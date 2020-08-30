@@ -1,5 +1,5 @@
-INIT_O_FILES := 						            \
-	asm/init.o
+INIT_O_FILES :=                                     \
+    asm/init.o
 
 EXTAB_O_FILES :=                                    \
     asm/extab.o
@@ -7,8 +7,24 @@ EXTAB_O_FILES :=                                    \
 EXTABINDEX_O_FILES :=                               \
     asm/extabindex.o
 
-TEXT_O_FILES := 						            \
-	asm/text.o
+TEXT_O_FILES :=                                     \
+    asm/Core/x/xAnim.o                              \
+    asm/Core/x/xBase.o                              \
+    asm/Core/x/xbinio.o                             \
+    asm/Core/x/xBound.o                             \
+    asm/Core/x/xCamera.o                            \
+    asm/Core/x/xClimate.o                           \
+    asm/Core/x/xCollide.o                           \
+    asm/Core/x/xCollideFast.o                       \
+    asm/Core/x/xCounter.o                           \
+    asm/Core/x/xCutscene.o                          \
+    asm/Core/x/xDebug.o                             \
+    asm/Core/x/xEnt.o                               \
+    asm/Core/x/xEntDrive.o                          \
+    asm/Core/x/xEntMotion.o                         \
+    asm/Core/x/xEnv.o                               \
+    asm/Core/x/xEvent.o                             \
+    asm/text.o
 
 CTORS_O_FILES :=                                    \
     asm/ctors.o
@@ -34,5 +50,5 @@ SBSS_O_FILES :=                                     \
 SDATA2_O_FILES :=                                   \
     asm/sdata2.o
 
-SBSS2_O_FILES :=                                   \
+SBSS2_O_FILES :=                                    \
     asm/sbss2.o
