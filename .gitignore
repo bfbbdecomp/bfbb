@@ -1,0 +1,14 @@
+tools/mwcc_compiler/*.*
+*.exe
+*.dol
+*.dump
+*.elf
+*.map
+*.ld
+*.i64
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+*.o
