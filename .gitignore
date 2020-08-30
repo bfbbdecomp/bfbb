@@ -12,3 +12,4 @@ tools/mwcc_compiler/*.*
 *.nam
 *.til
 *.o
+.vscode
