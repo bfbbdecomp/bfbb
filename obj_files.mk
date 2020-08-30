@@ -122,8 +122,8 @@ TEXT_O_FILES :=                                     \
     asm/Core/p2/iAnimSKB.o                          \
     asm/Core/x/iCamera.o                            \
     asm/Core/p2/iCollide.o                          \
-    asm/Core/p2/iCollideFast.o                      \
-    asm/Core/p2/iDraw.o                             \
+    src/Core/p2/iCollideFast.o                      \
+    src/Core/p2/iDraw.o                             \
     asm/Core/p2/iEnv.o                              \
     asm/Core/p2/iFile.o                             \
     asm/Core/p2/iFMV.o                              \

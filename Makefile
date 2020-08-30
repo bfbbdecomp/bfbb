@@ -51,7 +51,7 @@ ASMDIFF := ./asmdiff.sh
 # Options
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
-CFLAGS  := -Cpp_exceptions off -proc gekko -fp hard -O2,p -i include
+CFLAGS  := -Cpp_exceptions off -proc gekko -fp hard -O4,p -msgstyle gcc -ir .
 
 # elf2dol needs to know these in order to calculate sbss correctly.
 SDATA_PDHR := 9
@@ -83,4 +83,7 @@ $(ELF): $(O_FILES) $(LDSCRIPT)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 %.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+%.o: %.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
