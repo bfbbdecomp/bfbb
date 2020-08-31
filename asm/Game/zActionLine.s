@@ -82,8 +82,8 @@ lbl_8004E618:
 /* 8004E620 0004B420  42 00 FF 70 */	bdnz lbl_8004E590
 /* 8004E624 0004B424  4E 80 00 20 */	blr 
 
-.global func_8004E628
-func_8004E628:
+.global zActionLine.RenderActionLine__FP14_tagActionLine
+zActionLine.RenderActionLine__FP14_tagActionLine:
 /* 8004E628 0004B428  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004E62C 0004B42C  7C 08 02 A6 */	mflr r0
 /* 8004E630 0004B430  3C 80 80 2E */	lis r4, lbl_802DB9C0@ha
@@ -188,7 +188,7 @@ lbl_8004E79C:
 /* 8004E7A8 0004B5A8  80 03 00 00 */	lwz r0, 0(r3)
 /* 8004E7AC 0004B5AC  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 8004E7B0 0004B5B0  41 82 00 08 */	beq lbl_8004E7B8
-/* 8004E7B4 0004B5B4  4B FF FE 75 */	bl func_8004E628
+/* 8004E7B4 0004B5B4  4B FF FE 75 */	bl zActionLine.RenderActionLine__FP14_tagActionLine
 lbl_8004E7B8:
 /* 8004E7B8 0004B5B8  3B DE 00 01 */	addi r30, r30, 1
 /* 8004E7BC 0004B5BC  3B FF 00 04 */	addi r31, r31, 4

@@ -299,7 +299,7 @@ xSGTgtSelect__FP17st_XSAVEGAME_DATAi:
 /* 8003D038 00039E38  2C 03 00 00 */	cmpwi r3, 0
 /* 8003D03C 00039E3C  41 82 00 0C */	beq lbl_8003D048
 /* 8003D040 00039E40  7F C3 F3 78 */	mr r3, r30
-/* 8003D044 00039E44  48 00 10 ED */	bl func_8003E130
+/* 8003D044 00039E44  48 00 10 ED */	bl xsavegame.xSG_grab_leaders__FP17st_XSAVEGAME_DATA
 lbl_8003D048:
 /* 8003D048 00039E48  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8003D04C 00039E4C  7F E3 FB 78 */	mr r3, r31
@@ -1558,8 +1558,8 @@ xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPfi:
 /* 8003E128 0003AF28  38 21 00 10 */	addi r1, r1, 0x10
 /* 8003E12C 0003AF2C  4E 80 00 20 */	blr 
 
-.global func_8003E130
-func_8003E130:
+.global xsavegame.xSG_grab_leaders__FP17st_XSAVEGAME_DATA
+xsavegame.xSG_grab_leaders__FP17st_XSAVEGAME_DATA:
 /* 8003E130 0003AF30  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 8003E134 0003AF34  7C 08 02 A6 */	mflr r0
 /* 8003E138 0003AF38  3C 80 80 25 */	lis r4, lbl_80253958@ha
@@ -1693,8 +1693,8 @@ lbl_8003E2E0:
 /* 8003E300 0003B100  38 21 00 10 */	addi r1, r1, 0x10
 /* 8003E304 0003B104  4E 80 00 20 */	blr 
 
-.global func_8003E308
-func_8003E308:
+.global xsavegame.xSG_areaComposeLabel__FPciPci
+xsavegame.xSG_areaComposeLabel__FPciPci:
 /* 8003E308 0003B108  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8003E30C 0003B10C  7C 08 02 A6 */	mflr r0
 /* 8003E310 0003B110  3C 80 80 25 */	lis r4, lbl_802539CC@ha
@@ -2219,7 +2219,7 @@ lbl_8003EA6C:
 /* 8003EA74 0003B874  80 9E 00 54 */	lwz r4, 0x54(r30)
 /* 8003EA78 0003B878  38 BE 00 10 */	addi r5, r30, 0x10
 /* 8003EA7C 0003B87C  38 C6 00 01 */	addi r6, r6, 1
-/* 8003EA80 0003B880  4B FF F8 89 */	bl func_8003E308
+/* 8003EA80 0003B880  4B FF F8 89 */	bl xsavegame.xSG_areaComposeLabel__FPciPci
 /* 8003EA84 0003B884  80 BE 00 0C */	lwz r5, 0xc(r30)
 /* 8003EA88 0003B888  38 60 00 01 */	li r3, 1
 /* 8003EA8C 0003B88C  38 80 00 00 */	li r4, 0

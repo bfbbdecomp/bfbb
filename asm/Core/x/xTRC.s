@@ -31,8 +31,8 @@ xTRCInit__Fv:
 /* 8004D70C 0004A50C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D710 0004A510  4E 80 00 20 */	blr 
 
-.global func_8004D714
-func_8004D714:
+.global xTRC.render_message__FPCc
+xTRC.render_message__FPCc:
 /* 8004D714 0004A514  94 21 FF 40 */	stwu r1, -0xc0(r1)
 /* 8004D718 0004A518  7C 08 02 A6 */	mflr r0
 /* 8004D71C 0004A51C  90 01 00 C4 */	stw r0, 0xc4(r1)
@@ -139,7 +139,7 @@ xTRCRender__Fv:
 /* 8004D89C 0004A69C  80 6D 8B 24 */	lwz r3, lbl_803CB424-_SDA_BASE_(r13)
 /* 8004D8A0 0004A6A0  28 03 00 00 */	cmplwi r3, 0
 /* 8004D8A4 0004A6A4  41 82 00 08 */	beq lbl_8004D8AC
-/* 8004D8A8 0004A6A8  4B FF FE 6D */	bl func_8004D714
+/* 8004D8A8 0004A6A8  4B FF FE 6D */	bl xTRC.render_message__FPCc
 lbl_8004D8AC:
 /* 8004D8AC 0004A6AC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8004D8B0 0004A6B0  7C 08 03 A6 */	mtlr r0

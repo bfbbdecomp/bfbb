@@ -46,7 +46,7 @@ xScrFxUpdate__FP8RwCameraf:
 /* 800419A4 0003E7A4  FC 20 F8 90 */	fmr f1, f31
 /* 800419A8 0003E7A8  48 00 0B D1 */	bl xScrFXGlareUpdate__Ff
 /* 800419AC 0003E7AC  FC 20 F8 90 */	fmr f1, f31
-/* 800419B0 0003E7B0  48 00 08 91 */	bl func_80042240
+/* 800419B0 0003E7B0  48 00 08 91 */	bl xScrFx.xScrFxDistortionUpdate__Ff
 /* 800419B4 0003E7B4  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800419B8 0003E7B8  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 800419BC 0003E7BC  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -62,7 +62,7 @@ xScrFxRender__FP8RwCamera:
 /* 800419D8 0003E7D8  48 08 D9 79 */	bl iScrFxBegin__Fv
 /* 800419DC 0003E7DC  80 6D 9F 7C */	lwz r3, lbl_803CC87C-_SDA_BASE_(r13)
 /* 800419E0 0003E7E0  80 63 00 00 */	lwz r3, 0(r3)
-/* 800419E4 0003E7E4  48 00 09 B5 */	bl func_80042398
+/* 800419E4 0003E7E4  48 00 09 B5 */	bl xScrFx.xScrFxDistortionRender__FP8RwCamera
 /* 800419E8 0003E7E8  88 0D 8A 78 */	lbz r0, lbl_803CB378-_SDA_BASE_(r13)
 /* 800419EC 0003E7EC  28 00 00 00 */	cmplwi r0, 0
 /* 800419F0 0003E7F0  41 82 00 08 */	beq lbl_800419F8
@@ -124,8 +124,8 @@ xScrFxFadeInit__Fv:
 /* 80041AB4 0003E8B4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80041AB8 0003E8B8  4E 80 00 20 */	blr 
 
-.global func_80041ABC
-func_80041ABC:
+.global xScrFx.InterpCol__FfUcUc
+xScrFx.InterpCol__FfUcUc:
 /* 80041ABC 0003E8BC  54 65 06 3E */	clrlwi r5, r3, 0x18
 /* 80041AC0 0003E8C0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80041AC4 0003E8C4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -293,28 +293,28 @@ lbl_80041CEC:
 /* 80041CF4 0003EAF4  38 83 89 F0 */	addi r4, r3, lbl_802C89F0@l
 /* 80041CF8 0003EAF8  88 64 00 08 */	lbz r3, 8(r4)
 /* 80041CFC 0003EAFC  88 84 00 0C */	lbz r4, 0xc(r4)
-/* 80041D00 0003EB00  4B FF FD BD */	bl func_80041ABC
+/* 80041D00 0003EB00  4B FF FD BD */	bl xScrFx.InterpCol__FfUcUc
 /* 80041D04 0003EB04  3C 80 80 2D */	lis r4, lbl_802C89F0@ha
 /* 80041D08 0003EB08  FC 20 F8 90 */	fmr f1, f31
 /* 80041D0C 0003EB0C  38 84 89 F0 */	addi r4, r4, lbl_802C89F0@l
 /* 80041D10 0003EB10  7C 7F 1B 78 */	mr r31, r3
 /* 80041D14 0003EB14  88 64 00 09 */	lbz r3, 9(r4)
 /* 80041D18 0003EB18  88 84 00 0D */	lbz r4, 0xd(r4)
-/* 80041D1C 0003EB1C  4B FF FD A1 */	bl func_80041ABC
+/* 80041D1C 0003EB1C  4B FF FD A1 */	bl xScrFx.InterpCol__FfUcUc
 /* 80041D20 0003EB20  3C 80 80 2D */	lis r4, lbl_802C89F0@ha
 /* 80041D24 0003EB24  FC 20 F8 90 */	fmr f1, f31
 /* 80041D28 0003EB28  38 84 89 F0 */	addi r4, r4, lbl_802C89F0@l
 /* 80041D2C 0003EB2C  7C 7E 1B 78 */	mr r30, r3
 /* 80041D30 0003EB30  88 64 00 0A */	lbz r3, 0xa(r4)
 /* 80041D34 0003EB34  88 84 00 0E */	lbz r4, 0xe(r4)
-/* 80041D38 0003EB38  4B FF FD 85 */	bl func_80041ABC
+/* 80041D38 0003EB38  4B FF FD 85 */	bl xScrFx.InterpCol__FfUcUc
 /* 80041D3C 0003EB3C  3C 80 80 2D */	lis r4, lbl_802C89F0@ha
 /* 80041D40 0003EB40  FC 20 F8 90 */	fmr f1, f31
 /* 80041D44 0003EB44  38 84 89 F0 */	addi r4, r4, lbl_802C89F0@l
 /* 80041D48 0003EB48  7C 7D 1B 78 */	mr r29, r3
 /* 80041D4C 0003EB4C  88 64 00 0B */	lbz r3, 0xb(r4)
 /* 80041D50 0003EB50  88 84 00 0F */	lbz r4, 0xf(r4)
-/* 80041D54 0003EB54  4B FF FD 69 */	bl func_80041ABC
+/* 80041D54 0003EB54  4B FF FD 69 */	bl xScrFx.InterpCol__FfUcUc
 /* 80041D58 0003EB58  7C 7C 1B 78 */	mr r28, r3
 /* 80041D5C 0003EB5C  48 1F 61 01 */	bl RwEngineGetCurrentVideoMode
 /* 80041D60 0003EB60  7C 64 1B 78 */	mr r4, r3
@@ -664,8 +664,8 @@ xScrFxDrawSafeArea__Fv:
 xScrFxDistortionAdd__FP5xVec3P5xVec3i:
 /* 8004223C 0003F03C  4E 80 00 20 */	blr 
 
-.global func_80042240
-func_80042240:
+.global xScrFx.xScrFxDistortionUpdate__Ff
+xScrFx.xScrFxDistortionUpdate__Ff:
 /* 80042240 0003F040  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80042244 0003F044  7C 08 02 A6 */	mflr r0
 /* 80042248 0003F048  90 01 00 34 */	stw r0, 0x34(r1)
@@ -757,8 +757,8 @@ lbl_80042378:
 /* 80042390 0003F190  38 21 00 30 */	addi r1, r1, 0x30
 /* 80042394 0003F194  4E 80 00 20 */	blr 
 
-.global func_80042398
-func_80042398:
+.global xScrFx.xScrFxDistortionRender__FP8RwCamera
+xScrFx.xScrFxDistortionRender__FP8RwCamera:
 /* 80042398 0003F198  4E 80 00 20 */	blr 
 
 .global xScrFXGlareInit__Fv

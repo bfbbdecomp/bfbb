@@ -2,8 +2,8 @@
 
 .section .text  # 0x800974A8 - 0x80099680
 
-.global func_800974A8
-func_800974A8:
+.global zGame.PickNextSoak__Fv
+zGame.PickNextSoak__Fv:
 /* 800974A8 000942A8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800974AC 000942AC  7C 08 02 A6 */	mflr r0
 /* 800974B0 000942B0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -133,7 +133,7 @@ lbl_80097660:
 /* 80097660 00094460  80 6D 82 18 */	lwz r3, lbl_803CAB18-_SDA_BASE_(r13)
 /* 80097664 00094464  38 A0 00 00 */	li r5, 0
 /* 80097668 00094468  80 8D 8E EC */	lwz r4, lbl_803CB7EC-_SDA_BASE_(r13)
-/* 8009766C 0009446C  48 00 1E C1 */	bl func_8009952C
+/* 8009766C 0009446C  48 00 1E C1 */	bl zGame.xUtil_select_c___FPPciPCf
 /* 80097670 00094470  88 03 00 01 */	lbz r0, 1(r3)
 /* 80097674 00094474  88 83 00 00 */	lbz r4, 0(r3)
 /* 80097678 00094478  54 00 80 1E */	slwi r0, r0, 0x10
@@ -844,7 +844,7 @@ lbl_80097F9C:
 /* 800980C4 00094EC4  48 00 F6 F1 */	bl zMusicUpdate__Ff
 /* 800980C8 00094EC8  38 00 00 31 */	li r0, 0x31
 /* 800980CC 00094ECC  90 0D 8F 78 */	stw r0, lbl_803CB878-_SDA_BASE_(r13)
-/* 800980D0 00094ED0  48 00 07 B1 */	bl func_80098880
+/* 800980D0 00094ED0  48 00 07 B1 */	bl zGame.zGameUpdateMode__Fv
 /* 800980D4 00094ED4  80 6D 88 B0 */	lwz r3, lbl_803CB1B0-_SDA_BASE_(r13)
 /* 800980D8 00094ED8  2C 1F 00 00 */	cmpwi r31, 0
 /* 800980DC 00094EDC  38 03 00 01 */	addi r0, r3, 1
@@ -881,7 +881,7 @@ lbl_80098148:
 lbl_8009814C:
 /* 8009814C 00094F4C  38 00 00 32 */	li r0, 0x32
 /* 80098150 00094F50  90 0D 8F 78 */	stw r0, lbl_803CB878-_SDA_BASE_(r13)
-/* 80098154 00094F54  48 00 00 5D */	bl func_800981B0
+/* 80098154 00094F54  48 00 00 5D */	bl zGame.zGameLoopContinue__Fv
 /* 80098158 00094F58  2C 03 00 00 */	cmpwi r3, 0
 /* 8009815C 00094F5C  40 82 F9 88 */	bne lbl_80097AE4
 /* 80098160 00094F60  38 00 00 33 */	li r0, 0x33
@@ -910,8 +910,8 @@ lbl_800981A0:
 /* 800981A8 00094FA8  54 03 D9 7E */	srwi r3, r0, 5
 /* 800981AC 00094FAC  4E 80 00 20 */	blr 
 
-.global func_800981B0
-func_800981B0:
+.global zGame.zGameLoopContinue__Fv
+zGame.zGameLoopContinue__Fv:
 /* 800981B0 00094FB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800981B4 00094FB4  7C 08 02 A6 */	mflr r0
 /* 800981B8 00094FB8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -951,8 +951,8 @@ lbl_80098224:
 /* 8009822C 0009502C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80098230 00095030  4E 80 00 20 */	blr 
 
-.global func_80098234
-func_80098234:
+.global zGame.zGameOkToPause__Fv
+zGame.zGameOkToPause__Fv:
 /* 80098234 00095034  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80098238 00095038  7C 08 02 A6 */	mflr r0
 /* 8009823C 0009503C  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -1080,8 +1080,8 @@ lbl_800983E4:
 /* 800983EC 000951EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800983F0 000951F0  4E 80 00 20 */	blr 
 
-.global func_800983F4
-func_800983F4:
+.global zGame.zGame_HackDrawCard__FffffP8RwRaster
+zGame.zGame_HackDrawCard__FffffP8RwRaster:
 /* 800983F4 000951F4  94 21 FF 50 */	stwu r1, -0xb0(r1)
 /* 800983F8 000951F8  7C 08 02 A6 */	mflr r0
 /* 800983FC 000951FC  90 01 00 B4 */	stw r0, 0xb4(r1)
@@ -1174,8 +1174,8 @@ func_800983F4:
 /* 80098558 00095358  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8009855C 0009535C  4E 80 00 20 */	blr 
 
-.global func_80098560
-func_80098560:
+.global zGame.zGame_HackPostPortalAutoSaveDraw__Fv
+zGame.zGame_HackPostPortalAutoSaveDraw__Fv:
 /* 80098560 00095360  94 21 F6 D0 */	stwu r1, -0x930(r1)
 /* 80098564 00095364  7C 08 02 A6 */	mflr r0
 /* 80098568 00095368  90 01 09 34 */	stw r0, 0x934(r1)
@@ -1303,25 +1303,25 @@ lbl_80098734:
 /* 8009873C 0009553C  C0 62 90 AC */	lfs f3, lbl_803CDA2C-_SDA2_BASE_(r2)
 /* 80098740 00095540  FC 40 08 90 */	fmr f2, f1
 /* 80098744 00095544  C0 82 90 B0 */	lfs f4, lbl_803CDA30-_SDA2_BASE_(r2)
-/* 80098748 00095548  4B FF FC AD */	bl func_800983F4
+/* 80098748 00095548  4B FF FC AD */	bl zGame.zGame_HackDrawCard__FffffP8RwRaster
 /* 8009874C 0009554C  C0 22 90 AC */	lfs f1, lbl_803CDA2C-_SDA2_BASE_(r2)
 /* 80098750 00095550  7F 43 D3 78 */	mr r3, r26
 /* 80098754 00095554  C0 42 90 60 */	lfs f2, lbl_803CD9E0-_SDA2_BASE_(r2)
 /* 80098758 00095558  FC 60 08 90 */	fmr f3, f1
 /* 8009875C 0009555C  C0 82 90 B0 */	lfs f4, lbl_803CDA30-_SDA2_BASE_(r2)
-/* 80098760 00095560  4B FF FC 95 */	bl func_800983F4
+/* 80098760 00095560  4B FF FC 95 */	bl zGame.zGame_HackDrawCard__FffffP8RwRaster
 /* 80098764 00095564  C0 42 90 B0 */	lfs f2, lbl_803CDA30-_SDA2_BASE_(r2)
 /* 80098768 00095568  7F 43 D3 78 */	mr r3, r26
 /* 8009876C 0009556C  C0 22 90 60 */	lfs f1, lbl_803CD9E0-_SDA2_BASE_(r2)
 /* 80098770 00095570  FC 80 10 90 */	fmr f4, f2
 /* 80098774 00095574  C0 62 90 AC */	lfs f3, lbl_803CDA2C-_SDA2_BASE_(r2)
-/* 80098778 00095578  4B FF FC 7D */	bl func_800983F4
+/* 80098778 00095578  4B FF FC 7D */	bl zGame.zGame_HackDrawCard__FffffP8RwRaster
 /* 8009877C 0009557C  C0 22 90 AC */	lfs f1, lbl_803CDA2C-_SDA2_BASE_(r2)
 /* 80098780 00095580  7F 43 D3 78 */	mr r3, r26
 /* 80098784 00095584  C0 42 90 B0 */	lfs f2, lbl_803CDA30-_SDA2_BASE_(r2)
 /* 80098788 00095588  FC 60 08 90 */	fmr f3, f1
 /* 8009878C 0009558C  FC 80 10 90 */	fmr f4, f2
-/* 80098790 00095590  4B FF FC 65 */	bl func_800983F4
+/* 80098790 00095590  4B FF FC 65 */	bl zGame.zGame_HackDrawCard__FffffP8RwRaster
 /* 80098794 00095594  38 7D 01 84 */	addi r3, r29, 0x184
 /* 80098798 00095598  4B FB 3A 7D */	bl xStrHash__FPCc
 /* 8009879C 0009559C  38 80 00 00 */	li r4, 0
@@ -1346,7 +1346,7 @@ lbl_800987D8:
 /* 800987DC 000955DC  C0 22 90 B4 */	lfs f1, lbl_803CDA34-_SDA2_BASE_(r2)
 /* 800987E0 000955E0  FC 80 18 90 */	fmr f4, f3
 /* 800987E4 000955E4  C0 42 90 B8 */	lfs f2, lbl_803CDA38-_SDA2_BASE_(r2)
-/* 800987E8 000955E8  4B FF FC 0D */	bl func_800983F4
+/* 800987E8 000955E8  4B FF FC 0D */	bl zGame.zGame_HackDrawCard__FffffP8RwRaster
 /* 800987EC 000955EC  C0 02 90 60 */	lfs f0, lbl_803CD9E0-_SDA2_BASE_(r2)
 /* 800987F0 000955F0  FC 1F 00 40 */	fcmpo cr0, f31, f0
 /* 800987F4 000955F4  40 81 00 34 */	ble lbl_80098828
@@ -1387,8 +1387,8 @@ lbl_80098864:
 /* 80098878 00095678  38 21 09 30 */	addi r1, r1, 0x930
 /* 8009887C 0009567C  4E 80 00 20 */	blr 
 
-.global func_80098880
-func_80098880:
+.global zGame.zGameUpdateMode__Fv
+zGame.zGameUpdateMode__Fv:
 /* 80098880 00095680  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80098884 00095684  7C 08 02 A6 */	mflr r0
 /* 80098888 00095688  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1430,7 +1430,7 @@ func_80098880:
 /* 80098918 00095718  90 03 00 0C */	stw r0, 0xc(r3)
 /* 8009891C 0009571C  C0 02 90 60 */	lfs f0, lbl_803CD9E0-_SDA2_BASE_(r2)
 /* 80098920 00095720  D0 03 00 10 */	stfs f0, 0x10(r3)
-/* 80098924 00095724  4B FF EB 85 */	bl func_800974A8
+/* 80098924 00095724  4B FF EB 85 */	bl zGame.PickNextSoak__Fv
 /* 80098928 00095728  3C 80 80 3C */	lis r4, lbl_803C04EC@ha
 /* 8009892C 0009572C  3C A0 80 3C */	lis r5, lbl_803C0504@ha
 /* 80098930 00095730  38 C4 04 EC */	addi r6, r4, lbl_803C04EC@l
@@ -1456,7 +1456,7 @@ lbl_8009895C:
 /* 8009897C 0009577C  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 80098980 00095780  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 80098984 00095784  41 82 00 4C */	beq lbl_800989D0
-/* 80098988 00095788  4B FF F8 AD */	bl func_80098234
+/* 80098988 00095788  4B FF F8 AD */	bl zGame.zGameOkToPause__Fv
 /* 8009898C 0009578C  2C 03 00 01 */	cmpwi r3, 1
 /* 80098990 00095790  41 82 00 30 */	beq lbl_800989C0
 /* 80098994 00095794  40 80 00 10 */	bge lbl_800989A4
@@ -1548,7 +1548,7 @@ lbl_80098A9C:
 /* 80098ACC 000958CC  80 0D 8D D4 */	lwz r0, lbl_803CB6D4-_SDA_BASE_(r13)
 /* 80098AD0 000958D0  2C 00 00 00 */	cmpwi r0, 0
 /* 80098AD4 000958D4  41 82 00 74 */	beq lbl_80098B48
-/* 80098AD8 000958D8  4B FF FA 89 */	bl func_80098560
+/* 80098AD8 000958D8  4B FF FA 89 */	bl zGame.zGame_HackPostPortalAutoSaveDraw__Fv
 /* 80098ADC 000958DC  38 60 00 01 */	li r3, 1
 /* 80098AE0 000958E0  48 01 6C B9 */	bl zSaveLoadPreAutoSave__Fb
 /* 80098AE4 000958E4  48 01 6D F1 */	bl zSaveLoad_DoAutoSave__Fv
@@ -2274,8 +2274,8 @@ lbl_800994D4:
 zGameStats_Init__Fv:
 /* 80099528 00096328  4E 80 00 20 */	blr 
 
-.global func_8009952C
-func_8009952C:
+.global zGame.xUtil_select_c___FPPciPCf
+zGame.xUtil_select_c___FPPciPCf:
 /* 8009952C 0009632C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80099530 00096330  7C 08 02 A6 */	mflr r0
 /* 80099534 00096334  90 01 00 34 */	stw r0, 0x34(r1)

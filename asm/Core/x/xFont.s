@@ -2,8 +2,8 @@
 
 .section .text  # 0x8001FFB0 - 0x800266C8
 
-.global func_8001FFB0
-func_8001FFB0:
+.global xFont.find_bounds__19_unnamed_xFont_cpp_FPC10iColor_tagRC13basic_rect_i_i
+xFont.find_bounds__19_unnamed_xFont_cpp_FPC10iColor_tagRC13basic_rect_i_i:
 /* 8001FFB0 0001CDB0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8001FFB4 0001CDB4  81 45 00 0C */	lwz r10, 0xc(r5)
 /* 8001FFB8 0001CDB8  93 E1 00 2C */	stw r31, 0x2c(r1)
@@ -109,8 +109,8 @@ lbl_800200D0:
 /* 80020118 0001CF18  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002011C 0001CF1C  4E 80 00 20 */	blr 
 
-.global func_80020120
-func_80020120:
+.global xFont.reset_font_spacing__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10font_asset
+xFont.reset_font_spacing__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10font_asset:
 /* 80020120 0001CF20  94 21 FE A0 */	stwu r1, -0x160(r1)
 /* 80020124 0001CF24  7C 08 02 A6 */	mflr r0
 /* 80020128 0001CF28  38 80 00 00 */	li r4, 0
@@ -199,7 +199,7 @@ lbl_80020244:
 /* 80020260 0001D060  54 84 10 3A */	slwi r4, r4, 2
 /* 80020264 0001D064  7C 84 02 14 */	add r4, r4, r0
 /* 80020268 0001D068  7C 9C 22 14 */	add r4, r28, r4
-/* 8002026C 0001D06C  4B FF FD 45 */	bl func_8001FFB0
+/* 8002026C 0001D06C  4B FF FD 45 */	bl xFont.find_bounds__19_unnamed_xFont_cpp_FPC10iColor_tagRC13basic_rect_i_i
 /* 80020270 0001D070  80 1A 00 10 */	lwz r0, 0x10(r26)
 /* 80020274 0001D074  80 A1 00 08 */	lwz r5, 8(r1)
 /* 80020278 0001D078  54 00 07 39 */	rlwinm. r0, r0, 0, 0x1c, 0x1c
@@ -255,8 +255,8 @@ lbl_80020320:
 /* 8002032C 0001D12C  38 21 01 60 */	addi r1, r1, 0x160
 /* 80020330 0001D130  4E 80 00 20 */	blr 
 
-.global func_80020334
-func_80020334:
+.global xFont.get_tex_bounds__19_unnamed_xFont_cpp_FRCQ219_unnamed_xFont_cpp_9font_dataUc
+xFont.get_tex_bounds__19_unnamed_xFont_cpp_FRCQ219_unnamed_xFont_cpp_9font_dataUc:
 /* 80020334 0001D134  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80020338 0001D138  7C 08 02 A6 */	mflr r0
 /* 8002033C 0001D13C  80 C4 00 00 */	lwz r6, 0(r4)
@@ -375,8 +375,8 @@ lbl_800203F4:
 /* 800204F8 0001D2F8  38 21 00 60 */	addi r1, r1, 0x60
 /* 800204FC 0001D2FC  4E 80 00 20 */	blr 
 
-.global func_80020500
-func_80020500:
+.global xFont.get_bounds__19_unnamed_xFont_cpp_FRCQ219_unnamed_xFont_cpp_9font_dataUc
+xFont.get_bounds__19_unnamed_xFont_cpp_FRCQ219_unnamed_xFont_cpp_9font_dataUc:
 /* 80020500 0001D300  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80020504 0001D304  3C C0 43 30 */	lis r6, 0x4330
 /* 80020508 0001D308  81 24 00 00 */	lwz r9, 0(r4)
@@ -430,8 +430,8 @@ func_80020500:
 /* 800205C8 0001D3C8  38 21 00 40 */	addi r1, r1, 0x40
 /* 800205CC 0001D3CC  4E 80 00 20 */	blr 
 
-.global func_800205D0
-func_800205D0:
+.global xFont.init_font_data__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_9font_data
+xFont.init_font_data__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_9font_data:
 /* 800205D0 0001D3D0  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 800205D4 0001D3D4  7C 08 02 A6 */	mflr r0
 /* 800205D8 0001D3D8  38 80 00 00 */	li r4, 0
@@ -516,7 +516,7 @@ lbl_80020704:
 /* 80020704 0001D504  7F A4 EB 78 */	mr r4, r29
 /* 80020708 0001D508  7F C5 F3 78 */	mr r5, r30
 /* 8002070C 0001D50C  38 61 00 18 */	addi r3, r1, 0x18
-/* 80020710 0001D510  4B FF FC 25 */	bl func_80020334
+/* 80020710 0001D510  4B FF FC 25 */	bl xFont.get_tex_bounds__19_unnamed_xFont_cpp_FRCQ219_unnamed_xFont_cpp_9font_dataUc
 /* 80020714 0001D514  57 C0 20 36 */	slwi r0, r30, 4
 /* 80020718 0001D518  38 81 00 18 */	addi r4, r1, 0x18
 /* 8002071C 0001D51C  7F 7D 02 14 */	add r27, r29, r0
@@ -525,7 +525,7 @@ lbl_80020704:
 /* 80020728 0001D528  7F A4 EB 78 */	mr r4, r29
 /* 8002072C 0001D52C  7F C5 F3 78 */	mr r5, r30
 /* 80020730 0001D530  38 61 00 08 */	addi r3, r1, 8
-/* 80020734 0001D534  4B FF FD CD */	bl func_80020500
+/* 80020734 0001D534  4B FF FD CD */	bl xFont.get_bounds__19_unnamed_xFont_cpp_FRCQ219_unnamed_xFont_cpp_9font_dataUc
 /* 80020738 0001D538  38 7B 09 00 */	addi r3, r27, 0x900
 /* 8002073C 0001D53C  38 81 00 08 */	addi r4, r1, 8
 /* 80020740 0001D540  4B FF 79 01 */	bl func_80018040
@@ -659,8 +659,8 @@ lbl_8002091C:
 /* 80020928 0001D728  38 21 00 60 */	addi r1, r1, 0x60
 /* 8002092C 0001D72C  4E 80 00 20 */	blr 
 
-.global func_80020930
-func_80020930:
+.global xFont.start_tex_render__19_unnamed_xFont_cpp_FUi
+xFont.start_tex_render__19_unnamed_xFont_cpp_FUi:
 /* 80020930 0001D730  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80020934 0001D734  7C 08 02 A6 */	mflr r0
 /* 80020938 0001D738  90 01 00 14 */	stw r0, 0x14(r1)
@@ -686,8 +686,8 @@ func_80020930:
 /* 80020988 0001D788  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002098C 0001D78C  4E 80 00 20 */	blr 
 
-.global func_80020990
-func_80020990:
+.global xFont.tex_flush__19_unnamed_xFont_cpp_Fv
+xFont.tex_flush__19_unnamed_xFont_cpp_Fv:
 /* 80020990 0001D790  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80020994 0001D794  7C 08 02 A6 */	mflr r0
 /* 80020998 0001D798  90 01 00 14 */	stw r0, 0x14(r1)
@@ -706,20 +706,20 @@ lbl_800209C0:
 /* 800209C8 0001D7C8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800209CC 0001D7CC  4E 80 00 20 */	blr 
 
-.global func_800209D0
-func_800209D0:
+.global xFont.stop_tex_render__19_unnamed_xFont_cpp_Fv
+xFont.stop_tex_render__19_unnamed_xFont_cpp_Fv:
 /* 800209D0 0001D7D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800209D4 0001D7D4  7C 08 02 A6 */	mflr r0
 /* 800209D8 0001D7D8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800209DC 0001D7DC  4B FF FF B5 */	bl func_80020990
+/* 800209DC 0001D7DC  4B FF FF B5 */	bl xFont.tex_flush__19_unnamed_xFont_cpp_Fv
 /* 800209E0 0001D7E0  48 00 07 F5 */	bl restore_render_state__5xfontFv
 /* 800209E4 0001D7E4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800209E8 0001D7E8  7C 08 03 A6 */	mtlr r0
 /* 800209EC 0001D7EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800209F0 0001D7F0  4E 80 00 20 */	blr 
 
-.global func_800209F4
-func_800209F4:
+.global xFont.tex_render__19_unnamed_xFont_cpp_FRC13basic_rect_f_RC13basic_rect_f_RC13basic_rect_f_10iColor_tag
+xFont.tex_render__19_unnamed_xFont_cpp_FRC13basic_rect_f_RC13basic_rect_f_RC13basic_rect_f_10iColor_tag:
 /* 800209F4 0001D7F4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800209F8 0001D7F8  7C 08 02 A6 */	mflr r0
 /* 800209FC 0001D7FC  81 84 00 00 */	lwz r12, 0(r4)
@@ -779,7 +779,7 @@ lbl_80020A98:
 /* 80020AD0 0001D8D0  C0 41 00 2C */	lfs f2, 0x2c(r1)
 /* 80020AD4 0001D8D4  C0 61 00 18 */	lfs f3, 0x18(r1)
 /* 80020AD8 0001D8D8  C0 81 00 1C */	lfs f4, 0x1c(r1)
-/* 80020ADC 0001D8DC  48 00 01 39 */	bl func_80020C14
+/* 80020ADC 0001D8DC  48 00 01 39 */	bl xFont.set_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexffff10iColor_tag
 /* 80020AE0 0001D8E0  C0 41 00 2C */	lfs f2, 0x2c(r1)
 /* 80020AE4 0001D8E4  38 7E 00 18 */	addi r3, r30, 0x18
 /* 80020AE8 0001D8E8  C0 01 00 34 */	lfs f0, 0x34(r1)
@@ -792,7 +792,7 @@ lbl_80020A98:
 /* 80020B04 0001D904  EC 81 00 2A */	fadds f4, f1, f0
 /* 80020B08 0001D908  C0 21 00 28 */	lfs f1, 0x28(r1)
 /* 80020B0C 0001D90C  C0 61 00 18 */	lfs f3, 0x18(r1)
-/* 80020B10 0001D910  48 00 01 05 */	bl func_80020C14
+/* 80020B10 0001D910  48 00 01 05 */	bl xFont.set_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexffff10iColor_tag
 /* 80020B14 0001D914  C0 21 00 28 */	lfs f1, 0x28(r1)
 /* 80020B18 0001D918  38 7E 00 30 */	addi r3, r30, 0x30
 /* 80020B1C 0001D91C  C0 01 00 30 */	lfs f0, 0x30(r1)
@@ -805,7 +805,7 @@ lbl_80020A98:
 /* 80020B38 0001D938  EC 62 00 2A */	fadds f3, f2, f0
 /* 80020B3C 0001D93C  C0 41 00 2C */	lfs f2, 0x2c(r1)
 /* 80020B40 0001D940  C0 81 00 1C */	lfs f4, 0x1c(r1)
-/* 80020B44 0001D944  48 00 00 D1 */	bl func_80020C14
+/* 80020B44 0001D944  48 00 00 D1 */	bl xFont.set_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexffff10iColor_tag
 /* 80020B48 0001D948  38 7E 00 48 */	addi r3, r30, 0x48
 /* 80020B4C 0001D94C  38 9E 00 30 */	addi r4, r30, 0x30
 /* 80020B50 0001D950  48 00 00 79 */	bl func_80020BC8
@@ -828,7 +828,7 @@ lbl_80020A98:
 /* 80020B94 0001D994  EC 65 18 2A */	fadds f3, f5, f3
 /* 80020B98 0001D998  90 01 00 08 */	stw r0, 8(r1)
 /* 80020B9C 0001D99C  EC 84 00 2A */	fadds f4, f4, f0
-/* 80020BA0 0001D9A0  48 00 00 75 */	bl func_80020C14
+/* 80020BA0 0001D9A0  48 00 00 75 */	bl xFont.set_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexffff10iColor_tag
 /* 80020BA4 0001D9A4  80 6D 89 14 */	lwz r3, lbl_803CB214-_SDA_BASE_(r13)
 /* 80020BA8 0001D9A8  38 03 00 06 */	addi r0, r3, 6
 /* 80020BAC 0001D9AC  90 0D 89 14 */	stw r0, lbl_803CB214-_SDA_BASE_(r13)
@@ -862,8 +862,8 @@ func_80020BC8:
 /* 80020C0C 0001DA0C  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 80020C10 0001DA10  4E 80 00 20 */	blr 
 
-.global func_80020C14
-func_80020C14:
+.global xFont.set_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexffff10iColor_tag
+xFont.set_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexffff10iColor_tag:
 /* 80020C14 0001DA14  D0 23 00 00 */	stfs f1, 0(r3)
 /* 80020C18 0001DA18  D0 43 00 04 */	stfs f2, 4(r3)
 /* 80020C1C 0001DA1C  C0 0D 89 1C */	lfs f0, lbl_803CB21C-_SDA_BASE_(r13)
@@ -880,8 +880,8 @@ func_80020C14:
 /* 80020C48 0001DA48  98 03 00 0F */	stb r0, 0xf(r3)
 /* 80020C4C 0001DA4C  4E 80 00 20 */	blr 
 
-.global func_80020C50
-func_80020C50:
+.global xFont.init_model_cache__19_unnamed_xFont_cpp_Fv
+xFont.init_model_cache__19_unnamed_xFont_cpp_Fv:
 /* 80020C50 0001DA50  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80020C54 0001DA54  7C 08 02 A6 */	mflr r0
 /* 80020C58 0001DA58  38 80 05 60 */	li r4, 0x560
@@ -979,8 +979,8 @@ func_80020C50:
 /* 80020DC8 0001DBC8  38 21 00 30 */	addi r1, r1, 0x30
 /* 80020DCC 0001DBCC  4E 80 00 20 */	blr 
 
-.global func_80020DD0
-func_80020DD0:
+.global xFont.load_model__19_unnamed_xFont_cpp_FUi
+xFont.load_model__19_unnamed_xFont_cpp_FUi:
 /* 80020DD0 0001DBD0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80020DD4 0001DBD4  7C 08 02 A6 */	mflr r0
 /* 80020DD8 0001DBD8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1150,7 +1150,7 @@ lbl_80021018:
 /* 8002101C 0001DE1C  38 80 00 00 */	li r4, 0
 /* 80021020 0001DE20  48 02 A6 ED */	bl xSTFindAsset__FUiPUi
 /* 80021024 0001DE24  7F E3 FB 78 */	mr r3, r31
-/* 80021028 0001DE28  4B FF F0 F9 */	bl func_80020120
+/* 80021028 0001DE28  4B FF F0 F9 */	bl xFont.reset_font_spacing__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10font_asset
 /* 8002102C 0001DE2C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80021030 0001DE30  41 82 00 34 */	beq lbl_80021064
 /* 80021034 0001DE34  80 8D 89 10 */	lwz r4, lbl_803CB210-_SDA_BASE_(r13)
@@ -1159,7 +1159,7 @@ lbl_80021018:
 /* 80021040 0001DE40  1C 64 14 F0 */	mulli r3, r4, 0x14f0
 /* 80021044 0001DE44  7C 60 1A 14 */	add r3, r0, r3
 /* 80021048 0001DE48  93 E3 00 00 */	stw r31, 0(r3)
-/* 8002104C 0001DE4C  4B FF F5 85 */	bl func_800205D0
+/* 8002104C 0001DE4C  4B FF F5 85 */	bl xFont.init_font_data__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_9font_data
 /* 80021050 0001DE50  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80021054 0001DE54  41 82 00 10 */	beq lbl_80021064
 /* 80021058 0001DE58  80 6D 89 10 */	lwz r3, lbl_803CB210-_SDA_BASE_(r13)
@@ -1170,7 +1170,7 @@ lbl_80021064:
 /* 80021068 0001DE68  3B FF 01 94 */	addi r31, r31, 0x194
 /* 8002106C 0001DE6C  28 1E 00 04 */	cmplwi r30, 4
 /* 80021070 0001DE70  41 80 FF 84 */	blt lbl_80020FF4
-/* 80021074 0001DE74  4B FF FB DD */	bl func_80020C50
+/* 80021074 0001DE74  4B FF FB DD */	bl xFont.init_model_cache__19_unnamed_xFont_cpp_Fv
 /* 80021078 0001DE78  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8002107C 0001DE7C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80021080 0001DE80  83 C1 00 08 */	lwz r30, 8(r1)
@@ -1486,7 +1486,7 @@ start_render__5xfontCFv:
 /* 800214E8 0001E2E8  7C 08 02 A6 */	mflr r0
 /* 800214EC 0001E2EC  80 63 00 00 */	lwz r3, 0(r3)
 /* 800214F0 0001E2F0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800214F4 0001E2F4  4B FF F4 3D */	bl func_80020930
+/* 800214F4 0001E2F4  4B FF F4 3D */	bl xFont.start_tex_render__19_unnamed_xFont_cpp_FUi
 /* 800214F8 0001E2F8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800214FC 0001E2FC  7C 08 03 A6 */	mtlr r0
 /* 80021500 0001E300  38 21 00 10 */	addi r1, r1, 0x10
@@ -1497,14 +1497,14 @@ stop_render__5xfontCFv:
 /* 80021508 0001E308  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002150C 0001E30C  7C 08 02 A6 */	mflr r0
 /* 80021510 0001E310  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80021514 0001E314  4B FF F4 BD */	bl func_800209D0
+/* 80021514 0001E314  4B FF F4 BD */	bl xFont.stop_tex_render__19_unnamed_xFont_cpp_Fv
 /* 80021518 0001E318  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8002151C 0001E31C  7C 08 03 A6 */	mtlr r0
 /* 80021520 0001E320  38 21 00 10 */	addi r1, r1, 0x10
 /* 80021524 0001E324  4E 80 00 20 */	blr 
 
-.global func_80021528
-func_80021528:
+.global xFont.char_render__19_unnamed_xFont_cpp_FUcUiRC13basic_rect_f_RC13basic_rect_f_10iColor_tag
+xFont.char_render__19_unnamed_xFont_cpp_FUcUiRC13basic_rect_f_RC13basic_rect_f_10iColor_tag:
 /* 80021528 0001E328  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8002152C 0001E32C  7C 08 02 A6 */	mflr r0
 /* 80021530 0001E330  1D 04 14 F0 */	mulli r8, r4, 0x14f0
@@ -1561,7 +1561,7 @@ func_80021528:
 /* 800215FC 0001E3FC  D0 41 00 14 */	stfs f2, 0x14(r1)
 /* 80021600 0001E400  D0 01 00 18 */	stfs f0, 0x18(r1)
 /* 80021604 0001E404  90 01 00 08 */	stw r0, 8(r1)
-/* 80021608 0001E408  4B FF F3 ED */	bl func_800209F4
+/* 80021608 0001E408  4B FF F3 ED */	bl xFont.tex_render__19_unnamed_xFont_cpp_FRC13basic_rect_f_RC13basic_rect_f_RC13basic_rect_f_10iColor_tag
 lbl_8002160C:
 /* 8002160C 0001E40C  BB 41 00 28 */	lmw r26, 0x28(r1)
 /* 80021610 0001E410  80 01 00 44 */	lwz r0, 0x44(r1)
@@ -1569,8 +1569,8 @@ lbl_8002160C:
 /* 80021618 0001E418  38 21 00 40 */	addi r1, r1, 0x40
 /* 8002161C 0001E41C  4E 80 00 20 */	blr 
 
-.global func_80021620
-func_80021620:
+.global xFont.set_tex_raster__19_unnamed_xFont_cpp_FP8RwRaster
+xFont.set_tex_raster__19_unnamed_xFont_cpp_FP8RwRaster:
 /* 80021620 0001E420  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80021624 0001E424  7C 08 02 A6 */	mflr r0
 /* 80021628 0001E428  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1585,7 +1585,7 @@ func_80021620:
 /* 8002164C 0001E44C  7F E3 FB 78 */	mr r3, r31
 /* 80021650 0001E450  48 00 00 18 */	b lbl_80021668
 lbl_80021654:
-/* 80021654 0001E454  4B FF F3 3D */	bl func_80020990
+/* 80021654 0001E454  4B FF F3 3D */	bl xFont.tex_flush__19_unnamed_xFont_cpp_Fv
 /* 80021658 0001E458  7F E4 FB 78 */	mr r4, r31
 /* 8002165C 0001E45C  38 60 00 01 */	li r3, 1
 /* 80021660 0001E460  48 20 E1 7D */	bl RwRenderStateSet
@@ -1631,7 +1631,7 @@ irender__5xfontCFPCcUlff:
 /* 800216E4 0001E4E4  1C 64 14 F0 */	mulli r3, r4, 0x14f0
 /* 800216E8 0001E4E8  7F 40 1A 14 */	add r26, r0, r3
 /* 800216EC 0001E4EC  80 7A 14 EC */	lwz r3, 0x14ec(r26)
-/* 800216F0 0001E4F0  4B FF FF 31 */	bl func_80021620
+/* 800216F0 0001E4F0  4B FF FF 31 */	bl xFont.set_tex_raster__19_unnamed_xFont_cpp_FP8RwRaster
 /* 800216F4 0001E4F4  3C 60 80 25 */	lis r3, lbl_802527E8@ha
 /* 800216F8 0001E4F8  C0 3E 00 04 */	lfs f1, 4(r30)
 /* 800216FC 0001E4FC  38 C3 27 E8 */	addi r6, r3, lbl_802527E8@l
@@ -1659,7 +1659,7 @@ lbl_80021744:
 /* 80021750 0001E550  38 A1 00 0C */	addi r5, r1, 0xc
 /* 80021754 0001E554  38 DE 00 14 */	addi r6, r30, 0x14
 /* 80021758 0001E558  38 E1 00 08 */	addi r7, r1, 8
-/* 8002175C 0001E55C  4B FF FD CD */	bl func_80021528
+/* 8002175C 0001E55C  4B FF FD CD */	bl xFont.char_render__19_unnamed_xFont_cpp_FUcUiRC13basic_rect_f_RC13basic_rect_f_10iColor_tag
 /* 80021760 0001E560  57 63 06 3E */	clrlwi r3, r27, 0x18
 /* 80021764 0001E564  38 03 00 08 */	addi r0, r3, 8
 /* 80021768 0001E568  7C 1A 00 AE */	lbzx r0, r26, r0
@@ -1694,8 +1694,8 @@ lbl_800217B4:
 /* 800217D0 0001E5D0  38 21 00 60 */	addi r1, r1, 0x60
 /* 800217D4 0001E5D4  4E 80 00 20 */	blr 
 
-.global func_800217D8
-func_800217D8:
+.global xFont.parse_split_tag__19_unnamed_xFont_cpp_FRQ28xtextbox9split_tag
+xFont.parse_split_tag__19_unnamed_xFont_cpp_FRQ28xtextbox9split_tag:
 /* 800217D8 0001E5D8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800217DC 0001E5DC  7C 08 02 A6 */	mflr r0
 /* 800217E0 0001E5E0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1799,8 +1799,8 @@ lbl_80021940:
 /* 8002194C 0001E74C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80021950 0001E750  4E 80 00 20 */	blr 
 
-.global func_80021954
-func_80021954:
+.global xFont.parse_next_tag_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
+xFont.parse_next_tag_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl:
 /* 80021954 0001E754  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80021958 0001E758  7C 08 02 A6 */	mflr r0
 /* 8002195C 0001E75C  3D 00 80 25 */	lis r8, lbl_802527F8@ha
@@ -1830,7 +1830,7 @@ func_80021954:
 /* 800219BC 0001E7BC  90 01 00 34 */	stw r0, 0x34(r1)
 /* 800219C0 0001E7C0  93 E1 00 18 */	stw r31, 0x18(r1)
 /* 800219C4 0001E7C4  90 E1 00 1C */	stw r7, 0x1c(r1)
-/* 800219C8 0001E7C8  4B FF FE 11 */	bl func_800217D8
+/* 800219C8 0001E7C8  4B FF FE 11 */	bl xFont.parse_split_tag__19_unnamed_xFont_cpp_FRQ28xtextbox9split_tag
 /* 800219CC 0001E7CC  7C 7B 1B 79 */	or. r27, r3, r3
 /* 800219D0 0001E7D0  40 82 00 0C */	bne lbl_800219DC
 /* 800219D4 0001E7D4  38 60 00 00 */	li r3, 0
@@ -1913,8 +1913,8 @@ lbl_80021AE8:
 /* 80021AF4 0001E8F4  38 21 00 50 */	addi r1, r1, 0x50
 /* 80021AF8 0001E8F8  4E 80 00 20 */	blr 
 
-.global func_80021AFC
-func_80021AFC:
+.global xFont.parse_next_text_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
+xFont.parse_next_text_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl:
 /* 80021AFC 0001E8FC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80021B00 0001E900  7C 08 02 A6 */	mflr r0
 /* 80021B04 0001E904  88 A6 00 00 */	lbz r5, 0(r6)
@@ -1989,8 +1989,8 @@ lbl_80021BB4:
 /* 80021C08 0001EA08  38 21 00 30 */	addi r1, r1, 0x30
 /* 80021C0C 0001EA0C  4E 80 00 20 */	blr 
 
-.global func_80021C10
-func_80021C10:
+.global xFont.parse_next_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
+xFont.parse_next_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl:
 /* 80021C10 0001EA10  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80021C14 0001EA14  7C 08 02 A6 */	mflr r0
 /* 80021C18 0001EA18  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2003,7 +2003,7 @@ func_80021C10:
 /* 80021C34 0001EA34  7C BD 2B 78 */	mr r29, r5
 /* 80021C38 0001EA38  7C FF 3B 78 */	mr r31, r7
 /* 80021C3C 0001EA3C  40 82 00 10 */	bne lbl_80021C4C
-/* 80021C40 0001EA40  4B FF FD 15 */	bl func_80021954
+/* 80021C40 0001EA40  4B FF FD 15 */	bl xFont.parse_next_tag_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
 /* 80021C44 0001EA44  28 03 00 00 */	cmplwi r3, 0
 /* 80021C48 0001EA48  40 82 00 1C */	bne lbl_80021C64
 lbl_80021C4C:
@@ -2012,7 +2012,7 @@ lbl_80021C4C:
 /* 80021C54 0001EA54  7F A5 EB 78 */	mr r5, r29
 /* 80021C58 0001EA58  7F C6 F3 78 */	mr r6, r30
 /* 80021C5C 0001EA5C  7F E7 FB 78 */	mr r7, r31
-/* 80021C60 0001EA60  4B FF FE 9D */	bl func_80021AFC
+/* 80021C60 0001EA60  4B FF FE 9D */	bl xFont.parse_next_text_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
 lbl_80021C64:
 /* 80021C64 0001EA64  88 1B 00 08 */	lbz r0, 8(r27)
 /* 80021C68 0001EA68  38 80 00 00 */	li r4, 0
@@ -2032,8 +2032,8 @@ lbl_80021C84:
 /* 80021C9C 0001EA9C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80021CA0 0001EAA0  4E 80 00 20 */	blr 
 
-.global func_80021CA4
-func_80021CA4:
+.global xFont.reset_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_args
+xFont.reset_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_args:
 /* 80021CA4 0001EAA4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80021CA8 0001EAA8  7C 08 02 A6 */	mflr r0
 /* 80021CAC 0001EAAC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2061,8 +2061,8 @@ func_80021CA4:
 /* 80021D04 0001EB04  38 21 00 10 */	addi r1, r1, 0x10
 /* 80021D08 0001EB08  4E 80 00 20 */	blr 
 
-.global func_80021D0C
-func_80021D0C:
+.global xFont.load_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_argsRC6substr
+xFont.load_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_argsRC6substr:
 /* 80021D0C 0001EB0C  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 80021D10 0001EB10  7C 08 02 A6 */	mflr r0
 /* 80021D14 0001EB14  90 01 00 84 */	stw r0, 0x84(r1)
@@ -2370,8 +2370,8 @@ lbl_8002217C:
 /* 8002218C 0001EF8C  38 21 00 80 */	addi r1, r1, 0x80
 /* 80022190 0001EF90  4E 80 00 20 */	blr 
 
-.global func_80022194
-func_80022194:
+.global xFont.reset_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_args
+xFont.reset_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_args:
 /* 80022194 0001EF94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80022198 0001EF98  7C 08 02 A6 */	mflr r0
 /* 8002219C 0001EF9C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2398,8 +2398,8 @@ func_80022194:
 /* 800221F0 0001EFF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800221F4 0001EFF4  4E 80 00 20 */	blr 
 
-.global func_800221F8
-func_800221F8:
+.global xFont.load_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_argsRC6substr
+xFont.load_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_argsRC6substr:
 /* 800221F8 0001EFF8  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800221FC 0001EFFC  7C 08 02 A6 */	mflr r0
 /* 80022200 0001F000  90 01 00 44 */	stw r0, 0x44(r1)
@@ -2427,7 +2427,7 @@ lbl_80022250:
 /* 80022254 0001F054  80 64 00 00 */	lwz r3, 0(r4)
 /* 80022258 0001F058  80 84 00 04 */	lwz r4, 4(r4)
 /* 8002225C 0001F05C  48 02 9F F5 */	bl xStrHash__FPCcUl
-/* 80022260 0001F060  4B FF EB 71 */	bl func_80020DD0
+/* 80022260 0001F060  4B FF EB 71 */	bl xFont.load_model__19_unnamed_xFont_cpp_FUi
 /* 80022264 0001F064  90 7F 00 00 */	stw r3, 0(r31)
 lbl_80022268:
 /* 80022268 0001F068  80 81 00 30 */	lwz r4, 0x30(r1)
@@ -2546,28 +2546,28 @@ lbl_80022408:
 /* 80022418 0001F218  38 21 00 40 */	addi r1, r1, 0x40
 /* 8002241C 0001F21C  4E 80 00 20 */	blr 
 
-.global func_80022420
-func_80022420:
+.global xFont.start_layout__19_unnamed_xFont_cpp_FRC8xtextbox
+xFont.start_layout__19_unnamed_xFont_cpp_FRC8xtextbox:
 /* 80022420 0001F220  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80022424 0001F224  7C 08 02 A6 */	mflr r0
 /* 80022428 0001F228  3C 60 80 2C */	lis r3, lbl_802BED3C@ha
 /* 8002242C 0001F22C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80022430 0001F230  38 63 ED 3C */	addi r3, r3, lbl_802BED3C@l
-/* 80022434 0001F234  4B FF F8 71 */	bl func_80021CA4
+/* 80022434 0001F234  4B FF F8 71 */	bl xFont.reset_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_args
 /* 80022438 0001F238  3C 60 80 2C */	lis r3, lbl_802BED70@ha
 /* 8002243C 0001F23C  38 63 ED 70 */	addi r3, r3, lbl_802BED70@l
-/* 80022440 0001F240  4B FF FD 55 */	bl func_80022194
+/* 80022440 0001F240  4B FF FD 55 */	bl xFont.reset_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_args
 /* 80022444 0001F244  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80022448 0001F248  7C 08 03 A6 */	mtlr r0
 /* 8002244C 0001F24C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80022450 0001F250  4E 80 00 20 */	blr 
 
-.global func_80022454
-func_80022454:
+.global xFont.stop_layout__19_unnamed_xFont_cpp_FRC8xtextbox
+xFont.stop_layout__19_unnamed_xFont_cpp_FRC8xtextbox:
 /* 80022454 0001F254  4E 80 00 20 */	blr 
 
-.global func_80022458
-func_80022458:
+.global xFont.start_render__19_unnamed_xFont_cpp_FRC8xtextbox
+xFont.start_render__19_unnamed_xFont_cpp_FRC8xtextbox:
 /* 80022458 0001F258  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002245C 0001F25C  7C 08 02 A6 */	mflr r0
 /* 80022460 0001F260  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2577,8 +2577,8 @@ func_80022458:
 /* 80022470 0001F270  38 21 00 10 */	addi r1, r1, 0x10
 /* 80022474 0001F274  4E 80 00 20 */	blr 
 
-.global func_80022478
-func_80022478:
+.global xFont.stop_render__19_unnamed_xFont_cpp_FRC8xtextbox
+xFont.stop_render__19_unnamed_xFont_cpp_FRC8xtextbox:
 /* 80022478 0001F278  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002247C 0001F27C  7C 08 02 A6 */	mflr r0
 /* 80022480 0001F280  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2710,8 +2710,8 @@ lbl_80022618:
 /* 80022624 0001F424  38 21 00 20 */	addi r1, r1, 0x20
 /* 80022628 0001F428  4E 80 00 20 */	blr 
 
-.global func_8002262C
-func_8002262C:
+.global xFont.log_cache__Q27tweaker19_unnamed_xFont_cpp_Fb
+xFont.log_cache__Q27tweaker19_unnamed_xFont_cpp_Fb:
 /* 8002262C 0001F42C  4E 80 00 20 */	blr 
 
 .global temp_layout__8xtextboxCFb
@@ -2758,7 +2758,7 @@ lbl_800226BC:
 /* 800226C4 0001F4C4  7C 00 00 34 */	cntlzw r0, r0
 /* 800226C8 0001F4C8  7C 60 00 30 */	slw r0, r3, r0
 /* 800226CC 0001F4CC  54 03 0F FE */	srwi r3, r0, 0x1f
-/* 800226D0 0001F4D0  4B FF FF 5D */	bl func_8002262C
+/* 800226D0 0001F4D0  4B FF FF 5D */	bl xFont.log_cache__Q27tweaker19_unnamed_xFont_cpp_Fb
 /* 800226D4 0001F4D4  28 1A 00 01 */	cmplwi r26, 1
 /* 800226D8 0001F4D8  41 80 00 88 */	blt lbl_80022760
 /* 800226DC 0001F4DC  3C 60 80 2C */	lis r3, lbl_802BEDA0@ha
@@ -3716,7 +3716,7 @@ lbl_800233CC:
 /* 800233D0 000201D0  28 00 00 00 */	cmplwi r0, 0
 /* 800233D4 000201D4  41 82 03 90 */	beq lbl_80023764
 /* 800233D8 000201D8  7E C3 B3 78 */	mr r3, r22
-/* 800233DC 000201DC  4B FF F0 45 */	bl func_80022420
+/* 800233DC 000201DC  4B FF F0 45 */	bl xFont.start_layout__19_unnamed_xFont_cpp_FRC8xtextbox
 /* 800233E0 000201E0  3C 75 00 01 */	addis r3, r21, 1
 /* 800233E4 000201E4  38 00 00 00 */	li r0, 0
 /* 800233E8 000201E8  80 63 88 6C */	lwz r3, -0x7794(r3)
@@ -3829,7 +3829,7 @@ lbl_80023568:
 /* 80023570 00020370  7E C5 B3 78 */	mr r5, r22
 /* 80023574 00020374  7F 66 DB 78 */	mr r6, r27
 /* 80023578 00020378  7C FB D0 50 */	subf r7, r27, r26
-/* 8002357C 0002037C  4B FF E6 95 */	bl func_80021C10
+/* 8002357C 0002037C  4B FF E6 95 */	bl xFont.parse_next_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
 /* 80023580 00020380  3C B5 00 01 */	addis r5, r21, 1
 /* 80023584 00020384  7C 79 1B 78 */	mr r25, r3
 /* 80023588 00020388  80 85 8C 70 */	lwz r4, -0x7390(r5)
@@ -3960,7 +3960,7 @@ lbl_80023750:
 /* 80023754 00020554  7C 06 00 40 */	cmplw r6, r0
 /* 80023758 00020558  41 80 FF C8 */	blt lbl_80023720
 /* 8002375C 0002055C  7E C3 B3 78 */	mr r3, r22
-/* 80023760 00020560  4B FF EC F5 */	bl func_80022454
+/* 80023760 00020560  4B FF EC F5 */	bl xFont.stop_layout__19_unnamed_xFont_cpp_FRC8xtextbox
 lbl_80023764:
 /* 80023764 00020564  BA A1 00 94 */	lmw r21, 0x94(r1)
 /* 80023768 00020568  80 01 00 C4 */	lwz r0, 0xc4(r1)
@@ -4005,7 +4005,7 @@ lbl_800237D8:
 /* 800237E4 000205E4  7F A4 EB 78 */	mr r4, r29
 /* 800237E8 000205E8  4B FF EF F5 */	bl func_800227DC
 /* 800237EC 000205EC  7F A3 EB 78 */	mr r3, r29
-/* 800237F0 000205F0  4B FF EC 69 */	bl func_80022458
+/* 800237F0 000205F0  4B FF EC 69 */	bl xFont.start_render__19_unnamed_xFont_cpp_FRC8xtextbox
 /* 800237F4 000205F4  3C 7C 00 01 */	addis r3, r28, 1
 /* 800237F8 000205F8  7F 84 E3 78 */	mr r4, r28
 /* 800237FC 000205FC  80 63 88 6C */	lwz r3, -0x7794(r3)
@@ -4014,7 +4014,7 @@ lbl_80023804:
 /* 80023804 00020604  7C 1A 18 00 */	cmpw r26, r3
 /* 80023808 00020608  41 80 00 10 */	blt lbl_80023818
 /* 8002380C 0002060C  7F A3 EB 78 */	mr r3, r29
-/* 80023810 00020610  4B FF EC 69 */	bl func_80022478
+/* 80023810 00020610  4B FF EC 69 */	bl xFont.stop_render__19_unnamed_xFont_cpp_FRC8xtextbox
 /* 80023814 00020614  48 00 01 A8 */	b lbl_800239BC
 lbl_80023818:
 /* 80023818 00020618  80 04 78 84 */	lwz r0, 0x7884(r4)
@@ -4132,7 +4132,7 @@ lbl_800239AC:
 /* 800239AC 000207AC  7C 1F F0 00 */	cmpw r31, r30
 /* 800239B0 000207B0  41 80 FE F4 */	blt lbl_800238A4
 /* 800239B4 000207B4  7F A3 EB 78 */	mr r3, r29
-/* 800239B8 000207B8  4B FF EA C1 */	bl func_80022478
+/* 800239B8 000207B8  4B FF EA C1 */	bl xFont.stop_render__19_unnamed_xFont_cpp_FRC8xtextbox
 lbl_800239BC:
 /* 800239BC 000207BC  E3 E1 00 58 */	psq_l f31, 88(r1), 0, qr0
 /* 800239C0 000207C0  CB E1 00 50 */	lfd f31, 0x50(r1)
@@ -4296,7 +4296,7 @@ lbl_80023BB4:
 /* 80023BE8 000209E8  7F 43 D3 78 */	mr r3, r26
 /* 80023BEC 000209EC  7F C4 F3 78 */	mr r4, r30
 /* 80023BF0 000209F0  7F E5 FB 78 */	mr r5, r31
-/* 80023BF4 000209F4  4B FF E0 1D */	bl func_80021C10
+/* 80023BF4 000209F4  4B FF E0 1D */	bl xFont.parse_next_jot__19_unnamed_xFont_cpp_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUl
 /* 80023BF8 000209F8  80 7A 00 10 */	lwz r3, 0x10(r26)
 /* 80023BFC 000209FC  A0 9A 00 0C */	lhz r4, 0xc(r26)
 /* 80023C00 00020A00  48 02 86 51 */	bl xStrHash__FPCcUl
@@ -5885,7 +5885,7 @@ lbl_8002528C:
 /* 800252D8 000220D8  88 9E 00 13 */	lbz r4, 0x13(r30)
 /* 800252DC 000220DC  80 7F 00 00 */	lwz r3, 0(r31)
 /* 800252E0 000220E0  48 00 FA 71 */	bl xModelSetMaterialAlpha__FP14xModelInstanceUc
-/* 800252E4 000220E4  4B FF B6 AD */	bl func_80020990
+/* 800252E4 000220E4  4B FF B6 AD */	bl xFont.tex_flush__19_unnamed_xFont_cpp_Fv
 /* 800252E8 000220E8  38 60 00 07 */	li r3, 7
 /* 800252EC 000220EC  38 80 00 02 */	li r4, 2
 /* 800252F0 000220F0  48 20 A4 ED */	bl RwRenderStateSet
@@ -5929,7 +5929,7 @@ lbl_8002528C:
 /* 80025388 00022188  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8002538C 0002218C  7C 9D 23 78 */	mr r29, r4
 /* 80025390 00022190  7C C4 33 78 */	mr r4, r6
-/* 80025394 00022194  4B FF CE 65 */	bl func_800221F8
+/* 80025394 00022194  4B FF CE 65 */	bl xFont.load_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_argsRC6substr
 /* 80025398 00022198  3C 60 80 2C */	lis r3, 0x802c
 /* 8002539C 0002219C  84 03 ED 70 */	lwzu r0, -0x1290(r3)
 /* 800253A0 000221A0  28 00 00 00 */	cmplwi r0, 0
@@ -6012,7 +6012,7 @@ lbl_800254A0:
 /* 800254C4 000222C4  3C 60 80 2C */	lis r3, lbl_802BED70@ha
 /* 800254C8 000222C8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800254CC 000222CC  38 63 ED 70 */	addi r3, r3, lbl_802BED70@l
-/* 800254D0 000222D0  4B FF CC C5 */	bl func_80022194
+/* 800254D0 000222D0  4B FF CC C5 */	bl xFont.reset_model_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_10model_args
 /* 800254D4 000222D4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800254D8 000222D8  7C 08 03 A6 */	mtlr r0
 /* 800254DC 000222DC  38 21 00 10 */	addi r1, r1, 0x10
@@ -6029,7 +6029,7 @@ lbl_800254A0:
 /* 80025508 00022308  93 C1 00 28 */	stw r30, 0x28(r1)
 /* 8002550C 0002230C  7C 9E 23 78 */	mr r30, r4
 /* 80025510 00022310  80 7F 00 00 */	lwz r3, 0(r31)
-/* 80025514 00022314  4B FF C1 0D */	bl func_80021620
+/* 80025514 00022314  4B FF C1 0D */	bl xFont.set_tex_raster__19_unnamed_xFont_cpp_FP8RwRaster
 /* 80025518 00022318  80 9F 00 18 */	lwz r4, 0x18(r31)
 /* 8002551C 0002231C  FC 20 F0 90 */	fmr f1, f30
 /* 80025520 00022320  80 1F 00 1C */	lwz r0, 0x1c(r31)
@@ -6048,7 +6048,7 @@ lbl_800254A0:
 /* 80025554 00022354  38 BE 00 14 */	addi r5, r30, 0x14
 /* 80025558 00022358  90 01 00 08 */	stw r0, 8(r1)
 /* 8002555C 0002235C  38 C1 00 08 */	addi r6, r1, 8
-/* 80025560 00022360  4B FF B4 95 */	bl func_800209F4
+/* 80025560 00022360  4B FF B4 95 */	bl xFont.tex_render__19_unnamed_xFont_cpp_FRC13basic_rect_f_RC13basic_rect_f_RC13basic_rect_f_10iColor_tag
 /* 80025564 00022364  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 80025568 00022368  CB E1 00 38 */	lfd f31, 0x38(r1)
 /* 8002556C 0002236C  CB C1 00 30 */	lfd f30, 0x30(r1)
@@ -6069,7 +6069,7 @@ lbl_800254A0:
 /* 800255A8 000223A8  93 A1 00 44 */	stw r29, 0x44(r1)
 /* 800255AC 000223AC  7C 9D 23 78 */	mr r29, r4
 /* 800255B0 000223B0  7C C4 33 78 */	mr r4, r6
-/* 800255B4 000223B4  4B FF C7 59 */	bl func_80021D0C
+/* 800255B4 000223B4  4B FF C7 59 */	bl xFont.load_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_argsRC6substr
 /* 800255B8 000223B8  3C 60 80 2C */	lis r3, lbl_802BED3C@ha
 /* 800255BC 000223BC  38 A3 ED 3C */	addi r5, r3, lbl_802BED3C@l
 /* 800255C0 000223C0  80 05 00 00 */	lwz r0, 0(r5)
@@ -6124,7 +6124,7 @@ lbl_8002566C:
 /* 8002567C 0002247C  48 00 01 24 */	b lbl_800257A0
 lbl_80025680:
 /* 80025680 00022480  80 7E 00 00 */	lwz r3, 0(r30)
-/* 80025684 00022484  48 00 01 89 */	bl func_8002580C
+/* 80025684 00022484  48 00 01 89 */	bl xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster
 /* 80025688 00022488  90 81 00 2C */	stw r4, 0x2c(r1)
 /* 8002568C 0002248C  38 81 00 28 */	addi r4, r1, 0x28
 /* 80025690 00022490  90 61 00 28 */	stw r3, 0x28(r1)
@@ -6133,7 +6133,7 @@ lbl_80025680:
 /* 8002569C 0002249C  48 00 01 04 */	b lbl_800257A0
 lbl_800256A0:
 /* 800256A0 000224A0  80 7E 00 00 */	lwz r3, 0(r30)
-/* 800256A4 000224A4  48 00 01 69 */	bl func_8002580C
+/* 800256A4 000224A4  48 00 01 69 */	bl xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster
 /* 800256A8 000224A8  90 81 00 24 */	stw r4, 0x24(r1)
 /* 800256AC 000224AC  38 81 00 20 */	addi r4, r1, 0x20
 /* 800256B0 000224B0  90 61 00 20 */	stw r3, 0x20(r1)
@@ -6149,7 +6149,7 @@ lbl_800256A0:
 /* 800256D8 000224D8  48 00 00 C8 */	b lbl_800257A0
 lbl_800256DC:
 /* 800256DC 000224DC  80 7E 00 00 */	lwz r3, 0(r30)
-/* 800256E0 000224E0  48 00 01 2D */	bl func_8002580C
+/* 800256E0 000224E0  48 00 01 2D */	bl xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster
 /* 800256E4 000224E4  90 81 00 1C */	stw r4, 0x1c(r1)
 /* 800256E8 000224E8  38 81 00 18 */	addi r4, r1, 0x18
 /* 800256EC 000224EC  90 61 00 18 */	stw r3, 0x18(r1)
@@ -6165,7 +6165,7 @@ lbl_800256DC:
 /* 80025714 00022514  48 00 00 8C */	b lbl_800257A0
 lbl_80025718:
 /* 80025718 00022518  80 7E 00 00 */	lwz r3, 0(r30)
-/* 8002571C 0002251C  48 00 00 F1 */	bl func_8002580C
+/* 8002571C 0002251C  48 00 00 F1 */	bl xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster
 /* 80025720 00022520  90 81 00 14 */	stw r4, 0x14(r1)
 /* 80025724 00022524  38 81 00 10 */	addi r4, r1, 0x10
 /* 80025728 00022528  90 61 00 10 */	stw r3, 0x10(r1)
@@ -6181,7 +6181,7 @@ lbl_80025718:
 /* 80025750 00022550  48 00 00 50 */	b lbl_800257A0
 lbl_80025754:
 /* 80025754 00022554  80 7E 00 00 */	lwz r3, 0(r30)
-/* 80025758 00022558  48 00 00 B5 */	bl func_8002580C
+/* 80025758 00022558  48 00 00 B5 */	bl xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster
 /* 8002575C 0002255C  90 81 00 0C */	stw r4, 0xc(r1)
 /* 80025760 00022560  38 81 00 08 */	addi r4, r1, 8
 /* 80025764 00022564  90 61 00 08 */	stw r3, 8(r1)
@@ -6233,8 +6233,8 @@ func_800257F8:
 /* 80025804 00022604  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80025808 00022608  4E 80 00 20 */	blr 
 
-.global func_8002580C
-func_8002580C:
+.global xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster
+xFont.get_texture_size__19_unnamed_xFont_cpp_FR8RwRaster:
 /* 8002580C 0002260C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80025810 00022610  3C 80 43 30 */	lis r4, 0x4330
 /* 80025814 00022614  80 03 00 10 */	lwz r0, 0x10(r3)
@@ -6269,7 +6269,7 @@ func_8002580C:
 /* 80025888 00022688  3C 60 80 2C */	lis r3, lbl_802BED3C@ha
 /* 8002588C 0002268C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80025890 00022690  38 63 ED 3C */	addi r3, r3, lbl_802BED3C@l
-/* 80025894 00022694  4B FF C4 11 */	bl func_80021CA4
+/* 80025894 00022694  4B FF C4 11 */	bl xFont.reset_tex_args__19_unnamed_xFont_cpp_FRQ219_unnamed_xFont_cpp_8tex_args
 /* 80025898 00022698  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8002589C 0002269C  7C 08 03 A6 */	mtlr r0
 /* 800258A0 000226A0  38 21 00 10 */	addi r1, r1, 0x10
@@ -6668,7 +6668,7 @@ render_fill_rect__FRC13basic_rect_f_10iColor_tag:
 /* 80025E38 00022C38  C0 61 00 14 */	lfs f3, 0x14(r1)
 /* 80025E3C 00022C3C  C0 81 00 18 */	lfs f4, 0x18(r1)
 /* 80025E40 00022C40  38 81 00 08 */	addi r4, r1, 8
-/* 80025E44 00022C44  48 00 00 41 */	bl func_80025E84
+/* 80025E44 00022C44  48 00 00 41 */	bl xFont.set_rect_verts__19_unnamed_xFont_cpp_FP18rwGameCube2DVertexffff10iColor_tagff
 /* 80025E48 00022C48  38 81 00 1C */	addi r4, r1, 0x1c
 /* 80025E4C 00022C4C  38 60 00 04 */	li r3, 4
 /* 80025E50 00022C50  38 A0 00 04 */	li r5, 4
@@ -6686,8 +6686,8 @@ lbl_80025E5C:
 /* 80025E7C 00022C7C  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 80025E80 00022C80  4E 80 00 20 */	blr 
 
-.global func_80025E84
-func_80025E84:
+.global xFont.set_rect_verts__19_unnamed_xFont_cpp_FP18rwGameCube2DVertexffff10iColor_tagff
+xFont.set_rect_verts__19_unnamed_xFont_cpp_FP18rwGameCube2DVertexffff10iColor_tagff:
 /* 80025E84 00022C84  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80025E88 00022C88  7C 08 02 A6 */	mflr r0
 /* 80025E8C 00022C8C  90 01 00 94 */	stw r0, 0x94(r1)
@@ -6720,7 +6720,7 @@ func_80025E84:
 /* 80025EF8 00022CF8  FF 40 10 90 */	fmr f26, f2
 /* 80025EFC 00022CFC  FC 60 E8 90 */	fmr f3, f29
 /* 80025F00 00022D00  FC 80 E0 90 */	fmr f4, f28
-/* 80025F04 00022D04  48 00 00 C9 */	bl func_80025FCC
+/* 80025F04 00022D04  48 00 00 C9 */	bl xFont.set_rect_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 80025F08 00022D08  EF FA F0 2A */	fadds f31, f26, f30
 /* 80025F0C 00022D0C  80 1F 00 00 */	lwz r0, 0(r31)
 /* 80025F10 00022D10  FC 20 C8 90 */	fmr f1, f25
@@ -6730,7 +6730,7 @@ func_80025E84:
 /* 80025F20 00022D20  FC 40 F8 90 */	fmr f2, f31
 /* 80025F24 00022D24  38 81 00 10 */	addi r4, r1, 0x10
 /* 80025F28 00022D28  FC 80 E0 90 */	fmr f4, f28
-/* 80025F2C 00022D2C  48 00 00 A1 */	bl func_80025FCC
+/* 80025F2C 00022D2C  48 00 00 A1 */	bl xFont.set_rect_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 80025F30 00022D30  EF D9 D8 2A */	fadds f30, f25, f27
 /* 80025F34 00022D34  80 1F 00 00 */	lwz r0, 0(r31)
 /* 80025F38 00022D38  FC 40 D0 90 */	fmr f2, f26
@@ -6740,7 +6740,7 @@ func_80025E84:
 /* 80025F48 00022D48  FC 20 F0 90 */	fmr f1, f30
 /* 80025F4C 00022D4C  38 81 00 0C */	addi r4, r1, 0xc
 /* 80025F50 00022D50  FC 80 E0 90 */	fmr f4, f28
-/* 80025F54 00022D54  48 00 00 79 */	bl func_80025FCC
+/* 80025F54 00022D54  48 00 00 79 */	bl xFont.set_rect_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 80025F58 00022D58  80 1F 00 00 */	lwz r0, 0(r31)
 /* 80025F5C 00022D5C  FC 20 F0 90 */	fmr f1, f30
 /* 80025F60 00022D60  FC 40 F8 90 */	fmr f2, f31
@@ -6749,7 +6749,7 @@ func_80025E84:
 /* 80025F6C 00022D6C  90 01 00 08 */	stw r0, 8(r1)
 /* 80025F70 00022D70  FC 80 E0 90 */	fmr f4, f28
 /* 80025F74 00022D74  38 81 00 08 */	addi r4, r1, 8
-/* 80025F78 00022D78  48 00 00 55 */	bl func_80025FCC
+/* 80025F78 00022D78  48 00 00 55 */	bl xFont.set_rect_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 80025F7C 00022D7C  E3 E1 00 88 */	psq_l f31, 136(r1), 0, qr0
 /* 80025F80 00022D80  CB E1 00 80 */	lfd f31, 0x80(r1)
 /* 80025F84 00022D84  E3 C1 00 78 */	psq_l f30, 120(r1), 0, qr0
@@ -6771,8 +6771,8 @@ func_80025E84:
 /* 80025FC4 00022DC4  38 21 00 90 */	addi r1, r1, 0x90
 /* 80025FC8 00022DC8  4E 80 00 20 */	blr 
 
-.global func_80025FCC
-func_80025FCC:
+.global xFont.set_rect_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
+xFont.set_rect_vert__19_unnamed_xFont_cpp_FR18rwGameCube2DVertexfff10iColor_tagf:
 /* 80025FCC 00022DCC  D0 23 00 00 */	stfs f1, 0(r3)
 /* 80025FD0 00022DD0  D0 43 00 04 */	stfs f2, 4(r3)
 /* 80025FD4 00022DD4  D0 63 00 08 */	stfs f3, 8(r3)

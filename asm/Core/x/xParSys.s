@@ -2,8 +2,8 @@
 
 .section .text  # 0x801168EC - 0x80117690
 
-.global func_801168EC
-func_801168EC:
+.global xParSys.par_sprite_begin__Fv
+xParSys.par_sprite_begin__Fv:
 /* 801168EC 001136EC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801168F0 001136F0  7C 08 02 A6 */	mflr r0
 /* 801168F4 001136F4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -32,8 +32,8 @@ func_801168EC:
 /* 80116950 00113750  38 21 00 20 */	addi r1, r1, 0x20
 /* 80116954 00113754  4E 80 00 20 */	blr 
 
-.global func_80116958
-func_80116958:
+.global xParSys.par_sprite_update__FR7xParSysR9xParGroup
+xParSys.par_sprite_update__FR7xParSysR9xParGroup:
 /* 80116958 00113758  94 21 FF 30 */	stwu r1, -0xd0(r1)
 /* 8011695C 0011375C  7C 08 02 A6 */	mflr r0
 /* 80116960 00113760  90 01 00 D4 */	stw r0, 0xd4(r1)
@@ -616,7 +616,7 @@ xParSysUpdate__FP5xBaseP6xScenef:
 /* 8011718C 00113F8C  88 03 00 18 */	lbz r0, 0x18(r3)
 /* 80117190 00113F90  28 00 00 00 */	cmplwi r0, 0
 /* 80117194 00113F94  40 82 00 08 */	bne lbl_8011719C
-/* 80117198 00113F98  4B FF F7 55 */	bl func_801168EC
+/* 80117198 00113F98  4B FF F7 55 */	bl xParSys.par_sprite_begin__Fv
 lbl_8011719C:
 /* 8011719C 00113F9C  83 BF 00 20 */	lwz r29, 0x20(r31)
 /* 801171A0 00113FA0  48 00 00 7C */	b lbl_8011721C
@@ -629,7 +629,7 @@ lbl_801171A4:
 /* 801171B8 00113FB8  FC 20 F8 90 */	fmr f1, f31
 /* 801171BC 00113FBC  7F C3 F3 78 */	mr r3, r30
 /* 801171C0 00113FC0  7F A4 EB 78 */	mr r4, r29
-/* 801171C4 00113FC4  48 00 00 81 */	bl func_80117244
+/* 801171C4 00113FC4  48 00 00 81 */	bl xParSys.xParGroupUpdateR__FP7xParSysP9xParGroupf
 lbl_801171C8:
 /* 801171C8 00113FC8  88 1D 00 0C */	lbz r0, 0xc(r29)
 /* 801171CC 00113FCC  28 00 00 00 */	cmplwi r0, 0
@@ -637,7 +637,7 @@ lbl_801171C8:
 /* 801171D4 00113FD4  FC 20 F8 90 */	fmr f1, f31
 /* 801171D8 00113FD8  7F E3 FB 78 */	mr r3, r31
 /* 801171DC 00113FDC  7F A4 EB 78 */	mr r4, r29
-/* 801171E0 00113FE0  48 00 01 1D */	bl func_801172FC
+/* 801171E0 00113FE0  48 00 01 1D */	bl xParSys.xParGroupUpdate__FP7xParSysP9xParGroupf
 lbl_801171E4:
 /* 801171E4 00113FE4  FC 20 F8 90 */	fmr f1, f31
 /* 801171E8 00113FE8  7F A3 EB 78 */	mr r3, r29
@@ -651,7 +651,7 @@ lbl_801171E4:
 /* 80117208 00114008  40 82 00 10 */	bne lbl_80117218
 /* 8011720C 0011400C  7F E3 FB 78 */	mr r3, r31
 /* 80117210 00114010  7F A4 EB 78 */	mr r4, r29
-/* 80117214 00114014  4B FF F7 45 */	bl func_80116958
+/* 80117214 00114014  4B FF F7 45 */	bl xParSys.par_sprite_update__FR7xParSysR9xParGroup
 lbl_80117218:
 /* 80117218 00114018  83 BD 00 14 */	lwz r29, 0x14(r29)
 lbl_8011721C:
@@ -666,8 +666,8 @@ lbl_8011721C:
 /* 8011723C 0011403C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80117240 00114040  4E 80 00 20 */	blr 
 
-.global func_80117244
-func_80117244:
+.global xParSys.xParGroupUpdateR__FP7xParSysP9xParGroupf
+xParSys.xParGroupUpdateR__FP7xParSysP9xParGroupf:
 /* 80117244 00114044  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80117248 00114048  7C 08 02 A6 */	mflr r0
 /* 8011724C 0011404C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -679,7 +679,7 @@ func_80117244:
 /* 80117264 00114064  80 63 00 1C */	lwz r3, 0x1c(r3)
 /* 80117268 00114068  28 03 00 00 */	cmplwi r3, 0
 /* 8011726C 0011406C  41 82 00 08 */	beq lbl_80117274
-/* 80117270 00114070  4B FF FF D5 */	bl func_80117244
+/* 80117270 00114070  4B FF FF D5 */	bl xParSys.xParGroupUpdateR__FP7xParSysP9xParGroupf
 lbl_80117274:
 /* 80117274 00114074  80 7B 00 20 */	lwz r3, 0x20(r27)
 /* 80117278 00114078  88 03 00 0E */	lbz r0, 0xe(r3)
@@ -720,8 +720,8 @@ lbl_801172E4:
 /* 801172F4 001140F4  38 21 00 30 */	addi r1, r1, 0x30
 /* 801172F8 001140F8  4E 80 00 20 */	blr 
 
-.global func_801172FC
-func_801172FC:
+.global xParSys.xParGroupUpdate__FP7xParSysP9xParGroupf
+xParSys.xParGroupUpdate__FP7xParSysP9xParGroupf:
 /* 801172FC 001140FC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80117300 00114100  7C 08 02 A6 */	mflr r0
 /* 80117304 00114104  90 01 00 34 */	stw r0, 0x34(r1)

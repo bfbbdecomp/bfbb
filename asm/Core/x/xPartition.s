@@ -6,8 +6,8 @@
 xPartitionReset__Fv:
 /* 80038B98 00035998  4E 80 00 20 */	blr 
 
-.global func_80038B9C
-func_80038B9C:
+.global xPartition.PartitionGetFreeLink__Fv
+xPartition.PartitionGetFreeLink__Fv:
 /* 80038B9C 0003599C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80038BA0 000359A0  7C 08 02 A6 */	mflr r0
 /* 80038BA4 000359A4  38 80 00 08 */	li r4, 8
@@ -20,8 +20,8 @@ func_80038B9C:
 /* 80038BC0 000359C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80038BC4 000359C4  4E 80 00 20 */	blr 
 
-.global func_80038BC8
-func_80038BC8:
+.global xPartition.PartitionSpaceReset__FP13_tagPartSpace
+xPartition.PartitionSpaceReset__FP13_tagPartSpace:
 /* 80038BC8 000359C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80038BCC 000359CC  7C 08 02 A6 */	mflr r0
 /* 80038BD0 000359D0  38 80 00 00 */	li r4, 0
@@ -33,8 +33,8 @@ func_80038BC8:
 /* 80038BE8 000359E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80038BEC 000359EC  4E 80 00 20 */	blr 
 
-.global func_80038BF0
-func_80038BF0:
+.global xPartition.PartitionSpaceInsert__FP13_tagPartSpacePv
+xPartition.PartitionSpaceInsert__FP13_tagPartSpacePv:
 /* 80038BF0 000359F0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80038BF4 000359F4  7C 08 02 A6 */	mflr r0
 /* 80038BF8 000359F8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -52,7 +52,7 @@ lbl_80038C20:
 /* 80038C20 00035A20  80 1F 00 04 */	lwz r0, 4(r31)
 /* 80038C24 00035A24  28 00 00 00 */	cmplwi r0, 0
 /* 80038C28 00035A28  40 82 FF F4 */	bne lbl_80038C1C
-/* 80038C2C 00035A2C  4B FF FF 71 */	bl func_80038B9C
+/* 80038C2C 00035A2C  4B FF FF 71 */	bl xPartition.PartitionGetFreeLink__Fv
 /* 80038C30 00035A30  90 7F 00 04 */	stw r3, 4(r31)
 /* 80038C34 00035A34  38 00 00 00 */	li r0, 0
 /* 80038C38 00035A38  80 7F 00 04 */	lwz r3, 4(r31)
@@ -167,7 +167,7 @@ lbl_80038DB4:
 /* 80038DC8 00035BC8  1C 03 00 0C */	mulli r0, r3, 0xc
 /* 80038DCC 00035BCC  80 7C 00 30 */	lwz r3, 0x30(r28)
 /* 80038DD0 00035BD0  7C 63 02 14 */	add r3, r3, r0
-/* 80038DD4 00035BD4  4B FF FD F5 */	bl func_80038BC8
+/* 80038DD4 00035BD4  4B FF FD F5 */	bl xPartition.PartitionSpaceReset__FP13_tagPartSpace
 /* 80038DD8 00035BD8  3B 39 00 01 */	addi r25, r25, 1
 lbl_80038DDC:
 /* 80038DDC 00035BDC  7C 19 E8 00 */	cmpw r25, r29
@@ -181,7 +181,7 @@ lbl_80038DF4:
 /* 80038DF4 00035BF4  7C 1B F8 00 */	cmpw r27, r31
 /* 80038DF8 00035BF8  41 80 FF AC */	blt lbl_80038DA4
 /* 80038DFC 00035BFC  38 7C 00 34 */	addi r3, r28, 0x34
-/* 80038E00 00035C00  4B FF FD C9 */	bl func_80038BC8
+/* 80038E00 00035C00  4B FF FD C9 */	bl xPartition.PartitionSpaceReset__FP13_tagPartSpace
 /* 80038E04 00035C04  BB 21 00 24 */	lmw r25, 0x24(r1)
 /* 80038E08 00035C08  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 80038E0C 00035C0C  7C 08 03 A6 */	mtlr r0
@@ -279,7 +279,7 @@ lbl_80038F50:
 /* 80038F64 00035D64  1C 03 00 0C */	mulli r0, r3, 0xc
 /* 80038F68 00035D68  80 7C 00 30 */	lwz r3, 0x30(r28)
 /* 80038F6C 00035D6C  7C 63 02 14 */	add r3, r3, r0
-/* 80038F70 00035D70  4B FF FC 59 */	bl func_80038BC8
+/* 80038F70 00035D70  4B FF FC 59 */	bl xPartition.PartitionSpaceReset__FP13_tagPartSpace
 /* 80038F74 00035D74  3B 39 00 01 */	addi r25, r25, 1
 lbl_80038F78:
 /* 80038F78 00035D78  7C 19 E8 00 */	cmpw r25, r29
@@ -293,7 +293,7 @@ lbl_80038F90:
 /* 80038F90 00035D90  7C 1B F8 00 */	cmpw r27, r31
 /* 80038F94 00035D94  41 80 FF AC */	blt lbl_80038F40
 /* 80038F98 00035D98  38 7C 00 34 */	addi r3, r28, 0x34
-/* 80038F9C 00035D9C  4B FF FC 2D */	bl func_80038BC8
+/* 80038F9C 00035D9C  4B FF FC 2D */	bl xPartition.PartitionSpaceReset__FP13_tagPartSpace
 /* 80038FA0 00035DA0  BB 21 00 24 */	lmw r25, 0x24(r1)
 /* 80038FA4 00035DA4  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 80038FA8 00035DA8  7C 08 03 A6 */	mtlr r0
@@ -333,7 +333,7 @@ xPartitionInsert__FP13_tagPartitionPvP5xVec3:
 lbl_80039024:
 /* 80039024 00035E24  7F C4 F3 78 */	mr r4, r30
 /* 80039028 00035E28  38 7F 00 34 */	addi r3, r31, 0x34
-/* 8003902C 00035E2C  4B FF FB C5 */	bl func_80038BF0
+/* 8003902C 00035E2C  4B FF FB C5 */	bl xPartition.PartitionSpaceInsert__FP13_tagPartSpacePv
 /* 80039030 00035E30  38 60 FF FF */	li r3, -1
 /* 80039034 00035E34  48 00 00 6C */	b lbl_800390A0
 lbl_80039038:
@@ -361,7 +361,7 @@ lbl_80039038:
 /* 8003908C 00035E8C  1C 1F 00 0C */	mulli r0, r31, 0xc
 /* 80039090 00035E90  7F C4 F3 78 */	mr r4, r30
 /* 80039094 00035E94  7C 65 02 14 */	add r3, r5, r0
-/* 80039098 00035E98  4B FF FB 59 */	bl func_80038BF0
+/* 80039098 00035E98  4B FF FB 59 */	bl xPartition.PartitionSpaceInsert__FP13_tagPartSpacePv
 /* 8003909C 00035E9C  7F E3 FB 78 */	mr r3, r31
 lbl_800390A0:
 /* 800390A0 00035EA0  80 01 00 34 */	lwz r0, 0x34(r1)

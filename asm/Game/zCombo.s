@@ -2,8 +2,8 @@
 
 .section .text  # 0x8019590C - 0x80195FE8
 
-.global func_8019590C
-func_8019590C:
+.global zCombo.fillCombo__FP12zComboReward
+zCombo.fillCombo__FP12zComboReward:
 /* 8019590C 0019270C  3C 80 80 3C */	lis r4, lbl_803C0558@ha
 /* 80195910 00192710  80 E3 00 00 */	lwz r7, 0(r3)
 /* 80195914 00192714  38 C4 05 58 */	addi r6, r4, lbl_803C0558@l
@@ -154,7 +154,7 @@ lbl_80195A70:
 /* 80195B2C 0019292C  D0 0D 84 C8 */	stfs f0, lbl_803CADC8-_SDA_BASE_(r13)
 lbl_80195B30:
 /* 80195B30 00192930  7F E3 FB 78 */	mr r3, r31
-/* 80195B34 00192934  4B FF FD D9 */	bl func_8019590C
+/* 80195B34 00192934  4B FF FD D9 */	bl zCombo.fillCombo__FP12zComboReward
 /* 80195B38 00192938  3B DE 00 01 */	addi r30, r30, 1
 /* 80195B3C 0019293C  3B FF 00 38 */	addi r31, r31, 0x38
 /* 80195B40 00192940  2C 1E 00 10 */	cmpwi r30, 0x10

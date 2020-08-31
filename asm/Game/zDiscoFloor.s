@@ -2,8 +2,8 @@
 
 .section .text  # 0x8013AF64 - 0x8013D054
 
-.global func_8013AF64
-func_8013AF64:
+.global zDiscoFloor.create_glow_light__25_unnamed_zDiscoFloor_cpp_Fv
+zDiscoFloor.create_glow_light__25_unnamed_zDiscoFloor_cpp_Fv:
 /* 8013AF64 00137D64  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013AF68 00137D68  7C 08 02 A6 */	mflr r0
 /* 8013AF6C 00137D6C  3C 60 80 32 */	lis r3, lbl_80327D30@ha
@@ -33,8 +33,8 @@ func_8013AF64:
 /* 8013AFCC 00137DCC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013AFD0 00137DD0  4E 80 00 20 */	blr 
 
-.global func_8013AFD4
-func_8013AFD4:
+.global zDiscoFloor.destroy_glow_light__25_unnamed_zDiscoFloor_cpp_Fv
+zDiscoFloor.destroy_glow_light__25_unnamed_zDiscoFloor_cpp_Fv:
 /* 8013AFD4 00137DD4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013AFD8 00137DD8  7C 08 02 A6 */	mflr r0
 /* 8013AFDC 00137DDC  3C 60 80 32 */	lis r3, lbl_80327D30@ha
@@ -46,8 +46,8 @@ func_8013AFD4:
 /* 8013AFF4 00137DF4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013AFF8 00137DF8  4E 80 00 20 */	blr 
 
-.global func_8013AFFC
-func_8013AFFC:
+.global zDiscoFloor.object_prefix__25_unnamed_zDiscoFloor_cpp_FPCcRUlRUl
+zDiscoFloor.object_prefix__25_unnamed_zDiscoFloor_cpp_FPCcRUlRUl:
 /* 8013AFFC 00137DFC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013B000 00137E00  7C 08 02 A6 */	mflr r0
 /* 8013B004 00137E04  90 01 00 24 */	stw r0, 0x24(r1)
@@ -98,8 +98,8 @@ lbl_8013B094:
 /* 8013B0A8 00137EA8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013B0AC 00137EAC  4E 80 00 20 */	blr 
 
-.global func_8013B0B0
-func_8013B0B0:
+.global zDiscoFloor.find_object__25_unnamed_zDiscoFloor_cpp_FPCc
+zDiscoFloor.find_object__25_unnamed_zDiscoFloor_cpp_FPCc:
 /* 8013B0B0 00137EB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013B0B4 00137EB4  7C 08 02 A6 */	mflr r0
 /* 8013B0B8 00137EB8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -114,8 +114,8 @@ lbl_8013B0D0:
 /* 8013B0D8 00137ED8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013B0DC 00137EDC  4E 80 00 20 */	blr 
 
-.global func_8013B0E0
-func_8013B0E0:
+.global zDiscoFloor.find_tiles__25_unnamed_zDiscoFloor_cpp_FPCcPQ213z_disco_floor9tile_dataUl
+zDiscoFloor.find_tiles__25_unnamed_zDiscoFloor_cpp_FPCcPQ213z_disco_floor9tile_dataUl:
 /* 8013B0E0 00137EE0  94 21 FE D0 */	stwu r1, -0x130(r1)
 /* 8013B0E4 00137EE4  7C 08 02 A6 */	mflr r0
 /* 8013B0E8 00137EE8  90 01 01 34 */	stw r0, 0x134(r1)
@@ -125,7 +125,7 @@ func_8013B0E0:
 /* 8013B0F8 00137EF8  7C 7B 1B 78 */	mr r27, r3
 /* 8013B0FC 00137EFC  38 81 00 0C */	addi r4, r1, 0xc
 /* 8013B100 00137F00  38 A1 00 08 */	addi r5, r1, 8
-/* 8013B104 00137F04  4B FF FE F9 */	bl func_8013AFFC
+/* 8013B104 00137F04  4B FF FE F9 */	bl zDiscoFloor.object_prefix__25_unnamed_zDiscoFloor_cpp_FPCcRUlRUl
 /* 8013B108 00137F08  80 A1 00 0C */	lwz r5, 0xc(r1)
 /* 8013B10C 00137F0C  7F 64 DB 78 */	mr r4, r27
 /* 8013B110 00137F10  38 61 00 10 */	addi r3, r1, 0x10
@@ -156,7 +156,7 @@ lbl_8013B150:
 /* 8013B168 00137F68  4C C6 31 82 */	crclr 6
 /* 8013B16C 00137F6C  48 0A 8D C9 */	bl func_801E3F34
 /* 8013B170 00137F70  38 61 00 10 */	addi r3, r1, 0x10
-/* 8013B174 00137F74  4B FF FF 3D */	bl func_8013B0B0
+/* 8013B174 00137F74  4B FF FF 3D */	bl zDiscoFloor.find_object__25_unnamed_zDiscoFloor_cpp_FPCc
 /* 8013B178 00137F78  7C 79 F1 2E */	stwx r3, r25, r30
 /* 8013B17C 00137F7C  7C 19 F0 2E */	lwzx r0, r25, r30
 /* 8013B180 00137F80  28 00 00 00 */	cmplwi r0, 0
@@ -180,8 +180,8 @@ lbl_8013B1B0:
 /* 8013B1BC 00137FBC  38 21 01 30 */	addi r1, r1, 0x130
 /* 8013B1C0 00137FC0  4E 80 00 20 */	blr 
 
-.global func_8013B1C4
-func_8013B1C4:
+.global zDiscoFloor.get_tile__25_unnamed_zDiscoFloor_cpp_FPCUcUl
+zDiscoFloor.get_tile__25_unnamed_zDiscoFloor_cpp_FPCUcUl:
 /* 8013B1C4 00137FC4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013B1C8 00137FC8  7C 08 02 A6 */	mflr r0
 /* 8013B1CC 00137FCC  54 85 F0 FE */	rlwinm r5, r4, 0x1e, 3, 0x1f
@@ -225,8 +225,8 @@ lbl_8013B250:
 /* 8013B258 00138058  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013B25C 0013805C  4E 80 00 20 */	blr 
 
-.global func_8013B260
-func_8013B260:
+.global zDiscoFloor.set_tile__25_unnamed_zDiscoFloor_cpp_FPUcUlUi
+zDiscoFloor.set_tile__25_unnamed_zDiscoFloor_cpp_FPUcUlUi:
 /* 8013B260 00138060  54 87 F0 FE */	rlwinm r7, r4, 0x1e, 3, 0x1f
 /* 8013B264 00138064  54 88 0F 7C */	rlwinm r8, r4, 1, 0x1d, 0x1e
 /* 8013B268 00138068  38 00 00 03 */	li r0, 3
@@ -238,8 +238,8 @@ func_8013B260:
 /* 8013B280 00138080  7C 03 39 AE */	stbx r0, r3, r7
 /* 8013B284 00138084  4E 80 00 20 */	blr 
 
-.global func_8013B288
-func_8013B288:
+.global zDiscoFloor.translate_mask__25_unnamed_zDiscoFloor_cpp_FPUcPCUcUl
+zDiscoFloor.translate_mask__25_unnamed_zDiscoFloor_cpp_FPUcPCUcUl:
 /* 8013B288 00138088  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013B28C 0013808C  7C 08 02 A6 */	mflr r0
 /* 8013B290 00138090  90 01 00 24 */	stw r0, 0x24(r1)
@@ -255,12 +255,12 @@ func_8013B288:
 lbl_8013B2B8:
 /* 8013B2B8 001380B8  7F A3 EB 78 */	mr r3, r29
 /* 8013B2BC 001380BC  7F E4 FB 78 */	mr r4, r31
-/* 8013B2C0 001380C0  4B FF FF 05 */	bl func_8013B1C4
+/* 8013B2C0 001380C0  4B FF FF 05 */	bl zDiscoFloor.get_tile__25_unnamed_zDiscoFloor_cpp_FPCUcUl
 /* 8013B2C4 001380C4  7C 60 1B 78 */	mr r0, r3
 /* 8013B2C8 001380C8  7F 83 E3 78 */	mr r3, r28
 /* 8013B2CC 001380CC  7C 05 03 78 */	mr r5, r0
 /* 8013B2D0 001380D0  7F E4 FB 78 */	mr r4, r31
-/* 8013B2D4 001380D4  4B FF FF 8D */	bl func_8013B260
+/* 8013B2D4 001380D4  4B FF FF 8D */	bl zDiscoFloor.set_tile__25_unnamed_zDiscoFloor_cpp_FPUcUlUi
 /* 8013B2D8 001380D8  3B FF 00 01 */	addi r31, r31, 1
 lbl_8013B2DC:
 /* 8013B2DC 001380DC  7C 1F F0 40 */	cmplw r31, r30
@@ -274,8 +274,8 @@ lbl_8013B2DC:
 /* 8013B2FC 001380FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013B300 00138100  4E 80 00 20 */	blr 
 
-.global func_8013B304
-func_8013B304:
+.global zDiscoFloor.refresh_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
+zDiscoFloor.refresh_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor:
 /* 8013B304 00138104  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013B308 00138108  7C 08 02 A6 */	mflr r0
 /* 8013B30C 0013810C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -294,17 +294,17 @@ func_8013B304:
 lbl_8013B340:
 /* 8013B340 00138140  80 7D 00 1C */	lwz r3, 0x1c(r29)
 /* 8013B344 00138144  7F C4 F3 78 */	mr r4, r30
-/* 8013B348 00138148  4B FF FE 7D */	bl func_8013B1C4
+/* 8013B348 00138148  4B FF FE 7D */	bl zDiscoFloor.get_tile__25_unnamed_zDiscoFloor_cpp_FPCUcUl
 /* 8013B34C 0013814C  7C 7F 1B 78 */	mr r31, r3
 /* 8013B350 00138150  80 7D 00 20 */	lwz r3, 0x20(r29)
 /* 8013B354 00138154  7F C4 F3 78 */	mr r4, r30
-/* 8013B358 00138158  4B FF FE 6D */	bl func_8013B1C4
+/* 8013B358 00138158  4B FF FE 6D */	bl zDiscoFloor.get_tile__25_unnamed_zDiscoFloor_cpp_FPCUcUl
 /* 8013B35C 0013815C  28 03 00 00 */	cmplwi r3, 0
 /* 8013B360 00138160  40 82 00 18 */	bne lbl_8013B378
 /* 8013B364 00138164  7F A3 EB 78 */	mr r3, r29
 /* 8013B368 00138168  7F C4 F3 78 */	mr r4, r30
 /* 8013B36C 0013816C  38 A0 00 00 */	li r5, 0
-/* 8013B370 00138170  48 00 00 B5 */	bl func_8013B424
+/* 8013B370 00138170  48 00 00 B5 */	bl zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli
 /* 8013B374 00138174  48 00 00 30 */	b lbl_8013B3A4
 lbl_8013B378:
 /* 8013B378 00138178  28 1F 00 01 */	cmplwi r31, 1
@@ -312,13 +312,13 @@ lbl_8013B378:
 /* 8013B380 00138180  7F A3 EB 78 */	mr r3, r29
 /* 8013B384 00138184  7F C4 F3 78 */	mr r4, r30
 /* 8013B388 00138188  38 A0 00 02 */	li r5, 2
-/* 8013B38C 0013818C  48 00 00 99 */	bl func_8013B424
+/* 8013B38C 0013818C  48 00 00 99 */	bl zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli
 /* 8013B390 00138190  48 00 00 14 */	b lbl_8013B3A4
 lbl_8013B394:
 /* 8013B394 00138194  7F A3 EB 78 */	mr r3, r29
 /* 8013B398 00138198  7F C4 F3 78 */	mr r4, r30
 /* 8013B39C 0013819C  38 A0 00 01 */	li r5, 1
-/* 8013B3A0 001381A0  48 00 00 85 */	bl func_8013B424
+/* 8013B3A0 001381A0  48 00 00 85 */	bl zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli
 lbl_8013B3A4:
 /* 8013B3A4 001381A4  3B DE 00 01 */	addi r30, r30, 1
 lbl_8013B3A8:
@@ -332,19 +332,19 @@ lbl_8013B3B8:
 lbl_8013B3C0:
 /* 8013B3C0 001381C0  80 7D 00 1C */	lwz r3, 0x1c(r29)
 /* 8013B3C4 001381C4  7F C4 F3 78 */	mr r4, r30
-/* 8013B3C8 001381C8  4B FF FD FD */	bl func_8013B1C4
+/* 8013B3C8 001381C8  4B FF FD FD */	bl zDiscoFloor.get_tile__25_unnamed_zDiscoFloor_cpp_FPCUcUl
 /* 8013B3CC 001381CC  28 03 00 01 */	cmplwi r3, 1
 /* 8013B3D0 001381D0  40 82 00 18 */	bne lbl_8013B3E8
 /* 8013B3D4 001381D4  7F A3 EB 78 */	mr r3, r29
 /* 8013B3D8 001381D8  7F C4 F3 78 */	mr r4, r30
 /* 8013B3DC 001381DC  38 A0 00 02 */	li r5, 2
-/* 8013B3E0 001381E0  48 00 00 45 */	bl func_8013B424
+/* 8013B3E0 001381E0  48 00 00 45 */	bl zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli
 /* 8013B3E4 001381E4  48 00 00 14 */	b lbl_8013B3F8
 lbl_8013B3E8:
 /* 8013B3E8 001381E8  7F A3 EB 78 */	mr r3, r29
 /* 8013B3EC 001381EC  7F C4 F3 78 */	mr r4, r30
 /* 8013B3F0 001381F0  38 A0 00 00 */	li r5, 0
-/* 8013B3F4 001381F4  48 00 00 31 */	bl func_8013B424
+/* 8013B3F4 001381F4  48 00 00 31 */	bl zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli
 lbl_8013B3F8:
 /* 8013B3F8 001381F8  3B DE 00 01 */	addi r30, r30, 1
 lbl_8013B3FC:
@@ -360,8 +360,8 @@ lbl_8013B408:
 /* 8013B41C 0013821C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013B420 00138220  4E 80 00 20 */	blr 
 
-.global func_8013B424
-func_8013B424:
+.global zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli
+zDiscoFloor.set_object_state__25_unnamed_zDiscoFloor_cpp_FRC13z_disco_floorUli:
 /* 8013B424 00138224  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013B428 00138228  7C 08 02 A6 */	mflr r0
 /* 8013B42C 0013822C  1D 04 00 18 */	mulli r8, r4, 0x18
@@ -443,8 +443,8 @@ func_8013B424:
 /* 8013B55C 0013835C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013B560 00138360  4E 80 00 20 */	blr 
 
-.global func_8013B564
-func_8013B564:
+.global zDiscoFloor.play_sound__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
+zDiscoFloor.play_sound__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor:
 /* 8013B564 00138364  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8013B568 00138368  7C 08 02 A6 */	mflr r0
 /* 8013B56C 0013836C  90 01 00 54 */	stw r0, 0x54(r1)
@@ -562,8 +562,8 @@ lbl_8013B6F4:
 /* 8013B710 00138510  38 21 00 50 */	addi r1, r1, 0x50
 /* 8013B714 00138514  4E 80 00 20 */	blr 
 
-.global func_8013B718
-func_8013B718:
+.global zDiscoFloor.update_transition__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floorf
+zDiscoFloor.update_transition__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floorf:
 /* 8013B718 00138518  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013B71C 0013851C  7C 08 02 A6 */	mflr r0
 /* 8013B720 00138520  90 01 00 24 */	stw r0, 0x24(r1)
@@ -586,7 +586,7 @@ lbl_8013B75C:
 /* 8013B760 00138560  C0 02 A4 60 */	lfs f0, lbl_803CEDE0-_SDA2_BASE_(r2)
 /* 8013B764 00138564  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8013B768 00138568  40 81 00 08 */	ble lbl_8013B770
-/* 8013B76C 0013856C  4B FF FD F9 */	bl func_8013B564
+/* 8013B76C 0013856C  4B FF FD F9 */	bl zDiscoFloor.play_sound__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
 lbl_8013B770:
 /* 8013B770 00138570  C0 5F 00 5C */	lfs f2, 0x5c(r31)
 /* 8013B774 00138574  C0 3F 00 54 */	lfs f1, 0x54(r31)
@@ -602,13 +602,13 @@ lbl_8013B788:
 /* 8013B798 00138598  90 1F 00 50 */	stw r0, 0x50(r31)
 /* 8013B79C 0013859C  80 7F 00 14 */	lwz r3, 0x14(r31)
 /* 8013B7A0 001385A0  80 63 00 20 */	lwz r3, 0x20(r3)
-/* 8013B7A4 001385A4  48 00 00 3D */	bl func_8013B7E0
+/* 8013B7A4 001385A4  48 00 00 3D */	bl zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl
 /* 8013B7A8 001385A8  7C 65 1B 78 */	mr r5, r3
 /* 8013B7AC 001385AC  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 8013B7B0 001385B0  80 9F 00 20 */	lwz r4, 0x20(r31)
 /* 8013B7B4 001385B4  4B EC 7D 8D */	bl memcpy
 /* 8013B7B8 001385B8  7F E3 FB 78 */	mr r3, r31
-/* 8013B7BC 001385BC  4B FF FB 49 */	bl func_8013B304
+/* 8013B7BC 001385BC  4B FF FB 49 */	bl zDiscoFloor.refresh_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
 /* 8013B7C0 001385C0  FC 20 F8 90 */	fmr f1, f31
 lbl_8013B7C4:
 /* 8013B7C4 001385C4  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
@@ -619,15 +619,15 @@ lbl_8013B7C4:
 /* 8013B7D8 001385D8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013B7DC 001385DC  4E 80 00 20 */	blr 
 
-.global func_8013B7E0
-func_8013B7E0:
+.global zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl
+zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl:
 /* 8013B7E0 001385E0  54 63 08 3C */	slwi r3, r3, 1
 /* 8013B7E4 001385E4  38 03 00 07 */	addi r0, r3, 7
 /* 8013B7E8 001385E8  54 03 E8 FE */	srwi r3, r0, 3
 /* 8013B7EC 001385EC  4E 80 00 20 */	blr 
 
-.global func_8013B7F0
-func_8013B7F0:
+.global zDiscoFloor.update_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floorf
+zDiscoFloor.update_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floorf:
 /* 8013B7F0 001385F0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013B7F4 001385F4  7C 08 02 A6 */	mflr r0
 /* 8013B7F8 001385F8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -695,7 +695,7 @@ lbl_8013B8CC:
 /* 8013B8D8 001386D8  80 7F 00 20 */	lwz r3, 0x20(r31)
 /* 8013B8DC 001386DC  7C 84 00 2E */	lwzx r4, r4, r0
 /* 8013B8E0 001386E0  80 BF 00 3C */	lwz r5, 0x3c(r31)
-/* 8013B8E4 001386E4  4B FF F9 A5 */	bl func_8013B288
+/* 8013B8E4 001386E4  4B FF F9 A5 */	bl zDiscoFloor.translate_mask__25_unnamed_zDiscoFloor_cpp_FPUcPCUcUl
 /* 8013B8E8 001386E8  C0 1F 00 54 */	lfs f0, 0x54(r31)
 /* 8013B8EC 001386EC  FC 00 F8 40 */	fcmpo cr0, f0, f31
 /* 8013B8F0 001386F0  4C 40 13 82 */	cror 2, 0, 2
@@ -707,7 +707,7 @@ lbl_8013B8CC:
 /* 8013B908 00138708  90 1F 00 50 */	stw r0, 0x50(r31)
 /* 8013B90C 0013870C  80 7F 00 14 */	lwz r3, 0x14(r31)
 /* 8013B910 00138710  80 63 00 20 */	lwz r3, 0x20(r3)
-/* 8013B914 00138714  4B FF FE CD */	bl func_8013B7E0
+/* 8013B914 00138714  4B FF FE CD */	bl zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl
 /* 8013B918 00138718  7C 65 1B 78 */	mr r5, r3
 /* 8013B91C 0013871C  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 8013B920 00138720  80 9F 00 20 */	lwz r4, 0x20(r31)
@@ -718,7 +718,7 @@ lbl_8013B92C:
 /* 8013B930 00138730  D0 1F 00 5C */	stfs f0, 0x5c(r31)
 lbl_8013B934:
 /* 8013B934 00138734  7F E3 FB 78 */	mr r3, r31
-/* 8013B938 00138738  4B FF F9 CD */	bl func_8013B304
+/* 8013B938 00138738  4B FF F9 CD */	bl zDiscoFloor.refresh_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
 lbl_8013B93C:
 /* 8013B93C 0013873C  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 8013B940 00138740  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -728,8 +728,8 @@ lbl_8013B93C:
 /* 8013B950 00138750  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013B954 00138754  4E 80 00 20 */	blr 
 
-.global func_8013B958
-func_8013B958:
+.global zDiscoFloor.get_damage_surface__25_unnamed_zDiscoFloor_cpp_Fv
+zDiscoFloor.get_damage_surface__25_unnamed_zDiscoFloor_cpp_Fv:
 /* 8013B958 00138758  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013B95C 0013875C  7C 08 02 A6 */	mflr r0
 /* 8013B960 00138760  3C 60 80 32 */	lis r3, lbl_80327D30@ha
@@ -916,8 +916,8 @@ lbl_8013BBF8:
 /* 8013BC08 00138A08  42 00 FF F0 */	bdnz lbl_8013BBF8
 /* 8013BC0C 00138A0C  4E 80 00 20 */	blr 
 
-.global func_8013BC10
-func_8013BC10:
+.global zDiscoFloor.render_model__25_unnamed_zDiscoFloor_cpp_FP14xModelInstanceRC7xSphere
+zDiscoFloor.render_model__25_unnamed_zDiscoFloor_cpp_FP14xModelInstanceRC7xSphere:
 /* 8013BC10 00138A10  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013BC14 00138A14  7C 08 02 A6 */	mflr r0
 /* 8013BC18 00138A18  90 01 00 24 */	stw r0, 0x24(r1)
@@ -964,8 +964,8 @@ lbl_8013BC8C:
 /* 8013BCB8 00138AB8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013BCBC 00138ABC  4E 80 00 20 */	blr 
 
-.global func_8013BCC0
-func_8013BCC0:
+.global zDiscoFloor.render_model__25_unnamed_zDiscoFloor_cpp_FP14xModelInstanceR7xSpheref
+zDiscoFloor.render_model__25_unnamed_zDiscoFloor_cpp_FP14xModelInstanceR7xSpheref:
 /* 8013BCC0 00138AC0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8013BCC4 00138AC4  7C 08 02 A6 */	mflr r0
 /* 8013BCC8 00138AC8  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1025,25 +1025,25 @@ init__13z_disco_floorFv:
 /* 8013BD90 00138B90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013BD94 00138B94  7C 08 02 A6 */	mflr r0
 /* 8013BD98 00138B98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8013BD9C 00138B9C  4B FF F1 C9 */	bl func_8013AF64
+/* 8013BD9C 00138B9C  4B FF F1 C9 */	bl zDiscoFloor.create_glow_light__25_unnamed_zDiscoFloor_cpp_Fv
 /* 8013BDA0 00138BA0  3C 60 80 27 */	lis r3, lbl_8026D0C8@ha
 /* 8013BDA4 00138BA4  38 63 D0 C8 */	addi r3, r3, lbl_8026D0C8@l
 /* 8013BDA8 00138BA8  38 63 00 11 */	addi r3, r3, 0x11
 /* 8013BDAC 00138BAC  4B ED A0 F5 */	bl func_80015EA0
-/* 8013BDB0 00138BB0  48 00 00 21 */	bl func_8013BDD0
+/* 8013BDB0 00138BB0  48 00 00 21 */	bl zDiscoFloor.add_global_tweaks__25_unnamed_zDiscoFloor_cpp_Fv
 /* 8013BDB4 00138BB4  38 6D 96 74 */	addi r3, r13, lbl_803CBF74-_SDA_BASE_
-/* 8013BDB8 00138BB8  48 00 00 15 */	bl func_8013BDCC
+/* 8013BDB8 00138BB8  48 00 00 15 */	bl zDiscoFloor.init__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv
 /* 8013BDBC 00138BBC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013BDC0 00138BC0  7C 08 03 A6 */	mtlr r0
 /* 8013BDC4 00138BC4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013BDC8 00138BC8  4E 80 00 20 */	blr 
 
-.global func_8013BDCC
-func_8013BDCC:
+.global zDiscoFloor.init__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv
+zDiscoFloor.init__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv:
 /* 8013BDCC 00138BCC  4E 80 00 20 */	blr 
 
-.global func_8013BDD0
-func_8013BDD0:
+.global zDiscoFloor.add_global_tweaks__25_unnamed_zDiscoFloor_cpp_Fv
+zDiscoFloor.add_global_tweaks__25_unnamed_zDiscoFloor_cpp_Fv:
 /* 8013BDD0 00138BD0  4E 80 00 20 */	blr 
 
 .global post_setup__13z_disco_floorFv
@@ -1052,14 +1052,14 @@ post_setup__13z_disco_floorFv:
 /* 8013BDD8 00138BD8  7C 08 02 A6 */	mflr r0
 /* 8013BDDC 00138BDC  38 6D 96 74 */	addi r3, r13, lbl_803CBF74-_SDA_BASE_
 /* 8013BDE0 00138BE0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8013BDE4 00138BE4  48 00 00 15 */	bl func_8013BDF8
+/* 8013BDE4 00138BE4  48 00 00 15 */	bl zDiscoFloor.post_setup__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv
 /* 8013BDE8 00138BE8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013BDEC 00138BEC  7C 08 03 A6 */	mtlr r0
 /* 8013BDF0 00138BF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013BDF4 00138BF4  4E 80 00 20 */	blr 
 
-.global func_8013BDF8
-func_8013BDF8:
+.global zDiscoFloor.post_setup__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv
+zDiscoFloor.post_setup__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv:
 /* 8013BDF8 00138BF8  4E 80 00 20 */	blr 
 
 .global destroy__13z_disco_floorFv
@@ -1067,16 +1067,16 @@ destroy__13z_disco_floorFv:
 /* 8013BDFC 00138BFC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013BE00 00138C00  7C 08 02 A6 */	mflr r0
 /* 8013BE04 00138C04  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8013BE08 00138C08  4B FF F1 CD */	bl func_8013AFD4
+/* 8013BE08 00138C08  4B FF F1 CD */	bl zDiscoFloor.destroy_glow_light__25_unnamed_zDiscoFloor_cpp_Fv
 /* 8013BE0C 00138C0C  38 6D 96 74 */	addi r3, r13, lbl_803CBF74-_SDA_BASE_
-/* 8013BE10 00138C10  48 00 00 15 */	bl func_8013BE24
+/* 8013BE10 00138C10  48 00 00 15 */	bl zDiscoFloor.destroy__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv
 /* 8013BE14 00138C14  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013BE18 00138C18  7C 08 03 A6 */	mtlr r0
 /* 8013BE1C 00138C1C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013BE20 00138C20  4E 80 00 20 */	blr 
 
-.global func_8013BE24
-func_8013BE24:
+.global zDiscoFloor.destroy__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv
+zDiscoFloor.destroy__Q225_unnamed_zDiscoFloor_cpp_15clone_pipe_dataFv:
 /* 8013BE24 00138C24  4E 80 00 20 */	blr 
 
 .global render_all__13z_disco_floorFv
@@ -1287,14 +1287,14 @@ lbl_8013C0EC:
 /* 8013C0F0 00138EF0  7C 06 00 40 */	cmplw r6, r0
 /* 8013C0F4 00138EF4  41 80 FF DC */	blt lbl_8013C0D0
 /* 8013C0F8 00138EF8  80 7F 00 20 */	lwz r3, 0x20(r31)
-/* 8013C0FC 00138EFC  4B FF F6 E5 */	bl func_8013B7E0
+/* 8013C0FC 00138EFC  4B FF F6 E5 */	bl zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl
 /* 8013C100 00138F00  7C 64 1B 78 */	mr r4, r3
 /* 8013C104 00138F04  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 8013C108 00138F08  38 A0 00 00 */	li r5, 0
 /* 8013C10C 00138F0C  4B EF 78 35 */	bl xMemAlloc__FUiUii
 /* 8013C110 00138F10  90 7E 00 1C */	stw r3, 0x1c(r30)
 /* 8013C114 00138F14  80 7F 00 20 */	lwz r3, 0x20(r31)
-/* 8013C118 00138F18  4B FF F6 C9 */	bl func_8013B7E0
+/* 8013C118 00138F18  4B FF F6 C9 */	bl zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl
 /* 8013C11C 00138F1C  7C 64 1B 78 */	mr r4, r3
 /* 8013C120 00138F20  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 8013C124 00138F24  38 A0 00 00 */	li r5, 0
@@ -1363,7 +1363,7 @@ setup__13z_disco_floorFv:
 /* 8013C208 00139008  90 1F 00 24 */	stw r0, 0x24(r31)
 /* 8013C20C 0013900C  48 00 01 89 */	bl reset__13z_disco_floorFv
 /* 8013C210 00139010  7F E3 FB 78 */	mr r3, r31
-/* 8013C214 00139014  48 00 01 7D */	bl func_8013C390
+/* 8013C214 00139014  48 00 01 7D */	bl zDiscoFloor.add_tweaks__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
 /* 8013C218 00139018  48 00 01 64 */	b lbl_8013C37C
 lbl_8013C21C:
 /* 8013C21C 0013901C  1F 80 00 18 */	mulli r28, r0, 0x18
@@ -1380,7 +1380,7 @@ lbl_8013C23C:
 /* 8013C244 00139044  80 7D 00 24 */	lwz r3, 0x24(r29)
 /* 8013C248 00139048  80 9D 00 30 */	lwz r4, 0x30(r29)
 /* 8013C24C 0013904C  80 BF 00 3C */	lwz r5, 0x3c(r31)
-/* 8013C250 00139050  4B FF EE 91 */	bl func_8013B0E0
+/* 8013C250 00139050  4B FF EE 91 */	bl zDiscoFloor.find_tiles__25_unnamed_zDiscoFloor_cpp_FPCcPQ213z_disco_floor9tile_dataUl
 /* 8013C254 00139054  3B 7B 00 01 */	addi r27, r27, 1
 /* 8013C258 00139058  3B BD 00 04 */	addi r29, r29, 4
 /* 8013C25C 0013905C  2C 1B 00 03 */	cmpwi r27, 3
@@ -1397,7 +1397,7 @@ lbl_8013C274:
 /* 8013C284 00139084  80 7D 00 30 */	lwz r3, 0x30(r29)
 /* 8013C288 00139088  28 03 00 00 */	cmplwi r3, 0
 /* 8013C28C 0013908C  40 82 00 10 */	bne lbl_8013C29C
-/* 8013C290 00139090  4B FF F6 C9 */	bl func_8013B958
+/* 8013C290 00139090  4B FF F6 C9 */	bl zDiscoFloor.get_damage_surface__25_unnamed_zDiscoFloor_cpp_Fv
 /* 8013C294 00139094  90 7D 00 30 */	stw r3, 0x30(r29)
 /* 8013C298 00139098  48 00 00 10 */	b lbl_8013C2A8
 lbl_8013C29C:
@@ -1464,7 +1464,7 @@ lbl_8013C348:
 /* 8013C36C 0013916C  7F E3 FB 78 */	mr r3, r31
 /* 8013C370 00139170  48 00 00 25 */	bl reset__13z_disco_floorFv
 /* 8013C374 00139174  7F E3 FB 78 */	mr r3, r31
-/* 8013C378 00139178  48 00 00 19 */	bl func_8013C390
+/* 8013C378 00139178  48 00 00 19 */	bl zDiscoFloor.add_tweaks__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
 lbl_8013C37C:
 /* 8013C37C 0013917C  BB 61 00 0C */	lmw r27, 0xc(r1)
 /* 8013C380 00139180  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -1472,8 +1472,8 @@ lbl_8013C37C:
 /* 8013C388 00139188  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013C38C 0013918C  4E 80 00 20 */	blr 
 
-.global func_8013C390
-func_8013C390:
+.global zDiscoFloor.add_tweaks__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
+zDiscoFloor.add_tweaks__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor:
 /* 8013C390 00139190  4E 80 00 20 */	blr 
 
 .global reset__13z_disco_floorFv
@@ -1558,7 +1558,7 @@ lbl_8013C480:
 /* 8013C4B4 001392B4  40 80 00 14 */	bge lbl_8013C4C8
 /* 8013C4B8 001392B8  FC 20 F8 90 */	fmr f1, f31
 /* 8013C4BC 001392BC  7F E3 FB 78 */	mr r3, r31
-/* 8013C4C0 001392C0  4B FF F2 59 */	bl func_8013B718
+/* 8013C4C0 001392C0  4B FF F2 59 */	bl zDiscoFloor.update_transition__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floorf
 /* 8013C4C4 001392C4  FF E0 08 90 */	fmr f31, f1
 lbl_8013C4C8:
 /* 8013C4C8 001392C8  C0 02 A4 7C */	lfs f0, lbl_803CEDFC-_SDA2_BASE_(r2)
@@ -1566,7 +1566,7 @@ lbl_8013C4C8:
 /* 8013C4D0 001392D0  40 81 00 10 */	ble lbl_8013C4E0
 /* 8013C4D4 001392D4  FC 20 F8 90 */	fmr f1, f31
 /* 8013C4D8 001392D8  7F E3 FB 78 */	mr r3, r31
-/* 8013C4DC 001392DC  4B FF F3 15 */	bl func_8013B7F0
+/* 8013C4DC 001392DC  4B FF F3 15 */	bl zDiscoFloor.update_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floorf
 lbl_8013C4E0:
 /* 8013C4E0 001392E0  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 8013C4E4 001392E4  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -1606,10 +1606,10 @@ lbl_8013C534:
 /* 8013C558 00139358  80 7F 00 20 */	lwz r3, 0x20(r31)
 /* 8013C55C 0013935C  7C 84 00 2E */	lwzx r4, r4, r0
 /* 8013C560 00139360  80 BF 00 3C */	lwz r5, 0x3c(r31)
-/* 8013C564 00139364  4B FF ED 25 */	bl func_8013B288
+/* 8013C564 00139364  4B FF ED 25 */	bl zDiscoFloor.translate_mask__25_unnamed_zDiscoFloor_cpp_FPUcPCUcUl
 /* 8013C568 00139368  80 7F 00 14 */	lwz r3, 0x14(r31)
 /* 8013C56C 0013936C  80 63 00 20 */	lwz r3, 0x20(r3)
-/* 8013C570 00139370  4B FF F2 71 */	bl func_8013B7E0
+/* 8013C570 00139370  4B FF F2 71 */	bl zDiscoFloor.state_byte_size__25_unnamed_zDiscoFloor_cpp_FUl
 /* 8013C574 00139374  7C 65 1B 78 */	mr r5, r3
 /* 8013C578 00139378  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 8013C57C 0013937C  80 9F 00 20 */	lwz r4, 0x20(r31)
@@ -1625,12 +1625,12 @@ lbl_8013C588:
 /* 8013C5A0 001393A0  80 7F 00 20 */	lwz r3, 0x20(r31)
 /* 8013C5A4 001393A4  7C 84 00 2E */	lwzx r4, r4, r0
 /* 8013C5A8 001393A8  80 BF 00 3C */	lwz r5, 0x3c(r31)
-/* 8013C5AC 001393AC  4B FF EC DD */	bl func_8013B288
+/* 8013C5AC 001393AC  4B FF EC DD */	bl zDiscoFloor.translate_mask__25_unnamed_zDiscoFloor_cpp_FPUcPCUcUl
 lbl_8013C5B0:
 /* 8013C5B0 001393B0  C0 02 A4 7C */	lfs f0, lbl_803CEDFC-_SDA2_BASE_(r2)
 /* 8013C5B4 001393B4  7F E3 FB 78 */	mr r3, r31
 /* 8013C5B8 001393B8  D0 1F 00 60 */	stfs f0, 0x60(r31)
-/* 8013C5BC 001393BC  4B FF ED 49 */	bl func_8013B304
+/* 8013C5BC 001393BC  4B FF ED 49 */	bl zDiscoFloor.refresh_state__25_unnamed_zDiscoFloor_cpp_FR13z_disco_floor
 /* 8013C5C0 001393C0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013C5C4 001393C4  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8013C5C8 001393C8  7C 08 03 A6 */	mtlr r0
@@ -2186,7 +2186,7 @@ lbl_8013CD44:
 /* 8013CD68 00139B68  80 7E 00 04 */	lwz r3, 4(r30)
 /* 8013CD6C 00139B6C  38 9E 00 08 */	addi r4, r30, 8
 /* 8013CD70 00139B70  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 8013CD74 00139B74  4B FF EE 9D */	bl func_8013BC10
+/* 8013CD74 00139B74  4B FF EE 9D */	bl zDiscoFloor.render_model__25_unnamed_zDiscoFloor_cpp_FP14xModelInstanceRC7xSphere
 lbl_8013CD78:
 /* 8013CD78 00139B78  3B DE 00 18 */	addi r30, r30, 0x18
 lbl_8013CD7C:
@@ -2268,7 +2268,7 @@ lbl_8013CE88:
 /* 8013CE8C 00139C8C  FC 20 D8 90 */	fmr f1, f27
 /* 8013CE90 00139C90  38 9C 00 08 */	addi r4, r28, 8
 /* 8013CE94 00139C94  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 8013CE98 00139C98  4B FF EE 29 */	bl func_8013BCC0
+/* 8013CE98 00139C98  4B FF EE 29 */	bl zDiscoFloor.render_model__25_unnamed_zDiscoFloor_cpp_FP14xModelInstanceR7xSpheref
 lbl_8013CE9C:
 /* 8013CE9C 00139C9C  3B 9C 00 18 */	addi r28, r28, 0x18
 lbl_8013CEA0:

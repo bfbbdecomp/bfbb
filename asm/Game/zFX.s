@@ -24,11 +24,11 @@ zFX_SceneEnter__FP7RpWorld:
 /* 80092D58 0008FB58  7F E3 FB 78 */	mr r3, r31
 /* 80092D5C 0008FB5C  4B F9 42 4D */	bl xFX_SceneEnter__FP7RpWorld
 /* 80092D60 0008FB60  48 00 06 1D */	bl zFXGoo_SceneEnter__Fv
-/* 80092D64 0008FB64  48 00 3B 99 */	bl func_800968FC
+/* 80092D64 0008FB64  48 00 3B 99 */	bl zFX.init_poppers__Fv
 /* 80092D68 0008FB68  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 80092D6C 0008FB6C  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
 /* 80092D70 0008FB70  80 63 1F C0 */	lwz r3, 0x1fc0(r3)
-/* 80092D74 0008FB74  48 00 43 21 */	bl func_80097094
+/* 80092D74 0008FB74  48 00 43 21 */	bl zFX.setup_entrails__FR6zScene
 /* 80092D78 0008FB78  88 0D 8E 8C */	lbz r0, lbl_803CB78C-_SDA_BASE_(r13)
 /* 80092D7C 0008FB7C  7C 00 07 75 */	extsb. r0, r0
 /* 80092D80 0008FB80  40 82 00 74 */	bne lbl_80092DF4
@@ -92,9 +92,9 @@ zFX_SceneReset__Fv:
 /* 80092E4C 0008FC4C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80092E50 0008FC50  7C 08 02 A6 */	mflr r0
 /* 80092E54 0008FC54  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092E58 0008FC58  48 00 05 AD */	bl func_80093404
-/* 80092E5C 0008FC5C  48 00 3A C9 */	bl func_80096924
-/* 80092E60 0008FC60  48 00 3F 29 */	bl func_80096D88
+/* 80092E58 0008FC58  48 00 05 AD */	bl zFX.zFXGoo_SceneReset__Fv
+/* 80092E5C 0008FC5C  48 00 3A C9 */	bl zFX.reset_poppers__Fv
+/* 80092E60 0008FC60  48 00 3F 29 */	bl zFX.reset_entrails__Fv
 /* 80092E64 0008FC64  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80092E68 0008FC68  7C 08 03 A6 */	mtlr r0
 /* 80092E6C 0008FC6C  38 21 00 10 */	addi r1, r1, 0x10
@@ -484,8 +484,8 @@ lbl_800933AC:
 /* 800933FC 000901FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80093400 00090200  4E 80 00 20 */	blr 
 
-.global func_80093404
-func_80093404:
+.global zFX.zFXGoo_SceneReset__Fv
+zFX.zFXGoo_SceneReset__Fv:
 /* 80093404 00090204  3C 60 80 3C */	lis r3, lbl_803BFA0C@ha
 /* 80093408 00090208  38 00 00 03 */	li r0, 3
 /* 8009340C 0009020C  38 63 FA 0C */	addi r3, r3, lbl_803BFA0C@l
@@ -1299,9 +1299,9 @@ zFXUpdate__Ff:
 /* 80093F98 00090D98  FF E0 08 90 */	fmr f31, f1
 /* 80093F9C 00090D9C  4B FF F9 E5 */	bl zFXGooUpdate__Ff
 /* 80093FA0 00090DA0  FC 20 F8 90 */	fmr f1, f31
-/* 80093FA4 00090DA4  48 00 29 AD */	bl func_80096950
+/* 80093FA4 00090DA4  48 00 29 AD */	bl zFX.update_poppers__Ff
 /* 80093FA8 00090DA8  FC 20 F8 90 */	fmr f1, f31
-/* 80093FAC 00090DAC  48 00 2E 49 */	bl func_80096DF4
+/* 80093FAC 00090DAC  48 00 2E 49 */	bl zFX.update_entrails__Ff
 /* 80093FB0 00090DB0  FC 20 F8 90 */	fmr f1, f31
 /* 80093FB4 00090DB4  4B F9 33 39 */	bl xFXUpdate__Ff
 /* 80093FB8 00090DB8  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3151,8 +3151,8 @@ lbl_800959A8:
 /* 800959EC 000927EC  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800959F0 000927F0  4E 80 00 20 */	blr 
 
-.global func_800959F4
-func_800959F4:
+.global zFX.model_is_preinstanced__17_unnamed_zFX_cpp_FP8RpAtomic
+zFX.model_is_preinstanced__17_unnamed_zFX_cpp_FP8RpAtomic:
 /* 800959F4 000927F4  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 800959F8 000927F8  28 03 00 00 */	cmplwi r3, 0
 /* 800959FC 000927FC  40 82 00 0C */	bne lbl_80095A08
@@ -3170,8 +3170,8 @@ lbl_80095A24:
 /* 80095A24 00092824  38 60 00 01 */	li r3, 1
 /* 80095A28 00092828  4E 80 00 20 */	blr 
 
-.global func_80095A2C
-func_80095A2C:
+.global zFX.setup_popper_emitter__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
+zFX.setup_popper_emitter__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data:
 /* 80095A2C 0009282C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80095A30 00092830  7C 08 02 A6 */	mflr r0
 /* 80095A34 00092834  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3179,7 +3179,7 @@ func_80095A2C:
 /* 80095A3C 0009283C  7C 7D 1B 78 */	mr r29, r3
 /* 80095A40 00092840  80 63 00 04 */	lwz r3, 4(r3)
 /* 80095A44 00092844  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 80095A48 00092848  48 00 02 11 */	bl func_80095C58
+/* 80095A48 00092848  48 00 02 11 */	bl zFX.count_faces__17_unnamed_zFX_cpp_FP14xModelInstance
 /* 80095A4C 0009284C  90 7D 00 44 */	stw r3, 0x44(r29)
 /* 80095A50 00092850  80 1D 00 44 */	lwz r0, 0x44(r29)
 /* 80095A54 00092854  2C 00 00 00 */	cmpwi r0, 0
@@ -3227,7 +3227,7 @@ lbl_80095AD4:
 /* 80095AEC 000928EC  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80095AF0 000928F0  7C 9C 22 14 */	add r4, r28, r4
 /* 80095AF4 000928F4  7C BC 02 14 */	add r5, r28, r0
-/* 80095AF8 000928F8  48 00 00 6D */	bl func_80095B64
+/* 80095AF8 000928F8  48 00 00 6D */	bl zFX.get_triangle_area__17_unnamed_zFX_cpp_FRC5xVec3RC5xVec3RC5xVec3
 /* 80095AFC 000928FC  C0 1D 00 4C */	lfs f0, 0x4c(r29)
 /* 80095B00 00092900  3B 7B 00 08 */	addi r27, r27, 8
 /* 80095B04 00092904  EC 00 08 2A */	fadds f0, f0, f1
@@ -3260,8 +3260,8 @@ lbl_80095B50:
 /* 80095B5C 0009295C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80095B60 00092960  4E 80 00 20 */	blr 
 
-.global func_80095B64
-func_80095B64:
+.global zFX.get_triangle_area__17_unnamed_zFX_cpp_FRC5xVec3RC5xVec3RC5xVec3
+zFX.get_triangle_area__17_unnamed_zFX_cpp_FRC5xVec3RC5xVec3RC5xVec3:
 /* 80095B64 00092964  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80095B68 00092968  7C 08 02 A6 */	mflr r0
 /* 80095B6C 0009296C  C0 24 00 00 */	lfs f1, 0(r4)
@@ -3324,8 +3324,8 @@ func_80095B64:
 /* 80095C50 00092A50  38 21 00 30 */	addi r1, r1, 0x30
 /* 80095C54 00092A54  4E 80 00 20 */	blr 
 
-.global func_80095C58
-func_80095C58:
+.global zFX.count_faces__17_unnamed_zFX_cpp_FP14xModelInstance
+zFX.count_faces__17_unnamed_zFX_cpp_FP14xModelInstance:
 /* 80095C58 00092A58  38 A0 00 00 */	li r5, 0
 /* 80095C5C 00092A5C  48 00 00 18 */	b lbl_80095C74
 lbl_80095C60:
@@ -3340,8 +3340,8 @@ lbl_80095C74:
 /* 80095C7C 00092A7C  7C A3 2B 78 */	mr r3, r5
 /* 80095C80 00092A80  4E 80 00 20 */	blr 
 
-.global func_80095C84
-func_80095C84:
+.global zFX.eval_tri__17_unnamed_zFX_cpp_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle
+zFX.eval_tri__17_unnamed_zFX_cpp_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle:
 /* 80095C84 00092A84  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80095C88 00092A88  7C 08 02 A6 */	mflr r0
 /* 80095C8C 00092A8C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -3379,7 +3379,7 @@ func_80095C84:
 /* 80095D0C 00092B0C  7F 87 E3 78 */	mr r7, r28
 /* 80095D10 00092B10  7F 08 C3 78 */	mr r8, r24
 /* 80095D14 00092B14  7F 29 CB 78 */	mr r9, r25
-/* 80095D18 00092B18  48 00 00 C5 */	bl func_80095DDC
+/* 80095D18 00092B18  48 00 00 C5 */	bl zFX.SkinXformVertAndNormal__17_unnamed_zFX_cpp_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi
 /* 80095D1C 00092B1C  48 00 00 AC */	b lbl_80095DC8
 lbl_80095D20:
 /* 80095D20 00092B20  A0 1D 00 00 */	lhz r0, 0(r29)
@@ -3405,7 +3405,7 @@ lbl_80095D20:
 /* 80095D70 00092B70  7F 84 E3 78 */	mr r4, r28
 /* 80095D74 00092B74  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80095D78 00092B78  7C BE 02 14 */	add r5, r30, r0
-/* 80095D7C 00092B7C  48 00 16 05 */	bl func_80097380
+/* 80095D7C 00092B7C  48 00 16 05 */	bl zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80095D80 00092B80  7F 63 DB 78 */	mr r3, r27
 /* 80095D84 00092B84  48 00 15 D5 */	bl func_80097358
 /* 80095D88 00092B88  A0 1D 00 02 */	lhz r0, 2(r29)
@@ -3413,7 +3413,7 @@ lbl_80095D20:
 /* 80095D90 00092B90  38 7B 00 0C */	addi r3, r27, 0xc
 /* 80095D94 00092B94  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80095D98 00092B98  7C BE 02 14 */	add r5, r30, r0
-/* 80095D9C 00092B9C  48 00 15 E5 */	bl func_80097380
+/* 80095D9C 00092B9C  48 00 15 E5 */	bl zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80095DA0 00092BA0  38 7B 00 0C */	addi r3, r27, 0xc
 /* 80095DA4 00092BA4  48 00 15 B5 */	bl func_80097358
 /* 80095DA8 00092BA8  A0 1D 00 04 */	lhz r0, 4(r29)
@@ -3421,7 +3421,7 @@ lbl_80095D20:
 /* 80095DB0 00092BB0  38 7B 00 18 */	addi r3, r27, 0x18
 /* 80095DB4 00092BB4  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80095DB8 00092BB8  7C BE 02 14 */	add r5, r30, r0
-/* 80095DBC 00092BBC  48 00 15 C5 */	bl func_80097380
+/* 80095DBC 00092BBC  48 00 15 C5 */	bl zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80095DC0 00092BC0  38 7B 00 18 */	addi r3, r27, 0x18
 /* 80095DC4 00092BC4  48 00 15 95 */	bl func_80097358
 lbl_80095DC8:
@@ -3431,8 +3431,8 @@ lbl_80095DC8:
 /* 80095DD4 00092BD4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80095DD8 00092BD8  4E 80 00 20 */	blr 
 
-.global func_80095DDC
-func_80095DDC:
+.global zFX.SkinXformVertAndNormal__17_unnamed_zFX_cpp_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi
+zFX.SkinXformVertAndNormal__17_unnamed_zFX_cpp_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi:
 /* 80095DDC 00092BDC  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80095DE0 00092BE0  7C 08 02 A6 */	mflr r0
 /* 80095DE4 00092BE4  90 01 00 94 */	stw r0, 0x94(r1)
@@ -3543,7 +3543,7 @@ lbl_80095F64:
 /* 80095F6C 00092D6C  7C 99 02 14 */	add r4, r25, r0
 /* 80095F70 00092D70  56 B5 C2 3E */	srwi r21, r21, 8
 /* 80095F74 00092D74  38 61 00 20 */	addi r3, r1, 0x20
-/* 80095F78 00092D78  48 00 14 09 */	bl func_80097380
+/* 80095F78 00092D78  48 00 14 09 */	bl zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80095F7C 00092D7C  C0 2E 00 00 */	lfs f1, 0(r14)
 /* 80095F80 00092D80  38 61 00 20 */	addi r3, r1, 0x20
 /* 80095F84 00092D84  4B F7 51 FD */	bl func_8000B180
@@ -3563,7 +3563,7 @@ lbl_80095FB4:
 /* 80095FB4 00092DB4  7E 03 83 78 */	mr r3, r16
 /* 80095FB8 00092DB8  7E 24 8B 78 */	mr r4, r17
 /* 80095FBC 00092DBC  38 A1 00 38 */	addi r5, r1, 0x38
-/* 80095FC0 00092DC0  48 00 13 C1 */	bl func_80097380
+/* 80095FC0 00092DC0  48 00 13 C1 */	bl zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80095FC4 00092DC4  39 EF 00 0C */	addi r15, r15, 0xc
 /* 80095FC8 00092DC8  3A 10 00 0C */	addi r16, r16, 0xc
 /* 80095FCC 00092DCC  3A 73 00 02 */	addi r19, r19, 2
@@ -3577,8 +3577,8 @@ lbl_80095FD4:
 /* 80095FE8 00092DE8  38 21 00 90 */	addi r1, r1, 0x90
 /* 80095FEC 00092DEC  4E 80 00 20 */	blr 
 
-.global func_80095FF0
-func_80095FF0:
+.global zFX.random_point_on_triangle__17_unnamed_zFX_cpp_FR5xVec3R5xVec3PC5xVec3PC5xVec3
+zFX.random_point_on_triangle__17_unnamed_zFX_cpp_FR5xVec3R5xVec3PC5xVec3PC5xVec3:
 /* 80095FF0 00092DF0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80095FF4 00092DF4  7C 08 02 A6 */	mflr r0
 /* 80095FF8 00092DF8  90 01 00 54 */	stw r0, 0x54(r1)
@@ -3671,8 +3671,8 @@ lbl_80096058:
 /* 80096150 00092F50  38 21 00 50 */	addi r1, r1, 0x50
 /* 80096154 00092F54  4E 80 00 20 */	blr 
 
-.global func_80096158
-func_80096158:
+.global zFX.random_surface_point__17_unnamed_zFX_cpp_FR5xVec3R5xVec3RCQ217_unnamed_zFX_cpp_11popper_data
+zFX.random_surface_point__17_unnamed_zFX_cpp_FR5xVec3R5xVec3RCQ217_unnamed_zFX_cpp_11popper_data:
 /* 80096158 00092F58  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8009615C 00092F5C  7C 08 02 A6 */	mflr r0
 /* 80096160 00092F60  90 01 00 74 */	stw r0, 0x74(r1)
@@ -3687,7 +3687,7 @@ func_80096158:
 /* 80096184 00092F84  C0 1D 00 4C */	lfs f0, 0x4c(r29)
 /* 80096188 00092F88  7F A3 EB 78 */	mr r3, r29
 /* 8009618C 00092F8C  EC 20 00 72 */	fmuls f1, f0, f1
-/* 80096190 00092F90  48 00 00 85 */	bl func_80096214
+/* 80096190 00092F90  48 00 00 85 */	bl zFX.find_weight__Q217_unnamed_zFX_cpp_11popper_dataCFf
 /* 80096194 00092F94  80 1D 00 18 */	lwz r0, 0x18(r29)
 /* 80096198 00092F98  38 BD 00 08 */	addi r5, r29, 8
 /* 8009619C 00092F9C  54 00 10 3A */	slwi r0, r0, 2
@@ -3712,20 +3712,20 @@ lbl_800961CC:
 /* 800961DC 00092FDC  38 61 00 2C */	addi r3, r1, 0x2c
 /* 800961E0 00092FE0  38 81 00 08 */	addi r4, r1, 8
 /* 800961E4 00092FE4  7C E7 02 14 */	add r7, r7, r0
-/* 800961E8 00092FE8  4B FF FA 9D */	bl func_80095C84
+/* 800961E8 00092FE8  4B FF FA 9D */	bl zFX.eval_tri__17_unnamed_zFX_cpp_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle
 /* 800961EC 00092FEC  7F 63 DB 78 */	mr r3, r27
 /* 800961F0 00092FF0  7F 84 E3 78 */	mr r4, r28
 /* 800961F4 00092FF4  38 A1 00 2C */	addi r5, r1, 0x2c
 /* 800961F8 00092FF8  38 C1 00 08 */	addi r6, r1, 8
-/* 800961FC 00092FFC  4B FF FD F5 */	bl func_80095FF0
+/* 800961FC 00092FFC  4B FF FD F5 */	bl zFX.random_point_on_triangle__17_unnamed_zFX_cpp_FR5xVec3R5xVec3PC5xVec3PC5xVec3
 /* 80096200 00093000  BB 61 00 5C */	lmw r27, 0x5c(r1)
 /* 80096204 00093004  80 01 00 74 */	lwz r0, 0x74(r1)
 /* 80096208 00093008  7C 08 03 A6 */	mtlr r0
 /* 8009620C 0009300C  38 21 00 70 */	addi r1, r1, 0x70
 /* 80096210 00093010  4E 80 00 20 */	blr 
 
-.global func_80096214
-func_80096214:
+.global zFX.find_weight__Q217_unnamed_zFX_cpp_11popper_dataCFf
+zFX.find_weight__Q217_unnamed_zFX_cpp_11popper_dataCFf:
 /* 80096214 00093014  38 A0 00 00 */	li r5, 0
 /* 80096218 00093018  80 C3 00 44 */	lwz r6, 0x44(r3)
 lbl_8009621C:
@@ -3756,8 +3756,8 @@ lbl_8009626C:
 /* 80096274 00093074  7C A3 2B 78 */	mr r3, r5
 /* 80096278 00093078  4E 80 00 20 */	blr 
 
-.global func_8009627C
-func_8009627C:
+.global zFX.find_popper__17_unnamed_zFX_cpp_FP4xEnt
+zFX.find_popper__17_unnamed_zFX_cpp_FP4xEnt:
 /* 8009627C 0009307C  3C 80 80 2E */	lis r4, lbl_802DF490@ha
 /* 80096280 00093080  38 84 F4 90 */	addi r4, r4, lbl_802DF490@l
 /* 80096284 00093084  38 A4 62 80 */	addi r5, r4, 0x6280
@@ -3776,8 +3776,8 @@ lbl_800962A4:
 /* 800962AC 000930AC  38 60 00 00 */	li r3, 0
 /* 800962B0 000930B0  4E 80 00 20 */	blr 
 
-.global func_800962B4
-func_800962B4:
+.global zFX.find_free_popper__17_unnamed_zFX_cpp_Fv
+zFX.find_free_popper__17_unnamed_zFX_cpp_Fv:
 /* 800962B4 000930B4  3C 60 80 2E */	lis r3, lbl_802DF490@ha
 /* 800962B8 000930B8  38 80 00 00 */	li r4, 0
 /* 800962BC 000930BC  38 63 F4 90 */	addi r3, r3, lbl_802DF490@l
@@ -3799,8 +3799,8 @@ lbl_800962E8:
 /* 800962F0 000930F0  7C 83 23 78 */	mr r3, r4
 /* 800962F4 000930F4  4E 80 00 20 */	blr 
 
-.global func_800962F8
-func_800962F8:
+.global zFX.emit_popper_bubbles__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataiff
+zFX.emit_popper_bubbles__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataiff:
 /* 800962F8 000930F8  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 800962FC 000930FC  7C 08 02 A6 */	mflr r0
 /* 80096300 00093100  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -3870,7 +3870,7 @@ lbl_800963F0:
 /* 800963F0 000931F0  7F A3 EB 78 */	mr r3, r29
 /* 800963F4 000931F4  7F 84 E3 78 */	mr r4, r28
 /* 800963F8 000931F8  7F 05 C3 78 */	mr r5, r24
-/* 800963FC 000931FC  4B FF FD 5D */	bl func_80096158
+/* 800963FC 000931FC  4B FF FD 5D */	bl zFX.random_surface_point__17_unnamed_zFX_cpp_FR5xVec3R5xVec3RCQ217_unnamed_zFX_cpp_11popper_data
 /* 80096400 00093200  FC 20 F8 90 */	fmr f1, f31
 /* 80096404 00093204  7F 83 E3 78 */	mr r3, r28
 /* 80096408 00093208  4B F7 4D 79 */	bl func_8000B180
@@ -3955,8 +3955,8 @@ lbl_80096504:
 /* 80096530 00093330  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80096534 00093334  4E 80 00 20 */	blr 
 
-.global func_80096538
-func_80096538:
+.global zFX.emit_popper_bubbles_immediate__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
+zFX.emit_popper_bubbles_immediate__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data:
 /* 80096538 00093338  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009653C 0009333C  7C 08 02 A6 */	mflr r0
 /* 80096540 00093340  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3981,15 +3981,15 @@ lbl_80096578:
 /* 80096584 00093384  2C 04 00 00 */	cmpwi r4, 0
 /* 80096588 00093388  40 81 00 0C */	ble lbl_80096594
 /* 8009658C 0009338C  C0 42 8F F4 */	lfs f2, lbl_803CD974-_SDA2_BASE_(r2)
-/* 80096590 00093390  4B FF FD 69 */	bl func_800962F8
+/* 80096590 00093390  4B FF FD 69 */	bl zFX.emit_popper_bubbles__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataiff
 lbl_80096594:
 /* 80096594 00093394  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80096598 00093398  7C 08 03 A6 */	mtlr r0
 /* 8009659C 0009339C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800965A0 000933A0  4E 80 00 20 */	blr 
 
-.global func_800965A4
-func_800965A4:
+.global zFX.update_popper__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf
+zFX.update_popper__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf:
 /* 800965A4 000933A4  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 800965A8 000933A8  7C 08 02 A6 */	mflr r0
 /* 800965AC 000933AC  90 01 00 84 */	stw r0, 0x84(r1)
@@ -4062,7 +4062,7 @@ lbl_800966A0:
 /* 800966A4 000934A4  EC 20 08 28 */	fsubs f1, f0, f1
 /* 800966A8 000934A8  4B FC 8A 59 */	bl func_8005F100
 /* 800966AC 000934AC  7F E3 FB 78 */	mr r3, r31
-/* 800966B0 000934B0  48 00 00 BD */	bl func_8009676C
+/* 800966B0 000934B0  48 00 00 BD */	bl zFX.set_popper_alpha__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf
 lbl_800966B4:
 /* 800966B4 000934B4  C0 02 8F FC */	lfs f0, lbl_803CD97C-_SDA2_BASE_(r2)
 /* 800966B8 000934B8  FC 1E 00 40 */	fcmpo cr0, f30, f0
@@ -4100,7 +4100,7 @@ lbl_800966E4:
 /* 80096730 00093530  EC 03 00 28 */	fsubs f0, f3, f0
 /* 80096734 00093534  D0 1F 00 40 */	stfs f0, 0x40(r31)
 /* 80096738 00093538  C0 41 00 10 */	lfs f2, 0x10(r1)
-/* 8009673C 0009353C  4B FF FB BD */	bl func_800962F8
+/* 8009673C 0009353C  4B FF FB BD */	bl zFX.emit_popper_bubbles__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataiff
 lbl_80096740:
 /* 80096740 00093540  E3 E1 00 78 */	psq_l f31, 120(r1), 0, qr0
 /* 80096744 00093544  CB E1 00 70 */	lfd f31, 0x70(r1)
@@ -4114,8 +4114,8 @@ lbl_80096740:
 /* 80096764 00093564  38 21 00 80 */	addi r1, r1, 0x80
 /* 80096768 00093568  4E 80 00 20 */	blr 
 
-.global func_8009676C
-func_8009676C:
+.global zFX.set_popper_alpha__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf
+zFX.set_popper_alpha__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf:
 /* 8009676C 0009356C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80096770 00093570  7C 08 02 A6 */	mflr r0
 /* 80096774 00093574  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4142,8 +4142,8 @@ func_8009676C:
 /* 800967C8 000935C8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800967CC 000935CC  4E 80 00 20 */	blr 
 
-.global func_800967D0
-func_800967D0:
+.global zFX.destroy_popper__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
+zFX.destroy_popper__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data:
 /* 800967D0 000935D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800967D4 000935D4  7C 08 02 A6 */	mflr r0
 /* 800967D8 000935D8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4186,26 +4186,26 @@ lbl_8009684C:
 /* 80096860 00093660  38 21 00 10 */	addi r1, r1, 0x10
 /* 80096864 00093664  4E 80 00 20 */	blr 
 
-.global func_80096868
-func_80096868:
+.global zFX.grab_popper__17_unnamed_zFX_cpp_FR4xEnt
+zFX.grab_popper__17_unnamed_zFX_cpp_FR4xEnt:
 /* 80096868 00093668  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009686C 0009366C  7C 08 02 A6 */	mflr r0
 /* 80096870 00093670  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80096874 00093674  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80096878 00093678  93 C1 00 08 */	stw r30, 8(r1)
 /* 8009687C 0009367C  7C 7E 1B 78 */	mr r30, r3
-/* 80096880 00093680  4B FF F9 FD */	bl func_8009627C
+/* 80096880 00093680  4B FF F9 FD */	bl zFX.find_popper__17_unnamed_zFX_cpp_FP4xEnt
 /* 80096884 00093684  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80096888 00093688  41 82 00 20 */	beq lbl_800968A8
 /* 8009688C 0009368C  80 7E 00 24 */	lwz r3, 0x24(r30)
-/* 80096890 00093690  4B FF F3 C9 */	bl func_80095C58
+/* 80096890 00093690  4B FF F3 C9 */	bl zFX.count_faces__17_unnamed_zFX_cpp_FP14xModelInstance
 /* 80096894 00093694  80 1F 00 44 */	lwz r0, 0x44(r31)
 /* 80096898 00093698  7C 00 18 00 */	cmpw r0, r3
 /* 8009689C 0009369C  40 82 00 24 */	bne lbl_800968C0
 /* 800968A0 000936A0  7F E3 FB 78 */	mr r3, r31
 /* 800968A4 000936A4  48 00 00 40 */	b lbl_800968E4
 lbl_800968A8:
-/* 800968A8 000936A8  4B FF FA 0D */	bl func_800962B4
+/* 800968A8 000936A8  4B FF FA 0D */	bl zFX.find_free_popper__17_unnamed_zFX_cpp_Fv
 /* 800968AC 000936AC  7C 7F 1B 79 */	or. r31, r3, r3
 /* 800968B0 000936B0  40 82 00 0C */	bne lbl_800968BC
 /* 800968B4 000936B4  38 60 00 00 */	li r3, 0
@@ -4214,7 +4214,7 @@ lbl_800968BC:
 /* 800968BC 000936BC  93 DF 00 04 */	stw r30, 4(r31)
 lbl_800968C0:
 /* 800968C0 000936C0  7F E3 FB 78 */	mr r3, r31
-/* 800968C4 000936C4  4B FF F1 69 */	bl func_80095A2C
+/* 800968C4 000936C4  4B FF F1 69 */	bl zFX.setup_popper_emitter__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
 /* 800968C8 000936C8  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 800968CC 000936CC  40 82 00 14 */	bne lbl_800968E0
 /* 800968D0 000936D0  38 00 00 00 */	li r0, 0
@@ -4231,24 +4231,24 @@ lbl_800968E4:
 /* 800968F4 000936F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800968F8 000936F8  4E 80 00 20 */	blr 
 
-.global func_800968FC
-func_800968FC:
+.global zFX.init_poppers__Fv
+zFX.init_poppers__Fv:
 /* 800968FC 000936FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80096900 00093700  7C 08 02 A6 */	mflr r0
 /* 80096904 00093704  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80096908 00093708  48 00 00 1D */	bl func_80096924
-/* 8009690C 0009370C  48 00 00 15 */	bl func_80096920
+/* 80096908 00093708  48 00 00 1D */	bl zFX.reset_poppers__Fv
+/* 8009690C 0009370C  48 00 00 15 */	bl zFX.add_popper_tweaks__17_unnamed_zFX_cpp_Fv
 /* 80096910 00093710  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80096914 00093714  7C 08 03 A6 */	mtlr r0
 /* 80096918 00093718  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009691C 0009371C  4E 80 00 20 */	blr 
 
-.global func_80096920
-func_80096920:
+.global zFX.add_popper_tweaks__17_unnamed_zFX_cpp_Fv
+zFX.add_popper_tweaks__17_unnamed_zFX_cpp_Fv:
 /* 80096920 00093720  4E 80 00 20 */	blr 
 
-.global func_80096924
-func_80096924:
+.global zFX.reset_poppers__Fv
+zFX.reset_poppers__Fv:
 /* 80096924 00093724  3C 60 80 2E */	lis r3, lbl_802DF490@ha
 /* 80096928 00093728  38 00 00 00 */	li r0, 0
 /* 8009692C 0009372C  38 63 F4 90 */	addi r3, r3, lbl_802DF490@l
@@ -4263,8 +4263,8 @@ lbl_80096944:
 /* 80096948 00093748  40 82 FF F0 */	bne lbl_80096938
 /* 8009694C 0009374C  4E 80 00 20 */	blr 
 
-.global func_80096950
-func_80096950:
+.global zFX.update_poppers__Ff
+zFX.update_poppers__Ff:
 /* 80096950 00093750  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80096954 00093754  7C 08 02 A6 */	mflr r0
 /* 80096958 00093758  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4284,14 +4284,14 @@ lbl_80096984:
 /* 8009698C 0009378C  41 82 00 2C */	beq lbl_800969B8
 /* 80096990 00093790  FC 20 F8 90 */	fmr f1, f31
 /* 80096994 00093794  7F E3 FB 78 */	mr r3, r31
-/* 80096998 00093798  4B FF FC 0D */	bl func_800965A4
+/* 80096998 00093798  4B FF FC 0D */	bl zFX.update_popper__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf
 /* 8009699C 0009379C  C0 3F 00 1C */	lfs f1, 0x1c(r31)
 /* 800969A0 000937A0  C0 1F 00 20 */	lfs f0, 0x20(r31)
 /* 800969A4 000937A4  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800969A8 000937A8  4C 41 13 82 */	cror 2, 1, 2
 /* 800969AC 000937AC  40 82 00 0C */	bne lbl_800969B8
 /* 800969B0 000937B0  7F E3 FB 78 */	mr r3, r31
-/* 800969B4 000937B4  4B FF FE 1D */	bl func_800967D0
+/* 800969B4 000937B4  4B FF FE 1D */	bl zFX.destroy_popper__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
 lbl_800969B8:
 /* 800969B8 000937B8  3B FF 0C 50 */	addi r31, r31, 0xc50
 lbl_800969BC:
@@ -4320,11 +4320,11 @@ zFXPopOn__FR4xEntff:
 /* 80096A08 00093808  FF C0 08 90 */	fmr f30, f1
 /* 80096A0C 0009380C  7C 7E 1B 78 */	mr r30, r3
 /* 80096A10 00093810  FF E0 10 90 */	fmr f31, f2
-/* 80096A14 00093814  48 00 01 35 */	bl func_80096B48
+/* 80096A14 00093814  48 00 01 35 */	bl zFX.validate_popper__17_unnamed_zFX_cpp_FRC4xEnt
 /* 80096A18 00093818  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80096A1C 0009381C  41 82 01 04 */	beq lbl_80096B20
 /* 80096A20 00093820  7F C3 F3 78 */	mr r3, r30
-/* 80096A24 00093824  4B FF FE 45 */	bl func_80096868
+/* 80096A24 00093824  4B FF FE 45 */	bl zFX.grab_popper__17_unnamed_zFX_cpp_FR4xEnt
 /* 80096A28 00093828  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80096A2C 0009382C  41 82 00 F4 */	beq lbl_80096B20
 /* 80096A30 00093830  C0 02 8F F4 */	lfs f0, lbl_803CD974-_SDA2_BASE_(r2)
@@ -4349,7 +4349,7 @@ lbl_80096A60:
 /* 80096A70 00093870  38 00 00 02 */	li r0, 2
 /* 80096A74 00093874  7F E3 FB 78 */	mr r3, r31
 /* 80096A78 00093878  90 1F 00 00 */	stw r0, 0(r31)
-/* 80096A7C 0009387C  4B FF FA BD */	bl func_80096538
+/* 80096A7C 0009387C  4B FF FA BD */	bl zFX.emit_popper_bubbles_immediate__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
 /* 80096A80 00093880  38 00 00 00 */	li r0, 0
 /* 80096A84 00093884  7F C3 F3 78 */	mr r3, r30
 /* 80096A88 00093888  90 1F 00 00 */	stw r0, 0(r31)
@@ -4403,8 +4403,8 @@ lbl_80096B20:
 /* 80096B40 00093940  38 21 00 50 */	addi r1, r1, 0x50
 /* 80096B44 00093944  4E 80 00 20 */	blr 
 
-.global func_80096B48
-func_80096B48:
+.global zFX.validate_popper__17_unnamed_zFX_cpp_FRC4xEnt
+zFX.validate_popper__17_unnamed_zFX_cpp_FRC4xEnt:
 /* 80096B48 00093948  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80096B4C 0009394C  7C 08 02 A6 */	mflr r0
 /* 80096B50 00093950  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4420,7 +4420,7 @@ lbl_80096B74:
 /* 80096B74 00093974  38 60 00 00 */	li r3, 0
 /* 80096B78 00093978  48 00 00 B8 */	b lbl_80096C30
 lbl_80096B7C:
-/* 80096B7C 0009397C  4B FF EE 79 */	bl func_800959F4
+/* 80096B7C 0009397C  4B FF EE 79 */	bl zFX.model_is_preinstanced__17_unnamed_zFX_cpp_FP8RpAtomic
 /* 80096B80 00093980  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80096B84 00093984  41 82 00 0C */	beq lbl_80096B90
 /* 80096B88 00093988  38 60 00 00 */	li r3, 0
@@ -4491,11 +4491,11 @@ zFXPopOff__FR4xEntff:
 /* 80096C68 00093A68  FF C0 08 90 */	fmr f30, f1
 /* 80096C6C 00093A6C  7C 7E 1B 78 */	mr r30, r3
 /* 80096C70 00093A70  FF E0 10 90 */	fmr f31, f2
-/* 80096C74 00093A74  4B FF FE D5 */	bl func_80096B48
+/* 80096C74 00093A74  4B FF FE D5 */	bl zFX.validate_popper__17_unnamed_zFX_cpp_FRC4xEnt
 /* 80096C78 00093A78  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80096C7C 00093A7C  41 82 00 E0 */	beq lbl_80096D5C
 /* 80096C80 00093A80  7F C3 F3 78 */	mr r3, r30
-/* 80096C84 00093A84  4B FF FB E5 */	bl func_80096868
+/* 80096C84 00093A84  4B FF FB E5 */	bl zFX.grab_popper__17_unnamed_zFX_cpp_FR4xEnt
 /* 80096C88 00093A88  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80096C8C 00093A8C  41 82 00 D0 */	beq lbl_80096D5C
 /* 80096C90 00093A90  C0 02 8F F4 */	lfs f0, lbl_803CD974-_SDA2_BASE_(r2)
@@ -4520,7 +4520,7 @@ lbl_80096CC0:
 /* 80096CD0 00093AD0  38 00 00 01 */	li r0, 1
 /* 80096CD4 00093AD4  7F E3 FB 78 */	mr r3, r31
 /* 80096CD8 00093AD8  90 1F 00 00 */	stw r0, 0(r31)
-/* 80096CDC 00093ADC  4B FF F8 5D */	bl func_80096538
+/* 80096CDC 00093ADC  4B FF F8 5D */	bl zFX.emit_popper_bubbles_immediate__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_data
 /* 80096CE0 00093AE0  38 00 00 00 */	li r0, 0
 /* 80096CE4 00093AE4  7F C3 F3 78 */	mr r3, r30
 /* 80096CE8 00093AE8  90 1F 00 00 */	stw r0, 0(r31)
@@ -4552,7 +4552,7 @@ lbl_80096CF4:
 /* 80096D4C 00093B4C  54 00 07 3A */	rlwinm r0, r0, 0, 0x1c, 0x1d
 /* 80096D50 00093B50  90 1F 00 24 */	stw r0, 0x24(r31)
 /* 80096D54 00093B54  C0 22 8F F4 */	lfs f1, lbl_803CD974-_SDA2_BASE_(r2)
-/* 80096D58 00093B58  4B FF FA 15 */	bl func_8009676C
+/* 80096D58 00093B58  4B FF FA 15 */	bl zFX.set_popper_alpha__17_unnamed_zFX_cpp_FRQ217_unnamed_zFX_cpp_11popper_dataf
 lbl_80096D5C:
 /* 80096D5C 00093B5C  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
 /* 80096D60 00093B60  CB E1 00 30 */	lfd f31, 0x30(r1)
@@ -4565,12 +4565,12 @@ lbl_80096D5C:
 /* 80096D7C 00093B7C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80096D80 00093B80  4E 80 00 20 */	blr 
 
-.global func_80096D84
-func_80096D84:
+.global zFX.add_entrail_tweaks__17_unnamed_zFX_cpp_Fv
+zFX.add_entrail_tweaks__17_unnamed_zFX_cpp_Fv:
 /* 80096D84 00093B84  4E 80 00 20 */	blr 
 
-.global func_80096D88
-func_80096D88:
+.global zFX.reset_entrails__Fv
+zFX.reset_entrails__Fv:
 /* 80096D88 00093B88  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80096D8C 00093B8C  7C 08 02 A6 */	mflr r0
 /* 80096D90 00093B90  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4584,7 +4584,7 @@ func_80096D88:
 /* 80096DB0 00093BB0  48 00 00 10 */	b lbl_80096DC0
 lbl_80096DB4:
 /* 80096DB4 00093BB4  7F E3 FB 78 */	mr r3, r31
-/* 80096DB8 00093BB8  48 00 00 29 */	bl func_80096DE0
+/* 80096DB8 00093BB8  48 00 00 29 */	bl zFX.reset__Q217_unnamed_zFX_cpp_12entrail_dataFv
 /* 80096DBC 00093BBC  3B FF 00 24 */	addi r31, r31, 0x24
 lbl_80096DC0:
 /* 80096DC0 00093BC0  7C 1F F0 40 */	cmplw r31, r30
@@ -4596,16 +4596,16 @@ lbl_80096DC0:
 /* 80096DD8 00093BD8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80096DDC 00093BDC  4E 80 00 20 */	blr 
 
-.global func_80096DE0
-func_80096DE0:
+.global zFX.reset__Q217_unnamed_zFX_cpp_12entrail_dataFv
+zFX.reset__Q217_unnamed_zFX_cpp_12entrail_dataFv:
 /* 80096DE0 00093BE0  38 00 00 00 */	li r0, 0
 /* 80096DE4 00093BE4  B0 03 00 00 */	sth r0, 0(r3)
 /* 80096DE8 00093BE8  C0 02 8F F4 */	lfs f0, lbl_803CD974-_SDA2_BASE_(r2)
 /* 80096DEC 00093BEC  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 80096DF0 00093BF0  4E 80 00 20 */	blr 
 
-.global func_80096DF4
-func_80096DF4:
+.global zFX.update_entrails__Ff
+zFX.update_entrails__Ff:
 /* 80096DF4 00093BF4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80096DF8 00093BF8  7C 08 02 A6 */	mflr r0
 /* 80096DFC 00093BFC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4622,7 +4622,7 @@ func_80096DF4:
 lbl_80096E28:
 /* 80096E28 00093C28  FC 20 F8 90 */	fmr f1, f31
 /* 80096E2C 00093C2C  7F E3 FB 78 */	mr r3, r31
-/* 80096E30 00093C30  48 00 00 2D */	bl func_80096E5C
+/* 80096E30 00093C30  48 00 00 2D */	bl zFX.update__Q217_unnamed_zFX_cpp_12entrail_dataFf
 /* 80096E34 00093C34  3B FF 00 24 */	addi r31, r31, 0x24
 lbl_80096E38:
 /* 80096E38 00093C38  7C 1F F0 40 */	cmplw r31, r30
@@ -4635,8 +4635,8 @@ lbl_80096E38:
 /* 80096E54 00093C54  38 21 00 20 */	addi r1, r1, 0x20
 /* 80096E58 00093C58  4E 80 00 20 */	blr 
 
-.global func_80096E5C
-func_80096E5C:
+.global zFX.update__Q217_unnamed_zFX_cpp_12entrail_dataFf
+zFX.update__Q217_unnamed_zFX_cpp_12entrail_dataFf:
 /* 80096E5C 00093C5C  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80096E60 00093C60  7C 08 02 A6 */	mflr r0
 /* 80096E64 00093C64  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -4741,7 +4741,7 @@ lbl_80096F74:
 /* 80096FE4 00093DE4  38 61 00 08 */	addi r3, r1, 8
 /* 80096FE8 00093DE8  38 81 00 2C */	addi r4, r1, 0x2c
 /* 80096FEC 00093DEC  38 BF 00 28 */	addi r5, r31, 0x28
-/* 80096FF0 00093DF0  48 00 03 91 */	bl func_80097380
+/* 80096FF0 00093DF0  48 00 03 91 */	bl zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80096FF4 00093DF4  A0 1E 00 00 */	lhz r0, 0(r30)
 /* 80096FF8 00093DF8  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 80096FFC 00093DFC  41 82 00 2C */	beq lbl_80097028
@@ -4786,8 +4786,8 @@ lbl_80097070:
 /* 8009708C 00093E8C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80097090 00093E90  4E 80 00 20 */	blr 
 
-.global func_80097094
-func_80097094:
+.global zFX.setup_entrails__FR6zScene
+zFX.setup_entrails__FR6zScene:
 /* 80097094 00093E94  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80097098 00093E98  7C 08 02 A6 */	mflr r0
 /* 8009709C 00093E9C  3C 80 80 29 */	lis r4, lbl_8028F038@ha
@@ -4823,7 +4823,7 @@ lbl_800970D4:
 /* 80097110 00093F10  3B FF 00 04 */	addi r31, r31, 4
 /* 80097114 00093F14  3A F7 00 04 */	addi r23, r23, 4
 /* 80097118 00093F18  41 80 FF BC */	blt lbl_800970D4
-/* 8009711C 00093F1C  4B FF FC 69 */	bl func_80096D84
+/* 8009711C 00093F1C  4B FF FC 69 */	bl zFX.add_entrail_tweaks__17_unnamed_zFX_cpp_Fv
 /* 80097120 00093F20  38 00 00 00 */	li r0, 0
 /* 80097124 00093F24  90 0D 8E 9C */	stw r0, lbl_803CB79C-_SDA_BASE_(r13)
 /* 80097128 00093F28  80 18 00 74 */	lwz r0, 0x74(r24)
@@ -4911,7 +4911,7 @@ lbl_8009722C:
 lbl_80097250:
 /* 80097250 00094050  80 0D 8E 98 */	lwz r0, lbl_803CB798-_SDA_BASE_(r13)
 /* 80097254 00094054  7C 60 FA 14 */	add r3, r0, r31
-/* 80097258 00094058  4B FF FB 89 */	bl func_80096DE0
+/* 80097258 00094058  4B FF FB 89 */	bl zFX.reset__Q217_unnamed_zFX_cpp_12entrail_dataFv
 /* 8009725C 0009405C  80 8D 8E 98 */	lwz r4, lbl_803CB798-_SDA_BASE_(r13)
 /* 80097260 00094060  38 7F 00 02 */	addi r3, r31, 2
 /* 80097264 00094064  38 1F 00 04 */	addi r0, r31, 4
@@ -5002,8 +5002,8 @@ func_80097358:
 /* 80097378 00094178  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009737C 0009417C  4E 80 00 20 */	blr 
 
-.global func_80097380
-func_80097380:
+.global zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
+zFX.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80097380 00094180  C0 65 00 04 */	lfs f3, 4(r5)
 /* 80097384 00094184  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 80097388 00094188  C0 44 00 14 */	lfs f2, 0x14(r4)

@@ -168,8 +168,8 @@ lbl_800D32E0:
 /* 800D32E8 000D00E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D32EC 000D00EC  4E 80 00 20 */	blr 
 
-.global func_800D32F0
-func_800D32F0:
+.global iSystem.TRCInit__Fv
+iSystem.TRCInit__Fv:
 /* 800D32F0 000D00F0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D32F4 000D00F4  7C 08 02 A6 */	mflr r0
 /* 800D32F8 000D00F8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -249,8 +249,8 @@ lbl_800D3404:
 /* 800D3410 000D0210  48 00 15 15 */	bl iTimeInit__Fv
 /* 800D3414 000D0214  4B F6 2A 5D */	bl xPadInit__Fv
 /* 800D3418 000D0218  4B F7 4C 99 */	bl xSndInit__Fv
-/* 800D341C 000D021C  4B FF FE D5 */	bl func_800D32F0
-/* 800D3420 000D0220  48 00 01 25 */	bl func_800D3544
+/* 800D341C 000D021C  4B FF FE D5 */	bl iSystem.TRCInit__Fv
+/* 800D3420 000D0220  48 00 01 25 */	bl iSystem.RenderWareInit__Fv
 /* 800D3424 000D0224  4B F5 D7 E1 */	bl xMathInit__Fv
 /* 800D3428 000D0228  4B F5 E4 91 */	bl xMath3Init__Fv
 /* 800D342C 000D022C  3C 60 80 0D */	lis r3, lbl_800D30E0@ha
@@ -269,7 +269,7 @@ iSystemExit__Fv:
 /* 800D3454 000D0254  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800D3458 000D0258  4B F4 49 45 */	bl xDebugExit__Fv
 /* 800D345C 000D025C  4B F5 D7 C9 */	bl xMathExit__Fv
-/* 800D3460 000D0260  48 00 01 DD */	bl func_800D363C
+/* 800D3460 000D0260  48 00 01 DD */	bl iSystem.RenderWareExit__Fv
 /* 800D3464 000D0264  4B F7 55 A5 */	bl xSndExit__Fv
 /* 800D3468 000D0268  4B F6 31 1D */	bl xPadKill__Fv
 /* 800D346C 000D026C  4B FE FE AD */	bl iFileExit__Fv
@@ -287,8 +287,8 @@ iSystemExit__Fv:
 /* 800D349C 000D029C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D34A0 000D02A0  4E 80 00 20 */	blr 
 
-.global func_800D34A4
-func_800D34A4:
+.global iSystem.RWAttachPlugins__Fv
+iSystem.RWAttachPlugins__Fv:
 /* 800D34A4 000D02A4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D34A8 000D02A8  7C 08 02 A6 */	mflr r0
 /* 800D34AC 000D02AC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -337,8 +337,8 @@ lbl_800D3534:
 /* 800D353C 000D033C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D3540 000D0340  4E 80 00 20 */	blr 
 
-.global func_800D3544
-func_800D3544:
+.global iSystem.RenderWareInit__Fv
+iSystem.RenderWareInit__Fv:
 /* 800D3544 000D0344  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D3548 000D0348  7C 08 02 A6 */	mflr r0
 /* 800D354C 000D034C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -353,13 +353,13 @@ func_800D3544:
 lbl_800D3570:
 /* 800D3570 000D0370  3C 60 00 06 */	lis r3, 6
 /* 800D3574 000D0374  48 15 EC 95 */	bl RwResourcesSetArenaSize
-/* 800D3578 000D0378  48 00 0F 35 */	bl func_800D44AC
+/* 800D3578 000D0378  48 00 0F 35 */	bl iSystem.DolphinInstallFileSystem__Fv
 /* 800D357C 000D037C  2C 03 00 00 */	cmpwi r3, 0
 /* 800D3580 000D0380  40 82 00 0C */	bne lbl_800D358C
 /* 800D3584 000D0384  38 60 00 01 */	li r3, 1
 /* 800D3588 000D0388  48 00 00 A4 */	b lbl_800D362C
 lbl_800D358C:
-/* 800D358C 000D038C  4B FF FF 19 */	bl func_800D34A4
+/* 800D358C 000D038C  4B FF FF 19 */	bl iSystem.RWAttachPlugins__Fv
 /* 800D3590 000D0390  28 03 00 00 */	cmplwi r3, 0
 /* 800D3594 000D0394  41 82 00 0C */	beq lbl_800D35A0
 /* 800D3598 000D0398  38 60 00 01 */	li r3, 1
@@ -408,8 +408,8 @@ lbl_800D362C:
 /* 800D3634 000D0434  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D3638 000D0438  4E 80 00 20 */	blr 
 
-.global func_800D363C
-func_800D363C:
+.global iSystem.RenderWareExit__Fv
+iSystem.RenderWareExit__Fv:
 /* 800D363C 000D043C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D3640 000D0440  7C 08 02 A6 */	mflr r0
 /* 800D3644 000D0444  90 01 00 14 */	stw r0, 0x14(r1)
@@ -482,8 +482,8 @@ null_func__Fv:
 /* 800D3734 000D0534  90 0D 92 14 */	stw r0, lbl_803CBB14-_SDA_BASE_(r13)
 /* 800D3738 000D0538  4E 80 00 20 */	blr 
 
-.global func_800D373C
-func_800D373C:
+.global iSystem.mem_null
+iSystem.mem_null:
 /* 800D373C 000D053C  90 6D 93 1C */	stw r3, lbl_803CBC1C-_SDA_BASE_(r13)
 /* 800D3740 000D0540  90 8D 93 20 */	stw r4, lbl_803CBC20-_SDA_BASE_(r13)
 /* 800D3744 000D0544  4E 80 00 20 */	blr 
@@ -528,8 +528,8 @@ lbl_800D37B0:
 /* 800D37B8 000D05B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D37BC 000D05BC  4E 80 00 20 */	blr 
 
-.global func_800D37C0
-func_800D37C0:
+.global iSystem._rwDolphinHeapFree__FPv
+iSystem._rwDolphinHeapFree__FPv:
 /* 800D37C0 000D05C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D37C4 000D05C4  7C 08 02 A6 */	mflr r0
 /* 800D37C8 000D05C8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -540,7 +540,7 @@ func_800D37C0:
 /* 800D37DC 000D05DC  40 82 00 10 */	bne lbl_800D37EC
 /* 800D37E0 000D05E0  38 60 00 00 */	li r3, 0
 /* 800D37E4 000D05E4  38 80 00 00 */	li r4, 0
-/* 800D37E8 000D05E8  4B FF FF 55 */	bl func_800D373C
+/* 800D37E8 000D05E8  4B FF FF 55 */	bl iSystem.mem_null
 lbl_800D37EC:
 /* 800D37EC 000D05EC  28 1F 00 00 */	cmplwi r31, 0
 /* 800D37F0 000D05F0  41 82 00 3C */	beq lbl_800D382C
@@ -566,8 +566,8 @@ lbl_800D382C:
 /* 800D3838 000D0638  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D383C 000D063C  4E 80 00 20 */	blr 
 
-.global func_800D3840
-func_800D3840:
+.global iSystem._rwDolphinHeapAlloc__FUl
+iSystem._rwDolphinHeapAlloc__FUl:
 /* 800D3840 000D0640  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D3844 000D0644  7C 08 02 A6 */	mflr r0
 /* 800D3848 000D0648  90 01 00 14 */	stw r0, 0x14(r1)
@@ -632,7 +632,7 @@ lbl_800D3910:
 /* 800D3920 000D0720  7F E3 21 D6 */	mullw r31, r3, r4
 /* 800D3924 000D0724  93 C1 00 08 */	stw r30, 8(r1)
 /* 800D3928 000D0728  7F E3 FB 78 */	mr r3, r31
-/* 800D392C 000D072C  4B FF FF 15 */	bl func_800D3840
+/* 800D392C 000D072C  4B FF FF 15 */	bl iSystem._rwDolphinHeapAlloc__FUl
 /* 800D3930 000D0730  7C 7E 1B 79 */	or. r30, r3, r3
 /* 800D3934 000D0734  41 82 00 10 */	beq lbl_800D3944
 /* 800D3938 000D0738  7F E5 FB 78 */	mr r5, r31
@@ -668,7 +668,7 @@ lbl_800D3994:
 /* 800D39A0 000D07A0  48 00 00 44 */	b lbl_800D39E4
 lbl_800D39A4:
 /* 800D39A4 000D07A4  7F A3 EB 78 */	mr r3, r29
-/* 800D39A8 000D07A8  4B FF FE 99 */	bl func_800D3840
+/* 800D39A8 000D07A8  4B FF FE 99 */	bl iSystem._rwDolphinHeapAlloc__FUl
 /* 800D39AC 000D07AC  7C 7E 1B 79 */	or. r30, r3, r3
 /* 800D39B0 000D07B0  41 82 00 30 */	beq lbl_800D39E0
 /* 800D39B4 000D07B4  7C 1F E8 40 */	cmplw r31, r29
@@ -683,7 +683,7 @@ lbl_800D39CC:
 /* 800D39D4 000D07D4  4B F2 FB 6D */	bl memcpy
 lbl_800D39D8:
 /* 800D39D8 000D07D8  7F 83 E3 78 */	mr r3, r28
-/* 800D39DC 000D07DC  4B FF FD E5 */	bl func_800D37C0
+/* 800D39DC 000D07DC  4B FF FD E5 */	bl iSystem._rwDolphinHeapFree__FPv
 lbl_800D39E0:
 /* 800D39E0 000D07E0  7F C3 F3 78 */	mr r3, r30
 lbl_800D39E4:
@@ -698,23 +698,23 @@ lbl_800D39E4:
 
 .global DolphinInitMemorySystem__FP17RwMemoryFunctions
 DolphinInitMemorySystem__FP17RwMemoryFunctions:
-/* 800D3A04 000D0804  3C A0 80 0D */	lis r5, func_800D3840@ha
+/* 800D3A04 000D0804  3C A0 80 0D */	lis r5, iSystem._rwDolphinHeapAlloc__FUl@ha
 /* 800D3A08 000D0808  3C 80 80 0D */	lis r4, lbl_800D3910@ha
-/* 800D3A0C 000D080C  38 05 38 40 */	addi r0, r5, func_800D3840@l
+/* 800D3A0C 000D080C  38 05 38 40 */	addi r0, r5, iSystem._rwDolphinHeapAlloc__FUl@l
 /* 800D3A10 000D0810  3C A0 80 0D */	lis r5, lbl_800D3960@ha
 /* 800D3A14 000D0814  90 03 00 00 */	stw r0, 0(r3)
 /* 800D3A18 000D0818  38 04 39 10 */	addi r0, r4, lbl_800D3910@l
-/* 800D3A1C 000D081C  3C 80 80 0D */	lis r4, func_800D37C0@ha
+/* 800D3A1C 000D081C  3C 80 80 0D */	lis r4, iSystem._rwDolphinHeapFree__FPv@ha
 /* 800D3A20 000D0820  38 A5 39 60 */	addi r5, r5, lbl_800D3960@l
 /* 800D3A24 000D0824  90 03 00 0C */	stw r0, 0xc(r3)
-/* 800D3A28 000D0828  38 04 37 C0 */	addi r0, r4, func_800D37C0@l
+/* 800D3A28 000D0828  38 04 37 C0 */	addi r0, r4, iSystem._rwDolphinHeapFree__FPv@l
 /* 800D3A2C 000D082C  90 A3 00 08 */	stw r5, 8(r3)
 /* 800D3A30 000D0830  90 03 00 04 */	stw r0, 4(r3)
 /* 800D3A34 000D0834  38 60 00 01 */	li r3, 1
 /* 800D3A38 000D0838  4E 80 00 20 */	blr 
 
-.global func_800D3A3C
-func_800D3A3C:
+.global iSystem.dlAccessToMode__FPCc
+iSystem.dlAccessToMode__FPCc:
 /* 800D3A3C 000D083C  28 03 00 00 */	cmplwi r3, 0
 /* 800D3A40 000D0840  38 A0 00 00 */	li r5, 0
 /* 800D3A44 000D0844  40 82 00 0C */	bne lbl_800D3A50
@@ -825,7 +825,7 @@ lbl_800D3B9C:
 /* 800D3BB0 000D09B0  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800D3BB4 000D09B4  7C 7D 1B 78 */	mr r29, r3
 /* 800D3BB8 000D09B8  7C 83 23 78 */	mr r3, r4
-/* 800D3BBC 000D09BC  4B FF FE 81 */	bl func_800D3A3C
+/* 800D3BBC 000D09BC  4B FF FE 81 */	bl iSystem.dlAccessToMode__FPCc
 /* 800D3BC0 000D09C0  7C 7F 1B 79 */	or. r31, r3, r3
 /* 800D3BC4 000D09C4  40 82 00 0C */	bne lbl_800D3BD0
 /* 800D3BC8 000D09C8  38 60 00 00 */	li r3, 0
@@ -965,8 +965,8 @@ lbl_800D3DA4:
 /* 800D3DB0 000D0BB0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D3DB4 000D0BB4  4E 80 00 20 */	blr 
 
-.global func_800D3DB8
-func_800D3DB8:
+.global iSystem.dlFread__FPvUlUlPv
+iSystem.dlFread__FPvUlUlPv:
 /* 800D3DB8 000D0BB8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800D3DBC 000D0BBC  7C 08 02 A6 */	mflr r0
 /* 800D3DC0 000D0BC0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1123,8 +1123,8 @@ lbl_800D3FDC:
 /* 800D3FDC 000D0DDC  38 60 00 00 */	li r3, 0
 /* 800D3FE0 000D0DE0  4E 80 00 20 */	blr 
 
-.global func_800D3FE4
-func_800D3FE4:
+.global iSystem.dlFseek__FPvli
+iSystem.dlFseek__FPvli:
 /* 800D3FE4 000D0DE4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800D3FE8 000D0DE8  7C 08 02 A6 */	mflr r0
 /* 800D3FEC 000D0DEC  2C 05 00 01 */	cmpwi r5, 1
@@ -1252,7 +1252,7 @@ lbl_800D4188:
 /* 800D41A8 000D0FA8  3B C0 00 00 */	li r30, 0
 /* 800D41AC 000D0FAC  38 BC FF FF */	addi r5, r28, -1
 /* 800D41B0 000D0FB0  38 80 00 01 */	li r4, 1
-/* 800D41B4 000D0FB4  4B FF FC 05 */	bl func_800D3DB8
+/* 800D41B4 000D0FB4  4B FF FC 05 */	bl iSystem.dlFread__FPvUlUlPv
 /* 800D41B8 000D0FB8  7C 7D 1B 79 */	or. r29, r3, r3
 /* 800D41BC 000D0FBC  40 82 00 90 */	bne lbl_800D424C
 /* 800D41C0 000D0FC0  38 60 00 00 */	li r3, 0
@@ -1270,7 +1270,7 @@ lbl_800D41CC:
 /* 800D41EC 000D0FEC  7F E3 FB 78 */	mr r3, r31
 /* 800D41F0 000D0FF0  38 A0 00 01 */	li r5, 1
 /* 800D41F4 000D0FF4  7F C4 F3 78 */	mr r4, r30
-/* 800D41F8 000D0FF8  4B FF FD ED */	bl func_800D3FE4
+/* 800D41F8 000D0FF8  4B FF FD ED */	bl iSystem.dlFseek__FPvli
 /* 800D41FC 000D0FFC  7F 63 DB 78 */	mr r3, r27
 /* 800D4200 000D1000  48 00 00 78 */	b lbl_800D4278
 lbl_800D4204:
@@ -1369,16 +1369,16 @@ lbl_800D4320:
 /* 800D4348 000D1148  3C A0 80 0D */	lis r5, lbl_800D3CC8@ha
 /* 800D434C 000D114C  90 1F 00 00 */	stw r0, 0(r31)
 /* 800D4350 000D1150  38 03 3B 9C */	addi r0, r3, lbl_800D3B9C@l
-/* 800D4354 000D1154  3C 80 80 0D */	lis r4, func_800D3DB8@ha
+/* 800D4354 000D1154  3C 80 80 0D */	lis r4, iSystem.dlFread__FPvUlUlPv@ha
 /* 800D4358 000D1158  3C 60 80 0D */	lis r3, lbl_800D3FDC@ha
 /* 800D435C 000D115C  90 1F 00 04 */	stw r0, 4(r31)
 /* 800D4360 000D1160  38 05 3C C8 */	addi r0, r5, lbl_800D3CC8@l
 /* 800D4364 000D1164  3D 00 80 0D */	lis r8, lbl_800D4188@ha
 /* 800D4368 000D1168  3C E0 80 0D */	lis r7, lbl_800D428C@ha
 /* 800D436C 000D116C  90 1F 00 08 */	stw r0, 8(r31)
-/* 800D4370 000D1170  38 04 3D B8 */	addi r0, r4, func_800D3DB8@l
+/* 800D4370 000D1170  38 04 3D B8 */	addi r0, r4, iSystem.dlFread__FPvUlUlPv@l
 /* 800D4374 000D1174  3C C0 80 0D */	lis r6, lbl_800D4294@ha
-/* 800D4378 000D1178  3C A0 80 0D */	lis r5, func_800D3FE4@ha
+/* 800D4378 000D1178  3C A0 80 0D */	lis r5, iSystem.dlFseek__FPvli@ha
 /* 800D437C 000D117C  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 800D4380 000D1180  38 03 3F DC */	addi r0, r3, lbl_800D3FDC@l
 /* 800D4384 000D1184  3C 80 80 0D */	lis r4, lbl_800D42B4@ha
@@ -1388,7 +1388,7 @@ lbl_800D4320:
 /* 800D4394 000D1194  39 07 42 8C */	addi r8, r7, lbl_800D428C@l
 /* 800D4398 000D1198  38 E6 42 94 */	addi r7, r6, lbl_800D4294@l
 /* 800D439C 000D119C  90 1F 00 14 */	stw r0, 0x14(r31)
-/* 800D43A0 000D11A0  38 C5 3F E4 */	addi r6, r5, func_800D3FE4@l
+/* 800D43A0 000D11A0  38 C5 3F E4 */	addi r6, r5, iSystem.dlFseek__FPvli@l
 /* 800D43A4 000D11A4  38 84 42 B4 */	addi r4, r4, lbl_800D42B4@l
 /* 800D43A8 000D11A8  38 03 42 BC */	addi r0, r3, lbl_800D42BC@l
 /* 800D43AC 000D11AC  91 1F 00 18 */	stw r8, 0x18(r31)
@@ -1461,8 +1461,8 @@ lbl_800D4448:
 /* 800D44A4 000D12A4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D44A8 000D12A8  4E 80 00 20 */	blr 
 
-.global func_800D44AC
-func_800D44AC:
+.global iSystem.DolphinInstallFileSystem__Fv
+iSystem.DolphinInstallFileSystem__Fv:
 /* 800D44AC 000D12AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D44B0 000D12B0  7C 08 02 A6 */	mflr r0
 /* 800D44B4 000D12B4  90 01 00 14 */	stw r0, 0x14(r1)

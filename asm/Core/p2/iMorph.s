@@ -2,8 +2,8 @@
 
 .section .text  # 0x800C9630 - 0x800CA920
 
-.global func_800C9630
-func_800C9630:
+.global iMorph.MorphCommon__FP8RpAtomicP11RwMatrixTagPPsPsUifi
+iMorph.MorphCommon__FP8RpAtomicP11RwMatrixTagPPsPsUifi:
 /* 800C9630 000C6430  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800C9634 000C6434  7C 08 02 A6 */	mflr r0
 /* 800C9638 000C6438  90 01 00 74 */	stw r0, 0x74(r1)
@@ -594,7 +594,7 @@ iMorphRender__FP8RpAtomicP11RwMatrixTagPPsPsUif:
 /* 800C9E90 000C6C90  7C 08 02 A6 */	mflr r0
 /* 800C9E94 000C6C94  39 00 00 01 */	li r8, 1
 /* 800C9E98 000C6C98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800C9E9C 000C6C9C  4B FF F7 95 */	bl func_800C9630
+/* 800C9E9C 000C6C9C  4B FF F7 95 */	bl iMorph.MorphCommon__FP8RpAtomicP11RwMatrixTagPPsPsUifi
 /* 800C9EA0 000C6CA0  80 6D 92 70 */	lwz r3, lbl_803CBB70-_SDA_BASE_(r13)
 /* 800C9EA4 000C6CA4  28 03 00 00 */	cmplwi r3, 0
 /* 800C9EA8 000C6CA8  41 82 00 10 */	beq lbl_800C9EB8

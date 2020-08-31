@@ -274,8 +274,8 @@ lbl_80016254:
 /* 80016260 00013060  38 21 00 10 */	addi r1, r1, 0x10
 /* 80016264 00013064  4E 80 00 20 */	blr 
 
-.global func_80016268
-func_80016268:
+.global xCutscene.xCutsceneConvertBreak__FfP14xCutsceneBreakUii
+xCutscene.xCutsceneConvertBreak__FfP14xCutsceneBreakUii:
 /* 80016268 00013068  7C 66 1B 78 */	mr r6, r3
 /* 8001626C 0001306C  38 E0 00 00 */	li r7, 0
 /* 80016270 00013070  7C 89 03 A6 */	mtctr r4
@@ -345,7 +345,7 @@ lbl_80016338:
 /* 80016350 00013150  C0 3F 00 30 */	lfs f1, 0x30(r31)
 /* 80016354 00013154  80 7F 00 10 */	lwz r3, 0x10(r31)
 /* 80016358 00013158  80 84 00 28 */	lwz r4, 0x28(r4)
-/* 8001635C 0001315C  4B FF FF 0D */	bl func_80016268
+/* 8001635C 0001315C  4B FF FF 0D */	bl xCutscene.xCutsceneConvertBreak__FfP14xCutsceneBreakUii
 /* 80016360 00013160  D0 3F 00 34 */	stfs f1, 0x34(r31)
 /* 80016364 00013164  80 7F 00 14 */	lwz r3, 0x14(r31)
 /* 80016368 00013168  C0 1F 00 30 */	lfs f0, 0x30(r31)
@@ -396,7 +396,7 @@ lbl_800163EC:
 /* 8001640C 0001320C  C0 3F 00 30 */	lfs f1, 0x30(r31)
 /* 80016410 00013210  80 7F 00 10 */	lwz r3, 0x10(r31)
 /* 80016414 00013214  80 84 00 28 */	lwz r4, 0x28(r4)
-/* 80016418 00013218  4B FF FE 51 */	bl func_80016268
+/* 80016418 00013218  4B FF FE 51 */	bl xCutscene.xCutsceneConvertBreak__FfP14xCutsceneBreakUii
 /* 8001641C 0001321C  D0 3F 00 34 */	stfs f1, 0x34(r31)
 /* 80016420 00013220  80 1F 00 20 */	lwz r0, 0x20(r31)
 /* 80016424 00013224  28 00 00 00 */	cmplwi r0, 0
@@ -683,8 +683,8 @@ lbl_800167E4:
 /* 80016810 00013610  38 21 01 00 */	addi r1, r1, 0x100
 /* 80016814 00013614  4E 80 00 20 */	blr 
 
-.global func_80016818
-func_80016818:
+.global xCutscene.xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi
+xCutscene.xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi:
 /* 80016818 00013618  94 21 F8 40 */	stwu r1, -0x7c0(r1)
 /* 8001681C 0001361C  7C 08 02 A6 */	mflr r0
 /* 80016820 00013620  90 01 07 C4 */	stw r0, 0x7c4(r1)
@@ -826,8 +826,8 @@ lbl_80016A1C:
 /* 80016A28 00013828  38 21 07 C0 */	addi r1, r1, 0x7c0
 /* 80016A2C 0001382C  4E 80 00 20 */	blr 
 
-.global func_80016A30
-func_80016A30:
+.global xCutscene.JDeltaEval__FP8RpAtomicPvPvf
+xCutscene.JDeltaEval__FP8RpAtomicPvPvf:
 /* 80016A30 00013830  94 21 FD B0 */	stwu r1, -0x250(r1)
 /* 80016A34 00013834  7C 08 02 A6 */	mflr r0
 /* 80016A38 00013838  38 E5 00 0C */	addi r7, r5, 0xc
@@ -1483,7 +1483,7 @@ lbl_80017398:
 /* 800173AC 000141AC  C0 2F 00 34 */	lfs f1, 0x34(r15)
 /* 800173B0 000141B0  80 6F 00 10 */	lwz r3, 0x10(r15)
 /* 800173B4 000141B4  80 84 00 28 */	lwz r4, 0x28(r4)
-/* 800173B8 000141B8  4B FF EE B1 */	bl func_80016268
+/* 800173B8 000141B8  4B FF EE B1 */	bl xCutscene.xCutsceneConvertBreak__FfP14xCutsceneBreakUii
 /* 800173BC 000141BC  80 6F 00 00 */	lwz r3, 0(r15)
 /* 800173C0 000141C0  38 00 00 00 */	li r0, 0
 /* 800173C4 000141C4  90 01 41 08 */	stw r0, 0x4108(r1)
@@ -1607,7 +1607,7 @@ lbl_80017560:
 /* 80017570 00014370  C0 05 00 00 */	lfs f0, 0(r5)
 /* 80017574 00014374  38 B6 00 10 */	addi r5, r22, 0x10
 /* 80017578 00014378  EC 3E 00 28 */	fsubs f1, f30, f0
-/* 8001757C 0001437C  4B FF F2 9D */	bl func_80016818
+/* 8001757C 0001437C  4B FF F2 9D */	bl xCutscene.xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi
 /* 80017580 00014380  80 01 40 F8 */	lwz r0, 0x40f8(r1)
 /* 80017584 00014384  28 00 00 00 */	cmplwi r0, 0
 /* 80017588 00014388  41 82 00 34 */	beq lbl_800175BC
@@ -1864,7 +1864,7 @@ lbl_80017918:
 lbl_80017924:
 /* 80017924 00014724  FC 20 F0 90 */	fmr f1, f30
 /* 80017928 00014728  7E A3 AB 78 */	mr r3, r21
-/* 8001792C 0001472C  4B FF F1 05 */	bl func_80016A30
+/* 8001792C 0001472C  4B FF F1 05 */	bl xCutscene.JDeltaEval__FP8RpAtomicPvPvf
 lbl_80017930:
 /* 80017930 00014730  28 17 00 00 */	cmplwi r23, 0
 /* 80017934 00014734  41 82 00 A4 */	beq lbl_800179D8

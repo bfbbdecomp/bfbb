@@ -528,8 +528,8 @@ lbl_80109D14:
 /* 80109D34 00106B34  38 21 00 40 */	addi r1, r1, 0x40
 /* 80109D38 00106B38  4E 80 00 20 */	blr 
 
-.global func_80109D3C
-func_80109D3C:
+.global zNPCTypeTiki.zNPCTiki_PickTikisToAnimate__Fv
+zNPCTypeTiki.zNPCTiki_PickTikisToAnimate__Fv:
 /* 80109D3C 00106B3C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80109D40 00106B40  7C 08 02 A6 */	mflr r0
 /* 80109D44 00106B44  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -646,7 +646,7 @@ zNPCTiki_Timestep__FP6xScenef:
 /* 80109ED0 00106CD0  DB E1 00 10 */	stfd f31, 0x10(r1)
 /* 80109ED4 00106CD4  F3 E1 00 18 */	psq_st f31, 24(r1), 0, qr0
 /* 80109ED8 00106CD8  FF E0 08 90 */	fmr f31, f1
-/* 80109EDC 00106CDC  4B FF FE 61 */	bl func_80109D3C
+/* 80109EDC 00106CDC  4B FF FE 61 */	bl zNPCTypeTiki.zNPCTiki_PickTikisToAnimate__Fv
 /* 80109EE0 00106CE0  48 00 00 49 */	bl zNPCTiki_ReparentOrphans__Fv
 /* 80109EE4 00106CE4  C0 0D 84 34 */	lfs f0, lbl_803CAD34-_SDA_BASE_(r13)
 /* 80109EE8 00106CE8  EC 00 F8 2A */	fadds f0, f0, f31
@@ -2858,8 +2858,8 @@ lbl_8010BE64:
 /* 8010BEA8 00108CA8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010BEAC 00108CAC  4E 80 00 20 */	blr 
 
-.global func_8010BEB0
-func_8010BEB0:
+.global zNPCTypeTiki.loveyFloat__FP8zNPCTikif
+zNPCTypeTiki.loveyFloat__FP8zNPCTikif:
 /* 8010BEB0 00108CB0  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8010BEB4 00108CB4  7C 08 02 A6 */	mflr r0
 /* 8010BEB8 00108CB8  90 01 00 44 */	stw r0, 0x44(r1)
@@ -2990,7 +2990,7 @@ lbl_8010C084:
 lbl_8010C090:
 /* 8010C090 00108E90  FC 20 F8 90 */	fmr f1, f31
 /* 8010C094 00108E94  7F E3 FB 78 */	mr r3, r31
-/* 8010C098 00108E98  4B FF FE 19 */	bl func_8010BEB0
+/* 8010C098 00108E98  4B FF FE 19 */	bl zNPCTypeTiki.loveyFloat__FP8zNPCTikif
 /* 8010C09C 00108E9C  7F C3 F3 78 */	mr r3, r30
 /* 8010C0A0 00108EA0  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 8010C0A4 00108EA4  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -3042,7 +3042,7 @@ lbl_8010C0C8:
 lbl_8010C158:
 /* 8010C158 00108F58  FC 20 F8 90 */	fmr f1, f31
 /* 8010C15C 00108F5C  7F E3 FB 78 */	mr r3, r31
-/* 8010C160 00108F60  4B FF FD 51 */	bl func_8010BEB0
+/* 8010C160 00108F60  4B FF FD 51 */	bl zNPCTypeTiki.loveyFloat__FP8zNPCTikif
 /* 8010C164 00108F64  7F C3 F3 78 */	mr r3, r30
 /* 8010C168 00108F68  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
 /* 8010C16C 00108F6C  80 01 00 44 */	lwz r0, 0x44(r1)

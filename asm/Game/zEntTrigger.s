@@ -55,7 +55,7 @@ zEntTriggerInit__FP11zEntTriggerP9xEntAsset:
 /* 80092128 0008EF28  38 61 00 08 */	addi r3, r1, 8
 /* 8009212C 0008EF2C  38 9D 00 D4 */	addi r4, r29, 0xd4
 /* 80092130 0008EF30  7C 65 1B 78 */	mr r5, r3
-/* 80092134 0008EF34  48 00 05 61 */	bl func_80092694
+/* 80092134 0008EF34  48 00 05 61 */	bl zEntTrigger.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80092138 0008EF38  38 7D 01 04 */	addi r3, r29, 0x104
 /* 8009213C 0008EF3C  38 81 00 08 */	addi r4, r1, 8
 /* 80092140 0008EF40  38 BE 00 20 */	addi r5, r30, 0x20
@@ -443,8 +443,8 @@ lbl_80092674:
 /* 8009268C 0008F48C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80092690 0008F490  4E 80 00 20 */	blr 
 
-.global func_80092694
-func_80092694:
+.global zEntTrigger.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
+zEntTrigger.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80092694 0008F494  C0 65 00 04 */	lfs f3, 4(r5)
 /* 80092698 0008F498  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 8009269C 0008F49C  C0 44 00 14 */	lfs f2, 0x14(r4)

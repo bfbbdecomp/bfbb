@@ -2,8 +2,8 @@
 
 .section .text  # 0x8012C0A8 - 0x8012D888
 
-.global func_8012C0A8
-func_8012C0A8:
+.global zEntTeleportBox.VecFromAngle__FfP5xVec3
+zEntTeleportBox.VecFromAngle__FfP5xVec3:
 /* 8012C0A8 00128EA8  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8012C0AC 00128EAC  7C 08 02 A6 */	mflr r0
 /* 8012C0B0 00128EB0  90 01 00 54 */	stw r0, 0x54(r1)
@@ -1365,7 +1365,7 @@ lbl_8012D4C8:
 /* 8012D4FC 0012A2FC  C8 01 00 30 */	lfd f0, 0x30(r1)
 /* 8012D500 0012A300  EC 00 08 28 */	fsubs f0, f0, f1
 /* 8012D504 0012A304  EC 22 00 32 */	fmuls f1, f2, f0
-/* 8012D508 0012A308  4B FF EB A1 */	bl func_8012C0A8
+/* 8012D508 0012A308  4B FF EB A1 */	bl zEntTeleportBox.VecFromAngle__FfP5xVec3
 /* 8012D50C 0012A30C  C0 22 A2 9C */	lfs f1, lbl_803CEC1C-_SDA2_BASE_(r2)
 /* 8012D510 0012A310  3C 60 80 27 */	lis r3, lbl_8026C2B0@ha
 /* 8012D514 0012A314  C0 01 00 08 */	lfs f0, 8(r1)

@@ -139,15 +139,15 @@ lbl_800B57E0:
 /* 800B57E0 000B25E0  38 00 00 00 */	li r0, 0
 /* 800B57E4 000B25E4  90 0D 90 F0 */	stw r0, lbl_803CB9F0-_SDA_BASE_(r13)
 lbl_800B57E8:
-/* 800B57E8 000B25E8  48 00 00 19 */	bl func_800B5800
+/* 800B57E8 000B25E8  48 00 00 19 */	bl zSurface.zSurfaceInitDefaultSurface__Fv
 /* 800B57EC 000B25EC  BA C1 00 18 */	lmw r22, 0x18(r1)
 /* 800B57F0 000B25F0  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 800B57F4 000B25F4  7C 08 03 A6 */	mtlr r0
 /* 800B57F8 000B25F8  38 21 00 40 */	addi r1, r1, 0x40
 /* 800B57FC 000B25FC  4E 80 00 20 */	blr 
 
-.global func_800B5800
-func_800B5800:
+.global zSurface.zSurfaceInitDefaultSurface__Fv
+zSurface.zSurfaceInitDefaultSurface__Fv:
 /* 800B5800 000B2600  3C 60 80 2F */	lis r3, lbl_802F2C88@ha
 /* 800B5804 000B2604  C0 02 95 58 */	lfs f0, lbl_803CDED8-_SDA2_BASE_(r2)
 /* 800B5808 000B2608  39 03 2C 88 */	addi r8, r3, lbl_802F2C88@l

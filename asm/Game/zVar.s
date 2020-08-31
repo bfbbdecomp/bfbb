@@ -2,7 +2,7 @@
 
 .section .text  # 0x800BD1B0 - 0x800BE470
 
-func_800BD1B0:
+zVar.var_text_ActivePad__18_unnamed_zVar_cpp_Fv:
 /* 800BD1B0 000B9FB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BD1B4 000B9FB4  7C 08 02 A6 */	mflr r0
 /* 800BD1B8 000B9FB8  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -219,8 +219,8 @@ lbl_800BD35C:
 /* 800BD4F4 000BA2F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BD4F8 000BA2F8  4E 80 00 20 */	blr 
 
-.global func_800BD4FC
-func_800BD4FC:
+.global zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
+zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl:
 /* 800BD4FC 000BA2FC  94 21 FE 50 */	stwu r1, -0x1b0(r1)
 /* 800BD500 000BA300  7C 08 02 A6 */	mflr r0
 /* 800BD504 000BA304  3C A0 80 26 */	lis r5, lbl_8025F9E8@ha
@@ -408,7 +408,7 @@ lbl_800BD7A0:
 /* 800BD7C8 000BA5C8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD7CC 000BA5CC  38 84 87 68 */	addi r4, r4, lbl_802F8768@l
 /* 800BD7D0 000BA5D0  38 A0 00 3F */	li r5, 0x3f
-/* 800BD7D4 000BA5D4  4B FF FD 29 */	bl func_800BD4FC
+/* 800BD7D4 000BA5D4  4B FF FD 29 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD7D8 000BA5D8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD7DC 000BA5DC  7C 08 03 A6 */	mtlr r0
 /* 800BD7E0 000BA5E0  38 21 00 10 */	addi r1, r1, 0x10
@@ -420,7 +420,7 @@ lbl_800BD7A0:
 /* 800BD7F8 000BA5F8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD7FC 000BA5FC  38 84 87 A8 */	addi r4, r4, lbl_802F87A8@l
 /* 800BD800 000BA600  38 A0 00 3F */	li r5, 0x3f
-/* 800BD804 000BA604  4B FF FC F9 */	bl func_800BD4FC
+/* 800BD804 000BA604  4B FF FC F9 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD808 000BA608  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD80C 000BA60C  7C 08 03 A6 */	mtlr r0
 /* 800BD810 000BA610  38 21 00 10 */	addi r1, r1, 0x10
@@ -432,7 +432,7 @@ lbl_800BD7A0:
 /* 800BD828 000BA628  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD82C 000BA62C  38 84 87 E8 */	addi r4, r4, lbl_802F87E8@l
 /* 800BD830 000BA630  38 A0 00 3F */	li r5, 0x3f
-/* 800BD834 000BA634  4B FF FC C9 */	bl func_800BD4FC
+/* 800BD834 000BA634  4B FF FC C9 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD838 000BA638  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD83C 000BA63C  7C 08 03 A6 */	mtlr r0
 /* 800BD840 000BA640  38 21 00 10 */	addi r1, r1, 0x10
@@ -444,7 +444,7 @@ lbl_800BD7A0:
 /* 800BD858 000BA658  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD85C 000BA65C  38 84 88 28 */	addi r4, r4, lbl_802F8828@l
 /* 800BD860 000BA660  38 A0 00 3F */	li r5, 0x3f
-/* 800BD864 000BA664  4B FF FC 99 */	bl func_800BD4FC
+/* 800BD864 000BA664  4B FF FC 99 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD868 000BA668  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD86C 000BA66C  7C 08 03 A6 */	mtlr r0
 /* 800BD870 000BA670  38 21 00 10 */	addi r1, r1, 0x10
@@ -456,7 +456,7 @@ lbl_800BD7A0:
 /* 800BD888 000BA688  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD88C 000BA68C  38 84 88 68 */	addi r4, r4, lbl_802F8868@l
 /* 800BD890 000BA690  38 A0 00 3F */	li r5, 0x3f
-/* 800BD894 000BA694  4B FF FC 69 */	bl func_800BD4FC
+/* 800BD894 000BA694  4B FF FC 69 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD898 000BA698  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD89C 000BA69C  7C 08 03 A6 */	mtlr r0
 /* 800BD8A0 000BA6A0  38 21 00 10 */	addi r1, r1, 0x10
@@ -468,7 +468,7 @@ lbl_800BD7A0:
 /* 800BD8B8 000BA6B8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD8BC 000BA6BC  38 84 88 A8 */	addi r4, r4, lbl_802F88A8@l
 /* 800BD8C0 000BA6C0  38 A0 00 3F */	li r5, 0x3f
-/* 800BD8C4 000BA6C4  4B FF FC 39 */	bl func_800BD4FC
+/* 800BD8C4 000BA6C4  4B FF FC 39 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD8C8 000BA6C8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD8CC 000BA6CC  7C 08 03 A6 */	mtlr r0
 /* 800BD8D0 000BA6D0  38 21 00 10 */	addi r1, r1, 0x10
@@ -480,7 +480,7 @@ lbl_800BD7A0:
 /* 800BD8E8 000BA6E8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD8EC 000BA6EC  38 84 88 E8 */	addi r4, r4, lbl_802F88E8@l
 /* 800BD8F0 000BA6F0  38 A0 00 3F */	li r5, 0x3f
-/* 800BD8F4 000BA6F4  4B FF FC 09 */	bl func_800BD4FC
+/* 800BD8F4 000BA6F4  4B FF FC 09 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD8F8 000BA6F8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD8FC 000BA6FC  7C 08 03 A6 */	mtlr r0
 /* 800BD900 000BA700  38 21 00 10 */	addi r1, r1, 0x10
@@ -492,7 +492,7 @@ lbl_800BD7A0:
 /* 800BD918 000BA718  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800BD91C 000BA71C  38 84 89 28 */	addi r4, r4, lbl_802F8928@l
 /* 800BD920 000BA720  38 A0 00 3F */	li r5, 0x3f
-/* 800BD924 000BA724  4B FF FB D9 */	bl func_800BD4FC
+/* 800BD924 000BA724  4B FF FB D9 */	bl zVar.zVarGameSlotInfo__18_unnamed_zVar_cpp_FiPcUl
 /* 800BD928 000BA728  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BD92C 000BA72C  7C 08 03 A6 */	mtlr r0
 /* 800BD930 000BA730  38 21 00 10 */	addi r1, r1, 0x10
@@ -873,8 +873,8 @@ lbl_800BDEE0:
 /* 800BDEF0 000BACF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BDEF4 000BACF4  4E 80 00 20 */	blr 
 
-.global func_800BDEF8
-func_800BDEF8:
+.global zVar.find_var__18_unnamed_zVar_cpp_FRC6substr
+zVar.find_var__18_unnamed_zVar_cpp_FRC6substr:
 /* 800BDEF8 000BACF8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800BDEFC 000BACFC  7C 08 02 A6 */	mflr r0
 /* 800BDF00 000BAD00  90 01 00 24 */	stw r0, 0x24(r1)
@@ -977,7 +977,7 @@ var_text__FRC6substr:
 /* 800BE04C 000BAE4C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BE050 000BAE50  7C 08 02 A6 */	mflr r0
 /* 800BE054 000BAE54  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800BE058 000BAE58  4B FF FE A1 */	bl func_800BDEF8
+/* 800BE058 000BAE58  4B FF FE A1 */	bl zVar.find_var__18_unnamed_zVar_cpp_FRC6substr
 /* 800BE05C 000BAE5C  28 03 00 00 */	cmplwi r3, 0
 /* 800BE060 000BAE60  40 82 00 0C */	bne lbl_800BE06C
 /* 800BE064 000BAE64  38 60 00 00 */	li r3, 0

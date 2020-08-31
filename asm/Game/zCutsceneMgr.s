@@ -230,8 +230,8 @@ zCutSceneNamesTable_clearAll__Fv:
 /* 80052B7C 0004F97C  90 03 03 E8 */	stw r0, 0x3e8(r3)
 /* 80052B80 0004F980  4E 80 00 20 */	blr 
 
-.global func_80052B84
-func_80052B84:
+.global zCutsceneMgr.zCutsceneMgrPlayStart__FP12zCutsceneMgr
+zCutsceneMgr.zCutsceneMgrPlayStart__FP12zCutsceneMgr:
 /* 80052B84 0004F984  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80052B88 0004F988  7C 08 02 A6 */	mflr r0
 /* 80052B8C 0004F98C  3C 80 80 29 */	lis r4, lbl_8028BD08@ha
@@ -476,7 +476,7 @@ lbl_80052ED0:
 /* 80052EEC 0004FCEC  28 00 00 00 */	cmplwi r0, 0
 /* 80052EF0 0004FCF0  41 82 00 48 */	beq lbl_80052F38
 /* 80052EF4 0004FCF4  7F E3 FB 78 */	mr r3, r31
-/* 80052EF8 0004FCF8  4B FF FC 8D */	bl func_80052B84
+/* 80052EF8 0004FCF8  4B FF FC 8D */	bl zCutsceneMgr.zCutsceneMgrPlayStart__FP12zCutsceneMgr
 /* 80052EFC 0004FCFC  7F C3 F3 78 */	mr r3, r30
 /* 80052F00 0004FD00  7F C4 F3 78 */	mr r4, r30
 /* 80052F04 0004FD04  38 A0 00 18 */	li r5, 0x18
@@ -545,7 +545,7 @@ lbl_80052FAC:
 /* 80052FE4 0004FDE4  38 63 06 E0 */	addi r3, r3, 0x6e0
 /* 80052FE8 0004FDE8  4B FC C6 09 */	bl zEntEvent__FP5xBaseUi
 /* 80052FEC 0004FDEC  7F E3 FB 78 */	mr r3, r31
-/* 80052FF0 0004FDF0  48 00 00 3D */	bl func_8005302C
+/* 80052FF0 0004FDF0  48 00 00 3D */	bl zCutsceneMgr.zCutsceneMgrKillFX__FP12zCutsceneMgr
 /* 80052FF4 0004FDF4  38 00 00 00 */	li r0, 0
 /* 80052FF8 0004FDF8  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 80052FFC 0004FDFC  90 1F 00 14 */	stw r0, 0x14(r31)
@@ -563,8 +563,8 @@ lbl_80053018:
 /* 80053024 0004FE24  38 21 00 20 */	addi r1, r1, 0x20
 /* 80053028 0004FE28  4E 80 00 20 */	blr 
 
-.global func_8005302C
-func_8005302C:
+.global zCutsceneMgr.zCutsceneMgrKillFX__FP12zCutsceneMgr
+zCutsceneMgr.zCutsceneMgrKillFX__FP12zCutsceneMgr:
 /* 8005302C 0004FE2C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80053030 0004FE30  7C 08 02 A6 */	mflr r0
 /* 80053034 0004FE34  90 01 00 14 */	stw r0, 0x14(r1)
@@ -594,8 +594,8 @@ lbl_8005306C:
 /* 8005308C 0004FE8C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80053090 0004FE90  4E 80 00 20 */	blr 
 
-.global func_80053094
-func_80053094:
+.global zCutsceneMgr.zCutsceneMgrUpdateFX__FP12zCutsceneMgrf
+zCutsceneMgr.zCutsceneMgrUpdateFX__FP12zCutsceneMgrf:
 /* 80053094 0004FE94  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80053098 0004FE98  7C 08 02 A6 */	mflr r0
 /* 8005309C 0004FE9C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -678,7 +678,7 @@ lbl_800531A4:
 /* 800531B4 0004FFB4  2C 03 00 00 */	cmpwi r3, 0
 /* 800531B8 0004FFB8  41 82 02 58 */	beq lbl_80053410
 /* 800531BC 0004FFBC  7F E3 FB 78 */	mr r3, r31
-/* 800531C0 0004FFC0  4B FF FE 6D */	bl func_8005302C
+/* 800531C0 0004FFC0  4B FF FE 6D */	bl zCutsceneMgr.zCutsceneMgrKillFX__FP12zCutsceneMgr
 /* 800531C4 0004FFC4  38 00 00 00 */	li r0, 0
 /* 800531C8 0004FFC8  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 800531CC 0004FFCC  90 1F 00 14 */	stw r0, 0x14(r31)
@@ -709,7 +709,7 @@ lbl_8005320C:
 lbl_80053228:
 /* 80053228 00050028  FC 20 F8 90 */	fmr f1, f31
 /* 8005322C 0005002C  7F E3 FB 78 */	mr r3, r31
-/* 80053230 00050030  4B FF FE 65 */	bl func_80053094
+/* 80053230 00050030  4B FF FE 65 */	bl zCutsceneMgr.zCutsceneMgrUpdateFX__FP12zCutsceneMgrf
 /* 80053234 00050034  80 1F 00 18 */	lwz r0, 0x18(r31)
 /* 80053238 00050038  28 00 00 00 */	cmplwi r0, 0
 /* 8005323C 0005003C  40 82 00 18 */	bne lbl_80053254
@@ -778,7 +778,7 @@ lbl_80053318:
 /* 80053328 00050128  2C 03 00 00 */	cmpwi r3, 0
 /* 8005332C 0005012C  41 82 00 28 */	beq lbl_80053354
 /* 80053330 00050130  7F E3 FB 78 */	mr r3, r31
-/* 80053334 00050134  4B FF FC F9 */	bl func_8005302C
+/* 80053334 00050134  4B FF FC F9 */	bl zCutsceneMgr.zCutsceneMgrKillFX__FP12zCutsceneMgr
 /* 80053338 00050138  38 00 00 00 */	li r0, 0
 /* 8005333C 0005013C  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 80053340 00050140  90 1F 00 14 */	stw r0, 0x14(r31)
@@ -817,7 +817,7 @@ lbl_800533AC:
 /* 800533B8 000501B8  28 00 00 00 */	cmplwi r0, 0
 /* 800533BC 000501BC  41 82 00 54 */	beq lbl_80053410
 /* 800533C0 000501C0  7F E3 FB 78 */	mr r3, r31
-/* 800533C4 000501C4  4B FF F7 C1 */	bl func_80052B84
+/* 800533C4 000501C4  4B FF F7 C1 */	bl zCutsceneMgr.zCutsceneMgrPlayStart__FP12zCutsceneMgr
 /* 800533C8 000501C8  7F E3 FB 78 */	mr r3, r31
 /* 800533CC 000501CC  7F E4 FB 78 */	mr r4, r31
 /* 800533D0 000501D0  38 A0 00 18 */	li r5, 0x18
@@ -837,7 +837,7 @@ lbl_800533AC:
 /* 80053408 00050208  48 13 E7 C9 */	bl zNPCFXCutscenePrep__FPC6xScenefPC12zCutsceneMgr
 /* 8005340C 0005020C  90 6D 8C 14 */	stw r3, lbl_803CB514-_SDA_BASE_(r13)
 lbl_80053410:
-/* 80053410 00050210  48 00 00 29 */	bl func_80053438
+/* 80053410 00050210  48 00 00 29 */	bl zCutsceneMgr.check_hide_entities__Fv
 lbl_80053414:
 /* 80053414 00050214  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 80053418 00050218  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -849,8 +849,8 @@ lbl_80053414:
 /* 80053430 00050230  38 21 00 30 */	addi r1, r1, 0x30
 /* 80053434 00050234  4E 80 00 20 */	blr 
 
-.global func_80053438
-func_80053438:
+.global zCutsceneMgr.check_hide_entities__Fv
+zCutsceneMgr.check_hide_entities__Fv:
 /* 80053438 00050238  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 8005343C 0005023C  88 0D 8C 18 */	lbz r0, lbl_803CB518-_SDA_BASE_(r13)
 /* 80053440 00050240  38 A3 05 58 */	addi r5, r3, lbl_803C0558@l

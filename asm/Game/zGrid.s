@@ -2,8 +2,8 @@
 
 .section .text  # 0x80123B1C - 0x801245D4
 
-.global func_80123B1C
-func_80123B1C:
+.global zGrid.hack_flag_shadows__FP6zScene
+zGrid.hack_flag_shadows__FP6zScene:
 /* 80123B1C 0012091C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80123B20 00120920  7C 08 02 A6 */	mflr r0
 /* 80123B24 00120924  90 01 00 14 */	stw r0, 0x14(r1)
@@ -252,7 +252,7 @@ zGridReset__FP6zScene:
 /* 80123EC8 00120CC8  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 80123ECC 00120CCC  93 81 00 10 */	stw r28, 0x10(r1)
 /* 80123ED0 00120CD0  7C 7C 1B 78 */	mr r28, r3
-/* 80123ED4 00120CD4  4B FF FC 49 */	bl func_80123B1C
+/* 80123ED4 00120CD4  4B FF FC 49 */	bl zGrid.hack_flag_shadows__FP6zScene
 /* 80123ED8 00120CD8  3B C0 00 00 */	li r30, 0
 /* 80123EDC 00120CDC  3B E0 00 00 */	li r31, 0
 /* 80123EE0 00120CE0  48 00 00 8C */	b lbl_80123F6C

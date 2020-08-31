@@ -2,8 +2,8 @@
 
 .section .text  # 0x800A6E9C - 0x800A7CC4
 
-.global func_800A6E9C
-func_800A6E9C:
+.global zMusic.volume_reset__Fv
+zMusic.volume_reset__Fv:
 /* 800A6E9C 000A3C9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A6EA0 000A3CA0  7C 08 02 A6 */	mflr r0
 /* 800A6EA4 000A3CA4  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
@@ -293,14 +293,14 @@ zMusicInit__Fv:
 /* 800A72F4 000A40F4  90 04 01 20 */	stw r0, 0x120(r4)
 /* 800A72F8 000A40F8  D0 04 01 48 */	stfs f0, 0x148(r4)
 /* 800A72FC 000A40FC  90 04 01 4C */	stw r0, 0x14c(r4)
-/* 800A7300 000A4100  4B FF FB 9D */	bl func_800A6E9C
+/* 800A7300 000A4100  4B FF FB 9D */	bl zMusic.volume_reset__Fv
 /* 800A7304 000A4104  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800A7308 000A4108  7C 08 03 A6 */	mtlr r0
 /* 800A730C 000A410C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A7310 000A4110  4E 80 00 20 */	blr 
 
-.global func_800A7314
-func_800A7314:
+.global zMusic.getCurrLevelMusicEnum__Fv
+zMusic.getCurrLevelMusicEnum__Fv:
 /* 800A7314 000A4114  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A7318 000A4118  7C 08 02 A6 */	mflr r0
 /* 800A731C 000A411C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -370,8 +370,8 @@ lbl_800A7404:
 /* 800A740C 000A420C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A7410 000A4210  4E 80 00 20 */	blr 
 
-.global func_800A7414
-func_800A7414:
+.global zMusic.zMusicDo__Fi
+zMusic.zMusicDo__Fi:
 /* 800A7414 000A4214  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800A7418 000A4218  7C 08 02 A6 */	mflr r0
 /* 800A741C 000A421C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -411,7 +411,7 @@ lbl_800A7450:
 /* 800A74A0 000A42A0  48 00 00 44 */	b lbl_800A74E4
 /* 800A74A4 000A42A4  83 45 00 24 */	lwz r26, 0x24(r5)
 /* 800A74A8 000A42A8  48 00 00 3C */	b lbl_800A74E4
-/* 800A74AC 000A42AC  4B FF FE 69 */	bl func_800A7314
+/* 800A74AC 000A42AC  4B FF FE 69 */	bl zMusic.getCurrLevelMusicEnum__Fv
 /* 800A74B0 000A42B0  7C 7A 1B 78 */	mr r26, r3
 /* 800A74B4 000A42B4  48 00 00 30 */	b lbl_800A74E4
 /* 800A74B8 000A42B8  83 4D 82 D0 */	lwz r26, lbl_803CABD0-_SDA_BASE_(r13)
@@ -704,7 +704,7 @@ lbl_800A78C0:
 /* 800A78D4 000A46D4  28 00 00 00 */	cmplwi r0, 0
 /* 800A78D8 000A46D8  41 82 00 0C */	beq lbl_800A78E4
 /* 800A78DC 000A46DC  7F A3 EB 78 */	mr r3, r29
-/* 800A78E0 000A46E0  4B FF FB 35 */	bl func_800A7414
+/* 800A78E0 000A46E0  4B FF FB 35 */	bl zMusic.zMusicDo__Fi
 lbl_800A78E4:
 /* 800A78E4 000A46E4  3B BD 00 01 */	addi r29, r29, 1
 /* 800A78E8 000A46E8  3B DE 00 04 */	addi r30, r30, 4
@@ -712,7 +712,7 @@ lbl_800A78E4:
 /* 800A78F0 000A46F0  3B FF 00 04 */	addi r31, r31, 4
 /* 800A78F4 000A46F4  41 80 FF 64 */	blt lbl_800A7858
 /* 800A78F8 000A46F8  FC 20 F8 90 */	fmr f1, f31
-/* 800A78FC 000A46FC  48 00 00 29 */	bl func_800A7924
+/* 800A78FC 000A46FC  48 00 00 29 */	bl zMusic.volume_update__Ff
 lbl_800A7900:
 /* 800A7900 000A4700  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 800A7904 000A4704  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -724,8 +724,8 @@ lbl_800A7900:
 /* 800A791C 000A471C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7920 000A4720  4E 80 00 20 */	blr 
 
-.global func_800A7924
-func_800A7924:
+.global zMusic.volume_update__Ff
+zMusic.volume_update__Ff:
 /* 800A7924 000A4724  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800A7928 000A4728  7C 08 02 A6 */	mflr r0
 /* 800A792C 000A472C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -983,7 +983,7 @@ zMusicReset__Fv:
 /* 800A7C90 000A4A90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A7C94 000A4A94  7C 08 02 A6 */	mflr r0
 /* 800A7C98 000A4A98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A7C9C 000A4A9C  4B FF F6 79 */	bl func_800A7314
+/* 800A7C9C 000A4A9C  4B FF F6 79 */	bl zMusic.getCurrLevelMusicEnum__Fv
 /* 800A7CA0 000A4AA0  80 0D 82 D0 */	lwz r0, lbl_803CABD0-_SDA_BASE_(r13)
 /* 800A7CA4 000A4AA4  7C 00 18 00 */	cmpw r0, r3
 /* 800A7CA8 000A4AA8  41 82 00 0C */	beq lbl_800A7CB4

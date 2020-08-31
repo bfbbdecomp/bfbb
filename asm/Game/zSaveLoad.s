@@ -2045,7 +2045,7 @@ lbl_800AECC8:
 /* 800AECCC 000ABACC  3C 60 80 3C */	lis r3, lbl_803C2520@ha
 /* 800AECD0 000ABAD0  38 03 25 20 */	addi r0, r3, lbl_803C2520@l
 /* 800AECD4 000ABAD4  7C 60 22 14 */	add r3, r0, r4
-/* 800AECD8 000ABAD8  48 00 02 C9 */	bl func_800AEFA0
+/* 800AECD8 000ABAD8  48 00 02 C9 */	bl zSaveLoad.IsValidName__FPc
 /* 800AECDC 000ABADC  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 800AECE0 000ABAE0  41 82 00 0C */	beq lbl_800AECEC
 /* 800AECE4 000ABAE4  4B FF F0 ED */	bl zSaveLoad_CardPromptOverwrite__Fv
@@ -2254,8 +2254,8 @@ lbl_800AEF88:
 /* 800AEF98 000ABD98  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AEF9C 000ABD9C  4E 80 00 20 */	blr 
 
-.global func_800AEFA0
-func_800AEFA0:
+.global zSaveLoad.IsValidName__FPc
+zSaveLoad.IsValidName__FPc:
 /* 800AEFA0 000ABDA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AEFA4 000ABDA4  7C 08 02 A6 */	mflr r0
 /* 800AEFA8 000ABDA8  3C 80 80 26 */	lis r4, lbl_8025E9C0@ha
@@ -2303,8 +2303,8 @@ lbl_800AF028:
 /* 800AF034 000ABE34  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AF038 000ABE38  4E 80 00 20 */	blr 
 
-.global func_800AF03C
-func_800AF03C:
+.global zSaveLoad.BuildIt__FPci
+zSaveLoad.BuildIt__FPci:
 /* 800AF03C 000ABE3C  94 21 FE 80 */	stwu r1, -0x180(r1)
 /* 800AF040 000ABE40  7C 08 02 A6 */	mflr r0
 /* 800AF044 000ABE44  3C A0 80 26 */	lis r5, lbl_8025E8A0@ha
@@ -2348,7 +2348,7 @@ lbl_800AF0BC:
 /* 800AF0D8 000ABED8  38 03 25 20 */	addi r0, r3, lbl_803C2520@l
 /* 800AF0DC 000ABEDC  7F E0 F2 14 */	add r31, r0, r30
 /* 800AF0E0 000ABEE0  7F E3 FB 78 */	mr r3, r31
-/* 800AF0E4 000ABEE4  4B FF FE BD */	bl func_800AEFA0
+/* 800AF0E4 000ABEE4  4B FF FE BD */	bl zSaveLoad.IsValidName__FPc
 /* 800AF0E8 000ABEE8  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 800AF0EC 000ABEEC  40 82 00 1C */	bne lbl_800AF108
 /* 800AF0F0 000ABEF0  3C 80 80 26 */	lis r4, lbl_8025E9C0@ha
@@ -2444,7 +2444,7 @@ zSaveLoad_BuildName__FPci:
 /* 800AF23C 000AC03C  7C 79 1B 78 */	mr r25, r3
 /* 800AF240 000AC040  7C 9A 23 78 */	mr r26, r4
 /* 800AF244 000AC044  38 61 00 88 */	addi r3, r1, 0x88
-/* 800AF248 000AC048  4B FF FD F5 */	bl func_800AF03C
+/* 800AF248 000AC048  4B FF FD F5 */	bl zSaveLoad.BuildIt__FPci
 /* 800AF24C 000AC04C  1C 1A 00 6C */	mulli r0, r26, 0x6c
 /* 800AF250 000AC050  3C 80 80 3C */	lis r4, lbl_803C2520@ha
 /* 800AF254 000AC054  3C 60 80 26 */	lis r3, lbl_8025E9C0@ha
@@ -2457,7 +2457,7 @@ zSaveLoad_BuildName__FPci:
 lbl_800AF270:
 /* 800AF270 000AC070  7F 64 DB 78 */	mr r4, r27
 /* 800AF274 000AC074  38 61 00 08 */	addi r3, r1, 8
-/* 800AF278 000AC078  4B FF FD C5 */	bl func_800AF03C
+/* 800AF278 000AC078  4B FF FD C5 */	bl zSaveLoad.BuildIt__FPci
 /* 800AF27C 000AC07C  7F C3 F3 78 */	mr r3, r30
 /* 800AF280 000AC080  7F A4 EB 78 */	mr r4, r29
 /* 800AF284 000AC084  48 13 82 99 */	bl func_801E751C

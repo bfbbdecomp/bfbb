@@ -2,8 +2,8 @@
 
 .section .text  # 0x80015B3C - 0x80015EA4
 
-.global func_80015B3C
-func_80015B3C:
+.global xCounter.add_tweaks__22_unnamed_xCounter_cpp_FR9_xCounter
+xCounter.add_tweaks__22_unnamed_xCounter_cpp_FR9_xCounter:
 /* 80015B3C 0001293C  4E 80 00 20 */	blr 
 
 .global xCounterInit__Fv
@@ -58,7 +58,7 @@ lbl_80015BDC:
 /* 80015BE8 000129E8  A8 1E 00 08 */	lha r0, 8(r30)
 /* 80015BEC 000129EC  B0 1F 00 14 */	sth r0, 0x14(r31)
 /* 80015BF0 000129F0  98 9F 00 17 */	stb r4, 0x17(r31)
-/* 80015BF4 000129F4  4B FF FF 49 */	bl func_80015B3C
+/* 80015BF4 000129F4  4B FF FF 49 */	bl xCounter.add_tweaks__22_unnamed_xCounter_cpp_FR9_xCounter
 /* 80015BF8 000129F8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80015BFC 000129FC  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80015C00 00012A00  83 C1 00 08 */	lwz r30, 8(r1)

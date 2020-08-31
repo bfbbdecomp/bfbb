@@ -517,11 +517,11 @@ imemcmp__FPCvPCvUl:
 /* 8004C8AC 000496AC  48 00 00 38 */	b lbl_8004C8E4
 lbl_8004C8B0:
 /* 8004C8B0 000496B0  88 7E 00 00 */	lbz r3, 0(r30)
-/* 8004C8B4 000496B4  48 00 00 51 */	bl func_8004C904
+/* 8004C8B4 000496B4  48 00 00 51 */	bl xString.tolower__21_unnamed_xString_cpp_Fc
 /* 8004C8B8 000496B8  88 1D 00 00 */	lbz r0, 0(r29)
 /* 8004C8BC 000496BC  7C 7F 1B 78 */	mr r31, r3
 /* 8004C8C0 000496C0  7C 03 03 78 */	mr r3, r0
-/* 8004C8C4 000496C4  48 00 00 41 */	bl func_8004C904
+/* 8004C8C4 000496C4  48 00 00 41 */	bl xString.tolower__21_unnamed_xString_cpp_Fc
 /* 8004C8C8 000496C8  7C 1F 18 00 */	cmpw r31, r3
 /* 8004C8CC 000496CC  41 82 00 0C */	beq lbl_8004C8D8
 /* 8004C8D0 000496D0  7C 63 F8 50 */	subf r3, r3, r31
@@ -541,20 +541,20 @@ lbl_8004C8F0:
 /* 8004C8FC 000496FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004C900 00049700  4E 80 00 20 */	blr 
 
-.global func_8004C904
-func_8004C904:
+.global xString.tolower__21_unnamed_xString_cpp_Fc
+xString.tolower__21_unnamed_xString_cpp_Fc:
 /* 8004C904 00049704  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004C908 00049708  7C 08 02 A6 */	mflr r0
 /* 8004C90C 0004970C  54 63 06 3E */	clrlwi r3, r3, 0x18
 /* 8004C910 00049710  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004C914 00049714  48 00 00 15 */	bl func_8004C928
+/* 8004C914 00049714  48 00 00 15 */	bl xString.tolower__21_unnamed_xString_cpp_Fi
 /* 8004C918 00049718  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8004C91C 0004971C  7C 08 03 A6 */	mtlr r0
 /* 8004C920 00049720  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004C924 00049724  4E 80 00 20 */	blr 
 
-.global func_8004C928
-func_8004C928:
+.global xString.tolower__21_unnamed_xString_cpp_Fi
+xString.tolower__21_unnamed_xString_cpp_Fi:
 /* 8004C928 00049728  54 60 FE B4 */	rlwinm r0, r3, 0x1f, 0x1a, 0x1a
 /* 8004C92C 0004972C  7C 63 03 78 */	or r3, r3, r0
 /* 8004C930 00049730  4E 80 00 20 */	blr 

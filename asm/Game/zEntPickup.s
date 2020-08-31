@@ -2,8 +2,8 @@
 
 .section .text  # 0x800627CC - 0x80066210
 
-.global func_800627CC
-func_800627CC:
+.global zEntPickup.PickupFallPhysics__FP10zEntPickupP6xScenef
+zEntPickup.PickupFallPhysics__FP10zEntPickupP6xScenef:
 /* 800627CC 0005F5CC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800627D0 0005F5D0  7C 08 02 A6 */	mflr r0
 /* 800627D4 0005F5D4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1211,8 +1211,8 @@ lbl_800638F0:
 /* 8006390C 0006070C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80063910 00060710  4E 80 00 20 */	blr 
 
-.global func_80063914
-func_80063914:
+.global zEntPickup.collectPickup__FP10zEntPickup
+zEntPickup.collectPickup__FP10zEntPickup:
 /* 80063914 00060714  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80063918 00060718  7C 08 02 A6 */	mflr r0
 /* 8006391C 0006071C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1675,13 +1675,13 @@ lbl_80063FA4:
 /* 80063FAC 00060DAC  7F C3 F3 78 */	mr r3, r30
 /* 80063FB0 00060DB0  7F E4 FB 78 */	mr r4, r31
 /* 80063FB4 00060DB4  D0 1E 01 A0 */	stfs f0, 0x1a0(r30)
-/* 80063FB8 00060DB8  48 00 0A 1D */	bl func_800649D4
+/* 80063FB8 00060DB8  48 00 0A 1D */	bl zEntPickup.zEntPickup_UpdateFX__FP10zEntPickupP6xScenef
 /* 80063FBC 00060DBC  48 00 04 70 */	b lbl_8006442C
 lbl_80063FC0:
 /* 80063FC0 00060DC0  FC 20 F0 90 */	fmr f1, f30
 /* 80063FC4 00060DC4  7F C3 F3 78 */	mr r3, r30
 /* 80063FC8 00060DC8  7F E4 FB 78 */	mr r4, r31
-/* 80063FCC 00060DCC  4B FF E8 01 */	bl func_800627CC
+/* 80063FCC 00060DCC  4B FF E8 01 */	bl zEntPickup.PickupFallPhysics__FP10zEntPickupP6xScenef
 /* 80063FD0 00060DD0  48 00 04 5C */	b lbl_8006442C
 lbl_80063FD4:
 /* 80063FD4 00060DD4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -1706,7 +1706,7 @@ lbl_80064018:
 /* 80064018 00060E18  FC 20 F0 90 */	fmr f1, f30
 /* 8006401C 00060E1C  7F C3 F3 78 */	mr r3, r30
 /* 80064020 00060E20  7F E4 FB 78 */	mr r4, r31
-/* 80064024 00060E24  48 00 09 B1 */	bl func_800649D4
+/* 80064024 00060E24  48 00 09 B1 */	bl zEntPickup.zEntPickup_UpdateFX__FP10zEntPickupP6xScenef
 /* 80064028 00060E28  48 00 04 04 */	b lbl_8006442C
 lbl_8006402C:
 /* 8006402C 00060E2C  80 7E 01 70 */	lwz r3, 0x170(r30)
@@ -1721,14 +1721,14 @@ lbl_8006402C:
 /* 80064050 00060E50  41 82 00 14 */	beq lbl_80064064
 /* 80064054 00060E54  93 CD 8C 9C */	stw r30, lbl_803CB59C-_SDA_BASE_(r13)
 /* 80064058 00060E58  7F C3 F3 78 */	mr r3, r30
-/* 8006405C 00060E5C  4B FF F8 B9 */	bl func_80063914
+/* 8006405C 00060E5C  4B FF F8 B9 */	bl zEntPickup.collectPickup__FP10zEntPickup
 /* 80064060 00060E60  48 00 03 CC */	b lbl_8006442C
 lbl_80064064:
 /* 80064064 00060E64  48 00 59 41 */	bl zEntPlayer_InBossBattle__Fv
 /* 80064068 00060E68  2C 03 00 00 */	cmpwi r3, 0
 /* 8006406C 00060E6C  41 82 00 10 */	beq lbl_8006407C
 /* 80064070 00060E70  7F C3 F3 78 */	mr r3, r30
-/* 80064074 00060E74  4B FF F8 A1 */	bl func_80063914
+/* 80064074 00060E74  4B FF F8 A1 */	bl zEntPickup.collectPickup__FP10zEntPickup
 /* 80064078 00060E78  48 00 03 B4 */	b lbl_8006442C
 lbl_8006407C:
 /* 8006407C 00060E7C  C0 2D 81 90 */	lfs f1, lbl_803CAA90-_SDA_BASE_(r13)
@@ -1746,7 +1746,7 @@ lbl_8006407C:
 /* 800640AC 00060EAC  D0 0D 81 90 */	stfs f0, lbl_803CAA90-_SDA_BASE_(r13)
 /* 800640B0 00060EB0  C0 02 8B 5C */	lfs f0, lbl_803CD4DC-_SDA2_BASE_(r2)
 /* 800640B4 00060EB4  D0 0D 8C 94 */	stfs f0, lbl_803CB594-_SDA_BASE_(r13)
-/* 800640B8 00060EB8  4B FF F8 5D */	bl func_80063914
+/* 800640B8 00060EB8  4B FF F8 5D */	bl zEntPickup.collectPickup__FP10zEntPickup
 lbl_800640BC:
 /* 800640BC 00060EBC  C0 22 8B 70 */	lfs f1, lbl_803CD4F0-_SDA2_BASE_(r2)
 /* 800640C0 00060EC0  C0 0D 8C 94 */	lfs f0, lbl_803CB594-_SDA_BASE_(r13)
@@ -1820,7 +1820,7 @@ lbl_80064170:
 /* 800641C8 00060FC8  4C 40 13 82 */	cror 2, 0, 2
 /* 800641CC 00060FCC  40 82 00 10 */	bne lbl_800641DC
 /* 800641D0 00060FD0  7F C3 F3 78 */	mr r3, r30
-/* 800641D4 00060FD4  4B FF F7 41 */	bl func_80063914
+/* 800641D4 00060FD4  4B FF F7 41 */	bl zEntPickup.collectPickup__FP10zEntPickup
 /* 800641D8 00060FD8  48 00 02 54 */	b lbl_8006442C
 lbl_800641DC:
 /* 800641DC 00060FDC  7F C3 F3 78 */	mr r3, r30
@@ -1921,7 +1921,7 @@ lbl_8006430C:
 /* 80064340 00061140  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80064344 00061144  40 81 00 0C */	ble lbl_80064350
 /* 80064348 00061148  7F C3 F3 78 */	mr r3, r30
-/* 8006434C 0006114C  4B FF F5 C9 */	bl func_80063914
+/* 8006434C 0006114C  4B FF F5 C9 */	bl zEntPickup.collectPickup__FP10zEntPickup
 lbl_80064350:
 /* 80064350 00061150  80 7E 00 24 */	lwz r3, 0x24(r30)
 /* 80064354 00061154  80 63 00 4C */	lwz r3, 0x4c(r3)
@@ -2367,8 +2367,8 @@ lbl_8006498C:
 /* 800649A0 000617A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800649A4 000617A4  4E 80 00 20 */	blr 
 
-.global func_800649A8
-func_800649A8:
+.global zEntPickup.ShowPickupFx__FP10zEntPickup
+zEntPickup.ShowPickupFx__FP10zEntPickup:
 /* 800649A8 000617A8  3C 80 80 3C */	lis r4, lbl_803C0558@ha
 /* 800649AC 000617AC  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
 /* 800649B0 000617B0  80 04 1F BC */	lwz r0, 0x1fbc(r4)
@@ -2382,8 +2382,8 @@ lbl_800649C4:
 /* 800649CC 000617CC  68 03 00 01 */	xori r3, r0, 1
 /* 800649D0 000617D0  4E 80 00 20 */	blr 
 
-.global func_800649D4
-func_800649D4:
+.global zEntPickup.zEntPickup_UpdateFX__FP10zEntPickupP6xScenef
+zEntPickup.zEntPickup_UpdateFX__FP10zEntPickupP6xScenef:
 /* 800649D4 000617D4  94 21 FA C0 */	stwu r1, -0x540(r1)
 /* 800649D8 000617D8  7C 08 02 A6 */	mflr r0
 /* 800649DC 000617DC  90 01 05 44 */	stw r0, 0x544(r1)
@@ -2392,7 +2392,7 @@ func_800649D4:
 /* 800649E8 000617E8  BF 21 05 14 */	stmw r25, 0x514(r1)
 /* 800649EC 000617EC  7C 7D 1B 78 */	mr r29, r3
 /* 800649F0 000617F0  FF E0 08 90 */	fmr f31, f1
-/* 800649F4 000617F4  4B FF FF B5 */	bl func_800649A8
+/* 800649F4 000617F4  4B FF FF B5 */	bl zEntPickup.ShowPickupFx__FP10zEntPickup
 /* 800649F8 000617F8  2C 03 00 00 */	cmpwi r3, 0
 /* 800649FC 000617FC  40 82 00 54 */	bne lbl_80064A50
 /* 80064A00 00061800  80 1D 01 98 */	lwz r0, 0x198(r29)
@@ -2776,8 +2776,8 @@ lbl_80064F84:
 /* 80064F98 00061D98  38 21 05 40 */	addi r1, r1, 0x540
 /* 80064F9C 00061D9C  4E 80 00 20 */	blr 
 
-.global func_80064FA0
-func_80064FA0:
+.global zEntPickup.set_alpha_blend__FP14xModelInstance
+zEntPickup.set_alpha_blend__FP14xModelInstance:
 /* 80064FA0 00061DA0  3C 80 FF FF */	lis r4, 0xFFFF00F3@ha
 /* 80064FA4 00061DA4  80 A3 00 14 */	lwz r5, 0x14(r3)
 /* 80064FA8 00061DA8  38 04 00 F3 */	addi r0, r4, 0xFFFF00F3@l
@@ -2826,7 +2826,7 @@ lbl_80065000:
 /* 80065044 00061E44  80 1E 17 38 */	lwz r0, 0x1738(r30)
 /* 80065048 00061E48  7C 04 00 40 */	cmplw r4, r0
 /* 8006504C 00061E4C  41 80 00 2C */	blt lbl_80065078
-/* 80065050 00061E50  4B FF FF 51 */	bl func_80064FA0
+/* 80065050 00061E50  4B FF FF 51 */	bl zEntPickup.set_alpha_blend__FP14xModelInstance
 /* 80065054 00061E54  C0 0D 81 94 */	lfs f0, lbl_803CAA94-_SDA_BASE_(r13)
 /* 80065058 00061E58  80 7F 00 24 */	lwz r3, 0x24(r31)
 /* 8006505C 00061E5C  D0 03 00 24 */	stfs f0, 0x24(r3)
@@ -3485,8 +3485,8 @@ lbl_8006599C:
 /* 800659D0 000627D0  38 21 05 90 */	addi r1, r1, 0x590
 /* 800659D4 000627D4  4E 80 00 20 */	blr 
 
-.global func_800659D8
-func_800659D8:
+.global zEntPickup.rewardRequest__FUiP5xVec35xVec3
+zEntPickup.rewardRequest__FUiP5xVec35xVec3:
 /* 800659D8 000627D8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800659DC 000627DC  7C 08 02 A6 */	mflr r0
 /* 800659E0 000627E0  1C C3 00 28 */	mulli r6, r3, 0x28
@@ -3661,7 +3661,7 @@ lbl_80065C14:
 /* 80065C3C 00062A3C  90 81 00 0C */	stw r4, 0xc(r1)
 /* 80065C40 00062A40  80 9E 00 08 */	lwz r4, 8(r30)
 /* 80065C44 00062A44  90 01 00 10 */	stw r0, 0x10(r1)
-/* 80065C48 00062A48  4B FF FD 91 */	bl func_800659D8
+/* 80065C48 00062A48  4B FF FD 91 */	bl zEntPickup.rewardRequest__FUiP5xVec35xVec3
 /* 80065C4C 00062A4C  28 03 00 00 */	cmplwi r3, 0
 /* 80065C50 00062A50  40 82 00 94 */	bne lbl_80065CE4
 /* 80065C54 00062A54  7C 1E D8 2E */	lwzx r0, r30, r27
@@ -3821,8 +3821,8 @@ lbl_80065E68:
 /* 80065E7C 00062C7C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80065E80 00062C80  4E 80 00 20 */	blr 
 
-.global func_80065E84
-func_80065E84:
+.global zEntPickup.spawnNRewards__FPUiUiP5xVec35xVec3
+zEntPickup.spawnNRewards__FPUiUiP5xVec35xVec3:
 /* 80065E84 00062C84  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80065E88 00062C88  7C 08 02 A6 */	mflr r0
 /* 80065E8C 00062C8C  28 04 00 01 */	cmplwi r4, 1
@@ -3941,7 +3941,7 @@ zEntPickup_SpawnNRewards__FPUiUiP5xVec3:
 /* 80066024 00062E24  90 01 00 0C */	stw r0, 0xc(r1)
 /* 80066028 00062E28  80 05 00 08 */	lwz r0, 8(r5)
 /* 8006602C 00062E2C  90 01 00 10 */	stw r0, 0x10(r1)
-/* 80066030 00062E30  4B FF FE 55 */	bl func_80065E84
+/* 80066030 00062E30  4B FF FE 55 */	bl zEntPickup.spawnNRewards__FPUiUiP5xVec35xVec3
 lbl_80066034:
 /* 80066034 00062E34  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80066038 00062E38  7C 08 03 A6 */	mtlr r0
@@ -3963,7 +3963,7 @@ zEntPickup_SpawnNRewards__FPUiUi5xVec3:
 /* 8006606C 00062E6C  91 01 00 08 */	stw r8, 8(r1)
 /* 80066070 00062E70  90 E1 00 0C */	stw r7, 0xc(r1)
 /* 80066074 00062E74  90 01 00 10 */	stw r0, 0x10(r1)
-/* 80066078 00062E78  4B FF FE 0D */	bl func_80065E84
+/* 80066078 00062E78  4B FF FE 0D */	bl zEntPickup.spawnNRewards__FPUiUiP5xVec35xVec3
 lbl_8006607C:
 /* 8006607C 00062E7C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80066080 00062E80  7C 08 03 A6 */	mtlr r0

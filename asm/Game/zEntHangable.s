@@ -31,8 +31,8 @@ zEntHangable_SetupFX__Fv:
 /* 8006186C 0005E66C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80061870 0005E670  4E 80 00 20 */	blr 
 
-.global func_80061874
-func_80061874:
+.global zEntHangable.HangableSetup__FP12zEntHangableP9xEntAsset
+zEntHangable.HangableSetup__FP12zEntHangableP9xEntAsset:
 /* 80061874 0005E674  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80061878 0005E678  7C 08 02 A6 */	mflr r0
 /* 8006187C 0005E67C  3C A0 80 06 */	lis r5, lbl_80061B24@ha
@@ -138,7 +138,7 @@ lbl_800619F4:
 lbl_800619FC:
 /* 800619FC 0005E7FC  7F C3 F3 78 */	mr r3, r30
 /* 80061A00 0005E800  7F E4 FB 78 */	mr r4, r31
-/* 80061A04 0005E804  4B FF FE 71 */	bl func_80061874
+/* 80061A04 0005E804  4B FF FE 71 */	bl zEntHangable.HangableSetup__FP12zEntHangableP9xEntAsset
 /* 80061A08 0005E808  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80061A0C 0005E80C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80061A10 0005E810  83 C1 00 08 */	lwz r30, 8(r1)
@@ -146,8 +146,8 @@ lbl_800619FC:
 /* 80061A18 0005E818  38 21 00 10 */	addi r1, r1, 0x10
 /* 80061A1C 0005E81C  4E 80 00 20 */	blr 
 
-.global func_80061A20
-func_80061A20:
+.global zEntHangable.zEntHangable_UpdateFX__FP12zEntHangable
+zEntHangable.zEntHangable_UpdateFX__FP12zEntHangable:
 /* 80061A20 0005E820  94 21 FE 00 */	stwu r1, -0x200(r1)
 /* 80061A24 0005E824  7C 08 02 A6 */	mflr r0
 /* 80061A28 0005E828  3C 80 80 25 */	lis r4, lbl_80255DF8@ha
@@ -198,7 +198,7 @@ lbl_80061AC0:
 /* 80061AC8 0005E8C8  7C 64 1B 78 */	mr r4, r3
 /* 80061ACC 0005E8CC  7F C5 F3 78 */	mr r5, r30
 /* 80061AD0 0005E8D0  38 61 00 08 */	addi r3, r1, 8
-/* 80061AD4 0005E8D4  48 00 0C 95 */	bl func_80062768
+/* 80061AD4 0005E8D4  48 00 0C 95 */	bl zEntHangable.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80061AD8 0005E8D8  7F E3 FB 78 */	mr r3, r31
 /* 80061ADC 0005E8DC  4B FB 9D 2D */	bl func_8001B808
 /* 80061AE0 0005E8E0  7C 65 1B 78 */	mr r5, r3
@@ -250,7 +250,7 @@ lbl_80061B24:
 /* 80061B90 0005E990  90 1F 01 18 */	stw r0, 0x118(r31)
 lbl_80061B94:
 /* 80061B94 0005E994  7F E3 FB 78 */	mr r3, r31
-/* 80061B98 0005E998  4B FF FE 89 */	bl func_80061A20
+/* 80061B98 0005E998  4B FF FE 89 */	bl zEntHangable.zEntHangable_UpdateFX__FP12zEntHangable
 /* 80061B9C 0005E99C  80 9F 00 D4 */	lwz r4, 0xd4(r31)
 /* 80061BA0 0005E9A0  80 04 00 00 */	lwz r0, 0(r4)
 /* 80061BA4 0005E9A4  54 00 00 01 */	rlwinm. r0, r0, 0, 0, 0
@@ -394,8 +394,8 @@ lbl_80061DA4:
 /* 80061DB8 0005EBB8  38 21 00 40 */	addi r1, r1, 0x40
 /* 80061DBC 0005EBBC  4E 80 00 20 */	blr 
 
-.global func_80061DC0
-func_80061DC0:
+.global zEntHangable.zEntHangableMountFX__FP12zEntHangable
+zEntHangable.zEntHangableMountFX__FP12zEntHangable:
 /* 80061DC0 0005EBC0  94 21 FE 70 */	stwu r1, -0x190(r1)
 /* 80061DC4 0005EBC4  7C 08 02 A6 */	mflr r0
 /* 80061DC8 0005EBC8  90 01 01 94 */	stw r0, 0x194(r1)
@@ -505,7 +505,7 @@ lbl_80061F38:
 /* 80061F40 0005ED40  48 00 00 F0 */	b lbl_80062030
 lbl_80061F44:
 /* 80061F44 0005ED44  7F C3 F3 78 */	mr r3, r30
-/* 80061F48 0005ED48  4B FF FE 79 */	bl func_80061DC0
+/* 80061F48 0005ED48  4B FF FE 79 */	bl zEntHangable.zEntHangableMountFX__FP12zEntHangable
 /* 80061F4C 0005ED4C  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 80061F50 0005ED50  80 0D 8C 88 */	lwz r0, lbl_803CB588-_SDA_BASE_(r13)
 /* 80061F54 0005ED54  80 63 00 4C */	lwz r3, 0x4c(r3)
@@ -601,8 +601,8 @@ lbl_80062084:
 /* 80062094 0005EE94  38 21 00 30 */	addi r1, r1, 0x30
 /* 80062098 0005EE98  4E 80 00 20 */	blr 
 
-.global func_8006209C
-func_8006209C:
+.global zEntHangable.HangableIsMovingTooMuch__FP5xVec3P5xVec3P5xVec3P5xVec3
+zEntHangable.HangableIsMovingTooMuch__FP5xVec3P5xVec3P5xVec3P5xVec3:
 /* 8006209C 0005EE9C  C0 26 00 00 */	lfs f1, 0(r6)
 /* 800620A0 0005EEA0  C0 06 00 04 */	lfs f0, 4(r6)
 /* 800620A4 0005EEA4  C0 45 00 00 */	lfs f2, 0(r5)
@@ -673,7 +673,7 @@ zEntHangable_SetMatrix__FP12zEntHangablef:
 /* 80062194 0005EF94  38 61 00 44 */	addi r3, r1, 0x44
 /* 80062198 0005EF98  38 81 00 14 */	addi r4, r1, 0x14
 /* 8006219C 0005EF9C  7C 65 1B 78 */	mr r5, r3
-/* 800621A0 0005EFA0  48 00 05 C9 */	bl func_80062768
+/* 800621A0 0005EFA0  48 00 05 C9 */	bl zEntHangable.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 800621A4 0005EFA4  7F A3 EB 78 */	mr r3, r29
 /* 800621A8 0005EFA8  7F C5 F3 78 */	mr r5, r30
 /* 800621AC 0005EFAC  38 81 00 44 */	addi r4, r1, 0x44
@@ -688,7 +688,7 @@ zEntHangable_SetMatrix__FP12zEntHangablef:
 /* 800621D0 0005EFD0  FC 00 00 50 */	fneg f0, f0
 /* 800621D4 0005EFD4  D0 21 00 7C */	stfs f1, 0x7c(r1)
 /* 800621D8 0005EFD8  D0 01 00 78 */	stfs f0, 0x78(r1)
-/* 800621DC 0005EFDC  48 00 05 8D */	bl func_80062768
+/* 800621DC 0005EFDC  48 00 05 8D */	bl zEntHangable.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 800621E0 0005EFE0  C0 21 00 74 */	lfs f1, 0x74(r1)
 /* 800621E4 0005EFE4  38 00 00 00 */	li r0, 0
 /* 800621E8 0005EFE8  C0 1F 00 D8 */	lfs f0, 0xd8(r31)
@@ -779,7 +779,7 @@ lbl_800622E4:
 /* 80062330 0005F130  7F C5 F3 78 */	mr r5, r30
 /* 80062334 0005F134  7F 86 E3 78 */	mr r6, r28
 /* 80062338 0005F138  38 81 00 08 */	addi r4, r1, 8
-/* 8006233C 0005F13C  4B FF FD 61 */	bl func_8006209C
+/* 8006233C 0005F13C  4B FF FD 61 */	bl zEntHangable.HangableIsMovingTooMuch__FP5xVec3P5xVec3P5xVec3P5xVec3
 /* 80062340 0005F140  2C 03 00 00 */	cmpwi r3, 0
 /* 80062344 0005F144  41 82 00 B8 */	beq lbl_800623FC
 /* 80062348 0005F148  38 00 00 01 */	li r0, 1
@@ -822,7 +822,7 @@ lbl_800623AC:
 /* 800623D4 0005F1D4  7F C5 F3 78 */	mr r5, r30
 /* 800623D8 0005F1D8  7F 86 E3 78 */	mr r6, r28
 /* 800623DC 0005F1DC  38 81 00 08 */	addi r4, r1, 8
-/* 800623E0 0005F1E0  4B FF FC BD */	bl func_8006209C
+/* 800623E0 0005F1E0  4B FF FC BD */	bl zEntHangable.HangableIsMovingTooMuch__FP5xVec3P5xVec3P5xVec3P5xVec3
 /* 800623E4 0005F1E4  2C 03 00 00 */	cmpwi r3, 0
 /* 800623E8 0005F1E8  40 82 00 14 */	bne lbl_800623FC
 /* 800623EC 0005F1EC  C0 02 8B 24 */	lfs f0, lbl_803CD4A4-_SDA2_BASE_(r2)
@@ -876,7 +876,7 @@ zEntHangable_Reset__FP12zEntHangable:
 /* 80062484 0005F284  4B FB 6A CD */	bl xEntReset__FP4xEnt
 /* 80062488 0005F288  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 8006248C 0005F28C  7F E3 FB 78 */	mr r3, r31
-/* 80062490 0005F290  4B FF F3 E5 */	bl func_80061874
+/* 80062490 0005F290  4B FF F3 E5 */	bl zEntHangable.HangableSetup__FP12zEntHangableP9xEntAsset
 /* 80062494 0005F294  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80062498 0005F298  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8006249C 0005F29C  7C 08 03 A6 */	mtlr r0
@@ -1074,8 +1074,8 @@ lbl_80062758:
 /* 80062760 0005F560  38 21 00 10 */	addi r1, r1, 0x10
 /* 80062764 0005F564  4E 80 00 20 */	blr 
 
-.global func_80062768
-func_80062768:
+.global zEntHangable.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
+zEntHangable.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80062768 0005F568  C0 65 00 04 */	lfs f3, 4(r5)
 /* 8006276C 0005F56C  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 80062770 0005F570  C0 44 00 14 */	lfs f2, 0x14(r4)

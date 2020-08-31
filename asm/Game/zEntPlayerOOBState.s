@@ -2,8 +2,8 @@
 
 .section .text  # 0x8011A9F0 - 0x8011D564
 
-.global func_8011A9F0
-func_8011A9F0:
+.global zEntPlayerOOBState.set_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fb
+zEntPlayerOOBState.set_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fb:
 /* 8011A9F0 001177F0  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8011A9F4 001177F4  7C 08 02 A6 */	mflr r0
 /* 8011A9F8 001177F8  90 01 00 64 */	stw r0, 0x64(r1)
@@ -118,8 +118,8 @@ lbl_8011AACC:
 /* 8011AB9C 0011799C  38 21 00 60 */	addi r1, r1, 0x60
 /* 8011ABA0 001179A0  4E 80 00 20 */	blr 
 
-.global func_8011ABA4
-func_8011ABA4:
+.global zEntPlayerOOBState.reset_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
+zEntPlayerOOBState.reset_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv:
 /* 8011ABA4 001179A4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011ABA8 001179A8  7C 08 02 A6 */	mflr r0
 /* 8011ABAC 001179AC  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -143,8 +143,8 @@ func_8011ABA4:
 /* 8011ABF4 001179F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011ABF8 001179F8  4E 80 00 20 */	blr 
 
-.global func_8011ABFC
-func_8011ABFC:
+.global zEntPlayerOOBState.render_model__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR14xModelInstanceRC5xVec3RC5xVec3RC5xVec3
+zEntPlayerOOBState.render_model__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR14xModelInstanceRC5xVec3RC5xVec3RC5xVec3:
 /* 8011ABFC 001179FC  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 8011AC00 00117A00  7C 08 02 A6 */	mflr r0
 /* 8011AC04 00117A04  C0 64 00 08 */	lfs f3, 8(r4)
@@ -220,8 +220,8 @@ func_8011ABFC:
 /* 8011AD1C 00117B1C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8011AD20 00117B20  4E 80 00 20 */	blr 
 
-.global func_8011AD24
-func_8011AD24:
+.global zEntPlayerOOBState.move_up__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f
+zEntPlayerOOBState.move_up__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f:
 /* 8011AD24 00117B24  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8011AD28 00117B28  7C 08 02 A6 */	mflr r0
 /* 8011AD2C 00117B2C  90 01 00 54 */	stw r0, 0x54(r1)
@@ -258,8 +258,8 @@ func_8011AD24:
 /* 8011ADA8 00117BA8  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011ADAC 00117BAC  4E 80 00 20 */	blr 
 
-.global func_8011ADB0
-func_8011ADB0:
+.global zEntPlayerOOBState.move_right__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f
+zEntPlayerOOBState.move_right__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f:
 /* 8011ADB0 00117BB0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8011ADB4 00117BB4  7C 08 02 A6 */	mflr r0
 /* 8011ADB8 00117BB8  90 01 00 54 */	stw r0, 0x54(r1)
@@ -300,8 +300,8 @@ func_8011ADB0:
 /* 8011AE44 00117C44  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011AE48 00117C48  4E 80 00 20 */	blr 
 
-.global func_8011AE4C
-func_8011AE4C:
+.global zEntPlayerOOBState.update_max_out_time__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FRC8xSurface
+zEntPlayerOOBState.update_max_out_time__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FRC8xSurface:
 /* 8011AE4C 00117C4C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011AE50 00117C50  7C 08 02 A6 */	mflr r0
 /* 8011AE54 00117C54  90 01 00 14 */	stw r0, 0x14(r1)
@@ -325,8 +325,8 @@ lbl_8011AE70:
 /* 8011AE98 00117C98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011AE9C 00117C9C  4E 80 00 20 */	blr 
 
-.global func_8011AEA0
-func_8011AEA0:
+.global zEntPlayerOOBState.assume_player_is_stupid__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
+zEntPlayerOOBState.assume_player_is_stupid__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv:
 /* 8011AEA0 00117CA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011AEA4 00117CA4  7C 08 02 A6 */	mflr r0
 /* 8011AEA8 00117CA8  3C 60 80 27 */	lis r3, lbl_8026B42C@ha
@@ -394,8 +394,8 @@ lbl_8011AF7C:
 /* 8011AF84 00117D84  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011AF88 00117D88  4E 80 00 20 */	blr 
 
-.global func_8011AF8C
-func_8011AF8C:
+.global zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
+zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff:
 /* 8011AF8C 00117D8C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011AF90 00117D90  7C 08 02 A6 */	mflr r0
 /* 8011AF94 00117D94  3C 60 80 29 */	lis r3, lbl_80297E48@ha
@@ -424,8 +424,8 @@ func_8011AF8C:
 /* 8011AFF0 00117DF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011AFF4 00117DF4  4E 80 00 20 */	blr 
 
-.global func_8011AFF8
-func_8011AFF8:
+.global zEntPlayerOOBState.render_fade__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
+zEntPlayerOOBState.render_fade__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv:
 /* 8011AFF8 00117DF8  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 8011AFFC 00117DFC  7C 08 02 A6 */	mflr r0
 /* 8011B000 00117E00  90 01 00 94 */	stw r0, 0x94(r1)
@@ -466,7 +466,7 @@ func_8011AFF8:
 /* 8011B08C 00117E8C  C0 62 9F CC */	lfs f3, lbl_803CE94C-_SDA2_BASE_(r2)
 /* 8011B090 00117E90  FC 40 08 90 */	fmr f2, f1
 /* 8011B094 00117E94  C0 82 9F D0 */	lfs f4, lbl_803CE950-_SDA2_BASE_(r2)
-/* 8011B098 00117E98  48 00 00 2D */	bl func_8011B0C4
+/* 8011B098 00117E98  48 00 00 2D */	bl zEntPlayerOOBState.set_rect_verts__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FP18rwGameCube2DVertexffff10iColor_tagff
 /* 8011B09C 00117E9C  38 81 00 10 */	addi r4, r1, 0x10
 /* 8011B0A0 00117EA0  38 60 00 04 */	li r3, 4
 /* 8011B0A4 00117EA4  38 A0 00 04 */	li r5, 4
@@ -478,8 +478,8 @@ func_8011AFF8:
 /* 8011B0BC 00117EBC  38 21 00 90 */	addi r1, r1, 0x90
 /* 8011B0C0 00117EC0  4E 80 00 20 */	blr 
 
-.global func_8011B0C4
-func_8011B0C4:
+.global zEntPlayerOOBState.set_rect_verts__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FP18rwGameCube2DVertexffff10iColor_tagff
+zEntPlayerOOBState.set_rect_verts__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FP18rwGameCube2DVertexffff10iColor_tagff:
 /* 8011B0C4 00117EC4  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 8011B0C8 00117EC8  7C 08 02 A6 */	mflr r0
 /* 8011B0CC 00117ECC  90 01 00 94 */	stw r0, 0x94(r1)
@@ -512,7 +512,7 @@ func_8011B0C4:
 /* 8011B138 00117F38  FF 40 10 90 */	fmr f26, f2
 /* 8011B13C 00117F3C  FC 60 E0 90 */	fmr f3, f28
 /* 8011B140 00117F40  FC 80 E8 90 */	fmr f4, f29
-/* 8011B144 00117F44  48 00 00 C9 */	bl func_8011B20C
+/* 8011B144 00117F44  48 00 00 C9 */	bl zEntPlayerOOBState.set_rect_vert__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 8011B148 00117F48  EF FA F0 2A */	fadds f31, f26, f30
 /* 8011B14C 00117F4C  80 1F 00 00 */	lwz r0, 0(r31)
 /* 8011B150 00117F50  FC 20 C8 90 */	fmr f1, f25
@@ -522,7 +522,7 @@ func_8011B0C4:
 /* 8011B160 00117F60  FC 40 F8 90 */	fmr f2, f31
 /* 8011B164 00117F64  38 81 00 10 */	addi r4, r1, 0x10
 /* 8011B168 00117F68  FC 80 E8 90 */	fmr f4, f29
-/* 8011B16C 00117F6C  48 00 00 A1 */	bl func_8011B20C
+/* 8011B16C 00117F6C  48 00 00 A1 */	bl zEntPlayerOOBState.set_rect_vert__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 8011B170 00117F70  EF D9 D8 2A */	fadds f30, f25, f27
 /* 8011B174 00117F74  80 1F 00 00 */	lwz r0, 0(r31)
 /* 8011B178 00117F78  FC 40 D0 90 */	fmr f2, f26
@@ -532,7 +532,7 @@ func_8011B0C4:
 /* 8011B188 00117F88  FC 20 F0 90 */	fmr f1, f30
 /* 8011B18C 00117F8C  38 81 00 0C */	addi r4, r1, 0xc
 /* 8011B190 00117F90  FC 80 E8 90 */	fmr f4, f29
-/* 8011B194 00117F94  48 00 00 79 */	bl func_8011B20C
+/* 8011B194 00117F94  48 00 00 79 */	bl zEntPlayerOOBState.set_rect_vert__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 8011B198 00117F98  80 1F 00 00 */	lwz r0, 0(r31)
 /* 8011B19C 00117F9C  FC 20 F0 90 */	fmr f1, f30
 /* 8011B1A0 00117FA0  FC 40 F8 90 */	fmr f2, f31
@@ -541,7 +541,7 @@ func_8011B0C4:
 /* 8011B1AC 00117FAC  90 01 00 08 */	stw r0, 8(r1)
 /* 8011B1B0 00117FB0  FC 80 E8 90 */	fmr f4, f29
 /* 8011B1B4 00117FB4  38 81 00 08 */	addi r4, r1, 8
-/* 8011B1B8 00117FB8  48 00 00 55 */	bl func_8011B20C
+/* 8011B1B8 00117FB8  48 00 00 55 */	bl zEntPlayerOOBState.set_rect_vert__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
 /* 8011B1BC 00117FBC  E3 E1 00 88 */	psq_l f31, 136(r1), 0, qr0
 /* 8011B1C0 00117FC0  CB E1 00 80 */	lfd f31, 0x80(r1)
 /* 8011B1C4 00117FC4  E3 C1 00 78 */	psq_l f30, 120(r1), 0, qr0
@@ -563,8 +563,8 @@ func_8011B0C4:
 /* 8011B204 00118004  38 21 00 90 */	addi r1, r1, 0x90
 /* 8011B208 00118008  4E 80 00 20 */	blr 
 
-.global func_8011B20C
-func_8011B20C:
+.global zEntPlayerOOBState.set_rect_vert__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR18rwGameCube2DVertexfff10iColor_tagf
+zEntPlayerOOBState.set_rect_vert__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR18rwGameCube2DVertexfff10iColor_tagf:
 /* 8011B20C 0011800C  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8011B210 00118010  D0 43 00 04 */	stfs f2, 4(r3)
 /* 8011B214 00118014  D0 63 00 08 */	stfs f3, 8(r3)
@@ -578,8 +578,8 @@ func_8011B20C:
 /* 8011B234 00118034  98 03 00 0F */	stb r0, 0xf(r3)
 /* 8011B238 00118038  4E 80 00 20 */	blr 
 
-.global func_8011B23C
-func_8011B23C:
+.global zEntPlayerOOBState.render_ghost__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
+zEntPlayerOOBState.render_ghost__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv:
 /* 8011B23C 0011803C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011B240 00118040  7C 08 02 A6 */	mflr r0
 /* 8011B244 00118044  3C 80 80 3C */	lis r4, lbl_803C0558@ha
@@ -660,8 +660,8 @@ lbl_8011B32C:
 /* 8011B358 00118158  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011B35C 0011815C  4E 80 00 20 */	blr 
 
-.global func_8011B360
-func_8011B360:
+.global zEntPlayerOOBState.render_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
+zEntPlayerOOBState.render_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv:
 /* 8011B360 00118160  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8011B364 00118164  7C 08 02 A6 */	mflr r0
 /* 8011B368 00118168  3C 80 80 27 */	lis r4, lbl_8026B268@ha
@@ -713,7 +713,7 @@ func_8011B360:
 /* 8011B420 00118220  D0 41 00 08 */	stfs f2, 8(r1)
 /* 8011B424 00118224  D0 21 00 0C */	stfs f1, 0xc(r1)
 /* 8011B428 00118228  D0 01 00 10 */	stfs f0, 0x10(r1)
-/* 8011B42C 0011822C  4B FF F7 D1 */	bl func_8011ABFC
+/* 8011B42C 0011822C  4B FF F7 D1 */	bl zEntPlayerOOBState.render_model__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR14xModelInstanceRC5xVec3RC5xVec3RC5xVec3
 /* 8011B430 00118230  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 8011B434 00118234  83 E1 00 3C */	lwz r31, 0x3c(r1)
 /* 8011B438 00118238  83 C1 00 38 */	lwz r30, 0x38(r1)
@@ -1043,7 +1043,7 @@ init__9oob_stateFv:
 /* 8011B930 00118730  7C 00 07 75 */	extsb. r0, r0
 /* 8011B934 00118734  40 82 00 14 */	bne lbl_8011B948
 /* 8011B938 00118738  38 6D 95 14 */	addi r3, r13, lbl_803CBE14-_SDA_BASE_
-/* 8011B93C 0011873C  48 00 0D 7D */	bl func_8011C6B8
+/* 8011B93C 0011873C  48 00 0D 7D */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_typeFv
 /* 8011B940 00118740  38 00 00 01 */	li r0, 1
 /* 8011B944 00118744  98 0D 95 11 */	stb r0, lbl_803CBE11-_SDA_BASE_(r13)
 lbl_8011B948:
@@ -1055,7 +1055,7 @@ lbl_8011B948:
 /* 8011B95C 0011875C  7C 00 07 75 */	extsb. r0, r0
 /* 8011B960 00118760  40 82 00 14 */	bne lbl_8011B974
 /* 8011B964 00118764  38 6D 95 20 */	addi r3, r13, lbl_803CBE20-_SDA_BASE_
-/* 8011B968 00118768  48 00 0D 11 */	bl func_8011C678
+/* 8011B968 00118768  48 00 0D 11 */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_typeFv
 /* 8011B96C 0011876C  38 00 00 01 */	li r0, 1
 /* 8011B970 00118770  98 0D 95 1C */	stb r0, lbl_803CBE1C-_SDA_BASE_(r13)
 lbl_8011B974:
@@ -1067,7 +1067,7 @@ lbl_8011B974:
 /* 8011B988 00118788  7C 00 07 75 */	extsb. r0, r0
 /* 8011B98C 0011878C  40 82 00 14 */	bne lbl_8011B9A0
 /* 8011B990 00118790  38 7E 00 BC */	addi r3, r30, 0xbc
-/* 8011B994 00118794  48 00 05 ED */	bl func_8011BF80
+/* 8011B994 00118794  48 00 05 ED */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFv
 /* 8011B998 00118798  38 00 00 01 */	li r0, 1
 /* 8011B99C 0011879C  98 0D 95 28 */	stb r0, lbl_803CBE28-_SDA_BASE_(r13)
 lbl_8011B9A0:
@@ -1079,7 +1079,7 @@ lbl_8011B9A0:
 /* 8011B9B4 001187B4  7C 00 07 75 */	extsb. r0, r0
 /* 8011B9B8 001187B8  40 82 00 14 */	bne lbl_8011B9CC
 /* 8011B9BC 001187BC  38 7E 01 24 */	addi r3, r30, 0x124
-/* 8011B9C0 001187C0  48 00 00 95 */	bl func_8011BA54
+/* 8011B9C0 001187C0  48 00 00 95 */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFv
 /* 8011B9C4 001187C4  38 00 00 01 */	li r0, 1
 /* 8011B9C8 001187C8  98 0D 95 29 */	stb r0, lbl_803CBE29-_SDA_BASE_(r13)
 lbl_8011B9CC:
@@ -1121,15 +1121,15 @@ lbl_8011BA3C:
 /* 8011BA4C 0011884C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011BA50 00118850  4E 80 00 20 */	blr 
 
-.global func_8011BA54
-func_8011BA54:
+.global zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFv
+zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFv:
 /* 8011BA54 00118854  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BA58 00118858  7C 08 02 A6 */	mflr r0
 /* 8011BA5C 0011885C  38 80 00 03 */	li r4, 3
 /* 8011BA60 00118860  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8011BA64 00118864  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011BA68 00118868  7C 7F 1B 78 */	mr r31, r3
-/* 8011BA6C 0011886C  48 00 05 01 */	bl func_8011BF6C
+/* 8011BA6C 0011886C  48 00 05 01 */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_typeFQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_enum
 /* 8011BA70 00118870  3C 80 80 29 */	lis r4, lbl_80297F68@ha
 /* 8011BA74 00118874  3C 60 80 12 */	lis r3, lbl_8011BE3C@ha
 /* 8011BA78 00118878  38 04 7F 68 */	addi r0, r4, lbl_80297F68@l
@@ -1164,14 +1164,14 @@ lbl_8011BAE8:
 /* 8011BAE8 001188E8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BAEC 001188EC  7C 08 02 A6 */	mflr r0
 /* 8011BAF0 001188F0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BAF4 001188F4  48 00 00 15 */	bl func_8011BB08
+/* 8011BAF4 001188F4  48 00 00 15 */	bl zEntPlayerOOBState.update_fade_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BAF8 001188F8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BAFC 001188FC  7C 08 03 A6 */	mtlr r0
 /* 8011BB00 00118900  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BB04 00118904  4E 80 00 20 */	blr 
 
-.global func_8011BB08
-func_8011BB08:
+.global zEntPlayerOOBState.update_fade_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_fade_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BB08 00118908  C0 23 00 24 */	lfs f1, 0x24(r3)
 /* 8011BB0C 0011890C  3C C0 80 31 */	lis r6, lbl_80314530@ha
 /* 8011BB10 00118910  C0 05 00 00 */	lfs f0, 0(r5)
@@ -1206,14 +1206,14 @@ lbl_8011BB78:
 /* 8011BB78 00118978  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BB7C 0011897C  7C 08 02 A6 */	mflr r0
 /* 8011BB80 00118980  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BB84 00118984  48 00 00 15 */	bl func_8011BB98
+/* 8011BB84 00118984  48 00 00 15 */	bl zEntPlayerOOBState.update_start_fade_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BB88 00118988  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BB8C 0011898C  7C 08 03 A6 */	mtlr r0
 /* 8011BB90 00118990  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BB94 00118994  4E 80 00 20 */	blr 
 
-.global func_8011BB98
-func_8011BB98:
+.global zEntPlayerOOBState.update_start_fade_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_start_fade_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BB98 00118998  C0 23 00 20 */	lfs f1, 0x20(r3)
 /* 8011BB9C 0011899C  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8011BBA0 001189A0  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1234,21 +1234,21 @@ lbl_8011BBD4:
 /* 8011BBD4 001189D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BBD8 001189D8  7C 08 02 A6 */	mflr r0
 /* 8011BBDC 001189DC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BBE0 001189E0  48 00 00 15 */	bl func_8011BBF4
+/* 8011BBE0 001189E0  48 00 00 15 */	bl zEntPlayerOOBState.update_moving_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BBE4 001189E4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BBE8 001189E8  7C 08 03 A6 */	mtlr r0
 /* 8011BBEC 001189EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BBF0 001189F0  4E 80 00 20 */	blr 
 
-.global func_8011BBF4
-func_8011BBF4:
+.global zEntPlayerOOBState.update_moving_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_moving_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BBF4 001189F4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011BBF8 001189F8  7C 08 02 A6 */	mflr r0
 /* 8011BBFC 001189FC  90 01 00 24 */	stw r0, 0x24(r1)
 /* 8011BC00 00118A00  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8011BC04 00118A04  7C BF 2B 78 */	mr r31, r5
 /* 8011BC08 00118A08  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011BC0C 00118A0C  4B FF F3 81 */	bl func_8011AF8C
+/* 8011BC0C 00118A0C  4B FF F3 81 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011BC10 00118A10  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011BC14 00118A14  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011BC18 00118A18  38 A4 7E 48 */	addi r5, r4, lbl_80297E48@l
@@ -1282,19 +1282,19 @@ lbl_8011BC7C:
 /* 8011BC7C 00118A7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BC80 00118A80  7C 08 02 A6 */	mflr r0
 /* 8011BC84 00118A84  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BC88 00118A88  48 00 00 15 */	bl func_8011BC9C
+/* 8011BC88 00118A88  48 00 00 15 */	bl zEntPlayerOOBState.update_starting__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BC8C 00118A8C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BC90 00118A90  7C 08 03 A6 */	mtlr r0
 /* 8011BC94 00118A94  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BC98 00118A98  4E 80 00 20 */	blr 
 
-.global func_8011BC9C
-func_8011BC9C:
+.global zEntPlayerOOBState.update_starting__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_starting__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BC9C 00118A9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BCA0 00118AA0  7C 08 02 A6 */	mflr r0
 /* 8011BCA4 00118AA4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8011BCA8 00118AA8  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011BCAC 00118AAC  4B FF F2 E1 */	bl func_8011AF8C
+/* 8011BCAC 00118AAC  4B FF F2 E1 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011BCB0 00118AB0  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011BCB4 00118AB4  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011BCB8 00118AB8  38 63 45 30 */	addi r3, r3, lbl_80314530@l
@@ -1320,14 +1320,14 @@ lbl_8011BCFC:
 /* 8011BCFC 00118AFC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BD00 00118B00  7C 08 02 A6 */	mflr r0
 /* 8011BD04 00118B04  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BD08 00118B08  48 00 00 15 */	bl func_8011BD1C
+/* 8011BD08 00118B08  48 00 00 15 */	bl zEntPlayerOOBState.update_stopped__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BD0C 00118B0C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BD10 00118B10  7C 08 03 A6 */	mtlr r0
 /* 8011BD14 00118B14  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BD18 00118B18  4E 80 00 20 */	blr 
 
-.global func_8011BD1C
-func_8011BD1C:
+.global zEntPlayerOOBState.update_stopped__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_stopped__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BD1C 00118B1C  C0 23 00 1C */	lfs f1, 0x1c(r3)
 /* 8011BD20 00118B20  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8011BD24 00118B24  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1360,14 +1360,14 @@ lbl_8011BD88:
 /* 8011BD88 00118B88  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BD8C 00118B8C  7C 08 02 A6 */	mflr r0
 /* 8011BD90 00118B90  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BD94 00118B94  48 00 00 15 */	bl func_8011BDA8
+/* 8011BD94 00118B94  48 00 00 15 */	bl zEntPlayerOOBState.update_stopping__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BD98 00118B98  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BD9C 00118B9C  7C 08 03 A6 */	mtlr r0
 /* 8011BDA0 00118BA0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BDA4 00118BA4  4E 80 00 20 */	blr 
 
-.global func_8011BDA8
-func_8011BDA8:
+.global zEntPlayerOOBState.update_stopping__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_stopping__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BDA8 00118BA8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BDAC 00118BAC  7C 08 02 A6 */	mflr r0
 /* 8011BDB0 00118BB0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1375,7 +1375,7 @@ func_8011BDA8:
 /* 8011BDB8 00118BB8  93 C1 00 08 */	stw r30, 8(r1)
 /* 8011BDBC 00118BBC  7C 7E 1B 78 */	mr r30, r3
 /* 8011BDC0 00118BC0  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011BDC4 00118BC4  4B FF F1 C9 */	bl func_8011AF8C
+/* 8011BDC4 00118BC4  4B FF F1 C9 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011BDC8 00118BC8  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011BDCC 00118BCC  C0 02 9F A8 */	lfs f0, lbl_803CE928-_SDA2_BASE_(r2)
 /* 8011BDD0 00118BD0  3B E3 7E 48 */	addi r31, r3, lbl_80297E48@l
@@ -1411,21 +1411,21 @@ lbl_8011BE3C:
 /* 8011BE3C 00118C3C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BE40 00118C40  7C 08 02 A6 */	mflr r0
 /* 8011BE44 00118C44  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011BE48 00118C48  48 00 00 15 */	bl func_8011BE5C
+/* 8011BE48 00118C48  48 00 00 15 */	bl zEntPlayerOOBState.update_moving_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
 /* 8011BE4C 00118C4C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011BE50 00118C50  7C 08 03 A6 */	mtlr r0
 /* 8011BE54 00118C54  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BE58 00118C58  4E 80 00 20 */	blr 
 
-.global func_8011BE5C
-func_8011BE5C:
+.global zEntPlayerOOBState.update_moving_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_moving_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_typeFR6xSceneRf:
 /* 8011BE5C 00118C5C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8011BE60 00118C60  7C 08 02 A6 */	mflr r0
 /* 8011BE64 00118C64  90 01 00 34 */	stw r0, 0x34(r1)
 /* 8011BE68 00118C68  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 8011BE6C 00118C6C  93 C1 00 28 */	stw r30, 0x28(r1)
 /* 8011BE70 00118C70  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011BE74 00118C74  4B FF F1 19 */	bl func_8011AF8C
+/* 8011BE74 00118C74  4B FF F1 19 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011BE78 00118C78  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011BE7C 00118C7C  38 83 45 30 */	addi r4, r3, lbl_80314530@l
 /* 8011BE80 00118C80  3B E4 00 1C */	addi r31, r4, 0x1c
@@ -1492,29 +1492,29 @@ lbl_8011BF54:
 /* 8011BF64 00118D64  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011BF68 00118D68  4E 80 00 20 */	blr 
 
-.global func_8011BF6C
-func_8011BF6C:
+.global zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_typeFQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_enum
+zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_typeFQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_enum:
 /* 8011BF6C 00118D6C  3C A0 80 29 */	lis r5, lbl_80297F54@ha
 /* 8011BF70 00118D70  38 05 7F 54 */	addi r0, r5, lbl_80297F54@l
 /* 8011BF74 00118D74  90 03 00 04 */	stw r0, 4(r3)
 /* 8011BF78 00118D78  90 83 00 00 */	stw r4, 0(r3)
 /* 8011BF7C 00118D7C  4E 80 00 20 */	blr 
 
-.global func_8011BF80
-func_8011BF80:
+.global zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFv
+zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFv:
 /* 8011BF80 00118D80  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BF84 00118D84  7C 08 02 A6 */	mflr r0
 /* 8011BF88 00118D88  38 80 00 02 */	li r4, 2
 /* 8011BF8C 00118D8C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8011BF90 00118D90  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011BF94 00118D94  7C 7F 1B 78 */	mr r31, r3
-/* 8011BF98 00118D98  4B FF FF D5 */	bl func_8011BF6C
+/* 8011BF98 00118D98  4B FF FF D5 */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_typeFQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_enum
 /* 8011BF9C 00118D9C  3C 60 80 29 */	lis r3, lbl_80297F40@ha
 /* 8011BFA0 00118DA0  7F E4 FB 78 */	mr r4, r31
 /* 8011BFA4 00118DA4  38 03 7F 40 */	addi r0, r3, lbl_80297F40@l
 /* 8011BFA8 00118DA8  38 7F 00 08 */	addi r3, r31, 8
 /* 8011BFAC 00118DAC  90 1F 00 04 */	stw r0, 4(r31)
-/* 8011BFB0 00118DB0  48 00 06 6D */	bl func_8011C61C
+/* 8011BFB0 00118DB0  48 00 06 6D */	bl zEntPlayerOOBState.__ct__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callbackFRQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type
 /* 8011BFB4 00118DB4  3C 80 80 12 */	lis r4, lbl_8011C5F4@ha
 /* 8011BFB8 00118DB8  3C 60 80 12 */	lis r3, lbl_8011C594@ha
 /* 8011BFBC 00118DBC  38 04 C5 F4 */	addi r0, r4, lbl_8011C5F4@l
@@ -1555,14 +1555,14 @@ lbl_8011C044:
 /* 8011C044 00118E44  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C048 00118E48  7C 08 02 A6 */	mflr r0
 /* 8011C04C 00118E4C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C050 00118E50  48 00 00 15 */	bl func_8011C064
+/* 8011C050 00118E50  48 00 00 15 */	bl zEntPlayerOOBState.update_fade_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C054 00118E54  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C058 00118E58  7C 08 03 A6 */	mtlr r0
 /* 8011C05C 00118E5C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C060 00118E60  4E 80 00 20 */	blr 
 
-.global func_8011C064
-func_8011C064:
+.global zEntPlayerOOBState.update_fade_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_fade_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C064 00118E64  C0 23 00 34 */	lfs f1, 0x34(r3)
 /* 8011C068 00118E68  3C C0 80 31 */	lis r6, lbl_80314530@ha
 /* 8011C06C 00118E6C  C0 05 00 00 */	lfs f0, 0(r5)
@@ -1596,14 +1596,14 @@ lbl_8011C0D0:
 /* 8011C0D0 00118ED0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C0D4 00118ED4  7C 08 02 A6 */	mflr r0
 /* 8011C0D8 00118ED8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C0DC 00118EDC  48 00 00 15 */	bl func_8011C0F0
+/* 8011C0DC 00118EDC  48 00 00 15 */	bl zEntPlayerOOBState.update_start_fade_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C0E0 00118EE0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C0E4 00118EE4  7C 08 03 A6 */	mtlr r0
 /* 8011C0E8 00118EE8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C0EC 00118EEC  4E 80 00 20 */	blr 
 
-.global func_8011C0F0
-func_8011C0F0:
+.global zEntPlayerOOBState.update_start_fade_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_start_fade_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C0F0 00118EF0  C0 23 00 30 */	lfs f1, 0x30(r3)
 /* 8011C0F4 00118EF4  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8011C0F8 00118EF8  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1624,21 +1624,21 @@ lbl_8011C12C:
 /* 8011C12C 00118F2C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C130 00118F30  7C 08 02 A6 */	mflr r0
 /* 8011C134 00118F34  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C138 00118F38  48 00 00 15 */	bl func_8011C14C
+/* 8011C138 00118F38  48 00 00 15 */	bl zEntPlayerOOBState.update_moving_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C13C 00118F3C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C140 00118F40  7C 08 03 A6 */	mtlr r0
 /* 8011C144 00118F44  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C148 00118F48  4E 80 00 20 */	blr 
 
-.global func_8011C14C
-func_8011C14C:
+.global zEntPlayerOOBState.update_moving_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_moving_out__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C14C 00118F4C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011C150 00118F50  7C 08 02 A6 */	mflr r0
 /* 8011C154 00118F54  90 01 00 24 */	stw r0, 0x24(r1)
 /* 8011C158 00118F58  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8011C15C 00118F5C  7C BF 2B 78 */	mr r31, r5
 /* 8011C160 00118F60  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011C164 00118F64  4B FF EE 29 */	bl func_8011AF8C
+/* 8011C164 00118F64  4B FF EE 29 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011C168 00118F68  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011C16C 00118F6C  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011C170 00118F70  38 A4 7E 48 */	addi r5, r4, lbl_80297E48@l
@@ -1672,19 +1672,19 @@ lbl_8011C1D4:
 /* 8011C1D4 00118FD4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C1D8 00118FD8  7C 08 02 A6 */	mflr r0
 /* 8011C1DC 00118FDC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C1E0 00118FE0  48 00 00 15 */	bl func_8011C1F4
+/* 8011C1E0 00118FE0  48 00 00 15 */	bl zEntPlayerOOBState.update_starting__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C1E4 00118FE4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C1E8 00118FE8  7C 08 03 A6 */	mtlr r0
 /* 8011C1EC 00118FEC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C1F0 00118FF0  4E 80 00 20 */	blr 
 
-.global func_8011C1F4
-func_8011C1F4:
+.global zEntPlayerOOBState.update_starting__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_starting__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C1F4 00118FF4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C1F8 00118FF8  7C 08 02 A6 */	mflr r0
 /* 8011C1FC 00118FFC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8011C200 00119000  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011C204 00119004  4B FF ED 89 */	bl func_8011AF8C
+/* 8011C204 00119004  4B FF ED 89 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011C208 00119008  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011C20C 0011900C  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011C210 00119010  38 63 45 30 */	addi r3, r3, lbl_80314530@l
@@ -1710,14 +1710,14 @@ lbl_8011C254:
 /* 8011C254 00119054  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C258 00119058  7C 08 02 A6 */	mflr r0
 /* 8011C25C 0011905C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C260 00119060  48 00 00 15 */	bl func_8011C274
+/* 8011C260 00119060  48 00 00 15 */	bl zEntPlayerOOBState.update_tutorial__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C264 00119064  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C268 00119068  7C 08 03 A6 */	mtlr r0
 /* 8011C26C 0011906C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C270 00119070  4E 80 00 20 */	blr 
 
-.global func_8011C274
-func_8011C274:
+.global zEntPlayerOOBState.update_tutorial__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_tutorial__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C274 00119074  C0 23 00 2C */	lfs f1, 0x2c(r3)
 /* 8011C278 00119078  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8011C27C 0011907C  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1752,14 +1752,14 @@ lbl_8011C2E4:
 /* 8011C2E4 001190E4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C2E8 001190E8  7C 08 02 A6 */	mflr r0
 /* 8011C2EC 001190EC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C2F0 001190F0  48 00 00 15 */	bl func_8011C304
+/* 8011C2F0 001190F0  48 00 00 15 */	bl zEntPlayerOOBState.update_stopped__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C2F4 001190F4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C2F8 001190F8  7C 08 03 A6 */	mtlr r0
 /* 8011C2FC 001190FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C300 00119100  4E 80 00 20 */	blr 
 
-.global func_8011C304
-func_8011C304:
+.global zEntPlayerOOBState.update_stopped__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_stopped__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C304 00119104  C0 23 00 2C */	lfs f1, 0x2c(r3)
 /* 8011C308 00119108  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8011C30C 0011910C  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1792,14 +1792,14 @@ lbl_8011C370:
 /* 8011C370 00119170  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C374 00119174  7C 08 02 A6 */	mflr r0
 /* 8011C378 00119178  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C37C 0011917C  48 00 00 15 */	bl func_8011C390
+/* 8011C37C 0011917C  48 00 00 15 */	bl zEntPlayerOOBState.update_stopping__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C380 00119180  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C384 00119184  7C 08 03 A6 */	mtlr r0
 /* 8011C388 00119188  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C38C 0011918C  4E 80 00 20 */	blr 
 
-.global func_8011C390
-func_8011C390:
+.global zEntPlayerOOBState.update_stopping__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_stopping__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C390 00119190  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C394 00119194  7C 08 02 A6 */	mflr r0
 /* 8011C398 00119198  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1807,7 +1807,7 @@ func_8011C390:
 /* 8011C3A0 001191A0  93 C1 00 08 */	stw r30, 8(r1)
 /* 8011C3A4 001191A4  7C 7E 1B 78 */	mr r30, r3
 /* 8011C3A8 001191A8  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011C3AC 001191AC  4B FF EB E1 */	bl func_8011AF8C
+/* 8011C3AC 001191AC  4B FF EB E1 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011C3B0 001191B0  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011C3B4 001191B4  C0 02 9F A8 */	lfs f0, lbl_803CE928-_SDA2_BASE_(r2)
 /* 8011C3B8 001191B8  3B E3 7E 48 */	addi r31, r3, lbl_80297E48@l
@@ -1831,7 +1831,7 @@ lbl_8011C3D0:
 /* 8011C3FC 001191FC  D0 04 00 48 */	stfs f0, 0x48(r4)
 /* 8011C400 00119200  C0 03 00 38 */	lfs f0, 0x38(r3)
 /* 8011C404 00119204  D0 1E 00 2C */	stfs f0, 0x2c(r30)
-/* 8011C408 00119208  4B FF EA 99 */	bl func_8011AEA0
+/* 8011C408 00119208  4B FF EA 99 */	bl zEntPlayerOOBState.assume_player_is_stupid__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
 /* 8011C40C 0011920C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8011C410 00119210  41 82 00 38 */	beq lbl_8011C448
 /* 8011C414 00119214  3C 60 80 27 */	lis r3, lbl_8026B42C@ha
@@ -1860,21 +1860,21 @@ lbl_8011C464:
 /* 8011C464 00119264  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C468 00119268  7C 08 02 A6 */	mflr r0
 /* 8011C46C 0011926C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C470 00119270  48 00 00 15 */	bl func_8011C484
+/* 8011C470 00119270  48 00 00 15 */	bl zEntPlayerOOBState.update_moving_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C474 00119274  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C478 00119278  7C 08 03 A6 */	mtlr r0
 /* 8011C47C 0011927C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C480 00119280  4E 80 00 20 */	blr 
 
-.global func_8011C484
-func_8011C484:
+.global zEntPlayerOOBState.update_moving_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_moving_in__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C484 00119284  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8011C488 00119288  7C 08 02 A6 */	mflr r0
 /* 8011C48C 0011928C  90 01 00 34 */	stw r0, 0x34(r1)
 /* 8011C490 00119290  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 8011C494 00119294  93 C1 00 28 */	stw r30, 0x28(r1)
 /* 8011C498 00119298  C0 25 00 00 */	lfs f1, 0(r5)
-/* 8011C49C 0011929C  4B FF EA F1 */	bl func_8011AF8C
+/* 8011C49C 0011929C  4B FF EA F1 */	bl zEntPlayerOOBState.move_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Ff
 /* 8011C4A0 001192A0  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011C4A4 001192A4  38 83 45 30 */	addi r4, r3, lbl_80314530@l
 /* 8011C4A8 001192A8  3B E4 00 1C */	addi r31, r4, 0x1c
@@ -1944,14 +1944,14 @@ lbl_8011C594:
 /* 8011C594 00119394  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C598 00119398  7C 08 02 A6 */	mflr r0
 /* 8011C59C 0011939C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C5A0 001193A0  48 00 00 15 */	bl func_8011C5B4
+/* 8011C5A0 001193A0  48 00 00 15 */	bl zEntPlayerOOBState.update_begin_wait__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C5A4 001193A4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C5A8 001193A8  7C 08 03 A6 */	mtlr r0
 /* 8011C5AC 001193AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C5B0 001193B0  4E 80 00 20 */	blr 
 
-.global func_8011C5B4
-func_8011C5B4:
+.global zEntPlayerOOBState.update_begin_wait__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_begin_wait__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C5B4 001193B4  C0 23 00 2C */	lfs f1, 0x2c(r3)
 /* 8011C5B8 001193B8  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8011C5BC 001193BC  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1973,19 +1973,19 @@ lbl_8011C5F4:
 /* 8011C5F4 001193F4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C5F8 001193F8  7C 08 02 A6 */	mflr r0
 /* 8011C5FC 001193FC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011C600 00119400  48 00 00 15 */	bl func_8011C614
+/* 8011C600 00119400  48 00 00 15 */	bl zEntPlayerOOBState.update_reorient__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
 /* 8011C604 00119404  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C608 00119408  7C 08 03 A6 */	mtlr r0
 /* 8011C60C 0011940C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C610 00119410  4E 80 00 20 */	blr 
 
-.global func_8011C614
-func_8011C614:
+.global zEntPlayerOOBState.update_reorient__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf
+zEntPlayerOOBState.update_reorient__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_typeFR6xSceneRf:
 /* 8011C614 00119414  38 60 00 01 */	li r3, 1
 /* 8011C618 00119418  4E 80 00 20 */	blr 
 
-.global func_8011C61C
-func_8011C61C:
+.global zEntPlayerOOBState.__ct__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callbackFRQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type
+zEntPlayerOOBState.__ct__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callbackFRQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type:
 /* 8011C61C 0011941C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C620 00119420  7C 08 02 A6 */	mflr r0
 /* 8011C624 00119424  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2013,15 +2013,15 @@ func_8011C668:
 /* 8011C670 00119470  90 03 00 00 */	stw r0, 0(r3)
 /* 8011C674 00119474  4E 80 00 20 */	blr 
 
-.global func_8011C678
-func_8011C678:
+.global zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_typeFv
+zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_typeFv:
 /* 8011C678 00119478  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C67C 0011947C  7C 08 02 A6 */	mflr r0
 /* 8011C680 00119480  38 80 00 01 */	li r4, 1
 /* 8011C684 00119484  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8011C688 00119488  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011C68C 0011948C  7C 7F 1B 78 */	mr r31, r3
-/* 8011C690 00119490  4B FF F8 DD */	bl func_8011BF6C
+/* 8011C690 00119490  4B FF F8 DD */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_typeFQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_enum
 /* 8011C694 00119494  3C 80 80 29 */	lis r4, lbl_80297EFC@ha
 /* 8011C698 00119498  7F E3 FB 78 */	mr r3, r31
 /* 8011C69C 0011949C  38 04 7E FC */	addi r0, r4, lbl_80297EFC@l
@@ -2032,15 +2032,15 @@ func_8011C678:
 /* 8011C6B0 001194B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C6B4 001194B4  4E 80 00 20 */	blr 
 
-.global func_8011C6B8
-func_8011C6B8:
+.global zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_typeFv
+zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_typeFv:
 /* 8011C6B8 001194B8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C6BC 001194BC  7C 08 02 A6 */	mflr r0
 /* 8011C6C0 001194C0  38 80 00 00 */	li r4, 0
 /* 8011C6C4 001194C4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8011C6C8 001194C8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011C6CC 001194CC  7C 7F 1B 78 */	mr r31, r3
-/* 8011C6D0 001194D0  4B FF F8 9D */	bl func_8011BF6C
+/* 8011C6D0 001194D0  4B FF F8 9D */	bl zEntPlayerOOBState.__ct__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_typeFQ39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_enum
 /* 8011C6D4 001194D4  3C 80 80 29 */	lis r4, lbl_80297EE8@ha
 /* 8011C6D8 001194D8  7F E3 FB 78 */	mr r3, r31
 /* 8011C6DC 001194DC  38 04 7E E8 */	addi r0, r4, lbl_80297EE8@l
@@ -2220,8 +2220,8 @@ fx_render__9oob_stateFv:
 /* 8011C92C 0011972C  C0 02 9F B8 */	lfs f0, lbl_803CE938-_SDA2_BASE_(r2)
 /* 8011C930 00119730  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8011C934 00119734  40 80 00 0C */	bge lbl_8011C940
-/* 8011C938 00119738  4B FF E6 C1 */	bl func_8011AFF8
-/* 8011C93C 0011973C  4B FF E9 01 */	bl func_8011B23C
+/* 8011C938 00119738  4B FF E6 C1 */	bl zEntPlayerOOBState.render_fade__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
+/* 8011C93C 0011973C  4B FF E9 01 */	bl zEntPlayerOOBState.render_ghost__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
 lbl_8011C940:
 /* 8011C940 00119740  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011C944 00119744  38 63 7E 48 */	addi r3, r3, lbl_80297E48@l
@@ -2231,7 +2231,7 @@ lbl_8011C940:
 /* 8011C954 00119754  80 03 00 28 */	lwz r0, 0x28(r3)
 /* 8011C958 00119758  28 00 00 00 */	cmplwi r0, 0
 /* 8011C95C 0011975C  41 82 00 08 */	beq lbl_8011C964
-/* 8011C960 00119760  4B FF EA 01 */	bl func_8011B360
+/* 8011C960 00119760  4B FF EA 01 */	bl zEntPlayerOOBState.render_hand__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
 lbl_8011C964:
 /* 8011C964 00119764  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8011C968 00119768  7C 08 03 A6 */	mtlr r0
@@ -2383,7 +2383,7 @@ lbl_8011CAD0:
 /* 8011CB7C 0011997C  7C 7E 1B 78 */	mr r30, r3
 /* 8011CB80 00119980  41 82 00 0C */	beq lbl_8011CB8C
 /* 8011CB84 00119984  7F E3 FB 78 */	mr r3, r31
-/* 8011CB88 00119988  4B FF E2 C5 */	bl func_8011AE4C
+/* 8011CB88 00119988  4B FF E2 C5 */	bl zEntPlayerOOBState.update_max_out_time__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FRC8xSurface
 lbl_8011CB8C:
 /* 8011CB8C 0011998C  57 C0 06 3F */	clrlwi. r0, r30, 0x18
 /* 8011CB90 00119990  40 82 00 28 */	bne lbl_8011CBB8
@@ -2437,7 +2437,7 @@ lbl_8011CBBC:
 /* 8011CC48 00119A48  7C 7E 1B 78 */	mr r30, r3
 /* 8011CC4C 00119A4C  41 82 00 0C */	beq lbl_8011CC58
 /* 8011CC50 00119A50  7F E3 FB 78 */	mr r3, r31
-/* 8011CC54 00119A54  4B FF E1 F9 */	bl func_8011AE4C
+/* 8011CC54 00119A54  4B FF E1 F9 */	bl zEntPlayerOOBState.update_max_out_time__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FRC8xSurface
 lbl_8011CC58:
 /* 8011CC58 00119A58  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011CC5C 00119A5C  C0 1D 00 00 */	lfs f0, 0(r29)
@@ -2538,7 +2538,7 @@ lbl_8011CCF0:
 /* 8011CDC8 00119BC8  90 1D 00 10 */	stw r0, 0x10(r29)
 /* 8011CDCC 00119BCC  C0 1F 00 14 */	lfs f0, 0x14(r31)
 /* 8011CDD0 00119BD0  D0 1D 00 24 */	stfs f0, 0x24(r29)
-/* 8011CDD4 00119BD4  4B FF DC 1D */	bl func_8011A9F0
+/* 8011CDD4 00119BD4  4B FF DC 1D */	bl zEntPlayerOOBState.set_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fb
 /* 8011CDD8 00119BD8  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011CDDC 00119BDC  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011CDE0 00119BE0  38 63 45 30 */	addi r3, r3, lbl_80314530@l
@@ -2718,7 +2718,7 @@ lbl_8011D040:
 /* 8011D070 00119E70  C0 25 00 20 */	lfs f1, 0x20(r5)
 /* 8011D074 00119E74  C0 04 00 30 */	lfs f0, 0x30(r4)
 /* 8011D078 00119E78  EC 21 00 28 */	fsubs f1, f1, f0
-/* 8011D07C 00119E7C  4B FF DC A9 */	bl func_8011AD24
+/* 8011D07C 00119E7C  4B FF DC A9 */	bl zEntPlayerOOBState.move_up__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f
 /* 8011D080 00119E80  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011D084 00119E84  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011D088 00119E88  38 A3 45 30 */	addi r5, r3, lbl_80314530@l
@@ -2727,7 +2727,7 @@ lbl_8011D040:
 /* 8011D094 00119E94  C0 25 00 1C */	lfs f1, 0x1c(r5)
 /* 8011D098 00119E98  C0 04 00 2C */	lfs f0, 0x2c(r4)
 /* 8011D09C 00119E9C  EC 21 00 28 */	fsubs f1, f1, f0
-/* 8011D0A0 00119EA0  4B FF DD 11 */	bl func_8011ADB0
+/* 8011D0A0 00119EA0  4B FF DD 11 */	bl zEntPlayerOOBState.move_right__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f
 lbl_8011D0A4:
 /* 8011D0A4 00119EA4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 8011D0A8 00119EA8  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
@@ -2825,7 +2825,7 @@ lbl_8011D0BC:
 /* 8011D214 0011A014  38 63 00 30 */	addi r3, r3, 0x30
 /* 8011D218 0011A018  4B EE E0 4D */	bl func_8000B264
 /* 8011D21C 0011A01C  38 60 00 01 */	li r3, 1
-/* 8011D220 0011A020  4B FF D7 D1 */	bl func_8011A9F0
+/* 8011D220 0011A020  4B FF D7 D1 */	bl zEntPlayerOOBState.set_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fb
 /* 8011D224 0011A024  3C A0 80 31 */	lis r5, lbl_803145AC@ha
 /* 8011D228 0011A028  3C 60 80 3C */	lis r3, lbl_803C0558@ha
 /* 8011D22C 0011A02C  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
@@ -2873,7 +2873,7 @@ lbl_8011D0BC:
 /* 8011D2D4 0011A0D4  C0 02 9F B8 */	lfs f0, lbl_803CE938-_SDA2_BASE_(r2)
 /* 8011D2D8 0011A0D8  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
 /* 8011D2DC 0011A0DC  D0 03 17 10 */	stfs f0, 0x1710(r3)
-/* 8011D2E0 0011A0E0  4B FF D8 C5 */	bl func_8011ABA4
+/* 8011D2E0 0011A0E0  4B FF D8 C5 */	bl zEntPlayerOOBState.reset_camera__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_Fv
 /* 8011D2E4 0011A0E4  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011D2E8 0011A0E8  38 00 00 00 */	li r0, 0
 /* 8011D2EC 0011A0EC  38 63 7E 48 */	addi r3, r3, lbl_80297E48@l
@@ -2975,7 +2975,7 @@ lbl_8011D418:
 /* 8011D448 0011A248  C0 25 00 20 */	lfs f1, 0x20(r5)
 /* 8011D44C 0011A24C  C0 04 00 30 */	lfs f0, 0x30(r4)
 /* 8011D450 0011A250  EC 21 00 28 */	fsubs f1, f1, f0
-/* 8011D454 0011A254  4B FF D8 D1 */	bl func_8011AD24
+/* 8011D454 0011A254  4B FF D8 D1 */	bl zEntPlayerOOBState.move_up__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f
 /* 8011D458 0011A258  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011D45C 0011A25C  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011D460 0011A260  38 A3 45 30 */	addi r5, r3, lbl_80314530@l
@@ -2984,7 +2984,7 @@ lbl_8011D418:
 /* 8011D46C 0011A26C  C0 25 00 1C */	lfs f1, 0x1c(r5)
 /* 8011D470 0011A270  C0 04 00 2C */	lfs f0, 0x2c(r4)
 /* 8011D474 0011A274  EC 21 00 28 */	fsubs f1, f1, f0
-/* 8011D478 0011A278  4B FF D9 39 */	bl func_8011ADB0
+/* 8011D478 0011A278  4B FF D9 39 */	bl zEntPlayerOOBState.move_right__Q29oob_state32_unnamed_zEntPlayerOOBState_cpp_FR5xVec3f
 lbl_8011D47C:
 /* 8011D47C 0011A27C  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011D480 0011A280  38 63 7E 48 */	addi r3, r3, lbl_80297E48@l

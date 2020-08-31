@@ -374,7 +374,7 @@ xEntBoulder_RealBUpdate__FP4xEntP5xVec3:
 /* 8011F5E8 0011C3E8  38 BF 01 94 */	addi r5, r31, 0x194
 /* 8011F5EC 0011C3EC  80 9F 00 24 */	lwz r4, 0x24(r31)
 /* 8011F5F0 0011C3F0  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 8011F5F4 0011C3F4  48 00 27 B5 */	bl func_80121DA8
+/* 8011F5F4 0011C3F4  48 00 27 B5 */	bl xEntBoulder.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 8011F5F8 0011C3F8  7F C4 F3 78 */	mr r4, r30
 /* 8011F5FC 0011C3FC  38 7F 00 88 */	addi r3, r31, 0x88
 /* 8011F600 0011C400  38 A1 00 08 */	addi r5, r1, 8
@@ -469,7 +469,7 @@ lbl_8011F71C:
 /* 8011F74C 0011C54C  90 04 05 B0 */	stw r0, 0x5b0(r4)
 /* 8011F750 0011C550  80 9F 00 24 */	lwz r4, 0x24(r31)
 /* 8011F754 0011C554  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 8011F758 0011C558  48 00 26 51 */	bl func_80121DA8
+/* 8011F758 0011C558  48 00 26 51 */	bl xEntBoulder.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 8011F75C 0011C55C  80 9F 00 24 */	lwz r4, 0x24(r31)
 /* 8011F760 0011C560  38 7F 00 88 */	addi r3, r31, 0x88
 /* 8011F764 0011C564  38 A1 00 D4 */	addi r5, r1, 0xd4
@@ -1222,7 +1222,7 @@ lbl_8012024C:
 /* 80120250 0011D050  38 61 00 D4 */	addi r3, r1, 0xd4
 /* 80120254 0011D054  38 BF 01 94 */	addi r5, r31, 0x194
 /* 80120258 0011D058  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 8012025C 0011D05C  48 00 1B 4D */	bl func_80121DA8
+/* 8012025C 0011D05C  48 00 1B 4D */	bl xEntBoulder.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80120260 0011D060  80 7F 00 24 */	lwz r3, 0x24(r31)
 /* 80120264 0011D064  38 9F 00 88 */	addi r4, r31, 0x88
 /* 80120268 0011D068  38 A1 00 D4 */	addi r5, r1, 0xd4
@@ -2124,8 +2124,8 @@ lbl_80120F28:
 /* 80120F3C 0011DD3C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80120F40 0011DD40  4E 80 00 20 */	blr 
 
-.global func_80120F44
-func_80120F44:
+.global xEntBoulder.RecurseLinks__FP10xLinkAssetiPP11xEntBoulder
+xEntBoulder.RecurseLinks__FP10xLinkAssetiPP11xEntBoulder:
 /* 80120F44 0011DD44  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80120F48 0011DD48  7C 08 02 A6 */	mflr r0
 /* 80120F4C 0011DD4C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2150,7 +2150,7 @@ lbl_80120F7C:
 /* 80120F94 0011DD94  41 82 00 10 */	beq lbl_80120FA4
 /* 80120F98 0011DD98  7F A4 EB 78 */	mr r4, r29
 /* 80120F9C 0011DD9C  38 A1 00 08 */	addi r5, r1, 8
-/* 80120FA0 0011DDA0  48 00 00 39 */	bl func_80120FD8
+/* 80120FA0 0011DDA0  48 00 00 39 */	bl xEntBoulder.RecurseChild__FP5xBasePP11xEntBoulderRi
 lbl_80120FA4:
 /* 80120FA4 0011DDA4  3B FF 00 20 */	addi r31, r31, 0x20
 /* 80120FA8 0011DDA8  3B DE 00 01 */	addi r30, r30, 1
@@ -2167,8 +2167,8 @@ lbl_80120FAC:
 /* 80120FD0 0011DDD0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80120FD4 0011DDD4  4E 80 00 20 */	blr 
 
-.global func_80120FD8
-func_80120FD8:
+.global xEntBoulder.RecurseChild__FP5xBasePP11xEntBoulderRi
+xEntBoulder.RecurseChild__FP5xBasePP11xEntBoulderRi:
 /* 80120FD8 0011DDD8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80120FDC 0011DDDC  7C 08 02 A6 */	mflr r0
 /* 80120FE0 0011DDE0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2223,7 +2223,7 @@ lbl_80121088:
 /* 8012108C 0011DE8C  40 82 00 10 */	bne lbl_8012109C
 /* 80121090 0011DE90  7F 64 DB 78 */	mr r4, r27
 /* 80121094 0011DE94  7F 85 E3 78 */	mr r5, r28
-/* 80121098 0011DE98  4B FF FF 41 */	bl func_80120FD8
+/* 80121098 0011DE98  4B FF FF 41 */	bl xEntBoulder.RecurseChild__FP5xBasePP11xEntBoulderRi
 lbl_8012109C:
 /* 8012109C 0011DE9C  3B DE 00 01 */	addi r30, r30, 1
 lbl_801210A0:
@@ -2291,7 +2291,7 @@ lbl_80121174:
 /* 80121174 0011DF74  80 7F 00 08 */	lwz r3, 8(r31)
 /* 80121178 0011DF78  38 A0 00 00 */	li r5, 0
 /* 8012117C 0011DF7C  88 9F 00 05 */	lbz r4, 5(r31)
-/* 80121180 0011DF80  4B FF FD C5 */	bl func_80120F44
+/* 80121180 0011DF80  4B FF FD C5 */	bl xEntBoulder.RecurseLinks__FP10xLinkAssetiPP11xEntBoulder
 /* 80121184 0011DF84  90 7F 00 14 */	stw r3, 0x14(r31)
 /* 80121188 0011DF88  38 A0 00 00 */	li r5, 0
 /* 8012118C 0011DF8C  80 1F 00 14 */	lwz r0, 0x14(r31)
@@ -2310,7 +2310,7 @@ lbl_80121174:
 /* 801211C0 0011DFC0  80 7F 00 08 */	lwz r3, 8(r31)
 /* 801211C4 0011DFC4  88 9F 00 05 */	lbz r4, 5(r31)
 /* 801211C8 0011DFC8  80 BF 00 1C */	lwz r5, 0x1c(r31)
-/* 801211CC 0011DFCC  4B FF FD 79 */	bl func_80120F44
+/* 801211CC 0011DFCC  4B FF FD 79 */	bl xEntBoulder.RecurseLinks__FP10xLinkAssetiPP11xEntBoulder
 /* 801211D0 0011DFD0  80 7F 00 10 */	lwz r3, 0x10(r31)
 /* 801211D4 0011DFD4  38 63 00 38 */	addi r3, r3, 0x38
 /* 801211D8 0011DFD8  7C 64 1B 78 */	mr r4, r3
@@ -2394,8 +2394,8 @@ lbl_801212D4:
 /* 801212F8 0011E0F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801212FC 0011E0FC  4E 80 00 20 */	blr 
 
-.global func_80121300
-func_80121300:
+.global xEntBoulder.BoulderGen_GiveBirth__FP17xBoulderGeneratori
+xEntBoulder.BoulderGen_GiveBirth__FP17xBoulderGeneratori:
 /* 80121300 0011E100  39 00 00 00 */	li r8, 0
 /* 80121304 0011E104  38 E0 00 00 */	li r7, 0
 /* 80121308 0011E108  48 00 00 1C */	b lbl_80121324
@@ -2416,8 +2416,8 @@ lbl_80121324:
 /* 8012133C 0011E13C  7C 83 01 2E */	stwx r4, r3, r0
 /* 80121340 0011E140  4E 80 00 20 */	blr 
 
-.global func_80121344
-func_80121344:
+.global xEntBoulder.GetBoulderForGenerating__FP17xBoulderGenerator
+xEntBoulder.GetBoulderForGenerating__FP17xBoulderGenerator:
 /* 80121344 0011E144  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80121348 0011E148  7C 08 02 A6 */	mflr r0
 /* 8012134C 0011E14C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -2534,7 +2534,7 @@ xBoulderGenerator_Launch__FP17xBoulderGeneratorP5xVec3f:
 /* 801214D0 0011E2D0  FF E0 08 90 */	fmr f31, f1
 /* 801214D4 0011E2D4  7C 7C 1B 78 */	mr r28, r3
 /* 801214D8 0011E2D8  7C 9D 23 78 */	mr r29, r4
-/* 801214DC 0011E2DC  4B FF FE 69 */	bl func_80121344
+/* 801214DC 0011E2DC  4B FF FE 69 */	bl xEntBoulder.GetBoulderForGenerating__FP17xBoulderGenerator
 /* 801214E0 0011E2E0  80 9C 00 1C */	lwz r4, 0x1c(r28)
 /* 801214E4 0011E2E4  7C 7F 1B 78 */	mr r31, r3
 /* 801214E8 0011E2E8  54 63 10 3A */	slwi r3, r3, 2
@@ -2621,7 +2621,7 @@ lbl_801215B0:
 /* 8012161C 0011E41C  EC 23 10 28 */	fsubs f1, f3, f2
 /* 80121620 0011E420  EC 04 00 7A */	fmadds f0, f4, f1, f0
 /* 80121624 0011E424  D0 1E 01 A4 */	stfs f0, 0x1a4(r30)
-/* 80121628 0011E428  4B FF FC D9 */	bl func_80121300
+/* 80121628 0011E428  4B FF FC D9 */	bl xEntBoulder.BoulderGen_GiveBirth__FP17xBoulderGeneratori
 /* 8012162C 0011E42C  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 80121630 0011E430  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 80121634 0011E434  CB E1 00 20 */	lfd f31, 0x20(r1)
@@ -2846,7 +2846,7 @@ xBoulderGenerator_GenBoulder__FP17xBoulderGenerator:
 /* 80121968 0011E768  93 A1 00 24 */	stw r29, 0x24(r1)
 /* 8012196C 0011E76C  93 81 00 20 */	stw r28, 0x20(r1)
 /* 80121970 0011E770  7C 7D 1B 78 */	mr r29, r3
-/* 80121974 0011E774  4B FF F9 D1 */	bl func_80121344
+/* 80121974 0011E774  4B FF F9 D1 */	bl xEntBoulder.GetBoulderForGenerating__FP17xBoulderGenerator
 /* 80121978 0011E778  3C 80 80 3C */	lis r4, lbl_803C0558@ha
 /* 8012197C 0011E77C  7C 7F 1B 78 */	mr r31, r3
 /* 80121980 0011E780  3B 84 05 58 */	addi r28, r4, lbl_803C0558@l
@@ -3095,7 +3095,7 @@ lbl_80121CB4:
 lbl_80121D20:
 /* 80121D20 0011EB20  7F A3 EB 78 */	mr r3, r29
 /* 80121D24 0011EB24  7F E4 FB 78 */	mr r4, r31
-/* 80121D28 0011EB28  4B FF F5 D9 */	bl func_80121300
+/* 80121D28 0011EB28  4B FF F5 D9 */	bl xEntBoulder.BoulderGen_GiveBirth__FP17xBoulderGeneratori
 /* 80121D2C 0011EB2C  E3 E1 00 48 */	psq_l f31, 72(r1), 0, qr0
 /* 80121D30 0011EB30  CB E1 00 40 */	lfd f31, 0x40(r1)
 /* 80121D34 0011EB34  E3 C1 00 38 */	psq_l f30, 56(r1), 0, qr0
@@ -3131,8 +3131,8 @@ func_80121D5C:
 /* 80121DA0 0011EBA0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80121DA4 0011EBA4  4E 80 00 20 */	blr 
 
-.global func_80121DA8
-func_80121DA8:
+.global xEntBoulder.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
+xEntBoulder.xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80121DA8 0011EBA8  C0 65 00 04 */	lfs f3, 4(r5)
 /* 80121DAC 0011EBAC  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 80121DB0 0011EBB0  C0 44 00 14 */	lfs f2, 0x14(r4)

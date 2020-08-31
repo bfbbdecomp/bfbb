@@ -2,8 +2,8 @@
 
 .section .text  # 0x8009AD50 - 0x8009B684
 
-.global func_8009AD50
-func_8009AD50:
+.global zGust.zGustInit__FP5zGustP10zGustAsset
+zGust.zGustInit__FP5zGustP10zGustAsset:
 /* 8009AD50 00097B50  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009AD54 00097B54  7C 08 02 A6 */	mflr r0
 /* 8009AD58 00097B58  90 01 00 14 */	stw r0, 0x14(r1)
@@ -38,8 +38,8 @@ lbl_8009ADAC:
 /* 8009ADC4 00097BC4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009ADC8 00097BC8  4E 80 00 20 */	blr 
 
-.global func_8009ADCC
-func_8009ADCC:
+.global zGust.zGustSetup__FP5zGust
+zGust.zGustSetup__FP5zGust:
 /* 8009ADCC 00097BCC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009ADD0 00097BD0  7C 08 02 A6 */	mflr r0
 /* 8009ADD4 00097BD4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -91,7 +91,7 @@ lbl_8009AE64:
 /* 8009AE7C 00097C7C  1C 00 00 24 */	mulli r0, r0, 0x24
 /* 8009AE80 00097C80  7C 64 1B 78 */	mr r4, r3
 /* 8009AE84 00097C84  7C 65 02 14 */	add r3, r5, r0
-/* 8009AE88 00097C88  4B FF FE C9 */	bl func_8009AD50
+/* 8009AE88 00097C88  4B FF FE C9 */	bl zGust.zGustInit__FP5zGustP10zGustAsset
 /* 8009AE8C 00097C8C  3B DE 00 01 */	addi r30, r30, 1
 lbl_8009AE90:
 /* 8009AE90 00097C90  A0 0D 8F B4 */	lhz r0, lbl_803CB8B4-_SDA_BASE_(r13)
@@ -126,7 +126,7 @@ lbl_8009AEE8:
 /* 8009AEEC 00097CEC  80 6D 8F B0 */	lwz r3, lbl_803CB8B0-_SDA_BASE_(r13)
 /* 8009AEF0 00097CF0  1C 00 00 24 */	mulli r0, r0, 0x24
 /* 8009AEF4 00097CF4  7C 63 02 14 */	add r3, r3, r0
-/* 8009AEF8 00097CF8  4B FF FE D5 */	bl func_8009ADCC
+/* 8009AEF8 00097CF8  4B FF FE D5 */	bl zGust.zGustSetup__FP5zGust
 /* 8009AEFC 00097CFC  3B FF 00 01 */	addi r31, r31, 1
 lbl_8009AF00:
 /* 8009AF00 00097D00  A0 0D 8F B4 */	lhz r0, lbl_803CB8B4-_SDA_BASE_(r13)
@@ -473,8 +473,8 @@ lbl_8009B378:
 /* 8009B384 00098184  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009B388 00098188  4E 80 00 20 */	blr 
 
-.global func_8009B38C
-func_8009B38C:
+.global zGust.UpdateGustFX__FP5zGustf
+zGust.UpdateGustFX__FP5zGustf:
 /* 8009B38C 0009818C  94 21 FE 50 */	stwu r1, -0x1b0(r1)
 /* 8009B390 00098190  7C 08 02 A6 */	mflr r0
 /* 8009B394 00098194  90 01 01 B4 */	stw r0, 0x1b4(r1)
@@ -668,7 +668,7 @@ lbl_8009B638:
 /* 8009B644 00098444  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 8009B648 00098448  41 82 00 0C */	beq lbl_8009B654
 /* 8009B64C 0009844C  FC 20 F8 90 */	fmr f1, f31
-/* 8009B650 00098450  4B FF FD 3D */	bl func_8009B38C
+/* 8009B650 00098450  4B FF FD 3D */	bl zGust.UpdateGustFX__FP5zGustf
 lbl_8009B654:
 /* 8009B654 00098454  3B FF 00 24 */	addi r31, r31, 0x24
 /* 8009B658 00098458  3B DE 00 01 */	addi r30, r30, 1

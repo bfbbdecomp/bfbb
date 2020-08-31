@@ -2,8 +2,8 @@
 
 .section .text  # 0x8002F57C - 0x8002FC88
 
-.global func_8002F57C
-func_8002F57C:
+.global xHudMeter.add_global_tweaks__Q24xhud23_unnamed_xHudMeter_cpp_Fv
+xHudMeter.add_global_tweaks__Q24xhud23_unnamed_xHudMeter_cpp_Fv:
 /* 8002F57C 0002C37C  4E 80 00 20 */	blr 
 
 .global set_value__Q24xhud12meter_widgetFf
@@ -169,7 +169,7 @@ __ct__Q24xhud12meter_widgetFRCQ24xhud11meter_asset:
 /* 8002F7B4 0002C5B4  C0 02 84 48 */	lfs f0, lbl_803CCDC8-_SDA2_BASE_(r2)
 /* 8002F7B8 0002C5B8  D0 1E 00 A0 */	stfs f0, 0xa0(r30)
 /* 8002F7BC 0002C5BC  48 00 03 35 */	bl func_8002FAF0
-/* 8002F7C0 0002C5C0  4B FF FD BD */	bl func_8002F57C
+/* 8002F7C0 0002C5C0  4B FF FD BD */	bl xHudMeter.add_global_tweaks__Q24xhud23_unnamed_xHudMeter_cpp_Fv
 /* 8002F7C4 0002C5C4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8002F7C8 0002C5C8  7F C3 F3 78 */	mr r3, r30
 /* 8002F7CC 0002C5CC  83 E1 00 0C */	lwz r31, 0xc(r1)

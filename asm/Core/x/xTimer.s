@@ -2,8 +2,8 @@
 
 .section .text  # 0x8004D1F0 - 0x8004D6AC
 
-.global func_8004D1F0
-func_8004D1F0:
+.global xTimer.GetRandomizedTime__FP11xTimerAsset
+xTimer.GetRandomizedTime__FP11xTimerAsset:
 /* 8004D1F0 00049FF0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004D1F4 00049FF4  7C 08 02 A6 */	mflr r0
 /* 8004D1F8 00049FF8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -52,8 +52,8 @@ lbl_8004D26C:
 /* 8004D29C 0004A09C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D2A0 0004A0A0  4E 80 00 20 */	blr 
 
-.global func_8004D2A4
-func_8004D2A4:
+.global xTimer.xTimer_ObjIDIsPauseTimer__FUi
+xTimer.xTimer_ObjIDIsPauseTimer__FUi:
 /* 8004D2A4 0004A0A4  3C 03 34 C1 */	addis r0, r3, 0x34c1
 /* 8004D2A8 0004A0A8  28 00 63 40 */	cmplwi r0, 0x6340
 /* 8004D2AC 0004A0AC  40 82 00 0C */	bne lbl_8004D2B8
@@ -168,10 +168,10 @@ lbl_8004D428:
 /* 8004D428 0004A228  38 00 00 00 */	li r0, 0
 /* 8004D42C 0004A22C  7F E3 FB 78 */	mr r3, r31
 /* 8004D430 0004A230  98 1E 00 14 */	stb r0, 0x14(r30)
-/* 8004D434 0004A234  4B FF FD BD */	bl func_8004D1F0
+/* 8004D434 0004A234  4B FF FD BD */	bl xTimer.GetRandomizedTime__FP11xTimerAsset
 /* 8004D438 0004A238  D0 3E 00 18 */	stfs f1, 0x18(r30)
 /* 8004D43C 0004A23C  80 7E 00 00 */	lwz r3, 0(r30)
-/* 8004D440 0004A240  4B FF FE 65 */	bl func_8004D2A4
+/* 8004D440 0004A240  4B FF FE 65 */	bl xTimer.xTimer_ObjIDIsPauseTimer__FUi
 /* 8004D444 0004A244  98 7E 00 15 */	stb r3, 0x15(r30)
 /* 8004D448 0004A248  38 00 00 00 */	li r0, 0
 /* 8004D44C 0004A24C  B0 1E 00 16 */	sth r0, 0x16(r30)
@@ -194,7 +194,7 @@ xTimerReset__FP6xTimer:
 /* 8004D484 0004A284  38 00 00 00 */	li r0, 0
 /* 8004D488 0004A288  98 1F 00 14 */	stb r0, 0x14(r31)
 /* 8004D48C 0004A28C  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 8004D490 0004A290  4B FF FD 61 */	bl func_8004D1F0
+/* 8004D490 0004A290  4B FF FD 61 */	bl xTimer.GetRandomizedTime__FP11xTimerAsset
 /* 8004D494 0004A294  D0 3F 00 18 */	stfs f1, 0x18(r31)
 /* 8004D498 0004A298  38 00 00 00 */	li r0, 0
 /* 8004D49C 0004A29C  B0 1F 00 16 */	sth r0, 0x16(r31)

@@ -2,8 +2,8 @@
 
 .section .text  # 0x800BE470 - 0x800BF1C0
 
-.global func_800BE470
-func_800BE470:
+.global iAnim.zVolumeInit__FP7zVolumeP12xVolumeAsset
+iAnim.zVolumeInit__FP7zVolumeP12xVolumeAsset:
 /* 800BE470 000BB270  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BE474 000BB274  7C 08 02 A6 */	mflr r0
 /* 800BE478 000BB278  90 01 00 14 */	stw r0, 0x14(r1)
@@ -51,7 +51,7 @@ lbl_800BE4F8:
 /* 800BE510 000BB310  1C 00 00 14 */	mulli r0, r0, 0x14
 /* 800BE514 000BB314  7C 64 1B 78 */	mr r4, r3
 /* 800BE518 000BB318  7C 65 02 14 */	add r3, r5, r0
-/* 800BE51C 000BB31C  4B FF FF 55 */	bl func_800BE470
+/* 800BE51C 000BB31C  4B FF FF 55 */	bl iAnim.zVolumeInit__FP7zVolumeP12xVolumeAsset
 /* 800BE520 000BB320  3B DE 00 01 */	addi r30, r30, 1
 lbl_800BE524:
 /* 800BE524 000BB324  A0 0D 91 74 */	lhz r0, lbl_803CBA74-_SDA_BASE_(r13)
