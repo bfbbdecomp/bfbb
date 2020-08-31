@@ -40,8 +40,8 @@ func_8017EEA4:
 /* 8017EF28 0017BD28  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017EF2C 0017BD2C  4E 80 00 20 */	blr 
 
-.global func_8017EF30
-func_8017EF30:
+.global zCameraTweakGlobal_Init__Fv
+zCameraTweakGlobal_Init__Fv:
 /* 8017EF30 0017BD30  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EF34 0017BD34  7C 08 02 A6 */	mflr r0
 /* 8017EF38 0017BD38  3C 60 80 33 */	lis r3, lbl_8032B568@ha
@@ -57,14 +57,14 @@ func_8017EF30:
 /* 8017EF60 0017BD60  38 63 B5 74 */	addi r3, r3, lbl_8032B574@l
 /* 8017EF64 0017BD64  C0 6D 80 E4 */	lfs f3, lbl_803CA9E4-_SDA_BASE_(r13)
 /* 8017EF68 0017BD68  4B FF FF 3D */	bl func_8017EEA4
-/* 8017EF6C 0017BD6C  48 00 03 69 */	bl func_8017F2D4
+/* 8017EF6C 0017BD6C  48 00 03 69 */	bl zCameraTweakGlobal_Reset__Fv
 /* 8017EF70 0017BD70  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017EF74 0017BD74  7C 08 03 A6 */	mtlr r0
 /* 8017EF78 0017BD78  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017EF7C 0017BD7C  4E 80 00 20 */	blr 
 
-.global func_8017EF80
-func_8017EF80:
+.global zCameraTweakGlobal_Add__FUiffff
+zCameraTweakGlobal_Add__FUiffff:
 /* 8017EF80 0017BD80  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8017EF84 0017BD84  7C 08 02 A6 */	mflr r0
 /* 8017EF88 0017BD88  90 01 00 64 */	stw r0, 0x64(r1)
@@ -214,8 +214,8 @@ func_8017F170:
 /* 8017F194 0017BF94  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 8017F198 0017BF98  4E 80 00 20 */	blr 
 
-.global func_8017F19C
-func_8017F19C:
+.global zCameraTweakGlobal_Remove__FUi
+zCameraTweakGlobal_Remove__FUi:
 /* 8017F19C 0017BF9C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017F1A0 0017BFA0  7C 08 02 A6 */	mflr r0
 /* 8017F1A4 0017BFA4  3C 80 80 33 */	lis r4, lbl_8032B4C8@ha
@@ -302,8 +302,8 @@ lbl_8017F2B8:
 /* 8017F2CC 0017C0CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017F2D0 0017C0D0  4E 80 00 20 */	blr 
 
-.global func_8017F2D4
-func_8017F2D4:
+.global zCameraTweakGlobal_Reset__Fv
+zCameraTweakGlobal_Reset__Fv:
 /* 8017F2D4 0017C0D4  38 00 00 00 */	li r0, 0
 /* 8017F2D8 0017C0D8  38 8D 97 C4 */	addi r4, r13, lbl_803CC0C4-_SDA_BASE_
 /* 8017F2DC 0017C0DC  90 0D 97 B8 */	stw r0, lbl_803CC0B8-_SDA_BASE_(r13)
@@ -326,8 +326,8 @@ func_8017F2D4:
 /* 8017F320 0017C120  D0 0D 97 D8 */	stfs f0, lbl_803CC0D8-_SDA_BASE_(r13)
 /* 8017F324 0017C124  4E 80 00 20 */	blr 
 
-.global func_8017F328
-func_8017F328:
+.global zCameraTweakGlobal_Update__Ff
+zCameraTweakGlobal_Update__Ff:
 /* 8017F328 0017C128  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F32C 0017C12C  7C 08 02 A6 */	mflr r0
 /* 8017F330 0017C130  90 01 00 14 */	stw r0, 0x14(r1)
@@ -395,31 +395,31 @@ lbl_8017F3B8:
 /* 8017F420 0017C220  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F424 0017C224  4E 80 00 20 */	blr 
 
-.global func_8017F428
-func_8017F428:
+.global zCameraTweakGlobal_GetD__Fv
+zCameraTweakGlobal_GetD__Fv:
 /* 8017F428 0017C228  C0 2D 97 DC */	lfs f1, lbl_803CC0DC-_SDA_BASE_(r13)
 /* 8017F42C 0017C22C  4E 80 00 20 */	blr 
 
-.global func_8017F430
-func_8017F430:
+.global zCameraTweakGlobal_GetH__Fv
+zCameraTweakGlobal_GetH__Fv:
 /* 8017F430 0017C230  C0 2D 97 E0 */	lfs f1, lbl_803CC0E0-_SDA_BASE_(r13)
 /* 8017F434 0017C234  4E 80 00 20 */	blr 
 
-.global func_8017F438
-func_8017F438:
+.global zCameraTweakGlobal_GetPitch__Fv
+zCameraTweakGlobal_GetPitch__Fv:
 /* 8017F438 0017C238  C0 2D 97 E4 */	lfs f1, lbl_803CC0E4-_SDA_BASE_(r13)
 /* 8017F43C 0017C23C  4E 80 00 20 */	blr 
 /* 8017F440 0017C240  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F444 0017C244  7C 08 02 A6 */	mflr r0
 /* 8017F448 0017C248  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017F44C 0017C24C  48 00 00 15 */	bl func_8017F460
+/* 8017F44C 0017C24C  48 00 00 15 */	bl zCameraTweak_Init__FP12zCameraTweakP17CameraTweak_asset
 /* 8017F450 0017C250  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017F454 0017C254  7C 08 03 A6 */	mtlr r0
 /* 8017F458 0017C258  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F45C 0017C25C  4E 80 00 20 */	blr 
 
-.global func_8017F460
-func_8017F460:
+.global zCameraTweak_Init__FP12zCameraTweakP17CameraTweak_asset
+zCameraTweak_Init__FP12zCameraTweakP17CameraTweak_asset:
 /* 8017F460 0017C260  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F464 0017C264  7C 08 02 A6 */	mflr r0
 /* 8017F468 0017C268  90 01 00 14 */	stw r0, 0x14(r1)
@@ -427,7 +427,7 @@ func_8017F460:
 /* 8017F470 0017C270  7C 9F 23 78 */	mr r31, r4
 /* 8017F474 0017C274  93 C1 00 08 */	stw r30, 8(r1)
 /* 8017F478 0017C278  7C 7E 1B 78 */	mr r30, r3
-/* 8017F47C 0017C27C  4B E8 9F 85 */	bl func_80009400
+/* 8017F47C 0017C27C  4B E8 9F 85 */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 8017F480 0017C280  3C 60 80 18 */	lis r3, lbl_8017F508@ha
 /* 8017F484 0017C284  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 8017F488 0017C288  38 03 F5 08 */	addi r0, r3, lbl_8017F508@l
@@ -449,23 +449,23 @@ lbl_8017F4B0:
 /* 8017F4C0 0017C2C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F4C4 0017C2C4  4E 80 00 20 */	blr 
 
-.global func_8017F4C8
-func_8017F4C8:
+.global zCameraTweak_Save__FP12zCameraTweakP7xSerial
+zCameraTweak_Save__FP12zCameraTweakP7xSerial:
 /* 8017F4C8 0017C2C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F4CC 0017C2CC  7C 08 02 A6 */	mflr r0
 /* 8017F4D0 0017C2D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017F4D4 0017C2D4  4B E8 9F 79 */	bl func_8000944C
+/* 8017F4D4 0017C2D4  4B E8 9F 79 */	bl xBaseSave__FP5xBaseP7xSerial
 /* 8017F4D8 0017C2D8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017F4DC 0017C2DC  7C 08 03 A6 */	mtlr r0
 /* 8017F4E0 0017C2E0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F4E4 0017C2E4  4E 80 00 20 */	blr 
 
-.global func_8017F4E8
-func_8017F4E8:
+.global zCameraTweak_Load__FP12zCameraTweakP7xSerial
+zCameraTweak_Load__FP12zCameraTweakP7xSerial:
 /* 8017F4E8 0017C2E8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F4EC 0017C2EC  7C 08 02 A6 */	mflr r0
 /* 8017F4F0 0017C2F0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017F4F4 0017C2F4  4B E8 9F A9 */	bl func_8000949C
+/* 8017F4F4 0017C2F4  4B E8 9F A9 */	bl xBaseLoad__FP5xBaseP7xSerial
 /* 8017F4F8 0017C2F8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017F4FC 0017C2FC  7C 08 03 A6 */	mtlr r0
 /* 8017F500 0017C300  38 21 00 10 */	addi r1, r1, 0x10
@@ -515,7 +515,7 @@ lbl_8017F564:
 /* 8017F59C 0017C39C  C0 64 00 18 */	lfs f3, 0x18(r4)
 /* 8017F5A0 0017C3A0  EC 20 08 28 */	fsubs f1, f0, f1
 /* 8017F5A4 0017C3A4  C0 84 00 1C */	lfs f4, 0x1c(r4)
-/* 8017F5A8 0017C3A8  4B FF F9 D9 */	bl func_8017EF80
+/* 8017F5A8 0017C3A8  4B FF F9 D9 */	bl zCameraTweakGlobal_Add__FUiffff
 /* 8017F5AC 0017C3AC  48 00 00 1C */	b lbl_8017F5C8
 lbl_8017F5B0:
 /* 8017F5B0 0017C3B0  7F E3 FB 78 */	mr r3, r31
@@ -523,7 +523,7 @@ lbl_8017F5B0:
 /* 8017F5B8 0017C3B8  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8017F5BC 0017C3BC  41 82 00 0C */	beq lbl_8017F5C8
 /* 8017F5C0 0017C3C0  80 7F 00 00 */	lwz r3, 0(r31)
-/* 8017F5C4 0017C3C4  4B FF FB D9 */	bl func_8017F19C
+/* 8017F5C4 0017C3C4  4B FF FB D9 */	bl zCameraTweakGlobal_Remove__FUi
 lbl_8017F5C8:
 /* 8017F5C8 0017C3C8  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 8017F5CC 0017C3CC  38 60 00 01 */	li r3, 1

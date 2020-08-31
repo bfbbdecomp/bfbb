@@ -2,8 +2,8 @@
 
 .section .text  # 0x800A8DF0 - 0x800A8EC8
 
-.global func_800A8DF0
-func_800A8DF0:
+.global zPickupTableInit__Fv
+zPickupTableInit__Fv:
 /* 800A8DF0 000A5BF0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A8DF4 000A5BF4  7C 08 02 A6 */	mflr r0
 /* 800A8DF8 000A5BF8  3C 80 80 3C */	lis r4, lbl_803C0558@ha
@@ -21,7 +21,7 @@ func_800A8DF0:
 /* 800A8E28 000A5C28  48 00 00 74 */	b lbl_800A8E9C
 lbl_800A8E2C:
 /* 800A8E2C 000A5C2C  80 7E 00 00 */	lwz r3, 0(r30)
-/* 800A8E30 000A5C30  4B FA 33 E5 */	bl func_8004C214
+/* 800A8E30 000A5C30  4B FA 33 E5 */	bl xStrHash__FPCc
 /* 800A8E34 000A5C34  90 7E 00 04 */	stw r3, 4(r30)
 /* 800A8E38 000A5C38  7F A4 EB 78 */	mr r4, r29
 /* 800A8E3C 000A5C3C  80 7F 1F B8 */	lwz r3, 0x1fb8(r31)

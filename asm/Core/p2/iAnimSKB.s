@@ -2,8 +2,8 @@
 
 .section .text  # 0x800BE470 - 0x800C0138
 
-.global func_800BF1C0
-func_800BF1C0:
+.global iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat
+iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat:
 /* 800BF1C0 000BBFC0  94 21 FE F0 */	stwu r1, -0x110(r1)
 /* 800BF1C4 000BBFC4  7C 08 02 A6 */	mflr r0
 /* 800BF1C8 000BBFC8  90 01 01 14 */	stw r0, 0x114(r1)
@@ -251,7 +251,7 @@ lbl_800BF424:
 /* 800BF560 000BC360  EC 00 08 28 */	fsubs f0, f0, f1
 /* 800BF564 000BC364  EC 02 00 32 */	fmuls f0, f2, f0
 /* 800BF568 000BC368  D0 01 00 14 */	stfs f0, 0x14(r1)
-/* 800BF56C 000BC36C  48 16 F0 11 */	bl func_8022E57C
+/* 800BF56C 000BC36C  48 16 F0 11 */	bl RtQuatSetupSlerpCache
 /* 800BF570 000BC370  C0 02 96 70 */	lfs f0, lbl_803CDFF0-_SDA2_BASE_(r2)
 /* 800BF574 000BC374  FC 1C 00 40 */	fcmpo cr0, f28, f0
 /* 800BF578 000BC378  4C 40 13 82 */	cror 2, 0, 2
@@ -403,8 +403,8 @@ lbl_800BF774:
 /* 800BF7A8 000BC5A8  38 21 01 10 */	addi r1, r1, 0x110
 /* 800BF7AC 000BC5AC  4E 80 00 20 */	blr 
 
-.global func_800BF7B0
-func_800BF7B0:
+.global iAnimDurationSKB__FP14iAnimSKBHeader
+iAnimDurationSKB__FP14iAnimSKBHeader:
 /* 800BF7B0 000BC5B0  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 800BF7B4 000BC5B4  A0 03 00 0A */	lhz r0, 0xa(r3)
 /* 800BF7B8 000BC5B8  54 84 20 36 */	slwi r4, r4, 4
@@ -431,8 +431,8 @@ func_800BF7F4:
 /* 800BF7F4 000BC5F4  FC 20 0A 10 */	fabs f1, f1
 /* 800BF7F8 000BC5F8  4E 80 00 20 */	blr 
 
-.global func_800BF7FC
-func_800BF7FC:
+.global _iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf
+_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf:
 /* 800BF7FC 000BC5FC  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800BF800 000BC600  3C E0 80 26 */	lis r7, lbl_80260118@ha
 /* 800BF804 000BC604  39 47 01 18 */	addi r10, r7, lbl_80260118@l
@@ -726,8 +726,8 @@ lbl_800BFC14:
 /* 800BFC18 000BCA18  38 21 00 70 */	addi r1, r1, 0x70
 /* 800BFC1C 000BCA1C  4E 80 00 20 */	blr 
 
-.global func_800BFC20
-func_800BFC20:
+.global _iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i
+_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i:
 /* 800BFC20 000BCA20  94 21 FF 50 */	stwu r1, -0xb0(r1)
 /* 800BFC24 000BCA24  39 63 00 1C */	addi r11, r3, 0x1c
 /* 800BFC28 000BCA28  54 80 08 3C */	slwi r0, r4, 1

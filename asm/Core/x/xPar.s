@@ -2,8 +2,8 @@
 
 .section .text  # 0x8003694C - 0x80036B8C
 
-.global func_8003694C
-func_8003694C:
+.global xParMemInit__Fv
+xParMemInit__Fv:
 /* 8003694C 0003374C  3C 60 80 39 */	lis r3, lbl_8038CEB4@ha
 /* 80036950 00033750  38 00 01 90 */	li r0, 0x190
 /* 80036954 00033754  38 83 CE B4 */	addi r4, r3, lbl_8038CEB4@l
@@ -70,8 +70,8 @@ lbl_80036A24:
 /* 80036A30 00033830  42 00 FF 34 */	bdnz lbl_80036964
 /* 80036A34 00033834  4E 80 00 20 */	blr 
 
-.global func_80036A38
-func_80036A38:
+.global xParAlloc__Fv
+xParAlloc__Fv:
 /* 80036A38 00033838  80 6D 8A 10 */	lwz r3, lbl_803CB310-_SDA_BASE_(r13)
 /* 80036A3C 0003383C  28 03 00 00 */	cmplwi r3, 0
 /* 80036A40 00033840  40 82 00 0C */	bne lbl_80036A4C
@@ -91,8 +91,8 @@ lbl_80036A60:
 /* 80036A70 00033870  90 03 00 04 */	stw r0, 4(r3)
 /* 80036A74 00033874  4E 80 00 20 */	blr 
 
-.global func_80036A78
-func_80036A78:
+.global xParFree__FP4xPar
+xParFree__FP4xPar:
 /* 80036A78 00033878  80 83 00 00 */	lwz r4, 0(r3)
 /* 80036A7C 0003387C  28 04 00 00 */	cmplwi r4, 0
 /* 80036A80 00033880  41 82 00 0C */	beq lbl_80036A8C
@@ -117,8 +117,8 @@ lbl_80036AB0:
 /* 80036AC0 000338C0  90 6D 8A 10 */	stw r3, lbl_803CB310-_SDA_BASE_(r13)
 /* 80036AC4 000338C4  4E 80 00 20 */	blr 
 
-.global func_80036AC8
-func_80036AC8:
+.global xParInit__FP4xPar
+xParInit__FP4xPar:
 /* 80036AC8 000338C8  C0 02 85 90 */	lfs f0, lbl_803CCF10-_SDA2_BASE_(r2)
 /* 80036ACC 000338CC  38 80 00 FF */	li r4, 0xff
 /* 80036AD0 000338D0  38 00 00 00 */	li r0, 0

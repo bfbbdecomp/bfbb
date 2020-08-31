@@ -2,8 +2,8 @@
 
 .section .text  # 0x8004D054 - 0x8004D1F0
 
-.global func_8004D054
-func_8004D054:
+.global xSurfaceInit__FUs
+xSurfaceInit__FUs:
 /* 8004D054 00049E54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D058 00049E58  7C 08 02 A6 */	mflr r0
 /* 8004D05C 00049E5C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -13,7 +13,7 @@ func_8004D054:
 /* 8004D06C 00049E6C  1C 80 00 28 */	mulli r4, r0, 0x28
 /* 8004D070 00049E70  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 8004D074 00049E74  38 A0 00 00 */	li r5, 0
-/* 8004D078 00049E78  4B FE 68 C9 */	bl func_80033940
+/* 8004D078 00049E78  4B FE 68 C9 */	bl xMemAlloc__FUiUii
 /* 8004D07C 00049E7C  90 6D 8B 10 */	stw r3, lbl_803CB410-_SDA_BASE_(r13)
 /* 8004D080 00049E80  38 C0 00 00 */	li r6, 0
 /* 8004D084 00049E84  48 00 00 1C */	b lbl_8004D0A0
@@ -89,43 +89,43 @@ func_8004D148:
 /* 8004D174 00049F74  90 03 00 0C */	stw r0, 0xc(r3)
 /* 8004D178 00049F78  4E 80 00 20 */	blr 
 
-.global func_8004D17C
-func_8004D17C:
+.global xSurfaceExit__Fv
+xSurfaceExit__Fv:
 /* 8004D17C 00049F7C  4E 80 00 20 */	blr 
 
-.global func_8004D180
-func_8004D180:
+.global xSurfaceSave__FP8xSurfaceP7xSerial
+xSurfaceSave__FP8xSurfaceP7xSerial:
 /* 8004D180 00049F80  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D184 00049F84  7C 08 02 A6 */	mflr r0
 /* 8004D188 00049F88  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004D18C 00049F8C  4B FB C2 C1 */	bl func_8000944C
+/* 8004D18C 00049F8C  4B FB C2 C1 */	bl xBaseSave__FP5xBaseP7xSerial
 /* 8004D190 00049F90  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8004D194 00049F94  7C 08 03 A6 */	mtlr r0
 /* 8004D198 00049F98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D19C 00049F9C  4E 80 00 20 */	blr 
 
-.global func_8004D1A0
-func_8004D1A0:
+.global xSurfaceLoad__FP8xSurfaceP7xSerial
+xSurfaceLoad__FP8xSurfaceP7xSerial:
 /* 8004D1A0 00049FA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D1A4 00049FA4  7C 08 02 A6 */	mflr r0
 /* 8004D1A8 00049FA8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004D1AC 00049FAC  4B FB C2 F1 */	bl func_8000949C
+/* 8004D1AC 00049FAC  4B FB C2 F1 */	bl xBaseLoad__FP5xBaseP7xSerial
 /* 8004D1B0 00049FB0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8004D1B4 00049FB4  7C 08 03 A6 */	mtlr r0
 /* 8004D1B8 00049FB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D1BC 00049FBC  4E 80 00 20 */	blr 
 
-.global func_8004D1C0
-func_8004D1C0:
+.global xSurfaceReset__FP8xSurface
+xSurfaceReset__FP8xSurface:
 /* 8004D1C0 00049FC0  4E 80 00 20 */	blr 
 
-.global func_8004D1C4
-func_8004D1C4:
+.global xSurfaceGetNumSurfaces__Fv
+xSurfaceGetNumSurfaces__Fv:
 /* 8004D1C4 00049FC4  A0 6D 8B 14 */	lhz r3, lbl_803CB414-_SDA_BASE_(r13)
 /* 8004D1C8 00049FC8  4E 80 00 20 */	blr 
 
-.global func_8004D1CC
-func_8004D1CC:
+.global xSurfaceGetByIdx__FUs
+xSurfaceGetByIdx__FUs:
 /* 8004D1CC 00049FCC  80 8D 8B 10 */	lwz r4, lbl_803CB410-_SDA_BASE_(r13)
 /* 8004D1D0 00049FD0  28 04 00 00 */	cmplwi r4, 0
 /* 8004D1D4 00049FD4  41 82 00 14 */	beq lbl_8004D1E8

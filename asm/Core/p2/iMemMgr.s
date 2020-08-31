@@ -2,8 +2,8 @@
 
 .section .text  # 0x800C6360 - 0x800C64A8
 
-.global func_800C6360
-func_800C6360:
+.global iMemInit__Fv
+iMemInit__Fv:
 /* 800C6360 000C3160  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C6364 000C3164  7C 08 02 A6 */	mflr r0
 /* 800C6368 000C3168  90 01 00 14 */	stw r0, 0x14(r1)
@@ -74,8 +74,8 @@ lbl_800C63C0:
 /* 800C6464 000C3264  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C6468 000C3268  4E 80 00 20 */	blr 
 
-.global func_800C646C
-func_800C646C:
+.global iMemExit__Fv
+iMemExit__Fv:
 /* 800C646C 000C326C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C6470 000C3270  7C 08 02 A6 */	mflr r0
 /* 800C6474 000C3274  3C 60 80 39 */	lis r3, lbl_8038C320@ha

@@ -2,8 +2,8 @@
 
 .section .text  # 0x80009400 - 0x80009564
 
-.global func_80009400
-func_80009400:
+.global xBaseInit__FP5xBaseP10xBaseAsset
+xBaseInit__FP5xBaseP10xBaseAsset:
 /* 80009400 00006200  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80009404 00006204  7C 08 02 A6 */	mflr r0
 /* 80009408 00006208  90 01 00 14 */	stw r0, 0x14(r1)
@@ -23,12 +23,12 @@ func_80009400:
 /* 80009440 00006240  38 21 00 10 */	addi r1, r1, 0x10
 /* 80009444 00006244  4E 80 00 20 */	blr 
 
-.global func_80009448
-func_80009448:
+.global xBaseSetup__FP5xBase
+xBaseSetup__FP5xBase:
 /* 80009448 00006248  4E 80 00 20 */	blr 
 
-.global func_8000944C
-func_8000944C:
+.global xBaseSave__FP5xBaseP7xSerial
+xBaseSave__FP5xBaseP7xSerial:
 /* 8000944C 0000624C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80009450 00006250  7C 08 02 A6 */	mflr r0
 /* 80009454 00006254  90 01 00 14 */	stw r0, 0x14(r1)
@@ -39,12 +39,12 @@ func_8000944C:
 /* 80009468 00006268  41 82 00 14 */	beq lbl_8000947C
 /* 8000946C 0000626C  7F E3 FB 78 */	mr r3, r31
 /* 80009470 00006270  38 80 00 01 */	li r4, 1
-/* 80009474 00006274  48 03 9B 99 */	bl func_8004300C
+/* 80009474 00006274  48 03 9B 99 */	bl Write_b1__7xSerialFi
 /* 80009478 00006278  48 00 00 10 */	b lbl_80009488
 lbl_8000947C:
 /* 8000947C 0000627C  7F E3 FB 78 */	mr r3, r31
 /* 80009480 00006280  38 80 00 00 */	li r4, 0
-/* 80009484 00006284  48 03 9B 89 */	bl func_8004300C
+/* 80009484 00006284  48 03 9B 89 */	bl Write_b1__7xSerialFi
 lbl_80009488:
 /* 80009488 00006288  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8000948C 0000628C  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -52,8 +52,8 @@ lbl_80009488:
 /* 80009494 00006294  38 21 00 10 */	addi r1, r1, 0x10
 /* 80009498 00006298  4E 80 00 20 */	blr 
 
-.global func_8000949C
-func_8000949C:
+.global xBaseLoad__FP5xBaseP7xSerial
+xBaseLoad__FP5xBaseP7xSerial:
 /* 8000949C 0000629C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800094A0 000062A0  7C 08 02 A6 */	mflr r0
 /* 800094A4 000062A4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -63,7 +63,7 @@ func_8000949C:
 /* 800094B4 000062B4  7C 83 23 78 */	mr r3, r4
 /* 800094B8 000062B8  38 81 00 08 */	addi r4, r1, 8
 /* 800094BC 000062BC  90 01 00 08 */	stw r0, 8(r1)
-/* 800094C0 000062C0  48 03 9D ED */	bl func_800432AC
+/* 800094C0 000062C0  48 03 9D ED */	bl Read_b1__7xSerialFPi
 /* 800094C4 000062C4  80 01 00 08 */	lwz r0, 8(r1)
 /* 800094C8 000062C8  2C 00 00 00 */	cmpwi r0, 0
 /* 800094CC 000062CC  41 82 00 10 */	beq lbl_800094DC
@@ -80,8 +80,8 @@ lbl_800094E4:
 /* 800094F0 000062F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800094F4 000062F4  4E 80 00 20 */	blr 
 
-.global func_800094F8
-func_800094F8:
+.global xBaseReset__FP5xBaseP10xBaseAsset
+xBaseReset__FP5xBaseP10xBaseAsset:
 /* 800094F8 000062F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800094FC 000062FC  7C 08 02 A6 */	mflr r0
 /* 80009500 00006300  90 01 00 14 */	stw r0, 0x14(r1)

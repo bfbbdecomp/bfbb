@@ -2,12 +2,12 @@
 
 .section .text  # 0x800C4F18 - 0x800C6360
 
-.global func_800C4F18
-func_800C4F18:
+.global iMath3Init__Fv
+iMath3Init__Fv:
 /* 800C4F18 000C1D18  4E 80 00 20 */	blr 
 
-.global func_800C4F1C
-func_800C4F1C:
+.global iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect
+iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect:
 /* 800C4F1C 000C1D1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C4F20 000C1D20  7C 08 02 A6 */	mflr r0
 /* 800C4F24 000C1D24  90 01 00 14 */	stw r0, 0x14(r1)
@@ -32,8 +32,8 @@ func_800C4F1C:
 /* 800C4F70 000C1D70  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C4F74 000C1D74  4E 80 00 20 */	blr 
 
-.global func_800C4F78
-func_800C4F78:
+.global iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect
+iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect:
 /* 800C4F78 000C1D78  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800C4F7C 000C1D7C  7C 08 02 A6 */	mflr r0
 /* 800C4F80 000C1D80  90 01 00 44 */	stw r0, 0x44(r1)
@@ -65,23 +65,23 @@ lbl_800C4FD4:
 /* 800C4FE0 000C1DE0  4B F4 96 B1 */	bl func_8000E690
 /* 800C4FE4 000C1DE4  38 7F 00 1C */	addi r3, r31, 0x1c
 /* 800C4FE8 000C1DE8  7C 64 1B 78 */	mr r4, r3
-/* 800C4FEC 000C1DEC  4B F8 95 05 */	bl func_8004E4F0
+/* 800C4FEC 000C1DEC  4B F8 95 05 */	bl xVec3Dot__FPC5xVec3PC5xVec3
 /* 800C4FF0 000C1DF0  C0 1D 00 0C */	lfs f0, 0xc(r29)
 /* 800C4FF4 000C1DF4  38 7F 00 1C */	addi r3, r31, 0x1c
 /* 800C4FF8 000C1DF8  38 9E 00 0C */	addi r4, r30, 0xc
 /* 800C4FFC 000C1DFC  EC 00 00 32 */	fmuls f0, f0, f0
 /* 800C5000 000C1E00  EF C1 00 28 */	fsubs f30, f1, f0
-/* 800C5004 000C1E04  4B F8 94 ED */	bl func_8004E4F0
+/* 800C5004 000C1E04  4B F8 94 ED */	bl xVec3Dot__FPC5xVec3PC5xVec3
 /* 800C5008 000C1E08  C0 02 97 48 */	lfs f0, lbl_803CE0C8-_SDA2_BASE_(r2)
 /* 800C500C 000C1E0C  38 7E 00 0C */	addi r3, r30, 0xc
 /* 800C5010 000C1E10  7C 64 1B 78 */	mr r4, r3
 /* 800C5014 000C1E14  EF E0 00 72 */	fmuls f31, f0, f1
-/* 800C5018 000C1E18  4B F8 94 D9 */	bl func_8004E4F0
+/* 800C5018 000C1E18  4B F8 94 D9 */	bl xVec3Dot__FPC5xVec3PC5xVec3
 /* 800C501C 000C1E1C  FC 40 F8 90 */	fmr f2, f31
 /* 800C5020 000C1E20  38 61 00 0C */	addi r3, r1, 0xc
 /* 800C5024 000C1E24  FC 60 F0 90 */	fmr f3, f30
 /* 800C5028 000C1E28  38 81 00 08 */	addi r4, r1, 8
-/* 800C502C 000C1E2C  4B F6 BC 9D */	bl func_80030CC8
+/* 800C502C 000C1E2C  4B F6 BC 9D */	bl xMathSolveQuadratic__FfffPfPf
 /* 800C5030 000C1E30  28 03 00 00 */	cmplwi r3, 0
 /* 800C5034 000C1E34  40 82 00 18 */	bne lbl_800C504C
 /* 800C5038 000C1E38  C0 02 97 40 */	lfs f0, lbl_803CE0C0-_SDA2_BASE_(r2)
@@ -164,8 +164,8 @@ lbl_800C5128:
 /* 800C514C 000C1F4C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800C5150 000C1F50  4E 80 00 20 */	blr 
 
-.global func_800C5154
-func_800C5154:
+.global iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect
+iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect:
 /* 800C5154 000C1F54  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800C5158 000C1F58  7C 08 02 A6 */	mflr r0
 /* 800C515C 000C1F5C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -198,14 +198,14 @@ func_800C5154:
 /* 800C51C8 000C1FC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C51CC 000C1FCC  4E 80 00 20 */	blr 
 
-.global func_800C51D0
-func_800C51D0:
+.global iSphereInitBoundVec__FP7xSpherePC5xVec3
+iSphereInitBoundVec__FP7xSpherePC5xVec3:
 /* 800C51D0 000C1FD0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C51D4 000C1FD4  7C 08 02 A6 */	mflr r0
 /* 800C51D8 000C1FD8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800C51DC 000C1FDC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800C51E0 000C1FE0  7C 7F 1B 78 */	mr r31, r3
-/* 800C51E4 000C1FE4  4B F8 92 F9 */	bl func_8004E4DC
+/* 800C51E4 000C1FE4  4B F8 92 F9 */	bl xVec3Copy__FP5xVec3PC5xVec3
 /* 800C51E8 000C1FE8  C0 02 97 44 */	lfs f0, lbl_803CE0C4-_SDA2_BASE_(r2)
 /* 800C51EC 000C1FEC  D0 1F 00 0C */	stfs f0, 0xc(r31)
 /* 800C51F0 000C1FF0  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -214,8 +214,8 @@ func_800C51D0:
 /* 800C51FC 000C1FFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C5200 000C2000  4E 80 00 20 */	blr 
 
-.global func_800C5204
-func_800C5204:
+.global iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3
+iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3:
 /* 800C5204 000C2004  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 800C5208 000C2008  7C 08 02 A6 */	mflr r0
 /* 800C520C 000C200C  90 01 00 64 */	stw r0, 0x64(r1)
@@ -231,7 +231,7 @@ func_800C5204:
 /* 800C5234 000C2034  7F A3 EB 78 */	mr r3, r29
 /* 800C5238 000C2038  7C 00 00 34 */	cntlzw r0, r0
 /* 800C523C 000C203C  54 1E DE 3E */	rlwinm r30, r0, 0x1b, 0x18, 0x1f
-/* 800C5240 000C2040  4B FF FC DD */	bl func_800C4F1C
+/* 800C5240 000C2040  4B FF FC DD */	bl iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect
 /* 800C5244 000C2044  C0 21 00 1C */	lfs f1, 0x1c(r1)
 /* 800C5248 000C2048  C0 02 97 3C */	lfs f0, lbl_803CE0BC-_SDA2_BASE_(r2)
 /* 800C524C 000C204C  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -254,7 +254,7 @@ lbl_800C5284:
 lbl_800C5288:
 /* 800C5288 000C2088  7F E3 FB 78 */	mr r3, r31
 /* 800C528C 000C208C  38 81 00 34 */	addi r4, r1, 0x34
-/* 800C5290 000C2090  4B F8 92 4D */	bl func_8004E4DC
+/* 800C5290 000C2090  4B F8 92 4D */	bl xVec3Copy__FP5xVec3PC5xVec3
 /* 800C5294 000C2094  C0 41 00 40 */	lfs f2, 0x40(r1)
 /* 800C5298 000C2098  7F E3 FB 78 */	mr r3, r31
 /* 800C529C 000C209C  C0 3D 00 0C */	lfs f1, 0xc(r29)
@@ -290,8 +290,8 @@ lbl_800C52F8:
 /* 800C5310 000C2110  38 21 00 60 */	addi r1, r1, 0x60
 /* 800C5314 000C2114  4E 80 00 20 */	blr 
 
-.global func_800C5318
-func_800C5318:
+.global iCylinderIsectVec__FPC9xCylinderPC5xVec3P6xIsect
+iCylinderIsectVec__FPC9xCylinderPC5xVec3P6xIsect:
 /* 800C5318 000C2118  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C531C 000C211C  7C 08 02 A6 */	mflr r0
 /* 800C5320 000C2120  C0 43 00 04 */	lfs f2, 4(r3)
@@ -333,8 +333,8 @@ lbl_800C5398:
 /* 800C53A8 000C21A8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C53AC 000C21AC  4E 80 00 20 */	blr 
 
-.global func_800C53B0
-func_800C53B0:
+.global iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect
+iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect:
 /* 800C53B0 000C21B0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C53B4 000C21B4  7C 08 02 A6 */	mflr r0
 /* 800C53B8 000C21B8  C0 24 00 00 */	lfs f1, 0(r4)
@@ -841,8 +841,8 @@ lbl_800C5B0C:
 /* 800C5B24 000C2924  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C5B28 000C2928  4E 80 00 20 */	blr 
 
-.global func_800C5B2C
-func_800C5B2C:
+.global iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect
+iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect:
 /* 800C5B2C 000C292C  C0 24 00 00 */	lfs f1, 0(r4)
 /* 800C5B30 000C2930  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 800C5B34 000C2934  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -1005,8 +1005,8 @@ lbl_800C5D60:
 /* 800C5D70 000C2B70  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C5D74 000C2B74  4E 80 00 20 */	blr 
 
-.global func_800C5D78
-func_800C5D78:
+.global iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect
+iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect:
 /* 800C5D78 000C2B78  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800C5D7C 000C2B7C  7C 08 02 A6 */	mflr r0
 /* 800C5D80 000C2B80  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1130,8 +1130,8 @@ lbl_800C5F2C:
 /* 800C5F3C 000C2D3C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C5F40 000C2D40  4E 80 00 20 */	blr 
 
-.global func_800C5F44
-func_800C5F44:
+.global iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect
+iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect:
 /* 800C5F44 000C2D44  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800C5F48 000C2D48  7C 08 02 A6 */	mflr r0
 /* 800C5F4C 000C2D4C  C0 24 00 00 */	lfs f1, 0(r4)
@@ -1278,7 +1278,7 @@ lbl_800C612C:
 /* 800C612C 000C2F2C  7F 83 E3 78 */	mr r3, r28
 /* 800C6130 000C2F30  7F A4 EB 78 */	mr r4, r29
 /* 800C6134 000C2F34  7F C5 F3 78 */	mr r5, r30
-/* 800C6138 000C2F38  4B FF F9 F5 */	bl func_800C5B2C
+/* 800C6138 000C2F38  4B FF F9 F5 */	bl iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect
 /* 800C613C 000C2F3C  C0 3E 00 04 */	lfs f1, 4(r30)
 /* 800C6140 000C2F40  C0 02 97 3C */	lfs f0, lbl_803CE0BC-_SDA2_BASE_(r2)
 /* 800C6144 000C2F44  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -1309,7 +1309,7 @@ lbl_800C6190:
 /* 800C61A4 000C2FA4  7F A4 EB 78 */	mr r4, r29
 /* 800C61A8 000C2FA8  90 1E 00 00 */	stw r0, 0(r30)
 /* 800C61AC 000C2FAC  7F C5 F3 78 */	mr r5, r30
-/* 800C61B0 000C2FB0  4B FF F2 01 */	bl func_800C53B0
+/* 800C61B0 000C2FB0  4B FF F2 01 */	bl iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect
 /* 800C61B4 000C2FB4  C0 3E 00 28 */	lfs f1, 0x28(r30)
 /* 800C61B8 000C2FB8  C0 1D 00 0C */	lfs f0, 0xc(r29)
 /* 800C61BC 000C2FBC  EC 01 00 28 */	fsubs f0, f1, f0
@@ -1323,8 +1323,8 @@ lbl_800C61CC:
 /* 800C61D8 000C2FD8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C61DC 000C2FDC  4E 80 00 20 */	blr 
 
-.global func_800C61E0
-func_800C61E0:
+.global iBoxInitBoundVec__FP4xBoxPC5xVec3
+iBoxInitBoundVec__FP4xBoxPC5xVec3:
 /* 800C61E0 000C2FE0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C61E4 000C2FE4  7C 08 02 A6 */	mflr r0
 /* 800C61E8 000C2FE8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1333,10 +1333,10 @@ func_800C61E0:
 /* 800C61F4 000C2FF4  93 C1 00 08 */	stw r30, 8(r1)
 /* 800C61F8 000C2FF8  7C 7E 1B 78 */	mr r30, r3
 /* 800C61FC 000C2FFC  38 7E 00 0C */	addi r3, r30, 0xc
-/* 800C6200 000C3000  4B F8 82 DD */	bl func_8004E4DC
+/* 800C6200 000C3000  4B F8 82 DD */	bl xVec3Copy__FP5xVec3PC5xVec3
 /* 800C6204 000C3004  7F C3 F3 78 */	mr r3, r30
 /* 800C6208 000C3008  7F E4 FB 78 */	mr r4, r31
-/* 800C620C 000C300C  4B F8 82 D1 */	bl func_8004E4DC
+/* 800C620C 000C300C  4B F8 82 D1 */	bl xVec3Copy__FP5xVec3PC5xVec3
 /* 800C6210 000C3010  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800C6214 000C3014  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 800C6218 000C3018  83 C1 00 08 */	lwz r30, 8(r1)
@@ -1344,8 +1344,8 @@ func_800C61E0:
 /* 800C6220 000C3020  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C6224 000C3024  4E 80 00 20 */	blr 
 
-.global func_800C6228
-func_800C6228:
+.global iBoxBoundVec__FP4xBoxPC4xBoxPC5xVec3
+iBoxBoundVec__FP4xBoxPC4xBoxPC5xVec3:
 /* 800C6228 000C3028  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800C622C 000C302C  7C 08 02 A6 */	mflr r0
 /* 800C6230 000C3030  C0 65 00 08 */	lfs f3, 8(r5)

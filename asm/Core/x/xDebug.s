@@ -2,8 +2,8 @@
 
 .section .text  # 0x80017D3C - 0x80018064
 
-.global func_80017D3C
-func_80017D3C:
+.global xprintf__FPCce
+xprintf__FPCce:
 /* 80017D3C 00014B3C  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 80017D40 00014B40  40 86 00 24 */	bne cr1, lbl_80017D64
 /* 80017D44 00014B44  D8 21 00 28 */	stfd f1, 0x28(r1)
@@ -26,25 +26,25 @@ lbl_80017D64:
 /* 80017D84 00014B84  38 21 00 70 */	addi r1, r1, 0x70
 /* 80017D88 00014B88  4E 80 00 20 */	blr 
 
-.global func_80017D8C
-func_80017D8C:
+.global xDebugModeAdd__FPCcPFv_v
+xDebugModeAdd__FPCcPFv_v:
 /* 80017D8C 00014B8C  38 60 FF FF */	li r3, -1
 /* 80017D90 00014B90  4E 80 00 20 */	blr 
 
-.global func_80017D94
-func_80017D94:
+.global xDebugInit__Fv
+xDebugInit__Fv:
 /* 80017D94 00014B94  4E 80 00 20 */	blr 
 
-.global func_80017D98
-func_80017D98:
+.global xDebugUpdate__Fv
+xDebugUpdate__Fv:
 /* 80017D98 00014B98  4E 80 00 20 */	blr 
 
-.global func_80017D9C
-func_80017D9C:
+.global xDebugExit__Fv
+xDebugExit__Fv:
 /* 80017D9C 00014B9C  4E 80 00 20 */	blr 
 
-.global func_80017DA0
-func_80017DA0:
+.global xDebugTimestampScreen__Fv
+xDebugTimestampScreen__Fv:
 /* 80017DA0 00014BA0  4E 80 00 20 */	blr 
 
 .global func_80017DA4
@@ -54,12 +54,12 @@ func_80017DA4:
 /* 80017DAC 00014BAC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80017DB0 00014BB0  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80017DB4 00014BB4  7C 7F 1B 78 */	mr r31, r3
-/* 80017DB8 00014BB8  48 00 A8 79 */	bl func_80022630
+/* 80017DB8 00014BB8  48 00 A8 79 */	bl temp_layout__8xtextboxCFb
 /* 80017DBC 00014BBC  7C 64 1B 78 */	mr r4, r3
 /* 80017DC0 00014BC0  7F E3 FB 78 */	mr r3, r31
 /* 80017DC4 00014BC4  38 A0 00 00 */	li r5, 0
 /* 80017DC8 00014BC8  38 C0 FF FF */	li r6, -1
-/* 80017DCC 00014BCC  48 00 AA E5 */	bl func_800228B0
+/* 80017DCC 00014BCC  48 00 AA E5 */	bl render__8xtextboxCFRQ28xtextbox6layoutii
 /* 80017DD0 00014BD0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80017DD4 00014BD4  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80017DD8 00014BD8  7C 08 03 A6 */	mtlr r0

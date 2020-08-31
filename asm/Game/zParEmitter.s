@@ -2,8 +2,8 @@
 
 .section .text  # 0x800A87EC - 0x800A8868
 
-.global func_800A87EC
-func_800A87EC:
+.global zParEmitterFind__FUi
+zParEmitterFind__FUi:
 /* 800A87EC 000A55EC  3C 80 80 3C */	lis r4, lbl_803C0558@ha
 /* 800A87F0 000A55F0  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
 /* 800A87F4 000A55F4  80 84 1F C0 */	lwz r4, 0x1fc0(r4)
@@ -31,13 +31,13 @@ lbl_800A883C:
 /* 800A883C 000A563C  38 60 00 00 */	li r3, 0
 /* 800A8840 000A5640  4E 80 00 20 */	blr 
 
-.global func_800A8844
-func_800A8844:
+.global zParEmitterFind__FPCc
+zParEmitterFind__FPCc:
 /* 800A8844 000A5644  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8848 000A5648  7C 08 02 A6 */	mflr r0
 /* 800A884C 000A564C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A8850 000A5650  4B FA 39 C5 */	bl func_8004C214
-/* 800A8854 000A5654  4B FF FF 99 */	bl func_800A87EC
+/* 800A8850 000A5650  4B FA 39 C5 */	bl xStrHash__FPCc
+/* 800A8854 000A5654  4B FF FF 99 */	bl zParEmitterFind__FUi
 /* 800A8858 000A5658  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800A885C 000A565C  7C 08 03 A6 */	mtlr r0
 /* 800A8860 000A5660  38 21 00 10 */	addi r1, r1, 0x10

@@ -2,8 +2,8 @@
 
 .section .text  # 0x80035494 - 0x80035A00
 
-.global func_80035494
-func_80035494:
+.global xMovePointInit__FP10xMovePointP15xMovePointAsset
+xMovePointInit__FP10xMovePointP15xMovePointAsset:
 /* 80035494 00032294  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80035498 00032298  7C 08 02 A6 */	mflr r0
 /* 8003549C 0003229C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -11,7 +11,7 @@ func_80035494:
 /* 800354A4 000322A4  7C 9F 23 78 */	mr r31, r4
 /* 800354A8 000322A8  93 C1 00 08 */	stw r30, 8(r1)
 /* 800354AC 000322AC  7C 7E 1B 78 */	mr r30, r3
-/* 800354B0 000322B0  4B FD 3F 51 */	bl func_80009400
+/* 800354B0 000322B0  4B FD 3F 51 */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 800354B4 000322B4  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 800354B8 000322B8  38 00 00 00 */	li r0, 0
 /* 800354BC 000322BC  80 7E 00 10 */	lwz r3, 0x10(r30)
@@ -28,7 +28,7 @@ func_80035494:
 /* 800354E8 000322E8  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 800354EC 000322EC  54 84 13 BA */	rlwinm r4, r4, 2, 0xe, 0x1d
 /* 800354F0 000322F0  38 A0 00 00 */	li r5, 0
-/* 800354F4 000322F4  4B FF E4 4D */	bl func_80033940
+/* 800354F4 000322F4  4B FF E4 4D */	bl xMemAlloc__FUiUii
 /* 800354F8 000322F8  90 7E 00 18 */	stw r3, 0x18(r30)
 /* 800354FC 000322FC  48 00 00 08 */	b lbl_80035504
 lbl_80035500:
@@ -41,37 +41,37 @@ lbl_80035504:
 /* 80035514 00032314  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035518 00032318  4E 80 00 20 */	blr 
 
-.global func_8003551C
-func_8003551C:
+.global xMovePointSave__FP10xMovePointP7xSerial
+xMovePointSave__FP10xMovePointP7xSerial:
 /* 8003551C 0003231C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80035520 00032320  7C 08 02 A6 */	mflr r0
 /* 80035524 00032324  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035528 00032328  4B FD 3F 25 */	bl func_8000944C
+/* 80035528 00032328  4B FD 3F 25 */	bl xBaseSave__FP5xBaseP7xSerial
 /* 8003552C 0003232C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80035530 00032330  7C 08 03 A6 */	mtlr r0
 /* 80035534 00032334  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035538 00032338  4E 80 00 20 */	blr 
 
-.global func_8003553C
-func_8003553C:
+.global xMovePointLoad__FP10xMovePointP7xSerial
+xMovePointLoad__FP10xMovePointP7xSerial:
 /* 8003553C 0003233C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80035540 00032340  7C 08 02 A6 */	mflr r0
 /* 80035544 00032344  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035548 00032348  4B FD 3F 55 */	bl func_8000949C
+/* 80035548 00032348  4B FD 3F 55 */	bl xBaseLoad__FP5xBaseP7xSerial
 /* 8003554C 0003234C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80035550 00032350  7C 08 03 A6 */	mtlr r0
 /* 80035554 00032354  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035558 00032358  4E 80 00 20 */	blr 
 
-.global func_8003555C
-func_8003555C:
+.global xMovePointReset__FP10xMovePoint
+xMovePointReset__FP10xMovePoint:
 /* 8003555C 0003235C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80035560 00032360  7C 08 02 A6 */	mflr r0
 /* 80035564 00032364  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80035568 00032368  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8003556C 0003236C  7C 7F 1B 78 */	mr r31, r3
 /* 80035570 00032370  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 80035574 00032374  4B FD 3F 85 */	bl func_800094F8
+/* 80035574 00032374  4B FD 3F 85 */	bl xBaseReset__FP5xBaseP10xBaseAsset
 /* 80035578 00032378  80 7F 00 10 */	lwz r3, 0x10(r31)
 /* 8003557C 0003237C  88 03 00 16 */	lbz r0, 0x16(r3)
 /* 80035580 00032380  98 1F 00 24 */	stb r0, 0x24(r31)
@@ -84,8 +84,8 @@ func_8003555C:
 /* 8003559C 0003239C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800355A0 000323A0  4E 80 00 20 */	blr 
 
-.global func_800355A4
-func_800355A4:
+.global xMovePointSetup__FP10xMovePointP6xScene
+xMovePointSetup__FP10xMovePointP6xScene:
 /* 800355A4 000323A4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800355A8 000323A8  7C 08 02 A6 */	mflr r0
 /* 800355AC 000323AC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -102,7 +102,7 @@ lbl_800355D4:
 /* 800355D4 000323D4  57 9E 13 BA */	rlwinm r30, r28, 2, 0xe, 0x1d
 /* 800355D8 000323D8  7F 63 DB 78 */	mr r3, r27
 /* 800355DC 000323DC  7C 9D F0 2E */	lwzx r4, r29, r30
-/* 800355E0 000323E0  48 00 A0 09 */	bl func_8003F5E8
+/* 800355E0 000323E0  48 00 A0 09 */	bl xSceneResolvID__FP6xSceneUi
 /* 800355E4 000323E4  80 9F 00 18 */	lwz r4, 0x18(r31)
 /* 800355E8 000323E8  3B 9C 00 01 */	addi r28, r28, 1
 /* 800355EC 000323EC  7C 64 F1 2E */	stwx r3, r4, r30
@@ -128,8 +128,8 @@ lbl_80035618:
 /* 80035638 00032438  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003563C 0003243C  4E 80 00 20 */	blr 
 
-.global func_80035640
-func_80035640:
+.global xMovePointSplineSetup__FP10xMovePoint
+xMovePointSplineSetup__FP10xMovePoint:
 /* 80035640 00032440  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80035644 00032444  7C 08 02 A6 */	mflr r0
 /* 80035648 00032448  90 01 00 54 */	stw r0, 0x54(r1)
@@ -208,11 +208,11 @@ lbl_80035758:
 /* 80035764 00032564  38 80 00 00 */	li r4, 0
 /* 80035768 00032568  38 A0 00 02 */	li r5, 2
 /* 8003576C 0003256C  38 C0 00 00 */	li r6, 0
-/* 80035770 00032570  48 01 58 41 */	bl func_8004AFB0
+/* 80035770 00032570  48 01 58 41 */	bl xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3
 /* 80035774 00032574  90 7D 00 2C */	stw r3, 0x2c(r29)
 /* 80035778 00032578  38 80 00 14 */	li r4, 0x14
 /* 8003577C 0003257C  80 7D 00 2C */	lwz r3, 0x2c(r29)
-/* 80035780 00032580  48 01 55 C5 */	bl func_8004AD44
+/* 80035780 00032580  48 01 55 C5 */	bl xSpline3_ArcInit__FP8xSpline3Ui
 lbl_80035784:
 /* 80035784 00032584  80 01 00 54 */	lwz r0, 0x54(r1)
 /* 80035788 00032588  83 E1 00 4C */	lwz r31, 0x4c(r1)
@@ -222,8 +222,8 @@ lbl_80035784:
 /* 80035798 00032598  38 21 00 50 */	addi r1, r1, 0x50
 /* 8003579C 0003259C  4E 80 00 20 */	blr 
 
-.global func_800357A0
-func_800357A0:
+.global xMovePointSplineDestroy__FP10xMovePoint
+xMovePointSplineDestroy__FP10xMovePoint:
 /* 800357A0 000325A0  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 800357A4 000325A4  28 00 00 00 */	cmplwi r0, 0
 /* 800357A8 000325A8  4D 82 00 20 */	beqlr 
@@ -231,8 +231,8 @@ func_800357A0:
 /* 800357B0 000325B0  90 03 00 2C */	stw r0, 0x2c(r3)
 /* 800357B4 000325B4  4E 80 00 20 */	blr 
 
-.global func_800357B8
-func_800357B8:
+.global xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3
+xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3:
 /* 800357B8 000325B8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800357BC 000325BC  7C 08 02 A6 */	mflr r0
 /* 800357C0 000325C0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -251,7 +251,7 @@ func_800357B8:
 /* 800357F4 000325F4  48 00 00 DC */	b lbl_800358D0
 lbl_800357F8:
 /* 800357F8 000325F8  3B E0 00 00 */	li r31, 0
-/* 800357FC 000325FC  4B FF B4 6D */	bl func_80030C68
+/* 800357FC 000325FC  4B FF B4 6D */	bl xrand__Fv
 /* 80035800 00032600  80 DB 00 20 */	lwz r6, 0x20(r27)
 /* 80035804 00032604  39 00 00 00 */	li r8, 0
 /* 80035808 00032608  80 BB 00 18 */	lwz r5, 0x18(r27)
@@ -320,8 +320,8 @@ lbl_800358D0:
 /* 800358DC 000326DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800358E0 000326E0  4E 80 00 20 */	blr 
 
-.global func_800358E4
-func_800358E4:
+.global xMovePointGetPos__FPC10xMovePoint
+xMovePointGetPos__FPC10xMovePoint:
 /* 800358E4 000326E4  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 800358E8 000326E8  4E 80 00 20 */	blr 
 

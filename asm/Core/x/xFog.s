@@ -2,14 +2,14 @@
 
 .section .text  # 0x8001FDBC - 0x8001FFB0
 
-.global func_8001FDBC
-func_8001FDBC:
+.global xFogClearFog__Fv
+xFogClearFog__Fv:
 /* 8001FDBC 0001CBBC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FDC0 0001CBC0  7C 08 02 A6 */	mflr r0
 /* 8001FDC4 0001CBC4  38 60 00 00 */	li r3, 0
 /* 8001FDC8 0001CBC8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8001FDCC 0001CBCC  C0 22 82 D0 */	lfs f1, lbl_803CCC50-_SDA2_BASE_(r2)
-/* 8001FDD0 0001CBD0  48 0A 09 35 */	bl func_800C0704
+/* 8001FDD0 0001CBD0  48 0A 09 35 */	bl iCameraSetFogParams__FP10iFogParamsf
 /* 8001FDD4 0001CBD4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001FDD8 0001CBD8  7C 08 03 A6 */	mtlr r0
 /* 8001FDDC 0001CBDC  38 21 00 10 */	addi r1, r1, 0x10
@@ -17,14 +17,14 @@ func_8001FDBC:
 /* 8001FDE4 0001CBE4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FDE8 0001CBE8  7C 08 02 A6 */	mflr r0
 /* 8001FDEC 0001CBEC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8001FDF0 0001CBF0  48 00 00 15 */	bl func_8001FE04
+/* 8001FDF0 0001CBF0  48 00 00 15 */	bl xFogInit__FP5xBaseP9xFogAsset
 /* 8001FDF4 0001CBF4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001FDF8 0001CBF8  7C 08 03 A6 */	mtlr r0
 /* 8001FDFC 0001CBFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FE00 0001CC00  4E 80 00 20 */	blr 
 
-.global func_8001FE04
-func_8001FE04:
+.global xFogInit__FP5xBaseP9xFogAsset
+xFogInit__FP5xBaseP9xFogAsset:
 /* 8001FE04 0001CC04  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FE08 0001CC08  7C 08 02 A6 */	mflr r0
 /* 8001FE0C 0001CC0C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -32,7 +32,7 @@ func_8001FE04:
 /* 8001FE14 0001CC14  7C 9F 23 78 */	mr r31, r4
 /* 8001FE18 0001CC18  93 C1 00 08 */	stw r30, 8(r1)
 /* 8001FE1C 0001CC1C  7C 7E 1B 78 */	mr r30, r3
-/* 8001FE20 0001CC20  4B FE 95 E1 */	bl func_80009400
+/* 8001FE20 0001CC20  4B FE 95 E1 */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 8001FE24 0001CC24  3C 60 80 02 */	lis r3, lbl_8001FED4@ha
 /* 8001FE28 0001CC28  38 03 FE D4 */	addi r0, r3, lbl_8001FED4@l
 /* 8001FE2C 0001CC2C  90 1E 00 0C */	stw r0, 0xc(r30)
@@ -55,35 +55,35 @@ lbl_8001FE58:
 /* 8001FE68 0001CC68  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FE6C 0001CC6C  4E 80 00 20 */	blr 
 
-.global func_8001FE70
-func_8001FE70:
+.global xFogReset__FP5_xFog
+xFogReset__FP5_xFog:
 /* 8001FE70 0001CC70  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FE74 0001CC74  7C 08 02 A6 */	mflr r0
 /* 8001FE78 0001CC78  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8001FE7C 0001CC7C  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 8001FE80 0001CC80  4B FE 96 79 */	bl func_800094F8
+/* 8001FE80 0001CC80  4B FE 96 79 */	bl xBaseReset__FP5xBaseP10xBaseAsset
 /* 8001FE84 0001CC84  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001FE88 0001CC88  7C 08 03 A6 */	mtlr r0
 /* 8001FE8C 0001CC8C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FE90 0001CC90  4E 80 00 20 */	blr 
 
-.global func_8001FE94
-func_8001FE94:
+.global xFogSave__FP5_xFogP7xSerial
+xFogSave__FP5_xFogP7xSerial:
 /* 8001FE94 0001CC94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FE98 0001CC98  7C 08 02 A6 */	mflr r0
 /* 8001FE9C 0001CC9C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8001FEA0 0001CCA0  4B FE 95 AD */	bl func_8000944C
+/* 8001FEA0 0001CCA0  4B FE 95 AD */	bl xBaseSave__FP5xBaseP7xSerial
 /* 8001FEA4 0001CCA4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001FEA8 0001CCA8  7C 08 03 A6 */	mtlr r0
 /* 8001FEAC 0001CCAC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FEB0 0001CCB0  4E 80 00 20 */	blr 
 
-.global func_8001FEB4
-func_8001FEB4:
+.global xFogLoad__FP5_xFogP7xSerial
+xFogLoad__FP5_xFogP7xSerial:
 /* 8001FEB4 0001CCB4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FEB8 0001CCB8  7C 08 02 A6 */	mflr r0
 /* 8001FEBC 0001CCBC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8001FEC0 0001CCC0  4B FE 95 DD */	bl func_8000949C
+/* 8001FEC0 0001CCC0  4B FE 95 DD */	bl xBaseLoad__FP5xBaseP7xSerial
 /* 8001FEC4 0001CCC4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001FEC8 0001CCC8  7C 08 03 A6 */	mtlr r0
 /* 8001FECC 0001CCCC  38 21 00 10 */	addi r1, r1, 0x10
@@ -132,16 +132,16 @@ lbl_8001FF04:
 /* 8001FF6C 0001CD6C  98 81 00 1F */	stb r4, 0x1f(r1)
 /* 8001FF70 0001CD70  90 01 00 20 */	stw r0, 0x20(r1)
 /* 8001FF74 0001CD74  C0 25 00 1C */	lfs f1, 0x1c(r5)
-/* 8001FF78 0001CD78  48 0A 07 8D */	bl func_800C0704
+/* 8001FF78 0001CD78  48 0A 07 8D */	bl iCameraSetFogParams__FP10iFogParamsf
 /* 8001FF7C 0001CD7C  48 00 00 1C */	b lbl_8001FF98
 lbl_8001FF80:
 /* 8001FF80 0001CD80  C0 22 82 D0 */	lfs f1, lbl_803CCC50-_SDA2_BASE_(r2)
 /* 8001FF84 0001CD84  38 60 00 00 */	li r3, 0
-/* 8001FF88 0001CD88  48 0A 07 7D */	bl func_800C0704
+/* 8001FF88 0001CD88  48 0A 07 7D */	bl iCameraSetFogParams__FP10iFogParamsf
 /* 8001FF8C 0001CD8C  48 00 00 0C */	b lbl_8001FF98
 lbl_8001FF90:
 /* 8001FF90 0001CD90  7C 83 23 78 */	mr r3, r4
-/* 8001FF94 0001CD94  4B FF FE DD */	bl func_8001FE70
+/* 8001FF94 0001CD94  4B FF FE DD */	bl xFogReset__FP5_xFog
 lbl_8001FF98:
 /* 8001FF98 0001CD98  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 8001FF9C 0001CD9C  38 60 00 01 */	li r3, 1
@@ -149,6 +149,6 @@ lbl_8001FF98:
 /* 8001FFA4 0001CDA4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001FFA8 0001CDA8  4E 80 00 20 */	blr 
 
-.global func_8001FFAC
-func_8001FFAC:
+.global xFogUpdate__FP5xBaseP6xScenef
+xFogUpdate__FP5xBaseP6xScenef:
 /* 8001FFAC 0001CDAC  4E 80 00 20 */	blr 

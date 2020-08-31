@@ -2,8 +2,8 @@
 
 .section .text  # 0x80035034 - 0x80035494
 
-.global func_80035034
-func_80035034:
+.global xMorphSeqSetup__FPvPFUiPc_Pv
+xMorphSeqSetup__FPvPFUiPc_Pv:
 /* 80035034 00031E34  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80035038 00031E38  7C 08 02 A6 */	mflr r0
 /* 8003503C 00031E3C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -68,7 +68,7 @@ lbl_80035100:
 /* 8003510C 00031F0C  80 03 00 08 */	lwz r0, 8(r3)
 /* 80035110 00031F10  80 7B 00 00 */	lwz r3, 0(r27)
 /* 80035114 00031F14  54 04 07 FE */	clrlwi r4, r0, 0x1f
-/* 80035118 00031F18  48 09 4C E1 */	bl func_800C9DF8
+/* 80035118 00031F18  48 09 4C E1 */	bl iMorphOptimize__FP8RpAtomici
 lbl_8003511C:
 /* 8003511C 00031F1C  3B 7B 00 08 */	addi r27, r27, 8
 /* 80035120 00031F20  3B 9C 00 01 */	addi r28, r28, 1
@@ -177,8 +177,8 @@ lbl_8003527C:
 /* 80035288 00032088  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003528C 0003208C  4E 80 00 20 */	blr 
 
-.global func_80035290
-func_80035290:
+.global xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf
+xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf:
 /* 80035290 00032090  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80035294 00032094  7C 08 02 A6 */	mflr r0
 /* 80035298 00032098  38 E3 00 10 */	addi r7, r3, 0x10
@@ -229,7 +229,7 @@ lbl_80035324:
 /* 80035330 00032130  28 00 00 00 */	cmplwi r0, 0
 /* 80035334 00032134  40 82 00 10 */	bne lbl_80035344
 /* 80035338 00032138  80 65 00 00 */	lwz r3, 0(r5)
-/* 8003533C 0003213C  48 09 2D B5 */	bl func_800C80F0
+/* 8003533C 0003213C  48 09 2D B5 */	bl iModelRender__FP8RpAtomicP11RwMatrixTag
 /* 80035340 00032140  48 00 01 30 */	b lbl_80035470
 lbl_80035344:
 /* 80035344 00032144  54 C0 10 3A */	slwi r0, r6, 2
@@ -308,15 +308,15 @@ lbl_80035458:
 /* 80035460 00032260  C0 25 00 08 */	lfs f1, 8(r5)
 /* 80035464 00032264  38 A5 00 10 */	addi r5, r5, 0x10
 /* 80035468 00032268  54 07 07 FE */	clrlwi r7, r0, 0x1f
-/* 8003546C 0003226C  48 09 4A 21 */	bl func_800C9E8C
+/* 8003546C 0003226C  48 09 4A 21 */	bl iMorphRender__FP8RpAtomicP11RwMatrixTagPPsPsUif
 lbl_80035470:
 /* 80035470 00032270  80 01 00 54 */	lwz r0, 0x54(r1)
 /* 80035474 00032274  7C 08 03 A6 */	mtlr r0
 /* 80035478 00032278  38 21 00 50 */	addi r1, r1, 0x50
 /* 8003547C 0003227C  4E 80 00 20 */	blr 
 
-.global func_80035480
-func_80035480:
+.global xMorphSeqDuration__FP13xMorphSeqFile
+xMorphSeqDuration__FP13xMorphSeqFile:
 /* 80035480 00032280  80 03 00 08 */	lwz r0, 8(r3)
 /* 80035484 00032284  54 00 10 3A */	slwi r0, r0, 2
 /* 80035488 00032288  7C 63 02 14 */	add r3, r3, r0

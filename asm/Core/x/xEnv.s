@@ -2,8 +2,8 @@
 
 .section .text  # 0x8001F438 - 0x8001F524
 
-.global func_8001F438
-func_8001F438:
+.global xEnvLoadBsp__FP4xEnvPCvUii
+xEnvLoadBsp__FP4xEnvPCvUii:
 /* 8001F438 0001C238  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001F43C 0001C23C  7C 08 02 A6 */	mflr r0
 /* 8001F440 0001C240  2C 06 00 00 */	cmpwi r6, 0
@@ -15,7 +15,7 @@ func_8001F438:
 /* 8001F458 0001C258  90 1F 00 00 */	stw r0, 0(r31)
 lbl_8001F45C:
 /* 8001F45C 0001C25C  80 7F 00 00 */	lwz r3, 0(r31)
-/* 8001F460 0001C260  48 0A 3A F1 */	bl func_800C2F50
+/* 8001F460 0001C260  48 0A 3A F1 */	bl iEnvLoad__FP4iEnvPCvUii
 /* 8001F464 0001C264  93 ED 88 E0 */	stw r31, lbl_803CB1E0-_SDA_BASE_(r13)
 /* 8001F468 0001C268  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001F46C 0001C26C  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -23,15 +23,15 @@ lbl_8001F45C:
 /* 8001F474 0001C274  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001F478 0001C278  4E 80 00 20 */	blr 
 
-.global func_8001F47C
-func_8001F47C:
+.global xEnvSetup__FP4xEnv
+xEnvSetup__FP4xEnv:
 /* 8001F47C 0001C27C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001F480 0001C280  7C 08 02 A6 */	mflr r0
 /* 8001F484 0001C284  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8001F488 0001C288  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8001F48C 0001C28C  7C 7F 1B 78 */	mr r31, r3
 /* 8001F490 0001C290  80 63 00 00 */	lwz r3, 0(r3)
-/* 8001F494 0001C294  48 0A 3C 8D */	bl func_800C3120
+/* 8001F494 0001C294  48 0A 3C 8D */	bl iEnvDefaultLighting__FP4iEnv
 /* 8001F498 0001C298  38 00 00 00 */	li r0, 0
 /* 8001F49C 0001C29C  90 1F 00 2C */	stw r0, 0x2c(r31)
 /* 8001F4A0 0001C2A0  93 ED 88 E0 */	stw r31, lbl_803CB1E0-_SDA_BASE_(r13)
@@ -41,8 +41,8 @@ func_8001F47C:
 /* 8001F4B0 0001C2B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001F4B4 0001C2B4  4E 80 00 20 */	blr 
 
-.global func_8001F4B8
-func_8001F4B8:
+.global xEnvFree__FP4xEnv
+xEnvFree__FP4xEnv:
 /* 8001F4B8 0001C2B8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001F4BC 0001C2BC  7C 08 02 A6 */	mflr r0
 /* 8001F4C0 0001C2C0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -51,7 +51,7 @@ func_8001F4B8:
 /* 8001F4CC 0001C2CC  80 63 00 00 */	lwz r3, 0(r3)
 /* 8001F4D0 0001C2D0  28 03 00 00 */	cmplwi r3, 0
 /* 8001F4D4 0001C2D4  41 82 00 10 */	beq lbl_8001F4E4
-/* 8001F4D8 0001C2D8  48 0A 3B DD */	bl func_800C30B4
+/* 8001F4D8 0001C2D8  48 0A 3B DD */	bl iEnvFree__FP4iEnv
 /* 8001F4DC 0001C2DC  38 00 00 00 */	li r0, 0
 /* 8001F4E0 0001C2E0  90 1F 00 00 */	stw r0, 0(r31)
 lbl_8001F4E4:
@@ -61,15 +61,15 @@ lbl_8001F4E4:
 /* 8001F4F0 0001C2F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001F4F4 0001C2F4  4E 80 00 20 */	blr 
 
-.global func_8001F4F8
-func_8001F4F8:
+.global xEnvRender__FP4xEnv
+xEnvRender__FP4xEnv:
 /* 8001F4F8 0001C2F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001F4FC 0001C2FC  7C 08 02 A6 */	mflr r0
 /* 8001F500 0001C300  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8001F504 0001C304  80 63 00 00 */	lwz r3, 0(r3)
 /* 8001F508 0001C308  28 03 00 00 */	cmplwi r3, 0
 /* 8001F50C 0001C30C  41 82 00 08 */	beq lbl_8001F514
-/* 8001F510 0001C310  48 0A 3D 25 */	bl func_800C3234
+/* 8001F510 0001C310  48 0A 3D 25 */	bl iEnvRender__FP4iEnv
 lbl_8001F514:
 /* 8001F514 0001C314  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8001F518 0001C318  7C 08 03 A6 */	mtlr r0

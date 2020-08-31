@@ -2,8 +2,8 @@
 
 .section .text  # 0x8017C2B4 - 0x8017C420
 
-.global func_8017C2B4
-func_8017C2B4:
+.global xCurveAssetEvaluate__FPC11xCurveAssetf
+xCurveAssetEvaluate__FPC11xCurveAssetf:
 /* 8017C2B4 001790B4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8017C2B8 001790B8  7C 08 02 A6 */	mflr r0
 /* 8017C2BC 001790BC  90 01 00 44 */	stw r0, 0x44(r1)
