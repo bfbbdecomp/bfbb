@@ -4,8 +4,8 @@
 
 .global get_HIPLFuncs__Fv
 get_HIPLFuncs__Fv:
-/* 8002CF70 00029D70  3C 60 80 28 */	lis r3, lbl_8027D5E0@ha
-/* 8002CF74 00029D74  38 63 D5 E0 */	addi r3, r3, lbl_8027D5E0@l
+/* 8002CF70 00029D70  3C 60 80 28 */	lis r3, lbl_g_map_HIPL_funcmap@ha
+/* 8002CF74 00029D74  38 63 D5 E0 */	addi r3, r3, lbl_g_map_HIPL_funcmap@l
 /* 8002CF78 00029D78  4E 80 00 20 */	blr 
 /* 8002CF7C 00029D7C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002CF80 00029D80  7C 08 02 A6 */	mflr r0
@@ -19,19 +19,19 @@ get_HIPLFuncs__Fv:
 /* 8002CFA0 00029DA0  3B E0 00 00 */	li r31, 0
 /* 8002CFA4 00029DA4  3B 60 FF FF */	li r27, -1
 /* 8002CFA8 00029DA8  38 60 00 01 */	li r3, 1
-/* 8002CFAC 00029DAC  80 8D 89 90 */	lwz r4, lbl_803CB290-_SDA_BASE_(r13)
+/* 8002CFAC 00029DAC  80 8D 89 90 */	lwz r4, lbl_g_loadlock_1-_SDA_BASE_(r13)
 /* 8002CFB0 00029DB0  7C 09 03 A6 */	mtctr r0
 lbl_8002CFB4:
 /* 8002CFB4 00029DB4  7C 65 30 30 */	slw r5, r3, r6
 /* 8002CFB8 00029DB8  7C 80 28 39 */	and. r0, r4, r5
 /* 8002CFBC 00029DBC  40 82 00 28 */	bne lbl_8002CFE4
-/* 8002CFC0 00029DC0  80 0D 89 90 */	lwz r0, lbl_803CB290-_SDA_BASE_(r13)
-/* 8002CFC4 00029DC4  3C 60 80 28 */	lis r3, lbl_8027D0A0@ha
+/* 8002CFC0 00029DC0  80 0D 89 90 */	lwz r0, lbl_g_loadlock_1-_SDA_BASE_(r13)
+/* 8002CFC4 00029DC4  3C 60 80 28 */	lis r3, lbl_g_hiploadinst@ha
 /* 8002CFC8 00029DC8  1C 86 00 A8 */	mulli r4, r6, 0xa8
 /* 8002CFCC 00029DCC  7C DB 33 78 */	mr r27, r6
 /* 8002CFD0 00029DD0  7C 05 2B 78 */	or r5, r0, r5
-/* 8002CFD4 00029DD4  38 03 D0 A0 */	addi r0, r3, lbl_8027D0A0@l
-/* 8002CFD8 00029DD8  90 AD 89 90 */	stw r5, lbl_803CB290-_SDA_BASE_(r13)
+/* 8002CFD4 00029DD4  38 03 D0 A0 */	addi r0, r3, lbl_g_hiploadinst@l
+/* 8002CFD8 00029DD8  90 AD 89 90 */	stw r5, lbl_g_loadlock_1-_SDA_BASE_(r13)
 /* 8002CFDC 00029DDC  7F E0 22 14 */	add r31, r0, r4
 /* 8002CFE0 00029DE0  48 00 00 0C */	b lbl_8002CFEC
 lbl_8002CFE4:
@@ -138,10 +138,10 @@ lbl_8002D14C:
 /* 8002D158 00029F58  38 A0 00 A8 */	li r5, 0xa8
 /* 8002D15C 00029F5C  4B FD 62 FD */	bl memset
 /* 8002D160 00029F60  38 00 00 01 */	li r0, 1
-/* 8002D164 00029F64  80 6D 89 90 */	lwz r3, lbl_803CB290-_SDA_BASE_(r13)
+/* 8002D164 00029F64  80 6D 89 90 */	lwz r3, lbl_g_loadlock_1-_SDA_BASE_(r13)
 /* 8002D168 00029F68  7C 00 F8 30 */	slw r0, r0, r31
 /* 8002D16C 00029F6C  7C 60 00 78 */	andc r0, r3, r0
-/* 8002D170 00029F70  90 0D 89 90 */	stw r0, lbl_803CB290-_SDA_BASE_(r13)
+/* 8002D170 00029F70  90 0D 89 90 */	stw r0, lbl_g_loadlock_1-_SDA_BASE_(r13)
 lbl_8002D174:
 /* 8002D174 00029F74  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8002D178 00029F78  83 E1 00 0C */	lwz r31, 0xc(r1)

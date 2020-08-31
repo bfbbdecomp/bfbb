@@ -29,9 +29,9 @@ lbl_80092C34:
 /* 80092C3C 0008FA3C  41 82 FF F4 */	beq lbl_80092C30
 /* 80092C40 0008FA40  28 00 00 5C */	cmplwi r0, 0x5c
 /* 80092C44 0008FA44  41 82 FF EC */	beq lbl_80092C30
-/* 80092C48 0008FA48  3C 80 80 26 */	lis r4, lbl_8025BA20@ha
+/* 80092C48 0008FA48  3C 80 80 26 */	lis r4, lbl__stringBase0_35@ha
 /* 80092C4C 0008FA4C  7C 65 1B 78 */	mr r5, r3
-/* 80092C50 0008FA50  38 84 BA 20 */	addi r4, r4, lbl_8025BA20@l
+/* 80092C50 0008FA50  38 84 BA 20 */	addi r4, r4, lbl__stringBase0_35@l
 /* 80092C54 0008FA54  38 61 00 08 */	addi r3, r1, 8
 /* 80092C58 0008FA58  38 C4 00 05 */	addi r6, r4, 5
 /* 80092C5C 0008FA5C  4C C6 31 82 */	crclr 6
@@ -67,9 +67,9 @@ lbl_80092CAC:
 
 .global zFMVFileGetName__F8eFMVFile
 zFMVFileGetName__F8eFMVFile:
-/* 80092CD0 0008FAD0  3C 80 80 29 */	lis r4, lbl_8028EE98@ha
+/* 80092CD0 0008FAD0  3C 80 80 29 */	lis r4, lbl_zFMVFileTable@ha
 /* 80092CD4 0008FAD4  38 00 00 09 */	li r0, 9
-/* 80092CD8 0008FAD8  38 84 EE 98 */	addi r4, r4, lbl_8028EE98@l
+/* 80092CD8 0008FAD8  38 84 EE 98 */	addi r4, r4, lbl_zFMVFileTable@l
 /* 80092CDC 0008FADC  38 A0 00 00 */	li r5, 0
 /* 80092CE0 0008FAE0  7C 09 03 A6 */	mtctr r0
 lbl_80092CE4:
@@ -77,8 +77,8 @@ lbl_80092CE4:
 /* 80092CE8 0008FAE8  7C 03 00 00 */	cmpw r3, r0
 /* 80092CEC 0008FAEC  40 82 00 1C */	bne lbl_80092D08
 /* 80092CF0 0008FAF0  1C 85 00 24 */	mulli r4, r5, 0x24
-/* 80092CF4 0008FAF4  3C 60 80 29 */	lis r3, lbl_8028EE98@ha
-/* 80092CF8 0008FAF8  38 03 EE 98 */	addi r0, r3, lbl_8028EE98@l
+/* 80092CF4 0008FAF4  3C 60 80 29 */	lis r3, lbl_zFMVFileTable@ha
+/* 80092CF8 0008FAF8  38 03 EE 98 */	addi r0, r3, lbl_zFMVFileTable@l
 /* 80092CFC 0008FAFC  7C 60 22 14 */	add r3, r0, r4
 /* 80092D00 0008FB00  38 63 00 04 */	addi r3, r3, 4
 /* 80092D04 0008FB04  4E 80 00 20 */	blr 

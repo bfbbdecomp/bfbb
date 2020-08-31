@@ -11,14 +11,14 @@ xSerialStartup__FiP21st_SERIAL_PERCID_SIZE:
 /* 80042D7C 0003FB7C  7C 9F 23 78 */	mr r31, r4
 /* 80042D80 0003FB80  93 C1 00 08 */	stw r30, 8(r1)
 /* 80042D84 0003FB84  7C 7E 1B 78 */	mr r30, r3
-/* 80042D88 0003FB88  80 AD 8A A0 */	lwz r5, lbl_803CB3A0-_SDA_BASE_(r13)
+/* 80042D88 0003FB88  80 AD 8A A0 */	lwz r5, lbl_g_serinit-_SDA_BASE_(r13)
 /* 80042D8C 0003FB8C  38 05 00 01 */	addi r0, r5, 1
 /* 80042D90 0003FB90  2C 05 00 00 */	cmpwi r5, 0
-/* 80042D94 0003FB94  90 0D 8A A0 */	stw r0, lbl_803CB3A0-_SDA_BASE_(r13)
+/* 80042D94 0003FB94  90 0D 8A A0 */	stw r0, lbl_g_serinit-_SDA_BASE_(r13)
 /* 80042D98 0003FB98  40 82 00 28 */	bne lbl_80042DC0
-/* 80042D9C 0003FB9C  3C 60 80 29 */	lis r3, lbl_80288B10@ha
+/* 80042D9C 0003FB9C  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
 /* 80042DA0 0003FBA0  38 80 00 00 */	li r4, 0
-/* 80042DA4 0003FBA4  38 63 8B 10 */	addi r3, r3, lbl_80288B10@l
+/* 80042DA4 0003FBA4  38 63 8B 10 */	addi r3, r3, lbl_g_xserdata@l
 /* 80042DA8 0003FBA8  38 A0 00 24 */	li r5, 0x24
 /* 80042DAC 0003FBAC  4B FC 06 AD */	bl memset
 /* 80042DB0 0003FBB0  48 00 08 01 */	bl xserializer.xSER_init_tables__Fv
@@ -28,7 +28,7 @@ xSerialStartup__FiP21st_SERIAL_PERCID_SIZE:
 lbl_80042DC0:
 /* 80042DC0 0003FBC0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80042DC4 0003FBC4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80042DC8 0003FBC8  80 6D 8A A0 */	lwz r3, lbl_803CB3A0-_SDA_BASE_(r13)
+/* 80042DC8 0003FBC8  80 6D 8A A0 */	lwz r3, lbl_g_serinit-_SDA_BASE_(r13)
 /* 80042DCC 0003FBCC  83 C1 00 08 */	lwz r30, 8(r1)
 /* 80042DD0 0003FBD0  7C 08 03 A6 */	mtlr r0
 /* 80042DD4 0003FBD4  38 21 00 10 */	addi r1, r1, 0x10
@@ -36,21 +36,21 @@ lbl_80042DC0:
 
 .global xSerialShutdown__Fv
 xSerialShutdown__Fv:
-/* 80042DDC 0003FBDC  80 6D 8A A0 */	lwz r3, lbl_803CB3A0-_SDA_BASE_(r13)
+/* 80042DDC 0003FBDC  80 6D 8A A0 */	lwz r3, lbl_g_serinit-_SDA_BASE_(r13)
 /* 80042DE0 0003FBE0  38 03 FF FF */	addi r0, r3, -1
-/* 80042DE4 0003FBE4  90 0D 8A A0 */	stw r0, lbl_803CB3A0-_SDA_BASE_(r13)
-/* 80042DE8 0003FBE8  80 6D 8A A0 */	lwz r3, lbl_803CB3A0-_SDA_BASE_(r13)
+/* 80042DE4 0003FBE4  90 0D 8A A0 */	stw r0, lbl_g_serinit-_SDA_BASE_(r13)
+/* 80042DE8 0003FBE8  80 6D 8A A0 */	lwz r3, lbl_g_serinit-_SDA_BASE_(r13)
 /* 80042DEC 0003FBEC  4E 80 00 20 */	blr 
 
 .global xSerialTraverse__FPFUiP7xSerial_i
 xSerialTraverse__FPFUiP7xSerial_i:
 /* 80042DF0 0003FBF0  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80042DF4 0003FBF4  7C 08 02 A6 */	mflr r0
-/* 80042DF8 0003FBF8  3C 80 80 29 */	lis r4, lbl_80288B10@ha
+/* 80042DF8 0003FBF8  3C 80 80 29 */	lis r4, lbl_g_xserdata@ha
 /* 80042DFC 0003FBFC  90 01 00 44 */	stw r0, 0x44(r1)
 /* 80042E00 0003FC00  BF 61 00 2C */	stmw r27, 0x2c(r1)
 /* 80042E04 0003FC04  7C 7B 1B 78 */	mr r27, r3
-/* 80042E08 0003FC08  3B E4 8B 10 */	addi r31, r4, lbl_80288B10@l
+/* 80042E08 0003FC08  3B E4 8B 10 */	addi r31, r4, lbl_g_xserdata@l
 /* 80042E0C 0003FC0C  38 61 00 08 */	addi r3, r1, 8
 /* 80042E10 0003FC10  48 00 00 75 */	bl __ct__7xSerialFv
 /* 80042E14 0003FC14  3B A0 00 00 */	li r29, 0
@@ -155,9 +155,9 @@ lbl_80042F44:
 lbl_80042F48:
 /* 80042F48 0003FD48  2C 06 00 00 */	cmpwi r6, 0
 /* 80042F4C 0003FD4C  40 80 00 58 */	bge lbl_80042FA4
-/* 80042F50 0003FD50  3C 60 80 29 */	lis r3, lbl_80288B34@ha
+/* 80042F50 0003FD50  3C 60 80 29 */	lis r3, lbl_g_tbl_onbit@ha
 /* 80042F54 0003FD54  7C 9A 23 78 */	mr r26, r4
-/* 80042F58 0003FD58  3B C3 8B 34 */	addi r30, r3, lbl_80288B34@l
+/* 80042F58 0003FD58  3B C3 8B 34 */	addi r30, r3, lbl_g_tbl_onbit@l
 /* 80042F5C 0003FD5C  3B 80 00 00 */	li r28, 0
 /* 80042F60 0003FD60  3B A0 00 00 */	li r29, 0
 /* 80042F64 0003FD64  48 00 00 34 */	b lbl_80042F98
@@ -181,10 +181,10 @@ lbl_80042F98:
 /* 80042FA0 0003FDA0  48 00 00 54 */	b lbl_80042FF4
 lbl_80042FA4:
 /* 80042FA4 0003FDA4  3B A0 00 00 */	li r29, 0
-/* 80042FA8 0003FDA8  3C 60 80 29 */	lis r3, lbl_80288B34@ha
+/* 80042FA8 0003FDA8  3C 60 80 29 */	lis r3, lbl_g_tbl_onbit@ha
 /* 80042FAC 0003FDAC  7C 9A 23 78 */	mr r26, r4
 /* 80042FB0 0003FDB0  7F BC EB 78 */	mr r28, r29
-/* 80042FB4 0003FDB4  3B C3 8B 34 */	addi r30, r3, lbl_80288B34@l
+/* 80042FB4 0003FDB4  3B C3 8B 34 */	addi r30, r3, lbl_g_tbl_onbit@l
 /* 80042FB8 0003FDB8  48 00 00 34 */	b lbl_80042FEC
 lbl_80042FBC:
 /* 80042FBC 0003FDBC  57 A0 10 3A */	slwi r0, r29, 2
@@ -343,18 +343,18 @@ lbl_800431A0:
 /* 800431A4 0003FFA4  48 00 02 E5 */	bl rdbit__7xSerialFv
 /* 800431A8 0003FFA8  2C 03 00 00 */	cmpwi r3, 0
 /* 800431AC 0003FFAC  41 82 00 24 */	beq lbl_800431D0
-/* 800431B0 0003FFB0  3C 60 80 29 */	lis r3, lbl_80288B34@ha
+/* 800431B0 0003FFB0  3C 60 80 29 */	lis r3, lbl_g_tbl_onbit@ha
 /* 800431B4 0003FFB4  57 C0 10 3A */	slwi r0, r30, 2
-/* 800431B8 0003FFB8  38 63 8B 34 */	addi r3, r3, lbl_80288B34@l
+/* 800431B8 0003FFB8  38 63 8B 34 */	addi r3, r3, lbl_g_tbl_onbit@l
 /* 800431BC 0003FFBC  80 9C 00 00 */	lwz r4, 0(r28)
 /* 800431C0 0003FFC0  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800431C4 0003FFC4  7C 80 03 78 */	or r0, r4, r0
 /* 800431C8 0003FFC8  90 1C 00 00 */	stw r0, 0(r28)
 /* 800431CC 0003FFCC  48 00 00 20 */	b lbl_800431EC
 lbl_800431D0:
-/* 800431D0 0003FFD0  3C 60 80 29 */	lis r3, lbl_80288BB4@ha
+/* 800431D0 0003FFD0  3C 60 80 29 */	lis r3, lbl_g_tbl_clear@ha
 /* 800431D4 0003FFD4  57 C0 10 3A */	slwi r0, r30, 2
-/* 800431D8 0003FFD8  38 63 8B B4 */	addi r3, r3, lbl_80288BB4@l
+/* 800431D8 0003FFD8  38 63 8B B4 */	addi r3, r3, lbl_g_tbl_clear@l
 /* 800431DC 0003FFDC  80 9C 00 00 */	lwz r4, 0(r28)
 /* 800431E0 0003FFE0  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800431E4 0003FFE4  7C 80 00 38 */	and r0, r4, r0
@@ -381,9 +381,9 @@ lbl_80043220:
 /* 80043224 00040024  48 00 02 65 */	bl rdbit__7xSerialFv
 /* 80043228 00040028  2C 03 00 00 */	cmpwi r3, 0
 /* 8004322C 0004002C  41 82 00 28 */	beq lbl_80043254
-/* 80043230 00040030  3C 60 80 29 */	lis r3, lbl_80288B34@ha
+/* 80043230 00040030  3C 60 80 29 */	lis r3, lbl_g_tbl_onbit@ha
 /* 80043234 00040034  57 E0 10 3A */	slwi r0, r31, 2
-/* 80043238 00040038  38 63 8B 34 */	addi r3, r3, lbl_80288B34@l
+/* 80043238 00040038  38 63 8B 34 */	addi r3, r3, lbl_g_tbl_onbit@l
 /* 8004323C 0004003C  88 9C 00 00 */	lbz r4, 0(r28)
 /* 80043240 00040040  7C 03 00 2E */	lwzx r0, r3, r0
 /* 80043244 00040044  54 00 06 3E */	clrlwi r0, r0, 0x18
@@ -391,9 +391,9 @@ lbl_80043220:
 /* 8004324C 0004004C  98 1C 00 00 */	stb r0, 0(r28)
 /* 80043250 00040050  48 00 00 24 */	b lbl_80043274
 lbl_80043254:
-/* 80043254 00040054  3C 60 80 29 */	lis r3, lbl_80288BB4@ha
+/* 80043254 00040054  3C 60 80 29 */	lis r3, lbl_g_tbl_clear@ha
 /* 80043258 00040058  57 E0 10 3A */	slwi r0, r31, 2
-/* 8004325C 0004005C  38 63 8B B4 */	addi r3, r3, lbl_80288BB4@l
+/* 8004325C 0004005C  38 63 8B B4 */	addi r3, r3, lbl_g_tbl_clear@l
 /* 80043260 00040060  88 9C 00 00 */	lbz r4, 0(r28)
 /* 80043264 00040064  7C 03 00 2E */	lwzx r0, r3, r0
 /* 80043268 00040068  54 00 06 3E */	clrlwi r0, r0, 0x18
@@ -523,9 +523,9 @@ wrbit__7xSerialFi:
 /* 800433E8 000401E8  4E 80 00 20 */	blr 
 lbl_800433EC:
 /* 800433EC 000401EC  80 C3 00 10 */	lwz r6, 0x10(r3)
-/* 800433F0 000401F0  3C A0 80 29 */	lis r5, lbl_80288BB4@ha
+/* 800433F0 000401F0  3C A0 80 29 */	lis r5, lbl_g_tbl_clear@ha
 /* 800433F4 000401F4  80 03 00 14 */	lwz r0, 0x14(r3)
-/* 800433F8 000401F8  38 A5 8B B4 */	addi r5, r5, lbl_80288BB4@l
+/* 800433F8 000401F8  38 A5 8B B4 */	addi r5, r5, lbl_g_tbl_clear@l
 /* 800433FC 000401FC  80 E8 00 04 */	lwz r7, 4(r8)
 /* 80043400 00040200  54 C6 10 3A */	slwi r6, r6, 2
 /* 80043404 00040204  54 00 10 3A */	slwi r0, r0, 2
@@ -536,9 +536,9 @@ lbl_800433EC:
 /* 80043418 00040218  7C 07 31 2E */	stwx r0, r7, r6
 /* 8004341C 0004021C  41 82 00 30 */	beq lbl_8004344C
 /* 80043420 00040220  80 A3 00 10 */	lwz r5, 0x10(r3)
-/* 80043424 00040224  3C 80 80 29 */	lis r4, lbl_80288B34@ha
+/* 80043424 00040224  3C 80 80 29 */	lis r4, lbl_g_tbl_onbit@ha
 /* 80043428 00040228  80 03 00 14 */	lwz r0, 0x14(r3)
-/* 8004342C 0004022C  38 84 8B 34 */	addi r4, r4, lbl_80288B34@l
+/* 8004342C 0004022C  38 84 8B 34 */	addi r4, r4, lbl_g_tbl_onbit@l
 /* 80043430 00040230  80 E8 00 04 */	lwz r7, 4(r8)
 /* 80043434 00040234  54 A6 10 3A */	slwi r6, r5, 2
 /* 80043438 00040238  54 00 10 3A */	slwi r0, r0, 2
@@ -579,9 +579,9 @@ rdbit__7xSerialFv:
 /* 800434B0 000402B0  4E 80 00 20 */	blr 
 lbl_800434B4:
 /* 800434B4 000402B4  80 A3 00 14 */	lwz r5, 0x14(r3)
-/* 800434B8 000402B8  3C 80 80 29 */	lis r4, lbl_80288B34@ha
+/* 800434B8 000402B8  3C 80 80 29 */	lis r4, lbl_g_tbl_onbit@ha
 /* 800434BC 000402BC  80 C3 00 10 */	lwz r6, 0x10(r3)
-/* 800434C0 000402C0  38 84 8B 34 */	addi r4, r4, lbl_80288B34@l
+/* 800434C0 000402C0  38 84 8B 34 */	addi r4, r4, lbl_g_tbl_onbit@l
 /* 800434C4 000402C4  54 A0 10 3A */	slwi r0, r5, 2
 /* 800434C8 000402C8  80 E7 00 04 */	lwz r7, 4(r7)
 /* 800434CC 000402CC  54 C6 10 3A */	slwi r6, r6, 2
@@ -637,10 +637,10 @@ prepare__7xSerialFUi:
 xSerialWipeMainBuffer__Fv:
 /* 8004357C 0004037C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80043580 00040380  7C 08 02 A6 */	mflr r0
-/* 80043584 00040384  3C 60 80 29 */	lis r3, lbl_80288B10@ha
+/* 80043584 00040384  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
 /* 80043588 00040388  38 80 00 00 */	li r4, 0
 /* 8004358C 0004038C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80043590 00040390  38 A3 8B 10 */	addi r5, r3, lbl_80288B10@l
+/* 80043590 00040390  38 A3 8B 10 */	addi r5, r3, lbl_g_xserdata@l
 /* 80043594 00040394  80 65 00 04 */	lwz r3, 4(r5)
 /* 80043598 00040398  80 A5 00 08 */	lwz r5, 8(r5)
 /* 8004359C 0004039C  4B FB FE BD */	bl memset
@@ -652,12 +652,12 @@ xSerialWipeMainBuffer__Fv:
 .global xserializer.xSER_init_tables__Fv
 xserializer.xSER_init_tables__Fv:
 /* 800435B0 000403B0  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800435B4 000403B4  3C 80 80 29 */	lis r4, lbl_80288B34@ha
-/* 800435B8 000403B8  3C 60 80 29 */	lis r3, lbl_80288BB4@ha
+/* 800435B4 000403B4  3C 80 80 29 */	lis r4, lbl_g_tbl_onbit@ha
+/* 800435B8 000403B8  3C 60 80 29 */	lis r3, lbl_g_tbl_clear@ha
 /* 800435BC 000403BC  38 00 00 04 */	li r0, 4
 /* 800435C0 000403C0  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800435C4 000403C4  39 63 8B B4 */	addi r11, r3, lbl_80288BB4@l
-/* 800435C8 000403C8  39 44 8B 34 */	addi r10, r4, lbl_80288B34@l
+/* 800435C4 000403C4  39 63 8B B4 */	addi r11, r3, lbl_g_tbl_clear@l
+/* 800435C8 000403C8  39 44 8B 34 */	addi r10, r4, lbl_g_tbl_onbit@l
 /* 800435CC 000403CC  38 60 00 00 */	li r3, 0
 /* 800435D0 000403D0  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 800435D4 000403D4  93 A1 00 14 */	stw r29, 0x14(r1)
@@ -717,10 +717,10 @@ lbl_800435DC:
 xserializer.xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE:
 /* 800436A0 000404A0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800436A4 000404A4  7C 08 02 A6 */	mflr r0
-/* 800436A8 000404A8  3C A0 80 29 */	lis r5, lbl_80288B10@ha
+/* 800436A8 000404A8  3C A0 80 29 */	lis r5, lbl_g_xserdata@ha
 /* 800436AC 000404AC  90 01 00 24 */	stw r0, 0x24(r1)
 /* 800436B0 000404B0  BF 41 00 08 */	stmw r26, 8(r1)
-/* 800436B4 000404B4  3B E5 8B 10 */	addi r31, r5, lbl_80288B10@l
+/* 800436B4 000404B4  3B E5 8B 10 */	addi r31, r5, lbl_g_xserdata@l
 /* 800436B8 000404B8  7C 7B 1B 78 */	mr r27, r3
 /* 800436BC 000404BC  7C 9E 23 78 */	mr r30, r4
 /* 800436C0 000404C0  7F 64 DB 78 */	mr r4, r27
@@ -729,19 +729,19 @@ xserializer.xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE:
 /* 800436CC 000404CC  3B A0 00 00 */	li r29, 0
 /* 800436D0 000404D0  38 A0 00 00 */	li r5, 0
 /* 800436D4 000404D4  4B FF 23 2D */	bl XOrdInit__FP16st_XORDEREDARRAYii
-/* 800436D8 000404D8  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 800436D8 000404D8  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 800436DC 000404DC  57 64 20 36 */	slwi r4, r27, 4
 /* 800436E0 000404E0  38 A0 00 00 */	li r5, 0
 /* 800436E4 000404E4  4B FF 02 5D */	bl xMemAlloc__FUiUii
-/* 800436E8 000404E8  3C 80 80 29 */	lis r4, lbl_80288B10@ha
+/* 800436E8 000404E8  3C 80 80 29 */	lis r4, lbl_g_xserdata@ha
 /* 800436EC 000404EC  57 65 20 36 */	slwi r5, r27, 4
-/* 800436F0 000404F0  3B 84 8B 10 */	addi r28, r4, lbl_80288B10@l
+/* 800436F0 000404F0  3B 84 8B 10 */	addi r28, r4, lbl_g_xserdata@l
 /* 800436F4 000404F4  38 80 00 00 */	li r4, 0
 /* 800436F8 000404F8  90 7C 00 0C */	stw r3, 0xc(r28)
 /* 800436FC 000404FC  4B FB FD 5D */	bl memset
-/* 80043700 00040500  3C 60 80 29 */	lis r3, lbl_80288B10@ha
+/* 80043700 00040500  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
 /* 80043704 00040504  80 1C 00 0C */	lwz r0, 0xc(r28)
-/* 80043708 00040508  38 63 8B 10 */	addi r3, r3, lbl_80288B10@l
+/* 80043708 00040508  38 63 8B 10 */	addi r3, r3, lbl_g_xserdata@l
 /* 8004370C 0004050C  7F C4 F3 78 */	mr r4, r30
 /* 80043710 00040510  90 03 00 10 */	stw r0, 0x10(r3)
 /* 80043714 00040514  48 00 00 1C */	b lbl_80043730
@@ -757,7 +757,7 @@ lbl_80043730:
 /* 80043734 00040534  28 00 00 00 */	cmplwi r0, 0
 /* 80043738 00040538  40 82 FF E0 */	bne lbl_80043718
 /* 8004373C 0004053C  7C 1D D8 50 */	subf r0, r29, r27
-/* 80043740 00040540  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80043740 00040540  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 80043744 00040544  1C 00 01 90 */	mulli r0, r0, 0x190
 /* 80043748 00040548  38 A0 00 00 */	li r5, 0
 /* 8004374C 0004054C  7F 5A 02 14 */	add r26, r26, r0
@@ -912,11 +912,11 @@ lbl_80043960:
 xserializer.XSER_get_client__FUi:
 /* 80043968 00040768  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004396C 0004076C  7C 08 02 A6 */	mflr r0
-/* 80043970 00040770  3C A0 80 29 */	lis r5, lbl_80288B10@ha
+/* 80043970 00040770  3C A0 80 29 */	lis r5, lbl_g_xserdata@ha
 /* 80043974 00040774  3C 80 80 04 */	lis r4, lbl_80043940@ha
 /* 80043978 00040778  90 01 00 24 */	stw r0, 0x24(r1)
 /* 8004397C 0004077C  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80043980 00040780  3B E5 8B 10 */	addi r31, r5, lbl_80288B10@l
+/* 80043980 00040780  3B E5 8B 10 */	addi r31, r5, lbl_g_xserdata@l
 /* 80043984 00040784  38 A4 39 40 */	addi r5, r4, lbl_80043940@l
 /* 80043988 00040788  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8004398C 0004078C  93 A1 00 14 */	stw r29, 0x14(r1)
@@ -954,11 +954,11 @@ lbl_800439DC:
 xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE:
 /* 800439FC 000407FC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80043A00 00040800  7C 08 02 A6 */	mflr r0
-/* 80043A04 00040804  3C A0 80 29 */	lis r5, lbl_80288B10@ha
+/* 80043A04 00040804  3C A0 80 29 */	lis r5, lbl_g_xserdata@ha
 /* 80043A08 00040808  2C 04 00 0B */	cmpwi r4, 0xb
 /* 80043A0C 0004080C  90 01 00 24 */	stw r0, 0x24(r1)
 /* 80043A10 00040810  BF 41 00 08 */	stmw r26, 8(r1)
-/* 80043A14 00040814  3B E5 8B 10 */	addi r31, r5, lbl_80288B10@l
+/* 80043A14 00040814  3B E5 8B 10 */	addi r31, r5, lbl_g_xserdata@l
 /* 80043A18 00040818  7C 7E 1B 78 */	mr r30, r3
 /* 80043A1C 0004081C  80 1F 00 00 */	lwz r0, 0(r31)
 /* 80043A20 00040820  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
@@ -993,12 +993,12 @@ lbl_80043A8C:
 /* 80043A8C 0004088C  80 1F 00 18 */	lwz r0, 0x18(r31)
 /* 80043A90 00040890  7C 1A 00 00 */	cmpw r26, r0
 /* 80043A94 00040894  41 80 FF D4 */	blt lbl_80043A68
-/* 80043A98 00040898  3C A0 80 29 */	lis r5, lbl_80288B10@ha
+/* 80043A98 00040898  3C A0 80 29 */	lis r5, lbl_g_xserdata@ha
 /* 80043A9C 0004089C  3C 80 80 04 */	lis r4, lbl_80043CD0@ha
 /* 80043AA0 000408A0  3C 60 80 04 */	lis r3, lbl_80043DF8@ha
 /* 80043AA4 000408A4  3D 00 53 46 */	lis r8, 0x5346494C@ha
 /* 80043AA8 000408A8  38 C4 3C D0 */	addi r6, r4, lbl_80043CD0@l
-/* 80043AAC 000408AC  38 A5 8B 10 */	addi r5, r5, lbl_80288B10@l
+/* 80043AAC 000408AC  38 A5 8B 10 */	addi r5, r5, lbl_g_xserdata@l
 /* 80043AB0 000408B0  38 E3 3D F8 */	addi r7, r3, lbl_80043DF8@l
 /* 80043AB4 000408B4  7F C3 F3 78 */	mr r3, r30
 /* 80043AB8 000408B8  38 88 49 4C */	addi r4, r8, 0x5346494C@l
@@ -1013,16 +1013,16 @@ lbl_80043AC4:
 /* 80043AD8 000408D8  7F E5 FB 78 */	mr r5, r31
 /* 80043ADC 000408DC  38 87 49 44 */	addi r4, r7, 0x53564944@l
 /* 80043AE0 000408E0  4B FF 9A C5 */	bl xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i
-/* 80043AE4 000408E4  3C 60 80 29 */	lis r3, lbl_80288B10@ha
+/* 80043AE4 000408E4  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
 /* 80043AE8 000408E8  3C 80 80 04 */	lis r4, lbl_80043C60@ha
-/* 80043AEC 000408EC  38 A3 8B 10 */	addi r5, r3, lbl_80288B10@l
+/* 80043AEC 000408EC  38 A3 8B 10 */	addi r5, r3, lbl_g_xserdata@l
 /* 80043AF0 000408F0  38 C4 3C 60 */	addi r6, r4, lbl_80043C60@l
 /* 80043AF4 000408F4  7F C3 F3 78 */	mr r3, r30
 /* 80043AF8 000408F8  38 80 00 00 */	li r4, 0
 /* 80043AFC 000408FC  4B FF 9A A9 */	bl xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i
-/* 80043B00 00040900  3C 80 80 29 */	lis r4, lbl_80288B10@ha
+/* 80043B00 00040900  3C 80 80 29 */	lis r4, lbl_g_xserdata@ha
 /* 80043B04 00040904  3C 60 80 04 */	lis r3, lbl_80043E4C@ha
-/* 80043B08 00040908  38 A4 8B 10 */	addi r5, r4, lbl_80288B10@l
+/* 80043B08 00040908  38 A4 8B 10 */	addi r5, r4, lbl_g_xserdata@l
 /* 80043B0C 0004090C  3C 80 53 46 */	lis r4, 0x5346494C@ha
 /* 80043B10 00040910  38 C3 3E 4C */	addi r6, r3, lbl_80043E4C@l
 /* 80043B14 00040914  7F C3 F3 78 */	mr r3, r30
@@ -1065,10 +1065,10 @@ lbl_80043B8C:
 /* 80043B98 00040998  7C A4 2B 78 */	mr r4, r5
 /* 80043B9C 0004099C  90 01 00 24 */	stw r0, 0x24(r1)
 /* 80043BA0 000409A0  38 00 00 00 */	li r0, 0
-/* 80043BA4 000409A4  3C C0 80 29 */	lis r6, lbl_80288B10@ha
+/* 80043BA4 000409A4  3C C0 80 29 */	lis r6, lbl_g_xserdata@ha
 /* 80043BA8 000409A8  38 A1 00 08 */	addi r5, r1, 8
 /* 80043BAC 000409AC  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80043BB0 000409B0  3B E6 8B 10 */	addi r31, r6, lbl_80288B10@l
+/* 80043BB0 000409B0  3B E6 8B 10 */	addi r31, r6, lbl_g_xserdata@l
 /* 80043BB4 000409B4  38 C0 00 01 */	li r6, 1
 /* 80043BB8 000409B8  90 01 00 08 */	stw r0, 8(r1)
 /* 80043BBC 000409BC  4B FF A4 FD */	bl xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii
@@ -1118,13 +1118,13 @@ lbl_80043C08:
 lbl_80043C60:
 /* 80043C60 00040A60  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80043C64 00040A64  7C 08 02 A6 */	mflr r0
-/* 80043C68 00040A68  3C 60 80 29 */	lis r3, lbl_80288B10@ha
+/* 80043C68 00040A68  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
 /* 80043C6C 00040A6C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80043C70 00040A70  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80043C74 00040A74  7C BF 2B 78 */	mr r31, r5
 /* 80043C78 00040A78  93 C1 00 08 */	stw r30, 8(r1)
 /* 80043C7C 00040A7C  7C 9E 23 78 */	mr r30, r4
-/* 80043C80 00040A80  80 03 8B 10 */	lwz r0, lbl_80288B10@l(r3)
+/* 80043C80 00040A80  80 03 8B 10 */	lwz r0, lbl_g_xserdata@l(r3)
 /* 80043C84 00040A84  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 80043C88 00040A88  41 82 00 0C */	beq lbl_80043C94
 /* 80043C8C 00040A8C  38 60 00 01 */	li r3, 1
@@ -1148,8 +1148,8 @@ lbl_80043CB8:
 /* 80043CCC 00040ACC  4E 80 00 20 */	blr 
 lbl_80043CD0:
 /* 80043CD0 00040AD0  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80043CD4 00040AD4  3C 60 80 29 */	lis r3, lbl_80288B10@ha
-/* 80043CD8 00040AD8  38 63 8B 10 */	addi r3, r3, lbl_80288B10@l
+/* 80043CD4 00040AD4  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
+/* 80043CD8 00040AD8  38 63 8B 10 */	addi r3, r3, lbl_g_xserdata@l
 /* 80043CDC 00040ADC  38 00 00 00 */	li r0, 0
 /* 80043CE0 00040AE0  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 80043CE4 00040AE4  38 E0 00 00 */	li r7, 0
@@ -1228,9 +1228,9 @@ lbl_80043DC8:
 lbl_80043DF8:
 /* 80043DF8 00040BF8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80043DFC 00040BFC  7C 08 02 A6 */	mflr r0
-/* 80043E00 00040C00  3C 60 80 25 */	lis r3, lbl_80253E88@ha
+/* 80043E00 00040C00  3C 60 80 25 */	lis r3, lbl__1068@ha
 /* 80043E04 00040C04  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80043E08 00040C08  39 03 3E 88 */	addi r8, r3, lbl_80253E88@l
+/* 80043E08 00040C08  39 03 3E 88 */	addi r8, r3, lbl__1068@l
 /* 80043E0C 00040C0C  7C 83 23 78 */	mr r3, r4
 /* 80043E10 00040C10  7C A4 2B 78 */	mr r4, r5
 /* 80043E14 00040C14  80 C8 00 00 */	lwz r6, 0(r8)
@@ -1250,11 +1250,11 @@ lbl_80043DF8:
 lbl_80043E4C:
 /* 80043E4C 00040C4C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80043E50 00040C50  7C 08 02 A6 */	mflr r0
-/* 80043E54 00040C54  3C 60 80 29 */	lis r3, lbl_80288B10@ha
-/* 80043E58 00040C58  3C C0 80 25 */	lis r6, lbl_80253E94@ha
+/* 80043E54 00040C54  3C 60 80 29 */	lis r3, lbl_g_xserdata@ha
+/* 80043E58 00040C58  3C C0 80 25 */	lis r6, lbl__1074@ha
 /* 80043E5C 00040C5C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80043E60 00040C60  80 03 8B 10 */	lwz r0, lbl_80288B10@l(r3)
-/* 80043E64 00040C64  38 66 3E 94 */	addi r3, r6, lbl_80253E94@l
+/* 80043E60 00040C60  80 03 8B 10 */	lwz r0, lbl_g_xserdata@l(r3)
+/* 80043E64 00040C64  38 66 3E 94 */	addi r3, r6, lbl__1074@l
 /* 80043E68 00040C68  80 E3 00 00 */	lwz r7, 0(r3)
 /* 80043E6C 00040C6C  80 C3 00 04 */	lwz r6, 4(r3)
 /* 80043E70 00040C70  54 00 07 FF */	clrlwi. r0, r0, 0x1f

@@ -5,12 +5,12 @@
 .global zRenderStateInit__Fv
 zRenderStateInit__Fv:
 /* 800AC9E8 000A97E8  38 00 00 00 */	li r0, 0
-/* 800AC9EC 000A97EC  90 0D 90 78 */	stw r0, lbl_803CB978-_SDA_BASE_(r13)
+/* 800AC9EC 000A97EC  90 0D 90 78 */	stw r0, lbl_sRS-_SDA_BASE_(r13)
 /* 800AC9F0 000A97F0  4E 80 00 20 */	blr 
 
 .global zRenderStateCurrent__Fv
 zRenderStateCurrent__Fv:
-/* 800AC9F4 000A97F4  80 6D 90 78 */	lwz r3, lbl_803CB978-_SDA_BASE_(r13)
+/* 800AC9F4 000A97F4  80 6D 90 78 */	lwz r3, lbl_sRS-_SDA_BASE_(r13)
 /* 800AC9F8 000A97F8  4E 80 00 20 */	blr 
 
 .global zRenderState__F14_SDRenderState
@@ -20,7 +20,7 @@ zRenderState__F14_SDRenderState:
 /* 800ACA04 000A9804  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800ACA08 000A9808  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800ACA0C 000A980C  7C 7F 1B 78 */	mr r31, r3
-/* 800ACA10 000A9810  80 0D 90 78 */	lwz r0, lbl_803CB978-_SDA_BASE_(r13)
+/* 800ACA10 000A9810  80 0D 90 78 */	lwz r0, lbl_sRS-_SDA_BASE_(r13)
 /* 800ACA14 000A9814  7C 1F 00 00 */	cmpw r31, r0
 /* 800ACA18 000A9818  41 82 03 B4 */	beq lbl_800ACDCC
 /* 800ACA1C 000A981C  38 60 00 09 */	li r3, 9
@@ -51,13 +51,13 @@ zRenderState__F14_SDRenderState:
 /* 800ACA80 000A9880  38 60 00 06 */	li r3, 6
 /* 800ACA84 000A9884  38 80 00 01 */	li r4, 1
 /* 800ACA88 000A9888  48 18 2D 55 */	bl RwRenderStateSet
-/* 800ACA8C 000A988C  93 ED 90 78 */	stw r31, lbl_803CB978-_SDA_BASE_(r13)
-/* 800ACA90 000A9890  80 0D 90 78 */	lwz r0, lbl_803CB978-_SDA_BASE_(r13)
+/* 800ACA8C 000A988C  93 ED 90 78 */	stw r31, lbl_sRS-_SDA_BASE_(r13)
+/* 800ACA90 000A9890  80 0D 90 78 */	lwz r0, lbl_sRS-_SDA_BASE_(r13)
 /* 800ACA94 000A9894  28 00 00 16 */	cmplwi r0, 0x16
 /* 800ACA98 000A9898  41 81 03 34 */	bgt lbl_800ACDCC
-/* 800ACA9C 000A989C  3C 60 80 29 */	lis r3, lbl_80290030@ha
+/* 800ACA9C 000A989C  3C 60 80 29 */	lis r3, lbl__558_3@ha
 /* 800ACAA0 000A98A0  54 00 10 3A */	slwi r0, r0, 2
-/* 800ACAA4 000A98A4  38 63 00 30 */	addi r3, r3, lbl_80290030@l
+/* 800ACAA4 000A98A4  38 63 00 30 */	addi r3, r3, lbl__558_3@l
 /* 800ACAA8 000A98A8  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800ACAAC 000A98AC  7C 09 03 A6 */	mtctr r0
 /* 800ACAB0 000A98B0  4E 80 04 20 */	bctr 

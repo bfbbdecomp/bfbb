@@ -201,9 +201,9 @@ __ct__10xGoalEmptyFi:
 /* 8010EE48 0010BC48  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8010EE4C 0010BC4C  7C 7F 1B 78 */	mr r31, r3
 /* 8010EE50 0010BC50  4B FC A1 F1 */	bl __ct__5xGoalFi
-/* 8010EE54 0010BC54  3C 80 80 29 */	lis r4, lbl_80297430@ha
+/* 8010EE54 0010BC54  3C 80 80 29 */	lis r4, lbl___vt__10xGoalEmpty@ha
 /* 8010EE58 0010BC58  7F E3 FB 78 */	mr r3, r31
-/* 8010EE5C 0010BC5C  38 04 74 30 */	addi r0, r4, lbl_80297430@l
+/* 8010EE5C 0010BC5C  38 04 74 30 */	addi r0, r4, lbl___vt__10xGoalEmpty@l
 /* 8010EE60 0010BC60  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8010EE64 0010BC64  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8010EE68 0010BC68  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -219,21 +219,21 @@ __ct__12xGoalGenericFi:
 /* 8010EE84 0010BC84  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8010EE88 0010BC88  7C 7F 1B 78 */	mr r31, r3
 /* 8010EE8C 0010BC8C  4B FC A1 B5 */	bl __ct__5xGoalFi
-/* 8010EE90 0010BC90  3C 80 80 29 */	lis r4, lbl_80297400@ha
+/* 8010EE90 0010BC90  3C 80 80 29 */	lis r4, lbl___vt__12xGoalGeneric@ha
 /* 8010EE94 0010BC94  7F E3 FB 78 */	mr r3, r31
-/* 8010EE98 0010BC98  38 04 74 00 */	addi r0, r4, lbl_80297400@l
+/* 8010EE98 0010BC98  38 04 74 00 */	addi r0, r4, lbl___vt__12xGoalGeneric@l
 /* 8010EE9C 0010BC9C  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8010EEA0 0010BCA0  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8010EEA4 0010BCA4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8010EEA8 0010BCA8  7C 08 03 A6 */	mtlr r0
 /* 8010EEAC 0010BCAC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EEB0 0010BCB0  4E 80 00 20 */	blr 
-/* 8010EEB4 0010BCB4  3C 60 80 27 */	lis r3, lbl_8026A3B0@ha
-/* 8010EEB8 0010BCB8  38 63 A3 B0 */	addi r3, r3, lbl_8026A3B0@l
+/* 8010EEB4 0010BCB4  3C 60 80 27 */	lis r3, lbl__stringBase0_70@ha
+/* 8010EEB8 0010BCB8  38 63 A3 B0 */	addi r3, r3, lbl__stringBase0_70@l
 /* 8010EEBC 0010BCBC  4E 80 00 20 */	blr 
 /* 8010EEC0 0010BCC0  4E 80 00 20 */	blr 
-/* 8010EEC4 0010BCC4  3C 60 80 27 */	lis r3, lbl_8026A3B0@ha
-/* 8010EEC8 0010BCC8  38 63 A3 B0 */	addi r3, r3, lbl_8026A3B0@l
+/* 8010EEC4 0010BCC4  3C 60 80 27 */	lis r3, lbl__stringBase0_70@ha
+/* 8010EEC8 0010BCC8  38 63 A3 B0 */	addi r3, r3, lbl__stringBase0_70@l
 /* 8010EECC 0010BCCC  38 63 00 0D */	addi r3, r3, 0xd
 /* 8010EED0 0010BCD0  4E 80 00 20 */	blr 
 /* 8010EED4 0010BCD4  4E 80 00 20 */	blr 

@@ -10,9 +10,9 @@ xCounter.add_tweaks__22_unnamed_xCounter_cpp_FR9_xCounter:
 xCounterInit__Fv:
 /* 80015B40 00012940  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80015B44 00012944  7C 08 02 A6 */	mflr r0
-/* 80015B48 00012948  3C 60 80 25 */	lis r3, lbl_80252140@ha
+/* 80015B48 00012948  3C 60 80 25 */	lis r3, lbl__stringBase0_3@ha
 /* 80015B4C 0001294C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80015B50 00012950  38 63 21 40 */	addi r3, r3, lbl_80252140@l
+/* 80015B50 00012950  38 63 21 40 */	addi r3, r3, lbl__stringBase0_3@l
 /* 80015B54 00012954  48 00 03 4D */	bl xDebugRemoveTweak__FPCc
 /* 80015B58 00012958  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80015B5C 0001295C  7C 08 03 A6 */	mtlr r0

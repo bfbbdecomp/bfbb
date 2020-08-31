@@ -15,19 +15,19 @@ lbl_800C64B8:
 /* 800C64C4 000C32C4  38 63 FF 64 */	addi r3, r3, 0x0000FF64@l
 /* 800C64C8 000C32C8  4E 80 00 20 */	blr 
 lbl_800C64CC:
-/* 800C64CC 000C32CC  3C 80 80 29 */	lis r4, lbl_80291A60@ha
+/* 800C64CC 000C32CC  3C 80 80 29 */	lis r4, lbl___MIXVolumeTable@ha
 /* 800C64D0 000C32D0  54 60 08 3C */	slwi r0, r3, 1
-/* 800C64D4 000C32D4  38 64 1A 60 */	addi r3, r4, lbl_80291A60@l
+/* 800C64D4 000C32D4  38 64 1A 60 */	addi r3, r4, lbl___MIXVolumeTable@l
 /* 800C64D8 000C32D8  7C 63 02 14 */	add r3, r3, r0
 /* 800C64DC 000C32DC  A0 63 07 10 */	lhz r3, 0x710(r3)
 /* 800C64E0 000C32E0  4E 80 00 20 */	blr 
 
 .global iMix.__MIXSetPan__FP10MIXChannel
 iMix.__MIXSetPan__FP10MIXChannel:
-/* 800C64E4 000C32E4  80 0D 92 30 */	lwz r0, lbl_803CBB30-_SDA_BASE_(r13)
-/* 800C64E8 000C32E8  3C 80 80 29 */	lis r4, lbl_80291A60@ha
+/* 800C64E4 000C32E4  80 0D 92 30 */	lwz r0, lbl___MIXSoundMode-_SDA_BASE_(r13)
+/* 800C64E8 000C32E8  3C 80 80 29 */	lis r4, lbl___MIXVolumeTable@ha
 /* 800C64EC 000C32EC  80 A3 00 14 */	lwz r5, 0x14(r3)
-/* 800C64F0 000C32F0  38 C4 1A 60 */	addi r6, r4, lbl_80291A60@l
+/* 800C64F0 000C32F0  38 C4 1A 60 */	addi r6, r4, lbl___MIXVolumeTable@l
 /* 800C64F4 000C32F4  28 00 00 03 */	cmplwi r0, 3
 /* 800C64F8 000C32F8  81 43 00 18 */	lwz r10, 0x18(r3)
 /* 800C64FC 000C32FC  21 05 00 7F */	subfic r8, r5, 0x7f
@@ -120,10 +120,10 @@ lbl_800C6624:
 MIXInit:
 /* 800C662C 000C342C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C6630 000C3430  7C 08 02 A6 */	mflr r0
-/* 800C6634 000C3434  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
+/* 800C6634 000C3434  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
 /* 800C6638 000C3438  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800C663C 000C343C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800C6640 000C3440  3B E3 BE 98 */	addi r31, r3, lbl_802FBE98@l
+/* 800C6640 000C3440  3B E3 BE 98 */	addi r31, r3, lbl___MIXChannel@l
 /* 800C6644 000C3444  93 C1 00 08 */	stw r30, 8(r1)
 /* 800C6648 000C3448  3B C0 00 00 */	li r30, 0
 lbl_800C664C:
@@ -134,10 +134,10 @@ lbl_800C664C:
 /* 800C665C 000C345C  2C 1E 00 40 */	cmpwi r30, 0x40
 /* 800C6660 000C3460  41 80 FF EC */	blt lbl_800C664C
 /* 800C6664 000C3464  38 00 00 00 */	li r0, 0
-/* 800C6668 000C3468  90 0D 92 28 */	stw r0, lbl_803CBB28-_SDA_BASE_(r13)
-/* 800C666C 000C346C  90 0D 92 2C */	stw r0, lbl_803CBB2C-_SDA_BASE_(r13)
+/* 800C6668 000C3468  90 0D 92 28 */	stw r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
+/* 800C666C 000C346C  90 0D 92 2C */	stw r0, lbl___MIXDvdStreamAttenUser-_SDA_BASE_(r13)
 /* 800C6670 000C3470  48 10 FB 9D */	bl OSGetSoundMode
-/* 800C6674 000C3474  90 6D 92 30 */	stw r3, lbl_803CBB30-_SDA_BASE_(r13)
+/* 800C6674 000C3474  90 6D 92 30 */	stw r3, lbl___MIXSoundMode-_SDA_BASE_(r13)
 /* 800C6678 000C3478  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800C667C 000C347C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 800C6680 000C3480  83 C1 00 08 */	lwz r30, 8(r1)
@@ -156,9 +156,9 @@ MIXInitChannel:
 /* 800C66A8 000C34A8  7C BE 2B 78 */	mr r30, r5
 /* 800C66AC 000C34AC  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800C66B0 000C34B0  7C 7D 1B 78 */	mr r29, r3
-/* 800C66B4 000C34B4  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
+/* 800C66B4 000C34B4  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
 /* 800C66B8 000C34B8  81 7D 00 18 */	lwz r11, 0x18(r29)
-/* 800C66BC 000C34BC  38 63 BE 98 */	addi r3, r3, lbl_802FBE98@l
+/* 800C66BC 000C34BC  38 63 BE 98 */	addi r3, r3, lbl___MIXChannel@l
 /* 800C66C0 000C34C0  1C 8B 00 60 */	mulli r4, r11, 0x60
 /* 800C66C4 000C34C4  7F E3 22 14 */	add r31, r3, r4
 /* 800C66C8 000C34C8  93 BF 00 00 */	stw r29, 0(r31)
@@ -182,7 +182,7 @@ lbl_800C6708:
 /* 800C670C 000C350C  4B FF FD 9D */	bl iMix.__MIXGetVolume__Fi
 /* 800C6710 000C3510  B0 7F 00 38 */	sth r3, 0x38(r31)
 lbl_800C6714:
-/* 800C6714 000C3514  80 0D 92 30 */	lwz r0, lbl_803CBB30-_SDA_BASE_(r13)
+/* 800C6714 000C3514  80 0D 92 30 */	lwz r0, lbl___MIXSoundMode-_SDA_BASE_(r13)
 /* 800C6718 000C3518  3B C0 00 00 */	li r30, 0
 /* 800C671C 000C351C  2C 00 00 03 */	cmpwi r0, 3
 /* 800C6720 000C3520  41 82 03 88 */	beq lbl_800C6AA8
@@ -623,8 +623,8 @@ lbl_800C6D5C:
 .global MIXReleaseChannel
 MIXReleaseChannel:
 /* 800C6D94 000C3B94  80 03 00 18 */	lwz r0, 0x18(r3)
-/* 800C6D98 000C3B98  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6D9C 000C3B9C  38 63 BE 98 */	addi r3, r3, lbl_802FBE98@l
+/* 800C6D98 000C3B98  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6D9C 000C3B9C  38 63 BE 98 */	addi r3, r3, lbl___MIXChannel@l
 /* 800C6DA0 000C3BA0  38 80 00 00 */	li r4, 0
 /* 800C6DA4 000C3BA4  1C 00 00 60 */	mulli r0, r0, 0x60
 /* 800C6DA8 000C3BA8  7C 83 01 2E */	stwx r4, r3, r0
@@ -633,8 +633,8 @@ MIXReleaseChannel:
 .global MIXAdjustInput
 MIXAdjustInput:
 /* 800C6DB0 000C3BB0  80 A3 00 18 */	lwz r5, 0x18(r3)
-/* 800C6DB4 000C3BB4  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6DB8 000C3BB8  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6DB4 000C3BB4  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6DB8 000C3BB8  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6DBC 000C3BBC  1C 65 00 60 */	mulli r3, r5, 0x60
 /* 800C6DC0 000C3BC0  7C 60 1A 14 */	add r3, r0, r3
 /* 800C6DC4 000C3BC4  80 03 00 08 */	lwz r0, 8(r3)
@@ -648,8 +648,8 @@ MIXAdjustInput:
 .global MIXGetInput
 MIXGetInput:
 /* 800C6DE0 000C3BE0  80 83 00 18 */	lwz r4, 0x18(r3)
-/* 800C6DE4 000C3BE4  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6DE8 000C3BE8  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6DE4 000C3BE4  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6DE8 000C3BE8  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6DEC 000C3BEC  1C 64 00 60 */	mulli r3, r4, 0x60
 /* 800C6DF0 000C3BF0  7C 60 1A 14 */	add r3, r0, r3
 /* 800C6DF4 000C3BF4  80 63 00 08 */	lwz r3, 8(r3)
@@ -662,8 +662,8 @@ MIXAdjustPan:
 /* 800C6E04 000C3C04  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800C6E08 000C3C08  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800C6E0C 000C3C0C  80 A3 00 18 */	lwz r5, 0x18(r3)
-/* 800C6E10 000C3C10  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6E14 000C3C14  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6E10 000C3C10  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6E14 000C3C14  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6E18 000C3C18  1C 65 00 60 */	mulli r3, r5, 0x60
 /* 800C6E1C 000C3C1C  7F E0 1A 14 */	add r31, r0, r3
 /* 800C6E20 000C3C20  80 1F 00 14 */	lwz r0, 0x14(r31)
@@ -684,8 +684,8 @@ MIXAdjustPan:
 .global MIXGetPan
 MIXGetPan:
 /* 800C6E58 000C3C58  80 83 00 18 */	lwz r4, 0x18(r3)
-/* 800C6E5C 000C3C5C  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6E60 000C3C60  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6E5C 000C3C5C  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6E60 000C3C60  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6E64 000C3C64  1C 64 00 60 */	mulli r3, r4, 0x60
 /* 800C6E68 000C3C68  7C 60 1A 14 */	add r3, r0, r3
 /* 800C6E6C 000C3C6C  80 63 00 14 */	lwz r3, 0x14(r3)
@@ -694,8 +694,8 @@ MIXGetPan:
 .global MIXUnMute
 MIXUnMute:
 /* 800C6E74 000C3C74  80 83 00 18 */	lwz r4, 0x18(r3)
-/* 800C6E78 000C3C78  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6E7C 000C3C7C  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6E78 000C3C78  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6E7C 000C3C7C  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6E80 000C3C80  1C 64 00 60 */	mulli r3, r4, 0x60
 /* 800C6E84 000C3C84  7C 60 1A 14 */	add r3, r0, r3
 /* 800C6E88 000C3C88  80 03 00 04 */	lwz r0, 4(r3)
@@ -709,8 +709,8 @@ MIXUnMute:
 .global MIXAdjustFader
 MIXAdjustFader:
 /* 800C6EA4 000C3CA4  80 A3 00 18 */	lwz r5, 0x18(r3)
-/* 800C6EA8 000C3CA8  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6EAC 000C3CAC  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6EA8 000C3CA8  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6EAC 000C3CAC  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6EB0 000C3CB0  1C 65 00 60 */	mulli r3, r5, 0x60
 /* 800C6EB4 000C3CB4  7C 60 1A 14 */	add r3, r0, r3
 /* 800C6EB8 000C3CB8  80 03 00 1C */	lwz r0, 0x1c(r3)
@@ -724,8 +724,8 @@ MIXAdjustFader:
 .global MIXGetFader
 MIXGetFader:
 /* 800C6ED4 000C3CD4  80 83 00 18 */	lwz r4, 0x18(r3)
-/* 800C6ED8 000C3CD8  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
-/* 800C6EDC 000C3CDC  38 03 BE 98 */	addi r0, r3, lbl_802FBE98@l
+/* 800C6ED8 000C3CD8  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
+/* 800C6EDC 000C3CDC  38 03 BE 98 */	addi r0, r3, lbl___MIXChannel@l
 /* 800C6EE0 000C3CE0  1C 64 00 60 */	mulli r3, r4, 0x60
 /* 800C6EE4 000C3CE4  7C 60 1A 14 */	add r3, r0, r3
 /* 800C6EE8 000C3CE8  80 63 00 1C */	lwz r3, 0x1c(r3)
@@ -735,11 +735,11 @@ MIXGetFader:
 MIXUpdateSettings:
 /* 800C6EF0 000C3CF0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800C6EF4 000C3CF4  7C 08 02 A6 */	mflr r0
-/* 800C6EF8 000C3CF8  3C 60 80 30 */	lis r3, lbl_802FBE98@ha
+/* 800C6EF8 000C3CF8  3C 60 80 30 */	lis r3, lbl___MIXChannel@ha
 /* 800C6EFC 000C3CFC  90 01 00 24 */	stw r0, 0x24(r1)
 /* 800C6F00 000C3D00  BF 41 00 08 */	stmw r26, 8(r1)
 /* 800C6F04 000C3D04  3B C0 00 00 */	li r30, 0
-/* 800C6F08 000C3D08  3B E3 BE 98 */	addi r31, r3, lbl_802FBE98@l
+/* 800C6F08 000C3D08  3B E3 BE 98 */	addi r31, r3, lbl___MIXChannel@l
 lbl_800C6F0C:
 /* 800C6F0C 000C3D0C  83 7F 00 00 */	lwz r27, 0(r31)
 /* 800C6F10 000C3D10  3B 80 00 00 */	li r28, 0
@@ -807,7 +807,7 @@ lbl_800C6FF4:
 /* 800C6FF4 000C3DF4  80 1F 00 04 */	lwz r0, 4(r31)
 /* 800C6FF8 000C3DF8  54 00 00 43 */	rlwinm. r0, r0, 0, 1, 1
 /* 800C6FFC 000C3DFC  41 82 05 40 */	beq lbl_800C753C
-/* 800C7000 000C3E00  80 0D 92 30 */	lwz r0, lbl_803CBB30-_SDA_BASE_(r13)
+/* 800C7000 000C3E00  80 0D 92 30 */	lwz r0, lbl___MIXSoundMode-_SDA_BASE_(r13)
 /* 800C7004 000C3E04  2C 00 00 03 */	cmpwi r0, 3
 /* 800C7008 000C3E08  41 82 03 90 */	beq lbl_800C7398
 /* 800C700C 000C3E0C  40 80 05 14 */	bge lbl_800C7520
@@ -1364,35 +1364,35 @@ lbl_800C7828:
 /* 800C782C 000C462C  3B FF 00 60 */	addi r31, r31, 0x60
 /* 800C7830 000C4630  2C 1E 00 40 */	cmpwi r30, 0x40
 /* 800C7834 000C4634  41 80 F6 D8 */	blt lbl_800C6F0C
-/* 800C7838 000C4638  80 0D 92 2C */	lwz r0, lbl_803CBB2C-_SDA_BASE_(r13)
-/* 800C783C 000C463C  80 6D 92 28 */	lwz r3, lbl_803CBB28-_SDA_BASE_(r13)
+/* 800C7838 000C4638  80 0D 92 2C */	lwz r0, lbl___MIXDvdStreamAttenUser-_SDA_BASE_(r13)
+/* 800C783C 000C463C  80 6D 92 28 */	lwz r3, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
 /* 800C7840 000C4640  7C 00 18 00 */	cmpw r0, r3
 /* 800C7844 000C4644  40 81 00 38 */	ble lbl_800C787C
 /* 800C7848 000C4648  38 03 00 01 */	addi r0, r3, 1
-/* 800C784C 000C464C  3C 60 80 29 */	lis r3, lbl_802925EC@ha
-/* 800C7850 000C4650  90 0D 92 28 */	stw r0, lbl_803CBB28-_SDA_BASE_(r13)
-/* 800C7854 000C4654  38 63 25 EC */	addi r3, r3, lbl_802925EC@l
-/* 800C7858 000C4658  80 0D 92 28 */	lwz r0, lbl_803CBB28-_SDA_BASE_(r13)
+/* 800C784C 000C464C  3C 60 80 29 */	lis r3, lbl___MIXAIVolumeTable@ha
+/* 800C7850 000C4650  90 0D 92 28 */	stw r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
+/* 800C7854 000C4654  38 63 25 EC */	addi r3, r3, lbl___MIXAIVolumeTable@l
+/* 800C7858 000C4658  80 0D 92 28 */	lwz r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
 /* 800C785C 000C465C  7C 63 00 AE */	lbzx r3, r3, r0
 /* 800C7860 000C4660  48 0E DE AD */	bl AISetStreamVolLeft
-/* 800C7864 000C4664  3C 60 80 29 */	lis r3, lbl_802925EC@ha
-/* 800C7868 000C4668  80 0D 92 28 */	lwz r0, lbl_803CBB28-_SDA_BASE_(r13)
-/* 800C786C 000C466C  38 63 25 EC */	addi r3, r3, lbl_802925EC@l
+/* 800C7864 000C4664  3C 60 80 29 */	lis r3, lbl___MIXAIVolumeTable@ha
+/* 800C7868 000C4668  80 0D 92 28 */	lwz r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
+/* 800C786C 000C466C  38 63 25 EC */	addi r3, r3, lbl___MIXAIVolumeTable@l
 /* 800C7870 000C4670  7C 63 00 AE */	lbzx r3, r3, r0
 /* 800C7874 000C4674  48 0E DE C5 */	bl AISetStreamVolRight
 /* 800C7878 000C4678  48 00 00 38 */	b lbl_800C78B0
 lbl_800C787C:
 /* 800C787C 000C467C  40 80 00 34 */	bge lbl_800C78B0
 /* 800C7880 000C4680  38 03 FF FF */	addi r0, r3, -1
-/* 800C7884 000C4684  3C 60 80 29 */	lis r3, lbl_802925EC@ha
-/* 800C7888 000C4688  90 0D 92 28 */	stw r0, lbl_803CBB28-_SDA_BASE_(r13)
-/* 800C788C 000C468C  38 63 25 EC */	addi r3, r3, lbl_802925EC@l
-/* 800C7890 000C4690  80 0D 92 28 */	lwz r0, lbl_803CBB28-_SDA_BASE_(r13)
+/* 800C7884 000C4684  3C 60 80 29 */	lis r3, lbl___MIXAIVolumeTable@ha
+/* 800C7888 000C4688  90 0D 92 28 */	stw r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
+/* 800C788C 000C468C  38 63 25 EC */	addi r3, r3, lbl___MIXAIVolumeTable@l
+/* 800C7890 000C4690  80 0D 92 28 */	lwz r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
 /* 800C7894 000C4694  7C 63 00 AE */	lbzx r3, r3, r0
 /* 800C7898 000C4698  48 0E DE 75 */	bl AISetStreamVolLeft
-/* 800C789C 000C469C  3C 60 80 29 */	lis r3, lbl_802925EC@ha
-/* 800C78A0 000C46A0  80 0D 92 28 */	lwz r0, lbl_803CBB28-_SDA_BASE_(r13)
-/* 800C78A4 000C46A4  38 63 25 EC */	addi r3, r3, lbl_802925EC@l
+/* 800C789C 000C469C  3C 60 80 29 */	lis r3, lbl___MIXAIVolumeTable@ha
+/* 800C78A0 000C46A0  80 0D 92 28 */	lwz r0, lbl___MIXDvdStreamAttenCurrent-_SDA_BASE_(r13)
+/* 800C78A4 000C46A4  38 63 25 EC */	addi r3, r3, lbl___MIXAIVolumeTable@l
 /* 800C78A8 000C46A8  7C 63 00 AE */	lbzx r3, r3, r0
 /* 800C78AC 000C46AC  48 0E DE 8D */	bl AISetStreamVolRight
 lbl_800C78B0:

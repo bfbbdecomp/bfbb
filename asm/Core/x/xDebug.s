@@ -88,9 +88,9 @@ create__8xtextboxFRC5xfontRC13basic_rect_f_Uiffff:
 /* 80017E28 00014C28  7F C4 F3 78 */	mr r4, r30
 /* 80017E2C 00014C2C  38 61 00 2C */	addi r3, r1, 0x2c
 /* 80017E30 00014C30  48 00 02 11 */	bl __as__13basic_rect_f_FRC13basic_rect_f_
-/* 80017E34 00014C34  3C 60 80 28 */	lis r3, lbl_8027BBEC@ha
+/* 80017E34 00014C34  3C 60 80 28 */	lis r3, lbl_text_cb__8xtextbox@ha
 /* 80017E38 00014C38  38 C0 00 00 */	li r6, 0
-/* 80017E3C 00014C3C  38 63 BB EC */	addi r3, r3, lbl_8027BBEC@l
+/* 80017E3C 00014C3C  38 63 BB EC */	addi r3, r3, lbl_text_cb__8xtextbox@l
 /* 80017E40 00014C40  38 00 00 0D */	li r0, 0xd
 /* 80017E44 00014C44  93 E1 00 3C */	stw r31, 0x3c(r1)
 /* 80017E48 00014C48  38 BD FF FC */	addi r5, r29, -4
@@ -199,13 +199,13 @@ __as__10iColor_tagFRC10iColor_tag:
 
 .global NSCREENY__Ff
 NSCREENY__Ff:
-/* 80017FBC 00014DBC  C0 02 82 20 */	lfs f0, lbl_803CCBA0-_SDA2_BASE_(r2)
+/* 80017FBC 00014DBC  C0 02 82 20 */	lfs f0, lbl__781-_SDA2_BASE_(r2)
 /* 80017FC0 00014DC0  EC 20 00 72 */	fmuls f1, f0, f1
 /* 80017FC4 00014DC4  4E 80 00 20 */	blr 
 
 .global NSCREENX__Ff
 NSCREENX__Ff:
-/* 80017FC8 00014DC8  C0 02 82 24 */	lfs f0, lbl_803CCBA4-_SDA2_BASE_(r2)
+/* 80017FC8 00014DC8  C0 02 82 24 */	lfs f0, lbl__783-_SDA2_BASE_(r2)
 /* 80017FCC 00014DCC  EC 20 00 72 */	fmuls f1, f0, f1
 /* 80017FD0 00014DD0  4E 80 00 20 */	blr 
 

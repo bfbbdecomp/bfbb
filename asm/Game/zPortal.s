@@ -89,8 +89,8 @@ lbl_800AC9A8:
 /* 800AC9AC 000A97AC  4B FF FF 75 */	bl zPortalReset__FP8_zPortal
 /* 800AC9B0 000A97B0  48 00 00 24 */	b lbl_800AC9D4
 lbl_800AC9B4:
-/* 800AC9B4 000A97B4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
-/* 800AC9B8 000A97B8  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 800AC9B4 000A97B4  3C 60 80 3C */	lis r3, lbl_globals@ha
+/* 800AC9B8 000A97B8  38 63 05 58 */	addi r3, r3, lbl_globals@l
 /* 800AC9BC 000A97BC  80 03 16 B0 */	lwz r0, 0x16b0(r3)
 /* 800AC9C0 000A97C0  28 00 00 00 */	cmplwi r0, 0
 /* 800AC9C4 000A97C4  41 82 00 10 */	beq lbl_800AC9D4

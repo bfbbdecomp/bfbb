@@ -4,11 +4,11 @@
 
 .global iFileInit__Fv
 iFileInit__Fv:
-/* 800C3300 000C0100  3C 60 80 30 */	lis r3, lbl_802FAE60@ha
-/* 800C3304 000C0104  38 63 AE 60 */	addi r3, r3, lbl_802FAE60@l
+/* 800C3300 000C0100  3C 60 80 30 */	lis r3, lbl_tbuffer@ha
+/* 800C3304 000C0104  38 63 AE 60 */	addi r3, r3, lbl_tbuffer@l
 /* 800C3308 000C0108  38 03 00 1F */	addi r0, r3, 0x1f
 /* 800C330C 000C010C  54 00 00 34 */	rlwinm r0, r0, 0, 0, 0x1a
-/* 800C3310 000C0110  90 0D 91 C0 */	stw r0, lbl_803CBAC0-_SDA_BASE_(r13)
+/* 800C3310 000C0110  90 0D 91 C0 */	stw r0, lbl_buffer32-_SDA_BASE_(r13)
 /* 800C3314 000C0114  4E 80 00 20 */	blr 
 
 .global iFileExit__Fv
@@ -168,7 +168,7 @@ lbl_800C3504:
 /* 800C3518 000C0318  4E 80 00 20 */	blr 
 lbl_800C351C:
 /* 800C351C 000C031C  38 00 00 00 */	li r0, 0
-/* 800C3520 000C0320  90 0D 91 C4 */	stw r0, lbl_803CBAC4-_SDA_BASE_(r13)
+/* 800C3520 000C0320  90 0D 91 C4 */	stw r0, lbl_iFileSyncAsyncReadActive-_SDA_BASE_(r13)
 /* 800C3524 000C0324  4E 80 00 20 */	blr 
 
 .global iFileRead__FP9tag_xFilePvUi
@@ -187,7 +187,7 @@ iFileRead__FP9tag_xFilePvUi:
 /* 800C3554 000C0354  4B FF FF 25 */	bl iFileSeek__FP9tag_xFileii
 /* 800C3558 000C0358  38 00 00 01 */	li r0, 1
 /* 800C355C 000C035C  3C 60 80 0C */	lis r3, lbl_800C351C@ha
-/* 800C3560 000C0360  90 0D 91 C4 */	stw r0, lbl_803CBAC4-_SDA_BASE_(r13)
+/* 800C3560 000C0360  90 0D 91 C4 */	stw r0, lbl_iFileSyncAsyncReadActive-_SDA_BASE_(r13)
 /* 800C3564 000C0364  38 C3 35 1C */	addi r6, r3, lbl_800C351C@l
 /* 800C3568 000C0368  7F A3 EB 78 */	mr r3, r29
 /* 800C356C 000C036C  7F C4 F3 78 */	mr r4, r30
@@ -198,7 +198,7 @@ iFileRead__FP9tag_xFilePvUi:
 lbl_800C3580:
 /* 800C3580 000C0380  48 0B D7 0D */	bl CheckDVDAndResetState__8iTRCDiskFv
 lbl_800C3584:
-/* 800C3584 000C0384  80 0D 91 C4 */	lwz r0, lbl_803CBAC4-_SDA_BASE_(r13)
+/* 800C3584 000C0384  80 0D 91 C4 */	lwz r0, lbl_iFileSyncAsyncReadActive-_SDA_BASE_(r13)
 /* 800C3588 000C0388  28 00 00 00 */	cmplwi r0, 0
 /* 800C358C 000C038C  40 82 FF F4 */	bne lbl_800C3580
 /* 800C3590 000C0390  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -217,9 +217,9 @@ lbl_800C35B0:
 /* 800C35C0 000C03C0  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800C35C4 000C03C4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800C35C8 000C03C8  80 04 00 2C */	lwz r0, 0x2c(r4)
-/* 800C35CC 000C03CC  3C 80 80 3C */	lis r4, lbl_803C35F0@ha
+/* 800C35CC 000C03CC  3C 80 80 3C */	lis r4, lbl_file_queue@ha
 /* 800C35D0 000C03D0  1C A0 00 1C */	mulli r5, r0, 0x1c
-/* 800C35D4 000C03D4  38 04 35 F0 */	addi r0, r4, lbl_803C35F0@l
+/* 800C35D4 000C03D4  38 04 35 F0 */	addi r0, r4, lbl_file_queue@l
 /* 800C35D8 000C03D8  7F E0 2A 14 */	add r31, r0, r5
 /* 800C35DC 000C03DC  41 82 00 28 */	beq lbl_800C3604
 /* 800C35E0 000C03E0  40 80 00 10 */	bge lbl_800C35F0
@@ -330,16 +330,16 @@ iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi:
 /* 800C374C 000C054C  7C 7E 1B 78 */	mr r30, r3
 /* 800C3750 000C0550  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800C3754 000C0554  93 81 00 10 */	stw r28, 0x10(r1)
-/* 800C3758 000C0558  88 0D 91 CC */	lbz r0, lbl_803CBACC-_SDA_BASE_(r13)
+/* 800C3758 000C0558  88 0D 91 CC */	lbz r0, lbl_init$504-_SDA_BASE_(r13)
 /* 800C375C 000C055C  7C 00 07 75 */	extsb. r0, r0
 /* 800C3760 000C0560  40 82 00 10 */	bne lbl_800C3770
 /* 800C3764 000C0564  38 00 00 01 */	li r0, 1
-/* 800C3768 000C0568  90 0D 91 C8 */	stw r0, lbl_803CBAC8-_SDA_BASE_(r13)
-/* 800C376C 000C056C  98 0D 91 CC */	stb r0, lbl_803CBACC-_SDA_BASE_(r13)
+/* 800C3768 000C0568  90 0D 91 C8 */	stw r0, lbl_fopcount$503-_SDA_BASE_(r13)
+/* 800C376C 000C056C  98 0D 91 CC */	stb r0, lbl_init$504-_SDA_BASE_(r13)
 lbl_800C3770:
-/* 800C3770 000C0570  3C 60 80 3C */	lis r3, lbl_803C35F0@ha
+/* 800C3770 000C0570  3C 60 80 3C */	lis r3, lbl_file_queue@ha
 /* 800C3774 000C0574  38 00 00 04 */	li r0, 4
-/* 800C3778 000C0578  38 63 35 F0 */	addi r3, r3, lbl_803C35F0@l
+/* 800C3778 000C0578  38 63 35 F0 */	addi r3, r3, lbl_file_queue@l
 /* 800C377C 000C057C  3B E0 00 00 */	li r31, 0
 /* 800C3780 000C0580  7C 09 03 A6 */	mtctr r0
 lbl_800C3784:
@@ -348,13 +348,13 @@ lbl_800C3784:
 /* 800C378C 000C058C  41 82 00 94 */	beq lbl_800C3820
 /* 800C3790 000C0590  2C 00 00 01 */	cmpwi r0, 1
 /* 800C3794 000C0594  41 82 00 8C */	beq lbl_800C3820
-/* 800C3798 000C0598  81 0D 91 C8 */	lwz r8, lbl_803CBAC8-_SDA_BASE_(r13)
-/* 800C379C 000C059C  3C E0 80 3C */	lis r7, lbl_803C35F0@ha
+/* 800C3798 000C0598  81 0D 91 C8 */	lwz r8, lbl_fopcount$503-_SDA_BASE_(r13)
+/* 800C379C 000C059C  3C E0 80 3C */	lis r7, lbl_file_queue@ha
 /* 800C37A0 000C05A0  1D 3F 00 1C */	mulli r9, r31, 0x1c
 /* 800C37A4 000C05A4  38 60 00 00 */	li r3, 0
 /* 800C37A8 000C05A8  38 08 00 01 */	addi r0, r8, 1
-/* 800C37AC 000C05AC  90 0D 91 C8 */	stw r0, lbl_803CBAC8-_SDA_BASE_(r13)
-/* 800C37B0 000C05B0  38 E7 35 F0 */	addi r7, r7, lbl_803C35F0@l
+/* 800C37AC 000C05AC  90 0D 91 C8 */	stw r0, lbl_fopcount$503-_SDA_BASE_(r13)
+/* 800C37B0 000C05B0  38 E7 35 F0 */	addi r7, r7, lbl_file_queue@l
 /* 800C37B4 000C05B4  55 1C 10 3A */	slwi r28, r8, 2
 /* 800C37B8 000C05B8  7F C7 49 2E */	stwx r30, r7, r9
 /* 800C37BC 000C05BC  7C E7 4A 14 */	add r7, r7, r9
@@ -401,9 +401,9 @@ lbl_800C3830:
 .global iFileReadAsyncStatus__FiPi
 iFileReadAsyncStatus__FiPi:
 /* 800C3850 000C0650  54 60 07 BE */	clrlwi r0, r3, 0x1e
-/* 800C3854 000C0654  3C A0 80 3C */	lis r5, lbl_803C35F0@ha
+/* 800C3854 000C0654  3C A0 80 3C */	lis r5, lbl_file_queue@ha
 /* 800C3858 000C0658  1C C0 00 1C */	mulli r6, r0, 0x1c
-/* 800C385C 000C065C  38 05 35 F0 */	addi r0, r5, lbl_803C35F0@l
+/* 800C385C 000C065C  38 05 35 F0 */	addi r0, r5, lbl_file_queue@l
 /* 800C3860 000C0660  7C A0 32 14 */	add r5, r0, r6
 /* 800C3864 000C0664  80 05 00 18 */	lwz r0, 0x18(r5)
 /* 800C3868 000C0668  7C 03 00 40 */	cmplw r3, r0
@@ -416,8 +416,8 @@ lbl_800C3878:
 /* 800C3880 000C0680  80 05 00 0C */	lwz r0, 0xc(r5)
 /* 800C3884 000C0684  90 04 00 00 */	stw r0, 0(r4)
 lbl_800C3888:
-/* 800C3888 000C0688  3C 60 80 3C */	lis r3, lbl_803C35F0@ha
-/* 800C388C 000C068C  38 03 35 F0 */	addi r0, r3, lbl_803C35F0@l
+/* 800C3888 000C0688  3C 60 80 3C */	lis r3, lbl_file_queue@ha
+/* 800C388C 000C068C  38 03 35 F0 */	addi r0, r3, lbl_file_queue@l
 /* 800C3890 000C0690  7C 60 32 14 */	add r3, r0, r6
 /* 800C3894 000C0694  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 800C3898 000C0698  4E 80 00 20 */	blr 

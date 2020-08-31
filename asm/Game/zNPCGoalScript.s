@@ -15,9 +15,9 @@ GOALCreate_Script__FiP10RyzMemGrowPv:
 /* 801245F4 001213F4  38 84 AC D0 */	addi r4, r4, -21296
 /* 801245F8 001213F8  28 04 00 07 */	cmplwi r4, 7
 /* 801245FC 001213FC  41 81 01 58 */	bgt lbl_80124754
-/* 80124600 00121400  3C 60 80 2A */	lis r3, lbl_80298108@ha
+/* 80124600 00121400  3C 60 80 2A */	lis r3, lbl__811_1@ha
 /* 80124604 00121404  54 84 10 3A */	slwi r4, r4, 2
-/* 80124608 00121408  38 63 81 08 */	addi r3, r3, lbl_80298108@l
+/* 80124608 00121408  38 63 81 08 */	addi r3, r3, lbl__811_1@l
 /* 8012460C 0012140C  7C 03 20 2E */	lwzx r0, r3, r4
 /* 80124610 00121410  7C 09 03 A6 */	mtctr r0
 /* 80124614 00121414  4E 80 04 20 */	bctr 
@@ -208,9 +208,9 @@ __ct__18zNPCGoalScriptWaitFi:
 /* 801248B0 001216B0  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801248B4 001216B4  7C 7F 1B 78 */	mr r31, r3
 /* 801248B8 001216B8  4B FB 47 3D */	bl __ct__14zNPCGoalCommonFi
-/* 801248BC 001216BC  3C 80 80 2A */	lis r4, lbl_80298294@ha
+/* 801248BC 001216BC  3C 80 80 2A */	lis r4, lbl___vt__18zNPCGoalScriptWait@ha
 /* 801248C0 001216C0  7F E3 FB 78 */	mr r3, r31
-/* 801248C4 001216C4  38 04 82 94 */	addi r0, r4, lbl_80298294@l
+/* 801248C4 001216C4  38 04 82 94 */	addi r0, r4, lbl___vt__18zNPCGoalScriptWait@l
 /* 801248C8 001216C8  38 80 00 06 */	li r4, 6
 /* 801248CC 001216CC  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 801248D0 001216D0  4B FB 47 D1 */	bl SetFlags__5xGoalFi
@@ -229,9 +229,9 @@ __ct__18zNPCGoalScriptLeadFi:
 /* 801248F8 001216F8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801248FC 001216FC  7C 7F 1B 78 */	mr r31, r3
 /* 80124900 00121700  4B FB 46 F5 */	bl __ct__14zNPCGoalCommonFi
-/* 80124904 00121704  3C 80 80 2A */	lis r4, lbl_80298260@ha
+/* 80124904 00121704  3C 80 80 2A */	lis r4, lbl___vt__18zNPCGoalScriptLead@ha
 /* 80124908 00121708  7F E3 FB 78 */	mr r3, r31
-/* 8012490C 0012170C  38 04 82 60 */	addi r0, r4, lbl_80298260@l
+/* 8012490C 0012170C  38 04 82 60 */	addi r0, r4, lbl___vt__18zNPCGoalScriptLead@l
 /* 80124910 00121710  38 80 00 06 */	li r4, 6
 /* 80124914 00121714  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 80124918 00121718  4B FB 47 89 */	bl SetFlags__5xGoalFi
@@ -250,9 +250,9 @@ __ct__20zNPCGoalScriptFollowFi:
 /* 80124940 00121740  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80124944 00121744  7C 7F 1B 78 */	mr r31, r3
 /* 80124948 00121748  4B FB 46 AD */	bl __ct__14zNPCGoalCommonFi
-/* 8012494C 0012174C  3C 80 80 2A */	lis r4, lbl_8029822C@ha
+/* 8012494C 0012174C  3C 80 80 2A */	lis r4, lbl___vt__20zNPCGoalScriptFollow@ha
 /* 80124950 00121750  7F E3 FB 78 */	mr r3, r31
-/* 80124954 00121754  38 04 82 2C */	addi r0, r4, lbl_8029822C@l
+/* 80124954 00121754  38 04 82 2C */	addi r0, r4, lbl___vt__20zNPCGoalScriptFollow@l
 /* 80124958 00121758  38 80 00 06 */	li r4, 6
 /* 8012495C 0012175C  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 80124960 00121760  4B FB 47 41 */	bl SetFlags__5xGoalFi
@@ -271,9 +271,9 @@ __ct__18zNPCGoalScriptTalkFi:
 /* 80124988 00121788  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8012498C 0012178C  7C 7F 1B 78 */	mr r31, r3
 /* 80124990 00121790  4B FB 46 65 */	bl __ct__14zNPCGoalCommonFi
-/* 80124994 00121794  3C 80 80 2A */	lis r4, lbl_802981F8@ha
+/* 80124994 00121794  3C 80 80 2A */	lis r4, lbl___vt__18zNPCGoalScriptTalk@ha
 /* 80124998 00121798  7F E3 FB 78 */	mr r3, r31
-/* 8012499C 0012179C  38 04 81 F8 */	addi r0, r4, lbl_802981F8@l
+/* 8012499C 0012179C  38 04 81 F8 */	addi r0, r4, lbl___vt__18zNPCGoalScriptTalk@l
 /* 801249A0 001217A0  38 80 00 06 */	li r4, 6
 /* 801249A4 001217A4  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 801249A8 001217A8  4B FB 46 F9 */	bl SetFlags__5xGoalFi
@@ -292,9 +292,9 @@ __ct__18zNPCGoalScriptMoveFi:
 /* 801249D0 001217D0  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801249D4 001217D4  7C 7F 1B 78 */	mr r31, r3
 /* 801249D8 001217D8  4B FB 46 1D */	bl __ct__14zNPCGoalCommonFi
-/* 801249DC 001217DC  3C 80 80 2A */	lis r4, lbl_802981C4@ha
+/* 801249DC 001217DC  3C 80 80 2A */	lis r4, lbl___vt__18zNPCGoalScriptMove@ha
 /* 801249E0 001217E0  7F E3 FB 78 */	mr r3, r31
-/* 801249E4 001217E4  38 04 81 C4 */	addi r0, r4, lbl_802981C4@l
+/* 801249E4 001217E4  38 04 81 C4 */	addi r0, r4, lbl___vt__18zNPCGoalScriptMove@l
 /* 801249E8 001217E8  38 80 00 06 */	li r4, 6
 /* 801249EC 001217EC  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 801249F0 001217F0  4B FB 46 B1 */	bl SetFlags__5xGoalFi
@@ -313,9 +313,9 @@ __ct__20zNPCGoalScriptAttackFi:
 /* 80124A18 00121818  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80124A1C 0012181C  7C 7F 1B 78 */	mr r31, r3
 /* 80124A20 00121820  4B FB 45 D5 */	bl __ct__14zNPCGoalCommonFi
-/* 80124A24 00121824  3C 80 80 2A */	lis r4, lbl_80298190@ha
+/* 80124A24 00121824  3C 80 80 2A */	lis r4, lbl___vt__20zNPCGoalScriptAttack@ha
 /* 80124A28 00121828  7F E3 FB 78 */	mr r3, r31
-/* 80124A2C 0012182C  38 04 81 90 */	addi r0, r4, lbl_80298190@l
+/* 80124A2C 0012182C  38 04 81 90 */	addi r0, r4, lbl___vt__20zNPCGoalScriptAttack@l
 /* 80124A30 00121830  38 80 00 06 */	li r4, 6
 /* 80124A34 00121834  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 80124A38 00121838  4B FB 46 69 */	bl SetFlags__5xGoalFi
@@ -334,9 +334,9 @@ __ct__18zNPCGoalScriptAnimFi:
 /* 80124A60 00121860  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80124A64 00121864  7C 7F 1B 78 */	mr r31, r3
 /* 80124A68 00121868  4B FB 45 8D */	bl __ct__14zNPCGoalCommonFi
-/* 80124A6C 0012186C  3C 80 80 2A */	lis r4, lbl_8029815C@ha
+/* 80124A6C 0012186C  3C 80 80 2A */	lis r4, lbl___vt__18zNPCGoalScriptAnim@ha
 /* 80124A70 00121870  7F E3 FB 78 */	mr r3, r31
-/* 80124A74 00121874  38 04 81 5C */	addi r0, r4, lbl_8029815C@l
+/* 80124A74 00121874  38 04 81 5C */	addi r0, r4, lbl___vt__18zNPCGoalScriptAnim@l
 /* 80124A78 00121878  38 80 00 06 */	li r4, 6
 /* 80124A7C 0012187C  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 80124A80 00121880  4B FB 46 21 */	bl SetFlags__5xGoalFi
@@ -355,9 +355,9 @@ __ct__14zNPCGoalScriptFi:
 /* 80124AA8 001218A8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80124AAC 001218AC  7C 7F 1B 78 */	mr r31, r3
 /* 80124AB0 001218B0  4B FB 45 45 */	bl __ct__14zNPCGoalCommonFi
-/* 80124AB4 001218B4  3C 80 80 2A */	lis r4, lbl_80298128@ha
+/* 80124AB4 001218B4  3C 80 80 2A */	lis r4, lbl___vt__14zNPCGoalScript@ha
 /* 80124AB8 001218B8  7F E3 FB 78 */	mr r3, r31
-/* 80124ABC 001218BC  38 04 81 28 */	addi r0, r4, lbl_80298128@l
+/* 80124ABC 001218BC  38 04 81 28 */	addi r0, r4, lbl___vt__14zNPCGoalScript@l
 /* 80124AC0 001218C0  38 80 00 1C */	li r4, 0x1c
 /* 80124AC4 001218C4  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 80124AC8 001218C8  4B FB 45 D9 */	bl SetFlags__5xGoalFi

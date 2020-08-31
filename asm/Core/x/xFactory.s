@@ -14,7 +14,7 @@ __ct__8xFactoryFi:
 /* 8010F2EC 0010C0EC  1F FE 00 0C */	mulli r31, r30, 0xc
 /* 8010F2F0 0010C0F0  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8010F2F4 0010C0F4  7C 7D 1B 78 */	mr r29, r3
-/* 8010F2F8 0010C0F8  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8010F2F8 0010C0F8  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 8010F2FC 0010C0FC  7F E4 FB 78 */	mr r4, r31
 /* 8010F300 0010C100  4B F2 46 41 */	bl xMemAlloc__FUiUii
 /* 8010F304 0010C104  90 7D 00 00 */	stw r3, 0(r29)
@@ -137,9 +137,9 @@ lbl_8010F480:
 RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v:
 /* 8010F498 0010C298  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8010F49C 0010C29C  7C 08 02 A6 */	mflr r0
-/* 8010F4A0 0010C2A0  3C E0 80 27 */	lis r7, lbl_8026A3C8@ha
+/* 8010F4A0 0010C2A0  3C E0 80 27 */	lis r7, lbl__444@ha
 /* 8010F4A4 0010C2A4  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8010F4A8 0010C2A8  39 27 A3 C8 */	addi r9, r7, lbl_8026A3C8@l
+/* 8010F4A8 0010C2A8  39 27 A3 C8 */	addi r9, r7, lbl__444@l
 /* 8010F4AC 0010C2AC  81 09 00 00 */	lwz r8, 0(r9)
 /* 8010F4B0 0010C2B0  80 E9 00 04 */	lwz r7, 4(r9)
 /* 8010F4B4 0010C2B4  91 01 00 08 */	stw r8, 8(r1)
@@ -197,10 +197,10 @@ GrowDataDisable__8xFactoryFv:
 CreateItem__8xFactoryFiPvP10RyzMemGrow:
 /* 8010F55C 0010C35C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8010F560 0010C360  7C 08 02 A6 */	mflr r0
-/* 8010F564 0010C364  3D 00 80 27 */	lis r8, lbl_8026A3E0@ha
+/* 8010F564 0010C364  3D 00 80 27 */	lis r8, lbl__461_1@ha
 /* 8010F568 0010C368  3C E0 80 11 */	lis r7, lbl_8010F7D4@ha
 /* 8010F56C 0010C36C  90 01 00 34 */	stw r0, 0x34(r1)
-/* 8010F570 0010C370  39 28 A3 E0 */	addi r9, r8, lbl_8026A3E0@l
+/* 8010F570 0010C370  39 28 A3 E0 */	addi r9, r8, lbl__461_1@l
 /* 8010F574 0010C374  38 07 F7 D4 */	addi r0, r7, lbl_8010F7D4@l
 /* 8010F578 0010C378  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 8010F57C 0010C37C  7C 7F 1B 78 */	mr r31, r3
