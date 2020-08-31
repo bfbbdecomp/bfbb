@@ -49,9 +49,11 @@ SHA1SUM := sha1sum
 ASMDIFF := ./asmdiff.sh
 
 # Options
+INCLUDES := -Isrc/dolphin/include -Isrc/CodeWarrior
+
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
-CFLAGS  := -Cpp_exceptions off -proc gekko -fp hard -O4,p -msgstyle gcc -ir .
+CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
 
 # elf2dol needs to know these in order to calculate sbss correctly.
 SDATA_PDHR := 9

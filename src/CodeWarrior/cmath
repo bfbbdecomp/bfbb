@@ -1,0 +1,13 @@
+#ifndef _MSL_CMATH
+#define _MSL_CMATH
+
+#include "math.h"
+
+namespace std
+{
+    float sinf(float x);
+    float cosf(float x);
+    float tanf(float x);
+}
+
+#endif

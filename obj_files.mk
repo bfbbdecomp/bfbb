@@ -129,7 +129,7 @@ TEXT_O_FILES :=                                     \
     asm/Core/p2/iFMV.o                              \
     asm/Core/p2/iFX.o                               \
     asm/Core/p2/iLight.o                            \
-    asm/Core/p2/iMath.o                             \
+    src/Core/p2/iMath.o                             \
     asm/Core/p2/iMath3.o                            \
     asm/Core/p2/iMemMgr.o                           \
     asm/Core/p2/iMix.o                              \
