@@ -2,8 +2,8 @@
 
 .section .text  # 0x8013A5D0 - 0x8013AF64
 
-.global func_8013A5D0
-func_8013A5D0:
+.global xUpdateCull.xUpdateCull_Swap__FP14xUpdateCullMgrUiUi
+xUpdateCull.xUpdateCull_Swap__FP14xUpdateCullMgrUiUi:
 /* 8013A5D0 001373D0  80 C3 00 0C */	lwz r6, 0xc(r3)
 /* 8013A5D4 001373D4  54 87 10 3A */	slwi r7, r4, 2
 /* 8013A5D8 001373D8  54 A8 10 3A */	slwi r8, r5, 2
@@ -41,8 +41,8 @@ lbl_8013A61C:
 /* 8013A648 00137448  7C A3 41 2E */	stwx r5, r3, r8
 /* 8013A64C 0013744C  4E 80 00 20 */	blr 
 
-.global func_8013A650
-func_8013A650:
+.global xUpdateCull.xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
+xUpdateCull.xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt:
 /* 8013A650 00137450  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013A654 00137454  7C 08 02 A6 */	mflr r0
 /* 8013A658 00137458  90 01 00 14 */	stw r0, 0x14(r1)
@@ -55,7 +55,7 @@ func_8013A650:
 /* 8013A674 00137474  7C 04 28 40 */	cmplw r4, r5
 /* 8013A678 00137478  41 80 00 3C */	blt lbl_8013A6B4
 /* 8013A67C 0013747C  41 82 00 08 */	beq lbl_8013A684
-/* 8013A680 00137480  4B FF FF 51 */	bl func_8013A5D0
+/* 8013A680 00137480  4B FF FF 51 */	bl xUpdateCull.xUpdateCull_Swap__FP14xUpdateCullMgrUiUi
 lbl_8013A684:
 /* 8013A684 00137484  81 9E 00 24 */	lwz r12, 0x24(r30)
 /* 8013A688 00137488  28 0C 00 00 */	cmplwi r12, 0
@@ -78,8 +78,8 @@ lbl_8013A6B4:
 /* 8013A6C4 001374C4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013A6C8 001374C8  4E 80 00 20 */	blr 
 
-.global func_8013A6CC
-func_8013A6CC:
+.global xUpdateCull.xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt
+xUpdateCull.xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt:
 /* 8013A6CC 001374CC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013A6D0 001374D0  7C 08 02 A6 */	mflr r0
 /* 8013A6D4 001374D4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -94,7 +94,7 @@ func_8013A6CC:
 /* 8013A6F8 001374F8  38 A5 FF FF */	addi r5, r5, -1
 /* 8013A6FC 001374FC  7C 04 28 40 */	cmplw r4, r5
 /* 8013A700 00137500  41 82 00 08 */	beq lbl_8013A708
-/* 8013A704 00137504  4B FF FE CD */	bl func_8013A5D0
+/* 8013A704 00137504  4B FF FE CD */	bl xUpdateCull.xUpdateCull_Swap__FP14xUpdateCullMgrUiUi
 lbl_8013A708:
 /* 8013A708 00137508  81 9E 00 28 */	lwz r12, 0x28(r30)
 /* 8013A70C 0013750C  28 0C 00 00 */	cmplwi r12, 0
@@ -132,7 +132,7 @@ lbl_8013A758:
 /* 8013A76C 0013756C  48 00 00 5C */	b lbl_8013A7C8
 lbl_8013A770:
 /* 8013A770 00137570  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 8013A774 00137574  80 AD 82 B0 */	lwz r5, lbl_803CABB0-_SDA_BASE_(r13)
+/* 8013A774 00137574  80 AD 82 B0 */	lwz r5, lbl_xglobals-_SDA_BASE_(r13)
 /* 8013A778 00137578  80 63 00 4C */	lwz r3, 0x4c(r3)
 /* 8013A77C 0013757C  C0 45 00 44 */	lfs f2, 0x44(r5)
 /* 8013A780 00137580  C0 63 00 30 */	lfs f3, 0x30(r3)
@@ -157,8 +157,8 @@ lbl_8013A7C8:
 /* 8013A7C8 001375C8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013A7CC 001375CC  4E 80 00 20 */	blr 
 
-.global func_8013A7D0
-func_8013A7D0:
+.global xUpdateCull_Init__FPPvUiPP6xGroupUi
+xUpdateCull_Init__FPPvUiPP6xGroupUi:
 /* 8013A7D0 001375D0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8013A7D4 001375D4  7C 08 02 A6 */	mflr r0
 /* 8013A7D8 001375D8  90 01 00 54 */	stw r0, 0x54(r1)
@@ -171,7 +171,7 @@ func_8013A7D0:
 /* 8013A7F4 001375F4  3A C0 00 00 */	li r22, 0
 /* 8013A7F8 001375F8  39 E0 00 00 */	li r15, 0
 /* 8013A7FC 001375FC  41 82 00 50 */	beq lbl_8013A84C
-/* 8013A800 00137600  80 8D 9F 7C */	lwz r4, lbl_803CC87C-_SDA_BASE_(r13)
+/* 8013A800 00137600  80 8D 9F 7C */	lwz r4, lbl_RwEngineInstance-_SDA_BASE_(r13)
 /* 8013A804 00137604  56 03 10 3A */	slwi r3, r16, 2
 /* 8013A808 00137608  81 84 01 34 */	lwz r12, 0x134(r4)
 /* 8013A80C 0013760C  7D 89 03 A6 */	mtctr r12
@@ -193,7 +193,7 @@ lbl_8013A844:
 /* 8013A844 00137644  38 84 00 04 */	addi r4, r4, 4
 /* 8013A848 00137648  42 00 FF E0 */	bdnz lbl_8013A828
 lbl_8013A84C:
-/* 8013A84C 0013764C  80 8D 9F 7C */	lwz r4, lbl_803CC87C-_SDA_BASE_(r13)
+/* 8013A84C 0013764C  80 8D 9F 7C */	lwz r4, lbl_RwEngineInstance-_SDA_BASE_(r13)
 /* 8013A850 00137650  7E C3 B3 78 */	mr r3, r22
 /* 8013A854 00137654  39 E0 00 00 */	li r15, 0
 /* 8013A858 00137658  3A 00 00 00 */	li r16, 0
@@ -210,7 +210,7 @@ lbl_8013A84C:
 lbl_8013A884:
 /* 8013A884 00137684  80 74 00 00 */	lwz r3, 0(r20)
 /* 8013A888 00137688  3B 40 00 00 */	li r26, 0
-/* 8013A88C 0013768C  4B EF 25 F1 */	bl func_8002CE7C
+/* 8013A88C 0013768C  4B EF 25 F1 */	bl xGroupGetCount__FP6xGroup
 /* 8013A890 00137690  7C 73 1B 78 */	mr r19, r3
 /* 8013A894 00137694  3B 20 00 00 */	li r25, 0
 /* 8013A898 00137698  3A 20 00 01 */	li r17, 1
@@ -218,7 +218,7 @@ lbl_8013A884:
 lbl_8013A8A0:
 /* 8013A8A0 001376A0  80 74 00 00 */	lwz r3, 0(r20)
 /* 8013A8A4 001376A4  7F 24 CB 78 */	mr r4, r25
-/* 8013A8A8 001376A8  4B EF 25 E1 */	bl func_8002CE88
+/* 8013A8A8 001376A8  4B EF 25 E1 */	bl xGroupGetItemPtr__FP6xGroupUi
 /* 8013A8AC 001376AC  7E E5 BB 78 */	mr r5, r23
 /* 8013A8B0 001376B0  7E A4 AB 78 */	mr r4, r21
 /* 8013A8B4 001376B4  38 C0 00 00 */	li r6, 0
@@ -268,13 +268,13 @@ lbl_8013A940:
 /* 8013A940 00137740  56 CF 10 3A */	slwi r15, r22, 2
 /* 8013A944 00137744  56 24 20 36 */	slwi r4, r17, 4
 /* 8013A948 00137748  7C 0F 7A 14 */	add r0, r15, r15
-/* 8013A94C 0013774C  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8013A94C 0013774C  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 8013A950 00137750  1C D0 00 0C */	mulli r6, r16, 0xc
 /* 8013A954 00137754  38 A0 00 00 */	li r5, 0
 /* 8013A958 00137758  7C 00 22 14 */	add r0, r0, r4
 /* 8013A95C 0013775C  7C 80 32 14 */	add r4, r0, r6
 /* 8013A960 00137760  38 84 00 2C */	addi r4, r4, 0x2c
-/* 8013A964 00137764  4B EF 8F DD */	bl func_80033940
+/* 8013A964 00137764  4B EF 8F DD */	bl xMemAlloc__FUiUii
 /* 8013A968 00137768  7C 74 1B 78 */	mr r20, r3
 /* 8013A96C 0013776C  7D E4 7B 78 */	mr r4, r15
 /* 8013A970 00137770  38 14 00 2C */	addi r0, r20, 0x2c
@@ -322,7 +322,7 @@ lbl_8013AA0C:
 /* 8013AA0C 0013780C  80 7D 00 00 */	lwz r3, 0(r29)
 /* 8013AA10 00137810  7E 51 93 78 */	mr r17, r18
 /* 8013AA14 00137814  3B 20 00 00 */	li r25, 0
-/* 8013AA18 00137818  4B EF 24 65 */	bl func_8002CE7C
+/* 8013AA18 00137818  4B EF 24 65 */	bl xGroupGetCount__FP6xGroup
 /* 8013AA1C 0013781C  7C 70 1B 78 */	mr r16, r3
 /* 8013AA20 00137820  7F 9E E3 78 */	mr r30, r28
 /* 8013AA24 00137824  3B 00 00 00 */	li r24, 0
@@ -330,7 +330,7 @@ lbl_8013AA0C:
 lbl_8013AA2C:
 /* 8013AA2C 0013782C  80 7D 00 00 */	lwz r3, 0(r29)
 /* 8013AA30 00137830  7F 04 C3 78 */	mr r4, r24
-/* 8013AA34 00137834  4B EF 24 55 */	bl func_8002CE88
+/* 8013AA34 00137834  4B EF 24 55 */	bl xGroupGetItemPtr__FP6xGroupUi
 /* 8013AA38 00137838  39 00 00 00 */	li r8, 0
 /* 8013AA3C 0013783C  7E E5 BB 78 */	mr r5, r23
 /* 8013AA40 00137840  7F C6 F3 78 */	mr r6, r30
@@ -492,14 +492,14 @@ lbl_8013AC60:
 lbl_8013AC70:
 /* 8013AC70 00137A70  42 00 00 00 */	bdnz lbl_8013AC70
 lbl_8013AC74:
-/* 8013AC74 00137A74  80 8D 9F 7C */	lwz r4, lbl_803CC87C-_SDA_BASE_(r13)
+/* 8013AC74 00137A74  80 8D 9F 7C */	lwz r4, lbl_RwEngineInstance-_SDA_BASE_(r13)
 /* 8013AC78 00137A78  7E A3 AB 78 */	mr r3, r21
 /* 8013AC7C 00137A7C  81 84 01 38 */	lwz r12, 0x138(r4)
 /* 8013AC80 00137A80  7D 89 03 A6 */	mtctr r12
 /* 8013AC84 00137A84  4E 80 04 21 */	bctrl 
 /* 8013AC88 00137A88  28 17 00 00 */	cmplwi r23, 0
 /* 8013AC8C 00137A8C  41 82 00 18 */	beq lbl_8013ACA4
-/* 8013AC90 00137A90  80 8D 9F 7C */	lwz r4, lbl_803CC87C-_SDA_BASE_(r13)
+/* 8013AC90 00137A90  80 8D 9F 7C */	lwz r4, lbl_RwEngineInstance-_SDA_BASE_(r13)
 /* 8013AC94 00137A94  7E E3 BB 78 */	mr r3, r23
 /* 8013AC98 00137A98  81 84 01 38 */	lwz r12, 0x138(r4)
 /* 8013AC9C 00137A9C  7D 89 03 A6 */	mtctr r12
@@ -512,8 +512,8 @@ lbl_8013ACA4:
 /* 8013ACB4 00137AB4  38 21 00 50 */	addi r1, r1, 0x50
 /* 8013ACB8 00137AB8  4E 80 00 20 */	blr 
 
-.global func_8013ACBC
-func_8013ACBC:
+.global xUpdateCull_Update__FP14xUpdateCullMgrUi
+xUpdateCull_Update__FP14xUpdateCullMgrUi:
 /* 8013ACBC 00137ABC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013ACC0 00137AC0  7C 08 02 A6 */	mflr r0
 /* 8013ACC4 00137AC4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -548,12 +548,12 @@ lbl_8013ACF4:
 /* 8013AD34 00137B34  40 82 00 14 */	bne lbl_8013AD48
 /* 8013AD38 00137B38  7F A3 EB 78 */	mr r3, r29
 /* 8013AD3C 00137B3C  7F 64 DB 78 */	mr r4, r27
-/* 8013AD40 00137B40  4B FF F9 11 */	bl func_8013A650
+/* 8013AD40 00137B40  4B FF F9 11 */	bl xUpdateCull.xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
 /* 8013AD44 00137B44  48 00 00 10 */	b lbl_8013AD54
 lbl_8013AD48:
 /* 8013AD48 00137B48  7F A3 EB 78 */	mr r3, r29
 /* 8013AD4C 00137B4C  7F 64 DB 78 */	mr r4, r27
-/* 8013AD50 00137B50  4B FF F9 7D */	bl func_8013A6CC
+/* 8013AD50 00137B50  4B FF F9 7D */	bl xUpdateCull.xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt
 lbl_8013AD54:
 /* 8013AD54 00137B54  80 7D 00 14 */	lwz r3, 0x14(r29)
 /* 8013AD58 00137B58  3B FF FF FF */	addi r31, r31, -1
@@ -578,7 +578,7 @@ lbl_8013AD9C:
 /* 8013AD9C 00137B9C  80 1D 00 18 */	lwz r0, 0x18(r29)
 /* 8013ADA0 00137BA0  7F A3 EB 78 */	mr r3, r29
 /* 8013ADA4 00137BA4  7C 80 E2 14 */	add r4, r0, r28
-/* 8013ADA8 00137BA8  4B FF F8 A9 */	bl func_8013A650
+/* 8013ADA8 00137BA8  4B FF F8 A9 */	bl xUpdateCull.xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
 /* 8013ADAC 00137BAC  3B 9C 00 10 */	addi r28, r28, 0x10
 /* 8013ADB0 00137BB0  3B 7B 00 01 */	addi r27, r27, 1
 lbl_8013ADB4:
@@ -626,7 +626,7 @@ lbl_8013AE38:
 /* 8013AE44 00137C44  40 82 FF D8 */	bne lbl_8013AE1C
 lbl_8013AE48:
 /* 8013AE48 00137C48  7F A3 EB 78 */	mr r3, r29
-/* 8013AE4C 00137C4C  4B FF F8 81 */	bl func_8013A6CC
+/* 8013AE4C 00137C4C  4B FF F8 81 */	bl xUpdateCull.xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt
 lbl_8013AE50:
 /* 8013AE50 00137C50  3B 9C 00 10 */	addi r28, r28, 0x10
 /* 8013AE54 00137C54  3B 7B 00 01 */	addi r27, r27, 1
@@ -655,8 +655,8 @@ lbl_8013AE8C:
 /* 8013AEA0 00137CA0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013AEA4 00137CA4  4E 80 00 20 */	blr 
 
-.global func_8013AEA8
-func_8013AEA8:
+.global xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
+xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv:
 /* 8013AEA8 00137CA8  39 40 00 00 */	li r10, 0
 /* 8013AEAC 00137CAC  39 00 00 00 */	li r8, 0
 /* 8013AEB0 00137CB0  48 00 00 3C */	b lbl_8013AEEC
@@ -682,8 +682,8 @@ lbl_8013AEEC:
 /* 8013AEF4 00137CF4  41 80 FF C0 */	blt lbl_8013AEB4
 /* 8013AEF8 00137CF8  4E 80 00 20 */	blr 
 
-.global func_8013AEFC
-func_8013AEFC:
+.global xUpdateCull_Reset__FP14xUpdateCullMgr
+xUpdateCull_Reset__FP14xUpdateCullMgr:
 /* 8013AEFC 00137CFC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013AF00 00137D00  7C 08 02 A6 */	mflr r0
 /* 8013AF04 00137D04  90 01 00 24 */	stw r0, 0x24(r1)
@@ -698,7 +698,7 @@ lbl_8013AF24:
 /* 8013AF24 00137D24  80 9D 00 0C */	lwz r4, 0xc(r29)
 /* 8013AF28 00137D28  7F A3 EB 78 */	mr r3, r29
 /* 8013AF2C 00137D2C  7C 84 F8 2E */	lwzx r4, r4, r31
-/* 8013AF30 00137D30  4B FF F7 21 */	bl func_8013A650
+/* 8013AF30 00137D30  4B FF F7 21 */	bl xUpdateCull.xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
 /* 8013AF34 00137D34  3B FF 00 04 */	addi r31, r31, 4
 /* 8013AF38 00137D38  3B DE 00 01 */	addi r30, r30, 1
 lbl_8013AF3C:

@@ -2,8 +2,8 @@
 
 .section .text  # 0x80035034 - 0x80035494
 
-.global func_80035034
-func_80035034:
+.global xMorphSeqSetup__FPvPFUiPc_Pv
+xMorphSeqSetup__FPvPFUiPc_Pv:
 /* 80035034 00031E34  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80035038 00031E38  7C 08 02 A6 */	mflr r0
 /* 8003503C 00031E3C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -68,7 +68,7 @@ lbl_80035100:
 /* 8003510C 00031F0C  80 03 00 08 */	lwz r0, 8(r3)
 /* 80035110 00031F10  80 7B 00 00 */	lwz r3, 0(r27)
 /* 80035114 00031F14  54 04 07 FE */	clrlwi r4, r0, 0x1f
-/* 80035118 00031F18  48 09 4C E1 */	bl func_800C9DF8
+/* 80035118 00031F18  48 09 4C E1 */	bl iMorphOptimize__FP8RpAtomici
 lbl_8003511C:
 /* 8003511C 00031F1C  3B 7B 00 08 */	addi r27, r27, 8
 /* 80035120 00031F20  3B 9C 00 01 */	addi r28, r28, 1
@@ -177,13 +177,13 @@ lbl_8003527C:
 /* 80035288 00032088  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003528C 0003208C  4E 80 00 20 */	blr 
 
-.global func_80035290
-func_80035290:
+.global xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf
+xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf:
 /* 80035290 00032090  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80035294 00032094  7C 08 02 A6 */	mflr r0
 /* 80035298 00032098  38 E3 00 10 */	addi r7, r3, 0x10
 /* 8003529C 0003209C  90 01 00 54 */	stw r0, 0x54(r1)
-/* 800352A0 000320A0  C0 02 85 40 */	lfs f0, lbl_803CCEC0-_SDA2_BASE_(r2)
+/* 800352A0 000320A0  C0 02 85 40 */	lfs f0, lbl__683_1-_SDA2_BASE_(r2)
 /* 800352A4 000320A4  80 C3 00 08 */	lwz r6, 8(r3)
 /* 800352A8 000320A8  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800352AC 000320AC  54 C0 10 3A */	slwi r0, r6, 2
@@ -229,13 +229,13 @@ lbl_80035324:
 /* 80035330 00032130  28 00 00 00 */	cmplwi r0, 0
 /* 80035334 00032134  40 82 00 10 */	bne lbl_80035344
 /* 80035338 00032138  80 65 00 00 */	lwz r3, 0(r5)
-/* 8003533C 0003213C  48 09 2D B5 */	bl func_800C80F0
+/* 8003533C 0003213C  48 09 2D B5 */	bl iModelRender__FP8RpAtomicP11RwMatrixTag
 /* 80035340 00032140  48 00 01 30 */	b lbl_80035470
 lbl_80035344:
 /* 80035344 00032144  54 C0 10 3A */	slwi r0, r6, 2
 /* 80035348 00032148  C0 65 00 04 */	lfs f3, 4(r5)
 /* 8003534C 0003214C  7C 47 04 2E */	lfsx f2, r7, r0
-/* 80035350 00032150  C0 02 85 40 */	lfs f0, lbl_803CCEC0-_SDA2_BASE_(r2)
+/* 80035350 00032150  C0 02 85 40 */	lfs f0, lbl__683_1-_SDA2_BASE_(r2)
 /* 80035354 00032154  EC 21 10 28 */	fsubs f1, f1, f2
 /* 80035358 00032158  EC 43 00 72 */	fmuls f2, f3, f1
 /* 8003535C 0003215C  FC 00 10 00 */	fcmpu cr0, f0, f2
@@ -249,7 +249,7 @@ lbl_8003536C:
 /* 80035378 00032178  38 C1 00 08 */	addi r6, r1, 8
 /* 8003537C 0003217C  90 01 00 10 */	stw r0, 0x10(r1)
 /* 80035380 00032180  7C 67 18 50 */	subf r3, r7, r3
-/* 80035384 00032184  C8 22 85 48 */	lfd f1, lbl_803CCEC8-_SDA2_BASE_(r2)
+/* 80035384 00032184  C8 22 85 48 */	lfd f1, lbl__685_2-_SDA2_BASE_(r2)
 /* 80035388 00032188  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 8003538C 0003218C  90 01 00 20 */	stw r0, 0x20(r1)
 /* 80035390 00032190  90 61 00 14 */	stw r3, 0x14(r1)
@@ -308,15 +308,15 @@ lbl_80035458:
 /* 80035460 00032260  C0 25 00 08 */	lfs f1, 8(r5)
 /* 80035464 00032264  38 A5 00 10 */	addi r5, r5, 0x10
 /* 80035468 00032268  54 07 07 FE */	clrlwi r7, r0, 0x1f
-/* 8003546C 0003226C  48 09 4A 21 */	bl func_800C9E8C
+/* 8003546C 0003226C  48 09 4A 21 */	bl iMorphRender__FP8RpAtomicP11RwMatrixTagPPsPsUif
 lbl_80035470:
 /* 80035470 00032270  80 01 00 54 */	lwz r0, 0x54(r1)
 /* 80035474 00032274  7C 08 03 A6 */	mtlr r0
 /* 80035478 00032278  38 21 00 50 */	addi r1, r1, 0x50
 /* 8003547C 0003227C  4E 80 00 20 */	blr 
 
-.global func_80035480
-func_80035480:
+.global xMorphSeqDuration__FP13xMorphSeqFile
+xMorphSeqDuration__FP13xMorphSeqFile:
 /* 80035480 00032280  80 03 00 08 */	lwz r0, 8(r3)
 /* 80035484 00032284  54 00 10 3A */	slwi r0, r0, 2
 /* 80035488 00032288  7C 63 02 14 */	add r3, r3, r0

@@ -2,8 +2,8 @@
 
 .section .text  # 0x8010F150 - 0x8010F2D0
 
-.global func_8010F150
-func_8010F150:
+.global __nw__10RyzMemDataFUliP10RyzMemGrow
+__nw__10RyzMemDataFUliP10RyzMemGrow:
 /* 8010F150 0010BF50  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010F154 0010BF54  7C 08 02 A6 */	mflr r0
 /* 8010F158 0010BF58  28 05 00 00 */	cmplwi r5, 0
@@ -17,23 +17,23 @@ func_8010F150:
 /* 8010F178 0010BF78  48 00 00 18 */	b lbl_8010F190
 lbl_8010F17C:
 /* 8010F17C 0010BF7C  7C A3 2B 78 */	mr r3, r5
-/* 8010F180 0010BF80  48 00 01 45 */	bl func_8010F2C4
+/* 8010F180 0010BF80  48 00 01 45 */	bl IsEnabled__10RyzMemGrowFv
 /* 8010F184 0010BF84  2C 03 00 00 */	cmpwi r3, 0
 /* 8010F188 0010BF88  40 82 00 08 */	bne lbl_8010F190
 /* 8010F18C 0010BF8C  3B E0 00 00 */	li r31, 0
 lbl_8010F190:
 /* 8010F190 0010BF90  2C 1F 00 00 */	cmpwi r31, 0
 /* 8010F194 0010BF94  41 82 00 18 */	beq lbl_8010F1AC
-/* 8010F198 0010BF98  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8010F198 0010BF98  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 8010F19C 0010BF9C  7F C4 F3 78 */	mr r4, r30
-/* 8010F1A0 0010BFA0  4B F2 46 C5 */	bl func_80033864
+/* 8010F1A0 0010BFA0  4B F2 46 C5 */	bl xMemGrowAlloc__FUiUi
 /* 8010F1A4 0010BFA4  7C 7F 1B 78 */	mr r31, r3
 /* 8010F1A8 0010BFA8  48 00 00 18 */	b lbl_8010F1C0
 lbl_8010F1AC:
-/* 8010F1AC 0010BFAC  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8010F1AC 0010BFAC  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 8010F1B0 0010BFB0  7F C4 F3 78 */	mr r4, r30
 /* 8010F1B4 0010BFB4  38 A0 00 00 */	li r5, 0
-/* 8010F1B8 0010BFB8  4B F2 47 89 */	bl func_80033940
+/* 8010F1B8 0010BFB8  4B F2 47 89 */	bl xMemAlloc__FUiUii
 /* 8010F1BC 0010BFBC  7C 7F 1B 78 */	mr r31, r3
 lbl_8010F1C0:
 /* 8010F1C0 0010BFC0  7F E3 FB 78 */	mr r3, r31
@@ -48,12 +48,12 @@ lbl_8010F1C0:
 /* 8010F1E4 0010BFE4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010F1E8 0010BFE8  4E 80 00 20 */	blr 
 
-.global func_8010F1EC
-func_8010F1EC:
+.global __dl__10RyzMemDataFPv
+__dl__10RyzMemDataFPv:
 /* 8010F1EC 0010BFEC  4E 80 00 20 */	blr 
 
-.global func_8010F1F0
-func_8010F1F0:
+.global Init__10RyzMemGrowFP5xBase
+Init__10RyzMemGrowFP5xBase:
 /* 8010F1F0 0010BFF0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010F1F4 0010BFF4  7C 08 02 A6 */	mflr r0
 /* 8010F1F8 0010BFF8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -73,9 +73,9 @@ lbl_8010F21C:
 /* 8010F22C 0010C02C  90 7E 00 14 */	stw r3, 0x14(r30)
 /* 8010F230 0010C030  90 7E 00 18 */	stw r3, 0x18(r30)
 /* 8010F234 0010C034  90 1E 00 04 */	stw r0, 4(r30)
-/* 8010F238 0010C038  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8010F238 0010C038  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 8010F23C 0010C03C  80 9E 00 04 */	lwz r4, 4(r30)
-/* 8010F240 0010C040  4B F2 47 01 */	bl func_80033940
+/* 8010F240 0010C040  4B F2 47 01 */	bl xMemAlloc__FUiUii
 /* 8010F244 0010C044  90 7E 00 08 */	stw r3, 8(r30)
 /* 8010F248 0010C048  38 00 00 01 */	li r0, 1
 /* 8010F24C 0010C04C  7F C3 F3 78 */	mr r3, r30
@@ -89,8 +89,8 @@ lbl_8010F258:
 /* 8010F268 0010C068  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010F26C 0010C06C  4E 80 00 20 */	blr 
 
-.global func_8010F270
-func_8010F270:
+.global Resume__10RyzMemGrowFP5xBase
+Resume__10RyzMemGrowFP5xBase:
 /* 8010F270 0010C070  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 8010F274 0010C074  38 00 00 03 */	li r0, 3
 /* 8010F278 0010C078  90 83 00 04 */	stw r4, 4(r3)
@@ -101,8 +101,8 @@ func_8010F270:
 /* 8010F28C 0010C08C  90 03 00 00 */	stw r0, 0(r3)
 /* 8010F290 0010C090  4E 80 00 20 */	blr 
 
-.global func_8010F294
-func_8010F294:
+.global Done__10RyzMemGrowFv
+Done__10RyzMemGrowFv:
 /* 8010F294 0010C094  80 83 00 04 */	lwz r4, 4(r3)
 /* 8010F298 0010C098  38 00 00 00 */	li r0, 0
 /* 8010F29C 0010C09C  90 83 00 10 */	stw r4, 0x10(r3)
@@ -116,8 +116,8 @@ func_8010F294:
 /* 8010F2BC 0010C0BC  90 03 00 00 */	stw r0, 0(r3)
 /* 8010F2C0 0010C0C0  4E 80 00 20 */	blr 
 
-.global func_8010F2C4
-func_8010F2C4:
+.global IsEnabled__10RyzMemGrowFv
+IsEnabled__10RyzMemGrowFv:
 /* 8010F2C4 0010C0C4  80 03 00 00 */	lwz r0, 0(r3)
 /* 8010F2C8 0010C0C8  54 03 07 FE */	clrlwi r3, r0, 0x1f
 /* 8010F2CC 0010C0CC  4E 80 00 20 */	blr 

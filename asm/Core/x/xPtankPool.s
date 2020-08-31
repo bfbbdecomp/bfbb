@@ -2,8 +2,8 @@
 
 .section .text  # 0x8017F5E0 - 0x80180038
 
-.global func_8017F5E0
-func_8017F5E0:
+.global xPtankPool.sort_buckets__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_data
+xPtankPool.sort_buckets__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_data:
 /* 8017F5E0 0017C3E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F5E4 0017C3E4  7C 08 02 A6 */	mflr r0
 /* 8017F5E8 0017C3E8  38 80 00 00 */	li r4, 0
@@ -92,14 +92,14 @@ lbl_8017F704:
 /* 8017F718 0017C518  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F71C 0017C51C  4E 80 00 20 */	blr 
 
-.global func_8017F720
-func_8017F720:
+.global xPtankPool.init_groups__24_unnamed_xPtankPool_cpp_Fv
+xPtankPool.init_groups__24_unnamed_xPtankPool_cpp_Fv:
 /* 8017F720 0017C520  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017F724 0017C524  7C 08 02 A6 */	mflr r0
-/* 8017F728 0017C528  3C 60 80 2A */	lis r3, lbl_8029B830@ha
+/* 8017F728 0017C528  3C 60 80 2A */	lis r3, lbl_groups__24_unnamed_xPtankPool_cpp_@ha
 /* 8017F72C 0017C52C  38 A0 00 00 */	li r5, 0
 /* 8017F730 0017C530  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8017F734 0017C534  38 63 B8 30 */	addi r3, r3, lbl_8029B830@l
+/* 8017F734 0017C534  38 63 B8 30 */	addi r3, r3, lbl_groups__24_unnamed_xPtankPool_cpp_@l
 /* 8017F738 0017C538  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8017F73C 0017C53C  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8017F740 0017C540  3B C3 00 38 */	addi r30, r3, 0x38
@@ -115,14 +115,14 @@ lbl_8017F75C:
 /* 8017F760 0017C560  40 82 FF F0 */	bne lbl_8017F750
 /* 8017F764 0017C564  1C 85 00 14 */	mulli r4, r5, 0x14
 /* 8017F768 0017C568  38 05 00 04 */	addi r0, r5, 4
-/* 8017F76C 0017C56C  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8017F76C 0017C56C  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
 /* 8017F770 0017C570  38 A0 00 00 */	li r5, 0
 /* 8017F774 0017C574  54 00 10 3A */	slwi r0, r0, 2
 /* 8017F778 0017C578  7C 84 02 14 */	add r4, r4, r0
-/* 8017F77C 0017C57C  4B EB 41 C5 */	bl func_80033940
-/* 8017F780 0017C580  3C 80 80 2A */	lis r4, lbl_8029B830@ha
+/* 8017F77C 0017C57C  4B EB 41 C5 */	bl xMemAlloc__FUiUii
+/* 8017F780 0017C580  3C 80 80 2A */	lis r4, lbl_groups__24_unnamed_xPtankPool_cpp_@ha
 /* 8017F784 0017C584  3B E0 00 00 */	li r31, 0
-/* 8017F788 0017C588  38 04 B8 30 */	addi r0, r4, lbl_8029B830@l
+/* 8017F788 0017C588  38 04 B8 30 */	addi r0, r4, lbl_groups__24_unnamed_xPtankPool_cpp_@l
 /* 8017F78C 0017C58C  7C 7D 1B 78 */	mr r29, r3
 /* 8017F790 0017C590  7C 1C 03 78 */	mr r28, r0
 /* 8017F794 0017C594  48 00 00 48 */	b lbl_8017F7DC
@@ -142,7 +142,7 @@ lbl_8017F798:
 /* 8017F7C8 0017C5C8  80 1C 00 18 */	lwz r0, 0x18(r28)
 /* 8017F7CC 0017C5CC  54 00 10 3A */	slwi r0, r0, 2
 /* 8017F7D0 0017C5D0  7F BD 02 14 */	add r29, r29, r0
-/* 8017F7D4 0017C5D4  4B FF FE 0D */	bl func_8017F5E0
+/* 8017F7D4 0017C5D4  4B FF FE 0D */	bl xPtankPool.sort_buckets__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_data
 /* 8017F7D8 0017C5D8  3B 9C 00 1C */	addi r28, r28, 0x1c
 lbl_8017F7DC:
 /* 8017F7DC 0017C5DC  7C 1C F0 40 */	cmplw r28, r30
@@ -156,8 +156,8 @@ lbl_8017F7DC:
 /* 8017F7FC 0017C5FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017F800 0017C600  4E 80 00 20 */	blr 
 
-.global func_8017F804
-func_8017F804:
+.global xPtankPool.create_ptank__24_unnamed_xPtankPool_cpp_FUi
+xPtankPool.create_ptank__24_unnamed_xPtankPool_cpp_FUi:
 /* 8017F804 0017C604  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F808 0017C608  7C 08 02 A6 */	mflr r0
 /* 8017F80C 0017C60C  38 A0 00 00 */	li r5, 0
@@ -166,34 +166,34 @@ func_8017F804:
 /* 8017F818 0017C618  38 60 00 40 */	li r3, 0x40
 /* 8017F81C 0017C61C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8017F820 0017C620  64 04 20 00 */	oris r4, r0, 0x2000
-/* 8017F824 0017C624  48 08 6B FD */	bl func_80206420
+/* 8017F824 0017C624  48 08 6B FD */	bl RpPTankAtomicCreate
 /* 8017F828 0017C628  7C 7F 1B 79 */	or. r31, r3, r3
 /* 8017F82C 0017C62C  40 82 00 0C */	bne lbl_8017F838
 /* 8017F830 0017C630  38 60 00 00 */	li r3, 0
 /* 8017F834 0017C634  48 00 00 8C */	b lbl_8017F8C0
 lbl_8017F838:
-/* 8017F838 0017C638  48 0B 92 51 */	bl func_80238A88
+/* 8017F838 0017C638  48 0B 92 51 */	bl RwFrameCreate
 /* 8017F83C 0017C63C  7C 64 1B 79 */	or. r4, r3, r3
 /* 8017F840 0017C640  40 82 00 14 */	bne lbl_8017F854
 /* 8017F844 0017C644  7F E3 FB 78 */	mr r3, r31
-/* 8017F848 0017C648  48 08 6F 2D */	bl func_80206774
+/* 8017F848 0017C648  48 08 6F 2D */	bl RpPTankAtomicDestroy
 /* 8017F84C 0017C64C  38 60 00 00 */	li r3, 0
 /* 8017F850 0017C650  48 00 00 70 */	b lbl_8017F8C0
 lbl_8017F854:
-/* 8017F854 0017C654  C0 02 AE 68 */	lfs f0, lbl_803CF7E8-_SDA2_BASE_(r2)
+/* 8017F854 0017C654  C0 02 AE 68 */	lfs f0, lbl__644_2-_SDA2_BASE_(r2)
 /* 8017F858 0017C658  7F E3 FB 78 */	mr r3, r31
 /* 8017F85C 0017C65C  D0 04 00 38 */	stfs f0, 0x38(r4)
 /* 8017F860 0017C660  D0 04 00 24 */	stfs f0, 0x24(r4)
 /* 8017F864 0017C664  D0 04 00 10 */	stfs f0, 0x10(r4)
-/* 8017F868 0017C668  C0 02 AE 6C */	lfs f0, lbl_803CF7EC-_SDA2_BASE_(r2)
+/* 8017F868 0017C668  C0 02 AE 6C */	lfs f0, lbl__645_1-_SDA2_BASE_(r2)
 /* 8017F86C 0017C66C  D0 04 00 20 */	stfs f0, 0x20(r4)
 /* 8017F870 0017C670  D0 04 00 18 */	stfs f0, 0x18(r4)
 /* 8017F874 0017C674  D0 04 00 14 */	stfs f0, 0x14(r4)
-/* 8017F878 0017C678  C0 02 AE 6C */	lfs f0, lbl_803CF7EC-_SDA2_BASE_(r2)
+/* 8017F878 0017C678  C0 02 AE 6C */	lfs f0, lbl__645_1-_SDA2_BASE_(r2)
 /* 8017F87C 0017C67C  D0 04 00 34 */	stfs f0, 0x34(r4)
 /* 8017F880 0017C680  D0 04 00 30 */	stfs f0, 0x30(r4)
 /* 8017F884 0017C684  D0 04 00 28 */	stfs f0, 0x28(r4)
-/* 8017F888 0017C688  C0 02 AE 6C */	lfs f0, lbl_803CF7EC-_SDA2_BASE_(r2)
+/* 8017F888 0017C688  C0 02 AE 6C */	lfs f0, lbl__645_1-_SDA2_BASE_(r2)
 /* 8017F88C 0017C68C  D0 04 00 48 */	stfs f0, 0x48(r4)
 /* 8017F890 0017C690  D0 04 00 44 */	stfs f0, 0x44(r4)
 /* 8017F894 0017C694  D0 04 00 40 */	stfs f0, 0x40(r4)
@@ -201,8 +201,8 @@ lbl_8017F854:
 /* 8017F89C 0017C69C  64 00 00 02 */	oris r0, r0, 2
 /* 8017F8A0 0017C6A0  60 00 00 03 */	ori r0, r0, 3
 /* 8017F8A4 0017C6A4  90 04 00 1C */	stw r0, 0x1c(r4)
-/* 8017F8A8 0017C6A8  48 09 55 95 */	bl func_80214E3C
-/* 8017F8AC 0017C6AC  80 0D 9E 28 */	lwz r0, lbl_803CC728-_SDA_BASE_(r13)
+/* 8017F8A8 0017C6A8  48 09 55 95 */	bl RpAtomicSetFrame
+/* 8017F8AC 0017C6AC  80 0D 9E 28 */	lwz r0, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8017F8B0 0017C6B0  38 A0 00 01 */	li r5, 1
 /* 8017F8B4 0017C6B4  7F E3 FB 78 */	mr r3, r31
 /* 8017F8B8 0017C6B8  7C 9F 00 2E */	lwzx r4, r31, r0
@@ -214,8 +214,8 @@ lbl_8017F8C0:
 /* 8017F8CC 0017C6CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F8D0 0017C6D0  4E 80 00 20 */	blr 
 
-.global func_8017F8D4
-func_8017F8D4:
+.global xPtankPool.destroy_ptank__24_unnamed_xPtankPool_cpp_FP8RpAtomic
+xPtankPool.destroy_ptank__24_unnamed_xPtankPool_cpp_FP8RpAtomic:
 /* 8017F8D4 0017C6D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F8D8 0017C6D8  7C 08 02 A6 */	mflr r0
 /* 8017F8DC 0017C6DC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -225,14 +225,14 @@ func_8017F8D4:
 /* 8017F8EC 0017C6EC  41 82 00 28 */	beq lbl_8017F914
 /* 8017F8F0 0017C6F0  83 FE 00 04 */	lwz r31, 4(r30)
 /* 8017F8F4 0017C6F4  38 80 00 00 */	li r4, 0
-/* 8017F8F8 0017C6F8  48 09 55 45 */	bl func_80214E3C
+/* 8017F8F8 0017C6F8  48 09 55 45 */	bl RpAtomicSetFrame
 /* 8017F8FC 0017C6FC  28 1F 00 00 */	cmplwi r31, 0
 /* 8017F900 0017C700  41 82 00 0C */	beq lbl_8017F90C
 /* 8017F904 0017C704  7F E3 FB 78 */	mr r3, r31
-/* 8017F908 0017C708  48 0B 92 BD */	bl func_80238BC4
+/* 8017F908 0017C708  48 0B 92 BD */	bl RwFrameDestroy
 lbl_8017F90C:
 /* 8017F90C 0017C70C  7F C3 F3 78 */	mr r3, r30
-/* 8017F910 0017C710  48 08 6E 65 */	bl func_80206774
+/* 8017F910 0017C710  48 08 6E 65 */	bl RpPTankAtomicDestroy
 lbl_8017F914:
 /* 8017F914 0017C714  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017F918 0017C718  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -241,8 +241,8 @@ lbl_8017F914:
 /* 8017F924 0017C724  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F928 0017C728  4E 80 00 20 */	blr 
 
-.global func_8017F92C
-func_8017F92C:
+.global xPtankPool.render_ptank__24_unnamed_xPtankPool_cpp_FRCQ224_unnamed_xPtankPool_cpp_13ptank_context
+xPtankPool.render_ptank__24_unnamed_xPtankPool_cpp_FRCQ224_unnamed_xPtankPool_cpp_13ptank_context:
 /* 8017F92C 0017C72C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F930 0017C730  7C 08 02 A6 */	mflr r0
 /* 8017F934 0017C734  90 01 00 14 */	stw r0, 0x14(r1)
@@ -253,7 +253,7 @@ func_8017F92C:
 /* 8017F948 0017C748  54 00 07 FE */	clrlwi r0, r0, 0x1f
 /* 8017F94C 0017C74C  7C 00 00 34 */	cntlzw r0, r0
 /* 8017F950 0017C750  54 04 DE 3E */	rlwinm r4, r0, 0x1b, 0x18, 0x1f
-/* 8017F954 0017C754  48 0A FE 89 */	bl func_8022F7DC
+/* 8017F954 0017C754  48 0A FE 89 */	bl RwRenderStateSet
 /* 8017F958 0017C758  80 7F 00 04 */	lwz r3, 4(r31)
 /* 8017F95C 0017C75C  81 83 00 48 */	lwz r12, 0x48(r3)
 /* 8017F960 0017C760  7D 89 03 A6 */	mtctr r12
@@ -307,8 +307,8 @@ lbl_8017F9FC:
 /* 8017FA08 0017C808  54 03 0F FE */	srwi r3, r0, 0x1f
 /* 8017FA0C 0017C80C  4E 80 00 20 */	blr 
 
-.global func_8017FA10
-func_8017FA10:
+.global xPTankPoolSceneEnter__Fv
+xPTankPoolSceneEnter__Fv:
 /* 8017FA10 0017C810  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FA14 0017C814  7C 08 02 A6 */	mflr r0
 /* 8017FA18 0017C818  90 01 00 24 */	stw r0, 0x24(r1)
@@ -316,28 +316,28 @@ func_8017FA10:
 /* 8017FA20 0017C820  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8017FA24 0017C824  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8017FA28 0017C828  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8017FA2C 0017C82C  98 0D 97 E8 */	stb r0, lbl_803CC0E8-_SDA_BASE_(r13)
-/* 8017FA30 0017C830  4B FF FC F1 */	bl func_8017F720
-/* 8017FA34 0017C834  3C 60 80 2A */	lis r3, lbl_8029B830@ha
+/* 8017FA2C 0017C82C  98 0D 97 E8 */	stb r0, lbl_inited__24_unnamed_xPtankPool_cpp_-_SDA_BASE_(r13)
+/* 8017FA30 0017C830  4B FF FC F1 */	bl xPtankPool.init_groups__24_unnamed_xPtankPool_cpp_Fv
+/* 8017FA34 0017C834  3C 60 80 2A */	lis r3, lbl_groups__24_unnamed_xPtankPool_cpp_@ha
 /* 8017FA38 0017C838  3F E0 43 30 */	lis r31, 0x4330
-/* 8017FA3C 0017C83C  38 63 B8 30 */	addi r3, r3, lbl_8029B830@l
+/* 8017FA3C 0017C83C  38 63 B8 30 */	addi r3, r3, lbl_groups__24_unnamed_xPtankPool_cpp_@l
 /* 8017FA40 0017C840  7C 7E 1B 78 */	mr r30, r3
 /* 8017FA44 0017C844  3B A3 00 38 */	addi r29, r3, 0x38
 /* 8017FA48 0017C848  48 00 00 3C */	b lbl_8017FA84
 lbl_8017FA4C:
 /* 8017FA4C 0017C84C  80 1E 00 00 */	lwz r0, 0(r30)
 /* 8017FA50 0017C850  93 E1 00 08 */	stw r31, 8(r1)
-/* 8017FA54 0017C854  C8 42 AE 78 */	lfd f2, lbl_803CF7F8-_SDA2_BASE_(r2)
+/* 8017FA54 0017C854  C8 42 AE 78 */	lfd f2, lbl__706_4-_SDA2_BASE_(r2)
 /* 8017FA58 0017C858  90 01 00 0C */	stw r0, 0xc(r1)
-/* 8017FA5C 0017C85C  C0 62 AE 74 */	lfs f3, lbl_803CF7F4-_SDA2_BASE_(r2)
+/* 8017FA5C 0017C85C  C0 62 AE 74 */	lfs f3, lbl__704_2-_SDA2_BASE_(r2)
 /* 8017FA60 0017C860  C8 21 00 08 */	lfd f1, 8(r1)
-/* 8017FA64 0017C864  C0 02 AE 70 */	lfs f0, lbl_803CF7F0-_SDA2_BASE_(r2)
+/* 8017FA64 0017C864  C0 02 AE 70 */	lfs f0, lbl__703_2-_SDA2_BASE_(r2)
 /* 8017FA68 0017C868  EC 21 10 28 */	fsubs f1, f1, f2
 /* 8017FA6C 0017C86C  EC 23 00 7A */	fmadds f1, f3, f1, f0
 /* 8017FA70 0017C870  48 06 D9 6D */	bl func_801ED3DC
 /* 8017FA74 0017C874  7C 64 1B 78 */	mr r4, r3
 /* 8017FA78 0017C878  7F C3 F3 78 */	mr r3, r30
-/* 8017FA7C 0017C87C  48 00 00 2D */	bl func_8017FAA8
+/* 8017FA7C 0017C87C  48 00 00 2D */	bl xPtankPool.create_ptanks__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_dataUl
 /* 8017FA80 0017C880  3B DE 00 1C */	addi r30, r30, 0x1c
 lbl_8017FA84:
 /* 8017FA84 0017C884  7C 1E E8 40 */	cmplw r30, r29
@@ -350,8 +350,8 @@ lbl_8017FA84:
 /* 8017FAA0 0017C8A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FAA4 0017C8A4  4E 80 00 20 */	blr 
 
-.global func_8017FAA8
-func_8017FAA8:
+.global xPtankPool.create_ptanks__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_dataUl
+xPtankPool.create_ptanks__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_dataUl:
 /* 8017FAA8 0017C8A8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FAAC 0017C8AC  7C 08 02 A6 */	mflr r0
 /* 8017FAB0 0017C8B0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -374,7 +374,7 @@ lbl_8017FAD4:
 /* 8017FAF0 0017C8F0  48 00 00 44 */	b lbl_8017FB34
 lbl_8017FAF4:
 /* 8017FAF4 0017C8F4  80 7B 00 04 */	lwz r3, 4(r27)
-/* 8017FAF8 0017C8F8  4B FF FD 0D */	bl func_8017F804
+/* 8017FAF8 0017C8F8  4B FF FD 0D */	bl xPtankPool.create_ptank__24_unnamed_xPtankPool_cpp_FUi
 /* 8017FAFC 0017C8FC  90 7C 00 04 */	stw r3, 4(r28)
 /* 8017FB00 0017C900  80 1C 00 04 */	lwz r0, 4(r28)
 /* 8017FB04 0017C904  28 00 00 00 */	cmplwi r0, 0
@@ -401,21 +401,21 @@ lbl_8017FB3C:
 /* 8017FB50 0017C950  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FB54 0017C954  4E 80 00 20 */	blr 
 
-.global func_8017FB58
-func_8017FB58:
+.global xPTankPoolSceneExit__Fv
+xPTankPoolSceneExit__Fv:
 /* 8017FB58 0017C958  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FB5C 0017C95C  7C 08 02 A6 */	mflr r0
-/* 8017FB60 0017C960  3C 60 80 2A */	lis r3, lbl_8029B830@ha
+/* 8017FB60 0017C960  3C 60 80 2A */	lis r3, lbl_groups__24_unnamed_xPtankPool_cpp_@ha
 /* 8017FB64 0017C964  90 01 00 24 */	stw r0, 0x24(r1)
 /* 8017FB68 0017C968  38 00 00 00 */	li r0, 0
-/* 8017FB6C 0017C96C  38 63 B8 30 */	addi r3, r3, lbl_8029B830@l
+/* 8017FB6C 0017C96C  38 63 B8 30 */	addi r3, r3, lbl_groups__24_unnamed_xPtankPool_cpp_@l
 /* 8017FB70 0017C970  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8017FB74 0017C974  7C 7F 1B 78 */	mr r31, r3
 /* 8017FB78 0017C978  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8017FB7C 0017C97C  3B C3 00 38 */	addi r30, r3, 0x38
 /* 8017FB80 0017C980  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8017FB84 0017C984  93 81 00 10 */	stw r28, 0x10(r1)
-/* 8017FB88 0017C988  98 0D 97 E8 */	stb r0, lbl_803CC0E8-_SDA_BASE_(r13)
+/* 8017FB88 0017C988  98 0D 97 E8 */	stb r0, lbl_inited__24_unnamed_xPtankPool_cpp_-_SDA_BASE_(r13)
 /* 8017FB8C 0017C98C  48 00 00 30 */	b lbl_8017FBBC
 lbl_8017FB90:
 /* 8017FB90 0017C990  80 1F 00 10 */	lwz r0, 0x10(r31)
@@ -425,7 +425,7 @@ lbl_8017FB90:
 /* 8017FBA0 0017C9A0  48 00 00 10 */	b lbl_8017FBB0
 lbl_8017FBA4:
 /* 8017FBA4 0017C9A4  80 7D 00 04 */	lwz r3, 4(r29)
-/* 8017FBA8 0017C9A8  4B FF FD 2D */	bl func_8017F8D4
+/* 8017FBA8 0017C9A8  4B FF FD 2D */	bl xPtankPool.destroy_ptank__24_unnamed_xPtankPool_cpp_FP8RpAtomic
 /* 8017FBAC 0017C9AC  3B BD 00 14 */	addi r29, r29, 0x14
 lbl_8017FBB0:
 /* 8017FBB0 0017C9B0  7C 1D E0 40 */	cmplw r29, r28
@@ -443,8 +443,8 @@ lbl_8017FBBC:
 /* 8017FBDC 0017C9DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FBE0 0017C9E0  4E 80 00 20 */	blr 
 
-.global func_8017FBE4
-func_8017FBE4:
+.global xPTankPoolRender__Fv
+xPTankPoolRender__Fv:
 /* 8017FBE4 0017C9E4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FBE8 0017C9E8  7C 08 02 A6 */	mflr r0
 /* 8017FBEC 0017C9EC  38 60 00 14 */	li r3, 0x14
@@ -454,12 +454,12 @@ func_8017FBE4:
 /* 8017FBFC 0017C9FC  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8017FC00 0017CA00  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8017FC04 0017CA04  93 81 00 10 */	stw r28, 0x10(r1)
-/* 8017FC08 0017CA08  48 0A FB D5 */	bl func_8022F7DC
+/* 8017FC08 0017CA08  48 0A FB D5 */	bl RwRenderStateSet
 /* 8017FC0C 0017CA0C  38 60 00 08 */	li r3, 8
 /* 8017FC10 0017CA10  38 80 00 00 */	li r4, 0
-/* 8017FC14 0017CA14  48 0A FB C9 */	bl func_8022F7DC
-/* 8017FC18 0017CA18  3C 60 80 2A */	lis r3, lbl_8029B830@ha
-/* 8017FC1C 0017CA1C  38 63 B8 30 */	addi r3, r3, lbl_8029B830@l
+/* 8017FC14 0017CA14  48 0A FB C9 */	bl RwRenderStateSet
+/* 8017FC18 0017CA18  3C 60 80 2A */	lis r3, lbl_groups__24_unnamed_xPtankPool_cpp_@ha
+/* 8017FC1C 0017CA1C  38 63 B8 30 */	addi r3, r3, lbl_groups__24_unnamed_xPtankPool_cpp_@l
 /* 8017FC20 0017CA20  7C 7F 1B 78 */	mr r31, r3
 /* 8017FC24 0017CA24  3B C3 00 38 */	addi r30, r3, 0x38
 /* 8017FC28 0017CA28  48 00 00 AC */	b lbl_8017FCD4
@@ -483,7 +483,7 @@ lbl_8017FC64:
 /* 8017FC68 0017CA68  54 60 03 DF */	rlwinm. r0, r3, 0, 0xf, 0xf
 /* 8017FC6C 0017CA6C  41 82 00 1C */	beq lbl_8017FC88
 /* 8017FC70 0017CA70  7F A3 EB 78 */	mr r3, r29
-/* 8017FC74 0017CA74  4B FF FC B9 */	bl func_8017F92C
+/* 8017FC74 0017CA74  4B FF FC B9 */	bl xPtankPool.render_ptank__24_unnamed_xPtankPool_cpp_FRCQ224_unnamed_xPtankPool_cpp_13ptank_context
 /* 8017FC78 0017CA78  80 1D 00 08 */	lwz r0, 8(r29)
 /* 8017FC7C 0017CA7C  54 00 04 1C */	rlwinm r0, r0, 0, 0x10, 0xe
 /* 8017FC80 0017CA80  90 1D 00 08 */	stw r0, 8(r29)
@@ -496,7 +496,7 @@ lbl_8017FC88:
 /* 8017FC98 0017CA98  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 8017FC9C 0017CA9C  80 63 00 20 */	lwz r3, 0x20(r3)
 /* 8017FCA0 0017CAA0  80 63 00 00 */	lwz r3, 0(r3)
-/* 8017FCA4 0017CAA4  48 09 7F F5 */	bl func_80217C98
+/* 8017FCA4 0017CAA4  48 09 7F F5 */	bl RpMaterialSetTexture
 /* 8017FCA8 0017CAA8  80 1D 00 08 */	lwz r0, 8(r29)
 /* 8017FCAC 0017CAAC  64 00 00 02 */	oris r0, r0, 2
 /* 8017FCB0 0017CAB0  90 1D 00 08 */	stw r0, 8(r29)
@@ -508,7 +508,7 @@ lbl_8017FCB8:
 /* 8017FCC0 0017CAC0  38 00 00 00 */	li r0, 0
 /* 8017FCC4 0017CAC4  7F E3 FB 78 */	mr r3, r31
 /* 8017FCC8 0017CAC8  90 1F 00 14 */	stw r0, 0x14(r31)
-/* 8017FCCC 0017CACC  4B FF F9 15 */	bl func_8017F5E0
+/* 8017FCCC 0017CACC  4B FF F9 15 */	bl xPtankPool.sort_buckets__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_data
 lbl_8017FCD0:
 /* 8017FCD0 0017CAD0  3B FF 00 1C */	addi r31, r31, 0x1c
 lbl_8017FCD4:
@@ -523,14 +523,14 @@ lbl_8017FCD4:
 /* 8017FCF4 0017CAF4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FCF8 0017CAF8  4E 80 00 20 */	blr 
 
-.global func_8017FCFC
-func_8017FCFC:
+.global grab_block__10ptank_poolF16ptank_group_type
+grab_block__10ptank_poolF16ptank_group_type:
 /* 8017FCFC 0017CAFC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FD00 0017CB00  7C 08 02 A6 */	mflr r0
 /* 8017FD04 0017CB04  1C A4 00 1C */	mulli r5, r4, 0x1c
-/* 8017FD08 0017CB08  3C 80 80 2A */	lis r4, lbl_8029B830@ha
+/* 8017FD08 0017CB08  3C 80 80 2A */	lis r4, lbl_groups__24_unnamed_xPtankPool_cpp_@ha
 /* 8017FD0C 0017CB0C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8017FD10 0017CB10  38 04 B8 30 */	addi r0, r4, lbl_8029B830@l
+/* 8017FD10 0017CB10  38 04 B8 30 */	addi r0, r4, lbl_groups__24_unnamed_xPtankPool_cpp_@l
 /* 8017FD14 0017CB14  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8017FD18 0017CB18  7F E0 2A 14 */	add r31, r0, r5
 /* 8017FD1C 0017CB1C  93 C1 00 18 */	stw r30, 0x18(r1)
@@ -544,7 +544,7 @@ func_8017FCFC:
 /* 8017FD3C 0017CB3C  41 80 00 18 */	blt lbl_8017FD54
 /* 8017FD40 0017CB40  7F E3 FB 78 */	mr r3, r31
 /* 8017FD44 0017CB44  38 80 00 01 */	li r4, 1
-/* 8017FD48 0017CB48  4B FF FD 61 */	bl func_8017FAA8
+/* 8017FD48 0017CB48  4B FF FD 61 */	bl xPtankPool.create_ptanks__24_unnamed_xPtankPool_cpp_FRQ224_unnamed_xPtankPool_cpp_10group_dataUl
 /* 8017FD4C 0017CB4C  28 03 00 01 */	cmplwi r3, 1
 /* 8017FD50 0017CB50  41 80 01 D0 */	blt lbl_8017FF20
 lbl_8017FD54:
@@ -618,9 +618,9 @@ lbl_8017FE34:
 /* 8017FE50 0017CC50  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 8017FE54 0017CC54  40 82 00 1C */	bne lbl_8017FE70
 /* 8017FE58 0017CC58  80 63 00 04 */	lwz r3, 4(r3)
-/* 8017FE5C 0017CC5C  4B FF FA 79 */	bl func_8017F8D4
+/* 8017FE5C 0017CC5C  4B FF FA 79 */	bl xPtankPool.destroy_ptank__24_unnamed_xPtankPool_cpp_FP8RpAtomic
 /* 8017FE60 0017CC60  80 7F 00 04 */	lwz r3, 4(r31)
-/* 8017FE64 0017CC64  4B FF F9 A1 */	bl func_8017F804
+/* 8017FE64 0017CC64  4B FF F9 A1 */	bl xPtankPool.create_ptank__24_unnamed_xPtankPool_cpp_FUi
 /* 8017FE68 0017CC68  80 9E 00 00 */	lwz r4, 0(r30)
 /* 8017FE6C 0017CC6C  90 64 00 04 */	stw r3, 4(r4)
 lbl_8017FE70:
@@ -632,19 +632,19 @@ lbl_8017FE70:
 /* 8017FE84 0017CC84  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 8017FE88 0017CC88  80 63 00 20 */	lwz r3, 0x20(r3)
 /* 8017FE8C 0017CC8C  80 63 00 00 */	lwz r3, 0(r3)
-/* 8017FE90 0017CC90  48 09 7E 09 */	bl func_80217C98
+/* 8017FE90 0017CC90  48 09 7E 09 */	bl RpMaterialSetTexture
 /* 8017FE94 0017CC94  80 7D 00 14 */	lwz r3, 0x14(r29)
-/* 8017FE98 0017CC98  80 0D 9E 28 */	lwz r0, lbl_803CC728-_SDA_BASE_(r13)
+/* 8017FE98 0017CC98  80 0D 9E 28 */	lwz r0, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8017FE9C 0017CC9C  80 9D 00 04 */	lwz r4, 4(r29)
 /* 8017FEA0 0017CCA0  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8017FEA4 0017CCA4  90 83 00 A4 */	stw r4, 0xa4(r3)
 /* 8017FEA8 0017CCA8  80 7D 00 14 */	lwz r3, 0x14(r29)
-/* 8017FEAC 0017CCAC  80 0D 9E 28 */	lwz r0, lbl_803CC728-_SDA_BASE_(r13)
+/* 8017FEAC 0017CCAC  80 0D 9E 28 */	lwz r0, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8017FEB0 0017CCB0  80 9D 00 08 */	lwz r4, 8(r29)
 /* 8017FEB4 0017CCB4  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8017FEB8 0017CCB8  90 83 00 A8 */	stw r4, 0xa8(r3)
 /* 8017FEBC 0017CCBC  80 7D 00 14 */	lwz r3, 0x14(r29)
-/* 8017FEC0 0017CCC0  80 0D 9E 28 */	lwz r0, lbl_803CC728-_SDA_BASE_(r13)
+/* 8017FEC0 0017CCC0  80 0D 9E 28 */	lwz r0, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8017FEC4 0017CCC4  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8017FEC8 0017CCC8  80 03 00 40 */	lwz r0, 0x40(r3)
 /* 8017FECC 0017CCCC  64 00 10 00 */	oris r0, r0, 0x1000
@@ -678,8 +678,8 @@ lbl_8017FF20:
 /* 8017FF34 0017CD34  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FF38 0017CD38  4E 80 00 20 */	blr 
 
-.global func_8017FF3C
-func_8017FF3C:
+.global flush__10ptank_poolFv
+flush__10ptank_poolFv:
 /* 8017FF3C 0017CD3C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FF40 0017CD40  7C 08 02 A6 */	mflr r0
 /* 8017FF44 0017CD44  90 01 00 24 */	stw r0, 0x24(r1)
@@ -688,13 +688,13 @@ func_8017FF3C:
 /* 8017FF50 0017CD50  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8017FF54 0017CD54  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8017FF58 0017CD58  93 81 00 10 */	stw r28, 0x10(r1)
-/* 8017FF5C 0017CD5C  4B F9 75 39 */	bl func_80117494
+/* 8017FF5C 0017CD5C  4B F9 75 39 */	bl valid__10ptank_poolCFv
 /* 8017FF60 0017CD60  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8017FF64 0017CD64  41 82 00 B4 */	beq lbl_80180018
 /* 8017FF68 0017CD68  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 8017FF6C 0017CD6C  48 08 69 B9 */	bl func_80206924
+/* 8017FF6C 0017CD6C  48 08 69 B9 */	bl RpPTankAtomicUnlock
 /* 8017FF70 0017CD70  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 8017FF74 0017CD74  80 0D 9E 28 */	lwz r0, lbl_803CC728-_SDA_BASE_(r13)
+/* 8017FF74 0017CD74  80 0D 9E 28 */	lwz r0, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8017FF78 0017CD78  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 8017FF7C 0017CD7C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8017FF80 0017CD80  54 80 0F FE */	srwi r0, r4, 0x1f
@@ -728,13 +728,13 @@ lbl_8017FFE0:
 /* 8017FFE4 0017CDE4  40 82 FF E4 */	bne lbl_8017FFC8
 /* 8017FFE8 0017CDE8  80 9F 00 14 */	lwz r4, 0x14(r31)
 /* 8017FFEC 0017CDEC  38 00 00 00 */	li r0, 0
-/* 8017FFF0 0017CDF0  80 6D 9E 28 */	lwz r3, lbl_803CC728-_SDA_BASE_(r13)
+/* 8017FFF0 0017CDF0  80 6D 9E 28 */	lwz r3, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8017FFF4 0017CDF4  7C 84 18 2E */	lwzx r4, r4, r3
 /* 8017FFF8 0017CDF8  80 64 00 40 */	lwz r3, 0x40(r4)
 /* 8017FFFC 0017CDFC  64 63 00 80 */	oris r3, r3, 0x80
 /* 80180000 0017CE00  90 64 00 40 */	stw r3, 0x40(r4)
 /* 80180004 0017CE04  80 9F 00 14 */	lwz r4, 0x14(r31)
-/* 80180008 0017CE08  80 6D 9E 28 */	lwz r3, lbl_803CC728-_SDA_BASE_(r13)
+/* 80180008 0017CE08  80 6D 9E 28 */	lwz r3, lbl__rpPTankAtomicDataOffset-_SDA_BASE_(r13)
 /* 8018000C 0017CE0C  7C 64 18 2E */	lwzx r3, r4, r3
 /* 80180010 0017CE10  93 C3 00 04 */	stw r30, 4(r3)
 /* 80180014 0017CE14  90 1F 00 10 */	stw r0, 0x10(r31)

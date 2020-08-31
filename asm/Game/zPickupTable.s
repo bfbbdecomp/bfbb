@@ -2,17 +2,17 @@
 
 .section .text  # 0x800A8DF0 - 0x800A8EC8
 
-.global func_800A8DF0
-func_800A8DF0:
+.global zPickupTableInit__Fv
+zPickupTableInit__Fv:
 /* 800A8DF0 000A5BF0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A8DF4 000A5BF4  7C 08 02 A6 */	mflr r0
-/* 800A8DF8 000A5BF8  3C 80 80 3C */	lis r4, lbl_803C0558@ha
-/* 800A8DFC 000A5BFC  3C 60 80 29 */	lis r3, lbl_8028FF40@ha
+/* 800A8DF8 000A5BF8  3C 80 80 3C */	lis r4, lbl_globals@ha
+/* 800A8DFC 000A5BFC  3C 60 80 29 */	lis r3, lbl_ptranstbl@ha
 /* 800A8E00 000A5C00  90 01 00 24 */	stw r0, 0x24(r1)
 /* 800A8E04 000A5C04  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800A8E08 000A5C08  3B E4 05 58 */	addi r31, r4, lbl_803C0558@l
+/* 800A8E08 000A5C08  3B E4 05 58 */	addi r31, r4, lbl_globals@l
 /* 800A8E0C 000A5C0C  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800A8E10 000A5C10  3B C3 FF 40 */	addi r30, r3, lbl_8028FF40@l
+/* 800A8E10 000A5C10  3B C3 FF 40 */	addi r30, r3, lbl_ptranstbl@l
 /* 800A8E14 000A5C14  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800A8E18 000A5C18  93 81 00 10 */	stw r28, 0x10(r1)
 /* 800A8E1C 000A5C1C  3B 80 00 00 */	li r28, 0
@@ -21,7 +21,7 @@ func_800A8DF0:
 /* 800A8E28 000A5C28  48 00 00 74 */	b lbl_800A8E9C
 lbl_800A8E2C:
 /* 800A8E2C 000A5C2C  80 7E 00 00 */	lwz r3, 0(r30)
-/* 800A8E30 000A5C30  4B FA 33 E5 */	bl func_8004C214
+/* 800A8E30 000A5C30  4B FA 33 E5 */	bl xStrHash__FPCc
 /* 800A8E34 000A5C34  90 7E 00 04 */	stw r3, 4(r30)
 /* 800A8E38 000A5C38  7F A4 EB 78 */	mr r4, r29
 /* 800A8E3C 000A5C3C  80 7F 1F B8 */	lwz r3, 0x1fb8(r31)
@@ -52,7 +52,7 @@ lbl_800A8E94:
 /* 800A8E94 000A5C94  3B DE 00 0C */	addi r30, r30, 0xc
 /* 800A8E98 000A5C98  3B 9C 00 01 */	addi r28, r28, 1
 lbl_800A8E9C:
-/* 800A8E9C 000A5C9C  80 0D 82 E0 */	lwz r0, lbl_803CABE0-_SDA_BASE_(r13)
+/* 800A8E9C 000A5C9C  80 0D 82 E0 */	lwz r0, lbl_ptranstbl_size-_SDA_BASE_(r13)
 /* 800A8EA0 000A5CA0  7C 1C 00 40 */	cmplw r28, r0
 /* 800A8EA4 000A5CA4  41 80 FF 88 */	blt lbl_800A8E2C
 /* 800A8EA8 000A5CA8  80 01 00 24 */	lwz r0, 0x24(r1)

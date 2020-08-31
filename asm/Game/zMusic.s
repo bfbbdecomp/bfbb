@@ -2,19 +2,19 @@
 
 .section .text  # 0x800A6E9C - 0x800A7CC4
 
-.global func_800A6E9C
-func_800A6E9C:
+.global zMusic.volume_reset__Fv
+zMusic.volume_reset__Fv:
 /* 800A6E9C 000A3C9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A6EA0 000A3CA0  7C 08 02 A6 */	mflr r0
-/* 800A6EA4 000A3CA4  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
+/* 800A6EA4 000A3CA4  3C 60 80 2F */	lis r3, lbl_volume@ha
 /* 800A6EA8 000A3CA8  38 80 00 00 */	li r4, 0
 /* 800A6EAC 000A3CAC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A6EB0 000A3CB0  38 C3 2B 38 */	addi r6, r3, lbl_802F2B38@l
+/* 800A6EB0 000A3CB0  38 C3 2B 38 */	addi r6, r3, lbl_volume@l
 /* 800A6EB4 000A3CB4  38 66 00 0C */	addi r3, r6, 0xc
 /* 800A6EB8 000A3CB8  38 A0 00 08 */	li r5, 8
-/* 800A6EBC 000A3CBC  C0 22 93 C8 */	lfs f1, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A6EBC 000A3CBC  C0 22 93 C8 */	lfs f1, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A6EC0 000A3CC0  D0 26 00 00 */	stfs f1, 0(r6)
-/* 800A6EC4 000A3CC4  C0 02 93 CC */	lfs f0, lbl_803CDD4C-_SDA2_BASE_(r2)
+/* 800A6EC4 000A3CC4  C0 02 93 CC */	lfs f0, lbl__669_2-_SDA2_BASE_(r2)
 /* 800A6EC8 000A3CC8  D0 06 00 04 */	stfs f0, 4(r6)
 /* 800A6ECC 000A3CCC  D0 26 00 08 */	stfs f1, 8(r6)
 /* 800A6ED0 000A3CD0  4B F5 C5 89 */	bl memset
@@ -23,17 +23,17 @@ func_800A6E9C:
 /* 800A6EDC 000A3CDC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A6EE0 000A3CE0  4E 80 00 20 */	blr 
 
-.global func_800A6EE4
-func_800A6EE4:
+.global zMusicRefreshVolume__Fv
+zMusicRefreshVolume__Fv:
 /* 800A6EE4 000A3CE4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A6EE8 000A3CE8  7C 08 02 A6 */	mflr r0
-/* 800A6EEC 000A3CEC  3C 80 80 2F */	lis r4, lbl_802F2B10@ha
-/* 800A6EF0 000A3CF0  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
+/* 800A6EEC 000A3CEC  3C 80 80 2F */	lis r4, lbl_sMusicTrack@ha
+/* 800A6EF0 000A3CF0  3C 60 80 2F */	lis r3, lbl_volume@ha
 /* 800A6EF4 000A3CF4  90 01 00 24 */	stw r0, 0x24(r1)
 /* 800A6EF8 000A3CF8  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800A6EFC 000A3CFC  3B E3 2B 38 */	addi r31, r3, lbl_802F2B38@l
+/* 800A6EFC 000A3CFC  3B E3 2B 38 */	addi r31, r3, lbl_volume@l
 /* 800A6F00 000A3D00  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800A6F04 000A3D04  3B C4 2B 10 */	addi r30, r4, lbl_802F2B10@l
+/* 800A6F04 000A3D04  3B C4 2B 10 */	addi r30, r4, lbl_sMusicTrack@l
 /* 800A6F08 000A3D08  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800A6F0C 000A3D0C  3B A0 00 00 */	li r29, 0
 lbl_800A6F10:
@@ -41,7 +41,7 @@ lbl_800A6F10:
 /* 800A6F14 000A3D14  28 03 00 00 */	cmplwi r3, 0
 /* 800A6F18 000A3D18  41 82 00 0C */	beq lbl_800A6F24
 /* 800A6F1C 000A3D1C  C0 3F 00 00 */	lfs f1, 0(r31)
-/* 800A6F20 000A3D20  4B FA 24 89 */	bl func_800493A8
+/* 800A6F20 000A3D20  4B FA 24 89 */	bl xSndSetVol__FUif
 lbl_800A6F24:
 /* 800A6F24 000A3D24  3B BD 00 01 */	addi r29, r29, 1
 /* 800A6F28 000A3D28  3B DE 00 14 */	addi r30, r30, 0x14
@@ -55,218 +55,218 @@ lbl_800A6F24:
 /* 800A6F48 000A3D48  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A6F4C 000A3D4C  4E 80 00 20 */	blr 
 
-.global func_800A6F50
-func_800A6F50:
+.global zMusicInit__Fv
+zMusicInit__Fv:
 /* 800A6F50 000A3D50  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A6F54 000A3D54  7C 08 02 A6 */	mflr r0
-/* 800A6F58 000A3D58  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
+/* 800A6F58 000A3D58  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
 /* 800A6F5C 000A3D5C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800A6F60 000A3D60  38 00 00 00 */	li r0, 0
-/* 800A6F64 000A3D64  38 83 2B 10 */	addi r4, r3, lbl_802F2B10@l
-/* 800A6F68 000A3D68  3C 60 80 26 */	lis r3, lbl_8025E588@ha
-/* 800A6F6C 000A3D6C  90 0D 90 58 */	stw r0, lbl_803CB958-_SDA_BASE_(r13)
-/* 800A6F70 000A3D70  38 63 E5 88 */	addi r3, r3, lbl_8025E588@l
+/* 800A6F64 000A3D64  38 83 2B 10 */	addi r4, r3, lbl_sMusicTrack@l
+/* 800A6F68 000A3D68  3C 60 80 26 */	lis r3, lbl__stringBase0_47@ha
+/* 800A6F6C 000A3D6C  90 0D 90 58 */	stw r0, lbl_sMusicPaused-_SDA_BASE_(r13)
+/* 800A6F70 000A3D70  38 63 E5 88 */	addi r3, r3, lbl__stringBase0_47@l
 /* 800A6F74 000A3D74  90 04 00 00 */	stw r0, 0(r4)
 /* 800A6F78 000A3D78  90 04 00 04 */	stw r0, 4(r4)
 /* 800A6F7C 000A3D7C  90 04 00 08 */	stw r0, 8(r4)
 /* 800A6F80 000A3D80  90 04 00 14 */	stw r0, 0x14(r4)
 /* 800A6F84 000A3D84  90 04 00 18 */	stw r0, 0x18(r4)
 /* 800A6F88 000A3D88  90 04 00 1C */	stw r0, 0x1c(r4)
-/* 800A6F8C 000A3D8C  4B FA 52 89 */	bl func_8004C214
-/* 800A6F90 000A3D90  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A6F94 000A3D94  94 65 2A 50 */	stwu r3, lbl_802F2A50@l(r5)
-/* 800A6F98 000A3D98  3C 80 80 26 */	lis r4, lbl_8025E588@ha
+/* 800A6F8C 000A3D8C  4B FA 52 89 */	bl xStrHash__FPCc
+/* 800A6F90 000A3D90  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A6F94 000A3D94  94 65 2A 50 */	stwu r3, lbl_sMusicSoundID@l(r5)
+/* 800A6F98 000A3D98  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
 /* 800A6F9C 000A3D9C  38 00 00 01 */	li r0, 1
-/* 800A6FA0 000A3DA0  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A6FA0 000A3DA0  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A6FA4 000A3DA4  90 05 00 04 */	stw r0, 4(r5)
 /* 800A6FA8 000A3DA8  38 63 00 0F */	addi r3, r3, 0xf
-/* 800A6FAC 000A3DAC  4B FA 52 69 */	bl func_8004C214
-/* 800A6FB0 000A3DB0  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A6FB4 000A3DB4  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A6FB8 000A3DB8  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A6FAC 000A3DAC  4B FA 52 69 */	bl xStrHash__FPCc
+/* 800A6FB0 000A3DB0  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A6FB4 000A3DB4  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A6FB8 000A3DB8  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A6FBC 000A3DBC  38 00 00 01 */	li r0, 1
 /* 800A6FC0 000A3DC0  90 65 00 08 */	stw r3, 8(r5)
-/* 800A6FC4 000A3DC4  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A6FC4 000A3DC4  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A6FC8 000A3DC8  38 63 00 1E */	addi r3, r3, 0x1e
 /* 800A6FCC 000A3DCC  90 05 00 0C */	stw r0, 0xc(r5)
-/* 800A6FD0 000A3DD0  4B FA 52 45 */	bl func_8004C214
-/* 800A6FD4 000A3DD4  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A6FD8 000A3DD8  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A6FDC 000A3DDC  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A6FD0 000A3DD0  4B FA 52 45 */	bl xStrHash__FPCc
+/* 800A6FD4 000A3DD4  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A6FD8 000A3DD8  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A6FDC 000A3DDC  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A6FE0 000A3DE0  38 00 00 01 */	li r0, 1
 /* 800A6FE4 000A3DE4  90 65 00 10 */	stw r3, 0x10(r5)
-/* 800A6FE8 000A3DE8  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A6FE8 000A3DE8  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A6FEC 000A3DEC  38 63 00 2D */	addi r3, r3, 0x2d
 /* 800A6FF0 000A3DF0  90 05 00 14 */	stw r0, 0x14(r5)
-/* 800A6FF4 000A3DF4  4B FA 52 21 */	bl func_8004C214
-/* 800A6FF8 000A3DF8  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A6FFC 000A3DFC  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7000 000A3E00  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A6FF4 000A3DF4  4B FA 52 21 */	bl xStrHash__FPCc
+/* 800A6FF8 000A3DF8  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A6FFC 000A3DFC  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7000 000A3E00  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7004 000A3E04  38 00 00 01 */	li r0, 1
 /* 800A7008 000A3E08  90 65 00 18 */	stw r3, 0x18(r5)
-/* 800A700C 000A3E0C  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A700C 000A3E0C  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7010 000A3E10  38 63 00 3C */	addi r3, r3, 0x3c
 /* 800A7014 000A3E14  90 05 00 1C */	stw r0, 0x1c(r5)
-/* 800A7018 000A3E18  4B FA 51 FD */	bl func_8004C214
-/* 800A701C 000A3E1C  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7020 000A3E20  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7024 000A3E24  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7018 000A3E18  4B FA 51 FD */	bl xStrHash__FPCc
+/* 800A701C 000A3E1C  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7020 000A3E20  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7024 000A3E24  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7028 000A3E28  38 00 00 01 */	li r0, 1
 /* 800A702C 000A3E2C  90 65 00 20 */	stw r3, 0x20(r5)
-/* 800A7030 000A3E30  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7030 000A3E30  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7034 000A3E34  38 63 00 4B */	addi r3, r3, 0x4b
 /* 800A7038 000A3E38  90 05 00 24 */	stw r0, 0x24(r5)
-/* 800A703C 000A3E3C  4B FA 51 D9 */	bl func_8004C214
-/* 800A7040 000A3E40  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7044 000A3E44  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7048 000A3E48  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A703C 000A3E3C  4B FA 51 D9 */	bl xStrHash__FPCc
+/* 800A7040 000A3E40  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7044 000A3E44  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7048 000A3E48  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A704C 000A3E4C  38 00 00 01 */	li r0, 1
 /* 800A7050 000A3E50  90 65 00 28 */	stw r3, 0x28(r5)
-/* 800A7054 000A3E54  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7054 000A3E54  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7058 000A3E58  38 63 00 5A */	addi r3, r3, 0x5a
 /* 800A705C 000A3E5C  90 05 00 2C */	stw r0, 0x2c(r5)
-/* 800A7060 000A3E60  4B FA 51 B5 */	bl func_8004C214
-/* 800A7064 000A3E64  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7068 000A3E68  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A706C 000A3E6C  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7060 000A3E60  4B FA 51 B5 */	bl xStrHash__FPCc
+/* 800A7064 000A3E64  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7068 000A3E68  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A706C 000A3E6C  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7070 000A3E70  38 00 00 01 */	li r0, 1
 /* 800A7074 000A3E74  90 65 00 30 */	stw r3, 0x30(r5)
-/* 800A7078 000A3E78  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7078 000A3E78  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A707C 000A3E7C  38 63 00 69 */	addi r3, r3, 0x69
 /* 800A7080 000A3E80  90 05 00 34 */	stw r0, 0x34(r5)
-/* 800A7084 000A3E84  4B FA 51 91 */	bl func_8004C214
-/* 800A7088 000A3E88  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A708C 000A3E8C  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7090 000A3E90  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7084 000A3E84  4B FA 51 91 */	bl xStrHash__FPCc
+/* 800A7088 000A3E88  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A708C 000A3E8C  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7090 000A3E90  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7094 000A3E94  38 00 00 01 */	li r0, 1
 /* 800A7098 000A3E98  90 65 00 38 */	stw r3, 0x38(r5)
-/* 800A709C 000A3E9C  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A709C 000A3E9C  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A70A0 000A3EA0  38 63 00 78 */	addi r3, r3, 0x78
 /* 800A70A4 000A3EA4  90 05 00 3C */	stw r0, 0x3c(r5)
-/* 800A70A8 000A3EA8  4B FA 51 6D */	bl func_8004C214
-/* 800A70AC 000A3EAC  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A70B0 000A3EB0  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A70B4 000A3EB4  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A70A8 000A3EA8  4B FA 51 6D */	bl xStrHash__FPCc
+/* 800A70AC 000A3EAC  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A70B0 000A3EB0  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A70B4 000A3EB4  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A70B8 000A3EB8  38 00 00 01 */	li r0, 1
 /* 800A70BC 000A3EBC  90 65 00 40 */	stw r3, 0x40(r5)
-/* 800A70C0 000A3EC0  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A70C0 000A3EC0  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A70C4 000A3EC4  38 63 00 87 */	addi r3, r3, 0x87
 /* 800A70C8 000A3EC8  90 05 00 44 */	stw r0, 0x44(r5)
-/* 800A70CC 000A3ECC  4B FA 51 49 */	bl func_8004C214
-/* 800A70D0 000A3ED0  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A70D4 000A3ED4  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A70D8 000A3ED8  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A70CC 000A3ECC  4B FA 51 49 */	bl xStrHash__FPCc
+/* 800A70D0 000A3ED0  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A70D4 000A3ED4  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A70D8 000A3ED8  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A70DC 000A3EDC  38 00 00 01 */	li r0, 1
 /* 800A70E0 000A3EE0  90 65 00 48 */	stw r3, 0x48(r5)
-/* 800A70E4 000A3EE4  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A70E4 000A3EE4  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A70E8 000A3EE8  38 63 00 96 */	addi r3, r3, 0x96
 /* 800A70EC 000A3EEC  90 05 00 4C */	stw r0, 0x4c(r5)
-/* 800A70F0 000A3EF0  4B FA 51 25 */	bl func_8004C214
-/* 800A70F4 000A3EF4  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A70F8 000A3EF8  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A70FC 000A3EFC  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A70F0 000A3EF0  4B FA 51 25 */	bl xStrHash__FPCc
+/* 800A70F4 000A3EF4  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A70F8 000A3EF8  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A70FC 000A3EFC  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7100 000A3F00  38 00 00 01 */	li r0, 1
 /* 800A7104 000A3F04  90 65 00 50 */	stw r3, 0x50(r5)
-/* 800A7108 000A3F08  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7108 000A3F08  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A710C 000A3F0C  38 63 00 A5 */	addi r3, r3, 0xa5
 /* 800A7110 000A3F10  90 05 00 54 */	stw r0, 0x54(r5)
-/* 800A7114 000A3F14  4B FA 51 01 */	bl func_8004C214
-/* 800A7118 000A3F18  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A711C 000A3F1C  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7120 000A3F20  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7114 000A3F14  4B FA 51 01 */	bl xStrHash__FPCc
+/* 800A7118 000A3F18  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A711C 000A3F1C  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7120 000A3F20  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7124 000A3F24  38 00 00 01 */	li r0, 1
 /* 800A7128 000A3F28  90 65 00 58 */	stw r3, 0x58(r5)
-/* 800A712C 000A3F2C  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A712C 000A3F2C  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7130 000A3F30  38 63 00 B4 */	addi r3, r3, 0xb4
 /* 800A7134 000A3F34  90 05 00 5C */	stw r0, 0x5c(r5)
-/* 800A7138 000A3F38  4B FA 50 DD */	bl func_8004C214
-/* 800A713C 000A3F3C  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7140 000A3F40  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7144 000A3F44  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7138 000A3F38  4B FA 50 DD */	bl xStrHash__FPCc
+/* 800A713C 000A3F3C  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7140 000A3F40  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7144 000A3F44  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7148 000A3F48  38 00 00 01 */	li r0, 1
 /* 800A714C 000A3F4C  90 65 00 60 */	stw r3, 0x60(r5)
-/* 800A7150 000A3F50  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7150 000A3F50  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7154 000A3F54  38 63 00 C3 */	addi r3, r3, 0xc3
 /* 800A7158 000A3F58  90 05 00 64 */	stw r0, 0x64(r5)
-/* 800A715C 000A3F5C  4B FA 50 B9 */	bl func_8004C214
-/* 800A7160 000A3F60  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7164 000A3F64  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7168 000A3F68  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A715C 000A3F5C  4B FA 50 B9 */	bl xStrHash__FPCc
+/* 800A7160 000A3F60  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7164 000A3F64  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7168 000A3F68  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A716C 000A3F6C  38 00 00 01 */	li r0, 1
 /* 800A7170 000A3F70  90 65 00 68 */	stw r3, 0x68(r5)
-/* 800A7174 000A3F74  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7174 000A3F74  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7178 000A3F78  38 63 00 D4 */	addi r3, r3, 0xd4
 /* 800A717C 000A3F7C  90 05 00 6C */	stw r0, 0x6c(r5)
-/* 800A7180 000A3F80  4B FA 50 95 */	bl func_8004C214
-/* 800A7184 000A3F84  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7188 000A3F88  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A718C 000A3F8C  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7180 000A3F80  4B FA 50 95 */	bl xStrHash__FPCc
+/* 800A7184 000A3F84  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7188 000A3F88  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A718C 000A3F8C  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7190 000A3F90  38 00 00 01 */	li r0, 1
 /* 800A7194 000A3F94  90 65 00 70 */	stw r3, 0x70(r5)
-/* 800A7198 000A3F98  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7198 000A3F98  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A719C 000A3F9C  38 63 00 E5 */	addi r3, r3, 0xe5
 /* 800A71A0 000A3FA0  90 05 00 74 */	stw r0, 0x74(r5)
-/* 800A71A4 000A3FA4  4B FA 50 71 */	bl func_8004C214
-/* 800A71A8 000A3FA8  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A71AC 000A3FAC  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A71B0 000A3FB0  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A71A4 000A3FA4  4B FA 50 71 */	bl xStrHash__FPCc
+/* 800A71A8 000A3FA8  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A71AC 000A3FAC  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A71B0 000A3FB0  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A71B4 000A3FB4  38 00 00 01 */	li r0, 1
 /* 800A71B8 000A3FB8  90 65 00 78 */	stw r3, 0x78(r5)
-/* 800A71BC 000A3FBC  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A71BC 000A3FBC  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A71C0 000A3FC0  38 63 00 F7 */	addi r3, r3, 0xf7
 /* 800A71C4 000A3FC4  90 05 00 7C */	stw r0, 0x7c(r5)
-/* 800A71C8 000A3FC8  4B FA 50 4D */	bl func_8004C214
-/* 800A71CC 000A3FCC  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A71D0 000A3FD0  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A71D4 000A3FD4  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A71C8 000A3FC8  4B FA 50 4D */	bl xStrHash__FPCc
+/* 800A71CC 000A3FCC  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A71D0 000A3FD0  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A71D4 000A3FD4  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A71D8 000A3FD8  38 00 00 01 */	li r0, 1
 /* 800A71DC 000A3FDC  90 65 00 80 */	stw r3, 0x80(r5)
-/* 800A71E0 000A3FE0  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A71E0 000A3FE0  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A71E4 000A3FE4  38 63 01 0A */	addi r3, r3, 0x10a
 /* 800A71E8 000A3FE8  90 05 00 84 */	stw r0, 0x84(r5)
-/* 800A71EC 000A3FEC  4B FA 50 29 */	bl func_8004C214
-/* 800A71F0 000A3FF0  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A71F4 000A3FF4  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A71F8 000A3FF8  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A71EC 000A3FEC  4B FA 50 29 */	bl xStrHash__FPCc
+/* 800A71F0 000A3FF0  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A71F4 000A3FF4  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A71F8 000A3FF8  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A71FC 000A3FFC  38 00 00 01 */	li r0, 1
 /* 800A7200 000A4000  90 65 00 88 */	stw r3, 0x88(r5)
-/* 800A7204 000A4004  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7204 000A4004  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7208 000A4008  38 63 01 1E */	addi r3, r3, 0x11e
 /* 800A720C 000A400C  90 05 00 8C */	stw r0, 0x8c(r5)
-/* 800A7210 000A4010  4B FA 50 05 */	bl func_8004C214
-/* 800A7214 000A4014  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7218 000A4018  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A721C 000A401C  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7210 000A4010  4B FA 50 05 */	bl xStrHash__FPCc
+/* 800A7214 000A4014  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7218 000A4018  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A721C 000A401C  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7220 000A4020  38 00 00 01 */	li r0, 1
 /* 800A7224 000A4024  90 65 00 90 */	stw r3, 0x90(r5)
-/* 800A7228 000A4028  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7228 000A4028  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A722C 000A402C  38 63 01 34 */	addi r3, r3, 0x134
 /* 800A7230 000A4030  90 05 00 94 */	stw r0, 0x94(r5)
-/* 800A7234 000A4034  4B FA 4F E1 */	bl func_8004C214
-/* 800A7238 000A4038  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A723C 000A403C  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7240 000A4040  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7234 000A4034  4B FA 4F E1 */	bl xStrHash__FPCc
+/* 800A7238 000A4038  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A723C 000A403C  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7240 000A4040  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7244 000A4044  38 00 00 01 */	li r0, 1
 /* 800A7248 000A4048  90 65 00 A8 */	stw r3, 0xa8(r5)
-/* 800A724C 000A404C  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A724C 000A404C  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7250 000A4050  38 63 01 47 */	addi r3, r3, 0x147
 /* 800A7254 000A4054  90 05 00 AC */	stw r0, 0xac(r5)
-/* 800A7258 000A4058  4B FA 4F BD */	bl func_8004C214
-/* 800A725C 000A405C  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7260 000A4060  3C 80 80 26 */	lis r4, lbl_8025E588@ha
-/* 800A7264 000A4064  38 A5 2A 50 */	addi r5, r5, lbl_802F2A50@l
+/* 800A7258 000A4058  4B FA 4F BD */	bl xStrHash__FPCc
+/* 800A725C 000A405C  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7260 000A4060  3C 80 80 26 */	lis r4, lbl__stringBase0_47@ha
+/* 800A7264 000A4064  38 A5 2A 50 */	addi r5, r5, lbl_sMusicSoundID@l
 /* 800A7268 000A4068  38 00 00 01 */	li r0, 1
 /* 800A726C 000A406C  90 65 00 B0 */	stw r3, 0xb0(r5)
-/* 800A7270 000A4070  38 64 E5 88 */	addi r3, r4, lbl_8025E588@l
+/* 800A7270 000A4070  38 64 E5 88 */	addi r3, r4, lbl__stringBase0_47@l
 /* 800A7274 000A4074  38 63 01 5A */	addi r3, r3, 0x15a
 /* 800A7278 000A4078  90 05 00 B4 */	stw r0, 0xb4(r5)
-/* 800A727C 000A407C  4B FA 4F 99 */	bl func_8004C214
-/* 800A7280 000A4080  3C 80 80 29 */	lis r4, lbl_8028FD80@ha
-/* 800A7284 000A4084  3C A0 80 2F */	lis r5, lbl_802F2A50@ha
-/* 800A7288 000A4088  38 84 FD 80 */	addi r4, r4, lbl_8028FD80@l
+/* 800A727C 000A407C  4B FA 4F 99 */	bl xStrHash__FPCc
+/* 800A7280 000A4080  3C 80 80 29 */	lis r4, lbl_sMusicInfo@ha
+/* 800A7284 000A4084  3C A0 80 2F */	lis r5, lbl_sMusicSoundID@ha
+/* 800A7288 000A4088  38 84 FD 80 */	addi r4, r4, lbl_sMusicInfo@l
 /* 800A728C 000A408C  38 00 00 00 */	li r0, 0
 /* 800A7290 000A4090  C0 E4 00 0C */	lfs f7, 0xc(r4)
-/* 800A7294 000A4094  38 C5 2A 50 */	addi r6, r5, lbl_802F2A50@l
+/* 800A7294 000A4094  38 C5 2A 50 */	addi r6, r5, lbl_sMusicSoundID@l
 /* 800A7298 000A4098  C0 C4 00 38 */	lfs f6, 0x38(r4)
 /* 800A729C 000A409C  38 A0 00 01 */	li r5, 1
 /* 800A72A0 000A40A0  C0 A4 00 64 */	lfs f5, 0x64(r4)
@@ -293,23 +293,23 @@ func_800A6F50:
 /* 800A72F4 000A40F4  90 04 01 20 */	stw r0, 0x120(r4)
 /* 800A72F8 000A40F8  D0 04 01 48 */	stfs f0, 0x148(r4)
 /* 800A72FC 000A40FC  90 04 01 4C */	stw r0, 0x14c(r4)
-/* 800A7300 000A4100  4B FF FB 9D */	bl func_800A6E9C
+/* 800A7300 000A4100  4B FF FB 9D */	bl zMusic.volume_reset__Fv
 /* 800A7304 000A4104  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800A7308 000A4108  7C 08 03 A6 */	mtlr r0
 /* 800A730C 000A410C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A7310 000A4110  4E 80 00 20 */	blr 
 
-.global func_800A7314
-func_800A7314:
+.global zMusic.getCurrLevelMusicEnum__Fv
+zMusic.getCurrLevelMusicEnum__Fv:
 /* 800A7314 000A4114  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A7318 000A4118  7C 08 02 A6 */	mflr r0
 /* 800A731C 000A411C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A7320 000A4120  48 00 DA A1 */	bl func_800B4DC0
+/* 800A7320 000A4120  48 00 DA A1 */	bl zSceneGetLevelIndex__Fv
 /* 800A7324 000A4124  28 03 00 0E */	cmplwi r3, 0xe
 /* 800A7328 000A4128  41 81 00 94 */	bgt lbl_800A73BC
-/* 800A732C 000A412C  3C 80 80 29 */	lis r4, lbl_8028FEE0@ha
+/* 800A732C 000A412C  3C 80 80 29 */	lis r4, lbl__760_3@ha
 /* 800A7330 000A4130  54 60 10 3A */	slwi r0, r3, 2
-/* 800A7334 000A4134  38 64 FE E0 */	addi r3, r4, lbl_8028FEE0@l
+/* 800A7334 000A4134  38 64 FE E0 */	addi r3, r4, lbl__760_3@l
 /* 800A7338 000A4138  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800A733C 000A413C  7C 09 03 A6 */	mtctr r0
 /* 800A7340 000A4140  4E 80 04 20 */	bctr 
@@ -344,7 +344,7 @@ func_800A7314:
 /* 800A73B4 000A41B4  38 60 00 0D */	li r3, 0xd
 /* 800A73B8 000A41B8  48 00 00 4C */	b lbl_800A7404
 lbl_800A73BC:
-/* 800A73BC 000A41BC  4B F8 98 AD */	bl func_80030C68
+/* 800A73BC 000A41BC  4B F8 98 AD */	bl xrand__Fv
 /* 800A73C0 000A41C0  3C 80 B2 16 */	lis r4, 0xB21642C9@ha
 /* 800A73C4 000A41C4  38 04 42 C9 */	addi r0, r4, 0xB21642C9@l
 /* 800A73C8 000A41C8  7C 00 18 16 */	mulhwu r0, r0, r3
@@ -370,17 +370,17 @@ lbl_800A7404:
 /* 800A740C 000A420C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A7410 000A4210  4E 80 00 20 */	blr 
 
-.global func_800A7414
-func_800A7414:
+.global zMusic.zMusicDo__Fi
+zMusic.zMusicDo__Fi:
 /* 800A7414 000A4214  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800A7418 000A4218  7C 08 02 A6 */	mflr r0
 /* 800A741C 000A421C  90 01 00 44 */	stw r0, 0x44(r1)
 /* 800A7420 000A4220  DB E1 00 30 */	stfd f31, 0x30(r1)
 /* 800A7424 000A4224  F3 E1 00 38 */	psq_st f31, 56(r1), 0, qr0
 /* 800A7428 000A4228  BF 01 00 10 */	stmw r24, 0x10(r1)
-/* 800A742C 000A422C  3C 80 80 3C */	lis r4, lbl_803C0558@ha
-/* 800A7430 000A4230  C3 E2 93 CC */	lfs f31, lbl_803CDD4C-_SDA2_BASE_(r2)
-/* 800A7434 000A4234  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
+/* 800A742C 000A422C  3C 80 80 3C */	lis r4, lbl_globals@ha
+/* 800A7430 000A4230  C3 E2 93 CC */	lfs f31, lbl__669_2-_SDA2_BASE_(r2)
+/* 800A7434 000A4234  38 84 05 58 */	addi r4, r4, lbl_globals@l
 /* 800A7438 000A4238  7C 79 1B 78 */	mr r25, r3
 /* 800A743C 000A423C  88 04 06 D0 */	lbz r0, 0x6d0(r4)
 /* 800A7440 000A4240  28 00 00 00 */	cmplwi r0, 0
@@ -388,11 +388,11 @@ func_800A7414:
 /* 800A7448 000A4248  38 60 00 00 */	li r3, 0
 /* 800A744C 000A424C  48 00 01 D8 */	b lbl_800A7624
 lbl_800A7450:
-/* 800A7450 000A4250  4B F8 98 19 */	bl func_80030C68
+/* 800A7450 000A4250  4B F8 98 19 */	bl xrand__Fv
 /* 800A7454 000A4254  3C 80 AA AB */	lis r4, 0xAAAAAAAB@ha
 /* 800A7458 000A4258  57 3B 10 3A */	slwi r27, r25, 2
 /* 800A745C 000A425C  38 04 AA AB */	addi r0, r4, 0xAAAAAAAB@l
-/* 800A7460 000A4260  3B 8D 90 5C */	addi r28, r13, lbl_803CB95C-_SDA_BASE_
+/* 800A7460 000A4260  3B 8D 90 5C */	addi r28, r13, lbl_sMusicQueueData-_SDA_BASE_
 /* 800A7464 000A4264  7C 80 18 16 */	mulhwu r4, r0, r3
 /* 800A7468 000A4268  7C BC D8 2E */	lwzx r5, r28, r27
 /* 800A746C 000A426C  80 05 00 20 */	lwz r0, 0x20(r5)
@@ -401,9 +401,9 @@ lbl_800A7450:
 /* 800A7478 000A4278  1C 84 00 18 */	mulli r4, r4, 0x18
 /* 800A747C 000A427C  7F 44 18 50 */	subf r26, r4, r3
 /* 800A7480 000A4280  41 81 00 48 */	bgt lbl_800A74C8
-/* 800A7484 000A4284  3C 60 80 29 */	lis r3, lbl_8028FF1C@ha
+/* 800A7484 000A4284  3C 60 80 29 */	lis r3, lbl__801@ha
 /* 800A7488 000A4288  54 00 10 3A */	slwi r0, r0, 2
-/* 800A748C 000A428C  38 63 FF 1C */	addi r3, r3, lbl_8028FF1C@l
+/* 800A748C 000A428C  38 63 FF 1C */	addi r3, r3, lbl__801@l
 /* 800A7490 000A4290  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800A7494 000A4294  7C 09 03 A6 */	mtctr r0
 /* 800A7498 000A4298  4E 80 04 20 */	bctr 
@@ -411,15 +411,15 @@ lbl_800A7450:
 /* 800A74A0 000A42A0  48 00 00 44 */	b lbl_800A74E4
 /* 800A74A4 000A42A4  83 45 00 24 */	lwz r26, 0x24(r5)
 /* 800A74A8 000A42A8  48 00 00 3C */	b lbl_800A74E4
-/* 800A74AC 000A42AC  4B FF FE 69 */	bl func_800A7314
+/* 800A74AC 000A42AC  4B FF FE 69 */	bl zMusic.getCurrLevelMusicEnum__Fv
 /* 800A74B0 000A42B0  7C 7A 1B 78 */	mr r26, r3
 /* 800A74B4 000A42B4  48 00 00 30 */	b lbl_800A74E4
-/* 800A74B8 000A42B8  83 4D 82 D0 */	lwz r26, lbl_803CABD0-_SDA_BASE_(r13)
+/* 800A74B8 000A42B8  83 4D 82 D0 */	lwz r26, lbl_sMusicLastEnum-_SDA_BASE_(r13)
 /* 800A74BC 000A42BC  48 00 00 28 */	b lbl_800A74E4
 /* 800A74C0 000A42C0  3B 40 00 01 */	li r26, 1
 /* 800A74C4 000A42C4  48 00 00 20 */	b lbl_800A74E4
 lbl_800A74C8:
-/* 800A74C8 000A42C8  4B F8 97 A1 */	bl func_80030C68
+/* 800A74C8 000A42C8  4B F8 97 A1 */	bl xrand__Fv
 /* 800A74CC 000A42CC  3C 80 AA AB */	lis r4, 0xAAAAAAAB@ha
 /* 800A74D0 000A42D0  38 04 AA AB */	addi r0, r4, 0xAAAAAAAB@l
 /* 800A74D4 000A42D4  7C 00 18 16 */	mulhwu r0, r0, r3
@@ -428,65 +428,65 @@ lbl_800A74C8:
 /* 800A74E0 000A42E0  7F 40 18 50 */	subf r26, r0, r3
 lbl_800A74E4:
 /* 800A74E4 000A42E4  1F D9 00 14 */	mulli r30, r25, 0x14
-/* 800A74E8 000A42E8  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
-/* 800A74EC 000A42EC  3B E3 2B 10 */	addi r31, r3, lbl_802F2B10@l
+/* 800A74E8 000A42E8  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
+/* 800A74EC 000A42EC  3B E3 2B 10 */	addi r31, r3, lbl_sMusicTrack@l
 /* 800A74F0 000A42F0  7C 7F F0 2E */	lwzx r3, r31, r30
 /* 800A74F4 000A42F4  28 03 00 00 */	cmplwi r3, 0
 /* 800A74F8 000A42F8  41 82 00 10 */	beq lbl_800A7508
-/* 800A74FC 000A42FC  4B FA 1D 05 */	bl func_80049200
+/* 800A74FC 000A42FC  4B FA 1D 05 */	bl xSndStop__FUi
 /* 800A7500 000A4300  38 00 00 00 */	li r0, 0
 /* 800A7504 000A4304  7C 1F F1 2E */	stwx r0, r31, r30
 lbl_800A7508:
-/* 800A7508 000A4308  3C 80 80 2F */	lis r4, lbl_802F2A50@ha
+/* 800A7508 000A4308  3C 80 80 2F */	lis r4, lbl_sMusicSoundID@ha
 /* 800A750C 000A430C  57 5D 18 38 */	slwi r29, r26, 3
-/* 800A7510 000A4310  38 04 2A 50 */	addi r0, r4, lbl_802F2A50@l
-/* 800A7514 000A4314  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
+/* 800A7510 000A4310  38 04 2A 50 */	addi r0, r4, lbl_sMusicSoundID@l
+/* 800A7514 000A4314  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
 /* 800A7518 000A4318  7C 80 EA 14 */	add r4, r0, r29
 /* 800A751C 000A431C  2C 1A 00 09 */	cmpwi r26, 9
-/* 800A7520 000A4320  38 03 2B 10 */	addi r0, r3, lbl_802F2B10@l
+/* 800A7520 000A4320  38 03 2B 10 */	addi r0, r3, lbl_sMusicTrack@l
 /* 800A7524 000A4324  80 64 00 04 */	lwz r3, 4(r4)
 /* 800A7528 000A4328  7C 80 F2 14 */	add r4, r0, r30
 /* 800A752C 000A432C  94 64 00 04 */	stwu r3, 4(r4)
-/* 800A7530 000A4330  C0 42 93 C8 */	lfs f2, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A7530 000A4330  C0 42 93 C8 */	lfs f2, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A7534 000A4334  40 82 00 2C */	bne lbl_800A7560
-/* 800A7538 000A4338  3C 60 80 3C */	lis r3, lbl_803C0558@ha
-/* 800A753C 000A433C  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 800A7538 000A4338  3C 60 80 3C */	lis r3, lbl_globals@ha
+/* 800A753C 000A433C  38 63 05 58 */	addi r3, r3, lbl_globals@l
 /* 800A7540 000A4340  80 63 1F C0 */	lwz r3, 0x1fc0(r3)
 /* 800A7544 000A4344  80 63 00 00 */	lwz r3, 0(r3)
 /* 800A7548 000A4348  3C 03 B4 BA */	addis r0, r3, 0xb4ba
 /* 800A754C 000A434C  28 00 30 34 */	cmplwi r0, 0x3034
 /* 800A7550 000A4350  40 82 00 10 */	bne lbl_800A7560
-/* 800A7554 000A4354  C0 02 93 D4 */	lfs f0, lbl_803CDD54-_SDA2_BASE_(r2)
-/* 800A7558 000A4358  C0 42 93 D0 */	lfs f2, lbl_803CDD50-_SDA2_BASE_(r2)
+/* 800A7554 000A4354  C0 02 93 D4 */	lfs f0, lbl__800-_SDA2_BASE_(r2)
+/* 800A7558 000A4358  C0 42 93 D0 */	lfs f2, lbl__799_1-_SDA2_BASE_(r2)
 /* 800A755C 000A435C  EF FF 00 32 */	fmuls f31, f31, f0
 lbl_800A7560:
 /* 800A7560 000A4360  80 C4 00 00 */	lwz r6, 0(r4)
 /* 800A7564 000A4364  3C 80 00 01 */	lis r4, 0x00008000@ha
-/* 800A7568 000A4368  3C 60 80 2F */	lis r3, lbl_802F2A50@ha
+/* 800A7568 000A4368  3C 60 80 2F */	lis r3, lbl_sMusicSoundID@ha
 /* 800A756C 000A436C  FC 20 F8 90 */	fmr f1, f31
 /* 800A7570 000A4370  7C A6 00 D0 */	neg r5, r6
 /* 800A7574 000A4374  38 04 80 00 */	addi r0, r4, 0x00008000@l
 /* 800A7578 000A4378  7C A4 33 78 */	or r4, r5, r6
-/* 800A757C 000A437C  3B 03 2A 50 */	addi r24, r3, lbl_802F2A50@l
+/* 800A757C 000A437C  3B 03 2A 50 */	addi r24, r3, lbl_sMusicSoundID@l
 /* 800A7580 000A4380  7C 83 FE 70 */	srawi r3, r4, 0x1f
 /* 800A7584 000A4384  7C 00 18 38 */	and r0, r0, r3
 /* 800A7588 000A4388  57 24 58 28 */	slwi r4, r25, 0xb
 /* 800A758C 000A438C  64 00 00 01 */	oris r0, r0, 1
 /* 800A7590 000A4390  7C 78 E8 2E */	lwzx r3, r24, r29
 /* 800A7594 000A4394  7C 80 03 78 */	or r0, r4, r0
-/* 800A7598 000A4398  C0 62 93 C8 */	lfs f3, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A7598 000A4398  C0 62 93 C8 */	lfs f3, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A759C 000A439C  64 05 00 02 */	oris r5, r0, 2
 /* 800A75A0 000A43A0  38 80 00 FF */	li r4, 0xff
 /* 800A75A4 000A43A4  38 C0 00 00 */	li r6, 0
 /* 800A75A8 000A43A8  38 E0 00 02 */	li r7, 2
-/* 800A75AC 000A43AC  4B FA 14 81 */	bl func_80048A2C
+/* 800A75AC 000A43AC  4B FA 14 81 */	bl xSndPlay__FUiffUiUiUi14sound_categoryf
 /* 800A75B0 000A43B0  7C 7F F1 2E */	stwx r3, r31, r30
 /* 800A75B4 000A43B4  7C 1F F0 2E */	lwzx r0, r31, r30
 /* 800A75B8 000A43B8  28 00 00 00 */	cmplwi r0, 0
 /* 800A75BC 000A43BC  41 82 00 64 */	beq lbl_800A7620
-/* 800A75C0 000A43C0  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
+/* 800A75C0 000A43C0  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
 /* 800A75C4 000A43C4  7C BC D8 2E */	lwzx r5, r28, r27
-/* 800A75C8 000A43C8  38 03 2B 10 */	addi r0, r3, lbl_802F2B10@l
+/* 800A75C8 000A43C8  38 03 2B 10 */	addi r0, r3, lbl_sMusicTrack@l
 /* 800A75CC 000A43CC  7C 98 E8 2E */	lwzx r4, r24, r29
 /* 800A75D0 000A43D0  7C 60 F2 14 */	add r3, r0, r30
 /* 800A75D4 000A43D4  28 05 00 00 */	cmplwi r5, 0
@@ -496,7 +496,7 @@ lbl_800A7560:
 /* 800A75E4 000A43E4  7C 7F F0 2E */	lwzx r3, r31, r30
 /* 800A75E8 000A43E8  38 00 00 00 */	li r0, 0
 /* 800A75EC 000A43EC  90 65 00 1C */	stw r3, 0x1c(r5)
-/* 800A75F0 000A43F0  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A75F0 000A43F0  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A75F4 000A43F4  7C 7C D8 2E */	lwzx r3, r28, r27
 /* 800A75F8 000A43F8  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800A75FC 000A43FC  7C 9C D8 2E */	lwzx r4, r28, r27
@@ -505,7 +505,7 @@ lbl_800A7560:
 /* 800A7608 000A4408  90 64 00 18 */	stw r3, 0x18(r4)
 /* 800A760C 000A440C  7C 1C D9 2E */	stwx r0, r28, r27
 lbl_800A7610:
-/* 800A7610 000A4410  38 8D 82 D0 */	addi r4, r13, lbl_803CABD0-_SDA_BASE_
+/* 800A7610 000A4410  38 8D 82 D0 */	addi r4, r13, lbl_sMusicLastEnum-_SDA_BASE_
 /* 800A7614 000A4414  38 60 00 01 */	li r3, 1
 /* 800A7618 000A4418  7F 44 D9 2E */	stwx r26, r4, r27
 /* 800A761C 000A441C  48 00 00 08 */	b lbl_800A7624
@@ -520,14 +520,14 @@ lbl_800A7624:
 /* 800A7638 000A4438  38 21 00 40 */	addi r1, r1, 0x40
 /* 800A763C 000A443C  4E 80 00 20 */	blr 
 
-.global func_800A7640
-func_800A7640:
-/* 800A7640 000A4440  80 0D 90 58 */	lwz r0, lbl_803CB958-_SDA_BASE_(r13)
+.global zMusicNotify__Fi
+zMusicNotify__Fi:
+/* 800A7640 000A4440  80 0D 90 58 */	lwz r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 /* 800A7644 000A4444  28 00 00 00 */	cmplwi r0, 0
 /* 800A7648 000A4448  4C 82 00 20 */	bnelr 
 /* 800A764C 000A444C  1C 83 00 2C */	mulli r4, r3, 0x2c
-/* 800A7650 000A4450  3C 60 80 29 */	lis r3, lbl_8028FD80@ha
-/* 800A7654 000A4454  38 03 FD 80 */	addi r0, r3, lbl_8028FD80@l
+/* 800A7650 000A4450  3C 60 80 29 */	lis r3, lbl_sMusicInfo@ha
+/* 800A7654 000A4454  38 03 FD 80 */	addi r0, r3, lbl_sMusicInfo@l
 /* 800A7658 000A4458  7C A0 22 14 */	add r5, r0, r4
 /* 800A765C 000A445C  80 65 00 08 */	lwz r3, 8(r5)
 /* 800A7660 000A4460  28 03 00 00 */	cmplwi r3, 0
@@ -541,27 +541,27 @@ lbl_800A7674:
 /* 800A767C 000A447C  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A7680 000A4480  4D 81 00 20 */	bgtlr 
 /* 800A7684 000A4484  80 05 00 00 */	lwz r0, 0(r5)
-/* 800A7688 000A4488  38 8D 82 D8 */	addi r4, r13, lbl_803CABD8-_SDA_BASE_
+/* 800A7688 000A4488  38 8D 82 D8 */	addi r4, r13, lbl_sMusicTimer-_SDA_BASE_
 /* 800A768C 000A448C  C0 05 00 10 */	lfs f0, 0x10(r5)
-/* 800A7690 000A4490  38 6D 90 5C */	addi r3, r13, lbl_803CB95C-_SDA_BASE_
+/* 800A7690 000A4490  38 6D 90 5C */	addi r3, r13, lbl_sMusicQueueData-_SDA_BASE_
 /* 800A7694 000A4494  54 00 10 3A */	slwi r0, r0, 2
 /* 800A7698 000A4498  7C A3 01 2E */	stwx r5, r3, r0
 /* 800A769C 000A449C  7C 04 05 2E */	stfsx f0, r4, r0
 /* 800A76A0 000A44A0  7C 63 00 2E */	lwzx r3, r3, r0
-/* 800A76A4 000A44A4  80 0D 8F A8 */	lwz r0, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 800A76A4 000A44A4  80 0D 8F A8 */	lwz r0, lbl_gGameMode-_SDA_BASE_(r13)
 /* 800A76A8 000A44A8  20 00 00 0C */	subfic r0, r0, 0xc
 /* 800A76AC 000A44AC  7C 00 00 34 */	cntlzw r0, r0
 /* 800A76B0 000A44B0  54 00 DE 3E */	rlwinm r0, r0, 0x1b, 0x18, 0x1f
 /* 800A76B4 000A44B4  90 03 00 28 */	stw r0, 0x28(r3)
 /* 800A76B8 000A44B8  4E 80 00 20 */	blr 
 
-.global func_800A76BC
-func_800A76BC:
+.global zMusicNotifyEvent__FPCfP5xBase
+zMusicNotifyEvent__FPCfP5xBase:
 /* 800A76BC 000A44BC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A76C0 000A44C0  80 0D 90 58 */	lwz r0, lbl_803CB958-_SDA_BASE_(r13)
+/* 800A76C0 000A44C0  80 0D 90 58 */	lwz r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 /* 800A76C4 000A44C4  28 00 00 00 */	cmplwi r0, 0
 /* 800A76C8 000A44C8  40 82 00 E4 */	bne lbl_800A77AC
-/* 800A76CC 000A44CC  C0 22 93 C8 */	lfs f1, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A76CC 000A44CC  C0 22 93 C8 */	lfs f1, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A76D0 000A44D0  C0 03 00 04 */	lfs f0, 4(r3)
 /* 800A76D4 000A44D4  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 800A76D8 000A44D8  40 82 00 0C */	bne lbl_800A76E4
@@ -572,10 +572,10 @@ lbl_800A76E4:
 lbl_800A76E8:
 /* 800A76E8 000A44E8  C0 03 00 00 */	lfs f0, 0(r3)
 /* 800A76EC 000A44EC  1C C0 00 2C */	mulli r6, r0, 0x2c
-/* 800A76F0 000A44F0  3C A0 80 29 */	lis r5, lbl_8028FD80@ha
+/* 800A76F0 000A44F0  3C A0 80 29 */	lis r5, lbl_sMusicInfo@ha
 /* 800A76F4 000A44F4  FC 00 00 1E */	fctiwz f0, f0
-/* 800A76F8 000A44F8  38 8D 82 D0 */	addi r4, r13, lbl_803CABD0-_SDA_BASE_
-/* 800A76FC 000A44FC  38 05 FD 80 */	addi r0, r5, lbl_8028FD80@l
+/* 800A76F8 000A44F8  38 8D 82 D0 */	addi r4, r13, lbl_sMusicLastEnum-_SDA_BASE_
+/* 800A76FC 000A44FC  38 05 FD 80 */	addi r0, r5, lbl_sMusicInfo@l
 /* 800A7700 000A4500  7C E0 32 14 */	add r7, r0, r6
 /* 800A7704 000A4504  80 07 00 00 */	lwz r0, 0(r7)
 /* 800A7708 000A4508  D8 01 00 08 */	stfd f0, 8(r1)
@@ -584,7 +584,7 @@ lbl_800A76E8:
 /* 800A7714 000A4514  7C 04 30 2E */	lwzx r0, r4, r6
 /* 800A7718 000A4518  7C 05 00 00 */	cmpw r5, r0
 /* 800A771C 000A451C  41 82 00 90 */	beq lbl_800A77AC
-/* 800A7720 000A4520  38 8D 90 5C */	addi r4, r13, lbl_803CB95C-_SDA_BASE_
+/* 800A7720 000A4520  38 8D 90 5C */	addi r4, r13, lbl_sMusicQueueData-_SDA_BASE_
 /* 800A7724 000A4524  7C 04 30 2E */	lwzx r0, r4, r6
 /* 800A7728 000A4528  28 00 00 00 */	cmplwi r0, 0
 /* 800A772C 000A452C  40 82 00 80 */	bne lbl_800A77AC
@@ -600,16 +600,16 @@ lbl_800A7748:
 /* 800A7750 000A4550  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A7754 000A4554  41 81 00 58 */	bgt lbl_800A77AC
 /* 800A7758 000A4558  80 07 00 00 */	lwz r0, 0(r7)
-/* 800A775C 000A455C  38 8D 82 D8 */	addi r4, r13, lbl_803CABD8-_SDA_BASE_
+/* 800A775C 000A455C  38 8D 82 D8 */	addi r4, r13, lbl_sMusicTimer-_SDA_BASE_
 /* 800A7760 000A4560  C0 27 00 10 */	lfs f1, 0x10(r7)
-/* 800A7764 000A4564  38 AD 90 5C */	addi r5, r13, lbl_803CB95C-_SDA_BASE_
+/* 800A7764 000A4564  38 AD 90 5C */	addi r5, r13, lbl_sMusicQueueData-_SDA_BASE_
 /* 800A7768 000A4568  54 00 10 3A */	slwi r0, r0, 2
 /* 800A776C 000A456C  C0 03 00 00 */	lfs f0, 0(r3)
 /* 800A7770 000A4570  7C E5 01 2E */	stwx r7, r5, r0
 /* 800A7774 000A4574  FC 00 00 1E */	fctiwz f0, f0
 /* 800A7778 000A4578  7C 24 35 2E */	stfsx f1, r4, r6
 /* 800A777C 000A457C  7C 65 00 2E */	lwzx r3, r5, r0
-/* 800A7780 000A4580  80 0D 8F A8 */	lwz r0, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 800A7780 000A4580  80 0D 8F A8 */	lwz r0, lbl_gGameMode-_SDA_BASE_(r13)
 /* 800A7784 000A4584  D8 01 00 08 */	stfd f0, 8(r1)
 /* 800A7788 000A4588  20 00 00 0C */	subfic r0, r0, 0xc
 /* 800A778C 000A458C  7C 00 00 34 */	cntlzw r0, r0
@@ -624,8 +624,8 @@ lbl_800A77AC:
 /* 800A77AC 000A45AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A77B0 000A45B0  4E 80 00 20 */	blr 
 
-.global func_800A77B4
-func_800A77B4:
+.global zMusicUpdate__Ff
+zMusicUpdate__Ff:
 /* 800A77B4 000A45B4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800A77B8 000A45B8  7C 08 02 A6 */	mflr r0
 /* 800A77BC 000A45BC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -634,16 +634,16 @@ func_800A77B4:
 /* 800A77C8 000A45C8  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 800A77CC 000A45CC  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 800A77D0 000A45D0  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800A77D4 000A45D4  80 0D 90 58 */	lwz r0, lbl_803CB958-_SDA_BASE_(r13)
+/* 800A77D4 000A45D4  80 0D 90 58 */	lwz r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 /* 800A77D8 000A45D8  FF E0 08 90 */	fmr f31, f1
 /* 800A77DC 000A45DC  28 00 00 00 */	cmplwi r0, 0
 /* 800A77E0 000A45E0  40 82 01 20 */	bne lbl_800A7900
-/* 800A77E4 000A45E4  3C 60 80 29 */	lis r3, lbl_8028FD80@ha
+/* 800A77E4 000A45E4  3C 60 80 29 */	lis r3, lbl_sMusicInfo@ha
 /* 800A77E8 000A45E8  3B A0 00 00 */	li r29, 0
-/* 800A77EC 000A45EC  38 63 FD 80 */	addi r3, r3, lbl_8028FD80@l
-/* 800A77F0 000A45F0  3B ED 82 D8 */	addi r31, r13, lbl_803CABD8-_SDA_BASE_
+/* 800A77EC 000A45EC  38 63 FD 80 */	addi r3, r3, lbl_sMusicInfo@l
+/* 800A77F0 000A45F0  3B ED 82 D8 */	addi r31, r13, lbl_sMusicTimer-_SDA_BASE_
 /* 800A77F4 000A45F4  C0 03 00 14 */	lfs f0, 0x14(r3)
-/* 800A77F8 000A45F8  3B CD 90 5C */	addi r30, r13, lbl_803CB95C-_SDA_BASE_
+/* 800A77F8 000A45F8  3B CD 90 5C */	addi r30, r13, lbl_sMusicQueueData-_SDA_BASE_
 /* 800A77FC 000A45FC  C0 43 00 40 */	lfs f2, 0x40(r3)
 /* 800A7800 000A4600  C0 23 00 6C */	lfs f1, 0x6c(r3)
 /* 800A7804 000A4604  EC E0 F8 2A */	fadds f7, f0, f31
@@ -669,14 +669,14 @@ func_800A77B4:
 /* 800A7854 000A4654  D0 03 01 48 */	stfs f0, 0x148(r3)
 lbl_800A7858:
 /* 800A7858 000A4658  C0 3F 00 00 */	lfs f1, 0(r31)
-/* 800A785C 000A465C  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A785C 000A465C  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A7860 000A4660  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 800A7864 000A4664  40 82 00 10 */	bne lbl_800A7874
 /* 800A7868 000A4668  80 1E 00 00 */	lwz r0, 0(r30)
 /* 800A786C 000A466C  28 00 00 00 */	cmplwi r0, 0
 /* 800A7870 000A4670  41 82 00 74 */	beq lbl_800A78E4
 lbl_800A7874:
-/* 800A7874 000A4674  80 0D 8F A8 */	lwz r0, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 800A7874 000A4674  80 0D 8F A8 */	lwz r0, lbl_gGameMode-_SDA_BASE_(r13)
 /* 800A7878 000A4678  80 7E 00 00 */	lwz r3, 0(r30)
 /* 800A787C 000A467C  20 00 00 0C */	subfic r0, r0, 0xc
 /* 800A7880 000A4680  7C 04 00 34 */	cntlzw r4, r0
@@ -684,19 +684,19 @@ lbl_800A7874:
 /* 800A7888 000A4688  54 83 DE 3E */	rlwinm r3, r4, 0x1b, 0x18, 0x1f
 /* 800A788C 000A468C  7C 03 00 00 */	cmpw r3, r0
 /* 800A7890 000A4690  40 82 00 54 */	bne lbl_800A78E4
-/* 800A7894 000A4694  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A7894 000A4694  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A7898 000A4698  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A789C 000A469C  40 81 00 24 */	ble lbl_800A78C0
 /* 800A78A0 000A46A0  C0 1F 00 00 */	lfs f0, 0(r31)
 /* 800A78A4 000A46A4  EC 00 F8 28 */	fsubs f0, f0, f31
 /* 800A78A8 000A46A8  D0 1F 00 00 */	stfs f0, 0(r31)
 /* 800A78AC 000A46AC  C0 3F 00 00 */	lfs f1, 0(r31)
-/* 800A78B0 000A46B0  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A78B0 000A46B0  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A78B4 000A46B4  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A78B8 000A46B8  40 80 00 08 */	bge lbl_800A78C0
 /* 800A78BC 000A46BC  D0 1F 00 00 */	stfs f0, 0(r31)
 lbl_800A78C0:
-/* 800A78C0 000A46C0  C0 22 93 C8 */	lfs f1, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A78C0 000A46C0  C0 22 93 C8 */	lfs f1, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A78C4 000A46C4  C0 1F 00 00 */	lfs f0, 0(r31)
 /* 800A78C8 000A46C8  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 800A78CC 000A46CC  40 82 00 18 */	bne lbl_800A78E4
@@ -704,7 +704,7 @@ lbl_800A78C0:
 /* 800A78D4 000A46D4  28 00 00 00 */	cmplwi r0, 0
 /* 800A78D8 000A46D8  41 82 00 0C */	beq lbl_800A78E4
 /* 800A78DC 000A46DC  7F A3 EB 78 */	mr r3, r29
-/* 800A78E0 000A46E0  4B FF FB 35 */	bl func_800A7414
+/* 800A78E0 000A46E0  4B FF FB 35 */	bl zMusic.zMusicDo__Fi
 lbl_800A78E4:
 /* 800A78E4 000A46E4  3B BD 00 01 */	addi r29, r29, 1
 /* 800A78E8 000A46E8  3B DE 00 04 */	addi r30, r30, 4
@@ -712,7 +712,7 @@ lbl_800A78E4:
 /* 800A78F0 000A46F0  3B FF 00 04 */	addi r31, r31, 4
 /* 800A78F4 000A46F4  41 80 FF 64 */	blt lbl_800A7858
 /* 800A78F8 000A46F8  FC 20 F8 90 */	fmr f1, f31
-/* 800A78FC 000A46FC  48 00 00 29 */	bl func_800A7924
+/* 800A78FC 000A46FC  48 00 00 29 */	bl zMusic.volume_update__Ff
 lbl_800A7900:
 /* 800A7900 000A4700  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 800A7904 000A4704  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -724,8 +724,8 @@ lbl_800A7900:
 /* 800A791C 000A471C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7920 000A4720  4E 80 00 20 */	blr 
 
-.global func_800A7924
-func_800A7924:
+.global zMusic.volume_update__Ff
+zMusic.volume_update__Ff:
 /* 800A7924 000A4724  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800A7928 000A4728  7C 08 02 A6 */	mflr r0
 /* 800A792C 000A472C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -734,15 +734,15 @@ func_800A7924:
 /* 800A7938 000A4738  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 800A793C 000A473C  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 800A7940 000A4740  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800A7944 000A4744  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A7948 000A4748  C0 02 93 D8 */	lfs f0, lbl_803CDD58-_SDA2_BASE_(r2)
-/* 800A794C 000A474C  38 83 2B 38 */	addi r4, r3, lbl_802F2B38@l
+/* 800A7944 000A4744  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A7948 000A4748  C0 02 93 D8 */	lfs f0, lbl__899-_SDA2_BASE_(r2)
+/* 800A794C 000A474C  38 83 2B 38 */	addi r4, r3, lbl_volume@l
 /* 800A7950 000A4750  C0 44 00 08 */	lfs f2, 8(r4)
 /* 800A7954 000A4754  C3 E4 00 00 */	lfs f31, 0(r4)
 /* 800A7958 000A4758  FC 02 00 40 */	fcmpo cr0, f2, f0
 /* 800A795C 000A475C  4C 41 13 82 */	cror 2, 1, 2
 /* 800A7960 000A4760  40 82 00 20 */	bne lbl_800A7980
-/* 800A7964 000A4764  C0 02 93 DC */	lfs f0, lbl_803CDD5C-_SDA2_BASE_(r2)
+/* 800A7964 000A4764  C0 02 93 DC */	lfs f0, lbl__900-_SDA2_BASE_(r2)
 /* 800A7968 000A4768  FC 02 00 40 */	fcmpo cr0, f2, f0
 /* 800A796C 000A476C  4C 40 13 82 */	cror 2, 0, 2
 /* 800A7970 000A4770  40 82 00 10 */	bne lbl_800A7980
@@ -750,13 +750,13 @@ func_800A7924:
 /* 800A7978 000A4778  D0 04 00 00 */	stfs f0, 0(r4)
 /* 800A797C 000A477C  48 00 00 14 */	b lbl_800A7990
 lbl_800A7980:
-/* 800A7980 000A4780  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A7984 000A4784  C4 03 2B 38 */	lfsu f0, lbl_802F2B38@l(r3)
+/* 800A7980 000A4780  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A7984 000A4784  C4 03 2B 38 */	lfsu f0, lbl_volume@l(r3)
 /* 800A7988 000A4788  EC 02 00 7A */	fmadds f0, f2, f1, f0
 /* 800A798C 000A478C  D0 03 00 00 */	stfs f0, 0(r3)
 lbl_800A7990:
 /* 800A7990 000A4790  C0 44 00 08 */	lfs f2, 8(r4)
-/* 800A7994 000A4794  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A7994 000A4794  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A7998 000A4798  FC 02 00 40 */	fcmpo cr0, f2, f0
 /* 800A799C 000A479C  40 80 00 0C */	bge lbl_800A79A8
 /* 800A79A0 000A47A0  38 00 00 01 */	li r0, 1
@@ -766,41 +766,41 @@ lbl_800A79A8:
 lbl_800A79AC:
 /* 800A79AC 000A47AC  2C 00 00 00 */	cmpwi r0, 0
 /* 800A79B0 000A47B0  41 82 00 1C */	beq lbl_800A79CC
-/* 800A79B4 000A47B4  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A79B8 000A47B8  C4 23 2B 38 */	lfsu f1, lbl_802F2B38@l(r3)
+/* 800A79B4 000A47B4  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A79B8 000A47B8  C4 23 2B 38 */	lfsu f1, lbl_volume@l(r3)
 /* 800A79BC 000A47BC  C0 03 00 04 */	lfs f0, 4(r3)
 /* 800A79C0 000A47C0  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A79C4 000A47C4  4C 40 13 82 */	cror 2, 0, 2
 /* 800A79C8 000A47C8  41 82 00 28 */	beq lbl_800A79F0
 lbl_800A79CC:
-/* 800A79CC 000A47CC  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A79CC 000A47CC  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A79D0 000A47D0  FC 02 00 40 */	fcmpo cr0, f2, f0
 /* 800A79D4 000A47D4  41 80 00 34 */	blt lbl_800A7A08
-/* 800A79D8 000A47D8  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A79DC 000A47DC  C4 23 2B 38 */	lfsu f1, lbl_802F2B38@l(r3)
+/* 800A79D8 000A47D8  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A79DC 000A47DC  C4 23 2B 38 */	lfsu f1, lbl_volume@l(r3)
 /* 800A79E0 000A47E0  C0 03 00 04 */	lfs f0, 4(r3)
 /* 800A79E4 000A47E4  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A79E8 000A47E8  4C 41 13 82 */	cror 2, 1, 2
 /* 800A79EC 000A47EC  40 82 00 1C */	bne lbl_800A7A08
 lbl_800A79F0:
-/* 800A79F0 000A47F0  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A79F4 000A47F4  38 63 2B 38 */	addi r3, r3, lbl_802F2B38@l
+/* 800A79F0 000A47F0  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A79F4 000A47F4  38 63 2B 38 */	addi r3, r3, lbl_volume@l
 /* 800A79F8 000A47F8  C0 03 00 04 */	lfs f0, 4(r3)
 /* 800A79FC 000A47FC  D0 03 00 00 */	stfs f0, 0(r3)
-/* 800A7A00 000A4800  C0 02 93 C8 */	lfs f0, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A7A00 000A4800  C0 02 93 C8 */	lfs f0, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A7A04 000A4804  D0 04 00 08 */	stfs f0, 8(r4)
 lbl_800A7A08:
-/* 800A7A08 000A4808  3C 80 80 2F */	lis r4, lbl_802F2B10@ha
-/* 800A7A0C 000A480C  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A7A10 000A4810  3B E4 2B 10 */	addi r31, r4, lbl_802F2B10@l
+/* 800A7A08 000A4808  3C 80 80 2F */	lis r4, lbl_sMusicTrack@ha
+/* 800A7A0C 000A480C  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A7A10 000A4810  3B E4 2B 10 */	addi r31, r4, lbl_sMusicTrack@l
 /* 800A7A14 000A4814  3B A0 00 00 */	li r29, 0
-/* 800A7A18 000A4818  3B C3 2B 38 */	addi r30, r3, lbl_802F2B38@l
+/* 800A7A18 000A4818  3B C3 2B 38 */	addi r30, r3, lbl_volume@l
 lbl_800A7A1C:
 /* 800A7A1C 000A481C  80 7F 00 00 */	lwz r3, 0(r31)
 /* 800A7A20 000A4820  28 03 00 00 */	cmplwi r3, 0
 /* 800A7A24 000A4824  41 82 00 44 */	beq lbl_800A7A68
-/* 800A7A28 000A4828  3C 80 80 2F */	lis r4, lbl_802F2B38@ha
-/* 800A7A2C 000A482C  C0 44 2B 38 */	lfs f2, lbl_802F2B38@l(r4)
+/* 800A7A28 000A4828  3C 80 80 2F */	lis r4, lbl_volume@ha
+/* 800A7A2C 000A482C  C0 44 2B 38 */	lfs f2, lbl_volume@l(r4)
 /* 800A7A30 000A4830  FC 1F 10 00 */	fcmpu cr0, f31, f2
 /* 800A7A34 000A4834  40 82 00 10 */	bne lbl_800A7A44
 /* 800A7A38 000A4838  80 1E 00 0C */	lwz r0, 0xc(r30)
@@ -808,13 +808,13 @@ lbl_800A7A1C:
 /* 800A7A40 000A4840  41 82 00 28 */	beq lbl_800A7A68
 lbl_800A7A44:
 /* 800A7A44 000A4844  C0 3F 00 10 */	lfs f1, 0x10(r31)
-/* 800A7A48 000A4848  C0 02 93 CC */	lfs f0, lbl_803CDD4C-_SDA2_BASE_(r2)
+/* 800A7A48 000A4848  C0 02 93 CC */	lfs f0, lbl__669_2-_SDA2_BASE_(r2)
 /* 800A7A4C 000A484C  EC 22 00 72 */	fmuls f1, f2, f1
 /* 800A7A50 000A4850  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800A7A54 000A4854  40 81 00 08 */	ble lbl_800A7A5C
 /* 800A7A58 000A4858  FC 20 00 90 */	fmr f1, f0
 lbl_800A7A5C:
-/* 800A7A5C 000A485C  4B FA 19 4D */	bl func_800493A8
+/* 800A7A5C 000A485C  4B FA 19 4D */	bl xSndSetVol__FUif
 /* 800A7A60 000A4860  80 1F 00 00 */	lwz r0, 0(r31)
 /* 800A7A64 000A4864  90 1E 00 0C */	stw r0, 0xc(r30)
 lbl_800A7A68:
@@ -833,23 +833,23 @@ lbl_800A7A68:
 /* 800A7A98 000A4898  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7A9C 000A489C  4E 80 00 20 */	blr 
 
-.global func_800A7AA0
-func_800A7AA0:
+.global zMusicKill__Fv
+zMusicKill__Fv:
 /* 800A7AA0 000A48A0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A7AA4 000A48A4  7C 08 02 A6 */	mflr r0
-/* 800A7AA8 000A48A8  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
+/* 800A7AA8 000A48A8  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
 /* 800A7AAC 000A48AC  90 01 00 24 */	stw r0, 0x24(r1)
 /* 800A7AB0 000A48B0  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 800A7AB4 000A48B4  3B E0 00 00 */	li r31, 0
 /* 800A7AB8 000A48B8  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800A7ABC 000A48BC  3B C3 2B 10 */	addi r30, r3, lbl_802F2B10@l
+/* 800A7ABC 000A48BC  3B C3 2B 10 */	addi r30, r3, lbl_sMusicTrack@l
 /* 800A7AC0 000A48C0  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800A7AC4 000A48C4  3B A0 00 00 */	li r29, 0
 lbl_800A7AC8:
 /* 800A7AC8 000A48C8  80 7E 00 00 */	lwz r3, 0(r30)
 /* 800A7ACC 000A48CC  28 03 00 00 */	cmplwi r3, 0
 /* 800A7AD0 000A48D0  41 82 00 14 */	beq lbl_800A7AE4
-/* 800A7AD4 000A48D4  4B FA 17 2D */	bl func_80049200
+/* 800A7AD4 000A48D4  4B FA 17 2D */	bl xSndStop__FUi
 /* 800A7AD8 000A48D8  93 FE 00 00 */	stw r31, 0(r30)
 /* 800A7ADC 000A48DC  93 FE 00 04 */	stw r31, 4(r30)
 /* 800A7AE0 000A48E0  93 FE 00 08 */	stw r31, 8(r30)
@@ -866,31 +866,31 @@ lbl_800A7AE4:
 /* 800A7B08 000A4908  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A7B0C 000A490C  4E 80 00 20 */	blr 
 
-.global func_800A7B10
-func_800A7B10:
+.global zMusicPause__Fv
+zMusicPause__Fv:
 /* 800A7B10 000A4910  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A7B14 000A4914  7C 08 02 A6 */	mflr r0
 /* 800A7B18 000A4918  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800A7B1C 000A491C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800A7B20 000A4920  93 C1 00 08 */	stw r30, 8(r1)
-/* 800A7B24 000A4924  80 0D 90 58 */	lwz r0, lbl_803CB958-_SDA_BASE_(r13)
+/* 800A7B24 000A4924  80 0D 90 58 */	lwz r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 /* 800A7B28 000A4928  28 00 00 00 */	cmplwi r0, 0
 /* 800A7B2C 000A492C  40 82 00 38 */	bne lbl_800A7B64
-/* 800A7B30 000A4930  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
+/* 800A7B30 000A4930  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
 /* 800A7B34 000A4934  3B C0 00 00 */	li r30, 0
-/* 800A7B38 000A4938  3B E3 2B 10 */	addi r31, r3, lbl_802F2B10@l
+/* 800A7B38 000A4938  3B E3 2B 10 */	addi r31, r3, lbl_sMusicTrack@l
 lbl_800A7B3C:
 /* 800A7B3C 000A493C  80 7F 00 00 */	lwz r3, 0(r31)
 /* 800A7B40 000A4940  28 03 00 00 */	cmplwi r3, 0
 /* 800A7B44 000A4944  41 82 00 08 */	beq lbl_800A7B4C
-/* 800A7B48 000A4948  4B FA 16 B9 */	bl func_80049200
+/* 800A7B48 000A4948  4B FA 16 B9 */	bl xSndStop__FUi
 lbl_800A7B4C:
 /* 800A7B4C 000A494C  3B DE 00 01 */	addi r30, r30, 1
 /* 800A7B50 000A4950  3B FF 00 14 */	addi r31, r31, 0x14
 /* 800A7B54 000A4954  2C 1E 00 02 */	cmpwi r30, 2
 /* 800A7B58 000A4958  41 80 FF E4 */	blt lbl_800A7B3C
 /* 800A7B5C 000A495C  38 00 00 01 */	li r0, 1
-/* 800A7B60 000A4960  90 0D 90 58 */	stw r0, lbl_803CB958-_SDA_BASE_(r13)
+/* 800A7B60 000A4960  90 0D 90 58 */	stw r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 lbl_800A7B64:
 /* 800A7B64 000A4964  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800A7B68 000A4968  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -899,8 +899,8 @@ lbl_800A7B64:
 /* 800A7B74 000A4974  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A7B78 000A4978  4E 80 00 20 */	blr 
 
-.global func_800A7B7C
-func_800A7B7C:
+.global zMusicUnpause__Fi
+zMusicUnpause__Fi:
 /* 800A7B7C 000A497C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A7B80 000A4980  7C 08 02 A6 */	mflr r0
 /* 800A7B84 000A4984  90 01 00 24 */	stw r0, 0x24(r1)
@@ -909,12 +909,12 @@ func_800A7B7C:
 /* 800A7B90 000A4990  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 800A7B94 000A4994  93 81 00 10 */	stw r28, 0x10(r1)
 /* 800A7B98 000A4998  7C 7C 1B 78 */	mr r28, r3
-/* 800A7B9C 000A499C  80 0D 90 58 */	lwz r0, lbl_803CB958-_SDA_BASE_(r13)
+/* 800A7B9C 000A499C  80 0D 90 58 */	lwz r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 /* 800A7BA0 000A49A0  28 00 00 00 */	cmplwi r0, 0
 /* 800A7BA4 000A49A4  41 82 00 9C */	beq lbl_800A7C40
-/* 800A7BA8 000A49A8  3C 60 80 2F */	lis r3, lbl_802F2B10@ha
+/* 800A7BA8 000A49A8  3C 60 80 2F */	lis r3, lbl_sMusicTrack@ha
 /* 800A7BAC 000A49AC  3B A0 00 00 */	li r29, 0
-/* 800A7BB0 000A49B0  3B E3 2B 10 */	addi r31, r3, lbl_802F2B10@l
+/* 800A7BB0 000A49B0  3B E3 2B 10 */	addi r31, r3, lbl_sMusicTrack@l
 /* 800A7BB4 000A49B4  3B C0 00 00 */	li r30, 0
 lbl_800A7BB8:
 /* 800A7BB8 000A49B8  80 1F 00 00 */	lwz r0, 0(r31)
@@ -928,7 +928,7 @@ lbl_800A7BB8:
 lbl_800A7BD8:
 /* 800A7BD8 000A49D8  80 BF 00 04 */	lwz r5, 4(r31)
 /* 800A7BDC 000A49DC  3C 60 00 01 */	lis r3, 0x00008000@ha
-/* 800A7BE0 000A49E0  C0 42 93 C8 */	lfs f2, lbl_803CDD48-_SDA2_BASE_(r2)
+/* 800A7BE0 000A49E0  C0 42 93 C8 */	lfs f2, lbl__668_2-_SDA2_BASE_(r2)
 /* 800A7BE4 000A49E4  38 03 80 00 */	addi r0, r3, 0x00008000@l
 /* 800A7BE8 000A49E8  7C 85 00 D0 */	neg r4, r5
 /* 800A7BEC 000A49EC  80 7F 00 0C */	lwz r3, 0xc(r31)
@@ -943,7 +943,7 @@ lbl_800A7BD8:
 /* 800A7C10 000A4A10  38 C0 00 00 */	li r6, 0
 /* 800A7C14 000A4A14  64 05 00 02 */	oris r5, r0, 2
 /* 800A7C18 000A4A18  38 E0 00 02 */	li r7, 2
-/* 800A7C1C 000A4A1C  4B FA 0E 11 */	bl func_80048A2C
+/* 800A7C1C 000A4A1C  4B FA 0E 11 */	bl xSndPlay__FUiffUiUiUi14sound_categoryf
 /* 800A7C20 000A4A20  90 7F 00 00 */	stw r3, 0(r31)
 lbl_800A7C24:
 /* 800A7C24 000A4A24  3B BD 00 01 */	addi r29, r29, 1
@@ -952,7 +952,7 @@ lbl_800A7C24:
 /* 800A7C30 000A4A30  3B FF 00 14 */	addi r31, r31, 0x14
 /* 800A7C34 000A4A34  41 80 FF 84 */	blt lbl_800A7BB8
 /* 800A7C38 000A4A38  38 00 00 00 */	li r0, 0
-/* 800A7C3C 000A4A3C  90 0D 90 58 */	stw r0, lbl_803CB958-_SDA_BASE_(r13)
+/* 800A7C3C 000A4A3C  90 0D 90 58 */	stw r0, lbl_sMusicPaused-_SDA_BASE_(r13)
 lbl_800A7C40:
 /* 800A7C40 000A4A40  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800A7C44 000A4A44  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -963,32 +963,32 @@ lbl_800A7C40:
 /* 800A7C58 000A4A58  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A7C5C 000A4A5C  4E 80 00 20 */	blr 
 
-.global func_800A7C60
-func_800A7C60:
+.global zMusicSetVolume__Fff
+zMusicSetVolume__Fff:
 /* 800A7C60 000A4A60  FC 60 08 18 */	frsp f3, f1
-/* 800A7C64 000A4A64  3C 60 80 2F */	lis r3, lbl_802F2B38@ha
-/* 800A7C68 000A4A68  C4 03 2B 38 */	lfsu f0, lbl_802F2B38@l(r3)
+/* 800A7C64 000A4A64  3C 60 80 2F */	lis r3, lbl_volume@ha
+/* 800A7C68 000A4A68  C4 03 2B 38 */	lfsu f0, lbl_volume@l(r3)
 /* 800A7C6C 000A4A6C  D0 23 00 04 */	stfs f1, 4(r3)
 /* 800A7C70 000A4A70  EC 23 00 28 */	fsubs f1, f3, f0
 /* 800A7C74 000A4A74  D0 23 00 08 */	stfs f1, 8(r3)
-/* 800A7C78 000A4A78  C0 02 93 E0 */	lfs f0, lbl_803CDD60-_SDA2_BASE_(r2)
+/* 800A7C78 000A4A78  C0 02 93 E0 */	lfs f0, lbl__962_1-_SDA2_BASE_(r2)
 /* 800A7C7C 000A4A7C  FC 02 00 40 */	fcmpo cr0, f2, f0
 /* 800A7C80 000A4A80  4C 81 00 20 */	blelr 
 /* 800A7C84 000A4A84  EC 01 10 24 */	fdivs f0, f1, f2
 /* 800A7C88 000A4A88  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800A7C8C 000A4A8C  4E 80 00 20 */	blr 
 
-.global func_800A7C90
-func_800A7C90:
+.global zMusicReset__Fv
+zMusicReset__Fv:
 /* 800A7C90 000A4A90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A7C94 000A4A94  7C 08 02 A6 */	mflr r0
 /* 800A7C98 000A4A98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A7C9C 000A4A9C  4B FF F6 79 */	bl func_800A7314
-/* 800A7CA0 000A4AA0  80 0D 82 D0 */	lwz r0, lbl_803CABD0-_SDA_BASE_(r13)
+/* 800A7C9C 000A4A9C  4B FF F6 79 */	bl zMusic.getCurrLevelMusicEnum__Fv
+/* 800A7CA0 000A4AA0  80 0D 82 D0 */	lwz r0, lbl_sMusicLastEnum-_SDA_BASE_(r13)
 /* 800A7CA4 000A4AA4  7C 00 18 00 */	cmpw r0, r3
 /* 800A7CA8 000A4AA8  41 82 00 0C */	beq lbl_800A7CB4
 /* 800A7CAC 000A4AAC  38 60 00 00 */	li r3, 0
-/* 800A7CB0 000A4AB0  4B FF F9 91 */	bl func_800A7640
+/* 800A7CB0 000A4AB0  4B FF F9 91 */	bl zMusicNotify__Fi
 lbl_800A7CB4:
 /* 800A7CB4 000A4AB4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800A7CB8 000A4AB8  7C 08 03 A6 */	mtlr r0
