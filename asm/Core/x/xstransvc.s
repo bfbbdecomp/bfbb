@@ -282,7 +282,7 @@ lbl_8004B4C0:
 /* 8004B4C0 000482C0  C3 E2 87 8C */	lfs f31, lbl_803CD10C-_SDA2_BASE_(r2)
 lbl_8004B4C4:
 /* 8004B4C4 000482C4  48 13 57 C9 */	bl CheckDVDAndResetState__8iTRCDiskFv
-/* 8004B4C8 000482C8  48 00 0D 49 */	bl func_8004C210
+/* 8004B4C8 000482C8  48 00 0D 49 */	bl iFileAsyncService__Fv
 /* 8004B4CC 000482CC  FC 20 F8 90 */	fmr f1, f31
 /* 8004B4D0 000482D0  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 8004B4D4 000482D4  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -1273,6 +1273,6 @@ lbl_8004C208:
 /* 8004C208 00049008  7D 03 43 78 */	mr r3, r8
 /* 8004C20C 0004900C  4E 80 00 20 */	blr 
 
-.global func_8004C210
-func_8004C210:
+.global iFileAsyncService__Fv
+iFileAsyncService__Fv:
 /* 8004C210 00049010  4E 80 00 20 */	blr 

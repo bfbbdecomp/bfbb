@@ -17,7 +17,7 @@ __nw__10RyzMemDataFUliP10RyzMemGrow:
 /* 8010F178 0010BF78  48 00 00 18 */	b lbl_8010F190
 lbl_8010F17C:
 /* 8010F17C 0010BF7C  7C A3 2B 78 */	mr r3, r5
-/* 8010F180 0010BF80  48 00 01 45 */	bl func_8010F2C4
+/* 8010F180 0010BF80  48 00 01 45 */	bl IsEnabled__10RyzMemGrowFv
 /* 8010F184 0010BF84  2C 03 00 00 */	cmpwi r3, 0
 /* 8010F188 0010BF88  40 82 00 08 */	bne lbl_8010F190
 /* 8010F18C 0010BF8C  3B E0 00 00 */	li r31, 0
@@ -116,8 +116,8 @@ Done__10RyzMemGrowFv:
 /* 8010F2BC 0010C0BC  90 03 00 00 */	stw r0, 0(r3)
 /* 8010F2C0 0010C0C0  4E 80 00 20 */	blr 
 
-.global func_8010F2C4
-func_8010F2C4:
+.global IsEnabled__10RyzMemGrowFv
+IsEnabled__10RyzMemGrowFv:
 /* 8010F2C4 0010C0C4  80 03 00 00 */	lwz r0, 0(r3)
 /* 8010F2C8 0010C0C8  54 03 07 FE */	clrlwi r3, r0, 0x1f
 /* 8010F2CC 0010C0CC  4E 80 00 20 */	blr 

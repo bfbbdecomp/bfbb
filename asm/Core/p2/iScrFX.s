@@ -240,7 +240,7 @@ iScrFX.iCameraOverlayRender__FP8RwCameraP8RwRaster6RwRGBA:
 /* 800CF674 000CC474  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800CF678 000CC478  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800CF67C 000CC47C  7C BF 2B 78 */	mr r31, r5
-/* 800CF680 000CC480  48 00 01 71 */	bl func_800CF7F0
+/* 800CF680 000CC480  48 00 01 71 */	bl FBMBlur_DebugIntervention__FP8RwCameraP8RwRaster
 /* 800CF684 000CC484  3C 80 80 29 */	lis r4, lbl_80292B00@ha
 /* 800CF688 000CC488  89 1F 00 00 */	lbz r8, 0(r31)
 /* 800CF68C 000CC48C  38 E4 2B 00 */	addi r7, r4, lbl_80292B00@l
@@ -335,8 +335,8 @@ lbl_800CF788:
 /* 800CF7E8 000CC5E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CF7EC 000CC5EC  4E 80 00 20 */	blr 
 
-.global func_800CF7F0
-func_800CF7F0:
+.global FBMBlur_DebugIntervention__FP8RwCameraP8RwRaster
+FBMBlur_DebugIntervention__FP8RwCameraP8RwRaster:
 /* 800CF7F0 000CC5F0  7C 83 23 78 */	mr r3, r4
 /* 800CF7F4 000CC5F4  4E 80 00 20 */	blr 
 

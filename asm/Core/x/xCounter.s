@@ -13,7 +13,7 @@ xCounterInit__Fv:
 /* 80015B48 00012948  3C 60 80 25 */	lis r3, lbl_80252140@ha
 /* 80015B4C 0001294C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80015B50 00012950  38 63 21 40 */	addi r3, r3, lbl_80252140@l
-/* 80015B54 00012954  48 00 03 4D */	bl func_80015EA0
+/* 80015B54 00012954  48 00 03 4D */	bl xDebugRemoveTweak__FPCc
 /* 80015B58 00012958  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80015B5C 0001295C  7C 08 03 A6 */	mtlr r0
 /* 80015B60 00012960  38 21 00 10 */	addi r1, r1, 0x10
@@ -254,6 +254,6 @@ lbl_80015E8C:
 /* 80015E98 00012C98  38 21 00 10 */	addi r1, r1, 0x10
 /* 80015E9C 00012C9C  4E 80 00 20 */	blr 
 
-.global func_80015EA0
-func_80015EA0:
+.global xDebugRemoveTweak__FPCc
+xDebugRemoveTweak__FPCc:
 /* 80015EA0 00012CA0  4E 80 00 20 */	blr 

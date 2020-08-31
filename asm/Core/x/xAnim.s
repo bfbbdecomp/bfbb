@@ -585,20 +585,20 @@ xAnimTempTransitionInit__FUi:
 /* 80006068 00002E68  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000606C 00002E6C  4E 80 00 20 */	blr 
 
-.global func_80006070
-func_80006070:
+.global xatan2__Fff
+xatan2__Fff:
 /* 80006070 00002E70  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006074 00002E74  7C 08 02 A6 */	mflr r0
 /* 80006078 00002E78  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8000607C 00002E7C  48 00 00 19 */	bl func_80006094
+/* 8000607C 00002E7C  48 00 00 19 */	bl atan2f__3stdFff
 /* 80006080 00002E80  48 02 B0 51 */	bl xAngleClampFast__Ff
 /* 80006084 00002E84  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80006088 00002E88  7C 08 03 A6 */	mtlr r0
 /* 8000608C 00002E8C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80006090 00002E90  4E 80 00 20 */	blr 
 
-.global func_80006094
-func_80006094:
+.global atan2f__3stdFff
+atan2f__3stdFff:
 /* 80006094 00002E94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006098 00002E98  7C 08 02 A6 */	mflr r0
 /* 8000609C 00002E9C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1076,7 +1076,7 @@ lbl_800066C0:
 lbl_800066CC:
 /* 800066CC 000034CC  FC 20 18 90 */	fmr f1, f3
 lbl_800066D0:
-/* 800066D0 000034D0  48 00 2C E9 */	bl func_800093B8
+/* 800066D0 000034D0  48 00 2C E9 */	bl xAnimFileRawTime__FP9xAnimFilef
 /* 800066D4 000034D4  80 15 00 0C */	lwz r0, 0xc(r21)
 /* 800066D8 000034D8  FF E0 08 90 */	fmr f31, f1
 /* 800066DC 000034DC  54 00 04 21 */	rlwinm. r0, r0, 0, 0x10, 0x10
@@ -1149,7 +1149,7 @@ lbl_800067BC:
 /* 800067C8 000035C8  EF C0 08 28 */	fsubs f30, f0, f1
 lbl_800067CC:
 /* 800067CC 000035CC  FC 20 F0 90 */	fmr f1, f30
-/* 800067D0 000035D0  48 00 03 A9 */	bl func_80006B78
+/* 800067D0 000035D0  48 00 03 A9 */	bl floorf__3stdFf
 /* 800067D4 000035D4  EC 1E 08 28 */	fsubs f0, f30, f1
 /* 800067D8 000035D8  D0 1E 00 00 */	stfs f0, 0(r30)
 /* 800067DC 000035DC  48 1E 6C 01 */	bl func_801ED3DC
@@ -1390,8 +1390,8 @@ lbl_80006B54:
 /* 80006B70 00003970  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80006B74 00003974  4E 80 00 20 */	blr 
 
-.global func_80006B78
-func_80006B78:
+.global floorf__3stdFf
+floorf__3stdFf:
 /* 80006B78 00003978  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006B7C 0000397C  7C 08 02 A6 */	mflr r0
 /* 80006B80 00003980  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2316,7 +2316,7 @@ lbl_800077C8:
 /* 800077D8 000045D8  40 82 FF E8 */	bne lbl_800077C0
 lbl_800077DC:
 /* 800077DC 000045DC  7F A3 EB 78 */	mr r3, r29
-/* 800077E0 000045E0  48 00 00 35 */	bl func_80007814
+/* 800077E0 000045E0  48 00 00 35 */	bl __as__17xAnimActiveEffectFRC17xAnimActiveEffect
 /* 800077E4 000045E4  38 1E FF FF */	addi r0, r30, -1
 /* 800077E8 000045E8  7C 1F 00 40 */	cmplw r31, r0
 /* 800077EC 000045EC  40 80 00 0C */	bge lbl_800077F8
@@ -2331,8 +2331,8 @@ lbl_800077F8:
 /* 8000780C 0000460C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80007810 00004610  4E 80 00 20 */	blr 
 
-.global func_80007814
-func_80007814:
+.global __as__17xAnimActiveEffectFRC17xAnimActiveEffect
+__as__17xAnimActiveEffectFRC17xAnimActiveEffect:
 /* 80007814 00004614  80 A4 00 00 */	lwz r5, 0(r4)
 /* 80007818 00004618  80 04 00 04 */	lwz r0, 4(r4)
 /* 8000781C 0000461C  90 A3 00 00 */	stw r5, 0(r3)
@@ -2369,7 +2369,7 @@ lbl_8000786C:
 /* 8000787C 0000467C  40 82 FF E8 */	bne lbl_80007864
 lbl_80007880:
 /* 80007880 00004680  7F E4 FB 78 */	mr r4, r31
-/* 80007884 00004684  4B FF FF 91 */	bl func_80007814
+/* 80007884 00004684  4B FF FF 91 */	bl __as__17xAnimActiveEffectFRC17xAnimActiveEffect
 /* 80007888 00004688  38 00 00 00 */	li r0, 0
 /* 8000788C 0000468C  90 1F 00 00 */	stw r0, 0(r31)
 lbl_80007890:
@@ -4326,8 +4326,8 @@ lbl_80009384:
 /* 800093B0 000061B0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800093B4 000061B4  4E 80 00 20 */	blr 
 
-.global func_800093B8
-func_800093B8:
+.global xAnimFileRawTime__FP9xAnimFilef
+xAnimFileRawTime__FP9xAnimFilef:
 /* 800093B8 000061B8  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 800093BC 000061BC  54 80 04 E7 */	rlwinm. r0, r4, 0, 0x13, 0x13
 /* 800093C0 000061C0  40 82 00 20 */	bne lbl_800093E0

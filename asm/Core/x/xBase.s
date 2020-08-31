@@ -17,7 +17,7 @@ xBaseInit__FP5xBaseP10xBaseAsset:
 /* 80009428 00006228  88 84 00 05 */	lbz r4, 5(r4)
 /* 8000942C 0000622C  98 83 00 05 */	stb r4, 5(r3)
 /* 80009430 00006230  90 03 00 08 */	stw r0, 8(r3)
-/* 80009434 00006234  48 00 00 F5 */	bl func_80009528
+/* 80009434 00006234  48 00 00 F5 */	bl xBaseValidate__FP5xBase
 /* 80009438 00006238  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8000943C 0000623C  7C 08 03 A6 */	mtlr r0
 /* 80009440 00006240  38 21 00 10 */	addi r1, r1, 0x10
@@ -34,7 +34,7 @@ xBaseSave__FP5xBaseP7xSerial:
 /* 80009454 00006254  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80009458 00006258  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8000945C 0000625C  7C 9F 23 78 */	mr r31, r4
-/* 80009460 00006260  48 00 00 D9 */	bl func_80009538
+/* 80009460 00006260  48 00 00 D9 */	bl xBaseIsEnabled__FPC5xBase
 /* 80009464 00006264  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80009468 00006268  41 82 00 14 */	beq lbl_8000947C
 /* 8000946C 0000626C  7F E3 FB 78 */	mr r3, r31
@@ -68,11 +68,11 @@ xBaseLoad__FP5xBaseP7xSerial:
 /* 800094C8 000062C8  2C 00 00 00 */	cmpwi r0, 0
 /* 800094CC 000062CC  41 82 00 10 */	beq lbl_800094DC
 /* 800094D0 000062D0  7F E3 FB 78 */	mr r3, r31
-/* 800094D4 000062D4  48 00 00 81 */	bl func_80009554
+/* 800094D4 000062D4  48 00 00 81 */	bl xBaseEnable__FP5xBase
 /* 800094D8 000062D8  48 00 00 0C */	b lbl_800094E4
 lbl_800094DC:
 /* 800094DC 000062DC  7F E3 FB 78 */	mr r3, r31
-/* 800094E0 000062E0  48 00 00 65 */	bl func_80009544
+/* 800094E0 000062E0  48 00 00 65 */	bl xBaseDisable__FP5xBase
 lbl_800094E4:
 /* 800094E4 000062E4  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800094E8 000062E8  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -89,34 +89,34 @@ xBaseReset__FP5xBaseP10xBaseAsset:
 /* 80009508 00006308  A0 83 00 06 */	lhz r4, 6(r3)
 /* 8000950C 0000630C  50 80 06 F6 */	rlwimi r0, r4, 0, 0x1b, 0x1b
 /* 80009510 00006310  B0 03 00 06 */	sth r0, 6(r3)
-/* 80009514 00006314  48 00 00 15 */	bl func_80009528
+/* 80009514 00006314  48 00 00 15 */	bl xBaseValidate__FP5xBase
 /* 80009518 00006318  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8000951C 0000631C  7C 08 03 A6 */	mtlr r0
 /* 80009520 00006320  38 21 00 10 */	addi r1, r1, 0x10
 /* 80009524 00006324  4E 80 00 20 */	blr 
 
-.global func_80009528
-func_80009528:
+.global xBaseValidate__FP5xBase
+xBaseValidate__FP5xBase:
 /* 80009528 00006328  A0 03 00 06 */	lhz r0, 6(r3)
 /* 8000952C 0000632C  60 00 00 04 */	ori r0, r0, 4
 /* 80009530 00006330  B0 03 00 06 */	sth r0, 6(r3)
 /* 80009534 00006334  4E 80 00 20 */	blr 
 
-.global func_80009538
-func_80009538:
+.global xBaseIsEnabled__FPC5xBase
+xBaseIsEnabled__FPC5xBase:
 /* 80009538 00006338  A0 03 00 06 */	lhz r0, 6(r3)
 /* 8000953C 0000633C  54 03 07 FE */	clrlwi r3, r0, 0x1f
 /* 80009540 00006340  4E 80 00 20 */	blr 
 
-.global func_80009544
-func_80009544:
+.global xBaseDisable__FP5xBase
+xBaseDisable__FP5xBase:
 /* 80009544 00006344  A0 03 00 06 */	lhz r0, 6(r3)
 /* 80009548 00006348  54 00 04 3C */	rlwinm r0, r0, 0, 0x10, 0x1e
 /* 8000954C 0000634C  B0 03 00 06 */	sth r0, 6(r3)
 /* 80009550 00006350  4E 80 00 20 */	blr 
 
-.global func_80009554
-func_80009554:
+.global xBaseEnable__FP5xBase
+xBaseEnable__FP5xBase:
 /* 80009554 00006354  A0 03 00 06 */	lhz r0, 6(r3)
 /* 80009558 00006358  60 00 00 01 */	ori r0, r0, 1
 /* 8000955C 0000635C  B0 03 00 06 */	sth r0, 6(r3)

@@ -28,7 +28,7 @@ zHud.ping_widget__Q24zhud18_unnamed_zHud_cpp_FRQ24xhud6widget:
 /* 8009B6D0 000984D0  38 61 00 08 */	addi r3, r1, 8
 /* 8009B6D4 000984D4  38 9F 00 04 */	addi r4, r31, 4
 /* 8009B6D8 000984D8  38 C0 00 00 */	li r6, 0
-/* 8009B6DC 000984DC  4B F9 37 99 */	bl func_8002EE74
+/* 8009B6DC 000984DC  4B F9 37 99 */	bl __ct__Q24xhud6motiveFPffffPFRQ24xhud6widgetRQ24xhud6motivef_bPv
 /* 8009B6E0 000984E0  7C 64 1B 78 */	mr r4, r3
 /* 8009B6E4 000984E4  7F E3 FB 78 */	mr r3, r31
 /* 8009B6E8 000984E8  4B F9 2E 9D */	bl add_motive__Q24xhud6widgetFRCQ24xhud6motive
@@ -54,7 +54,7 @@ zHud.delay_hide_widget__Q24zhud18_unnamed_zHud_cpp_FRQ24xhud6widget:
 /* 8009B72C 0009852C  C0 22 91 44 */	lfs f1, lbl_803CDAC4-_SDA2_BASE_(r2)
 /* 8009B730 00098530  C0 42 91 4C */	lfs f2, lbl_803CDACC-_SDA2_BASE_(r2)
 /* 8009B734 00098534  FC 60 08 90 */	fmr f3, f1
-/* 8009B738 00098538  4B F9 37 3D */	bl func_8002EE74
+/* 8009B738 00098538  4B F9 37 3D */	bl __ct__Q24xhud6motiveFPffffPFRQ24xhud6widgetRQ24xhud6motivef_bPv
 /* 8009B73C 0009853C  7C 64 1B 78 */	mr r4, r3
 /* 8009B740 00098540  7F E3 FB 78 */	mr r3, r31
 /* 8009B744 00098544  4B F9 2E 41 */	bl add_motive__Q24xhud6widgetFRCQ24xhud6motive
@@ -74,7 +74,7 @@ zHud.get_meter_widget__Q24zhud18_unnamed_zHud_cpp_Fi:
 /* 8009B770 00098570  88 0D 8F CC */	lbz r0, lbl_803CB8CC-_SDA_BASE_(r13)
 /* 8009B774 00098574  7C 00 07 75 */	extsb. r0, r0
 /* 8009B778 00098578  40 82 00 18 */	bne lbl_8009B790
-/* 8009B77C 0009857C  4B F9 44 DD */	bl func_8002FC58
+/* 8009B77C 0009857C  4B F9 44 DD */	bl type_name__Q24xhud11meter_assetFv
 /* 8009B780 00098580  4B FB 0A 95 */	bl xStrHash__FPCc
 /* 8009B784 00098584  90 6D 8F C8 */	stw r3, lbl_803CB8C8-_SDA_BASE_(r13)
 /* 8009B788 00098588  38 00 00 01 */	li r0, 1
@@ -100,7 +100,7 @@ zHud.get_model_widget__Q24zhud18_unnamed_zHud_cpp_Fi:
 /* 8009B7C8 000985C8  88 0D 8F D4 */	lbz r0, lbl_803CB8D4-_SDA_BASE_(r13)
 /* 8009B7CC 000985CC  7C 00 07 75 */	extsb. r0, r0
 /* 8009B7D0 000985D0  40 82 00 18 */	bne lbl_8009B7E8
-/* 8009B7D4 000985D4  4B F9 47 9D */	bl func_8002FF70
+/* 8009B7D4 000985D4  4B F9 47 9D */	bl type_name__Q24xhud11model_assetFv
 /* 8009B7D8 000985D8  4B FB 0A 3D */	bl xStrHash__FPCc
 /* 8009B7DC 000985DC  90 6D 8F D0 */	stw r3, lbl_803CB8D0-_SDA_BASE_(r13)
 /* 8009B7E0 000985E0  38 00 00 01 */	li r0, 1
@@ -166,7 +166,7 @@ lbl_8009B88C:
 /* 8009B898 00098698  38 03 00 10 */	addi r0, r3, 0x10
 /* 8009B89C 0009869C  90 19 00 00 */	stw r0, 0(r25)
 /* 8009B8A0 000986A0  80 79 00 00 */	lwz r3, 0(r25)
-/* 8009B8A4 000986A4  4B F9 35 C5 */	bl func_8002EE68
+/* 8009B8A4 000986A4  4B F9 35 C5 */	bl enable__Q24xhud6widgetFv
 /* 8009B8A8 000986A8  3B 5A 00 01 */	addi r26, r26, 1
 /* 8009B8AC 000986AC  3B 39 00 04 */	addi r25, r25, 4
 /* 8009B8B0 000986B0  2C 1A 00 07 */	cmpwi r26, 7
@@ -203,19 +203,19 @@ lbl_8009B8F0:
 /* 8009B928 00098728  C8 01 00 08 */	lfd f0, 8(r1)
 /* 8009B92C 0009872C  EC 00 08 28 */	fsubs f0, f0, f1
 /* 8009B930 00098730  D0 1A 00 90 */	stfs f0, 0x90(r26)
-/* 8009B934 00098734  48 00 06 A9 */	bl func_8009BFDC
+/* 8009B934 00098734  48 00 06 A9 */	bl get_asset__Q24xhud17font_meter_widgetFv
 /* 8009B938 00098738  9B 03 00 70 */	stb r24, 0x70(r3)
 /* 8009B93C 0009873C  38 9F 00 50 */	addi r4, r31, 0x50
 /* 8009B940 00098740  7F 43 D3 78 */	mr r3, r26
 /* 8009B944 00098744  93 44 00 1C */	stw r26, 0x1c(r4)
-/* 8009B948 00098748  4B F9 35 21 */	bl func_8002EE68
+/* 8009B948 00098748  4B F9 35 21 */	bl enable__Q24xhud6widgetFv
 /* 8009B94C 0009874C  80 79 00 00 */	lwz r3, 0(r25)
 /* 8009B950 00098750  4B FB 08 C5 */	bl xStrHash__FPCc
 /* 8009B954 00098754  48 01 90 E9 */	bl zSceneFindObject__FUi
 /* 8009B958 00098758  38 63 00 10 */	addi r3, r3, 0x10
 /* 8009B95C 0009875C  38 9F 00 50 */	addi r4, r31, 0x50
 /* 8009B960 00098760  90 64 00 20 */	stw r3, 0x20(r4)
-/* 8009B964 00098764  4B F9 35 05 */	bl func_8002EE68
+/* 8009B964 00098764  4B F9 35 05 */	bl enable__Q24xhud6widgetFv
 lbl_8009B968:
 /* 8009B968 00098768  38 7F 00 28 */	addi r3, r31, 0x28
 /* 8009B96C 0009876C  38 80 00 00 */	li r4, 0
@@ -487,7 +487,7 @@ lbl_8009BD30:
 /* 8009BD40 00098B40  41 82 00 48 */	beq lbl_8009BD88
 /* 8009BD44 00098B44  4B FF FA 19 */	bl zHud.get_meter_widget__Q24zhud18_unnamed_zHud_cpp_Fi
 /* 8009BD48 00098B48  7C 75 1B 78 */	mr r21, r3
-/* 8009BD4C 00098B4C  48 00 02 99 */	bl func_8009BFE4
+/* 8009BD4C 00098B4C  48 00 02 99 */	bl changing__Q24xhud12meter_widgetCFv
 /* 8009BD50 00098B50  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8009BD54 00098B54  40 82 00 34 */	bne lbl_8009BD88
 /* 8009BD58 00098B58  88 1E 00 00 */	lbz r0, 0(r30)
@@ -555,7 +555,7 @@ lbl_8009BE18:
 /* 8009BE2C 00098C2C  7F E5 FB 78 */	mr r5, r31
 /* 8009BE30 00098C30  4B F9 28 61 */	bl clear_motives__Q24xhud6widgetFPFRQ24xhud6widgetRQ24xhud6motivef_bPv
 /* 8009BE34 00098C34  7F 63 DB 78 */	mr r3, r27
-/* 8009BE38 00098C38  48 00 01 7D */	bl func_8009BFB4
+/* 8009BE38 00098C38  48 00 01 7D */	bl showing__Q24xhud6widgetCFv
 /* 8009BE3C 00098C3C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8009BE40 00098C40  40 82 00 0C */	bne lbl_8009BE4C
 /* 8009BE44 00098C44  7F 63 DB 78 */	mr r3, r27
@@ -619,7 +619,7 @@ lbl_8009BF00:
 /* 8009BF04 00098D04  28 1D 00 00 */	cmplwi r29, 0
 /* 8009BF08 00098D08  41 82 00 1C */	beq lbl_8009BF24
 /* 8009BF0C 00098D0C  7F A3 EB 78 */	mr r3, r29
-/* 8009BF10 00098D10  48 00 00 B9 */	bl func_8009BFC8
+/* 8009BF10 00098D10  48 00 00 B9 */	bl hiding__Q24xhud6widgetCFv
 /* 8009BF14 00098D14  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8009BF18 00098D18  40 82 00 0C */	bne lbl_8009BF24
 /* 8009BF1C 00098D1C  7F A3 EB 78 */	mr r3, r29
@@ -667,29 +667,29 @@ lbl_8009BF98:
 /* 8009BFAC 00098DAC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009BFB0 00098DB0  4E 80 00 20 */	blr 
 
-.global func_8009BFB4
-func_8009BFB4:
+.global showing__Q24xhud6widgetCFv
+showing__Q24xhud6widgetCFv:
 /* 8009BFB4 00098DB4  80 03 00 70 */	lwz r0, 0x70(r3)
 /* 8009BFB8 00098DB8  20 00 00 01 */	subfic r0, r0, 1
 /* 8009BFBC 00098DBC  7C 00 00 34 */	cntlzw r0, r0
 /* 8009BFC0 00098DC0  54 03 D9 7E */	srwi r3, r0, 5
 /* 8009BFC4 00098DC4  4E 80 00 20 */	blr 
 
-.global func_8009BFC8
-func_8009BFC8:
+.global hiding__Q24xhud6widgetCFv
+hiding__Q24xhud6widgetCFv:
 /* 8009BFC8 00098DC8  80 03 00 70 */	lwz r0, 0x70(r3)
 /* 8009BFCC 00098DCC  20 00 00 02 */	subfic r0, r0, 2
 /* 8009BFD0 00098DD0  7C 00 00 34 */	cntlzw r0, r0
 /* 8009BFD4 00098DD4  54 03 D9 7E */	srwi r3, r0, 5
 /* 8009BFD8 00098DD8  4E 80 00 20 */	blr 
 
-.global func_8009BFDC
-func_8009BFDC:
+.global get_asset__Q24xhud17font_meter_widgetFv
+get_asset__Q24xhud17font_meter_widgetFv:
 /* 8009BFDC 00098DDC  80 63 00 6C */	lwz r3, 0x6c(r3)
 /* 8009BFE0 00098DE0  4E 80 00 20 */	blr 
 
-.global func_8009BFE4
-func_8009BFE4:
+.global changing__Q24xhud12meter_widgetCFv
+changing__Q24xhud12meter_widgetCFv:
 /* 8009BFE4 00098DE4  C0 23 00 88 */	lfs f1, 0x88(r3)
 /* 8009BFE8 00098DE8  C0 03 00 94 */	lfs f0, 0x94(r3)
 /* 8009BFEC 00098DEC  FC 01 00 00 */	fcmpu cr0, f1, f0

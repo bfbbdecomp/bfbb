@@ -36,7 +36,7 @@ zNPCMgr_Startup__Fv:
 /* 800EE328 000EB128  48 02 0E 29 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
 /* 800EE32C 000EB12C  7C 60 1B 79 */	or. r0, r3, r3
 /* 800EE330 000EB130  41 82 00 0C */	beq lbl_800EE33C
-/* 800EE334 000EB134  48 00 09 E5 */	bl func_800EED18
+/* 800EE334 000EB134  48 00 09 E5 */	bl __ct__7zNPCMgrFv
 /* 800EE338 000EB138  7C 60 1B 78 */	mr r0, r3
 lbl_800EE33C:
 /* 800EE33C 000EB13C  90 0D 93 C4 */	stw r0, lbl_803CBCC4-_SDA_BASE_(r13)
@@ -64,7 +64,7 @@ zNPCMgr_Shutdown__Fv:
 /* 800EE384 000EB184  48 00 02 45 */	bl Shutdown__7zNPCMgrFv
 /* 800EE388 000EB188  7F E3 FB 78 */	mr r3, r31
 /* 800EE38C 000EB18C  38 80 00 01 */	li r4, 1
-/* 800EE390 000EB190  48 00 09 8D */	bl func_800EED1C
+/* 800EE390 000EB190  48 00 09 8D */	bl __dt__7zNPCMgrFv
 /* 800EE394 000EB194  38 00 00 00 */	li r0, 0
 /* 800EE398 000EB198  90 0D 93 C4 */	stw r0, lbl_803CBCC4-_SDA_BASE_(r13)
 lbl_800EE39C:
@@ -232,7 +232,7 @@ lbl_800EE588:
 /* 800EE5A0 000EB3A0  48 01 E9 35 */	bl xBehaveMgr_GetSelf__Fv
 /* 800EE5A4 000EB3A4  90 7F 00 14 */	stw r3, 0x14(r31)
 /* 800EE5A8 000EB3A8  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 800EE5AC 000EB3AC  48 00 07 B5 */	bl func_800EED60
+/* 800EE5AC 000EB3AC  48 00 07 B5 */	bl GetFactory__10xBehaveMgrFv
 /* 800EE5B0 000EB3B0  4B FE 6B 0D */	bl zNPCGoals_RegisterTypes__FP8xFactory
 /* 800EE5B4 000EB3B4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800EE5B8 000EB3B8  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -571,7 +571,7 @@ lbl_800EEA08:
 /* 800EEA48 000EB848  4B F4 73 45 */	bl XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i
 lbl_800EEA4C:
 /* 800EEA4C 000EB84C  7F A3 EB 78 */	mr r3, r29
-/* 800EEA50 000EB850  48 00 03 09 */	bl func_800EED58
+/* 800EEA50 000EB850  48 00 03 09 */	bl DBG_Reset__7zNPCMgrFv
 /* 800EEA54 000EB854  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800EEA58 000EB858  7F E3 FB 78 */	mr r3, r31
 /* 800EEA5C 000EB85C  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -635,7 +635,7 @@ SceneTimestep__7zNPCMgrFP6xScenef:
 /* 800EEB20 000EB920  7C 9F 23 78 */	mr r31, r4
 /* 800EEB24 000EB924  93 C1 00 10 */	stw r30, 0x10(r1)
 /* 800EEB28 000EB928  7C 7E 1B 78 */	mr r30, r3
-/* 800EEB2C 000EB92C  48 00 02 31 */	bl func_800EED5C
+/* 800EEB2C 000EB92C  48 00 02 31 */	bl DBG_PerfTrack__7zNPCMgrFv
 /* 800EEB30 000EB930  80 0D 93 C8 */	lwz r0, lbl_803CBCC8-_SDA_BASE_(r13)
 /* 800EEB34 000EB934  2C 00 00 00 */	cmpwi r0, 0
 /* 800EEB38 000EB938  41 82 00 1C */	beq lbl_800EEB54
@@ -784,12 +784,12 @@ lbl_800EED10:
 /* 800EED10 000EBB10  38 60 00 00 */	li r3, 0
 /* 800EED14 000EBB14  4E 80 00 20 */	blr 
 
-.global func_800EED18
-func_800EED18:
+.global __ct__7zNPCMgrFv
+__ct__7zNPCMgrFv:
 /* 800EED18 000EBB18  4E 80 00 20 */	blr 
 
-.global func_800EED1C
-func_800EED1C:
+.global __dt__7zNPCMgrFv
+__dt__7zNPCMgrFv:
 /* 800EED1C 000EBB1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800EED20 000EBB20  7C 08 02 A6 */	mflr r0
 /* 800EED24 000EBB24  90 01 00 14 */	stw r0, 0x14(r1)
@@ -807,21 +807,21 @@ lbl_800EED40:
 /* 800EED50 000EBB50  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EED54 000EBB54  4E 80 00 20 */	blr 
 
-.global func_800EED58
-func_800EED58:
+.global DBG_Reset__7zNPCMgrFv
+DBG_Reset__7zNPCMgrFv:
 /* 800EED58 000EBB58  4E 80 00 20 */	blr 
 
-.global func_800EED5C
-func_800EED5C:
+.global DBG_PerfTrack__7zNPCMgrFv
+DBG_PerfTrack__7zNPCMgrFv:
 /* 800EED5C 000EBB5C  4E 80 00 20 */	blr 
 
-.global func_800EED60
-func_800EED60:
+.global GetFactory__10xBehaveMgrFv
+GetFactory__10xBehaveMgrFv:
 /* 800EED60 000EBB60  80 63 00 00 */	lwz r3, 0(r3)
 /* 800EED64 000EBB64  4E 80 00 20 */	blr 
 /* 800EED68 000EBB68  4E 80 00 20 */	blr 
 
-.global func_800EED6C
-func_800EED6C:
+.global RenderExtra__10zNPCCommonFv
+RenderExtra__10zNPCCommonFv:
 /* 800EED6C 000EBB6C  4E 80 00 20 */	blr 
 /* 800EED70 000EBB70  4E 80 00 20 */	blr 
