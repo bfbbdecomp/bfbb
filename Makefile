@@ -12,16 +12,33 @@ endif
 # Used for elf2dol
 TARGET_COL := wii
 
+OBJ_DIR := obj
+
+SRC_DIRS := src             \
+            src/Core/p2     \
+            src/Core/x      \
+            src/Game
+
+ASM_DIRS := asm             \
+            asm/bink        \
+            asm/CodeWarrior \
+            asm/Core/p2     \
+            asm/Core/x      \
+            asm/dolphin     \
+            asm/Game        \
+            asm/ODEGdev     \
+            asm/rwsdk
+
 # Inputs
-S_FILES := $(wildcard asm/*.s)
-C_FILES := $(wildcard src/*.c)
+S_FILES := $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
+C_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+CPP_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
 LDSCRIPT := ldscript.lcf
 
 # Outputs
 DOL     := main.dol
 ELF     := $(DOL:.dol=.elf)
 MAP     := bfbb.map
-# O_FILES := $(S_FILES:.s=.o) $(C_FILES:.c=.o)
 
 include obj_files.mk
 
@@ -54,6 +71,7 @@ INCLUDES := -Isrc/dolphin/include -Isrc/CodeWarrior
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
 CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
+PREPROCESS := -preprocess -gccincludes $(INCLUDES)
 
 # elf2dol needs to know these in order to calculate sbss correctly.
 SDATA_PDHR := 9
@@ -63,11 +81,20 @@ SBSS_PDHR := 10
 # Recipes
 #-------------------------------------------------------------------------------
 
+default: all
+
+all: $(DOL)
+
+ALL_DIRS := $(OBJ_DIR) $(addprefix $(OBJ_DIR)/,$(SRC_DIRS) $(ASM_DIRS))
+
+# Make sure build directory exists before compiling anything
+DUMMY != mkdir -p $(ALL_DIRS)
+
 .PHONY: tools
 	
 $(DOL): $(ELF) | tools
 	$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
-	$(SHA1SUM) -c bfbb.sha1 || $(ASMDIFF)
+	$(SHA1SUM) -c bfbb.sha1 || ./asmdiff.sh
 
 clean:
 	rm -f $(DOL) $(ELF) $(O_FILES) $(MAP)
@@ -81,11 +108,12 @@ $(ELF): $(O_FILES) $(LDSCRIPT)
 # The Metrowerks linker doesn't generate physical addresses in the ELF program headers. This fixes it somehow.
 	$(OBJCOPY) $@ $@
 
-%.o: %.s
+$(OBJ_DIR)/%.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(OBJ_DIR)/%.o: %.cpp
+	$(CC) $(PREPROCESS) -o $*.cp $<
+	$(CC) $(CFLAGS) -c -o $@ $*.cp
