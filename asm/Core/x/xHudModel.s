@@ -1,5 +1,11 @@
 .include "macros.inc"
 
+.section .rodata   # 0x80252F68 - 0x80252F90
+
+.global lbl_80252F68
+lbl_80252F68:
+	.incbin "baserom.dol", 0x24FF48, 0x28
+
 .section .text  # 0x8002FC88 - 0x8002FF80
 
 .global func_8002FC88

@@ -37,6 +37,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xHudUnitMeter.o           \
     $(OBJ_DIR)/asm/Core/x/xIni.o                    \
     $(OBJ_DIR)/asm/Core/x/xMath.o                   \
+    $(OBJ_DIR)/asm/Core/x/xMath2.o                  \
     $(OBJ_DIR)/asm/Core/x/xMath3.o                  \
     $(OBJ_DIR)/asm/Core/x/xMemMgr.o                 \
     $(OBJ_DIR)/asm/Core/x/xModel.o                  \
