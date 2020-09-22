@@ -9,7 +9,7 @@ EXTABINDEX_O_FILES :=                               \
 
 TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xAnim.o                   \
-    $(OBJ_DIR)/asm/Core/x/xBase.o                   \
+    $(OBJ_DIR)/src/Core/x/xBase.o                   \
     $(OBJ_DIR)/asm/Core/x/xbinio.o                  \
     $(OBJ_DIR)/asm/Core/x/xBound.o                  \
     $(OBJ_DIR)/asm/Core/x/xCamera.o                 \

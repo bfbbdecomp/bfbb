@@ -221,8 +221,8 @@ lbl_80042FF8:
 /* 80043004 0003FE04  38 21 00 20 */	addi r1, r1, 0x20
 /* 80043008 0003FE08  4E 80 00 20 */	blr 
 
-.global func_8004300C
-func_8004300C:
+.global Write_b1__7xSerialFi
+Write_b1__7xSerialFi:
 /* 8004300C 0003FE0C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80043010 0003FE10  7C 08 02 A6 */	mflr r0
 /* 80043014 0003FE14  38 A0 00 04 */	li r5, 4
@@ -427,8 +427,8 @@ lbl_80043294:
 /* 800432A4 000400A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800432A8 000400A8  4E 80 00 20 */	blr 
 
-.global func_800432AC
-func_800432AC:
+.global Read_b1__7xSerialFPi
+Read_b1__7xSerialFPi:
 /* 800432AC 000400AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800432B0 000400B0  7C 08 02 A6 */	mflr r0
 /* 800432B4 000400B4  38 A0 00 04 */	li r5, 4
