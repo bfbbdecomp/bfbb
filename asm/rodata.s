@@ -1,10 +1,4 @@
-.section .rodata   # 0x80251D80 - 0x8027A5C0
-.global lbl_80251D80
-lbl_80251D80:
-	.incbin "baserom.dol", 0x24ED60, 0x80
-.global lbl_80251E00
-lbl_80251E00:
-	.incbin "baserom.dol", 0x24EDE0, 0x48
+.section .rodata   # 0x80251E48 - 0x8027A5C0
 .global lbl_80251E48
 lbl_80251E48:
 	.incbin "baserom.dol", 0x24EE28, 0x114
