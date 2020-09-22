@@ -2,56 +2,56 @@
 
 .section .text  # 0x800D44F0 - 0x800D4A14
 
-.global iGetMinute__Fv
-iGetMinute__Fv:
+.global func_800D44F0
+func_800D44F0:
 /* 800D44F0 000D12F0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800D44F4 000D12F4  7C 08 02 A6 */	mflr r0
 /* 800D44F8 000D12F8  90 01 00 34 */	stw r0, 0x34(r1)
-/* 800D44FC 000D12FC  48 10 30 51 */	bl OSGetTime
+/* 800D44FC 000D12FC  48 10 30 51 */	bl func_801D754C
 /* 800D4500 000D1300  38 A1 00 08 */	addi r5, r1, 8
-/* 800D4504 000D1304  48 10 32 C1 */	bl OSTicksToCalendarTime
+/* 800D4504 000D1304  48 10 32 C1 */	bl func_801D77C4
 /* 800D4508 000D1308  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 800D450C 000D130C  80 61 00 0C */	lwz r3, 0xc(r1)
 /* 800D4510 000D1310  7C 08 03 A6 */	mtlr r0
 /* 800D4514 000D1314  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D4518 000D1318  4E 80 00 20 */	blr 
 
-.global iGetHour__Fv
-iGetHour__Fv:
+.global func_800D451C
+func_800D451C:
 /* 800D451C 000D131C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800D4520 000D1320  7C 08 02 A6 */	mflr r0
 /* 800D4524 000D1324  90 01 00 34 */	stw r0, 0x34(r1)
-/* 800D4528 000D1328  48 10 30 25 */	bl OSGetTime
+/* 800D4528 000D1328  48 10 30 25 */	bl func_801D754C
 /* 800D452C 000D132C  38 A1 00 08 */	addi r5, r1, 8
-/* 800D4530 000D1330  48 10 32 95 */	bl OSTicksToCalendarTime
+/* 800D4530 000D1330  48 10 32 95 */	bl func_801D77C4
 /* 800D4534 000D1334  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 800D4538 000D1338  80 61 00 10 */	lwz r3, 0x10(r1)
 /* 800D453C 000D133C  7C 08 03 A6 */	mtlr r0
 /* 800D4540 000D1340  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D4544 000D1344  4E 80 00 20 */	blr 
 
-.global iGetDay__Fv
-iGetDay__Fv:
+.global func_800D4548
+func_800D4548:
 /* 800D4548 000D1348  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800D454C 000D134C  7C 08 02 A6 */	mflr r0
 /* 800D4550 000D1350  90 01 00 34 */	stw r0, 0x34(r1)
-/* 800D4554 000D1354  48 10 2F F9 */	bl OSGetTime
+/* 800D4554 000D1354  48 10 2F F9 */	bl func_801D754C
 /* 800D4558 000D1358  38 A1 00 08 */	addi r5, r1, 8
-/* 800D455C 000D135C  48 10 32 69 */	bl OSTicksToCalendarTime
+/* 800D455C 000D135C  48 10 32 69 */	bl func_801D77C4
 /* 800D4560 000D1360  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 800D4564 000D1364  80 61 00 14 */	lwz r3, 0x14(r1)
 /* 800D4568 000D1368  7C 08 03 A6 */	mtlr r0
 /* 800D456C 000D136C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D4570 000D1370  4E 80 00 20 */	blr 
 
-.global iGetMonth__Fv
-iGetMonth__Fv:
+.global func_800D4574
+func_800D4574:
 /* 800D4574 000D1374  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800D4578 000D1378  7C 08 02 A6 */	mflr r0
 /* 800D457C 000D137C  90 01 00 34 */	stw r0, 0x34(r1)
-/* 800D4580 000D1380  48 10 2F CD */	bl OSGetTime
+/* 800D4580 000D1380  48 10 2F CD */	bl func_801D754C
 /* 800D4584 000D1384  38 A1 00 08 */	addi r5, r1, 8
-/* 800D4588 000D1388  48 10 32 3D */	bl OSTicksToCalendarTime
+/* 800D4588 000D1388  48 10 32 3D */	bl func_801D77C4
 /* 800D458C 000D138C  80 61 00 18 */	lwz r3, 0x18(r1)
 /* 800D4590 000D1390  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 800D4594 000D1394  38 63 00 01 */	addi r3, r3, 1
@@ -59,8 +59,8 @@ iGetMonth__Fv:
 /* 800D459C 000D139C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D45A0 000D13A0  4E 80 00 20 */	blr 
 
-.global iGetCurrFormattedDate__FPc
-iGetCurrFormattedDate__FPc:
+.global func_800D45A4
+func_800D45A4:
 /* 800D45A4 000D13A4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800D45A8 000D13A8  7C 08 02 A6 */	mflr r0
 /* 800D45AC 000D13AC  90 01 00 44 */	stw r0, 0x44(r1)
@@ -68,19 +68,19 @@ iGetCurrFormattedDate__FPc:
 /* 800D45B4 000D13B4  93 C1 00 38 */	stw r30, 0x38(r1)
 /* 800D45B8 000D13B8  7C 7E 1B 78 */	mr r30, r3
 /* 800D45BC 000D13BC  7F DF F3 78 */	mr r31, r30
-/* 800D45C0 000D13C0  48 10 2F 8D */	bl OSGetTime
+/* 800D45C0 000D13C0  48 10 2F 8D */	bl func_801D754C
 /* 800D45C4 000D13C4  38 A1 00 08 */	addi r5, r1, 8
-/* 800D45C8 000D13C8  48 10 31 FD */	bl OSTicksToCalendarTime
+/* 800D45C8 000D13C8  48 10 31 FD */	bl func_801D77C4
 /* 800D45CC 000D13CC  80 01 00 20 */	lwz r0, 0x20(r1)
-/* 800D45D0 000D13D0  3C 60 80 29 */	lis r3, lbl_dotw@ha
-/* 800D45D4 000D13D4  38 83 2B B8 */	addi r4, r3, lbl_dotw@l
+/* 800D45D0 000D13D0  3C 60 80 29 */	lis r3, lbl_80292BB8@ha
+/* 800D45D4 000D13D4  38 83 2B B8 */	addi r4, r3, lbl_80292BB8@l
 /* 800D45D8 000D13D8  7F C3 F3 78 */	mr r3, r30
 /* 800D45DC 000D13DC  54 00 10 3A */	slwi r0, r0, 2
 /* 800D45E0 000D13E0  7C 84 00 2E */	lwzx r4, r4, r0
 /* 800D45E4 000D13E4  48 11 31 1D */	bl func_801E7700
 /* 800D45E8 000D13E8  80 01 00 18 */	lwz r0, 0x18(r1)
-/* 800D45EC 000D13EC  3C 60 80 29 */	lis r3, lbl_months@ha
-/* 800D45F0 000D13F0  38 83 2B 88 */	addi r4, r3, lbl_months@l
+/* 800D45EC 000D13EC  3C 60 80 29 */	lis r3, lbl_80292B88@ha
+/* 800D45F0 000D13F0  38 83 2B 88 */	addi r4, r3, lbl_80292B88@l
 /* 800D45F4 000D13F4  7F C3 F3 78 */	mr r3, r30
 /* 800D45F8 000D13F8  54 00 10 3A */	slwi r0, r0, 2
 /* 800D45FC 000D13FC  7C 84 00 2E */	lwzx r4, r4, r0
@@ -173,8 +173,8 @@ lbl_800D4640:
 /* 800D4754 000D1554  38 21 00 40 */	addi r1, r1, 0x40
 /* 800D4758 000D1558  4E 80 00 20 */	blr 
 
-.global iGetCurrFormattedTime__FPc
-iGetCurrFormattedTime__FPc:
+.global func_800D475C
+func_800D475C:
 /* 800D475C 000D155C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800D4760 000D1560  7C 08 02 A6 */	mflr r0
 /* 800D4764 000D1564  90 01 00 44 */	stw r0, 0x44(r1)
@@ -184,9 +184,9 @@ iGetCurrFormattedTime__FPc:
 /* 800D4774 000D1574  93 A1 00 34 */	stw r29, 0x34(r1)
 /* 800D4778 000D1578  7C 7D 1B 78 */	mr r29, r3
 /* 800D477C 000D157C  7F BF EB 78 */	mr r31, r29
-/* 800D4780 000D1580  48 10 2D CD */	bl OSGetTime
+/* 800D4780 000D1580  48 10 2D CD */	bl func_801D754C
 /* 800D4784 000D1584  38 A1 00 08 */	addi r5, r1, 8
-/* 800D4788 000D1588  48 10 30 3D */	bl OSTicksToCalendarTime
+/* 800D4788 000D1588  48 10 30 3D */	bl func_801D77C4
 /* 800D478C 000D158C  80 61 00 10 */	lwz r3, 0x10(r1)
 /* 800D4790 000D1590  2C 03 00 0C */	cmpwi r3, 0xc
 /* 800D4794 000D1594  40 80 00 0C */	bge lbl_800D47A0
@@ -296,31 +296,31 @@ lbl_800D48F8:
 /* 800D491C 000D171C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800D4920 000D1720  4E 80 00 20 */	blr 
 
-.global iTimeInit__Fv
-iTimeInit__Fv:
+.global func_800D4924
+func_800D4924:
 /* 800D4924 000D1724  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D4928 000D1728  7C 08 02 A6 */	mflr r0
 /* 800D492C 000D172C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D4930 000D1730  48 10 2C 1D */	bl OSGetTime
+/* 800D4930 000D1730  48 10 2C 1D */	bl func_801D754C
 /* 800D4934 000D1734  90 8D 93 44 */	stw r4, lbl_803CBC44-_SDA_BASE_(r13)
-/* 800D4938 000D1738  90 6D 93 40 */	stw r3, lbl_sStartupTime-_SDA_BASE_(r13)
+/* 800D4938 000D1738  90 6D 93 40 */	stw r3, lbl_803CBC40-_SDA_BASE_(r13)
 /* 800D493C 000D173C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800D4940 000D1740  7C 08 03 A6 */	mtlr r0
 /* 800D4944 000D1744  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D4948 000D1748  4E 80 00 20 */	blr 
 
-.global iTimeExit__Fv
-iTimeExit__Fv:
+.global func_800D494C
+func_800D494C:
 /* 800D494C 000D174C  4E 80 00 20 */	blr 
 
-.global iTimeGet__Fv
-iTimeGet__Fv:
+.global func_800D4950
+func_800D4950:
 /* 800D4950 000D1750  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D4954 000D1754  7C 08 02 A6 */	mflr r0
 /* 800D4958 000D1758  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D495C 000D175C  48 10 2B F1 */	bl OSGetTime
+/* 800D495C 000D175C  48 10 2B F1 */	bl func_801D754C
 /* 800D4960 000D1760  80 AD 93 44 */	lwz r5, lbl_803CBC44-_SDA_BASE_(r13)
-/* 800D4964 000D1764  80 0D 93 40 */	lwz r0, lbl_sStartupTime-_SDA_BASE_(r13)
+/* 800D4964 000D1764  80 0D 93 40 */	lwz r0, lbl_803CBC40-_SDA_BASE_(r13)
 /* 800D4968 000D1768  7C 85 20 10 */	subfc r4, r5, r4
 /* 800D496C 000D176C  7C 60 19 10 */	subfe r3, r0, r3
 /* 800D4970 000D1770  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -328,8 +328,8 @@ iTimeGet__Fv:
 /* 800D4978 000D1778  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D497C 000D177C  4E 80 00 20 */	blr 
 
-.global iTimeDiffSec__Fx
-iTimeDiffSec__Fx:
+.global func_800D4980
+func_800D4980:
 /* 800D4980 000D1780  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D4984 000D1784  7C 08 02 A6 */	mflr r0
 /* 800D4988 000D1788  90 01 00 14 */	stw r0, 0x14(r1)
@@ -339,7 +339,7 @@ iTimeDiffSec__Fx:
 /* 800D4998 000D1798  80 63 00 F8 */	lwz r3, 0x800000F8@l(r3)
 /* 800D499C 000D179C  90 01 00 08 */	stw r0, 8(r1)
 /* 800D49A0 000D17A0  54 60 F0 BE */	srwi r0, r3, 2
-/* 800D49A4 000D17A4  C8 42 98 58 */	lfd f2, lbl__424-_SDA2_BASE_(r2)
+/* 800D49A4 000D17A4  C8 42 98 58 */	lfd f2, lbl_803CE1D8-_SDA2_BASE_(r2)
 /* 800D49A8 000D17A8  90 01 00 0C */	stw r0, 0xc(r1)
 /* 800D49AC 000D17AC  C8 01 00 08 */	lfd f0, 8(r1)
 /* 800D49B0 000D17B0  EC 00 10 28 */	fsubs f0, f0, f2
@@ -349,39 +349,39 @@ iTimeDiffSec__Fx:
 /* 800D49C0 000D17C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D49C4 000D17C4  4E 80 00 20 */	blr 
 
-.global iTimeDiffSec__Fxx
-iTimeDiffSec__Fxx:
+.global func_800D49C8
+func_800D49C8:
 /* 800D49C8 000D17C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D49CC 000D17CC  7C 08 02 A6 */	mflr r0
 /* 800D49D0 000D17D0  7C 84 30 10 */	subfc r4, r4, r6
 /* 800D49D4 000D17D4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800D49D8 000D17D8  7C 63 29 10 */	subfe r3, r3, r5
-/* 800D49DC 000D17DC  4B FF FF A5 */	bl iTimeDiffSec__Fx
+/* 800D49DC 000D17DC  4B FF FF A5 */	bl func_800D4980
 /* 800D49E0 000D17E0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800D49E4 000D17E4  7C 08 03 A6 */	mtlr r0
 /* 800D49E8 000D17E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D49EC 000D17EC  4E 80 00 20 */	blr 
 
-.global iTimeGameAdvance__Ff
-iTimeGameAdvance__Ff:
-/* 800D49F0 000D17F0  C0 0D 93 48 */	lfs f0, lbl_sGameTime-_SDA_BASE_(r13)
+.global func_800D49F0
+func_800D49F0:
+/* 800D49F0 000D17F0  C0 0D 93 48 */	lfs f0, lbl_803CBC48-_SDA_BASE_(r13)
 /* 800D49F4 000D17F4  EC 00 08 2A */	fadds f0, f0, f1
-/* 800D49F8 000D17F8  D0 0D 93 48 */	stfs f0, lbl_sGameTime-_SDA_BASE_(r13)
+/* 800D49F8 000D17F8  D0 0D 93 48 */	stfs f0, lbl_803CBC48-_SDA_BASE_(r13)
 /* 800D49FC 000D17FC  4E 80 00 20 */	blr 
 
-.global iTimeSetGame__Ff
-iTimeSetGame__Ff:
-/* 800D4A00 000D1800  D0 2D 93 48 */	stfs f1, lbl_sGameTime-_SDA_BASE_(r13)
+.global func_800D4A00
+func_800D4A00:
+/* 800D4A00 000D1800  D0 2D 93 48 */	stfs f1, lbl_803CBC48-_SDA_BASE_(r13)
 /* 800D4A04 000D1804  4E 80 00 20 */	blr 
 
-.global iProfileClear__FUi
-iProfileClear__FUi:
+.global func_800D4A08
+func_800D4A08:
 /* 800D4A08 000D1808  4E 80 00 20 */	blr 
 
-.global iFuncProfileDump__Fv
-iFuncProfileDump__Fv:
+.global func_800D4A0C
+func_800D4A0C:
 /* 800D4A0C 000D180C  4E 80 00 20 */	blr 
 
-.global iFuncProfileParse__FPci
-iFuncProfileParse__FPci:
+.global func_800D4A10
+func_800D4A10:
 /* 800D4A10 000D1810  4E 80 00 20 */	blr 

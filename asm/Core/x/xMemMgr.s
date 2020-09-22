@@ -2,47 +2,47 @@
 
 .section .text  # 0x80033554 - 0x80033E2C
 
-.global xMemDebug_SoakLog__FPCc
-xMemDebug_SoakLog__FPCc:
+.global func_80033554
+func_80033554:
 /* 80033554 00030354  4E 80 00 20 */	blr 
 
-.global xMemInit__Fv
-xMemInit__Fv:
+.global func_80033558
+func_80033558:
 /* 80033558 00030358  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8003355C 0003035C  7C 08 02 A6 */	mflr r0
 /* 80033560 00030360  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80033564 00030364  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80033568 00030368  48 09 2D F9 */	bl iMemInit__Fv
-/* 8003356C 0003036C  3C 60 80 39 */	lis r3, lbl_gMemInfo@ha
+/* 80033568 00030368  48 09 2D F9 */	bl func_800C6360
+/* 8003356C 0003036C  3C 60 80 39 */	lis r3, lbl_8038C320@ha
 /* 80033570 00030370  3C C0 00 01 */	lis r6, 0x00008826@ha
-/* 80033574 00030374  3B E3 C3 20 */	addi r31, r3, lbl_gMemInfo@l
-/* 80033578 00030378  3C 80 80 39 */	lis r4, lbl_gxHeap@ha
-/* 8003357C 0003037C  38 64 C5 E4 */	addi r3, r4, lbl_gxHeap@l
+/* 80033574 00030374  3B E3 C3 20 */	addi r31, r3, lbl_8038C320@l
+/* 80033578 00030378  3C 80 80 39 */	lis r4, lbl_8038C5E4@ha
+/* 8003357C 0003037C  38 64 C5 E4 */	addi r3, r4, lbl_8038C5E4@l
 /* 80033580 00030380  80 9F 00 18 */	lwz r4, 0x18(r31)
 /* 80033584 00030384  80 BF 00 1C */	lwz r5, 0x1c(r31)
 /* 80033588 00030388  38 C6 88 26 */	addi r6, r6, 0x00008826@l
-/* 8003358C 0003038C  48 00 00 B1 */	bl xMemInitHeap__FP12xMemHeap_tagUiUiUi
-/* 80033590 00030390  3C 60 80 39 */	lis r3, lbl_gxHeap@ha
+/* 8003358C 0003038C  48 00 00 B1 */	bl func_8003363C
+/* 80033590 00030390  3C 60 80 39 */	lis r3, lbl_8038C5E4@ha
 /* 80033594 00030394  80 BF 00 1C */	lwz r5, 0x1c(r31)
 /* 80033598 00030398  80 1F 00 18 */	lwz r0, 0x18(r31)
-/* 8003359C 0003039C  38 63 C5 E4 */	addi r3, r3, lbl_gxHeap@l
+/* 8003359C 0003039C  38 63 C5 E4 */	addi r3, r3, lbl_8038C5E4@l
 /* 800335A0 000303A0  3C C0 00 01 */	lis r6, 0x00008925@ha
 /* 800335A4 000303A4  38 63 00 DC */	addi r3, r3, 0xdc
 /* 800335A8 000303A8  7C 80 2A 14 */	add r4, r0, r5
 /* 800335AC 000303AC  38 C6 89 25 */	addi r6, r6, 0x00008925@l
-/* 800335B0 000303B0  48 00 00 8D */	bl xMemInitHeap__FP12xMemHeap_tagUiUiUi
-/* 800335B4 000303B4  3C 60 80 39 */	lis r3, lbl_gxHeap@ha
+/* 800335B0 000303B0  48 00 00 8D */	bl func_8003363C
+/* 800335B4 000303B4  3C 60 80 39 */	lis r3, lbl_8038C5E4@ha
 /* 800335B8 000303B8  80 BF 00 1C */	lwz r5, 0x1c(r31)
 /* 800335BC 000303BC  80 1F 00 18 */	lwz r0, 0x18(r31)
-/* 800335C0 000303C0  38 63 C5 E4 */	addi r3, r3, lbl_gxHeap@l
+/* 800335C0 000303C0  38 63 C5 E4 */	addi r3, r3, lbl_8038C5E4@l
 /* 800335C4 000303C4  3C C0 00 01 */	lis r6, 0x0000892A@ha
 /* 800335C8 000303C8  38 63 01 B8 */	addi r3, r3, 0x1b8
 /* 800335CC 000303CC  7C 80 2A 14 */	add r4, r0, r5
 /* 800335D0 000303D0  38 C6 89 2A */	addi r6, r6, 0x0000892A@l
-/* 800335D4 000303D4  48 00 00 69 */	bl xMemInitHeap__FP12xMemHeap_tagUiUiUi
-/* 800335D8 000303D8  3C 60 80 39 */	lis r3, lbl_gxHeap@ha
+/* 800335D4 000303D4  48 00 00 69 */	bl func_8003363C
+/* 800335D8 000303D8  3C 60 80 39 */	lis r3, lbl_8038C5E4@ha
 /* 800335DC 000303DC  38 A0 00 01 */	li r5, 1
-/* 800335E0 000303E0  38 83 C5 E4 */	addi r4, r3, lbl_gxHeap@l
+/* 800335E0 000303E0  38 83 C5 E4 */	addi r4, r3, lbl_8038C5E4@l
 /* 800335E4 000303E4  38 60 00 02 */	li r3, 2
 /* 800335E8 000303E8  38 00 00 00 */	li r0, 0
 /* 800335EC 000303EC  B0 A4 00 0C */	sth r5, 0xc(r4)
@@ -51,26 +51,26 @@ xMemInit__Fv:
 /* 800335F8 000303F8  B0 64 00 EA */	sth r3, 0xea(r4)
 /* 800335FC 000303FC  B0 04 01 C4 */	sth r0, 0x1c4(r4)
 /* 80033600 00030400  B0 A4 01 C6 */	sth r5, 0x1c6(r4)
-/* 80033604 00030404  90 0D 89 E0 */	stw r0, lbl_gActiveHeap-_SDA_BASE_(r13)
+/* 80033604 00030404  90 0D 89 E0 */	stw r0, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 80033608 00030408  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8003360C 0003040C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033610 00030410  7C 08 03 A6 */	mtlr r0
 /* 80033614 00030414  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033618 00030418  4E 80 00 20 */	blr 
 
-.global xMemExit__Fv
-xMemExit__Fv:
+.global func_8003361C
+func_8003361C:
 /* 8003361C 0003041C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033620 00030420  7C 08 02 A6 */	mflr r0
 /* 80033624 00030424  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033628 00030428  48 09 2E 45 */	bl iMemExit__Fv
+/* 80033628 00030428  48 09 2E 45 */	bl func_800C646C
 /* 8003362C 0003042C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033630 00030430  7C 08 03 A6 */	mtlr r0
 /* 80033634 00030434  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033638 00030438  4E 80 00 20 */	blr 
 
-.global xMemInitHeap__FP12xMemHeap_tagUiUiUi
-xMemInitHeap__FP12xMemHeap_tagUiUiUi:
+.global func_8003363C
+func_8003363C:
 /* 8003363C 0003043C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033640 00030440  7C 08 02 A6 */	mflr r0
 /* 80033644 00030444  38 E0 00 01 */	li r7, 1
@@ -138,8 +138,8 @@ lbl_80033714:
 /* 8003372C 0003052C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033730 00030530  4E 80 00 20 */	blr 
 
-.global xMemMgr.xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag
-xMemMgr.xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag:
+.global func_80033734
+func_80033734:
 /* 80033734 00030534  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033738 00030538  38 00 00 01 */	li r0, 1
 /* 8003373C 0003053C  93 E1 00 0C */	stw r31, 0xc(r1)
@@ -223,15 +223,15 @@ lbl_8003380C:
 /* 8003385C 0003065C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033860 00030660  4E 80 00 20 */	blr 
 
-.global xMemGrowAlloc__FUiUi
-xMemGrowAlloc__FUiUi:
+.global func_80033864
+func_80033864:
 /* 80033864 00030664  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033868 00030668  7C 08 02 A6 */	mflr r0
 /* 8003386C 0003066C  1C A3 00 DC */	mulli r5, r3, 0xdc
-/* 80033870 00030670  3C 60 80 39 */	lis r3, lbl_gxHeap@ha
+/* 80033870 00030670  3C 60 80 39 */	lis r3, lbl_8038C5E4@ha
 /* 80033874 00030674  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80033878 00030678  38 84 00 03 */	addi r4, r4, 3
-/* 8003387C 0003067C  38 03 C5 E4 */	addi r0, r3, lbl_gxHeap@l
+/* 8003387C 0003067C  38 03 C5 E4 */	addi r0, r3, lbl_8038C5E4@l
 /* 80033880 00030680  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80033884 00030684  7D 00 2A 14 */	add r8, r0, r5
 /* 80033888 00030688  54 85 00 3A */	rlwinm r5, r4, 0, 0, 0x1d
@@ -285,15 +285,15 @@ lbl_8003392C:
 /* 80033938 00030738  38 21 00 10 */	addi r1, r1, 0x10
 /* 8003393C 0003073C  4E 80 00 20 */	blr 
 
-.global xMemAlloc__FUiUii
-xMemAlloc__FUiUii:
+.global func_80033940
+func_80033940:
 /* 80033940 00030740  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80033944 00030744  7C 08 02 A6 */	mflr r0
 /* 80033948 00030748  1C E3 00 DC */	mulli r7, r3, 0xdc
-/* 8003394C 0003074C  3C C0 80 39 */	lis r6, lbl_gxHeap@ha
+/* 8003394C 0003074C  3C C0 80 39 */	lis r6, lbl_8038C5E4@ha
 /* 80033950 00030750  90 01 00 44 */	stw r0, 0x44(r1)
 /* 80033954 00030754  38 60 00 01 */	li r3, 1
-/* 80033958 00030758  38 06 C5 E4 */	addi r0, r6, lbl_gxHeap@l
+/* 80033958 00030758  38 06 C5 E4 */	addi r0, r6, lbl_8038C5E4@l
 /* 8003395C 0003075C  BF 61 00 2C */	stmw r27, 0x2c(r1)
 /* 80033960 00030760  7F E0 3A 14 */	add r31, r0, r7
 /* 80033964 00030764  7C 9C 23 78 */	mr r28, r4
@@ -318,7 +318,7 @@ lbl_800339A4:
 /* 800339A8 000307A8  7F 84 E3 78 */	mr r4, r28
 /* 800339AC 000307AC  7F 65 DB 78 */	mr r5, r27
 /* 800339B0 000307B0  38 C1 00 08 */	addi r6, r1, 8
-/* 800339B4 000307B4  4B FF FD 81 */	bl xMemMgr.xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag
+/* 800339B4 000307B4  4B FF FD 81 */	bl func_80033734
 /* 800339B8 000307B8  80 9D 00 08 */	lwz r4, 8(r29)
 /* 800339BC 000307BC  80 1F 00 08 */	lwz r0, 8(r31)
 /* 800339C0 000307C0  7C 84 1A 14 */	add r4, r4, r3
@@ -363,12 +363,12 @@ lbl_80033A44:
 /* 80033A50 00030850  38 21 00 40 */	addi r1, r1, 0x40
 /* 80033A54 00030854  4E 80 00 20 */	blr 
 
-.global xMemPushTemp__FUi
-xMemPushTemp__FUi:
+.global func_80033A58
+func_80033A58:
 /* 80033A58 00030858  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033A5C 0003085C  7C 08 02 A6 */	mflr r0
 /* 80033A60 00030860  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033A64 00030864  80 8D 9F 7C */	lwz r4, lbl_RwEngineInstance-_SDA_BASE_(r13)
+/* 80033A64 00030864  80 8D 9F 7C */	lwz r4, lbl_803CC87C-_SDA_BASE_(r13)
 /* 80033A68 00030868  81 84 01 34 */	lwz r12, 0x134(r4)
 /* 80033A6C 0003086C  7D 89 03 A6 */	mtctr r12
 /* 80033A70 00030870  4E 80 04 21 */	bctrl 
@@ -377,12 +377,12 @@ xMemPushTemp__FUi:
 /* 80033A7C 0003087C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033A80 00030880  4E 80 00 20 */	blr 
 
-.global xMemPopTemp__FPv
-xMemPopTemp__FPv:
+.global func_80033A84
+func_80033A84:
 /* 80033A84 00030884  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033A88 00030888  7C 08 02 A6 */	mflr r0
 /* 80033A8C 0003088C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033A90 00030890  80 8D 9F 7C */	lwz r4, lbl_RwEngineInstance-_SDA_BASE_(r13)
+/* 80033A90 00030890  80 8D 9F 7C */	lwz r4, lbl_803CC87C-_SDA_BASE_(r13)
 /* 80033A94 00030894  81 84 01 38 */	lwz r12, 0x138(r4)
 /* 80033A98 00030898  7D 89 03 A6 */	mtctr r12
 /* 80033A9C 0003089C  4E 80 04 21 */	bctrl 
@@ -391,14 +391,14 @@ xMemPopTemp__FPv:
 /* 80033AA8 000308A8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033AAC 000308AC  4E 80 00 20 */	blr 
 
-.global xMemPushBase__FUi
-xMemPushBase__FUi:
+.global func_80033AB0
+func_80033AB0:
 /* 80033AB0 000308B0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033AB4 000308B4  7C 08 02 A6 */	mflr r0
 /* 80033AB8 000308B8  1C 83 00 DC */	mulli r4, r3, 0xdc
-/* 80033ABC 000308BC  3C 60 80 39 */	lis r3, lbl_gxHeap@ha
+/* 80033ABC 000308BC  3C 60 80 39 */	lis r3, lbl_8038C5E4@ha
 /* 80033AC0 000308C0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033AC4 000308C4  38 03 C5 E4 */	addi r0, r3, lbl_gxHeap@l
+/* 80033AC4 000308C4  38 03 C5 E4 */	addi r0, r3, lbl_8038C5E4@l
 /* 80033AC8 000308C8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80033ACC 000308CC  7F E0 22 14 */	add r31, r0, r4
 /* 80033AD0 000308D0  A0 7F 00 D0 */	lhz r3, 0xd0(r31)
@@ -409,8 +409,8 @@ xMemPushBase__FUi:
 /* 80033AE4 000308E4  38 63 00 10 */	addi r3, r3, 0x10
 /* 80033AE8 000308E8  7C 7F 1A 14 */	add r3, r31, r3
 /* 80033AEC 000308EC  38 83 FF F0 */	addi r4, r3, -16
-/* 80033AF0 000308F0  48 00 00 35 */	bl __as__14xHeapState_tagFRC14xHeapState_tag
-/* 80033AF4 000308F4  81 8D 89 E4 */	lwz r12, lbl_sMemBaseNotifyFunc-_SDA_BASE_(r13)
+/* 80033AF0 000308F0  48 00 00 35 */	bl func_80033B24
+/* 80033AF4 000308F4  81 8D 89 E4 */	lwz r12, lbl_803CB2E4-_SDA_BASE_(r13)
 /* 80033AF8 000308F8  28 0C 00 00 */	cmplwi r12, 0
 /* 80033AFC 000308FC  41 82 00 0C */	beq lbl_80033B08
 /* 80033B00 00030900  7D 89 03 A6 */	mtctr r12
@@ -424,8 +424,8 @@ lbl_80033B08:
 /* 80033B1C 0003091C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033B20 00030920  4E 80 00 20 */	blr 
 
-.global __as__14xHeapState_tagFRC14xHeapState_tag
-__as__14xHeapState_tagFRC14xHeapState_tag:
+.global func_80033B24
+func_80033B24:
 /* 80033B24 00030924  80 04 00 00 */	lwz r0, 0(r4)
 /* 80033B28 00030928  A0 A4 00 04 */	lhz r5, 4(r4)
 /* 80033B2C 0003092C  90 03 00 00 */	stw r0, 0(r3)
@@ -438,27 +438,27 @@ __as__14xHeapState_tagFRC14xHeapState_tag:
 /* 80033B48 00030948  90 03 00 0C */	stw r0, 0xc(r3)
 /* 80033B4C 0003094C  4E 80 00 20 */	blr 
 
-.global xMemPushBase__Fv
-xMemPushBase__Fv:
+.global func_80033B50
+func_80033B50:
 /* 80033B50 00030950  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033B54 00030954  7C 08 02 A6 */	mflr r0
 /* 80033B58 00030958  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033B5C 0003095C  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
-/* 80033B60 00030960  4B FF FF 51 */	bl xMemPushBase__FUi
+/* 80033B5C 0003095C  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80033B60 00030960  4B FF FF 51 */	bl func_80033AB0
 /* 80033B64 00030964  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033B68 00030968  7C 08 03 A6 */	mtlr r0
 /* 80033B6C 0003096C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033B70 00030970  4E 80 00 20 */	blr 
 
-.global xMemPopBase__FUii
-xMemPopBase__FUii:
+.global func_80033B74
+func_80033B74:
 /* 80033B74 00030974  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033B78 00030978  7C 08 02 A6 */	mflr r0
 /* 80033B7C 0003097C  1C 63 00 DC */	mulli r3, r3, 0xdc
-/* 80033B80 00030980  3C A0 80 39 */	lis r5, lbl_gxHeap@ha
+/* 80033B80 00030980  3C A0 80 39 */	lis r5, lbl_8038C5E4@ha
 /* 80033B84 00030984  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80033B88 00030988  2C 04 00 00 */	cmpwi r4, 0
-/* 80033B8C 0003098C  38 05 C5 E4 */	addi r0, r5, lbl_gxHeap@l
+/* 80033B8C 0003098C  38 05 C5 E4 */	addi r0, r5, lbl_8038C5E4@l
 /* 80033B90 00030990  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80033B94 00030994  7F E0 1A 14 */	add r31, r0, r3
 /* 80033B98 00030998  40 80 00 0C */	bge lbl_80033BA4
@@ -466,7 +466,7 @@ xMemPopBase__FUii:
 /* 80033BA0 000309A0  7C 80 22 14 */	add r4, r0, r4
 lbl_80033BA4:
 /* 80033BA4 000309A4  B0 9F 00 D0 */	sth r4, 0xd0(r31)
-/* 80033BA8 000309A8  81 8D 89 E4 */	lwz r12, lbl_sMemBaseNotifyFunc-_SDA_BASE_(r13)
+/* 80033BA8 000309A8  81 8D 89 E4 */	lwz r12, lbl_803CB2E4-_SDA_BASE_(r13)
 /* 80033BAC 000309AC  28 0C 00 00 */	cmplwi r12, 0
 /* 80033BB0 000309B0  41 82 00 0C */	beq lbl_80033BBC
 /* 80033BB4 000309B4  7D 89 03 A6 */	mtctr r12
@@ -479,47 +479,47 @@ lbl_80033BBC:
 /* 80033BCC 000309CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033BD0 000309D0  4E 80 00 20 */	blr 
 
-.global xMemPopBase__Fi
-xMemPopBase__Fi:
+.global func_80033BD4
+func_80033BD4:
 /* 80033BD4 000309D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033BD8 000309D8  7C 08 02 A6 */	mflr r0
 /* 80033BDC 000309DC  7C 64 1B 78 */	mr r4, r3
 /* 80033BE0 000309E0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033BE4 000309E4  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
-/* 80033BE8 000309E8  4B FF FF 8D */	bl xMemPopBase__FUii
+/* 80033BE4 000309E4  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80033BE8 000309E8  4B FF FF 8D */	bl func_80033B74
 /* 80033BEC 000309EC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033BF0 000309F0  7C 08 03 A6 */	mtlr r0
 /* 80033BF4 000309F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033BF8 000309F8  4E 80 00 20 */	blr 
 
-.global xMemGetBase__FUi
-xMemGetBase__FUi:
+.global func_80033BFC
+func_80033BFC:
 /* 80033BFC 000309FC  1C 03 00 DC */	mulli r0, r3, 0xdc
-/* 80033C00 00030A00  3C 60 80 39 */	lis r3, lbl_gxHeap@ha
-/* 80033C04 00030A04  38 63 C5 E4 */	addi r3, r3, lbl_gxHeap@l
+/* 80033C00 00030A00  3C 60 80 39 */	lis r3, lbl_8038C5E4@ha
+/* 80033C04 00030A04  38 63 C5 E4 */	addi r3, r3, lbl_8038C5E4@l
 /* 80033C08 00030A08  7C 63 02 14 */	add r3, r3, r0
 /* 80033C0C 00030A0C  A0 63 00 D0 */	lhz r3, 0xd0(r3)
 /* 80033C10 00030A10  4E 80 00 20 */	blr 
 
-.global xMemRegisterBaseNotifyFunc__FPFv_v
-xMemRegisterBaseNotifyFunc__FPFv_v:
-/* 80033C14 00030A14  90 6D 89 E4 */	stw r3, lbl_sMemBaseNotifyFunc-_SDA_BASE_(r13)
+.global func_80033C14
+func_80033C14:
+/* 80033C14 00030A14  90 6D 89 E4 */	stw r3, lbl_803CB2E4-_SDA_BASE_(r13)
 /* 80033C18 00030A18  4E 80 00 20 */	blr 
 
-.global xMemGetBase__Fv
-xMemGetBase__Fv:
+.global func_80033C1C
+func_80033C1C:
 /* 80033C1C 00030A1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033C20 00030A20  7C 08 02 A6 */	mflr r0
 /* 80033C24 00030A24  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80033C28 00030A28  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
-/* 80033C2C 00030A2C  4B FF FF D1 */	bl xMemGetBase__FUi
+/* 80033C28 00030A28  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80033C2C 00030A2C  4B FF FF D1 */	bl func_80033BFC
 /* 80033C30 00030A30  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033C34 00030A34  7C 08 03 A6 */	mtlr r0
 /* 80033C38 00030A38  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033C3C 00030A3C  4E 80 00 20 */	blr 
 
-.global xMemMgr.xMemPoolAddElements__FP8xMemPoolPvUi
-xMemMgr.xMemPoolAddElements__FP8xMemPoolPvUi:
+.global func_80033C40
+func_80033C40:
 /* 80033C40 00030A40  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80033C44 00030A44  7C 08 02 A6 */	mflr r0
 /* 80033C48 00030A48  90 01 00 34 */	stw r0, 0x34(r1)
@@ -567,8 +567,8 @@ lbl_80033CC4:
 /* 80033CE0 00030AE0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80033CE4 00030AE4  4E 80 00 20 */	blr 
 
-.global xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi
-xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi:
+.global func_80033CE8
+func_80033CE8:
 /* 80033CE8 00030AE8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033CEC 00030AEC  7C 08 02 A6 */	mflr r0
 /* 80033CF0 00030AF0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -583,14 +583,14 @@ xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi:
 /* 80033D14 00030B14  B1 03 00 14 */	sth r8, 0x14(r3)
 /* 80033D18 00030B18  B1 43 00 16 */	sth r10, 0x16(r3)
 /* 80033D1C 00030B1C  90 03 00 18 */	stw r0, 0x18(r3)
-/* 80033D20 00030B20  4B FF FF 21 */	bl xMemMgr.xMemPoolAddElements__FP8xMemPoolPvUi
+/* 80033D20 00030B20  4B FF FF 21 */	bl func_80033C40
 /* 80033D24 00030B24  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033D28 00030B28  7C 08 03 A6 */	mtlr r0
 /* 80033D2C 00030B2C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033D30 00030B30  4E 80 00 20 */	blr 
 
-.global xMemPoolAlloc__FP8xMemPool
-xMemPoolAlloc__FP8xMemPool:
+.global func_80033D34
+func_80033D34:
 /* 80033D34 00030B34  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80033D38 00030B38  7C 08 02 A6 */	mflr r0
 /* 80033D3C 00030B3C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -607,13 +607,13 @@ xMemPoolAlloc__FP8xMemPool:
 /* 80033D68 00030B68  A3 FC 00 16 */	lhz r31, 0x16(r28)
 /* 80033D6C 00030B6C  38 A0 00 00 */	li r5, 0
 /* 80033D70 00030B70  A0 1C 00 14 */	lhz r0, 0x14(r28)
-/* 80033D74 00030B74  80 6D 89 E0 */	lwz r3, lbl_gActiveHeap-_SDA_BASE_(r13)
+/* 80033D74 00030B74  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 80033D78 00030B78  7C 9F 01 D6 */	mullw r4, r31, r0
-/* 80033D7C 00030B7C  4B FF FB C5 */	bl xMemAlloc__FUiUii
+/* 80033D7C 00030B7C  4B FF FB C5 */	bl func_80033940
 /* 80033D80 00030B80  7C 64 1B 78 */	mr r4, r3
 /* 80033D84 00030B84  7F 83 E3 78 */	mr r3, r28
 /* 80033D88 00030B88  7F E5 FB 78 */	mr r5, r31
-/* 80033D8C 00030B8C  4B FF FE B5 */	bl xMemMgr.xMemPoolAddElements__FP8xMemPoolPvUi
+/* 80033D8C 00030B8C  4B FF FE B5 */	bl func_80033C40
 /* 80033D90 00030B90  80 7C 00 00 */	lwz r3, 0(r28)
 lbl_80033D94:
 /* 80033D94 00030B94  7C 83 F0 2E */	lwzx r4, r3, r30
@@ -633,8 +633,8 @@ lbl_80033DB0:
 /* 80033DC8 00030BC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80033DCC 00030BCC  4E 80 00 20 */	blr 
 
-.global xMemPoolFree__FP8xMemPoolPv
-xMemPoolFree__FP8xMemPoolPv:
+.global func_80033DD0
+func_80033DD0:
 /* 80033DD0 00030BD0  28 04 00 00 */	cmplwi r4, 0
 /* 80033DD4 00030BD4  4D 82 00 20 */	beqlr 
 /* 80033DD8 00030BD8  A0 03 00 06 */	lhz r0, 6(r3)

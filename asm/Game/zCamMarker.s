@@ -2,8 +2,8 @@
 
 .section .text  # 0x80123638 - 0x80123740
 
-.global zCamMarkerInit__FP5xBaseP9xCamAsset
-zCamMarkerInit__FP5xBaseP9xCamAsset:
+.global func_80123638
+func_80123638:
 /* 80123638 00120438  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8012363C 0012043C  7C 08 02 A6 */	mflr r0
 /* 80123640 00120440  90 01 00 14 */	stw r0, 0x14(r1)
@@ -11,7 +11,7 @@ zCamMarkerInit__FP5xBaseP9xCamAsset:
 /* 80123648 00120448  7C 9F 23 78 */	mr r31, r4
 /* 8012364C 0012044C  93 C1 00 08 */	stw r30, 8(r1)
 /* 80123650 00120450  7C 7E 1B 78 */	mr r30, r3
-/* 80123654 00120454  4B EE 5D AD */	bl xBaseInit__FP5xBaseP10xBaseAsset
+/* 80123654 00120454  4B EE 5D AD */	bl func_80009400
 /* 80123658 00120458  88 1E 00 05 */	lbz r0, 5(r30)
 /* 8012365C 0012045C  28 00 00 00 */	cmplwi r0, 0
 /* 80123660 00120460  41 82 00 0C */	beq lbl_8012366C
@@ -29,23 +29,23 @@ lbl_8012366C:
 /* 8012368C 0012048C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80123690 00120490  4E 80 00 20 */	blr 
 
-.global zCamMarkerSave__FP10zCamMarkerP7xSerial
-zCamMarkerSave__FP10zCamMarkerP7xSerial:
+.global func_80123694
+func_80123694:
 /* 80123694 00120494  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80123698 00120498  7C 08 02 A6 */	mflr r0
 /* 8012369C 0012049C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801236A0 001204A0  4B EE 5D AD */	bl xBaseSave__FP5xBaseP7xSerial
+/* 801236A0 001204A0  4B EE 5D AD */	bl func_8000944C
 /* 801236A4 001204A4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801236A8 001204A8  7C 08 03 A6 */	mtlr r0
 /* 801236AC 001204AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801236B0 001204B0  4E 80 00 20 */	blr 
 
-.global zCamMarkerLoad__FP10zCamMarkerP7xSerial
-zCamMarkerLoad__FP10zCamMarkerP7xSerial:
+.global func_801236B4
+func_801236B4:
 /* 801236B4 001204B4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801236B8 001204B8  7C 08 02 A6 */	mflr r0
 /* 801236BC 001204BC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801236C0 001204C0  4B EE 5D DD */	bl xBaseLoad__FP5xBaseP7xSerial
+/* 801236C0 001204C0  4B EE 5D DD */	bl func_8000949C
 /* 801236C4 001204C4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801236C8 001204C8  7C 08 03 A6 */	mtlr r0
 /* 801236CC 001204CC  38 21 00 10 */	addi r1, r1, 0x10
@@ -68,15 +68,15 @@ lbl_801236F8:
 lbl_80123708:
 /* 80123708 00120508  80 64 00 10 */	lwz r3, 0x10(r4)
 /* 8012370C 0012050C  C0 26 00 00 */	lfs f1, 0(r6)
-/* 80123710 00120510  4B F2 EB 3D */	bl zCameraDoTrans__FP9xCamAssetf
+/* 80123710 00120510  4B F2 EB 3D */	bl func_8005224C
 /* 80123714 00120514  48 00 00 18 */	b lbl_8012372C
 lbl_80123718:
 /* 80123718 00120518  38 60 00 01 */	li r3, 1
-/* 8012371C 0012051C  4B F2 EA 55 */	bl zCameraSetConvers__Fi
+/* 8012371C 0012051C  4B F2 EA 55 */	bl func_80052170
 /* 80123720 00120520  48 00 00 0C */	b lbl_8012372C
 lbl_80123724:
 /* 80123724 00120524  38 60 00 00 */	li r3, 0
-/* 80123728 00120528  4B F2 EA 49 */	bl zCameraSetConvers__Fi
+/* 80123728 00120528  4B F2 EA 49 */	bl func_80052170
 lbl_8012372C:
 /* 8012372C 0012052C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80123730 00120530  38 60 00 01 */	li r3, 1
