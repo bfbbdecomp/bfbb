@@ -70,7 +70,9 @@ INCLUDES := -Isrc/dolphin/include -Isrc/CodeWarrior
 
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
-CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
+CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -str reuse,pool,readonly \
+           -pragma "check_header_flags off" -pragma "force_active on" \
+           -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
 PREPROCESS := -preprocess -gccincludes $(INCLUDES)
 
 # elf2dol needs to know these in order to calculate sbss correctly.

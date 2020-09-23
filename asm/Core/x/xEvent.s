@@ -137,8 +137,8 @@ func_8001F6A4:
 /* 8001F6D8 0001C4D8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001F6DC 0001C4DC  4E 80 00 20 */	blr 
 
-.global func_8001F6E0
-func_8001F6E0:
+.global zEntEvent__FP5xBaseP5xBaseUi
+zEntEvent__FP5xBaseP5xBaseUi:
 /* 8001F6E0 0001C4E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001F6E4 0001C4E4  7C 08 02 A6 */	mflr r0
 /* 8001F6E8 0001C4E8  7C A6 2B 78 */	mr r6, r5

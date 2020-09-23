@@ -251,8 +251,8 @@ func_8004303C:
 /* 80043064 0003FE64  38 21 00 10 */	addi r1, r1, 0x10
 /* 80043068 0003FE68  4E 80 00 20 */	blr 
 
-.global func_8004306C
-func_8004306C:
+.global Write__7xSerialFUc
+Write__7xSerialFUc:
 /* 8004306C 0003FE6C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80043070 0003FE70  7C 08 02 A6 */	mflr r0
 /* 80043074 0003FE74  38 A0 00 01 */	li r5, 1
@@ -266,8 +266,8 @@ func_8004306C:
 /* 80043094 0003FE94  38 21 00 10 */	addi r1, r1, 0x10
 /* 80043098 0003FE98  4E 80 00 20 */	blr 
 
-.global func_8004309C
-func_8004309C:
+.global Write__7xSerialFs
+Write__7xSerialFs:
 /* 8004309C 0003FE9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800430A0 0003FEA0  7C 08 02 A6 */	mflr r0
 /* 800430A4 0003FEA4  38 A0 00 02 */	li r5, 2
@@ -453,8 +453,8 @@ func_800432D4:
 /* 800432F4 000400F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800432F8 000400F8  4E 80 00 20 */	blr 
 
-.global func_800432FC
-func_800432FC:
+.global Read__7xSerialFPUc
+Read__7xSerialFPUc:
 /* 800432FC 000400FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80043300 00040100  7C 08 02 A6 */	mflr r0
 /* 80043304 00040104  38 A0 00 01 */	li r5, 1
@@ -466,8 +466,8 @@ func_800432FC:
 /* 8004331C 0004011C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80043320 00040120  4E 80 00 20 */	blr 
 
-.global func_80043324
-func_80043324:
+.global Read__7xSerialFPs
+Read__7xSerialFPs:
 /* 80043324 00040124  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80043328 00040128  7C 08 02 A6 */	mflr r0
 /* 8004332C 0004012C  38 A0 00 02 */	li r5, 2
