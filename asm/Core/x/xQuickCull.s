@@ -2,8 +2,8 @@
 
 .section .text  # 0x8003C498 - 0x8003CC4C
 
-.global func_8003C498
-func_8003C498:
+.global xQuickCullInit__FP10xQCControlffffff
+xQuickCullInit__FP10xQCControlffffff:
 /* 8003C498 00039298  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8003C49C 0003929C  ED 04 08 28 */	fsubs f8, f4, f1
 /* 8003C4A0 000392A0  EC E5 10 28 */	fsubs f7, f5, f2
@@ -67,8 +67,8 @@ lbl_8003C50C:
 /* 8003C580 00039380  D0 03 00 38 */	stfs f0, 0x38(r3)
 /* 8003C584 00039384  4E 80 00 20 */	blr 
 
-.global func_8003C588
-func_8003C588:
+.global xQuickCullInit__FP10xQCControlPC4xBox
+xQuickCullInit__FP10xQCControlPC4xBox:
 /* 8003C588 00039388  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8003C58C 0003938C  7C 08 02 A6 */	mflr r0
 /* 8003C590 00039390  C0 24 00 0C */	lfs f1, 0xc(r4)
@@ -78,14 +78,14 @@ func_8003C588:
 /* 8003C5A0 000393A0  C0 84 00 00 */	lfs f4, 0(r4)
 /* 8003C5A4 000393A4  C0 A4 00 04 */	lfs f5, 4(r4)
 /* 8003C5A8 000393A8  C0 C4 00 08 */	lfs f6, 8(r4)
-/* 8003C5AC 000393AC  4B FF FE ED */	bl func_8003C498
+/* 8003C5AC 000393AC  4B FF FE ED */	bl xQuickCullInit__FP10xQCControlffffff
 /* 8003C5B0 000393B0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8003C5B4 000393B4  7C 08 03 A6 */	mtlr r0
 /* 8003C5B8 000393B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8003C5BC 000393BC  4E 80 00 20 */	blr 
 
-.global func_8003C5C0
-func_8003C5C0:
+.global xQuickCullIsects__FPC7xQCDataPC7xQCData
+xQuickCullIsects__FPC7xQCDataPC7xQCData:
 /* 8003C5C0 000393C0  88 A3 00 00 */	lbz r5, 0(r3)
 /* 8003C5C4 000393C4  38 C0 00 00 */	li r6, 0
 /* 8003C5C8 000393C8  88 04 00 04 */	lbz r0, 4(r4)
@@ -128,8 +128,8 @@ lbl_8003C658:
 /* 8003C658 00039458  54 C3 06 3E */	clrlwi r3, r6, 0x18
 /* 8003C65C 0003945C  4E 80 00 20 */	blr 
 
-.global func_8003C660
-func_8003C660:
+.global xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound
+xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound:
 /* 8003C660 00039460  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8003C664 00039464  7C 08 02 A6 */	mflr r0
 /* 8003C668 00039468  90 01 00 14 */	stw r0, 0x14(r1)
@@ -137,20 +137,20 @@ func_8003C660:
 /* 8003C670 00039470  28 00 00 01 */	cmplwi r0, 1
 /* 8003C674 00039474  40 82 00 10 */	bne lbl_8003C684
 /* 8003C678 00039478  38 A5 00 24 */	addi r5, r5, 0x24
-/* 8003C67C 0003947C  48 00 04 1D */	bl func_8003CA98
+/* 8003C67C 0003947C  48 00 04 1D */	bl xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere
 /* 8003C680 00039480  48 00 00 2C */	b lbl_8003C6AC
 lbl_8003C684:
 /* 8003C684 00039484  28 00 00 02 */	cmplwi r0, 2
 /* 8003C688 00039488  40 82 00 10 */	bne lbl_8003C698
 /* 8003C68C 0003948C  38 A5 00 30 */	addi r5, r5, 0x30
-/* 8003C690 00039490  48 00 04 D1 */	bl func_8003CB60
+/* 8003C690 00039490  48 00 04 D1 */	bl xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox
 /* 8003C694 00039494  48 00 00 18 */	b lbl_8003C6AC
 lbl_8003C698:
 /* 8003C698 00039498  28 00 00 04 */	cmplwi r0, 4
 /* 8003C69C 0003949C  40 82 00 10 */	bne lbl_8003C6AC
 /* 8003C6A0 000394A0  80 C5 00 48 */	lwz r6, 0x48(r5)
 /* 8003C6A4 000394A4  38 A5 00 30 */	addi r5, r5, 0x30
-/* 8003C6A8 000394A8  48 00 05 25 */	bl func_8003CBCC
+/* 8003C6A8 000394A8  48 00 05 25 */	bl xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3
 lbl_8003C6AC:
 /* 8003C6AC 000394AC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8003C6B0 000394B0  7C 08 03 A6 */	mtlr r0
@@ -307,8 +307,8 @@ lbl_8003C8B0:
 /* 8003C8B8 000396B8  98 03 00 07 */	stb r0, 7(r3)
 /* 8003C8BC 000396BC  4E 80 00 20 */	blr 
 
-.global func_8003C8C0
-func_8003C8C0:
+.global xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3
+xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3:
 /* 8003C8C0 000396C0  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8003C8C4 000396C4  7C 08 02 A6 */	mflr r0
 /* 8003C8C8 000396C8  90 01 00 64 */	stw r0, 0x64(r1)
@@ -336,8 +336,8 @@ func_8003C8C0:
 /* 8003C920 00039720  38 21 00 60 */	addi r1, r1, 0x60
 /* 8003C924 00039724  4E 80 00 20 */	blr 
 
-.global func_8003C928
-func_8003C928:
+.global xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3
+xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3:
 /* 8003C928 00039728  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8003C92C 0003972C  7C 08 02 A6 */	mflr r0
 /* 8003C930 00039730  90 01 00 74 */	stw r0, 0x74(r1)
@@ -437,8 +437,8 @@ lbl_8003CA18:
 /* 8003CA90 00039890  38 21 00 70 */	addi r1, r1, 0x70
 /* 8003CA94 00039894  4E 80 00 20 */	blr 
 
-.global func_8003CA98
-func_8003CA98:
+.global xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere
+xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere:
 /* 8003CA98 00039898  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8003CA9C 0003989C  7C 08 02 A6 */	mflr r0
 /* 8003CAA0 000398A0  C0 05 00 0C */	lfs f0, 0xc(r5)
@@ -490,8 +490,8 @@ func_8003CA98:
 /* 8003CB58 00039958  38 21 00 70 */	addi r1, r1, 0x70
 /* 8003CB5C 0003995C  4E 80 00 20 */	blr 
 
-.global func_8003CB60
-func_8003CB60:
+.global xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox
+xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox:
 /* 8003CB60 00039960  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8003CB64 00039964  7C 08 02 A6 */	mflr r0
 /* 8003CB68 00039968  90 01 00 64 */	stw r0, 0x64(r1)
@@ -520,8 +520,8 @@ func_8003CB60:
 /* 8003CBC4 000399C4  38 21 00 60 */	addi r1, r1, 0x60
 /* 8003CBC8 000399C8  4E 80 00 20 */	blr 
 
-.global func_8003CBCC
-func_8003CBCC:
+.global xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3
+xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3:
 /* 8003CBCC 000399CC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8003CBD0 000399D0  7C 08 02 A6 */	mflr r0
 /* 8003CBD4 000399D4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -532,11 +532,11 @@ func_8003CBCC:
 /* 8003CBE8 000399E8  93 C1 00 28 */	stw r30, 0x28(r1)
 /* 8003CBEC 000399EC  7C 7E 1B 78 */	mr r30, r3
 /* 8003CBF0 000399F0  38 61 00 08 */	addi r3, r1, 8
-/* 8003CBF4 000399F4  4B FF 4E ED */	bl func_80031AE0
+/* 8003CBF4 000399F4  4B FF 4E ED */	bl xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3
 /* 8003CBF8 000399F8  7F C3 F3 78 */	mr r3, r30
 /* 8003CBFC 000399FC  7F E4 FB 78 */	mr r4, r31
 /* 8003CC00 00039A00  38 A1 00 08 */	addi r5, r1, 8
-/* 8003CC04 00039A04  4B FF FF 5D */	bl func_8003CB60
+/* 8003CC04 00039A04  4B FF FF 5D */	bl xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox
 /* 8003CC08 00039A08  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 8003CC0C 00039A0C  83 E1 00 2C */	lwz r31, 0x2c(r1)
 /* 8003CC10 00039A10  83 C1 00 28 */	lwz r30, 0x28(r1)
@@ -544,8 +544,8 @@ func_8003CBCC:
 /* 8003CC18 00039A18  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003CC1C 00039A1C  4E 80 00 20 */	blr 
 
-.global func_8003CC20
-func_8003CC20:
+.global xQuickCullForEverything__FP7xQCData
+xQuickCullForEverything__FP7xQCData:
 /* 8003CC20 00039A20  38 80 FF 80 */	li r4, -128
 /* 8003CC24 00039A24  38 00 00 7F */	li r0, 0x7f
 /* 8003CC28 00039A28  98 83 00 00 */	stb r4, 0(r3)

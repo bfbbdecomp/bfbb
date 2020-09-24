@@ -2,8 +2,8 @@
 
 .section .text  # 0x8017C2B4 - 0x8017C420
 
-.global func_8017C2B4
-func_8017C2B4:
+.global xCurveAssetEvaluate__FPC11xCurveAssetf
+xCurveAssetEvaluate__FPC11xCurveAssetf:
 /* 8017C2B4 001790B4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8017C2B8 001790B8  7C 08 02 A6 */	mflr r0
 /* 8017C2BC 001790BC  90 01 00 44 */	stw r0, 0x44(r1)
@@ -67,7 +67,7 @@ lbl_8017C364:
 /* 8017C390 00179190  54 A0 07 FE */	clrlwi r0, r5, 0x1f
 /* 8017C394 00179194  7C 00 1A 78 */	xor r0, r0, r3
 /* 8017C398 00179198  7C 63 00 50 */	subf r3, r3, r0
-/* 8017C39C 0017919C  48 06 5A 85 */	bl func_801E1E20
+/* 8017C39C 0017919C  48 06 5A 85 */	bl abs
 /* 8017C3A0 001791A0  2C 03 00 01 */	cmpwi r3, 1
 /* 8017C3A4 001791A4  40 82 00 08 */	bne lbl_8017C3AC
 /* 8017C3A8 001791A8  EF FE F8 28 */	fsubs f31, f30, f31

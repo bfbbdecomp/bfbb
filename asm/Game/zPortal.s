@@ -2,19 +2,19 @@
 
 .section .text  # 0x800AC8A0 - 0x800AC9E8
 
-.global func_800AC8A0
-func_800AC8A0:
+.global zPortalInit__FPvPv
+zPortalInit__FPvPv:
 /* 800AC8A0 000A96A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AC8A4 000A96A4  7C 08 02 A6 */	mflr r0
 /* 800AC8A8 000A96A8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AC8AC 000A96AC  48 00 00 15 */	bl func_800AC8C0
+/* 800AC8AC 000A96AC  48 00 00 15 */	bl zPortalInit__FP8_zPortalP12xPortalAsset
 /* 800AC8B0 000A96B0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800AC8B4 000A96B4  7C 08 03 A6 */	mtlr r0
 /* 800AC8B8 000A96B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AC8BC 000A96BC  4E 80 00 20 */	blr 
 
-.global func_800AC8C0
-func_800AC8C0:
+.global zPortalInit__FP8_zPortalP12xPortalAsset
+zPortalInit__FP8_zPortalP12xPortalAsset:
 /* 800AC8C0 000A96C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AC8C4 000A96C4  7C 08 02 A6 */	mflr r0
 /* 800AC8C8 000A96C8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -41,8 +41,8 @@ lbl_800AC908:
 /* 800AC918 000A9718  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AC91C 000A971C  4E 80 00 20 */	blr 
 
-.global func_800AC920
-func_800AC920:
+.global zPortalReset__FP8_zPortal
+zPortalReset__FP8_zPortal:
 /* 800AC920 000A9720  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AC924 000A9724  7C 08 02 A6 */	mflr r0
 /* 800AC928 000A9728  90 01 00 14 */	stw r0, 0x14(r1)
@@ -53,8 +53,8 @@ func_800AC920:
 /* 800AC93C 000A973C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AC940 000A9740  4E 80 00 20 */	blr 
 
-.global func_800AC944
-func_800AC944:
+.global zPortalSave__FP8_zPortalP7xSerial
+zPortalSave__FP8_zPortalP7xSerial:
 /* 800AC944 000A9744  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AC948 000A9748  7C 08 02 A6 */	mflr r0
 /* 800AC94C 000A974C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -64,8 +64,8 @@ func_800AC944:
 /* 800AC95C 000A975C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AC960 000A9760  4E 80 00 20 */	blr 
 
-.global func_800AC964
-func_800AC964:
+.global zPortalLoad__FP8_zPortalP7xSerial
+zPortalLoad__FP8_zPortalP7xSerial:
 /* 800AC964 000A9764  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AC968 000A9768  7C 08 02 A6 */	mflr r0
 /* 800AC96C 000A976C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -86,7 +86,7 @@ lbl_800AC984:
 /* 800AC9A4 000A97A4  48 00 00 30 */	b lbl_800AC9D4
 lbl_800AC9A8:
 /* 800AC9A8 000A97A8  7C 83 23 78 */	mr r3, r4
-/* 800AC9AC 000A97AC  4B FF FF 75 */	bl func_800AC920
+/* 800AC9AC 000A97AC  4B FF FF 75 */	bl zPortalReset__FP8_zPortal
 /* 800AC9B0 000A97B0  48 00 00 24 */	b lbl_800AC9D4
 lbl_800AC9B4:
 /* 800AC9B4 000A97B4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -96,7 +96,7 @@ lbl_800AC9B4:
 /* 800AC9C4 000A97C4  41 82 00 10 */	beq lbl_800AC9D4
 /* 800AC9C8 000A97C8  7C 83 23 78 */	mr r3, r4
 /* 800AC9CC 000A97CC  38 80 00 00 */	li r4, 0
-/* 800AC9D0 000A97D0  48 00 5A 29 */	bl func_800B23F8
+/* 800AC9D0 000A97D0  48 00 5A 29 */	bl zSceneSwitch__FP8_zPortali
 lbl_800AC9D4:
 /* 800AC9D4 000A97D4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800AC9D8 000A97D8  38 60 00 01 */	li r3, 1

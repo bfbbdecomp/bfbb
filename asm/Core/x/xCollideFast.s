@@ -2,8 +2,8 @@
 
 .section .text  # 0x800159D4 - 0x80015B3C
 
-.global func_800159D4
-func_800159D4:
+.global xCollideFastInit__FP6xScene
+xCollideFastInit__FP6xScene:
 /* 800159D4 000127D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800159D8 000127D8  7C 08 02 A6 */	mflr r0
 /* 800159DC 000127DC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -13,8 +13,8 @@ func_800159D4:
 /* 800159EC 000127EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800159F0 000127F0  4E 80 00 20 */	blr 
 
-.global func_800159F4
-func_800159F4:
+.global xRayHitsSphereFast__FPC5xRay3PC7xSphere
+xRayHitsSphereFast__FPC5xRay3PC7xSphere:
 /* 800159F4 000127F4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800159F8 000127F8  7C 08 02 A6 */	mflr r0
 /* 800159FC 000127FC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -30,7 +30,7 @@ func_800159F4:
 /* 80015A24 00012824  4B FF 8C 6D */	bl func_8000E690
 /* 80015A28 00012828  38 61 00 08 */	addi r3, r1, 8
 /* 80015A2C 0001282C  7C 64 1B 78 */	mr r4, r3
-/* 80015A30 00012830  48 03 8A C1 */	bl func_8004E4F0
+/* 80015A30 00012830  48 03 8A C1 */	bl xVec3Dot__FPC5xVec3PC5xVec3
 /* 80015A34 00012834  C0 7F 00 0C */	lfs f3, 0xc(r31)
 /* 80015A38 00012838  C0 02 81 78 */	lfs f0, lbl_803CCAF8-_SDA2_BASE_(r2)
 /* 80015A3C 0001283C  EC 43 00 F2 */	fmuls f2, f3, f3
@@ -55,7 +55,7 @@ lbl_80015A58:
 lbl_80015A84:
 /* 80015A84 00012884  38 61 00 08 */	addi r3, r1, 8
 /* 80015A88 00012888  38 9E 00 0C */	addi r4, r30, 0xc
-/* 80015A8C 0001288C  48 03 8A 65 */	bl func_8004E4F0
+/* 80015A8C 0001288C  48 03 8A 65 */	bl xVec3Dot__FPC5xVec3PC5xVec3
 /* 80015A90 00012890  C0 02 81 78 */	lfs f0, lbl_803CCAF8-_SDA2_BASE_(r2)
 /* 80015A94 00012894  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80015A98 00012898  4C 41 13 82 */	cror 2, 1, 2
@@ -78,8 +78,8 @@ lbl_80015ABC:
 /* 80015AD4 000128D4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80015AD8 000128D8  4E 80 00 20 */	blr 
 
-.global func_80015ADC
-func_80015ADC:
+.global xRayHitsBoxFast__FPC5xRay3PC4xBox
+xRayHitsBoxFast__FPC5xRay3PC4xBox:
 /* 80015ADC 000128DC  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80015AE0 000128E0  7C 08 02 A6 */	mflr r0
 /* 80015AE4 000128E4  90 01 00 44 */	stw r0, 0x44(r1)
@@ -87,7 +87,7 @@ func_80015ADC:
 /* 80015AEC 000128EC  7C 83 23 78 */	mr r3, r4
 /* 80015AF0 000128F0  38 A1 00 08 */	addi r5, r1, 8
 /* 80015AF4 000128F4  7C 04 03 78 */	mr r4, r0
-/* 80015AF8 000128F8  48 0B 02 81 */	bl func_800C5D78
+/* 80015AF8 000128F8  48 0B 02 81 */	bl iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect
 /* 80015AFC 000128FC  C0 01 00 0C */	lfs f0, 0xc(r1)
 /* 80015B00 00012900  38 00 00 00 */	li r0, 0
 /* 80015B04 00012904  C0 22 81 78 */	lfs f1, lbl_803CCAF8-_SDA2_BASE_(r2)

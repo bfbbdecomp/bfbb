@@ -2,8 +2,8 @@
 
 .section .text  # 0x8010EB94 - 0x8010EED8
 
-.global func_8010EB94
-func_8010EB94:
+.global xGoalSimple_RegisterTypes__FP8xFactory
+xGoalSimple_RegisterTypes__FP8xFactory:
 /* 8010EB94 0010B994  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EB98 0010B998  7C 08 02 A6 */	mflr r0
 /* 8010EB9C 0010B99C  3C A0 80 11 */	lis r5, lbl_8010EBF8@ha
@@ -15,7 +15,7 @@ func_8010EB94:
 /* 8010EBB4 0010B9B4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8010EBB8 0010B9B8  7C 7F 1B 78 */	mr r31, r3
 /* 8010EBBC 0010B9BC  38 87 4D 00 */	addi r4, r7, 0x47534D00@l
-/* 8010EBC0 0010B9C0  48 00 08 D9 */	bl func_8010F498
+/* 8010EBC0 0010B9C0  48 00 08 D9 */	bl RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v
 /* 8010EBC4 0010B9C4  3C 80 80 11 */	lis r4, lbl_8010EBF8@ha
 /* 8010EBC8 0010B9C8  3C 60 80 11 */	lis r3, lbl_8010ECA4@ha
 /* 8010EBCC 0010B9CC  38 A4 EB F8 */	addi r5, r4, lbl_8010EBF8@l
@@ -23,7 +23,7 @@ func_8010EB94:
 /* 8010EBD4 0010B9D4  38 C3 EC A4 */	addi r6, r3, lbl_8010ECA4@l
 /* 8010EBD8 0010B9D8  7F E3 FB 78 */	mr r3, r31
 /* 8010EBDC 0010B9DC  38 84 4D 01 */	addi r4, r4, 0x47534D01@l
-/* 8010EBE0 0010B9E0  48 00 08 B9 */	bl func_8010F498
+/* 8010EBE0 0010B9E0  48 00 08 B9 */	bl RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v
 /* 8010EBE4 0010B9E4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8010EBE8 0010B9E8  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8010EBEC 0010B9EC  7C 08 03 A6 */	mtlr r0
@@ -49,7 +49,7 @@ lbl_8010EBF8:
 lbl_8010EC38:
 /* 8010EC38 0010BA38  7F E4 FB 78 */	mr r4, r31
 /* 8010EC3C 0010BA3C  38 60 00 54 */	li r3, 0x54
-/* 8010EC40 0010BA40  48 00 05 11 */	bl func_8010F150
+/* 8010EC40 0010BA40  48 00 05 11 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
 /* 8010EC44 0010BA44  7C 60 1B 79 */	or. r0, r3, r3
 /* 8010EC48 0010BA48  41 82 00 10 */	beq lbl_8010EC58
 /* 8010EC4C 0010BA4C  7F E4 FB 78 */	mr r4, r31
@@ -61,7 +61,7 @@ lbl_8010EC58:
 lbl_8010EC60:
 /* 8010EC60 0010BA60  7F E4 FB 78 */	mr r4, r31
 /* 8010EC64 0010BA64  38 60 00 3C */	li r3, 0x3c
-/* 8010EC68 0010BA68  48 00 04 E9 */	bl func_8010F150
+/* 8010EC68 0010BA68  48 00 04 E9 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
 /* 8010EC6C 0010BA6C  7C 60 1B 79 */	or. r0, r3, r3
 /* 8010EC70 0010BA70  41 82 00 10 */	beq lbl_8010EC80
 /* 8010EC74 0010BA74  7F E4 FB 78 */	mr r4, r31

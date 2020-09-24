@@ -2,19 +2,19 @@
 
 .section .text  # 0x8017C0A0 - 0x8017C2B4
 
-.global func_8017C0A0
-func_8017C0A0:
+.global zCameraFly_Init__FR5xBaseR9xDynAssetUl
+zCameraFly_Init__FR5xBaseR9xDynAssetUl:
 /* 8017C0A0 00178EA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017C0A4 00178EA4  7C 08 02 A6 */	mflr r0
 /* 8017C0A8 00178EA8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017C0AC 00178EAC  48 00 00 15 */	bl func_8017C0C0
+/* 8017C0AC 00178EAC  48 00 00 15 */	bl zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset
 /* 8017C0B0 00178EB0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017C0B4 00178EB4  7C 08 03 A6 */	mtlr r0
 /* 8017C0B8 00178EB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C0BC 00178EBC  4E 80 00 20 */	blr 
 
-.global func_8017C0C0
-func_8017C0C0:
+.global zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset
+zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset:
 /* 8017C0C0 00178EC0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017C0C4 00178EC4  7C 08 02 A6 */	mflr r0
 /* 8017C0C8 00178EC8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -44,19 +44,19 @@ lbl_8017C110:
 /* 8017C120 00178F20  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C124 00178F24  4E 80 00 20 */	blr 
 
-.global func_8017C128
-func_8017C128:
+.global zCameraFly_Setup__FP10zCameraFly
+zCameraFly_Setup__FP10zCameraFly:
 /* 8017C128 00178F28  A0 03 00 06 */	lhz r0, 6(r3)
 /* 8017C12C 00178F2C  60 00 00 02 */	ori r0, r0, 2
 /* 8017C130 00178F30  B0 03 00 06 */	sth r0, 6(r3)
 /* 8017C134 00178F34  4E 80 00 20 */	blr 
 
-.global func_8017C138
-func_8017C138:
+.global zCameraFly_Update__FP5xBaseP6xScenef
+zCameraFly_Update__FP5xBaseP6xScenef:
 /* 8017C138 00178F38  4E 80 00 20 */	blr 
 
-.global func_8017C13C
-func_8017C13C:
+.global zCameraFly_Save__FP10zCameraFlyP7xSerial
+zCameraFly_Save__FP10zCameraFlyP7xSerial:
 /* 8017C13C 00178F3C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017C140 00178F40  7C 08 02 A6 */	mflr r0
 /* 8017C144 00178F44  90 01 00 14 */	stw r0, 0x14(r1)
@@ -66,8 +66,8 @@ func_8017C13C:
 /* 8017C154 00178F54  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C158 00178F58  4E 80 00 20 */	blr 
 
-.global func_8017C15C
-func_8017C15C:
+.global zCameraFly_Load__FP10zCameraFlyP7xSerial
+zCameraFly_Load__FP10zCameraFlyP7xSerial:
 /* 8017C15C 00178F5C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017C160 00178F60  7C 08 02 A6 */	mflr r0
 /* 8017C164 00178F64  90 01 00 14 */	stw r0, 0x14(r1)
@@ -77,8 +77,8 @@ func_8017C15C:
 /* 8017C174 00178F74  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C178 00178F78  4E 80 00 20 */	blr 
 
-.global func_8017C17C
-func_8017C17C:
+.global zCameraFlyProcessStopEvent__Fv
+zCameraFlyProcessStopEvent__Fv:
 /* 8017C17C 00178F7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017C180 00178F80  7C 08 02 A6 */	mflr r0
 /* 8017C184 00178F84  3C 60 80 3C */	lis r3, lbl_803C0558@ha
@@ -86,12 +86,12 @@ func_8017C17C:
 /* 8017C18C 00178F8C  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
 /* 8017C190 00178F90  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8017C194 00178F94  83 E3 1F C0 */	lwz r31, 0x1fc0(r3)
-/* 8017C198 00178F98  4B ED 63 11 */	bl func_800524A8
+/* 8017C198 00178F98  4B ED 63 11 */	bl zCamera_FlyOnly__Fv
 /* 8017C19C 00178F9C  28 03 00 00 */	cmplwi r3, 0
 /* 8017C1A0 00178FA0  40 82 00 10 */	bne lbl_8017C1B0
 /* 8017C1A4 00178FA4  C0 22 AD D8 */	lfs f1, lbl_803CF758-_SDA2_BASE_(r2)
 /* 8017C1A8 00178FA8  C0 42 AD DC */	lfs f2, lbl_803CF75C-_SDA2_BASE_(r2)
-/* 8017C1AC 00178FAC  4B F2 BA B5 */	bl func_800A7C60
+/* 8017C1AC 00178FAC  4B F2 BA B5 */	bl zMusicSetVolume__Fff
 lbl_8017C1B0:
 /* 8017C1B0 00178FB0  80 AD 8B BC */	lwz r5, lbl_803CB4BC-_SDA_BASE_(r13)
 /* 8017C1B4 00178FB4  38 E0 00 00 */	li r7, 0
@@ -109,7 +109,7 @@ lbl_8017C1C0:
 /* 8017C1E0 00178FE0  7C 00 28 40 */	cmplw r0, r5
 /* 8017C1E4 00178FE4  40 82 00 14 */	bne lbl_8017C1F8
 /* 8017C1E8 00178FE8  38 80 00 13 */	li r4, 0x13
-/* 8017C1EC 00178FEC  4B EA 34 05 */	bl func_8001F5F0
+/* 8017C1EC 00178FEC  4B EA 34 05 */	bl zEntEvent__FP5xBaseUi
 /* 8017C1F0 00178FF0  38 60 00 01 */	li r3, 1
 /* 8017C1F4 00178FF4  48 00 00 18 */	b lbl_8017C20C
 lbl_8017C1F8:
@@ -160,7 +160,7 @@ lbl_8017C280:
 /* 8017C28C 0017908C  41 82 00 10 */	beq lbl_8017C29C
 /* 8017C290 00179090  80 7F 00 10 */	lwz r3, 0x10(r31)
 /* 8017C294 00179094  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 8017C298 00179098  4B ED 42 29 */	bl func_800504C0
+/* 8017C298 00179098  4B ED 42 29 */	bl zCameraFlyStart__FUi
 lbl_8017C29C:
 /* 8017C29C 0017909C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017C2A0 001790A0  38 60 00 01 */	li r3, 1

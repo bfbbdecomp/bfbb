@@ -2,8 +2,8 @@
 
 .section .text  # 0x80038B98 - 0x800392A0
 
-.global func_80038B98
-func_80038B98:
+.global xPartitionReset__Fv
+xPartitionReset__Fv:
 /* 80038B98 00035998  4E 80 00 20 */	blr 
 
 .global func_80038B9C
@@ -14,7 +14,7 @@ func_80038B9C:
 /* 80038BA8 000359A8  38 A0 00 00 */	li r5, 0
 /* 80038BAC 000359AC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80038BB0 000359B0  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
-/* 80038BB4 000359B4  4B FF AD 8D */	bl func_80033940
+/* 80038BB4 000359B4  4B FF AD 8D */	bl xMemAlloc__FUiUii
 /* 80038BB8 000359B8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80038BBC 000359BC  7C 08 03 A6 */	mtlr r0
 /* 80038BC0 000359C0  38 21 00 10 */	addi r1, r1, 0x10
@@ -66,8 +66,8 @@ lbl_80038C20:
 /* 80038C58 00035A58  38 21 00 10 */	addi r1, r1, 0x10
 /* 80038C5C 00035A5C  4E 80 00 20 */	blr 
 
-.global func_80038C60
-func_80038C60:
+.global xPartitionGetTrueIdx__FP13_tagPartitioniii
+xPartitionGetTrueIdx__FP13_tagPartitioniii:
 /* 80038C60 00035A60  80 E3 00 24 */	lwz r7, 0x24(r3)
 /* 80038C64 00035A64  80 63 00 2C */	lwz r3, 0x2c(r3)
 /* 80038C68 00035A68  7C 07 31 D6 */	mullw r0, r7, r6
@@ -77,8 +77,8 @@ func_80038C60:
 /* 80038C78 00035A78  7C 63 22 14 */	add r3, r3, r4
 /* 80038C7C 00035A7C  4E 80 00 20 */	blr 
 
-.global func_80038C80
-func_80038C80:
+.global xPartitionVolume__FP13_tagPartitionP7xVolumeiii
+xPartitionVolume__FP13_tagPartitionP7xVolumeiii:
 /* 80038C80 00035A80  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80038C84 00035A84  7C 08 02 A6 */	mflr r0
 /* 80038C88 00035A88  90 01 00 44 */	stw r0, 0x44(r1)
@@ -92,7 +92,7 @@ func_80038C80:
 /* 80038CA8 00035AA8  38 A0 00 40 */	li r5, 0x40
 /* 80038CAC 00035AAC  4B FC A7 AD */	bl memset
 /* 80038CB0 00035AB0  7F 23 CB 78 */	mr r3, r25
-/* 80038CB4 00035AB4  48 0D FD 45 */	bl func_801189F8
+/* 80038CB4 00035AB4  48 0D FD 45 */	bl GetBound__7xVolumeFv
 /* 80038CB8 00035AB8  3B 63 00 30 */	addi r27, r3, 0x30
 /* 80038CBC 00035ABC  7F 83 E3 78 */	mr r3, r28
 /* 80038CC0 00035AC0  38 9B 00 0C */	addi r4, r27, 0xc
@@ -148,7 +148,7 @@ func_80038C80:
 /* 80038D88 00035B88  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 80038D8C 00035B8C  7C 04 01 D6 */	mullw r0, r4, r0
 /* 80038D90 00035B90  7C 86 01 D6 */	mullw r4, r6, r0
-/* 80038D94 00035B94  4B FF AB AD */	bl func_80033940
+/* 80038D94 00035B94  4B FF AB AD */	bl xMemAlloc__FUiUii
 /* 80038D98 00035B98  90 7C 00 30 */	stw r3, 0x30(r28)
 /* 80038D9C 00035B9C  3B 60 00 00 */	li r27, 0
 /* 80038DA0 00035BA0  48 00 00 54 */	b lbl_80038DF4
@@ -163,7 +163,7 @@ lbl_80038DB4:
 /* 80038DB8 00035BB8  7F 24 CB 78 */	mr r4, r25
 /* 80038DBC 00035BBC  7F 45 D3 78 */	mr r5, r26
 /* 80038DC0 00035BC0  7F 66 DB 78 */	mr r6, r27
-/* 80038DC4 00035BC4  4B FF FE 9D */	bl func_80038C60
+/* 80038DC4 00035BC4  4B FF FE 9D */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
 /* 80038DC8 00035BC8  1C 03 00 0C */	mulli r0, r3, 0xc
 /* 80038DCC 00035BCC  80 7C 00 30 */	lwz r3, 0x30(r28)
 /* 80038DD0 00035BD0  7C 63 02 14 */	add r3, r3, r0
@@ -188,8 +188,8 @@ lbl_80038DF4:
 /* 80038E10 00035C10  38 21 00 40 */	addi r1, r1, 0x40
 /* 80038E14 00035C14  4E 80 00 20 */	blr 
 
-.global func_80038E18
-func_80038E18:
+.global xPartitionWorld__FP13_tagPartitionP4xEnviii
+xPartitionWorld__FP13_tagPartitionP4xEnviii:
 /* 80038E18 00035C18  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80038E1C 00035C1C  7C 08 02 A6 */	mflr r0
 /* 80038E20 00035C20  90 01 00 44 */	stw r0, 0x44(r1)
@@ -260,7 +260,7 @@ func_80038E18:
 /* 80038F24 00035D24  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
 /* 80038F28 00035D28  7C 04 01 D6 */	mullw r0, r4, r0
 /* 80038F2C 00035D2C  7C 86 01 D6 */	mullw r4, r6, r0
-/* 80038F30 00035D30  4B FF AA 11 */	bl func_80033940
+/* 80038F30 00035D30  4B FF AA 11 */	bl xMemAlloc__FUiUii
 /* 80038F34 00035D34  90 7C 00 30 */	stw r3, 0x30(r28)
 /* 80038F38 00035D38  3B 60 00 00 */	li r27, 0
 /* 80038F3C 00035D3C  48 00 00 54 */	b lbl_80038F90
@@ -275,7 +275,7 @@ lbl_80038F50:
 /* 80038F54 00035D54  7F 24 CB 78 */	mr r4, r25
 /* 80038F58 00035D58  7F 45 D3 78 */	mr r5, r26
 /* 80038F5C 00035D5C  7F 66 DB 78 */	mr r6, r27
-/* 80038F60 00035D60  4B FF FD 01 */	bl func_80038C60
+/* 80038F60 00035D60  4B FF FD 01 */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
 /* 80038F64 00035D64  1C 03 00 0C */	mulli r0, r3, 0xc
 /* 80038F68 00035D68  80 7C 00 30 */	lwz r3, 0x30(r28)
 /* 80038F6C 00035D6C  7C 63 02 14 */	add r3, r3, r0
@@ -300,8 +300,8 @@ lbl_80038F90:
 /* 80038FAC 00035DAC  38 21 00 40 */	addi r1, r1, 0x40
 /* 80038FB0 00035DB0  4E 80 00 20 */	blr 
 
-.global func_80038FB4
-func_80038FB4:
+.global xPartitionInsert__FP13_tagPartitionPvP5xVec3
+xPartitionInsert__FP13_tagPartitionPvP5xVec3:
 /* 80038FB4 00035DB4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80038FB8 00035DB8  7C 08 02 A6 */	mflr r0
 /* 80038FBC 00035DBC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -355,7 +355,7 @@ lbl_80039038:
 /* 80039074 00035E74  D8 01 00 18 */	stfd f0, 0x18(r1)
 /* 80039078 00035E78  80 A1 00 14 */	lwz r5, 0x14(r1)
 /* 8003907C 00035E7C  80 C1 00 1C */	lwz r6, 0x1c(r1)
-/* 80039080 00035E80  4B FF FB E1 */	bl func_80038C60
+/* 80039080 00035E80  4B FF FB E1 */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
 /* 80039084 00035E84  80 BF 00 30 */	lwz r5, 0x30(r31)
 /* 80039088 00035E88  7C 7F 1B 78 */	mr r31, r3
 /* 8003908C 00035E8C  1C 1F 00 0C */	mulli r0, r31, 0xc
@@ -371,8 +371,8 @@ lbl_800390A0:
 /* 800390B0 00035EB0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800390B4 00035EB4  4E 80 00 20 */	blr 
 
-.global func_800390B8
-func_800390B8:
+.global xPartitionUpdate__FP13_tagPartitionPviP5xVec3
+xPartitionUpdate__FP13_tagPartitionPviP5xVec3:
 /* 800390B8 00035EB8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800390BC 00035EBC  7C 08 02 A6 */	mflr r0
 /* 800390C0 00035EC0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -426,7 +426,7 @@ lbl_8003913C:
 /* 80039178 00035F78  D8 01 00 18 */	stfd f0, 0x18(r1)
 /* 8003917C 00035F7C  80 A1 00 14 */	lwz r5, 0x14(r1)
 /* 80039180 00035F80  80 C1 00 1C */	lwz r6, 0x1c(r1)
-/* 80039184 00035F84  4B FF FA DD */	bl func_80038C60
+/* 80039184 00035F84  4B FF FA DD */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
 /* 80039188 00035F88  7C 7F 1B 78 */	mr r31, r3
 lbl_8003918C:
 /* 8003918C 00035F8C  7C 1E F8 00 */	cmpw r30, r31
@@ -453,7 +453,7 @@ lbl_800391C8:
 /* 800391D0 00035FD0  7C 84 02 14 */	add r4, r4, r0
 lbl_800391D4:
 /* 800391D4 00035FD4  7F A5 EB 78 */	mr r5, r29
-/* 800391D8 00035FD8  48 00 00 29 */	bl func_80039200
+/* 800391D8 00035FD8  48 00 00 29 */	bl xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi
 /* 800391DC 00035FDC  7F E3 FB 78 */	mr r3, r31
 lbl_800391E0:
 /* 800391E0 00035FE0  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -465,8 +465,8 @@ lbl_800391E0:
 /* 800391F8 00035FF8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800391FC 00035FFC  4E 80 00 20 */	blr 
 
-.global func_80039200
-func_80039200:
+.global xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi
+xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi:
 /* 80039200 00036000  38 C4 00 04 */	addi r6, r4, 4
 /* 80039204 00036004  48 00 00 08 */	b lbl_8003920C
 lbl_80039208:
@@ -499,8 +499,8 @@ lbl_8003922C:
 /* 80039264 00036064  90 04 00 00 */	stw r0, 0(r4)
 /* 80039268 00036068  4E 80 00 20 */	blr 
 
-.global func_8003926C
-func_8003926C:
+.global xPartitionDump__FP13_tagPartitionPc
+xPartitionDump__FP13_tagPartitionPc:
 /* 8003926C 0003606C  4E 80 00 20 */	blr 
 
 .global func_80039270
