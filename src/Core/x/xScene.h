@@ -3,7 +3,6 @@
 
 struct xScene
 {
-
 };
 
 #endif

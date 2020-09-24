@@ -3,6 +3,6 @@
 
 struct xScene;
 
-void iCollideFastInit(xScene *sc);
+void iCollideFastInit(xScene* sc);
 
 #endif

@@ -5,15 +5,15 @@
 
 struct xCounterAsset : xBaseAsset
 {
-	short count;
+    short count;
 };
 
 struct _xCounter : xBase
 {
-	xCounterAsset* asset;
-	short count;
-	unsigned char state;
-	unsigned char counterFlags;
+    xCounterAsset* asset;
+    short count;
+    unsigned char state;
+    unsigned char counterFlags;
 };
 
 void xCounterInit();

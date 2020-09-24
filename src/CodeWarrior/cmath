@@ -19,6 +19,6 @@ namespace std
     {
         return (float)tan((double)x);
     }
-}
+} // namespace std
 
 #endif

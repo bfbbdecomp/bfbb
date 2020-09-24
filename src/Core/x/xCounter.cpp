@@ -9,7 +9,7 @@ namespace
     {
         return;
     }
-}
+} // namespace
 
 void xCounterInit()
 {
@@ -26,7 +26,7 @@ void xCounterInit(xBase* b, xCounterAsset* asset)
     _xCounter* t = (_xCounter*)b;
 
     xBaseInit(t, asset);
-    
+
     t->eventFunc = xCounterEventCB;
     t->asset = asset;
 
