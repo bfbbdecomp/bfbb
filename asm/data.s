@@ -314,8 +314,8 @@ lbl_8028E508:
 .global lbl_8028E558
 lbl_8028E558:
 	.incbin "baserom.dol", 0x28B538, 0xC8
-.global lbl_8028E620
-lbl_8028E620:
+.global sEventTable
+sEventTable:
 	.incbin "baserom.dol", 0x28B600, 0x878
 .global lbl_8028EE98
 lbl_8028EE98:
