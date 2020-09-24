@@ -147,10 +147,10 @@ lbl_8010793C:
 /* 8010798C 0010478C  38 A0 00 00 */	li r5, 0
 /* 80107990 00104790  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 80107994 00104794  38 63 00 60 */	addi r3, r3, 0x60
-/* 80107998 00104798  4B EF F2 D9 */	bl func_80006C70
-/* 8010799C 0010479C  3C A0 80 00 */	lis r5, lbl_80006CFC@ha
+/* 80107998 00104798  4B EF F2 D9 */	bl xAnimTableNew__FPCcPP10xAnimTableUi
+/* 8010799C 0010479C  3C A0 80 00 */	lis r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 801079A0 001047A0  3C 80 80 29 */	lis r4, lbl_80296F90@ha
-/* 801079A4 001047A4  38 05 6C FC */	addi r0, r5, lbl_80006CFC@l
+/* 801079A4 001047A4  38 05 6C FC */	addi r0, r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 801079A8 001047A8  7C 7F 1B 78 */	mr r31, r3
 /* 801079AC 001047AC  90 01 00 08 */	stw r0, 8(r1)
 /* 801079B0 001047B0  38 00 00 00 */	li r0, 0
@@ -166,7 +166,7 @@ lbl_8010793C:
 /* 801079D8 001047D8  80 84 00 04 */	lwz r4, 4(r4)
 /* 801079DC 001047DC  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 801079E0 001047E0  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 801079E4 001047E4  4B EF F3 75 */	bl func_80006D58
+/* 801079E4 001047E4  4B EF F3 75 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
 /* 801079E8 001047E8  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 801079EC 001047EC  7F E3 FB 78 */	mr r3, r31
 /* 801079F0 001047F0  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -185,13 +185,13 @@ lbl_8010793C:
 /* 80107A24 00104824  93 C1 00 38 */	stw r30, 0x38(r1)
 /* 80107A28 00104828  93 A1 00 34 */	stw r29, 0x34(r1)
 /* 80107A2C 0010482C  93 81 00 30 */	stw r28, 0x30(r1)
-/* 80107A30 00104830  4B EF F2 41 */	bl func_80006C70
+/* 80107A30 00104830  4B EF F2 41 */	bl xAnimTableNew__FPCcPP10xAnimTableUi
 /* 80107A34 00104834  3C 80 80 27 */	lis r4, lbl_8026A210@ha
-/* 80107A38 00104838  3C A0 80 00 */	lis r5, lbl_80006CFC@ha
+/* 80107A38 00104838  3C A0 80 00 */	lis r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107A3C 0010483C  38 E4 A2 10 */	addi r7, r4, lbl_8026A210@l
 /* 80107A40 00104840  38 00 00 00 */	li r0, 0
 /* 80107A44 00104844  80 C7 00 00 */	lwz r6, 0(r7)
-/* 80107A48 00104848  39 65 6C FC */	addi r11, r5, lbl_80006CFC@l
+/* 80107A48 00104848  39 65 6C FC */	addi r11, r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107A4C 0010484C  81 27 00 04 */	lwz r9, 4(r7)
 /* 80107A50 00104850  3C 80 80 29 */	lis r4, lbl_80296F90@ha
 /* 80107A54 00104854  83 87 00 08 */	lwz r28, 8(r7)
@@ -218,10 +218,10 @@ lbl_8010793C:
 /* 80107AA8 001048A8  80 84 00 04 */	lwz r4, 4(r4)
 /* 80107AAC 001048AC  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107AB0 001048B0  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107AB4 001048B4  4B EF F2 A5 */	bl func_80006D58
-/* 80107AB8 001048B8  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107AB4 001048B4  4B EF F2 A5 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107AB8 001048B8  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107ABC 001048BC  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107AC0 001048C0  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107AC0 001048C0  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107AC4 001048C4  38 00 00 00 */	li r0, 0
 /* 80107AC8 001048C8  90 81 00 08 */	stw r4, 8(r1)
 /* 80107ACC 001048CC  38 83 6F 90 */	addi r4, r3, lbl_80296F90@l
@@ -237,10 +237,10 @@ lbl_8010793C:
 /* 80107AF4 001048F4  80 84 00 1C */	lwz r4, 0x1c(r4)
 /* 80107AF8 001048F8  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107AFC 001048FC  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107B00 00104900  4B EF F2 59 */	bl func_80006D58
-/* 80107B04 00104904  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107B00 00104900  4B EF F2 59 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107B04 00104904  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107B08 00104908  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107B0C 0010490C  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107B0C 0010490C  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107B10 00104910  38 00 00 00 */	li r0, 0
 /* 80107B14 00104914  90 81 00 08 */	stw r4, 8(r1)
 /* 80107B18 00104918  38 83 6F 90 */	addi r4, r3, lbl_80296F90@l
@@ -256,10 +256,10 @@ lbl_8010793C:
 /* 80107B40 00104940  80 84 00 10 */	lwz r4, 0x10(r4)
 /* 80107B44 00104944  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107B48 00104948  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107B4C 0010494C  4B EF F2 0D */	bl func_80006D58
-/* 80107B50 00104950  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107B4C 0010494C  4B EF F2 0D */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107B50 00104950  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107B54 00104954  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107B58 00104958  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107B58 00104958  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107B5C 0010495C  38 00 00 00 */	li r0, 0
 /* 80107B60 00104960  90 81 00 08 */	stw r4, 8(r1)
 /* 80107B64 00104964  38 83 6F 90 */	addi r4, r3, lbl_80296F90@l
@@ -275,10 +275,10 @@ lbl_8010793C:
 /* 80107B8C 0010498C  80 84 00 20 */	lwz r4, 0x20(r4)
 /* 80107B90 00104990  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107B94 00104994  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107B98 00104998  4B EF F1 C1 */	bl func_80006D58
-/* 80107B9C 0010499C  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107B98 00104998  4B EF F1 C1 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107B9C 0010499C  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107BA0 001049A0  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107BA4 001049A4  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107BA4 001049A4  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107BA8 001049A8  38 00 00 00 */	li r0, 0
 /* 80107BAC 001049AC  90 81 00 08 */	stw r4, 8(r1)
 /* 80107BB0 001049B0  38 83 6F 90 */	addi r4, r3, lbl_80296F90@l
@@ -294,7 +294,7 @@ lbl_8010793C:
 /* 80107BD8 001049D8  80 84 00 2C */	lwz r4, 0x2c(r4)
 /* 80107BDC 001049DC  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107BE0 001049E0  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107BE4 001049E4  4B EF F1 75 */	bl func_80006D58
+/* 80107BE4 001049E4  4B EF F1 75 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
 /* 80107BE8 001049E8  3C 60 80 29 */	lis r3, lbl_80296F90@ha
 /* 80107BEC 001049EC  C0 22 9D 20 */	lfs f1, lbl_803CE6A0-_SDA2_BASE_(r2)
 /* 80107BF0 001049F0  38 83 6F 90 */	addi r4, r3, lbl_80296F90@l
@@ -336,10 +336,10 @@ lbl_8010793C:
 /* 80107C80 00104A80  90 E1 00 28 */	stw r7, 0x28(r1)
 /* 80107C84 00104A84  90 C1 00 2C */	stw r6, 0x2c(r1)
 /* 80107C88 00104A88  90 01 00 30 */	stw r0, 0x30(r1)
-/* 80107C8C 00104A8C  4B EF EF E5 */	bl func_80006C70
-/* 80107C90 00104A90  3C A0 80 00 */	lis r5, lbl_80006CFC@ha
+/* 80107C8C 00104A8C  4B EF EF E5 */	bl xAnimTableNew__FPCcPP10xAnimTableUi
+/* 80107C90 00104A90  3C A0 80 00 */	lis r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107C94 00104A94  3C 80 80 29 */	lis r4, lbl_80296F90@ha
-/* 80107C98 00104A98  38 05 6C FC */	addi r0, r5, lbl_80006CFC@l
+/* 80107C98 00104A98  38 05 6C FC */	addi r0, r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107C9C 00104A9C  7C 7B 1B 78 */	mr r27, r3
 /* 80107CA0 00104AA0  90 01 00 08 */	stw r0, 8(r1)
 /* 80107CA4 00104AA4  38 00 00 00 */	li r0, 0
@@ -355,10 +355,10 @@ lbl_8010793C:
 /* 80107CCC 00104ACC  80 9C 00 04 */	lwz r4, 4(r28)
 /* 80107CD0 00104AD0  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107CD4 00104AD4  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107CD8 00104AD8  4B EF F0 81 */	bl func_80006D58
-/* 80107CDC 00104ADC  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107CD8 00104AD8  4B EF F0 81 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107CDC 00104ADC  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107CE0 00104AE0  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107CE4 00104AE4  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107CE4 00104AE4  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107CE8 00104AE8  38 00 00 00 */	li r0, 0
 /* 80107CEC 00104AEC  90 81 00 08 */	stw r4, 8(r1)
 /* 80107CF0 00104AF0  3B A3 6F 90 */	addi r29, r3, lbl_80296F90@l
@@ -374,10 +374,10 @@ lbl_8010793C:
 /* 80107D18 00104B18  80 9D 00 08 */	lwz r4, 8(r29)
 /* 80107D1C 00104B1C  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107D20 00104B20  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107D24 00104B24  4B EF F0 35 */	bl func_80006D58
-/* 80107D28 00104B28  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107D24 00104B24  4B EF F0 35 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107D28 00104B28  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107D2C 00104B2C  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107D30 00104B30  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107D30 00104B30  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107D34 00104B34  38 00 00 00 */	li r0, 0
 /* 80107D38 00104B38  90 81 00 08 */	stw r4, 8(r1)
 /* 80107D3C 00104B3C  3B C3 6F 90 */	addi r30, r3, lbl_80296F90@l
@@ -393,10 +393,10 @@ lbl_8010793C:
 /* 80107D64 00104B64  80 9E 00 0C */	lwz r4, 0xc(r30)
 /* 80107D68 00104B68  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107D6C 00104B6C  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107D70 00104B70  4B EF EF E9 */	bl func_80006D58
-/* 80107D74 00104B74  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107D70 00104B70  4B EF EF E9 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107D74 00104B74  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107D78 00104B78  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107D7C 00104B7C  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107D7C 00104B7C  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107D80 00104B80  38 00 00 00 */	li r0, 0
 /* 80107D84 00104B84  90 81 00 08 */	stw r4, 8(r1)
 /* 80107D88 00104B88  3B E3 6F 90 */	addi r31, r3, lbl_80296F90@l
@@ -412,10 +412,10 @@ lbl_8010793C:
 /* 80107DB0 00104BB0  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 80107DB4 00104BB4  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107DB8 00104BB8  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107DBC 00104BBC  4B EF EF 9D */	bl func_80006D58
-/* 80107DC0 00104BC0  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107DBC 00104BBC  4B EF EF 9D */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107DC0 00104BC0  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107DC4 00104BC4  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107DC8 00104BC8  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107DC8 00104BC8  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107DCC 00104BCC  38 00 00 00 */	li r0, 0
 /* 80107DD0 00104BD0  90 81 00 08 */	stw r4, 8(r1)
 /* 80107DD4 00104BD4  3B 23 6F 90 */	addi r25, r3, lbl_80296F90@l
@@ -431,10 +431,10 @@ lbl_8010793C:
 /* 80107DFC 00104BFC  80 99 00 14 */	lwz r4, 0x14(r25)
 /* 80107E00 00104C00  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107E04 00104C04  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107E08 00104C08  4B EF EF 51 */	bl func_80006D58
-/* 80107E0C 00104C0C  3C 80 80 00 */	lis r4, lbl_80006CFC@ha
+/* 80107E08 00104C08  4B EF EF 51 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+/* 80107E0C 00104C0C  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80107E10 00104C10  3C 60 80 29 */	lis r3, lbl_80296F90@ha
-/* 80107E14 00104C14  38 84 6C FC */	addi r4, r4, lbl_80006CFC@l
+/* 80107E14 00104C14  38 84 6C FC */	addi r4, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 80107E18 00104C18  38 00 00 00 */	li r0, 0
 /* 80107E1C 00104C1C  90 81 00 08 */	stw r4, 8(r1)
 /* 80107E20 00104C20  3B 43 6F 90 */	addi r26, r3, lbl_80296F90@l
@@ -450,7 +450,7 @@ lbl_8010793C:
 /* 80107E48 00104C48  80 9A 00 18 */	lwz r4, 0x18(r26)
 /* 80107E4C 00104C4C  C0 22 9D 18 */	lfs f1, lbl_803CE698-_SDA2_BASE_(r2)
 /* 80107E50 00104C50  C0 42 9D 1C */	lfs f2, lbl_803CE69C-_SDA2_BASE_(r2)
-/* 80107E54 00104C54  4B EF EF 05 */	bl func_80006D58
+/* 80107E54 00104C54  4B EF EF 05 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
 /* 80107E58 00104C58  3C 60 80 29 */	lis r3, lbl_80296F90@ha
 /* 80107E5C 00104C5C  C0 22 9D 24 */	lfs f1, lbl_803CE6A4-_SDA2_BASE_(r2)
 /* 80107E60 00104C60  38 83 6F 90 */	addi r4, r3, lbl_80296F90@l
@@ -472,7 +472,7 @@ lbl_8010793C:
 /* 80107EA0 00104CA0  FC 40 08 90 */	fmr f2, f1
 /* 80107EA4 00104CA4  80 BC 00 04 */	lwz r5, 4(r28)
 /* 80107EA8 00104CA8  C0 62 9D 24 */	lfs f3, lbl_803CE6A4-_SDA2_BASE_(r2)
-/* 80107EAC 00104CAC  4B EF F5 15 */	bl func_800073C0
+/* 80107EAC 00104CAC  4B EF F5 15 */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 80107EB0 00104CB0  38 00 00 00 */	li r0, 0
 /* 80107EB4 00104CB4  7F 63 DB 78 */	mr r3, r27
 /* 80107EB8 00104CB8  90 01 00 08 */	stw r0, 8(r1)
@@ -487,7 +487,7 @@ lbl_8010793C:
 /* 80107EDC 00104CDC  FC 40 08 90 */	fmr f2, f1
 /* 80107EE0 00104CE0  80 BD 00 08 */	lwz r5, 8(r29)
 /* 80107EE4 00104CE4  C0 62 9D 24 */	lfs f3, lbl_803CE6A4-_SDA2_BASE_(r2)
-/* 80107EE8 00104CE8  4B EF F4 D9 */	bl func_800073C0
+/* 80107EE8 00104CE8  4B EF F4 D9 */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 80107EEC 00104CEC  38 00 00 00 */	li r0, 0
 /* 80107EF0 00104CF0  7F 63 DB 78 */	mr r3, r27
 /* 80107EF4 00104CF4  90 01 00 08 */	stw r0, 8(r1)
@@ -502,7 +502,7 @@ lbl_8010793C:
 /* 80107F18 00104D18  FC 40 08 90 */	fmr f2, f1
 /* 80107F1C 00104D1C  80 BE 00 0C */	lwz r5, 0xc(r30)
 /* 80107F20 00104D20  C0 62 9D 24 */	lfs f3, lbl_803CE6A4-_SDA2_BASE_(r2)
-/* 80107F24 00104D24  4B EF F4 9D */	bl func_800073C0
+/* 80107F24 00104D24  4B EF F4 9D */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 80107F28 00104D28  7F 63 DB 78 */	mr r3, r27
 /* 80107F2C 00104D2C  BB 21 00 44 */	lmw r25, 0x44(r1)
 /* 80107F30 00104D30  80 01 00 64 */	lwz r0, 0x64(r1)

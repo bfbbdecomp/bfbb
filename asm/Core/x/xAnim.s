@@ -11,8 +11,7 @@ lbl_80251E00:
 
 .section .text  # 0x800058E0 - 0x80009400
 
-.global func_800058E0
-func_800058E0:
+_xSingleCompare__Fcc:
 /* 800058E0 000026E0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 800058E4 000026E4  2C 00 00 2C */	cmpwi r0, 0x2c
 /* 800058E8 000026E8  40 80 00 1C */	bge lbl_80005904
@@ -46,8 +45,7 @@ lbl_80005938:
 /* 80005948 00002748  54 03 D9 7E */	srwi r3, r0, 5
 /* 8000594C 0000274C  4E 80 00 20 */	blr 
 
-.global func_80005950
-func_80005950:
+_xSingleCompare__FcPCc:
 /* 80005950 00002750  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80005954 00002754  7C 08 02 A6 */	mflr r0
 /* 80005958 00002758  90 01 00 14 */	stw r0, 0x14(r1)
@@ -58,7 +56,7 @@ func_80005950:
 /* 8000596C 0000276C  48 00 00 20 */	b lbl_8000598C
 lbl_80005970:
 /* 80005970 00002770  7F C3 F3 78 */	mr r3, r30
-/* 80005974 00002774  4B FF FF 6D */	bl func_800058E0
+/* 80005974 00002774  4B FF FF 6D */	bl _xSingleCompare__Fcc
 /* 80005978 00002778  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8000597C 0000277C  41 82 00 0C */	beq lbl_80005988
 /* 80005980 00002780  38 60 00 01 */	li r3, 1
@@ -78,8 +76,7 @@ lbl_8000599C:
 /* 800059AC 000027AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800059B0 000027B0  4E 80 00 20 */	blr 
 
-.global func_800059B4
-func_800059B4:
+_xCharIn__FcPCc:
 /* 800059B4 000027B4  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 800059B8 000027B8  48 00 00 18 */	b lbl_800059D0
 lbl_800059BC:
@@ -96,8 +93,7 @@ lbl_800059D0:
 /* 800059DC 000027DC  38 60 00 00 */	li r3, 0
 /* 800059E0 000027E0  4E 80 00 20 */	blr 
 
-.global func_800059E4
-func_800059E4:
+_xCheckAnimNameInner__FPCcPCciPcPiPi:
 /* 800059E4 000027E4  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 800059E8 000027E8  7C 08 02 A6 */	mflr r0
 /* 800059EC 000027EC  90 01 00 E4 */	stw r0, 0xe4(r1)
@@ -216,7 +212,7 @@ lbl_80005B5C:
 lbl_80005B7C:
 /* 80005B7C 0000297C  56 60 06 3F */	clrlwi. r0, r19, 0x18
 /* 80005B80 00002980  41 82 00 24 */	beq lbl_80005BA4
-/* 80005B84 00002984  4B FF FE 31 */	bl func_800059B4
+/* 80005B84 00002984  4B FF FE 31 */	bl _xCharIn__FcPCc
 /* 80005B88 00002988  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80005B8C 0000298C  40 82 00 18 */	bne lbl_80005BA4
 /* 80005B90 00002990  88 10 00 00 */	lbz r0, 0(r16)
@@ -248,7 +244,7 @@ lbl_80005BDC:
 /* 80005BE0 000029E0  28 03 00 00 */	cmplwi r3, 0
 /* 80005BE4 000029E4  41 82 00 14 */	beq lbl_80005BF8
 /* 80005BE8 000029E8  38 81 00 18 */	addi r4, r1, 0x18
-/* 80005BEC 000029EC  4B FF FD 65 */	bl func_80005950
+/* 80005BEC 000029EC  4B FF FD 65 */	bl _xSingleCompare__FcPCc
 /* 80005BF0 000029F0  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80005BF4 000029F4  41 82 FF E0 */	beq lbl_80005BD4
 lbl_80005BF8:
@@ -358,7 +354,7 @@ lbl_80005D28:
 /* 80005D44 00002B44  7C A4 98 50 */	subf r5, r4, r19
 /* 80005D48 00002B48  38 E1 00 14 */	addi r7, r1, 0x14
 /* 80005D4C 00002B4C  39 01 00 10 */	addi r8, r1, 0x10
-/* 80005D50 00002B50  4B FF FC 95 */	bl func_800059E4
+/* 80005D50 00002B50  4B FF FC 95 */	bl _xCheckAnimNameInner__FPCcPCciPcPiPi
 /* 80005D54 00002B54  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80005D58 00002B58  41 82 00 08 */	beq lbl_80005D60
 /* 80005D5C 00002B5C  3A 00 00 01 */	li r16, 1
@@ -440,7 +436,7 @@ lbl_80005E48:
 /* 80005E54 00002C54  7C A4 28 50 */	subf r5, r4, r5
 /* 80005E58 00002C58  38 E1 00 0C */	addi r7, r1, 0xc
 /* 80005E5C 00002C5C  39 01 00 08 */	addi r8, r1, 8
-/* 80005E60 00002C60  4B FF FB 85 */	bl func_800059E4
+/* 80005E60 00002C60  4B FF FB 85 */	bl _xCheckAnimNameInner__FPCcPCciPcPiPi
 /* 80005E64 00002C64  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80005E68 00002C68  7C 70 1B 78 */	mr r16, r3
 /* 80005E6C 00002C6C  41 82 00 58 */	beq lbl_80005EC4
@@ -452,7 +448,7 @@ lbl_80005E48:
 /* 80005E84 00002C84  38 C0 00 00 */	li r6, 0
 /* 80005E88 00002C88  38 E0 00 00 */	li r7, 0
 /* 80005E8C 00002C8C  39 00 00 00 */	li r8, 0
-/* 80005E90 00002C90  4B FF FB 55 */	bl func_800059E4
+/* 80005E90 00002C90  4B FF FB 55 */	bl _xCheckAnimNameInner__FPCcPCciPcPiPi
 /* 80005E94 00002C94  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80005E98 00002C98  41 82 00 1C */	beq lbl_80005EB4
 /* 80005E9C 00002C9C  28 19 00 00 */	cmplwi r25, 0
@@ -511,8 +507,7 @@ lbl_80005F38:
 /* 80005F44 00002D44  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80005F48 00002D48  4E 80 00 20 */	blr 
 
-.global func_80005F4C
-func_80005F4C:
+_xCheckAnimName__FPCcPCcPc:
 /* 80005F4C 00002D4C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80005F50 00002D50  7C 08 02 A6 */	mflr r0
 /* 80005F54 00002D54  90 01 00 24 */	stw r0, 0x24(r1)
@@ -533,7 +528,7 @@ func_80005F4C:
 /* 80005F90 00002D90  7F E6 FB 78 */	mr r6, r31
 /* 80005F94 00002D94  38 E1 00 08 */	addi r7, r1, 8
 /* 80005F98 00002D98  39 00 00 00 */	li r8, 0
-/* 80005F9C 00002D9C  4B FF FA 49 */	bl func_800059E4
+/* 80005F9C 00002D9C  4B FF FA 49 */	bl _xCheckAnimNameInner__FPCcPCciPcPiPi
 /* 80005FA0 00002DA0  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80005FA4 00002DA4  38 60 00 00 */	li r3, 0
 /* 80005FA8 00002DA8  41 82 00 18 */	beq lbl_80005FC0
@@ -551,8 +546,8 @@ lbl_80005FC0:
 /* 80005FD4 00002DD4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80005FD8 00002DD8  4E 80 00 20 */	blr 
 
-.global func_80005FDC
-func_80005FDC:
+.global xAnimInit__Fv
+xAnimInit__Fv:
 /* 80005FDC 00002DDC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80005FE0 00002DE0  7C 08 02 A6 */	mflr r0
 /* 80005FE4 00002DE4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -567,8 +562,8 @@ func_80005FDC:
 /* 80006008 00002E08  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000600C 00002E0C  4E 80 00 20 */	blr 
 
-.global func_80006010
-func_80006010:
+.global xAnimTempTransitionInit__FUi
+xAnimTempTransitionInit__FUi:
 /* 80006010 00002E10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006014 00002E14  7C 08 02 A6 */	mflr r0
 /* 80006018 00002E18  38 A0 00 00 */	li r5, 0
@@ -594,20 +589,20 @@ func_80006010:
 /* 80006068 00002E68  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000606C 00002E6C  4E 80 00 20 */	blr 
 
-.global func_80006070
-func_80006070:
+.global xatan2__Fff
+xatan2__Fff:
 /* 80006070 00002E70  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006074 00002E74  7C 08 02 A6 */	mflr r0
 /* 80006078 00002E78  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8000607C 00002E7C  48 00 00 19 */	bl func_80006094
+/* 8000607C 00002E7C  48 00 00 19 */	bl atan2f__3stdFff
 /* 80006080 00002E80  48 02 B0 51 */	bl func_800310D0
 /* 80006084 00002E84  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80006088 00002E88  7C 08 03 A6 */	mtlr r0
 /* 8000608C 00002E8C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80006090 00002E90  4E 80 00 20 */	blr 
 
-.global func_80006094
-func_80006094:
+.global atan2f__3stdFff
+atan2f__3stdFff:
 /* 80006094 00002E94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006098 00002E98  7C 08 02 A6 */	mflr r0
 /* 8000609C 00002E9C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -618,8 +613,7 @@ func_80006094:
 /* 800060B0 00002EB0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800060B4 00002EB4  4E 80 00 20 */	blr 
 
-.global func_800060B8
-func_800060B8:
+CalcRecipBlendMax__FPUs:
 /* 800060B8 00002EB8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800060BC 00002EBC  3C 00 43 30 */	lis r0, 0x4330
 /* 800060C0 00002EC0  C0 82 80 00 */	lfs f4, lbl_803CC980-_SDA2_BASE_(r2)
@@ -669,8 +663,7 @@ lbl_80006154:
 /* 80006154 00002F54  38 21 00 20 */	addi r1, r1, 0x20
 /* 80006158 00002F58  4E 80 00 20 */	blr 
 
-.global func_8000615C
-func_8000615C:
+StateHasTransition__FP10xAnimStateP15xAnimTransition:
 /* 8000615C 00002F5C  80 63 00 24 */	lwz r3, 0x24(r3)
 /* 80006160 00002F60  48 00 00 1C */	b lbl_8000617C
 lbl_80006164:
@@ -687,8 +680,7 @@ lbl_8000617C:
 /* 80006184 00002F84  38 60 00 00 */	li r3, 0
 /* 80006188 00002F88  4E 80 00 20 */	blr 
 
-.global func_8000618C
-func_8000618C:
+DefaultHasTransition__FP10xAnimStateP15xAnimTransitionPUi:
 /* 8000618C 00002F8C  81 03 00 20 */	lwz r8, 0x20(r3)
 /* 80006190 00002F90  38 E0 00 01 */	li r7, 1
 /* 80006194 00002F94  48 00 00 40 */	b lbl_800061D4
@@ -719,8 +711,7 @@ lbl_800061D4:
 /* 800061E8 00002FE8  90 05 00 00 */	stw r0, 0(r5)
 /* 800061EC 00002FEC  4E 80 00 20 */	blr 
 
-.global func_800061F0
-func_800061F0:
+DefaultOverride__FP10xAnimStateP15xAnimTransition:
 /* 800061F0 00002FF0  80 C3 00 20 */	lwz r6, 0x20(r3)
 /* 800061F4 00002FF4  48 00 00 38 */	b lbl_8000622C
 lbl_800061F8:
@@ -744,8 +735,7 @@ lbl_8000622C:
 /* 80006234 00003034  38 60 00 00 */	li r3, 0
 /* 80006238 00003038  4E 80 00 20 */	blr 
 
-.global func_8000623C
-func_8000623C:
+TransitionTimeInit__FP11xAnimSingleP15xAnimTransition:
 /* 8000623C 0000303C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006240 00003040  7C 08 02 A6 */	mflr r0
 /* 80006244 00003044  90 01 00 14 */	stw r0, 0x14(r1)
@@ -801,8 +791,8 @@ lbl_800062E4:
 /* 800062F8 000030F8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800062FC 000030FC  4E 80 00 20 */	blr 
 
-.global func_80006300
-func_80006300:
+.global xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi
+xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi:
 /* 80006300 00003100  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80006304 00003104  7C 08 02 A6 */	mflr r0
 /* 80006308 00003108  90 01 00 34 */	stw r0, 0x34(r1)
@@ -976,8 +966,8 @@ lbl_80006544:
 /* 80006560 00003360  38 21 00 30 */	addi r1, r1, 0x30
 /* 80006564 00003364  4E 80 00 20 */	blr 
 
-.global func_80006568
-func_80006568:
+.global xAnimFileNew__FPvPCcUiPP9xAnimFile
+xAnimFileNew__FPvPCcUiPP9xAnimFile:
 /* 80006568 00003368  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000656C 0000336C  7C 08 02 A6 */	mflr r0
 /* 80006570 00003370  38 E0 00 01 */	li r7, 1
@@ -985,14 +975,14 @@ func_80006568:
 /* 80006578 00003378  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8000657C 0000337C  90 61 00 08 */	stw r3, 8(r1)
 /* 80006580 00003380  38 61 00 08 */	addi r3, r1, 8
-/* 80006584 00003384  4B FF FD 7D */	bl func_80006300
+/* 80006584 00003384  4B FF FD 7D */	bl xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi
 /* 80006588 00003388  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8000658C 0000338C  7C 08 03 A6 */	mtlr r0
 /* 80006590 00003390  38 21 00 10 */	addi r1, r1, 0x10
 /* 80006594 00003394  4E 80 00 20 */	blr 
 
-.global func_80006598
-func_80006598:
+.global xAnimFileSetTime__FP9xAnimFileff
+xAnimFileSetTime__FP9xAnimFileff:
 /* 80006598 00003398  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8000659C 0000339C  7C 08 02 A6 */	mflr r0
 /* 800065A0 000033A0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1048,8 +1038,8 @@ lbl_80006630:
 /* 80006650 00003450  38 21 00 30 */	addi r1, r1, 0x30
 /* 80006654 00003454  4E 80 00 20 */	blr 
 
-.global func_80006658
-func_80006658:
+.global xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf
+xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf:
 /* 80006658 00003458  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 8000665C 0000345C  7C 08 02 A6 */	mflr r0
 /* 80006660 00003460  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -1085,7 +1075,7 @@ lbl_800066C0:
 lbl_800066CC:
 /* 800066CC 000034CC  FC 20 18 90 */	fmr f1, f3
 lbl_800066D0:
-/* 800066D0 000034D0  48 00 2C E9 */	bl func_800093B8
+/* 800066D0 000034D0  48 00 2C E9 */	bl xAnimFileRawTime__FP9xAnimFilef
 /* 800066D4 000034D4  80 15 00 0C */	lwz r0, 0xc(r21)
 /* 800066D8 000034D8  FF E0 08 90 */	fmr f31, f1
 /* 800066DC 000034DC  54 00 04 21 */	rlwinm. r0, r0, 0, 0x10, 0x10
@@ -1158,7 +1148,7 @@ lbl_800067BC:
 /* 800067C8 000035C8  EF C0 08 28 */	fsubs f30, f0, f1
 lbl_800067CC:
 /* 800067CC 000035CC  FC 20 F0 90 */	fmr f1, f30
-/* 800067D0 000035D0  48 00 03 A9 */	bl func_80006B78
+/* 800067D0 000035D0  48 00 03 A9 */	bl floorf__3stdFf
 /* 800067D4 000035D4  EC 1E 08 28 */	fsubs f0, f30, f1
 /* 800067D8 000035D8  D0 1E 00 00 */	stfs f0, 0(r30)
 /* 800067DC 000035DC  48 1E 6C 01 */	bl func_801ED3DC
@@ -1399,8 +1389,8 @@ lbl_80006B54:
 /* 80006B70 00003970  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80006B74 00003974  4E 80 00 20 */	blr 
 
-.global func_80006B78
-func_80006B78:
+.global floorf__3stdFf
+floorf__3stdFf:
 /* 80006B78 00003978  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006B7C 0000397C  7C 08 02 A6 */	mflr r0
 /* 80006B80 00003980  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1411,8 +1401,8 @@ func_80006B78:
 /* 80006B94 00003994  38 21 00 10 */	addi r1, r1, 0x10
 /* 80006B98 00003998  4E 80 00 20 */	blr 
 
-.global func_80006B9C
-func_80006B9C:
+.global xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi
+xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi:
 /* 80006B9C 0000399C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80006BA0 000039A0  7C 08 02 A6 */	mflr r0
 /* 80006BA4 000039A4  90 01 00 44 */	stw r0, 0x44(r1)
@@ -1472,8 +1462,8 @@ lbl_80006C3C:
 /* 80006C68 00003A68  38 21 00 40 */	addi r1, r1, 0x40
 /* 80006C6C 00003A6C  4E 80 00 20 */	blr 
 
-.global func_80006C70
-func_80006C70:
+.global xAnimTableNew__FPCcPP10xAnimTableUi
+xAnimTableNew__FPCcPP10xAnimTableUi:
 /* 80006C70 00003A70  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80006C74 00003A74  7C 08 02 A6 */	mflr r0
 /* 80006C78 00003A78  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1512,8 +1502,8 @@ lbl_80006CC4:
 /* 80006CF4 00003AF4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80006CF8 00003AF8  4E 80 00 20 */	blr 
 
-.global lbl_80006CFC
-lbl_80006CFC:
+.global xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState
+xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState:
 /* 80006CFC 00003AFC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80006D00 00003B00  7C 08 02 A6 */	mflr r0
 /* 80006D04 00003B04  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1539,8 +1529,8 @@ lbl_80006D44:
 /* 80006D50 00003B50  38 21 00 10 */	addi r1, r1, 0x10
 /* 80006D54 00003B54  4E 80 00 20 */	blr 
 
-.global func_80006D58
-func_80006D58:
+.global xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
+xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v:
 /* 80006D58 00003B58  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80006D5C 00003B5C  7C 08 02 A6 */	mflr r0
 /* 80006D60 00003B60  90 01 00 54 */	stw r0, 0x54(r1)
@@ -1604,7 +1594,7 @@ lbl_80006E00:
 /* 80006E38 00003C38  93 3F 00 2C */	stw r25, 0x2c(r31)
 /* 80006E3C 00003C3C  41 82 00 10 */	beq lbl_80006E4C
 /* 80006E40 00003C40  7F 43 D3 78 */	mr r3, r26
-/* 80006E44 00003C44  4B FF F2 75 */	bl func_800060B8
+/* 80006E44 00003C44  4B FF F2 75 */	bl CalcRecipBlendMax__FPUs
 /* 80006E48 00003C48  48 00 00 08 */	b lbl_80006E50
 lbl_80006E4C:
 /* 80006E4C 00003C4C  FC 20 F8 90 */	fmr f1, f31
@@ -1626,8 +1616,7 @@ lbl_80006E50:
 /* 80006E88 00003C88  38 21 00 50 */	addi r1, r1, 0x50
 /* 80006E8C 00003C8C  4E 80 00 20 */	blr 
 
-.global func_80006E90
-func_80006E90:
+_xAnimTableAddTransitionHelper__FP10xAnimStateP15xAnimTransitionRUiRUiPP10xAnimState:
 /* 80006E90 00003C90  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80006E94 00003C94  7C 08 02 A6 */	mflr r0
 /* 80006E98 00003C98  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1642,7 +1631,7 @@ func_80006E90:
 /* 80006EBC 00003CBC  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 80006EC0 00003CC0  54 00 06 F7 */	rlwinm. r0, r0, 0, 0x1b, 0x1b
 /* 80006EC4 00003CC4  41 82 00 2C */	beq lbl_80006EF0
-/* 80006EC8 00003CC8  4B FF F2 C5 */	bl func_8000618C
+/* 80006EC8 00003CC8  4B FF F2 C5 */	bl DefaultHasTransition__FP10xAnimStateP15xAnimTransitionPUi
 /* 80006ECC 00003CCC  28 03 00 00 */	cmplwi r3, 0
 /* 80006ED0 00003CD0  40 82 00 50 */	bne lbl_80006F20
 /* 80006ED4 00003CD4  80 1E 00 00 */	lwz r0, 0(r30)
@@ -1653,7 +1642,7 @@ func_80006E90:
 /* 80006EE8 00003CE8  90 1E 00 00 */	stw r0, 0(r30)
 /* 80006EEC 00003CEC  48 00 00 34 */	b lbl_80006F20
 lbl_80006EF0:
-/* 80006EF0 00003CF0  4B FF F2 6D */	bl func_8000615C
+/* 80006EF0 00003CF0  4B FF F2 6D */	bl StateHasTransition__FP10xAnimStateP15xAnimTransition
 /* 80006EF4 00003CF4  28 03 00 00 */	cmplwi r3, 0
 /* 80006EF8 00003CF8  40 82 00 28 */	bne lbl_80006F20
 /* 80006EFC 00003CFC  80 1E 00 00 */	lwz r0, 0(r30)
@@ -1675,8 +1664,7 @@ lbl_80006F20:
 /* 80006F38 00003D38  38 21 00 20 */	addi r1, r1, 0x20
 /* 80006F3C 00003D3C  4E 80 00 20 */	blr 
 
-.global func_80006F40
-func_80006F40:
+_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc:
 /* 80006F40 00003D40  94 21 FE 20 */	stwu r1, -0x1e0(r1)
 /* 80006F44 00003D44  7C 08 02 A6 */	mflr r0
 /* 80006F48 00003D48  90 01 01 E4 */	stw r0, 0x1e4(r1)
@@ -1734,7 +1722,7 @@ lbl_80006FE8:
 /* 80007000 00003E00  48 00 00 20 */	b lbl_80007020
 lbl_80007004:
 /* 80007004 00003E04  7E 64 9B 78 */	mr r4, r19
-/* 80007008 00003E08  4B FF E9 AD */	bl func_800059B4
+/* 80007008 00003E08  4B FF E9 AD */	bl _xCharIn__FcPCc
 /* 8000700C 00003E0C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80007010 00003E10  41 82 00 0C */	beq lbl_8000701C
 /* 80007014 00003E14  3A 40 00 01 */	li r18, 1
@@ -1754,7 +1742,7 @@ lbl_8000703C:
 /* 8000703C 00003E3C  80 76 00 04 */	lwz r3, 4(r22)
 /* 80007040 00003E40  7F 44 D3 78 */	mr r4, r26
 /* 80007044 00003E44  38 A1 00 90 */	addi r5, r1, 0x90
-/* 80007048 00003E48  4B FF EF 05 */	bl func_80005F4C
+/* 80007048 00003E48  4B FF EF 05 */	bl _xCheckAnimName__FPCcPCcPc
 /* 8000704C 00003E4C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80007050 00003E50  41 82 01 34 */	beq lbl_80007184
 /* 80007054 00003E54  56 E0 06 3F */	clrlwi. r0, r23, 0x18
@@ -1798,7 +1786,7 @@ lbl_800070C8:
 /* 800070D8 00003ED8  7D E3 7B 78 */	mr r3, r15
 /* 800070DC 00003EDC  98 15 00 00 */	stb r0, 0(r21)
 /* 800070E0 00003EE0  38 81 00 10 */	addi r4, r1, 0x10
-/* 800070E4 00003EE4  48 00 06 79 */	bl func_8000775C
+/* 800070E4 00003EE4  48 00 06 79 */	bl xAnimTableGetState__FP10xAnimTablePCc
 /* 800070E8 00003EE8  56 60 06 3F */	clrlwi. r0, r19, 0x18
 /* 800070EC 00003EEC  7C 73 1B 78 */	mr r19, r3
 /* 800070F0 00003EF0  41 82 00 0C */	beq lbl_800070FC
@@ -1842,7 +1830,7 @@ lbl_80007160:
 /* 80007174 00003F74  7F 67 DB 78 */	mr r7, r27
 /* 80007178 00003F78  38 A1 00 08 */	addi r5, r1, 8
 /* 8000717C 00003F7C  38 C1 00 0C */	addi r6, r1, 0xc
-/* 80007180 00003F80  4B FF FD 11 */	bl func_80006E90
+/* 80007180 00003F80  4B FF FD 11 */	bl _xAnimTableAddTransitionHelper__FP10xAnimStateP15xAnimTransitionRUiRUiPP10xAnimState
 lbl_80007184:
 /* 80007184 00003F84  82 D6 00 00 */	lwz r22, 0(r22)
 lbl_80007188:
@@ -1852,7 +1840,7 @@ lbl_80007188:
 lbl_80007194:
 /* 80007194 00003F94  7D E3 7B 78 */	mr r3, r15
 /* 80007198 00003F98  7F 44 D3 78 */	mr r4, r26
-/* 8000719C 00003F9C  48 00 05 C1 */	bl func_8000775C
+/* 8000719C 00003F9C  48 00 05 C1 */	bl xAnimTableGetState__FP10xAnimTablePCc
 /* 800071A0 00003FA0  28 03 00 00 */	cmplwi r3, 0
 /* 800071A4 00003FA4  41 82 00 24 */	beq lbl_800071C8
 /* 800071A8 00003FA8  80 10 00 04 */	lwz r0, 4(r16)
@@ -1862,7 +1850,7 @@ lbl_80007194:
 /* 800071B8 00003FB8  7F 67 DB 78 */	mr r7, r27
 /* 800071BC 00003FBC  38 A1 00 08 */	addi r5, r1, 8
 /* 800071C0 00003FC0  38 C1 00 0C */	addi r6, r1, 0xc
-/* 800071C4 00003FC4  4B FF FC CD */	bl func_80006E90
+/* 800071C4 00003FC4  4B FF FC CD */	bl _xAnimTableAddTransitionHelper__FP10xAnimStateP15xAnimTransitionRUiRUiPP10xAnimState
 lbl_800071C8:
 /* 800071C8 00003FC8  80 61 01 90 */	lwz r3, 0x190(r1)
 /* 800071CC 00003FCC  7F 85 E3 78 */	mr r5, r28
@@ -1901,7 +1889,7 @@ lbl_80007224:
 lbl_80007240:
 /* 80007240 00004040  80 6F 00 00 */	lwz r3, 0(r15)
 /* 80007244 00004044  7E 04 83 78 */	mr r4, r16
-/* 80007248 00004048  4B FF EF A9 */	bl func_800061F0
+/* 80007248 00004048  4B FF EF A9 */	bl DefaultOverride__FP10xAnimStateP15xAnimTransition
 /* 8000724C 0000404C  28 03 00 00 */	cmplwi r3, 0
 /* 80007250 00004050  40 82 00 94 */	bne lbl_800072E4
 /* 80007254 00004054  80 10 00 08 */	lwz r0, 8(r16)
@@ -2002,20 +1990,20 @@ lbl_80007388:
 /* 80007394 00004194  38 21 01 E0 */	addi r1, r1, 0x1e0
 /* 80007398 00004198  4E 80 00 20 */	blr 
 
-.global func_8000739C
-func_8000739C:
+.global xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc
+xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc:
 /* 8000739C 0000419C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800073A0 000041A0  7C 08 02 A6 */	mflr r0
 /* 800073A4 000041A4  38 C0 00 00 */	li r6, 0
 /* 800073A8 000041A8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800073AC 000041AC  4B FF FB 95 */	bl func_80006F40
+/* 800073AC 000041AC  4B FF FB 95 */	bl _xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc
 /* 800073B0 000041B0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800073B4 000041B4  7C 08 03 A6 */	mtlr r0
 /* 800073B8 000041B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800073BC 000041BC  4E 80 00 20 */	blr 
 
-.global func_800073C0
-func_800073C0:
+.global xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
+xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs:
 /* 800073C0 000041C0  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800073C4 000041C4  7C 08 02 A6 */	mflr r0
 /* 800073C8 000041C8  90 01 00 74 */	stw r0, 0x74(r1)
@@ -2097,7 +2085,7 @@ lbl_800074C0:
 lbl_800074D0:
 /* 800074D0 000042D0  7E 83 A3 78 */	mr r3, r20
 /* 800074D4 000042D4  7E C4 B3 78 */	mr r4, r22
-/* 800074D8 000042D8  48 00 02 85 */	bl func_8000775C
+/* 800074D8 000042D8  48 00 02 85 */	bl xAnimTableGetState__FP10xAnimTablePCc
 lbl_800074DC:
 /* 800074DC 000042DC  90 7F 00 04 */	stw r3, 4(r31)
 lbl_800074E0:
@@ -2112,7 +2100,7 @@ lbl_800074E0:
 /* 80007500 00004300  B3 9F 00 22 */	sth r28, 0x22(r31)
 /* 80007504 00004304  41 82 00 10 */	beq lbl_80007514
 /* 80007508 00004308  7F A3 EB 78 */	mr r3, r29
-/* 8000750C 0000430C  4B FF EB AD */	bl func_800060B8
+/* 8000750C 0000430C  4B FF EB AD */	bl CalcRecipBlendMax__FPUs
 /* 80007510 00004310  48 00 00 08 */	b lbl_80007518
 lbl_80007514:
 /* 80007514 00004314  FC 20 F8 90 */	fmr f1, f31
@@ -2129,7 +2117,7 @@ lbl_80007518:
 lbl_8000753C:
 /* 8000753C 0000433C  38 C0 00 00 */	li r6, 0
 lbl_80007540:
-/* 80007540 00004340  4B FF FA 01 */	bl func_80006F40
+/* 80007540 00004340  4B FF FA 01 */	bl _xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc
 /* 80007544 00004344  7F E3 FB 78 */	mr r3, r31
 /* 80007548 00004348  E3 E1 00 68 */	psq_l f31, 104(r1), 0, qr0
 /* 8000754C 0000434C  CB E1 00 60 */	lfd f31, 0x60(r1)
@@ -2143,8 +2131,8 @@ lbl_80007540:
 /* 8000756C 0000436C  38 21 00 70 */	addi r1, r1, 0x70
 /* 80007570 00004370  4E 80 00 20 */	blr 
 
-.global func_80007574
-func_80007574:
+.global xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc
+xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc:
 /* 80007574 00004374  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80007578 00004378  7C 08 02 A6 */	mflr r0
 /* 8000757C 0000437C  3C C0 80 25 */	lis r6, lbl_80251E00@ha
@@ -2172,7 +2160,7 @@ lbl_800075C4:
 /* 800075D0 000043D0  7F A4 EB 78 */	mr r4, r29
 /* 800075D4 000043D4  38 C0 00 00 */	li r6, 0
 /* 800075D8 000043D8  38 E0 00 00 */	li r7, 0
-/* 800075DC 000043DC  48 00 00 3D */	bl func_80007618
+/* 800075DC 000043DC  48 00 00 3D */	bl xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi
 /* 800075E0 000043E0  7F C5 F3 78 */	mr r5, r30
 /* 800075E4 000043E4  38 9F 00 07 */	addi r4, r31, 7
 /* 800075E8 000043E8  38 60 00 00 */	li r3, 0
@@ -2189,8 +2177,8 @@ lbl_800075F0:
 /* 80007610 00004410  38 21 00 20 */	addi r1, r1, 0x20
 /* 80007614 00004414  4E 80 00 20 */	blr 
 
-.global func_80007618
-func_80007618:
+.global xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi
+xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi:
 /* 80007618 00004418  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8000761C 0000441C  7C 08 02 A6 */	mflr r0
 /* 80007620 00004420  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2200,7 +2188,7 @@ func_80007618:
 /* 80007630 00004430  7C DE 33 78 */	mr r30, r6
 /* 80007634 00004434  7C FB 3B 78 */	mr r27, r7
 /* 80007638 00004438  7C A4 2B 78 */	mr r4, r5
-/* 8000763C 0000443C  48 00 00 F9 */	bl func_80007734
+/* 8000763C 0000443C  48 00 00 F9 */	bl xAnimTableGetStateID__FP10xAnimTableUi
 /* 80007640 00004440  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80007644 00004444  41 82 00 D8 */	beq lbl_8000771C
 /* 80007648 00004448  28 1E 00 00 */	cmplwi r30, 0
@@ -2269,8 +2257,8 @@ lbl_8000771C:
 /* 8000772C 0000452C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80007730 00004530  4E 80 00 20 */	blr 
 
-.global func_80007734
-func_80007734:
+.global xAnimTableGetStateID__FP10xAnimTableUi
+xAnimTableGetStateID__FP10xAnimTableUi:
 /* 80007734 00004534  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 80007738 00004538  48 00 00 14 */	b lbl_8000774C
 lbl_8000773C:
@@ -2284,8 +2272,8 @@ lbl_8000774C:
 /* 80007754 00004554  38 60 00 00 */	li r3, 0
 /* 80007758 00004558  4E 80 00 20 */	blr 
 
-.global func_8000775C
-func_8000775C:
+.global xAnimTableGetState__FP10xAnimTablePCc
+xAnimTableGetState__FP10xAnimTablePCc:
 /* 8000775C 0000455C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80007760 00004560  7C 08 02 A6 */	mflr r0
 /* 80007764 00004564  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2295,15 +2283,14 @@ func_8000775C:
 /* 80007774 00004574  48 04 4A A1 */	bl func_8004C214
 /* 80007778 00004578  7C 64 1B 78 */	mr r4, r3
 /* 8000777C 0000457C  7F E3 FB 78 */	mr r3, r31
-/* 80007780 00004580  4B FF FF B5 */	bl func_80007734
+/* 80007780 00004580  4B FF FF B5 */	bl xAnimTableGetStateID__FP10xAnimTableUi
 /* 80007784 00004584  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80007788 00004588  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8000778C 0000458C  7C 08 03 A6 */	mtlr r0
 /* 80007790 00004590  38 21 00 10 */	addi r1, r1, 0x10
 /* 80007794 00004594  4E 80 00 20 */	blr 
 
-.global func_80007798
-func_80007798:
+EffectActiveInsert__FP11xAnimSingleP17xAnimActiveEffect:
 /* 80007798 00004598  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8000779C 0000459C  7C 08 02 A6 */	mflr r0
 /* 800077A0 000045A0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2325,7 +2312,7 @@ lbl_800077C8:
 /* 800077D8 000045D8  40 82 FF E8 */	bne lbl_800077C0
 lbl_800077DC:
 /* 800077DC 000045DC  7F A3 EB 78 */	mr r3, r29
-/* 800077E0 000045E0  48 00 00 35 */	bl func_80007814
+/* 800077E0 000045E0  48 00 00 35 */	bl __as__17xAnimActiveEffectFRC17xAnimActiveEffect
 /* 800077E4 000045E4  38 1E FF FF */	addi r0, r30, -1
 /* 800077E8 000045E8  7C 1F 00 40 */	cmplw r31, r0
 /* 800077EC 000045EC  40 80 00 0C */	bge lbl_800077F8
@@ -2340,16 +2327,15 @@ lbl_800077F8:
 /* 8000780C 0000460C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80007810 00004610  4E 80 00 20 */	blr 
 
-.global func_80007814
-func_80007814:
+.global __as__17xAnimActiveEffectFRC17xAnimActiveEffect
+__as__17xAnimActiveEffectFRC17xAnimActiveEffect:
 /* 80007814 00004614  80 A4 00 00 */	lwz r5, 0(r4)
 /* 80007818 00004618  80 04 00 04 */	lwz r0, 4(r4)
 /* 8000781C 0000461C  90 A3 00 00 */	stw r5, 0(r3)
 /* 80007820 00004620  90 03 00 04 */	stw r0, 4(r3)
 /* 80007824 00004624  4E 80 00 20 */	blr 
 
-.global func_80007828
-func_80007828:
+EffectActiveRemove__FP17xAnimActiveEffectUiUi:
 /* 80007828 00004628  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000782C 0000462C  7C 08 02 A6 */	mflr r0
 /* 80007830 00004630  38 A5 FF FF */	addi r5, r5, -1
@@ -2378,7 +2364,7 @@ lbl_8000786C:
 /* 8000787C 0000467C  40 82 FF E8 */	bne lbl_80007864
 lbl_80007880:
 /* 80007880 00004680  7F E4 FB 78 */	mr r4, r31
-/* 80007884 00004684  4B FF FF 91 */	bl func_80007814
+/* 80007884 00004684  4B FF FF 91 */	bl __as__17xAnimActiveEffectFRC17xAnimActiveEffect
 /* 80007888 00004688  38 00 00 00 */	li r0, 0
 /* 8000788C 0000468C  90 1F 00 00 */	stw r0, 0(r31)
 lbl_80007890:
@@ -2388,8 +2374,7 @@ lbl_80007890:
 /* 8000789C 0000469C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800078A0 000046A0  4E 80 00 20 */	blr 
 
-.global func_800078A4
-func_800078A4:
+EffectPlaying__FP11xAnimSingleP11xAnimEffect:
 /* 800078A4 000046A4  80 03 00 1C */	lwz r0, 0x1c(r3)
 /* 800078A8 000046A8  38 E0 00 00 */	li r7, 0
 /* 800078AC 000046AC  38 C0 00 00 */	li r6, 0
@@ -2413,8 +2398,7 @@ lbl_800078E4:
 /* 800078E4 000046E4  38 60 00 00 */	li r3, 0
 /* 800078E8 000046E8  4E 80 00 20 */	blr 
 
-.global func_800078EC
-func_800078EC:
+EffectSingleStart__FP11xAnimSingle:
 /* 800078EC 000046EC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800078F0 000046F0  7C 08 02 A6 */	mflr r0
 /* 800078F4 000046F4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2462,14 +2446,14 @@ lbl_8000791C:
 lbl_80007998:
 /* 80007998 00004798  7F C3 F3 78 */	mr r3, r30
 /* 8000799C 0000479C  38 81 00 08 */	addi r4, r1, 8
-/* 800079A0 000047A0  4B FF FD F9 */	bl func_80007798
+/* 800079A0 000047A0  4B FF FD F9 */	bl EffectActiveInsert__FP11xAnimSingleP17xAnimActiveEffect
 /* 800079A4 000047A4  48 00 00 6C */	b lbl_80007A10
 lbl_800079A8:
 /* 800079A8 000047A8  54 60 06 B5 */	rlwinm. r0, r3, 0, 0x1a, 0x1a
 /* 800079AC 000047AC  41 82 00 64 */	beq lbl_80007A10
 /* 800079B0 000047B0  7F C3 F3 78 */	mr r3, r30
 /* 800079B4 000047B4  38 81 00 08 */	addi r4, r1, 8
-/* 800079B8 000047B8  4B FF FD E1 */	bl func_80007798
+/* 800079B8 000047B8  4B FF FD E1 */	bl EffectActiveInsert__FP11xAnimSingleP17xAnimActiveEffect
 /* 800079BC 000047BC  48 00 00 54 */	b lbl_80007A10
 lbl_800079C0:
 /* 800079C0 000047C0  54 60 07 BD */	rlwinm. r0, r3, 0, 0x1e, 0x1e
@@ -2491,7 +2475,7 @@ lbl_800079C0:
 /* 80007A00 00004800  90 61 00 0C */	stw r3, 0xc(r1)
 /* 80007A04 00004804  7F C3 F3 78 */	mr r3, r30
 /* 80007A08 00004808  38 81 00 08 */	addi r4, r1, 8
-/* 80007A0C 0000480C  4B FF FD 8D */	bl func_80007798
+/* 80007A0C 0000480C  4B FF FD 8D */	bl EffectActiveInsert__FP11xAnimSingleP17xAnimActiveEffect
 lbl_80007A10:
 /* 80007A10 00004810  83 FF 00 00 */	lwz r31, 0(r31)
 lbl_80007A14:
@@ -2511,8 +2495,7 @@ lbl_80007A28:
 /* 80007A44 00004844  38 21 00 30 */	addi r1, r1, 0x30
 /* 80007A48 00004848  4E 80 00 20 */	blr 
 
-.global func_80007A4C
-func_80007A4C:
+EffectSingleDuration__FP11xAnimSingle:
 /* 80007A4C 0000484C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80007A50 00004850  7C 08 02 A6 */	mflr r0
 /* 80007A54 00004854  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2547,7 +2530,7 @@ lbl_80007A88:
 /* 80007AC4 000048C4  7F E3 FB 78 */	mr r3, r31
 /* 80007AC8 000048C8  7F C4 F3 78 */	mr r4, r30
 /* 80007ACC 000048CC  7F A5 EB 78 */	mr r5, r29
-/* 80007AD0 000048D0  4B FF FD 59 */	bl func_80007828
+/* 80007AD0 000048D0  4B FF FD 59 */	bl EffectActiveRemove__FP17xAnimActiveEffectUiUi
 /* 80007AD4 000048D4  48 00 00 2C */	b lbl_80007B00
 lbl_80007AD8:
 /* 80007AD8 000048D8  80 7C 00 28 */	lwz r3, 0x28(r28)
@@ -2578,8 +2561,7 @@ lbl_80007B14:
 /* 80007B34 00004934  38 21 00 30 */	addi r1, r1, 0x30
 /* 80007B38 00004938  4E 80 00 20 */	blr 
 
-.global func_80007B3C
-func_80007B3C:
+EffectSingleRun__FP11xAnimSingle:
 /* 80007B3C 0000493C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80007B40 00004940  7C 08 02 A6 */	mflr r0
 /* 80007B44 00004944  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2601,7 +2583,7 @@ lbl_80007B70:
 /* 80007B80 00004980  41 82 00 18 */	beq lbl_80007B98
 /* 80007B84 00004984  7F 83 E3 78 */	mr r3, r28
 /* 80007B88 00004988  7F C4 F3 78 */	mr r4, r30
-/* 80007B8C 0000498C  4B FF FD 19 */	bl func_800078A4
+/* 80007B8C 0000498C  4B FF FD 19 */	bl EffectPlaying__FP11xAnimSingleP11xAnimEffect
 /* 80007B90 00004990  28 03 00 00 */	cmplwi r3, 0
 /* 80007B94 00004994  40 82 00 8C */	bne lbl_80007C20
 lbl_80007B98:
@@ -2633,14 +2615,14 @@ lbl_80007B98:
 lbl_80007BFC:
 /* 80007BFC 000049FC  7F 83 E3 78 */	mr r3, r28
 /* 80007C00 00004A00  38 81 00 08 */	addi r4, r1, 8
-/* 80007C04 00004A04  4B FF FB 95 */	bl func_80007798
+/* 80007C04 00004A04  4B FF FB 95 */	bl EffectActiveInsert__FP11xAnimSingleP17xAnimActiveEffect
 /* 80007C08 00004A08  48 00 00 18 */	b lbl_80007C20
 lbl_80007C0C:
 /* 80007C0C 00004A0C  28 1F 00 00 */	cmplwi r31, 0
 /* 80007C10 00004A10  41 82 00 10 */	beq lbl_80007C20
 /* 80007C14 00004A14  7F 83 E3 78 */	mr r3, r28
 /* 80007C18 00004A18  38 81 00 08 */	addi r4, r1, 8
-/* 80007C1C 00004A1C  4B FF FB 7D */	bl func_80007798
+/* 80007C1C 00004A1C  4B FF FB 7D */	bl EffectActiveInsert__FP11xAnimSingleP17xAnimActiveEffect
 lbl_80007C20:
 /* 80007C20 00004A20  83 DE 00 00 */	lwz r30, 0(r30)
 lbl_80007C24:
@@ -2663,8 +2645,7 @@ lbl_80007C3C:
 /* 80007C60 00004A60  38 21 00 30 */	addi r1, r1, 0x30
 /* 80007C64 00004A64  4E 80 00 20 */	blr 
 
-.global func_80007C68
-func_80007C68:
+EffectSingleLoop__FP11xAnimSingle:
 /* 80007C68 00004A68  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80007C6C 00004A6C  7C 08 02 A6 */	mflr r0
 /* 80007C70 00004A70  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2673,7 +2654,7 @@ func_80007C68:
 /* 80007C7C 00004A7C  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 80007C80 00004A80  93 81 00 10 */	stw r28, 0x10(r1)
 /* 80007C84 00004A84  7C 7C 1B 78 */	mr r28, r3
-/* 80007C88 00004A88  4B FF FE B5 */	bl func_80007B3C
+/* 80007C88 00004A88  4B FF FE B5 */	bl EffectSingleRun__FP11xAnimSingle
 /* 80007C8C 00004A8C  83 FC 00 24 */	lwz r31, 0x24(r28)
 /* 80007C90 00004A90  3B C0 00 00 */	li r30, 0
 /* 80007C94 00004A94  83 BC 00 1C */	lwz r29, 0x1c(r28)
@@ -2693,7 +2674,7 @@ lbl_80007C9C:
 /* 80007CC8 00004AC8  7F E3 FB 78 */	mr r3, r31
 /* 80007CCC 00004ACC  7F C4 F3 78 */	mr r4, r30
 /* 80007CD0 00004AD0  7F A5 EB 78 */	mr r5, r29
-/* 80007CD4 00004AD4  4B FF FB 55 */	bl func_80007828
+/* 80007CD4 00004AD4  4B FF FB 55 */	bl EffectActiveRemove__FP17xAnimActiveEffectUiUi
 /* 80007CD8 00004AD8  48 00 00 0C */	b lbl_80007CE4
 lbl_80007CDC:
 /* 80007CDC 00004ADC  3B FF 00 08 */	addi r31, r31, 8
@@ -2728,8 +2709,7 @@ lbl_80007D20:
 /* 80007D3C 00004B3C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80007D40 00004B40  4E 80 00 20 */	blr 
 
-.global func_80007D44
-func_80007D44:
+EffectSingleStop__FP11xAnimSingle:
 /* 80007D44 00004B44  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80007D48 00004B48  7C 08 02 A6 */	mflr r0
 /* 80007D4C 00004B4C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2820,8 +2800,7 @@ lbl_80007E68:
 /* 80007E7C 00004C7C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80007E80 00004C80  4E 80 00 20 */	blr 
 
-.global func_80007E84
-func_80007E84:
+StopUpdate__FP11xAnimSingle:
 /* 80007E84 00004C84  80 83 00 04 */	lwz r4, 4(r3)
 /* 80007E88 00004C88  C0 03 00 08 */	lfs f0, 8(r3)
 /* 80007E8C 00004C8C  80 84 00 18 */	lwz r4, 0x18(r4)
@@ -2833,8 +2812,7 @@ func_80007E84:
 /* 80007EA4 00004CA4  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 80007EA8 00004CA8  4E 80 00 20 */	blr 
 
-.global func_80007EAC
-func_80007EAC:
+LoopUpdate__FP11xAnimSingle:
 /* 80007EAC 00004CAC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80007EB0 00004CB0  7C 08 02 A6 */	mflr r0
 /* 80007EB4 00004CB4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2851,7 +2829,7 @@ func_80007EAC:
 /* 80007EE0 00004CE0  FC 1F F0 40 */	fcmpo cr0, f31, f30
 /* 80007EE4 00004CE4  40 81 00 14 */	ble lbl_80007EF8
 /* 80007EE8 00004CE8  D3 DF 00 08 */	stfs f30, 8(r31)
-/* 80007EEC 00004CEC  4B FF FD 7D */	bl func_80007C68
+/* 80007EEC 00004CEC  4B FF FD 7D */	bl EffectSingleLoop__FP11xAnimSingle
 /* 80007EF0 00004CF0  EC 1F F0 28 */	fsubs f0, f31, f30
 /* 80007EF4 00004CF4  D0 1F 00 08 */	stfs f0, 8(r31)
 lbl_80007EF8:
@@ -2865,8 +2843,8 @@ lbl_80007EF8:
 /* 80007F14 00004D14  38 21 00 30 */	addi r1, r1, 0x30
 /* 80007F18 00004D18  4E 80 00 20 */	blr 
 
-.global func_80007F1C
-func_80007F1C:
+.global xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef
+xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef:
 /* 80007F1C 00004D1C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80007F20 00004D20  7C 08 02 A6 */	mflr r0
 /* 80007F24 00004D24  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2877,11 +2855,11 @@ func_80007F1C:
 /* 80007F38 00004D38  FF E0 08 90 */	fmr f31, f1
 /* 80007F3C 00004D3C  7C 7F 1B 78 */	mr r31, r3
 /* 80007F40 00004D40  7C 9E 23 78 */	mr r30, r4
-/* 80007F44 00004D44  4B FF FE 01 */	bl func_80007D44
+/* 80007F44 00004D44  4B FF FE 01 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80007F48 00004D48  80 7F 00 34 */	lwz r3, 0x34(r31)
 /* 80007F4C 00004D4C  28 03 00 00 */	cmplwi r3, 0
 /* 80007F50 00004D50  41 82 00 14 */	beq lbl_80007F64
-/* 80007F54 00004D54  4B FF FD F1 */	bl func_80007D44
+/* 80007F54 00004D54  4B FF FD F1 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80007F58 00004D58  80 7F 00 34 */	lwz r3, 0x34(r31)
 /* 80007F5C 00004D5C  38 00 00 00 */	li r0, 0
 /* 80007F60 00004D60  90 03 00 04 */	stw r0, 4(r3)
@@ -2950,8 +2928,7 @@ lbl_8000802C:
 /* 80008044 00004E44  38 21 00 20 */	addi r1, r1, 0x20
 /* 80008048 00004E48  4E 80 00 20 */	blr 
 
-.global func_8000804C
-func_8000804C:
+SingleUpdate__FP11xAnimSinglef:
 /* 8000804C 00004E4C  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80008050 00004E50  7C 08 02 A6 */	mflr r0
 /* 80008054 00004E54  90 01 00 94 */	stw r0, 0x94(r1)
@@ -2985,7 +2962,7 @@ func_8000804C:
 /* 800080C4 00004EC4  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 800080C8 00004EC8  83 44 00 0C */	lwz r26, 0xc(r4)
 /* 800080CC 00004ECC  40 82 00 08 */	bne lbl_800080D4
-/* 800080D0 00004ED0  4B FF F8 1D */	bl func_800078EC
+/* 800080D0 00004ED0  4B FF F8 1D */	bl EffectSingleStart__FP11xAnimSingle
 lbl_800080D4:
 /* 800080D4 00004ED4  C0 1F 00 08 */	lfs f0, 8(r31)
 /* 800080D8 00004ED8  D0 1F 00 20 */	stfs f0, 0x20(r31)
@@ -3004,7 +2981,7 @@ lbl_800080D4:
 /* 8000810C 00004F0C  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 80008110 00004F10  40 82 00 0C */	bne lbl_8000811C
 /* 80008114 00004F14  7F 23 CB 78 */	mr r3, r25
-/* 80008118 00004F18  4B FF F7 D5 */	bl func_800078EC
+/* 80008118 00004F18  4B FF F7 D5 */	bl EffectSingleStart__FP11xAnimSingle
 lbl_8000811C:
 /* 8000811C 00004F1C  C0 19 00 08 */	lfs f0, 8(r25)
 /* 80008120 00004F20  D0 19 00 20 */	stfs f0, 0x20(r25)
@@ -3181,7 +3158,7 @@ lbl_8000836C:
 /* 80008384 00005184  D0 1F 00 38 */	stfs f0, 0x38(r31)
 /* 80008388 00005188  41 82 00 48 */	beq lbl_800083D0
 /* 8000838C 0000518C  7F 63 DB 78 */	mr r3, r27
-/* 80008390 00005190  4B FF F9 B5 */	bl func_80007D44
+/* 80008390 00005190  4B FF F9 B5 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80008394 00005194  38 00 00 00 */	li r0, 0
 /* 80008398 00005198  90 1B 00 04 */	stw r0, 4(r27)
 /* 8000839C 0000519C  3B 60 00 00 */	li r27, 0
@@ -3215,7 +3192,7 @@ lbl_800083F8:
 /* 80008400 00005200  48 00 00 18 */	b lbl_80008418
 lbl_80008404:
 /* 80008404 00005204  7F E3 FB 78 */	mr r3, r31
-/* 80008408 00005208  4B FF F9 3D */	bl func_80007D44
+/* 80008408 00005208  4B FF F9 3D */	bl EffectSingleStop__FP11xAnimSingle
 /* 8000840C 0000520C  38 00 00 00 */	li r0, 0
 /* 80008410 00005210  90 1F 00 04 */	stw r0, 4(r31)
 /* 80008414 00005214  48 00 02 D0 */	b lbl_800086E4
@@ -3227,7 +3204,7 @@ lbl_80008424:
 /* 80008424 00005224  28 1B 00 00 */	cmplwi r27, 0
 /* 80008428 00005228  41 82 00 20 */	beq lbl_80008448
 /* 8000842C 0000522C  7F 63 DB 78 */	mr r3, r27
-/* 80008430 00005230  4B FF F9 15 */	bl func_80007D44
+/* 80008430 00005230  4B FF F9 15 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80008434 00005234  38 00 00 00 */	li r0, 0
 /* 80008438 00005238  90 1B 00 04 */	stw r0, 4(r27)
 /* 8000843C 0000523C  3B 60 00 00 */	li r27, 0
@@ -3243,7 +3220,7 @@ lbl_80008448:
 /* 80008460 00005260  40 82 00 3C */	bne lbl_8000849C
 lbl_80008464:
 /* 80008464 00005264  7F E3 FB 78 */	mr r3, r31
-/* 80008468 00005268  4B FF F8 DD */	bl func_80007D44
+/* 80008468 00005268  4B FF F8 DD */	bl EffectSingleStop__FP11xAnimSingle
 /* 8000846C 0000526C  80 9F 00 30 */	lwz r4, 0x30(r31)
 /* 80008470 00005270  28 04 00 00 */	cmplwi r4, 0
 /* 80008474 00005274  41 82 00 1C */	beq lbl_80008490
@@ -3297,7 +3274,7 @@ lbl_8000851C:
 lbl_80008528:
 /* 80008528 00005328  7F E3 FB 78 */	mr r3, r31
 /* 8000852C 0000532C  7F 84 E3 78 */	mr r4, r28
-/* 80008530 00005330  4B FF DD 0D */	bl func_8000623C
+/* 80008530 00005330  4B FF DD 0D */	bl TransitionTimeInit__FP11xAnimSingleP15xAnimTransition
 /* 80008534 00005334  80 9C 00 04 */	lwz r4, 4(r28)
 /* 80008538 00005338  38 00 00 00 */	li r0, 0
 /* 8000853C 0000533C  7F E3 FB 78 */	mr r3, r31
@@ -3310,7 +3287,7 @@ lbl_80008528:
 /* 80008558 00005358  C0 02 80 00 */	lfs f0, lbl_803CC980-_SDA2_BASE_(r2)
 /* 8000855C 0000535C  D0 1F 00 14 */	stfs f0, 0x14(r31)
 /* 80008560 00005360  90 1F 00 2C */	stw r0, 0x2c(r31)
-/* 80008564 00005364  4B FF F3 89 */	bl func_800078EC
+/* 80008564 00005364  4B FF F3 89 */	bl EffectSingleStart__FP11xAnimSingle
 /* 80008568 00005368  80 9C 00 04 */	lwz r4, 4(r28)
 /* 8000856C 0000536C  81 84 00 40 */	lwz r12, 0x40(r4)
 /* 80008570 00005370  28 0C 00 00 */	cmplwi r12, 0
@@ -3349,14 +3326,14 @@ lbl_800085D8:
 /* 800085E4 000053E4  28 00 00 10 */	cmplwi r0, 0x10
 /* 800085E8 000053E8  40 82 00 10 */	bne lbl_800085F8
 /* 800085EC 000053EC  7F E3 FB 78 */	mr r3, r31
-/* 800085F0 000053F0  4B FF F8 BD */	bl func_80007EAC
+/* 800085F0 000053F0  4B FF F8 BD */	bl LoopUpdate__FP11xAnimSingle
 /* 800085F4 000053F4  48 00 00 0C */	b lbl_80008600
 lbl_800085F8:
 /* 800085F8 000053F8  7F E3 FB 78 */	mr r3, r31
-/* 800085FC 000053FC  4B FF F8 89 */	bl func_80007E84
+/* 800085FC 000053FC  4B FF F8 89 */	bl StopUpdate__FP11xAnimSingle
 lbl_80008600:
 /* 80008600 00005400  7F E3 FB 78 */	mr r3, r31
-/* 80008604 00005404  4B FF F5 39 */	bl func_80007B3C
+/* 80008604 00005404  4B FF F5 39 */	bl EffectSingleRun__FP11xAnimSingle
 /* 80008608 00005408  28 1B 00 00 */	cmplwi r27, 0
 /* 8000860C 0000540C  41 82 00 34 */	beq lbl_80008640
 /* 80008610 00005410  80 7B 00 04 */	lwz r3, 4(r27)
@@ -3365,14 +3342,14 @@ lbl_80008600:
 /* 8000861C 0000541C  28 00 00 10 */	cmplwi r0, 0x10
 /* 80008620 00005420  40 82 00 10 */	bne lbl_80008630
 /* 80008624 00005424  7F 63 DB 78 */	mr r3, r27
-/* 80008628 00005428  4B FF F8 85 */	bl func_80007EAC
+/* 80008628 00005428  4B FF F8 85 */	bl LoopUpdate__FP11xAnimSingle
 /* 8000862C 0000542C  48 00 00 0C */	b lbl_80008638
 lbl_80008630:
 /* 80008630 00005430  7F 63 DB 78 */	mr r3, r27
-/* 80008634 00005434  4B FF F8 51 */	bl func_80007E84
+/* 80008634 00005434  4B FF F8 51 */	bl StopUpdate__FP11xAnimSingle
 lbl_80008638:
 /* 80008638 00005438  7F 63 DB 78 */	mr r3, r27
-/* 8000863C 0000543C  4B FF F5 01 */	bl func_80007B3C
+/* 8000863C 0000543C  4B FF F5 01 */	bl EffectSingleRun__FP11xAnimSingle
 lbl_80008640:
 /* 80008640 00005440  28 1E 00 00 */	cmplwi r30, 0
 /* 80008644 00005444  3B A0 00 00 */	li r29, 0
@@ -3412,11 +3389,11 @@ lbl_800086A8:
 /* 800086C8 000054C8  D0 1F 00 38 */	stfs f0, 0x38(r31)
 lbl_800086CC:
 /* 800086CC 000054CC  7F E3 FB 78 */	mr r3, r31
-/* 800086D0 000054D0  4B FF F3 7D */	bl func_80007A4C
+/* 800086D0 000054D0  4B FF F3 7D */	bl EffectSingleDuration__FP11xAnimSingle
 /* 800086D4 000054D4  28 1B 00 00 */	cmplwi r27, 0
 /* 800086D8 000054D8  41 82 00 0C */	beq lbl_800086E4
 /* 800086DC 000054DC  7F 63 DB 78 */	mr r3, r27
-/* 800086E0 000054E0  4B FF F3 6D */	bl func_80007A4C
+/* 800086E0 000054E0  4B FF F3 6D */	bl EffectSingleDuration__FP11xAnimSingle
 lbl_800086E4:
 /* 800086E4 000054E4  E3 E1 00 88 */	psq_l f31, 136(r1), 0, qr0
 /* 800086E8 000054E8  CB E1 00 80 */	lfd f31, 0x80(r1)
@@ -3436,8 +3413,7 @@ lbl_800086E4:
 /* 80008720 00005520  38 21 00 90 */	addi r1, r1, 0x90
 /* 80008724 00005524  4E 80 00 20 */	blr 
 
-.global func_80008728
-func_80008728:
+SingleEval__FP11xAnimSingleP5xVec3P5xQuat:
 /* 80008728 00005528  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8000872C 0000552C  7C 08 02 A6 */	mflr r0
 /* 80008730 00005530  90 01 00 34 */	stw r0, 0x34(r1)
@@ -3457,7 +3433,7 @@ func_80008728:
 /* 80008768 00005568  38 FD 00 10 */	addi r7, r29, 0x10
 /* 8000876C 0000556C  38 A0 00 02 */	li r5, 2
 /* 80008770 00005570  39 00 00 00 */	li r8, 0
-/* 80008774 00005574  4B FF DE E5 */	bl func_80006658
+/* 80008774 00005574  4B FF DE E5 */	bl xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf
 /* 80008778 00005578  80 FB 00 34 */	lwz r7, 0x34(r27)
 /* 8000877C 0000557C  28 07 00 00 */	cmplwi r7, 0
 /* 80008780 00005580  41 82 00 78 */	beq lbl_800087F8
@@ -3474,7 +3450,7 @@ func_80008728:
 /* 800087AC 000055AC  39 00 00 00 */	li r8, 0
 /* 800087B0 000055B0  7F C6 F3 78 */	mr r6, r30
 /* 800087B4 000055B4  7F E7 FB 78 */	mr r7, r31
-/* 800087B8 000055B8  4B FF DE A1 */	bl func_80006658
+/* 800087B8 000055B8  4B FF DE A1 */	bl xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf
 /* 800087BC 000055BC  81 7B 00 30 */	lwz r11, 0x30(r27)
 /* 800087C0 000055C0  39 3D 00 10 */	addi r9, r29, 0x10
 /* 800087C4 000055C4  39 1C 00 0C */	addi r8, r28, 0xc
@@ -3497,8 +3473,8 @@ lbl_800087F8:
 /* 80008804 00005604  38 21 00 30 */	addi r1, r1, 0x30
 /* 80008808 00005608  4E 80 00 20 */	blr 
 
-.global func_8000880C
-func_8000880C:
+.global xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance
+xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance:
 /* 8000880C 0000560C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80008810 00005610  7C 08 02 A6 */	mflr r0
 /* 80008814 00005614  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3555,14 +3531,14 @@ lbl_800088C0:
 /* 800088CC 000056CC  80 63 00 08 */	lwz r3, 8(r3)
 /* 800088D0 000056D0  80 85 00 0C */	lwz r4, 0xc(r5)
 /* 800088D4 000056D4  C0 22 80 00 */	lfs f1, lbl_803CC980-_SDA2_BASE_(r2)
-/* 800088D8 000056D8  4B FF F6 45 */	bl func_80007F1C
+/* 800088D8 000056D8  4B FF F6 45 */	bl xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef
 /* 800088DC 000056DC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800088E0 000056E0  7C 08 03 A6 */	mtlr r0
 /* 800088E4 000056E4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800088E8 000056E8  4E 80 00 20 */	blr 
 
-.global func_800088EC
-func_800088EC:
+.global xAnimPlayChooseTransition__FP9xAnimPlay
+xAnimPlayChooseTransition__FP9xAnimPlay:
 /* 800088EC 000056EC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800088F0 000056F0  7C 08 02 A6 */	mflr r0
 /* 800088F4 000056F4  38 80 00 00 */	li r4, 0
@@ -3646,7 +3622,7 @@ lbl_800089E0:
 /* 80008A0C 0000580C  40 81 00 0C */	ble lbl_80008A18
 lbl_80008A10:
 /* 80008A10 00005810  7F 83 E3 78 */	mr r3, r28
-/* 80008A14 00005814  48 00 00 31 */	bl func_80008A44
+/* 80008A14 00005814  48 00 00 31 */	bl xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition
 lbl_80008A18:
 /* 80008A18 00005818  3B 7B 00 04 */	addi r27, r27, 4
 /* 80008A1C 0000581C  3B BD 00 40 */	addi r29, r29, 0x40
@@ -3661,8 +3637,8 @@ lbl_80008A24:
 /* 80008A3C 0000583C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80008A40 00005840  4E 80 00 20 */	blr 
 
-.global func_80008A44
-func_80008A44:
+.global xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition
+xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition:
 /* 80008A44 00005844  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80008A48 00005848  7C 08 02 A6 */	mflr r0
 /* 80008A4C 0000584C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3700,7 +3676,7 @@ lbl_80008AB8:
 /* 80008AC4 000058C4  28 00 00 00 */	cmplwi r0, 0
 /* 80008AC8 000058C8  41 82 00 1C */	beq lbl_80008AE4
 /* 80008ACC 000058CC  7F 83 E3 78 */	mr r3, r28
-/* 80008AD0 000058D0  4B FF F2 75 */	bl func_80007D44
+/* 80008AD0 000058D0  4B FF F2 75 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80008AD4 000058D4  38 00 00 00 */	li r0, 0
 /* 80008AD8 000058D8  90 1C 00 04 */	stw r0, 4(r28)
 /* 80008ADC 000058DC  C0 02 80 00 */	lfs f0, lbl_803CC980-_SDA2_BASE_(r2)
@@ -3715,7 +3691,7 @@ lbl_80008AE4:
 /* 80008AFC 000058FC  40 82 00 3C */	bne lbl_80008B38
 lbl_80008B00:
 /* 80008B00 00005900  7F E3 FB 78 */	mr r3, r31
-/* 80008B04 00005904  4B FF F2 41 */	bl func_80007D44
+/* 80008B04 00005904  4B FF F2 41 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80008B08 00005908  80 9F 00 30 */	lwz r4, 0x30(r31)
 /* 80008B0C 0000590C  28 04 00 00 */	cmplwi r4, 0
 /* 80008B10 00005910  41 82 00 1C */	beq lbl_80008B2C
@@ -3771,7 +3747,7 @@ lbl_80008BBC:
 lbl_80008BC8:
 /* 80008BC8 000059C8  7F E3 FB 78 */	mr r3, r31
 /* 80008BCC 000059CC  7F C4 F3 78 */	mr r4, r30
-/* 80008BD0 000059D0  4B FF D6 6D */	bl func_8000623C
+/* 80008BD0 000059D0  4B FF D6 6D */	bl TransitionTimeInit__FP11xAnimSingleP15xAnimTransition
 /* 80008BD4 000059D4  80 9E 00 04 */	lwz r4, 4(r30)
 /* 80008BD8 000059D8  38 00 00 00 */	li r0, 0
 /* 80008BDC 000059DC  7F E3 FB 78 */	mr r3, r31
@@ -3784,7 +3760,7 @@ lbl_80008BC8:
 /* 80008BF8 000059F8  C0 02 80 00 */	lfs f0, lbl_803CC980-_SDA2_BASE_(r2)
 /* 80008BFC 000059FC  D0 1F 00 14 */	stfs f0, 0x14(r31)
 /* 80008C00 00005A00  90 1F 00 2C */	stw r0, 0x2c(r31)
-/* 80008C04 00005A04  4B FF EC E9 */	bl func_800078EC
+/* 80008C04 00005A04  4B FF EC E9 */	bl EffectSingleStart__FP11xAnimSingle
 /* 80008C08 00005A08  80 9E 00 04 */	lwz r4, 4(r30)
 /* 80008C0C 00005A0C  81 84 00 40 */	lwz r12, 0x40(r4)
 /* 80008C10 00005A10  28 0C 00 00 */	cmplwi r12, 0
@@ -3812,8 +3788,8 @@ lbl_80008C48:
 /* 80008C60 00005A60  38 21 00 20 */	addi r1, r1, 0x20
 /* 80008C64 00005A64  4E 80 00 20 */	blr 
 
-.global func_80008C68
-func_80008C68:
+.global xAnimPlayUpdate__FP9xAnimPlayf
+xAnimPlayUpdate__FP9xAnimPlayf:
 /* 80008C68 00005A68  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80008C6C 00005A6C  7C 08 02 A6 */	mflr r0
 /* 80008C70 00005A70  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3832,7 +3808,7 @@ lbl_80008C9C:
 /* 80008CA0 00005AA0  FC 20 F8 90 */	fmr f1, f31
 /* 80008CA4 00005AA4  7F A0 FA 14 */	add r29, r0, r31
 /* 80008CA8 00005AA8  7F A3 EB 78 */	mr r3, r29
-/* 80008CAC 00005AAC  4B FF F3 A1 */	bl func_8000804C
+/* 80008CAC 00005AAC  4B FF F3 A1 */	bl SingleUpdate__FP11xAnimSinglef
 /* 80008CB0 00005AB0  80 7D 00 04 */	lwz r3, 4(r29)
 /* 80008CB4 00005AB4  81 83 00 44 */	lwz r12, 0x44(r3)
 /* 80008CB8 00005AB8  28 0C 00 00 */	cmplwi r12, 0
@@ -3858,8 +3834,8 @@ lbl_80008CD8:
 /* 80008D00 00005B00  38 21 00 20 */	addi r1, r1, 0x20
 /* 80008D04 00005B04  4E 80 00 20 */	blr 
 
-.global func_80008D08
-func_80008D08:
+.global xAnimPlayEval__FP9xAnimPlay
+xAnimPlayEval__FP9xAnimPlay:
 /* 80008D08 00005B08  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80008D0C 00005B0C  7C 08 02 A6 */	mflr r0
 /* 80008D10 00005B10  90 01 00 64 */	stw r0, 0x64(r1)
@@ -3879,7 +3855,7 @@ func_80008D08:
 /* 80008D48 00005B48  80 78 00 08 */	lwz r3, 8(r24)
 /* 80008D4C 00005B4C  7F 84 E3 78 */	mr r4, r28
 /* 80008D50 00005B50  3B 5B 04 10 */	addi r26, r27, 0x410
-/* 80008D54 00005B54  4B FF F9 D5 */	bl func_80008728
+/* 80008D54 00005B54  4B FF F9 D5 */	bl SingleEval__FP11xAnimSingleP5xVec3P5xQuat
 /* 80008D58 00005B58  3B C0 00 01 */	li r30, 1
 /* 80008D5C 00005B5C  3B E0 00 40 */	li r31, 0x40
 /* 80008D60 00005B60  48 00 01 98 */	b lbl_80008EF8
@@ -3898,7 +3874,7 @@ lbl_80008D64:
 /* 80008D90 00005B90  7F 65 DB 78 */	mr r5, r27
 /* 80008D94 00005B94  FF C0 F8 90 */	fmr f30, f31
 /* 80008D98 00005B98  3A 80 00 00 */	li r20, 0
-/* 80008D9C 00005B9C  4B FF F9 8D */	bl func_80008728
+/* 80008D9C 00005B9C  4B FF F9 8D */	bl SingleEval__FP11xAnimSingleP5xVec3P5xQuat
 /* 80008DA0 00005BA0  80 79 00 34 */	lwz r3, 0x34(r25)
 /* 80008DA4 00005BA4  28 03 00 00 */	cmplwi r3, 0
 /* 80008DA8 00005BA8  41 82 00 10 */	beq lbl_80008DB8
@@ -4043,7 +4019,9 @@ lbl_80008F74:
 /* 80008FA8 00005DA8  7C 08 03 A6 */	mtlr r0
 /* 80008FAC 00005DAC  38 21 00 60 */	addi r1, r1, 0x60
 /* 80008FB0 00005DB0  4E 80 00 20 */	blr 
-lbl_80008FB4:
+
+.global xAnimPoolCB__FP8xMemPoolPv
+xAnimPoolCB__FP8xMemPoolPv:
 /* 80008FB4 00005DB4  80 A3 00 10 */	lwz r5, 0x10(r3)
 /* 80008FB8 00005DB8  39 40 00 00 */	li r10, 0
 /* 80008FBC 00005DBC  39 84 00 20 */	addi r12, r4, 0x20
@@ -4121,8 +4099,8 @@ lbl_800090A8:
 /* 800090B4 00005EB4  90 64 00 14 */	stw r3, 0x14(r4)
 /* 800090B8 00005EB8  4E 80 00 20 */	blr 
 
-.global func_800090BC
-func_800090BC:
+.global xAnimPoolInit__FP8xMemPoolUiUiUiUi
+xAnimPoolInit__FP8xMemPoolUiUiUiUi:
 /* 800090BC 00005EBC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800090C0 00005EC0  7C 08 02 A6 */	mflr r0
 /* 800090C4 00005EC4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4253,9 +4231,9 @@ lbl_8000928C:
 /* 8000928C 0000608C  A0 04 00 04 */	lhz r0, 4(r4)
 /* 80009290 00006090  7C 08 00 40 */	cmplw r8, r0
 /* 80009294 00006094  41 80 FF A8 */	blt lbl_8000923C
-/* 80009298 00006098  3C 60 80 01 */	lis r3, lbl_80008FB4@ha
+/* 80009298 00006098  3C 60 80 01 */	lis r3, xAnimPoolCB__FP8xMemPoolPv@ha
 /* 8000929C 0000609C  93 44 00 14 */	stw r26, 0x14(r4)
-/* 800092A0 000060A0  38 E3 8F B4 */	addi r7, r3, lbl_80008FB4@l
+/* 800092A0 000060A0  38 E3 8F B4 */	addi r7, r3, xAnimPoolCB__FP8xMemPoolPv@l
 /* 800092A4 000060A4  7F E8 FB 78 */	mr r8, r31
 /* 800092A8 000060A8  7F 43 D3 78 */	mr r3, r26
 /* 800092AC 000060AC  7F 69 DB 78 */	mr r9, r27
@@ -4269,8 +4247,8 @@ lbl_8000928C:
 /* 800092CC 000060CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800092D0 000060D0  4E 80 00 20 */	blr 
 
-.global func_800092D4
-func_800092D4:
+.global xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance
+xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance:
 /* 800092D4 000060D4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800092D8 000060D8  7C 08 02 A6 */	mflr r0
 /* 800092DC 000060DC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4285,7 +4263,7 @@ func_800092D4:
 /* 80009300 00006100  7C 7F 1B 78 */	mr r31, r3
 /* 80009304 00006104  7F A5 EB 78 */	mr r5, r29
 /* 80009308 00006108  7F C6 F3 78 */	mr r6, r30
-/* 8000930C 0000610C  4B FF F5 01 */	bl func_8000880C
+/* 8000930C 0000610C  4B FF F5 01 */	bl xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance
 /* 80009310 00006110  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80009314 00006114  7F E3 FB 78 */	mr r3, r31
 /* 80009318 00006118  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -4295,8 +4273,8 @@ func_800092D4:
 /* 80009328 00006128  38 21 00 20 */	addi r1, r1, 0x20
 /* 8000932C 0000612C  4E 80 00 20 */	blr 
 
-.global func_80009330
-func_80009330:
+.global xAnimPoolFree__FP9xAnimPlay
+xAnimPoolFree__FP9xAnimPlay:
 /* 80009330 00006130  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80009334 00006134  7C 08 02 A6 */	mflr r0
 /* 80009338 00006138  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4310,13 +4288,13 @@ func_80009330:
 lbl_80009358:
 /* 80009358 00006158  80 1D 00 08 */	lwz r0, 8(r29)
 /* 8000935C 0000615C  7C 60 FA 14 */	add r3, r0, r31
-/* 80009360 00006160  4B FF E9 E5 */	bl func_80007D44
+/* 80009360 00006160  4B FF E9 E5 */	bl EffectSingleStop__FP11xAnimSingle
 /* 80009364 00006164  80 7D 00 08 */	lwz r3, 8(r29)
 /* 80009368 00006168  38 1F 00 34 */	addi r0, r31, 0x34
 /* 8000936C 0000616C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 80009370 00006170  28 03 00 00 */	cmplwi r3, 0
 /* 80009374 00006174  41 82 00 08 */	beq lbl_8000937C
-/* 80009378 00006178  4B FF E9 CD */	bl func_80007D44
+/* 80009378 00006178  4B FF E9 CD */	bl EffectSingleStop__FP11xAnimSingle
 lbl_8000937C:
 /* 8000937C 0000617C  3B FF 00 40 */	addi r31, r31, 0x40
 /* 80009380 00006180  3B DE 00 01 */	addi r30, r30, 1
@@ -4335,8 +4313,8 @@ lbl_80009384:
 /* 800093B0 000061B0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800093B4 000061B4  4E 80 00 20 */	blr 
 
-.global func_800093B8
-func_800093B8:
+.global xAnimFileRawTime__FP9xAnimFilef
+xAnimFileRawTime__FP9xAnimFilef:
 /* 800093B8 000061B8  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 800093BC 000061BC  54 80 04 E7 */	rlwinm. r0, r4, 0, 0x13, 0x13
 /* 800093C0 000061C0  40 82 00 20 */	bne lbl_800093E0
