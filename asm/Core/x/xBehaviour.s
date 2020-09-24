@@ -90,8 +90,8 @@ lbl_8010EA80:
 /* 8010EA8C 0010B88C  7C 83 23 78 */	mr r3, r4
 /* 8010EA90 0010B890  4E 80 00 20 */	blr 
 
-.global func_8010EA94
-func_8010EA94:
+.global GetOwner__5xGoalCFv
+GetOwner__5xGoalCFv:
 /* 8010EA94 0010B894  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EA98 0010B898  7C 08 02 A6 */	mflr r0
 /* 8010EA9C 0010B89C  80 63 00 18 */	lwz r3, 0x18(r3)
@@ -102,14 +102,14 @@ func_8010EA94:
 /* 8010EAB0 0010B8B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EAB4 0010B8B4  4E 80 00 20 */	blr 
 
-.global func_8010EAB8
-func_8010EAB8:
+.global Clear__5xGoalFv
+Clear__5xGoalFv:
 /* 8010EAB8 0010B8B8  38 00 00 00 */	li r0, 0
 /* 8010EABC 0010B8BC  90 03 00 20 */	stw r0, 0x20(r3)
 /* 8010EAC0 0010B8C0  4E 80 00 20 */	blr 
 
-.global func_8010EAC4
-func_8010EAC4:
+.global PreCalc__5xGoalFfPv
+PreCalc__5xGoalFfPv:
 /* 8010EAC4 0010B8C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EAC8 0010B8C8  7C 08 02 A6 */	mflr r0
 /* 8010EACC 0010B8CC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -129,8 +129,8 @@ lbl_8010EAF4:
 /* 8010EAFC 0010B8FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EB00 0010B900  4E 80 00 20 */	blr 
 
-.global func_8010EB04
-func_8010EB04:
+.global EvalRules__5xGoalFP11en_trantypefPv
+EvalRules__5xGoalFP11en_trantypefPv:
 /* 8010EB04 0010B904  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EB08 0010B908  7C 08 02 A6 */	mflr r0
 /* 8010EB0C 0010B90C  7C A6 2B 78 */	mr r6, r5
@@ -151,8 +151,8 @@ lbl_8010EB38:
 /* 8010EB40 0010B940  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EB44 0010B944  4E 80 00 20 */	blr 
 
-.global func_8010EB48
-func_8010EB48:
+.global Process__5xGoalFP11en_trantypefPvP6xScene
+Process__5xGoalFP11en_trantypefPvP6xScene:
 /* 8010EB48 0010B948  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EB4C 0010B94C  7C 08 02 A6 */	mflr r0
 /* 8010EB50 0010B950  7C A6 2B 78 */	mr r6, r5

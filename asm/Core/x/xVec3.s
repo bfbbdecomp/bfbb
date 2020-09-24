@@ -14,8 +14,8 @@ lbl_802542F8:
 
 .section .text  # 0x8004E2F0 - 0x8004E510
 
-.global func_8004E2F0
-func_8004E2F0:
+.global xVec3Normalize__FP5xVec3PC5xVec3
+xVec3Normalize__FP5xVec3PC5xVec3:
 /* 8004E2F0 0004B0F0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004E2F4 0004B0F4  7C 08 02 A6 */	mflr r0
 /* 8004E2F8 0004B0F8  C0 C4 00 00 */	lfs f6, 0(r4)
@@ -79,8 +79,8 @@ lbl_8004E3C4:
 /* 8004E3D4 0004B1D4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004E3D8 0004B1D8  4E 80 00 20 */	blr 
 
-.global func_8004E3DC
-func_8004E3DC:
+.global xVec3NormalizeFast__FP5xVec3PC5xVec3
+xVec3NormalizeFast__FP5xVec3PC5xVec3:
 /* 8004E3DC 0004B1DC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004E3E0 0004B1E0  7C 08 02 A6 */	mflr r0
 /* 8004E3E4 0004B1E4  C0 C4 00 00 */	lfs f6, 0(r4)
@@ -149,16 +149,16 @@ lbl_8004E4C0:
 /* 8004E4D4 0004B2D4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004E4D8 0004B2D8  4E 80 00 20 */	blr 
 
-.global func_8004E4DC
-func_8004E4DC:
+.global xVec3Copy__FP5xVec3PC5xVec3
+xVec3Copy__FP5xVec3PC5xVec3:
 /* 8004E4DC 0004B2DC  E0 04 00 00 */	psq_l f0, 0(r4), 0, qr0
 /* 8004E4E0 0004B2E0  E0 24 80 08 */	psq_l f1, 8(r4), 1, qr0
 /* 8004E4E4 0004B2E4  F0 03 00 00 */	psq_st f0, 0(r3), 0, qr0
 /* 8004E4E8 0004B2E8  F0 23 80 08 */	psq_st f1, 8(r3), 1, qr0
 /* 8004E4EC 0004B2EC  4E 80 00 20 */	blr 
 
-.global func_8004E4F0
-func_8004E4F0:
+.global xVec3Dot__FPC5xVec3PC5xVec3
+xVec3Dot__FPC5xVec3PC5xVec3:
 /* 8004E4F0 0004B2F0  E0 43 00 04 */	psq_l f2, 4(r3), 0, qr0
 /* 8004E4F4 0004B2F4  E0 64 00 04 */	psq_l f3, 4(r4), 0, qr0
 /* 8004E4F8 0004B2F8  10 42 00 F2 */	ps_mul f2, f2, f3

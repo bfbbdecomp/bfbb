@@ -2,8 +2,8 @@
 
 .section .text  # 0x8002CF70 - 0x8002D98C
 
-.global func_8002CF70
-func_8002CF70:
+.global get_HIPLFuncs__Fv
+get_HIPLFuncs__Fv:
 /* 8002CF70 00029D70  3C 60 80 28 */	lis r3, lbl_8027D5E0@ha
 /* 8002CF74 00029D74  38 63 D5 E0 */	addi r3, r3, lbl_8027D5E0@l
 /* 8002CF78 00029D78  4E 80 00 20 */	blr 
@@ -88,7 +88,7 @@ lbl_8002CFEC:
 /* 8002D0A8 00029EA8  90 1F 00 9C */	stw r0, 0x9c(r31)
 /* 8002D0AC 00029EAC  90 1F 00 A0 */	stw r0, 0xa0(r31)
 /* 8002D0B0 00029EB0  90 1F 00 A4 */	stw r0, 0xa4(r31)
-/* 8002D0B4 00029EB4  4B FD C4 B1 */	bl func_80009564
+/* 8002D0B4 00029EB4  4B FD C4 B1 */	bl xBinioLoadCreate__FPCc
 /* 8002D0B8 00029EB8  28 03 00 00 */	cmplwi r3, 0
 /* 8002D0BC 00029EBC  41 82 00 38 */	beq lbl_8002D0F4
 /* 8002D0C0 00029EC0  90 7F 00 00 */	stw r3, 0(r31)

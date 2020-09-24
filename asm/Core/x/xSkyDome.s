@@ -5,14 +5,14 @@
 lbl_8010EED8:
 /* 8010EED8 0010BCD8  4E 80 00 20 */	blr 
 
-.global func_8010EEDC
-func_8010EEDC:
+.global xSkyDome_Setup__Fv
+xSkyDome_Setup__Fv:
 /* 8010EEDC 0010BCDC  38 00 00 00 */	li r0, 0
 /* 8010EEE0 0010BCE0  90 0D 94 E8 */	stw r0, lbl_803CBDE8-_SDA_BASE_(r13)
 /* 8010EEE4 0010BCE4  4E 80 00 20 */	blr 
 
-.global func_8010EEE8
-func_8010EEE8:
+.global xSkyDome_AddEntity__FP4xEntii
+xSkyDome_AddEntity__FP4xEntii:
 /* 8010EEE8 0010BCE8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8010EEEC 0010BCEC  7C 08 02 A6 */	mflr r0
 /* 8010EEF0 0010BCF0  3C C0 80 31 */	lis r6, lbl_80313728@ha
@@ -86,10 +86,10 @@ lbl_8010EF94:
 /* 8010EFE8 0010BDE8  A0 1D 00 06 */	lhz r0, 6(r29)
 /* 8010EFEC 0010BDEC  70 00 FF EF */	andi. r0, r0, 0xffef
 /* 8010EFF0 0010BDF0  B0 1D 00 06 */	sth r0, 6(r29)
-/* 8010EFF4 0010BDF4  4B F1 05 FD */	bl func_8001F5F0
+/* 8010EFF4 0010BDF4  4B F1 05 FD */	bl zEntEvent__FP5xBaseUi
 /* 8010EFF8 0010BDF8  7F A3 EB 78 */	mr r3, r29
 /* 8010EFFC 0010BDFC  38 80 02 08 */	li r4, 0x208
-/* 8010F000 0010BE00  4B F1 05 F1 */	bl func_8001F5F0
+/* 8010F000 0010BE00  4B F1 05 F1 */	bl zEntEvent__FP5xBaseUi
 lbl_8010F004:
 /* 8010F004 0010BE04  BB 21 00 14 */	lmw r25, 0x14(r1)
 /* 8010F008 0010BE08  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -107,8 +107,8 @@ func_8010F018:
 /* 8010F02C 0010BE2C  90 03 00 08 */	stw r0, 8(r3)
 /* 8010F030 0010BE30  4E 80 00 20 */	blr 
 
-.global func_8010F034
-func_8010F034:
+.global xSkyDome_Render__Fv
+xSkyDome_Render__Fv:
 /* 8010F034 0010BE34  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8010F038 0010BE38  7C 08 02 A6 */	mflr r0
 /* 8010F03C 0010BE3C  3C 60 80 31 */	lis r3, lbl_80313728@ha
@@ -160,13 +160,13 @@ lbl_8010F0EC:
 /* 8010F0EC 0010BEEC  80 9B 00 24 */	lwz r4, 0x24(r27)
 /* 8010F0F0 0010BEF0  80 64 00 10 */	lwz r3, 0x10(r4)
 /* 8010F0F4 0010BEF4  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 8010F0F8 0010BEF8  4B FB 90 E5 */	bl func_800C81DC
+/* 8010F0F8 0010BEF8  4B FB 90 E5 */	bl iModelCull__FP8RpAtomicP11RwMatrixTag
 /* 8010F0FC 0010BEFC  2C 03 00 00 */	cmpwi r3, 0
 /* 8010F100 0010BF00  40 82 00 14 */	bne lbl_8010F114
 /* 8010F104 0010BF04  80 9B 00 24 */	lwz r4, 0x24(r27)
 /* 8010F108 0010BF08  80 64 00 10 */	lwz r3, 0x10(r4)
 /* 8010F10C 0010BF0C  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 8010F110 0010BF10  4B FB 8F E1 */	bl func_800C80F0
+/* 8010F110 0010BF10  4B FB 8F E1 */	bl iModelRender__FP8RpAtomicP11RwMatrixTag
 lbl_8010F114:
 /* 8010F114 0010BF14  80 7B 00 24 */	lwz r3, 0x24(r27)
 /* 8010F118 0010BF18  38 81 00 08 */	addi r4, r1, 8

@@ -2,22 +2,22 @@
 
 .section .text  # 0x80052558 - 0x80052874
 
-.global func_80052558
-func_80052558:
+.global zConditionalInit__FPvPv
+zConditionalInit__FPvPv:
 /* 80052558 0004F358  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005255C 0004F35C  7C 08 02 A6 */	mflr r0
 /* 80052560 0004F360  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80052564 0004F364  48 00 00 21 */	bl func_80052584
+/* 80052564 0004F364  48 00 00 21 */	bl zConditionalInit__FP5xBaseP10zCondAsset
 /* 80052568 0004F368  3C 60 80 29 */	lis r3, lbl_80291930@ha
 /* 8005256C 0004F36C  38 63 19 30 */	addi r3, r3, lbl_80291930@l
-/* 80052570 0004F370  48 06 BB 19 */	bl func_800BE088
+/* 80052570 0004F370  48 06 BB 19 */	bl zVarInit__FP9zVarEntry
 /* 80052574 0004F374  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80052578 0004F378  7C 08 03 A6 */	mtlr r0
 /* 8005257C 0004F37C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80052580 0004F380  4E 80 00 20 */	blr 
 
-.global func_80052584
-func_80052584:
+.global zConditionalInit__FP5xBaseP10zCondAsset
+zConditionalInit__FP5xBaseP10zCondAsset:
 /* 80052584 0004F384  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80052588 0004F388  7C 08 02 A6 */	mflr r0
 /* 8005258C 0004F38C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -48,8 +48,8 @@ lbl_800525D8:
 /* 800525E8 0004F3E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800525EC 0004F3EC  4E 80 00 20 */	blr 
 
-.global func_800525F0
-func_800525F0:
+.global zConditionalReset__FP13_zConditional
+zConditionalReset__FP13_zConditional:
 /* 800525F0 0004F3F0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800525F4 0004F3F4  7C 08 02 A6 */	mflr r0
 /* 800525F8 0004F3F8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -60,8 +60,8 @@ func_800525F0:
 /* 8005260C 0004F40C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80052610 0004F410  4E 80 00 20 */	blr 
 
-.global func_80052614
-func_80052614:
+.global zConditionalSave__FP13_zConditionalP7xSerial
+zConditionalSave__FP13_zConditionalP7xSerial:
 /* 80052614 0004F414  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80052618 0004F418  7C 08 02 A6 */	mflr r0
 /* 8005261C 0004F41C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -71,8 +71,8 @@ func_80052614:
 /* 8005262C 0004F42C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80052630 0004F430  4E 80 00 20 */	blr 
 
-.global func_80052634
-func_80052634:
+.global zConditionalLoad__FP13_zConditionalP7xSerial
+zConditionalLoad__FP13_zConditionalP7xSerial:
 /* 80052634 0004F434  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80052638 0004F438  7C 08 02 A6 */	mflr r0
 /* 8005263C 0004F43C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -82,8 +82,8 @@ func_80052634:
 /* 8005264C 0004F44C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80052650 0004F450  4E 80 00 20 */	blr 
 
-.global func_80052654
-func_80052654:
+.global zConditional_Evaluate__FP13_zConditional
+zConditional_Evaluate__FP13_zConditional:
 /* 80052654 0004F454  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80052658 0004F458  7C 08 02 A6 */	mflr r0
 /* 8005265C 0004F45C  3C 80 80 29 */	lis r4, lbl_80291930@ha
@@ -113,7 +113,7 @@ lbl_800526B4:
 /* 800526B4 0004F4B4  80 64 00 14 */	lwz r3, 0x14(r4)
 /* 800526B8 0004F4B8  28 03 00 00 */	cmplwi r3, 0
 /* 800526BC 0004F4BC  41 82 00 0C */	beq lbl_800526C8
-/* 800526C0 0004F4C0  48 06 23 7D */	bl func_800B4A3C
+/* 800526C0 0004F4C0  48 06 23 7D */	bl zSceneFindObject__FUi
 /* 800526C4 0004F4C4  7C 65 1B 78 */	mr r5, r3
 lbl_800526C8:
 /* 800526C8 0004F4C8  3B BD 00 01 */	addi r29, r29, 1
@@ -214,7 +214,7 @@ lbl_800527EC:
 /* 80052818 0004F618  48 00 00 44 */	b lbl_8005285C
 lbl_8005281C:
 /* 8005281C 0004F61C  7F E3 FB 78 */	mr r3, r31
-/* 80052820 0004F620  4B FF FE 35 */	bl func_80052654
+/* 80052820 0004F620  4B FF FE 35 */	bl zConditional_Evaluate__FP13_zConditional
 /* 80052824 0004F624  28 03 00 00 */	cmplwi r3, 0
 /* 80052828 0004F628  41 82 00 18 */	beq lbl_80052840
 /* 8005282C 0004F62C  7F E3 FB 78 */	mr r3, r31
@@ -230,7 +230,7 @@ lbl_80052840:
 /* 80052850 0004F650  48 00 00 0C */	b lbl_8005285C
 lbl_80052854:
 /* 80052854 0004F654  7F E3 FB 78 */	mr r3, r31
-/* 80052858 0004F658  4B FF FD 99 */	bl func_800525F0
+/* 80052858 0004F658  4B FF FD 99 */	bl zConditionalReset__FP13_zConditional
 lbl_8005285C:
 /* 8005285C 0004F65C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80052860 0004F660  38 60 00 01 */	li r3, 1

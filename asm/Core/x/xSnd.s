@@ -2,12 +2,12 @@
 
 .section .text  # 0x800480B0 - 0x800499E4
 
-.global func_800480B0
-func_800480B0:
+.global xSndInit__Fv
+xSndInit__Fv:
 /* 800480B0 00044EB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800480B4 00044EB4  7C 08 02 A6 */	mflr r0
 /* 800480B8 00044EB8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800480BC 00044EBC  48 08 83 C1 */	bl func_800D047C
+/* 800480BC 00044EBC  48 08 83 C1 */	bl iSndInit__Fv
 /* 800480C0 00044EC0  3C 60 80 3C */	lis r3, lbl_803BD5B4@ha
 /* 800480C4 00044EC4  38 00 00 08 */	li r0, 8
 /* 800480C8 00044EC8  38 63 D5 B4 */	addi r3, r3, lbl_803BD5B4@l
@@ -33,7 +33,7 @@ lbl_800480D8:
 /* 80048114 00044F14  90 64 03 0C */	stw r3, 0x30c(r4)
 /* 80048118 00044F18  38 84 03 20 */	addi r4, r4, 0x320
 /* 8004811C 00044F1C  42 00 FF BC */	bdnz lbl_800480D8
-/* 80048120 00044F20  48 00 00 55 */	bl func_80048174
+/* 80048120 00044F20  48 00 00 55 */	bl xSndSceneInit__Fv
 /* 80048124 00044F24  3C 60 80 3C */	lis r3, lbl_803BD5B4@ha
 /* 80048128 00044F28  C0 02 86 F8 */	lfs f0, lbl_803CD078-_SDA2_BASE_(r2)
 /* 8004812C 00044F2C  38 83 D5 B4 */	addi r4, r3, lbl_803BD5B4@l
@@ -47,7 +47,7 @@ lbl_800480D8:
 /* 8004814C 00044F4C  C0 02 86 FC */	lfs f0, lbl_803CD07C-_SDA2_BASE_(r2)
 /* 80048150 00044F50  D0 04 00 10 */	stfs f0, 0x10(r4)
 /* 80048154 00044F54  90 04 00 00 */	stw r0, 0(r4)
-/* 80048158 00044F58  48 08 A4 B5 */	bl func_800D260C
+/* 80048158 00044F58  48 08 A4 B5 */	bl iSndSuspendCD__FUi
 /* 8004815C 00044F5C  48 00 03 89 */	bl func_800484E4
 /* 80048160 00044F60  48 00 12 A9 */	bl func_80049408
 /* 80048164 00044F64  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -55,8 +55,8 @@ lbl_800480D8:
 /* 8004816C 00044F6C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048170 00044F70  4E 80 00 20 */	blr 
 
-.global func_80048174
-func_80048174:
+.global xSndSceneInit__Fv
+xSndSceneInit__Fv:
 /* 80048174 00044F74  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048178 00044F78  7C 08 02 A6 */	mflr r0
 /* 8004817C 00044F7C  3C 60 80 3C */	lis r3, lbl_803BD5B4@ha
@@ -120,7 +120,7 @@ lbl_8004819C:
 /* 80048260 00045060  38 63 19 C8 */	addi r3, r3, 0x19c8
 /* 80048264 00045064  FC 60 08 90 */	fmr f3, f1
 /* 80048268 00045068  4B FC 2E 85 */	bl func_8000B0EC
-/* 8004826C 0004506C  48 08 93 05 */	bl func_800D1570
+/* 8004826C 0004506C  48 08 93 05 */	bl iSndUpdate__Fv
 /* 80048270 00045070  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048274 00045074  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80048278 00045078  83 C1 00 08 */	lwz r30, 8(r1)
@@ -128,8 +128,8 @@ lbl_8004819C:
 /* 80048280 00045080  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048284 00045084  4E 80 00 20 */	blr 
 
-.global func_80048288
-func_80048288:
+.global xSndSetEnvironmentalEffect__F12sound_effect
+xSndSetEnvironmentalEffect__F12sound_effect:
 /* 80048288 00045088  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004828C 0004508C  7C 08 02 A6 */	mflr r0
 /* 80048290 00045090  2C 03 00 01 */	cmpwi r3, 1
@@ -141,41 +141,41 @@ func_80048288:
 /* 800482A8 000450A8  48 00 00 18 */	b lbl_800482C0
 lbl_800482AC:
 /* 800482AC 000450AC  38 60 00 00 */	li r3, 0
-/* 800482B0 000450B0  48 08 85 51 */	bl func_800D0800
+/* 800482B0 000450B0  48 08 85 51 */	bl iSndSetEnvironmentalEffect__F13isound_effect
 /* 800482B4 000450B4  48 00 00 0C */	b lbl_800482C0
 lbl_800482B8:
 /* 800482B8 000450B8  38 60 00 01 */	li r3, 1
-/* 800482BC 000450BC  48 08 85 45 */	bl func_800D0800
+/* 800482BC 000450BC  48 08 85 45 */	bl iSndSetEnvironmentalEffect__F13isound_effect
 lbl_800482C0:
 /* 800482C0 000450C0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800482C4 000450C4  7C 08 03 A6 */	mtlr r0
 /* 800482C8 000450C8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800482CC 000450CC  4E 80 00 20 */	blr 
 
-.global func_800482D0
-func_800482D0:
+.global xSndSuspend__Fv
+xSndSuspend__Fv:
 /* 800482D0 000450D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800482D4 000450D4  7C 08 02 A6 */	mflr r0
 /* 800482D8 000450D8  38 60 00 01 */	li r3, 1
 /* 800482DC 000450DC  38 80 00 01 */	li r4, 1
 /* 800482E0 000450E0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800482E4 000450E4  48 00 00 51 */	bl func_80048334
+/* 800482E4 000450E4  48 00 00 51 */	bl xSndPauseAll__FUiUi
 /* 800482E8 000450E8  38 00 00 01 */	li r0, 1
 /* 800482EC 000450EC  90 0D 8A F8 */	stw r0, lbl_803CB3F8-_SDA_BASE_(r13)
-/* 800482F0 000450F0  48 00 06 A5 */	bl func_80048994
+/* 800482F0 000450F0  48 00 06 A5 */	bl xSndUpdate__Fv
 /* 800482F4 000450F4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800482F8 000450F8  7C 08 03 A6 */	mtlr r0
 /* 800482FC 000450FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048300 00045100  4E 80 00 20 */	blr 
 
-.global func_80048304
-func_80048304:
+.global xSndResume__Fv
+xSndResume__Fv:
 /* 80048304 00045104  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048308 00045108  7C 08 02 A6 */	mflr r0
 /* 8004830C 0004510C  38 60 00 00 */	li r3, 0
 /* 80048310 00045110  38 80 00 00 */	li r4, 0
 /* 80048314 00045114  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80048318 00045118  48 00 00 1D */	bl func_80048334
+/* 80048318 00045118  48 00 00 1D */	bl xSndPauseAll__FUiUi
 /* 8004831C 0004511C  38 00 00 00 */	li r0, 0
 /* 80048320 00045120  90 0D 8A F8 */	stw r0, lbl_803CB3F8-_SDA_BASE_(r13)
 /* 80048324 00045124  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -183,8 +183,8 @@ func_80048304:
 /* 8004832C 0004512C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048330 00045130  4E 80 00 20 */	blr 
 
-.global func_80048334
-func_80048334:
+.global xSndPauseAll__FUiUi
+xSndPauseAll__FUiUi:
 /* 80048334 00045134  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80048338 00045138  7C 08 02 A6 */	mflr r0
 /* 8004833C 0004513C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -206,14 +206,14 @@ lbl_80048368:
 /* 80048378 00045178  41 82 00 14 */	beq lbl_8004838C
 /* 8004837C 0004517C  80 7F 00 20 */	lwz r3, 0x20(r31)
 /* 80048380 00045180  7F 84 E3 78 */	mr r4, r28
-/* 80048384 00045184  48 08 89 B1 */	bl func_800D0D34
+/* 80048384 00045184  48 08 89 B1 */	bl iSndPause__FUiUi
 /* 80048388 00045188  48 00 00 18 */	b lbl_800483A0
 lbl_8004838C:
 /* 8004838C 0004518C  54 60 07 7B */	rlwinm. r0, r3, 0, 0x1d, 0x1d
 /* 80048390 00045190  41 82 00 10 */	beq lbl_800483A0
 /* 80048394 00045194  80 7F 00 20 */	lwz r3, 0x20(r31)
 /* 80048398 00045198  7F A4 EB 78 */	mr r4, r29
-/* 8004839C 0004519C  48 08 89 99 */	bl func_800D0D34
+/* 8004839C 0004519C  48 08 89 99 */	bl iSndPause__FUiUi
 lbl_800483A0:
 /* 800483A0 000451A0  3B DE 00 01 */	addi r30, r30, 1
 /* 800483A4 000451A4  3B FF 00 64 */	addi r31, r31, 0x64
@@ -228,8 +228,8 @@ lbl_800483A0:
 /* 800483C8 000451C8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800483CC 000451CC  4E 80 00 20 */	blr 
 
-.global func_800483D0
-func_800483D0:
+.global xSndPauseCategory__FUiUi
+xSndPauseCategory__FUiUi:
 /* 800483D0 000451D0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800483D4 000451D4  7C 08 02 A6 */	mflr r0
 /* 800483D8 000451D8  3C A0 80 3C */	lis r5, lbl_803BD5B4@ha
@@ -250,7 +250,7 @@ lbl_800483F8:
 /* 80048410 00045210  41 82 00 10 */	beq lbl_80048420
 /* 80048414 00045214  80 7E 00 20 */	lwz r3, 0x20(r30)
 /* 80048418 00045218  7F 84 E3 78 */	mr r4, r28
-/* 8004841C 0004521C  48 08 89 19 */	bl func_800D0D34
+/* 8004841C 0004521C  48 08 89 19 */	bl iSndPause__FUiUi
 lbl_80048420:
 /* 80048420 00045220  3B BD 00 01 */	addi r29, r29, 1
 /* 80048424 00045224  3B DE 00 64 */	addi r30, r30, 0x64
@@ -262,8 +262,8 @@ lbl_80048420:
 /* 8004843C 0004523C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80048440 00045240  4E 80 00 20 */	blr 
 
-.global func_80048444
-func_80048444:
+.global xSndSetCategoryVol__F14sound_categoryf
+xSndSetCategoryVol__F14sound_categoryf:
 /* 80048444 00045244  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
 /* 80048448 00045248  54 60 10 3A */	slwi r0, r3, 2
 /* 8004844C 0004524C  38 64 D5 B4 */	addi r3, r4, lbl_803BD5B4@l
@@ -271,8 +271,8 @@ func_80048444:
 /* 80048454 00045254  D0 23 00 08 */	stfs f1, 8(r3)
 /* 80048458 00045258  4E 80 00 20 */	blr 
 
-.global func_8004845C
-func_8004845C:
+.global xSndStopAll__FUi
+xSndStopAll__FUi:
 /* 8004845C 0004525C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80048460 00045260  7C 08 02 A6 */	mflr r0
 /* 80048464 00045264  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
@@ -294,7 +294,7 @@ lbl_8004848C:
 /* 800484A0 000452A0  7F 80 00 39 */	and. r0, r28, r0
 /* 800484A4 000452A4  41 82 00 0C */	beq lbl_800484B0
 /* 800484A8 000452A8  80 7E 00 20 */	lwz r3, 0x20(r30)
-/* 800484AC 000452AC  48 08 8A 51 */	bl func_800D0EFC
+/* 800484AC 000452AC  48 08 8A 51 */	bl iSndStop__FUi
 lbl_800484B0:
 /* 800484B0 000452B0  3B BD 00 01 */	addi r29, r29, 1
 /* 800484B4 000452B4  3B DE 00 64 */	addi r30, r30, 0x64
@@ -389,7 +389,7 @@ lbl_800485A8:
 /* 800485FC 000453FC  C0 9F 00 24 */	lfs f4, 0x24(r31)
 /* 80048600 00045400  81 3F 00 28 */	lwz r9, 0x28(r31)
 /* 80048604 00045404  C0 A2 87 00 */	lfs f5, lbl_803CD080-_SDA2_BASE_(r2)
-/* 80048608 00045408  48 00 04 D9 */	bl func_80048AE0
+/* 80048608 00045408  48 00 04 D9 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
 lbl_8004860C:
 /* 8004860C 0004540C  3B DE 00 01 */	addi r30, r30, 1
 /* 80048610 00045410  3B FF 00 34 */	addi r31, r31, 0x34
@@ -502,8 +502,8 @@ lbl_80048780:
 /* 8004878C 0004558C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048790 00045590  4E 80 00 20 */	blr 
 
-.global func_80048794
-func_80048794:
+.global xSndProcessSoundPos__FPC5xVec3P5xVec3
+xSndProcessSoundPos__FPC5xVec3P5xVec3:
 /* 80048794 00045594  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 80048798 00045598  7C 08 02 A6 */	mflr r0
 /* 8004879C 0004559C  90 01 00 74 */	stw r0, 0x74(r1)
@@ -583,8 +583,8 @@ lbl_80048898:
 /* 800488B4 000456B4  38 21 00 70 */	addi r1, r1, 0x70
 /* 800488B8 000456B8  4E 80 00 20 */	blr 
 
-.global func_800488BC
-func_800488BC:
+.global xSndInternalUpdateVoicePos__FP13xSndVoiceInfo
+xSndInternalUpdateVoicePos__FP13xSndVoiceInfo:
 /* 800488BC 000456BC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800488C0 000456C0  7C 08 02 A6 */	mflr r0
 /* 800488C4 000456C4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -621,7 +621,7 @@ lbl_80048928:
 /* 80048938 00045738  4B FD 2E D1 */	bl func_8001B808
 /* 8004893C 0004573C  7C 64 1B 78 */	mr r4, r3
 /* 80048940 00045740  38 7F 00 30 */	addi r3, r31, 0x30
-/* 80048944 00045744  48 00 5B 99 */	bl func_8004E4DC
+/* 80048944 00045744  48 00 5B 99 */	bl xVec3Copy__FP5xVec3PC5xVec3
 /* 80048948 00045748  48 00 00 2C */	b lbl_80048974
 lbl_8004894C:
 /* 8004894C 0004574C  54 60 07 34 */	rlwinm r0, r3, 0, 0x1c, 0x1a
@@ -638,7 +638,7 @@ lbl_80048958:
 lbl_80048974:
 /* 80048974 00045774  38 7F 00 30 */	addi r3, r31, 0x30
 /* 80048978 00045778  38 9F 00 3C */	addi r4, r31, 0x3c
-/* 8004897C 0004577C  4B FF FE 19 */	bl func_80048794
+/* 8004897C 0004577C  4B FF FE 19 */	bl xSndProcessSoundPos__FPC5xVec3P5xVec3
 lbl_80048980:
 /* 80048980 00045780  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048984 00045784  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -646,8 +646,8 @@ lbl_80048980:
 /* 8004898C 0004578C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048990 00045790  4E 80 00 20 */	blr 
 
-.global func_80048994
-func_80048994:
+.global xSndUpdate__Fv
+xSndUpdate__Fv:
 /* 80048994 00045794  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048998 00045798  7C 08 02 A6 */	mflr r0
 /* 8004899C 0004579C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -655,14 +655,14 @@ func_80048994:
 /* 800489A4 000457A4  4B FF FB D5 */	bl func_80048578
 /* 800489A8 000457A8  C0 2D 8E B8 */	lfs f1, lbl_803CB7B8-_SDA_BASE_(r13)
 /* 800489AC 000457AC  48 00 0A 69 */	bl func_80049414
-/* 800489B0 000457B0  48 08 8B C1 */	bl func_800D1570
+/* 800489B0 000457B0  48 08 8B C1 */	bl iSndUpdate__Fv
 /* 800489B4 000457B4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800489B8 000457B8  7C 08 03 A6 */	mtlr r0
 /* 800489BC 000457BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800489C0 000457C0  4E 80 00 20 */	blr 
 
-.global func_800489C4
-func_800489C4:
+.global xSndSetListenerData__F19sound_listener_typePC7xMat4x3
+xSndSetListenerData__F19sound_listener_typePC7xMat4x3:
 /* 800489C4 000457C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800489C8 000457C8  7C 08 02 A6 */	mflr r0
 /* 800489CC 000457CC  3C A0 80 3C */	lis r5, lbl_803BD5B4@ha
@@ -677,27 +677,27 @@ func_800489C4:
 /* 800489F0 000457F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800489F4 000457F4  4E 80 00 20 */	blr 
 
-.global func_800489F8
-func_800489F8:
+.global xSndSelectListenerMode__F24sound_listener_game_mode
+xSndSelectListenerMode__F24sound_listener_game_mode:
 /* 800489F8 000457F8  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
 /* 800489FC 000457FC  38 84 D5 B4 */	addi r4, r4, lbl_803BD5B4@l
 /* 80048A00 00045800  90 64 19 9C */	stw r3, 0x199c(r4)
 /* 80048A04 00045804  4E 80 00 20 */	blr 
 
-.global func_80048A08
-func_80048A08:
+.global xSndExit__Fv
+xSndExit__Fv:
 /* 80048A08 00045808  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048A0C 0004580C  7C 08 02 A6 */	mflr r0
 /* 80048A10 00045810  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80048A14 00045814  48 08 7D C5 */	bl func_800D07D8
+/* 80048A14 00045814  48 08 7D C5 */	bl iSndExit__Fv
 /* 80048A18 00045818  48 00 09 F1 */	bl func_80049408
 /* 80048A1C 0004581C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048A20 00045820  7C 08 03 A6 */	mtlr r0
 /* 80048A24 00045824  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048A28 00045828  4E 80 00 20 */	blr 
 
-.global func_80048A2C
-func_80048A2C:
+.global xSndPlay__FUiffUiUiUi14sound_categoryf
+xSndPlay__FUiffUiUiUi14sound_categoryf:
 /* 80048A2C 0004582C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048A30 00045830  7C 08 02 A6 */	mflr r0
 /* 80048A34 00045834  7C E9 3B 78 */	mr r9, r7
@@ -707,14 +707,14 @@ func_80048A2C:
 /* 80048A44 00045844  39 00 00 00 */	li r8, 0
 /* 80048A48 00045848  C0 62 87 00 */	lfs f3, lbl_803CD080-_SDA2_BASE_(r2)
 /* 80048A4C 0004584C  FC 80 18 90 */	fmr f4, f3
-/* 80048A50 00045850  48 00 00 91 */	bl func_80048AE0
+/* 80048A50 00045850  48 00 00 91 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
 /* 80048A54 00045854  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048A58 00045858  7C 08 03 A6 */	mtlr r0
 /* 80048A5C 0004585C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048A60 00045860  4E 80 00 20 */	blr 
 
-.global func_80048A64
-func_80048A64:
+.global xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf
+xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf:
 /* 80048A64 00045864  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048A68 00045868  7C 08 02 A6 */	mflr r0
 /* 80048A6C 0004586C  7C E9 3B 78 */	mr r9, r7
@@ -722,14 +722,14 @@ func_80048A64:
 /* 80048A74 00045874  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80048A78 00045878  38 C0 00 00 */	li r6, 0
 /* 80048A7C 0004587C  39 00 00 00 */	li r8, 0
-/* 80048A80 00045880  48 00 00 61 */	bl func_80048AE0
+/* 80048A80 00045880  48 00 00 61 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
 /* 80048A84 00045884  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048A88 00045888  7C 08 03 A6 */	mtlr r0
 /* 80048A8C 0004588C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048A90 00045890  4E 80 00 20 */	blr 
 
-.global func_80048A94
-func_80048A94:
+.global xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf
+xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf:
 /* 80048A94 00045894  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048A98 00045898  7C 08 02 A6 */	mflr r0
 /* 80048A9C 0004589C  7C E9 3B 78 */	mr r9, r7
@@ -739,21 +739,21 @@ func_80048A94:
 /* 80048AAC 000458AC  7C C7 33 78 */	mr r7, r6
 /* 80048AB0 000458B0  38 C0 00 00 */	li r6, 0
 /* 80048AB4 000458B4  39 00 00 00 */	li r8, 0
-/* 80048AB8 000458B8  48 00 00 29 */	bl func_80048AE0
+/* 80048AB8 000458B8  48 00 00 29 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
 /* 80048ABC 000458BC  48 00 00 14 */	b lbl_80048AD0
 lbl_80048AC0:
 /* 80048AC0 000458C0  7C C8 33 78 */	mr r8, r6
 /* 80048AC4 000458C4  38 C0 00 00 */	li r6, 0
 /* 80048AC8 000458C8  38 E0 00 00 */	li r7, 0
-/* 80048ACC 000458CC  48 00 00 15 */	bl func_80048AE0
+/* 80048ACC 000458CC  48 00 00 15 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
 lbl_80048AD0:
 /* 80048AD0 000458D0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048AD4 000458D4  7C 08 03 A6 */	mtlr r0
 /* 80048AD8 000458D8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048ADC 000458DC  4E 80 00 20 */	blr 
 
-.global func_80048AE0
-func_80048AE0:
+.global xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
+xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf:
 /* 80048AE0 000458E0  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 80048AE4 000458E4  7C 08 02 A6 */	mflr r0
 /* 80048AE8 000458E8  90 01 00 74 */	stw r0, 0x74(r1)
@@ -1038,7 +1038,7 @@ lbl_80048ED0:
 /* 80048ED4 00045CD4  41 82 00 2C */	beq lbl_80048F00
 /* 80048ED8 00045CD8  7F 03 C3 78 */	mr r3, r24
 /* 80048EDC 00045CDC  63 5A 00 04 */	ori r26, r26, 4
-/* 80048EE0 00045CE0  48 08 7B 65 */	bl func_800D0A44
+/* 80048EE0 00045CE0  48 08 7B 65 */	bl iSndLookup__FUi
 /* 80048EE4 00045CE4  28 03 00 00 */	cmplwi r3, 0
 /* 80048EE8 00045CE8  40 82 00 0C */	bne lbl_80048EF4
 /* 80048EEC 00045CEC  38 60 00 00 */	li r3, 0
@@ -1049,7 +1049,7 @@ lbl_80048EF4:
 /* 80048EFC 00045CFC  48 00 00 50 */	b lbl_80048F4C
 lbl_80048F00:
 /* 80048F00 00045D00  7F 03 C3 78 */	mr r3, r24
-/* 80048F04 00045D04  48 08 7B 41 */	bl func_800D0A44
+/* 80048F04 00045D04  48 08 7B 41 */	bl iSndLookup__FUi
 /* 80048F08 00045D08  7C 77 1B 79 */	or. r23, r3, r3
 /* 80048F0C 00045D0C  40 82 00 0C */	bne lbl_80048F18
 /* 80048F10 00045D10  38 60 00 00 */	li r3, 0
@@ -1074,7 +1074,7 @@ lbl_80048F4C:
 /* 80048F4C 00045D4C  7F 23 CB 78 */	mr r3, r25
 /* 80048F50 00045D50  7F 44 D3 78 */	mr r4, r26
 /* 80048F54 00045D54  7F C5 F3 78 */	mr r5, r30
-/* 80048F58 00045D58  48 08 87 4D */	bl func_800D16A4
+/* 80048F58 00045D58  48 08 87 4D */	bl iSndFindFreeVoice__FUiUiUi
 /* 80048F5C 00045D5C  3C 03 00 01 */	addis r0, r3, 1
 /* 80048F60 00045D60  28 00 FF FF */	cmplwi r0, 0xffff
 /* 80048F64 00045D64  40 82 00 0C */	bne lbl_80048F70
@@ -1176,10 +1176,10 @@ lbl_800490B8:
 /* 800490BC 00045EBC  54 00 07 39 */	rlwinm. r0, r0, 0, 0x1c, 0x1c
 /* 800490C0 00045EC0  41 82 00 0C */	beq lbl_800490CC
 /* 800490C4 00045EC4  7F C3 F3 78 */	mr r3, r30
-/* 800490C8 00045EC8  4B FF F7 F5 */	bl func_800488BC
+/* 800490C8 00045EC8  4B FF F7 F5 */	bl xSndInternalUpdateVoicePos__FP13xSndVoiceInfo
 lbl_800490CC:
 /* 800490CC 00045ECC  7F C3 F3 78 */	mr r3, r30
-/* 800490D0 00045ED0  48 08 90 D1 */	bl func_800D21A0
+/* 800490D0 00045ED0  48 08 90 D1 */	bl iSndPlay__FP13xSndVoiceInfo
 /* 800490D4 00045ED4  28 03 00 00 */	cmplwi r3, 0
 /* 800490D8 00045ED8  40 82 00 18 */	bne lbl_800490F0
 /* 800490DC 00045EDC  80 1E 00 14 */	lwz r0, 0x14(r30)
@@ -1204,19 +1204,19 @@ lbl_800490F4:
 /* 80049120 00045F20  38 21 00 70 */	addi r1, r1, 0x70
 /* 80049124 00045F24  4E 80 00 20 */	blr 
 
-.global func_80049128
-func_80049128:
+.global xSndStartStereo__FUiUif
+xSndStartStereo__FUiUif:
 /* 80049128 00045F28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004912C 00045F2C  7C 08 02 A6 */	mflr r0
 /* 80049130 00045F30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80049134 00045F34  48 08 94 2D */	bl func_800D2560
+/* 80049134 00045F34  48 08 94 2D */	bl iSndStartStereo__FUiUif
 /* 80049138 00045F38  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8004913C 00045F3C  7C 08 03 A6 */	mtlr r0
 /* 80049140 00045F40  38 21 00 10 */	addi r1, r1, 0x10
 /* 80049144 00045F44  4E 80 00 20 */	blr 
 
-.global func_80049148
-func_80049148:
+.global xSndIDIsPlaying__FUi
+xSndIDIsPlaying__FUi:
 /* 80049148 00045F48  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
 /* 8004914C 00045F4C  38 00 00 10 */	li r0, 0x10
 /* 80049150 00045F50  38 84 D5 B4 */	addi r4, r4, lbl_803BD5B4@l
@@ -1269,19 +1269,19 @@ lbl_800491EC:
 /* 800491F8 00045FF8  38 60 00 00 */	li r3, 0
 /* 800491FC 00045FFC  4E 80 00 20 */	blr 
 
-.global func_80049200
-func_80049200:
+.global xSndStop__FUi
+xSndStop__FUi:
 /* 80049200 00046000  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80049204 00046004  7C 08 02 A6 */	mflr r0
 /* 80049208 00046008  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004920C 0004600C  48 08 7C F1 */	bl func_800D0EFC
+/* 8004920C 0004600C  48 08 7C F1 */	bl iSndStop__FUi
 /* 80049210 00046010  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80049214 00046014  7C 08 03 A6 */	mtlr r0
 /* 80049218 00046018  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004921C 0004601C  4E 80 00 20 */	blr 
 
-.global func_80049220
-func_80049220:
+.global xSndParentDied__FUi
+xSndParentDied__FUi:
 /* 80049220 00046020  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
 /* 80049224 00046024  38 00 00 08 */	li r0, 8
 /* 80049228 00046028  38 84 D5 B4 */	addi r4, r4, lbl_803BD5B4@l
@@ -1357,8 +1357,8 @@ lbl_80049314:
 /* 8004931C 0004611C  42 00 FF 1C */	bdnz lbl_80049238
 /* 80049320 00046120  4E 80 00 20 */	blr 
 
-.global func_80049324
-func_80049324:
+.global xSndStopChildren__FUi
+xSndStopChildren__FUi:
 /* 80049324 00046124  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80049328 00046128  7C 08 02 A6 */	mflr r0
 /* 8004932C 0004612C  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
@@ -1378,7 +1378,7 @@ lbl_80049350:
 /* 80049360 00046160  7C 00 E8 40 */	cmplw r0, r29
 /* 80049364 00046164  40 82 00 18 */	bne lbl_8004937C
 /* 80049368 00046168  80 7E 00 04 */	lwz r3, 4(r30)
-/* 8004936C 0004616C  48 08 7B 91 */	bl func_800D0EFC
+/* 8004936C 0004616C  48 08 7B 91 */	bl iSndStop__FUi
 /* 80049370 00046170  80 1E 00 14 */	lwz r0, 0x14(r30)
 /* 80049374 00046174  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 80049378 00046178  90 1E 00 14 */	stw r0, 0x14(r30)
@@ -1395,34 +1395,34 @@ lbl_8004937C:
 /* 800493A0 000461A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800493A4 000461A4  4E 80 00 20 */	blr 
 
-.global func_800493A8
-func_800493A8:
+.global xSndSetVol__FUif
+xSndSetVol__FUif:
 /* 800493A8 000461A8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800493AC 000461AC  7C 08 02 A6 */	mflr r0
 /* 800493B0 000461B0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800493B4 000461B4  48 08 8E AD */	bl func_800D2260
+/* 800493B4 000461B4  48 08 8E AD */	bl iSndSetVol__FUif
 /* 800493B8 000461B8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800493BC 000461BC  7C 08 03 A6 */	mtlr r0
 /* 800493C0 000461C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800493C4 000461C4  4E 80 00 20 */	blr 
 
-.global func_800493C8
-func_800493C8:
+.global xSndSetPitch__FUif
+xSndSetPitch__FUif:
 /* 800493C8 000461C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800493CC 000461CC  7C 08 02 A6 */	mflr r0
 /* 800493D0 000461D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800493D4 000461D4  48 08 90 1D */	bl func_800D23F0
+/* 800493D4 000461D4  48 08 90 1D */	bl iSndSetPitch__FUif
 /* 800493D8 000461D8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800493DC 000461DC  7C 08 03 A6 */	mtlr r0
 /* 800493E0 000461E0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800493E4 000461E4  4E 80 00 20 */	blr 
 
-.global func_800493E8
-func_800493E8:
+.global xSndSetExternalCallback__FPFUi_v
+xSndSetExternalCallback__FPFUi_v:
 /* 800493E8 000461E8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800493EC 000461EC  7C 08 02 A6 */	mflr r0
 /* 800493F0 000461F0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800493F4 000461F4  48 08 9A C5 */	bl func_800D2EB8
+/* 800493F4 000461F4  48 08 9A C5 */	bl iSndSetExternalCallback__FPFUi_v
 /* 800493F8 000461F8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800493FC 000461FC  7C 08 03 A6 */	mtlr r0
 /* 80049400 00046200  38 21 00 10 */	addi r1, r1, 0x10
@@ -1475,11 +1475,11 @@ lbl_80049474:
 /* 8004949C 0004629C  41 82 00 14 */	beq lbl_800494B0
 /* 800494A0 000462A0  80 7F 00 04 */	lwz r3, 4(r31)
 /* 800494A4 000462A4  C0 3F 00 14 */	lfs f1, 0x14(r31)
-/* 800494A8 000462A8  4B FF FF 01 */	bl func_800493A8
+/* 800494A8 000462A8  4B FF FF 01 */	bl xSndSetVol__FUif
 /* 800494AC 000462AC  48 00 00 0C */	b lbl_800494B8
 lbl_800494B0:
 /* 800494B0 000462B0  80 7F 00 04 */	lwz r3, 4(r31)
-/* 800494B4 000462B4  4B FF FD 4D */	bl func_80049200
+/* 800494B4 000462B4  4B FF FD 4D */	bl xSndStop__FUi
 lbl_800494B8:
 /* 800494B8 000462B8  80 6D 8A FC */	lwz r3, lbl_803CB3FC-_SDA_BASE_(r13)
 /* 800494BC 000462BC  3B DE FF E8 */	addi r30, r30, -24
@@ -1503,7 +1503,7 @@ lbl_800494F8:
 /* 800494FC 000462FC  80 7F 00 04 */	lwz r3, 4(r31)
 /* 80049500 00046300  EC 21 00 32 */	fmuls f1, f1, f0
 /* 80049504 00046304  EC 21 00 32 */	fmuls f1, f1, f0
-/* 80049508 00046308  4B FF FE A1 */	bl func_800493A8
+/* 80049508 00046308  4B FF FE A1 */	bl xSndSetVol__FUif
 /* 8004950C 0004630C  3B FF 00 18 */	addi r31, r31, 0x18
 lbl_80049510:
 /* 80049510 00046310  7C 1F F0 40 */	cmplw r31, r30
@@ -1534,8 +1534,8 @@ func_80049538:
 /* 80049564 00046364  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 80049568 00046368  4E 80 00 20 */	blr 
 
-.global func_8004956C
-func_8004956C:
+.global xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff
+xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff:
 /* 8004956C 0004636C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80049570 00046370  7C 08 02 A6 */	mflr r0
 /* 80049574 00046374  90 01 00 44 */	stw r0, 0x44(r1)
@@ -1558,10 +1558,10 @@ func_8004956C:
 lbl_800495B8:
 /* 800495B8 000463B8  FC 20 E8 90 */	fmr f1, f29
 /* 800495BC 000463BC  FC A0 F0 90 */	fmr f5, f30
-/* 800495C0 000463C0  4B FF F4 D5 */	bl func_80048A94
+/* 800495C0 000463C0  4B FF F4 D5 */	bl xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf
 /* 800495C4 000463C4  48 00 00 58 */	b lbl_8004961C
 lbl_800495C8:
-/* 800495C8 000463C8  4B FF F4 CD */	bl func_80048A94
+/* 800495C8 000463C8  4B FF F4 CD */	bl xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf
 /* 800495CC 000463CC  28 03 00 00 */	cmplwi r3, 0
 /* 800495D0 000463D0  40 82 00 0C */	bne lbl_800495DC
 /* 800495D4 000463D4  38 60 00 00 */	li r3, 0
@@ -1595,8 +1595,8 @@ lbl_8004961C:
 /* 8004963C 0004643C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80049640 00046440  4E 80 00 20 */	blr 
 
-.global func_80049644
-func_80049644:
+.global xSndStopFade__FUif
+xSndStopFade__FUif:
 /* 80049644 00046444  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80049648 00046448  7C 08 02 A6 */	mflr r0
 /* 8004964C 0004644C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1617,7 +1617,7 @@ func_80049644:
 /* 80049688 00046488  40 82 00 10 */	bne lbl_80049698
 lbl_8004968C:
 /* 8004968C 0004648C  7F E3 FB 78 */	mr r3, r31
-/* 80049690 00046490  4B FF FB 71 */	bl func_80049200
+/* 80049690 00046490  4B FF FB 71 */	bl xSndStop__FUi
 /* 80049694 00046494  48 00 00 EC */	b lbl_80049780
 lbl_80049698:
 /* 80049698 00046498  48 00 03 2D */	bl func_800499C4
@@ -1626,7 +1626,7 @@ lbl_80049698:
 /* 800496A4 000464A4  4C 40 13 82 */	cror 2, 0, 2
 /* 800496A8 000464A8  40 82 00 6C */	bne lbl_80049714
 /* 800496AC 000464AC  7F E3 FB 78 */	mr r3, r31
-/* 800496B0 000464B0  4B FF FB 51 */	bl func_80049200
+/* 800496B0 000464B0  4B FF FB 51 */	bl xSndStop__FUi
 /* 800496B4 000464B4  80 0D 8A FC */	lwz r0, lbl_803CB3FC-_SDA_BASE_(r13)
 /* 800496B8 000464B8  3C 60 80 2E */	lis r3, lbl_802DADA0@ha
 /* 800496BC 000464BC  38 63 AD A0 */	addi r3, r3, lbl_802DADA0@l
@@ -1697,8 +1697,8 @@ lbl_80049780:
 /* 8004979C 0004659C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800497A0 000465A0  4E 80 00 20 */	blr 
 
-.global func_800497A4
-func_800497A4:
+.global xSndStreamLock__FUi14sound_categoryb
+xSndStreamLock__FUi14sound_categoryb:
 /* 800497A4 000465A4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800497A8 000465A8  7C 08 02 A6 */	mflr r0
 /* 800497AC 000465AC  3C C0 80 3C */	lis r6, lbl_803BD5B4@ha
@@ -1768,7 +1768,7 @@ lbl_80049874:
 /* 80049884 00046684  7C 00 20 00 */	cmpw r0, r4
 /* 80049888 00046688  40 82 00 18 */	bne lbl_800498A0
 /* 8004988C 0004668C  80 7E 00 04 */	lwz r3, 4(r30)
-/* 80049890 00046690  4B FF F9 71 */	bl func_80049200
+/* 80049890 00046690  4B FF F9 71 */	bl xSndStop__FUi
 /* 80049894 00046694  93 FE 00 50 */	stw r31, 0x50(r30)
 /* 80049898 00046698  38 60 00 01 */	li r3, 1
 /* 8004989C 0004669C  48 00 00 5C */	b lbl_800498F8
@@ -1790,7 +1790,7 @@ lbl_800498BC:
 /* 800498CC 000466CC  54 00 04 21 */	rlwinm. r0, r0, 0, 0x10, 0x10
 /* 800498D0 000466D0  40 82 00 18 */	bne lbl_800498E8
 /* 800498D4 000466D4  80 7E 00 04 */	lwz r3, 4(r30)
-/* 800498D8 000466D8  4B FF F9 29 */	bl func_80049200
+/* 800498D8 000466D8  4B FF F9 29 */	bl xSndStop__FUi
 /* 800498DC 000466DC  93 FE 00 50 */	stw r31, 0x50(r30)
 /* 800498E0 000466E0  38 60 00 01 */	li r3, 1
 /* 800498E4 000466E4  48 00 00 14 */	b lbl_800498F8
@@ -1809,8 +1809,8 @@ lbl_800498F8:
 /* 80049908 00046708  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004990C 0004670C  4E 80 00 20 */	blr 
 
-.global func_80049910
-func_80049910:
+.global xSndStreamReady__FUi
+xSndStreamReady__FUi:
 /* 80049910 00046710  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
 /* 80049914 00046714  38 84 D5 B4 */	addi r4, r4, lbl_803BD5B4@l
 /* 80049918 00046718  38 84 00 1C */	addi r4, r4, 0x1c
@@ -1834,8 +1834,8 @@ lbl_8004994C:
 /* 80049954 00046754  38 60 00 00 */	li r3, 0
 /* 80049958 00046758  4E 80 00 20 */	blr 
 
-.global func_8004995C
-func_8004995C:
+.global xSndStreamUnlock__FUi
+xSndStreamUnlock__FUi:
 /* 8004995C 0004675C  3C 80 80 3C */	lis r4, lbl_803BD5B4@ha
 /* 80049960 00046760  38 84 D5 B4 */	addi r4, r4, lbl_803BD5B4@l
 /* 80049964 00046764  38 84 00 1C */	addi r4, r4, 0x1c
@@ -1875,7 +1875,7 @@ func_800499C4:
 /* 800499C4 000467C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800499C8 000467C8  7C 08 02 A6 */	mflr r0
 /* 800499CC 000467CC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800499D0 000467D0  48 08 96 75 */	bl func_800D3044
+/* 800499D0 000467D0  48 08 96 75 */	bl iSndGetVol__FUi
 /* 800499D4 000467D4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800499D8 000467D8  7C 08 03 A6 */	mtlr r0
 /* 800499DC 000467DC  38 21 00 10 */	addi r1, r1, 0x10
