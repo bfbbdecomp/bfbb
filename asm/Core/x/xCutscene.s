@@ -2,6 +2,8 @@
 
 .section .rodata   # 0x80252158 - 0x80252188
 
+.balign 8
+
 .global lbl_80252158
 lbl_80252158:
 	.incbin "baserom.dol", 0x24F138, 0x10
