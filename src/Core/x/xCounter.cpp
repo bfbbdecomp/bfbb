@@ -13,7 +13,7 @@ namespace
 
 void xCounterInit()
 {
-    xDebugRemoveTweak("Widgets|Counters\0\0\0\0\0\0\0"); // TODO: no... just no...
+    xDebugRemoveTweak("Widgets|Counters");
 }
 
 void xCounterInit(void* b, void* asset)
