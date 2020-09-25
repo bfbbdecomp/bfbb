@@ -2,8 +2,7 @@
 
 .section .text  # 0x8013A5D0 - 0x8013AF64
 
-.global func_8013A5D0
-func_8013A5D0:
+xUpdateCull_Swap__FP14xUpdateCullMgrUiUi:
 /* 8013A5D0 001373D0  80 C3 00 0C */	lwz r6, 0xc(r3)
 /* 8013A5D4 001373D4  54 87 10 3A */	slwi r7, r4, 2
 /* 8013A5D8 001373D8  54 A8 10 3A */	slwi r8, r5, 2
@@ -41,8 +40,7 @@ lbl_8013A61C:
 /* 8013A648 00137448  7C A3 41 2E */	stwx r5, r3, r8
 /* 8013A64C 0013744C  4E 80 00 20 */	blr 
 
-.global func_8013A650
-func_8013A650:
+xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt:
 /* 8013A650 00137450  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013A654 00137454  7C 08 02 A6 */	mflr r0
 /* 8013A658 00137458  90 01 00 14 */	stw r0, 0x14(r1)
@@ -55,7 +53,7 @@ func_8013A650:
 /* 8013A674 00137474  7C 04 28 40 */	cmplw r4, r5
 /* 8013A678 00137478  41 80 00 3C */	blt lbl_8013A6B4
 /* 8013A67C 0013747C  41 82 00 08 */	beq lbl_8013A684
-/* 8013A680 00137480  4B FF FF 51 */	bl func_8013A5D0
+/* 8013A680 00137480  4B FF FF 51 */	bl xUpdateCull_Swap__FP14xUpdateCullMgrUiUi
 lbl_8013A684:
 /* 8013A684 00137484  81 9E 00 24 */	lwz r12, 0x24(r30)
 /* 8013A688 00137488  28 0C 00 00 */	cmplwi r12, 0
@@ -78,8 +76,7 @@ lbl_8013A6B4:
 /* 8013A6C4 001374C4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013A6C8 001374C8  4E 80 00 20 */	blr 
 
-.global func_8013A6CC
-func_8013A6CC:
+xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt:
 /* 8013A6CC 001374CC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013A6D0 001374D0  7C 08 02 A6 */	mflr r0
 /* 8013A6D4 001374D4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -94,7 +91,7 @@ func_8013A6CC:
 /* 8013A6F8 001374F8  38 A5 FF FF */	addi r5, r5, -1
 /* 8013A6FC 001374FC  7C 04 28 40 */	cmplw r4, r5
 /* 8013A700 00137500  41 82 00 08 */	beq lbl_8013A708
-/* 8013A704 00137504  4B FF FE CD */	bl func_8013A5D0
+/* 8013A704 00137504  4B FF FE CD */	bl xUpdateCull_Swap__FP14xUpdateCullMgrUiUi
 lbl_8013A708:
 /* 8013A708 00137508  81 9E 00 28 */	lwz r12, 0x28(r30)
 /* 8013A70C 0013750C  28 0C 00 00 */	cmplwi r12, 0
@@ -548,12 +545,12 @@ lbl_8013ACF4:
 /* 8013AD34 00137B34  40 82 00 14 */	bne lbl_8013AD48
 /* 8013AD38 00137B38  7F A3 EB 78 */	mr r3, r29
 /* 8013AD3C 00137B3C  7F 64 DB 78 */	mr r4, r27
-/* 8013AD40 00137B40  4B FF F9 11 */	bl func_8013A650
+/* 8013AD40 00137B40  4B FF F9 11 */	bl xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
 /* 8013AD44 00137B44  48 00 00 10 */	b lbl_8013AD54
 lbl_8013AD48:
 /* 8013AD48 00137B48  7F A3 EB 78 */	mr r3, r29
 /* 8013AD4C 00137B4C  7F 64 DB 78 */	mr r4, r27
-/* 8013AD50 00137B50  4B FF F9 7D */	bl func_8013A6CC
+/* 8013AD50 00137B50  4B FF F9 7D */	bl xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt
 lbl_8013AD54:
 /* 8013AD54 00137B54  80 7D 00 14 */	lwz r3, 0x14(r29)
 /* 8013AD58 00137B58  3B FF FF FF */	addi r31, r31, -1
@@ -578,7 +575,7 @@ lbl_8013AD9C:
 /* 8013AD9C 00137B9C  80 1D 00 18 */	lwz r0, 0x18(r29)
 /* 8013ADA0 00137BA0  7F A3 EB 78 */	mr r3, r29
 /* 8013ADA4 00137BA4  7C 80 E2 14 */	add r4, r0, r28
-/* 8013ADA8 00137BA8  4B FF F8 A9 */	bl func_8013A650
+/* 8013ADA8 00137BA8  4B FF F8 A9 */	bl xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
 /* 8013ADAC 00137BAC  3B 9C 00 10 */	addi r28, r28, 0x10
 /* 8013ADB0 00137BB0  3B 7B 00 01 */	addi r27, r27, 1
 lbl_8013ADB4:
@@ -626,7 +623,7 @@ lbl_8013AE38:
 /* 8013AE44 00137C44  40 82 FF D8 */	bne lbl_8013AE1C
 lbl_8013AE48:
 /* 8013AE48 00137C48  7F A3 EB 78 */	mr r3, r29
-/* 8013AE4C 00137C4C  4B FF F8 81 */	bl func_8013A6CC
+/* 8013AE4C 00137C4C  4B FF F8 81 */	bl xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt
 lbl_8013AE50:
 /* 8013AE50 00137C50  3B 9C 00 10 */	addi r28, r28, 0x10
 /* 8013AE54 00137C54  3B 7B 00 01 */	addi r27, r27, 1
@@ -698,7 +695,7 @@ lbl_8013AF24:
 /* 8013AF24 00137D24  80 9D 00 0C */	lwz r4, 0xc(r29)
 /* 8013AF28 00137D28  7F A3 EB 78 */	mr r3, r29
 /* 8013AF2C 00137D2C  7C 84 F8 2E */	lwzx r4, r4, r31
-/* 8013AF30 00137D30  4B FF F7 21 */	bl func_8013A650
+/* 8013AF30 00137D30  4B FF F7 21 */	bl xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt
 /* 8013AF34 00137D34  3B FF 00 04 */	addi r31, r31, 4
 /* 8013AF38 00137D38  3B DE 00 01 */	addi r30, r30, 1
 lbl_8013AF3C:

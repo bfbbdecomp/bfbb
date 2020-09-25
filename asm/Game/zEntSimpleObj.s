@@ -43,9 +43,9 @@ lbl_80090EFC:
 /* 80090F14 0008DD14  38 04 1B 08 */	addi r0, r4, lbl_80091B08@l
 /* 80090F18 0008DD18  7C 05 00 40 */	cmplw r5, r0
 /* 80090F1C 0008DD1C  40 82 00 9C */	bne lbl_80090FB8
-/* 80090F20 0008DD20  3C 80 80 09 */	lis r4, func_80091854@ha
+/* 80090F20 0008DD20  3C 80 80 09 */	lis r4, zEntSimpleObj_Render__FP4xEnt@ha
 /* 80090F24 0008DD24  80 A3 00 44 */	lwz r5, 0x44(r3)
-/* 80090F28 0008DD28  38 04 18 54 */	addi r0, r4, func_80091854@l
+/* 80090F28 0008DD28  38 04 18 54 */	addi r0, r4, zEntSimpleObj_Render__FP4xEnt@l
 /* 80090F2C 0008DD2C  7C 05 00 40 */	cmplw r5, r0
 /* 80090F30 0008DD30  40 82 00 88 */	bne lbl_80090FB8
 /* 80090F34 0008DD34  3C 80 80 09 */	lis r4, lbl_80091CD8@ha
@@ -559,7 +559,7 @@ lbl_80091678:
 /* 8009167C 0008E47C  80 9F 06 58 */	lwz r4, 0x658(r31)
 /* 80091680 0008E480  48 09 1E 41 */	bl xLightKit_Enable__FP9xLightKitP7RpWorld
 /* 80091684 0008E484  7F 83 E3 78 */	mr r3, r28
-/* 80091688 0008E488  48 00 01 CD */	bl func_80091854
+/* 80091688 0008E488  48 00 01 CD */	bl zEntSimpleObj_Render__FP4xEnt
 /* 8009168C 0008E48C  57 60 06 3F */	clrlwi. r0, r27, 0x18
 /* 80091690 0008E490  40 82 00 7C */	bne lbl_8009170C
 /* 80091694 0008E494  4B F9 F5 D5 */	bl xrand__Fv
@@ -688,8 +688,7 @@ lbl_8009182C:
 /* 8009184C 0008E64C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80091850 0008E650  4E 80 00 20 */	blr 
 
-.global func_80091854
-func_80091854:
+zEntSimpleObj_Render__FP4xEnt:
 /* 80091854 0008E654  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80091858 0008E658  7C 08 02 A6 */	mflr r0
 /* 8009185C 0008E65C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -779,10 +778,10 @@ lbl_8009197C:
 /* 80091984 0008E784  90 BD 00 40 */	stw r5, 0x40(r29)
 /* 80091988 0008E788  38 03 1B 08 */	addi r0, r3, lbl_80091B08@l
 /* 8009198C 0008E78C  3C 80 80 09 */	lis r4, lbl_80091CD8@ha
-/* 80091990 0008E790  3C 60 80 09 */	lis r3, func_80091854@ha
+/* 80091990 0008E790  3C 60 80 09 */	lis r3, zEntSimpleObj_Render__FP4xEnt@ha
 /* 80091994 0008E794  90 1D 00 34 */	stw r0, 0x34(r29)
 /* 80091998 0008E798  38 84 1C D8 */	addi r4, r4, lbl_80091CD8@l
-/* 8009199C 0008E79C  38 03 18 54 */	addi r0, r3, func_80091854@l
+/* 8009199C 0008E79C  38 03 18 54 */	addi r0, r3, zEntSimpleObj_Render__FP4xEnt@l
 /* 800919A0 0008E7A0  90 9D 00 0C */	stw r4, 0xc(r29)
 /* 800919A4 0008E7A4  90 1D 00 44 */	stw r0, 0x44(r29)
 /* 800919A8 0008E7A8  88 1D 00 05 */	lbz r0, 5(r29)

@@ -402,7 +402,7 @@ lbl_800A6574:
 /* 800A65B4 000A33B4  4B F8 FA 11 */	bl xPadUpdate__Fif
 lbl_800A65B8:
 /* 800A65B8 000A33B8  4B FF 30 A9 */	bl func_80099660
-/* 800A65BC 000A33BC  48 00 01 8D */	bl func_800A6748
+/* 800A65BC 000A33BC  48 00 01 8D */	bl zMenuIsPaused__Fv
 /* 800A65C0 000A33C0  C0 2D 82 C4 */	lfs f1, lbl_803CABC4-_SDA_BASE_(r13)
 /* 800A65C4 000A33C4  7C 75 1B 78 */	mr r21, r3
 /* 800A65C8 000A33C8  48 00 D9 6D */	bl zSceneUpdate__Ff
@@ -448,7 +448,7 @@ lbl_800A6650:
 /* 800A6660 000A3460  4B F6 6D AD */	bl xCameraEnd__FP7xCamerafi
 /* 800A6664 000A3464  7F E3 FB 78 */	mr r3, r31
 /* 800A6668 000A3468  4B F6 6D E5 */	bl xCameraShowRaster__FP7xCamera
-/* 800A666C 000A346C  48 00 00 FD */	bl func_800A6768
+/* 800A666C 000A346C  48 00 00 FD */	bl zMenuUpdateMode__Fv
 /* 800A6670 000A3470  90 61 00 10 */	stw r3, 0x10(r1)
 /* 800A6674 000A3474  80 7B 1F C0 */	lwz r3, 0x1fc0(r27)
 /* 800A6678 000A3478  80 63 00 70 */	lwz r3, 0x70(r3)
@@ -498,7 +498,7 @@ lbl_800A66F8:
 /* 800A6718 000A3518  38 80 00 01 */	li r4, 1
 /* 800A671C 000A351C  4B FA 71 E9 */	bl xTRCPad__Fi12_tagTRCState
 lbl_800A6720:
-/* 800A6720 000A3520  48 00 00 31 */	bl func_800A6750
+/* 800A6720 000A3520  48 00 00 31 */	bl zMenuLoopContinue__Fv
 /* 800A6724 000A3524  2C 03 00 00 */	cmpwi r3, 0
 /* 800A6728 000A3528  40 82 FB 80 */	bne lbl_800A62A8
 /* 800A672C 000A352C  4B FF 33 E1 */	bl zGameExtras_NewGameReset__Fv
@@ -509,13 +509,11 @@ lbl_800A6720:
 /* 800A6740 000A3540  38 21 00 60 */	addi r1, r1, 0x60
 /* 800A6744 000A3544  4E 80 00 20 */	blr 
 
-.global func_800A6748
-func_800A6748:
+zMenuIsPaused__Fv:
 /* 800A6748 000A3548  38 60 00 00 */	li r3, 0
 /* 800A674C 000A354C  4E 80 00 20 */	blr 
 
-.global func_800A6750
-func_800A6750:
+zMenuLoopContinue__Fv:
 /* 800A6750 000A3550  80 8D 8F A8 */	lwz r4, gGameMode-_SDA_BASE_(r13)
 /* 800A6754 000A3554  20 64 00 0C */	subfic r3, r4, 0xc
 /* 800A6758 000A3558  38 04 FF F4 */	addi r0, r4, -12
@@ -523,8 +521,7 @@ func_800A6750:
 /* 800A6760 000A3560  54 03 0F FE */	srwi r3, r0, 0x1f
 /* 800A6764 000A3564  4E 80 00 20 */	blr 
 
-.global func_800A6768
-func_800A6768:
+zMenuUpdateMode__Fv:
 /* 800A6768 000A3568  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A676C 000A356C  7C 08 02 A6 */	mflr r0
 /* 800A6770 000A3570  90 01 00 24 */	stw r0, 0x24(r1)

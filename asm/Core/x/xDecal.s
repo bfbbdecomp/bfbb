@@ -2,8 +2,8 @@
 
 .section .text  # 0x8017C420 - 0x8017D544
 
-.global func_8017C420
-func_8017C420:
+/* register_emitter__20@unnamed@xDecal_cpp@FP13xDecalEmitter */
+register_emitter__20_unnamed_xDecal_cpp_FP13xDecalEmitter:
 /* 8017C420 00179220  80 0D 97 B0 */	lwz r0, lbl_803CC0B0-_SDA_BASE_(r13)
 /* 8017C424 00179224  28 00 00 20 */	cmplwi r0, 0x20
 /* 8017C428 00179228  4C 80 00 20 */	bgelr 
@@ -69,7 +69,7 @@ init__13xDecalEmitterFiPCc:
 /* 8017C4E8 001792E8  7C 9E 23 78 */	mr r30, r4
 /* 8017C4EC 001792EC  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8017C4F0 001792F0  7C 7D 1B 78 */	mr r29, r3
-/* 8017C4F4 001792F4  4B FF FF 2D */	bl func_8017C420
+/* 8017C4F4 001792F4  4B FF FF 2D */	bl register_emitter__20_unnamed_xDecal_cpp_FP13xDecalEmitter
 /* 8017C4F8 001792F8  7F C4 F3 78 */	mr r4, r30
 /* 8017C4FC 001792FC  38 7D 00 44 */	addi r3, r29, 0x44
 /* 8017C500 00179300  48 00 0B B1 */	bl func_8017D0B0
@@ -334,7 +334,7 @@ lbl_8017C874:
 /* 8017C89C 0017969C  4B E8 E9 0D */	bl func_8000B1A8
 /* 8017C8A0 001796A0  FC 40 F8 90 */	fmr f2, f31
 /* 8017C8A4 001796A4  FC 60 F0 90 */	fmr f3, f30
-/* 8017C8A8 001796A8  48 00 00 81 */	bl func_8017C928
+/* 8017C8A8 001796A8  48 00 00 81 */	bl choose_greatest__20_unnamed_xDecal_cpp_Ffff
 /* 8017C8AC 001796AC  C0 02 AE 18 */	lfs f0, lbl_803CF798-_SDA2_BASE_(r2)
 /* 8017C8B0 001796B0  EC 00 00 72 */	fmuls f0, f0, f1
 /* 8017C8B4 001796B4  D0 1F 00 0C */	stfs f0, 0xc(r31)
@@ -370,8 +370,8 @@ lbl_8017C8D8:
 /* 8017C920 00179720  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017C924 00179724  4E 80 00 20 */	blr 
 
-.global func_8017C928
-func_8017C928:
+/* choose_greatest__20@unnamed@xDecal_cpp@Ffff */
+choose_greatest__20_unnamed_xDecal_cpp_Ffff:
 /* 8017C928 00179728  FC 01 10 40 */	fcmpo cr0, f1, f2
 /* 8017C92C 0017972C  40 80 00 08 */	bge lbl_8017C934
 /* 8017C930 00179730  FC 20 10 90 */	fmr f1, f2
@@ -421,7 +421,7 @@ lbl_8017C98C:
 /* 8017C9CC 001797CC  C0 3D 00 00 */	lfs f1, 0(r29)
 /* 8017C9D0 001797D0  C0 5D 00 04 */	lfs f2, 4(r29)
 /* 8017C9D4 001797D4  C0 7D 00 08 */	lfs f3, 8(r29)
-/* 8017C9D8 001797D8  4B FF FF 51 */	bl func_8017C928
+/* 8017C9D8 001797D8  4B FF FF 51 */	bl choose_greatest__20_unnamed_xDecal_cpp_Ffff
 /* 8017C9DC 001797DC  C0 02 AE 18 */	lfs f0, lbl_803CF798-_SDA2_BASE_(r2)
 /* 8017C9E0 001797E0  EC 00 00 72 */	fmuls f0, f0, f1
 /* 8017C9E4 001797E4  D0 1F 00 0C */	stfs f0, 0xc(r31)
@@ -449,7 +449,7 @@ lbl_8017C9EC:
 /* 8017CA38 00179838  4B E8 E7 71 */	bl func_8000B1A8
 /* 8017CA3C 0017983C  FC 40 F8 90 */	fmr f2, f31
 /* 8017CA40 00179840  FC 60 F0 90 */	fmr f3, f30
-/* 8017CA44 00179844  4B FF FE E5 */	bl func_8017C928
+/* 8017CA44 00179844  4B FF FE E5 */	bl choose_greatest__20_unnamed_xDecal_cpp_Ffff
 /* 8017CA48 00179848  C0 02 AE 18 */	lfs f0, lbl_803CF798-_SDA2_BASE_(r2)
 /* 8017CA4C 0017984C  EC 00 00 72 */	fmuls f0, f0, f1
 /* 8017CA50 00179850  D0 1F 00 0C */	stfs f0, 0xc(r31)
@@ -540,7 +540,7 @@ lbl_8017CB30:
 /* 8017CB88 00179988  7C 46 04 2E */	lfsx f2, r6, r0
 /* 8017CB8C 0017998C  38 04 00 08 */	addi r0, r4, 8
 /* 8017CB90 00179990  7C 66 04 2E */	lfsx f3, r6, r0
-/* 8017CB94 00179994  48 00 00 C1 */	bl func_8017CC54
+/* 8017CB94 00179994  48 00 00 C1 */	bl lerp__20_unnamed_xDecal_cpp_FRffff
 /* 8017CB98 00179998  C0 3E 00 0C */	lfs f1, 0xc(r30)
 /* 8017CB9C 0017999C  38 61 00 24 */	addi r3, r1, 0x24
 /* 8017CBA0 001799A0  C0 01 00 08 */	lfs f0, 8(r1)
@@ -591,8 +591,8 @@ lbl_8017CC0C:
 /* 8017CC4C 00179A4C  38 21 00 70 */	addi r1, r1, 0x70
 /* 8017CC50 00179A50  4E 80 00 20 */	blr 
 
-.global func_8017CC54
-func_8017CC54:
+/* lerp__20@unnamed@xDecal_cpp@FRffff */
+lerp__20_unnamed_xDecal_cpp_FRffff:
 /* 8017CC54 00179A54  EC 03 10 28 */	fsubs f0, f3, f2
 /* 8017CC58 00179A58  EC 01 10 3A */	fmadds f0, f1, f0, f2
 /* 8017CC5C 00179A5C  D0 03 00 00 */	stfs f0, 0(r3)
@@ -671,7 +671,7 @@ get_render_data__13xDecalEmitterFRCQ213xDecalEmitter9unit_datafR10iColor_tagR7xM
 /* 8017CD58 00179B58  80 05 00 04 */	lwz r0, 4(r5)
 /* 8017CD5C 00179B5C  38 A1 00 08 */	addi r5, r1, 8
 /* 8017CD60 00179B60  90 01 00 0C */	stw r0, 0xc(r1)
-/* 8017CD64 00179B64  48 00 01 25 */	bl func_8017CE88
+/* 8017CD64 00179B64  48 00 01 25 */	bl lerp__20_unnamed_xDecal_cpp_FR10iColor_tagf10iColor_tag10iColor_tag
 /* 8017CD68 00179B68  80 1B 00 00 */	lwz r0, 0(r27)
 /* 8017CD6C 00179B6C  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 8017CD70 00179B70  41 82 00 58 */	beq lbl_8017CDC8
@@ -747,8 +747,8 @@ lbl_8017CDF8:
 /* 8017CE80 00179C80  38 21 00 50 */	addi r1, r1, 0x50
 /* 8017CE84 00179C84  4E 80 00 20 */	blr 
 
-.global func_8017CE88
-func_8017CE88:
+/* lerp__20@unnamed@xDecal_cpp@FR10iColor_tagf10iColor_tag10iColor_tag */
+lerp__20_unnamed_xDecal_cpp_FR10iColor_tagf10iColor_tag10iColor_tag:
 /* 8017CE88 00179C88  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017CE8C 00179C8C  7C 08 02 A6 */	mflr r0
 /* 8017CE90 00179C90  90 01 00 24 */	stw r0, 0x24(r1)
@@ -762,22 +762,22 @@ func_8017CE88:
 /* 8017CEB0 00179CB0  7C 7D 1B 78 */	mr r29, r3
 /* 8017CEB4 00179CB4  88 84 00 00 */	lbz r4, 0(r4)
 /* 8017CEB8 00179CB8  88 A5 00 00 */	lbz r5, 0(r5)
-/* 8017CEBC 00179CBC  48 00 00 61 */	bl func_8017CF1C
+/* 8017CEBC 00179CBC  48 00 00 61 */	bl lerp__20_unnamed_xDecal_cpp_FRUcfUcUc
 /* 8017CEC0 00179CC0  FC 20 F8 90 */	fmr f1, f31
 /* 8017CEC4 00179CC4  88 9E 00 01 */	lbz r4, 1(r30)
 /* 8017CEC8 00179CC8  88 BF 00 01 */	lbz r5, 1(r31)
 /* 8017CECC 00179CCC  38 7D 00 01 */	addi r3, r29, 1
-/* 8017CED0 00179CD0  48 00 00 4D */	bl func_8017CF1C
+/* 8017CED0 00179CD0  48 00 00 4D */	bl lerp__20_unnamed_xDecal_cpp_FRUcfUcUc
 /* 8017CED4 00179CD4  FC 20 F8 90 */	fmr f1, f31
 /* 8017CED8 00179CD8  88 9E 00 02 */	lbz r4, 2(r30)
 /* 8017CEDC 00179CDC  88 BF 00 02 */	lbz r5, 2(r31)
 /* 8017CEE0 00179CE0  38 7D 00 02 */	addi r3, r29, 2
-/* 8017CEE4 00179CE4  48 00 00 39 */	bl func_8017CF1C
+/* 8017CEE4 00179CE4  48 00 00 39 */	bl lerp__20_unnamed_xDecal_cpp_FRUcfUcUc
 /* 8017CEE8 00179CE8  FC 20 F8 90 */	fmr f1, f31
 /* 8017CEEC 00179CEC  88 9E 00 03 */	lbz r4, 3(r30)
 /* 8017CEF0 00179CF0  88 BF 00 03 */	lbz r5, 3(r31)
 /* 8017CEF4 00179CF4  38 7D 00 03 */	addi r3, r29, 3
-/* 8017CEF8 00179CF8  48 00 00 25 */	bl func_8017CF1C
+/* 8017CEF8 00179CF8  48 00 00 25 */	bl lerp__20_unnamed_xDecal_cpp_FRUcfUcUc
 /* 8017CEFC 00179CFC  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 8017CF00 00179D00  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 8017CF04 00179D04  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -787,8 +787,8 @@ func_8017CE88:
 /* 8017CF14 00179D14  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017CF18 00179D18  4E 80 00 20 */	blr 
 
-.global func_8017CF1C
-func_8017CF1C:
+/* lerp__20@unnamed@xDecal_cpp@FRUcfUcUc */
+lerp__20_unnamed_xDecal_cpp_FRUcfUcUc:
 /* 8017CF1C 00179D1C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017CF20 00179D20  3C C0 43 30 */	lis r6, 0x4330
 /* 8017CF24 00179D24  54 80 06 3E */	clrlwi r0, r4, 0x18

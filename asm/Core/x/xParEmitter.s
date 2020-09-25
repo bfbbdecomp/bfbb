@@ -2,8 +2,7 @@
 
 .section .text  # 0x80117690 - 0x80118934
 
-.global func_80117690
-func_80117690:
+add_tweaks__FR11xParEmitter:
 /* 80117690 00114490  4E 80 00 20 */	blr 
 
 .global xParInterpConvertInterpMode__FP10xParInterp
@@ -313,7 +312,7 @@ lbl_80117AB4:
 /* 80117ABC 001148BC  90 7F 00 68 */	stw r3, 0x68(r31)
 lbl_80117AC0:
 /* 80117AC0 001148C0  7F E3 FB 78 */	mr r3, r31
-/* 80117AC4 001148C4  4B FF FB CD */	bl func_80117690
+/* 80117AC4 001148C4  4B FF FB CD */	bl add_tweaks__FR11xParEmitter
 /* 80117AC8 001148C8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80117ACC 001148CC  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80117AD0 001148D0  7C 08 03 A6 */	mtlr r0
@@ -551,8 +550,7 @@ lbl_80117DF0:
 /* 80117E08 00114C08  38 21 00 30 */	addi r1, r1, 0x30
 /* 80117E0C 00114C0C  4E 80 00 20 */	blr 
 
-.global func_80117E10
-func_80117E10:
+xParEmitterCull__FP11xParEmitterP4xPar:
 /* 80117E10 00114C10  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80117E14 00114C14  7C 08 02 A6 */	mflr r0
 /* 80117E18 00114C18  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1244,7 +1242,7 @@ lbl_801187EC:
 /* 801187F4 001155F4  4B EF CC 51 */	bl func_80015444
 /* 801187F8 001155F8  7F E3 FB 78 */	mr r3, r31
 /* 801187FC 001155FC  7E 04 83 78 */	mr r4, r16
-/* 80118800 00115600  4B FF F6 11 */	bl func_80117E10
+/* 80118800 00115600  4B FF F6 11 */	bl xParEmitterCull__FP11xParEmitterP4xPar
 /* 80118804 00115604  2C 03 00 00 */	cmpwi r3, 0
 /* 80118808 00115608  41 82 00 18 */	beq lbl_80118820
 /* 8011880C 0011560C  80 7B 00 20 */	lwz r3, 0x20(r27)

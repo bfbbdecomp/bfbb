@@ -266,8 +266,7 @@ lbl_800C109C:
 /* 800C10B4 000BDEB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C10B8 000BDEB8  4E 80 00 20 */	blr 
 
-.global func_800C10BC
-func_800C10BC:
+properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle:
 /* 800C10BC 000BDEBC  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 800C10C0 000BDEC0  7C 08 02 A6 */	mflr r0
 /* 800C10C4 000BDEC4  90 01 00 84 */	stw r0, 0x84(r1)
@@ -393,7 +392,7 @@ lbl_800C1278:
 /* 800C1284 000BE084  38 81 00 0C */	addi r4, r1, 0xc
 /* 800C1288 000BE088  D0 01 00 08 */	stfs f0, 8(r1)
 /* 800C128C 000BE08C  38 A1 00 08 */	addi r5, r1, 8
-/* 800C1290 000BE090  4B FF FE 2D */	bl func_800C10BC
+/* 800C1290 000BE090  4B FF FE 2D */	bl properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle
 /* 800C1294 000BE094  C0 21 00 08 */	lfs f1, 8(r1)
 /* 800C1298 000BE098  C0 02 96 E0 */	lfs f0, lbl_803CE060-_SDA2_BASE_(r2)
 /* 800C129C 000BE09C  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -471,8 +470,7 @@ lbl_800C1380:
 /* 800C1398 000BE198  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C139C 000BE19C  4E 80 00 20 */	blr 
 
-.global func_800C13A0
-func_800C13A0:
+sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 800C13A0 000BE1A0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 800C13A4 000BE1A4  7C 08 02 A6 */	mflr r0
 /* 800C13A8 000BE1A8  90 01 00 54 */	stw r0, 0x54(r1)
@@ -490,7 +488,7 @@ func_800C13A0:
 /* 800C13D8 000BE1D8  FC 20 F8 90 */	fmr f1, f31
 /* 800C13DC 000BE1DC  38 A1 00 08 */	addi r5, r1, 8
 /* 800C13E0 000BE1E0  D0 01 00 08 */	stfs f0, 8(r1)
-/* 800C13E4 000BE1E4  4B FF FC D9 */	bl func_800C10BC
+/* 800C13E4 000BE1E4  4B FF FC D9 */	bl properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle
 /* 800C13E8 000BE1E8  C0 62 96 E0 */	lfs f3, lbl_803CE060-_SDA2_BASE_(r2)
 /* 800C13EC 000BE1EC  C0 81 00 08 */	lfs f4, 8(r1)
 /* 800C13F0 000BE1F0  FC 03 20 00 */	fcmpu cr0, f3, f4
@@ -829,7 +827,7 @@ lbl_800C186C:
 /* 800C18AC 000BE6AC  FC 20 F8 90 */	fmr f1, f31
 /* 800C18B0 000BE6B0  38 A1 00 08 */	addi r5, r1, 8
 /* 800C18B4 000BE6B4  D0 01 00 08 */	stfs f0, 8(r1)
-/* 800C18B8 000BE6B8  4B FF F8 05 */	bl func_800C10BC
+/* 800C18B8 000BE6B8  4B FF F8 05 */	bl properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle
 /* 800C18BC 000BE6BC  C0 02 96 E0 */	lfs f0, lbl_803CE060-_SDA2_BASE_(r2)
 /* 800C18C0 000BE6C0  C0 21 00 08 */	lfs f1, 8(r1)
 /* 800C18C4 000BE6C4  FC 00 08 00 */	fcmpu cr0, f0, f1
@@ -953,14 +951,13 @@ lbl_800C1A50:
 /* 800C1A68 000BE868  38 80 00 00 */	li r4, 0
 /* 800C1A6C 000BE86C  38 63 AE 44 */	addi r3, r3, lbl_802FAE44@l
 /* 800C1A70 000BE870  7C 05 03 78 */	mr r5, r0
-/* 800C1A74 000BE874  4B FF F9 2D */	bl func_800C13A0
+/* 800C1A74 000BE874  4B FF F9 2D */	bl sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv
 /* 800C1A78 000BE878  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800C1A7C 000BE87C  7C 08 03 A6 */	mtlr r0
 /* 800C1A80 000BE880  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C1A84 000BE884  4E 80 00 20 */	blr 
 
-.global func_800C1A88
-func_800C1A88:
+rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 800C1A88 000BE888  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C1A8C 000BE88C  7C 08 02 A6 */	mflr r0
 /* 800C1A90 000BE890  3C 60 80 30 */	lis r3, lbl_802FAE20@ha
@@ -1030,8 +1027,7 @@ lbl_800C1B68:
 /* 800C1B74 000BE974  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C1B78 000BE978  4E 80 00 20 */	blr 
 
-.global func_800C1B7C
-func_800C1B7C:
+rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 800C1B7C 000BE97C  C0 42 96 E4 */	lfs f2, lbl_803CE064-_SDA2_BASE_(r2)
 /* 800C1B80 000BE980  3C 60 80 30 */	lis r3, lbl_802FAE20@ha
 /* 800C1B84 000BE984  38 63 AE 20 */	addi r3, r3, lbl_802FAE20@l
@@ -1080,7 +1076,7 @@ lbl_800C1C10:
 /* 800C1C1C 000BEA1C  7C 85 23 78 */	mr r5, r4
 /* 800C1C20 000BEA20  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800C1C24 000BEA24  38 80 00 00 */	li r4, 0
-/* 800C1C28 000BEA28  4B FF FE 61 */	bl func_800C1A88
+/* 800C1C28 000BEA28  4B FF FE 61 */	bl rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv
 /* 800C1C2C 000BEA2C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800C1C30 000BEA30  7C 08 03 A6 */	mtlr r0
 /* 800C1C34 000BEA34  38 21 00 10 */	addi r1, r1, 0x10
@@ -1092,7 +1088,7 @@ lbl_800C1C3C:
 /* 800C1C48 000BEA48  7C 85 23 78 */	mr r5, r4
 /* 800C1C4C 000BEA4C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800C1C50 000BEA50  38 80 00 00 */	li r4, 0
-/* 800C1C54 000BEA54  4B FF FF 29 */	bl func_800C1B7C
+/* 800C1C54 000BEA54  4B FF FF 29 */	bl rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv
 /* 800C1C58 000BEA58  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800C1C5C 000BEA5C  7C 08 03 A6 */	mtlr r0
 /* 800C1C60 000BEA60  38 21 00 10 */	addi r1, r1, 0x10
@@ -1269,9 +1265,9 @@ lbl_800C1EAC:
 /* 800C1ED4 000BECD4  28 00 00 00 */	cmplwi r0, 0
 /* 800C1ED8 000BECD8  41 82 00 34 */	beq lbl_800C1F0C
 /* 800C1EDC 000BECDC  38 00 00 01 */	li r0, 1
-/* 800C1EE0 000BECE0  3C 60 80 0C */	lis r3, func_800C13A0@ha
+/* 800C1EE0 000BECE0  3C 60 80 0C */	lis r3, sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C1EE4 000BECE4  90 0D 91 88 */	stw r0, lbl_803CBA88-_SDA_BASE_(r13)
-/* 800C1EE8 000BECE8  38 A3 13 A0 */	addi r5, r3, func_800C13A0@l
+/* 800C1EE8 000BECE8  38 A3 13 A0 */	addi r5, r3, sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C1EEC 000BECEC  7F C6 F3 78 */	mr r6, r30
 /* 800C1EF0 000BECF0  38 81 00 08 */	addi r4, r1, 8
 /* 800C1EF4 000BECF4  80 67 00 10 */	lwz r3, 0x10(r7)
@@ -1281,9 +1277,9 @@ lbl_800C1EAC:
 /* 800C1F04 000BED04  90 0D 91 88 */	stw r0, lbl_803CBA88-_SDA_BASE_(r13)
 /* 800C1F08 000BED08  48 00 00 40 */	b lbl_800C1F48
 lbl_800C1F0C:
-/* 800C1F0C 000BED0C  3C 80 80 0C */	lis r4, func_800C13A0@ha
+/* 800C1F0C 000BED0C  3C 80 80 0C */	lis r4, sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C1F10 000BED10  80 67 00 00 */	lwz r3, 0(r7)
-/* 800C1F14 000BED14  38 A4 13 A0 */	addi r5, r4, func_800C13A0@l
+/* 800C1F14 000BED14  38 A4 13 A0 */	addi r5, r4, sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C1F18 000BED18  7F C6 F3 78 */	mr r6, r30
 /* 800C1F1C 000BED1C  38 81 00 08 */	addi r4, r1, 8
 /* 800C1F20 000BED20  48 13 77 79 */	bl RpCollisionWorldForAllIntersections
@@ -1291,9 +1287,9 @@ lbl_800C1F0C:
 /* 800C1F28 000BED28  80 63 00 04 */	lwz r3, 4(r3)
 /* 800C1F2C 000BED2C  28 03 00 00 */	cmplwi r3, 0
 /* 800C1F30 000BED30  41 82 00 18 */	beq lbl_800C1F48
-/* 800C1F34 000BED34  3C 80 80 0C */	lis r4, func_800C13A0@ha
+/* 800C1F34 000BED34  3C 80 80 0C */	lis r4, sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C1F38 000BED38  7F C6 F3 78 */	mr r6, r30
-/* 800C1F3C 000BED3C  38 A4 13 A0 */	addi r5, r4, func_800C13A0@l
+/* 800C1F3C 000BED3C  38 A4 13 A0 */	addi r5, r4, sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C1F40 000BED40  38 81 00 08 */	addi r4, r1, 8
 /* 800C1F44 000BED44  48 13 77 55 */	bl RpCollisionWorldForAllIntersections
 lbl_800C1F48:
@@ -1684,19 +1680,19 @@ lbl_800C24C8:
 /* 800C24C8 000BF2C8  38 7B 00 20 */	addi r3, r27, 0x20
 /* 800C24CC 000BF2CC  7F C4 F3 78 */	mr r4, r30
 /* 800C24D0 000BF2D0  7C 65 1B 78 */	mr r5, r3
-/* 800C24D4 000BF2D4  48 00 09 01 */	bl func_800C2DD4
+/* 800C24D4 000BF2D4  48 00 09 01 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 800C24D8 000BF2D8  38 7B 00 2C */	addi r3, r27, 0x2c
 /* 800C24DC 000BF2DC  7F C4 F3 78 */	mr r4, r30
 /* 800C24E0 000BF2E0  7C 65 1B 78 */	mr r5, r3
-/* 800C24E4 000BF2E4  48 00 08 F1 */	bl func_800C2DD4
+/* 800C24E4 000BF2E4  48 00 08 F1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 800C24E8 000BF2E8  38 7B 00 38 */	addi r3, r27, 0x38
 /* 800C24EC 000BF2EC  38 81 00 24 */	addi r4, r1, 0x24
 /* 800C24F0 000BF2F0  7C 65 1B 78 */	mr r5, r3
-/* 800C24F4 000BF2F4  48 00 08 E1 */	bl func_800C2DD4
+/* 800C24F4 000BF2F4  48 00 08 E1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 800C24F8 000BF2F8  38 7B 00 14 */	addi r3, r27, 0x14
 /* 800C24FC 000BF2FC  38 81 00 24 */	addi r4, r1, 0x24
 /* 800C2500 000BF300  7C 65 1B 78 */	mr r5, r3
-/* 800C2504 000BF304  48 00 08 D1 */	bl func_800C2DD4
+/* 800C2504 000BF304  48 00 08 D1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 800C2508 000BF308  C0 1B 00 10 */	lfs f0, 0x10(r27)
 /* 800C250C 000BF30C  EC 00 07 F2 */	fmuls f0, f0, f31
 /* 800C2510 000BF310  D0 1B 00 10 */	stfs f0, 0x10(r27)
@@ -1841,9 +1837,9 @@ lbl_800C26F8:
 /* 800C2700 000BF500  28 00 00 00 */	cmplwi r0, 0
 /* 800C2704 000BF504  41 82 00 34 */	beq lbl_800C2738
 /* 800C2708 000BF508  38 00 00 01 */	li r0, 1
-/* 800C270C 000BF50C  3C 60 80 0C */	lis r3, func_800C1A88@ha
+/* 800C270C 000BF50C  3C 60 80 0C */	lis r3, rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C2710 000BF510  90 0D 91 88 */	stw r0, lbl_803CBA88-_SDA_BASE_(r13)
-/* 800C2714 000BF514  38 A3 1A 88 */	addi r5, r3, func_800C1A88@l
+/* 800C2714 000BF514  38 A3 1A 88 */	addi r5, r3, rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C2718 000BF518  7F E6 FB 78 */	mr r6, r31
 /* 800C271C 000BF51C  38 81 00 14 */	addi r4, r1, 0x14
 /* 800C2720 000BF520  80 67 00 10 */	lwz r3, 0x10(r7)
@@ -1853,9 +1849,9 @@ lbl_800C26F8:
 /* 800C2730 000BF530  90 0D 91 88 */	stw r0, lbl_803CBA88-_SDA_BASE_(r13)
 /* 800C2734 000BF534  48 00 00 40 */	b lbl_800C2774
 lbl_800C2738:
-/* 800C2738 000BF538  3C 80 80 0C */	lis r4, func_800C1A88@ha
+/* 800C2738 000BF538  3C 80 80 0C */	lis r4, rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C273C 000BF53C  80 67 00 00 */	lwz r3, 0(r7)
-/* 800C2740 000BF540  38 A4 1A 88 */	addi r5, r4, func_800C1A88@l
+/* 800C2740 000BF540  38 A4 1A 88 */	addi r5, r4, rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C2744 000BF544  7F E6 FB 78 */	mr r6, r31
 /* 800C2748 000BF548  38 81 00 14 */	addi r4, r1, 0x14
 /* 800C274C 000BF54C  48 13 6F 4D */	bl RpCollisionWorldForAllIntersections
@@ -1863,9 +1859,9 @@ lbl_800C2738:
 /* 800C2754 000BF554  80 63 00 04 */	lwz r3, 4(r3)
 /* 800C2758 000BF558  28 03 00 00 */	cmplwi r3, 0
 /* 800C275C 000BF55C  41 82 00 18 */	beq lbl_800C2774
-/* 800C2760 000BF560  3C 80 80 0C */	lis r4, func_800C1A88@ha
+/* 800C2760 000BF560  3C 80 80 0C */	lis r4, rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C2764 000BF564  7F E6 FB 78 */	mr r6, r31
-/* 800C2768 000BF568  38 A4 1A 88 */	addi r5, r4, func_800C1A88@l
+/* 800C2768 000BF568  38 A4 1A 88 */	addi r5, r4, rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C276C 000BF56C  38 81 00 14 */	addi r4, r1, 0x14
 /* 800C2770 000BF570  48 13 6F 29 */	bl RpCollisionWorldForAllIntersections
 lbl_800C2774:
@@ -1883,8 +1879,8 @@ lbl_800C2774:
 /* 800C27A0 000BF5A0  38 81 00 08 */	addi r4, r1, 8
 /* 800C27A4 000BF5A4  4B F4 DA 85 */	bl func_80010228
 /* 800C27A8 000BF5A8  80 9E 00 00 */	lwz r4, 0(r30)
-/* 800C27AC 000BF5AC  3C 60 80 0C */	lis r3, func_800C1B7C@ha
-/* 800C27B0 000BF5B0  38 A3 1B 7C */	addi r5, r3, func_800C1B7C@l
+/* 800C27AC 000BF5AC  3C 60 80 0C */	lis r3, rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
+/* 800C27B0 000BF5B0  38 A3 1B 7C */	addi r5, r3, rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C27B4 000BF5B4  7F E6 FB 78 */	mr r6, r31
 /* 800C27B8 000BF5B8  80 64 00 00 */	lwz r3, 0(r4)
 /* 800C27BC 000BF5BC  38 81 00 14 */	addi r4, r1, 0x14
@@ -1893,9 +1889,9 @@ lbl_800C2774:
 /* 800C27C8 000BF5C8  80 63 00 04 */	lwz r3, 4(r3)
 /* 800C27CC 000BF5CC  28 03 00 00 */	cmplwi r3, 0
 /* 800C27D0 000BF5D0  41 82 00 18 */	beq lbl_800C27E8
-/* 800C27D4 000BF5D4  3C 80 80 0C */	lis r4, func_800C1B7C@ha
+/* 800C27D4 000BF5D4  3C 80 80 0C */	lis r4, rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C27D8 000BF5D8  7F E6 FB 78 */	mr r6, r31
-/* 800C27DC 000BF5DC  38 A4 1B 7C */	addi r5, r4, func_800C1B7C@l
+/* 800C27DC 000BF5DC  38 A4 1B 7C */	addi r5, r4, rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C27E0 000BF5E0  38 81 00 14 */	addi r4, r1, 0x14
 /* 800C27E4 000BF5E4  48 13 6E B5 */	bl RpCollisionWorldForAllIntersections
 lbl_800C27E8:
@@ -2318,8 +2314,7 @@ lbl_800C2DB4:
 /* 800C2DCC 000BFBCC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C2DD0 000BFBD0  4E 80 00 20 */	blr 
 
-.global func_800C2DD4
-func_800C2DD4:
+xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 800C2DD4 000BFBD4  C0 65 00 04 */	lfs f3, 4(r5)
 /* 800C2DD8 000BFBD8  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 800C2DDC 000BFBDC  C0 44 00 14 */	lfs f2, 0x14(r4)

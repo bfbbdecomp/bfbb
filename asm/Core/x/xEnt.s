@@ -11,8 +11,8 @@ lbl_80252194:
 
 .section .text  # 0x80018064 - 0x8001BB54
 
-.global func_80018064
-func_80018064:
+/* reset__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt */
+reset__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt:
 /* 80018064 00014E64  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80018068 00014E68  7C 08 02 A6 */	mflr r0
 /* 8001806C 00014E6C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -117,8 +117,8 @@ lbl_800181C4:
 /* 800181E0 00014FE0  38 21 00 40 */	addi r1, r1, 0x40
 /* 800181E4 00014FE4  4E 80 00 20 */	blr 
 
-.global func_800181E8
-func_800181E8:
+/* refresh__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt */
+refresh__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt:
 /* 800181E8 00014FE8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800181EC 00014FEC  7C 08 02 A6 */	mflr r0
 /* 800181F0 00014FF0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -160,8 +160,7 @@ xEntSceneInit__Fv:
 xEntSceneExit__Fv:
 /* 80018260 00015060  4E 80 00 20 */	blr 
 
-.global func_80018264
-func_80018264:
+xEntAddHittableFlag__FP4xEnt:
 /* 80018264 00015064  88 03 00 04 */	lbz r0, 4(r3)
 /* 80018268 00015068  28 00 00 2B */	cmplwi r0, 0x2b
 /* 8001826C 0001506C  41 82 00 30 */	beq lbl_8001829C
@@ -210,8 +209,7 @@ lbl_80018300:
 /* 80018304 00015104  42 00 FF BC */	bdnz lbl_800182C0
 /* 80018308 00015108  4E 80 00 20 */	blr 
 
-.global func_8001830C
-func_8001830C:
+hack_receive_shadow__FP4xEnt:
 /* 8001830C 0001510C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80018310 00015110  7C 08 02 A6 */	mflr r0
 /* 80018314 00015114  90 01 00 14 */	stw r0, 0x14(r1)
@@ -358,8 +356,7 @@ lbl_80018528:
 /* 80018534 00015334  38 21 00 10 */	addi r1, r1, 0x10
 /* 80018538 00015338  4E 80 00 20 */	blr 
 
-.global func_8001853C
-func_8001853C:
+xEntAddShadowRecFlag__FP4xEnt:
 /* 8001853C 0001533C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80018540 00015340  7C 08 02 A6 */	mflr r0
 /* 80018544 00015344  90 01 00 14 */	stw r0, 0x14(r1)
@@ -386,7 +383,7 @@ lbl_80018590:
 /* 80018594 00015394  70 00 FF EF */	andi. r0, r0, 0xffef
 /* 80018598 00015398  B0 03 00 06 */	sth r0, 6(r3)
 lbl_8001859C:
-/* 8001859C 0001539C  4B FF FD 71 */	bl func_8001830C
+/* 8001859C 0001539C  4B FF FD 71 */	bl hack_receive_shadow__FP4xEnt
 /* 800185A0 000153A0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800185A4 000153A4  7C 08 03 A6 */	mtlr r0
 /* 800185A8 000153A8  38 21 00 10 */	addi r1, r1, 0x10
@@ -611,8 +608,8 @@ lbl_800188C0:
 /* 800188D8 000156D8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800188DC 000156DC  4E 80 00 20 */	blr 
 
-.global func_800188E0
-func_800188E0:
+/* get_lower_extent__18@unnamed@xEnt_cpp@FRC6xBound */
+get_lower_extent__18_unnamed_xEnt_cpp_FRC6xBound:
 /* 800188E0 000156E0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800188E4 000156E4  7C 08 02 A6 */	mflr r0
 /* 800188E8 000156E8  90 01 00 34 */	stw r0, 0x34(r1)
@@ -671,8 +668,8 @@ lbl_80018994:
 /* 800189A0 000157A0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800189A4 000157A4  4E 80 00 20 */	blr 
 
-.global func_800189A8
-func_800189A8:
+/* collide_downward__18@unnamed@xEnt_cpp@FR5xVec3RP4xEntR6xSceneR4xEntf */
+collide_downward__18_unnamed_xEnt_cpp_FR5xVec3RP4xEntR6xSceneR4xEntf:
 /* 800189A8 000157A8  94 21 FF 40 */	stwu r1, -0xc0(r1)
 /* 800189AC 000157AC  7C 08 02 A6 */	mflr r0
 /* 800189B0 000157B0  90 01 00 C4 */	stw r0, 0xc4(r1)
@@ -687,7 +684,7 @@ func_800189A8:
 /* 800189D4 000157D4  7C 9C 23 78 */	mr r28, r4
 /* 800189D8 000157D8  7C BF 2B 78 */	mr r31, r5
 /* 800189DC 000157DC  38 7D 00 64 */	addi r3, r29, 0x64
-/* 800189E0 000157E0  4B FF FF 01 */	bl func_800188E0
+/* 800189E0 000157E0  4B FF FF 01 */	bl get_lower_extent__18_unnamed_xEnt_cpp_FRC6xBound
 /* 800189E4 000157E4  FF E0 08 90 */	fmr f31, f1
 /* 800189E8 000157E8  38 7D 00 64 */	addi r3, r29, 0x64
 /* 800189EC 000157EC  48 00 2D ED */	bl func_8001B7D8
@@ -761,14 +758,14 @@ lbl_80018AEC:
 /* 80018AF0 000158F0  7C 08 02 A6 */	mflr r0
 /* 80018AF4 000158F4  7C 83 23 78 */	mr r3, r4
 /* 80018AF8 000158F8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80018AFC 000158FC  48 00 00 A5 */	bl func_80018BA0
+/* 80018AFC 000158FC  48 00 00 A5 */	bl drop_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt
 /* 80018B00 00015900  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80018B04 00015904  7C 08 03 A6 */	mtlr r0
 /* 80018B08 00015908  38 21 00 10 */	addi r1, r1, 0x10
 /* 80018B0C 0001590C  4E 80 00 20 */	blr 
 
-.global func_80018B10
-func_80018B10:
+/* mount_stacked_entity__18@unnamed@xEnt_cpp@FR4xEntR4xEnt */
+mount_stacked_entity__18_unnamed_xEnt_cpp_FR4xEntR4xEnt:
 /* 80018B10 00015910  88 04 00 20 */	lbz r0, 0x20(r4)
 /* 80018B14 00015914  28 00 00 04 */	cmplwi r0, 4
 /* 80018B18 00015918  4C 82 00 20 */	bnelr 
@@ -792,8 +789,8 @@ lbl_80018B34:
 /* 80018B5C 0001595C  90 64 01 08 */	stw r3, 0x108(r4)
 /* 80018B60 00015960  4E 80 00 20 */	blr 
 
-.global func_80018B64
-func_80018B64:
+/* dismount_stacked_entity__18@unnamed@xEnt_cpp@FR4xEnt */
+dismount_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt:
 /* 80018B64 00015964  80 83 00 B8 */	lwz r4, 0xb8(r3)
 /* 80018B68 00015968  28 04 00 00 */	cmplwi r4, 0
 /* 80018B6C 0001596C  4D 82 00 20 */	beqlr 
@@ -808,33 +805,33 @@ lbl_80018B88:
 /* 80018B8C 0001598C  90 03 00 B8 */	stw r0, 0xb8(r3)
 /* 80018B90 00015990  4E 80 00 20 */	blr 
 
-.global func_80018B94
-func_80018B94:
+/* setup_stacked_entity__18@unnamed@xEnt_cpp@FR4xEnt */
+setup_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt:
 /* 80018B94 00015994  38 00 00 04 */	li r0, 4
 /* 80018B98 00015998  98 03 00 1B */	stb r0, 0x1b(r3)
 /* 80018B9C 0001599C  4E 80 00 20 */	blr 
 
-.global func_80018BA0
-func_80018BA0:
+/* drop_stacked_entity__18@unnamed@xEnt_cpp@FR4xEnt */
+drop_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt:
 /* 80018BA0 000159A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80018BA4 000159A4  7C 08 02 A6 */	mflr r0
 /* 80018BA8 000159A8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80018BAC 000159AC  38 00 00 04 */	li r0, 4
 /* 80018BB0 000159B0  98 03 00 1B */	stb r0, 0x1b(r3)
-/* 80018BB4 000159B4  4B FF FF B1 */	bl func_80018B64
+/* 80018BB4 000159B4  4B FF FF B1 */	bl dismount_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt
 /* 80018BB8 000159B8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80018BBC 000159BC  7C 08 03 A6 */	mtlr r0
 /* 80018BC0 000159C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80018BC4 000159C4  4E 80 00 20 */	blr 
 
-.global func_80018BC8
-func_80018BC8:
+/* stop_stacked_entity__18@unnamed@xEnt_cpp@FR4xEnt */
+stop_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt:
 /* 80018BC8 000159C8  38 00 00 00 */	li r0, 0
 /* 80018BCC 000159CC  98 03 00 1B */	stb r0, 0x1b(r3)
 /* 80018BD0 000159D0  4E 80 00 20 */	blr 
 
-.global func_80018BD4
-func_80018BD4:
+/* update_stacked_entity__18@unnamed@xEnt_cpp@FR6xSceneR4xEntf */
+update_stacked_entity__18_unnamed_xEnt_cpp_FR6xSceneR4xEntf:
 /* 80018BD4 000159D4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80018BD8 000159D8  7C 08 02 A6 */	mflr r0
 /* 80018BDC 000159DC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -866,19 +863,19 @@ func_80018BD4:
 /* 80018C44 00015A44  7F E6 FB 78 */	mr r6, r31
 /* 80018C48 00015A48  38 61 00 0C */	addi r3, r1, 0xc
 /* 80018C4C 00015A4C  38 81 00 08 */	addi r4, r1, 8
-/* 80018C50 00015A50  4B FF FD 59 */	bl func_800189A8
+/* 80018C50 00015A50  4B FF FD 59 */	bl collide_downward__18_unnamed_xEnt_cpp_FR5xVec3RP4xEntR6xSceneR4xEntf
 /* 80018C54 00015A54  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80018C58 00015A58  41 82 00 2C */	beq lbl_80018C84
 /* 80018C5C 00015A5C  C0 01 00 10 */	lfs f0, 0x10(r1)
 /* 80018C60 00015A60  7F E3 FB 78 */	mr r3, r31
 /* 80018C64 00015A64  80 9F 00 48 */	lwz r4, 0x48(r31)
 /* 80018C68 00015A68  D0 04 00 34 */	stfs f0, 0x34(r4)
-/* 80018C6C 00015A6C  4B FF FF 5D */	bl func_80018BC8
+/* 80018C6C 00015A6C  4B FF FF 5D */	bl stop_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt
 /* 80018C70 00015A70  80 81 00 08 */	lwz r4, 8(r1)
 /* 80018C74 00015A74  28 04 00 00 */	cmplwi r4, 0
 /* 80018C78 00015A78  41 82 00 0C */	beq lbl_80018C84
 /* 80018C7C 00015A7C  7F E3 FB 78 */	mr r3, r31
-/* 80018C80 00015A80  4B FF FE 91 */	bl func_80018B10
+/* 80018C80 00015A80  4B FF FE 91 */	bl mount_stacked_entity__18_unnamed_xEnt_cpp_FR4xEntR4xEnt
 lbl_80018C84:
 /* 80018C84 00015A84  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 80018C88 00015A88  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -970,9 +967,9 @@ lbl_80018D78:
 /* 80018DBC 00015BBC  80 9F 00 24 */	lwz r4, 0x24(r31)
 /* 80018DC0 00015BC0  C0 05 00 44 */	lfs f0, 0x44(r5)
 /* 80018DC4 00015BC4  D0 04 00 24 */	stfs f0, 0x24(r4)
-/* 80018DC8 00015BC8  4B FF F4 9D */	bl func_80018264
+/* 80018DC8 00015BC8  4B FF F4 9D */	bl xEntAddHittableFlag__FP4xEnt
 /* 80018DCC 00015BCC  7F E3 FB 78 */	mr r3, r31
-/* 80018DD0 00015BD0  4B FF F7 6D */	bl func_8001853C
+/* 80018DD0 00015BD0  4B FF F7 6D */	bl xEntAddShadowRecFlag__FP4xEnt
 /* 80018DD4 00015BD4  7F E3 FB 78 */	mr r3, r31
 /* 80018DD8 00015BD8  48 0F D7 B1 */	bl zCollGeom_EntSetup__FP4xEnt
 /* 80018DDC 00015BDC  80 1F 00 24 */	lwz r0, 0x24(r31)
@@ -1008,13 +1005,13 @@ lbl_80018E38:
 /* 80018E3C 00015C3C  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
 /* 80018E40 00015C40  41 82 00 0C */	beq lbl_80018E4C
 /* 80018E44 00015C44  7F E3 FB 78 */	mr r3, r31
-/* 80018E48 00015C48  4B FF F2 1D */	bl func_80018064
+/* 80018E48 00015C48  4B FF F2 1D */	bl reset__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt
 lbl_80018E4C:
 /* 80018E4C 00015C4C  88 1F 00 18 */	lbz r0, 0x18(r31)
 /* 80018E50 00015C50  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 80018E54 00015C54  41 82 00 0C */	beq lbl_80018E60
 /* 80018E58 00015C58  7F E3 FB 78 */	mr r3, r31
-/* 80018E5C 00015C5C  4B FF FD 39 */	bl func_80018B94
+/* 80018E5C 00015C5C  4B FF FD 39 */	bl setup_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt
 lbl_80018E60:
 /* 80018E60 00015C60  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80018E64 00015C64  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -1108,9 +1105,9 @@ xEntReset__FP4xEnt:
 /* 80018F90 00015D90  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 80018F94 00015D94  88 04 00 0B */	lbz r0, 0xb(r4)
 /* 80018F98 00015D98  98 1F 00 1C */	stb r0, 0x1c(r31)
-/* 80018F9C 00015D9C  4B FF F2 C9 */	bl func_80018264
+/* 80018F9C 00015D9C  4B FF F2 C9 */	bl xEntAddHittableFlag__FP4xEnt
 /* 80018FA0 00015DA0  7F E3 FB 78 */	mr r3, r31
-/* 80018FA4 00015DA4  4B FF F5 99 */	bl func_8001853C
+/* 80018FA4 00015DA4  4B FF F5 99 */	bl xEntAddShadowRecFlag__FP4xEnt
 /* 80018FA8 00015DA8  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 80018FAC 00015DAC  38 61 00 08 */	addi r3, r1, 8
 /* 80018FB0 00015DB0  C0 24 00 14 */	lfs f1, 0x14(r4)
@@ -1150,7 +1147,7 @@ lbl_80019030:
 /* 80019034 00015E34  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
 /* 80019038 00015E38  41 82 00 0C */	beq lbl_80019044
 /* 8001903C 00015E3C  7F E3 FB 78 */	mr r3, r31
-/* 80019040 00015E40  4B FF F0 25 */	bl func_80018064
+/* 80019040 00015E40  4B FF F0 25 */	bl reset__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt
 lbl_80019044:
 /* 80019044 00015E44  80 9F 00 24 */	lwz r4, 0x24(r31)
 /* 80019048 00015E48  3C 00 43 30 */	lis r0, 0x4330
@@ -1249,7 +1246,7 @@ lbl_80019198:
 /* 800191A8 00015FA8  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 800191AC 00015FAC  41 82 00 0C */	beq lbl_800191B8
 /* 800191B0 00015FB0  7F E3 FB 78 */	mr r3, r31
-/* 800191B4 00015FB4  4B FF F9 E1 */	bl func_80018B94
+/* 800191B4 00015FB4  4B FF F9 E1 */	bl setup_stacked_entity__18_unnamed_xEnt_cpp_FR4xEnt
 lbl_800191B8:
 /* 800191B8 00015FB8  80 01 00 64 */	lwz r0, 0x64(r1)
 /* 800191BC 00015FBC  83 E1 00 5C */	lwz r31, 0x5c(r1)
@@ -1302,8 +1299,7 @@ lbl_80019248:
 /* 80019260 00016060  38 21 00 20 */	addi r1, r1, 0x20
 /* 80019264 00016064  4E 80 00 20 */	blr 
 
-.global func_80019268
-func_80019268:
+xEntAddToPos__FP4xEntPC5xVec3:
 /* 80019268 00016068  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001926C 0001606C  7C 08 02 A6 */	mflr r0
 /* 80019270 00016070  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1614,7 +1610,7 @@ lbl_80019688:
 /* 800196A0 000164A0  FC 20 F8 90 */	fmr f1, f31
 /* 800196A4 000164A4  7F E3 FB 78 */	mr r3, r31
 /* 800196A8 000164A8  7F C4 F3 78 */	mr r4, r30
-/* 800196AC 000164AC  4B FF F5 29 */	bl func_80018BD4
+/* 800196AC 000164AC  4B FF F5 29 */	bl update_stacked_entity__18_unnamed_xEnt_cpp_FR6xSceneR4xEntf
 lbl_800196B0:
 /* 800196B0 000164B0  FC 20 F8 90 */	fmr f1, f31
 /* 800196B4 000164B4  7F C3 F3 78 */	mr r3, r30
@@ -1719,7 +1715,7 @@ lbl_8001980C:
 /* 80019818 00016618  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
 /* 8001981C 0001661C  41 82 00 0C */	beq lbl_80019828
 /* 80019820 00016620  7F C3 F3 78 */	mr r3, r30
-/* 80019824 00016624  4B FF E9 C5 */	bl func_800181E8
+/* 80019824 00016624  4B FF E9 C5 */	bl refresh__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt
 lbl_80019828:
 /* 80019828 00016628  81 9E 00 38 */	lwz r12, 0x38(r30)
 /* 8001982C 0001662C  28 0C 00 00 */	cmplwi r12, 0
@@ -1833,8 +1829,7 @@ lbl_80019990:
 /* 800199A4 000167A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800199A8 000167A8  4E 80 00 20 */	blr 
 
-.global func_800199AC
-func_800199AC:
+xEntRotationToMatrix__FP9xEntFrame:
 /* 800199AC 000167AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800199B0 000167B0  7C 08 02 A6 */	mflr r0
 /* 800199B4 000167B4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1884,7 +1879,7 @@ xEntMotionToMatrix__FP4xEntP9xEntFrame:
 /* 80019A50 00016850  54 00 04 E7 */	rlwinm. r0, r0, 0, 0x13, 0x13
 /* 80019A54 00016854  41 82 00 0C */	beq lbl_80019A60
 /* 80019A58 00016858  7F E3 FB 78 */	mr r3, r31
-/* 80019A5C 0001685C  4B FF FF 51 */	bl func_800199AC
+/* 80019A5C 0001685C  4B FF FF 51 */	bl xEntRotationToMatrix__FP9xEntFrame
 lbl_80019A60:
 /* 80019A60 00016860  80 7F 00 E0 */	lwz r3, 0xe0(r31)
 /* 80019A64 00016864  54 60 07 BD */	rlwinm. r0, r3, 0, 0x1e, 0x1e
@@ -1894,11 +1889,11 @@ lbl_80019A60:
 /* 80019A74 00016874  38 7F 00 BC */	addi r3, r31, 0xbc
 /* 80019A78 00016878  7F E4 FB 78 */	mr r4, r31
 /* 80019A7C 0001687C  7C 65 1B 78 */	mr r5, r3
-/* 80019A80 00016880  48 00 1D F9 */	bl func_8001B878
+/* 80019A80 00016880  48 00 1D F9 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 lbl_80019A84:
 /* 80019A84 00016884  7F C3 F3 78 */	mr r3, r30
 /* 80019A88 00016888  38 9F 00 BC */	addi r4, r31, 0xbc
-/* 80019A8C 0001688C  4B FF F7 DD */	bl func_80019268
+/* 80019A8C 0001688C  4B FF F7 DD */	bl xEntAddToPos__FP4xEntPC5xVec3
 lbl_80019A90:
 /* 80019A90 00016890  80 7F 00 E0 */	lwz r3, 0xe0(r31)
 /* 80019A94 00016894  54 60 07 39 */	rlwinm. r0, r3, 0, 0x1c, 0x1c
@@ -1908,7 +1903,7 @@ lbl_80019A90:
 /* 80019AA4 000168A4  38 7F 00 C8 */	addi r3, r31, 0xc8
 /* 80019AA8 000168A8  7F E4 FB 78 */	mr r4, r31
 /* 80019AAC 000168AC  7C 65 1B 78 */	mr r5, r3
-/* 80019AB0 000168B0  48 00 1D C9 */	bl func_8001B878
+/* 80019AB0 000168B0  48 00 1D C9 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 lbl_80019AB4:
 /* 80019AB4 000168B4  38 7F 00 D4 */	addi r3, r31, 0xd4
 /* 80019AB8 000168B8  38 9F 00 C8 */	addi r4, r31, 0xc8
@@ -1918,7 +1913,7 @@ lbl_80019AC0:
 /* 80019AC4 000168C4  54 00 04 E7 */	rlwinm. r0, r0, 0, 0x13, 0x13
 /* 80019AC8 000168C8  40 82 00 0C */	bne lbl_80019AD4
 /* 80019ACC 000168CC  7F E3 FB 78 */	mr r3, r31
-/* 80019AD0 000168D0  4B FF FE DD */	bl func_800199AC
+/* 80019AD0 000168D0  4B FF FE DD */	bl xEntRotationToMatrix__FP9xEntFrame
 lbl_80019AD4:
 /* 80019AD4 000168D4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80019AD8 000168D8  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -1941,7 +1936,7 @@ xEntMove__FP4xEntP6xScenef:
 /* 80019B10 00016910  88 03 00 1C */	lbz r0, 0x1c(r3)
 /* 80019B14 00016914  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
 /* 80019B18 00016918  41 82 00 08 */	beq lbl_80019B20
-/* 80019B1C 0001691C  48 00 01 55 */	bl func_80019C70
+/* 80019B1C 0001691C  48 00 01 55 */	bl pre_move__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt
 lbl_80019B20:
 /* 80019B20 00016920  81 9E 00 40 */	lwz r12, 0x40(r30)
 /* 80019B24 00016924  FC 20 F8 90 */	fmr f1, f31
@@ -1994,7 +1989,7 @@ lbl_80019BD4:
 /* 80019BD8 000169D8  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
 /* 80019BDC 000169DC  41 82 00 0C */	beq lbl_80019BE8
 /* 80019BE0 000169E0  7F C3 F3 78 */	mr r3, r30
-/* 80019BE4 000169E4  48 00 00 21 */	bl func_80019C04
+/* 80019BE4 000169E4  48 00 00 21 */	bl post_move__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt
 lbl_80019BE8:
 /* 80019BE8 000169E8  80 01 00 B4 */	lwz r0, 0xb4(r1)
 /* 80019BEC 000169EC  CB E1 00 A8 */	lfd f31, 0xa8(r1)
@@ -2004,8 +1999,8 @@ lbl_80019BE8:
 /* 80019BFC 000169FC  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 80019C00 00016A00  4E 80 00 20 */	blr 
 
-.global func_80019C04
-func_80019C04:
+/* post_move__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt */
+post_move__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt:
 /* 80019C04 00016A04  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80019C08 00016A08  7C 08 02 A6 */	mflr r0
 /* 80019C0C 00016A0C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2034,8 +2029,8 @@ func_80019C04:
 /* 80019C68 00016A68  38 21 00 20 */	addi r1, r1, 0x20
 /* 80019C6C 00016A6C  4E 80 00 20 */	blr 
 
-.global func_80019C70
-func_80019C70:
+/* pre_move__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt */
+pre_move__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt:
 /* 80019C70 00016A70  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80019C74 00016A74  7C 08 02 A6 */	mflr r0
 /* 80019C78 00016A78  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2171,7 +2166,7 @@ lbl_80019E44:
 lbl_80019E5C:
 /* 80019E5C 00016C5C  7F C3 F3 78 */	mr r3, r30
 /* 80019E60 00016C60  38 81 00 08 */	addi r4, r1, 8
-/* 80019E64 00016C64  4B FF F4 05 */	bl func_80019268
+/* 80019E64 00016C64  4B FF F4 05 */	bl xEntAddToPos__FP4xEntPC5xVec3
 /* 80019E68 00016C68  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 80019E6C 00016C6C  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 80019E70 00016C70  CB E1 00 20 */	lfd f31, 0x20(r1)
@@ -2492,8 +2487,7 @@ xEntCollCheckEnv__FP4xEntP6xScene:
 /* 8001A2D8 000170D8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001A2DC 000170DC  4E 80 00 20 */	blr 
 
-.global func_8001A2E0
-func_8001A2E0:
+xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid:
 /* 8001A2E0 000170E0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8001A2E4 000170E4  7C 08 02 A6 */	mflr r0
 /* 8001A2E8 000170E8  90 01 00 54 */	stw r0, 0x54(r1)
@@ -2676,13 +2670,13 @@ xEntCollCheckByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt:
 /* 8001A568 00017368  80 E3 00 4C */	lwz r7, 0x4c(r3)
 /* 8001A56C 0001736C  88 07 00 0A */	lbz r0, 0xa(r7)
 /* 8001A570 00017370  98 07 00 06 */	stb r0, 6(r7)
-/* 8001A574 00017374  4B FF FD 6D */	bl func_8001A2E0
+/* 8001A574 00017374  4B FF FD 6D */	bl xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid
 /* 8001A578 00017378  3C 80 80 3D */	lis r4, colls_oso_grid@ha
 /* 8001A57C 0001737C  7F A3 EB 78 */	mr r3, r29
 /* 8001A580 00017380  38 C4 A7 74 */	addi r6, r4, colls_oso_grid@l
 /* 8001A584 00017384  7F E5 FB 78 */	mr r5, r31
 /* 8001A588 00017388  7F C4 F3 78 */	mr r4, r30
-/* 8001A58C 0001738C  4B FF FD 55 */	bl func_8001A2E0
+/* 8001A58C 0001738C  4B FF FD 55 */	bl xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid
 /* 8001A590 00017390  80 7D 00 4C */	lwz r3, 0x4c(r29)
 /* 8001A594 00017394  88 03 00 0A */	lbz r0, 0xa(r3)
 /* 8001A598 00017398  98 03 00 09 */	stb r0, 9(r3)
@@ -2709,7 +2703,7 @@ xEntCollCheckNPCsByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt:
 /* 8001A5E0 000173E0  80 E3 00 4C */	lwz r7, 0x4c(r3)
 /* 8001A5E4 000173E4  88 07 00 0A */	lbz r0, 0xa(r7)
 /* 8001A5E8 000173E8  98 07 00 04 */	stb r0, 4(r7)
-/* 8001A5EC 000173EC  4B FF FC F5 */	bl func_8001A2E0
+/* 8001A5EC 000173EC  4B FF FC F5 */	bl xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid
 /* 8001A5F0 000173F0  80 7F 00 4C */	lwz r3, 0x4c(r31)
 /* 8001A5F4 000173F4  88 03 00 0A */	lbz r0, 0xa(r3)
 /* 8001A5F8 000173F8  98 03 00 05 */	stb r0, 5(r3)
@@ -3497,7 +3491,7 @@ lbl_8001B100:
 lbl_8001B108:
 /* 8001B108 00017F08  7F C3 F3 78 */	mr r3, r30
 /* 8001B10C 00017F0C  38 9B 00 2C */	addi r4, r27, 0x2c
-/* 8001B110 00017F10  4B FF E1 59 */	bl func_80019268
+/* 8001B110 00017F10  4B FF E1 59 */	bl xEntAddToPos__FP4xEntPC5xVec3
 lbl_8001B114:
 /* 8001B114 00017F14  3B BD 00 01 */	addi r29, r29, 1
 lbl_8001B118:
@@ -3546,7 +3540,7 @@ lbl_8001B1A4:
 /* 8001B1B0 00017FB0  7F C3 F3 78 */	mr r3, r30
 /* 8001B1B4 00017FB4  38 9B 00 2C */	addi r4, r27, 0x2c
 /* 8001B1B8 00017FB8  D0 1B 00 30 */	stfs f0, 0x30(r27)
-/* 8001B1BC 00017FBC  4B FF E0 AD */	bl func_80019268
+/* 8001B1BC 00017FBC  4B FF E0 AD */	bl xEntAddToPos__FP4xEntPC5xVec3
 lbl_8001B1C0:
 /* 8001B1C0 00017FC0  3B 9C 00 01 */	addi r28, r28, 1
 lbl_8001B1C4:
@@ -3595,7 +3589,7 @@ lbl_8001B250:
 /* 8001B25C 0001805C  7F C3 F3 78 */	mr r3, r30
 /* 8001B260 00018060  38 9B 00 2C */	addi r4, r27, 0x2c
 /* 8001B264 00018064  D0 1B 00 30 */	stfs f0, 0x30(r27)
-/* 8001B268 00018068  4B FF E0 01 */	bl func_80019268
+/* 8001B268 00018068  4B FF E0 01 */	bl xEntAddToPos__FP4xEntPC5xVec3
 lbl_8001B26C:
 /* 8001B26C 0001806C  3B 9C 00 01 */	addi r28, r28, 1
 lbl_8001B270:
@@ -3626,7 +3620,7 @@ lbl_8001B298:
 /* 8001B2C8 000180C8  7F C3 F3 78 */	mr r3, r30
 /* 8001B2CC 000180CC  38 85 00 2C */	addi r4, r5, 0x2c
 /* 8001B2D0 000180D0  D0 05 00 30 */	stfs f0, 0x30(r5)
-/* 8001B2D4 000180D4  4B FF DF 95 */	bl func_80019268
+/* 8001B2D4 000180D4  4B FF DF 95 */	bl xEntAddToPos__FP4xEntPC5xVec3
 lbl_8001B2D8:
 /* 8001B2D8 000180D8  3B BD 00 01 */	addi r29, r29, 1
 lbl_8001B2DC:
@@ -3683,7 +3677,7 @@ xEntAnimateCollision__FR4xEntb:
 /* 8001B37C 0001817C  4B FE 80 DD */	bl memset
 lbl_8001B380:
 /* 8001B380 00018180  7F E3 FB 78 */	mr r3, r31
-/* 8001B384 00018184  4B FF CC E1 */	bl func_80018064
+/* 8001B384 00018184  4B FF CC E1 */	bl reset__Q218_unnamed_xEnt_cpp_9anim_collFR4xEnt
 /* 8001B388 00018188  48 00 00 20 */	b lbl_8001B3A8
 lbl_8001B38C:
 /* 8001B38C 0001818C  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -4065,8 +4059,7 @@ func_8001B854:
 /* 8001B870 00018670  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8001B874 00018674  4E 80 00 20 */	blr 
 
-.global func_8001B878
-func_8001B878:
+xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 8001B878 00018678  C0 65 00 04 */	lfs f3, 4(r5)
 /* 8001B87C 0001867C  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 8001B880 00018680  C0 44 00 14 */	lfs f2, 0x14(r4)

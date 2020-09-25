@@ -48,8 +48,8 @@ lbl_800480D8:
 /* 80048150 00044F50  D0 04 00 10 */	stfs f0, 0x10(r4)
 /* 80048154 00044F54  90 04 00 00 */	stw r0, 0(r4)
 /* 80048158 00044F58  48 08 A4 B5 */	bl iSndSuspendCD__FUi
-/* 8004815C 00044F5C  48 00 03 89 */	bl func_800484E4
-/* 80048160 00044F60  48 00 12 A9 */	bl func_80049408
+/* 8004815C 00044F5C  48 00 03 89 */	bl xSndDelayedInit__Fv
+/* 80048160 00044F60  48 00 12 A9 */	bl reset_faders__Fv
 /* 80048164 00044F64  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048168 00044F68  7C 08 03 A6 */	mtlr r0
 /* 8004816C 00044F6C  38 21 00 10 */	addi r1, r1, 0x10
@@ -300,7 +300,7 @@ lbl_800484B0:
 /* 800484B4 000452B4  3B DE 00 64 */	addi r30, r30, 0x64
 /* 800484B8 000452B8  28 1D 00 40 */	cmplwi r29, 0x40
 /* 800484BC 000452BC  41 80 FF D0 */	blt lbl_8004848C
-/* 800484C0 000452C0  48 00 00 25 */	bl func_800484E4
+/* 800484C0 000452C0  48 00 00 25 */	bl xSndDelayedInit__Fv
 /* 800484C4 000452C4  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800484C8 000452C8  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 800484CC 000452CC  83 C1 00 18 */	lwz r30, 0x18(r1)
@@ -310,8 +310,7 @@ lbl_800484B0:
 /* 800484DC 000452DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800484E0 000452E0  4E 80 00 20 */	blr 
 
-.global func_800484E4
-func_800484E4:
+xSndDelayedInit__Fv:
 /* 800484E4 000452E4  3C 60 80 29 */	lis r3, lbl_80288CA0@ha
 /* 800484E8 000452E8  C0 02 87 00 */	lfs f0, lbl_803CD080-_SDA2_BASE_(r2)
 /* 800484EC 000452EC  38 63 8C A0 */	addi r3, r3, lbl_80288CA0@l
@@ -350,8 +349,7 @@ func_800484E4:
 /* 80048570 00045370  90 0D 8A F8 */	stw r0, lbl_803CB3F8-_SDA_BASE_(r13)
 /* 80048574 00045374  4E 80 00 20 */	blr 
 
-.global func_80048578
-func_80048578:
+xSndDelayedUpdate__Fv:
 /* 80048578 00045378  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004857C 0004537C  7C 08 02 A6 */	mflr r0
 /* 80048580 00045380  90 01 00 14 */	stw r0, 0x14(r1)
@@ -403,8 +401,7 @@ lbl_8004861C:
 /* 8004862C 0004542C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048630 00045430  4E 80 00 20 */	blr 
 
-.global func_80048634
-func_80048634:
+xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf:
 /* 80048634 00045434  3D 40 80 29 */	lis r10, lbl_80288CA0@ha
 /* 80048638 00045438  38 00 00 10 */	li r0, 0x10
 /* 8004863C 0004543C  39 4A 8C A0 */	addi r10, r10, lbl_80288CA0@l
@@ -433,8 +430,7 @@ lbl_8004868C:
 /* 80048690 00045490  42 00 FF B4 */	bdnz lbl_80048644
 /* 80048694 00045494  4E 80 00 20 */	blr 
 
-.global func_80048698
-func_80048698:
+xSndCalculateListenerPosition__Fv:
 /* 80048698 00045498  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004869C 0004549C  7C 08 02 A6 */	mflr r0
 /* 800486A0 000454A0  3C 60 80 3C */	lis r3, gSnd@ha
@@ -651,10 +647,10 @@ xSndUpdate__Fv:
 /* 80048994 00045794  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048998 00045798  7C 08 02 A6 */	mflr r0
 /* 8004899C 0004579C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800489A0 000457A0  4B FF FC F9 */	bl func_80048698
-/* 800489A4 000457A4  4B FF FB D5 */	bl func_80048578
+/* 800489A0 000457A0  4B FF FC F9 */	bl xSndCalculateListenerPosition__Fv
+/* 800489A4 000457A4  4B FF FB D5 */	bl xSndDelayedUpdate__Fv
 /* 800489A8 000457A8  C0 2D 8E B8 */	lfs f1, sTimeElapsed-_SDA_BASE_(r13)
-/* 800489AC 000457AC  48 00 0A 69 */	bl func_80049414
+/* 800489AC 000457AC  48 00 0A 69 */	bl update_faders__Ff
 /* 800489B0 000457B0  48 08 8B C1 */	bl iSndUpdate__Fv
 /* 800489B4 000457B4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800489B8 000457B8  7C 08 03 A6 */	mtlr r0
@@ -690,7 +686,7 @@ xSndExit__Fv:
 /* 80048A0C 0004580C  7C 08 02 A6 */	mflr r0
 /* 80048A10 00045810  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80048A14 00045814  48 08 7D C5 */	bl iSndExit__Fv
-/* 80048A18 00045818  48 00 09 F1 */	bl func_80049408
+/* 80048A18 00045818  48 00 09 F1 */	bl reset_faders__Fv
 /* 80048A1C 0004581C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048A20 00045820  7C 08 03 A6 */	mtlr r0
 /* 80048A24 00045824  38 21 00 10 */	addi r1, r1, 0x10
@@ -812,7 +808,7 @@ lbl_80048B80:
 /* 80048BAC 000459AC  7F 67 DB 78 */	mr r7, r27
 /* 80048BB0 000459B0  7F 88 E3 78 */	mr r8, r28
 /* 80048BB4 000459B4  7F A9 EB 78 */	mr r9, r29
-/* 80048BB8 000459B8  4B FF FA 7D */	bl func_80048634
+/* 80048BB8 000459B8  4B FF FA 7D */	bl xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf
 /* 80048BBC 000459BC  38 60 00 00 */	li r3, 0
 /* 80048BC0 000459C0  48 00 05 34 */	b lbl_800490F4
 lbl_80048BC4:
@@ -1428,14 +1424,12 @@ xSndSetExternalCallback__FPFUi_v:
 /* 80049400 00046200  38 21 00 10 */	addi r1, r1, 0x10
 /* 80049404 00046204  4E 80 00 20 */	blr 
 
-.global func_80049408
-func_80049408:
+reset_faders__Fv:
 /* 80049408 00046208  38 00 00 00 */	li r0, 0
 /* 8004940C 0004620C  90 0D 8A FC */	stw r0, lbl_803CB3FC-_SDA_BASE_(r13)
 /* 80049410 00046210  4E 80 00 20 */	blr 
 
-.global func_80049414
-func_80049414:
+update_faders__Ff:
 /* 80049414 00046214  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80049418 00046218  7C 08 02 A6 */	mflr r0
 /* 8004941C 0004621C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1489,7 +1483,7 @@ lbl_800494B8:
 /* 800494CC 000462CC  41 82 00 4C */	beq lbl_80049518
 /* 800494D0 000462D0  7F E3 FB 78 */	mr r3, r31
 /* 800494D4 000462D4  7F C4 F3 78 */	mr r4, r30
-/* 800494D8 000462D8  48 00 00 61 */	bl func_80049538
+/* 800494D8 000462D8  48 00 00 61 */	bl __as__Q218_unnamed_xSnd_cpp_9fade_dataFRCQ218_unnamed_xSnd_cpp_9fade_data
 /* 800494DC 000462DC  48 00 00 34 */	b lbl_80049510
 lbl_800494E0:
 /* 800494E0 000462E0  EC 21 00 24 */	fdivs f1, f1, f0
@@ -1518,8 +1512,8 @@ lbl_80049518:
 /* 80049530 00046330  38 21 00 20 */	addi r1, r1, 0x20
 /* 80049534 00046334  4E 80 00 20 */	blr 
 
-.global func_80049538
-func_80049538:
+/* __as__Q218@unnamed@xSnd_cpp@9fade_dataFRCQ218@unnamed@xSnd_cpp@9fade_data */
+__as__Q218_unnamed_xSnd_cpp_9fade_dataFRCQ218_unnamed_xSnd_cpp_9fade_data:
 /* 80049538 00046338  88 A4 00 00 */	lbz r5, 0(r4)
 /* 8004953C 0004633C  80 04 00 04 */	lwz r0, 4(r4)
 /* 80049540 00046340  98 A3 00 00 */	stb r5, 0(r3)
@@ -1646,7 +1640,7 @@ lbl_800496D0:
 /* 800496F0 000464F0  41 82 00 90 */	beq lbl_80049780
 /* 800496F4 000464F4  7F C3 F3 78 */	mr r3, r30
 /* 800496F8 000464F8  7F A4 EB 78 */	mr r4, r29
-/* 800496FC 000464FC  4B FF FE 3D */	bl func_80049538
+/* 800496FC 000464FC  4B FF FE 3D */	bl __as__Q218_unnamed_xSnd_cpp_9fade_dataFRCQ218_unnamed_xSnd_cpp_9fade_data
 /* 80049700 00046500  48 00 00 08 */	b lbl_80049708
 lbl_80049704:
 /* 80049704 00046504  3B DE 00 18 */	addi r30, r30, 0x18

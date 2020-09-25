@@ -14,8 +14,7 @@ lbl_80252108:
 
 .section .text  # 0x8000E96C - 0x8000F058
 
-.global func_8000E96C
-func_8000E96C:
+xClimateVecFromAngle__FfP5xVec3:
 /* 8000E96C 0000B76C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8000E970 0000B770  7C 08 02 A6 */	mflr r0
 /* 8000E974 0000B774  90 01 00 54 */	stw r0, 0x54(r1)
@@ -99,7 +98,7 @@ xClimateInitAsset__FP11_tagClimateP9xEnvAsset:
 /* 8000EA94 0000B894  C0 02 80 F0 */	lfs f0, lbl_803CCA70-_SDA2_BASE_(r2)
 /* 8000EA98 0000B898  D0 1E 00 10 */	stfs f0, 0x10(r30)
 /* 8000EA9C 0000B89C  C0 3E 00 14 */	lfs f1, 0x14(r30)
-/* 8000EAA0 0000B8A0  4B FF FE CD */	bl func_8000E96C
+/* 8000EAA0 0000B8A0  4B FF FE CD */	bl xClimateVecFromAngle__FfP5xVec3
 /* 8000EAA4 0000B8A4  80 7F 00 10 */	lwz r3, 0x10(r31)
 /* 8000EAA8 0000B8A8  28 03 00 00 */	cmplwi r3, 0
 /* 8000EAAC 0000B8AC  40 82 00 18 */	bne lbl_8000EAC4
@@ -165,8 +164,7 @@ xClimateSetRain__Ff:
 /* 8000EB78 0000B978  D0 23 00 04 */	stfs f1, 4(r3)
 /* 8000EB7C 0000B97C  4E 80 00 20 */	blr 
 
-.global func_8000EB80
-func_8000EB80:
+GetPosBigDogWhattupFool__FP5xVec3:
 /* 8000EB80 0000B980  80 8D 82 B0 */	lwz r4, xglobals-_SDA_BASE_(r13)
 /* 8000EB84 0000B984  C0 42 80 FC */	lfs f2, lbl_803CCA7C-_SDA2_BASE_(r2)
 /* 8000EB88 0000B988  C0 24 00 34 */	lfs f1, 0x34(r4)
@@ -185,8 +183,7 @@ func_8000EB80:
 /* 8000EBBC 0000B9BC  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8000EBC0 0000B9C0  4E 80 00 20 */	blr 
 
-.global func_8000EBC4
-func_8000EBC4:
+UpdateRain__FP11_tagClimatef:
 /* 8000EBC4 0000B9C4  94 21 FD D0 */	stwu r1, -0x230(r1)
 /* 8000EBC8 0000B9C8  7C 08 02 A6 */	mflr r0
 /* 8000EBCC 0000B9CC  90 01 02 34 */	stw r0, 0x234(r1)
@@ -229,7 +226,7 @@ func_8000EBC4:
 /* 8000EC60 0000BA60  48 00 00 68 */	b lbl_8000ECC8
 lbl_8000EC64:
 /* 8000EC64 0000BA64  7F E3 FB 78 */	mr r3, r31
-/* 8000EC68 0000BA68  4B FF FF 19 */	bl func_8000EB80
+/* 8000EC68 0000BA68  4B FF FF 19 */	bl GetPosBigDogWhattupFool__FP5xVec3
 /* 8000EC6C 0000BA6C  48 02 20 1D */	bl xurand__Fv
 /* 8000EC70 0000BA70  C0 62 81 00 */	lfs f3, lbl_803CCA80-_SDA2_BASE_(r2)
 /* 8000EC74 0000BA74  C0 42 81 04 */	lfs f2, lbl_803CCA84-_SDA2_BASE_(r2)
@@ -267,7 +264,7 @@ lbl_8000ECD4:
 /* 8000ECEC 0000BAEC  FC 00 00 1E */	fctiwz f0, f0
 /* 8000ECF0 0000BAF0  D8 01 01 80 */	stfd f0, 0x180(r1)
 /* 8000ECF4 0000BAF4  83 A1 01 84 */	lwz r29, 0x184(r1)
-/* 8000ECF8 0000BAF8  4B FF FE 89 */	bl func_8000EB80
+/* 8000ECF8 0000BAF8  4B FF FE 89 */	bl GetPosBigDogWhattupFool__FP5xVec3
 /* 8000ECFC 0000BAFC  80 02 AB E8 */	lwz r0, gPTankDisable-_SDA2_BASE_(r2)
 /* 8000ED00 0000BB00  28 00 00 00 */	cmplwi r0, 0
 /* 8000ED04 0000BB04  41 82 01 00 */	beq lbl_8000EE04
@@ -449,8 +446,7 @@ lbl_8000EF60:
 /* 8000EFAC 0000BDAC  38 21 02 30 */	addi r1, r1, 0x230
 /* 8000EFB0 0000BDB0  4E 80 00 20 */	blr 
 
-.global func_8000EFB4
-func_8000EFB4:
+UpdateWind__FP11_tagClimatef:
 /* 8000EFB4 0000BDB4  4E 80 00 20 */	blr 
 
 .global xClimateUpdate__FP11_tagClimatef
@@ -462,10 +458,10 @@ xClimateUpdate__FP11_tagClimatef:
 /* 8000EFC8 0000BDC8  FF E0 08 90 */	fmr f31, f1
 /* 8000EFCC 0000BDCC  93 E1 00 14 */	stw r31, 0x14(r1)
 /* 8000EFD0 0000BDD0  7C 7F 1B 78 */	mr r31, r3
-/* 8000EFD4 0000BDD4  4B FF FB F1 */	bl func_8000EBC4
+/* 8000EFD4 0000BDD4  4B FF FB F1 */	bl UpdateRain__FP11_tagClimatef
 /* 8000EFD8 0000BDD8  FC 20 F8 90 */	fmr f1, f31
 /* 8000EFDC 0000BDDC  7F E3 FB 78 */	mr r3, r31
-/* 8000EFE0 0000BDE0  4B FF FF D5 */	bl func_8000EFB4
+/* 8000EFE0 0000BDE0  4B FF FF D5 */	bl UpdateWind__FP11_tagClimatef
 /* 8000EFE4 0000BDE4  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 8000EFE8 0000BDE8  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 8000EFEC 0000BDEC  83 E1 00 14 */	lwz r31, 0x14(r1)

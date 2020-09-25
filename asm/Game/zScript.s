@@ -158,8 +158,7 @@ lbl_800B5418:
 /* 800B5424 000B2224  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B5428 000B2228  4E 80 00 20 */	blr 
 
-.global func_800B542C
-func_800B542C:
+zScriptExecuteEvents__FP8_zScriptff:
 /* 800B542C 000B222C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800B5430 000B2230  7C 08 02 A6 */	mflr r0
 /* 800B5434 000B2234  90 01 00 44 */	stw r0, 0x44(r1)
@@ -249,7 +248,7 @@ zScriptUpdate__FP5xBaseP6xScenef:
 /* 800B5560 000B2360  40 82 00 44 */	bne lbl_800B55A4
 /* 800B5564 000B2364  C0 3F 00 18 */	lfs f1, 0x18(r31)
 /* 800B5568 000B2368  EC 41 F8 2A */	fadds f2, f1, f31
-/* 800B556C 000B236C  4B FF FE C1 */	bl func_800B542C
+/* 800B556C 000B236C  4B FF FE C1 */	bl zScriptExecuteEvents__FP8_zScriptff
 /* 800B5570 000B2370  C0 1F 00 18 */	lfs f0, 0x18(r31)
 /* 800B5574 000B2374  EC 00 F8 2A */	fadds f0, f0, f31
 /* 800B5578 000B2378  D0 1F 00 18 */	stfs f0, 0x18(r31)
