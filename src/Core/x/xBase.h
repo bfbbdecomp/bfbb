@@ -6,24 +6,24 @@
 
 struct xBaseAsset
 {
-	unsigned int id;
-	unsigned char baseType;
-	unsigned char linkCount;
-	unsigned short baseFlags;
+    unsigned int id;
+    unsigned char baseType;
+    unsigned char linkCount;
+    unsigned short baseFlags;
 };
 
 struct xBase;
 
-typedef int(*xBaseEventCB)(xBase*, xBase*, unsigned int, const float*, xBase*);
+typedef int (*xBaseEventCB)(xBase*, xBase*, unsigned int, const float*, xBase*);
 
 struct xBase
 {
-	unsigned int id;
-	unsigned char baseType;
-	unsigned char linkCount;
-	unsigned short baseFlags;
-	xLinkAsset* link;
-	xBaseEventCB eventFunc;
+    unsigned int id;
+    unsigned char baseType;
+    unsigned char linkCount;
+    unsigned short baseFlags;
+    xLinkAsset* link;
+    xBaseEventCB eventFunc;
 };
 
 void xBaseInit(xBase* xb, xBaseAsset* asset);
