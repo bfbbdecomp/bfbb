@@ -138,8 +138,7 @@ lbl_80033714:
 /* 8003372C 0003052C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033730 00030530  4E 80 00 20 */	blr 
 
-.global func_80033734
-func_80033734:
+xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag:
 /* 80033734 00030534  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80033738 00030538  38 00 00 01 */	li r0, 1
 /* 8003373C 0003053C  93 E1 00 0C */	stw r31, 0xc(r1)
@@ -318,7 +317,7 @@ lbl_800339A4:
 /* 800339A8 000307A8  7F 84 E3 78 */	mr r4, r28
 /* 800339AC 000307AC  7F 65 DB 78 */	mr r5, r27
 /* 800339B0 000307B0  38 C1 00 08 */	addi r6, r1, 8
-/* 800339B4 000307B4  4B FF FD 81 */	bl func_80033734
+/* 800339B4 000307B4  4B FF FD 81 */	bl xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag
 /* 800339B8 000307B8  80 9D 00 08 */	lwz r4, 8(r29)
 /* 800339BC 000307BC  80 1F 00 08 */	lwz r0, 8(r31)
 /* 800339C0 000307C0  7C 84 1A 14 */	add r4, r4, r3
@@ -518,8 +517,7 @@ xMemGetBase__Fv:
 /* 80033C38 00030A38  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033C3C 00030A3C  4E 80 00 20 */	blr 
 
-.global func_80033C40
-func_80033C40:
+xMemPoolAddElements__FP8xMemPoolPvUi:
 /* 80033C40 00030A40  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80033C44 00030A44  7C 08 02 A6 */	mflr r0
 /* 80033C48 00030A48  90 01 00 34 */	stw r0, 0x34(r1)
@@ -583,7 +581,7 @@ xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi:
 /* 80033D14 00030B14  B1 03 00 14 */	sth r8, 0x14(r3)
 /* 80033D18 00030B18  B1 43 00 16 */	sth r10, 0x16(r3)
 /* 80033D1C 00030B1C  90 03 00 18 */	stw r0, 0x18(r3)
-/* 80033D20 00030B20  4B FF FF 21 */	bl func_80033C40
+/* 80033D20 00030B20  4B FF FF 21 */	bl xMemPoolAddElements__FP8xMemPoolPvUi
 /* 80033D24 00030B24  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033D28 00030B28  7C 08 03 A6 */	mtlr r0
 /* 80033D2C 00030B2C  38 21 00 10 */	addi r1, r1, 0x10
@@ -613,7 +611,7 @@ xMemPoolAlloc__FP8xMemPool:
 /* 80033D80 00030B80  7C 64 1B 78 */	mr r4, r3
 /* 80033D84 00030B84  7F 83 E3 78 */	mr r3, r28
 /* 80033D88 00030B88  7F E5 FB 78 */	mr r5, r31
-/* 80033D8C 00030B8C  4B FF FE B5 */	bl func_80033C40
+/* 80033D8C 00030B8C  4B FF FE B5 */	bl xMemPoolAddElements__FP8xMemPoolPvUi
 /* 80033D90 00030B90  80 7C 00 00 */	lwz r3, 0(r28)
 lbl_80033D94:
 /* 80033D94 00030B94  7C 83 F0 2E */	lwzx r4, r3, r30

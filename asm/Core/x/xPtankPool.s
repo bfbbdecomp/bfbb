@@ -2,8 +2,8 @@
 
 .section .text  # 0x8017F5E0 - 0x80180038
 
-.global func_8017F5E0
-func_8017F5E0:
+/* sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data */
+sort_buckets__24$$2unnamed$$2xPtankPool_cpp$$2FRQ224$$2unnamed$$2xPtankPool_cpp$$210group_data:
 /* 8017F5E0 0017C3E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F5E4 0017C3E4  7C 08 02 A6 */	mflr r0
 /* 8017F5E8 0017C3E8  38 80 00 00 */	li r4, 0
@@ -92,8 +92,8 @@ lbl_8017F704:
 /* 8017F718 0017C518  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F71C 0017C51C  4E 80 00 20 */	blr 
 
-.global func_8017F720
-func_8017F720:
+/* init_groups__24@unnamed@xPtankPool_cpp@Fv */
+init_groups__24$$2unnamed$$2xPtankPool_cpp$$2Fv:
 /* 8017F720 0017C520  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017F724 0017C524  7C 08 02 A6 */	mflr r0
 /* 8017F728 0017C528  3C 60 80 2A */	lis r3, lbl_8029B830@ha
@@ -142,7 +142,7 @@ lbl_8017F798:
 /* 8017F7C8 0017C5C8  80 1C 00 18 */	lwz r0, 0x18(r28)
 /* 8017F7CC 0017C5CC  54 00 10 3A */	slwi r0, r0, 2
 /* 8017F7D0 0017C5D0  7F BD 02 14 */	add r29, r29, r0
-/* 8017F7D4 0017C5D4  4B FF FE 0D */	bl func_8017F5E0
+/* 8017F7D4 0017C5D4  4B FF FE 0D */	bl sort_buckets__24$$2unnamed$$2xPtankPool_cpp$$2FRQ224$$2unnamed$$2xPtankPool_cpp$$210group_data
 /* 8017F7D8 0017C5D8  3B 9C 00 1C */	addi r28, r28, 0x1c
 lbl_8017F7DC:
 /* 8017F7DC 0017C5DC  7C 1C F0 40 */	cmplw r28, r30
@@ -156,8 +156,8 @@ lbl_8017F7DC:
 /* 8017F7FC 0017C5FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017F800 0017C600  4E 80 00 20 */	blr 
 
-.global func_8017F804
-func_8017F804:
+/* create_ptank__24@unnamed@xPtankPool_cpp@FUi */
+create_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FUi:
 /* 8017F804 0017C604  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F808 0017C608  7C 08 02 A6 */	mflr r0
 /* 8017F80C 0017C60C  38 A0 00 00 */	li r5, 0
@@ -214,8 +214,8 @@ lbl_8017F8C0:
 /* 8017F8CC 0017C6CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F8D0 0017C6D0  4E 80 00 20 */	blr 
 
-.global func_8017F8D4
-func_8017F8D4:
+/* destroy_ptank__24@unnamed@xPtankPool_cpp@FP8RpAtomic */
+destroy_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FP8RpAtomic:
 /* 8017F8D4 0017C6D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F8D8 0017C6D8  7C 08 02 A6 */	mflr r0
 /* 8017F8DC 0017C6DC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -241,8 +241,8 @@ lbl_8017F914:
 /* 8017F924 0017C724  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F928 0017C728  4E 80 00 20 */	blr 
 
-.global func_8017F92C
-func_8017F92C:
+/* render_ptank__24@unnamed@xPtankPool_cpp@FRCQ224@unnamed@xPtankPool_cpp@13ptank_context */
+render_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FRCQ224$$2unnamed$$2xPtankPool_cpp$$213ptank_context:
 /* 8017F92C 0017C72C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F930 0017C730  7C 08 02 A6 */	mflr r0
 /* 8017F934 0017C734  90 01 00 14 */	stw r0, 0x14(r1)
@@ -317,7 +317,7 @@ xPTankPoolSceneEnter__Fv:
 /* 8017FA24 0017C824  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8017FA28 0017C828  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8017FA2C 0017C82C  98 0D 97 E8 */	stb r0, lbl_803CC0E8-_SDA_BASE_(r13)
-/* 8017FA30 0017C830  4B FF FC F1 */	bl func_8017F720
+/* 8017FA30 0017C830  4B FF FC F1 */	bl init_groups__24$$2unnamed$$2xPtankPool_cpp$$2Fv
 /* 8017FA34 0017C834  3C 60 80 2A */	lis r3, lbl_8029B830@ha
 /* 8017FA38 0017C838  3F E0 43 30 */	lis r31, 0x4330
 /* 8017FA3C 0017C83C  38 63 B8 30 */	addi r3, r3, lbl_8029B830@l
@@ -337,7 +337,7 @@ lbl_8017FA4C:
 /* 8017FA70 0017C870  48 06 D9 6D */	bl func_801ED3DC
 /* 8017FA74 0017C874  7C 64 1B 78 */	mr r4, r3
 /* 8017FA78 0017C878  7F C3 F3 78 */	mr r3, r30
-/* 8017FA7C 0017C87C  48 00 00 2D */	bl func_8017FAA8
+/* 8017FA7C 0017C87C  48 00 00 2D */	bl create_ptanks__24$$2unnamed$$2xPtankPool_cpp$$2FRQ224$$2unnamed$$2xPtankPool_cpp$$210group_dataUl
 /* 8017FA80 0017C880  3B DE 00 1C */	addi r30, r30, 0x1c
 lbl_8017FA84:
 /* 8017FA84 0017C884  7C 1E E8 40 */	cmplw r30, r29
@@ -350,8 +350,8 @@ lbl_8017FA84:
 /* 8017FAA0 0017C8A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FAA4 0017C8A4  4E 80 00 20 */	blr 
 
-.global func_8017FAA8
-func_8017FAA8:
+/* create_ptanks__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_dataUl */
+create_ptanks__24$$2unnamed$$2xPtankPool_cpp$$2FRQ224$$2unnamed$$2xPtankPool_cpp$$210group_dataUl:
 /* 8017FAA8 0017C8A8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FAAC 0017C8AC  7C 08 02 A6 */	mflr r0
 /* 8017FAB0 0017C8B0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -374,7 +374,7 @@ lbl_8017FAD4:
 /* 8017FAF0 0017C8F0  48 00 00 44 */	b lbl_8017FB34
 lbl_8017FAF4:
 /* 8017FAF4 0017C8F4  80 7B 00 04 */	lwz r3, 4(r27)
-/* 8017FAF8 0017C8F8  4B FF FD 0D */	bl func_8017F804
+/* 8017FAF8 0017C8F8  4B FF FD 0D */	bl create_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FUi
 /* 8017FAFC 0017C8FC  90 7C 00 04 */	stw r3, 4(r28)
 /* 8017FB00 0017C900  80 1C 00 04 */	lwz r0, 4(r28)
 /* 8017FB04 0017C904  28 00 00 00 */	cmplwi r0, 0
@@ -425,7 +425,7 @@ lbl_8017FB90:
 /* 8017FBA0 0017C9A0  48 00 00 10 */	b lbl_8017FBB0
 lbl_8017FBA4:
 /* 8017FBA4 0017C9A4  80 7D 00 04 */	lwz r3, 4(r29)
-/* 8017FBA8 0017C9A8  4B FF FD 2D */	bl func_8017F8D4
+/* 8017FBA8 0017C9A8  4B FF FD 2D */	bl destroy_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FP8RpAtomic
 /* 8017FBAC 0017C9AC  3B BD 00 14 */	addi r29, r29, 0x14
 lbl_8017FBB0:
 /* 8017FBB0 0017C9B0  7C 1D E0 40 */	cmplw r29, r28
@@ -483,7 +483,7 @@ lbl_8017FC64:
 /* 8017FC68 0017CA68  54 60 03 DF */	rlwinm. r0, r3, 0, 0xf, 0xf
 /* 8017FC6C 0017CA6C  41 82 00 1C */	beq lbl_8017FC88
 /* 8017FC70 0017CA70  7F A3 EB 78 */	mr r3, r29
-/* 8017FC74 0017CA74  4B FF FC B9 */	bl func_8017F92C
+/* 8017FC74 0017CA74  4B FF FC B9 */	bl render_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FRCQ224$$2unnamed$$2xPtankPool_cpp$$213ptank_context
 /* 8017FC78 0017CA78  80 1D 00 08 */	lwz r0, 8(r29)
 /* 8017FC7C 0017CA7C  54 00 04 1C */	rlwinm r0, r0, 0, 0x10, 0xe
 /* 8017FC80 0017CA80  90 1D 00 08 */	stw r0, 8(r29)
@@ -508,7 +508,7 @@ lbl_8017FCB8:
 /* 8017FCC0 0017CAC0  38 00 00 00 */	li r0, 0
 /* 8017FCC4 0017CAC4  7F E3 FB 78 */	mr r3, r31
 /* 8017FCC8 0017CAC8  90 1F 00 14 */	stw r0, 0x14(r31)
-/* 8017FCCC 0017CACC  4B FF F9 15 */	bl func_8017F5E0
+/* 8017FCCC 0017CACC  4B FF F9 15 */	bl sort_buckets__24$$2unnamed$$2xPtankPool_cpp$$2FRQ224$$2unnamed$$2xPtankPool_cpp$$210group_data
 lbl_8017FCD0:
 /* 8017FCD0 0017CAD0  3B FF 00 1C */	addi r31, r31, 0x1c
 lbl_8017FCD4:
@@ -544,7 +544,7 @@ grab_block__10ptank_poolF16ptank_group_type:
 /* 8017FD3C 0017CB3C  41 80 00 18 */	blt lbl_8017FD54
 /* 8017FD40 0017CB40  7F E3 FB 78 */	mr r3, r31
 /* 8017FD44 0017CB44  38 80 00 01 */	li r4, 1
-/* 8017FD48 0017CB48  4B FF FD 61 */	bl func_8017FAA8
+/* 8017FD48 0017CB48  4B FF FD 61 */	bl create_ptanks__24$$2unnamed$$2xPtankPool_cpp$$2FRQ224$$2unnamed$$2xPtankPool_cpp$$210group_dataUl
 /* 8017FD4C 0017CB4C  28 03 00 01 */	cmplwi r3, 1
 /* 8017FD50 0017CB50  41 80 01 D0 */	blt lbl_8017FF20
 lbl_8017FD54:
@@ -618,9 +618,9 @@ lbl_8017FE34:
 /* 8017FE50 0017CC50  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 8017FE54 0017CC54  40 82 00 1C */	bne lbl_8017FE70
 /* 8017FE58 0017CC58  80 63 00 04 */	lwz r3, 4(r3)
-/* 8017FE5C 0017CC5C  4B FF FA 79 */	bl func_8017F8D4
+/* 8017FE5C 0017CC5C  4B FF FA 79 */	bl destroy_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FP8RpAtomic
 /* 8017FE60 0017CC60  80 7F 00 04 */	lwz r3, 4(r31)
-/* 8017FE64 0017CC64  4B FF F9 A1 */	bl func_8017F804
+/* 8017FE64 0017CC64  4B FF F9 A1 */	bl create_ptank__24$$2unnamed$$2xPtankPool_cpp$$2FUi
 /* 8017FE68 0017CC68  80 9E 00 00 */	lwz r4, 0(r30)
 /* 8017FE6C 0017CC6C  90 64 00 04 */	stw r3, 4(r4)
 lbl_8017FE70:

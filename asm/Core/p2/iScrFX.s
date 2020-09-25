@@ -233,8 +233,7 @@ iScrFxPostCameraEnd__FP8RwCamera:
 /* 800CF664 000CC464  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CF668 000CC468  4E 80 00 20 */	blr 
 
-.global func_800CF66C
-func_800CF66C:
+iCameraOverlayRender__FP8RwCameraP8RwRaster6RwRGBA:
 /* 800CF66C 000CC46C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CF670 000CC470  7C 08 02 A6 */	mflr r0
 /* 800CF674 000CC474  90 01 00 14 */	stw r0, 0x14(r1)
@@ -388,7 +387,7 @@ iScrFxMotionBlurRender__FP8RwCameraUi:
 /* 800CF884 000CC684  7C C4 33 78 */	mr r4, r6
 /* 800CF888 000CC688  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 800CF88C 000CC68C  90 01 00 08 */	stw r0, 8(r1)
-/* 800CF890 000CC690  4B FF FD DD */	bl func_800CF66C
+/* 800CF890 000CC690  4B FF FD DD */	bl iCameraOverlayRender__FP8RwCameraP8RwRaster6RwRGBA
 lbl_800CF894:
 /* 800CF894 000CC694  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800CF898 000CC698  7C 08 03 A6 */	mtlr r0

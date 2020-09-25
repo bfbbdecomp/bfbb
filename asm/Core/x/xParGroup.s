@@ -27,8 +27,7 @@ xParGroupInit__FP9xParGroup:
 /* 80038478 00035278  98 03 00 12 */	stb r0, 0x12(r3)
 /* 8003847C 0003527C  4E 80 00 20 */	blr 
 
-.global func_80038480
-func_80038480:
+xParGroupRegisterInit__Fv:
 /* 80038480 00035280  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 80038484 00035284  38 00 00 1F */	li r0, 0x1f
 /* 80038488 00035288  38 83 BC B4 */	addi r4, r3, sParGroupRegTable@l
@@ -119,7 +118,7 @@ xParGroupRegister__FP9xParGroup:
 /* 8003858C 0003538C  80 0D 8A 18 */	lwz r0, lbl_803CB318-_SDA_BASE_(r13)
 /* 80038590 00035390  2C 00 00 00 */	cmpwi r0, 0
 /* 80038594 00035394  40 82 00 08 */	bne lbl_8003859C
-/* 80038598 00035398  4B FF FE E9 */	bl func_80038480
+/* 80038598 00035398  4B FF FE E9 */	bl xParGroupRegisterInit__Fv
 lbl_8003859C:
 /* 8003859C 0003539C  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 800385A0 000353A0  38 A0 00 00 */	li r5, 0

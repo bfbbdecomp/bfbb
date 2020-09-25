@@ -2,8 +2,8 @@
 
 .section .text  # 0x800609B4 - 0x8006180C
 
-.global func_800609B4
-func_800609B4:
+/* SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance */
+SwapModel__29$$2unnamed$$2zEntDestructObj_cpp$$2FP15zEntDestructObjP14xModelInstance:
 /* 800609B4 0005D7B4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800609B8 0005D7B8  7C 08 02 A6 */	mflr r0
 /* 800609BC 0005D7BC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -583,7 +583,7 @@ lbl_80061188:
 /* 800611CC 0005DFCC  90 9F 00 E4 */	stw r4, 0xe4(r31)
 /* 800611D0 0005DFD0  90 1F 00 D8 */	stw r0, 0xd8(r31)
 /* 800611D4 0005DFD4  80 9F 00 F8 */	lwz r4, 0xf8(r31)
-/* 800611D8 0005DFD8  4B FF F7 DD */	bl func_800609B4
+/* 800611D8 0005DFD8  4B FF F7 DD */	bl SwapModel__29$$2unnamed$$2zEntDestructObj_cpp$$2FP15zEntDestructObjP14xModelInstance
 /* 800611DC 0005DFDC  38 00 00 00 */	li r0, 0
 /* 800611E0 0005DFE0  90 1F 01 04 */	stw r0, 0x104(r31)
 /* 800611E4 0005DFE4  90 1F 01 08 */	stw r0, 0x108(r31)
@@ -885,7 +885,7 @@ lbl_80061604:
 /* 80061608 0005E408  28 04 00 00 */	cmplwi r4, 0
 /* 8006160C 0005E40C  41 82 00 10 */	beq lbl_8006161C
 /* 80061610 0005E410  7F E3 FB 78 */	mr r3, r31
-/* 80061614 0005E414  4B FF F3 A1 */	bl func_800609B4
+/* 80061614 0005E414  4B FF F3 A1 */	bl SwapModel__29$$2unnamed$$2zEntDestructObj_cpp$$2FP15zEntDestructObjP14xModelInstance
 /* 80061618 0005E418  48 00 00 18 */	b lbl_80061630
 lbl_8006161C:
 /* 8006161C 0005E41C  88 1F 00 22 */	lbz r0, 0x22(r31)
@@ -953,7 +953,7 @@ lbl_800616D8:
 /* 800616FC 0005E4FC  28 04 00 00 */	cmplwi r4, 0
 /* 80061700 0005E500  41 82 00 0C */	beq lbl_8006170C
 /* 80061704 0005E504  7F E3 FB 78 */	mr r3, r31
-/* 80061708 0005E508  4B FF F2 AD */	bl func_800609B4
+/* 80061708 0005E508  4B FF F2 AD */	bl SwapModel__29$$2unnamed$$2zEntDestructObj_cpp$$2FP15zEntDestructObjP14xModelInstance
 lbl_8006170C:
 /* 8006170C 0005E50C  80 1F 00 DC */	lwz r0, 0xdc(r31)
 /* 80061710 0005E510  28 00 00 00 */	cmplwi r0, 0

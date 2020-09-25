@@ -3624,7 +3624,7 @@ lbl_8018AA24:
 /* 8018AA2C 0018782C  42 00 FF 78 */	bdnz lbl_8018A9A4
 /* 8018AA30 00187830  38 61 00 08 */	addi r3, r1, 8
 /* 8018AA34 00187834  38 A0 00 00 */	li r5, 0
-/* 8018AA38 00187838  48 00 52 55 */	bl func_8018FC8C
+/* 8018AA38 00187838  48 00 52 55 */	bl xUtil_choose$$0i$$1__FPCiiPCf
 /* 8018AA3C 0018783C  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 8018AA40 00187840  83 E1 00 3C */	lwz r31, 0x3c(r1)
 /* 8018AA44 00187844  83 C1 00 38 */	lwz r30, 0x38(r1)
@@ -9352,8 +9352,8 @@ func_8018FBFC:
 /* 8018FC84 0018CA84  38 21 00 30 */	addi r1, r1, 0x30
 /* 8018FC88 0018CA88  4E 80 00 20 */	blr 
 
-.global func_8018FC8C
-func_8018FC8C:
+/* xUtil_choose<i>__FPCiiPCf */
+xUtil_choose$$0i$$1__FPCiiPCf:
 /* 8018FC8C 0018CA8C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8018FC90 0018CA90  7C 08 02 A6 */	mflr r0
 /* 8018FC94 0018CA94  90 01 00 34 */	stw r0, 0x34(r1)

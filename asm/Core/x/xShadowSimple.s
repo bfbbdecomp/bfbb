@@ -2,8 +2,7 @@
 
 .section .text  # 0x80139218 - 0x8013A5D0
 
-.global func_80139218
-func_80139218:
+shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 80139218 00136018  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8013921C 0013601C  7C 08 02 A6 */	mflr r0
 /* 80139220 00136020  90 01 00 44 */	stw r0, 0x44(r1)
@@ -20,7 +19,7 @@ func_80139218:
 /* 8013924C 0013604C  41 82 00 24 */	beq lbl_80139270
 /* 80139250 00136050  3B FE 00 58 */	addi r31, r30, 0x58
 /* 80139254 00136054  38 61 00 08 */	addi r3, r1, 8
-/* 80139258 00136058  48 00 12 E1 */	bl func_8013A538
+/* 80139258 00136058  48 00 12 E1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 8013925C 0013605C  38 61 00 08 */	addi r3, r1, 8
 /* 80139260 00136060  7C 64 1B 78 */	mr r4, r3
 /* 80139264 00136064  4B F1 50 8D */	bl xVec3Normalize__FP5xVec3PC5xVec3
@@ -73,7 +72,7 @@ lbl_801392FC:
 /* 80139308 00136108  7C 85 23 78 */	mr r5, r4
 /* 8013930C 0013610C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80139310 00136110  38 80 00 00 */	li r4, 0
-/* 80139314 00136114  4B FF FF 05 */	bl func_80139218
+/* 80139314 00136114  4B FF FF 05 */	bl shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv
 /* 80139318 00136118  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013931C 0013611C  7C 08 03 A6 */	mtlr r0
 /* 80139320 00136120  38 21 00 10 */	addi r1, r1, 0x10
@@ -297,8 +296,7 @@ lbl_80139650:
 /* 8013966C 0013646C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80139670 00136470  4E 80 00 20 */	blr 
 
-.global func_80139674
-func_80139674:
+xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f:
 /* 80139674 00136474  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80139678 00136478  7C 08 02 A6 */	mflr r0
 /* 8013967C 0013647C  38 A0 00 00 */	li r5, 0
@@ -333,17 +331,17 @@ func_80139674:
 /* 801396F0 001364F0  80 65 00 10 */	lwz r3, 0x10(r5)
 /* 801396F4 001364F4  28 03 00 00 */	cmplwi r3, 0
 /* 801396F8 001364F8  41 82 00 20 */	beq lbl_80139718
-/* 801396FC 001364FC  3C 80 80 14 */	lis r4, func_80139218@ha
+/* 801396FC 001364FC  3C 80 80 14 */	lis r4, shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 80139700 00136500  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 80139704 00136504  38 A4 92 18 */	addi r5, r4, func_80139218@l
+/* 80139704 00136504  38 A4 92 18 */	addi r5, r4, shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 80139708 00136508  7F E6 FB 78 */	mr r6, r31
 /* 8013970C 0013650C  38 81 00 30 */	addi r4, r1, 0x30
 /* 80139710 00136510  4B FE 57 69 */	bl xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv
 /* 80139714 00136514  48 00 00 1C */	b lbl_80139730
 lbl_80139718:
-/* 80139718 00136518  3C 80 80 14 */	lis r4, func_80139218@ha
+/* 80139718 00136518  3C 80 80 14 */	lis r4, shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 8013971C 0013651C  80 65 00 00 */	lwz r3, 0(r5)
-/* 80139720 00136520  38 A4 92 18 */	addi r5, r4, func_80139218@l
+/* 80139720 00136520  38 A4 92 18 */	addi r5, r4, shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 80139724 00136524  7F E6 FB 78 */	mr r6, r31
 /* 80139728 00136528  38 81 00 30 */	addi r4, r1, 0x30
 /* 8013972C 0013652C  48 0B FF 6D */	bl RpCollisionWorldForAllIntersections
@@ -431,8 +429,7 @@ lbl_80139850:
 /* 8013985C 0013665C  38 21 00 60 */	addi r1, r1, 0x60
 /* 80139860 00136660  4E 80 00 20 */	blr 
 
-.global func_80139864
-func_80139864:
+xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff:
 /* 80139864 00136664  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80139868 00136668  7C 08 02 A6 */	mflr r0
 /* 8013986C 0013666C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -458,7 +455,7 @@ func_80139864:
 /* 801398BC 001366BC  38 61 00 08 */	addi r3, r1, 8
 /* 801398C0 001366C0  38 BE 00 48 */	addi r5, r30, 0x48
 /* 801398C4 001366C4  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 801398C8 001366C8  48 00 0C 71 */	bl func_8013A538
+/* 801398C8 001366C8  48 00 0C 71 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 801398CC 001366CC  38 61 00 08 */	addi r3, r1, 8
 /* 801398D0 001366D0  7C 64 1B 78 */	mr r4, r3
 /* 801398D4 001366D4  4B F1 4A 1D */	bl xVec3Normalize__FP5xVec3PC5xVec3
@@ -559,8 +556,7 @@ lbl_80139A20:
 /* 80139A40 00136840  38 21 00 40 */	addi r1, r1, 0x40
 /* 80139A44 00136844  4E 80 00 20 */	blr 
 
-.global func_80139A48
-func_80139A48:
+xShadowSimple_AddVerts__FP18xShadowSimpleCache:
 /* 80139A48 00136848  C0 22 A4 08 */	lfs f1, lbl_803CED88-_SDA2_BASE_(r2)
 /* 80139A4C 0013684C  C0 03 00 58 */	lfs f0, 0x58(r3)
 /* 80139A50 00136850  FC 01 00 00 */	fcmpu cr0, f1, f0
@@ -872,7 +868,7 @@ xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff:
 /* 80139EB4 00136CB4  C0 22 A4 14 */	lfs f1, lbl_803CED94-_SDA2_BASE_(r2)
 /* 80139EB8 00136CB8  80 84 00 4C */	lwz r4, 0x4c(r4)
 /* 80139EBC 00136CBC  38 84 00 30 */	addi r4, r4, 0x30
-/* 80139EC0 00136CC0  4B FF F7 B5 */	bl func_80139674
+/* 80139EC0 00136CC0  4B FF F7 B5 */	bl xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f
 /* 80139EC4 00136CC4  A0 1E 00 06 */	lhz r0, 6(r30)
 /* 80139EC8 00136CC8  38 7D 00 08 */	addi r3, r29, 8
 /* 80139ECC 00136CCC  7C 00 FB 78 */	or r0, r0, r31
@@ -894,9 +890,9 @@ xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff:
 /* 80139F0C 00136D0C  7F A3 EB 78 */	mr r3, r29
 /* 80139F10 00136D10  FC 40 F8 90 */	fmr f2, f31
 /* 80139F14 00136D14  7F C4 F3 78 */	mr r4, r30
-/* 80139F18 00136D18  4B FF F9 4D */	bl func_80139864
+/* 80139F18 00136D18  4B FF F9 4D */	bl xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff
 /* 80139F1C 00136D1C  7F A3 EB 78 */	mr r3, r29
-/* 80139F20 00136D20  4B FF FB 29 */	bl func_80139A48
+/* 80139F20 00136D20  4B FF FB 29 */	bl xShadowSimple_AddVerts__FP18xShadowSimpleCache
 /* 80139F24 00136D24  48 00 03 AC */	b lbl_8013A2D0
 lbl_80139F28:
 /* 80139F28 00136D28  80 7E 00 24 */	lwz r3, 0x24(r30)
@@ -950,7 +946,7 @@ lbl_80139F90:
 /* 80139FDC 00136DDC  38 61 00 08 */	addi r3, r1, 8
 /* 80139FE0 00136DE0  38 BD 00 48 */	addi r5, r29, 0x48
 /* 80139FE4 00136DE4  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 80139FE8 00136DE8  48 00 05 51 */	bl func_8013A538
+/* 80139FE8 00136DE8  48 00 05 51 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80139FEC 00136DEC  38 61 00 08 */	addi r3, r1, 8
 /* 80139FF0 00136DF0  7C 64 1B 78 */	mr r4, r3
 /* 80139FF4 00136DF4  4B F1 42 FD */	bl xVec3Normalize__FP5xVec3PC5xVec3
@@ -1113,9 +1109,9 @@ lbl_8013A208:
 /* 8013A22C 0013702C  80 9F 00 1C */	lwz r4, 0x1c(r31)
 /* 8013A230 00137030  C0 3F 00 20 */	lfs f1, 0x20(r31)
 /* 8013A234 00137034  C0 5F 00 24 */	lfs f2, 0x24(r31)
-/* 8013A238 00137038  4B FF F6 2D */	bl func_80139864
+/* 8013A238 00137038  4B FF F6 2D */	bl xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff
 /* 8013A23C 0013703C  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 8013A240 00137040  4B FF F8 09 */	bl func_80139A48
+/* 8013A240 00137040  4B FF F8 09 */	bl xShadowSimple_AddVerts__FP18xShadowSimpleCache
 lbl_8013A244:
 /* 8013A244 00137044  3C 60 80 32 */	lis r3, lbl_803245D8@ha
 /* 8013A248 00137048  3B 40 00 00 */	li r26, 0
@@ -1152,9 +1148,9 @@ lbl_8013A2A8:
 /* 8013A2B8 001370B8  7F A3 EB 78 */	mr r3, r29
 /* 8013A2BC 001370BC  FC 40 F8 90 */	fmr f2, f31
 /* 8013A2C0 001370C0  7F C4 F3 78 */	mr r4, r30
-/* 8013A2C4 001370C4  4B FF F5 A1 */	bl func_80139864
+/* 8013A2C4 001370C4  4B FF F5 A1 */	bl xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff
 /* 8013A2C8 001370C8  7F A3 EB 78 */	mr r3, r29
-/* 8013A2CC 001370CC  4B FF F7 7D */	bl func_80139A48
+/* 8013A2CC 001370CC  4B FF F7 7D */	bl xShadowSimple_AddVerts__FP18xShadowSimpleCache
 lbl_8013A2D0:
 /* 8013A2D0 001370D0  E3 E1 00 78 */	psq_l f31, 120(r1), 0, qr0
 /* 8013A2D4 001370D4  CB E1 00 70 */	lfd f31, 0x70(r1)
@@ -1205,7 +1201,7 @@ lbl_8013A340:
 /* 8013A36C 0013716C  80 84 00 24 */	lwz r4, 0x24(r4)
 /* 8013A370 00137170  80 84 00 4C */	lwz r4, 0x4c(r4)
 /* 8013A374 00137174  38 84 00 30 */	addi r4, r4, 0x30
-/* 8013A378 00137178  4B FF F2 FD */	bl func_80139674
+/* 8013A378 00137178  4B FF F2 FD */	bl xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f
 /* 8013A37C 0013717C  A0 1A 00 06 */	lhz r0, 6(r26)
 /* 8013A380 00137180  38 7B 00 08 */	addi r3, r27, 8
 /* 8013A384 00137184  7C 00 EB 78 */	or r0, r0, r29
@@ -1225,9 +1221,9 @@ lbl_8013A340:
 /* 8013A3BC 001371BC  7F 63 DB 78 */	mr r3, r27
 /* 8013A3C0 001371C0  C0 3C 00 0C */	lfs f1, 0xc(r28)
 /* 8013A3C4 001371C4  C0 5C 00 10 */	lfs f2, 0x10(r28)
-/* 8013A3C8 001371C8  4B FF F4 9D */	bl func_80139864
+/* 8013A3C8 001371C8  4B FF F4 9D */	bl xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff
 /* 8013A3CC 001371CC  7F 63 DB 78 */	mr r3, r27
-/* 8013A3D0 001371D0  4B FF F6 79 */	bl func_80139A48
+/* 8013A3D0 001371D0  4B FF F6 79 */	bl xShadowSimple_AddVerts__FP18xShadowSimpleCache
 lbl_8013A3D4:
 /* 8013A3D4 001371D4  3B DE 00 01 */	addi r30, r30, 1
 /* 8013A3D8 001371D8  38 00 00 00 */	li r0, 0
@@ -1325,8 +1321,7 @@ lbl_8013A524:
 /* 8013A530 00137330  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013A534 00137334  4E 80 00 20 */	blr 
 
-.global func_8013A538
-func_8013A538:
+xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 8013A538 00137338  C0 65 00 04 */	lfs f3, 4(r5)
 /* 8013A53C 0013733C  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 8013A540 00137340  C0 44 00 14 */	lfs f2, 0x14(r4)

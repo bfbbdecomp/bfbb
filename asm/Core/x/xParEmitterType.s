@@ -21,7 +21,7 @@ xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf:
 /* 80118A3C 0011583C  4B F0 2E FD */	bl func_8001B938
 /* 80118A40 00115840  7F C3 F3 78 */	mr r3, r30
 /* 80118A44 00115844  7F E4 FB 78 */	mr r4, r31
-/* 80118A48 00115848  48 00 00 21 */	bl func_80118A68
+/* 80118A48 00115848  48 00 00 21 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 80118A4C 0011584C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80118A50 00115850  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 80118A54 00115854  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -30,8 +30,7 @@ xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf:
 /* 80118A60 00115860  38 21 00 20 */	addi r1, r1, 0x20
 /* 80118A64 00115864  4E 80 00 20 */	blr 
 
-.global func_80118A68
-func_80118A68:
+xParEmitterAngleVariation__FP4xParP16xParEmitterAsset:
 /* 80118A68 00115868  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 80118A6C 0011586C  7C 08 02 A6 */	mflr r0
 /* 80118A70 00115870  90 01 00 74 */	stw r0, 0x74(r1)
@@ -183,7 +182,7 @@ xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf:
 /* 80118CA8 00115AA8  C0 1D 00 18 */	lfs f0, 0x18(r29)
 /* 80118CAC 00115AAC  EC 00 E8 2A */	fadds f0, f0, f29
 /* 80118CB0 00115AB0  D0 1D 00 18 */	stfs f0, 0x18(r29)
-/* 80118CB4 00115AB4  4B FF FD B5 */	bl func_80118A68
+/* 80118CB4 00115AB4  4B FF FD B5 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 80118CB8 00115AB8  C0 02 9F 78 */	lfs f0, lbl_803CE8F8-_SDA2_BASE_(r2)
 /* 80118CBC 00115ABC  C0 5E 00 14 */	lfs f2, 0x14(r30)
 /* 80118CC0 00115AC0  FC 00 10 00 */	fcmpu cr0, f0, f2
@@ -291,7 +290,7 @@ xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf:
 /* 80118E48 00115C48  C0 1D 00 18 */	lfs f0, 0x18(r29)
 /* 80118E4C 00115C4C  EC 00 F0 2A */	fadds f0, f0, f30
 /* 80118E50 00115C50  D0 1D 00 18 */	stfs f0, 0x18(r29)
-/* 80118E54 00115C54  4B FF FC 15 */	bl func_80118A68
+/* 80118E54 00115C54  4B FF FC 15 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 80118E58 00115C58  C0 02 9F 78 */	lfs f0, lbl_803CE8F8-_SDA2_BASE_(r2)
 /* 80118E5C 00115C5C  C0 5E 00 14 */	lfs f2, 0x14(r30)
 /* 80118E60 00115C60  FC 00 10 00 */	fcmpu cr0, f0, f2
@@ -356,7 +355,7 @@ xParEmitterEmitRect__FP4xParP16xParEmitterAssetf:
 /* 80118F3C 00115D3C  EC 21 F8 B8 */	fmsubs f1, f1, f2, f31
 /* 80118F40 00115D40  EC 00 08 2A */	fadds f0, f0, f1
 /* 80118F44 00115D44  D0 1E 00 18 */	stfs f0, 0x18(r30)
-/* 80118F48 00115D48  4B FF FB 21 */	bl func_80118A68
+/* 80118F48 00115D48  4B FF FB 21 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 80118F4C 00115D4C  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 80118F50 00115D50  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80118F54 00115D54  CB E1 00 10 */	lfd f31, 0x10(r1)
@@ -419,7 +418,7 @@ lbl_80119014:
 lbl_80119020:
 /* 80119020 00115E20  7F C3 F3 78 */	mr r3, r30
 /* 80119024 00115E24  7F E4 FB 78 */	mr r4, r31
-/* 80119028 00115E28  4B FF FA 41 */	bl func_80118A68
+/* 80119028 00115E28  4B FF FA 41 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 8011902C 00115E2C  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 80119030 00115E30  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80119034 00115E34  CB E1 00 10 */	lfd f31, 0x10(r1)
@@ -525,7 +524,7 @@ xParEmitterEmitLine__FP4xParP16xParEmitterAssetf:
 lbl_801191B8:
 /* 801191B8 00115FB8  7F C3 F3 78 */	mr r3, r30
 /* 801191BC 00115FBC  7F E4 FB 78 */	mr r4, r31
-/* 801191C0 00115FC0  4B FF F8 A9 */	bl func_80118A68
+/* 801191C0 00115FC0  4B FF F8 A9 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 801191C4 00115FC4  E3 E1 00 78 */	psq_l f31, 120(r1), 0, qr0
 /* 801191C8 00115FC8  CB E1 00 70 */	lfd f31, 0x70(r1)
 /* 801191CC 00115FCC  E3 C1 00 68 */	psq_l f30, 104(r1), 0, qr0
@@ -606,7 +605,7 @@ xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf:
 /* 801192EC 001160EC  4B EF C1 59 */	bl func_80015444
 /* 801192F0 001160F0  7F C3 F3 78 */	mr r3, r30
 /* 801192F4 001160F4  7F E4 FB 78 */	mr r4, r31
-/* 801192F8 001160F8  4B FF F7 71 */	bl func_80118A68
+/* 801192F8 001160F8  4B FF F7 71 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 801192FC 001160FC  E3 E1 00 78 */	psq_l f31, 120(r1), 0, qr0
 /* 80119300 00116100  CB E1 00 70 */	lfd f31, 0x70(r1)
 /* 80119304 00116104  E3 C1 00 68 */	psq_l f30, 104(r1), 0, qr0
@@ -746,7 +745,7 @@ lbl_801194C4:
 /* 801194FC 001162FC  4B EF 52 59 */	bl func_8000E754
 /* 80119500 00116300  7F A3 EB 78 */	mr r3, r29
 /* 80119504 00116304  7F C4 F3 78 */	mr r4, r30
-/* 80119508 00116308  4B FF F5 61 */	bl func_80118A68
+/* 80119508 00116308  4B FF F5 61 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 8011950C 0011630C  E3 E1 00 A8 */	psq_l f31, 168(r1), 0, qr0
 /* 80119510 00116310  CB E1 00 A0 */	lfd f31, 0xa0(r1)
 /* 80119514 00116314  E3 C1 00 98 */	psq_l f30, 152(r1), 0, qr0
@@ -808,7 +807,7 @@ xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume:
 lbl_801195E8:
 /* 801195E8 001163E8  7F A3 EB 78 */	mr r3, r29
 /* 801195EC 001163EC  7F C4 F3 78 */	mr r4, r30
-/* 801195F0 001163F0  4B FF F4 79 */	bl func_80118A68
+/* 801195F0 001163F0  4B FF F4 79 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 801195F4 001163F4  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
 /* 801195F8 001163F8  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 801195FC 001163FC  CB E1 00 30 */	lfd f31, 0x30(r1)
@@ -891,7 +890,7 @@ lbl_801196E0:
 /* 80119704 00116504  4B EF 1B 61 */	bl func_8000B264
 /* 80119708 00116508  7F C3 F3 78 */	mr r3, r30
 /* 8011970C 0011650C  7F E4 FB 78 */	mr r4, r31
-/* 80119710 00116510  4B FF F3 59 */	bl func_80118A68
+/* 80119710 00116510  4B FF F3 59 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 80119714 00116514  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 80119718 00116518  CB E1 00 38 */	lfd f31, 0x38(r1)
 /* 8011971C 0011651C  83 E1 00 34 */	lwz r31, 0x34(r1)
@@ -933,7 +932,7 @@ lbl_80119790:
 lbl_8011979C:
 /* 8011979C 0011659C  7F C3 F3 78 */	mr r3, r30
 /* 801197A0 001165A0  7F E4 FB 78 */	mr r4, r31
-/* 801197A4 001165A4  4B FF F2 C5 */	bl func_80118A68
+/* 801197A4 001165A4  4B FF F2 C5 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 801197A8 001165A8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801197AC 001165AC  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 801197B0 001165B0  83 C1 00 08 */	lwz r30, 8(r1)
@@ -999,7 +998,7 @@ xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf:
 /* 80119894 00116694  C0 1E 00 28 */	lfs f0, 0x28(r30)
 /* 80119898 00116698  EC 03 00 BA */	fmadds f0, f3, f2, f0
 /* 8011989C 0011669C  D0 1E 00 28 */	stfs f0, 0x28(r30)
-/* 801198A0 001166A0  4B FF F1 C9 */	bl func_80118A68
+/* 801198A0 001166A0  4B FF F1 C9 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 801198A4 001166A4  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
 /* 801198A8 001166A8  CB E1 00 30 */	lfd f31, 0x30(r1)
 /* 801198AC 001166AC  E3 C1 00 28 */	psq_l f30, 40(r1), 0, qr0
@@ -1017,14 +1016,14 @@ xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf:
 /* 801198D0 001166D0  7C 08 02 A6 */	mflr r0
 /* 801198D4 001166D4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 801198D8 001166D8  C0 44 00 10 */	lfs f2, 0x10(r4)
-/* 801198DC 001166DC  48 00 00 15 */	bl func_801198F0
+/* 801198DC 001166DC  48 00 00 15 */	bl ocircle_emit__29$$2unnamed$$2xParEmitterType_cpp$$2FR4xParR16xParEmitterAssetff
 /* 801198E0 001166E0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801198E4 001166E4  7C 08 03 A6 */	mtlr r0
 /* 801198E8 001166E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801198EC 001166EC  4E 80 00 20 */	blr 
 
-.global func_801198F0
-func_801198F0:
+/* ocircle_emit__29@unnamed@xParEmitterType_cpp@FR4xParR16xParEmitterAssetff */
+ocircle_emit__29$$2unnamed$$2xParEmitterType_cpp$$2FR4xParR16xParEmitterAssetff:
 /* 801198F0 001166F0  94 21 FF 50 */	stwu r1, -0xb0(r1)
 /* 801198F4 001166F4  7C 08 02 A6 */	mflr r0
 /* 801198F8 001166F8  90 01 00 B4 */	stw r0, 0xb4(r1)
@@ -1069,7 +1068,7 @@ func_801198F0:
 /* 80119994 00116794  38 61 00 20 */	addi r3, r1, 0x20
 /* 80119998 00116798  38 81 00 2C */	addi r4, r1, 0x2c
 /* 8011999C 0011679C  7C 65 1B 78 */	mr r5, r3
-/* 801199A0 001167A0  48 00 0F 3D */	bl func_8011A8DC
+/* 801199A0 001167A0  48 00 0F 3D */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 801199A4 001167A4  38 7E 00 10 */	addi r3, r30, 0x10
 /* 801199A8 001167A8  38 81 00 20 */	addi r4, r1, 0x20
 /* 801199AC 001167AC  4B EF BA 99 */	bl func_80015444
@@ -1082,7 +1081,7 @@ func_801198F0:
 /* 801199C8 001167C8  4B EF 18 9D */	bl func_8000B264
 /* 801199CC 001167CC  7F C3 F3 78 */	mr r3, r30
 /* 801199D0 001167D0  7F E4 FB 78 */	mr r4, r31
-/* 801199D4 001167D4  4B FF F0 95 */	bl func_80118A68
+/* 801199D4 001167D4  4B FF F0 95 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 801199D8 001167D8  C0 02 9F 78 */	lfs f0, lbl_803CE8F8-_SDA2_BASE_(r2)
 /* 801199DC 001167DC  C0 3F 00 14 */	lfs f1, 0x14(r31)
 /* 801199E0 001167E0  FC 00 08 00 */	fcmpu cr0, f0, f1
@@ -1133,7 +1132,7 @@ xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf:
 /* 80119A84 00116884  EC 41 10 7C */	fnmsubs f2, f1, f1, f2
 /* 80119A88 00116888  FC 20 F8 90 */	fmr f1, f31
 /* 80119A8C 0011688C  EC 42 00 32 */	fmuls f2, f2, f0
-/* 80119A90 00116890  4B FF FE 61 */	bl func_801198F0
+/* 80119A90 00116890  4B FF FE 61 */	bl ocircle_emit__29$$2unnamed$$2xParEmitterType_cpp$$2FR4xParR16xParEmitterAssetff
 /* 80119A94 00116894  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 80119A98 00116898  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80119A9C 0011689C  CB E1 00 10 */	lfd f31, 0x10(r1)
@@ -1176,7 +1175,7 @@ lbl_80119B18:
 /* 80119B1C 0011691C  7F A4 EB 78 */	mr r4, r29
 /* 80119B20 00116920  7F C5 F3 78 */	mr r5, r30
 /* 80119B24 00116924  7F E6 FB 78 */	mr r6, r31
-/* 80119B28 00116928  48 00 00 29 */	bl func_80119B50
+/* 80119B28 00116928  48 00 00 29 */	bl transform_ent_bone__29$$2unnamed$$2xParEmitterType_cpp$$2FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3
 /* 80119B2C 0011692C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80119B30 00116930  7F E3 FB 78 */	mr r3, r31
 /* 80119B34 00116934  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -1187,8 +1186,8 @@ lbl_80119B18:
 /* 80119B48 00116948  38 21 00 20 */	addi r1, r1, 0x20
 /* 80119B4C 0011694C  4E 80 00 20 */	blr 
 
-.global func_80119B50
-func_80119B50:
+/* transform_ent_bone__29@unnamed@xParEmitterType_cpp@FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3 */
+transform_ent_bone__29$$2unnamed$$2xParEmitterType_cpp$$2FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3:
 /* 80119B50 00116950  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80119B54 00116954  7C 08 02 A6 */	mflr r0
 /* 80119B58 00116958  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1204,7 +1203,7 @@ func_80119B50:
 /* 80119B80 00116980  7C 83 23 78 */	mr r3, r4
 /* 80119B84 00116984  7F A4 EB 78 */	mr r4, r29
 /* 80119B88 00116988  38 BF 00 3C */	addi r5, r31, 0x3c
-/* 80119B8C 0011698C  48 00 0D 51 */	bl func_8011A8DC
+/* 80119B8C 0011698C  48 00 0D 51 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 80119B90 00116990  48 00 00 10 */	b lbl_80119BA0
 lbl_80119B94:
 /* 80119B94 00116994  7C 83 23 78 */	mr r3, r4
@@ -1274,7 +1273,7 @@ xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3:
 /* 80119C74 00116A74  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80119C78 00116A78  7C 08 02 A6 */	mflr r0
 /* 80119C7C 00116A7C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80119C80 00116A80  4B FF FE D1 */	bl func_80119B50
+/* 80119C80 00116A80  4B FF FE D1 */	bl transform_ent_bone__29$$2unnamed$$2xParEmitterType_cpp$$2FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3
 /* 80119C84 00116A84  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80119C88 00116A88  7C 08 03 A6 */	mtlr r0
 /* 80119C8C 00116A8C  38 21 00 10 */	addi r1, r1, 0x10
@@ -1296,7 +1295,7 @@ xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3:
 /* 80119CC0 00116AC0  7C 7D 1B 78 */	mr r29, r3
 /* 80119CC4 00116AC4  7F E4 FB 78 */	mr r4, r31
 /* 80119CC8 00116AC8  38 61 00 20 */	addi r3, r1, 0x20
-/* 80119CCC 00116ACC  48 00 00 91 */	bl func_80119D5C
+/* 80119CCC 00116ACC  48 00 00 91 */	bl get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC10xPEEntBoneRC7xMat4x3
 /* 80119CD0 00116AD0  80 C1 00 20 */	lwz r6, 0x20(r1)
 /* 80119CD4 00116AD4  38 7D 00 10 */	addi r3, r29, 0x10
 /* 80119CD8 00116AD8  80 A1 00 24 */	lwz r5, 0x24(r1)
@@ -1323,7 +1322,7 @@ xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3:
 lbl_80119D2C:
 /* 80119D2C 00116B2C  7F A3 EB 78 */	mr r3, r29
 /* 80119D30 00116B30  7F C4 F3 78 */	mr r4, r30
-/* 80119D34 00116B34  4B FF ED 35 */	bl func_80118A68
+/* 80119D34 00116B34  4B FF ED 35 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 80119D38 00116B38  E3 E1 00 58 */	psq_l f31, 88(r1), 0, qr0
 /* 80119D3C 00116B3C  80 01 00 64 */	lwz r0, 0x64(r1)
 /* 80119D40 00116B40  CB E1 00 50 */	lfd f31, 0x50(r1)
@@ -1334,8 +1333,8 @@ lbl_80119D2C:
 /* 80119D54 00116B54  38 21 00 60 */	addi r1, r1, 0x60
 /* 80119D58 00116B58  4E 80 00 20 */	blr 
 
-.global func_80119D5C
-func_80119D5C:
+/* get_random_offset__29@unnamed@xParEmitterType_cpp@FRC10xPEEntBoneRC7xMat4x3 */
+get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC10xPEEntBoneRC7xMat4x3:
 /* 80119D5C 00116B5C  94 21 FE B0 */	stwu r1, -0x150(r1)
 /* 80119D60 00116B60  7C 08 02 A6 */	mflr r0
 /* 80119D64 00116B64  90 01 01 54 */	stw r0, 0x154(r1)
@@ -1652,7 +1651,7 @@ xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt:
 /* 8011A230 00117030  7F E4 FB 78 */	mr r4, r31
 /* 8011A234 00117034  38 7C 00 20 */	addi r3, r28, 0x20
 /* 8011A238 00117038  38 BD 00 3C */	addi r5, r29, 0x3c
-/* 8011A23C 0011703C  48 00 06 A1 */	bl func_8011A8DC
+/* 8011A23C 0011703C  48 00 06 A1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 8011A240 00117040  48 00 00 10 */	b lbl_8011A250
 lbl_8011A244:
 /* 8011A244 00117044  38 7C 00 20 */	addi r3, r28, 0x20
@@ -1663,7 +1662,7 @@ lbl_8011A250:
 /* 8011A254 00117054  38 61 00 20 */	addi r3, r1, 0x20
 /* 8011A258 00117058  88 BD 00 11 */	lbz r5, 0x11(r29)
 /* 8011A25C 0011705C  38 9E 00 64 */	addi r4, r30, 0x64
-/* 8011A260 00117060  48 00 00 A1 */	bl func_8011A300
+/* 8011A260 00117060  48 00 00 A1 */	bl get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC6xBoundfUi
 /* 8011A264 00117064  80 E1 00 20 */	lwz r7, 0x20(r1)
 /* 8011A268 00117068  38 61 00 14 */	addi r3, r1, 0x14
 /* 8011A26C 0011706C  80 C1 00 24 */	lwz r6, 0x24(r1)
@@ -1693,7 +1692,7 @@ lbl_8011A2C0:
 /* 8011A2C8 001170C8  4B EF 0E B9 */	bl func_8000B180
 /* 8011A2CC 001170CC  7F 83 E3 78 */	mr r3, r28
 /* 8011A2D0 001170D0  7F A4 EB 78 */	mr r4, r29
-/* 8011A2D4 001170D4  4B FF E7 95 */	bl func_80118A68
+/* 8011A2D4 001170D4  4B FF E7 95 */	bl xParEmitterAngleVariation__FP4xParP16xParEmitterAsset
 /* 8011A2D8 001170D8  E3 E1 00 58 */	psq_l f31, 88(r1), 0, qr0
 /* 8011A2DC 001170DC  80 01 00 64 */	lwz r0, 0x64(r1)
 /* 8011A2E0 001170E0  CB E1 00 50 */	lfd f31, 0x50(r1)
@@ -1705,8 +1704,8 @@ lbl_8011A2C0:
 /* 8011A2F8 001170F8  38 21 00 60 */	addi r1, r1, 0x60
 /* 8011A2FC 001170FC  4E 80 00 20 */	blr 
 
-.global func_8011A300
-func_8011A300:
+/* get_random_offset__29@unnamed@xParEmitterType_cpp@FRC6xBoundfUi */
+get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC6xBoundfUi:
 /* 8011A300 00117100  94 21 FF 00 */	stwu r1, -0x100(r1)
 /* 8011A304 00117104  7C 08 02 A6 */	mflr r0
 /* 8011A308 00117108  90 01 01 04 */	stw r0, 0x104(r1)
@@ -1830,7 +1829,7 @@ func_8011A300:
 /* 8011A4E0 001172E0  80 9F 00 48 */	lwz r4, 0x48(r31)
 /* 8011A4E4 001172E4  EC 00 00 72 */	fmuls f0, f0, f1
 /* 8011A4E8 001172E8  D0 01 00 88 */	stfs f0, 0x88(r1)
-/* 8011A4EC 001172EC  48 00 03 F1 */	bl func_8011A8DC
+/* 8011A4EC 001172EC  48 00 03 F1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 /* 8011A4F0 001172F0  48 00 02 94 */	b lbl_8011A784
 /* 8011A4F4 001172F4  4B F1 67 95 */	bl xurand__Fv
 /* 8011A4F8 001172F8  C0 02 9F 88 */	lfs f0, lbl_803CE908-_SDA2_BASE_(r2)
@@ -2005,7 +2004,7 @@ lbl_8011A748:
 /* 8011A774 00117574  38 61 00 80 */	addi r3, r1, 0x80
 /* 8011A778 00117578  80 9F 00 48 */	lwz r4, 0x48(r31)
 /* 8011A77C 0011757C  7C 65 1B 78 */	mr r5, r3
-/* 8011A780 00117580  48 00 01 5D */	bl func_8011A8DC
+/* 8011A780 00117580  48 00 01 5D */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 lbl_8011A784:
 /* 8011A784 00117584  80 61 00 80 */	lwz r3, 0x80(r1)
 /* 8011A788 00117588  80 01 00 84 */	lwz r0, 0x84(r1)
@@ -2103,8 +2102,7 @@ func_8011A87C:
 /* 8011A8D4 001176D4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011A8D8 001176D8  4E 80 00 20 */	blr 
 
-.global func_8011A8DC
-func_8011A8DC:
+xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 8011A8DC 001176DC  C0 65 00 04 */	lfs f3, 4(r5)
 /* 8011A8E0 001176E0  C0 04 00 10 */	lfs f0, 0x10(r4)
 /* 8011A8E4 001176E4  C0 44 00 14 */	lfs f2, 0x14(r4)

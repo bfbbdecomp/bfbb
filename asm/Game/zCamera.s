@@ -44,11 +44,11 @@ zCameraReset__FP7xCamera:
 /* 8004FC78 0004CA78  4B FB E8 19 */	bl func_8000E490
 /* 8004FC7C 0004CA7C  C0 22 88 1C */	lfs f1, lbl_803CD19C-_SDA2_BASE_(r2)
 /* 8004FC80 0004CA80  48 12 F6 A9 */	bl zCameraTweakGlobal_Update__Ff
-/* 8004FC84 0004CA84  48 00 00 71 */	bl func_8004FCF4
+/* 8004FC84 0004CA84  48 00 00 71 */	bl GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 8004FC88 0004CA88  FF C0 08 90 */	fmr f30, f1
-/* 8004FC8C 0004CA8C  48 00 00 9D */	bl func_8004FD28
+/* 8004FC8C 0004CA8C  48 00 00 9D */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 8004FC90 0004CA90  FF E0 08 90 */	fmr f31, f1
-/* 8004FC94 0004CA94  48 00 01 09 */	bl func_8004FD9C
+/* 8004FC94 0004CA94  48 00 01 09 */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 8004FC98 0004CA98  FC 40 F8 90 */	fmr f2, f31
 /* 8004FC9C 0004CA9C  7F E3 FB 78 */	mr r3, r31
 /* 8004FCA0 0004CAA0  FC 60 F0 90 */	fmr f3, f30
@@ -73,8 +73,8 @@ zCameraReset__FP7xCamera:
 /* 8004FCEC 0004CAEC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004FCF0 0004CAF0  4E 80 00 20 */	blr 
 
-.global func_8004FCF4
-func_8004FCF4:
+/* GetCurrentPitch__21@unnamed@zCamera_cpp@Fv */
+GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FCF4 0004CAF4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FCF8 0004CAF8  7C 08 02 A6 */	mflr r0
 /* 8004FCFC 0004CAFC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -91,12 +91,12 @@ lbl_8004FD18:
 /* 8004FD20 0004CB20  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FD24 0004CB24  4E 80 00 20 */	blr 
 
-.global func_8004FD28
-func_8004FD28:
+/* GetCurrentH__21@unnamed@zCamera_cpp@Fv */
+GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FD28 0004CB28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FD2C 0004CB2C  7C 08 02 A6 */	mflr r0
 /* 8004FD30 0004CB30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FD34 0004CB34  48 00 00 21 */	bl func_8004FD54
+/* 8004FD34 0004CB34  48 00 00 21 */	bl _GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 8004FD38 0004CB38  C0 4D 8B E4 */	lfs f2, lbl_803CB4E4-_SDA_BASE_(r13)
 /* 8004FD3C 0004CB3C  C0 0D 8B E8 */	lfs f0, lbl_803CB4E8-_SDA_BASE_(r13)
 /* 8004FD40 0004CB40  EC 22 00 7A */	fmadds f1, f2, f1, f0
@@ -105,8 +105,8 @@ func_8004FD28:
 /* 8004FD4C 0004CB4C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FD50 0004CB50  4E 80 00 20 */	blr 
 
-.global func_8004FD54
-func_8004FD54:
+/* _GetCurrentH__21@unnamed@zCamera_cpp@Fv */
+_GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FD54 0004CB54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FD58 0004CB58  7C 08 02 A6 */	mflr r0
 /* 8004FD5C 0004CB5C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -129,12 +129,12 @@ lbl_8004FD8C:
 /* 8004FD94 0004CB94  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FD98 0004CB98  4E 80 00 20 */	blr 
 
-.global func_8004FD9C
-func_8004FD9C:
+/* GetCurrentD__21@unnamed@zCamera_cpp@Fv */
+GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FD9C 0004CB9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FDA0 0004CBA0  7C 08 02 A6 */	mflr r0
 /* 8004FDA4 0004CBA4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FDA8 0004CBA8  48 00 00 21 */	bl func_8004FDC8
+/* 8004FDA8 0004CBA8  48 00 00 21 */	bl _GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 8004FDAC 0004CBAC  C0 4D 8B E4 */	lfs f2, lbl_803CB4E4-_SDA_BASE_(r13)
 /* 8004FDB0 0004CBB0  C0 0D 8B E8 */	lfs f0, lbl_803CB4E8-_SDA_BASE_(r13)
 /* 8004FDB4 0004CBB4  EC 22 00 7A */	fmadds f1, f2, f1, f0
@@ -143,8 +143,8 @@ func_8004FD9C:
 /* 8004FDC0 0004CBC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FDC4 0004CBC4  4E 80 00 20 */	blr 
 
-.global func_8004FDC8
-func_8004FDC8:
+/* _GetCurrentD__21@unnamed@zCamera_cpp@Fv */
+_GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FDC8 0004CBC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FDCC 0004CBCC  7C 08 02 A6 */	mflr r0
 /* 8004FDD0 0004CBD0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -167,8 +167,7 @@ lbl_8004FE00:
 /* 8004FE08 0004CC08  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FE0C 0004CC0C  4E 80 00 20 */	blr 
 
-.global func_8004FE10
-func_8004FE10:
+EaseInOut__Ff:
 /* 8004FE10 0004CC10  C0 62 88 30 */	lfs f3, lbl_803CD1B0-_SDA2_BASE_(r2)
 /* 8004FE14 0004CC14  C0 42 88 2C */	lfs f2, lbl_803CD1AC-_SDA2_BASE_(r2)
 /* 8004FE18 0004CC18  C0 02 88 28 */	lfs f0, lbl_803CD1A8-_SDA2_BASE_(r2)
@@ -177,8 +176,7 @@ func_8004FE10:
 /* 8004FE24 0004CC24  EC 21 00 32 */	fmuls f1, f1, f0
 /* 8004FE28 0004CC28  4E 80 00 20 */	blr 
 
-.global func_8004FE2C
-func_8004FE2C:
+zCameraConversUpdate__FP7xCameraf:
 /* 8004FE2C 0004CC2C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8004FE30 0004CC30  7C 08 02 A6 */	mflr r0
 /* 8004FE34 0004CC34  90 01 00 54 */	stw r0, 0x54(r1)
@@ -226,7 +224,7 @@ lbl_8004FED4:
 /* 8004FED4 0004CCD4  C0 0D 8B C8 */	lfs f0, zcam_ttm-_SDA_BASE_(r13)
 /* 8004FED8 0004CCD8  EC 02 00 24 */	fdivs f0, f2, f0
 /* 8004FEDC 0004CCDC  EC 21 00 28 */	fsubs f1, f1, f0
-/* 8004FEE0 0004CCE0  4B FF FF 31 */	bl func_8004FE10
+/* 8004FEE0 0004CCE0  4B FF FF 31 */	bl EaseInOut__Ff
 /* 8004FEE4 0004CCE4  C0 4D 8B C4 */	lfs f2, zcam_tmr-_SDA_BASE_(r13)
 /* 8004FEE8 0004CCE8  FF C0 08 90 */	fmr f30, f1
 /* 8004FEEC 0004CCEC  C0 0D 8B C8 */	lfs f0, zcam_ttm-_SDA_BASE_(r13)
@@ -234,7 +232,7 @@ lbl_8004FED4:
 /* 8004FEF4 0004CCF4  C0 42 88 24 */	lfs f2, lbl_803CD1A4-_SDA2_BASE_(r2)
 /* 8004FEF8 0004CCF8  EC 01 00 24 */	fdivs f0, f1, f0
 /* 8004FEFC 0004CCFC  EC 22 00 28 */	fsubs f1, f2, f0
-/* 8004FF00 0004CD00  4B FF FF 11 */	bl func_8004FE10
+/* 8004FF00 0004CD00  4B FF FF 11 */	bl EaseInOut__Ff
 /* 8004FF04 0004CD04  C0 02 88 24 */	lfs f0, lbl_803CD1A4-_SDA2_BASE_(r2)
 /* 8004FF08 0004CD08  EC 21 F0 28 */	fsubs f1, f1, f30
 /* 8004FF0C 0004CD0C  38 61 00 18 */	addi r3, r1, 0x18
@@ -279,8 +277,7 @@ lbl_8004FF84:
 /* 8004FFA0 0004CDA0  38 21 00 50 */	addi r1, r1, 0x50
 /* 8004FFA4 0004CDA4  4E 80 00 20 */	blr 
 
-.global func_8004FFA8
-func_8004FFA8:
+TranSpeed__FP7zFlyKey:
 /* 8004FFA8 0004CDA8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FFAC 0004CDAC  7C 08 02 A6 */	mflr r0
 /* 8004FFB0 0004CDB0  7C 64 1B 78 */	mr r4, r3
@@ -295,8 +292,7 @@ func_8004FFA8:
 /* 8004FFD4 0004CDD4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FFD8 0004CDD8  4E 80 00 20 */	blr 
 
-.global func_8004FFDC
-func_8004FFDC:
+MatrixSpeed__FP7zFlyKey:
 /* 8004FFDC 0004CDDC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004FFE0 0004CDE0  7C 08 02 A6 */	mflr r0
 /* 8004FFE4 0004CDE4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -355,8 +351,7 @@ lbl_80050080:
 /* 800500A8 0004CEA8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800500AC 0004CEAC  4E 80 00 20 */	blr 
 
-.global func_800500B0
-func_800500B0:
+zCameraFlyUpdate__FP7xCameraf:
 /* 800500B0 0004CEB0  94 21 FE 30 */	stwu r1, -0x1d0(r1)
 /* 800500B4 0004CEB4  7C 08 02 A6 */	mflr r0
 /* 800500B8 0004CEB8  90 01 01 D4 */	stw r0, 0x1d4(r1)
@@ -486,13 +481,13 @@ lbl_8005020C:
 /* 80050294 0004D094  2C 1F 00 00 */	cmpwi r31, 0
 /* 80050298 0004D098  40 81 00 A0 */	ble lbl_80050338
 /* 8005029C 0004D09C  38 61 00 68 */	addi r3, r1, 0x68
-/* 800502A0 0004D0A0  4B FF FD 09 */	bl func_8004FFA8
+/* 800502A0 0004D0A0  4B FF FD 09 */	bl TranSpeed__FP7zFlyKey
 /* 800502A4 0004D0A4  FF A0 08 90 */	fmr f29, f1
 /* 800502A8 0004D0A8  7F A3 EB 78 */	mr r3, r29
-/* 800502AC 0004D0AC  4B FF FC FD */	bl func_8004FFA8
+/* 800502AC 0004D0AC  4B FF FC FD */	bl TranSpeed__FP7zFlyKey
 /* 800502B0 0004D0B0  FF 80 08 90 */	fmr f28, f1
 /* 800502B4 0004D0B4  7F 83 E3 78 */	mr r3, r28
-/* 800502B8 0004D0B8  4B FF FC F1 */	bl func_8004FFA8
+/* 800502B8 0004D0B8  4B FF FC F1 */	bl TranSpeed__FP7zFlyKey
 /* 800502BC 0004D0BC  C0 02 88 44 */	lfs f0, lbl_803CD1C4-_SDA2_BASE_(r2)
 /* 800502C0 0004D0C0  FC 1C 00 40 */	fcmpo cr0, f28, f0
 /* 800502C4 0004D0C4  40 81 00 28 */	ble lbl_800502EC
@@ -507,13 +502,13 @@ lbl_8005020C:
 /* 800502E8 0004D0E8  48 00 00 50 */	b lbl_80050338
 lbl_800502EC:
 /* 800502EC 0004D0EC  38 61 00 68 */	addi r3, r1, 0x68
-/* 800502F0 0004D0F0  4B FF FC ED */	bl func_8004FFDC
+/* 800502F0 0004D0F0  4B FF FC ED */	bl MatrixSpeed__FP7zFlyKey
 /* 800502F4 0004D0F4  FF 80 08 90 */	fmr f28, f1
 /* 800502F8 0004D0F8  7F A3 EB 78 */	mr r3, r29
-/* 800502FC 0004D0FC  4B FF FC E1 */	bl func_8004FFDC
+/* 800502FC 0004D0FC  4B FF FC E1 */	bl MatrixSpeed__FP7zFlyKey
 /* 80050300 0004D100  FF A0 08 90 */	fmr f29, f1
 /* 80050304 0004D104  7F 83 E3 78 */	mr r3, r28
-/* 80050308 0004D108  4B FF FC D5 */	bl func_8004FFDC
+/* 80050308 0004D108  4B FF FC D5 */	bl MatrixSpeed__FP7zFlyKey
 /* 8005030C 0004D10C  C0 02 88 4C */	lfs f0, lbl_803CD1CC-_SDA2_BASE_(r2)
 /* 80050310 0004D110  FC 1D 00 40 */	fcmpo cr0, f29, f0
 /* 80050314 0004D114  40 81 00 24 */	ble lbl_80050338
@@ -912,8 +907,7 @@ lbl_800508D4:
 /* 800508FC 0004D6FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80050900 0004D700  4E 80 00 20 */	blr 
 
-.global func_80050904
-func_80050904:
+zCameraFlyRestoreBackup__FP7xCamera:
 /* 80050904 0004D704  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80050908 0004D708  7C 08 02 A6 */	mflr r0
 /* 8005090C 0004D70C  3C 80 80 3C */	lis r4, globals@ha
@@ -1087,8 +1081,7 @@ func_80050904:
 /* 80050BAC 0004D9AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80050BB0 0004D9B0  4E 80 00 20 */	blr 
 
-.global func_80050BB4
-func_80050BB4:
+zCameraRewardUpdate__FP7xCameraf:
 /* 80050BB4 0004D9B4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80050BB8 0004D9B8  7C 08 02 A6 */	mflr r0
 /* 80050BBC 0004D9BC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1267,8 +1260,7 @@ lbl_80050E0C:
 /* 80050E54 0004DC54  38 21 00 30 */	addi r1, r1, 0x30
 /* 80050E58 0004DC58  4E 80 00 20 */	blr 
 
-.global func_80050E5C
-func_80050E5C:
+zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff:
 /* 80050E5C 0004DC5C  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80050E60 0004DC60  7C 08 02 A6 */	mflr r0
 /* 80050E64 0004DC64  90 01 00 64 */	stw r0, 0x64(r1)
@@ -1294,11 +1286,11 @@ func_80050E5C:
 /* 80050EB4 0004DCB4  80 0D 8B 98 */	lwz r0, zcam_highbounce-_SDA_BASE_(r13)
 /* 80050EB8 0004DCB8  2C 00 00 00 */	cmpwi r0, 0
 /* 80050EBC 0004DCBC  41 82 00 20 */	beq lbl_80050EDC
-/* 80050EC0 0004DCC0  4B FF EE DD */	bl func_8004FD9C
+/* 80050EC0 0004DCC0  4B FF EE DD */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80050EC4 0004DCC4  D0 3C 00 00 */	stfs f1, 0(r28)
-/* 80050EC8 0004DCC8  4B FF EE 61 */	bl func_8004FD28
+/* 80050EC8 0004DCC8  4B FF EE 61 */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80050ECC 0004DCCC  D0 3D 00 00 */	stfs f1, 0(r29)
-/* 80050ED0 0004DCD0  4B FF EE 25 */	bl func_8004FCF4
+/* 80050ED0 0004DCD0  4B FF EE 25 */	bl GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80050ED4 0004DCD4  D0 3E 00 00 */	stfs f1, 0(r30)
 /* 80050ED8 0004DCD8  48 00 02 50 */	b lbl_80051128
 lbl_80050EDC:
@@ -1308,7 +1300,7 @@ lbl_80050EDC:
 /* 80050EE8 0004DCE8  C0 22 88 8C */	lfs f1, lbl_803CD20C-_SDA2_BASE_(r2)
 /* 80050EEC 0004DCEC  48 00 00 08 */	b lbl_80050EF4
 lbl_80050EF0:
-/* 80050EF0 0004DCF0  4B FF EE AD */	bl func_8004FD9C
+/* 80050EF0 0004DCF0  4B FF EE AD */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
 lbl_80050EF4:
 /* 80050EF4 0004DCF4  D0 3C 00 00 */	stfs f1, 0(r28)
 /* 80050EF8 0004DCF8  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
@@ -1317,7 +1309,7 @@ lbl_80050EF4:
 /* 80050F04 0004DD04  C0 22 88 90 */	lfs f1, lbl_803CD210-_SDA2_BASE_(r2)
 /* 80050F08 0004DD08  48 00 00 08 */	b lbl_80050F10
 lbl_80050F0C:
-/* 80050F0C 0004DD0C  4B FF EE 1D */	bl func_8004FD28
+/* 80050F0C 0004DD0C  4B FF EE 1D */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
 lbl_80050F10:
 /* 80050F10 0004DD10  D0 3D 00 00 */	stfs f1, 0(r29)
 /* 80050F14 0004DD14  80 0D 8B 94 */	lwz r0, zcam_longbounce-_SDA_BASE_(r13)
@@ -1393,11 +1385,11 @@ lbl_80051004:
 /* 80051004 0004DE04  D0 1E 00 00 */	stfs f0, 0(r30)
 /* 80051008 0004DE08  48 00 01 20 */	b lbl_80051128
 lbl_8005100C:
-/* 8005100C 0004DE0C  4B FF ED 91 */	bl func_8004FD9C
+/* 8005100C 0004DE0C  4B FF ED 91 */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80051010 0004DE10  FF A0 08 90 */	fmr f29, f1
-/* 80051014 0004DE14  4B FF ED 15 */	bl func_8004FD28
+/* 80051014 0004DE14  4B FF ED 15 */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80051018 0004DE18  FF C0 08 90 */	fmr f30, f1
-/* 8005101C 0004DE1C  4B FF EC D9 */	bl func_8004FCF4
+/* 8005101C 0004DE1C  4B FF EC D9 */	bl GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80051020 0004DE20  88 0D 8B D8 */	lbz r0, lbl_803CB4D8-_SDA_BASE_(r13)
 /* 80051024 0004DE24  28 00 00 00 */	cmplwi r0, 0
 /* 80051028 0004DE28  41 82 00 50 */	beq lbl_80051078
@@ -1575,7 +1567,7 @@ lbl_80051220:
 /* 800512AC 0004E0AC  4B FF 0B 7D */	bl xScrFxLetterbox__Fi
 /* 800512B0 0004E0B0  3C 60 80 3C */	lis r3, zcam_backupcam@ha
 /* 800512B4 0004E0B4  38 63 EF B8 */	addi r3, r3, zcam_backupcam@l
-/* 800512B8 0004E0B8  4B FF F6 4D */	bl func_80050904
+/* 800512B8 0004E0B8  4B FF F6 4D */	bl zCameraFlyRestoreBackup__FP7xCamera
 /* 800512BC 0004E0BC  38 00 00 00 */	li r0, 0
 /* 800512C0 0004E0C0  7F C3 F3 78 */	mr r3, r30
 /* 800512C4 0004E0C4  90 0D 8B BC */	stw r0, zcam_flyasset_current-_SDA_BASE_(r13)
@@ -1607,7 +1599,7 @@ lbl_80051318:
 /* 80051320 0004E120  41 82 00 24 */	beq lbl_80051344
 /* 80051324 0004E124  3C 60 80 3C */	lis r3, zcam_backupcam@ha
 /* 80051328 0004E128  38 63 EF B8 */	addi r3, r3, zcam_backupcam@l
-/* 8005132C 0004E12C  4B FF F5 D9 */	bl func_80050904
+/* 8005132C 0004E12C  4B FF F5 D9 */	bl zCameraFlyRestoreBackup__FP7xCamera
 /* 80051330 0004E130  C0 22 88 18 */	lfs f1, lbl_803CD198-_SDA2_BASE_(r2)
 /* 80051334 0004E134  7F C3 F3 78 */	mr r3, r30
 /* 80051338 0004E138  4B FB D1 59 */	bl func_8000E490
@@ -1619,7 +1611,7 @@ lbl_80051344:
 /* 8005134C 0004E14C  41 82 00 34 */	beq lbl_80051380
 /* 80051350 0004E150  FC 20 F8 90 */	fmr f1, f31
 /* 80051354 0004E154  7F C3 F3 78 */	mr r3, r30
-/* 80051358 0004E158  4B FF EA D5 */	bl func_8004FE2C
+/* 80051358 0004E158  4B FF EA D5 */	bl zCameraConversUpdate__FP7xCameraf
 /* 8005135C 0004E15C  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 80051360 0004E160  38 9E 00 14 */	addi r4, r30, 0x14
 /* 80051364 0004E164  48 06 F1 CD */	bl iCameraUpdatePos__FP8RwCameraP7xMat4x3
@@ -1651,7 +1643,7 @@ lbl_800513A4:
 /* 800513C0 0004E1C0  41 82 00 14 */	beq lbl_800513D4
 /* 800513C4 0004E1C4  FC 20 F8 90 */	fmr f1, f31
 /* 800513C8 0004E1C8  7F C3 F3 78 */	mr r3, r30
-/* 800513CC 0004E1CC  4B FF F7 E9 */	bl func_80050BB4
+/* 800513CC 0004E1CC  4B FF F7 E9 */	bl zCameraRewardUpdate__FP7xCameraf
 /* 800513D0 0004E1D0  48 00 0C 58 */	b lbl_80052028
 lbl_800513D4:
 /* 800513D4 0004E1D4  FC 00 10 40 */	fcmpo cr0, f0, f2
@@ -1664,7 +1656,7 @@ lbl_800513E4:
 /* 800513EC 0004E1EC  41 82 00 88 */	beq lbl_80051474
 /* 800513F0 0004E1F0  FC 20 F8 90 */	fmr f1, f31
 /* 800513F4 0004E1F4  7F C3 F3 78 */	mr r3, r30
-/* 800513F8 0004E1F8  4B FF EC B9 */	bl func_800500B0
+/* 800513F8 0004E1F8  4B FF EC B9 */	bl zCameraFlyUpdate__FP7xCameraf
 /* 800513FC 0004E1FC  2C 03 00 00 */	cmpwi r3, 0
 /* 80051400 0004E200  41 82 00 14 */	beq lbl_80051414
 /* 80051404 0004E204  80 7E 00 10 */	lwz r3, 0x10(r30)
@@ -1692,7 +1684,7 @@ lbl_8005143C:
 /* 80051450 0004E250  4B FF 09 D9 */	bl xScrFxLetterbox__Fi
 /* 80051454 0004E254  3C 60 80 3C */	lis r3, zcam_backupcam@ha
 /* 80051458 0004E258  38 63 EF B8 */	addi r3, r3, zcam_backupcam@l
-/* 8005145C 0004E25C  4B FF F4 A9 */	bl func_80050904
+/* 8005145C 0004E25C  4B FF F4 A9 */	bl zCameraFlyRestoreBackup__FP7xCamera
 /* 80051460 0004E260  38 00 00 00 */	li r0, 0
 /* 80051464 0004E264  7F C3 F3 78 */	mr r3, r30
 /* 80051468 0004E268  90 0D 8B BC */	stw r0, zcam_flyasset_current-_SDA_BASE_(r13)
@@ -1912,9 +1904,9 @@ lbl_8005174C:
 /* 80051770 0004E570  40 80 00 08 */	bge lbl_80051778
 /* 80051774 0004E574  D0 0D 8B F4 */	stfs f0, lbl_803CB4F4-_SDA_BASE_(r13)
 lbl_80051778:
-/* 80051778 0004E578  4B FF E6 25 */	bl func_8004FD9C
+/* 80051778 0004E578  4B FF E6 25 */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 8005177C 0004E57C  D0 21 00 10 */	stfs f1, 0x10(r1)
-/* 80051780 0004E580  4B FF E5 A9 */	bl func_8004FD28
+/* 80051780 0004E580  4B FF E5 A9 */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
 /* 80051784 0004E584  D0 21 00 0C */	stfs f1, 0xc(r1)
 /* 80051788 0004E588  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 8005178C 0004E58C  C3 9E 01 80 */	lfs f28, 0x180(r30)
@@ -2370,7 +2362,7 @@ lbl_80051DD8:
 /* 80051DE8 0004EBE8  38 A1 00 0C */	addi r5, r1, 0xc
 /* 80051DEC 0004EBEC  38 C1 00 08 */	addi r6, r1, 8
 /* 80051DF0 0004EBF0  38 ED 8B FC */	addi r7, r13, lbl_803CB4FC-_SDA_BASE_
-/* 80051DF4 0004EBF4  4B FF F0 69 */	bl func_80050E5C
+/* 80051DF4 0004EBF4  4B FF F0 69 */	bl zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff
 /* 80051DF8 0004EBF8  80 7E 01 10 */	lwz r3, 0x110(r30)
 /* 80051DFC 0004EBFC  C0 1E 00 48 */	lfs f0, 0x48(r30)
 /* 80051E00 0004EC00  C0 23 00 34 */	lfs f1, 0x34(r3)
@@ -2691,7 +2683,7 @@ lbl_800521E0:
 /* 800521FC 0004EFFC  41 82 00 3C */	beq lbl_80052238
 /* 80052200 0004F000  3C 60 80 3C */	lis r3, zcam_backupconvers@ha
 /* 80052204 0004F004  38 63 F2 D4 */	addi r3, r3, zcam_backupconvers@l
-/* 80052208 0004F008  4B FF E6 FD */	bl func_80050904
+/* 80052208 0004F008  4B FF E6 FD */	bl zCameraFlyRestoreBackup__FP7xCamera
 /* 8005220C 0004F00C  C0 82 88 1C */	lfs f4, lbl_803CD19C-_SDA2_BASE_(r2)
 /* 80052210 0004F010  7F E3 FB 78 */	mr r3, r31
 /* 80052214 0004F014  C0 3F 01 60 */	lfs f1, 0x160(r31)

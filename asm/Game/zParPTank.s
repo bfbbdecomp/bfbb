@@ -2,8 +2,7 @@
 
 .section .text  # 0x8017047C - 0x80172034
 
-.global func_8017047C
-func_8017047C:
+zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v:
 /* 8017047C 0016D27C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80170480 0016D280  7C 08 02 A6 */	mflr r0
 /* 80170484 0016D284  90 01 00 24 */	stw r0, 0x24(r1)
@@ -358,8 +357,7 @@ lbl_8017099C:
 /* 801709A8 0016D7A8  38 21 00 40 */	addi r1, r1, 0x40
 /* 801709AC 0016D7AC  4E 80 00 20 */	blr 
 
-.global func_801709B0
-func_801709B0:
+zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v:
 /* 801709B0 0016D7B0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801709B4 0016D7B4  7C 08 02 A6 */	mflr r0
 /* 801709B8 0016D7B8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -451,8 +449,7 @@ lbl_80170AFC:
 /* 80170B0C 0016D90C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80170B10 0016D910  4E 80 00 20 */	blr 
 
-.global func_80170B14
-func_80170B14:
+zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v:
 /* 80170B14 0016D914  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80170B18 0016D918  7C 08 02 A6 */	mflr r0
 /* 80170B1C 0016D91C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -825,8 +822,7 @@ lbl_80171038:
 /* 8017109C 0016DE9C  38 21 00 90 */	addi r1, r1, 0x90
 /* 801710A0 0016DEA0  4E 80 00 20 */	blr 
 
-.global func_801710A4
-func_801710A4:
+zParPTankSpawnBubbles__FP5xVec3P5xVec3UifP9zParPTank:
 /* 801710A4 0016DEA4  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 801710A8 0016DEA8  7C 08 02 A6 */	mflr r0
 /* 801710AC 0016DEAC  90 01 00 74 */	stw r0, 0x74(r1)
@@ -1028,7 +1024,7 @@ zParPTankSpawnBubbles__FP5xVec3P5xVec3Uif:
 /* 80171388 0016E188  7F A3 EB 78 */	mr r3, r29
 /* 8017138C 0016E18C  7F C4 F3 78 */	mr r4, r30
 /* 80171390 0016E190  7F E5 FB 78 */	mr r5, r31
-/* 80171394 0016E194  4B FF FD 11 */	bl func_801710A4
+/* 80171394 0016E194  4B FF FD 11 */	bl zParPTankSpawnBubbles__FP5xVec3P5xVec3UifP9zParPTank
 lbl_80171398:
 /* 80171398 0016E198  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 8017139C 0016E19C  CB E1 00 18 */	lfd f31, 0x18(r1)
@@ -1054,14 +1050,13 @@ zParPTankSpawnMenuBubbles__FP5xVec3P5xVec3Ui:
 /* 801713D4 0016E1D4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 801713D8 0016E1D8  C0 22 AB F8 */	lfs f1, lbl_803CF578-_SDA2_BASE_(r2)
 /* 801713DC 0016E1DC  80 CD 97 44 */	lwz r6, lbl_803CC044-_SDA_BASE_(r13)
-/* 801713E0 0016E1E0  4B FF FC C5 */	bl func_801710A4
+/* 801713E0 0016E1E0  4B FF FC C5 */	bl zParPTankSpawnBubbles__FP5xVec3P5xVec3UifP9zParPTank
 /* 801713E4 0016E1E4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801713E8 0016E1E8  7C 08 03 A6 */	mtlr r0
 /* 801713EC 0016E1EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801713F0 0016E1F0  4E 80 00 20 */	blr 
 
-.global func_801713F4
-func_801713F4:
+zParPTankSnowCreate__FP9zParPTankUiPFP9zParPTankf_v:
 /* 801713F4 0016E1F4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801713F8 0016E1F8  7C 08 02 A6 */	mflr r0
 /* 801713FC 0016E1FC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1152,7 +1147,7 @@ lbl_80171528:
 /* 80171548 0016E348  3B FF FF D0 */	addi r31, r31, -48
 /* 8017154C 0016E34C  7F C3 F3 78 */	mr r3, r30
 /* 80171550 0016E350  7F E4 FB 78 */	mr r4, r31
-/* 80171554 0016E354  48 00 0A 7D */	bl func_80171FD0
+/* 80171554 0016E354  48 00 0A 7D */	bl __as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2zParPTank_cpp$$218snow_particle_data
 /* 80171558 0016E358  48 00 01 08 */	b lbl_80171660
 lbl_8017155C:
 /* 8017155C 0016E35C  FC 20 D8 90 */	fmr f1, f27
@@ -1326,8 +1321,7 @@ lbl_801717BC:
 /* 801717C8 0016E5C8  38 21 00 30 */	addi r1, r1, 0x30
 /* 801717CC 0016E5CC  4E 80 00 20 */	blr 
 
-.global func_801717D0
-func_801717D0:
+zParPTankSteamCreate__FP9zParPTankUiPFP9zParPTankf_v:
 /* 801717D0 0016E5D0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801717D4 0016E5D4  7C 08 02 A6 */	mflr r0
 /* 801717D8 0016E5D8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1596,14 +1590,14 @@ zParPTankInit__Fv:
 /* 80171BC0 0016E9C0  38 A3 06 80 */	addi r5, r3, lbl_80170680@l
 /* 80171BC4 0016E9C4  38 80 00 80 */	li r4, 0x80
 /* 80171BC8 0016E9C8  80 6D 97 3C */	lwz r3, lbl_803CC03C-_SDA_BASE_(r13)
-/* 80171BCC 0016E9CC  4B FF E8 B1 */	bl func_8017047C
+/* 80171BCC 0016E9CC  4B FF E8 B1 */	bl zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171BD0 0016E9D0  4B FF FF B1 */	bl zParPTankAdd__Fv
 /* 80171BD4 0016E9D4  90 6D 97 44 */	stw r3, lbl_803CC044-_SDA_BASE_(r13)
 /* 80171BD8 0016E9D8  3C 60 80 17 */	lis r3, lbl_80170C78@ha
 /* 80171BDC 0016E9DC  38 A3 0C 78 */	addi r5, r3, lbl_80170C78@l
 /* 80171BE0 0016E9E0  38 80 00 10 */	li r4, 0x10
 /* 80171BE4 0016E9E4  80 6D 97 44 */	lwz r3, lbl_803CC044-_SDA_BASE_(r13)
-/* 80171BE8 0016E9E8  4B FF EF 2D */	bl func_80170B14
+/* 80171BE8 0016E9E8  4B FF EF 2D */	bl zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171BEC 0016E9EC  80 6D 97 44 */	lwz r3, lbl_803CC044-_SDA_BASE_(r13)
 /* 80171BF0 0016E9F0  80 03 00 00 */	lwz r0, 0(r3)
 /* 80171BF4 0016E9F4  60 00 00 02 */	ori r0, r0, 2
@@ -1614,14 +1608,14 @@ zParPTankInit__Fv:
 /* 80171C08 0016EA08  38 A3 0C 78 */	addi r5, r3, lbl_80170C78@l
 /* 80171C0C 0016EA0C  38 80 03 00 */	li r4, 0x300
 /* 80171C10 0016EA10  80 6D 97 40 */	lwz r3, lbl_803CC040-_SDA_BASE_(r13)
-/* 80171C14 0016EA14  4B FF ED 9D */	bl func_801709B0
+/* 80171C14 0016EA14  4B FF ED 9D */	bl zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171C18 0016EA18  4B FF FF 69 */	bl zParPTankAdd__Fv
 /* 80171C1C 0016EA1C  90 6D 97 4C */	stw r3, lbl_803CC04C-_SDA_BASE_(r13)
 /* 80171C20 0016EA20  3C 60 80 17 */	lis r3, lbl_801719C4@ha
 /* 80171C24 0016EA24  38 A3 19 C4 */	addi r5, r3, lbl_801719C4@l
 /* 80171C28 0016EA28  38 80 00 80 */	li r4, 0x80
 /* 80171C2C 0016EA2C  80 6D 97 4C */	lwz r3, lbl_803CC04C-_SDA_BASE_(r13)
-/* 80171C30 0016EA30  4B FF FB A1 */	bl func_801717D0
+/* 80171C30 0016EA30  4B FF FB A1 */	bl zParPTankSteamCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171C34 0016EA34  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80171C38 0016EA38  7C 08 03 A6 */	mtlr r0
 /* 80171C3C 0016EA3C  38 21 00 10 */	addi r1, r1, 0x10
@@ -1638,7 +1632,7 @@ zParPTankSceneEnter__Fv:
 /* 80171C5C 0016EA5C  38 A3 14 84 */	addi r5, r3, lbl_80171484@l
 /* 80171C60 0016EA60  38 80 04 00 */	li r4, 0x400
 /* 80171C64 0016EA64  80 6D 97 48 */	lwz r3, lbl_803CC048-_SDA_BASE_(r13)
-/* 80171C68 0016EA68  4B FF F7 8D */	bl func_801713F4
+/* 80171C68 0016EA68  4B FF F7 8D */	bl zParPTankSnowCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171C6C 0016EA6C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80171C70 0016EA70  7C 08 03 A6 */	mtlr r0
 /* 80171C74 0016EA74  38 21 00 10 */	addi r1, r1, 0x10
@@ -1891,8 +1885,8 @@ func_80171FAC:
 /* 80171FC8 0016EDC8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80171FCC 0016EDCC  4E 80 00 20 */	blr 
 
-.global func_80171FD0
-func_80171FD0:
+/* __as__Q223@unnamed@zParPTank_cpp@18snow_particle_dataFRCQ223@unnamed@zParPTank_cpp@18snow_particle_data */
+__as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2zParPTank_cpp$$218snow_particle_data:
 /* 80171FD0 0016EDD0  80 04 00 00 */	lwz r0, 0(r4)
 /* 80171FD4 0016EDD4  80 A4 00 04 */	lwz r5, 4(r4)
 /* 80171FD8 0016EDD8  90 03 00 00 */	stw r0, 0(r3)

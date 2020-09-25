@@ -61,6 +61,7 @@ AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
 OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy
 CC      := $(WINE) tools/mwcc_compiler/2.0/mwcceppc.exe
 LD      := $(WINE) tools/mwcc_compiler/2.7/mwldeppc.exe
+PPROC   := python tools/postprocess.py
 ELF2DOL := tools/elf2dol
 SHA1SUM := sha1sum
 ASMDIFF := ./asmdiff.sh
@@ -74,6 +75,7 @@ CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -str reuse,pool,readonly 
            -pragma "check_header_flags off" -pragma "force_active on" \
            -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
 PREPROCESS := -preprocess -gccincludes $(INCLUDES)
+PPROCFLAGS := -fsymbol-fixup
 
 # elf2dol needs to know these in order to calculate sbss correctly.
 SDATA_PDHR := 9
@@ -112,6 +114,7 @@ $(ELF): $(O_FILES) $(LDSCRIPT)
 
 $(OBJ_DIR)/%.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<
+	$(PPROC) $(PPROCFLAGS) $@
 
 $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<

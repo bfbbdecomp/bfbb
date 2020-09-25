@@ -50,8 +50,7 @@ xShadowRender__FP5xVec3ff:
 /* 80044800 00041600  38 21 00 10 */	addi r1, r1, 0x10
 /* 80044804 00041604  4E 80 00 20 */	blr 
 
-.global func_80044808
-func_80044808:
+SetupShadow__Fv:
 /* 80044808 00041608  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004480C 0004160C  7C 08 02 A6 */	mflr r0
 /* 80044810 00041610  90 01 00 14 */	stw r0, 0x14(r1)
@@ -66,7 +65,7 @@ lbl_80044824:
 /* 8004482C 0004162C  2C 1F 01 E0 */	cmpwi r31, 0x1e0
 /* 80044830 00041630  41 81 FF F0 */	bgt lbl_80044820
 /* 80044834 00041634  7F E3 FB 78 */	mr r3, r31
-/* 80044838 00041638  48 00 19 91 */	bl func_800461C8
+/* 80044838 00041638  48 00 19 91 */	bl ShadowCameraCreatePersp__Fi
 /* 8004483C 0004163C  90 6D 8A C4 */	stw r3, ShadowCamera-_SDA_BASE_(r13)
 /* 80044840 00041640  80 0D 8A C4 */	lwz r0, ShadowCamera-_SDA_BASE_(r13)
 /* 80044844 00041644  28 00 00 00 */	cmplwi r0, 0
@@ -75,7 +74,7 @@ lbl_80044824:
 /* 80044850 00041650  48 00 00 30 */	b lbl_80044880
 lbl_80044854:
 /* 80044854 00041654  7F E3 FB 78 */	mr r3, r31
-/* 80044858 00041658  48 00 12 BD */	bl func_80045B14
+/* 80044858 00041658  48 00 12 BD */	bl ShadowRasterCreate__Fi
 /* 8004485C 0004165C  90 6D 8A C8 */	stw r3, ShadowCameraRaster-_SDA_BASE_(r13)
 /* 80044860 00041660  80 0D 8A C8 */	lwz r0, ShadowCameraRaster-_SDA_BASE_(r13)
 /* 80044864 00041664  28 00 00 00 */	cmplwi r0, 0
@@ -147,7 +146,7 @@ xShadowCameraCreate__Fv:
 /* 80044940 00041740  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80044944 00041744  7C 08 02 A6 */	mflr r0
 /* 80044948 00041748  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004494C 0004174C  4B FF FE BD */	bl func_80044808
+/* 8004494C 0004174C  4B FF FE BD */	bl SetupShadow__Fv
 /* 80044950 00041750  7C 03 00 D0 */	neg r0, r3
 /* 80044954 00041754  7C 00 1B 78 */	or r0, r0, r3
 /* 80044958 00041758  54 03 0F FE */	srwi r3, r0, 0x1f
@@ -173,14 +172,14 @@ xShadowCameraUpdate__FPvPFPv_vP5xVec3fi:
 /* 8004499C 0004179C  93 81 00 08 */	stw r28, 8(r1)
 /* 800449A0 000417A0  7C 7C 1B 78 */	mr r28, r3
 /* 800449A4 000417A4  80 6D 8A C4 */	lwz r3, ShadowCamera-_SDA_BASE_(r13)
-/* 800449A8 000417A8  48 00 18 C5 */	bl func_8004626C
+/* 800449A8 000417A8  48 00 18 C5 */	bl ShadowCameraSetSpherePersp__FP8RwCameraP5RwV3df
 /* 800449AC 000417AC  FC 20 F8 90 */	fmr f1, f31
 /* 800449B0 000417B0  80 6D 8A C4 */	lwz r3, ShadowCamera-_SDA_BASE_(r13)
 /* 800449B4 000417B4  7F 84 E3 78 */	mr r4, r28
 /* 800449B8 000417B8  7F A5 EB 78 */	mr r5, r29
 /* 800449BC 000417BC  7F C6 F3 78 */	mr r6, r30
 /* 800449C0 000417C0  7F E7 FB 78 */	mr r7, r31
-/* 800449C4 000417C4  48 00 0F B1 */	bl func_80045974
+/* 800449C4 000417C4  48 00 0F B1 */	bl ShadowCameraUpdate__FP8RwCameraPvPFPv_vP5xVec3fi
 /* 800449C8 000417C8  80 0D 8A C8 */	lwz r0, ShadowCameraRaster-_SDA_BASE_(r13)
 /* 800449CC 000417CC  90 0D 8A CC */	stw r0, lbl_803CB3CC-_SDA_BASE_(r13)
 /* 800449D0 000417D0  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -432,7 +431,7 @@ lbl_80044D50:
 /* 80044D74 00041B74  80 8D 8A CC */	lwz r4, lbl_803CB3CC-_SDA_BASE_(r13)
 /* 80044D78 00041B78  C0 2D 80 A8 */	lfs f1, ShadowStrength-_SDA_BASE_(r13)
 /* 80044D7C 00041B7C  C0 42 86 88 */	lfs f2, lbl_803CD008-_SDA2_BASE_(r2)
-/* 80044D80 00041B80  48 00 10 89 */	bl func_80045E08
+/* 80044D80 00041B80  48 00 10 89 */	bl ShadowRender__FP8RwCameraP8RwRasterP14RpIntersectionff
 lbl_80044D84:
 /* 80044D84 00041B84  E3 E1 01 B8 */	psq_l f31, 440(r1), 0, qr0
 /* 80044D88 00041B88  CB E1 01 B0 */	lfd f31, 0x1b0(r1)
@@ -1109,8 +1108,7 @@ Im2DRenderQuad__Ffffffff:
 /* 80045728 00042528  38 21 00 70 */	addi r1, r1, 0x70
 /* 8004572C 0004252C  4E 80 00 20 */	blr 
 
-.global func_80045730
-func_80045730:
+InvertRaster__FP8RwCamera:
 /* 80045730 00042530  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80045734 00042534  7C 08 02 A6 */	mflr r0
 /* 80045738 00042538  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -1221,8 +1219,7 @@ func_80045730:
 /* 800458DC 000426DC  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800458E0 000426E0  4E 80 00 20 */	blr 
 
-.global func_800458E4
-func_800458E4:
+ShadowCameraDestroy__FP8RwCamera:
 /* 800458E4 000426E4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800458E8 000426E8  7C 08 02 A6 */	mflr r0
 /* 800458EC 000426EC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1264,8 +1261,7 @@ lbl_8004595C:
 /* 8004596C 0004276C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80045970 00042770  4E 80 00 20 */	blr 
 
-.global func_80045974
-func_80045974:
+ShadowCameraUpdate__FP8RwCameraPvPFPv_vP5xVec3fi:
 /* 80045974 00042774  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80045978 00042778  7C 08 02 A6 */	mflr r0
 /* 8004597C 0004277C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1289,7 +1285,7 @@ func_80045974:
 /* 800459C4 000427C4  7F E3 FB 78 */	mr r3, r31
 /* 800459C8 000427C8  48 1F 1B C1 */	bl RwCameraEndUpdate
 lbl_800459CC:
-/* 800459CC 000427CC  48 00 06 F9 */	bl func_800460C4
+/* 800459CC 000427CC  48 00 06 F9 */	bl GCSaveFrameBuffer__Fv
 /* 800459D0 000427D0  80 FB 00 60 */	lwz r7, 0x60(r27)
 /* 800459D4 000427D4  7F 63 DB 78 */	mr r3, r27
 /* 800459D8 000427D8  38 81 00 0C */	addi r4, r1, 0xc
@@ -1340,7 +1336,7 @@ lbl_800459CC:
 /* 80045A8C 0004288C  2C 1E 00 00 */	cmpwi r30, 0
 /* 80045A90 00042890  40 82 00 0C */	bne lbl_80045A9C
 /* 80045A94 00042894  7F 63 DB 78 */	mr r3, r27
-/* 80045A98 00042898  4B FF FC 99 */	bl func_80045730
+/* 80045A98 00042898  4B FF FC 99 */	bl InvertRaster__FP8RwCamera
 lbl_80045A9C:
 /* 80045A9C 0004289C  38 60 00 08 */	li r3, 8
 /* 80045AA0 000428A0  38 80 00 01 */	li r4, 1
@@ -1364,7 +1360,7 @@ lbl_80045AC8:
 /* 80045AE4 000428E4  38 84 02 5C */	addi r4, r4, 0x25c
 /* 80045AE8 000428E8  48 07 A8 C5 */	bl iCameraFrustumPlanes__FP8RwCameraP5xVec4
 lbl_80045AEC:
-/* 80045AEC 000428EC  48 00 06 01 */	bl func_800460EC
+/* 80045AEC 000428EC  48 00 06 01 */	bl GCRestoreFrameBuffer__Fv
 /* 80045AF0 000428F0  80 81 00 08 */	lwz r4, 8(r1)
 /* 80045AF4 000428F4  38 60 00 0E */	li r3, 0xe
 /* 80045AF8 000428F8  48 1E 9C E5 */	bl RwRenderStateSet
@@ -1375,8 +1371,7 @@ lbl_80045AEC:
 /* 80045B0C 0004290C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80045B10 00042910  4E 80 00 20 */	blr 
 
-.global func_80045B14
-func_80045B14:
+ShadowRasterCreate__Fi:
 /* 80045B14 00042914  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80045B18 00042918  7C 08 02 A6 */	mflr r0
 /* 80045B1C 0004291C  38 A0 00 00 */	li r5, 0
@@ -1389,8 +1384,7 @@ func_80045B14:
 /* 80045B38 00042938  38 21 00 10 */	addi r1, r1, 0x10
 /* 80045B3C 0004293C  4E 80 00 20 */	blr 
 
-.global func_80045B40
-func_80045B40:
+ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 80045B40 00042940  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80045B44 00042944  7C 08 02 A6 */	mflr r0
 /* 80045B48 00042948  90 01 00 64 */	stw r0, 0x64(r1)
@@ -1580,8 +1574,7 @@ lbl_80045DF0:
 /* 80045E00 00042C00  38 21 00 60 */	addi r1, r1, 0x60
 /* 80045E04 00042C04  4E 80 00 20 */	blr 
 
-.global func_80045E08
-func_80045E08:
+ShadowRender__FP8RwCameraP8RwRasterP14RpIntersectionff:
 /* 80045E08 00042C08  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 80045E0C 00042C0C  7C 08 02 A6 */	mflr r0
 /* 80045E10 00042C10  90 01 00 E4 */	stw r0, 0xe4(r1)
@@ -1705,9 +1698,9 @@ lbl_80045F14:
 /* 80045FD8 00042DD8  28 00 00 00 */	cmplwi r0, 0
 /* 80045FDC 00042DDC  41 82 00 3C */	beq lbl_80046018
 /* 80045FE0 00042DE0  38 00 00 01 */	li r0, 1
-/* 80045FE4 00042DE4  3C 60 80 04 */	lis r3, func_80045B40@ha
+/* 80045FE4 00042DE4  3C 60 80 04 */	lis r3, ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 80045FE8 00042DE8  90 0D 8A DC */	stw r0, lbl_803CB3DC-_SDA_BASE_(r13)
-/* 80045FEC 00042DEC  38 A3 5B 40 */	addi r5, r3, func_80045B40@l
+/* 80045FEC 00042DEC  38 A3 5B 40 */	addi r5, r3, ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 80045FF0 00042DF0  7F E4 FB 78 */	mr r4, r31
 /* 80045FF4 00042DF4  38 C1 00 3C */	addi r6, r1, 0x3c
 /* 80045FF8 00042DF8  80 67 00 44 */	lwz r3, 0x44(r7)
@@ -1719,9 +1712,9 @@ lbl_80045F14:
 /* 80046010 00042E10  90 0D 8A DC */	stw r0, lbl_803CB3DC-_SDA_BASE_(r13)
 /* 80046014 00042E14  48 00 00 1C */	b lbl_80046030
 lbl_80046018:
-/* 80046018 00042E18  3C 80 80 04 */	lis r4, func_80045B40@ha
+/* 80046018 00042E18  3C 80 80 04 */	lis r4, ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 8004601C 00042E1C  80 63 00 00 */	lwz r3, 0(r3)
-/* 80046020 00042E20  38 A4 5B 40 */	addi r5, r4, func_80045B40@l
+/* 80046020 00042E20  38 A4 5B 40 */	addi r5, r4, ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 80046024 00042E24  38 C1 00 3C */	addi r6, r1, 0x3c
 /* 80046028 00042E28  7F E4 FB 78 */	mr r4, r31
 /* 8004602C 00042E2C  48 1B 36 6D */	bl RpCollisionWorldForAllIntersections
@@ -1766,8 +1759,7 @@ lbl_80046068:
 /* 800460BC 00042EBC  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800460C0 00042EC0  4E 80 00 20 */	blr 
 
-.global func_800460C4
-func_800460C4:
+GCSaveFrameBuffer__Fv:
 /* 800460C4 00042EC4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800460C8 00042EC8  7C 08 02 A6 */	mflr r0
 /* 800460CC 00042ECC  38 80 00 00 */	li r4, 0
@@ -1779,8 +1771,7 @@ func_800460C4:
 /* 800460E4 00042EE4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800460E8 00042EE8  4E 80 00 20 */	blr 
 
-.global func_800460EC
-func_800460EC:
+GCRestoreFrameBuffer__Fv:
 /* 800460EC 00042EEC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800460F0 00042EF0  7C 08 02 A6 */	mflr r0
 /* 800460F4 00042EF4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1837,8 +1828,7 @@ func_800460EC:
 /* 800461C0 00042FC0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800461C4 00042FC4  4E 80 00 20 */	blr 
 
-.global func_800461C8
-func_800461C8:
+ShadowCameraCreatePersp__Fi:
 /* 800461C8 00042FC8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800461CC 00042FCC  7C 08 02 A6 */	mflr r0
 /* 800461D0 00042FD0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1873,7 +1863,7 @@ func_800461C8:
 /* 80046244 00043044  48 00 00 10 */	b lbl_80046254
 lbl_80046248:
 /* 80046248 00043048  7F E3 FB 78 */	mr r3, r31
-/* 8004624C 0004304C  4B FF F6 99 */	bl func_800458E4
+/* 8004624C 0004304C  4B FF F6 99 */	bl ShadowCameraDestroy__FP8RwCamera
 /* 80046250 00043050  38 60 00 00 */	li r3, 0
 lbl_80046254:
 /* 80046254 00043054  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -1883,8 +1873,7 @@ lbl_80046254:
 /* 80046264 00043064  38 21 00 20 */	addi r1, r1, 0x20
 /* 80046268 00043068  4E 80 00 20 */	blr 
 
-.global func_8004626C
-func_8004626C:
+ShadowCameraSetSpherePersp__FP8RwCameraP5RwV3df:
 /* 8004626C 0004306C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80046270 00043070  7C 08 02 A6 */	mflr r0
 /* 80046274 00043074  90 01 00 54 */	stw r0, 0x54(r1)
@@ -3179,7 +3168,7 @@ lbl_80047520:
 /* 8004754C 0004434C  38 80 00 00 */	li r4, 0
 /* 80047550 00044350  90 01 00 60 */	stw r0, 0x60(r1)
 /* 80047554 00044354  C0 22 86 88 */	lfs f1, lbl_803CD008-_SDA2_BASE_(r2)
-/* 80047558 00044358  4B FF E5 E9 */	bl func_80045B40
+/* 80047558 00044358  4B FF E5 E9 */	bl ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv
 /* 8004755C 0004435C  3B DE 00 30 */	addi r30, r30, 0x30
 /* 80047560 00044360  3B BD 00 01 */	addi r29, r29, 1
 lbl_80047564:
@@ -3658,7 +3647,7 @@ lbl_80047BA8:
 /* 80047BDC 000449DC  80 0D 8A E8 */	lwz r0, lbl_803CB3E8-_SDA_BASE_(r13)
 /* 80047BE0 000449E0  7C 80 E2 14 */	add r4, r0, r28
 /* 80047BE4 000449E4  90 A4 00 0C */	stw r5, 0xc(r4)
-/* 80047BE8 000449E8  48 00 04 6D */	bl func_80048054
+/* 80047BE8 000449E8  48 00 04 6D */	bl xShadow_PickEntForNPC__FP10xShadowMgr
 lbl_80047BEC:
 /* 80047BEC 000449EC  3B C0 00 00 */	li r30, 0
 /* 80047BF0 000449F0  7F DF F3 78 */	mr r31, r30
@@ -3891,8 +3880,7 @@ lbl_80047F14:
 /* 80047F30 00044D30  38 21 00 70 */	addi r1, r1, 0x70
 /* 80047F34 00044D34  4E 80 00 20 */	blr 
 
-.global func_80047F38
-func_80047F38:
+xShadow_PickByRayCast__FP10xShadowMgr:
 /* 80047F38 00044D38  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80047F3C 00044D3C  7C 08 02 A6 */	mflr r0
 /* 80047F40 00044D40  38 80 00 00 */	li r4, 0
@@ -3969,8 +3957,7 @@ lbl_80048040:
 /* 8004804C 00044E4C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80048050 00044E50  4E 80 00 20 */	blr 
 
-.global func_80048054
-func_80048054:
+xShadow_PickEntForNPC__FP10xShadowMgr:
 /* 80048054 00044E54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80048058 00044E58  7C 08 02 A6 */	mflr r0
 /* 8004805C 00044E5C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3985,7 +3972,7 @@ func_80048054:
 /* 80048080 00044E80  A8 04 00 E4 */	lha r0, 0xe4(r4)
 /* 80048084 00044E84  54 00 07 39 */	rlwinm. r0, r0, 0, 0x1c, 0x1c
 /* 80048088 00044E88  41 82 00 08 */	beq lbl_80048090
-/* 8004808C 00044E8C  4B FF FE AD */	bl func_80047F38
+/* 8004808C 00044E8C  4B FF FE AD */	bl xShadow_PickByRayCast__FP10xShadowMgr
 lbl_80048090:
 /* 80048090 00044E90  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80048094 00044E94  7C 08 03 A6 */	mtlr r0
