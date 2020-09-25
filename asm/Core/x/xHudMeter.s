@@ -158,9 +158,9 @@ __ct__Q24xhud12meter_widgetFRCQ24xhud11meter_asset:
 /* 8002F770 0002C570  93 C1 00 08 */	stw r30, 8(r1)
 /* 8002F774 0002C574  7C 7E 1B 78 */	mr r30, r3
 /* 8002F778 0002C578  4B FF E4 B1 */	bl __ct__Q24xhud6widgetFRCQ24xhud5asset
-/* 8002F77C 0002C57C  3C 60 80 28 */	lis r3, lbl_8027D678@ha
+/* 8002F77C 0002C57C  3C 60 80 28 */	lis r3, __vt__Q24xhud12meter_widget@ha
 /* 8002F780 0002C580  C0 5F 00 28 */	lfs f2, 0x28(r31)
-/* 8002F784 0002C584  38 03 D6 78 */	addi r0, r3, lbl_8027D678@l
+/* 8002F784 0002C584  38 03 D6 78 */	addi r0, r3, __vt__Q24xhud12meter_widget@l
 /* 8002F788 0002C588  C0 3F 00 2C */	lfs f1, 0x2c(r31)
 /* 8002F78C 0002C58C  90 1E 00 74 */	stw r0, 0x74(r30)
 /* 8002F790 0002C590  38 7E 00 A8 */	addi r3, r30, 0xa8

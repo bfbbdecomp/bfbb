@@ -48,9 +48,9 @@ __ct__Q24xhud17font_meter_widgetFRCQ24xhud16font_meter_asset:
 /* 8002F078 0002BE78  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8002F07C 0002BE7C  7C 9D 23 78 */	mr r29, r4
 /* 8002F080 0002BE80  48 00 06 DD */	bl __ct__Q24xhud12meter_widgetFRCQ24xhud11meter_asset
-/* 8002F084 0002BE84  3C 60 80 28 */	lis r3, lbl_8027D64C@ha
+/* 8002F084 0002BE84  3C 60 80 28 */	lis r3, __vt__Q24xhud17font_meter_widget@ha
 /* 8002F088 0002BE88  83 DD 00 4C */	lwz r30, 0x4c(r29)
-/* 8002F08C 0002BE8C  38 03 D6 4C */	addi r0, r3, lbl_8027D64C@l
+/* 8002F08C 0002BE8C  38 03 D6 4C */	addi r0, r3, __vt__Q24xhud17font_meter_widget@l
 /* 8002F090 0002BE90  81 9D 00 50 */	lwz r12, 0x50(r29)
 /* 8002F094 0002BE94  90 1F 00 74 */	stw r0, 0x74(r31)
 /* 8002F098 0002BE98  38 00 00 00 */	li r0, 0

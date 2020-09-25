@@ -4,7 +4,7 @@
 
 .global iLightInit__FP7RpWorld
 iLightInit__FP7RpWorld:
-/* 800C4AF4 000C18F4  90 6D 92 08 */	stw r3, lbl_803CBB08-_SDA_BASE_(r13)
+/* 800C4AF4 000C18F4  90 6D 92 08 */	stw r3, gLightWorld-_SDA_BASE_(r13)
 /* 800C4AF8 000C18F8  4E 80 00 20 */	blr 
 
 .global iLightCreate__FP6iLightUi
@@ -116,14 +116,14 @@ iLightModify__FP6iLightUi:
 /* 800C4C6C 000C1A6C  7C 7D 1B 78 */	mr r29, r3
 /* 800C4C70 000C1A70  41 82 00 54 */	beq lbl_800C4CC4
 /* 800C4C74 000C1A74  80 BD 00 04 */	lwz r5, 4(r29)
-/* 800C4C78 000C1A78  3C 60 80 25 */	lis r3, lbl_80253018@ha
-/* 800C4C7C 000C1A7C  38 83 30 18 */	addi r4, r3, lbl_80253018@l
+/* 800C4C78 000C1A78  3C 60 80 25 */	lis r3, g_O3@ha
+/* 800C4C7C 000C1A7C  38 83 30 18 */	addi r4, r3, g_O3@l
 /* 800C4C80 000C1A80  83 E5 00 04 */	lwz r31, 4(r5)
 /* 800C4C84 000C1A84  38 61 00 08 */	addi r3, r1, 8
 /* 800C4C88 000C1A88  4B F4 65 DD */	bl func_8000B264
-/* 800C4C8C 000C1A8C  3C 80 80 25 */	lis r4, lbl_80253018@ha
+/* 800C4C8C 000C1A8C  3C 80 80 25 */	lis r4, g_O3@ha
 /* 800C4C90 000C1A90  38 61 00 18 */	addi r3, r1, 0x18
-/* 800C4C94 000C1A94  38 84 30 18 */	addi r4, r4, lbl_80253018@l
+/* 800C4C94 000C1A94  38 84 30 18 */	addi r4, r4, g_O3@l
 /* 800C4C98 000C1A98  4B F4 65 CD */	bl func_8000B264
 /* 800C4C9C 000C1A9C  38 61 00 28 */	addi r3, r1, 0x28
 /* 800C4CA0 000C1AA0  38 9D 00 2C */	addi r4, r29, 0x2c

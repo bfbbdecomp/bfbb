@@ -326,7 +326,7 @@ zGridInit__FP6zScene:
 /* 80123FD0 00120DD0  93 C1 00 38 */	stw r30, 0x38(r1)
 /* 80123FD4 00120DD4  38 00 00 00 */	li r0, 0
 /* 80123FD8 00120DD8  7C 7E 1B 78 */	mr r30, r3
-/* 80123FDC 00120DDC  90 0D 95 30 */	stw r0, lbl_803CBE30-_SDA_BASE_(r13)
+/* 80123FDC 00120DDC  90 0D 95 30 */	stw r0, gGridIterActive-_SDA_BASE_(r13)
 /* 80123FE0 00120DE0  4B EF 73 35 */	bl xEntGetAllEntsBox__Fv
 /* 80123FE4 00120DE4  C0 23 00 00 */	lfs f1, 0(r3)
 /* 80123FE8 00120DE8  7C 7F 1B 78 */	mr r31, r3
@@ -408,9 +408,9 @@ lbl_801240DC:
 /* 801240E4 00120EE4  FC 40 08 90 */	fmr f2, f1
 lbl_801240E8:
 /* 801240E8 00120EE8  FC 20 10 1E */	fctiwz f1, f2
-/* 801240EC 00120EEC  3C 60 80 3D */	lis r3, lbl_803CA6D8@ha
+/* 801240EC 00120EEC  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 801240F0 00120EF0  FC 00 F0 1E */	fctiwz f0, f30
-/* 801240F4 00120EF4  38 63 A6 D8 */	addi r3, r3, lbl_803CA6D8@l
+/* 801240F4 00120EF4  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 801240F8 00120EF8  7F E4 FB 78 */	mr r4, r31
 /* 801240FC 00120EFC  38 E0 00 01 */	li r7, 1
 /* 80124100 00120F00  D8 21 00 20 */	stfd f1, 0x20(r1)
@@ -521,9 +521,9 @@ lbl_80124268:
 /* 80124270 00121070  FC 40 08 90 */	fmr f2, f1
 lbl_80124274:
 /* 80124274 00121074  FC 20 10 1E */	fctiwz f1, f2
-/* 80124278 00121078  3C 60 80 3D */	lis r3, lbl_803CA774@ha
+/* 80124278 00121078  3C 60 80 3D */	lis r3, colls_oso_grid@ha
 /* 8012427C 0012107C  FC 00 E0 1E */	fctiwz f0, f28
-/* 80124280 00121080  38 63 A7 74 */	addi r3, r3, lbl_803CA774@l
+/* 80124280 00121080  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 80124284 00121084  38 81 00 08 */	addi r4, r1, 8
 /* 80124288 00121088  38 E0 00 02 */	li r7, 2
 /* 8012428C 0012108C  D8 21 00 28 */	stfd f1, 0x28(r1)
@@ -590,9 +590,9 @@ lbl_80124354:
 /* 8012435C 0012115C  FC 40 08 90 */	fmr f2, f1
 lbl_80124360:
 /* 80124360 00121160  FC 20 10 1E */	fctiwz f1, f2
-/* 80124364 00121164  3C 60 80 3D */	lis r3, lbl_803CA7A8@ha
+/* 80124364 00121164  3C 60 80 3D */	lis r3, npcs_grid@ha
 /* 80124368 00121168  FC 00 E0 1E */	fctiwz f0, f28
-/* 8012436C 0012116C  38 63 A7 A8 */	addi r3, r3, lbl_803CA7A8@l
+/* 8012436C 0012116C  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 80124370 00121170  7F E4 FB 78 */	mr r4, r31
 /* 80124374 00121174  38 E0 00 03 */	li r7, 3
 /* 80124378 00121178  D8 21 00 28 */	stfd f1, 0x28(r1)
@@ -625,18 +625,18 @@ lbl_80124360:
 zGridExit__FP6zScene:
 /* 801243DC 001211DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801243E0 001211E0  7C 08 02 A6 */	mflr r0
-/* 801243E4 001211E4  3C 60 80 3D */	lis r3, lbl_803CA6D8@ha
+/* 801243E4 001211E4  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 801243E8 001211E8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801243EC 001211EC  38 63 A6 D8 */	addi r3, r3, lbl_803CA6D8@l
+/* 801243EC 001211EC  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 801243F0 001211F0  4B FF DB F9 */	bl xGridKill__FP5xGrid
-/* 801243F4 001211F4  3C 60 80 3D */	lis r3, lbl_803CA774@ha
-/* 801243F8 001211F8  38 63 A7 74 */	addi r3, r3, lbl_803CA774@l
+/* 801243F4 001211F4  3C 60 80 3D */	lis r3, colls_oso_grid@ha
+/* 801243F8 001211F8  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 801243FC 001211FC  4B FF DB ED */	bl xGridKill__FP5xGrid
-/* 80124400 00121200  3C 60 80 3D */	lis r3, lbl_803CA7A8@ha
-/* 80124404 00121204  38 63 A7 A8 */	addi r3, r3, lbl_803CA7A8@l
+/* 80124400 00121200  3C 60 80 3D */	lis r3, npcs_grid@ha
+/* 80124404 00121204  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 80124408 00121208  4B FF DB E1 */	bl xGridKill__FP5xGrid
 /* 8012440C 0012120C  38 00 00 00 */	li r0, 0
-/* 80124410 00121210  90 0D 95 30 */	stw r0, lbl_803CBE30-_SDA_BASE_(r13)
+/* 80124410 00121210  90 0D 95 30 */	stw r0, gGridIterActive-_SDA_BASE_(r13)
 /* 80124414 00121214  90 0D 95 60 */	stw r0, lbl_803CBE60-_SDA_BASE_(r13)
 /* 80124418 00121218  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8012441C 0012121C  7C 08 03 A6 */	mtlr r0
@@ -667,22 +667,22 @@ lbl_8012446C:
 /* 80124470 00121270  40 80 00 4C */	bge lbl_801244BC
 /* 80124474 00121274  48 00 00 30 */	b lbl_801244A4
 lbl_80124478:
-/* 80124478 00121278  3C 60 80 3D */	lis r3, lbl_803CA6D8@ha
-/* 8012447C 0012127C  38 03 A6 D8 */	addi r0, r3, lbl_803CA6D8@l
+/* 80124478 00121278  3C 60 80 3D */	lis r3, colls_grid@ha
+/* 8012447C 0012127C  38 03 A6 D8 */	addi r0, r3, colls_grid@l
 /* 80124480 00121280  7C 03 03 78 */	mr r3, r0
 /* 80124484 00121284  48 00 00 38 */	b lbl_801244BC
 lbl_80124488:
 /* 80124488 00121288  88 1F 00 59 */	lbz r0, 0x59(r31)
-/* 8012448C 0012128C  3C 60 80 3D */	lis r3, lbl_803CA774@ha
-/* 80124490 00121290  38 63 A7 74 */	addi r3, r3, lbl_803CA774@l
+/* 8012448C 0012128C  3C 60 80 3D */	lis r3, colls_oso_grid@ha
+/* 80124490 00121290  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 80124494 00121294  20 00 00 02 */	subfic r0, r0, 2
 /* 80124498 00121298  7C 00 00 34 */	cntlzw r0, r0
 /* 8012449C 0012129C  54 04 DE 3E */	rlwinm r4, r0, 0x1b, 0x18, 0x1f
 /* 801244A0 001212A0  48 00 00 1C */	b lbl_801244BC
 lbl_801244A4:
 /* 801244A4 001212A4  88 1F 00 59 */	lbz r0, 0x59(r31)
-/* 801244A8 001212A8  3C 60 80 3D */	lis r3, lbl_803CA7A8@ha
-/* 801244AC 001212AC  38 63 A7 A8 */	addi r3, r3, lbl_803CA7A8@l
+/* 801244A8 001212A8  3C 60 80 3D */	lis r3, npcs_grid@ha
+/* 801244AC 001212AC  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 801244B0 001212B0  20 00 00 01 */	subfic r0, r0, 1
 /* 801244B4 001212B4  7C 00 00 34 */	cntlzw r0, r0
 /* 801244B8 001212B8  54 04 DE 3E */	rlwinm r4, r0, 0x1b, 0x18, 0x1f
@@ -705,9 +705,9 @@ lbl_801244F0:
 /* 801244F0 001212F0  88 1F 00 20 */	lbz r0, 0x20(r31)
 /* 801244F4 001212F4  28 00 00 08 */	cmplwi r0, 8
 /* 801244F8 001212F8  40 82 00 44 */	bne lbl_8012453C
-/* 801244FC 001212FC  3C 60 80 3D */	lis r3, lbl_803CA7A8@ha
+/* 801244FC 001212FC  3C 60 80 3D */	lis r3, npcs_grid@ha
 /* 80124500 00121300  7F E4 FB 78 */	mr r4, r31
-/* 80124504 00121304  38 63 A7 A8 */	addi r3, r3, lbl_803CA7A8@l
+/* 80124504 00121304  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 80124508 00121308  4B FF E3 0D */	bl xGridEntIsTooBig__FP5xGridPC4xEnt
 /* 8012450C 0012130C  2C 03 00 00 */	cmpwi r3, 0
 /* 80124510 00121310  41 82 00 10 */	beq lbl_80124520
@@ -718,21 +718,21 @@ lbl_80124520:
 /* 80124520 00121320  38 00 00 00 */	li r0, 0
 /* 80124524 00121324  98 1F 00 59 */	stb r0, 0x59(r31)
 lbl_80124528:
-/* 80124528 00121328  3C 60 80 3D */	lis r3, lbl_803CA7A8@ha
+/* 80124528 00121328  3C 60 80 3D */	lis r3, npcs_grid@ha
 /* 8012452C 0012132C  7F E4 FB 78 */	mr r4, r31
-/* 80124530 00121330  38 63 A7 A8 */	addi r3, r3, lbl_803CA7A8@l
+/* 80124530 00121330  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 80124534 00121334  4B FF DC 69 */	bl xGridAdd__FP5xGridP4xEnt
 /* 80124538 00121338  48 00 00 88 */	b lbl_801245C0
 lbl_8012453C:
-/* 8012453C 0012133C  3C 60 80 3D */	lis r3, lbl_803CA6D8@ha
+/* 8012453C 0012133C  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 80124540 00121340  7F E4 FB 78 */	mr r4, r31
-/* 80124544 00121344  38 63 A6 D8 */	addi r3, r3, lbl_803CA6D8@l
+/* 80124544 00121344  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 80124548 00121348  4B FF E2 CD */	bl xGridEntIsTooBig__FP5xGridPC4xEnt
 /* 8012454C 0012134C  2C 03 00 00 */	cmpwi r3, 0
 /* 80124550 00121350  41 82 00 44 */	beq lbl_80124594
-/* 80124554 00121354  3C 60 80 3D */	lis r3, lbl_803CA774@ha
+/* 80124554 00121354  3C 60 80 3D */	lis r3, colls_oso_grid@ha
 /* 80124558 00121358  7F E4 FB 78 */	mr r4, r31
-/* 8012455C 0012135C  38 63 A7 74 */	addi r3, r3, lbl_803CA774@l
+/* 8012455C 0012135C  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 80124560 00121360  4B FF E2 B5 */	bl xGridEntIsTooBig__FP5xGridPC4xEnt
 /* 80124564 00121364  2C 03 00 00 */	cmpwi r3, 0
 /* 80124568 00121368  41 82 00 10 */	beq lbl_80124578
@@ -743,15 +743,15 @@ lbl_80124578:
 /* 80124578 00121378  38 00 00 01 */	li r0, 1
 /* 8012457C 0012137C  98 1F 00 59 */	stb r0, 0x59(r31)
 lbl_80124580:
-/* 80124580 00121380  3C 60 80 3D */	lis r3, lbl_803CA774@ha
+/* 80124580 00121380  3C 60 80 3D */	lis r3, colls_oso_grid@ha
 /* 80124584 00121384  7F E4 FB 78 */	mr r4, r31
-/* 80124588 00121388  38 63 A7 74 */	addi r3, r3, lbl_803CA774@l
+/* 80124588 00121388  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 8012458C 0012138C  4B FF DC 11 */	bl xGridAdd__FP5xGridP4xEnt
 /* 80124590 00121390  48 00 00 30 */	b lbl_801245C0
 lbl_80124594:
-/* 80124594 00121394  3C 60 80 3D */	lis r3, lbl_803CA6D8@ha
+/* 80124594 00121394  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 80124598 00121398  7F E4 FB 78 */	mr r4, r31
-/* 8012459C 0012139C  38 63 A6 D8 */	addi r3, r3, lbl_803CA6D8@l
+/* 8012459C 0012139C  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 801245A0 001213A0  4B FF DB FD */	bl xGridAdd__FP5xGridP4xEnt
 /* 801245A4 001213A4  38 00 00 00 */	li r0, 0
 /* 801245A8 001213A8  98 1F 00 59 */	stb r0, 0x59(r31)

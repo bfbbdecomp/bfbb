@@ -25,7 +25,7 @@ xMovePointInit__FP10xMovePointP15xMovePointAsset:
 /* 800354DC 000322DC  A0 9F 00 1A */	lhz r4, 0x1a(r31)
 /* 800354E0 000322E0  28 04 00 00 */	cmplwi r4, 0
 /* 800354E4 000322E4  41 82 00 1C */	beq lbl_80035500
-/* 800354E8 000322E8  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 800354E8 000322E8  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 800354EC 000322EC  54 84 13 BA */	rlwinm r4, r4, 2, 0xe, 0x1d
 /* 800354F0 000322F0  38 A0 00 00 */	li r5, 0
 /* 800354F4 000322F4  4B FF E4 4D */	bl xMemAlloc__FUiUii

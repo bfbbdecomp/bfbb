@@ -11,8 +11,8 @@ zLightEffectSet__FP7_zLighti:
 /* 8009E808 0009B608  28 00 00 00 */	cmplwi r0, 0
 /* 8009E80C 0009B60C  41 82 00 2C */	beq lbl_8009E838
 /* 8009E810 0009B610  90 83 00 60 */	stw r4, 0x60(r3)
-/* 8009E814 0009B614  3C 80 80 29 */	lis r4, lbl_8028FB08@ha
-/* 8009E818 0009B618  38 84 FB 08 */	addi r4, r4, lbl_8028FB08@l
+/* 8009E814 0009B614  3C 80 80 29 */	lis r4, sEffectInitFuncs@ha
+/* 8009E818 0009B618  38 84 FB 08 */	addi r4, r4, sEffectInitFuncs@l
 /* 8009E81C 0009B61C  80 03 00 60 */	lwz r0, 0x60(r3)
 /* 8009E820 0009B620  54 00 10 3A */	slwi r0, r0, 2
 /* 8009E824 0009B624  7D 84 00 2E */	lwzx r12, r4, r0

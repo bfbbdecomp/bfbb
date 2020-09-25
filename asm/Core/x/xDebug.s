@@ -88,9 +88,9 @@ func_80017DE4:
 /* 80017E28 00014C28  7F C4 F3 78 */	mr r4, r30
 /* 80017E2C 00014C2C  38 61 00 2C */	addi r3, r1, 0x2c
 /* 80017E30 00014C30  48 00 02 11 */	bl func_80018040
-/* 80017E34 00014C34  3C 60 80 28 */	lis r3, lbl_8027BBEC@ha
+/* 80017E34 00014C34  3C 60 80 28 */	lis r3, text_cb__8xtextbox@ha
 /* 80017E38 00014C38  38 C0 00 00 */	li r6, 0
-/* 80017E3C 00014C3C  38 63 BB EC */	addi r3, r3, lbl_8027BBEC@l
+/* 80017E3C 00014C3C  38 63 BB EC */	addi r3, r3, text_cb__8xtextbox@l
 /* 80017E40 00014C40  38 00 00 0D */	li r0, 0xd
 /* 80017E44 00014C44  93 E1 00 3C */	stw r31, 0x3c(r1)
 /* 80017E48 00014C48  38 BD FF FC */	addi r5, r29, -4

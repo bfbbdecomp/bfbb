@@ -13,7 +13,7 @@ func_80038B9C:
 /* 80038BA4 000359A4  38 80 00 08 */	li r4, 8
 /* 80038BA8 000359A8  38 A0 00 00 */	li r5, 0
 /* 80038BAC 000359AC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80038BB0 000359B0  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80038BB0 000359B0  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80038BB4 000359B4  4B FF AD 8D */	bl xMemAlloc__FUiUii
 /* 80038BB8 000359B8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80038BBC 000359BC  7C 08 03 A6 */	mtlr r0
@@ -145,7 +145,7 @@ xPartitionVolume__FP13_tagPartitionP7xVolumeiii:
 /* 80038D7C 00035B7C  80 9C 00 28 */	lwz r4, 0x28(r28)
 /* 80038D80 00035B80  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80038D84 00035B84  80 DC 00 2C */	lwz r6, 0x2c(r28)
-/* 80038D88 00035B88  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80038D88 00035B88  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80038D8C 00035B8C  7C 04 01 D6 */	mullw r0, r4, r0
 /* 80038D90 00035B90  7C 86 01 D6 */	mullw r4, r6, r0
 /* 80038D94 00035B94  4B FF AB AD */	bl xMemAlloc__FUiUii
@@ -257,7 +257,7 @@ xPartitionWorld__FP13_tagPartitionP4xEnviii:
 /* 80038F18 00035D18  80 9C 00 28 */	lwz r4, 0x28(r28)
 /* 80038F1C 00035D1C  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80038F20 00035D20  80 DC 00 2C */	lwz r6, 0x2c(r28)
-/* 80038F24 00035D24  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80038F24 00035D24  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80038F28 00035D28  7C 04 01 D6 */	mullw r0, r4, r0
 /* 80038F2C 00035D2C  7C 86 01 D6 */	mullw r4, r6, r0
 /* 80038F30 00035D30  4B FF AA 11 */	bl xMemAlloc__FUiUii

@@ -140,8 +140,8 @@ iParMgrRenderParSys_Sprite__FPvP9xParGroup:
 /* 800CB0D4 000C7ED4  48 16 47 09 */	bl RwRenderStateSet
 lbl_800CB0D8:
 /* 800CB0D8 000C7ED8  80 78 00 10 */	lwz r3, 0x10(r24)
-/* 800CB0DC 000C7EDC  3C 80 80 3D */	lis r4, lbl_803C88E0@ha
-/* 800CB0E0 000C7EE0  3B C4 88 E0 */	addi r30, r4, lbl_803C88E0@l
+/* 800CB0DC 000C7EDC  3C 80 80 3D */	lis r4, gRenderBuffer@ha
+/* 800CB0E0 000C7EE0  3B C4 88 E0 */	addi r30, r4, gRenderBuffer@l
 /* 800CB0E4 000C7EE4  83 17 00 20 */	lwz r24, 0x20(r23)
 /* 800CB0E8 000C7EE8  8B E3 00 14 */	lbz r31, 0x14(r3)
 /* 800CB0EC 000C7EEC  3B 80 00 00 */	li r28, 0
@@ -156,9 +156,9 @@ lbl_800CB0D8:
 /* 800CB110 000C7F10  7C 64 1B 78 */	mr r4, r3
 /* 800CB114 000C7F14  38 61 00 44 */	addi r3, r1, 0x44
 /* 800CB118 000C7F18  4B F4 01 4D */	bl func_8000B264
-/* 800CB11C 000C7F1C  3C 80 80 3D */	lis r4, lbl_803C88E0@ha
+/* 800CB11C 000C7F1C  3C 80 80 3D */	lis r4, gRenderBuffer@ha
 /* 800CB120 000C7F20  38 61 00 5C */	addi r3, r1, 0x5c
-/* 800CB124 000C7F24  38 84 88 E0 */	addi r4, r4, lbl_803C88E0@l
+/* 800CB124 000C7F24  38 84 88 E0 */	addi r4, r4, gRenderBuffer@l
 /* 800CB128 000C7F28  38 84 00 60 */	addi r4, r4, 0x60
 /* 800CB12C 000C7F2C  4B F4 01 39 */	bl func_8000B264
 /* 800CB130 000C7F30  7C 64 1B 78 */	mr r4, r3
@@ -208,9 +208,9 @@ lbl_800CB188:
 lbl_800CB1D8:
 /* 800CB1D8 000C7FD8  57 E0 06 F7 */	rlwinm. r0, r31, 0, 0x1b, 0x1b
 /* 800CB1DC 000C7FDC  41 82 00 2C */	beq lbl_800CB208
-/* 800CB1E0 000C7FE0  3C 80 80 3D */	lis r4, lbl_803C88E0@ha
+/* 800CB1E0 000C7FE0  3C 80 80 3D */	lis r4, gRenderBuffer@ha
 /* 800CB1E4 000C7FE4  38 61 00 44 */	addi r3, r1, 0x44
-/* 800CB1E8 000C7FE8  38 84 88 E0 */	addi r4, r4, lbl_803C88E0@l
+/* 800CB1E8 000C7FE8  38 84 88 E0 */	addi r4, r4, gRenderBuffer@l
 /* 800CB1EC 000C7FEC  3A E4 00 70 */	addi r23, r4, 0x70
 /* 800CB1F0 000C7FF0  7E E4 BB 78 */	mr r4, r23
 /* 800CB1F4 000C7FF4  4B F4 A2 51 */	bl func_80015444
@@ -221,9 +221,9 @@ lbl_800CB1D8:
 lbl_800CB208:
 /* 800CB208 000C8008  57 E0 06 73 */	rlwinm. r0, r31, 0, 0x19, 0x19
 /* 800CB20C 000C800C  41 82 00 2C */	beq lbl_800CB238
-/* 800CB210 000C8010  3C 80 80 3D */	lis r4, lbl_803C88E0@ha
+/* 800CB210 000C8010  3C 80 80 3D */	lis r4, gRenderBuffer@ha
 /* 800CB214 000C8014  38 61 00 50 */	addi r3, r1, 0x50
-/* 800CB218 000C8018  38 84 88 E0 */	addi r4, r4, lbl_803C88E0@l
+/* 800CB218 000C8018  38 84 88 E0 */	addi r4, r4, gRenderBuffer@l
 /* 800CB21C 000C801C  3A E4 00 70 */	addi r23, r4, 0x70
 /* 800CB220 000C8020  7E E4 BB 78 */	mr r4, r23
 /* 800CB224 000C8024  4B F4 00 0D */	bl func_8000B230
@@ -232,9 +232,9 @@ lbl_800CB208:
 /* 800CB230 000C8030  4B F4 00 01 */	bl func_8000B230
 /* 800CB234 000C8034  48 00 00 64 */	b lbl_800CB298
 lbl_800CB238:
-/* 800CB238 000C8038  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CB238 000C8038  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CB23C 000C803C  C0 22 97 CC */	lfs f1, lbl_803CE14C-_SDA2_BASE_(r2)
-/* 800CB240 000C8040  38 83 88 E0 */	addi r4, r3, lbl_803C88E0@l
+/* 800CB240 000C8040  38 83 88 E0 */	addi r4, r3, gRenderBuffer@l
 /* 800CB244 000C8044  38 61 00 08 */	addi r3, r1, 8
 /* 800CB248 000C8048  38 84 00 70 */	addi r4, r4, 0x70
 /* 800CB24C 000C804C  4B F3 FE D5 */	bl func_8000B120
@@ -257,8 +257,8 @@ lbl_800CB238:
 /* 800CB290 000C8090  38 81 00 38 */	addi r4, r1, 0x38
 /* 800CB294 000C8094  4B F3 FF 9D */	bl func_8000B230
 lbl_800CB298:
-/* 800CB298 000C8098  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CB29C 000C809C  3B E3 88 E0 */	addi r31, r3, lbl_803C88E0@l
+/* 800CB298 000C8098  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CB29C 000C809C  3B E3 88 E0 */	addi r31, r3, gRenderBuffer@l
 /* 800CB2A0 000C80A0  48 00 02 50 */	b lbl_800CB4F0
 lbl_800CB2A4:
 /* 800CB2A4 000C80A4  7F A5 EB 78 */	mr r5, r29
@@ -403,11 +403,11 @@ lbl_800CB48C:
 /* 800CB4C8 000C82C8  2C 1B 01 DC */	cmpwi r27, 0x1dc
 /* 800CB4CC 000C82CC  40 81 00 24 */	ble lbl_800CB4F0
 lbl_800CB4D0:
-/* 800CB4D0 000C82D0  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CB4D0 000C82D0  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CB4D4 000C82D4  93 9F 00 18 */	stw r28, 0x18(r31)
 /* 800CB4D8 000C82D8  83 3E 00 04 */	lwz r25, 4(r30)
 /* 800CB4DC 000C82DC  93 7F 00 1C */	stw r27, 0x1c(r31)
-/* 800CB4E0 000C82E0  83 43 88 E0 */	lwz r26, lbl_803C88E0@l(r3)
+/* 800CB4E0 000C82E0  83 43 88 E0 */	lwz r26, gRenderBuffer@l(r3)
 /* 800CB4E4 000C82E4  48 00 07 75 */	bl iRenderFlush__Fv
 /* 800CB4E8 000C82E8  3B 80 00 00 */	li r28, 0
 /* 800CB4EC 000C82EC  3B 60 00 00 */	li r27, 0
@@ -425,11 +425,11 @@ lbl_800CB4F0:
 
 .global iRenderInit__Fv
 iRenderInit__Fv:
-/* 800CB518 000C8318  3C 60 80 3C */	lis r3, lbl_803C3660@ha
-/* 800CB51C 000C831C  3C A0 80 3D */	lis r5, lbl_803C88E0@ha
-/* 800CB520 000C8320  38 83 36 60 */	addi r4, r3, lbl_803C3660@l
+/* 800CB518 000C8318  3C 60 80 3C */	lis r3, gRenderArr@ha
+/* 800CB51C 000C831C  3C A0 80 3D */	lis r5, gRenderBuffer@ha
+/* 800CB520 000C8320  38 83 36 60 */	addi r4, r3, gRenderArr@l
 /* 800CB524 000C8324  38 E0 00 00 */	li r7, 0
-/* 800CB528 000C8328  38 C5 88 E0 */	addi r6, r5, lbl_803C88E0@l
+/* 800CB528 000C8328  38 C5 88 E0 */	addi r6, r5, gRenderBuffer@l
 /* 800CB52C 000C832C  38 A0 00 24 */	li r5, 0x24
 /* 800CB530 000C8330  38 64 07 80 */	addi r3, r4, 0x780
 /* 800CB534 000C8334  38 04 4B 00 */	addi r0, r4, 0x4b00
@@ -449,14 +449,14 @@ iRenderSetCameraViewMatrix__FP7xMat4x3:
 /* 800CB560 000C8360  28 03 00 00 */	cmplwi r3, 0
 /* 800CB564 000C8364  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800CB568 000C8368  40 82 00 3C */	bne lbl_800CB5A4
-/* 800CB56C 000C836C  3C 80 80 3C */	lis r4, lbl_803C0558@ha
-/* 800CB570 000C8370  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
+/* 800CB56C 000C836C  3C 80 80 3C */	lis r4, globals@ha
+/* 800CB570 000C8370  38 84 05 58 */	addi r4, r4, globals@l
 /* 800CB574 000C8374  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 800CB578 000C8378  28 00 00 00 */	cmplwi r0, 0
 /* 800CB57C 000C837C  41 82 00 28 */	beq lbl_800CB5A4
-/* 800CB580 000C8380  80 6D 9F 7C */	lwz r3, lbl_803CC87C-_SDA_BASE_(r13)
-/* 800CB584 000C8384  3C 80 80 3D */	lis r4, lbl_803C88E0@ha
-/* 800CB588 000C8388  38 A4 88 E0 */	addi r5, r4, lbl_803C88E0@l
+/* 800CB580 000C8380  80 6D 9F 7C */	lwz r3, RwEngineInstance-_SDA_BASE_(r13)
+/* 800CB584 000C8384  3C 80 80 3D */	lis r4, gRenderBuffer@ha
+/* 800CB588 000C8388  38 A4 88 E0 */	addi r5, r4, gRenderBuffer@l
 /* 800CB58C 000C838C  80 83 00 00 */	lwz r4, 0(r3)
 /* 800CB590 000C8390  38 65 00 20 */	addi r3, r5, 0x20
 /* 800CB594 000C8394  80 84 00 04 */	lwz r4, 4(r4)
@@ -464,19 +464,19 @@ iRenderSetCameraViewMatrix__FP7xMat4x3:
 /* 800CB59C 000C839C  4B F3 FF D1 */	bl func_8000B56C
 /* 800CB5A0 000C83A0  48 00 00 18 */	b lbl_800CB5B8
 lbl_800CB5A4:
-/* 800CB5A4 000C83A4  3C A0 80 3D */	lis r5, lbl_803C88E0@ha
+/* 800CB5A4 000C83A4  3C A0 80 3D */	lis r5, gRenderBuffer@ha
 /* 800CB5A8 000C83A8  7C 64 1B 78 */	mr r4, r3
-/* 800CB5AC 000C83AC  38 65 88 E0 */	addi r3, r5, lbl_803C88E0@l
+/* 800CB5AC 000C83AC  38 65 88 E0 */	addi r3, r5, gRenderBuffer@l
 /* 800CB5B0 000C83B0  38 63 00 20 */	addi r3, r3, 0x20
 /* 800CB5B4 000C83B4  4B F3 FF B9 */	bl func_8000B56C
 lbl_800CB5B8:
-/* 800CB5B8 000C83B8  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CB5BC 000C83BC  38 83 88 E0 */	addi r4, r3, lbl_803C88E0@l
+/* 800CB5B8 000C83B8  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CB5BC 000C83BC  38 83 88 E0 */	addi r4, r3, gRenderBuffer@l
 /* 800CB5C0 000C83C0  38 64 00 60 */	addi r3, r4, 0x60
 /* 800CB5C4 000C83C4  38 84 00 20 */	addi r4, r4, 0x20
 /* 800CB5C8 000C83C8  4B F4 30 FD */	bl func_8000E6C4
-/* 800CB5CC 000C83CC  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CB5D0 000C83D0  38 83 88 E0 */	addi r4, r3, lbl_803C88E0@l
+/* 800CB5CC 000C83CC  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CB5D0 000C83D0  38 83 88 E0 */	addi r4, r3, gRenderBuffer@l
 /* 800CB5D4 000C83D4  38 64 00 70 */	addi r3, r4, 0x70
 /* 800CB5D8 000C83D8  38 84 00 30 */	addi r4, r4, 0x30
 /* 800CB5DC 000C83DC  4B F4 30 E9 */	bl func_8000E6C4
@@ -493,9 +493,9 @@ iRenderPushQuadStreak__FP4xParP10xParCmdTex:
 /* 800CB5FC 000C83FC  DB E1 00 40 */	stfd f31, 0x40(r1)
 /* 800CB600 000C8400  F3 E1 00 48 */	psq_st f31, 72(r1), 0, qr0
 /* 800CB604 000C8404  BF 41 00 28 */	stmw r26, 0x28(r1)
-/* 800CB608 000C8408  3C A0 80 3D */	lis r5, lbl_803C88E0@ha
+/* 800CB608 000C8408  3C A0 80 3D */	lis r5, gRenderBuffer@ha
 /* 800CB60C 000C840C  3C E0 80 30 */	lis r7, lbl_802FDF38@ha
-/* 800CB610 000C8410  3B C5 88 E0 */	addi r30, r5, lbl_803C88E0@l
+/* 800CB610 000C8410  3B C5 88 E0 */	addi r30, r5, gRenderBuffer@l
 /* 800CB614 000C8414  3C C0 80 29 */	lis r6, lbl_80292650@ha
 /* 800CB618 000C8418  80 BE 00 18 */	lwz r5, 0x18(r30)
 /* 800CB61C 000C841C  38 E7 DF 38 */	addi r7, r7, lbl_802FDF38@l
@@ -508,8 +508,8 @@ iRenderPushQuadStreak__FP4xParP10xParCmdTex:
 /* 800CB638 000C8438  40 81 00 08 */	ble lbl_800CB640
 /* 800CB63C 000C843C  48 00 06 1D */	bl iRenderFlush__Fv
 lbl_800CB640:
-/* 800CB640 000C8440  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CB644 000C8444  3B E3 88 E0 */	addi r31, r3, lbl_803C88E0@l
+/* 800CB640 000C8440  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CB644 000C8444  3B E3 88 E0 */	addi r31, r3, gRenderBuffer@l
 /* 800CB648 000C8448  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 800CB64C 000C844C  38 03 00 04 */	addi r0, r3, 4
 /* 800CB650 000C8450  2C 00 01 E0 */	cmpwi r0, 0x1e0
@@ -517,9 +517,9 @@ lbl_800CB640:
 /* 800CB658 000C8458  48 00 06 01 */	bl iRenderFlush__Fv
 lbl_800CB65C:
 /* 800CB65C 000C845C  C1 9A 00 10 */	lfs f12, 0x10(r26)
-/* 800CB660 000C8460  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CB660 000C8460  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CB664 000C8464  C1 BA 00 14 */	lfs f13, 0x14(r26)
-/* 800CB668 000C8468  38 83 88 E0 */	addi r4, r3, lbl_803C88E0@l
+/* 800CB668 000C8468  38 83 88 E0 */	addi r4, r3, gRenderBuffer@l
 /* 800CB66C 000C846C  C3 FA 00 18 */	lfs f31, 0x18(r26)
 /* 800CB670 000C8470  3C 60 80 30 */	lis r3, lbl_802FDF38@ha
 /* 800CB674 000C8474  C0 62 97 E0 */	lfs f3, lbl_803CE160-_SDA2_BASE_(r2)
@@ -640,9 +640,9 @@ lbl_800CB81C:
 /* 800CB83C 000C863C  D0 25 00 88 */	stfs f1, 0x88(r5)
 /* 800CB840 000C8640  D0 05 00 68 */	stfs f0, 0x68(r5)
 lbl_800CB844:
-/* 800CB844 000C8644  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CB844 000C8644  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CB848 000C8648  80 9E 00 18 */	lwz r4, 0x18(r30)
-/* 800CB84C 000C864C  38 E3 88 E0 */	addi r7, r3, lbl_803C88E0@l
+/* 800CB84C 000C864C  38 E3 88 E0 */	addi r7, r3, gRenderBuffer@l
 /* 800CB850 000C8650  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 800CB854 000C8654  A0 1D 00 00 */	lhz r0, 0(r29)
 /* 800CB858 000C8658  54 85 08 3C */	slwi r5, r4, 1
@@ -700,9 +700,9 @@ func_800CB910:
 /* 800CB91C 000C871C  DB E1 00 80 */	stfd f31, 0x80(r1)
 /* 800CB920 000C8720  F3 E1 00 88 */	psq_st f31, 136(r1), 0, qr0
 /* 800CB924 000C8724  BE C1 00 58 */	stmw r22, 0x58(r1)
-/* 800CB928 000C8728  3C A0 80 3D */	lis r5, lbl_803C88E0@ha
+/* 800CB928 000C8728  3C A0 80 3D */	lis r5, gRenderBuffer@ha
 /* 800CB92C 000C872C  3C E0 80 30 */	lis r7, lbl_802FDFC8@ha
-/* 800CB930 000C8730  3B C5 88 E0 */	addi r30, r5, lbl_803C88E0@l
+/* 800CB930 000C8730  3B C5 88 E0 */	addi r30, r5, gRenderBuffer@l
 /* 800CB934 000C8734  3C C0 80 29 */	lis r6, lbl_8029265C@ha
 /* 800CB938 000C8738  80 BE 00 18 */	lwz r5, 0x18(r30)
 /* 800CB93C 000C873C  38 E7 DF C8 */	addi r7, r7, lbl_802FDFC8@l
@@ -715,8 +715,8 @@ func_800CB910:
 /* 800CB958 000C8758  40 81 00 08 */	ble lbl_800CB960
 /* 800CB95C 000C875C  48 00 02 FD */	bl iRenderFlush__Fv
 lbl_800CB960:
-/* 800CB960 000C8760  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CB964 000C8764  3B E3 88 E0 */	addi r31, r3, lbl_803C88E0@l
+/* 800CB960 000C8760  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CB964 000C8764  3B E3 88 E0 */	addi r31, r3, gRenderBuffer@l
 /* 800CB968 000C8768  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 800CB96C 000C876C  38 03 00 04 */	addi r0, r3, 4
 /* 800CB970 000C8770  2C 00 01 E0 */	cmpwi r0, 0x1e0
@@ -858,9 +858,9 @@ lbl_800CBB64:
 /* 800CBB84 000C8984  D0 25 00 88 */	stfs f1, 0x88(r5)
 /* 800CBB88 000C8988  D0 05 00 8C */	stfs f0, 0x8c(r5)
 lbl_800CBB8C:
-/* 800CBB8C 000C898C  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CBB8C 000C898C  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CBB90 000C8990  80 9E 00 18 */	lwz r4, 0x18(r30)
-/* 800CBB94 000C8994  38 E3 88 E0 */	addi r7, r3, lbl_803C88E0@l
+/* 800CBB94 000C8994  38 E3 88 E0 */	addi r7, r3, gRenderBuffer@l
 /* 800CBB98 000C8998  80 7F 00 1C */	lwz r3, 0x1c(r31)
 /* 800CBB9C 000C899C  A0 1D 00 00 */	lhz r0, 0(r29)
 /* 800CBBA0 000C89A0  54 85 08 3C */	slwi r5, r4, 1
@@ -914,10 +914,10 @@ lbl_800CBB8C:
 iRenderFlush__Fv:
 /* 800CBC58 000C8A58  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CBC5C 000C8A5C  7C 08 02 A6 */	mflr r0
-/* 800CBC60 000C8A60  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CBC60 000C8A60  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CBC64 000C8A64  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800CBC68 000C8A68  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800CBC6C 000C8A6C  3B E3 88 E0 */	addi r31, r3, lbl_803C88E0@l
+/* 800CBC6C 000C8A6C  3B E3 88 E0 */	addi r31, r3, gRenderBuffer@l
 /* 800CBC70 000C8A70  80 DF 00 1C */	lwz r6, 0x1c(r31)
 /* 800CBC74 000C8A74  2C 06 00 00 */	cmpwi r6, 0
 /* 800CBC78 000C8A78  40 81 00 1C */	ble lbl_800CBC94
@@ -928,9 +928,9 @@ iRenderFlush__Fv:
 /* 800CBC8C 000C8A8C  81 1F 00 18 */	lwz r8, 0x18(r31)
 /* 800CBC90 000C8A90  48 00 00 2D */	bl iRenderTrianglesImmediate__FiiPviPUsi
 lbl_800CBC94:
-/* 800CBC94 000C8A94  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 800CBC94 000C8A94  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 800CBC98 000C8A98  38 00 00 00 */	li r0, 0
-/* 800CBC9C 000C8A9C  38 63 88 E0 */	addi r3, r3, lbl_803C88E0@l
+/* 800CBC9C 000C8A9C  38 63 88 E0 */	addi r3, r3, gRenderBuffer@l
 /* 800CBCA0 000C8AA0  90 1F 00 1C */	stw r0, 0x1c(r31)
 /* 800CBCA4 000C8AA4  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800CBCA8 000C8AA8  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -1000,8 +1000,8 @@ lbl_800CBD88:
 /* 800CBD8C 000C8B8C  38 80 00 00 */	li r4, 0
 /* 800CBD90 000C8B90  48 16 3A 4D */	bl RwRenderStateSet
 lbl_800CBD94:
-/* 800CBD94 000C8B94  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CBD98 000C8B98  3B E3 88 E0 */	addi r31, r3, lbl_803C88E0@l
+/* 800CBD94 000C8B94  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CBD98 000C8B98  3B E3 88 E0 */	addi r31, r3, gRenderBuffer@l
 /* 800CBD9C 000C8B9C  80 9F 00 04 */	lwz r4, 4(r31)
 /* 800CBDA0 000C8BA0  48 00 01 28 */	b lbl_800CBEC8
 lbl_800CBDA4:
@@ -1115,8 +1115,8 @@ lbl_800CBF40:
 /* 800CBF44 000C8D44  38 80 00 00 */	li r4, 0
 /* 800CBF48 000C8D48  48 16 38 95 */	bl RwRenderStateSet
 lbl_800CBF4C:
-/* 800CBF4C 000C8D4C  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
-/* 800CBF50 000C8D50  3B E3 88 E0 */	addi r31, r3, lbl_803C88E0@l
+/* 800CBF4C 000C8D4C  3C 60 80 3D */	lis r3, gRenderBuffer@ha
+/* 800CBF50 000C8D50  3B E3 88 E0 */	addi r31, r3, gRenderBuffer@l
 /* 800CBF54 000C8D54  80 9F 00 04 */	lwz r4, 4(r31)
 /* 800CBF58 000C8D58  48 00 01 28 */	b lbl_800CC080
 lbl_800CBF5C:
@@ -1273,10 +1273,10 @@ lbl_800CC120:
 /* 800CC1A0 000C8FA0  48 16 36 3D */	bl RwRenderStateSet
 lbl_800CC1A4:
 /* 800CC1A4 000C8FA4  3C 60 80 30 */	lis r3, lbl_802FE058@ha
-/* 800CC1A8 000C8FA8  3C 80 80 3D */	lis r4, lbl_803C88E0@ha
+/* 800CC1A8 000C8FA8  3C 80 80 3D */	lis r4, gRenderBuffer@ha
 /* 800CC1AC 000C8FAC  3B C3 E0 58 */	addi r30, r3, lbl_802FE058@l
 /* 800CC1B0 000C8FB0  3C 60 80 29 */	lis r3, lbl_80292668@ha
-/* 800CC1B4 000C8FB4  3B A4 88 E0 */	addi r29, r4, lbl_803C88E0@l
+/* 800CC1B4 000C8FB4  3B A4 88 E0 */	addi r29, r4, gRenderBuffer@l
 /* 800CC1B8 000C8FB8  3B E3 26 68 */	addi r31, r3, lbl_80292668@l
 /* 800CC1BC 000C8FBC  48 00 03 70 */	b lbl_800CC52C
 lbl_800CC1C0:

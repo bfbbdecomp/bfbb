@@ -8,8 +8,8 @@ zConditionalInit__FPvPv:
 /* 8005255C 0004F35C  7C 08 02 A6 */	mflr r0
 /* 80052560 0004F360  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80052564 0004F364  48 00 00 21 */	bl zConditionalInit__FP5xBaseP10zCondAsset
-/* 80052568 0004F368  3C 60 80 29 */	lis r3, lbl_80291930@ha
-/* 8005256C 0004F36C  38 63 19 30 */	addi r3, r3, lbl_80291930@l
+/* 80052568 0004F368  3C 60 80 29 */	lis r3, zVarEntryTable@ha
+/* 8005256C 0004F36C  38 63 19 30 */	addi r3, r3, zVarEntryTable@l
 /* 80052570 0004F370  48 06 BB 19 */	bl zVarInit__FP9zVarEntry
 /* 80052574 0004F374  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80052578 0004F378  7C 08 03 A6 */	mtlr r0
@@ -86,11 +86,11 @@ zConditionalLoad__FP13_zConditionalP7xSerial:
 zConditional_Evaluate__FP13_zConditional:
 /* 80052654 0004F454  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80052658 0004F458  7C 08 02 A6 */	mflr r0
-/* 8005265C 0004F45C  3C 80 80 29 */	lis r4, lbl_80291930@ha
+/* 8005265C 0004F45C  3C 80 80 29 */	lis r4, zVarEntryTable@ha
 /* 80052660 0004F460  38 A0 00 00 */	li r5, 0
 /* 80052664 0004F464  90 01 00 24 */	stw r0, 0x24(r1)
 /* 80052668 0004F468  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8005266C 0004F46C  3B E4 19 30 */	addi r31, r4, lbl_80291930@l
+/* 8005266C 0004F46C  3B E4 19 30 */	addi r31, r4, zVarEntryTable@l
 /* 80052670 0004F470  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 80052674 0004F474  3B C0 00 00 */	li r30, 0
 /* 80052678 0004F478  93 A1 00 14 */	stw r29, 0x14(r1)

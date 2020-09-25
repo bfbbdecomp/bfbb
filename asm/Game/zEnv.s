@@ -35,9 +35,9 @@ zEnvInit__FP5_zEnvP9xEnvAsset:
 /* 80092784 0008F584  38 03 00 44 */	addi r0, r3, 0x44
 /* 80092788 0008F588  90 1D 00 08 */	stw r0, 8(r29)
 lbl_8009278C:
-/* 8009278C 0008F58C  3C 80 80 3C */	lis r4, lbl_803C0558@ha
+/* 8009278C 0008F58C  3C 80 80 3C */	lis r4, globals@ha
 /* 80092790 0008F590  3C 60 42 53 */	lis r3, 0x42535020@ha
-/* 80092794 0008F594  3B E4 05 58 */	addi r31, r4, lbl_803C0558@l
+/* 80092794 0008F594  3B E4 05 58 */	addi r31, r4, globals@l
 /* 80092798 0008F598  80 9F 1F C0 */	lwz r4, 0x1fc0(r31)
 /* 8009279C 0008F59C  38 63 50 20 */	addi r3, r3, 0x42535020@l
 /* 800927A0 0008F5A0  93 A4 02 C4 */	stw r29, 0x2c4(r4)
@@ -130,9 +130,9 @@ zEnvSetup__FP5_zEnv:
 /* 800928DC 0008F6DC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800928E0 0008F6E0  7C 7F 1B 78 */	mr r31, r3
 /* 800928E4 0008F6E4  4B F7 6B 65 */	bl xBaseSetup__FP5xBase
-/* 800928E8 0008F6E8  3C 60 80 3C */	lis r3, lbl_803C0558@ha
+/* 800928E8 0008F6E8  3C 60 80 3C */	lis r3, globals@ha
 /* 800928EC 0008F6EC  80 9F 00 10 */	lwz r4, 0x10(r31)
-/* 800928F0 0008F6F0  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 800928F0 0008F6F0  38 63 05 58 */	addi r3, r3, globals@l
 /* 800928F4 0008F6F4  80 63 1F C0 */	lwz r3, 0x1fc0(r3)
 /* 800928F8 0008F6F8  80 63 00 44 */	lwz r3, 0x44(r3)
 /* 800928FC 0008F6FC  80 63 00 00 */	lwz r3, 0(r3)
@@ -153,8 +153,8 @@ zEnvStartingCamera__FP5_zEnv:
 /* 8009292C 0008F72C  48 02 21 11 */	bl zSceneFindObject__FUi
 /* 80092930 0008F730  28 03 00 00 */	cmplwi r3, 0
 /* 80092934 0008F734  41 82 00 20 */	beq lbl_80092954
-/* 80092938 0008F738  3C 60 80 3C */	lis r3, lbl_803C0558@ha
-/* 8009293C 0008F73C  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 80092938 0008F738  3C 60 80 3C */	lis r3, globals@ha
+/* 8009293C 0008F73C  38 63 05 58 */	addi r3, r3, globals@l
 /* 80092940 0008F740  80 A3 07 28 */	lwz r5, 0x728(r3)
 /* 80092944 0008F744  80 83 00 00 */	lwz r4, 0(r3)
 /* 80092948 0008F748  C0 25 00 B8 */	lfs f1, 0xb8(r5)

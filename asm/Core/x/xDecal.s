@@ -675,9 +675,9 @@ get_render_data__13xDecalEmitterFRCQ213xDecalEmitter9unit_datafR10iColor_tagR7xM
 /* 8017CD68 00179B68  80 1B 00 00 */	lwz r0, 0(r27)
 /* 8017CD6C 00179B6C  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 8017CD70 00179B70  41 82 00 58 */	beq lbl_8017CDC8
-/* 8017CD74 00179B74  3C 80 80 3C */	lis r4, lbl_803C0558@ha
+/* 8017CD74 00179B74  3C 80 80 3C */	lis r4, globals@ha
 /* 8017CD78 00179B78  7F A3 EB 78 */	mr r3, r29
-/* 8017CD7C 00179B7C  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
+/* 8017CD7C 00179B7C  38 84 05 58 */	addi r4, r4, globals@l
 /* 8017CD80 00179B80  38 84 00 14 */	addi r4, r4, 0x14
 /* 8017CD84 00179B84  4B E8 E8 45 */	bl func_8000B5C8
 /* 8017CD88 00179B88  C0 1C 00 10 */	lfs f0, 0x10(r28)
@@ -946,7 +946,7 @@ lbl_8017D0D8:
 /* 8017D0F4 00179EF4  38 03 FF FF */	addi r0, r3, -1
 /* 8017D0F8 00179EF8  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 8017D0FC 00179EFC  80 1F 00 08 */	lwz r0, 8(r31)
-/* 8017D100 00179F00  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8017D100 00179F00  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 8017D104 00179F04  1C 80 00 50 */	mulli r4, r0, 0x50
 /* 8017D108 00179F08  4B EB 68 39 */	bl xMemAlloc__FUiUii
 /* 8017D10C 00179F0C  90 7F 00 10 */	stw r3, 0x10(r31)

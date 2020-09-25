@@ -94,9 +94,9 @@ lbl_8005426C:
 /* 80054348 00051148  80 9F 00 E0 */	lwz r4, 0xe0(r31)
 /* 8005434C 0005114C  38 A5 00 01 */	addi r5, r5, 1
 /* 80054350 00051150  4B FB 32 25 */	bl xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc
-/* 80054354 00051154  3C 60 80 3C */	lis r3, lbl_803C0558@ha
+/* 80054354 00051154  3C 60 80 3C */	lis r3, globals@ha
 /* 80054358 00051158  80 BF 00 D0 */	lwz r5, 0xd0(r31)
-/* 8005435C 0005115C  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 8005435C 0005115C  38 63 05 58 */	addi r3, r3, globals@l
 /* 80054360 00051160  80 DF 00 24 */	lwz r6, 0x24(r31)
 /* 80054364 00051164  80 63 1F C0 */	lwz r3, 0x1fc0(r3)
 /* 80054368 00051168  7F E4 FB 78 */	mr r4, r31
@@ -662,9 +662,9 @@ lbl_80054B20:
 /* 80054B24 00051924  4B FF FE F1 */	bl zEGenerator_ToggleOn__FP11zEGenerator
 /* 80054B28 00051928  48 00 00 BC */	b lbl_80054BE4
 lbl_80054B2C:
-/* 80054B2C 0005192C  3C 80 80 3C */	lis r4, lbl_803C0558@ha
+/* 80054B2C 0005192C  3C 80 80 3C */	lis r4, globals@ha
 /* 80054B30 00051930  7F E3 FB 78 */	mr r3, r31
-/* 80054B34 00051934  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
+/* 80054B34 00051934  38 84 05 58 */	addi r4, r4, globals@l
 /* 80054B38 00051938  80 84 1F C0 */	lwz r4, 0x1fc0(r4)
 /* 80054B3C 0005193C  4B FF F9 51 */	bl zEGenerator_Reset__FP11zEGeneratorP6xScene
 /* 80054B40 00051940  48 00 00 A4 */	b lbl_80054BE4

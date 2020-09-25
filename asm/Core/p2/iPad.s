@@ -18,10 +18,10 @@ iPadInit__Fv:
 iPadEnable__FP8_tagxPads:
 /* 800CA944 000C7744  B0 83 00 54 */	sth r4, 0x54(r3)
 /* 800CA948 000C7748  38 00 00 00 */	li r0, 0
-/* 800CA94C 000C774C  3C 80 80 3C */	lis r4, lbl_803BEF88@ha
+/* 800CA94C 000C774C  3C 80 80 3C */	lis r4, gTrcPad@ha
 /* 800CA950 000C7750  38 A0 00 02 */	li r5, 2
 /* 800CA954 000C7754  B0 03 00 56 */	sth r0, 0x56(r3)
-/* 800CA958 000C7758  38 84 EF 88 */	addi r4, r4, lbl_803BEF88@l
+/* 800CA958 000C7758  38 84 EF 88 */	addi r4, r4, gTrcPad@l
 /* 800CA95C 000C775C  90 A3 00 3C */	stw r5, 0x3c(r3)
 /* 800CA960 000C7760  A8 03 00 54 */	lha r0, 0x54(r3)
 /* 800CA964 000C7764  1C 00 00 0C */	mulli r0, r0, 0xc
@@ -335,9 +335,9 @@ lbl_800CAC30:
 /* 800CADE0 000C7BE0  EC 20 08 28 */	fsubs f1, f0, f1
 /* 800CADE4 000C7BE4  4B FF FB A9 */	bl func_800CA98C
 /* 800CADE8 000C7BE8  7C 03 00 D0 */	neg r0, r3
-/* 800CADEC 000C7BEC  3C 60 80 3C */	lis r3, lbl_803BEF88@ha
+/* 800CADEC 000C7BEC  3C 60 80 3C */	lis r3, gTrcPad@ha
 /* 800CADF0 000C7BF0  98 1D 00 3B */	stb r0, 0x3b(r29)
-/* 800CADF4 000C7BF4  38 83 EF 88 */	addi r4, r3, lbl_803BEF88@l
+/* 800CADF4 000C7BF4  38 83 EF 88 */	addi r4, r3, gTrcPad@l
 /* 800CADF8 000C7BF8  A8 7D 00 54 */	lha r3, 0x54(r29)
 /* 800CADFC 000C7BFC  1C 03 00 0C */	mulli r0, r3, 0xc
 /* 800CAE00 000C7C00  7C 84 02 14 */	add r4, r4, r0
@@ -387,11 +387,11 @@ iPadStopRumble__FP8_tagxPad:
 lbl_800CAE7C:
 /* 800CAE7C 000C7C7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CAE80 000C7C80  7C 08 02 A6 */	mflr r0
-/* 800CAE84 000C7C84  3C 80 80 3C */	lis r4, lbl_803C0558@ha
-/* 800CAE88 000C7C88  3C 60 80 39 */	lis r3, lbl_8038C994@ha
+/* 800CAE84 000C7C84  3C 80 80 3C */	lis r4, globals@ha
+/* 800CAE88 000C7C88  3C 60 80 39 */	lis r3, mPad@ha
 /* 800CAE8C 000C7C8C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800CAE90 000C7C90  38 A4 05 58 */	addi r5, r4, lbl_803C0558@l
-/* 800CAE94 000C7C94  38 03 C9 94 */	addi r0, r3, lbl_8038C994@l
+/* 800CAE90 000C7C90  38 A4 05 58 */	addi r5, r4, globals@l
+/* 800CAE94 000C7C94  38 03 C9 94 */	addi r0, r3, mPad@l
 /* 800CAE98 000C7C98  38 80 00 00 */	li r4, 0
 /* 800CAE9C 000C7C9C  88 A5 06 D1 */	lbz r5, 0x6d1(r5)
 /* 800CAEA0 000C7CA0  1C 65 01 48 */	mulli r3, r5, 0x148

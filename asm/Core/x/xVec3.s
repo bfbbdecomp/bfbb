@@ -2,14 +2,14 @@
 
 .section .rodata   # 0x802542E0 - 0x80254308
 
-.global lbl_802542E0
-lbl_802542E0:
+.global m_Null__5xVec3
+m_Null__5xVec3:
 	.incbin "baserom.dol", 0x2512C0, 0xC
-.global lbl_802542EC
-lbl_802542EC:
+.global m_UnitAxisX__5xVec3
+m_UnitAxisX__5xVec3:
 	.incbin "baserom.dol", 0x2512CC, 0xC
-.global lbl_802542F8
-lbl_802542F8:
+.global m_UnitAxisY__5xVec3
+m_UnitAxisY__5xVec3:
 	.incbin "baserom.dol", 0x2512D8, 0x10
 
 .section .text  # 0x8004E2F0 - 0x8004E510

@@ -6,13 +6,13 @@
 ZNPC_SubBoss_Startup__Fv:
 /* 80135EA0 00132CA0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80135EA4 00132CA4  7C 08 02 A6 */	mflr r0
-/* 80135EA8 00132CA8  3C 80 80 2A */	lis r4, lbl_8029913C@ha
-/* 80135EAC 00132CAC  3C 60 80 2A */	lis r3, lbl_802990E0@ha
+/* 80135EA8 00132CA8  3C 80 80 2A */	lis r4, g_strz_subbanim@ha
+/* 80135EAC 00132CAC  3C 60 80 2A */	lis r3, g_hash_subbanim@ha
 /* 80135EB0 00132CB0  90 01 00 24 */	stw r0, 0x24(r1)
 /* 80135EB4 00132CB4  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80135EB8 00132CB8  3B E4 91 3C */	addi r31, r4, lbl_8029913C@l
+/* 80135EB8 00132CB8  3B E4 91 3C */	addi r31, r4, g_strz_subbanim@l
 /* 80135EBC 00132CBC  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 80135EC0 00132CC0  3B C3 90 E0 */	addi r30, r3, lbl_802990E0@l
+/* 80135EC0 00132CC0  3B C3 90 E0 */	addi r30, r3, g_hash_subbanim@l
 /* 80135EC4 00132CC4  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 80135EC8 00132CC8  3B A0 00 00 */	li r29, 0
 lbl_80135ECC:
@@ -179,9 +179,9 @@ func_801360C8:
 /* 801360D4 00132ED4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801360D8 00132ED8  7C 7F 1B 78 */	mr r31, r3
 /* 801360DC 00132EDC  4B FB E5 19 */	bl func_800F45F4
-/* 801360E0 00132EE0  3C 80 80 2A */	lis r4, lbl_80299198@ha
+/* 801360E0 00132EE0  3C 80 80 2A */	lis r4, __vt__11zNPCSubBoss@ha
 /* 801360E4 00132EE4  7F E3 FB 78 */	mr r3, r31
-/* 801360E8 00132EE8  38 04 91 98 */	addi r0, r4, lbl_80299198@l
+/* 801360E8 00132EE8  38 04 91 98 */	addi r0, r4, __vt__11zNPCSubBoss@l
 /* 801360EC 00132EEC  90 1F 01 B8 */	stw r0, 0x1b8(r31)
 /* 801360F0 00132EF0  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 801360F4 00132EF4  80 01 00 14 */	lwz r0, 0x14(r1)

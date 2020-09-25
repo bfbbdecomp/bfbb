@@ -733,10 +733,10 @@ lbl_8000AF2C:
 func_8000AF3C:
 /* 8000AF3C 00007D3C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000AF40 00007D40  7C 08 02 A6 */	mflr r0
-/* 8000AF44 00007D44  3C A0 80 3C */	lis r5, lbl_803BC0B0@ha
+/* 8000AF44 00007D44  3C A0 80 3C */	lis r5, xqc_def_ctrl@ha
 /* 8000AF48 00007D48  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8000AF4C 00007D4C  7C 60 1B 78 */	mr r0, r3
-/* 8000AF50 00007D50  38 65 C0 B0 */	addi r3, r5, lbl_803BC0B0@l
+/* 8000AF50 00007D50  38 65 C0 B0 */	addi r3, r5, xqc_def_ctrl@l
 /* 8000AF54 00007D54  7C 85 23 78 */	mr r5, r4
 /* 8000AF58 00007D58  7C 04 03 78 */	mr r4, r0
 /* 8000AF5C 00007D5C  48 03 17 05 */	bl xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound
