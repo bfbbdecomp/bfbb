@@ -4,8 +4,8 @@
 
 .global zParEmitterFind__FUi
 zParEmitterFind__FUi:
-/* 800A87EC 000A55EC  3C 80 80 3C */	lis r4, lbl_803C0558@ha
-/* 800A87F0 000A55F0  38 84 05 58 */	addi r4, r4, lbl_803C0558@l
+/* 800A87EC 000A55EC  3C 80 80 3C */	lis r4, globals@ha
+/* 800A87F0 000A55F0  38 84 05 58 */	addi r4, r4, globals@l
 /* 800A87F4 000A55F4  80 84 1F C0 */	lwz r4, 0x1fc0(r4)
 /* 800A87F8 000A55F8  28 04 00 00 */	cmplwi r4, 0
 /* 800A87FC 000A55FC  40 82 00 0C */	bne lbl_800A8808

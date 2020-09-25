@@ -181,8 +181,8 @@ lbl_8000B468:
 /* 8000B524 00008324  80 9F 01 3C */	lwz r4, 0x13c(r31)
 /* 8000B528 00008328  60 84 00 80 */	ori r4, r4, 0x80
 /* 8000B52C 0000832C  90 9F 01 3C */	stw r4, 0x13c(r31)
-/* 8000B530 00008330  90 6D 80 08 */	stw r3, lbl_803CA908-_SDA_BASE_(r13)
-/* 8000B534 00008334  90 0D 88 74 */	stw r0, lbl_803CB174-_SDA_BASE_(r13)
+/* 8000B530 00008330  90 6D 80 08 */	stw r3, xcam_do_collis-_SDA_BASE_(r13)
+/* 8000B534 00008334  90 0D 88 74 */	stw r0, xcam_collis_owner_disable-_SDA_BASE_(r13)
 /* 8000B538 00008338  E3 E1 00 48 */	psq_l f31, 72(r1), 0, qr0
 /* 8000B53C 0000833C  CB E1 00 40 */	lfd f31, 0x40(r1)
 /* 8000B540 00008340  E3 C1 00 38 */	psq_l f30, 56(r1), 0, qr0
@@ -1633,9 +1633,9 @@ lbl_8000CA10:
 /* 8000CA3C 0000983C  D0 01 00 10 */	stfs f0, 0x10(r1)
 /* 8000CA40 00009840  C0 22 80 AC */	lfs f1, lbl_803CCA2C-_SDA2_BASE_(r2)
 /* 8000CA44 00009844  48 00 55 21 */	bl xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f
-/* 8000CA48 00009848  3C 80 80 3C */	lis r4, lbl_803C0558@ha
+/* 8000CA48 00009848  3C 80 80 3C */	lis r4, globals@ha
 /* 8000CA4C 0000984C  38 61 01 4C */	addi r3, r1, 0x14c
-/* 8000CA50 00009850  3B C4 05 58 */	addi r30, r4, lbl_803C0558@l
+/* 8000CA50 00009850  3B C4 05 58 */	addi r30, r4, globals@l
 /* 8000CA54 00009854  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
 /* 8000CA58 00009858  80 84 00 44 */	lwz r4, 0x44(r4)
 /* 8000CA5C 0000985C  48 00 6D 8D */	bl xSweptSphereToEnv__FP12xSweptSphereP4xEnv
@@ -1673,20 +1673,20 @@ lbl_8000CAA4:
 /* 8000CAD4 000098D4  D0 01 00 E0 */	stfs f0, 0xe0(r1)
 lbl_8000CAD8:
 /* 8000CAD8 000098D8  3C 80 80 01 */	lis r4, lbl_8000BBBC@ha
-/* 8000CADC 000098DC  3C 60 80 3D */	lis r3, lbl_803CA6D8@ha
+/* 8000CADC 000098DC  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 8000CAE0 000098E0  3B A1 02 04 */	addi r29, r1, 0x204
 /* 8000CAE4 000098E4  38 A1 00 C8 */	addi r5, r1, 0xc8
 /* 8000CAE8 000098E8  38 C4 BB BC */	addi r6, r4, lbl_8000BBBC@l
 /* 8000CAEC 000098EC  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
-/* 8000CAF0 000098F0  38 63 A6 D8 */	addi r3, r3, lbl_803CA6D8@l
+/* 8000CAF0 000098F0  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 8000CAF4 000098F4  7F A7 EB 78 */	mr r7, r29
 /* 8000CAF8 000098F8  39 01 01 4C */	addi r8, r1, 0x14c
 /* 8000CAFC 000098FC  48 03 2D 95 */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
-/* 8000CB00 00009900  3C 60 80 3D */	lis r3, lbl_803CA774@ha
+/* 8000CB00 00009900  3C 60 80 3D */	lis r3, colls_oso_grid@ha
 /* 8000CB04 00009904  3C A0 80 01 */	lis r5, lbl_8000BBBC@ha
 /* 8000CB08 00009908  38 C5 BB BC */	addi r6, r5, lbl_8000BBBC@l
 /* 8000CB0C 0000990C  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
-/* 8000CB10 00009910  38 63 A7 74 */	addi r3, r3, lbl_803CA774@l
+/* 8000CB10 00009910  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 8000CB14 00009914  7F A7 EB 78 */	mr r7, r29
 /* 8000CB18 00009918  38 A1 00 C8 */	addi r5, r1, 0xc8
 /* 8000CB1C 0000991C  39 01 01 4C */	addi r8, r1, 0x14c
@@ -1716,7 +1716,7 @@ lbl_8000CB48:
 /* 8000CB74 00009974  D0 1F 00 4C */	stfs f0, 0x4c(r31)
 /* 8000CB78 00009978  48 00 00 1C */	b lbl_8000CB94
 lbl_8000CB7C:
-/* 8000CB7C 0000997C  80 0D 80 08 */	lwz r0, lbl_803CA908-_SDA_BASE_(r13)
+/* 8000CB7C 0000997C  80 0D 80 08 */	lwz r0, xcam_do_collis-_SDA_BASE_(r13)
 /* 8000CB80 00009980  2C 00 00 00 */	cmpwi r0, 0
 /* 8000CB84 00009984  41 82 00 10 */	beq lbl_8000CB94
 /* 8000CB88 00009988  80 0D 88 70 */	lwz r0, lbl_803CB170-_SDA_BASE_(r13)
@@ -1867,15 +1867,15 @@ xCameraFXBegin__FP7xCamera:
 func_8000CD84:
 /* 8000CD84 00009B84  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000CD88 00009B88  7C 08 02 A6 */	mflr r0
-/* 8000CD8C 00009B8C  3C 60 80 38 */	lis r3, lbl_8038452C@ha
+/* 8000CD8C 00009B8C  3C 60 80 38 */	lis r3, sCameraFX@ha
 /* 8000CD90 00009B90  38 80 00 00 */	li r4, 0
 /* 8000CD94 00009B94  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8000CD98 00009B98  38 63 45 2C */	addi r3, r3, lbl_8038452C@l
+/* 8000CD98 00009B98  38 63 45 2C */	addi r3, r3, sCameraFX@l
 /* 8000CD9C 00009B9C  38 A0 02 F8 */	li r5, 0x2f8
 /* 8000CDA0 00009BA0  4B FF 66 B9 */	bl memset
-/* 8000CDA4 00009BA4  3C 60 80 38 */	lis r3, lbl_8038452C@ha
+/* 8000CDA4 00009BA4  3C 60 80 38 */	lis r3, sCameraFX@ha
 /* 8000CDA8 00009BA8  38 00 00 00 */	li r0, 0
-/* 8000CDAC 00009BAC  38 63 45 2C */	addi r3, r3, lbl_8038452C@l
+/* 8000CDAC 00009BAC  38 63 45 2C */	addi r3, r3, sCameraFX@l
 /* 8000CDB0 00009BB0  90 03 00 04 */	stw r0, 4(r3)
 /* 8000CDB4 00009BB4  90 03 00 50 */	stw r0, 0x50(r3)
 /* 8000CDB8 00009BB8  90 03 00 9C */	stw r0, 0x9c(r3)
@@ -1893,9 +1893,9 @@ func_8000CD84:
 
 .global xCameraFXAlloc__Fv
 xCameraFXAlloc__Fv:
-/* 8000CDE8 00009BE8  3C 60 80 38 */	lis r3, lbl_8038452C@ha
+/* 8000CDE8 00009BE8  3C 60 80 38 */	lis r3, sCameraFX@ha
 /* 8000CDEC 00009BEC  38 00 00 0A */	li r0, 0xa
-/* 8000CDF0 00009BF0  38 63 45 2C */	addi r3, r3, lbl_8038452C@l
+/* 8000CDF0 00009BF0  38 63 45 2C */	addi r3, r3, sCameraFX@l
 /* 8000CDF4 00009BF4  7C 09 03 A6 */	mtctr r0
 lbl_8000CDF8:
 /* 8000CDF8 00009BF8  80 03 00 04 */	lwz r0, 4(r3)
@@ -2224,8 +2224,8 @@ xCameraFXUpdate__FP7xCameraf:
 /* 8000D2B4 0000A0B4  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8000D2B8 0000A0B8  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8000D2BC 0000A0BC  FF E0 08 90 */	fmr f31, f1
-/* 8000D2C0 0000A0C0  3C 80 80 38 */	lis r4, lbl_8038452C@ha
-/* 8000D2C4 0000A0C4  3B E4 45 2C */	addi r31, r4, lbl_8038452C@l
+/* 8000D2C0 0000A0C0  3C 80 80 38 */	lis r4, sCameraFX@ha
+/* 8000D2C4 0000A0C4  3B E4 45 2C */	addi r31, r4, sCameraFX@l
 /* 8000D2C8 0000A0C8  7C 7D 1B 78 */	mr r29, r3
 /* 8000D2CC 0000A0CC  3B C0 00 00 */	li r30, 0
 lbl_8000D2D0:
@@ -2248,9 +2248,9 @@ lbl_8000D304:
 /* 8000D30C 0000A10C  41 82 00 3C */	beq lbl_8000D348
 lbl_8000D310:
 /* 8000D310 0000A110  38 00 00 00 */	li r0, 0
-/* 8000D314 0000A114  3C 60 80 28 */	lis r3, lbl_8027B3F0@ha
+/* 8000D314 0000A114  3C 60 80 28 */	lis r3, sCameraFXTable@ha
 /* 8000D318 0000A118  90 1F 00 04 */	stw r0, 4(r31)
-/* 8000D31C 0000A11C  38 03 B3 F0 */	addi r0, r3, lbl_8027B3F0@l
+/* 8000D31C 0000A11C  38 03 B3 F0 */	addi r0, r3, sCameraFXTable@l
 /* 8000D320 0000A120  80 7F 00 00 */	lwz r3, 0(r31)
 /* 8000D324 0000A124  1C 63 00 0C */	mulli r3, r3, 0xc
 /* 8000D328 0000A128  7C 60 1A 14 */	add r3, r0, r3
@@ -2263,8 +2263,8 @@ lbl_8000D310:
 /* 8000D344 0000A144  48 00 00 40 */	b lbl_8000D384
 lbl_8000D348:
 /* 8000D348 0000A148  80 9F 00 00 */	lwz r4, 0(r31)
-/* 8000D34C 0000A14C  3C 60 80 28 */	lis r3, lbl_8027B3F0@ha
-/* 8000D350 0000A150  38 03 B3 F0 */	addi r0, r3, lbl_8027B3F0@l
+/* 8000D34C 0000A14C  3C 60 80 28 */	lis r3, sCameraFXTable@ha
+/* 8000D350 0000A150  38 03 B3 F0 */	addi r0, r3, sCameraFXTable@l
 /* 8000D354 0000A154  1C 64 00 0C */	mulli r3, r4, 0xc
 /* 8000D358 0000A158  7C 60 1A 14 */	add r3, r0, r3
 /* 8000D35C 0000A15C  81 83 00 04 */	lwz r12, 4(r3)
@@ -2435,20 +2435,20 @@ xCameraSetTargetOMatrix__FP7xCameraP7xMat4x3:
 .global xCameraDoCollisions__Fii
 xCameraDoCollisions__Fii:
 /* 8000D590 0000A390  38 00 00 01 */	li r0, 1
-/* 8000D594 0000A394  80 CD 88 74 */	lwz r6, lbl_803CB174-_SDA_BASE_(r13)
+/* 8000D594 0000A394  80 CD 88 74 */	lwz r6, xcam_collis_owner_disable-_SDA_BASE_(r13)
 /* 8000D598 0000A398  7C 05 20 30 */	slw r5, r0, r4
 /* 8000D59C 0000A39C  7C 60 00 34 */	cntlzw r0, r3
 /* 8000D5A0 0000A3A0  7C C3 28 78 */	andc r3, r6, r5
-/* 8000D5A4 0000A3A4  90 6D 88 74 */	stw r3, lbl_803CB174-_SDA_BASE_(r13)
+/* 8000D5A4 0000A3A4  90 6D 88 74 */	stw r3, xcam_collis_owner_disable-_SDA_BASE_(r13)
 /* 8000D5A8 0000A3A8  54 00 DE 3E */	rlwinm r0, r0, 0x1b, 0x18, 0x1f
 /* 8000D5AC 0000A3AC  7C 00 20 30 */	slw r0, r0, r4
-/* 8000D5B0 0000A3B0  80 6D 88 74 */	lwz r3, lbl_803CB174-_SDA_BASE_(r13)
+/* 8000D5B0 0000A3B0  80 6D 88 74 */	lwz r3, xcam_collis_owner_disable-_SDA_BASE_(r13)
 /* 8000D5B4 0000A3B4  7C 60 03 78 */	or r0, r3, r0
-/* 8000D5B8 0000A3B8  90 0D 88 74 */	stw r0, lbl_803CB174-_SDA_BASE_(r13)
-/* 8000D5BC 0000A3BC  80 0D 88 74 */	lwz r0, lbl_803CB174-_SDA_BASE_(r13)
+/* 8000D5B8 0000A3B8  90 0D 88 74 */	stw r0, xcam_collis_owner_disable-_SDA_BASE_(r13)
+/* 8000D5BC 0000A3BC  80 0D 88 74 */	lwz r0, xcam_collis_owner_disable-_SDA_BASE_(r13)
 /* 8000D5C0 0000A3C0  7C 00 00 34 */	cntlzw r0, r0
 /* 8000D5C4 0000A3C4  54 00 DE 3E */	rlwinm r0, r0, 0x1b, 0x18, 0x1f
-/* 8000D5C8 0000A3C8  90 0D 80 08 */	stw r0, lbl_803CA908-_SDA_BASE_(r13)
+/* 8000D5C8 0000A3C8  90 0D 80 08 */	stw r0, xcam_do_collis-_SDA_BASE_(r13)
 /* 8000D5CC 0000A3CC  4E 80 00 20 */	blr 
 
 .global xCameraMove__FP7xCameraUiffffff
@@ -3277,9 +3277,9 @@ lbl_8000E188:
 /* 8000E18C 0000AF8C  FC 00 00 50 */	fneg f0, f0
 /* 8000E190 0000AF90  EC 20 07 32 */	fmuls f1, f0, f28
 /* 8000E194 0000AF94  48 00 06 1D */	bl func_8000E7B0
-/* 8000E198 0000AF98  3C 60 80 3C */	lis r3, lbl_803C0558@ha
+/* 8000E198 0000AF98  3C 60 80 3C */	lis r3, globals@ha
 /* 8000E19C 0000AF9C  C0 02 80 68 */	lfs f0, lbl_803CC9E8-_SDA2_BASE_(r2)
-/* 8000E1A0 0000AFA0  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 8000E1A0 0000AFA0  38 63 05 58 */	addi r3, r3, globals@l
 /* 8000E1A4 0000AFA4  C0 5D 00 30 */	lfs f2, 0x30(r29)
 /* 8000E1A8 0000AFA8  83 83 03 1C */	lwz r28, 0x31c(r3)
 /* 8000E1AC 0000AFAC  EF A0 08 28 */	fsubs f29, f0, f1
@@ -3500,9 +3500,9 @@ func_8000E4C0:
 func_8000E4C4:
 /* 8000E4C4 0000B2C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000E4C8 0000B2C8  7C 08 02 A6 */	mflr r0
-/* 8000E4CC 0000B2CC  3C 80 80 39 */	lis r4, lbl_8038C2E0@ha
+/* 8000E4CC 0000B2CC  3C 80 80 39 */	lis r4, g_I3@ha
 /* 8000E4D0 0000B2D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8000E4D4 0000B2D4  38 84 C2 E0 */	addi r4, r4, lbl_8038C2E0@l
+/* 8000E4D4 0000B2D4  38 84 C2 E0 */	addi r4, r4, g_I3@l
 /* 8000E4D8 0000B2D8  48 00 00 15 */	bl func_8000E4EC
 /* 8000E4DC 0000B2DC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8000E4E0 0000B2E0  7C 08 03 A6 */	mtlr r0
@@ -3811,9 +3811,9 @@ func_8000E878:
 func_8000E8A8:
 /* 8000E8A8 0000B6A8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000E8AC 0000B6AC  7C 08 02 A6 */	mflr r0
-/* 8000E8B0 0000B6B0  3C 80 80 25 */	lis r4, lbl_802542EC@ha
+/* 8000E8B0 0000B6B0  3C 80 80 25 */	lis r4, m_UnitAxisX__5xVec3@ha
 /* 8000E8B4 0000B6B4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8000E8B8 0000B6B8  38 84 42 EC */	addi r4, r4, lbl_802542EC@l
+/* 8000E8B8 0000B6B8  38 84 42 EC */	addi r4, r4, m_UnitAxisX__5xVec3@l
 /* 8000E8BC 0000B6BC  48 00 00 15 */	bl func_8000E8D0
 /* 8000E8C0 0000B6C0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8000E8C4 0000B6C4  7C 08 03 A6 */	mtlr r0

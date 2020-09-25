@@ -1142,8 +1142,8 @@ lbl_802752C0:
 .global lbl_802752D0
 lbl_802752D0:
 	.incbin "baserom.dol", 0x2722B0, 0x30
-.global lbl_80275300
-lbl_80275300:
+.global VarBitsLens
+VarBitsLens:
 	.incbin "baserom.dol", 0x2722E0, 0xC
 .global lbl_8027530C
 lbl_8027530C:
@@ -1208,11 +1208,11 @@ lbl_802754E0:
 .global lbl_802774E0
 lbl_802774E0:
 	.incbin "baserom.dol", 0x2744C0, 0x2000
-.global lbl_802794E0
-lbl_802794E0:
+.global zigzag
+zigzag:
 	.incbin "baserom.dol", 0x2764C0, 0x40
-.global lbl_80279520
-lbl_80279520:
+.global patterns
+patterns:
 	.incbin "baserom.dol", 0x276500, 0x400
 .global lbl_80279920
 lbl_80279920:
@@ -1286,8 +1286,8 @@ lbl_8027A2D8:
 .global lbl_8027A2F8
 lbl_8027A2F8:
 	.incbin "baserom.dol", 0x2772D8, 0x20
-.global lbl_8027A318
-lbl_8027A318:
+.global gTRKMemMap
+gTRKMemMap:
 	.incbin "baserom.dol", 0x2772F8, 0x10
 .global lbl_8027A328
 lbl_8027A328:
@@ -1313,8 +1313,8 @@ lbl_8027A3F0:
 .global lbl_8027A410
 lbl_8027A410:
 	.incbin "baserom.dol", 0x2773F0, 0x20
-.global lbl_8027A430
-lbl_8027A430:
+.global datasize
+datasize:
 	.incbin "baserom.dol", 0x277410, 0x24
 .global lbl_8027A454
 lbl_8027A454:

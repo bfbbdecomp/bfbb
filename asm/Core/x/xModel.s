@@ -4,9 +4,9 @@
 
 .global xModelGetPipeFlags__FP8RpAtomic
 xModelGetPipeFlags__FP8RpAtomic:
-/* 80033E2C 00030C2C  80 AD 89 F8 */	lwz r5, lbl_803CB2F8-_SDA_BASE_(r13)
+/* 80033E2C 00030C2C  80 AD 89 F8 */	lwz r5, xModelLookupList-_SDA_BASE_(r13)
 /* 80033E30 00030C30  38 C0 00 00 */	li r6, 0
-/* 80033E34 00030C34  80 0D 89 F4 */	lwz r0, lbl_803CB2F4-_SDA_BASE_(r13)
+/* 80033E34 00030C34  80 0D 89 F4 */	lwz r0, xModelLookupCount-_SDA_BASE_(r13)
 /* 80033E38 00030C38  7C A4 2B 78 */	mr r4, r5
 /* 80033E3C 00030C3C  7C 09 03 A6 */	mtctr r0
 /* 80033E40 00030C40  2C 00 00 00 */	cmpwi r0, 0
@@ -45,7 +45,7 @@ xModelInit__Fv:
 /* 80033EAC 00030CAC  90 6D 89 EC */	stw r3, lbl_803CB2EC-_SDA_BASE_(r13)
 lbl_80033EB0:
 /* 80033EB0 00030CB0  38 00 00 00 */	li r0, 0
-/* 80033EB4 00030CB4  90 0D 89 F0 */	stw r0, lbl_803CB2F0-_SDA_BASE_(r13)
+/* 80033EB4 00030CB4  90 0D 89 F0 */	stw r0, xModelPipeNumTables-_SDA_BASE_(r13)
 /* 80033EB8 00030CB8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80033EBC 00030CBC  7C 08 03 A6 */	mtlr r0
 /* 80033EC0 00030CC0  38 21 00 10 */	addi r1, r1, 0x10
@@ -67,7 +67,7 @@ xModelPoolInit__FUiUi:
 /* 80033EF4 00030CF4  3B E0 00 01 */	li r31, 1
 lbl_80033EF8:
 /* 80033EF8 00030CF8  7C 1E F9 D6 */	mullw r0, r30, r31
-/* 80033EFC 00030CFC  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80033EFC 00030CFC  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80033F00 00030D00  38 A0 00 10 */	li r5, 0x10
 /* 80033F04 00030D04  1C 9E 00 6C */	mulli r4, r30, 0x6c
 /* 80033F08 00030D08  54 1C 30 32 */	slwi r28, r0, 6
@@ -213,7 +213,7 @@ xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc:
 /* 80034110 00030F10  7C FB 3B 78 */	mr r27, r7
 /* 80034114 00030F14  3B C0 00 00 */	li r30, 0
 /* 80034118 00030F18  48 09 3D FD */	bl iModelNumBones__FP8RpAtomic
-/* 8003411C 00030F1C  80 0D 89 FC */	lwz r0, lbl_803CB2FC-_SDA_BASE_(r13)
+/* 8003411C 00030F1C  80 0D 89 FC */	lwz r0, xModelInstStaticAlloc-_SDA_BASE_(r13)
 /* 80034120 00030F20  7C 7F 1B 78 */	mr r31, r3
 /* 80034124 00030F24  57 23 D7 FE */	rlwinm r3, r25, 0x1a, 0x1f, 0x1f
 /* 80034128 00030F28  57 24 04 3E */	clrlwi r4, r25, 0x10
@@ -223,7 +223,7 @@ xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc:
 /* 80034138 00030F38  41 82 00 5C */	beq lbl_80034194
 /* 8003413C 00030F3C  54 80 04 A5 */	rlwinm. r0, r4, 0, 0x12, 0x12
 /* 80034140 00030F40  41 82 00 28 */	beq lbl_80034168
-/* 80034144 00030F44  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80034144 00030F44  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80034148 00030F48  38 80 00 6C */	li r4, 0x6c
 /* 8003414C 00030F4C  38 A0 00 00 */	li r5, 0
 /* 80034150 00030F50  4B FF F7 F1 */	bl xMemAlloc__FUiUii
@@ -234,7 +234,7 @@ xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc:
 /* 80034164 00030F64  48 00 00 90 */	b lbl_800341F4
 lbl_80034168:
 /* 80034168 00030F68  57 A4 30 32 */	slwi r4, r29, 6
-/* 8003416C 00030F6C  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8003416C 00030F6C  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80034170 00030F70  38 84 00 6C */	addi r4, r4, 0x6c
 /* 80034174 00030F74  38 A0 00 10 */	li r5, 0x10
 /* 80034178 00030F78  4B FF F7 C9 */	bl xMemAlloc__FUiUii
@@ -477,7 +477,7 @@ xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi:
 /* 80034490 00031290  57 E0 D7 FE */	rlwinm r0, r31, 0x1a, 0x1f, 0x1f
 /* 80034494 00031294  38 A0 00 10 */	li r5, 0x10
 /* 80034498 00031298  7C 83 02 14 */	add r4, r3, r0
-/* 8003449C 0003129C  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8003449C 0003129C  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 800344A0 000312A0  38 04 00 01 */	addi r0, r4, 1
 /* 800344A4 000312A4  54 04 30 32 */	slwi r4, r0, 6
 /* 800344A8 000312A8  4B FF F4 99 */	bl xMemAlloc__FUiUii
@@ -822,7 +822,7 @@ xModelRender__FP14xModelInstance:
 /* 80034954 00031754  7C 7F 1B 78 */	mr r31, r3
 /* 80034958 00031758  48 00 00 28 */	b lbl_80034980
 lbl_8003495C:
-/* 8003495C 0003175C  80 0D 8A 00 */	lwz r0, lbl_803CB300-_SDA_BASE_(r13)
+/* 8003495C 0003175C  80 0D 8A 00 */	lwz r0, xModelBucketEnabled-_SDA_BASE_(r13)
 /* 80034960 00031760  2C 00 00 00 */	cmpwi r0, 0
 /* 80034964 00031764  41 82 00 10 */	beq lbl_80034974
 /* 80034968 00031768  7F E3 FB 78 */	mr r3, r31
@@ -913,7 +913,7 @@ xModelRender2D__FRC14xModelInstanceRC13basic_rect_f_RC5xVec3RC5xVec3:
 /* 80034A94 00031894  40 81 00 08 */	ble lbl_80034A9C
 /* 80034A98 00031898  48 00 01 38 */	b lbl_80034BD0
 lbl_80034A9C:
-/* 80034A9C 0003189C  80 6D 9F 7C */	lwz r3, lbl_803CC87C-_SDA_BASE_(r13)
+/* 80034A9C 0003189C  80 6D 9F 7C */	lwz r3, RwEngineInstance-_SDA_BASE_(r13)
 /* 80034AA0 000318A0  83 E3 00 00 */	lwz r31, 0(r3)
 /* 80034AA4 000318A4  80 7F 00 04 */	lwz r3, 4(r31)
 /* 80034AA8 000318A8  48 20 45 89 */	bl RwFrameGetLTM
@@ -1181,7 +1181,7 @@ xModelAnimCollStart__FR14xModelInstance:
 /* 80034E3C 00031C3C  28 03 00 00 */	cmplwi r3, 0
 /* 80034E40 00031C40  41 82 00 18 */	beq lbl_80034E58
 /* 80034E44 00031C44  1C 83 00 0C */	mulli r4, r3, 0xc
-/* 80034E48 00031C48  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 80034E48 00031C48  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80034E4C 00031C4C  38 A0 00 00 */	li r5, 0
 /* 80034E50 00031C50  4B FF EA F1 */	bl xMemAlloc__FUiUii
 /* 80034E54 00031C54  90 7F 00 68 */	stw r3, 0x68(r31)
@@ -1204,10 +1204,10 @@ xModelAnimCollRefresh__FRC14xModelInstance:
 /* 80034E88 00031C88  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80034E8C 00031C8C  48 09 37 39 */	bl iModelVertCount__FP8RpAtomic
 /* 80034E90 00031C90  83 DD 00 4C */	lwz r30, 0x4c(r29)
-/* 80034E94 00031C94  3C 80 80 39 */	lis r4, lbl_8038C2E0@ha
+/* 80034E94 00031C94  3C 80 80 39 */	lis r4, g_I3@ha
 /* 80034E98 00031C98  7C 7F 1B 78 */	mr r31, r3
 /* 80034E9C 00031C9C  80 BE 00 00 */	lwz r5, 0(r30)
-/* 80034EA0 00031CA0  38 84 C2 E0 */	addi r4, r4, lbl_8038C2E0@l
+/* 80034EA0 00031CA0  38 84 C2 E0 */	addi r4, r4, g_I3@l
 /* 80034EA4 00031CA4  80 1E 00 04 */	lwz r0, 4(r30)
 /* 80034EA8 00031CA8  7F C3 F3 78 */	mr r3, r30
 /* 80034EAC 00031CAC  90 A1 00 08 */	stw r5, 8(r1)

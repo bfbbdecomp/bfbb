@@ -887,26 +887,26 @@ lbl_8037F2A0:
 .global lbl_8037F2B8
 lbl_8037F2B8:
 	.skip 0x10
-.global lbl_8037F2C8
-lbl_8037F2C8:
+.global gTRKEventQueue
+gTRKEventQueue:
 	.skip 0x28
-.global lbl_8037F2F0
-lbl_8037F2F0:
+.global gTRKBigEndian
+gTRKBigEndian:
 	.skip 0x8
-.global lbl_8037F2F8
-lbl_8037F2F8:
+.global gTRKMsgBufs
+gTRKMsgBufs:
 	.skip 0xD10
 .global lbl_80380008
 lbl_80380008:
 	.skip 0xCA0
-.global lbl_80380CA8
-lbl_80380CA8:
+.global gTRKInputPendingPtr
+gTRKInputPendingPtr:
 	.skip 0x4
 .global lbl_80380CAC
 lbl_80380CAC:
 	.skip 0x14
-.global lbl_80380CC0
-lbl_80380CC0:
+.global gTRKDispatchTableSize
+gTRKDispatchTableSize:
 	.skip 0x8
 .global lbl_80380CC8
 lbl_80380CC8:
@@ -914,17 +914,17 @@ lbl_80380CC8:
 .global lbl_80380CD0
 lbl_80380CD0:
 	.skip 0x4
-.global lbl_80380CD4
-lbl_80380CD4:
+.global gTRKState
+gTRKState:
 	.skip 0xA4
 .global lbl_80380D78
 lbl_80380D78:
 	.skip 0x430
-.global lbl_803811A8
-lbl_803811A8:
+.global gTRKSaveState
+gTRKSaveState:
 	.skip 0x94
-.global lbl_8038123C
-lbl_8038123C:
+.global TRKvalue128_temp
+TRKvalue128_temp:
 	.skip 0x14
 .global lbl_80381250
 lbl_80381250:
@@ -947,8 +947,8 @@ lbl_80383490:
 .global lbl_803834B8
 lbl_803834B8:
 	.skip 0x10
-.global lbl_803834C8
-lbl_803834C8:
+.global RegEntries
+RegEntries:
 	.skip 0x90
 .global lbl_80383558
 lbl_80383558:
@@ -995,8 +995,8 @@ lbl_803839A0:
 .global lbl_803839C0
 lbl_803839C0:
 	.skip 0x20
-.global lbl_803839E0
-lbl_803839E0:
+.global RtAnimInterpolatorInfoBlock
+RtAnimInterpolatorInfoBlock:
 	.skip 0x300
 .global lbl_80383CE0
 lbl_80383CE0:
@@ -1046,207 +1046,207 @@ lbl_80384400:
 .global lbl_80384418
 lbl_80384418:
 	.skip 0x3C
-.global lbl_80384454
-lbl_80384454:
+.global _RwDlInvCamLTM
+_RwDlInvCamLTM:
 	.skip 0x44
-.global lbl_80384498
-lbl_80384498:
+.global _RwDlStateCache
+_RwDlStateCache:
 	.skip 0x58
-.global lbl_803844F0
-lbl_803844F0:
+.global _rxExecCtxGlobal
+_rxExecCtxGlobal:
 	.skip 0x18
 .global lbl_80384508
 lbl_80384508:
 	.skip 0x24
-.global lbl_8038452C
-lbl_8038452C:
+.global sCameraFX
+sCameraFX:
 	.skip 0x2F8
-.global lbl_80384824
-lbl_80384824:
+.global sActiveCutscene
+sActiveCutscene:
 	.skip 0x198
-.global lbl_803849BC
-lbl_803849BC:
+.global zEventLogBuf
+zEventLogBuf:
 	.skip 0x1400
-.global lbl_80385DBC
-lbl_80385DBC:
+.global ringlist
+ringlist:
 	.skip 0x1E0
-.global lbl_80385F9C
-lbl_80385F9C:
+.global sStreakList
+sStreakList:
 	.skip 0x4038
-.global lbl_80389FD4
-lbl_80389FD4:
+.global sShineList
+sShineList:
 	.skip 0x22F0
-.global lbl_8038C2C4
-lbl_8038C2C4:
+.global joint_alloc__9xFXRibbon
+joint_alloc__9xFXRibbon:
 	.skip 0x1C
-.global lbl_8038C2E0
-lbl_8038C2E0:
+.global g_I3
+g_I3:
 	.skip 0x40
-.global lbl_8038C320
-lbl_8038C320:
+.global gMemInfo
+gMemInfo:
 	.skip 0x2C4
-.global lbl_8038C5E4
-lbl_8038C5E4:
+.global gxHeap
+gxHeap:
 	.skip 0x294
-.global lbl_8038C878
-lbl_8038C878:
+.global anim_coll_old_mt
+anim_coll_old_mt:
 	.skip 0x9C
-.global lbl_8038C914
-lbl_8038C914:
+.global xModelPipeCount
+xModelPipeCount:
 	.skip 0x40
-.global lbl_8038C954
-lbl_8038C954:
+.global xModelPipeData
+xModelPipeData:
 	.skip 0x40
-.global lbl_8038C994
-lbl_8038C994:
+.global mPad
+mPad:
 	.skip 0x520
-.global lbl_8038CEB4
-lbl_8038CEB4:
+.global gParPool
+gParPool:
 	.skip 0x2EE00
-.global lbl_803BBCB4
-lbl_803BBCB4:
+.global sParGroupRegTable
+sParGroupRegTable:
 	.skip 0x3FC
-.global lbl_803BC0B0
-lbl_803BC0B0:
+.global xqc_def_ctrl
+xqc_def_ctrl:
 	.skip 0x3C
-.global lbl_803BC0EC
-lbl_803BC0EC:
+.global gDistortionParticles
+gDistortionParticles:
 	.skip 0x12C0
-.global lbl_803BD3AC
-lbl_803BD3AC:
+.global sGlare
+sGlare:
 	.skip 0x208
-.global lbl_803BD5B4
-lbl_803BD5B4:
+.global gSnd
+gSnd:
 	.skip 0x19D4
-.global lbl_803BEF88
-lbl_803BEF88:
+.global gTrcPad
+gTrcPad:
 	.skip 0x30
-.global lbl_803BEFB8
-lbl_803BEFB8:
+.global zcam_backupcam
+zcam_backupcam:
 	.skip 0x31C
-.global lbl_803BF2D4
-lbl_803BF2D4:
+.global zcam_backupconvers
+zcam_backupconvers:
 	.skip 0x31C
-.global lbl_803BF5F0
-lbl_803BF5F0:
+.global zcam_quat
+zcam_quat:
 	.skip 0x10
-.global lbl_803BF600
-lbl_803BF600:
+.global gust_data
+gust_data:
 	.skip 0x24
-.global lbl_803BF624
-lbl_803BF624:
+.global gPlayerAbsMat
+gPlayerAbsMat:
 	.skip 0x40
-.global lbl_803BF664
-lbl_803BF664:
+.global rendermat
+rendermat:
 	.skip 0x40
-.global lbl_803BF6A4
-lbl_803BF6A4:
+.global sCameraLastMat
+sCameraLastMat:
 	.skip 0x40
-.global lbl_803BF6E4
-lbl_803BF6E4:
+.global sDriveVel
+sDriveVel:
 	.skip 0xC
-.global lbl_803BF6F0
-lbl_803BF6F0:
+.global floor_supp
+floor_supp:
 	.skip 0x30
-.global lbl_803BF720
-lbl_803BF720:
+.global floor_dist
+floor_dist:
 	.skip 0x10
-.global lbl_803BF730
-lbl_803BF730:
+.global floor_tmr
+floor_tmr:
 	.skip 0x10
-.global lbl_803BF740
-lbl_803BF740:
+.global floor_safe_vec
+floor_safe_vec:
 	.skip 0xC
-.global lbl_803BF74C
-lbl_803BF74C:
+.global sandyHitTran
+sandyHitTran:
 	.skip 0x160
-.global lbl_803BF8AC
-lbl_803BF8AC:
+.global patrickHitTran
+patrickHitTran:
 	.skip 0x160
-.global lbl_803BFA0C
-lbl_803BFA0C:
+.global zFXGooInstances
+zFXGooInstances:
 	.skip 0xAE0
-.global lbl_803C04EC
-lbl_803C04EC:
+.global dummyPortalAsset
+dummyPortalAsset:
 	.skip 0x18
-.global lbl_803C0504
-lbl_803C0504:
+.global dummyPortal
+dummyPortal:
 	.skip 0x14
-.global lbl_803C0518
-lbl_803C0518:
+.global gLightningTweakAddInfo
+gLightningTweakAddInfo:
 	.skip 0x40
-.global lbl_803C0558
-lbl_803C0558:
+.global globals
+globals:
 	.skip 0x1FC8
-.global lbl_803C2520
-lbl_803C2520:
+.global zSaveLoadGameTable
+zSaveLoadGameTable:
 	.skip 0x144
-.global lbl_803C2664
-lbl_803C2664:
+.global gClimate
+gClimate:
 	.skip 0x24
-.global lbl_803C2688
-lbl_803C2688:
+.global sSorted
+sSorted:
 	.skip 0xC00
-.global lbl_803C3288
-lbl_803C3288:
+.global gUIMgr
+gUIMgr:
 	.skip 0x20
-.global lbl_803C32A8
-lbl_803C32A8:
+.global gOccludeList
+gOccludeList:
 	.skip 0x28
-.global lbl_803C32D0
-lbl_803C32D0:
+.global gOccludeCalc
+gOccludeCalc:
 	.skip 0x320
-.global lbl_803C35F0
-lbl_803C35F0:
+.global file_queue
+file_queue:
 	.skip 0x70
-.global lbl_803C3660
-lbl_803C3660:
+.global gRenderArr
+gRenderArr:
 	.skip 0x5280
-.global lbl_803C88E0
-lbl_803C88E0:
+.global gRenderBuffer
+gRenderBuffer:
 	.skip 0x80
-.global lbl_803C8960
-lbl_803C8960:
+.global aram_array
+aram_array:
 	.skip 0xA0
-.global lbl_803C8A00
-lbl_803C8A00:
+.global voices
+voices:
 	.skip 0x740
-.global lbl_803C9140
-lbl_803C9140:
+.global streams
+streams:
 	.skip 0x648
-.global lbl_803C9788
-lbl_803C9788:
+.global sinfo_array
+sinfo_array:
 	.skip 0xD50
-.global lbl_803CA4D8
-lbl_803CA4D8:
+.global snd
+snd:
 	.skip 0x180
-.global lbl_803CA658
-lbl_803CA658:
+.global deviceConfig
+deviceConfig:
 	.skip 0xC
-.global lbl_803CA664
-lbl_803CA664:
+.global sVideoMode
+sVideoMode:
 	.skip 0x18
-.global lbl_803CA67C
-lbl_803CA67C:
+.global g_GlobalBattleData
+g_GlobalBattleData:
 	.skip 0x14
-.global lbl_803CA690
-lbl_803CA690:
+.global laser__11zNPCFodBzzt
+laser__11zNPCFodBzzt:
 	.skip 0x24
-.global lbl_803CA6B4
-lbl_803CA6B4:
+.global laser__13zNPCTubeSlave
+laser__13zNPCTubeSlave:
 	.skip 0x24
-.global lbl_803CA6D8
-lbl_803CA6D8:
+.global colls_grid
+colls_grid:
 	.skip 0x9C
-.global lbl_803CA774
-lbl_803CA774:
+.global colls_oso_grid
+colls_oso_grid:
 	.skip 0x34
-.global lbl_803CA7A8
-lbl_803CA7A8:
+.global npcs_grid
+npcs_grid:
 	.skip 0x34
-.global lbl_803CA7DC
-lbl_803CA7DC:
+.global dutchman_reticle_center
+dutchman_reticle_center:
 	.skip 0xC
-.global lbl_803CA7E8
-lbl_803CA7E8:
+.global mMessage__8iTRCDisk
+mMessage__8iTRCDisk:
 	.skip 0x118

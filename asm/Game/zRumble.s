@@ -6,9 +6,9 @@
 zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt:
 /* 800ACDE0 000A9BE0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ACDE4 000A9BE4  7C 08 02 A6 */	mflr r0
-/* 800ACDE8 000A9BE8  3C C0 80 3C */	lis r6, lbl_803C0558@ha
+/* 800ACDE8 000A9BE8  3C C0 80 3C */	lis r6, globals@ha
 /* 800ACDEC 000A9BEC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800ACDF0 000A9BF0  38 C6 05 58 */	addi r6, r6, lbl_803C0558@l
+/* 800ACDF0 000A9BF0  38 C6 05 58 */	addi r6, r6, globals@l
 /* 800ACDF4 000A9BF4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800ACDF8 000A9BF8  7C 7F 1B 78 */	mr r31, r3
 /* 800ACDFC 000A9BFC  80 06 06 C0 */	lwz r0, 0x6c0(r6)
@@ -170,10 +170,10 @@ zRumbleStart__Fi16_tagSDRumbleType:
 zRumbleStart__F16_tagSDRumbleType:
 /* 800AD054 000A9E54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AD058 000A9E58  7C 08 02 A6 */	mflr r0
-/* 800AD05C 000A9E5C  3C A0 80 3C */	lis r5, lbl_803C0558@ha
+/* 800AD05C 000A9E5C  3C A0 80 3C */	lis r5, globals@ha
 /* 800AD060 000A9E60  7C 64 1B 78 */	mr r4, r3
 /* 800AD064 000A9E64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD068 000A9E68  38 65 05 58 */	addi r3, r5, lbl_803C0558@l
+/* 800AD068 000A9E68  38 65 05 58 */	addi r3, r5, globals@l
 /* 800AD06C 000A9E6C  88 63 06 D1 */	lbz r3, 0x6d1(r3)
 /* 800AD070 000A9E70  4B FF FF C1 */	bl zRumbleStart__Fi16_tagSDRumbleType
 /* 800AD074 000A9E74  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -185,10 +185,10 @@ zRumbleStart__F16_tagSDRumbleType:
 zRumbleStart__F16_tagSDRumbleTypeP4xEnt:
 /* 800AD084 000A9E84  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AD088 000A9E88  7C 08 02 A6 */	mflr r0
-/* 800AD08C 000A9E8C  3C C0 80 3C */	lis r6, lbl_803C0558@ha
+/* 800AD08C 000A9E8C  3C C0 80 3C */	lis r6, globals@ha
 /* 800AD090 000A9E90  7C 85 23 78 */	mr r5, r4
 /* 800AD094 000A9E94  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD098 000A9E98  38 C6 05 58 */	addi r6, r6, lbl_803C0558@l
+/* 800AD098 000A9E98  38 C6 05 58 */	addi r6, r6, globals@l
 /* 800AD09C 000A9E9C  7C 64 1B 78 */	mr r4, r3
 /* 800AD0A0 000A9EA0  88 66 06 D1 */	lbz r3, 0x6d1(r6)
 /* 800AD0A4 000A9EA4  4B FF FD 3D */	bl zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt
@@ -243,9 +243,9 @@ zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef:
 /* 800AD144 000A9F44  7C 9E 23 78 */	mr r30, r4
 /* 800AD148 000A9F48  FF E0 10 90 */	fmr f31, f2
 /* 800AD14C 000A9F4C  4B F6 E6 BD */	bl func_8001B808
-/* 800AD150 000A9F50  3C 80 80 3C */	lis r4, lbl_803C0558@ha
+/* 800AD150 000A9F50  3C 80 80 3C */	lis r4, globals@ha
 /* 800AD154 000A9F54  7C 7F 1B 78 */	mr r31, r3
-/* 800AD158 000A9F58  38 64 05 58 */	addi r3, r4, lbl_803C0558@l
+/* 800AD158 000A9F58  38 64 05 58 */	addi r3, r4, globals@l
 /* 800AD15C 000A9F5C  38 63 06 E0 */	addi r3, r3, 0x6e0
 /* 800AD160 000A9F60  4B F6 E6 A9 */	bl func_8001B808
 /* 800AD164 000A9F64  7C 64 1B 78 */	mr r4, r3
@@ -253,9 +253,9 @@ zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef:
 /* 800AD16C 000A9F6C  38 61 00 08 */	addi r3, r1, 8
 /* 800AD170 000A9F70  4B F6 15 21 */	bl func_8000E690
 /* 800AD174 000A9F74  C0 21 00 08 */	lfs f1, 8(r1)
-/* 800AD178 000A9F78  3C 60 80 3C */	lis r3, lbl_803C0558@ha
+/* 800AD178 000A9F78  3C 60 80 3C */	lis r3, globals@ha
 /* 800AD17C 000A9F7C  C0 01 00 10 */	lfs f0, 0x10(r1)
-/* 800AD180 000A9F80  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 800AD180 000A9F80  38 63 05 58 */	addi r3, r3, globals@l
 /* 800AD184 000A9F84  EC 21 00 72 */	fmuls f1, f1, f1
 /* 800AD188 000A9F88  88 63 06 D1 */	lbz r3, 0x6d1(r3)
 /* 800AD18C 000A9F8C  EC 00 00 32 */	fmuls f0, f0, f0
@@ -279,10 +279,10 @@ zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef:
 zPadAddRumble__F14_tagRumbleTypefiUi:
 /* 800AD1CC 000A9FCC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800AD1D0 000A9FD0  7C 08 02 A6 */	mflr r0
-/* 800AD1D4 000A9FD4  3C C0 80 3C */	lis r6, lbl_803C0558@ha
+/* 800AD1D4 000A9FD4  3C C0 80 3C */	lis r6, globals@ha
 /* 800AD1D8 000A9FD8  7C 67 1B 78 */	mr r7, r3
 /* 800AD1DC 000A9FDC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD1E0 000A9FE0  38 C6 05 58 */	addi r6, r6, lbl_803C0558@l
+/* 800AD1E0 000A9FE0  38 C6 05 58 */	addi r6, r6, globals@l
 /* 800AD1E4 000A9FE4  7C 80 23 78 */	mr r0, r4
 /* 800AD1E8 000A9FE8  7C E4 3B 78 */	mr r4, r7
 /* 800AD1EC 000A9FEC  88 66 06 D1 */	lbz r3, 0x6d1(r6)

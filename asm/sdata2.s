@@ -260,47 +260,47 @@ lbl_803CCAF8:
 .global lbl_803CCAFC
 lbl_803CCAFC:
 	.incbin "baserom.dol", 0x2B639C, 0x4
-.global lbl_803CCB00
-lbl_803CCB00:
+.global g_RED
+g_RED:
 	.incbin "baserom.dol", 0x2B63A0, 0x4
-.global lbl_803CCB04
-lbl_803CCB04:
+.global g_GREEN
+g_GREEN:
 	.incbin "baserom.dol", 0x2B63A4, 0x4
-.global lbl_803CCB08
-lbl_803CCB08:
+.global g_BLUE
+g_BLUE:
 	.incbin "baserom.dol", 0x2B63A8, 0x4
-.global lbl_803CCB0C
-lbl_803CCB0C:
+.global g_CYAN
+g_CYAN:
 	.incbin "baserom.dol", 0x2B63AC, 0x4
-.global lbl_803CCB10
-lbl_803CCB10:
+.global g_YELLOW
+g_YELLOW:
 	.incbin "baserom.dol", 0x2B63B0, 0x4
-.global lbl_803CCB14
-lbl_803CCB14:
+.global g_WHITE
+g_WHITE:
 	.incbin "baserom.dol", 0x2B63B4, 0x4
-.global lbl_803CCB18
-lbl_803CCB18:
+.global g_GRAY50
+g_GRAY50:
 	.incbin "baserom.dol", 0x2B63B8, 0x4
-.global lbl_803CCB1C
-lbl_803CCB1C:
+.global g_NEON_RED
+g_NEON_RED:
 	.incbin "baserom.dol", 0x2B63BC, 0x4
-.global lbl_803CCB20
-lbl_803CCB20:
+.global g_NEON_GREEN
+g_NEON_GREEN:
 	.incbin "baserom.dol", 0x2B63C0, 0x4
-.global lbl_803CCB24
-lbl_803CCB24:
+.global g_NEON_BLUE
+g_NEON_BLUE:
 	.incbin "baserom.dol", 0x2B63C4, 0x4
-.global lbl_803CCB28
-lbl_803CCB28:
+.global g_PIMP_GOLD
+g_PIMP_GOLD:
 	.incbin "baserom.dol", 0x2B63C8, 0x4
-.global lbl_803CCB2C
-lbl_803CCB2C:
+.global g_ORANGE
+g_ORANGE:
 	.incbin "baserom.dol", 0x2B63CC, 0x4
-.global lbl_803CCB30
-lbl_803CCB30:
+.global g_LAVENDER
+g_LAVENDER:
 	.incbin "baserom.dol", 0x2B63D0, 0x4
-.global lbl_803CCB34
-lbl_803CCB34:
+.global g_PINK
+g_PINK:
 	.incbin "baserom.dol", 0x2B63D4, 0x4
 .global lbl_803CCB38
 lbl_803CCB38:
@@ -7679,8 +7679,8 @@ lbl_803CF558:
 .global lbl_803CF560
 lbl_803CF560:
 	.incbin "baserom.dol", 0x2B8E00, 0x8
-.global lbl_803CF568
-lbl_803CF568:
+.global gPTankDisable
+gPTankDisable:
 	.incbin "baserom.dol", 0x2B8E08, 0x4
 .global lbl_803CF56C
 lbl_803CF56C:
@@ -9734,8 +9734,8 @@ lbl_803D0490:
 .global lbl_803D0494
 lbl_803D0494:
 	.incbin "baserom.dol", 0x2B9D34, 0xC
-.global lbl_803D04A0
-lbl_803D04A0:
+.global _rwFifo
+_rwFifo:
 	.incbin "baserom.dol", 0x2B9D40, 0x8
 .global lbl_803D04A8
 lbl_803D04A8:

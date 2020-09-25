@@ -36,9 +36,9 @@ __ct__Q24xhud11text_widgetFRCQ24xhud10text_asset:
 /* 8019548C 0019228C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80195490 00192290  7C 7F 1B 78 */	mr r31, r3
 /* 80195494 00192294  4B E9 87 95 */	bl __ct__Q24xhud6widgetFRCQ24xhud5asset
-/* 80195498 00192298  3C 60 80 2A */	lis r3, lbl_802A1B60@ha
+/* 80195498 00192298  3C 60 80 2A */	lis r3, __vt__Q24xhud11text_widget@ha
 /* 8019549C 0019229C  38 00 00 00 */	li r0, 0
-/* 801954A0 001922A0  38 83 1B 60 */	addi r4, r3, lbl_802A1B60@l
+/* 801954A0 001922A0  38 83 1B 60 */	addi r4, r3, __vt__Q24xhud11text_widget@l
 /* 801954A4 001922A4  7F E3 FB 78 */	mr r3, r31
 /* 801954A8 001922A8  90 9F 00 74 */	stw r4, 0x74(r31)
 /* 801954AC 001922AC  98 1F 00 84 */	stb r0, 0x84(r31)

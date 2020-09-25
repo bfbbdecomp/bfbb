@@ -78,9 +78,9 @@ __ct__Q24xhud12model_widgetFRCQ24xhud11model_asset:
 /* 8002FD7C 0002CB7C  93 C1 00 08 */	stw r30, 8(r1)
 /* 8002FD80 0002CB80  7C 7E 1B 78 */	mr r30, r3
 /* 8002FD84 0002CB84  4B FF DE A5 */	bl __ct__Q24xhud6widgetFRCQ24xhud5asset
-/* 8002FD88 0002CB88  3C 80 80 28 */	lis r4, lbl_8027D6A0@ha
+/* 8002FD88 0002CB88  3C 80 80 28 */	lis r4, __vt__Q24xhud12model_widget@ha
 /* 8002FD8C 0002CB8C  80 7F 00 28 */	lwz r3, 0x28(r31)
-/* 8002FD90 0002CB90  38 84 D6 A0 */	addi r4, r4, lbl_8027D6A0@l
+/* 8002FD90 0002CB90  38 84 D6 A0 */	addi r4, r4, __vt__Q24xhud12model_widget@l
 /* 8002FD94 0002CB94  38 00 00 00 */	li r0, 0
 /* 8002FD98 0002CB98  90 9E 00 74 */	stw r4, 0x74(r30)
 /* 8002FD9C 0002CB9C  90 7E 00 84 */	stw r3, 0x84(r30)

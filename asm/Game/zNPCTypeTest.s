@@ -6,13 +6,13 @@
 ZNPC_Test_Startup__Fv:
 /* 80135ACC 001328CC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80135AD0 001328D0  7C 08 02 A6 */	mflr r0
-/* 80135AD4 001328D4  3C 80 80 2A */	lis r4, lbl_80298FE4@ha
-/* 80135AD8 001328D8  3C 60 80 2A */	lis r3, lbl_80298FB8@ha
+/* 80135AD4 001328D4  3C 80 80 2A */	lis r4, g_strz_testanim@ha
+/* 80135AD8 001328D8  3C 60 80 2A */	lis r3, g_hash_testanim@ha
 /* 80135ADC 001328DC  90 01 00 24 */	stw r0, 0x24(r1)
 /* 80135AE0 001328E0  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80135AE4 001328E4  3B E4 8F E4 */	addi r31, r4, lbl_80298FE4@l
+/* 80135AE4 001328E4  3B E4 8F E4 */	addi r31, r4, g_strz_testanim@l
 /* 80135AE8 001328E8  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 80135AEC 001328EC  3B C3 8F B8 */	addi r30, r3, lbl_80298FB8@l
+/* 80135AEC 001328EC  3B C3 8F B8 */	addi r30, r3, g_hash_testanim@l
 /* 80135AF0 001328F0  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 80135AF4 001328F4  3B A0 00 00 */	li r29, 0
 lbl_80135AF8:
@@ -80,18 +80,18 @@ lbl_80135B98:
 /* 80135BD0 001329D0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80135BD4 001329D4  7C 08 02 A6 */	mflr r0
 /* 80135BD8 001329D8  3C 60 80 27 */	lis r3, lbl_8026CA50@ha
-/* 80135BDC 001329DC  3C A0 80 2A */	lis r5, lbl_80298FE4@ha
+/* 80135BDC 001329DC  3C A0 80 2A */	lis r5, g_strz_testanim@ha
 /* 80135BE0 001329E0  90 01 00 34 */	stw r0, 0x34(r1)
 /* 80135BE4 001329E4  38 63 CA 50 */	addi r3, r3, lbl_8026CA50@l
 /* 80135BE8 001329E8  38 80 00 00 */	li r4, 0
 /* 80135BEC 001329EC  BF 41 00 18 */	stmw r26, 0x18(r1)
-/* 80135BF0 001329F0  3B A5 8F E4 */	addi r29, r5, lbl_80298FE4@l
+/* 80135BF0 001329F0  3B A5 8F E4 */	addi r29, r5, g_strz_testanim@l
 /* 80135BF4 001329F4  38 A0 00 00 */	li r5, 0
 /* 80135BF8 001329F8  38 63 00 4E */	addi r3, r3, 0x4e
 /* 80135BFC 001329FC  4B ED 10 75 */	bl xAnimTableNew__FPCcPP10xAnimTableUi
-/* 80135C00 00132A00  3C 80 80 2A */	lis r4, lbl_80298FE4@ha
+/* 80135C00 00132A00  3C 80 80 2A */	lis r4, g_strz_testanim@ha
 /* 80135C04 00132A04  7C 7B 1B 78 */	mr r27, r3
-/* 80135C08 00132A08  38 A4 8F E4 */	addi r5, r4, lbl_80298FE4@l
+/* 80135C08 00132A08  38 A4 8F E4 */	addi r5, r4, g_strz_testanim@l
 /* 80135C0C 00132A0C  3B 40 00 01 */	li r26, 1
 /* 80135C10 00132A10  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 80135C14 00132A14  3B E0 00 00 */	li r31, 0
@@ -174,9 +174,9 @@ __ct__8zNPCTestFi:
 /* 80135D2C 00132B2C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80135D30 00132B30  7C 7F 1B 78 */	mr r31, r3
 /* 80135D34 00132B34  4B FB E8 C1 */	bl func_800F45F4
-/* 80135D38 00132B38  3C 80 80 2A */	lis r4, lbl_80299010@ha
+/* 80135D38 00132B38  3C 80 80 2A */	lis r4, __vt__8zNPCTest@ha
 /* 80135D3C 00132B3C  7F E3 FB 78 */	mr r3, r31
-/* 80135D40 00132B40  38 04 90 10 */	addi r0, r4, lbl_80299010@l
+/* 80135D40 00132B40  38 04 90 10 */	addi r0, r4, __vt__8zNPCTest@l
 /* 80135D44 00132B44  90 1F 01 B8 */	stw r0, 0x1b8(r31)
 /* 80135D48 00132B48  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80135D4C 00132B4C  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -232,8 +232,8 @@ lbl_80135DD4:
 /* 80135E0C 00132C0C  90 1E 02 A4 */	stw r0, 0x2a4(r30)
 lbl_80135E10:
 /* 80135E10 00132C10  80 1E 02 A4 */	lwz r0, 0x2a4(r30)
-/* 80135E14 00132C14  3C 60 80 2A */	lis r3, lbl_80298FB8@ha
-/* 80135E18 00132C18  38 83 8F B8 */	addi r4, r3, lbl_80298FB8@l
+/* 80135E14 00132C14  3C 60 80 2A */	lis r3, g_hash_testanim@ha
+/* 80135E18 00132C18  38 83 8F B8 */	addi r4, r3, g_hash_testanim@l
 /* 80135E1C 00132C1C  7F C3 F3 78 */	mr r3, r30
 /* 80135E20 00132C20  54 00 10 3A */	slwi r0, r0, 2
 /* 80135E24 00132C24  38 A0 00 00 */	li r5, 0
@@ -262,8 +262,8 @@ lbl_80135E34:
 /* 80135E7C 00132C7C  D0 03 02 A8 */	stfs f0, 0x2a8(r3)
 /* 80135E80 00132C80  4E 80 00 20 */	blr 
 /* 80135E84 00132C84  80 03 02 A4 */	lwz r0, 0x2a4(r3)
-/* 80135E88 00132C88  3C 60 80 2A */	lis r3, lbl_80298FB8@ha
-/* 80135E8C 00132C8C  38 63 8F B8 */	addi r3, r3, lbl_80298FB8@l
+/* 80135E88 00132C88  3C 60 80 2A */	lis r3, g_hash_testanim@ha
+/* 80135E8C 00132C8C  38 63 8F B8 */	addi r3, r3, g_hash_testanim@l
 /* 80135E90 00132C90  54 00 10 3A */	slwi r0, r0, 2
 /* 80135E94 00132C94  7C 63 02 14 */	add r3, r3, r0
 /* 80135E98 00132C98  80 63 00 04 */	lwz r3, 4(r3)

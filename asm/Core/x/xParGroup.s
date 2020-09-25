@@ -29,9 +29,9 @@ xParGroupInit__FP9xParGroup:
 
 .global func_80038480
 func_80038480:
-/* 80038480 00035280  3C 60 80 3C */	lis r3, lbl_803BBCB4@ha
+/* 80038480 00035280  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 80038484 00035284  38 00 00 1F */	li r0, 0x1f
-/* 80038488 00035288  38 83 BC B4 */	addi r4, r3, lbl_803BBCB4@l
+/* 80038488 00035288  38 83 BC B4 */	addi r4, r3, sParGroupRegTable@l
 /* 8003848C 0003528C  38 A0 00 00 */	li r5, 0
 /* 80038490 00035290  38 60 00 00 */	li r3, 0
 /* 80038494 00035294  7C 09 03 A6 */	mtctr r0
@@ -47,9 +47,9 @@ lbl_80038498:
 /* 800384B8 000352B8  90 64 00 1C */	stw r3, 0x1c(r4)
 /* 800384BC 000352BC  38 84 00 20 */	addi r4, r4, 0x20
 /* 800384C0 000352C0  42 00 FF D8 */	bdnz lbl_80038498
-/* 800384C4 000352C4  3C 60 80 3C */	lis r3, lbl_803BBCB4@ha
+/* 800384C4 000352C4  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 800384C8 000352C8  54 A4 10 3A */	slwi r4, r5, 2
-/* 800384CC 000352CC  38 63 BC B4 */	addi r3, r3, lbl_803BBCB4@l
+/* 800384CC 000352CC  38 63 BC B4 */	addi r3, r3, sParGroupRegTable@l
 /* 800384D0 000352D0  20 05 00 FF */	subfic r0, r5, 0xff
 /* 800384D4 000352D4  7C 83 22 14 */	add r4, r3, r4
 /* 800384D8 000352D8  38 60 00 00 */	li r3, 0
@@ -121,9 +121,9 @@ xParGroupRegister__FP9xParGroup:
 /* 80038594 00035394  40 82 00 08 */	bne lbl_8003859C
 /* 80038598 00035398  4B FF FE E9 */	bl func_80038480
 lbl_8003859C:
-/* 8003859C 0003539C  3C 60 80 3C */	lis r3, lbl_803BBCB4@ha
+/* 8003859C 0003539C  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 800385A0 000353A0  38 A0 00 00 */	li r5, 0
-/* 800385A4 000353A4  38 63 BC B4 */	addi r3, r3, lbl_803BBCB4@l
+/* 800385A4 000353A4  38 63 BC B4 */	addi r3, r3, sParGroupRegTable@l
 /* 800385A8 000353A8  48 00 00 34 */	b lbl_800385DC
 lbl_800385AC:
 /* 800385AC 000353AC  54 A0 15 BA */	rlwinm r0, r5, 2, 0x16, 0x1d
@@ -131,9 +131,9 @@ lbl_800385AC:
 /* 800385B4 000353B4  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800385B8 000353B8  28 00 00 00 */	cmplwi r0, 0
 /* 800385BC 000353BC  40 82 00 1C */	bne lbl_800385D8
-/* 800385C0 000353C0  3C 60 80 3C */	lis r3, lbl_803BBCB4@ha
+/* 800385C0 000353C0  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 800385C4 000353C4  54 80 10 3A */	slwi r0, r4, 2
-/* 800385C8 000353C8  38 63 BC B4 */	addi r3, r3, lbl_803BBCB4@l
+/* 800385C8 000353C8  38 63 BC B4 */	addi r3, r3, sParGroupRegTable@l
 /* 800385CC 000353CC  7F E3 01 2E */	stwx r31, r3, r0
 /* 800385D0 000353D0  98 BF 00 13 */	stb r5, 0x13(r31)
 /* 800385D4 000353D4  48 00 00 14 */	b lbl_800385E8
@@ -152,9 +152,9 @@ lbl_800385E8:
 
 .global xParGroupUnregister__FP9xParGroup
 xParGroupUnregister__FP9xParGroup:
-/* 800385FC 000353FC  3C 80 80 3C */	lis r4, lbl_803BBCB4@ha
+/* 800385FC 000353FC  3C 80 80 3C */	lis r4, sParGroupRegTable@ha
 /* 80038600 00035400  38 C0 00 00 */	li r6, 0
-/* 80038604 00035404  38 84 BC B4 */	addi r4, r4, lbl_803BBCB4@l
+/* 80038604 00035404  38 84 BC B4 */	addi r4, r4, sParGroupRegTable@l
 /* 80038608 00035408  48 00 00 38 */	b lbl_80038640
 lbl_8003860C:
 /* 8003860C 0003540C  54 C0 15 BA */	rlwinm r0, r6, 2, 0x16, 0x1d
@@ -162,9 +162,9 @@ lbl_8003860C:
 /* 80038614 00035414  7C 04 00 2E */	lwzx r0, r4, r0
 /* 80038618 00035418  7C 00 18 40 */	cmplw r0, r3
 /* 8003861C 0003541C  40 82 00 20 */	bne lbl_8003863C
-/* 80038620 00035420  3C 80 80 3C */	lis r4, lbl_803BBCB4@ha
+/* 80038620 00035420  3C 80 80 3C */	lis r4, sParGroupRegTable@ha
 /* 80038624 00035424  54 A0 10 3A */	slwi r0, r5, 2
-/* 80038628 00035428  38 84 BC B4 */	addi r4, r4, lbl_803BBCB4@l
+/* 80038628 00035428  38 84 BC B4 */	addi r4, r4, sParGroupRegTable@l
 /* 8003862C 0003542C  38 A0 00 00 */	li r5, 0
 /* 80038630 00035430  7C A4 01 2E */	stwx r5, r4, r0
 /* 80038634 00035434  98 A3 00 13 */	stb r5, 0x13(r3)
@@ -381,9 +381,9 @@ xParGroupAddPar__FP9xParGroup:
 /* 800388F0 000356F0  4B FF E1 49 */	bl xParAlloc__Fv
 /* 800388F4 000356F4  7C 7E 1B 79 */	or. r30, r3, r3
 /* 800388F8 000356F8  40 82 00 CC */	bne lbl_800389C4
-/* 800388FC 000356FC  3C 60 80 3C */	lis r3, lbl_803BBCB4@ha
+/* 800388FC 000356FC  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 80038900 00035700  88 FF 00 11 */	lbz r7, 0x11(r31)
-/* 80038904 00035704  38 63 BC B4 */	addi r3, r3, lbl_803BBCB4@l
+/* 80038904 00035704  38 63 BC B4 */	addi r3, r3, sParGroupRegTable@l
 /* 80038908 00035708  39 00 00 00 */	li r8, 0
 /* 8003890C 0003570C  48 00 00 74 */	b lbl_80038980
 lbl_80038910:
@@ -405,9 +405,9 @@ lbl_80038910:
 /* 8003894C 0003574C  80 04 00 00 */	lwz r0, 0(r4)
 /* 80038950 00035750  28 00 00 00 */	cmplwi r0, 0
 /* 80038954 00035754  41 82 00 28 */	beq lbl_8003897C
-/* 80038958 00035758  3C 60 80 3C */	lis r3, lbl_803BBCB4@ha
+/* 80038958 00035758  3C 60 80 3C */	lis r3, sParGroupRegTable@ha
 /* 8003895C 0003575C  54 C0 10 3A */	slwi r0, r6, 2
-/* 80038960 00035760  38 63 BC B4 */	addi r3, r3, lbl_803BBCB4@l
+/* 80038960 00035760  38 63 BC B4 */	addi r3, r3, sParGroupRegTable@l
 /* 80038964 00035764  7C 63 00 2E */	lwzx r3, r3, r0
 /* 80038968 00035768  80 83 00 00 */	lwz r4, 0(r3)
 /* 8003896C 0003576C  48 00 00 91 */	bl xParGroupKillPar__FP9xParGroupP4xPar

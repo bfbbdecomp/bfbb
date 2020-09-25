@@ -561,14 +561,14 @@ attach_effects__17xLaserBoltEmitterFQ217xLaserBoltEmitter12fx_when_enumPQ217xLas
 pre_collide__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt:
 /* 8017DCE8 0017AAE8  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 8017DCEC 0017AAEC  7C 08 02 A6 */	mflr r0
-/* 8017DCF0 0017AAF0  3C A0 80 3C */	lis r5, lbl_803C0558@ha
+/* 8017DCF0 0017AAF0  3C A0 80 3C */	lis r5, globals@ha
 /* 8017DCF4 0017AAF4  90 01 00 94 */	stw r0, 0x94(r1)
 /* 8017DCF8 0017AAF8  93 E1 00 8C */	stw r31, 0x8c(r1)
 /* 8017DCFC 0017AAFC  93 C1 00 88 */	stw r30, 0x88(r1)
 /* 8017DD00 0017AB00  7C 9E 23 78 */	mr r30, r4
 /* 8017DD04 0017AB04  93 A1 00 84 */	stw r29, 0x84(r1)
 /* 8017DD08 0017AB08  7C 7D 1B 78 */	mr r29, r3
-/* 8017DD0C 0017AB0C  38 65 05 58 */	addi r3, r5, lbl_803C0558@l
+/* 8017DD0C 0017AB0C  38 65 05 58 */	addi r3, r5, globals@l
 /* 8017DD10 0017AB10  83 E3 1F C0 */	lwz r31, 0x1fc0(r3)
 /* 8017DD14 0017AB14  38 61 00 08 */	addi r3, r1, 8
 /* 8017DD18 0017AB18  4B E8 D5 4D */	bl func_8000B264
@@ -616,13 +616,13 @@ lbl_8017DD88:
 collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt:
 /* 8017DDB4 0017ABB4  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 8017DDB8 0017ABB8  7C 08 02 A6 */	mflr r0
-/* 8017DDBC 0017ABBC  3C A0 80 3C */	lis r5, lbl_803C0558@ha
+/* 8017DDBC 0017ABBC  3C A0 80 3C */	lis r5, globals@ha
 /* 8017DDC0 0017ABC0  90 01 00 E4 */	stw r0, 0xe4(r1)
 /* 8017DDC4 0017ABC4  93 E1 00 DC */	stw r31, 0xdc(r1)
 /* 8017DDC8 0017ABC8  7C 9F 23 78 */	mr r31, r4
 /* 8017DDCC 0017ABCC  93 C1 00 D8 */	stw r30, 0xd8(r1)
 /* 8017DDD0 0017ABD0  7C 7E 1B 78 */	mr r30, r3
-/* 8017DDD4 0017ABD4  38 65 05 58 */	addi r3, r5, lbl_803C0558@l
+/* 8017DDD4 0017ABD4  38 65 05 58 */	addi r3, r5, globals@l
 /* 8017DDD8 0017ABD8  93 A1 00 D4 */	stw r29, 0xd4(r1)
 /* 8017DDDC 0017ABDC  83 A3 1F C0 */	lwz r29, 0x1fc0(r3)
 /* 8017DDE0 0017ABE0  38 61 00 08 */	addi r3, r1, 8
@@ -644,8 +644,8 @@ collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt:
 /* 8017DE20 0017AC20  D0 01 00 20 */	stfs f0, 0x20(r1)
 lbl_8017DE24:
 /* 8017DE24 0017AC24  38 00 03 00 */	li r0, 0x300
-/* 8017DE28 0017AC28  3C 60 80 3C */	lis r3, lbl_803C0558@ha
-/* 8017DE2C 0017AC2C  38 83 05 58 */	addi r4, r3, lbl_803C0558@l
+/* 8017DE28 0017AC28  3C 60 80 3C */	lis r3, globals@ha
+/* 8017DE2C 0017AC2C  38 83 05 58 */	addi r4, r3, globals@l
 /* 8017DE30 0017AC30  90 01 00 7C */	stw r0, 0x7c(r1)
 /* 8017DE34 0017AC34  38 61 00 08 */	addi r3, r1, 8
 /* 8017DE38 0017AC38  38 A1 00 7C */	addi r5, r1, 0x7c
@@ -685,8 +685,8 @@ lbl_8017DEA4:
 /* 8017DEB8 0017ACB8  38 81 00 90 */	addi r4, r1, 0x90
 /* 8017DEBC 0017ACBC  D0 1F 00 34 */	stfs f0, 0x34(r31)
 /* 8017DEC0 0017ACC0  4B E8 D3 A5 */	bl func_8000B264
-/* 8017DEC4 0017ACC4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
-/* 8017DEC8 0017ACC8  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 8017DEC4 0017ACC4  3C 60 80 3C */	lis r3, globals@ha
+/* 8017DEC8 0017ACC8  38 63 05 58 */	addi r3, r3, globals@l
 /* 8017DECC 0017ACCC  38 03 06 E0 */	addi r0, r3, 0x6e0
 /* 8017DED0 0017ACD0  90 1F 00 40 */	stw r0, 0x40(r31)
 lbl_8017DED4:
@@ -783,9 +783,9 @@ lbl_8017DF98:
 /* 8017E018 0017AE18  38 81 00 20 */	addi r4, r1, 0x20
 /* 8017E01C 0017AE1C  4B F9 82 91 */	bl func_801162AC
 /* 8017E020 0017AE20  80 81 00 2C */	lwz r4, 0x2c(r1)
-/* 8017E024 0017AE24  3C 60 80 3C */	lis r3, lbl_803C0558@ha
+/* 8017E024 0017AE24  3C 60 80 3C */	lis r3, globals@ha
 /* 8017E028 0017AE28  80 C1 00 30 */	lwz r6, 0x30(r1)
-/* 8017E02C 0017AE2C  38 A3 05 58 */	addi r5, r3, lbl_803C0558@l
+/* 8017E02C 0017AE2C  38 A3 05 58 */	addi r5, r3, globals@l
 /* 8017E030 0017AE30  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 8017E034 0017AE34  38 61 00 14 */	addi r3, r1, 0x14
 /* 8017E038 0017AE38  90 81 00 80 */	stw r4, 0x80(r1)
@@ -872,9 +872,9 @@ lbl_8017E140:
 .global get_vert_buffer__17xLaserBoltEmitterFRi
 get_vert_buffer__17xLaserBoltEmitterFRi:
 /* 8017E164 0017AF64  38 00 01 E0 */	li r0, 0x1e0
-/* 8017E168 0017AF68  3C 60 80 3D */	lis r3, lbl_803C88E0@ha
+/* 8017E168 0017AF68  3C 60 80 3D */	lis r3, gRenderBuffer@ha
 /* 8017E16C 0017AF6C  90 04 00 00 */	stw r0, 0(r4)
-/* 8017E170 0017AF70  38 63 88 E0 */	addi r3, r3, lbl_803C88E0@l
+/* 8017E170 0017AF70  38 63 88 E0 */	addi r3, r3, gRenderBuffer@l
 /* 8017E174 0017AF74  80 63 00 04 */	lwz r3, 4(r3)
 /* 8017E178 0017AF78  4E 80 00 20 */	blr 
 
@@ -1628,7 +1628,7 @@ lbl_8017EB88:
 /* 8017EBA4 0017B9A4  38 03 FF FF */	addi r0, r3, -1
 /* 8017EBA8 0017B9A8  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 8017EBAC 0017B9AC  80 1F 00 08 */	lwz r0, 8(r31)
-/* 8017EBB0 0017B9B0  80 6D 89 E0 */	lwz r3, lbl_803CB2E0-_SDA_BASE_(r13)
+/* 8017EBB0 0017B9B0  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 8017EBB4 0017B9B4  1C 80 00 4C */	mulli r4, r0, 0x4c
 /* 8017EBB8 0017B9B8  4B EB 4D 89 */	bl xMemAlloc__FUiUii
 /* 8017EBBC 0017B9BC  90 7F 00 10 */	stw r3, 0x10(r31)

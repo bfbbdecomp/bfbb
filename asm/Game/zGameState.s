@@ -4,22 +4,22 @@
 
 .global zGameStateGet__Fv
 zGameStateGet__Fv:
-/* 8009A924 00097724  80 6D 82 40 */	lwz r3, lbl_803CAB40-_SDA_BASE_(r13)
+/* 8009A924 00097724  80 6D 82 40 */	lwz r3, gGameState-_SDA_BASE_(r13)
 /* 8009A928 00097728  4E 80 00 20 */	blr 
 
 .global zGameModeGet__Fv
 zGameModeGet__Fv:
-/* 8009A92C 0009772C  80 6D 8F A8 */	lwz r3, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 8009A92C 0009772C  80 6D 8F A8 */	lwz r3, gGameMode-_SDA_BASE_(r13)
 /* 8009A930 00097730  4E 80 00 20 */	blr 
 
 .global zGameGetOstrich__Fv
 zGameGetOstrich__Fv:
-/* 8009A934 00097734  80 6D 8F AC */	lwz r3, lbl_803CB8AC-_SDA_BASE_(r13)
+/* 8009A934 00097734  80 6D 8F AC */	lwz r3, gGameOstrich-_SDA_BASE_(r13)
 /* 8009A938 00097738  4E 80 00 20 */	blr 
 
 .global zGameSetOstrich__F12_GameOstrich
 zGameSetOstrich__F12_GameOstrich:
-/* 8009A93C 0009773C  90 6D 8F AC */	stw r3, lbl_803CB8AC-_SDA_BASE_(r13)
+/* 8009A93C 0009773C  90 6D 8F AC */	stw r3, gGameOstrich-_SDA_BASE_(r13)
 /* 8009A940 00097740  4E 80 00 20 */	blr 
 
 .global zGameStateFindEvent__FPUiiiiPiPi
@@ -166,15 +166,15 @@ zGameStateSwitch__Fi:
 /* 8009AB3C 0009793C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8009AB40 00097940  38 C0 00 00 */	li r6, 0
 /* 8009AB44 00097944  38 A4 F9 28 */	addi r5, r4, lbl_8028F928@l
-/* 8009AB48 00097948  80 0D 82 40 */	lwz r0, lbl_803CAB40-_SDA_BASE_(r13)
-/* 8009AB4C 0009794C  90 6D 82 40 */	stw r3, lbl_803CAB40-_SDA_BASE_(r13)
+/* 8009AB48 00097948  80 0D 82 40 */	lwz r0, gGameState-_SDA_BASE_(r13)
+/* 8009AB4C 0009794C  90 6D 82 40 */	stw r3, gGameState-_SDA_BASE_(r13)
 /* 8009AB50 00097950  40 82 00 14 */	bne lbl_8009AB64
 /* 8009AB54 00097954  2C 00 00 00 */	cmpwi r0, 0
 /* 8009AB58 00097958  40 82 00 0C */	bne lbl_8009AB64
 /* 8009AB5C 0009795C  38 00 00 01 */	li r0, 1
-/* 8009AB60 00097960  90 0D 82 0C */	stw r0, lbl_803CAB0C-_SDA_BASE_(r13)
+/* 8009AB60 00097960  90 0D 82 0C */	stw r0, startPressed-_SDA_BASE_(r13)
 lbl_8009AB64:
-/* 8009AB64 00097964  80 0D 8F A8 */	lwz r0, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 8009AB64 00097964  80 0D 8F A8 */	lwz r0, gGameMode-_SDA_BASE_(r13)
 /* 8009AB68 00097968  28 00 00 0C */	cmplwi r0, 0xc
 /* 8009AB6C 0009796C  41 81 00 88 */	bgt lbl_8009ABF4
 /* 8009AB70 00097970  3C 80 80 29 */	lis r4, lbl_8028F9EC@ha
@@ -233,7 +233,7 @@ zGameModeSwitch__F9eGameMode:
 /* 8009AC30 00097A30  7C 7F 1B 78 */	mr r31, r3
 /* 8009AC34 00097A34  38 7F FF FA */	addi r3, r31, -6
 /* 8009AC38 00097A38  20 03 00 01 */	subfic r0, r3, 1
-/* 8009AC3C 00097A3C  80 ED 8F A8 */	lwz r7, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 8009AC3C 00097A3C  80 ED 8F A8 */	lwz r7, gGameMode-_SDA_BASE_(r13)
 /* 8009AC40 00097A40  7C 83 1B 38 */	orc r3, r4, r3
 /* 8009AC44 00097A44  54 00 F8 7E */	srwi r0, r0, 1
 /* 8009AC48 00097A48  7C 00 18 50 */	subf r0, r0, r3
@@ -280,9 +280,9 @@ lbl_8009ACC8:
 /* 8009ACD8 00097AD8  38 60 00 00 */	li r3, 0
 /* 8009ACDC 00097ADC  38 80 00 00 */	li r4, 0
 /* 8009ACE0 00097AE0  4B FA D6 55 */	bl xSndPauseAll__FUiUi
-/* 8009ACE4 00097AE4  3C 60 80 3C */	lis r3, lbl_803C0558@ha
+/* 8009ACE4 00097AE4  3C 60 80 3C */	lis r3, globals@ha
 /* 8009ACE8 00097AE8  38 00 00 00 */	li r0, 0
-/* 8009ACEC 00097AEC  38 83 05 58 */	addi r4, r3, lbl_803C0558@l
+/* 8009ACEC 00097AEC  38 83 05 58 */	addi r4, r3, globals@l
 /* 8009ACF0 00097AF0  80 64 03 1C */	lwz r3, 0x31c(r4)
 /* 8009ACF4 00097AF4  90 03 00 30 */	stw r0, 0x30(r3)
 /* 8009ACF8 00097AF8  80 64 03 1C */	lwz r3, 0x31c(r4)
@@ -297,7 +297,7 @@ lbl_8009ACC8:
 /* 8009AD1C 00097B1C  98 03 00 3B */	stb r0, 0x3b(r3)
 lbl_8009AD20:
 /* 8009AD20 00097B20  3C 60 80 29 */	lis r3, lbl_8028F928@ha
-/* 8009AD24 00097B24  93 ED 8F A8 */	stw r31, lbl_803CB8A8-_SDA_BASE_(r13)
+/* 8009AD24 00097B24  93 ED 8F A8 */	stw r31, gGameMode-_SDA_BASE_(r13)
 /* 8009AD28 00097B28  57 E0 10 3A */	slwi r0, r31, 2
 /* 8009AD2C 00097B2C  38 80 00 1E */	li r4, 0x1e
 /* 8009AD30 00097B30  38 63 F9 28 */	addi r3, r3, lbl_8028F928@l

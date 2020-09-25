@@ -225,8 +225,8 @@ lbl_80124D94:
 
 .global NPCS_SndFindProps__F12en_NPC_SOUND
 NPCS_SndFindProps__F12en_NPC_SOUND:
-/* 80124DBC 00121BBC  3C 80 80 2A */	lis r4, lbl_80298398@ha
-/* 80124DC0 00121BC0  38 04 83 98 */	addi r0, r4, lbl_80298398@l
+/* 80124DBC 00121BBC  3C 80 80 2A */	lis r4, g_sndProps@ha
+/* 80124DC0 00121BC0  38 04 83 98 */	addi r0, r4, g_sndProps@l
 /* 80124DC4 00121BC4  7C 04 03 78 */	mr r4, r0
 /* 80124DC8 00121BC8  48 00 00 10 */	b lbl_80124DD8
 lbl_80124DCC:
@@ -260,13 +260,13 @@ lbl_80124E0C:
 lbl_80124E1C:
 /* 80124E1C 00121C1C  2C 08 00 02 */	cmpwi r8, 2
 /* 80124E20 00121C20  40 82 00 14 */	bne lbl_80124E34
-/* 80124E24 00121C24  3C C0 80 2A */	lis r6, lbl_80298470@ha
-/* 80124E28 00121C28  38 06 84 70 */	addi r0, r6, lbl_80298470@l
+/* 80124E24 00121C24  3C C0 80 2A */	lis r6, g_sndTrax_General@ha
+/* 80124E28 00121C28  38 06 84 70 */	addi r0, r6, g_sndTrax_General@l
 /* 80124E2C 00121C2C  7C 06 03 78 */	mr r6, r0
 /* 80124E30 00121C30  48 00 00 10 */	b lbl_80124E40
 lbl_80124E34:
-/* 80124E34 00121C34  3C C0 80 2A */	lis r6, lbl_80298464@ha
-/* 80124E38 00121C38  38 06 84 64 */	addi r0, r6, lbl_80298464@l
+/* 80124E34 00121C34  3C C0 80 2A */	lis r6, g_sndTrax_Universal@ha
+/* 80124E38 00121C38  38 06 84 64 */	addi r0, r6, g_sndTrax_Universal@l
 /* 80124E3C 00121C3C  7C 06 03 78 */	mr r6, r0
 lbl_80124E40:
 /* 80124E40 00121C40  28 06 00 00 */	cmplwi r6, 0
@@ -297,13 +297,13 @@ lbl_80124E80:
 lbl_80124E90:
 /* 80124E90 00121C90  2C 08 00 02 */	cmpwi r8, 2
 /* 80124E94 00121C94  40 82 00 14 */	bne lbl_80124EA8
-/* 80124E98 00121C98  3C C0 80 2A */	lis r6, lbl_80298470@ha
-/* 80124E9C 00121C9C  38 06 84 70 */	addi r0, r6, lbl_80298470@l
+/* 80124E98 00121C98  3C C0 80 2A */	lis r6, g_sndTrax_General@ha
+/* 80124E9C 00121C9C  38 06 84 70 */	addi r0, r6, g_sndTrax_General@l
 /* 80124EA0 00121CA0  7C 06 03 78 */	mr r6, r0
 /* 80124EA4 00121CA4  48 00 00 10 */	b lbl_80124EB4
 lbl_80124EA8:
-/* 80124EA8 00121CA8  3C C0 80 2A */	lis r6, lbl_80298464@ha
-/* 80124EAC 00121CAC  38 06 84 64 */	addi r0, r6, lbl_80298464@l
+/* 80124EA8 00121CA8  3C C0 80 2A */	lis r6, g_sndTrax_Universal@ha
+/* 80124EAC 00121CAC  38 06 84 64 */	addi r0, r6, g_sndTrax_Universal@l
 /* 80124EB0 00121CB0  7C 06 03 78 */	mr r6, r0
 lbl_80124EB4:
 /* 80124EB4 00121CB4  28 06 00 00 */	cmplwi r6, 0
@@ -383,8 +383,8 @@ lbl_80124FA4:
 /* 80124FAC 00121DAC  2C 1F 00 05 */	cmpwi r31, 5
 /* 80124FB0 00121DB0  38 C0 00 00 */	li r6, 0
 /* 80124FB4 00121DB4  40 80 00 0C */	bge lbl_80124FC0
-/* 80124FB8 00121DB8  3C C0 80 2A */	lis r6, lbl_80298470@ha
-/* 80124FBC 00121DBC  38 C6 84 70 */	addi r6, r6, lbl_80298470@l
+/* 80124FB8 00121DB8  3C C0 80 2A */	lis r6, g_sndTrax_General@ha
+/* 80124FBC 00121DBC  38 C6 84 70 */	addi r6, r6, g_sndTrax_General@l
 lbl_80124FC0:
 /* 80124FC0 00121DC0  C0 02 A1 0C */	lfs f0, lbl_803CEA8C-_SDA2_BASE_(r2)
 /* 80124FC4 00121DC4  7C CB 33 78 */	mr r11, r6
@@ -393,8 +393,8 @@ lbl_80124FCC:
 /* 80124FCC 00121DCC  2C 1F 00 05 */	cmpwi r31, 5
 /* 80124FD0 00121DD0  38 C0 00 00 */	li r6, 0
 /* 80124FD4 00121DD4  40 80 00 0C */	bge lbl_80124FE0
-/* 80124FD8 00121DD8  3C C0 80 2A */	lis r6, lbl_80298464@ha
-/* 80124FDC 00121DDC  38 C6 84 64 */	addi r6, r6, lbl_80298464@l
+/* 80124FD8 00121DD8  3C C0 80 2A */	lis r6, g_sndTrax_Universal@ha
+/* 80124FDC 00121DDC  38 C6 84 64 */	addi r6, r6, g_sndTrax_Universal@l
 lbl_80124FE0:
 /* 80124FE0 00121DE0  7C CB 33 78 */	mr r11, r6
 /* 80124FE4 00121DE4  C0 02 A1 0C */	lfs f0, lbl_803CEA8C-_SDA2_BASE_(r2)

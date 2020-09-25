@@ -266,8 +266,8 @@ zScriptUpdate__FP5xBaseP6xScenef:
 lbl_800B55A4:
 /* 800B55A4 000B23A4  28 00 00 03 */	cmplwi r0, 3
 /* 800B55A8 000B23A8  40 82 00 2C */	bne lbl_800B55D4
-/* 800B55AC 000B23AC  3C 60 80 3C */	lis r3, lbl_803C0558@ha
-/* 800B55B0 000B23B0  38 63 05 58 */	addi r3, r3, lbl_803C0558@l
+/* 800B55AC 000B23AC  3C 60 80 3C */	lis r3, globals@ha
+/* 800B55B0 000B23B0  38 63 05 58 */	addi r3, r3, globals@l
 /* 800B55B4 000B23B4  80 63 03 1C */	lwz r3, 0x31c(r3)
 /* 800B55B8 000B23B8  28 03 00 00 */	cmplwi r3, 0
 /* 800B55BC 000B23BC  41 82 00 18 */	beq lbl_800B55D4
