@@ -1,0 +1,1 @@
+#include "zNPCGoalCommon.h"

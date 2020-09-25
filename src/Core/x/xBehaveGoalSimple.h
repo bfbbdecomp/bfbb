@@ -1,0 +1,6 @@
+#ifndef XBEHAVEGOALSIMPLE_H
+#define XBEHAVEGOALSIMPLE_H
+
+
+
+#endif

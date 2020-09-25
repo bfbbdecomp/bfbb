@@ -1,0 +1,6 @@
+#ifndef ZNPCTYPEBOSSSB2_H
+#define ZNPCTYPEBOSSSB2_H
+
+
+
+#endif
