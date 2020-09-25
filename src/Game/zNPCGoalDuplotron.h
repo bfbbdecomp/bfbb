@@ -1,0 +1,6 @@
+#ifndef ZNPCGOALDUPLOTRON_H
+#define ZNPCGOALDUPLOTRON_H
+
+
+
+#endif

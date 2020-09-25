@@ -1,0 +1,1 @@
+#include "zNPCTypeBossPatrick.h"
