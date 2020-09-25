@@ -132,7 +132,7 @@ lbl_80097660:
 /* 80097660 00094460  80 6D 82 18 */	lwz r3, soaklevels-_SDA_BASE_(r13)
 /* 80097664 00094464  38 A0 00 00 */	li r5, 0
 /* 80097668 00094468  80 8D 8E EC */	lwz r4, lbl_803CB7EC-_SDA_BASE_(r13)
-/* 8009766C 0009446C  48 00 1E C1 */	bl xUtil_select_c___FPPciPCf
+/* 8009766C 0009446C  48 00 1E C1 */	bl xUtil_select$$0c$$1__FPPciPCf
 /* 80097670 00094470  88 03 00 01 */	lbz r0, 1(r3)
 /* 80097674 00094474  88 83 00 00 */	lbz r4, 0(r3)
 /* 80097678 00094478  54 00 80 1E */	slwi r0, r0, 0x10
@@ -1353,7 +1353,7 @@ lbl_800987D8:
 /* 8009880C 0009560C  90 61 00 08 */	stw r3, 8(r1)
 /* 80098810 00095610  7F 83 E3 78 */	mr r3, r28
 /* 80098814 00095614  38 81 00 08 */	addi r4, r1, 8
-/* 80098818 00095618  4B F8 D5 79 */	bl render_fill_rect__FRC13basic_rect_f_10iColor_tag
+/* 80098818 00095618  4B F8 D5 79 */	bl render_fill_rect__FRC13basic_rect$$0f$$110iColor_tag
 /* 8009881C 0009561C  38 61 00 A0 */	addi r3, r1, 0xa0
 /* 80098820 00095620  38 80 00 01 */	li r4, 1
 /* 80098824 00095624  4B F7 F5 81 */	bl func_80017DA4
@@ -2269,7 +2269,7 @@ zGameStats_Init__Fv:
 /* 80099528 00096328  4E 80 00 20 */	blr 
 
 /* xUtil_select<c>__FPPciPCf */
-xUtil_select_c___FPPciPCf:
+xUtil_select$$0c$$1__FPPciPCf:
 /* 8009952C 0009632C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80099530 00096330  7C 08 02 A6 */	mflr r0
 /* 80099534 00096334  90 01 00 34 */	stw r0, 0x34(r1)

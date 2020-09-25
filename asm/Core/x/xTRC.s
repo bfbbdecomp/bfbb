@@ -126,7 +126,7 @@ lbl_8004D7D4:
 /* 8004D854 0004A654  38 64 A2 A8 */	addi r3, r4, lbl_8028A2A8@l
 /* 8004D858 0004A658  38 81 00 08 */	addi r4, r1, 8
 /* 8004D85C 0004A65C  38 63 00 14 */	addi r3, r3, 0x14
-/* 8004D860 0004A660  4B FD 85 31 */	bl render_fill_rect__FRC13basic_rect_f_10iColor_tag
+/* 8004D860 0004A660  4B FD 85 31 */	bl render_fill_rect__FRC13basic_rect$$0f$$110iColor_tag
 /* 8004D864 0004A664  3C 60 80 29 */	lis r3, lbl_8028A2A8@ha
 /* 8004D868 0004A668  38 80 00 01 */	li r4, 1
 /* 8004D86C 0004A66C  38 63 A2 A8 */	addi r3, r3, lbl_8028A2A8@l
@@ -347,7 +347,7 @@ lbl_8004DACC:
 /* 8004DB50 0004A950  38 64 A3 10 */	addi r3, r4, lbl_8028A310@l
 /* 8004DB54 0004A954  38 81 00 08 */	addi r4, r1, 8
 /* 8004DB58 0004A958  38 63 00 14 */	addi r3, r3, 0x14
-/* 8004DB5C 0004A95C  4B FD 82 35 */	bl render_fill_rect__FRC13basic_rect_f_10iColor_tag
+/* 8004DB5C 0004A95C  4B FD 82 35 */	bl render_fill_rect__FRC13basic_rect$$0f$$110iColor_tag
 lbl_8004DB60:
 /* 8004DB60 0004A960  E3 E1 00 B8 */	psq_l f31, 184(r1), 0, qr0
 /* 8004DB64 0004A964  80 01 00 C4 */	lwz r0, 0xc4(r1)

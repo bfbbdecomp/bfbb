@@ -5372,7 +5372,7 @@ lbl_800F37E8:
 /* 800F37F4 000F05F4  38 80 00 07 */	li r4, 7
 /* 800F37F8 000F05F8  38 63 8C A4 */	addi r3, r3, lbl_80268CA4@l
 /* 800F37FC 000F05FC  38 A0 00 00 */	li r5, 0
-/* 800F3800 000F0600  48 00 10 FD */	bl xUtil_choose_f___FPCfiPCf
+/* 800F3800 000F0600  48 00 10 FD */	bl xUtil_choose$$0f$$1__FPCfiPCf
 /* 800F3804 000F0604  FF C0 08 90 */	fmr f30, f1
 lbl_800F3808:
 /* 800F3808 000F0608  57 C0 04 E7 */	rlwinm. r0, r30, 0, 0x13, 0x13
@@ -6646,7 +6646,7 @@ func_800F48E8:
 /* 800F48F8 000F16F8  4E 80 00 20 */	blr 
 
 /* xUtil_choose<f>__FPCfiPCf */
-xUtil_choose_f___FPCfiPCf:
+xUtil_choose$$0f$$1__FPCfiPCf:
 /* 800F48FC 000F16FC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F4900 000F1700  7C 08 02 A6 */	mflr r0
 /* 800F4904 000F1704  90 01 00 34 */	stw r0, 0x34(r1)

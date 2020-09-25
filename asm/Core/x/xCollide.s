@@ -2531,7 +2531,7 @@ lbl_800114C8:
 lbl_800114CC:
 /* 800114CC 0000E2CC  7F 43 D3 78 */	mr r3, r26
 /* 800114D0 0000E2D0  7F 64 DB 78 */	mr r4, r27
-/* 800114D4 0000E2D4  48 00 00 21 */	bl render_tri__22_unnamed_xCollide_cpp_FRQ27xCollis8tri_dataRC14xModelInstance
+/* 800114D4 0000E2D4  48 00 00 21 */	bl render_tri__22$$2unnamed$$2xCollide_cpp$$2FRQ27xCollis8tri_dataRC14xModelInstance
 /* 800114D8 0000E2D8  E3 E1 01 D8 */	psq_l f31, 472(r1), 0, qr0
 /* 800114DC 0000E2DC  CB E1 01 D0 */	lfd f31, 0x1d0(r1)
 /* 800114E0 0000E2E0  BB 01 01 B0 */	lmw r24, 0x1b0(r1)
@@ -2541,7 +2541,7 @@ lbl_800114CC:
 /* 800114F0 0000E2F0  4E 80 00 20 */	blr 
 
 /* render_tri__22@unnamed@xCollide_cpp@FRQ27xCollis8tri_dataRC14xModelInstance */
-render_tri__22_unnamed_xCollide_cpp_FRQ27xCollis8tri_dataRC14xModelInstance:
+render_tri__22$$2unnamed$$2xCollide_cpp$$2FRQ27xCollis8tri_dataRC14xModelInstance:
 /* 800114F4 0000E2F4  4E 80 00 20 */	blr 
 
 .global xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance

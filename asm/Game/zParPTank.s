@@ -1147,7 +1147,7 @@ lbl_80171528:
 /* 80171548 0016E348  3B FF FF D0 */	addi r31, r31, -48
 /* 8017154C 0016E34C  7F C3 F3 78 */	mr r3, r30
 /* 80171550 0016E350  7F E4 FB 78 */	mr r4, r31
-/* 80171554 0016E354  48 00 0A 7D */	bl __as__Q223_unnamed_zParPTank_cpp_18snow_particle_dataFRCQ223_unnamed_zParPTank_cpp_18snow_particle_data
+/* 80171554 0016E354  48 00 0A 7D */	bl __as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2zParPTank_cpp$$218snow_particle_data
 /* 80171558 0016E358  48 00 01 08 */	b lbl_80171660
 lbl_8017155C:
 /* 8017155C 0016E35C  FC 20 D8 90 */	fmr f1, f27
@@ -1886,7 +1886,7 @@ func_80171FAC:
 /* 80171FCC 0016EDCC  4E 80 00 20 */	blr 
 
 /* __as__Q223@unnamed@zParPTank_cpp@18snow_particle_dataFRCQ223@unnamed@zParPTank_cpp@18snow_particle_data */
-__as__Q223_unnamed_zParPTank_cpp_18snow_particle_dataFRCQ223_unnamed_zParPTank_cpp_18snow_particle_data:
+__as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2zParPTank_cpp$$218snow_particle_data:
 /* 80171FD0 0016EDD0  80 04 00 00 */	lwz r0, 0(r4)
 /* 80171FD4 0016EDD4  80 A4 00 04 */	lwz r5, 4(r4)
 /* 80171FD8 0016EDD8  90 03 00 00 */	stw r0, 0(r3)

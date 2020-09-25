@@ -2,7 +2,7 @@
 
 .section .text  # 0x80133E38 - 0x8013499C
 
-render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
+render_bk_fill__22$$2unnamed$$2zTextBox_cpp$$2FRC8ztextbox:
 /* 80133E38 00130C38  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80133E3C 00130C3C  7C 08 02 A6 */	mflr r0
 /* 80133E40 00130C40  90 01 00 24 */	stw r0, 0x24(r1)
@@ -14,7 +14,7 @@ render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
 /* 80133E58 00130C58  90 61 00 08 */	stw r3, 8(r1)
 /* 80133E5C 00130C5C  38 7F 00 2C */	addi r3, r31, 0x2c
 /* 80133E60 00130C60  38 81 00 08 */	addi r4, r1, 8
-/* 80133E64 00130C64  4B EF 1F 2D */	bl render_fill_rect__FRC13basic_rect_f_10iColor_tag
+/* 80133E64 00130C64  4B EF 1F 2D */	bl render_fill_rect__FRC13basic_rect$$0f$$110iColor_tag
 /* 80133E68 00130C68  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80133E6C 00130C6C  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 80133E70 00130C70  7C 08 03 A6 */	mtlr r0
@@ -66,7 +66,7 @@ render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
 /* 80133F28 00130D28  C0 62 A3 54 */	lfs f3, lbl_803CECD4-_SDA2_BASE_(r2)
 /* 80133F2C 00130D2C  38 81 00 14 */	addi r4, r1, 0x14
 /* 80133F30 00130D30  FC 80 18 90 */	fmr f4, f3
-/* 80133F34 00130D34  48 00 01 31 */	bl set_vert__22_unnamed_zTextBox_cpp_FR18rwGameCube2DVertexffff10iColor_tagff
+/* 80133F34 00130D34  48 00 01 31 */	bl set_vert__22$$2unnamed$$2zTextBox_cpp$$2FR18rwGameCube2DVertexffff10iColor_tagff
 /* 80133F38 00130D38  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 80133F3C 00130D3C  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133F40 00130D40  C0 41 00 20 */	lfs f2, 0x20(r1)
@@ -82,7 +82,7 @@ render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
 /* 80133F68 00130D68  C0 82 A3 48 */	lfs f4, lbl_803CECC8-_SDA2_BASE_(r2)
 /* 80133F6C 00130D6C  7F C3 F3 78 */	mr r3, r30
 /* 80133F70 00130D70  38 81 00 10 */	addi r4, r1, 0x10
-/* 80133F74 00130D74  48 00 00 F1 */	bl set_vert__22_unnamed_zTextBox_cpp_FR18rwGameCube2DVertexffff10iColor_tagff
+/* 80133F74 00130D74  48 00 00 F1 */	bl set_vert__22$$2unnamed$$2zTextBox_cpp$$2FR18rwGameCube2DVertexffff10iColor_tagff
 /* 80133F78 00130D78  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 80133F7C 00130D7C  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133F80 00130D80  C0 21 00 1C */	lfs f1, 0x1c(r1)
@@ -98,7 +98,7 @@ render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
 /* 80133FA8 00130DA8  C0 82 A3 54 */	lfs f4, lbl_803CECD4-_SDA2_BASE_(r2)
 /* 80133FAC 00130DAC  7F E3 FB 78 */	mr r3, r31
 /* 80133FB0 00130DB0  38 81 00 0C */	addi r4, r1, 0xc
-/* 80133FB4 00130DB4  48 00 00 B1 */	bl set_vert__22_unnamed_zTextBox_cpp_FR18rwGameCube2DVertexffff10iColor_tagff
+/* 80133FB4 00130DB4  48 00 00 B1 */	bl set_vert__22$$2unnamed$$2zTextBox_cpp$$2FR18rwGameCube2DVertexffff10iColor_tagff
 /* 80133FB8 00130DB8  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133FBC 00130DBC  7F E4 FB 78 */	mr r4, r31
 /* 80133FC0 00130DC0  38 63 42 58 */	addi r3, r3, lbl_80324258@l
@@ -125,7 +125,7 @@ render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
 /* 80134014 00130E14  EC 27 08 2A */	fadds f1, f7, f1
 /* 80134018 00130E18  38 81 00 08 */	addi r4, r1, 8
 /* 8013401C 00130E1C  EC 42 00 2A */	fadds f2, f2, f0
-/* 80134020 00130E20  48 00 00 45 */	bl set_vert__22_unnamed_zTextBox_cpp_FR18rwGameCube2DVertexffff10iColor_tagff
+/* 80134020 00130E20  48 00 00 45 */	bl set_vert__22$$2unnamed$$2zTextBox_cpp$$2FR18rwGameCube2DVertexffff10iColor_tagff
 /* 80134024 00130E24  3C 80 80 32 */	lis r4, lbl_80324258@ha
 /* 80134028 00130E28  38 60 00 03 */	li r3, 3
 /* 8013402C 00130E2C  38 84 42 58 */	addi r4, r4, lbl_80324258@l
@@ -144,7 +144,7 @@ render_bk_fill__22_unnamed_zTextBox_cpp_FRC8ztextbox:
 /* 80134060 00130E60  4E 80 00 20 */	blr 
 
 /* set_vert__22@unnamed@zTextBox_cpp@FR18rwGameCube2DVertexffff10iColor_tagff */
-set_vert__22_unnamed_zTextBox_cpp_FR18rwGameCube2DVertexffff10iColor_tagff:
+set_vert__22$$2unnamed$$2zTextBox_cpp$$2FR18rwGameCube2DVertexffff10iColor_tagff:
 /* 80134064 00130E64  D0 23 00 00 */	stfs f1, 0(r3)
 /* 80134068 00130E68  D0 43 00 04 */	stfs f2, 4(r3)
 /* 8013406C 00130E6C  D0 A3 00 08 */	stfs f5, 8(r3)
@@ -162,7 +162,7 @@ set_vert__22_unnamed_zTextBox_cpp_FR18rwGameCube2DVertexffff10iColor_tagff:
 /* 8013409C 00130E9C  4E 80 00 20 */	blr 
 
 /* init_textbox__22@unnamed@zTextBox_cpp@FR8ztextbox */
-init_textbox__22_unnamed_zTextBox_cpp_FR8ztextbox:
+init_textbox__22$$2unnamed$$2zTextBox_cpp$$2FR8ztextbox:
 /* 801340A0 00130EA0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801340A4 00130EA4  7C 08 02 A6 */	mflr r0
 /* 801340A8 00130EA8  90 01 00 34 */	stw r0, 0x34(r1)
@@ -481,7 +481,7 @@ render__8ztextboxFv:
 /* 80134508 00131308  88 03 00 10 */	lbz r0, 0x10(r3)
 /* 8013450C 0013130C  54 00 D7 FF */	rlwinm. r0, r0, 0x1a, 0x1f, 0x1f
 /* 80134510 00131310  41 82 00 18 */	beq lbl_80134528
-/* 80134514 00131314  4B FF FB 8D */	bl init_textbox__22_unnamed_zTextBox_cpp_FR8ztextbox
+/* 80134514 00131314  4B FF FB 8D */	bl init_textbox__22$$2unnamed$$2zTextBox_cpp$$2FR8ztextbox
 /* 80134518 00131318  88 1F 00 10 */	lbz r0, 0x10(r31)
 /* 8013451C 0013131C  38 60 00 00 */	li r3, 0
 /* 80134520 00131320  50 60 36 72 */	rlwimi r0, r3, 6, 0x19, 0x19
@@ -685,7 +685,7 @@ refresh__8ztextboxFv:
 /* 801347A8 001315A8  88 03 00 10 */	lbz r0, 0x10(r3)
 /* 801347AC 001315AC  54 00 D7 FF */	rlwinm. r0, r0, 0x1a, 0x1f, 0x1f
 /* 801347B0 001315B0  41 82 00 18 */	beq lbl_801347C8
-/* 801347B4 001315B4  4B FF F8 ED */	bl init_textbox__22_unnamed_zTextBox_cpp_FR8ztextbox
+/* 801347B4 001315B4  4B FF F8 ED */	bl init_textbox__22$$2unnamed$$2zTextBox_cpp$$2FR8ztextbox
 /* 801347B8 001315B8  88 1F 00 10 */	lbz r0, 0x10(r31)
 /* 801347BC 001315BC  38 60 00 00 */	li r3, 0
 /* 801347C0 001315C0  50 60 36 72 */	rlwimi r0, r3, 6, 0x19, 0x19

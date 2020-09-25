@@ -1016,14 +1016,14 @@ xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf:
 /* 801198D0 001166D0  7C 08 02 A6 */	mflr r0
 /* 801198D4 001166D4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 801198D8 001166D8  C0 44 00 10 */	lfs f2, 0x10(r4)
-/* 801198DC 001166DC  48 00 00 15 */	bl ocircle_emit__29_unnamed_xParEmitterType_cpp_FR4xParR16xParEmitterAssetff
+/* 801198DC 001166DC  48 00 00 15 */	bl ocircle_emit__29$$2unnamed$$2xParEmitterType_cpp$$2FR4xParR16xParEmitterAssetff
 /* 801198E0 001166E0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801198E4 001166E4  7C 08 03 A6 */	mtlr r0
 /* 801198E8 001166E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801198EC 001166EC  4E 80 00 20 */	blr 
 
 /* ocircle_emit__29@unnamed@xParEmitterType_cpp@FR4xParR16xParEmitterAssetff */
-ocircle_emit__29_unnamed_xParEmitterType_cpp_FR4xParR16xParEmitterAssetff:
+ocircle_emit__29$$2unnamed$$2xParEmitterType_cpp$$2FR4xParR16xParEmitterAssetff:
 /* 801198F0 001166F0  94 21 FF 50 */	stwu r1, -0xb0(r1)
 /* 801198F4 001166F4  7C 08 02 A6 */	mflr r0
 /* 801198F8 001166F8  90 01 00 B4 */	stw r0, 0xb4(r1)
@@ -1132,7 +1132,7 @@ xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf:
 /* 80119A84 00116884  EC 41 10 7C */	fnmsubs f2, f1, f1, f2
 /* 80119A88 00116888  FC 20 F8 90 */	fmr f1, f31
 /* 80119A8C 0011688C  EC 42 00 32 */	fmuls f2, f2, f0
-/* 80119A90 00116890  4B FF FE 61 */	bl ocircle_emit__29_unnamed_xParEmitterType_cpp_FR4xParR16xParEmitterAssetff
+/* 80119A90 00116890  4B FF FE 61 */	bl ocircle_emit__29$$2unnamed$$2xParEmitterType_cpp$$2FR4xParR16xParEmitterAssetff
 /* 80119A94 00116894  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
 /* 80119A98 00116898  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80119A9C 0011689C  CB E1 00 10 */	lfd f31, 0x10(r1)
@@ -1175,7 +1175,7 @@ lbl_80119B18:
 /* 80119B1C 0011691C  7F A4 EB 78 */	mr r4, r29
 /* 80119B20 00116920  7F C5 F3 78 */	mr r5, r30
 /* 80119B24 00116924  7F E6 FB 78 */	mr r6, r31
-/* 80119B28 00116928  48 00 00 29 */	bl transform_ent_bone__29_unnamed_xParEmitterType_cpp_FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3
+/* 80119B28 00116928  48 00 00 29 */	bl transform_ent_bone__29$$2unnamed$$2xParEmitterType_cpp$$2FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3
 /* 80119B2C 0011692C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80119B30 00116930  7F E3 FB 78 */	mr r3, r31
 /* 80119B34 00116934  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -1187,7 +1187,7 @@ lbl_80119B18:
 /* 80119B4C 0011694C  4E 80 00 20 */	blr 
 
 /* transform_ent_bone__29@unnamed@xParEmitterType_cpp@FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3 */
-transform_ent_bone__29_unnamed_xParEmitterType_cpp_FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3:
+transform_ent_bone__29$$2unnamed$$2xParEmitterType_cpp$$2FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3:
 /* 80119B50 00116950  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80119B54 00116954  7C 08 02 A6 */	mflr r0
 /* 80119B58 00116958  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1273,7 +1273,7 @@ xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3:
 /* 80119C74 00116A74  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80119C78 00116A78  7C 08 02 A6 */	mflr r0
 /* 80119C7C 00116A7C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80119C80 00116A80  4B FF FE D1 */	bl transform_ent_bone__29_unnamed_xParEmitterType_cpp_FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3
+/* 80119C80 00116A80  4B FF FE D1 */	bl transform_ent_bone__29$$2unnamed$$2xParEmitterType_cpp$$2FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3
 /* 80119C84 00116A84  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80119C88 00116A88  7C 08 03 A6 */	mtlr r0
 /* 80119C8C 00116A8C  38 21 00 10 */	addi r1, r1, 0x10
@@ -1295,7 +1295,7 @@ xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3:
 /* 80119CC0 00116AC0  7C 7D 1B 78 */	mr r29, r3
 /* 80119CC4 00116AC4  7F E4 FB 78 */	mr r4, r31
 /* 80119CC8 00116AC8  38 61 00 20 */	addi r3, r1, 0x20
-/* 80119CCC 00116ACC  48 00 00 91 */	bl get_random_offset__29_unnamed_xParEmitterType_cpp_FRC10xPEEntBoneRC7xMat4x3
+/* 80119CCC 00116ACC  48 00 00 91 */	bl get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC10xPEEntBoneRC7xMat4x3
 /* 80119CD0 00116AD0  80 C1 00 20 */	lwz r6, 0x20(r1)
 /* 80119CD4 00116AD4  38 7D 00 10 */	addi r3, r29, 0x10
 /* 80119CD8 00116AD8  80 A1 00 24 */	lwz r5, 0x24(r1)
@@ -1334,7 +1334,7 @@ lbl_80119D2C:
 /* 80119D58 00116B58  4E 80 00 20 */	blr 
 
 /* get_random_offset__29@unnamed@xParEmitterType_cpp@FRC10xPEEntBoneRC7xMat4x3 */
-get_random_offset__29_unnamed_xParEmitterType_cpp_FRC10xPEEntBoneRC7xMat4x3:
+get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC10xPEEntBoneRC7xMat4x3:
 /* 80119D5C 00116B5C  94 21 FE B0 */	stwu r1, -0x150(r1)
 /* 80119D60 00116B60  7C 08 02 A6 */	mflr r0
 /* 80119D64 00116B64  90 01 01 54 */	stw r0, 0x154(r1)
@@ -1662,7 +1662,7 @@ lbl_8011A250:
 /* 8011A254 00117054  38 61 00 20 */	addi r3, r1, 0x20
 /* 8011A258 00117058  88 BD 00 11 */	lbz r5, 0x11(r29)
 /* 8011A25C 0011705C  38 9E 00 64 */	addi r4, r30, 0x64
-/* 8011A260 00117060  48 00 00 A1 */	bl get_random_offset__29_unnamed_xParEmitterType_cpp_FRC6xBoundfUi
+/* 8011A260 00117060  48 00 00 A1 */	bl get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC6xBoundfUi
 /* 8011A264 00117064  80 E1 00 20 */	lwz r7, 0x20(r1)
 /* 8011A268 00117068  38 61 00 14 */	addi r3, r1, 0x14
 /* 8011A26C 0011706C  80 C1 00 24 */	lwz r6, 0x24(r1)
@@ -1705,7 +1705,7 @@ lbl_8011A2C0:
 /* 8011A2FC 001170FC  4E 80 00 20 */	blr 
 
 /* get_random_offset__29@unnamed@xParEmitterType_cpp@FRC6xBoundfUi */
-get_random_offset__29_unnamed_xParEmitterType_cpp_FRC6xBoundfUi:
+get_random_offset__29$$2unnamed$$2xParEmitterType_cpp$$2FRC6xBoundfUi:
 /* 8011A300 00117100  94 21 FF 00 */	stwu r1, -0x100(r1)
 /* 8011A304 00117104  7C 08 02 A6 */	mflr r0
 /* 8011A308 00117108  90 01 01 04 */	stw r0, 0x104(r1)
