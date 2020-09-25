@@ -1,0 +1,6 @@
+#ifndef ZNPCGOALSCRIPT_H
+#define ZNPCGOALSCRIPT_H
+
+
+
+#endif
