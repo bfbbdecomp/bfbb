@@ -7,6 +7,9 @@
 #include "iCamera.h"
 #include "../p2/iTime.h"
 
+#include <rwcore.h>
+#include <rpworld.h>
+
 struct xGlobals
 {
     xCamera camera;
