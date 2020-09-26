@@ -16,6 +16,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xClimate.o                \
     $(OBJ_DIR)/asm/Core/x/xCollide.o                \
     $(OBJ_DIR)/asm/Core/x/xCollideFast.o            \
+    $(OBJ_DIR)/asm/Core/x/xColor.o                  \
     $(OBJ_DIR)/src/Core/x/xCounter.o                \
     $(OBJ_DIR)/asm/Core/x/xCutscene.o               \
     $(OBJ_DIR)/asm/Core/x/xDebug.o                  \
@@ -119,6 +120,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zUI.o                       \
     $(OBJ_DIR)/asm/Game/zUIFont.o                   \
     $(OBJ_DIR)/asm/Game/zVar.o                      \
+    $(OBJ_DIR)/asm/Game/zVolume.o                   \
     $(OBJ_DIR)/asm/Core/p2/iAnim.o                  \
     $(OBJ_DIR)/asm/Core/p2/iAnimSKB.o               \
     $(OBJ_DIR)/asm/Core/x/iCamera.o                 \
@@ -182,6 +184,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zGrid.o                     \
     $(OBJ_DIR)/asm/Game/zNPCGoalScript.o            \
     $(OBJ_DIR)/asm/Game/zNPCSndTable.o              \
+    $(OBJ_DIR)/asm/Game/zNPCSndLists.o              \
     $(OBJ_DIR)/asm/Game/zNPCTypeDuplotron.o         \
     $(OBJ_DIR)/asm/Core/x/xModelBucket.o            \
     $(OBJ_DIR)/asm/Game/zShrapnel.o                 \

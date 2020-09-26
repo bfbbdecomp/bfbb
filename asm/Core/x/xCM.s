@@ -123,6 +123,7 @@ xCMcolor_scale__F10iColor_tagf:
 /* 80196190 00192F90  38 21 00 50 */	addi r1, r1, 0x50
 /* 80196194 00192F94  4E 80 00 20 */	blr 
 
+/* what? */
 .global xColorInit__FP10iColor_tagUcUcUcUc
 xColorInit__FP10iColor_tagUcUcUcUc:
 /* 80196198 00192F98  98 83 00 00 */	stb r4, 0(r3)
