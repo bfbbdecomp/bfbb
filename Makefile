@@ -67,7 +67,7 @@ SHA1SUM := sha1sum
 ASMDIFF := ./asmdiff.sh
 
 # Options
-INCLUDES := -Isrc/dolphin/include -Isrc/CodeWarrior
+INCLUDES := -Isrc/dolphin/include -Isrc/CodeWarrior -Isrc/rwsdk
 
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
