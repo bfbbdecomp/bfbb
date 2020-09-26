@@ -22,12 +22,4 @@ struct RwCamera
 {
 };
 
-struct RpAtomic
-{
-};
-
-struct RpWorld
-{
-};
-
 #endif

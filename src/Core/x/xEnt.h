@@ -10,6 +10,7 @@
 #include "xFFX.h"
 
 #include <rwcore.h>
+#include <rpworld.h>
 
 struct xEntAsset : xBaseAsset
 {
