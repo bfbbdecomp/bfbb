@@ -2466,9 +2466,9 @@ __ct__15zNPCGoalBoySwimFi:
 /* 8013894C 0013574C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80138950 00135750  7C 7F 1B 78 */	mr r31, r3
 /* 80138954 00135754  4B FA 06 A1 */	bl __ct__14zNPCGoalCommonFi
-/* 80138958 00135758  3C 80 80 2A */	lis r4, lbl_8029982C@ha
+/* 80138958 00135758  3C 80 80 2A */	lis r4, __vt__15zNPCGoalBoySwim@ha
 /* 8013895C 0013575C  7F E3 FB 78 */	mr r3, r31
-/* 80138960 00135760  38 04 98 2C */	addi r0, r4, lbl_8029982C@l
+/* 80138960 00135760  38 04 98 2C */	addi r0, r4, __vt__15zNPCGoalBoySwim@l
 /* 80138964 00135764  38 80 00 02 */	li r4, 2
 /* 80138968 00135768  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8013896C 0013576C  4B FA 07 35 */	bl SetFlags__5xGoalFi

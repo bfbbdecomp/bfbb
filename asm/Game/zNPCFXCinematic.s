@@ -816,8 +816,8 @@ __ct__11NCINBeNoseyFv:
 
 .global __ct__9XCSNNoseyFv
 __ct__9XCSNNoseyFv:
-/* 80191AEC 0018E8EC  3C 80 80 2A */	lis r4, lbl_802A1B3C@ha
-/* 80191AF0 0018E8F0  38 04 1B 3C */	addi r0, r4, lbl_802A1B3C@l
+/* 80191AEC 0018E8EC  3C 80 80 2A */	lis r4, __vt__9XCSNNosey@ha
+/* 80191AF0 0018E8F0  38 04 1B 3C */	addi r0, r4, __vt__9XCSNNosey@l
 /* 80191AF4 0018E8F4  90 03 00 00 */	stw r0, 0(r3)
 /* 80191AF8 0018E8F8  4E 80 00 20 */	blr 
 

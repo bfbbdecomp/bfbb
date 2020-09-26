@@ -805,9 +805,9 @@ __ct__13zNPCGoalExistFi:
 /* 8014F73C 0014C53C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8014F740 0014C540  7C 7F 1B 78 */	mr r31, r3
 /* 8014F744 0014C544  4B F8 98 B1 */	bl __ct__14zNPCGoalCommonFi
-/* 8014F748 0014C548  3C 80 80 2A */	lis r4, lbl_8029A208@ha
+/* 8014F748 0014C548  3C 80 80 2A */	lis r4, __vt__13zNPCGoalExist@ha
 /* 8014F74C 0014C54C  7F E3 FB 78 */	mr r3, r31
-/* 8014F750 0014C550  38 04 A2 08 */	addi r0, r4, lbl_8029A208@l
+/* 8014F750 0014C550  38 04 A2 08 */	addi r0, r4, __vt__13zNPCGoalExist@l
 /* 8014F754 0014C554  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8014F758 0014C558  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8014F75C 0014C55C  80 01 00 14 */	lwz r0, 0x14(r1)

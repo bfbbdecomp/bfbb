@@ -393,9 +393,9 @@ __ct__Q28ztaskbox13talk_callbackFv:
 /* 80134E9C 00131C9C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80134EA0 00131CA0  7C 7F 1B 78 */	mr r31, r3
 /* 80134EA4 00131CA4  4B FE 77 C5 */	bl __ct__Q28ztalkbox8callbackFv
-/* 80134EA8 00131CA8  3C 80 80 2A */	lis r4, lbl_80298FA0@ha
+/* 80134EA8 00131CA8  3C 80 80 2A */	lis r4, __vt__Q28ztaskbox13talk_callback@ha
 /* 80134EAC 00131CAC  7F E3 FB 78 */	mr r3, r31
-/* 80134EB0 00131CB0  38 04 8F A0 */	addi r0, r4, lbl_80298FA0@l
+/* 80134EB0 00131CB0  38 04 8F A0 */	addi r0, r4, __vt__Q28ztaskbox13talk_callback@l
 /* 80134EB4 00131CB4  90 1F 00 00 */	stw r0, 0(r31)
 /* 80134EB8 00131CB8  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80134EBC 00131CBC  80 01 00 14 */	lwz r0, 0x14(r1)

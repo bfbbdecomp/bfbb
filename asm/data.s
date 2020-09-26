@@ -221,44 +221,57 @@ lbl_8028C2A4:
 .global lbl_8028C430
 lbl_8028C430:
 	.incbin "baserom.dol", 0x289410, 0xA0
-.global lbl_8028C4D0
-lbl_8028C4D0:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_halt */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_halt
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_halt:
 	.incbin "baserom.dol", 0x2894B0, 0x1C
-.global lbl_8028C4EC
-lbl_8028C4EC:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aim */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_player_aim
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_player_aim:
 	.incbin "baserom.dol", 0x2894CC, 0x1C
-.global lbl_8028C508
-lbl_8028C508:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_fire */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_fire
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_fire:
 	.incbin "baserom.dol", 0x2894E8, 0x1C
-.global lbl_8028C524
-lbl_8028C524:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_wait */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_wait
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_wait:
 	.incbin "baserom.dol", 0x289504, 0x1C
-.global lbl_8028C540
-lbl_8028C540:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_missle_appear */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_missle_appear
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_missle_appear:
 	.incbin "baserom.dol", 0x289520, 0x1C
-.global lbl_8028C55C
-lbl_8028C55C:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_fly */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_missle_fly
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_missle_fly:
 	.incbin "baserom.dol", 0x28953C, 0x1C
-.global lbl_8028C578
-lbl_8028C578:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explode */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_missle_explode
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_missle_explode:
 	.incbin "baserom.dol", 0x289558, 0x1C
-.global lbl_8028C594
-lbl_8028C594:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aim */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_camera_aim
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_camera_aim:
 	.incbin "baserom.dol", 0x289574, 0x1C
-.global lbl_8028C5B0
-lbl_8028C5B0:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seize */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_18state_camera_seize
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_18state_camera_seize:
 	.incbin "baserom.dol", 0x289590, 0x1C
-.global lbl_8028C5CC
-lbl_8028C5CC:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attach */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_attach
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_attach:
 	.incbin "baserom.dol", 0x2895AC, 0x1C
-.global lbl_8028C5E8
-lbl_8028C5E8:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_survey */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_survey
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_survey:
 	.incbin "baserom.dol", 0x2895C8, 0x1C
-.global lbl_8028C604
-lbl_8028C604:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@10state_type */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_10state_type
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_10state_type:
 	.incbin "baserom.dol", 0x2895E4, 0x1C
-.global lbl_8028C620
-lbl_8028C620:
+/* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_camera_restore */
+.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_camera_restore
+__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_camera_restore:
 	.incbin "baserom.dol", 0x289600, 0x20
 .global lbl_8028C640
 lbl_8028C640:
@@ -584,8 +597,8 @@ __vt__16zNPCGoalLoopAnim:
 .global __vt__16zNPCGoalPushAnim
 __vt__16zNPCGoalPushAnim:
 	.incbin "baserom.dol", 0x28FE2C, 0x34
-.global lbl_80292E80
-lbl_80292E80:
+.global __vt__17zNPCGoalNoManLand
+__vt__17zNPCGoalNoManLand:
 	.incbin "baserom.dol", 0x28FE60, 0x38
 .global lbl_80292EB8
 lbl_80292EB8:
@@ -800,8 +813,8 @@ __vt__13zNPCGoalTaunt:
 .global __vt__14zNPCGoalNotice
 __vt__14zNPCGoalNotice:
 	.incbin "baserom.dol", 0x290EB8, 0x34
-.global lbl_80293F0C
-lbl_80293F0C:
+.global __vt__9HAZNotify
+__vt__9HAZNotify:
 	.incbin "baserom.dol", 0x290EEC, 0xC
 .global __vt__16zNPCGoalTikiDead
 __vt__16zNPCGoalTikiDead:
@@ -938,8 +951,8 @@ __vt__10zNPCFodder:
 .global __vt__9zNPCRobot
 __vt__9zNPCRobot:
 	.incbin "baserom.dol", 0x293510, 0xD8
-.global lbl_80296608
-lbl_80296608:
+.global __vt__8xPSYNote
+__vt__8xPSYNote:
 	.incbin "baserom.dol", 0x2935E8, 0x10
 .global g_hash_folkanim
 g_hash_folkanim:
@@ -980,14 +993,14 @@ __vt__8zNPCFish:
 .global __vt__12zNPCVillager
 __vt__12zNPCVillager:
 	.incbin "baserom.dol", 0x293D80, 0xD0
-.global lbl_80296E70
-lbl_80296E70:
+.global __vt__Q28ztaskbox8callback
+__vt__Q28ztaskbox8callback:
 	.incbin "baserom.dol", 0x293E50, 0x10
-.global lbl_80296E80
-lbl_80296E80:
+.global __vt__7HiThere
+__vt__7HiThere:
 	.incbin "baserom.dol", 0x293E60, 0x10
-.global lbl_80296E90
-lbl_80296E90:
+.global __vt__14zNPCNewsFishTV
+__vt__14zNPCNewsFishTV:
 	.incbin "baserom.dol", 0x293E70, 0xD0
 .global g_hash_ambianim
 g_hash_ambianim:
@@ -1016,8 +1029,8 @@ __vt__5xGoal:
 .global __vt__12xGoalGeneric
 __vt__12xGoalGeneric:
 	.incbin "baserom.dol", 0x2943E0, 0x30
-.global lbl_80297430
-lbl_80297430:
+.global __vt__10xGoalEmpty
+__vt__10xGoalEmpty:
 	.incbin "baserom.dol", 0x294410, 0x30
 .global lbl_80297460
 lbl_80297460:
@@ -1031,14 +1044,17 @@ lbl_80297A68:
 .global lbl_80297C04
 lbl_80297C04:
 	.incbin "baserom.dol", 0x294BE4, 0xC
-.global lbl_80297C10
-lbl_80297C10:
+/* __vt__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@20attaching_state_type */
+.global __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_20attaching_state_type
+__vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_20attaching_state_type:
 	.incbin "baserom.dol", 0x294BF0, 0x18
-.global lbl_80297C28
-lbl_80297C28:
+/* __vt__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@10state_type */
+.global __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_10state_type
+__vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_10state_type:
 	.incbin "baserom.dol", 0x294C08, 0x18
-.global lbl_80297C40
-lbl_80297C40:
+/* __vt__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@18hanging_state_type */
+.global __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_18hanging_state_type
+__vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_18hanging_state_type:
 	.incbin "baserom.dol", 0x294C20, 0x18
 .global lbl_80297C58
 lbl_80297C58:
@@ -1070,26 +1086,32 @@ lbl_80297E48:
 .global lbl_80297EB8
 lbl_80297EB8:
 	.incbin "baserom.dol", 0x294E98, 0x30
-.global lbl_80297EE8
-lbl_80297EE8:
+/* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@13in_state_type */
+.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_type
+__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_type:
 	.incbin "baserom.dol", 0x294EC8, 0x14
-.global lbl_80297EFC
-lbl_80297EFC:
+/* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@14out_state_type */
+.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_type
+__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_type:
 	.incbin "baserom.dol", 0x294EDC, 0x14
-.global lbl_80297F10
-lbl_80297F10:
+.global __vt__Q28ztalkbox8callback
+__vt__Q28ztalkbox8callback:
 	.incbin "baserom.dol", 0x294EF0, 0x18
-.global lbl_80297F28
-lbl_80297F28:
+/* __vt__Q49oob_state32@unnamed@zEntPlayerOOBState_cpp@15grab_state_type17tutorial_callback */
+.global __vt__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callback
+__vt__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callback:
 	.incbin "baserom.dol", 0x294F08, 0x18
-.global lbl_80297F40
-lbl_80297F40:
+/* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@15grab_state_type */
+.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type
+__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type:
 	.incbin "baserom.dol", 0x294F20, 0x14
-.global lbl_80297F54
-lbl_80297F54:
+/* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@10state_type */
+.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_type
+__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_type:
 	.incbin "baserom.dol", 0x294F34, 0x14
-.global lbl_80297F68
-lbl_80297F68:
+/* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@15drop_state_type */
+.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_type
+__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_type:
 	.incbin "baserom.dol", 0x294F48, 0x18
 .global lbl_80297F80
 lbl_80297F80:
@@ -1106,26 +1128,26 @@ lbl_80298108:
 .global __vt__14zNPCGoalScript
 __vt__14zNPCGoalScript:
 	.incbin "baserom.dol", 0x295108, 0x34
-.global lbl_8029815C
-lbl_8029815C:
+.global __vt__18zNPCGoalScriptAnim
+__vt__18zNPCGoalScriptAnim:
 	.incbin "baserom.dol", 0x29513C, 0x34
-.global lbl_80298190
-lbl_80298190:
+.global __vt__20zNPCGoalScriptAttack
+__vt__20zNPCGoalScriptAttack:
 	.incbin "baserom.dol", 0x295170, 0x34
-.global lbl_802981C4
-lbl_802981C4:
+.global __vt__18zNPCGoalScriptMove
+__vt__18zNPCGoalScriptMove:
 	.incbin "baserom.dol", 0x2951A4, 0x34
-.global lbl_802981F8
-lbl_802981F8:
+.global __vt__18zNPCGoalScriptTalk
+__vt__18zNPCGoalScriptTalk:
 	.incbin "baserom.dol", 0x2951D8, 0x34
-.global lbl_8029822C
-lbl_8029822C:
+.global __vt__20zNPCGoalScriptFollow
+__vt__20zNPCGoalScriptFollow:
 	.incbin "baserom.dol", 0x29520C, 0x34
-.global lbl_80298260
-lbl_80298260:
+.global __vt__18zNPCGoalScriptLead
+__vt__18zNPCGoalScriptLead:
 	.incbin "baserom.dol", 0x295240, 0x34
-.global lbl_80298294
-lbl_80298294:
+.global __vt__18zNPCGoalScriptWait
+__vt__18zNPCGoalScriptWait:
 	.incbin "baserom.dol", 0x295274, 0x34
 .global lbl_802982C8
 lbl_802982C8:
@@ -1256,8 +1278,8 @@ lbl_80298B88:
 .global __vt__17zNPCGoalDuploLive
 __vt__17zNPCGoalDuploLive:
 	.incbin "baserom.dol", 0x295BB0, 0x34
-.global lbl_80298C04
-lbl_80298C04:
+.global __vt__17zNPCGoalDuploDead
+__vt__17zNPCGoalDuploDead:
 	.incbin "baserom.dol", 0x295BE4, 0x34
 .global lbl_80298C38
 lbl_80298C38:
@@ -1283,20 +1305,25 @@ lbl_80298E14:
 .global lbl_80298E68
 lbl_80298E68:
 	.incbin "baserom.dol", 0x295E48, 0xB4
-.global lbl_80298F1C
-lbl_80298F1C:
+/* __vt__Q222@unnamed@zTalkBox_cpp@16start_state_type */
+.global __vt__Q222_unnamed_zTalkBox_cpp_16start_state_type
+__vt__Q222_unnamed_zTalkBox_cpp_16start_state_type:
 	.incbin "baserom.dol", 0x295EFC, 0x14
-.global lbl_80298F30
-lbl_80298F30:
+/* __vt__Q222@unnamed@zTalkBox_cpp@15next_state_type */
+.global __vt__Q222_unnamed_zTalkBox_cpp_15next_state_type
+__vt__Q222_unnamed_zTalkBox_cpp_15next_state_type:
 	.incbin "baserom.dol", 0x295F10, 0x14
-.global lbl_80298F44
-lbl_80298F44:
+/* __vt__Q222@unnamed@zTalkBox_cpp@15wait_state_type */
+.global __vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type
+__vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type:
 	.incbin "baserom.dol", 0x295F24, 0x14
-.global lbl_80298F58
-lbl_80298F58:
+/* __vt__Q222@unnamed@zTalkBox_cpp@10state_type */
+.global __vt__Q222_unnamed_zTalkBox_cpp_10state_type
+__vt__Q222_unnamed_zTalkBox_cpp_10state_type:
 	.incbin "baserom.dol", 0x295F38, 0x14
-.global lbl_80298F6C
-lbl_80298F6C:
+/* __vt__Q222@unnamed@zTalkBox_cpp@15stop_state_type */
+.global __vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type
+__vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type:
 	.incbin "baserom.dol", 0x295F4C, 0x14
 .global lbl_80298F80
 lbl_80298F80:
@@ -1304,8 +1331,8 @@ lbl_80298F80:
 .global lbl_80298F8C
 lbl_80298F8C:
 	.incbin "baserom.dol", 0x295F6C, 0x14
-.global lbl_80298FA0
-lbl_80298FA0:
+.global __vt__Q28ztaskbox13talk_callback
+__vt__Q28ztaskbox13talk_callback:
 	.incbin "baserom.dol", 0x295F80, 0x18
 .global g_hash_testanim
 g_hash_testanim:
@@ -1367,14 +1394,14 @@ __vt__12zNPCGoalTalk:
 .global __vt__18zNPCGoalPlayerNear
 __vt__18zNPCGoalPlayerNear:
 	.incbin "baserom.dol", 0x2967D8, 0x34
-.global lbl_8029982C
-lbl_8029982C:
+.global __vt__15zNPCGoalBoySwim
+__vt__15zNPCGoalBoySwim:
 	.incbin "baserom.dol", 0x29680C, 0x34
 .global lbl_80299860
 lbl_80299860:
 	.incbin "baserom.dol", 0x296840, 0x34
-.global lbl_80299894
-lbl_80299894:
+.global __vt__12zNPCGoalHere
+__vt__12zNPCGoalHere:
 	.incbin "baserom.dol", 0x296874, 0x34
 .global lbl_802998C8
 lbl_802998C8:
@@ -1463,8 +1490,8 @@ __vt__13zNPCKingJelly:
 .global lbl_8029A138
 lbl_8029A138:
 	.incbin "baserom.dol", 0x297118, 0xD0
-.global lbl_8029A208
-lbl_8029A208:
+.global __vt__13zNPCGoalExist
+__vt__13zNPCGoalExist:
 	.incbin "baserom.dol", 0x2971E8, 0x38
 .global lbl_8029A240
 lbl_8029A240:
@@ -1658,8 +1685,8 @@ __vt__21zNPCGoalBPlanktonIdle:
 .global __vt__13zNPCBPlankton
 __vt__13zNPCBPlankton:
 	.incbin "baserom.dol", 0x29834C, 0xDC
-.global lbl_8029B448
-lbl_8029B448:
+.global __vt__6taxiCB
+__vt__6taxiCB:
 	.incbin "baserom.dol", 0x298428, 0x18
 .global lbl_8029B460
 lbl_8029B460:
@@ -1700,8 +1727,8 @@ __vt__20zNPCGoalDutchmanIdle:
 .global __vt__24zNPCGoalDutchmanInitiate
 __vt__24zNPCGoalDutchmanInitiate:
 	.incbin "baserom.dol", 0x2986DC, 0x34
-.global lbl_8029B730
-lbl_8029B730:
+.global __vt__19zNPCGoalDutchmanNil
+__vt__19zNPCGoalDutchmanNil:
 	.incbin "baserom.dol", 0x298710, 0x34
 .global __vt__12zNPCDutchman
 __vt__12zNPCDutchman:
@@ -1787,8 +1814,8 @@ lbl_802A1B18:
 .global lbl_802A1B24
 lbl_802A1B24:
 	.incbin "baserom.dol", 0x29EB04, 0x18
-.global lbl_802A1B3C
-lbl_802A1B3C:
+.global __vt__9XCSNNosey
+__vt__9XCSNNosey:
 	.incbin "baserom.dol", 0x29EB1C, 0x10
 .global __vt__11NCINBeNosey
 __vt__11NCINBeNosey:

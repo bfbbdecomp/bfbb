@@ -16398,9 +16398,9 @@ lbl_80074F90:
 /* 80074FB0 00071DB0  4B F9 62 B5 */	bl __as__5xVec3FRC5xVec3
 /* 80074FB4 00071DB4  7F A3 EB 78 */	mr r3, r29
 /* 80074FB8 00071DB8  48 01 BE 7D */	bl NPCC_rightDir__FP4xEnt
-/* 80074FBC 00071DBC  3C A0 80 25 */	lis r5, lbl_802560F4@ha
+/* 80074FBC 00071DBC  3C A0 80 25 */	lis r5, offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf@ha
 /* 80074FC0 00071DC0  7C 64 1B 78 */	mr r4, r3
-/* 80074FC4 00071DC4  C0 25 60 F4 */	lfs f1, lbl_802560F4@l(r5)
+/* 80074FC4 00071DC4  C0 25 60 F4 */	lfs f1, offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf@l(r5)
 /* 80074FC8 00071DC8  38 61 00 20 */	addi r3, r1, 0x20
 /* 80074FCC 00071DCC  4B F9 61 55 */	bl __ml__5xVec3CFf
 /* 80074FD0 00071DD0  7F C3 F3 78 */	mr r3, r30
@@ -16408,9 +16408,9 @@ lbl_80074F90:
 /* 80074FD8 00071DD8  4B FA 04 6D */	bl __apl__5xVec3FRC5xVec3
 /* 80074FDC 00071DDC  7F A3 EB 78 */	mr r3, r29
 /* 80074FE0 00071DE0  48 01 BE 71 */	bl NPCC_upDir__FP4xEnt
-/* 80074FE4 00071DE4  3C A0 80 25 */	lis r5, lbl_802560F4@ha
+/* 80074FE4 00071DE4  3C A0 80 25 */	lis r5, offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf@ha
 /* 80074FE8 00071DE8  7C 64 1B 78 */	mr r4, r3
-/* 80074FEC 00071DEC  38 A5 60 F4 */	addi r5, r5, lbl_802560F4@l
+/* 80074FEC 00071DEC  38 A5 60 F4 */	addi r5, r5, offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf@l
 /* 80074FF0 00071DF0  38 61 00 14 */	addi r3, r1, 0x14
 /* 80074FF4 00071DF4  C0 25 00 04 */	lfs f1, 4(r5)
 /* 80074FF8 00071DF8  4B F9 61 29 */	bl __ml__5xVec3CFf
@@ -16419,9 +16419,9 @@ lbl_80074F90:
 /* 80075004 00071E04  4B FA 04 41 */	bl __apl__5xVec3FRC5xVec3
 /* 80075008 00071E08  7F A3 EB 78 */	mr r3, r29
 /* 8007500C 00071E0C  48 01 BE 35 */	bl NPCC_faceDir__FP4xEnt
-/* 80075010 00071E10  3C A0 80 25 */	lis r5, lbl_802560F4@ha
+/* 80075010 00071E10  3C A0 80 25 */	lis r5, offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf@ha
 /* 80075014 00071E14  7C 64 1B 78 */	mr r4, r3
-/* 80075018 00071E18  38 A5 60 F4 */	addi r5, r5, lbl_802560F4@l
+/* 80075018 00071E18  38 A5 60 F4 */	addi r5, r5, offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf@l
 /* 8007501C 00071E1C  38 61 00 08 */	addi r3, r1, 8
 /* 80075020 00071E20  C0 25 00 08 */	lfs f1, 8(r5)
 /* 80075024 00071E24  4B F9 60 FD */	bl __ml__5xVec3CFf

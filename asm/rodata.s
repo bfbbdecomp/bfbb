@@ -71,8 +71,8 @@ lbl_802560DC:
 .global lbl_802560E8
 lbl_802560E8:
 	.incbin "baserom.dol", 0x2530C8, 0xC
-.global lbl_802560F4
-lbl_802560F4:
+.global offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf
+offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf:
 	.incbin "baserom.dol", 0x2530D4, 0xC
 .global lbl_80256100
 lbl_80256100:

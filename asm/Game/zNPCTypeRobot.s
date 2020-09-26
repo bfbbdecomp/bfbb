@@ -14922,8 +14922,8 @@ __ct__10TubeNoticeFv:
 
 .global __ct__8xPSYNoteFv
 __ct__8xPSYNoteFv:
-/* 80102368 000FF168  3C 80 80 29 */	lis r4, lbl_80296608@ha
-/* 8010236C 000FF16C  38 04 66 08 */	addi r0, r4, lbl_80296608@l
+/* 80102368 000FF168  3C 80 80 29 */	lis r4, __vt__8xPSYNote@ha
+/* 8010236C 000FF16C  38 04 66 08 */	addi r0, r4, __vt__8xPSYNote@l
 /* 80102370 000FF170  90 03 00 00 */	stw r0, 0(r3)
 /* 80102374 000FF174  4E 80 00 20 */	blr 
 

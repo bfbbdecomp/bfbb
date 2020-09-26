@@ -2327,9 +2327,9 @@ __ct__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state
 /* 80112340 0010F140  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80112344 0010F144  7C 7F 1B 78 */	mr r31, r3
 /* 80112348 0010F148  48 00 00 29 */	bl __ct__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_typeFQ312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_enum
-/* 8011234C 0010F14C  3C 80 80 29 */	lis r4, lbl_80297C40@ha
+/* 8011234C 0010F14C  3C 80 80 29 */	lis r4, __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_18hanging_state_type@ha
 /* 80112350 0010F150  7F E3 FB 78 */	mr r3, r31
-/* 80112354 0010F154  38 04 7C 40 */	addi r0, r4, lbl_80297C40@l
+/* 80112354 0010F154  38 04 7C 40 */	addi r0, r4, __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_18hanging_state_type@l
 /* 80112358 0010F158  90 1F 00 04 */	stw r0, 4(r31)
 /* 8011235C 0010F15C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80112360 0010F160  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -2339,8 +2339,8 @@ __ct__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state
 
 /* __ct__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@10state_typeFQ312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@10state_enum */
 __ct__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_typeFQ312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_enum:
-/* 80112370 0010F170  3C A0 80 29 */	lis r5, lbl_80297C28@ha
-/* 80112374 0010F174  38 05 7C 28 */	addi r0, r5, lbl_80297C28@l
+/* 80112370 0010F170  3C A0 80 29 */	lis r5, __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_10state_type@ha
+/* 80112374 0010F174  38 05 7C 28 */	addi r0, r5, __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_10state_type@l
 /* 80112378 0010F178  90 03 00 04 */	stw r0, 4(r3)
 /* 8011237C 0010F17C  90 83 00 00 */	stw r4, 0(r3)
 /* 80112380 0010F180  4E 80 00 20 */	blr 
@@ -2354,9 +2354,9 @@ __ct__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$220attaching_sta
 /* 80112394 0010F194  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80112398 0010F198  7C 7F 1B 78 */	mr r31, r3
 /* 8011239C 0010F19C  4B FF FF D5 */	bl __ct__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_typeFQ312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_enum
-/* 801123A0 0010F1A0  3C 80 80 29 */	lis r4, lbl_80297C10@ha
+/* 801123A0 0010F1A0  3C 80 80 29 */	lis r4, __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_20attaching_state_type@ha
 /* 801123A4 0010F1A4  7F E3 FB 78 */	mr r3, r31
-/* 801123A8 0010F1A8  38 04 7C 10 */	addi r0, r4, lbl_80297C10@l
+/* 801123A8 0010F1A8  38 04 7C 10 */	addi r0, r4, __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_20attaching_state_type@l
 /* 801123AC 0010F1AC  90 1F 00 04 */	stw r0, 4(r31)
 /* 801123B0 0010F1B0  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 801123B4 0010F1B4  80 01 00 14 */	lwz r0, 0x14(r1)

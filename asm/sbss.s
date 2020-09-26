@@ -681,11 +681,11 @@ lbl_803CB534:
 .global lbl_803CB538
 lbl_803CB538:
 	.skip 0x8
-.global lbl_803CB540
-lbl_803CB540:
+.global model_id$localstatic3$checkpoint_collision_hack__FP4zEnt
+model_id$localstatic3$checkpoint_collision_hack__FP4zEnt:
 	.skip 0x4
-.global lbl_803CB544
-lbl_803CB544:
+.global init$localstatic4$checkpoint_collision_hack__FP4zEnt
+init$localstatic4$checkpoint_collision_hack__FP4zEnt:
 	.skip 0x4
 .global lbl_803CB548
 lbl_803CB548:
@@ -3582,8 +3582,8 @@ lbl_803CC504:
 .global lbl_803CC508
 lbl_803CC508:
 	.skip 0x4
-.global lbl_803CC50C
-lbl_803CC50C:
+.global __OSIsGcam
+__OSIsGcam:
 	.skip 0x4
 .global lbl_803CC510
 lbl_803CC510:

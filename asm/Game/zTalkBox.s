@@ -2999,9 +2999,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_typeFv:
 /* 80132F58 0012FD58  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80132F5C 0012FD5C  7C 7F 1B 78 */	mr r31, r3
 /* 80132F60 0012FD60  48 00 00 29 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80132F64 0012FD64  3C 80 80 2A */	lis r4, lbl_80298F6C@ha
+/* 80132F64 0012FD64  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type@ha
 /* 80132F68 0012FD68  7F E3 FB 78 */	mr r3, r31
-/* 80132F6C 0012FD6C  38 04 8F 6C */	addi r0, r4, lbl_80298F6C@l
+/* 80132F6C 0012FD6C  38 04 8F 6C */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type@l
 /* 80132F70 0012FD70  90 1F 00 04 */	stw r0, 4(r31)
 /* 80132F74 0012FD74  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80132F78 0012FD78  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3011,8 +3011,8 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_typeFv:
 
 /* __ct__Q222@unnamed@zTalkBox_cpp@10state_typeFQ222@unnamed@zTalkBox_cpp@10state_enum */
 __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum:
-/* 80132F88 0012FD88  3C A0 80 2A */	lis r5, lbl_80298F58@ha
-/* 80132F8C 0012FD8C  38 05 8F 58 */	addi r0, r5, lbl_80298F58@l
+/* 80132F88 0012FD88  3C A0 80 2A */	lis r5, __vt__Q222_unnamed_zTalkBox_cpp_10state_type@ha
+/* 80132F8C 0012FD8C  38 05 8F 58 */	addi r0, r5, __vt__Q222_unnamed_zTalkBox_cpp_10state_type@l
 /* 80132F90 0012FD90  90 03 00 04 */	stw r0, 4(r3)
 /* 80132F94 0012FD94  90 83 00 00 */	stw r4, 0(r3)
 /* 80132F98 0012FD98  4E 80 00 20 */	blr 
@@ -3026,9 +3026,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_typeFv:
 /* 80132FAC 0012FDAC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80132FB0 0012FDB0  7C 7F 1B 78 */	mr r31, r3
 /* 80132FB4 0012FDB4  4B FF FF D5 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80132FB8 0012FDB8  3C 80 80 2A */	lis r4, lbl_80298F44@ha
+/* 80132FB8 0012FDB8  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type@ha
 /* 80132FBC 0012FDBC  7F E3 FB 78 */	mr r3, r31
-/* 80132FC0 0012FDC0  38 04 8F 44 */	addi r0, r4, lbl_80298F44@l
+/* 80132FC0 0012FDC0  38 04 8F 44 */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type@l
 /* 80132FC4 0012FDC4  90 1F 00 04 */	stw r0, 4(r31)
 /* 80132FC8 0012FDC8  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80132FCC 0012FDCC  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3045,9 +3045,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_typeFv:
 /* 80132FEC 0012FDEC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80132FF0 0012FDF0  7C 7F 1B 78 */	mr r31, r3
 /* 80132FF4 0012FDF4  4B FF FF 95 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80132FF8 0012FDF8  3C 80 80 2A */	lis r4, lbl_80298F30@ha
+/* 80132FF8 0012FDF8  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_15next_state_type@ha
 /* 80132FFC 0012FDFC  7F E3 FB 78 */	mr r3, r31
-/* 80133000 0012FE00  38 04 8F 30 */	addi r0, r4, lbl_80298F30@l
+/* 80133000 0012FE00  38 04 8F 30 */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_15next_state_type@l
 /* 80133004 0012FE04  90 1F 00 04 */	stw r0, 4(r31)
 /* 80133008 0012FE08  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8013300C 0012FE0C  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3064,9 +3064,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_typeFv:
 /* 8013302C 0012FE2C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80133030 0012FE30  7C 7F 1B 78 */	mr r31, r3
 /* 80133034 0012FE34  4B FF FF 55 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80133038 0012FE38  3C 80 80 2A */	lis r4, lbl_80298F1C@ha
+/* 80133038 0012FE38  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_16start_state_type@ha
 /* 8013303C 0012FE3C  7F E3 FB 78 */	mr r3, r31
-/* 80133040 0012FE40  38 04 8F 1C */	addi r0, r4, lbl_80298F1C@l
+/* 80133040 0012FE40  38 04 8F 1C */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_16start_state_type@l
 /* 80133044 0012FE44  90 1F 00 04 */	stw r0, 4(r31)
 /* 80133048 0012FE48  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8013304C 0012FE4C  80 01 00 14 */	lwz r0, 0x14(r1)

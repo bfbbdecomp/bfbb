@@ -4961,9 +4961,9 @@ __ct__14zNPCNewsFishTVFi:
 /* 801072F4 001040F4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801072F8 001040F8  7C 7F 1B 78 */	mr r31, r3
 /* 801072FC 001040FC  48 00 01 91 */	bl __ct__12zNPCVillagerFi
-/* 80107300 00104100  3C 80 80 29 */	lis r4, lbl_80296E90@ha
+/* 80107300 00104100  3C 80 80 29 */	lis r4, __vt__14zNPCNewsFishTV@ha
 /* 80107304 00104104  7F E3 FB 78 */	mr r3, r31
-/* 80107308 00104108  38 04 6E 90 */	addi r0, r4, lbl_80296E90@l
+/* 80107308 00104108  38 04 6E 90 */	addi r0, r4, __vt__14zNPCNewsFishTV@l
 /* 8010730C 0010410C  90 1F 01 B8 */	stw r0, 0x1b8(r31)
 /* 80107310 00104110  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80107314 00104114  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -5107,9 +5107,9 @@ __ct__7HiThereFv:
 /* 801074DC 001042DC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801074E0 001042E0  7C 7F 1B 78 */	mr r31, r3
 /* 801074E4 001042E4  48 00 00 29 */	bl __ct__Q28ztaskbox8callbackFv
-/* 801074E8 001042E8  3C 80 80 29 */	lis r4, lbl_80296E80@ha
+/* 801074E8 001042E8  3C 80 80 29 */	lis r4, __vt__7HiThere@ha
 /* 801074EC 001042EC  7F E3 FB 78 */	mr r3, r31
-/* 801074F0 001042F0  38 04 6E 80 */	addi r0, r4, lbl_80296E80@l
+/* 801074F0 001042F0  38 04 6E 80 */	addi r0, r4, __vt__7HiThere@l
 /* 801074F4 001042F4  90 1F 00 00 */	stw r0, 0(r31)
 /* 801074F8 001042F8  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 801074FC 001042FC  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -5119,8 +5119,8 @@ __ct__7HiThereFv:
 
 .global __ct__Q28ztaskbox8callbackFv
 __ct__Q28ztaskbox8callbackFv:
-/* 8010750C 0010430C  3C 80 80 29 */	lis r4, lbl_80296E70@ha
-/* 80107510 00104310  38 04 6E 70 */	addi r0, r4, lbl_80296E70@l
+/* 8010750C 0010430C  3C 80 80 29 */	lis r4, __vt__Q28ztaskbox8callback@ha
+/* 80107510 00104310  38 04 6E 70 */	addi r0, r4, __vt__Q28ztaskbox8callback@l
 /* 80107514 00104314  90 03 00 00 */	stw r0, 0(r3)
 /* 80107518 00104318  4E 80 00 20 */	blr 
 /* 8010751C 0010431C  C0 22 9C A4 */	lfs f1, lbl_803CE624-_SDA2_BASE_(r2)

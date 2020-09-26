@@ -3939,9 +3939,9 @@ __ct__17zNPCGoalNoManLandFi:
 /* 800D8CFC 000D5AFC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800D8D00 000D5B00  7C 7F 1B 78 */	mr r31, r3
 /* 800D8D04 000D5B04  48 00 02 F1 */	bl __ct__14zNPCGoalCommonFi
-/* 800D8D08 000D5B08  3C 80 80 29 */	lis r4, lbl_80292E80@ha
+/* 800D8D08 000D5B08  3C 80 80 29 */	lis r4, __vt__17zNPCGoalNoManLand@ha
 /* 800D8D0C 000D5B0C  7F E3 FB 78 */	mr r3, r31
-/* 800D8D10 000D5B10  38 04 2E 80 */	addi r0, r4, lbl_80292E80@l
+/* 800D8D10 000D5B10  38 04 2E 80 */	addi r0, r4, __vt__17zNPCGoalNoManLand@l
 /* 800D8D14 000D5B14  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 800D8D18 000D5B18  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 800D8D1C 000D5B1C  80 01 00 14 */	lwz r0, 0x14(r1)

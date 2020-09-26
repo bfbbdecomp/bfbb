@@ -81,9 +81,9 @@ __ct__6taxiCBFv:
 /* 80172134 0016EF34  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80172138 0016EF38  7C 7F 1B 78 */	mr r31, r3
 /* 8017213C 0016EF3C  4B FA A5 2D */	bl __ct__Q28ztalkbox8callbackFv
-/* 80172140 0016EF40  3C 80 80 2A */	lis r4, lbl_8029B448@ha
+/* 80172140 0016EF40  3C 80 80 2A */	lis r4, __vt__6taxiCB@ha
 /* 80172144 0016EF44  7F E3 FB 78 */	mr r3, r31
-/* 80172148 0016EF48  38 04 B4 48 */	addi r0, r4, lbl_8029B448@l
+/* 80172148 0016EF48  38 04 B4 48 */	addi r0, r4, __vt__6taxiCB@l
 /* 8017214C 0016EF4C  90 1F 00 00 */	stw r0, 0(r31)
 /* 80172150 0016EF50  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80172154 0016EF54  80 01 00 14 */	lwz r0, 0x14(r1)

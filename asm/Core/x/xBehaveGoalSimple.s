@@ -201,9 +201,9 @@ __ct__10xGoalEmptyFi:
 /* 8010EE48 0010BC48  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8010EE4C 0010BC4C  7C 7F 1B 78 */	mr r31, r3
 /* 8010EE50 0010BC50  4B FC A1 F1 */	bl __ct__5xGoalFi
-/* 8010EE54 0010BC54  3C 80 80 29 */	lis r4, lbl_80297430@ha
+/* 8010EE54 0010BC54  3C 80 80 29 */	lis r4, __vt__10xGoalEmpty@ha
 /* 8010EE58 0010BC58  7F E3 FB 78 */	mr r3, r31
-/* 8010EE5C 0010BC5C  38 04 74 30 */	addi r0, r4, lbl_80297430@l
+/* 8010EE5C 0010BC5C  38 04 74 30 */	addi r0, r4, __vt__10xGoalEmpty@l
 /* 8010EE60 0010BC60  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8010EE64 0010BC64  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8010EE68 0010BC68  80 01 00 14 */	lwz r0, 0x14(r1)

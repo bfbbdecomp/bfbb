@@ -10292,9 +10292,9 @@ __ct__19zNPCGoalDutchmanNilFiR12zNPCDutchman:
 /* 8017BA10 00178810  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8017BA14 00178814  7C 7F 1B 78 */	mr r31, r3
 /* 8017BA18 00178818  4B F5 D5 DD */	bl __ct__14zNPCGoalCommonFi
-/* 8017BA1C 0017881C  3C 80 80 2A */	lis r4, lbl_8029B730@ha
+/* 8017BA1C 0017881C  3C 80 80 2A */	lis r4, __vt__19zNPCGoalDutchmanNil@ha
 /* 8017BA20 00178820  7F E3 FB 78 */	mr r3, r31
-/* 8017BA24 00178824  38 04 B7 30 */	addi r0, r4, lbl_8029B730@l
+/* 8017BA24 00178824  38 04 B7 30 */	addi r0, r4, __vt__19zNPCGoalDutchmanNil@l
 /* 8017BA28 00178828  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8017BA2C 0017882C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8017BA30 00178830  80 01 00 14 */	lwz r0, 0x14(r1)

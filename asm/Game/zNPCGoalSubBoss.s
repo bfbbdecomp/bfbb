@@ -399,9 +399,9 @@ __ct__12zNPCGoalHereFi:
 /* 801391E8 00135FE8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801391EC 00135FEC  7C 7F 1B 78 */	mr r31, r3
 /* 801391F0 00135FF0  4B F9 FE 05 */	bl __ct__14zNPCGoalCommonFi
-/* 801391F4 00135FF4  3C 80 80 2A */	lis r4, lbl_80299894@ha
+/* 801391F4 00135FF4  3C 80 80 2A */	lis r4, __vt__12zNPCGoalHere@ha
 /* 801391F8 00135FF8  7F E3 FB 78 */	mr r3, r31
-/* 801391FC 00135FFC  38 04 98 94 */	addi r0, r4, lbl_80299894@l
+/* 801391FC 00135FFC  38 04 98 94 */	addi r0, r4, __vt__12zNPCGoalHere@l
 /* 80139200 00136000  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 80139204 00136004  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80139208 00136008  80 01 00 14 */	lwz r0, 0x14(r1)

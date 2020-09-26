@@ -1130,9 +1130,9 @@ __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_typeFv:
 /* 8011BA64 00118864  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011BA68 00118868  7C 7F 1B 78 */	mr r31, r3
 /* 8011BA6C 0011886C  48 00 05 01 */	bl __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_typeFQ39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_enum
-/* 8011BA70 00118870  3C 80 80 29 */	lis r4, lbl_80297F68@ha
+/* 8011BA70 00118870  3C 80 80 29 */	lis r4, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_type@ha
 /* 8011BA74 00118874  3C 60 80 12 */	lis r3, lbl_8011BE3C@ha
-/* 8011BA78 00118878  38 04 7F 68 */	addi r0, r4, lbl_80297F68@l
+/* 8011BA78 00118878  38 04 7F 68 */	addi r0, r4, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_type@l
 /* 8011BA7C 0011887C  3C 80 80 12 */	lis r4, lbl_8011BD88@ha
 /* 8011BA80 00118880  90 1F 00 04 */	stw r0, 4(r31)
 /* 8011BA84 00118884  38 03 BE 3C */	addi r0, r3, lbl_8011BE3C@l
@@ -1494,8 +1494,8 @@ lbl_8011BF54:
 
 /* __ct__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@10state_typeFQ39oob_state32@unnamed@zEntPlayerOOBState_cpp@10state_enum */
 __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_typeFQ39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_enum:
-/* 8011BF6C 00118D6C  3C A0 80 29 */	lis r5, lbl_80297F54@ha
-/* 8011BF70 00118D70  38 05 7F 54 */	addi r0, r5, lbl_80297F54@l
+/* 8011BF6C 00118D6C  3C A0 80 29 */	lis r5, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_type@ha
+/* 8011BF70 00118D70  38 05 7F 54 */	addi r0, r5, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_type@l
 /* 8011BF74 00118D74  90 03 00 04 */	stw r0, 4(r3)
 /* 8011BF78 00118D78  90 83 00 00 */	stw r4, 0(r3)
 /* 8011BF7C 00118D7C  4E 80 00 20 */	blr 
@@ -1509,9 +1509,9 @@ __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_typeFv:
 /* 8011BF90 00118D90  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011BF94 00118D94  7C 7F 1B 78 */	mr r31, r3
 /* 8011BF98 00118D98  4B FF FF D5 */	bl __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_typeFQ39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_enum
-/* 8011BF9C 00118D9C  3C 60 80 29 */	lis r3, lbl_80297F40@ha
+/* 8011BF9C 00118D9C  3C 60 80 29 */	lis r3, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type@ha
 /* 8011BFA0 00118DA0  7F E4 FB 78 */	mr r4, r31
-/* 8011BFA4 00118DA4  38 03 7F 40 */	addi r0, r3, lbl_80297F40@l
+/* 8011BFA4 00118DA4  38 03 7F 40 */	addi r0, r3, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type@l
 /* 8011BFA8 00118DA8  38 7F 00 08 */	addi r3, r31, 8
 /* 8011BFAC 00118DAC  90 1F 00 04 */	stw r0, 4(r31)
 /* 8011BFB0 00118DB0  48 00 06 6D */	bl __ct__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tutorial_callbackFRQ39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type
@@ -1994,9 +1994,9 @@ __ct__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tut
 /* 8011C630 00119430  93 C1 00 08 */	stw r30, 8(r1)
 /* 8011C634 00119434  7C 7E 1B 78 */	mr r30, r3
 /* 8011C638 00119438  48 00 00 31 */	bl __ct__Q28ztalkbox8callbackFv
-/* 8011C63C 0011943C  3C 80 80 29 */	lis r4, lbl_80297F28@ha
+/* 8011C63C 0011943C  3C 80 80 29 */	lis r4, __vt__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callback@ha
 /* 8011C640 00119440  7F C3 F3 78 */	mr r3, r30
-/* 8011C644 00119444  38 04 7F 28 */	addi r0, r4, lbl_80297F28@l
+/* 8011C644 00119444  38 04 7F 28 */	addi r0, r4, __vt__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callback@l
 /* 8011C648 00119448  90 1E 00 00 */	stw r0, 0(r30)
 /* 8011C64C 0011944C  93 FE 00 04 */	stw r31, 4(r30)
 /* 8011C650 00119450  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -2008,8 +2008,8 @@ __ct__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tut
 
 .global __ct__Q28ztalkbox8callbackFv
 __ct__Q28ztalkbox8callbackFv:
-/* 8011C668 00119468  3C 80 80 29 */	lis r4, lbl_80297F10@ha
-/* 8011C66C 0011946C  38 04 7F 10 */	addi r0, r4, lbl_80297F10@l
+/* 8011C668 00119468  3C 80 80 29 */	lis r4, __vt__Q28ztalkbox8callback@ha
+/* 8011C66C 0011946C  38 04 7F 10 */	addi r0, r4, __vt__Q28ztalkbox8callback@l
 /* 8011C670 00119470  90 03 00 00 */	stw r0, 0(r3)
 /* 8011C674 00119474  4E 80 00 20 */	blr 
 
@@ -2022,9 +2022,9 @@ __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$214out_state_typeFv:
 /* 8011C688 00119488  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011C68C 0011948C  7C 7F 1B 78 */	mr r31, r3
 /* 8011C690 00119490  4B FF F8 DD */	bl __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_typeFQ39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_enum
-/* 8011C694 00119494  3C 80 80 29 */	lis r4, lbl_80297EFC@ha
+/* 8011C694 00119494  3C 80 80 29 */	lis r4, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_type@ha
 /* 8011C698 00119498  7F E3 FB 78 */	mr r3, r31
-/* 8011C69C 0011949C  38 04 7E FC */	addi r0, r4, lbl_80297EFC@l
+/* 8011C69C 0011949C  38 04 7E FC */	addi r0, r4, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_type@l
 /* 8011C6A0 001194A0  90 1F 00 04 */	stw r0, 4(r31)
 /* 8011C6A4 001194A4  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8011C6A8 001194A8  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -2041,9 +2041,9 @@ __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$213in_state_typeFv:
 /* 8011C6C8 001194C8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8011C6CC 001194CC  7C 7F 1B 78 */	mr r31, r3
 /* 8011C6D0 001194D0  4B FF F8 9D */	bl __ct__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_typeFQ39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_enum
-/* 8011C6D4 001194D4  3C 80 80 29 */	lis r4, lbl_80297EE8@ha
+/* 8011C6D4 001194D4  3C 80 80 29 */	lis r4, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_type@ha
 /* 8011C6D8 001194D8  7F E3 FB 78 */	mr r3, r31
-/* 8011C6DC 001194DC  38 04 7E E8 */	addi r0, r4, lbl_80297EE8@l
+/* 8011C6DC 001194DC  38 04 7E E8 */	addi r0, r4, __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_type@l
 /* 8011C6E0 001194E0  90 1F 00 04 */	stw r0, 4(r31)
 /* 8011C6E4 001194E4  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8011C6E8 001194E8  80 01 00 14 */	lwz r0, 0x14(r1)

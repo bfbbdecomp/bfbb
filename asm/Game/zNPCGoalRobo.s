@@ -20914,8 +20914,8 @@ __ct__Q220zNPCGoalAttackFodder12CattleNotifyFv:
 
 .global __ct__9HAZNotifyFv
 __ct__9HAZNotifyFv:
-/* 800EC0E0 000E8EE0  3C 80 80 29 */	lis r4, lbl_80293F0C@ha
-/* 800EC0E4 000E8EE4  38 04 3F 0C */	addi r0, r4, lbl_80293F0C@l
+/* 800EC0E0 000E8EE0  3C 80 80 29 */	lis r4, __vt__9HAZNotify@ha
+/* 800EC0E4 000E8EE4  38 04 3F 0C */	addi r0, r4, __vt__9HAZNotify@l
 /* 800EC0E8 000E8EE8  90 03 00 00 */	stw r0, 0(r3)
 /* 800EC0EC 000E8EEC  4E 80 00 20 */	blr 
 

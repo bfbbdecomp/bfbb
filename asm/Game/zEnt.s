@@ -340,19 +340,19 @@ checkpoint_collision_hack__FP4zEnt:
 /* 800550A8 00051EA8  7C 7F 1B 78 */	mr r31, r3
 /* 800550AC 00051EAC  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 800550B0 00051EB0  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800550B4 00051EB4  88 0D 8C 44 */	lbz r0, lbl_803CB544-_SDA_BASE_(r13)
+/* 800550B4 00051EB4  88 0D 8C 44 */	lbz r0, init$localstatic4$checkpoint_collision_hack__FP4zEnt-_SDA_BASE_(r13)
 /* 800550B8 00051EB8  7C 00 07 75 */	extsb. r0, r0
 /* 800550BC 00051EBC  40 82 00 20 */	bne lbl_800550DC
 /* 800550C0 00051EC0  3C 60 80 25 */	lis r3, lbl_80255024@ha
 /* 800550C4 00051EC4  38 63 50 24 */	addi r3, r3, lbl_80255024@l
 /* 800550C8 00051EC8  38 63 00 05 */	addi r3, r3, 5
 /* 800550CC 00051ECC  4B FF 71 49 */	bl xStrHash__FPCc
-/* 800550D0 00051ED0  90 6D 8C 40 */	stw r3, lbl_803CB540-_SDA_BASE_(r13)
+/* 800550D0 00051ED0  90 6D 8C 40 */	stw r3, model_id$localstatic3$checkpoint_collision_hack__FP4zEnt-_SDA_BASE_(r13)
 /* 800550D4 00051ED4  38 00 00 01 */	li r0, 1
-/* 800550D8 00051ED8  98 0D 8C 44 */	stb r0, lbl_803CB544-_SDA_BASE_(r13)
+/* 800550D8 00051ED8  98 0D 8C 44 */	stb r0, init$localstatic4$checkpoint_collision_hack__FP4zEnt-_SDA_BASE_(r13)
 lbl_800550DC:
 /* 800550DC 00051EDC  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 800550E0 00051EE0  80 0D 8C 40 */	lwz r0, lbl_803CB540-_SDA_BASE_(r13)
+/* 800550E0 00051EE0  80 0D 8C 40 */	lwz r0, model_id$localstatic3$checkpoint_collision_hack__FP4zEnt-_SDA_BASE_(r13)
 /* 800550E4 00051EE4  80 63 00 4C */	lwz r3, 0x4c(r3)
 /* 800550E8 00051EE8  7C 03 00 40 */	cmplw r3, r0
 /* 800550EC 00051EEC  40 82 01 08 */	bne lbl_800551F4

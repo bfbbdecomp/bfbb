@@ -497,9 +497,9 @@ __ct__17zNPCGoalDuploDeadFi:
 /* 8012A6A4 001274A4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8012A6A8 001274A8  7C 7F 1B 78 */	mr r31, r3
 /* 8012A6AC 001274AC  4B FA E6 81 */	bl __ct__12zNPCGoalDeadFi
-/* 8012A6B0 001274B0  3C 80 80 2A */	lis r4, lbl_80298C04@ha
+/* 8012A6B0 001274B0  3C 80 80 2A */	lis r4, __vt__17zNPCGoalDuploDead@ha
 /* 8012A6B4 001274B4  7F E3 FB 78 */	mr r3, r31
-/* 8012A6B8 001274B8  38 04 8C 04 */	addi r0, r4, lbl_80298C04@l
+/* 8012A6B8 001274B8  38 04 8C 04 */	addi r0, r4, __vt__17zNPCGoalDuploDead@l
 /* 8012A6BC 001274BC  38 80 00 08 */	li r4, 8
 /* 8012A6C0 001274C0  90 1F 00 38 */	stw r0, 0x38(r31)
 /* 8012A6C4 001274C4  4B FA E9 DD */	bl SetFlags__5xGoalFi
