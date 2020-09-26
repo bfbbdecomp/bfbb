@@ -408,7 +408,7 @@ xMemPushBase__FUi:
 /* 80033AE4 000308E4  38 63 00 10 */	addi r3, r3, 0x10
 /* 80033AE8 000308E8  7C 7F 1A 14 */	add r3, r31, r3
 /* 80033AEC 000308EC  38 83 FF F0 */	addi r4, r3, -16
-/* 80033AF0 000308F0  48 00 00 35 */	bl func_80033B24
+/* 80033AF0 000308F0  48 00 00 35 */	bl __as__14xHeapState_tagFRC14xHeapState_tag
 /* 80033AF4 000308F4  81 8D 89 E4 */	lwz r12, sMemBaseNotifyFunc-_SDA_BASE_(r13)
 /* 80033AF8 000308F8  28 0C 00 00 */	cmplwi r12, 0
 /* 80033AFC 000308FC  41 82 00 0C */	beq lbl_80033B08
@@ -423,8 +423,8 @@ lbl_80033B08:
 /* 80033B1C 0003091C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033B20 00030920  4E 80 00 20 */	blr 
 
-.global func_80033B24
-func_80033B24:
+.global __as__14xHeapState_tagFRC14xHeapState_tag
+__as__14xHeapState_tagFRC14xHeapState_tag:
 /* 80033B24 00030924  80 04 00 00 */	lwz r0, 0(r4)
 /* 80033B28 00030928  A0 A4 00 04 */	lhz r5, 4(r4)
 /* 80033B2C 0003092C  90 03 00 00 */	stw r0, 0(r3)

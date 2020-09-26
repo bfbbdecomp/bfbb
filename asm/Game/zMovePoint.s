@@ -211,13 +211,13 @@ zMovePointGetDelay__FPC10zMovePoint:
 /* 800A6E74 000A3C74  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A6E78 000A3C78  7C 08 02 A6 */	mflr r0
 /* 800A6E7C 000A3C7C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A6E80 000A3C80  48 00 00 15 */	bl func_800A6E94
+/* 800A6E80 000A3C80  48 00 00 15 */	bl xMovePointGetDelay__FPC10xMovePoint
 /* 800A6E84 000A3C84  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800A6E88 000A3C88  7C 08 03 A6 */	mtlr r0
 /* 800A6E8C 000A3C8C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A6E90 000A3C90  4E 80 00 20 */	blr 
 
-.global func_800A6E94
-func_800A6E94:
+.global xMovePointGetDelay__FPC10xMovePoint
+xMovePointGetDelay__FPC10xMovePoint:
 /* 800A6E94 000A3C94  C0 23 00 28 */	lfs f1, 0x28(r3)
 /* 800A6E98 000A3C98  4E 80 00 20 */	blr 

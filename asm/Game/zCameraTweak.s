@@ -24,7 +24,7 @@ zCameraTweak_LookPreCalc__FP13zCamTweakLookfff:
 /* 8017EEEC 0017BCEC  EC 5E 08 28 */	fsubs f2, f30, f1
 /* 8017EEF0 0017BCF0  EC 21 00 7A */	fmadds f1, f1, f1, f0
 /* 8017EEF4 0017BCF4  D0 5F 00 00 */	stfs f2, 0(r31)
-/* 8017EEF8 0017BCF8  4B E8 B9 05 */	bl func_8000A7FC
+/* 8017EEF8 0017BCF8  4B E8 B9 05 */	bl xsqrt__Ff
 /* 8017EEFC 0017BCFC  D0 3F 00 04 */	stfs f1, 4(r31)
 /* 8017EF00 0017BD00  D3 FF 00 08 */	stfs f31, 8(r31)
 /* 8017EF04 0017BD04  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
@@ -116,7 +116,7 @@ lbl_8017F030:
 /* 8017F034 0017BE34  7F 63 DB 78 */	mr r3, r27
 /* 8017F038 0017BE38  1C 00 00 14 */	mulli r0, r0, 0x14
 /* 8017F03C 0017BE3C  7C 9C 02 14 */	add r4, r28, r0
-/* 8017F040 0017BE40  48 00 01 31 */	bl func_8017F170
+/* 8017F040 0017BE40  48 00 01 31 */	bl __as__9zCamTweakFRC9zCamTweak
 /* 8017F044 0017BE44  3B 7B FF EC */	addi r27, r27, -20
 /* 8017F048 0017BE48  3B 5A FF FF */	addi r26, r26, -1
 lbl_8017F04C:
@@ -199,8 +199,8 @@ lbl_8017F13C:
 /* 8017F168 0017BF68  38 21 00 60 */	addi r1, r1, 0x60
 /* 8017F16C 0017BF6C  4E 80 00 20 */	blr 
 
-.global func_8017F170
-func_8017F170:
+.global __as__9zCamTweakFRC9zCamTweak
+__as__9zCamTweakFRC9zCamTweak:
 /* 8017F170 0017BF70  80 04 00 00 */	lwz r0, 0(r4)
 /* 8017F174 0017BF74  C0 24 00 04 */	lfs f1, 4(r4)
 /* 8017F178 0017BF78  90 03 00 00 */	stw r0, 0(r3)
@@ -278,7 +278,7 @@ lbl_8017F278:
 /* 8017F27C 0017C07C  7F C3 F3 78 */	mr r3, r30
 /* 8017F280 0017C080  1C 00 00 14 */	mulli r0, r0, 0x14
 /* 8017F284 0017C084  7C 9F 02 14 */	add r4, r31, r0
-/* 8017F288 0017C088  4B FF FE E9 */	bl func_8017F170
+/* 8017F288 0017C088  4B FF FE E9 */	bl __as__9zCamTweakFRC9zCamTweak
 /* 8017F28C 0017C08C  3B DE 00 14 */	addi r30, r30, 0x14
 /* 8017F290 0017C090  3B BD 00 01 */	addi r29, r29, 1
 lbl_8017F294:

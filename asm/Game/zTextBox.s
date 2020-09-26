@@ -10,7 +10,7 @@ render_bk_fill__22$$2unnamed$$2zTextBox_cpp$$2FRC8ztextbox:
 /* 80133E48 00130C48  7C 7F 1B 78 */	mr r31, r3
 /* 80133E4C 00130C4C  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 80133E50 00130C50  38 63 00 5C */	addi r3, r3, 0x5c
-/* 80133E54 00130C54  48 00 0B 19 */	bl func_8013496C
+/* 80133E54 00130C54  48 00 0B 19 */	bl convert__FRCQ38ztextbox10asset_type10color_type
 /* 80133E58 00130C58  90 61 00 08 */	stw r3, 8(r1)
 /* 80133E5C 00130C5C  38 7F 00 2C */	addi r3, r31, 0x2c
 /* 80133E60 00130C60  38 81 00 08 */	addi r4, r1, 8
@@ -32,7 +32,7 @@ render_bk_fill__22$$2unnamed$$2zTextBox_cpp$$2FRC8ztextbox:
 /* 80133EA0 00130CA0  7C 7E 1B 78 */	mr r30, r3
 /* 80133EA4 00130CA4  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 80133EA8 00130CA8  38 63 00 5C */	addi r3, r3, 0x5c
-/* 80133EAC 00130CAC  48 00 0A C1 */	bl func_8013496C
+/* 80133EAC 00130CAC  48 00 0A C1 */	bl convert__FRCQ38ztextbox10asset_type10color_type
 /* 80133EB0 00130CB0  80 8D 9F 7C */	lwz r4, RwEngineInstance-_SDA_BASE_(r13)
 /* 80133EB4 00130CB4  C0 22 A3 48 */	lfs f1, lbl_803CECC8-_SDA2_BASE_(r2)
 /* 80133EB8 00130CB8  80 84 00 00 */	lwz r4, 0(r4)
@@ -54,7 +54,7 @@ render_bk_fill__22$$2unnamed$$2zTextBox_cpp$$2FRC8ztextbox:
 /* 80133EF8 00130CF8  90 01 00 28 */	stw r0, 0x28(r1)
 /* 80133EFC 00130CFC  C0 22 A3 4C */	lfs f1, lbl_803CECCC-_SDA2_BASE_(r2)
 /* 80133F00 00130D00  C0 42 A3 50 */	lfs f2, lbl_803CECD0-_SDA2_BASE_(r2)
-/* 80133F04 00130D04  4B EF 20 F9 */	bl func_80025FFC
+/* 80133F04 00130D04  4B EF 20 F9 */	bl scale__13basic_rect_f_Fff
 /* 80133F08 00130D08  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 80133F0C 00130D0C  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133F10 00130D10  FC A0 F0 90 */	fmr f5, f30
@@ -103,12 +103,12 @@ render_bk_fill__22$$2unnamed$$2zTextBox_cpp$$2FRC8ztextbox:
 /* 80133FBC 00130DBC  7F E4 FB 78 */	mr r4, r31
 /* 80133FC0 00130DC0  38 63 42 58 */	addi r3, r3, lbl_80324258@l
 /* 80133FC4 00130DC4  38 63 00 48 */	addi r3, r3, 0x48
-/* 80133FC8 00130DC8  4B EE CC 01 */	bl func_80020BC8
+/* 80133FC8 00130DC8  4B EE CC 01 */	bl __as__18rwGameCube2DVertexFRC18rwGameCube2DVertex
 /* 80133FCC 00130DCC  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133FD0 00130DD0  7F C4 F3 78 */	mr r4, r30
 /* 80133FD4 00130DD4  38 63 42 58 */	addi r3, r3, lbl_80324258@l
 /* 80133FD8 00130DD8  38 63 00 60 */	addi r3, r3, 0x60
-/* 80133FDC 00130DDC  4B EE CB ED */	bl func_80020BC8
+/* 80133FDC 00130DDC  4B EE CB ED */	bl __as__18rwGameCube2DVertexFRC18rwGameCube2DVertex
 /* 80133FE0 00130DE0  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 80133FE4 00130DE4  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133FE8 00130DE8  38 63 42 58 */	addi r3, r3, lbl_80324258@l
@@ -185,11 +185,11 @@ init_textbox__22$$2unnamed$$2zTextBox_cpp$$2FR8ztextbox:
 /* 801340EC 00130EEC  D0 1E 00 24 */	stfs f0, 0x24(r30)
 /* 801340F0 00130EF0  C0 1F 00 34 */	lfs f0, 0x34(r31)
 /* 801340F4 00130EF4  D0 1E 00 50 */	stfs f0, 0x50(r30)
-/* 801340F8 00130EF8  48 00 08 75 */	bl func_8013496C
+/* 801340F8 00130EF8  48 00 08 75 */	bl convert__FRCQ38ztextbox10asset_type10color_type
 /* 801340FC 00130EFC  90 61 00 08 */	stw r3, 8(r1)
 /* 80134100 00130F00  38 7E 00 28 */	addi r3, r30, 0x28
 /* 80134104 00130F04  38 81 00 08 */	addi r4, r1, 8
-/* 80134108 00130F08  4B EE 3E 91 */	bl func_80017F98
+/* 80134108 00130F08  4B EE 3E 91 */	bl __as__10iColor_tagFRC10iColor_tag
 /* 8013410C 00130F0C  C0 3F 00 14 */	lfs f1, 0x14(r31)
 /* 80134110 00130F10  C0 1F 00 3C */	lfs f0, 0x3c(r31)
 /* 80134114 00130F14  EC 01 00 2A */	fadds f0, f1, f0
@@ -245,7 +245,7 @@ lbl_80134184:
 /* 801341D4 00130FD4  38 A0 00 01 */	li r5, 1
 /* 801341D8 00130FD8  EC 21 00 28 */	fsubs f1, f1, f0
 /* 801341DC 00130FDC  D0 3E 00 48 */	stfs f1, 0x48(r30)
-/* 801341E0 00130FE0  4B F8 8F 6D */	bl func_800BD14C
+/* 801341E0 00130FE0  4B F8 8F 6D */	bl yextent__8xtextboxCFfRib
 /* 801341E4 00130FE4  D0 3E 00 48 */	stfs f1, 0x48(r30)
 /* 801341E8 00130FE8  C0 1E 00 48 */	lfs f0, 0x48(r30)
 /* 801341EC 00130FEC  FC 00 F8 40 */	fcmpo cr0, f0, f31
@@ -495,7 +495,7 @@ lbl_80134528:
 lbl_8013453C:
 /* 8013453C 0013133C  38 7F 00 18 */	addi r3, r31, 0x18
 /* 80134540 00131340  38 80 00 01 */	li r4, 1
-/* 80134544 00131344  4B EE 38 61 */	bl func_80017DA4
+/* 80134544 00131344  4B EE 38 61 */	bl render__8xtextboxCFb
 /* 80134548 00131348  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013454C 0013134C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80134550 00131350  7C 08 03 A6 */	mtlr r0
@@ -817,8 +817,8 @@ lbl_80134950:
 /* 80134964 00131764  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134968 00131768  4E 80 00 20 */	blr 
 
-.global func_8013496C
-func_8013496C:
+.global convert__FRCQ38ztextbox10asset_type10color_type
+convert__FRCQ38ztextbox10asset_type10color_type:
 /* 8013496C 0013176C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80134970 00131770  88 C3 00 00 */	lbz r6, 0(r3)
 /* 80134974 00131774  88 A3 00 01 */	lbz r5, 1(r3)
