@@ -228,6 +228,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCFXCinematic.o           \
     $(OBJ_DIR)/asm/Core/x/xHudText.o                \
     $(OBJ_DIR)/asm/Game/zCombo.o                    \
+    $(OBJ_DIR)/asm/Core/x/xCM.o                     \
     $(OBJ_DIR)/asm/bink/bink.o                      \
     $(OBJ_DIR)/asm/dolphin/dolphin.o                \
     $(OBJ_DIR)/asm/CodeWarrior/MSL_C.o              \
