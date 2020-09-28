@@ -1077,8 +1077,8 @@ lbl_80297DB8:
 .global lbl_80297DE4
 lbl_80297DE4:
 	.incbin "baserom.dol", 0x294DC4, 0x34
-.global lbl_80297E18
-lbl_80297E18:
+.global sBlendTable
+sBlendTable:
 	.incbin "baserom.dol", 0x294DF8, 0x30
 .global lbl_80297E48
 lbl_80297E48:

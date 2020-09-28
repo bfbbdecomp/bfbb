@@ -1,11 +1,13 @@
 #ifndef ZGLOBALS_H
 #define ZGLOBALS_H
 
-#include "zEnt.h"
-#include "zEntPlayer.h"
 #include "../Core/x/xGlobals.h"
 #include "../Core/x/xShadowSimple.h"
 #include "../Core/x/xEntDrive.h"
+
+#include "zEnt.h"
+#include "zEntPlayer.h"
+#include "zScene.h"
 
 struct zGlobalSettings
 {
@@ -103,7 +105,6 @@ struct zPlatform;
 struct xSurface;
 struct zAssetPickupTable;
 struct zCutsceneMgr;
-struct zScene;
 
 struct zCheckPoint
 {
