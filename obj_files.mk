@@ -105,7 +105,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zMovePoint.o                \
     $(OBJ_DIR)/asm/Game/zMusic.o                    \
     $(OBJ_DIR)/asm/Game/zParCmd.o                   \
-    $(OBJ_DIR)/asm/Game/zParEmitter.o               \
+    $(OBJ_DIR)/src/Game/zParEmitter.o               \
     $(OBJ_DIR)/asm/Game/zPendulum.o                 \
     $(OBJ_DIR)/asm/Game/zPickupTable.o              \
     $(OBJ_DIR)/asm/Game/zPlatform.o                 \
