@@ -1030,7 +1030,7 @@ lbl_8000A398:
 /* 8000A3BC 000071BC  48 0B 90 BD */	bl iFileSeek__FP9tag_xFileii
 /* 8000A3C0 000071C0  7F E3 FB 78 */	mr r3, r31
 /* 8000A3C4 000071C4  7F 44 D3 78 */	mr r4, r26
-/* 8000A3C8 000071C8  48 00 01 39 */	bl func_8000A500
+/* 8000A3C8 000071C8  48 00 01 39 */	bl xFileSetUserData__FP9tag_xFilePv
 /* 8000A3CC 000071CC  7C BC E9 D6 */	mullw r5, r28, r29
 /* 8000A3D0 000071D0  3C 80 80 01 */	lis r4, lbl_8000A344@ha
 /* 8000A3D4 000071D4  7F E3 FB 78 */	mr r3, r31
@@ -1084,7 +1084,7 @@ lbl_8000A464:
 /* 8000A474 00007274  38 81 00 08 */	addi r4, r1, 8
 /* 8000A478 00007278  90 01 00 08 */	stw r0, 8(r1)
 /* 8000A47C 0000727C  80 7F 00 38 */	lwz r3, 0x38(r31)
-/* 8000A480 00007280  48 00 00 89 */	bl func_8000A508
+/* 8000A480 00007280  48 00 00 89 */	bl xFileReadAsyncStatus__FiPi
 /* 8000A484 00007284  2C 03 00 03 */	cmpwi r3, 3
 /* 8000A488 00007288  41 82 00 3C */	beq lbl_8000A4C4
 /* 8000A48C 0000728C  40 80 00 14 */	bge lbl_8000A4A0
@@ -1124,13 +1124,13 @@ lbl_8000A4EC:
 /* 8000A4F8 000072F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8000A4FC 000072FC  4E 80 00 20 */	blr 
 
-.global func_8000A500
-func_8000A500:
+.global xFileSetUserData__FP9tag_xFilePv
+xFileSetUserData__FP9tag_xFilePv:
 /* 8000A500 00007300  90 83 01 10 */	stw r4, 0x110(r3)
 /* 8000A504 00007304  4E 80 00 20 */	blr 
 
-.global func_8000A508
-func_8000A508:
+.global xFileReadAsyncStatus__FiPi
+xFileReadAsyncStatus__FiPi:
 /* 8000A508 00007308  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000A50C 0000730C  7C 08 02 A6 */	mflr r0
 /* 8000A510 00007310  90 01 00 14 */	stw r0, 0x14(r1)

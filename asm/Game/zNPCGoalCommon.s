@@ -24,7 +24,7 @@ Enter__14zNPCGoalCommonFfPv:
 /* 800D5158 000D1F58  41 82 00 14 */	beq lbl_800D516C
 lbl_800D515C:
 /* 800D515C 000D1F5C  7F A3 EB 78 */	mr r3, r29
-/* 800D5160 000D1F60  48 00 02 AD */	bl func_800D540C
+/* 800D5160 000D1F60  48 00 02 AD */	bl GetID__5xGoalCFv
 /* 800D5164 000D1F64  7C 1F 18 00 */	cmpw r31, r3
 /* 800D5168 000D1F68  40 82 00 14 */	bne lbl_800D517C
 lbl_800D516C:
@@ -36,7 +36,7 @@ lbl_800D517C:
 /* 800D517C 000D1F7C  FC 20 F8 90 */	fmr f1, f31
 /* 800D5180 000D1F80  7F A3 EB 78 */	mr r3, r29
 /* 800D5184 000D1F84  7F C4 F3 78 */	mr r4, r30
-/* 800D5188 000D1F88  48 00 02 7D */	bl func_800D5404
+/* 800D5188 000D1F88  48 00 02 7D */	bl Enter__5xGoalFfPv
 /* 800D518C 000D1F8C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800D5190 000D1F90  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 800D5194 000D1F94  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -70,7 +70,7 @@ Resume__14zNPCGoalCommonFfPv:
 /* 800D51F8 000D1FF8  41 82 00 14 */	beq lbl_800D520C
 lbl_800D51FC:
 /* 800D51FC 000D1FFC  7F A3 EB 78 */	mr r3, r29
-/* 800D5200 000D2000  48 00 02 0D */	bl func_800D540C
+/* 800D5200 000D2000  48 00 02 0D */	bl GetID__5xGoalCFv
 /* 800D5204 000D2004  7C 1F 18 00 */	cmpw r31, r3
 /* 800D5208 000D2008  40 82 00 14 */	bne lbl_800D521C
 lbl_800D520C:
@@ -82,7 +82,7 @@ lbl_800D521C:
 /* 800D521C 000D201C  FC 20 F8 90 */	fmr f1, f31
 /* 800D5220 000D2020  7F A3 EB 78 */	mr r3, r29
 /* 800D5224 000D2024  7F C4 F3 78 */	mr r4, r30
-/* 800D5228 000D2028  48 00 01 ED */	bl func_800D5414
+/* 800D5228 000D2028  48 00 01 ED */	bl Resume__5xGoalFfPv
 /* 800D522C 000D202C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800D5230 000D2030  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 800D5234 000D2034  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -115,7 +115,7 @@ lbl_800D521C:
 /* 800D52A0 000D20A0  7C 03 00 40 */	cmplw r3, r0
 /* 800D52A4 000D20A4  41 82 00 48 */	beq lbl_800D52EC
 /* 800D52A8 000D20A8  7F C3 F3 78 */	mr r3, r30
-/* 800D52AC 000D20AC  48 00 01 8D */	bl func_800D5438
+/* 800D52AC 000D20AC  48 00 01 8D */	bl Name__14zNPCGoalCommonFv
 /* 800D52B0 000D20B0  A8 1E 00 48 */	lha r0, 0x48(r30)
 /* 800D52B4 000D20B4  60 00 00 08 */	ori r0, r0, 8
 /* 800D52B8 000D20B8  B0 1E 00 48 */	sth r0, 0x48(r30)
@@ -194,7 +194,7 @@ DoExplicitAnim__14zNPCGoalCommonFUii:
 /* 800D53BC 000D21BC  48 00 00 14 */	b lbl_800D53D0
 lbl_800D53C0:
 /* 800D53C0 000D21C0  7F C3 F3 78 */	mr r3, r30
-/* 800D53C4 000D21C4  48 00 00 75 */	bl func_800D5438
+/* 800D53C4 000D21C4  48 00 00 75 */	bl Name__14zNPCGoalCommonFv
 /* 800D53C8 000D21C8  38 00 00 00 */	li r0, 0
 /* 800D53CC 000D21CC  90 1E 00 44 */	stw r0, 0x44(r30)
 lbl_800D53D0:
@@ -213,39 +213,39 @@ lbl_800D53E8:
 /* 800D53FC 000D21FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D5400 000D2200  4E 80 00 20 */	blr 
 
-.global func_800D5404
-func_800D5404:
+.global Enter__5xGoalFfPv
+Enter__5xGoalFfPv:
 /* 800D5404 000D2204  38 60 00 00 */	li r3, 0
 /* 800D5408 000D2208  4E 80 00 20 */	blr 
 
-.global func_800D540C
-func_800D540C:
+.global GetID__5xGoalCFv
+GetID__5xGoalCFv:
 /* 800D540C 000D220C  80 63 00 1C */	lwz r3, 0x1c(r3)
 /* 800D5410 000D2210  4E 80 00 20 */	blr 
 
-.global func_800D5414
-func_800D5414:
+.global Resume__5xGoalFfPv
+Resume__5xGoalFfPv:
 /* 800D5414 000D2214  38 60 00 00 */	li r3, 0
 /* 800D5418 000D2218  4E 80 00 20 */	blr 
 
-.global func_800D541C
-func_800D541C:
+.global Exit__5xGoalFfPv
+Exit__5xGoalFfPv:
 /* 800D541C 000D221C  38 60 00 00 */	li r3, 0
 /* 800D5420 000D2220  4E 80 00 20 */	blr 
 
-.global func_800D5424
-func_800D5424:
+.global Suspend__5xGoalFfPv
+Suspend__5xGoalFfPv:
 /* 800D5424 000D2224  38 60 00 00 */	li r3, 0
 /* 800D5428 000D2228  4E 80 00 20 */	blr 
 
-.global func_800D542C
-func_800D542C:
+.global SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi
+SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi:
 /* 800D542C 000D222C  38 60 00 01 */	li r3, 1
 /* 800D5430 000D2230  4E 80 00 20 */	blr 
 /* 800D5434 000D2234  4E 80 00 20 */	blr 
 
-.global func_800D5438
-func_800D5438:
+.global Name__14zNPCGoalCommonFv
+Name__14zNPCGoalCommonFv:
 /* 800D5438 000D2238  38 60 00 00 */	li r3, 0
 /* 800D543C 000D223C  4E 80 00 20 */	blr 
 /* 800D5440 000D2240  94 21 FF F0 */	stwu r1, -0x10(r1)

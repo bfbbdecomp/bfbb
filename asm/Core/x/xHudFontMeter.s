@@ -24,7 +24,7 @@ load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUl:
 /* 8002F028 0002BE28  4B FF ED 09 */	bl init_base__Q24xhud6widgetFR5xBaseRC10xBaseAssetUl
 /* 8002F02C 0002BE2C  38 9E 00 10 */	addi r4, r30, 0x10
 /* 8002F030 0002BE30  38 60 01 4C */	li r3, 0x14c
-/* 8002F034 0002BE34  4B FF FF AD */	bl func_8002EFE0
+/* 8002F034 0002BE34  4B FF FF AD */	bl __nw__FUlPv
 /* 8002F038 0002BE38  28 03 00 00 */	cmplwi r3, 0
 /* 8002F03C 0002BE3C  41 82 00 0C */	beq lbl_8002F048
 /* 8002F040 0002BE40  7F E4 FB 78 */	mr r4, r31
@@ -94,11 +94,11 @@ __ct__Q24xhud17font_meter_widgetFRCQ24xhud16font_meter_asset:
 /* 8002F130 0002BF30  D0 1F 01 30 */	stfs f0, 0x130(r31)
 /* 8002F134 0002BF34  C0 1F 00 D4 */	lfs f0, 0xd4(r31)
 /* 8002F138 0002BF38  D0 1F 01 34 */	stfs f0, 0x134(r31)
-/* 8002F13C 0002BF3C  4B FE 8E 5D */	bl func_80017F98
+/* 8002F13C 0002BF3C  4B FE 8E 5D */	bl __as__10iColor_tagFRC10iColor_tag
 /* 8002F140 0002BF40  3C 80 80 25 */	lis r4, lbl_80252F00@ha
 /* 8002F144 0002BF44  38 7F 01 3C */	addi r3, r31, 0x13c
 /* 8002F148 0002BF48  38 84 2F 00 */	addi r4, r4, lbl_80252F00@l
-/* 8002F14C 0002BF4C  4B FE 8E F5 */	bl func_80018040
+/* 8002F14C 0002BF4C  4B FE 8E F5 */	bl __as__13basic_rect_f_FRC13basic_rect_f_
 /* 8002F150 0002BF50  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 8002F154 0002BF54  7F E3 FB 78 */	mr r3, r31
 /* 8002F158 0002BF58  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -135,7 +135,7 @@ type__Q24xhud17font_meter_widgetCFv:
 /* 8002F1BC 0002BFBC  88 0D 89 AC */	lbz r0, lbl_803CB2AC-_SDA_BASE_(r13)
 /* 8002F1C0 0002BFC0  7C 00 07 75 */	extsb. r0, r0
 /* 8002F1C4 0002BFC4  40 82 00 18 */	bne lbl_8002F1DC
-/* 8002F1C8 0002BFC8  48 00 03 3D */	bl func_8002F504
+/* 8002F1C8 0002BFC8  48 00 03 3D */	bl type_name__Q24xhud16font_meter_assetFv
 /* 8002F1CC 0002BFCC  48 01 D0 49 */	bl xStrHash__FPCc
 /* 8002F1D0 0002BFD0  90 6D 89 A8 */	stw r3, lbl_803CB2A8-_SDA_BASE_(r13)
 /* 8002F1D4 0002BFD4  38 00 00 01 */	li r0, 1
@@ -326,26 +326,26 @@ lbl_8002F430:
 /* 8002F488 0002C288  41 82 00 2C */	beq lbl_8002F4B4
 /* 8002F48C 0002C28C  38 7F 01 38 */	addi r3, r31, 0x138
 /* 8002F490 0002C290  38 9F 00 E4 */	addi r4, r31, 0xe4
-/* 8002F494 0002C294  4B FE 8B 05 */	bl func_80017F98
+/* 8002F494 0002C294  4B FE 8B 05 */	bl __as__10iColor_tagFRC10iColor_tag
 /* 8002F498 0002C298  C0 3F 00 D8 */	lfs f1, 0xd8(r31)
 /* 8002F49C 0002C29C  38 7F 01 28 */	addi r3, r31, 0x128
 /* 8002F4A0 0002C2A0  C0 1F 00 DC */	lfs f0, 0xdc(r31)
 /* 8002F4A4 0002C2A4  38 9F 01 18 */	addi r4, r31, 0x118
 /* 8002F4A8 0002C2A8  EC 3F 08 2A */	fadds f1, f31, f1
 /* 8002F4AC 0002C2AC  EC 5E 00 2A */	fadds f2, f30, f0
-/* 8002F4B0 0002C2B0  48 00 00 61 */	bl func_8002F510
+/* 8002F4B0 0002C2B0  48 00 00 61 */	bl render__5xfontCFPCcff
 lbl_8002F4B4:
 /* 8002F4B4 0002C2B4  88 1F 00 E3 */	lbz r0, 0xe3(r31)
 /* 8002F4B8 0002C2B8  28 00 00 00 */	cmplwi r0, 0
 /* 8002F4BC 0002C2BC  41 82 00 24 */	beq lbl_8002F4E0
 /* 8002F4C0 0002C2C0  38 7F 01 38 */	addi r3, r31, 0x138
 /* 8002F4C4 0002C2C4  38 9F 00 E0 */	addi r4, r31, 0xe0
-/* 8002F4C8 0002C2C8  4B FE 8A D1 */	bl func_80017F98
+/* 8002F4C8 0002C2C8  4B FE 8A D1 */	bl __as__10iColor_tagFRC10iColor_tag
 /* 8002F4CC 0002C2CC  FC 20 F8 90 */	fmr f1, f31
 /* 8002F4D0 0002C2D0  38 7F 01 28 */	addi r3, r31, 0x128
 /* 8002F4D4 0002C2D4  FC 40 F0 90 */	fmr f2, f30
 /* 8002F4D8 0002C2D8  38 9F 01 18 */	addi r4, r31, 0x118
-/* 8002F4DC 0002C2DC  48 00 00 35 */	bl func_8002F510
+/* 8002F4DC 0002C2DC  48 00 00 35 */	bl render__5xfontCFPCcff
 lbl_8002F4E0:
 /* 8002F4E0 0002C2E0  E3 E1 00 28 */	psq_l f31, 40(r1), 0, qr0
 /* 8002F4E4 0002C2E4  CB E1 00 20 */	lfd f31, 0x20(r1)
@@ -357,14 +357,14 @@ lbl_8002F4E0:
 /* 8002F4FC 0002C2FC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002F500 0002C300  4E 80 00 20 */	blr 
 
-.global func_8002F504
-func_8002F504:
+.global type_name__Q24xhud16font_meter_assetFv
+type_name__Q24xhud16font_meter_assetFv:
 /* 8002F504 0002C304  3C 60 80 25 */	lis r3, lbl_80252F10@ha
 /* 8002F508 0002C308  38 63 2F 10 */	addi r3, r3, lbl_80252F10@l
 /* 8002F50C 0002C30C  4E 80 00 20 */	blr 
 
-.global func_8002F510
-func_8002F510:
+.global render__5xfontCFPCcff
+render__5xfontCFPCcff:
 /* 8002F510 0002C310  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002F514 0002C314  7C 08 02 A6 */	mflr r0
 /* 8002F518 0002C318  90 01 00 24 */	stw r0, 0x24(r1)

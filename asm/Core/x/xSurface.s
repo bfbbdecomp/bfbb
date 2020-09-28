@@ -39,8 +39,8 @@ lbl_8004D0BC:
 /* 8004D0C4 00049EC4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D0C8 00049EC8  4E 80 00 20 */	blr 
 
-.global func_8004D0CC
-func_8004D0CC:
+.global __as__8xSurfaceFRC8xSurface
+__as__8xSurfaceFRC8xSurface:
 /* 8004D0CC 00049ECC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D0D0 00049ED0  7C 08 02 A6 */	mflr r0
 /* 8004D0D4 00049ED4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -48,7 +48,7 @@ func_8004D0CC:
 /* 8004D0DC 00049EDC  7C 9F 23 78 */	mr r31, r4
 /* 8004D0E0 00049EE0  93 C1 00 08 */	stw r30, 8(r1)
 /* 8004D0E4 00049EE4  7C 7E 1B 78 */	mr r30, r3
-/* 8004D0E8 00049EE8  48 00 00 61 */	bl func_8004D148
+/* 8004D0E8 00049EE8  48 00 00 61 */	bl __as__5xBaseFRC5xBase
 /* 8004D0EC 00049EEC  80 1F 00 10 */	lwz r0, 0x10(r31)
 /* 8004D0F0 00049EF0  38 7E 00 21 */	addi r3, r30, 0x21
 /* 8004D0F4 00049EF4  80 DF 00 14 */	lwz r6, 0x14(r31)
@@ -73,8 +73,8 @@ func_8004D0CC:
 /* 8004D140 00049F40  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D144 00049F44  4E 80 00 20 */	blr 
 
-.global func_8004D148
-func_8004D148:
+.global __as__5xBaseFRC5xBase
+__as__5xBaseFRC5xBase:
 /* 8004D148 00049F48  80 A4 00 00 */	lwz r5, 0(r4)
 /* 8004D14C 00049F4C  88 04 00 04 */	lbz r0, 4(r4)
 /* 8004D150 00049F50  90 A3 00 00 */	stw r5, 0(r3)

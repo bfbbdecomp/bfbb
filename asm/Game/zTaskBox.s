@@ -144,7 +144,7 @@ lbl_80134B4C:
 /* 80134B80 00131980  93 8D 96 24 */	stw r28, lbl_803CBF24-_SDA_BASE_(r13)
 /* 80134B84 00131984  7F 84 E3 78 */	mr r4, r28
 /* 80134B88 00131988  80 6D 96 20 */	lwz r3, tcb__8ztaskbox-_SDA_BASE_(r13)
-/* 80134B8C 0013198C  48 00 00 39 */	bl func_80134BC4
+/* 80134B8C 0013198C  48 00 00 39 */	bl reset__Q28ztaskbox13talk_callbackFR8ztaskbox
 /* 80134B90 00131990  80 AD 96 20 */	lwz r5, tcb__8ztaskbox-_SDA_BASE_(r13)
 /* 80134B94 00131994  7F E3 FB 78 */	mr r3, r31
 /* 80134B98 00131998  7F C4 F3 78 */	mr r4, r30
@@ -160,8 +160,8 @@ lbl_80134BA4:
 /* 80134BBC 001319BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80134BC0 001319C0  4E 80 00 20 */	blr 
 
-.global func_80134BC4
-func_80134BC4:
+.global reset__Q28ztaskbox13talk_callbackFR8ztaskbox
+reset__Q28ztaskbox13talk_callbackFR8ztaskbox:
 /* 80134BC4 001319C4  90 83 00 04 */	stw r4, 4(r3)
 /* 80134BC8 001319C8  38 00 00 00 */	li r0, 0
 /* 80134BCC 001319CC  90 03 00 08 */	stw r0, 8(r3)
@@ -373,7 +373,7 @@ init__8ztaskboxFv:
 /* 80134E5C 00131C5C  40 82 00 18 */	bne lbl_80134E74
 /* 80134E60 00131C60  3C 60 80 32 */	lis r3, lbl_803242E8@ha
 /* 80134E64 00131C64  38 63 42 E8 */	addi r3, r3, lbl_803242E8@l
-/* 80134E68 00131C68  48 00 00 29 */	bl func_80134E90
+/* 80134E68 00131C68  48 00 00 29 */	bl __ct__Q28ztaskbox13talk_callbackFv
 /* 80134E6C 00131C6C  38 00 00 01 */	li r0, 1
 /* 80134E70 00131C70  98 0D 96 28 */	stb r0, lbl_803CBF28-_SDA_BASE_(r13)
 lbl_80134E74:
@@ -385,17 +385,17 @@ lbl_80134E74:
 /* 80134E88 00131C88  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134E8C 00131C8C  4E 80 00 20 */	blr 
 
-.global func_80134E90
-func_80134E90:
+.global __ct__Q28ztaskbox13talk_callbackFv
+__ct__Q28ztaskbox13talk_callbackFv:
 /* 80134E90 00131C90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80134E94 00131C94  7C 08 02 A6 */	mflr r0
 /* 80134E98 00131C98  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80134E9C 00131C9C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80134EA0 00131CA0  7C 7F 1B 78 */	mr r31, r3
-/* 80134EA4 00131CA4  4B FE 77 C5 */	bl func_8011C668
-/* 80134EA8 00131CA8  3C 80 80 2A */	lis r4, lbl_80298FA0@ha
+/* 80134EA4 00131CA4  4B FE 77 C5 */	bl __ct__Q28ztalkbox8callbackFv
+/* 80134EA8 00131CA8  3C 80 80 2A */	lis r4, __vt__Q28ztaskbox13talk_callback@ha
 /* 80134EAC 00131CAC  7F E3 FB 78 */	mr r3, r31
-/* 80134EB0 00131CB0  38 04 8F A0 */	addi r0, r4, lbl_80298FA0@l
+/* 80134EB0 00131CB0  38 04 8F A0 */	addi r0, r4, __vt__Q28ztaskbox13talk_callback@l
 /* 80134EB4 00131CB4  90 1F 00 00 */	stw r0, 0(r31)
 /* 80134EB8 00131CB8  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80134EBC 00131CBC  80 01 00 14 */	lwz r0, 0x14(r1)
