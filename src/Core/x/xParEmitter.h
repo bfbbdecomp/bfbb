@@ -8,9 +8,6 @@ typedef struct xParGroup;
 typedef struct xParEmitterPropsAsset;
 typedef struct xParSys;
 
-typedef unsigned char type_81[3];
-typedef unsigned char type_83[3];
-
 struct xParEmitterAsset : xBaseAsset
 {
 };
@@ -26,8 +23,8 @@ struct xParEmitter : xBase
 	float rate_fraction;
 	float rate_fraction_cull;
 	unsigned char emit_flags;
-	type_81 emit_pad;
-	type_83 rot;
+	unsigned char emit_pad[3];
+	unsigned char rot[3];
 	xModelTag tag;
 	float oocull_distance_sqr;
 	float distance_to_cull_sqr;

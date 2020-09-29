@@ -1,8 +1,58 @@
 #ifndef RWCORE_H
 #define RWCORE_H
 
+typedef int RwInt32;
+typedef short RwInt16;
+typedef char RwInt8;
+typedef unsigned int RwUInt32;
+typedef unsigned short RwUInt16;
+typedef unsigned char RwUInt8;
+typedef float RwReal;
+typedef RwInt32 RwBool;
+typedef RwInt8 RwChar;
+
 typedef struct RwRaster;
 typedef struct RwTexDictionary;
+
+#ifndef NULL
+#define NULL 0
+#endif
+
+#define RWFORCEENUMSIZEINT 0x7fffffff
+
+enum RwRenderState
+{
+    rwRENDERSTATENARENDERSTATE = 0,
+    rwRENDERSTATETEXTURERASTER,
+    rwRENDERSTATETEXTUREADDRESS,
+    rwRENDERSTATETEXTUREADDRESSU,
+    rwRENDERSTATETEXTUREADDRESSV,
+    rwRENDERSTATETEXTUREPERSPECTIVE,
+    rwRENDERSTATEZTESTENABLE,
+    rwRENDERSTATESHADEMODE,
+    rwRENDERSTATEZWRITEENABLE,
+    rwRENDERSTATETEXTUREFILTER,
+    rwRENDERSTATESRCBLEND,
+    rwRENDERSTATEDESTBLEND,
+    rwRENDERSTATEVERTEXALPHAENABLE,
+    rwRENDERSTATEBORDERCOLOR,
+    rwRENDERSTATEFOGENABLE,
+    rwRENDERSTATEFOGCOLOR,
+    rwRENDERSTATEFOGTYPE,
+    rwRENDERSTATEFOGDENSITY,
+    rwRENDERSTATECULLMODE = 20,
+    rwRENDERSTATESTENCILENABLE,
+    rwRENDERSTATESTENCILFAIL,
+    rwRENDERSTATESTENCILZFAIL,
+    rwRENDERSTATESTENCILPASS,
+    rwRENDERSTATESTENCILFUNCTION,
+    rwRENDERSTATESTENCILFUNCTIONREF,
+    rwRENDERSTATESTENCILFUNCTIONMASK,
+    rwRENDERSTATESTENCILFUNCTIONWRITEMASK,
+    rwRENDERSTATEALPHATESTFUNCTION,
+    rwRENDERSTATEALPHATESTFUNCTIONREF,
+    rwRENDERSTATEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
 
 struct RwLLLink
 {
@@ -15,10 +65,10 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	char name[32];
-	char mask[32];
-	unsigned int filterAddressing;
-	int refCount;
+	RwChar name[32];
+	RwChar mask[32];
+	RwUInt32 filterAddressing;
+	RwInt32 refCount;
 };
 
 enum RwFogType
@@ -27,23 +77,23 @@ enum RwFogType
     rwFOGTYPELINEAR,
     rwFOGTYPEEXPONENTIAL,
     rwFOGTYPEEXPONENTIAL2,
-    rwFOGTYPEFORCEENUMSIZEINT = 0x7fffffff
+    rwFOGTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
 struct RwRGBA
 {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
-    unsigned char alpha;
+    RwUInt8 red;
+    RwUInt8 green;
+    RwUInt8 blue;
+    RwUInt8 alpha;
 };
 
 struct RwCamera
 {
 };
 
-extern "C"{
-    extern void RwRenderStateSet(int a, void* b);
+extern "C" {
+    extern RwBool RwRenderStateSet(RwRenderState state, void* value);
 }
 
 #endif
