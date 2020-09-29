@@ -4678,7 +4678,7 @@ set_life__13zNPCKingJellyFi:
 /* 8014AA30 00147830  7C 83 23 78 */	mr r3, r4
 /* 8014AA34 00147834  80 A5 00 0C */	lwz r5, 0xc(r5)
 /* 8014AA38 00147838  38 80 00 00 */	li r4, 0
-/* 8014AA3C 0014783C  4B FF 25 F9 */	bl range_limit_i___Fiii
+/* 8014AA3C 0014783C  4B FF 25 F9 */	bl range_limit$$0i$$1__Fiii
 /* 8014AA40 00147840  90 7D 02 C4 */	stw r3, 0x2c4(r29)
 /* 8014AA44 00147844  80 7D 02 28 */	lwz r3, 0x228(r29)
 /* 8014AA48 00147848  4B FC 2B 7D */	bl GIDOfActive__7xPsycheCFv

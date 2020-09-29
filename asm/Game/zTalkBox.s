@@ -53,9 +53,9 @@ trigger__22$$2unnamed$$2zTalkBox_cpp$$2FUi:
 /* 801306A0 0012D4A0  41 82 00 30 */	beq lbl_801306D0
 /* 801306A4 0012D4A4  3B E3 8D 80 */	addi r31, r3, -29312
 /* 801306A8 0012D4A8  7F E3 FB 78 */	mr r3, r31
-/* 801306AC 0012D4AC  48 00 34 BD */	bl push_back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
+/* 801306AC 0012D4AC  48 00 34 BD */	bl push_back__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
 /* 801306B0 0012D4B0  7F E3 FB 78 */	mr r3, r31
-/* 801306B4 0012D4B4  48 00 33 7D */	bl back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
+/* 801306B4 0012D4B4  48 00 33 7D */	bl back__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
 /* 801306B8 0012D4B8  3C 80 80 32 */	lis r4, lbl_8031B320@ha
 /* 801306BC 0012D4BC  38 84 B3 20 */	addi r4, r4, lbl_8031B320@l
 /* 801306C0 0012D4C0  80 04 00 08 */	lwz r0, 8(r4)
@@ -171,20 +171,20 @@ flush_triggered__22$$2unnamed$$2zTalkBox_cpp$$2Fv:
 /* 80130820 0012D620  48 00 00 34 */	b lbl_80130854
 lbl_80130824:
 /* 80130824 0012D624  7F E3 FB 78 */	mr r3, r31
-/* 80130828 0012D628  48 00 33 A9 */	bl front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
+/* 80130828 0012D628  48 00 33 A9 */	bl front__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
 /* 8013082C 0012D62C  80 83 00 00 */	lwz r4, 0(r3)
 /* 80130830 0012D630  80 03 00 04 */	lwz r0, 4(r3)
 /* 80130834 0012D634  7F E3 FB 78 */	mr r3, r31
 /* 80130838 0012D638  90 81 00 08 */	stw r4, 8(r1)
 /* 8013083C 0012D63C  90 01 00 0C */	stw r0, 0xc(r1)
-/* 80130840 0012D640  48 00 33 69 */	bl pop_front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
+/* 80130840 0012D640  48 00 33 69 */	bl pop_front__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
 /* 80130844 0012D644  80 61 00 08 */	lwz r3, 8(r1)
 /* 80130848 0012D648  80 A1 00 0C */	lwz r5, 0xc(r1)
 /* 8013084C 0012D64C  7C 64 1B 78 */	mr r4, r3
 /* 80130850 0012D650  4B EE EE 91 */	bl zEntEvent__FP5xBaseP5xBaseUi
 lbl_80130854:
 /* 80130854 0012D654  7F E3 FB 78 */	mr r3, r31
-/* 80130858 0012D658  48 00 33 39 */	bl empty__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv
+/* 80130858 0012D658  48 00 33 39 */	bl empty__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv
 /* 8013085C 0012D65C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80130860 0012D660  41 82 FF C4 */	beq lbl_80130824
 /* 80130864 0012D664  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -1043,7 +1043,7 @@ lbl_80131424:
 /* 801314A4 0012E2A4  41 82 00 1C */	beq lbl_801314C0
 /* 801314A8 0012E2A8  7C 83 23 78 */	mr r3, r4
 /* 801314AC 0012E2AC  38 63 8D 5C */	addi r3, r3, -29348
-/* 801314B0 0012E2B0  48 00 28 29 */	bl clear__14sound_queue_4_Fv
+/* 801314B0 0012E2B0  48 00 28 29 */	bl clear__14sound_queue$$04$$1Fv
 /* 801314B4 0012E2B4  4B FF F1 49 */	bl speak_stop__22$$2unnamed$$2zTalkBox_cpp$$2Fv
 /* 801314B8 0012E2B8  38 60 00 01 */	li r3, 1
 /* 801314BC 0012E2BC  48 00 02 34 */	b lbl_801316F0
@@ -1062,16 +1062,16 @@ lbl_801314E4:
 /* 801314E8 0012E2E8  40 80 00 34 */	bge lbl_8013151C
 /* 801314EC 0012E2EC  3B A4 8D 5C */	addi r29, r4, -29348
 /* 801314F0 0012E2F0  7F A3 EB 78 */	mr r3, r29
-/* 801314F4 0012E2F4  48 00 27 C5 */	bl size__14sound_queue_4_CFv
+/* 801314F4 0012E2F4  48 00 27 C5 */	bl size__14sound_queue$$04$$1CFv
 /* 801314F8 0012E2F8  2C 03 00 00 */	cmpwi r3, 0
 /* 801314FC 0012E2FC  40 81 01 F0 */	ble lbl_801316EC
 /* 80131500 0012E300  7F A3 EB 78 */	mr r3, r29
-/* 80131504 0012E304  48 00 27 51 */	bl pop__14sound_queue_4_Fv
+/* 80131504 0012E304  48 00 27 51 */	bl pop__14sound_queue$$04$$1Fv
 /* 80131508 0012E308  48 00 01 E4 */	b lbl_801316EC
 lbl_8013150C:
 /* 8013150C 0012E30C  7C 83 23 78 */	mr r3, r4
 /* 80131510 0012E310  38 63 8D 5C */	addi r3, r3, -29348
-/* 80131514 0012E314  48 00 27 C5 */	bl clear__14sound_queue_4_Fv
+/* 80131514 0012E314  48 00 27 C5 */	bl clear__14sound_queue$$04$$1Fv
 /* 80131518 0012E318  4B FF F0 E5 */	bl speak_stop__22$$2unnamed$$2zTalkBox_cpp$$2Fv
 lbl_8013151C:
 /* 8013151C 0012E31C  80 9F 00 00 */	lwz r4, 0(r31)
@@ -1103,7 +1103,7 @@ lbl_80131548:
 /* 80131578 0012E378  7C E7 02 14 */	add r7, r7, r0
 /* 8013157C 0012E37C  3C E7 00 01 */	addis r7, r7, 1
 /* 80131580 0012E380  38 E7 8D 56 */	addi r7, r7, -29354
-/* 80131584 0012E384  4B EF E5 7D */	bl play__14sound_queue_4_FUiffUiUiUi14sound_category
+/* 80131584 0012E384  4B EF E5 7D */	bl play__14sound_queue$$04$$1FUiffUiUiUi14sound_category
 /* 80131588 0012E388  80 1D 8D 58 */	lwz r0, -0x72a8(r29)
 /* 8013158C 0012E38C  3C 60 80 32 */	lis r3, lbl_8031B320@ha
 /* 80131590 0012E390  38 83 B3 20 */	addi r4, r3, lbl_8031B320@l
@@ -2700,7 +2700,7 @@ lbl_80132B48:
 /* 80132B58 0012F958  38 63 B3 20 */	addi r3, r3, lbl_8031B320@l
 /* 80132B5C 0012F95C  3C 63 00 01 */	addis r3, r3, 1
 /* 80132B60 0012F960  38 63 8D 5C */	addi r3, r3, -29348
-/* 80132B64 0012F964  48 00 11 75 */	bl clear__14sound_queue_4_Fv
+/* 80132B64 0012F964  48 00 11 75 */	bl clear__14sound_queue$$04$$1Fv
 /* 80132B68 0012F968  4B FF DA 95 */	bl speak_stop__22$$2unnamed$$2zTalkBox_cpp$$2Fv
 /* 80132B6C 0012F96C  4B FF F4 41 */	bl unlock_stream__22$$2unnamed$$2zTalkBox_cpp$$2Fv
 lbl_80132B70:
@@ -2999,9 +2999,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_typeFv:
 /* 80132F58 0012FD58  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80132F5C 0012FD5C  7C 7F 1B 78 */	mr r31, r3
 /* 80132F60 0012FD60  48 00 00 29 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80132F64 0012FD64  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type@ha
+/* 80132F64 0012FD64  3C 80 80 2A */	lis r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type@ha
 /* 80132F68 0012FD68  7F E3 FB 78 */	mr r3, r31
-/* 80132F6C 0012FD6C  38 04 8F 6C */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type@l
+/* 80132F6C 0012FD6C  38 04 8F 6C */	addi r0, r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type@l
 /* 80132F70 0012FD70  90 1F 00 04 */	stw r0, 4(r31)
 /* 80132F74 0012FD74  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80132F78 0012FD78  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3011,8 +3011,8 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_typeFv:
 
 /* __ct__Q222@unnamed@zTalkBox_cpp@10state_typeFQ222@unnamed@zTalkBox_cpp@10state_enum */
 __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum:
-/* 80132F88 0012FD88  3C A0 80 2A */	lis r5, __vt__Q222_unnamed_zTalkBox_cpp_10state_type@ha
-/* 80132F8C 0012FD8C  38 05 8F 58 */	addi r0, r5, __vt__Q222_unnamed_zTalkBox_cpp_10state_type@l
+/* 80132F88 0012FD88  3C A0 80 2A */	lis r5, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type@ha
+/* 80132F8C 0012FD8C  38 05 8F 58 */	addi r0, r5, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type@l
 /* 80132F90 0012FD90  90 03 00 04 */	stw r0, 4(r3)
 /* 80132F94 0012FD94  90 83 00 00 */	stw r4, 0(r3)
 /* 80132F98 0012FD98  4E 80 00 20 */	blr 
@@ -3026,9 +3026,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_typeFv:
 /* 80132FAC 0012FDAC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80132FB0 0012FDB0  7C 7F 1B 78 */	mr r31, r3
 /* 80132FB4 0012FDB4  4B FF FF D5 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80132FB8 0012FDB8  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type@ha
+/* 80132FB8 0012FDB8  3C 80 80 2A */	lis r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_type@ha
 /* 80132FBC 0012FDBC  7F E3 FB 78 */	mr r3, r31
-/* 80132FC0 0012FDC0  38 04 8F 44 */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type@l
+/* 80132FC0 0012FDC0  38 04 8F 44 */	addi r0, r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_type@l
 /* 80132FC4 0012FDC4  90 1F 00 04 */	stw r0, 4(r31)
 /* 80132FC8 0012FDC8  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80132FCC 0012FDCC  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3045,9 +3045,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_typeFv:
 /* 80132FEC 0012FDEC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80132FF0 0012FDF0  7C 7F 1B 78 */	mr r31, r3
 /* 80132FF4 0012FDF4  4B FF FF 95 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80132FF8 0012FDF8  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_15next_state_type@ha
+/* 80132FF8 0012FDF8  3C 80 80 2A */	lis r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_type@ha
 /* 80132FFC 0012FDFC  7F E3 FB 78 */	mr r3, r31
-/* 80133000 0012FE00  38 04 8F 30 */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_15next_state_type@l
+/* 80133000 0012FE00  38 04 8F 30 */	addi r0, r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_type@l
 /* 80133004 0012FE04  90 1F 00 04 */	stw r0, 4(r31)
 /* 80133008 0012FE08  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8013300C 0012FE0C  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3064,9 +3064,9 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_typeFv:
 /* 8013302C 0012FE2C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80133030 0012FE30  7C 7F 1B 78 */	mr r31, r3
 /* 80133034 0012FE34  4B FF FF 55 */	bl __ct__Q222$$2unnamed$$2zTalkBox_cpp$$210state_typeFQ222$$2unnamed$$2zTalkBox_cpp$$210state_enum
-/* 80133038 0012FE38  3C 80 80 2A */	lis r4, __vt__Q222_unnamed_zTalkBox_cpp_16start_state_type@ha
+/* 80133038 0012FE38  3C 80 80 2A */	lis r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_type@ha
 /* 8013303C 0012FE3C  7F E3 FB 78 */	mr r3, r31
-/* 80133040 0012FE40  38 04 8F 1C */	addi r0, r4, __vt__Q222_unnamed_zTalkBox_cpp_16start_state_type@l
+/* 80133040 0012FE40  38 04 8F 1C */	addi r0, r4, __vt__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_type@l
 /* 80133044 0012FE44  90 1F 00 04 */	stw r0, 4(r31)
 /* 80133048 0012FE48  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8013304C 0012FE4C  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -3268,7 +3268,7 @@ reset_all__8ztalkboxFv:
 /* 801332FC 001300FC  98 A3 8D 7A */	stb r5, -0x7286(r3)
 /* 80133300 00130100  90 A3 8E 94 */	stw r5, -0x716c(r3)
 /* 80133304 00130104  38 63 8D 80 */	addi r3, r3, -29312
-/* 80133308 00130108  48 00 09 1D */	bl reset__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
+/* 80133308 00130108  48 00 09 1D */	bl reset__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
 /* 8013330C 0013010C  3C 60 80 32 */	lis r3, lbl_8031B320@ha
 /* 80133310 00130110  38 00 00 00 */	li r0, 0
 /* 80133314 00130114  38 63 B3 20 */	addi r3, r3, lbl_8031B320@l
@@ -3705,7 +3705,7 @@ lbl_8013392C:
 /* 80133944 00130744  38 A0 00 01 */	li r5, 1
 /* 80133948 00130748  3C 63 00 01 */	addis r3, r3, 1
 /* 8013394C 0013074C  38 63 8D 5C */	addi r3, r3, -29348
-/* 80133950 00130750  48 00 03 CD */	bl playing__14sound_queue_4_CFib
+/* 80133950 00130750  48 00 03 CD */	bl playing__14sound_queue$$04$$1CFib
 /* 80133954 00130754  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80133958 00130758  40 82 00 0C */	bne lbl_80133964
 /* 8013395C 0013075C  38 60 00 02 */	li r3, 2
@@ -3760,7 +3760,7 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$211shared_typeFv:
 /* 80133A08 00130808  7C 7F 1B 78 */	mr r31, r3
 /* 80133A0C 0013080C  3C 7F 00 01 */	addis r3, r31, 1
 /* 80133A10 00130810  38 63 8D 5C */	addi r3, r3, -29348
-/* 80133A14 00130814  4B EF C0 DD */	bl __ct__14sound_queue_4_Fv
+/* 80133A14 00130814  4B EF C0 DD */	bl __ct__14sound_queue$$04$$1Fv
 /* 80133A18 00130818  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80133A1C 0013081C  7F E3 FB 78 */	mr r3, r31
 /* 80133A20 00130820  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -3769,29 +3769,29 @@ __ct__Q222$$2unnamed$$2zTalkBox_cpp$$211shared_typeFv:
 /* 80133A2C 0013082C  4E 80 00 20 */	blr 
 
 /* back__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>Fv */
-.global back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
-back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
+.global back__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
+back__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv:
 /* 80133A30 00130830  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80133A34 00130834  7C 08 02 A6 */	mflr r0
 /* 80133A38 00130838  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80133A3C 0013083C  48 00 00 E9 */	bl end__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv
+/* 80133A3C 0013083C  48 00 00 E9 */	bl end__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv
 /* 80133A40 00130840  90 81 00 0C */	stw r4, 0xc(r1)
 /* 80133A44 00130844  38 80 00 01 */	li r4, 1
 /* 80133A48 00130848  90 61 00 08 */	stw r3, 8(r1)
 /* 80133A4C 0013084C  38 61 00 08 */	addi r3, r1, 8
-/* 80133A50 00130850  48 00 00 3D */	bl __mi__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFi
+/* 80133A50 00130850  48 00 00 3D */	bl __mi__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFi
 /* 80133A54 00130854  90 61 00 10 */	stw r3, 0x10(r1)
 /* 80133A58 00130858  38 61 00 10 */	addi r3, r1, 0x10
 /* 80133A5C 0013085C  90 81 00 14 */	stw r4, 0x14(r1)
-/* 80133A60 00130860  48 00 00 15 */	bl __ml__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFv
+/* 80133A60 00130860  48 00 00 15 */	bl __ml__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFv
 /* 80133A64 00130864  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80133A68 00130868  7C 08 03 A6 */	mtlr r0
 /* 80133A6C 0013086C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80133A70 00130870  4E 80 00 20 */	blr 
 
 /* __ml__Q256fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>8iteratorCFv */
-.global __ml__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFv
-__ml__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFv:
+.global __ml__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFv
+__ml__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFv:
 /* 80133A74 00130874  80 03 00 00 */	lwz r0, 0(r3)
 /* 80133A78 00130878  80 83 00 04 */	lwz r4, 4(r3)
 /* 80133A7C 0013087C  54 03 18 38 */	slwi r3, r0, 3
@@ -3800,8 +3800,8 @@ __ml__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFv:
 /* 80133A88 00130888  4E 80 00 20 */	blr 
 
 /* __mi__Q256fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>8iteratorCFi */
-.global __mi__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFi
-__mi__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFi:
+.global __mi__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFi
+__mi__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFi:
 /* 80133A8C 0013088C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133A90 00130890  7C 08 02 A6 */	mflr r0
 /* 80133A94 00130894  80 A3 00 00 */	lwz r5, 0(r3)
@@ -3810,7 +3810,7 @@ __mi__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFi:
 /* 80133AA0 001308A0  38 61 00 08 */	addi r3, r1, 8
 /* 80133AA4 001308A4  90 A1 00 08 */	stw r5, 8(r1)
 /* 80133AA8 001308A8  90 01 00 0C */	stw r0, 0xc(r1)
-/* 80133AAC 001308AC  48 00 00 1D */	bl __ami__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi
+/* 80133AAC 001308AC  48 00 00 1D */	bl __ami__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorFi
 /* 80133AB0 001308B0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80133AB4 001308B4  80 61 00 08 */	lwz r3, 8(r1)
 /* 80133AB8 001308B8  80 81 00 0C */	lwz r4, 0xc(r1)
@@ -3819,13 +3819,13 @@ __mi__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFi:
 /* 80133AC4 001308C4  4E 80 00 20 */	blr 
 
 /* __ami__Q256fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>8iteratorFi */
-.global __ami__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi
-__ami__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi:
+.global __ami__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorFi
+__ami__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorFi:
 /* 80133AC8 001308C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133ACC 001308CC  7C 08 02 A6 */	mflr r0
 /* 80133AD0 001308D0  7C 84 00 D0 */	neg r4, r4
 /* 80133AD4 001308D4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80133AD8 001308D8  48 00 00 21 */	bl __apl__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi
+/* 80133AD8 001308D8  48 00 00 21 */	bl __apl__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorFi
 /* 80133ADC 001308DC  7C 64 1B 78 */	mr r4, r3
 /* 80133AE0 001308E0  80 63 00 00 */	lwz r3, 0(r3)
 /* 80133AE4 001308E4  80 84 00 04 */	lwz r4, 4(r4)
@@ -3835,8 +3835,8 @@ __ami__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi:
 /* 80133AF4 001308F4  4E 80 00 20 */	blr 
 
 /* __apl__Q256fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>8iteratorFi */
-.global __apl__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi
-__apl__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi:
+.global __apl__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorFi
+__apl__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorFi:
 /* 80133AF8 001308F8  80 C3 00 00 */	lwz r6, 0(r3)
 /* 80133AFC 001308FC  3C A0 3E 10 */	lis r5, 0x3E0F83E1@ha
 /* 80133B00 00130900  38 05 83 E1 */	addi r0, r5, 0x3E0F83E1@l
@@ -3850,21 +3850,21 @@ __apl__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorFi:
 /* 80133B20 00130920  4E 80 00 20 */	blr 
 
 /* end__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>CFv */
-.global end__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv
-end__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv:
+.global end__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv
+end__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv:
 /* 80133B24 00130924  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133B28 00130928  7C 08 02 A6 */	mflr r0
 /* 80133B2C 0013092C  80 83 00 04 */	lwz r4, 4(r3)
 /* 80133B30 00130930  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80133B34 00130934  48 00 00 15 */	bl create_iterator__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFUl
+/* 80133B34 00130934  48 00 00 15 */	bl create_iterator__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFUl
 /* 80133B38 00130938  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80133B3C 0013093C  7C 08 03 A6 */	mtlr r0
 /* 80133B40 00130940  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133B44 00130944  4E 80 00 20 */	blr 
 
 /* create_iterator__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>CFUl */
-.global create_iterator__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFUl
-create_iterator__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFUl:
+.global create_iterator__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFUl
+create_iterator__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFUl:
 /* 80133B48 00130948  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133B4C 0013094C  7C 60 1B 78 */	mr r0, r3
 /* 80133B50 00130950  7C 83 23 78 */	mr r3, r4
@@ -3875,8 +3875,8 @@ create_iterator__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFUl:
 /* 80133B64 00130964  4E 80 00 20 */	blr 
 
 /* push_back__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>Fv */
-.global push_back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
-push_back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
+.global push_back__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
+push_back__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv:
 /* 80133B68 00130968  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80133B6C 0013096C  3C 80 3E 10 */	lis r4, 0x3E0F83E1@ha
 /* 80133B70 00130970  38 04 83 E1 */	addi r0, r4, 0x3E0F83E1@l
@@ -3889,8 +3889,8 @@ push_back__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
 /* 80133B8C 0013098C  4E 80 00 20 */	blr 
 
 /* empty__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>CFv */
-.global empty__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv
-empty__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv:
+.global empty__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv
+empty__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv:
 /* 80133B90 00130990  80 83 00 04 */	lwz r4, 4(r3)
 /* 80133B94 00130994  80 03 00 00 */	lwz r0, 0(r3)
 /* 80133B98 00130998  7C 04 00 50 */	subf r0, r4, r0
@@ -3899,8 +3899,8 @@ empty__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv:
 /* 80133BA4 001309A4  4E 80 00 20 */	blr 
 
 /* pop_front__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>Fv */
-.global pop_front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
-pop_front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
+.global pop_front__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
+pop_front__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv:
 /* 80133BA8 001309A8  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80133BAC 001309AC  3C 80 3E 10 */	lis r4, 0x3E0F83E1@ha
 /* 80133BB0 001309B0  38 04 83 E1 */	addi r0, r4, 0x3E0F83E1@l
@@ -3913,57 +3913,57 @@ pop_front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
 /* 80133BCC 001309CC  4E 80 00 20 */	blr 
 
 /* front__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>Fv */
-.global front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
-front__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
+.global front__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
+front__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv:
 /* 80133BD0 001309D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133BD4 001309D4  7C 08 02 A6 */	mflr r0
 /* 80133BD8 001309D8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80133BDC 001309DC  48 00 00 25 */	bl begin__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv
+/* 80133BDC 001309DC  48 00 00 25 */	bl begin__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv
 /* 80133BE0 001309E0  90 61 00 08 */	stw r3, 8(r1)
 /* 80133BE4 001309E4  38 61 00 08 */	addi r3, r1, 8
 /* 80133BE8 001309E8  90 81 00 0C */	stw r4, 0xc(r1)
-/* 80133BEC 001309EC  4B FF FE 89 */	bl __ml__Q256fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_8iteratorCFv
+/* 80133BEC 001309EC  4B FF FE 89 */	bl __ml__Q256fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$18iteratorCFv
 /* 80133BF0 001309F0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80133BF4 001309F4  7C 08 03 A6 */	mtlr r0
 /* 80133BF8 001309F8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133BFC 001309FC  4E 80 00 20 */	blr 
 
 /* begin__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>CFv */
-.global begin__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv
-begin__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFv:
+.global begin__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv
+begin__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFv:
 /* 80133C00 00130A00  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133C04 00130A04  7C 08 02 A6 */	mflr r0
 /* 80133C08 00130A08  80 83 00 00 */	lwz r4, 0(r3)
 /* 80133C0C 00130A0C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80133C10 00130A10  4B FF FF 39 */	bl create_iterator__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_CFUl
+/* 80133C10 00130A10  4B FF FF 39 */	bl create_iterator__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1CFUl
 /* 80133C14 00130A14  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80133C18 00130A18  7C 08 03 A6 */	mtlr r0
 /* 80133C1C 00130A1C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133C20 00130A20  4E 80 00 20 */	blr 
 
 /* reset__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>Fv */
-.global reset__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
-reset__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
+.global reset__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
+reset__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv:
 /* 80133C24 00130A24  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133C28 00130A28  7C 08 02 A6 */	mflr r0
 /* 80133C2C 00130A2C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80133C30 00130A30  48 00 00 15 */	bl clear__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
+/* 80133C30 00130A30  48 00 00 15 */	bl clear__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
 /* 80133C34 00130A34  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80133C38 00130A38  7C 08 03 A6 */	mtlr r0
 /* 80133C3C 00130A3C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133C40 00130A40  4E 80 00 20 */	blr 
 
 /* clear__56fixed_queue<Q222@unnamed@zTalkBox_cpp@12trigger_pair,32>Fv */
-.global clear__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv
-clear__56fixed_queue_Q222_unnamed_zTalkBox_cpp_12trigger_pair_32_Fv:
+.global clear__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv
+clear__56fixed_queue$$0Q222$$2unnamed$$2zTalkBox_cpp$$212trigger_pair$$432$$1Fv:
 /* 80133C44 00130A44  38 00 00 00 */	li r0, 0
 /* 80133C48 00130A48  90 03 00 04 */	stw r0, 4(r3)
 /* 80133C4C 00130A4C  90 03 00 00 */	stw r0, 0(r3)
 /* 80133C50 00130A50  4E 80 00 20 */	blr 
 
 /* pop__14sound_queue<4>Fv */
-.global pop__14sound_queue_4_Fv
-pop__14sound_queue_4_Fv:
+.global pop__14sound_queue$$04$$1Fv
+pop__14sound_queue$$04$$1Fv:
 /* 80133C54 00130A54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133C58 00130A58  7C 08 02 A6 */	mflr r0
 /* 80133C5C 00130A5C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3991,8 +3991,8 @@ pop__14sound_queue_4_Fv:
 /* 80133CB4 00130AB4  4E 80 00 20 */	blr 
 
 /* size__14sound_queue<4>CFv */
-.global size__14sound_queue_4_CFv
-size__14sound_queue_4_CFv:
+.global size__14sound_queue$$04$$1CFv
+size__14sound_queue$$04$$1CFv:
 /* 80133CB8 00130AB8  80 A3 00 18 */	lwz r5, 0x18(r3)
 /* 80133CBC 00130ABC  80 83 00 14 */	lwz r4, 0x14(r3)
 /* 80133CC0 00130AC0  7C 05 20 00 */	cmpw r5, r4
@@ -4003,8 +4003,8 @@ size__14sound_queue_4_CFv:
 /* 80133CD4 00130AD4  4E 80 00 20 */	blr 
 
 /* clear__14sound_queue<4>Fv */
-.global clear__14sound_queue_4_Fv
-clear__14sound_queue_4_Fv:
+.global clear__14sound_queue$$04$$1Fv
+clear__14sound_queue$$04$$1Fv:
 /* 80133CD8 00130AD8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133CDC 00130ADC  7C 08 02 A6 */	mflr r0
 /* 80133CE0 00130AE0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4013,10 +4013,10 @@ clear__14sound_queue_4_Fv:
 /* 80133CEC 00130AEC  48 00 00 0C */	b lbl_80133CF8
 lbl_80133CF0:
 /* 80133CF0 00130AF0  7F E3 FB 78 */	mr r3, r31
-/* 80133CF4 00130AF4  4B FF FF 61 */	bl pop__14sound_queue_4_Fv
+/* 80133CF4 00130AF4  4B FF FF 61 */	bl pop__14sound_queue$$04$$1Fv
 lbl_80133CF8:
 /* 80133CF8 00130AF8  7F E3 FB 78 */	mr r3, r31
-/* 80133CFC 00130AFC  4B FF FF BD */	bl size__14sound_queue_4_CFv
+/* 80133CFC 00130AFC  4B FF FF BD */	bl size__14sound_queue$$04$$1CFv
 /* 80133D00 00130B00  2C 03 00 00 */	cmpwi r3, 0
 /* 80133D04 00130B04  41 81 FF EC */	bgt lbl_80133CF0
 /* 80133D08 00130B08  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -4026,8 +4026,8 @@ lbl_80133CF8:
 /* 80133D18 00130B18  4E 80 00 20 */	blr 
 
 /* playing__14sound_queue<4>CFib */
-.global playing__14sound_queue_4_CFib
-playing__14sound_queue_4_CFib:
+.global playing__14sound_queue$$04$$1CFib
+playing__14sound_queue$$04$$1CFib:
 /* 80133D1C 00130B1C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80133D20 00130B20  7C 08 02 A6 */	mflr r0
 /* 80133D24 00130B24  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4037,7 +4037,7 @@ playing__14sound_queue_4_CFib:
 /* 80133D34 00130B34  7C 9E 23 78 */	mr r30, r4
 /* 80133D38 00130B38  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 80133D3C 00130B3C  7C 7D 1B 78 */	mr r29, r3
-/* 80133D40 00130B40  4B FF FF 79 */	bl size__14sound_queue_4_CFv
+/* 80133D40 00130B40  4B FF FF 79 */	bl size__14sound_queue$$04$$1CFv
 /* 80133D44 00130B44  2C 1E 00 00 */	cmpwi r30, 0
 /* 80133D48 00130B48  41 80 00 0C */	blt lbl_80133D54
 /* 80133D4C 00130B4C  7C 1E 18 00 */	cmpw r30, r3
@@ -4052,7 +4052,7 @@ lbl_80133D58:
 lbl_80133D68:
 /* 80133D68 00130B68  7F A3 EB 78 */	mr r3, r29
 /* 80133D6C 00130B6C  7F E4 FB 78 */	mr r4, r31
-/* 80133D70 00130B70  48 00 00 81 */	bl recent__14sound_queue_4_CFi
+/* 80133D70 00130B70  48 00 00 81 */	bl recent__14sound_queue$$04$$1CFi
 /* 80133D74 00130B74  4B F4 EF B9 */	bl xSndIsPlayingByHandle__FUi
 /* 80133D78 00130B78  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80133D7C 00130B7C  40 82 00 0C */	bne lbl_80133D88
@@ -4071,7 +4071,7 @@ lbl_80133D9C:
 lbl_80133DA4:
 /* 80133DA4 00130BA4  7F A3 EB 78 */	mr r3, r29
 /* 80133DA8 00130BA8  7F E4 FB 78 */	mr r4, r31
-/* 80133DAC 00130BAC  48 00 00 45 */	bl recent__14sound_queue_4_CFi
+/* 80133DAC 00130BAC  48 00 00 45 */	bl recent__14sound_queue$$04$$1CFi
 /* 80133DB0 00130BB0  4B F4 EF 7D */	bl xSndIsPlayingByHandle__FUi
 /* 80133DB4 00130BB4  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80133DB8 00130BB8  41 82 00 0C */	beq lbl_80133DC4
@@ -4093,8 +4093,8 @@ lbl_80133DD4:
 /* 80133DEC 00130BEC  4E 80 00 20 */	blr 
 
 /* recent__14sound_queue<4>CFi */
-.global recent__14sound_queue_4_CFi
-recent__14sound_queue_4_CFi:
+.global recent__14sound_queue$$04$$1CFi
+recent__14sound_queue$$04$$1CFi:
 /* 80133DF0 00130BF0  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 80133DF4 00130BF4  7C 84 00 50 */	subf r4, r4, r0
 /* 80133DF8 00130BF8  34 84 FF FF */	addic. r4, r4, -1

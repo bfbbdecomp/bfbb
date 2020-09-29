@@ -4274,7 +4274,7 @@ update_aim_gun__13zNPCBPlanktonFf:
 /* 8016C910 00169710  EC 21 00 28 */	fsubs f1, f1, f0
 /* 8016C914 00169714  C0 43 00 AC */	lfs f2, 0xac(r3)
 /* 8016C918 00169718  C0 63 00 B0 */	lfs f3, 0xb0(r3)
-/* 8016C91C 0016971C  4B EA 20 1D */	bl range_limit_f___Ffff
+/* 8016C91C 0016971C  4B EA 20 1D */	bl range_limit$$0f$$1__Ffff
 /* 8016C920 00169720  3C 80 80 27 */	lis r4, lbl_80271440@ha
 /* 8016C924 00169724  38 7F 02 CC */	addi r3, r31, 0x2cc
 /* 8016C928 00169728  38 E4 14 40 */	addi r7, r4, lbl_80271440@l
@@ -8278,7 +8278,7 @@ visible__17xLaserBoltEmitterCFv:
 /* 80170268 0016D068  7C 08 02 A6 */	mflr r0
 /* 8017026C 0016D06C  38 63 00 3C */	addi r3, r3, 0x3c
 /* 80170270 0016D070  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80170274 0016D074  48 00 00 21 */	bl empty__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 80170274 0016D074  48 00 00 21 */	bl empty__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 80170278 0016D078  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 8017027C 0016D07C  7C 00 00 34 */	cntlzw r0, r0
 /* 80170280 0016D080  54 03 D9 7E */	srwi r3, r0, 5
@@ -8288,12 +8288,12 @@ visible__17xLaserBoltEmitterCFv:
 /* 80170290 0016D090  4E 80 00 20 */	blr 
 
 /* empty__40static_queue<Q217xLaserBoltEmitter4bolt>CFv */
-.global empty__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
-empty__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
+.global empty__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
+empty__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv:
 /* 80170294 0016D094  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80170298 0016D098  7C 08 02 A6 */	mflr r0
 /* 8017029C 0016D09C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801702A0 0016D0A0  48 00 00 1D */	bl size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 801702A0 0016D0A0  48 00 00 1D */	bl size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 801702A4 0016D0A4  7C 60 00 34 */	cntlzw r0, r3
 /* 801702A8 0016D0A8  54 03 D9 7E */	srwi r3, r0, 5
 /* 801702AC 0016D0AC  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -8302,8 +8302,8 @@ empty__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
 /* 801702B8 0016D0B8  4E 80 00 20 */	blr 
 
 /* size__40static_queue<Q217xLaserBoltEmitter4bolt>CFv */
-.global size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
-size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
+.global size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
+size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv:
 /* 801702BC 0016D0BC  80 63 00 04 */	lwz r3, 4(r3)
 /* 801702C0 0016D0C0  4E 80 00 20 */	blr 
 

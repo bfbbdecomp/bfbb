@@ -717,11 +717,11 @@ lbl_800BCE60:
 /* 800BCF4C 000B9D4C  FC 60 F0 90 */	fmr f3, f30
 /* 800BCF50 000B9D50  7F E3 FB 78 */	mr r3, r31
 /* 800BCF54 000B9D54  FC 80 F8 90 */	fmr f4, f31
-/* 800BCF58 000B9D58  4B F6 91 01 */	bl assign__13basic_rect_f_Fffff
+/* 800BCF58 000B9D58  4B F6 91 01 */	bl assign__13basic_rect$$0f$$1Fffff
 /* 800BCF5C 000B9D5C  3B 81 00 54 */	addi r28, r1, 0x54
 /* 800BCF60 000B9D60  7F E4 FB 78 */	mr r4, r31
 /* 800BCF64 000B9D64  7F 83 E3 78 */	mr r3, r28
-/* 800BCF68 000B9D68  4B F5 B0 D9 */	bl __as__13basic_rect_f_FRC13basic_rect_f_
+/* 800BCF68 000B9D68  4B F5 B0 D9 */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
 /* 800BCF6C 000B9D6C  A0 7E 00 92 */	lhz r3, 0x92(r30)
 /* 800BCF70 000B9D70  3C 00 43 30 */	lis r0, 0x4330
 /* 800BCF74 000B9D74  90 01 00 C0 */	stw r0, 0xc0(r1)
@@ -761,7 +761,7 @@ lbl_800BCE60:
 /* 800BCFFC 000B9DFC  7F 83 E3 78 */	mr r3, r28
 /* 800BD000 000B9E00  FC 60 F0 90 */	fmr f3, f30
 /* 800BD004 000B9E04  FC 80 E8 90 */	fmr f4, f29
-/* 800BD008 000B9E08  4B F5 AF CD */	bl contract__13basic_rect_f_Fffff
+/* 800BD008 000B9E08  4B F5 AF CD */	bl contract__13basic_rect$$0f$$1Fffff
 /* 800BD00C 000B9E0C  38 60 00 00 */	li r3, 0
 /* 800BD010 000B9E10  90 61 00 64 */	stw r3, 0x64(r1)
 /* 800BD014 000B9E14  A0 9D 00 E8 */	lhz r4, 0xe8(r29)

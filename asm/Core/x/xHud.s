@@ -804,7 +804,7 @@ lbl_8002E3F8:
 /* 8002E400 0002B200  88 7F 00 00 */	lbz r3, 0(r31)
 /* 8002E404 0002B204  98 01 00 08 */	stb r0, 8(r1)
 /* 8002E408 0002B208  80 9F 00 04 */	lwz r4, 4(r31)
-/* 8002E40C 0002B20C  48 00 08 DD */	bl for_each_Q34xhud18_unnamed_xHud_cpp_15functor_disable___Q24xhud18_unnamed_xHud_cpp_FUcUiQ34xhud18_unnamed_xHud_cpp_15functor_disable
+/* 8002E40C 0002B20C  48 00 08 DD */	bl for_each$$0Q34xhud18$$2unnamed$$2xHud_cpp$$215functor_disable$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiQ34xhud18$$2unnamed$$2xHud_cpp$$215functor_disable
 /* 8002E410 0002B210  3B DE 00 01 */	addi r30, r30, 1
 /* 8002E414 0002B214  3B FF 00 08 */	addi r31, r31, 8
 /* 8002E418 0002B218  28 1E 00 04 */	cmplwi r30, 4
@@ -838,7 +838,7 @@ lbl_8002E46C:
 /* 8002E46C 0002B26C  88 7E 00 00 */	lbz r3, 0(r30)
 /* 8002E470 0002B270  7F E5 FB 78 */	mr r5, r31
 /* 8002E474 0002B274  80 9E 00 04 */	lwz r4, 4(r30)
-/* 8002E478 0002B278  48 00 07 E9 */	bl for_each_PFRQ24xhud6widget_v___Q24xhud18_unnamed_xHud_cpp_FUcUiPFRQ24xhud6widget_v
+/* 8002E478 0002B278  48 00 07 E9 */	bl for_each$$0PFRQ24xhud6widget_v$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiPFRQ24xhud6widget_v
 /* 8002E47C 0002B27C  3B BD 00 01 */	addi r29, r29, 1
 /* 8002E480 0002B280  3B DE 00 08 */	addi r30, r30, 8
 /* 8002E484 0002B284  28 1D 00 04 */	cmplwi r29, 4
@@ -869,7 +869,7 @@ lbl_8002E4D0:
 /* 8002E4D8 0002B2D8  88 7F 00 00 */	lbz r3, 0(r31)
 /* 8002E4DC 0002B2DC  90 01 00 08 */	stw r0, 8(r1)
 /* 8002E4E0 0002B2E0  80 9F 00 04 */	lwz r4, 4(r31)
-/* 8002E4E4 0002B2E4  48 00 06 F9 */	bl for_each_Q34xhud18_unnamed_xHud_cpp_14functor_update___Q24xhud18_unnamed_xHud_cpp_FUcUiQ34xhud18_unnamed_xHud_cpp_14functor_update
+/* 8002E4E4 0002B2E4  48 00 06 F9 */	bl for_each$$0Q34xhud18$$2unnamed$$2xHud_cpp$$214functor_update$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiQ34xhud18$$2unnamed$$2xHud_cpp$$214functor_update
 /* 8002E4E8 0002B2E8  3B DE 00 01 */	addi r30, r30, 1
 /* 8002E4EC 0002B2EC  3B FF 00 08 */	addi r31, r31, 8
 /* 8002E4F0 0002B2F0  28 1E 00 04 */	cmplwi r30, 4
@@ -904,7 +904,7 @@ lbl_8002E548:
 /* 8002E548 0002B348  88 7E 00 00 */	lbz r3, 0(r30)
 /* 8002E54C 0002B34C  7F E5 FB 78 */	mr r5, r31
 /* 8002E550 0002B350  80 9E 00 04 */	lwz r4, 4(r30)
-/* 8002E554 0002B354  48 00 07 0D */	bl for_each_PFRQ24xhud6widget_v___Q24xhud18_unnamed_xHud_cpp_FUcUiPFRQ24xhud6widget_v
+/* 8002E554 0002B354  48 00 07 0D */	bl for_each$$0PFRQ24xhud6widget_v$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiPFRQ24xhud6widget_v
 /* 8002E558 0002B358  3B BD 00 01 */	addi r29, r29, 1
 /* 8002E55C 0002B35C  3B DE 00 08 */	addi r30, r30, 8
 /* 8002E560 0002B360  28 1D 00 04 */	cmplwi r29, 4
@@ -1378,8 +1378,8 @@ lbl_8002EBCC:
 /* 8002EBD8 0002B9D8  4E 80 00 20 */	blr 
 
 /* for_each<Q34xhud18@unnamed@xHud_cpp@14functor_update>__Q24xhud18@unnamed@xHud_cpp@FUcUiQ34xhud18@unnamed@xHud_cpp@14functor_update */
-.global for_each_Q34xhud18_unnamed_xHud_cpp_14functor_update___Q24xhud18_unnamed_xHud_cpp_FUcUiQ34xhud18_unnamed_xHud_cpp_14functor_update
-for_each_Q34xhud18_unnamed_xHud_cpp_14functor_update___Q24xhud18_unnamed_xHud_cpp_FUcUiQ34xhud18_unnamed_xHud_cpp_14functor_update:
+.global for_each$$0Q34xhud18$$2unnamed$$2xHud_cpp$$214functor_update$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiQ34xhud18$$2unnamed$$2xHud_cpp$$214functor_update
+for_each$$0Q34xhud18$$2unnamed$$2xHud_cpp$$214functor_update$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiQ34xhud18$$2unnamed$$2xHud_cpp$$214functor_update:
 /* 8002EBDC 0002B9DC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002EBE0 0002B9E0  7C 08 02 A6 */	mflr r0
 /* 8002EBE4 0002B9E4  3C C0 80 3C */	lis r6, globals@ha
@@ -1417,8 +1417,8 @@ lbl_8002EC38:
 /* 8002EC5C 0002BA5C  4E 80 00 20 */	blr 
 
 /* for_each<PFRQ24xhud6widget_v>__Q24xhud18@unnamed@xHud_cpp@FUcUiPFRQ24xhud6widget_v */
-.global for_each_PFRQ24xhud6widget_v___Q24xhud18_unnamed_xHud_cpp_FUcUiPFRQ24xhud6widget_v
-for_each_PFRQ24xhud6widget_v___Q24xhud18_unnamed_xHud_cpp_FUcUiPFRQ24xhud6widget_v:
+.global for_each$$0PFRQ24xhud6widget_v$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiPFRQ24xhud6widget_v
+for_each$$0PFRQ24xhud6widget_v$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiPFRQ24xhud6widget_v:
 /* 8002EC60 0002BA60  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002EC64 0002BA64  7C 08 02 A6 */	mflr r0
 /* 8002EC68 0002BA68  3C C0 80 3C */	lis r6, globals@ha
@@ -1457,8 +1457,8 @@ lbl_8002ECC0:
 /* 8002ECE4 0002BAE4  4E 80 00 20 */	blr 
 
 /* for_each<Q34xhud18@unnamed@xHud_cpp@15functor_disable>__Q24xhud18@unnamed@xHud_cpp@FUcUiQ34xhud18@unnamed@xHud_cpp@15functor_disable */
-.global for_each_Q34xhud18_unnamed_xHud_cpp_15functor_disable___Q24xhud18_unnamed_xHud_cpp_FUcUiQ34xhud18_unnamed_xHud_cpp_15functor_disable
-for_each_Q34xhud18_unnamed_xHud_cpp_15functor_disable___Q24xhud18_unnamed_xHud_cpp_FUcUiQ34xhud18_unnamed_xHud_cpp_15functor_disable:
+.global for_each$$0Q34xhud18$$2unnamed$$2xHud_cpp$$215functor_disable$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiQ34xhud18$$2unnamed$$2xHud_cpp$$215functor_disable
+for_each$$0Q34xhud18$$2unnamed$$2xHud_cpp$$215functor_disable$$1__Q24xhud18$$2unnamed$$2xHud_cpp$$2FUcUiQ34xhud18$$2unnamed$$2xHud_cpp$$215functor_disable:
 /* 8002ECE8 0002BAE8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002ECEC 0002BAEC  7C 08 02 A6 */	mflr r0
 /* 8002ECF0 0002BAF0  3C C0 80 3C */	lis r6, globals@ha

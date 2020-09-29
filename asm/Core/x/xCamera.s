@@ -3202,7 +3202,7 @@ lbl_8000DFE0:
 /* 8000E0AC 0000AEAC  C0 42 80 54 */	lfs f2, lbl_803CC9D4-_SDA2_BASE_(r2)
 /* 8000E0B0 0000AEB0  C0 62 80 60 */	lfs f3, lbl_803CC9E0-_SDA2_BASE_(r2)
 /* 8000E0B4 0000AEB4  EC 24 00 7A */	fmadds f1, f4, f1, f0
-/* 8000E0B8 0000AEB8  48 00 08 81 */	bl range_limit_f___Ffff
+/* 8000E0B8 0000AEB8  48 00 08 81 */	bl range_limit$$0f$$1__Ffff
 /* 8000E0BC 0000AEBC  EC 1E E8 28 */	fsubs f0, f30, f29
 /* 8000E0C0 0000AEC0  C0 42 80 58 */	lfs f2, lbl_803CC9D8-_SDA2_BASE_(r2)
 /* 8000E0C4 0000AEC4  FC 00 02 10 */	fabs f0, f0
@@ -3838,8 +3838,8 @@ lbl_8000E920:
 /* 8000E934 0000B734  4E 80 00 20 */	blr 
 
 /* range_limit<f>__Ffff */
-.global range_limit_f___Ffff
-range_limit_f___Ffff:
+.global range_limit$$0f$$1__Ffff
+range_limit$$0f$$1__Ffff:
 /* 8000E938 0000B738  FC 01 10 40 */	fcmpo cr0, f1, f2
 /* 8000E93C 0000B73C  4C 40 13 82 */	cror 2, 0, 2
 /* 8000E940 0000B740  40 82 00 0C */	bne lbl_8000E94C

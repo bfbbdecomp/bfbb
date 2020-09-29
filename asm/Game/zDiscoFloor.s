@@ -1667,14 +1667,14 @@ set_state_range__13z_disco_floorFiib:
 /* 8013C620 00139420  80 A4 00 28 */	lwz r5, 0x28(r4)
 /* 8013C624 00139424  38 80 00 00 */	li r4, 0
 /* 8013C628 00139428  38 A5 FF FF */	addi r5, r5, -1
-/* 8013C62C 0013942C  48 00 0A 09 */	bl range_limit_i___Fiii
+/* 8013C62C 0013942C  48 00 0A 09 */	bl range_limit$$0i$$1__Fiii
 /* 8013C630 00139430  80 9F 00 14 */	lwz r4, 0x14(r31)
 /* 8013C634 00139434  7C 7E 1B 78 */	mr r30, r3
 /* 8013C638 00139438  7F 83 E3 78 */	mr r3, r28
 /* 8013C63C 0013943C  80 A4 00 28 */	lwz r5, 0x28(r4)
 /* 8013C640 00139440  7F 64 DB 78 */	mr r4, r27
 /* 8013C644 00139444  38 A5 FF FF */	addi r5, r5, -1
-/* 8013C648 00139448  48 00 09 ED */	bl range_limit_i___Fiii
+/* 8013C648 00139448  48 00 09 ED */	bl range_limit$$0i$$1__Fiii
 /* 8013C64C 0013944C  80 1F 00 40 */	lwz r0, 0x40(r31)
 /* 8013C650 00139450  7C 65 1B 78 */	mr r5, r3
 /* 8013C654 00139454  7C 1E 00 40 */	cmplw r30, r0
@@ -1689,7 +1689,7 @@ lbl_8013C668:
 /* 8013C674 00139474  41 82 00 30 */	beq lbl_8013C6A4
 /* 8013C678 00139478  80 7F 00 48 */	lwz r3, 0x48(r31)
 /* 8013C67C 0013947C  7F C4 F3 78 */	mr r4, r30
-/* 8013C680 00139480  48 00 09 95 */	bl range_limit_Ul___FUlUlUl
+/* 8013C680 00139480  48 00 09 95 */	bl range_limit$$0Ul$$1__FUlUlUl
 /* 8013C684 00139484  80 1F 00 48 */	lwz r0, 0x48(r31)
 /* 8013C688 00139488  7C 64 1B 78 */	mr r4, r3
 /* 8013C68C 0013948C  7C 04 00 40 */	cmplw r4, r0
@@ -1701,7 +1701,7 @@ lbl_8013C668:
 lbl_8013C6A4:
 /* 8013C6A4 001394A4  80 7F 00 4C */	lwz r3, 0x4c(r31)
 /* 8013C6A8 001394A8  7F C4 F3 78 */	mr r4, r30
-/* 8013C6AC 001394AC  48 00 09 69 */	bl range_limit_Ul___FUlUlUl
+/* 8013C6AC 001394AC  48 00 09 69 */	bl range_limit$$0Ul$$1__FUlUlUl
 /* 8013C6B0 001394B0  80 1F 00 4C */	lwz r0, 0x4c(r31)
 /* 8013C6B4 001394B4  7C 64 1B 78 */	mr r4, r3
 /* 8013C6B8 001394B8  7C 04 00 40 */	cmplw r4, r0
@@ -2381,8 +2381,8 @@ lbl_8013CFFC:
 /* 8013D010 00139E10  4E 80 00 20 */	blr 
 
 /* range_limit<Ul>__FUlUlUl */
-.global range_limit_Ul___FUlUlUl
-range_limit_Ul___FUlUlUl:
+.global range_limit$$0Ul$$1__FUlUlUl
+range_limit$$0Ul$$1__FUlUlUl:
 /* 8013D014 00139E14  7C 03 20 40 */	cmplw r3, r4
 /* 8013D018 00139E18  41 81 00 0C */	bgt lbl_8013D024
 /* 8013D01C 00139E1C  7C 83 23 78 */	mr r3, r4
@@ -2394,8 +2394,8 @@ lbl_8013D024:
 /* 8013D030 00139E30  4E 80 00 20 */	blr 
 
 /* range_limit<i>__Fiii */
-.global range_limit_i___Fiii
-range_limit_i___Fiii:
+.global range_limit$$0i$$1__Fiii
+range_limit$$0i$$1__Fiii:
 /* 8013D034 00139E34  7C 03 20 00 */	cmpw r3, r4
 /* 8013D038 00139E38  41 81 00 0C */	bgt lbl_8013D044
 /* 8013D03C 00139E3C  7C 83 23 78 */	mr r3, r4

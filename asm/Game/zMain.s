@@ -3104,7 +3104,7 @@ lbl_800A55D0:
 /* 800A5618 000A2418  38 61 00 10 */	addi r3, r1, 0x10
 /* 800A561C 000A241C  38 A1 00 08 */	addi r5, r1, 8
 /* 800A5620 000A2420  38 80 00 01 */	li r4, 1
-/* 800A5624 000A2424  4B F7 28 D1 */	bl create__5xfontFUifff10iColor_tagRC13basic_rect_f_
+/* 800A5624 000A2424  4B F7 28 D1 */	bl create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1
 /* 800A5628 000A2428  C0 22 92 DC */	lfs f1, lbl_803CDC5C-_SDA2_BASE_(r2)
 /* 800A562C 000A242C  3C 60 80 26 */	lis r3, lbl_8025D218@ha
 /* 800A5630 000A2430  38 A3 D2 18 */	addi r5, r3, lbl_8025D218@l
@@ -3114,7 +3114,7 @@ lbl_800A55D0:
 /* 800A5640 000A2440  FC 60 08 90 */	fmr f3, f1
 /* 800A5644 000A2444  38 C0 00 02 */	li r6, 2
 /* 800A5648 000A2448  FC 80 08 90 */	fmr f4, f1
-/* 800A564C 000A244C  4B F7 27 99 */	bl create__8xtextboxFRC5xfontRC13basic_rect_f_Uiffff
+/* 800A564C 000A244C  4B F7 27 99 */	bl create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff
 /* 800A5650 000A2450  38 00 00 0D */	li r0, 0xd
 /* 800A5654 000A2454  38 A1 00 98 */	addi r5, r1, 0x98
 /* 800A5658 000A2458  38 81 00 30 */	addi r4, r1, 0x30
@@ -3131,10 +3131,10 @@ lbl_800A5660:
 /* 800A5680 000A2480  3C 80 80 26 */	lis r4, lbl_8025D218@ha
 /* 800A5684 000A2484  7F E3 FB 78 */	mr r3, r31
 /* 800A5688 000A2488  38 84 D2 18 */	addi r4, r4, lbl_8025D218@l
-/* 800A568C 000A248C  4B F7 29 B5 */	bl __as__13basic_rect_f_FRC13basic_rect_f_
+/* 800A568C 000A248C  4B F7 29 B5 */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
 /* 800A5690 000A2490  C0 22 93 14 */	lfs f1, lbl_803CDC94-_SDA2_BASE_(r2)
 /* 800A5694 000A2494  7F E3 FB 78 */	mr r3, r31
-/* 800A5698 000A2498  4B FA 85 61 */	bl contract__13basic_rect_f_Ff
+/* 800A5698 000A2498  4B FA 85 61 */	bl contract__13basic_rect$$0f$$1Ff
 /* 800A569C 000A249C  38 61 00 9C */	addi r3, r1, 0x9c
 /* 800A56A0 000A24A0  38 80 00 01 */	li r4, 1
 /* 800A56A4 000A24A4  4B FA 84 DD */	bl yextent__8xtextboxCFb
