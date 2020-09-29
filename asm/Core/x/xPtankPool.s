@@ -747,3 +747,7 @@ lbl_80180018:
 /* 8018002C 0017CE2C  7C 08 03 A6 */	mtlr r0
 /* 80180030 0017CE30  38 21 00 20 */	addi r1, r1, 0x20
 /* 80180034 0017CE34  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8029B830:
+	.incbin "baserom.dol", 0x298810, 0x38

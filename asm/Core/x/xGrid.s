@@ -1010,3 +1010,7 @@ lbl_80122BF0:
 /* 80122BF8 0011F9F8  7C 08 03 A6 */	mtlr r0
 /* 80122BFC 0011F9FC  38 21 00 50 */	addi r1, r1, 0x50
 /* 80122C00 0011FA00  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80298040:
+	.incbin "baserom.dol", 0x295020, 0x60

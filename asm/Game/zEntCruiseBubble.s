@@ -10791,3 +10791,65 @@ lbl_80255330:
 	.incbin "baserom.dol", 0x252310, 0xC
 lbl_8025533C:
 	.incbin "baserom.dol", 0x25231C, 0xA4C
+
+.section .data
+lbl_8028C200:
+	.incbin "baserom.dol", 0x2891E0, 0x10
+lbl_8028C210:
+	.incbin "baserom.dol", 0x2891F0, 0x94
+lbl_8028C2A4:
+	.incbin "baserom.dol", 0x289284, 0x18C
+lbl_8028C430:
+	.incbin "baserom.dol", 0x289410, 0xA0
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_halt
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_halt:
+	.incbin "baserom.dol", 0x2894B0, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_player_aim
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_player_aim:
+	.incbin "baserom.dol", 0x2894CC, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_fire
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_fire:
+	.incbin "baserom.dol", 0x2894E8, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_wait
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_wait:
+	.incbin "baserom.dol", 0x289504, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_missle_appear
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_missle_appear:
+	.incbin "baserom.dol", 0x289520, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_missle_fly
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_missle_fly:
+	.incbin "baserom.dol", 0x28953C, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_missle_explode
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_missle_explode:
+	.incbin "baserom.dol", 0x289558, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_camera_aim
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_camera_aim:
+	.incbin "baserom.dol", 0x289574, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$218state_camera_seize
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$218state_camera_seize:
+	.incbin "baserom.dol", 0x289590, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_attach
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_attach:
+	.incbin "baserom.dol", 0x2895AC, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_survey
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_survey:
+	.incbin "baserom.dol", 0x2895C8, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$210state_type
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$210state_type:
+	.incbin "baserom.dol", 0x2895E4, 0x1C
+/* SPECULATION: link order */
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_camera_restore
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_camera_restore:
+	.incbin "baserom.dol", 0x289600, 0x20

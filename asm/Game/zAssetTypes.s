@@ -1150,3 +1150,17 @@ xSndPlay3D__FUiffUiUiP4xEntf14sound_categoryf:
 /* 8004FBF0 0004C9F0  7C 08 03 A6 */	mtlr r0
 /* 8004FBF4 0004C9F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FBF8 0004C9F8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A808:
+	.incbin "baserom.dol", 0x2877E8, 0xC30
+lbl_8028B438:
+	.incbin "baserom.dol", 0x288418, 0x18
+lbl_8028B450:
+	.incbin "baserom.dol", 0x288430, 0x14
+/* SPECULATION: link order */
+.global animTable
+animTable:
+	.incbin "baserom.dol", 0x288444, 0x18C
+lbl_8028B5F0:
+	.incbin "baserom.dol", 0x2885D0, 0xC0

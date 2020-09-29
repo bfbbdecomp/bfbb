@@ -3198,3 +3198,11 @@ __as__Q29xEntDrive8tri_dataFRCQ29xEntDrive8tri_data:
 .section .rodata
 lbl_8025F590:
 	.incbin "baserom.dol", 0x25C570, 0x1B0
+
+.section .data
+lbl_80290F08:
+	.incbin "baserom.dol", 0x28DEE8, 0xC
+lbl_80290F14:
+	.incbin "baserom.dol", 0x28DEF4, 0x398
+lbl_802912AC:
+	.incbin "baserom.dol", 0x28E28C, 0x4C

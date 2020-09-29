@@ -579,3 +579,11 @@ lbl_8009E7E4:
 .section .rodata
 lbl_8025CD30:
 	.incbin "baserom.dol", 0x259D10, 0x20
+
+.section .data
+lbl_8028FB50:
+	.incbin "baserom.dol", 0x28CB30, 0x10
+/* SPECULATION: link order */
+.global lightning_type_names
+lightning_type_names:
+	.incbin "baserom.dol", 0x28CB40, 0x10

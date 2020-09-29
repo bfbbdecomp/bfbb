@@ -1139,3 +1139,11 @@ xFileReadAsyncStatus__FiPi:
 /* 8000A51C 0000731C  7C 08 03 A6 */	mtlr r0
 /* 8000A520 00007320  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000A524 00007324  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027A5C0:
+	.incbin "baserom.dol", 0x2775A0, 0x340
+lbl_8027A900:
+	.incbin "baserom.dol", 0x2778E0, 0x8A0
+lbl_8027B1A0:
+	.incbin "baserom.dol", 0x278180, 0x1E0

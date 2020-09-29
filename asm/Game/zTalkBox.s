@@ -4132,3 +4132,27 @@ lbl_8026C8D0:
 	.incbin "baserom.dol", 0x2698B0, 0x50
 lbl_8026C920:
 	.incbin "baserom.dol", 0x269900, 0x118
+
+.section .data
+lbl_80298E68:
+	.incbin "baserom.dol", 0x295E48, 0xB4
+/* SPECULATION: link order */
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_type:
+	.incbin "baserom.dol", 0x295EFC, 0x14
+/* SPECULATION: link order */
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_type:
+	.incbin "baserom.dol", 0x295F10, 0x14
+/* SPECULATION: link order */
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_type:
+	.incbin "baserom.dol", 0x295F24, 0x14
+/* SPECULATION: link order */
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type:
+	.incbin "baserom.dol", 0x295F38, 0x14
+/* SPECULATION: link order */
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type:
+	.incbin "baserom.dol", 0x295F4C, 0x14

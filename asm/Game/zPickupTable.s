@@ -63,3 +63,11 @@ lbl_800A8E9C:
 /* 800A8EBC 000A5CBC  7C 08 03 A6 */	mtlr r0
 /* 800A8EC0 000A5CC0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A8EC4 000A5CC4  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028FF40:
+	.incbin "baserom.dol", 0x28CF20, 0xC0
+/* SPECULATION: link order */
+.global lbl_80290000
+lbl_80290000:
+	.incbin "baserom.dol", 0x28CFE0, 0x30

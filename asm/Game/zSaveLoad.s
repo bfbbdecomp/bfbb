@@ -4166,3 +4166,27 @@ lbl_8025E9A0:
 	.incbin "baserom.dol", 0x25B980, 0x20
 lbl_8025E9C0:
 	.incbin "baserom.dol", 0x25B9A0, 0x5A0
+
+.section .data
+lbl_802900E0:
+	.incbin "baserom.dol", 0x28D0C0, 0x20
+lbl_80290100:
+	.incbin "baserom.dol", 0x28D0E0, 0x20
+/* SPECULATION: link order */
+.global zSaveLoadUITable
+zSaveLoadUITable:
+	.incbin "baserom.dol", 0x28D100, 0x2E8
+/* SPECULATION: link order */
+.global thumbIconMap
+thumbIconMap:
+	.incbin "baserom.dol", 0x28D3E8, 0x3C
+lbl_80290444:
+	.incbin "baserom.dol", 0x28D424, 0x34
+lbl_80290478:
+	.incbin "baserom.dol", 0x28D458, 0x2C
+lbl_802904A4:
+	.incbin "baserom.dol", 0x28D484, 0x28
+lbl_802904CC:
+	.incbin "baserom.dol", 0x28D4AC, 0x2C
+lbl_802904F8:
+	.incbin "baserom.dol", 0x28D4D8, 0x30

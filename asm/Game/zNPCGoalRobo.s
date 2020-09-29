@@ -21832,3 +21832,293 @@ lbl_802673A8:
 	.incbin "baserom.dol", 0x264388, 0xC
 lbl_802673B4:
 	.incbin "baserom.dol", 0x264394, 0x151C
+
+.section .data
+lbl_80292EB8:
+	.incbin "baserom.dol", 0x28FE98, 0x1E0
+lbl_80293098:
+	.incbin "baserom.dol", 0x290078, 0x50
+lbl_802930E8:
+	.incbin "baserom.dol", 0x2900C8, 0xF0
+lbl_802931D8:
+	.incbin "baserom.dol", 0x2901B8, 0x18
+lbl_802931F0:
+	.incbin "baserom.dol", 0x2901D0, 0x1C
+lbl_8029320C:
+	.incbin "baserom.dol", 0x2901EC, 0x10
+lbl_8029321C:
+	.incbin "baserom.dol", 0x2901FC, 0xC
+lbl_80293228:
+	.incbin "baserom.dol", 0x290208, 0xC
+lbl_80293234:
+	.incbin "baserom.dol", 0x290214, 0xC
+lbl_80293240:
+	.incbin "baserom.dol", 0x290220, 0x34
+lbl_80293274:
+	.incbin "baserom.dol", 0x290254, 0x88
+lbl_802932FC:
+	.incbin "baserom.dol", 0x2902DC, 0x3C
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalDeflate
+__vt__15zNPCGoalDeflate:
+	.incbin "baserom.dol", 0x290318, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalTubeDying
+__vt__17zNPCGoalTubeDying:
+	.incbin "baserom.dol", 0x29034C, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalTubeDead
+__vt__16zNPCGoalTubeDead:
+	.incbin "baserom.dol", 0x290380, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalTubeBonked
+__vt__18zNPCGoalTubeBonked:
+	.incbin "baserom.dol", 0x2903B4, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalTubeBirth
+__vt__17zNPCGoalTubeBirth:
+	.incbin "baserom.dol", 0x2903E8, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalTubeLasso
+__vt__17zNPCGoalTubeLasso:
+	.incbin "baserom.dol", 0x29041C, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalTubeAttack
+__vt__18zNPCGoalTubeAttack:
+	.incbin "baserom.dol", 0x290450, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalTubeDuckling
+__vt__20zNPCGoalTubeDuckling:
+	.incbin "baserom.dol", 0x290484, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalTubePal
+__vt__15zNPCGoalTubePal:
+	.incbin "baserom.dol", 0x2904B8, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalRespawn
+__vt__15zNPCGoalRespawn:
+	.incbin "baserom.dol", 0x2904EC, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalAfterlife
+__vt__17zNPCGoalAfterlife:
+	.incbin "baserom.dol", 0x290520, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalKnock
+__vt__13zNPCGoalKnock:
+	.incbin "baserom.dol", 0x290554, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalWound
+__vt__13zNPCGoalWound:
+	.incbin "baserom.dol", 0x290588, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalBashed
+__vt__14zNPCGoalBashed:
+	.incbin "baserom.dol", 0x2905BC, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalDamage
+__vt__14zNPCGoalDamage:
+	.incbin "baserom.dol", 0x2905F0, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalLassoThrow
+__vt__18zNPCGoalLassoThrow:
+	.incbin "baserom.dol", 0x290624, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalLassoGrab
+__vt__17zNPCGoalLassoGrab:
+	.incbin "baserom.dol", 0x290658, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalLassoBase
+__vt__17zNPCGoalLassoBase:
+	.incbin "baserom.dol", 0x29068C, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalPatThrow
+__vt__16zNPCGoalPatThrow:
+	.incbin "baserom.dol", 0x2906C0, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalPatCarry
+__vt__16zNPCGoalPatCarry:
+	.incbin "baserom.dol", 0x2906F4, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalStunned
+__vt__15zNPCGoalStunned:
+	.incbin "baserom.dol", 0x290728, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalEvilPat
+__vt__15zNPCGoalEvilPat:
+	.incbin "baserom.dol", 0x29075C, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalHokeyPokey
+__vt__18zNPCGoalHokeyPokey:
+	.incbin "baserom.dol", 0x290790, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalTeleport
+__vt__16zNPCGoalTeleport:
+	.incbin "baserom.dol", 0x2907C4, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalDogPounce
+__vt__17zNPCGoalDogPounce:
+	.incbin "baserom.dol", 0x2907F8, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalDogDash
+__vt__15zNPCGoalDogDash:
+	.incbin "baserom.dol", 0x29082C, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalDogBark
+__vt__15zNPCGoalDogBark:
+	.incbin "baserom.dol", 0x290860, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalDogLaunch
+__vt__17zNPCGoalDogLaunch:
+	.incbin "baserom.dol", 0x290894, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalAttackSlick
+__vt__19zNPCGoalAttackSlick:
+	.incbin "baserom.dol", 0x2908C8, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalAttackChuck
+__vt__19zNPCGoalAttackChuck:
+	.incbin "baserom.dol", 0x2908FC, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalAttackArf
+__vt__17zNPCGoalAttackArf:
+	.incbin "baserom.dol", 0x290930, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalAttackArfMelee
+__vt__22zNPCGoalAttackArfMelee:
+	.incbin "baserom.dol", 0x290964, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalAttackMonsoon
+__vt__21zNPCGoalAttackMonsoon:
+	.incbin "baserom.dol", 0x290998, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAttackTarTar
+__vt__20zNPCGoalAttackTarTar:
+	.incbin "baserom.dol", 0x2909CC, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAttackHammer
+__vt__20zNPCGoalAttackHammer:
+	.incbin "baserom.dol", 0x290A00, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalAttackChomper
+__vt__21zNPCGoalAttackChomper:
+	.incbin "baserom.dol", 0x290A34, 0x34
+/* SPECULATION: link order */
+.global __vt__Q220zNPCGoalAttackFodder12CattleNotify
+__vt__Q220zNPCGoalAttackFodder12CattleNotify:
+	.incbin "baserom.dol", 0x290A68, 0xC
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAttackFodder
+__vt__20zNPCGoalAttackFodder:
+	.incbin "baserom.dol", 0x290A74, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalAttackCQC
+__vt__17zNPCGoalAttackCQC:
+	.incbin "baserom.dol", 0x290AA8, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalChase
+__vt__13zNPCGoalChase:
+	.incbin "baserom.dol", 0x290ADC, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalAlertSlick
+__vt__18zNPCGoalAlertSlick:
+	.incbin "baserom.dol", 0x290B10, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAlertTubelet
+__vt__20zNPCGoalAlertTubelet:
+	.incbin "baserom.dol", 0x290B44, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalAlertChuck
+__vt__18zNPCGoalAlertChuck:
+	.incbin "baserom.dol", 0x290B78, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalAlertPuppy
+__vt__18zNPCGoalAlertPuppy:
+	.incbin "baserom.dol", 0x290BAC, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalAlertArf
+__vt__16zNPCGoalAlertArf:
+	.incbin "baserom.dol", 0x290BE0, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalAlertSleepy
+__vt__19zNPCGoalAlertSleepy:
+	.incbin "baserom.dol", 0x290C14, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAlertMonsoon
+__vt__20zNPCGoalAlertMonsoon:
+	.incbin "baserom.dol", 0x290C48, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalAlertGlove
+__vt__18zNPCGoalAlertGlove:
+	.incbin "baserom.dol", 0x290C7C, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalAlertTarTar
+__vt__19zNPCGoalAlertTarTar:
+	.incbin "baserom.dol", 0x290CB0, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalAlertHammer
+__vt__19zNPCGoalAlertHammer:
+	.incbin "baserom.dol", 0x290CE4, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAlertChomper
+__vt__20zNPCGoalAlertChomper:
+	.incbin "baserom.dol", 0x290D18, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAlertFodBzzt
+__vt__20zNPCGoalAlertFodBzzt:
+	.incbin "baserom.dol", 0x290D4C, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalAlertFodBomb
+__vt__20zNPCGoalAlertFodBomb:
+	.incbin "baserom.dol", 0x290D80, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalAlertFodder
+__vt__19zNPCGoalAlertFodder:
+	.incbin "baserom.dol", 0x290DB4, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalAlert
+__vt__13zNPCGoalAlert:
+	.incbin "baserom.dol", 0x290DE8, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalGoHome
+__vt__14zNPCGoalGoHome:
+	.incbin "baserom.dol", 0x290E1C, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalEvade
+__vt__13zNPCGoalEvade:
+	.incbin "baserom.dol", 0x290E50, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalTaunt
+__vt__13zNPCGoalTaunt:
+	.incbin "baserom.dol", 0x290E84, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalNotice
+__vt__14zNPCGoalNotice:
+	.incbin "baserom.dol", 0x290EB8, 0x34
+/* SPECULATION: link order */
+.global __vt__9HAZNotify
+__vt__9HAZNotify:
+	.incbin "baserom.dol", 0x290EEC, 0xC
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalTikiDead
+__vt__16zNPCGoalTikiDead:
+	.incbin "baserom.dol", 0x290EF8, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalTikiDying
+__vt__17zNPCGoalTikiDying:
+	.incbin "baserom.dol", 0x290F2C, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalTikiCount
+__vt__17zNPCGoalTikiCount:
+	.incbin "baserom.dol", 0x290F60, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalTikiHide
+__vt__16zNPCGoalTikiHide:
+	.incbin "baserom.dol", 0x290F94, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalTikiPatrol
+__vt__18zNPCGoalTikiPatrol:
+	.incbin "baserom.dol", 0x290FC8, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalTikiIdle
+__vt__16zNPCGoalTikiIdle:
+	.incbin "baserom.dol", 0x290FFC, 0x34

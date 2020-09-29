@@ -10058,3 +10058,59 @@ lbl_8026D138:
 	.incbin "baserom.dol", 0x26A118, 0x64
 lbl_8026D19C:
 	.incbin "baserom.dol", 0x26A17C, 0x684
+
+.section .data
+lbl_802998C8:
+	.incbin "baserom.dol", 0x2968A8, 0x88
+lbl_80299950:
+	.incbin "baserom.dol", 0x296930, 0x114
+lbl_80299A64:
+	.incbin "baserom.dol", 0x296A44, 0x2C
+/* SPECULATION: link order */
+.global __vt__28zNPCGoalBossSandyClothesline
+__vt__28zNPCGoalBossSandyClothesline:
+	.incbin "baserom.dol", 0x296A70, 0x34
+/* SPECULATION: link order */
+.global __vt__26zNPCGoalBossSandyRunToRope
+__vt__26zNPCGoalBossSandyRunToRope:
+	.incbin "baserom.dol", 0x296AA4, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBossSandyGetUp
+__vt__22zNPCGoalBossSandyGetUp:
+	.incbin "baserom.dol", 0x296AD8, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSandySit
+__vt__20zNPCGoalBossSandySit:
+	.incbin "baserom.dol", 0x296B0C, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBossSandyLeap
+__vt__21zNPCGoalBossSandyLeap:
+	.incbin "baserom.dol", 0x296B40, 0x34
+/* SPECULATION: link order */
+.global __vt__26zNPCGoalBossSandyElbowDrop
+__vt__26zNPCGoalBossSandyElbowDrop:
+	.incbin "baserom.dol", 0x296B74, 0x34
+/* SPECULATION: link order */
+.global __vt__23zNPCGoalBossSandyNoHead
+__vt__23zNPCGoalBossSandyNoHead:
+	.incbin "baserom.dol", 0x296BA8, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBossSandyMelee
+__vt__22zNPCGoalBossSandyMelee:
+	.incbin "baserom.dol", 0x296BDC, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBossSandyChase
+__vt__22zNPCGoalBossSandyChase:
+	.incbin "baserom.dol", 0x296C10, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBossSandyTaunt
+__vt__22zNPCGoalBossSandyTaunt:
+	.incbin "baserom.dol", 0x296C44, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBossSandyIdle
+__vt__21zNPCGoalBossSandyIdle:
+	.incbin "baserom.dol", 0x296C78, 0x34
+/* SPECULATION: link order */
+.global __vt__10zNPCBSandy
+__vt__10zNPCBSandy:
+	.incbin "baserom.dol", 0x296CAC, 0xDC

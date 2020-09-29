@@ -392,3 +392,23 @@ render__5xfontCFPCcff:
 /* 8002F570 0002C370  7C 08 03 A6 */	mtlr r0
 /* 8002F574 0002C374  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002F578 0002C378  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027D640:
+	.incbin "baserom.dol", 0x27A620, 0xC
+/* SPECULATION: link order */
+.global __vt__Q24xhud17font_meter_widget
+__vt__Q24xhud17font_meter_widget:
+	.incbin "baserom.dol", 0x27A62C, 0x2C
+/* SPECULATION: link order */
+.global __vt__Q24xhud12meter_widget
+__vt__Q24xhud12meter_widget:
+	.incbin "baserom.dol", 0x27A658, 0x28
+/* SPECULATION: link order */
+.global __vt__Q24xhud12model_widget
+__vt__Q24xhud12model_widget:
+	.incbin "baserom.dol", 0x27A680, 0x28
+/* SPECULATION: link order */
+.global __vt__Q24xhud17unit_meter_widget
+__vt__Q24xhud17unit_meter_widget:
+	.incbin "baserom.dol", 0x27A6A8, 0x28

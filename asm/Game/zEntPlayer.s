@@ -46109,3 +46109,31 @@ lbl_8025610C:
 	.incbin "baserom.dol", 0x2530EC, 0xC
 lbl_80256118:
 	.incbin "baserom.dol", 0x2530F8, 0x37C8
+
+.section .data
+lbl_8028C9B0:
+	.incbin "baserom.dol", 0x289990, 0x468
+lbl_8028CE18:
+	.incbin "baserom.dol", 0x289DF8, 0xFD8
+lbl_8028DDF0:
+	.incbin "baserom.dol", 0x28ADD0, 0x3DC
+lbl_8028E1CC:
+	.incbin "baserom.dol", 0x28B1AC, 0x34
+lbl_8028E200:
+	.incbin "baserom.dol", 0x28B1E0, 0x2A0
+lbl_8028E4A0:
+	.incbin "baserom.dol", 0x28B480, 0xC
+lbl_8028E4AC:
+	.incbin "baserom.dol", 0x28B48C, 0xC
+lbl_8028E4B8:
+	.incbin "baserom.dol", 0x28B498, 0x30
+lbl_8028E4E8:
+	.incbin "baserom.dol", 0x28B4C8, 0x20
+lbl_8028E508:
+	.incbin "baserom.dol", 0x28B4E8, 0x50
+lbl_8028E558:
+	.incbin "baserom.dol", 0x28B538, 0xC8
+/* SPECULATION: link order */
+.global sEventTable
+sEventTable:
+	.incbin "baserom.dol", 0x28B600, 0x878

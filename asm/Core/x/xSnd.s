@@ -1874,3 +1874,7 @@ xSndGetVol__FUi:
 /* 800499D8 000467D8  7C 08 03 A6 */	mtlr r0
 /* 800499DC 000467DC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800499E0 000467E0  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80288CA0:
+	.incbin "baserom.dol", 0x285C80, 0x340

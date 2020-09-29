@@ -481,3 +481,9 @@ visible__8ztextboxFv:
 .section .rodata
 lbl_80274A00:
 	.incbin "baserom.dol", 0x2719E0, 0x138
+
+.section .data
+lbl_802A1B88:
+	.incbin "baserom.dol", 0x29EB68, 0x380
+lbl_802A1F08:
+	.incbin "baserom.dol", 0x29EEE8, 0x2C

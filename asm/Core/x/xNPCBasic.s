@@ -757,3 +757,11 @@ DBG_HaltOnMe__9xNPCBasicFUiPc:
 .section .rodata
 lbl_8026A3F8:
 	.incbin "baserom.dol", 0x2673D8, 0x10
+
+.section .data
+lbl_80297460:
+	.incbin "baserom.dol", 0x294440, 0x5B4
+/* SPECULATION: link order */
+.global __vt__9xNPCBasic
+__vt__9xNPCBasic:
+	.incbin "baserom.dol", 0x2949F4, 0x54

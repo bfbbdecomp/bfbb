@@ -6773,3 +6773,31 @@ lbl_80268CA4:
 	.incbin "baserom.dol", 0x265C84, 0x1C
 lbl_80268CC0:
 	.incbin "baserom.dol", 0x265CA0, 0x5C0
+
+.section .data
+lbl_80294F48:
+	.incbin "baserom.dol", 0x291F28, 0x10C
+lbl_80295054:
+	.incbin "baserom.dol", 0x292034, 0x50
+lbl_802950A4:
+	.incbin "baserom.dol", 0x292084, 0x44
+lbl_802950E8:
+	.incbin "baserom.dol", 0x2920C8, 0xF8
+lbl_802951E0:
+	.incbin "baserom.dol", 0x2921C0, 0x10C
+lbl_802952EC:
+	.incbin "baserom.dol", 0x2922CC, 0x10C
+lbl_802953F8:
+	.incbin "baserom.dol", 0x2923D8, 0x50
+/* SPECULATION: link order */
+.global __vt__10zNPCCommon
+__vt__10zNPCCommon:
+	.incbin "baserom.dol", 0x292428, 0xD0
+/* SPECULATION: link order */
+.global g_hash_roboanim
+g_hash_roboanim:
+	.incbin "baserom.dol", 0x2924F8, 0xA4
+/* SPECULATION: link order */
+.global g_strz_roboanim
+g_strz_roboanim:
+	.incbin "baserom.dol", 0x29259C, 0xB0

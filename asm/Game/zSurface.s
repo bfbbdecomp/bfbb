@@ -1426,3 +1426,7 @@ zSurfaceGetDefault__Fv:
 .section .rodata
 lbl_8025F4E8:
 	.incbin "baserom.dol", 0x25C4C8, 0xA8
+
+.section .data
+lbl_80290EA8:
+	.incbin "baserom.dol", 0x28DE88, 0x60

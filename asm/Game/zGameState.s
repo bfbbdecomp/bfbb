@@ -311,3 +311,9 @@ lbl_8009AD20:
 .section .rodata
 lbl_8025CB38:
 	.incbin "baserom.dol", 0x259B18, 0x18
+
+.section .data
+lbl_8028F928:
+	.incbin "baserom.dol", 0x28C908, 0xC4
+lbl_8028F9EC:
+	.incbin "baserom.dol", 0x28C9CC, 0x34

@@ -3156,3 +3156,7 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .section .rodata
 lbl_8026B948:
 	.incbin "baserom.dol", 0x268928, 0x50
+
+.section .data
+lbl_80297F80:
+	.incbin "baserom.dol", 0x294F60, 0xC0

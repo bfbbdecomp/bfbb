@@ -2133,3 +2133,33 @@ lbl_8026F218:
 	.incbin "baserom.dol", 0x26C1F8, 0xC
 lbl_8026F224:
 	.incbin "baserom.dol", 0x26C204, 0x7C
+
+.section .data
+lbl_8029A490:
+	.incbin "baserom.dol", 0x297470, 0x60
+lbl_8029A4F0:
+	.incbin "baserom.dol", 0x2974D0, 0x30
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBossSB1Deflate
+__vt__22zNPCGoalBossSB1Deflate:
+	.incbin "baserom.dol", 0x297500, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB1Smash
+__vt__20zNPCGoalBossSB1Smash:
+	.incbin "baserom.dol", 0x297534, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB1Stomp
+__vt__20zNPCGoalBossSB1Stomp:
+	.incbin "baserom.dol", 0x297568, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB1Taunt
+__vt__20zNPCGoalBossSB1Taunt:
+	.incbin "baserom.dol", 0x29759C, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossSB1Idle
+__vt__19zNPCGoalBossSB1Idle:
+	.incbin "baserom.dol", 0x2975D0, 0x34
+/* SPECULATION: link order */
+.global __vt__9zNPCB_SB1
+__vt__9zNPCB_SB1:
+	.incbin "baserom.dol", 0x297604, 0xDC

@@ -3060,3 +3060,37 @@ lbl_8026B268:
 	.incbin "baserom.dol", 0x268248, 0x1C4
 lbl_8026B42C:
 	.incbin "baserom.dol", 0x26840C, 0x51C
+
+.section .data
+lbl_80297E48:
+	.incbin "baserom.dol", 0x294E28, 0x70
+lbl_80297EB8:
+	.incbin "baserom.dol", 0x294E98, 0x30
+/* SPECULATION: link order */
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$213in_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$213in_state_type:
+	.incbin "baserom.dol", 0x294EC8, 0x14
+/* SPECULATION: link order */
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$214out_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$214out_state_type:
+	.incbin "baserom.dol", 0x294EDC, 0x14
+/* SPECULATION: link order */
+.global __vt__Q28ztalkbox8callback
+__vt__Q28ztalkbox8callback:
+	.incbin "baserom.dol", 0x294EF0, 0x18
+/* SPECULATION: link order */
+.global __vt__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tutorial_callback
+__vt__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tutorial_callback:
+	.incbin "baserom.dol", 0x294F08, 0x18
+/* SPECULATION: link order */
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type:
+	.incbin "baserom.dol", 0x294F20, 0x14
+/* SPECULATION: link order */
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_type:
+	.incbin "baserom.dol", 0x294F34, 0x14
+/* SPECULATION: link order */
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_type:
+	.incbin "baserom.dol", 0x294F48, 0x18

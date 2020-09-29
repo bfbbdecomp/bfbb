@@ -3122,3 +3122,7 @@ xDrawLine__FPC5xVec3PC5xVec3:
 .global xDrawSetColor__F10iColor_tag
 xDrawSetColor__F10iColor_tag:
 /* 8001F434 0001C234  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027B570:
+	.incbin "baserom.dol", 0x278550, 0x20

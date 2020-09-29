@@ -7215,3 +7215,7 @@ lbl_8002CA94:
 /* 8002CA94 00029894  28 04 00 01 */	cmplwi r4, 1
 /* 8002CA98 00029898  41 81 FF F4 */	bgt lbl_8002CA8C
 /* 8002CA9C 0002989C  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027D010:
+	.incbin "baserom.dol", 0x279FF0, 0x90

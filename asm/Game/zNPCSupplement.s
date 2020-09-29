@@ -5978,3 +5978,13 @@ lbl_802731E0:
 	.incbin "baserom.dol", 0x2701C0, 0x60
 lbl_80273240:
 	.incbin "baserom.dol", 0x270220, 0x158
+
+.section .data
+lbl_8029B8A0:
+	.incbin "baserom.dol", 0x298880, 0x20
+lbl_8029B8C0:
+	.incbin "baserom.dol", 0x2988A0, 0x20
+lbl_8029B8E0:
+	.incbin "baserom.dol", 0x2988C0, 0xC0
+lbl_8029B9A0:
+	.incbin "baserom.dol", 0x298980, 0x28

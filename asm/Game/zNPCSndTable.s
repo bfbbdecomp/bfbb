@@ -539,3 +539,157 @@ lbl_8026BAE0:
 	.incbin "baserom.dol", 0x268AC0, 0x80
 lbl_8026BB60:
 	.incbin "baserom.dol", 0x268B40, 0x568
+
+.section .data
+lbl_802982C8:
+	.incbin "baserom.dol", 0x2952A8, 0x68
+lbl_80298330:
+	.incbin "baserom.dol", 0x295310, 0x68
+/* SPECULATION: link order */
+.global g_sndProps
+g_sndProps:
+	.incbin "baserom.dol", 0x295378, 0xCC
+/* SPECULATION: link order */
+.global g_sndTrax_Universal
+g_sndTrax_Universal:
+	.incbin "baserom.dol", 0x295444, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_General
+g_sndTrax_General:
+	.incbin "baserom.dol", 0x295450, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_Villager
+g_sndTrax_Villager:
+	.incbin "baserom.dol", 0x29545C, 0x144
+/* SPECULATION: link order */
+.global g_sndTrax_Squidward
+g_sndTrax_Squidward:
+	.incbin "baserom.dol", 0x2955A0, 0x48
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerCoStar
+g_sndTrax_VillagerCoStar:
+	.incbin "baserom.dol", 0x2955E8, 0xC0
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerMale
+g_sndTrax_VillagerMale:
+	.incbin "baserom.dol", 0x2956A8, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerFemale
+g_sndTrax_VillagerFemale:
+	.incbin "baserom.dol", 0x2956B4, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerElder
+g_sndTrax_VillagerElder:
+	.incbin "baserom.dol", 0x2956C0, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerEldess
+g_sndTrax_VillagerEldess:
+	.incbin "baserom.dol", 0x2956CC, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerBoy
+g_sndTrax_VillagerBoy:
+	.incbin "baserom.dol", 0x2956D8, 0x18
+/* SPECULATION: link order */
+.global g_sndTrax_VillagerGirl
+g_sndTrax_VillagerGirl:
+	.incbin "baserom.dol", 0x2956F0, 0x18
+/* SPECULATION: link order */
+.global g_sndTrax_Neptune
+g_sndTrax_Neptune:
+	.incbin "baserom.dol", 0x295708, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_Jelly
+g_sndTrax_Jelly:
+	.incbin "baserom.dol", 0x295714, 0x30
+/* SPECULATION: link order */
+.global g_sndTrax_TikiShared
+g_sndTrax_TikiShared:
+	.incbin "baserom.dol", 0x295744, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_TikiThunder
+g_sndTrax_TikiThunder:
+	.incbin "baserom.dol", 0x295768, 0x18
+/* SPECULATION: link order */
+.global g_sndTrax_Duplotron
+g_sndTrax_Duplotron:
+	.incbin "baserom.dol", 0x295780, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_Robot
+g_sndTrax_Robot:
+	.incbin "baserom.dol", 0x2957A4, 0x18
+/* SPECULATION: link order */
+.global g_sndTrax_Fodder
+g_sndTrax_Fodder:
+	.incbin "baserom.dol", 0x2957BC, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_FodBomb
+g_sndTrax_FodBomb:
+	.incbin "baserom.dol", 0x2957E0, 0x48
+/* SPECULATION: link order */
+.global g_sndTrax_FodBzzt
+g_sndTrax_FodBzzt:
+	.incbin "baserom.dol", 0x295828, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_Chomper
+g_sndTrax_Chomper:
+	.incbin "baserom.dol", 0x29584C, 0x30
+/* SPECULATION: link order */
+.global g_sndTrax_Hammer
+g_sndTrax_Hammer:
+	.incbin "baserom.dol", 0x29587C, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_TarTar
+g_sndTrax_TarTar:
+	.incbin "baserom.dol", 0x2958A0, 0x30
+/* SPECULATION: link order */
+.global g_sndTrax_Glove
+g_sndTrax_Glove:
+	.incbin "baserom.dol", 0x2958D0, 0x18
+/* SPECULATION: link order */
+.global g_sndTrax_Monsoon
+g_sndTrax_Monsoon:
+	.incbin "baserom.dol", 0x2958E8, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_Sleepy
+g_sndTrax_Sleepy:
+	.incbin "baserom.dol", 0x29590C, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_Chuck
+g_sndTrax_Chuck:
+	.incbin "baserom.dol", 0x295930, 0x3C
+/* SPECULATION: link order */
+.global g_sndTrax_ArfArf
+g_sndTrax_ArfArf:
+	.incbin "baserom.dol", 0x29596C, 0x24
+/* SPECULATION: link order */
+.global g_sndTrax_ArfDog
+g_sndTrax_ArfDog:
+	.incbin "baserom.dol", 0x295990, 0x30
+/* SPECULATION: link order */
+.global g_sndTrax_Tubelet
+g_sndTrax_Tubelet:
+	.incbin "baserom.dol", 0x2959C0, 0x3C
+/* SPECULATION: link order */
+.global g_sndTrax_Slick
+g_sndTrax_Slick:
+	.incbin "baserom.dol", 0x2959FC, 0x3C
+/* SPECULATION: link order */
+.global g_sndTrax_KingJelly
+g_sndTrax_KingJelly:
+	.incbin "baserom.dol", 0x295A38, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_Dutchman
+g_sndTrax_Dutchman:
+	.incbin "baserom.dol", 0x295A44, 0xC
+/* SPECULATION: link order */
+.global g_sndTrax_BossSandy
+g_sndTrax_BossSandy:
+	.incbin "baserom.dol", 0x295A50, 0x10
+/* SPECULATION: link order */
+.global g_hash_dupoanim
+g_hash_dupoanim:
+	.incbin "baserom.dol", 0x295A60, 0x14
+/* SPECULATION: link order */
+.global g_strz_dupoanim
+g_strz_dupoanim:
+	.incbin "baserom.dol", 0x295A74, 0x14

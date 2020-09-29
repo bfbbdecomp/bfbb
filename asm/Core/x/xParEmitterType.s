@@ -2145,3 +2145,13 @@ lbl_8026B24C:
 	.incbin "baserom.dol", 0x26822C, 0xC
 lbl_8026B258:
 	.incbin "baserom.dol", 0x268238, 0x10
+
+.section .data
+lbl_80297DB8:
+	.incbin "baserom.dol", 0x294D98, 0x2C
+lbl_80297DE4:
+	.incbin "baserom.dol", 0x294DC4, 0x34
+/* SPECULATION: link order */
+.global sBlendTable
+sBlendTable:
+	.incbin "baserom.dol", 0x294DF8, 0x30

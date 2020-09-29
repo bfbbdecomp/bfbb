@@ -702,3 +702,17 @@ lbl_8025CB78:
 	.incbin "baserom.dol", 0x259B58, 0x14
 lbl_8025CB8C:
 	.incbin "baserom.dol", 0x259B6C, 0x18C
+
+.section .data
+lbl_8028FA20:
+	.incbin "baserom.dol", 0x28CA00, 0x24
+lbl_8028FA44:
+	.incbin "baserom.dol", 0x28CA24, 0x7C
+/* SPECULATION: link order */
+.global sEffectFuncs
+sEffectFuncs:
+	.incbin "baserom.dol", 0x28CAA0, 0x48
+/* SPECULATION: link order */
+.global sEffectInitFuncs
+sEffectInitFuncs:
+	.incbin "baserom.dol", 0x28CAE8, 0x48

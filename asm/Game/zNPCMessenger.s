@@ -1221,3 +1221,11 @@ lbl_800EE290:
 /* 800EE2C0 000EB0C0  38 60 00 01 */	li r3, 1
 /* 800EE2C4 000EB0C4  4E 80 00 20 */	blr 
 /* 800EE2C8 000EB0C8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80294050:
+	.incbin "baserom.dol", 0x291030, 0x30
+/* SPECULATION: link order */
+.global g_brainTable
+g_brainTable:
+	.incbin "baserom.dol", 0x291060, 0x2F4

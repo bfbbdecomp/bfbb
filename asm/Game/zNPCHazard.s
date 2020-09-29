@@ -9471,3 +9471,43 @@ lbl_802737F4:
 	.incbin "baserom.dol", 0x2707D4, 0xC
 lbl_80273800:
 	.incbin "baserom.dol", 0x2707E0, 0x330
+
+.section .data
+lbl_8029BA40:
+	.incbin "baserom.dol", 0x298A20, 0xF0
+lbl_8029BB30:
+	.incbin "baserom.dol", 0x298B10, 0xC
+lbl_8029BB3C:
+	.incbin "baserom.dol", 0x298B1C, 0xC
+lbl_8029BB48:
+	.incbin "baserom.dol", 0x298B28, 0xA8
+lbl_8029BBF0:
+	.incbin "baserom.dol", 0x298BD0, 0x20
+lbl_8029BC10:
+	.incbin "baserom.dol", 0x298BF0, 0x28
+lbl_8029BC38:
+	.incbin "baserom.dol", 0x298C18, 0xF0
+lbl_8029BD28:
+	.incbin "baserom.dol", 0x298D08, 0x6C
+lbl_8029BD94:
+	.incbin "baserom.dol", 0x298D74, 0x6C
+lbl_8029BE00:
+	.incbin "baserom.dol", 0x298DE0, 0x6C
+lbl_8029BE6C:
+	.incbin "baserom.dol", 0x298E4C, 0x4C
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalJellyBirth
+__vt__18zNPCGoalJellyBirth:
+	.incbin "baserom.dol", 0x298E98, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalJellyAttack
+__vt__19zNPCGoalJellyAttack:
+	.incbin "baserom.dol", 0x298ECC, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalJellyBumped
+__vt__19zNPCGoalJellyBumped:
+	.incbin "baserom.dol", 0x298F00, 0x40E4
+/* SPECULATION: link order */
+.global lbl_802A0004
+lbl_802A0004:
+	.incbin "baserom.dol", 0x29CFE4, 0x19F4

@@ -10788,3 +10788,61 @@ lbl_802720E4:
 	.incbin "baserom.dol", 0x26F0C4, 0xC
 lbl_802720F0:
 	.incbin "baserom.dol", 0x26F0D0, 0xB50
+
+.section .data
+lbl_8029B460:
+	.incbin "baserom.dol", 0x298440, 0x64
+lbl_8029B4C4:
+	.incbin "baserom.dol", 0x2984A4, 0x30
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalDutchmanDeath
+__vt__21zNPCGoalDutchmanDeath:
+	.incbin "baserom.dol", 0x2984D4, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalDutchmanDamage
+__vt__22zNPCGoalDutchmanDamage:
+	.incbin "baserom.dol", 0x298508, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalDutchmanCaught
+__vt__22zNPCGoalDutchmanCaught:
+	.incbin "baserom.dol", 0x29853C, 0x34
+/* SPECULATION: link order */
+.global __vt__25zNPCGoalDutchmanPostFlame
+__vt__25zNPCGoalDutchmanPostFlame:
+	.incbin "baserom.dol", 0x298570, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalDutchmanFlame
+__vt__21zNPCGoalDutchmanFlame:
+	.incbin "baserom.dol", 0x2985A4, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalDutchmanBeam
+__vt__20zNPCGoalDutchmanBeam:
+	.incbin "baserom.dol", 0x2985D8, 0x34
+/* SPECULATION: link order */
+.global __vt__24zNPCGoalDutchmanReappear
+__vt__24zNPCGoalDutchmanReappear:
+	.incbin "baserom.dol", 0x29860C, 0x34
+/* SPECULATION: link order */
+.global __vt__24zNPCGoalDutchmanTeleport
+__vt__24zNPCGoalDutchmanTeleport:
+	.incbin "baserom.dol", 0x298640, 0x34
+/* SPECULATION: link order */
+.global __vt__25zNPCGoalDutchmanDisappear
+__vt__25zNPCGoalDutchmanDisappear:
+	.incbin "baserom.dol", 0x298674, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalDutchmanIdle
+__vt__20zNPCGoalDutchmanIdle:
+	.incbin "baserom.dol", 0x2986A8, 0x34
+/* SPECULATION: link order */
+.global __vt__24zNPCGoalDutchmanInitiate
+__vt__24zNPCGoalDutchmanInitiate:
+	.incbin "baserom.dol", 0x2986DC, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalDutchmanNil
+__vt__19zNPCGoalDutchmanNil:
+	.incbin "baserom.dol", 0x298710, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCDutchman
+__vt__12zNPCDutchman:
+	.incbin "baserom.dol", 0x298744, 0xCC

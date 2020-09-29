@@ -7463,3 +7463,15 @@ lbl_800266AC:
 /* 800266BC 000234BC  7C 08 03 A6 */	mtlr r0
 /* 800266C0 000234C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800266C4 000234C4  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027B590:
+	.incbin "baserom.dol", 0x278570, 0xC
+lbl_8027B59C:
+	.incbin "baserom.dol", 0x27857C, 0x650
+/* SPECULATION: link order */
+.global text_cb__8xtextbox
+text_cb__8xtextbox:
+	.incbin "baserom.dol", 0x278BCC, 0xC
+lbl_8027BBF8:
+	.incbin "baserom.dol", 0x278BD8, 0x1418

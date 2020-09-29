@@ -9257,3 +9257,57 @@ lbl_80270874:
 	.incbin "baserom.dol", 0x26D854, 0x28
 lbl_8027089C:
 	.incbin "baserom.dol", 0x26D87C, 0x70C
+
+.section .data
+lbl_8029AA68:
+	.incbin "baserom.dol", 0x297A48, 0x78
+lbl_8029AAE0:
+	.incbin "baserom.dol", 0x297AC0, 0x128
+lbl_8029AC08:
+	.incbin "baserom.dol", 0x297BE8, 0x28
+lbl_8029AC30:
+	.incbin "baserom.dol", 0x297C10, 0x1C
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossPatFudge
+__vt__20zNPCGoalBossPatFudge:
+	.incbin "baserom.dol", 0x297C2C, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossPatSpin
+__vt__19zNPCGoalBossPatSpin:
+	.incbin "baserom.dol", 0x297C60, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossPatSpawn
+__vt__20zNPCGoalBossPatSpawn:
+	.incbin "baserom.dol", 0x297C94, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBossPatFreeze
+__vt__21zNPCGoalBossPatFreeze:
+	.incbin "baserom.dol", 0x297CC8, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossPatSmack
+__vt__20zNPCGoalBossPatSmack:
+	.incbin "baserom.dol", 0x297CFC, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalBossPatRun
+__vt__18zNPCGoalBossPatRun:
+	.incbin "baserom.dol", 0x297D30, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossPatSpit
+__vt__19zNPCGoalBossPatSpit:
+	.incbin "baserom.dol", 0x297D64, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalBossPatHit
+__vt__18zNPCGoalBossPatHit:
+	.incbin "baserom.dol", 0x297D98, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossPatTaunt
+__vt__20zNPCGoalBossPatTaunt:
+	.incbin "baserom.dol", 0x297DCC, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossPatIdle
+__vt__19zNPCGoalBossPatIdle:
+	.incbin "baserom.dol", 0x297E00, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCBPatrick
+__vt__12zNPCBPatrick:
+	.incbin "baserom.dol", 0x297E34, 0xDC

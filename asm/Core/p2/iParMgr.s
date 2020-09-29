@@ -1555,3 +1555,11 @@ lbl_800CC5C0:
 /* 800CC5DC 000C93DC  7C 08 03 A6 */	mtlr r0
 /* 800CC5E0 000C93E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800CC5E4 000C93E4  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80292650:
+	.incbin "baserom.dol", 0x28F630, 0xC
+lbl_8029265C:
+	.incbin "baserom.dol", 0x28F63C, 0xC
+lbl_80292668:
+	.incbin "baserom.dol", 0x28F648, 0x10

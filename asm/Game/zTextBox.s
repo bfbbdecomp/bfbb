@@ -834,3 +834,49 @@ convert__FRCQ38ztextbox10asset_type10color_type:
 .section .rodata
 lbl_8026CA38:
 	.incbin "baserom.dol", 0x269A18, 0x18
+
+.section .data
+lbl_80298F80:
+	.incbin "baserom.dol", 0x295F60, 0xC
+lbl_80298F8C:
+	.incbin "baserom.dol", 0x295F6C, 0x14
+/* SPECULATION: link order */
+.global __vt__Q28ztaskbox13talk_callback
+__vt__Q28ztaskbox13talk_callback:
+	.incbin "baserom.dol", 0x295F80, 0x18
+/* SPECULATION: link order */
+.global g_hash_testanim
+g_hash_testanim:
+	.incbin "baserom.dol", 0x295F98, 0x2C
+/* SPECULATION: link order */
+.global g_strz_testanim
+g_strz_testanim:
+	.incbin "baserom.dol", 0x295FC4, 0x2C
+/* SPECULATION: link order */
+.global __vt__8zNPCTest
+__vt__8zNPCTest:
+	.incbin "baserom.dol", 0x295FF0, 0xD0
+/* SPECULATION: link order */
+.global g_hash_subbanim
+g_hash_subbanim:
+	.incbin "baserom.dol", 0x2960C0, 0x5C
+/* SPECULATION: link order */
+.global g_strz_subbanim
+g_strz_subbanim:
+	.incbin "baserom.dol", 0x29611C, 0x5C
+/* SPECULATION: link order */
+.global __vt__11zNPCSubBoss
+__vt__11zNPCSubBoss:
+	.incbin "baserom.dol", 0x296178, 0xD0
+/* SPECULATION: link order */
+.global g_hash_bossanim
+g_hash_bossanim:
+	.incbin "baserom.dol", 0x296248, 0x138
+/* SPECULATION: link order */
+.global g_strz_bossanim
+g_strz_bossanim:
+	.incbin "baserom.dol", 0x296380, 0x138
+/* SPECULATION: link order */
+.global __vt__8zNPCBoss
+__vt__8zNPCBoss:
+	.incbin "baserom.dol", 0x2964B8, 0xD8

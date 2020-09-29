@@ -421,3 +421,9 @@ expand__13basic_rect$$0f$$1Ff:
 /* 8004DC3C 0004AA3C  7C 08 03 A6 */	mtlr r0
 /* 8004DC40 0004AA40  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004DC44 0004AA44  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A2A8:
+	.incbin "baserom.dol", 0x287288, 0x68
+lbl_8028A310:
+	.incbin "baserom.dol", 0x2872F0, 0x68

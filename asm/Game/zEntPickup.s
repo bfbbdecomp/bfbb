@@ -4077,3 +4077,21 @@ xMat3x3MulRotC__FP7xMat3x3P7xMat3x3ffff:
 .section .rodata
 lbl_80255EA8:
 	.incbin "baserom.dol", 0x252E88, 0x58
+
+.section .data
+lbl_8028C640:
+	.incbin "baserom.dol", 0x289620, 0xE0
+lbl_8028C720:
+	.incbin "baserom.dol", 0x289700, 0xA0
+lbl_8028C7C0:
+	.incbin "baserom.dol", 0x2897A0, 0x90
+lbl_8028C850:
+	.incbin "baserom.dol", 0x289830, 0x3C
+lbl_8028C88C:
+	.incbin "baserom.dol", 0x28986C, 0x3C
+lbl_8028C8C8:
+	.incbin "baserom.dol", 0x2898A8, 0x30
+/* SPECULATION: link order */
+.global zPickupAuraTable
+zPickupAuraTable:
+	.incbin "baserom.dol", 0x2898D8, 0xB8

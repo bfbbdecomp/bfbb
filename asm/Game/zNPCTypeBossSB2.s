@@ -10151,3 +10151,53 @@ lbl_8026FBF4:
 	.incbin "baserom.dol", 0x26CBD4, 0xC
 lbl_8026FC00:
 	.incbin "baserom.dol", 0x26CBE0, 0x404
+
+.section .data
+lbl_8029A700:
+	.incbin "baserom.dol", 0x2976E0, 0x64
+lbl_8029A764:
+	.incbin "baserom.dol", 0x297744, 0x20
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB2Death
+__vt__20zNPCGoalBossSB2Death:
+	.incbin "baserom.dol", 0x297764, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBossSB2Karate
+__vt__21zNPCGoalBossSB2Karate:
+	.incbin "baserom.dol", 0x297798, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossSB2Chop
+__vt__19zNPCGoalBossSB2Chop:
+	.incbin "baserom.dol", 0x2977CC, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB2Swipe
+__vt__20zNPCGoalBossSB2Swipe:
+	.incbin "baserom.dol", 0x297800, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossSB2Hunt
+__vt__19zNPCGoalBossSB2Hunt:
+	.incbin "baserom.dol", 0x297834, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalBossSB2Hit
+__vt__18zNPCGoalBossSB2Hit:
+	.incbin "baserom.dol", 0x297868, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB2Dizzy
+__vt__20zNPCGoalBossSB2Dizzy:
+	.incbin "baserom.dol", 0x29789C, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB2Taunt
+__vt__20zNPCGoalBossSB2Taunt:
+	.incbin "baserom.dol", 0x2978D0, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalBossSB2Idle
+__vt__19zNPCGoalBossSB2Idle:
+	.incbin "baserom.dol", 0x297904, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalBossSB2Intro
+__vt__20zNPCGoalBossSB2Intro:
+	.incbin "baserom.dol", 0x297938, 0x34
+/* SPECULATION: link order */
+.global __vt__9zNPCB_SB2
+__vt__9zNPCB_SB2:
+	.incbin "baserom.dol", 0x29796C, 0xDC

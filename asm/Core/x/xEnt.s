@@ -4285,3 +4285,11 @@ lbl_8001BB40:
 /* 8001BB48 00018948  90 03 00 04 */	stw r0, 4(r3)
 /* 8001BB4C 0001894C  90 03 00 08 */	stw r0, 8(r3)
 /* 8001BB50 00018950  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027B428:
+	.incbin "baserom.dol", 0x278408, 0x3C
+lbl_8027B464:
+	.incbin "baserom.dol", 0x278444, 0xA8
+lbl_8027B50C:
+	.incbin "baserom.dol", 0x2784EC, 0x64

@@ -293,3 +293,7 @@ zPadAddRumble__F14_tagRumbleTypefiUi:
 /* 800AD200 000AA000  7C 08 03 A6 */	mtlr r0
 /* 800AD204 000AA004  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AD208 000AA008  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80290090:
+	.incbin "baserom.dol", 0x28D070, 0x50

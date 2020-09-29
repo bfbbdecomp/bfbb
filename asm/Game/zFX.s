@@ -5110,3 +5110,25 @@ lbl_8025BDF8:
 	.incbin "baserom.dol", 0x258DD8, 0xC
 lbl_8025BE04:
 	.incbin "baserom.dol", 0x258DE4, 0x74
+
+.section .data
+lbl_8028EFE0:
+	.incbin "baserom.dol", 0x28BFC0, 0x28
+/* SPECULATION: link order */
+.global bubblehit_pos_rnd
+bubblehit_pos_rnd:
+	.incbin "baserom.dol", 0x28BFE8, 0xC
+/* SPECULATION: link order */
+.global bubblehit_vel_rnd
+bubblehit_vel_rnd:
+	.incbin "baserom.dol", 0x28BFF4, 0xC
+/* SPECULATION: link order */
+.global bubbletrail_pos_rnd
+bubbletrail_pos_rnd:
+	.incbin "baserom.dol", 0x28C000, 0xC
+/* SPECULATION: link order */
+.global bubbletrail_vel_rnd
+bubbletrail_vel_rnd:
+	.incbin "baserom.dol", 0x28C00C, 0xC
+lbl_8028F038:
+	.incbin "baserom.dol", 0x28C018, 0x178

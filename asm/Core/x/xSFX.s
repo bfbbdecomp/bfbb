@@ -617,3 +617,15 @@ xSFXStop__FP4xSFX:
 /* 8004476C 0004156C  7C 08 03 A6 */	mtlr r0
 /* 80044770 00041570  38 21 00 10 */	addi r1, r1, 0x10
 /* 80044774 00041574  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80288C38:
+	.incbin "baserom.dol", 0x285C18, 0x48
+/* SPECULATION: link order */
+.global ShadowLightColor
+ShadowLightColor:
+	.incbin "baserom.dol", 0x285C60, 0x10
+/* SPECULATION: link order */
+.global gCamPos
+gCamPos:
+	.incbin "baserom.dol", 0x285C70, 0x10

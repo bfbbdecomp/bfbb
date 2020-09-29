@@ -993,3 +993,11 @@ lbl_800A7CB4:
 .section .rodata
 lbl_8025E588:
 	.incbin "baserom.dol", 0x25B568, 0x170
+
+.section .data
+lbl_8028FD80:
+	.incbin "baserom.dol", 0x28CD60, 0x160
+lbl_8028FEE0:
+	.incbin "baserom.dol", 0x28CEC0, 0x3C
+lbl_8028FF1C:
+	.incbin "baserom.dol", 0x28CEFC, 0x24

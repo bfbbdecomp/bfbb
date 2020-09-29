@@ -347,3 +347,7 @@ lbl_8004D690:
 /* 8004D6A0 0004A4A0  7C 08 03 A6 */	mtlr r0
 /* 8004D6A4 0004A4A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004D6A8 0004A4A8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A258:
+	.incbin "baserom.dol", 0x287238, 0x50

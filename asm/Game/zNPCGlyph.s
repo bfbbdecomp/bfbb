@@ -1430,3 +1430,11 @@ lbl_802733E0:
 	.incbin "baserom.dol", 0x2703C0, 0xC
 lbl_802733EC:
 	.incbin "baserom.dol", 0x2703CC, 0xCC
+
+.section .data
+lbl_8029B9C8:
+	.incbin "baserom.dol", 0x2989A8, 0x28
+lbl_8029B9F0:
+	.incbin "baserom.dol", 0x2989D0, 0x28
+lbl_8029BA18:
+	.incbin "baserom.dol", 0x2989F8, 0x28

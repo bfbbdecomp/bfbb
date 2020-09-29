@@ -825,3 +825,15 @@ GetFactory__10xBehaveMgrFv:
 RenderExtra__10zNPCCommonFv:
 /* 800EED6C 000EBB6C  4E 80 00 20 */	blr 
 /* 800EED70 000EBB70  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80294374:
+	.incbin "baserom.dol", 0x291354, 0xBBC
+/* SPECULATION: link order */
+.global g_hash_lassanim
+g_hash_lassanim:
+	.incbin "baserom.dol", 0x291F10, 0xC
+/* SPECULATION: link order */
+.global g_strz_lassanim
+g_strz_lassanim:
+	.incbin "baserom.dol", 0x291F1C, 0xC

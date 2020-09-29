@@ -3191,3 +3191,15 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .section .rodata
 lbl_8026C170:
 	.incbin "baserom.dol", 0x269150, 0x80
+
+.section .data
+lbl_80298B88:
+	.incbin "baserom.dol", 0x295B68, 0x48
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalDuploLive
+__vt__17zNPCGoalDuploLive:
+	.incbin "baserom.dol", 0x295BB0, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalDuploDead
+__vt__17zNPCGoalDuploDead:
+	.incbin "baserom.dol", 0x295BE4, 0x34

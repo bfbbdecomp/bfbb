@@ -4770,3 +4770,23 @@ lbl_80273CFC:
 	.incbin "baserom.dol", 0x270CDC, 0xC
 lbl_80273D08:
 	.incbin "baserom.dol", 0x270CE8, 0xCE8
+
+.section .data
+lbl_802A19F8:
+	.incbin "baserom.dol", 0x29E9D8, 0x120
+lbl_802A1B18:
+	.incbin "baserom.dol", 0x29EAF8, 0xC
+lbl_802A1B24:
+	.incbin "baserom.dol", 0x29EB04, 0x18
+/* SPECULATION: link order */
+.global __vt__9XCSNNosey
+__vt__9XCSNNosey:
+	.incbin "baserom.dol", 0x29EB1C, 0x10
+/* SPECULATION: link order */
+.global __vt__11NCINBeNosey
+__vt__11NCINBeNosey:
+	.incbin "baserom.dol", 0x29EB2C, 0x14
+/* SPECULATION: link order */
+.global __vt__Q24xhud11text_widget
+__vt__Q24xhud11text_widget:
+	.incbin "baserom.dol", 0x29EB40, 0x28

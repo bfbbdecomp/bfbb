@@ -2728,3 +2728,51 @@ lbl_8026CFA4:
 	.incbin "baserom.dol", 0x269F84, 0xC
 lbl_8026CFB0:
 	.incbin "baserom.dol", 0x269F90, 0xD0
+
+.section .data
+lbl_802995B0:
+	.incbin "baserom.dol", 0x296590, 0x74
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalBoyWeep
+__vt__15zNPCGoalBoyWeep:
+	.incbin "baserom.dol", 0x296604, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalBoyFall
+__vt__15zNPCGoalBoyFall:
+	.incbin "baserom.dol", 0x296638, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalBoyRide
+__vt__15zNPCGoalBoyRide:
+	.incbin "baserom.dol", 0x29666C, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalBalloon
+__vt__15zNPCGoalBalloon:
+	.incbin "baserom.dol", 0x2966A0, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalHurt
+__vt__12zNPCGoalHurt:
+	.incbin "baserom.dol", 0x2966D4, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalChatter
+__vt__15zNPCGoalChatter:
+	.incbin "baserom.dol", 0x296708, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalCheer
+__vt__13zNPCGoalCheer:
+	.incbin "baserom.dol", 0x29673C, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalSpeak
+__vt__13zNPCGoalSpeak:
+	.incbin "baserom.dol", 0x296770, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalTalk
+__vt__12zNPCGoalTalk:
+	.incbin "baserom.dol", 0x2967A4, 0x34
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalPlayerNear
+__vt__18zNPCGoalPlayerNear:
+	.incbin "baserom.dol", 0x2967D8, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalBoySwim
+__vt__15zNPCGoalBoySwim:
+	.incbin "baserom.dol", 0x29680C, 0x34

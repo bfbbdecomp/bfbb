@@ -6102,3 +6102,35 @@ lbl_8026E950:
 	.incbin "baserom.dol", 0x26B930, 0xA0
 lbl_8026E9F0:
 	.incbin "baserom.dol", 0x26B9D0, 0x7F0
+
+.section .data
+lbl_8029A240:
+	.incbin "baserom.dol", 0x297220, 0x64
+lbl_8029A2A4:
+	.incbin "baserom.dol", 0x297284, 0xC
+lbl_8029A2B0:
+	.incbin "baserom.dol", 0x297290, 0xC
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalPrawnDeath
+__vt__18zNPCGoalPrawnDeath:
+	.incbin "baserom.dol", 0x29729C, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalPrawnDamage
+__vt__19zNPCGoalPrawnDamage:
+	.incbin "baserom.dol", 0x2972D0, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalPrawnBowl
+__vt__17zNPCGoalPrawnBowl:
+	.incbin "baserom.dol", 0x297304, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalPrawnBeam
+__vt__17zNPCGoalPrawnBeam:
+	.incbin "baserom.dol", 0x297338, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalPrawnIdle
+__vt__17zNPCGoalPrawnIdle:
+	.incbin "baserom.dol", 0x29736C, 0x34
+/* SPECULATION: link order */
+.global __vt__9zNPCPrawn
+__vt__9zNPCPrawn:
+	.incbin "baserom.dol", 0x2973A0, 0xD0

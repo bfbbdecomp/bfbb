@@ -1274,3 +1274,29 @@ lbl_8025F9E8:
 	.incbin "baserom.dol", 0x25C9C8, 0x2C8
 lbl_8025FCB0:
 	.incbin "baserom.dol", 0x25CC90, 0x354
+
+.section .data
+lbl_802916E0:
+	.incbin "baserom.dol", 0x28E6C0, 0x10
+lbl_802916F0:
+	.incbin "baserom.dol", 0x28E6D0, 0xC
+lbl_802916FC:
+	.incbin "baserom.dol", 0x28E6DC, 0xC
+lbl_80291708:
+	.incbin "baserom.dol", 0x28E6E8, 0x40
+lbl_80291748:
+	.incbin "baserom.dol", 0x28E728, 0x1D4
+lbl_8029191C:
+	.incbin "baserom.dol", 0x28E8FC, 0x14
+/* SPECULATION: link order */
+.global zVarEntryTable
+zVarEntryTable:
+	.incbin "baserom.dol", 0x28E910, 0x130
+/* SPECULATION: link order */
+.global __MIXVolumeTable
+__MIXVolumeTable:
+	.incbin "baserom.dol", 0x28EA40, 0xB8C
+/* SPECULATION: link order */
+.global __MIXAIVolumeTable
+__MIXAIVolumeTable:
+	.incbin "baserom.dol", 0x28F5CC, 0x34

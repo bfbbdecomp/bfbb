@@ -1086,3 +1086,7 @@ lbl_8004D038:
 lbl_8004D04C:
 /* 8004D04C 00049E4C  38 60 00 00 */	li r3, 0
 /* 8004D050 00049E50  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A228:
+	.incbin "baserom.dol", 0x287208, 0x30

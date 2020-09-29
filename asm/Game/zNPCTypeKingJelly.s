@@ -9356,3 +9356,47 @@ lbl_8026D8A4:
 	.incbin "baserom.dol", 0x26A884, 0xC
 lbl_8026D8B0:
 	.incbin "baserom.dol", 0x26A890, 0xF88
+
+.section .data
+lbl_80299DA8:
+	.incbin "baserom.dol", 0x296D88, 0x84
+lbl_80299E2C:
+	.incbin "baserom.dol", 0x296E0C, 0x64
+lbl_80299E90:
+	.incbin "baserom.dol", 0x296E70, 0x28
+lbl_80299EB8:
+	.incbin "baserom.dol", 0x296E98, 0x28
+lbl_80299EE0:
+	.incbin "baserom.dol", 0x296EC0, 0x1C
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalKJDeath
+__vt__15zNPCGoalKJDeath:
+	.incbin "baserom.dol", 0x296EDC, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalKJDamage
+__vt__16zNPCGoalKJDamage:
+	.incbin "baserom.dol", 0x296F10, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalKJShockGround
+__vt__21zNPCGoalKJShockGround:
+	.incbin "baserom.dol", 0x296F44, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalKJTaunt
+__vt__15zNPCGoalKJTaunt:
+	.incbin "baserom.dol", 0x296F78, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalKJSpawnKids
+__vt__19zNPCGoalKJSpawnKids:
+	.incbin "baserom.dol", 0x296FAC, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalKJBored
+__vt__15zNPCGoalKJBored:
+	.incbin "baserom.dol", 0x296FE0, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalKJIdle
+__vt__14zNPCGoalKJIdle:
+	.incbin "baserom.dol", 0x297014, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCKingJelly
+__vt__13zNPCKingJelly:
+	.incbin "baserom.dol", 0x297048, 0xD0

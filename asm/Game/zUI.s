@@ -3350,3 +3350,9 @@ lbl_8025F740:
 	.incbin "baserom.dol", 0x25C720, 0x10
 lbl_8025F750:
 	.incbin "baserom.dol", 0x25C730, 0x248
+
+.section .data
+lbl_802912F8:
+	.incbin "baserom.dol", 0x28E2D8, 0x24
+lbl_8029131C:
+	.incbin "baserom.dol", 0x28E2FC, 0x3C4

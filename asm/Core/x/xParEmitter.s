@@ -1343,3 +1343,11 @@ __as__10xParInterpFRC10xParInterp:
 .section .rodata
 lbl_8026B008:
 	.incbin "baserom.dol", 0x267FE8, 0x40
+
+.section .data
+lbl_80297D18:
+	.incbin "baserom.dol", 0x294CF8, 0x3C
+lbl_80297D54:
+	.incbin "baserom.dol", 0x294D34, 0x20
+lbl_80297D74:
+	.incbin "baserom.dol", 0x294D54, 0x44

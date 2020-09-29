@@ -15658,3 +15658,101 @@ lbl_802696DC:
 	.incbin "baserom.dol", 0x2666BC, 0x18
 lbl_802696F4:
 	.incbin "baserom.dol", 0x2666D4, 0x3D4
+
+.section .data
+lbl_8029566C:
+	.incbin "baserom.dol", 0x29264C, 0xC
+lbl_80295678:
+	.incbin "baserom.dol", 0x292658, 0x50
+lbl_802956C8:
+	.incbin "baserom.dol", 0x2926A8, 0x9C
+lbl_80295764:
+	.incbin "baserom.dol", 0x292744, 0x14
+lbl_80295778:
+	.incbin "baserom.dol", 0x292758, 0x20
+lbl_80295798:
+	.incbin "baserom.dol", 0x292778, 0xC
+/* SPECULATION: link order */
+.global __vt__9zNPCSlick
+__vt__9zNPCSlick:
+	.incbin "baserom.dol", 0x292784, 0xD8
+/* SPECULATION: link order */
+.global __vt__13zNPCTubeSlave
+__vt__13zNPCTubeSlave:
+	.incbin "baserom.dol", 0x29285C, 0xD8
+/* SPECULATION: link order */
+.global __vt__10TubeNotice
+__vt__10TubeNotice:
+	.incbin "baserom.dol", 0x292934, 0xC
+/* SPECULATION: link order */
+.global __vt__11zNPCTubelet
+__vt__11zNPCTubelet:
+	.incbin "baserom.dol", 0x292940, 0xD8
+/* SPECULATION: link order */
+.global __vt__9zNPCChuck
+__vt__9zNPCChuck:
+	.incbin "baserom.dol", 0x292A18, 0xD8
+/* SPECULATION: link order */
+.global __vt__10zNPCArfDog
+__vt__10zNPCArfDog:
+	.incbin "baserom.dol", 0x292AF0, 0xD8
+/* SPECULATION: link order */
+.global __vt__10zNPCArfArf
+__vt__10zNPCArfArf:
+	.incbin "baserom.dol", 0x292BC8, 0xD8
+/* SPECULATION: link order */
+.global __vt__10zNPCSleepy
+__vt__10zNPCSleepy:
+	.incbin "baserom.dol", 0x292CA0, 0xD8
+/* SPECULATION: link order */
+.global __vt__11zNPCMonsoon
+__vt__11zNPCMonsoon:
+	.incbin "baserom.dol", 0x292D78, 0xD8
+/* SPECULATION: link order */
+.global __vt__9zNPCGlove
+__vt__9zNPCGlove:
+	.incbin "baserom.dol", 0x292E50, 0xD8
+/* SPECULATION: link order */
+.global __vt__10zNPCTarTar
+__vt__10zNPCTarTar:
+	.incbin "baserom.dol", 0x292F28, 0xD8
+/* SPECULATION: link order */
+.global __vt__10zNPCHammer
+__vt__10zNPCHammer:
+	.incbin "baserom.dol", 0x293000, 0xD8
+/* SPECULATION: link order */
+.global __vt__11zNPCCritter
+__vt__11zNPCCritter:
+	.incbin "baserom.dol", 0x2930D8, 0xD8
+/* SPECULATION: link order */
+.global __vt__11zNPCChomper
+__vt__11zNPCChomper:
+	.incbin "baserom.dol", 0x2931B0, 0xD8
+/* SPECULATION: link order */
+.global __vt__11zNPCFodBzzt
+__vt__11zNPCFodBzzt:
+	.incbin "baserom.dol", 0x293288, 0xD8
+/* SPECULATION: link order */
+.global __vt__11zNPCFodBomb
+__vt__11zNPCFodBomb:
+	.incbin "baserom.dol", 0x293360, 0xD8
+/* SPECULATION: link order */
+.global __vt__10zNPCFodder
+__vt__10zNPCFodder:
+	.incbin "baserom.dol", 0x293438, 0xD8
+/* SPECULATION: link order */
+.global __vt__9zNPCRobot
+__vt__9zNPCRobot:
+	.incbin "baserom.dol", 0x293510, 0xD8
+/* SPECULATION: link order */
+.global __vt__8xPSYNote
+__vt__8xPSYNote:
+	.incbin "baserom.dol", 0x2935E8, 0x10
+/* SPECULATION: link order */
+.global g_hash_folkanim
+g_hash_folkanim:
+	.incbin "baserom.dol", 0x2935F8, 0x68
+/* SPECULATION: link order */
+.global g_strz_folkanim
+g_strz_folkanim:
+	.incbin "baserom.dol", 0x293660, 0x88

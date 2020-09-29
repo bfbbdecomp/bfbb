@@ -1323,3 +1323,21 @@ lbl_8009A904:
 .section .rodata
 lbl_8025CA20:
 	.incbin "baserom.dol", 0x259A00, 0x118
+
+.section .data
+lbl_8028F1B0:
+	.incbin "baserom.dol", 0x28C190, 0x20
+lbl_8028F1D0:
+	.incbin "baserom.dol", 0x28C1B0, 0x574
+lbl_8028F744:
+	.incbin "baserom.dol", 0x28C724, 0x160
+/* SPECULATION: link order */
+.global sCheatPressed
+sCheatPressed:
+	.incbin "baserom.dol", 0x28C884, 0x40
+lbl_8028F8E4:
+	.incbin "baserom.dol", 0x28C8C4, 0x1C
+lbl_8028F900:
+	.incbin "baserom.dol", 0x28C8E0, 0xC
+lbl_8028F90C:
+	.incbin "baserom.dol", 0x28C8EC, 0x1C

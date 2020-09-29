@@ -3795,3 +3795,9 @@ lbl_8025D228:
 	.incbin "baserom.dol", 0x25A208, 0x26C
 lbl_8025D494:
 	.incbin "baserom.dol", 0x25A474, 0x10C4
+
+.section .data
+lbl_8028FB70:
+	.incbin "baserom.dol", 0x28CB50, 0x1E4
+lbl_8028FD54:
+	.incbin "baserom.dol", 0x28CD34, 0x2C

@@ -6897,3 +6897,23 @@ lbl_8026A5DC:
 	.incbin "baserom.dol", 0x2675BC, 0xAC
 lbl_8026A688:
 	.incbin "baserom.dol", 0x267668, 0x950
+
+.section .data
+lbl_80297A68:
+	.incbin "baserom.dol", 0x294A48, 0x19C
+lbl_80297C04:
+	.incbin "baserom.dol", 0x294BE4, 0xC
+/* SPECULATION: link order */
+.global __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$220attaching_state_type
+__vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$220attaching_state_type:
+	.incbin "baserom.dol", 0x294BF0, 0x18
+/* SPECULATION: link order */
+.global __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_type
+__vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_type:
+	.incbin "baserom.dol", 0x294C08, 0x18
+/* SPECULATION: link order */
+.global __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state_type
+__vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state_type:
+	.incbin "baserom.dol", 0x294C20, 0x18
+lbl_80297C58:
+	.incbin "baserom.dol", 0x294C38, 0x88

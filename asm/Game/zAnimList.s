@@ -294,3 +294,7 @@ lbl_8004EBD8:
 lbl_8004EBE4:
 /* 8004EBE4 0004B9E4  38 60 00 00 */	li r3, 0
 /* 8004EBE8 0004B9E8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A7B8:
+	.incbin "baserom.dol", 0x287798, 0x50

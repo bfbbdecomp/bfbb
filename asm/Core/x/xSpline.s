@@ -1621,3 +1621,9 @@ xSpline3_Catmullize__FP8xSpline3:
 /* 8004B0FC 00047EFC  7C 08 03 A6 */	mtlr r0
 /* 8004B100 00047F00  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004B104 00047F04  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80288FE0:
+	.incbin "baserom.dol", 0x285FC0, 0x40
+lbl_80289020:
+	.incbin "baserom.dol", 0x286000, 0x40

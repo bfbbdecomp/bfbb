@@ -5073,3 +5073,23 @@ lbl_8025EF60:
 	.incbin "baserom.dol", 0x25BF40, 0x118
 lbl_8025F078:
 	.incbin "baserom.dol", 0x25C058, 0x470
+
+.section .data
+lbl_80290528:
+	.incbin "baserom.dol", 0x28D508, 0x78
+lbl_802905A0:
+	.incbin "baserom.dol", 0x28D580, 0x40C
+lbl_802909AC:
+	.incbin "baserom.dol", 0x28D98C, 0x118
+lbl_80290AC4:
+	.incbin "baserom.dol", 0x28DAA4, 0x118
+lbl_80290BDC:
+	.incbin "baserom.dol", 0x28DBBC, 0x9C
+lbl_80290C78:
+	.incbin "baserom.dol", 0x28DC58, 0x120
+lbl_80290D98:
+	.incbin "baserom.dol", 0x28DD78, 0x104
+/* SPECULATION: link order */
+.global scale
+scale:
+	.incbin "baserom.dol", 0x28DE7C, 0xC

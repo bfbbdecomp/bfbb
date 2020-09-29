@@ -1290,3 +1290,11 @@ lbl_8026C0DC:
 	.incbin "baserom.dol", 0x2690BC, 0xC
 lbl_8026C0E8:
 	.incbin "baserom.dol", 0x2690C8, 0x88
+
+.section .data
+lbl_80298AA8:
+	.incbin "baserom.dol", 0x295A88, 0x10
+/* SPECULATION: link order */
+.global __vt__13zNPCDuplotron
+__vt__13zNPCDuplotron:
+	.incbin "baserom.dol", 0x295A98, 0xD0

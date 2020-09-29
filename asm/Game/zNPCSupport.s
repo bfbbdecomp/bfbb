@@ -2956,3 +2956,15 @@ lbl_8026C7F8:
 	.incbin "baserom.dol", 0x2697D8, 0x10
 lbl_8026C808:
 	.incbin "baserom.dol", 0x2697E8, 0x68
+
+.section .data
+lbl_80298C68:
+	.incbin "baserom.dol", 0x295C48, 0x14
+lbl_80298C7C:
+	.incbin "baserom.dol", 0x295C5C, 0x28
+lbl_80298CA4:
+	.incbin "baserom.dol", 0x295C84, 0xB8
+lbl_80298D5C:
+	.incbin "baserom.dol", 0x295D3C, 0xB8
+lbl_80298E14:
+	.incbin "baserom.dol", 0x295DF4, 0x54

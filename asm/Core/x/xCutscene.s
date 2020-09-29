@@ -2155,3 +2155,7 @@ xVec3Lerp__FP5xVec3PC5xVec3PC5xVec3f:
 /* 80017D30 00014B30  4E 80 00 20 */	blr 
 /* 80017D34 00014B34  4E 80 00 20 */	blr 
 /* 80017D38 00014B38  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027B418:
+	.incbin "baserom.dol", 0x2783F8, 0x10

@@ -8452,3 +8452,79 @@ lbl_80271440:
 	.incbin "baserom.dol", 0x26E420, 0x24
 lbl_80271464:
 	.incbin "baserom.dol", 0x26E444, 0x9C4
+
+.section .data
+lbl_8029AF30:
+	.incbin "baserom.dol", 0x297F10, 0xC0
+lbl_8029AFF0:
+	.incbin "baserom.dol", 0x297FD0, 0x34
+lbl_8029B024:
+	.incbin "baserom.dol", 0x298004, 0x3C
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonBomb
+__vt__21zNPCGoalBPlanktonBomb:
+	.incbin "baserom.dol", 0x298040, 0x34
+/* SPECULATION: link order */
+.global __vt__23zNPCGoalBPlanktonMissle
+__vt__23zNPCGoalBPlanktonMissle:
+	.incbin "baserom.dol", 0x298074, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonWall
+__vt__21zNPCGoalBPlanktonWall:
+	.incbin "baserom.dol", 0x2980A8, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonBeam
+__vt__21zNPCGoalBPlanktonBeam:
+	.incbin "baserom.dol", 0x2980DC, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBPlanktonDizzy
+__vt__22zNPCGoalBPlanktonDizzy:
+	.incbin "baserom.dol", 0x298110, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonFall
+__vt__21zNPCGoalBPlanktonFall:
+	.incbin "baserom.dol", 0x298144, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonStun
+__vt__21zNPCGoalBPlanktonStun:
+	.incbin "baserom.dol", 0x298178, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonMove
+__vt__21zNPCGoalBPlanktonMove:
+	.incbin "baserom.dol", 0x2981AC, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBPlanktonTaunt
+__vt__22zNPCGoalBPlanktonTaunt:
+	.incbin "baserom.dol", 0x2981E0, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonHunt
+__vt__21zNPCGoalBPlanktonHunt:
+	.incbin "baserom.dol", 0x298214, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBPlanktonEvade
+__vt__22zNPCGoalBPlanktonEvade:
+	.incbin "baserom.dol", 0x298248, 0x34
+/* SPECULATION: link order */
+.global __vt__22zNPCGoalBPlanktonFlank
+__vt__22zNPCGoalBPlanktonFlank:
+	.incbin "baserom.dol", 0x29827C, 0x34
+/* SPECULATION: link order */
+.global __vt__23zNPCGoalBPlanktonAmbush
+__vt__23zNPCGoalBPlanktonAmbush:
+	.incbin "baserom.dol", 0x2982B0, 0x34
+/* SPECULATION: link order */
+.global __vt__23zNPCGoalBPlanktonAttack
+__vt__23zNPCGoalBPlanktonAttack:
+	.incbin "baserom.dol", 0x2982E4, 0x34
+/* SPECULATION: link order */
+.global __vt__21zNPCGoalBPlanktonIdle
+__vt__21zNPCGoalBPlanktonIdle:
+	.incbin "baserom.dol", 0x298318, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCBPlankton
+__vt__13zNPCBPlankton:
+	.incbin "baserom.dol", 0x29834C, 0xDC
+/* SPECULATION: link order */
+.global __vt__6taxiCB
+__vt__6taxiCB:
+	.incbin "baserom.dol", 0x298428, 0x18
