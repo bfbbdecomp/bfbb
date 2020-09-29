@@ -73,7 +73,7 @@ ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
 CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -str reuse,pool,readonly \
            -pragma "check_header_flags off" -pragma "force_active on" \
-           -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
+           -use_lmw_stmw on -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
 PREPROCESS := -preprocess -gccincludes $(INCLUDES)
 PPROCFLAGS := -fsymbol-fixup
 
