@@ -8,21 +8,21 @@ void xRenderStateSetTexture(RwTexture* texture)
     {
         if (texture->raster != NULL)
         {
-            RwRenderStateSet(1, (void*)texture->raster);
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)texture->raster);
         }
     }
     else
     {
-        RwRenderStateSet(1, 0);
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)NULL);
     }
 }
 
 void xRenderStateSetSrcBlendMode(int xmode)
 {
-    RwRenderStateSet(10, (void*)sBlendTable[xmode]);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)sBlendTable[xmode]);
 }
 
 void xRenderStateSetDstBlendMode(int xmode)
 {
-    RwRenderStateSet(11, (void*)sBlendTable[xmode]);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)sBlendTable[xmode]);
 }

@@ -278,4 +278,7 @@ struct zGlobals : xGlobals
     zScene* scenePreload;
 };
 
+extern zGlobals globals;
+extern xGlobals* xglobals;
+
 #endif

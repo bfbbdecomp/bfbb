@@ -6,9 +6,6 @@
 #include "zPortal.h"
 #include "zEnv.h"
 
-typedef unsigned int type_45[72];
-typedef xBase* type_49[72];
-
 struct zScene : xScene
 {
 	_zPortal* pendingPortal;
@@ -24,8 +21,8 @@ struct zScene : xScene
 	};
 	unsigned int num_update_base;
 	xBase** update_base;
-	type_45 baseCount;
-	type_49 baseList;
+	unsigned int baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 

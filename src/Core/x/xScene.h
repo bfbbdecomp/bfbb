@@ -6,9 +6,9 @@
 #include "xEnv.h"
 #include "xMemMgr.h"
 
-typedef char*(*type_5)(xBase*);
-typedef char*(*type_8)(unsigned int);
-typedef xBase*(*type_104)(unsigned int);
+typedef char*(*xSceneBase2NameCallback)(xBase*);
+typedef char*(*xSceneID2NameCallback)(unsigned int);
+typedef xBase*(*xSceneResolvIDCallback)(unsigned int);
 
 struct xScene
 {
@@ -37,9 +37,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_104 resolvID;
-	type_5 base2Name;
-	type_8 id2Name;
+	xSceneResolvIDCallback resolvID;
+	xSceneBase2NameCallback base2Name;
+	xSceneID2NameCallback id2Name;
 };
 
 #endif

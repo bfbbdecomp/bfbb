@@ -2,7 +2,6 @@
 #define XRENDERSTATE_H
 
 #include <rwcore.h>
-#include "../../dolphin/include/dolphin/types.h"
 
 void xRenderStateSetDstBlendMode(int xmode);
 void xRenderStateSetSrcBlendMode(int xmode);
