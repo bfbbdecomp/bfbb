@@ -340,3 +340,6 @@ type_name__Q24xhud10text_assetFv:
 /* 80195900 00192700  3C 60 80 27 */	lis r3, lbl_802749F0@ha
 /* 80195904 00192704  38 63 49 F0 */	addi r3, r3, lbl_802749F0@l
 /* 80195908 00192708  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802749F0:
+	.incbin "baserom.dol", 0x2719D0, 0x10

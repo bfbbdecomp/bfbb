@@ -1239,3 +1239,6 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80190F74 0018DD74  D0 63 00 04 */	stfs f3, 4(r3)
 /* 80190F78 0018DD78  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80190F7C 0018DD7C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80273B30:
+	.incbin "baserom.dol", 0x270B10, 0x10

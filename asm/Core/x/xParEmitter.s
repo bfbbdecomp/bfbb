@@ -1340,3 +1340,6 @@ __as__10xParInterpFRC10xParInterp:
 /* 80118928 00115728  D0 23 00 0C */	stfs f1, 0xc(r3)
 /* 8011892C 0011572C  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 80118930 00115730  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026B008:
+	.incbin "baserom.dol", 0x267FE8, 0x40

@@ -563,3 +563,12 @@ __as__6RtQuatFRC6RtQuat:
 /* 800BF1B4 000BBFB4  90 03 00 08 */	stw r0, 8(r3)
 /* 800BF1B8 000BBFB8  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 800BF1BC 000BBFBC  4E 80 00 20 */	blr 
+
+.section .rodata
+/* this apparently goes to iAnimSKB but putting it there breaks the linking order */
+.global lbl_80260004
+lbl_80260004:
+	.incbin "baserom.dol", 0x25cfe4, 0x104
+.global lbl_80260108
+lbl_80260108:
+	.incbin "baserom.dol", 0x25d0e8, 0x10

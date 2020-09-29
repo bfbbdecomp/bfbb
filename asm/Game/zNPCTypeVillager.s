@@ -5309,3 +5309,26 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80107794 00104594  D0 63 00 04 */	stfs f3, 4(r3)
 /* 80107798 00104598  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8010779C 0010459C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80269AC8:
+	.incbin "baserom.dol", 0x266AA8, 0x158
+lbl_80269C20:
+	.incbin "baserom.dol", 0x266C00, 0x2C
+lbl_80269C4C:
+	.incbin "baserom.dol", 0x266C2C, 0x1C
+lbl_80269C68:
+	.incbin "baserom.dol", 0x266C48, 0x28
+lbl_80269C90:
+	.incbin "baserom.dol", 0x266C70, 0x10
+lbl_80269CA0:
+	.incbin "baserom.dol", 0x266C80, 0x10
+lbl_80269CB0:
+	.incbin "baserom.dol", 0x266C90, 0x1C
+lbl_80269CCC:
+	.incbin "baserom.dol", 0x266CAC, 0x34
+lbl_80269D00:
+	.incbin "baserom.dol", 0x266CE0, 0x1C
+lbl_80269D1C:
+	.incbin "baserom.dol", 0x266CFC, 0x24
+lbl_80269D40:
+	.incbin "baserom.dol", 0x266D20, 0x4D0

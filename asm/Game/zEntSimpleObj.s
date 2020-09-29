@@ -1272,3 +1272,8 @@ lbl_80092058:
 /* 80092068 0008EE68  7C 08 03 A6 */	mtlr r0
 /* 8009206C 0008EE6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80092070 0008EE70  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802598E0:
+	.incbin "baserom.dol", 0x2568C0, 0xC
+lbl_802598EC:
+	.incbin "baserom.dol", 0x2568CC, 0x20EC

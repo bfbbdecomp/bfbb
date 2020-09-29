@@ -1269,3 +1269,8 @@ lbl_800BE32C:
 /* 800BE464 000BB264  7C 08 03 A6 */	mtlr r0
 /* 800BE468 000BB268  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BE46C 000BB26C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025F9E8:
+	.incbin "baserom.dol", 0x25C9C8, 0x2C8
+lbl_8025FCB0:
+	.incbin "baserom.dol", 0x25CC90, 0x354

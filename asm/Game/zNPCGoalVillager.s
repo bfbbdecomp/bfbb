@@ -2709,3 +2709,22 @@ IndexInStack__7xPsycheCFPC5xGoal:
 /* 80138C94 00135A94  7C 08 03 A6 */	mtlr r0
 /* 80138C98 00135A98  38 21 00 10 */	addi r1, r1, 0x10
 /* 80138C9C 00135A9C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026CF48:
+	.incbin "baserom.dol", 0x269F28, 0xC
+lbl_8026CF54:
+	.incbin "baserom.dol", 0x269F34, 0xC
+lbl_8026CF60:
+	.incbin "baserom.dol", 0x269F40, 0xC
+lbl_8026CF6C:
+	.incbin "baserom.dol", 0x269F4C, 0xC
+lbl_8026CF78:
+	.incbin "baserom.dol", 0x269F58, 0x14
+lbl_8026CF8C:
+	.incbin "baserom.dol", 0x269F6C, 0xC
+lbl_8026CF98:
+	.incbin "baserom.dol", 0x269F78, 0xC
+lbl_8026CFA4:
+	.incbin "baserom.dol", 0x269F84, 0xC
+lbl_8026CFB0:
+	.incbin "baserom.dol", 0x269F90, 0xD0

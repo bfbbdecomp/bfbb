@@ -766,3 +766,6 @@ lbl_801245C0:
 /* 801245C8 001213C8  7C 08 03 A6 */	mtlr r0
 /* 801245CC 001213CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801245D0 001213D0  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026B998:
+	.incbin "baserom.dol", 0x268978, 0x148

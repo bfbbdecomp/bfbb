@@ -3924,3 +3924,6 @@ lbl_800D30A4:
 /* 800D30A8 000CFEA8  42 00 FF B0 */	bdnz lbl_800D3058
 /* 800D30AC 000CFEAC  C0 22 98 18 */	lfs f1, lbl_803CE198-_SDA2_BASE_(r2)
 /* 800D30B0 000CFEB0  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802665E8:
+	.incbin "baserom.dol", 0x2635C8, 0x28

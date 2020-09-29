@@ -21785,3 +21785,50 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 800ECBF0 000E99F0  D0 63 00 04 */	stfs f3, 4(r3)
 /* 800ECBF4 000E99F4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800ECBF8 000E99F8  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802670B0:
+	.incbin "baserom.dol", 0x264090, 0x154
+lbl_80267204:
+	.incbin "baserom.dol", 0x2641E4, 0x20
+lbl_80267224:
+	.incbin "baserom.dol", 0x264204, 0xC
+lbl_80267230:
+	.incbin "baserom.dol", 0x264210, 0xC
+lbl_8026723C:
+	.incbin "baserom.dol", 0x26421C, 0xC
+lbl_80267248:
+	.incbin "baserom.dol", 0x264228, 0xC
+lbl_80267254:
+	.incbin "baserom.dol", 0x264234, 0x18
+lbl_8026726C:
+	.incbin "baserom.dol", 0x26424C, 0xC
+lbl_80267278:
+	.incbin "baserom.dol", 0x264258, 0xC
+lbl_80267284:
+	.incbin "baserom.dol", 0x264264, 0xC
+lbl_80267290:
+	.incbin "baserom.dol", 0x264270, 0x20
+lbl_802672B0:
+	.incbin "baserom.dol", 0x264290, 0xC
+lbl_802672BC:
+	.incbin "baserom.dol", 0x26429C, 0xC
+lbl_802672C8:
+	.incbin "baserom.dol", 0x2642A8, 0x18
+lbl_802672E0:
+	.incbin "baserom.dol", 0x2642C0, 0x18
+lbl_802672F8:
+	.incbin "baserom.dol", 0x2642D8, 0x60
+lbl_80267358:
+	.incbin "baserom.dol", 0x264338, 0xC
+lbl_80267364:
+	.incbin "baserom.dol", 0x264344, 0xC
+lbl_80267370:
+	.incbin "baserom.dol", 0x264350, 0xC
+lbl_8026737C:
+	.incbin "baserom.dol", 0x26435C, 0x20
+lbl_8026739C:
+	.incbin "baserom.dol", 0x26437C, 0xC
+lbl_802673A8:
+	.incbin "baserom.dol", 0x264388, 0xC
+lbl_802673B4:
+	.incbin "baserom.dol", 0x264394, 0x151C

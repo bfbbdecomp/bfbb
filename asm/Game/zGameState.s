@@ -308,3 +308,6 @@ lbl_8009AD20:
 /* 8009AD44 00097B44  7C 08 03 A6 */	mtlr r0
 /* 8009AD48 00097B48  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009AD4C 00097B4C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025CB38:
+	.incbin "baserom.dol", 0x259B18, 0x18

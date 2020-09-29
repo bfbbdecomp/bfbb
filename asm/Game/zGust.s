@@ -680,3 +680,6 @@ lbl_8009B65C:
 /* 8009B678 00098478  7C 08 03 A6 */	mtlr r0
 /* 8009B67C 0009847C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009B680 00098480  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025CB50:
+	.incbin "baserom.dol", 0x259B30, 0x28

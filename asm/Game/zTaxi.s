@@ -450,3 +450,6 @@ lbl_80172620:
 /* 80172658 0016F458  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017265C 0016F45C  4E 80 00 20 */	blr 
 /* 80172660 0016F460  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80271E40:
+	.incbin "baserom.dol", 0x26EE20, 0x18

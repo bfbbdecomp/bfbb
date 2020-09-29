@@ -1423,3 +1423,6 @@ zSurfaceGetDefault__Fv:
 /* 800B691C 000B371C  3C 60 80 2F */	lis r3, lbl_802F2C88@ha
 /* 800B6920 000B3720  38 63 2C 88 */	addi r3, r3, lbl_802F2C88@l
 /* 800B6924 000B3724  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025F4E8:
+	.incbin "baserom.dol", 0x25C4C8, 0xA8

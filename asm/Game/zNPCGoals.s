@@ -27,3 +27,6 @@ lbl_800D50E0:
 /* 800D5108 000D1F08  7C 08 03 A6 */	mtlr r0
 /* 800D510C 000D1F0C  38 21 08 70 */	addi r1, r1, 0x870
 /* 800D5110 000D1F10  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80266848:
+	.incbin "baserom.dol", 0x263828, 0x868

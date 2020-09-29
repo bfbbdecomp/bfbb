@@ -3188,3 +3188,6 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80129FA8 00126DA8  D0 63 00 04 */	stfs f3, 4(r3)
 /* 80129FAC 00126DAC  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80129FB0 00126DB0  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026C170:
+	.incbin "baserom.dol", 0x269150, 0x80

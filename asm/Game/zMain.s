@@ -3788,3 +3788,10 @@ lbl_800A5F98:
 .global iEnvStartup__Fv
 iEnvStartup__Fv:
 /* 800A5FFC 000A2DFC  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025D218:
+	.incbin "baserom.dol", 0x25A1F8, 0x10
+lbl_8025D228:
+	.incbin "baserom.dol", 0x25A208, 0x26C
+lbl_8025D494:
+	.incbin "baserom.dol", 0x25A474, 0x10C4

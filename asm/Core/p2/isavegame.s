@@ -3345,3 +3345,18 @@ lbl_800CF33C:
 /* 800CF340 000CC140  7C 08 03 A6 */	mtlr r0
 /* 800CF344 000CC144  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CF348 000CC148  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802601B8:
+	.incbin "baserom.dol", 0x25D198, 0x28
+lbl_802601E0:
+	.incbin "baserom.dol", 0x25D1C0, 0x6C
+lbl_8026024C:
+	.incbin "baserom.dol", 0x25D22C, 0x6C
+lbl_802602B8:
+	.incbin "baserom.dol", 0x25D298, 0x200
+lbl_802604B8:
+	.incbin "baserom.dol", 0x25D498, 0x28
+lbl_802604E0:
+	.incbin "baserom.dol", 0x25D4C0, 0x5C40
+lbl_80266120:
+	.incbin "baserom.dol", 0x263100, 0x4C8

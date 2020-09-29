@@ -1096,3 +1096,8 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 800627C0 0005F5C0  D0 63 00 04 */	stfs f3, 4(r3)
 /* 800627C4 0005F5C4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800627C8 0005F5C8  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80255DF8:
+	.incbin "baserom.dol", 0x252DD8, 0x60
+lbl_80255E58:
+	.incbin "baserom.dol", 0x252E38, 0x50

@@ -46089,3 +46089,23 @@ zGooIs__FP4xEnt:
 /* 80090E7C 0008DC7C  7C 08 03 A6 */	mtlr r0
 /* 80090E80 0008DC80  38 21 00 10 */	addi r1, r1, 0x10
 /* 80090E84 0008DC84  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80255F00:
+	.incbin "baserom.dol", 0x252EE0, 0x58
+lbl_80255F58:
+	.incbin "baserom.dol", 0x252F38, 0x84
+lbl_80255FDC:
+	.incbin "baserom.dol", 0x252FBC, 0x100
+lbl_802560DC:
+	.incbin "baserom.dol", 0x2530BC, 0xC
+lbl_802560E8:
+	.incbin "baserom.dol", 0x2530C8, 0xC
+.global offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf
+offsetChuck$localstatic4$get_reticle_bound__FR5xVec3Rf:
+	.incbin "baserom.dol", 0x2530D4, 0xC
+lbl_80256100:
+	.incbin "baserom.dol", 0x2530E0, 0xC
+lbl_8025610C:
+	.incbin "baserom.dol", 0x2530EC, 0xC
+lbl_80256118:
+	.incbin "baserom.dol", 0x2530F8, 0x37C8

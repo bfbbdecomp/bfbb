@@ -346,3 +346,6 @@ __ct__9zNPCB_SB2Fi:
 /* 801365BC 001333BC  7C 08 03 A6 */	mtlr r0
 /* 801365C0 001333C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801365C4 001333C4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026CBB8:
+	.incbin "baserom.dol", 0x269B98, 0x390

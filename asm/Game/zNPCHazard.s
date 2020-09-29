@@ -9444,3 +9444,30 @@ xVec2Length2__FPC5xVec2:
 /* 8018FDB8 0018CBB8  7C 08 03 A6 */	mtlr r0
 /* 8018FDBC 0018CBBC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8018FDC0 0018CBC0  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802734B8:
+	.incbin "baserom.dol", 0x270498, 0x148
+lbl_80273600:
+	.incbin "baserom.dol", 0x2705E0, 0xC
+lbl_8027360C:
+	.incbin "baserom.dol", 0x2705EC, 0xE4
+lbl_802736F0:
+	.incbin "baserom.dol", 0x2706D0, 0x20
+lbl_80273710:
+	.incbin "baserom.dol", 0x2706F0, 0x90
+lbl_802737A0:
+	.incbin "baserom.dol", 0x270780, 0xC
+lbl_802737AC:
+	.incbin "baserom.dol", 0x27078C, 0x18
+lbl_802737C4:
+	.incbin "baserom.dol", 0x2707A4, 0xC
+lbl_802737D0:
+	.incbin "baserom.dol", 0x2707B0, 0xC
+lbl_802737DC:
+	.incbin "baserom.dol", 0x2707BC, 0xC
+lbl_802737E8:
+	.incbin "baserom.dol", 0x2707C8, 0xC
+lbl_802737F4:
+	.incbin "baserom.dol", 0x2707D4, 0xC
+lbl_80273800:
+	.incbin "baserom.dol", 0x2707E0, 0x330

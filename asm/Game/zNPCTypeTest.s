@@ -268,3 +268,6 @@ lbl_80135E34:
 /* 80135E94 00132C94  7C 63 02 14 */	add r3, r3, r0
 /* 80135E98 00132C98  80 63 00 04 */	lwz r3, 4(r3)
 /* 80135E9C 00132C9C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026CA50:
+	.incbin "baserom.dol", 0x269A30, 0x58

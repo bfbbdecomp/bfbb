@@ -245,3 +245,6 @@ lbl_800C4ADC:
 /* 800C4AE8 000C18E8  7C 08 03 A6 */	mtlr r0
 /* 800C4AEC 000C18EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C4AF0 000C18F0  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80260148:
+	.incbin "baserom.dol", 0x25D128, 0x30

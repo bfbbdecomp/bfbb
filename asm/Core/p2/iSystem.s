@@ -1469,3 +1469,6 @@ DolphinInstallFileSystem__Fv:
 /* 800D44E4 000D12E4  7C 08 03 A6 */	mtlr r0
 /* 800D44E8 000D12E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D44EC 000D12EC  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80266610:
+	.incbin "baserom.dol", 0x2635F0, 0x238

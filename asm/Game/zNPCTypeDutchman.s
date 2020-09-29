@@ -10768,3 +10768,23 @@ xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f:
 /* 8017C094 00178E94  7C 08 03 A6 */	mtlr r0
 /* 8017C098 00178E98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C09C 00178E9C  4E 80 00 20 */	blr 
+
+.section .rodata
+lbl_80271E58:
+	.incbin "baserom.dol", 0x26EE38, 0x180
+lbl_80271FD8:
+	.incbin "baserom.dol", 0x26EFB8, 0x54
+lbl_8027202C:
+	.incbin "baserom.dol", 0x26F00C, 0x48
+lbl_80272074:
+	.incbin "baserom.dol", 0x26F054, 0x34
+lbl_802720A8:
+	.incbin "baserom.dol", 0x26F088, 0x18
+lbl_802720C0:
+	.incbin "baserom.dol", 0x26F0A0, 0xC
+lbl_802720CC:
+	.incbin "baserom.dol", 0x26F0AC, 0x18
+lbl_802720E4:
+	.incbin "baserom.dol", 0x26F0C4, 0xC
+lbl_802720F0:
+	.incbin "baserom.dol", 0x26F0D0, 0xB50

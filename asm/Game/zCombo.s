@@ -478,3 +478,6 @@ visible__8ztextboxFv:
 /* 80195FDC 00192DDC  88 03 00 10 */	lbz r0, 0x10(r3)
 /* 80195FE0 00192DE0  54 03 E7 FE */	rlwinm r3, r0, 0x1c, 0x1f, 0x1f
 /* 80195FE4 00192DE4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80274A00:
+	.incbin "baserom.dol", 0x2719E0, 0x138

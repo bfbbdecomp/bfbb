@@ -6888,3 +6888,12 @@ lbl_80116574:
 /* 8011657C 0011337C  7C 08 03 A6 */	mtlr r0
 /* 80116580 00113380  38 21 00 60 */	addi r1, r1, 0x60
 /* 80116584 00113384  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026A408:
+	.incbin "baserom.dol", 0x2673E8, 0x168
+lbl_8026A570:
+	.incbin "baserom.dol", 0x267550, 0x6C
+lbl_8026A5DC:
+	.incbin "baserom.dol", 0x2675BC, 0xAC
+lbl_8026A688:
+	.incbin "baserom.dol", 0x267668, 0x950

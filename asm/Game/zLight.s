@@ -576,3 +576,6 @@ lbl_8009E7E4:
 /* 8009E7EC 0009B5EC  7C 08 03 A6 */	mtlr r0
 /* 8009E7F0 0009B5F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E7F4 0009B5F4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025CD30:
+	.incbin "baserom.dol", 0x259D10, 0x20

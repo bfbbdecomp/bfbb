@@ -1887,3 +1887,14 @@ lbl_8012C080:
 IsOn__10zMovePointFv:
 /* 8012C0A0 00128EA0  88 63 00 24 */	lbz r3, 0x24(r3)
 /* 8012C0A4 00128EA4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026C1F0:
+	.incbin "baserom.dol", 0x2691D0, 0x4C
+lbl_8026C23C:
+	.incbin "baserom.dol", 0x26921C, 0xC
+lbl_8026C248:
+	.incbin "baserom.dol", 0x269228, 0x50
+lbl_8026C298:
+	.incbin "baserom.dol", 0x269278, 0xC
+lbl_8026C2A4:
+	.incbin "baserom.dol", 0x269284, 0xC
