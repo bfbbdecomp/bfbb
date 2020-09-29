@@ -49,7 +49,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xPar.o                    \
     $(OBJ_DIR)/asm/Core/x/xParCmd.o                 \
     $(OBJ_DIR)/asm/Core/x/xParGroup.o               \
-    $(OBJ_DIR)/asm/Core/x/xParMgr.o                 \
+    $(OBJ_DIR)/src/Core/x/xParMgr.o                 \
     $(OBJ_DIR)/asm/Core/x/xPartition.o              \
     $(OBJ_DIR)/asm/Core/x/xpkrsvc.o                 \
     $(OBJ_DIR)/asm/Core/x/xQuickCull.o              \
