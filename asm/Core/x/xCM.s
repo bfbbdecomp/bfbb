@@ -326,7 +326,7 @@ lbl_801963E4:
 /* 8019646C 0019326C  38 61 00 A4 */	addi r3, r1, 0xa4
 /* 80196470 00193270  38 A1 00 18 */	addi r5, r1, 0x18
 /* 80196474 00193274  38 DF 01 48 */	addi r6, r31, 0x148
-/* 80196478 00193278  4B E8 1A 7D */	bl create__5xfontFUifff10iColor_tagRC13basic_rect_f_
+/* 80196478 00193278  4B E8 1A 7D */	bl create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1
 /* 8019647C 0019327C  C0 22 B2 78 */	lfs f1, lbl_803CFBF8-_SDA2_BASE_(r2)
 /* 80196480 00193280  38 61 01 98 */	addi r3, r1, 0x198
 /* 80196484 00193284  38 81 00 A4 */	addi r4, r1, 0xa4
@@ -335,7 +335,7 @@ lbl_801963E4:
 /* 80196490 00193290  38 C0 00 02 */	li r6, 2
 /* 80196494 00193294  FC 60 08 90 */	fmr f3, f1
 /* 80196498 00193298  FC 80 08 90 */	fmr f4, f1
-/* 8019649C 0019329C  4B E8 19 49 */	bl create__8xtextboxFRC5xfontRC13basic_rect_f_Uiffff
+/* 8019649C 0019329C  4B E8 19 49 */	bl create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff
 /* 801964A0 001932A0  38 00 00 0D */	li r0, 0xd
 /* 801964A4 001932A4  38 A1 02 CC */	addi r5, r1, 0x2cc
 /* 801964A8 001932A8  38 81 01 94 */	addi r4, r1, 0x194
@@ -410,7 +410,7 @@ lbl_80196534:
 /* 801965A8 001933A8  38 61 00 80 */	addi r3, r1, 0x80
 /* 801965AC 001933AC  38 A1 00 10 */	addi r5, r1, 0x10
 /* 801965B0 001933B0  38 DF 01 48 */	addi r6, r31, 0x148
-/* 801965B4 001933B4  4B E8 19 41 */	bl create__5xfontFUifff10iColor_tagRC13basic_rect_f_
+/* 801965B4 001933B4  4B E8 19 41 */	bl create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1
 /* 801965B8 001933B8  C0 22 B2 78 */	lfs f1, lbl_803CFBF8-_SDA2_BASE_(r2)
 /* 801965BC 001933BC  7F 06 C3 78 */	mr r6, r24
 /* 801965C0 001933C0  38 61 01 30 */	addi r3, r1, 0x130
@@ -419,7 +419,7 @@ lbl_80196534:
 /* 801965CC 001933CC  38 A1 00 3C */	addi r5, r1, 0x3c
 /* 801965D0 001933D0  FC 60 08 90 */	fmr f3, f1
 /* 801965D4 001933D4  FC 80 08 90 */	fmr f4, f1
-/* 801965D8 001933D8  4B E8 18 0D */	bl create__8xtextboxFRC5xfontRC13basic_rect_f_Uiffff
+/* 801965D8 001933D8  4B E8 18 0D */	bl create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff
 /* 801965DC 001933DC  38 00 00 0D */	li r0, 0xd
 /* 801965E0 001933E0  38 A1 02 64 */	addi r5, r1, 0x264
 /* 801965E4 001933E4  38 81 01 2C */	addi r4, r1, 0x12c
@@ -472,7 +472,7 @@ lbl_801965EC:
 /* 8019669C 0019349C  38 61 00 5C */	addi r3, r1, 0x5c
 /* 801966A0 001934A0  38 A1 00 08 */	addi r5, r1, 8
 /* 801966A4 001934A4  38 DF 01 48 */	addi r6, r31, 0x148
-/* 801966A8 001934A8  4B E8 18 4D */	bl create__5xfontFUifff10iColor_tagRC13basic_rect_f_
+/* 801966A8 001934A8  4B E8 18 4D */	bl create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1
 /* 801966AC 001934AC  C0 22 B2 78 */	lfs f1, lbl_803CFBF8-_SDA2_BASE_(r2)
 /* 801966B0 001934B0  7F 46 D3 78 */	mr r6, r26
 /* 801966B4 001934B4  38 61 00 C8 */	addi r3, r1, 0xc8
@@ -481,7 +481,7 @@ lbl_801965EC:
 /* 801966C0 001934C0  38 A1 00 2C */	addi r5, r1, 0x2c
 /* 801966C4 001934C4  FC 60 08 90 */	fmr f3, f1
 /* 801966C8 001934C8  FC 80 08 90 */	fmr f4, f1
-/* 801966CC 001934CC  4B E8 17 19 */	bl create__8xtextboxFRC5xfontRC13basic_rect_f_Uiffff
+/* 801966CC 001934CC  4B E8 17 19 */	bl create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff
 /* 801966D0 001934D0  38 00 00 0D */	li r0, 0xd
 /* 801966D4 001934D4  38 A1 01 FC */	addi r5, r1, 0x1fc
 /* 801966D8 001934D8  38 81 00 C4 */	addi r4, r1, 0xc4

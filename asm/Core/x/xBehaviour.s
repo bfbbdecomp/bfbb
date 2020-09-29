@@ -23,14 +23,14 @@ GetState__5xGoalCFv:
 /* 8010E9CC 0010B7CC  4E 80 00 20 */	blr 
 
 /* Next__17xListItem<5xGoal>Fv */
-.global Next__17xListItem_5xGoal_Fv
-Next__17xListItem_5xGoal_Fv:
+.global Next__17xListItem$$05xGoal$$1Fv
+Next__17xListItem$$05xGoal$$1Fv:
 /* 8010E9D0 0010B7D0  80 63 00 04 */	lwz r3, 4(r3)
 /* 8010E9D4 0010B7D4  4E 80 00 20 */	blr 
 
 /* Insert__17xListItem<5xGoal>FP5xGoal */
-.global Insert__17xListItem_5xGoal_FP5xGoal
-Insert__17xListItem_5xGoal_FP5xGoal:
+.global Insert__17xListItem$$05xGoal$$1FP5xGoal
+Insert__17xListItem$$05xGoal$$1FP5xGoal:
 /* 8010E9D8 0010B7D8  90 83 00 08 */	stw r4, 8(r3)
 /* 8010E9DC 0010B7DC  80 04 00 04 */	lwz r0, 4(r4)
 /* 8010E9E0 0010B7E0  90 03 00 04 */	stw r0, 4(r3)
@@ -43,8 +43,8 @@ lbl_8010E9F4:
 /* 8010E9F8 0010B7F8  4E 80 00 20 */	blr 
 
 /* RemHead__17xListItem<5xGoal>FPP5xGoal */
-.global RemHead__17xListItem_5xGoal_FPP5xGoal
-RemHead__17xListItem_5xGoal_FPP5xGoal:
+.global RemHead__17xListItem$$05xGoal$$1FPP5xGoal
+RemHead__17xListItem$$05xGoal$$1FPP5xGoal:
 /* 8010E9FC 0010B7FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EA00 0010B800  7C 08 02 A6 */	mflr r0
 /* 8010EA04 0010B804  90 01 00 14 */	stw r0, 0x14(r1)
@@ -57,17 +57,17 @@ RemHead__17xListItem_5xGoal_FPP5xGoal:
 /* 8010EA20 0010B820  38 60 00 00 */	li r3, 0
 /* 8010EA24 0010B824  48 00 00 30 */	b lbl_8010EA54
 lbl_8010EA28:
-/* 8010EA28 0010B828  48 00 00 45 */	bl Head__17xListItem_5xGoal_Fv
+/* 8010EA28 0010B828  48 00 00 45 */	bl Head__17xListItem$$05xGoal$$1Fv
 /* 8010EA2C 0010B82C  7C 7F 1B 79 */	or. r31, r3, r3
 /* 8010EA30 0010B830  40 82 00 10 */	bne lbl_8010EA40
 /* 8010EA34 0010B834  38 00 00 00 */	li r0, 0
 /* 8010EA38 0010B838  90 1E 00 00 */	stw r0, 0(r30)
 /* 8010EA3C 0010B83C  48 00 00 14 */	b lbl_8010EA50
 lbl_8010EA40:
-/* 8010EA40 0010B840  4B FF FF 91 */	bl Next__17xListItem_5xGoal_Fv
+/* 8010EA40 0010B840  4B FF FF 91 */	bl Next__17xListItem$$05xGoal$$1Fv
 /* 8010EA44 0010B844  90 7E 00 00 */	stw r3, 0(r30)
 /* 8010EA48 0010B848  7F E3 FB 78 */	mr r3, r31
-/* 8010EA4C 0010B84C  4B FC A8 29 */	bl Remove__17xListItem_5xGoal_Fv
+/* 8010EA4C 0010B84C  4B FC A8 29 */	bl Remove__17xListItem$$05xGoal$$1Fv
 lbl_8010EA50:
 /* 8010EA50 0010B850  7F E3 FB 78 */	mr r3, r31
 lbl_8010EA54:
@@ -79,8 +79,8 @@ lbl_8010EA54:
 /* 8010EA68 0010B868  4E 80 00 20 */	blr 
 
 /* Head__17xListItem<5xGoal>Fv */
-.global Head__17xListItem_5xGoal_Fv
-Head__17xListItem_5xGoal_Fv:
+.global Head__17xListItem$$05xGoal$$1Fv
+Head__17xListItem$$05xGoal$$1Fv:
 /* 8010EA6C 0010B86C  7C 64 1B 79 */	or. r4, r3, r3
 /* 8010EA70 0010B870  40 82 00 10 */	bne lbl_8010EA80
 /* 8010EA74 0010B874  4E 80 00 20 */	blr 

@@ -54,7 +54,7 @@ render_bk_fill__22$$2unnamed$$2zTextBox_cpp$$2FRC8ztextbox:
 /* 80133EF8 00130CF8  90 01 00 28 */	stw r0, 0x28(r1)
 /* 80133EFC 00130CFC  C0 22 A3 4C */	lfs f1, lbl_803CECCC-_SDA2_BASE_(r2)
 /* 80133F00 00130D00  C0 42 A3 50 */	lfs f2, lbl_803CECD0-_SDA2_BASE_(r2)
-/* 80133F04 00130D04  4B EF 20 F9 */	bl scale__13basic_rect_f_Fff
+/* 80133F04 00130D04  4B EF 20 F9 */	bl scale__13basic_rect$$0f$$1Fff
 /* 80133F08 00130D08  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 80133F0C 00130D0C  3C 60 80 32 */	lis r3, lbl_80324258@ha
 /* 80133F10 00130D10  FC A0 F0 90 */	fmr f5, f30

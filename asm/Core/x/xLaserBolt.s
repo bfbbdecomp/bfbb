@@ -21,7 +21,7 @@ init__17xLaserBoltEmitterFUlPCc:
 /* 8017D57C 0017A37C  4B E8 5E DD */	bl memset
 /* 8017D580 0017A380  7F C4 F3 78 */	mr r4, r30
 /* 8017D584 0017A384  38 7D 00 3C */	addi r3, r29, 0x3c
-/* 8017D588 0017A388  48 00 15 D9 */	bl init__40static_queue_Q217xLaserBoltEmitter4bolt_FUl
+/* 8017D588 0017A388  48 00 15 D9 */	bl init__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1FUl
 /* 8017D58C 0017A38C  7F A3 EB 78 */	mr r3, r29
 /* 8017D590 0017A390  7F E4 FB 78 */	mr r4, r31
 /* 8017D594 0017A394  48 00 12 A5 */	bl debug_init__17xLaserBoltEmitterFPCc
@@ -105,13 +105,13 @@ reset__17xLaserBoltEmitterFv:
 /* 8017D688 0017A488  93 81 00 20 */	stw r28, 0x20(r1)
 /* 8017D68C 0017A48C  7C 7C 1B 78 */	mr r28, r3
 /* 8017D690 0017A490  38 7C 00 3C */	addi r3, r28, 0x3c
-/* 8017D694 0017A494  48 00 16 71 */	bl begin__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017D694 0017A494  48 00 16 71 */	bl begin__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017D698 0017A498  90 81 00 14 */	stw r4, 0x14(r1)
 /* 8017D69C 0017A49C  90 61 00 10 */	stw r3, 0x10(r1)
 /* 8017D6A0 0017A4A0  48 00 00 54 */	b lbl_8017D6F4
 lbl_8017D6A4:
 /* 8017D6A4 0017A4A4  38 61 00 10 */	addi r3, r1, 0x10
-/* 8017D6A8 0017A4A8  48 00 16 45 */	bl __ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv
+/* 8017D6A8 0017A4A8  48 00 16 45 */	bl __ml__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFv
 /* 8017D6AC 0017A4AC  80 1C 00 90 */	lwz r0, 0x90(r28)
 /* 8017D6B0 0017A4B0  7C 7F 1B 78 */	mr r31, r3
 /* 8017D6B4 0017A4B4  83 DC 00 74 */	lwz r30, 0x74(r28)
@@ -131,19 +131,19 @@ lbl_8017D6E4:
 /* 8017D6E4 0017A4E4  7C 1E E8 40 */	cmplw r30, r29
 /* 8017D6E8 0017A4E8  40 82 FF DC */	bne lbl_8017D6C4
 /* 8017D6EC 0017A4EC  38 61 00 10 */	addi r3, r1, 0x10
-/* 8017D6F0 0017A4F0  48 00 15 89 */	bl __pp__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFv
+/* 8017D6F0 0017A4F0  48 00 15 89 */	bl __pp__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFv
 lbl_8017D6F4:
 /* 8017D6F4 0017A4F4  38 7C 00 3C */	addi r3, r28, 0x3c
-/* 8017D6F8 0017A4F8  48 00 15 11 */	bl end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017D6F8 0017A4F8  48 00 15 11 */	bl end__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017D6FC 0017A4FC  90 81 00 0C */	stw r4, 0xc(r1)
 /* 8017D700 0017A500  38 81 00 08 */	addi r4, r1, 8
 /* 8017D704 0017A504  90 61 00 08 */	stw r3, 8(r1)
 /* 8017D708 0017A508  38 61 00 10 */	addi r3, r1, 0x10
-/* 8017D70C 0017A50C  48 00 14 E1 */	bl __ne__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator
+/* 8017D70C 0017A50C  48 00 14 E1 */	bl __ne__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator
 /* 8017D710 0017A510  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8017D714 0017A514  40 82 FF 90 */	bne lbl_8017D6A4
 /* 8017D718 0017A518  38 7C 00 3C */	addi r3, r28, 0x3c
-/* 8017D71C 0017A51C  48 00 14 C1 */	bl clear__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
+/* 8017D71C 0017A51C  48 00 14 C1 */	bl clear__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
 /* 8017D720 0017A520  38 00 00 00 */	li r0, 0
 /* 8017D724 0017A524  3B A0 00 00 */	li r29, 0
 /* 8017D728 0017A528  90 1C 00 58 */	stw r0, 0x58(r28)
@@ -193,14 +193,14 @@ emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3:
 /* 8017D7B4 0017A5B4  93 81 00 10 */	stw r28, 0x10(r1)
 /* 8017D7B8 0017A5B8  7C 7C 1B 78 */	mr r28, r3
 /* 8017D7BC 0017A5BC  38 7C 00 3C */	addi r3, r28, 0x3c
-/* 8017D7C0 0017A5C0  48 00 15 F5 */	bl full__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017D7C0 0017A5C0  48 00 15 F5 */	bl full__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017D7C4 0017A5C4  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8017D7C8 0017A5C8  41 82 00 0C */	beq lbl_8017D7D4
 /* 8017D7CC 0017A5CC  38 7C 00 3C */	addi r3, r28, 0x3c
-/* 8017D7D0 0017A5D0  48 00 15 D5 */	bl pop_back__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
+/* 8017D7D0 0017A5D0  48 00 15 D5 */	bl pop_back__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
 lbl_8017D7D4:
 /* 8017D7D4 0017A5D4  38 7C 00 3C */	addi r3, r28, 0x3c
-/* 8017D7D8 0017A5D8  48 00 15 51 */	bl push_front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
+/* 8017D7D8 0017A5D8  48 00 15 51 */	bl push_front__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
 /* 8017D7DC 0017A5DC  7C 7F 1B 78 */	mr r31, r3
 /* 8017D7E0 0017A5E0  7F C4 F3 78 */	mr r4, r30
 /* 8017D7E4 0017A5E4  38 7F 00 18 */	addi r3, r31, 0x18
@@ -293,13 +293,13 @@ lbl_8017D918:
 lbl_8017D920:
 /* 8017D920 0017A720  7C 1E 03 78 */	mr r30, r0
 /* 8017D924 0017A724  38 7F 00 3C */	addi r3, r31, 0x3c
-/* 8017D928 0017A728  48 00 13 DD */	bl begin__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017D928 0017A728  48 00 13 DD */	bl begin__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017D92C 0017A72C  90 81 00 1C */	stw r4, 0x1c(r1)
 /* 8017D930 0017A730  90 61 00 18 */	stw r3, 0x18(r1)
 /* 8017D934 0017A734  48 00 01 DC */	b lbl_8017DB10
 lbl_8017D938:
 /* 8017D938 0017A738  38 61 00 18 */	addi r3, r1, 0x18
-/* 8017D93C 0017A73C  48 00 13 B1 */	bl __ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv
+/* 8017D93C 0017A73C  48 00 13 B1 */	bl __ml__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFv
 /* 8017D940 0017A740  C0 23 00 30 */	lfs f1, 0x30(r3)
 /* 8017D944 0017A744  7C 7D 1B 78 */	mr r29, r3
 /* 8017D948 0017A748  C0 03 00 34 */	lfs f0, 0x34(r3)
@@ -354,13 +354,13 @@ lbl_8017D9FC:
 /* 8017D9FC 0017A7FC  7C 1C F0 40 */	cmplw r28, r30
 /* 8017DA00 0017A800  40 82 FF DC */	bne lbl_8017D9DC
 /* 8017DA04 0017A804  38 7F 00 3C */	addi r3, r31, 0x3c
-/* 8017DA08 0017A808  48 00 12 01 */	bl end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017DA08 0017A808  48 00 12 01 */	bl end__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017DA0C 0017A80C  90 81 00 14 */	stw r4, 0x14(r1)
 /* 8017DA10 0017A810  38 81 00 18 */	addi r4, r1, 0x18
 /* 8017DA14 0017A814  38 A1 00 10 */	addi r5, r1, 0x10
 /* 8017DA18 0017A818  90 61 00 10 */	stw r3, 0x10(r1)
 /* 8017DA1C 0017A81C  38 7F 00 3C */	addi r3, r31, 0x3c
-/* 8017DA20 0017A820  48 00 13 ED */	bl erase__40static_queue_Q217xLaserBoltEmitter4bolt_FRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator
+/* 8017DA20 0017A820  48 00 13 ED */	bl erase__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1FRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator
 /* 8017DA24 0017A824  48 00 01 10 */	b lbl_8017DB34
 lbl_8017DA28:
 /* 8017DA28 0017A828  FC 20 F8 90 */	fmr f1, f31
@@ -425,15 +425,15 @@ lbl_8017DB00:
 /* 8017DB04 0017A904  40 82 FF DC */	bne lbl_8017DAE0
 lbl_8017DB08:
 /* 8017DB08 0017A908  38 61 00 18 */	addi r3, r1, 0x18
-/* 8017DB0C 0017A90C  48 00 11 6D */	bl __pp__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFv
+/* 8017DB0C 0017A90C  48 00 11 6D */	bl __pp__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFv
 lbl_8017DB10:
 /* 8017DB10 0017A910  38 7F 00 3C */	addi r3, r31, 0x3c
-/* 8017DB14 0017A914  48 00 10 F5 */	bl end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017DB14 0017A914  48 00 10 F5 */	bl end__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017DB18 0017A918  90 81 00 0C */	stw r4, 0xc(r1)
 /* 8017DB1C 0017A91C  38 81 00 08 */	addi r4, r1, 8
 /* 8017DB20 0017A920  90 61 00 08 */	stw r3, 8(r1)
 /* 8017DB24 0017A924  38 61 00 18 */	addi r3, r1, 0x18
-/* 8017DB28 0017A928  48 00 10 C5 */	bl __ne__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator
+/* 8017DB28 0017A928  48 00 10 C5 */	bl __ne__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator
 /* 8017DB2C 0017A92C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8017DB30 0017A930  40 82 FE 08 */	bne lbl_8017D938
 lbl_8017DB34:
@@ -470,7 +470,7 @@ render__17xLaserBoltEmitterFv:
 /* 8017DBA0 0017A9A0  7F FC FB 78 */	mr r28, r31
 /* 8017DBA4 0017A9A4  48 0B 1C 39 */	bl RwRenderStateSet
 /* 8017DBA8 0017A9A8  38 7E 00 3C */	addi r3, r30, 0x3c
-/* 8017DBAC 0017A9AC  48 00 11 59 */	bl begin__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017DBAC 0017A9AC  48 00 11 59 */	bl begin__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017DBB0 0017A9B0  3C A0 38 E4 */	lis r5, 0x38E38E39@ha
 /* 8017DBB4 0017A9B4  90 81 00 18 */	stw r4, 0x18(r1)
 /* 8017DBB8 0017A9B8  3B A5 8E 39 */	addi r29, r5, 0x38E38E39@l
@@ -492,7 +492,7 @@ lbl_8017DBC4:
 /* 8017DBF4 0017A9F4  7F FC FB 78 */	mr r28, r31
 lbl_8017DBF8:
 /* 8017DBF8 0017A9F8  38 61 00 14 */	addi r3, r1, 0x14
-/* 8017DBFC 0017A9FC  48 00 10 F1 */	bl __ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv
+/* 8017DBFC 0017A9FC  48 00 10 F1 */	bl __ml__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFv
 /* 8017DC00 0017AA00  7C 64 1B 78 */	mr r4, r3
 /* 8017DC04 0017AA04  7F C3 F3 78 */	mr r3, r30
 /* 8017DC08 0017AA08  7F 85 E3 78 */	mr r5, r28
@@ -500,15 +500,15 @@ lbl_8017DBF8:
 /* 8017DC10 0017AA10  7C 60 1B 78 */	mr r0, r3
 /* 8017DC14 0017AA14  38 61 00 14 */	addi r3, r1, 0x14
 /* 8017DC18 0017AA18  7C 1C 03 78 */	mr r28, r0
-/* 8017DC1C 0017AA1C  48 00 10 5D */	bl __pp__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFv
+/* 8017DC1C 0017AA1C  48 00 10 5D */	bl __pp__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFv
 lbl_8017DC20:
 /* 8017DC20 0017AA20  38 7E 00 3C */	addi r3, r30, 0x3c
-/* 8017DC24 0017AA24  48 00 0F E5 */	bl end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017DC24 0017AA24  48 00 0F E5 */	bl end__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017DC28 0017AA28  90 81 00 10 */	stw r4, 0x10(r1)
 /* 8017DC2C 0017AA2C  38 81 00 0C */	addi r4, r1, 0xc
 /* 8017DC30 0017AA30  90 61 00 0C */	stw r3, 0xc(r1)
 /* 8017DC34 0017AA34  38 61 00 14 */	addi r3, r1, 0x14
-/* 8017DC38 0017AA38  48 00 0F B5 */	bl __ne__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator
+/* 8017DC38 0017AA38  48 00 0F B5 */	bl __ne__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator
 /* 8017DC3C 0017AA3C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8017DC40 0017AA40  40 82 FF 84 */	bne lbl_8017DBC4
 /* 8017DC44 0017AA44  7C 1C F8 40 */	cmplw r28, r31
@@ -1605,8 +1605,8 @@ set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc:
 /* 8017EB5C 0017B95C  4E 80 00 20 */	blr 
 
 /* init__40static_queue<Q217xLaserBoltEmitter4bolt>FUl */
-.global init__40static_queue_Q217xLaserBoltEmitter4bolt_FUl
-init__40static_queue_Q217xLaserBoltEmitter4bolt_FUl:
+.global init__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1FUl
+init__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1FUl:
 /* 8017EB60 0017B960  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EB64 0017B964  7C 08 02 A6 */	mflr r0
 /* 8017EB68 0017B968  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1634,7 +1634,7 @@ lbl_8017EB88:
 /* 8017EBB8 0017B9B8  4B EB 4D 89 */	bl xMemAlloc__FUiUii
 /* 8017EBBC 0017B9BC  90 7F 00 10 */	stw r3, 0x10(r31)
 /* 8017EBC0 0017B9C0  7F E3 FB 78 */	mr r3, r31
-/* 8017EBC4 0017B9C4  48 00 00 19 */	bl clear__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
+/* 8017EBC4 0017B9C4  48 00 00 19 */	bl clear__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
 /* 8017EBC8 0017B9C8  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017EBCC 0017B9CC  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8017EBD0 0017B9D0  7C 08 03 A6 */	mtlr r0
@@ -1642,16 +1642,16 @@ lbl_8017EB88:
 /* 8017EBD8 0017B9D8  4E 80 00 20 */	blr 
 
 /* clear__40static_queue<Q217xLaserBoltEmitter4bolt>Fv */
-.global clear__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
-clear__40static_queue_Q217xLaserBoltEmitter4bolt_Fv:
+.global clear__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
+clear__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv:
 /* 8017EBDC 0017B9DC  38 00 00 00 */	li r0, 0
 /* 8017EBE0 0017B9E0  90 03 00 04 */	stw r0, 4(r3)
 /* 8017EBE4 0017B9E4  90 03 00 00 */	stw r0, 0(r3)
 /* 8017EBE8 0017B9E8  4E 80 00 20 */	blr 
 
 /* __ne__Q240static_queue<Q217xLaserBoltEmitter4bolt>8iteratorCFRCQ240static_queue<Q217xLaserBoltEmitter4bolt>8iterator */
-.global __ne__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator
-__ne__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator:
+.global __ne__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator
+__ne__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator:
 /* 8017EBEC 0017B9EC  80 A3 00 00 */	lwz r5, 0(r3)
 /* 8017EBF0 0017B9F0  80 04 00 00 */	lwz r0, 0(r4)
 /* 8017EBF4 0017B9F4  7C 65 00 50 */	subf r3, r5, r0
@@ -1661,8 +1661,8 @@ __ne__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFRCQ240static_queue_
 /* 8017EC04 0017BA04  4E 80 00 20 */	blr 
 
 /* end__40static_queue<Q217xLaserBoltEmitter4bolt>CFv */
-.global end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
-end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
+.global end__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
+end__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv:
 /* 8017EC08 0017BA08  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EC0C 0017BA0C  7C 08 02 A6 */	mflr r0
 /* 8017EC10 0017BA10  80 83 00 00 */	lwz r4, 0(r3)
@@ -1671,10 +1671,10 @@ end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
 /* 8017EC1C 0017BA1C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8017EC20 0017BA20  7C 7F 1B 78 */	mr r31, r3
 /* 8017EC24 0017BA24  7C 84 02 14 */	add r4, r4, r0
-/* 8017EC28 0017BA28  48 00 00 45 */	bl mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017EC28 0017BA28  48 00 00 45 */	bl mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017EC2C 0017BA2C  7C 64 1B 78 */	mr r4, r3
 /* 8017EC30 0017BA30  7F E3 FB 78 */	mr r3, r31
-/* 8017EC34 0017BA34  48 00 00 19 */	bl create_iterator__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017EC34 0017BA34  48 00 00 19 */	bl create_iterator__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017EC38 0017BA38  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017EC3C 0017BA3C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8017EC40 0017BA40  7C 08 03 A6 */	mtlr r0
@@ -1682,8 +1682,8 @@ end__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
 /* 8017EC48 0017BA48  4E 80 00 20 */	blr 
 
 /* create_iterator__40static_queue<Q217xLaserBoltEmitter4bolt>CFUl */
-.global create_iterator__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
-create_iterator__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl:
+.global create_iterator__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
+create_iterator__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl:
 /* 8017EC4C 0017BA4C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EC50 0017BA50  7C 60 1B 78 */	mr r0, r3
 /* 8017EC54 0017BA54  7C 83 23 78 */	mr r3, r4
@@ -1694,22 +1694,22 @@ create_iterator__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl:
 /* 8017EC68 0017BA68  4E 80 00 20 */	blr 
 
 /* mod_max_size__40static_queue<Q217xLaserBoltEmitter4bolt>CFUl */
-.global mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
-mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl:
+.global mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
+mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl:
 /* 8017EC6C 0017BA6C  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 8017EC70 0017BA70  7C 83 00 38 */	and r3, r4, r0
 /* 8017EC74 0017BA74  4E 80 00 20 */	blr 
 
 /* __pp__Q240static_queue<Q217xLaserBoltEmitter4bolt>8iteratorFv */
-.global __pp__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFv
-__pp__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFv:
+.global __pp__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFv
+__pp__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFv:
 /* 8017EC78 0017BA78  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EC7C 0017BA7C  7C 08 02 A6 */	mflr r0
 /* 8017EC80 0017BA80  38 80 00 01 */	li r4, 1
 /* 8017EC84 0017BA84  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8017EC88 0017BA88  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8017EC8C 0017BA8C  7C 7F 1B 78 */	mr r31, r3
-/* 8017EC90 0017BA90  48 00 00 1D */	bl __apl__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFi
+/* 8017EC90 0017BA90  48 00 00 1D */	bl __apl__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFi
 /* 8017EC94 0017BA94  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017EC98 0017BA98  7F E3 FB 78 */	mr r3, r31
 /* 8017EC9C 0017BA9C  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -1718,8 +1718,8 @@ __pp__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFv:
 /* 8017ECA8 0017BAA8  4E 80 00 20 */	blr 
 
 /* __apl__Q240static_queue<Q217xLaserBoltEmitter4bolt>8iteratorFi */
-.global __apl__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFi
-__apl__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFi:
+.global __apl__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFi
+__apl__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorFi:
 /* 8017ECAC 0017BAAC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017ECB0 0017BAB0  7C 08 02 A6 */	mflr r0
 /* 8017ECB4 0017BAB4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1728,7 +1728,7 @@ __apl__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFi:
 /* 8017ECC0 0017BAC0  80 03 00 00 */	lwz r0, 0(r3)
 /* 8017ECC4 0017BAC4  80 63 00 04 */	lwz r3, 4(r3)
 /* 8017ECC8 0017BAC8  7C 80 22 14 */	add r4, r0, r4
-/* 8017ECCC 0017BACC  4B FF FF A1 */	bl mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017ECCC 0017BACC  4B FF FF A1 */	bl mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017ECD0 0017BAD0  90 7F 00 00 */	stw r3, 0(r31)
 /* 8017ECD4 0017BAD4  7F E3 FB 78 */	mr r3, r31
 /* 8017ECD8 0017BAD8  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -1738,8 +1738,8 @@ __apl__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorFi:
 /* 8017ECE8 0017BAE8  4E 80 00 20 */	blr 
 
 /* __ml__Q240static_queue<Q217xLaserBoltEmitter4bolt>8iteratorCFv */
-.global __ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv
-__ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv:
+.global __ml__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFv
+__ml__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFv:
 /* 8017ECEC 0017BAEC  80 03 00 00 */	lwz r0, 0(r3)
 /* 8017ECF0 0017BAF0  80 63 00 04 */	lwz r3, 4(r3)
 /* 8017ECF4 0017BAF4  1C 00 00 4C */	mulli r0, r0, 0x4c
@@ -1748,21 +1748,21 @@ __ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv:
 /* 8017ED00 0017BB00  4E 80 00 20 */	blr 
 
 /* begin__40static_queue<Q217xLaserBoltEmitter4bolt>CFv */
-.global begin__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
-begin__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
+.global begin__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
+begin__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv:
 /* 8017ED04 0017BB04  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017ED08 0017BB08  7C 08 02 A6 */	mflr r0
 /* 8017ED0C 0017BB0C  80 83 00 00 */	lwz r4, 0(r3)
 /* 8017ED10 0017BB10  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017ED14 0017BB14  4B FF FF 39 */	bl create_iterator__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017ED14 0017BB14  4B FF FF 39 */	bl create_iterator__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017ED18 0017BB18  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017ED1C 0017BB1C  7C 08 03 A6 */	mtlr r0
 /* 8017ED20 0017BB20  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017ED24 0017BB24  4E 80 00 20 */	blr 
 
 /* push_front__40static_queue<Q217xLaserBoltEmitter4bolt>Fv */
-.global push_front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
-push_front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv:
+.global push_front__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
+push_front__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv:
 /* 8017ED28 0017BB28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017ED2C 0017BB2C  7C 08 02 A6 */	mflr r0
 /* 8017ED30 0017BB30  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1773,10 +1773,10 @@ push_front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv:
 /* 8017ED44 0017BB44  90 03 00 04 */	stw r0, 4(r3)
 /* 8017ED48 0017BB48  80 83 00 00 */	lwz r4, 0(r3)
 /* 8017ED4C 0017BB4C  38 84 FF FF */	addi r4, r4, -1
-/* 8017ED50 0017BB50  4B FF FF 1D */	bl mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017ED50 0017BB50  4B FF FF 1D */	bl mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017ED54 0017BB54  90 7F 00 00 */	stw r3, 0(r31)
 /* 8017ED58 0017BB58  7F E3 FB 78 */	mr r3, r31
-/* 8017ED5C 0017BB5C  48 00 00 19 */	bl front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
+/* 8017ED5C 0017BB5C  48 00 00 19 */	bl front__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
 /* 8017ED60 0017BB60  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017ED64 0017BB64  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8017ED68 0017BB68  7C 08 03 A6 */	mtlr r0
@@ -1784,42 +1784,42 @@ push_front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv:
 /* 8017ED70 0017BB70  4E 80 00 20 */	blr 
 
 /* front__40static_queue<Q217xLaserBoltEmitter4bolt>Fv */
-.global front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
-front__40static_queue_Q217xLaserBoltEmitter4bolt_Fv:
+.global front__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
+front__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv:
 /* 8017ED74 0017BB74  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017ED78 0017BB78  7C 08 02 A6 */	mflr r0
 /* 8017ED7C 0017BB7C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017ED80 0017BB80  4B FF FF 85 */	bl begin__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017ED80 0017BB80  4B FF FF 85 */	bl begin__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017ED84 0017BB84  90 61 00 08 */	stw r3, 8(r1)
 /* 8017ED88 0017BB88  38 61 00 08 */	addi r3, r1, 8
 /* 8017ED8C 0017BB8C  90 81 00 0C */	stw r4, 0xc(r1)
-/* 8017ED90 0017BB90  4B FF FF 5D */	bl __ml__Q240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorCFv
+/* 8017ED90 0017BB90  4B FF FF 5D */	bl __ml__Q240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorCFv
 /* 8017ED94 0017BB94  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017ED98 0017BB98  7C 08 03 A6 */	mtlr r0
 /* 8017ED9C 0017BB9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017EDA0 0017BBA0  4E 80 00 20 */	blr 
 
 /* pop_back__40static_queue<Q217xLaserBoltEmitter4bolt>Fv */
-.global pop_back__40static_queue_Q217xLaserBoltEmitter4bolt_Fv
-pop_back__40static_queue_Q217xLaserBoltEmitter4bolt_Fv:
+.global pop_back__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv
+pop_back__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1Fv:
 /* 8017EDA4 0017BBA4  80 83 00 04 */	lwz r4, 4(r3)
 /* 8017EDA8 0017BBA8  38 04 FF FF */	addi r0, r4, -1
 /* 8017EDAC 0017BBAC  90 03 00 04 */	stw r0, 4(r3)
 /* 8017EDB0 0017BBB0  4E 80 00 20 */	blr 
 
 /* full__40static_queue<Q217xLaserBoltEmitter4bolt>CFv */
-.global full__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
-full__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
+.global full__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
+full__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv:
 /* 8017EDB4 0017BBB4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EDB8 0017BBB8  7C 08 02 A6 */	mflr r0
 /* 8017EDBC 0017BBBC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8017EDC0 0017BBC0  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8017EDC4 0017BBC4  93 C1 00 08 */	stw r30, 8(r1)
 /* 8017EDC8 0017BBC8  7C 7E 1B 78 */	mr r30, r3
-/* 8017EDCC 0017BBCC  48 00 00 35 */	bl max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017EDCC 0017BBCC  48 00 00 35 */	bl max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017EDD0 0017BBD0  7C 7F 1B 78 */	mr r31, r3
 /* 8017EDD4 0017BBD4  7F C3 F3 78 */	mr r3, r30
-/* 8017EDD8 0017BBD8  4B FF 14 E5 */	bl size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
+/* 8017EDD8 0017BBD8  4B FF 14 E5 */	bl size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
 /* 8017EDDC 0017BBDC  7C 03 F8 50 */	subf r0, r3, r31
 /* 8017EDE0 0017BBE0  7C 00 00 34 */	cntlzw r0, r0
 /* 8017EDE4 0017BBE4  54 03 D9 7E */	srwi r3, r0, 5
@@ -1831,15 +1831,15 @@ full__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
 /* 8017EDFC 0017BBFC  4E 80 00 20 */	blr 
 
 /* max_size__40static_queue<Q217xLaserBoltEmitter4bolt>CFv */
-.global max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv
-max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFv:
+.global max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv
+max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFv:
 /* 8017EE00 0017BC00  80 63 00 08 */	lwz r3, 8(r3)
 /* 8017EE04 0017BC04  38 63 FF FF */	addi r3, r3, -1
 /* 8017EE08 0017BC08  4E 80 00 20 */	blr 
 
 /* erase__40static_queue<Q217xLaserBoltEmitter4bolt>FRCQ240static_queue<Q217xLaserBoltEmitter4bolt>8iteratorRCQ240static_queue<Q217xLaserBoltEmitter4bolt>8iterator */
-.global erase__40static_queue_Q217xLaserBoltEmitter4bolt_FRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator
-erase__40static_queue_Q217xLaserBoltEmitter4bolt_FRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iteratorRCQ240static_queue_Q217xLaserBoltEmitter4bolt_8iterator:
+.global erase__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1FRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator
+erase__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1FRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iteratorRCQ240static_queue$$0Q217xLaserBoltEmitter4bolt$$18iterator:
 /* 8017EE0C 0017BC0C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017EE10 0017BC10  7C 08 02 A6 */	mflr r0
 /* 8017EE14 0017BC14  80 84 00 00 */	lwz r4, 0(r4)
@@ -1855,13 +1855,13 @@ erase__40static_queue_Q217xLaserBoltEmitter4bolt_FRCQ240static_queue_Q217xLaserB
 /* 8017EE3C 0017BC3C  90 1F 00 00 */	stw r0, 0(r31)
 /* 8017EE40 0017BC40  80 1F 00 00 */	lwz r0, 0(r31)
 /* 8017EE44 0017BC44  7C 80 20 50 */	subf r4, r0, r4
-/* 8017EE48 0017BC48  4B FF FE 25 */	bl mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017EE48 0017BC48  4B FF FE 25 */	bl mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017EE4C 0017BC4C  90 7F 00 04 */	stw r3, 4(r31)
 /* 8017EE50 0017BC50  48 00 00 1C */	b lbl_8017EE6C
 lbl_8017EE54:
 /* 8017EE54 0017BC54  80 05 00 00 */	lwz r0, 0(r5)
 /* 8017EE58 0017BC58  7C 84 00 50 */	subf r4, r4, r0
-/* 8017EE5C 0017BC5C  4B FF FE 11 */	bl mod_max_size__40static_queue_Q217xLaserBoltEmitter4bolt_CFUl
+/* 8017EE5C 0017BC5C  4B FF FE 11 */	bl mod_max_size__40static_queue$$0Q217xLaserBoltEmitter4bolt$$1CFUl
 /* 8017EE60 0017BC60  80 1F 00 04 */	lwz r0, 4(r31)
 /* 8017EE64 0017BC64  7C 03 00 50 */	subf r0, r3, r0
 /* 8017EE68 0017BC68  90 1F 00 04 */	stw r0, 4(r31)
@@ -1878,7 +1878,7 @@ full__13xDecalEmitterCFv:
 /* 8017EE84 0017BC84  7C 08 02 A6 */	mflr r0
 /* 8017EE88 0017BC88  38 63 00 44 */	addi r3, r3, 0x44
 /* 8017EE8C 0017BC8C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017EE90 0017BC90  4B FF E3 A1 */	bl full__41static_queue_Q213xDecalEmitter9unit_data_CFv
+/* 8017EE90 0017BC90  4B FF E3 A1 */	bl full__41static_queue$$0Q213xDecalEmitter9unit_data$$1CFv
 /* 8017EE94 0017BC94  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8017EE98 0017BC98  7C 08 03 A6 */	mtlr r0
 /* 8017EE9C 0017BC9C  38 21 00 10 */	addi r1, r1, 0x10

@@ -222,56 +222,56 @@ lbl_8028C2A4:
 lbl_8028C430:
 	.incbin "baserom.dol", 0x289410, 0xA0
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_halt */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_halt
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_halt:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_halt
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_halt:
 	.incbin "baserom.dol", 0x2894B0, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aim */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_player_aim
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_player_aim:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_player_aim
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_player_aim:
 	.incbin "baserom.dol", 0x2894CC, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_fire */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_fire
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_fire:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_fire
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_fire:
 	.incbin "baserom.dol", 0x2894E8, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_wait */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_wait
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_17state_player_wait:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_wait
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$217state_player_wait:
 	.incbin "baserom.dol", 0x289504, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_missle_appear */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_missle_appear
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_missle_appear:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_missle_appear
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_missle_appear:
 	.incbin "baserom.dol", 0x289520, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_fly */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_missle_fly
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_missle_fly:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_missle_fly
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_missle_fly:
 	.incbin "baserom.dol", 0x28953C, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explode */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_missle_explode
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_missle_explode:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_missle_explode
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_missle_explode:
 	.incbin "baserom.dol", 0x289558, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aim */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_camera_aim
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_16state_camera_aim:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_camera_aim
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$216state_camera_aim:
 	.incbin "baserom.dol", 0x289574, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seize */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_18state_camera_seize
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_18state_camera_seize:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$218state_camera_seize
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$218state_camera_seize:
 	.incbin "baserom.dol", 0x289590, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attach */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_attach
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_attach:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_attach
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_attach:
 	.incbin "baserom.dol", 0x2895AC, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_survey */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_survey
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_19state_camera_survey:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_survey
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$219state_camera_survey:
 	.incbin "baserom.dol", 0x2895C8, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@10state_type */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_10state_type
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_10state_type:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$210state_type
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$210state_type:
 	.incbin "baserom.dol", 0x2895E4, 0x1C
 /* __vt__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_camera_restore */
-.global __vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_camera_restore
-__vt__Q313cruise_bubble30_unnamed_zEntCruiseBubble_cpp_20state_camera_restore:
+.global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_camera_restore
+__vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_camera_restore:
 	.incbin "baserom.dol", 0x289600, 0x20
 .global lbl_8028C640
 lbl_8028C640:
@@ -1045,16 +1045,16 @@ lbl_80297A68:
 lbl_80297C04:
 	.incbin "baserom.dol", 0x294BE4, 0xC
 /* __vt__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@20attaching_state_type */
-.global __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_20attaching_state_type
-__vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_20attaching_state_type:
+.global __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$220attaching_state_type
+__vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$220attaching_state_type:
 	.incbin "baserom.dol", 0x294BF0, 0x18
 /* __vt__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@10state_type */
-.global __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_10state_type
-__vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_10state_type:
+.global __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_type
+__vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$210state_type:
 	.incbin "baserom.dol", 0x294C08, 0x18
 /* __vt__Q312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@18hanging_state_type */
-.global __vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_18hanging_state_type
-__vt__Q312bungee_state35_unnamed_zEntPlayerBungeeState_cpp_18hanging_state_type:
+.global __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state_type
+__vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state_type:
 	.incbin "baserom.dol", 0x294C20, 0x18
 .global lbl_80297C58
 lbl_80297C58:
@@ -1087,31 +1087,31 @@ lbl_80297E48:
 lbl_80297EB8:
 	.incbin "baserom.dol", 0x294E98, 0x30
 /* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@13in_state_type */
-.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_type
-__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_13in_state_type:
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$213in_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$213in_state_type:
 	.incbin "baserom.dol", 0x294EC8, 0x14
 /* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@14out_state_type */
-.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_type
-__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_14out_state_type:
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$214out_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$214out_state_type:
 	.incbin "baserom.dol", 0x294EDC, 0x14
 .global __vt__Q28ztalkbox8callback
 __vt__Q28ztalkbox8callback:
 	.incbin "baserom.dol", 0x294EF0, 0x18
 /* __vt__Q49oob_state32@unnamed@zEntPlayerOOBState_cpp@15grab_state_type17tutorial_callback */
-.global __vt__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callback
-__vt__Q49oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type17tutorial_callback:
+.global __vt__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tutorial_callback
+__vt__Q49oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type17tutorial_callback:
 	.incbin "baserom.dol", 0x294F08, 0x18
 /* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@15grab_state_type */
-.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type
-__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15grab_state_type:
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215grab_state_type:
 	.incbin "baserom.dol", 0x294F20, 0x14
 /* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@10state_type */
-.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_type
-__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_10state_type:
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_type:
 	.incbin "baserom.dol", 0x294F34, 0x14
 /* __vt__Q39oob_state32@unnamed@zEntPlayerOOBState_cpp@15drop_state_type */
-.global __vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_type
-__vt__Q39oob_state32_unnamed_zEntPlayerOOBState_cpp_15drop_state_type:
+.global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_type
+__vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_type:
 	.incbin "baserom.dol", 0x294F48, 0x18
 .global lbl_80297F80
 lbl_80297F80:
@@ -1306,24 +1306,24 @@ lbl_80298E14:
 lbl_80298E68:
 	.incbin "baserom.dol", 0x295E48, 0xB4
 /* __vt__Q222@unnamed@zTalkBox_cpp@16start_state_type */
-.global __vt__Q222_unnamed_zTalkBox_cpp_16start_state_type
-__vt__Q222_unnamed_zTalkBox_cpp_16start_state_type:
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$216start_state_type:
 	.incbin "baserom.dol", 0x295EFC, 0x14
 /* __vt__Q222@unnamed@zTalkBox_cpp@15next_state_type */
-.global __vt__Q222_unnamed_zTalkBox_cpp_15next_state_type
-__vt__Q222_unnamed_zTalkBox_cpp_15next_state_type:
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$215next_state_type:
 	.incbin "baserom.dol", 0x295F10, 0x14
 /* __vt__Q222@unnamed@zTalkBox_cpp@15wait_state_type */
-.global __vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type
-__vt__Q222_unnamed_zTalkBox_cpp_15wait_state_type:
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$215wait_state_type:
 	.incbin "baserom.dol", 0x295F24, 0x14
 /* __vt__Q222@unnamed@zTalkBox_cpp@10state_type */
-.global __vt__Q222_unnamed_zTalkBox_cpp_10state_type
-__vt__Q222_unnamed_zTalkBox_cpp_10state_type:
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type:
 	.incbin "baserom.dol", 0x295F38, 0x14
 /* __vt__Q222@unnamed@zTalkBox_cpp@15stop_state_type */
-.global __vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type
-__vt__Q222_unnamed_zTalkBox_cpp_15stop_state_type:
+.global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type
+__vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type:
 	.incbin "baserom.dol", 0x295F4C, 0x14
 .global lbl_80298F80
 lbl_80298F80:

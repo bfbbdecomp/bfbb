@@ -280,7 +280,7 @@ load__9aqua_beamFRCQ29aqua_beam6configR8RpAtomic:
 /* 8014FB38 0014C938  90 A3 00 9C */	stw r5, 0x9c(r3)
 /* 8014FB3C 0014C93C  48 00 4C B1 */	bl __as__Q29aqua_beam6configFRCQ29aqua_beam6config
 /* 8014FB40 0014C940  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FB44 0014C944  48 00 4C 79 */	bl reset__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 8014FB44 0014C944  48 00 4C 79 */	bl reset__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 8014FB48 0014C948  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8014FB4C 0014C94C  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8014FB50 0014C950  7C 08 03 A6 */	mtlr r0
@@ -302,7 +302,7 @@ lbl_8014FB7C:
 /* 8014FB80 0014C980  48 00 05 15 */	bl kill_ring__9aqua_beamFv
 lbl_8014FB84:
 /* 8014FB84 0014C984  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FB88 0014C988  48 00 4C E1 */	bl empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FB88 0014C988  48 00 4C E1 */	bl empty__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FB8C 0014C98C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FB90 0014C990  41 82 FF EC */	beq lbl_8014FB7C
 /* 8014FB94 0014C994  38 00 00 00 */	li r0, 0
@@ -363,26 +363,26 @@ render__9aqua_beamFv:
 /* 8014FC3C 0014CA3C  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8014FC40 0014CA40  7C 7F 1B 78 */	mr r31, r3
 /* 8014FC44 0014CA44  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FC48 0014CA48  48 00 4C FD */	bl begin__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FC48 0014CA48  48 00 4C FD */	bl begin__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FC4C 0014CA4C  90 81 00 14 */	stw r4, 0x14(r1)
 /* 8014FC50 0014CA50  90 61 00 10 */	stw r3, 0x10(r1)
 /* 8014FC54 0014CA54  48 00 00 20 */	b lbl_8014FC74
 lbl_8014FC58:
 /* 8014FC58 0014CA58  38 61 00 10 */	addi r3, r1, 0x10
-/* 8014FC5C 0014CA5C  48 00 4C D1 */	bl __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv
+/* 8014FC5C 0014CA5C  48 00 4C D1 */	bl __ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv
 /* 8014FC60 0014CA60  7C 64 1B 78 */	mr r4, r3
 /* 8014FC64 0014CA64  7F E3 FB 78 */	mr r3, r31
 /* 8014FC68 0014CA68  48 00 05 41 */	bl render_ring__9aqua_beamFRQ29aqua_beam12ring_segment
 /* 8014FC6C 0014CA6C  38 61 00 10 */	addi r3, r1, 0x10
-/* 8014FC70 0014CA70  48 00 4C 71 */	bl __pp__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFv
+/* 8014FC70 0014CA70  48 00 4C 71 */	bl __pp__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFv
 lbl_8014FC74:
 /* 8014FC74 0014CA74  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FC78 0014CA78  48 00 4C 25 */	bl end__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FC78 0014CA78  48 00 4C 25 */	bl end__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FC7C 0014CA7C  90 81 00 0C */	stw r4, 0xc(r1)
 /* 8014FC80 0014CA80  38 81 00 08 */	addi r4, r1, 8
 /* 8014FC84 0014CA84  90 61 00 08 */	stw r3, 8(r1)
 /* 8014FC88 0014CA88  38 61 00 10 */	addi r3, r1, 0x10
-/* 8014FC8C 0014CA8C  48 00 4B F5 */	bl __ne__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFRCQ242fixed_queue_Q29aqua_beam12ring_segment_31_8iterator
+/* 8014FC8C 0014CA8C  48 00 4B F5 */	bl __ne__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFRCQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iterator
 /* 8014FC90 0014CA90  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FC94 0014CA94  40 82 FF C4 */	bne lbl_8014FC58
 /* 8014FC98 0014CA98  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -418,7 +418,7 @@ hits_sphere__9aqua_beamCFRC7xSphere:
 /* 8014FD04 0014CB04  90 A1 00 3C */	stw r5, 0x3c(r1)
 /* 8014FD08 0014CB08  90 81 00 40 */	stw r4, 0x40(r1)
 /* 8014FD0C 0014CB0C  90 01 00 44 */	stw r0, 0x44(r1)
-/* 8014FD10 0014CB10  48 00 4C 35 */	bl begin__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FD10 0014CB10  48 00 4C 35 */	bl begin__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FD14 0014CB14  90 81 00 14 */	stw r4, 0x14(r1)
 /* 8014FD18 0014CB18  C3 BE 00 2C */	lfs f29, 0x2c(r30)
 /* 8014FD1C 0014CB1C  90 61 00 10 */	stw r3, 0x10(r1)
@@ -427,7 +427,7 @@ hits_sphere__9aqua_beamCFRC7xSphere:
 /* 8014FD28 0014CB28  48 00 00 90 */	b lbl_8014FDB8
 lbl_8014FD2C:
 /* 8014FD2C 0014CB2C  38 61 00 10 */	addi r3, r1, 0x10
-/* 8014FD30 0014CB30  48 00 4B FD */	bl __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv
+/* 8014FD30 0014CB30  48 00 4B FD */	bl __ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv
 /* 8014FD34 0014CB34  7C 7F 1B 78 */	mr r31, r3
 /* 8014FD38 0014CB38  C0 02 A7 68 */	lfs f0, lbl_803CF0E8-_SDA2_BASE_(r2)
 /* 8014FD3C 0014CB3C  C0 23 00 10 */	lfs f1, 0x10(r3)
@@ -461,15 +461,15 @@ lbl_8014FD2C:
 /* 8014FDAC 0014CBAC  48 00 00 34 */	b lbl_8014FDE0
 lbl_8014FDB0:
 /* 8014FDB0 0014CBB0  38 61 00 10 */	addi r3, r1, 0x10
-/* 8014FDB4 0014CBB4  48 00 4B 2D */	bl __pp__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFv
+/* 8014FDB4 0014CBB4  48 00 4B 2D */	bl __pp__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFv
 lbl_8014FDB8:
 /* 8014FDB8 0014CBB8  38 7E 00 A4 */	addi r3, r30, 0xa4
-/* 8014FDBC 0014CBBC  48 00 4A E1 */	bl end__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FDBC 0014CBBC  48 00 4A E1 */	bl end__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FDC0 0014CBC0  90 81 00 0C */	stw r4, 0xc(r1)
 /* 8014FDC4 0014CBC4  38 81 00 08 */	addi r4, r1, 8
 /* 8014FDC8 0014CBC8  90 61 00 08 */	stw r3, 8(r1)
 /* 8014FDCC 0014CBCC  38 61 00 10 */	addi r3, r1, 0x10
-/* 8014FDD0 0014CBD0  48 00 4A B1 */	bl __ne__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFRCQ242fixed_queue_Q29aqua_beam12ring_segment_31_8iterator
+/* 8014FDD0 0014CBD0  48 00 4A B1 */	bl __ne__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFRCQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iterator
 /* 8014FDD4 0014CBD4  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FDD8 0014CBD8  40 82 FF 54 */	bne lbl_8014FD2C
 /* 8014FDDC 0014CBDC  38 60 00 00 */	li r3, 0
@@ -503,7 +503,7 @@ update_rings__9aqua_beamFf:
 /* 8014FE3C 0014CC3C  28 00 00 00 */	cmplwi r0, 0
 /* 8014FE40 0014CC40  40 82 00 14 */	bne lbl_8014FE54
 /* 8014FE44 0014CC44  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FE48 0014CC48  48 00 4A 21 */	bl empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FE48 0014CC48  48 00 4A 21 */	bl empty__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FE4C 0014CC4C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FE50 0014CC50  40 82 00 F8 */	bne lbl_8014FF48
 lbl_8014FE54:
@@ -531,7 +531,7 @@ lbl_8014FEA0:
 /* 8014FEA4 0014CCA4  48 00 00 C1 */	bl emit_ring__9aqua_beamFv
 lbl_8014FEA8:
 /* 8014FEA8 0014CCA8  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FEAC 0014CCAC  48 00 4A 99 */	bl begin__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FEAC 0014CCAC  48 00 4A 99 */	bl begin__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FEB0 0014CCB0  90 81 00 1C */	stw r4, 0x1c(r1)
 /* 8014FEB4 0014CCB4  90 61 00 18 */	stw r3, 0x18(r1)
 /* 8014FEB8 0014CCB8  48 00 00 2C */	b lbl_8014FEE4
@@ -545,15 +545,15 @@ lbl_8014FEBC:
 /* 8014FED4 0014CCD4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8014FED8 0014CCD8  48 00 02 1D */	bl update_ring__9aqua_beamFQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorf
 /* 8014FEDC 0014CCDC  38 61 00 18 */	addi r3, r1, 0x18
-/* 8014FEE0 0014CCE0  48 00 4A 01 */	bl __pp__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFv
+/* 8014FEE0 0014CCE0  48 00 4A 01 */	bl __pp__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFv
 lbl_8014FEE4:
 /* 8014FEE4 0014CCE4  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FEE8 0014CCE8  48 00 49 B5 */	bl end__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FEE8 0014CCE8  48 00 49 B5 */	bl end__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FEEC 0014CCEC  90 81 00 0C */	stw r4, 0xc(r1)
 /* 8014FEF0 0014CCF0  38 81 00 08 */	addi r4, r1, 8
 /* 8014FEF4 0014CCF4  90 61 00 08 */	stw r3, 8(r1)
 /* 8014FEF8 0014CCF8  38 61 00 18 */	addi r3, r1, 0x18
-/* 8014FEFC 0014CCFC  48 00 49 85 */	bl __ne__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFRCQ242fixed_queue_Q29aqua_beam12ring_segment_31_8iterator
+/* 8014FEFC 0014CCFC  48 00 49 85 */	bl __ne__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFRCQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iterator
 /* 8014FF00 0014CD00  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FF04 0014CD04  40 82 FF B8 */	bne lbl_8014FEBC
 /* 8014FF08 0014CD08  48 00 00 0C */	b lbl_8014FF14
@@ -562,11 +562,11 @@ lbl_8014FF0C:
 /* 8014FF10 0014CD10  48 00 01 85 */	bl kill_ring__9aqua_beamFv
 lbl_8014FF14:
 /* 8014FF14 0014CD14  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FF18 0014CD18  48 00 49 51 */	bl empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FF18 0014CD18  48 00 49 51 */	bl empty__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FF1C 0014CD1C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FF20 0014CD20  40 82 00 28 */	bne lbl_8014FF48
 /* 8014FF24 0014CD24  38 7F 00 A4 */	addi r3, r31, 0xa4
-/* 8014FF28 0014CD28  48 00 4A 41 */	bl back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 8014FF28 0014CD28  48 00 4A 41 */	bl back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 8014FF2C 0014CD2C  C0 23 00 10 */	lfs f1, 0x10(r3)
 /* 8014FF30 0014CD30  C0 1F 00 24 */	lfs f0, 0x24(r31)
 /* 8014FF34 0014CD34  FC 20 0A 10 */	fabs f1, f1
@@ -592,16 +592,16 @@ emit_ring__9aqua_beamFv:
 /* 8014FF74 0014CD74  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8014FF78 0014CD78  7C 7E 1B 78 */	mr r30, r3
 /* 8014FF7C 0014CD7C  38 7E 00 A4 */	addi r3, r30, 0xa4
-/* 8014FF80 0014CD80  48 00 4A DD */	bl full__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 8014FF80 0014CD80  48 00 4A DD */	bl full__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 8014FF84 0014CD84  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8014FF88 0014CD88  41 82 00 0C */	beq lbl_8014FF94
 /* 8014FF8C 0014CD8C  7F C3 F3 78 */	mr r3, r30
 /* 8014FF90 0014CD90  48 00 01 05 */	bl kill_ring__9aqua_beamFv
 lbl_8014FF94:
 /* 8014FF94 0014CD94  38 7E 00 A4 */	addi r3, r30, 0xa4
-/* 8014FF98 0014CD98  48 00 4A B1 */	bl push_front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 8014FF98 0014CD98  48 00 4A B1 */	bl push_front__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 8014FF9C 0014CD9C  38 7E 00 A4 */	addi r3, r30, 0xa4
-/* 8014FFA0 0014CDA0  48 00 4A 79 */	bl front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 8014FFA0 0014CDA0  48 00 4A 79 */	bl front__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 8014FFA4 0014CDA4  7C 7F 1B 78 */	mr r31, r3
 /* 8014FFA8 0014CDA8  38 9E 00 40 */	addi r4, r30, 0x40
 /* 8014FFAC 0014CDAC  38 7F 00 04 */	addi r3, r31, 4
@@ -674,7 +674,7 @@ kill_ring__9aqua_beamFv:
 /* 801500A4 0014CEA4  93 C1 00 08 */	stw r30, 8(r1)
 /* 801500A8 0014CEA8  7C 7E 1B 78 */	mr r30, r3
 /* 801500AC 0014CEAC  38 7E 00 A4 */	addi r3, r30, 0xa4
-/* 801500B0 0014CEB0  48 00 48 B9 */	bl back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 801500B0 0014CEB0  48 00 48 B9 */	bl back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 801500B4 0014CEB4  7C 7F 1B 78 */	mr r31, r3
 /* 801500B8 0014CEB8  80 63 00 00 */	lwz r3, 0(r3)
 /* 801500BC 0014CEBC  4B EE 42 BD */	bl xModelInstanceFree__FP14xModelInstance
@@ -685,7 +685,7 @@ kill_ring__9aqua_beamFv:
 /* 801500D0 0014CED0  4B FF F8 E9 */	bl kill_sound__27$$2unnamed$$2zNPCTypePrawn_cpp$$2FiUi
 lbl_801500D4:
 /* 801500D4 0014CED4  38 7E 00 A4 */	addi r3, r30, 0xa4
-/* 801500D8 0014CED8  48 00 49 F1 */	bl pop_back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 801500D8 0014CED8  48 00 49 F1 */	bl pop_back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 801500DC 0014CEDC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801500E0 0014CEE0  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 801500E4 0014CEE4  83 C1 00 08 */	lwz r30, 8(r1)
@@ -706,7 +706,7 @@ update_ring__9aqua_beamFQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18ite
 /* 80150110 0014CF10  FF E0 08 90 */	fmr f31, f1
 /* 80150114 0014CF14  7C 7E 1B 78 */	mr r30, r3
 /* 80150118 0014CF18  7C 83 23 78 */	mr r3, r4
-/* 8015011C 0014CF1C  48 00 48 11 */	bl __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv
+/* 8015011C 0014CF1C  48 00 48 11 */	bl __ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv
 /* 80150120 0014CF20  7C 7F 1B 78 */	mr r31, r3
 /* 80150124 0014CF24  C0 3E 00 14 */	lfs f1, 0x14(r30)
 /* 80150128 0014CF28  C0 03 00 14 */	lfs f0, 0x14(r3)
@@ -3417,7 +3417,7 @@ lbl_80152910:
 /* 8015291C 0014F71C  4C 40 13 82 */	cror 2, 0, 2
 /* 80152920 0014F720  40 82 00 14 */	bne lbl_80152934
 /* 80152924 0014F724  FC 40 18 50 */	fneg f2, f3
-/* 80152928 0014F728  4B EB C0 11 */	bl range_limit_f___Ffff
+/* 80152928 0014F728  4B EB C0 11 */	bl range_limit$$0f$$1__Ffff
 /* 8015292C 0014F72C  D0 3F 03 1C */	stfs f1, 0x31c(r31)
 /* 80152930 0014F730  48 00 00 40 */	b lbl_80152970
 lbl_80152934:
@@ -3547,7 +3547,7 @@ lbl_80152AC4:
 lbl_80152ACC:
 /* 80152ACC 0014F8CC  C0 42 A7 D4 */	lfs f2, lbl_803CF154-_SDA2_BASE_(r2)
 /* 80152AD0 0014F8D0  C0 62 A7 68 */	lfs f3, lbl_803CF0E8-_SDA2_BASE_(r2)
-/* 80152AD4 0014F8D4  4B EB BE 65 */	bl range_limit_f___Ffff
+/* 80152AD4 0014F8D4  4B EB BE 65 */	bl range_limit$$0f$$1__Ffff
 /* 80152AD8 0014F8D8  80 7D 00 24 */	lwz r3, 0x24(r29)
 /* 80152ADC 0014F8DC  88 0D 96 CD */	lbz r0, lbl_803CBFCD-_SDA_BASE_(r13)
 /* 80152AE0 0014F8E0  80 63 00 0C */	lwz r3, 0xc(r3)
@@ -4488,7 +4488,7 @@ set_life__9zNPCPrawnFi:
 /* 801537E8 001505E8  83 FD 02 B8 */	lwz r31, 0x2b8(r29)
 /* 801537EC 001505EC  38 80 00 00 */	li r4, 0
 /* 801537F0 001505F0  80 A5 00 2C */	lwz r5, 0x2c(r5)
-/* 801537F4 001505F4  4B FE 98 41 */	bl range_limit_i___Fiii
+/* 801537F4 001505F4  4B FE 98 41 */	bl range_limit$$0i$$1__Fiii
 /* 801537F8 001505F8  90 7D 02 B8 */	stw r3, 0x2b8(r29)
 /* 801537FC 001505FC  80 7D 02 28 */	lwz r3, 0x228(r29)
 /* 80153800 00150600  4B FB 9D C5 */	bl GIDOfActive__7xPsycheCFv
@@ -5586,20 +5586,20 @@ lbl_80154704:
 /* 801547B8 001515B8  4E 80 00 20 */	blr 
 
 /* reset__42fixed_queue<Q29aqua_beam12ring_segment,31>Fv */
-.global reset__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
-reset__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
+.global reset__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
+reset__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv:
 /* 801547BC 001515BC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801547C0 001515C0  7C 08 02 A6 */	mflr r0
 /* 801547C4 001515C4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801547C8 001515C8  48 00 00 15 */	bl clear__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
+/* 801547C8 001515C8  48 00 00 15 */	bl clear__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
 /* 801547CC 001515CC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801547D0 001515D0  7C 08 03 A6 */	mtlr r0
 /* 801547D4 001515D4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801547D8 001515D8  4E 80 00 20 */	blr 
 
 /* clear__42fixed_queue<Q29aqua_beam12ring_segment,31>Fv */
-.global clear__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
-clear__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
+.global clear__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
+clear__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv:
 /* 801547DC 001515DC  38 00 00 00 */	li r0, 0
 /* 801547E0 001515E0  90 03 00 04 */	stw r0, 4(r3)
 /* 801547E4 001515E4  90 03 00 00 */	stw r0, 0(r3)
@@ -5640,8 +5640,8 @@ __as__Q29aqua_beam6configFRCQ29aqua_beam6config:
 /* 80154864 00151664  4E 80 00 20 */	blr 
 
 /* empty__42fixed_queue<Q29aqua_beam12ring_segment,31>CFv */
-.global empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
-empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
+.global empty__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
+empty__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv:
 /* 80154868 00151668  80 83 00 04 */	lwz r4, 4(r3)
 /* 8015486C 0015166C  80 03 00 00 */	lwz r0, 0(r3)
 /* 80154870 00151670  7C 04 00 50 */	subf r0, r4, r0
@@ -5650,8 +5650,8 @@ empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
 /* 8015487C 0015167C  4E 80 00 20 */	blr 
 
 /* __ne__Q242fixed_queue<Q29aqua_beam12ring_segment,31>8iteratorCFRCQ242fixed_queue<Q29aqua_beam12ring_segment,31>8iterator */
-.global __ne__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFRCQ242fixed_queue_Q29aqua_beam12ring_segment_31_8iterator
-__ne__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFRCQ242fixed_queue_Q29aqua_beam12ring_segment_31_8iterator:
+.global __ne__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFRCQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iterator
+__ne__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFRCQ242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iterator:
 /* 80154880 00151680  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80154884 00151684  80 04 00 00 */	lwz r0, 0(r4)
 /* 80154888 00151688  7C 65 00 50 */	subf r3, r5, r0
@@ -5661,21 +5661,21 @@ __ne__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFRCQ242fixed_queue
 /* 80154898 00151698  4E 80 00 20 */	blr 
 
 /* end__42fixed_queue<Q29aqua_beam12ring_segment,31>CFv */
-.global end__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
-end__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
+.global end__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
+end__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv:
 /* 8015489C 0015169C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801548A0 001516A0  7C 08 02 A6 */	mflr r0
 /* 801548A4 001516A4  80 83 00 04 */	lwz r4, 4(r3)
 /* 801548A8 001516A8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801548AC 001516AC  48 00 00 15 */	bl create_iterator__42fixed_queue_Q29aqua_beam12ring_segment_31_CFUl
+/* 801548AC 001516AC  48 00 00 15 */	bl create_iterator__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFUl
 /* 801548B0 001516B0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801548B4 001516B4  7C 08 03 A6 */	mtlr r0
 /* 801548B8 001516B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801548BC 001516BC  4E 80 00 20 */	blr 
 
 /* create_iterator__42fixed_queue<Q29aqua_beam12ring_segment,31>CFUl */
-.global create_iterator__42fixed_queue_Q29aqua_beam12ring_segment_31_CFUl
-create_iterator__42fixed_queue_Q29aqua_beam12ring_segment_31_CFUl:
+.global create_iterator__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFUl
+create_iterator__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFUl:
 /* 801548C0 001516C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801548C4 001516C4  7C 60 1B 78 */	mr r0, r3
 /* 801548C8 001516C8  7C 83 23 78 */	mr r3, r4
@@ -5686,15 +5686,15 @@ create_iterator__42fixed_queue_Q29aqua_beam12ring_segment_31_CFUl:
 /* 801548DC 001516DC  4E 80 00 20 */	blr 
 
 /* __pp__Q242fixed_queue<Q29aqua_beam12ring_segment,31>8iteratorFv */
-.global __pp__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFv
-__pp__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFv:
+.global __pp__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFv
+__pp__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFv:
 /* 801548E0 001516E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801548E4 001516E4  7C 08 02 A6 */	mflr r0
 /* 801548E8 001516E8  38 80 00 01 */	li r4, 1
 /* 801548EC 001516EC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 801548F0 001516F0  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801548F4 001516F4  7C 7F 1B 78 */	mr r31, r3
-/* 801548F8 001516F8  48 00 00 1D */	bl __apl__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi
+/* 801548F8 001516F8  48 00 00 1D */	bl __apl__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi
 /* 801548FC 001516FC  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80154900 00151700  7F E3 FB 78 */	mr r3, r31
 /* 80154904 00151704  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -5703,8 +5703,8 @@ __pp__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFv:
 /* 80154910 00151710  4E 80 00 20 */	blr 
 
 /* __apl__Q242fixed_queue<Q29aqua_beam12ring_segment,31>8iteratorFi */
-.global __apl__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi
-__apl__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi:
+.global __apl__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi
+__apl__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi:
 /* 80154914 00151714  80 03 00 00 */	lwz r0, 0(r3)
 /* 80154918 00151718  7C 80 22 14 */	add r4, r0, r4
 /* 8015491C 0015171C  38 04 00 20 */	addi r0, r4, 0x20
@@ -5713,8 +5713,8 @@ __apl__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi:
 /* 80154928 00151728  4E 80 00 20 */	blr 
 
 /* __ml__Q242fixed_queue<Q29aqua_beam12ring_segment,31>8iteratorCFv */
-.global __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv
-__ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv:
+.global __ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv
+__ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv:
 /* 8015492C 0015172C  80 03 00 00 */	lwz r0, 0(r3)
 /* 80154930 00151730  80 83 00 04 */	lwz r4, 4(r3)
 /* 80154934 00151734  1C 60 00 5C */	mulli r3, r0, 0x5c
@@ -5723,42 +5723,42 @@ __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv:
 /* 80154940 00151740  4E 80 00 20 */	blr 
 
 /* begin__42fixed_queue<Q29aqua_beam12ring_segment,31>CFv */
-.global begin__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
-begin__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
+.global begin__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
+begin__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv:
 /* 80154944 00151744  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80154948 00151748  7C 08 02 A6 */	mflr r0
 /* 8015494C 0015174C  80 83 00 00 */	lwz r4, 0(r3)
 /* 80154950 00151750  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80154954 00151754  4B FF FF 6D */	bl create_iterator__42fixed_queue_Q29aqua_beam12ring_segment_31_CFUl
+/* 80154954 00151754  4B FF FF 6D */	bl create_iterator__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFUl
 /* 80154958 00151758  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8015495C 0015175C  7C 08 03 A6 */	mtlr r0
 /* 80154960 00151760  38 21 00 10 */	addi r1, r1, 0x10
 /* 80154964 00151764  4E 80 00 20 */	blr 
 
 /* back__42fixed_queue<Q29aqua_beam12ring_segment,31>Fv */
-.global back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
-back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
+.global back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
+back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv:
 /* 80154968 00151768  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8015496C 0015176C  7C 08 02 A6 */	mflr r0
 /* 80154970 00151770  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80154974 00151774  4B FF FF 29 */	bl end__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 80154974 00151774  4B FF FF 29 */	bl end__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 80154978 00151778  90 81 00 0C */	stw r4, 0xc(r1)
 /* 8015497C 0015177C  38 80 00 01 */	li r4, 1
 /* 80154980 00151780  90 61 00 08 */	stw r3, 8(r1)
 /* 80154984 00151784  38 61 00 08 */	addi r3, r1, 8
-/* 80154988 00151788  48 00 00 25 */	bl __mi__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFi
+/* 80154988 00151788  48 00 00 25 */	bl __mi__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFi
 /* 8015498C 0015178C  90 61 00 10 */	stw r3, 0x10(r1)
 /* 80154990 00151790  38 61 00 10 */	addi r3, r1, 0x10
 /* 80154994 00151794  90 81 00 14 */	stw r4, 0x14(r1)
-/* 80154998 00151798  4B FF FF 95 */	bl __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv
+/* 80154998 00151798  4B FF FF 95 */	bl __ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv
 /* 8015499C 0015179C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 801549A0 001517A0  7C 08 03 A6 */	mtlr r0
 /* 801549A4 001517A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801549A8 001517A8  4E 80 00 20 */	blr 
 
 /* __mi__Q242fixed_queue<Q29aqua_beam12ring_segment,31>8iteratorCFi */
-.global __mi__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFi
-__mi__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFi:
+.global __mi__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFi
+__mi__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFi:
 /* 801549AC 001517AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801549B0 001517B0  7C 08 02 A6 */	mflr r0
 /* 801549B4 001517B4  80 A3 00 00 */	lwz r5, 0(r3)
@@ -5767,7 +5767,7 @@ __mi__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFi:
 /* 801549C0 001517C0  38 61 00 08 */	addi r3, r1, 8
 /* 801549C4 001517C4  90 A1 00 08 */	stw r5, 8(r1)
 /* 801549C8 001517C8  90 01 00 0C */	stw r0, 0xc(r1)
-/* 801549CC 001517CC  48 00 00 1D */	bl __ami__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi
+/* 801549CC 001517CC  48 00 00 1D */	bl __ami__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi
 /* 801549D0 001517D0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801549D4 001517D4  80 61 00 08 */	lwz r3, 8(r1)
 /* 801549D8 001517D8  80 81 00 0C */	lwz r4, 0xc(r1)
@@ -5776,13 +5776,13 @@ __mi__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFi:
 /* 801549E4 001517E4  4E 80 00 20 */	blr 
 
 /* __ami__Q242fixed_queue<Q29aqua_beam12ring_segment,31>8iteratorFi */
-.global __ami__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi
-__ami__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi:
+.global __ami__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi
+__ami__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi:
 /* 801549E8 001517E8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801549EC 001517EC  7C 08 02 A6 */	mflr r0
 /* 801549F0 001517F0  7C 84 00 D0 */	neg r4, r4
 /* 801549F4 001517F4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801549F8 001517F8  4B FF FF 1D */	bl __apl__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi
+/* 801549F8 001517F8  4B FF FF 1D */	bl __apl__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorFi
 /* 801549FC 001517FC  7C 64 1B 78 */	mr r4, r3
 /* 80154A00 00151800  80 63 00 00 */	lwz r3, 0(r3)
 /* 80154A04 00151804  80 84 00 04 */	lwz r4, 4(r4)
@@ -5792,24 +5792,24 @@ __ami__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorFi:
 /* 80154A14 00151814  4E 80 00 20 */	blr 
 
 /* front__42fixed_queue<Q29aqua_beam12ring_segment,31>Fv */
-.global front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
-front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
+.global front__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
+front__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv:
 /* 80154A18 00151818  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80154A1C 0015181C  7C 08 02 A6 */	mflr r0
 /* 80154A20 00151820  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80154A24 00151824  4B FF FF 21 */	bl begin__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 80154A24 00151824  4B FF FF 21 */	bl begin__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 80154A28 00151828  90 61 00 08 */	stw r3, 8(r1)
 /* 80154A2C 0015182C  38 61 00 08 */	addi r3, r1, 8
 /* 80154A30 00151830  90 81 00 0C */	stw r4, 0xc(r1)
-/* 80154A34 00151834  4B FF FE F9 */	bl __ml__Q242fixed_queue_Q29aqua_beam12ring_segment_31_8iteratorCFv
+/* 80154A34 00151834  4B FF FE F9 */	bl __ml__Q242fixed_queue$$0Q29aqua_beam12ring_segment$$431$$18iteratorCFv
 /* 80154A38 00151838  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80154A3C 0015183C  7C 08 03 A6 */	mtlr r0
 /* 80154A40 00151840  38 21 00 10 */	addi r1, r1, 0x10
 /* 80154A44 00151844  4E 80 00 20 */	blr 
 
 /* push_front__42fixed_queue<Q29aqua_beam12ring_segment,31>Fv */
-.global push_front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
-push_front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
+.global push_front__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
+push_front__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv:
 /* 80154A48 00151848  80 83 00 00 */	lwz r4, 0(r3)
 /* 80154A4C 0015184C  38 04 00 1F */	addi r0, r4, 0x1f
 /* 80154A50 00151850  54 00 06 FE */	clrlwi r0, r0, 0x1b
@@ -5817,18 +5817,18 @@ push_front__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
 /* 80154A58 00151858  4E 80 00 20 */	blr 
 
 /* full__42fixed_queue<Q29aqua_beam12ring_segment,31>CFv */
-.global full__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
-full__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
+.global full__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
+full__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv:
 /* 80154A5C 0015185C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80154A60 00151860  7C 08 02 A6 */	mflr r0
 /* 80154A64 00151864  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80154A68 00151868  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80154A6C 0015186C  93 C1 00 08 */	stw r30, 8(r1)
 /* 80154A70 00151870  7C 7E 1B 78 */	mr r30, r3
-/* 80154A74 00151874  48 00 00 35 */	bl max_size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 80154A74 00151874  48 00 00 35 */	bl max_size__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 80154A78 00151878  7C 7F 1B 78 */	mr r31, r3
 /* 80154A7C 0015187C  7F C3 F3 78 */	mr r3, r30
-/* 80154A80 00151880  48 00 00 31 */	bl size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 80154A80 00151880  48 00 00 31 */	bl size__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 80154A84 00151884  7C 03 F8 50 */	subf r0, r3, r31
 /* 80154A88 00151888  7C 00 00 34 */	cntlzw r0, r0
 /* 80154A8C 0015188C  54 03 D9 7E */	srwi r3, r0, 5
@@ -5840,14 +5840,14 @@ full__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
 /* 80154AA4 001518A4  4E 80 00 20 */	blr 
 
 /* max_size__42fixed_queue<Q29aqua_beam12ring_segment,31>CFv */
-.global max_size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
-max_size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
+.global max_size__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
+max_size__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv:
 /* 80154AA8 001518A8  38 60 00 1F */	li r3, 0x1f
 /* 80154AAC 001518AC  4E 80 00 20 */	blr 
 
 /* size__42fixed_queue<Q29aqua_beam12ring_segment,31>CFv */
-.global size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
-size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
+.global size__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
+size__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv:
 /* 80154AB0 001518B0  80 83 00 04 */	lwz r4, 4(r3)
 /* 80154AB4 001518B4  80 63 00 00 */	lwz r3, 0(r3)
 /* 80154AB8 001518B8  38 04 00 20 */	addi r0, r4, 0x20
@@ -5856,8 +5856,8 @@ size__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv:
 /* 80154AC4 001518C4  4E 80 00 20 */	blr 
 
 /* pop_back__42fixed_queue<Q29aqua_beam12ring_segment,31>Fv */
-.global pop_back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv
-pop_back__42fixed_queue_Q29aqua_beam12ring_segment_31_Fv:
+.global pop_back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv
+pop_back__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1Fv:
 /* 80154AC8 001518C8  80 83 00 04 */	lwz r4, 4(r3)
 /* 80154ACC 001518CC  38 04 00 1F */	addi r0, r4, 0x1f
 /* 80154AD0 001518D0  54 00 06 FE */	clrlwi r0, r0, 0x1b
@@ -5947,7 +5947,7 @@ active__9aqua_beamCFv:
 /* 80154BE0 001519E0  28 00 00 00 */	cmplwi r0, 0
 /* 80154BE4 001519E4  40 82 00 14 */	bne lbl_80154BF8
 /* 80154BE8 001519E8  38 63 00 A4 */	addi r3, r3, 0xa4
-/* 80154BEC 001519EC  4B FF FC 7D */	bl empty__42fixed_queue_Q29aqua_beam12ring_segment_31_CFv
+/* 80154BEC 001519EC  4B FF FC 7D */	bl empty__42fixed_queue$$0Q29aqua_beam12ring_segment$$431$$1CFv
 /* 80154BF0 001519F0  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80154BF4 001519F4  40 82 00 08 */	bne lbl_80154BFC
 lbl_80154BF8:
