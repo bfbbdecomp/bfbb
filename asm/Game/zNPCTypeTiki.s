@@ -3914,3 +3914,11 @@ lbl_8026A308:
 	.incbin "baserom.dol", 0x2672E8, 0x50
 lbl_8026A358:
 	.incbin "baserom.dol", 0x267338, 0x58
+
+.section .bss
+lbl_80313410:
+	.skip 0x16C
+lbl_8031357C:
+	.skip 0x16C
+lbl_803136E8:
+	.skip 0x40

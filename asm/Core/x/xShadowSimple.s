@@ -1366,3 +1366,11 @@ xQuickCullForLine__FP7xQCDataPC6xLine3:
 .section .rodata
 lbl_8026D080:
 	.incbin "baserom.dol", 0x26A060, 0x10
+
+.section .bss
+lbl_803245D8:
+	.skip 0x54
+lbl_8032462C:
+	.skip 0x3600
+lbl_80327C2C:
+	.skip 0x104

@@ -1430,3 +1430,7 @@ lbl_8025F4E8:
 .section .data
 lbl_80290EA8:
 	.incbin "baserom.dol", 0x28DE88, 0x60
+
+.section .bss
+lbl_802F2C88:
+	.skip 0x260

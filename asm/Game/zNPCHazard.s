@@ -9511,3 +9511,19 @@ __vt__19zNPCGoalJellyBumped:
 .global lbl_802A0004
 lbl_802A0004:
 	.incbin "baserom.dol", 0x29CFE4, 0x19F4
+
+.section .bss
+lbl_8035E738:
+	.skip 0x3978
+lbl_803620B0:
+	.skip 0x3C0
+lbl_80362470:
+	.skip 0x16C
+lbl_803625DC:
+	.skip 0x444
+lbl_80362A20:
+	.skip 0x50
+lbl_80362A70:
+	.skip 0x50
+lbl_80362AC0:
+	.skip 0x50

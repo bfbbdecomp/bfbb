@@ -10114,3 +10114,11 @@ __vt__21zNPCGoalBossSandyIdle:
 .global __vt__10zNPCBSandy
 __vt__10zNPCBSandy:
 	.incbin "baserom.dol", 0x296CAC, 0xDC
+
+.section .bss
+lbl_80328000:
+	.skip 0x9C
+lbl_8032809C:
+	.skip 0x78
+lbl_80328114:
+	.skip 0x424

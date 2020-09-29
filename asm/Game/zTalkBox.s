@@ -4156,3 +4156,13 @@ __vt__Q222$$2unnamed$$2zTalkBox_cpp$$210state_type:
 .global __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type
 __vt__Q222$$2unnamed$$2zTalkBox_cpp$$215stop_state_type:
 	.incbin "baserom.dol", 0x295F4C, 0x14
+
+.section .bss
+lbl_8031B320:
+	.skip 0x8E9C
+lbl_803241BC:
+	.skip 0x80
+lbl_8032423C:
+	.skip 0xC
+lbl_80324248:
+	.skip 0x10

@@ -5422,3 +5422,9 @@ __vt__12xGoalGeneric:
 .global __vt__10xGoalEmpty
 __vt__10xGoalEmpty:
 	.incbin "baserom.dol", 0x294410, 0x30
+
+.section .bss
+lbl_80313188:
+	.skip 0x16C
+lbl_803132F4:
+	.skip 0x11C

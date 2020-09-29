@@ -22122,3 +22122,7 @@ __vt__18zNPCGoalTikiPatrol:
 .global __vt__16zNPCGoalTikiIdle
 __vt__16zNPCGoalTikiIdle:
 	.incbin "baserom.dol", 0x290FFC, 0x34
+
+.section .bss
+lbl_80312178:
+	.skip 0x50

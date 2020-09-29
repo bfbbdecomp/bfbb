@@ -1710,3 +1710,7 @@ xColorFromRGBA__FUcUcUcUc:
 /* 8002EFFC 0002BDFC  80 61 00 08 */	lwz r3, 8(r1)
 /* 8002F000 0002BE00  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002F004 0002BE04  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802C8760:
+	.skip 0x10

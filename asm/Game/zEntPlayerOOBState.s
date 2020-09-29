@@ -3094,3 +3094,9 @@ __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$210state_type:
 .global __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_type
 __vt__Q39oob_state32$$2unnamed$$2zEntPlayerOOBState_cpp$$215drop_state_type:
 	.incbin "baserom.dol", 0x294F48, 0x18
+
+.section .bss
+lbl_80314530:
+	.skip 0x7C
+lbl_803145AC:
+	.skip 0xEC

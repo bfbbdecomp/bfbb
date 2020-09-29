@@ -5093,3 +5093,9 @@ lbl_80290D98:
 .global scale
 scale:
 	.incbin "baserom.dol", 0x28DE7C, 0xC
+
+.section .bss
+lbl_802F2C70:
+	.skip 0xC
+lbl_802F2C7C:
+	.skip 0xC

@@ -4790,3 +4790,9 @@ __vt__11NCINBeNosey:
 .global __vt__Q24xhud11text_widget
 __vt__Q24xhud11text_widget:
 	.incbin "baserom.dol", 0x29EB40, 0x28
+
+.section .bss
+lbl_80362B10:
+	.skip 0x14
+lbl_80362B24:
+	.skip 0x44

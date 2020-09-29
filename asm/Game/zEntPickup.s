@@ -4095,3 +4095,15 @@ lbl_8028C8C8:
 .global zPickupAuraTable
 zPickupAuraTable:
 	.incbin "baserom.dol", 0x2898D8, 0xB8
+
+.section .bss
+lbl_802DD310:
+	.skip 0xC8
+lbl_802DD3D8:
+	.skip 0x8C0
+lbl_802DDC98:
+	.skip 0xA0
+lbl_802DDD38:
+	.skip 0xE4
+lbl_802DDE1C:
+	.skip 0x5B4

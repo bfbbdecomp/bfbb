@@ -7475,3 +7475,23 @@ text_cb__8xtextbox:
 	.incbin "baserom.dol", 0x278BCC, 0xC
 lbl_8027BBF8:
 	.incbin "baserom.dol", 0x278BD8, 0x1418
+
+.section .bss
+lbl_802B8DB8:
+	.skip 0x53C0
+lbl_802BE178:
+	.skip 0xB40
+lbl_802BECB8:
+	.skip 0x60
+lbl_802BED18:
+	.skip 0x24
+lbl_802BED3C:
+	.skip 0x34
+lbl_802BED70:
+	.skip 0x30
+lbl_802BEDA0:
+	.skip 0x8D08
+lbl_802C7AA8:
+	.skip 0x100
+lbl_802C7BA8:
+	.skip 0x140

@@ -1229,3 +1229,11 @@ lbl_80294050:
 .global g_brainTable
 g_brainTable:
 	.incbin "baserom.dol", 0x291060, 0x2F4
+
+.section .bss
+lbl_803121C8:
+	.skip 0x44
+lbl_8031220C:
+	.skip 0x44
+lbl_80312250:
+	.skip 0x48

@@ -10846,3 +10846,15 @@ __vt__19zNPCGoalDutchmanNil:
 .global __vt__12zNPCDutchman
 __vt__12zNPCDutchman:
 	.incbin "baserom.dol", 0x298744, 0xCC
+
+.section .bss
+lbl_8032A578:
+	.skip 0x944
+lbl_8032AEBC:
+	.skip 0x16C
+lbl_8032B028:
+	.skip 0x16C
+lbl_8032B194:
+	.skip 0x280
+lbl_8032B414:
+	.skip 0x34

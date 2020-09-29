@@ -1351,3 +1351,11 @@ lbl_80297D54:
 	.incbin "baserom.dol", 0x294D34, 0x20
 lbl_80297D74:
 	.incbin "baserom.dol", 0x294D54, 0x44
+
+.section .bss
+lbl_80314228:
+	.skip 0x54
+lbl_8031427C:
+	.skip 0x138
+lbl_803143B4:
+	.skip 0x13C

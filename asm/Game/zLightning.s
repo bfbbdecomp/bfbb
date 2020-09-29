@@ -3327,3 +3327,15 @@ xDebugAddTweak__FPCcPsssPC14tweak_callbackPvUi:
 .section .rodata
 lbl_8025CD50:
 	.incbin "baserom.dol", 0x259D30, 0x4C8
+
+.section .bss
+lbl_802E90C8:
+	.skip 0x5E8
+lbl_802E96B0:
+	.skip 0x28
+lbl_802E96D8:
+	.skip 0xC
+lbl_802E96E4:
+	.skip 0xAC
+lbl_802E9790:
+	.skip 0x1200

@@ -1001,3 +1001,11 @@ lbl_8028FEE0:
 	.incbin "baserom.dol", 0x28CEC0, 0x3C
 lbl_8028FF1C:
 	.incbin "baserom.dol", 0x28CEFC, 0x24
+
+.section .bss
+lbl_802F2A50:
+	.skip 0xC0
+lbl_802F2B10:
+	.skip 0x28
+lbl_802F2B38:
+	.skip 0x18

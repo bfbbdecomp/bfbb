@@ -10201,3 +10201,15 @@ __vt__20zNPCGoalBossSB2Intro:
 .global __vt__9zNPCB_SB2
 __vt__9zNPCB_SB2:
 	.incbin "baserom.dol", 0x29796C, 0xDC
+
+.section .bss
+lbl_803299D8:
+	.skip 0xA0
+lbl_80329A78:
+	.skip 0xC8
+lbl_80329B40:
+	.skip 0xA0
+lbl_80329BE0:
+	.skip 0x358
+lbl_80329F38:
+	.skip 0x10

@@ -961,3 +961,7 @@ xDrawLine2D_LocaliFMVVersion__Fffff:
 /* 800C4770 000C1570  7C 08 03 A6 */	mtlr r0
 /* 800C4774 000C1574  38 21 00 70 */	addi r1, r1, 0x70
 /* 800C4778 000C1578  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802FBE80:
+	.skip 0x18

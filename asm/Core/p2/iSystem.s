@@ -1472,3 +1472,7 @@ DolphinInstallFileSystem__Fv:
 .section .rodata
 lbl_80266610:
 	.incbin "baserom.dol", 0x2635F0, 0x238
+
+.section .bss
+lbl_80312140:
+	.skip 0x10

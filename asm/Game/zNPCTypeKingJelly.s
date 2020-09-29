@@ -9400,3 +9400,17 @@ __vt__14zNPCGoalKJIdle:
 .global __vt__13zNPCKingJelly
 __vt__13zNPCKingJelly:
 	.incbin "baserom.dol", 0x297048, 0xD0
+
+.section .bss
+lbl_80328538:
+	.skip 0x298
+lbl_803287D0:
+	.skip 0x108
+lbl_803288D8:
+	.skip 0x16C
+lbl_80328A44:
+	.skip 0x2D8
+lbl_80328D1C:
+	.skip 0x16C
+lbl_80328E88:
+	.skip 0x648

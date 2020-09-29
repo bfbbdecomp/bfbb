@@ -6801,3 +6801,13 @@ g_hash_roboanim:
 .global g_strz_roboanim
 g_strz_roboanim:
 	.incbin "baserom.dol", 0x29259C, 0xB0
+
+.section .bss
+lbl_80312298:
+	.skip 0x44
+lbl_803122DC:
+	.skip 0x44
+lbl_80312320:
+	.skip 0x44
+lbl_80312364:
+	.skip 0x2C

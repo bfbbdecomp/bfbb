@@ -1297,3 +1297,7 @@ lock_block__25ptank_pool__color_mat_uv2Fv:
 /* 8017D538 0017A338  7C 08 03 A6 */	mtlr r0
 /* 8017D53C 0017A33C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017D540 0017A340  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_8032B448:
+	.skip 0x80

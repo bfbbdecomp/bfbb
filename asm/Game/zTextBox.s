@@ -880,3 +880,7 @@ g_strz_bossanim:
 .global __vt__8zNPCBoss
 __vt__8zNPCBoss:
 	.incbin "baserom.dol", 0x2964B8, 0xD8
+
+.section .bss
+lbl_80324258:
+	.skip 0x90

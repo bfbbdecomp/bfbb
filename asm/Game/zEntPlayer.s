@@ -46137,3 +46137,25 @@ lbl_8028E558:
 .global sEventTable
 sEventTable:
 	.incbin "baserom.dol", 0x28B600, 0x878
+
+.section .bss
+lbl_802DE3D0:
+	.skip 0x24
+lbl_802DE3F4:
+	.skip 0xBC
+lbl_802DE4B0:
+	.skip 0xBC
+lbl_802DE56C:
+	.skip 0x158
+lbl_802DE6C4:
+	.skip 0x40
+lbl_802DE704:
+	.skip 0x24
+lbl_802DE728:
+	.skip 0xC
+lbl_802DE734:
+	.skip 0xC
+lbl_802DE740:
+	.skip 0xC
+lbl_802DE74C:
+	.skip 0xCE4

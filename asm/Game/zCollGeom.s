@@ -254,3 +254,9 @@ zCollGeom_CamDisable__FP4xEnt:
 /* 801168E0 001136E0  38 00 00 00 */	li r0, 0
 /* 801168E4 001136E4  90 03 00 2C */	stw r0, 0x2c(r3)
 /* 801168E8 001136E8  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_803141F8:
+	.skip 0xC
+lbl_80314204:
+	.skip 0xC

@@ -2159,3 +2159,7 @@ xVec3Lerp__FP5xVec3PC5xVec3PC5xVec3f:
 .section .data
 lbl_8027B418:
 	.incbin "baserom.dol", 0x2783F8, 0x10
+
+.section .bss
+lbl_802B8A40:
+	.skip 0x360

@@ -5132,3 +5132,7 @@ bubbletrail_vel_rnd:
 	.incbin "baserom.dol", 0x28C00C, 0xC
 lbl_8028F038:
 	.incbin "baserom.dol", 0x28C018, 0x178
+
+.section .bss
+lbl_802DF490:
+	.skip 0x6280

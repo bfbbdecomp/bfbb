@@ -3203,3 +3203,23 @@ __vt__17zNPCGoalDuploLive:
 .global __vt__17zNPCGoalDuploDead
 __vt__17zNPCGoalDuploDead:
 	.incbin "baserom.dol", 0x295BE4, 0x34
+
+.section .bss
+lbl_803154F0:
+	.skip 0x4D98
+lbl_8031A288:
+	.skip 0x84
+lbl_8031A30C:
+	.skip 0x84
+lbl_8031A390:
+	.skip 0x84
+lbl_8031A414:
+	.skip 0x84
+lbl_8031A498:
+	.skip 0x84
+lbl_8031A51C:
+	.skip 0x84
+lbl_8031A5A0:
+	.skip 0x40
+lbl_8031A5E0:
+	.skip 0x90

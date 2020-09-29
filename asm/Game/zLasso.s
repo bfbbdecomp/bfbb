@@ -2223,3 +2223,7 @@ xMat4x3RotC__FP7xMat4x3ffff:
 .section .rodata
 lbl_8025CD18:
 	.incbin "baserom.dol", 0x259CF8, 0x18
+
+.section .bss
+lbl_802E5788:
+	.skip 0x3800

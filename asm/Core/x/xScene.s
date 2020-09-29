@@ -2680,3 +2680,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80041914 0003E714  D0 63 00 04 */	stfs f3, 4(r3)
 /* 80041918 0003E718  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8004191C 0003E71C  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802C8988:
+	.skip 0x4C
+lbl_802C89D4:
+	.skip 0x1C

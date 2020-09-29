@@ -3374,3 +3374,7 @@ lbl_80292A9C:
 	.incbin "baserom.dol", 0x28FA7C, 0x2C
 lbl_80292AC8:
 	.incbin "baserom.dol", 0x28FAA8, 0x38
+
+.section .bss
+lbl_802FE100:
+	.skip 0x14000

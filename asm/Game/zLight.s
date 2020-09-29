@@ -587,3 +587,11 @@ lbl_8028FB50:
 .global lightning_type_names
 lightning_type_names:
 	.incbin "baserom.dol", 0x28CB40, 0x10
+
+.section .bss
+lbl_802E8F88:
+	.skip 0x80
+lbl_802E9008:
+	.skip 0x40
+lbl_802E9048:
+	.skip 0x80

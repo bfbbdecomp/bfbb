@@ -3991,3 +3991,7 @@ xDrawSetColor__FUcUcUcUc:
 SQ__Ff:
 /* 800480A8 00044EA8  EC 21 00 72 */	fmuls f1, f1, f1
 /* 800480AC 00044EAC  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802C8B00:
+	.skip 0x122A0

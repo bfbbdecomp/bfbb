@@ -1300,3 +1300,69 @@ __MIXVolumeTable:
 .global __MIXAIVolumeTable
 __MIXAIVolumeTable:
 	.incbin "baserom.dol", 0x28F5CC, 0x34
+
+.section .bss
+lbl_802F8640:
+	.skip 0xC
+lbl_802F864C:
+	.skip 0xC
+lbl_802F8658:
+	.skip 0xC
+lbl_802F8664:
+	.skip 0xC
+lbl_802F8670:
+	.skip 0x80
+lbl_802F86F0:
+	.skip 0x20
+lbl_802F8710:
+	.skip 0xC
+lbl_802F871C:
+	.skip 0xC
+lbl_802F8728:
+	.skip 0x20
+lbl_802F8748:
+	.skip 0x20
+lbl_802F8768:
+	.skip 0x40
+lbl_802F87A8:
+	.skip 0x40
+lbl_802F87E8:
+	.skip 0x40
+lbl_802F8828:
+	.skip 0x40
+lbl_802F8868:
+	.skip 0x40
+lbl_802F88A8:
+	.skip 0x40
+lbl_802F88E8:
+	.skip 0x40
+lbl_802F8928:
+	.skip 0x40
+lbl_802F8968:
+	.skip 0xC
+lbl_802F8974:
+	.skip 0xC
+lbl_802F8980:
+	.skip 0xC
+lbl_802F898C:
+	.skip 0xC
+lbl_802F8998:
+	.skip 0xC
+lbl_802F89A4:
+	.skip 0x30
+lbl_802F89D4:
+	.skip 0xC
+lbl_802F89E0:
+	.skip 0xC
+lbl_802F89EC:
+	.skip 0xC
+lbl_802F89F8:
+	.skip 0xC
+lbl_802F8A04:
+	.skip 0x40
+lbl_802F8A44:
+	.skip 0xC
+lbl_802F8A50:
+	.skip 0xC
+lbl_802F8A5C:
+	.skip 0x23C4

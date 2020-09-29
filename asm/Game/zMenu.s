@@ -854,3 +854,7 @@ zMenuFirstBootSet__Fi:
 .section .rodata
 lbl_8025E558:
 	.incbin "baserom.dol", 0x25B538, 0x30
+
+.section .bss
+lbl_802F2990:
+	.skip 0xC0

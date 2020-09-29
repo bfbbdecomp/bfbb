@@ -6917,3 +6917,11 @@ __vt__Q312bungee_state35$$2unnamed$$2zEntPlayerBungeeState_cpp$$218hanging_state
 	.incbin "baserom.dol", 0x294C20, 0x18
 lbl_80297C58:
 	.incbin "baserom.dol", 0x294C38, 0x88
+
+.section .bss
+lbl_80313788:
+	.skip 0x58
+lbl_803137E0:
+	.skip 0x4C
+lbl_8031382C:
+	.skip 0x9CC

@@ -716,3 +716,9 @@ sEffectFuncs:
 .global sEffectInitFuncs
 sEffectInitFuncs:
 	.incbin "baserom.dol", 0x28CAE8, 0x48
+
+.section .bss
+lbl_802E5710:
+	.skip 0x50
+lbl_802E5760:
+	.skip 0x28

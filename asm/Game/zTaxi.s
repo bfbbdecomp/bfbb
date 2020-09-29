@@ -453,3 +453,7 @@ lbl_80172620:
 .section .rodata
 lbl_80271E40:
 	.incbin "baserom.dol", 0x26EE20, 0x18
+
+.section .bss
+lbl_8032A568:
+	.skip 0x10

@@ -2115,3 +2115,15 @@ lbl_80260188:
 	.incbin "baserom.dol", 0x25D168, 0x18
 lbl_802601A0:
 	.incbin "baserom.dol", 0x25D180, 0x8
+
+.section .bss
+lbl_802FD698:
+	.skip 0x400
+lbl_802FDA98:
+	.skip 0x10
+lbl_802FDAA8:
+	.skip 0x40
+lbl_802FDAE8:
+	.skip 0x40
+lbl_802FDB28:
+	.skip 0x10

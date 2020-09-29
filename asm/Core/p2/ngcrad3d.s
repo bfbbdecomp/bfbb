@@ -470,3 +470,9 @@ GXSetTexCoordGen:
 /* 800D50B0 000D1EB0  7C 08 03 A6 */	mtlr r0
 /* 800D50B4 000D1EB4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D50B8 000D1EB8  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_80312150:
+	.skip 0x14
+lbl_80312164:
+	.skip 0x14

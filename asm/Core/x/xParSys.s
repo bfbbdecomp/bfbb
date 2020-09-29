@@ -988,3 +988,9 @@ lbl_8026AFD8:
 .section .data
 lbl_80297CE0:
 	.incbin "baserom.dol", 0x294CC0, 0x38
+
+.section .bss
+lbl_80314210:
+	.skip 0xC
+lbl_8031421C:
+	.skip 0xC

@@ -349,3 +349,7 @@ __ct__9zNPCB_SB2Fi:
 .section .rodata
 lbl_8026CBB8:
 	.incbin "baserom.dol", 0x269B98, 0x390
+
+.section .bss
+lbl_80324468:
+	.skip 0x170

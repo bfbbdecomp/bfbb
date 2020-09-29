@@ -7219,3 +7219,21 @@ lbl_8002CA94:
 .section .data
 lbl_8027D010:
 	.incbin "baserom.dol", 0x279FF0, 0x90
+
+.section .bss
+lbl_802C7CE8:
+	.skip 0x12C
+lbl_802C7E14:
+	.skip 0x12C
+lbl_802C7F40:
+	.skip 0x168
+lbl_802C80A8:
+	.skip 0x90
+lbl_802C8138:
+	.skip 0x90
+lbl_802C81C8:
+	.skip 0x100
+lbl_802C82C8:
+	.skip 0x18
+lbl_802C82E0:
+	.skip 0x480

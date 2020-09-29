@@ -3927,3 +3927,7 @@ lbl_800D30A4:
 .section .rodata
 lbl_802665E8:
 	.incbin "baserom.dol", 0x2635C8, 0x28
+
+.section .bss
+lbl_80312100:
+	.skip 0x40

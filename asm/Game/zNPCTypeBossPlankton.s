@@ -8528,3 +8528,13 @@ __vt__13zNPCBPlankton:
 .global __vt__6taxiCB
 __vt__6taxiCB:
 	.incbin "baserom.dol", 0x298428, 0x18
+
+.section .bss
+lbl_80329F48:
+	.skip 0xF0
+lbl_8032A038:
+	.skip 0x108
+lbl_8032A140:
+	.skip 0x60
+lbl_8032A1A0:
+	.skip 0x300

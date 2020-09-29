@@ -2968,3 +2968,15 @@ lbl_80298D5C:
 	.incbin "baserom.dol", 0x295D3C, 0xB8
 lbl_80298E14:
 	.incbin "baserom.dol", 0x295DF4, 0x54
+
+.section .bss
+lbl_8031A670:
+	.skip 0xC
+lbl_8031A67C:
+	.skip 0x3F0
+lbl_8031AA6C:
+	.skip 0x3F0
+lbl_8031AE5C:
+	.skip 0x480
+lbl_8031B2DC:
+	.skip 0x44

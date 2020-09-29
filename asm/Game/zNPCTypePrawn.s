@@ -6134,3 +6134,17 @@ __vt__17zNPCGoalPrawnIdle:
 .global __vt__9zNPCPrawn
 __vt__9zNPCPrawn:
 	.incbin "baserom.dol", 0x2973A0, 0xD0
+
+.section .bss
+lbl_803294D0:
+	.skip 0x60
+lbl_80329530:
+	.skip 0x70
+lbl_803295A0:
+	.skip 0x40
+lbl_803295E0:
+	.skip 0x260
+lbl_80329840:
+	.skip 0x28
+lbl_80329868:
+	.skip 0x170

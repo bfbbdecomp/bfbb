@@ -1397,3 +1397,7 @@ lbl_800C78B0:
 /* 800C78B8 000C46B8  7C 08 03 A6 */	mtlr r0
 /* 800C78BC 000C46BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C78C0 000C46C0  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802FBE98:
+	.skip 0x1800

@@ -1915,3 +1915,9 @@ __as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2z
 .section .rodata
 lbl_80271E28:
 	.incbin "baserom.dol", 0x26EE08, 0x18
+
+.section .bss
+lbl_8032A4A0:
+	.skip 0x8C
+lbl_8032A52C:
+	.skip 0x3C

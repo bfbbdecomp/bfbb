@@ -15756,3 +15756,15 @@ g_hash_folkanim:
 .global g_strz_folkanim
 g_strz_folkanim:
 	.incbin "baserom.dol", 0x293660, 0x88
+
+.section .bss
+lbl_80312390:
+	.skip 0x20
+lbl_803123B0:
+	.skip 0x44
+lbl_803123F4:
+	.skip 0x44
+lbl_80312438:
+	.skip 0x7A0
+lbl_80312BD8:
+	.skip 0x5B0

@@ -1164,3 +1164,7 @@ animTable:
 	.incbin "baserom.dol", 0x288444, 0x18C
 lbl_8028B5F0:
 	.incbin "baserom.dol", 0x2885D0, 0xC0
+
+.section .bss
+lbl_802DBA50:
+	.skip 0x20

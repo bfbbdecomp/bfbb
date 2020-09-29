@@ -487,3 +487,29 @@ lbl_802A1B88:
 	.incbin "baserom.dol", 0x29EB68, 0x380
 lbl_802A1F08:
 	.incbin "baserom.dol", 0x29EEE8, 0x2C
+
+.section .bss
+lbl_80362B68:
+	.skip 0xC
+lbl_80362B74:
+	.skip 0x14
+/* SPECULATION: link order */
+.global lbl_80362B88
+lbl_80362B88:
+	.skip 0x100
+/* SPECULATION: link order */
+.global lbl_80362C88
+lbl_80362C88:
+	.skip 0x400
+/* SPECULATION: link order */
+.global lbl_80363088
+lbl_80363088:
+	.skip 0x400
+/* SPECULATION: link order */
+.global lbl_80363488
+lbl_80363488:
+	.skip 0x400
+/* SPECULATION: link order */
+.global lbl_80363888
+lbl_80363888:
+	.skip 0x500

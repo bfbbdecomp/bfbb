@@ -799,3 +799,11 @@ lbl_800A87D0:
 .section .rodata
 lbl_8025E6F8:
 	.incbin "baserom.dol", 0x25B6D8, 0xF8
+
+.section .bss
+lbl_802F2B50:
+	.skip 0x80
+lbl_802F2BD0:
+	.skip 0x50
+lbl_802F2C20:
+	.skip 0x50

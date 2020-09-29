@@ -1298,3 +1298,11 @@ lbl_80298AA8:
 .global __vt__13zNPCDuplotron
 __vt__13zNPCDuplotron:
 	.incbin "baserom.dol", 0x295A98, 0xD0
+
+.section .bss
+lbl_80314CB8:
+	.skip 0x16C
+lbl_80314E24:
+	.skip 0x16C
+lbl_80314F90:
+	.skip 0x560

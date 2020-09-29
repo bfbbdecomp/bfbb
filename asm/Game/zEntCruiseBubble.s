@@ -10853,3 +10853,21 @@ __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$210state_type:
 .global __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_camera_restore
 __vt__Q313cruise_bubble30$$2unnamed$$2zEntCruiseBubble_cpp$$220state_camera_restore:
 	.incbin "baserom.dol", 0x289600, 0x20
+
+.section .bss
+lbl_802DBA80:
+	.skip 0x1B8
+lbl_802DBC38:
+	.skip 0x1B8
+lbl_802DBDF0:
+	.skip 0x40
+lbl_802DBE30:
+	.skip 0x808
+lbl_802DC638:
+	.skip 0x280
+lbl_802DC8B8:
+	.skip 0x68
+lbl_802DC920:
+	.skip 0x35C
+lbl_802DCC7C:
+	.skip 0x694

@@ -693,3 +693,7 @@ g_hash_dupoanim:
 .global g_strz_dupoanim
 g_strz_dupoanim:
 	.incbin "baserom.dol", 0x295A74, 0x14
+
+.section .bss
+lbl_80314C50:
+	.skip 0x68

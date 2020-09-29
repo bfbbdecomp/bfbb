@@ -4293,3 +4293,7 @@ lbl_8027B464:
 	.incbin "baserom.dol", 0x278444, 0xA8
 lbl_8027B50C:
 	.incbin "baserom.dol", 0x2784EC, 0x64
+
+.section .bss
+lbl_802B8DA0:
+	.skip 0x18

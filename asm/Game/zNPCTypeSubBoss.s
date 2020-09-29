@@ -201,3 +201,7 @@ __ct__11zNPCSubBossFi:
 .section .rodata
 lbl_8026CAA8:
 	.incbin "baserom.dol", 0x269A88, 0x110
+
+.section .bss
+lbl_803242F8:
+	.skip 0x170

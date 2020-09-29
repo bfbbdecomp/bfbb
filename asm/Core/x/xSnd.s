@@ -1878,3 +1878,7 @@ xSndGetVol__FUi:
 .section .data
 lbl_80288CA0:
 	.incbin "baserom.dol", 0x285C80, 0x340
+
+.section .bss
+lbl_802DADA0:
+	.skip 0xC00

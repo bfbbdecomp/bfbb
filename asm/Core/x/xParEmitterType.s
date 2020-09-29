@@ -2155,3 +2155,7 @@ lbl_80297DE4:
 .global sBlendTable
 sBlendTable:
 	.incbin "baserom.dol", 0x294DF8, 0x30
+
+.section .bss
+lbl_803144F0:
+	.skip 0x40

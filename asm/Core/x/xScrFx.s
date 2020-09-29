@@ -1433,3 +1433,11 @@ __as__18DistortionParticleFRC18DistortionParticle:
 /* 80042D60 0003FB60  90 03 00 28 */	stw r0, 0x28(r3)
 /* 80042D64 0003FB64  D0 03 00 2C */	stfs f0, 0x2c(r3)
 /* 80042D68 0003FB68  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802C89F0:
+	.skip 0x1C
+lbl_802C8A0C:
+	.skip 0x90
+lbl_802C8A9C:
+	.skip 0x64

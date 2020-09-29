@@ -2938,3 +2938,7 @@ ddir:
 .global sFullScreenGlareDir
 sFullScreenGlareDir:
 	.incbin "baserom.dol", 0x285AE4, 0xC
+
+.section .bss
+lbl_802C8970:
+	.skip 0x18
