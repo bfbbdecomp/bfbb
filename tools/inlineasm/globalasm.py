@@ -21,25 +21,49 @@ def run():
 
     if len(matches) == 0:
         return
+    
+    # in-memory dictionary to optimize the script
+    # will hold a bunch of info about each
+    # assembly file that is referenced in pragmas
+    asmFileDictionary = {}
 
+    # this first loop is to pre-load data into the dict
+    # to avoid opening/processing the file at each pragma
     for match in matches:
 
-        replace = match[0]
         args = getPragmaArgs(match[1])
         asmPath = Path(args[0])
-        asmFileText = open(asmPath).read()
+        func = args[1]
+        key = str(asmPath)
+
+        if key not in asmFileDictionary:
+            fileText = open(asmPath).read()
+            funcs = set(getAsmFunctions(fileText))
+            asmFileDictionary[key] = {
+                "text": fileText,
+                "funcs": funcs
+            }
+
+        # check to see if the requested function exists
+        # before we waste time doing anything
+        if func + ":" not in asmFileDictionary[key]["funcs"]:
+            error(func + " not in " + key)
+
+    # Now let's loop through each pragma and substitute it
+    for match in matches:
+
+        replacePragmaText = match[0]
+        args = getPragmaArgs(match[1])
+        asmPath = Path(args[0])
+        key = str(asmPath)
+        asmFileText = asmFileDictionary[key]["text"]
 
         funcToImport = args[1]
-        funcs = getAsmFunctions(asmFileText)
-        # check to see if function argument given is in the file
-        if funcToImport + ":" not in funcs:
-            error(funcToImport + " is undefined in " + str(asmPath))
-        
         asmBlock = getAsmFunctionBlock(asmFileText, funcToImport + ":")
         codeBytes = blockToBytes(asmBlock)
         newSource = ""
         newSource = writeCode(newSource, funcToImport, codeBytes)
-        cpText = cpText.replace(replace, newSource)
+        cpText = cpText.replace(replacePragmaText, newSource)
 
     open(cpPath, "w").write(cpText)
 
