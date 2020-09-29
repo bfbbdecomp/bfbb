@@ -981,3 +981,6 @@ reset__10ptank_poolFv:
 /* 80117684 00114484  90 03 00 14 */	stw r0, 0x14(r3)
 /* 80117688 00114488  90 03 00 10 */	stw r0, 0x10(r3)
 /* 8011768C 0011448C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026AFD8:
+	.incbin "baserom.dol", 0x267FB8, 0x30

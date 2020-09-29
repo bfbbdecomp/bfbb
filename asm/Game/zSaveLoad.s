@@ -4157,3 +4157,12 @@ LastGame__11XSGAutoDataFv:
 LastTarget__11XSGAutoDataFv:
 /* 800B0A20 000AD820  80 63 00 04 */	lwz r3, 4(r3)
 /* 800B0A24 000AD824  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025E880:
+	.incbin "baserom.dol", 0x25B860, 0x20
+lbl_8025E8A0:
+	.incbin "baserom.dol", 0x25B880, 0x100
+lbl_8025E9A0:
+	.incbin "baserom.dol", 0x25B980, 0x20
+lbl_8025E9C0:
+	.incbin "baserom.dol", 0x25B9A0, 0x5A0

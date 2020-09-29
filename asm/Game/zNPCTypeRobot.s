@@ -15589,3 +15589,72 @@ NumNodes__10zMovePointFv:
 /* 80102C20 000FFA20  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80102C24 000FFA24  A0 63 00 1A */	lhz r3, 0x1a(r3)
 /* 80102C28 000FFA28  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80269280:
+	.incbin "baserom.dol", 0x266260, 0x148
+lbl_802693C8:
+	.incbin "baserom.dol", 0x2663A8, 0x44
+lbl_8026940C:
+	.incbin "baserom.dol", 0x2663EC, 0x40
+lbl_8026944C:
+	.incbin "baserom.dol", 0x26642C, 0x18
+lbl_80269464:
+	.incbin "baserom.dol", 0x266444, 0x10
+lbl_80269474:
+	.incbin "baserom.dol", 0x266454, 0x20
+lbl_80269494:
+	.incbin "baserom.dol", 0x266474, 0x14
+lbl_802694A8:
+	.incbin "baserom.dol", 0x266488, 0xC
+lbl_802694B4:
+	.incbin "baserom.dol", 0x266494, 0xC
+lbl_802694C0:
+	.incbin "baserom.dol", 0x2664A0, 0x44
+lbl_80269504:
+	.incbin "baserom.dol", 0x2664E4, 0x1C
+lbl_80269520:
+	.incbin "baserom.dol", 0x266500, 0x10
+lbl_80269530:
+	.incbin "baserom.dol", 0x266510, 0x10
+lbl_80269540:
+	.incbin "baserom.dol", 0x266520, 0x34
+lbl_80269574:
+	.incbin "baserom.dol", 0x266554, 0xC
+lbl_80269580:
+	.incbin "baserom.dol", 0x266560, 0x78
+lbl_802695F8:
+	.incbin "baserom.dol", 0x2665D8, 0xC
+lbl_80269604:
+	.incbin "baserom.dol", 0x2665E4, 0xC
+lbl_80269610:
+	.incbin "baserom.dol", 0x2665F0, 0xC
+lbl_8026961C:
+	.incbin "baserom.dol", 0x2665FC, 0xC
+lbl_80269628:
+	.incbin "baserom.dol", 0x266608, 0xC
+lbl_80269634:
+	.incbin "baserom.dol", 0x266614, 0xC
+lbl_80269640:
+	.incbin "baserom.dol", 0x266620, 0xC
+lbl_8026964C:
+	.incbin "baserom.dol", 0x26662C, 0xC
+lbl_80269658:
+	.incbin "baserom.dol", 0x266638, 0xC
+lbl_80269664:
+	.incbin "baserom.dol", 0x266644, 0xC
+lbl_80269670:
+	.incbin "baserom.dol", 0x266650, 0xC
+lbl_8026967C:
+	.incbin "baserom.dol", 0x26665C, 0xC
+lbl_80269688:
+	.incbin "baserom.dol", 0x266668, 0xC
+lbl_80269694:
+	.incbin "baserom.dol", 0x266674, 0xC
+lbl_802696A0:
+	.incbin "baserom.dol", 0x266680, 0x18
+lbl_802696B8:
+	.incbin "baserom.dol", 0x266698, 0x24
+lbl_802696DC:
+	.incbin "baserom.dol", 0x2666BC, 0x18
+lbl_802696F4:
+	.incbin "baserom.dol", 0x2666D4, 0x3D4

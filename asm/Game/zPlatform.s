@@ -4039,3 +4039,6 @@ lbl_800AC894:
 lbl_800AC898:
 /* 800AC898 000A9698  D0 43 00 18 */	stfs f2, 0x18(r3)
 /* 800AC89C 000A969C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025E7F0:
+	.incbin "baserom.dol", 0x25B7D0, 0x90

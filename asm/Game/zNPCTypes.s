@@ -65,3 +65,6 @@ lbl_800EEE18:
 /* 800EEE40 000EBC40  7C 08 03 A6 */	mtlr r0
 /* 800EEE44 000EBC44  38 21 03 60 */	addi r1, r1, 0x360
 /* 800EEE48 000EBC48  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802688D0:
+	.incbin "baserom.dol", 0x2658B0, 0x358

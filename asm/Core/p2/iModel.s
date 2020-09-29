@@ -2108,3 +2108,10 @@ lbl_800C95DC:
 /* 800C9624 000C6424  7C 08 03 A6 */	mtlr r0
 /* 800C9628 000C6428  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C962C 000C642C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80260178:
+	.incbin "baserom.dol", 0x25D158, 0x10
+lbl_80260188:
+	.incbin "baserom.dol", 0x25D168, 0x18
+lbl_802601A0:
+	.incbin "baserom.dol", 0x25D180, 0x8

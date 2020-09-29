@@ -697,3 +697,8 @@ changing__Q24xhud12meter_widgetCFv:
 /* 8009BFF4 00098DF4  54 00 1F FE */	rlwinm r0, r0, 3, 0x1f, 0x1f
 /* 8009BFF8 00098DF8  68 03 00 01 */	xori r3, r0, 1
 /* 8009BFFC 00098DFC  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025CB78:
+	.incbin "baserom.dol", 0x259B58, 0x14
+lbl_8025CB8C:
+	.incbin "baserom.dol", 0x259B6C, 0x18C

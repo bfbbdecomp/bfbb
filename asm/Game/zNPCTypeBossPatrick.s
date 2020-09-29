@@ -9248,3 +9248,12 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .global xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi
 xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi:
 /* 80168A90 00165890  4E 80 00 20 */	blr 
+.section .rodata
+lbl_802707F0:
+	.incbin "baserom.dol", 0x26D7D0, 0x5C
+lbl_8027084C:
+	.incbin "baserom.dol", 0x26D82C, 0x28
+lbl_80270874:
+	.incbin "baserom.dol", 0x26D854, 0x28
+lbl_8027089C:
+	.incbin "baserom.dol", 0x26D87C, 0x70C

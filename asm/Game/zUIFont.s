@@ -877,3 +877,8 @@ yextent__8xtextboxCFfRib:
 /* 800BD1A4 000B9FA4  7C 08 03 A6 */	mtlr r0
 /* 800BD1A8 000B9FA8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BD1AC 000B9FAC  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025F998:
+	.incbin "baserom.dol", 0x25C978, 0x10
+lbl_8025F9A8:
+	.incbin "baserom.dol", 0x25C988, 0x40

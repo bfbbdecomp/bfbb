@@ -831,3 +831,6 @@ convert__FRCQ38ztextbox10asset_type10color_type:
 /* 80134990 00131790  80 61 00 08 */	lwz r3, 8(r1)
 /* 80134994 00131794  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134998 00131798  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026CA38:
+	.incbin "baserom.dol", 0x269A18, 0x18

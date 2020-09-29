@@ -796,3 +796,6 @@ lbl_800A87D0:
 /* 800A87E0 000A55E0  7C 08 03 A6 */	mtlr r0
 /* 800A87E4 000A55E4  38 21 00 40 */	addi r1, r1, 0x40
 /* 800A87E8 000A55E8  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025E6F8:
+	.incbin "baserom.dol", 0x25B6D8, 0xF8

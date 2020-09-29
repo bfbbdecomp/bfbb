@@ -4755,3 +4755,18 @@ KillAll__8NPARMgmtFv:
 singleton__9zNPCB_SB2Fv:
 /* 80195420 00192220  80 6D 96 F0 */	lwz r3, _singleton__9zNPCB_SB2-_SDA_BASE_(r13)
 /* 80195424 00192224  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80273B40:
+	.incbin "baserom.dol", 0x270B20, 0x148
+lbl_80273C88:
+	.incbin "baserom.dol", 0x270C68, 0xC
+lbl_80273C94:
+	.incbin "baserom.dol", 0x270C74, 0x50
+lbl_80273CE4:
+	.incbin "baserom.dol", 0x270CC4, 0xC
+lbl_80273CF0:
+	.incbin "baserom.dol", 0x270CD0, 0xC
+lbl_80273CFC:
+	.incbin "baserom.dol", 0x270CDC, 0xC
+lbl_80273D08:
+	.incbin "baserom.dol", 0x270CE8, 0xCE8

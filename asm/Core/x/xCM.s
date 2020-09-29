@@ -610,3 +610,8 @@ lbl_80196870:
 /* 80196874 00193674  7C 08 03 A6 */	mtlr r0
 /* 80196878 00193678  38 21 00 10 */	addi r1, r1, 0x10
 /* 8019687C 0019367C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80274B38:
+	.incbin "baserom.dol", 0x271B18, 0x198
+lbl_80274CD0:
+	.incbin "baserom.dol", 0x271CB0, 0x80

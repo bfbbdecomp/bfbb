@@ -1419,3 +1419,14 @@ __ct__8NPCGlyphFv:
 __ct__8NPCGlyphF11en_npcglyph:
 /* 80187628 00184428  90 83 00 00 */	stw r4, 0(r3)
 /* 8018762C 0018442C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80273398:
+	.incbin "baserom.dol", 0x270378, 0xC
+lbl_802733A4:
+	.incbin "baserom.dol", 0x270384, 0xC
+lbl_802733B0:
+	.incbin "baserom.dol", 0x270390, 0x30
+lbl_802733E0:
+	.incbin "baserom.dol", 0x2703C0, 0xC
+lbl_802733EC:
+	.incbin "baserom.dol", 0x2703CC, 0xCC

@@ -10049,3 +10049,12 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 Name__21zNPCGoalBossSandyLeapFv:
 /* 801465F4 001433F4  38 60 00 00 */	li r3, 0
 /* 801465F8 001433F8  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026D0E8:
+	.incbin "baserom.dol", 0x26A0C8, 0x28
+lbl_8026D110:
+	.incbin "baserom.dol", 0x26A0F0, 0x28
+lbl_8026D138:
+	.incbin "baserom.dol", 0x26A118, 0x64
+lbl_8026D19C:
+	.incbin "baserom.dol", 0x26A17C, 0x684

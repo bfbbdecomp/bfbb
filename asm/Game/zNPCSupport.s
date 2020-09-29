@@ -2939,3 +2939,20 @@ IsLocked__9NPCWidgetFv:
 /* 801305F0 0012D3F0  7C 00 1B 78 */	or r0, r0, r3
 /* 801305F4 0012D3F4  54 03 0F FE */	srwi r3, r0, 0x1f
 /* 801305F8 0012D3F8  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026C410:
+	.incbin "baserom.dol", 0x2693F0, 0x1E0
+lbl_8026C5F0:
+	.incbin "baserom.dol", 0x2695D0, 0x6C
+lbl_8026C65C:
+	.incbin "baserom.dol", 0x26963C, 0xB8
+lbl_8026C714:
+	.incbin "baserom.dol", 0x2696F4, 0x24
+lbl_8026C738:
+	.incbin "baserom.dol", 0x269718, 0x24
+lbl_8026C75C:
+	.incbin "baserom.dol", 0x26973C, 0x9C
+lbl_8026C7F8:
+	.incbin "baserom.dol", 0x2697D8, 0x10
+lbl_8026C808:
+	.incbin "baserom.dol", 0x2697E8, 0x68

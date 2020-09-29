@@ -1629,3 +1629,6 @@ lbl_8012D874:
 /* 8012D87C 0012A67C  7C 08 03 A6 */	mtlr r0
 /* 8012D880 0012A680  38 21 00 10 */	addi r1, r1, 0x10
 /* 8012D884 0012A684  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026C2B0:
+	.incbin "baserom.dol", 0x269290, 0x150

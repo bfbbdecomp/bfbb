@@ -851,3 +851,6 @@ zMenuIsFirstBoot__Fv:
 zMenuFirstBootSet__Fi:
 /* 800A6BF0 000A39F0  90 6D 82 C0 */	stw r3, lbl_803CABC0-_SDA_BASE_(r13)
 /* 800A6BF4 000A39F4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025E558:
+	.incbin "baserom.dol", 0x25B538, 0x30

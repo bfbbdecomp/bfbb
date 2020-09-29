@@ -402,3 +402,8 @@ lbl_8010F818:
 lbl_8010F824:
 /* 8010F824 0010C624  38 60 00 00 */	li r3, 0
 /* 8010F828 0010C628  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026A3C8:
+	.incbin "baserom.dol", 0x2673A8, 0x18
+lbl_8026A3E0:
+	.incbin "baserom.dol", 0x2673C0, 0x18

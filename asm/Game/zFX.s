@@ -5079,3 +5079,34 @@ lbl_80097470:
 /* 8009749C 0009429C  EC 01 00 FA */	fmadds f0, f1, f3, f0
 /* 800974A0 000942A0  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800974A4 000942A4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025BA30:
+	.incbin "baserom.dol", 0x258A10, 0xF8
+lbl_8025BB28:
+	.incbin "baserom.dol", 0x258B08, 0x70
+lbl_8025BB98:
+	.incbin "baserom.dol", 0x258B78, 0xF0
+lbl_8025BC88:
+	.incbin "baserom.dol", 0x258C68, 0x3C
+lbl_8025BCC4:
+	.incbin "baserom.dol", 0x258CA4, 0x78
+lbl_8025BD3C:
+	.incbin "baserom.dol", 0x258D1C, 0x3C
+lbl_8025BD78:
+	.incbin "baserom.dol", 0x258D58, 0x10
+lbl_8025BD88:
+	.incbin "baserom.dol", 0x258D68, 0x10
+lbl_8025BD98:
+	.incbin "baserom.dol", 0x258D78, 0xC
+lbl_8025BDA4:
+	.incbin "baserom.dol", 0x258D84, 0xC
+lbl_8025BDB0:
+	.incbin "baserom.dol", 0x258D90, 0x30
+lbl_8025BDE0:
+	.incbin "baserom.dol", 0x258DC0, 0xC
+lbl_8025BDEC:
+	.incbin "baserom.dol", 0x258DCC, 0xC
+lbl_8025BDF8:
+	.incbin "baserom.dol", 0x258DD8, 0xC
+lbl_8025BE04:
+	.incbin "baserom.dol", 0x258DE4, 0x74

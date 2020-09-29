@@ -2128,3 +2128,20 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 8011A934 00117734  D0 63 00 04 */	stfs f3, 4(r3)
 /* 8011A938 00117738  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011A93C 0011773C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026B048:
+	.incbin "baserom.dol", 0x268028, 0x178
+lbl_8026B1C0:
+	.incbin "baserom.dol", 0x2681A0, 0xC
+lbl_8026B1CC:
+	.incbin "baserom.dol", 0x2681AC, 0x10
+lbl_8026B1DC:
+	.incbin "baserom.dol", 0x2681BC, 0x10
+lbl_8026B1EC:
+	.incbin "baserom.dol", 0x2681CC, 0xC
+lbl_8026B1F8:
+	.incbin "baserom.dol", 0x2681D8, 0x54
+lbl_8026B24C:
+	.incbin "baserom.dol", 0x26822C, 0xC
+lbl_8026B258:
+	.incbin "baserom.dol", 0x268238, 0x10

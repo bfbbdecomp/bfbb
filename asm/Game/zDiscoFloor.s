@@ -2405,3 +2405,12 @@ lbl_8013D044:
 /* 8013D048 00139E48  4D 80 00 20 */	bltlr 
 /* 8013D04C 00139E4C  7C A3 2B 78 */	mr r3, r5
 /* 8013D050 00139E50  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026D090:
+	.incbin "baserom.dol", 0x26A070, 0x14
+lbl_8026D0A4:
+	.incbin "baserom.dol", 0x26A084, 0x18
+lbl_8026D0BC:
+	.incbin "baserom.dol", 0x26A09C, 0xC
+lbl_8026D0C8:
+	.incbin "baserom.dol", 0x26A0A8, 0x20

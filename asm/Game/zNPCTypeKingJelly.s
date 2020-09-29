@@ -9339,3 +9339,20 @@ lbl_8014EC5C:
 /* 8014EC70 0014BA70  7C 08 03 A6 */	mtlr r0
 /* 8014EC74 0014BA74  38 21 00 30 */	addi r1, r1, 0x30
 /* 8014EC78 0014BA78  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026D820:
+	.incbin "baserom.dol", 0x26A800, 0x10
+lbl_8026D830:
+	.incbin "baserom.dol", 0x26A810, 0xC
+lbl_8026D83C:
+	.incbin "baserom.dol", 0x26A81C, 0x1C
+lbl_8026D858:
+	.incbin "baserom.dol", 0x26A838, 0x2C
+lbl_8026D884:
+	.incbin "baserom.dol", 0x26A864, 0x14
+lbl_8026D898:
+	.incbin "baserom.dol", 0x26A878, 0xC
+lbl_8026D8A4:
+	.incbin "baserom.dol", 0x26A884, 0xC
+lbl_8026D8B0:
+	.incbin "baserom.dol", 0x26A890, 0xF88

@@ -3055,3 +3055,8 @@ normalize__5xVec2Fv:
 /* 8011D558 0011A358  4E 80 00 20 */	blr 
 /* 8011D55C 0011A35C  4E 80 00 20 */	blr 
 /* 8011D560 0011A360  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026B268:
+	.incbin "baserom.dol", 0x268248, 0x1C4
+lbl_8026B42C:
+	.incbin "baserom.dol", 0x26840C, 0x51C

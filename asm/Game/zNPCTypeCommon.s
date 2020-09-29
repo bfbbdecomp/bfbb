@@ -6760,3 +6760,16 @@ Insert__21xListItem_9NPCConfig_FP9NPCConfig:
 lbl_800F4A64:
 /* 800F4A64 000F1864  90 64 00 04 */	stw r3, 4(r4)
 /* 800F4A68 000F1868  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80268C28:
+	.incbin "baserom.dol", 0x265C08, 0x30
+lbl_80268C58:
+	.incbin "baserom.dol", 0x265C38, 0xC
+lbl_80268C64:
+	.incbin "baserom.dol", 0x265C44, 0x10
+lbl_80268C74:
+	.incbin "baserom.dol", 0x265C54, 0x30
+lbl_80268CA4:
+	.incbin "baserom.dol", 0x265C84, 0x1C
+lbl_80268CC0:
+	.incbin "baserom.dol", 0x265CA0, 0x5C0

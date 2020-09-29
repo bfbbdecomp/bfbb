@@ -6091,3 +6091,14 @@ lbl_80154DAC:
 .global xDebugAddTweak__FPCcP5xVec3PC14tweak_callbackPvUi
 xDebugAddTweak__FPCcP5xVec3PC14tweak_callbackPvUi:
 /* 80154DD4 00151BD4  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026E838:
+	.incbin "baserom.dol", 0x26B818, 0xE0
+lbl_8026E918:
+	.incbin "baserom.dol", 0x26B8F8, 0x28
+lbl_8026E940:
+	.incbin "baserom.dol", 0x26B920, 0x10
+lbl_8026E950:
+	.incbin "baserom.dol", 0x26B930, 0xA0
+lbl_8026E9F0:
+	.incbin "baserom.dol", 0x26B9D0, 0x7F0

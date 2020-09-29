@@ -3909,3 +3909,8 @@ __ct__8zNPCTikiFi:
 /* 8010CE18 00109C18  4E 80 00 20 */	blr 
 /* 8010CE1C 00109C1C  38 60 00 00 */	li r3, 0
 /* 8010CE20 00109C20  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8026A308:
+	.incbin "baserom.dol", 0x2672E8, 0x50
+lbl_8026A358:
+	.incbin "baserom.dol", 0x267338, 0x58

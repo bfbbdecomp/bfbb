@@ -2220,3 +2220,6 @@ xMat4x3RotC__FP7xMat4x3ffff:
 /* 8009E020 0009AE20  7C 08 03 A6 */	mtlr r0
 /* 8009E024 0009AE24  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E028 0009AE28  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025CD18:
+	.incbin "baserom.dol", 0x259CF8, 0x18

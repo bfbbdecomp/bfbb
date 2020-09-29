@@ -8432,3 +8432,23 @@ lbl_80170444:
 /* 80170470 0016D270  7C 08 03 A6 */	mtlr r0
 /* 80170474 0016D274  38 21 00 40 */	addi r1, r1, 0x40
 /* 80170478 0016D278  4E 80 00 20 */	blr 
+
+.section .rodata
+lbl_80270FA8:
+	.incbin "baserom.dol", 0x26DF88, 0x164
+lbl_8027110C:
+	.incbin "baserom.dol", 0x26E0EC, 0x1DC
+lbl_802712E8:
+	.incbin "baserom.dol", 0x26E2C8, 0x18
+lbl_80271300:
+	.incbin "baserom.dol", 0x26E2E0, 0x94
+lbl_80271394:
+	.incbin "baserom.dol", 0x26E374, 0x40
+lbl_802713D4:
+	.incbin "baserom.dol", 0x26E3B4, 0xC
+lbl_802713E0:
+	.incbin "baserom.dol", 0x26E3C0, 0x60
+lbl_80271440:
+	.incbin "baserom.dol", 0x26E420, 0x24
+lbl_80271464:
+	.incbin "baserom.dol", 0x26E444, 0x9C4

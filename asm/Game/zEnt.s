@@ -1780,3 +1780,8 @@ xSndPlay3D__FUiffUiUiPC5xVec3f14sound_categoryf:
 SelfType__9xNPCBasicCFv:
 /* 800564E4 000532E4  80 63 00 F4 */	lwz r3, 0xf4(r3)
 /* 800564E8 000532E8  4E 80 00 20 */	blr 
+.section .rodata
+lbl_80255018:
+	.incbin "baserom.dol", 0x251FF8, 0xC
+lbl_80255024:
+	.incbin "baserom.dol", 0x252004, 0x64

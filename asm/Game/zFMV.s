@@ -88,3 +88,6 @@ lbl_80092D08:
 /* 80092D10 0008FB10  42 00 FF D4 */	bdnz lbl_80092CE4
 /* 80092D14 0008FB14  38 60 00 00 */	li r3, 0
 /* 80092D18 0008FB18  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025BA20:
+	.incbin "baserom.dol", 0x258A00, 0x10

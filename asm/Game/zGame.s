@@ -2370,3 +2370,10 @@ xDrawBegin__Fv:
 /* 80099674 00096474  7C 08 03 A6 */	mtlr r0
 /* 80099678 00096478  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009967C 0009647C  4E 80 00 20 */	blr 
+.section .rodata
+lbl_8025BE78:
+	.incbin "baserom.dol", 0x258E58, 0x10
+lbl_8025BE88:
+	.incbin "baserom.dol", 0x258E68, 0x100
+lbl_8025BF88:
+	.incbin "baserom.dol", 0x258F68, 0xA98
