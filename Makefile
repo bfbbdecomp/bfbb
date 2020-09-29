@@ -62,6 +62,7 @@ OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy
 CC      := $(WINE) tools/mwcc_compiler/2.0/mwcceppc.exe
 LD      := $(WINE) tools/mwcc_compiler/2.7/mwldeppc.exe
 PPROC   := python tools/postprocess.py
+GLBLASM := python tools/inlineasm/globalasm.py
 ELF2DOL := tools/elf2dol
 SHA1SUM := sha1sum
 ASMDIFF := ./asmdiff.sh
@@ -121,4 +122,5 @@ $(OBJ_DIR)/%.o: %.c
 
 $(OBJ_DIR)/%.o: %.cpp
 	$(CC) $(PREPROCESS) -o $*.cp $<
+	$(GLBLASM) $*.cp
 	$(CC) $(CFLAGS) -c -o $@ $*.cp
