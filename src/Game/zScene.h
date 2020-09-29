@@ -4,6 +4,7 @@
 #include "../Core/x/xScene.h"
 
 #include "zPortal.h"
+#include "zEnt.h"
 #include "zEnv.h"
 
 struct zScene : xScene
@@ -25,5 +26,7 @@ struct zScene : xScene
 	xBase* baseList[72];
 	_zEnv* zen;
 };
+
+xBase* zSceneFindObject(unsigned int gameID);
 
 #endif

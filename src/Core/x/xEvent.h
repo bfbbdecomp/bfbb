@@ -549,6 +549,21 @@ enum en_xEventTags
     eEventCount
 };
 
+void zEntEvent(char* to, unsigned int toEvent);
+void zEntEvent(unsigned int toID, unsigned int toEvent);
+void zEntEvent(unsigned int toID, unsigned int toEvent, float toParam0,
+               float toParam1, float toParam2, float toParam3);
+void zEntEvent(xBase* to, unsigned int toEvent);
+void zEntEvent(xBase* to, unsigned int toEvent, float toParam0, float toParam1,
+               float toParam2, float toParam3);
+void zEntEvent(xBase* to, unsigned int toEvent, const float* toParam);
+void zEntEvent(xBase* to, unsigned int toEvent, const float* toParam,
+               xBase* toParamWidget);
 void zEntEvent(xBase* from, xBase* to, unsigned int toEvent);
+void zEntEvent(xBase* from, xBase* to, unsigned int toEvent,
+               const float* toParam);
+void zEntEvent(xBase* from, unsigned int fromEvent, xBase* to,
+               unsigned int toEvent, const float* toParam, xBase* toParamWidget,
+               int forceEvent);
 
 #endif
