@@ -555,3 +555,15 @@ xQuickCullForEverything__FP7xQCData:
 /* 8003CC40 00039A40  98 03 00 06 */	stb r0, 6(r3)
 /* 8003CC44 00039A44  98 03 00 07 */	stb r0, 7(r3)
 /* 8003CC48 00039A48  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCF60:
+	.incbin "baserom.dol", 0x2B6800, 0x4
+lbl_803CCF64:
+	.incbin "baserom.dol", 0x2B6804, 0x4
+lbl_803CCF68:
+	.incbin "baserom.dol", 0x2B6808, 0x4
+lbl_803CCF6C:
+	.incbin "baserom.dol", 0x2B680C, 0x4
+lbl_803CCF70:
+	.incbin "baserom.dol", 0x2B6810, 0x8

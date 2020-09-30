@@ -322,3 +322,9 @@ xMorphSeqDuration__FP13xMorphSeqFile:
 /* 80035488 00032288  7C 63 02 14 */	add r3, r3, r0
 /* 8003548C 0003228C  C0 23 00 0C */	lfs f1, 0xc(r3)
 /* 80035490 00032290  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCEC0:
+	.incbin "baserom.dol", 0x2B6760, 0x8
+lbl_803CCEC8:
+	.incbin "baserom.dol", 0x2B6768, 0x8

@@ -67,3 +67,9 @@ xParMgrRender__Fv:
 /* 80038B8C 0003598C  7C 08 03 A6 */	mtlr r0
 /* 80038B90 00035990  38 21 00 10 */	addi r1, r1, 0x10
 /* 80038B94 00035994  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB320:
+	.skip 0x4
+lbl_803CB324:
+	.skip 0x4

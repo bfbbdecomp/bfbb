@@ -489,3 +489,29 @@ type_name__Q24xhud16unit_meter_assetFv:
 /* 80030634 0002D434  38 63 2F 90 */	addi r3, r3, lbl_80252F90@l
 /* 80030638 0002D438  38 63 00 19 */	addi r3, r3, 0x19
 /* 8003063C 0002D43C  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB2C0:
+	.skip 0x1
+lbl_803CB2C1:
+	.skip 0x3
+lbl_803CB2C4:
+	.skip 0x4
+lbl_803CB2C8:
+	.skip 0x8
+
+.section .sdata
+lbl_803CA980:
+	.incbin "baserom.dol", 0x2B5A40, 0x8
+
+.section .sdata2
+lbl_803CCDF0:
+	.incbin "baserom.dol", 0x2B6690, 0x4
+lbl_803CCDF4:
+	.incbin "baserom.dol", 0x2B6694, 0x4
+lbl_803CCDF8:
+	.incbin "baserom.dol", 0x2B6698, 0x4
+lbl_803CCDFC:
+	.incbin "baserom.dol", 0x2B669C, 0x4
+lbl_803CCE00:
+	.incbin "baserom.dol", 0x2B66A0, 0x8

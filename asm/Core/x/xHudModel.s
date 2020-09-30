@@ -219,3 +219,17 @@ type_name__Q24xhud11model_assetFv:
 /* 8002FF74 0002CD74  38 63 2F 68 */	addi r3, r3, lbl_80252F68@l
 /* 8002FF78 0002CD78  38 63 00 1B */	addi r3, r3, 0x1b
 /* 8002FF7C 0002CD7C  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB2B8:
+	.skip 0x4
+lbl_803CB2BC:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CCDE0:
+	.incbin "baserom.dol", 0x2B6680, 0x4
+lbl_803CCDE4:
+	.incbin "baserom.dol", 0x2B6684, 0x4
+lbl_803CCDE8:
+	.incbin "baserom.dol", 0x2B6688, 0x8

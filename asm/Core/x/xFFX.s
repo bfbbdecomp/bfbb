@@ -389,3 +389,28 @@ lbl_8001FDB0:
 /* 8001FDB0 0001CBB0  80 03 00 40 */	lwz r0, 0x40(r3)
 /* 8001FDB4 0001CBB4  90 0D 89 08 */	stw r0, lbl_803CB208-_SDA_BASE_(r13)
 /* 8001FDB8 0001CBB8  4E 80 00 20 */	blr 
+
+.section .sbss
+.balign 8
+lbl_803CB1E8:
+	.skip 0x4
+lbl_803CB1EC:
+	.skip 0x4
+lbl_803CB1F0:
+	.skip 0x4
+lbl_803CB1F4:
+	.skip 0x4
+lbl_803CB1F8:
+	.skip 0x4
+lbl_803CB1FC:
+	.skip 0x4
+lbl_803CB200:
+	.skip 0x4
+lbl_803CB204:
+	.skip 0x4
+lbl_803CB208:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CCC48:
+	.incbin "baserom.dol", 0x2B64E8, 0x8

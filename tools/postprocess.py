@@ -34,14 +34,14 @@ import struct
 
 # Substitutions
 
-#NOTE: We replaced ? with $$ for the escape sequence
+#NOTE: We replaced ? with _esc__ _for the escape sequence
 substitutions = (
-    ('<',  '$$0'),
-    ('>',  '$$1'),
-    ('@',  '$$2'),
-    ('\\', '$$3'),
-    (',',  '$$4'),
-    ('-',  '$$5')
+    ('<',  '_esc__0_'),
+    ('>',  '_esc__1_'),
+    ('@',  '_esc__2_'),
+    ('\\', '_esc__3_'),
+    (',',  '_esc__4_'),
+    ('-',  '_esc__5_')
 )
 
 def format(symbol):

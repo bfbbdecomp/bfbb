@@ -984,3 +984,25 @@ reset__10ptank_poolFv:
 .section .rodata
 lbl_8026AFD8:
 	.incbin "baserom.dol", 0x267FB8, 0x30
+
+.section .data
+lbl_80297CE0:
+	.incbin "baserom.dol", 0x294CC0, 0x38
+
+.section .bss
+lbl_80314210:
+	.skip 0xC
+lbl_8031421C:
+	.skip 0xC
+
+.section .sdata2
+lbl_803CE8A8:
+	.incbin "baserom.dol", 0x2B8148, 0x4
+lbl_803CE8AC:
+	.incbin "baserom.dol", 0x2B814C, 0x4
+lbl_803CE8B0:
+	.incbin "baserom.dol", 0x2B8150, 0x8
+lbl_803CE8B8:
+	.incbin "baserom.dol", 0x2B8158, 0x8
+lbl_803CE8C0:
+	.incbin "baserom.dol", 0x2B8160, 0x8

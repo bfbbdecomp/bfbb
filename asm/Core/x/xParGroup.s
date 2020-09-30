@@ -519,3 +519,15 @@ lbl_80038ABC:
 /* 80038AC8 000358C8  90 04 00 04 */	stw r0, 4(r4)
 /* 80038ACC 000358CC  90 83 00 04 */	stw r4, 4(r3)
 /* 80038AD0 000358D0  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB318:
+	.skip 0x4
+lbl_803CB31C:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CCF50:
+	.incbin "baserom.dol", 0x2B67F0, 0x4
+lbl_803CCF54:
+	.incbin "baserom.dol", 0x2B67F4, 0x4

@@ -517,3 +517,7 @@ iEnvGetBBox__FP4iEnv:
 /* 80039294 00036094  80 63 00 00 */	lwz r3, 0(r3)
 /* 80039298 00036098  38 63 00 50 */	addi r3, r3, 0x50
 /* 8003929C 0003609C  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCF58:
+	.incbin "baserom.dol", 0x2B67F8, 0x8

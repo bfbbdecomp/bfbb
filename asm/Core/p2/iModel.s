@@ -2018,7 +2018,7 @@ lbl_800C947C:
 /* 800C94E0 000C62E0  C8 21 00 10 */	lfd f1, 0x10(r1)
 /* 800C94E4 000C62E4  EC 21 10 28 */	fsubs f1, f1, f2
 /* 800C94E8 000C62E8  EC 21 00 32 */	fmuls f1, f1, f0
-/* 800C94EC 000C62EC  48 00 00 85 */	bl U8_COLOR_CLAMP__20$$2unnamed$$2iModel_cpp$$2FRUcf
+/* 800C94EC 000C62EC  48 00 00 85 */	bl U8_COLOR_CLAMP__20_esc__2_unnamed_esc__2_iModel_cpp_esc__2_FRUcf
 /* 800C94F0 000C62F0  88 81 00 09 */	lbz r4, 9(r1)
 /* 800C94F4 000C62F4  3C 00 43 30 */	lis r0, 0x4330
 /* 800C94F8 000C62F8  90 01 00 18 */	stw r0, 0x18(r1)
@@ -2029,7 +2029,7 @@ lbl_800C947C:
 /* 800C950C 000C630C  C8 21 00 18 */	lfd f1, 0x18(r1)
 /* 800C9510 000C6310  EC 21 10 28 */	fsubs f1, f1, f2
 /* 800C9514 000C6314  EC 21 00 32 */	fmuls f1, f1, f0
-/* 800C9518 000C6318  48 00 00 59 */	bl U8_COLOR_CLAMP__20$$2unnamed$$2iModel_cpp$$2FRUcf
+/* 800C9518 000C6318  48 00 00 59 */	bl U8_COLOR_CLAMP__20_esc__2_unnamed_esc__2_iModel_cpp_esc__2_FRUcf
 /* 800C951C 000C631C  88 81 00 0A */	lbz r4, 0xa(r1)
 /* 800C9520 000C6320  3C 00 43 30 */	lis r0, 0x4330
 /* 800C9524 000C6324  90 01 00 20 */	stw r0, 0x20(r1)
@@ -2040,7 +2040,7 @@ lbl_800C947C:
 /* 800C9538 000C6338  C8 21 00 20 */	lfd f1, 0x20(r1)
 /* 800C953C 000C633C  EC 21 10 28 */	fsubs f1, f1, f2
 /* 800C9540 000C6340  EC 21 00 32 */	fmuls f1, f1, f0
-/* 800C9544 000C6344  48 00 00 2D */	bl U8_COLOR_CLAMP__20$$2unnamed$$2iModel_cpp$$2FRUcf
+/* 800C9544 000C6344  48 00 00 2D */	bl U8_COLOR_CLAMP__20_esc__2_unnamed_esc__2_iModel_cpp_esc__2_FRUcf
 /* 800C9548 000C6348  38 7E 00 04 */	addi r3, r30, 4
 /* 800C954C 000C634C  38 81 00 08 */	addi r4, r1, 8
 /* 800C9550 000C6350  4B F8 95 69 */	bl __as__6RwRGBAFRC6RwRGBA
@@ -2053,7 +2053,7 @@ lbl_800C947C:
 /* 800C956C 000C636C  4E 80 00 20 */	blr 
 
 /* U8_COLOR_CLAMP__20@unnamed@iModel_cpp@FRUcf */
-U8_COLOR_CLAMP__20$$2unnamed$$2iModel_cpp$$2FRUcf:
+U8_COLOR_CLAMP__20_esc__2_unnamed_esc__2_iModel_cpp_esc__2_FRUcf:
 /* 800C9570 000C6370  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C9574 000C6374  C0 02 97 68 */	lfs f0, lbl_803CE0E8-_SDA2_BASE_(r2)
 /* 800C9578 000C6378  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -2115,3 +2115,65 @@ lbl_80260188:
 	.incbin "baserom.dol", 0x25D168, 0x18
 lbl_802601A0:
 	.incbin "baserom.dol", 0x25D180, 0x8
+
+.section .bss
+lbl_802FD698:
+	.skip 0x400
+lbl_802FDA98:
+	.skip 0x10
+lbl_802FDAA8:
+	.skip 0x40
+lbl_802FDAE8:
+	.skip 0x40
+lbl_802FDB28:
+	.skip 0x10
+
+.section .sbss
+lbl_803CBB40:
+	.skip 0x4
+lbl_803CBB44:
+	.skip 0x4
+lbl_803CBB48:
+	.skip 0x4
+lbl_803CBB4C:
+	.skip 0x4
+lbl_803CBB50:
+	.skip 0x4
+lbl_803CBB54:
+	.skip 0x4
+lbl_803CBB58:
+	.skip 0x4
+lbl_803CBB5C:
+	.skip 0x4
+lbl_803CBB60:
+	.skip 0x8
+
+.section .sbss2
+lbl_803D08A0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08A4
+lbl_803D08A4:
+	.skip 0x4
+lbl_803D08A8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08AC
+lbl_803D08AC:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CE0E0:
+	.incbin "baserom.dol", 0x2B7980, 0x4
+lbl_803CE0E4:
+	.incbin "baserom.dol", 0x2B7984, 0x4
+lbl_803CE0E8:
+	.incbin "baserom.dol", 0x2B7988, 0x4
+lbl_803CE0EC:
+	.incbin "baserom.dol", 0x2B798C, 0x4
+lbl_803CE0F0:
+	.incbin "baserom.dol", 0x2B7990, 0x8
+lbl_803CE0F8:
+	.incbin "baserom.dol", 0x2B7998, 0x8
+lbl_803CE100:
+	.incbin "baserom.dol", 0x2B79A0, 0x8

@@ -220,7 +220,7 @@ lbl_801956D8:
 /* 80195738 00192538  D0 1F 01 30 */	stfs f0, 0x130(r31)
 /* 8019573C 0019253C  C0 1F 00 14 */	lfs f0, 0x14(r31)
 /* 80195740 00192540  D0 1F 01 34 */	stfs f0, 0x134(r31)
-/* 80195744 00192544  4B E8 28 FD */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
+/* 80195744 00192544  4B E8 28 FD */	bl __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
 /* 80195748 00192548  C0 42 B2 40 */	lfs f2, lbl_803CFBC0-_SDA2_BASE_(r2)
 /* 8019574C 0019254C  C0 3F 00 28 */	lfs f1, 0x28(r31)
 /* 80195750 00192550  C0 02 B2 54 */	lfs f0, lbl_803CFBD4-_SDA2_BASE_(r2)
@@ -343,3 +343,27 @@ type_name__Q24xhud10text_assetFv:
 .section .rodata
 lbl_802749F0:
 	.incbin "baserom.dol", 0x2719D0, 0x10
+
+.section .sbss
+lbl_803CC1C8:
+	.skip 0x4
+lbl_803CC1CC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global comboHUD
+comboHUD:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CFBC0:
+	.incbin "baserom.dol", 0x2B9460, 0x8
+lbl_803CFBC8:
+	.incbin "baserom.dol", 0x2B9468, 0x8
+lbl_803CFBD0:
+	.incbin "baserom.dol", 0x2B9470, 0x4
+lbl_803CFBD4:
+	.incbin "baserom.dol", 0x2B9474, 0x4
+lbl_803CFBD8:
+	.incbin "baserom.dol", 0x2B9478, 0x4
+lbl_803CFBDC:
+	.incbin "baserom.dol", 0x2B947C, 0x4

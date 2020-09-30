@@ -1877,3 +1877,15 @@ lbl_8011F0A0:
 /* 8011F0AC 0011BEAC  7C 08 03 A6 */	mtlr r0
 /* 8011F0B0 0011BEB0  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8011F0B4 0011BEB4  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CE990:
+	.incbin "baserom.dol", 0x2B8230, 0x4
+lbl_803CE994:
+	.incbin "baserom.dol", 0x2B8234, 0x4
+lbl_803CE998:
+	.incbin "baserom.dol", 0x2B8238, 0x4
+lbl_803CE99C:
+	.incbin "baserom.dol", 0x2B823C, 0x4
+lbl_803CE9A0:
+	.incbin "baserom.dol", 0x2B8240, 0x8

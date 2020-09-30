@@ -3,7 +3,7 @@
 .section .text  # 0x800B96B8 - 0x800BC558
 
 /* refresh_model__17@unnamed@zUI_cpp@FR4_zUI */
-refresh_model__17$$2unnamed$$2zUI_cpp$$2FR4_zUI:
+refresh_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI:
 /* 800B96B8 000B64B8  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800B96BC 000B64BC  7C 08 02 A6 */	mflr r0
 /* 800B96C0 000B64C0  90 01 00 74 */	stw r0, 0x74(r1)
@@ -41,15 +41,15 @@ lbl_800B9728:
 /* 800B973C 000B653C  4E 80 00 20 */	blr 
 
 /* init_tweaks__17@unnamed@zUI_cpp@Fv */
-init_tweaks__17$$2unnamed$$2zUI_cpp$$2Fv:
+init_tweaks__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_Fv:
 /* 800B9740 000B6540  4E 80 00 20 */	blr 
 
 /* debug_update__17@unnamed@zUI_cpp@FR6zScenef */
-debug_update__17$$2unnamed$$2zUI_cpp$$2FR6zScenef:
+debug_update__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR6zScenef:
 /* 800B9744 000B6544  4E 80 00 20 */	blr 
 
 /* debug_render__17@unnamed@zUI_cpp@Fv */
-debug_render__17$$2unnamed$$2zUI_cpp$$2Fv:
+debug_render__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_Fv:
 /* 800B9748 000B6548  4E 80 00 20 */	blr 
 
 .global PreUpdate__6zUIMgrFP6zScenef
@@ -144,7 +144,7 @@ lbl_800B9870:
 /* 800B9878 000B6678  41 80 FF C0 */	blt lbl_800B9838
 /* 800B987C 000B667C  FC 20 F8 90 */	fmr f1, f31
 /* 800B9880 000B6680  7F A3 EB 78 */	mr r3, r29
-/* 800B9884 000B6684  4B FF FE C1 */	bl debug_update__17$$2unnamed$$2zUI_cpp$$2FR6zScenef
+/* 800B9884 000B6684  4B FF FE C1 */	bl debug_update__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR6zScenef
 /* 800B9888 000B6688  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800B988C 000B668C  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 800B9890 000B6690  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -423,7 +423,7 @@ zUI_Init__Fv:
 /* 800B9C34 000B6A34  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800B9C38 000B6A38  7C 08 02 A6 */	mflr r0
 /* 800B9C3C 000B6A3C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B9C40 000B6A40  4B FF FB 01 */	bl init_tweaks__17$$2unnamed$$2zUI_cpp$$2Fv
+/* 800B9C40 000B6A40  4B FF FB 01 */	bl init_tweaks__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_Fv
 /* 800B9C44 000B6A44  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800B9C48 000B6A48  7C 08 03 A6 */	mtlr r0
 /* 800B9C4C 000B6A4C  38 21 00 10 */	addi r1, r1, 0x10
@@ -438,7 +438,7 @@ zUI_Init__Fv:
 /* 800B9C70 000B6A70  4E 80 00 20 */	blr 
 
 /* load_model__17@unnamed@zUI_cpp@FUi */
-load_model__17$$2unnamed$$2zUI_cpp$$2FUi:
+load_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FUi:
 /* 800B9C74 000B6A74  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800B9C78 000B6A78  7C 08 02 A6 */	mflr r0
 /* 800B9C7C 000B6A7C  3C 80 80 26 */	lis r4, lbl_8025F750@ha
@@ -486,7 +486,7 @@ lbl_800B9D04:
 /* 800B9D14 000B6B14  4E 80 00 20 */	blr 
 
 /* load_anim_list__17@unnamed@zUI_cpp@FR4_zUI */
-load_anim_list__17$$2unnamed$$2zUI_cpp$$2FR4_zUI:
+load_anim_list__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI:
 /* 800B9D18 000B6B18  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800B9D1C 000B6B1C  7C 08 02 A6 */	mflr r0
 /* 800B9D20 000B6B20  90 01 00 14 */	stw r0, 0x14(r1)
@@ -561,10 +561,10 @@ zUI_Init__FP4_zUIP9xEntAsset:
 /* 800B9E24 000B6C24  80 7E 00 4C */	lwz r3, 0x4c(r30)
 /* 800B9E28 000B6C28  28 03 00 00 */	cmplwi r3, 0
 /* 800B9E2C 000B6C2C  41 82 00 14 */	beq lbl_800B9E40
-/* 800B9E30 000B6C30  4B FF FE 45 */	bl load_model__17$$2unnamed$$2zUI_cpp$$2FUi
+/* 800B9E30 000B6C30  4B FF FE 45 */	bl load_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FUi
 /* 800B9E34 000B6C34  90 7F 00 24 */	stw r3, 0x24(r31)
 /* 800B9E38 000B6C38  7F E3 FB 78 */	mr r3, r31
-/* 800B9E3C 000B6C3C  4B FF FE DD */	bl load_anim_list__17$$2unnamed$$2zUI_cpp$$2FR4_zUI
+/* 800B9E3C 000B6C3C  4B FF FE DD */	bl load_anim_list__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI
 lbl_800B9E40:
 /* 800B9E40 000B6C40  38 A0 00 00 */	li r5, 0
 /* 800B9E44 000B6C44  3C 80 80 0C */	lis r4, lbl_800BA35C@ha
@@ -596,7 +596,7 @@ lbl_800B9EA4:
 /* 800B9EA4 000B6CA4  7F E3 FB 78 */	mr r3, r31
 /* 800B9EA8 000B6CA8  4B F9 B3 A9 */	bl zEntReset__FP4zEnt
 /* 800B9EAC 000B6CAC  7F E3 FB 78 */	mr r3, r31
-/* 800B9EB0 000B6CB0  4B FF F8 09 */	bl refresh_model__17$$2unnamed$$2zUI_cpp$$2FR4_zUI
+/* 800B9EB0 000B6CB0  4B FF F8 09 */	bl refresh_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI
 /* 800B9EB4 000B6CB4  38 00 00 00 */	li r0, 0
 /* 800B9EB8 000B6CB8  90 0D 91 10 */	stw r0, lbl_803CBA10-_SDA_BASE_(r13)
 /* 800B9EBC 000B6CBC  80 7F 00 10 */	lwz r3, 0x10(r31)
@@ -697,7 +697,7 @@ zUI_Reset__FP4_zUI:
 /* 800BA008 000B6E08  7C 7F 1B 78 */	mr r31, r3
 /* 800BA00C 000B6E0C  4B F9 B2 45 */	bl zEntReset__FP4zEnt
 /* 800BA010 000B6E10  7F E3 FB 78 */	mr r3, r31
-/* 800BA014 000B6E14  4B FF F6 A5 */	bl refresh_model__17$$2unnamed$$2zUI_cpp$$2FR4_zUI
+/* 800BA014 000B6E14  4B FF F6 A5 */	bl refresh_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI
 /* 800BA018 000B6E18  38 80 00 00 */	li r4, 0
 /* 800BA01C 000B6E1C  98 9F 00 1B */	stb r4, 0x1b(r31)
 /* 800BA020 000B6E20  88 1F 00 23 */	lbz r0, 0x23(r31)
@@ -1270,7 +1270,7 @@ lbl_800BA7E8:
 /* 800BA7E8 000B75E8  80 0D 91 10 */	lwz r0, lbl_803CBA10-_SDA_BASE_(r13)
 /* 800BA7EC 000B75EC  7C 1D 00 00 */	cmpw r29, r0
 /* 800BA7F0 000B75F0  41 80 FF 70 */	blt lbl_800BA760
-/* 800BA7F4 000B75F4  4B FF EF 55 */	bl debug_render__17$$2unnamed$$2zUI_cpp$$2Fv
+/* 800BA7F4 000B75F4  4B FF EF 55 */	bl debug_render__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_Fv
 /* 800BA7F8 000B75F8  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800BA7FC 000B75FC  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 800BA800 000B7600  83 C1 00 18 */	lwz r30, 0x18(r1)
@@ -1587,7 +1587,7 @@ lbl_800BAC88:
 /* 800BACAC 000B7AAC  38 81 00 08 */	addi r4, r1, 8
 /* 800BACB0 000B7AB0  38 BF 00 0C */	addi r5, r31, 0xc
 /* 800BACB4 000B7AB4  38 DF 00 18 */	addi r6, r31, 0x18
-/* 800BACB8 000B7AB8  4B F7 9D 69 */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
+/* 800BACB8 000B7AB8  4B F7 9D 69 */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
 /* 800BACBC 000B7ABC  80 7E 00 24 */	lwz r3, 0x24(r30)
 /* 800BACC0 000B7AC0  4B F5 E7 81 */	bl xEntRestorePipeline__FP14xModelInstance
 /* 800BACC4 000B7AC4  80 7E 00 24 */	lwz r3, 0x24(r30)
@@ -3350,3 +3350,121 @@ lbl_8025F740:
 	.incbin "baserom.dol", 0x25C720, 0x10
 lbl_8025F750:
 	.incbin "baserom.dol", 0x25C730, 0x248
+
+.section .data
+lbl_802912F8:
+	.incbin "baserom.dol", 0x28E2D8, 0x24
+lbl_8029131C:
+	.incbin "baserom.dol", 0x28E2FC, 0x3C4
+
+.section .bss
+lbl_802F6368:
+	.skip 0x60
+lbl_802F63C8:
+	.skip 0x2278
+
+.section .sbss
+lbl_803CBA10:
+	.skip 0x4
+lbl_803CBA14:
+	.skip 0x4
+lbl_803CBA18:
+	.skip 0x4
+lbl_803CBA1C:
+	.skip 0x4
+lbl_803CBA20:
+	.skip 0x4
+lbl_803CBA24:
+	.skip 0x4
+lbl_803CBA28:
+	.skip 0x4
+lbl_803CBA2C:
+	.skip 0x4
+lbl_803CBA30:
+	.skip 0x4
+lbl_803CBA34:
+	.skip 0x4
+lbl_803CBA38:
+	.skip 0x4
+lbl_803CBA3C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTakeTaxi
+sTakeTaxi:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sNoneTaskDesc
+sNoneTaskDesc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sCurrTaskDesc
+sCurrTaskDesc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sCurrWorld
+sCurrWorld:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sCurrTask
+sCurrTask:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sPauseManager
+sPauseManager:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sConfirmation
+sConfirmation:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTaxiConfirmGrp
+sTaxiConfirmGrp:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bad_card_available
+bad_card_available:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bad_card_needed
+bad_card_needed:
+	.skip 0x4
+
+.section .sdata
+lbl_803CAC20:
+	.incbin "baserom.dol", 0x2B5CE0, 0x8
+lbl_803CAC28:
+	.incbin "baserom.dol", 0x2B5CE8, 0x4
+lbl_803CAC2C:
+	.incbin "baserom.dol", 0x2B5CEC, 0x4
+/* SPECULATION: link order */
+.global giAnimScratch
+giAnimScratch:
+	.incbin "baserom.dol", 0x2B5CF0, 0x8
+/* SPECULATION: link order */
+.global sCameraNearClip
+sCameraNearClip:
+	.incbin "baserom.dol", 0x2B5CF8, 0x4
+/* SPECULATION: link order */
+.global sCameraFarClip
+sCameraFarClip:
+	.incbin "baserom.dol", 0x2B5CFC, 0x4
+
+.section .sdata2
+lbl_803CDF70:
+	.incbin "baserom.dol", 0x2B7810, 0x4
+lbl_803CDF74:
+	.incbin "baserom.dol", 0x2B7814, 0x4
+lbl_803CDF78:
+	.incbin "baserom.dol", 0x2B7818, 0x4
+lbl_803CDF7C:
+	.incbin "baserom.dol", 0x2B781C, 0x4
+lbl_803CDF80:
+	.incbin "baserom.dol", 0x2B7820, 0x4
+lbl_803CDF84:
+	.incbin "baserom.dol", 0x2B7824, 0x4
+lbl_803CDF88:
+	.incbin "baserom.dol", 0x2B7828, 0x4
+lbl_803CDF8C:
+	.incbin "baserom.dol", 0x2B782C, 0x4
+lbl_803CDF90:
+	.incbin "baserom.dol", 0x2B7830, 0x8

@@ -409,3 +409,13 @@ lbl_800A8DD8:
 /* 800A8DE4 000A5BE4  7C 08 03 A6 */	mtlr r0
 /* 800A8DE8 000A5BE8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A8DEC 000A5BEC  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CDDA0:
+	.incbin "baserom.dol", 0x2B7640, 0x4
+lbl_803CDDA4:
+	.incbin "baserom.dol", 0x2B7644, 0x4
+lbl_803CDDA8:
+	.incbin "baserom.dol", 0x2B7648, 0x4
+lbl_803CDDAC:
+	.incbin "baserom.dol", 0x2B764C, 0x4

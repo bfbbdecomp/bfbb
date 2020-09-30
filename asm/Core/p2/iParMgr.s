@@ -1555,3 +1555,43 @@ lbl_800CC5C0:
 /* 800CC5DC 000C93DC  7C 08 03 A6 */	mtlr r0
 /* 800CC5E0 000C93E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800CC5E4 000C93E4  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80292650:
+	.incbin "baserom.dol", 0x28F630, 0xC
+lbl_8029265C:
+	.incbin "baserom.dol", 0x28F63C, 0xC
+lbl_80292668:
+	.incbin "baserom.dol", 0x28F648, 0x10
+
+.section .bss
+lbl_802FDB38:
+	.skip 0x400
+lbl_802FDF38:
+	.skip 0x90
+lbl_802FDFC8:
+	.skip 0x90
+lbl_802FE058:
+	.skip 0xA8
+
+.section .sbss
+lbl_803CBB80:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CE138:
+	.incbin "baserom.dol", 0x2B79D8, 0x8
+lbl_803CE140:
+	.incbin "baserom.dol", 0x2B79E0, 0x8
+lbl_803CE148:
+	.incbin "baserom.dol", 0x2B79E8, 0x4
+lbl_803CE14C:
+	.incbin "baserom.dol", 0x2B79EC, 0x4
+lbl_803CE150:
+	.incbin "baserom.dol", 0x2B79F0, 0x8
+lbl_803CE158:
+	.incbin "baserom.dol", 0x2B79F8, 0x8
+lbl_803CE160:
+	.incbin "baserom.dol", 0x2B7A00, 0x4
+lbl_803CE164:
+	.incbin "baserom.dol", 0x2B7A04, 0x4

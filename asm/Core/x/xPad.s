@@ -809,3 +809,19 @@ lbl_80036908:
 lbl_80036944:
 /* 80036944 00033744  38 21 00 20 */	addi r1, r1, 0x20
 /* 80036948 00033748  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802C8770:
+	.skip 0x200
+
+.section .sdata2
+lbl_803CCEF8:
+	.incbin "baserom.dol", 0x2B6798, 0x4
+lbl_803CCEFC:
+	.incbin "baserom.dol", 0x2B679C, 0x4
+lbl_803CCF00:
+	.incbin "baserom.dol", 0x2B67A0, 0x4
+lbl_803CCF04:
+	.incbin "baserom.dol", 0x2B67A4, 0x4
+lbl_803CCF08:
+	.incbin "baserom.dol", 0x2B67A8, 0x8

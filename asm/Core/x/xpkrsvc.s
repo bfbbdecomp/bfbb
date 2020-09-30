@@ -3611,3 +3611,45 @@ Name__19st_PACKER_ATOC_NODECFv:
 /* 8003C48C 0003928C  38 63 35 8C */	addi r3, r3, lbl_8025358C@l
 /* 8003C490 00039290  38 63 00 52 */	addi r3, r3, 0x52
 /* 8003C494 00039294  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027D8A8:
+	.incbin "baserom.dol", 0x27A888, 0x44
+lbl_8027D8EC:
+	.incbin "baserom.dol", 0x27A8CC, 0x44
+lbl_8027D930:
+	.incbin "baserom.dol", 0x27A910, 0x26D4
+/* SPECULATION: link order */
+.global lbl_80280004
+lbl_80280004:
+	.incbin "baserom.dol", 0x27CFE4, 0x682C
+lbl_80286830:
+	.incbin "baserom.dol", 0x283810, 0x2C
+lbl_8028685C:
+	.incbin "baserom.dol", 0x28383C, 0x2C
+
+.section .sbss
+	/* needed to ensure correct alignment */
+    .skip 0x8
+lbl_803CB328:
+	.skip 0x4
+lbl_803CB32C:
+	.skip 0x4
+lbl_803CB330:
+	.skip 0x4
+lbl_803CB334:
+	.skip 0x4
+lbl_803CB338:
+	.skip 0x4
+lbl_803CB33C:
+	.skip 0x4
+lbl_803CB340:
+	.skip 0x4
+lbl_803CB344:
+	.skip 0x4
+lbl_803CB348:
+	.skip 0x4
+lbl_803CB34C:
+	.skip 0x4
+lbl_803CB350:
+	.skip 0x8

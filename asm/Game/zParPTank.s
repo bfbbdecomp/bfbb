@@ -1147,7 +1147,7 @@ lbl_80171528:
 /* 80171548 0016E348  3B FF FF D0 */	addi r31, r31, -48
 /* 8017154C 0016E34C  7F C3 F3 78 */	mr r3, r30
 /* 80171550 0016E350  7F E4 FB 78 */	mr r4, r31
-/* 80171554 0016E354  48 00 0A 7D */	bl __as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2zParPTank_cpp$$218snow_particle_data
+/* 80171554 0016E354  48 00 0A 7D */	bl __as__Q223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_dataFRCQ223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_data
 /* 80171558 0016E358  48 00 01 08 */	b lbl_80171660
 lbl_8017155C:
 /* 8017155C 0016E35C  FC 20 D8 90 */	fmr f1, f27
@@ -1886,7 +1886,7 @@ assign__5xVec2Ff:
 /* 80171FCC 0016EDCC  4E 80 00 20 */	blr 
 
 /* __as__Q223@unnamed@zParPTank_cpp@18snow_particle_dataFRCQ223@unnamed@zParPTank_cpp@18snow_particle_data */
-__as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2zParPTank_cpp$$218snow_particle_data:
+__as__Q223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_dataFRCQ223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_data:
 /* 80171FD0 0016EDD0  80 04 00 00 */	lwz r0, 0(r4)
 /* 80171FD4 0016EDD4  80 A4 00 04 */	lwz r5, 4(r4)
 /* 80171FD8 0016EDD8  90 03 00 00 */	stw r0, 0(r3)
@@ -1915,3 +1915,105 @@ __as__Q223$$2unnamed$$2zParPTank_cpp$$218snow_particle_dataFRCQ223$$2unnamed$$2z
 .section .rodata
 lbl_80271E28:
 	.incbin "baserom.dol", 0x26EE08, 0x18
+
+.section .bss
+lbl_8032A4A0:
+	.skip 0x8C
+lbl_8032A52C:
+	.skip 0x3C
+
+.section .sbss
+lbl_803CC038:
+	.skip 0x4
+lbl_803CC03C:
+	.skip 0x4
+lbl_803CC040:
+	.skip 0x4
+lbl_803CC044:
+	.skip 0x4
+lbl_803CC048:
+	.skip 0x4
+lbl_803CC04C:
+	.skip 0x4
+lbl_803CC050:
+	.skip 0x4
+lbl_803CC054:
+	.skip 0x4
+lbl_803CC058:
+	.skip 0x4
+lbl_803CC05C:
+	.skip 0x4
+lbl_803CC060:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CF56C:
+	.incbin "baserom.dol", 0x2B8E0C, 0x8
+lbl_803CF574:
+	.incbin "baserom.dol", 0x2B8E14, 0x4
+lbl_803CF578:
+	.incbin "baserom.dol", 0x2B8E18, 0x4
+lbl_803CF57C:
+	.incbin "baserom.dol", 0x2B8E1C, 0x4
+lbl_803CF580:
+	.incbin "baserom.dol", 0x2B8E20, 0x4
+lbl_803CF584:
+	.incbin "baserom.dol", 0x2B8E24, 0x4
+lbl_803CF588:
+	.incbin "baserom.dol", 0x2B8E28, 0x4
+lbl_803CF58C:
+	.incbin "baserom.dol", 0x2B8E2C, 0x4
+lbl_803CF590:
+	.incbin "baserom.dol", 0x2B8E30, 0x4
+lbl_803CF594:
+	.incbin "baserom.dol", 0x2B8E34, 0x4
+lbl_803CF598:
+	.incbin "baserom.dol", 0x2B8E38, 0x4
+lbl_803CF59C:
+	.incbin "baserom.dol", 0x2B8E3C, 0x4
+lbl_803CF5A0:
+	.incbin "baserom.dol", 0x2B8E40, 0x4
+lbl_803CF5A4:
+	.incbin "baserom.dol", 0x2B8E44, 0x4
+lbl_803CF5A8:
+	.incbin "baserom.dol", 0x2B8E48, 0x4
+lbl_803CF5AC:
+	.incbin "baserom.dol", 0x2B8E4C, 0x4
+lbl_803CF5B0:
+	.incbin "baserom.dol", 0x2B8E50, 0x4
+lbl_803CF5B4:
+	.incbin "baserom.dol", 0x2B8E54, 0x4
+lbl_803CF5B8:
+	.incbin "baserom.dol", 0x2B8E58, 0x4
+lbl_803CF5BC:
+	.incbin "baserom.dol", 0x2B8E5C, 0x4
+lbl_803CF5C0:
+	.incbin "baserom.dol", 0x2B8E60, 0x8
+lbl_803CF5C8:
+	.incbin "baserom.dol", 0x2B8E68, 0x8
+lbl_803CF5D0:
+	.incbin "baserom.dol", 0x2B8E70, 0x4
+lbl_803CF5D4:
+	.incbin "baserom.dol", 0x2B8E74, 0x4
+lbl_803CF5D8:
+	.incbin "baserom.dol", 0x2B8E78, 0x4
+lbl_803CF5DC:
+	.incbin "baserom.dol", 0x2B8E7C, 0x4
+lbl_803CF5E0:
+	.incbin "baserom.dol", 0x2B8E80, 0x4
+lbl_803CF5E4:
+	.incbin "baserom.dol", 0x2B8E84, 0x4
+lbl_803CF5E8:
+	.incbin "baserom.dol", 0x2B8E88, 0x4
+lbl_803CF5EC:
+	.incbin "baserom.dol", 0x2B8E8C, 0x4
+lbl_803CF5F0:
+	.incbin "baserom.dol", 0x2B8E90, 0x4
+lbl_803CF5F4:
+	.incbin "baserom.dol", 0x2B8E94, 0x4
+lbl_803CF5F8:
+	.incbin "baserom.dol", 0x2B8E98, 0x8
+lbl_803CF600:
+	.incbin "baserom.dol", 0x2B8EA0, 0x8
+lbl_803CF608:
+	.incbin "baserom.dol", 0x2B8EA8, 0x8

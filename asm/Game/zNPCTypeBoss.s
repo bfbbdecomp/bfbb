@@ -349,3 +349,29 @@ __ct__9zNPCB_SB2Fi:
 .section .rodata
 lbl_8026CBB8:
 	.incbin "baserom.dol", 0x269B98, 0x390
+
+.section .bss
+lbl_80324468:
+	.skip 0x170
+
+.section .sbss
+lbl_803CBF40:
+	.skip 0x4
+lbl_803CBF44:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CED08:
+	.incbin "baserom.dol", 0x2B85A8, 0x4
+/* SPECULATION: link order */
+.global lbl_803CED0C
+lbl_803CED0C:
+	.incbin "baserom.dol", 0x2B85AC, 0x4
+lbl_803CED10:
+	.incbin "baserom.dol", 0x2B85B0, 0x4
+lbl_803CED14:
+	.incbin "baserom.dol", 0x2B85B4, 0x4
+lbl_803CED18:
+	.incbin "baserom.dol", 0x2B85B8, 0x4
+lbl_803CED1C:
+	.incbin "baserom.dol", 0x2B85BC, 0x4

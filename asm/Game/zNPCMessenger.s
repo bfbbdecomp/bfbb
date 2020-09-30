@@ -1221,3 +1221,41 @@ lbl_800EE290:
 /* 800EE2C0 000EB0C0  38 60 00 01 */	li r3, 1
 /* 800EE2C4 000EB0C4  4E 80 00 20 */	blr 
 /* 800EE2C8 000EB0C8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80294050:
+	.incbin "baserom.dol", 0x291030, 0x30
+/* SPECULATION: link order */
+.global g_brainTable
+g_brainTable:
+	.incbin "baserom.dol", 0x291060, 0x2F4
+
+.section .bss
+lbl_803121C8:
+	.skip 0x44
+lbl_8031220C:
+	.skip 0x44
+lbl_80312250:
+	.skip 0x48
+
+.section .sbss
+lbl_803CBCB8:
+	.skip 0x8
+
+.section .sbss2
+lbl_803D08B8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08BC
+lbl_803D08BC:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CE418:
+	.incbin "baserom.dol", 0x2B7CB8, 0x4
+lbl_803CE41C:
+	.incbin "baserom.dol", 0x2B7CBC, 0x4
+lbl_803CE420:
+	.incbin "baserom.dol", 0x2B7CC0, 0x4
+lbl_803CE424:
+	.incbin "baserom.dol", 0x2B7CC4, 0x4

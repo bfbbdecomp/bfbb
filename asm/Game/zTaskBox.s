@@ -695,3 +695,17 @@ lbl_80135238:
 /* 80135298 00132098  4E 80 00 20 */	blr 
 /* 8013529C 0013209C  90 83 00 08 */	stw r4, 8(r3)
 /* 801352A0 001320A0  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_803242E8:
+	.skip 0x10
+
+.section .sbss
+lbl_803CBF24:
+	.skip 0x4
+lbl_803CBF28:
+	.skip 0x8
+/* SPECULATION: link order */
+.global read_sizzze
+read_sizzze:
+	.skip 0x8

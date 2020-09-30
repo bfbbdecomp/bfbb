@@ -481,3 +481,67 @@ visible__8ztextboxFv:
 .section .rodata
 lbl_80274A00:
 	.incbin "baserom.dol", 0x2719E0, 0x138
+
+.section .data
+lbl_802A1B88:
+	.incbin "baserom.dol", 0x29EB68, 0x380
+lbl_802A1F08:
+	.incbin "baserom.dol", 0x29EEE8, 0x2C
+
+.section .bss
+lbl_80362B68:
+	.skip 0xC
+lbl_80362B74:
+	.skip 0x14
+/* SPECULATION: link order */
+.global lbl_80362B88
+lbl_80362B88:
+	.skip 0x100
+/* SPECULATION: link order */
+.global lbl_80362C88
+lbl_80362C88:
+	.skip 0x400
+/* SPECULATION: link order */
+.global lbl_80363088
+lbl_80363088:
+	.skip 0x400
+/* SPECULATION: link order */
+.global lbl_80363488
+lbl_80363488:
+	.skip 0x400
+/* SPECULATION: link order */
+.global lbl_80363888
+lbl_80363888:
+	.skip 0x500
+
+.section .sbss
+lbl_803CC1D4:
+	.skip 0x4
+lbl_803CC1D8:
+	.skip 0x4
+lbl_803CC1DC:
+	.skip 0x4
+lbl_803CC1E0:
+	.skip 0x4
+lbl_803CC1E4:
+	.skip 0x4
+
+.section .sdata
+lbl_803CADC8:
+	.incbin "baserom.dol", 0x2B5E88, 0x4
+lbl_803CADCC:
+	.incbin "baserom.dol", 0x2B5E8C, 0x4
+/* SPECULATION: link order */
+.global dtscale
+dtscale:
+	.incbin "baserom.dol", 0x2B5E90, 0x4
+
+.section .sdata2
+lbl_803CFBE0:
+	.incbin "baserom.dol", 0x2B9480, 0x4
+lbl_803CFBE4:
+	.incbin "baserom.dol", 0x2B9484, 0x4
+lbl_803CFBE8:
+	.incbin "baserom.dol", 0x2B9488, 0x4
+lbl_803CFBEC:
+	.incbin "baserom.dol", 0x2B948C, 0x4

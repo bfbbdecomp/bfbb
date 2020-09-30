@@ -2039,3 +2039,27 @@ xQuatAdd__FP5xQuatPC5xQuatPC5xQuat:
 /* 80033548 00030348  7C 08 03 A6 */	mtlr r0
 /* 8003354C 0003034C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033550 00030350  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027D6F0:
+	.incbin "baserom.dol", 0x27A6D0, 0x10
+
+.section .sdata2
+lbl_803CCE70:
+	.incbin "baserom.dol", 0x2B6710, 0x4
+lbl_803CCE74:
+	.incbin "baserom.dol", 0x2B6714, 0x4
+lbl_803CCE78:
+	.incbin "baserom.dol", 0x2B6718, 0x4
+lbl_803CCE7C:
+	.incbin "baserom.dol", 0x2B671C, 0x4
+lbl_803CCE80:
+	.incbin "baserom.dol", 0x2B6720, 0x4
+lbl_803CCE84:
+	.incbin "baserom.dol", 0x2B6724, 0x4
+lbl_803CCE88:
+	.incbin "baserom.dol", 0x2B6728, 0x4
+lbl_803CCE8C:
+	.incbin "baserom.dol", 0x2B672C, 0x4
+lbl_803CCE90:
+	.incbin "baserom.dol", 0x2B6730, 0x8

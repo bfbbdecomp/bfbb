@@ -991,3 +991,53 @@ lbl_800541C4:
 /* 800541F4 00050FF4  7C 08 03 A6 */	mtlr r0
 /* 800541F8 00050FF8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800541FC 00050FFC  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028C0F8:
+	.incbin "baserom.dol", 0x2890D8, 0x60
+
+.section .sbss
+lbl_803CB520:
+	.skip 0x4
+lbl_803CB524:
+	.skip 0x4
+lbl_803CB528:
+	.skip 0x4
+lbl_803CB52C:
+	.skip 0x4
+lbl_803CB530:
+	.skip 0x4
+lbl_803CB534:
+	.skip 0x4
+lbl_803CB538:
+	.skip 0x8
+/* SPECULATION: link order */
+.global model_id$localstatic3$checkpoint_collision_hack__FP4zEnt
+model_id$localstatic3$checkpoint_collision_hack__FP4zEnt:
+	.skip 0x4
+/* SPECULATION: link order */
+.global init$localstatic4$checkpoint_collision_hack__FP4zEnt
+init$localstatic4$checkpoint_collision_hack__FP4zEnt:
+	.skip 0x4
+
+.section .sbss2
+lbl_803D0828:
+	.skip 0x8
+
+.section .sdata
+lbl_803CAA60:
+	.incbin "baserom.dol", 0x2B5B20, 0x8
+
+.section .sdata2
+lbl_803CD270:
+	.incbin "baserom.dol", 0x2B6B10, 0x4
+lbl_803CD274:
+	.incbin "baserom.dol", 0x2B6B14, 0x4
+lbl_803CD278:
+	.incbin "baserom.dol", 0x2B6B18, 0x4
+lbl_803CD27C:
+	.incbin "baserom.dol", 0x2B6B1C, 0x4
+lbl_803CD280:
+	.incbin "baserom.dol", 0x2B6B20, 0x8
+lbl_803CD288:
+	.incbin "baserom.dol", 0x2B6B28, 0x8

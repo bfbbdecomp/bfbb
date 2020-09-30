@@ -1274,3 +1274,29 @@ lbl_8004C208:
 .global iFileAsyncService__Fv
 iFileAsyncService__Fv:
 /* 8004C210 00049010  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80289060:
+	.incbin "baserom.dol", 0x286040, 0x1144
+lbl_8028A1A4:
+	.incbin "baserom.dol", 0x287184, 0x40
+lbl_8028A1E4:
+	.incbin "baserom.dol", 0x2871C4, 0x44
+
+.section .sbss
+lbl_803CB400:
+	.skip 0x4
+lbl_803CB404:
+	.skip 0x4
+lbl_803CB408:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CD108:
+	.incbin "baserom.dol", 0x2B69A8, 0x4
+lbl_803CD10C:
+	.incbin "baserom.dol", 0x2B69AC, 0x4
+lbl_803CD110:
+	.incbin "baserom.dol", 0x2B69B0, 0x4
+lbl_803CD114:
+	.incbin "baserom.dol", 0x2B69B4, 0x4

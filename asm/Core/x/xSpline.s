@@ -1621,3 +1621,45 @@ xSpline3_Catmullize__FP8xSpline3:
 /* 8004B0FC 00047EFC  7C 08 03 A6 */	mtlr r0
 /* 8004B100 00047F00  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004B104 00047F04  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80288FE0:
+	.incbin "baserom.dol", 0x285FC0, 0x40
+lbl_80289020:
+	.incbin "baserom.dol", 0x286000, 0x40
+
+.section .sdata2
+lbl_803CD098:
+	.incbin "baserom.dol", 0x2B6938, 0x4
+lbl_803CD09C:
+	.incbin "baserom.dol", 0x2B693C, 0x4
+lbl_803CD0A0:
+	.incbin "baserom.dol", 0x2B6940, 0x8
+lbl_803CD0A8:
+	.incbin "baserom.dol", 0x2B6948, 0x8
+lbl_803CD0B0:
+	.incbin "baserom.dol", 0x2B6950, 0x8
+lbl_803CD0B8:
+	.incbin "baserom.dol", 0x2B6958, 0x8
+lbl_803CD0C0:
+	.incbin "baserom.dol", 0x2B6960, 0x8
+lbl_803CD0C8:
+	.incbin "baserom.dol", 0x2B6968, 0x8
+lbl_803CD0D0:
+	.incbin "baserom.dol", 0x2B6970, 0x8
+lbl_803CD0D8:
+	.incbin "baserom.dol", 0x2B6978, 0x8
+lbl_803CD0E0:
+	.incbin "baserom.dol", 0x2B6980, 0x8
+lbl_803CD0E8:
+	.incbin "baserom.dol", 0x2B6988, 0x4
+lbl_803CD0EC:
+	.incbin "baserom.dol", 0x2B698C, 0x4
+lbl_803CD0F0:
+	.incbin "baserom.dol", 0x2B6990, 0x4
+lbl_803CD0F4:
+	.incbin "baserom.dol", 0x2B6994, 0x4
+lbl_803CD0F8:
+	.incbin "baserom.dol", 0x2B6998, 0x8
+lbl_803CD100:
+	.incbin "baserom.dol", 0x2B69A0, 0x8

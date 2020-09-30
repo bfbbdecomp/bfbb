@@ -439,3 +439,129 @@ lbl_800CF91C:
 /* 800CF920 000CC720  7C 08 03 A6 */	mtlr r0
 /* 800CF924 000CC724  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CF928 000CC728  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80292B00:
+	.incbin "baserom.dol", 0x28FAE0, 0x88
+/* SPECULATION: link order */
+.global months
+months:
+	.incbin "baserom.dol", 0x28FB68, 0x30
+/* SPECULATION: link order */
+.global dotw
+dotw:
+	.incbin "baserom.dol", 0x28FB98, 0x20
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalCommon
+__vt__14zNPCGoalCommon:
+	.incbin "baserom.dol", 0x28FBB8, 0x38
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalDEVHero
+__vt__15zNPCGoalDEVHero:
+	.incbin "baserom.dol", 0x28FBF0, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalDEVAnimSpin
+__vt__19zNPCGoalDEVAnimSpin:
+	.incbin "baserom.dol", 0x28FC24, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalDEVAnimCycle
+__vt__20zNPCGoalDEVAnimCycle:
+	.incbin "baserom.dol", 0x28FC58, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalLimbo
+__vt__13zNPCGoalLimbo:
+	.incbin "baserom.dol", 0x28FC8C, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalDead
+__vt__12zNPCGoalDead:
+	.incbin "baserom.dol", 0x28FCC0, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalWaiting
+__vt__15zNPCGoalWaiting:
+	.incbin "baserom.dol", 0x28FCF4, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalWander
+__vt__14zNPCGoalWander:
+	.incbin "baserom.dol", 0x28FD28, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalFidget
+__vt__14zNPCGoalFidget:
+	.incbin "baserom.dol", 0x28FD5C, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalPatrol
+__vt__14zNPCGoalPatrol:
+	.incbin "baserom.dol", 0x28FD90, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalIdle
+__vt__12zNPCGoalIdle:
+	.incbin "baserom.dol", 0x28FDC4, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalLoopAnim
+__vt__16zNPCGoalLoopAnim:
+	.incbin "baserom.dol", 0x28FDF8, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalPushAnim
+__vt__16zNPCGoalPushAnim:
+	.incbin "baserom.dol", 0x28FE2C, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalNoManLand
+__vt__17zNPCGoalNoManLand:
+	.incbin "baserom.dol", 0x28FE60, 0x38
+
+.section .sbss
+lbl_803CBBB8:
+	.skip 0x4
+lbl_803CBBBC:
+	.skip 0x4
+lbl_803CBBC0:
+	.skip 0x8
+/* SPECULATION: link order */
+.global ua_stream_buffer
+ua_stream_buffer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global stream_buffer
+stream_buffer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global silence_buffer
+silence_buffer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zero_point
+zero_point:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zero_end
+zero_end:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sinfo_array_max
+sinfo_array_max:
+	.skip 0x4
+/* SPECULATION: link order */
+.global SoundFlags
+SoundFlags:
+	.skip 0x4
+/* SPECULATION: link order */
+.global fc
+fc:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CE168:
+	.incbin "baserom.dol", 0x2B7A08, 0x4
+lbl_803CE16C:
+	.incbin "baserom.dol", 0x2B7A0C, 0x4
+/* SPECULATION: link order */
+.global lbl_803CE170
+lbl_803CE170:
+	.incbin "baserom.dol", 0x2B7A10, 0x4
+lbl_803CE174:
+	.incbin "baserom.dol", 0x2B7A14, 0x4
+lbl_803CE178:
+	.incbin "baserom.dol", 0x2B7A18, 0x4
+lbl_803CE17C:
+	.incbin "baserom.dol", 0x2B7A1C, 0x4
+lbl_803CE180:
+	.incbin "baserom.dol", 0x2B7A20, 0x8

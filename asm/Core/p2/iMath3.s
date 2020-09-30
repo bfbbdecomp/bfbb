@@ -1443,3 +1443,23 @@ xVec2Init__FP5xVec2ff:
 /* 800C6354 000C3154  D0 23 00 00 */	stfs f1, 0(r3)
 /* 800C6358 000C3158  D0 43 00 04 */	stfs f2, 4(r3)
 /* 800C635C 000C315C  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CE0B8:
+	.incbin "baserom.dol", 0x2B7958, 0x4
+lbl_803CE0BC:
+	.incbin "baserom.dol", 0x2B795C, 0x4
+lbl_803CE0C0:
+	.incbin "baserom.dol", 0x2B7960, 0x4
+lbl_803CE0C4:
+	.incbin "baserom.dol", 0x2B7964, 0x4
+lbl_803CE0C8:
+	.incbin "baserom.dol", 0x2B7968, 0x4
+lbl_803CE0CC:
+	.incbin "baserom.dol", 0x2B796C, 0x4
+lbl_803CE0D0:
+	.incbin "baserom.dol", 0x2B7970, 0x4
+lbl_803CE0D4:
+	.incbin "baserom.dol", 0x2B7974, 0x4
+lbl_803CE0D8:
+	.incbin "baserom.dol", 0x2B7978, 0x8

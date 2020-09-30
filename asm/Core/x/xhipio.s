@@ -724,3 +724,22 @@ lbl_8002D968:
 /* 8002D980 0002A780  7C 08 03 A6 */	mtlr r0
 /* 8002D984 0002A784  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002D988 0002A788  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027D0A0:
+	.incbin "baserom.dol", 0x27A080, 0x540
+lbl_8027D5E0:
+	.incbin "baserom.dol", 0x27A5C0, 0x38
+/* SPECULATION: link order */
+.global __vt__Q24xhud6widget
+__vt__Q24xhud6widget:
+	.incbin "baserom.dol", 0x27A5F8, 0x28
+
+.section .sbss
+.balign 8
+lbl_803CB290:
+	.skip 0x8
+/* SPECULATION: link order */
+.global _head_alloc__Q24xhud15block_allocator
+_head_alloc__Q24xhud15block_allocator:
+	.skip 0x4

@@ -3,7 +3,7 @@
 .section .text  # 0x800B0A28 - 0x800B5228
 
 /* count_dynamic_types__20@unnamed@zScene_cpp@FPCc */
-count_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FPCc:
+count_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FPCc:
 /* 800B0A28 000AD828  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800B0A2C 000AD82C  7C 08 02 A6 */	mflr r0
 /* 800B0A30 000AD830  90 01 00 34 */	stw r0, 0x34(r1)
@@ -42,7 +42,7 @@ lbl_800B0A8C:
 /* 800B0AA8 000AD8A8  4E 80 00 20 */	blr 
 
 /* add_dynamic_types__20@unnamed@zScene_cpp@FR6zScene */
-add_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FR6zScene:
+add_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zScene:
 /* 800B0AAC 000AD8AC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800B0AB0 000AD8B0  7C 08 02 A6 */	mflr r0
 /* 800B0AB4 000AD8B4  3C 80 80 26 */	lis r4, lbl_8025EF60@ha
@@ -55,7 +55,7 @@ add_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FR6zScene:
 /* 800B0AD0 000AD8D0  7C 7D 1B 78 */	mr r29, r3
 lbl_800B0AD4:
 /* 800B0AD4 000AD8D4  80 7F 00 00 */	lwz r3, 0(r31)
-/* 800B0AD8 000AD8D8  4B FF FF 51 */	bl count_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FPCc
+/* 800B0AD8 000AD8D8  4B FF FF 51 */	bl count_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FPCc
 /* 800B0ADC 000AD8DC  80 1F 00 04 */	lwz r0, 4(r31)
 /* 800B0AE0 000AD8E0  3B DE 00 01 */	addi r30, r30, 1
 /* 800B0AE4 000AD8E4  28 1E 00 0E */	cmplwi r30, 0xe
@@ -76,7 +76,7 @@ lbl_800B0AD4:
 /* 800B0B20 000AD920  4E 80 00 20 */	blr 
 
 /* init_dynamic_type__20@unnamed@zScene_cpp@FR6zSceneUiRCQ220@unnamed@zScene_cpp@17dynamic_type_data */
-init_dynamic_type__20$$2unnamed$$2zScene_cpp$$2FR6zSceneUiRCQ220$$2unnamed$$2zScene_cpp$$217dynamic_type_data:
+init_dynamic_type__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUiRCQ220_esc__2_unnamed_esc__2_zScene_cpp_esc__2_17dynamic_type_data:
 /* 800B0B24 000AD924  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800B0B28 000AD928  7C 08 02 A6 */	mflr r0
 /* 800B0B2C 000AD92C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -179,7 +179,7 @@ lbl_800B0C80:
 /* 800B0C90 000ADA90  4E 80 00 20 */	blr 
 
 /* init_dynamic_types__20@unnamed@zScene_cpp@FR6zSceneUi */
-init_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FR6zSceneUi:
+init_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUi:
 /* 800B0C94 000ADA94  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800B0C98 000ADA98  7C 08 02 A6 */	mflr r0
 /* 800B0C9C 000ADA9C  3C A0 80 26 */	lis r5, lbl_8025EF60@ha
@@ -196,7 +196,7 @@ lbl_800B0CBC:
 /* 800B0CC4 000ADAC4  41 82 00 14 */	beq lbl_800B0CD8
 /* 800B0CC8 000ADAC8  7F A3 EB 78 */	mr r3, r29
 /* 800B0CCC 000ADACC  7F E5 FB 78 */	mr r5, r31
-/* 800B0CD0 000ADAD0  4B FF FE 55 */	bl init_dynamic_type__20$$2unnamed$$2zScene_cpp$$2FR6zSceneUiRCQ220$$2unnamed$$2zScene_cpp$$217dynamic_type_data
+/* 800B0CD0 000ADAD0  4B FF FE 55 */	bl init_dynamic_type__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUiRCQ220_esc__2_unnamed_esc__2_zScene_cpp_esc__2_17dynamic_type_data
 /* 800B0CD4 000ADAD4  7C 64 1B 78 */	mr r4, r3
 lbl_800B0CD8:
 /* 800B0CD8 000ADAD8  3B DE 00 01 */	addi r30, r30, 1
@@ -1370,7 +1370,7 @@ lbl_800B1DD8:
 /* 800B1DDC 000AEBDC  28 00 00 00 */	cmplwi r0, 0
 /* 800B1DE0 000AEBE0  40 82 FF 7C */	bne lbl_800B1D5C
 /* 800B1DE4 000AEBE4  7F E3 FB 78 */	mr r3, r31
-/* 800B1DE8 000AEBE8  4B FF EC C5 */	bl add_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FR6zScene
+/* 800B1DE8 000AEBE8  4B FF EC C5 */	bl add_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zScene
 /* 800B1DEC 000AEBEC  80 1F 00 74 */	lwz r0, 0x74(r31)
 /* 800B1DF0 000AEBF0  28 00 00 00 */	cmplwi r0, 0
 /* 800B1DF4 000AEBF4  41 82 00 1C */	beq lbl_800B1E10
@@ -1425,7 +1425,7 @@ lbl_800B1E9C:
 /* 800B1EA4 000AECA4  40 82 FF CC */	bne lbl_800B1E70
 /* 800B1EA8 000AECA8  7F E3 FB 78 */	mr r3, r31
 /* 800B1EAC 000AECAC  7C A4 2B 78 */	mr r4, r5
-/* 800B1EB0 000AECB0  4B FF ED E5 */	bl init_dynamic_types__20$$2unnamed$$2zScene_cpp$$2FR6zSceneUi
+/* 800B1EB0 000AECB0  4B FF ED E5 */	bl init_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUi
 /* 800B1EB4 000AECB4  3B 40 00 00 */	li r26, 0
 /* 800B1EB8 000AECB8  93 5F 00 7C */	stw r26, 0x7c(r31)
 /* 800B1EBC 000AECBC  7F 59 D3 78 */	mr r25, r26
@@ -5073,3 +5073,123 @@ lbl_8025EF60:
 	.incbin "baserom.dol", 0x25BF40, 0x118
 lbl_8025F078:
 	.incbin "baserom.dol", 0x25C058, 0x470
+
+.section .data
+lbl_80290528:
+	.incbin "baserom.dol", 0x28D508, 0x78
+lbl_802905A0:
+	.incbin "baserom.dol", 0x28D580, 0x40C
+lbl_802909AC:
+	.incbin "baserom.dol", 0x28D98C, 0x118
+lbl_80290AC4:
+	.incbin "baserom.dol", 0x28DAA4, 0x118
+lbl_80290BDC:
+	.incbin "baserom.dol", 0x28DBBC, 0x9C
+lbl_80290C78:
+	.incbin "baserom.dol", 0x28DC58, 0x120
+lbl_80290D98:
+	.incbin "baserom.dol", 0x28DD78, 0x104
+/* SPECULATION: link order */
+.global scale
+scale:
+	.incbin "baserom.dol", 0x28DE7C, 0xC
+
+.section .bss
+lbl_802F2C70:
+	.skip 0xC
+lbl_802F2C7C:
+	.skip 0xC
+
+.section .sbss
+lbl_803CB9BC:
+	.skip 0x4
+lbl_803CB9C0:
+	.skip 0x4
+lbl_803CB9C4:
+	.skip 0x4
+lbl_803CB9C8:
+	.skip 0x4
+lbl_803CB9CC:
+	.skip 0x4
+lbl_803CB9D0:
+	.skip 0x4
+lbl_803CB9D4:
+	.skip 0x4
+lbl_803CB9D8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gCurEnv
+gCurEnv:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gTransitionSceneID
+gTransitionSceneID:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gSceneUpdateTime
+gSceneUpdateTime:
+	.skip 0x4
+lbl_803CB9E8:
+	.skip 0x4
+lbl_803CB9EC:
+	.skip 0x4
+
+.section .sbss2
+lbl_803D0880:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0884
+lbl_803D0884:
+	.skip 0x4
+lbl_803D0888:
+	.skip 0x4
+lbl_803D088C:
+	.skip 0x4
+lbl_803D0890:
+	.skip 0x8
+
+.section .sdata
+lbl_803CAC00:
+	.incbin "baserom.dol", 0x2B5CC0, 0x4
+lbl_803CAC04:
+	.incbin "baserom.dol", 0x2B5CC4, 0x4
+lbl_803CAC08:
+	.incbin "baserom.dol", 0x2B5CC8, 0x4
+lbl_803CAC0C:
+	.incbin "baserom.dol", 0x2B5CCC, 0x4
+
+.section .sdata2
+lbl_803CDE88:
+	.incbin "baserom.dol", 0x2B7728, 0x4
+lbl_803CDE8C:
+	.incbin "baserom.dol", 0x2B772C, 0x4
+lbl_803CDE90:
+	.incbin "baserom.dol", 0x2B7730, 0x4
+lbl_803CDE94:
+	.incbin "baserom.dol", 0x2B7734, 0x4
+lbl_803CDE98:
+	.incbin "baserom.dol", 0x2B7738, 0x4
+lbl_803CDE9C:
+	.incbin "baserom.dol", 0x2B773C, 0x4
+lbl_803CDEA0:
+	.incbin "baserom.dol", 0x2B7740, 0x4
+lbl_803CDEA4:
+	.incbin "baserom.dol", 0x2B7744, 0x4
+lbl_803CDEA8:
+	.incbin "baserom.dol", 0x2B7748, 0x4
+lbl_803CDEAC:
+	.incbin "baserom.dol", 0x2B774C, 0x4
+lbl_803CDEB0:
+	.incbin "baserom.dol", 0x2B7750, 0x4
+lbl_803CDEB4:
+	.incbin "baserom.dol", 0x2B7754, 0x4
+lbl_803CDEB8:
+	.incbin "baserom.dol", 0x2B7758, 0x4
+lbl_803CDEBC:
+	.incbin "baserom.dol", 0x2B775C, 0x4
+lbl_803CDEC0:
+	.incbin "baserom.dol", 0x2B7760, 0x4
+lbl_803CDEC4:
+	.incbin "baserom.dol", 0x2B7764, 0x4
+lbl_803CDEC8:
+	.incbin "baserom.dol", 0x2B7768, 0x8

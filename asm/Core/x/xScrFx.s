@@ -1433,3 +1433,77 @@ __as__18DistortionParticleFRC18DistortionParticle:
 /* 80042D60 0003FB60  90 03 00 28 */	stw r0, 0x28(r3)
 /* 80042D64 0003FB64  D0 03 00 2C */	stfs f0, 0x2c(r3)
 /* 80042D68 0003FB68  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802C89F0:
+	.skip 0x1C
+lbl_802C8A0C:
+	.skip 0x90
+lbl_802C8A9C:
+	.skip 0x64
+
+.section .sbss
+lbl_803CB37C:
+	.skip 0x4
+lbl_803CB380:
+	.skip 0x4
+lbl_803CB384:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gNumDistortionParticles
+gNumDistortionParticles:
+	.skip 0x4
+lbl_803CB38C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareEnabled
+sFullScreenGlareEnabled:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareTextureID
+sFullScreenGlareTextureID:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareTexturePtr
+sFullScreenGlareTexturePtr:
+	.skip 0x8
+
+.section .sdata
+lbl_803CA988:
+	.incbin "baserom.dol", 0x2B5A48, 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareIntensity
+sFullScreenGlareIntensity:
+	.incbin "baserom.dol", 0x2B5A4C, 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareColor
+sFullScreenGlareColor:
+	.incbin "baserom.dol", 0x2B5A50, 0x4
+lbl_803CA994:
+	.incbin "baserom.dol", 0x2B5A54, 0xC
+
+.section .sdata2
+lbl_803CCFA8:
+	.incbin "baserom.dol", 0x2B6848, 0x8
+lbl_803CCFB0:
+	.incbin "baserom.dol", 0x2B6850, 0x8
+lbl_803CCFB8:
+	.incbin "baserom.dol", 0x2B6858, 0x8
+lbl_803CCFC0:
+	.incbin "baserom.dol", 0x2B6860, 0x4
+lbl_803CCFC4:
+	.incbin "baserom.dol", 0x2B6864, 0x4
+lbl_803CCFC8:
+	.incbin "baserom.dol", 0x2B6868, 0x4
+lbl_803CCFCC:
+	.incbin "baserom.dol", 0x2B686C, 0x4
+lbl_803CCFD0:
+	.incbin "baserom.dol", 0x2B6870, 0x4
+lbl_803CCFD4:
+	.incbin "baserom.dol", 0x2B6874, 0x4
+lbl_803CCFD8:
+	.incbin "baserom.dol", 0x2B6878, 0x4
+lbl_803CCFDC:
+	.incbin "baserom.dol", 0x2B687C, 0x4
+lbl_803CCFE0:
+	.incbin "baserom.dol", 0x2B6880, 0x8

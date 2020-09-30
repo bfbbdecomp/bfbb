@@ -3122,3 +3122,50 @@ xDrawLine__FPC5xVec3PC5xVec3:
 .global xDrawSetColor__F10iColor_tag
 xDrawSetColor__F10iColor_tag:
 /* 8001F434 0001C234  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027B570:
+	.incbin "baserom.dol", 0x278550, 0x20
+
+.section .sbss
+.balign 8
+lbl_803CB1D8:
+	.skip 0x4
+lbl_803CB1DC:
+	.skip 0x2
+lbl_803CB1DE:
+	.skip 0x2
+/* SPECULATION: link order */
+.global gCurXEnv
+gCurXEnv:
+	.skip 0x8
+
+.section .sdata
+lbl_803CA928:
+	.incbin "baserom.dol", 0x2B59E8, 0x8
+
+.section .sdata2
+lbl_803CCC18:
+	.incbin "baserom.dol", 0x2B64B8, 0x4
+lbl_803CCC1C:
+	.incbin "baserom.dol", 0x2B64BC, 0x4
+lbl_803CCC20:
+	.incbin "baserom.dol", 0x2B64C0, 0x4
+lbl_803CCC24:
+	.incbin "baserom.dol", 0x2B64C4, 0x4
+lbl_803CCC28:
+	.incbin "baserom.dol", 0x2B64C8, 0x4
+lbl_803CCC2C:
+	.incbin "baserom.dol", 0x2B64CC, 0x4
+lbl_803CCC30:
+	.incbin "baserom.dol", 0x2B64D0, 0x4
+lbl_803CCC34:
+	.incbin "baserom.dol", 0x2B64D4, 0x4
+lbl_803CCC38:
+	.incbin "baserom.dol", 0x2B64D8, 0x4
+lbl_803CCC3C:
+	.incbin "baserom.dol", 0x2B64DC, 0x4
+lbl_803CCC40:
+	.incbin "baserom.dol", 0x2B64E0, 0x4
+lbl_803CCC44:
+	.incbin "baserom.dol", 0x2B64E4, 0x4

@@ -4166,3 +4166,89 @@ lbl_8025E9A0:
 	.incbin "baserom.dol", 0x25B980, 0x20
 lbl_8025E9C0:
 	.incbin "baserom.dol", 0x25B9A0, 0x5A0
+
+.section .data
+lbl_802900E0:
+	.incbin "baserom.dol", 0x28D0C0, 0x20
+lbl_80290100:
+	.incbin "baserom.dol", 0x28D0E0, 0x20
+/* SPECULATION: link order */
+.global zSaveLoadUITable
+zSaveLoadUITable:
+	.incbin "baserom.dol", 0x28D100, 0x2E8
+/* SPECULATION: link order */
+.global thumbIconMap
+thumbIconMap:
+	.incbin "baserom.dol", 0x28D3E8, 0x3C
+lbl_80290444:
+	.incbin "baserom.dol", 0x28D424, 0x34
+lbl_80290478:
+	.incbin "baserom.dol", 0x28D458, 0x2C
+lbl_802904A4:
+	.incbin "baserom.dol", 0x28D484, 0x28
+lbl_802904CC:
+	.incbin "baserom.dol", 0x28D4AC, 0x2C
+lbl_802904F8:
+	.incbin "baserom.dol", 0x28D4D8, 0x30
+
+.section .sbss
+lbl_803CB980:
+	.skip 0x4
+lbl_803CB984:
+	.skip 0x4
+lbl_803CB988:
+	.skip 0x8
+lbl_803CB990:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB994
+lbl_803CB994:
+	.skip 0x4
+lbl_803CB998:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB99C
+lbl_803CB99C:
+	.skip 0x4
+lbl_803CB9A0:
+	.skip 0x4
+lbl_803CB9A4:
+	.skip 0x4
+lbl_803CB9A8:
+	.skip 0x4
+lbl_803CB9AC:
+	.skip 0x4
+lbl_803CB9B0:
+	.skip 0x4
+lbl_803CB9B4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global HACK_BASETYPE
+HACK_BASETYPE:
+	.skip 0x4
+
+.section .sdata
+lbl_803CABE8:
+	.incbin "baserom.dol", 0x2B5CA8, 0x4
+lbl_803CABEC:
+	.incbin "baserom.dol", 0x2B5CAC, 0x4
+lbl_803CABF0:
+	.incbin "baserom.dol", 0x2B5CB0, 0x4
+lbl_803CABF4:
+	.incbin "baserom.dol", 0x2B5CB4, 0x4
+lbl_803CABF8:
+	.incbin "baserom.dol", 0x2B5CB8, 0x8
+
+.section .sdata2
+lbl_803CDE68:
+	.incbin "baserom.dol", 0x2B7708, 0x4
+lbl_803CDE6C:
+	.incbin "baserom.dol", 0x2B770C, 0x4
+lbl_803CDE70:
+	.incbin "baserom.dol", 0x2B7710, 0x4
+lbl_803CDE74:
+	.incbin "baserom.dol", 0x2B7714, 0x4
+lbl_803CDE78:
+	.incbin "baserom.dol", 0x2B7718, 0x8
+lbl_803CDE80:
+	.incbin "baserom.dol", 0x2B7720, 0x8

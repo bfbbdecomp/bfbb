@@ -1150,3 +1150,285 @@ xSndPlay3D__FUiffUiUiP4xEntf14sound_categoryf:
 /* 8004FBF0 0004C9F0  7C 08 03 A6 */	mtlr r0
 /* 8004FBF4 0004C9F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FBF8 0004C9F8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A808:
+	.incbin "baserom.dol", 0x2877E8, 0xC30
+lbl_8028B438:
+	.incbin "baserom.dol", 0x288418, 0x18
+lbl_8028B450:
+	.incbin "baserom.dol", 0x288430, 0x14
+/* SPECULATION: link order */
+.global animTable
+animTable:
+	.incbin "baserom.dol", 0x288444, 0x18C
+lbl_8028B5F0:
+	.incbin "baserom.dol", 0x2885D0, 0xC0
+
+.section .bss
+lbl_802DBA50:
+	.skip 0x20
+
+.section .sbss
+lbl_803CB450:
+	.skip 0x4
+lbl_803CB454:
+	.skip 0x4
+lbl_803CB458:
+	.skip 0x4
+lbl_803CB45C:
+	.skip 0x4
+lbl_803CB460:
+	.skip 0x4
+lbl_803CB464:
+	.skip 0x4
+lbl_803CB468:
+	.skip 0x4
+lbl_803CB46C:
+	.skip 0x4
+lbl_803CB470:
+	.skip 0x8
+/* SPECULATION: link order */
+.global zcam_overrot_tmr
+zcam_overrot_tmr:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_near
+zcam_near:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_mode
+zcam_mode:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_bbounce
+zcam_bbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_lbbounce
+zcam_lbbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_convers
+zcam_convers:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_lconvers
+zcam_lconvers:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_longbounce
+zcam_longbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_highbounce
+zcam_highbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_cutscene
+zcam_cutscene:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_reward
+zcam_reward:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_playervel
+zcam_playervel:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_fly
+zcam_fly:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flypaused
+zcam_flypaused:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flydata
+zcam_flydata:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flysize
+zcam_flysize:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flytime
+zcam_flytime:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flyasset_current
+zcam_flyasset_current:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_dest
+zcam_dest:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_tmr
+zcam_tmr:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_ttm
+zcam_ttm:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_fovcurr
+zcam_fovcurr:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_fovdest
+zcam_fovdest:
+	.skip 0x4
+
+.section .sbss2
+lbl_803D0820:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0824
+lbl_803D0824:
+	.skip 0x4
+
+.section .sdata
+lbl_803CA9B8:
+	.incbin "baserom.dol", 0x2B5A78, 0x4
+lbl_803CA9BC:
+	.incbin "baserom.dol", 0x2B5A7C, 0xC
+/* SPECULATION: link order */
+.global zcam_pad_pyaw_scale
+zcam_pad_pyaw_scale:
+	.incbin "baserom.dol", 0x2B5A88, 0x4
+/* SPECULATION: link order */
+.global zcam_pad_pitch_scale
+zcam_pad_pitch_scale:
+	.incbin "baserom.dol", 0x2B5A8C, 0x4
+/* SPECULATION: link order */
+.global zcam_near_d
+zcam_near_d:
+	.incbin "baserom.dol", 0x2B5A90, 0x4
+/* SPECULATION: link order */
+.global zcam_near_h
+zcam_near_h:
+	.incbin "baserom.dol", 0x2B5A94, 0x4
+/* SPECULATION: link order */
+.global zcam_near_pitch
+zcam_near_pitch:
+	.incbin "baserom.dol", 0x2B5A98, 0x4
+/* SPECULATION: link order */
+.global zcam_far_d
+zcam_far_d:
+	.incbin "baserom.dol", 0x2B5A9C, 0x4
+/* SPECULATION: link order */
+.global zcam_far_h
+zcam_far_h:
+	.incbin "baserom.dol", 0x2B5AA0, 0x4
+/* SPECULATION: link order */
+.global zcam_far_pitch
+zcam_far_pitch:
+	.incbin "baserom.dol", 0x2B5AA4, 0x4
+/* SPECULATION: link order */
+.global zcam_wall_d
+zcam_wall_d:
+	.incbin "baserom.dol", 0x2B5AA8, 0x4
+/* SPECULATION: link order */
+.global zcam_wall_h
+zcam_wall_h:
+	.incbin "baserom.dol", 0x2B5AAC, 0x4
+/* SPECULATION: link order */
+.global zcam_wall_pitch
+zcam_wall_pitch:
+	.incbin "baserom.dol", 0x2B5AB0, 0x4
+/* SPECULATION: link order */
+.global zcam_above_d
+zcam_above_d:
+	.incbin "baserom.dol", 0x2B5AB4, 0x4
+/* SPECULATION: link order */
+.global zcam_above_h
+zcam_above_h:
+	.incbin "baserom.dol", 0x2B5AB8, 0x4
+/* SPECULATION: link order */
+.global zcam_above_pitch
+zcam_above_pitch:
+	.incbin "baserom.dol", 0x2B5ABC, 0x4
+/* SPECULATION: link order */
+.global zcam_below_d
+zcam_below_d:
+	.incbin "baserom.dol", 0x2B5AC0, 0x4
+/* SPECULATION: link order */
+.global zcam_below_h
+zcam_below_h:
+	.incbin "baserom.dol", 0x2B5AC4, 0x4
+/* SPECULATION: link order */
+.global zcam_below_pitch
+zcam_below_pitch:
+	.incbin "baserom.dol", 0x2B5AC8, 0x4
+/* SPECULATION: link order */
+.global zcam_highbounce_d
+zcam_highbounce_d:
+	.incbin "baserom.dol", 0x2B5ACC, 0x4
+/* SPECULATION: link order */
+.global zcam_highbounce_h
+zcam_highbounce_h:
+	.incbin "baserom.dol", 0x2B5AD0, 0x4
+/* SPECULATION: link order */
+.global zcam_highbounce_pitch
+zcam_highbounce_pitch:
+	.incbin "baserom.dol", 0x2B5AD4, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_min
+zcam_overrot_min:
+	.incbin "baserom.dol", 0x2B5AD8, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_mid
+zcam_overrot_mid:
+	.incbin "baserom.dol", 0x2B5ADC, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_max
+zcam_overrot_max:
+	.incbin "baserom.dol", 0x2B5AE0, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_rate
+zcam_overrot_rate:
+	.incbin "baserom.dol", 0x2B5AE4, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_tstart
+zcam_overrot_tstart:
+	.incbin "baserom.dol", 0x2B5AE8, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_tend
+zcam_overrot_tend:
+	.incbin "baserom.dol", 0x2B5AEC, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_velmin
+zcam_overrot_velmin:
+	.incbin "baserom.dol", 0x2B5AF0, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_velmax
+zcam_overrot_velmax:
+	.incbin "baserom.dol", 0x2B5AF4, 0x4
+/* SPECULATION: link order */
+.global zcam_overrot_tmanual
+zcam_overrot_tmanual:
+	.incbin "baserom.dol", 0x2B5AF8, 0x4
+/* SPECULATION: link order */
+.global zcam_mintgtheight
+zcam_mintgtheight:
+	.incbin "baserom.dol", 0x2B5AFC, 0x4
+
+.section .sdata2
+lbl_803CD178:
+	.incbin "baserom.dol", 0x2B6A18, 0x4
+lbl_803CD17C:
+	.incbin "baserom.dol", 0x2B6A1C, 0x4
+lbl_803CD180:
+	.incbin "baserom.dol", 0x2B6A20, 0x4
+lbl_803CD184:
+	.incbin "baserom.dol", 0x2B6A24, 0x4
+lbl_803CD188:
+	.incbin "baserom.dol", 0x2B6A28, 0x4
+lbl_803CD18C:
+	.incbin "baserom.dol", 0x2B6A2C, 0x4
+lbl_803CD190:
+	.incbin "baserom.dol", 0x2B6A30, 0x4
+lbl_803CD194:
+	.incbin "baserom.dol", 0x2B6A34, 0x4

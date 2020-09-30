@@ -205,3 +205,19 @@ lbl_8004E7B8:
 /* 8004E7D4 0004B5D4  7C 08 03 A6 */	mtlr r0
 /* 8004E7D8 0004B5D8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004E7DC 0004B5DC  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802DB9A0:
+	.skip 0x20
+lbl_802DB9C0:
+	.skip 0x90
+
+.section .sbss
+lbl_803CB438:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CD168:
+	.incbin "baserom.dol", 0x2B6A08, 0x4
+lbl_803CD16C:
+	.incbin "baserom.dol", 0x2B6A0C, 0x4

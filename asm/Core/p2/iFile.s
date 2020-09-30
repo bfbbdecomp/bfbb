@@ -508,3 +508,19 @@ lbl_800C3984:
 /* 800C398C 000C078C  80 03 00 DC */	lwz r0, 0xdc(r3)
 /* 800C3990 000C0790  90 05 00 00 */	stw r0, 0(r5)
 /* 800C3994 000C0794  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802FAE60:
+	.skip 0x1020
+
+.section .sbss
+lbl_803CBAC0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global iFileSyncAsyncReadActive
+iFileSyncAsyncReadActive:
+	.skip 0x4
+lbl_803CBAC8:
+	.skip 0x4
+lbl_803CBACC:
+	.skip 0x4

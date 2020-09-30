@@ -417,3 +417,21 @@ iPadStartRumble__FP8_tagxPadP11_tagxRumble:
 .global iPadKill__Fv
 iPadKill__Fv:
 /* 800CAEE8 000C7CE8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80292620:
+	.incbin "baserom.dol", 0x28F600, 0x30
+
+.section .sdata2
+lbl_803CE118:
+	.incbin "baserom.dol", 0x2B79B8, 0x4
+lbl_803CE11C:
+	.incbin "baserom.dol", 0x2B79BC, 0x4
+lbl_803CE120:
+	.incbin "baserom.dol", 0x2B79C0, 0x4
+lbl_803CE124:
+	.incbin "baserom.dol", 0x2B79C4, 0x4
+lbl_803CE128:
+	.incbin "baserom.dol", 0x2B79C8, 0x8
+lbl_803CE130:
+	.incbin "baserom.dol", 0x2B79D0, 0x8

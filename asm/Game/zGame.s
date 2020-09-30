@@ -132,7 +132,7 @@ lbl_80097660:
 /* 80097660 00094460  80 6D 82 18 */	lwz r3, soaklevels-_SDA_BASE_(r13)
 /* 80097664 00094464  38 A0 00 00 */	li r5, 0
 /* 80097668 00094468  80 8D 8E EC */	lwz r4, lbl_803CB7EC-_SDA_BASE_(r13)
-/* 8009766C 0009446C  48 00 1E C1 */	bl xUtil_select$$0c$$1__FPPciPCf
+/* 8009766C 0009446C  48 00 1E C1 */	bl xUtil_select_esc__0_c_esc__1___FPPciPCf
 /* 80097670 00094470  88 03 00 01 */	lbz r0, 1(r3)
 /* 80097674 00094474  88 83 00 00 */	lbz r4, 0(r3)
 /* 80097678 00094478  54 00 80 1E */	slwi r0, r0, 0x10
@@ -1216,7 +1216,7 @@ lbl_80098598:
 /* 80098604 00095404  38 61 00 14 */	addi r3, r1, 0x14
 /* 80098608 00095408  38 A1 00 0C */	addi r5, r1, 0xc
 /* 8009860C 0009540C  38 80 00 01 */	li r4, 1
-/* 80098610 00095410  4B F7 F8 E5 */	bl create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1
+/* 80098610 00095410  4B F7 F8 E5 */	bl create__5xfontFUifff10iColor_tagRC13basic_rect_esc__0_f_esc__1_
 /* 80098614 00095414  C0 22 90 60 */	lfs f1, lbl_803CD9E0-_SDA2_BASE_(r2)
 /* 80098618 00095418  3C 60 80 26 */	lis r3, lbl_8025BE78@ha
 /* 8009861C 0009541C  38 A3 BE 78 */	addi r5, r3, lbl_8025BE78@l
@@ -1226,7 +1226,7 @@ lbl_80098598:
 /* 8009862C 0009542C  FC 60 08 90 */	fmr f3, f1
 /* 80098630 00095430  38 C0 00 00 */	li r6, 0
 /* 80098634 00095434  FC 80 08 90 */	fmr f4, f1
-/* 80098638 00095438  4B F7 F7 AD */	bl create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff
+/* 80098638 00095438  4B F7 F7 AD */	bl create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff
 /* 8009863C 0009543C  38 00 00 0D */	li r0, 0xd
 /* 80098640 00095440  38 A1 00 9C */	addi r5, r1, 0x9c
 /* 80098644 00095444  38 81 00 34 */	addi r4, r1, 0x34
@@ -1246,10 +1246,10 @@ lbl_8009864C:
 /* 80098678 00095478  C0 42 90 9C */	lfs f2, lbl_803CDA1C-_SDA2_BASE_(r2)
 /* 8009867C 0009547C  C0 62 90 90 */	lfs f3, lbl_803CDA10-_SDA2_BASE_(r2)
 /* 80098680 00095480  C0 82 90 A0 */	lfs f4, lbl_803CDA20-_SDA2_BASE_(r2)
-/* 80098684 00095484  4B F8 D9 D5 */	bl assign__13basic_rect$$0f$$1Fffff
+/* 80098684 00095484  4B F8 D9 D5 */	bl assign__13basic_rect_esc__0_f_esc__1_Fffff
 /* 80098688 00095488  C0 22 90 A4 */	lfs f1, lbl_803CDA24-_SDA2_BASE_(r2)
 /* 8009868C 0009548C  7F A3 EB 78 */	mr r3, r29
-/* 80098690 00095490  4B FB 55 69 */	bl contract__13basic_rect$$0f$$1Ff
+/* 80098690 00095490  4B FB 55 69 */	bl contract__13basic_rect_esc__0_f_esc__1_Ff
 /* 80098694 00095494  38 61 00 A0 */	addi r3, r1, 0xa0
 /* 80098698 00095498  38 81 01 08 */	addi r4, r1, 0x108
 /* 8009869C 0009549C  4B F8 9E 2D */	bl set_text__8xtextboxFPCc
@@ -1264,10 +1264,10 @@ lbl_8009864C:
 /* 800986C0 000954C0  7F A4 EB 78 */	mr r4, r29
 /* 800986C4 000954C4  EC 01 08 3C */	fnmsubs f0, f1, f0, f1
 /* 800986C8 000954C8  D0 01 00 C8 */	stfs f0, 0xc8(r1)
-/* 800986CC 000954CC  4B F7 F9 75 */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
+/* 800986CC 000954CC  4B F7 F9 75 */	bl __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
 /* 800986D0 000954D0  C0 22 90 A4 */	lfs f1, lbl_803CDA24-_SDA2_BASE_(r2)
 /* 800986D4 000954D4  7F 83 E3 78 */	mr r3, r28
-/* 800986D8 000954D8  4B FB 55 45 */	bl expand__13basic_rect$$0f$$1Ff
+/* 800986D8 000954D8  4B FB 55 45 */	bl expand__13basic_rect_esc__0_f_esc__1_Ff
 /* 800986DC 000954DC  38 61 00 A0 */	addi r3, r1, 0xa0
 /* 800986E0 000954E0  38 80 00 01 */	li r4, 1
 /* 800986E4 000954E4  4B FB 54 9D */	bl yextent__8xtextboxCFb
@@ -1353,7 +1353,7 @@ lbl_800987D8:
 /* 8009880C 0009560C  90 61 00 08 */	stw r3, 8(r1)
 /* 80098810 00095610  7F 83 E3 78 */	mr r3, r28
 /* 80098814 00095614  38 81 00 08 */	addi r4, r1, 8
-/* 80098818 00095618  4B F8 D5 79 */	bl render_fill_rect__FRC13basic_rect$$0f$$110iColor_tag
+/* 80098818 00095618  4B F8 D5 79 */	bl render_fill_rect__FRC13basic_rect_esc__0_f_esc__1_10iColor_tag
 /* 8009881C 0009561C  38 61 00 A0 */	addi r3, r1, 0xa0
 /* 80098820 00095620  38 80 00 01 */	li r4, 1
 /* 80098824 00095624  4B F7 F5 81 */	bl render__8xtextboxCFb
@@ -2269,7 +2269,7 @@ zGameStats_Init__Fv:
 /* 80099528 00096328  4E 80 00 20 */	blr 
 
 /* xUtil_select<c>__FPPciPCf */
-xUtil_select$$0c$$1__FPPciPCf:
+xUtil_select_esc__0_c_esc__1___FPPciPCf:
 /* 8009952C 0009632C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80099530 00096330  7C 08 02 A6 */	mflr r0
 /* 80099534 00096334  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2377,3 +2377,257 @@ lbl_8025BE88:
 	.incbin "baserom.dol", 0x258E68, 0x100
 lbl_8025BF88:
 	.incbin "baserom.dol", 0x258F68, 0xA98
+
+.section .sbss
+lbl_803CB7A4:
+	.skip 0x4
+lbl_803CB7A8:
+	.skip 0x4
+lbl_803CB7AC:
+	.skip 0x4
+lbl_803CB7B0:
+	.skip 0x4
+lbl_803CB7B4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTimeElapsed
+sTimeElapsed:
+	.skip 0x8
+/* SPECULATION: link order */
+.global sTimeLast
+sTimeLast:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB7C4
+lbl_803CB7C4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTimeCurrent
+sTimeCurrent:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB7CC
+lbl_803CB7CC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gLevelChanged
+gLevelChanged:
+	.skip 0x4
+lbl_803CB7D4:
+	.skip 0x4
+lbl_803CB7D8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gSoak
+gSoak:
+	.skip 0x4
+lbl_803CB7E0:
+	.skip 0x4
+lbl_803CB7E4:
+	.skip 0x4
+lbl_803CB7E8:
+	.skip 0x4
+lbl_803CB7EC:
+	.skip 0x4
+lbl_803CB7F0:
+	.skip 0x4
+lbl_803CB7F4:
+	.skip 0x4
+lbl_803CB7F8:
+	.skip 0x4
+lbl_803CB7FC:
+	.skip 0x4
+lbl_803CB800:
+	.skip 0x4
+lbl_803CB804:
+	.skip 0x4
+lbl_803CB808:
+	.skip 0x8
+lbl_803CB810:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB814
+lbl_803CB814:
+	.skip 0x4
+lbl_803CB818:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB81C
+lbl_803CB81C:
+	.skip 0x4
+lbl_803CB820:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB824
+lbl_803CB824:
+	.skip 0x4
+lbl_803CB828:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB82C
+lbl_803CB82C:
+	.skip 0x4
+lbl_803CB830:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB834
+lbl_803CB834:
+	.skip 0x4
+lbl_803CB838:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB83C
+lbl_803CB83C:
+	.skip 0x4
+lbl_803CB840:
+	.skip 0x4
+lbl_803CB844:
+	.skip 0x4
+lbl_803CB848:
+	.skip 0x4
+lbl_803CB84C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sHackSmoothedUpdate
+sHackSmoothedUpdate:
+	.skip 0x4
+lbl_803CB854:
+	.skip 0x4
+lbl_803CB858:
+	.skip 0x4
+lbl_803CB85C:
+	.skip 0x4
+lbl_803CB860:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sGameScreenTransCam
+sGameScreenTransCam:
+	.skip 0x4
+lbl_803CB868:
+	.skip 0x4
+lbl_803CB86C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bgu1
+bgu1:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bgv1
+bgv1:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gGameWhereAmI
+gGameWhereAmI:
+	.skip 0x8
+
+.section .sbss2
+lbl_803D0858:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D085C
+lbl_803D085C:
+	.skip 0x4
+lbl_803D0860:
+	.skip 0x8
+
+.section .sdata
+lbl_803CAB20:
+	.incbin "baserom.dol", 0x2B5BE0, 0x8
+/* SPECULATION: link order */
+.global bgID
+bgID:
+	.incbin "baserom.dol", 0x2B5BE8, 0x4
+/* SPECULATION: link order */
+.global bgu2
+bgu2:
+	.incbin "baserom.dol", 0x2B5BEC, 0x4
+/* SPECULATION: link order */
+.global bgv2
+bgv2:
+	.incbin "baserom.dol", 0x2B5BF0, 0x4
+/* SPECULATION: link order */
+.global bgr
+bgr:
+	.incbin "baserom.dol", 0x2B5BF4, 0x1
+/* SPECULATION: link order */
+.global bgg
+bgg:
+	.incbin "baserom.dol", 0x2B5BF5, 0x1
+/* SPECULATION: link order */
+.global bgb
+bgb:
+	.incbin "baserom.dol", 0x2B5BF6, 0x1
+/* SPECULATION: link order */
+.global bga
+bga:
+	.incbin "baserom.dol", 0x2B5BF7, 0x1
+
+.section .sdata2
+lbl_803CD9E0:
+	.incbin "baserom.dol", 0x2B7280, 0x8
+lbl_803CD9E8:
+	.incbin "baserom.dol", 0x2B7288, 0x8
+lbl_803CD9F0:
+	.incbin "baserom.dol", 0x2B7290, 0x4
+lbl_803CD9F4:
+	.incbin "baserom.dol", 0x2B7294, 0x4
+lbl_803CD9F8:
+	.incbin "baserom.dol", 0x2B7298, 0x4
+lbl_803CD9FC:
+	.incbin "baserom.dol", 0x2B729C, 0x4
+lbl_803CDA00:
+	.incbin "baserom.dol", 0x2B72A0, 0x4
+lbl_803CDA04:
+	.incbin "baserom.dol", 0x2B72A4, 0x4
+lbl_803CDA08:
+	.incbin "baserom.dol", 0x2B72A8, 0x8
+lbl_803CDA10:
+	.incbin "baserom.dol", 0x2B72B0, 0x4
+lbl_803CDA14:
+	.incbin "baserom.dol", 0x2B72B4, 0x4
+lbl_803CDA18:
+	.incbin "baserom.dol", 0x2B72B8, 0x4
+lbl_803CDA1C:
+	.incbin "baserom.dol", 0x2B72BC, 0x4
+lbl_803CDA20:
+	.incbin "baserom.dol", 0x2B72C0, 0x4
+lbl_803CDA24:
+	.incbin "baserom.dol", 0x2B72C4, 0x4
+lbl_803CDA28:
+	.incbin "baserom.dol", 0x2B72C8, 0x4
+lbl_803CDA2C:
+	.incbin "baserom.dol", 0x2B72CC, 0x4
+lbl_803CDA30:
+	.incbin "baserom.dol", 0x2B72D0, 0x4
+lbl_803CDA34:
+	.incbin "baserom.dol", 0x2B72D4, 0x4
+lbl_803CDA38:
+	.incbin "baserom.dol", 0x2B72D8, 0x4
+lbl_803CDA3C:
+	.incbin "baserom.dol", 0x2B72DC, 0x4
+lbl_803CDA40:
+	.incbin "baserom.dol", 0x2B72E0, 0x4
+lbl_803CDA44:
+	.incbin "baserom.dol", 0x2B72E4, 0x4
+lbl_803CDA48:
+	.incbin "baserom.dol", 0x2B72E8, 0x4
+lbl_803CDA4C:
+	.incbin "baserom.dol", 0x2B72EC, 0x4
+lbl_803CDA50:
+	.incbin "baserom.dol", 0x2B72F0, 0x4
+lbl_803CDA54:
+	.incbin "baserom.dol", 0x2B72F4, 0x4
+lbl_803CDA58:
+	.incbin "baserom.dol", 0x2B72F8, 0x4
+lbl_803CDA5C:
+	.incbin "baserom.dol", 0x2B72FC, 0x4
+lbl_803CDA60:
+	.incbin "baserom.dol", 0x2B7300, 0x4
+lbl_803CDA64:
+	.incbin "baserom.dol", 0x2B7304, 0x4
+lbl_803CDA68:
+	.incbin "baserom.dol", 0x2B7308, 0x4
+lbl_803CDA6C:
+	.incbin "baserom.dol", 0x2B730C, 0x4
+lbl_803CDA70:
+	.incbin "baserom.dol", 0x2B7310, 0x8

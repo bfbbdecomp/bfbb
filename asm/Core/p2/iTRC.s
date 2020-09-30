@@ -976,3 +976,21 @@ lbl_80180D38:
 .section .rodata
 lbl_80272C50:
 	.incbin "baserom.dol", 0x26FC30, 0x290
+
+.section .data
+lbl_8029B868:
+	.incbin "baserom.dol", 0x298848, 0x38
+
+.section .sbss2
+lbl_803D0A40:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CF800:
+	.incbin "baserom.dol", 0x2B90A0, 0x4
+lbl_803CF804:
+	.incbin "baserom.dol", 0x2B90A4, 0x4
+lbl_803CF808:
+	.incbin "baserom.dol", 0x2B90A8, 0x8
+lbl_803CF810:
+	.incbin "baserom.dol", 0x2B90B0, 0x8

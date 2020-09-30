@@ -257,3 +257,9 @@ lbl_800C4E40:
 /* 800C4E40 000C1C40  80 63 00 04 */	lwz r3, 4(r3)
 /* 800C4E44 000C1C44  98 03 00 02 */	stb r0, 2(r3)
 /* 800C4E48 000C1C48  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CE0B0:
+	.incbin "baserom.dol", 0x2B7950, 0x4
+lbl_803CE0B4:
+	.incbin "baserom.dol", 0x2B7954, 0x4

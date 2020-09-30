@@ -1291,3 +1291,25 @@ lbl_800CA914:
 .section .rodata
 lbl_802601A8:
 	.incbin "baserom.dol", 0x25D188, 0x10
+
+.section .sbss
+lbl_803CBB68:
+	.skip 0x4
+lbl_803CBB6C:
+	.skip 0x4
+lbl_803CBB70:
+	.skip 0x4
+lbl_803CBB74:
+	.skip 0x4
+lbl_803CBB78:
+	.skip 0x4
+lbl_803CBB7C:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CE108:
+	.incbin "baserom.dol", 0x2B79A8, 0x4
+lbl_803CE10C:
+	.incbin "baserom.dol", 0x2B79AC, 0x4
+lbl_803CE110:
+	.incbin "baserom.dol", 0x2B79B0, 0x8

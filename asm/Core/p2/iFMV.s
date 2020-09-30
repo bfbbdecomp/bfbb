@@ -961,3 +961,117 @@ xDrawLine2D_LocaliFMVVersion__Fffff:
 /* 800C4770 000C1570  7C 08 03 A6 */	mtlr r0
 /* 800C4774 000C1574  38 21 00 70 */	addi r1, r1, 0x70
 /* 800C4778 000C1578  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802FBE80:
+	.skip 0x18
+
+.section .sbss
+lbl_803CBAD0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global fuckingSurfaceType
+fuckingSurfaceType:
+	.skip 0x4
+lbl_803CBAD8:
+	.skip 0x4
+lbl_803CBADC:
+	.skip 0x4
+lbl_803CBAE0:
+	.skip 0x4
+lbl_803CBAE4:
+	.skip 0x4
+lbl_803CBAE8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global ip
+ip:
+	.skip 0x4
+/* SPECULATION: link order */
+.global oof
+oof:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mXFBs__4iFMV
+mXFBs__4iFMV:
+	.skip 0x8
+/* SPECULATION: link order */
+.global mCurrentFrameBuffer__4iFMV
+mCurrentFrameBuffer__4iFMV:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mRenderMode__4iFMV
+mRenderMode__4iFMV:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gLightWorld
+gLightWorld:
+	.skip 0x8
+/* SPECULATION: link order */
+.global mem_top_alloc
+mem_top_alloc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mem_base_alloc
+mem_base_alloc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global the_heap
+the_heap:
+	.skip 0x4
+/* SPECULATION: link order */
+.global hs
+hs:
+	.skip 0x4
+/* SPECULATION: link order */
+.global he
+he:
+	.skip 0x4
+/* SPECULATION: link order */
+.global HeapSize
+HeapSize:
+	.skip 0x4
+
+.section .sbss2
+lbl_803D0898:
+	.skip 0x4
+lbl_803D089C:
+	.skip 0x4
+
+.section .sdata
+lbl_803CAC40:
+	.incbin "baserom.dol", 0x2B5D00, 0x4
+lbl_803CAC44:
+	.incbin "baserom.dol", 0x2B5D04, 0x4
+/* SPECULATION: link order */
+.global mFirstFrame__4iFMV
+mFirstFrame__4iFMV:
+	.incbin "baserom.dol", 0x2B5D08, 0x8
+/* SPECULATION: link order */
+.global bad_val
+bad_val:
+	.incbin "baserom.dol", 0x2B5D10, 0x4
+/* SPECULATION: link order */
+.global test_alloc_val
+test_alloc_val:
+	.incbin "baserom.dol", 0x2B5D14, 0x4
+
+.section .sdata2
+lbl_803CE080:
+	.incbin "baserom.dol", 0x2B7920, 0x4
+lbl_803CE084:
+	.incbin "baserom.dol", 0x2B7924, 0x4
+lbl_803CE088:
+	.incbin "baserom.dol", 0x2B7928, 0x4
+lbl_803CE08C:
+	.incbin "baserom.dol", 0x2B792C, 0x4
+lbl_803CE090:
+	.incbin "baserom.dol", 0x2B7930, 0x8
+lbl_803CE098:
+	.incbin "baserom.dol", 0x2B7938, 0x8
+lbl_803CE0A0:
+	.incbin "baserom.dol", 0x2B7940, 0x4
+lbl_803CE0A4:
+	.incbin "baserom.dol", 0x2B7944, 0x4
+lbl_803CE0A8:
+	.incbin "baserom.dol", 0x2B7948, 0x8

@@ -1139,3 +1139,36 @@ xFileReadAsyncStatus__FiPi:
 /* 8000A51C 0000731C  7C 08 03 A6 */	mtlr r0
 /* 8000A520 00007320  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000A524 00007324  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027A5C0:
+	.incbin "baserom.dol", 0x2775A0, 0x340
+lbl_8027A900:
+	.incbin "baserom.dol", 0x2778E0, 0x8A0
+lbl_8027B1A0:
+	.incbin "baserom.dol", 0x278180, 0x1E0
+
+.section .sbss
+.balign 8
+lbl_803CB168:
+	.skip 0x8
+
+.section .sdata
+lbl_803CA900:
+	.incbin "baserom.dol", 0x2B59C0, 0x8
+/* SPECULATION: link order */
+.global xcam_do_collis
+xcam_do_collis:
+	.incbin "baserom.dol", 0x2B59C8, 0x4
+/* SPECULATION: link order */
+.global xcam_collis_radius
+xcam_collis_radius:
+	.incbin "baserom.dol", 0x2B59CC, 0x4
+/* SPECULATION: link order */
+.global xcam_collis_stiffness
+xcam_collis_stiffness:
+	.incbin "baserom.dol", 0x2B59D0, 0x8
+/* SPECULATION: link order */
+.global snow_life
+snow_life:
+	.incbin "baserom.dol", 0x2B59D8, 0x8

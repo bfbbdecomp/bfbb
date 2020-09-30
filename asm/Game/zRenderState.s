@@ -265,3 +265,11 @@ lbl_800ACDCC:
 /* 800ACDD4 000A9BD4  7C 08 03 A6 */	mtlr r0
 /* 800ACDD8 000A9BD8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ACDDC 000A9BDC  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80290030:
+	.incbin "baserom.dol", 0x28D010, 0x60
+
+.section .sbss
+lbl_803CB978:
+	.skip 0x8

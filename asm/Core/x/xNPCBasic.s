@@ -757,3 +757,37 @@ DBG_HaltOnMe__9xNPCBasicFUiPc:
 .section .rodata
 lbl_8026A3F8:
 	.incbin "baserom.dol", 0x2673D8, 0x10
+
+.section .data
+lbl_80297460:
+	.incbin "baserom.dol", 0x294440, 0x5B4
+/* SPECULATION: link order */
+.global __vt__9xNPCBasic
+__vt__9xNPCBasic:
+	.incbin "baserom.dol", 0x2949F4, 0x54
+
+.section .sdata2
+lbl_803CE7D0:
+	.incbin "baserom.dol", 0x2B8070, 0x4
+lbl_803CE7D4:
+	.incbin "baserom.dol", 0x2B8074, 0x4
+lbl_803CE7D8:
+	.incbin "baserom.dol", 0x2B8078, 0x4
+lbl_803CE7DC:
+	.incbin "baserom.dol", 0x2B807C, 0x4
+lbl_803CE7E0:
+	.incbin "baserom.dol", 0x2B8080, 0x4
+lbl_803CE7E4:
+	.incbin "baserom.dol", 0x2B8084, 0x4
+lbl_803CE7E8:
+	.incbin "baserom.dol", 0x2B8088, 0x4
+lbl_803CE7EC:
+	.incbin "baserom.dol", 0x2B808C, 0x4
+lbl_803CE7F0:
+	.incbin "baserom.dol", 0x2B8090, 0x4
+lbl_803CE7F4:
+	.incbin "baserom.dol", 0x2B8094, 0x4
+lbl_803CE7F8:
+	.incbin "baserom.dol", 0x2B8098, 0x4
+lbl_803CE7FC:
+	.incbin "baserom.dol", 0x2B809C, 0x4

@@ -294,3 +294,23 @@ lbl_8004EBD8:
 lbl_8004EBE4:
 /* 8004EBE4 0004B9E4  38 60 00 00 */	li r3, 0
 /* 8004EBE8 0004B9E8  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8028A7B8:
+	.incbin "baserom.dol", 0x287798, 0x50
+
+.section .sbss
+lbl_803CB440:
+	.skip 0x4
+lbl_803CB444:
+	.skip 0x4
+lbl_803CB448:
+	.skip 0x4
+lbl_803CB44C:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CD170:
+	.incbin "baserom.dol", 0x2B6A10, 0x4
+lbl_803CD174:
+	.incbin "baserom.dol", 0x2B6A14, 0x4

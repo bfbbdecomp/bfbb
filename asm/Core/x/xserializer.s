@@ -1283,3 +1283,15 @@ lbl_80043EA8:
 /* 80043EAC 00040CAC  7C 08 03 A6 */	mtlr r0
 /* 80043EB0 00040CB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80043EB4 00040CB4  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80288B10:
+	.incbin "baserom.dol", 0x285AF0, 0x24
+lbl_80288B34:
+	.incbin "baserom.dol", 0x285B14, 0x80
+lbl_80288BB4:
+	.incbin "baserom.dol", 0x285B94, 0x84
+
+.section .sbss
+lbl_803CB3A0:
+	.skip 0x8

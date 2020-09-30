@@ -530,3 +530,29 @@ __ct__17zNPCGoalDuploLiveFi:
 /* 8012A71C 0012751C  7C 08 03 A6 */	mtlr r0
 /* 8012A720 00127520  38 21 00 10 */	addi r1, r1, 0x10
 /* 8012A724 00127524  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CEB58:
+	.incbin "baserom.dol", 0x2B83F8, 0x4
+lbl_803CEB5C:
+	.incbin "baserom.dol", 0x2B83FC, 0x4
+lbl_803CEB60:
+	.incbin "baserom.dol", 0x2B8400, 0x4
+lbl_803CEB64:
+	.incbin "baserom.dol", 0x2B8404, 0x4
+lbl_803CEB68:
+	.incbin "baserom.dol", 0x2B8408, 0x4
+lbl_803CEB6C:
+	.incbin "baserom.dol", 0x2B840C, 0x4
+lbl_803CEB70:
+	.incbin "baserom.dol", 0x2B8410, 0x8
+lbl_803CEB78:
+	.incbin "baserom.dol", 0x2B8418, 0x8
+lbl_803CEB80:
+	.incbin "baserom.dol", 0x2B8420, 0x4
+lbl_803CEB84:
+	.incbin "baserom.dol", 0x2B8424, 0x4
+lbl_803CEB88:
+	.incbin "baserom.dol", 0x2B8428, 0x4
+lbl_803CEB8C:
+	.incbin "baserom.dol", 0x2B842C, 0x4

@@ -3624,7 +3624,7 @@ lbl_8018AA24:
 /* 8018AA2C 0018782C  42 00 FF 78 */	bdnz lbl_8018A9A4
 /* 8018AA30 00187830  38 61 00 08 */	addi r3, r1, 8
 /* 8018AA34 00187834  38 A0 00 00 */	li r5, 0
-/* 8018AA38 00187838  48 00 52 55 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 8018AA38 00187838  48 00 52 55 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 8018AA3C 0018783C  80 01 00 44 */	lwz r0, 0x44(r1)
 /* 8018AA40 00187840  83 E1 00 3C */	lwz r31, 0x3c(r1)
 /* 8018AA44 00187844  83 C1 00 38 */	lwz r30, 0x38(r1)
@@ -9353,7 +9353,7 @@ LERP__FfP5xVec3PC5xVec3PC5xVec3:
 /* 8018FC88 0018CA88  4E 80 00 20 */	blr 
 
 /* xUtil_choose<i>__FPCiiPCf */
-xUtil_choose$$0i$$1__FPCiiPCf:
+xUtil_choose_esc__0_i_esc__1___FPCiiPCf:
 /* 8018FC8C 0018CA8C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8018FC90 0018CA90  7C 08 02 A6 */	mflr r0
 /* 8018FC94 0018CA94  90 01 00 34 */	stw r0, 0x34(r1)
@@ -9471,3 +9471,247 @@ lbl_802737F4:
 	.incbin "baserom.dol", 0x2707D4, 0xC
 lbl_80273800:
 	.incbin "baserom.dol", 0x2707E0, 0x330
+
+.section .data
+lbl_8029BA40:
+	.incbin "baserom.dol", 0x298A20, 0xF0
+lbl_8029BB30:
+	.incbin "baserom.dol", 0x298B10, 0xC
+lbl_8029BB3C:
+	.incbin "baserom.dol", 0x298B1C, 0xC
+lbl_8029BB48:
+	.incbin "baserom.dol", 0x298B28, 0xA8
+lbl_8029BBF0:
+	.incbin "baserom.dol", 0x298BD0, 0x20
+lbl_8029BC10:
+	.incbin "baserom.dol", 0x298BF0, 0x28
+lbl_8029BC38:
+	.incbin "baserom.dol", 0x298C18, 0xF0
+lbl_8029BD28:
+	.incbin "baserom.dol", 0x298D08, 0x6C
+lbl_8029BD94:
+	.incbin "baserom.dol", 0x298D74, 0x6C
+lbl_8029BE00:
+	.incbin "baserom.dol", 0x298DE0, 0x6C
+lbl_8029BE6C:
+	.incbin "baserom.dol", 0x298E4C, 0x4C
+/* SPECULATION: link order */
+.global __vt__18zNPCGoalJellyBirth
+__vt__18zNPCGoalJellyBirth:
+	.incbin "baserom.dol", 0x298E98, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalJellyAttack
+__vt__19zNPCGoalJellyAttack:
+	.incbin "baserom.dol", 0x298ECC, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalJellyBumped
+__vt__19zNPCGoalJellyBumped:
+	.incbin "baserom.dol", 0x298F00, 0x40E4
+/* SPECULATION: link order */
+.global lbl_802A0004
+lbl_802A0004:
+	.incbin "baserom.dol", 0x29CFE4, 0x19F4
+
+.section .bss
+lbl_8035E738:
+	.skip 0x3978
+lbl_803620B0:
+	.skip 0x3C0
+lbl_80362470:
+	.skip 0x16C
+lbl_803625DC:
+	.skip 0x444
+lbl_80362A20:
+	.skip 0x50
+lbl_80362A70:
+	.skip 0x50
+lbl_80362AC0:
+	.skip 0x50
+
+.section .sbss
+lbl_803CC148:
+	.skip 0x4
+lbl_803CC14C:
+	.skip 0x4
+lbl_803CC150:
+	.skip 0x4
+lbl_803CC154:
+	.skip 0x4
+lbl_803CC158:
+	.skip 0x4
+lbl_803CC15C:
+	.skip 0x4
+lbl_803CC160:
+	.skip 0x4
+lbl_803CC164:
+	.skip 0x4
+lbl_803CC168:
+	.skip 0x4
+lbl_803CC16C:
+	.skip 0x4
+lbl_803CC170:
+	.skip 0x4
+lbl_803CC174:
+	.skip 0x4
+lbl_803CC178:
+	.skip 0x4
+lbl_803CC17C:
+	.skip 0x4
+lbl_803CC180:
+	.skip 0x4
+lbl_803CC184:
+	.skip 0x4
+lbl_803CC188:
+	.skip 0x4
+lbl_803CC18C:
+	.skip 0x4
+lbl_803CC190:
+	.skip 0x4
+lbl_803CC194:
+	.skip 0x4
+lbl_803CC198:
+	.skip 0x4
+lbl_803CC19C:
+	.skip 0x4
+lbl_803CC1A0:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CF968:
+	.incbin "baserom.dol", 0x2B9208, 0x4
+lbl_803CF96C:
+	.incbin "baserom.dol", 0x2B920C, 0x4
+lbl_803CF970:
+	.incbin "baserom.dol", 0x2B9210, 0x4
+lbl_803CF974:
+	.incbin "baserom.dol", 0x2B9214, 0x8
+lbl_803CF97C:
+	.incbin "baserom.dol", 0x2B921C, 0x8
+lbl_803CF984:
+	.incbin "baserom.dol", 0x2B9224, 0x8
+lbl_803CF98C:
+	.incbin "baserom.dol", 0x2B922C, 0x8
+lbl_803CF994:
+	.incbin "baserom.dol", 0x2B9234, 0x8
+lbl_803CF99C:
+	.incbin "baserom.dol", 0x2B923C, 0x8
+lbl_803CF9A4:
+	.incbin "baserom.dol", 0x2B9244, 0x8
+lbl_803CF9AC:
+	.incbin "baserom.dol", 0x2B924C, 0x8
+lbl_803CF9B4:
+	.incbin "baserom.dol", 0x2B9254, 0x8
+lbl_803CF9BC:
+	.incbin "baserom.dol", 0x2B925C, 0x8
+lbl_803CF9C4:
+	.incbin "baserom.dol", 0x2B9264, 0x8
+lbl_803CF9CC:
+	.incbin "baserom.dol", 0x2B926C, 0x8
+lbl_803CF9D4:
+	.incbin "baserom.dol", 0x2B9274, 0x8
+lbl_803CF9DC:
+	.incbin "baserom.dol", 0x2B927C, 0x8
+lbl_803CF9E4:
+	.incbin "baserom.dol", 0x2B9284, 0x4
+lbl_803CF9E8:
+	.incbin "baserom.dol", 0x2B9288, 0x4
+lbl_803CF9EC:
+	.incbin "baserom.dol", 0x2B928C, 0x4
+lbl_803CF9F0:
+	.incbin "baserom.dol", 0x2B9290, 0x4
+lbl_803CF9F4:
+	.incbin "baserom.dol", 0x2B9294, 0x4
+lbl_803CF9F8:
+	.incbin "baserom.dol", 0x2B9298, 0x4
+lbl_803CF9FC:
+	.incbin "baserom.dol", 0x2B929C, 0x4
+lbl_803CFA00:
+	.incbin "baserom.dol", 0x2B92A0, 0x4
+lbl_803CFA04:
+	.incbin "baserom.dol", 0x2B92A4, 0x4
+lbl_803CFA08:
+	.incbin "baserom.dol", 0x2B92A8, 0x4
+lbl_803CFA0C:
+	.incbin "baserom.dol", 0x2B92AC, 0x4
+lbl_803CFA10:
+	.incbin "baserom.dol", 0x2B92B0, 0x4
+lbl_803CFA14:
+	.incbin "baserom.dol", 0x2B92B4, 0x4
+lbl_803CFA18:
+	.incbin "baserom.dol", 0x2B92B8, 0x4
+lbl_803CFA1C:
+	.incbin "baserom.dol", 0x2B92BC, 0x4
+lbl_803CFA20:
+	.incbin "baserom.dol", 0x2B92C0, 0x4
+lbl_803CFA24:
+	.incbin "baserom.dol", 0x2B92C4, 0x4
+lbl_803CFA28:
+	.incbin "baserom.dol", 0x2B92C8, 0x4
+lbl_803CFA2C:
+	.incbin "baserom.dol", 0x2B92CC, 0x4
+lbl_803CFA30:
+	.incbin "baserom.dol", 0x2B92D0, 0x4
+lbl_803CFA34:
+	.incbin "baserom.dol", 0x2B92D4, 0x4
+lbl_803CFA38:
+	.incbin "baserom.dol", 0x2B92D8, 0x4
+lbl_803CFA3C:
+	.incbin "baserom.dol", 0x2B92DC, 0x4
+lbl_803CFA40:
+	.incbin "baserom.dol", 0x2B92E0, 0x4
+lbl_803CFA44:
+	.incbin "baserom.dol", 0x2B92E4, 0x4
+lbl_803CFA48:
+	.incbin "baserom.dol", 0x2B92E8, 0x4
+lbl_803CFA4C:
+	.incbin "baserom.dol", 0x2B92EC, 0x4
+lbl_803CFA50:
+	.incbin "baserom.dol", 0x2B92F0, 0x4
+lbl_803CFA54:
+	.incbin "baserom.dol", 0x2B92F4, 0x4
+lbl_803CFA58:
+	.incbin "baserom.dol", 0x2B92F8, 0x4
+lbl_803CFA5C:
+	.incbin "baserom.dol", 0x2B92FC, 0x4
+lbl_803CFA60:
+	.incbin "baserom.dol", 0x2B9300, 0x4
+lbl_803CFA64:
+	.incbin "baserom.dol", 0x2B9304, 0x4
+lbl_803CFA68:
+	.incbin "baserom.dol", 0x2B9308, 0x4
+lbl_803CFA6C:
+	.incbin "baserom.dol", 0x2B930C, 0x4
+lbl_803CFA70:
+	.incbin "baserom.dol", 0x2B9310, 0x4
+lbl_803CFA74:
+	.incbin "baserom.dol", 0x2B9314, 0x4
+lbl_803CFA78:
+	.incbin "baserom.dol", 0x2B9318, 0x4
+lbl_803CFA7C:
+	.incbin "baserom.dol", 0x2B931C, 0x4
+lbl_803CFA80:
+	.incbin "baserom.dol", 0x2B9320, 0x4
+lbl_803CFA84:
+	.incbin "baserom.dol", 0x2B9324, 0x4
+lbl_803CFA88:
+	.incbin "baserom.dol", 0x2B9328, 0x8
+lbl_803CFA90:
+	.incbin "baserom.dol", 0x2B9330, 0x4
+lbl_803CFA94:
+	.incbin "baserom.dol", 0x2B9334, 0x4
+lbl_803CFA98:
+	.incbin "baserom.dol", 0x2B9338, 0x4
+lbl_803CFA9C:
+	.incbin "baserom.dol", 0x2B933C, 0x4
+lbl_803CFAA0:
+	.incbin "baserom.dol", 0x2B9340, 0x4
+lbl_803CFAA4:
+	.incbin "baserom.dol", 0x2B9344, 0x4
+lbl_803CFAA8:
+	.incbin "baserom.dol", 0x2B9348, 0x4
+lbl_803CFAAC:
+	.incbin "baserom.dol", 0x2B934C, 0x4
+lbl_803CFAB0:
+	.incbin "baserom.dol", 0x2B9350, 0x8
+lbl_803CFAB8:
+	.incbin "baserom.dol", 0x2B9358, 0x8

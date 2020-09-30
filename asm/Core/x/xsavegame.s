@@ -2918,3 +2918,35 @@ lbl_8003F390:
 /* 8003F398 0003C198  7C 08 03 A6 */	mtlr r0
 /* 8003F39C 0003C19C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8003F3A0 0003C1A0  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80286888:
+	.incbin "baserom.dol", 0x283868, 0x20F0
+lbl_80288978:
+	.incbin "baserom.dol", 0x285958, 0x108
+lbl_80288A80:
+	.incbin "baserom.dol", 0x285A60, 0x20
+lbl_80288AA0:
+	.incbin "baserom.dol", 0x285A80, 0x34
+lbl_80288AD4:
+	.incbin "baserom.dol", 0x285AB4, 0x24
+/* SPECULATION: link order */
+.global ddir
+ddir:
+	.incbin "baserom.dol", 0x285AD8, 0xC
+/* SPECULATION: link order */
+.global sFullScreenGlareDir
+sFullScreenGlareDir:
+	.incbin "baserom.dol", 0x285AE4, 0xC
+
+.section .bss
+lbl_802C8970:
+	.skip 0x18
+
+.section .sbss
+lbl_803CB358:
+	.skip 0x8
+/* SPECULATION: link order */
+.global g_xSceneCur
+g_xSceneCur:
+	.skip 0x4

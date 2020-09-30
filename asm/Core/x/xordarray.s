@@ -341,3 +341,9 @@ lbl_80035E54:
 /* 80035E64 00032C64  7C 08 03 A6 */	mtlr r0
 /* 80035E68 00032C68  38 21 00 40 */	addi r1, r1, 0x40
 /* 80035E6C 00032C6C  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCEE8:
+	.incbin "baserom.dol", 0x2B6788, 0x8
+lbl_803CCEF0:
+	.incbin "baserom.dol", 0x2B6790, 0x8

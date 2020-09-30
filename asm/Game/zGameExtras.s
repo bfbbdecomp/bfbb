@@ -704,7 +704,7 @@ lbl_8009A00C:
 /* 8009A010 00096E10  38 80 00 07 */	li r4, 7
 /* 8009A014 00096E14  38 63 F8 E4 */	addi r3, r3, lbl_8028F8E4@l
 /* 8009A018 00096E18  38 A0 00 00 */	li r5, 0
-/* 8009A01C 00096E1C  48 00 07 F5 */	bl xUtil_choose$$0Ui$$1__FPCUiiPCf
+/* 8009A01C 00096E1C  48 00 07 F5 */	bl xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf
 /* 8009A020 00096E20  28 03 00 00 */	cmplwi r3, 0
 /* 8009A024 00096E24  41 82 00 24 */	beq lbl_8009A048
 /* 8009A028 00096E28  C0 42 90 F8 */	lfs f2, lbl_803CDA78-_SDA2_BASE_(r2)
@@ -958,7 +958,7 @@ lbl_8009A3DC:
 /* 8009A3DC 000971DC  38 6D 82 38 */	addi r3, r13, lbl_803CAB38-_SDA_BASE_
 /* 8009A3E0 000971E0  38 80 00 02 */	li r4, 2
 /* 8009A3E4 000971E4  38 A0 00 00 */	li r5, 0
-/* 8009A3E8 000971E8  48 00 04 29 */	bl xUtil_choose$$0Ui$$1__FPCUiiPCf
+/* 8009A3E8 000971E8  48 00 04 29 */	bl xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf
 /* 8009A3EC 000971EC  28 03 00 00 */	cmplwi r3, 0
 /* 8009A3F0 000971F0  41 82 00 24 */	beq lbl_8009A414
 /* 8009A3F4 000971F4  C0 42 90 F8 */	lfs f2, lbl_803CDA78-_SDA2_BASE_(r2)
@@ -1042,7 +1042,7 @@ lbl_8009A520:
 /* 8009A524 00097324  38 80 00 03 */	li r4, 3
 /* 8009A528 00097328  38 63 F9 00 */	addi r3, r3, lbl_8028F900@l
 /* 8009A52C 0009732C  38 A0 00 00 */	li r5, 0
-/* 8009A530 00097330  48 00 02 E1 */	bl xUtil_choose$$0Ui$$1__FPCUiiPCf
+/* 8009A530 00097330  48 00 02 E1 */	bl xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf
 /* 8009A534 00097334  28 03 00 00 */	cmplwi r3, 0
 /* 8009A538 00097338  41 82 00 24 */	beq lbl_8009A55C
 /* 8009A53C 0009733C  C0 42 90 F8 */	lfs f2, lbl_803CDA78-_SDA2_BASE_(r2)
@@ -1130,7 +1130,7 @@ lbl_8009A670:
 /* 8009A674 00097474  38 80 00 06 */	li r4, 6
 /* 8009A678 00097478  38 63 F9 0C */	addi r3, r3, lbl_8028F90C@l
 /* 8009A67C 0009747C  38 A0 00 00 */	li r5, 0
-/* 8009A680 00097480  48 00 01 91 */	bl xUtil_choose$$0Ui$$1__FPCUiiPCf
+/* 8009A680 00097480  48 00 01 91 */	bl xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf
 /* 8009A684 00097484  28 03 00 00 */	cmplwi r3, 0
 /* 8009A688 00097488  41 82 00 24 */	beq lbl_8009A6AC
 /* 8009A68C 0009748C  C0 42 90 F8 */	lfs f2, lbl_803CDA78-_SDA2_BASE_(r2)
@@ -1241,7 +1241,7 @@ lbl_8009A800:
 /* 8009A80C 0009760C  4E 80 00 20 */	blr 
 
 /* xUtil_choose<Ui>__FPCUiiPCf */
-xUtil_choose$$0Ui$$1__FPCUiiPCf:
+xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf:
 /* 8009A810 00097610  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8009A814 00097614  7C 08 02 A6 */	mflr r0
 /* 8009A818 00097618  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1323,3 +1323,75 @@ lbl_8009A904:
 .section .rodata
 lbl_8025CA20:
 	.incbin "baserom.dol", 0x259A00, 0x118
+
+.section .data
+lbl_8028F1B0:
+	.incbin "baserom.dol", 0x28C190, 0x20
+lbl_8028F1D0:
+	.incbin "baserom.dol", 0x28C1B0, 0x574
+lbl_8028F744:
+	.incbin "baserom.dol", 0x28C724, 0x160
+/* SPECULATION: link order */
+.global sCheatPressed
+sCheatPressed:
+	.incbin "baserom.dol", 0x28C884, 0x40
+lbl_8028F8E4:
+	.incbin "baserom.dol", 0x28C8C4, 0x1C
+lbl_8028F900:
+	.incbin "baserom.dol", 0x28C8E0, 0xC
+lbl_8028F90C:
+	.incbin "baserom.dol", 0x28C8EC, 0x1C
+
+.section .sbss
+lbl_803CB880:
+	.skip 0x4
+lbl_803CB884:
+	.skip 0x4
+lbl_803CB888:
+	.skip 0x4
+lbl_803CB88C:
+	.skip 0x4
+lbl_803CB890:
+	.skip 0x4
+lbl_803CB894:
+	.skip 0x4
+lbl_803CB898:
+	.skip 0x4
+lbl_803CB89C:
+	.skip 0x1
+lbl_803CB89D:
+	.skip 0x1
+lbl_803CB89E:
+	.skip 0x1
+lbl_803CB89F:
+	.skip 0x1
+lbl_803CB8A0:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gGameMode
+gGameMode:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gGameOstrich
+gGameOstrich:
+	.skip 0x4
+
+.section .sdata
+lbl_803CAB38:
+	.incbin "baserom.dol", 0x2B5BF8, 0x8
+/* SPECULATION: link order */
+.global gGameState
+gGameState:
+	.incbin "baserom.dol", 0x2B5C00, 0x4
+
+.section .sdata2
+lbl_803CDA78:
+	.incbin "baserom.dol", 0x2B7318, 0x4
+lbl_803CDA7C:
+	.incbin "baserom.dol", 0x2B731C, 0x4
+lbl_803CDA80:
+	.incbin "baserom.dol", 0x2B7320, 0x4
+lbl_803CDA84:
+	.incbin "baserom.dol", 0x2B7324, 0x4
+lbl_803CDA88:
+	.incbin "baserom.dol", 0x2B7328, 0x8

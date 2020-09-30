@@ -1001,3 +1001,25 @@ xDrawOBB__FPC4xBoxPC7xMat4x3:
 .global xDrawSphere2__FPC7xSphereUi
 xDrawSphere2__FPC7xSphereUi:
 /* 8000B2AC 000080AC  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027B380:
+	.incbin "baserom.dol", 0x278360, 0x70
+/* SPECULATION: link order */
+.global sCameraFXTable
+sCameraFXTable:
+	.incbin "baserom.dol", 0x2783D0, 0x28
+
+.section .sdata2
+lbl_803CC9B8:
+	.incbin "baserom.dol", 0x2B6258, 0x4
+lbl_803CC9BC:
+	.incbin "baserom.dol", 0x2B625C, 0x4
+lbl_803CC9C0:
+	.incbin "baserom.dol", 0x2B6260, 0x4
+lbl_803CC9C4:
+	.incbin "baserom.dol", 0x2B6264, 0x4
+lbl_803CC9C8:
+	.incbin "baserom.dol", 0x2B6268, 0x4
+lbl_803CC9CC:
+	.incbin "baserom.dol", 0x2B626C, 0x4

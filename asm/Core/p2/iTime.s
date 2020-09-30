@@ -385,3 +385,11 @@ iFuncProfileDump__Fv:
 .global iFuncProfileParse__FPci
 iFuncProfileParse__FPci:
 /* 800D4A10 000D1810  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CBC48:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CE1D8:
+	.incbin "baserom.dol", 0x2B7A78, 0x8

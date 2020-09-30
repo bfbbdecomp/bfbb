@@ -727,3 +727,33 @@ lbl_80054BE4:
 .section .rodata
 lbl_80255010:
 	.incbin "baserom.dol", 0x251FF0, 0x8
+
+.section .sdata2
+lbl_803CD290:
+	.incbin "baserom.dol", 0x2B6B30, 0x4
+lbl_803CD294:
+	.incbin "baserom.dol", 0x2B6B34, 0x4
+lbl_803CD298:
+	.incbin "baserom.dol", 0x2B6B38, 0x4
+lbl_803CD29C:
+	.incbin "baserom.dol", 0x2B6B3C, 0x4
+lbl_803CD2A0:
+	.incbin "baserom.dol", 0x2B6B40, 0x4
+lbl_803CD2A4:
+	.incbin "baserom.dol", 0x2B6B44, 0x4
+lbl_803CD2A8:
+	.incbin "baserom.dol", 0x2B6B48, 0x4
+lbl_803CD2AC:
+	.incbin "baserom.dol", 0x2B6B4C, 0x4
+lbl_803CD2B0:
+	.incbin "baserom.dol", 0x2B6B50, 0x4
+lbl_803CD2B4:
+	.incbin "baserom.dol", 0x2B6B54, 0x4
+lbl_803CD2B8:
+	.incbin "baserom.dol", 0x2B6B58, 0x4
+lbl_803CD2BC:
+	.incbin "baserom.dol", 0x2B6B5C, 0x4
+lbl_803CD2C0:
+	.incbin "baserom.dol", 0x2B6B60, 0x4
+lbl_803CD2C4:
+	.incbin "baserom.dol", 0x2B6B64, 0x4

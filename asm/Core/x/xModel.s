@@ -878,8 +878,8 @@ __as__11RwMatrixTagFRC11RwMatrixTag:
 /* 80034A1C 0003181C  4E 80 00 20 */	blr 
 
 /* xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3 */
-.global xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
-xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3:
+.global xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
+xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3:
 /* 80034A20 00031820  94 21 FE E0 */	stwu r1, -0x120(r1)
 /* 80034A24 00031824  7C 08 02 A6 */	mflr r0
 /* 80034A28 00031828  C0 04 00 08 */	lfs f0, 8(r4)
@@ -1315,3 +1315,57 @@ lbl_80035024:
 /* 80035028 00031E28  7C 08 03 A6 */	mtlr r0
 /* 8003502C 00031E2C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035030 00031E30  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB2E8:
+	.skip 0x4
+lbl_803CB2EC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelPipeNumTables
+xModelPipeNumTables:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelLookupCount
+xModelLookupCount:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelLookupList
+xModelLookupList:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelInstStaticAlloc
+xModelInstStaticAlloc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelBucketEnabled
+xModelBucketEnabled:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gDebugPad
+gDebugPad:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gPlayerPad
+gPlayerPad:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gParDead
+gParDead:
+	.skip 0x8
+
+.section .sdata2
+lbl_803CCE98:
+	.incbin "baserom.dol", 0x2B6738, 0x4
+lbl_803CCE9C:
+	.incbin "baserom.dol", 0x2B673C, 0x4
+lbl_803CCEA0:
+	.incbin "baserom.dol", 0x2B6740, 0x4
+lbl_803CCEA4:
+	.incbin "baserom.dol", 0x2B6744, 0x4
+lbl_803CCEA8:
+	.incbin "baserom.dol", 0x2B6748, 0x8
+lbl_803CCEB0:
+	.incbin "baserom.dol", 0x2B6750, 0x8
+lbl_803CCEB8:
+	.incbin "baserom.dol", 0x2B6758, 0x8

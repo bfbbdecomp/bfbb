@@ -167,3 +167,11 @@ xVec3Dot__FPC5xVec3PC5xVec3:
 /* 8004E504 0004B304  10 65 11 3A */	ps_madd f3, f5, f4, f2
 /* 8004E508 0004B308  10 23 10 94 */	ps_sum0 f1, f3, f2, f2
 /* 8004E50C 0004B30C  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CD158:
+	.incbin "baserom.dol", 0x2B69F8, 0x4
+lbl_803CD15C:
+	.incbin "baserom.dol", 0x2B69FC, 0x4
+lbl_803CD160:
+	.incbin "baserom.dol", 0x2B6A00, 0x8

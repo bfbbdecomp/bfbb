@@ -3360,3 +3360,55 @@ lbl_802604E0:
 	.incbin "baserom.dol", 0x25D4C0, 0x5C40
 lbl_80266120:
 	.incbin "baserom.dol", 0x263100, 0x4C8
+
+.section .data
+lbl_80292678:
+	.incbin "baserom.dol", 0x28F658, 0x28C
+lbl_80292904:
+	.incbin "baserom.dol", 0x28F8E4, 0x100
+lbl_80292A04:
+	.incbin "baserom.dol", 0x28F9E4, 0x40
+lbl_80292A44:
+	.incbin "baserom.dol", 0x28FA24, 0x58
+lbl_80292A9C:
+	.incbin "baserom.dol", 0x28FA7C, 0x2C
+lbl_80292AC8:
+	.incbin "baserom.dol", 0x28FAA8, 0x38
+
+.section .bss
+lbl_802FE100:
+	.skip 0x14000
+
+.section .sbss
+lbl_803CBB88:
+	.skip 0x4
+lbl_803CBB8C:
+	.skip 0x4
+lbl_803CBB90:
+	.skip 0x4
+lbl_803CBB94:
+	.skip 0x4
+lbl_803CBB98:
+	.skip 0x4
+lbl_803CBB9C:
+	.skip 0x4
+lbl_803CBBA0:
+	.skip 0x4
+lbl_803CBBA4:
+	.skip 0x4
+lbl_803CBBA8:
+	.skip 0x4
+lbl_803CBBAC:
+	.skip 0x4
+lbl_803CBBB0:
+	.skip 0x4
+lbl_803CBBB4:
+	.skip 0x4
+
+.section .sbss2
+lbl_803D08B0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08B4
+lbl_803D08B4:
+	.skip 0x4

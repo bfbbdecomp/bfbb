@@ -691,3 +691,29 @@ lbl_800A267C:
 /* 800A2694 0009F494  7C 08 03 A6 */	mtlr r0
 /* 800A2698 0009F498  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A269C 0009F49C  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802EA990:
+	.skip 0x8000
+
+.section .sbss
+lbl_803CB908:
+	.skip 0x4
+lbl_803CB90C:
+	.skip 0x4
+lbl_803CB910:
+	.skip 0x4
+lbl_803CB914:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CDC40:
+	.incbin "baserom.dol", 0x2B74E0, 0x4
+lbl_803CDC44:
+	.incbin "baserom.dol", 0x2B74E4, 0x4
+lbl_803CDC48:
+	.incbin "baserom.dol", 0x2B74E8, 0x4
+lbl_803CDC4C:
+	.incbin "baserom.dol", 0x2B74EC, 0x4
+lbl_803CDC50:
+	.incbin "baserom.dol", 0x2B74F0, 0x8

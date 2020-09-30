@@ -98,7 +98,7 @@ __ct__Q24xhud17font_meter_widgetFRCQ24xhud16font_meter_asset:
 /* 8002F140 0002BF40  3C 80 80 25 */	lis r4, lbl_80252F00@ha
 /* 8002F144 0002BF44  38 7F 01 3C */	addi r3, r31, 0x13c
 /* 8002F148 0002BF48  38 84 2F 00 */	addi r4, r4, lbl_80252F00@l
-/* 8002F14C 0002BF4C  4B FE 8E F5 */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
+/* 8002F14C 0002BF4C  4B FE 8E F5 */	bl __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
 /* 8002F150 0002BF50  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 8002F154 0002BF54  7F E3 FB 78 */	mr r3, r31
 /* 8002F158 0002BF58  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -392,3 +392,39 @@ render__5xfontCFPCcff:
 /* 8002F570 0002C370  7C 08 03 A6 */	mtlr r0
 /* 8002F574 0002C374  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002F578 0002C378  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8027D640:
+	.incbin "baserom.dol", 0x27A620, 0xC
+/* SPECULATION: link order */
+.global __vt__Q24xhud17font_meter_widget
+__vt__Q24xhud17font_meter_widget:
+	.incbin "baserom.dol", 0x27A62C, 0x2C
+/* SPECULATION: link order */
+.global __vt__Q24xhud12meter_widget
+__vt__Q24xhud12meter_widget:
+	.incbin "baserom.dol", 0x27A658, 0x28
+/* SPECULATION: link order */
+.global __vt__Q24xhud12model_widget
+__vt__Q24xhud12model_widget:
+	.incbin "baserom.dol", 0x27A680, 0x28
+/* SPECULATION: link order */
+.global __vt__Q24xhud17unit_meter_widget
+__vt__Q24xhud17unit_meter_widget:
+	.incbin "baserom.dol", 0x27A6A8, 0x28
+
+.section .sbss
+lbl_803CB2A8:
+	.skip 0x4
+lbl_803CB2AC:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CCD88:
+	.incbin "baserom.dol", 0x2B6628, 0x4
+lbl_803CCD8C:
+	.incbin "baserom.dol", 0x2B662C, 0x4
+lbl_803CCD90:
+	.incbin "baserom.dol", 0x2B6630, 0x8
+lbl_803CCD98:
+	.incbin "baserom.dol", 0x2B6638, 0x8

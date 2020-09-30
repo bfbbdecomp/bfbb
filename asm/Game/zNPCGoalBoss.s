@@ -814,3 +814,11 @@ __ct__13zNPCGoalExistFi:
 /* 8014F760 0014C560  7C 08 03 A6 */	mtlr r0
 /* 8014F764 0014C564  38 21 00 10 */	addi r1, r1, 0x10
 /* 8014F768 0014C568  4E 80 00 20 */	blr 
+
+.section .data
+lbl_8029A138:
+	.incbin "baserom.dol", 0x297118, 0xD0
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalExist
+__vt__13zNPCGoalExist:
+	.incbin "baserom.dol", 0x2971E8, 0x38

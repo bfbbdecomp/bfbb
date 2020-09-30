@@ -1472,3 +1472,33 @@ DolphinInstallFileSystem__Fv:
 .section .rodata
 lbl_80266610:
 	.incbin "baserom.dol", 0x2635F0, 0x238
+
+.section .bss
+lbl_80312140:
+	.skip 0x10
+
+.section .sbss
+lbl_803CBC28:
+	.skip 0x4
+lbl_803CBC2C:
+	.skip 0x4
+lbl_803CBC30:
+	.skip 0x4
+lbl_803CBC34:
+	.skip 0xC
+/* SPECULATION: link order */
+.global sStartupTime
+sStartupTime:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CBC44
+lbl_803CBC44:
+	.skip 0x4
+
+.section .sdata
+lbl_803CAC58:
+	.incbin "baserom.dol", 0x2B5D18, 0x8
+/* SPECULATION: link order */
+.global g_ang_yankDir
+g_ang_yankDir:
+	.incbin "baserom.dol", 0x2B5D20, 0x8

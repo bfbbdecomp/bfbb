@@ -168,3 +168,9 @@ lbl_8017C29C:
 /* 8017C2A8 001790A8  7C 08 03 A6 */	mtlr r0
 /* 8017C2AC 001790AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C2B0 001790B0  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CF758:
+	.incbin "baserom.dol", 0x2B8FF8, 0x4
+lbl_803CF75C:
+	.incbin "baserom.dol", 0x2B8FFC, 0x4

@@ -408,3 +408,11 @@ __ct__12zNPCGoalHereFi:
 /* 8013920C 0013600C  7C 08 03 A6 */	mtlr r0
 /* 80139210 00136010  38 21 00 10 */	addi r1, r1, 0x10
 /* 80139214 00136014  4E 80 00 20 */	blr 
+
+.section .data
+lbl_80299860:
+	.incbin "baserom.dol", 0x296840, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalHere
+__vt__12zNPCGoalHere:
+	.incbin "baserom.dol", 0x296874, 0x34

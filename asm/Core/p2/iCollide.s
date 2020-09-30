@@ -2340,3 +2340,59 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 800C2E2C 000BFC2C  D0 63 00 04 */	stfs f3, 4(r3)
 /* 800C2E30 000BFC30  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800C2E34 000BFC34  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802FAE20:
+	.skip 0x24
+lbl_802FAE44:
+	.skip 0x1C
+
+.section .sbss
+lbl_803CBA88:
+	.skip 0x4
+lbl_803CBA8C:
+	.skip 0x4
+lbl_803CBA90:
+	.skip 0x4
+lbl_803CBA94:
+	.skip 0x1
+lbl_803CBA95:
+	.skip 0x1
+lbl_803CBA96:
+	.skip 0x1
+lbl_803CBA97:
+	.skip 0x1
+lbl_803CBA98:
+	.skip 0x8
+/* SPECULATION: link order */
+.global collide_rwtime
+collide_rwtime:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CBAA4
+lbl_803CBAA4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global collide_rwct
+collide_rwct:
+	.skip 0x4
+/* SPECULATION: link order */
+.global collide_rwtime_secs
+collide_rwtime_secs:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CE060:
+	.incbin "baserom.dol", 0x2B7900, 0x4
+lbl_803CE064:
+	.incbin "baserom.dol", 0x2B7904, 0x4
+lbl_803CE068:
+	.incbin "baserom.dol", 0x2B7908, 0x4
+lbl_803CE06C:
+	.incbin "baserom.dol", 0x2B790C, 0x4
+lbl_803CE070:
+	.incbin "baserom.dol", 0x2B7910, 0x4
+lbl_803CE074:
+	.incbin "baserom.dol", 0x2B7914, 0x4
+lbl_803CE078:
+	.incbin "baserom.dol", 0x2B7918, 0x8

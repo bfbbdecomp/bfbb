@@ -1489,7 +1489,7 @@ lbl_80104198:
 /* 80104198 00100F98  38 7F 00 D0 */	addi r3, r31, 0xd0
 /* 8010419C 00100F9C  38 80 00 04 */	li r4, 4
 /* 801041A0 00100FA0  38 A0 00 00 */	li r5, 0
-/* 801041A4 00100FA4  48 00 34 61 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 801041A4 00100FA4  48 00 34 61 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 801041A8 00100FA8  48 00 01 AC */	b lbl_80104354
 lbl_801041AC:
 /* 801041AC 00100FAC  2C 05 00 26 */	cmpwi r5, 0x26
@@ -1527,7 +1527,7 @@ lbl_80104220:
 /* 80104220 00101020  38 61 00 18 */	addi r3, r1, 0x18
 /* 80104224 00101024  38 80 00 04 */	li r4, 4
 /* 80104228 00101028  38 A0 00 00 */	li r5, 0
-/* 8010422C 0010102C  48 00 33 D9 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 8010422C 0010102C  48 00 33 D9 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 80104230 00101030  48 00 01 24 */	b lbl_80104354
 lbl_80104234:
 /* 80104234 00101034  2C 05 00 23 */	cmpwi r5, 0x23
@@ -1559,7 +1559,7 @@ lbl_80104298:
 /* 80104298 00101098  38 61 00 08 */	addi r3, r1, 8
 /* 8010429C 0010109C  38 80 00 04 */	li r4, 4
 /* 801042A0 001010A0  38 A0 00 00 */	li r5, 0
-/* 801042A4 001010A4  48 00 33 61 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 801042A4 001010A4  48 00 33 61 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 801042A8 001010A8  48 00 00 AC */	b lbl_80104354
 lbl_801042AC:
 /* 801042AC 001010AC  38 60 00 01 */	li r3, 1
@@ -3591,12 +3591,12 @@ lbl_80105E9C:
 /* 80105FB8 00102DB8  38 A1 00 14 */	addi r5, r1, 0x14
 /* 80105FBC 00102DBC  38 C1 00 08 */	addi r6, r1, 8
 /* 80105FC0 00102DC0  80 63 00 00 */	lwz r3, 0(r3)
-/* 80105FC4 00102DC4  4B F2 EA 5D */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
+/* 80105FC4 00102DC4  4B F2 EA 5D */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
 /* 80105FC8 00102DC8  80 7B 00 24 */	lwz r3, 0x24(r27)
 /* 80105FCC 00102DCC  38 81 00 20 */	addi r4, r1, 0x20
 /* 80105FD0 00102DD0  38 A1 00 14 */	addi r5, r1, 0x14
 /* 80105FD4 00102DD4  38 C1 00 08 */	addi r6, r1, 8
-/* 80105FD8 00102DD8  4B F2 EA 49 */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
+/* 80105FD8 00102DD8  4B F2 EA 49 */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
 /* 80105FDC 00102DDC  80 7B 00 24 */	lwz r3, 0x24(r27)
 /* 80105FE0 00102DE0  38 81 00 30 */	addi r4, r1, 0x30
 /* 80105FE4 00102DE4  80 63 00 4C */	lwz r3, 0x4c(r3)
@@ -5188,7 +5188,7 @@ lbl_801075CC:
 /* 80107600 00104400  4E 80 00 20 */	blr 
 
 /* xUtil_choose<i>__FPCiiPCf */
-xUtil_choose$$0i$$1__FPCiiPCf:
+xUtil_choose_esc__0_i_esc__1___FPCiiPCf:
 /* 80107604 00104404  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80107608 00104408  7C 08 02 A6 */	mflr r0
 /* 8010760C 0010440C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5332,3 +5332,235 @@ lbl_80269D1C:
 	.incbin "baserom.dol", 0x266CFC, 0x24
 lbl_80269D40:
 	.incbin "baserom.dol", 0x266D20, 0x4D0
+
+.section .data
+lbl_80296708:
+	.incbin "baserom.dol", 0x2936E8, 0x74
+lbl_8029677C:
+	.incbin "baserom.dol", 0x29375C, 0x18
+lbl_80296794:
+	.incbin "baserom.dol", 0x293774, 0x10
+lbl_802967A4:
+	.incbin "baserom.dol", 0x293784, 0x11C
+/* SPECULATION: link order */
+.global __vt__15zNPCBubbleBuddy
+__vt__15zNPCBubbleBuddy:
+	.incbin "baserom.dol", 0x2938A0, 0xD0
+/* SPECULATION: link order */
+.global __vt__14zNPCBalloonBoy
+__vt__14zNPCBalloonBoy:
+	.incbin "baserom.dol", 0x293970, 0xD0
+/* SPECULATION: link order */
+.global __vt__15zNPCSandyBikini
+__vt__15zNPCSandyBikini:
+	.incbin "baserom.dol", 0x293A40, 0xD0
+/* SPECULATION: link order */
+.global __vt__12zNPCNewsFish
+__vt__12zNPCNewsFish:
+	.incbin "baserom.dol", 0x293B10, 0xD0
+/* SPECULATION: link order */
+.global __vt__15zNPCMerManChair
+__vt__15zNPCMerManChair:
+	.incbin "baserom.dol", 0x293BE0, 0xD0
+/* SPECULATION: link order */
+.global __vt__8zNPCFish
+__vt__8zNPCFish:
+	.incbin "baserom.dol", 0x293CB0, 0xD0
+/* SPECULATION: link order */
+.global __vt__12zNPCVillager
+__vt__12zNPCVillager:
+	.incbin "baserom.dol", 0x293D80, 0xD0
+/* SPECULATION: link order */
+.global __vt__Q28ztaskbox8callback
+__vt__Q28ztaskbox8callback:
+	.incbin "baserom.dol", 0x293E50, 0x10
+/* SPECULATION: link order */
+.global __vt__7HiThere
+__vt__7HiThere:
+	.incbin "baserom.dol", 0x293E60, 0x10
+/* SPECULATION: link order */
+.global __vt__14zNPCNewsFishTV
+__vt__14zNPCNewsFishTV:
+	.incbin "baserom.dol", 0x293E70, 0xD0
+/* SPECULATION: link order */
+.global g_hash_ambianim
+g_hash_ambianim:
+	.incbin "baserom.dol", 0x293F40, 0x30
+/* SPECULATION: link order */
+.global g_strz_ambianim
+g_strz_ambianim:
+	.incbin "baserom.dol", 0x293F70, 0x30
+/* SPECULATION: link order */
+.global __vt__12zNPCMimeFish
+__vt__12zNPCMimeFish:
+	.incbin "baserom.dol", 0x293FA0, 0xD0
+/* SPECULATION: link order */
+.global __vt__11zNPCNeptune
+__vt__11zNPCNeptune:
+	.incbin "baserom.dol", 0x294070, 0xD0
+/* SPECULATION: link order */
+.global __vt__9zNPCJelly
+__vt__9zNPCJelly:
+	.incbin "baserom.dol", 0x294140, 0xD0
+/* SPECULATION: link order */
+.global __vt__11zNPCAmbient
+__vt__11zNPCAmbient:
+	.incbin "baserom.dol", 0x294210, 0xD0
+/* SPECULATION: link order */
+.global __vt__8zNPCTiki
+__vt__8zNPCTiki:
+	.incbin "baserom.dol", 0x2942E0, 0xD0
+/* SPECULATION: link order */
+.global __vt__5xGoal
+__vt__5xGoal:
+	.incbin "baserom.dol", 0x2943B0, 0x30
+/* SPECULATION: link order */
+.global __vt__12xGoalGeneric
+__vt__12xGoalGeneric:
+	.incbin "baserom.dol", 0x2943E0, 0x30
+/* SPECULATION: link order */
+.global __vt__10xGoalEmpty
+__vt__10xGoalEmpty:
+	.incbin "baserom.dol", 0x294410, 0x30
+
+.section .bss
+lbl_80313188:
+	.skip 0x16C
+lbl_803132F4:
+	.skip 0x11C
+
+.section .sbss
+lbl_803CBD90:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_shadBalloon__14zNPCBalloonBoy
+rast_shadBalloon__14zNPCBalloonBoy:
+	.skip 0x4
+lbl_803CBD98:
+	.skip 0x4
+lbl_803CBD9C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global aid_fresnelTxtr__15zNPCBubbleBuddy
+aid_fresnelTxtr__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global aid_enviroTxtr__15zNPCBubbleBuddy
+aid_enviroTxtr__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global txtr_fresnel__15zNPCBubbleBuddy
+txtr_fresnel__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global txtr_enviro__15zNPCBubbleBuddy
+txtr_enviro__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_fresnel__15zNPCBubbleBuddy
+rast_fresnel__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_enviro__15zNPCBubbleBuddy
+rast_enviro__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global CruiseBubbleDoesBubbleBuddyToo
+CruiseBubbleDoesBubbleBuddyToo:
+	.skip 0x4
+lbl_803CBDBC:
+	.skip 0x4
+lbl_803CBDC0:
+	.skip 0x4
+lbl_803CBDC4:
+	.skip 0x4
+lbl_803CBDC8:
+	.skip 0x8
+
+.section .sdata
+lbl_803CACF8:
+	.incbin "baserom.dol", 0x2B5DB8, 0x8
+lbl_803CAD00:
+	.incbin "baserom.dol", 0x2B5DC0, 0x8
+/* SPECULATION: link order */
+.global g_vilg_ds2_playernear
+g_vilg_ds2_playernear:
+	.incbin "baserom.dol", 0x2B5DC8, 0x4
+lbl_803CAD0C:
+	.incbin "baserom.dol", 0x2B5DCC, 0x4
+/* SPECULATION: link order */
+.global alf_currBubBud__15zNPCBubbleBuddy
+alf_currBubBud__15zNPCBubbleBuddy:
+	.incbin "baserom.dol", 0x2B5DD0, 0x8
+/* SPECULATION: link order */
+.global g_hash_tikianim
+g_hash_tikianim:
+	.incbin "baserom.dol", 0x2B5DD8, 0x8
+/* SPECULATION: link order */
+.global g_strz_tikianim
+g_strz_tikianim:
+	.incbin "baserom.dol", 0x2B5DE0, 0x8
+
+.section .sdata2
+lbl_803CE610:
+	.incbin "baserom.dol", 0x2B7EB0, 0x4
+lbl_803CE614:
+	.incbin "baserom.dol", 0x2B7EB4, 0x4
+lbl_803CE618:
+	.incbin "baserom.dol", 0x2B7EB8, 0x4
+lbl_803CE61C:
+	.incbin "baserom.dol", 0x2B7EBC, 0x4
+lbl_803CE620:
+	.incbin "baserom.dol", 0x2B7EC0, 0x4
+lbl_803CE624:
+	.incbin "baserom.dol", 0x2B7EC4, 0x4
+lbl_803CE628:
+	.incbin "baserom.dol", 0x2B7EC8, 0x4
+lbl_803CE62C:
+	.incbin "baserom.dol", 0x2B7ECC, 0x4
+lbl_803CE630:
+	.incbin "baserom.dol", 0x2B7ED0, 0x8
+lbl_803CE638:
+	.incbin "baserom.dol", 0x2B7ED8, 0x8
+lbl_803CE640:
+	.incbin "baserom.dol", 0x2B7EE0, 0x4
+lbl_803CE644:
+	.incbin "baserom.dol", 0x2B7EE4, 0x4
+lbl_803CE648:
+	.incbin "baserom.dol", 0x2B7EE8, 0x4
+lbl_803CE64C:
+	.incbin "baserom.dol", 0x2B7EEC, 0x4
+lbl_803CE650:
+	.incbin "baserom.dol", 0x2B7EF0, 0x4
+lbl_803CE654:
+	.incbin "baserom.dol", 0x2B7EF4, 0x4
+lbl_803CE658:
+	.incbin "baserom.dol", 0x2B7EF8, 0x4
+lbl_803CE65C:
+	.incbin "baserom.dol", 0x2B7EFC, 0x4
+lbl_803CE660:
+	.incbin "baserom.dol", 0x2B7F00, 0x4
+lbl_803CE664:
+	.incbin "baserom.dol", 0x2B7F04, 0x4
+lbl_803CE668:
+	.incbin "baserom.dol", 0x2B7F08, 0x4
+lbl_803CE66C:
+	.incbin "baserom.dol", 0x2B7F0C, 0x4
+lbl_803CE670:
+	.incbin "baserom.dol", 0x2B7F10, 0x4
+lbl_803CE674:
+	.incbin "baserom.dol", 0x2B7F14, 0x4
+lbl_803CE678:
+	.incbin "baserom.dol", 0x2B7F18, 0x4
+lbl_803CE67C:
+	.incbin "baserom.dol", 0x2B7F1C, 0x4
+lbl_803CE680:
+	.incbin "baserom.dol", 0x2B7F20, 0x4
+lbl_803CE684:
+	.incbin "baserom.dol", 0x2B7F24, 0x4
+lbl_803CE688:
+	.incbin "baserom.dol", 0x2B7F28, 0x4
+lbl_803CE68C:
+	.incbin "baserom.dol", 0x2B7F2C, 0x4
+lbl_803CE690:
+	.incbin "baserom.dol", 0x2B7F30, 0x8

@@ -1242,3 +1242,41 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .section .rodata
 lbl_80273B30:
 	.incbin "baserom.dol", 0x270B10, 0x10
+
+.section .sbss
+lbl_803CC1A8:
+	.skip 0x4
+lbl_803CC1AC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global g_noz_ncin
+g_noz_ncin:
+	.skip 0x4
+
+.section .sdata2
+lbl_803CFAC0:
+	.incbin "baserom.dol", 0x2B9360, 0x4
+lbl_803CFAC4:
+	.incbin "baserom.dol", 0x2B9364, 0x4
+lbl_803CFAC8:
+	.incbin "baserom.dol", 0x2B9368, 0x4
+lbl_803CFACC:
+	.incbin "baserom.dol", 0x2B936C, 0x4
+lbl_803CFAD0:
+	.incbin "baserom.dol", 0x2B9370, 0x4
+lbl_803CFAD4:
+	.incbin "baserom.dol", 0x2B9374, 0x4
+lbl_803CFAD8:
+	.incbin "baserom.dol", 0x2B9378, 0x4
+lbl_803CFADC:
+	.incbin "baserom.dol", 0x2B937C, 0x4
+lbl_803CFAE0:
+	.incbin "baserom.dol", 0x2B9380, 0x8
+lbl_803CFAE8:
+	.incbin "baserom.dol", 0x2B9388, 0x8
+lbl_803CFAF0:
+	.incbin "baserom.dol", 0x2B9390, 0x4
+lbl_803CFAF4:
+	.incbin "baserom.dol", 0x2B9394, 0x4
+lbl_803CFAF8:
+	.incbin "baserom.dol", 0x2B9398, 0x8

@@ -1397,3 +1397,23 @@ lbl_800C78B0:
 /* 800C78B8 000C46B8  7C 08 03 A6 */	mtlr r0
 /* 800C78BC 000C46BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C78C0 000C46C0  4E 80 00 20 */	blr 
+
+.section .bss
+lbl_802FBE98:
+	.skip 0x1800
+
+.section .sbss
+lbl_803CBB28:
+	.skip 0x4
+lbl_803CBB2C:
+	.skip 0x4
+lbl_803CBB30:
+	.skip 0x8
+/* SPECULATION: link order */
+.global instance_world
+instance_world:
+	.skip 0x4
+/* SPECULATION: link order */
+.global instance_camera
+instance_camera:
+	.skip 0x4
