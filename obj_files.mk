@@ -179,7 +179,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xGrid.o                   \
     $(OBJ_DIR)/asm/Core/x/xJSP.o                    \
     $(OBJ_DIR)/asm/Core/x/xLightKit.o               \
-    $(OBJ_DIR)/asm/Game/zCamMarker.o                \
+    $(OBJ_DIR)/src/Game/zCamMarker.o                \
     $(OBJ_DIR)/asm/Game/zGoo.o                      \
     $(OBJ_DIR)/asm/Game/zGrid.o                     \
     $(OBJ_DIR)/asm/Game/zNPCGoalScript.o            \

@@ -2,5 +2,6 @@
 #define ZCAMERA_H
 
 
+void zCameraSetConvers(int on);
 
 #endif

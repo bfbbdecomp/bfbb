@@ -18,8 +18,8 @@ zCamMarkerInit__FP5xBaseP9xCamAsset:
 /* 80123664 00120464  38 1F 00 88 */	addi r0, r31, 0x88
 /* 80123668 00120468  90 1E 00 08 */	stw r0, 8(r30)
 lbl_8012366C:
-/* 8012366C 0012046C  3C 60 80 12 */	lis r3, lbl_801236D4@ha
-/* 80123670 00120470  38 03 36 D4 */	addi r0, r3, lbl_801236D4@l
+/* 8012366C 0012046C  3C 60 80 12 */	lis r3, zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 80123670 00120470  38 03 36 D4 */	addi r0, r3, zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80123674 00120474  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 80123678 00120478  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 8012367C 0012047C  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -27,7 +27,7 @@ lbl_8012366C:
 /* 80123684 00120484  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80123688 00120488  7C 08 03 A6 */	mtlr r0
 /* 8012368C 0012048C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80123690 00120490  4E 80 00 20 */	blr 
+/* 80123690 00120490  4E 80 00 20 */	blr
 
 .global zCamMarkerSave__FP10zCamMarkerP7xSerial
 zCamMarkerSave__FP10zCamMarkerP7xSerial:
@@ -38,7 +38,7 @@ zCamMarkerSave__FP10zCamMarkerP7xSerial:
 /* 801236A4 001204A4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801236A8 001204A8  7C 08 03 A6 */	mtlr r0
 /* 801236AC 001204AC  38 21 00 10 */	addi r1, r1, 0x10
-/* 801236B0 001204B0  4E 80 00 20 */	blr 
+/* 801236B0 001204B0  4E 80 00 20 */	blr
 
 .global zCamMarkerLoad__FP10zCamMarkerP7xSerial
 zCamMarkerLoad__FP10zCamMarkerP7xSerial:
@@ -49,8 +49,10 @@ zCamMarkerLoad__FP10zCamMarkerP7xSerial:
 /* 801236C4 001204C4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 801236C8 001204C8  7C 08 03 A6 */	mtlr r0
 /* 801236CC 001204CC  38 21 00 10 */	addi r1, r1, 0x10
-/* 801236D0 001204D0  4E 80 00 20 */	blr 
-lbl_801236D4:
+/* 801236D0 001204D0  4E 80 00 20 */	blr
+
+.global zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase
+zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 801236D4 001204D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801236D8 001204D8  7C 08 02 A6 */	mflr r0
 /* 801236DC 001204DC  2C 05 01 4F */	cmpwi r5, 0x14f
@@ -82,4 +84,4 @@ lbl_8012372C:
 /* 80123730 00120530  38 60 00 01 */	li r3, 1
 /* 80123734 00120534  7C 08 03 A6 */	mtlr r0
 /* 80123738 00120538  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012373C 0012053C  4E 80 00 20 */	blr 
+/* 8012373C 0012053C  4E 80 00 20 */	blr
