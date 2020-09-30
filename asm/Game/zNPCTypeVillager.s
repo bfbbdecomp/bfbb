@@ -1489,7 +1489,7 @@ lbl_80104198:
 /* 80104198 00100F98  38 7F 00 D0 */	addi r3, r31, 0xd0
 /* 8010419C 00100F9C  38 80 00 04 */	li r4, 4
 /* 801041A0 00100FA0  38 A0 00 00 */	li r5, 0
-/* 801041A4 00100FA4  48 00 34 61 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 801041A4 00100FA4  48 00 34 61 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 801041A8 00100FA8  48 00 01 AC */	b lbl_80104354
 lbl_801041AC:
 /* 801041AC 00100FAC  2C 05 00 26 */	cmpwi r5, 0x26
@@ -1527,7 +1527,7 @@ lbl_80104220:
 /* 80104220 00101020  38 61 00 18 */	addi r3, r1, 0x18
 /* 80104224 00101024  38 80 00 04 */	li r4, 4
 /* 80104228 00101028  38 A0 00 00 */	li r5, 0
-/* 8010422C 0010102C  48 00 33 D9 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 8010422C 0010102C  48 00 33 D9 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 80104230 00101030  48 00 01 24 */	b lbl_80104354
 lbl_80104234:
 /* 80104234 00101034  2C 05 00 23 */	cmpwi r5, 0x23
@@ -1559,7 +1559,7 @@ lbl_80104298:
 /* 80104298 00101098  38 61 00 08 */	addi r3, r1, 8
 /* 8010429C 0010109C  38 80 00 04 */	li r4, 4
 /* 801042A0 001010A0  38 A0 00 00 */	li r5, 0
-/* 801042A4 001010A4  48 00 33 61 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 801042A4 001010A4  48 00 33 61 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 801042A8 001010A8  48 00 00 AC */	b lbl_80104354
 lbl_801042AC:
 /* 801042AC 001010AC  38 60 00 01 */	li r3, 1
@@ -3591,12 +3591,12 @@ lbl_80105E9C:
 /* 80105FB8 00102DB8  38 A1 00 14 */	addi r5, r1, 0x14
 /* 80105FBC 00102DBC  38 C1 00 08 */	addi r6, r1, 8
 /* 80105FC0 00102DC0  80 63 00 00 */	lwz r3, 0(r3)
-/* 80105FC4 00102DC4  4B F2 EA 5D */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
+/* 80105FC4 00102DC4  4B F2 EA 5D */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
 /* 80105FC8 00102DC8  80 7B 00 24 */	lwz r3, 0x24(r27)
 /* 80105FCC 00102DCC  38 81 00 20 */	addi r4, r1, 0x20
 /* 80105FD0 00102DD0  38 A1 00 14 */	addi r5, r1, 0x14
 /* 80105FD4 00102DD4  38 C1 00 08 */	addi r6, r1, 8
-/* 80105FD8 00102DD8  4B F2 EA 49 */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
+/* 80105FD8 00102DD8  4B F2 EA 49 */	bl xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
 /* 80105FDC 00102DDC  80 7B 00 24 */	lwz r3, 0x24(r27)
 /* 80105FE0 00102DE0  38 81 00 30 */	addi r4, r1, 0x30
 /* 80105FE4 00102DE4  80 63 00 4C */	lwz r3, 0x4c(r3)
@@ -5188,7 +5188,7 @@ lbl_801075CC:
 /* 80107600 00104400  4E 80 00 20 */	blr 
 
 /* xUtil_choose<i>__FPCiiPCf */
-xUtil_choose$$0i$$1__FPCiiPCf:
+xUtil_choose_esc__0_i_esc__1___FPCiiPCf:
 /* 80107604 00104404  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80107608 00104408  7C 08 02 A6 */	mflr r0
 /* 8010760C 0010440C  90 01 00 34 */	stw r0, 0x34(r1)

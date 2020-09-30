@@ -44,11 +44,11 @@ zCameraReset__FP7xCamera:
 /* 8004FC78 0004CA78  4B FB E8 19 */	bl xCameraSetFOV__FP7xCameraf
 /* 8004FC7C 0004CA7C  C0 22 88 1C */	lfs f1, lbl_803CD19C-_SDA2_BASE_(r2)
 /* 8004FC80 0004CA80  48 12 F6 A9 */	bl zCameraTweakGlobal_Update__Ff
-/* 8004FC84 0004CA84  48 00 00 71 */	bl GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8004FC84 0004CA84  48 00 00 71 */	bl GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 8004FC88 0004CA88  FF C0 08 90 */	fmr f30, f1
-/* 8004FC8C 0004CA8C  48 00 00 9D */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8004FC8C 0004CA8C  48 00 00 9D */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 8004FC90 0004CA90  FF E0 08 90 */	fmr f31, f1
-/* 8004FC94 0004CA94  48 00 01 09 */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8004FC94 0004CA94  48 00 01 09 */	bl GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 8004FC98 0004CA98  FC 40 F8 90 */	fmr f2, f31
 /* 8004FC9C 0004CA9C  7F E3 FB 78 */	mr r3, r31
 /* 8004FCA0 0004CAA0  FC 60 F0 90 */	fmr f3, f30
@@ -74,7 +74,7 @@ zCameraReset__FP7xCamera:
 /* 8004FCF0 0004CAF0  4E 80 00 20 */	blr 
 
 /* GetCurrentPitch__21@unnamed@zCamera_cpp@Fv */
-GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv:
+GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
 /* 8004FCF4 0004CAF4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FCF8 0004CAF8  7C 08 02 A6 */	mflr r0
 /* 8004FCFC 0004CAFC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -92,11 +92,11 @@ lbl_8004FD18:
 /* 8004FD24 0004CB24  4E 80 00 20 */	blr 
 
 /* GetCurrentH__21@unnamed@zCamera_cpp@Fv */
-GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv:
+GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
 /* 8004FD28 0004CB28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FD2C 0004CB2C  7C 08 02 A6 */	mflr r0
 /* 8004FD30 0004CB30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FD34 0004CB34  48 00 00 21 */	bl _GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8004FD34 0004CB34  48 00 00 21 */	bl _GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 8004FD38 0004CB38  C0 4D 8B E4 */	lfs f2, lbl_803CB4E4-_SDA_BASE_(r13)
 /* 8004FD3C 0004CB3C  C0 0D 8B E8 */	lfs f0, lbl_803CB4E8-_SDA_BASE_(r13)
 /* 8004FD40 0004CB40  EC 22 00 7A */	fmadds f1, f2, f1, f0
@@ -106,7 +106,7 @@ GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FD50 0004CB50  4E 80 00 20 */	blr 
 
 /* _GetCurrentH__21@unnamed@zCamera_cpp@Fv */
-_GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv:
+_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
 /* 8004FD54 0004CB54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FD58 0004CB58  7C 08 02 A6 */	mflr r0
 /* 8004FD5C 0004CB5C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -130,11 +130,11 @@ lbl_8004FD8C:
 /* 8004FD98 0004CB98  4E 80 00 20 */	blr 
 
 /* GetCurrentD__21@unnamed@zCamera_cpp@Fv */
-GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv:
+GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
 /* 8004FD9C 0004CB9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FDA0 0004CBA0  7C 08 02 A6 */	mflr r0
 /* 8004FDA4 0004CBA4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FDA8 0004CBA8  48 00 00 21 */	bl _GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8004FDA8 0004CBA8  48 00 00 21 */	bl _GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 8004FDAC 0004CBAC  C0 4D 8B E4 */	lfs f2, lbl_803CB4E4-_SDA_BASE_(r13)
 /* 8004FDB0 0004CBB0  C0 0D 8B E8 */	lfs f0, lbl_803CB4E8-_SDA_BASE_(r13)
 /* 8004FDB4 0004CBB4  EC 22 00 7A */	fmadds f1, f2, f1, f0
@@ -144,7 +144,7 @@ GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv:
 /* 8004FDC4 0004CBC4  4E 80 00 20 */	blr 
 
 /* _GetCurrentD__21@unnamed@zCamera_cpp@Fv */
-_GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv:
+_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
 /* 8004FDC8 0004CBC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FDCC 0004CBCC  7C 08 02 A6 */	mflr r0
 /* 8004FDD0 0004CBD0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1286,11 +1286,11 @@ zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff:
 /* 80050EB4 0004DCB4  80 0D 8B 98 */	lwz r0, zcam_highbounce-_SDA_BASE_(r13)
 /* 80050EB8 0004DCB8  2C 00 00 00 */	cmpwi r0, 0
 /* 80050EBC 0004DCBC  41 82 00 20 */	beq lbl_80050EDC
-/* 80050EC0 0004DCC0  4B FF EE DD */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80050EC0 0004DCC0  4B FF EE DD */	bl GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80050EC4 0004DCC4  D0 3C 00 00 */	stfs f1, 0(r28)
-/* 80050EC8 0004DCC8  4B FF EE 61 */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80050EC8 0004DCC8  4B FF EE 61 */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80050ECC 0004DCCC  D0 3D 00 00 */	stfs f1, 0(r29)
-/* 80050ED0 0004DCD0  4B FF EE 25 */	bl GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80050ED0 0004DCD0  4B FF EE 25 */	bl GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80050ED4 0004DCD4  D0 3E 00 00 */	stfs f1, 0(r30)
 /* 80050ED8 0004DCD8  48 00 02 50 */	b lbl_80051128
 lbl_80050EDC:
@@ -1300,7 +1300,7 @@ lbl_80050EDC:
 /* 80050EE8 0004DCE8  C0 22 88 8C */	lfs f1, lbl_803CD20C-_SDA2_BASE_(r2)
 /* 80050EEC 0004DCEC  48 00 00 08 */	b lbl_80050EF4
 lbl_80050EF0:
-/* 80050EF0 0004DCF0  4B FF EE AD */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80050EF0 0004DCF0  4B FF EE AD */	bl GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 lbl_80050EF4:
 /* 80050EF4 0004DCF4  D0 3C 00 00 */	stfs f1, 0(r28)
 /* 80050EF8 0004DCF8  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
@@ -1309,7 +1309,7 @@ lbl_80050EF4:
 /* 80050F04 0004DD04  C0 22 88 90 */	lfs f1, lbl_803CD210-_SDA2_BASE_(r2)
 /* 80050F08 0004DD08  48 00 00 08 */	b lbl_80050F10
 lbl_80050F0C:
-/* 80050F0C 0004DD0C  4B FF EE 1D */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80050F0C 0004DD0C  4B FF EE 1D */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 lbl_80050F10:
 /* 80050F10 0004DD10  D0 3D 00 00 */	stfs f1, 0(r29)
 /* 80050F14 0004DD14  80 0D 8B 94 */	lwz r0, zcam_longbounce-_SDA_BASE_(r13)
@@ -1385,11 +1385,11 @@ lbl_80051004:
 /* 80051004 0004DE04  D0 1E 00 00 */	stfs f0, 0(r30)
 /* 80051008 0004DE08  48 00 01 20 */	b lbl_80051128
 lbl_8005100C:
-/* 8005100C 0004DE0C  4B FF ED 91 */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8005100C 0004DE0C  4B FF ED 91 */	bl GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80051010 0004DE10  FF A0 08 90 */	fmr f29, f1
-/* 80051014 0004DE14  4B FF ED 15 */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80051014 0004DE14  4B FF ED 15 */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80051018 0004DE18  FF C0 08 90 */	fmr f30, f1
-/* 8005101C 0004DE1C  4B FF EC D9 */	bl GetCurrentPitch__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 8005101C 0004DE1C  4B FF EC D9 */	bl GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80051020 0004DE20  88 0D 8B D8 */	lbz r0, lbl_803CB4D8-_SDA_BASE_(r13)
 /* 80051024 0004DE24  28 00 00 00 */	cmplwi r0, 0
 /* 80051028 0004DE28  41 82 00 50 */	beq lbl_80051078
@@ -1904,9 +1904,9 @@ lbl_8005174C:
 /* 80051770 0004E570  40 80 00 08 */	bge lbl_80051778
 /* 80051774 0004E574  D0 0D 8B F4 */	stfs f0, lbl_803CB4F4-_SDA_BASE_(r13)
 lbl_80051778:
-/* 80051778 0004E578  4B FF E6 25 */	bl GetCurrentD__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80051778 0004E578  4B FF E6 25 */	bl GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 8005177C 0004E57C  D0 21 00 10 */	stfs f1, 0x10(r1)
-/* 80051780 0004E580  4B FF E5 A9 */	bl GetCurrentH__21$$2unnamed$$2zCamera_cpp$$2Fv
+/* 80051780 0004E580  4B FF E5 A9 */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80051784 0004E584  D0 21 00 0C */	stfs f1, 0xc(r1)
 /* 80051788 0004E588  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 8005178C 0004E58C  C3 9E 01 80 */	lfs f28, 0x180(r30)

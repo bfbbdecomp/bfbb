@@ -67,8 +67,8 @@ render__8xtextboxCFb:
 /* 80017DE0 00014BE0  4E 80 00 20 */	blr 
 
 /* create__8xtextboxFRC5xfontRC13basic_rect<f>Uiffff */
-.global create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff
-create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff:
+.global create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff
+create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff:
 /* 80017DE4 00014BE4  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80017DE8 00014BE8  7C 08 02 A6 */	mflr r0
 /* 80017DEC 00014BEC  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -88,7 +88,7 @@ create__8xtextboxFRC5xfontRC13basic_rect$$0f$$1Uiffff:
 /* 80017E24 00014C24  48 00 00 85 */	bl __as__5xfontFRC5xfont
 /* 80017E28 00014C28  7F C4 F3 78 */	mr r4, r30
 /* 80017E2C 00014C2C  38 61 00 2C */	addi r3, r1, 0x2c
-/* 80017E30 00014C30  48 00 02 11 */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
+/* 80017E30 00014C30  48 00 02 11 */	bl __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
 /* 80017E34 00014C34  3C 60 80 28 */	lis r3, text_cb__8xtextbox@ha
 /* 80017E38 00014C38  38 C0 00 00 */	li r6, 0
 /* 80017E3C 00014C3C  38 63 BB EC */	addi r3, r3, text_cb__8xtextbox@l
@@ -143,8 +143,8 @@ __as__5xfontFRC5xfont:
 /* 80017EF0 00014CF0  4E 80 00 20 */	blr 
 
 /* create__5xfontFUifff10iColor_tagRC13basic_rect<f> */
-.global create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1
-create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1:
+.global create__5xfontFUifff10iColor_tagRC13basic_rect_esc__0_f_esc__1_
+create__5xfontFUifff10iColor_tagRC13basic_rect_esc__0_f_esc__1_:
 /* 80017EF4 00014CF4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80017EF8 00014CF8  7C 08 02 A6 */	mflr r0
 /* 80017EFC 00014CFC  90 01 00 44 */	stw r0, 0x44(r1)
@@ -161,7 +161,7 @@ create__5xfontFUifff10iColor_tagRC13basic_rect$$0f$$1:
 /* 80017F28 00014D28  48 00 00 71 */	bl __as__10iColor_tagFRC10iColor_tag
 /* 80017F2C 00014D2C  7F E4 FB 78 */	mr r4, r31
 /* 80017F30 00014D30  38 61 00 1C */	addi r3, r1, 0x1c
-/* 80017F34 00014D34  48 00 01 0D */	bl __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
+/* 80017F34 00014D34  48 00 01 0D */	bl __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
 /* 80017F38 00014D38  80 61 00 08 */	lwz r3, 8(r1)
 /* 80017F3C 00014D3C  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 80017F40 00014D40  90 7E 00 00 */	stw r3, 0(r30)
@@ -212,8 +212,8 @@ NSCREENX__Ff:
 /* 80017FD0 00014DD0  4E 80 00 20 */	blr 
 
 /* contract__13basic_rect<f>Fffff */
-.global contract__13basic_rect$$0f$$1Fffff
-contract__13basic_rect$$0f$$1Fffff:
+.global contract__13basic_rect_esc__0_f_esc__1_Fffff
+contract__13basic_rect_esc__0_f_esc__1_Fffff:
 /* 80017FD4 00014DD4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80017FD8 00014DD8  7C 08 02 A6 */	mflr r0
 /* 80017FDC 00014DDC  FC 20 08 50 */	fneg f1, f1
@@ -221,15 +221,15 @@ contract__13basic_rect$$0f$$1Fffff:
 /* 80017FE4 00014DE4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80017FE8 00014DE8  FC 60 18 50 */	fneg f3, f3
 /* 80017FEC 00014DEC  FC 80 20 50 */	fneg f4, f4
-/* 80017FF0 00014DF0  48 00 00 15 */	bl expand__13basic_rect$$0f$$1Fffff
+/* 80017FF0 00014DF0  48 00 00 15 */	bl expand__13basic_rect_esc__0_f_esc__1_Fffff
 /* 80017FF4 00014DF4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80017FF8 00014DF8  7C 08 03 A6 */	mtlr r0
 /* 80017FFC 00014DFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80018000 00014E00  4E 80 00 20 */	blr 
 
 /* expand__13basic_rect<f>Fffff */
-.global expand__13basic_rect$$0f$$1Fffff
-expand__13basic_rect$$0f$$1Fffff:
+.global expand__13basic_rect_esc__0_f_esc__1_Fffff
+expand__13basic_rect_esc__0_f_esc__1_Fffff:
 /* 80018004 00014E04  C0 A3 00 00 */	lfs f5, 0(r3)
 /* 80018008 00014E08  EC 61 18 2A */	fadds f3, f1, f3
 /* 8001800C 00014E0C  EC 02 20 2A */	fadds f0, f2, f4
@@ -247,8 +247,8 @@ expand__13basic_rect$$0f$$1Fffff:
 /* 8001803C 00014E3C  4E 80 00 20 */	blr 
 
 /* __as__13basic_rect<f>FRC13basic_rect<f> */
-.global __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1
-__as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1:
+.global __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
+__as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_:
 /* 80018040 00014E40  C0 24 00 00 */	lfs f1, 0(r4)
 /* 80018044 00014E44  C0 04 00 04 */	lfs f0, 4(r4)
 /* 80018048 00014E48  D0 23 00 00 */	stfs f1, 0(r3)

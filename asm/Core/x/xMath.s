@@ -494,7 +494,7 @@ lbl_80031288:
 /* 80031298 0002E098  40 82 00 40 */	bne lbl_800312D8
 /* 8003129C 0002E09C  FC 60 20 90 */	fmr f3, f4
 /* 800312A0 0002E0A0  FC 40 20 50 */	fneg f2, f4
-/* 800312A4 0002E0A4  4B FD D6 95 */	bl range_limit$$0f$$1__Ffff
+/* 800312A4 0002E0A4  4B FD D6 95 */	bl range_limit_esc__0_f_esc__1___Ffff
 /* 800312A8 0002E0A8  D0 3F 00 00 */	stfs f1, 0(r31)
 /* 800312AC 0002E0AC  C0 1F 00 00 */	lfs f0, 0(r31)
 /* 800312B0 0002E0B0  FC 1E 00 00 */	fcmpu cr0, f30, f0

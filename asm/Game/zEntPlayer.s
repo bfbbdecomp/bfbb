@@ -5879,7 +5879,7 @@ lbl_8006B604:
 /* 8006B620 00068420  4E 80 00 20 */	blr 
 
 /* speak_update__24@unnamed@zEntPlayer_cpp@Ff */
-speak_update__24$$2unnamed$$2zEntPlayer_cpp$$2Ff:
+speak_update__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_Ff:
 /* 8006B624 00068424  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8006B628 00068428  7C 08 02 A6 */	mflr r0
 /* 8006B62C 0006842C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -11037,7 +11037,7 @@ lbl_800700D0:
 /* 80070110 0006CF10  7F 43 D3 78 */	mr r3, r26
 /* 80070114 0006CF14  4B FF EA A9 */	bl zEntPlayer_SpringboardFX__FP4xEntf
 /* 80070118 0006CF18  FC 20 F8 90 */	fmr f1, f31
-/* 8007011C 0006CF1C  4B FF B5 09 */	bl speak_update__24$$2unnamed$$2zEntPlayer_cpp$$2Ff
+/* 8007011C 0006CF1C  4B FF B5 09 */	bl speak_update__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_Ff
 /* 80070120 0006CF20  80 8D 8D 60 */	lwz r4, gCurrentPlayer-_SDA_BASE_(r13)
 /* 80070124 0006CF24  2C 04 00 00 */	cmpwi r4, 0
 /* 80070128 0006CF28  40 82 00 80 */	bne lbl_800701A8

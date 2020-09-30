@@ -3151,7 +3151,7 @@ lbl_800959A8:
 /* 800959F0 000927F0  4E 80 00 20 */	blr 
 
 /* model_is_preinstanced__17@unnamed@zFX_cpp@FP8RpAtomic */
-model_is_preinstanced__17$$2unnamed$$2zFX_cpp$$2FP8RpAtomic:
+model_is_preinstanced__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP8RpAtomic:
 /* 800959F4 000927F4  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 800959F8 000927F8  28 03 00 00 */	cmplwi r3, 0
 /* 800959FC 000927FC  40 82 00 0C */	bne lbl_80095A08
@@ -3170,7 +3170,7 @@ lbl_80095A24:
 /* 80095A28 00092828  4E 80 00 20 */	blr 
 
 /* setup_popper_emitter__17@unnamed@zFX_cpp@FRQ217@unnamed@zFX_cpp@11popper_data */
-setup_popper_emitter__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data:
+setup_popper_emitter__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data:
 /* 80095A2C 0009282C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80095A30 00092830  7C 08 02 A6 */	mflr r0
 /* 80095A34 00092834  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3178,7 +3178,7 @@ setup_popper_emitter__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211po
 /* 80095A3C 0009283C  7C 7D 1B 78 */	mr r29, r3
 /* 80095A40 00092840  80 63 00 04 */	lwz r3, 4(r3)
 /* 80095A44 00092844  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 80095A48 00092848  48 00 02 11 */	bl count_faces__17$$2unnamed$$2zFX_cpp$$2FP14xModelInstance
+/* 80095A48 00092848  48 00 02 11 */	bl count_faces__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP14xModelInstance
 /* 80095A4C 0009284C  90 7D 00 44 */	stw r3, 0x44(r29)
 /* 80095A50 00092850  80 1D 00 44 */	lwz r0, 0x44(r29)
 /* 80095A54 00092854  2C 00 00 00 */	cmpwi r0, 0
@@ -3226,7 +3226,7 @@ lbl_80095AD4:
 /* 80095AEC 000928EC  1C 00 00 0C */	mulli r0, r0, 0xc
 /* 80095AF0 000928F0  7C 9C 22 14 */	add r4, r28, r4
 /* 80095AF4 000928F4  7C BC 02 14 */	add r5, r28, r0
-/* 80095AF8 000928F8  48 00 00 6D */	bl get_triangle_area__17$$2unnamed$$2zFX_cpp$$2FRC5xVec3RC5xVec3RC5xVec3
+/* 80095AF8 000928F8  48 00 00 6D */	bl get_triangle_area__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3
 /* 80095AFC 000928FC  C0 1D 00 4C */	lfs f0, 0x4c(r29)
 /* 80095B00 00092900  3B 7B 00 08 */	addi r27, r27, 8
 /* 80095B04 00092904  EC 00 08 2A */	fadds f0, f0, f1
@@ -3260,7 +3260,7 @@ lbl_80095B50:
 /* 80095B60 00092960  4E 80 00 20 */	blr 
 
 /* get_triangle_area__17@unnamed@zFX_cpp@FRC5xVec3RC5xVec3RC5xVec3 */
-get_triangle_area__17$$2unnamed$$2zFX_cpp$$2FRC5xVec3RC5xVec3RC5xVec3:
+get_triangle_area__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3:
 /* 80095B64 00092964  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80095B68 00092968  7C 08 02 A6 */	mflr r0
 /* 80095B6C 0009296C  C0 24 00 00 */	lfs f1, 0(r4)
@@ -3324,7 +3324,7 @@ get_triangle_area__17$$2unnamed$$2zFX_cpp$$2FRC5xVec3RC5xVec3RC5xVec3:
 /* 80095C54 00092A54  4E 80 00 20 */	blr 
 
 /* count_faces__17@unnamed@zFX_cpp@FP14xModelInstance */
-count_faces__17$$2unnamed$$2zFX_cpp$$2FP14xModelInstance:
+count_faces__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP14xModelInstance:
 /* 80095C58 00092A58  38 A0 00 00 */	li r5, 0
 /* 80095C5C 00092A5C  48 00 00 18 */	b lbl_80095C74
 lbl_80095C60:
@@ -3340,7 +3340,7 @@ lbl_80095C74:
 /* 80095C80 00092A80  4E 80 00 20 */	blr 
 
 /* eval_tri__17@unnamed@zFX_cpp@FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle */
-eval_tri__17$$2unnamed$$2zFX_cpp$$2FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle:
+eval_tri__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle:
 /* 80095C84 00092A84  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80095C88 00092A88  7C 08 02 A6 */	mflr r0
 /* 80095C8C 00092A8C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -3378,7 +3378,7 @@ eval_tri__17$$2unnamed$$2zFX_cpp$$2FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10Rp
 /* 80095D0C 00092B0C  7F 87 E3 78 */	mr r7, r28
 /* 80095D10 00092B10  7F 08 C3 78 */	mr r8, r24
 /* 80095D14 00092B14  7F 29 CB 78 */	mr r9, r25
-/* 80095D18 00092B18  48 00 00 C5 */	bl SkinXformVertAndNormal__17$$2unnamed$$2zFX_cpp$$2FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi
+/* 80095D18 00092B18  48 00 00 C5 */	bl SkinXformVertAndNormal__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi
 /* 80095D1C 00092B1C  48 00 00 AC */	b lbl_80095DC8
 lbl_80095D20:
 /* 80095D20 00092B20  A0 1D 00 00 */	lhz r0, 0(r29)
@@ -3431,7 +3431,7 @@ lbl_80095DC8:
 /* 80095DD8 00092BD8  4E 80 00 20 */	blr 
 
 /* SkinXformVertAndNormal__17@unnamed@zFX_cpp@FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi */
-SkinXformVertAndNormal__17$$2unnamed$$2zFX_cpp$$2FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi:
+SkinXformVertAndNormal__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi:
 /* 80095DDC 00092BDC  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80095DE0 00092BE0  7C 08 02 A6 */	mflr r0
 /* 80095DE4 00092BE4  90 01 00 94 */	stw r0, 0x94(r1)
@@ -3577,7 +3577,7 @@ lbl_80095FD4:
 /* 80095FEC 00092DEC  4E 80 00 20 */	blr 
 
 /* random_point_on_triangle__17@unnamed@zFX_cpp@FR5xVec3R5xVec3PC5xVec3PC5xVec3 */
-random_point_on_triangle__17$$2unnamed$$2zFX_cpp$$2FR5xVec3R5xVec3PC5xVec3PC5xVec3:
+random_point_on_triangle__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3PC5xVec3PC5xVec3:
 /* 80095FF0 00092DF0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80095FF4 00092DF4  7C 08 02 A6 */	mflr r0
 /* 80095FF8 00092DF8  90 01 00 54 */	stw r0, 0x54(r1)
@@ -3671,7 +3671,7 @@ lbl_80096058:
 /* 80096154 00092F54  4E 80 00 20 */	blr 
 
 /* random_surface_point__17@unnamed@zFX_cpp@FR5xVec3R5xVec3RCQ217@unnamed@zFX_cpp@11popper_data */
-random_surface_point__17$$2unnamed$$2zFX_cpp$$2FR5xVec3R5xVec3RCQ217$$2unnamed$$2zFX_cpp$$211popper_data:
+random_surface_point__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3RCQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data:
 /* 80096158 00092F58  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8009615C 00092F5C  7C 08 02 A6 */	mflr r0
 /* 80096160 00092F60  90 01 00 74 */	stw r0, 0x74(r1)
@@ -3686,7 +3686,7 @@ random_surface_point__17$$2unnamed$$2zFX_cpp$$2FR5xVec3R5xVec3RCQ217$$2unnamed$$
 /* 80096184 00092F84  C0 1D 00 4C */	lfs f0, 0x4c(r29)
 /* 80096188 00092F88  7F A3 EB 78 */	mr r3, r29
 /* 8009618C 00092F8C  EC 20 00 72 */	fmuls f1, f0, f1
-/* 80096190 00092F90  48 00 00 85 */	bl find_weight__Q217$$2unnamed$$2zFX_cpp$$211popper_dataCFf
+/* 80096190 00092F90  48 00 00 85 */	bl find_weight__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataCFf
 /* 80096194 00092F94  80 1D 00 18 */	lwz r0, 0x18(r29)
 /* 80096198 00092F98  38 BD 00 08 */	addi r5, r29, 8
 /* 8009619C 00092F9C  54 00 10 3A */	slwi r0, r0, 2
@@ -3711,12 +3711,12 @@ lbl_800961CC:
 /* 800961DC 00092FDC  38 61 00 2C */	addi r3, r1, 0x2c
 /* 800961E0 00092FE0  38 81 00 08 */	addi r4, r1, 8
 /* 800961E4 00092FE4  7C E7 02 14 */	add r7, r7, r0
-/* 800961E8 00092FE8  4B FF FA 9D */	bl eval_tri__17$$2unnamed$$2zFX_cpp$$2FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle
+/* 800961E8 00092FE8  4B FF FA 9D */	bl eval_tri__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle
 /* 800961EC 00092FEC  7F 63 DB 78 */	mr r3, r27
 /* 800961F0 00092FF0  7F 84 E3 78 */	mr r4, r28
 /* 800961F4 00092FF4  38 A1 00 2C */	addi r5, r1, 0x2c
 /* 800961F8 00092FF8  38 C1 00 08 */	addi r6, r1, 8
-/* 800961FC 00092FFC  4B FF FD F5 */	bl random_point_on_triangle__17$$2unnamed$$2zFX_cpp$$2FR5xVec3R5xVec3PC5xVec3PC5xVec3
+/* 800961FC 00092FFC  4B FF FD F5 */	bl random_point_on_triangle__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3PC5xVec3PC5xVec3
 /* 80096200 00093000  BB 61 00 5C */	lmw r27, 0x5c(r1)
 /* 80096204 00093004  80 01 00 74 */	lwz r0, 0x74(r1)
 /* 80096208 00093008  7C 08 03 A6 */	mtlr r0
@@ -3724,7 +3724,7 @@ lbl_800961CC:
 /* 80096210 00093010  4E 80 00 20 */	blr 
 
 /* find_weight__Q217@unnamed@zFX_cpp@11popper_dataCFf */
-find_weight__Q217$$2unnamed$$2zFX_cpp$$211popper_dataCFf:
+find_weight__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataCFf:
 /* 80096214 00093014  38 A0 00 00 */	li r5, 0
 /* 80096218 00093018  80 C3 00 44 */	lwz r6, 0x44(r3)
 lbl_8009621C:
@@ -3756,7 +3756,7 @@ lbl_8009626C:
 /* 80096278 00093078  4E 80 00 20 */	blr 
 
 /* find_popper__17@unnamed@zFX_cpp@FP4xEnt */
-find_popper__17$$2unnamed$$2zFX_cpp$$2FP4xEnt:
+find_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP4xEnt:
 /* 8009627C 0009307C  3C 80 80 2E */	lis r4, lbl_802DF490@ha
 /* 80096280 00093080  38 84 F4 90 */	addi r4, r4, lbl_802DF490@l
 /* 80096284 00093084  38 A4 62 80 */	addi r5, r4, 0x6280
@@ -3776,7 +3776,7 @@ lbl_800962A4:
 /* 800962B0 000930B0  4E 80 00 20 */	blr 
 
 /* find_free_popper__17@unnamed@zFX_cpp@Fv */
-find_free_popper__17$$2unnamed$$2zFX_cpp$$2Fv:
+find_free_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv:
 /* 800962B4 000930B4  3C 60 80 2E */	lis r3, lbl_802DF490@ha
 /* 800962B8 000930B8  38 80 00 00 */	li r4, 0
 /* 800962BC 000930BC  38 63 F4 90 */	addi r3, r3, lbl_802DF490@l
@@ -3799,7 +3799,7 @@ lbl_800962E8:
 /* 800962F4 000930F4  4E 80 00 20 */	blr 
 
 /* emit_popper_bubbles__17@unnamed@zFX_cpp@FRQ217@unnamed@zFX_cpp@11popper_dataiff */
-emit_popper_bubbles__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataiff:
+emit_popper_bubbles__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataiff:
 /* 800962F8 000930F8  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 800962FC 000930FC  7C 08 02 A6 */	mflr r0
 /* 80096300 00093100  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -3869,7 +3869,7 @@ lbl_800963F0:
 /* 800963F0 000931F0  7F A3 EB 78 */	mr r3, r29
 /* 800963F4 000931F4  7F 84 E3 78 */	mr r4, r28
 /* 800963F8 000931F8  7F 05 C3 78 */	mr r5, r24
-/* 800963FC 000931FC  4B FF FD 5D */	bl random_surface_point__17$$2unnamed$$2zFX_cpp$$2FR5xVec3R5xVec3RCQ217$$2unnamed$$2zFX_cpp$$211popper_data
+/* 800963FC 000931FC  4B FF FD 5D */	bl random_surface_point__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3RCQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data
 /* 80096400 00093200  FC 20 F8 90 */	fmr f1, f31
 /* 80096404 00093204  7F 83 E3 78 */	mr r3, r28
 /* 80096408 00093208  4B F7 4D 79 */	bl __amu__5xVec3Ff
@@ -3955,7 +3955,7 @@ lbl_80096504:
 /* 80096534 00093334  4E 80 00 20 */	blr 
 
 /* emit_popper_bubbles_immediate__17@unnamed@zFX_cpp@FRQ217@unnamed@zFX_cpp@11popper_data */
-emit_popper_bubbles_immediate__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data:
+emit_popper_bubbles_immediate__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data:
 /* 80096538 00093338  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009653C 0009333C  7C 08 02 A6 */	mflr r0
 /* 80096540 00093340  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3980,7 +3980,7 @@ lbl_80096578:
 /* 80096584 00093384  2C 04 00 00 */	cmpwi r4, 0
 /* 80096588 00093388  40 81 00 0C */	ble lbl_80096594
 /* 8009658C 0009338C  C0 42 8F F4 */	lfs f2, lbl_803CD974-_SDA2_BASE_(r2)
-/* 80096590 00093390  4B FF FD 69 */	bl emit_popper_bubbles__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataiff
+/* 80096590 00093390  4B FF FD 69 */	bl emit_popper_bubbles__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataiff
 lbl_80096594:
 /* 80096594 00093394  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80096598 00093398  7C 08 03 A6 */	mtlr r0
@@ -3988,7 +3988,7 @@ lbl_80096594:
 /* 800965A0 000933A0  4E 80 00 20 */	blr 
 
 /* update_popper__17@unnamed@zFX_cpp@FRQ217@unnamed@zFX_cpp@11popper_dataf */
-update_popper__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataf:
+update_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf:
 /* 800965A4 000933A4  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 800965A8 000933A8  7C 08 02 A6 */	mflr r0
 /* 800965AC 000933AC  90 01 00 84 */	stw r0, 0x84(r1)
@@ -4061,7 +4061,7 @@ lbl_800966A0:
 /* 800966A4 000934A4  EC 20 08 28 */	fsubs f1, f0, f1
 /* 800966A8 000934A8  4B FC 8A 59 */	bl xSCurve__Ff
 /* 800966AC 000934AC  7F E3 FB 78 */	mr r3, r31
-/* 800966B0 000934B0  48 00 00 BD */	bl set_popper_alpha__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataf
+/* 800966B0 000934B0  48 00 00 BD */	bl set_popper_alpha__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf
 lbl_800966B4:
 /* 800966B4 000934B4  C0 02 8F FC */	lfs f0, lbl_803CD97C-_SDA2_BASE_(r2)
 /* 800966B8 000934B8  FC 1E 00 40 */	fcmpo cr0, f30, f0
@@ -4099,7 +4099,7 @@ lbl_800966E4:
 /* 80096730 00093530  EC 03 00 28 */	fsubs f0, f3, f0
 /* 80096734 00093534  D0 1F 00 40 */	stfs f0, 0x40(r31)
 /* 80096738 00093538  C0 41 00 10 */	lfs f2, 0x10(r1)
-/* 8009673C 0009353C  4B FF FB BD */	bl emit_popper_bubbles__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataiff
+/* 8009673C 0009353C  4B FF FB BD */	bl emit_popper_bubbles__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataiff
 lbl_80096740:
 /* 80096740 00093540  E3 E1 00 78 */	psq_l f31, 120(r1), 0, qr0
 /* 80096744 00093544  CB E1 00 70 */	lfd f31, 0x70(r1)
@@ -4114,7 +4114,7 @@ lbl_80096740:
 /* 80096768 00093568  4E 80 00 20 */	blr 
 
 /* set_popper_alpha__17@unnamed@zFX_cpp@FRQ217@unnamed@zFX_cpp@11popper_dataf */
-set_popper_alpha__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataf:
+set_popper_alpha__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf:
 /* 8009676C 0009356C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80096770 00093570  7C 08 02 A6 */	mflr r0
 /* 80096774 00093574  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4142,7 +4142,7 @@ set_popper_alpha__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper
 /* 800967CC 000935CC  4E 80 00 20 */	blr 
 
 /* destroy_popper__17@unnamed@zFX_cpp@FRQ217@unnamed@zFX_cpp@11popper_data */
-destroy_popper__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data:
+destroy_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data:
 /* 800967D0 000935D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800967D4 000935D4  7C 08 02 A6 */	mflr r0
 /* 800967D8 000935D8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4186,25 +4186,25 @@ lbl_8009684C:
 /* 80096864 00093664  4E 80 00 20 */	blr 
 
 /* grab_popper__17@unnamed@zFX_cpp@FR4xEnt */
-grab_popper__17$$2unnamed$$2zFX_cpp$$2FR4xEnt:
+grab_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR4xEnt:
 /* 80096868 00093668  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009686C 0009366C  7C 08 02 A6 */	mflr r0
 /* 80096870 00093670  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80096874 00093674  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80096878 00093678  93 C1 00 08 */	stw r30, 8(r1)
 /* 8009687C 0009367C  7C 7E 1B 78 */	mr r30, r3
-/* 80096880 00093680  4B FF F9 FD */	bl find_popper__17$$2unnamed$$2zFX_cpp$$2FP4xEnt
+/* 80096880 00093680  4B FF F9 FD */	bl find_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP4xEnt
 /* 80096884 00093684  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80096888 00093688  41 82 00 20 */	beq lbl_800968A8
 /* 8009688C 0009368C  80 7E 00 24 */	lwz r3, 0x24(r30)
-/* 80096890 00093690  4B FF F3 C9 */	bl count_faces__17$$2unnamed$$2zFX_cpp$$2FP14xModelInstance
+/* 80096890 00093690  4B FF F3 C9 */	bl count_faces__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP14xModelInstance
 /* 80096894 00093694  80 1F 00 44 */	lwz r0, 0x44(r31)
 /* 80096898 00093698  7C 00 18 00 */	cmpw r0, r3
 /* 8009689C 0009369C  40 82 00 24 */	bne lbl_800968C0
 /* 800968A0 000936A0  7F E3 FB 78 */	mr r3, r31
 /* 800968A4 000936A4  48 00 00 40 */	b lbl_800968E4
 lbl_800968A8:
-/* 800968A8 000936A8  4B FF FA 0D */	bl find_free_popper__17$$2unnamed$$2zFX_cpp$$2Fv
+/* 800968A8 000936A8  4B FF FA 0D */	bl find_free_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv
 /* 800968AC 000936AC  7C 7F 1B 79 */	or. r31, r3, r3
 /* 800968B0 000936B0  40 82 00 0C */	bne lbl_800968BC
 /* 800968B4 000936B4  38 60 00 00 */	li r3, 0
@@ -4213,7 +4213,7 @@ lbl_800968BC:
 /* 800968BC 000936BC  93 DF 00 04 */	stw r30, 4(r31)
 lbl_800968C0:
 /* 800968C0 000936C0  7F E3 FB 78 */	mr r3, r31
-/* 800968C4 000936C4  4B FF F1 69 */	bl setup_popper_emitter__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data
+/* 800968C4 000936C4  4B FF F1 69 */	bl setup_popper_emitter__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data
 /* 800968C8 000936C8  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 800968CC 000936CC  40 82 00 14 */	bne lbl_800968E0
 /* 800968D0 000936D0  38 00 00 00 */	li r0, 0
@@ -4235,14 +4235,14 @@ init_poppers__Fv:
 /* 80096900 00093700  7C 08 02 A6 */	mflr r0
 /* 80096904 00093704  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80096908 00093708  48 00 00 1D */	bl reset_poppers__Fv
-/* 8009690C 0009370C  48 00 00 15 */	bl add_popper_tweaks__17$$2unnamed$$2zFX_cpp$$2Fv
+/* 8009690C 0009370C  48 00 00 15 */	bl add_popper_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv
 /* 80096910 00093710  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80096914 00093714  7C 08 03 A6 */	mtlr r0
 /* 80096918 00093718  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009691C 0009371C  4E 80 00 20 */	blr 
 
 /* add_popper_tweaks__17@unnamed@zFX_cpp@Fv */
-add_popper_tweaks__17$$2unnamed$$2zFX_cpp$$2Fv:
+add_popper_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv:
 /* 80096920 00093720  4E 80 00 20 */	blr 
 
 reset_poppers__Fv:
@@ -4280,14 +4280,14 @@ lbl_80096984:
 /* 8009698C 0009378C  41 82 00 2C */	beq lbl_800969B8
 /* 80096990 00093790  FC 20 F8 90 */	fmr f1, f31
 /* 80096994 00093794  7F E3 FB 78 */	mr r3, r31
-/* 80096998 00093798  4B FF FC 0D */	bl update_popper__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataf
+/* 80096998 00093798  4B FF FC 0D */	bl update_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf
 /* 8009699C 0009379C  C0 3F 00 1C */	lfs f1, 0x1c(r31)
 /* 800969A0 000937A0  C0 1F 00 20 */	lfs f0, 0x20(r31)
 /* 800969A4 000937A4  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800969A8 000937A8  4C 41 13 82 */	cror 2, 1, 2
 /* 800969AC 000937AC  40 82 00 0C */	bne lbl_800969B8
 /* 800969B0 000937B0  7F E3 FB 78 */	mr r3, r31
-/* 800969B4 000937B4  4B FF FE 1D */	bl destroy_popper__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data
+/* 800969B4 000937B4  4B FF FE 1D */	bl destroy_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data
 lbl_800969B8:
 /* 800969B8 000937B8  3B FF 0C 50 */	addi r31, r31, 0xc50
 lbl_800969BC:
@@ -4316,11 +4316,11 @@ zFXPopOn__FR4xEntff:
 /* 80096A08 00093808  FF C0 08 90 */	fmr f30, f1
 /* 80096A0C 0009380C  7C 7E 1B 78 */	mr r30, r3
 /* 80096A10 00093810  FF E0 10 90 */	fmr f31, f2
-/* 80096A14 00093814  48 00 01 35 */	bl validate_popper__17$$2unnamed$$2zFX_cpp$$2FRC4xEnt
+/* 80096A14 00093814  48 00 01 35 */	bl validate_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC4xEnt
 /* 80096A18 00093818  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80096A1C 0009381C  41 82 01 04 */	beq lbl_80096B20
 /* 80096A20 00093820  7F C3 F3 78 */	mr r3, r30
-/* 80096A24 00093824  4B FF FE 45 */	bl grab_popper__17$$2unnamed$$2zFX_cpp$$2FR4xEnt
+/* 80096A24 00093824  4B FF FE 45 */	bl grab_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR4xEnt
 /* 80096A28 00093828  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80096A2C 0009382C  41 82 00 F4 */	beq lbl_80096B20
 /* 80096A30 00093830  C0 02 8F F4 */	lfs f0, lbl_803CD974-_SDA2_BASE_(r2)
@@ -4345,7 +4345,7 @@ lbl_80096A60:
 /* 80096A70 00093870  38 00 00 02 */	li r0, 2
 /* 80096A74 00093874  7F E3 FB 78 */	mr r3, r31
 /* 80096A78 00093878  90 1F 00 00 */	stw r0, 0(r31)
-/* 80096A7C 0009387C  4B FF FA BD */	bl emit_popper_bubbles_immediate__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data
+/* 80096A7C 0009387C  4B FF FA BD */	bl emit_popper_bubbles_immediate__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data
 /* 80096A80 00093880  38 00 00 00 */	li r0, 0
 /* 80096A84 00093884  7F C3 F3 78 */	mr r3, r30
 /* 80096A88 00093888  90 1F 00 00 */	stw r0, 0(r31)
@@ -4400,7 +4400,7 @@ lbl_80096B20:
 /* 80096B44 00093944  4E 80 00 20 */	blr 
 
 /* validate_popper__17@unnamed@zFX_cpp@FRC4xEnt */
-validate_popper__17$$2unnamed$$2zFX_cpp$$2FRC4xEnt:
+validate_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC4xEnt:
 /* 80096B48 00093948  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80096B4C 0009394C  7C 08 02 A6 */	mflr r0
 /* 80096B50 00093950  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4416,7 +4416,7 @@ lbl_80096B74:
 /* 80096B74 00093974  38 60 00 00 */	li r3, 0
 /* 80096B78 00093978  48 00 00 B8 */	b lbl_80096C30
 lbl_80096B7C:
-/* 80096B7C 0009397C  4B FF EE 79 */	bl model_is_preinstanced__17$$2unnamed$$2zFX_cpp$$2FP8RpAtomic
+/* 80096B7C 0009397C  4B FF EE 79 */	bl model_is_preinstanced__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP8RpAtomic
 /* 80096B80 00093980  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80096B84 00093984  41 82 00 0C */	beq lbl_80096B90
 /* 80096B88 00093988  38 60 00 00 */	li r3, 0
@@ -4487,11 +4487,11 @@ zFXPopOff__FR4xEntff:
 /* 80096C68 00093A68  FF C0 08 90 */	fmr f30, f1
 /* 80096C6C 00093A6C  7C 7E 1B 78 */	mr r30, r3
 /* 80096C70 00093A70  FF E0 10 90 */	fmr f31, f2
-/* 80096C74 00093A74  4B FF FE D5 */	bl validate_popper__17$$2unnamed$$2zFX_cpp$$2FRC4xEnt
+/* 80096C74 00093A74  4B FF FE D5 */	bl validate_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC4xEnt
 /* 80096C78 00093A78  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80096C7C 00093A7C  41 82 00 E0 */	beq lbl_80096D5C
 /* 80096C80 00093A80  7F C3 F3 78 */	mr r3, r30
-/* 80096C84 00093A84  4B FF FB E5 */	bl grab_popper__17$$2unnamed$$2zFX_cpp$$2FR4xEnt
+/* 80096C84 00093A84  4B FF FB E5 */	bl grab_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR4xEnt
 /* 80096C88 00093A88  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80096C8C 00093A8C  41 82 00 D0 */	beq lbl_80096D5C
 /* 80096C90 00093A90  C0 02 8F F4 */	lfs f0, lbl_803CD974-_SDA2_BASE_(r2)
@@ -4516,7 +4516,7 @@ lbl_80096CC0:
 /* 80096CD0 00093AD0  38 00 00 01 */	li r0, 1
 /* 80096CD4 00093AD4  7F E3 FB 78 */	mr r3, r31
 /* 80096CD8 00093AD8  90 1F 00 00 */	stw r0, 0(r31)
-/* 80096CDC 00093ADC  4B FF F8 5D */	bl emit_popper_bubbles_immediate__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_data
+/* 80096CDC 00093ADC  4B FF F8 5D */	bl emit_popper_bubbles_immediate__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data
 /* 80096CE0 00093AE0  38 00 00 00 */	li r0, 0
 /* 80096CE4 00093AE4  7F C3 F3 78 */	mr r3, r30
 /* 80096CE8 00093AE8  90 1F 00 00 */	stw r0, 0(r31)
@@ -4548,7 +4548,7 @@ lbl_80096CF4:
 /* 80096D4C 00093B4C  54 00 07 3A */	rlwinm r0, r0, 0, 0x1c, 0x1d
 /* 80096D50 00093B50  90 1F 00 24 */	stw r0, 0x24(r31)
 /* 80096D54 00093B54  C0 22 8F F4 */	lfs f1, lbl_803CD974-_SDA2_BASE_(r2)
-/* 80096D58 00093B58  4B FF FA 15 */	bl set_popper_alpha__17$$2unnamed$$2zFX_cpp$$2FRQ217$$2unnamed$$2zFX_cpp$$211popper_dataf
+/* 80096D58 00093B58  4B FF FA 15 */	bl set_popper_alpha__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf
 lbl_80096D5C:
 /* 80096D5C 00093B5C  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
 /* 80096D60 00093B60  CB E1 00 30 */	lfd f31, 0x30(r1)
@@ -4562,7 +4562,7 @@ lbl_80096D5C:
 /* 80096D80 00093B80  4E 80 00 20 */	blr 
 
 /* add_entrail_tweaks__17@unnamed@zFX_cpp@Fv */
-add_entrail_tweaks__17$$2unnamed$$2zFX_cpp$$2Fv:
+add_entrail_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv:
 /* 80096D84 00093B84  4E 80 00 20 */	blr 
 
 reset_entrails__Fv:
@@ -4579,7 +4579,7 @@ reset_entrails__Fv:
 /* 80096DB0 00093BB0  48 00 00 10 */	b lbl_80096DC0
 lbl_80096DB4:
 /* 80096DB4 00093BB4  7F E3 FB 78 */	mr r3, r31
-/* 80096DB8 00093BB8  48 00 00 29 */	bl reset__Q217$$2unnamed$$2zFX_cpp$$212entrail_dataFv
+/* 80096DB8 00093BB8  48 00 00 29 */	bl reset__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFv
 /* 80096DBC 00093BBC  3B FF 00 24 */	addi r31, r31, 0x24
 lbl_80096DC0:
 /* 80096DC0 00093BC0  7C 1F F0 40 */	cmplw r31, r30
@@ -4592,7 +4592,7 @@ lbl_80096DC0:
 /* 80096DDC 00093BDC  4E 80 00 20 */	blr 
 
 /* reset__Q217@unnamed@zFX_cpp@12entrail_dataFv */
-reset__Q217$$2unnamed$$2zFX_cpp$$212entrail_dataFv:
+reset__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFv:
 /* 80096DE0 00093BE0  38 00 00 00 */	li r0, 0
 /* 80096DE4 00093BE4  B0 03 00 00 */	sth r0, 0(r3)
 /* 80096DE8 00093BE8  C0 02 8F F4 */	lfs f0, lbl_803CD974-_SDA2_BASE_(r2)
@@ -4616,7 +4616,7 @@ update_entrails__Ff:
 lbl_80096E28:
 /* 80096E28 00093C28  FC 20 F8 90 */	fmr f1, f31
 /* 80096E2C 00093C2C  7F E3 FB 78 */	mr r3, r31
-/* 80096E30 00093C30  48 00 00 2D */	bl update__Q217$$2unnamed$$2zFX_cpp$$212entrail_dataFf
+/* 80096E30 00093C30  48 00 00 2D */	bl update__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFf
 /* 80096E34 00093C34  3B FF 00 24 */	addi r31, r31, 0x24
 lbl_80096E38:
 /* 80096E38 00093C38  7C 1F F0 40 */	cmplw r31, r30
@@ -4630,7 +4630,7 @@ lbl_80096E38:
 /* 80096E58 00093C58  4E 80 00 20 */	blr 
 
 /* update__Q217@unnamed@zFX_cpp@12entrail_dataFf */
-update__Q217$$2unnamed$$2zFX_cpp$$212entrail_dataFf:
+update__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFf:
 /* 80096E5C 00093C5C  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80096E60 00093C60  7C 08 02 A6 */	mflr r0
 /* 80096E64 00093C64  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -4816,7 +4816,7 @@ lbl_800970D4:
 /* 80097110 00093F10  3B FF 00 04 */	addi r31, r31, 4
 /* 80097114 00093F14  3A F7 00 04 */	addi r23, r23, 4
 /* 80097118 00093F18  41 80 FF BC */	blt lbl_800970D4
-/* 8009711C 00093F1C  4B FF FC 69 */	bl add_entrail_tweaks__17$$2unnamed$$2zFX_cpp$$2Fv
+/* 8009711C 00093F1C  4B FF FC 69 */	bl add_entrail_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv
 /* 80097120 00093F20  38 00 00 00 */	li r0, 0
 /* 80097124 00093F24  90 0D 8E 9C */	stw r0, lbl_803CB79C-_SDA_BASE_(r13)
 /* 80097128 00093F28  80 18 00 74 */	lwz r0, 0x74(r24)
@@ -4904,7 +4904,7 @@ lbl_8009722C:
 lbl_80097250:
 /* 80097250 00094050  80 0D 8E 98 */	lwz r0, lbl_803CB798-_SDA_BASE_(r13)
 /* 80097254 00094054  7C 60 FA 14 */	add r3, r0, r31
-/* 80097258 00094058  4B FF FB 89 */	bl reset__Q217$$2unnamed$$2zFX_cpp$$212entrail_dataFv
+/* 80097258 00094058  4B FF FB 89 */	bl reset__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFv
 /* 8009725C 0009405C  80 8D 8E 98 */	lwz r4, lbl_803CB798-_SDA_BASE_(r13)
 /* 80097260 00094060  38 7F 00 02 */	addi r3, r31, 2
 /* 80097264 00094064  38 1F 00 04 */	addi r0, r31, 4

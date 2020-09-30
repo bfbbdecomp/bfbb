@@ -878,8 +878,8 @@ __as__11RwMatrixTagFRC11RwMatrixTag:
 /* 80034A1C 0003181C  4E 80 00 20 */	blr 
 
 /* xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3 */
-.global xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3
-xModelRender2D__FRC14xModelInstanceRC13basic_rect$$0f$$1RC5xVec3RC5xVec3:
+.global xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3
+xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3:
 /* 80034A20 00031820  94 21 FE E0 */	stwu r1, -0x120(r1)
 /* 80034A24 00031824  7C 08 02 A6 */	mflr r0
 /* 80034A28 00031828  C0 04 00 08 */	lfs f0, 8(r4)

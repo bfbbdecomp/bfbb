@@ -443,7 +443,7 @@ lbl_80125058:
 /* 80125078 00121E78  7F E4 FB 78 */	mr r4, r31
 /* 8012507C 00121E7C  38 61 00 88 */	addi r3, r1, 0x88
 /* 80125080 00121E80  38 A1 00 08 */	addi r5, r1, 8
-/* 80125084 00121E84  48 00 00 25 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 80125084 00121E84  48 00 00 25 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 80125088 00121E88  7C 60 1B 78 */	mr r0, r3
 lbl_8012508C:
 /* 8012508C 00121E8C  7C 03 03 78 */	mr r3, r0
@@ -455,7 +455,7 @@ lbl_8012508C:
 /* 801250A4 00121EA4  4E 80 00 20 */	blr 
 
 /* xUtil_choose<i>__FPCiiPCf */
-xUtil_choose$$0i$$1__FPCiiPCf:
+xUtil_choose_esc__0_i_esc__1___FPCiiPCf:
 /* 801250A8 00121EA8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801250AC 00121EAC  7C 08 02 A6 */	mflr r0
 /* 801250B0 00121EB0  90 01 00 34 */	stw r0, 0x34(r1)

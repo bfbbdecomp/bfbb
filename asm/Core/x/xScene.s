@@ -1254,7 +1254,7 @@ xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc:
 /* 800404F4 0003D2F4  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
 /* 800404F8 0003D2F8  60 00 01 00 */	ori r0, r0, 0x100
 /* 800404FC 0003D2FC  90 05 00 00 */	stw r0, 0(r5)
-/* 80040500 0003D300  48 00 01 59 */	bl __ct__Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_entFRC5xRay3R7xCollisUcUc
+/* 80040500 0003D300  48 00 01 59 */	bl __ct__Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_entFRC5xRay3R7xCollisUcUc
 /* 80040504 0003D304  38 00 00 02 */	li r0, 2
 /* 80040508 0003D308  3B E1 00 B8 */	addi r31, r1, 0xb8
 /* 8004050C 0003D30C  98 01 00 A8 */	stb r0, 0xa8(r1)
@@ -1287,7 +1287,7 @@ xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc:
 /* 80040578 0003D378  38 C1 00 20 */	addi r6, r1, 0x20
 /* 8004057C 0003D37C  90 E1 00 24 */	stw r7, 0x24(r1)
 /* 80040580 0003D380  90 01 00 28 */	stw r0, 0x28(r1)
-/* 80040584 0003D384  48 00 0E D9 */	bl xGridCheckBound$$0Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent$$1__FR5xGridRC6xBoundRC7xQCDataQ220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent
+/* 80040584 0003D384  48 00 0E D9 */	bl xGridCheckBound_esc__0_Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent_esc__1___FR5xGridRC6xBoundRC7xQCDataQ220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent
 /* 80040588 0003D388  80 A1 00 2C */	lwz r5, 0x2c(r1)
 /* 8004058C 0003D38C  3C 60 80 3D */	lis r3, colls_oso_grid@ha
 /* 80040590 0003D390  80 E1 00 30 */	lwz r7, 0x30(r1)
@@ -1299,7 +1299,7 @@ xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc:
 /* 800405A8 0003D3A8  38 C1 00 14 */	addi r6, r1, 0x14
 /* 800405AC 0003D3AC  90 E1 00 18 */	stw r7, 0x18(r1)
 /* 800405B0 0003D3B0  90 01 00 1C */	stw r0, 0x1c(r1)
-/* 800405B4 0003D3B4  48 00 0E A9 */	bl xGridCheckBound$$0Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent$$1__FR5xGridRC6xBoundRC7xQCDataQ220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent
+/* 800405B4 0003D3B4  48 00 0E A9 */	bl xGridCheckBound_esc__0_Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent_esc__1___FR5xGridRC6xBoundRC7xQCDataQ220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent
 lbl_800405B8:
 /* 800405B8 0003D3B8  57 E0 07 39 */	rlwinm. r0, r31, 0, 0x1c, 0x1c
 /* 800405BC 0003D3BC  41 82 00 34 */	beq lbl_800405F0
@@ -1314,7 +1314,7 @@ lbl_800405B8:
 /* 800405E0 0003D3E0  38 C1 00 08 */	addi r6, r1, 8
 /* 800405E4 0003D3E4  90 E1 00 0C */	stw r7, 0xc(r1)
 /* 800405E8 0003D3E8  90 01 00 10 */	stw r0, 0x10(r1)
-/* 800405EC 0003D3EC  48 00 0E 71 */	bl xGridCheckBound$$0Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent$$1__FR5xGridRC6xBoundRC7xQCDataQ220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent
+/* 800405EC 0003D3EC  48 00 0E 71 */	bl xGridCheckBound_esc__0_Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent_esc__1___FR5xGridRC6xBoundRC7xQCDataQ220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent
 lbl_800405F0:
 /* 800405F0 0003D3F0  57 E0 06 B5 */	rlwinm. r0, r31, 0, 0x1a, 0x1a
 /* 800405F4 0003D3F4  41 82 00 50 */	beq lbl_80040644
@@ -1345,7 +1345,7 @@ lbl_80040644:
 /* 80040654 0003D454  4E 80 00 20 */	blr 
 
 /* __ct__Q220@unnamed@xScene_cpp@15cb_ray_hits_entFRC5xRay3R7xCollisUcUc */
-__ct__Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_entFRC5xRay3R7xCollisUcUc:
+__ct__Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_entFRC5xRay3R7xCollisUcUc:
 /* 80040658 0003D458  90 83 00 00 */	stw r4, 0(r3)
 /* 8004065C 0003D45C  90 A3 00 04 */	stw r5, 4(r3)
 /* 80040660 0003D460  98 C3 00 08 */	stb r6, 8(r3)
@@ -2223,7 +2223,7 @@ lbl_800412E4:
 /* 800412F4 0003E0F4  4E 80 00 20 */	blr 
 
 /* __cl__Q220@unnamed@xScene_cpp@15cb_ray_hits_entFR4xEntR10xGridBound */
-__cl__Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_entFR4xEntR10xGridBound:
+__cl__Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_entFR4xEntR10xGridBound:
 /* 800412F8 0003E0F8  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 800412FC 0003E0FC  7C 08 02 A6 */	mflr r0
 /* 80041300 0003E100  90 01 00 64 */	stw r0, 0x64(r1)
@@ -2328,8 +2328,8 @@ xEntEnable__FP4xEnt:
 /* 80041458 0003E258  4E 80 00 20 */	blr 
 
 /* xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent */
-.global xGridCheckBound$$0Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent$$1__FR5xGridRC6xBoundRC7xQCDataQ220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent
-xGridCheckBound$$0Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent$$1__FR5xGridRC6xBoundRC7xQCDataQ220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_ent:
+.global xGridCheckBound_esc__0_Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent_esc__1___FR5xGridRC6xBoundRC7xQCDataQ220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent
+xGridCheckBound_esc__0_Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent_esc__1___FR5xGridRC6xBoundRC7xQCDataQ220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent:
 /* 8004145C 0003E25C  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80041460 0003E260  7C 08 02 A6 */	mflr r0
 /* 80041464 0003E264  90 01 00 64 */	stw r0, 0x64(r1)
@@ -2384,7 +2384,7 @@ lbl_80041510:
 /* 80041524 0003E324  80 9C 00 00 */	lwz r4, 0(r28)
 /* 80041528 0003E328  7F E3 FB 78 */	mr r3, r31
 /* 8004152C 0003E32C  7F 85 E3 78 */	mr r5, r28
-/* 80041530 0003E330  4B FF FD C9 */	bl __cl__Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_entFR4xEntR10xGridBound
+/* 80041530 0003E330  4B FF FD C9 */	bl __cl__Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_entFR4xEntR10xGridBound
 /* 80041534 0003E334  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80041538 0003E338  40 82 00 10 */	bne lbl_80041548
 /* 8004153C 0003E33C  38 61 00 18 */	addi r3, r1, 0x18
@@ -2420,7 +2420,7 @@ lbl_8004158C:
 /* 800415A0 0003E3A0  80 99 00 00 */	lwz r4, 0(r25)
 /* 800415A4 0003E3A4  7F E3 FB 78 */	mr r3, r31
 /* 800415A8 0003E3A8  7F 25 CB 78 */	mr r5, r25
-/* 800415AC 0003E3AC  4B FF FD 4D */	bl __cl__Q220$$2unnamed$$2xScene_cpp$$215cb_ray_hits_entFR4xEntR10xGridBound
+/* 800415AC 0003E3AC  4B FF FD 4D */	bl __cl__Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_entFR4xEntR10xGridBound
 /* 800415B0 0003E3B0  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 800415B4 0003E3B4  40 82 00 10 */	bne lbl_800415C4
 /* 800415B8 0003E3B8  38 61 00 18 */	addi r3, r1, 0x18
@@ -2478,7 +2478,7 @@ get_grid_index__FRC5xGridff:
 /* 80041668 0003E468  FC 00 10 1E */	fctiwz f0, f2
 /* 8004166C 0003E46C  D8 01 00 10 */	stfd f0, 0x10(r1)
 /* 80041670 0003E470  80 61 00 14 */	lwz r3, 0x14(r1)
-/* 80041674 0003E474  48 00 00 4D */	bl range_limit$$0Us$$1__FUsUsUs
+/* 80041674 0003E474  48 00 00 4D */	bl range_limit_esc__0_Us_esc__1___FUsUsUs
 /* 80041678 0003E478  FC 00 F8 1E */	fctiwz f0, f31
 /* 8004167C 0003E47C  A0 BF 00 06 */	lhz r5, 6(r31)
 /* 80041680 0003E480  B0 61 00 08 */	sth r3, 8(r1)
@@ -2487,7 +2487,7 @@ get_grid_index__FRC5xGridff:
 /* 8004168C 0003E48C  D8 01 00 18 */	stfd f0, 0x18(r1)
 /* 80041690 0003E490  54 05 04 3E */	clrlwi r5, r0, 0x10
 /* 80041694 0003E494  80 61 00 1C */	lwz r3, 0x1c(r1)
-/* 80041698 0003E498  48 00 00 29 */	bl range_limit$$0Us$$1__FUsUsUs
+/* 80041698 0003E498  48 00 00 29 */	bl range_limit_esc__0_Us_esc__1___FUsUsUs
 /* 8004169C 0003E49C  B0 61 00 0A */	sth r3, 0xa(r1)
 /* 800416A0 0003E4A0  80 61 00 08 */	lwz r3, 8(r1)
 /* 800416A4 0003E4A4  E3 E1 00 38 */	psq_l f31, 56(r1), 0, qr0
@@ -2499,8 +2499,8 @@ get_grid_index__FRC5xGridff:
 /* 800416BC 0003E4BC  4E 80 00 20 */	blr 
 
 /* range_limit<Us>__FUsUsUs */
-.global range_limit$$0Us$$1__FUsUsUs
-range_limit$$0Us$$1__FUsUsUs:
+.global range_limit_esc__0_Us_esc__1___FUsUsUs
+range_limit_esc__0_Us_esc__1___FUsUsUs:
 /* 800416C0 0003E4C0  54 66 04 3E */	clrlwi r6, r3, 0x10
 /* 800416C4 0003E4C4  54 80 04 3E */	clrlwi r0, r4, 0x10
 /* 800416C8 0003E4C8  7C 06 00 40 */	cmplw r6, r0

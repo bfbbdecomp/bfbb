@@ -12684,7 +12684,7 @@ lbl_8010044C:
 /* 80100450 000FD250  38 80 00 03 */	li r4, 3
 /* 80100454 000FD254  38 63 57 98 */	addi r3, r3, lbl_80295798@l
 /* 80100458 000FD258  38 A0 00 00 */	li r5, 0
-/* 8010045C 000FD25C  48 00 25 39 */	bl xUtil_choose$$0i$$1__FPCiiPCf
+/* 8010045C 000FD25C  48 00 25 39 */	bl xUtil_choose_esc__0_i_esc__1___FPCiiPCf
 /* 80100460 000FD260  7C 7F 1B 78 */	mr r31, r3
 lbl_80100464:
 /* 80100464 000FD264  7F 63 DB 78 */	mr r3, r27
@@ -15376,7 +15376,7 @@ GetFlags__5xGoalCFv:
 /* 80102990 000FF790  4E 80 00 20 */	blr 
 
 /* xUtil_choose<i>__FPCiiPCf */
-xUtil_choose$$0i$$1__FPCiiPCf:
+xUtil_choose_esc__0_i_esc__1___FPCiiPCf:
 /* 80102994 000FF794  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80102998 000FF798  7C 08 02 A6 */	mflr r0
 /* 8010299C 000FF79C  90 01 00 34 */	stw r0, 0x34(r1)

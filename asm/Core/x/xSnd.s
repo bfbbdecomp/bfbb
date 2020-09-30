@@ -1483,7 +1483,7 @@ lbl_800494B8:
 /* 800494CC 000462CC  41 82 00 4C */	beq lbl_80049518
 /* 800494D0 000462D0  7F E3 FB 78 */	mr r3, r31
 /* 800494D4 000462D4  7F C4 F3 78 */	mr r4, r30
-/* 800494D8 000462D8  48 00 00 61 */	bl __as__Q218$$2unnamed$$2xSnd_cpp$$29fade_dataFRCQ218$$2unnamed$$2xSnd_cpp$$29fade_data
+/* 800494D8 000462D8  48 00 00 61 */	bl __as__Q218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_dataFRCQ218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_data
 /* 800494DC 000462DC  48 00 00 34 */	b lbl_80049510
 lbl_800494E0:
 /* 800494E0 000462E0  EC 21 00 24 */	fdivs f1, f1, f0
@@ -1513,7 +1513,7 @@ lbl_80049518:
 /* 80049534 00046334  4E 80 00 20 */	blr 
 
 /* __as__Q218@unnamed@xSnd_cpp@9fade_dataFRCQ218@unnamed@xSnd_cpp@9fade_data */
-__as__Q218$$2unnamed$$2xSnd_cpp$$29fade_dataFRCQ218$$2unnamed$$2xSnd_cpp$$29fade_data:
+__as__Q218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_dataFRCQ218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_data:
 /* 80049538 00046338  88 A4 00 00 */	lbz r5, 0(r4)
 /* 8004953C 0004633C  80 04 00 04 */	lwz r0, 4(r4)
 /* 80049540 00046340  98 A3 00 00 */	stb r5, 0(r3)
@@ -1640,7 +1640,7 @@ lbl_800496D0:
 /* 800496F0 000464F0  41 82 00 90 */	beq lbl_80049780
 /* 800496F4 000464F4  7F C3 F3 78 */	mr r3, r30
 /* 800496F8 000464F8  7F A4 EB 78 */	mr r4, r29
-/* 800496FC 000464FC  4B FF FE 3D */	bl __as__Q218$$2unnamed$$2xSnd_cpp$$29fade_dataFRCQ218$$2unnamed$$2xSnd_cpp$$29fade_data
+/* 800496FC 000464FC  4B FF FE 3D */	bl __as__Q218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_dataFRCQ218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_data
 /* 80049700 00046500  48 00 00 08 */	b lbl_80049708
 lbl_80049704:
 /* 80049704 00046504  3B DE 00 18 */	addi r30, r30, 0x18

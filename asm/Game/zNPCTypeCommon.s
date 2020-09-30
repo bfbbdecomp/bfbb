@@ -3814,7 +3814,7 @@ ConfigCreate__10zNPCCommonFUi:
 /* 800F2310 000EF110  48 00 00 0C */	b lbl_800F231C
 lbl_800F2314:
 /* 800F2314 000EF114  7F E3 FB 78 */	mr r3, r31
-/* 800F2318 000EF118  48 00 27 31 */	bl Insert__21xListItem$$09NPCConfig$$1FP9NPCConfig
+/* 800F2318 000EF118  48 00 27 31 */	bl Insert__21xListItem_esc__0_9NPCConfig_esc__1_FP9NPCConfig
 lbl_800F231C:
 /* 800F231C 000EF11C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800F2320 000EF120  7F E3 FB 78 */	mr r3, r31
@@ -3842,7 +3842,7 @@ lbl_800F235C:
 /* 800F2368 000EF168  7C 7F 1B 78 */	mr r31, r3
 /* 800F236C 000EF16C  48 00 00 10 */	b lbl_800F237C
 lbl_800F2370:
-/* 800F2370 000EF170  48 00 25 71 */	bl Next__21xListItem$$09NPCConfig$$1Fv
+/* 800F2370 000EF170  48 00 25 71 */	bl Next__21xListItem_esc__0_9NPCConfig_esc__1_Fv
 lbl_800F2374:
 /* 800F2374 000EF174  28 03 00 00 */	cmplwi r3, 0
 /* 800F2378 000EF178  40 82 FF E4 */	bne lbl_800F235C
@@ -5372,7 +5372,7 @@ lbl_800F37E8:
 /* 800F37F4 000F05F4  38 80 00 07 */	li r4, 7
 /* 800F37F8 000F05F8  38 63 8C A4 */	addi r3, r3, lbl_80268CA4@l
 /* 800F37FC 000F05FC  38 A0 00 00 */	li r5, 0
-/* 800F3800 000F0600  48 00 10 FD */	bl xUtil_choose$$0f$$1__FPCfiPCf
+/* 800F3800 000F0600  48 00 10 FD */	bl xUtil_choose_esc__0_f_esc__1___FPCfiPCf
 /* 800F3804 000F0604  FF C0 08 90 */	fmr f30, f1
 lbl_800F3808:
 /* 800F3808 000F0608  57 C0 04 E7 */	rlwinm. r0, r30, 0, 0x13, 0x13
@@ -6633,8 +6633,8 @@ HasGoal__7xPsycheFi:
 /* 800F48DC 000F16DC  4E 80 00 20 */	blr 
 
 /* Next__21xListItem<9NPCConfig>Fv */
-.global Next__21xListItem$$09NPCConfig$$1Fv
-Next__21xListItem$$09NPCConfig$$1Fv:
+.global Next__21xListItem_esc__0_9NPCConfig_esc__1_Fv
+Next__21xListItem_esc__0_9NPCConfig_esc__1_Fv:
 /* 800F48E0 000F16E0  80 63 00 04 */	lwz r3, 4(r3)
 /* 800F48E4 000F16E4  4E 80 00 20 */	blr 
 
@@ -6647,7 +6647,7 @@ HasSpline__10zMovePointFv:
 /* 800F48F8 000F16F8  4E 80 00 20 */	blr 
 
 /* xUtil_choose<f>__FPCfiPCf */
-xUtil_choose$$0f$$1__FPCfiPCf:
+xUtil_choose_esc__0_f_esc__1___FPCfiPCf:
 /* 800F48FC 000F16FC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F4900 000F1700  7C 08 02 A6 */	mflr r0
 /* 800F4904 000F1704  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6748,8 +6748,8 @@ SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_
 /* 800F4A44 000F1844  4E 80 00 20 */	blr 
 
 /* Insert__21xListItem<9NPCConfig>FP9NPCConfig */
-.global Insert__21xListItem$$09NPCConfig$$1FP9NPCConfig
-Insert__21xListItem$$09NPCConfig$$1FP9NPCConfig:
+.global Insert__21xListItem_esc__0_9NPCConfig_esc__1_FP9NPCConfig
+Insert__21xListItem_esc__0_9NPCConfig_esc__1_FP9NPCConfig:
 /* 800F4A48 000F1848  90 83 00 08 */	stw r4, 8(r3)
 /* 800F4A4C 000F184C  80 04 00 04 */	lwz r0, 4(r4)
 /* 800F4A50 000F1850  90 03 00 04 */	stw r0, 4(r3)
