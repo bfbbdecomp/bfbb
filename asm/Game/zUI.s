@@ -3362,3 +3362,69 @@ lbl_802F6368:
 	.skip 0x60
 lbl_802F63C8:
 	.skip 0x2278
+
+.section .sbss
+lbl_803CBA10:
+	.skip 0x4
+lbl_803CBA14:
+	.skip 0x4
+lbl_803CBA18:
+	.skip 0x4
+lbl_803CBA1C:
+	.skip 0x4
+lbl_803CBA20:
+	.skip 0x4
+lbl_803CBA24:
+	.skip 0x4
+lbl_803CBA28:
+	.skip 0x4
+lbl_803CBA2C:
+	.skip 0x4
+lbl_803CBA30:
+	.skip 0x4
+lbl_803CBA34:
+	.skip 0x4
+lbl_803CBA38:
+	.skip 0x4
+lbl_803CBA3C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTakeTaxi
+sTakeTaxi:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sNoneTaskDesc
+sNoneTaskDesc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sCurrTaskDesc
+sCurrTaskDesc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sCurrWorld
+sCurrWorld:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sCurrTask
+sCurrTask:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sPauseManager
+sPauseManager:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sConfirmation
+sConfirmation:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTaxiConfirmGrp
+sTaxiConfirmGrp:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bad_card_available
+bad_card_available:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bad_card_needed
+bad_card_needed:
+	.skip 0x4

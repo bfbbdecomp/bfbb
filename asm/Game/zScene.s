@@ -5099,3 +5099,37 @@ lbl_802F2C70:
 	.skip 0xC
 lbl_802F2C7C:
 	.skip 0xC
+
+.section .sbss
+lbl_803CB9BC:
+	.skip 0x4
+lbl_803CB9C0:
+	.skip 0x4
+lbl_803CB9C4:
+	.skip 0x4
+lbl_803CB9C8:
+	.skip 0x4
+lbl_803CB9CC:
+	.skip 0x4
+lbl_803CB9D0:
+	.skip 0x4
+lbl_803CB9D4:
+	.skip 0x4
+lbl_803CB9D8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gCurEnv
+gCurEnv:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gTransitionSceneID
+gTransitionSceneID:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gSceneUpdateTime
+gSceneUpdateTime:
+	.skip 0x4
+lbl_803CB9E8:
+	.skip 0x4
+lbl_803CB9EC:
+	.skip 0x4

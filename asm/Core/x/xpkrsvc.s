@@ -3627,3 +3627,29 @@ lbl_80286830:
 	.incbin "baserom.dol", 0x283810, 0x2C
 lbl_8028685C:
 	.incbin "baserom.dol", 0x28383C, 0x2C
+
+.section .sbss
+	/* needed to ensure correct alignment */
+    .skip 0x8
+lbl_803CB328:
+	.skip 0x4
+lbl_803CB32C:
+	.skip 0x4
+lbl_803CB330:
+	.skip 0x4
+lbl_803CB334:
+	.skip 0x4
+lbl_803CB338:
+	.skip 0x4
+lbl_803CB33C:
+	.skip 0x4
+lbl_803CB340:
+	.skip 0x4
+lbl_803CB344:
+	.skip 0x4
+lbl_803CB348:
+	.skip 0x4
+lbl_803CB34C:
+	.skip 0x4
+lbl_803CB350:
+	.skip 0x8

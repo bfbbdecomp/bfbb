@@ -205,3 +205,9 @@ lbl_8026CAA8:
 .section .bss
 lbl_803242F8:
 	.skip 0x170
+
+.section .sbss
+lbl_803CBF38:
+	.skip 0x4
+lbl_803CBF3C:
+	.skip 0x4

@@ -837,3 +837,11 @@ g_hash_lassanim:
 .global g_strz_lassanim
 g_strz_lassanim:
 	.incbin "baserom.dol", 0x291F1C, 0xC
+
+.section .sbss
+lbl_803CBCC0:
+	.skip 0x4
+lbl_803CBCC4:
+	.skip 0x4
+lbl_803CBCC8:
+	.skip 0x8

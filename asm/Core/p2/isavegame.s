@@ -3378,3 +3378,29 @@ lbl_80292AC8:
 .section .bss
 lbl_802FE100:
 	.skip 0x14000
+
+.section .sbss
+lbl_803CBB88:
+	.skip 0x4
+lbl_803CBB8C:
+	.skip 0x4
+lbl_803CBB90:
+	.skip 0x4
+lbl_803CBB94:
+	.skip 0x4
+lbl_803CBB98:
+	.skip 0x4
+lbl_803CBB9C:
+	.skip 0x4
+lbl_803CBBA0:
+	.skip 0x4
+lbl_803CBBA4:
+	.skip 0x4
+lbl_803CBBA8:
+	.skip 0x4
+lbl_803CBBAC:
+	.skip 0x4
+lbl_803CBBB0:
+	.skip 0x4
+lbl_803CBBB4:
+	.skip 0x4

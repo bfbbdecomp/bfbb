@@ -500,3 +500,8 @@ xMat3x3Copy__FP7xMat3x3PC7xMat3x3:
 /* 8000F04C 0000BE4C  7C 08 03 A6 */	mtlr r0
 /* 8000F050 0000BE50  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000F054 0000BE54  4E 80 00 20 */	blr 
+
+.section .sbss
+.balign 8
+lbl_803CB188:
+	.skip 0x8

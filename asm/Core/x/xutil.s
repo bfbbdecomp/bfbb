@@ -511,3 +511,7 @@ lbl_8028A378:
 	.incbin "baserom.dol", 0x287358, 0x400
 lbl_8028A778:
 	.incbin "baserom.dol", 0x287758, 0x40
+
+.section .sbss
+lbl_803CB430:
+	.skip 0x8

@@ -615,3 +615,53 @@ lbl_80274B38:
 	.incbin "baserom.dol", 0x271B18, 0x198
 lbl_80274CD0:
 	.incbin "baserom.dol", 0x271CB0, 0x80
+
+.section .sbss
+lbl_803CC1E8:
+	.skip 0x4
+lbl_803CC1EC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC1F0
+lbl_803CC1F0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC1F4
+lbl_803CC1F4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC1F8
+lbl_803CC1F8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC1FC
+lbl_803CC1FC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC200
+lbl_803CC200:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC204
+lbl_803CC204:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC208
+lbl_803CC208:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC20C
+lbl_803CC20C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC210
+lbl_803CC210:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC214
+lbl_803CC214:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CC218
+lbl_803CC218:
+	.skip 0x8

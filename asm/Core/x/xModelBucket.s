@@ -1117,3 +1117,29 @@ lbl_801272E8:
 /* 80127308 00124108  7C 08 03 A6 */	mtlr r0
 /* 8012730C 0012410C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80127310 00124110  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CBE80:
+	.skip 0x4
+lbl_803CBE84:
+	.skip 0x4
+lbl_803CBE88:
+	.skip 0x4
+lbl_803CBE8C:
+	.skip 0x4
+lbl_803CBE90:
+	.skip 0x4
+lbl_803CBE94:
+	.skip 0x4
+lbl_803CBE98:
+	.skip 0x4
+lbl_803CBE9C:
+	.skip 0x4
+lbl_803CBEA0:
+	.skip 0x4
+lbl_803CBEA4:
+	.skip 0x4
+lbl_803CBEA8:
+	.skip 0x4
+lbl_803CBEAC:
+	.skip 0x4

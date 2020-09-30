@@ -4339,3 +4339,8 @@ lbl_800093F4:
 .section .bss
 lbl_802B89E0:
 	.skip 0x20
+
+.section .sbss
+.global gxAnimUseGrowAlloc
+gxAnimUseGrowAlloc:
+	.skip 0x8

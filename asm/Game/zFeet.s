@@ -69,3 +69,15 @@ lbl_8025B9D8:
 .section .bss
 lbl_802DF430:
 	.skip 0x60
+
+.section .sbss
+lbl_803CB778:
+	.skip 0x4
+lbl_803CB77C:
+	.skip 0x4
+lbl_803CB780:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gFXSurfaceFlags
+gFXSurfaceFlags:
+	.skip 0x4

@@ -423,3 +423,19 @@ lbl_801231FC:
 /* 8012321C 0012001C  7C 08 03 A6 */	mtlr r0
 /* 80123220 00120020  38 21 00 20 */	addi r1, r1, 0x20
 /* 80123224 00120024  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CBE38:
+	.skip 0x4
+lbl_803CBE3C:
+	.skip 0x4
+lbl_803CBE40:
+	.skip 0x8
+/* SPECULATION: link order */
+.global iModelHack_DisablePrelight
+iModelHack_DisablePrelight:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gLastLightKit
+gLastLightKit:
+	.skip 0x4

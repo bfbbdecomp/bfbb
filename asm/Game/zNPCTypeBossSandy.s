@@ -10122,3 +10122,35 @@ lbl_8032809C:
 	.skip 0x78
 lbl_80328114:
 	.skip 0x424
+
+.section .sbss
+lbl_803CBF78:
+	.skip 0x1
+lbl_803CBF79:
+	.skip 0x3
+lbl_803CBF7C:
+	.skip 0x4
+lbl_803CBF80:
+	.skip 0x4
+lbl_803CBF84:
+	.skip 0x4
+lbl_803CBF88:
+	.skip 0x4
+lbl_803CBF8C:
+	.skip 0x4
+lbl_803CBF90:
+	.skip 0x4
+lbl_803CBF94:
+	.skip 0x4
+lbl_803CBF98:
+	.skip 0x4
+lbl_803CBF9C:
+	.skip 0x4
+lbl_803CBFA0:
+	.skip 0x4
+lbl_803CBFA4:
+	.skip 0x4
+lbl_803CBFA8:
+	.skip 0x4
+lbl_803CBFAC:
+	.skip 0x4

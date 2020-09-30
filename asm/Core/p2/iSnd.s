@@ -3931,3 +3931,53 @@ lbl_802665E8:
 .section .bss
 lbl_80312100:
 	.skip 0x40
+
+.section .sbss
+lbl_803CBBE8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global houston_we_have_a_problem
+houston_we_have_a_problem:
+	.skip 0x4
+/* SPECULATION: link order */
+.global last_ar
+last_ar:
+	.skip 0x4
+lbl_803CBBF4:
+	.skip 0x4
+lbl_803CBBF8:
+	.skip 0x4
+lbl_803CBBFC:
+	.skip 0x4
+lbl_803CBC00:
+	.skip 0x4
+lbl_803CBC04:
+	.skip 0x4
+/* SPECULATION: link order */
+.global staticibuf
+staticibuf:
+	.skip 0x8
+/* SPECULATION: link order */
+.global old_dsc
+old_dsc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global last_error
+last_error:
+	.skip 0x4
+/* SPECULATION: link order */
+.global last_context
+last_context:
+	.skip 0x4
+/* SPECULATION: link order */
+.global add
+add:
+	.skip 0x4
+/* SPECULATION: link order */
+.global size
+size:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gEmergencyMemLevel
+gEmergencyMemLevel:
+	.skip 0x4

@@ -965,3 +965,69 @@ xDrawLine2D_LocaliFMVVersion__Fffff:
 .section .bss
 lbl_802FBE80:
 	.skip 0x18
+
+.section .sbss
+lbl_803CBAD0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global fuckingSurfaceType
+fuckingSurfaceType:
+	.skip 0x4
+lbl_803CBAD8:
+	.skip 0x4
+lbl_803CBADC:
+	.skip 0x4
+lbl_803CBAE0:
+	.skip 0x4
+lbl_803CBAE4:
+	.skip 0x4
+lbl_803CBAE8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global ip
+ip:
+	.skip 0x4
+/* SPECULATION: link order */
+.global oof
+oof:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mXFBs__4iFMV
+mXFBs__4iFMV:
+	.skip 0x8
+/* SPECULATION: link order */
+.global mCurrentFrameBuffer__4iFMV
+mCurrentFrameBuffer__4iFMV:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mRenderMode__4iFMV
+mRenderMode__4iFMV:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gLightWorld
+gLightWorld:
+	.skip 0x8
+/* SPECULATION: link order */
+.global mem_top_alloc
+mem_top_alloc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mem_base_alloc
+mem_base_alloc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global the_heap
+the_heap:
+	.skip 0x4
+/* SPECULATION: link order */
+.global hs
+hs:
+	.skip 0x4
+/* SPECULATION: link order */
+.global he
+he:
+	.skip 0x4
+/* SPECULATION: link order */
+.global HeapSize
+HeapSize:
+	.skip 0x4

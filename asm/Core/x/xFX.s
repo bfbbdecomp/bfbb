@@ -7237,3 +7237,50 @@ lbl_802C82C8:
 	.skip 0x18
 lbl_802C82E0:
 	.skip 0x480
+
+.section .sbss
+.balign 8
+lbl_803CB238:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xfx_initted
+xfx_initted:
+	.skip 0x4
+lbl_803CB240:
+	.skip 0x4
+lbl_803CB244:
+	.skip 0x4
+lbl_803CB248:
+	.skip 0x4
+lbl_803CB24C:
+	.skip 0x4
+lbl_803CB250:
+	.skip 0x4
+lbl_803CB254:
+	.skip 0x4
+lbl_803CB258:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xFXanimUV2PTexture
+xFXanimUV2PTexture:
+	.skip 0x4
+lbl_803CB260:
+	.skip 0x4
+lbl_803CB264:
+	.skip 0x4
+lbl_803CB268:
+	.skip 0x4
+lbl_803CB26C:
+	.skip 0x4
+lbl_803CB270:
+	.skip 0x4
+lbl_803CB274:
+	.skip 0x4
+lbl_803CB278:
+	.skip 0x4
+lbl_803CB27C:
+	.skip 0x8
+lbl_803CB284:
+	.skip 0x8
+lbl_803CB28C:
+	.skip 0x4

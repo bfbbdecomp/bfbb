@@ -1014,3 +1014,7 @@ lbl_80122BF0:
 .section .data
 lbl_80298040:
 	.incbin "baserom.dol", 0x295020, 0x60
+
+.section .sbss
+lbl_803CBE34:
+	.skip 0x4

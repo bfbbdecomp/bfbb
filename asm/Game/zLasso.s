@@ -2227,3 +2227,13 @@ lbl_8025CD18:
 .section .bss
 lbl_802E5788:
 	.skip 0x3800
+
+.section .sbss
+lbl_803CB8D8:
+	.skip 0x4
+lbl_803CB8DC:
+	.skip 0x4
+lbl_803CB8E0:
+	.skip 0x4
+lbl_803CB8E4:
+	.skip 0x4

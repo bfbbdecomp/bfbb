@@ -695,3 +695,13 @@ lbl_800A267C:
 .section .bss
 lbl_802EA990:
 	.skip 0x8000
+
+.section .sbss
+lbl_803CB908:
+	.skip 0x4
+lbl_803CB90C:
+	.skip 0x4
+lbl_803CB910:
+	.skip 0x4
+lbl_803CB914:
+	.skip 0x4

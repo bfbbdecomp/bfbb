@@ -6811,3 +6811,25 @@ lbl_80312320:
 	.skip 0x44
 lbl_80312364:
 	.skip 0x2C
+
+.section .sbss
+lbl_803CBCD0:
+	.skip 0x4
+lbl_803CBCD4:
+	.skip 0x4
+lbl_803CBCD8:
+	.skip 0x4
+lbl_803CBCDC:
+	.skip 0x4
+lbl_803CBCE0:
+	.skip 0x4
+lbl_803CBCE4:
+	.skip 0x4
+lbl_803CBCE8:
+	.skip 0x4
+lbl_803CBCEC:
+	.skip 0x4
+lbl_803CBCF0:
+	.skip 0x4
+lbl_803CBCF4:
+	.skip 0x4

@@ -1315,3 +1315,41 @@ lbl_80035024:
 /* 80035028 00031E28  7C 08 03 A6 */	mtlr r0
 /* 8003502C 00031E2C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035030 00031E30  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB2E8:
+	.skip 0x4
+lbl_803CB2EC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelPipeNumTables
+xModelPipeNumTables:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelLookupCount
+xModelLookupCount:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelLookupList
+xModelLookupList:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelInstStaticAlloc
+xModelInstStaticAlloc:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xModelBucketEnabled
+xModelBucketEnabled:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gDebugPad
+gDebugPad:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gPlayerPad
+gPlayerPad:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gParDead
+gParDead:
+	.skip 0x8

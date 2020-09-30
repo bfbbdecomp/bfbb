@@ -2938,3 +2938,37 @@ xVec3Dist2__FPC5xVec3PC5xVec3:
 .section .bss
 lbl_802DBA70:
 	.skip 0x10
+
+.section .sbss
+lbl_803CB4D4:
+	.skip 0x4
+lbl_803CB4D8:
+	.skip 0x4
+lbl_803CB4DC:
+	.skip 0x4
+lbl_803CB4E0:
+	.skip 0x4
+lbl_803CB4E4:
+	.skip 0x4
+lbl_803CB4E8:
+	.skip 0x4
+lbl_803CB4EC:
+	.skip 0x4
+lbl_803CB4F0:
+	.skip 0x4
+lbl_803CB4F4:
+	.skip 0x4
+lbl_803CB4F8:
+	.skip 0x4
+lbl_803CB4FC:
+	.skip 0x4
+lbl_803CB500:
+	.skip 0x4
+lbl_803CB504:
+	.skip 0x4
+lbl_803CB508:
+	.skip 0x1
+lbl_803CB509:
+	.skip 0x1
+lbl_803CB50A:
+	.skip 0x6

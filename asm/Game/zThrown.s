@@ -3210,3 +3210,15 @@ lbl_802912AC:
 .section .bss
 lbl_802F2EE8:
 	.skip 0x3480
+
+.section .sbss
+lbl_803CB9F8:
+	.skip 0x4
+lbl_803CB9FC:
+	.skip 0x4
+lbl_803CBA00:
+	.skip 0x4
+lbl_803CBA04:
+	.skip 0x4
+lbl_803CBA08:
+	.skip 0x8

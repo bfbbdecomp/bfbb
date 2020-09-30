@@ -10858,3 +10858,39 @@ lbl_8032B194:
 	.skip 0x280
 lbl_8032B414:
 	.skip 0x34
+
+.section .sbss
+lbl_803CC070:
+	.skip 0x4
+lbl_803CC074:
+	.skip 0x4
+lbl_803CC078:
+	.skip 0x4
+lbl_803CC07C:
+	.skip 0x8
+lbl_803CC084:
+	.skip 0x4
+lbl_803CC088:
+	.skip 0x4
+lbl_803CC08C:
+	.skip 0x4
+lbl_803CC090:
+	.skip 0x4
+lbl_803CC094:
+	.skip 0x4
+lbl_803CC098:
+	.skip 0x4
+lbl_803CC09C:
+	.skip 0x4
+lbl_803CC0A0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global dutchman_reticle_ent
+dutchman_reticle_ent:
+	.skip 0x4
+/* SPECULATION: link order */
+.global dutchman_reticle_radius
+dutchman_reticle_radius:
+	.skip 0x4
+lbl_803CC0AC:
+	.skip 0x4

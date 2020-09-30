@@ -1434,3 +1434,9 @@ lbl_80290EA8:
 .section .bss
 lbl_802F2C88:
 	.skip 0x260
+
+.section .sbss
+lbl_803CB9F0:
+	.skip 0x4
+lbl_803CB9F4:
+	.skip 0x4

@@ -3861,3 +3861,22 @@ __as__5xVec2Ff:
 .section .bss
 lbl_802B8A00:
 	.skip 0x40
+
+.section .sbss
+.balign 8
+lbl_803CB170:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xcam_collis_owner_disable
+xcam_collis_owner_disable:
+	.skip 0x4
+lbl_803CB178:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gCameraLastFov
+gCameraLastFov:
+	.skip 0x4
+lbl_803CB180:
+	.skip 0x4
+lbl_803CB184:
+	.skip 0x4

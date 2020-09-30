@@ -3801,3 +3801,19 @@ lbl_8028FB70:
 	.incbin "baserom.dol", 0x28CB50, 0x1E4
 lbl_8028FD54:
 	.incbin "baserom.dol", 0x28CD34, 0x2C
+
+.section .sbss
+lbl_803CB918:
+	.skip 0x4
+lbl_803CB91C:
+	.skip 0x4
+lbl_803CB920:
+	.skip 0x4
+lbl_803CB924:
+	.skip 0x4
+lbl_803CB928:
+	.skip 0x8
+/* SPECULATION: link order */
+.global menu_fmv_played
+menu_fmv_played:
+	.skip 0x4

@@ -2942,3 +2942,11 @@ sFullScreenGlareDir:
 .section .bss
 lbl_802C8970:
 	.skip 0x18
+
+.section .sbss
+lbl_803CB358:
+	.skip 0x8
+/* SPECULATION: link order */
+.global g_xSceneCur
+g_xSceneCur:
+	.skip 0x4

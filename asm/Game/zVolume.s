@@ -396,3 +396,21 @@ lbl_800BE9E4:
 /* 800BE9EC 000BB7EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BE9F0 000BB7F0  4E 80 00 20 */	blr 
 
+
+.section .sbss
+lbl_803CBA70:
+	.skip 0x4
+lbl_803CBA74:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gOccludeCount
+gOccludeCount:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gOccludeCalcCount
+gOccludeCalcCount:
+	.skip 0x4
+/* SPECULATION: link order */
+.global globalCamera
+globalCamera:
+	.skip 0x4

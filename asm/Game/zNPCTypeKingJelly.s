@@ -9414,3 +9414,17 @@ lbl_80328D1C:
 	.skip 0x16C
 lbl_80328E88:
 	.skip 0x648
+
+.section .sbss
+lbl_803CBFB0:
+	.skip 0x4
+lbl_803CBFB4:
+	.skip 0x4
+lbl_803CBFB8:
+	.skip 0x4
+lbl_803CBFBC:
+	.skip 0x4
+lbl_803CBFC0:
+	.skip 0x1
+lbl_803CBFC1:
+	.skip 0x7

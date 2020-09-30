@@ -1237,3 +1237,7 @@ lbl_8031220C:
 	.skip 0x44
 lbl_80312250:
 	.skip 0x48
+
+.section .sbss
+lbl_803CBCB8:
+	.skip 0x8

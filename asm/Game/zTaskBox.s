@@ -699,3 +699,13 @@ lbl_80135238:
 .section .bss
 lbl_803242E8:
 	.skip 0x10
+
+.section .sbss
+lbl_803CBF24:
+	.skip 0x4
+lbl_803CBF28:
+	.skip 0x8
+/* SPECULATION: link order */
+.global read_sizzze
+read_sizzze:
+	.skip 0x8

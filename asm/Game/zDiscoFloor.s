@@ -2418,3 +2418,19 @@ lbl_8026D0C8:
 .section .bss
 lbl_80327D30:
 	.skip 0x2D0
+
+.section .sbss
+lbl_803CBF60:
+	.skip 0x4
+lbl_803CBF64:
+	.skip 0x4
+lbl_803CBF68:
+	.skip 0x4
+lbl_803CBF6C:
+	.skip 0x4
+lbl_803CBF70:
+	.skip 0x1
+lbl_803CBF71:
+	.skip 0x3
+lbl_803CBF74:
+	.skip 0x4

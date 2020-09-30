@@ -46159,3 +46159,265 @@ lbl_802DE740:
 	.skip 0xC
 lbl_802DE74C:
 	.skip 0xCE4
+
+.section .sbss
+lbl_803CB5A0:
+	.skip 0x4
+lbl_803CB5A4:
+	.skip 0x4
+lbl_803CB5A8:
+	.skip 0x4
+lbl_803CB5AC:
+	.skip 0x4
+lbl_803CB5B0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gSpongeBall
+gSpongeBall:
+	.skip 0x4
+lbl_803CB5B8:
+	.skip 0x4
+lbl_803CB5BC:
+	.skip 0x4
+lbl_803CB5C0:
+	.skip 0x4
+lbl_803CB5C4:
+	.skip 0x4
+lbl_803CB5C8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global startJump
+startJump:
+	.skip 0x4
+/* SPECULATION: link order */
+.global startDouble
+startDouble:
+	.skip 0x4
+/* SPECULATION: link order */
+.global startBounce
+startBounce:
+	.skip 0x4
+lbl_803CB5D8:
+	.skip 0x4
+lbl_803CB5DC:
+	.skip 0x4
+lbl_803CB5E0:
+	.skip 0x4
+lbl_803CB5E4:
+	.skip 0x4
+lbl_803CB5E8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global surfSlickRatio
+surfSlickRatio:
+	.skip 0x4
+lbl_803CB5F0:
+	.skip 0x4
+lbl_803CB5F4:
+	.skip 0x4
+lbl_803CB5F8:
+	.skip 0x4
+lbl_803CB5FC:
+	.skip 0x4
+lbl_803CB600:
+	.skip 0x4
+lbl_803CB604:
+	.skip 0x4
+lbl_803CB608:
+	.skip 0x4
+lbl_803CB60C:
+	.skip 0x4
+lbl_803CB610:
+	.skip 0x4
+lbl_803CB614:
+	.skip 0x4
+lbl_803CB618:
+	.skip 0x4
+lbl_803CB61C:
+	.skip 0x4
+lbl_803CB620:
+	.skip 0x4
+lbl_803CB624:
+	.skip 0x4
+/* SPECULATION: link order */
+.global boulderVehicle
+boulderVehicle:
+	.skip 0x4
+lbl_803CB62C:
+	.skip 0x4
+lbl_803CB630:
+	.skip 0x4
+lbl_803CB634:
+	.skip 0x4
+lbl_803CB638:
+	.skip 0x4
+lbl_803CB63C:
+	.skip 0x4
+lbl_803CB640:
+	.skip 0x4
+lbl_803CB644:
+	.skip 0x4
+lbl_803CB648:
+	.skip 0x4
+lbl_803CB64C:
+	.skip 0x4
+lbl_803CB650:
+	.skip 0x4
+lbl_803CB654:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gReticleTarget
+gReticleTarget:
+	.skip 0x4
+lbl_803CB65C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gCurrentPlayer
+gCurrentPlayer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global floor_safe_tmr
+floor_safe_tmr:
+	.skip 0x4
+lbl_803CB668:
+	.skip 0x4
+lbl_803CB66C:
+	.skip 0x4
+lbl_803CB670:
+	.skip 0x4
+lbl_803CB674:
+	.skip 0x4
+lbl_803CB678:
+	.skip 0x4
+lbl_803CB67C:
+	.skip 0x4
+lbl_803CB680:
+	.skip 0x4
+lbl_803CB684:
+	.skip 0x4
+lbl_803CB688:
+	.skip 0x4
+lbl_803CB68C:
+	.skip 0x4
+lbl_803CB690:
+	.skip 0x4
+lbl_803CB694:
+	.skip 0x4
+lbl_803CB698:
+	.skip 0x4
+lbl_803CB69C:
+	.skip 0x4
+lbl_803CB6A0:
+	.skip 0x4
+lbl_803CB6A4:
+	.skip 0x4
+lbl_803CB6A8:
+	.skip 0x4
+lbl_803CB6AC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global player_hit
+player_hit:
+	.skip 0x4
+lbl_803CB6B4:
+	.skip 0x4
+lbl_803CB6B8:
+	.skip 0x4
+lbl_803CB6BC:
+	.skip 0x4
+lbl_803CB6C0:
+	.skip 0x4
+lbl_803CB6C4:
+	.skip 0x4
+lbl_803CB6C8:
+	.skip 0x4
+lbl_803CB6CC:
+	.skip 0x4
+lbl_803CB6D0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gWaitingToAutoSave
+gWaitingToAutoSave:
+	.skip 0x4
+lbl_803CB6D8:
+	.skip 0x4
+lbl_803CB6DC:
+	.skip 0x4
+lbl_803CB6E0:
+	.skip 0x4
+lbl_803CB6E4:
+	.skip 0x4
+lbl_803CB6E8:
+	.skip 0x4
+lbl_803CB6EC:
+	.skip 0x4
+lbl_803CB6F0:
+	.skip 0x4
+lbl_803CB6F4:
+	.skip 0x4
+lbl_803CB6F8:
+	.skip 0x4
+lbl_803CB6FC:
+	.skip 0x4
+lbl_803CB700:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sandyHitMax
+sandyHitMax:
+	.skip 0x4
+/* SPECULATION: link order */
+.global patrickHitMax
+patrickHitMax:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gEmitBFX
+gEmitBFX:
+	.skip 0x4
+lbl_803CB710:
+	.skip 0x4
+lbl_803CB714:
+	.skip 0x4
+lbl_803CB718:
+	.skip 0x4
+lbl_803CB71C:
+	.skip 0x4
+lbl_803CB720:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sRingDelay
+sRingDelay:
+	.skip 0x4
+lbl_803CB728:
+	.skip 0x4
+lbl_803CB72C:
+	.skip 0x1
+lbl_803CB72D:
+	.skip 0x1
+lbl_803CB72E:
+	.skip 0x2
+lbl_803CB730:
+	.skip 0x4
+lbl_803CB734:
+	.skip 0x4
+lbl_803CB738:
+	.skip 0x4
+lbl_803CB73C:
+	.skip 0x4
+lbl_803CB740:
+	.skip 0x4
+lbl_803CB744:
+	.skip 0x4
+lbl_803CB748:
+	.skip 0x4
+lbl_803CB74C:
+	.skip 0x4
+lbl_803CB750:
+	.skip 0x4
+lbl_803CB754:
+	.skip 0x4
+lbl_803CB758:
+	.skip 0x4
+lbl_803CB75C:
+	.skip 0x4
+lbl_803CB760:
+	.skip 0x8

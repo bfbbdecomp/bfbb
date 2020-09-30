@@ -1101,3 +1101,17 @@ lbl_80255DF8:
 	.incbin "baserom.dol", 0x252DD8, 0x60
 lbl_80255E58:
 	.incbin "baserom.dol", 0x252E38, 0x50
+
+.section .sbss
+lbl_803CB580:
+	.skip 0x4
+lbl_803CB584:
+	.skip 0x4
+lbl_803CB588:
+	.skip 0x4
+lbl_803CB58C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gEmitShinySparkles
+gEmitShinySparkles:
+	.skip 0x4

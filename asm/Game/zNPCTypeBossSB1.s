@@ -2163,3 +2163,15 @@ __vt__19zNPCGoalBossSB1Idle:
 .global __vt__9zNPCB_SB1
 __vt__9zNPCB_SB1:
 	.incbin "baserom.dol", 0x297604, 0xDC
+
+.section .sbss
+lbl_803CBFE0:
+	.skip 0x4
+lbl_803CBFE4:
+	.skip 0x4
+lbl_803CBFE8:
+	.skip 0x8
+/* SPECULATION: link order */
+.global _singleton__9zNPCB_SB2
+_singleton__9zNPCB_SB2:
+	.skip 0x4

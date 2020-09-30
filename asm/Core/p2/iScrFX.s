@@ -507,3 +507,43 @@ __vt__16zNPCGoalPushAnim:
 .global __vt__17zNPCGoalNoManLand
 __vt__17zNPCGoalNoManLand:
 	.incbin "baserom.dol", 0x28FE60, 0x38
+
+.section .sbss
+lbl_803CBBB8:
+	.skip 0x4
+lbl_803CBBBC:
+	.skip 0x4
+lbl_803CBBC0:
+	.skip 0x8
+/* SPECULATION: link order */
+.global ua_stream_buffer
+ua_stream_buffer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global stream_buffer
+stream_buffer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global silence_buffer
+silence_buffer:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zero_point
+zero_point:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zero_end
+zero_end:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sinfo_array_max
+sinfo_array_max:
+	.skip 0x4
+/* SPECULATION: link order */
+.global SoundFlags
+SoundFlags:
+	.skip 0x4
+/* SPECULATION: link order */
+.global fc
+fc:
+	.skip 0x4

@@ -2163,3 +2163,14 @@ lbl_8027B418:
 .section .bss
 lbl_802B8A40:
 	.skip 0x360
+
+.section .sbss
+.balign 8
+lbl_803CB1A8:
+	.skip 0x4
+lbl_803CB1AC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gFrameCount
+gFrameCount:
+	.skip 0x8

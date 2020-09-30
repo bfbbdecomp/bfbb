@@ -260,3 +260,11 @@ lbl_803141F8:
 	.skip 0xC
 lbl_80314204:
 	.skip 0xC
+
+.section .sbss
+lbl_803CBE08:
+	.skip 0x8
+/* SPECULATION: link order */
+.global oob_player_teleported
+oob_player_teleported:
+	.skip 0x1

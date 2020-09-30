@@ -512,3 +512,15 @@ lbl_800C3984:
 .section .bss
 lbl_802FAE60:
 	.skip 0x1020
+
+.section .sbss
+lbl_803CBAC0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global iFileSyncAsyncReadActive
+iFileSyncAsyncReadActive:
+	.skip 0x4
+lbl_803CBAC8:
+	.skip 0x4
+lbl_803CBACC:
+	.skip 0x4

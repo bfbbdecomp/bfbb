@@ -1009,3 +1009,9 @@ lbl_802F2B10:
 	.skip 0x28
 lbl_802F2B38:
 	.skip 0x18
+
+.section .sbss
+lbl_803CB958:
+	.skip 0x4
+lbl_803CB95C:
+	.skip 0xC

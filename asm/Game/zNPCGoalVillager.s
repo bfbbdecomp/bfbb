@@ -2776,3 +2776,15 @@ __vt__18zNPCGoalPlayerNear:
 .global __vt__15zNPCGoalBoySwim
 __vt__15zNPCGoalBoySwim:
 	.incbin "baserom.dol", 0x29680C, 0x34
+
+.section .sbss
+lbl_803CBF48:
+	.skip 0x4
+lbl_803CBF4C:
+	.skip 0x1
+lbl_803CBF4D:
+	.skip 0x1
+lbl_803CBF4E:
+	.skip 0x1
+lbl_803CBF4F:
+	.skip 0x1

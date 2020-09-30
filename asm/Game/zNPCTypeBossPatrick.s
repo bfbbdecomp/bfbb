@@ -9311,3 +9311,33 @@ __vt__19zNPCGoalBossPatIdle:
 .global __vt__12zNPCBPatrick
 __vt__12zNPCBPatrick:
 	.incbin "baserom.dol", 0x297E34, 0xDC
+
+.section .sbss
+lbl_803CC000:
+	.skip 0x4
+lbl_803CC004:
+	.skip 0x4
+lbl_803CC008:
+	.skip 0x4
+lbl_803CC00C:
+	.skip 0x4
+lbl_803CC010:
+	.skip 0x4
+lbl_803CC014:
+	.skip 0x4
+lbl_803CC018:
+	.skip 0x4
+lbl_803CC01C:
+	.skip 0x4
+lbl_803CC020:
+	.skip 0x4
+lbl_803CC024:
+	.skip 0x4
+lbl_803CC028:
+	.skip 0x4
+lbl_803CC02C:
+	.skip 0x4
+lbl_803CC030:
+	.skip 0x4
+lbl_803CC034:
+	.skip 0x4

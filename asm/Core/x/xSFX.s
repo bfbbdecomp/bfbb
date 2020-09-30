@@ -629,3 +629,13 @@ ShadowLightColor:
 .global gCamPos
 gCamPos:
 	.incbin "baserom.dol", 0x285C70, 0x10
+
+.section .sbss
+lbl_803CB3A8:
+	.skip 0x4
+lbl_803CB3AC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global ShadowLight
+ShadowLight:
+	.skip 0x4

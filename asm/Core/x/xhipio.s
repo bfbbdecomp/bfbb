@@ -734,3 +734,12 @@ lbl_8027D5E0:
 .global __vt__Q24xhud6widget
 __vt__Q24xhud6widget:
 	.incbin "baserom.dol", 0x27A5F8, 0x28
+
+.section .sbss
+.balign 8
+lbl_803CB290:
+	.skip 0x8
+/* SPECULATION: link order */
+.global _head_alloc__Q24xhud15block_allocator
+_head_alloc__Q24xhud15block_allocator:
+	.skip 0x4

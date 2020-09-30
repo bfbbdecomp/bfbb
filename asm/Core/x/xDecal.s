@@ -1301,3 +1301,7 @@ lock_block__25ptank_pool__color_mat_uv2Fv:
 .section .bss
 lbl_8032B448:
 	.skip 0x80
+
+.section .sbss
+lbl_803CC0B0:
+	.skip 0x8

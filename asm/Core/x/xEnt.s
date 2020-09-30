@@ -4297,3 +4297,26 @@ lbl_8027B50C:
 .section .bss
 lbl_802B8DA0:
 	.skip 0x18
+
+.section .sbss
+.balign 8
+lbl_803CB1B8:
+	.skip 0x4
+lbl_803CB1BC:
+	.skip 0x4
+lbl_803CB1C0:
+	.skip 0x4
+lbl_803CB1C4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sSetPipeline
+sSetPipeline:
+	.skip 0x4
+lbl_803CB1CC:
+	.skip 0x4
+lbl_803CB1D0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global xent_entent
+xent_entent:
+	.skip 0x4

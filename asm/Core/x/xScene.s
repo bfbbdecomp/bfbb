@@ -2686,3 +2686,21 @@ lbl_802C8988:
 	.skip 0x4C
 lbl_802C89D4:
 	.skip 0x1C
+
+.section .sbss
+lbl_803CB364:
+	.skip 0x4
+lbl_803CB368:
+	.skip 0x4
+lbl_803CB36C:
+	.skip 0x4
+lbl_803CB370:
+	.skip 0x4
+lbl_803CB374:
+	.skip 0x1
+lbl_803CB375:
+	.skip 0x3
+/* SPECULATION: link order */
+.global g_debugRenderSafeArea
+g_debugRenderSafeArea:
+	.skip 0x4

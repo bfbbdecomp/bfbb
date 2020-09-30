@@ -538,3 +538,25 @@ lbl_8032B568:
 	.skip 0xC
 lbl_8032B574:
 	.skip 0xC
+
+.section .sbss
+lbl_803CC0B8:
+	.skip 0x4
+lbl_803CC0BC:
+	.skip 0x4
+lbl_803CC0C0:
+	.skip 0x4
+lbl_803CC0C4:
+	.skip 0x8
+lbl_803CC0CC:
+	.skip 0x8
+lbl_803CC0D4:
+	.skip 0x4
+lbl_803CC0D8:
+	.skip 0x4
+lbl_803CC0DC:
+	.skip 0x4
+lbl_803CC0E0:
+	.skip 0x4
+lbl_803CC0E4:
+	.skip 0x4

@@ -1374,3 +1374,11 @@ lbl_8032462C:
 	.skip 0x3600
 lbl_80327C2C:
 	.skip 0x104
+
+.section .sbss
+lbl_803CBF50:
+	.skip 0x4
+lbl_803CBF54:
+	.skip 0x4
+lbl_803CBF58:
+	.skip 0x8

@@ -3922,3 +3922,13 @@ lbl_8031357C:
 	.skip 0x16C
 lbl_803136E8:
 	.skip 0x40
+
+.section .sbss
+lbl_803CBDD0:
+	.skip 0x4
+lbl_803CBDD4:
+	.skip 0x4
+lbl_803CBDD8:
+	.skip 0x4
+lbl_803CBDDC:
+	.skip 0x4

@@ -954,3 +954,19 @@ lbl_80031898:
 /* 800318AC 0002E6AC  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800318B0 0002E6B0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800318B4 0002E6B4  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB2D0:
+	.skip 0x4
+lbl_803CB2D4:
+	.skip 0x4
+lbl_803CB2D8:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gActiveHeap
+gActiveHeap:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sMemBaseNotifyFunc
+sMemBaseNotifyFunc:
+	.skip 0x4

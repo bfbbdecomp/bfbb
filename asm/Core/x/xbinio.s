@@ -1147,3 +1147,8 @@ lbl_8027A900:
 	.incbin "baserom.dol", 0x2778E0, 0x8A0
 lbl_8027B1A0:
 	.incbin "baserom.dol", 0x278180, 0x1E0
+
+.section .sbss
+.balign 8
+lbl_803CB168:
+	.skip 0x8

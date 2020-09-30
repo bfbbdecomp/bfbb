@@ -2127,3 +2127,23 @@ lbl_802FDAE8:
 	.skip 0x40
 lbl_802FDB28:
 	.skip 0x10
+
+.section .sbss
+lbl_803CBB40:
+	.skip 0x4
+lbl_803CBB44:
+	.skip 0x4
+lbl_803CBB48:
+	.skip 0x4
+lbl_803CBB4C:
+	.skip 0x4
+lbl_803CBB50:
+	.skip 0x4
+lbl_803CBB54:
+	.skip 0x4
+lbl_803CBB58:
+	.skip 0x4
+lbl_803CBB5C:
+	.skip 0x4
+lbl_803CBB60:
+	.skip 0x8

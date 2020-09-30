@@ -513,3 +513,15 @@ lbl_80363488:
 .global lbl_80363888
 lbl_80363888:
 	.skip 0x500
+
+.section .sbss
+lbl_803CC1D4:
+	.skip 0x4
+lbl_803CC1D8:
+	.skip 0x4
+lbl_803CC1DC:
+	.skip 0x4
+lbl_803CC1E0:
+	.skip 0x4
+lbl_803CC1E4:
+	.skip 0x4

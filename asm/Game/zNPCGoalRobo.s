@@ -22126,3 +22126,49 @@ __vt__16zNPCGoalTikiIdle:
 .section .bss
 lbl_80312178:
 	.skip 0x50
+
+.section .sbss
+lbl_803CBC60:
+	.skip 0x4
+lbl_803CBC64:
+	.skip 0x4
+lbl_803CBC68:
+	.skip 0x4
+lbl_803CBC6C:
+	.skip 0x4
+lbl_803CBC70:
+	.skip 0x4
+lbl_803CBC74:
+	.skip 0x4
+lbl_803CBC78:
+	.skip 0x4
+lbl_803CBC7C:
+	.skip 0x4
+lbl_803CBC80:
+	.skip 0x4
+lbl_803CBC84:
+	.skip 0x4
+lbl_803CBC88:
+	.skip 0x4
+lbl_803CBC8C:
+	.skip 0x4
+lbl_803CBC90:
+	.skip 0x4
+lbl_803CBC94:
+	.skip 0x4
+lbl_803CBC98:
+	.skip 0x4
+lbl_803CBC9C:
+	.skip 0x4
+lbl_803CBCA0:
+	.skip 0x4
+lbl_803CBCA4:
+	.skip 0x4
+lbl_803CBCA8:
+	.skip 0x4
+lbl_803CBCAC:
+	.skip 0x4
+lbl_803CBCB0:
+	.skip 0x4
+lbl_803CBCB4:
+	.skip 0x4

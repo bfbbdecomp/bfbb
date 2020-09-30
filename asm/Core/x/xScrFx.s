@@ -1441,3 +1441,29 @@ lbl_802C8A0C:
 	.skip 0x90
 lbl_802C8A9C:
 	.skip 0x64
+
+.section .sbss
+lbl_803CB37C:
+	.skip 0x4
+lbl_803CB380:
+	.skip 0x4
+lbl_803CB384:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gNumDistortionParticles
+gNumDistortionParticles:
+	.skip 0x4
+lbl_803CB38C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareEnabled
+sFullScreenGlareEnabled:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareTextureID
+sFullScreenGlareTextureID:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareTexturePtr
+sFullScreenGlareTexturePtr:
+	.skip 0x8

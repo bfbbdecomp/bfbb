@@ -353,3 +353,7 @@ lbl_8012DD5C:
 .section .rodata
 lbl_8026C400:
 	.incbin "baserom.dol", 0x2693E0, 0x10
+
+.section .sbss
+lbl_803CBEDC:
+	.skip 0x4

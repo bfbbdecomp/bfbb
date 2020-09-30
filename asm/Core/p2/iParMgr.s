@@ -1573,3 +1573,7 @@ lbl_802FDFC8:
 	.skip 0x90
 lbl_802FE058:
 	.skip 0xA8
+
+.section .sbss
+lbl_803CBB80:
+	.skip 0x8

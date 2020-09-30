@@ -353,3 +353,9 @@ lbl_8026CBB8:
 .section .bss
 lbl_80324468:
 	.skip 0x170
+
+.section .sbss
+lbl_803CBF40:
+	.skip 0x4
+lbl_803CBF44:
+	.skip 0x4

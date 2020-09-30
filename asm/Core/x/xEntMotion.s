@@ -3126,3 +3126,16 @@ xDrawSetColor__F10iColor_tag:
 .section .data
 lbl_8027B570:
 	.incbin "baserom.dol", 0x278550, 0x20
+
+.section .sbss
+.balign 8
+lbl_803CB1D8:
+	.skip 0x4
+lbl_803CB1DC:
+	.skip 0x2
+lbl_803CB1DE:
+	.skip 0x2
+/* SPECULATION: link order */
+.global gCurXEnv
+gCurXEnv:
+	.skip 0x8

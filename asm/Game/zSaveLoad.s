@@ -4190,3 +4190,39 @@ lbl_802904CC:
 	.incbin "baserom.dol", 0x28D4AC, 0x2C
 lbl_802904F8:
 	.incbin "baserom.dol", 0x28D4D8, 0x30
+
+.section .sbss
+lbl_803CB980:
+	.skip 0x4
+lbl_803CB984:
+	.skip 0x4
+lbl_803CB988:
+	.skip 0x8
+lbl_803CB990:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB994
+lbl_803CB994:
+	.skip 0x4
+lbl_803CB998:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB99C
+lbl_803CB99C:
+	.skip 0x4
+lbl_803CB9A0:
+	.skip 0x4
+lbl_803CB9A4:
+	.skip 0x4
+lbl_803CB9A8:
+	.skip 0x4
+lbl_803CB9AC:
+	.skip 0x4
+lbl_803CB9B0:
+	.skip 0x4
+lbl_803CB9B4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global HACK_BASETYPE
+HACK_BASETYPE:
+	.skip 0x4

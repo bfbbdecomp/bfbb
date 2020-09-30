@@ -5998,3 +5998,23 @@ lbl_8032B71C:
 	.skip 0x30700
 lbl_8035BE1C:
 	.skip 0x14
+
+.section .sbss
+lbl_803CC128:
+	.skip 0x4
+lbl_803CC12C:
+	.skip 0x4
+lbl_803CC130:
+	.skip 0x4
+lbl_803CC134:
+	.skip 0x4
+lbl_803CC138:
+	.skip 0x4
+lbl_803CC13C:
+	.skip 0x1
+lbl_803CC13D:
+	.skip 0x3
+lbl_803CC140:
+	.skip 0x4
+lbl_803CC144:
+	.skip 0x4

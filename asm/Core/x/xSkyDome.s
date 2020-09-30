@@ -189,3 +189,7 @@ lbl_8010F130:
 .section .bss
 lbl_80313728:
 	.skip 0x60
+
+.section .sbss
+lbl_803CBDE8:
+	.skip 0x8

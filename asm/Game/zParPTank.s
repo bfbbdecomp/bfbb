@@ -1921,3 +1921,27 @@ lbl_8032A4A0:
 	.skip 0x8C
 lbl_8032A52C:
 	.skip 0x3C
+
+.section .sbss
+lbl_803CC038:
+	.skip 0x4
+lbl_803CC03C:
+	.skip 0x4
+lbl_803CC040:
+	.skip 0x4
+lbl_803CC044:
+	.skip 0x4
+lbl_803CC048:
+	.skip 0x4
+lbl_803CC04C:
+	.skip 0x4
+lbl_803CC050:
+	.skip 0x4
+lbl_803CC054:
+	.skip 0x4
+lbl_803CC058:
+	.skip 0x4
+lbl_803CC05C:
+	.skip 0x4
+lbl_803CC060:
+	.skip 0x8

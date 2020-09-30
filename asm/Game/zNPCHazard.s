@@ -9527,3 +9527,51 @@ lbl_80362A70:
 	.skip 0x50
 lbl_80362AC0:
 	.skip 0x50
+
+.section .sbss
+lbl_803CC148:
+	.skip 0x4
+lbl_803CC14C:
+	.skip 0x4
+lbl_803CC150:
+	.skip 0x4
+lbl_803CC154:
+	.skip 0x4
+lbl_803CC158:
+	.skip 0x4
+lbl_803CC15C:
+	.skip 0x4
+lbl_803CC160:
+	.skip 0x4
+lbl_803CC164:
+	.skip 0x4
+lbl_803CC168:
+	.skip 0x4
+lbl_803CC16C:
+	.skip 0x4
+lbl_803CC170:
+	.skip 0x4
+lbl_803CC174:
+	.skip 0x4
+lbl_803CC178:
+	.skip 0x4
+lbl_803CC17C:
+	.skip 0x4
+lbl_803CC180:
+	.skip 0x4
+lbl_803CC184:
+	.skip 0x4
+lbl_803CC188:
+	.skip 0x4
+lbl_803CC18C:
+	.skip 0x4
+lbl_803CC190:
+	.skip 0x4
+lbl_803CC194:
+	.skip 0x4
+lbl_803CC198:
+	.skip 0x4
+lbl_803CC19C:
+	.skip 0x4
+lbl_803CC1A0:
+	.skip 0x8

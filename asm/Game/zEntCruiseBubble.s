@@ -10871,3 +10871,33 @@ lbl_802DC920:
 	.skip 0x35C
 lbl_802DCC7C:
 	.skip 0x694
+
+.section .sbss
+lbl_803CB548:
+	.skip 0x1
+lbl_803CB549:
+	.skip 0x1
+lbl_803CB54A:
+	.skip 0x1
+lbl_803CB54B:
+	.skip 0x1
+lbl_803CB54C:
+	.skip 0x8
+lbl_803CB554:
+	.skip 0x4
+lbl_803CB558:
+	.skip 0x8
+lbl_803CB560:
+	.skip 0x1
+lbl_803CB561:
+	.skip 0x1
+lbl_803CB562:
+	.skip 0x1
+lbl_803CB563:
+	.skip 0x1
+lbl_803CB564:
+	.skip 0x1
+lbl_803CB565:
+	.skip 0x1
+lbl_803CB566:
+	.skip 0x2

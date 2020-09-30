@@ -1341,3 +1341,37 @@ lbl_8028F900:
 	.incbin "baserom.dol", 0x28C8E0, 0xC
 lbl_8028F90C:
 	.incbin "baserom.dol", 0x28C8EC, 0x1C
+
+.section .sbss
+lbl_803CB880:
+	.skip 0x4
+lbl_803CB884:
+	.skip 0x4
+lbl_803CB888:
+	.skip 0x4
+lbl_803CB88C:
+	.skip 0x4
+lbl_803CB890:
+	.skip 0x4
+lbl_803CB894:
+	.skip 0x4
+lbl_803CB898:
+	.skip 0x4
+lbl_803CB89C:
+	.skip 0x1
+lbl_803CB89D:
+	.skip 0x1
+lbl_803CB89E:
+	.skip 0x1
+lbl_803CB89F:
+	.skip 0x1
+lbl_803CB8A0:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gGameMode
+gGameMode:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gGameOstrich
+gGameOstrich:
+	.skip 0x4

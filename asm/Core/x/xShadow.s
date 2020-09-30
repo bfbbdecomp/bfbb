@@ -3995,3 +3995,45 @@ SQ__Ff:
 .section .bss
 lbl_802C8B00:
 	.skip 0x122A0
+
+.section .sbss
+lbl_803CB3B4:
+	.skip 0x4
+lbl_803CB3B8:
+	.skip 0x4
+lbl_803CB3BC:
+	.skip 0x4
+lbl_803CB3C0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global ShadowCamera
+ShadowCamera:
+	.skip 0x4
+/* SPECULATION: link order */
+.global ShadowCameraRaster
+ShadowCameraRaster:
+	.skip 0x4
+lbl_803CB3CC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gShadowFlags
+gShadowFlags:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gShadowObjectRadius
+gShadowObjectRadius:
+	.skip 0x4
+lbl_803CB3D8:
+	.skip 0x4
+lbl_803CB3DC:
+	.skip 0x4
+lbl_803CB3E0:
+	.skip 0x4
+lbl_803CB3E4:
+	.skip 0x4
+lbl_803CB3E8:
+	.skip 0x4
+lbl_803CB3EC:
+	.skip 0x4
+lbl_803CB3F0:
+	.skip 0x8

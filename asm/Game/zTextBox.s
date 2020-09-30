@@ -884,3 +884,11 @@ __vt__8zNPCBoss:
 .section .bss
 lbl_80324258:
 	.skip 0x90
+
+.section .sbss
+lbl_803CBF18:
+	.skip 0x8
+/* SPECULATION: link order */
+.global tcb__8ztaskbox
+tcb__8ztaskbox:
+	.skip 0x4

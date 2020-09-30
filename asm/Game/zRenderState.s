@@ -269,3 +269,7 @@ lbl_800ACDCC:
 .section .data
 lbl_80290030:
 	.incbin "baserom.dol", 0x28D010, 0x60
+
+.section .sbss
+lbl_803CB978:
+	.skip 0x8

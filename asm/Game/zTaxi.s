@@ -457,3 +457,9 @@ lbl_80271E40:
 .section .bss
 lbl_8032A568:
 	.skip 0x10
+
+.section .sbss
+lbl_803CC068:
+	.skip 0x4
+lbl_803CC06C:
+	.skip 0x4

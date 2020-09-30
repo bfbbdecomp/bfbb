@@ -3100,3 +3100,21 @@ lbl_80314530:
 	.skip 0x7C
 lbl_803145AC:
 	.skip 0xEC
+
+.section .sbss
+lbl_803CBE11:
+	.skip 0x3
+lbl_803CBE14:
+	.skip 0x8
+lbl_803CBE1C:
+	.skip 0x4
+lbl_803CBE20:
+	.skip 0x8
+lbl_803CBE28:
+	.skip 0x1
+lbl_803CBE29:
+	.skip 0x7
+/* SPECULATION: link order */
+.global gGridIterActive
+gGridIterActive:
+	.skip 0x4

@@ -995,3 +995,27 @@ lbl_800541C4:
 .section .data
 lbl_8028C0F8:
 	.incbin "baserom.dol", 0x2890D8, 0x60
+
+.section .sbss
+lbl_803CB520:
+	.skip 0x4
+lbl_803CB524:
+	.skip 0x4
+lbl_803CB528:
+	.skip 0x4
+lbl_803CB52C:
+	.skip 0x4
+lbl_803CB530:
+	.skip 0x4
+lbl_803CB534:
+	.skip 0x4
+lbl_803CB538:
+	.skip 0x8
+/* SPECULATION: link order */
+.global model_id$localstatic3$checkpoint_collision_hack__FP4zEnt
+model_id$localstatic3$checkpoint_collision_hack__FP4zEnt:
+	.skip 0x4
+/* SPECULATION: link order */
+.global init$localstatic4$checkpoint_collision_hack__FP4zEnt
+init$localstatic4$checkpoint_collision_hack__FP4zEnt:
+	.skip 0x4

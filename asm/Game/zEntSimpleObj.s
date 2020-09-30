@@ -1277,3 +1277,13 @@ lbl_802598E0:
 	.incbin "baserom.dol", 0x2568C0, 0xC
 lbl_802598EC:
 	.incbin "baserom.dol", 0x2568CC, 0x20EC
+
+.section .sbss
+lbl_803CB768:
+	.skip 0x4
+lbl_803CB76C:
+	.skip 0x4
+lbl_803CB770:
+	.skip 0x4
+lbl_803CB774:
+	.skip 0x4

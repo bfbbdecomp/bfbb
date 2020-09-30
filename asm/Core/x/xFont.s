@@ -7495,3 +7495,28 @@ lbl_802C7AA8:
 	.skip 0x100
 lbl_802C7BA8:
 	.skip 0x140
+
+.section .sbss
+.balign 8
+lbl_803CB210:
+	.skip 0x4
+lbl_803CB214:
+	.skip 0x4
+lbl_803CB218:
+	.skip 0x4
+lbl_803CB21C:
+	.skip 0x4
+lbl_803CB220:
+	.skip 0x4
+lbl_803CB224:
+	.skip 0x4
+lbl_803CB228:
+	.skip 0x8
+/* SPECULATION: link order */
+.global gAtomicRenderCallBack
+gAtomicRenderCallBack:
+	.skip 0x4
+/* SPECULATION: link order */
+.global MainLight
+MainLight:
+	.skip 0x4

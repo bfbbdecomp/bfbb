@@ -5136,3 +5136,19 @@ lbl_8028F038:
 .section .bss
 lbl_802DF490:
 	.skip 0x6280
+
+.section .sbss
+lbl_803CB78C:
+	.skip 0x4
+lbl_803CB790:
+	.skip 0x4
+lbl_803CB794:
+	.skip 0x4
+lbl_803CB798:
+	.skip 0x4
+lbl_803CB79C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gGameSfxReport
+gGameSfxReport:
+	.skip 0x4

@@ -4107,3 +4107,11 @@ lbl_802DDD38:
 	.skip 0xE4
 lbl_802DDE1C:
 	.skip 0x5B4
+
+.section .sbss
+lbl_803CB594:
+	.skip 0x4
+lbl_803CB598:
+	.skip 0x4
+lbl_803CB59C:
+	.skip 0x4

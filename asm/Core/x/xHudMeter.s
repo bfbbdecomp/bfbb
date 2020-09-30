@@ -523,3 +523,9 @@ type_name__Q24xhud11meter_assetFv:
 /* 8002FC7C 0002CA7C  7C 08 03 A6 */	mtlr r0
 /* 8002FC80 0002CA80  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002FC84 0002CA84  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB2B0:
+	.skip 0x4
+lbl_803CB2B4:
+	.skip 0x4

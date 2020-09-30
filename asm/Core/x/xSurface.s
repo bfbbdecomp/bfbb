@@ -136,3 +136,13 @@ xSurfaceGetByIdx__FUs:
 lbl_8004D1E8:
 /* 8004D1E8 00049FE8  38 60 00 00 */	li r3, 0
 /* 8004D1EC 00049FEC  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB410:
+	.skip 0x4
+lbl_803CB414:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gTrcDisk
+gTrcDisk:
+	.skip 0x8

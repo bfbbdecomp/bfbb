@@ -10213,3 +10213,13 @@ lbl_80329BE0:
 	.skip 0x358
 lbl_80329F38:
 	.skip 0x10
+
+.section .sbss
+lbl_803CBFF4:
+	.skip 0x4
+lbl_803CBFF8:
+	.skip 0x1
+lbl_803CBFF9:
+	.skip 0x1
+lbl_803CBFFA:
+	.skip 0x6

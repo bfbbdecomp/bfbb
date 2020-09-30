@@ -293,3 +293,11 @@ lbl_80123AF4:
 /* 80123B10 00120910  7C 08 03 A6 */	mtlr r0
 /* 80123B14 00120914  38 21 00 20 */	addi r1, r1, 0x20
 /* 80123B18 00120918  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CBE50:
+	.skip 0x4
+lbl_803CBE54:
+	.skip 0x4
+lbl_803CBE58:
+	.skip 0x8

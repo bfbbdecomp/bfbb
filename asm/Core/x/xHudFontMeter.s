@@ -412,3 +412,9 @@ __vt__Q24xhud12model_widget:
 .global __vt__Q24xhud17unit_meter_widget
 __vt__Q24xhud17unit_meter_widget:
 	.incbin "baserom.dol", 0x27A6A8, 0x28
+
+.section .sbss
+lbl_803CB2A8:
+	.skip 0x4
+lbl_803CB2AC:
+	.skip 0x4

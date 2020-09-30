@@ -7335,3 +7335,18 @@ __ami__5xVec2FRC5xVec2:
 /* 800159C8 000127C8  EC 01 00 28 */	fsubs f0, f1, f0
 /* 800159CC 000127CC  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800159D0 000127D0  4E 80 00 20 */	blr 
+
+.section .sbss
+.balign 8
+lbl_803CB190:
+	.skip 0x4
+lbl_803CB194:
+	.skip 0x4
+lbl_803CB198:
+	.skip 0x4
+lbl_803CB19C:
+	.skip 0x4
+lbl_803CB1A0:
+	.skip 0x4
+lbl_803CB1A4:
+	.skip 0x4

@@ -751,3 +751,55 @@ lbl_80180018:
 .section .data
 lbl_8029B830:
 	.incbin "baserom.dol", 0x298810, 0x38
+
+.section .sbss
+lbl_803CC0E8:
+	.skip 0x8
+/* SPECULATION: link order */
+.global mFontData__7ROMFont
+mFontData__7ROMFont:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mXFBs__7ROMFont
+mXFBs__7ROMFont:
+	.skip 0x8
+/* SPECULATION: link order */
+.global mCurrentFrameBuffer__7ROMFont
+mCurrentFrameBuffer__7ROMFont:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mRenderMode__7ROMFont
+mRenderMode__7ROMFont:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mWasResetButtonPressed__11ResetButton
+mWasResetButtonPressed__11ResetButton:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mSndKill__11ResetButton
+mSndKill__11ResetButton:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mSndSuspend__8iTRCDisk
+mSndSuspend__8iTRCDisk:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mSndResume__8iTRCDisk
+mSndResume__8iTRCDisk:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mPadStopRumbling__8iTRCDisk
+mPadStopRumbling__8iTRCDisk:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mSndKill__8iTRCDisk
+mSndKill__8iTRCDisk:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mMovieSuspendFunction__8iTRCDisk
+mMovieSuspendFunction__8iTRCDisk:
+	.skip 0x4
+/* SPECULATION: link order */
+.global mMovieResumeFunction__8iTRCDisk
+mMovieResumeFunction__8iTRCDisk:
+	.skip 0x8

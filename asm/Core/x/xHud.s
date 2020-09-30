@@ -1714,3 +1714,13 @@ xColorFromRGBA__FUcUcUcUc:
 .section .bss
 lbl_802C8760:
 	.skip 0x10
+
+.section .sbss
+lbl_803CB29C:
+	.skip 0x1
+lbl_803CB29D:
+	.skip 0x3
+lbl_803CB2A0:
+	.skip 0x4
+lbl_803CB2A4:
+	.skip 0x4

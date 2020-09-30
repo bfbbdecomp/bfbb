@@ -5428,3 +5428,51 @@ lbl_80313188:
 	.skip 0x16C
 lbl_803132F4:
 	.skip 0x11C
+
+.section .sbss
+lbl_803CBD90:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_shadBalloon__14zNPCBalloonBoy
+rast_shadBalloon__14zNPCBalloonBoy:
+	.skip 0x4
+lbl_803CBD98:
+	.skip 0x4
+lbl_803CBD9C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global aid_fresnelTxtr__15zNPCBubbleBuddy
+aid_fresnelTxtr__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global aid_enviroTxtr__15zNPCBubbleBuddy
+aid_enviroTxtr__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global txtr_fresnel__15zNPCBubbleBuddy
+txtr_fresnel__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global txtr_enviro__15zNPCBubbleBuddy
+txtr_enviro__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_fresnel__15zNPCBubbleBuddy
+rast_fresnel__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_enviro__15zNPCBubbleBuddy
+rast_enviro__15zNPCBubbleBuddy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global CruiseBubbleDoesBubbleBuddyToo
+CruiseBubbleDoesBubbleBuddyToo:
+	.skip 0x4
+lbl_803CBDBC:
+	.skip 0x4
+lbl_803CBDC0:
+	.skip 0x4
+lbl_803CBDC4:
+	.skip 0x4
+lbl_803CBDC8:
+	.skip 0x8

@@ -6148,3 +6148,23 @@ lbl_80329840:
 	.skip 0x28
 lbl_80329868:
 	.skip 0x170
+
+.section .sbss
+lbl_803CBFC8:
+	.skip 0x4
+lbl_803CBFCC:
+	.skip 0x1
+lbl_803CBFCD:
+	.skip 0x3
+lbl_803CBFD0:
+	.skip 0x4
+lbl_803CBFD4:
+	.skip 0x1
+lbl_803CBFD5:
+	.skip 0x1
+lbl_803CBFD6:
+	.skip 0x2
+lbl_803CBFD8:
+	.skip 0x4
+lbl_803CBFDC:
+	.skip 0x4

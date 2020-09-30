@@ -807,3 +807,7 @@ lbl_802F2BD0:
 	.skip 0x50
 lbl_802F2C20:
 	.skip 0x50
+
+.section .sbss
+lbl_803CB968:
+	.skip 0x8

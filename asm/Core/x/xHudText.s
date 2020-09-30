@@ -343,3 +343,13 @@ type_name__Q24xhud10text_assetFv:
 .section .rodata
 lbl_802749F0:
 	.incbin "baserom.dol", 0x2719D0, 0x10
+
+.section .sbss
+lbl_803CC1C8:
+	.skip 0x4
+lbl_803CC1CC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global comboHUD
+comboHUD:
+	.skip 0x4

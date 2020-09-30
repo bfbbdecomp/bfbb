@@ -1632,3 +1632,17 @@ lbl_8012D874:
 .section .rodata
 lbl_8026C2B0:
 	.incbin "baserom.dol", 0x269290, 0x150
+
+.section .sbss
+lbl_803CBEC8:
+	.skip 0x4
+lbl_803CBECC:
+	.skip 0x4
+lbl_803CBED0:
+	.skip 0x4
+lbl_803CBED4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gBusStopIsRunning
+gBusStopIsRunning:
+	.skip 0x4

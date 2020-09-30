@@ -3223,3 +3223,13 @@ lbl_8031A5A0:
 	.skip 0x40
 lbl_8031A5E0:
 	.skip 0x90
+
+.section .sbss
+lbl_803CBEB0:
+	.skip 0x4
+lbl_803CBEB4:
+	.skip 0x4
+lbl_803CBEB8:
+	.skip 0x4
+lbl_803CBEBC:
+	.skip 0x4

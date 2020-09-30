@@ -1168,3 +1168,115 @@ lbl_8028B5F0:
 .section .bss
 lbl_802DBA50:
 	.skip 0x20
+
+.section .sbss
+lbl_803CB450:
+	.skip 0x4
+lbl_803CB454:
+	.skip 0x4
+lbl_803CB458:
+	.skip 0x4
+lbl_803CB45C:
+	.skip 0x4
+lbl_803CB460:
+	.skip 0x4
+lbl_803CB464:
+	.skip 0x4
+lbl_803CB468:
+	.skip 0x4
+lbl_803CB46C:
+	.skip 0x4
+lbl_803CB470:
+	.skip 0x8
+/* SPECULATION: link order */
+.global zcam_overrot_tmr
+zcam_overrot_tmr:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_near
+zcam_near:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_mode
+zcam_mode:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_bbounce
+zcam_bbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_lbbounce
+zcam_lbbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_convers
+zcam_convers:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_lconvers
+zcam_lconvers:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_longbounce
+zcam_longbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_highbounce
+zcam_highbounce:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_cutscene
+zcam_cutscene:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_reward
+zcam_reward:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_playervel
+zcam_playervel:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_fly
+zcam_fly:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flypaused
+zcam_flypaused:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flydata
+zcam_flydata:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flysize
+zcam_flysize:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flytime
+zcam_flytime:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_flyasset_current
+zcam_flyasset_current:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_dest
+zcam_dest:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_tmr
+zcam_tmr:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_ttm
+zcam_ttm:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_fovcurr
+zcam_fovcurr:
+	.skip 0x4
+/* SPECULATION: link order */
+.global zcam_fovdest
+zcam_fovdest:
+	.skip 0x4

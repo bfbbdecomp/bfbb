@@ -858,3 +858,17 @@ lbl_8025E558:
 .section .bss
 lbl_802F2990:
 	.skip 0xC0
+
+.section .sbss
+lbl_803CB934:
+	.skip 0x4
+lbl_803CB938:
+	.skip 0x4
+lbl_803CB93C:
+	.skip 0x4
+lbl_803CB940:
+	.skip 0x4
+lbl_803CB944:
+	.skip 0x4
+lbl_803CB948:
+	.skip 0x8

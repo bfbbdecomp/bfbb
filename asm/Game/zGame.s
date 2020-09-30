@@ -2377,3 +2377,145 @@ lbl_8025BE88:
 	.incbin "baserom.dol", 0x258E68, 0x100
 lbl_8025BF88:
 	.incbin "baserom.dol", 0x258F68, 0xA98
+
+.section .sbss
+lbl_803CB7A4:
+	.skip 0x4
+lbl_803CB7A8:
+	.skip 0x4
+lbl_803CB7AC:
+	.skip 0x4
+lbl_803CB7B0:
+	.skip 0x4
+lbl_803CB7B4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTimeElapsed
+sTimeElapsed:
+	.skip 0x8
+/* SPECULATION: link order */
+.global sTimeLast
+sTimeLast:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB7C4
+lbl_803CB7C4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sTimeCurrent
+sTimeCurrent:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB7CC
+lbl_803CB7CC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gLevelChanged
+gLevelChanged:
+	.skip 0x4
+lbl_803CB7D4:
+	.skip 0x4
+lbl_803CB7D8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gSoak
+gSoak:
+	.skip 0x4
+lbl_803CB7E0:
+	.skip 0x4
+lbl_803CB7E4:
+	.skip 0x4
+lbl_803CB7E8:
+	.skip 0x4
+lbl_803CB7EC:
+	.skip 0x4
+lbl_803CB7F0:
+	.skip 0x4
+lbl_803CB7F4:
+	.skip 0x4
+lbl_803CB7F8:
+	.skip 0x4
+lbl_803CB7FC:
+	.skip 0x4
+lbl_803CB800:
+	.skip 0x4
+lbl_803CB804:
+	.skip 0x4
+lbl_803CB808:
+	.skip 0x8
+lbl_803CB810:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB814
+lbl_803CB814:
+	.skip 0x4
+lbl_803CB818:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB81C
+lbl_803CB81C:
+	.skip 0x4
+lbl_803CB820:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB824
+lbl_803CB824:
+	.skip 0x4
+lbl_803CB828:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB82C
+lbl_803CB82C:
+	.skip 0x4
+lbl_803CB830:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB834
+lbl_803CB834:
+	.skip 0x4
+lbl_803CB838:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CB83C
+lbl_803CB83C:
+	.skip 0x4
+lbl_803CB840:
+	.skip 0x4
+lbl_803CB844:
+	.skip 0x4
+lbl_803CB848:
+	.skip 0x4
+lbl_803CB84C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sHackSmoothedUpdate
+sHackSmoothedUpdate:
+	.skip 0x4
+lbl_803CB854:
+	.skip 0x4
+lbl_803CB858:
+	.skip 0x4
+lbl_803CB85C:
+	.skip 0x4
+lbl_803CB860:
+	.skip 0x4
+/* SPECULATION: link order */
+.global sGameScreenTransCam
+sGameScreenTransCam:
+	.skip 0x4
+lbl_803CB868:
+	.skip 0x4
+lbl_803CB86C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bgu1
+bgu1:
+	.skip 0x4
+/* SPECULATION: link order */
+.global bgv1
+bgv1:
+	.skip 0x4
+/* SPECULATION: link order */
+.global gGameWhereAmI
+gGameWhereAmI:
+	.skip 0x8

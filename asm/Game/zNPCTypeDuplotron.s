@@ -1306,3 +1306,19 @@ lbl_80314E24:
 	.skip 0x16C
 lbl_80314F90:
 	.skip 0x560
+
+.section .sbss
+lbl_803CBE68:
+	.skip 0x4
+lbl_803CBE6C:
+	.skip 0x4
+lbl_803CBE70:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_blinky__13zNPCDuplotron
+rast_blinky__13zNPCDuplotron:
+	.skip 0x4
+lbl_803CBE78:
+	.skip 0x4
+lbl_803CBE7C:
+	.skip 0x4

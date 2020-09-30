@@ -1882,3 +1882,9 @@ lbl_80288CA0:
 .section .bss
 lbl_802DADA0:
 	.skip 0xC00
+
+.section .sbss
+lbl_803CB3F8:
+	.skip 0x4
+lbl_803CB3FC:
+	.skip 0x4

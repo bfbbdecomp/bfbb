@@ -2980,3 +2980,17 @@ lbl_8031AE5C:
 	.skip 0x480
 lbl_8031B2DC:
 	.skip 0x44
+
+.section .sbss
+lbl_803CBEE0:
+	.skip 0x4
+lbl_803CBEE4:
+	.skip 0x4
+lbl_803CBEE8:
+	.skip 0x4
+lbl_803CBEEC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global g_pc_playerInvisible
+g_pc_playerInvisible:
+	.skip 0x8

@@ -2346,3 +2346,37 @@ lbl_802FAE20:
 	.skip 0x24
 lbl_802FAE44:
 	.skip 0x1C
+
+.section .sbss
+lbl_803CBA88:
+	.skip 0x4
+lbl_803CBA8C:
+	.skip 0x4
+lbl_803CBA90:
+	.skip 0x4
+lbl_803CBA94:
+	.skip 0x1
+lbl_803CBA95:
+	.skip 0x1
+lbl_803CBA96:
+	.skip 0x1
+lbl_803CBA97:
+	.skip 0x1
+lbl_803CBA98:
+	.skip 0x8
+/* SPECULATION: link order */
+.global collide_rwtime
+collide_rwtime:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CBAA4
+lbl_803CBAA4:
+	.skip 0x4
+/* SPECULATION: link order */
+.global collide_rwct
+collide_rwct:
+	.skip 0x4
+/* SPECULATION: link order */
+.global collide_rwtime_secs
+collide_rwtime_secs:
+	.skip 0x4

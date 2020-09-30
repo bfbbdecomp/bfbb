@@ -4796,3 +4796,17 @@ lbl_80362B10:
 	.skip 0x14
 lbl_80362B24:
 	.skip 0x44
+
+.section .sbss
+lbl_803CC1B4:
+	.skip 0x4
+lbl_803CC1B8:
+	.skip 0x4
+lbl_803CC1BC:
+	.skip 0x4
+lbl_803CC1C0:
+	.skip 0x4
+lbl_803CC1C4:
+	.skip 0x1
+lbl_803CC1C5:
+	.skip 0x3

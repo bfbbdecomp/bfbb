@@ -1476,3 +1476,21 @@ lbl_80266610:
 .section .bss
 lbl_80312140:
 	.skip 0x10
+
+.section .sbss
+lbl_803CBC28:
+	.skip 0x4
+lbl_803CBC2C:
+	.skip 0x4
+lbl_803CBC30:
+	.skip 0x4
+lbl_803CBC34:
+	.skip 0xC
+/* SPECULATION: link order */
+.global sStartupTime
+sStartupTime:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803CBC44
+lbl_803CBC44:
+	.skip 0x4

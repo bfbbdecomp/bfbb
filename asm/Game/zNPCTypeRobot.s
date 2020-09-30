@@ -15768,3 +15768,99 @@ lbl_80312438:
 	.skip 0x7A0
 lbl_80312BD8:
 	.skip 0x5B0
+
+.section .sbss
+lbl_803CBCF8:
+	.skip 0x4
+lbl_803CBCFC:
+	.skip 0x4
+lbl_803CBD00:
+	.skip 0x4
+lbl_803CBD04:
+	.skip 0x4
+lbl_803CBD08:
+	.skip 0x4
+lbl_803CBD0C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_blink__11zNPCFodBomb
+rast_blink__11zNPCFodBomb:
+	.skip 0x4
+/* SPECULATION: link order */
+.global tmr_nexthokey__11zNPCFodBzzt
+tmr_nexthokey__11zNPCFodBzzt:
+	.skip 0x4
+/* SPECULATION: link order */
+.global tmr_hokeypokey__11zNPCFodBzzt
+tmr_hokeypokey__11zNPCFodBzzt:
+	.skip 0x4
+/* SPECULATION: link order */
+.global cnt_alerthokey__11zNPCFodBzzt
+cnt_alerthokey__11zNPCFodBzzt:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_discoLight__11zNPCFodBzzt
+rast_discoLight__11zNPCFodBzzt:
+	.skip 0x4
+lbl_803CBD24:
+	.skip 0x4
+lbl_803CBD28:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_killcone__10zNPCSleepy
+rast_killcone__10zNPCSleepy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_detectcone__10zNPCSleepy
+rast_detectcone__10zNPCSleepy:
+	.skip 0x4
+/* SPECULATION: link order */
+.global hyt_NightLightCurrent__10zNPCSleepy
+hyt_NightLightCurrent__10zNPCSleepy:
+	.skip 0x4
+lbl_803CBD38:
+	.skip 0x4
+lbl_803CBD3C:
+	.skip 0x4
+lbl_803CBD40:
+	.skip 0x4
+lbl_803CBD44:
+	.skip 0x4
+lbl_803CBD48:
+	.skip 0x4
+lbl_803CBD4C:
+	.skip 0x4
+lbl_803CBD50:
+	.skip 0x4
+lbl_803CBD54:
+	.skip 0x4
+lbl_803CBD58:
+	.skip 0x4
+lbl_803CBD5C:
+	.skip 0x4
+lbl_803CBD60:
+	.skip 0x4
+lbl_803CBD64:
+	.skip 0x4
+/* SPECULATION: link order */
+.global rast_blink__10zNPCArfDog
+rast_blink__10zNPCArfDog:
+	.skip 0x4
+lbl_803CBD6C:
+	.skip 0x4
+lbl_803CBD70:
+	.skip 0x4
+lbl_803CBD74:
+	.skip 0x4
+lbl_803CBD78:
+	.skip 0x4
+lbl_803CBD7C:
+	.skip 0x4
+lbl_803CBD80:
+	.skip 0x4
+lbl_803CBD84:
+	.skip 0x4
+lbl_803CBD88:
+	.skip 0x4
+lbl_803CBD8C:
+	.skip 0x4

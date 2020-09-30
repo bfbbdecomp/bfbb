@@ -1242,3 +1242,13 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .section .rodata
 lbl_80273B30:
 	.incbin "baserom.dol", 0x270B10, 0x10
+
+.section .sbss
+lbl_803CC1A8:
+	.skip 0x4
+lbl_803CC1AC:
+	.skip 0x4
+/* SPECULATION: link order */
+.global g_noz_ncin
+g_noz_ncin:
+	.skip 0x4

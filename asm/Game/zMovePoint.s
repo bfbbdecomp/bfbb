@@ -221,3 +221,9 @@ zMovePointGetDelay__FPC10zMovePoint:
 xMovePointGetDelay__FPC10xMovePoint:
 /* 800A6E94 000A3C94  C0 23 00 28 */	lfs f1, 0x28(r3)
 /* 800A6E98 000A3C98  4E 80 00 20 */	blr 
+
+.section .sbss
+lbl_803CB950:
+	.skip 0x4
+lbl_803CB954:
+	.skip 0x4

@@ -722,3 +722,17 @@ lbl_802E5710:
 	.skip 0x50
 lbl_802E5760:
 	.skip 0x28
+
+.section .sbss
+lbl_803CB8C0:
+	.skip 0x5
+lbl_803CB8C5:
+	.skip 0x3
+lbl_803CB8C8:
+	.skip 0x4
+lbl_803CB8CC:
+	.skip 0x4
+lbl_803CB8D0:
+	.skip 0x4
+lbl_803CB8D4:
+	.skip 0x4
