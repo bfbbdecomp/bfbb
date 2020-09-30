@@ -297,3 +297,33 @@ zPadAddRumble__F14_tagRumbleTypefiUi:
 .section .data
 lbl_80290090:
 	.incbin "baserom.dol", 0x28D070, 0x50
+
+.section .sdata2
+lbl_803CDE30:
+	.incbin "baserom.dol", 0x2B76D0, 0x4
+lbl_803CDE34:
+	.incbin "baserom.dol", 0x2B76D4, 0x4
+lbl_803CDE38:
+	.incbin "baserom.dol", 0x2B76D8, 0x4
+lbl_803CDE3C:
+	.incbin "baserom.dol", 0x2B76DC, 0x4
+lbl_803CDE40:
+	.incbin "baserom.dol", 0x2B76E0, 0x4
+lbl_803CDE44:
+	.incbin "baserom.dol", 0x2B76E4, 0x4
+lbl_803CDE48:
+	.incbin "baserom.dol", 0x2B76E8, 0x4
+lbl_803CDE4C:
+	.incbin "baserom.dol", 0x2B76EC, 0x4
+lbl_803CDE50:
+	.incbin "baserom.dol", 0x2B76F0, 0x4
+lbl_803CDE54:
+	.incbin "baserom.dol", 0x2B76F4, 0x4
+lbl_803CDE58:
+	.incbin "baserom.dol", 0x2B76F8, 0x4
+lbl_803CDE5C:
+	.incbin "baserom.dol", 0x2B76FC, 0x4
+lbl_803CDE60:
+	.incbin "baserom.dol", 0x2B7700, 0x4
+lbl_803CDE64:
+	.incbin "baserom.dol", 0x2B7704, 0x4

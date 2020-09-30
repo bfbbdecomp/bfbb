@@ -3880,3 +3880,79 @@ lbl_803CB180:
 	.skip 0x4
 lbl_803CB184:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CC9D0:
+	.incbin "baserom.dol", 0x2B6270, 0x4
+lbl_803CC9D4:
+	.incbin "baserom.dol", 0x2B6274, 0x4
+lbl_803CC9D8:
+	.incbin "baserom.dol", 0x2B6278, 0x4
+lbl_803CC9DC:
+	.incbin "baserom.dol", 0x2B627C, 0x4
+lbl_803CC9E0:
+	.incbin "baserom.dol", 0x2B6280, 0x4
+lbl_803CC9E4:
+	.incbin "baserom.dol", 0x2B6284, 0x4
+lbl_803CC9E8:
+	.incbin "baserom.dol", 0x2B6288, 0x4
+lbl_803CC9EC:
+	.incbin "baserom.dol", 0x2B628C, 0x4
+lbl_803CC9F0:
+	.incbin "baserom.dol", 0x2B6290, 0x4
+lbl_803CC9F4:
+	.incbin "baserom.dol", 0x2B6294, 0x4
+lbl_803CC9F8:
+	.incbin "baserom.dol", 0x2B6298, 0x4
+lbl_803CC9FC:
+	.incbin "baserom.dol", 0x2B629C, 0x4
+lbl_803CCA00:
+	.incbin "baserom.dol", 0x2B62A0, 0x4
+lbl_803CCA04:
+	.incbin "baserom.dol", 0x2B62A4, 0x4
+lbl_803CCA08:
+	.incbin "baserom.dol", 0x2B62A8, 0x4
+lbl_803CCA0C:
+	.incbin "baserom.dol", 0x2B62AC, 0x4
+lbl_803CCA10:
+	.incbin "baserom.dol", 0x2B62B0, 0x4
+lbl_803CCA14:
+	.incbin "baserom.dol", 0x2B62B4, 0x4
+lbl_803CCA18:
+	.incbin "baserom.dol", 0x2B62B8, 0x4
+lbl_803CCA1C:
+	.incbin "baserom.dol", 0x2B62BC, 0x4
+lbl_803CCA20:
+	.incbin "baserom.dol", 0x2B62C0, 0x4
+lbl_803CCA24:
+	.incbin "baserom.dol", 0x2B62C4, 0x4
+lbl_803CCA28:
+	.incbin "baserom.dol", 0x2B62C8, 0x4
+lbl_803CCA2C:
+	.incbin "baserom.dol", 0x2B62CC, 0x4
+lbl_803CCA30:
+	.incbin "baserom.dol", 0x2B62D0, 0x4
+lbl_803CCA34:
+	.incbin "baserom.dol", 0x2B62D4, 0x4
+lbl_803CCA38:
+	.incbin "baserom.dol", 0x2B62D8, 0x8
+lbl_803CCA40:
+	.incbin "baserom.dol", 0x2B62E0, 0x4
+lbl_803CCA44:
+	.incbin "baserom.dol", 0x2B62E4, 0x4
+lbl_803CCA48:
+	.incbin "baserom.dol", 0x2B62E8, 0x4
+lbl_803CCA4C:
+	.incbin "baserom.dol", 0x2B62EC, 0x4
+lbl_803CCA50:
+	.incbin "baserom.dol", 0x2B62F0, 0x4
+lbl_803CCA54:
+	.incbin "baserom.dol", 0x2B62F4, 0x4
+lbl_803CCA58:
+	.incbin "baserom.dol", 0x2B62F8, 0x4
+lbl_803CCA5C:
+	.incbin "baserom.dol", 0x2B62FC, 0x4
+lbl_803CCA60:
+	.incbin "baserom.dol", 0x2B6300, 0x4
+lbl_803CCA64:
+	.incbin "baserom.dol", 0x2B6304, 0x4

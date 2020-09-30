@@ -503,3 +503,15 @@ lbl_803CB2C8:
 .section .sdata
 lbl_803CA980:
 	.incbin "baserom.dol", 0x2B5A40, 0x8
+
+.section .sdata2
+lbl_803CCDF0:
+	.incbin "baserom.dol", 0x2B6690, 0x4
+lbl_803CCDF4:
+	.incbin "baserom.dol", 0x2B6694, 0x4
+lbl_803CCDF8:
+	.incbin "baserom.dol", 0x2B6698, 0x4
+lbl_803CCDFC:
+	.incbin "baserom.dol", 0x2B669C, 0x4
+lbl_803CCE00:
+	.incbin "baserom.dol", 0x2B66A0, 0x8

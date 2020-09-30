@@ -414,3 +414,7 @@ gOccludeCalcCount:
 .global globalCamera
 globalCamera:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CDFB8:
+	.incbin "baserom.dol", 0x2B7858, 0x8

@@ -2434,3 +2434,79 @@ lbl_803CBF71:
 	.skip 0x3
 lbl_803CBF74:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CEDA8:
+	.incbin "baserom.dol", 0x2B8648, 0x4
+lbl_803CEDAC:
+	.incbin "baserom.dol", 0x2B864C, 0x4
+lbl_803CEDB0:
+	.incbin "baserom.dol", 0x2B8650, 0x4
+lbl_803CEDB4:
+	.incbin "baserom.dol", 0x2B8654, 0x4
+lbl_803CEDB8:
+	.incbin "baserom.dol", 0x2B8658, 0x4
+lbl_803CEDBC:
+	.incbin "baserom.dol", 0x2B865C, 0x4
+lbl_803CEDC0:
+	.incbin "baserom.dol", 0x2B8660, 0x4
+lbl_803CEDC4:
+	.incbin "baserom.dol", 0x2B8664, 0x4
+lbl_803CEDC8:
+	.incbin "baserom.dol", 0x2B8668, 0x4
+lbl_803CEDCC:
+	.incbin "baserom.dol", 0x2B866C, 0x4
+lbl_803CEDD0:
+	.incbin "baserom.dol", 0x2B8670, 0x4
+lbl_803CEDD4:
+	.incbin "baserom.dol", 0x2B8674, 0x4
+lbl_803CEDD8:
+	.incbin "baserom.dol", 0x2B8678, 0x4
+lbl_803CEDDC:
+	.incbin "baserom.dol", 0x2B867C, 0x4
+lbl_803CEDE0:
+	.incbin "baserom.dol", 0x2B8680, 0x4
+lbl_803CEDE4:
+	.incbin "baserom.dol", 0x2B8684, 0x4
+lbl_803CEDE8:
+	.incbin "baserom.dol", 0x2B8688, 0x4
+lbl_803CEDEC:
+	.incbin "baserom.dol", 0x2B868C, 0x4
+lbl_803CEDF0:
+	.incbin "baserom.dol", 0x2B8690, 0x4
+lbl_803CEDF4:
+	.incbin "baserom.dol", 0x2B8694, 0x4
+lbl_803CEDF8:
+	.incbin "baserom.dol", 0x2B8698, 0x4
+lbl_803CEDFC:
+	.incbin "baserom.dol", 0x2B869C, 0x4
+lbl_803CEE00:
+	.incbin "baserom.dol", 0x2B86A0, 0x4
+lbl_803CEE04:
+	.incbin "baserom.dol", 0x2B86A4, 0x4
+lbl_803CEE08:
+	.incbin "baserom.dol", 0x2B86A8, 0x4
+lbl_803CEE0C:
+	.incbin "baserom.dol", 0x2B86AC, 0x4
+lbl_803CEE10:
+	.incbin "baserom.dol", 0x2B86B0, 0x4
+lbl_803CEE14:
+	.incbin "baserom.dol", 0x2B86B4, 0x4
+lbl_803CEE18:
+	.incbin "baserom.dol", 0x2B86B8, 0x4
+lbl_803CEE1C:
+	.incbin "baserom.dol", 0x2B86BC, 0x4
+lbl_803CEE20:
+	.incbin "baserom.dol", 0x2B86C0, 0x8
+lbl_803CEE28:
+	.incbin "baserom.dol", 0x2B86C8, 0x8
+lbl_803CEE30:
+	.incbin "baserom.dol", 0x2B86D0, 0x4
+lbl_803CEE34:
+	.incbin "baserom.dol", 0x2B86D4, 0x4
+lbl_803CEE38:
+	.incbin "baserom.dol", 0x2B86D8, 0x4
+lbl_803CEE3C:
+	.incbin "baserom.dol", 0x2B86DC, 0x4
+lbl_803CEE40:
+	.incbin "baserom.dol", 0x2B86E0, 0x8

@@ -4344,3 +4344,27 @@ lbl_802B89E0:
 .global gxAnimUseGrowAlloc
 gxAnimUseGrowAlloc:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CC980:
+	.incbin "baserom.dol", 0x2B6220, 0x4
+lbl_803CC984:
+	.incbin "baserom.dol", 0x2B6224, 0x4
+lbl_803CC988:
+	.incbin "baserom.dol", 0x2B6228, 0x8
+lbl_803CC990:
+	.incbin "baserom.dol", 0x2B6230, 0x8
+lbl_803CC998:
+	.incbin "baserom.dol", 0x2B6238, 0x4
+lbl_803CC99C:
+	.incbin "baserom.dol", 0x2B623C, 0x4
+lbl_803CC9A0:
+	.incbin "baserom.dol", 0x2B6240, 0x8
+lbl_803CC9A8:
+	.incbin "baserom.dol", 0x2B6248, 0x4
+lbl_803CC9AC:
+	.incbin "baserom.dol", 0x2B624C, 0x4
+lbl_803CC9B0:
+	.incbin "baserom.dol", 0x2B6250, 0x4
+lbl_803CC9B4:
+	.incbin "baserom.dol", 0x2B6254, 0x4

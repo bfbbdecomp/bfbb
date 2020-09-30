@@ -925,3 +925,13 @@ __as__5xVec3Ff:
 /* 8001C87C 0001967C  D0 23 00 04 */	stfs f1, 4(r3)
 /* 8001C880 00019680  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8001C884 00019684  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCC08:
+	.incbin "baserom.dol", 0x2B64A8, 0x4
+lbl_803CCC0C:
+	.incbin "baserom.dol", 0x2B64AC, 0x4
+lbl_803CCC10:
+	.incbin "baserom.dol", 0x2B64B0, 0x4
+lbl_803CCC14:
+	.incbin "baserom.dol", 0x2B64B4, 0x4

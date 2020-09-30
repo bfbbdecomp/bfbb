@@ -1755,3 +1755,31 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .section .data
 lbl_8027D700:
 	.incbin "baserom.dol", 0x27A6E0, 0x1A8
+
+.section .sdata2
+lbl_803CCF18:
+	.incbin "baserom.dol", 0x2B67B8, 0x4
+lbl_803CCF1C:
+	.incbin "baserom.dol", 0x2B67BC, 0x4
+lbl_803CCF20:
+	.incbin "baserom.dol", 0x2B67C0, 0x4
+lbl_803CCF24:
+	.incbin "baserom.dol", 0x2B67C4, 0x4
+lbl_803CCF28:
+	.incbin "baserom.dol", 0x2B67C8, 0x4
+lbl_803CCF2C:
+	.incbin "baserom.dol", 0x2B67CC, 0x4
+lbl_803CCF30:
+	.incbin "baserom.dol", 0x2B67D0, 0x4
+lbl_803CCF34:
+	.incbin "baserom.dol", 0x2B67D4, 0x4
+lbl_803CCF38:
+	.incbin "baserom.dol", 0x2B67D8, 0x4
+lbl_803CCF3C:
+	.incbin "baserom.dol", 0x2B67DC, 0x4
+lbl_803CCF40:
+	.incbin "baserom.dol", 0x2B67E0, 0x4
+lbl_803CCF44:
+	.incbin "baserom.dol", 0x2B67E4, 0x4
+lbl_803CCF48:
+	.incbin "baserom.dol", 0x2B67E8, 0x8

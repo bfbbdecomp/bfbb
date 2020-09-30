@@ -2708,3 +2708,23 @@ g_debugRenderSafeArea:
 .section .sbss2
 lbl_803D0818:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CCF78:
+	.incbin "baserom.dol", 0x2B6818, 0x4
+lbl_803CCF7C:
+	.incbin "baserom.dol", 0x2B681C, 0x4
+lbl_803CCF80:
+	.incbin "baserom.dol", 0x2B6820, 0x4
+lbl_803CCF84:
+	.incbin "baserom.dol", 0x2B6824, 0x4
+lbl_803CCF88:
+	.incbin "baserom.dol", 0x2B6828, 0x8
+lbl_803CCF90:
+	.incbin "baserom.dol", 0x2B6830, 0x8
+lbl_803CCF98:
+	.incbin "baserom.dol", 0x2B6838, 0x4
+lbl_803CCF9C:
+	.incbin "baserom.dol", 0x2B683C, 0x4
+lbl_803CCFA0:
+	.incbin "baserom.dol", 0x2B6840, 0x8

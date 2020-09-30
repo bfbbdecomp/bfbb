@@ -2380,3 +2380,19 @@ collide_rwct:
 .global collide_rwtime_secs
 collide_rwtime_secs:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CE060:
+	.incbin "baserom.dol", 0x2B7900, 0x4
+lbl_803CE064:
+	.incbin "baserom.dol", 0x2B7904, 0x4
+lbl_803CE068:
+	.incbin "baserom.dol", 0x2B7908, 0x4
+lbl_803CE06C:
+	.incbin "baserom.dol", 0x2B790C, 0x4
+lbl_803CE070:
+	.incbin "baserom.dol", 0x2B7910, 0x4
+lbl_803CE074:
+	.incbin "baserom.dol", 0x2B7914, 0x4
+lbl_803CE078:
+	.incbin "baserom.dol", 0x2B7918, 0x8

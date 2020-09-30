@@ -2161,3 +2161,19 @@ lbl_803D08A8:
 .global lbl_803D08AC
 lbl_803D08AC:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CE0E0:
+	.incbin "baserom.dol", 0x2B7980, 0x4
+lbl_803CE0E4:
+	.incbin "baserom.dol", 0x2B7984, 0x4
+lbl_803CE0E8:
+	.incbin "baserom.dol", 0x2B7988, 0x4
+lbl_803CE0EC:
+	.incbin "baserom.dol", 0x2B798C, 0x4
+lbl_803CE0F0:
+	.incbin "baserom.dol", 0x2B7990, 0x8
+lbl_803CE0F8:
+	.incbin "baserom.dol", 0x2B7998, 0x8
+lbl_803CE100:
+	.incbin "baserom.dol", 0x2B79A0, 0x8

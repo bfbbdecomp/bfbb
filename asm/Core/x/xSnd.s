@@ -1888,3 +1888,21 @@ lbl_803CB3F8:
 	.skip 0x4
 lbl_803CB3FC:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CD078:
+	.incbin "baserom.dol", 0x2B6918, 0x4
+lbl_803CD07C:
+	.incbin "baserom.dol", 0x2B691C, 0x4
+lbl_803CD080:
+	.incbin "baserom.dol", 0x2B6920, 0x4
+lbl_803CD084:
+	.incbin "baserom.dol", 0x2B6924, 0x4
+lbl_803CD088:
+	.incbin "baserom.dol", 0x2B6928, 0x4
+lbl_803CD08C:
+	.incbin "baserom.dol", 0x2B692C, 0x4
+lbl_803CD090:
+	.incbin "baserom.dol", 0x2B6930, 0x4
+lbl_803CD094:
+	.incbin "baserom.dol", 0x2B6934, 0x4

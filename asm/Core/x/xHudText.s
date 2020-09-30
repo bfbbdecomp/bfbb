@@ -353,3 +353,17 @@ lbl_803CC1CC:
 .global comboHUD
 comboHUD:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CFBC0:
+	.incbin "baserom.dol", 0x2B9460, 0x8
+lbl_803CFBC8:
+	.incbin "baserom.dol", 0x2B9468, 0x8
+lbl_803CFBD0:
+	.incbin "baserom.dol", 0x2B9470, 0x4
+lbl_803CFBD4:
+	.incbin "baserom.dol", 0x2B9474, 0x4
+lbl_803CFBD8:
+	.incbin "baserom.dol", 0x2B9478, 0x4
+lbl_803CFBDC:
+	.incbin "baserom.dol", 0x2B947C, 0x4

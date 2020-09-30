@@ -896,3 +896,15 @@ tcb__8ztaskbox:
 .section .sdata
 lbl_803CAD78:
 	.incbin "baserom.dol", 0x2B5E38, 0x8
+
+.section .sdata2
+lbl_803CECC8:
+	.incbin "baserom.dol", 0x2B8568, 0x4
+lbl_803CECCC:
+	.incbin "baserom.dol", 0x2B856C, 0x4
+lbl_803CECD0:
+	.incbin "baserom.dol", 0x2B8570, 0x4
+lbl_803CECD4:
+	.incbin "baserom.dol", 0x2B8574, 0x4
+lbl_803CECD8:
+	.incbin "baserom.dol", 0x2B8578, 0x8

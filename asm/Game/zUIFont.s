@@ -882,3 +882,11 @@ lbl_8025F998:
 	.incbin "baserom.dol", 0x25C978, 0x10
 lbl_8025F9A8:
 	.incbin "baserom.dol", 0x25C988, 0x40
+
+.section .sdata2
+lbl_803CDF98:
+	.incbin "baserom.dol", 0x2B7838, 0x4
+lbl_803CDF9C:
+	.incbin "baserom.dol", 0x2B783C, 0x4
+lbl_803CDFA0:
+	.incbin "baserom.dol", 0x2B7840, 0x8

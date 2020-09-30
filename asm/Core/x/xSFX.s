@@ -651,3 +651,13 @@ ShadowStrength:
 .global rscale
 rscale:
 	.incbin "baserom.dol", 0x2B5A6C, 0x4
+
+.section .sdata2
+lbl_803CCFE8:
+	.incbin "baserom.dol", 0x2B6888, 0x8
+lbl_803CCFF0:
+	.incbin "baserom.dol", 0x2B6890, 0x4
+lbl_803CCFF4:
+	.incbin "baserom.dol", 0x2B6894, 0x4
+lbl_803CCFF8:
+	.incbin "baserom.dol", 0x2B6898, 0x8

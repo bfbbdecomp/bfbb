@@ -3122,3 +3122,55 @@ gGridIterActive:
 .section .sbss2
 lbl_803D08D0:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CE928:
+	.incbin "baserom.dol", 0x2B81C8, 0x4
+lbl_803CE92C:
+	.incbin "baserom.dol", 0x2B81CC, 0x4
+lbl_803CE930:
+	.incbin "baserom.dol", 0x2B81D0, 0x4
+lbl_803CE934:
+	.incbin "baserom.dol", 0x2B81D4, 0x4
+lbl_803CE938:
+	.incbin "baserom.dol", 0x2B81D8, 0x4
+lbl_803CE93C:
+	.incbin "baserom.dol", 0x2B81DC, 0x4
+lbl_803CE940:
+	.incbin "baserom.dol", 0x2B81E0, 0x4
+lbl_803CE944:
+	.incbin "baserom.dol", 0x2B81E4, 0x4
+lbl_803CE948:
+	.incbin "baserom.dol", 0x2B81E8, 0x4
+lbl_803CE94C:
+	.incbin "baserom.dol", 0x2B81EC, 0x4
+lbl_803CE950:
+	.incbin "baserom.dol", 0x2B81F0, 0x4
+lbl_803CE954:
+	.incbin "baserom.dol", 0x2B81F4, 0x4
+lbl_803CE958:
+	.incbin "baserom.dol", 0x2B81F8, 0x4
+lbl_803CE95C:
+	.incbin "baserom.dol", 0x2B81FC, 0x4
+lbl_803CE960:
+	.incbin "baserom.dol", 0x2B8200, 0x4
+lbl_803CE964:
+	.incbin "baserom.dol", 0x2B8204, 0x4
+lbl_803CE968:
+	.incbin "baserom.dol", 0x2B8208, 0x4
+lbl_803CE96C:
+	.incbin "baserom.dol", 0x2B820C, 0x4
+lbl_803CE970:
+	.incbin "baserom.dol", 0x2B8210, 0x4
+lbl_803CE974:
+	.incbin "baserom.dol", 0x2B8214, 0x4
+lbl_803CE978:
+	.incbin "baserom.dol", 0x2B8218, 0x4
+lbl_803CE97C:
+	.incbin "baserom.dol", 0x2B821C, 0x4
+lbl_803CE980:
+	.incbin "baserom.dol", 0x2B8220, 0x4
+lbl_803CE984:
+	.incbin "baserom.dol", 0x2B8224, 0x4
+lbl_803CE988:
+	.incbin "baserom.dol", 0x2B8228, 0x8

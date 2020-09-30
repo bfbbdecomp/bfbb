@@ -1009,3 +1009,17 @@ lbl_8027B380:
 .global sCameraFXTable
 sCameraFXTable:
 	.incbin "baserom.dol", 0x2783D0, 0x28
+
+.section .sdata2
+lbl_803CC9B8:
+	.incbin "baserom.dol", 0x2B6258, 0x4
+lbl_803CC9BC:
+	.incbin "baserom.dol", 0x2B625C, 0x4
+lbl_803CC9C0:
+	.incbin "baserom.dol", 0x2B6260, 0x4
+lbl_803CC9C4:
+	.incbin "baserom.dol", 0x2B6264, 0x4
+lbl_803CC9C8:
+	.incbin "baserom.dol", 0x2B6268, 0x4
+lbl_803CC9CC:
+	.incbin "baserom.dol", 0x2B626C, 0x4

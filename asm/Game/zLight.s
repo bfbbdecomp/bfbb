@@ -603,3 +603,7 @@ lbl_803CB8EC:
 	.skip 0x4
 lbl_803CB8F0:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CDB58:
+	.incbin "baserom.dol", 0x2B73F8, 0x8

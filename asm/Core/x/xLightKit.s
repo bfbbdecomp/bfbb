@@ -307,3 +307,9 @@ lbl_80123624:
 /* 8012362C 0012042C  7C 08 03 A6 */	mtlr r0
 /* 80123630 00120430  38 21 00 20 */	addi r1, r1, 0x20
 /* 80123634 00120434  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CEA40:
+	.incbin "baserom.dol", 0x2B82E0, 0x4
+lbl_803CEA44:
+	.incbin "baserom.dol", 0x2B82E4, 0x4

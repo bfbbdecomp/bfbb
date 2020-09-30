@@ -475,3 +475,21 @@ mFirstFrame__7ROMFont:
 .global mResetEnabled__11ResetButton
 mResetEnabled__11ResetButton:
 	.incbin "baserom.dol", 0x2B5E79, 0x7
+
+.section .sdata2
+lbl_803CF610:
+	.incbin "baserom.dol", 0x2B8EB0, 0x4
+lbl_803CF614:
+	.incbin "baserom.dol", 0x2B8EB4, 0x4
+lbl_803CF618:
+	.incbin "baserom.dol", 0x2B8EB8, 0x4
+lbl_803CF61C:
+	.incbin "baserom.dol", 0x2B8EBC, 0x4
+lbl_803CF620:
+	.incbin "baserom.dol", 0x2B8EC0, 0x4
+lbl_803CF624:
+	.incbin "baserom.dol", 0x2B8EC4, 0x4
+lbl_803CF628:
+	.incbin "baserom.dol", 0x2B8EC8, 0x4
+lbl_803CF62C:
+	.incbin "baserom.dol", 0x2B8ECC, 0x4

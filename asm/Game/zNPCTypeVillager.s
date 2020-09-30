@@ -5500,3 +5500,67 @@ g_hash_tikianim:
 .global g_strz_tikianim
 g_strz_tikianim:
 	.incbin "baserom.dol", 0x2B5DE0, 0x8
+
+.section .sdata2
+lbl_803CE610:
+	.incbin "baserom.dol", 0x2B7EB0, 0x4
+lbl_803CE614:
+	.incbin "baserom.dol", 0x2B7EB4, 0x4
+lbl_803CE618:
+	.incbin "baserom.dol", 0x2B7EB8, 0x4
+lbl_803CE61C:
+	.incbin "baserom.dol", 0x2B7EBC, 0x4
+lbl_803CE620:
+	.incbin "baserom.dol", 0x2B7EC0, 0x4
+lbl_803CE624:
+	.incbin "baserom.dol", 0x2B7EC4, 0x4
+lbl_803CE628:
+	.incbin "baserom.dol", 0x2B7EC8, 0x4
+lbl_803CE62C:
+	.incbin "baserom.dol", 0x2B7ECC, 0x4
+lbl_803CE630:
+	.incbin "baserom.dol", 0x2B7ED0, 0x8
+lbl_803CE638:
+	.incbin "baserom.dol", 0x2B7ED8, 0x8
+lbl_803CE640:
+	.incbin "baserom.dol", 0x2B7EE0, 0x4
+lbl_803CE644:
+	.incbin "baserom.dol", 0x2B7EE4, 0x4
+lbl_803CE648:
+	.incbin "baserom.dol", 0x2B7EE8, 0x4
+lbl_803CE64C:
+	.incbin "baserom.dol", 0x2B7EEC, 0x4
+lbl_803CE650:
+	.incbin "baserom.dol", 0x2B7EF0, 0x4
+lbl_803CE654:
+	.incbin "baserom.dol", 0x2B7EF4, 0x4
+lbl_803CE658:
+	.incbin "baserom.dol", 0x2B7EF8, 0x4
+lbl_803CE65C:
+	.incbin "baserom.dol", 0x2B7EFC, 0x4
+lbl_803CE660:
+	.incbin "baserom.dol", 0x2B7F00, 0x4
+lbl_803CE664:
+	.incbin "baserom.dol", 0x2B7F04, 0x4
+lbl_803CE668:
+	.incbin "baserom.dol", 0x2B7F08, 0x4
+lbl_803CE66C:
+	.incbin "baserom.dol", 0x2B7F0C, 0x4
+lbl_803CE670:
+	.incbin "baserom.dol", 0x2B7F10, 0x4
+lbl_803CE674:
+	.incbin "baserom.dol", 0x2B7F14, 0x4
+lbl_803CE678:
+	.incbin "baserom.dol", 0x2B7F18, 0x4
+lbl_803CE67C:
+	.incbin "baserom.dol", 0x2B7F1C, 0x4
+lbl_803CE680:
+	.incbin "baserom.dol", 0x2B7F20, 0x4
+lbl_803CE684:
+	.incbin "baserom.dol", 0x2B7F24, 0x4
+lbl_803CE688:
+	.incbin "baserom.dol", 0x2B7F28, 0x4
+lbl_803CE68C:
+	.incbin "baserom.dol", 0x2B7F2C, 0x4
+lbl_803CE690:
+	.incbin "baserom.dol", 0x2B7F30, 0x8

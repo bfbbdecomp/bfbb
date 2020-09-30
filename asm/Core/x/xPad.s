@@ -813,3 +813,15 @@ lbl_80036944:
 .section .bss
 lbl_802C8770:
 	.skip 0x200
+
+.section .sdata2
+lbl_803CCEF8:
+	.incbin "baserom.dol", 0x2B6798, 0x4
+lbl_803CCEFC:
+	.incbin "baserom.dol", 0x2B679C, 0x4
+lbl_803CCF00:
+	.incbin "baserom.dol", 0x2B67A0, 0x4
+lbl_803CCF04:
+	.incbin "baserom.dol", 0x2B67A4, 0x4
+lbl_803CCF08:
+	.incbin "baserom.dol", 0x2B67A8, 0x8

@@ -705,3 +705,15 @@ lbl_803CB910:
 	.skip 0x4
 lbl_803CB914:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CDC40:
+	.incbin "baserom.dol", 0x2B74E0, 0x4
+lbl_803CDC44:
+	.incbin "baserom.dol", 0x2B74E4, 0x4
+lbl_803CDC48:
+	.incbin "baserom.dol", 0x2B74E8, 0x4
+lbl_803CDC4C:
+	.incbin "baserom.dol", 0x2B74EC, 0x4
+lbl_803CDC50:
+	.incbin "baserom.dol", 0x2B74F0, 0x8

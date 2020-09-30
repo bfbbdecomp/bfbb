@@ -547,3 +547,21 @@ SoundFlags:
 .global fc
 fc:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CE168:
+	.incbin "baserom.dol", 0x2B7A08, 0x4
+lbl_803CE16C:
+	.incbin "baserom.dol", 0x2B7A0C, 0x4
+/* SPECULATION: link order */
+.global lbl_803CE170
+lbl_803CE170:
+	.incbin "baserom.dol", 0x2B7A10, 0x4
+lbl_803CE174:
+	.incbin "baserom.dol", 0x2B7A14, 0x4
+lbl_803CE178:
+	.incbin "baserom.dol", 0x2B7A18, 0x4
+lbl_803CE17C:
+	.incbin "baserom.dol", 0x2B7A1C, 0x4
+lbl_803CE180:
+	.incbin "baserom.dol", 0x2B7A20, 0x8

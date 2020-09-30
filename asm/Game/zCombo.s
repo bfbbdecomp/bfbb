@@ -535,3 +535,13 @@ lbl_803CADCC:
 .global dtscale
 dtscale:
 	.incbin "baserom.dol", 0x2B5E90, 0x4
+
+.section .sdata2
+lbl_803CFBE0:
+	.incbin "baserom.dol", 0x2B9480, 0x4
+lbl_803CFBE4:
+	.incbin "baserom.dol", 0x2B9484, 0x4
+lbl_803CFBE8:
+	.incbin "baserom.dol", 0x2B9488, 0x4
+lbl_803CFBEC:
+	.incbin "baserom.dol", 0x2B948C, 0x4

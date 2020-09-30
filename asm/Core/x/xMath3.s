@@ -2043,3 +2043,23 @@ xQuatAdd__FP5xQuatPC5xQuatPC5xQuat:
 .section .data
 lbl_8027D6F0:
 	.incbin "baserom.dol", 0x27A6D0, 0x10
+
+.section .sdata2
+lbl_803CCE70:
+	.incbin "baserom.dol", 0x2B6710, 0x4
+lbl_803CCE74:
+	.incbin "baserom.dol", 0x2B6714, 0x4
+lbl_803CCE78:
+	.incbin "baserom.dol", 0x2B6718, 0x4
+lbl_803CCE7C:
+	.incbin "baserom.dol", 0x2B671C, 0x4
+lbl_803CCE80:
+	.incbin "baserom.dol", 0x2B6720, 0x4
+lbl_803CCE84:
+	.incbin "baserom.dol", 0x2B6724, 0x4
+lbl_803CCE88:
+	.incbin "baserom.dol", 0x2B6728, 0x4
+lbl_803CCE8C:
+	.incbin "baserom.dol", 0x2B672C, 0x4
+lbl_803CCE90:
+	.incbin "baserom.dol", 0x2B6730, 0x8

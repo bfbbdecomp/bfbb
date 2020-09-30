@@ -2167,3 +2167,31 @@ lbl_803D08C8:
 .global lbl_803D08CC
 lbl_803D08CC:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CE8F8:
+	.incbin "baserom.dol", 0x2B8198, 0x4
+lbl_803CE8FC:
+	.incbin "baserom.dol", 0x2B819C, 0x4
+lbl_803CE900:
+	.incbin "baserom.dol", 0x2B81A0, 0x4
+/* SPECULATION: link order */
+.global lbl_803CE904
+lbl_803CE904:
+	.incbin "baserom.dol", 0x2B81A4, 0x4
+lbl_803CE908:
+	.incbin "baserom.dol", 0x2B81A8, 0x4
+lbl_803CE90C:
+	.incbin "baserom.dol", 0x2B81AC, 0x4
+/* SPECULATION: link order */
+.global lbl_803CE910
+lbl_803CE910:
+	.incbin "baserom.dol", 0x2B81B0, 0x4
+lbl_803CE914:
+	.incbin "baserom.dol", 0x2B81B4, 0x4
+lbl_803CE918:
+	.incbin "baserom.dol", 0x2B81B8, 0x4
+lbl_803CE91C:
+	.incbin "baserom.dol", 0x2B81BC, 0x4
+lbl_803CE920:
+	.incbin "baserom.dol", 0x2B81C0, 0x8

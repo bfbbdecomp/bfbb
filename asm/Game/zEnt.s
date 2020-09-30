@@ -1803,3 +1803,29 @@ lbl_8028C1A0:
 .global gShadowParams
 gShadowParams:
 	.incbin "baserom.dol", 0x2891A0, 0x40
+
+.section .sdata2
+lbl_803CD2C8:
+	.incbin "baserom.dol", 0x2B6B68, 0x4
+lbl_803CD2CC:
+	.incbin "baserom.dol", 0x2B6B6C, 0x4
+lbl_803CD2D0:
+	.incbin "baserom.dol", 0x2B6B70, 0x4
+lbl_803CD2D4:
+	.incbin "baserom.dol", 0x2B6B74, 0x4
+lbl_803CD2D8:
+	.incbin "baserom.dol", 0x2B6B78, 0x4
+lbl_803CD2DC:
+	.incbin "baserom.dol", 0x2B6B7C, 0x4
+lbl_803CD2E0:
+	.incbin "baserom.dol", 0x2B6B80, 0x4
+lbl_803CD2E4:
+	.incbin "baserom.dol", 0x2B6B84, 0x4
+lbl_803CD2E8:
+	.incbin "baserom.dol", 0x2B6B88, 0x4
+lbl_803CD2EC:
+	.incbin "baserom.dol", 0x2B6B8C, 0x4
+lbl_803CD2F0:
+	.incbin "baserom.dol", 0x2B6B90, 0x4
+lbl_803CD2F4:
+	.incbin "baserom.dol", 0x2B6B94, 0x4

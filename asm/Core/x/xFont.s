@@ -7544,3 +7544,51 @@ lbl_803CA934:
 .global EnvMapShininess
 EnvMapShininess:
 	.incbin "baserom.dol", 0x2B59F8, 0x4
+
+.section .sdata2
+lbl_803CCC58:
+	.incbin "baserom.dol", 0x2B64F8, 0x8
+lbl_803CCC60:
+	.incbin "baserom.dol", 0x2B6500, 0x8
+lbl_803CCC68:
+	.incbin "baserom.dol", 0x2B6508, 0x8
+lbl_803CCC70:
+	.incbin "baserom.dol", 0x2B6510, 0x4
+lbl_803CCC74:
+	.incbin "baserom.dol", 0x2B6514, 0x4
+lbl_803CCC78:
+	.incbin "baserom.dol", 0x2B6518, 0x4
+lbl_803CCC7C:
+	.incbin "baserom.dol", 0x2B651C, 0x4
+lbl_803CCC80:
+	.incbin "baserom.dol", 0x2B6520, 0x4
+lbl_803CCC84:
+	.incbin "baserom.dol", 0x2B6524, 0x8
+lbl_803CCC8C:
+	.incbin "baserom.dol", 0x2B652C, 0x4
+/* SPECULATION: link order */
+.global lbl_803CCC90
+lbl_803CCC90:
+	.incbin "baserom.dol", 0x2B6530, 0x4
+lbl_803CCC94:
+	.incbin "baserom.dol", 0x2B6534, 0x4
+/* SPECULATION: link order */
+.global lbl_803CCC98
+lbl_803CCC98:
+	.incbin "baserom.dol", 0x2B6538, 0x4
+lbl_803CCC9C:
+	.incbin "baserom.dol", 0x2B653C, 0x4
+/* SPECULATION: link order */
+.global lbl_803CCCA0
+lbl_803CCCA0:
+	.incbin "baserom.dol", 0x2B6540, 0x4
+lbl_803CCCA4:
+	.incbin "baserom.dol", 0x2B6544, 0x4
+lbl_803CCCA8:
+	.incbin "baserom.dol", 0x2B6548, 0x4
+lbl_803CCCAC:
+	.incbin "baserom.dol", 0x2B654C, 0x4
+lbl_803CCCB0:
+	.incbin "baserom.dol", 0x2B6550, 0x4
+lbl_803CCCB4:
+	.incbin "baserom.dol", 0x2B6554, 0x4

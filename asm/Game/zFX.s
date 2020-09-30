@@ -5192,3 +5192,59 @@ soaklevels:
 .global soaktime
 soaktime:
 	.incbin "baserom.dol", 0x2B5BDC, 0x4
+
+.section .sdata2
+lbl_803CD968:
+	.incbin "baserom.dol", 0x2B7208, 0x4
+lbl_803CD96C:
+	.incbin "baserom.dol", 0x2B720C, 0x4
+lbl_803CD970:
+	.incbin "baserom.dol", 0x2B7210, 0x4
+lbl_803CD974:
+	.incbin "baserom.dol", 0x2B7214, 0x4
+lbl_803CD978:
+	.incbin "baserom.dol", 0x2B7218, 0x4
+lbl_803CD97C:
+	.incbin "baserom.dol", 0x2B721C, 0x4
+lbl_803CD980:
+	.incbin "baserom.dol", 0x2B7220, 0x4
+lbl_803CD984:
+	.incbin "baserom.dol", 0x2B7224, 0x4
+lbl_803CD988:
+	.incbin "baserom.dol", 0x2B7228, 0x4
+lbl_803CD98C:
+	.incbin "baserom.dol", 0x2B722C, 0x4
+lbl_803CD990:
+	.incbin "baserom.dol", 0x2B7230, 0x4
+lbl_803CD994:
+	.incbin "baserom.dol", 0x2B7234, 0x4
+lbl_803CD998:
+	.incbin "baserom.dol", 0x2B7238, 0x4
+lbl_803CD99C:
+	.incbin "baserom.dol", 0x2B723C, 0x4
+lbl_803CD9A0:
+	.incbin "baserom.dol", 0x2B7240, 0x8
+lbl_803CD9A8:
+	.incbin "baserom.dol", 0x2B7248, 0x8
+lbl_803CD9B0:
+	.incbin "baserom.dol", 0x2B7250, 0x4
+lbl_803CD9B4:
+	.incbin "baserom.dol", 0x2B7254, 0x4
+lbl_803CD9B8:
+	.incbin "baserom.dol", 0x2B7258, 0x4
+lbl_803CD9BC:
+	.incbin "baserom.dol", 0x2B725C, 0x4
+lbl_803CD9C0:
+	.incbin "baserom.dol", 0x2B7260, 0x4
+lbl_803CD9C4:
+	.incbin "baserom.dol", 0x2B7264, 0x4
+lbl_803CD9C8:
+	.incbin "baserom.dol", 0x2B7268, 0x4
+lbl_803CD9CC:
+	.incbin "baserom.dol", 0x2B726C, 0x4
+lbl_803CD9D0:
+	.incbin "baserom.dol", 0x2B7270, 0x8
+lbl_803CD9D8:
+	.incbin "baserom.dol", 0x2B7278, 0x4
+lbl_803CD9DC:
+	.incbin "baserom.dol", 0x2B727C, 0x4

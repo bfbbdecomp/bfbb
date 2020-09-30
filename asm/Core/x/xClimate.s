@@ -505,3 +505,35 @@ xMat3x3Copy__FP7xMat3x3PC7xMat3x3:
 .balign 8
 lbl_803CB188:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CCA68:
+	.incbin "baserom.dol", 0x2B6308, 0x4
+lbl_803CCA6C:
+	.incbin "baserom.dol", 0x2B630C, 0x4
+lbl_803CCA70:
+	.incbin "baserom.dol", 0x2B6310, 0x4
+lbl_803CCA74:
+	.incbin "baserom.dol", 0x2B6314, 0x4
+lbl_803CCA78:
+	.incbin "baserom.dol", 0x2B6318, 0x4
+lbl_803CCA7C:
+	.incbin "baserom.dol", 0x2B631C, 0x4
+lbl_803CCA80:
+	.incbin "baserom.dol", 0x2B6320, 0x4
+lbl_803CCA84:
+	.incbin "baserom.dol", 0x2B6324, 0x4
+lbl_803CCA88:
+	.incbin "baserom.dol", 0x2B6328, 0x4
+lbl_803CCA8C:
+	.incbin "baserom.dol", 0x2B632C, 0x4
+lbl_803CCA90:
+	.incbin "baserom.dol", 0x2B6330, 0x4
+lbl_803CCA94:
+	.incbin "baserom.dol", 0x2B6334, 0x4
+lbl_803CCA98:
+	.incbin "baserom.dol", 0x2B6338, 0x4
+lbl_803CCA9C:
+	.incbin "baserom.dol", 0x2B633C, 0x4
+lbl_803CCAA0:
+	.incbin "baserom.dol", 0x2B6340, 0x8

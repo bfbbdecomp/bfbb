@@ -3008,3 +3008,55 @@ acc_thrust__8Firework:
 .global acc_gravity__8Firework
 acc_gravity__8Firework:
 	.incbin "baserom.dol", 0x2B5E24, 0x4
+
+.section .sdata2
+lbl_803CEC40:
+	.incbin "baserom.dol", 0x2B84E0, 0x4
+lbl_803CEC44:
+	.incbin "baserom.dol", 0x2B84E4, 0x4
+lbl_803CEC48:
+	.incbin "baserom.dol", 0x2B84E8, 0x4
+lbl_803CEC4C:
+	.incbin "baserom.dol", 0x2B84EC, 0x4
+lbl_803CEC50:
+	.incbin "baserom.dol", 0x2B84F0, 0x4
+lbl_803CEC54:
+	.incbin "baserom.dol", 0x2B84F4, 0x4
+lbl_803CEC58:
+	.incbin "baserom.dol", 0x2B84F8, 0x4
+lbl_803CEC5C:
+	.incbin "baserom.dol", 0x2B84FC, 0x4
+lbl_803CEC60:
+	.incbin "baserom.dol", 0x2B8500, 0x8
+lbl_803CEC68:
+	.incbin "baserom.dol", 0x2B8508, 0x4
+lbl_803CEC6C:
+	.incbin "baserom.dol", 0x2B850C, 0x4
+lbl_803CEC70:
+	.incbin "baserom.dol", 0x2B8510, 0x4
+lbl_803CEC74:
+	.incbin "baserom.dol", 0x2B8514, 0x4
+lbl_803CEC78:
+	.incbin "baserom.dol", 0x2B8518, 0x4
+lbl_803CEC7C:
+	.incbin "baserom.dol", 0x2B851C, 0x4
+lbl_803CEC80:
+	.incbin "baserom.dol", 0x2B8520, 0x4
+lbl_803CEC84:
+	.incbin "baserom.dol", 0x2B8524, 0x4
+lbl_803CEC88:
+	.incbin "baserom.dol", 0x2B8528, 0x4
+lbl_803CEC8C:
+	.incbin "baserom.dol", 0x2B852C, 0x4
+lbl_803CEC90:
+	.incbin "baserom.dol", 0x2B8530, 0x4
+lbl_803CEC94:
+	.incbin "baserom.dol", 0x2B8534, 0x4
+lbl_803CEC98:
+	.incbin "baserom.dol", 0x2B8538, 0x4
+lbl_803CEC9C:
+	.incbin "baserom.dol", 0x2B853C, 0x4
+lbl_803CECA0:
+	.incbin "baserom.dol", 0x2B8540, 0x4
+lbl_803CECA4:
+	.incbin "baserom.dol", 0x2B8544, 0x4

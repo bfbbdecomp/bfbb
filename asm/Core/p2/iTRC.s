@@ -984,3 +984,13 @@ lbl_8029B868:
 .section .sbss2
 lbl_803D0A40:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CF800:
+	.incbin "baserom.dol", 0x2B90A0, 0x4
+lbl_803CF804:
+	.incbin "baserom.dol", 0x2B90A4, 0x4
+lbl_803CF808:
+	.incbin "baserom.dol", 0x2B90A8, 0x8
+lbl_803CF810:
+	.incbin "baserom.dol", 0x2B90B0, 0x8

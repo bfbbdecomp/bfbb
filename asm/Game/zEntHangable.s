@@ -1115,3 +1115,29 @@ lbl_803CB58C:
 .global gEmitShinySparkles
 gEmitShinySparkles:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CD4A0:
+	.incbin "baserom.dol", 0x2B6D40, 0x4
+lbl_803CD4A4:
+	.incbin "baserom.dol", 0x2B6D44, 0x4
+lbl_803CD4A8:
+	.incbin "baserom.dol", 0x2B6D48, 0x4
+lbl_803CD4AC:
+	.incbin "baserom.dol", 0x2B6D4C, 0x4
+lbl_803CD4B0:
+	.incbin "baserom.dol", 0x2B6D50, 0x4
+lbl_803CD4B4:
+	.incbin "baserom.dol", 0x2B6D54, 0x4
+lbl_803CD4B8:
+	.incbin "baserom.dol", 0x2B6D58, 0x4
+lbl_803CD4BC:
+	.incbin "baserom.dol", 0x2B6D5C, 0x4
+lbl_803CD4C0:
+	.incbin "baserom.dol", 0x2B6D60, 0x4
+lbl_803CD4C4:
+	.incbin "baserom.dol", 0x2B6D64, 0x4
+lbl_803CD4C8:
+	.incbin "baserom.dol", 0x2B6D68, 0x4
+lbl_803CD4CC:
+	.incbin "baserom.dol", 0x2B6D6C, 0x4

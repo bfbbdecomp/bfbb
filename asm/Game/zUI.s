@@ -3448,3 +3448,23 @@ sCameraNearClip:
 .global sCameraFarClip
 sCameraFarClip:
 	.incbin "baserom.dol", 0x2B5CFC, 0x4
+
+.section .sdata2
+lbl_803CDF70:
+	.incbin "baserom.dol", 0x2B7810, 0x4
+lbl_803CDF74:
+	.incbin "baserom.dol", 0x2B7814, 0x4
+lbl_803CDF78:
+	.incbin "baserom.dol", 0x2B7818, 0x4
+lbl_803CDF7C:
+	.incbin "baserom.dol", 0x2B781C, 0x4
+lbl_803CDF80:
+	.incbin "baserom.dol", 0x2B7820, 0x4
+lbl_803CDF84:
+	.incbin "baserom.dol", 0x2B7824, 0x4
+lbl_803CDF88:
+	.incbin "baserom.dol", 0x2B7828, 0x4
+lbl_803CDF8C:
+	.incbin "baserom.dol", 0x2B782C, 0x4
+lbl_803CDF90:
+	.incbin "baserom.dol", 0x2B7830, 0x8

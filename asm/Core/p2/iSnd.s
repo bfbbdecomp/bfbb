@@ -3981,3 +3981,39 @@ size:
 .global gEmergencyMemLevel
 gEmergencyMemLevel:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CE188:
+	.incbin "baserom.dol", 0x2B7A28, 0x4
+/* SPECULATION: link order */
+.global lbl_803CE18C
+lbl_803CE18C:
+	.incbin "baserom.dol", 0x2B7A2C, 0x4
+lbl_803CE190:
+	.incbin "baserom.dol", 0x2B7A30, 0x4
+lbl_803CE194:
+	.incbin "baserom.dol", 0x2B7A34, 0x4
+lbl_803CE198:
+	.incbin "baserom.dol", 0x2B7A38, 0x4
+lbl_803CE19C:
+	.incbin "baserom.dol", 0x2B7A3C, 0x4
+lbl_803CE1A0:
+	.incbin "baserom.dol", 0x2B7A40, 0x4
+lbl_803CE1A4:
+	.incbin "baserom.dol", 0x2B7A44, 0x4
+lbl_803CE1A8:
+	.incbin "baserom.dol", 0x2B7A48, 0x4
+lbl_803CE1AC:
+	.incbin "baserom.dol", 0x2B7A4C, 0x4
+lbl_803CE1B0:
+	.incbin "baserom.dol", 0x2B7A50, 0x8
+lbl_803CE1B8:
+	.incbin "baserom.dol", 0x2B7A58, 0x8
+lbl_803CE1C0:
+	.incbin "baserom.dol", 0x2B7A60, 0x8
+lbl_803CE1C8:
+	.incbin "baserom.dol", 0x2B7A68, 0x8
+lbl_803CE1D0:
+	.incbin "baserom.dol", 0x2B7A70, 0x4
+lbl_803CE1D4:
+	.incbin "baserom.dol", 0x2B7A74, 0x4

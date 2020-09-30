@@ -519,3 +519,9 @@ lbl_803CB430:
 .section .sdata
 lbl_803CA9B0:
 	.incbin "baserom.dol", 0x2B5A70, 0x8
+
+.section .sdata2
+lbl_803CD150:
+	.incbin "baserom.dol", 0x2B69F0, 0x4
+lbl_803CD154:
+	.incbin "baserom.dol", 0x2B69F4, 0x4

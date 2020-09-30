@@ -1481,3 +1481,29 @@ sFullScreenGlareColor:
 	.incbin "baserom.dol", 0x2B5A50, 0x4
 lbl_803CA994:
 	.incbin "baserom.dol", 0x2B5A54, 0xC
+
+.section .sdata2
+lbl_803CCFA8:
+	.incbin "baserom.dol", 0x2B6848, 0x8
+lbl_803CCFB0:
+	.incbin "baserom.dol", 0x2B6850, 0x8
+lbl_803CCFB8:
+	.incbin "baserom.dol", 0x2B6858, 0x8
+lbl_803CCFC0:
+	.incbin "baserom.dol", 0x2B6860, 0x4
+lbl_803CCFC4:
+	.incbin "baserom.dol", 0x2B6864, 0x4
+lbl_803CCFC8:
+	.incbin "baserom.dol", 0x2B6868, 0x4
+lbl_803CCFCC:
+	.incbin "baserom.dol", 0x2B686C, 0x4
+lbl_803CCFD0:
+	.incbin "baserom.dol", 0x2B6870, 0x4
+lbl_803CCFD4:
+	.incbin "baserom.dol", 0x2B6874, 0x4
+lbl_803CCFD8:
+	.incbin "baserom.dol", 0x2B6878, 0x4
+lbl_803CCFDC:
+	.incbin "baserom.dol", 0x2B687C, 0x4
+lbl_803CCFE0:
+	.incbin "baserom.dol", 0x2B6880, 0x8

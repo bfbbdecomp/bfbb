@@ -101,3 +101,13 @@ lbl_8017C3AC:
 /* 8017C414 00179214  7C 08 03 A6 */	mtlr r0
 /* 8017C418 00179218  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017C41C 0017921C  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CF760:
+	.incbin "baserom.dol", 0x2B9000, 0x4
+lbl_803CF764:
+	.incbin "baserom.dol", 0x2B9004, 0x4
+lbl_803CF768:
+	.incbin "baserom.dol", 0x2B9008, 0x8
+lbl_803CF770:
+	.incbin "baserom.dol", 0x2B9010, 0x8

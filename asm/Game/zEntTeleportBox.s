@@ -1646,3 +1646,59 @@ lbl_803CBED4:
 .global gBusStopIsRunning
 gBusStopIsRunning:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CEBB8:
+	.incbin "baserom.dol", 0x2B8458, 0x4
+lbl_803CEBBC:
+	.incbin "baserom.dol", 0x2B845C, 0x4
+lbl_803CEBC0:
+	.incbin "baserom.dol", 0x2B8460, 0x4
+lbl_803CEBC4:
+	.incbin "baserom.dol", 0x2B8464, 0x4
+lbl_803CEBC8:
+	.incbin "baserom.dol", 0x2B8468, 0x4
+lbl_803CEBCC:
+	.incbin "baserom.dol", 0x2B846C, 0x4
+lbl_803CEBD0:
+	.incbin "baserom.dol", 0x2B8470, 0x4
+lbl_803CEBD4:
+	.incbin "baserom.dol", 0x2B8474, 0x4
+lbl_803CEBD8:
+	.incbin "baserom.dol", 0x2B8478, 0x4
+lbl_803CEBDC:
+	.incbin "baserom.dol", 0x2B847C, 0x4
+lbl_803CEBE0:
+	.incbin "baserom.dol", 0x2B8480, 0x4
+lbl_803CEBE4:
+	.incbin "baserom.dol", 0x2B8484, 0x4
+lbl_803CEBE8:
+	.incbin "baserom.dol", 0x2B8488, 0x4
+lbl_803CEBEC:
+	.incbin "baserom.dol", 0x2B848C, 0x4
+lbl_803CEBF0:
+	.incbin "baserom.dol", 0x2B8490, 0x4
+lbl_803CEBF4:
+	.incbin "baserom.dol", 0x2B8494, 0x4
+lbl_803CEBF8:
+	.incbin "baserom.dol", 0x2B8498, 0x4
+lbl_803CEBFC:
+	.incbin "baserom.dol", 0x2B849C, 0x4
+lbl_803CEC00:
+	.incbin "baserom.dol", 0x2B84A0, 0x4
+lbl_803CEC04:
+	.incbin "baserom.dol", 0x2B84A4, 0x4
+lbl_803CEC08:
+	.incbin "baserom.dol", 0x2B84A8, 0x4
+lbl_803CEC0C:
+	.incbin "baserom.dol", 0x2B84AC, 0x4
+lbl_803CEC10:
+	.incbin "baserom.dol", 0x2B84B0, 0x4
+lbl_803CEC14:
+	.incbin "baserom.dol", 0x2B84B4, 0x4
+lbl_803CEC18:
+	.incbin "baserom.dol", 0x2B84B8, 0x4
+lbl_803CEC1C:
+	.incbin "baserom.dol", 0x2B84BC, 0x4
+lbl_803CEC20:
+	.incbin "baserom.dol", 0x2B84C0, 0x8

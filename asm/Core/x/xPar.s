@@ -168,3 +168,9 @@ xParInit__FP4xPar:
 /* 80036B80 00033980  98 03 00 32 */	stb r0, 0x32(r3)
 /* 80036B84 00033984  98 03 00 33 */	stb r0, 0x33(r3)
 /* 80036B88 00033988  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCF10:
+	.incbin "baserom.dol", 0x2B67B0, 0x4
+lbl_803CCF14:
+	.incbin "baserom.dol", 0x2B67B4, 0x4

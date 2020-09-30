@@ -389,3 +389,7 @@ iFuncProfileParse__FPci:
 .section .sbss
 lbl_803CBC48:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CE1D8:
+	.incbin "baserom.dol", 0x2B7A78, 0x8

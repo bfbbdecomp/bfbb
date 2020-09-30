@@ -697,3 +697,19 @@ g_strz_dupoanim:
 .section .bss
 lbl_80314C50:
 	.skip 0x68
+
+.section .sdata2
+lbl_803CEA78:
+	.incbin "baserom.dol", 0x2B8318, 0x4
+lbl_803CEA7C:
+	.incbin "baserom.dol", 0x2B831C, 0x4
+lbl_803CEA80:
+	.incbin "baserom.dol", 0x2B8320, 0x4
+lbl_803CEA84:
+	.incbin "baserom.dol", 0x2B8324, 0x4
+lbl_803CEA88:
+	.incbin "baserom.dol", 0x2B8328, 0x4
+lbl_803CEA8C:
+	.incbin "baserom.dol", 0x2B832C, 0x4
+lbl_803CEA90:
+	.incbin "baserom.dol", 0x2B8330, 0x8

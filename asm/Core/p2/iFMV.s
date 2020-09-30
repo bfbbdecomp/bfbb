@@ -1055,3 +1055,23 @@ bad_val:
 .global test_alloc_val
 test_alloc_val:
 	.incbin "baserom.dol", 0x2B5D14, 0x4
+
+.section .sdata2
+lbl_803CE080:
+	.incbin "baserom.dol", 0x2B7920, 0x4
+lbl_803CE084:
+	.incbin "baserom.dol", 0x2B7924, 0x4
+lbl_803CE088:
+	.incbin "baserom.dol", 0x2B7928, 0x4
+lbl_803CE08C:
+	.incbin "baserom.dol", 0x2B792C, 0x4
+lbl_803CE090:
+	.incbin "baserom.dol", 0x2B7930, 0x8
+lbl_803CE098:
+	.incbin "baserom.dol", 0x2B7938, 0x8
+lbl_803CE0A0:
+	.incbin "baserom.dol", 0x2B7940, 0x4
+lbl_803CE0A4:
+	.incbin "baserom.dol", 0x2B7944, 0x4
+lbl_803CE0A8:
+	.incbin "baserom.dol", 0x2B7948, 0x8

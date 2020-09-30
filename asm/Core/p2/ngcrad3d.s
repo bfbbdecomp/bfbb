@@ -480,3 +480,21 @@ lbl_80312164:
 .section .sbss
 lbl_803CBC50:
 	.skip 0x8
+
+.section .sdata2
+lbl_803CE1E0:
+	.incbin "baserom.dol", 0x2B7A80, 0x4
+lbl_803CE1E4:
+	.incbin "baserom.dol", 0x2B7A84, 0x4
+lbl_803CE1E8:
+	.incbin "baserom.dol", 0x2B7A88, 0x8
+lbl_803CE1F0:
+	.incbin "baserom.dol", 0x2B7A90, 0x8
+lbl_803CE1F8:
+	.incbin "baserom.dol", 0x2B7A98, 0x4
+lbl_803CE1FC:
+	.incbin "baserom.dol", 0x2B7A9C, 0x4
+lbl_803CE200:
+	.incbin "baserom.dol", 0x2B7AA0, 0x8
+lbl_803CE208:
+	.incbin "baserom.dol", 0x2B7AA8, 0x8

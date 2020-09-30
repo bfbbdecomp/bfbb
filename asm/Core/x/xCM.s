@@ -669,3 +669,21 @@ lbl_803CC218:
 .section .sdata
 lbl_803CADD4:
 	.incbin "baserom.dol", 0x2B5E94, 0x4
+
+.section .sdata2
+lbl_803CFBF0:
+	.incbin "baserom.dol", 0x2B9490, 0x8
+lbl_803CFBF8:
+	.incbin "baserom.dol", 0x2B9498, 0x4
+lbl_803CFBFC:
+	.incbin "baserom.dol", 0x2B949C, 0x4
+lbl_803CFC00:
+	.incbin "baserom.dol", 0x2B94A0, 0x4
+lbl_803CFC04:
+	.incbin "baserom.dol", 0x2B94A4, 0x4
+lbl_803CFC08:
+	.incbin "baserom.dol", 0x2B94A8, 0x4
+lbl_803CFC0C:
+	.incbin "baserom.dol", 0x2B94AC, 0x4
+lbl_803CFC10:
+	.incbin "baserom.dol", 0x2B94B0, 0x18

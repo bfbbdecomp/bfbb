@@ -1383,3 +1383,15 @@ lbl_803CAB38:
 .global gGameState
 gGameState:
 	.incbin "baserom.dol", 0x2B5C00, 0x4
+
+.section .sdata2
+lbl_803CDA78:
+	.incbin "baserom.dol", 0x2B7318, 0x4
+lbl_803CDA7C:
+	.incbin "baserom.dol", 0x2B731C, 0x4
+lbl_803CDA80:
+	.incbin "baserom.dol", 0x2B7320, 0x4
+lbl_803CDA84:
+	.incbin "baserom.dol", 0x2B7324, 0x4
+lbl_803CDA88:
+	.incbin "baserom.dol", 0x2B7328, 0x8

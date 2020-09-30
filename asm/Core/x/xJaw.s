@@ -148,3 +148,15 @@ lbl_80270004:
 lbl_80270008:
 	.incbin "baserom.dol", 0x26CFE8, 0x7E8
 
+
+.section .sdata2
+lbl_803CF328:
+	.incbin "baserom.dol", 0x2B8BC8, 0x4
+lbl_803CF32C:
+	.incbin "baserom.dol", 0x2B8BCC, 0x4
+lbl_803CF330:
+	.incbin "baserom.dol", 0x2B8BD0, 0x4
+lbl_803CF334:
+	.incbin "baserom.dol", 0x2B8BD4, 0x4
+lbl_803CF338:
+	.incbin "baserom.dol", 0x2B8BD8, 0x8

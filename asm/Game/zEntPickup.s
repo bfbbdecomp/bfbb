@@ -4127,3 +4127,87 @@ lbl_803CAA90:
 	.incbin "baserom.dol", 0x2B5B50, 0x4
 lbl_803CAA94:
 	.incbin "baserom.dol", 0x2B5B54, 0x4
+
+.section .sdata2
+lbl_803CD4D0:
+	.incbin "baserom.dol", 0x2B6D70, 0x4
+lbl_803CD4D4:
+	.incbin "baserom.dol", 0x2B6D74, 0x4
+lbl_803CD4D8:
+	.incbin "baserom.dol", 0x2B6D78, 0x4
+lbl_803CD4DC:
+	.incbin "baserom.dol", 0x2B6D7C, 0x4
+lbl_803CD4E0:
+	.incbin "baserom.dol", 0x2B6D80, 0x4
+lbl_803CD4E4:
+	.incbin "baserom.dol", 0x2B6D84, 0x4
+lbl_803CD4E8:
+	.incbin "baserom.dol", 0x2B6D88, 0x4
+lbl_803CD4EC:
+	.incbin "baserom.dol", 0x2B6D8C, 0x4
+lbl_803CD4F0:
+	.incbin "baserom.dol", 0x2B6D90, 0x4
+lbl_803CD4F4:
+	.incbin "baserom.dol", 0x2B6D94, 0x4
+lbl_803CD4F8:
+	.incbin "baserom.dol", 0x2B6D98, 0x4
+lbl_803CD4FC:
+	.incbin "baserom.dol", 0x2B6D9C, 0x4
+lbl_803CD500:
+	.incbin "baserom.dol", 0x2B6DA0, 0x4
+lbl_803CD504:
+	.incbin "baserom.dol", 0x2B6DA4, 0x4
+lbl_803CD508:
+	.incbin "baserom.dol", 0x2B6DA8, 0x4
+lbl_803CD50C:
+	.incbin "baserom.dol", 0x2B6DAC, 0x4
+lbl_803CD510:
+	.incbin "baserom.dol", 0x2B6DB0, 0x4
+lbl_803CD514:
+	.incbin "baserom.dol", 0x2B6DB4, 0x4
+lbl_803CD518:
+	.incbin "baserom.dol", 0x2B6DB8, 0x4
+lbl_803CD51C:
+	.incbin "baserom.dol", 0x2B6DBC, 0x4
+lbl_803CD520:
+	.incbin "baserom.dol", 0x2B6DC0, 0x4
+lbl_803CD524:
+	.incbin "baserom.dol", 0x2B6DC4, 0x4
+lbl_803CD528:
+	.incbin "baserom.dol", 0x2B6DC8, 0x4
+lbl_803CD52C:
+	.incbin "baserom.dol", 0x2B6DCC, 0x4
+lbl_803CD530:
+	.incbin "baserom.dol", 0x2B6DD0, 0x4
+lbl_803CD534:
+	.incbin "baserom.dol", 0x2B6DD4, 0x4
+lbl_803CD538:
+	.incbin "baserom.dol", 0x2B6DD8, 0x4
+lbl_803CD53C:
+	.incbin "baserom.dol", 0x2B6DDC, 0x4
+lbl_803CD540:
+	.incbin "baserom.dol", 0x2B6DE0, 0x4
+lbl_803CD544:
+	.incbin "baserom.dol", 0x2B6DE4, 0x4
+lbl_803CD548:
+	.incbin "baserom.dol", 0x2B6DE8, 0x4
+lbl_803CD54C:
+	.incbin "baserom.dol", 0x2B6DEC, 0x4
+lbl_803CD550:
+	.incbin "baserom.dol", 0x2B6DF0, 0x8
+lbl_803CD558:
+	.incbin "baserom.dol", 0x2B6DF8, 0x8
+lbl_803CD560:
+	.incbin "baserom.dol", 0x2B6E00, 0x4
+lbl_803CD564:
+	.incbin "baserom.dol", 0x2B6E04, 0x4
+lbl_803CD568:
+	.incbin "baserom.dol", 0x2B6E08, 0x4
+lbl_803CD56C:
+	.incbin "baserom.dol", 0x2B6E0C, 0x4
+lbl_803CD570:
+	.incbin "baserom.dol", 0x2B6E10, 0x4
+lbl_803CD574:
+	.incbin "baserom.dol", 0x2B6E14, 0x4
+lbl_803CD578:
+	.incbin "baserom.dol", 0x2B6E18, 0x8

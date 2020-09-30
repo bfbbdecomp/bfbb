@@ -258,3 +258,9 @@ __as__13basic_rect$$0f$$1FRC13basic_rect$$0f$$1:
 /* 80018058 00014E58  D0 23 00 08 */	stfs f1, 8(r3)
 /* 8001805C 00014E5C  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 80018060 00014E60  4E 80 00 20 */	blr 
+
+.section .sdata2
+lbl_803CCBA0:
+	.incbin "baserom.dol", 0x2B6440, 0x4
+lbl_803CCBA4:
+	.incbin "baserom.dol", 0x2B6444, 0x4

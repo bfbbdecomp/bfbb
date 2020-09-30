@@ -1027,3 +1027,17 @@ lbl_803D0828:
 .section .sdata
 lbl_803CAA60:
 	.incbin "baserom.dol", 0x2B5B20, 0x8
+
+.section .sdata2
+lbl_803CD270:
+	.incbin "baserom.dol", 0x2B6B10, 0x4
+lbl_803CD274:
+	.incbin "baserom.dol", 0x2B6B14, 0x4
+lbl_803CD278:
+	.incbin "baserom.dol", 0x2B6B18, 0x4
+lbl_803CD27C:
+	.incbin "baserom.dol", 0x2B6B1C, 0x4
+lbl_803CD280:
+	.incbin "baserom.dol", 0x2B6B20, 0x8
+lbl_803CD288:
+	.incbin "baserom.dol", 0x2B6B28, 0x8

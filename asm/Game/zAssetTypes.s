@@ -1414,3 +1414,21 @@ zcam_overrot_tmanual:
 .global zcam_mintgtheight
 zcam_mintgtheight:
 	.incbin "baserom.dol", 0x2B5AFC, 0x4
+
+.section .sdata2
+lbl_803CD178:
+	.incbin "baserom.dol", 0x2B6A18, 0x4
+lbl_803CD17C:
+	.incbin "baserom.dol", 0x2B6A1C, 0x4
+lbl_803CD180:
+	.incbin "baserom.dol", 0x2B6A20, 0x4
+lbl_803CD184:
+	.incbin "baserom.dol", 0x2B6A24, 0x4
+lbl_803CD188:
+	.incbin "baserom.dol", 0x2B6A28, 0x4
+lbl_803CD18C:
+	.incbin "baserom.dol", 0x2B6A2C, 0x4
+lbl_803CD190:
+	.incbin "baserom.dol", 0x2B6A30, 0x4
+lbl_803CD194:
+	.incbin "baserom.dol", 0x2B6A34, 0x4

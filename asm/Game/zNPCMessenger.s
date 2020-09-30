@@ -1249,3 +1249,13 @@ lbl_803D08B8:
 .global lbl_803D08BC
 lbl_803D08BC:
 	.skip 0x4
+
+.section .sdata2
+lbl_803CE418:
+	.incbin "baserom.dol", 0x2B7CB8, 0x4
+lbl_803CE41C:
+	.incbin "baserom.dol", 0x2B7CBC, 0x4
+lbl_803CE420:
+	.incbin "baserom.dol", 0x2B7CC0, 0x4
+lbl_803CE424:
+	.incbin "baserom.dol", 0x2B7CC4, 0x4

@@ -4324,3 +4324,49 @@ xent_entent:
 .section .sdata
 lbl_803CA920:
 	.incbin "baserom.dol", 0x2B59E0, 0x8
+
+.section .sdata2
+lbl_803CCBA8:
+	.incbin "baserom.dol", 0x2B6448, 0x4
+lbl_803CCBAC:
+	.incbin "baserom.dol", 0x2B644C, 0x4
+lbl_803CCBB0:
+	.incbin "baserom.dol", 0x2B6450, 0x4
+lbl_803CCBB4:
+	.incbin "baserom.dol", 0x2B6454, 0x4
+lbl_803CCBB8:
+	.incbin "baserom.dol", 0x2B6458, 0x4
+lbl_803CCBBC:
+	.incbin "baserom.dol", 0x2B645C, 0x4
+lbl_803CCBC0:
+	.incbin "baserom.dol", 0x2B6460, 0x8
+lbl_803CCBC8:
+	.incbin "baserom.dol", 0x2B6468, 0x4
+lbl_803CCBCC:
+	.incbin "baserom.dol", 0x2B646C, 0x4
+lbl_803CCBD0:
+	.incbin "baserom.dol", 0x2B6470, 0x4
+lbl_803CCBD4:
+	.incbin "baserom.dol", 0x2B6474, 0x4
+lbl_803CCBD8:
+	.incbin "baserom.dol", 0x2B6478, 0x4
+lbl_803CCBDC:
+	.incbin "baserom.dol", 0x2B647C, 0x4
+lbl_803CCBE0:
+	.incbin "baserom.dol", 0x2B6480, 0x4
+lbl_803CCBE4:
+	.incbin "baserom.dol", 0x2B6484, 0x4
+lbl_803CCBE8:
+	.incbin "baserom.dol", 0x2B6488, 0x8
+lbl_803CCBF0:
+	.incbin "baserom.dol", 0x2B6490, 0x4
+lbl_803CCBF4:
+	.incbin "baserom.dol", 0x2B6494, 0x4
+lbl_803CCBF8:
+	.incbin "baserom.dol", 0x2B6498, 0x4
+lbl_803CCBFC:
+	.incbin "baserom.dol", 0x2B649C, 0x4
+lbl_803CCC00:
+	.incbin "baserom.dol", 0x2B64A0, 0x4
+lbl_803CCC04:
+	.incbin "baserom.dol", 0x2B64A4, 0x4
