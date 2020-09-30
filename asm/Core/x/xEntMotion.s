@@ -3139,3 +3139,7 @@ lbl_803CB1DE:
 .global gCurXEnv
 gCurXEnv:
 	.skip 0x8
+
+.section .sdata
+lbl_803CA928:
+	.incbin "baserom.dol", 0x2B59E8, 0x8

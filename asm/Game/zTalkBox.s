@@ -4194,3 +4194,11 @@ lbl_803D08E8:
 .global lbl_803D08EC
 lbl_803D08EC:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAD68:
+	.incbin "baserom.dol", 0x2B5E28, 0x4
+lbl_803CAD6C:
+	.incbin "baserom.dol", 0x2B5E2C, 0x4
+lbl_803CAD70:
+	.incbin "baserom.dol", 0x2B5E30, 0x8

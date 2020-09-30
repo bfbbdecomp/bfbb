@@ -5147,3 +5147,13 @@ lbl_803D088C:
 	.skip 0x4
 lbl_803D0890:
 	.skip 0x8
+
+.section .sdata
+lbl_803CAC00:
+	.incbin "baserom.dol", 0x2B5CC0, 0x4
+lbl_803CAC04:
+	.incbin "baserom.dol", 0x2B5CC4, 0x4
+lbl_803CAC08:
+	.incbin "baserom.dol", 0x2B5CC8, 0x4
+lbl_803CAC0C:
+	.incbin "baserom.dol", 0x2B5CCC, 0x4

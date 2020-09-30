@@ -3349,3 +3349,31 @@ lbl_803CB900:
 	.skip 0x4
 lbl_803CB904:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAB80:
+	.incbin "baserom.dol", 0x2B5C40, 0x4
+lbl_803CAB84:
+	.incbin "baserom.dol", 0x2B5C44, 0x4
+lbl_803CAB88:
+	.incbin "baserom.dol", 0x2B5C48, 0x4
+lbl_803CAB8C:
+	.incbin "baserom.dol", 0x2B5C4C, 0x4
+lbl_803CAB90:
+	.incbin "baserom.dol", 0x2B5C50, 0x4
+lbl_803CAB94:
+	.incbin "baserom.dol", 0x2B5C54, 0x4
+lbl_803CAB98:
+	.incbin "baserom.dol", 0x2B5C58, 0x4
+lbl_803CAB9C:
+	.incbin "baserom.dol", 0x2B5C5C, 0x4
+lbl_803CABA0:
+	.incbin "baserom.dol", 0x2B5C60, 0x4
+lbl_803CABA4:
+	.incbin "baserom.dol", 0x2B5C64, 0x4
+lbl_803CABA8:
+	.incbin "baserom.dol", 0x2B5C68, 0x8
+/* SPECULATION: link order */
+.global xglobals
+xglobals:
+	.incbin "baserom.dol", 0x2B5C70, 0x4

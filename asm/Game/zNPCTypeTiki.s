@@ -3932,3 +3932,19 @@ lbl_803CBDD8:
 	.skip 0x4
 lbl_803CBDDC:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAD28:
+	.incbin "baserom.dol", 0x2B5DE8, 0x4
+lbl_803CAD2C:
+	.incbin "baserom.dol", 0x2B5DEC, 0x4
+lbl_803CAD30:
+	.incbin "baserom.dol", 0x2B5DF0, 0x4
+lbl_803CAD34:
+	.incbin "baserom.dol", 0x2B5DF4, 0x4
+lbl_803CAD38:
+	.incbin "baserom.dol", 0x2B5DF8, 0x8
+/* SPECULATION: link order */
+.global xClumpColl_FilterFlags
+xClumpColl_FilterFlags:
+	.incbin "baserom.dol", 0x2B5E00, 0x8

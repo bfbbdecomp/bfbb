@@ -3825,3 +3825,15 @@ lbl_803D086C:
 	.skip 0x4
 lbl_803D0870:
 	.skip 0x8
+
+.section .sdata
+lbl_803CABB4:
+	.incbin "baserom.dol", 0x2B5C74, 0x4
+/* SPECULATION: link order */
+.global gSkipTimeCutscene
+gSkipTimeCutscene:
+	.incbin "baserom.dol", 0x2B5C78, 0x4
+/* SPECULATION: link order */
+.global gSkipTimeFlythrough
+gSkipTimeFlythrough:
+	.incbin "baserom.dol", 0x2B5C7C, 0x4

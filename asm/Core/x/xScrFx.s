@@ -1467,3 +1467,17 @@ sFullScreenGlareTextureID:
 .global sFullScreenGlareTexturePtr
 sFullScreenGlareTexturePtr:
 	.skip 0x8
+
+.section .sdata
+lbl_803CA988:
+	.incbin "baserom.dol", 0x2B5A48, 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareIntensity
+sFullScreenGlareIntensity:
+	.incbin "baserom.dol", 0x2B5A4C, 0x4
+/* SPECULATION: link order */
+.global sFullScreenGlareColor
+sFullScreenGlareColor:
+	.incbin "baserom.dol", 0x2B5A50, 0x4
+lbl_803CA994:
+	.incbin "baserom.dol", 0x2B5A54, 0xC

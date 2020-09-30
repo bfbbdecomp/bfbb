@@ -949,3 +949,15 @@ lbl_800571F0:
 .section .rodata
 lbl_80255088:
 	.incbin "baserom.dol", 0x252068, 0x30
+
+.section .sdata
+lbl_803CAA68:
+	.incbin "baserom.dol", 0x2B5B28, 0x4
+lbl_803CAA6C:
+	.incbin "baserom.dol", 0x2B5B2C, 0x4
+lbl_803CAA70:
+	.incbin "baserom.dol", 0x2B5B30, 0x4
+lbl_803CAA74:
+	.incbin "baserom.dol", 0x2B5B34, 0x4
+lbl_803CAA78:
+	.incbin "baserom.dol", 0x2B5B38, 0x8

@@ -7534,3 +7534,13 @@ lbl_803D0810:
 .global lbl_803D0814
 lbl_803D0814:
 	.skip 0x4
+
+.section .sdata
+lbl_803CA930:
+	.incbin "baserom.dol", 0x2B59F0, 0x4
+lbl_803CA934:
+	.incbin "baserom.dol", 0x2B59F4, 0x4
+/* SPECULATION: link order */
+.global EnvMapShininess
+EnvMapShininess:
+	.incbin "baserom.dol", 0x2B59F8, 0x4

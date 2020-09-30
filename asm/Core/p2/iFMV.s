@@ -1037,3 +1037,21 @@ lbl_803D0898:
 	.skip 0x4
 lbl_803D089C:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAC40:
+	.incbin "baserom.dol", 0x2B5D00, 0x4
+lbl_803CAC44:
+	.incbin "baserom.dol", 0x2B5D04, 0x4
+/* SPECULATION: link order */
+.global mFirstFrame__4iFMV
+mFirstFrame__4iFMV:
+	.incbin "baserom.dol", 0x2B5D08, 0x8
+/* SPECULATION: link order */
+.global bad_val
+bad_val:
+	.incbin "baserom.dol", 0x2B5D10, 0x4
+/* SPECULATION: link order */
+.global test_alloc_val
+test_alloc_val:
+	.incbin "baserom.dol", 0x2B5D14, 0x4

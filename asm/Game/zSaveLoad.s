@@ -4226,3 +4226,15 @@ lbl_803CB9B4:
 .global HACK_BASETYPE
 HACK_BASETYPE:
 	.skip 0x4
+
+.section .sdata
+lbl_803CABE8:
+	.incbin "baserom.dol", 0x2B5CA8, 0x4
+lbl_803CABEC:
+	.incbin "baserom.dol", 0x2B5CAC, 0x4
+lbl_803CABF0:
+	.incbin "baserom.dol", 0x2B5CB0, 0x4
+lbl_803CABF4:
+	.incbin "baserom.dol", 0x2B5CB4, 0x4
+lbl_803CABF8:
+	.incbin "baserom.dol", 0x2B5CB8, 0x8

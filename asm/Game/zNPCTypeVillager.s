@@ -5476,3 +5476,27 @@ lbl_803CBDC4:
 	.skip 0x4
 lbl_803CBDC8:
 	.skip 0x8
+
+.section .sdata
+lbl_803CACF8:
+	.incbin "baserom.dol", 0x2B5DB8, 0x8
+lbl_803CAD00:
+	.incbin "baserom.dol", 0x2B5DC0, 0x8
+/* SPECULATION: link order */
+.global g_vilg_ds2_playernear
+g_vilg_ds2_playernear:
+	.incbin "baserom.dol", 0x2B5DC8, 0x4
+lbl_803CAD0C:
+	.incbin "baserom.dol", 0x2B5DCC, 0x4
+/* SPECULATION: link order */
+.global alf_currBubBud__15zNPCBubbleBuddy
+alf_currBubBud__15zNPCBubbleBuddy:
+	.incbin "baserom.dol", 0x2B5DD0, 0x8
+/* SPECULATION: link order */
+.global g_hash_tikianim
+g_hash_tikianim:
+	.incbin "baserom.dol", 0x2B5DD8, 0x8
+/* SPECULATION: link order */
+.global g_strz_tikianim
+g_strz_tikianim:
+	.incbin "baserom.dol", 0x2B5DE0, 0x8

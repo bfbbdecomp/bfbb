@@ -2994,3 +2994,17 @@ lbl_803CBEEC:
 .global g_pc_playerInvisible
 g_pc_playerInvisible:
 	.skip 0x8
+
+.section .sdata
+lbl_803CAD58:
+	.incbin "baserom.dol", 0x2B5E18, 0x4
+lbl_803CAD5C:
+	.incbin "baserom.dol", 0x2B5E1C, 0x4
+/* SPECULATION: link order */
+.global acc_thrust__8Firework
+acc_thrust__8Firework:
+	.incbin "baserom.dol", 0x2B5E20, 0x4
+/* SPECULATION: link order */
+.global acc_gravity__8Firework
+acc_gravity__8Firework:
+	.incbin "baserom.dol", 0x2B5E24, 0x4

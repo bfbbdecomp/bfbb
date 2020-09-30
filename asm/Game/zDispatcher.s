@@ -1023,3 +1023,7 @@ init$localstatic4$checkpoint_collision_hack__FP4zEnt:
 .section .sbss2
 lbl_803D0828:
 	.skip 0x8
+
+.section .sdata
+lbl_803CAA60:
+	.incbin "baserom.dol", 0x2B5B20, 0x8

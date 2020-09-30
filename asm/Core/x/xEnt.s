@@ -4320,3 +4320,7 @@ lbl_803CB1D0:
 .global xent_entent
 xent_entent:
 	.skip 0x4
+
+.section .sdata
+lbl_803CA920:
+	.incbin "baserom.dol", 0x2B59E0, 0x8

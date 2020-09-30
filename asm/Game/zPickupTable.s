@@ -71,3 +71,7 @@ lbl_8028FF40:
 .global lbl_80290000
 lbl_80290000:
 	.incbin "baserom.dol", 0x28CFE0, 0x30
+
+.section .sdata
+lbl_803CABE0:
+	.incbin "baserom.dol", 0x2B5CA0, 0x8

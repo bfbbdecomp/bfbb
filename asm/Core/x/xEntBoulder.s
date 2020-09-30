@@ -3164,3 +3164,7 @@ lbl_80297F80:
 .section .bss
 lbl_80314698:
 	.skip 0x5B8
+
+.section .sdata
+lbl_803CAD48:
+	.incbin "baserom.dol", 0x2B5E08, 0x8

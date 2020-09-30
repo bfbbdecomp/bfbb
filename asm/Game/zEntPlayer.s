@@ -46439,3 +46439,57 @@ lbl_803D0848:
 	.skip 0x4
 lbl_803D084C:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAA98:
+	.incbin "baserom.dol", 0x2B5B58, 0x4
+lbl_803CAA9C:
+	.incbin "baserom.dol", 0x2B5B5C, 0x4
+lbl_803CAAA0:
+	.incbin "baserom.dol", 0x2B5B60, 0x4
+lbl_803CAAA4:
+	.incbin "baserom.dol", 0x2B5B64, 0x4
+lbl_803CAAA8:
+	.incbin "baserom.dol", 0x2B5B68, 0x4
+lbl_803CAAAC:
+	.incbin "baserom.dol", 0x2B5B6C, 0x4
+lbl_803CAAB0:
+	.incbin "baserom.dol", 0x2B5B70, 0x4
+lbl_803CAAB4:
+	.incbin "baserom.dol", 0x2B5B74, 0x4
+lbl_803CAAB8:
+	.incbin "baserom.dol", 0x2B5B78, 0x4
+lbl_803CAABC:
+	.incbin "baserom.dol", 0x2B5B7C, 0x4
+lbl_803CAAC0:
+	.incbin "baserom.dol", 0x2B5B80, 0x4
+lbl_803CAAC4:
+	.incbin "baserom.dol", 0x2B5B84, 0x4
+lbl_803CAAC8:
+	.incbin "baserom.dol", 0x2B5B88, 0x4
+lbl_803CAACC:
+	.incbin "baserom.dol", 0x2B5B8C, 0x4
+lbl_803CAAD0:
+	.incbin "baserom.dol", 0x2B5B90, 0x4
+lbl_803CAAD4:
+	.incbin "baserom.dol", 0x2B5B94, 0x4
+/* SPECULATION: link order */
+.global default_player_radius
+default_player_radius:
+	.incbin "baserom.dol", 0x2B5B98, 0x4
+/* SPECULATION: link order */
+.global lastgCurrentPlayer
+lastgCurrentPlayer:
+	.incbin "baserom.dol", 0x2B5B9C, 0x4
+lbl_803CAAE0:
+	.incbin "baserom.dol", 0x2B5BA0, 0x4
+lbl_803CAAE4:
+	.incbin "baserom.dol", 0x2B5BA4, 0x4
+lbl_803CAAE8:
+	.incbin "baserom.dol", 0x2B5BA8, 0x4
+lbl_803CAAEC:
+	.incbin "baserom.dol", 0x2B5BAC, 0x4
+lbl_803CAAF0:
+	.incbin "baserom.dol", 0x2B5BB0, 0x4
+lbl_803CAAF4:
+	.incbin "baserom.dol", 0x2B5BB4, 0x4

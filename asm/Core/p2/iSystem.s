@@ -1494,3 +1494,11 @@ sStartupTime:
 .global lbl_803CBC44
 lbl_803CBC44:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAC58:
+	.incbin "baserom.dol", 0x2B5D18, 0x8
+/* SPECULATION: link order */
+.global g_ang_yankDir
+g_ang_yankDir:
+	.incbin "baserom.dol", 0x2B5D20, 0x8

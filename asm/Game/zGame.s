@@ -2529,3 +2529,35 @@ lbl_803D085C:
 	.skip 0x4
 lbl_803D0860:
 	.skip 0x8
+
+.section .sdata
+lbl_803CAB20:
+	.incbin "baserom.dol", 0x2B5BE0, 0x8
+/* SPECULATION: link order */
+.global bgID
+bgID:
+	.incbin "baserom.dol", 0x2B5BE8, 0x4
+/* SPECULATION: link order */
+.global bgu2
+bgu2:
+	.incbin "baserom.dol", 0x2B5BEC, 0x4
+/* SPECULATION: link order */
+.global bgv2
+bgv2:
+	.incbin "baserom.dol", 0x2B5BF0, 0x4
+/* SPECULATION: link order */
+.global bgr
+bgr:
+	.incbin "baserom.dol", 0x2B5BF4, 0x1
+/* SPECULATION: link order */
+.global bgg
+bgg:
+	.incbin "baserom.dol", 0x2B5BF5, 0x1
+/* SPECULATION: link order */
+.global bgb
+bgb:
+	.incbin "baserom.dol", 0x2B5BF6, 0x1
+/* SPECULATION: link order */
+.global bga
+bga:
+	.incbin "baserom.dol", 0x2B5BF7, 0x1

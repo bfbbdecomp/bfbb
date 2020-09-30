@@ -10154,3 +10154,17 @@ lbl_803CBFA8:
 	.skip 0x4
 lbl_803CBFAC:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAD80:
+	.incbin "baserom.dol", 0x2B5E40, 0x1
+lbl_803CAD81:
+	.incbin "baserom.dol", 0x2B5E41, 0x3
+lbl_803CAD84:
+	.incbin "baserom.dol", 0x2B5E44, 0x4
+lbl_803CAD88:
+	.incbin "baserom.dol", 0x2B5E48, 0x4
+lbl_803CAD8C:
+	.incbin "baserom.dol", 0x2B5E4C, 0x8
+lbl_803CAD94:
+	.incbin "baserom.dol", 0x2B5E54, 0xC

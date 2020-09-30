@@ -1375,3 +1375,11 @@ gGameMode:
 .global gGameOstrich
 gGameOstrich:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAB38:
+	.incbin "baserom.dol", 0x2B5BF8, 0x8
+/* SPECULATION: link order */
+.global gGameState
+gGameState:
+	.incbin "baserom.dol", 0x2B5C00, 0x4

@@ -525,3 +525,13 @@ lbl_803CC1E0:
 	.skip 0x4
 lbl_803CC1E4:
 	.skip 0x4
+
+.section .sdata
+lbl_803CADC8:
+	.incbin "baserom.dol", 0x2B5E88, 0x4
+lbl_803CADCC:
+	.incbin "baserom.dol", 0x2B5E8C, 0x4
+/* SPECULATION: link order */
+.global dtscale
+dtscale:
+	.incbin "baserom.dol", 0x2B5E90, 0x4

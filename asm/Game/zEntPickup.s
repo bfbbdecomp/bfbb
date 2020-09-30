@@ -4115,3 +4115,15 @@ lbl_803CB598:
 	.skip 0x4
 lbl_803CB59C:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAA88:
+	.incbin "baserom.dol", 0x2B5B48, 0x4
+/* SPECULATION: link order */
+.global gEnableRewardsQueue
+gEnableRewardsQueue:
+	.incbin "baserom.dol", 0x2B5B4C, 0x4
+lbl_803CAA90:
+	.incbin "baserom.dol", 0x2B5B50, 0x4
+lbl_803CAA94:
+	.incbin "baserom.dol", 0x2B5B54, 0x4

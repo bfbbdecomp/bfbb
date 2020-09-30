@@ -1152,3 +1152,23 @@ lbl_8027B1A0:
 .balign 8
 lbl_803CB168:
 	.skip 0x8
+
+.section .sdata
+lbl_803CA900:
+	.incbin "baserom.dol", 0x2B59C0, 0x8
+/* SPECULATION: link order */
+.global xcam_do_collis
+xcam_do_collis:
+	.incbin "baserom.dol", 0x2B59C8, 0x4
+/* SPECULATION: link order */
+.global xcam_collis_radius
+xcam_collis_radius:
+	.incbin "baserom.dol", 0x2B59CC, 0x4
+/* SPECULATION: link order */
+.global xcam_collis_stiffness
+xcam_collis_stiffness:
+	.incbin "baserom.dol", 0x2B59D0, 0x8
+/* SPECULATION: link order */
+.global snow_life
+snow_life:
+	.incbin "baserom.dol", 0x2B59D8, 0x8

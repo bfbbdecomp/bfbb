@@ -463,3 +463,15 @@ lbl_803CC068:
 	.skip 0x4
 lbl_803CC06C:
 	.skip 0x4
+
+.section .sdata
+lbl_803CADB0:
+	.incbin "baserom.dol", 0x2B5E70, 0x8
+/* SPECULATION: link order */
+.global mFirstFrame__7ROMFont
+mFirstFrame__7ROMFont:
+	.incbin "baserom.dol", 0x2B5E78, 0x1
+/* SPECULATION: link order */
+.global mResetEnabled__11ResetButton
+mResetEnabled__11ResetButton:
+	.incbin "baserom.dol", 0x2B5E79, 0x7

@@ -3428,3 +3428,23 @@ bad_card_available:
 .global bad_card_needed
 bad_card_needed:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAC20:
+	.incbin "baserom.dol", 0x2B5CE0, 0x8
+lbl_803CAC28:
+	.incbin "baserom.dol", 0x2B5CE8, 0x4
+lbl_803CAC2C:
+	.incbin "baserom.dol", 0x2B5CEC, 0x4
+/* SPECULATION: link order */
+.global giAnimScratch
+giAnimScratch:
+	.incbin "baserom.dol", 0x2B5CF0, 0x8
+/* SPECULATION: link order */
+.global sCameraNearClip
+sCameraNearClip:
+	.incbin "baserom.dol", 0x2B5CF8, 0x4
+/* SPECULATION: link order */
+.global sCameraFarClip
+sCameraFarClip:
+	.incbin "baserom.dol", 0x2B5CFC, 0x4

@@ -7284,3 +7284,39 @@ lbl_803CB284:
 	.skip 0x8
 lbl_803CB28C:
 	.skip 0x4
+
+.section .sdata
+lbl_803CA93C:
+	.incbin "baserom.dol", 0x2B59FC, 0x4
+/* SPECULATION: link order */
+.global xFXanimUVRotMat0
+xFXanimUVRotMat0:
+	.incbin "baserom.dol", 0x2B5A00, 0x8
+/* SPECULATION: link order */
+.global xFXanimUVRotMat1
+xFXanimUVRotMat1:
+	.incbin "baserom.dol", 0x2B5A08, 0x8
+/* SPECULATION: link order */
+.global xFXanimUVTrans
+xFXanimUVTrans:
+	.incbin "baserom.dol", 0x2B5A10, 0x8
+/* SPECULATION: link order */
+.global xFXanimUVScale
+xFXanimUVScale:
+	.incbin "baserom.dol", 0x2B5A18, 0x8
+/* SPECULATION: link order */
+.global xFXanimUV2PRotMat0
+xFXanimUV2PRotMat0:
+	.incbin "baserom.dol", 0x2B5A20, 0x8
+/* SPECULATION: link order */
+.global xFXanimUV2PRotMat1
+xFXanimUV2PRotMat1:
+	.incbin "baserom.dol", 0x2B5A28, 0x8
+/* SPECULATION: link order */
+.global xFXanimUV2PTrans
+xFXanimUV2PTrans:
+	.incbin "baserom.dol", 0x2B5A30, 0x8
+/* SPECULATION: link order */
+.global xFXanimUV2PScale
+xFXanimUV2PScale:
+	.incbin "baserom.dol", 0x2B5A38, 0x8

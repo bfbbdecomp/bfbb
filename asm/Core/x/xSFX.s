@@ -639,3 +639,15 @@ lbl_803CB3AC:
 .global ShadowLight
 ShadowLight:
 	.skip 0x4
+
+.section .sdata
+lbl_803CA9A0:
+	.incbin "baserom.dol", 0x2B5A60, 0x8
+/* SPECULATION: link order */
+.global ShadowStrength
+ShadowStrength:
+	.incbin "baserom.dol", 0x2B5A68, 0x4
+/* SPECULATION: link order */
+.global rscale
+rscale:
+	.incbin "baserom.dol", 0x2B5A6C, 0x4

@@ -5160,3 +5160,35 @@ lbl_803D0850:
 .global lbl_803D0854
 lbl_803D0854:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAAF8:
+	.incbin "baserom.dol", 0x2B5BB8, 0x8
+/* SPECULATION: link order */
+.global bubblehit_vel_scale
+bubblehit_vel_scale:
+	.incbin "baserom.dol", 0x2B5BC0, 0x8
+/* SPECULATION: link order */
+.global gPendingPlayer
+gPendingPlayer:
+	.incbin "baserom.dol", 0x2B5BC8, 0x4
+/* SPECULATION: link order */
+.global startPressed
+startPressed:
+	.incbin "baserom.dol", 0x2B5BCC, 0x4
+/* SPECULATION: link order */
+.global black
+black:
+	.incbin "baserom.dol", 0x2B5BD0, 0x4
+/* SPECULATION: link order */
+.global clear
+clear:
+	.incbin "baserom.dol", 0x2B5BD4, 0x4
+/* SPECULATION: link order */
+.global soaklevels
+soaklevels:
+	.incbin "baserom.dol", 0x2B5BD8, 0x4
+/* SPECULATION: link order */
+.global soaktime
+soaktime:
+	.incbin "baserom.dol", 0x2B5BDC, 0x4

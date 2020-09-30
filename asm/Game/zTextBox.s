@@ -892,3 +892,7 @@ lbl_803CBF18:
 .global tcb__8ztaskbox
 tcb__8ztaskbox:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAD78:
+	.incbin "baserom.dol", 0x2B5E38, 0x8

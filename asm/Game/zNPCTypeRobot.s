@@ -15864,3 +15864,53 @@ lbl_803CBD88:
 	.skip 0x4
 lbl_803CBD8C:
 	.skip 0x4
+
+.section .sdata
+lbl_803CAC70:
+	.incbin "baserom.dol", 0x2B5D30, 0x8
+lbl_803CAC78:
+	.incbin "baserom.dol", 0x2B5D38, 0x8
+lbl_803CAC80:
+	.incbin "baserom.dol", 0x2B5D40, 0x8
+lbl_803CAC88:
+	.incbin "baserom.dol", 0x2B5D48, 0x8
+lbl_803CAC90:
+	.incbin "baserom.dol", 0x2B5D50, 0x8
+lbl_803CAC98:
+	.incbin "baserom.dol", 0x2B5D58, 0x8
+lbl_803CACA0:
+	.incbin "baserom.dol", 0x2B5D60, 0x8
+lbl_803CACA8:
+	.incbin "baserom.dol", 0x2B5D68, 0x8
+/* SPECULATION: link order */
+.global uv_slice_discoLight__11zNPCFodBzzt
+uv_slice_discoLight__11zNPCFodBzzt:
+	.incbin "baserom.dol", 0x2B5D70, 0x8
+/* SPECULATION: link order */
+.global g_needMusician
+g_needMusician:
+	.incbin "baserom.dol", 0x2B5D78, 0x4
+/* SPECULATION: link order */
+.global uv_deathcone__10zNPCSleepy
+uv_deathcone__10zNPCSleepy:
+	.incbin "baserom.dol", 0x2B5D7C, 0x8
+/* SPECULATION: link order */
+.global uv_nightlight__10zNPCSleepy
+uv_nightlight__10zNPCSleepy:
+	.incbin "baserom.dol", 0x2B5D84, 0x8
+/* SPECULATION: link order */
+.global uv_slice_nightlight__10zNPCSleepy
+uv_slice_nightlight__10zNPCSleepy:
+	.incbin "baserom.dol", 0x2B5D8C, 0x8
+/* SPECULATION: link order */
+.global uv_slice_deathcone__10zNPCSleepy
+uv_slice_deathcone__10zNPCSleepy:
+	.incbin "baserom.dol", 0x2B5D94, 0x8
+lbl_803CACDC:
+	.incbin "baserom.dol", 0x2B5D9C, 0x4
+lbl_803CACE0:
+	.incbin "baserom.dol", 0x2B5DA0, 0x4
+lbl_803CACE4:
+	.incbin "baserom.dol", 0x2B5DA4, 0x8
+lbl_803CACEC:
+	.incbin "baserom.dol", 0x2B5DAC, 0xC
