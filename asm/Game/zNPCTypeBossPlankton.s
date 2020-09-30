@@ -8538,3 +8538,89 @@ lbl_8032A140:
 	.skip 0x60
 lbl_8032A1A0:
 	.skip 0x300
+
+.section .sbss2
+lbl_803D0938:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D093C
+lbl_803D093C:
+	.skip 0x4
+lbl_803D0940:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0944
+lbl_803D0944:
+	.skip 0x4
+lbl_803D0948:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D094C
+lbl_803D094C:
+	.skip 0x4
+lbl_803D0950:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0954
+lbl_803D0954:
+	.skip 0x4
+lbl_803D0958:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D095C
+lbl_803D095C:
+	.skip 0x4
+lbl_803D0960:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0964
+lbl_803D0964:
+	.skip 0x4
+lbl_803D0968:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D096C
+lbl_803D096C:
+	.skip 0x4
+lbl_803D0970:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0974
+lbl_803D0974:
+	.skip 0x4
+lbl_803D0978:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D097C
+lbl_803D097C:
+	.skip 0x4
+lbl_803D0980:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0984
+lbl_803D0984:
+	.skip 0x4
+lbl_803D0988:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D098C
+lbl_803D098C:
+	.skip 0x4
+lbl_803D0990:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0994
+lbl_803D0994:
+	.skip 0x4
+lbl_803D0998:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D099C
+lbl_803D099C:
+	.skip 0x4
+lbl_803D09A0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09A4
+lbl_803D09A4:
+	.skip 0x4

@@ -10223,3 +10223,35 @@ lbl_803CBFF9:
 	.skip 0x1
 lbl_803CBFFA:
 	.skip 0x6
+
+.section .sbss2
+lbl_803D0910:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0914
+lbl_803D0914:
+	.skip 0x4
+lbl_803D0918:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D091C
+lbl_803D091C:
+	.skip 0x4
+lbl_803D0920:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0924
+lbl_803D0924:
+	.skip 0x4
+lbl_803D0928:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D092C
+lbl_803D092C:
+	.skip 0x4
+lbl_803D0930:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0934
+lbl_803D0934:
+	.skip 0x4

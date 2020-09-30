@@ -6945,3 +6945,7 @@ lbl_803CBE00:
 	.skip 0x4
 lbl_803CBE04:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D08C0:
+	.skip 0x8

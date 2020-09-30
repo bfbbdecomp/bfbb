@@ -7520,3 +7520,17 @@ gAtomicRenderCallBack:
 .global MainLight
 MainLight:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0808:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D080C
+lbl_803D080C:
+	.skip 0x4
+lbl_803D0810:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0814
+lbl_803D0814:
+	.skip 0x4

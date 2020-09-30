@@ -4186,3 +4186,11 @@ lbl_803CBF0A:
 	.skip 0x2
 lbl_803CBF0C:
 	.skip 0xC
+
+.section .sbss2
+lbl_803D08E8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08EC
+lbl_803D08EC:
+	.skip 0x4

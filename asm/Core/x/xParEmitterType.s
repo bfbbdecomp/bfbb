@@ -2159,3 +2159,11 @@ sBlendTable:
 .section .bss
 lbl_803144F0:
 	.skip 0x40
+
+.section .sbss2
+lbl_803D08C8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08CC
+lbl_803D08CC:
+	.skip 0x4

@@ -3817,3 +3817,11 @@ lbl_803CB928:
 .global menu_fmv_played
 menu_fmv_played:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0868:
+	.skip 0x4
+lbl_803D086C:
+	.skip 0x4
+lbl_803D0870:
+	.skip 0x8

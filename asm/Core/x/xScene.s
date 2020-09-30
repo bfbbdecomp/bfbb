@@ -2704,3 +2704,7 @@ lbl_803CB375:
 .global g_debugRenderSafeArea
 g_debugRenderSafeArea:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0818:
+	.skip 0x8

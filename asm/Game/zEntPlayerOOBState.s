@@ -3118,3 +3118,7 @@ lbl_803CBE29:
 .global gGridIterActive
 gGridIterActive:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D08D0:
+	.skip 0x8

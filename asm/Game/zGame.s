@@ -2519,3 +2519,13 @@ bgv1:
 .global gGameWhereAmI
 gGameWhereAmI:
 	.skip 0x8
+
+.section .sbss2
+lbl_803D0858:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D085C
+lbl_803D085C:
+	.skip 0x4
+lbl_803D0860:
+	.skip 0x8

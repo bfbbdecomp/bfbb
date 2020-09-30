@@ -5152,3 +5152,11 @@ lbl_803CB79C:
 .global gGameSfxReport
 gGameSfxReport:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0850:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0854
+lbl_803D0854:
+	.skip 0x4

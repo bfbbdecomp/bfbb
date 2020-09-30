@@ -10894,3 +10894,119 @@ dutchman_reticle_radius:
 	.skip 0x4
 lbl_803CC0AC:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D09A8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09AC
+lbl_803D09AC:
+	.skip 0x4
+lbl_803D09B0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09B4
+lbl_803D09B4:
+	.skip 0x4
+lbl_803D09B8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09BC
+lbl_803D09BC:
+	.skip 0x4
+lbl_803D09C0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09C4
+lbl_803D09C4:
+	.skip 0x4
+lbl_803D09C8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09CC
+lbl_803D09CC:
+	.skip 0x4
+lbl_803D09D0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09D4
+lbl_803D09D4:
+	.skip 0x4
+lbl_803D09D8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09DC
+lbl_803D09DC:
+	.skip 0x4
+lbl_803D09E0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09E4
+lbl_803D09E4:
+	.skip 0x4
+lbl_803D09E8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09EC
+lbl_803D09EC:
+	.skip 0x4
+lbl_803D09F0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09F4
+lbl_803D09F4:
+	.skip 0x4
+lbl_803D09F8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D09FC
+lbl_803D09FC:
+	.skip 0x4
+lbl_803D0A00:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A04
+lbl_803D0A04:
+	.skip 0x4
+lbl_803D0A08:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A0C
+lbl_803D0A0C:
+	.skip 0x4
+lbl_803D0A10:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A14
+lbl_803D0A14:
+	.skip 0x4
+lbl_803D0A18:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A1C
+lbl_803D0A1C:
+	.skip 0x4
+lbl_803D0A20:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A24
+lbl_803D0A24:
+	.skip 0x4
+lbl_803D0A28:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A2C
+lbl_803D0A2C:
+	.skip 0x4
+lbl_803D0A30:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A34
+lbl_803D0A34:
+	.skip 0x4
+lbl_803D0A38:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0A3C
+lbl_803D0A3C:
+	.skip 0x4

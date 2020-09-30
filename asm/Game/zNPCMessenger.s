@@ -1241,3 +1241,11 @@ lbl_80312250:
 .section .sbss
 lbl_803CBCB8:
 	.skip 0x8
+
+.section .sbss2
+lbl_803D08B8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08BC
+lbl_803D08BC:
+	.skip 0x4

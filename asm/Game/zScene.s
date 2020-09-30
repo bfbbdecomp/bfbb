@@ -5133,3 +5133,17 @@ lbl_803CB9E8:
 	.skip 0x4
 lbl_803CB9EC:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0880:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0884
+lbl_803D0884:
+	.skip 0x4
+lbl_803D0888:
+	.skip 0x4
+lbl_803D088C:
+	.skip 0x4
+lbl_803D0890:
+	.skip 0x8

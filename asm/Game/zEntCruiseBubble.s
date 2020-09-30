@@ -10901,3 +10901,11 @@ lbl_803CB565:
 	.skip 0x1
 lbl_803CB566:
 	.skip 0x2
+
+.section .sbss2
+lbl_803D0830:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0834
+lbl_803D0834:
+	.skip 0x4

@@ -7350,3 +7350,29 @@ lbl_803CB1A0:
 	.skip 0x4
 lbl_803CB1A4:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D07E0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D07E4
+lbl_803D07E4:
+	.skip 0x4
+lbl_803D07E8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D07EC
+lbl_803D07EC:
+	.skip 0x4
+lbl_803D07F0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D07F4
+lbl_803D07F4:
+	.skip 0x4
+lbl_803D07F8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D07FC
+lbl_803D07FC:
+	.skip 0x4

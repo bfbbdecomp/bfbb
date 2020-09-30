@@ -1280,3 +1280,11 @@ zcam_fovcurr:
 .global zcam_fovdest
 zcam_fovdest:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0820:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0824
+lbl_803D0824:
+	.skip 0x4

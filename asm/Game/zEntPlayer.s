@@ -46421,3 +46421,21 @@ lbl_803CB75C:
 	.skip 0x4
 lbl_803CB760:
 	.skip 0x8
+
+.section .sbss2
+lbl_803D0838:
+	.skip 0x4
+lbl_803D083C:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0840
+lbl_803D0840:
+	.skip 0x4
+lbl_803D0844:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0848
+lbl_803D0848:
+	.skip 0x4
+lbl_803D084C:
+	.skip 0x4

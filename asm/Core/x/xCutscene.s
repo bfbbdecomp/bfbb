@@ -2174,3 +2174,11 @@ lbl_803CB1AC:
 .global gFrameCount
 gFrameCount:
 	.skip 0x8
+
+.section .sbss2
+lbl_803D0800:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0804
+lbl_803D0804:
+	.skip 0x4

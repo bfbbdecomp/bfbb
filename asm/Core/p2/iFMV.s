@@ -1031,3 +1031,9 @@ he:
 .global HeapSize
 HeapSize:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D0898:
+	.skip 0x4
+lbl_803D089C:
+	.skip 0x4

@@ -6168,3 +6168,29 @@ lbl_803CBFD8:
 	.skip 0x4
 lbl_803CBFDC:
 	.skip 0x4
+
+.section .sbss2
+lbl_803D08F0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08F4
+lbl_803D08F4:
+	.skip 0x4
+lbl_803D08F8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08FC
+lbl_803D08FC:
+	.skip 0x4
+lbl_803D0900:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D0904
+lbl_803D0904:
+	.skip 0x4
+lbl_803D0908:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D090C
+lbl_803D090C:
+	.skip 0x4

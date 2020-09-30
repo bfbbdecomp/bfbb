@@ -2147,3 +2147,17 @@ lbl_803CBB5C:
 	.skip 0x4
 lbl_803CBB60:
 	.skip 0x8
+
+.section .sbss2
+lbl_803D08A0:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08A4
+lbl_803D08A4:
+	.skip 0x4
+lbl_803D08A8:
+	.skip 0x4
+/* SPECULATION: link order */
+.global lbl_803D08AC
+lbl_803D08AC:
+	.skip 0x4
