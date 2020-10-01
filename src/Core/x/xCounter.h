@@ -5,15 +5,15 @@
 
 struct xCounterAsset : xBaseAsset
 {
-    short count;
+    int16 count;
 };
 
 struct _xCounter : xBase
 {
     xCounterAsset* asset;
-    short count;
-    unsigned char state;
-    unsigned char counterFlags;
+    int16 count;
+    uint8 state;
+    uint8 counterFlags;
 };
 
 void xCounterInit();
@@ -22,6 +22,6 @@ void xCounterInit(xBase* b, xCounterAsset* asset);
 void xCounterReset(xBase* b);
 void xCounterSave(_xCounter* ent, xSerial* s);
 void xCounterLoad(_xCounter* ent, xSerial* s);
-int xCounterEventCB(xBase*, xBase* to, unsigned int toEvent, const float*, xBase*);
+int xCounterEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*);
 
 #endif

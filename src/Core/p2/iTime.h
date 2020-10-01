@@ -1,6 +1,8 @@
 #ifndef ITIME_H
 #define ITIME_H
 
-typedef unsigned long long iTime;
+#include <types.h>
+
+typedef u64 iTime;
 
 #endif

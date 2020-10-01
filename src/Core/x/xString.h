@@ -1,6 +1,8 @@
 #ifndef XSTRING_H
 #define XSTRING_H
 
-extern unsigned int xStrHash(const char* str);
+#include <types.h>
+
+extern uint32 xStrHash(const char* str);
 
 #endif

@@ -81,7 +81,7 @@ void xCounterLoad(_xCounter* ent, xSerial* s)
     s->Read(&ent->count);
 }
 
-int xCounterEventCB(xBase*, xBase* to, unsigned int toEvent, const float*, xBase*)
+int xCounterEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
 {
     _xCounter* t = (_xCounter*)to;
 
@@ -140,7 +140,7 @@ int xCounterEventCB(xBase*, xBase* to, unsigned int toEvent, const float*, xBase
     {
         if (t->state != 1 && toEvent >= eEventCount1 && toEvent <= eEventCount20)
         {
-            short newCount = toEvent - (eEventCount1 - 1);
+            int16 newCount = toEvent - (eEventCount1 - 1);
 
             if (!(t->counterFlags & 0x1) || t->count != 2)
             {

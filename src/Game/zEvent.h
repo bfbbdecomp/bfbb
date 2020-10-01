@@ -1,6 +1,8 @@
 #ifndef ZEVENT_H
 #define ZEVENT_H
 
-char* zEventName(unsigned int eventEnum);
+#include <types.h>
+
+char* zEventName(uint32 eventEnum);
 
 #endif

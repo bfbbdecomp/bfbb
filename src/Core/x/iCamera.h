@@ -2,16 +2,17 @@
 #define ICAMERA_H
 
 #include <rwcore.h>
+#include <types.h>
 
 struct iFogParams
 {
     RwFogType type;
-    float start;
-    float stop;
-    float density;
+    float32 start;
+    float32 stop;
+    float32 density;
     RwRGBA fogcolor;
     RwRGBA bgcolor;
-    unsigned char* table;
+    uint8* table;
 };
 
 #endif

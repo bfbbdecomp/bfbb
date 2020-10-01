@@ -7,28 +7,28 @@
 #include "xMemMgr.h"
 
 typedef char*(*xSceneBase2NameCallback)(xBase*);
-typedef char*(*xSceneID2NameCallback)(unsigned int);
-typedef xBase*(*xSceneResolvIDCallback)(unsigned int);
+typedef char*(*xSceneID2NameCallback)(uint32);
+typedef xBase*(*xSceneResolvIDCallback)(uint32);
 
 struct xScene
 {
-	unsigned int sceneID;
-	unsigned short flags;
-	unsigned short num_ents;
-	unsigned short num_trigs;
-	unsigned short num_stats;
-	unsigned short num_dyns;
-	unsigned short num_npcs;
-	unsigned short num_act_ents;
-	unsigned short num_nact_ents;
-	float gravity;
-	float drag;
-	float friction;
-	unsigned short num_ents_allocd;
-	unsigned short num_trigs_allocd;
-	unsigned short num_stats_allocd;
-	unsigned short num_dyns_allocd;
-	unsigned short num_npcs_allocd;
+	uint32 sceneID;
+	uint16 flags;
+	uint16 num_ents;
+	uint16 num_trigs;
+	uint16 num_stats;
+	uint16 num_dyns;
+	uint16 num_npcs;
+	uint16 num_act_ents;
+	uint16 num_nact_ents;
+	float32 gravity;
+	float32 drag;
+	float32 friction;
+	uint16 num_ents_allocd;
+	uint16 num_trigs_allocd;
+	uint16 num_stats_allocd;
+	uint16 num_dyns_allocd;
+	uint16 num_npcs_allocd;
 	xEnt** trigs;
 	xEnt** stats;
 	xEnt** dyns;

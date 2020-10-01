@@ -11,19 +11,19 @@ struct xShadowSimplePoly
 
 struct xShadowSimpleCache
 {
-    unsigned short flags;
-    unsigned char alpha;
-    unsigned char pad;
-    unsigned int collPriority;
+    uint16 flags;
+    uint8 alpha;
+    uint8 pad;
+    uint32 collPriority;
     xVec3 pos;
     xVec3 at;
     xEnt* castOnEnt;
     xShadowSimplePoly poly;
-    float envHeight;
-    float shadowHeight;
-    unsigned int raster;
-    float dydx;
-    float dydz;
+    float32 envHeight;
+    float32 shadowHeight;
+    uint32 raster;
+    float32 dydx;
+    float32 dydz;
     xVec3 corner[4];
 };
 

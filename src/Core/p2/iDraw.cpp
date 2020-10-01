@@ -1,10 +1,10 @@
 #include "iDraw.h"
 
-#include "dolphin.h"
+#include <dolphin.h>
 
-void iDrawSetFBMSK(unsigned int abgr)
+void iDrawSetFBMSK(uint32 abgr)
 {
-    unsigned long tmp, hi;
+    ulong32 tmp, hi;
 
     hi = abgr >> 24;
 

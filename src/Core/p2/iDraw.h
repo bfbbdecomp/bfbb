@@ -1,7 +1,9 @@
 #ifndef IDRAW_H
 #define IDRAW_H
 
-void iDrawSetFBMSK(unsigned int abgr);
+#include <types.h>
+
+void iDrawSetFBMSK(uint32 abgr);
 void iDrawBegin();
 void iDrawEnd();
 

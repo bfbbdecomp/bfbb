@@ -68,14 +68,14 @@ SHA1SUM := sha1sum
 ASMDIFF := ./asmdiff.sh
 
 # Options
-INCLUDES := -Isrc/dolphin/include -Isrc/CodeWarrior -Isrc/rwsdk
+INCLUDES := -Iinclude -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk
 
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
-CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -str reuse,pool,readonly \
+CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -str reuse,pool,readonly \
            -pragma "check_header_flags off" -pragma "force_active on" \
            -use_lmw_stmw on -inline off -O4,p -msgstyle gcc -gccincludes $(INCLUDES)
-PREPROCESS := -preprocess -gccincludes $(INCLUDES)
+PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES)
 PPROCFLAGS := -fsymbol-fixup
 
 # elf2dol needs to know these in order to calculate sbss correctly.

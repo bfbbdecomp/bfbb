@@ -1,7 +1,7 @@
 #ifndef ICOLLIDEFAST_H
 #define ICOLLIDEFAST_H
 
-struct xScene;
+#include "../x/xScene.h"
 
 void iCollideFastInit(xScene* sc);
 
