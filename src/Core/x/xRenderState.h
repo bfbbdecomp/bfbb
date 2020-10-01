@@ -2,9 +2,10 @@
 #define XRENDERSTATE_H
 
 #include <rwcore.h>
+#include <types.h>
 
-void xRenderStateSetDstBlendMode(int xmode);
-void xRenderStateSetSrcBlendMode(int xmode);
+void xRenderStateSetDstBlendMode(int32 xmode);
+void xRenderStateSetSrcBlendMode(int32 xmode);
 void xRenderStateSetTexture(RwTexture* texture);
 
 #endif

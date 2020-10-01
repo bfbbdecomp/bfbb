@@ -2,17 +2,17 @@
 
 #include <cmath>
 
-float isin(float x)
+float32 isin(float32 x)
 {
     return std::sinf(x);
 }
 
-float icos(float x)
+float32 icos(float32 x)
 {
     return std::cosf(x);
 }
 
-float itan(float x)
+float32 itan(float32 x)
 {
     return std::tanf(x);
 }

@@ -2,12 +2,13 @@
 #define XBOUND_H
 
 #include "xQuickCull.h"
+#include "xMath3.h"
 
 struct xBound
 {
     xQCData qcd;
-    unsigned char type;
-    unsigned char pad[3];
+    uint8 type;
+    uint8 pad[3];
     union
     {
         xSphere sph;

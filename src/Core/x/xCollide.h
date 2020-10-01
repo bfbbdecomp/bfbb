@@ -7,16 +7,16 @@ struct xCollis
 {
     struct tri_data
     {
-        unsigned int index;
-        float r;
-        float d;
+        uint32 index;
+        float32 r;
+        float32 d;
     };
 
-    unsigned int flags;
-    unsigned int oid;
+    uint32 flags;
+    uint32 oid;
     void* optr;
     xModelInstance* mptr;
-    float dist;
+    float32 dist;
     xVec3 norm;
     xVec3 tohit;
     xVec3 depen;
@@ -25,9 +25,9 @@ struct xCollis
     {
         struct
         {
-            float t;
-            float u;
-            float v;
+            float32 t;
+            float32 u;
+            float32 v;
         } tuv;
         tri_data tri;
     };

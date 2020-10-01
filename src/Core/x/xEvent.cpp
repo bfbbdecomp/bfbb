@@ -1,13 +1,13 @@
 #include "xEvent.h"
 
-#include "../Game/zScene.h"
+#include "../../Game/zScene.h"
 
 #include "xString.h"
 #include "xstransvc.h"
 
-void zEntEvent(char* to, unsigned int toEvent)
+void zEntEvent(char* to, uint32 toEvent)
 {
-    unsigned int id = xStrHash(to);
+    uint32 id = xStrHash(to);
     xBase* sendTo = zSceneFindObject(id);
 
     if (sendTo)
@@ -16,7 +16,7 @@ void zEntEvent(char* to, unsigned int toEvent)
     }
 }
 
-void zEntEvent(unsigned int toID, unsigned int toEvent)
+void zEntEvent(uint32 toID, uint32 toEvent)
 {
     xBase* sendTo = zSceneFindObject(toID);
 
@@ -26,11 +26,11 @@ void zEntEvent(unsigned int toID, unsigned int toEvent)
     }
 }
 
-void zEntEvent(unsigned int toID, unsigned int toEvent, float toParam0,
-               float toParam1, float toParam2, float toParam3)
+void zEntEvent(uint32 toID, uint32 toEvent, float32 toParam0, float32 toParam1, float32 toParam2,
+               float32 toParam3)
 {
     xBase* sendTo;
-    float toParam[4];
+    float32 toParam[4];
 
     toParam[0] = toParam0;
     toParam[1] = toParam1;
@@ -45,15 +45,15 @@ void zEntEvent(unsigned int toID, unsigned int toEvent, float toParam0,
     }
 }
 
-void zEntEvent(xBase* to, unsigned int toEvent)
+void zEntEvent(xBase* to, uint32 toEvent)
 {
     zEntEvent(NULL, 0, to, toEvent, NULL, NULL, 0);
 }
 
-void zEntEvent(xBase* to, unsigned int toEvent, float toParam0, float toParam1,
-               float toParam2, float toParam3)
+void zEntEvent(xBase* to, uint32 toEvent, float32 toParam0, float32 toParam1, float32 toParam2,
+               float32 toParam3)
 {
-    float toParam[4];
+    float32 toParam[4];
 
     toParam[0] = toParam0;
     toParam[1] = toParam1;
@@ -63,31 +63,28 @@ void zEntEvent(xBase* to, unsigned int toEvent, float toParam0, float toParam1,
     zEntEvent(to, toEvent, toParam, NULL);
 }
 
-void zEntEvent(xBase* to, unsigned int toEvent, const float* toParam)
+void zEntEvent(xBase* to, uint32 toEvent, const float32* toParam)
 {
     zEntEvent(NULL, 0, to, toEvent, toParam, NULL, 0);
 }
 
-void zEntEvent(xBase* to, unsigned int toEvent, const float* toParam,
-               xBase* toParamWidget)
+void zEntEvent(xBase* to, uint32 toEvent, const float32* toParam, xBase* toParamWidget)
 {
     zEntEvent(NULL, 0, to, toEvent, toParam, toParamWidget, 0);
 }
 
-void zEntEvent(xBase* from, xBase* to, unsigned int toEvent)
+void zEntEvent(xBase* from, xBase* to, uint32 toEvent)
 {
     zEntEvent(from, 0, to, toEvent, NULL, NULL, 0);
 }
 
-void zEntEvent(xBase* from, xBase* to, unsigned int toEvent,
-               const float* toParam)
+void zEntEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam)
 {
     zEntEvent(from, 0, to, toEvent, toParam, NULL, 0);
 }
 
-void zEntEvent(xBase* from, unsigned int fromEvent, xBase* to,
-               unsigned int toEvent, const float* toParam, xBase* toParamWidget,
-               int forceEvent)
+void zEntEvent(xBase* from, uint32 fromEvent, xBase* to, uint32 toEvent, const float32* toParam,
+               xBase* toParamWidget, int32 forceEvent)
 {
     if (toEvent == eEventDisable)
     {
@@ -107,7 +104,7 @@ void zEntEvent(xBase* from, unsigned int fromEvent, xBase* to,
     {
         xLinkAsset* idx = to->link;
 
-        for (int i = 0; i < to->linkCount; i++, idx++)
+        for (int32 i = 0; i < to->linkCount; i++, idx++)
         {
             if (toEvent == idx->srcEvent)
             {

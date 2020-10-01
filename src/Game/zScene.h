@@ -6,27 +6,28 @@
 #include "zPortal.h"
 #include "zEnt.h"
 #include "zEnv.h"
+#include "zBase.h"
 
 struct zScene : xScene
 {
 	_zPortal* pendingPortal;
 	union
 	{
-		unsigned int num_ents;
-		unsigned int num_base;
+		uint32 num_ents;
+		uint32 num_base;
 	};
 	union
 	{
 		xBase** base;
 		zEnt** ents;
 	};
-	unsigned int num_update_base;
+	uint32 num_update_base;
 	xBase** update_base;
-	unsigned int baseCount[72];
-	xBase* baseList[72];
+	uint32 baseCount[eBaseTypeCount];
+	xBase* baseList[eBaseTypeCount];
 	_zEnv* zen;
 };
 
-xBase* zSceneFindObject(unsigned int gameID);
+xBase* zSceneFindObject(uint32 gameID);
 
 #endif
