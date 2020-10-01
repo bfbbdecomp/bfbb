@@ -1,18 +1,20 @@
 #include "zCamMarker.h"
 
-/*
 void zCamMarkerInit(xBase* b, xCamAsset* asset)
 {
     xBaseInit(b, asset);
-    if (b->linkCount != 0) {
-        // b->linkCount = asset->linkCount;
+    /*
+        xCamAsset, like most of the asset types, extends from xBaseAsset
+        they all have a xLinkAsset array at the end (or near the end) of their data
+        in xCamAsset's case, the xLinkAsset array appears right after it
+    */
+    if (b->linkCount != 0)
+    {
+        b->link = (xLinkAsset*)(asset + 1);
     }
-    // b->eventFunc = 0;
-    b->eventFunc = (xBaseEventCB) zCamMarkerEventCB; //
-    b->link = 0;
+    b->eventFunc = (xBaseEventCB) zCamMarkerEventCB;
+    ((zCamMarker*) b)->asset = asset;
 }
-*/
-#pragma GLOBAL_ASM("asm/Game/zCamMarker.s", "zCamMarkerInit__FP5xBaseP9xCamAsset")
 
 void zCamMarkerSave(zCamMarker* m, xSerial* s)
 {
