@@ -3,6 +3,7 @@
 
 #include "../Core/x/xBase.h"
 #include "../Core/x/xCamera.h"
+#include "../Core/x/xEvent.h"
 #include "zCamera.h"
 
 struct zCamMarker : xBase
@@ -10,9 +11,9 @@ struct zCamMarker : xBase
 	xCamAsset* asset;
 };
 
-int zCamMarkerEventCB(xBase* b1, xBase* b2, unsigned int par3, const float* par4, xBase* b3);
-void zCamMarkerLoad(zCamMarker* m, xSerial* s);
-void zCamMarkerSave(zCamMarker* m, xSerial* s);
 void zCamMarkerInit(xBase* b, xCamAsset* asset);
+void zCamMarkerSave(zCamMarker* m, xSerial* s);
+void zCamMarkerLoad(zCamMarker* m, xSerial* s);
+int zCamMarkerEventCB(xBase* from, xBase* to, unsigned int toEvent, const float* toParam, xBase* b3);
 
 #endif
