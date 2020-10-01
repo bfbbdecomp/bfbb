@@ -12,37 +12,37 @@ typedef struct _tagTRCPadInfo;
 typedef enum _tagRumbleType;
 
 
-typedef f32 type_0[22];
-typedef f32 type_1[22];
-typedef u8 type_2[32];
+typedef float32 type_0[22];
+typedef float32 type_1[22];
+typedef uint8 type_2[32];
 typedef _tagTRCPadInfo type_3[4];
 typedef analog_data type_4[2];
-typedef u8 type_5[6];
+typedef uint8 type_5[6];
 typedef <unknown type (0xa510)> type_6[16];
 typedef type_6 type_7[4];
-typedef f32 type_8[4];
-typedef u8 type_9[22];
-typedef u8 type_10[22];
-typedef u8 type_11[6];
+typedef float32 type_8[4];
+typedef uint8 type_9[22];
+typedef uint8 type_10[22];
+typedef uint8 type_11[6];
 
 struct _tagxPad
 {
 	type_9 value;
 	type_10 last_value;
-	u32 on;
-	u32 pressed;
-	u32 released;
+	uint32 on;
+	uint32 pressed;
+	uint32 released;
 	_tagPadAnalog analog1;
 	_tagPadAnalog analog2;
 	_tagPadState state;
-	u32 flags;
+	uint32 flags;
 	_tagxRumble rumble_head;
-	s16 port;
-	s16 slot;
+	int16 port;
+	int16 slot;
 	_tagiPad context;
-	f32 al2d_timer;
-	f32 ar2d_timer;
-	f32 d_timer;
+	float32 al2d_timer;
+	float32 ar2d_timer;
+	float32 d_timer;
 	type_0 up_tmr;
 	type_1 down_tmr;
 	type_4 analog;
@@ -52,28 +52,28 @@ struct analog_data
 {
 	xVec2 offset;
 	xVec2 dir;
-	f32 mag;
-	f32 ang;
+	float32 mag;
+	float32 ang;
 };
 
 struct _tagiPad
 {
-	s32 port;
+	int32 port;
 };
 
 struct xVec2
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct _tagxRumble
 {
 	_tagRumbleType type;
-	f32 seconds;
+	float32 seconds;
 	_tagxRumble* next;
-	s16 active;
-	u16 fxflags;
+	int16 active;
+	uint16 fxflags;
 };
 
 struct _tagiTRCPadInfo
@@ -110,8 +110,8 @@ enum _tagTRCState
 
 struct _tagPadAnalog
 {
-	s8 x;
-	s8 y;
+	int8 x;
+	int8 y;
 };
 
 enum _tagPadInit
@@ -131,7 +131,7 @@ enum _tagPadInit
 
 struct _tagTRCPadInfo : _tagiTRCPadInfo
 {
-	s32 id;
+	int32 id;
 	_tagTRCState state;
 };
 
@@ -163,12 +163,12 @@ type_3 gTrcPad;
 void iPadKill();
 void iPadStartRumble(_tagxPad* pad, _tagxRumble* rumble);
 void iPadStopRumble(_tagxPad* pad);
-void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, f32 time_passed);
-s32 iPadUpdate(_tagxPad* pad, u32* on);
+void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, float32 time_passed);
+int32 iPadUpdate(_tagxPad* pad, uint32* on);
 void iPadTRCUpdate(_tagxPad* pad);
-_tagxPad* iPadEnable(_tagxPad* pad, s16 port);
+_tagxPad* iPadEnable(_tagxPad* pad, int16 port);
 _tagxPad* iPadEnableGuts(_tagxPad* pad, _tagPadInit* pad_init);
-s32 iPadInit();
+int32 iPadInit();
 
 // iPadKill__Fv
 // Start address: 0x1b0070
@@ -190,19 +190,19 @@ void iPadStopRumble(_tagxPad* pad)
 
 // iPadRumbleFx__FP8_tagxPadP11_tagxRumblef
 // Start address: 0x1b01c0
-void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, f32 time_passed)
+void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, float32 time_passed)
 {
-	f32 act;
-	f32 scale;
+	float32 act;
+	float32 scale;
 }
 
 // iPadUpdate__FP8_tagxPadPUi
 // Start address: 0x1b0270
-s32 iPadUpdate(_tagxPad* pad, u32* on)
+int32 iPadUpdate(_tagxPad* pad, uint32* on)
 {
-	s32 temp;
-	u32 temp_on;
-	s32 result;
+	int32 temp;
+	uint32 temp_on;
+	int32 result;
 }
 
 // iPadTRCUpdate__FP8_tagxPad
@@ -213,7 +213,7 @@ void iPadTRCUpdate(_tagxPad* pad)
 
 // iPadEnable__FP8_tagxPads
 // Start address: 0x1b0710
-_tagxPad* iPadEnable(_tagxPad* pad, s16 port)
+_tagxPad* iPadEnable(_tagxPad* pad, int16 port)
 {
 	_tagPadInit pad_init;
 }
@@ -222,17 +222,17 @@ _tagxPad* iPadEnable(_tagxPad* pad, s16 port)
 // Start address: 0x1b0780
 _tagxPad* iPadEnableGuts(_tagxPad* pad, _tagPadInit* pad_init)
 {
-	s32 state;
-	s32 id;
-	s32 exid;
-	s32 state3;
-	s32 state3;
-	s32 state5;
+	int32 state;
+	int32 id;
+	int32 exid;
+	int32 state3;
+	int32 state3;
+	int32 state5;
 }
 
 // iPadInit__Fv
 // Start address: 0x1b0b10
-s32 iPadInit()
+int32 iPadInit()
 {
 }
 

@@ -1,41 +1,41 @@
 typedef struct xJawDataTable;
 
 
-typedef s8 type_0[16];
-typedef s8 type_1[16];
+typedef int8 type_0[16];
+typedef int8 type_1[16];
 
 struct xJawDataTable
 {
-	u32 soundHashID;
-	u32 dataStart;
-	u32 dataLength;
+	uint32 soundHashID;
+	uint32 dataStart;
+	uint32 dataLength;
 };
 
 type_1 buffer;
 type_0 buffer;
 
-f32 xJaw_EvalData(void* data, f32 time);
-void* xJaw_FindData(u32 soundID);
+float32 xJaw_EvalData(void* data, float32 time);
+void* xJaw_FindData(uint32 soundID);
 
 // xJaw_EvalData__FPvf
 // Start address: 0x35d2c0
-f32 xJaw_EvalData(void* data, f32 time)
+float32 xJaw_EvalData(void* data, float32 time)
 {
-	f32 lerp;
-	s32 idx;
-	s32 numdata;
-	u8* jawdata;
+	float32 lerp;
+	int32 idx;
+	int32 numdata;
+	uint8* jawdata;
 }
 
 // xJaw_FindData__FUi
 // Start address: 0x35d400
-void* xJaw_FindData(u32 soundID)
+void* xJaw_FindData(uint32 soundID)
 {
-	s32 i;
-	s32 numJawTables;
-	u32 j;
+	int32 i;
+	int32 numJawTables;
+	uint32 j;
 	void* data;
-	u32 jawcount;
+	uint32 jawcount;
 	xJawDataTable* tbl;
 	void* rawdata;
 }

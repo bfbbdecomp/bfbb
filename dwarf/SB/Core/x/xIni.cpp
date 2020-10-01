@@ -3,21 +3,21 @@ typedef struct xIniFile;
 typedef struct xIniValue;
 
 
-typedef s8 type_0[256];
-typedef s8 type_1[256];
-typedef u32 type_2[4096];
+typedef int8 type_0[256];
+typedef int8 type_1[256];
+typedef uint32 type_2[4096];
 
 struct xIniSection
 {
-	s8* sec;
-	s32 first;
-	s32 count;
+	int8* sec;
+	int32 first;
+	int32 count;
 };
 
 struct xIniFile
 {
-	s32 NumValues;
-	s32 NumSections;
+	int32 NumValues;
+	int32 NumSections;
 	xIniValue* Values;
 	xIniSection* Sections;
 	void* mem;
@@ -27,33 +27,33 @@ struct xIniFile
 
 struct xIniValue
 {
-	s8* tok;
-	s8* val;
+	int8* tok;
+	int8* val;
 };
 
 type_2 ourGlobals;
 
-s8* xIniGetString(xIniFile* ini, s8* tok, s8* def);
-f32 xIniGetFloat(xIniFile* ini, s8* tok, f32 def);
-s32 xIniGetInt(xIniFile* ini, s8* tok, s32 def);
+int8* xIniGetString(xIniFile* ini, int8* tok, int8* def);
+float32 xIniGetFloat(xIniFile* ini, int8* tok, float32 def);
+int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def);
 void xIniDestroy(xIniFile* ini);
-xIniFile* xIniParse(s8* buf, s32 len);
+xIniFile* xIniParse(int8* buf, int32 len);
 
 // xIniGetString__FP8xIniFilePcPc
 // Start address: 0x1ec930
-s8* xIniGetString(xIniFile* ini, s8* tok, s8* def)
+int8* xIniGetString(xIniFile* ini, int8* tok, int8* def)
 {
 }
 
 // xIniGetFloat__FP8xIniFilePcf
 // Start address: 0x1eca00
-f32 xIniGetFloat(xIniFile* ini, s8* tok, f32 def)
+float32 xIniGetFloat(xIniFile* ini, int8* tok, float32 def)
 {
 }
 
 // xIniGetInt__FP8xIniFilePci
 // Start address: 0x1ecae0
-s32 xIniGetInt(xIniFile* ini, s8* tok, s32 def)
+int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def)
 {
 }
 
@@ -65,17 +65,17 @@ void xIniDestroy(xIniFile* ini)
 
 // xIniParse__FPci
 // Start address: 0x1ecc10
-xIniFile* xIniParse(s8* buf, s32 len)
+xIniFile* xIniParse(int8* buf, int32 len)
 {
-	s32 i;
-	s32 ccr;
-	s32 clf;
-	s32 copen;
-	s32 lastCRLF;
-	s8* c;
-	s8* lastLine;
-	s8* line;
-	s8* ltoken;
+	int32 i;
+	int32 ccr;
+	int32 clf;
+	int32 copen;
+	int32 lastCRLF;
+	int8* c;
+	int8* lastLine;
+	int8* line;
+	int8* ltoken;
 	xIniFile* ini;
 }
 

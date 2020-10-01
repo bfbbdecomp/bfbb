@@ -1,8 +1,8 @@
 typedef enum _SDRenderState;
 
 
-typedef s8 type_0[16];
-typedef s8 type_1[16];
+typedef int8 type_0[16];
+typedef int8 type_1[16];
 
 enum _SDRenderState
 {

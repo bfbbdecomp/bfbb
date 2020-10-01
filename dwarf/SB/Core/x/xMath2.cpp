@@ -6,16 +6,16 @@ typedef struct _xMat3x2;
 
 struct xVec2
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct basic_rect
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct _xMat3x2

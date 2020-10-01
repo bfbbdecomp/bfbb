@@ -14,40 +14,40 @@ typedef struct xCylinder;
 typedef struct xBox;
 typedef struct xMat3x3;
 
-typedef s32(*type_0)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_0)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef u8 type_1[3];
-typedef f32 type_2[4];
+typedef uint8 type_1[3];
+typedef float32 type_2[4];
 
 struct xVolumeAsset : xBaseAsset
 {
-	u32 flags;
+	uint32 flags;
 	xBound bound;
-	f32 rot;
-	f32 xpivot;
-	f32 zpivot;
+	float32 rot;
+	float32 xpivot;
+	float32 zpivot;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_0 eventFunc;
 };
 
 struct xQCData
 {
-	s8 xmin;
-	s8 ymin;
-	s8 zmin;
-	s8 zmin_dup;
-	s8 xmax;
-	s8 ymax;
-	s8 zmax;
-	s8 zmax_dup;
+	int8 xmin;
+	int8 ymin;
+	int8 zmin;
+	int8 zmin_dup;
+	int8 xmax;
+	int8 ymax;
+	int8 zmax;
+	int8 zmax_dup;
 	xVec3 min;
 	xVec3 max;
 };
@@ -64,12 +64,12 @@ struct xSerial
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_2 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xVolume : xBase
@@ -79,23 +79,23 @@ struct xVolume : xBase
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct xBound
 {
 	xQCData qcd;
-	u8 type;
+	uint8 type;
 	type_1 pad;
 	union
 	{
@@ -109,20 +109,20 @@ struct xBound
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct xCylinder
 {
 	xVec3 center;
-	f32 r;
-	f32 h;
+	float32 r;
+	float32 h;
 };
 
 struct xBox
@@ -134,11 +134,11 @@ struct xBox
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 

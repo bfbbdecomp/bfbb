@@ -12,46 +12,46 @@ typedef struct xMat3x3;
 typedef struct xBound;
 
 
-typedef u8 type[3];
+typedef uint8 type[3];
 
 struct xQCData
 {
-	s8 xmin;
-	s8 ymin;
-	s8 zmin;
-	s8 zmin_dup;
-	s8 xmax;
-	s8 ymax;
-	s8 zmax;
-	s8 zmax_dup;
+	int8 xmin;
+	int8 ymin;
+	int8 zmin;
+	int8 zmin_dup;
+	int8 xmax;
+	int8 ymax;
+	int8 zmax;
+	int8 zmax_dup;
 	xVec3 min;
 	xVec3 max;
 };
 
 struct xQCControl
 {
-	f32 world_xmin;
-	f32 world_ymin;
-	f32 world_zmin;
-	f32 world_xmax;
-	f32 world_ymax;
-	f32 world_zmax;
-	f32 world_xsz;
-	f32 world_ysz;
-	f32 world_zsz;
-	f32 scale_x;
-	f32 scale_y;
-	f32 scale_z;
-	f32 center_x;
-	f32 center_y;
-	f32 center_z;
+	float32 world_xmin;
+	float32 world_ymin;
+	float32 world_zmin;
+	float32 world_xmax;
+	float32 world_ymax;
+	float32 world_zmax;
+	float32 world_xsz;
+	float32 world_ysz;
+	float32 world_zsz;
+	float32 scale_x;
+	float32 scale_y;
+	float32 scale_z;
+	float32 center_x;
+	float32 center_y;
+	float32 center_z;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xBox
@@ -70,28 +70,28 @@ struct xRay3
 {
 	xVec3 origin;
 	xVec3 dir;
-	f32 min_t;
-	f32 max_t;
-	s32 flags;
+	float32 min_t;
+	float32 max_t;
+	int32 flags;
 };
 
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct xCylinder
 {
 	xVec3 center;
-	f32 r;
-	f32 h;
+	float32 r;
+	float32 h;
 };
 
 struct xLine3
@@ -103,17 +103,17 @@ struct xLine3
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct xBound
 {
 	xQCData qcd;
-	u8 type;
+	uint8 type;
 	type pad;
 	union
 	{
@@ -134,9 +134,9 @@ void xQuickCullForRay(xQCControl* ctrl, xQCData* q, xRay3* r);
 void xQuickCullForLine(xQCControl* ctrl, xQCData* q, xLine3* ln);
 void xQuickCullCellForVec(xQCControl* ctrl, xQCData* c, xVec3* v);
 void xQuickCullForBound(xQCControl* ctrl, xQCData* q, xBound* b);
-s32 xQuickCullIsects(xQCData* a, xQCData* b);
+int32 xQuickCullIsects(xQCData* a, xQCData* b);
 void xQuickCullInit(xQCControl* ctrl, xBox* box);
-void xQuickCullInit(xQCControl* ctrl, f32 xmin, f32 ymin, f32 zmin, f32 xmax, f32 ymax, f32 zmax);
+void xQuickCullInit(xQCControl* ctrl, float32 xmin, float32 ymin, float32 zmin, float32 xmax, float32 ymax, float32 zmax);
 
 // xQuickCullForEverything__FP7xQCData
 // Start address: 0x1fa330
@@ -165,7 +165,7 @@ void xQuickCullForSphere(xQCControl* ctrl, xQCData* q, xSphere* s)
 {
 	xVec3 v1;
 	xVec3 v2;
-	f32 radius_adjusted;
+	float32 radius_adjusted;
 	xQCData a;
 	xQCData b;
 }
@@ -175,7 +175,7 @@ void xQuickCullForSphere(xQCControl* ctrl, xQCData* q, xSphere* s)
 void xQuickCullForRay(xQCControl* ctrl, xQCData* q, xRay3* r)
 {
 	xLine3 ln;
-	f32 len;
+	float32 len;
 	xQCData a;
 	xQCData b;
 }
@@ -202,9 +202,9 @@ void xQuickCullForBound(xQCControl* ctrl, xQCData* q, xBound* b)
 
 // xQuickCullIsects__FPC7xQCDataPC7xQCData
 // Start address: 0x1faae0
-s32 xQuickCullIsects(xQCData* a, xQCData* b)
+int32 xQuickCullIsects(xQCData* a, xQCData* b)
 {
-	s32 result;
+	int32 result;
 }
 
 // xQuickCullInit__FP10xQCControlPC4xBox
@@ -215,7 +215,7 @@ void xQuickCullInit(xQCControl* ctrl, xBox* box)
 
 // xQuickCullInit__FP10xQCControlffffff
 // Start address: 0x1fab30
-void xQuickCullInit(xQCControl* ctrl, f32 xmin, f32 ymin, f32 zmin, f32 xmax, f32 ymax, f32 zmax)
+void xQuickCullInit(xQCControl* ctrl, float32 xmin, float32 ymin, float32 zmin, float32 xmax, float32 ymax, float32 zmax)
 {
 }
 

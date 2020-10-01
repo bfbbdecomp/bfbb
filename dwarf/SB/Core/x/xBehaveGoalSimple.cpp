@@ -15,18 +15,18 @@ typedef struct RyzMemData;
 typedef enum en_GOALSTATE;
 typedef struct _anon2;
 
-typedef xFactoryInst*(*type_0)(s32, RyzMemGrow*, void*);
+typedef xFactoryInst*(*type_0)(int32, RyzMemGrow*, void*);
 typedef void(*type_1)(xFactoryInst*);
-typedef xFactoryInst*(*type_2)(s32, RyzMemGrow*, void*);
-typedef s32(*type_3)(xGoal*, void*, f32, void*);
+typedef xFactoryInst*(*type_2)(int32, RyzMemGrow*, void*);
+typedef int32(*type_3)(xGoal*, void*, float32, void*);
 typedef void(*type_4)(xFactoryInst*);
-typedef s32(*type_5)(xGoal*, void*, f32, void*);
-typedef s32(*type_6)(xGoal*, void*, f32, void*);
-typedef s32(*type_7)(xGoal*, void*, f32, void*);
-typedef s32(*type_8)(xGoal*, void*, f32, void*);
-typedef s32(*type_9)(xGoal*, void*, xBase*, xBase*, u32, f32*, xBase*, s32*);
-typedef s32(*type_10)(xGoal*, void*, en_trantype*, f32, void*);
-typedef s32(*type_11)(xGoal*, void*, en_trantype*, f32, void*);
+typedef int32(*type_5)(xGoal*, void*, float32, void*);
+typedef int32(*type_6)(xGoal*, void*, float32, void*);
+typedef int32(*type_7)(xGoal*, void*, float32, void*);
+typedef int32(*type_8)(xGoal*, void*, float32, void*);
+typedef int32(*type_9)(xGoal*, void*, xBase*, xBase*, uint32, float32*, xBase*, int32*);
+typedef int32(*type_10)(xGoal*, void*, en_trantype*, float32, void*);
+typedef int32(*type_11)(xGoal*, void*, en_trantype*, float32, void*);
 
 
 struct xFactory : RyzMemData
@@ -39,14 +39,14 @@ struct xFactory : RyzMemData
 
 struct XGOFTypeInfo
 {
-	s32 tid;
+	int32 tid;
 	type_0 creator;
 	type_1 destroyer;
 };
 
 struct xFactoryInst : RyzMemData
 {
-	s32 itemType;
+	int32 itemType;
 	xFactoryInst* nextprod;
 	xFactoryInst* prevprod;
 };
@@ -54,9 +54,9 @@ struct xFactoryInst : RyzMemData
 struct xGoal : xListItem, xFactoryInst
 {
 	xPsyche* psyche;
-	s32 goalID;
+	int32 goalID;
 	en_GOALSTATE stat;
-	s32 flg_able;
+	int32 flg_able;
 	type_11 fun_process;
 	type_5 fun_precalc;
 	type_10 fun_chkRule;
@@ -65,18 +65,18 @@ struct xGoal : xListItem, xFactoryInst
 
 struct RyzMemGrow
 {
-	s32 flg_grow;
-	s32 amt;
-	s8* ptr;
+	int32 flg_grow;
+	int32 amt;
+	int8* ptr;
 	xBase* user;
-	s32 amt_last;
-	s8* ptr_last;
+	int32 amt_last;
+	int8* ptr_last;
 	xBase* user_last;
 };
 
 struct xListItem
 {
-	s32 flg_travFilter;
+	int32 flg_travFilter;
 	xGoal* next;
 	xGoal* prev;
 };
@@ -94,9 +94,9 @@ struct xGoalGeneric : xGoal
 struct st_XORDEREDARRAY
 {
 	void** list;
-	s32 cnt;
-	s32 max;
-	s32 warnlvl;
+	int32 cnt;
+	int32 max;
+	int32 warnlvl;
 };
 
 struct xPsyche
@@ -158,42 +158,42 @@ _anon0 __vt__5xGoal;
 type_4 GOALDestroy_Generic;
 type_2 GOALCreate_Generic;
 
-s32 SysEvent(xGoalGeneric* this, xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* toParamWidget, s32* handled);
-s32 Resume(xGoalGeneric* this, f32 dt, void* updCtxt);
-s32 Suspend(xGoalGeneric* this, f32 dt, void* updCtxt);
-s32 Exit(xGoalGeneric* this, f32 dt, void* updCtxt);
-s32 Enter(xGoalGeneric* this, f32 dt, void* updCtxt);
+int32 SysEvent(xGoalGeneric* this, xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled);
+int32 Resume(xGoalGeneric* this, float32 dt, void* updCtxt);
+int32 Suspend(xGoalGeneric* this, float32 dt, void* updCtxt);
+int32 Exit(xGoalGeneric* this, float32 dt, void* updCtxt);
+int32 Enter(xGoalGeneric* this, float32 dt, void* updCtxt);
 void GOALDestroy_Generic(xFactoryInst* item);
-xFactoryInst* GOALCreate_Generic(s32 who, RyzMemGrow* growCtxt);
+xFactoryInst* GOALCreate_Generic(int32 who, RyzMemGrow* growCtxt);
 void xGoalSimple_RegisterTypes(xFactory* fac);
 
 // SysEvent__12xGoalGenericFP5xBaseP5xBaseUiPCfP5xBasePi
 // Start address: 0x2f2fd0
-s32 SysEvent(xGoalGeneric* this, xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* toParamWidget, s32* handled)
+int32 SysEvent(xGoalGeneric* this, xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled)
 {
 }
 
 // Resume__12xGoalGenericFfPv
 // Start address: 0x2f3030
-s32 Resume(xGoalGeneric* this, f32 dt, void* updCtxt)
+int32 Resume(xGoalGeneric* this, float32 dt, void* updCtxt)
 {
 }
 
 // Suspend__12xGoalGenericFfPv
 // Start address: 0x2f3070
-s32 Suspend(xGoalGeneric* this, f32 dt, void* updCtxt)
+int32 Suspend(xGoalGeneric* this, float32 dt, void* updCtxt)
 {
 }
 
 // Exit__12xGoalGenericFfPv
 // Start address: 0x2f30b0
-s32 Exit(xGoalGeneric* this, f32 dt, void* updCtxt)
+int32 Exit(xGoalGeneric* this, float32 dt, void* updCtxt)
 {
 }
 
 // Enter__12xGoalGenericFfPv
 // Start address: 0x2f30f0
-s32 Enter(xGoalGeneric* this, f32 dt, void* updCtxt)
+int32 Enter(xGoalGeneric* this, float32 dt, void* updCtxt)
 {
 }
 
@@ -205,7 +205,7 @@ void GOALDestroy_Generic(xFactoryInst* item)
 
 // GOALCreate_Generic__FiP10RyzMemGrowPv
 // Start address: 0x2f3160
-xFactoryInst* GOALCreate_Generic(s32 who, RyzMemGrow* growCtxt)
+xFactoryInst* GOALCreate_Generic(int32 who, RyzMemGrow* growCtxt)
 {
 	xGoal* goal;
 }

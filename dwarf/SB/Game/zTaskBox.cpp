@@ -25,13 +25,13 @@ typedef struct st_SERIAL_CLIENTINFO;
 typedef struct _anon1;
 typedef struct _class_3;
 
-typedef s32(*type_1)(xBase*, xBase*, u32, f32*, xBase*);
-typedef s32(*type_3)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_1)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef int32(*type_3)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef f32 type_0[4];
-typedef u32 type_2[6];
-typedef s8 type_4[16];
-typedef s8 type_5[16];
+typedef float32 type_0[4];
+typedef uint32 type_2[6];
+typedef int8 type_4[16];
+typedef int8 type_5[16];
 
 struct ztaskbox : xBase
 {
@@ -44,13 +44,13 @@ struct ztaskbox : xBase
 
 struct xGroupAsset : xBaseAsset
 {
-	u16 itemCount;
-	u16 groupFlags;
+	uint16 itemCount;
+	uint16 groupFlags;
 };
 
 struct xTextAsset
 {
-	u32 len;
+	uint32 len;
 };
 
 struct _anon0
@@ -59,10 +59,10 @@ struct _anon0
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_1 eventFunc;
 };
@@ -73,8 +73,8 @@ struct callback_0
 
 union _class_0
 {
-	u8 enabled;
-	u32 dummy;
+	uint8 enabled;
+	uint32 dummy;
 };
 
 struct asset_type_0
@@ -83,13 +83,13 @@ struct asset_type_0
 
 struct xSerial
 {
-	u32 idtag;
-	s32 baseoff;
+	uint32 idtag;
+	int32 baseoff;
 	st_SERIAL_CLIENTINFO* ctxtdata;
-	s32 warned;
-	s32 curele;
-	s32 bitidx;
-	s32 bittally;
+	int32 warned;
+	int32 curele;
+	int32 bitidx;
+	int32 bittally;
 };
 
 struct ztextbox
@@ -104,21 +104,21 @@ struct talk_callback : callback_1
 
 struct _class_1
 {
-	s8* skip;
-	s8* noskip;
-	s8* quit;
-	s8* noquit;
-	s8* yesno;
+	int8* skip;
+	int8* noskip;
+	int8* quit;
+	int8* noquit;
+	int8* yesno;
 };
 
 struct asset_type_1 : xDynAsset
 {
-	u8 persistent;
-	u8 loop;
-	u8 enable;
-	u8 retry;
-	u32 talk_box;
-	u32 next_task;
+	uint8 persistent;
+	uint8 loop;
+	uint8 enable;
+	uint8 retry;
+	uint32 talk_box;
+	uint32 next_task;
 	type_2 stages;
 };
 
@@ -128,12 +128,12 @@ struct zNPCCommon
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_0 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct ztalkbox : xBase
@@ -156,8 +156,8 @@ struct xGroup : xBase
 {
 	xGroupAsset* asset;
 	xBase** item;
-	u32 last_index;
-	s32 flg_group;
+	uint32 last_index;
+	int32 flg_group;
 };
 
 enum answer_enum
@@ -169,10 +169,10 @@ enum answer_enum
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct callback_1
@@ -181,9 +181,9 @@ struct callback_1
 
 struct xDynAsset : xBaseAsset
 {
-	u32 type;
-	u16 version;
-	u16 handle;
+	uint32 type;
+	uint16 version;
+	uint16 handle;
 };
 
 enum state_enum
@@ -208,7 +208,7 @@ struct _anon1
 
 struct _class_3
 {
-	u8 visible;
+	uint8 visible;
 };
 
 type_4 buffer;
@@ -219,7 +219,7 @@ _anon1 __vt__Q28ztaskbox13talk_callback;
 _anon0 __vt__Q28ztalkbox8callback;
 type_3 cb_dispatch;
 
-s32 cb_dispatch(xBase* to, u32 event);
+int32 cb_dispatch(xBase* to, uint32 event);
 void on_talk_stop(ztaskbox* this);
 void set_state(ztaskbox* this, state_enum state);
 void load(xBase& data, xDynAsset& asset);
@@ -236,7 +236,7 @@ void on_answer(talk_callback* this, answer_enum answer);
 
 // cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase
 // Start address: 0x323a70
-s32 cb_dispatch(xBase* to, u32 event)
+int32 cb_dispatch(xBase* to, uint32 event)
 {
 	ztaskbox& e;
 }
@@ -264,7 +264,7 @@ void load(xBase& data, xDynAsset& asset)
 void init()
 {
 	talk_callback tcb;
-	s8 @3564;
+	int8 @3564;
 }
 
 // set_callback__8ztaskboxFPQ28ztaskbox8callback
@@ -297,7 +297,7 @@ void write(ztaskbox* this, xSerial& s)
 // Start address: 0x324100
 void read(ztaskbox* this, xSerial& s)
 {
-	u8 state;
+	uint8 state;
 }
 
 // load__8ztaskboxFRCQ28ztaskbox10asset_type

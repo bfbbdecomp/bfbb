@@ -61,41 +61,41 @@ typedef struct rwPS2AllClusterInstanceInfo;
 typedef struct RpPDSSkyMatPrimitive;
 typedef enum RpMeshHeaderFlags;
 
-typedef s32(*type_0)(RxPipelineNode*, RxPipeline*);
-typedef s32(*type_1)(RxPS2AllPipeData*);
-typedef u32(*type_2)(RxPipelineNode*, u32, u32, void*);
-typedef s32(*type_4)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef s32(*type_5)(RxPS2AllPipeData*);
-typedef s32(*type_6)(RxNodeDefinition*);
-typedef RwResEntry*(*type_7)(RxPS2AllPipeData*, RwResEntry**, u32, type_31);
+typedef int32(*type_0)(RxPipelineNode*, RxPipeline*);
+typedef int32(*type_1)(RxPS2AllPipeData*);
+typedef uint32(*type_2)(RxPipelineNode*, uint32, uint32, void*);
+typedef int32(*type_4)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef int32(*type_5)(RxPS2AllPipeData*);
+typedef int32(*type_6)(RxNodeDefinition*);
+typedef RwResEntry*(*type_7)(RxPS2AllPipeData*, RwResEntry**, uint32, type_31);
 typedef void(*type_9)(RxNodeDefinition*);
-typedef s32(*type_10)(RxPS2AllPipeData*, void**, u32);
-typedef s32(*type_11)(RxPipelineNode*);
-typedef s32(*type_12)(RxPS2AllPipeData*);
-typedef RwTexture*(*type_14)(s8*, s8*);
+typedef int32(*type_10)(RxPS2AllPipeData*, void**, uint32);
+typedef int32(*type_11)(RxPipelineNode*);
+typedef int32(*type_12)(RxPS2AllPipeData*);
+typedef RwTexture*(*type_14)(int8*, int8*);
 typedef void(*type_15)(RxPipelineNode*);
-typedef s32(*type_23)(RxPS2AllPipeData*, RwMatrixTag**);
-typedef s32(*type_25)(RxPS2AllPipeData*);
+typedef int32(*type_23)(RxPS2AllPipeData*, RwMatrixTag**);
+typedef int32(*type_25)(RxPS2AllPipeData*);
 typedef void(*type_31)(RwResEntry*);
-typedef s32(*type_34)(s32);
+typedef int32(*type_34)(int32);
 
-typedef s8 type_3[512];
+typedef int8 type_3[512];
 typedef RpPDSSkyMatCluster type_8[10];
-typedef u8 type_13[1];
-typedef s8 type_16[16];
-typedef s8 type_17[256];
-typedef s8 type_18[16];
+typedef uint8 type_13[1];
+typedef int8 type_16[16];
+typedef int8 type_17[256];
+typedef int8 type_18[16];
 typedef rwPS2AllClusterInstanceInfo type_19[12];
-typedef u32 type_20[12];
-typedef u8 type_21[2];
-typedef s8* type_22[3];
+typedef uint32 type_20[12];
+typedef uint8 type_21[2];
+typedef int8* type_22[3];
 typedef rwPS2AllFieldRec type_24[12];
-typedef u32 type_26[4];
-typedef s8* type_27[3];
+typedef uint32 type_26[4];
+typedef int8* type_27[3];
 typedef RwResEntry* type_28[1];
-typedef s8 type_29[32];
-typedef s8 type_30[32];
-typedef s8 type_32[256];
+typedef int8 type_29[32];
+typedef int8 type_30[32];
+typedef int8 type_32[256];
 typedef RxCluster type_33[1];
 
 struct RxPipelineNodeParam
@@ -118,20 +118,20 @@ enum RwPrimitiveType
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct RxPS2AllPipeData
@@ -142,18 +142,18 @@ struct RxPS2AllPipeData
 	RpMeshHeader* meshHeader;
 	RwMeshCache* meshCache;
 	RxInstanceFlags objInstance;
-	u32 objIdentifier;
-	f32 spExtra;
-	s32 numMorphTargets;
-	u32 fastMorphing;
-	u8 transType;
-	u8 primType;
-	u8 matModulate;
-	u8 vu1CodeIndex;
+	uint32 objIdentifier;
+	float32 spExtra;
+	int32 numMorphTargets;
+	uint32 fastMorphing;
+	uint8 transType;
+	uint8 primType;
+	uint8 matModulate;
+	uint8 vu1CodeIndex;
 	RpMesh* mesh;
 	RwResEntry** cacheEntryRef;
 	RxInstanceFlags meshInstance;
-	u32 meshIdentifier;
+	uint32 meshIdentifier;
 	RwSurfaceProperties* surfProps;
 	RwTexture* texture;
 	RwRGBA matCol;
@@ -166,56 +166,56 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_29 name;
 	type_30 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct rwPS2AllFieldRec
 {
-	s32 numVerts;
-	s32 morphNumVerts;
-	s32 dataoffset;
-	s32 morphDataoffset;
-	s16 skip;
-	s16 morphSkip;
-	s16 reverse;
-	u8 vuoffset;
+	int32 numVerts;
+	int32 morphNumVerts;
+	int32 dataoffset;
+	int32 morphDataoffset;
+	int16 skip;
+	int16 morphSkip;
+	int16 reverse;
+	uint8 vuoffset;
 	type_13 pad;
 };
 
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
@@ -226,26 +226,26 @@ struct rxNodePS2AllMatPvtData
 	type_10 instanceCB;
 	type_12 bridgeCB;
 	type_1 postMeshCB;
-	s32 vifOffset;
+	int32 vifOffset;
 	void** vu1CodeArray;
-	u32 codeArrayLength;
+	uint32 codeArrayLength;
 	type_19 clinfo;
 	type_20 cliIndex;
 	RpMeshHeaderFlags pipeType;
-	u8 totallyOpaque;
-	u8 numStripes;
-	u8 sizeOnVU;
-	u8 pad0;
+	uint8 totallyOpaque;
+	uint8 numStripes;
+	uint8 sizeOnVU;
+	uint8 pad0;
 	rwPS2AllResEntryFormat strip;
 	rwPS2AllResEntryFormat list;
-	u32 magicValue;
+	uint32 magicValue;
 };
 
 struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_26 pad;
 };
@@ -257,20 +257,20 @@ struct DBWATCHData
 
 struct sceCdCLOCK
 {
-	u8 stat;
-	u8 second;
-	u8 minute;
-	u8 hour;
-	u8 pad;
-	u8 day;
-	u8 month;
-	u8 year;
+	uint8 stat;
+	uint8 second;
+	uint8 minute;
+	uint8 hour;
+	uint8 pad;
+	uint8 day;
+	uint8 month;
+	uint8 year;
 };
 
 struct RpPDSSkyMatTemplate
 {
-	u32 pluginId;
-	u32 pluginData;
+	uint32 pluginId;
+	uint32 pluginData;
 	type_8 clusters;
 	RpPDSSkyMatPrimitive primitive;
 	RpPDSSkyVU1CodeTemplate* vu1code;
@@ -285,30 +285,30 @@ struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 struct RpPDSSkyVU1CodeTemplate
 {
 	void** array;
-	u32 slots;
+	uint32 slots;
 };
 
 enum RxInstanceFlags
@@ -343,13 +343,13 @@ enum RxInstanceFlags
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct RpMaterial
@@ -358,14 +358,14 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
@@ -376,22 +376,22 @@ struct rxReq
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 enum RxClusterValidityReq
@@ -418,14 +418,14 @@ enum RwVideoModeFlag
 
 struct rwPS2AllResEntryFormat
 {
-	u8 batchRound;
-	u8 stripReverse;
+	uint8 batchRound;
+	uint8 stripReverse;
 	type_21 pad;
-	u32 maxInputSize;
-	s32 batchSize;
-	s32 batchesPerTag;
-	s32 morphBatchSize;
-	s32 morphBatchesPerTag;
+	uint32 maxInputSize;
+	int32 batchSize;
+	int32 batchesPerTag;
+	int32 morphBatchSize;
+	int32 morphBatchesPerTag;
 	type_24 fieldRec;
 };
 
@@ -446,14 +446,14 @@ enum RxClusterValid
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
 struct RpPDSSkyObjTemplate
 {
-	u32 pluginId;
-	u32 pluginData;
+	uint32 pluginId;
+	uint32 pluginData;
 	type_23 objectSetupCallBack;
 	type_25 objectFinalizeCallBack;
 	RxPipeline* matGroup;
@@ -485,10 +485,10 @@ enum RpPDSPipeType
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 struct RwTexDictionary
@@ -500,17 +500,17 @@ struct RwTexDictionary
 
 struct RwVideoMode
 {
-	s32 width;
-	s32 height;
-	s32 depth;
+	int32 width;
+	int32 height;
+	int32 depth;
 	RwVideoModeFlag flags;
-	s32 refRate;
-	s32 format;
+	int32 refRate;
+	int32 format;
 };
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
@@ -526,21 +526,21 @@ struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 struct RwMeshCache
 {
-	u32 lengthOfMeshesArray;
+	uint32 lengthOfMeshesArray;
 	type_28 meshes;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -552,24 +552,24 @@ struct RwLLLink
 
 struct RpMesh
 {
-	u16* indices;
-	u32 numIndices;
+	uint16* indices;
+	uint32 numIndices;
 	RpMaterial* material;
 };
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_31 destroyNotify;
@@ -589,7 +589,7 @@ struct RxNodeMethods
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct RpPDSRegister
@@ -787,48 +787,48 @@ struct rxNodePS2AllPvtData
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct RpPDSSkyMatCluster
 {
 	RxClusterDefinition* definition;
-	u32 type;
+	uint32 type;
 };
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_33 clusters;
 };
@@ -845,17 +845,17 @@ struct RwLinkList
 
 struct rwPS2AllClusterInstanceInfo
 {
-	u32 attrib;
-	u32 stride;
+	uint32 attrib;
+	uint32 stride;
 };
 
 struct RpPDSSkyMatPrimitive
 {
 	RwPrimitiveType type;
-	s32 clusterStride;
-	s32 vertexCount;
-	s32 primCount;
-	s32 vifOffset;
+	int32 clusterStride;
+	int32 vertexCount;
+	int32 primCount;
+	int32 vifOffset;
 };
 
 enum RpMeshHeaderFlags
@@ -873,13 +873,13 @@ enum RpMeshHeaderFlags
 type_16 buffer;
 type_18 buffer;
 void* hackResourceArenaPointer;
-s32 DVD;
-s32 g_dumpEachAllocOp;
+int32 DVD;
+int32 g_dumpEachAllocOp;
 RwVideoMode sVideoMode;
-s32 gFB_Flags;
+int32 gFB_Flags;
 DBWATCHData* g_watchthisblock;
-u32 gVsyncCount;
-u32 gTransitionSceneID;
+uint32 gVsyncCount;
+uint32 gTransitionSceneID;
 type_34 vsyncCounterHandler;
 type_14 TextureRead;
 RpPDSSkyObjTemplate rwPDS_G3_SkinfxUV2_AtmPipe;
@@ -919,21 +919,21 @@ RpPDSSkyMatTemplate rwPDS_G3x_ADL_MatPipe;
 RpPDSSkyObjTemplate rwPDS_G3x_Generic_AtmPipe;
 
 void iSystem_GapTrackReport();
-void iLoadModule(s8* moduleName, s8* arguments);
-u32 iGetCurrFormattedTime(s8* str);
-u32 iGetCurrFormattedDate(s8* str);
-u8 iGetMonth();
-u8 iGetDay();
-u8 iGetHour();
-u8 iGetMinute();
+void iLoadModule(int8* moduleName, int8* arguments);
+uint32 iGetCurrFormattedTime(int8* str);
+uint32 iGetCurrFormattedDate(int8* str);
+uint8 iGetMonth();
+uint8 iGetDay();
+uint8 iGetHour();
+uint8 iGetMinute();
 void iVSync();
-RwTexture* TextureRead(s8* name, s8* maskName);
-u32 iRenderWareInit();
-s32 vsyncCounterHandler();
-u32 RWAttachPlugins();
+RwTexture* TextureRead(int8* name, int8* maskName);
+uint32 iRenderWareInit();
+int32 vsyncCounterHandler();
+uint32 RWAttachPlugins();
 void iSystemExit();
-void iSystemInit(u32 options);
-u32 psSelectDevice();
+void iSystemInit(uint32 options);
+uint32 psSelectDevice();
 
 // iSystem_GapTrackReport__Fv
 // Start address: 0x1b9c50
@@ -943,53 +943,53 @@ void iSystem_GapTrackReport()
 
 // iLoadModule__FPCcPCc
 // Start address: 0x1b9c60
-void iLoadModule(s8* moduleName, s8* arguments)
+void iLoadModule(int8* moduleName, int8* arguments)
 {
 	type_32 workingName;
-	s32 j;
-	s32 errorCode;
+	int32 j;
+	int32 errorCode;
 	type_22 PATHS_CDROM;
 	type_27 PATHS_HOST;
 }
 
 // iGetCurrFormattedTime__FPc
 // Start address: 0x1b9db0
-u32 iGetCurrFormattedTime(s8* str)
+uint32 iGetCurrFormattedTime(int8* str)
 {
 	sceCdCLOCK clock;
 }
 
 // iGetCurrFormattedDate__FPc
 // Start address: 0x1b9f10
-u32 iGetCurrFormattedDate(s8* str)
+uint32 iGetCurrFormattedDate(int8* str)
 {
 	sceCdCLOCK clock;
 }
 
 // iGetMonth__Fv
 // Start address: 0x1ba010
-u8 iGetMonth()
+uint8 iGetMonth()
 {
 	sceCdCLOCK clock;
 }
 
 // iGetDay__Fv
 // Start address: 0x1ba040
-u8 iGetDay()
+uint8 iGetDay()
 {
 	sceCdCLOCK clock;
 }
 
 // iGetHour__Fv
 // Start address: 0x1ba070
-u8 iGetHour()
+uint8 iGetHour()
 {
 	sceCdCLOCK clock;
 }
 
 // iGetMinute__Fv
 // Start address: 0x1ba0a0
-u8 iGetMinute()
+uint8 iGetMinute()
 {
 	sceCdCLOCK clock;
 }
@@ -1002,30 +1002,30 @@ void iVSync()
 
 // TextureRead__FPCcPCc
 // Start address: 0x1ba0e0
-RwTexture* TextureRead(s8* name, s8* maskName)
+RwTexture* TextureRead(int8* name, int8* maskName)
 {
 	type_17 tmpname;
 	RwTexture* result;
-	u32 assetid;
-	u32 tmpsize;
+	uint32 assetid;
+	uint32 tmpsize;
 }
 
 // iRenderWareInit__Fv
 // Start address: 0x1ba1e0
-u32 iRenderWareInit()
+uint32 iRenderWareInit()
 {
 	RwEngineOpenParams openParams;
 }
 
 // vsyncCounterHandler__Fi
 // Start address: 0x1ba2e0
-s32 vsyncCounterHandler()
+int32 vsyncCounterHandler()
 {
 }
 
 // RWAttachPlugins__Fv
 // Start address: 0x1ba300
-u32 RWAttachPlugins()
+uint32 RWAttachPlugins()
 {
 	RpPDSRegister _objPipe;
 	RpPDSRegister _matPipe;
@@ -1075,20 +1075,20 @@ void iSystemExit()
 
 // iSystemInit__FUi
 // Start address: 0x1bab70
-void iSystemInit(u32 options)
+void iSystemInit(uint32 options)
 {
-	s8* CDROM_IMAGE_FILE;
-	s8* HOSTIO_IMAGE_FILE;
-	s8* iopImageFile;
-	s32 disk_type;
+	int8* CDROM_IMAGE_FILE;
+	int8* HOSTIO_IMAGE_FILE;
+	int8* iopImageFile;
+	int32 disk_type;
 }
 
 // psSelectDevice__Fv
 // Start address: 0x1bad40
-u32 psSelectDevice()
+uint32 psSelectDevice()
 {
 	RwVideoMode videoMode;
-	s32 i;
-	s32 num;
+	int32 i;
+	int32 num;
 }
 

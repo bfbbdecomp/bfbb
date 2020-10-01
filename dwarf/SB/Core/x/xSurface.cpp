@@ -4,23 +4,23 @@ typedef struct xLinkAsset;
 typedef struct xEnt;
 typedef struct xBase;
 
-typedef s32(*type_2)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_2)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef u8 type_0[3];
-typedef f32 type_1[4];
+typedef uint8 type_0[3];
+typedef float32 type_1[4];
 
 struct xSurface : xBase
 {
-	u32 idx;
-	u32 type;
+	uint32 idx;
+	uint32 type;
 	union
 	{
-		u32 mat_idx;
+		uint32 mat_idx;
 		xEnt* ent;
 		void* obj;
 	};
-	f32 friction;
-	u8 state;
+	float32 friction;
+	uint8 state;
 	type_0 pad;
 	void* moprops;
 };
@@ -31,12 +31,12 @@ struct xSerial
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_1 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xEnt
@@ -45,35 +45,35 @@ struct xEnt
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_2 eventFunc;
 };
 
 xSurface* surfs;
-u16 nsurfs;
-u32 gActiveHeap;
+uint16 nsurfs;
+uint32 gActiveHeap;
 
-xSurface* xSurfaceGetByIdx(u16 n);
-u16 xSurfaceGetNumSurfaces();
+xSurface* xSurfaceGetByIdx(uint16 n);
+uint16 xSurfaceGetNumSurfaces();
 void xSurfaceReset();
 void xSurfaceLoad(xSurface* ent, xSerial* s);
 void xSurfaceSave(xSurface* ent, xSerial* s);
 void xSurfaceExit();
-void xSurfaceInit(u16 num_surfs);
+void xSurfaceInit(uint16 num_surfs);
 
 // xSurfaceGetByIdx__FUs
 // Start address: 0x20ed40
-xSurface* xSurfaceGetByIdx(u16 n)
+xSurface* xSurfaceGetByIdx(uint16 n)
 {
 }
 
 // xSurfaceGetNumSurfaces__Fv
 // Start address: 0x20ed70
-u16 xSurfaceGetNumSurfaces()
+uint16 xSurfaceGetNumSurfaces()
 {
 }
 
@@ -103,8 +103,8 @@ void xSurfaceExit()
 
 // xSurfaceInit__FUs
 // Start address: 0x20edc0
-void xSurfaceInit(u16 num_surfs)
+void xSurfaceInit(uint16 num_surfs)
 {
-	u16 i;
+	uint16 i;
 }
 

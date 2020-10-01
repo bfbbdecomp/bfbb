@@ -35,55 +35,55 @@ typedef struct xPEEntBone;
 typedef struct xPECircle;
 typedef struct xBaseAsset;
 
-typedef void(*type_0)(xParCmd*, xParGroup*, f32);
-typedef void(*type_1)(xParCmd*, xParGroup*, f32);
-typedef void(*type_2)(xParCmd*, xParGroup*, f32);
-typedef void(*type_4)(xParCmd*, xParGroup*, f32);
+typedef void(*type_0)(xParCmd*, xParGroup*, float32);
+typedef void(*type_1)(xParCmd*, xParGroup*, float32);
+typedef void(*type_2)(xParCmd*, xParGroup*, float32);
+typedef void(*type_4)(xParCmd*, xParGroup*, float32);
 typedef void(*type_6)(void*, xParGroup*);
-typedef void(*type_7)(xParCmd*, xParGroup*, f32);
-typedef void(*type_12)(xParCmd*, xParGroup*, f32);
-typedef void(*type_13)(xParCmd*, xParGroup*, f32);
-typedef void(*type_15)(xParCmd*, xParGroup*, f32);
-typedef void(*type_20)(xParCmd*, xParGroup*, f32);
-typedef void(*type_21)(xParCmd*, xParGroup*, f32);
-typedef void(*type_22)(xParCmd*, xParGroup*, f32);
-typedef void(*type_23)(xParCmd*, xParGroup*, f32);
-typedef void(*type_25)(xParCmd*, xParGroup*, f32);
-typedef void(*type_26)(xParCmd*, xParGroup*, f32);
-typedef void(*type_27)(xParCmd*, xParGroup*, f32);
-typedef void(*type_28)(xParCmd*, xParGroup*, f32);
-typedef void(*type_31)(xParCmd*, xParGroup*, f32);
-typedef void(*type_32)(xParCmd*, xParGroup*, f32);
-typedef void(*type_33)(xParCmd*, xParGroup*, f32);
-typedef void(*type_34)(xParCmd*, xParGroup*, f32);
-typedef void(*type_35)(xParCmd*, xParGroup*, f32);
-typedef void(*type_36)(xParCmd*, xParGroup*, f32);
-typedef void(*type_37)(xParCmd*, xParGroup*, f32);
-typedef void(*type_38)(xParCmd*, xParGroup*, f32);
-typedef void(*type_40)(xParCmd*, xParGroup*, f32);
-typedef void(*type_42)(xParCmd*, xParGroup*, f32);
-typedef void(*type_43)(xParCmd*, xParGroup*, f32);
+typedef void(*type_7)(xParCmd*, xParGroup*, float32);
+typedef void(*type_12)(xParCmd*, xParGroup*, float32);
+typedef void(*type_13)(xParCmd*, xParGroup*, float32);
+typedef void(*type_15)(xParCmd*, xParGroup*, float32);
+typedef void(*type_20)(xParCmd*, xParGroup*, float32);
+typedef void(*type_21)(xParCmd*, xParGroup*, float32);
+typedef void(*type_22)(xParCmd*, xParGroup*, float32);
+typedef void(*type_23)(xParCmd*, xParGroup*, float32);
+typedef void(*type_25)(xParCmd*, xParGroup*, float32);
+typedef void(*type_26)(xParCmd*, xParGroup*, float32);
+typedef void(*type_27)(xParCmd*, xParGroup*, float32);
+typedef void(*type_28)(xParCmd*, xParGroup*, float32);
+typedef void(*type_31)(xParCmd*, xParGroup*, float32);
+typedef void(*type_32)(xParCmd*, xParGroup*, float32);
+typedef void(*type_33)(xParCmd*, xParGroup*, float32);
+typedef void(*type_34)(xParCmd*, xParGroup*, float32);
+typedef void(*type_35)(xParCmd*, xParGroup*, float32);
+typedef void(*type_36)(xParCmd*, xParGroup*, float32);
+typedef void(*type_37)(xParCmd*, xParGroup*, float32);
+typedef void(*type_38)(xParCmd*, xParGroup*, float32);
+typedef void(*type_40)(xParCmd*, xParGroup*, float32);
+typedef void(*type_42)(xParCmd*, xParGroup*, float32);
+typedef void(*type_43)(xParCmd*, xParGroup*, float32);
 
-typedef u8 type_3[4];
+typedef uint8 type_3[4];
 typedef xCmdInfo type_5[35];
-typedef f32 type_8[3];
-typedef f32 type_9[3];
-typedef u8 type_10[2];
-typedef u8 type_11[3];
-typedef f32 type_14[3];
-typedef f32 type_16[4];
-typedef f32 type_17[4];
-typedef u8 type_18[2];
-typedef f32 type_19[4];
-typedef f32 type_24[4];
-typedef f32 type_29[4];
-typedef f32 type_30[4];
-typedef f32 type_39[0];
-typedef f32 type_41[3];
+typedef float32 type_8[3];
+typedef float32 type_9[3];
+typedef uint8 type_10[2];
+typedef uint8 type_11[3];
+typedef float32 type_14[3];
+typedef float32 type_16[4];
+typedef float32 type_17[4];
+typedef uint8 type_18[2];
+typedef float32 type_19[4];
+typedef float32 type_24[4];
+typedef float32 type_29[4];
+typedef float32 type_30[4];
+typedef float32 type_39[0];
+typedef float32 type_41[3];
 
 struct xParCmd
 {
-	u32 flag;
+	uint32 flag;
 	xParCmdAsset* tasset;
 };
 
@@ -91,18 +91,18 @@ struct xPar
 {
 	xPar* m_next;
 	xPar* m_prev;
-	f32 m_lifetime;
+	float32 m_lifetime;
 	type_3 m_c;
 	xVec3 m_pos;
-	f32 m_size;
+	float32 m_size;
 	xVec3 m_vel;
-	f32 m_sizeVel;
-	u8 m_flag;
-	u8 m_mode;
+	float32 m_sizeVel;
+	uint8 m_flag;
+	uint8 m_mode;
 	type_10 m_texIdx;
 	type_11 m_rotdeg;
-	u8 pad8;
-	f32 totalLifespan;
+	uint8 pad8;
+	float32 totalLifespan;
 	xParEmitterAsset* m_asset;
 	type_16 m_cvel;
 	type_17 m_cfl;
@@ -112,15 +112,15 @@ struct xParGroup
 {
 	xPar* m_root;
 	xPar* m_dead;
-	s32 m_num_of_particles;
-	u8 m_alive;
-	u8 m_killWhenDead;
-	u8 m_active;
-	u8 m_visible;
-	u8 m_culled;
-	u8 m_priority;
-	u8 m_flags;
-	u8 m_regidx;
+	int32 m_num_of_particles;
+	uint8 m_alive;
+	uint8 m_killWhenDead;
+	uint8 m_active;
+	uint8 m_visible;
+	uint8 m_culled;
+	uint8 m_priority;
+	uint8 m_flags;
+	uint8 m_regidx;
 	xParGroup* m_next;
 	xParGroup* m_prev;
 	type_6 draw;
@@ -129,8 +129,8 @@ struct xParGroup
 
 struct xCmdInfo
 {
-	u32 type;
-	u32 size;
+	uint32 type;
+	uint32 size;
 	type_2 func;
 };
 
@@ -141,7 +141,7 @@ struct xParCmdMove : xParCmdAsset
 
 struct _tagEmitSphere
 {
-	f32 radius;
+	float32 radius;
 };
 
 struct xParCmdSizeInOutData : xParCmdAsset
@@ -151,83 +151,83 @@ struct xParCmdSizeInOutData : xParCmdAsset
 
 struct xParCmdCollideFallSticky : xParCmdCollideFall
 {
-	f32 sticky;
+	float32 sticky;
 };
 
 struct xParCmdTex : xParCmdAsset
 {
-	f32 x1;
-	f32 y1;
-	f32 x2;
-	f32 y2;
-	u8 birthMode;
-	u8 rows;
-	u8 cols;
-	u8 unit_count;
-	f32 unit_width;
-	f32 unit_height;
+	float32 x1;
+	float32 y1;
+	float32 x2;
+	float32 y2;
+	uint8 birthMode;
+	uint8 rows;
+	uint8 cols;
+	uint8 unit_count;
+	float32 unit_width;
+	float32 unit_height;
 };
 
 struct xParCmdAsset
 {
-	u32 type;
-	u8 enabled;
-	u8 mode;
+	uint32 type;
+	uint8 enabled;
+	uint8 mode;
 	type_18 pad;
 };
 
 struct xParCmdFollow : xParCmdAsset
 {
-	f32 gravity;
-	f32 epsilon;
+	float32 gravity;
+	float32 epsilon;
 };
 
 struct _tagEmitRect
 {
-	f32 x_len;
-	f32 z_len;
+	float32 x_len;
+	float32 z_len;
 };
 
 struct xParCmdKillSlow : xParCmdAsset
 {
-	f32 speedLimitSqr;
-	u32 kill_less_than;
+	float32 speedLimitSqr;
+	uint32 kill_less_than;
 };
 
 struct xParCmdDampenData : xParCmdAsset
 {
-	f32 dampSpeed;
+	float32 dampSpeed;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xParCmdRandomVelocityPar : xParCmdAsset
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xParCmdOrbitLine : xParCmdAsset
 {
 	xVec3 p;
 	xVec3 axis;
-	f32 gravity;
-	f32 epsilon;
-	f32 maxRadiusSqr;
+	float32 gravity;
+	float32 epsilon;
+	float32 maxRadiusSqr;
 };
 
 struct xParEmitterAsset : xBaseAsset
 {
-	u8 emit_flags;
-	u8 emit_type;
-	u16 pad;
-	u32 propID;
+	uint8 emit_flags;
+	uint8 emit_type;
+	uint16 pad;
+	uint32 propID;
 	union
 	{
 		xPECircle e_circle;
@@ -240,22 +240,22 @@ struct xParEmitterAsset : xBaseAsset
 		xPEEntBone e_entbone;
 		xPEEntBound e_entbound;
 	};
-	u32 attachToID;
+	uint32 attachToID;
 	xVec3 pos;
 	xVec3 vel;
-	f32 vel_angle_variation;
-	u32 cull_mode;
-	f32 cull_dist_sqr;
+	float32 vel_angle_variation;
+	uint32 cull_mode;
+	float32 cull_dist_sqr;
 };
 
 struct xPEEntBound
 {
-	u8 flags;
-	u8 type;
-	u8 pad1;
-	u8 pad2;
-	f32 expand;
-	f32 deflection;
+	uint8 flags;
+	uint8 type;
+	uint8 pad1;
+	uint8 pad2;
+	float32 expand;
+	float32 deflection;
 };
 
 struct xParCmdAlphaInOutData : xParCmdAsset
@@ -267,7 +267,7 @@ struct _tagEmitLine
 {
 	xVec3 pos1;
 	xVec3 pos2;
-	f32 radius;
+	float32 radius;
 };
 
 struct xParCmdAccelerate : xParCmdAsset
@@ -277,7 +277,7 @@ struct xParCmdAccelerate : xParCmdAsset
 
 struct _tagEmitVolume
 {
-	u32 emit_volumeID;
+	uint32 emit_volumeID;
 };
 
 struct xParCmdRotPar : xParCmdAsset
@@ -289,34 +289,34 @@ struct xParCmdRotPar : xParCmdAsset
 struct xParCmdOrbitPoint : xParCmdAsset
 {
 	xVec3 center;
-	f32 gravity;
-	f32 epsilon;
-	f32 maxRadiusSqr;
+	float32 gravity;
+	float32 epsilon;
+	float32 maxRadiusSqr;
 };
 
 struct xParCmdCollideFall : xParCmdAsset
 {
-	f32 y;
-	f32 bounce;
+	float32 y;
+	float32 bounce;
 };
 
 struct xParCmdTexAnim : xParCmdAsset
 {
-	u8 anim_mode;
-	u8 anim_wrap_mode;
-	u8 pad_anim;
-	u8 throttle_spd_less_than;
-	f32 throttle_spd_sqr;
-	f32 throttle_time;
-	f32 throttle_time_elapsed;
+	uint8 anim_mode;
+	uint8 anim_wrap_mode;
+	uint8 pad_anim;
+	uint8 throttle_spd_less_than;
+	float32 throttle_spd_sqr;
+	float32 throttle_time;
+	float32 throttle_time_elapsed;
 };
 
 struct xParCmdShaperData : xParCmdAsset
 {
 	type_29 custAlpha;
 	type_30 custSize;
-	f32 dampSpeed;
-	f32 gravity;
+	float32 dampSpeed;
+	float32 gravity;
 };
 
 struct _tagEmitOffsetPoint
@@ -327,11 +327,11 @@ struct _tagEmitOffsetPoint
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct xParCmdMoveRandomPar : xParCmdAsset
@@ -341,43 +341,43 @@ struct xParCmdMoveRandomPar : xParCmdAsset
 
 struct xPEVCyl
 {
-	f32 height;
-	f32 radius;
-	f32 deflection;
+	float32 height;
+	float32 radius;
+	float32 deflection;
 };
 
 struct xParCmdRotateAround : xParCmdAsset
 {
 	xVec3 pos;
-	f32 unused1;
-	f32 radius_growth;
-	f32 yaw;
+	float32 unused1;
+	float32 radius_growth;
+	float32 yaw;
 };
 
 struct xPEEntBone
 {
-	u8 flags;
-	u8 type;
-	u8 bone;
-	u8 pad1;
+	uint8 flags;
+	uint8 type;
+	uint8 bone;
+	uint8 pad1;
 	xVec3 offset;
-	f32 radius;
-	f32 deflection;
+	float32 radius;
+	float32 deflection;
 };
 
 struct xPECircle
 {
-	f32 radius;
-	f32 deflection;
+	float32 radius;
+	float32 deflection;
 	xVec3 dir;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 type_5 sCmdInfo;
@@ -409,53 +409,53 @@ type_13 xParCmdAccelerate_Update;
 type_23 xParCmdMoveRandom_Update;
 type_21 xParCmdMove_Update;
 
-void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, f32 dt);
+void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, float32 dt);
 void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps);
 void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps);
-void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, f32 dt);
+void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, float32 dt);
 void xParCmdCollideFallSticky_Update(xParCmd* c, xParGroup* ps);
 void xParCmdCollideFall_Update(xParCmd* c, xParGroup* ps);
-void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, f32 dt);
+void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, float32 dt);
 void xParCmdTex_Update();
-void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, f32 dt);
+void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, float32 dt);
 void xParCmdVelocityApply_Update(xParGroup* ps);
-void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, f32 dt);
+void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, float32 dt);
 void xParCmdAlpha3rdPolyReg_Update();
 void xParCmdScale_Update();
 void xParCmdSmokeAlpha_Update();
 void xParCmdScale3rdPolyReg_Update();
-void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdMove_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdAge_Update(xParCmd* c, xParGroup* ps, f32 dt);
-void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, f32 dt);
-type_2 xParCmdGetUpdateFunc(u32 parType);
-u32 xParCmdGetSize(u32 parType);
-void xParCmdRegister(u32 parType, u32 size, type_2 func);
+void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdMove_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdAge_Update(xParCmd* c, xParGroup* ps, float32 dt);
+void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, float32 dt);
+type_2 xParCmdGetUpdateFunc(uint32 parType);
+uint32 xParCmdGetSize(uint32 parType);
+void xParCmdRegister(uint32 parType, uint32 size, type_2 func);
 void xParCmdInit();
 
 // xParCmd_Shaper_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f4370
-void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdShaperData* cmd;
-	f32 damp;
-	f32 grav;
-	s32 doalpha;
-	s32 dosize;
-	s32 i;
-	s32 seg;
+	float32 damp;
+	float32 grav;
+	int32 doalpha;
+	int32 dosize;
+	int32 i;
+	int32 seg;
 	type_8 slope_alfa;
 	type_9 slope_size;
-	f32 frac;
-	f32 alfa;
+	float32 frac;
+	float32 alfa;
 }
 
 // xParCmd_AlphaInOut_Update__FP7xParCmdP9xParGroupf
@@ -464,11 +464,11 @@ void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps)
 {
 	xPar* p;
 	xParCmdAlphaInOutData* cmd;
-	s32 i;
-	s32 seg;
+	int32 i;
+	int32 seg;
 	type_41 slope_alfa;
-	f32 frac;
-	f32 alfa;
+	float32 frac;
+	float32 alfa;
 }
 
 // xParCmd_SizeInOut_Update__FP7xParCmdP9xParGroupf
@@ -477,19 +477,19 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps)
 {
 	xPar* p;
 	xParCmdSizeInOutData* cmd;
-	s32 i;
-	s32 seg;
+	int32 i;
+	int32 seg;
 	type_14 slope_size;
-	f32 frac;
+	float32 frac;
 }
 
 // xParCmd_DampenSpeed_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f49b0
-void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdDampenData* cmd;
-	f32 damp;
+	float32 damp;
 }
 
 // xParCmdCollideFallSticky_Update__FP7xParCmdP9xParGroupf
@@ -497,11 +497,11 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, f32 dt)
 void xParCmdCollideFallSticky_Update(xParCmd* c, xParGroup* ps)
 {
 	xParCmdCollideFallSticky& cmd;
-	f32 xzdamp;
+	float32 xzdamp;
 	xPar* p;
-	f32& loc;
-	f32& vel;
-	f32 dloc;
+	float32& loc;
+	float32& vel;
+	float32 dloc;
 }
 
 // xParCmdCollideFall_Update__FP7xParCmdP9xParGroupf
@@ -510,14 +510,14 @@ void xParCmdCollideFall_Update(xParCmd* c, xParGroup* ps)
 {
 	xParCmdCollideFall& cmd;
 	xPar* p;
-	f32& loc;
-	f32& vel;
-	f32 dloc;
+	float32& loc;
+	float32& vel;
+	float32 dloc;
 }
 
 // xParCmdTexAnim_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f4b40
-void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdTexAnim* cmd;
@@ -532,15 +532,15 @@ void xParCmdTex_Update()
 
 // xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f4f90
-void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdRotateAround* cmd;
-	f32 yaw;
-	f32 radius_growth;
+	float32 yaw;
+	float32 radius_growth;
 	xVec3 at;
 	xMat3x3 lookmat;
-	f32 radius;
+	float32 radius;
 	xVec3 angles;
 	xMat3x3 rotmat;
 }
@@ -554,7 +554,7 @@ void xParCmdVelocityApply_Update(xParGroup* ps)
 
 // xParCmdRotPar_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f51b0
-void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdRotPar* cmd;
@@ -562,22 +562,22 @@ void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, f32 dt)
 
 // xParCmdApplyWind_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f53b0
-void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 }
 
 // xParCmdRandomVelocityPar_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5410
-void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdRandomVelocityPar* cmd;
 	xVec3 rot;
 	xVec3* velvec;
-	u32 uvelx;
-	u32 uvely;
-	u32 uvelz;
+	uint32 uvelx;
+	uint32 uvely;
+	uint32 uvelz;
 }
 
 // xParCmdAlpha3rdPolyReg_Update__FP7xParCmdP9xParGroupf
@@ -606,7 +606,7 @@ void xParCmdScale3rdPolyReg_Update()
 
 // xParCmdMoveRandomPar_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f56a0
-void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdMoveRandomPar* cmd;
@@ -614,7 +614,7 @@ void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, f32 dt)
 
 // xParCmdMoveRandom_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5750
-void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdMove* cmd;
@@ -622,7 +622,7 @@ void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, f32 dt)
 
 // xParCmdMove_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5850
-void xParCmdMove_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdMove_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdMove* cmd;
@@ -630,7 +630,7 @@ void xParCmdMove_Update(xParCmd* c, xParGroup* ps, f32 dt)
 
 // xParCmdAccelerate_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f58b0
-void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdAccelerate* cmd;
@@ -638,68 +638,68 @@ void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, f32 dt)
 
 // xParCmdOrbitLine_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5910
-void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdOrbitLine* cmd;
-	f32 mdt;
-	f32 force;
+	float32 mdt;
+	float32 force;
 }
 
 // xParCmdOrbitPoint_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5a20
-void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdOrbitPoint* cmd;
-	f32 mdt;
-	f32 force;
+	float32 mdt;
+	float32 force;
 }
 
 // xParCmdFollow_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5af0
-void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdFollow* cmd;
-	f32 mdt;
-	f32 force;
+	float32 mdt;
+	float32 force;
 }
 
 // xParCmdAge_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5bb0
-void xParCmdAge_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdAge_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
-	f32 age_rate;
+	float32 age_rate;
 }
 
 // xParCmdKillSlow_Update__FP7xParCmdP9xParGroupf
 // Start address: 0x1f5bf0
-void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, f32 dt)
+void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
 	xPar* p;
 	xParCmdKillSlow* cmd;
-	f32 speedLimit;
+	float32 speedLimit;
 }
 
 // xParCmdGetUpdateFunc__FUi
 // Start address: 0x1f5ca0
-type_2 xParCmdGetUpdateFunc(u32 parType)
+type_2 xParCmdGetUpdateFunc(uint32 parType)
 {
-	s32 i;
+	int32 i;
 }
 
 // xParCmdGetSize__FUi
 // Start address: 0x1f5d00
-u32 xParCmdGetSize(u32 parType)
+uint32 xParCmdGetSize(uint32 parType)
 {
-	s32 i;
+	int32 i;
 }
 
 // xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
 // Start address: 0x1f5d60
-void xParCmdRegister(u32 parType, u32 size, type_2 func)
+void xParCmdRegister(uint32 parType, uint32 size, type_2 func)
 {
 }
 

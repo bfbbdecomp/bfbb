@@ -38,41 +38,41 @@ typedef struct _anon1;
 typedef enum _enum_2;
 
 typedef void(*type_0)(jot&, xtextbox&, xtextbox&);
-typedef s32(*type_1)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_1)(xBase*, xBase*, uint32, float32*, xBase*);
 typedef void(*type_2)(jot&, xtextbox&, xtextbox&, split_tag&);
-typedef u8(*type_4)(widget&, motive&, f32);
-typedef void(*type_7)(jot&, xtextbox&, f32, f32);
+typedef uint8(*type_4)(widget&, motive&, float32);
+typedef void(*type_7)(jot&, xtextbox&, float32, float32);
 
-typedef s8* type_3[16];
-typedef f32 type_5[4];
-typedef s8 type_6[16];
-typedef s8 type_8[128];
-typedef s8 type_9[16];
+typedef int8* type_3[16];
+typedef float32 type_5[4];
+typedef int8 type_6[16];
+typedef int8 type_8[128];
+typedef int8 type_9[16];
 
 struct xtextbox
 {
 	xfont font;
 	basic_rect bounds;
-	u32 flags;
-	f32 line_space;
-	f32 tab_stop;
-	f32 left_indent;
-	f32 right_indent;
+	uint32 flags;
+	float32 line_space;
+	float32 tab_stop;
+	float32 left_indent;
+	float32 right_indent;
 	callback* cb;
 	void* context;
-	s8** texts;
-	u32* text_sizes;
-	u32 texts_size;
+	int8** texts;
+	uint32* text_sizes;
+	uint32 texts_size;
 	substr text;
-	u32 text_hash;
+	uint32 text_hash;
 };
 
 struct _class_0
 {
-	f32 left;
-	f32 top;
-	f32 right;
-	f32 bottom;
+	float32 left;
+	float32 top;
+	float32 right;
+	float32 bottom;
 };
 
 struct split_tag
@@ -85,7 +85,7 @@ struct split_tag
 
 struct xTextAsset
 {
-	u32 len;
+	uint32 len;
 };
 
 struct tag_type
@@ -142,7 +142,7 @@ struct ztextbox : xBase
 	asset_type* asset;
 	xtextbox tb;
 	type_3 segments;
-	u32 segments_size;
+	uint32 segments_size;
 	ztextbox* next;
 	ztextbox* prev;
 	RwRaster* bgtex;
@@ -150,10 +150,10 @@ struct ztextbox : xBase
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_1 eventFunc;
 };
@@ -166,9 +166,9 @@ struct text_widget : widget
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct render_context
@@ -176,72 +176,72 @@ struct render_context
 	xVec3 loc;
 	xVec3 size;
 	xVec3 rot;
-	f32 r;
-	f32 g;
-	f32 b;
-	f32 a;
+	float32 r;
+	float32 g;
+	float32 b;
+	float32 a;
 };
 
 union _class_1
 {
-	u8 active;
-	u8 dirty;
-	u8 show_backdrop;
-	u8 visible;
-	u8 hack_invisible;
+	uint8 active;
+	uint8 dirty;
+	uint8 show_backdrop;
+	uint8 visible;
+	uint8 hack_invisible;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct substr
 {
-	s8* text;
-	u32 size;
+	int8* text;
+	uint32 size;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct xfont
 {
-	u32 id;
-	f32 width;
-	f32 height;
-	f32 space;
+	uint32 id;
+	float32 width;
+	float32 height;
+	float32 space;
 	iColor_tag color;
 	basic_rect clip;
 };
 
 struct basic_rect
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct asset : xDynAsset
@@ -252,23 +252,23 @@ struct asset : xDynAsset
 
 struct _class_2
 {
-	u32 type;
+	uint32 type;
 	color_type color;
-	u32 texture;
+	uint32 texture;
 };
 
 struct asset_type : xDynAsset
 {
-	u32 text;
+	uint32 text;
 	basic_rect bounds;
-	u32 font;
+	uint32 font;
 	_class_4 size;
 	_class_6 space;
 	color_type color;
 	_class_0 inset;
 	_enum_0 xjustify;
 	_enum_1 expand;
-	f32 max_height;
+	float32 max_height;
 	_class_2 backdrop;
 };
 
@@ -276,74 +276,74 @@ struct _class_3
 {
 	union
 	{
-		u8 invisible;
-		u8 ethereal;
-		u8 merge;
-		u8 word_break;
-		u8 word_end;
-		u8 line_break;
-		u8 stop;
-		u8 tab;
+		uint8 invisible;
+		uint8 ethereal;
+		uint8 merge;
+		uint8 word_break;
+		uint8 word_end;
+		uint8 line_break;
+		uint8 stop;
+		uint8 tab;
 	};
 	union
 	{
-		u8 insert;
-		u8 dynamic;
-		u8 page_break;
-		u8 stateful;
+		uint8 insert;
+		uint8 dynamic;
+		uint8 page_break;
+		uint8 stateful;
 	};
-	u16 dummy;
+	uint16 dummy;
 };
 
 struct motive
 {
-	f32* value;
-	f32 delta;
-	f32 start_delta;
-	f32 max_offset;
-	f32 offset;
-	f32 accel;
+	float32* value;
+	float32 delta;
+	float32 start_delta;
+	float32 max_offset;
+	float32 offset;
+	float32 accel;
 	type_4 fp_update;
 	void* context;
-	u8 inverse;
+	uint8 inverse;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_5 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct color_type
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 struct xDynAsset : xBaseAsset
 {
-	u32 type;
-	u16 version;
-	u16 handle;
+	uint32 type;
+	uint16 version;
+	uint16 handle;
 };
 
 struct text_asset : asset
 {
-	u32 text_box;
-	u32 text;
+	uint32 text_box;
+	uint32 text;
 };
 
 struct jot
 {
 	substr s;
 	_class_3 flag;
-	u16 context_size;
+	uint16 context_size;
 	void* context;
 	basic_rect bounds;
 	basic_rect render_bounds;
@@ -353,20 +353,20 @@ struct jot
 
 struct _class_4
 {
-	f32 width;
-	f32 height;
+	float32 width;
+	float32 height;
 };
 
 struct _class_5
 {
-	u8 visible;
-	u8 enabled;
+	uint8 visible;
+	uint8 enabled;
 };
 
 struct _class_6
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct _anon0
@@ -375,10 +375,10 @@ struct _anon0
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 struct _anon1
@@ -403,9 +403,9 @@ iColor_tag g_WHITE;
 _anon1 __vt__Q24xhud6widget;
 
 void render(text_widget* this);
-void update(text_widget* this, f32 dt);
-u8 is(text_widget* this, u32 id);
-u32 type();
+void update(text_widget* this, float32 dt);
+uint8 is(text_widget* this, uint32 id);
+uint32 type();
 void destroy(text_widget* this);
 void setup(text_widget* this);
 void load(xBase& data, xDynAsset& asset);
@@ -414,33 +414,33 @@ void load(xBase& data, xDynAsset& asset);
 // Start address: 0x3d5490
 void render(text_widget* this)
 {
-	f32 x;
-	f32 y;
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
-	f32 floatA;
-	u8 newA;
+	float32 x;
+	float32 y;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
+	float32 floatA;
+	uint8 newA;
 }
 
 // update__Q24xhud11text_widgetFf
 // Start address: 0x3d5660
-void update(text_widget* this, f32 dt)
+void update(text_widget* this, float32 dt)
 {
 }
 
 // is__Q24xhud11text_widgetCFUi
 // Start address: 0x3d5840
-u8 is(text_widget* this, u32 id)
+uint8 is(text_widget* this, uint32 id)
 {
-	u32 myid;
-	s8 @3835;
+	uint32 myid;
+	int8 @3835;
 }
 
 // type__Q24xhud11text_widgetCFv
 // Start address: 0x3d58b0
-u32 type()
+uint32 type()
 {
 }
 
@@ -457,8 +457,8 @@ void setup(text_widget* this)
 	text_asset& ta;
 	ztextbox* ztb;
 	xTextAsset* t;
-	s8* s;
-	u32 len;
+	int8* s;
+	uint32 len;
 }
 
 // load__Q24xhud11text_widgetFR5xBaseR9xDynAssetUi

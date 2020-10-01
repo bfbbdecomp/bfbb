@@ -13,13 +13,13 @@ typedef struct xMat3x3;
 
 struct xIsect
 {
-	u32 flags;
-	f32 penned;
-	f32 contained;
-	f32 lapped;
+	uint32 flags;
+	float32 penned;
+	float32 contained;
+	float32 lapped;
 	xVec3 point;
 	xVec3 norm;
-	f32 dist;
+	float32 dist;
 };
 
 struct xBox
@@ -30,9 +30,9 @@ struct xBox
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xTri3
@@ -45,45 +45,45 @@ struct xTri3
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct xCylinder
 {
 	xVec3 center;
-	f32 r;
-	f32 h;
+	float32 r;
+	float32 h;
 };
 
 struct xRay3
 {
 	xVec3 origin;
 	xVec3 dir;
-	f32 min_t;
-	f32 max_t;
-	s32 flags;
+	float32 min_t;
+	float32 max_t;
+	int32 flags;
 };
 
 struct xPlane
 {
 	xVec3 norm;
-	f32 d;
+	float32 d;
 };
 
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 
@@ -91,7 +91,7 @@ void iBoxBoundVec(xBox* o, xBox* b, xVec3* v);
 void iBoxInitBoundVec(xBox* b, xVec3* v);
 void iBoxIsectSphere(xBox* box, xSphere* p, xIsect* isx);
 void iBoxIsectRay(xBox* b, xRay3* r, xIsect* isx);
-u32 ClipPlane(f32 denom, f32 numer, f32* t_in, f32* t_out);
+uint32 ClipPlane(float32 denom, float32 numer, float32* t_in, float32* t_out);
 void iBoxIsectVec(xBox* b, xVec3* v, xIsect* isx);
 void iBoxVecDist(xBox* box, xVec3* v, xIsect* isx);
 void iCylinderIsectVec(xCylinder* c, xVec3* v, xIsect* isx);
@@ -119,22 +119,22 @@ void iBoxInitBoundVec(xBox* b, xVec3* v)
 // Start address: 0x1ab3e0
 void iBoxIsectSphere(xBox* box, xSphere* p, xIsect* isx)
 {
-	u32 xcode;
-	u32 ycode;
-	u32 zcode;
+	uint32 xcode;
+	uint32 ycode;
+	uint32 zcode;
 }
 
 // iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect
 // Start address: 0x1ab760
 void iBoxIsectRay(xBox* b, xRay3* r, xIsect* isx)
 {
-	f32 t_in;
-	f32 t_out;
+	float32 t_in;
+	float32 t_out;
 }
 
 // ClipPlane__FffPfPf
 // Start address: 0x1ab9f0
-u32 ClipPlane(f32 denom, f32 numer, f32* t_in, f32* t_out)
+uint32 ClipPlane(float32 denom, float32 numer, float32* t_in, float32* t_out)
 {
 }
 
@@ -154,17 +154,17 @@ void iBoxVecDist(xBox* box, xVec3* v, xIsect* isx)
 // Start address: 0x1ac570
 void iCylinderIsectVec(xCylinder* c, xVec3* v, xIsect* isx)
 {
-	f32 b;
+	float32 b;
 }
 
 // iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3
 // Start address: 0x1ac5f0
 void iSphereBoundVec(xSphere* o, xSphere* s, xVec3* v)
 {
-	f32 scale;
+	float32 scale;
 	xSphere temp;
 	xSphere* tp;
-	u32 usetemp;
+	uint32 usetemp;
 }
 
 // iSphereInitBoundVec__FP7xSpherePC5xVec3
@@ -183,9 +183,9 @@ void iSphereIsectSphere(xSphere* s, xSphere* p, xIsect* isx)
 // Start address: 0x1ac7e0
 void iSphereIsectRay(xSphere* s, xRay3* r, xIsect* isx)
 {
-	f32 t_in;
-	f32 t_out;
-	u32 num;
+	float32 t_in;
+	float32 t_out;
+	uint32 num;
 }
 
 // iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect

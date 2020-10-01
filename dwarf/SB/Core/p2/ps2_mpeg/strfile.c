@@ -5,9 +5,9 @@ typedef enum HISStatus;
 
 struct StrFile
 {
-	s32 file;
-	s32 size;
-	s32 current;
+	int32 file;
+	int32 size;
+	int32 current;
 };
 
 enum HISStatus
@@ -23,28 +23,28 @@ enum HISStatus
 };
 
 
-s32 strFileRead(StrFile* file, void* buff, s32 size);
-s32 strFileClose();
-s32 strFileOpen(StrFile* file, s8* filename);
+int32 strFileRead(StrFile* file, void* buff, int32 size);
+int32 strFileClose();
+int32 strFileOpen(StrFile* file, int8* filename);
 
 // strFileRead__FP7StrFilePvi
 // Start address: 0x1bd9e0
-s32 strFileRead(StrFile* file, void* buff, s32 size)
+int32 strFileRead(StrFile* file, void* buff, int32 size)
 {
-	s32 blocksToRead;
-	s32 id;
+	int32 blocksToRead;
+	int32 id;
 	HISStatus status;
 }
 
 // strFileClose__FP7StrFile
 // Start address: 0x1bdb10
-s32 strFileClose()
+int32 strFileClose()
 {
 }
 
 // strFileOpen__FP7StrFilePc
 // Start address: 0x1bdb20
-s32 strFileOpen(StrFile* file, s8* filename)
+int32 strFileOpen(StrFile* file, int8* filename)
 {
 }
 

@@ -6,11 +6,11 @@ typedef struct RwObject;
 typedef struct RwLLLink;
 
 
-typedef s32 type_0[11];
-typedef s8 type_1[16];
-typedef s8 type_2[16];
-typedef s8 type_3[32];
-typedef s8 type_4[32];
+typedef int32 type_0[11];
+typedef int8 type_1[16];
+typedef int8 type_2[16];
+typedef int8 type_3[32];
+typedef int8 type_4[32];
 
 struct RwTexture
 {
@@ -19,8 +19,8 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_3 name;
 	type_4 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct RwLinkList
@@ -31,22 +31,22 @@ struct RwLinkList
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct RwTexDictionary
@@ -58,10 +58,10 @@ struct RwTexDictionary
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -75,19 +75,19 @@ type_1 buffer;
 type_2 buffer;
 type_0 sBlendTable;
 
-void xRenderStateSetDstBlendMode(s32 xmode);
-void xRenderStateSetSrcBlendMode(s32 xmode);
+void xRenderStateSetDstBlendMode(int32 xmode);
+void xRenderStateSetSrcBlendMode(int32 xmode);
 void xRenderStateSetTexture(RwTexture* texture);
 
 // xRenderStateSetDstBlendMode__Fi
 // Start address: 0x301890
-void xRenderStateSetDstBlendMode(s32 xmode)
+void xRenderStateSetDstBlendMode(int32 xmode)
 {
 }
 
 // xRenderStateSetSrcBlendMode__Fi
 // Start address: 0x3018b0
-void xRenderStateSetSrcBlendMode(s32 xmode)
+void xRenderStateSetSrcBlendMode(int32 xmode)
 {
 }
 

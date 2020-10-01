@@ -344,475 +344,475 @@ typedef enum _tagPadInit;
 typedef struct xPlatformFallingData;
 typedef enum _tagTRCState;
 
-typedef u32(*type_2)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_2)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_4)(void*);
 typedef void(*type_6)(xMemPool*, void*);
-typedef void(*type_7)(xEnt*, xScene*, f32, void*);
-typedef u32(*type_9)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_11)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_12)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_13)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_14)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_7)(xEnt*, xScene*, float32, void*);
+typedef uint32(*type_9)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_11)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_12)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_13)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_14)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_15)(zEnt*);
-typedef u32(*type_17)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_18)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_20)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_21)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_25)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_26)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_28)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_17)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_18)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_20)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_21)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_25)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_26)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_28)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_30)(RwResEntry*);
-typedef u32(*type_31)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_31)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_32)(void*, xParGroup*);
-typedef s32(*type_33)(xBase*, xBase*, u32, f32*, xBase*);
-typedef u32(*type_36)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_39)(xEnt*, xScene*, f32, void*);
-typedef s32(*type_42)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef u32(*type_44)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_46)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_47)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_33)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef uint32(*type_36)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_39)(xEnt*, xScene*, float32, void*);
+typedef int32(*type_42)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef uint32(*type_44)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_46)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_47)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_48)(xEnt*);
-typedef u32(*type_52)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_55)(xAnimTransition*, xAnimSingle*, void*);
-typedef xBase*(*type_57)(u32);
-typedef u32(*type_58)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_59)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_61)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_62)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_65)(RxNodeDefinition*);
+typedef uint32(*type_52)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_55)(xAnimTransition*, xAnimSingle*, void*);
+typedef xBase*(*type_57)(uint32);
+typedef uint32(*type_58)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_59)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_61)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_62)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_65)(RxNodeDefinition*);
 typedef void(*type_66)(zEnt*);
-typedef u32(*type_67)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_68)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_67)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_68)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_69)(xEnt*);
-typedef u32(*type_74)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_75)(xAnimTransition*, xAnimSingle*, void*);
-typedef s8*(*type_77)(xBase*);
-typedef u32(*type_81)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_83)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_84)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_85)(xAnimTransition*, xAnimSingle*, void*);
-typedef s8*(*type_87)(u32);
+typedef uint32(*type_74)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_75)(xAnimTransition*, xAnimSingle*, void*);
+typedef int8*(*type_77)(xBase*);
+typedef uint32(*type_81)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_83)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_84)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_85)(xAnimTransition*, xAnimSingle*, void*);
+typedef int8*(*type_87)(uint32);
 typedef void(*type_88)(RxNodeDefinition*);
-typedef u32(*type_89)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_92)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_94)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_89)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_92)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_94)(xAnimTransition*, xAnimSingle*, void*);
 typedef RwCamera*(*type_103)(RwCamera*);
-typedef u32(*type_104)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_105)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_106)(zEnt*, xCollis*);
+typedef uint32(*type_104)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_105)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_106)(zEnt*, xCollis*);
 typedef void(*type_107)(zFrag*, zFragAsset*);
-typedef u32(*type_108)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_109)(RxPipelineNode*);
-typedef u32(*type_110)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_108)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_109)(RxPipelineNode*);
+typedef uint32(*type_110)(xAnimTransition*, xAnimSingle*, void*);
 typedef RpWorldSector*(*type_111)(RpWorldSector*);
-typedef void(*type_112)(xEnt*, xScene*, f32, xEntFrame*);
-typedef u32(*type_114)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_117)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_112)(xEnt*, xScene*, float32, xEntFrame*);
+typedef uint32(*type_114)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_117)(xAnimTransition*, xAnimSingle*, void*);
 typedef RwCamera*(*type_118)(RwCamera*);
 typedef RwObjectHasFrame*(*type_121)(RwObjectHasFrame*);
-typedef u32(*type_122)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_127)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_129)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_130)(s32*, en_trantype*);
+typedef uint32(*type_122)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_127)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_129)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_130)(int32*, en_trantype*);
 typedef void(*type_131)(RxPipelineNode*);
-typedef u32(*type_133)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_135)(xEnt*, xScene*, f32);
-typedef u32(*type_136)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_137)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_138)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_140)(u32, xAnimActiveEffect*, xAnimSingle*, void*);
+typedef uint32(*type_133)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_135)(xEnt*, xScene*, float32);
+typedef uint32(*type_136)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_137)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_138)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_140)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 typedef void(*type_142)(zShrapnelAsset*, xModelInstance*, xVec3*, type_107);
-typedef void(*type_143)(xEnt*, xScene*, f32);
-typedef u32(*type_145)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_146)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_147)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_148)(xEnt*, xScene*, f32, xEntCollis*);
+typedef void(*type_143)(xEnt*, xScene*, float32);
+typedef uint32(*type_145)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_146)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_147)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_148)(xEnt*, xScene*, float32, xEntCollis*);
 typedef void(*type_149)(xEnt*, xVec3*);
-typedef void(*type_154)(xEnt*, xScene*, f32, xEntFrame*);
-typedef u32(*type_155)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_157)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_158)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_159)(RxPipelineNode*, RxPipeline*);
-typedef u32(*type_160)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_161)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_162)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_154)(xEnt*, xScene*, float32, xEntFrame*);
+typedef uint32(*type_155)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_157)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_158)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_159)(RxPipelineNode*, RxPipeline*);
+typedef uint32(*type_160)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_161)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_162)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_164)(xEnt*);
-typedef u32(*type_165)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_166)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_168)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_169)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_171)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_172)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_175)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_176)(xEnt*, xEnt*, xScene*, f32, xCollis*);
+typedef uint32(*type_165)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_166)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_168)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_169)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_171)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_172)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_175)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_176)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 typedef void(*type_177)(xAnimPlay*, xAnimState*);
-typedef u32(*type_185)(RxPipelineNode*, u32, u32, void*);
-typedef u32(*type_187)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_185)(RxPipelineNode*, uint32, uint32, void*);
+typedef uint32(*type_187)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_188)(xEnt*, xVec3*, xMat4x3*);
-typedef u32(*type_190)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_195)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_196)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_198)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_199)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_201)(void*, void*);
-typedef u32(*type_202)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_203)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_207)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_208)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_209)(xEnt*, xScene*, f32, xEntFrame*);
-typedef u32(*type_213)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_217)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_218)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_190)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_195)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_196)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_198)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_199)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_201)(void*, void*);
+typedef uint32(*type_202)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_203)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_207)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_208)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_209)(xEnt*, xScene*, float32, xEntFrame*);
+typedef uint32(*type_213)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_217)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_218)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_220)(xAnimState*, xAnimSingle*, void*);
-typedef u32(*type_221)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_223)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_224)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_225)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_228)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_229)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_230)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_234)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_235)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_237)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_240)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_244)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_247)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_248)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_221)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_223)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_224)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_225)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_228)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_229)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_230)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_234)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_235)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_237)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_240)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_244)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_247)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_248)(xAnimTransition*, xAnimSingle*, void*);
 typedef RpClump*(*type_250)(RpClump*, void*);
-typedef u32(*type_251)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_253)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_255)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_259)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_260)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_261)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_262)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_251)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_253)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_255)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_259)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_260)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_261)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_262)(xAnimTransition*, xAnimSingle*, void*);
 typedef xEnt*(*type_263)(xEnt*, xScene*, void*);
-typedef u32(*type_265)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_268)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_272)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_265)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_268)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_272)(xAnimTransition*, xAnimSingle*, void*);
 typedef xEnt*(*type_275)(xEnt*, xScene*, void*);
-typedef u32(*type_279)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_280)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_279)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_280)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_282)(xAnimPlay*, xAnimState*);
-typedef u32(*type_283)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_288)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_289)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_291)(xBase*, xBase*, u32, f32*, xBase*);
-typedef u32(*type_294)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_295)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_296)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_300)(xEnt*, xScene*, f32, xEntFrame*);
-typedef u32(*type_301)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_302)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_304)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_305)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_306)(xAnimPlay*, xQuat*, xVec3*, s32);
+typedef uint32(*type_283)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_288)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_289)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_291)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef uint32(*type_294)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_295)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_296)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_300)(xEnt*, xScene*, float32, xEntFrame*);
+typedef uint32(*type_301)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_302)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_304)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_305)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_306)(xAnimPlay*, xQuat*, xVec3*, int32);
 typedef RpAtomic*(*type_307)(RpAtomic*);
-typedef u32(*type_308)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_309)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_311)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_313)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_314)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_315)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_316)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_319)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_320)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_324)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_325)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_326)(xEnt*, xEnt*, xScene*, f32, xCollis*);
+typedef uint32(*type_308)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_309)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_311)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_313)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_314)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_315)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_316)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_319)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_320)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_324)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_325)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_326)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 typedef RpAtomic*(*type_329)(RpAtomic*);
-typedef u32(*type_332)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_333)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_335)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_336)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_341)(xGoal*, void*, f32, void*);
-typedef u32(*type_343)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_344)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_346)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_332)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_333)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_335)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_336)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_341)(xGoal*, void*, float32, void*);
+typedef uint32(*type_343)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_344)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_346)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_347)(xEnt*, xVec3*);
-typedef u32(*type_349)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_351)(xBase*, xBase*, u32, f32*, xBase*);
-typedef u32(*type_354)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_355)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_357)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_359)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_360)(xAnimTransition*, xAnimSingle*, void*);
-typedef RpCollisionTriangle*(*type_361)(RpIntersection*, RpCollisionTriangle*, f32, void*);
-typedef u32(*type_363)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_364)(xGoal*, void*, en_trantype*, f32, void*);
-typedef void(*type_365)(xEnt*, xScene*, f32, void*);
-typedef u32(*type_366)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_368)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_369)(xEnt*, xScene*, f32);
-typedef u32(*type_373)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_375)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_377)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_378)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_379)(zFrag*, f32);
-typedef u32(*type_380)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_381)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_386)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_389)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_390)(xGoal*, void*, en_trantype*, f32, void*);
-typedef u32(*type_394)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_395)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_349)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_351)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef uint32(*type_354)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_355)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_357)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_359)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_360)(xAnimTransition*, xAnimSingle*, void*);
+typedef RpCollisionTriangle*(*type_361)(RpIntersection*, RpCollisionTriangle*, float32, void*);
+typedef uint32(*type_363)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_364)(xGoal*, void*, en_trantype*, float32, void*);
+typedef void(*type_365)(xEnt*, xScene*, float32, void*);
+typedef uint32(*type_366)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_368)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_369)(xEnt*, xScene*, float32);
+typedef uint32(*type_373)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_375)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_377)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_378)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_379)(zFrag*, float32);
+typedef uint32(*type_380)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_381)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_386)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_389)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_390)(xGoal*, void*, en_trantype*, float32, void*);
+typedef uint32(*type_394)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_395)(xAnimTransition*, xAnimSingle*, void*);
 typedef RpAtomic*(*type_397)(RpAtomic*);
-typedef u32(*type_399)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_402)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_403)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_408)(zEnt*, xCollis*);
-typedef u32(*type_411)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_412)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_415)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_421)(xAnimTransition*, xAnimSingle*, void*);
-typedef s32(*type_424)(xEnt*, void*);
-typedef u32(*type_425)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_426)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_427)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_428)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_433)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_435)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_437)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_439)(xAnimTransition*, xAnimSingle*, void*);
-typedef u32(*type_440)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_399)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_402)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_403)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_408)(zEnt*, xCollis*);
+typedef uint32(*type_411)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_412)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_415)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_421)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_424)(xEnt*, void*);
+typedef uint32(*type_425)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_426)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_427)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_428)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_433)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_435)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_437)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_439)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32(*type_440)(xAnimTransition*, xAnimSingle*, void*);
 
-typedef f32 type_0[3];
-typedef s8* type_1[33];
-typedef s32 type_3[2];
-typedef u32 type_5[15];
+typedef float32 type_0[3];
+typedef int8* type_1[33];
+typedef int32 type_3[2];
+typedef uint32 type_5[15];
 typedef xAnimTransition* type_8[11];
-typedef f32 type_10[5];
-typedef s8 type_16[32];
-typedef u8 type_19[4];
+typedef float32 type_10[5];
+typedef int8 type_16[32];
+typedef uint8 type_19[4];
 typedef zSurfacePropTexAnim type_22[2];
-typedef s8 type_23[32];
+typedef int8 type_23[32];
 typedef xParInterp type_24[4];
-typedef f32 type_27[4];
+typedef float32 type_27[4];
 typedef xEnt* type_29[111];
 typedef zLightning* type_34[2];
-typedef u8 type_35[2];
+typedef uint8 type_35[2];
 typedef zSurfacePropUVFX type_37[2];
 typedef xEnt* type_38[32];
 typedef xEnt* type_40[16];
 typedef xParInterp type_41[4];
 typedef xModelTag type_43[20];
-typedef f32 type_45[4];
-typedef u32 type_49[3];
+typedef float32 type_45[4];
+typedef uint32 type_49[3];
 typedef xShadowPoly type_50[256];
-typedef u32 type_51[72];
+typedef uint32 type_51[72];
 typedef xVec3 type_53[9];
-typedef s8 type_54[4];
+typedef int8 type_54[4];
 typedef xVec3 type_56[4];
 typedef xGoal* type_60[5];
-typedef f32 type_63[47];
+typedef float32 type_63[47];
 typedef xModelInstance* type_64[2];
-typedef s32 type_70[5];
+typedef int32 type_70[5];
 typedef xBase* type_71[72];
 typedef PlayerStreakInfo type_72[4];
-typedef f32 type_73[2];
+typedef float32 type_73[2];
 typedef type_72 type_76[3];
 typedef type_73 type_78[4];
-typedef f32 type_79[1];
+typedef float32 type_79[1];
 typedef xVec3 type_80[4];
 typedef type_79 type_82[5];
 typedef xVec3 type_86[3];
-typedef s8 type_90[128];
-typedef u8 type_91[2];
-typedef u8 type_93[3];
+typedef int8 type_90[128];
+typedef uint8 type_91[2];
+typedef uint8 type_93[3];
 typedef type_90 type_95[6];
-typedef f32 type_96[4];
-typedef u8 type_97[3];
-typedef s8 type_98[16];
+typedef float32 type_96[4];
+typedef uint8 type_97[3];
+typedef int8 type_98[16];
 typedef RxCluster type_99[1];
-typedef u8 type_100[3];
+typedef uint8 type_100[3];
 typedef xSweptSphere type_101[3];
 typedef xVec3 type_102[64];
-typedef u8 type_113[14];
-typedef f32 type_115[4];
+typedef uint8 type_113[14];
+typedef float32 type_115[4];
 typedef xModelTag type_116[4];
 typedef xQuat type_119[64];
-typedef u8 type_120[4];
-typedef s8 type_123[3];
+typedef uint8 type_120[4];
+typedef int8 type_123[3];
 typedef xAnimTransition* type_124[8];
-typedef s8 type_125[32];
+typedef int8 type_125[32];
 typedef xModelInstance* type_126[14];
 typedef xAnimTransition type_128[8];
-typedef u32 type_132[118];
+typedef uint32 type_132[118];
 typedef type_132 type_134[3];
-typedef f32 type_139[4];
-typedef f32 type_141[4];
-typedef f32 type_144[16];
-typedef f32 type_150[4];
-typedef f32 type_151[2];
+typedef float32 type_139[4];
+typedef float32 type_141[4];
+typedef float32 type_144[16];
+typedef float32 type_150[4];
+typedef float32 type_151[2];
 typedef void** type_152[64];
 typedef RwV3d* type_153[3];
-typedef u8 type_156[4];
+typedef uint8 type_156[4];
 typedef xVec3 type_163[2];
-typedef s8 type_167[256];
-typedef f32 type_170[3];
+typedef int8 type_167[256];
+typedef float32 type_170[3];
 typedef void* type_173[64];
-typedef s8 type_174[16];
-typedef u32 type_178[3];
+typedef int8 type_174[16];
+typedef uint32 type_178[3];
 typedef RwFrustumPlane type_179[6];
-typedef u32 type_180[47];
-typedef f32 type_181[3];
+typedef uint32 type_180[47];
+typedef float32 type_181[3];
 typedef zSurfTextureAnim type_182[2];
-typedef u8 type_183[22];
-typedef u16 type_184[3];
+typedef uint8 type_183[22];
+typedef uint16 type_184[3];
 typedef type_180 type_186[3];
 typedef _class_1 type_189[11];
-typedef u8 type_191[22];
+typedef uint8 type_191[22];
 typedef RpLight* type_192[2];
 typedef zSurfUVFX type_193[2];
 typedef RwV3d type_194[8];
-typedef u32 type_197[20];
-typedef u8 type_200[2];
-typedef f32 type_204[3];
-typedef s8 type_205[16];
+typedef uint32 type_197[20];
+typedef uint8 type_200[2];
+typedef float32 type_204[3];
+typedef int8 type_205[16];
 typedef RwFrame* type_206[2];
-typedef f32* type_210[64];
+typedef float32* type_210[64];
 typedef zPlayerSndTimer type_211[118];
 typedef xAnimMultiFileEntry type_212[1];
-typedef s8 type_214[128];
-typedef u8 type_215[3];
+typedef int8 type_214[128];
+typedef uint8 type_215[3];
 typedef xVec3 type_216[4];
 typedef xModelTag type_219[3];
 typedef xCutsceneZbuffer type_222[4];
 typedef xVec3 type_226[4];
-typedef u32 type_227[3];
-typedef f32 type_231[3];
+typedef uint32 type_227[3];
+typedef float32 type_231[3];
 typedef _tagxPad type_232[4];
-typedef u32 type_233[2];
-typedef u8 type_236[2];
-typedef u8 type_238[3];
-typedef f32 type_239[47];
+typedef uint32 type_233[2];
+typedef uint8 type_236[2];
+typedef uint8 type_238[3];
+typedef float32 type_239[47];
 typedef xAnimTransition type_241[8];
 typedef xVec3 type_242[16];
 typedef xVec3 type_243[128];
-typedef u32 type_245[2];
-typedef f32 type_246[64];
-typedef u8 type_249[3];
+typedef uint32 type_245[2];
+typedef float32 type_246[64];
+typedef uint8 type_249[3];
 typedef xVec3 type_252[16];
-typedef u8 type_254[8];
+typedef uint8 type_254[8];
 typedef RxObjSpace3DVertex type_256[4];
-typedef u32 type_257[2];
+typedef uint32 type_257[2];
 typedef xVec3 type_258[4];
 typedef xVec3 type_264[60];
 typedef zGust* type_266[4];
-typedef u32 type_267[11];
-typedef f32 type_269[4];
+typedef uint32 type_267[11];
+typedef float32 type_269[4];
 typedef _tagTRCPadInfo type_270[4];
 typedef RwTexCoords* type_271[8];
-typedef f32 type_273[3];
+typedef float32 type_273[3];
 typedef xVec3 type_274[3];
-typedef f32 type_276[4];
-typedef f32 type_277[4];
-typedef f32 type_278[16];
-typedef f32 type_281[4];
-typedef u8 type_284[3];
-typedef s8 type_285[32];
-typedef f32 type_286[22];
+typedef float32 type_276[4];
+typedef float32 type_277[4];
+typedef float32 type_278[16];
+typedef float32 type_281[4];
+typedef uint8 type_284[3];
+typedef int8 type_285[32];
+typedef float32 type_286[22];
 typedef xCollis type_287[18];
-typedef u32 type_290[47];
+typedef uint32 type_290[47];
 typedef xVec3 type_292[3];
-typedef f32 type_293[22];
-typedef u8 type_297[2];
-typedef f32 type_298[2];
+typedef float32 type_293[22];
+typedef uint8 type_297[2];
+typedef float32 type_298[2];
 typedef type_290 type_299[3];
 typedef xVec3 type_303[5];
-typedef u8 type_310[5];
-typedef u32 type_312[15];
+typedef uint8 type_310[5];
+typedef uint32 type_312[15];
 typedef zFrag* type_317[21];
 typedef RwV3d type_318[4];
-typedef u32 type_321[15];
-typedef u16 type_322[3];
-typedef f32 type_323[12];
+typedef uint32 type_321[15];
+typedef uint16 type_322[3];
+typedef float32 type_323[12];
 typedef RwV3d type_327[4];
-typedef s8* type_328[11];
-typedef f32 type_330[12];
-typedef u32 type_331[2];
-typedef f32 type_334[4];
-typedef u32 type_337[15];
-typedef f32 type_338[12];
-typedef u8 type_339[3];
-typedef u32 type_340[4];
-typedef s32 type_342[2];
-typedef f32 type_345[12];
+typedef int8* type_328[11];
+typedef float32 type_330[12];
+typedef uint32 type_331[2];
+typedef float32 type_334[4];
+typedef uint32 type_337[15];
+typedef float32 type_338[12];
+typedef uint8 type_339[3];
+typedef uint32 type_340[4];
+typedef int32 type_342[2];
+typedef float32 type_345[12];
 typedef _tagRumbleType type_348[47];
-typedef f32 type_350[16];
-typedef f32 type_352[12];
+typedef float32 type_350[16];
+typedef float32 type_352[12];
 typedef analog_data type_353[2];
-typedef f32 type_356[12];
-typedef u32 type_358[4];
-typedef f32 type_362[6];
-typedef f32 type_367[4];
+typedef float32 type_356[12];
+typedef uint32 type_358[4];
+typedef float32 type_362[6];
+typedef float32 type_367[4];
 typedef xModelInstance* type_370[2];
-typedef f32 type_371[2];
-typedef s8 type_372[16];
-typedef u8 type_374[2];
+typedef float32 type_371[2];
+typedef int8 type_372[16];
+typedef uint8 type_374[2];
 typedef xVec3 type_376[2];
-typedef u32 type_382[118];
+typedef uint32 type_382[118];
 typedef xVec3 type_383[3];
 typedef xAnimTransition type_384[8];
 typedef type_382 type_385[3];
-typedef s8 type_387[16];
+typedef int8 type_387[16];
 typedef xVec3 type_388[2];
-typedef f32 type_391[2];
-typedef s32 type_392[32];
-typedef u8 type_393[8];
+typedef float32 type_391[2];
+typedef int32 type_392[32];
+typedef uint8 type_393[8];
 typedef zNPCTiki* type_396[4];
-typedef f32 type_398[4];
-typedef u8 type_400[2];
+typedef float32 type_398[4];
+typedef uint8 type_400[2];
 typedef RwTexCoords* type_401[8];
-typedef u8 type_404[2];
-typedef f32 type_405[2];
+typedef uint8 type_404[2];
+typedef float32 type_405[2];
 typedef xParInterp type_406[1];
-typedef u32 type_407[2];
+typedef uint32 type_407[2];
 typedef NPCSndQueue type_409[4];
-typedef s8* type_410[4];
+typedef int8* type_410[4];
 typedef zNPCTiki* type_413[4];
-typedef f32 type_414[4];
-typedef u8 type_416[2];
+typedef float32 type_414[4];
+typedef uint8 type_416[2];
 typedef zDelayedStreamSound type_417[8];
-typedef f32 type_418[2];
-typedef s8* type_419[64];
-typedef f32 type_420[6];
+typedef float32 type_418[2];
+typedef int8* type_419[64];
+typedef float32 type_420[6];
 typedef xModelInstance* type_422[2];
-typedef s32 type_423[32];
-typedef f32 type_429[2];
-typedef f32 type_430[3];
-typedef f32 type_431[15];
-typedef f32 type_432[118];
-typedef f32 type_434[3];
+typedef int32 type_423[32];
+typedef float32 type_429[2];
+typedef float32 type_430[3];
+typedef float32 type_431[15];
+typedef float32 type_432[118];
+typedef float32 type_434[3];
 typedef xModelTag type_436[2];
-typedef u32 type_438[47];
+typedef uint32 type_438[47];
 typedef type_438 type_441[3];
-typedef f32 type_442[15];
+typedef float32 type_442[15];
 typedef xVec4 type_443[12];
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xAnimState
 {
 	xAnimState* Next;
-	s8* Name;
-	u32 ID;
-	u32 Flags;
-	u32 UserFlags;
-	f32 Speed;
+	int8* Name;
+	uint32 ID;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 Speed;
 	xAnimFile* Data;
 	xAnimEffect* Effects;
 	xAnimTransitionList* Default;
 	xAnimTransitionList* List;
-	f32* BoneBlend;
-	f32* TimeSnap;
-	f32 FadeRecip;
-	u16* FadeOffset;
+	float32* BoneBlend;
+	float32* TimeSnap;
+	float32 FadeRecip;
+	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
 	type_282 BeforeEnter;
@@ -827,37 +827,37 @@ struct xModelInstance
 	xModelPool* Pool;
 	xAnimPlay* Anim;
 	RpAtomic* Data;
-	u32 PipeFlags;
-	f32 RedMultiplier;
-	f32 GreenMultiplier;
-	f32 BlueMultiplier;
-	f32 Alpha;
-	f32 FadeStart;
-	f32 FadeEnd;
+	uint32 PipeFlags;
+	float32 RedMultiplier;
+	float32 GreenMultiplier;
+	float32 BlueMultiplier;
+	float32 Alpha;
+	float32 FadeStart;
+	float32 FadeEnd;
 	xSurface* Surf;
 	xModelBucket** Bucket;
 	xModelInstance* BucketNext;
 	xLightKit* LightKit;
 	void* Object;
-	u16 Flags;
-	u8 BoneCount;
-	u8 BoneIndex;
-	u8* BoneRemap;
+	uint16 Flags;
+	uint8 BoneCount;
+	uint8 BoneIndex;
+	uint8* BoneRemap;
 	RwMatrixTag* Mat;
 	xVec3 Scale;
-	u32 modelID;
-	u32 shadowID;
+	uint32 modelID;
+	uint32 shadowID;
 	RpAtomic* shadowmapAtomic;
 	_class_0 anim_coll;
 };
 
 struct xCollis
 {
-	u32 flags;
-	u32 oid;
+	uint32 flags;
+	uint32 oid;
 	void* optr;
 	xModelInstance* mptr;
-	f32 dist;
+	float32 dist;
 	xVec3 norm;
 	xVec3 tohit;
 	xVec3 depen;
@@ -873,26 +873,26 @@ struct zEntTrigger : zEnt
 {
 	xMat4x3 triggerMatrix;
 	xBox triggerBox;
-	u32 entered;
+	uint32 entered;
 };
 
 struct xEnt : xBase
 {
 	xEntAsset* asset;
-	u16 idx;
-	u16 num_updates;
-	u8 flags;
-	u8 miscflags;
-	u8 subType;
-	u8 pflags;
-	u8 moreFlags;
-	u8 isCulled;
-	u8 driving_count;
-	u8 num_ffx;
-	u8 collType;
-	u8 collLev;
-	u8 chkby;
-	u8 penby;
+	uint16 idx;
+	uint16 num_updates;
+	uint8 flags;
+	uint8 miscflags;
+	uint8 subType;
+	uint8 pflags;
+	uint8 moreFlags;
+	uint8 isCulled;
+	uint8 driving_count;
+	uint8 num_ffx;
+	uint8 collType;
+	uint8 collLev;
+	uint8 chkby;
+	uint8 penby;
 	xModelInstance* model;
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
@@ -909,7 +909,7 @@ struct xEnt : xBase
 	type_188 transl;
 	xFFX* ffx;
 	xEnt* driver;
-	s32 driveMode;
+	int32 driveMode;
 	xShadowSimpleCache* simpShadow;
 	xEntShadow* entShadow;
 	anim_coll_data* anim_coll;
@@ -922,20 +922,20 @@ struct xAnimTransition
 	xAnimState* Dest;
 	type_172 Conditional;
 	type_172 Callback;
-	u32 Flags;
-	u32 UserFlags;
-	f32 SrcTime;
-	f32 DestTime;
-	u16 Priority;
-	u16 QueuePriority;
-	f32 BlendRecip;
-	u16* BlendOffset;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 SrcTime;
+	float32 DestTime;
+	uint16 Priority;
+	uint16 QueuePriority;
+	float32 BlendRecip;
+	uint16* BlendOffset;
 };
 
 struct xBound
 {
 	xQCData qcd;
-	u8 type;
+	uint8 type;
 	type_284 pad;
 	union
 	{
@@ -948,10 +948,10 @@ struct xBound
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_351 eventFunc;
 };
@@ -969,12 +969,12 @@ struct zNPCLassoInfo
 struct RpWorld
 {
 	RwObject object;
-	u32 flags;
+	uint32 flags;
 	RpWorldRenderOrder renderOrder;
 	RpMaterialList matList;
 	RpSector* rootSector;
-	s32 numTexCoordSets;
-	s32 numClumpsInWorld;
+	int32 numTexCoordSets;
+	int32 numClumpsInWorld;
 	RwLLLink* currentClumpLink;
 	RwLinkList clumpList;
 	RwLinkList lightList;
@@ -987,31 +987,31 @@ struct RpWorld
 
 struct xLightKit
 {
-	u32 tagID;
-	u32 groupID;
-	u32 lightCount;
+	uint32 tagID;
+	uint32 groupID;
+	uint32 lightCount;
 	xLightKitLight* lightList;
 };
 
 struct xScene
 {
-	u32 sceneID;
-	u16 flags;
-	u16 num_ents;
-	u16 num_trigs;
-	u16 num_stats;
-	u16 num_dyns;
-	u16 num_npcs;
-	u16 num_act_ents;
-	u16 num_nact_ents;
-	f32 gravity;
-	f32 drag;
-	f32 friction;
-	u16 num_ents_allocd;
-	u16 num_trigs_allocd;
-	u16 num_stats_allocd;
-	u16 num_dyns_allocd;
-	u16 num_npcs_allocd;
+	uint32 sceneID;
+	uint16 flags;
+	uint16 num_ents;
+	uint16 num_trigs;
+	uint16 num_stats;
+	uint16 num_dyns;
+	uint16 num_npcs;
+	uint16 num_act_ents;
+	uint16 num_nact_ents;
+	float32 gravity;
+	float32 drag;
+	float32 friction;
+	uint16 num_ents_allocd;
+	uint16 num_trigs_allocd;
+	uint16 num_stats_allocd;
+	uint16 num_dyns_allocd;
+	uint16 num_npcs_allocd;
 	xEnt** trigs;
 	xEnt** stats;
 	xEnt** dyns;
@@ -1028,10 +1028,10 @@ struct xScene
 struct RwFrustumPlane
 {
 	RwPlane plane;
-	u8 closestX;
-	u8 closestY;
-	u8 closestZ;
-	u8 pad;
+	uint8 closestX;
+	uint8 closestY;
+	uint8 closestZ;
+	uint8 pad;
 };
 
 struct RwTexDictionary
@@ -1044,7 +1044,7 @@ struct RwTexDictionary
 struct RayBundle
 {
 	RwV3d delta;
-	f32 rayup;
+	float32 rayup;
 	RwV3d locdelta;
 	type_318 raystart;
 	type_327 raylocal;
@@ -1056,18 +1056,18 @@ struct xPar
 {
 	xPar* m_next;
 	xPar* m_prev;
-	f32 m_lifetime;
+	float32 m_lifetime;
 	type_19 m_c;
 	xVec3 m_pos;
-	f32 m_size;
+	float32 m_size;
 	xVec3 m_vel;
-	f32 m_sizeVel;
-	u8 m_flag;
-	u8 m_mode;
+	float32 m_sizeVel;
+	uint8 m_flag;
+	uint8 m_mode;
 	type_91 m_texIdx;
 	type_100 m_rotdeg;
-	u8 pad8;
-	f32 totalLifespan;
+	uint8 pad8;
+	float32 totalLifespan;
 	xParEmitterAsset* m_asset;
 	type_139 m_cvel;
 	type_150 m_cfl;
@@ -1075,12 +1075,12 @@ struct xPar
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct zScene : xScene
@@ -1088,15 +1088,15 @@ struct zScene : xScene
 	_zPortal* pendingPortal;
 	union
 	{
-		u32 num_ents;
-		u32 num_base;
+		uint32 num_ents;
+		uint32 num_base;
 	};
 	union
 	{
 		xBase** base;
 		zEnt** ents;
 	};
-	u32 num_update_base;
+	uint32 num_update_base;
 	xBase** update_base;
 	type_51 baseCount;
 	type_71 baseList;
@@ -1105,21 +1105,21 @@ struct zScene : xScene
 
 struct xAnimSingle
 {
-	u32 SingleFlags;
+	uint32 SingleFlags;
 	xAnimState* State;
-	f32 Time;
-	f32 CurrentSpeed;
+	float32 Time;
+	float32 CurrentSpeed;
 	type_151 BilinearLerp;
 	xAnimEffect* Effect;
-	u32 ActiveCount;
-	f32 LastTime;
+	uint32 ActiveCount;
+	float32 LastTime;
 	xAnimActiveEffect* ActiveList;
 	xAnimPlay* Play;
 	xAnimTransition* Sync;
 	xAnimTransition* Tran;
 	xAnimSingle* Blend;
-	f32 BlendFactor;
-	u32 pad;
+	float32 BlendFactor;
+	uint32 pad;
 };
 
 struct zFragParticleAsset : zFragAsset
@@ -1127,14 +1127,14 @@ struct zFragParticleAsset : zFragAsset
 	zFragLocation source;
 	zFragLocation vel;
 	xParEmitterCustomSettings emit;
-	u32 parEmitterID;
+	uint32 parEmitterID;
 	zParEmitter* parEmitter;
 };
 
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_30 destroyNotify;
@@ -1142,28 +1142,28 @@ struct RwResEntry
 
 struct zSurfAssetBase : xBaseAsset
 {
-	u8 game_damage_type;
-	u8 game_sticky;
-	u8 game_damage_flags;
-	u8 surf_type;
-	u8 phys_pad;
-	u8 sld_start;
-	u8 sld_stop;
-	u8 phys_flags;
-	f32 friction;
+	uint8 game_damage_type;
+	uint8 game_sticky;
+	uint8 game_damage_flags;
+	uint8 surf_type;
+	uint8 phys_pad;
+	uint8 sld_start;
+	uint8 sld_stop;
+	uint8 phys_flags;
+	float32 friction;
 	zSurfMatFX matfx;
 	zSurfColorFX colorfx;
-	u32 texture_anim_flags;
+	uint32 texture_anim_flags;
 	type_182 texture_anim;
-	u32 uvfx_flags;
+	uint32 uvfx_flags;
 	type_193 uvfx;
-	u8 on;
+	uint8 on;
 	type_215 surf_pad;
-	f32 oob_delay;
-	f32 walljump_scale_xz;
-	f32 walljump_scale_y;
-	f32 damage_timer;
-	f32 damage_bounce;
+	float32 oob_delay;
+	float32 walljump_scale_xz;
+	float32 walljump_scale_y;
+	float32 damage_timer;
+	float32 damage_bounce;
 };
 
 struct xModelAssetParam
@@ -1185,41 +1185,41 @@ struct xEntFrame
 	xVec3 dpos;
 	xVec3 dvel;
 	xVec3 vel;
-	u32 mode;
+	uint32 mode;
 };
 
 struct zPlatform : zEnt
 {
 	xPlatformAsset* passet;
 	xEntMotion motion;
-	u16 state;
-	u16 plat_flags;
-	f32 tmr;
-	s32 ctr;
+	uint16 state;
+	uint16 plat_flags;
+	float32 tmr;
+	int32 ctr;
 	xMovePoint* src;
 	xModelInstance* am;
 	xModelInstance* bm;
-	s32 moving;
+	int32 moving;
 	xEntDrive drv;
 	zPlatFMRunTime* fmrt;
-	f32 pauseMult;
-	f32 pauseDelta;
+	float32 pauseMult;
+	float32 pauseDelta;
 };
 
 struct xCutsceneInfo
 {
-	u32 Magic;
-	u32 AssetID;
-	u32 NumData;
-	u32 NumTime;
-	u32 MaxModel;
-	u32 MaxBufEven;
-	u32 MaxBufOdd;
-	u32 HeaderSize;
-	u32 VisCount;
-	u32 VisSize;
-	u32 BreakCount;
-	u32 pad;
+	uint32 Magic;
+	uint32 AssetID;
+	uint32 NumData;
+	uint32 NumTime;
+	uint32 MaxModel;
+	uint32 MaxBufEven;
+	uint32 MaxBufOdd;
+	uint32 HeaderSize;
+	uint32 VisCount;
+	uint32 VisSize;
+	uint32 BreakCount;
+	uint32 pad;
 	type_372 SoundLeft;
 	type_387 SoundRight;
 };
@@ -1234,20 +1234,20 @@ struct xEntBoulder : xEnt
 	xVec3 rotVec;
 	xVec3 force;
 	xVec3 instForce;
-	f32 angVel;
-	f32 timeToLive;
-	s32 hitpoints;
-	f32 lastRolling;
-	u32 rollingID;
-	u8 collis_chk;
-	u8 collis_pen;
+	float32 angVel;
+	float32 timeToLive;
+	int32 hitpoints;
+	float32 lastRolling;
+	uint32 rollingID;
+	uint8 collis_chk;
+	uint8 collis_pen;
 	type_400 pad1;
 };
 
 struct RwPlane
 {
 	RwV3d normal;
-	f32 distance;
+	float32 distance;
 };
 
 enum _tagPadState
@@ -1268,45 +1268,45 @@ struct xAnimTransitionList
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct xTriggerAsset
 {
 	type_226 p;
 	xVec3 direction;
-	u32 flags;
+	uint32 flags;
 };
 
 struct _tagEmitRect
 {
-	f32 x_len;
-	f32 z_len;
+	float32 x_len;
+	float32 z_len;
 };
 
 struct xCutsceneData
 {
-	u32 DataType;
-	u32 AssetID;
-	u32 ChunkSize;
+	uint32 DataType;
+	uint32 AssetID;
+	uint32 ChunkSize;
 	union
 	{
-		u32 FileOffset;
+		uint32 FileOffset;
 		void* DataPtr;
 	};
 };
 
 struct zPlatFMRunTime
 {
-	u32 flags;
+	uint32 flags;
 	type_323 tmrs;
 	type_330 ttms;
 	type_338 atms;
@@ -1317,49 +1317,49 @@ struct zPlatFMRunTime
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct xClumpCollBSPBranchNode
 {
-	u32 leftInfo;
-	u32 rightInfo;
-	f32 leftValue;
-	f32 rightValue;
+	uint32 leftInfo;
+	uint32 rightInfo;
+	float32 leftValue;
+	float32 rightValue;
 };
 
 struct xMovePointAsset : xBaseAsset
 {
 	xVec3 pos;
-	u16 wt;
-	u8 on;
-	u8 bezIndex;
-	u8 flg_props;
-	u8 pad;
-	u16 numPoints;
-	f32 delay;
-	f32 zoneRadius;
-	f32 arenaRadius;
+	uint16 wt;
+	uint8 on;
+	uint8 bezIndex;
+	uint8 flg_props;
+	uint8 pad;
+	uint16 numPoints;
+	float32 delay;
+	float32 zoneRadius;
+	float32 arenaRadius;
 };
 
 struct xParCmd
 {
-	u32 flag;
+	uint32 flag;
 	xParCmdAsset* tasset;
 };
 
 struct xAnimTable
 {
 	xAnimTable* Next;
-	s8* Name;
+	int8* Name;
 	xAnimTransition* TransitionList;
 	xAnimState* StateList;
-	u32 AnimIndex;
-	u32 MorphIndex;
-	u32 UserFlags;
+	uint32 AnimIndex;
+	uint32 MorphIndex;
+	uint32 UserFlags;
 };
 
 enum en_dupowavmod
@@ -1373,27 +1373,27 @@ enum en_dupowavmod
 struct iFogParams
 {
 	RwFogType type;
-	f32 start;
-	f32 stop;
-	f32 density;
+	float32 start;
+	float32 stop;
+	float32 density;
 	RwRGBA fogcolor;
 	RwRGBA bgcolor;
-	u8* table;
+	uint8* table;
 };
 
 struct xParGroup
 {
 	xPar* m_root;
 	xPar* m_dead;
-	s32 m_num_of_particles;
-	u8 m_alive;
-	u8 m_killWhenDead;
-	u8 m_active;
-	u8 m_visible;
-	u8 m_culled;
-	u8 m_priority;
-	u8 m_flags;
-	u8 m_regidx;
+	int32 m_num_of_particles;
+	uint8 m_alive;
+	uint8 m_killWhenDead;
+	uint8 m_active;
+	uint8 m_visible;
+	uint8 m_culled;
+	uint8 m_priority;
+	uint8 m_flags;
+	uint8 m_regidx;
 	xParGroup* m_next;
 	xParGroup* m_prev;
 	type_32 draw;
@@ -1402,44 +1402,44 @@ struct xParGroup
 
 struct NPCConfig : xListItem_0
 {
-	u32 modelID;
-	s32 flg_config;
-	f32 spd_turnMax;
-	f32 spd_moveMax;
-	f32 fac_accelMax;
-	f32 fac_driftMax;
-	f32 fac_gravKnock;
-	f32 fac_elastic;
-	s32 pts_damage;
-	s32 useBoxBound;
+	uint32 modelID;
+	int32 flg_config;
+	float32 spd_turnMax;
+	float32 spd_moveMax;
+	float32 fac_accelMax;
+	float32 fac_driftMax;
+	float32 fac_gravKnock;
+	float32 fac_elastic;
+	int32 pts_damage;
+	int32 useBoxBound;
 	xVec3 off_bound;
 	xVec3 dim_bound;
-	f32 npcMass;
-	f32 npcMassInv;
-	f32 rad_detect;
-	f32 hyt_detect;
-	f32 off_detect;
-	f32 rad_attack;
-	f32 fov_attack;
+	float32 npcMass;
+	float32 npcMassInv;
+	float32 rad_detect;
+	float32 hyt_detect;
+	float32 off_detect;
+	float32 rad_attack;
+	float32 fov_attack;
 	xVec3 scl_model;
-	f32 tym_attack;
-	f32 tym_fidget;
-	f32 tym_stun;
-	f32 tym_alert;
-	f32 dst_castShadow;
-	f32 rad_shadowCache;
-	f32 rad_shadowRaster;
-	f32 rad_dmgSize;
-	s32 flg_vert;
+	float32 tym_attack;
+	float32 tym_fidget;
+	float32 tym_stun;
+	float32 tym_alert;
+	float32 dst_castShadow;
+	float32 rad_shadowCache;
+	float32 rad_shadowRaster;
+	float32 rad_dmgSize;
+	int32 flg_vert;
 	type_43 tag_vert;
 	type_53 animFrameRange;
 	type_70 cnt_esteem;
-	f32 rad_sound;
+	float32 rad_sound;
 	NPCSndTrax* snd_trax;
 	NPCSndTrax* snd_traxShare;
-	s32 test_count;
+	int32 test_count;
 	type_120 talk_filter;
-	u8 talk_filter_size;
+	uint8 talk_filter_size;
 };
 
 struct RyzMemData
@@ -1448,14 +1448,14 @@ struct RyzMemData
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct xPSYNote
@@ -1465,24 +1465,24 @@ struct xPSYNote
 struct zNPCSettings : xDynAsset
 {
 	en_npcbtyp basisType;
-	s8 allowDetect;
-	s8 allowPatrol;
-	s8 allowWander;
-	s8 reduceCollide;
-	s8 useNavSplines;
+	int8 allowDetect;
+	int8 allowPatrol;
+	int8 allowWander;
+	int8 reduceCollide;
+	int8 useNavSplines;
 	type_123 pad;
-	s8 allowChase;
-	s8 allowAttack;
-	s8 assumeLOS;
-	s8 assumeFOV;
+	int8 allowChase;
+	int8 allowAttack;
+	int8 assumeLOS;
+	int8 assumeFOV;
 	en_dupowavmod duploWaveMode;
-	f32 duploSpawnDelay;
-	s32 duploSpawnLifeMax;
+	float32 duploSpawnDelay;
+	int32 duploSpawnLifeMax;
 };
 
 struct xFFX
 {
-	u32 flags;
+	uint32 flags;
 	type_7 doEffect;
 	void* fdata;
 	xFFX* next;
@@ -1495,33 +1495,33 @@ struct xGlobals
 	_tagxPad* pad1;
 	_tagxPad* pad2;
 	_tagxPad* pad3;
-	s32 profile;
+	int32 profile;
 	type_95 profFunc;
 	xUpdateCullMgr* updateMgr;
-	s32 sceneFirst;
+	int32 sceneFirst;
 	type_125 sceneStart;
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
 	iFogParams fogB;
-	s32 fog_t0;
-	s32 fog_t1;
-	s32 option_vibration;
-	u32 QuarterSpeed;
-	f32 update_dt;
-	s32 useHIPHOP;
-	u8 NoMusic;
-	s8 currentActivePad;
-	u8 firstStartPressed;
-	u32 minVSyncCnt;
-	u8 dontShowPadMessageDuringLoadingOrCutScene;
-	u8 autoSaveFeature;
+	long32 fog_t0;
+	long32 fog_t1;
+	int32 option_vibration;
+	uint32 QuarterSpeed;
+	float32 update_dt;
+	int32 useHIPHOP;
+	uint8 NoMusic;
+	int8 currentActivePad;
+	uint8 firstStartPressed;
+	uint32 minVSyncCnt;
+	uint8 dontShowPadMessageDuringLoadingOrCutScene;
+	uint8 autoSaveFeature;
 };
 
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct zEntHangable : zEnt
@@ -1531,15 +1531,15 @@ struct zEntHangable : zEnt
 	xVec3 endpos;
 	xVec3 vel;
 	xVec3 swingplane;
-	f32 grabTimer;
-	f32 spin;
-	u32 state;
+	float32 grabTimer;
+	float32 spin;
+	uint32 state;
 	zEnt* shaggy;
-	s32 enabled;
+	int32 enabled;
 	zEnt* follow;
-	s32 moving;
-	f32 candle_timer;
-	s32 candle_state;
+	int32 moving;
+	float32 candle_timer;
+	int32 candle_state;
 };
 
 struct RpAtomic
@@ -1553,17 +1553,17 @@ struct RpAtomic
 	RwLLLink inClumpLink;
 	type_329 renderCallBack;
 	RpInterpolator interpolator;
-	u16 renderFrame;
-	u16 pad;
+	uint16 renderFrame;
+	uint16 pad;
 	RwLinkList llWorldSectorsInAtomic;
 	RxPipeline* pipeline;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RxPipelineNodeParam
@@ -1574,16 +1574,16 @@ struct RxPipelineNodeParam
 
 struct zLightning
 {
-	u32 type;
-	u32 flags;
+	uint32 type;
+	uint32 flags;
 	union
 	{
 		_class_3 legacy;
 		_class_5 func;
 	};
 	iColor_tag color;
-	f32 time_left;
-	f32 time_total;
+	float32 time_left;
+	float32 time_total;
 };
 
 struct RwFrame
@@ -1600,15 +1600,15 @@ struct RwFrame
 
 struct xParEmitterCustomSettings : xParEmitterPropsAsset
 {
-	u32 custom_flags;
-	u32 attachToID;
+	uint32 custom_flags;
+	uint32 attachToID;
 	xVec3 pos;
 	xVec3 vel;
-	f32 vel_angle_variation;
+	float32 vel_angle_variation;
 	type_93 rot;
-	u8 padding;
-	f32 radius;
-	f32 emit_interval_current;
+	uint8 padding;
+	float32 radius;
+	float32 emit_interval_current;
 	void* emit_volume;
 };
 
@@ -1632,76 +1632,76 @@ struct xCamera : xBase
 	xVec3 focus;
 	xScene* sc;
 	xVec3 tran_accum;
-	f32 fov;
-	u32 flags;
-	f32 tmr;
-	f32 tm_acc;
-	f32 tm_dec;
-	f32 ltmr;
-	f32 ltm_acc;
-	f32 ltm_dec;
-	f32 dmin;
-	f32 dmax;
-	f32 dcur;
-	f32 dgoal;
-	f32 hmin;
-	f32 hmax;
-	f32 hcur;
-	f32 hgoal;
-	f32 pmin;
-	f32 pmax;
-	f32 pcur;
-	f32 pgoal;
-	f32 depv;
-	f32 hepv;
-	f32 pepv;
-	f32 orn_epv;
-	f32 yaw_epv;
-	f32 pitch_epv;
-	f32 roll_epv;
+	float32 fov;
+	uint32 flags;
+	float32 tmr;
+	float32 tm_acc;
+	float32 tm_dec;
+	float32 ltmr;
+	float32 ltm_acc;
+	float32 ltm_dec;
+	float32 dmin;
+	float32 dmax;
+	float32 dcur;
+	float32 dgoal;
+	float32 hmin;
+	float32 hmax;
+	float32 hcur;
+	float32 hgoal;
+	float32 pmin;
+	float32 pmax;
+	float32 pcur;
+	float32 pgoal;
+	float32 depv;
+	float32 hepv;
+	float32 pepv;
+	float32 orn_epv;
+	float32 yaw_epv;
+	float32 pitch_epv;
+	float32 roll_epv;
 	xQuat orn_cur;
 	xQuat orn_goal;
 	xQuat orn_diff;
-	f32 yaw_cur;
-	f32 yaw_goal;
-	f32 pitch_cur;
-	f32 pitch_goal;
-	f32 roll_cur;
-	f32 roll_goal;
-	f32 dct;
-	f32 dcd;
-	f32 dccv;
-	f32 dcsv;
-	f32 hct;
-	f32 hcd;
-	f32 hccv;
-	f32 hcsv;
-	f32 pct;
-	f32 pcd;
-	f32 pccv;
-	f32 pcsv;
-	f32 orn_ct;
-	f32 orn_cd;
-	f32 orn_ccv;
-	f32 orn_csv;
-	f32 yaw_ct;
-	f32 yaw_cd;
-	f32 yaw_ccv;
-	f32 yaw_csv;
-	f32 pitch_ct;
-	f32 pitch_cd;
-	f32 pitch_ccv;
-	f32 pitch_csv;
-	f32 roll_ct;
-	f32 roll_cd;
-	f32 roll_ccv;
-	f32 roll_csv;
+	float32 yaw_cur;
+	float32 yaw_goal;
+	float32 pitch_cur;
+	float32 pitch_goal;
+	float32 roll_cur;
+	float32 roll_goal;
+	float32 dct;
+	float32 dcd;
+	float32 dccv;
+	float32 dcsv;
+	float32 hct;
+	float32 hcd;
+	float32 hccv;
+	float32 hcsv;
+	float32 pct;
+	float32 pcd;
+	float32 pccv;
+	float32 pcsv;
+	float32 orn_ct;
+	float32 orn_cd;
+	float32 orn_ccv;
+	float32 orn_csv;
+	float32 yaw_ct;
+	float32 yaw_cd;
+	float32 yaw_ccv;
+	float32 yaw_csv;
+	float32 pitch_ct;
+	float32 pitch_cd;
+	float32 pitch_ccv;
+	float32 pitch_csv;
+	float32 roll_ct;
+	float32 roll_cd;
+	float32 roll_ccv;
+	float32 roll_csv;
 	type_443 frustplane;
 };
 
 struct RpSector
 {
-	s32 type;
+	int32 type;
 };
 
 struct zNPCCommon : xNPCBasic
@@ -1709,10 +1709,10 @@ struct zNPCCommon : xNPCBasic
 	xEntAsset* entass;
 	xEntNPCAsset* npcass;
 	zNPCSettings* npcsetass;
-	s32 flg_vuln;
-	s32 flg_move;
-	s32 flg_misc;
-	s32 flg_able;
+	int32 flg_vuln;
+	int32 flg_move;
+	int32 flg_misc;
+	int32 flg_able;
 	NPCConfig* cfg_npc;
 	zNPCSettings npcset;
 	zMovePoint* nav_past;
@@ -1720,18 +1720,18 @@ struct zNPCCommon : xNPCBasic
 	zMovePoint* nav_dest;
 	zMovePoint* nav_lead;
 	xSpline3* spl_mvptspline;
-	f32 len_mvptspline;
-	f32 dst_curspline;
+	float32 len_mvptspline;
+	float32 dst_curspline;
 	xEntDrive* drv_data;
 	xPsyche* psy_instinct;
 	zNPCCommon* npc_duplodude;
-	f32 spd_throttle;
-	s32 flg_xtrarend;
-	f32 tmr_fidget;
-	f32 tmr_invuln;
+	float32 spd_throttle;
+	int32 flg_xtrarend;
+	float32 tmr_fidget;
+	float32 tmr_invuln;
 	zShrapnelAsset* explosion;
 	xModelAssetParam* parmdata;
-	u32 pdatsize;
+	uint32 pdatsize;
 	zNPCLassoInfo* lassdata;
 	type_409 snd_queue;
 };
@@ -1739,8 +1739,8 @@ struct zNPCCommon : xNPCBasic
 struct xJSPHeader
 {
 	type_54 idtag;
-	u32 version;
-	u32 jspNodeCount;
+	uint32 version;
+	uint32 jspNodeCount;
 	RpClump* clump;
 	xClumpCollBSPTree* colltree;
 	xJSPNodeInfo* jspNodeList;
@@ -1748,16 +1748,16 @@ struct xJSPHeader
 
 struct xSurface : xBase
 {
-	u32 idx;
-	u32 type;
+	uint32 idx;
+	uint32 type;
 	union
 	{
-		u32 mat_idx;
+		uint32 mat_idx;
 		xEnt* ent;
 		void* obj;
 	};
-	f32 friction;
-	u8 state;
+	float32 friction;
+	uint8 state;
 	type_339 pad;
 	void* moprops;
 };
@@ -1765,35 +1765,35 @@ struct xSurface : xBase
 struct zSurfaceProps
 {
 	zSurfAssetBase* asset;
-	u32 texanim_flags;
+	uint32 texanim_flags;
 	type_22 texanim;
-	u32 uvfx_flags;
+	uint32 uvfx_flags;
 	type_37 uvfx;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 struct xGoal : xListItem_1, xFactoryInst
 {
 	xPsyche* psyche;
-	s32 goalID;
+	int32 goalID;
 	en_GOALSTATE stat;
-	s32 flg_able;
+	int32 flg_able;
 	type_390 fun_process;
 	type_341 fun_precalc;
 	type_364 fun_chkRule;
@@ -1803,22 +1803,22 @@ struct xGoal : xListItem_1, xFactoryInst
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_99 clusters;
 };
@@ -1827,20 +1827,20 @@ struct _tagxPad
 {
 	type_183 value;
 	type_191 last_value;
-	u32 on;
-	u32 pressed;
-	u32 released;
+	uint32 on;
+	uint32 pressed;
+	uint32 released;
 	_tagPadAnalog analog1;
 	_tagPadAnalog analog2;
 	_tagPadState state;
-	u32 flags;
+	uint32 flags;
 	_tagxRumble rumble_head;
-	s16 port;
-	s16 slot;
+	int16 port;
+	int16 slot;
 	_tagiPad context;
-	f32 al2d_timer;
-	f32 ar2d_timer;
-	f32 d_timer;
+	float32 al2d_timer;
+	float32 ar2d_timer;
+	float32 d_timer;
 	type_286 up_tmr;
 	type_293 down_tmr;
 	type_353 analog;
@@ -1848,24 +1848,24 @@ struct _tagxPad
 
 struct xParCmdTex : xParCmdAsset
 {
-	f32 x1;
-	f32 y1;
-	f32 x2;
-	f32 y2;
-	u8 birthMode;
-	u8 rows;
-	u8 cols;
-	u8 unit_count;
-	f32 unit_width;
-	f32 unit_height;
+	float32 x1;
+	float32 y1;
+	float32 x2;
+	float32 y2;
+	uint8 birthMode;
+	uint8 rows;
+	uint8 cols;
+	uint8 unit_count;
+	float32 unit_width;
+	float32 unit_height;
 };
 
 struct xPortalAsset : xBaseAsset
 {
-	u32 assetCameraID;
-	u32 assetMarkerID;
-	f32 ang;
-	u32 sceneID;
+	uint32 assetCameraID;
+	uint32 assetMarkerID;
+	float32 ang;
+	uint32 sceneID;
 };
 
 enum zControlOwner
@@ -1890,22 +1890,22 @@ enum zControlOwner
 
 struct xCutsceneBreak
 {
-	f32 Time;
-	s32 Index;
+	float32 Time;
+	int32 Index;
 };
 
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct xPlatformFRData
 {
-	f32 fspeed;
-	f32 rspeed;
-	f32 ret_delay;
-	f32 post_ret_delay;
+	float32 fspeed;
+	float32 rspeed;
+	float32 ret_delay;
+	float32 post_ret_delay;
 };
 
 struct RpIntersection
@@ -1916,10 +1916,10 @@ struct RpIntersection
 
 struct xCutsceneTime
 {
-	f32 StartTime;
-	f32 EndTime;
-	u32 NumData;
-	u32 ChunkIndex;
+	float32 StartTime;
+	float32 EndTime;
+	uint32 NumData;
+	uint32 ChunkIndex;
 };
 
 enum _tagePlayerSnd
@@ -1982,12 +1982,12 @@ enum _tagePlayerSnd
 
 struct zSurfMatFX
 {
-	u32 flags;
-	u32 bumpmapID;
-	u32 envmapID;
-	f32 shininess;
-	f32 bumpiness;
-	u32 dualmapID;
+	uint32 flags;
+	uint32 bumpmapID;
+	uint32 envmapID;
+	float32 shininess;
+	float32 bumpiness;
+	uint32 dualmapID;
 };
 
 enum PSY_BRAIN_STATUS
@@ -2016,16 +2016,16 @@ struct RwLLLink
 
 struct xFFXRotMatchState
 {
-	s32 lgrounded;
+	int32 lgrounded;
 	xVec3 lfup;
 	xVec3 lfat;
 	xVec3 plfat;
-	f32 tmr;
-	f32 mrate;
-	f32 tmatch;
-	f32 rrate;
-	f32 trelax;
-	f32 max_decl;
+	float32 tmr;
+	float32 mrate;
+	float32 tmatch;
+	float32 rrate;
+	float32 trelax;
+	float32 max_decl;
 	xFFXRotMatchState* next;
 };
 
@@ -2033,7 +2033,7 @@ struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 enum RwFogType
@@ -2058,20 +2058,20 @@ struct zEnt : xEnt
 
 struct xEntDrive
 {
-	u32 flags;
-	f32 otm;
-	f32 otmr;
-	f32 os;
-	f32 tm;
-	f32 tmr;
-	f32 s;
+	uint32 flags;
+	float32 otm;
+	float32 otmr;
+	float32 os;
+	float32 tm;
+	float32 tmr;
+	float32 s;
 	xEnt* odriver;
 	xEnt* driver;
 	xEnt* driven;
 	xVec3 op;
 	xVec3 p;
 	xVec3 q;
-	f32 yaw;
+	float32 yaw;
 	xVec3 dloc;
 	tri_data_1 tri;
 };
@@ -2079,30 +2079,30 @@ struct xEntDrive
 struct zCheckPoint
 {
 	xVec3 pos;
-	f32 rot;
-	u32 initCamID;
+	float32 rot;
+	uint32 initCamID;
 };
 
 struct zFragBone
 {
-	s32 index;
+	int32 index;
 	xVec3 offset;
 };
 
 struct xEntMotionOrbitData
 {
 	xVec3 center;
-	f32 w;
-	f32 h;
-	f32 period;
+	float32 w;
+	float32 h;
+	float32 period;
 };
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 enum en_GOALSTATE
@@ -2123,19 +2123,19 @@ struct zFragLightningAsset : zFragAsset
 {
 	zFragLocation start;
 	zFragLocation end;
-	u32 startParentID;
-	u32 endParentID;
+	uint32 startParentID;
+	uint32 endParentID;
 };
 
 struct xAnimFile
 {
 	xAnimFile* Next;
-	s8* Name;
-	u32 ID;
-	u32 FileFlags;
-	f32 Duration;
-	f32 TimeOffset;
-	u16 BoneCount;
+	int8* Name;
+	uint32 ID;
+	uint32 FileFlags;
+	float32 Duration;
+	float32 TimeOffset;
+	uint16 BoneCount;
 	type_200 NumAnims;
 	void** RawData;
 };
@@ -2155,10 +2155,10 @@ enum _CurrentPlayer
 
 struct RwRGBAReal
 {
-	f32 red;
-	f32 green;
-	f32 blue;
-	f32 alpha;
+	float32 red;
+	float32 green;
+	float32 blue;
+	float32 alpha;
 };
 
 struct RpClump
@@ -2173,18 +2173,18 @@ struct RpClump
 
 struct xPEEntBound
 {
-	u8 flags;
-	u8 type;
-	u8 pad1;
-	u8 pad2;
-	f32 expand;
-	f32 deflection;
+	uint8 flags;
+	uint8 type;
+	uint8 pad1;
+	uint8 pad2;
+	float32 expand;
+	float32 deflection;
 };
 
 struct XCSNNosey
 {
 	void* userdata;
-	s32 flg_nosey;
+	int32 flg_nosey;
 };
 
 struct xNPCBasic : xEnt, xFactoryInst
@@ -2193,19 +2193,19 @@ struct xNPCBasic : xEnt, xFactoryInst
 	type_69 f_reset;
 	union
 	{
-		s32 flg_basenpc;
-		s32 inUpdate;
-		s32 flg_upward;
+		int32 flg_basenpc;
+		int32 inUpdate;
+		int32 flg_upward;
 	};
-	s32 colFreq;
-	s32 colFreqReset;
+	int32 colFreq;
+	int32 colFreqReset;
 	union
 	{
-		u32 flg_colCheck;
-		u32 flg_penCheck;
-		u32 flg_unused;
+		uint32 flg_colCheck;
+		uint32 flg_penCheck;
+		uint32 flg_unused;
 	};
-	s32 myNPCType;
+	int32 myNPCType;
 	xEntShadow entShadow_embedded;
 	xShadowSimpleCache simpShadow_embedded;
 };
@@ -2219,20 +2219,20 @@ struct RwObjectHasFrame
 
 struct xAnimMultiFileEntry
 {
-	u32 ID;
+	uint32 ID;
 	xAnimFile* File;
 };
 
 struct xAnimActiveEffect
 {
 	xAnimEffect* Effect;
-	u32 Handle;
+	uint32 Handle;
 };
 
 struct xModelTag
 {
 	xVec3 v;
-	u32 matidx;
+	uint32 matidx;
 	type_414 wt;
 };
 
@@ -2243,21 +2243,21 @@ struct zGustAsset
 struct NPCSndTrax
 {
 	en_NPC_SOUND typ_sound;
-	s8* nam_sound;
-	u32 aid_sound;
+	int8* nam_sound;
+	uint32 aid_sound;
 };
 
 struct _tagPadAnalog
 {
-	s8 x;
-	s8 y;
+	int8 x;
+	int8 y;
 };
 
 struct xClumpCollBSPTree
 {
-	u32 numBranchNodes;
+	uint32 numBranchNodes;
 	xClumpCollBSPBranchNode* branchNodes;
-	u32 numTriangles;
+	uint32 numTriangles;
 	xClumpCollBSPTriangle* triangles;
 };
 
@@ -2265,9 +2265,9 @@ struct zFrag
 {
 	zFragType type;
 	zFragInfo info;
-	f32 delay;
-	f32 alivetime;
-	f32 lifetime;
+	float32 delay;
+	float32 alivetime;
+	float32 lifetime;
 	type_379 update;
 	type_422 parent;
 	zFrag* prev;
@@ -2278,20 +2278,20 @@ struct _tagEmitLine
 {
 	xVec3 pos1;
 	xVec3 pos2;
-	f32 radius;
+	float32 radius;
 };
 
 struct xVec2
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct tri_data_0
 {
-	u32 index;
-	f32 r;
-	f32 d;
+	uint32 index;
+	float32 r;
+	float32 d;
 };
 
 struct _class_0
@@ -2307,28 +2307,28 @@ struct RwLinkList
 struct zFragAsset
 {
 	zFragType type;
-	u32 id;
+	uint32 id;
 	type_331 parentID;
-	f32 lifetime;
-	f32 delay;
+	float32 lifetime;
+	float32 delay;
 };
 
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct xUpdateCullMgr
 {
-	u32 entCount;
-	u32 entActive;
+	uint32 entCount;
+	uint32 entActive;
 	void** ent;
 	xUpdateCullEnt** mgr;
-	u32 mgrCount;
-	u32 mgrCurr;
+	uint32 mgrCount;
+	uint32 mgrCurr;
 	xUpdateCullEnt* mgrList;
-	u32 grpCount;
+	uint32 grpCount;
 	xUpdateCullGroup* grpList;
 	type_4 activateCB;
 	type_4 deactivateCB;
@@ -2336,35 +2336,35 @@ struct xUpdateCullMgr
 
 struct xJSPNodeInfo
 {
-	s32 originalMatIndex;
-	s32 nodeFlags;
+	int32 originalMatIndex;
+	int32 nodeFlags;
 };
 
 struct xEnvAsset : xBaseAsset
 {
-	u32 bspAssetID;
-	u32 startCameraAssetID;
-	u32 climateFlags;
-	f32 climateStrengthMin;
-	f32 climateStrengthMax;
-	u32 bspLightKit;
-	u32 objectLightKit;
-	f32 padF1;
-	u32 bspCollisionAssetID;
-	u32 bspFXAssetID;
-	u32 bspCameraAssetID;
-	u32 bspMapperID;
-	u32 bspMapperCollisionID;
-	u32 bspMapperFXID;
-	f32 loldHeight;
+	uint32 bspAssetID;
+	uint32 startCameraAssetID;
+	uint32 climateFlags;
+	float32 climateStrengthMin;
+	float32 climateStrengthMax;
+	uint32 bspLightKit;
+	uint32 objectLightKit;
+	float32 padF1;
+	uint32 bspCollisionAssetID;
+	uint32 bspFXAssetID;
+	uint32 bspCameraAssetID;
+	uint32 bspMapperID;
+	uint32 bspMapperCollisionID;
+	uint32 bspMapperFXID;
+	float32 loldHeight;
 };
 
 struct RpVertexNormal
 {
-	s8 x;
-	s8 y;
-	s8 z;
-	u8 pad;
+	int8 x;
+	int8 y;
+	int8 z;
+	uint8 pad;
 };
 
 struct zPlayerGlobals
@@ -2380,120 +2380,120 @@ struct zPlayerGlobals
 	xModelInstance* model_spongebob;
 	xModelInstance* model_patrick;
 	xModelInstance* model_sandy;
-	u32 Visible;
-	u32 Health;
-	s32 Speed;
-	f32 SpeedMult;
-	s32 Sneak;
-	s32 Teeter;
-	f32 SlipFadeTimer;
-	s32 Slide;
-	f32 SlideTimer;
-	s32 Stepping;
-	s32 JumpState;
-	s32 LastJumpState;
-	f32 JumpTimer;
-	f32 LookAroundTimer;
-	u32 LookAroundRand;
-	u32 LastProjectile;
-	f32 DecelRun;
-	f32 DecelRunSpeed;
-	f32 HotsauceTimer;
-	f32 LeanLerp;
-	f32 ScareTimer;
+	uint32 Visible;
+	uint32 Health;
+	int32 Speed;
+	float32 SpeedMult;
+	int32 Sneak;
+	int32 Teeter;
+	float32 SlipFadeTimer;
+	int32 Slide;
+	float32 SlideTimer;
+	int32 Stepping;
+	int32 JumpState;
+	int32 LastJumpState;
+	float32 JumpTimer;
+	float32 LookAroundTimer;
+	uint32 LookAroundRand;
+	uint32 LastProjectile;
+	float32 DecelRun;
+	float32 DecelRunSpeed;
+	float32 HotsauceTimer;
+	float32 LeanLerp;
+	float32 ScareTimer;
 	xBase* ScareSource;
-	f32 CowerTimer;
-	f32 DamageTimer;
-	f32 SundaeTimer;
-	f32 ControlOffTimer;
-	f32 HelmetTimer;
-	u32 WorldDisguise;
-	u32 Bounced;
-	f32 FallDeathTimer;
-	f32 HeadbuttVel;
-	f32 HeadbuttTimer;
-	u32 SpecialReceived;
+	float32 CowerTimer;
+	float32 DamageTimer;
+	float32 SundaeTimer;
+	float32 ControlOffTimer;
+	float32 HelmetTimer;
+	uint32 WorldDisguise;
+	uint32 Bounced;
+	float32 FallDeathTimer;
+	float32 HeadbuttVel;
+	float32 HeadbuttTimer;
+	uint32 SpecialReceived;
 	xEnt* MountChimney;
-	f32 MountChimOldY;
-	u32 MaxHealth;
-	u32 DoMeleeCheck;
-	f32 VictoryTimer;
-	f32 BadGuyNearTimer;
-	f32 ForceSlipperyTimer;
-	f32 ForceSlipperyFriction;
-	f32 ShockRadius;
-	f32 ShockRadiusOld;
-	f32 Face_ScareTimer;
-	u32 Face_ScareRandom;
-	u32 Face_Event;
-	f32 Face_EventTimer;
-	f32 Face_PantTimer;
-	u32 Face_AnimSpecific;
-	u32 IdleRand;
-	f32 IdleMinorTimer;
-	f32 IdleMajorTimer;
-	f32 IdleSitTimer;
-	s32 Transparent;
+	float32 MountChimOldY;
+	uint32 MaxHealth;
+	uint32 DoMeleeCheck;
+	float32 VictoryTimer;
+	float32 BadGuyNearTimer;
+	float32 ForceSlipperyTimer;
+	float32 ForceSlipperyFriction;
+	float32 ShockRadius;
+	float32 ShockRadiusOld;
+	float32 Face_ScareTimer;
+	uint32 Face_ScareRandom;
+	uint32 Face_Event;
+	float32 Face_EventTimer;
+	float32 Face_PantTimer;
+	uint32 Face_AnimSpecific;
+	uint32 IdleRand;
+	float32 IdleMinorTimer;
+	float32 IdleMajorTimer;
+	float32 IdleSitTimer;
+	int32 Transparent;
 	zEnt* FireTarget;
-	u32 ControlOff;
-	u32 ControlOnEvent;
-	u32 AutoMoveSpeed;
-	f32 AutoMoveDist;
+	uint32 ControlOff;
+	uint32 ControlOnEvent;
+	uint32 AutoMoveSpeed;
+	float32 AutoMoveDist;
 	xVec3 AutoMoveTarget;
 	xBase* AutoMoveObject;
 	zEnt* Diggable;
-	f32 DigTimer;
+	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
 	type_436 BubbleWandTag;
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
-	f32 bbowlInitVel;
+	float32 bbowlInitVel;
 	zEntHangable* HangFound;
 	zEntHangable* HangEnt;
 	zEntHangable* HangEntLast;
 	xVec3 HangPivot;
 	xVec3 HangVel;
-	f32 HangLength;
+	float32 HangLength;
 	xVec3 HangStartPos;
-	f32 HangStartLerp;
+	float32 HangStartLerp;
 	type_116 HangPawTag;
-	f32 HangPawOffset;
-	f32 HangElapsed;
-	f32 Jump_CurrGravity;
-	f32 Jump_HoldTimer;
-	f32 Jump_ChangeTimer;
-	s32 Jump_CanDouble;
-	s32 Jump_CanFloat;
-	s32 Jump_SpringboardStart;
+	float32 HangPawOffset;
+	float32 HangElapsed;
+	float32 Jump_CurrGravity;
+	float32 Jump_HoldTimer;
+	float32 Jump_ChangeTimer;
+	int32 Jump_CanDouble;
+	int32 Jump_CanFloat;
+	int32 Jump_SpringboardStart;
 	zPlatform* Jump_Springboard;
-	s32 CanJump;
-	s32 CanBubbleSpin;
-	s32 CanBubbleBounce;
-	s32 CanBubbleBash;
-	s32 IsJumping;
-	s32 IsDJumping;
-	s32 IsBubbleSpinning;
-	s32 IsBubbleBouncing;
-	s32 IsBubbleBashing;
-	s32 IsBubbleBowling;
-	s32 WasDJumping;
-	s32 IsCoptering;
+	int32 CanJump;
+	int32 CanBubbleSpin;
+	int32 CanBubbleBounce;
+	int32 CanBubbleBash;
+	int32 IsJumping;
+	int32 IsDJumping;
+	int32 IsBubbleSpinning;
+	int32 IsBubbleBouncing;
+	int32 IsBubbleBashing;
+	int32 IsBubbleBowling;
+	int32 WasDJumping;
+	int32 IsCoptering;
 	_zPlayerWallJumpState WallJumpState;
-	s32 cheat_mode;
-	u32 Inv_Shiny;
-	u32 Inv_Spatula;
+	int32 cheat_mode;
+	uint32 Inv_Shiny;
+	uint32 Inv_Spatula;
 	type_312 Inv_PatsSock;
 	type_321 Inv_PatsSock_Max;
-	u32 Inv_PatsSock_CurrentLevel;
+	uint32 Inv_PatsSock_CurrentLevel;
 	type_337 Inv_LevelPickups;
-	u32 Inv_LevelPickups_CurrentLevel;
-	u32 Inv_PatsSock_Total;
+	uint32 Inv_LevelPickups_CurrentLevel;
+	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
 	xEntDrive drv;
 	xSurface* floor_surf;
 	xVec3 floor_norm;
-	s32 slope;
+	int32 slope;
 	xCollis earc_coll;
 	xSphere head_sph;
 	xModelTag center_tag;
@@ -2502,25 +2502,25 @@ struct zPlayerGlobals
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
-	u32 SlideTrackSliding;
-	u32 SlideTrackCount;
+	uint32 SlideTrackSliding;
+	uint32 SlideTrackCount;
 	type_29 SlideTrackEnt;
-	u32 SlideNotGroundedSinceSlide;
+	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
-	f32 SlideTrackDecay;
-	f32 SlideTrackLean;
-	f32 SlideTrackLand;
+	float32 SlideTrackDecay;
+	float32 SlideTrackLean;
+	float32 SlideTrackLand;
 	type_113 sb_model_indices;
 	type_126 sb_models;
-	u32 currentPlayer;
+	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
-	f32 PredictAngV;
+	float32 PredictAngV;
 	xVec3 PredictCurrDir;
-	f32 PredictCurrVel;
-	f32 KnockBackTimer;
-	f32 KnockIntoAirTimer;
+	float32 PredictCurrVel;
+	float32 KnockBackTimer;
+	float32 KnockIntoAirTimer;
 };
 
 struct zVolume : xVolume
@@ -2531,20 +2531,20 @@ struct xSweptSphere
 {
 	xVec3 start;
 	xVec3 end;
-	f32 radius;
-	f32 dist;
+	float32 radius;
+	float32 dist;
 	xiMat4x3Union basis;
 	xiMat4x3Union invbasis;
 	xBox box;
 	xQCData qcd;
-	f32 boxsize;
-	f32 curdist;
+	float32 boxsize;
+	float32 curdist;
 	xVec3 contact;
 	xVec3 polynorm;
-	u32 oid;
+	uint32 oid;
 	void* optr;
 	xModelInstance* mptr;
-	s32 hitIt;
+	int32 hitIt;
 	xVec3 worldPos;
 	xVec3 worldContact;
 	xVec3 worldNormal;
@@ -2560,11 +2560,11 @@ struct xBBox
 
 struct xLightKitLight
 {
-	u32 type;
+	uint32 type;
 	RwRGBAReal color;
 	type_144 matrix;
-	f32 radius;
-	f32 angle;
+	float32 radius;
+	float32 angle;
 	RpLight* platLight;
 };
 
@@ -2572,56 +2572,56 @@ struct RpCollisionTriangle
 {
 	RwV3d normal;
 	RwV3d point;
-	s32 index;
+	int32 index;
 	type_153 vertices;
 };
 
 struct zShrapnelAsset
 {
-	s32 fassetCount;
-	u32 shrapnelID;
+	int32 fassetCount;
+	uint32 shrapnelID;
 	type_142 initCB;
 };
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
 struct xGroupAsset : xBaseAsset
 {
-	u16 itemCount;
-	u16 groupFlags;
+	uint16 itemCount;
+	uint16 groupFlags;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct xParEmitterAsset : xBaseAsset
 {
-	u8 emit_flags;
-	u8 emit_type;
-	u16 pad;
-	u32 propID;
+	uint8 emit_flags;
+	uint8 emit_type;
+	uint16 pad;
+	uint32 propID;
 	union
 	{
 		xPECircle e_circle;
@@ -2634,40 +2634,40 @@ struct xParEmitterAsset : xBaseAsset
 		xPEEntBone e_entbone;
 		xPEEntBound e_entbound;
 	};
-	u32 attachToID;
+	uint32 attachToID;
 	xVec3 pos;
 	xVec3 vel;
-	f32 vel_angle_variation;
-	u32 cull_mode;
-	f32 cull_dist_sqr;
+	float32 vel_angle_variation;
+	uint32 cull_mode;
+	float32 cull_dist_sqr;
 };
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
 struct RwV2d
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct xEntCollis
 {
-	u8 chk;
-	u8 pen;
-	u8 env_sidx;
-	u8 env_eidx;
-	u8 npc_sidx;
-	u8 npc_eidx;
-	u8 dyn_sidx;
-	u8 dyn_eidx;
-	u8 stat_sidx;
-	u8 stat_eidx;
-	u8 idx;
+	uint8 chk;
+	uint8 pen;
+	uint8 env_sidx;
+	uint8 env_eidx;
+	uint8 npc_sidx;
+	uint8 npc_eidx;
+	uint8 dyn_sidx;
+	uint8 dyn_eidx;
+	uint8 stat_sidx;
+	uint8 stat_eidx;
+	uint8 idx;
 	type_287 colls;
 	type_148 post;
 	type_176 depenq;
@@ -2675,15 +2675,15 @@ struct xEntCollis
 
 struct _tagiPad
 {
-	s32 port;
+	int32 port;
 };
 
 struct xPlatformBreakawayData
 {
-	f32 ba_delay;
-	u32 bustModelID;
-	f32 reset_delay;
-	u32 breakflags;
+	float32 ba_delay;
+	uint32 bustModelID;
+	float32 reset_delay;
+	uint32 breakflags;
 };
 
 union zFragLocInfo
@@ -2694,30 +2694,30 @@ union zFragLocInfo
 
 struct xShadowSimpleCache
 {
-	u16 flags;
-	u8 alpha;
-	u8 pad;
-	u32 collPriority;
+	uint16 flags;
+	uint8 alpha;
+	uint8 pad;
+	uint32 collPriority;
 	xVec3 pos;
 	xVec3 at;
 	xEnt* castOnEnt;
 	xShadowSimplePoly poly;
-	f32 envHeight;
-	f32 shadowHeight;
-	u32 raster;
-	f32 dydx;
-	f32 dydz;
+	float32 envHeight;
+	float32 shadowHeight;
+	uint32 raster;
+	float32 dydx;
+	float32 dydz;
 	type_216 corner;
 };
 
 struct RpInterpolator
 {
-	s32 flags;
-	s16 startMorphTarget;
-	s16 endMorphTarget;
-	f32 time;
-	f32 recipTime;
-	f32 position;
+	int32 flags;
+	int16 startMorphTarget;
+	int16 endMorphTarget;
+	float32 time;
+	float32 recipTime;
+	float32 position;
 };
 
 struct xEntMechData
@@ -2725,56 +2725,56 @@ struct xEntMechData
 	xVec3 apos;
 	xVec3 bpos;
 	xVec3 dir;
-	f32 arot;
-	f32 brot;
-	f32 ss;
-	f32 sr;
-	s32 state;
-	f32 tsfd;
-	f32 trfd;
-	f32 tsbd;
-	f32 trbd;
-	f32* rotptr;
+	float32 arot;
+	float32 brot;
+	float32 ss;
+	float32 sr;
+	int32 state;
+	float32 tsfd;
+	float32 trfd;
+	float32 tsbd;
+	float32 trbd;
+	float32* rotptr;
 };
 
 struct zNPCTiki : zNPCCommon
 {
-	u32 tikiFlag;
+	uint32 tikiFlag;
 	xVec3 lastAt;
 	xBound origLocalBound;
 	xVec3 deltaPos;
-	f32 timeToLive;
-	f32 t1;
-	f32 t2;
-	f32 t3;
+	float32 timeToLive;
+	float32 t1;
+	float32 t2;
+	float32 t3;
 	xVec3 v1;
-	f32 vel;
-	f32 landHt;
+	float32 vel;
+	float32 landHt;
 	xEnt* nonTikiParent;
 	xVec3 nonTikiParentDisp;
-	u8 numParents;
+	uint8 numParents;
 	type_396 parents;
-	u8 numChildren;
+	uint8 numChildren;
 	type_413 children;
 	zNPCTiki* nextOrphan;
-	u32 updatedParents;
-	s32 contactParent;
+	uint32 updatedParents;
+	int32 contactParent;
 	void* tikiAnim;
-	f32 tikiAnimTime;
+	float32 tikiAnimTime;
 };
 
 struct zEGenAsset : xEntAsset
 {
 	xVec3 src_dpos;
-	u8 damage_type;
-	u8 flags;
-	f32 ontime;
-	u32 onAnimID;
+	uint8 damage_type;
+	uint8 flags;
+	float32 ontime;
+	uint32 onAnimID;
 };
 
 struct xPlatformERData
 {
-	s32 nodata;
+	int32 nodata;
 };
 
 enum _tagePlayerStreamSnd
@@ -2908,61 +2908,61 @@ enum _tagePlayerStreamSnd
 
 struct xCutsceneZbuffer
 {
-	f32 start;
-	f32 end;
-	f32 nearPlane;
-	f32 farPlane;
+	float32 start;
+	float32 end;
+	float32 nearPlane;
+	float32 farPlane;
 };
 
 struct xEntMotionSplineData
 {
-	s32 unknown;
+	int32 unknown;
 };
 
 struct xParCmdAsset
 {
-	u32 type;
-	u8 enabled;
-	u8 mode;
+	uint32 type;
+	uint8 enabled;
+	uint8 mode;
 	type_236 pad;
 };
 
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
 struct xAnimMultiFileBase
 {
-	u32 Count;
+	uint32 Count;
 };
 
 struct _class_1
 {
-	u32 level;
-	u32 total;
+	uint32 level;
+	uint32 total;
 };
 
 struct zFragSound
 {
 	zFragSoundAsset* fasset;
 	xVec3 location;
-	u32 soundID;
+	uint32 soundID;
 };
 
 struct zPlayerLassoInfo
 {
 	xEnt* target;
-	f32 dist;
-	u8 destroy;
-	u8 targetGuide;
-	f32 lassoRot;
+	float32 dist;
+	uint8 destroy;
+	uint8 targetGuide;
+	float32 lassoRot;
 	xEnt* swingTarget;
 	xEnt* releasedSwing;
-	f32 copterTime;
-	s32 canCopter;
+	float32 copterTime;
+	int32 canCopter;
 	zLasso lasso;
 	xAnimState* zeroAnim;
 };
@@ -2970,9 +2970,9 @@ struct zPlayerLassoInfo
 struct xAnimEffect
 {
 	xAnimEffect* Next;
-	u32 Flags;
-	f32 StartTime;
-	f32 EndTime;
+	uint32 Flags;
+	float32 StartTime;
+	float32 EndTime;
 	type_140 Callback;
 };
 
@@ -2985,15 +2985,15 @@ struct iEnv
 	xJSPHeader* jsp;
 	type_192 light;
 	type_206 light_frame;
-	s32 memlvl;
+	int32 memlvl;
 };
 
 struct zJumpParam
 {
-	f32 PeakHeight;
-	f32 TimeGravChange;
-	f32 TimeHold;
-	f32 ImpulseVel;
+	float32 PeakHeight;
+	float32 TimeGravChange;
+	float32 TimeHold;
+	float32 ImpulseVel;
 };
 
 enum _enum
@@ -3005,25 +3005,25 @@ enum _enum
 struct RpLight
 {
 	RwObjectHasFrame object;
-	f32 radius;
+	float32 radius;
 	RwRGBAReal color;
-	f32 minusCosAngle;
+	float32 minusCosAngle;
 	RwLinkList WorldSectorsInLight;
 	RwLLLink inWorld;
-	u16 lightFrame;
-	u16 pad;
+	uint16 lightFrame;
+	uint16 pad;
 };
 
 struct RpGeometry
 {
 	RwObject object;
-	u32 flags;
-	u16 lockedSinceLastInst;
-	s16 refCount;
-	s32 numTriangles;
-	s32 numVertices;
-	s32 numMorphTargets;
-	s32 numTexCoordSets;
+	uint32 flags;
+	uint16 lockedSinceLastInst;
+	int16 refCount;
+	int32 numTriangles;
+	int32 numVertices;
+	int32 numMorphTargets;
+	int32 numTexCoordSets;
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
@@ -3035,57 +3035,57 @@ struct RpGeometry
 
 struct zFragProjectileAsset : zFragAsset
 {
-	u32 modelInfoID;
+	uint32 modelInfoID;
 	RpAtomic* modelFile;
 	zFragLocation launch;
 	zFragLocation vel;
-	f32 bounce;
-	s32 maxBounces;
-	u32 flags;
-	u32 childID;
+	float32 bounce;
+	int32 maxBounces;
+	uint32 flags;
+	uint32 childID;
 	zShrapnelAsset* child;
-	f32 minScale;
-	f32 maxScale;
-	u32 scaleCurveID;
+	float32 minScale;
+	float32 maxScale;
+	uint32 scaleCurveID;
 	xCurveAsset* scaleCurve;
-	f32 gravity;
+	float32 gravity;
 };
 
 struct _tagTRCPadInfo : _tagiTRCPadInfo
 {
-	s32 id;
+	int32 id;
 	_tagTRCState state;
 };
 
 struct zFragSoundAsset : zFragAsset
 {
-	u32 assetID;
+	uint32 assetID;
 	zFragLocation source;
-	f32 volume;
-	f32 innerRadius;
-	f32 outerRadius;
+	float32 volume;
+	float32 innerRadius;
+	float32 outerRadius;
 };
 
 struct basic_rect
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct zGust : xBase
 {
-	u32 flags;
+	uint32 flags;
 	zGustAsset* asset;
 	zVolume* volume;
 	zVolume* fx_volume;
-	f32 debris_timer;
+	float32 debris_timer;
 };
 
 struct _tagEmitVolume
 {
-	u32 emit_volumeID;
+	uint32 emit_volumeID;
 };
 
 struct xParEmitter : xBase
@@ -3093,17 +3093,17 @@ struct xParEmitter : xBase
 	xParEmitterAsset* tasset;
 	xParGroup* group;
 	xParEmitterPropsAsset* prop;
-	u8 rate_mode;
-	f32 rate;
-	f32 rate_time;
-	f32 rate_fraction;
-	f32 rate_fraction_cull;
-	u8 emit_flags;
+	uint8 rate_mode;
+	float32 rate;
+	float32 rate_time;
+	float32 rate_fraction;
+	float32 rate_fraction_cull;
+	uint8 emit_flags;
 	type_238 emit_pad;
 	type_249 rot;
 	xModelTag tag;
-	f32 oocull_distance_sqr;
-	f32 distance_to_cull_sqr;
+	float32 oocull_distance_sqr;
+	float32 distance_to_cull_sqr;
 	void* attachTo;
 	xParSys* parSys;
 	void* emit_volume;
@@ -3112,45 +3112,45 @@ struct xParEmitter : xBase
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct xGrid
 {
-	u8 ingrid_id;
+	uint8 ingrid_id;
 	type_97 pad;
-	u16 nx;
-	u16 nz;
-	f32 minx;
-	f32 minz;
-	f32 maxx;
-	f32 maxz;
-	f32 csizex;
-	f32 csizez;
-	f32 inv_csizex;
-	f32 inv_csizez;
-	f32 maxr;
+	uint16 nx;
+	uint16 nz;
+	float32 minx;
+	float32 minz;
+	float32 maxx;
+	float32 maxz;
+	float32 csizex;
+	float32 csizez;
+	float32 inv_csizex;
+	float32 inv_csizez;
+	float32 maxr;
 	xGridBound** cells;
 	xGridBound* other;
 };
 
 struct _class_2
 {
-	f32 t;
-	f32 u;
-	f32 v;
+	float32 t;
+	float32 u;
+	float32 v;
 };
 
 struct zPlayerSndTimer
 {
-	f32 timer;
-	f32 time;
+	float32 timer;
+	float32 time;
 };
 
 struct RwBBox
@@ -3161,7 +3161,7 @@ struct RwBBox
 
 struct xFactoryInst : RyzMemData
 {
-	s32 itemType;
+	int32 itemType;
 	xFactoryInst* nextprod;
 	xFactoryInst* prevprod;
 };
@@ -3173,25 +3173,25 @@ struct _zPortal : xBase
 
 struct RpPolygon
 {
-	u16 matIndex;
+	uint16 matIndex;
 	type_184 vertIndex;
 };
 
 struct xQuat
 {
 	xVec3 v;
-	f32 s;
+	float32 s;
 };
 
 struct xGridBound
 {
 	void* data;
-	u16 gx;
-	u16 gz;
-	u8 ingrid;
-	u8 oversize;
-	u8 deleted;
-	u8 gpad;
+	uint16 gx;
+	uint16 gz;
+	uint8 ingrid;
+	uint8 oversize;
+	uint8 deleted;
+	uint8 gpad;
 	xGridBound** head;
 	xGridBound* next;
 };
@@ -3199,26 +3199,26 @@ struct xGridBound
 struct RpTriangle
 {
 	type_322 vertIndex;
-	s16 matIndex;
+	int16 matIndex;
 };
 
 struct xEntHangableAsset
 {
-	u32 flags;
-	f32 pivotOffset;
-	f32 leverArm;
-	f32 gravity;
-	f32 accel;
-	f32 decay;
-	f32 grabDelay;
-	f32 stopDecel;
+	uint32 flags;
+	float32 pivotOffset;
+	float32 leverArm;
+	float32 gravity;
+	float32 accel;
+	float32 decay;
+	float32 grabDelay;
+	float32 stopDecel;
 };
 
 struct xAnimPlay
 {
 	xAnimPlay* Next;
-	u16 NumSingle;
-	u16 BoneCount;
+	uint16 NumSingle;
+	uint16 BoneCount;
 	xAnimSingle* Single;
 	void* Object;
 	xAnimTable* Table;
@@ -3233,20 +3233,20 @@ struct zMovePoint : xMovePoint
 
 struct RwTexCoords
 {
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct xQCData
 {
-	s8 xmin;
-	s8 ymin;
-	s8 zmin;
-	s8 zmin_dup;
-	s8 xmax;
-	s8 ymax;
-	s8 zmax;
-	s8 zmax_dup;
+	int8 xmin;
+	int8 ymin;
+	int8 zmin;
+	int8 zmin_dup;
+	int8 xmax;
+	int8 ymax;
+	int8 zmax;
+	int8 zmax_dup;
 	xVec3 min;
 	xVec3 max;
 };
@@ -3254,8 +3254,8 @@ struct xQCData
 struct RpMaterialList
 {
 	RpMaterial** materials;
-	s32 numMaterials;
-	s32 space;
+	int32 numMaterials;
+	int32 space;
 };
 
 struct xCoef3
@@ -3269,7 +3269,7 @@ struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_358 pad;
 };
@@ -3298,27 +3298,27 @@ struct zFragLocation
 struct xModelPool
 {
 	xModelPool* Next;
-	u32 NumMatrices;
+	uint32 NumMatrices;
 	xModelInstance* List;
 };
 
 struct xEntMotionMPData
 {
-	u32 flags;
-	u32 mp_id;
-	f32 speed;
+	uint32 flags;
+	uint32 mp_id;
+	float32 speed;
 };
 
 struct xPlatformOrbitData
 {
-	s32 nodata;
+	int32 nodata;
 };
 
 struct xDynAsset : xBaseAsset
 {
-	u32 type;
-	u16 version;
-	u16 handle;
+	uint32 type;
+	uint16 version;
+	uint16 handle;
 };
 
 struct xEntERData
@@ -3326,14 +3326,14 @@ struct xEntERData
 	xVec3 a;
 	xVec3 b;
 	xVec3 dir;
-	f32 et;
-	f32 wet;
-	f32 rt;
-	f32 wrt;
-	f32 p;
-	f32 brt;
-	f32 ert;
-	s32 state;
+	float32 et;
+	float32 wet;
+	float32 rt;
+	float32 wrt;
+	float32 p;
+	float32 brt;
+	float32 ert;
+	int32 state;
 };
 
 struct zGlobals : xGlobals
@@ -3348,15 +3348,15 @@ struct zGlobals : xGlobals
 struct _tagxRumble
 {
 	_tagRumbleType type;
-	f32 seconds;
+	float32 seconds;
 	_tagxRumble* next;
-	s16 active;
-	u16 fxflags;
+	int16 active;
+	uint16 fxflags;
 };
 
 struct xParEmitterPropsAsset : xBaseAsset
 {
-	u32 parSysID;
+	uint32 parSysID;
 	union
 	{
 		xParInterp rate;
@@ -3370,8 +3370,8 @@ struct xParEmitterPropsAsset : xBaseAsset
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
-	u32 emit_limit;
-	f32 emit_limit_reset_time;
+	uint32 emit_limit;
+	float32 emit_limit_reset_time;
 };
 
 struct RpMaterial
@@ -3380,8 +3380,8 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
@@ -3392,24 +3392,24 @@ struct xAnimMultiFile : xAnimMultiFileBase
 struct xPlatformSpringboardData
 {
 	type_204 jmph;
-	f32 jmpbounce;
+	float32 jmpbounce;
 	type_227 animID;
 	xVec3 jmpdir;
-	u32 springflags;
+	uint32 springflags;
 };
 
 struct tag_iFile
 {
-	u32 flags;
+	uint32 flags;
 	type_214 path;
-	s32 fd;
-	s32 offset;
-	s32 length;
+	int32 fd;
+	int32 offset;
+	int32 length;
 };
 
 struct xCutsceneZbufferHack
 {
-	s8* name;
+	int8* name;
 	type_222 times;
 };
 
@@ -3420,10 +3420,10 @@ struct zPlayerSettings
 	type_430 AnimSneak;
 	type_434 AnimWalk;
 	type_0 AnimRun;
-	f32 JumpGravity;
-	f32 GravSmooth;
-	f32 FloatSpeed;
-	f32 ButtsmashSpeed;
+	float32 JumpGravity;
+	float32 GravSmooth;
+	float32 FloatSpeed;
+	float32 ButtsmashSpeed;
 	zJumpParam Jump;
 	zJumpParam Bounce;
 	zJumpParam Spring;
@@ -3431,178 +3431,178 @@ struct zPlayerSettings
 	zJumpParam Double;
 	zJumpParam SlideDouble;
 	zJumpParam SlideJump;
-	f32 WallJumpVelocity;
+	float32 WallJumpVelocity;
 	zLedgeGrabParams ledge;
-	f32 spin_damp_xz;
-	f32 spin_damp_y;
-	u8 talk_anims;
-	u8 talk_filter_size;
+	float32 spin_damp_xz;
+	float32 spin_damp_y;
+	uint8 talk_anims;
+	uint8 talk_filter_size;
 	type_156 talk_filter;
 };
 
 struct zGlobalSettings
 {
-	u16 AnalogMin;
-	u16 AnalogMax;
-	f32 SundaeTime;
-	f32 SundaeMult;
-	u32 InitialShinyCount;
-	u32 InitialSpatulaCount;
-	s32 ShinyValuePurple;
-	s32 ShinyValueBlue;
-	s32 ShinyValueGreen;
-	s32 ShinyValueYellow;
-	s32 ShinyValueRed;
-	s32 ShinyValueCombo0;
-	s32 ShinyValueCombo1;
-	s32 ShinyValueCombo2;
-	s32 ShinyValueCombo3;
-	s32 ShinyValueCombo4;
-	s32 ShinyValueCombo5;
-	s32 ShinyValueCombo6;
-	s32 ShinyValueCombo7;
-	s32 ShinyValueCombo8;
-	s32 ShinyValueCombo9;
-	s32 ShinyValueCombo10;
-	s32 ShinyValueCombo11;
-	s32 ShinyValueCombo12;
-	s32 ShinyValueCombo13;
-	s32 ShinyValueCombo14;
-	s32 ShinyValueCombo15;
-	f32 ComboTimer;
-	u32 Initial_Specials;
-	u32 TakeDamage;
-	f32 DamageTimeHit;
-	f32 DamageTimeSurface;
-	f32 DamageTimeEGen;
-	f32 DamageSurfKnock;
-	f32 DamageGiveHealthKnock;
-	u32 CheatSpongeball;
-	u32 CheatPlayerSwitch;
-	u32 CheatAlwaysPortal;
-	u32 CheatFlyToggle;
-	u32 DisableForceConversation;
-	f32 StartSlideAngle;
-	f32 StopSlideAngle;
-	f32 RotMatchMaxAngle;
-	f32 RotMatchMatchTime;
-	f32 RotMatchRelaxTime;
-	f32 Gravity;
-	f32 BBashTime;
-	f32 BBashHeight;
-	f32 BBashDelay;
-	f32 BBashCVTime;
-	f32 BBounceSpeed;
-	f32 BSpinMinFrame;
-	f32 BSpinMaxFrame;
-	f32 BSpinRadius;
-	f32 SandyMeleeMinFrame;
-	f32 SandyMeleeMaxFrame;
-	f32 SandyMeleeRadius;
-	f32 BubbleBowlTimeDelay;
-	f32 BubbleBowlLaunchPosLeft;
-	f32 BubbleBowlLaunchPosUp;
-	f32 BubbleBowlLaunchPosAt;
-	f32 BubbleBowlLaunchVelLeft;
-	f32 BubbleBowlLaunchVelUp;
-	f32 BubbleBowlLaunchVelAt;
-	f32 BubbleBowlPercentIncrease;
-	f32 BubbleBowlMinSpeed;
-	f32 BubbleBowlMinRecoverTime;
-	f32 SlideAccelVelMin;
-	f32 SlideAccelVelMax;
-	f32 SlideAccelStart;
-	f32 SlideAccelEnd;
-	f32 SlideAccelPlayerFwd;
-	f32 SlideAccelPlayerBack;
-	f32 SlideAccelPlayerSide;
-	f32 SlideVelMaxStart;
-	f32 SlideVelMaxEnd;
-	f32 SlideVelMaxIncTime;
-	f32 SlideVelMaxIncAccel;
-	f32 SlideAirHoldTime;
-	f32 SlideAirSlowTime;
-	f32 SlideAirDblHoldTime;
-	f32 SlideAirDblSlowTime;
-	f32 SlideVelDblBoost;
-	u8 SlideApplyPhysics;
+	uint16 AnalogMin;
+	uint16 AnalogMax;
+	float32 SundaeTime;
+	float32 SundaeMult;
+	uint32 InitialShinyCount;
+	uint32 InitialSpatulaCount;
+	int32 ShinyValuePurple;
+	int32 ShinyValueBlue;
+	int32 ShinyValueGreen;
+	int32 ShinyValueYellow;
+	int32 ShinyValueRed;
+	int32 ShinyValueCombo0;
+	int32 ShinyValueCombo1;
+	int32 ShinyValueCombo2;
+	int32 ShinyValueCombo3;
+	int32 ShinyValueCombo4;
+	int32 ShinyValueCombo5;
+	int32 ShinyValueCombo6;
+	int32 ShinyValueCombo7;
+	int32 ShinyValueCombo8;
+	int32 ShinyValueCombo9;
+	int32 ShinyValueCombo10;
+	int32 ShinyValueCombo11;
+	int32 ShinyValueCombo12;
+	int32 ShinyValueCombo13;
+	int32 ShinyValueCombo14;
+	int32 ShinyValueCombo15;
+	float32 ComboTimer;
+	uint32 Initial_Specials;
+	uint32 TakeDamage;
+	float32 DamageTimeHit;
+	float32 DamageTimeSurface;
+	float32 DamageTimeEGen;
+	float32 DamageSurfKnock;
+	float32 DamageGiveHealthKnock;
+	uint32 CheatSpongeball;
+	uint32 CheatPlayerSwitch;
+	uint32 CheatAlwaysPortal;
+	uint32 CheatFlyToggle;
+	uint32 DisableForceConversation;
+	float32 StartSlideAngle;
+	float32 StopSlideAngle;
+	float32 RotMatchMaxAngle;
+	float32 RotMatchMatchTime;
+	float32 RotMatchRelaxTime;
+	float32 Gravity;
+	float32 BBashTime;
+	float32 BBashHeight;
+	float32 BBashDelay;
+	float32 BBashCVTime;
+	float32 BBounceSpeed;
+	float32 BSpinMinFrame;
+	float32 BSpinMaxFrame;
+	float32 BSpinRadius;
+	float32 SandyMeleeMinFrame;
+	float32 SandyMeleeMaxFrame;
+	float32 SandyMeleeRadius;
+	float32 BubbleBowlTimeDelay;
+	float32 BubbleBowlLaunchPosLeft;
+	float32 BubbleBowlLaunchPosUp;
+	float32 BubbleBowlLaunchPosAt;
+	float32 BubbleBowlLaunchVelLeft;
+	float32 BubbleBowlLaunchVelUp;
+	float32 BubbleBowlLaunchVelAt;
+	float32 BubbleBowlPercentIncrease;
+	float32 BubbleBowlMinSpeed;
+	float32 BubbleBowlMinRecoverTime;
+	float32 SlideAccelVelMin;
+	float32 SlideAccelVelMax;
+	float32 SlideAccelStart;
+	float32 SlideAccelEnd;
+	float32 SlideAccelPlayerFwd;
+	float32 SlideAccelPlayerBack;
+	float32 SlideAccelPlayerSide;
+	float32 SlideVelMaxStart;
+	float32 SlideVelMaxEnd;
+	float32 SlideVelMaxIncTime;
+	float32 SlideVelMaxIncAccel;
+	float32 SlideAirHoldTime;
+	float32 SlideAirSlowTime;
+	float32 SlideAirDblHoldTime;
+	float32 SlideAirDblSlowTime;
+	float32 SlideVelDblBoost;
+	uint8 SlideApplyPhysics;
 	type_404 PowerUp;
 	type_416 InitialPowerUp;
 };
 
 struct iAnimSKBHeader
 {
-	u32 Magic;
-	u32 Flags;
-	u16 BoneCount;
-	u16 TimeCount;
-	u32 KeyCount;
+	uint32 Magic;
+	uint32 Flags;
+	uint16 BoneCount;
+	uint16 TimeCount;
+	uint32 KeyCount;
 	type_273 Scale;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_277 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xQCControl
 {
-	f32 world_xmin;
-	f32 world_ymin;
-	f32 world_zmin;
-	f32 world_xmax;
-	f32 world_ymax;
-	f32 world_zmax;
-	f32 world_xsz;
-	f32 world_ysz;
-	f32 world_zsz;
-	f32 scale_x;
-	f32 scale_y;
-	f32 scale_z;
-	f32 center_x;
-	f32 center_y;
-	f32 center_z;
+	float32 world_xmin;
+	float32 world_ymin;
+	float32 world_zmin;
+	float32 world_xmax;
+	float32 world_ymax;
+	float32 world_zmax;
+	float32 world_xsz;
+	float32 world_ysz;
+	float32 world_zsz;
+	float32 scale_x;
+	float32 scale_y;
+	float32 scale_z;
+	float32 center_x;
+	float32 center_y;
+	float32 center_z;
 };
 
 struct zAssetPickupTable
 {
-	u32 Magic;
-	u32 Count;
+	uint32 Magic;
+	uint32 Count;
 };
 
 struct xEntAsset : xBaseAsset
 {
-	u8 flags;
-	u8 subtype;
-	u8 pflags;
-	u8 moreFlags;
-	u8 pad;
-	u32 surfaceID;
+	uint8 flags;
+	uint8 subtype;
+	uint8 pflags;
+	uint8 moreFlags;
+	uint8 pad;
+	uint32 surfaceID;
 	xVec3 ang;
 	xVec3 pos;
 	xVec3 scale;
-	f32 redMult;
-	f32 greenMult;
-	f32 blueMult;
-	f32 seeThru;
-	f32 seeThruSpeed;
-	u32 modelInfoID;
-	u32 animListID;
+	float32 redMult;
+	float32 greenMult;
+	float32 blueMult;
+	float32 seeThru;
+	float32 seeThruSpeed;
+	uint32 modelInfoID;
+	uint32 animListID;
 };
 
 struct zFragShockwave
 {
 	zFragShockwaveAsset* fasset;
-	f32 currSize;
-	f32 currVelocity;
-	f32 deltVelocity;
-	f32 currSpin;
-	f32 deltSpin;
+	float32 currSize;
+	float32 currVelocity;
+	float32 deltVelocity;
+	float32 currSpin;
+	float32 deltSpin;
 	type_269 currColor;
 	type_281 deltColor;
 };
@@ -3618,20 +3618,20 @@ struct _tagEmitOffsetPoint
 
 struct zFragShockwaveAsset : zFragAsset
 {
-	u32 modelInfoID;
-	f32 birthRadius;
-	f32 deathRadius;
-	f32 birthVelocity;
-	f32 deathVelocity;
-	f32 birthSpin;
-	f32 deathSpin;
+	uint32 modelInfoID;
+	float32 birthRadius;
+	float32 deathRadius;
+	float32 birthVelocity;
+	float32 deathVelocity;
+	float32 birthSpin;
+	float32 deathSpin;
 	type_27 birthColor;
 	type_45 deathColor;
 };
 
 struct RpWorldSector
 {
-	s32 type;
+	int32 type;
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
@@ -3645,20 +3645,20 @@ struct RpWorldSector
 	RwBBox tightBoundingBox;
 	RpMeshHeader* mesh;
 	RxPipeline* pipeline;
-	u16 matListWindowBase;
-	u16 numVertices;
-	u16 numPolygons;
-	u16 pad;
+	uint16 matListWindowBase;
+	uint16 numVertices;
+	uint16 numPolygons;
+	uint16 pad;
 };
 
 struct xEntNPCAsset
 {
-	s32 npcFlags;
-	s32 npcModel;
-	s32 npcProps;
-	u32 movepoint;
-	u32 taskWidgetPrime;
-	u32 taskWidgetSecond;
+	int32 npcFlags;
+	int32 npcModel;
+	int32 npcProps;
+	uint32 movepoint;
+	uint32 taskWidgetPrime;
+	uint32 taskWidgetSecond;
 };
 
 struct tag_xFile
@@ -3672,9 +3672,9 @@ struct _class_3
 {
 	type_242 base_point;
 	type_252 point;
-	s16 total_points;
-	s16 end_points;
-	f32 arc_height;
+	int16 total_points;
+	int16 end_points;
+	float32 arc_height;
 	xVec3 arc_normal;
 	type_278 thickness;
 	union
@@ -3683,15 +3683,15 @@ struct _class_3
 		_tagLightningRot rot;
 		_tagLightningZeus zeus;
 	};
-	f32 rand_radius;
+	float32 rand_radius;
 };
 
 struct xVec4
 {
-	f32 x;
-	f32 y;
-	f32 z;
-	f32 w;
+	float32 x;
+	float32 y;
+	float32 z;
+	float32 w;
 };
 
 enum zFragType
@@ -3713,27 +3713,27 @@ struct xNearFloorPoly
 	xBox box;
 	xVec3 center;
 	xVec3 facingVec;
-	f32 facingDot;
-	f32 floorDot;
+	float32 facingDot;
+	float32 floorDot;
 	type_274 vert;
-	f32 neardist;
+	float32 neardist;
 	xVec3 nearpt;
-	s32 nearvert;
-	s32 nearedge;
-	u32 oid;
+	int32 nearvert;
+	int32 nearedge;
+	uint32 oid;
 	void* optr;
 	xModelInstance* mptr;
 };
 
 struct xPlatformSplineData
 {
-	s32 nodata;
+	int32 nodata;
 };
 
 struct tri_data_1 : tri_data_0
 {
 	xVec3 loc;
-	f32 yaw;
+	float32 yaw;
 	xCollis* coll;
 };
 
@@ -3742,40 +3742,40 @@ struct xEntShadow
 	xVec3 pos;
 	xVec3 vec;
 	RpAtomic* shadowModel;
-	f32 dst_cast;
+	float32 dst_cast;
 	type_391 radius;
 };
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct zLedgeGrabParams
 {
-	f32 animGrab;
-	f32 zdist;
+	float32 animGrab;
+	float32 zdist;
 	type_264 tranTable;
-	s32 tranCount;
+	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
-	f32 y0det;
-	f32 dydet;
-	f32 r0det;
-	f32 drdet;
-	f32 thdet;
-	f32 rtime;
-	f32 ttime;
-	f32 tmr;
+	float32 y0det;
+	float32 dydet;
+	float32 r0det;
+	float32 drdet;
+	float32 thdet;
+	float32 rtime;
+	float32 ttime;
+	float32 tmr;
 	xVec3 spos;
 	xVec3 epos;
 	xVec3 tpos;
-	s32 nrays;
-	s32 rrand;
-	f32 startrot;
-	f32 endrot;
+	int32 nrays;
+	int32 rrand;
+	float32 startrot;
+	float32 endrot;
 };
 
 struct RpMorphTarget
@@ -3790,14 +3790,14 @@ struct xGroup : xBase
 {
 	xGroupAsset* asset;
 	xBase** item;
-	u32 last_index;
-	s32 flg_group;
+	uint32 last_index;
+	int32 flg_group;
 };
 
 struct xUpdateCullEnt
 {
-	u16 index;
-	s16 groupIndex;
+	uint16 index;
+	int16 groupIndex;
 	type_201 cb;
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
@@ -3805,28 +3805,28 @@ struct xUpdateCullEnt
 
 struct xEntMotionMechData
 {
-	u8 type;
-	u8 flags;
-	u8 sld_axis;
-	u8 rot_axis;
-	f32 sld_dist;
-	f32 sld_tm;
-	f32 sld_acc_tm;
-	f32 sld_dec_tm;
-	f32 rot_dist;
-	f32 rot_tm;
-	f32 rot_acc_tm;
-	f32 rot_dec_tm;
-	f32 ret_delay;
-	f32 post_ret_delay;
+	uint8 type;
+	uint8 flags;
+	uint8 sld_axis;
+	uint8 rot_axis;
+	float32 sld_dist;
+	float32 sld_tm;
+	float32 sld_acc_tm;
+	float32 sld_dec_tm;
+	float32 rot_dist;
+	float32 rot_tm;
+	float32 rot_acc_tm;
+	float32 rot_dec_tm;
+	float32 ret_delay;
+	float32 post_ret_delay;
 };
 
 struct zSurfTextureAnim
 {
-	u16 pad;
-	u16 mode;
-	u32 group;
-	f32 speed;
+	uint16 pad;
+	uint16 mode;
+	uint32 group;
+	float32 speed;
 };
 
 struct xMovePoint : xBase
@@ -3835,16 +3835,16 @@ struct xMovePoint : xBase
 	xVec3* pos;
 	xMovePoint** nodes;
 	xMovePoint* prev;
-	u32 node_wt_sum;
-	u8 on;
+	uint32 node_wt_sum;
+	uint8 on;
 	type_297 pad;
-	f32 delay;
+	float32 delay;
 	xSpline3* spl;
 };
 
 struct zGustData
 {
-	u32 gust_on;
+	uint32 gust_on;
 	type_266 g;
 	type_276 lerp;
 };
@@ -3864,7 +3864,7 @@ struct xCurveAsset
 struct xEntPenData
 {
 	xVec3 top;
-	f32 w;
+	float32 w;
 	xMat4x3 omat;
 };
 
@@ -3889,12 +3889,12 @@ struct TrackPolyData
 	xVec3 center;
 	xMat4x3* mat;
 	xEnt* testEnt;
-	s32 triIndex;
+	int32 triIndex;
 	type_292 vert;
-	f32 neardist;
+	float32 neardist;
 	xVec3 nearpt;
-	s32 nearvert;
-	s32 nearedge;
+	int32 nearvert;
+	int32 nearedge;
 	xEnt* foundEnt;
 };
 
@@ -3902,44 +3902,44 @@ struct xCutsceneMgr : xBase
 {
 	xCutsceneMgrAsset* tasset;
 	xCutscene* csn;
-	u32 stop;
+	uint32 stop;
 	xCutsceneZbufferHack* zhack;
-	f32 oldfov;
+	float32 oldfov;
 };
 
 struct xRay3
 {
 	xVec3 origin;
 	xVec3 dir;
-	f32 min_t;
-	f32 max_t;
-	s32 flags;
+	float32 min_t;
+	float32 max_t;
+	int32 flags;
 };
 
 struct xPEVCyl
 {
-	f32 height;
-	f32 radius;
-	f32 deflection;
+	float32 height;
+	float32 radius;
+	float32 deflection;
 };
 
 struct xPlatformTeeterData
 {
-	f32 itilt;
-	f32 maxtilt;
-	f32 invmass;
+	float32 itilt;
+	float32 maxtilt;
+	float32 invmass;
 };
 
 struct xPlatformMPData
 {
-	s32 nodata;
+	int32 nodata;
 };
 
 struct xCutsceneMgrAsset : xBaseAsset
 {
-	u32 cutsceneAssetID;
-	u32 flags;
-	f32 interpSpeed;
+	uint32 cutsceneAssetID;
+	uint32 flags;
+	float32 interpSpeed;
 	type_431 startTime;
 	type_442 endTime;
 	type_5 emitID;
@@ -3947,21 +3947,21 @@ struct xCutsceneMgrAsset : xBaseAsset
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct xParSys : xBase
 {
 	xParSysAsset* tasset;
-	u32 cmdCount;
+	uint32 cmdCount;
 	xParCmd* cmd;
 	xParSys* parent;
 	xParGroup* group;
-	u8 visible;
+	uint8 visible;
 	RwTexture* txtr_particle;
 };
 
@@ -3974,18 +3974,18 @@ enum RxNodeDefEditable
 
 struct _class_4
 {
-	s32 anim;
-	u32 sndid;
+	int32 anim;
+	uint32 sndid;
 	void* data;
-	f32 time;
+	float32 time;
 };
 
 struct xParInterp
 {
 	type_298 val;
-	u32 interp;
-	f32 freq;
-	f32 oofreq;
+	uint32 interp;
+	float32 freq;
+	float32 oofreq;
 };
 
 enum _tagRumbleType
@@ -4010,31 +4010,31 @@ struct xCutscene
 {
 	xCutsceneInfo* Info;
 	xCutsceneData* Data;
-	u32* TimeChunkOffs;
-	u32* Visibility;
+	uint32* TimeChunkOffs;
+	uint32* Visibility;
 	xCutsceneBreak* BreakList;
 	xCutsceneTime* Play;
 	xCutsceneTime* Stream;
-	u32 Waiting;
-	u32 BadReadPause;
-	f32 BadReadSpeed;
+	uint32 Waiting;
+	uint32 BadReadPause;
+	float32 BadReadSpeed;
 	void* RawBuf;
 	void* AlignBuf;
-	f32 Time;
-	f32 CamTime;
-	u32 PlayIndex;
-	u32 Ready;
-	s32 DataLoading;
-	u32 GotData;
-	u32 ShutDownWait;
-	f32 PlaybackSpeed;
-	u32 Opened;
+	float32 Time;
+	float32 CamTime;
+	uint32 PlayIndex;
+	uint32 Ready;
+	int32 DataLoading;
+	uint32 GotData;
+	uint32 ShutDownWait;
+	float32 PlaybackSpeed;
+	uint32 Opened;
 	tag_xFile File;
-	s32 AsyncID;
+	int32 AsyncID;
 	void* MemBuf;
 	void* MemCurr;
-	u32 SndStarted;
-	u32 SndNumChannel;
+	uint32 SndStarted;
+	uint32 SndNumChannel;
 	type_233 SndChannelReq;
 	type_245 SndAssetID;
 	type_257 SndHandle;
@@ -4061,27 +4061,27 @@ struct xEntOrbitData
 {
 	xVec3 orig;
 	xVec3 c;
-	f32 a;
-	f32 b;
-	f32 p;
-	f32 w;
+	float32 a;
+	float32 b;
+	float32 p;
+	float32 w;
 };
 
 struct xPsyche : RyzMemData
 {
 	xBase* clt_owner;
 	xPSYNote* cb_notice;
-	s32 flg_psyche;
+	int32 flg_psyche;
 	xGoal* goallist;
 	type_60 goalstak;
 	type_82 tmr_stack;
-	s32 staktop;
+	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
-	s32 gid_safegoal;
+	int32 gid_safegoal;
 	type_130 fun_remap;
 	void* userContext;
-	s32 cnt_transLastTimestep;
+	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
 	xBase fakebase;
 };
@@ -4089,28 +4089,28 @@ struct xPsyche : RyzMemData
 struct xMemPool
 {
 	void* FreeList;
-	u16 NextOffset;
-	u16 Flags;
+	uint16 NextOffset;
+	uint16 Flags;
 	void* UsedList;
 	type_6 InitCB;
 	void* Buffer;
-	u16 Size;
-	u16 NumRealloc;
-	u32 Total;
+	uint16 Size;
+	uint16 NumRealloc;
+	uint32 Total;
 };
 
 struct _tagLightningLine
 {
-	f32 unused;
+	float32 unused;
 };
 
 struct zSurfacePropTexAnim
 {
-	u16 mode;
-	f32 speed;
-	f32 frame;
-	u32 group;
-	s32 group_idx;
+	uint16 mode;
+	float32 speed;
+	float32 frame;
+	uint32 group;
+	int32 group_idx;
 	xBase* group_ptr;
 };
 
@@ -4119,24 +4119,24 @@ struct Melee_cbData
 	xEnt* ent;
 	zScene* zsc;
 	xBound* meleeB;
-	s32 hitsomething;
+	int32 hitsomething;
 };
 
 struct xRot
 {
 	xVec3 axis;
-	f32 angle;
+	float32 angle;
 };
 
 struct xIsect
 {
-	u32 flags;
-	f32 penned;
-	f32 contained;
-	f32 lapped;
+	uint32 flags;
+	float32 penned;
+	float32 contained;
+	float32 lapped;
 	xVec3 point;
 	xVec3 norm;
-	f32 dist;
+	float32 dist;
 };
 
 struct zFragGroup
@@ -4148,30 +4148,30 @@ struct analog_data
 {
 	xVec2 offset;
 	xVec2 dir;
-	f32 mag;
-	f32 ang;
+	float32 mag;
+	float32 ang;
 };
 
 struct xSpline3
 {
-	u16 type;
-	u16 flags;
-	u32 N;
-	u32 allocN;
+	uint16 type;
+	uint16 flags;
+	uint32 N;
+	uint32 allocN;
 	xVec3* points;
-	f32* time;
+	float32* time;
 	xVec3* p12;
 	xVec3* bctrl;
-	f32* knot;
+	float32* knot;
 	xCoef3* coef;
-	u32 arcSample;
-	f32* arcLength;
+	uint32 arcSample;
+	float32* arcLength;
 };
 
 struct xClumpCollBSPVertInfo
 {
-	u16 atomIndex;
-	u16 meshVertIndex;
+	uint16 atomIndex;
+	uint16 meshVertIndex;
 };
 
 struct xBox
@@ -4183,12 +4183,12 @@ struct xBox
 struct xEntMotion
 {
 	xEntMotionAsset* asset;
-	u8 type;
-	u8 pad;
-	u16 flags;
-	f32 t;
-	f32 tmr;
-	f32 d;
+	uint8 type;
+	uint8 pad;
+	uint16 flags;
+	float32 t;
+	float32 tmr;
+	float32 d;
 	union
 	{
 		xEntERData er;
@@ -4204,16 +4204,16 @@ struct xEntMotion
 
 struct xListItem_0
 {
-	s32 flg_travFilter;
+	int32 flg_travFilter;
 	NPCConfig* next;
 	NPCConfig* prev;
 };
 
 struct xUpdateCullGroup
 {
-	u32 active;
-	u16 startIndex;
-	u16 endIndex;
+	uint32 active;
+	uint16 startIndex;
+	uint16 endIndex;
 	xGroup* groupObject;
 };
 
@@ -4238,9 +4238,9 @@ union zFragInfo
 
 struct xPlatformAsset
 {
-	u8 type;
-	u8 pad;
-	u16 flags;
+	uint8 type;
+	uint8 pad;
+	uint16 flags;
 	union
 	{
 		xPlatformERData er;
@@ -4262,13 +4262,13 @@ struct xPlatformAsset
 
 struct xPEEntBone
 {
-	u8 flags;
-	u8 type;
-	u8 bone;
-	u8 pad1;
+	uint8 flags;
+	uint8 type;
+	uint8 bone;
+	uint8 pad1;
 	xVec3 offset;
-	f32 radius;
-	f32 deflection;
+	float32 radius;
+	float32 deflection;
 };
 
 enum en_LASSO_EVENT
@@ -4285,9 +4285,9 @@ enum en_LASSO_EVENT
 
 struct xEntMotionAsset
 {
-	u8 type;
-	u8 use_banking;
-	u16 flags;
+	uint8 type;
+	uint8 use_banking;
+	uint16 flags;
 	union
 	{
 		xEntMotionERData er;
@@ -4301,15 +4301,15 @@ struct xEntMotionAsset
 
 struct xPlatformMechData
 {
-	s32 nodata;
+	int32 nodata;
 };
 
 struct xClumpCollBSPTriangle
 {
 	_class_6 v;
-	u8 flags;
-	u8 platData;
-	u16 matIndex;
+	uint8 flags;
+	uint8 platData;
+	uint16 matIndex;
 };
 
 enum RwCameraProjection
@@ -4322,12 +4322,12 @@ enum RwCameraProjection
 
 struct PlayerStreakInfo
 {
-	u32 activated;
-	u32 streakID;
+	uint32 activated;
+	uint32 streakID;
 	xModelTag* tagA;
 	xModelTag* tagB;
-	f32 alphaStart;
-	s32 streakTaper;
+	float32 alphaStart;
+	int32 streakTaper;
 	iColor_tag colA;
 	iColor_tag colB;
 	xVec3 a;
@@ -4336,24 +4336,24 @@ struct PlayerStreakInfo
 
 struct xEntBoulderAsset
 {
-	f32 gravity;
-	f32 mass;
-	f32 bounce;
-	f32 friction;
-	f32 statFric;
-	f32 maxVel;
-	f32 maxAngVel;
-	f32 stickiness;
-	f32 bounceDamp;
-	u32 flags;
-	f32 killtimer;
-	u32 hitpoints;
-	u32 soundID;
-	f32 volume;
-	f32 minSoundVel;
-	f32 maxSoundVel;
-	f32 innerRadius;
-	f32 outerRadius;
+	float32 gravity;
+	float32 mass;
+	float32 bounce;
+	float32 friction;
+	float32 statFric;
+	float32 maxVel;
+	float32 maxAngVel;
+	float32 stickiness;
+	float32 bounceDamp;
+	uint32 flags;
+	float32 killtimer;
+	uint32 hitpoints;
+	uint32 soundID;
+	float32 volume;
+	float32 minSoundVel;
+	float32 maxSoundVel;
+	float32 innerRadius;
+	float32 outerRadius;
 };
 
 enum RxClusterForcePresent
@@ -4365,21 +4365,21 @@ enum RxClusterForcePresent
 
 struct NPCSndQueue
 {
-	u32 sndDirect;
+	uint32 sndDirect;
 	en_NPC_SOUND sndtype;
-	s32 flg_snd;
-	f32 tmr_delay;
-	f32 radius;
+	int32 flg_snd;
+	float32 tmr_delay;
+	float32 radius;
 };
 
 struct zLasso
 {
-	u32 flags;
-	f32 secsTotal;
-	f32 secsLeft;
-	f32 stRadius;
-	f32 tgRadius;
-	f32 crRadius;
+	uint32 flags;
+	float32 secsTotal;
+	float32 secsLeft;
+	float32 stRadius;
+	float32 tgRadius;
+	float32 crRadius;
 	xVec3 stCenter;
 	xVec3 tgCenter;
 	xVec3 crCenter;
@@ -4387,13 +4387,13 @@ struct zLasso
 	xVec3 tgNormal;
 	xVec3 crNormal;
 	xVec3 honda;
-	f32 stSlack;
-	f32 stSlackDist;
-	f32 tgSlack;
-	f32 tgSlackDist;
-	f32 crSlack;
-	f32 currDist;
-	f32 lastDist;
+	float32 stSlack;
+	float32 stSlackDist;
+	float32 tgSlack;
+	float32 tgSlackDist;
+	float32 crSlack;
+	float32 currDist;
+	float32 lastDist;
 	type_303 lastRefs;
 	type_310 reindex;
 	xVec3 anchor;
@@ -4404,8 +4404,8 @@ struct zLasso
 struct xCylinder
 {
 	xVec3 center;
-	f32 r;
-	f32 h;
+	float32 r;
+	float32 h;
 };
 
 struct RwTexture
@@ -4415,8 +4415,8 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_16 name;
 	type_23 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 union RxColorUnion
@@ -4428,37 +4428,37 @@ union RxColorUnion
 struct _tagLightningRot
 {
 	type_350 deg;
-	f32 degrees;
-	f32 height;
+	float32 degrees;
+	float32 height;
 };
 
 struct xPlatformPaddleData
 {
-	s32 startOrient;
-	s32 countOrient;
-	f32 orientLoop;
+	int32 startOrient;
+	int32 countOrient;
+	float32 orientLoop;
 	type_362 orient;
-	u32 paddleFlags;
-	f32 rotateSpeed;
-	f32 accelTime;
-	f32 decelTime;
-	f32 hubRadius;
+	uint32 paddleFlags;
+	float32 rotateSpeed;
+	float32 accelTime;
+	float32 decelTime;
+	float32 hubRadius;
 };
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 struct zEGenerator : zEnt
 {
 	zEGenAsset* zasset;
-	u16 flags;
-	u16 num_dsts;
-	f32 tmr;
+	uint16 flags;
+	uint16 num_dsts;
+	float32 tmr;
 	xAnimFile* afile;
 	xVec3 src_pos;
 	xVec3 dst_pos;
@@ -4478,61 +4478,61 @@ struct zFragParticle
 
 struct xEntSplineData
 {
-	s32 unknown;
+	int32 unknown;
 };
 
 struct zPlayerCarryInfo
 {
 	xEnt* grabbed;
-	u32 grabbedModelID;
+	uint32 grabbedModelID;
 	xMat4x3 spin;
 	xEnt* throwTarget;
 	xEnt* flyingToTarget;
-	f32 minDist;
-	f32 maxDist;
-	f32 minHeight;
-	f32 maxHeight;
-	f32 maxCosAngle;
-	f32 throwMinDist;
-	f32 throwMaxDist;
-	f32 throwMinHeight;
-	f32 throwMaxHeight;
-	f32 throwMaxStack;
-	f32 throwMaxCosAngle;
-	f32 throwTargetRotRate;
-	f32 targetRot;
-	u32 grabTarget;
+	float32 minDist;
+	float32 maxDist;
+	float32 minHeight;
+	float32 maxHeight;
+	float32 maxCosAngle;
+	float32 throwMinDist;
+	float32 throwMaxDist;
+	float32 throwMinHeight;
+	float32 throwMaxHeight;
+	float32 throwMaxStack;
+	float32 throwMaxCosAngle;
+	float32 throwTargetRotRate;
+	float32 targetRot;
+	uint32 grabTarget;
 	xVec3 grabOffset;
-	f32 grabLerpMin;
-	f32 grabLerpMax;
-	f32 grabLerpLast;
-	u32 grabYclear;
-	f32 throwGravity;
-	f32 throwHeight;
-	f32 throwDistance;
-	f32 fruitFloorDecayMin;
-	f32 fruitFloorDecayMax;
-	f32 fruitFloorBounce;
-	f32 fruitFloorFriction;
-	f32 fruitCeilingBounce;
-	f32 fruitWallBounce;
-	f32 fruitLifetime;
+	float32 grabLerpMin;
+	float32 grabLerpMax;
+	float32 grabLerpLast;
+	uint32 grabYclear;
+	float32 throwGravity;
+	float32 throwHeight;
+	float32 throwDistance;
+	float32 fruitFloorDecayMin;
+	float32 fruitFloorDecayMax;
+	float32 fruitFloorBounce;
+	float32 fruitFloorFriction;
+	float32 fruitCeilingBounce;
+	float32 fruitWallBounce;
+	float32 fruitLifetime;
 	xEnt* patLauncher;
 };
 
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct xPlatformPenData
 {
-	s32 nodata;
+	int32 nodata;
 };
 
 enum RpIntersectType
@@ -4548,9 +4548,9 @@ enum RpIntersectType
 
 struct zSurfacePropUVFX
 {
-	s32 mode;
-	f32 rot;
-	f32 rot_spd;
+	int32 mode;
+	float32 rot;
+	float32 rot_spd;
 	type_371 minmax_timer;
 	xVec3 trans;
 	xVec3 trans_spd;
@@ -4568,9 +4568,9 @@ struct xVolume : xBase
 
 struct zSurfColorFX
 {
-	u16 flags;
-	u16 mode;
-	f32 speed;
+	uint16 flags;
+	uint16 mode;
+	float32 speed;
 };
 
 struct _tagiTRCPadInfo
@@ -4581,7 +4581,7 @@ struct _tagiTRCPadInfo
 struct RwSphere
 {
 	RwV3d center;
-	f32 radius;
+	float32 radius;
 };
 
 struct xCoef
@@ -4591,27 +4591,27 @@ struct xCoef
 
 struct xPECircle
 {
-	f32 radius;
-	f32 deflection;
+	float32 radius;
+	float32 deflection;
 	xVec3 dir;
 };
 
 struct xEntMotionPenData
 {
-	u8 flags;
-	u8 plane;
+	uint8 flags;
+	uint8 plane;
 	type_374 pad;
-	f32 len;
-	f32 range;
-	f32 period;
-	f32 phase;
+	float32 len;
+	float32 range;
+	float32 period;
+	float32 phase;
 };
 
 struct zDelayedStreamSound
 {
 	_tagePlayerStreamSnd start;
 	_tagePlayerStreamSnd end;
-	f32 delay;
+	float32 delay;
 };
 
 enum en_NPC_SOUND
@@ -4651,13 +4651,13 @@ struct _class_5
 {
 	type_376 endPoint;
 	xVec3 direction;
-	f32 length;
-	f32 scale;
-	f32 width;
+	float32 length;
+	float32 scale;
+	float32 width;
 	type_405 endParam;
 	type_418 endVel;
 	type_429 paramSpan;
-	f32 arc_height;
+	float32 arc_height;
 	xVec3 arc_normal;
 };
 
@@ -4683,14 +4683,14 @@ struct xParabola
 {
 	xVec3 initPos;
 	xVec3 initVel;
-	f32 gravity;
-	f32 minTime;
-	f32 maxTime;
+	float32 gravity;
+	float32 minTime;
+	float32 maxTime;
 };
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
@@ -4708,34 +4708,34 @@ struct RxObjSpace3DVertex
 	RwV3d objVertex;
 	RxColorUnion c;
 	RwV3d objNormal;
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct xParSysAsset : xBaseAsset
 {
-	u32 type;
-	u32 parentParSysID;
-	u32 textureID;
-	u8 parFlags;
-	u8 priority;
-	u16 maxPar;
-	u8 renderFunc;
-	u8 renderSrcBlendMode;
-	u8 renderDstBlendMode;
-	u8 cmdCount;
-	u32 cmdSize;
+	uint32 type;
+	uint32 parentParSysID;
+	uint32 textureID;
+	uint8 parFlags;
+	uint8 priority;
+	uint16 maxPar;
+	uint8 renderFunc;
+	uint8 renderSrcBlendMode;
+	uint8 renderDstBlendMode;
+	uint8 cmdCount;
+	uint32 cmdSize;
 };
 
 struct xEntMPData
 {
-	f32 curdist;
-	f32 speed;
+	float32 curdist;
+	float32 speed;
 	xMovePoint* dest;
 	xMovePoint* src;
 	xSpline3* spl;
-	f32 dist;
-	u32 padalign;
+	float32 dist;
+	uint32 padalign;
 	xQuat aquat;
 	xQuat bquat;
 };
@@ -4768,29 +4768,29 @@ struct zFragProjectile
 	zFragProjectileAsset* fasset;
 	xModelInstance* model;
 	xParabola path;
-	f32 angVel;
-	f32 t;
-	f32 tColl;
-	s32 numBounces;
-	f32 scale;
-	f32 parentScale;
-	f32 alpha;
+	float32 angVel;
+	float32 t;
+	float32 tColl;
+	int32 numBounces;
+	float32 scale;
+	float32 parentScale;
+	float32 alpha;
 	xVec3 N;
 	xVec3 axis;
 };
 
 struct _tagLightningZeus
 {
-	f32 normal_offset;
-	f32 back_offset;
-	f32 side_offset;
+	float32 normal_offset;
+	float32 back_offset;
+	float32 side_offset;
 };
 
 struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 enum en_npcbtyp
@@ -4806,7 +4806,7 @@ enum en_npcbtyp
 
 struct xPlatformConvBeltData
 {
-	f32 speed;
+	float32 speed;
 };
 
 struct xModelBucket
@@ -4814,8 +4814,8 @@ struct xModelBucket
 	RpAtomic* Data;
 	RpAtomic* OriginalData;
 	xModelInstance* List;
-	s32 ClipFlags;
-	u32 PipeFlags;
+	int32 ClipFlags;
+	uint32 PipeFlags;
 };
 
 struct RwCamera
@@ -4830,11 +4830,11 @@ struct RwCamera
 	RwV2d viewWindow;
 	RwV2d recipViewWindow;
 	RwV2d viewOffset;
-	f32 nearPlane;
-	f32 farPlane;
-	f32 fogPlane;
-	f32 zScale;
-	f32 zShift;
+	float32 nearPlane;
+	float32 farPlane;
+	float32 fogPlane;
+	float32 zScale;
+	float32 zShift;
 	type_179 frustumPlanes;
 	RwBBox frustumBoundBox;
 	type_194 frustumCorners;
@@ -4842,47 +4842,47 @@ struct RwCamera
 
 struct xListItem_1
 {
-	s32 flg_travFilter;
+	int32 flg_travFilter;
 	xGoal* next;
 	xGoal* prev;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
 struct _tagEmitSphere
 {
-	f32 radius;
+	float32 radius;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct zSurfUVFX
 {
-	s32 mode;
-	f32 rot;
-	f32 rot_spd;
+	int32 mode;
+	float32 rot;
+	float32 rot_spd;
 	xVec3 trans;
 	xVec3 trans_spd;
 	xVec3 scale;
@@ -4908,10 +4908,10 @@ struct xEntMotionERData
 {
 	xVec3 ret_pos;
 	xVec3 ext_dpos;
-	f32 ext_tm;
-	f32 ext_wait_tm;
-	f32 ret_tm;
-	f32 ret_wait_tm;
+	float32 ext_tm;
+	float32 ext_wait_tm;
+	float32 ret_tm;
+	float32 ret_wait_tm;
 };
 
 struct RwLine
@@ -4923,12 +4923,12 @@ struct RwLine
 struct xShadowCache
 {
 	xVec3 pos;
-	f32 radius;
-	u32 entCount;
-	u32 polyCount;
+	float32 radius;
+	uint32 entCount;
+	uint32 polyCount;
 	type_10 polyRayDepth;
-	u16 castOnEnt;
-	u16 castOnPoly;
+	uint16 castOnEnt;
+	uint16 castOnPoly;
 	type_40 ent;
 	type_50 poly;
 };
@@ -4944,7 +4944,7 @@ union RpIntersectData
 
 struct xPlatformFMData
 {
-	s32 nothingyet;
+	int32 nothingyet;
 };
 
 struct RxNodeMethods
@@ -4975,8 +4975,8 @@ enum _tagPadInit
 
 struct xPlatformFallingData
 {
-	f32 speed;
-	u32 bustModelID;
+	float32 speed;
+	uint32 bustModelID;
 };
 
 enum _tagTRCState
@@ -5001,19 +5001,19 @@ type_174 buffer;
 type_205 buffer;
 basic_rect screen_bounds;
 basic_rect default_adjust;
-f32 sHackStuckTimer;
+float32 sHackStuckTimer;
 xVec3 sHackStuckDir;
 xVec3 sHackStuckVel;
-u32 sHackStuckSetDir;
-f32 CATCH_CAPSULE_RAD;
-f32 CATCH_CAPSULE_BIAS;
-f32 sCatchCapsuleTimer;
-f32 stuck_timer;
-f32 not_stuck_timer;
+uint32 sHackStuckSetDir;
+float32 CATCH_CAPSULE_RAD;
+float32 CATCH_CAPSULE_BIAS;
+float32 sCatchCapsuleTimer;
+float32 stuck_timer;
+float32 not_stuck_timer;
 xVec3 stuck_start_loc;
-s32 sPlayerSurfaceType;
+int32 sPlayerSurfaceType;
 xEnt* sDebugPlayerPtr;
-s32 gSpongeBall;
+int32 gSpongeBall;
 type_299 sPlayerSnd;
 type_441 sPlayerSndRand;
 type_186 sPlayerSndID;
@@ -5022,56 +5022,56 @@ type_63 sPlayerRumbleTime;
 type_239 sPlayerSndFxVolume;
 type_385 sPlayerStreamSnd;
 type_134 sPlayerStreamSndRand;
-u32 sCurrentStreamSndID;
+uint32 sCurrentStreamSndID;
 type_432 sPlayerSndStreamVolume;
-f32 sPlayerSndSneakDelay;
-s32 sPlayerDiedLastTime;
-s32 sPlayerIgnoreSound;
-s32 sPlayerAttackInAir;
+float32 sPlayerSndSneakDelay;
+int32 sPlayerDiedLastTime;
+int32 sPlayerIgnoreSound;
+int32 sPlayerAttackInAir;
 type_417 sDelayedSound;
 type_211 sPlayerStreamSndTimer;
-f32 startJump;
-f32 startDouble;
-f32 startBounce;
-f32 minVelmag;
-f32 maxVelmag;
-f32 curVelmag;
-f32 curVelangle;
-s32 surfSlickness;
-f32 surfFriction;
-f32 surfDamping;
-s32 lastSlickness;
+float32 startJump;
+float32 startDouble;
+float32 startBounce;
+float32 minVelmag;
+float32 maxVelmag;
+float32 curVelmag;
+float32 curVelangle;
+int32 surfSlickness;
+float32 surfFriction;
+float32 surfDamping;
+int32 lastSlickness;
 xVec3 lastDeltaPos;
 xVec3 lastFloorNorm;
 xEnt* lastFloorEnt;
-u32 surfSticky;
-f32 surfSlideStart;
-f32 surfSlideStop;
-f32 surfSlickRatio;
-f32 surfSlickTimer;
-f32 surfPeakRatio;
-f32 surfAccelWalk;
-f32 surfAccelRun;
-f32 surfDecelIdle;
-f32 surfDecelSkid;
-f32 surfMaxSpeed;
-f32 surfSlipTimer;
+uint32 surfSticky;
+float32 surfSlideStart;
+float32 surfSlideStop;
+float32 surfSlickRatio;
+float32 surfSlickTimer;
+float32 surfPeakRatio;
+float32 surfAccelWalk;
+float32 surfAccelRun;
+float32 surfDecelIdle;
+float32 surfDecelSkid;
+float32 surfMaxSpeed;
+float32 surfSlipTimer;
 xEnt* sGrabFound;
-s32 sGrabFailed;
-f32 sPlayerCollAdjust;
+int32 sGrabFailed;
+float32 sPlayerCollAdjust;
 zPlayerLassoInfo* sLassoInfo;
 zLasso* sLasso;
 type_38 sHitch;
-s32 sNumHitches;
-f32 sHitchAngle;
-f32 sSwingTimeElapsed;
-s32 sLassoCamLinger;
-s32 sGooKnockedToSafety;
-f32 sGooKnockedTimer;
+int32 sNumHitches;
+float32 sHitchAngle;
+float32 sSwingTimeElapsed;
+int32 sLassoCamLinger;
+int32 sGooKnockedToSafety;
+float32 sGooKnockedTimer;
 xEntBoulder* boulderVehicle;
-f32 bvTimeToIdle;
-s32 boulderRollShouldEnd;
-s32 boulderRollShouldStart;
+float32 bvTimeToIdle;
+int32 boulderRollShouldEnd;
+int32 boulderRollShouldStart;
 zParEmitter* sEmitSpinBubbles;
 zParEmitter* sEmitSundae;
 zParEmitter* sEmitStankBreath;
@@ -5081,19 +5081,19 @@ RpAtomic* sReticleHandModel;
 RpAtomic* sReticleDuhModel;
 RpAtomic* sReticleYeeModel;
 RpAtomic* sReticleHawModel;
-f32 sReticleRot;
-f32 sReticleAlpha;
+float32 sReticleRot;
+float32 sReticleAlpha;
 xMat4x3 sReticleMat;
-s32 sTypeOfTarget;
-f32 sTimeToRetarget;
+int32 sTypeOfTarget;
+float32 sTimeToRetarget;
 xEnt* gReticleTarget;
 RwRaster* sBowlingLaneRast;
 type_328 sBowlBlendLabels;
 type_267 sBowlBlendValues;
-u32 sBowlNumBlendModes;
+uint32 sBowlNumBlendModes;
 type_189 patsock_totals;
-f32 update_dt;
-f32 last_update_dt;
+float32 update_dt;
+float32 last_update_dt;
 xVec3 update_motion;
 xVec3 req_motion;
 xVec3 precollide_motion;
@@ -5102,68 +5102,68 @@ xMat4x3 gPlayerAbsMat;
 xMat4x3 rendermat;
 xMat4x3 sCameraLastMat;
 xVec3 sDriveVel;
-f32 default_player_radius;
+float32 default_player_radius;
 _CurrentPlayer gCurrentPlayer;
 _CurrentPlayer lastgCurrentPlayer;
 type_258 floor_supp;
 type_398 floor_dist;
 type_141 floor_tmr;
 xVec3 floor_safe_vec;
-f32 floor_safe_tmr;
-f32 bbash_start_ht;
-f32 bbash_end_tmr;
-f32 bbash_tmr;
-f32 bbash_vel;
-s32 bbash_hit;
-s32 bbounce_hit;
-f32 bbounce_tmr;
-f32 idle_tmr;
-f32 inact_tmr;
-f32 stun_power_tmr;
-f32 tslide_maxspd;
-f32 tslide_maxspd_tmr;
-f32 tslide_inair_tmr;
-f32 tslide_dbl_tmr;
-u32 tslide_ground;
+float32 floor_safe_tmr;
+float32 bbash_start_ht;
+float32 bbash_end_tmr;
+float32 bbash_tmr;
+float32 bbash_vel;
+int32 bbash_hit;
+int32 bbounce_hit;
+float32 bbounce_tmr;
+float32 idle_tmr;
+float32 inact_tmr;
+float32 stun_power_tmr;
+float32 tslide_maxspd;
+float32 tslide_maxspd_tmr;
+float32 tslide_inair_tmr;
+float32 tslide_dbl_tmr;
+uint32 tslide_ground;
 xVec3 tslide_lastrealvel;
-s32 in_goo;
-s32 lin_goo;
-f32 in_goo_tmr;
-u32 player_hitlist_anim;
-s32 player_hit;
-s32 player_hit_anim;
-u32 player_dead_anim;
-u32 player_idle_anim;
-u32 mount_type;
+int32 in_goo;
+int32 lin_goo;
+float32 in_goo_tmr;
+uint32 player_hitlist_anim;
+int32 player_hit;
+int32 player_hit_anim;
+uint32 player_dead_anim;
+uint32 player_idle_anim;
+uint32 mount_type;
 xEnt* mount_object;
-f32 mount_tmr;
+float32 mount_tmr;
 xVec3 velbase;
 xVec3 velvar;
 xVec3 last_center;
-u32 last_frame;
+uint32 last_frame;
 type_35 default_PowerUp;
-u32 sShouldBubbleBowl;
-f32 sBubbleBowlTimer;
-f32 sBubbleBowlLastWindupTime;
-f32 sBubbleBowlMultiplier;
-u32 sSpatulaGrabbed;
-s32 gWaitingToAutoSave;
+uint32 sShouldBubbleBowl;
+float32 sBubbleBowlTimer;
+float32 sBubbleBowlLastWindupTime;
+float32 sBubbleBowlMultiplier;
+uint32 sSpatulaGrabbed;
+int32 gWaitingToAutoSave;
 _enum sWallJumpResult;
 xVec3 sWallNormal;
 zSurfaceProps* sWallCollisionSurface;
-f32 sTongueDblSpeedMult;
+float32 sTongueDblSpeedMult;
 _class_4 player_talk;
 zNPCLassoInfo* sCurrentNPCInfo;
-u32 sShouldMelee;
-u32 sandyHitMax;
-u32 patrickHitMax;
-u32 sbHitMax;
+uint32 sShouldMelee;
+uint32 sandyHitMax;
+uint32 patrickHitMax;
+uint32 sbHitMax;
 type_241 sandyHitTran;
 type_384 patrickHitTran;
 type_128 sbHitTran;
 zParEmitter* gEmitBFX;
-f32 sLastBubbleEmit;
-f32 sLastInvulnEmit;
+float32 sLastBubbleEmit;
+float32 sLastInvulnEmit;
 xModelTag sSandyLFoot;
 xModelTag sSandyRFoot;
 xModelTag sSandyLHand;
@@ -5190,17 +5190,17 @@ xModelTag sPatrickLElbow;
 xModelTag sPatrickRElbow;
 xModelTag sPatrickMelee;
 type_76 sStreakInfo;
-f32 sRingDelay;
+float32 sRingDelay;
 type_254 SBBBashBones;
 type_393 SBBBounceBones;
-f32 scaleChuck;
+float32 scaleChuck;
 xVec3 offsetChuck;
-f32 sPlayerNPC_KnockBackTime;
-f32 sPlayerNPC_KnockBackVel;
+float32 sPlayerNPC_KnockBackTime;
+float32 sPlayerNPC_KnockBackVel;
 type_197 sTrackHash;
-u32 cchkButtbounce;
-u32 cchkSquish;
-s32 g_flg_loaded;
+uint32 cchkButtbounce;
+uint32 cchkSquish;
+int32 g_flg_loaded;
 zGlobals globals;
 type_300 dont_move;
 type_275 PlayerCollCheckOneEnt;
@@ -5208,7 +5208,7 @@ type_263 PlayerCollCheckOneVillain;
 xVec3 g_O3;
 type_143 zEntPlayer_BoulderVehicleUpdate;
 xVec3 g_Y3;
-s32 xent_entent;
+int32 xent_entent;
 xMat4x3 g_I3;
 type_232 mPad;
 type_347 PlayerBoundUpdate;
@@ -5216,19 +5216,19 @@ type_326 PlayerDepenQuery;
 type_15 zEntPlayer_Render;
 type_209 zEntPlayer_Move;
 type_369 zEntPlayer_Update;
-u8 xClumpColl_FilterFlags;
+uint8 xClumpColl_FilterFlags;
 type_361 nearestTrackCB;
 xQCControl xqc_def_ctrl;
-u32 gEnableRewardsQueue;
-u32 gPTankDisable;
+uint32 gEnableRewardsQueue;
+uint32 gPTankDisable;
 type_397 AtomicDefaultRenderCallBack;
 type_307 xFXBubbleRender;
-f32 dutchman_reticle_radius;
+float32 dutchman_reticle_radius;
 xVec3 dutchman_reticle_center;
 xEnt* dutchman_reticle_ent;
-f32 gShadowObjectRadius;
+float32 gShadowObjectRadius;
 xVec3 g_NY3;
-s32 zcam_bbounce;
+int32 zcam_bbounce;
 type_39 zGustUpdateEnt;
 type_112 zEntPlayer_BoulderVehicleMove;
 type_33 BoulderVEventCB;
@@ -5407,75 +5407,75 @@ xGrid colls_grid;
 type_66 zEntPlayer_BoulderVehicleRender;
 xGlobals* xglobals;
 type_270 gTrcPad;
-u32 gFrameCount;
+uint32 gFrameCount;
 
-u8 zEntPlayerDyingInGoo();
+uint8 zEntPlayerDyingInGoo();
 void zEntPlayer_MinimalRender(zEnt* ent);
-u8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, f32 dt, xVec3& drive_motion);
-void dont_move(xEnt* ent, f32 dt);
+uint8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, float32 dt, xVec3& drive_motion);
+void dont_move(xEnt* ent, float32 dt);
 void zEntPlayer_UnloadSounds();
 void zEntPlayer_LoadSounds();
-void player_sound_hop_load(u32 hopid, s32 hip_or_hop);
+void player_sound_hop_load(uint32 hopid, int32 hip_or_hop);
 void zEntPlayer_UpdateVelocityBlur();
-void PlayerLedgeUpdate(xEnt* ent, xScene* sc, f32 dt);
+void PlayerLedgeUpdate(xEnt* ent, xScene* sc, float32 dt);
 void PlayerLedgeInit(zLedgeGrabParams* ledge, xModelInstance* model);
 void PlayerHackFixBbashMiss(xModelInstance* model);
 void PlayerBeginCollideNoBupdate(xEnt* ent);
-void zEntPlayer_SNDNotifyPlaying(u32 id);
+void zEntPlayer_SNDNotifyPlaying(uint32 id);
 void zEntPlayer_SNDStopStream();
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
-void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, f32 new_pitch);
-void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, f32 new_vol);
-void zEntPlayer_SNDPlayRandom(_tagePlayerSnd player_snd_start, _tagePlayerSnd player_snd_end, f32 delay);
-void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, f32 delay);
-void zEntPlayer_SNDPlayStreamRandom(u32 lower, u32 upper, _tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, f32 delay);
-void zEntPlayer_SNDPlayStream(u32 lower, u32 upper, _tagePlayerStreamSnd player_snd, u32 flags);
-void zEntPlayer_SNDPlayDelayed(f32 seconds);
+void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch);
+void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol);
+void zEntPlayer_SNDPlayRandom(_tagePlayerSnd player_snd_start, _tagePlayerSnd player_snd_end, float32 delay);
+void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, float32 delay);
+void zEntPlayer_SNDPlayStreamRandom(uint32 lower, uint32 upper, _tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, float32 delay);
+void zEntPlayer_SNDPlayStream(uint32 lower, uint32 upper, _tagePlayerStreamSnd player_snd, uint32 flags);
+void zEntPlayer_SNDPlayDelayed(float32 seconds);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
-void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, f32 delay);
+void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 void zEntPlayer_SNDInit();
 void zEntPlayer_LoadCheckPoint();
-void zEntPlayer_StoreCheckPoint(xVec3* pos, f32 rot, u32 initCamID);
-void PlayerRotMatchUpdateEnt(xEnt* ent, f32 dt, void* fdata);
-void PlayerTeeterCheck(f32 dt);
-void PlayerSwingUpdate(xEnt* ent, f32 mag, f32 angle, f32 dt);
-s32 zEntPlayerEventCB(xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* toParamWidget);
+void zEntPlayer_StoreCheckPoint(xVec3* pos, float32 rot, uint32 initCamID);
+void PlayerRotMatchUpdateEnt(xEnt* ent, float32 dt, void* fdata);
+void PlayerTeeterCheck(float32 dt);
+void PlayerSwingUpdate(xEnt* ent, float32 mag, float32 angle, float32 dt);
+int32 zEntPlayerEventCB(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget);
 void zEntPlayerCollTrigger(xEnt* ent, xScene* sc);
-void zEntPlayerCollide(xEnt* ent, xScene* sc, f32 dt);
+void zEntPlayerCollide(xEnt* ent, xScene* sc, float32 dt);
 void PlayerCollsSelectDepen(xEnt* p);
-void CalcCombinedDepen(f32& dx, f32& dz, f32 ax, f32 az, f32 bx, f32 bz, f32 fudge);
-void PlayerCollisTranslate(xCollis* c, f32 x, f32 y, f32 z);
+void CalcCombinedDepen(float32& dx, float32& dz, float32 ax, float32 az, float32 bx, float32 bz, float32 fudge);
+void PlayerCollisTranslate(xCollis* c, float32 x, float32 y, float32 z);
 xEnt* PlayerCollCheckOneVillain(xEnt* ent, void* data);
-u32 CollidePyramidBoxTop(xCollis* coll, xBox* box, f32 height, xSphere* sph);
+uint32 CollidePyramidBoxTop(xCollis* coll, xBox* box, float32 height, xSphere* sph);
 xEnt* PlayerCollCheckOneEnt(xEnt* ent, void* data);
 void zEntPlayerReset(xEnt* ent);
 void zEntPlayerPreReset();
 void zEntPlayerExit();
-void zEntPlayerDriveUpdate(xEnt* p, f32 dt);
+void zEntPlayerDriveUpdate(xEnt* p, float32 dt);
 void zEntPlayerSurfDamageUpdate(xEnt* p);
 void PlayerBoundUpdate(xEnt* ent, xVec3* pos);
-u32 PlayerDepenQuery(xCollis* coll);
-void zEntPlayerFloorUpdate(xEnt* p, f32 dt);
-void zEntPlayerTSlideUpdate(xEnt* p, f32 dt);
+uint32 PlayerDepenQuery(xCollis* coll);
+void zEntPlayerFloorUpdate(xEnt* p, float32 dt);
+void zEntPlayerTSlideUpdate(xEnt* p, float32 dt);
 void SlideTrackUpdate(xEnt* p);
 RpCollisionTriangle* nearestTrackCB(RpCollisionTriangle* collTriangle, void* data);
-void zEntPlayerVelUpdate(xEnt* ent, f32 dt);
+void zEntPlayerVelUpdate(xEnt* ent, float32 dt);
 void zEntPlayerEGenUpdate(xEnt* p, xScene* sc);
-void zEntPlayerJumpUpdate(xEnt* ent, f32 dt);
+void zEntPlayerJumpUpdate(xEnt* ent, float32 dt);
 void zEntPlayerJumpLand(xEnt* ent);
 void zEntPlayerJumpStart(xEnt* ent, zJumpParam* jump);
 void CalcJumpImpulse(zJumpParam* param, zPlayerSettings* settings);
-f32 CalcJumpImpulse_Smooth(f32 g, f32 j, f32 h, f32 Tgc, f32 Tgs);
-void zEntPlayer_GivePatsSocksCurrentLevel(s32 quantity);
+float32 CalcJumpImpulse_Smooth(float32 g, float32 j, float32 h, float32 Tgc, float32 Tgs);
+void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity);
 void zEntPlayer_GiveSpatula();
-void zEntPlayer_GiveHealth(s32 quantity);
-u32 zEntPlayer_MoveInfo();
-s32 zEntPlayer_Damage(xBase* src, u32 damage);
-void zEntPlayer_DamageKnockIntoAir(f32 height);
-s32 zEntPlayer_DamageNPCKnockBack(xBase* src, u32 damage, xVec3* npcPos);
-s32 zEntPlayer_Damage(xBase* src, u32 damage, xVec3* knockback);
-void zEntPlayer_setBoulderMode(u32 mode);
-void zEntPlayer_Move(xEnt* ent, f32 dt, xEntFrame* frame);
+void zEntPlayer_GiveHealth(int32 quantity);
+uint32 zEntPlayer_MoveInfo();
+int32 zEntPlayer_Damage(xBase* src, uint32 damage);
+void zEntPlayer_DamageKnockIntoAir(float32 height);
+int32 zEntPlayer_DamageNPCKnockBack(xBase* src, uint32 damage, xVec3* npcPos);
+int32 zEntPlayer_Damage(xBase* src, uint32 damage, xVec3* knockback);
+void zEntPlayer_setBoulderMode(uint32 mode);
+void zEntPlayer_Move(xEnt* ent, float32 dt, xEntFrame* frame);
 void zEntPlayer_Render(zEnt* ent);
 void zEntPlayerCheckShoePop();
 void zEntPlayerUpdateModel();
@@ -5485,215 +5485,215 @@ void zEntPlayer_BubbleBowlLaneRender(zEnt* ent);
 void zEntPlayer_ShadowModelDisable();
 void zEntPlayer_ShadowModelEnable();
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher);
-void zEntPlayer_CheckCritterContact(xEnt* player, f32 dt);
-void zEntPlayer_Update(xEnt* ent, xScene* sc, f32 dt);
-xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, s32* failed);
-s32 zEntPlayerKnockToSafety(xEnt* ent);
-void zEntPlayer_PredictPos(xVec3* pos, f32 timeIntoFuture, f32 leadFactor, s32 useTurn);
-void zEntPlayer_PredictionUpdate(xEnt* ent, f32 dt);
-void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, f32 dt);
+void zEntPlayer_CheckCritterContact(xEnt* player, float32 dt);
+void zEntPlayer_Update(xEnt* ent, xScene* sc, float32 dt);
+xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, int32* failed);
+int32 zEntPlayerKnockToSafety(xEnt* ent);
+void zEntPlayer_PredictPos(xVec3* pos, float32 timeIntoFuture, float32 leadFactor, int32 useTurn);
+void zEntPlayer_PredictionUpdate(xEnt* ent, float32 dt);
+void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, float32 dt);
 void zEntPlayer_BoulderVehicleMove(xEntFrame* frame);
 void zEntPlayer_BoulderVehicleRender();
-s32 BoulderVEventCB(xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* toParamWidget);
+int32 BoulderVEventCB(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget);
 void getPadDefl(_tagPadAnalog* stick, xVec2* v);
-void zEntPlayer_SpringboardFX(xEnt* ent, f32 dt);
+void zEntPlayer_SpringboardFX(xEnt* ent, float32 dt);
 void zEntPlayer_StreakFX(xEnt* ent);
 void zEntPlayer_Load();
 void zEntPlayer_Init(xEnt* ent, xEntAsset* asset);
 void load_player_ini();
-s32 load_talk_filter(u8* filter, xModelAssetParam* params, u32 params_size, s32 max_size);
-s32 zEntPlayer_IsSneaking();
-s32 CheckObjectAgainstMeleeBound(xEnt* cbent, void* cbdata);
-s32 MeleeAttackBoundCollide(xEnt* ent, zScene* zsc, xBound* meleeB);
-u32 StunRadiusCB();
-u32 StunStartFallCB();
-u32 BubbleBounceContrails(xAnimSingle* single);
-u32 BubbleBashContrails(xAnimSingle* single);
-u32 StunBubbleTrail(xAnimSingle* single);
-u32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
-u32 LassoSwingGroundedCB();
-u32 LassoSwingCB(xAnimSingle* anim);
-u32 LassoSwingTossCB();
-u32 LassoSwingGroundedBeginCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
-u32 LassoSwingBeginCB(void* object);
-u32 LassoSwingReleaseCheck();
-u32 LassoSwingBeginCheck();
-u32 LassoSwingGroundedBeginCheck();
-u32 LassoStopCB();
-u32 SpatulaMeleeStopCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
-u32 MeleeStopCB();
-u32 LassoYankCB();
-u32 LassoDestroyCB();
-u32 LassoFlyCB(void* object);
-u32 LassoThrowCB(void* object);
-u32 LassoStartCB(void* object);
-u32 MeleeCB();
-u32 JumpMeleeCB();
-u32 LassoFailRunSlipCheck();
-u32 LassoFailRunOutOfWorldCheck();
-u32 LassoFailRunCheck();
-u32 LassoFailWalkCheck();
-u32 LassoFailIdleCheck();
-u32 LassoFailIdleSlipCheck();
-u32 LassoReyankCheck();
-u32 LassoDestroyCheck();
-u32 LassoAboutToDestroyCheck();
-u32 LassoStraightToDestroyCheck();
-u32 LassoLostTargetCheck();
-u32 LassoStartCheck();
-u32 MeleeCheck(xAnimSingle* anim);
+int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_size, int32 max_size);
+int32 zEntPlayer_IsSneaking();
+int32 CheckObjectAgainstMeleeBound(xEnt* cbent, void* cbdata);
+int32 MeleeAttackBoundCollide(xEnt* ent, zScene* zsc, xBound* meleeB);
+uint32 StunRadiusCB();
+uint32 StunStartFallCB();
+uint32 BubbleBounceContrails(xAnimSingle* single);
+uint32 BubbleBashContrails(xAnimSingle* single);
+uint32 StunBubbleTrail(xAnimSingle* single);
+uint32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
+uint32 LassoSwingGroundedCB();
+uint32 LassoSwingCB(xAnimSingle* anim);
+uint32 LassoSwingTossCB();
+uint32 LassoSwingGroundedBeginCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
+uint32 LassoSwingBeginCB(void* object);
+uint32 LassoSwingReleaseCheck();
+uint32 LassoSwingBeginCheck();
+uint32 LassoSwingGroundedBeginCheck();
+uint32 LassoStopCB();
+uint32 SpatulaMeleeStopCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
+uint32 MeleeStopCB();
+uint32 LassoYankCB();
+uint32 LassoDestroyCB();
+uint32 LassoFlyCB(void* object);
+uint32 LassoThrowCB(void* object);
+uint32 LassoStartCB(void* object);
+uint32 MeleeCB();
+uint32 JumpMeleeCB();
+uint32 LassoFailRunSlipCheck();
+uint32 LassoFailRunOutOfWorldCheck();
+uint32 LassoFailRunCheck();
+uint32 LassoFailWalkCheck();
+uint32 LassoFailIdleCheck();
+uint32 LassoFailIdleSlipCheck();
+uint32 LassoReyankCheck();
+uint32 LassoDestroyCheck();
+uint32 LassoAboutToDestroyCheck();
+uint32 LassoStraightToDestroyCheck();
+uint32 LassoLostTargetCheck();
+uint32 LassoStartCheck();
+uint32 MeleeCheck(xAnimSingle* anim);
 void zEntPlayer_LassoNotify(en_LASSO_EVENT event);
-u32 PatrickGrabThrowCB(void* object);
+uint32 PatrickGrabThrowCB(void* object);
 xEnt* GetPatrickTarget(xEnt* ent);
 void zEntPlayerSpeakStop();
-void zEntPlayerSpeakStart(u32 sndid, s32 anim);
-void speak_update(f32 dt);
-u32 TalkDoneCheck(xAnimTransition* tran);
-u32 TalkCheck(xAnimTransition* tran);
-u32 PatrickGrabCB();
-u32 PatrickMeleeCB();
-u32 PatrickStunCheck();
-u32 PatrickAttackCheck();
-u32 PatrickGrabThrow();
-u32 PatrickGrabKill();
-u32 PatrickGrabFailed();
-u32 PatrickGrabCheck();
-u32 LedgeFinishCB();
-u32 LedgeGrabCB(void* object);
-u32 LedgeGrabCheck();
-u32 TrackPrefallJumpCheck();
-u32 TrackFallCB();
-u32 TrackFallCheck();
-u32 NoslideTrackCheck();
-u32 NoslideTrackCB();
-u32 SlideTrackCB();
-u32 SlideTrackCheck();
-u32 BoulderRollDoneCB();
-u32 BoulderRollCB();
-u32 BoulderRollWindupCB();
-u32 BoulderRollCheck();
-u32 BoulderRollIdleCheck();
-u32 BoulderRollMoveCheck();
-u32 FallCheck(xAnimSingle* anim);
-u32 TongueDblSpinCB(xAnimSingle* anim);
-u32 TongueDblJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
-u32 DblJumpCB();
-u32 DblJumpCheck();
-u32 BounceStopLCopterCB();
-u32 BounceCB();
-u32 BounceCheck();
-u32 JumpApexCheck(xAnimSingle* anim);
-u32 JumpCB();
-u32 JumpCheck();
-u32 WallJumpLandFlightCallback();
-u32 WallJumpLandFlightCheck();
-u32 WallJumpFlightLandCallback();
-u32 WallJumpFlightLandCheck();
-u32 WallJumpCallback();
-u32 WallJumpLaunchCallback();
-u32 WallJumpLaunchCheck();
+void zEntPlayerSpeakStart(uint32 sndid, int32 anim);
+void speak_update(float32 dt);
+uint32 TalkDoneCheck(xAnimTransition* tran);
+uint32 TalkCheck(xAnimTransition* tran);
+uint32 PatrickGrabCB();
+uint32 PatrickMeleeCB();
+uint32 PatrickStunCheck();
+uint32 PatrickAttackCheck();
+uint32 PatrickGrabThrow();
+uint32 PatrickGrabKill();
+uint32 PatrickGrabFailed();
+uint32 PatrickGrabCheck();
+uint32 LedgeFinishCB();
+uint32 LedgeGrabCB(void* object);
+uint32 LedgeGrabCheck();
+uint32 TrackPrefallJumpCheck();
+uint32 TrackFallCB();
+uint32 TrackFallCheck();
+uint32 NoslideTrackCheck();
+uint32 NoslideTrackCB();
+uint32 SlideTrackCB();
+uint32 SlideTrackCheck();
+uint32 BoulderRollDoneCB();
+uint32 BoulderRollCB();
+uint32 BoulderRollWindupCB();
+uint32 BoulderRollCheck();
+uint32 BoulderRollIdleCheck();
+uint32 BoulderRollMoveCheck();
+uint32 FallCheck(xAnimSingle* anim);
+uint32 TongueDblSpinCB(xAnimSingle* anim);
+uint32 TongueDblJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* object);
+uint32 DblJumpCB();
+uint32 DblJumpCheck();
+uint32 BounceStopLCopterCB();
+uint32 BounceCB();
+uint32 BounceCheck();
+uint32 JumpApexCheck(xAnimSingle* anim);
+uint32 JumpCB();
+uint32 JumpCheck();
+uint32 WallJumpLandFlightCallback();
+uint32 WallJumpLandFlightCheck();
+uint32 WallJumpFlightLandCallback();
+uint32 WallJumpFlightLandCheck();
+uint32 WallJumpCallback();
+uint32 WallJumpLaunchCallback();
+uint32 WallJumpLaunchCheck();
 void DoWallJumpCheck();
-u32 StopLCopterCB();
-u32 LCopterCB(void* object);
-u32 LCopterCheck();
-u32 SpatulaGrabStopCB();
-u32 SpatulaGrabCB(void* object);
-s32 zEntPlayer_InBossBattle();
-u32 SpatulaGrabCheck();
-u32 DefeatedCB();
-u32 Defeated05Check(xAnimTransition* tran);
-u32 Defeated04Check(xAnimTransition* tran);
-u32 Defeated03Check(xAnimTransition* tran);
-u32 Defeated02Check(xAnimTransition* tran);
-u32 Defeated01Check(xAnimTransition* tran);
-u32 Hit05CB();
-u32 Hit05Check();
-u32 Hit04CB();
-u32 Hit04Check();
-u32 Hit03CB();
-u32 Hit03Check();
-u32 Hit02CB();
-u32 Hit02Check();
-u32 Hit01CB();
-u32 Hit01Check();
-u32 GooDeathCB();
-u32 GooCheck();
-u32 BbowlRecoverRunSlipCheck(xAnimSingle* anim);
-u32 BbowlRecoverRunOutOfWorldCheck(xAnimSingle* anim);
-u32 BbowlRecoverRunVictoryCheck(xAnimSingle* anim);
-u32 BbowlRecoverRunScaredCheck(xAnimSingle* anim);
-u32 BbowlRecoverRunCheck(xAnimSingle* anim);
-u32 BbowlRecoverWalkCheck(xAnimSingle* anim);
-u32 BbowlTossEndCB();
-u32 BbowlWindupEndCheck(xAnimSingle* anim);
-u32 BbowlCB();
-u32 BbowlCheck();
-u32 BBounceToJumpCB();
-u32 BBounceToJumpCheck();
-u32 BBounceStrikeCB();
-u32 BBounceStrikeCheck();
-u32 BBounceAttackCB();
-u32 BubbleBounceCB();
-u32 BubbleBounceCheck();
-u32 BBashToJumpCheck();
-u32 BBashStrikeCB();
-u32 BBashStrikeCheck();
-u32 BubbleBashCB();
-u32 BubbleBashCheck();
-u32 BubbleSpinCB(xAnimSingle* anim);
-u32 BubbleSpinCheck();
-u32 SandyLandCB();
-u32 LandSlipRunCallback();
-u32 LandCallback();
-u32 LandNoTrackSlipIdleCheck();
-u32 LandNoTrackSlipRunCheck();
-u32 LandNoTrackFastCheck();
-u32 LandSlipRunCheck();
-u32 LandSlipIdleCheck();
-u32 LandNoTrackWalkCheck();
-u32 LandFastCheck();
-u32 LandWalkCheck();
-u32 LandRunCheck();
-u32 LandHighCheck();
-u32 LandNoTrackCheck();
-u32 LandTrackCheck();
-u32 LandCheck();
-u32 InactiveFinishedCheck();
-u32 InactiveCB();
-u32 InactiveCheck(xAnimTransition* tran);
-u32 IdleCB();
-u32 NoSlipCB();
-u32 SlipRunCB();
-u32 AnyStopCheck();
-u32 AnyMoveCheck();
-u32 IdleSlipCheck();
-u32 IdleScaredCheck();
-u32 IdleVictoryCheck();
-u32 IdleStoicCheck();
-u32 IdleCheck();
-u32 WalkScaredCheck();
-u32 WalkVictoryCheck();
-u32 WalkStoicCheck();
-u32 WalkCheck();
-u32 RunOutOfWorldCheck();
-u32 RunSlipCheck();
-u32 RunVictoryCheck();
-u32 RunScaredCheck();
-u32 RunStoicCheck();
-u32 RunAnyCheck();
+uint32 StopLCopterCB();
+uint32 LCopterCB(void* object);
+uint32 LCopterCheck();
+uint32 SpatulaGrabStopCB();
+uint32 SpatulaGrabCB(void* object);
+int32 zEntPlayer_InBossBattle();
+uint32 SpatulaGrabCheck();
+uint32 DefeatedCB();
+uint32 Defeated05Check(xAnimTransition* tran);
+uint32 Defeated04Check(xAnimTransition* tran);
+uint32 Defeated03Check(xAnimTransition* tran);
+uint32 Defeated02Check(xAnimTransition* tran);
+uint32 Defeated01Check(xAnimTransition* tran);
+uint32 Hit05CB();
+uint32 Hit05Check();
+uint32 Hit04CB();
+uint32 Hit04Check();
+uint32 Hit03CB();
+uint32 Hit03Check();
+uint32 Hit02CB();
+uint32 Hit02Check();
+uint32 Hit01CB();
+uint32 Hit01Check();
+uint32 GooDeathCB();
+uint32 GooCheck();
+uint32 BbowlRecoverRunSlipCheck(xAnimSingle* anim);
+uint32 BbowlRecoverRunOutOfWorldCheck(xAnimSingle* anim);
+uint32 BbowlRecoverRunVictoryCheck(xAnimSingle* anim);
+uint32 BbowlRecoverRunScaredCheck(xAnimSingle* anim);
+uint32 BbowlRecoverRunCheck(xAnimSingle* anim);
+uint32 BbowlRecoverWalkCheck(xAnimSingle* anim);
+uint32 BbowlTossEndCB();
+uint32 BbowlWindupEndCheck(xAnimSingle* anim);
+uint32 BbowlCB();
+uint32 BbowlCheck();
+uint32 BBounceToJumpCB();
+uint32 BBounceToJumpCheck();
+uint32 BBounceStrikeCB();
+uint32 BBounceStrikeCheck();
+uint32 BBounceAttackCB();
+uint32 BubbleBounceCB();
+uint32 BubbleBounceCheck();
+uint32 BBashToJumpCheck();
+uint32 BBashStrikeCB();
+uint32 BBashStrikeCheck();
+uint32 BubbleBashCB();
+uint32 BubbleBashCheck();
+uint32 BubbleSpinCB(xAnimSingle* anim);
+uint32 BubbleSpinCheck();
+uint32 SandyLandCB();
+uint32 LandSlipRunCallback();
+uint32 LandCallback();
+uint32 LandNoTrackSlipIdleCheck();
+uint32 LandNoTrackSlipRunCheck();
+uint32 LandNoTrackFastCheck();
+uint32 LandSlipRunCheck();
+uint32 LandSlipIdleCheck();
+uint32 LandNoTrackWalkCheck();
+uint32 LandFastCheck();
+uint32 LandWalkCheck();
+uint32 LandRunCheck();
+uint32 LandHighCheck();
+uint32 LandNoTrackCheck();
+uint32 LandTrackCheck();
+uint32 LandCheck();
+uint32 InactiveFinishedCheck();
+uint32 InactiveCB();
+uint32 InactiveCheck(xAnimTransition* tran);
+uint32 IdleCB();
+uint32 NoSlipCB();
+uint32 SlipRunCB();
+uint32 AnyStopCheck();
+uint32 AnyMoveCheck();
+uint32 IdleSlipCheck();
+uint32 IdleScaredCheck();
+uint32 IdleVictoryCheck();
+uint32 IdleStoicCheck();
+uint32 IdleCheck();
+uint32 WalkScaredCheck();
+uint32 WalkVictoryCheck();
+uint32 WalkStoicCheck();
+uint32 WalkCheck();
+uint32 RunOutOfWorldCheck();
+uint32 RunSlipCheck();
+uint32 RunVictoryCheck();
+uint32 RunScaredCheck();
+uint32 RunStoicCheck();
+uint32 RunAnyCheck();
 void InvReset();
-void PlayerAbsControl(xEnt* ent, f32 x, f32 z, f32 dt);
-void TurnToFace(xEnt* ent, xVec3* target, f32 speedLimit, f32 dt);
-void DampenControls(f32* angle, f32* mag, f32 x, f32 y);
-void SetPlayerKillsVillainTimer(f32 time);
-void TellPlayerVillainIsNear(f32 visnear);
+void PlayerAbsControl(xEnt* ent, float32 x, float32 z, float32 dt);
+void TurnToFace(xEnt* ent, xVec3* target, float32 speedLimit, float32 dt);
+void DampenControls(float32* angle, float32* mag, float32 x, float32 y);
+void SetPlayerKillsVillainTimer(float32 time);
+void TellPlayerVillainIsNear(float32 visnear);
 void zEntPlayerControlOff(zControlOwner owner);
 void zEntPlayerControlOn(zControlOwner owner);
-void zEntPlayer_SpawnWandBubbles(xVec3* center, u32 count);
+void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count);
 
 // zEntPlayerDyingInGoo__Fv
 // Start address: 0x13da50
-u8 zEntPlayerDyingInGoo()
+uint8 zEntPlayerDyingInGoo()
 {
 }
 
@@ -5701,7 +5701,7 @@ u8 zEntPlayerDyingInGoo()
 // Start address: 0x13da60
 void zEntPlayer_MinimalRender(zEnt* ent)
 {
-	f32 reticle_order;
+	float32 reticle_order;
 	xVec3& loc;
 	xVec3 cam_offset;
 	xVec3 reticle_offset;
@@ -5709,21 +5709,21 @@ void zEntPlayer_MinimalRender(zEnt* ent)
 
 // zEntPlayer_MinimalUpdate__FP4xEntP6xScenefR5xVec3
 // Start address: 0x13dbd0
-u8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, f32 dt, xVec3& drive_motion)
+uint8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, float32 dt, xVec3& drive_motion)
 {
-	u8 stop_the_madness;
+	uint8 stop_the_madness;
 	xVec3 suboldpos;
 	type_154 old_move;
 	xVec3 req_motion;
 	xVec3 predrive_loc;
 	xVec3& floor_norm;
-	f32 ndotm;
+	float32 ndotm;
 	xCollis* fcoll;
 }
 
 // dont_move__FP4xEntP6xScenefP9xEntFrame
 // Start address: 0x13dfb0
-void dont_move(xEnt* ent, f32 dt)
+void dont_move(xEnt* ent, float32 dt)
 {
 }
 
@@ -5737,15 +5737,15 @@ void zEntPlayer_UnloadSounds()
 // Start address: 0x13e0c0
 void zEntPlayer_LoadSounds()
 {
-	u32 bufsize;
+	uint32 bufsize;
 	void* info;
 }
 
 // player_sound_hop_load__FUii
 // Start address: 0x13e170
-void player_sound_hop_load(u32 hopid, s32 hip_or_hop)
+void player_sound_hop_load(uint32 hopid, int32 hip_or_hop)
 {
-	s32 t;
+	long32 t;
 }
 
 // zEntPlayer_UpdateVelocityBlur__Fv
@@ -5753,33 +5753,33 @@ void player_sound_hop_load(u32 hopid, s32 hip_or_hop)
 void zEntPlayer_UpdateVelocityBlur()
 {
 	xVec3& vel;
-	f32 start_vel2;
-	f32 peak_vel2;
-	f32 blur;
-	f32 max_blur;
-	f32 peak_vel;
-	f32 start_vel;
+	float32 start_vel2;
+	float32 peak_vel2;
+	float32 blur;
+	float32 max_blur;
+	float32 peak_vel;
+	float32 start_vel;
 }
 
 // PlayerLedgeUpdate__FP4xEntP6xScenef
 // Start address: 0x13e320
-void PlayerLedgeUpdate(xEnt* ent, xScene* sc, f32 dt)
+void PlayerLedgeUpdate(xEnt* ent, xScene* sc, float32 dt)
 {
 	zLedgeGrabParams* ledge;
-	f32 tnext;
-	f32 s;
+	float32 tnext;
+	float32 s;
 	xMat4x3 tmpmat;
-	f32 animTime;
-	f32 timelerp;
-	f32 animDiffZ;
-	s32 sidx;
-	f32 sfactor;
-	f32 sscale;
+	float32 animTime;
+	float32 timelerp;
+	float32 animDiffZ;
+	int32 sidx;
+	float32 sfactor;
+	float32 sscale;
 	xNearFloorPoly nfpoly;
-	s32 chknum;
+	int32 chknum;
 	xSurface* surface;
-	f32 neardx;
-	f32 neardz;
+	float32 neardx;
+	float32 neardz;
 	xRay3 groundray;
 	xCollis groundcoll;
 	xVec3 bpos;
@@ -5790,7 +5790,7 @@ void PlayerLedgeUpdate(xEnt* ent, xScene* sc, f32 dt)
 // Start address: 0x13f260
 void PlayerLedgeInit(zLedgeGrabParams* ledge, xModelInstance* model)
 {
-	s32 i;
+	int32 i;
 	xAnimState* idle;
 	xAnimState* grab;
 	type_102 tran;
@@ -5801,12 +5801,12 @@ void PlayerLedgeInit(zLedgeGrabParams* ledge, xModelInstance* model)
 // Start address: 0x13f4a0
 void PlayerHackFixBbashMiss(xModelInstance* model)
 {
-	s32 i;
+	int32 i;
 	xAnimState* astate;
 	type_163 tran;
 	iAnimSKBHeader* skb;
 	type_243 tranList;
-	s32 tranCount;
+	int32 tranCount;
 	type_115 bbspeed;
 	type_78 bbadjust;
 	type_410 bbstate;
@@ -5816,13 +5816,13 @@ void PlayerHackFixBbashMiss(xModelInstance* model)
 // Start address: 0x13f660
 void PlayerBeginCollideNoBupdate(xEnt* ent)
 {
-	u8 idx;
+	uint8 idx;
 	xCollis* coll;
 }
 
 // zEntPlayer_SNDNotifyPlaying__FUi
 // Start address: 0x13f770
-void zEntPlayer_SNDNotifyPlaying(u32 id)
+void zEntPlayer_SNDNotifyPlaying(uint32 id)
 {
 }
 
@@ -5840,70 +5840,70 @@ void zEntPlayer_SNDStop(_tagePlayerSnd player_snd)
 
 // zEntPlayer_SNDSetPitch__F14_tagePlayerSndf
 // Start address: 0x13f880
-void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, f32 new_pitch)
+void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
 {
 }
 
 // zEntPlayer_SNDSetVol__F14_tagePlayerSndf
 // Start address: 0x13f8f0
-void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, f32 new_vol)
+void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
 {
 }
 
 // zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf
 // Start address: 0x13f960
-void zEntPlayer_SNDPlayRandom(_tagePlayerSnd player_snd_start, _tagePlayerSnd player_snd_end, f32 delay)
+void zEntPlayer_SNDPlayRandom(_tagePlayerSnd player_snd_start, _tagePlayerSnd player_snd_end, float32 delay)
 {
-	s32 diff;
+	int32 diff;
 	type_392 rand_array;
-	s32 i;
-	s32 i;
-	u32 j;
-	s32 swap;
-	s32 pick_sound;
-	s32 i;
-	s32 possible;
-	u32 returned_snd_id;
-	s32 i;
+	int32 i;
+	int32 i;
+	uint32 j;
+	int32 swap;
+	int32 pick_sound;
+	int32 i;
+	int32 possible;
+	uint32 returned_snd_id;
+	int32 i;
 }
 
 // zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf
 // Start address: 0x13fc90
-void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, f32 delay)
+void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, float32 delay)
 {
-	s32 i;
-	s32 diff;
-	s32 i;
-	s32 i;
+	int32 i;
+	int32 diff;
+	int32 i;
+	int32 i;
 	type_423 rand_array;
-	s32 i;
-	s32 i;
-	u32 j;
-	s32 swap;
-	s32 pick_sound;
-	s32 first_valid;
-	s32 num_valid;
-	s32 i;
-	s32 possible;
+	int32 i;
+	int32 i;
+	uint32 j;
+	int32 swap;
+	int32 pick_sound;
+	int32 first_valid;
+	int32 num_valid;
+	int32 i;
+	int32 possible;
 }
 
 // zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf
 // Start address: 0x1401b0
-void zEntPlayer_SNDPlayStreamRandom(u32 lower, u32 upper, _tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, f32 delay)
+void zEntPlayer_SNDPlayStreamRandom(uint32 lower, uint32 upper, _tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, float32 delay)
 {
 }
 
 // zEntPlayer_SNDPlayStream__FUiUi20_tagePlayerStreamSndUi
 // Start address: 0x1401f0
-void zEntPlayer_SNDPlayStream(u32 lower, u32 upper, _tagePlayerStreamSnd player_snd, u32 flags)
+void zEntPlayer_SNDPlayStream(uint32 lower, uint32 upper, _tagePlayerStreamSnd player_snd, uint32 flags)
 {
 }
 
 // zEntPlayer_SNDPlayDelayed__Ff
 // Start address: 0x140310
-void zEntPlayer_SNDPlayDelayed(f32 seconds)
+void zEntPlayer_SNDPlayDelayed(float32 seconds)
 {
-	s32 i;
+	int32 i;
 }
 
 // zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd
@@ -5914,7 +5914,7 @@ void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd)
 
 // zEntPlayer_SNDPlay__F14_tagePlayerSndf
 // Start address: 0x1404a0
-void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, f32 delay)
+void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay)
 {
 }
 
@@ -5922,14 +5922,14 @@ void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, f32 delay)
 // Start address: 0x1405b0
 void zEntPlayer_SNDInit()
 {
-	s32 player;
-	s32 snd;
-	s32 i;
-	s32 snd;
-	s32 snd;
-	s32 snd;
-	f32 minutes;
-	s32 i;
+	int32 player;
+	int32 snd;
+	int32 i;
+	int32 snd;
+	int32 snd;
+	int32 snd;
+	float32 minutes;
+	int32 i;
 }
 
 // zEntPlayer_LoadCheckPoint__Fv
@@ -5944,74 +5944,74 @@ void zEntPlayer_LoadCheckPoint()
 
 // zEntPlayer_StoreCheckPoint__FP5xVec3fUi
 // Start address: 0x142fd0
-void zEntPlayer_StoreCheckPoint(xVec3* pos, f32 rot, u32 initCamID)
+void zEntPlayer_StoreCheckPoint(xVec3* pos, float32 rot, uint32 initCamID)
 {
 }
 
 // PlayerRotMatchUpdateEnt__FP4xEntP6xScenefPv
 // Start address: 0x143020
-void PlayerRotMatchUpdateEnt(xEnt* ent, f32 dt, void* fdata)
+void PlayerRotMatchUpdateEnt(xEnt* ent, float32 dt, void* fdata)
 {
 	xFFXRotMatchState* rms;
 	xCollis* coll;
-	s32 hit_it;
+	int32 hit_it;
 	xSurface* surf;
-	s32 grounded;
+	int32 grounded;
 	xVec3* fup;
 	xVec3* eup;
 	xVec3 nfup;
 	xVec3 neup;
-	f32 fup_len;
-	f32 eup_len;
-	f32 fdecl;
-	f32 edecl;
+	float32 fup_len;
+	float32 eup_len;
+	float32 fdecl;
+	float32 edecl;
 	xVec3 raxis;
-	f32 rang;
-	f32 dang;
+	float32 rang;
+	float32 dang;
 	xMat4x3 rot;
-	f32 s;
+	float32 s;
 	xVec3* eup;
 	xVec3 neup;
-	f32 eup_len;
+	float32 eup_len;
 	xVec3 raxis;
-	f32 rang;
-	f32 dang;
+	float32 rang;
+	float32 dang;
 	xMat4x3 rot;
 }
 
 // PlayerTeeterCheck__FP4xEntP6xScenef
 // Start address: 0x143510
-void PlayerTeeterCheck(f32 dt)
+void PlayerTeeterCheck(float32 dt)
 {
-	s32 i;
+	int32 i;
 }
 
 // PlayerSwingUpdate__FP4xEntfff
 // Start address: 0x143610
-void PlayerSwingUpdate(xEnt* ent, f32 mag, f32 angle, f32 dt)
+void PlayerSwingUpdate(xEnt* ent, float32 mag, float32 angle, float32 dt)
 {
-	f32 hangDist;
+	float32 hangDist;
 	xVec3 unitHang;
 	xVec3 accel;
 	xVec3 unitDefl;
 	xVec3 unitVel;
-	s32 i;
+	int32 i;
 	xVec3 unitAccel;
-	f32 lerpDiff;
-	f32 newLerp;
-	f32 curFactor;
+	float32 lerpDiff;
+	float32 newLerp;
+	float32 curFactor;
 }
 
 // zEntPlayerEventCB__FP5xBaseP5xBaseUiPCfP5xBase
 // Start address: 0x143ea0
-s32 zEntPlayerEventCB(xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* toParamWidget)
+int32 zEntPlayerEventCB(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget)
 {
-	s32 iParam;
-	s32 num;
-	s32 s;
-	u32 p;
+	int32 iParam;
+	int32 num;
+	int32 s;
+	uint32 p;
 	zEnt* z;
-	s8* astatename;
+	int8* astatename;
 	zShrapnelAsset* shrap;
 	xVec3 currVel;
 }
@@ -6020,8 +6020,8 @@ s32 zEntPlayerEventCB(xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* 
 // Start address: 0x145040
 void zEntPlayerCollTrigger(xEnt* ent, xScene* sc)
 {
-	u32 i;
-	u32 inside;
+	uint32 i;
+	uint32 inside;
 	zEntTrigger* trig;
 	xTriggerAsset* tasset;
 	xIsect isect;
@@ -6036,7 +6036,7 @@ void zEntPlayerCollTrigger(xEnt* ent, xScene* sc)
 
 // zEntPlayerCollide__FP4xEntP6xScenef
 // Start address: 0x1455e0
-void zEntPlayerCollide(xEnt* ent, xScene* sc, f32 dt)
+void zEntPlayerCollide(xEnt* ent, xScene* sc, float32 dt)
 {
 	xCollis* colls;
 	xCollis* cend;
@@ -6052,57 +6052,57 @@ void PlayerCollsSelectDepen(xEnt* p)
 	xCollis* c;
 	xCollis* cend;
 	xVec3 motion_delta;
-	u8 idx;
+	uint8 idx;
 	xSurface* surface;
 	zSurfaceProps* surfaceProperties;
 	xVec3 vec;
 	xCollis* curr;
 	xCollis* coll;
-	f32 h_dot_n;
-	f32 depen_len;
+	float32 h_dot_n;
+	float32 depen_len;
 	xEnt* cent;
 	xSurface* surf;
 	xCollis* cfloor;
 	xCollis* cceil;
 	xSurface* sfloor;
-	f32 floordot;
-	s32 i;
+	float32 floordot;
+	int32 i;
 	type_96 w;
-	s32 num_walls;
+	int32 num_walls;
 	xCollis* first_wall;
 	xCollis* inside_wall;
 	xCollis* cfront;
 	xCollis* crear;
-	f32 dx;
-	f32 dz;
-	f32 dx;
-	f32 dz;
+	float32 dx;
+	float32 dz;
+	float32 dx;
+	float32 dz;
 	xCollis* cleft;
 	xCollis* cright;
-	f32 dx;
-	f32 dz;
-	f32 dx;
-	f32 dz;
+	float32 dx;
+	float32 dz;
+	float32 dx;
+	float32 dz;
 }
 
 // CalcCombinedDepen__FRfRffffff
 // Start address: 0x1466c0
-void CalcCombinedDepen(f32& dx, f32& dz, f32 ax, f32 az, f32 bx, f32 bz, f32 fudge)
+void CalcCombinedDepen(float32& dx, float32& dz, float32 ax, float32 az, float32 bx, float32 bz, float32 fudge)
 {
-	f32 normX;
-	f32 normZ;
-	f32 nddot;
+	float32 normX;
+	float32 normZ;
+	float32 nddot;
 }
 
 // PlayerCollisTranslate__FP7xCollisfff
 // Start address: 0x1468f0
-void PlayerCollisTranslate(xCollis* c, f32 x, f32 y, f32 z)
+void PlayerCollisTranslate(xCollis* c, float32 x, float32 y, float32 z)
 {
-	f32 dx;
-	f32 dy;
-	f32 dz;
-	f32 dist2;
-	f32 s;
+	float32 dx;
+	float32 dy;
+	float32 dz;
+	float32 dist2;
+	float32 s;
 }
 
 // PlayerCollCheckOneVillain__FP4xEntP6xScenePv
@@ -6111,26 +6111,26 @@ xEnt* PlayerCollCheckOneVillain(xEnt* ent, void* data)
 {
 	xEnt* p;
 	xCollis* coll;
-	f32 playerOldRad;
+	float32 playerOldRad;
 	xSphere tmpsph;
 }
 
 // CollidePyramidBoxTop__FP7xCollisP4xBoxfP7xSphere
 // Start address: 0x146e80
-u32 CollidePyramidBoxTop(xCollis* coll, xBox* box, f32 height, xSphere* sph)
+uint32 CollidePyramidBoxTop(xCollis* coll, xBox* box, float32 height, xSphere* sph)
 {
-	f32 dx;
-	f32 dz;
+	float32 dx;
+	float32 dz;
 	xVec3 point;
 	type_388 corner;
 	xVec3 quaddir;
 	xSweptSphere sws;
 	xVec3 start;
 	xVec3 end;
-	f32 normX;
-	f32 normZ;
-	f32 normMag;
-	f32 boxMaxSize;
+	float32 normX;
+	float32 normZ;
+	float32 normMag;
+	float32 boxMaxSize;
 }
 
 // PlayerCollCheckOneEnt__FP4xEntP6xScenePv
@@ -6139,15 +6139,15 @@ xEnt* PlayerCollCheckOneEnt(xEnt* ent, void* data)
 {
 	xEnt* p;
 	xCollis* coll;
-	u32 modl_coll;
+	uint32 modl_coll;
 	xSphere tmpsph;
-	u8 ncolls;
-	u8 idx;
-	f32 rsum;
-	f32 dx;
-	f32 dy;
-	f32 dz;
-	f32 hsqr;
+	uint8 ncolls;
+	uint8 idx;
+	float32 rsum;
+	float32 dx;
+	float32 dy;
+	float32 dz;
+	float32 hsqr;
 }
 
 // zEntPlayerReset__FP4xEnt
@@ -6156,10 +6156,10 @@ void zEntPlayerReset(xEnt* ent)
 {
 	xAnimState* curr;
 	xModelInstance* minst;
-	u32 index;
+	uint32 index;
 	iColor_tag black;
 	iColor_tag clear;
-	u32 i;
+	uint32 i;
 	xEnt* trackEnt;
 	RwTexture* tex;
 }
@@ -6178,16 +6178,16 @@ void zEntPlayerExit()
 
 // zEntPlayerDriveUpdate__FP4xEntP6xScenef
 // Start address: 0x148740
-void zEntPlayerDriveUpdate(xEnt* p, f32 dt)
+void zEntPlayerDriveUpdate(xEnt* p, float32 dt)
 {
 	xCollis* coll;
 	zPlatform* plat;
 	xEntDrive* drv;
 	zPlatform* oplat;
 	xSurface* surf;
-	f32 jmph;
-	u32 superbounce;
-	f32* jmphs;
+	float32 jmph;
+	uint32 superbounce;
+	float32* jmphs;
 	xVec3* jmpdir;
 	xAnimPlay* aplay;
 	xAnimState* spring_state;
@@ -6200,11 +6200,11 @@ void zEntPlayerSurfDamageUpdate(xEnt* p)
 	xCollis* coll;
 	xCollis* cend;
 	xSurface* surf;
-	s32 damaged;
+	int32 damaged;
 	zSurfaceProps* prop;
-	f32 dx;
-	f32 dz;
-	f32 mag;
+	float32 dx;
+	float32 dz;
+	float32 mag;
 	xEnt* cent;
 }
 
@@ -6216,7 +6216,7 @@ void PlayerBoundUpdate(xEnt* ent, xVec3* pos)
 
 // PlayerDepenQuery__FP4xEntP4xEntP6xScenefP7xCollis
 // Start address: 0x149540
-u32 PlayerDepenQuery(xCollis* coll)
+uint32 PlayerDepenQuery(xCollis* coll)
 {
 	xSurface* surf;
 	zSurfaceProps* prop;
@@ -6224,45 +6224,45 @@ u32 PlayerDepenQuery(xCollis* coll)
 
 // zEntPlayerFloorUpdate__FP4xEntP6xScenef
 // Start address: 0x149600
-void zEntPlayerFloorUpdate(xEnt* p, f32 dt)
+void zEntPlayerFloorUpdate(xEnt* p, float32 dt)
 {
 	xCollis* fcoll;
 	xSurface* fsurf;
 	xVec3* vel;
-	f32 velmag;
-	f32 decelmag;
-	f32 slickLerp;
+	float32 velmag;
+	float32 decelmag;
+	float32 slickLerp;
 	xVec3* fnorm;
 	xRay3 ray;
 	xCollis rcoll;
 	xEnt* fent;
-	s32 i;
-	f32 dave;
-	s32 safecount;
-	f32 dmin;
-	f32 dmax;
+	int32 i;
+	float32 dave;
+	int32 safecount;
+	float32 dmin;
+	float32 dmax;
 	xVec3* vel;
 	xVec3 X;
 	xVec3 D;
 	xMat3x3 N_to_Up;
-	f32 ddotm;
-	f32 s;
-	f32 s;
+	float32 ddotm;
+	float32 s;
+	float32 s;
 	type_80 lorigins;
 }
 
 // zEntPlayerTSlideUpdate__FP4xEntP6xScenef
 // Start address: 0x14a4a0
-void zEntPlayerTSlideUpdate(xEnt* p, f32 dt)
+void zEntPlayerTSlideUpdate(xEnt* p, float32 dt)
 {
-	f32 t;
-	f32 s;
-	f32 t;
-	f32 s;
-	f32 tmax;
-	s8 @11329;
-	f32 tmax;
-	s8 @11317;
+	float32 t;
+	float32 s;
+	float32 t;
+	float32 s;
+	float32 tmax;
+	int8 @11329;
+	float32 tmax;
+	int8 @11317;
 }
 
 // SlideTrackUpdate__FP4xEnt
@@ -6275,20 +6275,20 @@ void SlideTrackUpdate(xEnt* p)
 	RpIntersection isect;
 	xVec3* center;
 	TrackPolyData tpoly;
-	s32 triIndex;
-	u32 i;
+	int32 triIndex;
+	uint32 i;
 	xEnt* trackEnt;
 	RwFrame* frame;
 	RpGeometry* geom;
 	RpTriangle* tri;
 	RwTexCoords* tex;
 	RwV3d* vert;
-	u16* triidx;
-	f32 denom;
-	f32 vcenter;
-	f32 dvdx;
-	f32 dvdz;
-	f32 mag;
+	uint16* triidx;
+	float32 denom;
+	float32 vcenter;
+	float32 dvdx;
+	float32 dvdz;
+	float32 mag;
 }
 
 // nearestTrackCB__FP14RpIntersectionP19RpCollisionTrianglefPv
@@ -6296,47 +6296,47 @@ void SlideTrackUpdate(xEnt* p)
 RpCollisionTriangle* nearestTrackCB(RpCollisionTriangle* collTriangle, void* data)
 {
 	TrackPolyData* tpoly;
-	f32 currnear;
-	s32 currvert;
-	s32 curredge;
+	float32 currnear;
+	int32 currvert;
+	int32 curredge;
 	type_56 xformVert;
-	s32 i;
+	int32 i;
 	type_170 pdx;
 	type_181 pdz;
-	f32 numer;
-	f32 denom;
-	f32 t;
-	f32 testdist2;
+	float32 numer;
+	float32 denom;
+	float32 t;
+	float32 testdist2;
 }
 
 // zEntPlayerVelUpdate__FP4xEntP6xScenef
 // Start address: 0x14b9d0
-void zEntPlayerVelUpdate(xEnt* ent, f32 dt)
+void zEntPlayerVelUpdate(xEnt* ent, float32 dt)
 {
 	xVec3* v;
-	f32 min;
-	f32 interp;
-	f32 speedMult;
-	f32 gft;
-	f32 s;
+	float32 min;
+	float32 interp;
+	float32 speedMult;
+	float32 gft;
+	float32 s;
 	xCollis* coll;
 	xEnt* flent;
-	f32 mft;
-	f32 rft;
-	f32 gft;
-	f32 s;
-	f32 aft;
-	f32 s;
-	f32 velen2;
+	float32 mft;
+	float32 rft;
+	float32 gft;
+	float32 s;
+	float32 aft;
+	float32 s;
+	float32 velen2;
 	xCollis* colls;
 	xCollis* coll;
-	s32 i;
-	f32 dh;
-	f32 sft;
-	f32 s;
-	f32 h_dot_v;
-	f32 v_dot_n;
-	f32 s;
+	int32 i;
+	float32 dh;
+	float32 sft;
+	float32 s;
+	float32 h_dot_v;
+	float32 v_dot_n;
+	float32 s;
 	xVec3 boost;
 }
 
@@ -6345,17 +6345,17 @@ void zEntPlayerVelUpdate(xEnt* ent, f32 dt)
 void zEntPlayerEGenUpdate(xEnt* p, xScene* sc)
 {
 	xCollis* earc_coll;
-	u32 i;
+	uint32 i;
 	zEGenerator* eg;
 	xIsect isx;
-	f32 ra;
+	float32 ra;
 }
 
 // zEntPlayerJumpUpdate__FP4xEntP6xScenef
 // Start address: 0x14c1e0
-void zEntPlayerJumpUpdate(xEnt* ent, f32 dt)
+void zEntPlayerJumpUpdate(xEnt* ent, float32 dt)
 {
-	f32 lerp;
+	float32 lerp;
 	xCollis* cfloor;
 }
 
@@ -6363,8 +6363,8 @@ void zEntPlayerJumpUpdate(xEnt* ent, f32 dt)
 // Start address: 0x14c840
 void zEntPlayerJumpLand(xEnt* ent)
 {
-	f32 diff;
-	f32 vol;
+	float32 diff;
+	float32 vol;
 }
 
 // zEntPlayerJumpStart__FP4xEntP10zJumpParam
@@ -6381,25 +6381,25 @@ void CalcJumpImpulse(zJumpParam* param, zPlayerSettings* settings)
 
 // CalcJumpImpulse_Smooth__Ffffff
 // Start address: 0x14cb80
-f32 CalcJumpImpulse_Smooth(f32 g, f32 j, f32 h, f32 Tgc, f32 Tgs)
+float32 CalcJumpImpulse_Smooth(float32 g, float32 j, float32 h, float32 Tgc, float32 Tgs)
 {
-	u32 i;
-	u32 solcnt;
-	f32 A;
-	f32 B;
-	f32 Kc;
-	f32 D;
-	f32 AF;
-	f32 Kbf;
+	uint32 i;
+	uint32 solcnt;
+	float32 A;
+	float32 B;
+	float32 Kc;
+	float32 D;
+	float32 AF;
+	float32 Kbf;
 	type_231 Tm;
-	f32 Tmfound;
+	float32 Tmfound;
 }
 
 // zEntPlayer_GivePatsSocksCurrentLevel__Fi
 // Start address: 0x14ce20
-void zEntPlayer_GivePatsSocksCurrentLevel(s32 quantity)
+void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
 {
-	u32 level;
+	uint32 level;
 }
 
 // zEntPlayer_GiveSpatula__Fi
@@ -6410,22 +6410,22 @@ void zEntPlayer_GiveSpatula()
 
 // zEntPlayer_GiveHealth__Fi
 // Start address: 0x14cf90
-void zEntPlayer_GiveHealth(s32 quantity)
+void zEntPlayer_GiveHealth(int32 quantity)
 {
 }
 
 // zEntPlayer_MoveInfo__Fv
 // Start address: 0x14d000
-u32 zEntPlayer_MoveInfo()
+uint32 zEntPlayer_MoveInfo()
 {
-	u32 animflags;
-	u32 infoflags;
-	s8* nam_ast;
+	uint32 animflags;
+	uint32 infoflags;
+	int8* nam_ast;
 }
 
 // zEntPlayer_Damage__FP5xBaseUi
 // Start address: 0x14d180
-s32 zEntPlayer_Damage(xBase* src, u32 damage)
+int32 zEntPlayer_Damage(xBase* src, uint32 damage)
 {
 	iColor_tag c_inside;
 	iColor_tag c_outside;
@@ -6433,37 +6433,37 @@ s32 zEntPlayer_Damage(xBase* src, u32 damage)
 
 // zEntPlayer_DamageKnockIntoAir__Ff
 // Start address: 0x14dba0
-void zEntPlayer_DamageKnockIntoAir(f32 height)
+void zEntPlayer_DamageKnockIntoAir(float32 height)
 {
 }
 
 // zEntPlayer_DamageNPCKnockBack__FP5xBaseUiP5xVec3
 // Start address: 0x14dcc0
-s32 zEntPlayer_DamageNPCKnockBack(xBase* src, u32 damage, xVec3* npcPos)
+int32 zEntPlayer_DamageNPCKnockBack(xBase* src, uint32 damage, xVec3* npcPos)
 {
-	f32 dx;
-	f32 dz;
-	f32 mag;
+	float32 dx;
+	float32 dz;
+	float32 mag;
 }
 
 // zEntPlayer_Damage__FP5xBaseUiPC5xVec3
 // Start address: 0x14ddb0
-s32 zEntPlayer_Damage(xBase* src, u32 damage, xVec3* knockback)
+int32 zEntPlayer_Damage(xBase* src, uint32 damage, xVec3* knockback)
 {
 }
 
 // zEntPlayer_setBoulderMode__FUi
 // Start address: 0x14de30
-void zEntPlayer_setBoulderMode(u32 mode)
+void zEntPlayer_setBoulderMode(uint32 mode)
 {
 }
 
 // zEntPlayer_Move__FP4xEntP6xScenefP9xEntFrame
 // Start address: 0x14de60
-void zEntPlayer_Move(xEnt* ent, f32 dt, xEntFrame* frame)
+void zEntPlayer_Move(xEnt* ent, float32 dt, xEntFrame* frame)
 {
-	s32 px;
-	s32 pz;
+	int32 px;
+	int32 pz;
 	xVec3 inverseNormal;
 	zPlayerGlobals& p;
 	xVec3 damp;
@@ -6473,7 +6473,7 @@ void zEntPlayer_Move(xEnt* ent, f32 dt, xEntFrame* frame)
 // Start address: 0x14e360
 void zEntPlayer_Render(zEnt* ent)
 {
-	f32 rootZadjust;
+	float32 rootZadjust;
 	RwMatrixTag rootOldMat;
 	xAnimSingle* ablend;
 	xVec3 rootZvec;
@@ -6482,10 +6482,10 @@ void zEntPlayer_Render(zEnt* ent)
 	xVec3 a;
 	xVec3 b;
 	xVec3 wand_center;
-	u32 showShell;
+	uint32 showShell;
 	xModelInstance* minst;
-	u32 index;
-	f32 orderDot;
+	uint32 index;
+	float32 orderDot;
 	xModelInstance* minst;
 }
 
@@ -6497,8 +6497,8 @@ void zEntPlayerCheckShoePop()
 	xModelInstance** mlist;
 	type_342 bone_index;
 	type_370 model_index;
-	s32 i;
-	s32 bone;
+	int32 i;
+	int32 bone;
 	xModelInstance* m;
 }
 
@@ -6519,19 +6519,19 @@ void zEntPlayerUpdateModelSB()
 	xAnimState* tonguestate;
 	type_3 bone_index;
 	type_64 model_index;
-	s32 i;
-	s32 bone;
-	f32 on_time;
-	f32 off_time;
+	int32 i;
+	int32 bone;
+	float32 on_time;
+	float32 off_time;
 }
 
 // zEntPlayer_ReticleRender__FP4zEnt
 // Start address: 0x14f660
 void zEntPlayer_ReticleRender()
 {
-	f32 size;
-	f32 bounce;
-	f32 bound_radius;
+	float32 size;
+	float32 bounce;
+	float32 bound_radius;
 }
 
 // zEntPlayer_BubbleBowlLaneRender__FP4zEnt
@@ -6540,9 +6540,9 @@ void zEntPlayer_BubbleBowlLaneRender(zEnt* ent)
 {
 	xShadowCache cache;
 	xVec3 center;
-	f32 factor;
+	float32 factor;
 	xMat4x3 matrix;
-	u32 i;
+	uint32 i;
 	xEnt* ep;
 }
 
@@ -6566,142 +6566,142 @@ void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
 
 // zEntPlayer_CheckCritterContact__FP4xEntf
 // Start address: 0x1501c0
-void zEntPlayer_CheckCritterContact(xEnt* player, f32 dt)
+void zEntPlayer_CheckCritterContact(xEnt* player, float32 dt)
 {
-	s32 i;
+	int32 i;
 	xEntCollis* plyrcol;
 	xCollis* colrec;
 	zNPCCommon* npc;
 	xPsyche* psy;
-	f32 tym_inGoal;
-	u32 anid_player;
-	s32 found;
-	s32 k;
-	s32 k;
-	u32 mvinf;
+	float32 tym_inGoal;
+	uint32 anid_player;
+	int32 found;
+	int32 k;
+	int32 k;
+	uint32 mvinf;
 	xVec3 dir_push;
 	xVec3 vel_push;
 	type_178 hashes_pa;
 	type_49 hashes_ss;
-	s8 @10192;
-	s8 @10189;
+	int8 @10192;
+	int8 @10189;
 }
 
 // zEntPlayer_Update__FP4xEntP6xScenef
 // Start address: 0x150740
-void zEntPlayer_Update(xEnt* ent, xScene* sc, f32 dt)
+void zEntPlayer_Update(xEnt* ent, xScene* sc, float32 dt)
 {
-	s32 j;
+	int32 j;
 	xAnimState* astate;
-	f32 mvelx;
-	f32 mvelz;
-	f32 s;
-	u32 total;
+	float32 mvelx;
+	float32 mvelz;
+	float32 s;
+	uint32 total;
 	xEnt* oldTarget;
 	xEnt* oldTarget;
 	xVec3 pos;
 	xAnimSingle* single;
 	xAnimState* astate;
 	xParEmitterCustomSettings info;
-	s32 j;
-	f32 ang;
+	int32 j;
+	float32 ang;
 	zScene* zsc;
 	xParEmitterCustomSettings info;
 	xVec3 vel;
 	xVec3 tmp;
-	f32 rate;
+	float32 rate;
 	xBound slideB;
 	xVec3 normvel;
-	u8* bonelist;
+	uint8* bonelist;
 	xAnimSingle* single;
-	u32 num;
-	u8* bp;
+	uint32 num;
+	uint8* bp;
 	xVec3* posbuf;
 	xVec3* velbuf;
 	xVec3* pp;
 	xVec3* vp;
-	u32 j;
+	uint32 j;
 	xMat4x3 mat;
 	xAnimSingle* single;
 	xAnimState* astate;
 	iColor_tag black;
 	iColor_tag clear;
-	s32 anim_done;
-	u32 i;
-	f32 rad2;
-	f32 radold2;
-	f32 sdist2;
-	f32 sdistold2;
-	f32 ydist;
+	int32 anim_done;
+	uint32 i;
+	float32 rad2;
+	float32 radold2;
+	float32 sdist2;
+	float32 sdistold2;
+	float32 ydist;
 	xEnt* vill;
-	u32 stuckforce;
-	f32 playerVel;
-	f32 actualVel;
+	uint32 stuckforce;
+	float32 playerVel;
+	float32 actualVel;
 	xRay3 testRay;
 	xCollis testColl;
-	f32 old_yvel;
-	s32 num_updates;
-	s32 updidx;
+	float32 old_yvel;
+	int32 num_updates;
+	int32 updidx;
 	xVec3 suboldpos;
 	xVec3 predrive_pos;
 	xFFX* gust_fkt;
 	xVec3 motion;
-	f32 sett;
-	f32 ndotm;
-	f32 sett2;
-	f32 sft;
-	f32 fg;
-	f32 m;
-	f32 fg;
-	f32 s;
-	f32 m;
-	u8 hitting_floor;
-	u8 hitting_wall;
+	float32 sett;
+	float32 ndotm;
+	float32 sett2;
+	float32 sft;
+	float32 fg;
+	float32 m;
+	float32 fg;
+	float32 s;
+	float32 m;
+	uint8 hitting_floor;
+	uint8 hitting_wall;
 	xVec3& player_loc;
-	f32 dist2;
+	float32 dist2;
 	xVec3 driveDist;
 	xCollis bbc;
 	xBox bbox;
-	f32 dist;
-	u32 redo_catchtunnel;
+	float32 dist;
+	uint32 redo_catchtunnel;
 	xVec3 vstart;
 	xVec3 vend;
 	xSweptSphere sws;
-	u32 iter;
+	uint32 iter;
 	type_101 swsredo;
 	xSweptSphere* swscurr;
 	xVec3 totalTan;
-	f32 tandot;
-	f32 catchdot;
-	f32 distremain;
+	float32 tandot;
+	float32 catchdot;
+	float32 distremain;
 	xVec3 deltaremain;
 	xCollis* wcoll;
 	xCollis* gcoll;
-	f32 hdotm;
+	float32 hdotm;
 	xSurface* wsurf;
 	xCollis* fcoll;
 	xBase* b;
-	f32 dummy;
+	float32 dummy;
 	xVec3 pos_rnd;
 	xVec3 vel_rnd;
-	f32 dposx;
-	f32 dposy;
-	f32 dposz;
+	float32 dposx;
+	float32 dposy;
+	float32 dposz;
 	xCollis* ceil;
 	xEnt* destructent;
-	u8 destroyed;
+	uint8 destroyed;
 	xVec3 bashRay;
 	xEntBoulder* boul;
 	xVec3 f;
 	zNPCCommon* npc;
 	xCollis* floor;
 	xEnt* destructent;
-	u8 destroyed;
+	uint8 destroyed;
 	xVec3 bounceRay;
 	zNPCCommon* npc;
-	f32 stunlerp;
-	f32 mag;
-	f32 lerpspeed;
+	float32 stunlerp;
+	float32 mag;
+	float32 lerpspeed;
 	xVec3 delta;
 	xVec3 a;
 	xVec3 b;
@@ -6710,7 +6710,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, f32 dt)
 	iColor_tag streakWandCol;
 	iColor_tag streakWandCol2;
 	xParEmitterCustomSettings info;
-	f32 size;
+	float32 size;
 	xEntBoulder* boul;
 	type_167 tmpStateName;
 	xAnimSingle* playerAnim;
@@ -6721,118 +6721,118 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, f32 dt)
 	xVec3 rotatedLC;
 	xEntBoulder* boul;
 	xMat4x3 targetMat;
-	f32 lerp;
-	f32 bottom;
+	float32 lerp;
+	float32 bottom;
 	zNPCCommon* npc;
 	zNPCCommon* npc;
 	zNPCTiki* tiki;
 	xVec3 tgtpos;
 	xVec3 tempPos;
 	xMat4x3* tgtmat;
-	f32 throwHeightOffset;
+	float32 throwHeightOffset;
 	RwMatrixTag rootOldMat;
 	xMat4x3 tmpMat;
 	xVec3 ax;
-	f32 rads;
-	f32 crs;
-	f32 dot;
+	float32 rads;
+	float32 crs;
+	float32 dot;
 	xMat3x3 rotMat;
 	xMat3x3 hitchMat;
-	s32 hitch;
-	s32 wasCoptering;
-	f32 speed;
-	u32 heliSnd;
+	int32 hitch;
+	int32 wasCoptering;
+	float32 speed;
+	uint32 heliSnd;
 	xModelTag* meleeTag;
 	xBound meleeB;
 	zNPCCommon* npc;
-	f32 dist_sqr;
+	float32 dist_sqr;
 	xVec3 disp;
-	u32 sliding;
+	uint32 sliding;
 	xEnt* oldTarget;
-	f32 currDist_sqr;
-	f32 maxDist_sqr;
-	f32 closestDist_sqr;
+	float32 currDist_sqr;
+	float32 maxDist_sqr;
+	float32 closestDist_sqr;
 	xVec3 toTarget;
 	xEnt* closest;
-	u32 i;
+	uint32 i;
 	xEnt* targent;
 	xNPCBasic* npc;
 	xRay3 ray;
 	xCollis rayCollis;
-	s32 canSwing;
-	s32 i;
+	int32 canSwing;
+	int32 i;
 	xEnt* targent;
-	f32 dist;
+	float32 dist;
 	xVec3 disp;
 	xModelTag* meleeTag;
 	xBound meleeB;
-	u32 streakBubbleSpinID;
+	uint32 streakBubbleSpinID;
 	xEntCollis old_collis;
 }
 
 // zEntPlayer_FindGrabEnt__FP4xEntP6zScenePi
 // Start address: 0x156a50
-xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, s32* failed)
+xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, int32* failed)
 {
-	u32 i;
+	uint32 i;
 	xEnt* grabent;
-	f32 dx;
-	f32 dy;
-	f32 dz;
+	float32 dx;
+	float32 dy;
+	float32 dz;
 	xEntBoulder* boul;
 }
 
 // zEntPlayerKnockToSafety__FP4xEnt
 // Start address: 0x156d00
-s32 zEntPlayerKnockToSafety(xEnt* ent)
+int32 zEntPlayerKnockToSafety(xEnt* ent)
 {
-	f32 diffX;
-	f32 diffY;
-	f32 diffZ;
-	f32 popheight;
-	f32 ttot;
-	f32 velXZ;
+	float32 diffX;
+	float32 diffY;
+	float32 diffZ;
+	float32 popheight;
+	float32 ttot;
+	float32 velXZ;
 }
 
 // zEntPlayer_PredictPos__FP5xVec3ffi
 // Start address: 0x156e90
-void zEntPlayer_PredictPos(xVec3* pos, f32 timeIntoFuture, f32 leadFactor, s32 useTurn)
+void zEntPlayer_PredictPos(xVec3* pos, float32 timeIntoFuture, float32 leadFactor, int32 useTurn)
 {
 	zPlayerGlobals* g;
-	f32 useVel;
-	f32 useAngV;
+	float32 useVel;
+	float32 useAngV;
 	xMat3x3 rotMat;
 }
 
 // zEntPlayer_PredictionUpdate__FP4xEntf
 // Start address: 0x157030
-void zEntPlayer_PredictionUpdate(xEnt* ent, f32 dt)
+void zEntPlayer_PredictionUpdate(xEnt* ent, float32 dt)
 {
 	zPlayerGlobals* g;
-	f32 lastVel;
-	f32 newAngV;
-	f32 r;
+	float32 lastVel;
+	float32 newAngV;
+	float32 r;
 }
 
 // zEntPlayer_BoulderVehicleUpdate__FP4xEntP6xScenef
 // Start address: 0x157340
-void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, f32 dt)
+void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, float32 dt)
 {
 	xEntBoulder* shouldDamagePlayer;
-	u8 chkBackup;
-	u8 penBackup;
+	uint8 chkBackup;
+	uint8 penBackup;
 	xVec2 inputDefl;
 	xEntCollis collis;
-	s32 i;
+	int32 i;
 	xEnt* dyn;
 	xEntBoulder* boul;
-	f32 padDefl;
+	float32 padDefl;
 	xVec3 rotFudge;
-	f32 ang;
+	float32 ang;
 	xMat3x3 rotM;
 	xVec3 heading;
-	f32 angle;
-	f32 mag;
+	float32 angle;
+	float32 mag;
 }
 
 // zEntPlayer_BoulderVehicleMove__FP4xEntP6xScenefP9xEntFrame
@@ -6849,7 +6849,7 @@ void zEntPlayer_BoulderVehicleRender()
 
 // BoulderVEventCB__FP5xBaseP5xBaseUiPCfP5xBase
 // Start address: 0x157cf0
-s32 BoulderVEventCB(xBase* from, xBase* to, u32 toEvent, f32* toParam, xBase* toParamWidget)
+int32 BoulderVEventCB(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget)
 {
 }
 
@@ -6861,20 +6861,20 @@ void getPadDefl(_tagPadAnalog* stick, xVec2* v)
 
 // zEntPlayer_SpringboardFX__FP4xEntf
 // Start address: 0x157fc0
-void zEntPlayer_SpringboardFX(xEnt* ent, f32 dt)
+void zEntPlayer_SpringboardFX(xEnt* ent, float32 dt)
 {
 	xParEmitterCustomSettings info;
-	f32 size;
-	f32 sLastSpringboardBubbleEmit;
+	float32 size;
+	float32 sLastSpringboardBubbleEmit;
 }
 
 // zEntPlayer_StreakFX__FP4xEntf
 // Start address: 0x158180
 void zEntPlayer_StreakFX(xEnt* ent)
 {
-	s32 i;
-	s32 p;
-	s32 cp;
+	int32 i;
+	int32 p;
+	int32 cp;
 }
 
 // zEntPlayer_Load__FP4xEntP7xSerial
@@ -6887,26 +6887,26 @@ void zEntPlayer_Load()
 // Start address: 0x158770
 void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
 {
-	u8 index;
+	uint8 index;
 	xModelInstance* m;
-	s32 i;
-	f32 bbncvtm;
-	u32 bufsize;
+	int32 i;
+	float32 bbncvtm;
+	uint32 bufsize;
 	void* info;
-	s32 i;
+	int32 i;
 	xAnimTable* wettbl;
 	xAnimTable* drytbl;
 	xAnimState* wetstate;
 	xAnimState* drystate;
 	xAnimFile* wetfile;
 	xAnimFile* dryfile;
-	s32 aa;
-	s32 numa;
+	int32 aa;
+	int32 numa;
 	xFFXRotMatchState* rms;
-	u32 trailerHash;
-	u32 i;
+	uint32 trailerHash;
+	uint32 i;
 	xEnt* hitch;
-	s32 drybob_anim_count;
+	int32 drybob_anim_count;
 	type_246 drybob_oldTime;
 	type_210 drybob_chgTime;
 	type_173 drybob_oldData;
@@ -6917,38 +6917,38 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
 // Start address: 0x159aa0
 void load_player_ini()
 {
-	u32 params_size;
+	uint32 params_size;
 	xModelAssetParam* params;
-	u32 params_size;
+	uint32 params_size;
 	xModelAssetParam* params;
-	u32 params_size;
+	uint32 params_size;
 	xModelAssetParam* params;
 }
 
 // load_talk_filter__FPUcP16xModelAssetParamUii
 // Start address: 0x159d90
-s32 load_talk_filter(u8* filter, xModelAssetParam* params, u32 params_size, s32 max_size)
+int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_size, int32 max_size)
 {
-	s32 size;
-	f32* non_choices;
-	s32 found;
-	s32 i;
-	u8 skip;
-	s32 j;
+	int32 size;
+	float32* non_choices;
+	int32 found;
+	int32 i;
+	uint8 skip;
+	int32 j;
 }
 
 // zEntPlayer_IsSneaking__Fv
 // Start address: 0x159eb0
-s32 zEntPlayer_IsSneaking()
+int32 zEntPlayer_IsSneaking()
 {
 }
 
 // CheckObjectAgainstMeleeBound__FP4xEntPv
 // Start address: 0x167bf0
-s32 CheckObjectAgainstMeleeBound(xEnt* cbent, void* cbdata)
+int32 CheckObjectAgainstMeleeBound(xEnt* cbent, void* cbdata)
 {
 	Melee_cbData* data;
-	s32 hitsomething;
+	int32 hitsomething;
 	xEnt* ent;
 	xBound* meleeB;
 	xCollis meleeColl;
@@ -6957,14 +6957,14 @@ s32 CheckObjectAgainstMeleeBound(xEnt* cbent, void* cbdata)
 	iColor_tag c_outside;
 	xEntBoulder* boul;
 	xVec3 f;
-	u32 paddleFlags;
-	u32 worldSpaceNorm;
+	uint32 paddleFlags;
+	uint32 worldSpaceNorm;
 	xRay3 tempray;
 }
 
 // MeleeAttackBoundCollide__FP4xEntP6zSceneP6xBound
 // Start address: 0x168240
-s32 MeleeAttackBoundCollide(xEnt* ent, zScene* zsc, xBound* meleeB)
+int32 MeleeAttackBoundCollide(xEnt* ent, zScene* zsc, xBound* meleeB)
 {
 	Melee_cbData cbdata;
 	xVec3 pos;
@@ -6972,139 +6972,139 @@ s32 MeleeAttackBoundCollide(xEnt* ent, zScene* zsc, xBound* meleeB)
 
 // StunRadiusCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168300
-u32 StunRadiusCB()
+uint32 StunRadiusCB()
 {
 }
 
 // StunStartFallCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1684e0
-u32 StunStartFallCB()
+uint32 StunStartFallCB()
 {
 }
 
 // BubbleBounceContrails__FP11xAnimSingle
 // Start address: 0x1684f0
-u32 BubbleBounceContrails(xAnimSingle* single)
+uint32 BubbleBounceContrails(xAnimSingle* single)
 {
 	xAnimState* astate;
 }
 
 // BubbleBashContrails__FP11xAnimSingle
 // Start address: 0x168590
-u32 BubbleBashContrails(xAnimSingle* single)
+uint32 BubbleBashContrails(xAnimSingle* single)
 {
 	xAnimState* astate;
 }
 
 // StunBubbleTrail__FP11xAnimSingle
 // Start address: 0x168670
-u32 StunBubbleTrail(xAnimSingle* single)
+uint32 StunBubbleTrail(xAnimSingle* single)
 {
 	xAnimState* astate;
 }
 
 // LassoSwingReleaseCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168750
-u32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+uint32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
 {
 }
 
 // LassoSwingGroundedCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168870
-u32 LassoSwingGroundedCB()
+uint32 LassoSwingGroundedCB()
 {
 }
 
 // LassoSwingCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168950
-u32 LassoSwingCB(xAnimSingle* anim)
+uint32 LassoSwingCB(xAnimSingle* anim)
 {
 }
 
 // LassoSwingTossCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1689b0
-u32 LassoSwingTossCB()
+uint32 LassoSwingTossCB()
 {
 }
 
 // LassoSwingGroundedBeginCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168c60
-u32 LassoSwingGroundedBeginCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+uint32 LassoSwingGroundedBeginCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
 {
 }
 
 // LassoSwingBeginCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168cd0
-u32 LassoSwingBeginCB(void* object)
+uint32 LassoSwingBeginCB(void* object)
 {
 	xEnt* ent;
 }
 
 // LassoSwingReleaseCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168ef0
-u32 LassoSwingReleaseCheck()
+uint32 LassoSwingReleaseCheck()
 {
 }
 
 // LassoSwingBeginCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168f90
-u32 LassoSwingBeginCheck()
+uint32 LassoSwingBeginCheck()
 {
 }
 
 // LassoSwingGroundedBeginCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x168fc0
-u32 LassoSwingGroundedBeginCheck()
+uint32 LassoSwingGroundedBeginCheck()
 {
 }
 
 // LassoStopCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169020
-u32 LassoStopCB()
+uint32 LassoStopCB()
 {
 }
 
 // SpatulaMeleeStopCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1690c0
-u32 SpatulaMeleeStopCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+uint32 SpatulaMeleeStopCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
 {
 }
 
 // MeleeStopCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169120
-u32 MeleeStopCB()
+uint32 MeleeStopCB()
 {
 }
 
 // LassoYankCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169170
-u32 LassoYankCB()
+uint32 LassoYankCB()
 {
 }
 
 // LassoDestroyCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1692a0
-u32 LassoDestroyCB()
+uint32 LassoDestroyCB()
 {
 }
 
 // LassoFlyCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169480
-u32 LassoFlyCB(void* object)
+uint32 LassoFlyCB(void* object)
 {
 	xEnt* ent;
 }
 
 // LassoThrowCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169760
-u32 LassoThrowCB(void* object)
+uint32 LassoThrowCB(void* object)
 {
 	xEnt* ent;
 }
 
 // LassoStartCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169990
-u32 LassoStartCB(void* object)
+uint32 LassoStartCB(void* object)
 {
 	xEnt* ent;
 	zNPCCommon* npc;
@@ -7112,91 +7112,91 @@ u32 LassoStartCB(void* object)
 
 // MeleeCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169bc0
-u32 MeleeCB()
+uint32 MeleeCB()
 {
 }
 
 // JumpMeleeCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169ce0
-u32 JumpMeleeCB()
+uint32 JumpMeleeCB()
 {
 }
 
 // LassoFailRunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169e20
-u32 LassoFailRunSlipCheck()
+uint32 LassoFailRunSlipCheck()
 {
 }
 
 // LassoFailRunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169eb0
-u32 LassoFailRunOutOfWorldCheck()
+uint32 LassoFailRunOutOfWorldCheck()
 {
 }
 
 // LassoFailRunCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x169fa0
-u32 LassoFailRunCheck()
+uint32 LassoFailRunCheck()
 {
 }
 
 // LassoFailWalkCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a090
-u32 LassoFailWalkCheck()
+uint32 LassoFailWalkCheck()
 {
 }
 
 // LassoFailIdleCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a180
-u32 LassoFailIdleCheck()
+uint32 LassoFailIdleCheck()
 {
 }
 
 // LassoFailIdleSlipCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a220
-u32 LassoFailIdleSlipCheck()
+uint32 LassoFailIdleSlipCheck()
 {
 }
 
 // LassoReyankCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a2b0
-u32 LassoReyankCheck()
+uint32 LassoReyankCheck()
 {
 }
 
 // LassoDestroyCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a2c0
-u32 LassoDestroyCheck()
+uint32 LassoDestroyCheck()
 {
 }
 
 // LassoAboutToDestroyCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a2d0
-u32 LassoAboutToDestroyCheck()
+uint32 LassoAboutToDestroyCheck()
 {
 }
 
 // LassoStraightToDestroyCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a2e0
-u32 LassoStraightToDestroyCheck()
+uint32 LassoStraightToDestroyCheck()
 {
 }
 
 // LassoLostTargetCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a2f0
-u32 LassoLostTargetCheck()
+uint32 LassoLostTargetCheck()
 {
 }
 
 // LassoStartCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a310
-u32 LassoStartCheck()
+uint32 LassoStartCheck()
 {
 }
 
 // MeleeCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a390
-u32 MeleeCheck(xAnimSingle* anim)
+uint32 MeleeCheck(xAnimSingle* anim)
 {
 }
 
@@ -7208,7 +7208,7 @@ void zEntPlayer_LassoNotify(en_LASSO_EVENT event)
 
 // PatrickGrabThrowCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16a470
-u32 PatrickGrabThrowCB(void* object)
+uint32 PatrickGrabThrowCB(void* object)
 {
 	zEnt* ent;
 }
@@ -7221,17 +7221,17 @@ xEnt* GetPatrickTarget(xEnt* ent)
 	xCollis* coll;
 	zPlatform* plat;
 	xVec3 relpos;
-	u32 i;
-	f32 bestTargetDot;
+	uint32 i;
+	float32 bestTargetDot;
 	xVec3* bestTargetPos;
 	zScene* zsc;
-	s32 grabbedIsFruit;
-	f32 maxHeight;
+	int32 grabbedIsFruit;
+	float32 maxHeight;
 	xEnt* tgtent;
-	f32 dx;
-	f32 dy;
-	f32 dz;
-	f32 ddot;
+	float32 dx;
+	float32 dy;
+	float32 dz;
+	float32 ddot;
 }
 
 // zEntPlayerSpeakStop__Fv
@@ -7242,34 +7242,34 @@ void zEntPlayerSpeakStop()
 
 // zEntPlayerSpeakStart__FUiUii
 // Start address: 0x16aca0
-void zEntPlayerSpeakStart(u32 sndid, s32 anim)
+void zEntPlayerSpeakStart(uint32 sndid, int32 anim)
 {
-	u8 filter_size;
-	u32 which;
+	uint8 filter_size;
+	uint32 which;
 }
 
 // speak_update__24@unnamed@zEntPlayer_cpp@Ff
 // Start address: 0x16ad80
-void speak_update(f32 dt)
+void speak_update(float32 dt)
 {
-	f32 jawval;
+	float32 jawval;
 }
 
 // TalkDoneCheck__24@unnamed@zEntPlayer_cpp@FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ae50
-u32 TalkDoneCheck(xAnimTransition* tran)
+uint32 TalkDoneCheck(xAnimTransition* tran)
 {
 }
 
 // TalkCheck__24@unnamed@zEntPlayer_cpp@FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ae70
-u32 TalkCheck(xAnimTransition* tran)
+uint32 TalkCheck(xAnimTransition* tran)
 {
 }
 
 // PatrickGrabCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ae90
-u32 PatrickGrabCB()
+uint32 PatrickGrabCB()
 {
 	xAnimState* stat;
 	xVec3 tmptran;
@@ -7280,245 +7280,245 @@ u32 PatrickGrabCB()
 
 // PatrickMeleeCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b350
-u32 PatrickMeleeCB()
+uint32 PatrickMeleeCB()
 {
 }
 
 // PatrickStunCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b440
-u32 PatrickStunCheck()
+uint32 PatrickStunCheck()
 {
 }
 
 // PatrickAttackCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b480
-u32 PatrickAttackCheck()
+uint32 PatrickAttackCheck()
 {
 }
 
 // PatrickGrabThrow__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b4f0
-u32 PatrickGrabThrow()
+uint32 PatrickGrabThrow()
 {
 }
 
 // PatrickGrabKill__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b540
-u32 PatrickGrabKill()
+uint32 PatrickGrabKill()
 {
 }
 
 // PatrickGrabFailed__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b560
-u32 PatrickGrabFailed()
+uint32 PatrickGrabFailed()
 {
 }
 
 // PatrickGrabCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b570
-u32 PatrickGrabCheck()
+uint32 PatrickGrabCheck()
 {
 }
 
 // LedgeFinishCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b580
-u32 LedgeFinishCB()
+uint32 LedgeFinishCB()
 {
 }
 
 // LedgeGrabCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b5c0
-u32 LedgeGrabCB(void* object)
+uint32 LedgeGrabCB(void* object)
 {
 }
 
 // LedgeGrabCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b730
-u32 LedgeGrabCheck()
+uint32 LedgeGrabCheck()
 {
 }
 
 // TrackPrefallJumpCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b760
-u32 TrackPrefallJumpCheck()
+uint32 TrackPrefallJumpCheck()
 {
 }
 
 // TrackFallCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b800
-u32 TrackFallCB()
+uint32 TrackFallCB()
 {
 }
 
 // TrackFallCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b820
-u32 TrackFallCheck()
+uint32 TrackFallCheck()
 {
 }
 
 // NoslideTrackCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b850
-u32 NoslideTrackCheck()
+uint32 NoslideTrackCheck()
 {
 }
 
 // NoslideTrackCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b880
-u32 NoslideTrackCB()
+uint32 NoslideTrackCB()
 {
 }
 
 // SlideTrackCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16b890
-u32 SlideTrackCB()
+uint32 SlideTrackCB()
 {
 }
 
 // SlideTrackCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16bb10
-u32 SlideTrackCheck()
+uint32 SlideTrackCheck()
 {
 }
 
 // BoulderRollDoneCB__Fv
 // Start address: 0x16bb20
-u32 BoulderRollDoneCB()
+uint32 BoulderRollDoneCB()
 {
 	xParEmitterCustomSettings info;
 }
 
 // BoulderRollCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16be70
-u32 BoulderRollCB()
+uint32 BoulderRollCB()
 {
 	xParEmitterCustomSettings info;
 }
 
 // BoulderRollWindupCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c330
-u32 BoulderRollWindupCB()
+uint32 BoulderRollWindupCB()
 {
 }
 
 // BoulderRollCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c4c0
-u32 BoulderRollCheck()
+uint32 BoulderRollCheck()
 {
 }
 
 // BoulderRollIdleCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c4e0
-u32 BoulderRollIdleCheck()
+uint32 BoulderRollIdleCheck()
 {
 }
 
 // BoulderRollMoveCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c520
-u32 BoulderRollMoveCheck()
+uint32 BoulderRollMoveCheck()
 {
 }
 
 // FallCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c560
-u32 FallCheck(xAnimSingle* anim)
+uint32 FallCheck(xAnimSingle* anim)
 {
 }
 
 // TongueDblSpinCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c680
-u32 TongueDblSpinCB(xAnimSingle* anim)
+uint32 TongueDblSpinCB(xAnimSingle* anim)
 {
 }
 
 // TongueDblJumpCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c6a0
-u32 TongueDblJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+uint32 TongueDblJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
 {
 }
 
 // DblJumpCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c710
-u32 DblJumpCB()
+uint32 DblJumpCB()
 {
-	f32 dirx;
-	f32 dirz;
-	f32 dbldirx;
-	f32 dbldirz;
-	f32 speed;
-	f32 dblspeed;
-	f32 len2;
-	f32 len_inv;
+	float32 dirx;
+	float32 dirz;
+	float32 dbldirx;
+	float32 dbldirz;
+	float32 speed;
+	float32 dblspeed;
+	float32 len2;
+	float32 len_inv;
 }
 
 // DblJumpCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16c960
-u32 DblJumpCheck()
+uint32 DblJumpCheck()
 {
 }
 
 // BounceStopLCopterCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cab0
-u32 BounceStopLCopterCB()
+uint32 BounceStopLCopterCB()
 {
 }
 
 // BounceCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cbb0
-u32 BounceCB()
+uint32 BounceCB()
 {
 }
 
 // BounceCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cc00
-u32 BounceCheck()
+uint32 BounceCheck()
 {
 }
 
 // JumpApexCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cc20
-u32 JumpApexCheck(xAnimSingle* anim)
+uint32 JumpApexCheck(xAnimSingle* anim)
 {
 }
 
 // JumpCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cd10
-u32 JumpCB()
+uint32 JumpCB()
 {
 }
 
 // JumpCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cf90
-u32 JumpCheck()
+uint32 JumpCheck()
 {
 }
 
 // WallJumpLandFlightCallback__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16cfe0
-u32 WallJumpLandFlightCallback()
+uint32 WallJumpLandFlightCallback()
 {
 }
 
 // WallJumpLandFlightCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d000
-u32 WallJumpLandFlightCheck()
+uint32 WallJumpLandFlightCheck()
 {
 }
 
 // WallJumpFlightLandCallback__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d010
-u32 WallJumpFlightLandCallback()
+uint32 WallJumpFlightLandCallback()
 {
 }
 
 // WallJumpFlightLandCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d030
-u32 WallJumpFlightLandCheck()
+uint32 WallJumpFlightLandCheck()
 {
 }
 
 // WallJumpCallback__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d040
-u32 WallJumpCallback()
+uint32 WallJumpCallback()
 {
 	zJumpParam wallParam;
 	xEntFrame* frame;
@@ -7527,13 +7527,13 @@ u32 WallJumpCallback()
 
 // WallJumpLaunchCallback__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d390
-u32 WallJumpLaunchCallback()
+uint32 WallJumpLaunchCallback()
 {
 }
 
 // WallJumpLaunchCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d3d0
-u32 WallJumpLaunchCheck()
+uint32 WallJumpLaunchCheck()
 {
 }
 
@@ -7547,549 +7547,549 @@ void DoWallJumpCheck()
 	xSweptSphere sws;
 	xSurface* surf;
 	zSurfaceProps* surfaceProperties;
-	f32 sVerticalCos;
-	f32 sSweptrad;
-	f32 sAtdist;
+	float32 sVerticalCos;
+	float32 sSweptrad;
+	float32 sAtdist;
 }
 
 // StopLCopterCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d600
-u32 StopLCopterCB()
+uint32 StopLCopterCB()
 {
 }
 
 // LCopterCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d6d0
-u32 LCopterCB(void* object)
+uint32 LCopterCB(void* object)
 {
 }
 
 // LCopterCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d890
-u32 LCopterCheck()
+uint32 LCopterCheck()
 {
 }
 
 // SpatulaGrabStopCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16d8f0
-u32 SpatulaGrabStopCB()
+uint32 SpatulaGrabStopCB()
 {
-	s32 result;
+	int32 result;
 	xBase* sendTo;
 }
 
 // SpatulaGrabCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16daa0
-u32 SpatulaGrabCB(void* object)
+uint32 SpatulaGrabCB(void* object)
 {
 	xEnt* ent;
 	xCollis rcoll;
 	xRay3 r;
-	f32 one_len;
-	f32 delay;
+	float32 one_len;
+	float32 delay;
 }
 
 // zEntPlayer_InBossBattle__Fv
 // Start address: 0x16ddc0
-s32 zEntPlayer_InBossBattle()
+int32 zEntPlayer_InBossBattle()
 {
 }
 
 // SpatulaGrabCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16de30
-u32 SpatulaGrabCheck()
+uint32 SpatulaGrabCheck()
 {
 }
 
 // DefeatedCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16de40
-u32 DefeatedCB()
+uint32 DefeatedCB()
 {
-	s32 cheats;
+	int32 cheats;
 	zShrapnelAsset* deathShrap;
 }
 
 // Defeated05Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16df40
-u32 Defeated05Check(xAnimTransition* tran)
+uint32 Defeated05Check(xAnimTransition* tran)
 {
 }
 
 // Defeated04Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16dfb0
-u32 Defeated04Check(xAnimTransition* tran)
+uint32 Defeated04Check(xAnimTransition* tran)
 {
 }
 
 // Defeated03Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e020
-u32 Defeated03Check(xAnimTransition* tran)
+uint32 Defeated03Check(xAnimTransition* tran)
 {
 }
 
 // Defeated02Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e090
-u32 Defeated02Check(xAnimTransition* tran)
+uint32 Defeated02Check(xAnimTransition* tran)
 {
 }
 
 // Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e100
-u32 Defeated01Check(xAnimTransition* tran)
+uint32 Defeated01Check(xAnimTransition* tran)
 {
 }
 
 // Hit05CB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e160
-u32 Hit05CB()
+uint32 Hit05CB()
 {
 }
 
 // Hit05Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e180
-u32 Hit05Check()
+uint32 Hit05Check()
 {
 }
 
 // Hit04CB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e1b0
-u32 Hit04CB()
+uint32 Hit04CB()
 {
 }
 
 // Hit04Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e1d0
-u32 Hit04Check()
+uint32 Hit04Check()
 {
 }
 
 // Hit03CB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e200
-u32 Hit03CB()
+uint32 Hit03CB()
 {
 }
 
 // Hit03Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e220
-u32 Hit03Check()
+uint32 Hit03Check()
 {
 }
 
 // Hit02CB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e250
-u32 Hit02CB()
+uint32 Hit02CB()
 {
 }
 
 // Hit02Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e270
-u32 Hit02Check()
+uint32 Hit02Check()
 {
 }
 
 // Hit01CB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e2a0
-u32 Hit01CB()
+uint32 Hit01CB()
 {
 }
 
 // Hit01Check__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e2c0
-u32 Hit01Check()
+uint32 Hit01Check()
 {
 }
 
 // GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e2f0
-u32 GooDeathCB()
+uint32 GooDeathCB()
 {
 }
 
 // GooCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e330
-u32 GooCheck()
+uint32 GooCheck()
 {
 }
 
 // BbowlRecoverRunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e380
-u32 BbowlRecoverRunSlipCheck(xAnimSingle* anim)
+uint32 BbowlRecoverRunSlipCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlRecoverRunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e410
-u32 BbowlRecoverRunOutOfWorldCheck(xAnimSingle* anim)
+uint32 BbowlRecoverRunOutOfWorldCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlRecoverRunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e500
-u32 BbowlRecoverRunVictoryCheck(xAnimSingle* anim)
+uint32 BbowlRecoverRunVictoryCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlRecoverRunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e620
-u32 BbowlRecoverRunScaredCheck(xAnimSingle* anim)
+uint32 BbowlRecoverRunScaredCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlRecoverRunCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e780
-u32 BbowlRecoverRunCheck(xAnimSingle* anim)
+uint32 BbowlRecoverRunCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlRecoverWalkCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e8f0
-u32 BbowlRecoverWalkCheck(xAnimSingle* anim)
+uint32 BbowlRecoverWalkCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlTossEndCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16e9f0
-u32 BbowlTossEndCB()
+uint32 BbowlTossEndCB()
 {
 }
 
 // BbowlWindupEndCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16eb80
-u32 BbowlWindupEndCheck(xAnimSingle* anim)
+uint32 BbowlWindupEndCheck(xAnimSingle* anim)
 {
 }
 
 // BbowlCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ebc0
-u32 BbowlCB()
+uint32 BbowlCB()
 {
 	xEntFrame* frame;
-	f32 x;
-	f32 z;
-	f32 speed2;
+	float32 x;
+	float32 z;
+	float32 speed2;
 }
 
 // BbowlCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ee00
-u32 BbowlCheck()
+uint32 BbowlCheck()
 {
 }
 
 // BBounceToJumpCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ee90
-u32 BBounceToJumpCB()
+uint32 BBounceToJumpCB()
 {
 }
 
 // BBounceToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f0d0
-u32 BBounceToJumpCheck()
+uint32 BBounceToJumpCheck()
 {
 }
 
 // BBounceStrikeCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f0e0
-u32 BBounceStrikeCB()
+uint32 BBounceStrikeCB()
 {
 }
 
 // BBounceStrikeCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f2a0
-u32 BBounceStrikeCheck()
+uint32 BBounceStrikeCheck()
 {
 }
 
 // BBounceAttackCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f2c0
-u32 BBounceAttackCB()
+uint32 BBounceAttackCB()
 {
 }
 
 // BubbleBounceCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f2e0
-u32 BubbleBounceCB()
+uint32 BubbleBounceCB()
 {
 }
 
 // BubbleBounceCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f340
-u32 BubbleBounceCheck()
+uint32 BubbleBounceCheck()
 {
 }
 
 // BBashToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f390
-u32 BBashToJumpCheck()
+uint32 BBashToJumpCheck()
 {
 }
 
 // BBashStrikeCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f3c0
-u32 BBashStrikeCB()
+uint32 BBashStrikeCB()
 {
 }
 
 // BBashStrikeCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f3e0
-u32 BBashStrikeCheck()
+uint32 BBashStrikeCheck()
 {
 }
 
 // BubbleBashCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f3f0
-u32 BubbleBashCB()
+uint32 BubbleBashCB()
 {
 }
 
 // BubbleBashCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f5c0
-u32 BubbleBashCheck()
+uint32 BubbleBashCheck()
 {
 }
 
 // BubbleSpinCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f660
-u32 BubbleSpinCB(xAnimSingle* anim)
+uint32 BubbleSpinCB(xAnimSingle* anim)
 {
 }
 
 // BubbleSpinCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f7f0
-u32 BubbleSpinCheck()
+uint32 BubbleSpinCheck()
 {
 }
 
 // SandyLandCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f870
-u32 SandyLandCB()
+uint32 SandyLandCB()
 {
 }
 
 // LandSlipRunCallback__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f890
-u32 LandSlipRunCallback()
+uint32 LandSlipRunCallback()
 {
 }
 
 // LandCallback__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f990
-u32 LandCallback()
+uint32 LandCallback()
 {
 }
 
 // LandNoTrackSlipIdleCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16f9c0
-u32 LandNoTrackSlipIdleCheck()
+uint32 LandNoTrackSlipIdleCheck()
 {
 }
 
 // LandNoTrackSlipRunCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fa40
-u32 LandNoTrackSlipRunCheck()
+uint32 LandNoTrackSlipRunCheck()
 {
 }
 
 // LandNoTrackFastCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fac0
-u32 LandNoTrackFastCheck()
+uint32 LandNoTrackFastCheck()
 {
 }
 
 // LandSlipRunCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fb20
-u32 LandSlipRunCheck()
+uint32 LandSlipRunCheck()
 {
 }
 
 // LandSlipIdleCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fb70
-u32 LandSlipIdleCheck()
+uint32 LandSlipIdleCheck()
 {
 }
 
 // LandNoTrackWalkCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fbc0
-u32 LandNoTrackWalkCheck()
+uint32 LandNoTrackWalkCheck()
 {
 }
 
 // LandFastCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fc20
-u32 LandFastCheck()
+uint32 LandFastCheck()
 {
 }
 
 // LandWalkCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fc50
-u32 LandWalkCheck()
+uint32 LandWalkCheck()
 {
 }
 
 // LandRunCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fc80
-u32 LandRunCheck()
+uint32 LandRunCheck()
 {
 }
 
 // LandHighCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fcb0
-u32 LandHighCheck()
+uint32 LandHighCheck()
 {
 }
 
 // LandNoTrackCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fce0
-u32 LandNoTrackCheck()
+uint32 LandNoTrackCheck()
 {
 }
 
 // LandTrackCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fd20
-u32 LandTrackCheck()
+uint32 LandTrackCheck()
 {
 }
 
 // LandCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fd60
-u32 LandCheck()
+uint32 LandCheck()
 {
 }
 
 // InactiveFinishedCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fd80
-u32 InactiveFinishedCheck()
+uint32 InactiveFinishedCheck()
 {
 }
 
 // InactiveCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fdb0
-u32 InactiveCB()
+uint32 InactiveCB()
 {
 }
 
 // InactiveCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fdd0
-u32 InactiveCheck(xAnimTransition* tran)
+uint32 InactiveCheck(xAnimTransition* tran)
 {
 }
 
 // IdleCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fe20
-u32 IdleCB()
+uint32 IdleCB()
 {
 }
 
 // NoSlipCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16fee0
-u32 NoSlipCB()
+uint32 NoSlipCB()
 {
 }
 
 // SlipRunCB__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x16ff90
-u32 SlipRunCB()
+uint32 SlipRunCB()
 {
 }
 
 // AnyStopCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170070
-u32 AnyStopCheck()
+uint32 AnyStopCheck()
 {
 }
 
 // AnyMoveCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170090
-u32 AnyMoveCheck()
+uint32 AnyMoveCheck()
 {
 }
 
 // IdleSlipCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1700a0
-u32 IdleSlipCheck()
+uint32 IdleSlipCheck()
 {
 }
 
 // IdleScaredCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170110
-u32 IdleScaredCheck()
+uint32 IdleScaredCheck()
 {
 }
 
 // IdleVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1701f0
-u32 IdleVictoryCheck()
+uint32 IdleVictoryCheck()
 {
 }
 
 // IdleStoicCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x1702a0
-u32 IdleStoicCheck()
+uint32 IdleStoicCheck()
 {
 }
 
 // IdleCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170390
-u32 IdleCheck()
+uint32 IdleCheck()
 {
 }
 
 // WalkScaredCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170410
-u32 WalkScaredCheck()
+uint32 WalkScaredCheck()
 {
 }
 
 // WalkVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170540
-u32 WalkVictoryCheck()
+uint32 WalkVictoryCheck()
 {
 }
 
 // WalkStoicCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170640
-u32 WalkStoicCheck()
+uint32 WalkStoicCheck()
 {
 }
 
 // WalkCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170780
-u32 WalkCheck()
+uint32 WalkCheck()
 {
 }
 
 // RunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170850
-u32 RunOutOfWorldCheck()
+uint32 RunOutOfWorldCheck()
 {
 }
 
 // RunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170910
-u32 RunSlipCheck()
+uint32 RunSlipCheck()
 {
 }
 
 // RunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170980
-u32 RunVictoryCheck()
+uint32 RunVictoryCheck()
 {
 }
 
 // RunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170a80
-u32 RunScaredCheck()
+uint32 RunScaredCheck()
 {
 }
 
 // RunStoicCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170bb0
-u32 RunStoicCheck()
+uint32 RunStoicCheck()
 {
 }
 
 // RunAnyCheck__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x170cf0
-u32 RunAnyCheck()
+uint32 RunAnyCheck()
 {
 }
 
@@ -8097,82 +8097,82 @@ u32 RunAnyCheck()
 // Start address: 0x170dc0
 void InvReset()
 {
-	u32 i;
-	u32& maxsocks;
-	s8* level_prefix;
-	u32 level_mask;
+	uint32 i;
+	uint32& maxsocks;
+	int8* level_prefix;
+	uint32 level_mask;
 }
 
 // PlayerAbsControl__FP4xEntfff
 // Start address: 0x170f00
-void PlayerAbsControl(xEnt* ent, f32 x, f32 z, f32 dt)
+void PlayerAbsControl(xEnt* ent, float32 x, float32 z, float32 dt)
 {
-	u32 animUserFlag;
-	u32 blendUserFlag;
-	f32 angle;
-	f32 mag;
-	f32 scalemag;
-	f32 dir_dp;
-	f32 turnfactor;
-	f32 diffAngle;
-	f32 autodist2d;
-	f32 camAngle;
+	uint32 animUserFlag;
+	uint32 blendUserFlag;
+	float32 angle;
+	float32 mag;
+	float32 scalemag;
+	float32 dir_dp;
+	float32 turnfactor;
+	float32 diffAngle;
+	float32 autodist2d;
+	float32 camAngle;
 	xMat4x3* m;
 	xVec3 euler;
-	f32 rot;
-	f32 dx;
-	f32 dz;
-	f32 ddot;
-	f32 atime;
-	f32 lerp;
-	f32 rot;
+	float32 rot;
+	float32 dx;
+	float32 dz;
+	float32 ddot;
+	float32 atime;
+	float32 lerp;
+	float32 rot;
 	xMat3x3 rotY;
-	f32 m;
-	f32 curFactor;
+	float32 m;
+	float32 curFactor;
 	zPlayerGlobals* pg;
-	f32 slideVelMag;
-	f32 slideAccel;
-	f32 accelX;
-	f32 accelZ;
-	f32 fwdComponent;
-	f32 sideComponent;
-	f32 veldown;
-	f32 fwdlerp;
-	f32 targetAngle;
-	f32 targetLean;
-	u32 moveFlag;
+	float32 slideVelMag;
+	float32 slideAccel;
+	float32 accelX;
+	float32 accelZ;
+	float32 fwdComponent;
+	float32 sideComponent;
+	float32 veldown;
+	float32 fwdlerp;
+	float32 targetAngle;
+	float32 targetLean;
+	uint32 moveFlag;
 	xVec3* vel;
-	f32 accelMag;
-	f32 peakLerp;
-	f32 slickLerp;
-	f32 s;
-	f32 s;
+	float32 accelMag;
+	float32 peakLerp;
+	float32 slickLerp;
+	float32 s;
+	float32 s;
 }
 
 // TurnToFace__FP4xEntPC5xVec3ff
 // Start address: 0x172d00
-void TurnToFace(xEnt* ent, xVec3* target, f32 speedLimit, f32 dt)
+void TurnToFace(xEnt* ent, xVec3* target, float32 speedLimit, float32 dt)
 {
 	xVec3 currentFacing;
-	f32 angle;
-	f32 maxAngle;
+	float32 angle;
+	float32 maxAngle;
 }
 
 // DampenControls__FPfPfff
 // Start address: 0x172e70
-void DampenControls(f32* angle, f32* mag, f32 x, f32 y)
+void DampenControls(float32* angle, float32* mag, float32 x, float32 y)
 {
 }
 
 // SetPlayerKillsVillainTimer__Ff
 // Start address: 0x173090
-void SetPlayerKillsVillainTimer(f32 time)
+void SetPlayerKillsVillainTimer(float32 time)
 {
 }
 
 // TellPlayerVillainIsNear__Ff
 // Start address: 0x1730a0
-void TellPlayerVillainIsNear(f32 visnear)
+void TellPlayerVillainIsNear(float32 visnear)
 {
 }
 
@@ -8180,26 +8180,26 @@ void TellPlayerVillainIsNear(f32 visnear)
 // Start address: 0x1730b0
 void zEntPlayerControlOff(zControlOwner owner)
 {
-	u32 originalValue;
+	uint32 originalValue;
 }
 
 // zEntPlayerControlOn__F13zControlOwner
 // Start address: 0x1731e0
 void zEntPlayerControlOn(zControlOwner owner)
 {
-	u32 originalValue;
+	uint32 originalValue;
 }
 
 // zEntPlayer_SpawnWandBubbles__FP5xVec3Ui
 // Start address: 0x173250
-void zEntPlayer_SpawnWandBubbles(xVec3* center, u32 count)
+void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count)
 {
-	u32 num;
+	uint32 num;
 	xVec3* posbuf;
 	xVec3* velbuf;
 	xVec3* pp;
 	xVec3* vp;
-	u32 j;
-	f32 f;
+	uint32 j;
+	float32 f;
 }
 

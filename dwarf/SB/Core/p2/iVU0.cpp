@@ -5,14 +5,14 @@ typedef VU0Block type[8];
 
 struct VU0Block
 {
-	s32 parent;
-	u32 size;
+	int32 parent;
+	uint32 size;
 	void* address;
-	u32 lru;
+	uint32 lru;
 };
 
 type blocks;
-u32 lru;
+uint32 lru;
 
 void iVU0Reset();
 
@@ -20,6 +20,6 @@ void iVU0Reset();
 // Start address: 0x378830
 void iVU0Reset()
 {
-	s32 i;
+	int32 i;
 }
 

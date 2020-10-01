@@ -6,63 +6,63 @@ typedef struct xCounterAsset;
 typedef struct xBaseAsset;
 typedef struct st_SERIAL_CLIENTINFO;
 
-typedef s32(*type_0)(xBase*, xBase*, u32, f32*, xBase*);
-typedef s32(*type_2)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_0)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef int32(*type_2)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef f32 type_1[4];
-typedef s8 type_3[16];
-typedef s8 type_4[16];
+typedef float32 type_1[4];
+typedef int8 type_3[16];
+typedef int8 type_4[16];
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_1 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_2 eventFunc;
 };
 
 struct xSerial
 {
-	u32 idtag;
-	s32 baseoff;
+	uint32 idtag;
+	int32 baseoff;
 	st_SERIAL_CLIENTINFO* ctxtdata;
-	s32 warned;
-	s32 curele;
-	s32 bitidx;
-	s32 bittally;
+	int32 warned;
+	int32 curele;
+	int32 bitidx;
+	int32 bittally;
 };
 
 struct _xCounter : xBase
 {
 	xCounterAsset* asset;
-	s16 count;
-	u8 state;
-	u8 counterFlags;
+	int16 count;
+	uint8 state;
+	uint8 counterFlags;
 };
 
 struct xCounterAsset : xBaseAsset
 {
-	s16 count;
+	int16 count;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct st_SERIAL_CLIENTINFO
@@ -73,7 +73,7 @@ type_3 buffer;
 type_4 buffer;
 type_0 xCounterEventCB;
 
-s32 xCounterEventCB(xBase* to, u32 toEvent);
+int32 xCounterEventCB(xBase* to, uint32 toEvent);
 void xCounterLoad(_xCounter* ent, xSerial* s);
 void xCounterSave(_xCounter* ent, xSerial* s);
 void xCounterReset(xBase* b);
@@ -82,10 +82,10 @@ void xCounterInit();
 
 // xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase
 // Start address: 0x29e5e0
-s32 xCounterEventCB(xBase* to, u32 toEvent)
+int32 xCounterEventCB(xBase* to, uint32 toEvent)
 {
 	_xCounter* t;
-	s16 newCount;
+	int16 newCount;
 }
 
 // xCounterLoad__FP9_xCounterP7xSerial

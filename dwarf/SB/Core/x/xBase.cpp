@@ -4,37 +4,37 @@ typedef struct xSerial;
 typedef struct st_SERIAL_CLIENTINFO;
 typedef struct xLinkAsset;
 
-typedef s32(*type_1)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_1)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef f32 type_0[4];
+typedef float32 type_0[4];
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_1 eventFunc;
 };
 
 struct xSerial
 {
-	u32 idtag;
-	s32 baseoff;
+	uint32 idtag;
+	int32 baseoff;
 	st_SERIAL_CLIENTINFO* ctxtdata;
-	s32 warned;
-	s32 curele;
-	s32 bitidx;
-	s32 bittally;
+	int32 warned;
+	int32 curele;
+	int32 bitidx;
+	int32 bittally;
 };
 
 struct st_SERIAL_CLIENTINFO
@@ -43,12 +43,12 @@ struct st_SERIAL_CLIENTINFO
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_0 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 
@@ -68,7 +68,7 @@ void xBaseReset(xBase* xb, xBaseAsset* asset)
 // Start address: 0x1bf6c0
 void xBaseLoad(xBase* ent, xSerial* s)
 {
-	s32 b;
+	int32 b;
 }
 
 // xBaseSave__FP5xBaseP7xSerial

@@ -4,20 +4,20 @@
 
 void Render(zNPCBubbleBuddy* this);
 xEntDrive* PRIV_GetDriverData(zNPCFish* this);
-u8 ColChkByFlags();
-u8 ColPenByFlags();
-f32 GenShadCacheRad();
-u8 ColChkFlags();
-u8 ColPenFlags();
-u8 ColChkByFlags();
-u8 ColPenByFlags();
-u8 PhysicsFlags();
+uint8 ColChkByFlags();
+uint8 ColPenByFlags();
+float32 GenShadCacheRad();
+uint8 ColChkFlags();
+uint8 ColPenFlags();
+uint8 ColChkByFlags();
+uint8 ColPenByFlags();
+uint8 PhysicsFlags();
 void on_talk_stop(HiThere* this);
 void on_talk_start(HiThere* this);
 void SelfSetup();
-u8 ColChkFlags();
-u8 ColPenFlags();
-u8 PhysicsFlags();
+uint8 ColChkFlags();
+uint8 ColPenFlags();
+uint8 PhysicsFlags();
 
 // Render__15zNPCBubbleBuddyFv
 // Start address: 0x2eae80
@@ -33,49 +33,49 @@ xEntDrive* PRIV_GetDriverData(zNPCFish* this)
 
 // ColChkByFlags__12zNPCVillagerCFv
 // Start address: 0x2eaea0
-u8 ColChkByFlags()
+uint8 ColChkByFlags()
 {
 }
 
 // ColPenByFlags__12zNPCVillagerCFv
 // Start address: 0x2eaeb0
-u8 ColPenByFlags()
+uint8 ColPenByFlags()
 {
 }
 
 // GenShadCacheRad__12zNPCVillagerFv
 // Start address: 0x2eaec0
-f32 GenShadCacheRad()
+float32 GenShadCacheRad()
 {
 }
 
 // ColChkFlags__14zNPCNewsFishTVCFv
 // Start address: 0x2f01d0
-u8 ColChkFlags()
+uint8 ColChkFlags()
 {
 }
 
 // ColPenFlags__14zNPCNewsFishTVCFv
 // Start address: 0x2f01e0
-u8 ColPenFlags()
+uint8 ColPenFlags()
 {
 }
 
 // ColChkByFlags__14zNPCNewsFishTVCFv
 // Start address: 0x2f01f0
-u8 ColChkByFlags()
+uint8 ColChkByFlags()
 {
 }
 
 // ColPenByFlags__14zNPCNewsFishTVCFv
 // Start address: 0x2f0200
-u8 ColPenByFlags()
+uint8 ColPenByFlags()
 {
 }
 
 // PhysicsFlags__14zNPCNewsFishTVCFv
 // Start address: 0x2f0210
-u8 PhysicsFlags()
+uint8 PhysicsFlags()
 {
 }
 
@@ -99,19 +99,19 @@ void SelfSetup()
 
 // ColChkFlags__15zNPCMerManChairCFv
 // Start address: 0x2f02b0
-u8 ColChkFlags()
+uint8 ColChkFlags()
 {
 }
 
 // ColPenFlags__15zNPCMerManChairCFv
 // Start address: 0x2f02c0
-u8 ColPenFlags()
+uint8 ColPenFlags()
 {
 }
 
 // PhysicsFlags__15zNPCMerManChairCFv
 // Start address: 0x2f02d0
-u8 PhysicsFlags()
+uint8 PhysicsFlags()
 {
 }
 

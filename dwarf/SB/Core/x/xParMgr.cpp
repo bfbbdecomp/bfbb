@@ -1,13 +1,13 @@
 
 
 
-u32 sFrameCount;
-s32 sCounter;
-u32 sParMgrIgnoreFXCounter;
-s32 sParMgrInit;
+uint32 sFrameCount;
+int32 sCounter;
+uint32 sParMgrIgnoreFXCounter;
+int32 sParMgrInit;
 
 void xParMgrRender();
-void xParMgrUpdate(f32 elapsedTime);
+void xParMgrUpdate(float32 elapsedTime);
 void xParMgrInit();
 
 // xParMgrRender__Fv
@@ -18,7 +18,7 @@ void xParMgrRender()
 
 // xParMgrUpdate__Ff
 // Start address: 0x1f67b0
-void xParMgrUpdate(f32 elapsedTime)
+void xParMgrUpdate(float32 elapsedTime)
 {
 }
 

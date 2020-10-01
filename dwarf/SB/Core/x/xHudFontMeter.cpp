@@ -26,39 +26,39 @@ typedef struct sound_queue;
 typedef struct _class_1;
 typedef struct iColor_tag;
 
-typedef s32(*type_0)(xBase*, xBase*, u32, f32*, xBase*);
-typedef u8(*type_5)(widget&, motive&, f32);
+typedef int32(*type_0)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef uint8(*type_5)(widget&, motive&, float32);
 
-typedef s8 type_1[16];
-typedef s8* type_2[3];
-typedef s8 type_3[12];
-typedef u32 type_4[5];
-typedef f32 type_6[4];
-typedef s8 type_7[16];
+typedef int8 type_1[16];
+typedef int8* type_2[3];
+typedef int8 type_3[12];
+typedef uint32 type_4[5];
+typedef float32 type_6[4];
+typedef int8 type_7[16];
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_0 eventFunc;
 };
 
 struct xDynAsset : xBaseAsset
 {
-	u32 type;
-	u16 version;
-	u16 handle;
+	uint32 type;
+	uint16 version;
+	uint16 handle;
 };
 
 struct xfont
 {
-	u32 id;
-	f32 width;
-	f32 height;
-	f32 space;
+	uint32 id;
+	float32 width;
+	float32 height;
+	float32 space;
 	iColor_tag color;
 	basic_rect clip;
 };
@@ -88,10 +88,10 @@ struct asset : xDynAsset
 struct font_meter_asset : meter_asset
 {
 	font_context font;
-	u8 counter_mode;
-	u8 pad1;
-	u8 pad2;
-	u8 pad3;
+	uint8 counter_mode;
+	uint8 pad1;
+	uint8 pad2;
+	uint8 pad3;
 };
 
 enum _enum
@@ -104,31 +104,31 @@ enum _enum
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_6 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct font_meter_widget : meter_widget
 {
 	font_context font;
 	font_context start_font;
-	s32 precision;
+	int32 precision;
 	xVec2 offset;
 	type_3 buffer;
-	s32 last_value;
+	int32 last_value;
 	xfont xf;
 };
 
 struct color32u
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 struct motive_node
@@ -139,20 +139,20 @@ struct motive_node
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct font_context
 {
-	u32 id;
-	s32 justify;
-	f32 w;
-	f32 h;
-	f32 space;
-	f32 drop_x;
-	f32 drop_y;
+	uint32 id;
+	int32 justify;
+	float32 w;
+	float32 h;
+	float32 space;
+	float32 drop_x;
+	float32 drop_y;
 	color32u c;
 	color32u drop_c;
 };
@@ -162,42 +162,42 @@ struct render_context
 	xVec3 loc;
 	xVec3 size;
 	xVec3 rot;
-	f32 r;
-	f32 g;
-	f32 b;
-	f32 a;
+	float32 r;
+	float32 g;
+	float32 b;
+	float32 a;
 };
 
 struct xVec2
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct meter_asset : asset
 {
-	f32 start_value;
-	f32 min_value;
-	f32 max_value;
-	f32 increment_time;
-	f32 decrement_time;
+	float32 start_value;
+	float32 min_value;
+	float32 max_value;
+	float32 increment_time;
+	float32 decrement_time;
 	_class_0 sound;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct basic_rect
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct _anon1
@@ -206,10 +206,10 @@ struct _anon1
 
 struct _class_0
 {
-	u32 start_increment;
-	u32 increment;
-	u32 start_decrement;
-	u32 decrement;
+	uint32 start_increment;
+	uint32 increment;
+	uint32 start_decrement;
+	uint32 decrement;
 };
 
 struct _anon2
@@ -218,50 +218,50 @@ struct _anon2
 
 struct motive
 {
-	f32* value;
-	f32 delta;
-	f32 start_delta;
-	f32 max_offset;
-	f32 offset;
-	f32 accel;
+	float32* value;
+	float32 delta;
+	float32 start_delta;
+	float32 max_offset;
+	float32 offset;
+	float32 accel;
 	type_5 fp_update;
 	void* context;
-	u8 inverse;
+	uint8 inverse;
 };
 
 struct meter_widget : widget
 {
 	meter_asset& res;
-	f32 value;
-	f32 min_value;
-	f32 max_value;
-	f32 end_value;
-	f32 value_vel;
-	f32 value_accel;
-	f32 ping_delay;
-	f32 pitch;
+	float32 value;
+	float32 min_value;
+	float32 max_value;
+	float32 end_value;
+	float32 value_vel;
+	float32 value_accel;
+	float32 ping_delay;
+	float32 pitch;
 	sound_queue pings;
 };
 
 struct sound_queue
 {
 	type_4 _playing;
-	s32 head;
-	s32 tail;
+	int32 head;
+	int32 tail;
 };
 
 struct _class_1
 {
-	u8 visible;
-	u8 enabled;
+	uint8 visible;
+	uint8 enabled;
 };
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 basic_rect screen_bounds;
@@ -273,9 +273,9 @@ _anon0 __vt__Q24xhud6widget;
 _anon1 __vt__Q24xhud12meter_widget;
 
 void render(font_meter_widget* this);
-void update(font_meter_widget* this, f32 dt);
-u8 is(font_meter_widget* this, u32 id);
-u32 type();
+void update(font_meter_widget* this, float32 dt);
+uint8 is(font_meter_widget* this, uint32 id);
+uint32 type();
 void destroy(font_meter_widget* this);
 void load(xBase& data, xDynAsset& asset);
 
@@ -283,16 +283,16 @@ void load(xBase& data, xDynAsset& asset);
 // Start address: 0x2996c0
 void render(font_meter_widget* this)
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 }
 
 // update__Q24xhud17font_meter_widgetFf
 // Start address: 0x2997d0
-void update(font_meter_widget* this, f32 dt)
+void update(font_meter_widget* this, float32 dt)
 {
-	f32 a;
-	s32 new_value;
+	float32 a;
+	int32 new_value;
 	font_meter_asset& fma;
 	basic_rect bounds;
 	type_2 format_text;
@@ -300,15 +300,15 @@ void update(font_meter_widget* this, f32 dt)
 
 // is__Q24xhud17font_meter_widgetCFUi
 // Start address: 0x299a70
-u8 is(font_meter_widget* this, u32 id)
+uint8 is(font_meter_widget* this, uint32 id)
 {
-	u32 myid;
-	s8 @3845;
+	uint32 myid;
+	int8 @3845;
 }
 
 // type__Q24xhud17font_meter_widgetCFv
 // Start address: 0x299ae0
-u32 type()
+uint32 type()
 {
 }
 

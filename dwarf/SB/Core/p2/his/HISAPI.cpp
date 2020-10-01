@@ -2,7 +2,7 @@ typedef enum HISMemoryType;
 typedef enum HISStatus;
 
 
-typedef s8 type[4096];
+typedef int8 type[4096];
 
 enum HISMemoryType
 {
@@ -24,21 +24,21 @@ enum HISStatus
 };
 
 type asyncRequestBuffers;
-s8* asyncRequestBuffer;
-s32 asyncRequestCurrent;
+int8* asyncRequestBuffer;
+int32 asyncRequestCurrent;
 
 void HISFlushAsyncRequestsNoWait();
 void HISFlushAsyncRequests();
-void HISPlayExternalStreamAsync(s32 voice, s32 leftVolume, s32 rightVolume, s32 pitch, s32 flags, s32 attack, s32 release, s32 blockSize);
-void HISJoinStereoVoicesAsync(s32 voice1, s32 voice2);
-void HISResumeVoiceAsync(s32 voice);
-void HISPauseVoiceAsync(s32 voice);
-void HISStopVoiceAsync(s32 voice);
-void HISSetVoicePitchAsync(s32 voice, s32 pitch);
-void HISSetVoiceVolumeAsync(s32 voice, s32 leftVolume, s32 rightVolume);
-void HISPlayStreamAsync(s32 voice, s32 leftVolume, s32 rightVolume, s32 pitch, s32 fileIndex, s32 logicalSectorNumber, s32 dataSize, s32 flags, s32 attack, s32 release, s32 blockSize, s32 interleaveSectors);
-void HISPlaySoundAsync(s32 voice, s32 leftVolume, s32 rightVolume, s32 pitch, u32 address, s32 attack, s32 release, u8 paused);
-HISStatus HISLoadBlock(s32 fileIndex, s32 sourceBlock, s32 sourceSize, void* destinationAddress, HISMemoryType destinationType, s32 priority, s32 flags);
+void HISPlayExternalStreamAsync(int32 voice, int32 leftVolume, int32 rightVolume, int32 pitch, int32 flags, int32 attack, int32 release, int32 blockSize);
+void HISJoinStereoVoicesAsync(int32 voice1, int32 voice2);
+void HISResumeVoiceAsync(int32 voice);
+void HISPauseVoiceAsync(int32 voice);
+void HISStopVoiceAsync(int32 voice);
+void HISSetVoicePitchAsync(int32 voice, int32 pitch);
+void HISSetVoiceVolumeAsync(int32 voice, int32 leftVolume, int32 rightVolume);
+void HISPlayStreamAsync(int32 voice, int32 leftVolume, int32 rightVolume, int32 pitch, int32 fileIndex, int32 logicalSectorNumber, int32 dataSize, int32 flags, int32 attack, int32 release, int32 blockSize, int32 interleaveSectors);
+void HISPlaySoundAsync(int32 voice, int32 leftVolume, int32 rightVolume, int32 pitch, uint32 address, int32 attack, int32 release, uint8 paused);
+HISStatus HISLoadBlock(int32 fileIndex, int32 sourceBlock, int32 sourceSize, void* destinationAddress, HISMemoryType destinationType, int32 priority, int32 flags);
 
 // HISFlushAsyncRequestsNoWait__Fv
 // Start address: 0x34b5a0
@@ -54,63 +54,63 @@ void HISFlushAsyncRequests()
 
 // HISPlayExternalStreamAsync__Fiiiiiiii
 // Start address: 0x34b630
-void HISPlayExternalStreamAsync(s32 voice, s32 leftVolume, s32 rightVolume, s32 pitch, s32 flags, s32 attack, s32 release, s32 blockSize)
+void HISPlayExternalStreamAsync(int32 voice, int32 leftVolume, int32 rightVolume, int32 pitch, int32 flags, int32 attack, int32 release, int32 blockSize)
 {
 }
 
 // HISJoinStereoVoicesAsync__Fii
 // Start address: 0x34b690
-void HISJoinStereoVoicesAsync(s32 voice1, s32 voice2)
+void HISJoinStereoVoicesAsync(int32 voice1, int32 voice2)
 {
 }
 
 // HISResumeVoiceAsync__Fi
 // Start address: 0x34b6d0
-void HISResumeVoiceAsync(s32 voice)
+void HISResumeVoiceAsync(int32 voice)
 {
 }
 
 // HISPauseVoiceAsync__Fi
 // Start address: 0x34b710
-void HISPauseVoiceAsync(s32 voice)
+void HISPauseVoiceAsync(int32 voice)
 {
 }
 
 // HISStopVoiceAsync__Fi
 // Start address: 0x34b750
-void HISStopVoiceAsync(s32 voice)
+void HISStopVoiceAsync(int32 voice)
 {
 }
 
 // HISSetVoicePitchAsync__Fii
 // Start address: 0x34b790
-void HISSetVoicePitchAsync(s32 voice, s32 pitch)
+void HISSetVoicePitchAsync(int32 voice, int32 pitch)
 {
 }
 
 // HISSetVoiceVolumeAsync__Fiii
 // Start address: 0x34b7d0
-void HISSetVoiceVolumeAsync(s32 voice, s32 leftVolume, s32 rightVolume)
+void HISSetVoiceVolumeAsync(int32 voice, int32 leftVolume, int32 rightVolume)
 {
 }
 
 // HISPlayStreamAsync__Fiiiiiiiiiiii
 // Start address: 0x34b810
-void HISPlayStreamAsync(s32 voice, s32 leftVolume, s32 rightVolume, s32 pitch, s32 fileIndex, s32 logicalSectorNumber, s32 dataSize, s32 flags, s32 attack, s32 release, s32 blockSize, s32 interleaveSectors)
+void HISPlayStreamAsync(int32 voice, int32 leftVolume, int32 rightVolume, int32 pitch, int32 fileIndex, int32 logicalSectorNumber, int32 dataSize, int32 flags, int32 attack, int32 release, int32 blockSize, int32 interleaveSectors)
 {
 }
 
 // HISPlaySoundAsync__FiiiiUiiib
 // Start address: 0x34b890
-void HISPlaySoundAsync(s32 voice, s32 leftVolume, s32 rightVolume, s32 pitch, u32 address, s32 attack, s32 release, u8 paused)
+void HISPlaySoundAsync(int32 voice, int32 leftVolume, int32 rightVolume, int32 pitch, uint32 address, int32 attack, int32 release, uint8 paused)
 {
 }
 
 // HISLoadBlock__FiiiPv13HISMemoryTypeii
 // Start address: 0x34b8f0
-HISStatus HISLoadBlock(s32 fileIndex, s32 sourceBlock, s32 sourceSize, void* destinationAddress, HISMemoryType destinationType, s32 priority, s32 flags)
+HISStatus HISLoadBlock(int32 fileIndex, int32 sourceBlock, int32 sourceSize, void* destinationAddress, HISMemoryType destinationType, int32 priority, int32 flags)
 {
-	s32 id;
+	int32 id;
 	HISStatus status;
 }
 

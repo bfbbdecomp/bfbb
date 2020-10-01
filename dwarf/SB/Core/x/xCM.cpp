@@ -27,95 +27,95 @@ typedef struct iColor_tag;
 typedef struct RwLinkList;
 typedef struct xCMtextbox;
 
-typedef void(*type_2)(jot&, xtextbox&, f32, f32);
+typedef void(*type_2)(jot&, xtextbox&, float32, float32);
 typedef void(*type_3)(jot&, xtextbox&, xtextbox&);
-typedef s32(*type_4)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_4)(xBase*, xBase*, uint32, float32*, xBase*);
 typedef void(*type_6)(jot&, xtextbox&, xtextbox&, split_tag&);
 
 typedef xCMtextbox type_0[2];
-typedef f32 type_1[4];
-typedef s8* type_5[5];
-typedef s8 type_7[32];
-typedef s8 type_8[32];
-typedef s8 type_9[16];
-typedef s8 type_10[16];
+typedef float32 type_1[4];
+typedef int8* type_5[5];
+typedef int8 type_7[32];
+typedef int8 type_8[32];
+typedef int8 type_9[16];
+typedef int8 type_10[16];
 
 struct xCMcredits
 {
-	u32 credits_size;
-	f32 len;
-	u32 flags;
+	uint32 credits_size;
+	float32 len;
+	uint32 flags;
 	sxy in;
 	sxy out;
-	f32 scroll_rate;
-	f32 lifetime;
+	float32 scroll_rate;
+	float32 lifetime;
 	fade fin;
 	fade fout;
-	u32 num_presets;
+	uint32 num_presets;
 };
 
 struct xCMpreset
 {
-	u16 num;
-	u16 align;
-	f32 delay;
-	f32 innerspace;
+	uint16 num;
+	uint16 align;
+	float32 delay;
+	float32 innerspace;
 	type_0 box;
 };
 
 struct xCMhunk
 {
-	u32 hunk_size;
-	u32 preset;
-	f32 t0;
-	f32 t1;
-	s8* text1;
-	s8* text2;
+	uint32 hunk_size;
+	uint32 preset;
+	float32 t0;
+	float32 t1;
+	int8* text1;
+	int8* text2;
 };
 
 struct xCMtexture
 {
-	u32 assetID;
+	uint32 assetID;
 	iColor_tag color;
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 	RwTexture* texture;
-	u32 pad;
+	uint32 pad;
 };
 
 struct _class
 {
 	union
 	{
-		u8 invisible;
-		u8 ethereal;
-		u8 merge;
-		u8 word_break;
-		u8 word_end;
-		u8 line_break;
-		u8 stop;
-		u8 tab;
+		uint8 invisible;
+		uint8 ethereal;
+		uint8 merge;
+		uint8 word_break;
+		uint8 word_end;
+		uint8 line_break;
+		uint8 stop;
+		uint8 tab;
 	};
 	union
 	{
-		u8 insert;
-		u8 dynamic;
-		u8 page_break;
-		u8 stateful;
+		uint8 insert;
+		uint8 dynamic;
+		uint8 page_break;
+		uint8 stateful;
 	};
-	u16 dummy;
+	uint16 dummy;
 };
 
 struct xCMheader
 {
-	u32 magic;
-	u32 version;
-	u32 crdID;
-	u32 state;
-	f32 total_time;
-	u32 total_size;
+	uint32 magic;
+	uint32 version;
+	uint32 crdID;
+	uint32 state;
+	float32 total_time;
+	uint32 total_size;
 };
 
 struct RwTexture
@@ -125,58 +125,58 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_7 name;
 	type_8 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct sxy
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_1 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct fade
 {
-	f32 start;
-	f32 end;
+	float32 start;
+	float32 end;
 };
 
 struct jot
 {
 	substr s;
 	_class flag;
-	u16 context_size;
+	uint16 context_size;
 	void* context;
 	basic_rect bounds;
 	basic_rect render_bounds;
@@ -196,18 +196,18 @@ struct xtextbox
 {
 	xfont font;
 	basic_rect bounds;
-	u32 flags;
-	f32 line_space;
-	f32 tab_stop;
-	f32 left_indent;
-	f32 right_indent;
+	uint32 flags;
+	float32 line_space;
+	float32 tab_stop;
+	float32 left_indent;
+	float32 right_indent;
 	callback* cb;
 	void* context;
-	s8** texts;
-	u32* text_sizes;
-	u32 texts_size;
+	int8** texts;
+	uint32* text_sizes;
+	uint32 texts_size;
 	substr text;
-	u32 text_hash;
+	uint32 text_hash;
 };
 
 struct callback
@@ -227,10 +227,10 @@ struct tag_type
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_4 eventFunc;
 };
@@ -244,33 +244,33 @@ struct RwTexDictionary
 
 struct xfont
 {
-	u32 id;
-	f32 width;
-	f32 height;
-	f32 space;
+	uint32 id;
+	float32 width;
+	float32 height;
+	float32 space;
 	iColor_tag color;
 	basic_rect clip;
 };
 
 struct basic_rect
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct xCreditsData
 {
-	u32 dummy;
+	uint32 dummy;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -282,24 +282,24 @@ struct RwLLLink
 
 struct substr
 {
-	s8* text;
-	u32 size;
+	int8* text;
+	uint32 size;
 };
 
 struct xColorUnpack
 {
-	u8 a;
-	u8 b;
-	u8 g;
-	u8 r;
+	uint8 a;
+	uint8 b;
+	uint8 g;
+	uint8 r;
 };
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 struct RwLinkList
@@ -309,7 +309,7 @@ struct RwLinkList
 
 struct xCMtextbox
 {
-	u32 font;
+	uint32 font;
 	iColor_tag color;
 	sxy char_size;
 	sxy char_spacing;
@@ -321,17 +321,17 @@ type_10 buffer;
 basic_rect screen_bounds;
 basic_rect default_adjust;
 type_5 preset_names;
-f32 dtscale;
-f32 credits_time;
+float32 dtscale;
+float32 credits_time;
 xCreditsData* credits_data;
-u32 credits_parentID;
+uint32 credits_parentID;
 callback text_cb;
 
 void xCMstop();
 void xCMstart(xCreditsData* data, xBase* parent);
 void xCMrender();
-void xCMupdate(f32 dt);
-u32 xCMrender(f32 time, xCreditsData* data);
+void xCMupdate(float32 dt);
+uint32 xCMrender(float32 time, xCreditsData* data);
 void xCMprep(xCreditsData* data);
 
 // xCMstop__Fv
@@ -354,33 +354,33 @@ void xCMrender()
 
 // xCMupdate__Ff
 // Start address: 0x3d5d40
-void xCMupdate(f32 dt)
+void xCMupdate(float32 dt)
 {
 }
 
 // xCMrender__FfP12xCreditsData
 // Start address: 0x3d5db0
-u32 xCMrender(f32 time, xCreditsData* data)
+uint32 xCMrender(float32 time, xCreditsData* data)
 {
 	xCMheader* hdr;
-	s8* dp;
+	int8* dp;
 	xCMcredits* cp;
 	xCMpreset* pp;
 	xCMhunk* hp;
-	f32 a;
+	float32 a;
 	xCMpreset* preset;
-	f32 nx;
-	f32 ny;
-	f32 x0;
-	f32 x1;
-	f32 y0;
-	f32 y1;
-	f32 ca;
+	float32 nx;
+	float32 ny;
+	float32 x0;
+	float32 x1;
+	float32 y0;
+	float32 y1;
+	float32 ca;
 	xCMtexture* tex;
 	basic_rect bounds;
 	xtextbox tb;
-	u32 alignL;
-	u32 alignR;
+	uint32 alignL;
+	uint32 alignR;
 	basic_rect bounds;
 	xtextbox tb;
 	basic_rect bounds;
@@ -392,7 +392,7 @@ u32 xCMrender(f32 time, xCreditsData* data)
 void xCMprep(xCreditsData* data)
 {
 	xCMheader* hdr;
-	s8* dp;
+	int8* dp;
 	xCMcredits* cp;
 	xCMpreset* pp;
 	xCMhunk* hp;

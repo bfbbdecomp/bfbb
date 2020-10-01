@@ -8,9 +8,9 @@ struct xCurveAsset
 {
 	xCurveType type;
 	xCurveClamp clamp;
-	f32 delta;
-	s32 numPoints;
-	f32* points;
+	float32 delta;
+	int32 numPoints;
+	float32* points;
 };
 
 enum xCurveType
@@ -26,16 +26,16 @@ enum xCurveClamp
 };
 
 
-f32 xCurveAssetEvaluate(xCurveAsset* curve_asset, f32 t);
+float32 xCurveAssetEvaluate(xCurveAsset* curve_asset, float32 t);
 
 // xCurveAssetEvaluate__FPC11xCurveAssetf
 // Start address: 0x3ade50
-f32 xCurveAssetEvaluate(xCurveAsset* curve_asset, f32 t)
+float32 xCurveAssetEvaluate(xCurveAsset* curve_asset, float32 t)
 {
-	f32 max_t;
-	f32 curve_length;
-	s32 curve_shift;
-	u32 last_point;
-	f32 u;
+	float32 max_t;
+	float32 curve_length;
+	int32 curve_shift;
+	uint32 last_point;
+	float32 u;
 }
 

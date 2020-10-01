@@ -13,18 +13,18 @@ typedef struct iSndVol;
 typedef struct xSndGlobals;
 
 
-typedef f32 type_0[5];
+typedef float32 type_0[5];
 typedef xSndVoiceInfo type_1[48];
 typedef xMat4x3 type_2[2];
-typedef s8 type_3[4];
-typedef s8 type_4[4];
-typedef s8 type_5[2048];
+typedef int8 type_3[4];
+typedef int8 type_4[4];
+typedef int8 type_5[2048];
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 enum sound_category
@@ -40,57 +40,57 @@ enum sound_category
 
 struct AudioDec
 {
-	s32 state;
+	int32 state;
 	SpuStreamHeader sshd;
 	SpuStreamBody ssbd;
-	s32 hdrCount;
-	u8* data;
-	s32 put;
-	s32 count;
-	s32 size;
-	s32 totalBytes;
-	s32 iopBuff;
-	s32 iopBuffSize;
-	s32 iopLastPos;
-	s32 iopPausePos;
-	s32 totalBytesSent;
-	s32 iopZero;
+	int32 hdrCount;
+	uint8* data;
+	int32 put;
+	int32 count;
+	int32 size;
+	int32 totalBytes;
+	int32 iopBuff;
+	int32 iopBuffSize;
+	int32 iopLastPos;
+	int32 iopPausePos;
+	int32 totalBytesSent;
+	int32 iopZero;
 };
 
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct iSndInfo
 {
-	u32 flags;
+	uint32 flags;
 	iSndVol vol;
-	u32 pitch;
-	s32 lastStreamBuffer;
+	uint32 pitch;
+	int32 lastStreamBuffer;
 };
 
 struct SpuStreamHeader
 {
 	type_3 id;
-	s32 size;
-	s32 type;
-	s32 rate;
-	s32 ch;
-	s32 interSize;
-	s32 loopStart;
-	s32 loopEnd;
+	int32 size;
+	int32 type;
+	int32 rate;
+	int32 ch;
+	int32 interSize;
+	int32 loopStart;
+	int32 loopEnd;
 };
 
 enum sound_listener_game_mode
@@ -101,56 +101,56 @@ enum sound_listener_game_mode
 
 struct xSndVoiceInfo
 {
-	u32 assetID;
-	u32 sndID;
-	u32 parentID;
+	uint32 assetID;
+	uint32 sndID;
+	uint32 parentID;
 	xVec3* parentPos;
-	s32 internalID;
-	u32 flags;
-	u16 pad;
-	u16 priority;
-	f32 vol;
-	f32 pitch;
-	u32 sample_rate;
-	u32 deadct;
+	int32 internalID;
+	uint32 flags;
+	uint16 pad;
+	uint16 priority;
+	float32 vol;
+	float32 pitch;
+	uint32 sample_rate;
+	uint32 deadct;
 	sound_category category;
 	xVec3 actualPos;
 	xVec3 playPos;
-	f32 innerRadius2;
-	f32 outerRadius2;
-	u32 lock_owner;
+	float32 innerRadius2;
+	float32 outerRadius2;
+	uint32 lock_owner;
 	iSndInfo ps;
 };
 
 struct sceSifDmaData
 {
-	u32 data;
-	u32 addr;
-	u32 size;
-	u32 mode;
+	uint32 data;
+	uint32 addr;
+	uint32 size;
+	uint32 mode;
 };
 
 struct SpuStreamBody
 {
 	type_4 id;
-	s32 size;
+	int32 size;
 };
 
 struct iSndVol
 {
-	s16 volL;
-	s16 volR;
+	int16 volL;
+	int16 volR;
 };
 
 struct xSndGlobals
 {
-	u32 stereo;
-	u32 SndCount;
+	uint32 stereo;
+	uint32 SndCount;
 	type_0 categoryVolFader;
 	type_1 voice;
 	type_2 listenerMat;
 	sound_listener_game_mode listenerMode;
-	u32 suspendCD;
+	uint32 suspendCD;
 	xVec3 right;
 	xVec3 up;
 	xVec3 at;
@@ -160,56 +160,56 @@ struct xSndGlobals
 type_5 _0_buf;
 xSndGlobals gSnd;
 
-s32 sendToIOP2area(s32 pd0, s32 d0, s32 pd1, s32 d1, u8* ps0, s32 s0, u8* ps1, s32 s1);
-s32 audioDecSendToIOP(AudioDec* ad);
-s32 audioDecIsPreset(AudioDec* ad);
-void audioDecEndPut(AudioDec* ad, s32 size);
-void audioDecBeginPut(AudioDec* ad, u8** ptr0, s32* len0, u8** ptr1, s32* len1);
+int32 sendToIOP2area(int32 pd0, int32 d0, int32 pd1, int32 d1, uint8* ps0, int32 s0, uint8* ps1, int32 s1);
+int32 audioDecSendToIOP(AudioDec* ad);
+int32 audioDecIsPreset(AudioDec* ad);
+void audioDecEndPut(AudioDec* ad, int32 size);
+void audioDecBeginPut(AudioDec* ad, uint8** ptr0, int32* len0, uint8** ptr1, int32* len1);
 void audioDecReset(AudioDec* ad);
 void audioDecStart(AudioDec* ad);
-s32 audioDecDelete(AudioDec* ad);
-s32 audioDecCreate(AudioDec* ad, u8* buff, s32 buffSize, s32 iopBuffSize);
+int32 audioDecDelete(AudioDec* ad);
+int32 audioDecCreate(AudioDec* ad, uint8* buff, int32 buffSize, int32 iopBuffSize);
 
 // sendToIOP2area__FiiiiPUciPUci
 // Start address: 0x1bb9e0
-s32 sendToIOP2area(s32 pd0, s32 d0, s32 pd1, s32 d1, u8* ps0, s32 s0, u8* ps1, s32 s1)
+int32 sendToIOP2area(int32 pd0, int32 d0, int32 pd1, int32 d1, uint8* ps0, int32 s0, uint8* ps1, int32 s1)
 {
-	s32 diff;
+	int32 diff;
 }
 
 // audioDecSendToIOP__FP8AudioDec
 // Start address: 0x1bbd10
-s32 audioDecSendToIOP(AudioDec* ad)
+int32 audioDecSendToIOP(AudioDec* ad)
 {
-	s32 pd0;
-	s32 pd1;
-	s32 d0;
-	s32 d1;
-	u8* ps0;
-	s32 s1;
-	s32 count_sent;
-	s32 countAdj;
-	s32 pos;
+	int32 pd0;
+	int32 pd1;
+	int32 d0;
+	int32 d1;
+	uint8* ps0;
+	int32 s1;
+	int32 count_sent;
+	int32 countAdj;
+	int32 pos;
 }
 
 // audioDecIsPreset__FP8AudioDec
 // Start address: 0x1bbf10
-s32 audioDecIsPreset(AudioDec* ad)
+int32 audioDecIsPreset(AudioDec* ad)
 {
 }
 
 // audioDecEndPut__FP8AudioDeci
 // Start address: 0x1bbf30
-void audioDecEndPut(AudioDec* ad, s32 size)
+void audioDecEndPut(AudioDec* ad, int32 size)
 {
-	s32 hdr_add;
+	int32 hdr_add;
 }
 
 // audioDecBeginPut__FP8AudioDecPPUcPiPPUcPi
 // Start address: 0x1bbfc0
-void audioDecBeginPut(AudioDec* ad, u8** ptr0, s32* len0, u8** ptr1, s32* len1)
+void audioDecBeginPut(AudioDec* ad, uint8** ptr0, int32* len0, uint8** ptr1, int32* len1)
 {
-	s32 len;
+	int32 len;
 }
 
 // audioDecReset__FP8AudioDec
@@ -226,13 +226,13 @@ void audioDecStart(AudioDec* ad)
 
 // audioDecDelete__FP8AudioDec
 // Start address: 0x1bc1a0
-s32 audioDecDelete(AudioDec* ad)
+int32 audioDecDelete(AudioDec* ad)
 {
 }
 
 // audioDecCreate__FP8AudioDecPUcii
 // Start address: 0x1bc1e0
-s32 audioDecCreate(AudioDec* ad, u8* buff, s32 buffSize, s32 iopBuffSize)
+int32 audioDecCreate(AudioDec* ad, uint8* buff, int32 buffSize, int32 iopBuffSize)
 {
 }
 

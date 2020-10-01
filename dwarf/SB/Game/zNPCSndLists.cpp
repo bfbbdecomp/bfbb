@@ -78,15 +78,15 @@ enum en_NPC_SOUND
 struct NPCSndTrax
 {
 	en_NPC_SOUND typ_sound;
-	s8* nam_sound;
-	u32 aid_sound;
+	int8* nam_sound;
+	uint32 aid_sound;
 };
 
 struct NPCSndProp
 {
 	en_NPC_SOUND sndtype;
-	s32 flg_snd;
-	f32 tym_delayNext;
+	int32 flg_snd;
+	float32 tym_delayNext;
 };
 
 type_31 g_sndProps;

@@ -10,52 +10,52 @@ typedef struct basic_rect;
 typedef struct iColor_tag;
 typedef struct substr;
 
-typedef void(*type_0)(jot&, xtextbox&, f32, f32);
+typedef void(*type_0)(jot&, xtextbox&, float32, float32);
 typedef void(*type_1)(jot&, xtextbox&, xtextbox&);
 typedef void(*type_4)(jot&, xtextbox&, xtextbox&, split_tag&);
 
-typedef s8 type_2[16];
-typedef s8 type_3[16];
-typedef s8 type_5[32];
+typedef int8 type_2[16];
+typedef int8 type_3[16];
+typedef int8 type_5[32];
 typedef type_5 type_6[35];
-typedef u32 type_7[4096];
+typedef uint32 type_7[4096];
 
 struct _class
 {
 	union
 	{
-		u8 invisible;
-		u8 ethereal;
-		u8 merge;
-		u8 word_break;
-		u8 word_end;
-		u8 line_break;
-		u8 stop;
-		u8 tab;
+		uint8 invisible;
+		uint8 ethereal;
+		uint8 merge;
+		uint8 word_break;
+		uint8 word_end;
+		uint8 line_break;
+		uint8 stop;
+		uint8 tab;
 	};
 	union
 	{
-		u8 insert;
-		u8 dynamic;
-		u8 page_break;
-		u8 stateful;
+		uint8 insert;
+		uint8 dynamic;
+		uint8 page_break;
+		uint8 stateful;
 	};
-	u16 dummy;
+	uint16 dummy;
 };
 
 struct xSB
 {
-	s8* buf;
-	u32 max;
-	s8* cur;
-	s8* disp;
+	int8* buf;
+	uint32 max;
+	int8* cur;
+	int8* disp;
 };
 
 struct jot
 {
 	substr s;
 	_class flag;
-	u16 context_size;
+	uint16 context_size;
 	void* context;
 	basic_rect bounds;
 	basic_rect render_bounds;
@@ -75,18 +75,18 @@ struct xtextbox
 {
 	xfont font;
 	basic_rect bounds;
-	u32 flags;
-	f32 line_space;
-	f32 tab_stop;
-	f32 left_indent;
-	f32 right_indent;
+	uint32 flags;
+	float32 line_space;
+	float32 tab_stop;
+	float32 left_indent;
+	float32 right_indent;
 	callback* cb;
 	void* context;
-	s8** texts;
-	u32* text_sizes;
-	u32 texts_size;
+	int8** texts;
+	uint32* text_sizes;
+	uint32 texts_size;
 	substr text;
-	u32 text_hash;
+	uint32 text_hash;
 };
 
 struct callback
@@ -106,34 +106,34 @@ struct tag_type
 
 struct xfont
 {
-	u32 id;
-	f32 width;
-	f32 height;
-	f32 space;
+	uint32 id;
+	float32 width;
+	float32 height;
+	float32 space;
 	iColor_tag color;
 	basic_rect clip;
 };
 
 struct basic_rect
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 struct substr
 {
-	s8* text;
-	u32 size;
+	int8* text;
+	uint32 size;
 };
 
 type_2 buffer;
@@ -141,7 +141,7 @@ type_3 buffer;
 basic_rect screen_bounds;
 basic_rect default_adjust;
 type_6 xStatsFieldName;
-u32 gFrameCount;
+uint32 gFrameCount;
 callback text_cb;
 iColor_tag g_WHITE;
 type_7 ourGlobals;
@@ -150,7 +150,7 @@ void xDebugTimestampScreen();
 void xDebugExit();
 void xDebugUpdate();
 void xDebugInit();
-s32 xDebugModeAdd();
+int32 xDebugModeAdd();
 void xprintf();
 
 // xDebugTimestampScreen__Fv
@@ -179,7 +179,7 @@ void xDebugInit()
 
 // xDebugModeAdd__FPCcPFv_v
 // Start address: 0x1d0bf0
-s32 xDebugModeAdd()
+int32 xDebugModeAdd()
 {
 }
 

@@ -56,53 +56,53 @@ typedef struct tag_iFile;
 typedef struct RwLinkList;
 typedef enum XFILE_READSECTOR_STATUS;
 
-typedef s32(*type_0)(void*, u32, void*, s32);
-typedef s32(*type_1)(RxPipelineNode*);
-typedef void*(*type_2)(void*, u32, void*, s32*, s32*);
+typedef int32(*type_0)(void*, uint32, void*, int32);
+typedef int32(*type_1)(RxPipelineNode*);
+typedef void*(*type_2)(void*, uint32, void*, int32*, int32*);
 typedef RwObjectHasFrame*(*type_3)(RwObjectHasFrame*);
 typedef void(*type_4)(RxPipelineNode*);
-typedef void(*type_5)(void*, u32, void*);
-typedef void(*type_6)(void*, u32);
-typedef void(*type_7)(void*, u32, void*, s8*);
-typedef s32(*type_8)(RxPipelineNode*, RxPipeline*);
-typedef u32(*type_10)(RxPipelineNode*, u32, u32, void*);
-typedef s32(*type_11)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef s32(*type_12)(RxNodeDefinition*);
+typedef void(*type_5)(void*, uint32, void*);
+typedef void(*type_6)(void*, uint32);
+typedef void(*type_7)(void*, uint32, void*, int8*);
+typedef int32(*type_8)(RxPipelineNode*, RxPipeline*);
+typedef uint32(*type_10)(RxPipelineNode*, uint32, uint32, void*);
+typedef int32(*type_11)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef int32(*type_12)(RxNodeDefinition*);
 typedef RpAtomic*(*type_13)(RpAtomic*, void*);
 typedef RpClump*(*type_14)(RpClump*, void*);
 typedef void(*type_15)(RxNodeDefinition*);
 typedef RpAtomic*(*type_19)(RpAtomic*);
-typedef void*(*type_20)(void*, u32, void*, u32, u32*);
-typedef void(*type_21)(u32, u8);
-typedef void*(*type_22)(void*, u32, void*, void*, u32, u32*);
+typedef void*(*type_20)(void*, uint32, void*, uint32, uint32*);
+typedef void(*type_21)(uint32, uint8);
+typedef void*(*type_22)(void*, uint32, void*, void*, uint32, uint32*);
 typedef void(*type_32)(tag_xFile*);
 typedef void(*type_34)(RwResEntry*);
 
-typedef s8 type_9[32];
-typedef s8 type_16[16];
-typedef s8 type_17[16];
-typedef u16 type_18[3];
-typedef u32 type_23[4];
+typedef int8 type_9[32];
+typedef int8 type_16[16];
+typedef int8 type_17[16];
+typedef uint16 type_18[3];
+typedef uint32 type_23[4];
 typedef RwTexCoords* type_24[8];
-typedef u32 type_25[2];
-typedef u32 type_26[4096];
-typedef u32 type_27[2];
-typedef s8 type_28[16];
-typedef u32 type_29[2];
-typedef s8 type_30[16];
-typedef s8 type_31[32];
-typedef s8 type_33[32];
-typedef s8 type_35[128];
+typedef uint32 type_25[2];
+typedef uint32 type_26[4096];
+typedef uint32 type_27[2];
+typedef int8 type_28[16];
+typedef uint32 type_29[2];
+typedef int8 type_30[16];
+typedef int8 type_31[32];
+typedef int8 type_33[32];
+typedef int8 type_35[128];
 typedef RxCluster type_36[1];
 
 struct RpInterpolator
 {
-	s32 flags;
-	s16 startMorphTarget;
-	s16 endMorphTarget;
-	f32 time;
-	f32 recipTime;
-	f32 position;
+	int32 flags;
+	int16 startMorphTarget;
+	int16 endMorphTarget;
+	float32 time;
+	float32 recipTime;
+	float32 position;
 };
 
 struct RwObjectHasFrame
@@ -115,15 +115,15 @@ struct RwObjectHasFrame
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct tag_xFile
@@ -137,31 +137,31 @@ struct xCutscene
 {
 	xCutsceneInfo* Info;
 	xCutsceneData* Data;
-	u32* TimeChunkOffs;
-	u32* Visibility;
+	uint32* TimeChunkOffs;
+	uint32* Visibility;
 	xCutsceneBreak* BreakList;
 	xCutsceneTime* Play;
 	xCutsceneTime* Stream;
-	u32 Waiting;
-	u32 BadReadPause;
-	f32 BadReadSpeed;
+	uint32 Waiting;
+	uint32 BadReadPause;
+	float32 BadReadSpeed;
 	void* RawBuf;
 	void* AlignBuf;
-	f32 Time;
-	f32 CamTime;
-	u32 PlayIndex;
-	u32 Ready;
-	s32 DataLoading;
-	u32 GotData;
-	u32 ShutDownWait;
-	f32 PlaybackSpeed;
-	u32 Opened;
+	float32 Time;
+	float32 CamTime;
+	uint32 PlayIndex;
+	uint32 Ready;
+	int32 DataLoading;
+	uint32 GotData;
+	uint32 ShutDownWait;
+	float32 PlaybackSpeed;
+	uint32 Opened;
 	tag_xFile File;
-	s32 AsyncID;
+	int32 AsyncID;
 	void* MemBuf;
 	void* MemCurr;
-	u32 SndStarted;
-	u32 SndNumChannel;
+	uint32 SndStarted;
+	uint32 SndNumChannel;
 	type_25 SndChannelReq;
 	type_27 SndAssetID;
 	type_29 SndHandle;
@@ -170,62 +170,62 @@ struct xCutscene
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
 struct RpMaterialList
 {
 	RpMaterial** materials;
-	s32 numMaterials;
-	s32 space;
+	int32 numMaterials;
+	int32 space;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct RxPipelineNodeParam
@@ -236,12 +236,12 @@ struct RxPipelineNodeParam
 
 struct xCutsceneData
 {
-	u32 DataType;
-	u32 AssetID;
-	u32 ChunkSize;
+	uint32 DataType;
+	uint32 AssetID;
+	uint32 ChunkSize;
 	union
 	{
-		u32 FileOffset;
+		uint32 FileOffset;
 		void* DataPtr;
 	};
 };
@@ -252,40 +252,40 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RwTexCoords
 {
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct RpClump
@@ -302,25 +302,25 @@ struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_23 pad;
 };
 
 struct xCutsceneInfo
 {
-	u32 Magic;
-	u32 AssetID;
-	u32 NumData;
-	u32 NumTime;
-	u32 MaxModel;
-	u32 MaxBufEven;
-	u32 MaxBufOdd;
-	u32 HeaderSize;
-	u32 VisCount;
-	u32 VisSize;
-	u32 BreakCount;
-	u32 pad;
+	uint32 Magic;
+	uint32 AssetID;
+	uint32 NumData;
+	uint32 NumTime;
+	uint32 MaxModel;
+	uint32 MaxBufEven;
+	uint32 MaxBufOdd;
+	uint32 HeaderSize;
+	uint32 VisCount;
+	uint32 VisSize;
+	uint32 BreakCount;
+	uint32 pad;
 	type_16 SoundLeft;
 	type_17 SoundRight;
 };
@@ -328,13 +328,13 @@ struct xCutsceneInfo
 struct RpGeometry
 {
 	RwObject object;
-	u32 flags;
-	u16 lockedSinceLastInst;
-	s16 refCount;
-	s32 numTriangles;
-	s32 numVertices;
-	s32 numMorphTargets;
-	s32 numTexCoordSets;
+	uint32 flags;
+	uint16 lockedSinceLastInst;
+	int16 refCount;
+	int32 numTriangles;
+	int32 numVertices;
+	int32 numMorphTargets;
+	int32 numTexCoordSets;
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
@@ -346,17 +346,17 @@ struct RpGeometry
 
 struct xCutsceneTime
 {
-	f32 StartTime;
-	f32 EndTime;
-	u32 NumData;
-	u32 ChunkIndex;
+	float32 StartTime;
+	float32 EndTime;
+	uint32 NumData;
+	uint32 ChunkIndex;
 };
 
 struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 struct RpAtomic
@@ -370,8 +370,8 @@ struct RpAtomic
 	RwLLLink inClumpLink;
 	type_19 renderCallBack;
 	RpInterpolator interpolator;
-	u16 renderFrame;
-	u16 pad;
+	uint16 renderFrame;
+	uint16 pad;
 	RwLinkList llWorldSectorsInAtomic;
 	RxPipeline* pipeline;
 };
@@ -386,15 +386,15 @@ struct RpMorphTarget
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct xCutsceneBreak
 {
-	f32 Time;
-	s32 Index;
+	float32 Time;
+	int32 Index;
 };
 
 struct rxReq
@@ -403,32 +403,32 @@ struct rxReq
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 enum RxClusterValidityReq
@@ -442,22 +442,22 @@ enum RxClusterValidityReq
 struct XCSNNosey
 {
 	void* userdata;
-	s32 flg_nosey;
+	int32 flg_nosey;
 };
 
 struct RpTriangle
 {
 	type_18 vertIndex;
-	s16 matIndex;
+	int16 matIndex;
 };
 
 struct st_PKR_ASSET_TOCINFO
 {
-	u32 aid;
+	uint32 aid;
 	st_PACKER_ASSETTYPE* typeref;
-	u32 sector;
-	u32 plus_offset;
-	u32 size;
+	uint32 sector;
+	uint32 plus_offset;
+	uint32 size;
 	void* mempos;
 };
 
@@ -478,9 +478,9 @@ enum RxClusterValid
 
 struct st_PACKER_ASSETTYPE
 {
-	u32 typetag;
-	u32 tflags;
-	s32 typalign;
+	uint32 typetag;
+	uint32 tflags;
+	int32 typalign;
 	type_20 readXForm;
 	type_22 writeXForm;
 	type_0 assetLoaded;
@@ -493,7 +493,7 @@ struct st_PACKER_ASSETTYPE
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_34 destroyNotify;
@@ -517,16 +517,16 @@ enum RxClusterForcePresent
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 struct RwSphere
 {
 	RwV3d center;
-	f32 radius;
+	float32 radius;
 };
 
 struct RwTexDictionary
@@ -543,13 +543,13 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_31 name;
 	type_33 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
@@ -558,15 +558,15 @@ struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -578,10 +578,10 @@ struct RwLLLink
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
@@ -598,34 +598,34 @@ struct RxNodeMethods
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_36 clusters;
 };
 
 struct tag_iFile
 {
-	u32 flags;
+	uint32 flags;
 	type_35 path;
-	s32 fd;
-	s32 offset;
-	s32 length;
+	int32 fd;
+	int32 offset;
+	int32 length;
 };
 
 struct RwLinkList
@@ -651,25 +651,25 @@ type_13 FastPipeAtomicCB;
 type_26 ourGlobals;
 xCutscene sActiveCutscene;
 
-s32 iCSLoadStep(xCutscene* csn);
+int32 iCSLoadStep(xCutscene* csn);
 RpAtomic* FastPipeAtomicCB(RpAtomic* atomic);
 void iCSFileClose(xCutscene* csn);
-void iCSFileAsyncRead(xCutscene* csn, void* dest, u32 size);
-u32 iCSFileOpen(xCutscene* csn);
+void iCSFileAsyncRead(xCutscene* csn, void* dest, uint32 size);
+uint32 iCSFileOpen(xCutscene* csn);
 void iCSAsyncReadCB();
-void iCSSoundCutsceneCB(u32 id, u8 first);
-void* iCSSoundGetData(xCutscene* csn, u32 channel, u32 chunk);
+void iCSSoundCutsceneCB(uint32 id, uint8 first);
+void* iCSSoundGetData(xCutscene* csn, uint32 channel, uint32 chunk);
 
 // iCSLoadStep__FP9xCutscene
 // Start address: 0x34b9a0
-s32 iCSLoadStep(xCutscene* csn)
+int32 iCSLoadStep(xCutscene* csn)
 {
-	s32 bytes;
+	int32 bytes;
 	XFILE_READSECTOR_STATUS cdstat;
-	u32 skipAccum;
-	u32 tmpSize;
+	uint32 skipAccum;
+	uint32 tmpSize;
 	void* foundModel;
-	u32 i;
+	uint32 i;
 }
 
 // FastPipeAtomicCB__FP8RpAtomicPv
@@ -686,19 +686,19 @@ void iCSFileClose(xCutscene* csn)
 
 // iCSFileAsyncRead__FP9xCutscenePvUi
 // Start address: 0x34c100
-void iCSFileAsyncRead(xCutscene* csn, void* dest, u32 size)
+void iCSFileAsyncRead(xCutscene* csn, void* dest, uint32 size)
 {
-	u32* tp;
-	u32 i;
+	uint32* tp;
+	uint32 i;
 }
 
 // iCSFileOpen__FP9xCutscene
 // Start address: 0x34c1d0
-u32 iCSFileOpen(xCutscene* csn)
+uint32 iCSFileOpen(xCutscene* csn)
 {
-	u32 headerskip;
+	uint32 headerskip;
 	st_PKR_ASSET_TOCINFO ainfo;
-	s8* filename;
+	int8* filename;
 }
 
 // iCSAsyncReadCB__FP9tag_xFile
@@ -709,19 +709,19 @@ void iCSAsyncReadCB()
 
 // iCSSoundCutsceneCB__FUib
 // Start address: 0x34c2b0
-void iCSSoundCutsceneCB(u32 id, u8 first)
+void iCSSoundCutsceneCB(uint32 id, uint8 first)
 {
 	void* data;
 }
 
 // iCSSoundGetData__FP9xCutsceneUiUi
 // Start address: 0x34c360
-void* iCSSoundGetData(xCutscene* csn, u32 channel, u32 chunk)
+void* iCSSoundGetData(xCutscene* csn, uint32 channel, uint32 chunk)
 {
 	void* retdata;
 	xCutsceneData* data;
-	u32 dataIndex;
-	u32 numData;
-	u32 channelIndex;
+	uint32 dataIndex;
+	uint32 numData;
+	uint32 channelIndex;
 }
 

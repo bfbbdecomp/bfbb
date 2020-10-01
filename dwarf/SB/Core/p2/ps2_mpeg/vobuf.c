@@ -3,23 +3,23 @@ typedef struct VoTag;
 typedef struct VoData;
 
 
-typedef s32 type_0[15];
-typedef u32 type_1[29248];
+typedef int32 type_0[15];
+typedef uint32 type_1[29248];
 typedef type_1 type_2[2];
-typedef u8 type_3[1228800];
+typedef uint8 type_3[1228800];
 
 struct VoBuf
 {
 	VoData* data;
 	VoTag* tag;
-	s32 write;
-	s32 count;
-	s32 size;
+	int32 write;
+	int32 count;
+	int32 size;
 };
 
 struct VoTag
 {
-	s32 status;
+	int32 status;
 	type_0 dummy;
 	type_2 v;
 };
@@ -34,10 +34,10 @@ void voBufDecCount(VoBuf* f);
 VoTag* voBufGetTag(VoBuf* f);
 VoData* voBufGetData(VoBuf* f);
 void voBufIncCount(VoBuf* f);
-s32 voBufIsFull(VoBuf* f);
+int32 voBufIsFull(VoBuf* f);
 void voBufReset(VoBuf* f);
 void voBufDelete();
-void voBufCreate(VoBuf* f, VoData* data, VoTag* tag, s32 size);
+void voBufCreate(VoBuf* f, VoData* data, VoTag* tag, int32 size);
 
 // voBufDecCount__FP5VoBuf
 // Start address: 0x1bf390
@@ -65,7 +65,7 @@ void voBufIncCount(VoBuf* f)
 
 // voBufIsFull__FP5VoBuf
 // Start address: 0x1bf510
-s32 voBufIsFull(VoBuf* f)
+int32 voBufIsFull(VoBuf* f)
 {
 }
 
@@ -83,8 +83,8 @@ void voBufDelete()
 
 // voBufCreate__FP5VoBufP6VoDataP5VoTagi
 // Start address: 0x1bf550
-void voBufCreate(VoBuf* f, VoData* data, VoTag* tag, s32 size)
+void voBufCreate(VoBuf* f, VoData* data, VoTag* tag, int32 size)
 {
-	s32 i;
+	int32 i;
 }
 

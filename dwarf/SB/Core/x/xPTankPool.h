@@ -4,8 +4,8 @@
 
 void lock_block(ptank_pool__pos_color_size_uv2* this);
 void unlock_block(ptank_pool* this);
-u8 valid(ptank_pool* this);
-u8 at_block_end(ptank_pool* this);
+uint8 valid(ptank_pool* this);
+uint8 at_block_end(ptank_pool* this);
 
 // lock_block__30ptank_pool__pos_color_size_uv2Fv
 // Start address: 0x2fc960
@@ -25,13 +25,13 @@ void unlock_block(ptank_pool* this)
 
 // valid__10ptank_poolCFv
 // Start address: 0x2fca70
-u8 valid(ptank_pool* this)
+uint8 valid(ptank_pool* this)
 {
 }
 
 // at_block_end__10ptank_poolCFv
 // Start address: 0x2fca80
-u8 at_block_end(ptank_pool* this)
+uint8 at_block_end(ptank_pool* this)
 {
 }
 

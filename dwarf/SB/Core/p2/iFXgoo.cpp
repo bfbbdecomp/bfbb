@@ -69,58 +69,58 @@ typedef struct RwV2d;
 
 typedef RpClump*(*type_3)(RpClump*, void*);
 typedef void(*type_6)(RwResEntry*);
-typedef RwResEntry*(*type_7)(RxPS2AllPipeData*, RwResEntry**, u32, type_6);
-typedef u32(*type_9)(RxPipelineNode*, u32, u32, void*);
-typedef s32(*type_10)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef s32(*type_13)(RxNodeDefinition*);
-typedef s32(*type_14)(RxPS2AllPipeData*, void**, u32);
+typedef RwResEntry*(*type_7)(RxPS2AllPipeData*, RwResEntry**, uint32, type_6);
+typedef uint32(*type_9)(RxPipelineNode*, uint32, uint32, void*);
+typedef int32(*type_10)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef int32(*type_13)(RxNodeDefinition*);
+typedef int32(*type_14)(RxPS2AllPipeData*, void**, uint32);
 typedef void(*type_15)(RxNodeDefinition*);
-typedef s32(*type_16)(RxPipelineNode*);
+typedef int32(*type_16)(RxPipelineNode*);
 typedef void(*type_17)(RxPipelineNode*);
-typedef s32(*type_18)(RxPS2AllPipeData*);
-typedef s32(*type_19)(RxPipelineNode*, RxPipeline*);
-typedef s32(*type_21)(RxPS2AllPipeData*);
+typedef int32(*type_18)(RxPS2AllPipeData*);
+typedef int32(*type_19)(RxPipelineNode*, RxPipeline*);
+typedef int32(*type_21)(RxPS2AllPipeData*);
 typedef RpAtomic*(*type_22)(RpAtomic*);
-typedef s32(*type_23)(RxPS2AllPipeData*, RwMatrixTag**);
-typedef s32(*type_25)(RxPS2AllPipeData*);
-typedef s32(*type_26)(RxPS2AllPipeData*);
-typedef RwResEntry*(*type_31)(RxPS2AllPipeData*, RwResEntry**, u32, type_6);
-typedef s32(*type_35)(RxPS2AllPipeData*, void**, u32);
+typedef int32(*type_23)(RxPS2AllPipeData*, RwMatrixTag**);
+typedef int32(*type_25)(RxPS2AllPipeData*);
+typedef int32(*type_26)(RxPS2AllPipeData*);
+typedef RwResEntry*(*type_31)(RxPS2AllPipeData*, RwResEntry**, uint32, type_6);
+typedef int32(*type_35)(RxPS2AllPipeData*, void**, uint32);
 typedef RwCamera*(*type_41)(RwCamera*);
 typedef RwCamera*(*type_42)(RwCamera*);
 typedef RwObjectHasFrame*(*type_48)(RwObjectHasFrame*);
-typedef s32(*type_49)(RxPS2AllPipeData*);
+typedef int32(*type_49)(RxPS2AllPipeData*);
 
 typedef rwPS2AllClusterQuickInfo type_0[12];
 typedef rwPS2AllFieldRec type_1[12];
-typedef s8 type_2[16];
-typedef f32 type_4[2];
-typedef f32 type_5[8];
+typedef int8 type_2[16];
+typedef float32 type_4[2];
+typedef float32 type_5[8];
 typedef RwFrustumPlane type_8[6];
-typedef s8 type_11[16];
+typedef int8 type_11[16];
 typedef RwV3d type_12[8];
-typedef u16 type_20[3];
-typedef f32 type_24[2];
-typedef f32 type_27[2];
-typedef f32 type_28[2];
-typedef u8 type_29[1];
-typedef f32 type_30[2];
+typedef uint16 type_20[3];
+typedef float32 type_24[2];
+typedef float32 type_27[2];
+typedef float32 type_28[2];
+typedef uint8 type_29[1];
+typedef float32 type_30[2];
 typedef RwTexCoords* type_32[8];
 typedef rwPS2AllClusterInstanceInfo type_33[12];
-typedef u32 type_34[12];
-typedef u32 type_36[4];
-typedef u8 type_37[2];
-typedef f32 type_38[8];
-typedef u32 type_39[4096];
+typedef uint32 type_34[12];
+typedef uint32 type_36[4];
+typedef uint8 type_37[2];
+typedef float32 type_38[8];
+typedef uint32 type_39[4096];
 typedef rwPS2AllFieldRec type_40[12];
-typedef s8 type_43[32];
-typedef s8 type_44[32];
+typedef int8 type_43[32];
+typedef int8 type_44[32];
 typedef void* type_45[32];
 typedef RwResEntry* type_46[1];
 typedef RxCluster type_47[1];
-typedef f32 type_50[2];
-typedef f32 type_51[2];
-typedef f32 type_52[2];
+typedef float32 type_50[2];
+typedef float32 type_51[2];
+typedef float32 type_52[2];
 
 struct RxPS2AllPipeData
 {
@@ -130,18 +130,18 @@ struct RxPS2AllPipeData
 	RpMeshHeader* meshHeader;
 	RwMeshCache* meshCache;
 	RxInstanceFlags objInstance;
-	u32 objIdentifier;
-	f32 spExtra;
-	s32 numMorphTargets;
-	u32 fastMorphing;
-	u8 transType;
-	u8 primType;
-	u8 matModulate;
-	u8 vu1CodeIndex;
+	uint32 objIdentifier;
+	float32 spExtra;
+	int32 numMorphTargets;
+	uint32 fastMorphing;
+	uint8 transType;
+	uint8 primType;
+	uint8 matModulate;
+	uint8 vu1CodeIndex;
 	RpMesh* mesh;
 	RwResEntry** cacheEntryRef;
 	RxInstanceFlags meshInstance;
-	u32 meshIdentifier;
+	uint32 meshIdentifier;
 	RwSurfaceProperties* surfProps;
 	RwTexture* texture;
 	RwRGBA matCol;
@@ -149,19 +149,19 @@ struct RxPS2AllPipeData
 
 struct RwMeshCache
 {
-	u32 lengthOfMeshesArray;
+	uint32 lengthOfMeshesArray;
 	type_46 meshes;
 };
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct RpClump
@@ -190,30 +190,30 @@ struct RwBBox
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_6 destroyNotify;
@@ -221,45 +221,45 @@ struct RwResEntry
 
 struct rwPS2AllResEntryHeader
 {
-	s32 refCnt;
-	s32 clrCnt;
+	int32 refCnt;
+	int32 clrCnt;
 	<unknown type (0xa510)>* data;
-	u32 numVerts;
-	u32 objIdentifier;
-	u32 meshIdentifier;
-	s32 batchSize;
-	s32 numBatches;
-	s32 batchesPerTag;
-	s32 morphStart;
-	s32 morphFinish;
-	s32 morphNum;
+	uint32 numVerts;
+	uint32 objIdentifier;
+	uint32 meshIdentifier;
+	int32 batchSize;
+	int32 numBatches;
+	int32 batchesPerTag;
+	int32 morphStart;
+	int32 morphFinish;
+	int32 morphNum;
 	type_0 clquickinfo;
 	type_1 fieldRec;
 };
 
 struct RwTexCoords
 {
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RpGeometry
 {
 	RwObject object;
-	u32 flags;
-	u16 lockedSinceLastInst;
-	s16 refCount;
-	s32 numTriangles;
-	s32 numVertices;
-	s32 numMorphTargets;
-	s32 numTexCoordSets;
+	uint32 flags;
+	uint16 lockedSinceLastInst;
+	int16 refCount;
+	int32 numTriangles;
+	int32 numVertices;
+	int32 numMorphTargets;
+	int32 numTexCoordSets;
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
@@ -271,8 +271,8 @@ struct RpGeometry
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
@@ -280,7 +280,7 @@ struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_36 pad;
 };
@@ -289,39 +289,39 @@ struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 struct rwPS2AllClusterInstanceInfo
 {
-	u32 attrib;
-	u32 stride;
+	uint32 attrib;
+	uint32 stride;
 };
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 enum RpMeshHeaderFlags
@@ -338,41 +338,41 @@ enum RpMeshHeaderFlags
 
 struct RpMesh
 {
-	u16* indices;
-	u32 numIndices;
+	uint16* indices;
+	uint32 numIndices;
 	RpMaterial* material;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RpTriangle
 {
 	type_20 vertIndex;
-	s16 matIndex;
+	int16 matIndex;
 };
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct RpAtomic
@@ -386,8 +386,8 @@ struct RpAtomic
 	RwLLLink inClumpLink;
 	type_22 renderCallBack;
 	RpInterpolator interpolator;
-	u16 renderFrame;
-	u16 pad;
+	uint16 renderFrame;
+	uint16 pad;
 	RwLinkList llWorldSectorsInAtomic;
 	RxPipeline* pipeline;
 };
@@ -395,7 +395,7 @@ struct RpAtomic
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
@@ -406,34 +406,34 @@ struct rxReq
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct rwPS2AllFieldRec
 {
-	s32 numVerts;
-	s32 morphNumVerts;
-	s32 dataoffset;
-	s32 morphDataoffset;
-	s16 skip;
-	s16 morphSkip;
-	s16 reverse;
-	u8 vuoffset;
+	int32 numVerts;
+	int32 morphNumVerts;
+	int32 dataoffset;
+	int32 morphDataoffset;
+	int16 skip;
+	int16 morphSkip;
+	int16 reverse;
+	uint8 vuoffset;
 	type_29 pad;
 };
 
@@ -452,8 +452,8 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_43 name;
 	type_44 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct rxNodePS2AllMatPvtData
@@ -463,19 +463,19 @@ struct rxNodePS2AllMatPvtData
 	type_14 instanceCB;
 	type_18 bridgeCB;
 	type_21 postMeshCB;
-	s32 vifOffset;
+	int32 vifOffset;
 	void** vu1CodeArray;
-	u32 codeArrayLength;
+	uint32 codeArrayLength;
 	type_33 clinfo;
 	type_34 cliIndex;
 	RpMeshHeaderFlags pipeType;
-	u8 totallyOpaque;
-	u8 numStripes;
-	u8 sizeOnVU;
-	u8 pad0;
+	uint8 totallyOpaque;
+	uint8 numStripes;
+	uint8 sizeOnVU;
+	uint8 pad0;
 	rwPS2AllResEntryFormat strip;
 	rwPS2AllResEntryFormat list;
-	u32 magicValue;
+	uint32 magicValue;
 };
 
 enum RxNodeDefEditable
@@ -495,7 +495,7 @@ enum RxClusterValid
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
@@ -551,8 +551,8 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 enum RxClusterForcePresent
@@ -564,46 +564,46 @@ enum RxClusterForcePresent
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 struct rwPS2AllResEntryFormat
 {
-	u8 batchRound;
-	u8 stripReverse;
+	uint8 batchRound;
+	uint8 stripReverse;
 	type_37 pad;
-	u32 maxInputSize;
-	s32 batchSize;
-	s32 batchesPerTag;
-	s32 morphBatchSize;
-	s32 morphBatchesPerTag;
+	uint32 maxInputSize;
+	int32 batchSize;
+	int32 batchesPerTag;
+	int32 morphBatchSize;
+	int32 morphBatchesPerTag;
 	type_40 fieldRec;
 };
 
 struct rwPS2AllClusterQuickInfo
 {
 	<unknown type (0xa510)>* data;
-	u32 stride;
+	uint32 stride;
 };
 
 struct iFXgooParams
 {
 	xVec3 center;
-	u32 state;
-	f32 warb_time;
-	f32 alpha;
-	f32 min;
-	f32 max;
-	f32* warbc;
+	uint32 state;
+	float32 warb_time;
+	float32 alpha;
+	float32 min;
+	float32 max;
+	float32* warbc;
 };
 
 struct RwSphere
 {
 	RwV3d center;
-	f32 radius;
+	float32 radius;
 };
 
 struct RwTexDictionary
@@ -615,7 +615,7 @@ struct RwTexDictionary
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
@@ -624,7 +624,7 @@ struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 struct RwCamera
@@ -639,11 +639,11 @@ struct RwCamera
 	RwV2d viewWindow;
 	RwV2d recipViewWindow;
 	RwV2d viewOffset;
-	f32 nearPlane;
-	f32 farPlane;
-	f32 fogPlane;
-	f32 zScale;
-	f32 zShift;
+	float32 nearPlane;
+	float32 farPlane;
+	float32 fogPlane;
+	float32 zScale;
+	float32 zShift;
 	type_8 frustumPlanes;
 	RwBBox frustumBoundBox;
 	type_12 frustumCorners;
@@ -651,10 +651,10 @@ struct RwCamera
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -666,10 +666,10 @@ struct RwLLLink
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
@@ -687,44 +687,44 @@ struct RxNodeMethods
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct RwFrustumPlane
 {
 	RwPlane plane;
-	u8 closestX;
-	u8 closestY;
-	u8 closestZ;
-	u8 pad;
+	uint8 closestX;
+	uint8 closestY;
+	uint8 closestZ;
+	uint8 pad;
 };
 
 struct RwPlane
 {
 	RwV3d normal;
-	f32 distance;
+	float32 distance;
 };
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct RxPipelineNodeParam
@@ -735,21 +735,21 @@ struct RxPipelineNodeParam
 
 struct RpInterpolator
 {
-	s32 flags;
-	s16 startMorphTarget;
-	s16 endMorphTarget;
-	f32 time;
-	f32 recipTime;
-	f32 position;
+	int32 flags;
+	int16 startMorphTarget;
+	int16 endMorphTarget;
+	float32 time;
+	float32 recipTime;
+	float32 position;
 };
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_47 clusters;
 };
@@ -769,8 +769,8 @@ struct RwLinkList
 struct RpMaterialList
 {
 	RpMaterial** materials;
-	s32 numMaterials;
-	s32 space;
+	int32 numMaterials;
+	int32 space;
 };
 
 enum RwCullMode
@@ -788,8 +788,8 @@ struct rxNodePS2AllPvtData
 
 struct RwV2d
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 type_2 buffer;
@@ -797,36 +797,36 @@ type_11 buffer;
 type_5 sinRangePoint5;
 type_38 xFXWarbleParam;
 iFXgooParams gooParams;
-u32 gs_alpha_2;
+ulong32 gs_alpha_2;
 RwTexture* g_txtrGoo;
 type_23 RpAtomicPS2AllObjectSetupCallBack;
 type_49 iFXgooBridgeCallBack;
 type_35 RpMeshPS2AllInstanceCallBack;
 type_31 RpMeshPS2AllResEntryAllocCallBack;
 type_26 RpMeshPS2AllMeshInstanceTestCallBack;
-s32 FXgooPRS;
+long32 FXgooPRS;
 RxClusterDefinition RxClPS2normal;
 RxClusterDefinition RxClPS2rgba;
 RxClusterDefinition RxClPS2uv;
 RxClusterDefinition RxClPS2xyz;
 <unknown type (0xa510)>* _rwDMAPktPtr;
 void* skyUploadedCode;
-s32 skyTest_1;
-s32 skyClamp_1;
-s32 skyTex1_1;
-u32 skyUserSwitch1;
-u32 skyUserSwitch2;
+long32 skyTest_1;
+long32 skyClamp_1;
+long32 skyTex1_1;
+uint32 skyUserSwitch1;
+uint32 skyUserSwitch2;
 RwCullMode gSkyCullState;
 <unknown type (0xa510)> skyClipVect2;
 <unknown type (0xa510)> skyClipVect1;
 <unknown type (0xa510)> skyCClipVect2;
 <unknown type (0xa510)> skyCClipVect1;
-s32 skyTLClipperMode;
-s32 skyTSClipperMode;
-s32 skyPrim_State;
+int32 skyTLClipperMode;
+int32 skyTSClipperMode;
+long32 skyPrim_State;
 <unknown type (0xa510)> gifTag128;
-s32 skyAlphaTex;
-s32 skyVertexAlpha;
+int32 skyAlphaTex;
+int32 skyVertexAlpha;
 type_30 xFXanimUV2PScale;
 type_28 xFXanimUV2PTrans;
 type_27 xFXanimUV2PRotMat1;
@@ -841,10 +841,10 @@ type_39 ourGlobals;
 
 RxPipeline* iFXgooCreatePipe();
 RxPipeline* iFXgooCreateMaterialPipe();
-s32 iFXgooBridgeCallBack(RxPS2AllPipeData* ps2AllPipeData);
+int32 iFXgooBridgeCallBack(RxPS2AllPipeData* ps2AllPipeData);
 void iFXGooSceneExit();
 void iFXGooSceneSetup();
-void iFXgooSetParams(xVec3* center, u32 state, f32 warb_time, f32 alpha, f32 min, f32 max, f32* warbc);
+void iFXgooSetParams(xVec3* center, uint32 state, float32 warb_time, float32 alpha, float32 min, float32 max, float32* warbc);
 
 // iFXgooCreatePipe__Fv
 // Start address: 0x3299e0
@@ -870,38 +870,38 @@ RxPipeline* iFXgooCreateMaterialPipe()
 
 // iFXgooBridgeCallBack__FP16RxPS2AllPipeData
 // Start address: 0x329c90
-s32 iFXgooBridgeCallBack(RxPS2AllPipeData* ps2AllPipeData)
+int32 iFXgooBridgeCallBack(RxPS2AllPipeData* ps2AllPipeData)
 {
-	u32 numInitialQW;
-	u32 numUserInitialQW;
-	u32 numExtraQW;
-	u32 prim;
-	u32 primSwitch;
-	u32 fogSwitch;
+	uint32 numInitialQW;
+	uint32 numUserInitialQW;
+	uint32 numExtraQW;
+	uint32 prim;
+	uint32 primSwitch;
+	uint32 fogSwitch;
 	RwRaster* customRaster;
-	u32 tmp;
-	u32 tmp1;
+	ulong32 tmp;
+	ulong32 tmp1;
 	<unknown type (0xa510)> ltmp;
 	RwTexture* tex;
-	s32 rc;
+	int32 rc;
 	RxPS2AllPipeData* _p2apd;
 	RxPS2AllPipeData* _p2apd;
 	RwTexture* _nwtx;
 	RwRaster* _nwrs;
-	u32 cFormat;
-	s32 textureUploadSuccess;
-	u32 _itQW;
-	u32 _xaQW;
-	u32 tmp;
+	uint32 cFormat;
+	int32 textureUploadSuccess;
+	uint32 _itQW;
+	uint32 _xaQW;
+	ulong32 tmp;
 	<unknown type (0xa510)> ltmp;
 	<unknown type (0xa510)> ___ltmp;
 	<unknown type (0xa510)>* _rwDMA_local_rwDMAPktPtr;
 	<unknown type (0xa510)> ___ltmp;
 	iFXgooParams* goo;
-	f32 A;
-	f32 B;
-	f32 saved_min;
-	f32 saved_max;
+	float32 A;
+	float32 B;
+	float32 saved_min;
+	float32 saved_max;
 	<unknown type (0xa510)> ___ltmp;
 	<unknown type (0xa510)> ___ltmp;
 	<unknown type (0xa510)> ___ltmp;
@@ -915,28 +915,28 @@ s32 iFXgooBridgeCallBack(RxPS2AllPipeData* ps2AllPipeData)
 	<unknown type (0xa510)> ___ltmp;
 	RxPS2AllPipeData* _p2apd;
 	<unknown type (0xa510)> __ltmp;
-	u32 __tmp1;
-	u32 __prmTmp;
+	ulong32 __tmp1;
+	uint32 __prmTmp;
 	<unknown type (0xa510)> ___ltmp;
 	<unknown type (0xa510)> ___ltmp;
 	RxPS2AllPipeData* _p2apd;
 	<unknown type (0xa510)> __ltmp;
-	u32 __tmp1;
-	f32 __colScale;
+	ulong32 __tmp1;
+	float32 __colScale;
 	<unknown type (0xa510)> ___ltmp;
 	RxPS2AllPipeData* _p2apd;
 	<unknown type (0xa510)> __ltmp;
-	u32 __tmp1;
+	ulong32 __tmp1;
 	<unknown type (0xa510)> ___ltmp;
 	RxPS2AllPipeData* _p2apd;
 	<unknown type (0xa510)> __ltmp;
-	u32 __tmp1;
-	u32 __skySwitchFlag;
+	ulong32 __tmp1;
+	uint32 __skySwitchFlag;
 	<unknown type (0xa510)> ___ltmp;
 	<unknown type (0xa510)> ___ltmp;
 	RxPS2AllPipeData* _p2apd;
-	u32 __tmp;
-	u32 __tmp1;
+	ulong32 __tmp;
+	ulong32 __tmp1;
 	<unknown type (0xa510)> __ltmp;
 	<unknown type (0xa510)> ___ltmp;
 	<unknown type (0xa510)> ___ltmp;
@@ -949,16 +949,16 @@ s32 iFXgooBridgeCallBack(RxPS2AllPipeData* ps2AllPipeData)
 	RxPS2AllPipeData* _p2apd;
 	RxPS2AllPipeData* _p2apd;
 	void* _kohd;
-	u32 tmp;
+	ulong32 tmp;
 	<unknown type (0xa510)> ltmp;
 	<unknown type (0xa510)> ___ltmp;
 	RxPS2AllPipeData* _p2apd;
 	rwPS2AllResEntryHeader* _p2rh;
-	u32 __tmp;
-	u32 __tmp1;
+	ulong32 __tmp;
+	ulong32 __tmp1;
 	<unknown type (0xa510)> __ltmp;
 	<unknown type (0xa510)> ___ltmp;
-	u32 stat;
+	uint32 stat;
 }
 
 // iFXGooSceneExit__Fv
@@ -975,7 +975,7 @@ void iFXGooSceneSetup()
 
 // iFXgooSetParams__FP5xVec3UiffffPf
 // Start address: 0x32a690
-void iFXgooSetParams(xVec3* center, u32 state, f32 warb_time, f32 alpha, f32 min, f32 max, f32* warbc)
+void iFXgooSetParams(xVec3* center, uint32 state, float32 warb_time, float32 alpha, float32 min, float32 max, float32* warbc)
 {
 }
 

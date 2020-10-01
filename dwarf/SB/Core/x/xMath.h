@@ -2,55 +2,55 @@
 
 
 
-f32 range_limit(f32 v, f32 minv, f32 maxv);
-f32 xabs(f32 v);
-u16 range_limit(u16 v, u16 minv, u16 maxv);
-f32 xSCurve(f32 t, f32 softness);
-f32 xrmod(f32 ang);
-u32 range_limit(u32 v, u32 minv, u32 maxv);
-s32 range_limit(s32 v, s32 minv, s32 maxv);
+float32 range_limit(float32 v, float32 minv, float32 maxv);
+float32 xabs(float32 v);
+uint16 range_limit(uint16 v, uint16 minv, uint16 maxv);
+float32 xSCurve(float32 t, float32 softness);
+float32 xrmod(float32 ang);
+uint32 range_limit(uint32 v, uint32 minv, uint32 maxv);
+int32 range_limit(int32 v, int32 minv, int32 maxv);
 
 // range_limit<f>__Ffff_f
 // Start address: 0x1c4ee0
-f32 range_limit(f32 v, f32 minv, f32 maxv)
+float32 range_limit(float32 v, float32 minv, float32 maxv)
 {
 }
 
 // xabs__Ff
 // Start address: 0x1c57e0
-f32 xabs(f32 v)
+float32 xabs(float32 v)
 {
 }
 
 // range_limit<Us>__FUsUsUs_Us
 // Start address: 0x201080
-u16 range_limit(u16 v, u16 minv, u16 maxv)
+uint16 range_limit(uint16 v, uint16 minv, uint16 maxv)
 {
 }
 
 // xSCurve__Fff
 // Start address: 0x2a81b0
-f32 xSCurve(f32 t, f32 softness)
+float32 xSCurve(float32 t, float32 softness)
 {
-	f32 T2;
+	float32 T2;
 }
 
 // xrmod__Ff
 // Start address: 0x2ab4f0
-f32 xrmod(f32 ang)
+float32 xrmod(float32 ang)
 {
-	f32 frac;
+	float32 frac;
 }
 
 // range_limit<Ui>__FUiUiUi_Ui
 // Start address: 0x33b130
-u32 range_limit(u32 v, u32 minv, u32 maxv)
+uint32 range_limit(uint32 v, uint32 minv, uint32 maxv)
 {
 }
 
 // range_limit<i>__Fiii_i
 // Start address: 0x33b160
-s32 range_limit(s32 v, s32 minv, s32 maxv)
+int32 range_limit(int32 v, int32 minv, int32 maxv)
 {
 }
 

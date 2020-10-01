@@ -2,49 +2,49 @@ typedef struct RyzMemGrow;
 typedef struct xBase;
 typedef struct xLinkAsset;
 
-typedef s32(*type_1)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_1)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef f32 type_0[4];
+typedef float32 type_0[4];
 
 struct RyzMemGrow
 {
-	s32 flg_grow;
-	s32 amt;
-	s8* ptr;
+	int32 flg_grow;
+	int32 amt;
+	int8* ptr;
 	xBase* user;
-	s32 amt_last;
-	s8* ptr_last;
+	int32 amt_last;
+	int8* ptr_last;
 	xBase* user_last;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_1 eventFunc;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_0 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
-u32 g_total_alloc;
-u32 gActiveHeap;
+uint32 g_total_alloc;
+uint32 gActiveHeap;
 
 void Done(RyzMemGrow* this);
 RyzMemGrow* Resume(RyzMemGrow* this);
 RyzMemGrow* Init(RyzMemGrow* this, xBase* growuser);
 void __dl();
-void* __nw(u32 amt, RyzMemGrow* growCtxt);
+void* __nw(uint32 amt, RyzMemGrow* growCtxt);
 
 // Done__10RyzMemGrowFv
 // Start address: 0x2f2e30
@@ -72,9 +72,9 @@ void __dl()
 
 // __nw__10RyzMemDataFUiiP10RyzMemGrow
 // Start address: 0x2f2f20
-void* __nw(u32 amt, RyzMemGrow* growCtxt)
+void* __nw(uint32 amt, RyzMemGrow* growCtxt)
 {
 	void* mem;
-	s32 dogrow;
+	int32 dogrow;
 }
 

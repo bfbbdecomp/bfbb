@@ -7,7 +7,7 @@ typedef void(*type)(RwResEntry*);
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type destroyNotify;
@@ -20,11 +20,11 @@ struct RwLLLink
 };
 
 
-u32 iFMVPlay(s8* filename, u32 buttons, f32 time);
+uint32 iFMVPlay(int8* filename, uint32 buttons, float32 time);
 
 // iFMVPlay__FPcUifbb
 // Start address: 0x1aa330
-u32 iFMVPlay(s8* filename, u32 buttons, f32 time)
+uint32 iFMVPlay(int8* filename, uint32 buttons, float32 time)
 {
 	RwResEntry* repEntry;
 	RwResEntry* repEntryOwner;

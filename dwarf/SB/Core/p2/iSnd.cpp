@@ -16,35 +16,35 @@ typedef enum eSndWhereEnum;
 typedef struct iSndVol;
 typedef struct xSndGlobals;
 
-typedef void(*type_0)(void*, u32);
-typedef void(*type_2)(void*, u32, void*, s8*);
-typedef void(*type_4)(u32, u8);
-typedef void*(*type_7)(void*, u32, void*, u32, u32*);
-typedef void*(*type_8)(void*, u32, void*, void*, u32, u32*);
-typedef s32(*type_10)(void*, u32, void*, s32);
-typedef void(*type_13)(u32, u8);
-typedef void*(*type_15)(void*, u32, void*, s32*, s32*);
-typedef void(*type_19)(void*, u32, void*);
+typedef void(*type_0)(void*, uint32);
+typedef void(*type_2)(void*, uint32, void*, int8*);
+typedef void(*type_4)(uint32, uint8);
+typedef void*(*type_7)(void*, uint32, void*, uint32, uint32*);
+typedef void*(*type_8)(void*, uint32, void*, void*, uint32, uint32*);
+typedef int32(*type_10)(void*, uint32, void*, int32);
+typedef void(*type_13)(uint32, uint8);
+typedef void*(*type_15)(void*, uint32, void*, int32*, int32*);
+typedef void(*type_19)(void*, uint32, void*);
 
 typedef xSndVoiceInfo type_1[48];
 typedef xMat4x3 type_3[2];
-typedef u32 type_5[2];
-typedef s8* type_6[23];
+typedef uint32 type_5[2];
+typedef int8* type_6[23];
 typedef iSndFileInfo type_9[512];
-typedef s8 type_11[16];
-typedef s8 type_12[4];
-typedef s8 type_14[16];
+typedef int8 type_11[16];
+typedef int8 type_12[4];
+typedef int8 type_14[16];
 typedef VAGheader type_16[1];
-typedef u32 type_17[1];
-typedef s8 type_18[16];
-typedef f32 type_20[5];
+typedef uint32 type_17[1];
+typedef int8 type_18[16];
+typedef float32 type_20[5];
 
 struct iSndFileInfo
 {
-	u32 ID;
-	u32 assetID;
-	u16 sample_rate;
-	u8 is_streamed;
+	uint32 ID;
+	uint32 assetID;
+	uint16 sample_rate;
+	uint8 is_streamed;
 	union
 	{
 		_class_0 nonstream;
@@ -54,24 +54,24 @@ struct iSndFileInfo
 
 struct xSndVoiceInfo
 {
-	u32 assetID;
-	u32 sndID;
-	u32 parentID;
+	uint32 assetID;
+	uint32 sndID;
+	uint32 parentID;
 	xVec3* parentPos;
-	s32 internalID;
-	u32 flags;
-	u16 pad;
-	u16 priority;
-	f32 vol;
-	f32 pitch;
-	u32 sample_rate;
-	u32 deadct;
+	int32 internalID;
+	uint32 flags;
+	uint16 pad;
+	uint16 priority;
+	float32 vol;
+	float32 pitch;
+	uint32 sample_rate;
+	uint32 deadct;
 	sound_category category;
 	xVec3 actualPos;
 	xVec3 playPos;
-	f32 innerRadius2;
-	f32 outerRadius2;
-	u32 lock_owner;
+	float32 innerRadius2;
+	float32 outerRadius2;
+	uint32 lock_owner;
 	iSndInfo ps;
 };
 
@@ -88,47 +88,47 @@ enum sound_category
 
 struct _class_0
 {
-	u32 address;
-	u32 size;
+	uint32 address;
+	uint32 size;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct _class_1
 {
-	s32 file_index;
-	u32 lsn;
-	u32 data_size;
-	u16 stream_interleave_size;
-	u16 stream_interleave_count;
+	int32 file_index;
+	uint32 lsn;
+	uint32 data_size;
+	uint16 stream_interleave_size;
+	uint16 stream_interleave_count;
 };
 
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct st_PKR_ASSET_TOCINFO
 {
-	u32 aid;
+	uint32 aid;
 	st_PACKER_ASSETTYPE* typeref;
-	u32 sector;
-	u32 plus_offset;
-	u32 size;
+	uint32 sector;
+	uint32 plus_offset;
+	uint32 size;
 	void* mempos;
 };
 
 struct st_PACKER_ASSETTYPE
 {
-	u32 typetag;
-	u32 tflags;
-	s32 typalign;
+	uint32 typetag;
+	uint32 tflags;
+	int32 typalign;
 	type_7 readXForm;
 	type_8 writeXForm;
 	type_10 assetLoaded;
@@ -140,28 +140,28 @@ struct st_PACKER_ASSETTYPE
 
 struct SndInfo
 {
-	u32 num_effects;
-	u32 num_streams;
+	uint32 num_effects;
+	uint32 num_streams;
 	type_16 vagHeaders;
 };
 
 struct iSndInfo
 {
-	u32 flags;
+	uint32 flags;
 	iSndVol vol;
-	u32 pitch;
-	s32 lastStreamBuffer;
+	uint32 pitch;
+	int32 lastStreamBuffer;
 };
 
 struct VAGheader
 {
 	type_12 id;
-	u32 version;
-	u32 assetID;
-	u32 data_size;
-	u32 frequency;
-	u32 streamInterleaveSize;
-	u32 streamInterleaveCount;
+	uint32 version;
+	uint32 assetID;
+	uint32 data_size;
+	uint32 frequency;
+	uint32 streamInterleaveSize;
+	uint32 streamInterleaveCount;
 	type_17 reserved2;
 	type_18 name;
 };
@@ -175,11 +175,11 @@ enum sound_listener_game_mode
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 enum eSndWhereEnum
@@ -211,19 +211,19 @@ enum eSndWhereEnum
 
 struct iSndVol
 {
-	s16 volL;
-	s16 volR;
+	int16 volL;
+	int16 volR;
 };
 
 struct xSndGlobals
 {
-	u32 stereo;
-	u32 SndCount;
+	uint32 stereo;
+	uint32 SndCount;
 	type_20 categoryVolFader;
 	type_1 voice;
 	type_3 listenerMat;
 	sound_listener_game_mode listenerMode;
-	u32 suspendCD;
+	uint32 suspendCD;
 	xVec3 right;
 	xVec3 up;
 	xVec3 at;
@@ -235,28 +235,28 @@ type_14 buffer;
 type_6 gSndWhere_str;
 eSndWhereEnum gSndWhere;
 type_9 eeFiles;
-s32 eeFileCount;
+int32 eeFileCount;
 type_5 currentStatus;
 type_13 externalCallback;
-u32 currentSPUAddress;
+uint32 currentSPUAddress;
 xSndGlobals gSnd;
 
-void iSndStereo(u32 stereo);
+void iSndStereo(uint32 stereo);
 void iSndSetExternalCallback(type_4 callback);
-void iSndLoadExternalData(u32 snd, void* data, s32 forceBuffer);
+void iSndLoadExternalData(uint32 snd, void* data, int32 forceBuffer);
 void iSndWaitForDeadSounds();
-void iSndSetPitch(u32 snd, f32 pitch);
-f32 iSndGetVol(u32 snd);
-void iSndSetVol(u32 snd, f32 vol);
-void iSndStop(u32 snd);
-void iSndPause(u32 snd, u32 pause);
-u32 iSndFindFreeVoice(u32 priority, u32 flags, u32 owner);
-void iSndStartStereo(u32 id1, u32 id2, f32 pitch);
-u8 iSndIsReady(u32 id);
-u32 iSndPlay(xSndVoiceInfo* vp);
-u8 iSndIsPlayingByHandle(u32 id);
-u8 iSndIsPlaying(u32 assetID, u32 parid);
-u8 iSndIsPlaying(u32 assetID);
+void iSndSetPitch(uint32 snd, float32 pitch);
+float32 iSndGetVol(uint32 snd);
+void iSndSetVol(uint32 snd, float32 vol);
+void iSndStop(uint32 snd);
+void iSndPause(uint32 snd, uint32 pause);
+uint32 iSndFindFreeVoice(uint32 priority, uint32 flags, uint32 owner);
+void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch);
+uint8 iSndIsReady(uint32 id);
+uint32 iSndPlay(xSndVoiceInfo* vp);
+uint8 iSndIsPlayingByHandle(uint32 id);
+uint8 iSndIsPlaying(uint32 assetID, uint32 parid);
+uint8 iSndIsPlaying(uint32 assetID);
 void iSndUpdate();
 iSndVol iSndCalcVol(xSndVoiceInfo* vp);
 void iSndSetEnvironmentalEffect();
@@ -265,11 +265,11 @@ void iSndInitSceneLoaded();
 void iSndLoadFasterer();
 void iSndInit();
 void iSndSuspendCD();
-iSndFileInfo* iSndLookup(u32 id);
+iSndFileInfo* iSndLookup(uint32 id);
 
 // iSndStereo__FUi
 // Start address: 0x1b80c0
-void iSndStereo(u32 stereo)
+void iSndStereo(uint32 stereo)
 {
 }
 
@@ -281,155 +281,155 @@ void iSndSetExternalCallback(type_4 callback)
 
 // iSndLoadExternalData__FUiPCvi
 // Start address: 0x1b80e0
-void iSndLoadExternalData(u32 snd, void* data, s32 forceBuffer)
+void iSndLoadExternalData(uint32 snd, void* data, int32 forceBuffer)
 {
 	xSndVoiceInfo* vp;
-	s32 i;
+	int32 i;
 }
 
 // iSndWaitForDeadSounds__Fv
 // Start address: 0x1b81a0
 void iSndWaitForDeadSounds()
 {
-	s32 i;
-	s32 numdelay;
-	u32 zombies;
+	int32 i;
+	int32 numdelay;
+	ulong32 zombies;
 	xSndVoiceInfo* vp;
 }
 
 // iSndSetPitch__FUif
 // Start address: 0x1b8290
-void iSndSetPitch(u32 snd, f32 pitch)
+void iSndSetPitch(uint32 snd, float32 pitch)
 {
-	s32 i;
+	int32 i;
 }
 
 // iSndGetVol__FUi
 // Start address: 0x1b83e0
-f32 iSndGetVol(u32 snd)
+float32 iSndGetVol(uint32 snd)
 {
 	xSndVoiceInfo* vp;
-	s32 i;
+	int32 i;
 }
 
 // iSndSetVol__FUif
 // Start address: 0x1b8470
-void iSndSetVol(u32 snd, f32 vol)
+void iSndSetVol(uint32 snd, float32 vol)
 {
 	xSndVoiceInfo* vp;
-	s32 i;
+	int32 i;
 }
 
 // iSndStop__FUi
 // Start address: 0x1b8660
-void iSndStop(u32 snd)
+void iSndStop(uint32 snd)
 {
-	s32 i;
+	int32 i;
 }
 
 // iSndPause__FUiUi
 // Start address: 0x1b8720
-void iSndPause(u32 snd, u32 pause)
+void iSndPause(uint32 snd, uint32 pause)
 {
-	s32 i;
+	int32 i;
 }
 
 // iSndFindFreeVoice__FUiUiUi
 // Start address: 0x1b87b0
-u32 iSndFindFreeVoice(u32 priority, u32 flags, u32 owner)
+uint32 iSndFindFreeVoice(uint32 priority, uint32 flags, uint32 owner)
 {
-	u32 i;
-	u32 vlo;
-	u32 vhi;
-	u32 best;
-	u32 bestpri;
-	s32 bestvol;
+	uint32 i;
+	uint32 vlo;
+	uint32 vhi;
+	uint32 best;
+	uint32 bestpri;
+	int32 bestvol;
 	xSndVoiceInfo* vp;
 	xSndVoiceInfo* begin;
 	xSndVoiceInfo* end;
 	xSndVoiceInfo* v;
-	s32 volR;
-	s32 L;
-	s32 R;
+	int32 volR;
+	int32 L;
+	int32 R;
 }
 
 // iSndStartStereo__FUiUif
 // Start address: 0x1b8b40
-void iSndStartStereo(u32 id1, u32 id2, f32 pitch)
+void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
 {
-	s32 v1;
-	s32 v2;
+	int32 v1;
+	int32 v2;
 }
 
 // iSndIsReady__FUi
 // Start address: 0x1b8d10
-u8 iSndIsReady(u32 id)
+uint8 iSndIsReady(uint32 id)
 {
-	s32 v;
+	int32 v;
 }
 
 // iSndPlay__FP13xSndVoiceInfo
 // Start address: 0x1b8d90
-u32 iSndPlay(xSndVoiceInfo* vp)
+uint32 iSndPlay(xSndVoiceInfo* vp)
 {
 	iSndVol nvol;
-	u32 voice;
+	uint32 voice;
 	iSndFileInfo* file;
 	iSndFileInfo* file;
-	u8 loop;
-	u8 paused;
-	u32 offset;
-	u32 track;
-	u32 numTracks;
+	uint8 loop;
+	uint8 paused;
+	uint32 offset;
+	uint32 track;
+	uint32 numTracks;
 }
 
 // iSndIsPlayingByHandle__FUi
 // Start address: 0x1b91f0
-u8 iSndIsPlayingByHandle(u32 id)
+uint8 iSndIsPlayingByHandle(uint32 id)
 {
-	s32 i;
+	int32 i;
 }
 
 // iSndIsPlaying__FUiUi
 // Start address: 0x1b9260
-u8 iSndIsPlaying(u32 assetID, u32 parid)
+uint8 iSndIsPlaying(uint32 assetID, uint32 parid)
 {
-	s32 i;
+	int32 i;
 }
 
 // iSndIsPlaying__FUi
 // Start address: 0x1b92d0
-u8 iSndIsPlaying(u32 assetID)
+uint8 iSndIsPlaying(uint32 assetID)
 {
-	s32 i;
+	int32 i;
 }
 
 // iSndUpdate__Fv
 // Start address: 0x1b9330
 void iSndUpdate()
 {
-	s32 i;
+	int32 i;
 	xSndVoiceInfo* vp;
-	u8 active;
-	s32 i;
+	uint8 active;
+	int32 i;
 	xSndVoiceInfo* vp;
 	iSndVol nvol;
-	s32 i;
+	int32 i;
 	xSndVoiceInfo* vp;
-	s32 testBuffer;
+	int32 testBuffer;
 }
 
 // iSndCalcVol__FP13xSndVoiceInfo
 // Start address: 0x1b95e0
 iSndVol iSndCalcVol(xSndVoiceInfo* vp)
 {
-	f32 volL;
-	f32 volR;
+	float32 volL;
+	float32 volR;
 	xVec3 to;
-	f32 pan;
-	f32 volscale;
-	f32 fadeRange;
-	f32 tmp;
+	float32 pan;
+	float32 volscale;
+	float32 fadeRange;
+	float32 tmp;
 }
 
 // iSndSetEnvironmentalEffect__F13isound_effect
@@ -454,18 +454,18 @@ void iSndInitSceneLoaded()
 // Start address: 0x1b9940
 void iSndLoadFasterer()
 {
-	u32 size;
-	s32 index;
+	uint32 size;
+	int32 index;
 	SndInfo* sndInfo;
 	VAGheader* vagIterator;
 	st_PKR_ASSET_TOCINFO xinfo;
-	s8* hipname;
-	s32 fileIndex;
-	u32 startSPUAddress;
-	u32 totalToRead;
-	s32 i;
+	int8* hipname;
+	int32 fileIndex;
+	uint32 startSPUAddress;
+	uint32 totalToRead;
+	int32 i;
 	iSndFileInfo* file;
-	s32 i;
+	int32 i;
 	st_PKR_ASSET_TOCINFO xinfo;
 	iSndFileInfo* file;
 }
@@ -484,8 +484,8 @@ void iSndSuspendCD()
 
 // iSndLookup__FUi
 // Start address: 0x1b9bf0
-iSndFileInfo* iSndLookup(u32 id)
+iSndFileInfo* iSndLookup(uint32 id)
 {
-	s32 i;
+	int32 i;
 }
 

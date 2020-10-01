@@ -1,146 +1,146 @@
 typedef struct substr;
 
 
-typedef u8 type_0[32];
-typedef u8 type_1[32];
-typedef u8 type_2[32];
+typedef uint8 type_0[32];
+typedef uint8 type_1[32];
+typedef uint8 type_2[32];
 
 struct substr
 {
-	s8* text;
-	u32 size;
+	int8* text;
+	uint32 size;
 };
 
 
-s8* find_char(substr& s, substr& cs);
-u32 atox(substr& s, u32& read_size);
-s32 icompare(substr& s1, substr& s2);
-s32 imemcmp(void* d1, void* d2, u32 size);
-s32 xStrParseFloatList(f32* dest, s8* strbuf, s32 max);
-s8* xStrupr(s8* string);
-s32 xStricmp(s8* string1, s8* string2);
-s8* xStrTokBuffer(s8* string, s8* control, void* buffer);
-s8* xStrTok(s8* string, s8* control, s8** nextoken);
-u32 xStrHashCat(u32 prefix, s8* str);
-u32 xStrHash(s8* s, u32 size);
-u32 xStrHash(s8* str);
+int8* find_char(substr& s, substr& cs);
+uint32 atox(substr& s, uint32& read_size);
+int32 icompare(substr& s1, substr& s2);
+int32 imemcmp(void* d1, void* d2, uint32 size);
+int32 xStrParseFloatList(float32* dest, int8* strbuf, int32 max);
+int8* xStrupr(int8* string);
+int32 xStricmp(int8* string1, int8* string2);
+int8* xStrTokBuffer(int8* string, int8* control, void* buffer);
+int8* xStrTok(int8* string, int8* control, int8** nextoken);
+uint32 xStrHashCat(uint32 prefix, int8* str);
+uint32 xStrHash(int8* s, uint32 size);
+uint32 xStrHash(int8* str);
 
 // find_char__FRC6substrRC6substr
 // Start address: 0x20dda0
-s8* find_char(substr& s, substr& cs)
+int8* find_char(substr& s, substr& cs)
 {
-	s8* p;
-	s8* d;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s32 i;
-	s8* s;
+	int8* p;
+	int8* d;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int32 i;
+	int8* s;
 }
 
 // atox__FRC6substrRUi
 // Start address: 0x20e410
-u32 atox(substr& s, u32& read_size)
+uint32 atox(substr& s, uint32& read_size)
 {
-	s8* p;
-	u32 size;
-	u32 total;
-	u32 v;
+	int8* p;
+	uint32 size;
+	uint32 total;
+	uint32 v;
 }
 
 // icompare__FRC6substrRC6substr
 // Start address: 0x20e4e0
-s32 icompare(substr& s1, substr& s2)
+int32 icompare(substr& s1, substr& s2)
 {
-	u32 len;
+	uint32 len;
 }
 
 // imemcmp__FPCvPCvUi
 // Start address: 0x20e5a0
-s32 imemcmp(void* d1, void* d2, u32 size)
+int32 imemcmp(void* d1, void* d2, uint32 size)
 {
-	s8* s1;
-	s8* s2;
-	u32 i;
+	int8* s1;
+	int8* s2;
+	uint32 i;
 }
 
 // xStrParseFloatList__FPfPCci
 // Start address: 0x20e610
-s32 xStrParseFloatList(f32* dest, s8* strbuf, s32 max)
+int32 xStrParseFloatList(float32* dest, int8* strbuf, int32 max)
 {
-	s8* str;
-	s32 index;
-	s32 digits;
-	s32 negate;
-	s8* numstart;
+	int8* str;
+	int32 index;
+	int32 digits;
+	int32 negate;
+	int8* numstart;
 }
 
 // xStrupr__FPc
 // Start address: 0x20e820
-s8* xStrupr(s8* string)
+int8* xStrupr(int8* string)
 {
-	s8* p;
+	int8* p;
 }
 
 // xStricmp__FPCcPCc
 // Start address: 0x20e880
-s32 xStricmp(s8* string1, s8* string2)
+int32 xStricmp(int8* string1, int8* string2)
 {
-	s32 result;
+	int32 result;
 }
 
 // xStrTokBuffer__FPCcPCcPv
 // Start address: 0x20e980
-s8* xStrTokBuffer(s8* string, s8* control, void* buffer)
+int8* xStrTokBuffer(int8* string, int8* control, void* buffer)
 {
-	s8** nextoken;
-	s8* dest;
-	u8* str;
-	u8* ctrl;
+	int8** nextoken;
+	int8* dest;
+	uint8* str;
+	uint8* ctrl;
 	type_2 map;
-	s32 count;
+	int32 count;
 }
 
 // xStrTok__FPcPCcPPc
 // Start address: 0x20ead0
-s8* xStrTok(s8* string, s8* control, s8** nextoken)
+int8* xStrTok(int8* string, int8* control, int8** nextoken)
 {
-	u8* str;
-	u8* ctrl;
+	uint8* str;
+	uint8* ctrl;
 	type_1 map;
-	s32 count;
+	int32 count;
 }
 
 // xStrHashCat__FUiPCc
 // Start address: 0x20ec10
-u32 xStrHashCat(u32 prefix, s8* str)
+uint32 xStrHashCat(uint32 prefix, int8* str)
 {
-	u32 i;
-	s8 c;
+	uint32 i;
+	int8 c;
 }
 
 // xStrHash__FPCcUi
 // Start address: 0x20ec70
-u32 xStrHash(s8* s, u32 size)
+uint32 xStrHash(int8* s, uint32 size)
 {
-	u32 value;
-	u32 i;
-	s8 c;
+	uint32 value;
+	uint32 i;
+	int8 c;
 }
 
 // xStrHash__FPCc
 // Start address: 0x20ece0
-u32 xStrHash(s8* str)
+uint32 xStrHash(int8* str)
 {
-	u32 i;
-	s8 c;
+	uint32 i;
+	int8 c;
 }
 

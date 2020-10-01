@@ -15,31 +15,31 @@ typedef struct RwRGBAReal;
 typedef struct RwLinkList;
 
 typedef RwObjectHasFrame*(*type_1)(RwObjectHasFrame*);
-typedef s32(*type_3)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_3)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef f32 type_0[4];
-typedef f32 type_2[4];
-typedef u8 type_4[2];
+typedef float32 type_0[4];
+typedef float32 type_2[4];
+typedef uint8 type_4[2];
 
 struct iLight
 {
-	u32 type;
+	uint32 type;
 	RpLight* hw;
 	xSphere sph;
-	f32 radius_sq;
+	float32 radius_sq;
 	_xFColor color;
 	xVec3 dir;
-	f32 coneangle;
+	float32 coneangle;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_2 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct RwObjectHasFrame
@@ -52,84 +52,84 @@ struct RwObjectHasFrame
 struct RpLight
 {
 	RwObjectHasFrame object;
-	f32 radius;
+	float32 radius;
 	RwRGBAReal color;
-	f32 minusCosAngle;
+	float32 minusCosAngle;
 	RwLinkList WorldSectorsInLight;
 	RwLLLink inWorld;
-	u16 lightFrame;
-	u16 pad;
+	uint16 lightFrame;
+	uint16 pad;
 };
 
 struct _zLight : xBase
 {
-	u32 flags;
+	uint32 flags;
 	zLightAsset* tasset;
 	iLight light;
 	xBase* attached_to;
-	s32 true_idx;
-	f32* reg;
-	s32 effect_idx;
+	int32 true_idx;
+	float32* reg;
+	int32 effect_idx;
 };
 
 struct _xFColor
 {
-	f32 r;
-	f32 g;
-	f32 b;
-	f32 a;
+	float32 r;
+	float32 g;
+	float32 b;
+	float32 a;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_3 eventFunc;
 };
 
 struct zLightAsset : xBaseAsset
 {
-	u8 lightType;
-	u8 lightEffect;
+	uint8 lightType;
+	uint8 lightEffect;
 	type_4 lightPad;
-	u32 lightFlags;
+	uint32 lightFlags;
 	type_0 lightColor;
 	xVec3 lightDir;
-	f32 lightConeAngle;
+	float32 lightConeAngle;
 	xSphere lightSphere;
-	u32 attachID;
+	uint32 attachID;
 };
 
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -141,10 +141,10 @@ struct RwLLLink
 
 struct RwRGBAReal
 {
-	f32 red;
-	f32 green;
-	f32 blue;
-	f32 alpha;
+	float32 red;
+	float32 green;
+	float32 blue;
+	float32 alpha;
 };
 
 struct RwLinkList
@@ -153,7 +153,7 @@ struct RwLinkList
 };
 
 
-void zLightEffectCauldron(_zLight* zlight, f32 seconds);
+void zLightEffectCauldron(_zLight* zlight, float32 seconds);
 void zLightEffectInitCauldron(_zLight* zlight);
 void zLightEffectRandomColFast();
 void zLightEffectRandomCol();
@@ -167,10 +167,10 @@ void zLightEffectDimSlow();
 void zLightEffectStrobeFast();
 void zLightEffectStrobe();
 void zLightEffectStrobeSlow();
-void zLightEffectFlickerErratic(_zLight* zlight, f32 seconds);
-void zLightEffectFlickerSlow(_zLight* zlight, f32 seconds);
-void zLightEffectFlicker(_zLight* zlight, f32 seconds);
-void EffectFlicker(_zLight* zlight, f32 seconds, f32 min, f32 rnd);
+void zLightEffectFlickerErratic(_zLight* zlight, float32 seconds);
+void zLightEffectFlickerSlow(_zLight* zlight, float32 seconds);
+void zLightEffectFlicker(_zLight* zlight, float32 seconds);
+void EffectFlicker(_zLight* zlight, float32 seconds, float32 min, float32 rnd);
 void zLightEffectInitFlicker(_zLight* zlight);
 void zLightEffectInitRandomCol();
 void zLightEffectInitHalfDim();
@@ -179,11 +179,11 @@ void zLightEffectInitStrobe();
 
 // zLightEffectCauldron__FP7_zLightf
 // Start address: 0x180e10
-void zLightEffectCauldron(_zLight* zlight, f32 seconds)
+void zLightEffectCauldron(_zLight* zlight, float32 seconds)
 {
 	iLight* l;
-	f32* reg;
-	f32 amount;
+	float32* reg;
+	float32 amount;
 }
 
 // zLightEffectInitCauldron__FP7_zLight
@@ -266,28 +266,28 @@ void zLightEffectStrobeSlow()
 
 // zLightEffectFlickerErratic__FP7_zLightf
 // Start address: 0x181160
-void zLightEffectFlickerErratic(_zLight* zlight, f32 seconds)
+void zLightEffectFlickerErratic(_zLight* zlight, float32 seconds)
 {
 }
 
 // zLightEffectFlickerSlow__FP7_zLightf
 // Start address: 0x181180
-void zLightEffectFlickerSlow(_zLight* zlight, f32 seconds)
+void zLightEffectFlickerSlow(_zLight* zlight, float32 seconds)
 {
 }
 
 // zLightEffectFlicker__FP7_zLightf
 // Start address: 0x1811b0
-void zLightEffectFlicker(_zLight* zlight, f32 seconds)
+void zLightEffectFlicker(_zLight* zlight, float32 seconds)
 {
 }
 
 // EffectFlicker__FP7_zLightfff
 // Start address: 0x1811e0
-void EffectFlicker(_zLight* zlight, f32 seconds, f32 min, f32 rnd)
+void EffectFlicker(_zLight* zlight, float32 seconds, float32 min, float32 rnd)
 {
 	iLight* l;
-	f32* reg;
+	float32* reg;
 }
 
 // zLightEffectInitFlicker__FP7_zLight

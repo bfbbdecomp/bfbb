@@ -12,12 +12,12 @@ typedef struct _tagp2CamStaticFollowAsset;
 typedef enum _tagTransType;
 typedef struct _tagxCamPathAsset;
 
-typedef s32(*type_1)(xBase*, xBase*, u32, f32*, xBase*);
-typedef s32(*type_4)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_1)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef int32(*type_4)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef f32 type_0[4];
-typedef u32 type_2[2];
-typedef u8 type_3[3];
+typedef float32 type_0[4];
+typedef uint32 type_2[2];
+typedef uint8 type_3[3];
 
 struct xCamAsset : xBaseAsset
 {
@@ -26,14 +26,14 @@ struct xCamAsset : xBaseAsset
 	xVec3 up;
 	xVec3 right;
 	xVec3 view_offset;
-	s16 offset_start_frames;
-	s16 offset_end_frames;
-	f32 fov;
-	f32 trans_time;
+	int16 offset_start_frames;
+	int16 offset_end_frames;
+	float32 fov;
+	float32 trans_time;
 	_tagTransType trans_type;
-	u32 flags;
-	f32 fade_up;
-	f32 fade_down;
+	uint32 flags;
+	float32 fade_up;
+	float32 fade_down;
 	union
 	{
 		_tagxCamFollowAsset cam_follow;
@@ -42,9 +42,9 @@ struct xCamAsset : xBaseAsset
 		_tagxCamPathAsset cam_path;
 		_tagp2CamStaticFollowAsset cam_staticFollow;
 	};
-	u32 valid_flags;
+	uint32 valid_flags;
 	type_2 markerid;
-	u8 cam_type;
+	uint8 cam_type;
 	type_3 pad;
 };
 
@@ -59,65 +59,65 @@ struct xSerial
 
 struct _tagxCamFollowAsset
 {
-	f32 rotation;
-	f32 distance;
-	f32 height;
-	f32 rubber_band;
-	f32 start_speed;
-	f32 end_speed;
+	float32 rotation;
+	float32 distance;
+	float32 height;
+	float32 rubber_band;
+	float32 start_speed;
+	float32 end_speed;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_1 eventFunc;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct _tagxCamShoulderAsset
 {
-	f32 distance;
-	f32 height;
-	f32 realign_speed;
-	f32 realign_delay;
+	float32 distance;
+	float32 height;
+	float32 realign_speed;
+	float32 realign_delay;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_0 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct _tagp2CamStaticAsset
 {
-	u32 unused;
+	uint32 unused;
 };
 
 struct _tagp2CamStaticFollowAsset
 {
-	f32 rubber_band;
+	float32 rubber_band;
 };
 
 enum _tagTransType
@@ -137,21 +137,21 @@ enum _tagTransType
 
 struct _tagxCamPathAsset
 {
-	u32 assetID;
-	f32 time_end;
-	f32 time_delay;
+	uint32 assetID;
+	float32 time_end;
+	float32 time_delay;
 };
 
 type_4 zCamMarkerEventCB;
 
-s32 zCamMarkerEventCB(xBase* to, u32 toEvent, f32* toParam);
+int32 zCamMarkerEventCB(xBase* to, uint32 toEvent, float32* toParam);
 void zCamMarkerLoad(zCamMarker* m, xSerial* s);
 void zCamMarkerSave(zCamMarker* m, xSerial* s);
 void zCamMarkerInit(xBase* b, xCamAsset* asset);
 
 // zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase
 // Start address: 0x310910
-s32 zCamMarkerEventCB(xBase* to, u32 toEvent, f32* toParam)
+int32 zCamMarkerEventCB(xBase* to, uint32 toEvent, float32* toParam)
 {
 }
 

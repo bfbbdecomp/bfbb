@@ -28,25 +28,25 @@ typedef enum en_GOALSTATE;
 typedef struct _anon13;
 typedef struct _anon14;
 
-typedef void(*type_0)(s32*, en_trantype*);
-typedef s32(*type_3)(xGoal*, void*, f32, void*);
-typedef s32(*type_5)(xGoal*, void*, en_trantype*, f32, void*);
-typedef s32(*type_6)(xGoal*, void*, en_trantype*, f32, void*);
-typedef s32(*type_7)(xBase*, xBase*, u32, f32*, xBase*);
+typedef void(*type_0)(int32*, en_trantype*);
+typedef int32(*type_3)(xGoal*, void*, float32, void*);
+typedef int32(*type_5)(xGoal*, void*, en_trantype*, float32, void*);
+typedef int32(*type_6)(xGoal*, void*, en_trantype*, float32, void*);
+typedef int32(*type_7)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef s8 type_1[16];
-typedef s8 type_2[16];
-typedef f32 type_4[4];
+typedef int8 type_1[16];
+typedef int8 type_2[16];
+typedef float32 type_4[4];
 typedef xGoal* type_8[5];
-typedef f32 type_9[1];
+typedef float32 type_9[1];
 typedef type_9 type_10[5];
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_7 eventFunc;
 };
@@ -54,9 +54,9 @@ struct xBase
 struct xGoal : xListItem, xFactoryInst
 {
 	xPsyche* psyche;
-	s32 goalID;
+	int32 goalID;
 	en_GOALSTATE stat;
-	s32 flg_able;
+	int32 flg_able;
 	type_6 fun_process;
 	type_3 fun_precalc;
 	type_5 fun_chkRule;
@@ -65,14 +65,14 @@ struct xGoal : xListItem, xFactoryInst
 
 struct xListItem
 {
-	s32 flg_travFilter;
+	int32 flg_travFilter;
 	xGoal* next;
 	xGoal* prev;
 };
 
 struct xFactoryInst : RyzMemData
 {
-	s32 itemType;
+	int32 itemType;
 	xFactoryInst* nextprod;
 	xFactoryInst* prevprod;
 };
@@ -114,13 +114,13 @@ struct _anon3
 
 struct zNPCGoalCommon : xGoal
 {
-	s32 flg_npcgauto;
-	s32 flg_npcgable;
-	u32 anid_played;
+	int32 flg_npcgauto;
+	int32 flg_npcgable;
+	uint32 anid_played;
 	union
 	{
-		s32 flg_info;
-		s32 flg_user;
+		int32 flg_info;
+		int32 flg_user;
 	};
 };
 
@@ -130,29 +130,29 @@ struct _anon4
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_4 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xPsyche : RyzMemData
 {
 	xBase* clt_owner;
 	xPSYNote* cb_notice;
-	s32 flg_psyche;
+	int32 flg_psyche;
 	xGoal* goallist;
 	type_8 goalstak;
 	type_10 tmr_stack;
-	s32 staktop;
+	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
-	s32 gid_safegoal;
+	int32 gid_safegoal;
 	type_0 fun_remap;
 	void* userContext;
-	s32 cnt_transLastTimestep;
+	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
 	xBase fakebase;
 };
@@ -218,12 +218,12 @@ enum PSY_BRAIN_STATUS
 
 struct RyzMemGrow
 {
-	s32 flg_grow;
-	s32 amt;
-	s8* ptr;
+	int32 flg_grow;
+	int32 amt;
+	int8* ptr;
 	xBase* user;
-	s32 amt_last;
-	s8* ptr_last;
+	int32 amt_last;
+	int8* ptr_last;
 	xBase* user_last;
 };
 
@@ -267,11 +267,11 @@ _anon13 __vt__15zNPCGoalKJBored;
 _anon8 __vt__14zNPCGoalKJIdle;
 _anon9 __vt__12zNPCGoalHere;
 
-xFactoryInst* GOALCreate_SubBoss(s32 who, RyzMemGrow* grow);
+xFactoryInst* GOALCreate_SubBoss(int32 who, RyzMemGrow* grow);
 
 // GOALCreate_SubBoss__FiP10RyzMemGrowPv
 // Start address: 0x324650
-xFactoryInst* GOALCreate_SubBoss(s32 who, RyzMemGrow* grow)
+xFactoryInst* GOALCreate_SubBoss(int32 who, RyzMemGrow* grow)
 {
 	xGoal* goal;
 }

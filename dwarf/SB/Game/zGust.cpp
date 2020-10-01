@@ -141,73 +141,73 @@ typedef struct xParEmitterCustomSettings;
 typedef RpWorldSector*(*type_0)(RpWorldSector*);
 typedef RwObjectHasFrame*(*type_1)(RwObjectHasFrame*);
 typedef void(*type_2)(RxPipelineNode*);
-typedef xBase*(*type_3)(u32);
+typedef xBase*(*type_3)(uint32);
 typedef void(*type_4)(xAnimPlay*, xAnimState*);
-typedef s32(*type_6)(RxPipelineNode*, RxPipeline*);
+typedef int32(*type_6)(RxPipelineNode*, RxPipeline*);
 typedef void(*type_7)(xAnimState*, xAnimSingle*, void*);
-typedef s8*(*type_9)(xBase*);
-typedef void(*type_10)(xAnimPlay*, xQuat*, xVec3*, s32);
-typedef s8*(*type_12)(u32);
-typedef u32(*type_14)(RxPipelineNode*, u32, u32, void*);
-typedef s32(*type_16)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef s32(*type_17)(RxNodeDefinition*);
+typedef int8*(*type_9)(xBase*);
+typedef void(*type_10)(xAnimPlay*, xQuat*, xVec3*, int32);
+typedef int8*(*type_12)(uint32);
+typedef uint32(*type_14)(RxPipelineNode*, uint32, uint32, void*);
+typedef int32(*type_16)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef int32(*type_17)(RxNodeDefinition*);
 typedef void(*type_19)(RxNodeDefinition*);
-typedef s32(*type_21)(RxPipelineNode*);
+typedef int32(*type_21)(RxPipelineNode*);
 typedef RpClump*(*type_23)(RpClump*, void*);
-typedef u32(*type_25)(u32, xAnimActiveEffect*, xAnimSingle*, void*);
-typedef s32(*type_32)(xBase*, xBase*, u32, f32*, xBase*);
-typedef void(*type_34)(xEnt*, xScene*, f32);
+typedef uint32(*type_25)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
+typedef int32(*type_32)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef void(*type_34)(xEnt*, xScene*, float32);
 typedef RpAtomic*(*type_35)(RpAtomic*);
-typedef u32(*type_36)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_37)(xEnt*, xScene*, f32, xEntCollis*);
+typedef uint32(*type_36)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_37)(xEnt*, xScene*, float32, xEntCollis*);
 typedef void(*type_38)(xEnt*, xVec3*);
-typedef void(*type_40)(xEnt*, xScene*, f32, xEntFrame*);
+typedef void(*type_40)(xEnt*, xScene*, float32, xEntFrame*);
 typedef void(*type_41)(xEnt*);
-typedef u32(*type_46)(xEnt*, xEnt*, xScene*, f32, xCollis*);
+typedef uint32(*type_46)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 typedef void(*type_47)(xEnt*, xVec3*, xMat4x3*);
 typedef void(*type_53)(xMemPool*, void*);
 typedef void(*type_60)(RwResEntry*);
-typedef s32(*type_61)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_61)(xBase*, xBase*, uint32, float32*, xBase*);
 
-typedef u8 type_5[3];
-typedef s8 type_8[16];
-typedef f32 type_11[2];
-typedef u16 type_13[3];
-typedef s8 type_15[16];
+typedef uint8 type_5[3];
+typedef int8 type_8[16];
+typedef float32 type_11[2];
+typedef uint16 type_13[3];
+typedef int8 type_15[16];
 typedef zGust* type_18[4];
-typedef f32 type_20[4];
-typedef f32 type_22[4];
+typedef float32 type_20[4];
+typedef float32 type_22[4];
 typedef RwTexCoords* type_24[8];
-typedef f32 type_26[2];
+typedef float32 type_26[2];
 typedef xVec3 type_27[3];
-typedef u8 type_28[3];
-typedef f32 type_29[2];
-typedef u8 type_30[3];
-typedef u16 type_31[3];
-typedef s8 type_33[4];
-typedef f32 type_39[16];
-typedef u8 type_42[2];
+typedef uint8 type_28[3];
+typedef float32 type_29[2];
+typedef uint8 type_30[3];
+typedef uint16 type_31[3];
+typedef int8 type_33[4];
+typedef float32 type_39[16];
+typedef uint8 type_42[2];
 typedef xAnimMultiFileEntry type_43[1];
-typedef f32 type_44[4];
-typedef u32 type_45[4];
+typedef float32 type_44[4];
+typedef uint32 type_45[4];
 typedef xVec3 type_48[4];
 typedef xParInterp type_49[1];
 typedef RwTexCoords* type_50[8];
-typedef u8 type_51[3];
+typedef uint8 type_51[3];
 typedef RpLight* type_52[2];
 typedef RwFrame* type_54[2];
-typedef s8 type_55[32];
+typedef int8 type_55[32];
 typedef xCollis type_56[18];
 typedef xParInterp type_57[4];
-typedef s8 type_58[32];
+typedef int8 type_58[32];
 typedef xParInterp type_59[4];
 typedef RxCluster type_62[1];
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RwObjectHasFrame
@@ -219,11 +219,11 @@ struct RwObjectHasFrame
 
 struct zGust : xBase
 {
-	u32 flags;
+	uint32 flags;
 	zGustAsset* asset;
 	zVolume* volume;
 	zVolume* fx_volume;
-	f32 debris_timer;
+	float32 debris_timer;
 };
 
 struct RpAtomic
@@ -237,50 +237,50 @@ struct RpAtomic
 	RwLLLink inClumpLink;
 	type_35 renderCallBack;
 	RpInterpolator interpolator;
-	u16 renderFrame;
-	u16 pad;
+	uint16 renderFrame;
+	uint16 pad;
 	RwLinkList llWorldSectorsInAtomic;
 	RxPipeline* pipeline;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct xCollis
 {
-	u32 flags;
-	u32 oid;
+	uint32 flags;
+	uint32 oid;
 	void* optr;
 	xModelInstance* mptr;
-	f32 dist;
+	float32 dist;
 	xVec3 norm;
 	xVec3 tohit;
 	xVec3 depen;
@@ -294,59 +294,59 @@ struct xCollis
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
 struct xClumpCollBSPVertInfo
 {
-	u16 atomIndex;
-	u16 meshVertIndex;
+	uint16 atomIndex;
+	uint16 meshVertIndex;
 };
 
 struct xClumpCollBSPBranchNode
 {
-	u32 leftInfo;
-	u32 rightInfo;
-	f32 leftValue;
-	f32 rightValue;
+	uint32 leftInfo;
+	uint32 rightInfo;
+	float32 leftValue;
+	float32 rightValue;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_32 eventFunc;
 };
 
 struct zGustAsset : xBaseAsset
 {
-	u32 flags;
-	u32 volumeID;
-	u32 effectID;
+	uint32 flags;
+	uint32 volumeID;
+	uint32 effectID;
 	xVec3 vel;
-	f32 fade;
-	f32 partMod;
+	float32 fade;
+	float32 partMod;
 };
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct zVolume : xVolume
@@ -356,30 +356,30 @@ struct zVolume : xVolume
 struct xClumpCollBSPTriangle
 {
 	_class_1 v;
-	u8 flags;
-	u8 platData;
-	u16 matIndex;
+	uint8 flags;
+	uint8 platData;
+	uint16 matIndex;
 };
 
 struct xScene
 {
-	u32 sceneID;
-	u16 flags;
-	u16 num_ents;
-	u16 num_trigs;
-	u16 num_stats;
-	u16 num_dyns;
-	u16 num_npcs;
-	u16 num_act_ents;
-	u16 num_nact_ents;
-	f32 gravity;
-	f32 drag;
-	f32 friction;
-	u16 num_ents_allocd;
-	u16 num_trigs_allocd;
-	u16 num_stats_allocd;
-	u16 num_dyns_allocd;
-	u16 num_npcs_allocd;
+	uint32 sceneID;
+	uint16 flags;
+	uint16 num_ents;
+	uint16 num_trigs;
+	uint16 num_stats;
+	uint16 num_dyns;
+	uint16 num_npcs;
+	uint16 num_act_ents;
+	uint16 num_nact_ents;
+	float32 gravity;
+	float32 drag;
+	float32 friction;
+	uint16 num_ents_allocd;
+	uint16 num_trigs_allocd;
+	uint16 num_stats_allocd;
+	uint16 num_dyns_allocd;
+	uint16 num_npcs_allocd;
 	xEnt** trigs;
 	xEnt** stats;
 	xEnt** dyns;
@@ -400,12 +400,12 @@ struct xAnimMultiFile : xAnimMultiFileBase
 
 struct RpInterpolator
 {
-	s32 flags;
-	s16 startMorphTarget;
-	s16 endMorphTarget;
-	f32 time;
-	f32 recipTime;
-	f32 position;
+	int32 flags;
+	int16 startMorphTarget;
+	int16 endMorphTarget;
+	float32 time;
+	float32 recipTime;
+	float32 position;
 };
 
 struct xModelInstance
@@ -415,26 +415,26 @@ struct xModelInstance
 	xModelPool* Pool;
 	xAnimPlay* Anim;
 	RpAtomic* Data;
-	u32 PipeFlags;
-	f32 RedMultiplier;
-	f32 GreenMultiplier;
-	f32 BlueMultiplier;
-	f32 Alpha;
-	f32 FadeStart;
-	f32 FadeEnd;
+	uint32 PipeFlags;
+	float32 RedMultiplier;
+	float32 GreenMultiplier;
+	float32 BlueMultiplier;
+	float32 Alpha;
+	float32 FadeStart;
+	float32 FadeEnd;
 	xSurface* Surf;
 	xModelBucket** Bucket;
 	xModelInstance* BucketNext;
 	xLightKit* LightKit;
 	void* Object;
-	u16 Flags;
-	u8 BoneCount;
-	u8 BoneIndex;
-	u8* BoneRemap;
+	uint16 Flags;
+	uint8 BoneCount;
+	uint8 BoneIndex;
+	uint8* BoneRemap;
 	RwMatrixTag* Mat;
 	xVec3 Scale;
-	u32 modelID;
-	u32 shadowID;
+	uint32 modelID;
+	uint32 shadowID;
 	RpAtomic* shadowmapAtomic;
 	_class_2 anim_coll;
 };
@@ -442,14 +442,14 @@ struct xModelInstance
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct xSerial
@@ -464,25 +464,25 @@ struct RxPipelineNodeParam
 
 struct _tagEmitVolume
 {
-	u32 emit_volumeID;
+	uint32 emit_volumeID;
 };
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct _class_0
 {
-	f32 t;
-	f32 u;
-	f32 v;
+	float32 t;
+	float32 u;
+	float32 v;
 };
 
 struct RwBBox
@@ -493,22 +493,22 @@ struct RwBBox
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct RpPolygon
 {
-	u16 matIndex;
+	uint16 matIndex;
 	type_13 vertIndex;
 };
 
 struct xQuat
 {
 	xVec3 v;
-	f32 s;
+	float32 s;
 };
 
 struct zParEmitter : xParEmitter
@@ -517,31 +517,31 @@ struct zParEmitter : xParEmitter
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_22 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xEnt : xBase
 {
 	xEntAsset* asset;
-	u16 idx;
-	u16 num_updates;
-	u8 flags;
-	u8 miscflags;
-	u8 subType;
-	u8 pflags;
-	u8 moreFlags;
-	u8 isCulled;
-	u8 driving_count;
-	u8 num_ffx;
-	u8 collType;
-	u8 collLev;
-	u8 chkby;
-	u8 penby;
+	uint16 idx;
+	uint16 num_updates;
+	uint8 flags;
+	uint8 miscflags;
+	uint8 subType;
+	uint8 pflags;
+	uint8 moreFlags;
+	uint8 isCulled;
+	uint8 driving_count;
+	uint8 num_ffx;
+	uint8 collType;
+	uint8 collLev;
+	uint8 chkby;
+	uint8 penby;
 	xModelInstance* model;
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
@@ -558,7 +558,7 @@ struct xEnt : xBase
 	type_47 transl;
 	xFFX* ffx;
 	xEnt* driver;
-	s32 driveMode;
+	int32 driveMode;
 	xShadowSimpleCache* simpShadow;
 	xEntShadow* entShadow;
 	anim_coll_data* anim_coll;
@@ -567,29 +567,29 @@ struct xEnt : xBase
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RwTexCoords
 {
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct RpMaterialList
 {
 	RpMaterial** materials;
-	s32 numMaterials;
-	s32 space;
+	int32 numMaterials;
+	int32 space;
 };
 
 struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_45 pad;
 };
@@ -601,7 +601,7 @@ struct xParGroup
 struct xModelPool
 {
 	xModelPool* Next;
-	u32 NumMatrices;
+	uint32 NumMatrices;
 	xModelInstance* List;
 };
 
@@ -617,13 +617,13 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 struct zGustData
 {
-	u32 gust_on;
+	uint32 gust_on;
 	type_18 g;
 	type_20 lerp;
 };
@@ -632,26 +632,26 @@ struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 struct xAnimTable
 {
 	xAnimTable* Next;
-	s8* Name;
+	int8* Name;
 	xAnimTransition* TransitionList;
 	xAnimState* StateList;
-	u32 AnimIndex;
-	u32 MorphIndex;
-	u32 UserFlags;
+	uint32 AnimIndex;
+	uint32 MorphIndex;
+	uint32 UserFlags;
 };
 
 struct xParEmitterAsset : xBaseAsset
 {
-	u8 emit_flags;
-	u8 emit_type;
-	u16 pad;
-	u32 propID;
+	uint8 emit_flags;
+	uint8 emit_type;
+	uint16 pad;
+	uint32 propID;
 	union
 	{
 		xPECircle e_circle;
@@ -664,12 +664,12 @@ struct xParEmitterAsset : xBaseAsset
 		xPEEntBone e_entbone;
 		xPEEntBound e_entbound;
 	};
-	u32 attachToID;
+	uint32 attachToID;
 	xVec3 pos;
 	xVec3 vel;
-	f32 vel_angle_variation;
-	u32 cull_mode;
-	f32 cull_dist_sqr;
+	float32 vel_angle_variation;
+	uint32 cull_mode;
+	float32 cull_dist_sqr;
 };
 
 union _class_1
@@ -684,34 +684,34 @@ struct xAnimTransition
 	xAnimState* Dest;
 	type_36 Conditional;
 	type_36 Callback;
-	u32 Flags;
-	u32 UserFlags;
-	f32 SrcTime;
-	f32 DestTime;
-	u16 Priority;
-	u16 QueuePriority;
-	f32 BlendRecip;
-	u16* BlendOffset;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 SrcTime;
+	float32 DestTime;
+	uint16 Priority;
+	uint16 QueuePriority;
+	float32 BlendRecip;
+	uint16* BlendOffset;
 };
 
 struct xEntAsset : xBaseAsset
 {
-	u8 flags;
-	u8 subtype;
-	u8 pflags;
-	u8 moreFlags;
-	u8 pad;
-	u32 surfaceID;
+	uint8 flags;
+	uint8 subtype;
+	uint8 pflags;
+	uint8 moreFlags;
+	uint8 pad;
+	uint32 surfaceID;
 	xVec3 ang;
 	xVec3 pos;
 	xVec3 scale;
-	f32 redMult;
-	f32 greenMult;
-	f32 blueMult;
-	f32 seeThru;
-	f32 seeThruSpeed;
-	u32 modelInfoID;
-	u32 animListID;
+	float32 redMult;
+	float32 greenMult;
+	float32 blueMult;
+	float32 seeThru;
+	float32 seeThruSpeed;
+	uint32 modelInfoID;
+	uint32 animListID;
 };
 
 struct _tagEmitOffsetPoint
@@ -734,17 +734,17 @@ struct xParEmitter : xBase
 	xParEmitterAsset* tasset;
 	xParGroup* group;
 	xParEmitterPropsAsset* prop;
-	u8 rate_mode;
-	f32 rate;
-	f32 rate_time;
-	f32 rate_fraction;
-	f32 rate_fraction_cull;
-	u8 emit_flags;
+	uint8 rate_mode;
+	float32 rate;
+	float32 rate_time;
+	float32 rate_fraction;
+	float32 rate_fraction_cull;
+	uint8 emit_flags;
 	type_28 emit_pad;
 	type_30 rot;
 	xModelTag tag;
-	f32 oocull_distance_sqr;
-	f32 distance_to_cull_sqr;
+	float32 oocull_distance_sqr;
+	float32 distance_to_cull_sqr;
 	void* attachTo;
 	xParSys* parSys;
 	void* emit_volume;
@@ -753,7 +753,7 @@ struct xParEmitter : xBase
 
 struct xParEmitterPropsAsset : xBaseAsset
 {
-	u32 parSysID;
+	uint32 parSysID;
 	union
 	{
 		xParInterp rate;
@@ -767,20 +767,20 @@ struct xParEmitterPropsAsset : xBaseAsset
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
-	u32 emit_limit;
-	f32 emit_limit_reset_time;
+	uint32 emit_limit;
+	float32 emit_limit_reset_time;
 };
 
 struct RpGeometry
 {
 	RwObject object;
-	u32 flags;
-	u16 lockedSinceLastInst;
-	s16 refCount;
-	s32 numTriangles;
-	s32 numVertices;
-	s32 numMorphTargets;
-	s32 numTexCoordSets;
+	uint32 flags;
+	uint16 lockedSinceLastInst;
+	int16 refCount;
+	int32 numTriangles;
+	int32 numVertices;
+	int32 numMorphTargets;
+	int32 numTexCoordSets;
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
@@ -793,19 +793,19 @@ struct RpGeometry
 struct xAnimState
 {
 	xAnimState* Next;
-	s8* Name;
-	u32 ID;
-	u32 Flags;
-	u32 UserFlags;
-	f32 Speed;
+	int8* Name;
+	uint32 ID;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 Speed;
 	xAnimFile* Data;
 	xAnimEffect* Effects;
 	xAnimTransitionList* Default;
 	xAnimTransitionList* List;
-	f32* BoneBlend;
-	f32* TimeSnap;
-	f32 FadeRecip;
-	u16* FadeOffset;
+	float32* BoneBlend;
+	float32* TimeSnap;
+	float32 FadeRecip;
+	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
 	type_4 BeforeEnter;
@@ -815,7 +815,7 @@ struct xAnimState
 
 struct RpWorldSector
 {
-	s32 type;
+	int32 type;
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
@@ -829,17 +829,17 @@ struct RpWorldSector
 	RwBBox tightBoundingBox;
 	RpMeshHeader* mesh;
 	RxPipeline* pipeline;
-	u16 matListWindowBase;
-	u16 numVertices;
-	u16 numPolygons;
-	u16 pad;
+	uint16 matListWindowBase;
+	uint16 numVertices;
+	uint16 numPolygons;
+	uint16 pad;
 };
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct xParSys
@@ -849,13 +849,13 @@ struct xParSys
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct RpMorphTarget
@@ -869,7 +869,7 @@ struct RpMorphTarget
 struct xBound
 {
 	xQCData qcd;
-	u8 type;
+	uint8 type;
 	type_51 pad;
 	union
 	{
@@ -889,7 +889,7 @@ struct iEnv
 	xJSPHeader* jsp;
 	type_52 light;
 	type_54 light_frame;
-	s32 memlvl;
+	int32 memlvl;
 };
 
 struct rxReq
@@ -898,14 +898,14 @@ struct rxReq
 
 struct xAnimMultiFileEntry
 {
-	u32 ID;
+	uint32 ID;
 	xAnimFile* File;
 };
 
 struct xAnimActiveEffect
 {
 	xAnimEffect* Effect;
-	u32 Handle;
+	uint32 Handle;
 };
 
 struct xEntFrame
@@ -919,28 +919,28 @@ struct xEntFrame
 	xVec3 dpos;
 	xVec3 dvel;
 	xVec3 vel;
-	u32 mode;
+	uint32 mode;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 enum RxClusterValidityReq
@@ -953,75 +953,75 @@ enum RxClusterValidityReq
 
 struct xLightKit
 {
-	u32 tagID;
-	u32 groupID;
-	u32 lightCount;
+	uint32 tagID;
+	uint32 groupID;
+	uint32 lightCount;
 	xLightKitLight* lightList;
 };
 
 struct RpVertexNormal
 {
-	s8 x;
-	s8 y;
-	s8 z;
-	u8 pad;
+	int8 x;
+	int8 y;
+	int8 z;
+	uint8 pad;
 };
 
 struct xJSPNodeInfo
 {
-	s32 originalMatIndex;
-	s32 nodeFlags;
+	int32 originalMatIndex;
+	int32 nodeFlags;
 };
 
 struct xAnimFile
 {
 	xAnimFile* Next;
-	s8* Name;
-	u32 ID;
-	u32 FileFlags;
-	f32 Duration;
-	f32 TimeOffset;
-	u16 BoneCount;
+	int8* Name;
+	uint32 ID;
+	uint32 FileFlags;
+	float32 Duration;
+	float32 TimeOffset;
+	uint16 BoneCount;
 	type_42 NumAnims;
 	void** RawData;
 };
 
 struct xPEVCyl
 {
-	f32 height;
-	f32 radius;
-	f32 deflection;
+	float32 height;
+	float32 radius;
+	float32 deflection;
 };
 
 struct xAnimSingle
 {
-	u32 SingleFlags;
+	uint32 SingleFlags;
 	xAnimState* State;
-	f32 Time;
-	f32 CurrentSpeed;
+	float32 Time;
+	float32 CurrentSpeed;
 	type_29 BilinearLerp;
 	xAnimEffect* Effect;
-	u32 ActiveCount;
-	f32 LastTime;
+	uint32 ActiveCount;
+	float32 LastTime;
 	xAnimActiveEffect* ActiveList;
 	xAnimPlay* Play;
 	xAnimTransition* Sync;
 	xAnimTransition* Tran;
 	xAnimSingle* Blend;
-	f32 BlendFactor;
-	u32 pad;
+	float32 BlendFactor;
+	uint32 pad;
 };
 
 struct xQCData
 {
-	s8 xmin;
-	s8 ymin;
-	s8 zmin;
-	s8 zmin_dup;
-	s8 xmax;
-	s8 ymax;
-	s8 zmax;
-	s8 zmax_dup;
+	int8 xmin;
+	int8 ymin;
+	int8 zmin;
+	int8 zmin_dup;
+	int8 xmax;
+	int8 ymax;
+	int8 zmax;
+	int8 zmax_dup;
 	xVec3 min;
 	xVec3 max;
 };
@@ -1034,19 +1034,19 @@ struct xBBox
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct xParInterp
 {
 	type_26 val;
-	u32 interp;
-	f32 freq;
-	f32 oofreq;
+	uint32 interp;
+	float32 freq;
+	float32 oofreq;
 };
 
 struct xShadowSimplePoly
@@ -1058,13 +1058,13 @@ struct xShadowSimplePoly
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_60 destroyNotify;
@@ -1088,34 +1088,34 @@ enum RxClusterValid
 struct xRot
 {
 	xVec3 axis;
-	f32 angle;
+	float32 angle;
 };
 
 struct xAnimMultiFileBase
 {
-	u32 Count;
+	uint32 Count;
 };
 
 struct xModelTag
 {
 	xVec3 v;
-	u32 matidx;
+	uint32 matidx;
 	type_44 wt;
 };
 
 struct xAnimEffect
 {
 	xAnimEffect* Next;
-	u32 Flags;
-	f32 StartTime;
-	f32 EndTime;
+	uint32 Flags;
+	float32 StartTime;
+	float32 EndTime;
 	type_25 Callback;
 };
 
 struct RpTriangle
 {
 	type_31 vertIndex;
-	s16 matIndex;
+	int16 matIndex;
 };
 
 enum rxEmbeddedPacketState
@@ -1130,8 +1130,8 @@ enum rxEmbeddedPacketState
 struct xJSPHeader
 {
 	type_33 idtag;
-	u32 version;
-	u32 jspNodeCount;
+	uint32 version;
+	uint32 jspNodeCount;
 	RpClump* clump;
 	xClumpCollBSPTree* colltree;
 	xJSPNodeInfo* jspNodeList;
@@ -1139,28 +1139,28 @@ struct xJSPHeader
 
 struct xPEEntBone
 {
-	u8 flags;
-	u8 type;
-	u8 bone;
-	u8 pad1;
+	uint8 flags;
+	uint8 type;
+	uint8 bone;
+	uint8 pad1;
 	xVec3 offset;
-	f32 radius;
-	f32 deflection;
+	float32 radius;
+	float32 deflection;
 };
 
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct xLightKitLight
 {
-	u32 type;
+	uint32 type;
 	RwRGBAReal color;
 	type_39 matrix;
-	f32 radius;
-	f32 angle;
+	float32 radius;
+	float32 angle;
 	RpLight* platLight;
 };
 
@@ -1174,46 +1174,46 @@ enum RxClusterForcePresent
 struct xCylinder
 {
 	xVec3 center;
-	f32 r;
-	f32 h;
+	float32 r;
+	float32 h;
 };
 
 struct xGridBound
 {
 	void* data;
-	u16 gx;
-	u16 gz;
-	u8 ingrid;
-	u8 oversize;
-	u8 deleted;
-	u8 gpad;
+	uint16 gx;
+	uint16 gz;
+	uint8 ingrid;
+	uint8 oversize;
+	uint8 deleted;
+	uint8 gpad;
 	xGridBound** head;
 	xGridBound* next;
 };
 
 struct xShadowSimpleCache
 {
-	u16 flags;
-	u8 alpha;
-	u8 pad;
-	u32 collPriority;
+	uint16 flags;
+	uint8 alpha;
+	uint8 pad;
+	uint32 collPriority;
 	xVec3 pos;
 	xVec3 at;
 	xEnt* castOnEnt;
 	xShadowSimplePoly poly;
-	f32 envHeight;
-	f32 shadowHeight;
-	u32 raster;
-	f32 dydx;
-	f32 dydz;
+	float32 envHeight;
+	float32 shadowHeight;
+	uint32 raster;
+	float32 dydx;
+	float32 dydz;
 	type_48 corner;
 };
 
 struct xAnimPlay
 {
 	xAnimPlay* Next;
-	u16 NumSingle;
-	u16 BoneCount;
+	uint16 NumSingle;
+	uint16 BoneCount;
 	xAnimSingle* Single;
 	void* Object;
 	xAnimTable* Table;
@@ -1224,17 +1224,17 @@ struct xAnimPlay
 
 struct xEntCollis
 {
-	u8 chk;
-	u8 pen;
-	u8 env_sidx;
-	u8 env_eidx;
-	u8 npc_sidx;
-	u8 npc_eidx;
-	u8 dyn_sidx;
-	u8 dyn_eidx;
-	u8 stat_sidx;
-	u8 stat_eidx;
-	u8 idx;
+	uint8 chk;
+	uint8 pen;
+	uint8 env_sidx;
+	uint8 env_eidx;
+	uint8 npc_sidx;
+	uint8 npc_eidx;
+	uint8 dyn_sidx;
+	uint8 dyn_eidx;
+	uint8 stat_sidx;
+	uint8 stat_eidx;
+	uint8 idx;
 	type_56 colls;
 	type_37 post;
 	type_46 depenq;
@@ -1248,17 +1248,17 @@ struct xBox
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 struct xClumpCollBSPTree
 {
-	u32 numBranchNodes;
+	uint32 numBranchNodes;
 	xClumpCollBSPBranchNode* branchNodes;
-	u32 numTriangles;
+	uint32 numTriangles;
 	xClumpCollBSPTriangle* triangles;
 };
 
@@ -1272,26 +1272,26 @@ struct xEnv
 struct RpLight
 {
 	RwObjectHasFrame object;
-	f32 radius;
+	float32 radius;
 	RwRGBAReal color;
-	f32 minusCosAngle;
+	float32 minusCosAngle;
 	RwLinkList WorldSectorsInLight;
 	RwLLLink inWorld;
-	u16 lightFrame;
-	u16 pad;
+	uint16 lightFrame;
+	uint16 pad;
 };
 
 struct xPECircle
 {
-	f32 radius;
-	f32 deflection;
+	float32 radius;
+	float32 deflection;
 	xVec3 dir;
 };
 
 struct RwSphere
 {
 	RwV3d center;
-	f32 radius;
+	float32 radius;
 };
 
 struct RwTexDictionary
@@ -1303,7 +1303,7 @@ struct RwTexDictionary
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
@@ -1318,10 +1318,10 @@ enum RpWorldRenderOrder
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct xFFX
@@ -1331,11 +1331,11 @@ struct xFFX
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct xSurface
@@ -1346,7 +1346,7 @@ struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 struct RwTexture
@@ -1356,19 +1356,19 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_55 name;
 	type_58 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct RpWorld
 {
 	RwObject object;
-	u32 flags;
+	uint32 flags;
 	RpWorldRenderOrder renderOrder;
 	RpMaterialList matList;
 	RpSector* rootSector;
-	s32 numTexCoordSets;
-	s32 numClumpsInWorld;
+	int32 numTexCoordSets;
+	int32 numClumpsInWorld;
 	RwLLLink* currentClumpLink;
 	RwLinkList clumpList;
 	RwLinkList lightList;
@@ -1381,15 +1381,15 @@ struct RpWorld
 
 struct RpSector
 {
-	s32 type;
+	int32 type;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -1398,8 +1398,8 @@ struct xModelBucket
 	RpAtomic* Data;
 	RpAtomic* OriginalData;
 	xModelInstance* List;
-	s32 ClipFlags;
-	u32 PipeFlags;
+	int32 ClipFlags;
+	uint32 PipeFlags;
 };
 
 struct RwLLLink
@@ -1410,7 +1410,7 @@ struct RwLLLink
 
 struct _tagEmitSphere
 {
-	f32 radius;
+	float32 radius;
 };
 
 struct xVolume : xBase
@@ -1420,10 +1420,10 @@ struct xVolume : xBase
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
@@ -1432,21 +1432,21 @@ struct xEntShadow
 	xVec3 pos;
 	xVec3 vec;
 	RpAtomic* shadowModel;
-	f32 dst_cast;
+	float32 dst_cast;
 	type_11 radius;
 };
 
 struct xMemPool
 {
 	void* FreeList;
-	u16 NextOffset;
-	u16 Flags;
+	uint16 NextOffset;
+	uint16 Flags;
 	void* UsedList;
 	type_53 InitCB;
 	void* Buffer;
-	u16 Size;
-	u16 NumRealloc;
-	u32 Total;
+	uint16 Size;
+	uint16 NumRealloc;
+	uint32 Total;
 };
 
 struct anim_coll_data
@@ -1455,11 +1455,11 @@ struct anim_coll_data
 
 struct xVolumeAsset : xBaseAsset
 {
-	u32 flags;
+	uint32 flags;
 	xBound bound;
-	f32 rot;
-	f32 xpivot;
-	f32 zpivot;
+	float32 rot;
+	float32 xpivot;
+	float32 zpivot;
 };
 
 struct RxNodeMethods
@@ -1487,56 +1487,56 @@ struct RwFrame
 
 struct _tagEmitRect
 {
-	f32 x_len;
-	f32 z_len;
+	float32 x_len;
+	float32 z_len;
 };
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_62 clusters;
 };
 
 struct xPEEntBound
 {
-	u8 flags;
-	u8 type;
-	u8 pad1;
-	u8 pad2;
-	f32 expand;
-	f32 deflection;
+	uint8 flags;
+	uint8 type;
+	uint8 pad1;
+	uint8 pad2;
+	float32 expand;
+	float32 deflection;
 };
 
 struct RwRGBAReal
 {
-	f32 red;
-	f32 green;
-	f32 blue;
-	f32 alpha;
+	float32 red;
+	float32 green;
+	float32 blue;
+	float32 alpha;
 };
 
 struct _tagEmitLine
 {
 	xVec3 pos1;
 	xVec3 pos2;
-	f32 radius;
+	float32 radius;
 };
 
 struct RwLinkList
@@ -1546,9 +1546,9 @@ struct RwLinkList
 
 struct tri_data
 {
-	u32 index;
-	f32 r;
-	f32 d;
+	uint32 index;
+	float32 r;
+	float32 d;
 };
 
 struct _class_2
@@ -1558,59 +1558,59 @@ struct _class_2
 
 struct xParEmitterCustomSettings : xParEmitterPropsAsset
 {
-	u32 custom_flags;
-	u32 attachToID;
+	uint32 custom_flags;
+	uint32 attachToID;
 	xVec3 pos;
 	xVec3 vel;
-	f32 vel_angle_variation;
+	float32 vel_angle_variation;
 	type_5 rot;
-	u8 padding;
-	f32 radius;
-	f32 emit_interval_current;
+	uint8 padding;
+	float32 radius;
+	float32 emit_interval_current;
 	void* emit_volume;
 };
 
 type_8 buffer;
 type_15 buffer;
 zGust* gusts;
-u16 ngusts;
+uint16 ngusts;
 zParEmitter* sGustDustEmitter;
 zParEmitter* sGustDebrisEmitter;
 type_61 zGustEventCB;
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
-void zGustUpdateFX(f32 seconds);
-void UpdateGustFX(zGust* g, f32 seconds);
-s32 zGustEventCB(xBase* to, u32 toEvent);
+void zGustUpdateFX(float32 seconds);
+void UpdateGustFX(zGust* g, float32 seconds);
+int32 zGustEventCB(xBase* to, uint32 toEvent);
 void zGustLoad(zGust* ent, xSerial* s);
 void zGustSave(zGust* ent, xSerial* s);
-void zGustUpdateEnt(xEnt* ent, f32 dt, void* gdata);
-zGust* zGustGetGust(u16 n);
+void zGustUpdateEnt(xEnt* ent, float32 dt, void* gdata);
+zGust* zGustGetGust(uint16 n);
 void zGustSetup();
 void zGustInit();
 
 // zGustUpdateFX__Ff
 // Start address: 0x17f090
-void zGustUpdateFX(f32 seconds)
+void zGustUpdateFX(float32 seconds)
 {
-	s32 i;
+	int32 i;
 }
 
 // UpdateGustFX__FP5zGustf
 // Start address: 0x17f110
-void UpdateGustFX(zGust* g, f32 seconds)
+void UpdateGustFX(zGust* g, float32 seconds)
 {
 	xBBox* box;
 	xParEmitterCustomSettings info;
 	zParEmitter* e;
-	s32 total_debris;
-	s32 vol_area;
-	s32 i;
+	int32 total_debris;
+	int32 vol_area;
+	int32 i;
 }
 
 // zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase
 // Start address: 0x17f460
-s32 zGustEventCB(xBase* to, u32 toEvent)
+int32 zGustEventCB(xBase* to, uint32 toEvent)
 {
 	zGust* g;
 }
@@ -1629,22 +1629,22 @@ void zGustSave(zGust* ent, xSerial* s)
 
 // zGustUpdateEnt__FP4xEntP6xScenefPv
 // Start address: 0x17f550
-void zGustUpdateEnt(xEnt* ent, f32 dt, void* gdata)
+void zGustUpdateEnt(xEnt* ent, float32 dt, void* gdata)
 {
-	u32 i;
-	u32 j;
-	u32 minidx;
-	f32 minlerp;
+	uint32 i;
+	uint32 j;
+	uint32 minidx;
+	float32 minlerp;
 	zGustData* data;
 	xCollis coll;
-	f32 lerpinc;
+	float32 lerpinc;
 	xVec3* gvel;
 	xVec3 dpos;
 }
 
 // zGustGetGust__FUs
 // Start address: 0x17f8d0
-zGust* zGustGetGust(u16 n)
+zGust* zGustGetGust(uint16 n)
 {
 }
 
@@ -1652,15 +1652,15 @@ zGust* zGustGetGust(u16 n)
 // Start address: 0x17f900
 void zGustSetup()
 {
-	u16 i;
+	uint16 i;
 }
 
 // zGustInit__Fv
 // Start address: 0x17f9c0
 void zGustInit()
 {
-	u16 i;
-	u32 size;
+	uint16 i;
+	uint32 size;
 	zGustAsset* asset;
 }
 

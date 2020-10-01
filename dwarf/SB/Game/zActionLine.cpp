@@ -15,60 +15,60 @@ typedef struct RwLinkList;
 
 typedef xVec3 type_0[4];
 typedef _tagActionLine* type_1[8];
-typedef s8 type_2[16];
+typedef int8 type_2[16];
 typedef RxObjSpace3DVertex type_3[4];
-typedef s8 type_4[16];
-typedef s8 type_5[32];
-typedef s8 type_6[32];
+typedef int8 type_4[16];
+typedef int8 type_5[32];
+typedef int8 type_6[32];
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct _tagActionLine
 {
-	u32 flags;
+	uint32 flags;
 	type_0 pos;
-	f32 time_left;
+	float32 time_left;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct RwTexture
@@ -78,8 +78,8 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_5 name;
 	type_6 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 union RxColorUnion
@@ -93,8 +93,8 @@ struct RxObjSpace3DVertex
 	RwV3d objVertex;
 	RxColorUnion c;
 	RwV3d objNormal;
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct RwTexDictionary
@@ -107,19 +107,19 @@ struct RwTexDictionary
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -138,18 +138,18 @@ type_2 buffer;
 type_4 buffer;
 type_1 sActionLine;
 RwRaster* sActionLineRaster;
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
 void zActionLineRender();
 void RenderActionLine(_tagActionLine* l);
-void zActionLineUpdate(f32 seconds);
+void zActionLineUpdate(float32 seconds);
 void zActionLineInit();
 
 // zActionLineRender__Fv
 // Start address: 0x1a41d0
 void zActionLineRender()
 {
-	s32 i;
+	int32 i;
 }
 
 // RenderActionLine__FP14_tagActionLine
@@ -157,16 +157,16 @@ void zActionLineRender()
 void RenderActionLine(_tagActionLine* l)
 {
 	RxObjSpace3DVertex* vert;
-	s32 i;
+	int32 i;
 	RwRGBA* _col;
 	type_3 sStripVert;
 }
 
 // zActionLineUpdate__Ff
 // Start address: 0x1a4310
-void zActionLineUpdate(f32 seconds)
+void zActionLineUpdate(float32 seconds)
 {
-	s32 i;
+	int32 i;
 	_tagActionLine* l;
 }
 

@@ -3,29 +3,29 @@ typedef struct xVec3;
 typedef struct xParEmitterAsset;
 
 
-typedef u8 type_0[4];
-typedef u8 type_1[2];
-typedef u8 type_2[3];
-typedef f32 type_3[4];
-typedef f32 type_4[4];
+typedef uint8 type_0[4];
+typedef uint8 type_1[2];
+typedef uint8 type_2[3];
+typedef float32 type_3[4];
+typedef float32 type_4[4];
 typedef xPar type_5[2000];
 
 struct xPar
 {
 	xPar* m_next;
 	xPar* m_prev;
-	f32 m_lifetime;
+	float32 m_lifetime;
 	type_0 m_c;
 	xVec3 m_pos;
-	f32 m_size;
+	float32 m_size;
 	xVec3 m_vel;
-	f32 m_sizeVel;
-	u8 m_flag;
-	u8 m_mode;
+	float32 m_sizeVel;
+	uint8 m_flag;
+	uint8 m_mode;
 	type_1 m_texIdx;
 	type_2 m_rotdeg;
-	u8 pad8;
-	f32 totalLifespan;
+	uint8 pad8;
+	float32 totalLifespan;
 	xParEmitterAsset* m_asset;
 	type_3 m_cvel;
 	type_4 m_cfl;
@@ -33,9 +33,9 @@ struct xPar
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xParEmitterAsset
@@ -72,6 +72,6 @@ xPar* xParAlloc()
 // Start address: 0x1f4320
 void xParMemInit()
 {
-	s32 i;
+	int32 i;
 }
 

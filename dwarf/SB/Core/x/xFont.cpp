@@ -117,74 +117,74 @@ typedef struct xBaseAsset;
 
 typedef void(*type_1)(xAnimPlay*, xAnimState*);
 typedef void(*type_2)(xAnimState*, xAnimSingle*, void*);
-typedef void(*type_5)(xAnimPlay*, xQuat*, xVec3*, s32);
-typedef u32(*type_6)(RxPipelineNode*, u32, u32, void*);
-typedef s32(*type_9)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef s32(*type_12)(RxNodeDefinition*);
+typedef void(*type_5)(xAnimPlay*, xQuat*, xVec3*, int32);
+typedef uint32(*type_6)(RxPipelineNode*, uint32, uint32, void*);
+typedef int32(*type_9)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef int32(*type_12)(RxNodeDefinition*);
 typedef void(*type_13)(RxNodeDefinition*);
-typedef s32(*type_14)(RxPipelineNode*);
+typedef int32(*type_14)(RxPipelineNode*);
 typedef void(*type_15)(RxPipelineNode*);
-typedef s32(*type_17)(RxPipelineNode*, RxPipeline*);
-typedef u32(*type_23)(u32, xAnimActiveEffect*, xAnimSingle*, void*);
-typedef u32(*type_27)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_17)(RxPipelineNode*, RxPipeline*);
+typedef uint32(*type_23)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
+typedef uint32(*type_27)(xAnimTransition*, xAnimSingle*, void*);
 typedef RpClump*(*type_37)(RpClump*, void*);
 typedef void(*type_38)(xMemPool*, void*);
-typedef void(*type_39)(jot&, xtextbox&, f32, f32);
+typedef void(*type_39)(jot&, xtextbox&, float32, float32);
 typedef void(*type_44)(jot&, xtextbox&, xtextbox&);
 typedef void(*type_45)(RwResEntry*);
-typedef s32(*type_46)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_46)(xBase*, xBase*, uint32, float32*, xBase*);
 typedef void(*type_50)(jot&, xtextbox&, xtextbox&, split_tag&);
 typedef RpAtomic*(*type_53)(RpAtomic*);
 typedef RwObjectHasFrame*(*type_55)(RwObjectHasFrame*);
 
 typedef model_cache_entry type_0[8];
 typedef _class_5 type_3[127];
-typedef s8 type_4[16];
+typedef int8 type_4[16];
 typedef RwMatrixTag type_7[8];
 typedef RwTexCoords* type_8[8];
 typedef xModelInstance type_10[8];
 typedef tl_cache_entry type_11[3];
-typedef u8 type_16[256];
+typedef uint8 type_16[256];
 typedef basic_rect_1 type_18[127];
 typedef basic_rect_1 type_19[127];
 typedef xVec2 type_20[127];
-typedef f32 type_21[16];
+typedef float32 type_21[16];
 typedef substr type_22[32];
-typedef s8* type_24[3];
+typedef int8* type_24[3];
 typedef tag_entry type_25[16];
-typedef f32 type_26[2];
-typedef u32 type_28[4];
-typedef u8 type_29[2];
+typedef float32 type_26[2];
+typedef uint32 type_28[4];
+typedef uint8 type_29[2];
 typedef xAnimMultiFileEntry type_30[1];
 typedef RwSky2DVertex type_31[120];
-typedef u8 type_32[256];
-typedef u32 type_33[4096];
+typedef uint8 type_32[256];
+typedef uint32 type_33[4096];
 typedef font_data type_34[4];
-typedef f32 type_35[4];
+typedef float32 type_35[4];
 typedef _class_3 type_36[16];
-typedef s8 type_40[32];
+typedef int8 type_40[32];
 typedef tag_type type_41[128];
-typedef s8 type_42[32];
+typedef int8 type_42[32];
 typedef type_41 type_43[2];
 typedef jot type_47[512];
 typedef jot_line type_48[128];
 typedef RwSky2DVertex type_49[4];
-typedef u16 type_51[3];
+typedef uint16 type_51[3];
 typedef RxCluster type_52[1];
-typedef u8 type_54[1024];
-typedef u16 type_56[64];
-typedef u8 type_57[128];
+typedef uint8 type_54[1024];
+typedef uint16 type_56[64];
+typedef uint8 type_57[128];
 typedef <unknown type (0xa510)> type_58[4];
-typedef s8 type_59[16];
-typedef s8 type_60[64];
+typedef int8 type_59[16];
+typedef int8 type_60[64];
 typedef font_asset type_61[4];
 
 struct xfont
 {
-	u32 id;
-	f32 width;
-	f32 height;
-	f32 space;
+	uint32 id;
+	float32 width;
+	float32 height;
+	float32 space;
 	iColor_tag color;
 	basic_rect_1 clip;
 };
@@ -193,7 +193,7 @@ struct jot
 {
 	substr s;
 	_class_0 flag;
-	u16 context_size;
+	uint16 context_size;
 	void* context;
 	basic_rect_1 bounds;
 	basic_rect_1 render_bounds;
@@ -203,15 +203,15 @@ struct jot
 
 struct font_asset
 {
-	u32 tex_id;
-	u16 u;
-	u16 v;
-	u8 du;
-	u8 dv;
-	u8 line_size;
-	u8 baseline;
+	uint32 tex_id;
+	uint16 u;
+	uint16 v;
+	uint8 du;
+	uint8 dv;
+	uint8 line_size;
+	uint8 baseline;
 	_class_4 space;
-	u32 flags;
+	uint32 flags;
 	type_57 char_set;
 	type_3 char_pos;
 };
@@ -220,18 +220,18 @@ struct xtextbox
 {
 	xfont font;
 	basic_rect_1 bounds;
-	u32 flags;
-	f32 line_space;
-	f32 tab_stop;
-	f32 left_indent;
-	f32 right_indent;
+	uint32 flags;
+	float32 line_space;
+	float32 tab_stop;
+	float32 left_indent;
+	float32 right_indent;
 	callback* cb;
 	void* context;
-	s8** texts;
-	u32* text_sizes;
-	u32 texts_size;
+	int8** texts;
+	uint32* text_sizes;
+	uint32 texts_size;
 	substr text;
-	u32 text_hash;
+	uint32 text_hash;
 };
 
 struct model_tag_context
@@ -244,21 +244,21 @@ struct model_tag_context
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct RwSky2DVertex
@@ -268,41 +268,41 @@ struct RwSky2DVertex
 
 struct RwImage
 {
-	s32 flags;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	u8* cpPixels;
+	int32 flags;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	uint8* cpPixels;
 	RwRGBA* palette;
 };
 
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct tag_entry
 {
 	substr name;
-	s8 op;
+	int8 op;
 	substr* args;
-	u32 args_size;
+	uint32 args_size;
 };
 
 struct xQuat
 {
 	xVec3 v;
-	f32 s;
+	float32 s;
 };
 
 struct model_pool
@@ -313,8 +313,8 @@ struct model_pool
 
 struct RwTexCoords
 {
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct RpMaterial
@@ -323,27 +323,27 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RpTriangle
 {
 	type_51 vertIndex;
-	s16 matIndex;
+	int16 matIndex;
 };
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
@@ -351,48 +351,48 @@ struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_28 pad;
 };
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 struct jot_line
 {
 	basic_rect_1 bounds;
-	f32 baseline;
-	u32 first;
-	u32 last;
-	u8 page_break;
+	float32 baseline;
+	uint32 first;
+	uint32 last;
+	uint8 page_break;
 };
 
 struct xTextAsset
 {
-	u32 len;
+	uint32 len;
 };
 
 struct xSurface
@@ -406,8 +406,8 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_40 name;
 	type_42 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct tag_type
@@ -420,15 +420,15 @@ struct tag_type
 
 struct substr
 {
-	s8* text;
-	u32 size;
+	int8* text;
+	uint32 size;
 };
 
 struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 struct split_tag
@@ -441,17 +441,17 @@ struct split_tag
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_45 destroyNotify;
@@ -459,8 +459,8 @@ struct RwResEntry
 
 struct xVec2
 {
-	f32 x;
-	f32 y;
+	float32 x;
+	float32 y;
 };
 
 struct xAnimTransitionList
@@ -474,17 +474,17 @@ struct xModelBucket
 	RpAtomic* Data;
 	RpAtomic* OriginalData;
 	xModelInstance* List;
-	s32 ClipFlags;
-	u32 PipeFlags;
+	int32 ClipFlags;
+	uint32 PipeFlags;
 };
 
 struct font_data
 {
 	font_asset* asset;
-	u32 index_max;
+	uint32 index_max;
 	type_16 char_index;
-	f32 iwidth;
-	f32 iheight;
+	float32 iwidth;
+	float32 iheight;
 	type_18 tex_bounds;
 	type_19 bounds;
 	type_20 dstfrac;
@@ -494,8 +494,8 @@ struct font_data
 
 struct xTimerAsset : xBaseAsset
 {
-	f32 seconds;
-	f32 randomRange;
+	float32 seconds;
+	float32 randomRange;
 };
 
 struct RpMorphTarget
@@ -509,41 +509,41 @@ struct RpMorphTarget
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct xAnimTable
 {
 	xAnimTable* Next;
-	s8* Name;
+	int8* Name;
 	xAnimTransition* TransitionList;
 	xAnimState* StateList;
-	u32 AnimIndex;
-	u32 MorphIndex;
-	u32 UserFlags;
+	uint32 AnimIndex;
+	uint32 MorphIndex;
+	uint32 UserFlags;
 };
 
 struct basic_rect_0
 {
-	s32 x;
-	s32 y;
-	s32 w;
-	s32 h;
+	int32 x;
+	int32 y;
+	int32 w;
+	int32 h;
 };
 
 struct xAnimTransition
@@ -552,53 +552,53 @@ struct xAnimTransition
 	xAnimState* Dest;
 	type_27 Conditional;
 	type_27 Callback;
-	u32 Flags;
-	u32 UserFlags;
-	f32 SrcTime;
-	f32 DestTime;
-	u16 Priority;
-	u16 QueuePriority;
-	f32 BlendRecip;
-	u16* BlendOffset;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 SrcTime;
+	float32 DestTime;
+	uint16 Priority;
+	uint16 QueuePriority;
+	float32 BlendRecip;
+	uint16* BlendOffset;
 };
 
 struct layout
 {
 	xtextbox tb;
 	type_47 _jots;
-	u32 _jots_size;
+	uint32 _jots_size;
 	type_48 _lines;
-	u32 _lines_size;
+	uint32 _lines_size;
 	type_54 context_buffer;
-	u32 context_buffer_size;
+	uint32 context_buffer_size;
 	type_56 dynamics;
-	u32 dynamics_size;
+	uint32 dynamics_size;
 };
 
 struct RpLight
 {
 	RwObjectHasFrame object;
-	f32 radius;
+	float32 radius;
 	RwRGBAReal color;
-	f32 minusCosAngle;
+	float32 minusCosAngle;
 	RwLinkList WorldSectorsInLight;
 	RwLLLink inWorld;
-	u16 lightFrame;
-	u16 pad;
+	uint16 lightFrame;
+	uint16 pad;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct xModelInstance
@@ -608,26 +608,26 @@ struct xModelInstance
 	xModelPool* Pool;
 	xAnimPlay* Anim;
 	RpAtomic* Data;
-	u32 PipeFlags;
-	f32 RedMultiplier;
-	f32 GreenMultiplier;
-	f32 BlueMultiplier;
-	f32 Alpha;
-	f32 FadeStart;
-	f32 FadeEnd;
+	uint32 PipeFlags;
+	float32 RedMultiplier;
+	float32 GreenMultiplier;
+	float32 BlueMultiplier;
+	float32 Alpha;
+	float32 FadeStart;
+	float32 FadeEnd;
 	xSurface* Surf;
 	xModelBucket** Bucket;
 	xModelInstance* BucketNext;
 	xLightKit* LightKit;
 	void* Object;
-	u16 Flags;
-	u8 BoneCount;
-	u8 BoneIndex;
-	u8* BoneRemap;
+	uint16 Flags;
+	uint8 BoneCount;
+	uint8 BoneIndex;
+	uint8* BoneRemap;
 	RwMatrixTag* Mat;
 	xVec3 Scale;
-	u32 modelID;
-	u32 shadowID;
+	uint32 modelID;
+	uint32 shadowID;
 	RpAtomic* shadowmapAtomic;
 	_class_1 anim_coll;
 };
@@ -635,34 +635,34 @@ struct xModelInstance
 struct tag_entry_list
 {
 	tag_entry* entries;
-	u32 size;
+	uint32 size;
 };
 
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
 struct basic_rect_1
 {
-	f32 x;
-	f32 y;
-	f32 w;
-	f32 h;
+	float32 x;
+	float32 y;
+	float32 w;
+	float32 h;
 };
 
 struct rxReq
@@ -671,9 +671,9 @@ struct rxReq
 
 struct xLightKit
 {
-	u32 tagID;
-	u32 groupID;
-	u32 lightCount;
+	uint32 tagID;
+	uint32 groupID;
+	uint32 lightCount;
 	xLightKitLight* lightList;
 };
 
@@ -688,19 +688,19 @@ enum RxClusterValidityReq
 struct xAnimState
 {
 	xAnimState* Next;
-	s8* Name;
-	u32 ID;
-	u32 Flags;
-	u32 UserFlags;
-	f32 Speed;
+	int8* Name;
+	uint32 ID;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 Speed;
 	xAnimFile* Data;
 	xAnimEffect* Effects;
 	xAnimTransitionList* Default;
 	xAnimTransitionList* List;
-	f32* BoneBlend;
-	f32* TimeSnap;
-	f32 FadeRecip;
-	u16* FadeOffset;
+	float32* BoneBlend;
+	float32* TimeSnap;
+	float32 FadeRecip;
+	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
 	type_1 BeforeEnter;
@@ -710,41 +710,41 @@ struct xAnimState
 
 struct xLightKitLight
 {
-	u32 type;
+	uint32 type;
 	RwRGBAReal color;
 	type_21 matrix;
-	f32 radius;
-	f32 angle;
+	float32 radius;
+	float32 angle;
 	RpLight* platLight;
 };
 
 struct xAnimMultiFileEntry
 {
-	u32 ID;
+	uint32 ID;
 	xAnimFile* File;
 };
 
 struct xAnimActiveEffect
 {
 	xAnimEffect* Effect;
-	u32 Handle;
+	uint32 Handle;
 };
 
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct xAnimFile
 {
 	xAnimFile* Next;
-	s8* Name;
-	u32 ID;
-	u32 FileFlags;
-	f32 Duration;
-	f32 TimeOffset;
-	u16 BoneCount;
+	int8* Name;
+	uint32 ID;
+	uint32 FileFlags;
+	float32 Duration;
+	float32 TimeOffset;
+	uint16 BoneCount;
 	type_29 NumAnims;
 	void** RawData;
 };
@@ -766,26 +766,26 @@ enum RxClusterValid
 
 struct xAnimSingle
 {
-	u32 SingleFlags;
+	uint32 SingleFlags;
 	xAnimState* State;
-	f32 Time;
-	f32 CurrentSpeed;
+	float32 Time;
+	float32 CurrentSpeed;
 	type_26 BilinearLerp;
 	xAnimEffect* Effect;
-	u32 ActiveCount;
-	f32 LastTime;
+	uint32 ActiveCount;
+	float32 LastTime;
 	xAnimActiveEffect* ActiveList;
 	xAnimPlay* Play;
 	xAnimTransition* Sync;
 	xAnimTransition* Tran;
 	xAnimSingle* Blend;
-	f32 BlendFactor;
-	u32 pad;
+	float32 BlendFactor;
+	uint32 pad;
 };
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
@@ -793,29 +793,29 @@ struct _class_0
 {
 	union
 	{
-		u8 invisible;
-		u8 ethereal;
-		u8 merge;
-		u8 word_break;
-		u8 word_end;
-		u8 line_break;
-		u8 stop;
-		u8 tab;
+		uint8 invisible;
+		uint8 ethereal;
+		uint8 merge;
+		uint8 word_break;
+		uint8 word_end;
+		uint8 line_break;
+		uint8 stop;
+		uint8 tab;
 	};
 	union
 	{
-		u8 insert;
-		u8 dynamic;
-		u8 page_break;
-		u8 stateful;
+		uint8 insert;
+		uint8 dynamic;
+		uint8 page_break;
+		uint8 stateful;
 	};
-	u16 dummy;
+	uint16 dummy;
 };
 
 struct tex_tag_context
 {
 	RwRaster* raster;
-	f32 rot;
+	float32 rot;
 	basic_rect_1 src;
 	basic_rect_1 dst;
 };
@@ -832,19 +832,19 @@ enum rxEmbeddedPacketState
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 struct model_cache_entry
 {
-	u32 id;
-	u32 order;
+	uint32 id;
+	uint32 order;
 	xModelInstance* model;
 };
 
 struct xAnimMultiFileBase
 {
-	u32 Count;
+	uint32 Count;
 };
 
 struct model_args
@@ -867,8 +867,8 @@ struct RpAtomic
 	RwLLLink inClumpLink;
 	type_53 renderCallBack;
 	RpInterpolator interpolator;
-	u16 renderFrame;
-	u16 pad;
+	uint16 renderFrame;
+	uint16 pad;
 	RwLinkList llWorldSectorsInAtomic;
 	RxPipeline* pipeline;
 };
@@ -883,7 +883,7 @@ enum RxClusterForcePresent
 struct tex_args
 {
 	RwRaster* raster;
-	f32 rot;
+	float32 rot;
 	basic_rect_1 src;
 	basic_rect_1 dst;
 	xVec2 off;
@@ -898,28 +898,28 @@ struct _class_1
 struct xAnimEffect
 {
 	xAnimEffect* Next;
-	u32 Flags;
-	f32 StartTime;
-	f32 EndTime;
+	uint32 Flags;
+	float32 StartTime;
+	float32 EndTime;
 	type_23 Callback;
 };
 
 struct RpInterpolator
 {
-	s32 flags;
-	s16 startMorphTarget;
-	s16 endMorphTarget;
-	f32 time;
-	f32 recipTime;
-	f32 position;
+	int32 flags;
+	int16 startMorphTarget;
+	int16 endMorphTarget;
+	float32 time;
+	float32 recipTime;
+	float32 position;
 };
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 enum _enum_0
@@ -931,19 +931,19 @@ enum _enum_0
 
 struct tl_cache_entry
 {
-	u32 used;
-	s32 last_used;
+	uint32 used;
+	long32 last_used;
 	layout tl;
 };
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_35 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
@@ -954,14 +954,14 @@ struct xAnimMultiFile : xAnimMultiFileBase
 struct RwSphere
 {
 	RwV3d center;
-	f32 radius;
+	float32 radius;
 };
 
 struct xAnimPlay
 {
 	xAnimPlay* Next;
-	u16 NumSingle;
-	u16 BoneCount;
+	uint16 NumSingle;
+	uint16 BoneCount;
 	xAnimSingle* Single;
 	void* Object;
 	xAnimTable* Table;
@@ -980,28 +980,28 @@ struct RwTexDictionary
 struct xTimer : xBase
 {
 	xTimerAsset* tasset;
-	u8 state;
-	u8 runsInPause;
-	u16 flags;
-	f32 secondsLeft;
+	uint8 state;
+	uint8 runsInPause;
+	uint16 flags;
+	float32 secondsLeft;
 };
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
 
 struct _class_2
 {
-	s32 fogenable;
-	s32 vertexalphaenable;
-	s32 zwriteenable;
-	s32 ztestenable;
-	u32 srcblend;
-	u32 destblend;
-	u32 shademode;
+	int32 fogenable;
+	int32 vertexalphaenable;
+	int32 zwriteenable;
+	int32 ztestenable;
+	uint32 srcblend;
+	uint32 destblend;
+	uint32 shademode;
 	RwRaster* textureraster;
 	RwTextureFilterMode filter;
 };
@@ -1009,46 +1009,46 @@ struct _class_2
 struct RpMaterialList
 {
 	RpMaterial** materials;
-	s32 numMaterials;
-	s32 space;
+	int32 numMaterials;
+	int32 space;
 };
 
 struct _class_3
 {
-	s8* s;
-	s8* end;
+	int8* s;
+	int8* end;
 };
 
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 struct xModelPool
 {
 	xModelPool* Next;
-	u32 NumMatrices;
+	uint32 NumMatrices;
 	xModelInstance* List;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -1070,23 +1070,23 @@ struct RpClump
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
 struct RpGeometry
 {
 	RwObject object;
-	u32 flags;
-	u16 lockedSinceLastInst;
-	s16 refCount;
-	s32 numTriangles;
-	s32 numVertices;
-	s32 numMorphTargets;
-	s32 numTexCoordSets;
+	uint32 flags;
+	uint16 lockedSinceLastInst;
+	int16 refCount;
+	int32 numTriangles;
+	int32 numVertices;
+	int32 numMorphTargets;
+	int32 numTexCoordSets;
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
@@ -1111,14 +1111,14 @@ enum RwTextureFilterMode
 struct xMemPool
 {
 	void* FreeList;
-	u16 NextOffset;
-	u16 Flags;
+	uint16 NextOffset;
+	uint16 Flags;
 	void* UsedList;
 	type_38 InitCB;
 	void* Buffer;
-	u16 Size;
-	u16 NumRealloc;
-	u32 Total;
+	uint16 Size;
+	uint16 NumRealloc;
+	uint32 Total;
 };
 
 struct RxNodeMethods
@@ -1135,30 +1135,30 @@ struct RxNodeMethods
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct RwSky2DVertexFields
 {
 	RwV3d scrVertex;
-	f32 camVertex_z;
-	f32 u;
-	f32 v;
-	f32 recipZ;
-	f32 pad1;
+	float32 camVertex_z;
+	float32 u;
+	float32 v;
+	float32 recipZ;
+	float32 pad1;
 	RwRGBAReal color;
 	RwV3d objNormal;
-	f32 pad2;
+	float32 pad2;
 };
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct callback
@@ -1170,24 +1170,24 @@ struct callback
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_46 eventFunc;
 };
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct RxPipelineNodeParam
@@ -1198,19 +1198,19 @@ struct RxPipelineNodeParam
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_52 clusters;
 };
 
 struct _class_4
 {
-	s16 x;
-	s16 y;
+	int16 x;
+	int16 y;
 };
 
 enum _enum_1
@@ -1226,10 +1226,10 @@ enum _enum_1
 
 struct RwRGBAReal
 {
-	f32 red;
-	f32 green;
-	f32 blue;
-	f32 alpha;
+	float32 red;
+	float32 green;
+	float32 blue;
+	float32 alpha;
 };
 
 struct RwObjectHasFrame
@@ -1252,16 +1252,16 @@ union RwSky2DVertexAlignmentOverlay
 
 struct _class_5
 {
-	u8 offset;
-	u8 size;
+	uint8 offset;
+	uint8 size;
 };
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 basic_rect_1 screen_bounds;
@@ -1271,45 +1271,45 @@ type_4 buffer;
 type_24 default_font_texture;
 type_61 default_font_assets;
 type_34 active_fonts;
-u32 active_fonts_size;
+uint32 active_fonts_size;
 type_31 vert_buffer;
-u32 vert_buffer_used;
-f32 rcz;
-f32 nsz;
+uint32 vert_buffer_used;
+float32 rcz;
+float32 nsz;
 type_0 model_cache;
-u8 model_cache_inited;
+uint8 model_cache_inited;
 _class_2 oldrs;
 substr text_delims;
 tex_args def_tex_args;
 model_args def_model_args;
 type_11 tl_cache;
 callback text_cb;
-u8 disable_text_stats;
+uint8 disable_text_stats;
 type_43 format_tags_buffer;
 tag_type* format_tags;
-u32 format_tags_size;
+uint32 format_tags_size;
 type_33 ourGlobals;
 basic_rect_1 m_Unit;
 xVec3 m_Null;
 basic_rect_1 m_Null;
 iColor_tag g_WHITE;
 xMat4x3 g_I3;
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
 void render_fill_rect(basic_rect_1& bounds, iColor_tag color);
-void set_rect_vert(RwSky2DVertex& vert, f32 x, f32 y, f32 z, iColor_tag c, f32 rcz);
-tag_type* find_format_tag(substr& s, s32& index);
-void register_tags(tag_type* t, u32 size);
+void set_rect_vert(RwSky2DVertex& vert, float32 x, float32 y, float32 z, iColor_tag c, float32 rcz);
+tag_type* find_format_tag(substr& s, int32& index);
+void register_tags(tag_type* t, uint32 size);
 void parse_tag_timer(jot& j, split_tag& ti);
 void parse_tag_pop(split_tag& ti);
 void parse_tag_insert_hash(jot& j, split_tag& ti);
 void parse_tag_insert(jot& j, split_tag& ti);
 void reset_tag_tex();
 void parse_tag_tex(jot& a, xtextbox& tb, split_tag& ti);
-void render_tag_tex(jot& j, xtextbox& tb, f32 x, f32 y);
+void render_tag_tex(jot& j, xtextbox& tb, float32 x, float32 y);
 void reset_tag_model();
 void parse_tag_model(jot& a, xtextbox& tb, split_tag& ti);
-void render_tag_model(jot& j, xtextbox& tb, f32 x, f32 y);
+void render_tag_model(jot& j, xtextbox& tb, float32 x, float32 y);
 void parse_tag_page_break(jot& a);
 void parse_tag_word_break(jot& a);
 void parse_tag_tab(jot& a);
@@ -1381,98 +1381,98 @@ void reset_tag_alpha(jot& a);
 void parse_tag_alpha(jot& a, xtextbox& tb, split_tag& ti);
 void update_tag_reset_alpha(xtextbox& tb, xtextbox& ctb);
 void update_tag_alpha(jot& j, xtextbox& tb);
-u8 changed(layout* this, xtextbox& ctb);
-f32 yextent(layout* this, f32 max, s32& size, s32 begin_jot, s32 end_jot);
-void render(layout* this, xtextbox& ctb, s32 begin_jot, s32 end_jot);
-void calc(layout* this, xtextbox& ctb, u32 start_text);
-u8 fit_line(layout* this);
+uint8 changed(layout* this, xtextbox& ctb);
+float32 yextent(layout* this, float32 max, int32& size, int32 begin_jot, int32 end_jot);
+void render(layout* this, xtextbox& ctb, int32 begin_jot, int32 end_jot);
+void calc(layout* this, xtextbox& ctb, uint32 start_text);
+uint8 fit_line(layout* this);
 void bound_line(layout* this, jot_line& line);
 void merge_line(layout* this, jot_line& line);
 void trim_line(layout* this, jot_line& line);
 void clear(layout* this);
 void refresh_end(layout* this, xtextbox& tb);
-void refresh(layout* this, xtextbox& tb, u8 force);
+void refresh(layout* this, xtextbox& tb, uint8 force);
 void clear_layout_cache();
-u32 read_list(tag_entry& e, s32* v, u32 vsize);
-u32 read_list(tag_entry& e, f32* v, u32 vsize);
+uint32 read_list(tag_entry& e, int32* v, uint32 vsize);
+uint32 read_list(tag_entry& e, float32* v, uint32 vsize);
 tag_entry* find_entry(tag_entry_list& el, substr& name);
 tag_entry_list read_tag(substr& s);
-f32 yextent(f32 max, s32& size, layout& l, s32 begin_jot, s32 end_jot);
-void render(xtextbox* this, layout& l, s32 begin_jot, s32 end_jot);
-layout& temp_layout(xtextbox* this, u8 cache);
-void set_text(xtextbox* this, s8** texts, u32* text_sizes, u32 size);
-void set_text(xtextbox* this, s8** texts, u32 size);
-void set_text(xtextbox* this, s8* text);
-void text_render(jot& j, xtextbox& tb, f32 x, f32 y);
+float32 yextent(float32 max, int32& size, layout& l, int32 begin_jot, int32 end_jot);
+void render(xtextbox* this, layout& l, int32 begin_jot, int32 end_jot);
+layout& temp_layout(xtextbox* this, uint8 cache);
+void set_text(xtextbox* this, int8** texts, uint32* text_sizes, uint32 size);
+void set_text(xtextbox* this, int8** texts, uint32 size);
+void set_text(xtextbox* this, int8* text);
+void text_render(jot& j, xtextbox& tb, float32 x, float32 y);
 void start_layout();
 void load_model_args(model_args& ma, substr& s);
 void load_tex_args(tex_args& ta, substr& s);
-s8* parse_next_text_jot(jot& a, xtextbox& tb, s8* text);
-s8* parse_next_tag_jot(jot& a, xtextbox& tb, xtextbox& ctb, s8* text, u32 text_size);
-u32 parse_split_tag(split_tag& ti);
-void irender(xfont* this, s8* text, u32 text_size, f32 x, f32 y);
-void irender(xfont* this, s8* text, f32 x, f32 y);
+int8* parse_next_text_jot(jot& a, xtextbox& tb, int8* text);
+int8* parse_next_tag_jot(jot& a, xtextbox& tb, xtextbox& ctb, int8* text, uint32 text_size);
+uint32 parse_split_tag(split_tag& ti);
+void irender(xfont* this, int8* text, uint32 text_size, float32 x, float32 y);
+void irender(xfont* this, int8* text, float32 x, float32 y);
 void stop_render();
 void start_render(xfont* this);
-basic_rect_1 bounds(xfont* this, s8* text, u32 text_size, f32 max_width, u32& size);
-basic_rect_1 bounds(xfont* this, s8* text);
+basic_rect_1 bounds(xfont* this, int8* text, uint32 text_size, float32 max_width, uint32& size);
+basic_rect_1 bounds(xfont* this, int8* text);
 void restore_render_state();
 void set_render_state(RwRaster* raster);
 void init();
-xModelInstance* load_model(u32 id);
+xModelInstance* load_model(uint32 id);
 void init_model_cache();
 void tex_render(basic_rect_1& src, basic_rect_1& dst, basic_rect_1& clip, iColor_tag color);
-u8 init_font_data(font_data& fd);
-u8 reset_font_spacing(font_asset& a);
-basic_rect_0 find_bounds(iColor_tag* bits, basic_rect_0& r, s32 pitch);
+uint8 init_font_data(font_data& fd);
+uint8 reset_font_spacing(font_asset& a);
+basic_rect_0 find_bounds(iColor_tag* bits, basic_rect_0& r, int32 pitch);
 
 // render_fill_rect__FRC13basic_rect<f>10iColor_tag
 // Start address: 0x1daf50
 void render_fill_rect(basic_rect_1& bounds, iColor_tag color)
 {
-	f32 rcz;
-	f32 nsz;
+	float32 rcz;
+	float32 nsz;
 	type_49 vert;
 	basic_rect_1 r;
 }
 
 // set_rect_vert__19@unnamed@xFont_cpp@FR13RwSky2DVertexfff10iColor_tagf
 // Start address: 0x1db1b0
-void set_rect_vert(RwSky2DVertex& vert, f32 x, f32 y, f32 z, iColor_tag c, f32 rcz)
+void set_rect_vert(RwSky2DVertex& vert, float32 x, float32 y, float32 z, iColor_tag c, float32 rcz)
 {
 }
 
 // find_format_tag__8xtextboxFRC6substrRi
 // Start address: 0x1db2b0
-tag_type* find_format_tag(substr& s, s32& index)
+tag_type* find_format_tag(substr& s, int32& index)
 {
-	s32 start;
-	s32 end;
+	int32 start;
+	int32 end;
 	tag_type& t;
-	s32 c;
+	int32 c;
 }
 
 // register_tags__8xtextboxFPCQ28xtextbox8tag_typeUi
 // Start address: 0x1db390
-void register_tags(tag_type* t, u32 size)
+void register_tags(tag_type* t, uint32 size)
 {
 	tag_type* s1;
 	tag_type* s2;
 	tag_type* end1;
 	tag_type* end2;
 	tag_type* d;
-	s32 c;
+	int32 c;
 }
 
 // parse_tag_timer__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
 // Start address: 0x1db5a0
 void parse_tag_timer(jot& j, split_tag& ti)
 {
-	u32 id;
+	uint32 id;
 	xTimer* ta;
 	type_60 buffer;
-	u32 sec;
-	u32 mn;
+	uint32 sec;
+	uint32 mn;
 }
 
 // parse_tag_pop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -1492,7 +1492,7 @@ void parse_tag_insert_hash(jot& j, split_tag& ti)
 // Start address: 0x1db870
 void parse_tag_insert(jot& j, split_tag& ti)
 {
-	u32 id;
+	uint32 id;
 	xTextAsset* ta;
 }
 
@@ -1512,7 +1512,7 @@ void parse_tag_tex(jot& a, xtextbox& tb, split_tag& ti)
 
 // render_tag_tex__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotRC8xtextboxff
 // Start address: 0x1dbe60
-void render_tag_tex(jot& j, xtextbox& tb, f32 x, f32 y)
+void render_tag_tex(jot& j, xtextbox& tb, float32 x, float32 y)
 {
 	tex_tag_context& ttc;
 	basic_rect_1 dst;
@@ -1534,14 +1534,14 @@ void parse_tag_model(jot& a, xtextbox& tb, split_tag& ti)
 
 // render_tag_model__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotRC8xtextboxff
 // Start address: 0x1dc280
-void render_tag_model(jot& j, xtextbox& tb, f32 x, f32 y)
+void render_tag_model(jot& j, xtextbox& tb, float32 x, float32 y)
 {
 	model_tag_context& mtc;
 	basic_rect_1 dst;
 	xVec3 from;
 	xVec3 to;
 	xMat4x3 frame;
-	f32 scale;
+	float32 scale;
 }
 
 // parse_tag_page_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -1572,7 +1572,7 @@ void parse_tag_newline(jot& a, xtextbox& tb)
 // Start address: 0x1dc600
 void parse_tag_open_curly(jot& a, xtextbox& tb, split_tag& ti)
 {
-	s8 c;
+	int8 c;
 }
 
 // reset_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -1586,7 +1586,7 @@ void reset_tag_yjustify(jot& a)
 // Start address: 0x1dc720
 void parse_tag_yjustify(jot& a, split_tag& ti)
 {
-	u32& flags;
+	uint32& flags;
 	callback cb;
 }
 
@@ -1613,7 +1613,7 @@ void reset_tag_xjustify(jot& a)
 // Start address: 0x1dc910
 void parse_tag_xjustify(jot& a, split_tag& ti)
 {
-	u32& flags;
+	uint32& flags;
 	callback cb;
 }
 
@@ -1640,7 +1640,7 @@ void reset_tag_wrap(jot& a)
 // Start address: 0x1dcb00
 void parse_tag_wrap(jot& a, split_tag& ti)
 {
-	u32& flags;
+	uint32& flags;
 	callback cb;
 }
 
@@ -1667,7 +1667,7 @@ void reset_tag_font(jot& a)
 // Start address: 0x1dcc50
 void parse_tag_font(jot& a, split_tag& ti)
 {
-	u32& id;
+	uint32& id;
 	callback cb;
 }
 
@@ -1695,8 +1695,8 @@ void reset_tag_color(jot& a)
 void parse_tag_color(jot& a, xtextbox& tb, split_tag& ti)
 {
 	iColor_tag& color;
-	u32 v;
-	u32 temp;
+	uint32 v;
+	uint32 temp;
 	callback cb;
 }
 
@@ -1736,7 +1736,7 @@ void reset_tag_yspace(jot& a)
 // Start address: 0x1dd0b0
 void parse_tag_yspace(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1763,7 +1763,7 @@ void reset_tag_xspace(jot& a)
 // Start address: 0x1dd220
 void parse_tag_xspace(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1790,7 +1790,7 @@ void reset_tag_tab_stop(jot& a)
 // Start address: 0x1dd390
 void parse_tag_tab_stop(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1817,7 +1817,7 @@ void reset_tag_right_indent(jot& a)
 // Start address: 0x1dd4f0
 void parse_tag_right_indent(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1844,7 +1844,7 @@ void reset_tag_left_indent(jot& a)
 // Start address: 0x1dd660
 void parse_tag_left_indent(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1871,7 +1871,7 @@ void reset_tag_height(jot& a)
 // Start address: 0x1dd7d0
 void parse_tag_height(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1898,7 +1898,7 @@ void reset_tag_width(jot& a)
 // Start address: 0x1dd930
 void parse_tag_width(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1925,7 +1925,7 @@ void reset_tag_blue(jot& a)
 // Start address: 0x1dda90
 void parse_tag_blue(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1952,7 +1952,7 @@ void reset_tag_green(jot& a)
 // Start address: 0x1ddcc0
 void parse_tag_green(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -1979,7 +1979,7 @@ void reset_tag_red(jot& a)
 // Start address: 0x1ddef0
 void parse_tag_red(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -2006,7 +2006,7 @@ void reset_tag_alpha(jot& a)
 // Start address: 0x1de120
 void parse_tag_alpha(jot& a, xtextbox& tb, split_tag& ti)
 {
-	f32& v;
+	float32& v;
 	callback cb;
 }
 
@@ -2024,86 +2024,86 @@ void update_tag_alpha(jot& j, xtextbox& tb)
 
 // changed__Q28xtextbox6layoutFRC8xtextbox
 // Start address: 0x1de340
-u8 changed(layout* this, xtextbox& ctb)
+uint8 changed(layout* this, xtextbox& ctb)
 {
-	u32 flags1;
-	u32 flags2;
-	s32 i;
+	uint32 flags1;
+	uint32 flags2;
+	int32 i;
 	jot& j;
-	u32 oldval;
-	u32 val;
+	uint32 oldval;
+	uint32 val;
 }
 
 // yextent__Q28xtextbox6layoutCFfRiii
 // Start address: 0x1de550
-f32 yextent(layout* this, f32 max, s32& size, s32 begin_jot, s32 end_jot)
+float32 yextent(layout* this, float32 max, int32& size, int32 begin_jot, int32 end_jot)
 {
-	s32 begin_line;
-	f32 top;
-	s32 i;
+	int32 begin_line;
+	float32 top;
+	int32 i;
 	jot_line& line;
 	jot_line& line;
 }
 
 // render__Q28xtextbox6layoutFRC8xtextboxii
 // Start address: 0x1de690
-void render(layout* this, xtextbox& ctb, s32 begin_jot, s32 end_jot)
+void render(layout* this, xtextbox& ctb, int32 begin_jot, int32 end_jot)
 {
-	s32 begin_line;
-	s32 i;
+	int32 begin_line;
+	int32 i;
 	jot& j;
-	f32 top;
-	u32 li;
-	s32 line_last;
-	f32 x;
-	f32 y;
-	s32 i;
+	float32 top;
+	uint32 li;
+	int32 line_last;
+	float32 x;
+	float32 y;
+	int32 i;
 	jot_line& line;
-	u32 xj;
+	uint32 xj;
 	jot& j;
 }
 
 // calc__Q28xtextbox6layoutFRC8xtextboxUi
 // Start address: 0x1deba0
-void calc(layout* this, xtextbox& ctb, u32 start_text)
+void calc(layout* this, xtextbox& ctb, uint32 start_text)
 {
 	jot_line& first_line;
 	type_36 text_stack;
-	u32 text_stack_size;
-	u32 text_index;
-	s8* s;
-	s8* end;
+	uint32 text_stack_size;
+	uint32 text_index;
+	int8* s;
+	int8* end;
 	jot& a;
 	jot_line& line;
 	jot_line& last_line;
-	u32 i;
+	uint32 i;
 }
 
 // fit_line__Q28xtextbox6layoutFv
 // Start address: 0x1df1b0
-u8 fit_line(layout* this)
+uint8 fit_line(layout* this)
 {
 	jot_line& line;
-	s32 i;
+	int32 i;
 }
 
 // bound_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line
 // Start address: 0x1df330
 void bound_line(layout* this, jot_line& line)
 {
-	u32 i;
+	uint32 i;
 	jot& a;
-	u32 i;
+	uint32 i;
 	jot& a;
-	f32 total_height;
+	float32 total_height;
 }
 
 // merge_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line
 // Start address: 0x1df460
 void merge_line(layout* this, jot_line& line)
 {
-	u32 d;
-	u32 i;
+	uint32 d;
+	uint32 i;
 	jot& a1;
 	jot& a2;
 }
@@ -2112,9 +2112,9 @@ void merge_line(layout* this, jot_line& line)
 // Start address: 0x1df730
 void trim_line(layout* this, jot_line& line)
 {
-	s32 i;
+	int32 i;
 	jot& a;
-	u32 i;
+	uint32 i;
 	jot& a;
 }
 
@@ -2132,7 +2132,7 @@ void refresh_end(layout* this, xtextbox& tb)
 
 // refresh__Q28xtextbox6layoutFRC8xtextboxb
 // Start address: 0x1dfdd0
-void refresh(layout* this, xtextbox& tb, u8 force)
+void refresh(layout* this, xtextbox& tb, uint8 force)
 {
 }
 
@@ -2140,30 +2140,30 @@ void refresh(layout* this, xtextbox& tb, u8 force)
 // Start address: 0x1dff00
 void clear_layout_cache()
 {
-	u32 index;
+	uint32 index;
 }
 
 // read_list__8xtextboxFRCQ28xtextbox9tag_entryPiUi
 // Start address: 0x1dff60
-u32 read_list(tag_entry& e, s32* v, u32 vsize)
+uint32 read_list(tag_entry& e, int32* v, uint32 vsize)
 {
-	u32 total;
-	u32 i;
+	uint32 total;
+	uint32 i;
 }
 
 // read_list__8xtextboxFRCQ28xtextbox9tag_entryPfUi
 // Start address: 0x1e0000
-u32 read_list(tag_entry& e, f32* v, u32 vsize)
+uint32 read_list(tag_entry& e, float32* v, uint32 vsize)
 {
-	u32 total;
-	u32 i;
+	uint32 total;
+	uint32 i;
 }
 
 // find_entry__8xtextboxFRCQ28xtextbox14tag_entry_listRC6substr
 // Start address: 0x1e00a0
 tag_entry* find_entry(tag_entry_list& el, substr& name)
 {
-	u32 i;
+	uint32 i;
 	tag_entry& e;
 }
 
@@ -2171,14 +2171,14 @@ tag_entry* find_entry(tag_entry_list& el, substr& name)
 // Start address: 0x1e0140
 tag_entry_list read_tag(substr& s)
 {
-	u32 entries_used;
+	uint32 entries_used;
 	substr it;
 	substr delims;
 	substr sub_delims;
 	tag_entry& entry;
-	s8* d;
+	int8* d;
 	substr& arg;
-	s8* d;
+	int8* d;
 	tag_entry_list ret;
 	type_22 arg_buffer;
 	type_25 entry_buffer;
@@ -2186,52 +2186,52 @@ tag_entry_list read_tag(substr& s)
 
 // yextent__8xtextboxCFfRiRCQ28xtextbox6layoutii
 // Start address: 0x1e05e0
-f32 yextent(f32 max, s32& size, layout& l, s32 begin_jot, s32 end_jot)
+float32 yextent(float32 max, int32& size, layout& l, int32 begin_jot, int32 end_jot)
 {
 }
 
 // render__8xtextboxCFRQ28xtextbox6layoutii
 // Start address: 0x1e05f0
-void render(xtextbox* this, layout& l, s32 begin_jot, s32 end_jot)
+void render(xtextbox* this, layout& l, int32 begin_jot, int32 end_jot)
 {
 }
 
 // temp_layout__8xtextboxCFb
 // Start address: 0x1e0600
-layout& temp_layout(xtextbox* this, u8 cache)
+layout& temp_layout(xtextbox* this, uint8 cache)
 {
-	s32 cur_time;
-	u8 refresh;
-	u32 index;
-	s32 min_used;
-	u32 i;
-	s32 used;
+	long32 cur_time;
+	uint8 refresh;
+	uint32 index;
+	int32 min_used;
+	uint32 i;
+	int32 used;
 	tl_cache_entry& e;
 }
 
 // set_text__8xtextboxFPPCcPCUiUi
 // Start address: 0x1e0960
-void set_text(xtextbox* this, s8** texts, u32* text_sizes, u32 size)
+void set_text(xtextbox* this, int8** texts, uint32* text_sizes, uint32 size)
 {
-	u32 i;
-	u32 i;
+	uint32 i;
+	uint32 i;
 }
 
 // set_text__8xtextboxFPPCcUi
 // Start address: 0x1e0a70
-void set_text(xtextbox* this, s8** texts, u32 size)
+void set_text(xtextbox* this, int8** texts, uint32 size)
 {
 }
 
 // set_text__8xtextboxFPCc
 // Start address: 0x1e0a80
-void set_text(xtextbox* this, s8* text)
+void set_text(xtextbox* this, int8* text)
 {
 }
 
 // text_render__8xtextboxFRCQ28xtextbox3jotRC8xtextboxff
 // Start address: 0x1e0ad0
-void text_render(jot& j, xtextbox& tb, f32 x, f32 y)
+void text_render(jot& j, xtextbox& tb, float32 x, float32 y)
 {
 }
 
@@ -2248,7 +2248,7 @@ void load_model_args(model_args& ma, substr& s)
 	tag_entry_list el;
 	tag_entry* e;
 	substr& name;
-	u32 id;
+	uint32 id;
 }
 
 // load_tex_args__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@8tex_argsRC6substr
@@ -2258,45 +2258,45 @@ void load_tex_args(tex_args& ta, substr& s)
 	tag_entry_list el;
 	tag_entry* e;
 	substr& name;
-	u32 id;
+	uint32 id;
 	RwTexture* texture;
 }
 
 // parse_next_text_jot__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUi
 // Start address: 0x1e1b20
-s8* parse_next_text_jot(jot& a, xtextbox& tb, s8* text)
+int8* parse_next_text_jot(jot& a, xtextbox& tb, int8* text)
 {
-	s8 c;
+	int8 c;
 }
 
 // parse_next_tag_jot__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUi
 // Start address: 0x1e1d40
-s8* parse_next_tag_jot(jot& a, xtextbox& tb, xtextbox& ctb, s8* text, u32 text_size)
+int8* parse_next_tag_jot(jot& a, xtextbox& tb, xtextbox& ctb, int8* text, uint32 text_size)
 {
 	split_tag ti;
-	u32 size;
+	uint32 size;
 }
 
 // parse_split_tag__19@unnamed@xFont_cpp@FRQ28xtextbox9split_tag
 // Start address: 0x1e1f50
-u32 parse_split_tag(split_tag& ti)
+uint32 parse_split_tag(split_tag& ti)
 {
 	substr s;
 }
 
 // irender__5xfontCFPCcUiff
 // Start address: 0x1e2340
-void irender(xfont* this, s8* text, u32 text_size, f32 x, f32 y)
+void irender(xfont* this, int8* text, uint32 text_size, float32 x, float32 y)
 {
 	font_data& fd;
 	basic_rect_1 bounds;
-	u32 i;
-	u32 charIndex;
+	uint32 i;
+	uint32 charIndex;
 }
 
 // irender__5xfontCFPCcff
 // Start address: 0x1e2600
-void irender(xfont* this, s8* text, f32 x, f32 y)
+void irender(xfont* this, int8* text, float32 x, float32 y)
 {
 }
 
@@ -2314,21 +2314,21 @@ void start_render(xfont* this)
 
 // bounds__5xfontCFPCcUifRUi
 // Start address: 0x1e2750
-basic_rect_1 bounds(xfont* this, s8* text, u32 text_size, f32 max_width, u32& size)
+basic_rect_1 bounds(xfont* this, int8* text, uint32 text_size, float32 max_width, uint32& size)
 {
 	font_data& fd;
 	basic_rect_1 r;
-	s8* s;
-	u32 i;
-	u32 charIndex;
-	f32 dx;
+	int8* s;
+	uint32 i;
+	uint32 charIndex;
+	float32 dx;
 }
 
 // bounds__5xfontCFPCc
 // Start address: 0x1e28c0
-basic_rect_1 bounds(xfont* this, s8* text)
+basic_rect_1 bounds(xfont* this, int8* text)
 {
-	u32 size;
+	uint32 size;
 }
 
 // restore_render_state__5xfontFv
@@ -2347,20 +2347,20 @@ void set_render_state(RwRaster* raster)
 // Start address: 0x1e2ac0
 void init()
 {
-	u32 i;
+	uint32 i;
 	font_data& fd;
 }
 
 // load_model__19@unnamed@xFont_cpp@FUi
 // Start address: 0x1e2b90
-xModelInstance* load_model(u32 id)
+xModelInstance* load_model(uint32 id)
 {
-	u32 oldest;
-	u32 i;
+	uint32 oldest;
+	uint32 i;
 	RpAtomic* mf;
 	model_cache_entry& e;
 	xModelInstance& model;
-	u32 next_order;
+	uint32 next_order;
 }
 
 // init_model_cache__19@unnamed@xFont_cpp@Fv
@@ -2384,45 +2384,45 @@ void tex_render(basic_rect_1& src, basic_rect_1& dst, basic_rect_1& clip, iColor
 
 // init_font_data__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@9font_data
 // Start address: 0x1e35a0
-u8 init_font_data(font_data& fd)
+uint8 init_font_data(font_data& fd)
 {
 	font_asset& a;
-	s32 height;
-	u8 i;
-	u8 c;
-	u32 tail_index;
+	int32 height;
+	uint8 i;
+	uint8 c;
+	uint32 tail_index;
 }
 
 // reset_font_spacing__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@10font_asset
 // Start address: 0x1e3ce0
-u8 reset_font_spacing(font_asset& a)
+uint8 reset_font_spacing(font_asset& a)
 {
 	RwTexture* tex;
 	basic_rect_0 char_bounds;
 	type_32 baseline_count;
-	s32 width;
+	int32 width;
 	RwImage* image;
 	iColor_tag* bits;
-	s32 i;
+	int32 i;
 	basic_rect_0 r;
-	s32 baseline;
+	int32 baseline;
 }
 
 // find_bounds__19@unnamed@xFont_cpp@FPC10iColor_tagRC13basic_rect<i>i
 // Start address: 0x1e3fb0
-basic_rect_0 find_bounds(iColor_tag* bits, basic_rect_0& r, s32 pitch)
+basic_rect_0 find_bounds(iColor_tag* bits, basic_rect_0& r, int32 pitch)
 {
-	s32 diff;
+	int32 diff;
 	iColor_tag* endp;
 	iColor_tag* p;
-	s32 pmode;
-	s32 minx;
-	s32 maxx;
-	s32 miny;
-	s32 maxy;
-	s32 y;
+	int32 pmode;
+	int32 minx;
+	int32 maxx;
+	int32 miny;
+	int32 maxy;
+	int32 y;
 	iColor_tag* endline;
-	s32 x;
+	int32 x;
 	basic_rect_0 b;
 }
 

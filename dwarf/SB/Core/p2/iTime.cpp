@@ -1,48 +1,48 @@
 typedef struct prof_info;
 
-typedef s32(*type)(s32, void*, void*);
+typedef int32(*type)(int32, void*, void*);
 
 
 struct prof_info
 {
-	u32 addr;
-	u32 len;
-	u32 count;
+	uint32 addr;
+	uint32 len;
+	uint32 count;
 };
 
-s32 tim0_handler_id;
-s32 tim0_high;
-s32 sProfLevel;
-s8* sProfMap;
-s8** sProfFunc;
-s8** sProfFile;
-u32* sProfBin;
-u32 sProfCount;
-u32 pvsyncaddr;
+int32 tim0_handler_id;
+long32 tim0_high;
+int32 sProfLevel;
+int8* sProfMap;
+int8** sProfFunc;
+int8** sProfFile;
+uint32* sProfBin;
+uint32 sProfCount;
+uint32 pvsyncaddr;
 prof_info* pip;
-u32 pil;
-u32 app_top;
-u32 app_end;
-u32 app_hits;
-u32 kernel_hits;
-u32 vsync_hits;
-u32 scene_id;
-u32 prof_enable;
-u32* profSampleBuffer;
-u32* profSampleStatic;
-u32 profSampleSize;
-f32 sGameTime;
+uint32 pil;
+uint32 app_top;
+uint32 app_end;
+uint32 app_hits;
+uint32 kernel_hits;
+uint32 vsync_hits;
+uint32 scene_id;
+uint32 prof_enable;
+uint32* profSampleBuffer;
+uint32* profSampleStatic;
+uint32 profSampleSize;
+float32 sGameTime;
 type TimerHandler;
 
 void iFuncProfileDump();
 void iFuncProfileParse();
-void iProfileClear(u32 sceneID);
-void iTimeSetGame(f32 time);
-void iTimeGameAdvance(f32 elapsed);
-f32 iTimeDiffSec(s32 t0, s32 t1);
-f32 iTimeDiffSec(s32 time);
-s32 iTimeGet();
-s32 TimerHandler(s32 ca);
+void iProfileClear(uint32 sceneID);
+void iTimeSetGame(float32 time);
+void iTimeGameAdvance(float32 elapsed);
+float32 iTimeDiffSec(long32 t0, long32 t1);
+float32 iTimeDiffSec(long32 time);
+long32 iTimeGet();
+int32 TimerHandler(int32 ca);
 void iTimeExit();
 void iTimeInit();
 
@@ -60,48 +60,48 @@ void iFuncProfileParse()
 
 // iProfileClear__FUi
 // Start address: 0x1bae60
-void iProfileClear(u32 sceneID)
+void iProfileClear(uint32 sceneID)
 {
-	s32 i;
+	int32 i;
 }
 
 // iTimeSetGame__Ff
 // Start address: 0x1baf10
-void iTimeSetGame(f32 time)
+void iTimeSetGame(float32 time)
 {
 }
 
 // iTimeGameAdvance__Ff
 // Start address: 0x1baf20
-void iTimeGameAdvance(f32 elapsed)
+void iTimeGameAdvance(float32 elapsed)
 {
 }
 
 // iTimeDiffSec__Fll
 // Start address: 0x1baf30
-f32 iTimeDiffSec(s32 t0, s32 t1)
+float32 iTimeDiffSec(long32 t0, long32 t1)
 {
 }
 
 // iTimeDiffSec__Fl
 // Start address: 0x1baf80
-f32 iTimeDiffSec(s32 time)
+float32 iTimeDiffSec(long32 time)
 {
 }
 
 // iTimeGet__Fv
 // Start address: 0x1bafd0
-s32 iTimeGet()
+long32 iTimeGet()
 {
-	s32 high0;
-	s32 low0;
-	s32 high1;
-	s32 low1;
+	long32 high0;
+	long32 low0;
+	long32 high1;
+	long32 low1;
 }
 
 // TimerHandler__FiPvPv
 // Start address: 0x1bb010
-s32 TimerHandler(s32 ca)
+int32 TimerHandler(int32 ca)
 {
 }
 

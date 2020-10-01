@@ -5,9 +5,9 @@
 void destroy();
 void init();
 void setup(widget* this);
-void update(widget* this, f32 dt);
+void update(widget* this, float32 dt);
 void render();
-void dispatch(widget* this, u32 event);
+void dispatch(widget* this, uint32 event);
 
 // destroy__Q24xhud6widgetFv
 // Start address: 0x2980f0
@@ -29,7 +29,7 @@ void setup(widget* this)
 
 // update__Q24xhud6widgetFf
 // Start address: 0x298120
-void update(widget* this, f32 dt)
+void update(widget* this, float32 dt)
 {
 }
 
@@ -41,7 +41,7 @@ void render()
 
 // dispatch__Q24xhud6widgetFP5xBaseUiPCfP5xBase
 // Start address: 0x298140
-void dispatch(widget* this, u32 event)
+void dispatch(widget* this, uint32 event)
 {
 }
 

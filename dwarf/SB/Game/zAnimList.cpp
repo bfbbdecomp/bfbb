@@ -19,43 +19,43 @@ typedef struct xAnimMultiFileBase;
 typedef struct st_PKR_ASSET_TOCINFO;
 
 typedef void(*type_0)(xAnimPlay*, xAnimState*);
-typedef s32(*type_1)(void*, u32, void*, s32);
-typedef u32(*type_2)(u32, xAnimActiveEffect*, xAnimSingle*, void*);
-typedef void(*type_3)(void*, u32);
-typedef u32(*type_4)(xAnimTransition*, xAnimSingle*, void*);
-typedef void(*type_6)(xAnimPlay*, xQuat*, xVec3*, s32);
-typedef void*(*type_7)(void*, u32, void*, s32*, s32*);
-typedef void(*type_9)(void*, u32, void*);
-typedef u32(*type_10)(xAnimTransition*, xAnimSingle*, void*);
+typedef int32(*type_1)(void*, uint32, void*, int32);
+typedef uint32(*type_2)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
+typedef void(*type_3)(void*, uint32);
+typedef uint32(*type_4)(xAnimTransition*, xAnimSingle*, void*);
+typedef void(*type_6)(xAnimPlay*, xQuat*, xVec3*, int32);
+typedef void*(*type_7)(void*, uint32, void*, int32*, int32*);
+typedef void(*type_9)(void*, uint32, void*);
+typedef uint32(*type_10)(xAnimTransition*, xAnimSingle*, void*);
 typedef void(*type_12)(xMemPool*, void*);
-typedef void*(*type_13)(void*, u32, void*, u32, u32*);
-typedef void*(*type_14)(void*, u32, void*, void*, u32, u32*);
+typedef void*(*type_13)(void*, uint32, void*, uint32, uint32*);
+typedef void*(*type_14)(void*, uint32, void*, void*, uint32, uint32*);
 typedef void(*type_15)(xAnimState*, xAnimSingle*, void*);
-typedef void(*type_16)(void*, u32, void*, s8*);
+typedef void(*type_16)(void*, uint32, void*, int8*);
 typedef void(*type_20)(xAnimPlay*, xAnimState*);
 
-typedef s8 type_5[16];
-typedef s8 type_8[16];
-typedef u32 type_11[10];
-typedef f32 type_17[2];
-typedef u8 type_18[2];
+typedef int8 type_5[16];
+typedef int8 type_8[16];
+typedef uint32 type_11[10];
+typedef float32 type_17[2];
+typedef uint8 type_18[2];
 typedef xAnimMultiFileEntry type_19[1];
-typedef s8* type_21[20];
+typedef int8* type_21[20];
 
 struct xAnimEffect
 {
 	xAnimEffect* Next;
-	u32 Flags;
-	f32 StartTime;
-	f32 EndTime;
+	uint32 Flags;
+	float32 StartTime;
+	float32 EndTime;
 	type_2 Callback;
 };
 
 struct xAnimPlay
 {
 	xAnimPlay* Next;
-	u16 NumSingle;
-	u16 BoneCount;
+	uint16 NumSingle;
+	uint16 BoneCount;
 	xAnimSingle* Single;
 	void* Object;
 	xAnimTable* Table;
@@ -67,19 +67,19 @@ struct xAnimPlay
 struct xAnimState
 {
 	xAnimState* Next;
-	s8* Name;
-	u32 ID;
-	u32 Flags;
-	u32 UserFlags;
-	f32 Speed;
+	int8* Name;
+	uint32 ID;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 Speed;
 	xAnimFile* Data;
 	xAnimEffect* Effects;
 	xAnimTransitionList* Default;
 	xAnimTransitionList* List;
-	f32* BoneBlend;
-	f32* TimeSnap;
-	f32 FadeRecip;
-	u16* FadeOffset;
+	float32* BoneBlend;
+	float32* TimeSnap;
+	float32 FadeRecip;
+	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
 	type_0 BeforeEnter;
@@ -89,58 +89,58 @@ struct xAnimState
 
 struct xAnimSingle
 {
-	u32 SingleFlags;
+	uint32 SingleFlags;
 	xAnimState* State;
-	f32 Time;
-	f32 CurrentSpeed;
+	float32 Time;
+	float32 CurrentSpeed;
 	type_17 BilinearLerp;
 	xAnimEffect* Effect;
-	u32 ActiveCount;
-	f32 LastTime;
+	uint32 ActiveCount;
+	float32 LastTime;
 	xAnimActiveEffect* ActiveList;
 	xAnimPlay* Play;
 	xAnimTransition* Sync;
 	xAnimTransition* Tran;
 	xAnimSingle* Blend;
-	f32 BlendFactor;
-	u32 pad;
+	float32 BlendFactor;
+	uint32 pad;
 };
 
 struct xQuat
 {
 	xVec3 v;
-	f32 s;
+	float32 s;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xAnimTable
 {
 	xAnimTable* Next;
-	s8* Name;
+	int8* Name;
 	xAnimTransition* TransitionList;
 	xAnimState* StateList;
-	u32 AnimIndex;
-	u32 MorphIndex;
-	u32 UserFlags;
+	uint32 AnimIndex;
+	uint32 MorphIndex;
+	uint32 UserFlags;
 };
 
 struct xMemPool
 {
 	void* FreeList;
-	u16 NextOffset;
-	u16 Flags;
+	uint16 NextOffset;
+	uint16 Flags;
 	void* UsedList;
 	type_12 InitCB;
 	void* Buffer;
-	u16 Size;
-	u16 NumRealloc;
-	u32 Total;
+	uint16 Size;
+	uint16 NumRealloc;
+	uint32 Total;
 };
 
 struct xModelInstance
@@ -153,14 +153,14 @@ struct xAnimTransition
 	xAnimState* Dest;
 	type_10 Conditional;
 	type_10 Callback;
-	u32 Flags;
-	u32 UserFlags;
-	f32 SrcTime;
-	f32 DestTime;
-	u16 Priority;
-	u16 QueuePriority;
-	f32 BlendRecip;
-	u16* BlendOffset;
+	uint32 Flags;
+	uint32 UserFlags;
+	float32 SrcTime;
+	float32 DestTime;
+	uint16 Priority;
+	uint16 QueuePriority;
+	float32 BlendRecip;
+	uint16* BlendOffset;
 };
 
 struct zAnimListAsset
@@ -171,12 +171,12 @@ struct zAnimListAsset
 struct xAnimFile
 {
 	xAnimFile* Next;
-	s8* Name;
-	u32 ID;
-	u32 FileFlags;
-	f32 Duration;
-	f32 TimeOffset;
-	u16 BoneCount;
+	int8* Name;
+	uint32 ID;
+	uint32 FileFlags;
+	float32 Duration;
+	float32 TimeOffset;
+	uint16 BoneCount;
 	type_18 NumAnims;
 	void** RawData;
 };
@@ -189,9 +189,9 @@ struct xAnimTransitionList
 
 struct st_PACKER_ASSETTYPE
 {
-	u32 typetag;
-	u32 tflags;
-	s32 typalign;
+	uint32 typetag;
+	uint32 tflags;
+	int32 typalign;
 	type_13 readXForm;
 	type_14 writeXForm;
 	type_1 assetLoaded;
@@ -208,60 +208,60 @@ struct xAnimMultiFile : xAnimMultiFileBase
 
 struct xAnimMultiFileEntry
 {
-	u32 ID;
+	uint32 ID;
 	xAnimFile* File;
 };
 
 struct xAnimActiveEffect
 {
 	xAnimEffect* Effect;
-	u32 Handle;
+	uint32 Handle;
 };
 
 struct xAnimMultiFileBase
 {
-	u32 Count;
+	uint32 Count;
 };
 
 struct st_PKR_ASSET_TOCINFO
 {
-	u32 aid;
+	uint32 aid;
 	st_PACKER_ASSETTYPE* typeref;
-	u32 sector;
-	u32 plus_offset;
-	u32 size;
+	uint32 sector;
+	uint32 plus_offset;
+	uint32 size;
 	void* mempos;
 };
 
 type_5 buffer;
 type_8 buffer;
-s32 nals;
-u32* aids;
+int32 nals;
+uint32* aids;
 xAnimTable** atbls;
-s32* anused;
+int32* anused;
 type_21 astnames;
 type_20 xAnimDefaultBeforeEnter;
 type_4 AlwaysConditional;
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
-s32 zAnimListGetNumUsed(u32 id);
-xAnimTable* zAnimListGetTable(u32 id);
+int32 zAnimListGetNumUsed(uint32 id);
+xAnimTable* zAnimListGetTable(uint32 id);
 void zAnimListExit();
 void zAnimListInit();
-u32 AlwaysConditional();
+uint32 AlwaysConditional();
 
 // zAnimListGetNumUsed__FUi
 // Start address: 0x129e50
-s32 zAnimListGetNumUsed(u32 id)
+int32 zAnimListGetNumUsed(uint32 id)
 {
-	s32 i;
+	int32 i;
 }
 
 // zAnimListGetTable__FUi
 // Start address: 0x129eb0
-xAnimTable* zAnimListGetTable(u32 id)
+xAnimTable* zAnimListGetTable(uint32 id)
 {
-	s32 i;
+	int32 i;
 }
 
 // zAnimListExit__Fv
@@ -274,21 +274,21 @@ void zAnimListExit()
 // Start address: 0x129f30
 void zAnimListInit()
 {
-	s32 i;
-	u32 size;
+	int32 i;
+	uint32 size;
 	zAnimListAsset* zala;
 	st_PKR_ASSET_TOCINFO ainfo;
 	xAnimTable* atbl;
 	void* buf;
 	xAnimFile* afile;
-	s32 idle_exists;
-	s32 j;
+	int32 idle_exists;
+	int32 j;
 	xAnimFile* afile;
 }
 
 // AlwaysConditional__FP15xAnimTransitionP11xAnimSinglePv
 // Start address: 0x12a2f0
-u32 AlwaysConditional()
+uint32 AlwaysConditional()
 {
 }
 

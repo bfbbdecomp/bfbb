@@ -13,11 +13,11 @@ void xGridCheckBound(xGrid& grid, xBound& bound, xQCData& qcd)
 {
 	cb_ray_hits_ent cb;
 	xBox box;
-	f32 ex;
-	f32 ez;
+	float32 ex;
+	float32 ez;
 	xGridBound* cell;
-	u16 gx;
-	u16 gz;
+	uint16 gx;
+	uint16 gz;
 	xGridBound* cell;
 }
 
@@ -26,11 +26,11 @@ void xGridCheckBound(xGrid& grid, xBound& bound, xQCData& qcd)
 void xGridCheckBound(xGrid& grid, xBound& bound, xQCData& qcd, cb_damage_ent cb)
 {
 	xBox box;
-	f32 ex;
-	f32 ez;
+	float32 ex;
+	float32 ez;
 	xGridBound* cell;
-	u16 gx;
-	u16 gz;
+	uint16 gx;
+	uint16 gz;
 	xGridBound* cell;
 }
 
@@ -39,11 +39,11 @@ void xGridCheckBound(xGrid& grid, xBound& bound, xQCData& qcd, cb_damage_ent cb)
 void xGridCheckBound(xGrid& grid, xBound& bound, xQCData& qcd)
 {
 	xBox box;
-	f32 ex;
-	f32 ez;
+	float32 ex;
+	float32 ez;
 	xGridBound* cell;
-	u16 gx;
-	u16 gz;
+	uint16 gx;
+	uint16 gz;
 	xGridBound* cell;
 }
 
@@ -53,11 +53,11 @@ void xGridCheckBound(xGrid& grid, xBound& bound, xQCData& qcd)
 {
 	cb_cache_collisions cb;
 	xBox box;
-	f32 ex;
-	f32 ez;
+	float32 ex;
+	float32 ez;
 	xGridBound* cell;
-	u16 gx;
-	u16 gz;
+	uint16 gx;
+	uint16 gz;
 	xGridBound* cell;
 }
 

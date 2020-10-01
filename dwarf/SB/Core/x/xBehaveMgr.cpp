@@ -17,25 +17,25 @@ typedef enum PSY_BRAIN_STATUS;
 typedef struct RyzMemData;
 typedef enum en_GOALSTATE;
 
-typedef xFactoryInst*(*type_1)(s32, RyzMemGrow*, void*);
+typedef xFactoryInst*(*type_1)(int32, RyzMemGrow*, void*);
 typedef void(*type_2)(xFactoryInst*);
-typedef s32(*type_3)(xBase*, xBase*, u32, f32*, xBase*);
-typedef s32(*type_4)(xGoal*, void*, f32, void*);
-typedef s32(*type_5)(xGoal*, void*, en_trantype*, f32, void*);
-typedef s32(*type_9)(xGoal*, void*, en_trantype*, f32, void*);
-typedef void(*type_10)(s32*, en_trantype*);
+typedef int32(*type_3)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef int32(*type_4)(xGoal*, void*, float32, void*);
+typedef int32(*type_5)(xGoal*, void*, en_trantype*, float32, void*);
+typedef int32(*type_9)(xGoal*, void*, en_trantype*, float32, void*);
+typedef void(*type_10)(int32*, en_trantype*);
 
-typedef f32 type_0[4];
+typedef float32 type_0[4];
 typedef xGoal* type_6[5];
-typedef f32 type_7[1];
+typedef float32 type_7[1];
 typedef type_7 type_8[5];
 
 struct xGoal : xListItem, xFactoryInst
 {
 	xPsyche* psyche;
-	s32 goalID;
+	int32 goalID;
 	en_GOALSTATE stat;
-	s32 flg_able;
+	int32 flg_able;
 	type_9 fun_process;
 	type_4 fun_precalc;
 	type_5 fun_chkRule;
@@ -44,39 +44,39 @@ struct xGoal : xListItem, xFactoryInst
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_0 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xPsyche : RyzMemData
 {
 	xBase* clt_owner;
 	xPSYNote* cb_notice;
-	s32 flg_psyche;
+	int32 flg_psyche;
 	xGoal* goallist;
 	type_6 goalstak;
 	type_8 tmr_stack;
-	s32 staktop;
+	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
-	s32 gid_safegoal;
+	int32 gid_safegoal;
 	type_10 fun_remap;
 	void* userContext;
-	s32 cnt_transLastTimestep;
+	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
 	xBase fakebase;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_3 eventFunc;
 };
@@ -98,14 +98,14 @@ enum en_trantype
 
 struct xListItem
 {
-	s32 flg_travFilter;
+	int32 flg_travFilter;
 	xGoal* next;
 	xGoal* prev;
 };
 
 struct xFactoryInst : RyzMemData
 {
-	s32 itemType;
+	int32 itemType;
 	xFactoryInst* nextprod;
 	xFactoryInst* prevprod;
 };
@@ -127,19 +127,19 @@ struct xBehaveMgr : RyzMemData
 
 struct XGOFTypeInfo
 {
-	s32 tid;
+	int32 tid;
 	type_1 creator;
 	type_2 destroyer;
 };
 
 struct RyzMemGrow
 {
-	s32 flg_grow;
-	s32 amt;
-	s8* ptr;
+	int32 flg_grow;
+	int32 amt;
+	int8* ptr;
 	xBase* user;
-	s32 amt_last;
-	s8* ptr_last;
+	int32 amt_last;
+	int8* ptr_last;
 	xBase* user_last;
 };
 
@@ -159,9 +159,9 @@ enum en_pendtype
 struct st_XORDEREDARRAY
 {
 	void** list;
-	s32 cnt;
-	s32 max;
-	s32 warnlvl;
+	int32 cnt;
+	int32 max;
+	int32 warnlvl;
 };
 
 struct xPSYNote
@@ -202,30 +202,30 @@ enum en_GOALSTATE
 	GOAL_STAT_FORCE = 0x7fffffff
 };
 
-s32 g_modinit;
+int32 g_modinit;
 xBehaveMgr* g_behavmgr;
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
-f32 TimerGet(xPsyche* this, en_xpsytime tymr);
-s32 TranGoal(xPsyche* this, f32 dt, void* updCtxt);
-s32 ParseTranRequest(xPsyche* this, en_trantype trantyp, s32 trangid);
-s32 Timestep(xPsyche* this, f32 dt, void* updCtxt);
-xGoal* FindGoal(xPsyche* this, s32 gid);
-s32 GoalNone(xPsyche* this, s32 denyExplicit);
-s32 GoalSwap(xPsyche* this, s32 gid);
-s32 GoalPop(xPsyche* this, s32 gid_popto);
-s32 GoalPopRecover(xPsyche* this, s32 overpend);
-s32 GoalPopToBase(xPsyche* this, s32 overpend);
-s32 GoalPush(xPsyche* this, s32 gid);
-s32 GoalSet(xPsyche* this, s32 gid);
-xGoal* GetPrevRecovery(xPsyche* this, s32 gid);
-s32 GIDOfPending(xPsyche* this);
-s32 GIDOfActive(xPsyche* this);
-xGoal* GIDInStack(xPsyche* this, s32 gid);
+float32 TimerGet(xPsyche* this, en_xpsytime tymr);
+int32 TranGoal(xPsyche* this, float32 dt, void* updCtxt);
+int32 ParseTranRequest(xPsyche* this, en_trantype trantyp, int32 trangid);
+int32 Timestep(xPsyche* this, float32 dt, void* updCtxt);
+xGoal* FindGoal(xPsyche* this, int32 gid);
+int32 GoalNone(xPsyche* this, int32 denyExplicit);
+int32 GoalSwap(xPsyche* this, int32 gid);
+int32 GoalPop(xPsyche* this, int32 gid_popto);
+int32 GoalPopRecover(xPsyche* this, int32 overpend);
+int32 GoalPopToBase(xPsyche* this, int32 overpend);
+int32 GoalPush(xPsyche* this, int32 gid);
+int32 GoalSet(xPsyche* this, int32 gid);
+xGoal* GetPrevRecovery(xPsyche* this, int32 gid);
+int32 GIDOfPending(xPsyche* this);
+int32 GIDOfActive(xPsyche* this);
+xGoal* GIDInStack(xPsyche* this, int32 gid);
 xGoal* GetCurGoal(xPsyche* this);
-s32 IndexInStack(xPsyche* this, s32 gid);
+int32 IndexInStack(xPsyche* this, int32 gid);
 void FreshWipe(xPsyche* this);
-xGoal* AddGoal(xPsyche* this, s32 gid, void* createData);
+xGoal* AddGoal(xPsyche* this, int32 gid, void* createData);
 void BrainEnd(xPsyche* this);
 void BrainExtend(xPsyche* this);
 void BrainBegin(xPsyche* this);
@@ -240,42 +240,42 @@ void xBehaveMgr_Startup();
 
 // TimerGet__7xPsycheF11en_xpsytime
 // Start address: 0x2f02e0
-f32 TimerGet(xPsyche* this, en_xpsytime tymr)
+float32 TimerGet(xPsyche* this, en_xpsytime tymr)
 {
 }
 
 // TranGoal__7xPsycheFfPv
 // Start address: 0x2f0320
-s32 TranGoal(xPsyche* this, f32 dt, void* updCtxt)
+int32 TranGoal(xPsyche* this, float32 dt, void* updCtxt)
 {
-	s32 halfway;
-	s32 just_switched;
+	int32 halfway;
+	int32 just_switched;
 	xGoal* topgoal;
-	s32 moretodo;
-	s32 moretodo;
+	int32 moretodo;
+	int32 moretodo;
 }
 
 // ParseTranRequest__7xPsycheF11en_trantypei
 // Start address: 0x2f07a0
-s32 ParseTranRequest(xPsyche* this, en_trantype trantyp, s32 trangid)
+int32 ParseTranRequest(xPsyche* this, en_trantype trantyp, int32 trangid)
 {
-	s32 rc;
+	int32 rc;
 }
 
 // Timestep__7xPsycheFfPv
 // Start address: 0x2f08d0
-s32 Timestep(xPsyche* this, f32 dt, void* updCtxt)
+int32 Timestep(xPsyche* this, float32 dt, void* updCtxt)
 {
 	xGoal* curgoal;
-	s32 moretodo;
-	s32 trangid;
+	int32 moretodo;
+	int32 trangid;
 	en_trantype trantyp;
-	s32 old_psyflags;
+	int32 old_psyflags;
 }
 
 // FindGoal__7xPsycheFi
 // Start address: 0x2f0ae0
-xGoal* FindGoal(xPsyche* this, s32 gid)
+xGoal* FindGoal(xPsyche* this, int32 gid)
 {
 	xGoal* goal;
 	xGoal* safe;
@@ -283,93 +283,93 @@ xGoal* FindGoal(xPsyche* this, s32 gid)
 
 // GoalNone__7xPsycheFii
 // Start address: 0x2f0b90
-s32 GoalNone(xPsyche* this, s32 denyExplicit)
+int32 GoalNone(xPsyche* this, int32 denyExplicit)
 {
 }
 
 // GoalSwap__7xPsycheFii
 // Start address: 0x2f0cf0
-s32 GoalSwap(xPsyche* this, s32 gid)
+int32 GoalSwap(xPsyche* this, int32 gid)
 {
-	s32 result;
+	int32 result;
 	xGoal* goal;
 	en_trantype trantype;
 }
 
 // GoalPop__7xPsycheFii
 // Start address: 0x2f0e20
-s32 GoalPop(xPsyche* this, s32 gid_popto)
+int32 GoalPop(xPsyche* this, int32 gid_popto)
 {
-	s32 result;
+	int32 result;
 	xGoal* destgoal;
 	xGoal* tmpgoal;
-	s32 i;
+	int32 i;
 	en_trantype trantype;
 }
 
 // GoalPopRecover__7xPsycheFi
 // Start address: 0x2f1020
-s32 GoalPopRecover(xPsyche* this, s32 overpend)
+int32 GoalPopRecover(xPsyche* this, int32 overpend)
 {
-	s32 result;
-	s32 i;
+	int32 result;
+	int32 i;
 	xGoal* tmpgoal;
 	xGoal* destgoal;
 }
 
 // GoalPopToBase__7xPsycheFi
 // Start address: 0x2f1160
-s32 GoalPopToBase(xPsyche* this, s32 overpend)
+int32 GoalPopToBase(xPsyche* this, int32 overpend)
 {
 }
 
 // GoalPush__7xPsycheFii
 // Start address: 0x2f1220
-s32 GoalPush(xPsyche* this, s32 gid)
+int32 GoalPush(xPsyche* this, int32 gid)
 {
-	s32 result;
+	int32 result;
 	xGoal* goal;
 	en_trantype trantype;
 }
 
 // GoalSet__7xPsycheFii
 // Start address: 0x2f13a0
-s32 GoalSet(xPsyche* this, s32 gid)
+int32 GoalSet(xPsyche* this, int32 gid)
 {
-	s32 result;
+	int32 result;
 	xGoal* goal;
 	en_trantype trantype;
 }
 
 // GetPrevRecovery__7xPsycheCFi
 // Start address: 0x2f14e0
-xGoal* GetPrevRecovery(xPsyche* this, s32 gid)
+xGoal* GetPrevRecovery(xPsyche* this, int32 gid)
 {
-	s32 i;
-	s32 idx_start;
+	int32 i;
+	int32 idx_start;
 	xGoal* tmpgoal;
 	xGoal* recgoal;
 }
 
 // GIDOfPending__7xPsycheCFv
 // Start address: 0x2f15d0
-s32 GIDOfPending(xPsyche* this)
+int32 GIDOfPending(xPsyche* this)
 {
 }
 
 // GIDOfActive__7xPsycheCFv
 // Start address: 0x2f15f0
-s32 GIDOfActive(xPsyche* this)
+int32 GIDOfActive(xPsyche* this)
 {
 }
 
 // GIDInStack__7xPsycheCFi
 // Start address: 0x2f1620
-xGoal* GIDInStack(xPsyche* this, s32 gid)
+xGoal* GIDInStack(xPsyche* this, int32 gid)
 {
 	xGoal* da_goal;
 	xGoal* tmpgoal;
-	s32 i;
+	int32 i;
 }
 
 // GetCurGoal__7xPsycheCFv
@@ -380,22 +380,22 @@ xGoal* GetCurGoal(xPsyche* this)
 
 // IndexInStack__7xPsycheCFi
 // Start address: 0x2f16a0
-s32 IndexInStack(xPsyche* this, s32 gid)
+int32 IndexInStack(xPsyche* this, int32 gid)
 {
-	s32 da_idx;
-	s32 i;
+	int32 da_idx;
+	int32 i;
 }
 
 // FreshWipe__7xPsycheFv
 // Start address: 0x2f16f0
 void FreshWipe(xPsyche* this)
 {
-	s32 i;
+	int32 i;
 }
 
 // AddGoal__7xPsycheFiPv
 // Start address: 0x2f1760
-xGoal* AddGoal(xPsyche* this, s32 gid, void* createData)
+xGoal* AddGoal(xPsyche* this, int32 gid, void* createData)
 {
 	xGoal* goal;
 }

@@ -34,7 +34,7 @@ typedef struct tGS_DISPFB1;
 
 
 typedef RxObjSpace3DVertex type_0[384];
-typedef u32 type_1[4096];
+typedef uint32 type_1[4096];
 typedef sceGsDispEnv type_2[2];
 typedef sceGsDispEnv type_3[2];
 typedef <unknown type (0xa510)>* type_4[4];
@@ -53,8 +53,8 @@ struct RxObjSpace3DVertex
 	RwV3d objVertex;
 	RxColorUnion c;
 	RwV3d objNormal;
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct rwDMAReadCircuitOneTag
@@ -68,77 +68,77 @@ struct rwDMAReadCircuitOneTag
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct tGS_DISPLAY2
 {
 	union
 	{
-		u32 DX;
-		u32 DY;
-		u32 MAGH;
-		u32 MAGV;
-		u32 p0;
+		uint32 DX;
+		uint32 DY;
+		uint32 MAGH;
+		uint32 MAGV;
+		uint32 p0;
 	};
 	union
 	{
-		u32 DW;
-		u32 DH;
-		u32 p1;
+		uint32 DW;
+		uint32 DH;
+		uint32 p1;
 	};
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct sceGsDrawEnv1
 {
 	sceGsFrame frame1;
-	u32 frame1addr;
+	ulong32 frame1addr;
 	sceGsZbuf zbuf1;
-	s32 zbuf1addr;
+	long32 zbuf1addr;
 	sceGsXyoffset xyoffset1;
-	s32 xyoffset1addr;
+	long32 xyoffset1addr;
 	sceGsScissor scissor1;
-	s32 scissor1addr;
+	long32 scissor1addr;
 	sceGsPrmodecont prmodecont;
-	s32 prmodecontaddr;
+	long32 prmodecontaddr;
 	sceGsColclamp colclamp;
-	s32 colclampaddr;
+	long32 colclampaddr;
 	sceGsDthe dthe;
-	s32 dtheaddr;
+	long32 dtheaddr;
 	sceGsTest test1;
-	s32 test1addr;
+	long32 test1addr;
 };
 
 union sceGsTest
 {
-	u32 ATE;
-	u32 ATST;
-	u32 AREF;
-	u32 AFAIL;
-	u32 DATE;
-	u32 DATM;
-	u32 ZTE;
-	u32 ZTST;
-	u32 pad19;
+	ulong32 ATE;
+	ulong32 ATST;
+	ulong32 AREF;
+	ulong32 AFAIL;
+	ulong32 DATE;
+	ulong32 DATM;
+	ulong32 ZTE;
+	ulong32 ZTST;
+	ulong32 pad19;
 };
 
 union sceGsDthe
 {
-	u32 DTHE;
-	u32 pad01;
+	ulong32 DTHE;
+	ulong32 pad01;
 };
 
 struct rwDMA_flipData
@@ -167,165 +167,165 @@ struct tGS_PMODE
 {
 	union
 	{
-		u32 EN1;
-		u32 EN2;
-		u32 CRTMD;
-		u32 MMOD;
-		u32 AMOD;
-		u32 SLBG;
-		u32 ALP;
-		u32 p0;
+		uint32 EN1;
+		uint32 EN2;
+		uint32 CRTMD;
+		uint32 MMOD;
+		uint32 AMOD;
+		uint32 SLBG;
+		uint32 ALP;
+		uint32 p0;
 	};
-	u32 p1;
+	uint32 p1;
 };
 
 union sceGsPrmodecont
 {
-	u32 AC;
-	u32 pad01;
+	ulong32 AC;
+	ulong32 pad01;
 };
 
 struct tGS_DISPLAY1
 {
 	union
 	{
-		u32 DX;
-		u32 DY;
-		u32 MAGH;
-		u32 MAGV;
-		u32 p0;
+		uint32 DX;
+		uint32 DY;
+		uint32 MAGH;
+		uint32 MAGV;
+		uint32 p0;
 	};
 	union
 	{
-		u32 DW;
-		u32 DH;
-		u32 p1;
+		uint32 DW;
+		uint32 DH;
+		uint32 p1;
 	};
 };
 
 union sceGsXyoffset
 {
-	u32 OFX;
-	u32 pad16;
-	u32 OFY;
-	u32 pad48;
+	ulong32 OFX;
+	ulong32 pad16;
+	ulong32 OFY;
+	ulong32 pad48;
 };
 
 union sceGsColclamp
 {
-	u32 CLAMP;
-	u32 pad01;
+	ulong32 CLAMP;
+	ulong32 pad01;
 };
 
 struct sceGsRgbaq
 {
 	union
 	{
-		u32 R;
-		u32 G;
-		u32 B;
-		u32 A;
+		uint32 R;
+		uint32 G;
+		uint32 B;
+		uint32 A;
 	};
-	f32 Q;
+	float32 Q;
 };
 
 struct tGS_BGCOLOR
 {
 	union
 	{
-		u32 R;
-		u32 G;
-		u32 B;
-		u32 p0;
+		uint32 R;
+		uint32 G;
+		uint32 B;
+		uint32 p0;
 	};
-	u32 p1;
+	uint32 p1;
 };
 
 struct sceGsDrawEnv2
 {
 	sceGsFrame frame2;
-	u32 frame2addr;
+	ulong32 frame2addr;
 	sceGsZbuf zbuf2;
-	s32 zbuf2addr;
+	long32 zbuf2addr;
 	sceGsXyoffset xyoffset2;
-	s32 xyoffset2addr;
+	long32 xyoffset2addr;
 	sceGsScissor scissor2;
-	s32 scissor2addr;
+	long32 scissor2addr;
 	sceGsPrmodecont prmodecont;
-	s32 prmodecontaddr;
+	long32 prmodecontaddr;
 	sceGsColclamp colclamp;
-	s32 colclampaddr;
+	long32 colclampaddr;
 	sceGsDthe dthe;
-	s32 dtheaddr;
+	long32 dtheaddr;
 	sceGsTest test2;
-	s32 test2addr;
+	long32 test2addr;
 };
 
 union sceGsXyz
 {
-	u32 X;
-	u32 Y;
-	u32 Z;
+	ulong32 X;
+	ulong32 Y;
+	ulong32 Z;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct tGS_SMODE2
 {
 	union
 	{
-		u32 INT;
-		u32 FFMD;
-		u32 DPMS;
-		u32 p0;
+		uint32 INT;
+		uint32 FFMD;
+		uint32 DPMS;
+		uint32 p0;
 	};
-	u32 p1;
+	uint32 p1;
 };
 
 struct sceGifTag
 {
 	union
 	{
-		u32 NLOOP;
-		u32 EOP;
-		u32 pad16;
-		u32 id;
-		u32 PRE;
-		u32 PRIM;
-		u32 FLG;
-		u32 NREG;
+		ulong32 NLOOP;
+		ulong32 EOP;
+		ulong32 pad16;
+		ulong32 id;
+		ulong32 PRE;
+		ulong32 PRIM;
+		ulong32 FLG;
+		ulong32 NREG;
 	};
 	union
 	{
-		u32 REGS0;
-		u32 REGS1;
-		u32 REGS2;
-		u32 REGS3;
-		u32 REGS4;
-		u32 REGS5;
-		u32 REGS6;
-		u32 REGS7;
-		u32 REGS8;
-		u32 REGS9;
-		u32 REGS10;
-		u32 REGS11;
-		u32 REGS12;
-		u32 REGS13;
-		u32 REGS14;
-		u32 REGS15;
+		ulong32 REGS0;
+		ulong32 REGS1;
+		ulong32 REGS2;
+		ulong32 REGS3;
+		ulong32 REGS4;
+		ulong32 REGS5;
+		ulong32 REGS6;
+		ulong32 REGS7;
+		ulong32 REGS8;
+		ulong32 REGS9;
+		ulong32 REGS10;
+		ulong32 REGS11;
+		ulong32 REGS12;
+		ulong32 REGS13;
+		ulong32 REGS14;
+		ulong32 REGS15;
 	};
 };
 
@@ -333,29 +333,29 @@ struct tGS_DISPFB2
 {
 	union
 	{
-		u32 FBP;
-		u32 FBW;
-		u32 PSM;
-		u32 p0;
+		uint32 FBP;
+		uint32 FBW;
+		uint32 PSM;
+		uint32 p0;
 	};
 	union
 	{
-		u32 DBX;
-		u32 DBY;
-		u32 p1;
+		uint32 DBX;
+		uint32 DBY;
+		uint32 p1;
 	};
 };
 
 union sceGsScissor
 {
-	u32 SCAX0;
-	u32 pad11;
-	u32 SCAX1;
-	u32 pad27;
-	u32 SCAY0;
-	u32 pad43;
-	u32 SCAY1;
-	u32 pad59;
+	ulong32 SCAX0;
+	ulong32 pad11;
+	ulong32 SCAX1;
+	ulong32 pad27;
+	ulong32 SCAY0;
+	ulong32 pad43;
+	ulong32 SCAY1;
+	ulong32 pad59;
 };
 
 union RxColorUnion
@@ -367,120 +367,120 @@ union RxColorUnion
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 struct sceGsClear
 {
 	sceGsTest testa;
-	s32 testaaddr;
+	long32 testaaddr;
 	sceGsPrim prim;
-	s32 primaddr;
+	long32 primaddr;
 	sceGsRgbaq rgbaq;
-	s32 rgbaqaddr;
+	long32 rgbaqaddr;
 	sceGsXyz xyz2a;
-	s32 xyz2aaddr;
+	long32 xyz2aaddr;
 	sceGsXyz xyz2b;
-	s32 xyz2baddr;
+	long32 xyz2baddr;
 	sceGsTest testb;
-	s32 testbaddr;
+	long32 testbaddr;
 };
 
 union sceGsZbuf
 {
-	u32 ZBP;
-	u32 pad09;
-	u32 PSM;
-	u32 pad28;
-	u32 ZMSK;
-	u32 pad33;
+	ulong32 ZBP;
+	ulong32 pad09;
+	ulong32 PSM;
+	ulong32 pad28;
+	ulong32 ZMSK;
+	ulong32 pad33;
 };
 
 union sceGsPrim
 {
-	u32 PRIM;
-	u32 IIP;
-	u32 TME;
-	u32 FGE;
-	u32 ABE;
-	u32 AA1;
-	u32 FST;
-	u32 CTXT;
-	u32 FIX;
-	u32 pad11;
+	ulong32 PRIM;
+	ulong32 IIP;
+	ulong32 TME;
+	ulong32 FGE;
+	ulong32 ABE;
+	ulong32 AA1;
+	ulong32 FST;
+	ulong32 CTXT;
+	ulong32 FIX;
+	ulong32 pad11;
 };
 
 union sceGsFrame
 {
-	u32 FBP;
-	u32 pad09;
-	u32 FBW;
-	u32 pad22;
-	u32 PSM;
-	u32 pad30;
-	u32 FBMSK;
+	ulong32 FBP;
+	ulong32 pad09;
+	ulong32 FBW;
+	ulong32 pad22;
+	ulong32 PSM;
+	ulong32 pad30;
+	ulong32 FBMSK;
 };
 
 struct tGS_DISPFB1
 {
 	union
 	{
-		u32 FBP;
-		u32 FBW;
-		u32 PSM;
-		u32 p0;
+		uint32 FBP;
+		uint32 FBW;
+		uint32 PSM;
+		uint32 p0;
 	};
 	union
 	{
-		u32 DBX;
-		u32 DBY;
-		u32 p1;
+		uint32 DBX;
+		uint32 DBY;
+		uint32 p1;
 	};
 };
 
 type_1 ourGlobals;
 rwDMA_flipData _rwDMAFlipData;
 <unknown type (0xa510)>* _rwDMAPktPtr;
-s32 skyFrame_1;
+long32 skyFrame_1;
 
-void iDrawSetTEST2(s32 value);
-void iDrawSetFBA1(s32 value);
-void iDrawSetFBMSK(u32 abgr);
+void iDrawSetTEST2(int32 value);
+void iDrawSetFBA1(int32 value);
+void iDrawSetFBMSK(uint32 abgr);
 
 // iDrawSetTEST2__Fi
 // Start address: 0x1a7e50
-void iDrawSetTEST2(s32 value)
+void iDrawSetTEST2(int32 value)
 {
-	u32 tmp;
+	ulong32 tmp;
 }
 
 // iDrawSetFBA1__Fi
 // Start address: 0x1a7ed0
-void iDrawSetFBA1(s32 value)
+void iDrawSetFBA1(int32 value)
 {
-	u32 tmp;
+	ulong32 tmp;
 }
 
 // iDrawSetFBMSK__FUi
 // Start address: 0x1a7f70
-void iDrawSetFBMSK(u32 abgr)
+void iDrawSetFBMSK(uint32 abgr)
 {
-	u32 tmp;
-	u32 hi;
+	ulong32 tmp;
+	ulong32 hi;
 }
 

@@ -77,38 +77,38 @@ typedef struct RwObjectHasFrame;
 typedef union _class;
 typedef struct RwLinkList;
 
-typedef s32(*type_0)(RxPipelineNode*, RxPipeline*);
-typedef u32(*type_2)(RxPipelineNode*, u32, u32, void*);
-typedef s32(*type_3)(RxPipelineNode*, RxPipelineNodeParam*);
-typedef s32(*type_4)(RxNodeDefinition*);
+typedef int32(*type_0)(RxPipelineNode*, RxPipeline*);
+typedef uint32(*type_2)(RxPipelineNode*, uint32, uint32, void*);
+typedef int32(*type_3)(RxPipelineNode*, RxPipelineNodeParam*);
+typedef int32(*type_4)(RxNodeDefinition*);
 typedef void(*type_5)(RxNodeDefinition*);
-typedef s32(*type_6)(RxPipelineNode*);
+typedef int32(*type_6)(RxPipelineNode*);
 typedef void(*type_7)(RxPipelineNode*);
 typedef RpClump*(*type_8)(RpClump*, void*);
-typedef s32(*type_14)(xBase*, xBase*, u32, f32*, xBase*);
+typedef int32(*type_14)(xBase*, xBase*, uint32, float32*, xBase*);
 typedef RpWorldSector*(*type_15)(RpWorldSector*);
 typedef void(*type_19)(RwResEntry*);
 typedef RwObjectHasFrame*(*type_21)(RwObjectHasFrame*);
 
-typedef u16 type_1[3];
-typedef s8 type_9[4];
+typedef uint16 type_1[3];
+typedef int8 type_9[4];
 typedef RwTexCoords* type_10[8];
-typedef u8 type_11[3];
-typedef f32 type_12[4];
-typedef u32 type_13[4];
-typedef s8 type_16[32];
-typedef f32 type_17[16];
-typedef s8 type_18[32];
+typedef uint8 type_11[3];
+typedef float32 type_12[4];
+typedef uint32 type_13[4];
+typedef int8 type_16[32];
+typedef float32 type_17[16];
+typedef int8 type_18[32];
 typedef RxCluster type_20[1];
 typedef RpLight* type_22[2];
 typedef RwFrame* type_23[2];
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_14 eventFunc;
 };
@@ -121,21 +121,21 @@ struct RxPipelineNodeParam
 
 struct xQCData
 {
-	s8 xmin;
-	s8 ymin;
-	s8 zmin;
-	s8 zmin_dup;
-	s8 xmax;
-	s8 ymax;
-	s8 zmax;
-	s8 zmax_dup;
+	int8 xmin;
+	int8 ymin;
+	int8 zmin;
+	int8 zmin_dup;
+	int8 xmax;
+	int8 ymax;
+	int8 zmax;
+	int8 zmax_dup;
 	xVec3 min;
 	xVec3 max;
 };
 
 struct RpPolygon
 {
-	u16 matIndex;
+	uint16 matIndex;
 	type_1 vertIndex;
 };
 
@@ -147,13 +147,13 @@ struct xBBox
 
 struct RxHeap
 {
-	u32 superBlockSize;
+	uint32 superBlockSize;
 	rxHeapSuperBlockDescriptor* head;
 	rxHeapBlockHeader* headBlock;
 	rxHeapFreeBlock* freeBlocks;
-	u32 entriesAlloced;
-	u32 entriesUsed;
-	s32 dirty;
+	uint32 entriesAlloced;
+	uint32 entriesUsed;
+	int32 dirty;
 };
 
 struct _tagPartLink
@@ -170,50 +170,50 @@ struct RwBBox
 
 struct RwRGBA
 {
-	u8 red;
-	u8 green;
-	u8 blue;
-	u8 alpha;
+	uint8 red;
+	uint8 green;
+	uint8 blue;
+	uint8 alpha;
 };
 
 struct RpMaterialList
 {
 	RpMaterial** materials;
-	s32 numMaterials;
-	s32 space;
+	int32 numMaterials;
+	int32 space;
 };
 
 struct RxPipelineNode
 {
 	RxNodeDefinition* nodeDef;
-	u32 numOutputs;
-	u32* outputs;
+	uint32 numOutputs;
+	uint32* outputs;
 	RxPipelineCluster** slotClusterRefs;
-	u32* slotsContinue;
+	uint32* slotsContinue;
 	void* privateData;
-	u32* inputToClusterSlot;
+	uint32* inputToClusterSlot;
 	RxPipelineNodeTopSortData* topSortData;
 	void* initializationData;
-	u32 initializationDataSize;
+	uint32 initializationDataSize;
 };
 
 struct xJSPNodeInfo
 {
-	s32 originalMatIndex;
-	s32 nodeFlags;
+	int32 originalMatIndex;
+	int32 nodeFlags;
 };
 
 struct RwTexCoords
 {
-	f32 u;
-	f32 v;
+	float32 u;
+	float32 v;
 };
 
 struct RwV3d
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct RpMaterial
@@ -222,14 +222,14 @@ struct RpMaterial
 	RwRGBA color;
 	RxPipeline* pipeline;
 	RwSurfaceProperties surfaceProps;
-	s16 refCount;
-	s16 pad;
+	int16 refCount;
+	int16 pad;
 };
 
 struct RxPipelineNodeTopSortData
 {
-	u32 numIns;
-	u32 numInsVisited;
+	uint32 numIns;
+	uint32 numInsVisited;
 	rxReq* req;
 };
 
@@ -237,30 +237,30 @@ struct rxHeapBlockHeader
 {
 	rxHeapBlockHeader* prev;
 	rxHeapBlockHeader* next;
-	u32 size;
+	uint32 size;
 	rxHeapFreeBlock* freeEntry;
 	type_13 pad;
 };
 
 struct _tagPartSpace
 {
-	s32 total;
+	int32 total;
 	_tagPartLink head;
 };
 
 struct xClumpCollBSPBranchNode
 {
-	u32 leftInfo;
-	u32 rightInfo;
-	f32 leftValue;
-	f32 rightValue;
+	uint32 leftInfo;
+	uint32 rightInfo;
+	float32 leftValue;
+	float32 rightValue;
 };
 
 struct RxPipelineRequiresCluster
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterValidityReq rqdOrOpt;
-	u32 slotIndex;
+	uint32 slotIndex;
 };
 
 struct RpClump
@@ -275,7 +275,7 @@ struct RpClump
 
 struct RpWorldSector
 {
-	s32 type;
+	int32 type;
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
@@ -289,41 +289,41 @@ struct RpWorldSector
 	RwBBox tightBoundingBox;
 	RpMeshHeader* mesh;
 	RxPipeline* pipeline;
-	u16 matListWindowBase;
-	u16 numVertices;
-	u16 numPolygons;
-	u16 pad;
+	uint16 matListWindowBase;
+	uint16 numVertices;
+	uint16 numPolygons;
+	uint16 pad;
 };
 
 struct RxPipeline
 {
-	s32 locked;
-	u32 numNodes;
+	int32 locked;
+	uint32 numNodes;
 	RxPipelineNode* nodes;
-	u32 packetNumClusterSlots;
+	uint32 packetNumClusterSlots;
 	rxEmbeddedPacketState embeddedPacketState;
 	RxPacket* embeddedPacket;
-	u32 numInputRequirements;
+	uint32 numInputRequirements;
 	RxPipelineRequiresCluster* inputRequirements;
 	void* superBlock;
-	u32 superBlockSize;
-	u32 entryPoint;
-	u32 pluginId;
-	u32 pluginData;
+	uint32 superBlockSize;
+	uint32 entryPoint;
+	uint32 pluginId;
+	uint32 pluginData;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xJSPHeader
 {
 	type_9 idtag;
-	u32 version;
-	u32 jspNodeCount;
+	uint32 version;
+	uint32 jspNodeCount;
 	RpClump* clump;
 	xClumpCollBSPTree* colltree;
 	xJSPNodeInfo* jspNodeList;
@@ -331,27 +331,27 @@ struct xJSPHeader
 
 struct RwSurfaceProperties
 {
-	f32 ambient;
-	f32 specular;
-	f32 diffuse;
+	float32 ambient;
+	float32 specular;
+	float32 diffuse;
 };
 
 struct RwMatrixTag
 {
 	RwV3d right;
-	u32 flags;
+	uint32 flags;
 	RwV3d up;
-	u32 pad1;
+	uint32 pad1;
 	RwV3d at;
-	u32 pad2;
+	uint32 pad2;
 	RwV3d pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 struct rxHeapSuperBlockDescriptor
 {
 	void* start;
-	u32 size;
+	uint32 size;
 	rxHeapSuperBlockDescriptor* next;
 };
 
@@ -361,31 +361,31 @@ struct rxReq
 
 struct RpVertexNormal
 {
-	s8 x;
-	s8 y;
-	s8 z;
-	u8 pad;
+	int8 x;
+	int8 y;
+	int8 z;
+	uint8 pad;
 };
 
 struct RwRaster
 {
 	RwRaster* parent;
-	u8* cpPixels;
-	u8* palette;
-	s32 width;
-	s32 height;
-	s32 depth;
-	s32 stride;
-	s16 nOffsetX;
-	s16 nOffsetY;
-	u8 cType;
-	u8 cFlags;
-	u8 privateFlags;
-	u8 cFormat;
-	u8* originalPixels;
-	s32 originalWidth;
-	s32 originalHeight;
-	s32 originalStride;
+	uint8* cpPixels;
+	uint8* palette;
+	int32 width;
+	int32 height;
+	int32 depth;
+	int32 stride;
+	int16 nOffsetX;
+	int16 nOffsetY;
+	uint8 cType;
+	uint8 cFlags;
+	uint8 privateFlags;
+	uint8 cFormat;
+	uint8* originalPixels;
+	int32 originalWidth;
+	int32 originalHeight;
+	int32 originalStride;
 };
 
 enum RxClusterValidityReq
@@ -401,9 +401,9 @@ struct _tagPartition
 	xVec3 min;
 	xVec3 max;
 	xVec3 space_dim;
-	s32 total_x;
-	s32 total_y;
-	s32 total_z;
+	int32 total_x;
+	int32 total_y;
+	int32 total_z;
 	_tagPartSpace* space;
 	_tagPartSpace global;
 };
@@ -417,25 +417,25 @@ struct xEnv
 
 struct RpMeshHeader
 {
-	u32 flags;
-	u16 numMeshes;
-	u16 serialNum;
-	u32 totalIndicesInMesh;
-	u32 firstMeshOffset;
+	uint32 flags;
+	uint16 numMeshes;
+	uint16 serialNum;
+	uint32 totalIndicesInMesh;
+	uint32 firstMeshOffset;
 };
 
 struct xClumpCollBSPTree
 {
-	u32 numBranchNodes;
+	uint32 numBranchNodes;
 	xClumpCollBSPBranchNode* branchNodes;
-	u32 numTriangles;
+	uint32 numTriangles;
 	xClumpCollBSPTriangle* triangles;
 };
 
 struct RwResEntry
 {
 	RwLLLink link;
-	s32 size;
+	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
 	type_19 destroyNotify;
@@ -444,7 +444,7 @@ struct RwResEntry
 struct xMat4x3 : xMat3x3
 {
 	xVec3 pos;
-	u32 pad3;
+	uint32 pad3;
 };
 
 enum RxNodeDefEditable
@@ -464,17 +464,17 @@ enum RxClusterValid
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_12 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct rxHeapFreeBlock
 {
-	u32 size;
+	uint32 size;
 	rxHeapBlockHeader* ptr;
 };
 
@@ -495,7 +495,7 @@ enum rxEmbeddedPacketState
 struct xSphere
 {
 	xVec3 center;
-	f32 r;
+	float32 r;
 };
 
 enum RxClusterForcePresent
@@ -508,8 +508,8 @@ enum RxClusterForcePresent
 struct xCylinder
 {
 	xVec3 center;
-	f32 r;
-	f32 h;
+	float32 r;
+	float32 h;
 };
 
 struct iEnv
@@ -521,7 +521,7 @@ struct iEnv
 	xJSPHeader* jsp;
 	type_22 light;
 	type_23 light_frame;
-	s32 memlvl;
+	int32 memlvl;
 };
 
 struct xBox
@@ -532,17 +532,17 @@ struct xBox
 
 struct RxClusterDefinition
 {
-	s8* name;
-	u32 defaultStride;
-	u32 defaultAttributes;
-	s8* attributeSet;
+	int8* name;
+	uint32 defaultStride;
+	uint32 defaultAttributes;
+	int8* attributeSet;
 };
 
 struct xLightKit
 {
-	u32 tagID;
-	u32 groupID;
-	u32 lightCount;
+	uint32 tagID;
+	uint32 groupID;
+	uint32 lightCount;
 	xLightKitLight* lightList;
 };
 
@@ -563,7 +563,7 @@ enum RpWorldRenderOrder
 
 struct RxOutputSpec
 {
-	s8* name;
+	int8* name;
 	RxClusterValid* outputClusters;
 	RxClusterValid allOtherClusters;
 };
@@ -571,7 +571,7 @@ struct RxOutputSpec
 struct xBound
 {
 	xQCData qcd;
-	u8 type;
+	uint8 type;
 	type_11 pad;
 	union
 	{
@@ -589,8 +589,8 @@ struct RwTexture
 	RwLLLink lInDictionary;
 	type_16 name;
 	type_18 mask;
-	u32 filterAddressing;
-	s32 refCount;
+	uint32 filterAddressing;
+	int32 refCount;
 };
 
 struct xVolumeAsset
@@ -600,31 +600,31 @@ struct xVolumeAsset
 struct xMat3x3
 {
 	xVec3 right;
-	s32 flags;
+	int32 flags;
 	xVec3 up;
-	u32 pad1;
+	uint32 pad1;
 	xVec3 at;
-	u32 pad2;
+	uint32 pad2;
 };
 
 struct RpSector
 {
-	s32 type;
+	int32 type;
 };
 
 struct RxClusterRef
 {
 	RxClusterDefinition* clusterDef;
 	RxClusterForcePresent forcePresent;
-	u32 reserved;
+	uint32 reserved;
 };
 
 struct RwObject
 {
-	u8 type;
-	u8 subType;
-	u8 flags;
-	u8 privateFlags;
+	uint8 type;
+	uint8 subType;
+	uint8 flags;
+	uint8 privateFlags;
 	void* parent;
 };
 
@@ -636,23 +636,23 @@ struct RwLLLink
 
 struct RxIoSpec
 {
-	u32 numClustersOfInterest;
+	uint32 numClustersOfInterest;
 	RxClusterRef* clustersOfInterest;
 	RxClusterValidityReq* inputRequirements;
-	u32 numOutputs;
+	uint32 numOutputs;
 	RxOutputSpec* outputs;
 };
 
 struct RpLight
 {
 	RwObjectHasFrame object;
-	f32 radius;
+	float32 radius;
 	RwRGBAReal color;
-	f32 minusCosAngle;
+	float32 minusCosAngle;
 	RwLinkList WorldSectorsInLight;
 	RwLLLink inWorld;
-	u16 lightFrame;
-	u16 pad;
+	uint16 lightFrame;
+	uint16 pad;
 };
 
 struct RxNodeMethods
@@ -681,18 +681,18 @@ struct RwFrame
 struct RxPipelineCluster
 {
 	RxClusterDefinition* clusterRef;
-	u32 creationAttributes;
+	uint32 creationAttributes;
 };
 
 struct RpWorld
 {
 	RwObject object;
-	u32 flags;
+	uint32 flags;
 	RpWorldRenderOrder renderOrder;
 	RpMaterialList matList;
 	RpSector* rootSector;
-	s32 numTexCoordSets;
-	s32 numClumpsInWorld;
+	int32 numTexCoordSets;
+	int32 numClumpsInWorld;
 	RwLLLink* currentClumpLink;
 	RwLinkList clumpList;
 	RwLinkList lightList;
@@ -705,67 +705,67 @@ struct RpWorld
 
 struct xClumpCollBSPVertInfo
 {
-	u16 atomIndex;
-	u16 meshVertIndex;
+	uint16 atomIndex;
+	uint16 meshVertIndex;
 };
 
 struct xLightKitLight
 {
-	u32 type;
+	uint32 type;
 	RwRGBAReal color;
 	type_17 matrix;
-	f32 radius;
-	f32 angle;
+	float32 radius;
+	float32 angle;
 	RpLight* platLight;
 };
 
 struct RxNodeDefinition
 {
-	s8* name;
+	int8* name;
 	RxNodeMethods nodeMethods;
 	RxIoSpec io;
-	u32 pipelineNodePrivateDataSize;
+	uint32 pipelineNodePrivateDataSize;
 	RxNodeDefEditable editable;
-	s32 InputPipesCnt;
+	int32 InputPipesCnt;
 };
 
 struct xClumpCollBSPTriangle
 {
 	_class v;
-	u8 flags;
-	u8 platData;
-	u16 matIndex;
+	uint8 flags;
+	uint8 platData;
+	uint16 matIndex;
 };
 
 struct RxCluster
 {
-	u16 flags;
-	u16 stride;
+	uint16 flags;
+	uint16 stride;
 	void* data;
 	void* currentData;
-	u32 numAlloced;
-	u32 numUsed;
+	uint32 numAlloced;
+	uint32 numUsed;
 	RxPipelineCluster* clusterRef;
-	u32 attributes;
+	uint32 attributes;
 };
 
 struct RxPacket
 {
-	u16 flags;
-	u16 numClusters;
+	uint16 flags;
+	uint16 numClusters;
 	RxPipeline* pipeline;
-	u32* inputToClusterSlot;
-	u32* slotsContinue;
+	uint32* inputToClusterSlot;
+	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
 	type_20 clusters;
 };
 
 struct RwRGBAReal
 {
-	f32 red;
-	f32 green;
-	f32 blue;
-	f32 alpha;
+	float32 red;
+	float32 green;
+	float32 blue;
+	float32 alpha;
 };
 
 struct RwObjectHasFrame
@@ -786,14 +786,14 @@ struct RwLinkList
 	RwLLLink link;
 };
 
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
 void xPartitionDump();
-void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, u32 data);
-s32 xPartitionUpdate(_tagPartition* part, void* data, s32 old_idx, xVec3* current_pos);
-s32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos);
-void xPartitionWorld(_tagPartition* part, xEnv* env, s32 x_spaces, s32 y_spaces, s32 z_spaces);
-void xPartitionVolume(_tagPartition* part, xVolume* volume, s32 x_spaces, s32 y_spaces, s32 z_spaces);
+void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, uint32 data);
+int32 xPartitionUpdate(_tagPartition* part, void* data, int32 old_idx, xVec3* current_pos);
+int32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos);
+void xPartitionWorld(_tagPartition* part, xEnv* env, int32 x_spaces, int32 y_spaces, int32 z_spaces);
+void xPartitionVolume(_tagPartition* part, xVolume* volume, int32 x_spaces, int32 y_spaces, int32 z_spaces);
 void xPartitionReset();
 
 // xPartitionDump__FP13_tagPartitionPc
@@ -804,7 +804,7 @@ void xPartitionDump()
 
 // xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi
 // Start address: 0x1f6890
-void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, u32 data)
+void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, uint32 data)
 {
 	_tagPartLink* dest_lnk;
 	_tagPartLink* src_lnk;
@@ -813,43 +813,43 @@ void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, u32 data)
 
 // xPartitionUpdate__FP13_tagPartitionPviP5xVec3
 // Start address: 0x1f6910
-s32 xPartitionUpdate(_tagPartition* part, void* data, s32 old_idx, xVec3* current_pos)
+int32 xPartitionUpdate(_tagPartition* part, void* data, int32 old_idx, xVec3* current_pos)
 {
-	s32 cur_idx;
+	int32 cur_idx;
 	_tagPartSpace* src;
 }
 
 // xPartitionInsert__FP13_tagPartitionPvP5xVec3
 // Start address: 0x1f6a70
-s32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos)
+int32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos)
 {
 }
 
 // xPartitionWorld__FP13_tagPartitionP4xEnviii
 // Start address: 0x1f6c40
-void xPartitionWorld(_tagPartition* part, xEnv* env, s32 x_spaces, s32 y_spaces, s32 z_spaces)
+void xPartitionWorld(_tagPartition* part, xEnv* env, int32 x_spaces, int32 y_spaces, int32 z_spaces)
 {
 	xBox* bb;
-	f32 dx;
-	f32 dy;
-	f32 dz;
-	s32 z;
-	s32 y;
-	s32 x;
+	float32 dx;
+	float32 dy;
+	float32 dz;
+	int32 z;
+	int32 y;
+	int32 x;
 }
 
 // xPartitionVolume__FP13_tagPartitionP7xVolumeiii
 // Start address: 0x1f6e20
-void xPartitionVolume(_tagPartition* part, xVolume* volume, s32 x_spaces, s32 y_spaces, s32 z_spaces)
+void xPartitionVolume(_tagPartition* part, xVolume* volume, int32 x_spaces, int32 y_spaces, int32 z_spaces)
 {
 	xBound* xb;
 	xBox* bb;
-	f32 dx;
-	f32 dy;
-	f32 dz;
-	s32 z;
-	s32 y;
-	s32 x;
+	float32 dx;
+	float32 dy;
+	float32 dz;
+	int32 z;
+	int32 y;
+	int32 x;
 }
 
 // xPartitionReset__Fv

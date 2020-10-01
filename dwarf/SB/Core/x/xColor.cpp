@@ -4,10 +4,10 @@ typedef struct iColor_tag;
 
 struct iColor_tag
 {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
 };
 
 iColor_tag g_RED;
@@ -45,6 +45,6 @@ iColor_tag g_PINK;
 iColor_tag g_COLOR_TRYME;
 iColor_tag g_COLOR_TRYME2;
 iColor_tag g_COLOR_TRYME3;
-s8* g_xColor_FMT;
+int8* g_xColor_FMT;
 
 

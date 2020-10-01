@@ -13,25 +13,25 @@ typedef struct xScene;
 typedef struct xMemPool;
 typedef struct xBase;
 
-typedef s32(*type_0)(xBase*, xBase*, u32, f32*, xBase*);
-typedef xBase*(*type_1)(u32);
-typedef s8*(*type_2)(xBase*);
-typedef s8*(*type_3)(u32);
+typedef int32(*type_0)(xBase*, xBase*, uint32, float32*, xBase*);
+typedef xBase*(*type_1)(uint32);
+typedef int8*(*type_2)(xBase*);
+typedef int8*(*type_3)(uint32);
 typedef void(*type_6)(xMemPool*, void*);
 
-typedef f32 type_4[4];
-typedef u8 type_5[2];
-typedef f32 type_7[4];
+typedef float32 type_4[4];
+typedef uint8 type_5[2];
+typedef float32 type_7[4];
 typedef xVec3 type_8[2];
 
 struct xLinkAsset
 {
-	u16 srcEvent;
-	u16 dstEvent;
-	u32 dstAssetID;
+	uint16 srcEvent;
+	uint16 dstEvent;
+	uint32 dstAssetID;
 	type_7 param;
-	u32 paramWidgetAssetID;
-	u32 chkAssetID;
+	uint32 paramWidgetAssetID;
+	uint32 chkAssetID;
 };
 
 struct xMovePoint : xBase
@@ -40,25 +40,25 @@ struct xMovePoint : xBase
 	xVec3* pos;
 	xMovePoint** nodes;
 	xMovePoint* prev;
-	u32 node_wt_sum;
-	u8 on;
+	uint32 node_wt_sum;
+	uint8 on;
 	type_5 pad;
-	f32 delay;
+	float32 delay;
 	xSpline3* spl;
 };
 
 struct xMovePointAsset : xBaseAsset
 {
 	xVec3 pos;
-	u16 wt;
-	u8 on;
-	u8 bezIndex;
-	u8 flg_props;
-	u8 pad;
-	u16 numPoints;
-	f32 delay;
-	f32 zoneRadius;
-	f32 arenaRadius;
+	uint16 wt;
+	uint8 on;
+	uint8 bezIndex;
+	uint8 flg_props;
+	uint8 pad;
+	uint16 numPoints;
+	float32 delay;
+	float32 zoneRadius;
+	float32 arenaRadius;
 };
 
 struct xEnt
@@ -67,17 +67,17 @@ struct xEnt
 
 struct xBaseAsset
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 };
 
 struct xVec3
 {
-	f32 x;
-	f32 y;
-	f32 z;
+	float32 x;
+	float32 y;
+	float32 z;
 };
 
 struct xEnv
@@ -95,18 +95,18 @@ struct xCoef
 
 struct xSpline3
 {
-	u16 type;
-	u16 flags;
-	u32 N;
-	u32 allocN;
+	uint16 type;
+	uint16 flags;
+	uint32 N;
+	uint32 allocN;
 	xVec3* points;
-	f32* time;
+	float32* time;
 	xVec3* p12;
 	xVec3* bctrl;
-	f32* knot;
+	float32* knot;
 	xCoef3* coef;
-	u32 arcSample;
-	f32* arcLength;
+	uint32 arcSample;
+	float32* arcLength;
 };
 
 struct xCoef3
@@ -118,23 +118,23 @@ struct xCoef3
 
 struct xScene
 {
-	u32 sceneID;
-	u16 flags;
-	u16 num_ents;
-	u16 num_trigs;
-	u16 num_stats;
-	u16 num_dyns;
-	u16 num_npcs;
-	u16 num_act_ents;
-	u16 num_nact_ents;
-	f32 gravity;
-	f32 drag;
-	f32 friction;
-	u16 num_ents_allocd;
-	u16 num_trigs_allocd;
-	u16 num_stats_allocd;
-	u16 num_dyns_allocd;
-	u16 num_npcs_allocd;
+	uint32 sceneID;
+	uint16 flags;
+	uint16 num_ents;
+	uint16 num_trigs;
+	uint16 num_stats;
+	uint16 num_dyns;
+	uint16 num_npcs;
+	uint16 num_act_ents;
+	uint16 num_nact_ents;
+	float32 gravity;
+	float32 drag;
+	float32 friction;
+	uint16 num_ents_allocd;
+	uint16 num_trigs_allocd;
+	uint16 num_stats_allocd;
+	uint16 num_dyns_allocd;
+	uint16 num_npcs_allocd;
 	xEnt** trigs;
 	xEnt** stats;
 	xEnt** dyns;
@@ -151,30 +151,30 @@ struct xScene
 struct xMemPool
 {
 	void* FreeList;
-	u16 NextOffset;
-	u16 Flags;
+	uint16 NextOffset;
+	uint16 Flags;
 	void* UsedList;
 	type_6 InitCB;
 	void* Buffer;
-	u16 Size;
-	u16 NumRealloc;
-	u32 Total;
+	uint16 Size;
+	uint16 NumRealloc;
+	uint32 Total;
 };
 
 struct xBase
 {
-	u32 id;
-	u8 baseType;
-	u8 linkCount;
-	u16 baseFlags;
+	uint32 id;
+	uint8 baseType;
+	uint8 linkCount;
+	uint16 baseFlags;
 	xLinkAsset* link;
 	type_0 eventFunc;
 };
 
-u32 gActiveHeap;
+uint32 gActiveHeap;
 
 xVec3* xMovePointGetPos(xMovePoint* m);
-f32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng);
+float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng);
 void xMovePointSplineDestroy(xMovePoint* m);
 void xMovePointSplineSetup(xMovePoint* m);
 void xMovePointSetup(xMovePoint* m, xScene* sc);
@@ -191,10 +191,10 @@ xVec3* xMovePointGetPos(xMovePoint* m)
 
 // xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3
 // Start address: 0x1f2880
-f32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng)
+float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng)
 {
-	s32 rnd;
-	u16 idx;
+	int32 rnd;
+	uint16 idx;
 	xMovePoint* previousOption;
 }
 
@@ -220,8 +220,8 @@ void xMovePointSplineSetup(xMovePoint* m)
 // Start address: 0x1f2cc0
 void xMovePointSetup(xMovePoint* m, xScene* sc)
 {
-	u32* id;
-	u16 idx;
+	uint32* id;
+	uint16 idx;
 }
 
 // xMovePointReset__FP10xMovePoint

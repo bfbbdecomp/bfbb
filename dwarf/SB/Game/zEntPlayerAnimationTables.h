@@ -37,10 +37,10 @@ xAnimTable* zEntPlayer_AnimTable()
 	xAnimTransition* tran;
 	xAnimTable* table;
 	type_124 stdtran;
-	s32 i;
-	s32 j;
+	int32 i;
+	int32 j;
 	type_8 hittran;
-	s32 j;
+	int32 j;
 	type_419 HIT_STATES;
 	type_1 STANDARD_STATES;
 }

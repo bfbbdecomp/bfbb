@@ -2,25 +2,25 @@
 
 
 
-s32 SelfType(xNPCBasic* this);
+int32 SelfType(xNPCBasic* this);
 void Load();
 void Save();
-u8 PhysicsFlags();
-u8 ColPenByFlags();
-u8 ColChkByFlags();
-u8 ColPenFlags();
-u8 ColChkFlags();
+uint8 PhysicsFlags();
+uint8 ColPenByFlags();
+uint8 ColChkByFlags();
+uint8 ColPenFlags();
+uint8 ColChkFlags();
 void PostSetup();
 void PostInit();
 void Render(xNPCBasic* this);
 void Setup();
 void BUpdate(xNPCBasic* this, xVec3* pos);
 void Move();
-s32 SysEvent();
+int32 SysEvent();
 
 // SelfType__9xNPCBasicCFv
 // Start address: 0x14fc90
-s32 SelfType(xNPCBasic* this)
+int32 SelfType(xNPCBasic* this)
 {
 }
 
@@ -38,31 +38,31 @@ void Save()
 
 // PhysicsFlags__9xNPCBasicCFv
 // Start address: 0x2aded0
-u8 PhysicsFlags()
+uint8 PhysicsFlags()
 {
 }
 
 // ColPenByFlags__9xNPCBasicCFv
 // Start address: 0x2adee0
-u8 ColPenByFlags()
+uint8 ColPenByFlags()
 {
 }
 
 // ColChkByFlags__9xNPCBasicCFv
 // Start address: 0x2adef0
-u8 ColChkByFlags()
+uint8 ColChkByFlags()
 {
 }
 
 // ColPenFlags__9xNPCBasicCFv
 // Start address: 0x2adf00
-u8 ColPenFlags()
+uint8 ColPenFlags()
 {
 }
 
 // ColChkFlags__9xNPCBasicCFv
 // Start address: 0x2adf10
-u8 ColChkFlags()
+uint8 ColChkFlags()
 {
 }
 
@@ -104,7 +104,7 @@ void Move()
 
 // SysEvent__9xNPCBasicFP5xBaseP5xBaseUiPCfP5xBasePi
 // Start address: 0x2f2390
-s32 SysEvent()
+int32 SysEvent()
 {
 }
 

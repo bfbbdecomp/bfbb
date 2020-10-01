@@ -90,107 +90,107 @@ typedef struct HISWaitForAllRequestsReturn;
 typedef struct HISLoadExternalStreamReturn;
 
 typedef void(*type_19)(void*);
-typedef void*(*type_61)(u32, void*, s32);
+typedef void*(*type_61)(uint32, void*, int32);
 
-typedef s8 type_0[20];
-typedef s8 type_1[17];
-typedef s8 type_2[18];
-typedef s8 type_3[44];
-typedef s8 type_4[17];
-typedef s8 type_5[20];
-typedef s8 type_6[22];
-typedef s8 type_7[36];
-typedef s8 type_8[17];
-typedef s8 type_9[20];
-typedef s8 type_10[17];
-typedef s8 type_11[17];
-typedef s8 type_12[17];
-typedef s8 type_13[48];
-typedef s8 type_14[18];
-typedef s8 type_15[20];
-typedef s8 type_16[20];
-typedef s8 type_17[17];
-typedef s8 type_18[20];
-typedef s8 type_20[20];
-typedef s8 type_21[17];
-typedef s8 type_22[20];
-typedef s8 type_23[20];
-typedef s8 type_24[17];
-typedef s8 type_25[20];
-typedef s8 type_26[20];
-typedef s8 type_27[17];
-typedef s8 type_28[48];
-typedef s8 type_29[17];
-typedef s8 type_30[20];
-typedef u32 type_31[2];
-typedef s8 type_32[17];
-typedef s8 type_33[17];
-typedef s8 type_34[20];
-typedef s8 type_35[64];
-typedef s8 type_36[17];
-typedef s8 type_37[17];
-typedef s8 type_38[20];
-typedef s8 type_39[20];
-typedef s8 type_40[20];
-typedef s8 type_41[20];
-typedef s8 type_42[20];
-typedef s8 type_43[32];
-typedef s8 type_44[48];
-typedef s8 type_45[20];
-typedef s8 type_46[32];
-typedef s8 type_47[64];
-typedef s8 type_48[76];
-typedef s8 type_49[17];
-typedef s8 type_50[17];
-typedef s8 type_51[48];
-typedef s8 type_52[20];
-typedef s8 type_53[20];
-typedef s8 type_54[20];
-typedef s8 type_55[20];
-typedef s8 type_56[17];
-typedef s8 type_57[44];
-typedef s8 type_58[36];
-typedef s8 type_59[17];
-typedef s8 type_60[20];
-typedef s8 type_62[17];
-typedef s8 type_63[17];
-typedef s8 type_64[17];
-typedef s8 type_65[20];
-typedef s8 type_66[17];
-typedef s8 type_67[84];
-typedef s8 type_68[17];
-typedef s8 type_69[20];
-typedef s8 type_70[17];
-typedef s8 type_71[24];
-typedef s8 type_72[20];
-typedef s8 type_73[17];
-typedef s8 type_74[20];
-typedef s8 type_75[17];
-typedef s8 type_76[20];
-typedef s8 type_77[17];
-typedef s8 type_78[18];
-typedef s8 type_79[24];
-typedef s8 type_80[17];
-typedef s8 type_81[17];
-typedef s8 type_82[17];
-typedef s8 type_83[20];
+typedef int8 type_0[20];
+typedef int8 type_1[17];
+typedef int8 type_2[18];
+typedef int8 type_3[44];
+typedef int8 type_4[17];
+typedef int8 type_5[20];
+typedef int8 type_6[22];
+typedef int8 type_7[36];
+typedef int8 type_8[17];
+typedef int8 type_9[20];
+typedef int8 type_10[17];
+typedef int8 type_11[17];
+typedef int8 type_12[17];
+typedef int8 type_13[48];
+typedef int8 type_14[18];
+typedef int8 type_15[20];
+typedef int8 type_16[20];
+typedef int8 type_17[17];
+typedef int8 type_18[20];
+typedef int8 type_20[20];
+typedef int8 type_21[17];
+typedef int8 type_22[20];
+typedef int8 type_23[20];
+typedef int8 type_24[17];
+typedef int8 type_25[20];
+typedef int8 type_26[20];
+typedef int8 type_27[17];
+typedef int8 type_28[48];
+typedef int8 type_29[17];
+typedef int8 type_30[20];
+typedef uint32 type_31[2];
+typedef int8 type_32[17];
+typedef int8 type_33[17];
+typedef int8 type_34[20];
+typedef int8 type_35[64];
+typedef int8 type_36[17];
+typedef int8 type_37[17];
+typedef int8 type_38[20];
+typedef int8 type_39[20];
+typedef int8 type_40[20];
+typedef int8 type_41[20];
+typedef int8 type_42[20];
+typedef int8 type_43[32];
+typedef int8 type_44[48];
+typedef int8 type_45[20];
+typedef int8 type_46[32];
+typedef int8 type_47[64];
+typedef int8 type_48[76];
+typedef int8 type_49[17];
+typedef int8 type_50[17];
+typedef int8 type_51[48];
+typedef int8 type_52[20];
+typedef int8 type_53[20];
+typedef int8 type_54[20];
+typedef int8 type_55[20];
+typedef int8 type_56[17];
+typedef int8 type_57[44];
+typedef int8 type_58[36];
+typedef int8 type_59[17];
+typedef int8 type_60[20];
+typedef int8 type_62[17];
+typedef int8 type_63[17];
+typedef int8 type_64[17];
+typedef int8 type_65[20];
+typedef int8 type_66[17];
+typedef int8 type_67[84];
+typedef int8 type_68[17];
+typedef int8 type_69[20];
+typedef int8 type_70[17];
+typedef int8 type_71[24];
+typedef int8 type_72[20];
+typedef int8 type_73[17];
+typedef int8 type_74[20];
+typedef int8 type_75[17];
+typedef int8 type_76[20];
+typedef int8 type_77[17];
+typedef int8 type_78[18];
+typedef int8 type_79[24];
+typedef int8 type_80[17];
+typedef int8 type_81[17];
+typedef int8 type_82[17];
+typedef int8 type_83[20];
 
 struct _sif_serve_data
 {
-	u32 command;
+	uint32 command;
 	type_61 func;
 	void* buff;
-	s32 size;
+	int32 size;
 	type_61 cfunc;
 	void* cbuff;
-	s32 csize;
+	int32 csize;
 	_sif_client_data* client;
 	void* paddr;
-	u32 fno;
+	uint32 fno;
 	void* receive;
-	s32 rsize;
-	s32 rmode;
-	u32 rid;
+	int32 rsize;
+	int32 rmode;
+	uint32 rid;
 	_sif_serve_data* link;
 	_sif_serve_data* next;
 	_sif_queue_data* base;
@@ -198,24 +198,24 @@ struct _sif_serve_data
 
 struct HISRemoteVoiceTransStatusParameter
 {
-	s16 channel;
-	s16 flag;
+	int16 channel;
+	int16 flag;
 };
 
 struct HISGetRequestDebugParameter
 {
-	s32 requestID;
+	int32 requestID;
 };
 
 struct HISGetRequestStatusParameter
 {
-	s32 requestID;
+	int32 requestID;
 };
 
 struct _sif_queue_data
 {
-	s32 key;
-	s32 active;
+	int32 key;
+	int32 active;
 	_sif_serve_data* link;
 	_sif_serve_data* start;
 	_sif_serve_data* end;
@@ -229,7 +229,7 @@ struct HISGetRequestDebugReturn
 
 struct HISLoadBlockAsyncReturn
 {
-	s32 requestID;
+	int32 requestID;
 };
 
 struct HISFlushHostIOHandlesReturn
@@ -243,7 +243,7 @@ struct HISInitParameter
 
 struct HISPauseVoiceParameter
 {
-	u16 voice;
+	uint16 voice;
 };
 
 struct HISGetSoundDebugVoiceReturn
@@ -262,8 +262,8 @@ struct HISGetRequestStatusReturn
 
 struct HISRemoteBlockTransStatusParameter
 {
-	s16 channel;
-	s16 flag;
+	int16 channel;
+	int16 flag;
 };
 
 struct HISGetRequestCountParameter
@@ -272,32 +272,32 @@ struct HISGetRequestCountParameter
 
 struct HISGetFileSizeParameter
 {
-	s32 fileIndex;
+	int32 fileIndex;
 };
 
 struct HISSetVoicePitchParameter
 {
-	u16 voice;
-	u16 pitch;
+	uint16 voice;
+	uint16 pitch;
 };
 
 struct HISSetVoiceVolumeParameter
 {
-	u16 voice;
-	u16 leftVolume;
-	u16 rightVolume;
+	uint16 voice;
+	uint16 leftVolume;
+	uint16 rightVolume;
 };
 
 struct HISPlaySoundParameter
 {
-	u32 address;
-	u16 voice;
-	u16 leftVolume;
-	u16 rightVolume;
-	u16 pitch;
-	u16 attack;
-	u16 release;
-	u8 paused;
+	uint32 address;
+	uint16 voice;
+	uint16 leftVolume;
+	uint16 rightVolume;
+	uint16 pitch;
+	uint16 attack;
+	uint16 release;
+	uint8 paused;
 };
 
 struct HISPauseVoiceReturn
@@ -307,19 +307,19 @@ struct HISPauseVoiceReturn
 struct _sif_rpc_data
 {
 	void* paddr;
-	u32 pid;
-	s32 tid;
-	u32 mode;
+	uint32 pid;
+	int32 tid;
+	uint32 mode;
 };
 
 struct HISRemoteVoiceTransStatusReturn
 {
-	u32 ret;
+	uint32 ret;
 };
 
 struct HISGetSoundDebugVoiceParameter
 {
-	s32 voice;
+	int32 voice;
 };
 
 struct HISDelayFrameReturn
@@ -328,19 +328,19 @@ struct HISDelayFrameReturn
 
 struct HISSoundDebug
 {
-	u16 leftVolume;
-	u16 rightVolume;
+	uint16 leftVolume;
+	uint16 rightVolume;
 };
 
 struct HISJoinStereoVoicesParameter
 {
-	u16 voice1;
-	u16 voice2;
+	uint16 voice1;
+	uint16 voice2;
 };
 
 struct HISGetExternalStreamBufferParameter
 {
-	s32 voice;
+	int32 voice;
 };
 
 struct HISInitReturn
@@ -361,22 +361,22 @@ struct HISPlaySoundReturn
 
 struct HISGetRequestCountReturn
 {
-	s32 count;
+	int32 count;
 };
 
 struct HISGetFileSizeReturn
 {
-	s32 size;
+	int32 size;
 };
 
 struct HISResumeVoiceParameter
 {
-	u16 voice;
+	uint16 voice;
 };
 
 struct HISRemoteBlockTransStatusReturn
 {
-	u32 ret;
+	uint32 ret;
 };
 
 struct HISSetVoicePitchReturn
@@ -405,7 +405,7 @@ struct HISJoinStereoVoicesReturn
 
 struct HISGetExternalStreamBufferReturn
 {
-	s32 buffer;
+	int32 buffer;
 };
 
 enum HISMediaType
@@ -417,8 +417,8 @@ enum HISMediaType
 
 struct HISRemoteSetParamParameter
 {
-	u16 reg;
-	u16 value;
+	uint16 reg;
+	uint16 value;
 };
 
 struct HISNullParameter
@@ -431,13 +431,13 @@ struct HISGetVersionParameter
 
 struct HISGetFirstValidRequestReturn
 {
-	s32 request;
+	int32 request;
 };
 
 struct _sif_client_data
 {
 	_sif_rpc_data rpcd;
-	u32 command;
+	uint32 command;
 	void* buff;
 	void* cbuff;
 	type_19 func;
@@ -451,8 +451,8 @@ struct HISRemoteSetParamReturn
 
 struct HISSetMasterVolumeParameter
 {
-	u16 leftVolume;
-	u16 rightVolume;
+	uint16 leftVolume;
+	uint16 rightVolume;
 };
 
 struct HISGetSoundDebugReturn
@@ -466,7 +466,7 @@ struct HISGetFreeRequestCountParameter
 
 struct HISCancelRequestParameter
 {
-	s32 requestID;
+	int32 requestID;
 };
 
 enum HISMemoryType
@@ -483,9 +483,9 @@ struct HISGetVoiceStatusReturn
 
 struct HISFileIndexDebug
 {
-	s32 logicalSectorNumber;
-	s32 size;
-	s32 sizeInSectors;
+	int32 logicalSectorNumber;
+	int32 size;
+	int32 sizeInSectors;
 	type_44 name;
 };
 
@@ -495,23 +495,23 @@ struct HISFlushHostIOHandlesParameter
 
 struct HISPlayStreamParameter
 {
-	s32 fileIndex;
-	s32 logicalSectorNumber;
-	s32 dataSize;
-	s32 blockSize;
-	u16 voice;
-	u16 leftVolume;
-	u16 rightVolume;
-	u16 pitch;
-	u16 flags;
-	u16 attack;
-	u16 release;
-	u16 interleaveSectors;
+	int32 fileIndex;
+	int32 logicalSectorNumber;
+	int32 dataSize;
+	int32 blockSize;
+	uint16 voice;
+	uint16 leftVolume;
+	uint16 rightVolume;
+	uint16 pitch;
+	uint16 flags;
+	uint16 attack;
+	uint16 release;
+	uint16 interleaveSectors;
 };
 
 struct HISStopVoiceParameter
 {
-	u16 voice;
+	uint16 voice;
 };
 
 struct HISNullReturn
@@ -520,11 +520,11 @@ struct HISNullReturn
 
 struct HISRemoteVoiceTransParameter
 {
-	s16 channel;
-	u16 mode;
-	u8* m_addr;
-	u32 s_addr;
-	u32 size;
+	int16 channel;
+	uint16 mode;
+	uint8* m_addr;
+	uint32 s_addr;
+	uint32 size;
 };
 
 struct HISSetMasterVolumeReturn
@@ -533,12 +533,12 @@ struct HISSetMasterVolumeReturn
 
 struct HISGetVersionReturn
 {
-	s32 version;
+	int32 version;
 };
 
 struct HISCancelRequestReturn
 {
-	u8 success;
+	uint8 success;
 };
 
 struct HISGetFileIndexParameter
@@ -548,14 +548,14 @@ struct HISGetFileIndexParameter
 
 struct HISPlayExternalStreamParameter
 {
-	s32 blockSize;
-	u16 voice;
-	u16 leftVolume;
-	u16 rightVolume;
-	u16 pitch;
-	u16 flags;
-	u16 attack;
-	u16 release;
+	int32 blockSize;
+	uint16 voice;
+	uint16 leftVolume;
+	uint16 rightVolume;
+	uint16 pitch;
+	uint16 flags;
+	uint16 attack;
+	uint16 release;
 };
 
 enum HISStatus
@@ -572,7 +572,7 @@ enum HISStatus
 
 struct HISGetFreeRequestCountReturn
 {
-	s32 count;
+	int32 count;
 };
 
 struct HISStopVoiceReturn
@@ -581,61 +581,61 @@ struct HISStopVoiceReturn
 
 struct HISGetFileIndexReturn
 {
-	s32 index;
+	int32 index;
 };
 
 struct HISTestParameter
 {
-	s32 testValue;
+	int32 testValue;
 	type_47 testString;
 };
 
 struct HISSoundDebugVoice
 {
-	u32 address;
-	u16 leftVolume;
-	u16 rightVolume;
-	u16 pitch;
-	u16 envelope;
-	u8 kon;
-	u8 koff;
-	u8 endx;
-	u8 external;
-	u8 streaming;
-	u8 reading;
-	u8 readingBuffer;
-	u8 byteMode;
+	uint32 address;
+	uint16 leftVolume;
+	uint16 rightVolume;
+	uint16 pitch;
+	uint16 envelope;
+	uint8 kon;
+	uint8 koff;
+	uint8 endx;
+	uint8 external;
+	uint8 streaming;
+	uint8 reading;
+	uint8 readingBuffer;
+	uint8 byteMode;
 	union
 	{
-		s32 currentSector;
-		s32 currentOffset;
+		int32 currentSector;
+		int32 currentOffset;
 	};
-	s32 sectorsLeft;
-	s32 dataSize;
+	int32 sectorsLeft;
+	int32 dataSize;
 };
 
 struct HISRemoteVoiceTransReturn
 {
-	s32 ret;
+	int32 ret;
 };
 
 struct HISGetFileIndexDebugParameter
 {
-	s32 fileIndex;
+	int32 fileIndex;
 };
 
 struct HISCloseRequestParameter
 {
-	s32 requestID;
+	int32 requestID;
 };
 
 struct HISRemoteBlockTransParameter
 {
-	s16 channel;
-	u16 mode;
-	u8* m_addr;
-	u32 size;
-	u8* start_addr;
+	int16 channel;
+	uint16 mode;
+	uint8* m_addr;
+	uint32 size;
+	uint8* start_addr;
 };
 
 struct HISGetFileIndexDebugReturn
@@ -653,46 +653,46 @@ struct HISWaitForRequestParameter
 
 struct HISCloseRequestReturn
 {
-	u8 success;
+	uint8 success;
 };
 
 struct HISRequestDebug
 {
 	_class small;
-	s32 destination;
-	s32 currentPriority;
-	s32 originalPriority;
-	s32 fileIndex;
-	s32 startSector;
-	s32 sectorsToRead;
+	int32 destination;
+	int32 currentPriority;
+	int32 originalPriority;
+	int32 fileIndex;
+	int32 startSector;
+	int32 sectorsToRead;
 };
 
 struct HISRemoteBlockTransReturn
 {
-	s32 ret;
+	int32 ret;
 };
 
 union _class
 {
-	s32 nextRequest;
+	int32 nextRequest;
 	HISStatus status;
 	HISMemoryType destinationType;
 };
 
 struct HISTestReturn
 {
-	s32 returnValue;
+	int32 returnValue;
 };
 
 struct HISLoadBlockAsyncParameter
 {
-	s32 fileIndex;
-	s32 sourceBlock;
-	s32 sourceSize;
+	int32 fileIndex;
+	int32 sourceBlock;
+	int32 sourceSize;
 	void* destinationAddress;
 	HISMemoryType destinationType;
-	s32 priority;
-	s32 flags;
+	int32 priority;
+	int32 flags;
 };
 
 struct HISWaitForRequestReturn
@@ -705,8 +705,8 @@ struct HISWaitForAllRequestsParameter
 
 struct HISLoadExternalStreamParameter
 {
-	u16 voice;
-	u16 buffer;
+	uint16 voice;
+	uint16 buffer;
 	void* address;
 };
 
@@ -719,36 +719,36 @@ struct HISLoadExternalStreamReturn
 };
 
 _sif_client_data clientData;
-u8 asyncFire;
+uint8 asyncFire;
 
-void HISRemoteSetParam(u16 reg, u16 value);
-s32 HISRemoteVoiceTrans(s16 channel, u16 mode, u8* m_addr, u32 s_addr, u32 size);
-u32 HISRemoteBlockTransStatus(s16 channel, s16 flag);
-s32 HISRemoteBlockTrans(s16 channel, u16 mode, u8* m_addr, u32 size, u8* start_addr);
-s32 HISGetExternalStreamBuffer(s32 voice);
-void HISLoadExternalStream(s32 voice, s32 buffer, void* address);
-void HISSetMasterVolume(s32 leftVolume, s32 rightVolume);
-void HISGetVoiceStatus(u32* data);
-void _HISBatchSoundCommandsNoWait(void* data, s32 size);
-void HISBatchSoundCommands(void* data, s32 size);
-void HISGetFileIndexDebug(s32 fileIndex, HISFileIndexDebug* fileIndexDebug);
-s32 HISGetFirstValidRequest();
-void HISGetRequestDebug(s32 requestID, HISRequestDebug* requestDebug);
+void HISRemoteSetParam(uint16 reg, uint16 value);
+int32 HISRemoteVoiceTrans(int16 channel, uint16 mode, uint8* m_addr, uint32 s_addr, uint32 size);
+uint32 HISRemoteBlockTransStatus(int16 channel, int16 flag);
+int32 HISRemoteBlockTrans(int16 channel, uint16 mode, uint8* m_addr, uint32 size, uint8* start_addr);
+int32 HISGetExternalStreamBuffer(int32 voice);
+void HISLoadExternalStream(int32 voice, int32 buffer, void* address);
+void HISSetMasterVolume(int32 leftVolume, int32 rightVolume);
+void HISGetVoiceStatus(uint32* data);
+void _HISBatchSoundCommandsNoWait(void* data, int32 size);
+void HISBatchSoundCommands(void* data, int32 size);
+void HISGetFileIndexDebug(int32 fileIndex, HISFileIndexDebug* fileIndexDebug);
+int32 HISGetFirstValidRequest();
+void HISGetRequestDebug(int32 requestID, HISRequestDebug* requestDebug);
 void HISFlushHostIOHandles();
-s32 HISGetFileSize(s32 fileIndex);
+int32 HISGetFileSize(int32 fileIndex);
 void HISWaitForRequest();
-u8 HISCloseRequest(s32 requestID);
-u8 HISCancelRequest(s32 requestID);
-HISStatus HISGetRequestStatus(s32 requestID);
-s32 HISLoadBlockAsync(s32 fileIndex, s32 sourceBlock, s32 sourceSize, void* destinationAddress, HISMemoryType destinationType, s32 priority, s32 flags);
-s32 HISGetFileIndex(s8* filename);
-s32 HISGetVersion();
+uint8 HISCloseRequest(int32 requestID);
+uint8 HISCancelRequest(int32 requestID);
+HISStatus HISGetRequestStatus(int32 requestID);
+int32 HISLoadBlockAsync(int32 fileIndex, int32 sourceBlock, int32 sourceSize, void* destinationAddress, HISMemoryType destinationType, int32 priority, int32 flags);
+int32 HISGetFileIndex(int8* filename);
+int32 HISGetVersion();
 void HISInit(HISMediaType mediaType);
 void HISInitStubs();
 
 // HISRemoteSetParam__FUsUs
 // Start address: 0x34a4d0
-void HISRemoteSetParam(u16 reg, u16 value)
+void HISRemoteSetParam(uint16 reg, uint16 value)
 {
 	type_18 inputBuffer;
 	HISRemoteSetParamParameter* input;
@@ -758,7 +758,7 @@ void HISRemoteSetParam(u16 reg, u16 value)
 
 // HISRemoteVoiceTrans__FsUsPUcUiUi
 // Start address: 0x34a580
-s32 HISRemoteVoiceTrans(s16 channel, u16 mode, u8* m_addr, u32 s_addr, u32 size)
+int32 HISRemoteVoiceTrans(int16 channel, uint16 mode, uint8* m_addr, uint32 s_addr, uint32 size)
 {
 	type_46 inputBuffer;
 	HISRemoteVoiceTransParameter* input;
@@ -768,7 +768,7 @@ s32 HISRemoteVoiceTrans(s16 channel, u16 mode, u8* m_addr, u32 s_addr, u32 size)
 
 // HISRemoteBlockTransStatus__Fss
 // Start address: 0x34a670
-u32 HISRemoteBlockTransStatus(s16 channel, s16 flag)
+uint32 HISRemoteBlockTransStatus(int16 channel, int16 flag)
 {
 	type_15 inputBuffer;
 	HISRemoteBlockTransStatusParameter* input;
@@ -778,7 +778,7 @@ u32 HISRemoteBlockTransStatus(s16 channel, s16 flag)
 
 // HISRemoteBlockTrans__FsUsPUcUiPUc
 // Start address: 0x34a720
-s32 HISRemoteBlockTrans(s16 channel, u16 mode, u8* m_addr, u32 size, u8* start_addr)
+int32 HISRemoteBlockTrans(int16 channel, uint16 mode, uint8* m_addr, uint32 size, uint8* start_addr)
 {
 	type_43 inputBuffer;
 	HISRemoteBlockTransParameter* input;
@@ -788,7 +788,7 @@ s32 HISRemoteBlockTrans(s16 channel, u16 mode, u8* m_addr, u32 size, u8* start_a
 
 // HISGetExternalStreamBuffer__Fi
 // Start address: 0x34a810
-s32 HISGetExternalStreamBuffer(s32 voice)
+int32 HISGetExternalStreamBuffer(int32 voice)
 {
 	type_23 inputBuffer;
 	HISGetExternalStreamBufferParameter* input;
@@ -798,7 +798,7 @@ s32 HISGetExternalStreamBuffer(s32 voice)
 
 // HISLoadExternalStream__FiiPCv
 // Start address: 0x34a8c0
-void HISLoadExternalStream(s32 voice, s32 buffer, void* address)
+void HISLoadExternalStream(int32 voice, int32 buffer, void* address)
 {
 	type_79 inputBuffer;
 	HISLoadExternalStreamParameter* input;
@@ -808,7 +808,7 @@ void HISLoadExternalStream(s32 voice, s32 buffer, void* address)
 
 // HISSetMasterVolume__Fii
 // Start address: 0x34a980
-void HISSetMasterVolume(s32 leftVolume, s32 rightVolume)
+void HISSetMasterVolume(int32 leftVolume, int32 rightVolume)
 {
 	type_22 inputBuffer;
 	HISSetMasterVolumeParameter* input;
@@ -818,30 +818,30 @@ void HISSetMasterVolume(s32 leftVolume, s32 rightVolume)
 
 // HISGetVoiceStatus__FPUi
 // Start address: 0x34aa30
-void HISGetVoiceStatus(u32* data)
+void HISGetVoiceStatus(uint32* data)
 {
 	type_62 inputBuffer;
 	HISGetVoiceStatusParameter* input;
 	type_71 outputBuffer;
 	HISGetVoiceStatusReturn* output;
-	s32 i;
+	int32 i;
 }
 
 // _HISBatchSoundCommandsNoWait__FPCvi
 // Start address: 0x34aaf0
-void _HISBatchSoundCommandsNoWait(void* data, s32 size)
+void _HISBatchSoundCommandsNoWait(void* data, int32 size)
 {
 }
 
 // HISBatchSoundCommands__FPCvi
 // Start address: 0x34ab70
-void HISBatchSoundCommands(void* data, s32 size)
+void HISBatchSoundCommands(void* data, int32 size)
 {
 }
 
 // HISGetFileIndexDebug__FiP17HISFileIndexDebug
 // Start address: 0x34abf0
-void HISGetFileIndexDebug(s32 fileIndex, HISFileIndexDebug* fileIndexDebug)
+void HISGetFileIndexDebug(int32 fileIndex, HISFileIndexDebug* fileIndexDebug)
 {
 	type_41 inputBuffer;
 	HISGetFileIndexDebugParameter* input;
@@ -851,7 +851,7 @@ void HISGetFileIndexDebug(s32 fileIndex, HISFileIndexDebug* fileIndexDebug)
 
 // HISGetFirstValidRequest__Fv
 // Start address: 0x34acf0
-s32 HISGetFirstValidRequest()
+int32 HISGetFirstValidRequest()
 {
 	type_37 inputBuffer;
 	HISGetFirstValidRequestParameter* input;
@@ -861,7 +861,7 @@ s32 HISGetFirstValidRequest()
 
 // HISGetRequestDebug__FiP15HISRequestDebug
 // Start address: 0x34ad80
-void HISGetRequestDebug(s32 requestID, HISRequestDebug* requestDebug)
+void HISGetRequestDebug(int32 requestID, HISRequestDebug* requestDebug)
 {
 	type_83 inputBuffer;
 	HISGetRequestDebugParameter* input;
@@ -881,7 +881,7 @@ void HISFlushHostIOHandles()
 
 // HISGetFileSize__Fi
 // Start address: 0x34af00
-s32 HISGetFileSize(s32 fileIndex)
+int32 HISGetFileSize(int32 fileIndex)
 {
 	type_69 inputBuffer;
 	HISGetFileSizeParameter* input;
@@ -901,7 +901,7 @@ void HISWaitForRequest()
 
 // HISCloseRequest__Fi
 // Start address: 0x34b040
-u8 HISCloseRequest(s32 requestID)
+uint8 HISCloseRequest(int32 requestID)
 {
 	type_42 inputBuffer;
 	HISCloseRequestParameter* input;
@@ -911,7 +911,7 @@ u8 HISCloseRequest(s32 requestID)
 
 // HISCancelRequest__Fi
 // Start address: 0x34b0f0
-u8 HISCancelRequest(s32 requestID)
+uint8 HISCancelRequest(int32 requestID)
 {
 	type_25 inputBuffer;
 	HISCancelRequestParameter* input;
@@ -921,7 +921,7 @@ u8 HISCancelRequest(s32 requestID)
 
 // HISGetRequestStatus__Fi
 // Start address: 0x34b1a0
-HISStatus HISGetRequestStatus(s32 requestID)
+HISStatus HISGetRequestStatus(int32 requestID)
 {
 	type_0 inputBuffer;
 	HISGetRequestStatusParameter* input;
@@ -931,7 +931,7 @@ HISStatus HISGetRequestStatus(s32 requestID)
 
 // HISLoadBlockAsync__FiiiPv13HISMemoryTypeii
 // Start address: 0x34b250
-s32 HISLoadBlockAsync(s32 fileIndex, s32 sourceBlock, s32 sourceSize, void* destinationAddress, HISMemoryType destinationType, s32 priority, s32 flags)
+int32 HISLoadBlockAsync(int32 fileIndex, int32 sourceBlock, int32 sourceSize, void* destinationAddress, HISMemoryType destinationType, int32 priority, int32 flags)
 {
 	type_57 inputBuffer;
 	HISLoadBlockAsyncParameter* input;
@@ -941,7 +941,7 @@ s32 HISLoadBlockAsync(s32 fileIndex, s32 sourceBlock, s32 sourceSize, void* dest
 
 // HISGetFileIndex__FPCc
 // Start address: 0x34b370
-s32 HISGetFileIndex(s8* filename)
+int32 HISGetFileIndex(int8* filename)
 {
 	type_35 inputBuffer;
 	HISGetFileIndexParameter* input;
@@ -951,7 +951,7 @@ s32 HISGetFileIndex(s8* filename)
 
 // HISGetVersion__Fv
 // Start address: 0x34b420
-s32 HISGetVersion()
+int32 HISGetVersion()
 {
 	type_27 inputBuffer;
 	HISGetVersionParameter* input;

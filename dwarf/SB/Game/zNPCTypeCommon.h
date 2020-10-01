@@ -2,12 +2,12 @@
 
 
 
-s32 IsHealthy();
-s32 CanRope(zNPCCommon* this);
-s32 SetCarryState();
+int32 IsHealthy();
+int32 CanRope(zNPCCommon* this);
+int32 SetCarryState();
 void DuploNotice();
-u32 AnimPick();
-s32 IsAlive();
+uint32 AnimPick();
+int32 IsAlive();
 void Stun();
 void RenderExtraPostParticles();
 void RenderExtra();
@@ -16,26 +16,26 @@ void SpeakBegin();
 void SpeakEnd();
 void SpeakStart();
 void SpeakStop();
-f32 GenShadCacheRad();
+float32 GenShadCacheRad();
 xEntDrive* PRIV_GetDriverData();
 zNPCLassoInfo* PRIV_GetLassoData();
 void SelfSetup();
 
 // IsHealthy__10zNPCCommonFv
 // Start address: 0x146e70
-s32 IsHealthy()
+int32 IsHealthy()
 {
 }
 
 // CanRope__10zNPCCommonFv
 // Start address: 0x1567e0
-s32 CanRope(zNPCCommon* this)
+int32 CanRope(zNPCCommon* this)
 {
 }
 
 // SetCarryState__10zNPCCommonF18en_NPC_CARRY_STATE
 // Start address: 0x156870
-s32 SetCarryState()
+int32 SetCarryState()
 {
 }
 
@@ -47,13 +47,13 @@ void DuploNotice()
 
 // AnimPick__10zNPCCommonFi16en_NPC_GOAL_SPOTP5xGoal
 // Start address: 0x2c98b0
-u32 AnimPick()
+uint32 AnimPick()
 {
 }
 
 // IsAlive__10zNPCCommonFv
 // Start address: 0x2cb310
-s32 IsAlive()
+int32 IsAlive()
 {
 }
 
@@ -107,7 +107,7 @@ void SpeakStop()
 
 // GenShadCacheRad__10zNPCCommonFv
 // Start address: 0x2cd430
-f32 GenShadCacheRad()
+float32 GenShadCacheRad()
 {
 }
 

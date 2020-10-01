@@ -3,13 +3,13 @@
 
 
 void clear(tier_queue_allocator* this);
-u32 log2_ceil(u32 v);
-void free_block(tier_queue_allocator* this, u8 index);
-u32 get_block(tier_queue* this, u32 i);
-u32 mod_block_size(tier_queue_allocator* this, u32 i);
-u32 wrap_index(tier_queue* this, u32 i);
+uint32 log2_ceil(uint32 v);
+void free_block(tier_queue_allocator* this, uint8 index);
+uint32 get_block(tier_queue* this, uint32 i);
+uint32 mod_block_size(tier_queue_allocator* this, uint32 i);
+uint32 wrap_index(tier_queue* this, uint32 i);
 void clear(tier_queue* this);
-u8 __ne(iterator* this, iterator& c);
+uint8 __ne(iterator* this, iterator& c);
 iterator& __pp(iterator* this);
 missle_record_data* __rf(iterator* this);
 iterator end(fixed_queue* this);
@@ -19,40 +19,40 @@ iterator begin(fixed_queue* this);
 // Start address: 0x1e4ea0
 void clear(tier_queue_allocator* this)
 {
-	u32 imask;
-	u32 i;
-	u32 end;
+	uint32 imask;
+	uint32 i;
+	uint32 end;
 }
 
 // log2_ceil__20tier_queue_allocatorCFUi
 // Start address: 0x1e5050
-u32 log2_ceil(u32 v)
+uint32 log2_ceil(uint32 v)
 {
-	u32 power;
+	uint32 power;
 }
 
 // free_block__20tier_queue_allocatorFUc
 // Start address: 0x1e6700
-void free_block(tier_queue_allocator* this, u8 index)
+void free_block(tier_queue_allocator* this, uint8 index)
 {
 	block_data& block;
 }
 
 // get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi
 // Start address: 0x1e6760
-u32 get_block(tier_queue* this, u32 i)
+uint32 get_block(tier_queue* this, uint32 i)
 {
 }
 
 // mod_block_size__20tier_queue_allocatorCFUi
 // Start address: 0x1e6770
-u32 mod_block_size(tier_queue_allocator* this, u32 i)
+uint32 mod_block_size(tier_queue_allocator* this, uint32 i)
 {
 }
 
 // wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi
 // Start address: 0x1e6780
-u32 wrap_index(tier_queue* this, u32 i)
+uint32 wrap_index(tier_queue* this, uint32 i)
 {
 }
 
@@ -60,13 +60,13 @@ u32 wrap_index(tier_queue* this, u32 i)
 // Start address: 0x1e6790
 void clear(tier_queue* this)
 {
-	u32 i;
-	u32 end;
+	uint32 i;
+	uint32 end;
 }
 
 // __ne__Q286fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>8iteratorCFRCQ286fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>8iterator
 // Start address: 0x2a8250
-u8 __ne(iterator* this, iterator& c)
+uint8 __ne(iterator* this, iterator& c)
 {
 }
 

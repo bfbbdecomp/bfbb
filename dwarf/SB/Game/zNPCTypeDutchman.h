@@ -2,47 +2,47 @@
 
 
 
-u8 ColChkFlags();
-u8 ColPenFlags();
-u8 ColChkByFlags();
-u8 ColPenByFlags();
-u8 PhysicsFlags();
-s32 IsAlive(zNPCDutchman* this);
+uint8 ColChkFlags();
+uint8 ColPenFlags();
+uint8 ColChkByFlags();
+uint8 ColPenByFlags();
+uint8 PhysicsFlags();
+int32 IsAlive(zNPCDutchman* this);
 zNPCLassoInfo* PRIV_GetLassoData(zNPCDutchman* this);
 
 // ColChkFlags__12zNPCDutchmanCFv
 // Start address: 0x3ab050
-u8 ColChkFlags()
+uint8 ColChkFlags()
 {
 }
 
 // ColPenFlags__12zNPCDutchmanCFv
 // Start address: 0x3ab060
-u8 ColPenFlags()
+uint8 ColPenFlags()
 {
 }
 
 // ColChkByFlags__12zNPCDutchmanCFv
 // Start address: 0x3ab070
-u8 ColChkByFlags()
+uint8 ColChkByFlags()
 {
 }
 
 // ColPenByFlags__12zNPCDutchmanCFv
 // Start address: 0x3ab080
-u8 ColPenByFlags()
+uint8 ColPenByFlags()
 {
 }
 
 // PhysicsFlags__12zNPCDutchmanCFv
 // Start address: 0x3ab090
-u8 PhysicsFlags()
+uint8 PhysicsFlags()
 {
 }
 
 // IsAlive__12zNPCDutchmanFv
 // Start address: 0x3ab0a0
-s32 IsAlive(zNPCDutchman* this)
+int32 IsAlive(zNPCDutchman* this)
 {
 }
 

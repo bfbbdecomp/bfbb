@@ -12,30 +12,30 @@ typedef struct sceMpegCbDataError;
 typedef struct sceMpegCbDataStr;
 typedef struct ViBuf;
 
-typedef s32(*type_0)(sceMpeg*, sceMpegCbData*, void*);
-typedef s32(*type_2)(sceMpeg*, sceMpegCbDataTimeStamp*, void*);
-typedef s32(*type_6)(sceMpeg*, sceMpegCbData*, void*);
-typedef s32(*type_8)(sceMpeg*, sceMpegCbDataError*, void*);
-typedef s32(*type_9)(sceMpeg*, sceMpegCbData*, void*);
-typedef s32(*type_10)(sceMpeg*, sceMpegCbData*, void*);
+typedef int32(*type_0)(sceMpeg*, sceMpegCbData*, void*);
+typedef int32(*type_2)(sceMpeg*, sceMpegCbDataTimeStamp*, void*);
+typedef int32(*type_6)(sceMpeg*, sceMpegCbData*, void*);
+typedef int32(*type_8)(sceMpeg*, sceMpegCbDataError*, void*);
+typedef int32(*type_9)(sceMpeg*, sceMpegCbData*, void*);
+typedef int32(*type_10)(sceMpeg*, sceMpegCbData*, void*);
 
-typedef u8 type_1[1228800];
-typedef s32 type_3[15];
-typedef u32 type_4[29248];
+typedef uint8 type_1[1228800];
+typedef int32 type_3[15];
+typedef uint32 type_4[29248];
 typedef type_4 type_5[2];
-typedef u8 type_7[4];
+typedef uint8 type_7[4];
 
 struct sceMpeg
 {
-	s32 width;
-	s32 height;
-	s32 frameCount;
-	s32 pts;
-	s32 dts;
-	u32 flags;
-	s32 pts2nd;
-	s32 dts2nd;
-	u32 flags2nd;
+	int32 width;
+	int32 height;
+	int32 frameCount;
+	long32 pts;
+	long32 dts;
+	ulong32 flags;
+	long32 pts2nd;
+	long32 dts2nd;
+	ulong32 flags2nd;
 	void* sys;
 };
 
@@ -43,10 +43,10 @@ struct VideoDec
 {
 	sceMpeg mpeg;
 	ViBuf vibuf;
-	u32 state;
-	s32 sema;
-	s32 hid_endimage;
-	s32 hid_vblank;
+	uint32 state;
+	int32 sema;
+	int32 hid_endimage;
+	int32 hid_vblank;
 };
 
 union sceMpegCbData
@@ -59,10 +59,10 @@ union sceMpegCbData
 
 struct TimeStamp
 {
-	s32 pts;
-	s32 dts;
-	s32 pos;
-	s32 len;
+	long32 pts;
+	long32 dts;
+	int32 pos;
+	int32 len;
 };
 
 struct VoData
@@ -73,28 +73,28 @@ struct VoData
 struct sceMpegCbDataTimeStamp
 {
 	sceMpegCbType type;
-	s32 pts;
-	s32 dts;
+	long32 pts;
+	long32 dts;
 };
 
 struct VoTag
 {
-	s32 status;
+	int32 status;
 	type_3 dummy;
 	type_5 v;
 };
 
 struct sceIpuDmaEnv
 {
-	u32 d4madr;
-	u32 d4tadr;
-	u32 d4qwc;
-	u32 d4chcr;
-	u32 d3madr;
-	u32 d3qwc;
-	u32 d3chcr;
-	u32 ipubp;
-	u32 ipuctrl;
+	uint32 d4madr;
+	uint32 d4tadr;
+	uint32 d4qwc;
+	uint32 d4chcr;
+	uint32 d3madr;
+	uint32 d3qwc;
+	uint32 d3chcr;
+	uint32 ipubp;
+	uint32 ipuctrl;
 };
 
 enum sceMpegCbType
@@ -112,44 +112,44 @@ struct VoBuf
 {
 	VoData* data;
 	VoTag* tag;
-	s32 write;
-	s32 count;
-	s32 size;
+	int32 write;
+	int32 count;
+	int32 size;
 };
 
 struct sceMpegCbDataError
 {
 	sceMpegCbType type;
-	s8* errMessage;
+	int8* errMessage;
 };
 
 struct sceMpegCbDataStr
 {
 	sceMpegCbType type;
-	u8* header;
-	u8* data;
-	u32 len;
-	s32 pts;
-	s32 dts;
+	uint8* header;
+	uint8* data;
+	uint32 len;
+	long32 pts;
+	long32 dts;
 };
 
 struct ViBuf
 {
 	<unknown type (0xa510)>* data;
 	<unknown type (0xa510)>* tag;
-	s32 n;
-	s32 dmaStart;
-	s32 dmaN;
-	s32 readBytes;
-	s32 buffSize;
+	int32 n;
+	int32 dmaStart;
+	int32 dmaN;
+	int32 readBytes;
+	int32 buffSize;
 	sceIpuDmaEnv env;
-	s32 sema;
-	s32 isActive;
-	s32 totalBytes;
+	int32 sema;
+	int32 isActive;
+	long32 totalBytes;
 	TimeStamp* ts;
-	s32 n_ts;
-	s32 count_ts;
-	s32 wt_ts;
+	int32 n_ts;
+	int32 count_ts;
+	int32 wt_ts;
 };
 
 VideoDec videoDec;
@@ -160,65 +160,65 @@ type_10 mpegStopDMA;
 type_9 mpegNodata;
 type_8 mpegError;
 
-s32 mpegTS(sceMpegCbDataTimeStamp* cbts);
-s32 mpegRestartDMA();
-s32 mpegStopDMA();
-s32 mpegNodata();
-s32 mpegError(sceMpegCbDataError* cberror);
-s32 decBs0(VideoDec* vd);
+int32 mpegTS(sceMpegCbDataTimeStamp* cbts);
+int32 mpegRestartDMA();
+int32 mpegStopDMA();
+int32 mpegNodata();
+int32 mpegError(sceMpegCbDataError* cberror);
+int32 decBs0(VideoDec* vd);
 void videoDecMain(VideoDec* vd);
-s32 videoDecIsFlushed(VideoDec* vd);
-s32 videoDecFlush(VideoDec* vd);
-s32 videoDecPutTs(VideoDec* vd, s32 pts_val, s32 dts_val, u8* start, s32 len);
-u32 videoDecGetState(VideoDec* vd);
+int32 videoDecIsFlushed(VideoDec* vd);
+int32 videoDecFlush(VideoDec* vd);
+int32 videoDecPutTs(VideoDec* vd, long32 pts_val, long32 dts_val, uint8* start, int32 len);
+uint32 videoDecGetState(VideoDec* vd);
 void videoDecAbort(VideoDec* vd);
-s32 videoDecDelete(VideoDec* vd);
-void videoDecEndPut(VideoDec* vd, s32 size);
-void videoDecBeginPut(VideoDec* vd, u8** ptr0, s32* len0, u8** ptr1, s32* len1);
-s32 videoDecSetStream(VideoDec* vd, s32 strType, s32 ch, type_6 cb, void* data);
-s32 videoDecCreate(VideoDec* vd, u8* mpegWork, s32 mpegWorkSize, <unknown type (0xa510)>* data, <unknown type (0xa510)>* tag, s32 tagSize, TimeStamp* pts, s32 n_pts);
+int32 videoDecDelete(VideoDec* vd);
+void videoDecEndPut(VideoDec* vd, int32 size);
+void videoDecBeginPut(VideoDec* vd, uint8** ptr0, int32* len0, uint8** ptr1, int32* len1);
+int32 videoDecSetStream(VideoDec* vd, int32 strType, int32 ch, type_6 cb, void* data);
+int32 videoDecCreate(VideoDec* vd, uint8* mpegWork, int32 mpegWorkSize, <unknown type (0xa510)>* data, <unknown type (0xa510)>* tag, int32 tagSize, TimeStamp* pts, int32 n_pts);
 
 // mpegTS__FP7sceMpegP22sceMpegCbDataTimeStampPv
 // Start address: 0x1bec60
-s32 mpegTS(sceMpegCbDataTimeStamp* cbts)
+int32 mpegTS(sceMpegCbDataTimeStamp* cbts)
 {
 	TimeStamp ts;
 }
 
 // mpegRestartDMA__FP7sceMpegP13sceMpegCbDataPv
 // Start address: 0x1becb0
-s32 mpegRestartDMA()
+int32 mpegRestartDMA()
 {
 }
 
 // mpegStopDMA__FP7sceMpegP13sceMpegCbDataPv
 // Start address: 0x1bece0
-s32 mpegStopDMA()
+int32 mpegStopDMA()
 {
 }
 
 // mpegNodata__FP7sceMpegP13sceMpegCbDataPv
 // Start address: 0x1bed10
-s32 mpegNodata()
+int32 mpegNodata()
 {
 }
 
 // mpegError__FP7sceMpegP18sceMpegCbDataErrorPv
 // Start address: 0x1bed40
-s32 mpegError(sceMpegCbDataError* cberror)
+int32 mpegError(sceMpegCbDataError* cberror)
 {
 }
 
 // decBs0__FP8VideoDec
 // Start address: 0x1bed70
-s32 decBs0(VideoDec* vd)
+int32 decBs0(VideoDec* vd)
 {
 	VoData* voData;
-	s32 ret;
-	s32 status;
-	s32 i;
-	s32 image_w;
-	s32 image_h;
+	int32 ret;
+	int32 status;
+	int32 i;
+	int32 image_w;
+	int32 image_h;
 }
 
 // videoDecMain__FP8VideoDec
@@ -229,33 +229,33 @@ void videoDecMain(VideoDec* vd)
 
 // videoDecIsFlushed__FP8VideoDec
 // Start address: 0x1befa0
-s32 videoDecIsFlushed(VideoDec* vd)
+int32 videoDecIsFlushed(VideoDec* vd)
 {
 }
 
 // videoDecFlush__FP8VideoDec
 // Start address: 0x1bf000
-s32 videoDecFlush(VideoDec* vd)
+int32 videoDecFlush(VideoDec* vd)
 {
-	u8* pd0;
-	u8* pd1;
-	u8* pd0Unc;
-	u8* pd1Unc;
+	uint8* pd0;
+	uint8* pd1;
+	uint8* pd0Unc;
+	uint8* pd1Unc;
 	type_7 seq_end_code;
-	s32 d0;
-	s32 d1;
+	int32 d0;
+	int32 d1;
 }
 
 // videoDecPutTs__FP8VideoDecllPUci
 // Start address: 0x1bf1b0
-s32 videoDecPutTs(VideoDec* vd, s32 pts_val, s32 dts_val, u8* start, s32 len)
+int32 videoDecPutTs(VideoDec* vd, long32 pts_val, long32 dts_val, uint8* start, int32 len)
 {
 	TimeStamp ts;
 }
 
 // videoDecGetState__FP8VideoDec
 // Start address: 0x1bf1f0
-u32 videoDecGetState(VideoDec* vd)
+uint32 videoDecGetState(VideoDec* vd)
 {
 }
 
@@ -267,31 +267,31 @@ void videoDecAbort(VideoDec* vd)
 
 // videoDecDelete__FP8VideoDec
 // Start address: 0x1bf210
-s32 videoDecDelete(VideoDec* vd)
+int32 videoDecDelete(VideoDec* vd)
 {
 }
 
 // videoDecEndPut__FP8VideoDeci
 // Start address: 0x1bf250
-void videoDecEndPut(VideoDec* vd, s32 size)
+void videoDecEndPut(VideoDec* vd, int32 size)
 {
 }
 
 // videoDecBeginPut__FP8VideoDecPPUcPiPPUcPi
 // Start address: 0x1bf260
-void videoDecBeginPut(VideoDec* vd, u8** ptr0, s32* len0, u8** ptr1, s32* len1)
+void videoDecBeginPut(VideoDec* vd, uint8** ptr0, int32* len0, uint8** ptr1, int32* len1)
 {
 }
 
 // videoDecSetStream__FP8VideoDeciiPFP7sceMpegP13sceMpegCbDataPv_iPv
 // Start address: 0x1bf270
-s32 videoDecSetStream(VideoDec* vd, s32 strType, s32 ch, type_6 cb, void* data)
+int32 videoDecSetStream(VideoDec* vd, int32 strType, int32 ch, type_6 cb, void* data)
 {
 }
 
 // videoDecCreate__FP8VideoDecPUciP1P1iP9TimeStampi
 // Start address: 0x1bf290
-s32 videoDecCreate(VideoDec* vd, u8* mpegWork, s32 mpegWorkSize, <unknown type (0xa510)>* data, <unknown type (0xa510)>* tag, s32 tagSize, TimeStamp* pts, s32 n_pts)
+int32 videoDecCreate(VideoDec* vd, uint8* mpegWork, int32 mpegWorkSize, <unknown type (0xa510)>* data, <unknown type (0xa510)>* tag, int32 tagSize, TimeStamp* pts, int32 n_pts)
 {
 }
 
