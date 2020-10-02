@@ -1,5 +1,10 @@
 #include "zParEmitter.h"
 
+#include <types.h>
+#include "zBase.h"
+#include "zGlobals.h"
+#include "../Core/x/xString.h"
+
 zParEmitter* zParEmitterFind(uint32 asset_id)
 {
     zScene* s = globals.sceneCur;
@@ -9,7 +14,7 @@ zParEmitter* zParEmitterFind(uint32 asset_id)
         return NULL;
     }
 
-    zParEmitter* pe = (zParEmitter*) s->baseList[eBaseTypeParticleEmitter];
+    zParEmitter* pe = (zParEmitter*)s->baseList[eBaseTypeParticleEmitter];
 
     for (int32 i = s->baseCount[eBaseTypeParticleEmitter]; i > 0; i--)
     {

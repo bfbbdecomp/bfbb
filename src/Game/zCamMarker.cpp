@@ -12,8 +12,8 @@ void zCamMarkerInit(xBase* b, xCamAsset* asset)
         b->link = (xLinkAsset*)(asset + 1);
     }
 
-    b->eventFunc = (xBaseEventCB) zCamMarkerEventCB;
-    ((zCamMarker*) b)->asset = asset;
+    b->eventFunc = (xBaseEventCB)zCamMarkerEventCB;
+    ((zCamMarker*)b)->asset = asset;
 }
 
 void zCamMarkerSave(zCamMarker* m, xSerial* s)
@@ -30,22 +30,22 @@ int zCamMarkerEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toP
 {
     switch (toEvent)
     {
-        case eEventOn:
-        case eEventSwitch:
-        {
-            zCameraDoTrans(((zCamMarker*) to)->asset, *toParam);
-            break;
-        }
-        case eEventStartConversation:
-        {
-            zCameraSetConvers(true);
-            break;
-        }
-        case eEventEndConversation:
-        {
-            zCameraSetConvers(false);
-            break;
-        }
+    case eEventOn:
+    case eEventSwitch:
+    {
+        zCameraDoTrans(((zCamMarker*)to)->asset, *toParam);
+        break;
+    }
+    case eEventStartConversation:
+    {
+        zCameraSetConvers(true);
+        break;
+    }
+    case eEventEndConversation:
+    {
+        zCameraSetConvers(false);
+        break;
+    }
     }
 
     return eEventEnable;

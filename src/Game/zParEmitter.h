@@ -2,9 +2,6 @@
 #define ZPAREMITTER_H
 
 #include <types.h>
-#include "zBase.h"
-#include "zGlobals.h"
-#include "../Core/x/xString.h"
 #include "../Core/x/xParEmitter.h"
 
 struct zParEmitter : xParEmitter
