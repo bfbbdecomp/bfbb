@@ -13,6 +13,7 @@ typedef RwInt8 RwChar;
 
 typedef struct RwRaster;
 typedef struct RwTexDictionary;
+typedef struct RwFrame;
 
 #ifndef NULL
 #define NULL 0
