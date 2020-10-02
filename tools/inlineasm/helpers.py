@@ -1,17 +1,16 @@
 import re
 
-pragmaRegex = r"(#pragma\sGLOBAL_ASM\((.*)\))"
+pragmaRegex = r"(#pragma\sGLOBAL_ASM\((.*?)\))"
 
 def getPragmaMatches(fileText):
-    matches = re.findall(pragmaRegex, fileText)
+    matches = re.findall(pragmaRegex, fileText, flags=re.DOTALL)
     return matches
 
 # Arguments are processed outside of the regex to keep it simple
 # and support any changes we may make in the future
 def getPragmaArgs(argString):
     args = argString.split(",")
-    args = map(str.strip, args)
-    args = map(lambda x: x.replace("\"", ""), args)
+    args = map(lambda s: s.split("\"")[1], args)
     return list(args)
 
 labelRegex = r".+:"
