@@ -1,10 +1,9 @@
 #ifndef XENV_H
 #define XENV_H
 
-#include "../../dolphin/include/dolphin/types.h"
+#include <types.h>
 #include "../p2/iEnv.h"
-
-extern struct xLightKit;
+#include "xLightKit.h"
 
 struct xEnv
 {

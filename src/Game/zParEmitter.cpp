@@ -1,10 +1,5 @@
 #include "zParEmitter.h"
 
-#include "../Core/x/xString.h"
-
-#include "zGlobals.h"
-#include "zBase.h"
-
 zParEmitter* zParEmitterFind(uint32 asset_id)
 {
     zScene* s = globals.sceneCur;

@@ -1,8 +1,9 @@
 #include "xEnv.h"
 
+// TODO: move from xEntMotion.s
 extern xEnv* gCurXEnv;
 
-void xEnvLoadBsp(xEnv* env, const void* data, unsigned int datasize, int dataType)
+void xEnvLoadBsp(xEnv* env, const void* data, uint32 datasize, int32 dataType)
 {
     if (dataType == 0)
     {

@@ -1,10 +1,10 @@
 #ifndef IENV_H
 #define IENV_H
 
-extern struct RpWorld;
-extern struct xJSPHeader;
-extern struct RpLight;
-extern struct RwFrame;
+#include <rpworld.h>
+#include <rwcore.h>
+#include "../x/xJSP.h"
+
 
 struct iEnv
 {
@@ -21,7 +21,6 @@ struct iEnv
 void iEnvFree(iEnv* param_1);
 void iEnvRender(iEnv* param_1);
 void iEnvDefaultLighting(iEnv* param_1);
-//void iEnvLoad(iEnv* env, void* data, int dataType);
 void iEnvLoad(iEnv* env, void const* data, unsigned int dataSize, int dataType);
 
 #endif
