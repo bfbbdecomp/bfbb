@@ -26,37 +26,37 @@ enum _tagTransType
 
 struct _tagxCamFollowAsset
 {
-	float rotation;
-	float distance;
-	float height;
-	float rubber_band;
-	float start_speed;
-	float end_speed;
+	float32 rotation;
+	float32 distance;
+	float32 height;
+	float32 rubber_band;
+	float32 start_speed;
+	float32 end_speed;
 };
 
 struct _tagxCamShoulderAsset
 {
-	float distance;
-	float height;
-	float realign_speed;
-	float realign_delay;
+	float32 distance;
+	float32 height;
+	float32 realign_speed;
+	float32 realign_delay;
 };
 
 struct _tagp2CamStaticAsset
 {
-	unsigned int unused;
+	uint32 unused;
 };
 
 struct _tagxCamPathAsset
 {
-	unsigned int assetID;
-	float time_end;
-	float time_delay;
+	uint32 assetID;
+	float32 time_end;
+	float32 time_delay;
 };
 
 struct _tagp2CamStaticFollowAsset
 {
-	float rubber_band;
+	float32 rubber_band;
 };
 
 struct xCamAsset : xBaseAsset
@@ -66,14 +66,14 @@ struct xCamAsset : xBaseAsset
 	xVec3 up;
 	xVec3 right;
 	xVec3 view_offset;
-	short offset_start_frames;
-	short offset_end_frames;
-	float fov;
-	float trans_time;
+	int16 offset_start_frames;
+	int16 offset_end_frames;
+	float32 fov;
+	float32 trans_time;
 	_tagTransType trans_type;
-	unsigned int flags;
-	float fade_up;
-	float fade_down;
+	uint32 flags;
+	float32 fade_up;
+	float32 fade_down;
 	union
 	{
 		_tagxCamFollowAsset cam_follow;
@@ -82,10 +82,10 @@ struct xCamAsset : xBaseAsset
 		_tagxCamPathAsset cam_path;
 		_tagp2CamStaticFollowAsset cam_staticFollow;
 	};
-	unsigned int valid_flags;
-	unsigned int markerid[2];
-	unsigned char cam_type;
-	unsigned char pad[3];
+	uint32 valid_flags;
+	uint32 markerid[2];
+	uint8 cam_type;
+	uint8 pad[3];
 };
 
 struct xCamera : xBase

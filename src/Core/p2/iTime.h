@@ -3,6 +3,6 @@
 
 #include <types.h>
 
-typedef u64 iTime;
+typedef uint64 iTime;
 
 #endif

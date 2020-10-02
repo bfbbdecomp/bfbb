@@ -6,7 +6,7 @@ void xBaseInit(xBase* xb, xBaseAsset* asset)
     xb->baseType = asset->baseType;
     xb->baseFlags = asset->baseFlags;
     xb->linkCount = asset->linkCount;
-    xb->link = 0;
+    xb->link = NULL;
 
     xBaseValidate(xb);
 }
@@ -30,7 +30,7 @@ void xBaseSave(xBase* ent, xSerial* s)
 
 void xBaseLoad(xBase* ent, xSerial* s)
 {
-    int b = 0;
+    int32 b = 0;
     s->Read_b1(&b);
 
     if (b)

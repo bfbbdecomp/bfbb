@@ -15,12 +15,12 @@ struct iEnv
 	xJSPHeader* jsp;
 	RpLight* light[2];
 	RwFrame* light_frame[2];
-	int memlvl;
+	int32 memlvl;
 };
 
 void iEnvFree(iEnv* param_1);
 void iEnvRender(iEnv* param_1);
 void iEnvDefaultLighting(iEnv* param_1);
-void iEnvLoad(iEnv* env, void const* data, unsigned int dataSize, int dataType);
+void iEnvLoad(iEnv* env, void const* data, uint32 dataSize, int32 dataType);
 
 #endif

@@ -22,4 +22,9 @@ typedef u32 ulong32;
 typedef int32 bool32;
 #endif
 
+#ifdef NULL
+#undef NULL
+#define NULL 0
+#endif
+
 #endif
