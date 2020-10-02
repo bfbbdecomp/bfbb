@@ -10,8 +10,8 @@ struct xModelInstance
 struct xModelTag
 {
     xVec3 v;
-    unsigned int matidx;
-    float wt[4];
+    uint32 matidx;
+    float32 wt[4];
 };
 
 #endif

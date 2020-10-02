@@ -1,15 +1,17 @@
 #ifndef XGRID_H
 #define XGRID_H
 
+#include <types.h>
+
 struct xGridBound
 {
     void* data;
-    unsigned short gx;
-    unsigned short gz;
-    unsigned char ingrid;
-    unsigned char oversize;
-    unsigned char deleted;
-    unsigned char gpad;
+    uint16 gx;
+    uint16 gz;
+    uint8 ingrid;
+    uint8 oversize;
+    uint8 deleted;
+    uint8 gpad;
     xGridBound** head;
     xGridBound* next;
 };

@@ -5,24 +5,24 @@
 
 struct xMat3x3
 {
-    xVec3 right;
-    int flags;
-    xVec3 up;
-    unsigned int pad1;
-    xVec3 at;
-    unsigned int pad2;
+	xVec3 right;
+	int32 flags;
+	xVec3 up;
+	uint32 pad1;
+	xVec3 at;
+	uint32 pad2;
 };
 
 struct xMat4x3 : xMat3x3
 {
-    xVec3 pos;
-    unsigned int pad3;
+	xVec3 pos;
+	uint32 pad3;
 };
 
 struct xSphere
 {
-    xVec3 center;
-    float r;
+	xVec3 center;
+	float32 r;
 };
 
 struct xBox
@@ -40,22 +40,22 @@ struct xBBox
 struct xCylinder
 {
     xVec3 center;
-    float r;
-    float h;
+    float32 r;
+    float32 h;
 };
 
 struct xQuat
 {
     xVec3 v;
-    float s;
+    float32 s;
 };
 
 struct xVec4
 {
-    float x;
-    float y;
-    float z;
-    float w;
+    float32 x;
+    float32 y;
+    float32 z;
+    float32 w;
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 extern char* sEventTable[eEventCount];
 
-char* zEventName(unsigned int eventEnum)
+char* zEventName(uint32 eventEnum)
 {
     return sEventTable[eventEnum];
 }

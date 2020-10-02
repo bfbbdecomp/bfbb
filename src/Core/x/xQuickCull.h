@@ -5,14 +5,14 @@
 
 struct xQCData
 {
-    char xmin;
-    char ymin;
-    char zmin;
-    char zmin_dup;
-    char xmax;
-    char ymax;
-    char zmax;
-    char zmax_dup;
+    int8 xmin;
+    int8 ymin;
+    int8 zmin;
+    int8 zmin_dup;
+    int8 xmax;
+    int8 ymax;
+    int8 zmax;
+    int8 zmax_dup;
     xVec3 min;
     xVec3 max;
 };

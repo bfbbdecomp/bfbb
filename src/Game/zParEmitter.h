@@ -7,7 +7,7 @@ struct zParEmitter : xParEmitter
 {
 };
 
-zParEmitter* zParEmitterFind(unsigned int asset_id);
+zParEmitter* zParEmitterFind(uint32 asset_id);
 zParEmitter* zParEmitterFind(const char* asset_name);
 
 #endif

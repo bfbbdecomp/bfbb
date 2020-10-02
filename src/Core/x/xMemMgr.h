@@ -1,17 +1,19 @@
 #ifndef XMEMMGR_H
 #define XMEMMGR_H
 
+#include <types.h>
+
 struct xMemPool
 {
 	void* FreeList;
-	unsigned short NextOffset;
-	unsigned short Flags;
+	uint16 NextOffset;
+	uint16 Flags;
 	void* UsedList;
 	void (*InitCB)(xMemPool*, void*);
 	void* Buffer;
-	unsigned short Size;
-	unsigned short NumRealloc;
-	unsigned int Total;
+	uint16 Size;
+	uint16 NumRealloc;
+	uint32 Total;
 };
 
 #endif
