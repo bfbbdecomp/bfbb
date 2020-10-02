@@ -4,6 +4,9 @@ endif
 ifneq ($(findstring MSYS,$(shell uname)),)
   WINDOWS := 1
 endif
+ifneq ($(findstring microsoft,$(shell uname -a)),)
+  WINDOWS := 1
+endif
 
 #-------------------------------------------------------------------------------
 # Files
