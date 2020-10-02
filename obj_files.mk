@@ -23,7 +23,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xEnt.o                    \
     $(OBJ_DIR)/asm/Core/x/xEntDrive.o               \
     $(OBJ_DIR)/asm/Core/x/xEntMotion.o              \
-    $(OBJ_DIR)/asm/Core/x/xEnv.o                    \
+    $(OBJ_DIR)/src/Core/x/xEnv.o                    \
     $(OBJ_DIR)/src/Core/x/xEvent.o                  \
     $(OBJ_DIR)/asm/Core/x/xFFX.o                    \
     $(OBJ_DIR)/asm/Core/x/xFog.o                    \
@@ -179,7 +179,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xGrid.o                   \
     $(OBJ_DIR)/asm/Core/x/xJSP.o                    \
     $(OBJ_DIR)/asm/Core/x/xLightKit.o               \
-    $(OBJ_DIR)/asm/Game/zCamMarker.o                \
+    $(OBJ_DIR)/src/Game/zCamMarker.o                \
     $(OBJ_DIR)/asm/Game/zGoo.o                      \
     $(OBJ_DIR)/asm/Game/zGrid.o                     \
     $(OBJ_DIR)/asm/Game/zNPCGoalScript.o            \
