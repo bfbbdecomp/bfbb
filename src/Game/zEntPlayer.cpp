@@ -1,12 +1,14 @@
 #include "zEntPlayer.h"
 
+#include <types.h>
+
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
 
 #include "zGlobals.h"
 
 extern zGlobals globals;
-extern uint32 lbl_803CB5B8;
+extern uint32 sCurrentStreamSndID;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SpawnWandBubbles__FP5xVec3Ui")
 
@@ -50,7 +52,8 @@ extern uint32 lbl_803CB5B8;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "RunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
@@ -77,7 +80,8 @@ extern uint32 lbl_803CB5B8;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BoulderRollDoneCB__Fv")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "speak_update__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_Ff")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "speak_update__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_Ff")
 
 // void zEntPlayerSpeakStart(unsigned int sndid, int anim)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerSpeakStart__FUiUii")
@@ -92,7 +96,8 @@ extern uint32 lbl_803CB5B8;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "MeleeStopCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoSwingBeginCB__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "LassoSwingBeginCB__FP15xAnimTransitionP11xAnimSinglePv")
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "StunBubbleTrail__FP11xAnimSingle")
 
@@ -109,7 +114,8 @@ extern uint32 lbl_803CB5B8;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "count_talk_anims__FP10xAnimTable")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_player_ini__FR15zPlayerSettingsR14xModelInstanceP16xModelAssetParamUi")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "load_player_ini__FR15zPlayerSettingsR14xModelInstanceP16xModelAssetParamUi")
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_player_ini__Fv")
 
@@ -192,7 +198,7 @@ void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 
 void zEntPlayer_GiveHealth(int32 quantity)
 {
-    if (quantity < 0 && -quantity > (int32) globals.player.Health)
+    if (quantity < 0 && -quantity > (int32)globals.player.Health)
     {
         globals.player.Health = 0;
         return;
@@ -213,7 +219,7 @@ void zEntPlayer_GiveHealth(int32 quantity)
 
 void zEntPlayer_GiveShinyObject(int32 quantity)
 {
-    if (quantity < 0 && -quantity > (int32) globals.player.Inv_Shiny)
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_Shiny)
     {
         globals.player.Inv_Shiny = 0;
         return;
@@ -228,7 +234,6 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
         globals.player.Inv_Shiny = maxShinies;
     }
 }
-
 
 // void zEntPlayer_GivePatsSocksCurrentLevel(int quantity)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GivePatsSocksCurrentLevel__Fi")
@@ -272,7 +277,8 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 // void zEntPlayerExit()
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerExit__FP4xEnt")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerHitAnimInit__FP14xModelInstanceP15xAnimTransitionPUi")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "PlayerHitAnimInit__FP14xModelInstanceP15xAnimTransitionPUi")
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_ObjIDIsTrack__FUi")
 
@@ -338,16 +344,22 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayDelayed__Ff")
 
 // void zEntPlayer_SNDPlayStream(unsigned int lower, unsigned int upper, _tagePlayerStreamSnd player_snd, unsigned int flags)
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayStream__FUiUi20_tagePlayerStreamSndUi")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "zEntPlayer_SNDPlayStream__FUiUi20_tagePlayerStreamSndUi")
 
 // void zEntPlayer_SNDPlayStreamRandom(unsigned int lower, unsigned int upper, _tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, float delay)
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zEntPlayer.s",                                                                       \
+    "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf")
 
 // void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start, _tagePlayerStreamSnd player_snd_end, float delay)
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zEntPlayer.s",                                                                       \
+    "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf")
 
 // void zEntPlayer_SNDPlayRandom(_tagePlayerSnd player_snd_start, _tagePlayerSnd player_snd_end, float delay)
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
 
 // void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float new_vol)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetVol__F14_tagePlayerSndf")
@@ -363,7 +375,7 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 
 void zEntPlayer_SNDNotifyPlaying(uint32 id)
 {
-    lbl_803CB5B8 = id;
+    sCurrentStreamSndID = id;
 }
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerBeginCollideNoBupdate__FP4xEntP6xScenef")
@@ -372,7 +384,8 @@ void zEntPlayer_SNDNotifyPlaying(uint32 id)
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerHackFixBbashMiss__FP14xModelInstance")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerLedgeInit__FP16zLedgeGrabParamsP14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "PlayerLedgeInit__FP16zLedgeGrabParamsP14xModelInstance")
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerLedgeUpdate__FP4xEntP6xScenef")
 
@@ -430,15 +443,19 @@ xVec3* NPCC_rightDir(xEnt* ent)
     // So this is actually a reference to a struct RwV3D
     // which is the exact same as xVec3, but typed differently.
     // TODO: figure out what to do with these duplicate types
-    return (xVec3*) &ent->model->Mat->right;
+    return (xVec3*)&ent->model->Mat->right;
 }
 
 xVec3* NPCC_faceDir(xEnt* ent)
 {
     // TODO: see note in previous function
-    return (xVec3*) &ent->model->Mat->at;
+    return (xVec3*)&ent->model->Mat->at;
 }
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "NPCC_upDir__FP4xEnt")
+xVec3* NPCC_upDir(xEnt* ent)
+{
+    // TODO: see note in previous function
+    return (xVec3*)&ent->model->Mat->up;
+}
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zGooIs__FP4xEnt")
