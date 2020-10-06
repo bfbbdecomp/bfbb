@@ -1,6 +1,9 @@
 #ifndef XENT_H
 #define XENT_H
 
+#include <rwcore.h>
+#include <rpworld.h>
+
 #include "xBase.h"
 #include "xMath3.h"
 #include "xModel.h"
@@ -8,9 +11,6 @@
 #include "xGrid.h"
 #include "xBound.h"
 #include "xFFX.h"
-
-#include <rwcore.h>
-#include <rpworld.h>
 
 struct xEntAsset : xBaseAsset
 {

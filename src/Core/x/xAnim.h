@@ -9,4 +9,8 @@ struct xAnimTable
 {
 };
 
+struct xAnimPlay
+{
+};
+
 #endif

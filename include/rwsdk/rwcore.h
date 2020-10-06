@@ -72,6 +72,25 @@ struct RwTexture
 	RwInt32 refCount;
 };
 
+struct RwV3d
+{
+	float x;
+	float y;
+	float z;
+};
+
+struct RwMatrixTag
+{
+	RwV3d right;
+	unsigned int flags;
+	RwV3d up;
+	unsigned int pad1;
+	RwV3d at;
+	unsigned int pad2;
+	RwV3d pos;
+	unsigned int pad3;
+};
+
 enum RwFogType
 {
     rwFOGTYPENAFOGTYPE,

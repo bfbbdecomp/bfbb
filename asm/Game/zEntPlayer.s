@@ -1,5 +1,6 @@
 .include "macros.inc"
 
+.if 0
 .section .text  # 0x80066210 - 0x80090E88
 
 zEntPlayer_SpawnWandBubbles__FP5xVec3Ui:
@@ -46089,6 +46090,9 @@ zGooIs__FP4xEnt:
 /* 80090E7C 0008DC7C  7C 08 03 A6 */	mtlr r0
 /* 80090E80 0008DC80  38 21 00 10 */	addi r1, r1, 0x10
 /* 80090E84 0008DC84  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80255F00:
 	.incbin "baserom.dol", 0x252EE0, 0x58
@@ -46175,6 +46179,7 @@ lbl_803CB5B0:
 .global gSpongeBall
 gSpongeBall:
 	.skip 0x4
+.global lbl_803CB5B8
 lbl_803CB5B8:
 	.skip 0x4
 lbl_803CB5BC:

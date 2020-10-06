@@ -83,6 +83,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zEntHangable.o              \
     $(OBJ_DIR)/asm/Game/zEntPickup.o                \
     $(OBJ_DIR)/asm/Game/zEntPlayer.o                \
+    $(OBJ_DIR)/src/Game/zEntPlayer.o                \
     $(OBJ_DIR)/asm/Game/zEntSimpleObj.o             \
     $(OBJ_DIR)/asm/Game/zEntTrigger.o               \
     $(OBJ_DIR)/asm/Game/zEnv.o                      \
