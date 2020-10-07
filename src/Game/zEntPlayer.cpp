@@ -5,9 +5,11 @@
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
 
+#include "zGame.h"
 #include "zGlobals.h"
 
 extern zGlobals globals;
+extern int32 gCurrentPlayer;
 extern uint32 sCurrentStreamSndID;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SpawnWandBubbles__FP5xVec3Ui")
@@ -107,7 +109,37 @@ extern uint32 sCurrentStreamSndID;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "MeleeAttackBoundCollide__FP4xEntP6zSceneP6xBound")
 
-// int zEntPlayer_IsSneaking()
+/*
+int32 zEntPlayer_IsSneaking()
+{
+    if (gCurrentPlayer != eCurrentPlayerSpongeBob)
+    {
+        return false;
+    }
+
+    uint32 flags = globals.player.ent.model->Anim->Single->State->UserFlags;
+
+    // only two instructions before this matches
+    // it seems to be branching to the wrong result.
+    // inverting this chain of logic should fix it?
+    // flipping the return values below is the
+    // correct logic, but non-matching
+    if ((flags & 1) == 0)
+    {
+        flags &= 0x1e;
+
+        if (flags != 2)
+        {
+            if (flags == 4)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+*/
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_IsSneaking__Fv")
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_talk_filter__FPUcP16xModelAssetParamUii")
