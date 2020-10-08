@@ -127,3 +127,4 @@ $(OBJ_DIR)/%.o: %.cpp
 	$(CC) $(PREPROCESS) -o $*.cp $<
 	$(GLBLASM) $*.cp
 	$(CC) $(CFLAGS) -c -o $@ $*.cp
+	$(CC) -S -o $*.asm $@

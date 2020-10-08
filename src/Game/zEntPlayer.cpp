@@ -187,8 +187,10 @@ void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 // void zEntPlayer_CheckCritterContact(xEnt* player, float dt)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_CheckCritterContact__FP4xEntf")
 
-// void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_PatrickLaunch__FP4xEnt")
+void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
+{
+    globals.player.carry.patLauncher = patLauncher;
+}
 
 // void zEntPlayer_ShadowModelEnable()
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_ShadowModelEnable__Fv")
@@ -218,8 +220,28 @@ void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 // void zEntPlayer_setBoulderMode(unsigned int mode)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_setBoulderMode__FUi")
 
-// int zEntPlayer_Damage(xBase* src, unsigned int damage, xVec3* knockback)
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Damage__FP5xBaseUiPC5xVec3")
+int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
+{
+    int32 newDamage = zEntPlayer_Damage(src, damage);
+
+    if (newDamage == 0)
+    {
+        newDamage = 0; // galaxy brain
+    }
+    else
+    {
+        if (knockback != NULL)
+        {
+            globals.player.ent.frame->vel.x = knockback->x;
+            globals.player.ent.frame->vel.y = knockback->y;
+            globals.player.ent.frame->vel.z = knockback->z;
+        }
+
+        newDamage = 1;
+    }
+
+    return newDamage;
+}
 
 // int zEntPlayer_DamageNPCKnockBack(xBase* src, unsigned int damage, xVec3* npcPos)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_DamageNPCKnockBack__FP5xBaseUiP5xVec3")
