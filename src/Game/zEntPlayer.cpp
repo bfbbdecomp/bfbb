@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+#include "../Core/p2/iSnd.h"
+
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
 
@@ -42,7 +44,10 @@ extern uint32 sCurrentStreamSndID;
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "InvReset__Fv")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "HealthReset__Fv")
+void HealthReset()
+{
+    globals.player.Health = globals.player.MaxHealth;
+}
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunAnyCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
@@ -458,7 +463,10 @@ void zEntPlayer_SNDNotifyPlaying(uint32 id)
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Pos__10zNPCCommonFv")
 
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "xSndIsPlaying__FUi")
+uint8 xSndIsPlaying(uint32 assetID)
+{
+    return (uint8)iSndIsPlaying(assetID);
+}
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "xSndIsPlayingByHandle__FUi")
 
