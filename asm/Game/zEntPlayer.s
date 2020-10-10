@@ -2115,13 +2115,6 @@ lbl_80068010:
 /* 8006804C 00064E4C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80068050 00064E50  4E 80 00 20 */	blr 
 
-HealthReset__Fv:
-/* 80068054 00064E54  3C 60 80 3C */	lis r3, globals@ha
-/* 80068058 00064E58  38 63 05 58 */	addi r3, r3, globals@l
-/* 8006805C 00064E5C  80 03 17 38 */	lwz r0, 0x1738(r3)
-/* 80068060 00064E60  90 03 16 B0 */	stw r0, 0x16b0(r3)
-/* 80068064 00064E64  4E 80 00 20 */	blr 
-
 RunAnyCheck__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80068068 00064E68  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8006806C 00064E6C  7C 08 02 A6 */	mflr r0
@@ -9214,10 +9207,6 @@ zEntPlayer_RestoreSounds__Fv:
 /* 8006E68C 0006B48C  90 0D 8C C4 */	stw r0, lbl_803CB5C4-_SDA_BASE_(r13)
 /* 8006E690 0006B490  4E 80 00 20 */	blr 
 
-.global zEntPlayer_Load__FP4xEntP7xSerial
-zEntPlayer_Load__FP4xEntP7xSerial:
-/* 8006E694 0006B494  4E 80 00 20 */	blr 
-
 zEntPlayer_StreakFX__FP4xEntf:
 /* 8006E698 0006B498  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8006E69C 0006B49C  7C 08 02 A6 */	mflr r0
@@ -15956,13 +15945,6 @@ lbl_80074928:
 /* 8007493C 0007173C  38 21 00 70 */	addi r1, r1, 0x70
 /* 80074940 00071740  4E 80 00 20 */	blr 
 
-.global zEntPlayer_PatrickLaunch__FP4xEnt
-zEntPlayer_PatrickLaunch__FP4xEnt:
-/* 80074944 00071744  3C 80 80 3C */	lis r4, globals@ha
-/* 80074948 00071748  38 84 05 58 */	addi r4, r4, globals@l
-/* 8007494C 0007174C  90 64 18 7C */	stw r3, 0x187c(r4)
-/* 80074950 00071750  4E 80 00 20 */	blr 
-
 .global zEntPlayer_ShadowModelEnable__Fv
 zEntPlayer_ShadowModelEnable__Fv:
 /* 80074954 00071754  3C 60 80 3C */	lis r3, globals@ha
@@ -17678,41 +17660,6 @@ lbl_80076220:
 /* 80076228 00073028  90 6D 8D 34 */	stw r3, lbl_803CB634-_SDA_BASE_(r13)
 /* 8007622C 0007302C  90 0D 8D 30 */	stw r0, lbl_803CB630-_SDA_BASE_(r13)
 /* 80076230 00073030  4E 80 00 20 */	blr 
-
-.global zEntPlayer_Damage__FP5xBaseUiPC5xVec3
-zEntPlayer_Damage__FP5xBaseUiPC5xVec3:
-/* 80076234 00073034  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80076238 00073038  7C 08 02 A6 */	mflr r0
-/* 8007623C 0007303C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80076240 00073040  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80076244 00073044  7C BF 2B 78 */	mr r31, r5
-/* 80076248 00073048  48 00 01 E9 */	bl zEntPlayer_Damage__FP5xBaseUi
-/* 8007624C 0007304C  2C 03 00 00 */	cmpwi r3, 0
-/* 80076250 00073050  40 82 00 0C */	bne lbl_8007625C
-/* 80076254 00073054  38 60 00 00 */	li r3, 0
-/* 80076258 00073058  48 00 00 3C */	b lbl_80076294
-lbl_8007625C:
-/* 8007625C 0007305C  28 1F 00 00 */	cmplwi r31, 0
-/* 80076260 00073060  41 82 00 30 */	beq lbl_80076290
-/* 80076264 00073064  3C 60 80 3C */	lis r3, globals@ha
-/* 80076268 00073068  C0 1F 00 00 */	lfs f0, 0(r31)
-/* 8007626C 0007306C  38 83 05 58 */	addi r4, r3, globals@l
-/* 80076270 00073070  80 64 07 28 */	lwz r3, 0x728(r4)
-/* 80076274 00073074  D0 03 00 D4 */	stfs f0, 0xd4(r3)
-/* 80076278 00073078  C0 1F 00 04 */	lfs f0, 4(r31)
-/* 8007627C 0007307C  80 64 07 28 */	lwz r3, 0x728(r4)
-/* 80076280 00073080  D0 03 00 D8 */	stfs f0, 0xd8(r3)
-/* 80076284 00073084  C0 1F 00 08 */	lfs f0, 8(r31)
-/* 80076288 00073088  80 64 07 28 */	lwz r3, 0x728(r4)
-/* 8007628C 0007308C  D0 03 00 DC */	stfs f0, 0xdc(r3)
-lbl_80076290:
-/* 80076290 00073090  38 60 00 01 */	li r3, 1
-lbl_80076294:
-/* 80076294 00073094  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80076298 00073098  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8007629C 0007309C  7C 08 03 A6 */	mtlr r0
-/* 800762A0 000730A0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800762A4 000730A4  4E 80 00 20 */	blr 
 
 .global zEntPlayer_DamageNPCKnockBack__FP5xBaseUiP5xVec3
 zEntPlayer_DamageNPCKnockBack__FP5xBaseUiP5xVec3:
@@ -31567,18 +31514,6 @@ Pos__10zNPCCommonFv:
 /* 80082CFC 0007FAFC  80 63 00 4C */	lwz r3, 0x4c(r3)
 /* 80082D00 0007FB00  38 63 00 30 */	addi r3, r3, 0x30
 /* 80082D04 0007FB04  4E 80 00 20 */	blr 
-
-.global xSndIsPlaying__FUi
-xSndIsPlaying__FUi:
-/* 80082D08 0007FB08  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80082D0C 0007FB0C  7C 08 02 A6 */	mflr r0
-/* 80082D10 0007FB10  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80082D14 0007FB14  48 04 DA F5 */	bl iSndIsPlaying__FUi
-/* 80082D18 0007FB18  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80082D1C 0007FB1C  54 63 06 3E */	clrlwi r3, r3, 0x18
-/* 80082D20 0007FB20  7C 08 03 A6 */	mtlr r0
-/* 80082D24 0007FB24  38 21 00 10 */	addi r1, r1, 0x10
-/* 80082D28 0007FB28  4E 80 00 20 */	blr 
 
 .global xSndIsPlayingByHandle__FUi
 xSndIsPlayingByHandle__FUi:
