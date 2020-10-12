@@ -118,7 +118,7 @@ $(ELF): $(O_FILES) $(LDSCRIPT)
 
 $(OBJ_DIR)/%.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<
-	$(PPROC) $(PPROCFLAGS) $@
+	@$(PPROC) $(PPROCFLAGS) $@
 
 $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<

@@ -1,6 +1,7 @@
 __pycache__
 tools/mwcc_compiler/*.*
 tools/elf2dol
+*.asm
 *.exe
 *.dol
 *.dump

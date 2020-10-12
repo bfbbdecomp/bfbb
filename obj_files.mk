@@ -201,6 +201,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCTypeTest.o              \
     $(OBJ_DIR)/asm/Game/zNPCTypeSubBoss.o           \
     $(OBJ_DIR)/asm/Game/zNPCTypeBoss.o              \
+    $(OBJ_DIR)/src/Game/zNPCTypeBoss.o              \
     $(OBJ_DIR)/asm/Game/zNPCGoalVillager.o          \
     $(OBJ_DIR)/asm/Game/zNPCGoalSubBoss.o           \
     $(OBJ_DIR)/asm/Core/x/xShadowSimple.o           \
