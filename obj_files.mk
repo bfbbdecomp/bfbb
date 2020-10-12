@@ -63,6 +63,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xSpline.o                 \
     $(OBJ_DIR)/asm/Core/x/xstransvc.o               \
     $(OBJ_DIR)/asm/Core/x/xString.o                 \
+    $(OBJ_DIR)/src/Core/x/xString.o                 \
     $(OBJ_DIR)/asm/Core/x/xSurface.o                \
     $(OBJ_DIR)/asm/Core/x/xTimer.o                  \
     $(OBJ_DIR)/asm/Core/x/xTRC.o                    \

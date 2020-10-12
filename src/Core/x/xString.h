@@ -3,6 +3,7 @@
 
 #include <types.h>
 
-extern uint32 xStrHash(const char* str);
+uint32 xStrHash(const int8* str);
+uint32 xStrHash(const int8* str, ulong32 size);
 
 #endif

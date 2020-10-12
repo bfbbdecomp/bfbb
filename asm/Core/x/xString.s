@@ -1,5 +1,6 @@
 .include "macros.inc"
 
+.if 0
 .section .text  # 0x8004C214 - 0x8004D054
 
 .global xStrHash__FPCc
@@ -1085,7 +1086,9 @@ lbl_8004D038:
 /* 8004D048 00049E48  40 82 FF C0 */	bne lbl_8004D008
 lbl_8004D04C:
 /* 8004D04C 00049E4C  38 60 00 00 */	li r3, 0
-/* 8004D050 00049E50  4E 80 00 20 */	blr 
+/* 8004D050 00049E50  4E 80 00 20 */	blr
+
+.endif
 
 .section .data
 lbl_8028A228:
