@@ -4,6 +4,7 @@
 
 #include "../Core/p2/iSnd.h"
 
+#include "../Core/x/xSnd.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
 
@@ -13,6 +14,10 @@
 extern zGlobals globals;
 extern int32 gCurrentPlayer;
 extern uint32 sCurrentStreamSndID;
+
+// Multidimensional sound arrays for each player type
+extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
+extern uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total];
 
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SpawnWandBubbles__FP5xVec3Ui")
 
@@ -420,10 +425,27 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
 
-// void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float new_vol)
+/*
+void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
+{
+    // only 1 slightly incorrect instruction preventing match
+    if (sPlayerSnd[gCurrentPlayer][player_snd] != 0)
+    {
+        xSndSetVol(sPlayerSndID[gCurrentPlayer][player_snd], new_vol);
+    }
+}*/
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetVol__F14_tagePlayerSndf")
 
-// void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float new_pitch)
+/*
+void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
+{
+    // only 1 slightly incorrect instruction preventing match
+    if (sPlayerSnd[gCurrentPlayer][player_snd] != 0)
+    {
+        xSndSetPitch(sPlayerSndID[gCurrentPlayer][player_snd], new_pitch);
+    }
+}
+*/
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetPitch__F14_tagePlayerSndf")
 
 // void zEntPlayer_SNDStop(_tagePlayerSnd player_snd)
