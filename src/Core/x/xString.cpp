@@ -83,13 +83,56 @@ int8* xStrupr(int8* string)
 
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "imemcmp__FPCvPCvUl")
 
-#pragma GLOBAL_ASM("asm/Core/x/xString.s",                                                         \
-                   "tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc")
+// @unnamed@xString_cpp@::tolower(char)
+extern "C" {
+uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(uint32 param_1)
+{
+    tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(param_1 & 0xff);
+}
+}
 
-#pragma GLOBAL_ASM("asm/Core/x/xString.s",                                                         \
-                   "tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi")
+// @unnamed@xString_cpp@::tolower(int)
+extern "C" {
+uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(uint32 param_1)
+{
+    return param_1 | ((param_1 >> 1) & 32);
+}
+}
 
-// int icompare(substr& s1, substr& s2)
+/*
+// Non-matching
+int32 icompare(const substr& s1, const substr& s2)
+{
+    int32 result;
+    uint32 len;
+
+    len = s2.size;
+
+    if (s1.size < s2.size)
+    {
+        len = s1.size;
+    }
+
+    result = imemcmp(s1.text, s2.text, len);
+
+    if (result == 0)
+    {
+        if (s1.size == s2.size)
+        {
+            result = 0;
+        }
+        else
+        {
+            result = 1;
+            if (s1.size < s2.size)
+            {
+                result = -1;
+            }
+        }
+    }
+    return result;
+}
+*/
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "icompare__FRC6substrRC6substr")
 
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "atox__FRC6substrRUl")

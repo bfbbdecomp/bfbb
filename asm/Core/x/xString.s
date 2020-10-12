@@ -3,69 +3,6 @@
 .if 0
 .section .text  # 0x8004C214 - 0x8004D054
 
-.global xStrHash__FPCc
-xStrHash__FPCc:
-/* 8004C214 00049014  38 A0 00 00 */	li r5, 0
-/* 8004C218 00049018  48 00 00 24 */	b lbl_8004C23C
-lbl_8004C21C:
-/* 8004C21C 0004901C  7C 80 0E 70 */	srawi r0, r4, 1
-/* 8004C220 00049020  38 63 00 01 */	addi r3, r3, 1
-/* 8004C224 00049024  7C 80 00 38 */	and r0, r4, r0
-/* 8004C228 00049028  54 00 06 B4 */	rlwinm r0, r0, 0, 0x1a, 0x1a
-/* 8004C22C 0004902C  7C 80 20 50 */	subf r4, r0, r4
-/* 8004C230 00049030  1C 05 00 83 */	mulli r0, r5, 0x83
-/* 8004C234 00049034  54 84 06 3E */	clrlwi r4, r4, 0x18
-/* 8004C238 00049038  7C A4 02 14 */	add r5, r4, r0
-lbl_8004C23C:
-/* 8004C23C 0004903C  88 83 00 00 */	lbz r4, 0(r3)
-/* 8004C240 00049040  28 04 00 00 */	cmplwi r4, 0
-/* 8004C244 00049044  40 82 FF D8 */	bne lbl_8004C21C
-/* 8004C248 00049048  7C A3 2B 78 */	mr r3, r5
-/* 8004C24C 0004904C  4E 80 00 20 */	blr 
-
-.global xStrHash__FPCcUl
-xStrHash__FPCcUl:
-/* 8004C250 00049050  38 C0 00 00 */	li r6, 0
-/* 8004C254 00049054  38 E0 00 00 */	li r7, 0
-/* 8004C258 00049058  48 00 00 28 */	b lbl_8004C280
-lbl_8004C25C:
-/* 8004C25C 0004905C  7C A0 0E 70 */	srawi r0, r5, 1
-/* 8004C260 00049060  38 E7 00 01 */	addi r7, r7, 1
-/* 8004C264 00049064  7C A0 00 38 */	and r0, r5, r0
-/* 8004C268 00049068  38 63 00 01 */	addi r3, r3, 1
-/* 8004C26C 0004906C  54 00 06 B4 */	rlwinm r0, r0, 0, 0x1a, 0x1a
-/* 8004C270 00049070  7C A0 28 50 */	subf r5, r0, r5
-/* 8004C274 00049074  1C 06 00 83 */	mulli r0, r6, 0x83
-/* 8004C278 00049078  54 A5 06 3E */	clrlwi r5, r5, 0x18
-/* 8004C27C 0004907C  7C C5 02 14 */	add r6, r5, r0
-lbl_8004C280:
-/* 8004C280 00049080  7C 07 20 40 */	cmplw r7, r4
-/* 8004C284 00049084  40 80 00 10 */	bge lbl_8004C294
-/* 8004C288 00049088  88 A3 00 00 */	lbz r5, 0(r3)
-/* 8004C28C 0004908C  28 05 00 00 */	cmplwi r5, 0
-/* 8004C290 00049090  40 82 FF CC */	bne lbl_8004C25C
-lbl_8004C294:
-/* 8004C294 00049094  7C C3 33 78 */	mr r3, r6
-/* 8004C298 00049098  4E 80 00 20 */	blr 
-
-.global xStrHashCat__FUiPCc
-xStrHashCat__FUiPCc:
-/* 8004C29C 0004909C  48 00 00 24 */	b lbl_8004C2C0
-lbl_8004C2A0:
-/* 8004C2A0 000490A0  7C A0 0E 70 */	srawi r0, r5, 1
-/* 8004C2A4 000490A4  38 84 00 01 */	addi r4, r4, 1
-/* 8004C2A8 000490A8  7C A0 00 38 */	and r0, r5, r0
-/* 8004C2AC 000490AC  54 00 06 B4 */	rlwinm r0, r0, 0, 0x1a, 0x1a
-/* 8004C2B0 000490B0  7C A0 28 50 */	subf r5, r0, r5
-/* 8004C2B4 000490B4  1C 03 00 83 */	mulli r0, r3, 0x83
-/* 8004C2B8 000490B8  54 A3 06 3E */	clrlwi r3, r5, 0x18
-/* 8004C2BC 000490BC  7C 63 02 14 */	add r3, r3, r0
-lbl_8004C2C0:
-/* 8004C2C0 000490C0  88 A4 00 00 */	lbz r5, 0(r4)
-/* 8004C2C4 000490C4  28 05 00 00 */	cmplwi r5, 0
-/* 8004C2C8 000490C8  40 82 FF D8 */	bne lbl_8004C2A0
-/* 8004C2CC 000490CC  4E 80 00 20 */	blr 
-
 .global xStrTok__FPcPCcPPc
 xStrTok__FPcPCcPPc:
 /* 8004C2D0 000490D0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -356,30 +293,6 @@ lbl_8004C694:
 /* 8004C69C 0004949C  38 60 FF FF */	li r3, -1
 /* 8004C6A0 000494A0  4E 80 00 20 */	blr 
 
-.global xStrupr__FPc
-xStrupr__FPc:
-/* 8004C6A4 000494A4  7C 65 1B 78 */	mr r5, r3
-/* 8004C6A8 000494A8  48 00 00 30 */	b lbl_8004C6D8
-lbl_8004C6AC:
-/* 8004C6AC 000494AC  28 04 00 61 */	cmplwi r4, 0x61
-/* 8004C6B0 000494B0  38 00 00 00 */	li r0, 0
-/* 8004C6B4 000494B4  41 80 00 10 */	blt lbl_8004C6C4
-/* 8004C6B8 000494B8  28 04 00 7A */	cmplwi r4, 0x7a
-/* 8004C6BC 000494BC  41 81 00 08 */	bgt lbl_8004C6C4
-/* 8004C6C0 000494C0  38 00 00 01 */	li r0, 1
-lbl_8004C6C4:
-/* 8004C6C4 000494C4  54 00 06 3F */	clrlwi. r0, r0, 0x18
-/* 8004C6C8 000494C8  41 82 00 08 */	beq lbl_8004C6D0
-/* 8004C6CC 000494CC  38 84 FF E0 */	addi r4, r4, -32
-lbl_8004C6D0:
-/* 8004C6D0 000494D0  98 85 00 00 */	stb r4, 0(r5)
-/* 8004C6D4 000494D4  38 A5 00 01 */	addi r5, r5, 1
-lbl_8004C6D8:
-/* 8004C6D8 000494D8  88 85 00 00 */	lbz r4, 0(r5)
-/* 8004C6DC 000494DC  28 04 00 00 */	cmplwi r4, 0
-/* 8004C6E0 000494E0  40 82 FF CC */	bne lbl_8004C6AC
-/* 8004C6E4 000494E4  4E 80 00 20 */	blr 
-
 .global xStrParseFloatList__FPfPCci
 xStrParseFloatList__FPfPCci:
 /* 8004C6E8 000494E8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -553,12 +466,6 @@ tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc:
 /* 8004C91C 0004971C  7C 08 03 A6 */	mtlr r0
 /* 8004C920 00049720  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004C924 00049724  4E 80 00 20 */	blr 
-
-/* tolower__21@unnamed@xString_cpp@Fi */
-tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi:
-/* 8004C928 00049728  54 60 FE B4 */	rlwinm r0, r3, 0x1f, 0x1a, 0x1a
-/* 8004C92C 0004972C  7C 63 03 78 */	or r3, r3, r0
-/* 8004C930 00049730  4E 80 00 20 */	blr 
 
 .global icompare__FRC6substrRC6substr
 icompare__FRC6substrRC6substr:
