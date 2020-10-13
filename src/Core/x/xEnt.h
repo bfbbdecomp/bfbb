@@ -1,6 +1,9 @@
 #ifndef XENT_H
 #define XENT_H
 
+#include <rwcore.h>
+#include <rpworld.h>
+
 #include "xBase.h"
 #include "xMath3.h"
 #include "xModel.h"
@@ -9,32 +12,49 @@
 #include "xBound.h"
 #include "xFFX.h"
 
-#include <rwcore.h>
-#include <rpworld.h>
-
 struct xEntAsset : xBaseAsset
 {
-	uint8 flags;
-	uint8 subtype;
-	uint8 pflags;
-	uint8 moreFlags;
-	uint8 pad;
-	uint32 surfaceID;
-	xVec3 ang;
-	xVec3 pos;
-	xVec3 scale;
-	float32 redMult;
-	float32 greenMult;
-	float32 blueMult;
-	float32 seeThru;
-	float32 seeThruSpeed;
-	uint32 modelInfoID;
-	uint32 animListID;
+    uint8 flags;
+    uint8 subtype;
+    uint8 pflags;
+    uint8 moreFlags;
+    uint8 pad;
+    uint32 surfaceID;
+    xVec3 ang;
+    xVec3 pos;
+    xVec3 scale;
+    float32 redMult;
+    float32 greenMult;
+    float32 blueMult;
+    float32 seeThru;
+    float32 seeThruSpeed;
+    uint32 modelInfoID;
+    uint32 animListID;
 };
 
 struct xEnt;
 struct xScene;
-struct xEntFrame;
+
+struct xRot
+{
+    xVec3 axis;
+    float32 angle;
+};
+
+struct xEntFrame
+{
+    xMat4x3 mat;
+    xMat4x3 oldmat;
+    xVec3 oldvel;
+    xRot oldrot;
+    xRot drot;
+    xRot rot;
+    xVec3 dpos;
+    xVec3 dvel;
+    xVec3 vel;
+    uint32 mode;
+};
+
 struct xEntCollis;
 struct xShadowSimpleCache;
 struct xEntShadow;

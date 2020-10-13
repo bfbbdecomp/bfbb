@@ -10,24 +10,25 @@
 
 struct zScene : xScene
 {
-	_zPortal* pendingPortal;
-	union
-	{
-		uint32 num_ents;
-		uint32 num_base;
-	};
-	union
-	{
-		xBase** base;
-		zEnt** ents;
-	};
-	uint32 num_update_base;
-	xBase** update_base;
-	uint32 baseCount[eBaseTypeCount];
-	xBase* baseList[eBaseTypeCount];
-	_zEnv* zen;
+    _zPortal* pendingPortal;
+    union
+    {
+        uint32 num_ents;
+        uint32 num_base;
+    };
+    union
+    {
+        xBase** base;
+        zEnt** ents;
+    };
+    uint32 num_update_base;
+    xBase** update_base;
+    uint32 baseCount[eBaseTypeCount];
+    xBase* baseList[eBaseTypeCount];
+    _zEnv* zen;
 };
 
 xBase* zSceneFindObject(uint32 gameID);
+void zSceneSwitch(_zPortal* p, int32 forceSameScene);
 
 #endif
