@@ -1,52 +1,10 @@
 .include "macros.inc"
 
+.if 0
 .section .text  # 0x8013612C - 0x801365C8
 
-.global ZNPC_Boss_Startup__Fv
-ZNPC_Boss_Startup__Fv:
-/* 8013612C 00132F2C  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80136130 00132F30  7C 08 02 A6 */	mflr r0
-/* 80136134 00132F34  3C 80 80 2A */	lis r4, g_strz_bossanim@ha
-/* 80136138 00132F38  3C 60 80 2A */	lis r3, g_hash_bossanim@ha
-/* 8013613C 00132F3C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80136140 00132F40  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80136144 00132F44  3B E4 93 A0 */	addi r31, r4, g_strz_bossanim@l
-/* 80136148 00132F48  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8013614C 00132F4C  3B C3 92 68 */	addi r30, r3, g_hash_bossanim@l
-/* 80136150 00132F50  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 80136154 00132F54  3B A0 00 00 */	li r29, 0
-lbl_80136158:
-/* 80136158 00132F58  80 7F 00 00 */	lwz r3, 0(r31)
-/* 8013615C 00132F5C  4B F1 60 B9 */	bl xStrHash__FPCc
-/* 80136160 00132F60  3B BD 00 01 */	addi r29, r29, 1
-/* 80136164 00132F64  90 7E 00 00 */	stw r3, 0(r30)
-/* 80136168 00132F68  2C 1D 00 4E */	cmpwi r29, 0x4e
-/* 8013616C 00132F6C  3B FF 00 04 */	addi r31, r31, 4
-/* 80136170 00132F70  3B DE 00 04 */	addi r30, r30, 4
-/* 80136174 00132F74  41 80 FF E4 */	blt lbl_80136158
-/* 80136178 00132F78  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8013617C 00132F7C  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80136180 00132F80  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80136184 00132F84  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80136188 00132F88  7C 08 03 A6 */	mtlr r0
-/* 8013618C 00132F8C  38 21 00 20 */	addi r1, r1, 0x20
-/* 80136190 00132F90  4E 80 00 20 */	blr 
-
-.global ZNPC_Boss_Shutdown__Fv
-ZNPC_Boss_Shutdown__Fv:
-/* 80136194 00132F94  4E 80 00 20 */	blr 
-
-.global zNPCBoss_ScenePrepare__Fv
-zNPCBoss_ScenePrepare__Fv:
-/* 80136198 00132F98  38 00 00 01 */	li r0, 1
-/* 8013619C 00132F9C  90 0D 96 40 */	stw r0, lbl_803CBF40-_SDA_BASE_(r13)
-/* 801361A0 00132FA0  4E 80 00 20 */	blr 
-
-.global zNPCBoss_SceneFinish__Fv
-zNPCBoss_SceneFinish__Fv:
-/* 801361A4 00132FA4  38 00 00 00 */	li r0, 0
-/* 801361A8 00132FA8  90 0D 96 40 */	stw r0, lbl_803CBF40-_SDA_BASE_(r13)
-/* 801361AC 00132FAC  4E 80 00 20 */	blr 
+.global ZNPC_Create_Boss__FiP10RyzMemGrowPv
+ZNPC_Create_Boss__FiP10RyzMemGrowPv:
 /* 801361B0 00132FB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801361B4 00132FB4  7C 08 02 A6 */	mflr r0
 /* 801361B8 00132FB8  3C C0 4E 54 */	lis r6, 0x4E544232@ha
@@ -212,11 +170,11 @@ Setup__8zNPCBossFv:
 /* 801363F0 001331F0  7C 08 02 A6 */	mflr r0
 /* 801363F4 001331F4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 801363F8 001331F8  4B FB 90 69 */	bl Setup__10zNPCCommonFv
-/* 801363FC 001331FC  80 0D 96 40 */	lwz r0, lbl_803CBF40-_SDA_BASE_(r13)
+/* 801363FC 001331FC  80 0D 96 40 */	lwz r0, g_boss_is_in_the_house-_SDA_BASE_(r13)
 /* 80136400 00133200  2C 00 00 00 */	cmpwi r0, 0
 /* 80136404 00133204  41 82 00 10 */	beq lbl_80136414
 /* 80136408 00133208  38 00 00 00 */	li r0, 0
-/* 8013640C 0013320C  90 0D 96 40 */	stw r0, lbl_803CBF40-_SDA_BASE_(r13)
+/* 8013640C 0013320C  90 0D 96 40 */	stw r0, g_boss_is_in_the_house-_SDA_BASE_(r13)
 /* 80136410 00133210  48 00 00 15 */	bl BOSS_InitEffects__Fv
 lbl_80136414:
 /* 80136414 00133214  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -346,6 +304,9 @@ __ct__9zNPCB_SB2Fi:
 /* 801365BC 001333BC  7C 08 03 A6 */	mtlr r0
 /* 801365C0 001333C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801365C4 001333C4  4E 80 00 20 */	blr 
+
+.endif 
+
 .section .rodata
 lbl_8026CBB8:
 	.incbin "baserom.dol", 0x269B98, 0x390
@@ -355,7 +316,8 @@ lbl_80324468:
 	.skip 0x170
 
 .section .sbss
-lbl_803CBF40:
+.global g_boss_is_in_the_house
+g_boss_is_in_the_house:
 	.skip 0x4
 lbl_803CBF44:
 	.skip 0x4

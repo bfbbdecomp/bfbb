@@ -63,6 +63,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xSpline.o                 \
     $(OBJ_DIR)/asm/Core/x/xstransvc.o               \
     $(OBJ_DIR)/asm/Core/x/xString.o                 \
+    $(OBJ_DIR)/src/Core/x/xString.o                 \
     $(OBJ_DIR)/asm/Core/x/xSurface.o                \
     $(OBJ_DIR)/asm/Core/x/xTimer.o                  \
     $(OBJ_DIR)/asm/Core/x/xTRC.o                    \
@@ -83,6 +84,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zEntHangable.o              \
     $(OBJ_DIR)/asm/Game/zEntPickup.o                \
     $(OBJ_DIR)/asm/Game/zEntPlayer.o                \
+    $(OBJ_DIR)/src/Game/zEntPlayer.o                \
     $(OBJ_DIR)/asm/Game/zEntSimpleObj.o             \
     $(OBJ_DIR)/asm/Game/zEntTrigger.o               \
     $(OBJ_DIR)/asm/Game/zEnv.o                      \
@@ -109,7 +111,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zPendulum.o                 \
     $(OBJ_DIR)/asm/Game/zPickupTable.o              \
     $(OBJ_DIR)/asm/Game/zPlatform.o                 \
-    $(OBJ_DIR)/asm/Game/zPortal.o                   \
+    $(OBJ_DIR)/src/Game/zPortal.o                   \
     $(OBJ_DIR)/asm/Game/zRenderState.o              \
     $(OBJ_DIR)/asm/Game/zRumble.o                   \
     $(OBJ_DIR)/asm/Game/zSaveLoad.o                 \
@@ -200,6 +202,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCTypeTest.o              \
     $(OBJ_DIR)/asm/Game/zNPCTypeSubBoss.o           \
     $(OBJ_DIR)/asm/Game/zNPCTypeBoss.o              \
+    $(OBJ_DIR)/src/Game/zNPCTypeBoss.o              \
     $(OBJ_DIR)/asm/Game/zNPCGoalVillager.o          \
     $(OBJ_DIR)/asm/Game/zNPCGoalSubBoss.o           \
     $(OBJ_DIR)/asm/Core/x/xShadowSimple.o           \
