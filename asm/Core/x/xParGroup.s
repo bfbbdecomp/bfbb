@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80038428 - 0x80038AD4
 
 .global xParGroupInit__FP9xParGroup
@@ -519,6 +521,8 @@ lbl_80038ABC:
 /* 80038AC8 000358C8  90 04 00 04 */	stw r0, 4(r4)
 /* 80038ACC 000358CC  90 83 00 04 */	stw r4, 4(r3)
 /* 80038AD0 000358D0  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB318:

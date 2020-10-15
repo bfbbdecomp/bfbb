@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80035E70 - 0x8003694C
 
 .global xPadInit__Fv
@@ -809,6 +811,8 @@ lbl_80036908:
 lbl_80036944:
 /* 80036944 00033744  38 21 00 20 */	addi r1, r1, 0x20
 /* 80036948 00033748  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802C8770:

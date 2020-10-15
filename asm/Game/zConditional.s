@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80052558 - 0x80052874
 
 .global zConditionalInit__FPvPv
@@ -238,3 +240,6 @@ lbl_8005285C:
 /* 80052868 0004F668  7C 08 03 A6 */	mtlr r0
 /* 8005286C 0004F66C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80052870 0004F670  4E 80 00 20 */	blr 
+
+.endif
+

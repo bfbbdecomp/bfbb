@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8011D564 - 0x8011F0B8
 
 .global xClumpColl_StaticBufferInit__FPvUi
@@ -1877,6 +1879,8 @@ lbl_8011F0A0:
 /* 8011F0AC 0011BEAC  7C 08 03 A6 */	mtlr r0
 /* 8011F0B0 0011BEB0  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8011F0B4 0011BEB4  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CE990:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C6360 - 0x800C64A8
 
 .global iMemInit__Fv
@@ -91,3 +93,6 @@ iMemExit__Fv:
 /* 800C649C 000C329C  7C 08 03 A6 */	mtlr r0
 /* 800C64A0 000C32A0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C64A4 000C32A4  4E 80 00 20 */	blr 
+
+.endif
+

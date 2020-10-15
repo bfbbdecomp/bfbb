@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8017EEA4 - 0x8017F5E0
 
 zCameraTweak_LookPreCalc__FP13zCamTweakLookfff:
@@ -530,6 +532,8 @@ lbl_8017F5C8:
 /* 8017F5D4 0017C3D4  7C 08 03 A6 */	mtlr r0
 /* 8017F5D8 0017C3D8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017F5DC 0017C3DC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_8032B4C8:

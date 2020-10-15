@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8004DC48 - 0x8004E2F0
 
 .global xUtilStartup__Fv
@@ -505,6 +507,8 @@ lbl_8004E2D8:
 /* 8004E2E4 0004B0E4  38 63 00 04 */	addi r3, r3, 4
 /* 8004E2E8 0004B0E8  42 00 FF F0 */	bdnz lbl_8004E2D8
 /* 8004E2EC 0004B0EC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8028A378:

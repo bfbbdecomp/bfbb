@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80118934 - 0x80118A04
 
 .global Init__7xVolumeFP12xVolumeAsset
@@ -70,3 +72,6 @@ GetBound__7xVolumeFv:
 /* 801189F8 001157F8  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 801189FC 001157FC  38 63 00 0C */	addi r3, r3, 0xc
 /* 80118A00 00115800  4E 80 00 20 */	blr 
+
+.endif
+

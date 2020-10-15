@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800564EC - 0x8005720C
 
 .global zEntButton_Init__FPvPv
@@ -946,6 +948,9 @@ lbl_800571F0:
 /* 80057200 00054000  7C 08 03 A6 */	mtlr r0
 /* 80057204 00054004  38 21 00 20 */	addi r1, r1, 0x20
 /* 80057208 00054008  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80255088:
 	.incbin "baserom.dol", 0x252068, 0x30

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8003C498 - 0x8003CC4C
 
 .global xQuickCullInit__FP10xQCControlffffff
@@ -555,6 +557,8 @@ xQuickCullForEverything__FP7xQCData:
 /* 8003CC40 00039A40  98 03 00 06 */	stb r0, 6(r3)
 /* 8003CC44 00039A44  98 03 00 07 */	stb r0, 7(r3)
 /* 8003CC48 00039A48  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CCF60:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8012A728 - 0x8012C0A8
 
 .global zNPCSpawner_Startup__Fv
@@ -1887,6 +1889,9 @@ lbl_8012C080:
 IsOn__10zMovePointFv:
 /* 8012C0A0 00128EA0  88 63 00 24 */	lbz r3, 0x24(r3)
 /* 8012C0A4 00128EA4  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026C1F0:
 	.incbin "baserom.dol", 0x2691D0, 0x4C

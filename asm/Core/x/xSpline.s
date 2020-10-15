@@ -6,6 +6,8 @@
 lbl_80253EB8:
 	.incbin "baserom.dol", 0x250E98, 0x10
 
+.if 0
+
 .section .text  # 0x800499E4 - 0x8004B108
 
 Tridiag_Solve__FPfPfPfP5xVec3P5xVec3i:
@@ -1621,6 +1623,8 @@ xSpline3_Catmullize__FP8xSpline3:
 /* 8004B0FC 00047EFC  7C 08 03 A6 */	mtlr r0
 /* 8004B100 00047F00  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004B104 00047F04  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80288FE0:

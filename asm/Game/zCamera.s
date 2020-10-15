@@ -6,6 +6,8 @@
 lbl_802547A0:
 	.incbin "baserom.dol", 0x251780, 0x18
 
+.if 0
+
 .section .text  # 0x8004FBFC - 0x80052558
 
 .global zCameraReset__FP7xCamera
@@ -2934,6 +2936,8 @@ xVec3Dist2__FPC5xVec3PC5xVec3:
 /* 8005254C 0004F34C  EC 03 00 FA */	fmadds f0, f3, f3, f0
 /* 80052550 0004F350  EC 21 00 7A */	fmadds f1, f1, f1, f0
 /* 80052554 0004F354  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802DBA70:

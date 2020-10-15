@@ -6,6 +6,8 @@
 lbl_80252FB8:
 	.incbin "baserom.dol", 0x24FF98, 0x10
 
+.if 0
+
 .section .text  # 0x80030640 - 0x80030C04
 
 TrimWhitespace__FPc:
@@ -431,3 +433,6 @@ lbl_80030BEC:
 /* 80030BF8 0002D9F8  7C 08 03 A6 */	mtlr r0
 /* 80030BFC 0002D9FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80030C00 0002DA00  4E 80 00 20 */	blr 
+
+.endif
+

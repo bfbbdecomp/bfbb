@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8010EB94 - 0x8010EED8
 
 .global xGoalSimple_RegisterTypes__FP8xFactory
@@ -237,6 +239,9 @@ __ct__12xGoalGenericFi:
 /* 8010EECC 0010BCCC  38 63 00 0D */	addi r3, r3, 0xd
 /* 8010EED0 0010BCD0  4E 80 00 20 */	blr 
 /* 8010EED4 0010BCD4  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026A3B0:
 	.incbin "baserom.dol", 0x267390, 0x18

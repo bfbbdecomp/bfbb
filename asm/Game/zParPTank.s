@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8017047C - 0x80172034
 
 zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v:
@@ -1912,6 +1914,9 @@ __as__Q223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_dataFRCQ22
 /* 80172028 0016EE28  90 A3 00 28 */	stw r5, 0x28(r3)
 /* 8017202C 0016EE2C  90 03 00 2C */	stw r0, 0x2c(r3)
 /* 80172030 0016EE30  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80271E28:
 	.incbin "baserom.dol", 0x26EE08, 0x18

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80135EA0 - 0x8013612C
 
 .global ZNPC_SubBoss_Startup__Fv
@@ -198,6 +200,9 @@ __ct__11zNPCSubBossFi:
 /* 80136120 00132F20  4E 80 00 20 */	blr 
 /* 80136124 00132F24  38 60 00 03 */	li r3, 3
 /* 80136128 00132F28  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026CAA8:
 	.incbin "baserom.dol", 0x269A88, 0x110

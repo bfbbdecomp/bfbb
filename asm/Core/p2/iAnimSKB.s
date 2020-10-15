@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800BE470 - 0x800C0138
 
 .global iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat
@@ -1061,6 +1063,9 @@ lbl_800C0120:
 /* 800C012C 000BCF2C  BB 01 00 90 */	lmw r24, 0x90(r1)
 /* 800C0130 000BCF30  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800C0134 000BCF34  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80260118:
 	.incbin "baserom.dol", 0x25D0F8, 0x18

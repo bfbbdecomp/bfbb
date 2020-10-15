@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800609B4 - 0x8006180C
 
 /* SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance */
@@ -1027,6 +1029,9 @@ lbl_800617F0:
 /* 80061800 0005E600  7C 08 03 A6 */	mtlr r0
 /* 80061804 0005E604  38 21 00 20 */	addi r1, r1, 0x20
 /* 80061808 0005E608  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80255D88:
 	.incbin "baserom.dol", 0x252D68, 0x70

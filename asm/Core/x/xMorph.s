@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80035034 - 0x80035494
 
 .global xMorphSeqSetup__FPvPFUiPc_Pv
@@ -322,6 +324,8 @@ xMorphSeqDuration__FP13xMorphSeqFile:
 /* 80035488 00032288  7C 63 02 14 */	add r3, r3, r0
 /* 8003548C 0003228C  C0 23 00 0C */	lfs f1, 0xc(r3)
 /* 80035490 00032290  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CCEC0:

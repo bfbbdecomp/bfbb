@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8012D888 - 0x8012DD64
 
 .global zBusStop_Init__FR5xBaseR9xDynAssetUl
@@ -350,6 +352,9 @@ lbl_8012DD40:
 lbl_8012DD5C:
 /* 8012DD5C 0012AB5C  38 60 00 01 */	li r3, 1
 /* 8012DD60 0012AB60  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026C400:
 	.incbin "baserom.dol", 0x2693E0, 0x10
