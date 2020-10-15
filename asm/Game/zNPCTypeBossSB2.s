@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80156D98 - 0x8015FF60
 
 /* init_sound__29@unnamed@zNPCTypeBossSB2_cpp@Fv */
@@ -10126,6 +10128,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 8015FF54 0015CD54  D0 63 00 04 */	stfs f3, 4(r3)
 /* 8015FF58 0015CD58  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8015FF5C 0015CD5C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026F2A0:
 	.incbin "baserom.dol", 0x26C280, 0xC0

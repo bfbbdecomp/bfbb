@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800CC5E8 - 0x800CF34C
 
 .global iSGStartup__Fv
@@ -3345,6 +3347,9 @@ lbl_800CF33C:
 /* 800CF340 000CC140  7C 08 03 A6 */	mtlr r0
 /* 800CF344 000CC144  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CF348 000CC148  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802601B8:
 	.incbin "baserom.dol", 0x25D198, 0x28

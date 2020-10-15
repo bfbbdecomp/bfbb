@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800CA920 - 0x800CAEEC
 
 .global iPadInit__Fv
@@ -381,8 +383,8 @@ iPadStopRumble__FP8_tagxPad:
 /* 800CAE74 000C7C74  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CAE78 000C7C78  4E 80 00 20 */	blr 
 
-.global lbl_800CAE7C
-lbl_800CAE7C:
+.global ipad_rename_me
+ipad_rename_me:
 /* 800CAE7C 000C7C7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CAE80 000C7C80  7C 08 02 A6 */	mflr r0
 /* 800CAE84 000C7C84  3C 80 80 3C */	lis r4, globals@ha
@@ -417,6 +419,8 @@ iPadStartRumble__FP8_tagxPadP11_tagxRumble:
 .global iPadKill__Fv
 iPadKill__Fv:
 /* 800CAEE8 000C7CE8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80292620:

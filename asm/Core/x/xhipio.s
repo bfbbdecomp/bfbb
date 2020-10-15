@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8002CF70 - 0x8002D98C
 
 .global get_HIPLFuncs__Fv
@@ -724,6 +726,8 @@ lbl_8002D968:
 /* 8002D980 0002A780  7C 08 03 A6 */	mtlr r0
 /* 8002D984 0002A784  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002D988 0002A788  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027D0A0:

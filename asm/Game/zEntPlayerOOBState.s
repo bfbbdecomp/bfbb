@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8011A9F0 - 0x8011D564
 
 /* set_camera__Q29oob_state32@unnamed@zEntPlayerOOBState_cpp@Fb */
@@ -3055,6 +3057,9 @@ normalize__5xVec2Fv:
 /* 8011D558 0011A358  4E 80 00 20 */	blr 
 /* 8011D55C 0011A35C  4E 80 00 20 */	blr 
 /* 8011D560 0011A360  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026B268:
 	.incbin "baserom.dol", 0x268248, 0x1C4

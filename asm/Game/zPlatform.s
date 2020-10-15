@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800A8EC8 - 0x800AC8A0
 
-lbl_800A8EC8:
+func_800A8EC8:
 /* 800A8EC8 000A5CC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8ECC 000A5CCC  7C 08 02 A6 */	mflr r0
 /* 800A8ED0 000A5CD0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -65,11 +67,11 @@ lbl_800A8F88:
 /* 800A8F98 000A5D98  90 1E 00 34 */	stw r0, 0x34(r30)
 /* 800A8F9C 000A5D9C  38 03 B7 60 */	addi r0, r3, lbl_800AB760@l
 /* 800A8FA0 000A5DA0  3C 80 80 0B */	lis r4, lbl_800ABAF4@ha
-/* 800A8FA4 000A5DA4  3C 60 80 0B */	lis r3, lbl_800A8EC8@ha
+/* 800A8FA4 000A5DA4  3C 60 80 0B */	lis r3, func_800A8EC8@ha
 /* 800A8FA8 000A5DA8  90 1E 00 40 */	stw r0, 0x40(r30)
 /* 800A8FAC 000A5DAC  38 05 BC 04 */	addi r0, r5, lbl_800ABC04@l
 /* 800A8FB0 000A5DB0  38 84 BA F4 */	addi r4, r4, lbl_800ABAF4@l
-/* 800A8FB4 000A5DB4  38 63 8E C8 */	addi r3, r3, lbl_800A8EC8@l
+/* 800A8FB4 000A5DB4  38 63 8E C8 */	addi r3, r3, func_800A8EC8@l
 /* 800A8FB8 000A5DB8  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 800A8FBC 000A5DBC  38 00 00 00 */	li r0, 0
 /* 800A8FC0 000A5DC0  90 9E 00 B0 */	stw r4, 0xb0(r30)
@@ -2870,9 +2872,9 @@ zPlatform_Shake__FP9zPlatformfff:
 /* 800AB80C 000A860C  48 00 00 58 */	b lbl_800AB864
 lbl_800AB810:
 /* 800AB810 000A8610  C0 22 94 34 */	lfs f1, lbl_803CDDB4-_SDA2_BASE_(r2)
-/* 800AB814 000A8614  3C 60 80 02 */	lis r3, lbl_8001FB5C@ha
+/* 800AB814 000A8614  3C 60 80 02 */	lis r3, xffx_rename_me@ha
 /* 800AB818 000A8618  FC 00 F0 50 */	fneg f0, f30
-/* 800AB81C 000A861C  38 03 FB 5C */	addi r0, r3, lbl_8001FB5C@l
+/* 800AB81C 000A861C  38 03 FB 5C */	addi r0, r3, xffx_rename_me@l
 /* 800AB820 000A8620  D0 3F 00 00 */	stfs f1, 0(r31)
 /* 800AB824 000A8624  7F C3 F3 78 */	mr r3, r30
 /* 800AB828 000A8628  D0 1F 00 04 */	stfs f0, 4(r31)
@@ -2936,8 +2938,8 @@ lbl_800AB8F0:
 /* 800AB900 000A8700  38 84 00 14 */	addi r4, r4, 0x14
 /* 800AB904 000A8704  4B F5 F7 8D */	bl xVec3SMul__FP5xVec3PC5xVec3f
 /* 800AB908 000A8708  D3 FF 00 0C */	stfs f31, 0xc(r31)
-/* 800AB90C 000A870C  3C 60 80 02 */	lis r3, lbl_8001FB5C@ha
-/* 800AB910 000A8710  38 03 FB 5C */	addi r0, r3, lbl_8001FB5C@l
+/* 800AB90C 000A870C  3C 60 80 02 */	lis r3, xffx_rename_me@ha
+/* 800AB910 000A8710  38 03 FB 5C */	addi r0, r3, xffx_rename_me@l
 /* 800AB914 000A8714  7F A3 EB 78 */	mr r3, r29
 /* 800AB918 000A8718  C0 02 94 30 */	lfs f0, lbl_803CDDB0-_SDA2_BASE_(r2)
 /* 800AB91C 000A871C  7F C4 F3 78 */	mr r4, r30
@@ -3933,15 +3935,15 @@ lbl_800AC700:
 /* 800AC71C 000A951C  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800AC720 000A9520  4C 40 13 82 */	cror 2, 0, 2
 /* 800AC724 000A9524  40 82 00 18 */	bne lbl_800AC73C
-/* 800AC728 000A9528  3C A0 80 14 */	lis r5, lbl_8013A750@ha
+/* 800AC728 000A9528  3C A0 80 14 */	lis r5, xUpdateCull_AlwaysTrueCB__FPvPv@ha
 /* 800AC72C 000A952C  38 C0 00 00 */	li r6, 0
-/* 800AC730 000A9530  38 A5 A7 50 */	addi r5, r5, lbl_8013A750@l
+/* 800AC730 000A9530  38 A5 A7 50 */	addi r5, r5, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 800AC734 000A9534  48 08 E7 75 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
 /* 800AC738 000A9538  48 00 01 00 */	b lbl_800AC838
 lbl_800AC73C:
 /* 800AC73C 000A953C  EC 01 00 72 */	fmuls f0, f1, f1
-/* 800AC740 000A9540  3C A0 80 14 */	lis r5, lbl_8013A758@ha
-/* 800AC744 000A9544  38 A5 A7 58 */	addi r5, r5, lbl_8013A758@l
+/* 800AC740 000A9540  3C A0 80 14 */	lis r5, xUpdateCull_DistanceSquaredCB__FPvPv@ha
+/* 800AC744 000A9544  38 A5 A7 58 */	addi r5, r5, xUpdateCull_DistanceSquaredCB__FPvPv@l
 /* 800AC748 000A9548  D0 01 00 08 */	stfs f0, 8(r1)
 /* 800AC74C 000A954C  80 C1 00 08 */	lwz r6, 8(r1)
 /* 800AC750 000A9550  48 08 E7 59 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
@@ -4039,6 +4041,9 @@ lbl_800AC894:
 lbl_800AC898:
 /* 800AC898 000A9698  D0 43 00 18 */	stfs f2, 0x18(r3)
 /* 800AC89C 000A969C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025E7F0:
 	.incbin "baserom.dol", 0x25B7D0, 0x90

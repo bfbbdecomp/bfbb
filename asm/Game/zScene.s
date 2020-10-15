@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800B0A28 - 0x800B5228
 
 /* count_dynamic_types__20@unnamed@zScene_cpp@FPCc */
@@ -1262,13 +1264,13 @@ lbl_800B1BF8:
 /* 800B1C48 000AEA48  4B FF F9 1D */	bl PipeForAllSceneModels__FPFP8RpAtomicUiUi_v
 lbl_800B1C4C:
 /* 800B1C4C 000AEA4C  48 07 47 C5 */	bl xModelBucket_PreCountReset__Fv
-/* 800B1C50 000AEA50  3C 60 80 12 */	lis r3, lbl_8012643C@ha
-/* 800B1C54 000AEA54  38 63 64 3C */	addi r3, r3, lbl_8012643C@l
+/* 800B1C50 000AEA50  3C 60 80 12 */	lis r3, xModelBucket_PreCountBucket__FP8RpAtomicUiUi@ha
+/* 800B1C54 000AEA54  38 63 64 3C */	addi r3, r3, xModelBucket_PreCountBucket__FP8RpAtomicUiUi@l
 /* 800B1C58 000AEA58  4B FF F9 0D */	bl PipeForAllSceneModels__FPFP8RpAtomicUiUi_v
 /* 800B1C5C 000AEA5C  38 60 01 00 */	li r3, 0x100
 /* 800B1C60 000AEA60  48 07 48 CD */	bl xModelBucket_PreCountAlloc__Fi
-/* 800B1C64 000AEA64  3C 60 80 12 */	lis r3, lbl_801267B8@ha
-/* 800B1C68 000AEA68  38 63 67 B8 */	addi r3, r3, lbl_801267B8@l
+/* 800B1C64 000AEA64  3C 60 80 12 */	lis r3, xModelBucket_InsertBucket__FP8RpAtomicUiUi@ha
+/* 800B1C68 000AEA68  38 63 67 B8 */	addi r3, r3, xModelBucket_InsertBucket__FP8RpAtomicUiUi@l
 /* 800B1C6C 000AEA6C  4B FF F8 F9 */	bl PipeForAllSceneModels__FPFP8RpAtomicUiUi_v
 /* 800B1C70 000AEA70  48 07 4D 89 */	bl xModelBucket_Init__Fv
 /* 800B1C74 000AEA74  48 00 03 F1 */	bl add_scene_tweaks__Fv
@@ -3517,11 +3519,11 @@ lbl_800B3CDC:
 /* 800B3CFC 000B0AFC  3C A0 80 0B */	lis r5, lbl_800B31F0@ha
 /* 800B3D00 000B0B00  90 79 06 30 */	stw r3, 0x630(r25)
 /* 800B3D04 000B0B04  38 C4 31 E0 */	addi r6, r4, lbl_800B31E0@l
-/* 800B3D08 000B0B08  3C 80 80 14 */	lis r4, lbl_8013A758@ha
+/* 800B3D08 000B0B08  3C 80 80 14 */	lis r4, xUpdateCull_DistanceSquaredCB__FPvPv@ha
 /* 800B3D0C 000B0B0C  38 05 31 F0 */	addi r0, r5, lbl_800B31F0@l
 /* 800B3D10 000B0B10  90 C3 00 24 */	stw r6, 0x24(r3)
 /* 800B3D14 000B0B14  7F 94 E3 78 */	mr r20, r28
-/* 800B3D18 000B0B18  3A E4 A7 58 */	addi r23, r4, lbl_8013A758@l
+/* 800B3D18 000B0B18  3A E4 A7 58 */	addi r23, r4, xUpdateCull_DistanceSquaredCB__FPvPv@l
 /* 800B3D1C 000B0B1C  3A A0 00 00 */	li r21, 0
 /* 800B3D20 000B0B20  80 79 06 30 */	lwz r3, 0x630(r25)
 /* 800B3D24 000B0B24  90 03 00 28 */	stw r0, 0x28(r3)
@@ -5068,6 +5070,9 @@ xQuickCullInit__FPC4xBox:
 /* 800B521C 000B201C  7C 08 03 A6 */	mtlr r0
 /* 800B5220 000B2020  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B5224 000B2024  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025EF60:
 	.incbin "baserom.dol", 0x25BF40, 0x118

@@ -9,6 +9,8 @@ lbl_80252128:
 lbl_80252134:
 	.incbin "baserom.dol", 0x24F114, 0xC
 
+.if 0
+
 .section .text  # 0x8000F058 - 0x800159D4
 
 .global xCollideGetCollsIdx__FPC7xCollisPC5xVec3PC7xMat3x3
@@ -7335,6 +7337,8 @@ __ami__5xVec2FRC5xVec2:
 /* 800159C8 000127C8  EC 01 00 28 */	fsubs f0, f1, f0
 /* 800159CC 000127CC  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800159D0 000127D0  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 .balign 8

@@ -9,6 +9,8 @@ lbl_80254E00:
 lbl_80254E10:
 	.incbin "baserom.dol", 0x251DF0, 0x200
 
+.if 0
+
 .section .text  # 0x800534E4 - 0x80054200
 
 .global zDispatcher_Startup__Fv
@@ -991,6 +993,8 @@ lbl_800541C4:
 /* 800541F4 00050FF4  7C 08 03 A6 */	mtlr r0
 /* 800541F8 00050FF8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800541FC 00050FFC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8028C0F8:

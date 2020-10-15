@@ -976,15 +976,15 @@ lbl_8006172C:
 /* 80061748 0005E548  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8006174C 0005E54C  4C 40 13 82 */	cror 2, 0, 2
 /* 80061750 0005E550  40 82 00 18 */	bne lbl_80061768
-/* 80061754 0005E554  3C A0 80 14 */	lis r5, lbl_8013A750@ha
+/* 80061754 0005E554  3C A0 80 14 */	lis r5, xUpdateCull_AlwaysTrueCB__FPvPv@ha
 /* 80061758 0005E558  38 C0 00 00 */	li r6, 0
-/* 8006175C 0005E55C  38 A5 A7 50 */	addi r5, r5, lbl_8013A750@l
+/* 8006175C 0005E55C  38 A5 A7 50 */	addi r5, r5, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 80061760 0005E560  48 0D 97 49 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
 /* 80061764 0005E564  48 00 00 8C */	b lbl_800617F0
 lbl_80061768:
 /* 80061768 0005E568  EC 01 00 72 */	fmuls f0, f1, f1
-/* 8006176C 0005E56C  3C A0 80 14 */	lis r5, lbl_8013A758@ha
-/* 80061770 0005E570  38 A5 A7 58 */	addi r5, r5, lbl_8013A758@l
+/* 8006176C 0005E56C  3C A0 80 14 */	lis r5, xUpdateCull_DistanceSquaredCB__FPvPv@ha
+/* 80061770 0005E570  38 A5 A7 58 */	addi r5, r5, xUpdateCull_DistanceSquaredCB__FPvPv@l
 /* 80061774 0005E574  D0 01 00 08 */	stfs f0, 8(r1)
 /* 80061778 0005E578  80 C1 00 08 */	lwz r6, 8(r1)
 /* 8006177C 0005E57C  48 0D 97 2D */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8013D054 - 0x801465FC
 
 on_change_newsfish__FRC10tweak_info:
@@ -10049,6 +10051,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 Name__21zNPCGoalBossSandyLeapFv:
 /* 801465F4 001433F4  38 60 00 00 */	li r3, 0
 /* 801465F8 001433F8  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026D0E8:
 	.incbin "baserom.dol", 0x26A0C8, 0x28

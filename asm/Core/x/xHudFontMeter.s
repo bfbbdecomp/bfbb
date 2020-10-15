@@ -9,6 +9,8 @@ lbl_80252F00:
 lbl_80252F10:
 	.incbin "baserom.dol", 0x24FEF0, 0x28
 
+.if 0
+
 .section .text  # 0x8002F008 - 0x8002F57C
 
 .global load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUl
@@ -392,6 +394,8 @@ render__5xfontCFPCcff:
 /* 8002F570 0002C370  7C 08 03 A6 */	mtlr r0
 /* 8002F574 0002C374  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002F578 0002C378  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027D640:

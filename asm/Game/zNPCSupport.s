@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8012DD64 - 0x801305FC
 
 .global NPCSupport_Startup__Fv
@@ -2939,6 +2941,9 @@ IsLocked__9NPCWidgetFv:
 /* 801305F0 0012D3F0  7C 00 1B 78 */	or r0, r0, r3
 /* 801305F4 0012D3F4  54 03 0F FE */	srwi r3, r0, 0x1f
 /* 801305F8 0012D3F8  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026C410:
 	.incbin "baserom.dol", 0x2693F0, 0x1E0

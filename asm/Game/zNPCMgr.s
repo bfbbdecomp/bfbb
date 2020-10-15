@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800EE2CC - 0x800EED74
 
 .global zNPCMgrSelf__Fv
@@ -755,8 +757,8 @@ lbl_800EECB0:
 /* 800EECBC 000EBABC  38 63 30 31 */	addi r3, r3, 0x4E543031@l
 /* 800EECC0 000EBAC0  4E 80 00 20 */	blr 
 
-.global lbl_800EECC4
-lbl_800EECC4:
+.global func_800EECC4
+func_800EECC4:
 /* 800EECC4 000EBAC4  80 04 00 00 */	lwz r0, 0(r4)
 /* 800EECC8 000EBAC8  7C 03 00 40 */	cmplw r3, r0
 /* 800EECCC 000EBACC  40 80 00 0C */	bge lbl_800EECD8
@@ -825,6 +827,8 @@ GetFactory__10xBehaveMgrFv:
 RenderExtra__10zNPCCommonFv:
 /* 800EED6C 000EBB6C  4E 80 00 20 */	blr 
 /* 800EED70 000EBB70  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80294374:

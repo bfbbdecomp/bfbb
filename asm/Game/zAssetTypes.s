@@ -9,6 +9,8 @@ lbl_80254398:
 lbl_802543A4:
 	.incbin "baserom.dol", 0x251384, 0x3FC
 
+.if 0
+
 .section .text  # 0x8004EBEC - 0x8004FBFC
 
 .global zAssetStartup__Fv
@@ -1150,6 +1152,8 @@ xSndPlay3D__FUiffUiUiP4xEntf14sound_categoryf:
 /* 8004FBF0 0004C9F0  7C 08 03 A6 */	mtlr r0
 /* 8004FBF4 0004C9F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FBF8 0004C9F8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8028A808:

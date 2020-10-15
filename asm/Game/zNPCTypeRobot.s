@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800F4A6C - 0x80102C2C
 
 .global ZNPC_Robot_Startup__Fv
@@ -15589,6 +15591,9 @@ NumNodes__10zMovePointFv:
 /* 80102C20 000FFA20  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80102C24 000FFA24  A0 63 00 1A */	lhz r3, 0x1a(r3)
 /* 80102C28 000FFA28  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80269280:
 	.incbin "baserom.dol", 0x266260, 0x148

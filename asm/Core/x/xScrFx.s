@@ -6,6 +6,8 @@
 lbl_80253E68:
 	.incbin "baserom.dol", 0x250E48, 0x20
 
+.if 0
+
 .section .text  # 0x80041920 - 0x80042D6C
 
 .global xScrFxInit__Fv
@@ -1433,6 +1435,8 @@ __as__18DistortionParticleFRC18DistortionParticle:
 /* 80042D60 0003FB60  90 03 00 28 */	stw r0, 0x28(r3)
 /* 80042D64 0003FB64  D0 03 00 2C */	stfs f0, 0x2c(r3)
 /* 80042D68 0003FB68  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802C89F0:

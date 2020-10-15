@@ -11,6 +11,8 @@ lbl_80252158:
 lbl_80252168:
 	.incbin "baserom.dol", 0x24F148, 0x20
 
+.if 0
+
 .section .text  # 0x80015EA4 - 0x80017D3C
 
 .global xCutscene_Init__FPv
@@ -2155,6 +2157,8 @@ xVec3Lerp__FP5xVec3PC5xVec3PC5xVec3f:
 /* 80017D30 00014B30  4E 80 00 20 */	blr 
 /* 80017D34 00014B34  4E 80 00 20 */	blr 
 /* 80017D38 00014B38  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027B418:

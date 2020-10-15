@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80154DD8 - 0x80156D98
 
 .global ZNPC_AnimTable_BossSB1__Fv
@@ -2124,6 +2126,9 @@ lbl_80156D44:
 /* 80156D8C 00153B8C  7C 08 03 A6 */	mtlr r0
 /* 80156D90 00153B90  38 21 00 30 */	addi r1, r1, 0x30
 /* 80156D94 00153B94  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026F1E0:
 	.incbin "baserom.dol", 0x26C1C0, 0x2C

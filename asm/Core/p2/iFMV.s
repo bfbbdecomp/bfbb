@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C3998 - 0x800C477C
 
 .global iFMVmalloc__FUl
@@ -892,12 +894,12 @@ lbl_800C4674:
 /* 800C467C 000C147C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C4680 000C1480  4E 80 00 20 */	blr 
 
-.global lbl_800C4684
-lbl_800C4684:
+.global iFMV_rename_me_1
+iFMV_rename_me_1:
 /* 800C4684 000C1484  4E 80 00 20 */	blr 
 
-.global lbl_800C4688
-lbl_800C4688:
+.global iFMV_rename_me_2
+iFMV_rename_me_2:
 /* 800C4688 000C1488  4E 80 00 20 */	blr 
 
 xDrawLine2D_LocaliFMVVersion__Fffff:
@@ -961,6 +963,8 @@ xDrawLine2D_LocaliFMVVersion__Fffff:
 /* 800C4770 000C1570  7C 08 03 A6 */	mtlr r0
 /* 800C4774 000C1574  38 21 00 70 */	addi r1, r1, 0x70
 /* 800C4778 000C1578  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802FBE80:

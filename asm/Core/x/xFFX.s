@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8001F8BC - 0x8001FDBC
 
 .global xFFXPoolInit__FUi
@@ -211,8 +213,8 @@ lbl_8001FB4C:
 /* 8001FB54 0001C954  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FB58 0001C958  4E 80 00 20 */	blr 
 
-.global lbl_8001FB5C
-lbl_8001FB5C:
+.global xffx_rename_me
+xffx_rename_me:
 /* 8001FB5C 0001C95C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8001FB60 0001C960  7C 08 02 A6 */	mflr r0
 /* 8001FB64 0001C964  90 01 00 44 */	stw r0, 0x44(r1)
@@ -389,6 +391,8 @@ lbl_8001FDB0:
 /* 8001FDB0 0001CBB0  80 03 00 40 */	lwz r0, 0x40(r3)
 /* 8001FDB4 0001CBB4  90 0D 89 08 */	stw r0, lbl_803CB208-_SDA_BASE_(r13)
 /* 8001FDB8 0001CBB8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 .balign 8

@@ -128,3 +128,4 @@ $(OBJ_DIR)/%.o: %.cpp
 	$(GLBLASM) $*.cp
 	$(CC) $(CFLAGS) -c -o $@ $*.cp
 	$(CC) -S -o $*.asm $@
+	@$(PPROC) $(PPROCFLAGS) $@

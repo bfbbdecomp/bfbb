@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801465FC - 0x8014EC7C
 
 /* init_sound__31@unnamed@zNPCTypeKingJelly_cpp@Fv */
@@ -9339,6 +9341,9 @@ lbl_8014EC5C:
 /* 8014EC70 0014BA70  7C 08 03 A6 */	mtlr r0
 /* 8014EC74 0014BA74  38 21 00 30 */	addi r1, r1, 0x30
 /* 8014EC78 0014BA78  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026D820:
 	.incbin "baserom.dol", 0x26A800, 0x10

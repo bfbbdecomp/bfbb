@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800974A8 - 0x80099680
 
 PickNextSoak__Fv:
@@ -2370,6 +2372,9 @@ xDrawBegin__Fv:
 /* 80099674 00096474  7C 08 03 A6 */	mtlr r0
 /* 80099678 00096478  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009967C 0009647C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025BE78:
 	.incbin "baserom.dol", 0x258E58, 0x10

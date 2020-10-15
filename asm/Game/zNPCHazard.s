@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80187630 - 0x8018FDC4
 
 .global zNPCHazard_Startup__Fv
@@ -9444,6 +9446,9 @@ xVec2Length2__FPC5xVec2:
 /* 8018FDB8 0018CBB8  7C 08 03 A6 */	mtlr r0
 /* 8018FDBC 0018CBBC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8018FDC0 0018CBC0  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802734B8:
 	.incbin "baserom.dol", 0x270498, 0x148

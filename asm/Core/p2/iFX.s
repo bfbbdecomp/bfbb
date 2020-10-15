@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C477C - 0x800C4AF4
 
-lbl_800C477C:
+ifx_rename_me_1:
 /* 800C477C 000C157C  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800C4780 000C1580  7C 08 02 A6 */	mflr r0
 /* 800C4784 000C1584  90 01 00 74 */	stw r0, 0x74(r1)
@@ -227,8 +229,8 @@ iFXanimUVCreatePipe__Fv:
 /* 800C4AAC 000C18AC  38 A0 00 00 */	li r5, 0
 /* 800C4AB0 000C18B0  38 C0 00 00 */	li r6, 0
 /* 800C4AB4 000C18B4  48 18 99 3D */	bl RxPipelineFindNodeByName
-/* 800C4AB8 000C18B8  3C 80 80 0C */	lis r4, lbl_800C477C@ha
-/* 800C4ABC 000C18BC  38 84 47 7C */	addi r4, r4, lbl_800C477C@l
+/* 800C4AB8 000C18B8  3C 80 80 0C */	lis r4, ifx_rename_me_1@ha
+/* 800C4ABC 000C18BC  38 84 47 7C */	addi r4, r4, ifx_rename_me_1@l
 /* 800C4AC0 000C18C0  48 15 AC 79 */	bl RxGameCubeAllInOneSetRenderCallBack
 /* 800C4AC4 000C18C4  7F E3 FB 78 */	mr r3, r31
 /* 800C4AC8 000C18C8  48 00 00 14 */	b lbl_800C4ADC
@@ -245,6 +247,9 @@ lbl_800C4ADC:
 /* 800C4AE8 000C18E8  7C 08 03 A6 */	mtlr r0
 /* 800C4AEC 000C18EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C4AF0 000C18F0  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80260148:
 	.incbin "baserom.dol", 0x25D128, 0x30

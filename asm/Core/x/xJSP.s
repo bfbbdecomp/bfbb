@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80122C04 - 0x80123228
 
-lbl_80122C04:
+CountAtomicCB__FP8RpAtomicPv:
 /* 80122C04 0011FA04  80 AD 95 3C */	lwz r5, lbl_803CBE3C-_SDA_BASE_(r13)
 /* 80122C08 0011FA08  38 05 00 01 */	addi r0, r5, 1
 /* 80122C0C 0011FA0C  90 0D 95 3C */	stw r0, lbl_803CBE3C-_SDA_BASE_(r13)
@@ -232,9 +234,9 @@ lbl_80122F54:
 /* 80122F58 0011FD58  28 00 00 00 */	cmplwi r0, 0
 /* 80122F5C 0011FD5C  40 82 00 78 */	bne lbl_80122FD4
 /* 80122F60 0011FD60  38 00 00 00 */	li r0, 0
-/* 80122F64 0011FD64  3C 60 80 12 */	lis r3, lbl_80122C04@ha
+/* 80122F64 0011FD64  3C 60 80 12 */	lis r3, CountAtomicCB__FP8RpAtomicPv@ha
 /* 80122F68 0011FD68  90 1D 00 18 */	stw r0, 0x18(r29)
-/* 80122F6C 0011FD6C  38 83 2C 04 */	addi r4, r3, lbl_80122C04@l
+/* 80122F6C 0011FD6C  38 83 2C 04 */	addi r4, r3, CountAtomicCB__FP8RpAtomicPv@l
 /* 80122F70 0011FD70  38 BD 00 18 */	addi r5, r29, 0x18
 /* 80122F74 0011FD74  90 0D 95 3C */	stw r0, lbl_803CBE3C-_SDA_BASE_(r13)
 /* 80122F78 0011FD78  80 7D 00 0C */	lwz r3, 0xc(r29)
@@ -423,6 +425,8 @@ lbl_801231FC:
 /* 8012321C 0012001C  7C 08 03 A6 */	mtlr r0
 /* 80123220 00120020  38 21 00 20 */	addi r1, r1, 0x20
 /* 80123224 00120024  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CBE38:

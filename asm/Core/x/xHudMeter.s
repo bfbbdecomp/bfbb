@@ -6,6 +6,8 @@
 lbl_80252F38:
 	.incbin "baserom.dol", 0x24FF18, 0x30
 
+.if 0
+
 .section .text  # 0x8002F57C - 0x8002FC88
 
 /* add_global_tweaks__Q24xhud23@unnamed@xHudMeter_cpp@Fv */
@@ -523,6 +525,8 @@ type_name__Q24xhud11meter_assetFv:
 /* 8002FC7C 0002CA7C  7C 08 03 A6 */	mtlr r0
 /* 8002FC80 0002CA80  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002FC84 0002CA84  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB2B0:

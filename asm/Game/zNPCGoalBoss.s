@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8014EC7C - 0x8014F76C
 
 .global GOALCreate_Boss__FiP10RyzMemGrowPv
@@ -814,6 +816,8 @@ __ct__13zNPCGoalExistFi:
 /* 8014F760 0014C560  7C 08 03 A6 */	mtlr r0
 /* 8014F764 0014C564  38 21 00 10 */	addi r1, r1, 0x10
 /* 8014F768 0014C568  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8029A138:

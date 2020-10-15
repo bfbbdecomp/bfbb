@@ -1,9 +1,11 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8002CAA0 - 0x8002CF70
 
-.global lbl_8002CAA0
-lbl_8002CAA0:
+.global xgroup_rename_me
+xgroup_rename_me:
 /* 8002CAA0 000298A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002CAA4 000298A4  7C 08 02 A6 */	mflr r0
 /* 8002CAA8 000298A8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -377,3 +379,6 @@ lbl_8002CF44:
 /* 8002CF64 00029D64  90 03 00 18 */	stw r0, 0x18(r3)
 /* 8002CF68 00029D68  7C A3 2B 78 */	mr r3, r5
 /* 8002CF6C 00029D6C  4E 80 00 20 */	blr 
+
+.endif
+

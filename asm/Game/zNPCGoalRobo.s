@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800D92AC - 0x800ECBFC
 
 .global GOALCreate_Robotic__FiP10RyzMemGrowPv
@@ -21785,6 +21787,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 800ECBF0 000E99F0  D0 63 00 04 */	stfs f3, 4(r3)
 /* 800ECBF4 000E99F4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800ECBF8 000E99F8  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802670B0:
 	.incbin "baserom.dol", 0x264090, 0x154

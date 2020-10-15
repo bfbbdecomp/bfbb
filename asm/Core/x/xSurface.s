@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8004D054 - 0x8004D1F0
 
 .global xSurfaceInit__FUs
@@ -136,6 +138,8 @@ xSurfaceGetByIdx__FUs:
 lbl_8004D1E8:
 /* 8004D1E8 00049FE8  38 60 00 00 */	li r3, 0
 /* 8004D1EC 00049FEC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB410:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80168A94 - 0x8017047C
 
 /* get_player_loc__34@unnamed@zNPCTypeBossPlankton_cpp@Fv */
@@ -1001,11 +1003,11 @@ __ct__13zNPCBPlanktonFi:
 /* 80169990 00166790  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80169994 00166794  7C 08 02 A6 */	mflr r0
 /* 80169998 00166798  3C 80 80 3C */	lis r4, globals@ha
-/* 8016999C 0016679C  3C A0 80 14 */	lis r5, lbl_8013A750@ha
+/* 8016999C 0016679C  3C A0 80 14 */	lis r5, xUpdateCull_AlwaysTrueCB__FPvPv@ha
 /* 801699A0 001667A0  90 01 00 14 */	stw r0, 0x14(r1)
 /* 801699A4 001667A4  38 C4 05 58 */	addi r6, r4, globals@l
 /* 801699A8 001667A8  7C 64 1B 78 */	mr r4, r3
-/* 801699AC 001667AC  38 A5 A7 50 */	addi r5, r5, lbl_8013A750@l
+/* 801699AC 001667AC  38 A5 A7 50 */	addi r5, r5, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 801699B0 001667B0  80 66 06 30 */	lwz r3, 0x630(r6)
 /* 801699B4 001667B4  38 C0 00 00 */	li r6, 0
 /* 801699B8 001667B8  4B FD 14 F1 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
@@ -8432,6 +8434,8 @@ lbl_80170444:
 /* 80170470 0016D270  7C 08 03 A6 */	mtlr r0
 /* 80170474 0016D274  38 21 00 40 */	addi r1, r1, 0x40
 /* 80170478 0016D278  4E 80 00 20 */	blr 
+
+.endif
 
 .section .rodata
 lbl_80270FA8:

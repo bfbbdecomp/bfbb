@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8010EED8 - 0x8010F150
 
 lbl_8010EED8:
@@ -185,6 +187,8 @@ lbl_8010F130:
 /* 8010F144 0010BF44  7C 08 03 A6 */	mtlr r0
 /* 8010F148 0010BF48  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010F14C 0010BF4C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_80313728:

@@ -18,6 +18,8 @@ lbl_80253388:
 lbl_8025358C:
 	.incbin "baserom.dol", 0x25056C, 0xE4
 
+.if 0
+
 .section .text  # 0x800392A0 - 0x8003C498
 
 .global PKRGetReadFuncs__Fi
@@ -3611,6 +3613,8 @@ Name__19st_PACKER_ATOC_NODECFv:
 /* 8003C48C 0003928C  38 63 35 8C */	addi r3, r3, lbl_8025358C@l
 /* 8003C490 00039290  38 63 00 52 */	addi r3, r3, 0x52
 /* 8003C494 00039294  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027D8A8:

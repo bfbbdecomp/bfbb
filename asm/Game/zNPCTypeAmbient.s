@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801077A0 - 0x80109588
 
 .global ZNPC_Ambient_Startup__Fv
@@ -2095,6 +2097,9 @@ lbl_80109568:
 /* 8010957C 0010637C  7C 08 03 A6 */	mtlr r0
 /* 80109580 00106380  38 21 00 30 */	addi r1, r1, 0x30
 /* 80109584 00106384  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026A210:
 	.incbin "baserom.dol", 0x2671F0, 0x18

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8015FF60 - 0x80160144
 
 .global xJaw_FindData__FUi
@@ -138,6 +140,8 @@ lbl_80160120:
 /* 80160138 0015CF38  7C 08 03 A6 */	mtlr r0
 /* 8016013C 0015CF3C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80160140 0015CF40  4E 80 00 20 */	blr 
+
+.endif
 
 .section .rodata 
 /* SPECULATION: This seems to be located after zNPCTypeBossSB2 but before zNPCTypeBossPatrick */

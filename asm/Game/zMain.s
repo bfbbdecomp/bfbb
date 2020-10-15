@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800A26A0 - 0x800A6000
 
 .global func_800A26A0
@@ -3788,6 +3790,9 @@ lbl_800A5F98:
 .global iEnvStartup__Fv
 iEnvStartup__Fv:
 /* 800A5FFC 000A2DFC  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025D218:
 	.incbin "baserom.dol", 0x25A1F8, 0x10

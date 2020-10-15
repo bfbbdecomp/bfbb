@@ -36,6 +36,8 @@ g_Onez:
 g_IQ:
 	.incbin "baserom.dol", 0x250058, 0x10
 
+.if 0
+
 .section .text  # 0x800318B8 - 0x80033554
 
 .global xMath3Init__Fv
@@ -2039,6 +2041,8 @@ xQuatAdd__FP5xQuatPC5xQuatPC5xQuat:
 /* 80033548 00030348  7C 08 03 A6 */	mtlr r0
 /* 8003354C 0003034C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80033550 00030350  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027D6F0:

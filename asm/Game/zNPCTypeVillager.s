@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80102C2C - 0x801077A0
 
 .global ZNPC_Villager_Startup__Fv
@@ -3090,11 +3092,11 @@ lbl_80105808:
 /* 80105848 00102648  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010584C 0010264C  7C 08 02 A6 */	mflr r0
 /* 80105850 00102650  3C 80 80 3C */	lis r4, globals@ha
-/* 80105854 00102654  3C A0 80 14 */	lis r5, lbl_8013A750@ha
+/* 80105854 00102654  3C A0 80 14 */	lis r5, xUpdateCull_AlwaysTrueCB__FPvPv@ha
 /* 80105858 00102658  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8010585C 0010265C  38 C4 05 58 */	addi r6, r4, globals@l
 /* 80105860 00102660  7C 64 1B 78 */	mr r4, r3
-/* 80105864 00102664  38 A5 A7 50 */	addi r5, r5, lbl_8013A750@l
+/* 80105864 00102664  38 A5 A7 50 */	addi r5, r5, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 80105868 00102668  80 66 06 30 */	lwz r3, 0x630(r6)
 /* 8010586C 0010266C  38 C0 00 00 */	li r6, 0
 /* 80105870 00102670  48 03 56 39 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
@@ -5309,6 +5311,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80107794 00104594  D0 63 00 04 */	stfs f3, 4(r3)
 /* 80107798 00104598  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8010779C 0010459C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80269AC8:
 	.incbin "baserom.dol", 0x266AA8, 0x158

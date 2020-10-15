@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8013499C - 0x801352A4
 
 .global load__8ztaskboxFRCQ28ztaskbox10asset_type
@@ -695,6 +697,8 @@ lbl_80135238:
 /* 80135298 00132098  4E 80 00 20 */	blr 
 /* 8013529C 0013209C  90 83 00 08 */	stw r4, 8(r3)
 /* 801352A0 001320A0  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_803242E8:

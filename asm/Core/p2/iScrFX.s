@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800CF34C - 0x800CF92C
 
 .global iScrFxInit__Fv
@@ -439,6 +441,8 @@ lbl_800CF91C:
 /* 800CF920 000CC720  7C 08 03 A6 */	mtlr r0
 /* 800CF924 000CC724  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CF928 000CC728  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80292B00:

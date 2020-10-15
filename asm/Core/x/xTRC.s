@@ -9,6 +9,8 @@ lbl_80253F00:
 lbl_80253F10:
 	.incbin "baserom.dol", 0x250EF0, 0x3D0
 
+.if 0
+
 .section .text  # 0x8004D6AC - 0x8004DC48
 
 .global xTRCInit__Fv
@@ -421,6 +423,8 @@ expand__13basic_rect_esc__0_f_esc__1_Ff:
 /* 8004DC3C 0004AA3C  7C 08 03 A6 */	mtlr r0
 /* 8004DC40 0004AA40  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004DC44 0004AA44  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8028A2A8:
