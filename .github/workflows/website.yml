@@ -1,0 +1,46 @@
+name: Publish Website
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # by default it only checks out one commit... not what we want. 0 enables all
+          path: bfbbdecomp
+      - uses: actions/checkout@v2
+        with:
+          repository: mattbruv/bfbbdecomp-website
+          path: website
+      
+      - uses: actions/setup-node@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - run: |
+          pip install gitpython
+          npm install -g parcel-bundler
+          cd website
+          mkdir data
+          cd python
+          python progress.py
+          cd ../
+          npm install
+          npm run build-pages
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: website/dist # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+          SINGLE_COMMIT: true
