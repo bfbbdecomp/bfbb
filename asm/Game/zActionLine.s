@@ -6,6 +6,8 @@
 lbl_80254308:
 	.incbin "baserom.dol", 0x2512E8, 0x10
 
+.if 0
+
 .section .text  # 0x8004E510 - 0x8004E7E0
 
 .global zActionLineInit__Fv
@@ -205,6 +207,8 @@ lbl_8004E7B8:
 /* 8004E7D4 0004B5D4  7C 08 03 A6 */	mtlr r0
 /* 8004E7D8 0004B5D8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004E7DC 0004B5DC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802DB9A0:

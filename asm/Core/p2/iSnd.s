@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800CF92C - 0x800D30B4
 
-lbl_800CF92C:
+dv_callback__FPv:
 /* 800CF92C 000CC72C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CF930 000CC730  7C 08 02 A6 */	mflr r0
 /* 800CF934 000CC734  90 01 00 14 */	stw r0, 0x14(r1)
@@ -523,9 +525,9 @@ lbl_800D0034:
 lbl_800D00A4:
 /* 800D00A4 000CCEA4  7F E3 FB 78 */	mr r3, r31
 /* 800D00A8 000CCEA8  48 00 2E 15 */	bl iSndMyAXFree__FPP6_AXVPB
-/* 800D00AC 000CCEAC  3C 60 80 0D */	lis r3, lbl_800CF92C@ha
+/* 800D00AC 000CCEAC  3C 60 80 0D */	lis r3, dv_callback__FPv@ha
 /* 800D00B0 000CCEB0  7F A5 EB 78 */	mr r5, r29
-/* 800D00B4 000CCEB4  38 83 F9 2C */	addi r4, r3, lbl_800CF92C@l
+/* 800D00B4 000CCEB4  38 83 F9 2C */	addi r4, r3, dv_callback__FPv@l
 /* 800D00B8 000CCEB8  56 A3 E8 FE */	srwi r3, r21, 3
 /* 800D00BC 000CCEBC  48 0E 7F 9D */	bl AXAcquireVoice
 /* 800D00C0 000CCEC0  90 7F 00 00 */	stw r3, 0(r31)
@@ -2122,9 +2124,9 @@ lbl_800D16FC:
 /* 800D1738 000CE538  4B FF F7 C5 */	bl iSndStop__FUi
 lbl_800D173C:
 /* 800D173C 000CE53C  48 10 2B D5 */	bl OSDisableInterrupts
-/* 800D1740 000CE540  3C 80 80 0D */	lis r4, lbl_800CF92C@ha
+/* 800D1740 000CE540  3C 80 80 0D */	lis r4, dv_callback__FPv@ha
 /* 800D1744 000CE544  7C 7D 1B 78 */	mr r29, r3
-/* 800D1748 000CE548  38 84 F9 2C */	addi r4, r4, lbl_800CF92C@l
+/* 800D1748 000CE548  38 84 F9 2C */	addi r4, r4, dv_callback__FPv@l
 /* 800D174C 000CE54C  7F E5 FB 78 */	mr r5, r31
 /* 800D1750 000CE550  57 C3 E8 FE */	srwi r3, r30, 3
 /* 800D1754 000CE554  48 0E 69 05 */	bl AXAcquireVoice
@@ -2181,9 +2183,9 @@ lbl_800D17FC:
 /* 800D180C 000CE60C  28 00 00 00 */	cmplwi r0, 0
 /* 800D1810 000CE610  40 82 00 9C */	bne lbl_800D18AC
 /* 800D1814 000CE614  48 10 2A FD */	bl OSDisableInterrupts
-/* 800D1818 000CE618  3C 80 80 0D */	lis r4, lbl_800CF92C@ha
+/* 800D1818 000CE618  3C 80 80 0D */	lis r4, dv_callback__FPv@ha
 /* 800D181C 000CE61C  7C 7D 1B 78 */	mr r29, r3
-/* 800D1820 000CE620  38 84 F9 2C */	addi r4, r4, lbl_800CF92C@l
+/* 800D1820 000CE620  38 84 F9 2C */	addi r4, r4, dv_callback__FPv@l
 /* 800D1824 000CE624  7F E5 FB 78 */	mr r5, r31
 /* 800D1828 000CE628  57 C3 E8 FE */	srwi r3, r30, 3
 /* 800D182C 000CE62C  48 0E 68 2D */	bl AXAcquireVoice
@@ -2717,9 +2719,9 @@ lbl_800D1FF4:
 /* 800D1FF8 000CEDF8  40 82 00 08 */	bne lbl_800D2000
 /* 800D1FFC 000CEDFC  3B 40 00 01 */	li r26, 1
 lbl_800D2000:
-/* 800D2000 000CEE00  3C 80 80 0D */	lis r4, lbl_800CF92C@ha
+/* 800D2000 000CEE00  3C 80 80 0D */	lis r4, dv_callback__FPv@ha
 /* 800D2004 000CEE04  7F 43 D3 78 */	mr r3, r26
-/* 800D2008 000CEE08  38 84 F9 2C */	addi r4, r4, lbl_800CF92C@l
+/* 800D2008 000CEE08  38 84 F9 2C */	addi r4, r4, dv_callback__FPv@l
 /* 800D200C 000CEE0C  7F 65 DB 78 */	mr r5, r27
 /* 800D2010 000CEE10  48 0E 60 49 */	bl AXAcquireVoice
 /* 800D2014 000CEE14  90 7C 00 00 */	stw r3, 0(r28)
@@ -3715,8 +3717,8 @@ lbl_800D2DDC:
 /* 800D2DE8 000CFBE8  38 21 00 90 */	addi r1, r1, 0x90
 /* 800D2DEC 000CFBEC  4E 80 00 20 */	blr 
 
-.global lbl_800D2DF0
-lbl_800D2DF0:
+.global iSnd_rename_3
+iSnd_rename_3:
 /* 800D2DF0 000CFBF0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D2DF4 000CFBF4  7C 08 02 A6 */	mflr r0
 /* 800D2DF8 000CFBF8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3797,8 +3799,8 @@ lbl_800D2EEC:
 /* 800D2EF8 000CFCF8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D2EFC 000CFCFC  4E 80 00 20 */	blr 
 
-.global lbl_800D2F00
-lbl_800D2F00:
+.global iSnd_rename_1
+iSnd_rename_1:
 /* 800D2F00 000CFD00  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D2F04 000CFD04  7C 08 02 A6 */	mflr r0
 /* 800D2F08 000CFD08  38 60 00 00 */	li r3, 0
@@ -3841,8 +3843,8 @@ lbl_800D2F6C:
 /* 800D2F8C 000CFD8C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D2F90 000CFD90  4E 80 00 20 */	blr 
 
-.global lbl_800D2F94
-lbl_800D2F94:
+.global iSnd_rename_2
+iSnd_rename_2:
 /* 800D2F94 000CFD94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D2F98 000CFD98  7C 08 02 A6 */	mflr r0
 /* 800D2F9C 000CFD9C  3C 60 80 3D */	lis r3, streams@ha
@@ -3924,6 +3926,9 @@ lbl_800D30A4:
 /* 800D30A8 000CFEA8  42 00 FF B0 */	bdnz lbl_800D3058
 /* 800D30AC 000CFEAC  C0 22 98 18 */	lfs f1, lbl_803CE198-_SDA2_BASE_(r2)
 /* 800D30B0 000CFEB0  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802665E8:
 	.incbin "baserom.dol", 0x2635C8, 0x28

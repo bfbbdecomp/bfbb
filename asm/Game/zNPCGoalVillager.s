@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801365C8 - 0x80138CA0
 
 .global GOALCreate_Villager__FiP10RyzMemGrowPv
@@ -2709,6 +2711,9 @@ IndexInStack__7xPsycheCFPC5xGoal:
 /* 80138C94 00135A94  7C 08 03 A6 */	mtlr r0
 /* 80138C98 00135A98  38 21 00 10 */	addi r1, r1, 0x10
 /* 80138C9C 00135A9C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026CF48:
 	.incbin "baserom.dol", 0x269F28, 0xC

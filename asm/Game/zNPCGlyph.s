@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8018626C - 0x80187630
 
 .global zNPCGlyph_Startup__Fv
@@ -1419,6 +1421,9 @@ __ct__8NPCGlyphFv:
 __ct__8NPCGlyphF11en_npcglyph:
 /* 80187628 00184428  90 83 00 00 */	stw r4, 0(r3)
 /* 8018762C 0018442C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80273398:
 	.incbin "baserom.dol", 0x270378, 0xC

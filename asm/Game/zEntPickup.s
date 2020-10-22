@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800627CC - 0x80066210
 
 PickupFallPhysics__FP10zEntPickupP6xScenef:
@@ -4074,6 +4076,9 @@ xMat3x3MulRotC__FP7xMat3x3P7xMat3x3ffff:
 /* 80066204 00063004  7C 08 03 A6 */	mtlr r0
 /* 80066208 00063008  38 21 00 40 */	addi r1, r1, 0x40
 /* 8006620C 0006300C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80255EA8:
 	.incbin "baserom.dol", 0x252E88, 0x58

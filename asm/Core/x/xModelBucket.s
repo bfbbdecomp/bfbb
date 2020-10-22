@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801263C0 - 0x80127314
 
-lbl_801263C0:
+CmpAlphaBucket__FPCvPCv:
 /* 801263C0 001231C0  80 A3 00 10 */	lwz r5, 0x10(r3)
 /* 801263C4 001231C4  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 801263C8 001231C8  7C 05 00 40 */	cmplw r5, r0
@@ -42,8 +44,8 @@ xModelBucket_PreCountReset__Fv:
 /* 80126434 00123234  90 0D 95 AC */	stw r0, lbl_803CBEAC-_SDA_BASE_(r13)
 /* 80126438 00123238  4E 80 00 20 */	blr 
 
-.global lbl_8012643C
-lbl_8012643C:
+.global xModelBucket_PreCountBucket__FP8RpAtomicUiUi
+xModelBucket_PreCountBucket__FP8RpAtomicUiUi:
 /* 8012643C 0012323C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80126440 00123240  7C 08 02 A6 */	mflr r0
 /* 80126444 00123244  90 01 00 24 */	stw r0, 0x24(r1)
@@ -291,8 +293,8 @@ lbl_80126788:
 /* 801267B0 001235B0  38 21 00 30 */	addi r1, r1, 0x30
 /* 801267B4 001235B4  4E 80 00 20 */	blr 
 
-.global lbl_801267B8
-lbl_801267B8:
+.global xModelBucket_InsertBucket__FP8RpAtomicUiUi
+xModelBucket_InsertBucket__FP8RpAtomicUiUi:
 /* 801267B8 001235B8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801267BC 001235BC  7C 08 02 A6 */	mflr r0
 /* 801267C0 001235C0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -799,9 +801,9 @@ xModelBucket_RenderAlphaBegin__Fv:
 /* 80126EBC 00123CBC  80 8D 95 A0 */	lwz r4, lbl_803CBEA0-_SDA_BASE_(r13)
 /* 80126EC0 00123CC0  2C 04 00 00 */	cmpwi r4, 0
 /* 80126EC4 00123CC4  41 82 00 18 */	beq lbl_80126EDC
-/* 80126EC8 00123CC8  3C A0 80 12 */	lis r5, lbl_801263C0@ha
+/* 80126EC8 00123CC8  3C A0 80 12 */	lis r5, CmpAlphaBucket__FPCvPCv@ha
 /* 80126ECC 00123CCC  80 6D 95 AC */	lwz r3, lbl_803CBEAC-_SDA_BASE_(r13)
-/* 80126ED0 00123CD0  38 C5 63 C0 */	addi r6, r5, lbl_801263C0@l
+/* 80126ED0 00123CD0  38 C5 63 C0 */	addi r6, r5, CmpAlphaBucket__FPCvPCv@l
 /* 80126ED4 00123CD4  38 A0 00 14 */	li r5, 0x14
 /* 80126ED8 00123CD8  48 0B F1 9D */	bl qsort
 lbl_80126EDC:
@@ -1117,6 +1119,8 @@ lbl_801272E8:
 /* 80127308 00124108  7C 08 03 A6 */	mtlr r0
 /* 8012730C 0012410C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80127310 00124110  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CBE80:

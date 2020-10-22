@@ -6,9 +6,11 @@
 lbl_80254318:
 	.incbin "baserom.dol", 0x2512F8, 0x80
 
+.if 0
+
 .section .text  # 0x8004E7E0 - 0x8004EBEC
 
-lbl_8004E7E0:
+func_8004E7E0:
 /* 8004E7E0 0004B5E0  38 60 00 01 */	li r3, 1
 /* 8004E7E4 0004B5E4  4E 80 00 20 */	blr 
 
@@ -156,10 +158,10 @@ lbl_8004E980:
 /* 8004EA08 0004B808  3C 60 80 25 */	lis r3, lbl_80254318@ha
 /* 8004EA0C 0004B80C  90 01 00 08 */	stw r0, 8(r1)
 /* 8004EA10 0004B810  38 A3 43 18 */	addi r5, r3, lbl_80254318@l
-/* 8004EA14 0004B814  3C 80 80 05 */	lis r4, lbl_8004E7E0@ha
+/* 8004EA14 0004B814  3C 80 80 05 */	lis r4, func_8004E7E0@ha
 /* 8004EA18 0004B818  7E E3 BB 78 */	mr r3, r23
 /* 8004EA1C 0004B81C  90 01 00 0C */	stw r0, 0xc(r1)
-/* 8004EA20 0004B820  38 C4 E7 E0 */	addi r6, r4, lbl_8004E7E0@l
+/* 8004EA20 0004B820  38 C4 E7 E0 */	addi r6, r4, func_8004E7E0@l
 /* 8004EA24 0004B824  38 A5 00 79 */	addi r5, r5, 0x79
 /* 8004EA28 0004B828  38 E0 00 00 */	li r7, 0
 /* 8004EA2C 0004B82C  C0 22 87 F4 */	lfs f1, lbl_803CD174-_SDA2_BASE_(r2)
@@ -294,6 +296,8 @@ lbl_8004EBD8:
 lbl_8004EBE4:
 /* 8004EBE4 0004B9E4  38 60 00 00 */	li r3, 0
 /* 8004EBE8 0004B9E8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8028A7B8:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80109588 - 0x8010CE24
 
 .global ZNPC_Tiki_Startup__Fv
@@ -3909,6 +3911,9 @@ __ct__8zNPCTikiFi:
 /* 8010CE18 00109C18  4E 80 00 20 */	blr 
 /* 8010CE1C 00109C1C  38 60 00 00 */	li r3, 0
 /* 8010CE20 00109C20  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026A308:
 	.incbin "baserom.dol", 0x2672E8, 0x50

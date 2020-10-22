@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8017F5E0 - 0x80180038
 
 /* sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data */
@@ -747,6 +749,8 @@ lbl_80180018:
 /* 8018002C 0017CE2C  7C 08 03 A6 */	mtlr r0
 /* 80180030 0017CE30  38 21 00 20 */	addi r1, r1, 0x20
 /* 80180034 0017CE34  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8029B830:

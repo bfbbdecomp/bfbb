@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8017C2B4 - 0x8017C420
 
 .global xCurveAssetEvaluate__FPC11xCurveAssetf
@@ -101,6 +103,8 @@ lbl_8017C3AC:
 /* 8017C414 00179214  7C 08 03 A6 */	mtlr r0
 /* 8017C418 00179218  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017C41C 0017921C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CF760:

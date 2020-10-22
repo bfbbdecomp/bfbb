@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80190F80 - 0x80195428
 
 NCIN_Par_BPLANK_JET_1_Upd__FPC12zCutsceneMgrP9NCINEntryi:
@@ -4755,6 +4757,9 @@ KillAll__8NPARMgmtFv:
 singleton__9zNPCB_SB2Fv:
 /* 80195420 00192220  80 6D 96 F0 */	lwz r3, _singleton__9zNPCB_SB2-_SDA_BASE_(r13)
 /* 80195424 00192224  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80273B40:
 	.incbin "baserom.dol", 0x270B20, 0x148

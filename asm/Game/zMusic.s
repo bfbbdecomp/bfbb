@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800A6E9C - 0x800A7CC4
 
 volume_reset__Fv:
@@ -990,6 +992,9 @@ lbl_800A7CB4:
 /* 800A7CB8 000A4AB8  7C 08 03 A6 */	mtlr r0
 /* 800A7CBC 000A4ABC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A7CC0 000A4AC0  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025E588:
 	.incbin "baserom.dol", 0x25B568, 0x170

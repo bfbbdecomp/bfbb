@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80030C04 - 0x800318B8
 
 .global xMathInit__Fv
@@ -954,6 +956,8 @@ lbl_80031898:
 /* 800318AC 0002E6AC  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800318B0 0002E6B0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800318B4 0002E6B4  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB2D0:

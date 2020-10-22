@@ -1,13 +1,16 @@
 #ifndef XANIM_H
 #define XANIM_H
 
+#include <types.h>
+
+struct xAnimPlay;
+
 #include "xModel.h"
 #include "xMemMgr.h"
 #include "xMath3.h"
 #include "xVec3.h"
 
 struct xAnimState;
-struct xAnimPlay;
 struct xAnimFile;
 struct xAnimMultiFile;
 struct xAnimTransitionList;

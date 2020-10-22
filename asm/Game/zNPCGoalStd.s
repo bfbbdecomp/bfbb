@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800D5480 - 0x800D92AC
 
 .global GOALCreate_Standard__FiP10RyzMemGrowPv
@@ -4385,6 +4387,8 @@ lbl_800D929C:
 /* 800D92A0 000D60A0  90 03 00 04 */	stw r0, 4(r3)
 /* 800D92A4 000D60A4  90 03 00 08 */	stw r0, 8(r3)
 /* 800D92A8 000D60A8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CBC58:

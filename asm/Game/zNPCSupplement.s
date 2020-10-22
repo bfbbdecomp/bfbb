@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80180D54 - 0x8018626C
 
 .global NPCSupplement_Startup__Fv
@@ -5955,6 +5957,9 @@ lbl_80186258:
 /* 80186260 00183060  7C 08 03 A6 */	mtlr r0
 /* 80186264 00183064  38 21 00 10 */	addi r1, r1, 0x10
 /* 80186268 00183068  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80272EE0:
 	.incbin "baserom.dol", 0x26FEC0, 0x70

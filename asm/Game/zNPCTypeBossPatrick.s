@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80160144 - 0x80168A94
 
 .global ZNPC_AnimTable_BossPatrick__Fv
@@ -9248,6 +9250,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 .global xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi
 xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi:
 /* 80168A90 00165890  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802707F0:
 	.incbin "baserom.dol", 0x26D7D0, 0x5C

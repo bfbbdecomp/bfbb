@@ -9,6 +9,8 @@ lbl_80251D80:
 lbl_80251E00:
 	.incbin "baserom.dol", 0x24EDE0, 0x48
 
+.if 0
+
 .section .text  # 0x800058E0 - 0x80009400
 
 _xSingleCompare__Fcc:
@@ -4335,6 +4337,8 @@ lbl_800093F4:
 /* 800093F4 000061F4  C0 03 00 14 */	lfs f0, 0x14(r3)
 /* 800093F8 000061F8  EC 20 08 2A */	fadds f1, f0, f1
 /* 800093FC 000061FC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802B89E0:

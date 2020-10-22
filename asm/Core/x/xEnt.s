@@ -9,6 +9,8 @@ lbl_80252188:
 lbl_80252194:
 	.incbin "baserom.dol", 0x24F174, 0xEC
 
+.if 0
+
 .section .text  # 0x80018064 - 0x8001BB54
 
 /* reset__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt */
@@ -4285,6 +4287,8 @@ lbl_8001BB40:
 /* 8001BB48 00018948  90 03 00 04 */	stw r0, 4(r3)
 /* 8001BB4C 0001894C  90 03 00 08 */	stw r0, 8(r3)
 /* 8001BB50 00018950  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027B428:

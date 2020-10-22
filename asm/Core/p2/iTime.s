@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800D44F0 - 0x800D4A14
 
 .global iGetMinute__Fv
@@ -385,6 +387,8 @@ iFuncProfileDump__Fv:
 .global iFuncProfileParse__FPci
 iFuncProfileParse__FPci:
 /* 800D4A10 000D1810  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CBC48:

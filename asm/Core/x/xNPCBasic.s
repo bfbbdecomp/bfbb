@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8010F82C - 0x801102B8
 
 .global Init__9xNPCBasicFP9xEntAsset
@@ -754,6 +756,9 @@ DBG_HaltOnMe__9xNPCBasicFUiPc:
 /* 801102AC 0010D0AC  7C 08 03 A6 */	mtlr r0
 /* 801102B0 0010D0B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801102B4 0010D0B4  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026A3F8:
 	.incbin "baserom.dol", 0x2673D8, 0x10

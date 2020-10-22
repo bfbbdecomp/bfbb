@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8000A528 - 0x8000B2B0
 
 .global xBoundUpdate__FP6xBound
@@ -1001,6 +1003,8 @@ xDrawOBB__FPC4xBoxPC7xMat4x3:
 .global xDrawSphere2__FPC7xSphereUi
 xDrawSphere2__FPC7xSphereUi:
 /* 8000B2AC 000080AC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027B380:

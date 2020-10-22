@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80123228 - 0x80123638
 
 .global xLightKit_Prepare__FPv
@@ -307,6 +309,8 @@ lbl_80123624:
 /* 8012362C 0012042C  7C 08 03 A6 */	mtlr r0
 /* 80123630 00120430  38 21 00 20 */	addi r1, r1, 0x20
 /* 80123634 00120434  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CEA40:

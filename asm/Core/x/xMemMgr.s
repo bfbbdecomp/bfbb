@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80033554 - 0x80033E2C
 
 .global xMemDebug_SoakLog__FPCc
@@ -660,3 +662,6 @@ lbl_80033E20:
 /* 80033E20 00030C20  7C C4 39 2E */	stwx r6, r4, r7
 /* 80033E24 00030C24  90 83 00 00 */	stw r4, 0(r3)
 /* 80033E28 00030C28  4E 80 00 20 */	blr 
+
+.endif
+

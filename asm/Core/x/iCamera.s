@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C0138 - 0x800C0D20
 
 .global iCameraCreate__Fiii
@@ -830,6 +832,8 @@ lbl_800C0D04:
 /* 800C0D14 000BDB14  7C 08 03 A6 */	mtlr r0
 /* 800C0D18 000BDB18  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C0D1C 000BDB1C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CBA84:

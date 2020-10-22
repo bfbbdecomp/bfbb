@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800BD1B0 - 0x800BE470
 
 var_text_ActivePad__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv:
@@ -1269,6 +1271,9 @@ lbl_800BE32C:
 /* 800BE464 000BB264  7C 08 03 A6 */	mtlr r0
 /* 800BE468 000BB268  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BE46C 000BB26C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025F9E8:
 	.incbin "baserom.dol", 0x25C9C8, 0x2C8

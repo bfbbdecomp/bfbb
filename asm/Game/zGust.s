@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8009AD50 - 0x8009B684
 
 zGustInit__FP5zGustP10zGustAsset:
@@ -187,8 +189,8 @@ lbl_8009AFAC:
 /* 8009AFAC 00097DAC  38 60 00 00 */	li r3, 0
 /* 8009AFB0 00097DB0  4E 80 00 20 */	blr 
 
-.global lbl_8009AFB4
-lbl_8009AFB4:
+.global func_8009AFB4
+func_8009AFB4:
 /* 8009AFB4 00097DB4  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 8009AFB8 00097DB8  7C 08 02 A6 */	mflr r0
 /* 8009AFBC 00097DBC  90 01 00 94 */	stw r0, 0x94(r1)
@@ -680,6 +682,9 @@ lbl_8009B65C:
 /* 8009B678 00098478  7C 08 03 A6 */	mtlr r0
 /* 8009B67C 0009847C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009B680 00098480  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025CB50:
 	.incbin "baserom.dol", 0x259B30, 0x28

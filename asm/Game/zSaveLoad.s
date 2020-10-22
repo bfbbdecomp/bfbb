@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800AD20C - 0x800B0A28
 
 .global zUpdateThumbIcon__Fv
@@ -4157,6 +4159,9 @@ LastGame__11XSGAutoDataFv:
 LastTarget__11XSGAutoDataFv:
 /* 800B0A20 000AD820  80 63 00 04 */	lwz r3, 4(r3)
 /* 800B0A24 000AD824  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025E880:
 	.incbin "baserom.dol", 0x25B860, 0x20

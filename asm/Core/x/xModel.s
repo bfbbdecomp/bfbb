@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80033E2C - 0x80035034
 
 .global xModelGetPipeFlags__FP8RpAtomic
@@ -1315,6 +1317,8 @@ lbl_80035024:
 /* 80035028 00031E28  7C 08 03 A6 */	mtlr r0
 /* 8003502C 00031E2C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035030 00031E30  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB2E8:

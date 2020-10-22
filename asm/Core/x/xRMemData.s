@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8010F150 - 0x8010F2D0
 
 .global __nw__10RyzMemDataFUliP10RyzMemGrow
@@ -121,3 +123,6 @@ IsEnabled__10RyzMemGrowFv:
 /* 8010F2C4 0010C0C4  80 03 00 00 */	lwz r0, 0(r3)
 /* 8010F2C8 0010C0C8  54 03 07 FE */	clrlwi r3, r0, 0x1f
 /* 8010F2CC 0010C0CC  4E 80 00 20 */	blr 
+
+.endif
+

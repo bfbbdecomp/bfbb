@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8003694C - 0x80036B8C
 
 .global xParMemInit__Fv
@@ -168,6 +170,8 @@ xParInit__FP4xPar:
 /* 80036B80 00033980  98 03 00 32 */	stb r0, 0x32(r3)
 /* 80036B84 00033984  98 03 00 33 */	stb r0, 0x33(r3)
 /* 80036B88 00033988  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CCF10:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80092B0C - 0x80092BEC
 
 .global zFeetGetIDs__Fv
@@ -62,6 +64,9 @@ lbl_80092BD0:
 /* 80092BE0 0008F9E0  7C 08 03 A6 */	mtlr r0
 /* 80092BE4 0008F9E4  38 21 01 20 */	addi r1, r1, 0x120
 /* 80092BE8 0008F9E8  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025B9D8:
 	.incbin "baserom.dol", 0x2589B8, 0x48

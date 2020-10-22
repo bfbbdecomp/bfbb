@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800B6928 - 0x800B96B8
 
 .global zThrown_Setup__FP6zScene
@@ -3195,6 +3197,9 @@ __as__Q29xEntDrive8tri_dataFRCQ29xEntDrive8tri_data:
 /* 800B96AC 000B64AC  7C 08 03 A6 */	mtlr r0
 /* 800B96B0 000B64B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B96B4 000B64B4  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025F590:
 	.incbin "baserom.dol", 0x25C570, 0x1B0

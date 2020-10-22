@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800A6BF8 - 0x800A6E9C
 
 .global zMovePoint_GetMemPool__Fi
@@ -221,6 +223,8 @@ zMovePointGetDelay__FPC10zMovePoint:
 xMovePointGetDelay__FPC10xMovePoint:
 /* 800A6E94 000A3C94  C0 23 00 28 */	lfs f1, 0x28(r3)
 /* 800A6E98 000A3C98  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB950:

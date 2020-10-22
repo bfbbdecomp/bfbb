@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C3300 - 0x800C3998
 
 .global iFileInit__Fv
@@ -508,6 +510,8 @@ lbl_800C3984:
 /* 800C398C 000C078C  80 03 00 DC */	lwz r0, 0xdc(r3)
 /* 800C3990 000C0790  90 05 00 00 */	stw r0, 0(r5)
 /* 800C3994 000C0794  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802FAE60:

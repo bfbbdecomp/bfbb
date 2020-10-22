@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801251BC - 0x801263C0
 
 .global ZNPC_Duplotron_Startup__Fv
@@ -1283,6 +1285,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 801263B4 001231B4  D0 63 00 04 */	stfs f3, 4(r3)
 /* 801263B8 001231B8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 801263BC 001231BC  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026C0C8:
 	.incbin "baserom.dol", 0x2690A8, 0x14

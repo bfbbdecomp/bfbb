@@ -9,6 +9,8 @@ lbl_80252280:
 lbl_8025228C:
 	.incbin "baserom.dol", 0x24F26C, 0x54C
 
+.if 0
+
 .section .text  # 0x8001C888 - 0x8001F438
 
 .global xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset
@@ -3122,6 +3124,8 @@ xDrawLine__FPC5xVec3PC5xVec3:
 .global xDrawSetColor__F10iColor_tag
 xDrawSetColor__F10iColor_tag:
 /* 8001F434 0001C234  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027B570:

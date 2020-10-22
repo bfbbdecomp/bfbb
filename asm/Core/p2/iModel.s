@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C78C4 - 0x800C9630
 
 GetChildFrameHierarchy__FP7RwFramePv:
@@ -2108,6 +2110,9 @@ lbl_800C95DC:
 /* 800C9624 000C6424  7C 08 03 A6 */	mtlr r0
 /* 800C9628 000C6428  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C962C 000C642C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80260178:
 	.incbin "baserom.dol", 0x25D158, 0x10

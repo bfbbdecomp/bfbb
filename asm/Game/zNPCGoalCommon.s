@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800D5114 - 0x800D5480
 
 .global Enter__14zNPCGoalCommonFfPv
@@ -264,3 +266,6 @@ Name__14zNPCGoalCommonFv:
 /* 800D5474 000D2274  4E 80 00 20 */	blr 
 /* 800D5478 000D2278  38 60 00 00 */	li r3, 0
 /* 800D547C 000D227C  4E 80 00 20 */	blr 
+
+.endif
+

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text 
 
 zVolumeInit__FP7zVolumeP12xVolumeAsset:
@@ -396,6 +398,8 @@ lbl_800BE9E4:
 /* 800BE9EC 000BB7EC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BE9F0 000BB7F0  4E 80 00 20 */	blr 
 
+
+.endif
 
 .section .sbss
 lbl_803CBA70:

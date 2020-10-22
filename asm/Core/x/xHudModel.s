@@ -6,6 +6,8 @@
 lbl_80252F68:
 	.incbin "baserom.dol", 0x24FF48, 0x28
 
+.if 0
+
 .section .text  # 0x8002FC88 - 0x8002FF80
 
 .global XHUD_AnimTable_Idle__Fv
@@ -219,6 +221,8 @@ type_name__Q24xhud11model_assetFv:
 /* 8002FF74 0002CD74  38 63 2F 68 */	addi r3, r3, lbl_80252F68@l
 /* 8002FF78 0002CD78  38 63 00 1B */	addi r3, r3, 0x1b
 /* 8002FF7C 0002CD7C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB2B8:

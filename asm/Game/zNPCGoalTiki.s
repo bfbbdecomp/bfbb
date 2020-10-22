@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800ECBFC - 0x800ED1E0
 
 .global GOALCreate_Tiki__FiP10RyzMemGrowPv
@@ -419,6 +421,8 @@ __ct__16zNPCGoalTikiIdleFi:
 /* 800ED1D4 000E9FD4  4E 80 00 20 */	blr 
 /* 800ED1D8 000E9FD8  4E 80 00 20 */	blr 
 /* 800ED1DC 000E9FDC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CE408:

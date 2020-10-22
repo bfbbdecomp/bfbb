@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80118A04 - 0x8011A940
 
 .global xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf
@@ -2128,6 +2130,9 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 8011A934 00117734  D0 63 00 04 */	stfs f3, 4(r3)
 /* 8011A938 00117738  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011A93C 0011773C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026B048:
 	.incbin "baserom.dol", 0x268028, 0x178

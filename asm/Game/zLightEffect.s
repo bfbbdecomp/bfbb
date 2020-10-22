@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8009E7F8 - 0x8009EC78
 
 .global zLightEffectSet__FP7_zLighti
@@ -312,6 +314,8 @@ lbl_8009EC08:
 /* 8009EC6C 0009BA6C  7C 08 03 A6 */	mtlr r0
 /* 8009EC70 0009BA70  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009EC74 0009BA74  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CDB60:

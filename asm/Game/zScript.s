@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800B5228 - 0x800B55F0
 
 .global zScriptInit__FPvPv
@@ -283,3 +285,6 @@ lbl_800B55D4:
 /* 800B55E4 000B23E4  7C 08 03 A6 */	mtlr r0
 /* 800B55E8 000B23E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800B55EC 000B23EC  4E 80 00 20 */	blr 
+
+.endif
+

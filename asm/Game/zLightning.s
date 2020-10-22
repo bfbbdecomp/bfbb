@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8009EC78 - 0x800A1D18
 
 lightningTweakChangeType__FRC10tweak_info:
@@ -3324,6 +3326,9 @@ xDebugAddSelectTweak__FPCcPUiPPCcPCUiUiPC14tweak_callbackPvUi:
 .global xDebugAddTweak__FPCcPsssPC14tweak_callbackPvUi
 xDebugAddTweak__FPCcPsssPC14tweak_callbackPvUi:
 /* 800A1D14 0009EB14  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025CD50:
 	.incbin "baserom.dol", 0x259D30, 0x4C8

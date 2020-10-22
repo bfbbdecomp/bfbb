@@ -6,6 +6,8 @@
 lbl_80253EA0:
 	.incbin "baserom.dol", 0x250E80, 0x18
 
+.if 0
+
 .section .text  # 0x80044778 - 0x800480B0
 
 .global xShadowInit__Fv
@@ -244,9 +246,9 @@ xShadowRenderWorld__FP5xVec3ff:
 /* 80044AB0 000418B0  FC 40 08 90 */	fmr f2, f1
 /* 80044AB4 000418B4  FC 60 08 90 */	fmr f3, f1
 /* 80044AB8 000418B8  4B FC A5 45 */	bl xVec3Init__FP5xVec3fff
-/* 80044ABC 000418BC  3C 60 80 04 */	lis r3, lbl_800401D8@ha
+/* 80044ABC 000418BC  3C 60 80 04 */	lis r3, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
 /* 80044AC0 000418C0  3C E0 80 3C */	lis r7, globals@ha
-/* 80044AC4 000418C4  3A 63 01 D8 */	addi r19, r3, lbl_800401D8@l
+/* 80044AC4 000418C4  3A 63 01 D8 */	addi r19, r3, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 80044AC8 000418C8  3C C0 80 3D */	lis r6, colls_grid@ha
 /* 80044ACC 000418CC  3C A0 80 3D */	lis r5, colls_oso_grid@ha
 /* 80044AD0 000418D0  3C 60 80 3D */	lis r3, npcs_grid@ha
@@ -3991,6 +3993,8 @@ xDrawSetColor__FUcUcUcUc:
 SQ__Ff:
 /* 800480A8 00044EA8  EC 21 00 72 */	fmuls f1, f1, f1
 /* 800480AC 00044EAC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802C8B00:

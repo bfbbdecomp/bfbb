@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80092D1C - 0x800974A8
 
-lbl_80092D1C:
+func_80092D1C:
 /* 80092D1C 0008FB1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80092D20 0008FB20  7C 08 02 A6 */	mflr r0
 /* 80092D24 0008FB24  90 01 00 14 */	stw r0, 0x14(r1)
@@ -32,9 +34,9 @@ zFX_SceneEnter__FP7RpWorld:
 /* 80092D78 0008FB78  88 0D 8E 8C */	lbz r0, lbl_803CB78C-_SDA_BASE_(r13)
 /* 80092D7C 0008FB7C  7C 00 07 75 */	extsb. r0, r0
 /* 80092D80 0008FB80  40 82 00 74 */	bne lbl_80092DF4
-/* 80092D84 0008FB84  3C 80 80 09 */	lis r4, lbl_80092D1C@ha
+/* 80092D84 0008FB84  3C 80 80 09 */	lis r4, func_80092D1C@ha
 /* 80092D88 0008FB88  38 61 00 08 */	addi r3, r1, 8
-/* 80092D8C 0008FB8C  38 84 2D 1C */	addi r4, r4, lbl_80092D1C@l
+/* 80092D8C 0008FB8C  38 84 2D 1C */	addi r4, r4, func_80092D1C@l
 /* 80092D90 0008FB90  48 00 45 25 */	bl create_change__14tweak_callbackFPFRC10tweak_info_v
 /* 80092D94 0008FB94  3C 60 80 29 */	lis r3, lbl_8028EFE0@ha
 /* 80092D98 0008FB98  81 81 00 08 */	lwz r12, 8(r1)
@@ -5079,6 +5081,9 @@ lbl_80097470:
 /* 8009749C 0009429C  EC 01 00 FA */	fmadds f0, f1, f3, f0
 /* 800974A0 000942A0  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800974A4 000942A4  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025BA30:
 	.incbin "baserom.dol", 0x258A10, 0xF8

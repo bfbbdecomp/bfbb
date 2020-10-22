@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800480B0 - 0x800499E4
 
 .global xSndInit__Fv
@@ -1874,6 +1876,8 @@ xSndGetVol__FUi:
 /* 800499D8 000467D8  7C 08 03 A6 */	mtlr r0
 /* 800499DC 000467DC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800499E0 000467E0  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80288CA0:

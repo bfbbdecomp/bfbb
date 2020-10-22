@@ -6,6 +6,8 @@
 lbl_802547B8:
 	.incbin "baserom.dol", 0x251798, 0x648
 
+.if 0
+
 .section .text  # 0x80052874 - 0x800534E4
 
 .global zCutsceneMgrInit__FPvPv
@@ -902,6 +904,8 @@ lbl_800534D8:
 /* 800534D8 000502D8  7C 04 28 40 */	cmplw r4, r5
 /* 800534DC 000502DC  40 82 FF DC */	bne lbl_800534B8
 /* 800534E0 000502E0  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8028B6B0:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8010E9B0 - 0x8010EB94
 
 .global SetPsyche__5xGoalFP7xPsyche
@@ -181,3 +183,6 @@ lbl_8010EB7C:
 GetClient__7xPsycheFv:
 /* 8010EB8C 0010B98C  80 63 00 00 */	lwz r3, 0(r3)
 /* 8010EB90 0010B990  4E 80 00 20 */	blr 
+
+.endif
+

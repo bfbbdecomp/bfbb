@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800A1D18 - 0x800A26A0
 
 AddToLODList__FP14xModelInstance:
@@ -691,6 +693,8 @@ lbl_800A267C:
 /* 800A2694 0009F494  7C 08 03 A6 */	mtlr r0
 /* 800A2698 0009F498  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A269C 0009F49C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802EA990:

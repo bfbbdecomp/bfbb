@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80092720 - 0x80092AF8
 
 .global zEnvInit__FPvPv
@@ -287,3 +289,6 @@ lbl_80092AE4:
 /* 80092AEC 0008F8EC  7C 08 03 A6 */	mtlr r0
 /* 80092AF0 0008F8F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80092AF4 0008F8F4  4E 80 00 20 */	blr 
+
+.endif
+

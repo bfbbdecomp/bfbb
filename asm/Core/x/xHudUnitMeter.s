@@ -6,6 +6,8 @@
 lbl_80252F90:
 	.incbin "baserom.dol", 0x24FF70, 0x28
 
+.if 0
+
 .section .text  # 0x8002FF80 - 0x80030640
 
 .global load__Q24xhud17unit_meter_widgetFR5xBaseR9xDynAssetUl
@@ -489,6 +491,8 @@ type_name__Q24xhud16unit_meter_assetFv:
 /* 80030634 0002D434  38 63 2F 90 */	addi r3, r3, lbl_80252F90@l
 /* 80030638 0002D438  38 63 00 19 */	addi r3, r3, 0x19
 /* 8003063C 0002D43C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CB2C0:

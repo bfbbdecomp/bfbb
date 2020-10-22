@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80195FE8 - 0x801B5350
 
 xCMprep__FP12xCreditsData:
@@ -610,6 +612,9 @@ lbl_80196870:
 /* 80196874 00193674  7C 08 03 A6 */	mtlr r0
 /* 80196878 00193678  38 21 00 10 */	addi r1, r1, 0x10
 /* 8019687C 0019367C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80274B38:
 	.incbin "baserom.dol", 0x271B18, 0x198

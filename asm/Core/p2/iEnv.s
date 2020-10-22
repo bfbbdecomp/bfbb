@@ -1,8 +1,10 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C2EAC - 0x800C3300
 
-lbl_800C2EAC:
+some_bullshit_function_rename_me:
 /* 800C2EAC 000BFCAC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C2EB0 000BFCB0  7C 08 02 A6 */	mflr r0
 /* 800C2EB4 000BFCB4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -323,6 +325,9 @@ lbl_800C32EC:
 /* 800C32F4 000C00F4  7C 08 03 A6 */	mtlr r0
 /* 800C32F8 000C00F8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C32FC 000C00FC  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80260130:
 	.incbin "baserom.dol", 0x25D110, 0x18

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800159D4 - 0x80015B3C
 
 .global xCollideFastInit__FP6xScene
@@ -106,6 +108,8 @@ lbl_80015B28:
 /* 80015B30 00012930  7C 08 03 A6 */	mtlr r0
 /* 80015B34 00012934  38 21 00 40 */	addi r1, r1, 0x40
 /* 80015B38 00012938  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CCAF8:

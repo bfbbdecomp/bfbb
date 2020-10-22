@@ -9,6 +9,8 @@ lbl_80253E88:
 lbl_80253E94:
 	.incbin "baserom.dol", 0x250E74, 0xC
 
+.if 0
+
 .section .text  # 0x80042D6C - 0x80043EB8
 
 .global xSerialStartup__FiP21st_SERIAL_PERCID_SIZE
@@ -1283,6 +1285,8 @@ lbl_80043EA8:
 /* 80043EAC 00040CAC  7C 08 03 A6 */	mtlr r0
 /* 80043EB0 00040CB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80043EB4 00040CB4  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80288B10:

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8010CE24 - 0x8010E9B0
 
 .global xBehaveMgr_Startup__Fv
@@ -2080,6 +2082,8 @@ ExpTranIsOn__7xPsycheFv:
 .global DBG_HistAdd__7xPsycheFi
 DBG_HistAdd__7xPsycheFi:
 /* 8010E9AC 0010B7AC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sbss
 lbl_803CBDE0:

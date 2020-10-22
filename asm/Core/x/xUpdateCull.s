@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8013A5D0 - 0x8013AF64
 
 xUpdateCull_Swap__FP14xUpdateCullMgrUiUi:
@@ -114,13 +116,13 @@ lbl_8013A738:
 /* 8013A748 00137548  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013A74C 0013754C  4E 80 00 20 */	blr 
 
-.global lbl_8013A750
-lbl_8013A750:
+.global xUpdateCull_AlwaysTrueCB__FPvPv
+xUpdateCull_AlwaysTrueCB__FPvPv:
 /* 8013A750 00137550  38 60 00 01 */	li r3, 1
 /* 8013A754 00137554  4E 80 00 20 */	blr 
 
-.global lbl_8013A758
-lbl_8013A758:
+.global xUpdateCull_DistanceSquaredCB__FPvPv
+xUpdateCull_DistanceSquaredCB__FPvPv:
 /* 8013A758 00137558  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013A75C 0013755C  A0 03 00 06 */	lhz r0, 6(r3)
 /* 8013A760 00137560  54 00 06 31 */	rlwinm. r0, r0, 0, 0x18, 0x18
@@ -338,8 +340,8 @@ lbl_8013AA4C:
 /* 8013AA50 00137850  7C 03 00 40 */	cmplw r3, r0
 /* 8013AA54 00137854  40 82 00 CC */	bne lbl_8013AB20
 /* 8013AA58 00137858  81 54 00 18 */	lwz r10, 0x18(r20)
-/* 8013AA5C 0013785C  3D 20 80 14 */	lis r9, lbl_8013A750@ha
-/* 8013AA60 00137860  39 E9 A7 50 */	addi r15, r9, lbl_8013A750@l
+/* 8013AA5C 0013785C  3D 20 80 14 */	lis r9, xUpdateCull_AlwaysTrueCB__FPvPv@ha
+/* 8013AA60 00137860  39 E9 A7 50 */	addi r15, r9, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 8013AA64 00137864  39 86 00 02 */	addi r12, r6, 2
 /* 8013AA68 00137868  7D 0A 33 2E */	sthx r8, r10, r6
 /* 8013AA6C 0013786C  39 66 00 04 */	addi r11, r6, 4
@@ -439,8 +441,8 @@ lbl_8013ABB4:
 /* 8013ABB8 001379B8  28 00 00 00 */	cmplwi r0, 0
 /* 8013ABBC 001379BC  40 82 00 60 */	bne lbl_8013AC1C
 /* 8013ABC0 001379C0  80 B4 00 18 */	lwz r5, 0x18(r20)
-/* 8013ABC4 001379C4  3C 80 80 14 */	lis r4, lbl_8013A750@ha
-/* 8013ABC8 001379C8  39 04 A7 50 */	addi r8, r4, lbl_8013A750@l
+/* 8013ABC4 001379C4  3C 80 80 14 */	lis r4, xUpdateCull_AlwaysTrueCB__FPvPv@ha
+/* 8013ABC8 001379C8  39 04 A7 50 */	addi r8, r4, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 8013ABCC 001379CC  38 EB 00 02 */	addi r7, r11, 2
 /* 8013ABD0 001379D0  7D E5 5B 2E */	sthx r15, r5, r11
 /* 8013ABD4 001379D4  39 40 FF FF */	li r10, -1
@@ -709,3 +711,6 @@ lbl_8013AF3C:
 /* 8013AF58 00137D58  7C 08 03 A6 */	mtlr r0
 /* 8013AF5C 00137D5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013AF60 00137D60  4E 80 00 20 */	blr 
+
+.endif
+

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800C9630 - 0x800CA920
 
 MorphCommon__FP8RpAtomicP11RwMatrixTagPPsPsUifi:
@@ -1288,6 +1290,9 @@ lbl_800CA914:
 /* 800CA914 000C7714  BB 41 01 08 */	lmw r26, 0x108(r1)
 /* 800CA918 000C7718  38 21 01 20 */	addi r1, r1, 0x120
 /* 800CA91C 000C771C  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802601A8:
 	.incbin "baserom.dol", 0x25D188, 0x10

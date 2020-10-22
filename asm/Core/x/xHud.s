@@ -15,6 +15,8 @@ lbl_80252ED8:
 lbl_80252EE8:
 	.incbin "baserom.dol", 0x24FEC8, 0x18
 
+.if 0
+
 .section .text  # 0x8002D98C - 0x8002F008
 
 .global flush_all__Q24xhud15block_allocatorFv
@@ -1308,8 +1310,8 @@ lbl_8002EACC:
 /* 8002EAE8 0002B8E8  D0 04 00 10 */	stfs f0, 0x10(r4)
 /* 8002EAEC 0002B8EC  4E 80 00 20 */	blr 
 
-.global lbl_8002EAF0
-lbl_8002EAF0:
+.global xhud_rename_me_2
+xhud_rename_me_2:
 /* 8002EAF0 0002B8F0  80 64 00 1C */	lwz r3, 0x1c(r4)
 /* 8002EAF4 0002B8F4  38 03 00 01 */	addi r0, r3, 1
 /* 8002EAF8 0002B8F8  90 04 00 1C */	stw r0, 0x1c(r4)
@@ -1350,8 +1352,8 @@ lbl_8002EB60:
 /* 8002EB7C 0002B97C  D0 04 00 10 */	stfs f0, 0x10(r4)
 /* 8002EB80 0002B980  4E 80 00 20 */	blr 
 
-.global lbl_8002EB84
-lbl_8002EB84:
+.global xhud_rename_me
+xhud_rename_me:
 /* 8002EB84 0002B984  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002EB88 0002B988  7C 08 02 A6 */	mflr r0
 /* 8002EB8C 0002B98C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1710,6 +1712,8 @@ xColorFromRGBA__FUcUcUcUc:
 /* 8002EFFC 0002BDFC  80 61 00 08 */	lwz r3, 8(r1)
 /* 8002F000 0002BE00  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002F004 0002BE04  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802C8760:

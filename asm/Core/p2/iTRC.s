@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80180038 - 0x80180D54
 
 .global Init__7ROMFontFv
@@ -973,6 +975,9 @@ lbl_80180D38:
 /* 80180D48 0017DB48  7C 08 03 A6 */	mtlr r0
 /* 80180D4C 0017DB4C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80180D50 0017DB50  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80272C50:
 	.incbin "baserom.dol", 0x26FC30, 0x290

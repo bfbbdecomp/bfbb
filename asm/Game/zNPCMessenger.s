@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800ED1E0 - 0x800EE2CC
 
 .global zNPCMsg_Startup__Fv
@@ -221,9 +223,9 @@ lbl_800ED4B0:
 /* 800ED4B0 000EA2B0  28 1C 00 00 */	cmplwi r28, 0
 /* 800ED4B4 000EA2B4  40 82 00 30 */	bne lbl_800ED4E4
 /* 800ED4B8 000EA2B8  48 00 0E 1D */	bl zNPCMgr_GetNPCList__Fv
-/* 800ED4BC 000EA2BC  3C A0 80 0F */	lis r5, lbl_800EECC4@ha
+/* 800ED4BC 000EA2BC  3C A0 80 0F */	lis r5, func_800EECC4@ha
 /* 800ED4C0 000EA2C0  80 9B 00 04 */	lwz r4, 4(r27)
-/* 800ED4C4 000EA2C4  38 A5 EC C4 */	addi r5, r5, lbl_800EECC4@l
+/* 800ED4C4 000EA2C4  38 A5 EC C4 */	addi r5, r5, func_800EECC4@l
 /* 800ED4C8 000EA2C8  7C 7E 1B 78 */	mr r30, r3
 /* 800ED4CC 000EA2CC  4B F4 88 29 */	bl XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i
 /* 800ED4D0 000EA2D0  2C 03 00 00 */	cmpwi r3, 0
@@ -1221,6 +1223,8 @@ lbl_800EE290:
 /* 800EE2C0 000EB0C0  38 60 00 01 */	li r3, 1
 /* 800EE2C4 000EB0C4  4E 80 00 20 */	blr 
 /* 800EE2C8 000EB0C8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_80294050:

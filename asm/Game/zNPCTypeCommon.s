@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800EEE4C - 0x800F4A6C
 
 .global ZNPC_Create_Common__FiP10RyzMemGrowPv
@@ -1789,16 +1791,16 @@ lbl_800F06F0:
 /* 800F070C 000ED50C  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 800F0710 000ED510  4C 40 13 82 */	cror 2, 0, 2
 /* 800F0714 000ED514  40 82 00 1C */	bne lbl_800F0730
-/* 800F0718 000ED518  3C 80 80 14 */	lis r4, lbl_8013A750@ha
+/* 800F0718 000ED518  3C 80 80 14 */	lis r4, xUpdateCull_AlwaysTrueCB__FPvPv@ha
 /* 800F071C 000ED51C  38 C0 00 00 */	li r6, 0
-/* 800F0720 000ED520  38 A4 A7 50 */	addi r5, r4, lbl_8013A750@l
+/* 800F0720 000ED520  38 A4 A7 50 */	addi r5, r4, xUpdateCull_AlwaysTrueCB__FPvPv@l
 /* 800F0724 000ED524  7D 44 53 78 */	mr r4, r10
 /* 800F0728 000ED528  48 04 A7 81 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
 /* 800F072C 000ED52C  48 00 05 D4 */	b lbl_800F0D00
 lbl_800F0730:
 /* 800F0730 000ED530  EC 01 00 72 */	fmuls f0, f1, f1
-/* 800F0734 000ED534  3C 80 80 14 */	lis r4, lbl_8013A758@ha
-/* 800F0738 000ED538  38 A4 A7 58 */	addi r5, r4, lbl_8013A758@l
+/* 800F0734 000ED534  3C 80 80 14 */	lis r4, xUpdateCull_DistanceSquaredCB__FPvPv@ha
+/* 800F0738 000ED538  38 A4 A7 58 */	addi r5, r4, xUpdateCull_DistanceSquaredCB__FPvPv@l
 /* 800F073C 000ED53C  7D 44 53 78 */	mr r4, r10
 /* 800F0740 000ED540  D0 01 00 08 */	stfs f0, 8(r1)
 /* 800F0744 000ED544  80 C1 00 08 */	lwz r6, 8(r1)
@@ -6760,6 +6762,9 @@ Insert__21xListItem_esc__0_9NPCConfig_esc__1_FP9NPCConfig:
 lbl_800F4A64:
 /* 800F4A64 000F1864  90 64 00 04 */	stw r3, 4(r4)
 /* 800F4A68 000F1868  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80268C28:
 	.incbin "baserom.dol", 0x265C08, 0x30

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8003F3A4 - 0x80041920
 
 .global xSceneInit__FP6xSceneUsUsUsUs
@@ -1033,8 +1035,8 @@ lbl_800401BC:
 /* 800401D0 0003CFD0  38 21 00 70 */	addi r1, r1, 0x70
 /* 800401D4 0003CFD4  4E 80 00 20 */	blr 
 
-.global lbl_800401D8
-lbl_800401D8:
+.global xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv
+xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv:
 /* 800401D8 0003CFD8  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800401DC 0003CFDC  7C 08 02 A6 */	mflr r0
 /* 800401E0 0003CFE0  90 01 00 74 */	stw r0, 0x74(r1)
@@ -1175,8 +1177,8 @@ xRayHitsScene__FP6xSceneP5xRay3P7xCollis:
 /* 800403D0 0003D1D0  D0 05 00 10 */	stfs f0, 0x10(r5)
 /* 800403D4 0003D1D4  4B FD 55 21 */	bl xQuickCullForRay__FP7xQCDataPC5xRay3
 /* 800403D8 0003D1D8  3C 60 80 3D */	lis r3, colls_grid@ha
-/* 800403DC 0003D1DC  3C A0 80 04 */	lis r5, lbl_800401D8@ha
-/* 800403E0 0003D1E0  38 C5 01 D8 */	addi r6, r5, lbl_800401D8@l
+/* 800403DC 0003D1DC  3C A0 80 04 */	lis r5, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 800403E0 0003D1E0  38 C5 01 D8 */	addi r6, r5, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 800403E4 0003D1E4  7F A4 EB 78 */	mr r4, r29
 /* 800403E8 0003D1E8  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 800403EC 0003D1EC  7F C5 F3 78 */	mr r5, r30
@@ -1184,8 +1186,8 @@ xRayHitsScene__FP6xSceneP5xRay3P7xCollis:
 /* 800403F4 0003D1F4  38 E1 00 08 */	addi r7, r1, 8
 /* 800403F8 0003D1F8  4B FF F4 99 */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
 /* 800403FC 0003D1FC  3C 60 80 3D */	lis r3, colls_oso_grid@ha
-/* 80040400 0003D200  3C A0 80 04 */	lis r5, lbl_800401D8@ha
-/* 80040404 0003D204  38 C5 01 D8 */	addi r6, r5, lbl_800401D8@l
+/* 80040400 0003D200  3C A0 80 04 */	lis r5, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 80040404 0003D204  38 C5 01 D8 */	addi r6, r5, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 80040408 0003D208  7F A4 EB 78 */	mr r4, r29
 /* 8004040C 0003D20C  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 80040410 0003D210  7F C5 F3 78 */	mr r5, r30
@@ -1193,8 +1195,8 @@ xRayHitsScene__FP6xSceneP5xRay3P7xCollis:
 /* 80040418 0003D218  38 E1 00 08 */	addi r7, r1, 8
 /* 8004041C 0003D21C  4B FF F4 75 */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
 /* 80040420 0003D220  3C 60 80 3D */	lis r3, npcs_grid@ha
-/* 80040424 0003D224  3C A0 80 04 */	lis r5, lbl_800401D8@ha
-/* 80040428 0003D228  38 C5 01 D8 */	addi r6, r5, lbl_800401D8@l
+/* 80040424 0003D224  3C A0 80 04 */	lis r5, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 80040428 0003D228  38 C5 01 D8 */	addi r6, r5, xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 8004042C 0003D22C  7F A4 EB 78 */	mr r4, r29
 /* 80040430 0003D230  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 80040434 0003D234  7F C5 F3 78 */	mr r5, r30
@@ -2680,6 +2682,8 @@ xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80041914 0003E714  D0 63 00 04 */	stfs f3, 4(r3)
 /* 80041918 0003E718  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8004191C 0003E71C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802C8988:

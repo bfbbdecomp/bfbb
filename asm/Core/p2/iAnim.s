@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800BE470 - 0x800BF1C0
 
 
@@ -563,6 +565,8 @@ __as__6RtQuatFRC6RtQuat:
 /* 800BF1B4 000BBFB4  90 03 00 08 */	stw r0, 8(r3)
 /* 800BF1B8 000BBFB8  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 800BF1BC 000BBFBC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .rodata
 /* this apparently goes to iAnimSKB but putting it there breaks the linking order */

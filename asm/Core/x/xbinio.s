@@ -9,6 +9,8 @@ lbl_80251E48:
 lbl_80251F5C:
 	.incbin "baserom.dol", 0x24EF3C, 0xC
 
+.if 0
+
 .section .text  # 0x80009564 - 0x8000A528
 
 .global xBinioLoadCreate__FPCc
@@ -1139,6 +1141,8 @@ xFileReadAsyncStatus__FiPi:
 /* 8000A51C 0000731C  7C 08 03 A6 */	mtlr r0
 /* 8000A520 00007320  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000A524 00007324  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027A5C0:

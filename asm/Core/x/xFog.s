@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8001FDBC - 0x8001FFB0
 
 .global xFogClearFog__Fv
@@ -152,6 +154,8 @@ lbl_8001FF98:
 .global xFogUpdate__FP5xBaseP6xScenef
 xFogUpdate__FP5xBaseP6xScenef:
 /* 8001FFAC 0001CDAC  4E 80 00 20 */	blr 
+
+.endif
 
 .section .sdata2
 lbl_803CCC50:
