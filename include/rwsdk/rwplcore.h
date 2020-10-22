@@ -1,6 +1,7 @@
 #ifndef RWPLCORE_H
 #define RWPLCORE_H
 
+#include <stdarg.h>
 #include <stddef.h>
 
 #define rwBIGENDIAN

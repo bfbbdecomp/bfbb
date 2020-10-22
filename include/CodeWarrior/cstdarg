@@ -1,0 +1,8 @@
+#ifndef _MSL_CSTDDEF
+#define _MSL_CSTDDEF
+
+#include <stdarg.h>
+
+#endif
+
+#endif

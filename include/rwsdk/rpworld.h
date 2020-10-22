@@ -63,6 +63,8 @@ struct RpMeshHeader
 
 typedef RpMesh* (*RpMeshCallBack)(RpMesh* mesh, RpMeshHeader* meshHeader, void* pData);
 
+typedef struct RpGeometry;
+
 struct RpMorphTarget
 {
     RpGeometry* parentGeom;
@@ -145,6 +147,7 @@ enum RpWorldRenderOrder
     rpWORLDRENDERORDERFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef struct RpWorldSector;
 typedef RpWorldSector* (*RpWorldSectorCallBack)(RpWorldSector* worldSector, void* data);
 
 struct RpSector
