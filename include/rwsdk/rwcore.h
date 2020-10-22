@@ -68,6 +68,8 @@ enum RxClusterValid
 typedef struct RxPipelineNode;
 typedef struct RxNodeDefinition;
 typedef struct RxPipeline;
+typedef struct RxPipelineNodeParam;
+typedef struct RxPipelineNodeTopSortData;
 
 struct RxClusterDefinition
 {
