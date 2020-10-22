@@ -6,6 +6,12 @@ It builds the following DOL:
 
 main.dol: `sha1: 306526d90b48e99894c3138f5fc8f2716d9fecf6`
 
+## Progress
+
+View our progress here: https://pslehisl.github.io/bfbbdecomp
+
+Thanks to [@mattbruv](https://github.com/mattbruv) for setting this up!
+
 ## Building
 
 ### Required tools
