@@ -76,7 +76,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_1 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RxPipelineNode
@@ -125,7 +125,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_7 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -135,7 +135,7 @@ struct RpAtomic
 
 struct RpTriangle
 {
-	type_5 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -371,7 +371,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_18 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct RxHeap
@@ -420,7 +420,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_13 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -452,7 +452,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_14 pad;
+	uint32 pad[4];
 };
 
 struct RpClump
@@ -462,7 +462,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_19 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RxPipelineRequiresCluster
@@ -483,8 +483,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_16 name;
-	type_17 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -648,13 +648,13 @@ struct RxIoSpec
 
 struct RxNodeMethods
 {
-	type_10 nodeBody;
-	type_11 nodeInit;
-	type_12 nodeTerm;
-	type_0 pipelineNodeInit;
-	type_3 pipelineNodeTerm;
-	type_8 pipelineNodeConfig;
-	type_9 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxCluster
@@ -677,15 +677,15 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_20 clusters;
+	RxCluster clusters[1];
 };
 
 struct PipeTranslation
 {
 	RpPDSPipeID atm;
 	RpPDSPipeID mat;
-	type_2 atmpipeTranslateCB;
-	type_6 matpipeTranslateCB;
+	RxPipeline*(*atmpipeTranslateCB)(RpAtomic*, RpMaterial*);
+	RxPipeline*(*matpipeTranslateCB)(RpAtomic*, RpMaterial*);
 	RxPipeline* atmPipe;
 	RxPipeline* matPipe;
 };
@@ -695,8 +695,8 @@ struct RwLinkList
 	RwLLLink link;
 };
 
-type_15 sPipeTrans;
-type_4 sFastPipeList;
+PipeTranslation sPipeTrans[6];
+FastPipeTrans sFastPipeList[2];
 
 uint8 iModelCanUseFastPipes(RpAtomic* dataTemp);
 void iModelUseFastPipes(RpAtomic* dataTemp);
@@ -714,6 +714,24 @@ uint8 iModelCanUseFastPipes(RpAtomic* dataTemp)
 	int32 i;
 	RpMaterialList* matList;
 	int32 i;
+	// Line 217, Address: 0x3ae020, Func Offset: 0
+	// Line 222, Address: 0x3ae024, Func Offset: 0x4
+	// Line 217, Address: 0x3ae028, Func Offset: 0x8
+	// Line 222, Address: 0x3ae02c, Func Offset: 0xc
+	// Line 217, Address: 0x3ae030, Func Offset: 0x10
+	// Line 221, Address: 0x3ae04c, Func Offset: 0x2c
+	// Line 222, Address: 0x3ae050, Func Offset: 0x30
+	// Line 223, Address: 0x3ae058, Func Offset: 0x38
+	// Line 224, Address: 0x3ae064, Func Offset: 0x44
+	// Line 226, Address: 0x3ae06c, Func Offset: 0x4c
+	// Line 243, Address: 0x3ae080, Func Offset: 0x60
+	// Line 244, Address: 0x3ae088, Func Offset: 0x68
+	// Line 245, Address: 0x3ae0a0, Func Offset: 0x80
+	// Line 250, Address: 0x3ae200, Func Offset: 0x1e0
+	// Line 252, Address: 0x3ae208, Func Offset: 0x1e8
+	// Line 256, Address: 0x3ae220, Func Offset: 0x200
+	// Line 257, Address: 0x3ae228, Func Offset: 0x208
+	// Func End, Address: 0x3ae24c, Func Offset: 0x22c
 }
 
 // iModelUseFastPipes__FP8RpAtomic
@@ -724,6 +742,21 @@ void iModelUseFastPipes(RpAtomic* dataTemp)
 	int32 i;
 	RpMaterialList* matList;
 	int32 i;
+	// Line 176, Address: 0x3ae250, Func Offset: 0
+	// Line 181, Address: 0x3ae254, Func Offset: 0x4
+	// Line 176, Address: 0x3ae258, Func Offset: 0x8
+	// Line 181, Address: 0x3ae280, Func Offset: 0x30
+	// Line 182, Address: 0x3ae288, Func Offset: 0x38
+	// Line 185, Address: 0x3ae294, Func Offset: 0x44
+	// Line 188, Address: 0x3ae2a4, Func Offset: 0x54
+	// Line 189, Address: 0x3ae2ac, Func Offset: 0x5c
+	// Line 191, Address: 0x3ae348, Func Offset: 0xf8
+	// Line 192, Address: 0x3ae360, Func Offset: 0x110
+	// Line 194, Address: 0x3ae408, Func Offset: 0x1b8
+	// Line 195, Address: 0x3ae420, Func Offset: 0x1d0
+	// Line 199, Address: 0x3ae438, Func Offset: 0x1e8
+	// Line 214, Address: 0x3ae448, Func Offset: 0x1f8
+	// Func End, Address: 0x3ae470, Func Offset: 0x220
 }
 
 // iModelInitFastPipes__Fv
@@ -732,6 +765,20 @@ void iModelInitFastPipes()
 {
 	int32 i;
 	int32 i;
+	// Line 120, Address: 0x3ae470, Func Offset: 0
+	// Line 125, Address: 0x3ae480, Func Offset: 0x10
+	// Line 126, Address: 0x3ae490, Func Offset: 0x20
+	// Line 127, Address: 0x3ae49c, Func Offset: 0x2c
+	// Line 130, Address: 0x3ae4a8, Func Offset: 0x38
+	// Line 131, Address: 0x3ae4b4, Func Offset: 0x44
+	// Line 134, Address: 0x3ae4c0, Func Offset: 0x50
+	// Line 136, Address: 0x3ae4d0, Func Offset: 0x60
+	// Line 137, Address: 0x3ae4e0, Func Offset: 0x70
+	// Line 139, Address: 0x3ae4e8, Func Offset: 0x78
+	// Line 137, Address: 0x3ae4ec, Func Offset: 0x7c
+	// Line 139, Address: 0x3ae4f0, Func Offset: 0x80
+	// Line 140, Address: 0x3ae4fc, Func Offset: 0x8c
+	// Func End, Address: 0x3ae510, Func Offset: 0xa0
 }
 
 // GenericMatCB__FP8RpAtomicP10RpMaterial
@@ -739,6 +786,8 @@ void iModelInitFastPipes()
 RxPipeline* GenericMatCB()
 {
 	RxPipeline* p;
+	// Line 35, Address: 0x3ae510, Func Offset: 0
+	// Func End, Address: 0x3ae540, Func Offset: 0x30
 }
 
 // GenericAtmCB__FP8RpAtomicP10RpMaterial
@@ -746,6 +795,8 @@ RxPipeline* GenericMatCB()
 RxPipeline* GenericAtmCB()
 {
 	RxPipeline* p;
+	// Line 34, Address: 0x3ae540, Func Offset: 0
+	// Func End, Address: 0x3ae570, Func Offset: 0x30
 }
 
 // SkinMatCB__FP8RpAtomicP10RpMaterial
@@ -753,6 +804,8 @@ RxPipeline* GenericAtmCB()
 RxPipeline* SkinMatCB()
 {
 	RxPipeline* p;
+	// Line 33, Address: 0x3ae570, Func Offset: 0
+	// Func End, Address: 0x3ae5a0, Func Offset: 0x30
 }
 
 // SkinAtmCB__FP8RpAtomicP10RpMaterial
@@ -760,5 +813,7 @@ RxPipeline* SkinMatCB()
 RxPipeline* SkinAtmCB()
 {
 	RxPipeline* p;
+	// Line 32, Address: 0x3ae5a0, Func Offset: 0
+	// Func End, Address: 0x3ae5d0, Func Offset: 0x30
 }
 

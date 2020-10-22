@@ -51,7 +51,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_5 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xBaseAsset
@@ -95,6 +95,14 @@ struct meter_widget : widget
 	float32 ping_delay;
 	float32 pitch;
 	sound_queue pings;
+
+	void update(float32 dt);
+	void updater(float32 dt);
+	uint8 is(uint32 id);
+	void destruct();
+	void* __ct(meter_asset& a);
+	void set_value_immediate(float32 v);
+	void set_value(float32 v);
 };
 
 struct basic_rect
@@ -134,7 +142,7 @@ struct motive
 	float32 max_offset;
 	float32 offset;
 	float32 accel;
-	type_1 fp_update;
+	uint8(*fp_update)(widget&, motive&, float32);
 	void* context;
 	uint8 inverse;
 };
@@ -144,7 +152,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_2 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -180,74 +188,184 @@ enum _enum
 
 struct sound_queue
 {
-	type_0 _playing;
+	uint32 _playing[5];
 	int32 head;
 	int32 tail;
 };
 
 basic_rect screen_bounds;
 basic_rect default_adjust;
-type_3 buffer;
-type_4 buffer;
+int8 buffer[16];
+int8 buffer[16];
 _anon0 __vt__Q24xhud12meter_widget;
 _anon1 __vt__Q24xhud6widget;
 
-void updater(meter_widget* this, float32 dt);
-uint8 is(meter_widget* this, uint32 id);
+void updater(float32 dt);
+uint8 is(uint32 id);
 uint32 type();
-void destruct(meter_widget* this);
-void* __ct(meter_widget* this, meter_asset& a);
-void set_value_immediate(meter_widget* this, float32 v);
-void set_value(meter_widget* this, float32 v);
+void destruct();
+void* __ct(meter_asset& a);
+void set_value_immediate(float32 v);
+void set_value(float32 v);
 
 // updater__Q24xhud12meter_widgetFf
 // Start address: 0x299cb0
-void updater(meter_widget* this, float32 dt)
+void meter_widget::updater(float32 dt)
 {
 	float32 old_value;
 	float32 pitch;
 	float32 min_ping_time;
 	float32 pitch;
 	float32 min_ping_time;
+	// Line 117, Address: 0x299cb0, Func Offset: 0
+	// Line 118, Address: 0x299cd0, Func Offset: 0x20
+	// Line 120, Address: 0x299cd8, Func Offset: 0x28
+	// Line 123, Address: 0x299cdc, Func Offset: 0x2c
+	// Line 120, Address: 0x299ce0, Func Offset: 0x30
+	// Line 121, Address: 0x299ce8, Func Offset: 0x38
+	// Line 123, Address: 0x299cf8, Func Offset: 0x48
+	// Line 126, Address: 0x299d04, Func Offset: 0x54
+	// Line 125, Address: 0x299d10, Func Offset: 0x60
+	// Line 129, Address: 0x299d14, Func Offset: 0x64
+	// Line 126, Address: 0x299d18, Func Offset: 0x68
+	// Line 127, Address: 0x299d30, Func Offset: 0x80
+	// Line 129, Address: 0x299d44, Func Offset: 0x94
+	// Line 131, Address: 0x299d5c, Func Offset: 0xac
+	// Line 133, Address: 0x299d6c, Func Offset: 0xbc
+	// Line 134, Address: 0x299d70, Func Offset: 0xc0
+	// Line 135, Address: 0x299d74, Func Offset: 0xc4
+	// Line 136, Address: 0x299d78, Func Offset: 0xc8
+	// Line 138, Address: 0x299d80, Func Offset: 0xd0
+	// Line 136, Address: 0x299d84, Func Offset: 0xd4
+	// Line 138, Address: 0x299d88, Func Offset: 0xd8
+	// Line 139, Address: 0x299d9c, Func Offset: 0xec
+	// Line 138, Address: 0x299da4, Func Offset: 0xf4
+	// Line 139, Address: 0x299da8, Func Offset: 0xf8
+	// Line 142, Address: 0x299dbc, Func Offset: 0x10c
+	// Line 140, Address: 0x299dc0, Func Offset: 0x110
+	// Line 142, Address: 0x299dcc, Func Offset: 0x11c
+	// Line 145, Address: 0x299e08, Func Offset: 0x158
+	// Line 146, Address: 0x299e0c, Func Offset: 0x15c
+	// Line 145, Address: 0x299e14, Func Offset: 0x164
+	// Line 146, Address: 0x299e18, Func Offset: 0x168
+	// Line 148, Address: 0x299ebc, Func Offset: 0x20c
+	// Line 151, Address: 0x299ecc, Func Offset: 0x21c
+	// Line 153, Address: 0x299edc, Func Offset: 0x22c
+	// Line 154, Address: 0x299ee0, Func Offset: 0x230
+	// Line 155, Address: 0x299ee4, Func Offset: 0x234
+	// Line 156, Address: 0x299ee8, Func Offset: 0x238
+	// Line 158, Address: 0x299ef0, Func Offset: 0x240
+	// Line 156, Address: 0x299ef4, Func Offset: 0x244
+	// Line 158, Address: 0x299ef8, Func Offset: 0x248
+	// Line 159, Address: 0x299f0c, Func Offset: 0x25c
+	// Line 158, Address: 0x299f14, Func Offset: 0x264
+	// Line 159, Address: 0x299f18, Func Offset: 0x268
+	// Line 162, Address: 0x299f2c, Func Offset: 0x27c
+	// Line 160, Address: 0x299f30, Func Offset: 0x280
+	// Line 162, Address: 0x299f3c, Func Offset: 0x28c
+	// Line 165, Address: 0x299f78, Func Offset: 0x2c8
+	// Line 166, Address: 0x299f7c, Func Offset: 0x2cc
+	// Line 165, Address: 0x299f84, Func Offset: 0x2d4
+	// Line 166, Address: 0x299f88, Func Offset: 0x2d8
+	// Line 170, Address: 0x29a030, Func Offset: 0x380
+	// Func End, Address: 0x29a050, Func Offset: 0x3a0
 }
 
 // is__Q24xhud12meter_widgetCFUi
 // Start address: 0x29a050
-uint8 is(meter_widget* this, uint32 id)
+uint8 meter_widget::is(uint32 id)
 {
 	uint32 myid;
 	int8 @3750;
+	// Line 112, Address: 0x29a050, Func Offset: 0
+	// Line 113, Address: 0x29a064, Func Offset: 0x14
+	// Line 114, Address: 0x29a0a8, Func Offset: 0x58
+	// Func End, Address: 0x29a0bc, Func Offset: 0x6c
 }
 
 // type__Q24xhud12meter_widgetCFv
 // Start address: 0x29a0c0
 uint32 type()
 {
+	// Line 106, Address: 0x29a0c0, Func Offset: 0
+	// Line 107, Address: 0x29a0c8, Func Offset: 0x8
+	// Line 109, Address: 0x29a0e8, Func Offset: 0x28
+	// Line 108, Address: 0x29a0ec, Func Offset: 0x2c
+	// Line 109, Address: 0x29a0f0, Func Offset: 0x30
+	// Func End, Address: 0x29a0f8, Func Offset: 0x38
 }
 
 // destruct__Q24xhud12meter_widgetFv
 // Start address: 0x29a100
-void destruct(meter_widget* this)
+void meter_widget::destruct()
 {
+	// Line 103, Address: 0x29a100, Func Offset: 0
+	// Func End, Address: 0x29a108, Func Offset: 0x8
 }
 
 // __ct__Q24xhud12meter_widgetFRCQ24xhud11meter_asset
 // Start address: 0x29a110
-void* __ct(meter_widget* this, meter_asset& a)
+void* meter_widget::__ct(meter_asset& a)
 {
+	// Line 96, Address: 0x29a110, Func Offset: 0
+	// Line 101, Address: 0x29a140, Func Offset: 0x30
+	// Line 96, Address: 0x29a144, Func Offset: 0x34
+	// Line 101, Address: 0x29a174, Func Offset: 0x64
+	// Func End, Address: 0x29a188, Func Offset: 0x78
 }
 
 // set_value_immediate__Q24xhud12meter_widgetFf
 // Start address: 0x29a190
-void set_value_immediate(meter_widget* this, float32 v)
+void meter_widget::set_value_immediate(float32 v)
 {
+	// Line 91, Address: 0x29a190, Func Offset: 0
+	// Line 93, Address: 0x29a198, Func Offset: 0x8
+	// Func End, Address: 0x29a1a0, Func Offset: 0x10
 }
 
 // set_value__Q24xhud12meter_widgetFf
 // Start address: 0x29a1a0
-void set_value(meter_widget* this, float32 v)
+void meter_widget::set_value(float32 v)
 {
 	float32 dvalue;
 	float32 sign;
+	// Line 54, Address: 0x29a1a0, Func Offset: 0
+	// Line 58, Address: 0x29a1a4, Func Offset: 0x4
+	// Line 54, Address: 0x29a1a8, Func Offset: 0x8
+	// Line 58, Address: 0x29a1ac, Func Offset: 0xc
+	// Line 54, Address: 0x29a1b0, Func Offset: 0x10
+	// Line 58, Address: 0x29a1b4, Func Offset: 0x14
+	// Line 54, Address: 0x29a1b8, Func Offset: 0x18
+	// Line 55, Address: 0x29a1c8, Func Offset: 0x28
+	// Line 58, Address: 0x29a1d0, Func Offset: 0x30
+	// Line 60, Address: 0x29a1e4, Func Offset: 0x44
+	// Line 61, Address: 0x29a1ec, Func Offset: 0x4c
+	// Line 62, Address: 0x29a210, Func Offset: 0x70
+	// Line 63, Address: 0x29a230, Func Offset: 0x90
+	// Line 64, Address: 0x29a240, Func Offset: 0xa0
+	// Line 65, Address: 0x29a248, Func Offset: 0xa8
+	// Line 66, Address: 0x29a250, Func Offset: 0xb0
+	// Line 68, Address: 0x29a274, Func Offset: 0xd4
+	// Line 69, Address: 0x29a27c, Func Offset: 0xdc
+	// Line 70, Address: 0x29a2a0, Func Offset: 0x100
+	// Line 71, Address: 0x29a2c0, Func Offset: 0x120
+	// Line 72, Address: 0x29a2d0, Func Offset: 0x130
+	// Line 73, Address: 0x29a2d8, Func Offset: 0x138
+	// Line 75, Address: 0x29a2e0, Func Offset: 0x140
+	// Line 77, Address: 0x29a2f0, Func Offset: 0x150
+	// Line 78, Address: 0x29a2f4, Func Offset: 0x154
+	// Line 79, Address: 0x29a30c, Func Offset: 0x16c
+	// Line 81, Address: 0x29a31c, Func Offset: 0x17c
+	// Line 79, Address: 0x29a328, Func Offset: 0x188
+	// Line 81, Address: 0x29a32c, Func Offset: 0x18c
+	// Line 82, Address: 0x29a354, Func Offset: 0x1b4
+	// Line 81, Address: 0x29a358, Func Offset: 0x1b8
+	// Line 82, Address: 0x29a35c, Func Offset: 0x1bc
+	// Line 83, Address: 0x29a370, Func Offset: 0x1d0
+	// Line 84, Address: 0x29a378, Func Offset: 0x1d8
+	// Line 85, Address: 0x29a390, Func Offset: 0x1f0
+	// Line 86, Address: 0x29a39c, Func Offset: 0x1fc
+	// Line 87, Address: 0x29a3b0, Func Offset: 0x210
+	// Func End, Address: 0x29a3cc, Func Offset: 0x22c
 }
 

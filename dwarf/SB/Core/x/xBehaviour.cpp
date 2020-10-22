@@ -21,14 +21,14 @@ typedef void(*type_8)(int32*, en_trantype*);
 typedef float32 type_1[4];
 typedef xGoal* type_5[5];
 typedef float32 type_6[1];
-typedef type_6 type_7[5];
+typedef float32 type_7[1][5];
 
 struct xLinkAsset
 {
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_1 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -39,13 +39,13 @@ struct xPsyche : RyzMemData
 	xPSYNote* cb_notice;
 	int32 flg_psyche;
 	xGoal* goallist;
-	type_5 goalstak;
-	type_7 tmr_stack;
+	xGoal* goalstak[5];
+	float32 tmr_stack[1][5];
 	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
 	int32 gid_safegoal;
-	type_8 fun_remap;
+	void(*fun_remap)(int32*, en_trantype*);
 	void* userContext;
 	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
@@ -59,7 +59,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_4 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xGoal : xListItem, xFactoryInst
@@ -68,10 +68,16 @@ struct xGoal : xListItem, xFactoryInst
 	int32 goalID;
 	en_GOALSTATE stat;
 	int32 flg_able;
-	type_3 fun_process;
-	type_0 fun_precalc;
-	type_2 fun_chkRule;
+	int32(*fun_process)(xGoal*, void*, en_trantype*, float32, void*);
+	int32(*fun_precalc)(xGoal*, void*, float32, void*);
+	int32(*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
 	void* cbdata;
+
+	int32 Process(en_trantype* trantype, float32 dt, void* ctxt);
+	int32 EvalRules(en_trantype* trantype, float32 dt, void* updCtxt);
+	int32 PreCalc(float32 dt, void* updCtxt);
+	void Clear();
+	xBase* GetOwner();
 };
 
 struct _anon0
@@ -154,39 +160,56 @@ enum en_GOALSTATE
 
 _anon0 __vt__5xGoal;
 
-int32 Process(xGoal* this, en_trantype* trantype, float32 dt, void* ctxt);
-int32 EvalRules(xGoal* this, en_trantype* trantype, float32 dt, void* updCtxt);
-int32 PreCalc(xGoal* this, float32 dt, void* updCtxt);
-void Clear(xGoal* this);
-xBase* GetOwner(xGoal* this);
+int32 Process(en_trantype* trantype, float32 dt, void* ctxt);
+int32 EvalRules(en_trantype* trantype, float32 dt, void* updCtxt);
+int32 PreCalc(float32 dt, void* updCtxt);
+void Clear();
+xBase* GetOwner();
 
 // Process__5xGoalFP11en_trantypefPvP6xScene
 // Start address: 0x2f1cd0
-int32 Process(xGoal* this, en_trantype* trantype, float32 dt, void* ctxt)
+int32 xGoal::Process(en_trantype* trantype, float32 dt, void* ctxt)
 {
+	// Line 104, Address: 0x2f1cd0, Func Offset: 0
+	// Line 108, Address: 0x2f1cdc, Func Offset: 0xc
+	// Line 114, Address: 0x2f1cfc, Func Offset: 0x2c
+	// Func End, Address: 0x2f1d08, Func Offset: 0x38
 }
 
 // EvalRules__5xGoalFP11en_trantypefPv
 // Start address: 0x2f1d10
-int32 EvalRules(xGoal* this, en_trantype* trantype, float32 dt, void* updCtxt)
+int32 xGoal::EvalRules(en_trantype* trantype, float32 dt, void* updCtxt)
 {
+	// Line 92, Address: 0x2f1d10, Func Offset: 0
+	// Line 96, Address: 0x2f1d1c, Func Offset: 0xc
+	// Line 101, Address: 0x2f1d3c, Func Offset: 0x2c
+	// Func End, Address: 0x2f1d48, Func Offset: 0x38
 }
 
 // PreCalc__5xGoalFfPv
 // Start address: 0x2f1d50
-int32 PreCalc(xGoal* this, float32 dt, void* updCtxt)
+int32 xGoal::PreCalc(float32 dt, void* updCtxt)
 {
+	// Line 83, Address: 0x2f1d50, Func Offset: 0
+	// Line 87, Address: 0x2f1d5c, Func Offset: 0xc
+	// Line 89, Address: 0x2f1d78, Func Offset: 0x28
+	// Func End, Address: 0x2f1d84, Func Offset: 0x34
 }
 
 // Clear__5xGoalFv
 // Start address: 0x2f1d90
-void Clear(xGoal* this)
+void xGoal::Clear()
 {
+	// Line 80, Address: 0x2f1d90, Func Offset: 0
+	// Func End, Address: 0x2f1d98, Func Offset: 0x8
 }
 
 // GetOwner__5xGoalCFv
 // Start address: 0x2f1da0
-xBase* GetOwner(xGoal* this)
+xBase* xGoal::GetOwner()
 {
+	// Line 61, Address: 0x2f1da0, Func Offset: 0
+	// Line 62, Address: 0x2f1da4, Func Offset: 0x4
+	// Func End, Address: 0x2f1dac, Func Offset: 0xc
 }
 

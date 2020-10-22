@@ -43,9 +43,9 @@ struct xCamAsset : xBaseAsset
 		_tagp2CamStaticFollowAsset cam_staticFollow;
 	};
 	uint32 valid_flags;
-	type_2 markerid;
+	uint32 markerid[2];
 	uint8 cam_type;
-	type_3 pad;
+	uint8 pad[3];
 };
 
 struct zCamMarker : xBase
@@ -74,7 +74,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_1 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xVec3
@@ -97,7 +97,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_0 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -142,7 +142,7 @@ struct _tagxCamPathAsset
 	float32 time_delay;
 };
 
-type_4 zCamMarkerEventCB;
+int32(*zCamMarkerEventCB)(xBase*, xBase*, uint32, float32*, xBase*);
 
 int32 zCamMarkerEventCB(xBase* to, uint32 toEvent, float32* toParam);
 void zCamMarkerLoad(zCamMarker* m, xSerial* s);
@@ -153,23 +153,47 @@ void zCamMarkerInit(xBase* b, xCamAsset* asset);
 // Start address: 0x310910
 int32 zCamMarkerEventCB(xBase* to, uint32 toEvent, float32* toParam)
 {
+	// Line 47, Address: 0x310910, Func Offset: 0
+	// Line 51, Address: 0x310914, Func Offset: 0x4
+	// Line 59, Address: 0x310948, Func Offset: 0x38
+	// Line 60, Address: 0x310954, Func Offset: 0x44
+	// Line 62, Address: 0x31095c, Func Offset: 0x4c
+	// Line 63, Address: 0x310960, Func Offset: 0x50
+	// Line 64, Address: 0x310968, Func Offset: 0x58
+	// Line 67, Address: 0x310970, Func Offset: 0x60
+	// Line 72, Address: 0x310978, Func Offset: 0x68
+	// Line 71, Address: 0x31097c, Func Offset: 0x6c
+	// Line 72, Address: 0x310980, Func Offset: 0x70
+	// Func End, Address: 0x310988, Func Offset: 0x78
 }
 
 // zCamMarkerLoad__FP10zCamMarkerP7xSerial
 // Start address: 0x310990
 void zCamMarkerLoad(zCamMarker* m, xSerial* s)
 {
+	// Line 38, Address: 0x310990, Func Offset: 0
+	// Func End, Address: 0x310998, Func Offset: 0x8
 }
 
 // zCamMarkerSave__FP10zCamMarkerP7xSerial
 // Start address: 0x3109a0
 void zCamMarkerSave(zCamMarker* m, xSerial* s)
 {
+	// Line 29, Address: 0x3109a0, Func Offset: 0
+	// Func End, Address: 0x3109a8, Func Offset: 0x8
 }
 
 // zCamMarkerInit__FP5xBaseP9xCamAsset
 // Start address: 0x3109b0
 void zCamMarkerInit(xBase* b, xCamAsset* asset)
 {
+	// Line 10, Address: 0x3109b0, Func Offset: 0
+	// Line 12, Address: 0x3109c4, Func Offset: 0x14
+	// Line 17, Address: 0x3109cc, Func Offset: 0x1c
+	// Line 18, Address: 0x3109d8, Func Offset: 0x28
+	// Line 21, Address: 0x3109e0, Func Offset: 0x30
+	// Line 23, Address: 0x3109ec, Func Offset: 0x3c
+	// Line 24, Address: 0x3109f0, Func Offset: 0x40
+	// Func End, Address: 0x310a04, Func Offset: 0x54
 }
 

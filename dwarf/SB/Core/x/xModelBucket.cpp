@@ -49,7 +49,7 @@ typedef struct xScene;
 typedef struct xGroupAsset;
 typedef struct rxHeapSuperBlockDescriptor;
 typedef struct rxReq;
-typedef union RwStreamUnion;
+typedef struct RwStreamUnion;
 typedef enum RxClusterValidityReq;
 typedef struct xMemPool;
 typedef enum RwStreamType;
@@ -105,7 +105,7 @@ typedef struct RwV3d;
 typedef struct RwPlane;
 typedef struct RxNodeMethods;
 typedef struct RxPipelineCluster;
-typedef union RwStreamFile;
+typedef struct RwStreamFile;
 typedef struct RwTexture;
 typedef struct RxNodeDefinition;
 typedef struct xShadowSimplePoly;
@@ -204,7 +204,7 @@ typedef int8 type_56[32];
 typedef uint16 type_58[3];
 typedef RxCluster type_61[1];
 typedef int8 type_63[128];
-typedef type_63 type_64[6];
+typedef int8 type_64[128][6];
 typedef int8 type_65[32];
 typedef xVec3 type_68[4];
 
@@ -212,8 +212,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_51 beginUpdate;
-	type_53 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -225,9 +225,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_23 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_29 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct RxPipeline
@@ -256,7 +256,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_20 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -335,7 +335,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_68 corner;
+	xVec3 corner[4];
 };
 
 struct xModelInstance
@@ -378,8 +378,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_3 Conditional;
-	type_3 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -402,7 +402,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_40 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xAnimSingle
@@ -411,7 +411,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_0 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -426,8 +426,8 @@ struct xAnimSingle
 
 struct _tagxPad
 {
-	type_10 value;
-	type_14 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -442,9 +442,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_41 up_tmr;
-	type_42 down_tmr;
-	type_46 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct xEntShadow
@@ -453,7 +453,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_44 radius;
+	float32 radius[2];
 };
 
 struct rxHeapBlockHeader
@@ -462,7 +462,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_45 pad;
+	uint32 pad[4];
 };
 
 struct RxPipelineNodeTopSortData
@@ -490,7 +490,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_59 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -525,16 +525,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_57 update;
-	type_57 endUpdate;
-	type_7 bupdate;
-	type_60 move;
-	type_62 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_34 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -550,7 +550,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_54 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xVec3
@@ -594,7 +594,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_50 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -657,14 +657,14 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_37 BeforeEnter;
-	type_25 StateCallback;
-	type_43 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_22 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct xMat3x3
@@ -684,7 +684,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_38 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xAnimPlay
@@ -697,7 +697,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_43 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xModelBucket
@@ -734,7 +734,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_15 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -768,7 +768,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_6 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -788,7 +788,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_16 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -819,9 +819,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_21 resolvID;
-	type_30 base2Name;
-	type_33 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xGroupAsset : xBaseAsset
@@ -841,11 +841,14 @@ struct rxReq
 {
 };
 
-union RwStreamUnion
+struct RwStreamUnion
 {
-	RwStreamMemory memory;
-	RwStreamFile file;
-	RwStreamCustom custom;
+	union
+	{
+		RwStreamMemory memory;
+		RwStreamFile file;
+		RwStreamCustom custom;
+	};
 };
 
 enum RxClusterValidityReq
@@ -862,7 +865,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_36 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -889,7 +892,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_39 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -936,10 +939,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_64 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_65 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -1061,7 +1064,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_17 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1164,7 +1167,7 @@ struct _class_0
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_47 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct RpMaterialList
@@ -1189,8 +1192,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_13 activateCB;
-	type_13 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct xBaseAsset
@@ -1278,7 +1281,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_49 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RxClusterRef
@@ -1301,7 +1304,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_1 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -1351,13 +1354,13 @@ struct RwPlane
 
 struct RxNodeMethods
 {
-	type_8 nodeBody;
-	type_11 nodeInit;
-	type_19 nodeTerm;
-	type_24 pipelineNodeInit;
-	type_26 pipelineNodeTerm;
-	type_31 pipelineNodeConfig;
-	type_4 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -1366,10 +1369,13 @@ struct RxPipelineCluster
 	uint32 creationAttributes;
 };
 
-union RwStreamFile
+struct RwStreamFile
 {
-	void* fpFile;
-	void* constfpFile;
+	union
+	{
+		void* fpFile;
+		void* constfpFile;
+	};
 };
 
 struct RwTexture
@@ -1377,8 +1383,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_55 name;
-	type_56 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -1395,7 +1401,7 @@ struct RxNodeDefinition
 
 struct xShadowSimplePoly
 {
-	type_52 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1447,7 +1453,7 @@ struct RwLinkList
 
 struct RpTriangle
 {
-	type_58 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -1459,7 +1465,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_61 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwFrustumPlane
@@ -1512,9 +1518,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_27 colls;
-	type_28 post;
-	type_32 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xSphere
@@ -1552,7 +1558,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_66 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct _tagiPad
@@ -1651,7 +1657,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_18 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct iFogParams
@@ -1672,10 +1678,10 @@ struct xAnimMultiFileBase
 
 struct RwStreamCustom
 {
-	type_2 sfnclose;
-	type_5 sfnread;
-	type_9 sfnwrite;
-	type_12 sfnskip;
+	int32(*sfnclose)(void*);
+	uint32(*sfnread)(void*, void*, uint32);
+	int32(*sfnwrite)(void*, void*, uint32);
+	int32(*sfnskip)(void*, uint32);
 	void* data;
 };
 
@@ -1695,12 +1701,12 @@ RpMaterial* s_pMaterial;
 xGlobals* xglobals;
 int32 iModelHack_DisablePrelight;
 long32 skyTest_1;
-type_67 CmpAlphaBucket;
+int32(*CmpAlphaBucket)(void*, void*);
 int32 xModelBucketEnabled;
-<unknown type (0xa510)>* _rwDMAPktPtr;
+<unknown fundamental type (0xa510)>* _rwDMAPktPtr;
 long32 skyFrame_1;
 xLightKit* gLastLightKit;
-type_48 ourGlobals;
+uint32 ourGlobals[4096];
 uint32 gActiveHeap;
 
 void xModelBucket_PreAllocModelPipe(RpAtomic* m);
@@ -1725,6 +1731,14 @@ int32 CmpAlphaBucket(void* _a, void* _b);
 // Start address: 0x310a10
 void xModelBucket_PreAllocModelPipe(RpAtomic* m)
 {
+	// Line 1164, Address: 0x310a10, Func Offset: 0
+	// Line 1166, Address: 0x310a20, Func Offset: 0x10
+	// Line 1167, Address: 0x310a28, Func Offset: 0x18
+	// Line 1168, Address: 0x310a38, Func Offset: 0x28
+	// Line 1170, Address: 0x310a40, Func Offset: 0x30
+	// Line 1171, Address: 0x310a4c, Func Offset: 0x3c
+	// Line 1173, Address: 0x310a58, Func Offset: 0x48
+	// Func End, Address: 0x310a68, Func Offset: 0x58
 }
 
 // xModelBucket_Deinit__Fv
@@ -1733,12 +1747,27 @@ void xModelBucket_Deinit()
 {
 	int32 i;
 	RwFrame* tframe;
+	// Line 1140, Address: 0x310a70, Func Offset: 0
+	// Line 1143, Address: 0x310a84, Func Offset: 0x14
+	// Line 1144, Address: 0x310aa0, Func Offset: 0x30
+	// Line 1148, Address: 0x310ab0, Func Offset: 0x40
+	// Line 1149, Address: 0x310ac4, Func Offset: 0x54
+	// Line 1150, Address: 0x310ac8, Func Offset: 0x58
+	// Line 1151, Address: 0x310ad0, Func Offset: 0x60
+	// Line 1152, Address: 0x310ad8, Func Offset: 0x68
+	// Line 1154, Address: 0x310ae0, Func Offset: 0x70
+	// Line 1156, Address: 0x310af0, Func Offset: 0x80
+	// Line 1159, Address: 0x310b08, Func Offset: 0x98
+	// Line 1160, Address: 0x310b2c, Func Offset: 0xbc
+	// Func End, Address: 0x310b44, Func Offset: 0xd4
 }
 
 // xModelBucket_RenderAlphaEnd__Fv
 // Start address: 0x310b50
 void xModelBucket_RenderAlphaEnd()
 {
+	// Line 1133, Address: 0x310b50, Func Offset: 0
+	// Func End, Address: 0x310b58, Func Offset: 0x8
 }
 
 // xModelBucket_RenderAlphaLayer__Fi
@@ -1757,12 +1786,133 @@ void xModelBucket_RenderAlphaLayer(int32 maxLayer)
 	uint8 skyOldFade;
 	uint32 xorPipeFlags;
 	uint8 oldcmp;
+	// Line 863, Address: 0x310b60, Func Offset: 0
+	// Line 864, Address: 0x310b64, Func Offset: 0x4
+	// Line 863, Address: 0x310b68, Func Offset: 0x8
+	// Line 864, Address: 0x310b74, Func Offset: 0x14
+	// Line 863, Address: 0x310b78, Func Offset: 0x18
+	// Line 870, Address: 0x310b9c, Func Offset: 0x3c
+	// Line 871, Address: 0x310ba8, Func Offset: 0x48
+	// Line 872, Address: 0x310bb0, Func Offset: 0x50
+	// Line 876, Address: 0x310bb8, Func Offset: 0x58
+	// Line 878, Address: 0x310bc4, Func Offset: 0x64
+	// Line 881, Address: 0x310be8, Func Offset: 0x88
+	// Line 885, Address: 0x310bec, Func Offset: 0x8c
+	// Line 884, Address: 0x310bf0, Func Offset: 0x90
+	// Line 885, Address: 0x310bf4, Func Offset: 0x94
+	// Line 888, Address: 0x310bf8, Func Offset: 0x98
+	// Line 890, Address: 0x310c08, Func Offset: 0xa8
+	// Line 891, Address: 0x310c1c, Func Offset: 0xbc
+	// Line 895, Address: 0x310c24, Func Offset: 0xc4
+	// Line 896, Address: 0x310c2c, Func Offset: 0xcc
+	// Line 897, Address: 0x310c34, Func Offset: 0xd4
+	// Line 900, Address: 0x310c38, Func Offset: 0xd8
+	// Line 901, Address: 0x310c3c, Func Offset: 0xdc
+	// Line 902, Address: 0x310c50, Func Offset: 0xf0
+	// Line 915, Address: 0x310c60, Func Offset: 0x100
+	// Line 906, Address: 0x310c64, Func Offset: 0x104
+	// Line 915, Address: 0x310c68, Func Offset: 0x108
+	// Line 906, Address: 0x310c6c, Func Offset: 0x10c
+	// Line 903, Address: 0x310c70, Func Offset: 0x110
+	// Line 906, Address: 0x310c74, Func Offset: 0x114
+	// Line 915, Address: 0x310c8c, Func Offset: 0x12c
+	// Line 907, Address: 0x310c90, Func Offset: 0x130
+	// Line 915, Address: 0x310c94, Func Offset: 0x134
+	// Line 916, Address: 0x310cac, Func Offset: 0x14c
+	// Line 917, Address: 0x310cb0, Func Offset: 0x150
+	// Line 916, Address: 0x310cb8, Func Offset: 0x158
+	// Line 917, Address: 0x310cc0, Func Offset: 0x160
+	// Line 918, Address: 0x310d00, Func Offset: 0x1a0
+	// Line 919, Address: 0x310d44, Func Offset: 0x1e4
+	// Line 926, Address: 0x310d48, Func Offset: 0x1e8
+	// Line 927, Address: 0x310d4c, Func Offset: 0x1ec
+	// Line 930, Address: 0x310d54, Func Offset: 0x1f4
+	// Line 931, Address: 0x310d5c, Func Offset: 0x1fc
+	// Line 932, Address: 0x310d6c, Func Offset: 0x20c
+	// Line 933, Address: 0x310d70, Func Offset: 0x210
+	// Line 934, Address: 0x310d7c, Func Offset: 0x21c
+	// Line 938, Address: 0x310d88, Func Offset: 0x228
+	// Line 939, Address: 0x310d94, Func Offset: 0x234
+	// Line 940, Address: 0x310da0, Func Offset: 0x240
+	// Line 941, Address: 0x310da8, Func Offset: 0x248
+	// Line 942, Address: 0x310db0, Func Offset: 0x250
+	// Line 944, Address: 0x310dbc, Func Offset: 0x25c
+	// Line 947, Address: 0x310dc0, Func Offset: 0x260
+	// Line 948, Address: 0x310dcc, Func Offset: 0x26c
+	// Line 949, Address: 0x310dd8, Func Offset: 0x278
+	// Line 950, Address: 0x310de0, Func Offset: 0x280
+	// Line 951, Address: 0x310df4, Func Offset: 0x294
+	// Line 953, Address: 0x310dfc, Func Offset: 0x29c
+	// Line 989, Address: 0x310e00, Func Offset: 0x2a0
+	// Line 990, Address: 0x310e10, Func Offset: 0x2b0
+	// Line 991, Address: 0x310e18, Func Offset: 0x2b8
+	// Line 992, Address: 0x310e1c, Func Offset: 0x2bc
+	// Line 993, Address: 0x310e24, Func Offset: 0x2c4
+	// Line 994, Address: 0x310e30, Func Offset: 0x2d0
+	// Line 995, Address: 0x310e34, Func Offset: 0x2d4
+	// Line 997, Address: 0x310e3c, Func Offset: 0x2dc
+	// Line 1000, Address: 0x310e40, Func Offset: 0x2e0
+	// Line 1001, Address: 0x310e44, Func Offset: 0x2e4
+	// Line 1025, Address: 0x310e48, Func Offset: 0x2e8
+	// Line 1026, Address: 0x310e58, Func Offset: 0x2f8
+	// Line 1027, Address: 0x310e60, Func Offset: 0x300
+	// Line 1028, Address: 0x310e68, Func Offset: 0x308
+	// Line 1029, Address: 0x310e74, Func Offset: 0x314
+	// Line 1030, Address: 0x310e7c, Func Offset: 0x31c
+	// Line 1031, Address: 0x310e88, Func Offset: 0x328
+	// Line 1034, Address: 0x310e98, Func Offset: 0x338
+	// Line 1035, Address: 0x310ea4, Func Offset: 0x344
+	// Line 1036, Address: 0x310eac, Func Offset: 0x34c
+	// Line 1045, Address: 0x310eb8, Func Offset: 0x358
+	// Line 1046, Address: 0x310ec0, Func Offset: 0x360
+	// Line 1049, Address: 0x310ec8, Func Offset: 0x368
+	// Line 1055, Address: 0x310ed0, Func Offset: 0x370
+	// Line 1056, Address: 0x310ef8, Func Offset: 0x398
+	// Line 1057, Address: 0x310f00, Func Offset: 0x3a0
+	// Line 1056, Address: 0x310f08, Func Offset: 0x3a8
+	// Line 1057, Address: 0x310f0c, Func Offset: 0x3ac
+	// Line 1058, Address: 0x310f14, Func Offset: 0x3b4
+	// Line 1057, Address: 0x310f18, Func Offset: 0x3b8
+	// Line 1062, Address: 0x310f1c, Func Offset: 0x3bc
+	// Line 1063, Address: 0x310f24, Func Offset: 0x3c4
+	// Line 1064, Address: 0x310f2c, Func Offset: 0x3cc
+	// Line 1070, Address: 0x310f30, Func Offset: 0x3d0
+	// Line 1073, Address: 0x310f34, Func Offset: 0x3d4
+	// Line 1076, Address: 0x310f38, Func Offset: 0x3d8
+	// Line 1077, Address: 0x310f44, Func Offset: 0x3e4
+	// Line 1076, Address: 0x310f48, Func Offset: 0x3e8
+	// Line 1077, Address: 0x310f4c, Func Offset: 0x3ec
+	// Line 1080, Address: 0x310f60, Func Offset: 0x400
+	// Line 1084, Address: 0x310f6c, Func Offset: 0x40c
+	// Line 1085, Address: 0x310f7c, Func Offset: 0x41c
+	// Line 1086, Address: 0x310f84, Func Offset: 0x424
+	// Line 1087, Address: 0x310f88, Func Offset: 0x428
+	// Line 1088, Address: 0x310f9c, Func Offset: 0x43c
+	// Line 1089, Address: 0x310fa4, Func Offset: 0x444
+	// Line 1092, Address: 0x310fa8, Func Offset: 0x448
+	// Line 1093, Address: 0x310fb8, Func Offset: 0x458
+	// Line 1097, Address: 0x310fc4, Func Offset: 0x464
+	// Line 1099, Address: 0x310fd8, Func Offset: 0x478
+	// Line 1100, Address: 0x310fe4, Func Offset: 0x484
+	// Line 1118, Address: 0x310fe8, Func Offset: 0x488
+	// Line 1119, Address: 0x310ff8, Func Offset: 0x498
+	// Line 1120, Address: 0x310ffc, Func Offset: 0x49c
+	// Line 1122, Address: 0x311004, Func Offset: 0x4a4
+	// Line 1123, Address: 0x311008, Func Offset: 0x4a8
+	// Func End, Address: 0x311040, Func Offset: 0x4e0
 }
 
 // xModelBucket_RenderAlphaBegin__Fv
 // Start address: 0x311040
 void xModelBucket_RenderAlphaBegin()
 {
+	// Line 846, Address: 0x311040, Func Offset: 0
+	// Line 850, Address: 0x311048, Func Offset: 0x8
+	// Line 848, Address: 0x31104c, Func Offset: 0xc
+	// Line 851, Address: 0x311050, Func Offset: 0x10
+	// Line 852, Address: 0x311058, Func Offset: 0x18
+	// Line 853, Address: 0x311070, Func Offset: 0x30
+	// Func End, Address: 0x31107c, Func Offset: 0x3c
 }
 
 // PS2_MaskFrameBuffer_AlphaCompare__FUiUc
@@ -1771,6 +1921,36 @@ uint8 PS2_MaskFrameBuffer_AlphaCompare(uint32 mask, uint8 alphaCompare)
 {
 	uint8 retval;
 	long32 tmpframe;
+	// Line 809, Address: 0x311080, Func Offset: 0
+	// Line 813, Address: 0x311084, Func Offset: 0x4
+	// Line 809, Address: 0x311088, Func Offset: 0x8
+	// Line 813, Address: 0x31108c, Func Offset: 0xc
+	// Line 809, Address: 0x311090, Func Offset: 0x10
+	// Line 816, Address: 0x311094, Func Offset: 0x14
+	// Line 809, Address: 0x311098, Func Offset: 0x18
+	// Line 816, Address: 0x31109c, Func Offset: 0x1c
+	// Line 811, Address: 0x3110a0, Func Offset: 0x20
+	// Line 812, Address: 0x3110a4, Func Offset: 0x24
+	// Line 816, Address: 0x3110a8, Func Offset: 0x28
+	// Line 820, Address: 0x3110bc, Func Offset: 0x3c
+	// Line 812, Address: 0x3110c0, Func Offset: 0x40
+	// Line 816, Address: 0x3110c4, Func Offset: 0x44
+	// Line 811, Address: 0x3110c8, Func Offset: 0x48
+	// Line 813, Address: 0x3110cc, Func Offset: 0x4c
+	// Line 811, Address: 0x3110d0, Func Offset: 0x50
+	// Line 813, Address: 0x3110d4, Func Offset: 0x54
+	// Line 816, Address: 0x3110d8, Func Offset: 0x58
+	// Line 820, Address: 0x3110dc, Func Offset: 0x5c
+	// Line 832, Address: 0x3110e4, Func Offset: 0x64
+	// Line 833, Address: 0x3110f4, Func Offset: 0x74
+	// Line 832, Address: 0x3110f8, Func Offset: 0x78
+	// Line 837, Address: 0x311100, Func Offset: 0x80
+	// Line 841, Address: 0x311104, Func Offset: 0x84
+	// Line 837, Address: 0x311108, Func Offset: 0x88
+	// Line 833, Address: 0x31110c, Func Offset: 0x8c
+	// Line 838, Address: 0x31111c, Func Offset: 0x9c
+	// Line 842, Address: 0x311130, Func Offset: 0xb0
+	// Func End, Address: 0x311144, Func Offset: 0xc4
 }
 
 // xModelBucket_RenderOpaque__Fv
@@ -1784,6 +1964,48 @@ void xModelBucket_RenderOpaque()
 	int32 oldHack;
 	RpAtomic* oldmodel;
 	RwFogType oldfogtype;
+	// Line 684, Address: 0x311150, Func Offset: 0
+	// Line 702, Address: 0x311168, Func Offset: 0x18
+	// Line 684, Address: 0x31116c, Func Offset: 0x1c
+	// Line 702, Address: 0x31117c, Func Offset: 0x2c
+	// Line 704, Address: 0x311190, Func Offset: 0x40
+	// Line 706, Address: 0x311198, Func Offset: 0x48
+	// Line 708, Address: 0x31119c, Func Offset: 0x4c
+	// Line 711, Address: 0x3111a8, Func Offset: 0x58
+	// Line 713, Address: 0x3111b8, Func Offset: 0x68
+	// Line 714, Address: 0x3111cc, Func Offset: 0x7c
+	// Line 718, Address: 0x3111d4, Func Offset: 0x84
+	// Line 719, Address: 0x3111dc, Func Offset: 0x8c
+	// Line 720, Address: 0x3111e4, Func Offset: 0x94
+	// Line 723, Address: 0x3111e8, Func Offset: 0x98
+	// Line 727, Address: 0x3111ec, Func Offset: 0x9c
+	// Line 724, Address: 0x3111f0, Func Offset: 0xa0
+	// Line 727, Address: 0x3111f4, Func Offset: 0xa4
+	// Line 728, Address: 0x311204, Func Offset: 0xb4
+	// Line 729, Address: 0x31120c, Func Offset: 0xbc
+	// Line 733, Address: 0x311210, Func Offset: 0xc0
+	// Line 735, Address: 0x311238, Func Offset: 0xe8
+	// Line 736, Address: 0x31123c, Func Offset: 0xec
+	// Line 737, Address: 0x311244, Func Offset: 0xf4
+	// Line 762, Address: 0x311248, Func Offset: 0xf8
+	// Line 765, Address: 0x311250, Func Offset: 0x100
+	// Line 766, Address: 0x31126c, Func Offset: 0x11c
+	// Line 767, Address: 0x311270, Func Offset: 0x120
+	// Line 771, Address: 0x311278, Func Offset: 0x128
+	// Line 772, Address: 0x31128c, Func Offset: 0x13c
+	// Line 773, Address: 0x311294, Func Offset: 0x144
+	// Line 772, Address: 0x311298, Func Offset: 0x148
+	// Line 776, Address: 0x31129c, Func Offset: 0x14c
+	// Line 777, Address: 0x3112a4, Func Offset: 0x154
+	// Line 778, Address: 0x3112ac, Func Offset: 0x15c
+	// Line 783, Address: 0x3112b0, Func Offset: 0x160
+	// Line 786, Address: 0x3112b4, Func Offset: 0x164
+	// Line 789, Address: 0x3112b8, Func Offset: 0x168
+	// Line 791, Address: 0x3112bc, Func Offset: 0x16c
+	// Line 793, Address: 0x3112c8, Func Offset: 0x178
+	// Line 794, Address: 0x3112cc, Func Offset: 0x17c
+	// Line 803, Address: 0x3112e0, Func Offset: 0x190
+	// Func End, Address: 0x31130c, Func Offset: 0x1bc
 }
 
 // xModelBucket_Add__FP14xModelInstance
@@ -1796,6 +2018,51 @@ void xModelBucket_Add(xModelInstance* minst)
 	xModelBucket* bucket;
 	float32 camdot;
 	float32 alphaFade;
+	// Line 506, Address: 0x311310, Func Offset: 0
+	// Line 508, Address: 0x311314, Func Offset: 0x4
+	// Line 506, Address: 0x311318, Func Offset: 0x8
+	// Line 508, Address: 0x311328, Func Offset: 0x18
+	// Line 513, Address: 0x311338, Func Offset: 0x28
+	// Line 514, Address: 0x31133c, Func Offset: 0x2c
+	// Line 519, Address: 0x311350, Func Offset: 0x40
+	// Line 520, Address: 0x311354, Func Offset: 0x44
+	// Line 519, Address: 0x311358, Func Offset: 0x48
+	// Line 523, Address: 0x311370, Func Offset: 0x60
+	// Line 520, Address: 0x311380, Func Offset: 0x70
+	// Line 523, Address: 0x311390, Func Offset: 0x80
+	// Line 560, Address: 0x31139c, Func Offset: 0x8c
+	// Line 561, Address: 0x3113b0, Func Offset: 0xa0
+	// Line 573, Address: 0x3113b8, Func Offset: 0xa8
+	// Line 567, Address: 0x3113bc, Func Offset: 0xac
+	// Line 573, Address: 0x3113e4, Func Offset: 0xd4
+	// Line 567, Address: 0x3113ec, Func Offset: 0xdc
+	// Line 573, Address: 0x311400, Func Offset: 0xf0
+	// Line 567, Address: 0x311404, Func Offset: 0xf4
+	// Line 573, Address: 0x311408, Func Offset: 0xf8
+	// Line 577, Address: 0x311428, Func Offset: 0x118
+	// Line 578, Address: 0x311438, Func Offset: 0x128
+	// Line 579, Address: 0x311448, Func Offset: 0x138
+	// Line 580, Address: 0x311468, Func Offset: 0x158
+	// Line 583, Address: 0x31147c, Func Offset: 0x16c
+	// Line 584, Address: 0x31149c, Func Offset: 0x18c
+	// Line 587, Address: 0x3114a0, Func Offset: 0x190
+	// Line 591, Address: 0x3114dc, Func Offset: 0x1cc
+	// Line 592, Address: 0x3114ec, Func Offset: 0x1dc
+	// Line 599, Address: 0x311500, Func Offset: 0x1f0
+	// Line 592, Address: 0x311508, Func Offset: 0x1f8
+	// Line 593, Address: 0x311510, Func Offset: 0x200
+	// Line 594, Address: 0x31152c, Func Offset: 0x21c
+	// Line 599, Address: 0x31154c, Func Offset: 0x23c
+	// Line 604, Address: 0x311560, Func Offset: 0x250
+	// Line 599, Address: 0x311564, Func Offset: 0x254
+	// Line 604, Address: 0x31157c, Func Offset: 0x26c
+	// Line 605, Address: 0x3115a4, Func Offset: 0x294
+	// Line 620, Address: 0x3115ac, Func Offset: 0x29c
+	// Line 623, Address: 0x3115b8, Func Offset: 0x2a8
+	// Line 624, Address: 0x3115c0, Func Offset: 0x2b0
+	// Line 625, Address: 0x3115c4, Func Offset: 0x2b4
+	// Line 626, Address: 0x3115c8, Func Offset: 0x2b8
+	// Func End, Address: 0x3115dc, Func Offset: 0x2cc
 }
 
 // xModelBucket_Begin__Fv
@@ -1803,6 +2070,14 @@ void xModelBucket_Add(xModelInstance* minst)
 void xModelBucket_Begin()
 {
 	int32 i;
+	// Line 495, Address: 0x3115e0, Func Offset: 0
+	// Line 496, Address: 0x3115f8, Func Offset: 0x18
+	// Line 497, Address: 0x3115fc, Func Offset: 0x1c
+	// Line 496, Address: 0x311600, Func Offset: 0x20
+	// Line 497, Address: 0x311608, Func Offset: 0x28
+	// Line 500, Address: 0x311618, Func Offset: 0x38
+	// Line 501, Address: 0x31161c, Func Offset: 0x3c
+	// Func End, Address: 0x311624, Func Offset: 0x44
 }
 
 // xModelBucket_GetBuckets__FP8RpAtomic
@@ -1810,12 +2085,29 @@ void xModelBucket_Begin()
 xModelBucket** xModelBucket_GetBuckets(RpAtomic* data)
 {
 	int32 i;
+	// Line 480, Address: 0x311630, Func Offset: 0
+	// Line 481, Address: 0x311648, Func Offset: 0x18
+	// Line 482, Address: 0x311658, Func Offset: 0x28
+	// Line 484, Address: 0x311660, Func Offset: 0x30
+	// Line 485, Address: 0x311670, Func Offset: 0x40
+	// Line 486, Address: 0x311678, Func Offset: 0x48
+	// Func End, Address: 0x311680, Func Offset: 0x50
 }
 
 // xModelBucket_Init__Fv
 // Start address: 0x311680
 void xModelBucket_Init()
 {
+	// Line 462, Address: 0x311680, Func Offset: 0
+	// Line 467, Address: 0x31168c, Func Offset: 0xc
+	// Line 468, Address: 0x311694, Func Offset: 0x14
+	// Line 469, Address: 0x31169c, Func Offset: 0x1c
+	// Line 470, Address: 0x3116a4, Func Offset: 0x24
+	// Line 471, Address: 0x3116ac, Func Offset: 0x2c
+	// Line 472, Address: 0x3116b0, Func Offset: 0x30
+	// Line 473, Address: 0x3116b4, Func Offset: 0x34
+	// Line 474, Address: 0x3116b8, Func Offset: 0x38
+	// Func End, Address: 0x3116c4, Func Offset: 0x44
 }
 
 // xModelBucket_InsertBucket__FP8RpAtomicUiUi
@@ -1823,11 +2115,72 @@ void xModelBucket_Init()
 void xModelBucket_InsertBucket(RpAtomic* data, uint32 pipeFlags, uint32 subObjects)
 {
 	int32 numbuckets;
-	type_35 pipeSetting;
+	int32 pipeSetting[2];
 	int32 i;
 	uint32 subObjTemp;
 	RpAtomic* dataTemp;
 	RpAtomic* extraData;
+	// Line 348, Address: 0x3116d0, Func Offset: 0
+	// Line 356, Address: 0x3116d4, Func Offset: 0x4
+	// Line 348, Address: 0x3116d8, Func Offset: 0x8
+	// Line 356, Address: 0x311704, Func Offset: 0x34
+	// Line 360, Address: 0x311730, Func Offset: 0x60
+	// Line 363, Address: 0x311738, Func Offset: 0x68
+	// Line 364, Address: 0x31173c, Func Offset: 0x6c
+	// Line 365, Address: 0x311744, Func Offset: 0x74
+	// Line 366, Address: 0x311748, Func Offset: 0x78
+	// Line 368, Address: 0x31174c, Func Offset: 0x7c
+	// Line 367, Address: 0x311750, Func Offset: 0x80
+	// Line 369, Address: 0x311754, Func Offset: 0x84
+	// Line 371, Address: 0x31175c, Func Offset: 0x8c
+	// Line 372, Address: 0x311760, Func Offset: 0x90
+	// Line 375, Address: 0x311770, Func Offset: 0xa0
+	// Line 376, Address: 0x311778, Func Offset: 0xa8
+	// Line 378, Address: 0x31177c, Func Offset: 0xac
+	// Line 377, Address: 0x311780, Func Offset: 0xb0
+	// Line 378, Address: 0x311784, Func Offset: 0xb4
+	// Line 386, Address: 0x311788, Func Offset: 0xb8
+	// Line 387, Address: 0x31178c, Func Offset: 0xbc
+	// Line 389, Address: 0x311790, Func Offset: 0xc0
+	// Line 390, Address: 0x31179c, Func Offset: 0xcc
+	// Line 391, Address: 0x3117a8, Func Offset: 0xd8
+	// Line 399, Address: 0x3117b8, Func Offset: 0xe8
+	// Line 402, Address: 0x3117d0, Func Offset: 0x100
+	// Line 403, Address: 0x3117f4, Func Offset: 0x124
+	// Line 404, Address: 0x3117fc, Func Offset: 0x12c
+	// Line 409, Address: 0x311804, Func Offset: 0x134
+	// Line 413, Address: 0x311818, Func Offset: 0x148
+	// Line 414, Address: 0x311828, Func Offset: 0x158
+	// Line 417, Address: 0x311830, Func Offset: 0x160
+	// Line 422, Address: 0x311838, Func Offset: 0x168
+	// Line 429, Address: 0x311844, Func Offset: 0x174
+	// Line 437, Address: 0x311848, Func Offset: 0x178
+	// Line 429, Address: 0x31184c, Func Offset: 0x17c
+	// Line 430, Address: 0x311874, Func Offset: 0x1a4
+	// Line 432, Address: 0x3118a0, Func Offset: 0x1d0
+	// Line 433, Address: 0x3118bc, Func Offset: 0x1ec
+	// Line 434, Address: 0x3118d8, Func Offset: 0x208
+	// Line 435, Address: 0x3118f4, Func Offset: 0x224
+	// Line 436, Address: 0x311914, Func Offset: 0x244
+	// Line 437, Address: 0x31192c, Func Offset: 0x25c
+	// Line 439, Address: 0x311934, Func Offset: 0x264
+	// Line 440, Address: 0x311944, Func Offset: 0x274
+	// Line 441, Address: 0x311964, Func Offset: 0x294
+	// Line 442, Address: 0x311980, Func Offset: 0x2b0
+	// Line 443, Address: 0x31199c, Func Offset: 0x2cc
+	// Line 444, Address: 0x3119b8, Func Offset: 0x2e8
+	// Line 447, Address: 0x3119d4, Func Offset: 0x304
+	// Line 448, Address: 0x311a04, Func Offset: 0x334
+	// Line 452, Address: 0x311a08, Func Offset: 0x338
+	// Line 453, Address: 0x311a0c, Func Offset: 0x33c
+	// Line 452, Address: 0x311a10, Func Offset: 0x340
+	// Line 453, Address: 0x311a14, Func Offset: 0x344
+	// Line 452, Address: 0x311a18, Func Offset: 0x348
+	// Line 453, Address: 0x311a1c, Func Offset: 0x34c
+	// Line 456, Address: 0x311a20, Func Offset: 0x350
+	// Line 458, Address: 0x311a30, Func Offset: 0x360
+	// Line 459, Address: 0x311a38, Func Offset: 0x368
+	// Func End, Address: 0x311a64, Func Offset: 0x394
 }
 
 // FullAtomicDupe__FP8RpAtomiciPP8RpAtomic
@@ -1840,6 +2193,58 @@ void FullAtomicDupe(RpAtomic* atomic, int32 count, RpAtomic** output)
 	RpAtomic* tempAtom;
 	RwMemory rwmemB;
 	RwFrame* temp_frame;
+	// Line 196, Address: 0x311a70, Func Offset: 0
+	// Line 199, Address: 0x311a74, Func Offset: 0x4
+	// Line 196, Address: 0x311a78, Func Offset: 0x8
+	// Line 199, Address: 0x311a7c, Func Offset: 0xc
+	// Line 196, Address: 0x311a80, Func Offset: 0x10
+	// Line 199, Address: 0x311aa0, Func Offset: 0x30
+	// Line 223, Address: 0x311ac0, Func Offset: 0x50
+	// Line 225, Address: 0x311ad4, Func Offset: 0x64
+	// Line 226, Address: 0x311adc, Func Offset: 0x6c
+	// Line 227, Address: 0x311ae4, Func Offset: 0x74
+	// Line 231, Address: 0x311af0, Func Offset: 0x80
+	// Line 235, Address: 0x311b08, Func Offset: 0x98
+	// Line 237, Address: 0x311b1c, Func Offset: 0xac
+	// Line 239, Address: 0x311b30, Func Offset: 0xc0
+	// Line 242, Address: 0x311b3c, Func Offset: 0xcc
+	// Line 245, Address: 0x311b48, Func Offset: 0xd8
+	// Line 250, Address: 0x311b5c, Func Offset: 0xec
+	// Line 251, Address: 0x311b74, Func Offset: 0x104
+	// Line 252, Address: 0x311b84, Func Offset: 0x114
+	// Line 253, Address: 0x311b8c, Func Offset: 0x11c
+	// Line 255, Address: 0x311b94, Func Offset: 0x124
+	// Line 259, Address: 0x311b98, Func Offset: 0x128
+	// Line 260, Address: 0x311ba8, Func Offset: 0x138
+	// Line 261, Address: 0x311bb0, Func Offset: 0x140
+	// Line 265, Address: 0x311bb8, Func Offset: 0x148
+	// Line 266, Address: 0x311bdc, Func Offset: 0x16c
+	// Line 268, Address: 0x311bf0, Func Offset: 0x180
+	// Line 269, Address: 0x311bf8, Func Offset: 0x188
+	// Line 270, Address: 0x311c00, Func Offset: 0x190
+	// Line 271, Address: 0x311c0c, Func Offset: 0x19c
+	// Line 272, Address: 0x311c10, Func Offset: 0x1a0
+	// Line 274, Address: 0x311c24, Func Offset: 0x1b4
+	// Line 275, Address: 0x311c2c, Func Offset: 0x1bc
+	// Line 286, Address: 0x311c3c, Func Offset: 0x1cc
+	// Line 287, Address: 0x311c48, Func Offset: 0x1d8
+	// Line 288, Address: 0x311c54, Func Offset: 0x1e4
+	// Line 289, Address: 0x311c60, Func Offset: 0x1f0
+	// Line 290, Address: 0x311c64, Func Offset: 0x1f4
+	// Line 291, Address: 0x311c68, Func Offset: 0x1f8
+	// Line 299, Address: 0x311c74, Func Offset: 0x204
+	// Line 300, Address: 0x311c7c, Func Offset: 0x20c
+	// Line 301, Address: 0x311c80, Func Offset: 0x210
+	// Line 302, Address: 0x311c88, Func Offset: 0x218
+	// Line 303, Address: 0x311c90, Func Offset: 0x220
+	// Line 306, Address: 0x311c98, Func Offset: 0x228
+	// Line 313, Address: 0x311ca0, Func Offset: 0x230
+	// Line 317, Address: 0x311cc4, Func Offset: 0x254
+	// Line 318, Address: 0x311cdc, Func Offset: 0x26c
+	// Line 320, Address: 0x311ce4, Func Offset: 0x274
+	// Line 323, Address: 0x311cf8, Func Offset: 0x288
+	// Line 345, Address: 0x311d08, Func Offset: 0x298
+	// Func End, Address: 0x311d2c, Func Offset: 0x2bc
 }
 
 // xModelBucket_PreCountAlloc__Fi
@@ -1847,6 +2252,30 @@ void FullAtomicDupe(RpAtomic* atomic, int32 count, RpAtomic** output)
 void xModelBucket_PreCountAlloc(int32 maxAlphaModels)
 {
 	RwBBox bbox;
+	// Line 160, Address: 0x311d30, Func Offset: 0
+	// Line 162, Address: 0x311d34, Func Offset: 0x4
+	// Line 160, Address: 0x311d38, Func Offset: 0x8
+	// Line 162, Address: 0x311d3c, Func Offset: 0xc
+	// Line 161, Address: 0x311d40, Func Offset: 0x10
+	// Line 162, Address: 0x311d44, Func Offset: 0x14
+	// Line 163, Address: 0x311d5c, Func Offset: 0x2c
+	// Line 164, Address: 0x311d70, Func Offset: 0x40
+	// Line 163, Address: 0x311d78, Func Offset: 0x48
+	// Line 164, Address: 0x311d7c, Func Offset: 0x4c
+	// Line 176, Address: 0x311d94, Func Offset: 0x64
+	// Line 170, Address: 0x311d98, Func Offset: 0x68
+	// Line 173, Address: 0x311da0, Func Offset: 0x70
+	// Line 170, Address: 0x311da4, Func Offset: 0x74
+	// Line 173, Address: 0x311da8, Func Offset: 0x78
+	// Line 171, Address: 0x311dac, Func Offset: 0x7c
+	// Line 172, Address: 0x311db0, Func Offset: 0x80
+	// Line 173, Address: 0x311db4, Func Offset: 0x84
+	// Line 174, Address: 0x311db8, Func Offset: 0x88
+	// Line 176, Address: 0x311dbc, Func Offset: 0x8c
+	// Line 180, Address: 0x311dc8, Func Offset: 0x98
+	// Line 182, Address: 0x311ddc, Func Offset: 0xac
+	// Line 183, Address: 0x311de8, Func Offset: 0xb8
+	// Func End, Address: 0x311df4, Func Offset: 0xc4
 }
 
 // xModelBucket_PreCountBucket__FP8RpAtomicUiUi
@@ -1855,12 +2284,48 @@ void xModelBucket_PreCountBucket(RpAtomic* data, uint32 pipeFlags, uint32 subObj
 {
 	int32 numbuckets;
 	int32 modelcount;
+	// Line 115, Address: 0x311e00, Func Offset: 0
+	// Line 123, Address: 0x311e04, Func Offset: 0x4
+	// Line 115, Address: 0x311e08, Func Offset: 0x8
+	// Line 123, Address: 0x311e20, Func Offset: 0x20
+	// Line 124, Address: 0x311e4c, Func Offset: 0x4c
+	// Line 126, Address: 0x311e50, Func Offset: 0x50
+	// Line 129, Address: 0x311e58, Func Offset: 0x58
+	// Line 132, Address: 0x311e60, Func Offset: 0x60
+	// Line 135, Address: 0x311e68, Func Offset: 0x68
+	// Line 137, Address: 0x311e78, Func Offset: 0x78
+	// Line 138, Address: 0x311e80, Func Offset: 0x80
+	// Line 141, Address: 0x311e84, Func Offset: 0x84
+	// Line 144, Address: 0x311e88, Func Offset: 0x88
+	// Line 145, Address: 0x311e8c, Func Offset: 0x8c
+	// Line 146, Address: 0x311e90, Func Offset: 0x90
+	// Line 147, Address: 0x311e9c, Func Offset: 0x9c
+	// Line 150, Address: 0x311ea0, Func Offset: 0xa0
+	// Line 151, Address: 0x311eb0, Func Offset: 0xb0
+	// Line 154, Address: 0x311eb8, Func Offset: 0xb8
+	// Line 155, Address: 0x311ec0, Func Offset: 0xc0
+	// Line 154, Address: 0x311ec8, Func Offset: 0xc8
+	// Line 155, Address: 0x311ecc, Func Offset: 0xcc
+	// Line 154, Address: 0x311ed0, Func Offset: 0xd0
+	// Line 155, Address: 0x311ed4, Func Offset: 0xd4
+	// Line 156, Address: 0x311ed8, Func Offset: 0xd8
+	// Func End, Address: 0x311ef4, Func Offset: 0xf4
 }
 
 // xModelBucket_PreCountReset__Fv
 // Start address: 0x311f00
 void xModelBucket_PreCountReset()
 {
+	// Line 103, Address: 0x311f00, Func Offset: 0
+	// Line 104, Address: 0x311f04, Func Offset: 0x4
+	// Line 105, Address: 0x311f08, Func Offset: 0x8
+	// Line 106, Address: 0x311f0c, Func Offset: 0xc
+	// Line 107, Address: 0x311f10, Func Offset: 0x10
+	// Line 108, Address: 0x311f14, Func Offset: 0x14
+	// Line 109, Address: 0x311f18, Func Offset: 0x18
+	// Line 110, Address: 0x311f1c, Func Offset: 0x1c
+	// Line 112, Address: 0x311f20, Func Offset: 0x20
+	// Func End, Address: 0x311f28, Func Offset: 0x28
 }
 
 // CmpAlphaBucket__FPCvPCv
@@ -1869,5 +2334,15 @@ int32 CmpAlphaBucket(void* _a, void* _b)
 {
 	xModelAlphaBucket* a;
 	xModelAlphaBucket* b;
+	// Line 81, Address: 0x311f30, Func Offset: 0
+	// Line 83, Address: 0x311f38, Func Offset: 0x8
+	// Line 84, Address: 0x311f44, Func Offset: 0x14
+	// Line 85, Address: 0x311f50, Func Offset: 0x20
+	// Line 86, Address: 0x311f5c, Func Offset: 0x2c
+	// Line 87, Address: 0x311f70, Func Offset: 0x40
+	// Line 88, Address: 0x311f7c, Func Offset: 0x4c
+	// Line 90, Address: 0x311f88, Func Offset: 0x58
+	// Line 92, Address: 0x311fa0, Func Offset: 0x70
+	// Func End, Address: 0x311fa8, Func Offset: 0x78
 }
 

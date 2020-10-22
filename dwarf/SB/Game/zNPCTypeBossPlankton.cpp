@@ -152,7 +152,7 @@ typedef struct xLinkAsset;
 typedef struct RxCluster;
 typedef struct tri_data_0;
 typedef struct config_0;
-typedef union zFragInfo;
+typedef struct zFragInfo;
 typedef struct RpVertexNormal;
 typedef struct zFrag;
 typedef struct sound_asset;
@@ -171,7 +171,7 @@ typedef struct RxPacket;
 typedef struct zPlayerGlobals;
 typedef struct _class_8;
 typedef struct _class_9;
-typedef union _class_10;
+typedef struct _class_10;
 typedef struct xMovePoint;
 typedef struct tri_data_1;
 typedef struct xCutscene;
@@ -309,7 +309,7 @@ typedef struct RwSurfaceProperties;
 typedef struct _class_22;
 typedef struct _class_23;
 typedef enum state_enum;
-typedef union _class_24;
+typedef struct _class_24;
 typedef struct rxReq;
 typedef struct _anon13;
 typedef struct _class_25;
@@ -342,7 +342,7 @@ typedef struct xRot;
 typedef struct _class_29;
 typedef struct xModelTag;
 typedef struct _class_30;
-typedef union zFragLocInfo;
+typedef struct zFragLocInfo;
 typedef struct _anon17;
 typedef enum rxEmbeddedPacketState;
 typedef struct xSphere;
@@ -369,7 +369,7 @@ typedef struct _anon20;
 typedef struct zNPCVillager;
 typedef struct _class_33;
 typedef struct zGlobals;
-typedef union _class_34;
+typedef struct _class_34;
 typedef struct xQCData;
 typedef struct xModelBucket;
 typedef struct zFragLocation;
@@ -436,7 +436,7 @@ typedef void(*type_167)(xEnt*, xScene*, float32, xEntFrame*);
 typedef xFactoryInst*(*type_168)(int32, RyzMemGrow*, void*);
 typedef void(*type_171)(xEnt*);
 typedef void(*type_172)(bolt&, void*);
-typedef void(*type_173)(zShrapnelAsset*, xModelInstance*, xVec3*, type_156);
+typedef void(*type_173)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 typedef void(*type_174)(zEntDestructObj&, void*);
 typedef void(*type_176)(xFactoryInst*);
 
@@ -451,7 +451,7 @@ typedef xCollis type_14[18];
 typedef float32 type_15[4];
 typedef uint32 type_18[10];
 typedef float32 type_19[22];
-typedef type_18 type_20[6];
+typedef uint32 type_20[10][6];
 typedef say_enum type_21[6];
 typedef float32 type_22[4];
 typedef int8 type_25[32];
@@ -522,7 +522,7 @@ typedef float32 type_117[12];
 typedef RwV3d type_119[8];
 typedef float32 type_120[1];
 typedef float32 type_121[12];
-typedef type_120 type_122[5];
+typedef float32 type_122[1][5];
 typedef RwTexCoords* type_123[8];
 typedef float32 type_125[16];
 typedef float32 type_126[12];
@@ -541,10 +541,10 @@ typedef _class_20 type_141[8];
 typedef int32 type_142[5];
 typedef int8 type_143[128];
 typedef xVec3 type_144[2];
-typedef type_143 type_145[6];
+typedef int8 type_145[128][6];
 typedef uint16 type_146[3];
 typedef int8* type_147[10];
-typedef type_147 type_148[6];
+typedef int8* type_148[10][6];
 typedef xCutsceneZbuffer type_150[4];
 typedef xParInterp type_152[1];
 typedef uint8 type_153[14];
@@ -621,16 +621,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_155 update;
-	type_155 endUpdate;
-	type_7 bupdate;
-	type_167 move;
-	type_171 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_30 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -675,12 +675,48 @@ struct zNPCBPlankton : zNPCBoss
 	_class_1 follow;
 	_class_6 old;
 	zNPCBoss* crony;
-	type_105 territory;
+	territory_data territory[8];
 	int32 territory_size;
 	int32 active_territory;
 	zNPCNewsFish* newsfish;
 	uint32 old_player_health;
 	uint8 played_intro;
+
+	void fall(float32 accel, float32 max_vel);
+	void halt(float32 accel);
+	void here_boy();
+	void sickum();
+	uint8 player_left_territory();
+	uint8 move_to_player_territory();
+	void impart_velocity(xVec3& vel);
+	void stun();
+	xVec3 player_orbit();
+	xVec3 random_orbit(xVec3& loc, float32 min_ang, float32 max_ang);
+	void reappear();
+	void setup_beam();
+	void init_beam();
+	void load_territory(int32 index, xBase& child);
+	float32 orbit_yaw_offset(xVec3& p0, xVec3& p1);
+	void update_follow_camera(float32 dt);
+	void update_follow_player(float32 dt);
+	void update_follow(float32 dt);
+	void update_dialog(float32 dt);
+	void update_turn(float32 dt);
+	void refresh_orbit();
+	void Damage(en_NPC_DAMAGE_TYPE damtype, xVec3* vec_hit);
+	void SelfSetup();
+	void ParseLinks();
+	void ParseINI();
+	void RenderExtraPostParticles();
+	void Render();
+	int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled);
+	void Process(xScene* xscn, float32 dt);
+	void Destroy();
+	void Reset();
+	void PostSetup();
+	void Setup();
+	void Init(xEntAsset* asset);
+	void* __ct(int32 myType);
 };
 
 struct zCutsceneMgr : xCutsceneMgr
@@ -710,7 +746,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_80 radius;
+	float32 radius[2];
 };
 
 struct zFragShockwave
@@ -721,8 +757,8 @@ struct zFragShockwave
 	float32 deltVelocity;
 	float32 currSpin;
 	float32 deltSpin;
-	type_15 currColor;
-	type_22 deltColor;
+	float32 currColor[4];
+	float32 deltColor[4];
 };
 
 enum fx_orient_enum
@@ -781,8 +817,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_189 baseCount;
-	type_197 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -800,7 +836,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_123 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -852,7 +888,7 @@ struct zNPCCommon : xNPCBasic
 	xModelAssetParam* parmdata;
 	uint32 pdatsize;
 	zNPCLassoInfo* lassdata;
-	type_97 snd_queue;
+	NPCSndQueue snd_queue[4];
 };
 
 struct xLightKit
@@ -873,7 +909,7 @@ struct move_info
 
 struct tag_xFile
 {
-	type_25 relname;
+	int8 relname[32];
 	tag_iFile ps;
 	void* user_data;
 };
@@ -900,23 +936,23 @@ struct xEntAsset : xBaseAsset
 
 struct tweak_callback
 {
-	type_1 on_change;
-	type_1 on_select;
-	type_1 on_unselect;
-	type_1 on_start_edit;
-	type_1 on_stop_edit;
-	type_1 on_expand;
-	type_1 on_collapse;
-	type_1 on_update;
-	type_31 convert_mem_to_tweak;
-	type_31 convert_tweak_to_mem;
+	void(*on_change)(tweak_info&);
+	void(*on_select)(tweak_info&);
+	void(*on_unselect)(tweak_info&);
+	void(*on_start_edit)(tweak_info&);
+	void(*on_stop_edit)(tweak_info&);
+	void(*on_expand)(tweak_info&);
+	void(*on_collapse)(tweak_info&);
+	void(*on_update)(tweak_info&);
+	void(*convert_mem_to_tweak)(tweak_info&, void*);
+	void(*convert_tweak_to_mem)(tweak_info&, void*);
 };
 
 struct zShrapnelAsset
 {
 	int32 fassetCount;
 	uint32 shrapnelID;
-	type_173 initCB;
+	void(*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 };
 
 struct RpLight
@@ -948,8 +984,8 @@ struct zFragShockwaveAsset : zFragAsset
 	float32 deathVelocity;
 	float32 birthSpin;
 	float32 deathSpin;
-	type_129 birthColor;
-	type_131 deathColor;
+	float32 birthColor[4];
+	float32 deathColor[4];
 };
 
 struct anim_coll_data
@@ -1004,7 +1040,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_12 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -1029,7 +1065,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_11 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1072,9 +1108,9 @@ struct xCutsceneMgrAsset : xBaseAsset
 	uint32 cutsceneAssetID;
 	uint32 flags;
 	float32 interpSpeed;
-	type_50 startTime;
-	type_53 endTime;
-	type_59 emitID;
+	float32 startTime[15];
+	float32 endTime[15];
+	uint32 emitID[15];
 };
 
 struct asset_type
@@ -1114,6 +1150,11 @@ struct xAnimTransitionList
 struct zNPCGoalBPlanktonAttack : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct RpWorld
@@ -1131,13 +1172,18 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_6 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
 struct zNPCGoalBPlanktonFall : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct RxClusterRef
@@ -1153,13 +1199,13 @@ struct xPsyche : RyzMemData
 	xPSYNote* cb_notice;
 	int32 flg_psyche;
 	xGoal* goallist;
-	type_115 goalstak;
-	type_122 tmr_stack;
+	xGoal* goalstak[5];
+	float32 tmr_stack[1][5];
 	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
 	int32 gid_safegoal;
-	type_136 fun_remap;
+	void(*fun_remap)(int32*, en_trantype*);
 	void* userContext;
 	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
@@ -1174,7 +1220,7 @@ struct zNPCSettings : xDynAsset
 	int8 allowWander;
 	int8 reduceCollide;
 	int8 useNavSplines;
-	type_166 pad;
+	int8 pad[3];
 	int8 allowChase;
 	int8 allowAttack;
 	int8 assumeLOS;
@@ -1198,6 +1244,12 @@ struct xAnimTable
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	void get_yaw(float32& optimal, float32& dist);
+	int32 Process(en_trantype* trantype);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct xGroupAsset : xBaseAsset
@@ -1224,9 +1276,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_124 BeforeEnter;
-	type_91 StateCallback;
-	type_132 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xEntDrive
@@ -1264,8 +1316,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_13 beginUpdate;
-	type_24 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -1277,9 +1329,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_103 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_119 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct territory_data
@@ -1288,7 +1340,7 @@ struct territory_data
 	xEnt* platform;
 	zEntDestructObj* fuse;
 	xTimer* timer;
-	type_71 crony;
+	zNPCCommon* crony[8];
 	int32 crony_size;
 	uint8 fuse_detected;
 	uint8 fuse_destroyed;
@@ -1298,6 +1350,10 @@ struct territory_data
 struct zNPCGoalBPlanktonMove : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct xBase
@@ -1307,7 +1363,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_116 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RwObject
@@ -1362,8 +1418,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_67 Conditional;
-	type_67 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -1423,9 +1479,9 @@ struct xGoal : xListItem_1, xFactoryInst
 	int32 goalID;
 	en_GOALSTATE stat;
 	int32 flg_able;
-	type_61 fun_process;
-	type_28 fun_precalc;
-	type_43 fun_chkRule;
+	int32(*fun_process)(xGoal*, void*, en_trantype*, float32, void*);
+	int32(*fun_precalc)(xGoal*, void*, float32, void*);
+	int32(*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
 	void* cbdata;
 };
 
@@ -1485,7 +1541,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_132 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 enum follow_enum
@@ -1587,14 +1643,14 @@ struct NPCConfig : xListItem_0
 	float32 rad_shadowRaster;
 	float32 rad_dmgSize;
 	int32 flg_vert;
-	type_134 tag_vert;
-	type_138 animFrameRange;
-	type_142 cnt_esteem;
+	xModelTag tag_vert[20];
+	xVec3 animFrameRange[9];
+	int32 cnt_esteem[5];
 	float32 rad_sound;
 	NPCSndTrax* snd_trax;
 	NPCSndTrax* snd_traxShare;
 	int32 test_count;
-	type_164 talk_filter;
+	uint8 talk_filter[4];
 	uint8 talk_filter_size;
 };
 
@@ -1605,8 +1661,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_40 light;
-	type_44 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -1615,8 +1671,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_35 name;
-	type_37 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -1641,13 +1697,13 @@ enum _tagRumbleType
 
 struct RxNodeMethods
 {
-	type_42 nodeBody;
-	type_51 nodeInit;
-	type_60 nodeTerm;
-	type_66 pipelineNodeInit;
-	type_82 pipelineNodeTerm;
-	type_93 pipelineNodeConfig;
-	type_109 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct _zPortal : xBase
@@ -1685,8 +1741,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_58 emit_pad;
-	type_62 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -1757,7 +1813,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_33 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -1766,21 +1822,21 @@ struct xMemPool
 
 struct xNPCBasic : xEnt, xFactoryInst
 {
-	type_106 f_setup;
-	type_118 f_reset;
-	union
+	void(*f_setup)(xEnt*);
+	void(*f_reset)(xEnt*);
+	struct
 	{
-		int32 flg_basenpc;
-		int32 inUpdate;
-		int32 flg_upward;
+		int32 flg_basenpc : 16;
+		int32 inUpdate : 8;
+		int32 flg_upward : 8;
 	};
 	int32 colFreq;
 	int32 colFreqReset;
-	union
+	struct
 	{
-		uint32 flg_colCheck;
-		uint32 flg_penCheck;
-		uint32 flg_unused;
+		uint32 flg_colCheck : 8;
+		uint32 flg_penCheck : 8;
+		uint32 flg_unused : 16;
 	};
 	int32 myNPCType;
 	xEntShadow entShadow_embedded;
@@ -1826,6 +1882,11 @@ struct RwRaster
 struct zNPCGoalBPlanktonAmbush : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype, float32 dt);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zMovePoint : xMovePoint
@@ -1901,9 +1962,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_14 colls;
-	type_17 post;
-	type_23 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct RwFrustumPlane
@@ -1977,7 +2038,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_41 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct analog_data
@@ -2004,7 +2065,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_149 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -2017,10 +2078,10 @@ struct zNPCGoalCommon : xGoal
 	int32 flg_npcgauto;
 	int32 flg_npcgable;
 	uint32 anid_played;
-	union
+	struct
 	{
-		int32 flg_info;
-		int32 flg_user;
+		int32 flg_info : 16;
+		int32 flg_user : 16;
 	};
 };
 
@@ -2038,8 +2099,8 @@ struct xCutsceneInfo
 	uint32 VisSize;
 	uint32 BreakCount;
 	uint32 pad;
-	type_79 SoundLeft;
-	type_84 SoundRight;
+	int8 SoundLeft[16];
+	int8 SoundRight[16];
 };
 
 struct xLaserBoltEmitter
@@ -2049,8 +2110,8 @@ struct xLaserBoltEmitter
 	float32 ialpha;
 	RwRaster* bolt_raster;
 	int32 start_collide;
-	type_179 fx;
-	type_181 fxsize;
+	effect_data* fx[7];
+	uint32 fxsize[7];
 };
 
 struct RwPlane
@@ -2098,18 +2159,23 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_86 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
 struct zNPCGoalBPlanktonDizzy : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype, float32 dt);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zFragGroup
 {
-	type_39 list;
+	zFrag* list[21];
 };
 
 struct effect_data
@@ -2125,6 +2191,9 @@ struct xVec2
 {
 	float32 x;
 	float32 y;
+
+	xVec2 __dv(float32 f);
+	float32 length();
 };
 
 struct _class_5
@@ -2136,6 +2205,11 @@ struct zNPCGoalBPlanktonEvade : zNPCGoalCommon
 {
 	float32 evade_delay;
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct xEntMotionMPData
@@ -2151,13 +2225,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_152 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_180 color_birth;
-	type_182 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -2250,6 +2324,11 @@ enum say_enum
 struct zNPCGoalBPlanktonStun : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype, float32 dt);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct xEntERData
@@ -2269,7 +2348,7 @@ struct xEntERData
 
 struct xJSPHeader
 {
-	type_190 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -2289,7 +2368,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_52 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -2307,7 +2386,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_69 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -2342,19 +2421,22 @@ struct config_0
 	float32 hit_radius;
 	float32 rand_ang;
 	float32 scar_life;
-	type_70 bolt_uv;
+	xVec2 bolt_uv[2];
 	int32 hit_interval;
 	float32 damage;
 };
 
-union zFragInfo
+struct zFragInfo
 {
-	zFragGroup group;
-	zFragParticle particle;
-	zFragProjectile projectile;
-	zFragLightning lightning;
-	zFragSound sound;
-	zFragShockwave shockwave;
+	union
+	{
+		zFragGroup group;
+		zFragParticle particle;
+		zFragProjectile projectile;
+		zFragLightning lightning;
+		zFragSound sound;
+		zFragShockwave shockwave;
+	};
 };
 
 struct RpVertexNormal
@@ -2372,8 +2454,8 @@ struct zFrag
 	float32 delay;
 	float32 alivetime;
 	float32 lifetime;
-	type_83 update;
-	type_99 parent;
+	void(*update)(zFrag*, float32);
+	xModelInstance* parent[2];
 	zFrag* prev;
 	zFrag* next;
 };
@@ -2410,6 +2492,10 @@ struct xListItem_0
 struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct RxPipelineNodeParam
@@ -2483,9 +2569,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_16 resolvID;
-	type_27 base2Name;
-	type_34 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
@@ -2493,12 +2579,23 @@ struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
 	float32 emitted;
 	substate_enum substate;
 	zNPCBPlankton& owner;
+
+	void update_fire(float32 dt);
+	int32 Process(en_trantype* trantype, float32 dt);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonFlank : zNPCGoalCommon
 {
 	float32 accel;
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zCheckPoint
@@ -2516,7 +2613,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_64 clusters;
+	RxCluster clusters[1];
 };
 
 struct zPlayerGlobals
@@ -2597,7 +2694,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_107 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -2609,7 +2706,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_154 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -2635,10 +2732,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_32 Inv_PatsSock;
-	type_38 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_45 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -2650,21 +2747,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_94 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_127 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_153 sb_model_indices;
-	type_161 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -2694,11 +2791,14 @@ struct _class_9
 	uint32 value_max;
 };
 
-union _class_10
+struct _class_10
 {
-	xParEmitter* par;
-	xDecalEmitter* decal;
-	_class_12 callback;
+	union
+	{
+		xParEmitter* par;
+		xDecalEmitter* decal;
+		_class_12 callback;
+	};
 };
 
 struct xMovePoint : xBase
@@ -2709,7 +2809,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_73 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -2750,9 +2850,9 @@ struct xCutscene
 	void* MemCurr;
 	uint32 SndStarted;
 	uint32 SndNumChannel;
-	type_157 SndChannelReq;
-	type_163 SndAssetID;
-	type_169 SndHandle;
+	uint32 SndChannelReq[2];
+	uint32 SndAssetID[2];
+	uint32 SndHandle[2];
 	XCSNNosey* cb_nosey;
 };
 
@@ -2827,7 +2927,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_47 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 enum en_pendtype
@@ -2884,13 +2984,13 @@ struct zPlayerCarryInfo
 
 struct _class_11
 {
-	type_63 base_point;
-	type_65 point;
+	xVec3 base_point[16];
+	xVec3 point[16];
 	int16 total_points;
 	int16 end_points;
 	float32 arc_height;
 	xVec3 arc_normal;
-	type_85 thickness;
+	float32 thickness[16];
 	union
 	{
 		_tagLightningLine line;
@@ -2917,7 +3017,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_72 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xSurface : xBase
@@ -2932,17 +3032,17 @@ struct xSurface : xBase
 	};
 	float32 friction;
 	uint8 state;
-	type_49 pad;
+	uint8 pad[3];
 	void* moprops;
 };
 
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_96 MoveSpeed;
-	type_100 AnimSneak;
-	type_102 AnimWalk;
-	type_113 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -2960,7 +3060,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_175 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct xCutsceneData
@@ -2995,7 +3095,7 @@ struct xCollis
 
 struct _class_12
 {
-	type_29 fp;
+	void(*fp)(bolt&, void*);
 	void* context;
 };
 
@@ -3067,7 +3167,7 @@ struct zEntDestructObj : zEnt
 	xModelInstance* base_model;
 	xModelInstance* hit_model;
 	xModelInstance* destroy_model;
-	type_174 destroy_notify;
+	void(*destroy_notify)(zEntDestructObj&, void*);
 	void* notify_context;
 	xSFXAsset* sfx_destroy;
 	xSFXAsset* sfx_hit;
@@ -3111,8 +3211,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_4 activateCB;
-	type_4 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct xFFX
@@ -3126,12 +3226,12 @@ struct xTimer
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_81 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xCoef
 {
-	type_77 a;
+	float32 a[4];
 };
 
 struct xPEVCyl
@@ -3158,6 +3258,10 @@ struct _class_14
 struct zNPCGoalBPlanktonWall : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct RpMaterialList
@@ -3201,7 +3305,7 @@ struct RwV2d
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_90 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct xModelPool
@@ -3288,13 +3392,18 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_108 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
 {
 	xVec3 player_loc;
 	zNPCBPlankton& owner;
+
+	int32 Process(en_trantype* trantype);
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct RpMaterial
@@ -3317,7 +3426,7 @@ struct zJumpParam
 
 struct xParInterp
 {
-	type_88 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -3346,8 +3455,8 @@ struct xParSys
 
 struct _tagxPad
 {
-	type_183 value;
-	type_186 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -3362,9 +3471,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_19 up_tmr;
-	type_26 down_tmr;
-	type_54 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct static_queue_0
@@ -3379,6 +3488,10 @@ struct static_queue_0
 struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 enum en_LASSO_STATUS
@@ -3478,7 +3591,7 @@ struct zEntDestructObjAsset
 	uint32 dflags;
 	uint8 collType;
 	uint8 fxType;
-	type_10 pad;
+	uint8 pad[2];
 	float32 blast_radius;
 	float32 blast_strength;
 	uint32 shrapnelID_destroy;
@@ -3523,7 +3636,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_110 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct _class_16
@@ -3555,7 +3668,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_188 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -3592,12 +3705,12 @@ struct xPEEntBone
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_101 tmrs;
-	type_111 ttms;
-	type_117 atms;
-	type_121 dtms;
-	type_126 vms;
-	type_128 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct xClumpCollBSPBranchNode
@@ -3662,7 +3775,7 @@ struct xPlatformAsset
 
 struct _class_17
 {
-	type_104 uv;
+	xVec2 uv[2];
 	uint8 rows;
 	uint8 cols;
 	texture_mode mode;
@@ -3743,7 +3856,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_196 pad;
+	uint32 pad[4];
 };
 
 enum substate_enum
@@ -3758,7 +3871,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_57 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -3833,7 +3946,7 @@ struct xEntFrame
 
 struct _tagLightningRot
 {
-	type_125 deg;
+	float32 deg[16];
 	float32 degrees;
 	float32 height;
 };
@@ -3870,7 +3983,7 @@ struct tweak_group
 	_class_28 fall;
 	_class_32 evade;
 	_class_0 arena;
-	type_76 sound;
+	sound_property sound[6];
 	void* context;
 	tweak_callback cb_move;
 	tweak_callback cb_arena;
@@ -3879,6 +3992,8 @@ struct tweak_group
 	tweak_callback cb_help;
 	tweak_callback cb_sound;
 	tweak_callback cb_sound_asset;
+
+	void register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize);
 };
 
 enum en_NPC_SOUND
@@ -3931,11 +4046,15 @@ enum en_GOALSTATE
 struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
 {
 	zNPCBPlankton& owner;
+
+	int32 Exit();
+	int32 Enter(float32 dt, void* updCtxt);
+	xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCNewsFish : zNPCVillager
 {
-	type_195 said;
+	say_data said[71];
 	uint8 was_reset;
 	uint32 soundHandle;
 	uint32 currSoundID;
@@ -3992,10 +4111,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_145 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_158 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -4042,7 +4161,7 @@ struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_140 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -4059,7 +4178,7 @@ struct xVec4
 
 struct xShadowSimplePoly
 {
-	type_135 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -4098,10 +4217,13 @@ enum state_enum
 	MAX_STATE
 };
 
-union _class_24
+struct _class_24
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct rxReq
@@ -4114,21 +4236,21 @@ struct _anon13
 
 struct _class_25
 {
-	type_144 endPoint;
+	xVec3 endPoint[2];
 	xVec3 direction;
 	float32 length;
 	float32 scale;
 	float32 width;
-	type_160 endParam;
-	type_165 endVel;
-	type_170 paramSpan;
+	float32 endParam[2];
+	float32 endVel[2];
+	float32 paramSpan[2];
 	float32 arc_height;
 	xVec3 arc_normal;
 };
 
 struct RpTriangle
 {
-	type_146 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -4143,7 +4265,7 @@ struct zFragLightning
 struct xCutsceneZbufferHack
 {
 	int8* name;
-	type_150 times;
+	xCutsceneZbuffer times[4];
 };
 
 struct _class_26
@@ -4229,7 +4351,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_162 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -4257,8 +4379,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_133 lastRefs;
-	type_137 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -4268,7 +4390,7 @@ struct zFragAsset
 {
 	zFragType type;
 	uint32 id;
-	type_46 parentID;
+	uint32 parentID[2];
 	float32 lifetime;
 	float32 delay;
 };
@@ -4291,8 +4413,8 @@ enum RxNodeDefEditable
 struct XGOFTypeInfo
 {
 	int32 tid;
-	type_168 creator;
-	type_176 destroyer;
+	xFactoryInst*(*creator)(int32, RyzMemGrow*, void*);
+	void(*destroyer)(xFactoryInst*);
 };
 
 enum RxClusterValid
@@ -4318,7 +4440,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_192 corner;
+	xVec3 corner[4];
 };
 
 struct _class_28
@@ -4359,7 +4481,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_194 wt;
+	float32 wt[4];
 };
 
 struct _class_30
@@ -4370,10 +4492,13 @@ struct _class_30
 	float32 max_vel;
 };
 
-union zFragLocInfo
+struct zFragLocInfo
 {
-	zFragBone bone;
-	xModelTag tag;
+	union
+	{
+		zFragBone bone;
+		xModelTag tag;
+	};
 };
 
 struct _anon17
@@ -4534,7 +4659,7 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_0 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
@@ -4558,7 +4683,7 @@ struct zNPCVillager : zNPCCommon
 
 struct _class_33
 {
-	type_191 pad;
+	uint8 pad[16];
 };
 
 struct zGlobals : xGlobals
@@ -4570,10 +4695,13 @@ struct zGlobals : xGlobals
 	zScene* scenePreload;
 };
 
-union _class_34
+struct _class_34
 {
-	uint8 enabled;
-	uint32 dummy;
+	struct
+	{
+		uint8 enabled : 8;
+		uint32 dummy : 24;
+	};
 };
 
 struct xQCData
@@ -4727,8 +4855,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_92 PowerUp;
-	type_95 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct RwSphere
@@ -4750,7 +4878,7 @@ struct xPEEntBound
 struct tag_iFile
 {
 	uint32 flags;
-	type_5 path;
+	int8 path[128];
 	int32 fd;
 	int32 offset;
 	int32 length;
@@ -4778,36 +4906,36 @@ struct _tagEmitLine
 	float32 radius;
 };
 
-type_184 buffer;
-type_2 buffer;
-type_148 sound_asset_names;
-type_20 sound_asset_ids;
-type_112 sound_asset_names_size;
-type_193 sound_data;
-type_68 sound_assets;
+int8 buffer[16];
+int8 buffer[16];
+int8* sound_asset_names[10][6];
+uint32 sound_asset_ids[10][6];
+uint32 sound_asset_names_size[6];
+sound_data_type sound_data[6];
+sound_asset sound_assets[29];
 tweak_group tweak;
-type_98 beam_ring_curve;
-type_198 beam_glow_curve;
-type_87 beam_launch_effect;
-type_185 beam_head_effect;
-type_74 beam_impact_effect;
-type_177 beam_death_effect;
-type_56 beam_kill_effect;
-type_187 say_intro;
-type_78 say_fuse_near;
-type_178 say_fuse_hit;
-type_55 say_hit_boss_1;
-type_159 say_hit_boss_2;
-type_36 say_hit_boss_3;
-type_139 say_hit_boss_4;
-type_21 say_hit_player;
-type_141 say_set;
+curve_node beam_ring_curve[2];
+curve_node beam_glow_curve[3];
+effect_data beam_launch_effect[2];
+effect_data beam_head_effect[1];
+effect_data beam_impact_effect[3];
+effect_data beam_death_effect[1];
+effect_data beam_kill_effect[1];
+say_enum say_intro[2];
+say_enum say_fuse_near[4];
+say_enum say_fuse_hit[3];
+say_enum say_hit_boss_1[6];
+say_enum say_hit_boss_2[3];
+say_enum say_hit_boss_3[6];
+say_enum say_hit_boss_4[1];
+say_enum say_hit_player[6];
+_class_20 say_set[8];
 _anon6 __vt__21zNPCGoalBPlanktonBomb;
 _anon9 __vt__14zNPCGoalCommon;
 _anon1 __vt__5xGoal;
 _anon14 __vt__23zNPCGoalBPlanktonMissle;
 _anon3 __vt__21zNPCGoalBPlanktonWall;
-type_3 g_hash_bossanim;
+uint32 g_hash_bossanim[78];
 xMat4x3 g_I3;
 zGlobals globals;
 _anon12 __vt__21zNPCGoalBPlanktonBeam;
@@ -4822,120 +4950,120 @@ _anon11 __vt__22zNPCGoalBPlanktonFlank;
 _anon19 __vt__23zNPCGoalBPlanktonAmbush;
 _anon7 __vt__23zNPCGoalBPlanktonAttack;
 _anon16 __vt__21zNPCGoalBPlanktonIdle;
-type_114 kill_beam_fly_sound;
-type_130 play_beam_hit_sound;
-type_172 play_beam_fly_sound;
-type_48 play_beam_fire_sound;
-type_9 xUpdateCull_AlwaysTrueCB;
-type_151 aim_gun;
+void(*kill_beam_fly_sound)(bolt&, void*);
+void(*play_beam_hit_sound)(bolt&, void*);
+void(*play_beam_fly_sound)(bolt&, void*);
+void(*play_beam_fire_sound)(bolt&, void*);
+uint32(*xUpdateCull_AlwaysTrueCB)(void*, void*);
+void(*aim_gun)(xAnimPlay*, xQuat*, xVec3*, int32);
 _anon18 __vt__13zNPCBPlankton;
 _anon5 __vt__8zNPCBoss;
 _anon2 __vt__10zNPCCommon;
 _anon17 __vt__9xNPCBasic;
-type_8 g_strz_bossanim;
-type_75 xAnimDefaultBeforeEnter;
+int8* g_strz_bossanim[78];
+void(*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
 
 int32 Process();
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonBomb* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 int32 Process();
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonMissle* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 int32 Process();
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonWall* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-void update_fire(zNPCGoalBPlanktonBeam* this, float32 dt);
-int32 Process(zNPCGoalBPlanktonBeam* this, en_trantype* trantype, float32 dt);
-int32 Exit(zNPCGoalBPlanktonBeam* this);
-int32 Enter(zNPCGoalBPlanktonBeam* this, float32 dt, void* updCtxt);
+void update_fire(float32 dt);
+int32 Process(en_trantype* trantype, float32 dt);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonDizzy* this, en_trantype* trantype, float32 dt);
-int32 Exit(zNPCGoalBPlanktonDizzy* this);
-int32 Enter(zNPCGoalBPlanktonDizzy* this, float32 dt, void* updCtxt);
+int32 Process(en_trantype* trantype, float32 dt);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonFall* this, en_trantype* trantype);
-int32 Exit(zNPCGoalBPlanktonFall* this);
-int32 Enter(zNPCGoalBPlanktonFall* this, float32 dt, void* updCtxt);
+int32 Process(en_trantype* trantype);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonStun* this, en_trantype* trantype, float32 dt);
-int32 Exit(zNPCGoalBPlanktonStun* this);
-int32 Enter(zNPCGoalBPlanktonStun* this, float32 dt, void* updCtxt);
+int32 Process(en_trantype* trantype, float32 dt);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 int32 Process();
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonMove* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 int32 Process();
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonTaunt* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonHunt* this, en_trantype* trantype);
-int32 Exit(zNPCGoalBPlanktonHunt* this);
-int32 Enter(zNPCGoalBPlanktonHunt* this, float32 dt, void* updCtxt);
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonEvade* this, en_trantype* trantype);
-int32 Exit(zNPCGoalBPlanktonEvade* this);
-int32 Enter(zNPCGoalBPlanktonEvade* this, float32 dt, void* updCtxt);
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonFlank* this, en_trantype* trantype);
-int32 Exit(zNPCGoalBPlanktonFlank* this);
-int32 Enter(zNPCGoalBPlanktonFlank* this, float32 dt, void* updCtxt);
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonAmbush* this, en_trantype* trantype, float32 dt);
+int32 Process(en_trantype* trantype);
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonAmbush* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-int32 Process(zNPCGoalBPlanktonAttack* this, en_trantype* trantype);
+int32 Process(en_trantype* trantype);
 int32 Exit();
-int32 Enter(zNPCGoalBPlanktonAttack* this, float32 dt, void* updCtxt);
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
-void get_yaw(zNPCGoalBPlanktonIdle* this, float32& optimal, float32& dist);
-int32 Process(zNPCGoalBPlanktonIdle* this, en_trantype* trantype);
-int32 Exit(zNPCGoalBPlanktonIdle* this);
-int32 Enter(zNPCGoalBPlanktonIdle* this, float32 dt, void* updCtxt);
+int32 Process(en_trantype* trantype);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
+xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+int32 Process(en_trantype* trantype, float32 dt);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
+xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+int32 Process(en_trantype* trantype);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
+xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+void get_yaw(float32& optimal, float32& dist);
+int32 Process(en_trantype* trantype);
+int32 Exit();
+int32 Enter(float32 dt, void* updCtxt);
 xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 void aim_gun(xAnimPlay* play, xQuat* quat);
-void fall(zNPCBPlankton* this, float32 accel, float32 max_vel);
-void halt(zNPCBPlankton* this, float32 accel);
-void here_boy(zNPCBPlankton* this);
-void sickum(zNPCBPlankton* this);
-uint8 player_left_territory(zNPCBPlankton* this);
-uint8 move_to_player_territory(zNPCBPlankton* this);
-void impart_velocity(zNPCBPlankton* this, xVec3& vel);
-void stun(zNPCBPlankton* this);
-xVec3 player_orbit(zNPCBPlankton* this);
-xVec3 random_orbit(zNPCBPlankton* this, xVec3& loc, float32 min_ang, float32 max_ang);
-void reappear(zNPCBPlankton* this);
-void setup_beam(zNPCBPlankton* this);
-void init_beam(zNPCBPlankton* this);
-void load_territory(zNPCBPlankton* this, int32 index, xBase& child);
-float32 orbit_yaw_offset(zNPCBPlankton* this, xVec3& p0, xVec3& p1);
-void update_follow_camera(zNPCBPlankton* this, float32 dt);
-void update_follow_player(zNPCBPlankton* this, float32 dt);
-void update_follow(zNPCBPlankton* this, float32 dt);
-void update_dialog(zNPCBPlankton* this, float32 dt);
-void update_turn(zNPCBPlankton* this, float32 dt);
+void fall(float32 accel, float32 max_vel);
+void halt(float32 accel);
+void here_boy();
+void sickum();
+uint8 player_left_territory();
+uint8 move_to_player_territory();
+void impart_velocity(xVec3& vel);
+void stun();
+xVec3 player_orbit();
+xVec3 random_orbit(xVec3& loc, float32 min_ang, float32 max_ang);
+void reappear();
+void setup_beam();
+void init_beam();
+void load_territory(int32 index, xBase& child);
+float32 orbit_yaw_offset(xVec3& p0, xVec3& p1);
+void update_follow_camera(float32 dt);
+void update_follow_player(float32 dt);
+void update_follow(float32 dt);
+void update_dialog(float32 dt);
+void update_turn(float32 dt);
 void update_move_orbit(xVec3& loc, move_info& move, xVec3& center, float32 dt, uint8 xfree);
-void refresh_orbit(zNPCBPlankton* this);
+void refresh_orbit();
 uint32 AnimPick(int32 gid);
-void Damage(zNPCBPlankton* this, en_NPC_DAMAGE_TYPE damtype, xVec3* vec_hit);
-void SelfSetup(zNPCBPlankton* this);
-void ParseLinks(zNPCBPlankton* this);
-void ParseINI(zNPCBPlankton* this);
-void register_tweaks(tweak_group* this, uint8 init, xModelAssetParam* ap, uint32 apsize);
-void RenderExtraPostParticles(zNPCBPlankton* this);
-void Render(zNPCBPlankton* this);
-int32 SysEvent(zNPCBPlankton* this, xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled);
-void Process(zNPCBPlankton* this, xScene* xscn, float32 dt);
-void Destroy(zNPCBPlankton* this);
-void Reset(zNPCBPlankton* this);
-void PostSetup(zNPCBPlankton* this);
-void Setup(zNPCBPlankton* this);
-void Init(zNPCBPlankton* this, xEntAsset* asset);
-void* __ct(zNPCBPlankton* this, int32 myType);
+void Damage(en_NPC_DAMAGE_TYPE damtype, xVec3* vec_hit);
+void SelfSetup();
+void ParseLinks();
+void ParseINI();
+void register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize);
+void RenderExtraPostParticles();
+void Render();
+int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled);
+void Process(xScene* xscn, float32 dt);
+void Destroy();
+void Reset();
+void PostSetup();
+void Setup();
+void Init(xEntAsset* asset);
+void* __ct(int32 myType);
 xAnimTable* ZNPC_AnimTable_BossPlankton();
 void play_beam_hit_sound(bolt& b);
 void play_beam_fire_sound(bolt& b);
@@ -4947,461 +5075,1066 @@ void init_sound();
 // Start address: 0x363a20
 int32 Process()
 {
+	// Line 3045, Address: 0x363a20, Func Offset: 0
+	// Func End, Address: 0x363a28, Func Offset: 0x8
 }
 
 // Exit__21zNPCGoalBPlanktonBombFfPv
 // Start address: 0x363a30
-int32 Exit()
+int32 zNPCGoalBPlanktonBomb::Exit()
 {
+	// Line 3040, Address: 0x363a30, Func Offset: 0
+	// Func End, Address: 0x363a38, Func Offset: 0x8
 }
 
 // Enter__21zNPCGoalBPlanktonBombFfPv
 // Start address: 0x363a40
-int32 Enter(zNPCGoalBPlanktonBomb* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonBomb::Enter(float32 dt, void* updCtxt)
 {
+	// Line 3034, Address: 0x363a40, Func Offset: 0
+	// Func End, Address: 0x363a48, Func Offset: 0x8
 }
 
 // create__21zNPCGoalBPlanktonBombFiP10RyzMemGrowPv
 // Start address: 0x363a50
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonBomb::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 3028, Address: 0x363a50, Func Offset: 0
+	// Line 3029, Address: 0x363a68, Func Offset: 0x18
+	// Line 3030, Address: 0x363af0, Func Offset: 0xa0
+	// Func End, Address: 0x363b04, Func Offset: 0xb4
 }
 
 // Process__23zNPCGoalBPlanktonMissleFP11en_trantypefPvP6xScene
 // Start address: 0x363b10
 int32 Process()
 {
+	// Line 3020, Address: 0x363b10, Func Offset: 0
+	// Func End, Address: 0x363b18, Func Offset: 0x8
 }
 
 // Exit__23zNPCGoalBPlanktonMissleFfPv
 // Start address: 0x363b20
-int32 Exit()
+int32 zNPCGoalBPlanktonMissle::Exit()
 {
+	// Line 3015, Address: 0x363b20, Func Offset: 0
+	// Func End, Address: 0x363b28, Func Offset: 0x8
 }
 
 // Enter__23zNPCGoalBPlanktonMissleFfPv
 // Start address: 0x363b30
-int32 Enter(zNPCGoalBPlanktonMissle* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonMissle::Enter(float32 dt, void* updCtxt)
 {
+	// Line 3009, Address: 0x363b30, Func Offset: 0
+	// Func End, Address: 0x363b38, Func Offset: 0x8
 }
 
 // create__23zNPCGoalBPlanktonMissleFiP10RyzMemGrowPv
 // Start address: 0x363b40
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonMissle::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 3003, Address: 0x363b40, Func Offset: 0
+	// Line 3004, Address: 0x363b58, Func Offset: 0x18
+	// Line 3005, Address: 0x363be0, Func Offset: 0xa0
+	// Func End, Address: 0x363bf4, Func Offset: 0xb4
 }
 
 // Process__21zNPCGoalBPlanktonWallFP11en_trantypefPvP6xScene
 // Start address: 0x363c00
 int32 Process()
 {
+	// Line 2995, Address: 0x363c00, Func Offset: 0
+	// Func End, Address: 0x363c08, Func Offset: 0x8
 }
 
 // Exit__21zNPCGoalBPlanktonWallFfPv
 // Start address: 0x363c10
-int32 Exit()
+int32 zNPCGoalBPlanktonWall::Exit()
 {
+	// Line 2990, Address: 0x363c10, Func Offset: 0
+	// Func End, Address: 0x363c18, Func Offset: 0x8
 }
 
 // Enter__21zNPCGoalBPlanktonWallFfPv
 // Start address: 0x363c20
-int32 Enter(zNPCGoalBPlanktonWall* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonWall::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2984, Address: 0x363c20, Func Offset: 0
+	// Func End, Address: 0x363c28, Func Offset: 0x8
 }
 
 // create__21zNPCGoalBPlanktonWallFiP10RyzMemGrowPv
 // Start address: 0x363c30
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonWall::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2978, Address: 0x363c30, Func Offset: 0
+	// Line 2979, Address: 0x363c48, Func Offset: 0x18
+	// Line 2980, Address: 0x363cd0, Func Offset: 0xa0
+	// Func End, Address: 0x363ce4, Func Offset: 0xb4
 }
 
 // update_fire__21zNPCGoalBPlanktonBeamFf
 // Start address: 0x363cf0
-void update_fire(zNPCGoalBPlanktonBeam* this, float32 dt)
+void zNPCGoalBPlanktonBeam::update_fire(float32 dt)
 {
 	xMat4x3 mat;
 	int32 total;
 	int32 i;
+	// Line 2923, Address: 0x363cf0, Func Offset: 0
+	// Line 2924, Address: 0x363d28, Func Offset: 0x38
+	// Line 2926, Address: 0x363d48, Func Offset: 0x58
+	// Line 2927, Address: 0x363d58, Func Offset: 0x68
+	// Line 2928, Address: 0x363d5c, Func Offset: 0x6c
+	// Line 2927, Address: 0x363d60, Func Offset: 0x70
+	// Line 2929, Address: 0x363d64, Func Offset: 0x74
+	// Line 2930, Address: 0x363d6c, Func Offset: 0x7c
+	// Line 2933, Address: 0x363d70, Func Offset: 0x80
+	// Line 2934, Address: 0x363dec, Func Offset: 0xfc
+	// Line 2933, Address: 0x363df0, Func Offset: 0x100
+	// Line 2934, Address: 0x363df8, Func Offset: 0x108
+	// Line 2937, Address: 0x363e18, Func Offset: 0x128
+	// Line 2944, Address: 0x363e20, Func Offset: 0x130
+	// Line 2945, Address: 0x363e40, Func Offset: 0x150
+	// Line 2944, Address: 0x363e4c, Func Offset: 0x15c
+	// Line 2945, Address: 0x363e60, Func Offset: 0x170
+	// Line 2946, Address: 0x364018, Func Offset: 0x328
+	// Line 2948, Address: 0x364038, Func Offset: 0x348
+	// Line 2946, Address: 0x36403c, Func Offset: 0x34c
+	// Line 2948, Address: 0x3640ac, Func Offset: 0x3bc
+	// Line 2949, Address: 0x3640bc, Func Offset: 0x3cc
+	// Line 2948, Address: 0x3640c4, Func Offset: 0x3d4
+	// Line 2950, Address: 0x3640c8, Func Offset: 0x3d8
+	// Line 2951, Address: 0x3640d0, Func Offset: 0x3e0
+	// Line 2952, Address: 0x3640d8, Func Offset: 0x3e8
+	// Line 2954, Address: 0x3640e8, Func Offset: 0x3f8
+	// Line 2955, Address: 0x3640fc, Func Offset: 0x40c
+	// Line 2956, Address: 0x364110, Func Offset: 0x420
+	// Line 2957, Address: 0x364120, Func Offset: 0x430
+	// Func End, Address: 0x364154, Func Offset: 0x464
 }
 
 // Process__21zNPCGoalBPlanktonBeamFP11en_trantypefPvP6xScene
 // Start address: 0x364160
-int32 Process(zNPCGoalBPlanktonBeam* this, en_trantype* trantype, float32 dt)
+int32 zNPCGoalBPlanktonBeam::Process(en_trantype* trantype, float32 dt)
 {
+	// Line 2894, Address: 0x364160, Func Offset: 0
+	// Line 2895, Address: 0x364164, Func Offset: 0x4
+	// Line 2894, Address: 0x364168, Func Offset: 0x8
+	// Line 2895, Address: 0x364178, Func Offset: 0x18
+	// Line 2897, Address: 0x3641ac, Func Offset: 0x4c
+	// Line 2898, Address: 0x3641e4, Func Offset: 0x84
+	// Line 2899, Address: 0x3641f8, Func Offset: 0x98
+	// Line 2900, Address: 0x36424c, Func Offset: 0xec
+	// Line 2901, Address: 0x364250, Func Offset: 0xf0
+	// Line 2902, Address: 0x364258, Func Offset: 0xf8
+	// Line 2905, Address: 0x3642f8, Func Offset: 0x198
+	// Line 2906, Address: 0x364300, Func Offset: 0x1a0
+	// Func End, Address: 0x364314, Func Offset: 0x1b4
 }
 
 // Exit__21zNPCGoalBPlanktonBeamFfPv
 // Start address: 0x364320
-int32 Exit(zNPCGoalBPlanktonBeam* this)
+int32 zNPCGoalBPlanktonBeam::Exit()
 {
+	// Line 2887, Address: 0x364320, Func Offset: 0
+	// Line 2888, Address: 0x364324, Func Offset: 0x4
+	// Line 2890, Address: 0x364328, Func Offset: 0x8
+	// Line 2887, Address: 0x36432c, Func Offset: 0xc
+	// Line 2888, Address: 0x364330, Func Offset: 0x10
+	// Line 2889, Address: 0x364338, Func Offset: 0x18
+	// Line 2891, Address: 0x364348, Func Offset: 0x28
+	// Func End, Address: 0x364350, Func Offset: 0x30
 }
 
 // Enter__21zNPCGoalBPlanktonBeamFfPv
 // Start address: 0x364350
-int32 Enter(zNPCGoalBPlanktonBeam* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonBeam::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2873, Address: 0x364350, Func Offset: 0
+	// Line 2874, Address: 0x364378, Func Offset: 0x28
+	// Line 2875, Address: 0x364384, Func Offset: 0x34
+	// Line 2881, Address: 0x364388, Func Offset: 0x38
+	// Line 2876, Address: 0x36438c, Func Offset: 0x3c
+	// Line 2881, Address: 0x364390, Func Offset: 0x40
+	// Line 2878, Address: 0x364398, Func Offset: 0x48
+	// Line 2881, Address: 0x36439c, Func Offset: 0x4c
+	// Line 2876, Address: 0x3643a4, Func Offset: 0x54
+	// Line 2877, Address: 0x3643a8, Func Offset: 0x58
+	// Line 2878, Address: 0x3643ac, Func Offset: 0x5c
+	// Line 2879, Address: 0x3643b4, Func Offset: 0x64
+	// Line 2880, Address: 0x3643bc, Func Offset: 0x6c
+	// Line 2881, Address: 0x3643d0, Func Offset: 0x80
+	// Line 2882, Address: 0x364498, Func Offset: 0x148
+	// Line 2883, Address: 0x3644a8, Func Offset: 0x158
+	// Func End, Address: 0x3644cc, Func Offset: 0x17c
 }
 
 // create__21zNPCGoalBPlanktonBeamFiP10RyzMemGrowPv
 // Start address: 0x3644d0
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonBeam::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2868, Address: 0x3644d0, Func Offset: 0
+	// Line 2869, Address: 0x3644e8, Func Offset: 0x18
+	// Line 2870, Address: 0x364570, Func Offset: 0xa0
+	// Func End, Address: 0x364584, Func Offset: 0xb4
 }
 
 // Process__22zNPCGoalBPlanktonDizzyFP11en_trantypefPvP6xScene
 // Start address: 0x364590
-int32 Process(zNPCGoalBPlanktonDizzy* this, en_trantype* trantype, float32 dt)
+int32 zNPCGoalBPlanktonDizzy::Process(en_trantype* trantype, float32 dt)
 {
 	xAnimState* anim;
 	uint8 end;
+	// Line 2843, Address: 0x364590, Func Offset: 0
+	// Line 2844, Address: 0x3645ac, Func Offset: 0x1c
+	// Line 2845, Address: 0x3645bc, Func Offset: 0x2c
+	// Line 2847, Address: 0x3645d0, Func Offset: 0x40
+	// Line 2848, Address: 0x3645f8, Func Offset: 0x68
+	// Line 2849, Address: 0x364608, Func Offset: 0x78
+	// Line 2853, Address: 0x364610, Func Offset: 0x80
+	// Line 2854, Address: 0x364618, Func Offset: 0x88
+	// Line 2853, Address: 0x36461c, Func Offset: 0x8c
+	// Line 2854, Address: 0x364620, Func Offset: 0x90
+	// Line 2855, Address: 0x364658, Func Offset: 0xc8
+	// Line 2856, Address: 0x36466c, Func Offset: 0xdc
+	// Line 2858, Address: 0x364670, Func Offset: 0xe0
+	// Line 2859, Address: 0x364678, Func Offset: 0xe8
+	// Func End, Address: 0x364690, Func Offset: 0x100
 }
 
 // Exit__22zNPCGoalBPlanktonDizzyFfPv
 // Start address: 0x364690
-int32 Exit(zNPCGoalBPlanktonDizzy* this)
+int32 zNPCGoalBPlanktonDizzy::Exit()
 {
+	// Line 2838, Address: 0x364690, Func Offset: 0
+	// Line 2839, Address: 0x364694, Func Offset: 0x4
+	// Line 2838, Address: 0x364698, Func Offset: 0x8
+	// Line 2840, Address: 0x36469c, Func Offset: 0xc
+	// Func End, Address: 0x3646a4, Func Offset: 0x14
 }
 
 // Enter__22zNPCGoalBPlanktonDizzyFfPv
 // Start address: 0x3646b0
-int32 Enter(zNPCGoalBPlanktonDizzy* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonDizzy::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2829, Address: 0x3646b0, Func Offset: 0
+	// Line 2830, Address: 0x3646d4, Func Offset: 0x24
+	// Line 2831, Address: 0x3646f0, Func Offset: 0x40
+	// Line 2833, Address: 0x3646f4, Func Offset: 0x44
+	// Line 2831, Address: 0x364700, Func Offset: 0x50
+	// Line 2832, Address: 0x364704, Func Offset: 0x54
+	// Line 2833, Address: 0x364708, Func Offset: 0x58
+	// Line 2834, Address: 0x364710, Func Offset: 0x60
+	// Func End, Address: 0x364728, Func Offset: 0x78
 }
 
 // create__22zNPCGoalBPlanktonDizzyFiP10RyzMemGrowPv
 // Start address: 0x364730
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonDizzy::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2824, Address: 0x364730, Func Offset: 0
+	// Line 2825, Address: 0x364748, Func Offset: 0x18
+	// Line 2826, Address: 0x3647d0, Func Offset: 0xa0
+	// Func End, Address: 0x3647e4, Func Offset: 0xb4
 }
 
 // Process__21zNPCGoalBPlanktonFallFP11en_trantypefPvP6xScene
 // Start address: 0x3647f0
-int32 Process(zNPCGoalBPlanktonFall* this, en_trantype* trantype)
+int32 zNPCGoalBPlanktonFall::Process(en_trantype* trantype)
 {
+	// Line 2802, Address: 0x3647f0, Func Offset: 0
+	// Line 2804, Address: 0x3647f4, Func Offset: 0x4
+	// Line 2809, Address: 0x36481c, Func Offset: 0x2c
+	// Line 2810, Address: 0x364860, Func Offset: 0x70
+	// Line 2812, Address: 0x36486c, Func Offset: 0x7c
+	// Line 2811, Address: 0x364870, Func Offset: 0x80
+	// Line 2812, Address: 0x364874, Func Offset: 0x84
+	// Line 2810, Address: 0x364878, Func Offset: 0x88
+	// Line 2812, Address: 0x36487c, Func Offset: 0x8c
+	// Line 2814, Address: 0x364884, Func Offset: 0x94
+	// Line 2815, Address: 0x364888, Func Offset: 0x98
+	// Line 2816, Address: 0x364890, Func Offset: 0xa0
+	// Func End, Address: 0x364898, Func Offset: 0xa8
 }
 
 // Exit__21zNPCGoalBPlanktonFallFfPv
 // Start address: 0x3648a0
-int32 Exit(zNPCGoalBPlanktonFall* this)
+int32 zNPCGoalBPlanktonFall::Exit()
 {
+	// Line 2797, Address: 0x3648a0, Func Offset: 0
+	// Line 2798, Address: 0x3648a4, Func Offset: 0x4
+	// Line 2797, Address: 0x3648a8, Func Offset: 0x8
+	// Line 2799, Address: 0x3648ac, Func Offset: 0xc
+	// Func End, Address: 0x3648b4, Func Offset: 0x14
 }
 
 // Enter__21zNPCGoalBPlanktonFallFfPv
 // Start address: 0x3648c0
-int32 Enter(zNPCGoalBPlanktonFall* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonFall::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2787, Address: 0x3648c0, Func Offset: 0
+	// Line 2788, Address: 0x3648dc, Func Offset: 0x1c
+	// Line 2789, Address: 0x3648e8, Func Offset: 0x28
+	// Line 2791, Address: 0x3648ec, Func Offset: 0x2c
+	// Line 2789, Address: 0x3648f0, Func Offset: 0x30
+	// Line 2790, Address: 0x3648f4, Func Offset: 0x34
+	// Line 2791, Address: 0x3648fc, Func Offset: 0x3c
+	// Line 2792, Address: 0x364910, Func Offset: 0x50
+	// Line 2793, Address: 0x364920, Func Offset: 0x60
+	// Func End, Address: 0x364938, Func Offset: 0x78
 }
 
 // create__21zNPCGoalBPlanktonFallFiP10RyzMemGrowPv
 // Start address: 0x364940
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonFall::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2782, Address: 0x364940, Func Offset: 0
+	// Line 2783, Address: 0x364958, Func Offset: 0x18
+	// Line 2784, Address: 0x3649e0, Func Offset: 0xa0
+	// Func End, Address: 0x3649f4, Func Offset: 0xb4
 }
 
 // Process__21zNPCGoalBPlanktonStunFP11en_trantypefPvP6xScene
 // Start address: 0x364a00
-int32 Process(zNPCGoalBPlanktonStun* this, en_trantype* trantype, float32 dt)
+int32 zNPCGoalBPlanktonStun::Process(en_trantype* trantype, float32 dt)
 {
 	xAnimState* anim;
 	uint8 end;
+	// Line 2758, Address: 0x364a00, Func Offset: 0
+	// Line 2759, Address: 0x364a1c, Func Offset: 0x1c
+	// Line 2760, Address: 0x364a2c, Func Offset: 0x2c
+	// Line 2762, Address: 0x364a40, Func Offset: 0x40
+	// Line 2763, Address: 0x364a54, Func Offset: 0x54
+	// Line 2764, Address: 0x364a60, Func Offset: 0x60
+	// Line 2768, Address: 0x364a68, Func Offset: 0x68
+	// Line 2769, Address: 0x364a70, Func Offset: 0x70
+	// Line 2768, Address: 0x364a74, Func Offset: 0x74
+	// Line 2769, Address: 0x364a78, Func Offset: 0x78
+	// Line 2770, Address: 0x364ab0, Func Offset: 0xb0
+	// Line 2773, Address: 0x364b58, Func Offset: 0x158
+	// Line 2774, Address: 0x364b60, Func Offset: 0x160
+	// Func End, Address: 0x364b78, Func Offset: 0x178
 }
 
 // Exit__21zNPCGoalBPlanktonStunFfPv
 // Start address: 0x364b80
-int32 Exit(zNPCGoalBPlanktonStun* this)
+int32 zNPCGoalBPlanktonStun::Exit()
 {
+	// Line 2751, Address: 0x364b80, Func Offset: 0
+	// Line 2752, Address: 0x364b98, Func Offset: 0x18
+	// Line 2753, Address: 0x364bb0, Func Offset: 0x30
+	// Line 2754, Address: 0x364bb8, Func Offset: 0x38
+	// Line 2753, Address: 0x364bbc, Func Offset: 0x3c
+	// Line 2755, Address: 0x364bc0, Func Offset: 0x40
+	// Func End, Address: 0x364bd0, Func Offset: 0x50
 }
 
 // Enter__21zNPCGoalBPlanktonStunFfPv
 // Start address: 0x364bd0
-int32 Enter(zNPCGoalBPlanktonStun* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonStun::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2743, Address: 0x364bd0, Func Offset: 0
+	// Line 2744, Address: 0x364bec, Func Offset: 0x1c
+	// Line 2745, Address: 0x364bf8, Func Offset: 0x28
+	// Line 2747, Address: 0x364bfc, Func Offset: 0x2c
+	// Line 2745, Address: 0x364c08, Func Offset: 0x38
+	// Line 2746, Address: 0x364c0c, Func Offset: 0x3c
+	// Line 2747, Address: 0x364c10, Func Offset: 0x40
+	// Line 2748, Address: 0x364c18, Func Offset: 0x48
+	// Func End, Address: 0x364c30, Func Offset: 0x60
 }
 
 // create__21zNPCGoalBPlanktonStunFiP10RyzMemGrowPv
 // Start address: 0x364c30
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonStun::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2738, Address: 0x364c30, Func Offset: 0
+	// Line 2739, Address: 0x364c48, Func Offset: 0x18
+	// Line 2740, Address: 0x364cd0, Func Offset: 0xa0
+	// Func End, Address: 0x364ce4, Func Offset: 0xb4
 }
 
 // Process__21zNPCGoalBPlanktonMoveFP11en_trantypefPvP6xScene
 // Start address: 0x364cf0
 int32 Process()
 {
+	// Line 2730, Address: 0x364cf0, Func Offset: 0
+	// Func End, Address: 0x364cf8, Func Offset: 0x8
 }
 
 // Exit__21zNPCGoalBPlanktonMoveFfPv
 // Start address: 0x364d00
-int32 Exit()
+int32 zNPCGoalBPlanktonMove::Exit()
 {
+	// Line 2725, Address: 0x364d00, Func Offset: 0
+	// Func End, Address: 0x364d08, Func Offset: 0x8
 }
 
 // Enter__21zNPCGoalBPlanktonMoveFfPv
 // Start address: 0x364d10
-int32 Enter(zNPCGoalBPlanktonMove* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonMove::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2719, Address: 0x364d10, Func Offset: 0
+	// Func End, Address: 0x364d18, Func Offset: 0x8
 }
 
 // create__21zNPCGoalBPlanktonMoveFiP10RyzMemGrowPv
 // Start address: 0x364d20
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonMove::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2713, Address: 0x364d20, Func Offset: 0
+	// Line 2714, Address: 0x364d38, Func Offset: 0x18
+	// Line 2715, Address: 0x364dc0, Func Offset: 0xa0
+	// Func End, Address: 0x364dd4, Func Offset: 0xb4
 }
 
 // Process__22zNPCGoalBPlanktonTauntFP11en_trantypefPvP6xScene
 // Start address: 0x364de0
 int32 Process()
 {
+	// Line 2705, Address: 0x364de0, Func Offset: 0
+	// Func End, Address: 0x364de8, Func Offset: 0x8
 }
 
 // Exit__22zNPCGoalBPlanktonTauntFfPv
 // Start address: 0x364df0
-int32 Exit()
+int32 zNPCGoalBPlanktonTaunt::Exit()
 {
+	// Line 2700, Address: 0x364df0, Func Offset: 0
+	// Func End, Address: 0x364df8, Func Offset: 0x8
 }
 
 // Enter__22zNPCGoalBPlanktonTauntFfPv
 // Start address: 0x364e00
-int32 Enter(zNPCGoalBPlanktonTaunt* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonTaunt::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2694, Address: 0x364e00, Func Offset: 0
+	// Func End, Address: 0x364e08, Func Offset: 0x8
 }
 
 // create__22zNPCGoalBPlanktonTauntFiP10RyzMemGrowPv
 // Start address: 0x364e10
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonTaunt::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2688, Address: 0x364e10, Func Offset: 0
+	// Line 2689, Address: 0x364e28, Func Offset: 0x18
+	// Line 2690, Address: 0x364eb0, Func Offset: 0xa0
+	// Func End, Address: 0x364ec4, Func Offset: 0xb4
 }
 
 // Process__21zNPCGoalBPlanktonHuntFP11en_trantypefPvP6xScene
 // Start address: 0x364ed0
-int32 Process(zNPCGoalBPlanktonHunt* this, en_trantype* trantype)
+int32 zNPCGoalBPlanktonHunt::Process(en_trantype* trantype)
 {
 	xVec3 player_vel;
+	// Line 2656, Address: 0x364ed0, Func Offset: 0
+	// Line 2657, Address: 0x364ee8, Func Offset: 0x18
+	// Line 2658, Address: 0x364ef4, Func Offset: 0x24
+	// Line 2660, Address: 0x364f98, Func Offset: 0xc8
+	// Line 2664, Address: 0x364fa0, Func Offset: 0xd0
+	// Line 2665, Address: 0x365020, Func Offset: 0x150
+	// Line 2664, Address: 0x365024, Func Offset: 0x154
+	// Line 2665, Address: 0x36502c, Func Offset: 0x15c
+	// Line 2666, Address: 0x36504c, Func Offset: 0x17c
+	// Line 2669, Address: 0x365058, Func Offset: 0x188
+	// Line 2671, Address: 0x365068, Func Offset: 0x198
+	// Line 2669, Address: 0x36506c, Func Offset: 0x19c
+	// Line 2670, Address: 0x3650bc, Func Offset: 0x1ec
+	// Line 2671, Address: 0x3650d8, Func Offset: 0x208
+	// Line 2674, Address: 0x365128, Func Offset: 0x258
+	// Line 2675, Address: 0x365130, Func Offset: 0x260
+	// Line 2674, Address: 0x36513c, Func Offset: 0x26c
+	// Line 2675, Address: 0x365140, Func Offset: 0x270
+	// Line 2678, Address: 0x365148, Func Offset: 0x278
+	// Line 2679, Address: 0x365150, Func Offset: 0x280
+	// Func End, Address: 0x365164, Func Offset: 0x294
 }
 
 // Exit__21zNPCGoalBPlanktonHuntFfPv
 // Start address: 0x365170
-int32 Exit(zNPCGoalBPlanktonHunt* this)
+int32 zNPCGoalBPlanktonHunt::Exit()
 {
+	// Line 2650, Address: 0x365170, Func Offset: 0
+	// Line 2651, Address: 0x365178, Func Offset: 0x8
+	// Line 2653, Address: 0x365180, Func Offset: 0x10
+	// Line 2652, Address: 0x365184, Func Offset: 0x14
+	// Line 2653, Address: 0x365188, Func Offset: 0x18
+	// Func End, Address: 0x365190, Func Offset: 0x20
 }
 
 // Enter__21zNPCGoalBPlanktonHuntFfPv
 // Start address: 0x365190
-int32 Enter(zNPCGoalBPlanktonHunt* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonHunt::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2638, Address: 0x365190, Func Offset: 0
+	// Line 2639, Address: 0x3651ac, Func Offset: 0x1c
+	// Line 2641, Address: 0x3651b8, Func Offset: 0x28
+	// Line 2643, Address: 0x3651c0, Func Offset: 0x30
+	// Line 2641, Address: 0x3651c4, Func Offset: 0x34
+	// Line 2642, Address: 0x3651c8, Func Offset: 0x38
+	// Line 2643, Address: 0x3651d0, Func Offset: 0x40
+	// Line 2644, Address: 0x365288, Func Offset: 0xf8
+	// Line 2645, Address: 0x365290, Func Offset: 0x100
+	// Line 2646, Address: 0x36529c, Func Offset: 0x10c
+	// Line 2645, Address: 0x3652a8, Func Offset: 0x118
+	// Line 2646, Address: 0x3652b4, Func Offset: 0x124
+	// Line 2647, Address: 0x3652bc, Func Offset: 0x12c
+	// Func End, Address: 0x3652d4, Func Offset: 0x144
 }
 
 // create__21zNPCGoalBPlanktonHuntFiP10RyzMemGrowPv
 // Start address: 0x3652e0
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonHunt::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2633, Address: 0x3652e0, Func Offset: 0
+	// Line 2634, Address: 0x3652f8, Func Offset: 0x18
+	// Line 2635, Address: 0x365380, Func Offset: 0xa0
+	// Func End, Address: 0x365394, Func Offset: 0xb4
 }
 
 // Process__22zNPCGoalBPlanktonEvadeFP11en_trantypefPvP6xScene
 // Start address: 0x3653a0
-int32 Process(zNPCGoalBPlanktonEvade* this, en_trantype* trantype)
+int32 zNPCGoalBPlanktonEvade::Process(en_trantype* trantype)
 {
 	xVec3 rloc;
+	// Line 2597, Address: 0x3653a0, Func Offset: 0
+	// Line 2598, Address: 0x3653a4, Func Offset: 0x4
+	// Line 2597, Address: 0x3653a8, Func Offset: 0x8
+	// Line 2598, Address: 0x3653cc, Func Offset: 0x2c
+	// Line 2597, Address: 0x3653d0, Func Offset: 0x30
+	// Line 2598, Address: 0x3653d4, Func Offset: 0x34
+	// Line 2601, Address: 0x3653e0, Func Offset: 0x40
+	// Line 2600, Address: 0x3653e4, Func Offset: 0x44
+	// Line 2601, Address: 0x3653e8, Func Offset: 0x48
+	// Line 2600, Address: 0x3653f0, Func Offset: 0x50
+	// Line 2601, Address: 0x3653f4, Func Offset: 0x54
+	// Line 2602, Address: 0x3653fc, Func Offset: 0x5c
+	// Line 2605, Address: 0x365400, Func Offset: 0x60
+	// Line 2610, Address: 0x365410, Func Offset: 0x70
+	// Line 2611, Address: 0x3654d0, Func Offset: 0x130
+	// Line 2610, Address: 0x3654d8, Func Offset: 0x138
+	// Line 2611, Address: 0x3654f4, Func Offset: 0x154
+	// Line 2612, Address: 0x365534, Func Offset: 0x194
+	// Line 2613, Address: 0x365558, Func Offset: 0x1b8
+	// Line 2617, Address: 0x365560, Func Offset: 0x1c0
+	// Line 2614, Address: 0x365570, Func Offset: 0x1d0
+	// Line 2617, Address: 0x365578, Func Offset: 0x1d8
+	// Line 2620, Address: 0x3656b8, Func Offset: 0x318
+	// Line 2622, Address: 0x3656e4, Func Offset: 0x344
+	// Line 2624, Address: 0x3656e8, Func Offset: 0x348
+	// Line 2625, Address: 0x3656f0, Func Offset: 0x350
+	// Func End, Address: 0x365714, Func Offset: 0x374
 }
 
 // Exit__22zNPCGoalBPlanktonEvadeFfPv
 // Start address: 0x365720
-int32 Exit(zNPCGoalBPlanktonEvade* this)
+int32 zNPCGoalBPlanktonEvade::Exit()
 {
+	// Line 2590, Address: 0x365720, Func Offset: 0
+	// Line 2591, Address: 0x365724, Func Offset: 0x4
+	// Line 2590, Address: 0x365728, Func Offset: 0x8
+	// Line 2591, Address: 0x36572c, Func Offset: 0xc
+	// Line 2592, Address: 0x3657e0, Func Offset: 0xc0
+	// Line 2594, Address: 0x3657f4, Func Offset: 0xd4
+	// Line 2593, Address: 0x3657f8, Func Offset: 0xd8
+	// Line 2594, Address: 0x3657fc, Func Offset: 0xdc
+	// Func End, Address: 0x365804, Func Offset: 0xe4
 }
 
 // Enter__22zNPCGoalBPlanktonEvadeFfPv
 // Start address: 0x365810
-int32 Enter(zNPCGoalBPlanktonEvade* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonEvade::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2572, Address: 0x365810, Func Offset: 0
+	// Line 2573, Address: 0x365830, Func Offset: 0x20
+	// Line 2574, Address: 0x36583c, Func Offset: 0x2c
+	// Line 2575, Address: 0x365844, Func Offset: 0x34
+	// Line 2574, Address: 0x365848, Func Offset: 0x38
+	// Line 2575, Address: 0x36584c, Func Offset: 0x3c
+	// Line 2577, Address: 0x365900, Func Offset: 0xf0
+	// Line 2578, Address: 0x365908, Func Offset: 0xf8
+	// Line 2580, Address: 0x36590c, Func Offset: 0xfc
+	// Line 2577, Address: 0x365910, Func Offset: 0x100
+	// Line 2578, Address: 0x365914, Func Offset: 0x104
+	// Line 2579, Address: 0x36591c, Func Offset: 0x10c
+	// Line 2580, Address: 0x365924, Func Offset: 0x114
+	// Line 2581, Address: 0x3659d8, Func Offset: 0x1c8
+	// Line 2582, Address: 0x3659e8, Func Offset: 0x1d8
+	// Line 2583, Address: 0x3659f8, Func Offset: 0x1e8
+	// Line 2584, Address: 0x365a04, Func Offset: 0x1f4
+	// Line 2586, Address: 0x365a18, Func Offset: 0x208
+	// Line 2584, Address: 0x365a24, Func Offset: 0x214
+	// Line 2586, Address: 0x365a38, Func Offset: 0x228
+	// Line 2587, Address: 0x365a40, Func Offset: 0x230
+	// Func End, Address: 0x365a5c, Func Offset: 0x24c
 }
 
 // create__22zNPCGoalBPlanktonEvadeFiP10RyzMemGrowPv
 // Start address: 0x365a60
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonEvade::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2567, Address: 0x365a60, Func Offset: 0
+	// Line 2568, Address: 0x365a78, Func Offset: 0x18
+	// Line 2569, Address: 0x365b00, Func Offset: 0xa0
+	// Func End, Address: 0x365b14, Func Offset: 0xb4
 }
 
 // Process__22zNPCGoalBPlanktonFlankFP11en_trantypefPvP6xScene
 // Start address: 0x365b20
-int32 Process(zNPCGoalBPlanktonFlank* this, en_trantype* trantype)
+int32 zNPCGoalBPlanktonFlank::Process(en_trantype* trantype)
 {
+	// Line 2552, Address: 0x365b20, Func Offset: 0
+	// Line 2555, Address: 0x365b58, Func Offset: 0x38
+	// Line 2554, Address: 0x365b5c, Func Offset: 0x3c
+	// Line 2555, Address: 0x365b60, Func Offset: 0x40
+	// Line 2554, Address: 0x365b68, Func Offset: 0x48
+	// Line 2555, Address: 0x365b6c, Func Offset: 0x4c
+	// Line 2556, Address: 0x365b74, Func Offset: 0x54
+	// Line 2558, Address: 0x365b78, Func Offset: 0x58
+	// Line 2559, Address: 0x365b80, Func Offset: 0x60
+	// Func End, Address: 0x365b88, Func Offset: 0x68
 }
 
 // Exit__22zNPCGoalBPlanktonFlankFfPv
 // Start address: 0x365b90
-int32 Exit(zNPCGoalBPlanktonFlank* this)
+int32 zNPCGoalBPlanktonFlank::Exit()
 {
+	// Line 2543, Address: 0x365b90, Func Offset: 0
+	// Line 2544, Address: 0x365c48, Func Offset: 0xb8
+	// Line 2546, Address: 0x365c50, Func Offset: 0xc0
+	// Line 2544, Address: 0x365c54, Func Offset: 0xc4
+	// Line 2547, Address: 0x365c64, Func Offset: 0xd4
+	// Func End, Address: 0x365c6c, Func Offset: 0xdc
 }
 
 // Enter__22zNPCGoalBPlanktonFlankFfPv
 // Start address: 0x365c70
-int32 Enter(zNPCGoalBPlanktonFlank* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonFlank::Enter(float32 dt, void* updCtxt)
 {
 	xVec3 target;
+	// Line 2529, Address: 0x365c70, Func Offset: 0
+	// Line 2530, Address: 0x365c8c, Func Offset: 0x1c
+	// Line 2531, Address: 0x365c98, Func Offset: 0x28
+	// Line 2532, Address: 0x365ca0, Func Offset: 0x30
+	// Line 2534, Address: 0x365cb8, Func Offset: 0x48
+	// Line 2531, Address: 0x365cc0, Func Offset: 0x50
+	// Line 2532, Address: 0x365cc8, Func Offset: 0x58
+	// Line 2534, Address: 0x365d70, Func Offset: 0x100
+	// Line 2535, Address: 0x365dc0, Func Offset: 0x150
+	// Line 2536, Address: 0x365dc8, Func Offset: 0x158
+	// Line 2537, Address: 0x365dd4, Func Offset: 0x164
+	// Line 2536, Address: 0x365dd8, Func Offset: 0x168
+	// Line 2537, Address: 0x365de8, Func Offset: 0x178
+	// Line 2538, Address: 0x365ea0, Func Offset: 0x230
+	// Line 2539, Address: 0x365eb0, Func Offset: 0x240
+	// Func End, Address: 0x365ec8, Func Offset: 0x258
 }
 
 // create__22zNPCGoalBPlanktonFlankFiP10RyzMemGrowPv
 // Start address: 0x365ed0
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonFlank::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2524, Address: 0x365ed0, Func Offset: 0
+	// Line 2525, Address: 0x365ee8, Func Offset: 0x18
+	// Line 2526, Address: 0x365f70, Func Offset: 0xa0
+	// Func End, Address: 0x365f84, Func Offset: 0xb4
 }
 
 // Process__23zNPCGoalBPlanktonAmbushFP11en_trantypefPvP6xScene
 // Start address: 0x365f90
-int32 Process(zNPCGoalBPlanktonAmbush* this, en_trantype* trantype, float32 dt)
+int32 zNPCGoalBPlanktonAmbush::Process(en_trantype* trantype, float32 dt)
 {
+	// Line 2497, Address: 0x365f90, Func Offset: 0
+	// Line 2499, Address: 0x365fc4, Func Offset: 0x34
+	// Line 2501, Address: 0x365fd0, Func Offset: 0x40
+	// Line 2502, Address: 0x366038, Func Offset: 0xa8
+	// Line 2506, Address: 0x366048, Func Offset: 0xb8
+	// Line 2507, Address: 0x36604c, Func Offset: 0xbc
+	// Line 2506, Address: 0x366054, Func Offset: 0xc4
+	// Line 2507, Address: 0x366060, Func Offset: 0xd0
+	// Line 2509, Address: 0x366080, Func Offset: 0xf0
+	// Line 2510, Address: 0x366088, Func Offset: 0xf8
+	// Line 2511, Address: 0x3660b8, Func Offset: 0x128
+	// Line 2510, Address: 0x3660bc, Func Offset: 0x12c
+	// Line 2511, Address: 0x3660c0, Func Offset: 0x130
+	// Line 2510, Address: 0x3660c8, Func Offset: 0x138
+	// Line 2511, Address: 0x366100, Func Offset: 0x170
+	// Line 2515, Address: 0x366108, Func Offset: 0x178
+	// Line 2516, Address: 0x366110, Func Offset: 0x180
+	// Func End, Address: 0x366128, Func Offset: 0x198
 }
 
 // Exit__23zNPCGoalBPlanktonAmbushFfPv
 // Start address: 0x366130
-int32 Exit()
+int32 zNPCGoalBPlanktonAmbush::Exit()
 {
+	// Line 2494, Address: 0x366130, Func Offset: 0
+	// Func End, Address: 0x366138, Func Offset: 0x8
 }
 
 // Enter__23zNPCGoalBPlanktonAmbushFfPv
 // Start address: 0x366140
-int32 Enter(zNPCGoalBPlanktonAmbush* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonAmbush::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2481, Address: 0x366140, Func Offset: 0
+	// Line 2483, Address: 0x366144, Func Offset: 0x4
+	// Line 2481, Address: 0x366148, Func Offset: 0x8
+	// Line 2482, Address: 0x366164, Func Offset: 0x24
+	// Line 2483, Address: 0x36616c, Func Offset: 0x2c
+	// Line 2482, Address: 0x366170, Func Offset: 0x30
+	// Line 2483, Address: 0x366174, Func Offset: 0x34
+	// Line 2484, Address: 0x366180, Func Offset: 0x40
+	// Line 2485, Address: 0x366188, Func Offset: 0x48
+	// Line 2486, Address: 0x36619c, Func Offset: 0x5c
+	// Line 2487, Address: 0x366238, Func Offset: 0xf8
+	// Line 2488, Address: 0x36626c, Func Offset: 0x12c
+	// Line 2487, Address: 0x366278, Func Offset: 0x138
+	// Line 2488, Address: 0x3662ac, Func Offset: 0x16c
+	// Line 2489, Address: 0x3662b4, Func Offset: 0x174
+	// Func End, Address: 0x3662d0, Func Offset: 0x190
 }
 
 // create__23zNPCGoalBPlanktonAmbushFiP10RyzMemGrowPv
 // Start address: 0x3662d0
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonAmbush::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2476, Address: 0x3662d0, Func Offset: 0
+	// Line 2477, Address: 0x3662e8, Func Offset: 0x18
+	// Line 2478, Address: 0x366370, Func Offset: 0xa0
+	// Func End, Address: 0x366384, Func Offset: 0xb4
 }
 
 // Process__23zNPCGoalBPlanktonAttackFP11en_trantypefPvP6xScene
 // Start address: 0x366390
-int32 Process(zNPCGoalBPlanktonAttack* this, en_trantype* trantype)
+int32 zNPCGoalBPlanktonAttack::Process(en_trantype* trantype)
 {
+	// Line 2451, Address: 0x366390, Func Offset: 0
+	// Line 2452, Address: 0x3663ac, Func Offset: 0x1c
+	// Line 2457, Address: 0x3663f0, Func Offset: 0x60
+	// Line 2456, Address: 0x3663f4, Func Offset: 0x64
+	// Line 2457, Address: 0x3663f8, Func Offset: 0x68
+	// Line 2461, Address: 0x366404, Func Offset: 0x74
+	// Line 2464, Address: 0x36641c, Func Offset: 0x8c
+	// Line 2463, Address: 0x366420, Func Offset: 0x90
+	// Line 2464, Address: 0x366424, Func Offset: 0x94
+	// Line 2463, Address: 0x36642c, Func Offset: 0x9c
+	// Line 2464, Address: 0x366430, Func Offset: 0xa0
+	// Line 2467, Address: 0x366438, Func Offset: 0xa8
+	// Line 2468, Address: 0x366440, Func Offset: 0xb0
+	// Func End, Address: 0x366454, Func Offset: 0xc4
 }
 
 // Exit__23zNPCGoalBPlanktonAttackFfPv
 // Start address: 0x366460
-int32 Exit()
+int32 zNPCGoalBPlanktonAttack::Exit()
 {
+	// Line 2448, Address: 0x366460, Func Offset: 0
+	// Func End, Address: 0x366468, Func Offset: 0x8
 }
 
 // Enter__23zNPCGoalBPlanktonAttackFfPv
 // Start address: 0x366470
-int32 Enter(zNPCGoalBPlanktonAttack* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonAttack::Enter(float32 dt, void* updCtxt)
 {
+	// Line 2432, Address: 0x366470, Func Offset: 0
+	// Line 2433, Address: 0x36648c, Func Offset: 0x1c
+	// Line 2434, Address: 0x366498, Func Offset: 0x28
+	// Line 2435, Address: 0x3664a4, Func Offset: 0x34
+	// Line 2436, Address: 0x3664ac, Func Offset: 0x3c
+	// Line 2441, Address: 0x3664b8, Func Offset: 0x48
+	// Line 2436, Address: 0x3664bc, Func Offset: 0x4c
+	// Line 2437, Address: 0x3664cc, Func Offset: 0x5c
+	// Line 2438, Address: 0x3664d4, Func Offset: 0x64
+	// Line 2441, Address: 0x3664dc, Func Offset: 0x6c
+	// Line 2442, Address: 0x366590, Func Offset: 0x120
+	// Line 2443, Address: 0x3665a0, Func Offset: 0x130
+	// Func End, Address: 0x3665b8, Func Offset: 0x148
 }
 
 // create__23zNPCGoalBPlanktonAttackFiP10RyzMemGrowPv
 // Start address: 0x3665c0
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonAttack::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2427, Address: 0x3665c0, Func Offset: 0
+	// Line 2428, Address: 0x3665d8, Func Offset: 0x18
+	// Line 2429, Address: 0x366660, Func Offset: 0xa0
+	// Func End, Address: 0x366674, Func Offset: 0xb4
 }
 
 // get_yaw__21zNPCGoalBPlanktonIdleCFRfRf
 // Start address: 0x366680
-void get_yaw(zNPCGoalBPlanktonIdle* this, float32& optimal, float32& dist)
+void zNPCGoalBPlanktonIdle::get_yaw(float32& optimal, float32& dist)
 {
+	// Line 2395, Address: 0x366680, Func Offset: 0
+	// Line 2397, Address: 0x366684, Func Offset: 0x4
+	// Line 2395, Address: 0x366688, Func Offset: 0x8
+	// Line 2397, Address: 0x3666b4, Func Offset: 0x34
+	// Line 2398, Address: 0x3666ec, Func Offset: 0x6c
+	// Line 2399, Address: 0x366724, Func Offset: 0xa4
+	// Line 2398, Address: 0x366734, Func Offset: 0xb4
+	// Line 2399, Address: 0x36673c, Func Offset: 0xbc
+	// Line 2400, Address: 0x3667c8, Func Offset: 0x148
+	// Line 2401, Address: 0x3667d0, Func Offset: 0x150
+	// Line 2400, Address: 0x3667e8, Func Offset: 0x168
+	// Line 2401, Address: 0x3667f0, Func Offset: 0x170
+	// Line 2400, Address: 0x3667f4, Func Offset: 0x174
+	// Line 2401, Address: 0x3667f8, Func Offset: 0x178
+	// Line 2403, Address: 0x366810, Func Offset: 0x190
+	// Line 2402, Address: 0x366814, Func Offset: 0x194
+	// Line 2403, Address: 0x366818, Func Offset: 0x198
+	// Line 2402, Address: 0x366830, Func Offset: 0x1b0
+	// Line 2403, Address: 0x366838, Func Offset: 0x1b8
+	// Line 2404, Address: 0x3668c0, Func Offset: 0x240
+	// Func End, Address: 0x3668e8, Func Offset: 0x268
 }
 
 // Process__21zNPCGoalBPlanktonIdleFP11en_trantypefPvP6xScene
 // Start address: 0x3668f0
-int32 Process(zNPCGoalBPlanktonIdle* this, en_trantype* trantype)
+int32 zNPCGoalBPlanktonIdle::Process(en_trantype* trantype)
 {
 	float32 yaw_optimal;
 	float32 yaw_dist;
+	// Line 2375, Address: 0x3668f0, Func Offset: 0
+	// Line 2376, Address: 0x36690c, Func Offset: 0x1c
+	// Line 2378, Address: 0x366960, Func Offset: 0x70
+	// Line 2379, Address: 0x366980, Func Offset: 0x90
+	// Line 2380, Address: 0x366988, Func Offset: 0x98
+	// Line 2381, Address: 0x366994, Func Offset: 0xa4
+	// Line 2386, Address: 0x366998, Func Offset: 0xa8
+	// Line 2387, Address: 0x3669a8, Func Offset: 0xb8
+	// Line 2389, Address: 0x3669e0, Func Offset: 0xf0
+	// Line 2391, Address: 0x366aa0, Func Offset: 0x1b0
+	// Line 2392, Address: 0x366aa8, Func Offset: 0x1b8
+	// Func End, Address: 0x366ac4, Func Offset: 0x1d4
 }
 
 // Exit__21zNPCGoalBPlanktonIdleFfPv
 // Start address: 0x366ad0
-int32 Exit(zNPCGoalBPlanktonIdle* this)
+int32 zNPCGoalBPlanktonIdle::Exit()
 {
+	// Line 2369, Address: 0x366ad0, Func Offset: 0
+	// Line 2370, Address: 0x366ad8, Func Offset: 0x8
+	// Line 2372, Address: 0x366ae0, Func Offset: 0x10
+	// Line 2371, Address: 0x366ae4, Func Offset: 0x14
+	// Line 2372, Address: 0x366ae8, Func Offset: 0x18
+	// Func End, Address: 0x366af0, Func Offset: 0x20
 }
 
 // Enter__21zNPCGoalBPlanktonIdleFfPv
 // Start address: 0x366af0
-int32 Enter(zNPCGoalBPlanktonIdle* this, float32 dt, void* updCtxt)
+int32 zNPCGoalBPlanktonIdle::Enter(float32 dt, void* updCtxt)
 {
 	float32 yaw_optimal;
 	float32 yaw_dist;
+	// Line 2352, Address: 0x366af0, Func Offset: 0
+	// Line 2353, Address: 0x366b14, Func Offset: 0x24
+	// Line 2354, Address: 0x366b20, Func Offset: 0x30
+	// Line 2355, Address: 0x366b28, Func Offset: 0x38
+	// Line 2356, Address: 0x366b30, Func Offset: 0x40
+	// Line 2360, Address: 0x366be8, Func Offset: 0xf8
+	// Line 2362, Address: 0x366bec, Func Offset: 0xfc
+	// Line 2363, Address: 0x366c00, Func Offset: 0x110
+	// Line 2365, Address: 0x366cb4, Func Offset: 0x1c4
+	// Line 2363, Address: 0x366cbc, Func Offset: 0x1cc
+	// Line 2365, Address: 0x366cc4, Func Offset: 0x1d4
+	// Line 2366, Address: 0x366cd0, Func Offset: 0x1e0
+	// Func End, Address: 0x366cf0, Func Offset: 0x200
 }
 
 // create__21zNPCGoalBPlanktonIdleFiP10RyzMemGrowPv
 // Start address: 0x366cf0
-xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info)
+xFactoryInst* zNPCGoalBPlanktonIdle::create(int32 who, RyzMemGrow* grow, void* info)
 {
+	// Line 2347, Address: 0x366cf0, Func Offset: 0
+	// Line 2348, Address: 0x366d08, Func Offset: 0x18
+	// Line 2349, Address: 0x366d90, Func Offset: 0xa0
+	// Func End, Address: 0x366da4, Func Offset: 0xb4
 }
 
 // aim_gun__13zNPCBPlanktonFP9xAnimPlayP5xQuatP5xVec3i
 // Start address: 0x366db0
-void aim_gun(xAnimPlay* play, xQuat* quat)
+void zNPCBPlankton::aim_gun(xAnimPlay* play, xQuat* quat)
 {
 	zNPCBPlankton& owner;
+	// Line 2247, Address: 0x366db0, Func Offset: 0
+	// Line 2248, Address: 0x366db4, Func Offset: 0x4
+	// Line 2249, Address: 0x366dc0, Func Offset: 0x10
+	// Line 2273, Address: 0x366de0, Func Offset: 0x30
+	// Func End, Address: 0x366de8, Func Offset: 0x38
 }
 
 // fall__13zNPCBPlanktonFff
 // Start address: 0x366df0
-void fall(zNPCBPlankton* this, float32 accel, float32 max_vel)
+void zNPCBPlankton::fall(float32 accel, float32 max_vel)
 {
+	// Line 2237, Address: 0x366df0, Func Offset: 0
+	// Line 2238, Address: 0x366df4, Func Offset: 0x4
+	// Line 2239, Address: 0x366e04, Func Offset: 0x14
+	// Line 2240, Address: 0x366f78, Func Offset: 0x188
+	// Line 2241, Address: 0x366f80, Func Offset: 0x190
+	// Line 2242, Address: 0x366f90, Func Offset: 0x1a0
+	// Line 2243, Address: 0x366f9c, Func Offset: 0x1ac
+	// Func End, Address: 0x366fa4, Func Offset: 0x1b4
 }
 
 // halt__13zNPCBPlanktonFf
 // Start address: 0x366fb0
-void halt(zNPCBPlankton* this, float32 accel)
+void zNPCBPlankton::halt(float32 accel)
 {
+	// Line 2226, Address: 0x366fb0, Func Offset: 0
+	// Line 2227, Address: 0x366fb4, Func Offset: 0x4
+	// Line 2228, Address: 0x366fc4, Func Offset: 0x14
+	// Line 2229, Address: 0x367138, Func Offset: 0x188
+	// Line 2230, Address: 0x367140, Func Offset: 0x190
+	// Line 2231, Address: 0x367160, Func Offset: 0x1b0
+	// Line 2232, Address: 0x367188, Func Offset: 0x1d8
+	// Line 2233, Address: 0x3671b0, Func Offset: 0x200
+	// Func End, Address: 0x3671b8, Func Offset: 0x208
 }
 
 // here_boy__13zNPCBPlanktonFv
 // Start address: 0x3671c0
-void here_boy(zNPCBPlankton* this)
+void zNPCBPlankton::here_boy()
 {
+	// Line 2181, Address: 0x3671c0, Func Offset: 0
+	// Func End, Address: 0x3671c8, Func Offset: 0x8
 }
 
 // sickum__13zNPCBPlanktonFv
 // Start address: 0x3671d0
-void sickum(zNPCBPlankton* this)
+void zNPCBPlankton::sickum()
 {
+	// Line 2167, Address: 0x3671d0, Func Offset: 0
+	// Line 2169, Address: 0x3671e0, Func Offset: 0x10
+	// Line 2172, Address: 0x3671f8, Func Offset: 0x28
+	// Line 2173, Address: 0x3671fc, Func Offset: 0x2c
+	// Line 2174, Address: 0x367204, Func Offset: 0x34
+	// Func End, Address: 0x367218, Func Offset: 0x48
 }
 
 // player_left_territory__13zNPCBPlanktonCFv
 // Start address: 0x367220
-uint8 player_left_territory(zNPCBPlankton* this)
+uint8 zNPCBPlankton::player_left_territory()
 {
 	territory_data& t;
 	xCollis& coll;
 	xEnt* platform;
 	int32 i;
 	territory_data& t;
+	// Line 2087, Address: 0x367220, Func Offset: 0
+	// Line 2086, Address: 0x367224, Func Offset: 0x4
+	// Line 2087, Address: 0x367228, Func Offset: 0x8
+	// Line 2086, Address: 0x36722c, Func Offset: 0xc
+	// Line 2087, Address: 0x367230, Func Offset: 0x10
+	// Line 2086, Address: 0x367234, Func Offset: 0x14
+	// Line 2087, Address: 0x367238, Func Offset: 0x18
+	// Line 2086, Address: 0x36723c, Func Offset: 0x1c
+	// Line 2089, Address: 0x367248, Func Offset: 0x28
+	// Line 2091, Address: 0x367278, Func Offset: 0x58
+	// Line 2092, Address: 0x367280, Func Offset: 0x60
+	// Line 2095, Address: 0x367298, Func Offset: 0x78
+	// Line 2096, Address: 0x3672a4, Func Offset: 0x84
+	// Line 2097, Address: 0x3672bc, Func Offset: 0x9c
+	// Line 2098, Address: 0x3672c4, Func Offset: 0xa4
+	// Line 2099, Address: 0x3672e0, Func Offset: 0xc0
+	// Line 2100, Address: 0x3672e8, Func Offset: 0xc8
+	// Func End, Address: 0x3672f0, Func Offset: 0xd0
 }
 
 // move_to_player_territory__13zNPCBPlanktonFv
 // Start address: 0x3672f0
-uint8 move_to_player_territory(zNPCBPlankton* this)
+uint8 zNPCBPlankton::move_to_player_territory()
 {
 	xCollis& coll;
 	xEnt* platform;
 	int32 i;
 	territory_data& t;
+	// Line 2067, Address: 0x3672f0, Func Offset: 0
+	// Line 2068, Address: 0x3672fc, Func Offset: 0xc
+	// Line 2069, Address: 0x367318, Func Offset: 0x28
+	// Line 2071, Address: 0x367320, Func Offset: 0x30
+	// Line 2074, Address: 0x367338, Func Offset: 0x48
+	// Line 2075, Address: 0x367344, Func Offset: 0x54
+	// Line 2077, Address: 0x367350, Func Offset: 0x60
+	// Line 2078, Address: 0x367354, Func Offset: 0x64
+	// Line 2080, Address: 0x36735c, Func Offset: 0x6c
+	// Line 2081, Address: 0x367370, Func Offset: 0x80
+	// Line 2082, Address: 0x367378, Func Offset: 0x88
+	// Func End, Address: 0x367380, Func Offset: 0x90
 }
 
 // impart_velocity__13zNPCBPlanktonFRC5xVec3
 // Start address: 0x367380
-void impart_velocity(zNPCBPlankton* this, xVec3& vel)
+void zNPCBPlankton::impart_velocity(xVec3& vel)
 {
 	xVec3 rvel;
 	xVec2 offset;
 	float32 max_dist;
+	// Line 2032, Address: 0x367380, Func Offset: 0
+	// Line 2033, Address: 0x367384, Func Offset: 0x4
+	// Line 2032, Address: 0x367388, Func Offset: 0x8
+	// Line 2033, Address: 0x36739c, Func Offset: 0x1c
+	// Line 2035, Address: 0x3673bc, Func Offset: 0x3c
+	// Line 2037, Address: 0x3673c0, Func Offset: 0x40
+	// Line 2039, Address: 0x3674ec, Func Offset: 0x16c
+	// Line 2037, Address: 0x3674f0, Func Offset: 0x170
+	// Line 2039, Address: 0x3674f4, Func Offset: 0x174
+	// Line 2037, Address: 0x3674f8, Func Offset: 0x178
+	// Line 2039, Address: 0x3674fc, Func Offset: 0x17c
+	// Line 2040, Address: 0x367528, Func Offset: 0x1a8
+	// Line 2039, Address: 0x36752c, Func Offset: 0x1ac
+	// Line 2040, Address: 0x367554, Func Offset: 0x1d4
+	// Line 2041, Address: 0x367568, Func Offset: 0x1e8
+	// Line 2042, Address: 0x367588, Func Offset: 0x208
+	// Line 2044, Address: 0x3675b4, Func Offset: 0x234
+	// Line 2046, Address: 0x3675bc, Func Offset: 0x23c
+	// Line 2047, Address: 0x3675c0, Func Offset: 0x240
+	// Line 2049, Address: 0x3675f0, Func Offset: 0x270
+	// Func End, Address: 0x367608, Func Offset: 0x288
 }
 
 // stun__13zNPCBPlanktonFv
 // Start address: 0x367700
-void stun(zNPCBPlankton* this)
+void zNPCBPlankton::stun()
 {
 	int32 state;
 	int32 fuses;
 	int32 i;
+	// Line 1979, Address: 0x367700, Func Offset: 0
+	// Line 1980, Address: 0x367720, Func Offset: 0x20
+	// Line 1981, Address: 0x367728, Func Offset: 0x28
+	// Line 1984, Address: 0x367750, Func Offset: 0x50
+	// Line 1985, Address: 0x367758, Func Offset: 0x58
+	// Line 1986, Address: 0x367838, Func Offset: 0x138
+	// Line 1988, Address: 0x367844, Func Offset: 0x144
+	// Line 1989, Address: 0x367858, Func Offset: 0x158
+	// Line 1995, Address: 0x367878, Func Offset: 0x178
+	// Line 1996, Address: 0x367888, Func Offset: 0x188
+	// Line 2000, Address: 0x36789c, Func Offset: 0x19c
+	// Line 1999, Address: 0x3678a0, Func Offset: 0x1a0
+	// Line 2000, Address: 0x3678a4, Func Offset: 0x1a4
+	// Line 2003, Address: 0x3678bc, Func Offset: 0x1bc
+	// Line 2005, Address: 0x3678d4, Func Offset: 0x1d4
+	// Line 2006, Address: 0x3678d8, Func Offset: 0x1d8
+	// Line 2009, Address: 0x3678f0, Func Offset: 0x1f0
+	// Line 2011, Address: 0x36791c, Func Offset: 0x21c
+	// Line 2012, Address: 0x367944, Func Offset: 0x244
+	// Line 2011, Address: 0x367948, Func Offset: 0x248
+	// Line 2012, Address: 0x36794c, Func Offset: 0x24c
+	// Line 2013, Address: 0x367974, Func Offset: 0x274
+	// Line 2012, Address: 0x367978, Func Offset: 0x278
+	// Line 2013, Address: 0x36797c, Func Offset: 0x27c
+	// Line 2014, Address: 0x3679a4, Func Offset: 0x2a4
+	// Line 2013, Address: 0x3679a8, Func Offset: 0x2a8
+	// Line 2014, Address: 0x3679ac, Func Offset: 0x2ac
+	// Line 2017, Address: 0x3679cc, Func Offset: 0x2cc
+	// Line 2018, Address: 0x3679d0, Func Offset: 0x2d0
+	// Func End, Address: 0x3679f0, Func Offset: 0x2f0
 }
 
 // player_orbit__13zNPCBPlanktonCFv
 // Start address: 0x3679f0
-xVec3 player_orbit(zNPCBPlankton* this)
+xVec3 zNPCBPlankton::player_orbit()
 {
 	float32 dyaw;
 	float32 dx;
@@ -5411,11 +6144,42 @@ xVec3 player_orbit(zNPCBPlankton* this)
 	xVec2 rloc;
 	xVec2 roffset;
 	xVec2 ret;
+	// Line 1951, Address: 0x3679f0, Func Offset: 0
+	// Line 1953, Address: 0x3679f4, Func Offset: 0x4
+	// Line 1951, Address: 0x3679f8, Func Offset: 0x8
+	// Line 1953, Address: 0x367a08, Func Offset: 0x18
+	// Line 1954, Address: 0x367a2c, Func Offset: 0x3c
+	// Line 1955, Address: 0x367a38, Func Offset: 0x48
+	// Line 1959, Address: 0x367a54, Func Offset: 0x64
+	// Line 1962, Address: 0x367a6c, Func Offset: 0x7c
+	// Line 1963, Address: 0x367a98, Func Offset: 0xa8
+	// Line 1962, Address: 0x367aa0, Func Offset: 0xb0
+	// Line 1963, Address: 0x367aa8, Func Offset: 0xb8
+	// Line 1966, Address: 0x367acc, Func Offset: 0xdc
+	// Line 1963, Address: 0x367ad0, Func Offset: 0xe0
+	// Line 1966, Address: 0x367ad4, Func Offset: 0xe4
+	// Line 1964, Address: 0x367adc, Func Offset: 0xec
+	// Line 1963, Address: 0x367ae8, Func Offset: 0xf8
+	// Line 1964, Address: 0x367af0, Func Offset: 0x100
+	// Line 1965, Address: 0x367b20, Func Offset: 0x130
+	// Line 1964, Address: 0x367b24, Func Offset: 0x134
+	// Line 1965, Address: 0x367b28, Func Offset: 0x138
+	// Line 1966, Address: 0x367b30, Func Offset: 0x140
+	// Line 1967, Address: 0x367b60, Func Offset: 0x170
+	// Line 1968, Address: 0x367b70, Func Offset: 0x180
+	// Line 1969, Address: 0x367b80, Func Offset: 0x190
+	// Line 1967, Address: 0x367b84, Func Offset: 0x194
+	// Line 1968, Address: 0x367b88, Func Offset: 0x198
+	// Line 1967, Address: 0x367b8c, Func Offset: 0x19c
+	// Line 1968, Address: 0x367bac, Func Offset: 0x1bc
+	// Line 1969, Address: 0x367c08, Func Offset: 0x218
+	// Line 1970, Address: 0x367c60, Func Offset: 0x270
+	// Func End, Address: 0x367c74, Func Offset: 0x284
 }
 
 // random_orbit__13zNPCBPlanktonCFRC5xVec3ff
 // Start address: 0x367c80
-xVec3 random_orbit(zNPCBPlankton* this, xVec3& loc, float32 min_ang, float32 max_ang)
+xVec3 zNPCBPlankton::random_orbit(xVec3& loc, float32 min_ang, float32 max_ang)
 {
 	xVec3 offset;
 	float32 ang;
@@ -5423,73 +6187,308 @@ xVec3 random_orbit(zNPCBPlankton* this, xVec3& loc, float32 min_ang, float32 max
 	float32 r;
 	float32 rand_ang;
 	xVec3 dest;
+	// Line 1925, Address: 0x367c80, Func Offset: 0
+	// Line 1930, Address: 0x367c84, Func Offset: 0x4
+	// Line 1925, Address: 0x367c88, Func Offset: 0x8
+	// Line 1930, Address: 0x367c8c, Func Offset: 0xc
+	// Line 1925, Address: 0x367c90, Func Offset: 0x10
+	// Line 1930, Address: 0x367c94, Func Offset: 0x14
+	// Line 1925, Address: 0x367c98, Func Offset: 0x18
+	// Line 1927, Address: 0x367ca4, Func Offset: 0x24
+	// Line 1925, Address: 0x367ca8, Func Offset: 0x28
+	// Line 1927, Address: 0x367cac, Func Offset: 0x2c
+	// Line 1925, Address: 0x367cb0, Func Offset: 0x30
+	// Line 1927, Address: 0x367cb8, Func Offset: 0x38
+	// Line 1928, Address: 0x367d18, Func Offset: 0x98
+	// Line 1927, Address: 0x367d1c, Func Offset: 0x9c
+	// Line 1928, Address: 0x367d20, Func Offset: 0xa0
+	// Line 1930, Address: 0x367d30, Func Offset: 0xb0
+	// Line 1933, Address: 0x367d68, Func Offset: 0xe8
+	// Line 1934, Address: 0x367d74, Func Offset: 0xf4
+	// Line 1933, Address: 0x367d78, Func Offset: 0xf8
+	// Line 1934, Address: 0x367d80, Func Offset: 0x100
+	// Line 1938, Address: 0x367d98, Func Offset: 0x118
+	// Line 1939, Address: 0x367db8, Func Offset: 0x138
+	// Line 1940, Address: 0x367dc8, Func Offset: 0x148
+	// Line 1944, Address: 0x367df0, Func Offset: 0x170
+	// Line 1941, Address: 0x367e00, Func Offset: 0x180
+	// Line 1945, Address: 0x367e04, Func Offset: 0x184
+	// Line 1944, Address: 0x367e08, Func Offset: 0x188
+	// Line 1945, Address: 0x367e10, Func Offset: 0x190
+	// Line 1946, Address: 0x367e20, Func Offset: 0x1a0
+	// Line 1945, Address: 0x367e24, Func Offset: 0x1a4
+	// Line 1946, Address: 0x367e2c, Func Offset: 0x1ac
+	// Line 1947, Address: 0x367e38, Func Offset: 0x1b8
+	// Line 1946, Address: 0x367e3c, Func Offset: 0x1bc
+	// Line 1947, Address: 0x367e4c, Func Offset: 0x1cc
+	// Line 1948, Address: 0x367e64, Func Offset: 0x1e4
+	// Func End, Address: 0x367e84, Func Offset: 0x204
 }
 
 // reappear__13zNPCBPlanktonFv
 // Start address: 0x367e90
-void reappear(zNPCBPlankton* this)
+void zNPCBPlankton::reappear()
 {
+	// Line 1912, Address: 0x367e90, Func Offset: 0
+	// Line 1921, Address: 0x367e94, Func Offset: 0x4
+	// Line 1912, Address: 0x367e98, Func Offset: 0x8
+	// Line 1921, Address: 0x367e9c, Func Offset: 0xc
+	// Line 1912, Address: 0x367ea0, Func Offset: 0x10
+	// Line 1916, Address: 0x367ea4, Func Offset: 0x14
+	// Line 1912, Address: 0x367ea8, Func Offset: 0x18
+	// Line 1921, Address: 0x367eb4, Func Offset: 0x24
+	// Line 1913, Address: 0x367eb8, Func Offset: 0x28
+	// Line 1921, Address: 0x367ebc, Func Offset: 0x2c
+	// Line 1913, Address: 0x367ec4, Func Offset: 0x34
+	// Line 1914, Address: 0x367ecc, Func Offset: 0x3c
+	// Line 1915, Address: 0x367ed8, Func Offset: 0x48
+	// Line 1916, Address: 0x367edc, Func Offset: 0x4c
+	// Line 1917, Address: 0x367ee0, Func Offset: 0x50
+	// Line 1918, Address: 0x367ee4, Func Offset: 0x54
+	// Line 1919, Address: 0x367ee8, Func Offset: 0x58
+	// Line 1920, Address: 0x367eec, Func Offset: 0x5c
+	// Line 1921, Address: 0x367ef0, Func Offset: 0x60
+	// Line 1922, Address: 0x367fb8, Func Offset: 0x128
+	// Func End, Address: 0x367fd0, Func Offset: 0x140
 }
 
 // setup_beam__13zNPCBPlanktonFv
 // Start address: 0x367fd0
-void setup_beam(zNPCBPlankton* this)
+void zNPCBPlankton::setup_beam()
 {
+	// Line 1863, Address: 0x367fd0, Func Offset: 0
+	// Line 1866, Address: 0x367fd4, Func Offset: 0x4
+	// Line 1863, Address: 0x367fd8, Func Offset: 0x8
+	// Line 1870, Address: 0x367fdc, Func Offset: 0xc
+	// Line 1863, Address: 0x367fe0, Func Offset: 0x10
+	// Line 1867, Address: 0x367fe4, Func Offset: 0x14
+	// Line 1866, Address: 0x367fec, Func Offset: 0x1c
+	// Line 1867, Address: 0x367ff0, Func Offset: 0x20
+	// Line 1870, Address: 0x367ff4, Func Offset: 0x24
+	// Line 1866, Address: 0x367ff8, Func Offset: 0x28
+	// Line 1870, Address: 0x367ffc, Func Offset: 0x2c
+	// Line 1866, Address: 0x368000, Func Offset: 0x30
+	// Line 1870, Address: 0x368004, Func Offset: 0x34
+	// Line 1868, Address: 0x368008, Func Offset: 0x38
+	// Line 1870, Address: 0x368014, Func Offset: 0x44
+	// Line 1868, Address: 0x368018, Func Offset: 0x48
+	// Line 1869, Address: 0x36801c, Func Offset: 0x4c
+	// Line 1870, Address: 0x368020, Func Offset: 0x50
+	// Line 1873, Address: 0x368028, Func Offset: 0x58
+	// Line 1872, Address: 0x36802c, Func Offset: 0x5c
+	// Line 1873, Address: 0x368034, Func Offset: 0x64
+	// Line 1872, Address: 0x368038, Func Offset: 0x68
+	// Line 1873, Address: 0x36803c, Func Offset: 0x6c
+	// Line 1875, Address: 0x36804c, Func Offset: 0x7c
+	// Line 1880, Address: 0x36805c, Func Offset: 0x8c
+	// Line 1875, Address: 0x368060, Func Offset: 0x90
+	// Line 1880, Address: 0x368064, Func Offset: 0x94
+	// Line 1876, Address: 0x368068, Func Offset: 0x98
+	// Line 1880, Address: 0x368074, Func Offset: 0xa4
+	// Line 1876, Address: 0x368078, Func Offset: 0xa8
+	// Line 1880, Address: 0x36807c, Func Offset: 0xac
+	// Line 1878, Address: 0x368080, Func Offset: 0xb0
+	// Line 1880, Address: 0x36808c, Func Offset: 0xbc
+	// Line 1878, Address: 0x368090, Func Offset: 0xc0
+	// Line 1877, Address: 0x368094, Func Offset: 0xc4
+	// Line 1879, Address: 0x36809c, Func Offset: 0xcc
+	// Line 1880, Address: 0x3680a0, Func Offset: 0xd0
+	// Line 1882, Address: 0x3680a8, Func Offset: 0xd8
+	// Line 1883, Address: 0x3680b8, Func Offset: 0xe8
+	// Line 1882, Address: 0x3680bc, Func Offset: 0xec
+	// Line 1883, Address: 0x3680c0, Func Offset: 0xf0
+	// Line 1886, Address: 0x3680d4, Func Offset: 0x104
+	// Line 1885, Address: 0x3680d8, Func Offset: 0x108
+	// Line 1886, Address: 0x3680dc, Func Offset: 0x10c
+	// Line 1887, Address: 0x3680e0, Func Offset: 0x110
+	// Line 1885, Address: 0x3680e4, Func Offset: 0x114
+	// Line 1887, Address: 0x3680f0, Func Offset: 0x120
+	// Line 1889, Address: 0x368104, Func Offset: 0x134
+	// Line 1891, Address: 0x368114, Func Offset: 0x144
+	// Func End, Address: 0x368124, Func Offset: 0x154
 }
 
 // init_beam__13zNPCBPlanktonFv
 // Start address: 0x368130
-void init_beam(zNPCBPlankton* this)
+void zNPCBPlankton::init_beam()
 {
+	// Line 1830, Address: 0x368130, Func Offset: 0
+	// Line 1834, Address: 0x368134, Func Offset: 0x4
+	// Line 1830, Address: 0x368138, Func Offset: 0x8
+	// Line 1834, Address: 0x36813c, Func Offset: 0xc
+	// Line 1830, Address: 0x368140, Func Offset: 0x10
+	// Line 1834, Address: 0x368144, Func Offset: 0x14
+	// Line 1835, Address: 0x368154, Func Offset: 0x24
+	// Line 1836, Address: 0x368164, Func Offset: 0x34
+	// Line 1837, Address: 0x368174, Func Offset: 0x44
+	// Line 1836, Address: 0x368178, Func Offset: 0x48
+	// Line 1837, Address: 0x368210, Func Offset: 0xe0
+	// Line 1840, Address: 0x368218, Func Offset: 0xe8
+	// Line 1841, Address: 0x36822c, Func Offset: 0xfc
+	// Line 1842, Address: 0x368240, Func Offset: 0x110
+	// Line 1843, Address: 0x368250, Func Offset: 0x120
+	// Line 1844, Address: 0x368258, Func Offset: 0x128
+	// Line 1845, Address: 0x36825c, Func Offset: 0x12c
+	// Line 1848, Address: 0x368264, Func Offset: 0x134
+	// Line 1846, Address: 0x368268, Func Offset: 0x138
+	// Line 1847, Address: 0x368270, Func Offset: 0x140
+	// Line 1848, Address: 0x368274, Func Offset: 0x144
+	// Line 1851, Address: 0x36827c, Func Offset: 0x14c
+	// Line 1852, Address: 0x368290, Func Offset: 0x160
+	// Line 1853, Address: 0x3682a4, Func Offset: 0x174
+	// Line 1854, Address: 0x3682b4, Func Offset: 0x184
+	// Line 1855, Address: 0x3682bc, Func Offset: 0x18c
+	// Line 1856, Address: 0x3682c0, Func Offset: 0x190
+	// Line 1859, Address: 0x3682c8, Func Offset: 0x198
+	// Line 1857, Address: 0x3682cc, Func Offset: 0x19c
+	// Line 1858, Address: 0x3682d4, Func Offset: 0x1a4
+	// Line 1859, Address: 0x3682d8, Func Offset: 0x1a8
+	// Line 1860, Address: 0x3682e0, Func Offset: 0x1b0
+	// Func End, Address: 0x3682f0, Func Offset: 0x1c0
 }
 
 // load_territory__13zNPCBPlanktonFiR5xBase
 // Start address: 0x3682f0
-void load_territory(zNPCBPlankton* this, int32 index, xBase& child)
+void zNPCBPlankton::load_territory(int32 index, xBase& child)
 {
 	territory_data& t;
 	uint32 i;
 	uint32 size;
 	xBase* entry;
+	// Line 1772, Address: 0x3682f0, Func Offset: 0
+	// Line 1774, Address: 0x3682f4, Func Offset: 0x4
+	// Line 1772, Address: 0x3682f8, Func Offset: 0x8
+	// Line 1773, Address: 0x368314, Func Offset: 0x24
+	// Line 1772, Address: 0x368318, Func Offset: 0x28
+	// Line 1773, Address: 0x36831c, Func Offset: 0x2c
+	// Line 1774, Address: 0x368334, Func Offset: 0x44
+	// Line 1778, Address: 0x368370, Func Offset: 0x80
+	// Line 1780, Address: 0x368390, Func Offset: 0xa0
+	// Line 1782, Address: 0x36839c, Func Offset: 0xac
+	// Line 1783, Address: 0x3683ac, Func Offset: 0xbc
+	// Line 1784, Address: 0x3683bc, Func Offset: 0xcc
+	// Line 1785, Address: 0x3683c4, Func Offset: 0xd4
+	// Line 1791, Address: 0x3683c8, Func Offset: 0xd8
+	// Line 1797, Address: 0x3683d4, Func Offset: 0xe4
+	// Line 1798, Address: 0x3683e0, Func Offset: 0xf0
+	// Line 1799, Address: 0x3683ec, Func Offset: 0xfc
+	// Line 1800, Address: 0x3683f4, Func Offset: 0x104
+	// Line 1801, Address: 0x3683fc, Func Offset: 0x10c
+	// Line 1807, Address: 0x368400, Func Offset: 0x110
+	// Line 1814, Address: 0x368408, Func Offset: 0x118
+	// Line 1820, Address: 0x368410, Func Offset: 0x120
+	// Line 1824, Address: 0x368420, Func Offset: 0x130
+	// Line 1826, Address: 0x368424, Func Offset: 0x134
+	// Line 1827, Address: 0x368428, Func Offset: 0x138
+	// Func End, Address: 0x368448, Func Offset: 0x158
 }
 
 // orbit_yaw_offset__13zNPCBPlanktonCFRC5xVec3RC5xVec3
 // Start address: 0x368450
-float32 orbit_yaw_offset(zNPCBPlankton* this, xVec3& p0, xVec3& p1)
+float32 zNPCBPlankton::orbit_yaw_offset(xVec3& p0, xVec3& p1)
 {
 	xVec2 center;
 	xVec2 loc0;
 	xVec2 loc1;
 	xVec2 offset0;
 	xVec2 offset1;
+	// Line 1760, Address: 0x368450, Func Offset: 0
+	// Line 1761, Address: 0x368454, Func Offset: 0x4
+	// Line 1760, Address: 0x368458, Func Offset: 0x8
+	// Line 1761, Address: 0x36845c, Func Offset: 0xc
+	// Line 1762, Address: 0x368488, Func Offset: 0x38
+	// Line 1761, Address: 0x368490, Func Offset: 0x40
+	// Line 1762, Address: 0x368498, Func Offset: 0x48
+	// Line 1763, Address: 0x3684bc, Func Offset: 0x6c
+	// Line 1762, Address: 0x3684c4, Func Offset: 0x74
+	// Line 1763, Address: 0x3684cc, Func Offset: 0x7c
+	// Line 1764, Address: 0x3684f0, Func Offset: 0xa0
+	// Line 1765, Address: 0x3684fc, Func Offset: 0xac
+	// Line 1763, Address: 0x368508, Func Offset: 0xb8
+	// Line 1764, Address: 0x368514, Func Offset: 0xc4
+	// Line 1765, Address: 0x368544, Func Offset: 0xf4
+	// Line 1767, Address: 0x368570, Func Offset: 0x120
+	// Line 1765, Address: 0x368574, Func Offset: 0x124
+	// Line 1767, Address: 0x368578, Func Offset: 0x128
+	// Line 1768, Address: 0x36859c, Func Offset: 0x14c
+	// Line 1769, Address: 0x368640, Func Offset: 0x1f0
+	// Line 1768, Address: 0x368644, Func Offset: 0x1f4
+	// Line 1769, Address: 0x368648, Func Offset: 0x1f8
+	// Line 1768, Address: 0x36864c, Func Offset: 0x1fc
+	// Line 1769, Address: 0x368650, Func Offset: 0x200
+	// Func End, Address: 0x368658, Func Offset: 0x208
 }
 
 // update_follow_camera__13zNPCBPlanktonFf
 // Start address: 0x368660
-void update_follow_camera(zNPCBPlankton* this, float32 dt)
+void zNPCBPlankton::update_follow_camera(float32 dt)
 {
 	xVec3 target;
 	float32 min;
 	float32 max;
+	// Line 1641, Address: 0x368660, Func Offset: 0
+	// Line 1642, Address: 0x368664, Func Offset: 0x4
+	// Line 1641, Address: 0x368668, Func Offset: 0x8
+	// Line 1642, Address: 0x36866c, Func Offset: 0xc
+	// Line 1641, Address: 0x368670, Func Offset: 0x10
+	// Line 1642, Address: 0x368674, Func Offset: 0x14
+	// Line 1641, Address: 0x368678, Func Offset: 0x18
+	// Line 1642, Address: 0x36867c, Func Offset: 0x1c
+	// Line 1641, Address: 0x368680, Func Offset: 0x20
+	// Line 1642, Address: 0x368684, Func Offset: 0x24
+	// Line 1643, Address: 0x368734, Func Offset: 0xd4
+	// Line 1644, Address: 0x368740, Func Offset: 0xe0
+	// Line 1647, Address: 0x368778, Func Offset: 0x118
+	// Line 1651, Address: 0x368798, Func Offset: 0x138
+	// Line 1647, Address: 0x36879c, Func Offset: 0x13c
+	// Line 1650, Address: 0x3687b0, Func Offset: 0x150
+	// Line 1651, Address: 0x3687b4, Func Offset: 0x154
+	// Line 1652, Address: 0x3687bc, Func Offset: 0x15c
+	// Line 1653, Address: 0x3687d4, Func Offset: 0x174
+	// Line 1654, Address: 0x3687d8, Func Offset: 0x178
+	// Func End, Address: 0x3687f0, Func Offset: 0x190
 }
 
 // update_follow_player__13zNPCBPlanktonFf
 // Start address: 0x3687f0
-void update_follow_player(zNPCBPlankton* this, float32 dt)
+void zNPCBPlankton::update_follow_player(float32 dt)
 {
 	float32 min;
 	float32 max;
+	// Line 1623, Address: 0x3687f0, Func Offset: 0
+	// Line 1625, Address: 0x368804, Func Offset: 0x14
+	// Line 1626, Address: 0x368810, Func Offset: 0x20
+	// Line 1629, Address: 0x368850, Func Offset: 0x60
+	// Line 1630, Address: 0x368860, Func Offset: 0x70
+	// Line 1629, Address: 0x368870, Func Offset: 0x80
+	// Line 1630, Address: 0x368884, Func Offset: 0x94
+	// Line 1634, Address: 0x368894, Func Offset: 0xa4
+	// Line 1630, Address: 0x368898, Func Offset: 0xa8
+	// Line 1633, Address: 0x3688ac, Func Offset: 0xbc
+	// Line 1634, Address: 0x3688b0, Func Offset: 0xc0
+	// Line 1635, Address: 0x3688b8, Func Offset: 0xc8
+	// Line 1637, Address: 0x3688d0, Func Offset: 0xe0
+	// Func End, Address: 0x3688e8, Func Offset: 0xf8
 }
 
 // update_follow__13zNPCBPlanktonFf
 // Start address: 0x3688f0
-void update_follow(zNPCBPlankton* this, float32 dt)
+void zNPCBPlankton::update_follow(float32 dt)
 {
+	// Line 1610, Address: 0x3688f0, Func Offset: 0
+	// Line 1611, Address: 0x3688f4, Func Offset: 0x4
+	// Line 1610, Address: 0x3688f8, Func Offset: 0x8
+	// Line 1611, Address: 0x3688fc, Func Offset: 0xc
+	// Line 1614, Address: 0x368918, Func Offset: 0x28
+	// Line 1615, Address: 0x368920, Func Offset: 0x30
+	// Line 1617, Address: 0x368928, Func Offset: 0x38
+	// Line 1620, Address: 0x368930, Func Offset: 0x40
+	// Func End, Address: 0x36893c, Func Offset: 0x4c
 }
 
 // update_dialog__13zNPCBPlanktonFf
 // Start address: 0x368940
-void update_dialog(zNPCBPlankton* this, float32 dt)
+void zNPCBPlankton::update_dialog(float32 dt)
 {
 	int32 i;
 	territory_data& t;
@@ -5497,11 +6496,50 @@ void update_dialog(zNPCBPlankton* this, float32 dt)
 	territory_data& t;
 	xVec3& fuse_loc;
 	xVec3 offset;
+	// Line 1549, Address: 0x368940, Func Offset: 0
+	// Line 1551, Address: 0x368974, Func Offset: 0x34
+	// Line 1554, Address: 0x368980, Func Offset: 0x40
+	// Line 1551, Address: 0x368984, Func Offset: 0x44
+	// Line 1554, Address: 0x368988, Func Offset: 0x48
+	// Line 1555, Address: 0x3689a4, Func Offset: 0x64
+	// Line 1556, Address: 0x3689c8, Func Offset: 0x88
+	// Line 1558, Address: 0x3689d4, Func Offset: 0x94
+	// Line 1563, Address: 0x3689dc, Func Offset: 0x9c
+	// Line 1558, Address: 0x3689e0, Func Offset: 0xa0
+	// Line 1563, Address: 0x3689e4, Func Offset: 0xa4
+	// Line 1564, Address: 0x3689e8, Func Offset: 0xa8
+	// Line 1565, Address: 0x3689f0, Func Offset: 0xb0
+	// Line 1567, Address: 0x3689f8, Func Offset: 0xb8
+	// Line 1568, Address: 0x3689fc, Func Offset: 0xbc
+	// Line 1571, Address: 0x368a24, Func Offset: 0xe4
+	// Line 1572, Address: 0x368a48, Func Offset: 0x108
+	// Line 1573, Address: 0x368a4c, Func Offset: 0x10c
+	// Line 1574, Address: 0x368a54, Func Offset: 0x114
+	// Line 1573, Address: 0x368a58, Func Offset: 0x118
+	// Line 1574, Address: 0x368a5c, Func Offset: 0x11c
+	// Line 1579, Address: 0x368a70, Func Offset: 0x130
+	// Line 1582, Address: 0x368a90, Func Offset: 0x150
+	// Line 1585, Address: 0x368ac4, Func Offset: 0x184
+	// Line 1586, Address: 0x368ac8, Func Offset: 0x188
+	// Line 1585, Address: 0x368ae0, Func Offset: 0x1a0
+	// Line 1586, Address: 0x368ae8, Func Offset: 0x1a8
+	// Line 1587, Address: 0x368b44, Func Offset: 0x204
+	// Line 1589, Address: 0x368b64, Func Offset: 0x224
+	// Line 1590, Address: 0x368b68, Func Offset: 0x228
+	// Line 1589, Address: 0x368b6c, Func Offset: 0x22c
+	// Line 1590, Address: 0x368b74, Func Offset: 0x234
+	// Line 1592, Address: 0x368b84, Func Offset: 0x244
+	// Line 1593, Address: 0x368b8c, Func Offset: 0x24c
+	// Line 1594, Address: 0x368bb0, Func Offset: 0x270
+	// Line 1599, Address: 0x368bb8, Func Offset: 0x278
+	// Line 1601, Address: 0x368bbc, Func Offset: 0x27c
+	// Line 1602, Address: 0x368bd8, Func Offset: 0x298
+	// Func End, Address: 0x368c2c, Func Offset: 0x2ec
 }
 
 // update_turn__13zNPCBPlanktonFf
 // Start address: 0x368c30
-void update_turn(zNPCBPlankton* this, float32 dt)
+void zNPCBPlankton::update_turn(float32 dt)
 {
 	xVec3& loc3;
 	xVec3& start3;
@@ -5511,6 +6549,33 @@ void update_turn(zNPCBPlankton* this, float32 dt)
 	float32 end;
 	float32 diff;
 	float32 yaw;
+	// Line 1470, Address: 0x368c30, Func Offset: 0
+	// Line 1474, Address: 0x368c34, Func Offset: 0x4
+	// Line 1470, Address: 0x368c38, Func Offset: 0x8
+	// Line 1471, Address: 0x368c4c, Func Offset: 0x1c
+	// Line 1472, Address: 0x368c54, Func Offset: 0x24
+	// Line 1471, Address: 0x368c58, Func Offset: 0x28
+	// Line 1472, Address: 0x368c5c, Func Offset: 0x2c
+	// Line 1474, Address: 0x368c60, Func Offset: 0x30
+	// Line 1471, Address: 0x368c64, Func Offset: 0x34
+	// Line 1474, Address: 0x368c68, Func Offset: 0x38
+	// Line 1475, Address: 0x368c8c, Func Offset: 0x5c
+	// Line 1474, Address: 0x368c94, Func Offset: 0x64
+	// Line 1475, Address: 0x368c9c, Func Offset: 0x6c
+	// Line 1477, Address: 0x368cc0, Func Offset: 0x90
+	// Line 1475, Address: 0x368cc8, Func Offset: 0x98
+	// Line 1477, Address: 0x368cd0, Func Offset: 0xa0
+	// Line 1479, Address: 0x368ed8, Func Offset: 0x2a8
+	// Line 1480, Address: 0x368eec, Func Offset: 0x2bc
+	// Line 1482, Address: 0x368f04, Func Offset: 0x2d4
+	// Line 1483, Address: 0x368f08, Func Offset: 0x2d8
+	// Line 1484, Address: 0x368f38, Func Offset: 0x308
+	// Line 1487, Address: 0x368f68, Func Offset: 0x338
+	// Line 1486, Address: 0x368f6c, Func Offset: 0x33c
+	// Line 1487, Address: 0x368f70, Func Offset: 0x340
+	// Line 1488, Address: 0x368f88, Func Offset: 0x358
+	// Line 1489, Address: 0x368fd0, Func Offset: 0x3a0
+	// Func End, Address: 0x368fe8, Func Offset: 0x3b8
 }
 
 // update_move_orbit__34@unnamed@zNPCTypeBossPlankton_cpp@FR5xVec3RQ213zNPCBPlankton9move_infoRC5xVec3fb
@@ -5525,14 +6590,114 @@ void update_move_orbit(xVec3& loc, move_info& move, xVec3& center, float32 dt, u
 	xVec3 dloc;
 	float32 new_yaw;
 	float32 iradius0;
+	// Line 1420, Address: 0x368ff0, Func Offset: 0
+	// Line 1423, Address: 0x368ff4, Func Offset: 0x4
+	// Line 1420, Address: 0x368ff8, Func Offset: 0x8
+	// Line 1423, Address: 0x368ffc, Func Offset: 0xc
+	// Line 1420, Address: 0x369000, Func Offset: 0x10
+	// Line 1423, Address: 0x369040, Func Offset: 0x50
+	// Line 1424, Address: 0x369064, Func Offset: 0x74
+	// Line 1423, Address: 0x36906c, Func Offset: 0x7c
+	// Line 1424, Address: 0x36907c, Func Offset: 0x8c
+	// Line 1425, Address: 0x3690a0, Func Offset: 0xb0
+	// Line 1426, Address: 0x3690ac, Func Offset: 0xbc
+	// Line 1424, Address: 0x3690b8, Func Offset: 0xc8
+	// Line 1425, Address: 0x3690cc, Func Offset: 0xdc
+	// Line 1426, Address: 0x36911c, Func Offset: 0x12c
+	// Line 1428, Address: 0x369164, Func Offset: 0x174
+	// Line 1427, Address: 0x369168, Func Offset: 0x178
+	// Line 1426, Address: 0x369170, Func Offset: 0x180
+	// Line 1427, Address: 0x369174, Func Offset: 0x184
+	// Line 1428, Address: 0x36917c, Func Offset: 0x18c
+	// Line 1427, Address: 0x369184, Func Offset: 0x194
+	// Line 1428, Address: 0x369190, Func Offset: 0x1a0
+	// Line 1427, Address: 0x369194, Func Offset: 0x1a4
+	// Line 1428, Address: 0x36919c, Func Offset: 0x1ac
+	// Line 1429, Address: 0x3691ac, Func Offset: 0x1bc
+	// Line 1430, Address: 0x3691bc, Func Offset: 0x1cc
+	// Line 1431, Address: 0x3691e0, Func Offset: 0x1f0
+	// Line 1433, Address: 0x369278, Func Offset: 0x288
+	// Line 1441, Address: 0x3692b0, Func Offset: 0x2c0
+	// Line 1433, Address: 0x3692b4, Func Offset: 0x2c4
+	// Line 1441, Address: 0x3692b8, Func Offset: 0x2c8
+	// Line 1433, Address: 0x3692bc, Func Offset: 0x2cc
+	// Line 1441, Address: 0x3692d8, Func Offset: 0x2e8
+	// Line 1442, Address: 0x3692f8, Func Offset: 0x308
+	// Line 1443, Address: 0x369320, Func Offset: 0x330
+	// Line 1444, Address: 0x369340, Func Offset: 0x350
+	// Line 1443, Address: 0x369354, Func Offset: 0x364
+	// Line 1444, Address: 0x369358, Func Offset: 0x368
+	// Line 1445, Address: 0x369360, Func Offset: 0x370
+	// Line 1444, Address: 0x369374, Func Offset: 0x384
+	// Line 1445, Address: 0x369378, Func Offset: 0x388
+	// Line 1450, Address: 0x369380, Func Offset: 0x390
+	// Line 1452, Address: 0x3693b4, Func Offset: 0x3c4
+	// Line 1454, Address: 0x3693b8, Func Offset: 0x3c8
+	// Line 1458, Address: 0x3693c0, Func Offset: 0x3d0
+	// Line 1457, Address: 0x3693c4, Func Offset: 0x3d4
+	// Line 1458, Address: 0x3693c8, Func Offset: 0x3d8
+	// Line 1459, Address: 0x369414, Func Offset: 0x424
+	// Line 1458, Address: 0x369418, Func Offset: 0x428
+	// Line 1459, Address: 0x369420, Func Offset: 0x430
+	// Line 1463, Address: 0x369428, Func Offset: 0x438
+	// Line 1464, Address: 0x36944c, Func Offset: 0x45c
+	// Line 1465, Address: 0x369454, Func Offset: 0x464
+	// Line 1464, Address: 0x369458, Func Offset: 0x468
+	// Line 1465, Address: 0x36945c, Func Offset: 0x46c
+	// Line 1466, Address: 0x36947c, Func Offset: 0x48c
+	// Func End, Address: 0x3694b8, Func Offset: 0x4c8
 }
 
 // refresh_orbit__13zNPCBPlanktonFv
 // Start address: 0x3694c0
-void refresh_orbit(zNPCBPlankton* this)
+void zNPCBPlankton::refresh_orbit()
 {
 	xVec3 oldcenter;
 	xMovePointAsset& mp;
+	// Line 1247, Address: 0x3694c0, Func Offset: 0
+	// Line 1250, Address: 0x3694cc, Func Offset: 0xc
+	// Line 1252, Address: 0x3694d8, Func Offset: 0x18
+	// Line 1253, Address: 0x3694e4, Func Offset: 0x24
+	// Line 1252, Address: 0x3694e8, Func Offset: 0x28
+	// Line 1256, Address: 0x3694ec, Func Offset: 0x2c
+	// Line 1252, Address: 0x3694f4, Func Offset: 0x34
+	// Line 1253, Address: 0x369500, Func Offset: 0x40
+	// Line 1254, Address: 0x369508, Func Offset: 0x48
+	// Line 1253, Address: 0x36950c, Func Offset: 0x4c
+	// Line 1254, Address: 0x369524, Func Offset: 0x64
+	// Line 1255, Address: 0x369534, Func Offset: 0x74
+	// Line 1254, Address: 0x369538, Func Offset: 0x78
+	// Line 1255, Address: 0x36953c, Func Offset: 0x7c
+	// Line 1256, Address: 0x369544, Func Offset: 0x84
+	// Line 1284, Address: 0x3695c8, Func Offset: 0x108
+	// Line 1285, Address: 0x3695d0, Func Offset: 0x110
+	// Line 1287, Address: 0x3695dc, Func Offset: 0x11c
+	// Line 1288, Address: 0x3695fc, Func Offset: 0x13c
+	// Line 1289, Address: 0x369608, Func Offset: 0x148
+	// Line 1288, Address: 0x36960c, Func Offset: 0x14c
+	// Line 1289, Address: 0x369614, Func Offset: 0x154
+	// Line 1290, Address: 0x369618, Func Offset: 0x158
+	// Line 1293, Address: 0x369620, Func Offset: 0x160
+	// Line 1294, Address: 0x369644, Func Offset: 0x184
+	// Line 1295, Address: 0x369650, Func Offset: 0x190
+	// Line 1294, Address: 0x369654, Func Offset: 0x194
+	// Line 1295, Address: 0x36965c, Func Offset: 0x19c
+	// Line 1297, Address: 0x369660, Func Offset: 0x1a0
+	// Line 1302, Address: 0x369668, Func Offset: 0x1a8
+	// Line 1303, Address: 0x369684, Func Offset: 0x1c4
+	// Line 1304, Address: 0x36969c, Func Offset: 0x1dc
+	// Line 1305, Address: 0x3696a4, Func Offset: 0x1e4
+	// Line 1307, Address: 0x3696b0, Func Offset: 0x1f0
+	// Line 1308, Address: 0x3696b8, Func Offset: 0x1f8
+	// Line 1307, Address: 0x3696bc, Func Offset: 0x1fc
+	// Line 1308, Address: 0x3696c4, Func Offset: 0x204
+	// Line 1309, Address: 0x3696d0, Func Offset: 0x210
+	// Line 1312, Address: 0x3696d8, Func Offset: 0x218
+	// Line 1313, Address: 0x3696e4, Func Offset: 0x224
+	// Line 1312, Address: 0x3696e8, Func Offset: 0x228
+	// Line 1313, Address: 0x3696f0, Func Offset: 0x230
+	// Line 1316, Address: 0x369700, Func Offset: 0x240
+	// Func End, Address: 0x369708, Func Offset: 0x248
 }
 
 // AnimPick__13zNPCBPlanktonFi16en_NPC_GOAL_SPOTP5xGoal
@@ -5540,26 +6705,57 @@ void refresh_orbit(zNPCBPlankton* this)
 uint32 AnimPick(int32 gid)
 {
 	int32 index;
+	// Line 1073, Address: 0x369710, Func Offset: 0
+	// Line 1082, Address: 0x369740, Func Offset: 0x30
+	// Line 1085, Address: 0x369748, Func Offset: 0x38
+	// Line 1088, Address: 0x369750, Func Offset: 0x40
+	// Line 1093, Address: 0x369758, Func Offset: 0x48
+	// Line 1096, Address: 0x369760, Func Offset: 0x50
+	// Line 1099, Address: 0x369768, Func Offset: 0x58
+	// Line 1102, Address: 0x369770, Func Offset: 0x60
+	// Line 1105, Address: 0x369778, Func Offset: 0x68
+	// Line 1107, Address: 0x369780, Func Offset: 0x70
+	// Line 1111, Address: 0x369784, Func Offset: 0x74
+	// Line 1112, Address: 0x3697ac, Func Offset: 0x9c
+	// Func End, Address: 0x3697b4, Func Offset: 0xa4
 }
 
 // Damage__13zNPCBPlanktonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3
 // Start address: 0x3697c0
-void Damage(zNPCBPlankton* this, en_NPC_DAMAGE_TYPE damtype, xVec3* vec_hit)
+void zNPCBPlankton::Damage(en_NPC_DAMAGE_TYPE damtype, xVec3* vec_hit)
 {
+	// Line 1047, Address: 0x3697c0, Func Offset: 0
+	// Line 1048, Address: 0x3697dc, Func Offset: 0x1c
+	// Line 1049, Address: 0x3697e8, Func Offset: 0x28
+	// Line 1059, Address: 0x369840, Func Offset: 0x80
+	// Line 1060, Address: 0x3698a8, Func Offset: 0xe8
+	// Line 1067, Address: 0x3698b0, Func Offset: 0xf0
+	// Func End, Address: 0x3698c8, Func Offset: 0x108
 }
 
 // SelfSetup__13zNPCBPlanktonFv
 // Start address: 0x3698d0
-void SelfSetup(zNPCBPlankton* this)
+void zNPCBPlankton::SelfSetup()
 {
 	xBehaveMgr* bmgr;
 	xPsyche* psy;
 	int32 i;
+	// Line 1026, Address: 0x3698d0, Func Offset: 0
+	// Line 1030, Address: 0x3698e4, Func Offset: 0x14
+	// Line 1032, Address: 0x3698ec, Func Offset: 0x1c
+	// Line 1033, Address: 0x369900, Func Offset: 0x30
+	// Line 1036, Address: 0x369904, Func Offset: 0x34
+	// Line 1038, Address: 0x36990c, Func Offset: 0x3c
+	// Line 1039, Address: 0x369918, Func Offset: 0x48
+	// Line 1041, Address: 0x369940, Func Offset: 0x70
+	// Line 1043, Address: 0x369948, Func Offset: 0x78
+	// Line 1044, Address: 0x369954, Func Offset: 0x84
+	// Func End, Address: 0x36996c, Func Offset: 0x9c
 }
 
 // ParseLinks__13zNPCBPlanktonFv
 // Start address: 0x369970
-void ParseLinks(zNPCBPlankton* this)
+void zNPCBPlankton::ParseLinks()
 {
 	xLinkAsset* it;
 	xLinkAsset* end;
@@ -5567,80 +6763,334 @@ void ParseLinks(zNPCBPlankton* this)
 	int32 index;
 	territory_data& t;
 	int32 i;
+	// Line 973, Address: 0x369970, Func Offset: 0
+	// Line 974, Address: 0x369988, Func Offset: 0x18
+	// Line 976, Address: 0x369990, Func Offset: 0x20
+	// Line 979, Address: 0x3699a0, Func Offset: 0x30
+	// Line 982, Address: 0x3699b8, Func Offset: 0x48
+	// Line 983, Address: 0x3699c8, Func Offset: 0x58
+	// Line 987, Address: 0x3699d0, Func Offset: 0x60
+	// Line 991, Address: 0x3699e0, Func Offset: 0x70
+	// Line 994, Address: 0x3699f4, Func Offset: 0x84
+	// Line 998, Address: 0x369a08, Func Offset: 0x98
+	// Line 1001, Address: 0x369a14, Func Offset: 0xa4
+	// Line 1011, Address: 0x369a1c, Func Offset: 0xac
+	// Line 1012, Address: 0x369a38, Func Offset: 0xc8
+	// Line 1013, Address: 0x369a48, Func Offset: 0xd8
+	// Line 1016, Address: 0x369a58, Func Offset: 0xe8
+	// Line 1017, Address: 0x369a5c, Func Offset: 0xec
+	// Line 1019, Address: 0x369a68, Func Offset: 0xf8
+	// Line 1020, Address: 0x369a78, Func Offset: 0x108
+	// Line 1021, Address: 0x369b08, Func Offset: 0x198
+	// Line 1022, Address: 0x369b14, Func Offset: 0x1a4
+	// Line 1023, Address: 0x369b28, Func Offset: 0x1b8
+	// Func End, Address: 0x369b44, Func Offset: 0x1d4
 }
 
 // ParseINI__13zNPCBPlanktonFv
 // Start address: 0x369b50
-void ParseINI(zNPCBPlankton* this)
+void zNPCBPlankton::ParseINI()
 {
+	// Line 966, Address: 0x369b50, Func Offset: 0
+	// Line 967, Address: 0x369b5c, Func Offset: 0xc
+	// Line 969, Address: 0x369b64, Func Offset: 0x14
+	// Line 970, Address: 0x369b80, Func Offset: 0x30
+	// Func End, Address: 0x369b90, Func Offset: 0x40
 }
 
 // register_tweaks__Q234@unnamed@zNPCTypeBossPlankton_cpp@11tweak_groupFbP16xModelAssetParamUiPCc
 // Start address: 0x369b90
-void register_tweaks(tweak_group* this, uint8 init, xModelAssetParam* ap, uint32 apsize)
+void tweak_group::register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize)
 {
 	xVec3 V0;
+	// Line 296, Address: 0x369b90, Func Offset: 0
+	// Line 298, Address: 0x369b94, Func Offset: 0x4
+	// Line 296, Address: 0x369b98, Func Offset: 0x8
+	// Line 298, Address: 0x369bac, Func Offset: 0x1c
+	// Line 296, Address: 0x369bb0, Func Offset: 0x20
+	// Line 298, Address: 0x369bbc, Func Offset: 0x2c
+	// Line 300, Address: 0x369bdc, Func Offset: 0x4c
+	// Line 301, Address: 0x369c68, Func Offset: 0xd8
+	// Line 302, Address: 0x369cf8, Func Offset: 0x168
+	// Line 303, Address: 0x369d80, Func Offset: 0x1f0
+	// Line 304, Address: 0x369e00, Func Offset: 0x270
+	// Line 305, Address: 0x369e80, Func Offset: 0x2f0
+	// Line 306, Address: 0x369f00, Func Offset: 0x370
+	// Line 307, Address: 0x369f80, Func Offset: 0x3f0
+	// Line 309, Address: 0x36a000, Func Offset: 0x470
+	// Line 310, Address: 0x36a080, Func Offset: 0x4f0
+	// Line 311, Address: 0x36a100, Func Offset: 0x570
+	// Line 312, Address: 0x36a188, Func Offset: 0x5f8
+	// Line 313, Address: 0x36a210, Func Offset: 0x680
+	// Line 314, Address: 0x36a288, Func Offset: 0x6f8
+	// Line 315, Address: 0x36a308, Func Offset: 0x778
+	// Line 316, Address: 0x36a390, Func Offset: 0x800
+	// Line 317, Address: 0x36a418, Func Offset: 0x888
+	// Line 318, Address: 0x36a498, Func Offset: 0x908
+	// Line 319, Address: 0x36a520, Func Offset: 0x990
+	// Line 320, Address: 0x36a5a8, Func Offset: 0xa18
+	// Line 321, Address: 0x36a630, Func Offset: 0xaa0
+	// Line 322, Address: 0x36a6b0, Func Offset: 0xb20
+	// Line 323, Address: 0x36a730, Func Offset: 0xba0
+	// Line 324, Address: 0x36a7b0, Func Offset: 0xc20
+	// Line 325, Address: 0x36a830, Func Offset: 0xca0
+	// Line 326, Address: 0x36a8b0, Func Offset: 0xd20
+	// Line 327, Address: 0x36a930, Func Offset: 0xda0
+	// Line 328, Address: 0x36a9b8, Func Offset: 0xe28
+	// Line 329, Address: 0x36aa40, Func Offset: 0xeb0
+	// Line 330, Address: 0x36aac8, Func Offset: 0xf38
+	// Line 331, Address: 0x36ab50, Func Offset: 0xfc0
+	// Line 332, Address: 0x36abd8, Func Offset: 0x1048
+	// Line 333, Address: 0x36ac58, Func Offset: 0x10c8
+	// Line 334, Address: 0x36acd8, Func Offset: 0x1148
+	// Line 335, Address: 0x36ad60, Func Offset: 0x11d0
+	// Line 336, Address: 0x36ade8, Func Offset: 0x1258
+	// Line 337, Address: 0x36ae68, Func Offset: 0x12d8
+	// Line 338, Address: 0x36aee8, Func Offset: 0x1358
+	// Line 339, Address: 0x36af68, Func Offset: 0x13d8
+	// Line 340, Address: 0x36afe8, Func Offset: 0x1458
+	// Line 341, Address: 0x36b068, Func Offset: 0x14d8
+	// Line 342, Address: 0x36b0f0, Func Offset: 0x1560
+	// Line 343, Address: 0x36b170, Func Offset: 0x15e0
+	// Line 344, Address: 0x36b1e8, Func Offset: 0x1658
+	// Line 345, Address: 0x36b260, Func Offset: 0x16d0
+	// Line 346, Address: 0x36b2e0, Func Offset: 0x1750
+	// Line 347, Address: 0x36b360, Func Offset: 0x17d0
+	// Line 348, Address: 0x36b3b8, Func Offset: 0x1828
+	// Line 350, Address: 0x36b438, Func Offset: 0x18a8
+	// Line 351, Address: 0x36b4b8, Func Offset: 0x1928
+	// Line 352, Address: 0x36b538, Func Offset: 0x19a8
+	// Line 353, Address: 0x36b5b8, Func Offset: 0x1a28
+	// Line 354, Address: 0x36b638, Func Offset: 0x1aa8
+	// Line 356, Address: 0x36b6b8, Func Offset: 0x1b28
+	// Line 357, Address: 0x36b738, Func Offset: 0x1ba8
+	// Line 358, Address: 0x36b7b8, Func Offset: 0x1c28
+	// Line 360, Address: 0x36b838, Func Offset: 0x1ca8
+	// Line 361, Address: 0x36b8b8, Func Offset: 0x1d28
+	// Line 362, Address: 0x36b938, Func Offset: 0x1da8
+	// Line 364, Address: 0x36b9b8, Func Offset: 0x1e28
+	// Line 365, Address: 0x36ba38, Func Offset: 0x1ea8
+	// Line 366, Address: 0x36bab8, Func Offset: 0x1f28
+	// Line 367, Address: 0x36bb38, Func Offset: 0x1fa8
+	// Line 368, Address: 0x36bbb8, Func Offset: 0x2028
+	// Line 371, Address: 0x36bc38, Func Offset: 0x20a8
+	// Line 372, Address: 0x36bc78, Func Offset: 0x20e8
+	// Line 373, Address: 0x36bd00, Func Offset: 0x2170
+	// Line 374, Address: 0x36bd88, Func Offset: 0x21f8
+	// Line 375, Address: 0x36be10, Func Offset: 0x2280
+	// Line 377, Address: 0x36be98, Func Offset: 0x2308
+	// Line 378, Address: 0x36bf18, Func Offset: 0x2388
+	// Line 379, Address: 0x36bf90, Func Offset: 0x2400
+	// Line 380, Address: 0x36c010, Func Offset: 0x2480
+	// Line 381, Address: 0x36c088, Func Offset: 0x24f8
+	// Line 382, Address: 0x36c100, Func Offset: 0x2570
+	// Line 383, Address: 0x36c180, Func Offset: 0x25f0
+	// Line 384, Address: 0x36c200, Func Offset: 0x2670
+	// Line 385, Address: 0x36c280, Func Offset: 0x26f0
+	// Line 386, Address: 0x36c2f8, Func Offset: 0x2768
+	// Line 387, Address: 0x36c378, Func Offset: 0x27e8
+	// Line 388, Address: 0x36c3f0, Func Offset: 0x2860
+	// Line 389, Address: 0x36c470, Func Offset: 0x28e0
+	// Line 390, Address: 0x36c4e8, Func Offset: 0x2958
+	// Line 391, Address: 0x36c568, Func Offset: 0x29d8
+	// Line 392, Address: 0x36c5e0, Func Offset: 0x2a50
+	// Line 393, Address: 0x36c660, Func Offset: 0x2ad0
+	// Line 394, Address: 0x36c6e0, Func Offset: 0x2b50
+	// Line 395, Address: 0x36c760, Func Offset: 0x2bd0
+	// Line 396, Address: 0x36c7e0, Func Offset: 0x2c50
+	// Line 397, Address: 0x36c858, Func Offset: 0x2cc8
+	// Line 398, Address: 0x36c8d8, Func Offset: 0x2d48
+	// Line 399, Address: 0x36c950, Func Offset: 0x2dc0
+	// Line 400, Address: 0x36c9d0, Func Offset: 0x2e40
+	// Line 401, Address: 0x36ca48, Func Offset: 0x2eb8
+	// Line 402, Address: 0x36cac8, Func Offset: 0x2f38
+	// Line 415, Address: 0x36cb40, Func Offset: 0x2fb0
+	// Line 416, Address: 0x36cb78, Func Offset: 0x2fe8
+	// Line 417, Address: 0x36cbb0, Func Offset: 0x3020
+	// Line 418, Address: 0x36cbe8, Func Offset: 0x3058
+	// Line 419, Address: 0x36cc20, Func Offset: 0x3090
+	// Line 420, Address: 0x36cc58, Func Offset: 0x30c8
+	// Line 422, Address: 0x36cc90, Func Offset: 0x3100
+	// Func End, Address: 0x36ccac, Func Offset: 0x311c
 }
 
 // RenderExtraPostParticles__13zNPCBPlanktonFv
 // Start address: 0x36ccb0
-void RenderExtraPostParticles(zNPCBPlankton* this)
+void zNPCBPlankton::RenderExtraPostParticles()
 {
+	// Line 952, Address: 0x36ccb0, Func Offset: 0
+	// Line 953, Address: 0x36ccbc, Func Offset: 0xc
+	// Line 959, Address: 0x36ccd4, Func Offset: 0x24
+	// Line 960, Address: 0x36cce0, Func Offset: 0x30
+	// Line 961, Address: 0x36ccec, Func Offset: 0x3c
+	// Line 962, Address: 0x36ccf4, Func Offset: 0x44
+	// Line 963, Address: 0x36ccf8, Func Offset: 0x48
+	// Func End, Address: 0x36cd08, Func Offset: 0x58
 }
 
 // Render__13zNPCBPlanktonFv
 // Start address: 0x36cd10
-void Render(zNPCBPlankton* this)
+void zNPCBPlankton::Render()
 {
+	// Line 946, Address: 0x36cd10, Func Offset: 0
+	// Func End, Address: 0x36cd18, Func Offset: 0x8
 }
 
 // SysEvent__13zNPCBPlanktonFP5xBaseP5xBaseUiPCfP5xBasePi
 // Start address: 0x36cd20
-int32 SysEvent(zNPCBPlankton* this, xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled)
+int32 zNPCBPlankton::SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget, int32* handled)
 {
+	// Line 938, Address: 0x36cd20, Func Offset: 0
+	// Func End, Address: 0x36cd28, Func Offset: 0x8
 }
 
 // Process__13zNPCBPlanktonFP6xScenef
 // Start address: 0x36cd30
-void Process(zNPCBPlankton* this, xScene* xscn, float32 dt)
+void zNPCBPlankton::Process(xScene* xscn, float32 dt)
 {
 	xVec3& player_loc;
+	// Line 872, Address: 0x36cd30, Func Offset: 0
+	// Line 874, Address: 0x36cd54, Func Offset: 0x24
+	// Line 876, Address: 0x36cd60, Func Offset: 0x30
+	// Line 877, Address: 0x36cd68, Func Offset: 0x38
+	// Line 879, Address: 0x36cd78, Func Offset: 0x48
+	// Line 880, Address: 0x36cda8, Func Offset: 0x78
+	// Line 884, Address: 0x36cdb0, Func Offset: 0x80
+	// Line 886, Address: 0x36cdbc, Func Offset: 0x8c
+	// Line 888, Address: 0x36cdc0, Func Offset: 0x90
+	// Line 886, Address: 0x36cdc4, Func Offset: 0x94
+	// Line 888, Address: 0x36cdcc, Func Offset: 0x9c
+	// Line 890, Address: 0x36cde8, Func Offset: 0xb8
+	// Line 891, Address: 0x36cdec, Func Offset: 0xbc
+	// Line 894, Address: 0x36ce00, Func Offset: 0xd0
+	// Line 898, Address: 0x36ce14, Func Offset: 0xe4
+	// Line 899, Address: 0x36ce24, Func Offset: 0xf4
+	// Line 901, Address: 0x36ce28, Func Offset: 0xf8
+	// Line 903, Address: 0x36ce34, Func Offset: 0x104
+	// Line 906, Address: 0x36ce38, Func Offset: 0x108
+	// Line 903, Address: 0x36ce3c, Func Offset: 0x10c
+	// Line 904, Address: 0x36ce40, Func Offset: 0x110
+	// Line 903, Address: 0x36ce44, Func Offset: 0x114
+	// Line 904, Address: 0x36ce48, Func Offset: 0x118
+	// Line 905, Address: 0x36ce4c, Func Offset: 0x11c
+	// Line 906, Address: 0x36ce70, Func Offset: 0x140
+	// Line 909, Address: 0x36ce98, Func Offset: 0x168
+	// Line 910, Address: 0x36cea4, Func Offset: 0x174
+	// Line 911, Address: 0x36ceb0, Func Offset: 0x180
+	// Line 912, Address: 0x36cfa4, Func Offset: 0x274
+	// Line 917, Address: 0x36cfa8, Func Offset: 0x278
+	// Line 919, Address: 0x36d170, Func Offset: 0x440
+	// Line 925, Address: 0x36d17c, Func Offset: 0x44c
+	// Line 926, Address: 0x36d194, Func Offset: 0x464
+	// Line 929, Address: 0x36d1a0, Func Offset: 0x470
+	// Line 930, Address: 0x36d1b0, Func Offset: 0x480
+	// Func End, Address: 0x36d1d0, Func Offset: 0x4a0
 }
 
 // Destroy__13zNPCBPlanktonFv
 // Start address: 0x36d1d0
-void Destroy(zNPCBPlankton* this)
+void zNPCBPlankton::Destroy()
 {
+	// Line 868, Address: 0x36d1d0, Func Offset: 0
+	// Func End, Address: 0x36d1d8, Func Offset: 0x8
 }
 
 // Reset__13zNPCBPlanktonFv
 // Start address: 0x36d1e0
-void Reset(zNPCBPlankton* this)
+void zNPCBPlankton::Reset()
 {
+	// Line 811, Address: 0x36d1e0, Func Offset: 0
+	// Line 812, Address: 0x36d1f8, Func Offset: 0x18
+	// Line 813, Address: 0x36d210, Func Offset: 0x30
+	// Line 815, Address: 0x36d218, Func Offset: 0x38
+	// Line 813, Address: 0x36d21c, Func Offset: 0x3c
+	// Line 815, Address: 0x36d240, Func Offset: 0x60
+	// Line 816, Address: 0x36d248, Func Offset: 0x68
+	// Line 818, Address: 0x36d250, Func Offset: 0x70
+	// Line 823, Address: 0x36d260, Func Offset: 0x80
+	// Line 828, Address: 0x36d264, Func Offset: 0x84
+	// Line 823, Address: 0x36d268, Func Offset: 0x88
+	// Line 825, Address: 0x36d26c, Func Offset: 0x8c
+	// Line 826, Address: 0x36d270, Func Offset: 0x90
+	// Line 827, Address: 0x36d27c, Func Offset: 0x9c
+	// Line 828, Address: 0x36d29c, Func Offset: 0xbc
+	// Line 829, Address: 0x36d2a0, Func Offset: 0xc0
+	// Line 832, Address: 0x36d2a4, Func Offset: 0xc4
+	// Line 835, Address: 0x36d2f8, Func Offset: 0x118
+	// Line 837, Address: 0x36d304, Func Offset: 0x124
+	// Line 838, Address: 0x36d308, Func Offset: 0x128
+	// Line 840, Address: 0x36d314, Func Offset: 0x134
+	// Line 844, Address: 0x36d320, Func Offset: 0x140
+	// Line 846, Address: 0x36d328, Func Offset: 0x148
+	// Line 845, Address: 0x36d32c, Func Offset: 0x14c
+	// Line 846, Address: 0x36d330, Func Offset: 0x150
+	// Line 847, Address: 0x36d33c, Func Offset: 0x15c
+	// Line 848, Address: 0x36d34c, Func Offset: 0x16c
+	// Line 850, Address: 0x36d350, Func Offset: 0x170
+	// Line 852, Address: 0x36d408, Func Offset: 0x228
+	// Line 853, Address: 0x36d410, Func Offset: 0x230
+	// Line 854, Address: 0x36d41c, Func Offset: 0x23c
+	// Line 853, Address: 0x36d420, Func Offset: 0x240
+	// Line 854, Address: 0x36d42c, Func Offset: 0x24c
+	// Line 858, Address: 0x36d460, Func Offset: 0x280
+	// Line 861, Address: 0x36d488, Func Offset: 0x2a8
+	// Line 862, Address: 0x36d520, Func Offset: 0x340
+	// Line 863, Address: 0x36d534, Func Offset: 0x354
+	// Line 864, Address: 0x36d538, Func Offset: 0x358
+	// Func End, Address: 0x36d54c, Func Offset: 0x36c
 }
 
 // PostSetup__13zNPCBPlanktonFv
 // Start address: 0x36d550
-void PostSetup(zNPCBPlankton* this)
+void zNPCBPlankton::PostSetup()
 {
+	// Line 807, Address: 0x36d554, Func Offset: 0x4
+	// Func End, Address: 0x36d56c, Func Offset: 0x1c
 }
 
 // Setup__13zNPCBPlanktonFv
 // Start address: 0x36d570
-void Setup(zNPCBPlankton* this)
+void zNPCBPlankton::Setup()
 {
+	// Line 795, Address: 0x36d570, Func Offset: 0
+	// Line 796, Address: 0x36d57c, Func Offset: 0xc
+	// Line 797, Address: 0x36d584, Func Offset: 0x14
+	// Line 799, Address: 0x36d58c, Func Offset: 0x1c
+	// Line 803, Address: 0x36d5a4, Func Offset: 0x34
+	// Func End, Address: 0x36d5b4, Func Offset: 0x44
 }
 
 // Init__13zNPCBPlanktonFP9xEntAsset
 // Start address: 0x36d5c0
-void Init(zNPCBPlankton* this, xEntAsset* asset)
+void zNPCBPlankton::Init(xEntAsset* asset)
 {
+	// Line 775, Address: 0x36d5c0, Func Offset: 0
+	// Line 776, Address: 0x36d5d4, Func Offset: 0x14
+	// Line 779, Address: 0x36d5dc, Func Offset: 0x1c
+	// Line 781, Address: 0x36d5e8, Func Offset: 0x28
+	// Line 782, Address: 0x36d5f0, Func Offset: 0x30
+	// Line 784, Address: 0x36d5f4, Func Offset: 0x34
+	// Line 789, Address: 0x36d658, Func Offset: 0x98
+	// Line 784, Address: 0x36d65c, Func Offset: 0x9c
+	// Line 786, Address: 0x36d664, Func Offset: 0xa4
+	// Line 789, Address: 0x36d668, Func Offset: 0xa8
+	// Line 791, Address: 0x36d670, Func Offset: 0xb0
+	// Line 792, Address: 0x36d684, Func Offset: 0xc4
+	// Func End, Address: 0x36d698, Func Offset: 0xd8
 }
 
 // __ct__13zNPCBPlanktonFi
 // Start address: 0x36d6a0
-void* __ct(zNPCBPlankton* this, int32 myType)
+void* zNPCBPlankton::__ct(int32 myType)
 {
+	// Line 769, Address: 0x36d6a0, Func Offset: 0
+	// Line 771, Address: 0x36d6cc, Func Offset: 0x2c
+	// Line 769, Address: 0x36d6d0, Func Offset: 0x30
+	// Line 771, Address: 0x36d6e0, Func Offset: 0x40
+	// Line 769, Address: 0x36d6e4, Func Offset: 0x44
+	// Line 771, Address: 0x36d6f8, Func Offset: 0x58
+	// Line 772, Address: 0x36d700, Func Offset: 0x60
+	// Func End, Address: 0x36d714, Func Offset: 0x74
 }
 
 // ZNPC_AnimTable_BossPlankton__Fv
@@ -5648,19 +7098,78 @@ void* __ct(zNPCBPlankton* this, int32 myType)
 xAnimTable* ZNPC_AnimTable_BossPlankton()
 {
 	xAnimTable* table;
-	type_89 anim_list;
+	int32 anim_list[32];
+	// Line 708, Address: 0x36d720, Func Offset: 0
+	// Line 713, Address: 0x36d724, Func Offset: 0x4
+	// Line 708, Address: 0x36d728, Func Offset: 0x8
+	// Line 713, Address: 0x36d72c, Func Offset: 0xc
+	// Line 720, Address: 0x36d744, Func Offset: 0x24
+	// Line 721, Address: 0x36d794, Func Offset: 0x74
+	// Line 722, Address: 0x36d7e4, Func Offset: 0xc4
+	// Line 723, Address: 0x36d834, Func Offset: 0x114
+	// Line 724, Address: 0x36d884, Func Offset: 0x164
+	// Line 725, Address: 0x36d8d4, Func Offset: 0x1b4
+	// Line 726, Address: 0x36d924, Func Offset: 0x204
+	// Line 727, Address: 0x36d974, Func Offset: 0x254
+	// Line 728, Address: 0x36d9c4, Func Offset: 0x2a4
+	// Line 729, Address: 0x36da14, Func Offset: 0x2f4
+	// Line 730, Address: 0x36da64, Func Offset: 0x344
+	// Line 731, Address: 0x36dab4, Func Offset: 0x394
+	// Line 732, Address: 0x36db04, Func Offset: 0x3e4
+	// Line 733, Address: 0x36db54, Func Offset: 0x434
+	// Line 736, Address: 0x36dba4, Func Offset: 0x484
+	// Line 740, Address: 0x36dbcc, Func Offset: 0x4ac
+	// Line 741, Address: 0x36dc14, Func Offset: 0x4f4
+	// Line 742, Address: 0x36dc5c, Func Offset: 0x53c
+	// Line 743, Address: 0x36dca4, Func Offset: 0x584
+	// Line 744, Address: 0x36dcec, Func Offset: 0x5cc
+	// Line 745, Address: 0x36dd34, Func Offset: 0x614
+	// Line 746, Address: 0x36dd7c, Func Offset: 0x65c
+	// Line 748, Address: 0x36ddc4, Func Offset: 0x6a4
+	// Line 749, Address: 0x36de0c, Func Offset: 0x6ec
+	// Line 750, Address: 0x36de54, Func Offset: 0x734
+	// Line 751, Address: 0x36de9c, Func Offset: 0x77c
+	// Line 752, Address: 0x36dee4, Func Offset: 0x7c4
+	// Line 753, Address: 0x36df2c, Func Offset: 0x80c
+	// Line 754, Address: 0x36df74, Func Offset: 0x854
+	// Line 755, Address: 0x36dfbc, Func Offset: 0x89c
+	// Line 756, Address: 0x36e004, Func Offset: 0x8e4
+	// Line 757, Address: 0x36e04c, Func Offset: 0x92c
+	// Line 759, Address: 0x36e094, Func Offset: 0x974
+	// Line 760, Address: 0x36e098, Func Offset: 0x978
+	// Func End, Address: 0x36e0a8, Func Offset: 0x988
 }
 
 // play_beam_hit_sound__34@unnamed@zNPCTypeBossPlankton_cpp@FRQ217xLaserBoltEmitter4boltPv
 // Start address: 0x36e0b0
 void play_beam_hit_sound(bolt& b)
 {
+	// Line 691, Address: 0x36e0b0, Func Offset: 0
+	// Line 692, Address: 0x36e0b4, Func Offset: 0x4
+	// Line 691, Address: 0x36e0b8, Func Offset: 0x8
+	// Line 692, Address: 0x36e0bc, Func Offset: 0xc
+	// Line 691, Address: 0x36e0c0, Func Offset: 0x10
+	// Line 692, Address: 0x36e0c4, Func Offset: 0x14
+	// Line 691, Address: 0x36e0c8, Func Offset: 0x18
+	// Line 692, Address: 0x36e0d4, Func Offset: 0x24
+	// Line 693, Address: 0x36e1a8, Func Offset: 0xf8
+	// Func End, Address: 0x36e1c0, Func Offset: 0x110
 }
 
 // play_beam_fire_sound__34@unnamed@zNPCTypeBossPlankton_cpp@FRQ217xLaserBoltEmitter4boltPv
 // Start address: 0x36e1c0
 void play_beam_fire_sound(bolt& b)
 {
+	// Line 686, Address: 0x36e1c0, Func Offset: 0
+	// Line 687, Address: 0x36e1c4, Func Offset: 0x4
+	// Line 686, Address: 0x36e1c8, Func Offset: 0x8
+	// Line 687, Address: 0x36e1cc, Func Offset: 0xc
+	// Line 686, Address: 0x36e1d0, Func Offset: 0x10
+	// Line 687, Address: 0x36e1d4, Func Offset: 0x14
+	// Line 686, Address: 0x36e1d8, Func Offset: 0x18
+	// Line 687, Address: 0x36e1e4, Func Offset: 0x24
+	// Line 688, Address: 0x36e2b0, Func Offset: 0xf0
+	// Func End, Address: 0x36e2c8, Func Offset: 0x108
 }
 
 // kill_beam_fly_sound__34@unnamed@zNPCTypeBossPlankton_cpp@FRQ217xLaserBoltEmitter4boltPv
@@ -5668,6 +7177,13 @@ void play_beam_fire_sound(bolt& b)
 void kill_beam_fly_sound(bolt& b)
 {
 	uint32& handle;
+	// Line 678, Address: 0x36e2d0, Func Offset: 0
+	// Line 679, Address: 0x36e2e0, Func Offset: 0x10
+	// Line 680, Address: 0x36e2e8, Func Offset: 0x18
+	// Line 681, Address: 0x36e2f0, Func Offset: 0x20
+	// Line 682, Address: 0x36e33c, Func Offset: 0x6c
+	// Line 683, Address: 0x36e340, Func Offset: 0x70
+	// Func End, Address: 0x36e354, Func Offset: 0x84
 }
 
 // play_beam_fly_sound__34@unnamed@zNPCTypeBossPlankton_cpp@FRQ217xLaserBoltEmitter4boltPv
@@ -5675,6 +7191,11 @@ void kill_beam_fly_sound(bolt& b)
 void play_beam_fly_sound(bolt& b)
 {
 	uint32& handle;
+	// Line 671, Address: 0x36e360, Func Offset: 0
+	// Line 673, Address: 0x36e37c, Func Offset: 0x1c
+	// Line 674, Address: 0x36e388, Func Offset: 0x28
+	// Line 675, Address: 0x36e474, Func Offset: 0x114
+	// Func End, Address: 0x36e494, Func Offset: 0x134
 }
 
 // init_sound__34@unnamed@zNPCTypeBossPlankton_cpp@Fv
@@ -5683,5 +7204,30 @@ void init_sound()
 {
 	uint32 i;
 	uint32& total;
+	// Line 577, Address: 0x36e4a0, Func Offset: 0
+	// Line 578, Address: 0x36e4a4, Func Offset: 0x4
+	// Line 577, Address: 0x36e4a8, Func Offset: 0x8
+	// Line 578, Address: 0x36e4ac, Func Offset: 0xc
+	// Line 579, Address: 0x36e4bc, Func Offset: 0x1c
+	// Line 583, Address: 0x36e4c8, Func Offset: 0x28
+	// Line 584, Address: 0x36e4cc, Func Offset: 0x2c
+	// Line 585, Address: 0x36e4d0, Func Offset: 0x30
+	// Line 583, Address: 0x36e4d4, Func Offset: 0x34
+	// Line 584, Address: 0x36e4d8, Func Offset: 0x38
+	// Line 585, Address: 0x36e4dc, Func Offset: 0x3c
+	// Line 579, Address: 0x36e4e0, Func Offset: 0x40
+	// Line 582, Address: 0x36e4e4, Func Offset: 0x44
+	// Line 583, Address: 0x36e4f0, Func Offset: 0x50
+	// Line 584, Address: 0x36e4f4, Func Offset: 0x54
+	// Line 583, Address: 0x36e4f8, Func Offset: 0x58
+	// Line 584, Address: 0x36e4fc, Func Offset: 0x5c
+	// Line 585, Address: 0x36e514, Func Offset: 0x74
+	// Line 586, Address: 0x36e538, Func Offset: 0x98
+	// Line 587, Address: 0x36e544, Func Offset: 0xa4
+	// Line 589, Address: 0x36e558, Func Offset: 0xb8
+	// Line 592, Address: 0x36e56c, Func Offset: 0xcc
+	// Line 593, Address: 0x36e574, Func Offset: 0xd4
+	// Line 595, Address: 0x36e5cc, Func Offset: 0x12c
+	// Func End, Address: 0x36e5d8, Func Offset: 0x138
 }
 

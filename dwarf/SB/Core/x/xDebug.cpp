@@ -17,30 +17,30 @@ typedef void(*type_4)(jot&, xtextbox&, xtextbox&, split_tag&);
 typedef int8 type_2[16];
 typedef int8 type_3[16];
 typedef int8 type_5[32];
-typedef type_5 type_6[35];
+typedef int8 type_6[32][35];
 typedef uint32 type_7[4096];
 
 struct _class
 {
-	union
+	struct
 	{
-		uint8 invisible;
-		uint8 ethereal;
-		uint8 merge;
-		uint8 word_break;
-		uint8 word_end;
-		uint8 line_break;
-		uint8 stop;
-		uint8 tab;
+		uint8 invisible : 1;
+		uint8 ethereal : 1;
+		uint8 merge : 1;
+		uint8 word_break : 1;
+		uint8 word_end : 1;
+		uint8 line_break : 1;
+		uint8 stop : 1;
+		uint8 tab : 1;
 	};
-	union
+	struct
 	{
-		uint8 insert;
-		uint8 dynamic;
-		uint8 page_break;
-		uint8 stateful;
+		uint8 insert : 1;
+		uint8 dynamic : 1;
+		uint8 page_break : 1;
+		uint8 stateful : 1;
 	};
-	uint16 dummy;
+	uint16 dummy : 4;
 };
 
 struct xSB
@@ -91,16 +91,16 @@ struct xtextbox
 
 struct callback
 {
-	type_0 render;
-	type_1 layout_update;
-	type_1 render_update;
+	void(*render)(jot&, xtextbox&, float32, float32);
+	void(*layout_update)(jot&, xtextbox&, xtextbox&);
+	void(*render_update)(jot&, xtextbox&, xtextbox&);
 };
 
 struct tag_type
 {
 	substr name;
-	type_4 parse_tag;
-	type_4 reset_tag;
+	void(*parse_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
+	void(*reset_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
 	void* context;
 };
 
@@ -136,15 +136,15 @@ struct substr
 	uint32 size;
 };
 
-type_2 buffer;
-type_3 buffer;
+int8 buffer[16];
+int8 buffer[16];
 basic_rect screen_bounds;
 basic_rect default_adjust;
-type_6 xStatsFieldName;
+int8 xStatsFieldName[32][35];
 uint32 gFrameCount;
 callback text_cb;
 iColor_tag g_WHITE;
-type_7 ourGlobals;
+uint32 ourGlobals[4096];
 
 void xDebugTimestampScreen();
 void xDebugExit();
@@ -157,35 +157,48 @@ void xprintf();
 // Start address: 0x1d0bb0
 void xDebugTimestampScreen()
 {
+	// Line 2065, Address: 0x1d0bb0, Func Offset: 0
+	// Func End, Address: 0x1d0bb8, Func Offset: 0x8
 }
 
 // xDebugExit__Fv
 // Start address: 0x1d0bc0
 void xDebugExit()
 {
+	// Line 1992, Address: 0x1d0bc0, Func Offset: 0
+	// Func End, Address: 0x1d0bc8, Func Offset: 0x8
 }
 
 // xDebugUpdate__Fv
 // Start address: 0x1d0bd0
 void xDebugUpdate()
 {
+	// Line 1988, Address: 0x1d0bd0, Func Offset: 0
+	// Func End, Address: 0x1d0bd8, Func Offset: 0x8
 }
 
 // xDebugInit__Fv
 // Start address: 0x1d0be0
 void xDebugInit()
 {
+	// Line 1920, Address: 0x1d0be0, Func Offset: 0
+	// Func End, Address: 0x1d0be8, Func Offset: 0x8
 }
 
 // xDebugModeAdd__FPCcPFv_v
 // Start address: 0x1d0bf0
 int32 xDebugModeAdd()
 {
+	// Line 830, Address: 0x1d0bf0, Func Offset: 0
+	// Func End, Address: 0x1d0bf8, Func Offset: 0x8
 }
 
 // xprintf__FPCce
 // Start address: 0x1d0c00
 void xprintf()
 {
+	// Line 634, Address: 0x1d0c00, Func Offset: 0
+	// Line 662, Address: 0x1d0c20, Func Offset: 0x20
+	// Func End, Address: 0x1d0c28, Func Offset: 0x28
 }
 

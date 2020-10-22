@@ -13,7 +13,7 @@ typedef struct xBase;
 typedef struct text_widget;
 typedef struct xVec3;
 typedef struct render_context;
-typedef union _class_1;
+typedef struct _class_1;
 typedef struct RwRaster;
 typedef struct substr;
 typedef struct xBaseAsset;
@@ -91,16 +91,16 @@ struct xTextAsset
 struct tag_type
 {
 	substr name;
-	type_2 parse_tag;
-	type_2 reset_tag;
+	void(*parse_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
+	void(*reset_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
 	void* context;
 };
 
 struct callback
 {
-	type_7 render;
-	type_0 layout_update;
-	type_0 render_update;
+	void(*render)(jot&, xtextbox&, float32, float32);
+	void(*layout_update)(jot&, xtextbox&, xtextbox&);
+	void(*render_update)(jot&, xtextbox&, xtextbox&);
 };
 
 struct motive_node
@@ -141,7 +141,7 @@ struct ztextbox : xBase
 	_class_1 flag;
 	asset_type* asset;
 	xtextbox tb;
-	type_3 segments;
+	int8* segments[16];
 	uint32 segments_size;
 	ztextbox* next;
 	ztextbox* prev;
@@ -155,13 +155,19 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_1 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct text_widget : widget
 {
-	type_8 text;
+	int8 text[128];
 	xtextbox tb;
+
+	void render();
+	void update(float32 dt);
+	uint8 is(uint32 id);
+	void destroy();
+	void setup();
 };
 
 struct xVec3
@@ -182,13 +188,16 @@ struct render_context
 	float32 a;
 };
 
-union _class_1
+struct _class_1
 {
-	uint8 active;
-	uint8 dirty;
-	uint8 show_backdrop;
-	uint8 visible;
-	uint8 hack_invisible;
+	struct
+	{
+		uint8 active : 1;
+		uint8 dirty : 1;
+		uint8 show_backdrop : 1;
+		uint8 visible : 1;
+		uint8 hack_invisible : 1;
+	};
 };
 
 struct RwRaster
@@ -274,25 +283,25 @@ struct asset_type : xDynAsset
 
 struct _class_3
 {
-	union
+	struct
 	{
-		uint8 invisible;
-		uint8 ethereal;
-		uint8 merge;
-		uint8 word_break;
-		uint8 word_end;
-		uint8 line_break;
-		uint8 stop;
-		uint8 tab;
+		uint8 invisible : 1;
+		uint8 ethereal : 1;
+		uint8 merge : 1;
+		uint8 word_break : 1;
+		uint8 word_end : 1;
+		uint8 line_break : 1;
+		uint8 stop : 1;
+		uint8 tab : 1;
 	};
-	union
+	struct
 	{
-		uint8 insert;
-		uint8 dynamic;
-		uint8 page_break;
-		uint8 stateful;
+		uint8 insert : 1;
+		uint8 dynamic : 1;
+		uint8 page_break : 1;
+		uint8 stateful : 1;
 	};
-	uint16 dummy;
+	uint16 dummy : 4;
 };
 
 struct motive
@@ -303,7 +312,7 @@ struct motive
 	float32 max_offset;
 	float32 offset;
 	float32 accel;
-	type_4 fp_update;
+	uint8(*fp_update)(widget&, motive&, float32);
 	void* context;
 	uint8 inverse;
 };
@@ -313,7 +322,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_5 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -395,24 +404,24 @@ enum _enum_2
 
 basic_rect screen_bounds;
 basic_rect default_adjust;
-type_6 buffer;
-type_9 buffer;
+int8 buffer[16];
+int8 buffer[16];
 _anon0 __vt__Q24xhud11text_widget;
 callback text_cb;
 iColor_tag g_WHITE;
 _anon1 __vt__Q24xhud6widget;
 
-void render(text_widget* this);
-void update(text_widget* this, float32 dt);
-uint8 is(text_widget* this, uint32 id);
+void render();
+void update(float32 dt);
+uint8 is(uint32 id);
 uint32 type();
-void destroy(text_widget* this);
-void setup(text_widget* this);
+void destroy();
+void setup();
 void load(xBase& data, xDynAsset& asset);
 
 // render__Q24xhud11text_widgetFv
 // Start address: 0x3d5490
-void render(text_widget* this)
+void text_widget::render()
 {
 	float32 x;
 	float32 y;
@@ -422,48 +431,150 @@ void render(text_widget* this)
 	uint8 a;
 	float32 floatA;
 	uint8 newA;
+	// Line 96, Address: 0x3d5490, Func Offset: 0
+	// Line 107, Address: 0x3d5494, Func Offset: 0x4
+	// Line 96, Address: 0x3d5498, Func Offset: 0x8
+	// Line 107, Address: 0x3d549c, Func Offset: 0xc
+	// Line 96, Address: 0x3d54a0, Func Offset: 0x10
+	// Line 106, Address: 0x3d54bc, Func Offset: 0x2c
+	// Line 101, Address: 0x3d54c0, Func Offset: 0x30
+	// Line 102, Address: 0x3d54c4, Func Offset: 0x34
+	// Line 103, Address: 0x3d54c8, Func Offset: 0x38
+	// Line 104, Address: 0x3d54cc, Func Offset: 0x3c
+	// Line 105, Address: 0x3d54d0, Func Offset: 0x40
+	// Line 107, Address: 0x3d54d4, Func Offset: 0x44
+	// Line 109, Address: 0x3d5520, Func Offset: 0x90
+	// Line 110, Address: 0x3d5538, Func Offset: 0xa8
+	// Line 111, Address: 0x3d5558, Func Offset: 0xc8
+	// Line 113, Address: 0x3d55a0, Func Offset: 0x110
+	// Line 116, Address: 0x3d55b0, Func Offset: 0x120
+	// Line 117, Address: 0x3d55b4, Func Offset: 0x124
+	// Line 121, Address: 0x3d55b8, Func Offset: 0x128
+	// Line 113, Address: 0x3d55c0, Func Offset: 0x130
+	// Line 114, Address: 0x3d55c8, Func Offset: 0x138
+	// Line 115, Address: 0x3d55d4, Func Offset: 0x144
+	// Line 116, Address: 0x3d55d8, Func Offset: 0x148
+	// Line 117, Address: 0x3d55dc, Func Offset: 0x14c
+	// Line 121, Address: 0x3d55e0, Func Offset: 0x150
+	// Line 123, Address: 0x3d55fc, Func Offset: 0x16c
+	// Line 131, Address: 0x3d5600, Func Offset: 0x170
+	// Line 124, Address: 0x3d5604, Func Offset: 0x174
+	// Line 131, Address: 0x3d5608, Func Offset: 0x178
+	// Line 125, Address: 0x3d560c, Func Offset: 0x17c
+	// Line 126, Address: 0x3d5610, Func Offset: 0x180
+	// Line 127, Address: 0x3d5614, Func Offset: 0x184
+	// Line 131, Address: 0x3d5618, Func Offset: 0x188
+	// Line 132, Address: 0x3d5634, Func Offset: 0x1a4
+	// Func End, Address: 0x3d565c, Func Offset: 0x1cc
 }
 
 // update__Q24xhud11text_widgetFf
 // Start address: 0x3d5660
-void update(text_widget* this, float32 dt)
+void text_widget::update(float32 dt)
 {
+	// Line 80, Address: 0x3d5660, Func Offset: 0
+	// Line 81, Address: 0x3d566c, Func Offset: 0xc
+	// Line 83, Address: 0x3d5674, Func Offset: 0x14
+	// Line 84, Address: 0x3d5680, Func Offset: 0x20
+	// Line 89, Address: 0x3d5684, Func Offset: 0x24
+	// Line 84, Address: 0x3d5694, Func Offset: 0x34
+	// Line 89, Address: 0x3d5698, Func Offset: 0x38
+	// Line 85, Address: 0x3d569c, Func Offset: 0x3c
+	// Line 89, Address: 0x3d56a0, Func Offset: 0x40
+	// Line 85, Address: 0x3d56a4, Func Offset: 0x44
+	// Line 86, Address: 0x3d56a8, Func Offset: 0x48
+	// Line 87, Address: 0x3d56b0, Func Offset: 0x50
+	// Line 88, Address: 0x3d56b8, Func Offset: 0x58
+	// Line 89, Address: 0x3d56d8, Func Offset: 0x78
+	// Line 90, Address: 0x3d571c, Func Offset: 0xbc
+	// Line 91, Address: 0x3d5778, Func Offset: 0x118
+	// Line 92, Address: 0x3d57d4, Func Offset: 0x174
+	// Line 93, Address: 0x3d5830, Func Offset: 0x1d0
+	// Func End, Address: 0x3d5840, Func Offset: 0x1e0
 }
 
 // is__Q24xhud11text_widgetCFUi
 // Start address: 0x3d5840
-uint8 is(text_widget* this, uint32 id)
+uint8 text_widget::is(uint32 id)
 {
 	uint32 myid;
 	int8 @3835;
+	// Line 75, Address: 0x3d5840, Func Offset: 0
+	// Line 76, Address: 0x3d5854, Func Offset: 0x14
+	// Line 77, Address: 0x3d5898, Func Offset: 0x58
+	// Func End, Address: 0x3d58ac, Func Offset: 0x6c
 }
 
 // type__Q24xhud11text_widgetCFv
 // Start address: 0x3d58b0
 uint32 type()
 {
+	// Line 69, Address: 0x3d58b0, Func Offset: 0
+	// Line 70, Address: 0x3d58b8, Func Offset: 0x8
+	// Line 72, Address: 0x3d58d8, Func Offset: 0x28
+	// Line 71, Address: 0x3d58dc, Func Offset: 0x2c
+	// Line 72, Address: 0x3d58e0, Func Offset: 0x30
+	// Func End, Address: 0x3d58e8, Func Offset: 0x38
 }
 
 // destroy__Q24xhud11text_widgetFv
 // Start address: 0x3d58f0
-void destroy(text_widget* this)
+void text_widget::destroy()
 {
+	// Line 65, Address: 0x3d58f0, Func Offset: 0
+	// Func End, Address: 0x3d58f8, Func Offset: 0x8
 }
 
 // setup__Q24xhud11text_widgetFv
 // Start address: 0x3d5900
-void setup(text_widget* this)
+void text_widget::setup()
 {
 	text_asset& ta;
 	ztextbox* ztb;
 	xTextAsset* t;
 	int8* s;
 	uint32 len;
+	// Line 27, Address: 0x3d5900, Func Offset: 0
+	// Line 28, Address: 0x3d5914, Func Offset: 0x14
+	// Line 30, Address: 0x3d591c, Func Offset: 0x1c
+	// Line 31, Address: 0x3d5920, Func Offset: 0x20
+	// Line 34, Address: 0x3d592c, Func Offset: 0x2c
+	// Line 36, Address: 0x3d5934, Func Offset: 0x34
+	// Line 37, Address: 0x3d5a3c, Func Offset: 0x13c
+	// Line 38, Address: 0x3d5a44, Func Offset: 0x144
+	// Line 39, Address: 0x3d5a48, Func Offset: 0x148
+	// Line 40, Address: 0x3d5a50, Func Offset: 0x150
+	// Line 42, Address: 0x3d5a54, Func Offset: 0x154
+	// Line 40, Address: 0x3d5a58, Func Offset: 0x158
+	// Line 42, Address: 0x3d5a5c, Func Offset: 0x15c
+	// Line 40, Address: 0x3d5a60, Func Offset: 0x160
+	// Line 42, Address: 0x3d5a64, Func Offset: 0x164
+	// Line 40, Address: 0x3d5a68, Func Offset: 0x168
+	// Line 42, Address: 0x3d5b28, Func Offset: 0x228
+	// Line 43, Address: 0x3d5b34, Func Offset: 0x234
+	// Line 45, Address: 0x3d5b3c, Func Offset: 0x23c
+	// Line 48, Address: 0x3d5b44, Func Offset: 0x244
+	// Line 51, Address: 0x3d5b4c, Func Offset: 0x24c
+	// Line 52, Address: 0x3d5b58, Func Offset: 0x258
+	// Line 53, Address: 0x3d5b68, Func Offset: 0x268
+	// Line 54, Address: 0x3d5b78, Func Offset: 0x278
+	// Line 58, Address: 0x3d5b80, Func Offset: 0x280
+	// Line 59, Address: 0x3d5bc8, Func Offset: 0x2c8
+	// Line 60, Address: 0x3d5c10, Func Offset: 0x310
+	// Line 61, Address: 0x3d5c54, Func Offset: 0x354
+	// Func End, Address: 0x3d5c70, Func Offset: 0x370
 }
 
 // load__Q24xhud11text_widgetFR5xBaseR9xDynAssetUi
 // Start address: 0x3d5c70
 void load(xBase& data, xDynAsset& asset)
 {
+	// Line 12, Address: 0x3d5c70, Func Offset: 0
+	// Line 14, Address: 0x3d5c74, Func Offset: 0x4
+	// Line 12, Address: 0x3d5c78, Func Offset: 0x8
+	// Line 14, Address: 0x3d5c88, Func Offset: 0x18
+	// Line 16, Address: 0x3d5c90, Func Offset: 0x20
+	// Line 17, Address: 0x3d5cb8, Func Offset: 0x48
+	// Func End, Address: 0x3d5ccc, Func Offset: 0x5c
 }
 

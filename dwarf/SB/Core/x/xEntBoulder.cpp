@@ -152,7 +152,7 @@ typedef struct xPECircle;
 typedef enum PSY_BRAIN_STATUS;
 typedef struct xEntMotionPenData;
 typedef enum en_NPC_SOUND;
-typedef union FloatAndVoid;
+typedef struct FloatAndVoid;
 typedef struct RwRaster;
 typedef struct xMemPool;
 typedef enum en_GOALSTATE;
@@ -161,7 +161,7 @@ typedef struct xPlatformMechData;
 typedef struct _class_3;
 typedef struct RwFrustumPlane;
 typedef struct RxNodeDefinition;
-typedef union _class_4;
+typedef struct _class_4;
 typedef struct xNPCBasic;
 typedef struct RpPolygon;
 typedef struct zFragLightning;
@@ -203,7 +203,7 @@ typedef struct xEntMotionERData;
 typedef struct xLightKit;
 typedef struct xJSPNodeInfo;
 typedef struct RwRGBAReal;
-typedef union zFragLocInfo;
+typedef struct zFragLocInfo;
 typedef struct xShadowSimplePoly;
 typedef struct RwObjectHasFrame;
 typedef struct xEnv;
@@ -269,7 +269,7 @@ typedef struct analog_data;
 typedef enum RpWorldRenderOrder;
 typedef struct zFragGroup;
 typedef struct xRay3;
-typedef union zFragInfo;
+typedef struct zFragInfo;
 typedef struct xEntMotionMPData;
 typedef struct xEntERData;
 typedef struct xListItem_1;
@@ -315,7 +315,7 @@ typedef void(*type_82)(int32*, en_trantype*);
 typedef void(*type_87)(xAnimState*, xAnimSingle*, void*);
 typedef int32(*type_90)(RxNodeDefinition*);
 typedef void(*type_97)(RxNodeDefinition*);
-typedef void(*type_98)(zShrapnelAsset*, xModelInstance*, xVec3*, type_81);
+typedef void(*type_98)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 typedef RpClump*(*type_102)(RpClump*, void*);
 typedef int32(*type_103)(RxPipelineNode*);
 typedef RwObjectHasFrame*(*type_104)(RwObjectHasFrame*);
@@ -379,7 +379,7 @@ typedef xGoal* type_54[5];
 typedef float32 type_56[4];
 typedef xModelTag type_58[20];
 typedef float32 type_60[1];
-typedef type_60 type_61[5];
+typedef float32 type_61[1][5];
 typedef xVec3 type_62[9];
 typedef uint8 type_65[2];
 typedef float32 type_66[4];
@@ -387,7 +387,7 @@ typedef int32 type_67[5];
 typedef xVec3 type_68[2];
 typedef int8 type_69[32];
 typedef int8 type_70[128];
-typedef type_70 type_73[6];
+typedef int8 type_73[128][6];
 typedef uint16 type_74[3];
 typedef int8 type_75[32];
 typedef uint8 type_78[2];
@@ -451,7 +451,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_76 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xGoal : xListItem_0, xFactoryInst
@@ -460,9 +460,9 @@ struct xGoal : xListItem_0, xFactoryInst
 	int32 goalID;
 	en_GOALSTATE stat;
 	int32 flg_able;
-	type_12 fun_process;
-	type_23 fun_precalc;
-	type_6 fun_chkRule;
+	int32(*fun_process)(xGoal*, void*, en_trantype*, float32, void*);
+	int32(*fun_precalc)(xGoal*, void*, float32, void*);
+	int32(*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
 	void* cbdata;
 };
 
@@ -487,16 +487,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_106 update;
-	type_106 endUpdate;
-	type_113 bupdate;
-	type_116 move;
-	type_120 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_2 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -541,7 +541,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_105 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xVec3
@@ -557,7 +557,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_109 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -593,13 +593,13 @@ struct xPsyche : RyzMemData
 	xPSYNote* cb_notice;
 	int32 flg_psyche;
 	xGoal* goallist;
-	type_54 goalstak;
-	type_61 tmr_stack;
+	xGoal* goalstak[5];
+	float32 tmr_stack[1][5];
 	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
 	int32 gid_safegoal;
-	type_82 fun_remap;
+	void(*fun_remap)(int32*, en_trantype*);
 	void* userContext;
 	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
@@ -662,13 +662,13 @@ struct zPlayerCarryInfo
 
 struct _class_0
 {
-	type_7 base_point;
-	type_9 point;
+	xVec3 base_point[16];
+	xVec3 point[16];
 	int16 total_points;
 	int16 end_points;
 	float32 arc_height;
 	xVec3 arc_normal;
-	type_16 thickness;
+	float32 thickness[16];
 	union
 	{
 		_tagLightningLine line;
@@ -722,10 +722,10 @@ struct xSphere
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_26 MoveSpeed;
-	type_28 AnimSneak;
-	type_31 AnimWalk;
-	type_36 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -743,7 +743,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_101 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct zFragSoundAsset : zFragAsset
@@ -784,7 +784,7 @@ struct zNPCCommon : xNPCBasic
 	xModelAssetParam* parmdata;
 	uint32 pdatsize;
 	zNPCLassoInfo* lassdata;
-	type_25 snd_queue;
+	NPCSndQueue snd_queue[4];
 };
 
 struct xEntBoulder : xEnt
@@ -804,7 +804,7 @@ struct xEntBoulder : xEnt
 	uint32 rollingID;
 	uint8 collis_chk;
 	uint8 collis_pen;
-	type_132 pad1;
+	uint8 pad1[2];
 };
 
 struct RwMatrixTag
@@ -844,7 +844,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_20 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -937,7 +937,7 @@ struct xSurface : xBase
 	};
 	float32 friction;
 	uint8 state;
-	type_155 pad;
+	uint8 pad[3];
 	void* moprops;
 };
 
@@ -950,7 +950,7 @@ enum RxClusterForcePresent
 
 struct xCoef
 {
-	type_11 a;
+	float32 a[4];
 };
 
 struct xAnimTransitionList
@@ -981,7 +981,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_4 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -1001,8 +1001,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_34 activateCB;
-	type_34 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct xCollis
@@ -1061,14 +1061,14 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_30 radius;
+	float32 radius[2];
 };
 
 struct xPlatformSpringboardData
 {
-	type_15 jmph;
+	float32 jmph[3];
 	float32 jmpbounce;
-	type_17 animID;
+	uint32 animID[3];
 	xVec3 jmpdir;
 	uint32 springflags;
 };
@@ -1120,8 +1120,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_64 Conditional;
-	type_64 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -1139,8 +1139,8 @@ struct zFrag
 	float32 delay;
 	float32 alivetime;
 	float32 lifetime;
-	type_14 update;
-	type_27 parent;
+	void(*update)(zFrag*, float32);
+	xModelInstance* parent[2];
 	zFrag* prev;
 	zFrag* next;
 };
@@ -1154,7 +1154,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_133 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -1168,14 +1168,14 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_18 pad;
+	uint32 pad[4];
 };
 
 struct zShrapnelAsset
 {
 	int32 fassetCount;
 	uint32 shrapnelID;
-	type_98 initCB;
+	void(*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 };
 
 struct RxClusterDefinition
@@ -1263,7 +1263,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_35 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct _class_1
@@ -1289,9 +1289,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_110 BeforeEnter;
-	type_87 StateCallback;
-	type_0 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xListItem_0
@@ -1323,7 +1323,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_124 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1353,7 +1353,7 @@ struct zFragProjectile
 
 struct xParInterp
 {
-	type_19 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -1392,8 +1392,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_42 beginUpdate;
-	type_55 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -1405,9 +1405,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_129 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_135 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct _tagLightningLine
@@ -1528,8 +1528,8 @@ struct zFragShockwaveAsset : zFragAsset
 	float32 deathVelocity;
 	float32 birthSpin;
 	float32 deathSpin;
-	type_51 birthColor;
-	type_56 deathColor;
+	float32 birthColor[4];
+	float32 deathColor[4];
 };
 
 struct xCurveAsset
@@ -1596,12 +1596,12 @@ struct xSpline3
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_29 tmrs;
-	type_33 ttms;
-	type_38 atms;
-	type_40 dtms;
-	type_45 vms;
-	type_52 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct xClumpCollBSPVertInfo
@@ -1652,8 +1652,8 @@ struct xEntMotion
 
 struct _tagxPad
 {
-	type_112 value;
-	type_117 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -1668,9 +1668,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_143 up_tmr;
-	type_144 down_tmr;
-	type_1 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct xClumpCollBSPBranchNode
@@ -1702,7 +1702,7 @@ struct zSurfacePropUVFX
 	int32 mode;
 	float32 rot;
 	float32 rot_spd;
-	type_39 minmax_timer;
+	float32 minmax_timer[2];
 	xVec3 trans;
 	xVec3 trans_spd;
 	xVec3 scale;
@@ -1763,7 +1763,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_78 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -1824,7 +1824,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_47 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -1842,7 +1842,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_66 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1896,7 +1896,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_53 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -1932,8 +1932,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_119 baseCount;
-	type_125 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -1996,7 +1996,7 @@ struct RwObject
 
 struct _tagLightningRot
 {
-	type_43 deg;
+	float32 deg[16];
 	float32 degrees;
 	float32 height;
 };
@@ -2048,9 +2048,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_3 resolvID;
-	type_10 base2Name;
-	type_13 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct RxIoSpec
@@ -2068,13 +2068,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_83 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_108 color_birth;
-	type_115 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -2113,9 +2113,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_149 colls;
-	type_111 post;
-	type_128 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xEntSplineData
@@ -2161,10 +2161,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_73 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_86 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -2221,14 +2221,14 @@ struct NPCConfig : xListItem_1
 	float32 rad_shadowRaster;
 	float32 rad_dmgSize;
 	int32 flg_vert;
-	type_58 tag_vert;
-	type_62 animFrameRange;
-	type_67 cnt_esteem;
+	xModelTag tag_vert[20];
+	xVec3 animFrameRange[9];
+	int32 cnt_esteem[5];
 	float32 rad_sound;
 	NPCSndTrax* snd_trax;
 	NPCSndTrax* snd_traxShare;
 	int32 test_count;
-	type_89 talk_filter;
+	uint8 talk_filter[4];
 	uint8 talk_filter_size;
 };
 
@@ -2237,8 +2237,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_69 name;
-	type_75 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -2249,7 +2249,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_41 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct zNPCSettings : xDynAsset
@@ -2260,7 +2260,7 @@ struct zNPCSettings : xDynAsset
 	int8 allowWander;
 	int8 reduceCollide;
 	int8 useNavSplines;
-	type_93 pad;
+	int8 pad[3];
 	int8 allowChase;
 	int8 allowAttack;
 	int8 assumeLOS;
@@ -2272,13 +2272,13 @@ struct zNPCSettings : xDynAsset
 
 struct RxNodeMethods
 {
-	type_77 nodeBody;
-	type_90 nodeInit;
-	type_97 nodeTerm;
-	type_103 pipelineNodeInit;
-	type_107 pipelineNodeTerm;
-	type_122 pipelineNodeConfig;
-	type_131 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct zParEmitter : xParEmitter
@@ -2324,7 +2324,7 @@ struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_65 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -2364,10 +2364,13 @@ enum en_NPC_SOUND
 	NPC_STYP_FORCE = 0x7fffffff
 };
 
-union FloatAndVoid
+struct FloatAndVoid
 {
-	float32 f;
-	void* v;
+	union
+	{
+		float32 f;
+		void* v;
+	};
 };
 
 struct RwRaster
@@ -2397,7 +2400,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_71 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -2439,14 +2442,14 @@ struct xPlatformMechData
 
 struct _class_3
 {
-	type_68 endPoint;
+	xVec3 endPoint[2];
 	xVec3 direction;
 	float32 length;
 	float32 scale;
 	float32 width;
-	type_85 endParam;
-	type_92 endVel;
-	type_95 paramSpan;
+	float32 endParam[2];
+	float32 endVel[2];
+	float32 paramSpan[2];
 	float32 arc_height;
 	xVec3 arc_normal;
 };
@@ -2470,29 +2473,32 @@ struct RxNodeDefinition
 	int32 InputPipesCnt;
 };
 
-union _class_4
+struct _class_4
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct xNPCBasic : xEnt, xFactoryInst
 {
-	type_48 f_setup;
-	type_59 f_reset;
-	union
+	void(*f_setup)(xEnt*);
+	void(*f_reset)(xEnt*);
+	struct
 	{
-		int32 flg_basenpc;
-		int32 inUpdate;
-		int32 flg_upward;
+		int32 flg_basenpc : 16;
+		int32 inUpdate : 8;
+		int32 flg_upward : 8;
 	};
 	int32 colFreq;
 	int32 colFreqReset;
-	union
+	struct
 	{
-		uint32 flg_colCheck;
-		uint32 flg_penCheck;
-		uint32 flg_unused;
+		uint32 flg_colCheck : 8;
+		uint32 flg_penCheck : 8;
+		uint32 flg_unused : 16;
 	};
 	int32 myNPCType;
 	xEntShadow entShadow_embedded;
@@ -2502,7 +2508,7 @@ struct xNPCBasic : xEnt, xFactoryInst
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_74 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct zFragLightning
@@ -2535,8 +2541,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_44 lastRefs;
-	type_50 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -2558,7 +2564,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_0 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct zFragBone
@@ -2649,7 +2655,7 @@ struct xPlatformPaddleData
 	int32 startOrient;
 	int32 countOrient;
 	float32 orientLoop;
-	type_94 orient;
+	float32 orient[6];
 	uint32 paddleFlags;
 	float32 rotateSpeed;
 	float32 accelTime;
@@ -2675,16 +2681,16 @@ struct RxCluster
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_84 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct zSurfaceProps
 {
 	zSurfAssetBase* asset;
 	uint32 texanim_flags;
-	type_91 texanim;
+	zSurfacePropTexAnim texanim[2];
 	uint32 uvfx_flags;
-	type_96 uvfx;
+	zSurfacePropUVFX uvfx[2];
 };
 
 struct _tagLightningZeus
@@ -2721,7 +2727,7 @@ struct zFragAsset
 {
 	zFragType type;
 	uint32 id;
-	type_153 parentID;
+	uint32 parentID[2];
 	float32 lifetime;
 	float32 delay;
 };
@@ -2740,11 +2746,11 @@ struct zSurfAssetBase : xBaseAsset
 	zSurfMatFX matfx;
 	zSurfColorFX colorfx;
 	uint32 texture_anim_flags;
-	type_137 texture_anim;
+	zSurfTextureAnim texture_anim[2];
 	uint32 uvfx_flags;
-	type_141 uvfx;
+	zSurfUVFX uvfx[2];
 	uint8 on;
-	type_145 surf_pad;
+	uint8 surf_pad[3];
 	float32 oob_delay;
 	float32 walljump_scale_xz;
 	float32 walljump_scale_y;
@@ -2760,7 +2766,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_100 clusters;
+	RxCluster clusters[1];
 };
 
 struct zLightning
@@ -2794,8 +2800,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_151 light;
-	type_157 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -2812,7 +2818,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_102 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RxPipelineRequiresCluster
@@ -2849,7 +2855,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_152 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -2887,15 +2893,18 @@ struct RwRGBAReal
 	float32 alpha;
 };
 
-union zFragLocInfo
+struct zFragLocInfo
 {
-	zFragBone bone;
-	xModelTag tag;
+	union
+	{
+		zFragBone bone;
+		xModelTag tag;
+	};
 };
 
 struct xShadowSimplePoly
 {
-	type_99 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -2903,7 +2912,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_104 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xEnv
@@ -3003,7 +3012,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_118 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -3016,7 +3025,7 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_127 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
@@ -3057,7 +3066,7 @@ struct zFragLocation
 
 struct xJSPHeader
 {
-	type_121 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -3080,7 +3089,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_140 corner;
+	xVec3 corner[4];
 };
 
 struct rxHeapSuperBlockDescriptor
@@ -3202,8 +3211,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_21 PowerUp;
-	type_24 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct xEntFrame
@@ -3267,8 +3276,8 @@ struct zFragShockwave
 	float32 deltVelocity;
 	float32 currSpin;
 	float32 deltSpin;
-	type_138 currColor;
-	type_142 deltColor;
+	float32 currColor[4];
+	float32 deltColor[4];
 };
 
 struct xPEEntBound
@@ -3303,7 +3312,7 @@ struct zPlayerLassoInfo
 
 struct RpTriangle
 {
-	type_130 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -3328,7 +3337,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_136 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -3422,7 +3431,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_156 wt;
+	float32 wt[4];
 };
 
 struct xVec4
@@ -3507,8 +3516,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_5 emit_pad;
-	type_8 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -3536,7 +3545,7 @@ enum RpWorldRenderOrder
 
 struct zFragGroup
 {
-	type_148 list;
+	zFrag* list[21];
 };
 
 struct xRay3
@@ -3548,14 +3557,17 @@ struct xRay3
 	int32 flags;
 };
 
-union zFragInfo
+struct zFragInfo
 {
-	zFragGroup group;
-	zFragParticle particle;
-	zFragProjectile projectile;
-	zFragLightning lightning;
-	zFragSound sound;
-	zFragShockwave shockwave;
+	union
+	{
+		zFragGroup group;
+		zFragParticle particle;
+		zFragProjectile projectile;
+		zFragLightning lightning;
+		zFragSound sound;
+		zFragShockwave shockwave;
+	};
 };
 
 struct xEntMotionMPData
@@ -3720,7 +3732,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_32 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -3732,7 +3744,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_80 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -3758,10 +3770,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_146 Inv_PatsSock;
-	type_147 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_154 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -3773,21 +3785,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_22 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_49 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_79 sb_model_indices;
-	type_88 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -3815,23 +3827,23 @@ struct xRot
 	float32 angle;
 };
 
-type_114 buffer;
-type_126 buffer;
+int8 buffer[16];
+int8 buffer[16];
 xEntCollis sBoulderCollis;
 uint32 sBubbleStreakID;
-type_37 xEntBoulder_Update;
+void(*xEntBoulder_Update)(xEntBoulder*, xScene*, float32);
 zGlobals globals;
 uint32 gActiveHeap;
-type_63 xBoulderGenerator_EventCB;
-type_139 xUpdateCull_DistanceSquaredCB;
-type_134 xUpdateCull_AlwaysTrueCB;
+int32(*xBoulderGenerator_EventCB)(xBase*, xBase*, uint32, float32*, xBase*);
+uint32(*xUpdateCull_DistanceSquaredCB)(void*, void*);
+uint32(*xUpdateCull_AlwaysTrueCB)(void*, void*);
 xEntBoulder* boulderVehicle;
 xQCControl xqc_def_ctrl;
-type_150 AtomicDefaultRenderCallBack;
-type_57 xFXBubbleRender;
-type_72 xEntBoulder_Render;
-type_46 xEntBoulder_BUpdate;
-type_123 xEntBoulderEventCB;
+RpAtomic*(*AtomicDefaultRenderCallBack)(RpAtomic*);
+RpAtomic*(*xFXBubbleRender)(RpAtomic*);
+void(*xEntBoulder_Render)(xEnt*);
+void(*xEntBoulder_BUpdate)(xEnt*, xVec3*);
+int32(*xEntBoulderEventCB)(xBase*, xBase*, uint32, float32*, xBase*);
 
 void xBoulderGenerator_GenBoulder(xBoulderGenerator* bg);
 int32 xBoulderGenerator_EventCB(xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget);
@@ -3867,6 +3879,98 @@ void xBoulderGenerator_GenBoulder(xBoulderGenerator* bg)
 	float32 nf;
 	float32 randAng;
 	float32 sclMag;
+	// Line 1457, Address: 0x306d40, Func Offset: 0
+	// Line 1459, Address: 0x306d64, Func Offset: 0x24
+	// Line 1460, Address: 0x306d6c, Func Offset: 0x2c
+	// Line 1463, Address: 0x306d74, Func Offset: 0x34
+	// Line 1460, Address: 0x306d78, Func Offset: 0x38
+	// Line 1463, Address: 0x306d7c, Func Offset: 0x3c
+	// Line 1460, Address: 0x306d80, Func Offset: 0x40
+	// Line 1463, Address: 0x306d84, Func Offset: 0x44
+	// Line 1464, Address: 0x306d8c, Func Offset: 0x4c
+	// Line 1465, Address: 0x306d9c, Func Offset: 0x5c
+	// Line 1466, Address: 0x306da8, Func Offset: 0x68
+	// Line 1468, Address: 0x306dac, Func Offset: 0x6c
+	// Line 1466, Address: 0x306db0, Func Offset: 0x70
+	// Line 1468, Address: 0x306db8, Func Offset: 0x78
+	// Line 1470, Address: 0x306dbc, Func Offset: 0x7c
+	// Line 1480, Address: 0x306dc4, Func Offset: 0x84
+	// Line 1470, Address: 0x306dc8, Func Offset: 0x88
+	// Line 1473, Address: 0x306de8, Func Offset: 0xa8
+	// Line 1474, Address: 0x306e00, Func Offset: 0xc0
+	// Line 1475, Address: 0x306e08, Func Offset: 0xc8
+	// Line 1480, Address: 0x306e20, Func Offset: 0xe0
+	// Line 1481, Address: 0x306e68, Func Offset: 0x128
+	// Line 1484, Address: 0x306e70, Func Offset: 0x130
+	// Line 1489, Address: 0x306e90, Func Offset: 0x150
+	// Line 1490, Address: 0x306ea0, Func Offset: 0x160
+	// Line 1491, Address: 0x306eac, Func Offset: 0x16c
+	// Line 1494, Address: 0x306eb8, Func Offset: 0x178
+	// Line 1495, Address: 0x306ec4, Func Offset: 0x184
+	// Line 1497, Address: 0x306ee4, Func Offset: 0x1a4
+	// Line 1498, Address: 0x306ef0, Func Offset: 0x1b0
+	// Line 1500, Address: 0x306f1c, Func Offset: 0x1dc
+	// Line 1501, Address: 0x306f20, Func Offset: 0x1e0
+	// Line 1502, Address: 0x306f28, Func Offset: 0x1e8
+	// Line 1501, Address: 0x306f2c, Func Offset: 0x1ec
+	// Line 1502, Address: 0x306f60, Func Offset: 0x220
+	// Line 1503, Address: 0x306f74, Func Offset: 0x234
+	// Line 1505, Address: 0x306fb4, Func Offset: 0x274
+	// Line 1507, Address: 0x306ff4, Func Offset: 0x2b4
+	// Line 1512, Address: 0x307038, Func Offset: 0x2f8
+	// Line 1513, Address: 0x307054, Func Offset: 0x314
+	// Line 1517, Address: 0x307060, Func Offset: 0x320
+	// Line 1519, Address: 0x307094, Func Offset: 0x354
+	// Line 1520, Address: 0x3070a4, Func Offset: 0x364
+	// Line 1521, Address: 0x3070b4, Func Offset: 0x374
+	// Line 1520, Address: 0x3070b8, Func Offset: 0x378
+	// Line 1521, Address: 0x3070bc, Func Offset: 0x37c
+	// Line 1522, Address: 0x3070cc, Func Offset: 0x38c
+	// Line 1521, Address: 0x3070d8, Func Offset: 0x398
+	// Line 1522, Address: 0x3070e8, Func Offset: 0x3a8
+	// Line 1524, Address: 0x3070f4, Func Offset: 0x3b4
+	// Line 1525, Address: 0x3070f8, Func Offset: 0x3b8
+	// Line 1526, Address: 0x307100, Func Offset: 0x3c0
+	// Line 1527, Address: 0x307104, Func Offset: 0x3c4
+	// Line 1531, Address: 0x307108, Func Offset: 0x3c8
+	// Line 1532, Address: 0x307110, Func Offset: 0x3d0
+	// Line 1531, Address: 0x30711c, Func Offset: 0x3dc
+	// Line 1532, Address: 0x307128, Func Offset: 0x3e8
+	// Line 1531, Address: 0x307130, Func Offset: 0x3f0
+	// Line 1532, Address: 0x307134, Func Offset: 0x3f4
+	// Line 1533, Address: 0x307140, Func Offset: 0x400
+	// Line 1534, Address: 0x307154, Func Offset: 0x414
+	// Line 1533, Address: 0x30715c, Func Offset: 0x41c
+	// Line 1534, Address: 0x307160, Func Offset: 0x420
+	// Line 1533, Address: 0x307164, Func Offset: 0x424
+	// Line 1534, Address: 0x307168, Func Offset: 0x428
+	// Line 1533, Address: 0x307170, Func Offset: 0x430
+	// Line 1534, Address: 0x307174, Func Offset: 0x434
+	// Line 1535, Address: 0x307184, Func Offset: 0x444
+	// Line 1536, Address: 0x30718c, Func Offset: 0x44c
+	// Line 1537, Address: 0x307198, Func Offset: 0x458
+	// Line 1538, Address: 0x30719c, Func Offset: 0x45c
+	// Line 1537, Address: 0x3071a4, Func Offset: 0x464
+	// Line 1538, Address: 0x3071a8, Func Offset: 0x468
+	// Line 1537, Address: 0x3071ac, Func Offset: 0x46c
+	// Line 1538, Address: 0x3071cc, Func Offset: 0x48c
+	// Line 1539, Address: 0x3071ec, Func Offset: 0x4ac
+	// Line 1540, Address: 0x3071f8, Func Offset: 0x4b8
+	// Line 1541, Address: 0x307214, Func Offset: 0x4d4
+	// Line 1544, Address: 0x307218, Func Offset: 0x4d8
+	// Line 1545, Address: 0x307238, Func Offset: 0x4f8
+	// Line 1546, Address: 0x307248, Func Offset: 0x508
+	// Line 1547, Address: 0x30725c, Func Offset: 0x51c
+	// Line 1546, Address: 0x307260, Func Offset: 0x520
+	// Line 1547, Address: 0x30726c, Func Offset: 0x52c
+	// Line 1548, Address: 0x307288, Func Offset: 0x548
+	// Line 1549, Address: 0x307290, Func Offset: 0x550
+	// Line 1550, Address: 0x3072c0, Func Offset: 0x580
+	// Line 1551, Address: 0x3072f0, Func Offset: 0x5b0
+	// Line 1554, Address: 0x307324, Func Offset: 0x5e4
+	// Line 1556, Address: 0x307328, Func Offset: 0x5e8
+	// Line 1557, Address: 0x307378, Func Offset: 0x638
+	// Func End, Address: 0x3073a0, Func Offset: 0x660
 }
 
 // xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase
@@ -3875,6 +3979,55 @@ int32 xBoulderGenerator_EventCB(xBase* to, uint32 toEvent, float32* toParam, xBa
 {
 	xBoulderGenerator* bg;
 	xVec3 pnt;
+	// Line 1376, Address: 0x3073a0, Func Offset: 0
+	// Line 1386, Address: 0x3073a4, Func Offset: 0x4
+	// Line 1376, Address: 0x3073a8, Func Offset: 0x8
+	// Line 1386, Address: 0x3073c0, Func Offset: 0x20
+	// Line 1389, Address: 0x3073f8, Func Offset: 0x58
+	// Line 1390, Address: 0x307400, Func Offset: 0x60
+	// Line 1392, Address: 0x307408, Func Offset: 0x68
+	// Line 1407, Address: 0x3074a0, Func Offset: 0x100
+	// Line 1409, Address: 0x3074ac, Func Offset: 0x10c
+	// Line 1407, Address: 0x3074b0, Func Offset: 0x110
+	// Line 1409, Address: 0x3074cc, Func Offset: 0x12c
+	// Line 1410, Address: 0x3074dc, Func Offset: 0x13c
+	// Line 1411, Address: 0x30750c, Func Offset: 0x16c
+	// Line 1412, Address: 0x30753c, Func Offset: 0x19c
+	// Line 1414, Address: 0x307570, Func Offset: 0x1d0
+	// Line 1415, Address: 0x307580, Func Offset: 0x1e0
+	// Line 1419, Address: 0x307588, Func Offset: 0x1e8
+	// Line 1421, Address: 0x30759c, Func Offset: 0x1fc
+	// Line 1419, Address: 0x3075a4, Func Offset: 0x204
+	// Line 1421, Address: 0x3075b8, Func Offset: 0x218
+	// Line 1422, Address: 0x3075c8, Func Offset: 0x228
+	// Line 1423, Address: 0x3075f8, Func Offset: 0x258
+	// Line 1424, Address: 0x307628, Func Offset: 0x288
+	// Line 1425, Address: 0x30765c, Func Offset: 0x2bc
+	// Line 1426, Address: 0x307660, Func Offset: 0x2c0
+	// Line 1429, Address: 0x307670, Func Offset: 0x2d0
+	// Line 1434, Address: 0x307678, Func Offset: 0x2d8
+	// Line 1431, Address: 0x30767c, Func Offset: 0x2dc
+	// Line 1432, Address: 0x307684, Func Offset: 0x2e4
+	// Line 1433, Address: 0x30768c, Func Offset: 0x2ec
+	// Line 1434, Address: 0x307694, Func Offset: 0x2f4
+	// Line 1435, Address: 0x3076a0, Func Offset: 0x300
+	// Line 1437, Address: 0x3076a8, Func Offset: 0x308
+	// Line 1439, Address: 0x3076b8, Func Offset: 0x318
+	// Line 1437, Address: 0x3076bc, Func Offset: 0x31c
+	// Line 1438, Address: 0x3076c0, Func Offset: 0x320
+	// Line 1437, Address: 0x3076c4, Func Offset: 0x324
+	// Line 1438, Address: 0x3076dc, Func Offset: 0x33c
+	// Line 1439, Address: 0x307734, Func Offset: 0x394
+	// Line 1440, Address: 0x307744, Func Offset: 0x3a4
+	// Line 1441, Address: 0x307774, Func Offset: 0x3d4
+	// Line 1442, Address: 0x3077a4, Func Offset: 0x404
+	// Line 1444, Address: 0x3077d8, Func Offset: 0x438
+	// Line 1445, Address: 0x3077e8, Func Offset: 0x448
+	// Line 1447, Address: 0x3077f0, Func Offset: 0x450
+	// Line 1455, Address: 0x307888, Func Offset: 0x4e8
+	// Line 1454, Address: 0x307890, Func Offset: 0x4f0
+	// Line 1455, Address: 0x307894, Func Offset: 0x4f4
+	// Func End, Address: 0x3078a8, Func Offset: 0x508
 }
 
 // xBoulderGenerator_Launch__FP17xBoulderGeneratorP5xVec3f
@@ -3884,6 +4037,35 @@ void xBoulderGenerator_Launch(xBoulderGenerator* bg, xVec3* pnt, float32 t)
 	int32 i;
 	xEntBoulder* b;
 	float32 invTime;
+	// Line 1345, Address: 0x3078b0, Func Offset: 0
+	// Line 1346, Address: 0x3078d4, Func Offset: 0x24
+	// Line 1347, Address: 0x3078dc, Func Offset: 0x2c
+	// Line 1348, Address: 0x3078e4, Func Offset: 0x34
+	// Line 1347, Address: 0x3078e8, Func Offset: 0x38
+	// Line 1348, Address: 0x3078f0, Func Offset: 0x40
+	// Line 1349, Address: 0x307910, Func Offset: 0x60
+	// Line 1350, Address: 0x307920, Func Offset: 0x70
+	// Line 1351, Address: 0x30792c, Func Offset: 0x7c
+	// Line 1354, Address: 0x307938, Func Offset: 0x88
+	// Line 1355, Address: 0x307944, Func Offset: 0x94
+	// Line 1356, Address: 0x307964, Func Offset: 0xb4
+	// Line 1357, Address: 0x307970, Func Offset: 0xc0
+	// Line 1358, Address: 0x30799c, Func Offset: 0xec
+	// Line 1359, Address: 0x3079a0, Func Offset: 0xf0
+	// Line 1362, Address: 0x3079dc, Func Offset: 0x12c
+	// Line 1363, Address: 0x3079f8, Func Offset: 0x148
+	// Line 1364, Address: 0x307a04, Func Offset: 0x154
+	// Line 1367, Address: 0x307a08, Func Offset: 0x158
+	// Line 1368, Address: 0x307a10, Func Offset: 0x160
+	// Line 1367, Address: 0x307a18, Func Offset: 0x168
+	// Line 1370, Address: 0x307a1c, Func Offset: 0x16c
+	// Line 1368, Address: 0x307a20, Func Offset: 0x170
+	// Line 1370, Address: 0x307a34, Func Offset: 0x184
+	// Line 1369, Address: 0x307a38, Func Offset: 0x188
+	// Line 1370, Address: 0x307a54, Func Offset: 0x1a4
+	// Line 1373, Address: 0x307a80, Func Offset: 0x1d0
+	// Line 1374, Address: 0x307ad0, Func Offset: 0x220
+	// Func End, Address: 0x307af0, Func Offset: 0x240
 }
 
 // GetBoulderForGenerating__FP17xBoulderGenerator
@@ -3895,6 +4077,35 @@ int32 GetBoulderForGenerating(xBoulderGenerator* bg)
 	int32 oldestCulled;
 	int32 minAge;
 	int32 numList;
+	// Line 1305, Address: 0x307af0, Func Offset: 0
+	// Line 1308, Address: 0x307af4, Func Offset: 0x4
+	// Line 1305, Address: 0x307af8, Func Offset: 0x8
+	// Line 1311, Address: 0x307afc, Func Offset: 0xc
+	// Line 1305, Address: 0x307b00, Func Offset: 0x10
+	// Line 1308, Address: 0x307b0c, Func Offset: 0x1c
+	// Line 1311, Address: 0x307b10, Func Offset: 0x20
+	// Line 1313, Address: 0x307b28, Func Offset: 0x38
+	// Line 1314, Address: 0x307b3c, Func Offset: 0x4c
+	// Line 1316, Address: 0x307b68, Func Offset: 0x78
+	// Line 1317, Address: 0x307b74, Func Offset: 0x84
+	// Line 1319, Address: 0x307b7c, Func Offset: 0x8c
+	// Line 1320, Address: 0x307b8c, Func Offset: 0x9c
+	// Line 1321, Address: 0x307ba0, Func Offset: 0xb0
+	// Line 1324, Address: 0x307bbc, Func Offset: 0xcc
+	// Line 1325, Address: 0x307bc8, Func Offset: 0xd8
+	// Line 1327, Address: 0x307be8, Func Offset: 0xf8
+	// Line 1331, Address: 0x307bec, Func Offset: 0xfc
+	// Line 1332, Address: 0x307c00, Func Offset: 0x110
+	// Line 1333, Address: 0x307c08, Func Offset: 0x118
+	// Line 1334, Address: 0x307c10, Func Offset: 0x120
+	// Line 1335, Address: 0x307c38, Func Offset: 0x148
+	// Line 1336, Address: 0x307c44, Func Offset: 0x154
+	// Line 1337, Address: 0x307c50, Func Offset: 0x160
+	// Line 1339, Address: 0x307c54, Func Offset: 0x164
+	// Line 1340, Address: 0x307c58, Func Offset: 0x168
+	// Line 1341, Address: 0x307c60, Func Offset: 0x170
+	// Line 1343, Address: 0x307c78, Func Offset: 0x188
+	// Func End, Address: 0x307c8c, Func Offset: 0x19c
 }
 
 // xBoulderGenerator_Init__FP17xBoulderGeneratorP22xBoulderGeneratorAsset
@@ -3902,12 +4113,51 @@ int32 GetBoulderForGenerating(xBoulderGenerator* bg)
 void xBoulderGenerator_Init(xBoulderGenerator* bg, xBoulderGeneratorAsset* asset)
 {
 	uint32 size;
+	// Line 1239, Address: 0x307c90, Func Offset: 0
+	// Line 1240, Address: 0x307cb0, Func Offset: 0x20
+	// Line 1243, Address: 0x307cb8, Func Offset: 0x28
+	// Line 1244, Address: 0x307cc4, Func Offset: 0x34
+	// Line 1246, Address: 0x307cc8, Func Offset: 0x38
+	// Line 1247, Address: 0x307cd4, Func Offset: 0x44
+	// Line 1249, Address: 0x307ce8, Func Offset: 0x58
+	// Line 1252, Address: 0x307cf0, Func Offset: 0x60
+	// Line 1253, Address: 0x307cf4, Func Offset: 0x64
+	// Line 1254, Address: 0x307d04, Func Offset: 0x74
+	// Line 1255, Address: 0x307d14, Func Offset: 0x84
+	// Line 1256, Address: 0x307d18, Func Offset: 0x88
+	// Line 1257, Address: 0x307d20, Func Offset: 0x90
+	// Line 1258, Address: 0x307d24, Func Offset: 0x94
+	// Line 1262, Address: 0x307d30, Func Offset: 0xa0
+	// Line 1266, Address: 0x307d8c, Func Offset: 0xfc
+	// Line 1262, Address: 0x307d90, Func Offset: 0x100
+	// Line 1263, Address: 0x307d94, Func Offset: 0x104
+	// Line 1266, Address: 0x307da0, Func Offset: 0x110
+	// Line 1274, Address: 0x307db4, Func Offset: 0x124
+	// Line 1269, Address: 0x307db8, Func Offset: 0x128
+	// Line 1274, Address: 0x307dcc, Func Offset: 0x13c
+	// Line 1277, Address: 0x307e2c, Func Offset: 0x19c
+	// Line 1278, Address: 0x307e38, Func Offset: 0x1a8
+	// Line 1279, Address: 0x307e3c, Func Offset: 0x1ac
+	// Line 1278, Address: 0x307e48, Func Offset: 0x1b8
+	// Line 1279, Address: 0x307e6c, Func Offset: 0x1dc
+	// Line 1283, Address: 0x307e7c, Func Offset: 0x1ec
+	// Line 1280, Address: 0x307e84, Func Offset: 0x1f4
+	// Line 1281, Address: 0x307e98, Func Offset: 0x208
+	// Line 1282, Address: 0x307eac, Func Offset: 0x21c
+	// Line 1283, Address: 0x307eb8, Func Offset: 0x228
+	// Line 1284, Address: 0x307ec0, Func Offset: 0x230
+	// Line 1285, Address: 0x307f18, Func Offset: 0x288
+	// Line 1288, Address: 0x307f40, Func Offset: 0x2b0
+	// Line 1289, Address: 0x307fd8, Func Offset: 0x348
+	// Func End, Address: 0x307ff8, Func Offset: 0x368
 }
 
 // xBoulderGenerator_Init__FR5xBaseR9xDynAssetUi
 // Start address: 0x308000
 void xBoulderGenerator_Init(xBase& data, xDynAsset& asset)
 {
+	// Line 1236, Address: 0x308000, Func Offset: 0
+	// Func End, Address: 0x308008, Func Offset: 0x8
 }
 
 // RecurseChild__FP5xBasePP11xEntBoulderRi
@@ -3918,6 +4168,27 @@ void RecurseChild(xBase* child, xEntBoulder** boulList, int32& currBoul)
 	int32 cnt;
 	xGroup* grp;
 	xBase* grpitem;
+	// Line 1201, Address: 0x308010, Func Offset: 0
+	// Line 1207, Address: 0x308014, Func Offset: 0x4
+	// Line 1201, Address: 0x308018, Func Offset: 0x8
+	// Line 1207, Address: 0x308034, Func Offset: 0x24
+	// Line 1208, Address: 0x308054, Func Offset: 0x44
+	// Line 1209, Address: 0x308058, Func Offset: 0x48
+	// Line 1210, Address: 0x308070, Func Offset: 0x60
+	// Line 1211, Address: 0x308078, Func Offset: 0x68
+	// Line 1215, Address: 0x308080, Func Offset: 0x70
+	// Line 1216, Address: 0x30808c, Func Offset: 0x7c
+	// Line 1217, Address: 0x308098, Func Offset: 0x88
+	// Line 1219, Address: 0x3080a8, Func Offset: 0x98
+	// Line 1220, Address: 0x3080b4, Func Offset: 0xa4
+	// Line 1221, Address: 0x3080c0, Func Offset: 0xb0
+	// Line 1222, Address: 0x3080d8, Func Offset: 0xc8
+	// Line 1223, Address: 0x3080e0, Func Offset: 0xd0
+	// Line 1224, Address: 0x3080e8, Func Offset: 0xd8
+	// Line 1225, Address: 0x3080f4, Func Offset: 0xe4
+	// Line 1227, Address: 0x308100, Func Offset: 0xf0
+	// Line 1232, Address: 0x308110, Func Offset: 0x100
+	// Func End, Address: 0x308130, Func Offset: 0x120
 }
 
 // xEntBoulderEventCB__FP5xBaseP5xBaseUiPCfP5xBase
@@ -3927,18 +4198,121 @@ int32 xEntBoulderEventCB(xBase* to, uint32 toEvent, float32* toParam, xBase* toP
 	xEntBoulder* s;
 	FloatAndVoid dist;
 	zShrapnelAsset* shrap;
+	// Line 1073, Address: 0x308130, Func Offset: 0
+	// Line 1082, Address: 0x308134, Func Offset: 0x4
+	// Line 1073, Address: 0x308138, Func Offset: 0x8
+	// Line 1082, Address: 0x308140, Func Offset: 0x10
+	// Line 1086, Address: 0x3081e8, Func Offset: 0xb8
+	// Line 1087, Address: 0x3081f0, Func Offset: 0xc0
+	// Line 1088, Address: 0x308220, Func Offset: 0xf0
+	// Line 1089, Address: 0x308230, Func Offset: 0x100
+	// Line 1092, Address: 0x308238, Func Offset: 0x108
+	// Line 1093, Address: 0x308240, Func Offset: 0x110
+	// Line 1094, Address: 0x308270, Func Offset: 0x140
+	// Line 1095, Address: 0x308280, Func Offset: 0x150
+	// Line 1097, Address: 0x308288, Func Offset: 0x158
+	// Line 1098, Address: 0x308290, Func Offset: 0x160
+	// Line 1100, Address: 0x308298, Func Offset: 0x168
+	// Line 1101, Address: 0x3082a0, Func Offset: 0x170
+	// Line 1103, Address: 0x3082a8, Func Offset: 0x178
+	// Line 1104, Address: 0x3082b4, Func Offset: 0x184
+	// Line 1105, Address: 0x3082bc, Func Offset: 0x18c
+	// Line 1106, Address: 0x3082ec, Func Offset: 0x1bc
+	// Line 1107, Address: 0x3082fc, Func Offset: 0x1cc
+	// Line 1108, Address: 0x308304, Func Offset: 0x1d4
+	// Line 1109, Address: 0x308308, Func Offset: 0x1d8
+	// Line 1110, Address: 0x308314, Func Offset: 0x1e4
+	// Line 1111, Address: 0x30831c, Func Offset: 0x1ec
+	// Line 1112, Address: 0x30834c, Func Offset: 0x21c
+	// Line 1113, Address: 0x30835c, Func Offset: 0x22c
+	// Line 1114, Address: 0x308364, Func Offset: 0x234
+	// Line 1115, Address: 0x308368, Func Offset: 0x238
+	// Line 1116, Address: 0x308370, Func Offset: 0x240
+	// Line 1118, Address: 0x308378, Func Offset: 0x248
+	// Line 1119, Address: 0x308380, Func Offset: 0x250
+	// Line 1121, Address: 0x308388, Func Offset: 0x258
+	// Line 1122, Address: 0x308398, Func Offset: 0x268
+	// Line 1123, Address: 0x3083b4, Func Offset: 0x284
+	// Line 1124, Address: 0x3083bc, Func Offset: 0x28c
+	// Line 1125, Address: 0x3083c0, Func Offset: 0x290
+	// Line 1126, Address: 0x3083cc, Func Offset: 0x29c
+	// Line 1127, Address: 0x3083d8, Func Offset: 0x2a8
+	// Line 1128, Address: 0x3083e4, Func Offset: 0x2b4
+	// Line 1131, Address: 0x3083ec, Func Offset: 0x2bc
+	// Line 1132, Address: 0x3083f4, Func Offset: 0x2c4
+	// Line 1133, Address: 0x3083f8, Func Offset: 0x2c8
+	// Line 1134, Address: 0x308448, Func Offset: 0x318
+	// Line 1135, Address: 0x308458, Func Offset: 0x328
+	// Line 1137, Address: 0x308470, Func Offset: 0x340
+	// Line 1139, Address: 0x308480, Func Offset: 0x350
+	// Line 1140, Address: 0x30848c, Func Offset: 0x35c
+	// Line 1141, Address: 0x3084a0, Func Offset: 0x370
+	// Line 1142, Address: 0x3084ac, Func Offset: 0x37c
+	// Line 1145, Address: 0x3084b8, Func Offset: 0x388
+	// Line 1144, Address: 0x3084bc, Func Offset: 0x38c
+	// Line 1145, Address: 0x3084c4, Func Offset: 0x394
+	// Line 1148, Address: 0x3084d0, Func Offset: 0x3a0
+	// Line 1153, Address: 0x3084d8, Func Offset: 0x3a8
+	// Line 1154, Address: 0x3084ec, Func Offset: 0x3bc
+	// Line 1156, Address: 0x308500, Func Offset: 0x3d0
+	// Line 1160, Address: 0x308508, Func Offset: 0x3d8
+	// Line 1167, Address: 0x30850c, Func Offset: 0x3dc
+	// Line 1170, Address: 0x308510, Func Offset: 0x3e0
+	// Line 1169, Address: 0x308518, Func Offset: 0x3e8
+	// Line 1170, Address: 0x30851c, Func Offset: 0x3ec
+	// Func End, Address: 0x308524, Func Offset: 0x3f4
 }
 
 // xEntBoulder_Reset__FP11xEntBoulderP6xScene
 // Start address: 0x308530
 void xEntBoulder_Reset(xEntBoulder* ent)
 {
+	// Line 1022, Address: 0x308530, Func Offset: 0
+	// Line 1024, Address: 0x308534, Func Offset: 0x4
+	// Line 1022, Address: 0x308538, Func Offset: 0x8
+	// Line 1025, Address: 0x30853c, Func Offset: 0xc
+	// Line 1022, Address: 0x308540, Func Offset: 0x10
+	// Line 1024, Address: 0x308548, Func Offset: 0x18
+	// Line 1026, Address: 0x308550, Func Offset: 0x20
+	// Line 1025, Address: 0x308554, Func Offset: 0x24
+	// Line 1026, Address: 0x308558, Func Offset: 0x28
+	// Line 1030, Address: 0x30855c, Func Offset: 0x2c
+	// Line 1034, Address: 0x308568, Func Offset: 0x38
+	// Line 1039, Address: 0x308590, Func Offset: 0x60
+	// Line 1040, Address: 0x30859c, Func Offset: 0x6c
+	// Line 1042, Address: 0x3085a0, Func Offset: 0x70
+	// Line 1045, Address: 0x3085a8, Func Offset: 0x78
+	// Line 1042, Address: 0x3085ac, Func Offset: 0x7c
+	// Line 1043, Address: 0x3085b0, Func Offset: 0x80
+	// Line 1044, Address: 0x3085bc, Func Offset: 0x8c
+	// Line 1045, Address: 0x3085c8, Func Offset: 0x98
+	// Line 1046, Address: 0x3085d4, Func Offset: 0xa4
+	// Line 1047, Address: 0x3085dc, Func Offset: 0xac
+	// Line 1048, Address: 0x3085ec, Func Offset: 0xbc
+	// Line 1050, Address: 0x3085f8, Func Offset: 0xc8
+	// Line 1051, Address: 0x308600, Func Offset: 0xd0
+	// Line 1053, Address: 0x308604, Func Offset: 0xd4
+	// Line 1051, Address: 0x308608, Func Offset: 0xd8
+	// Line 1053, Address: 0x308610, Func Offset: 0xe0
+	// Line 1055, Address: 0x3086a8, Func Offset: 0x178
+	// Line 1057, Address: 0x3086dc, Func Offset: 0x1ac
+	// Line 1059, Address: 0x3086e8, Func Offset: 0x1b8
+	// Func End, Address: 0x3086fc, Func Offset: 0x1cc
 }
 
 // xEntBoulder_Setup__FP11xEntBoulder
 // Start address: 0x308700
 void xEntBoulder_Setup(xEntBoulder* ent)
 {
+	// Line 1010, Address: 0x308700, Func Offset: 0
+	// Line 1011, Address: 0x308710, Func Offset: 0x10
+	// Line 1012, Address: 0x308718, Func Offset: 0x18
+	// Line 1013, Address: 0x308724, Func Offset: 0x24
+	// Line 1014, Address: 0x30872c, Func Offset: 0x2c
+	// Line 1015, Address: 0x308734, Func Offset: 0x34
+	// Line 1016, Address: 0x308740, Func Offset: 0x40
+	// Line 1018, Address: 0x308748, Func Offset: 0x48
+	// Func End, Address: 0x308750, Func Offset: 0x50
 }
 
 // xEntBoulder_BubbleBowl__Ff
@@ -3949,12 +4323,101 @@ void xEntBoulder_BubbleBowl(float32 multiplier)
 	xRay3 ray;
 	xCollis rayCollis;
 	xEnt* optr;
+	// Line 864, Address: 0x308750, Func Offset: 0
+	// Line 866, Address: 0x308754, Func Offset: 0x4
+	// Line 864, Address: 0x308758, Func Offset: 0x8
+	// Line 866, Address: 0x308768, Func Offset: 0x18
+	// Line 867, Address: 0x30876c, Func Offset: 0x1c
+	// Line 868, Address: 0x308774, Func Offset: 0x24
+	// Line 869, Address: 0x308788, Func Offset: 0x38
+	// Line 871, Address: 0x308790, Func Offset: 0x40
+	// Line 872, Address: 0x3087a0, Func Offset: 0x50
+	// Line 874, Address: 0x3087a4, Func Offset: 0x54
+	// Line 872, Address: 0x3087a8, Func Offset: 0x58
+	// Line 874, Address: 0x3087b4, Func Offset: 0x64
+	// Line 876, Address: 0x3087bc, Func Offset: 0x6c
+	// Line 877, Address: 0x3087c4, Func Offset: 0x74
+	// Line 878, Address: 0x3087cc, Func Offset: 0x7c
+	// Line 880, Address: 0x3087d0, Func Offset: 0x80
+	// Line 912, Address: 0x3087d8, Func Offset: 0x88
+	// Line 880, Address: 0x3087e0, Func Offset: 0x90
+	// Line 923, Address: 0x3087e4, Func Offset: 0x94
+	// Line 912, Address: 0x3087e8, Func Offset: 0x98
+	// Line 924, Address: 0x3087ec, Func Offset: 0x9c
+	// Line 880, Address: 0x3087f0, Func Offset: 0xa0
+	// Line 882, Address: 0x3087f4, Func Offset: 0xa4
+	// Line 880, Address: 0x3087f8, Func Offset: 0xa8
+	// Line 882, Address: 0x308814, Func Offset: 0xc4
+	// Line 885, Address: 0x308830, Func Offset: 0xe0
+	// Line 882, Address: 0x308834, Func Offset: 0xe4
+	// Line 885, Address: 0x30886c, Func Offset: 0x11c
+	// Line 888, Address: 0x308888, Func Offset: 0x138
+	// Line 885, Address: 0x30888c, Func Offset: 0x13c
+	// Line 888, Address: 0x3088c4, Func Offset: 0x174
+	// Line 898, Address: 0x3088e0, Func Offset: 0x190
+	// Line 888, Address: 0x3088e4, Func Offset: 0x194
+	// Line 891, Address: 0x30891c, Func Offset: 0x1cc
+	// Line 893, Address: 0x30893c, Func Offset: 0x1ec
+	// Line 898, Address: 0x308960, Func Offset: 0x210
+	// Line 901, Address: 0x308970, Func Offset: 0x220
+	// Line 898, Address: 0x308974, Func Offset: 0x224
+	// Line 901, Address: 0x308998, Func Offset: 0x248
+	// Line 904, Address: 0x3089ac, Func Offset: 0x25c
+	// Line 901, Address: 0x3089b0, Func Offset: 0x260
+	// Line 904, Address: 0x3089e8, Func Offset: 0x298
+	// Line 910, Address: 0x3089fc, Func Offset: 0x2ac
+	// Line 904, Address: 0x308a00, Func Offset: 0x2b0
+	// Line 908, Address: 0x308a38, Func Offset: 0x2e8
+	// Line 910, Address: 0x308a5c, Func Offset: 0x30c
+	// Line 921, Address: 0x308a64, Func Offset: 0x314
+	// Line 910, Address: 0x308a68, Func Offset: 0x318
+	// Line 912, Address: 0x308a80, Func Offset: 0x330
+	// Line 921, Address: 0x308a84, Func Offset: 0x334
+	// Line 923, Address: 0x308aa4, Func Offset: 0x354
+	// Line 924, Address: 0x308ad8, Func Offset: 0x388
+	// Line 928, Address: 0x308ae4, Func Offset: 0x394
+	// Line 931, Address: 0x308af4, Func Offset: 0x3a4
+	// Line 928, Address: 0x308af8, Func Offset: 0x3a8
+	// Line 931, Address: 0x308afc, Func Offset: 0x3ac
+	// Line 930, Address: 0x308b00, Func Offset: 0x3b0
+	// Line 931, Address: 0x308b08, Func Offset: 0x3b8
+	// Line 928, Address: 0x308b10, Func Offset: 0x3c0
+	// Line 931, Address: 0x308b14, Func Offset: 0x3c4
+	// Line 932, Address: 0x308b1c, Func Offset: 0x3cc
+	// Line 933, Address: 0x308b2c, Func Offset: 0x3dc
+	// Line 935, Address: 0x308b30, Func Offset: 0x3e0
+	// Line 954, Address: 0x308b88, Func Offset: 0x438
+	// Line 955, Address: 0x308ba0, Func Offset: 0x450
+	// Line 956, Address: 0x308bb0, Func Offset: 0x460
+	// Line 957, Address: 0x308bc0, Func Offset: 0x470
+	// Line 959, Address: 0x308bc4, Func Offset: 0x474
+	// Line 960, Address: 0x308bd0, Func Offset: 0x480
+	// Line 963, Address: 0x308bdc, Func Offset: 0x48c
+	// Line 967, Address: 0x308be0, Func Offset: 0x490
+	// Line 969, Address: 0x308bf4, Func Offset: 0x4a4
+	// Line 970, Address: 0x308c28, Func Offset: 0x4d8
+	// Func End, Address: 0x308c40, Func Offset: 0x4f0
 }
 
 // xEntBoulder_Kill__FP11xEntBoulder
 // Start address: 0x308c40
 void xEntBoulder_Kill(xEntBoulder* ent)
 {
+	// Line 844, Address: 0x308c40, Func Offset: 0
+	// Line 852, Address: 0x308c44, Func Offset: 0x4
+	// Line 844, Address: 0x308c48, Func Offset: 0x8
+	// Line 845, Address: 0x308c4c, Func Offset: 0xc
+	// Line 846, Address: 0x308c50, Func Offset: 0x10
+	// Line 847, Address: 0x308c54, Func Offset: 0x14
+	// Line 848, Address: 0x308c58, Func Offset: 0x18
+	// Line 849, Address: 0x308c5c, Func Offset: 0x1c
+	// Line 850, Address: 0x308c60, Func Offset: 0x20
+	// Line 852, Address: 0x308c6c, Func Offset: 0x2c
+	// Line 853, Address: 0x308c7c, Func Offset: 0x3c
+	// Line 854, Address: 0x308c88, Func Offset: 0x48
+	// Line 855, Address: 0x308c90, Func Offset: 0x50
+	// Line 861, Address: 0x308c98, Func Offset: 0x58
+	// Func End, Address: 0x308ca4, Func Offset: 0x64
 }
 
 // xEntBoulder_KilledBySurface__FP11xEntBoulderP6xScenef
@@ -3966,6 +4429,64 @@ int32 xEntBoulder_KilledBySurface(xEntBoulder* ent)
 	float32 temp;
 	xSurface* surf;
 	zSurfaceProps* prop;
+	// Line 772, Address: 0x308cb0, Func Offset: 0
+	// Line 773, Address: 0x308cc4, Func Offset: 0x14
+	// Line 777, Address: 0x308cd8, Func Offset: 0x28
+	// Line 781, Address: 0x308ce4, Func Offset: 0x34
+	// Line 780, Address: 0x308ce8, Func Offset: 0x38
+	// Line 781, Address: 0x308cec, Func Offset: 0x3c
+	// Line 784, Address: 0x308cfc, Func Offset: 0x4c
+	// Line 785, Address: 0x308d08, Func Offset: 0x58
+	// Line 787, Address: 0x308d18, Func Offset: 0x68
+	// Line 788, Address: 0x308d30, Func Offset: 0x80
+	// Line 790, Address: 0x308d48, Func Offset: 0x98
+	// Line 792, Address: 0x308d54, Func Offset: 0xa4
+	// Line 790, Address: 0x308d58, Func Offset: 0xa8
+	// Line 792, Address: 0x308d5c, Func Offset: 0xac
+	// Line 788, Address: 0x308d60, Func Offset: 0xb0
+	// Line 790, Address: 0x308d64, Func Offset: 0xb4
+	// Line 792, Address: 0x308dc8, Func Offset: 0x118
+	// Line 793, Address: 0x308dd0, Func Offset: 0x120
+	// Line 796, Address: 0x308dd8, Func Offset: 0x128
+	// Line 797, Address: 0x308de0, Func Offset: 0x130
+	// Line 799, Address: 0x308df4, Func Offset: 0x144
+	// Line 800, Address: 0x308df8, Func Offset: 0x148
+	// Line 802, Address: 0x308e10, Func Offset: 0x160
+	// Line 803, Address: 0x308e20, Func Offset: 0x170
+	// Line 810, Address: 0x308e4c, Func Offset: 0x19c
+	// Line 811, Address: 0x308e50, Func Offset: 0x1a0
+	// Line 812, Address: 0x308e5c, Func Offset: 0x1ac
+	// Line 814, Address: 0x308e68, Func Offset: 0x1b8
+	// Line 816, Address: 0x308e74, Func Offset: 0x1c4
+	// Line 814, Address: 0x308e78, Func Offset: 0x1c8
+	// Line 816, Address: 0x308e7c, Func Offset: 0x1cc
+	// Line 812, Address: 0x308e80, Func Offset: 0x1d0
+	// Line 814, Address: 0x308e84, Func Offset: 0x1d4
+	// Line 816, Address: 0x308ee8, Func Offset: 0x238
+	// Line 817, Address: 0x308ef0, Func Offset: 0x240
+	// Line 822, Address: 0x308ef8, Func Offset: 0x248
+	// Line 817, Address: 0x308efc, Func Offset: 0x24c
+	// Line 824, Address: 0x308f00, Func Offset: 0x250
+	// Line 822, Address: 0x308f04, Func Offset: 0x254
+	// Line 824, Address: 0x308f24, Func Offset: 0x274
+	// Line 822, Address: 0x308f28, Func Offset: 0x278
+	// Line 824, Address: 0x308f74, Func Offset: 0x2c4
+	// Line 825, Address: 0x308f7c, Func Offset: 0x2cc
+	// Line 827, Address: 0x308f84, Func Offset: 0x2d4
+	// Line 825, Address: 0x308f88, Func Offset: 0x2d8
+	// Line 828, Address: 0x308f8c, Func Offset: 0x2dc
+	// Line 829, Address: 0x308f9c, Func Offset: 0x2ec
+	// Line 831, Address: 0x308fb4, Func Offset: 0x304
+	// Line 833, Address: 0x308fbc, Func Offset: 0x30c
+	// Line 831, Address: 0x308fc0, Func Offset: 0x310
+	// Line 833, Address: 0x308fc4, Func Offset: 0x314
+	// Line 831, Address: 0x308fc8, Func Offset: 0x318
+	// Line 833, Address: 0x30902c, Func Offset: 0x37c
+	// Line 834, Address: 0x309034, Func Offset: 0x384
+	// Line 840, Address: 0x30903c, Func Offset: 0x38c
+	// Line 841, Address: 0x309050, Func Offset: 0x3a0
+	// Line 842, Address: 0x309058, Func Offset: 0x3a8
+	// Func End, Address: 0x309070, Func Offset: 0x3c0
 }
 
 // xEntBoulder_Update__FP11xEntBoulderP6xScenef
@@ -3996,6 +4517,342 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, float32 dt)
 	xVec3 newRotVec;
 	xMat3x3 rotM;
 	float32 vol;
+	// Line 294, Address: 0x309070, Func Offset: 0
+	// Line 298, Address: 0x309078, Func Offset: 0x8
+	// Line 294, Address: 0x30907c, Func Offset: 0xc
+	// Line 298, Address: 0x3090c0, Func Offset: 0x50
+	// Line 299, Address: 0x3090d0, Func Offset: 0x60
+	// Line 300, Address: 0x3090d4, Func Offset: 0x64
+	// Line 301, Address: 0x3090e0, Func Offset: 0x70
+	// Line 302, Address: 0x3090e8, Func Offset: 0x78
+	// Line 306, Address: 0x3090f0, Func Offset: 0x80
+	// Line 313, Address: 0x309100, Func Offset: 0x90
+	// Line 317, Address: 0x309104, Func Offset: 0x94
+	// Line 313, Address: 0x30910c, Func Offset: 0x9c
+	// Line 316, Address: 0x309114, Func Offset: 0xa4
+	// Line 313, Address: 0x309120, Func Offset: 0xb0
+	// Line 316, Address: 0x309124, Func Offset: 0xb4
+	// Line 317, Address: 0x30913c, Func Offset: 0xcc
+	// Line 319, Address: 0x309158, Func Offset: 0xe8
+	// Line 320, Address: 0x309160, Func Offset: 0xf0
+	// Line 324, Address: 0x309168, Func Offset: 0xf8
+	// Line 325, Address: 0x309174, Func Offset: 0x104
+	// Line 326, Address: 0x30917c, Func Offset: 0x10c
+	// Line 327, Address: 0x309180, Func Offset: 0x110
+	// Line 337, Address: 0x309188, Func Offset: 0x118
+	// Line 327, Address: 0x30918c, Func Offset: 0x11c
+	// Line 328, Address: 0x309190, Func Offset: 0x120
+	// Line 329, Address: 0x30919c, Func Offset: 0x12c
+	// Line 330, Address: 0x3091a4, Func Offset: 0x134
+	// Line 334, Address: 0x3091b0, Func Offset: 0x140
+	// Line 330, Address: 0x3091bc, Func Offset: 0x14c
+	// Line 334, Address: 0x3091c0, Func Offset: 0x150
+	// Line 335, Address: 0x3091d0, Func Offset: 0x160
+	// Line 334, Address: 0x3091d8, Func Offset: 0x168
+	// Line 335, Address: 0x3091fc, Func Offset: 0x18c
+	// Line 334, Address: 0x309208, Func Offset: 0x198
+	// Line 335, Address: 0x30920c, Func Offset: 0x19c
+	// Line 337, Address: 0x30923c, Func Offset: 0x1cc
+	// Line 342, Address: 0x309250, Func Offset: 0x1e0
+	// Line 343, Address: 0x309270, Func Offset: 0x200
+	// Line 345, Address: 0x309280, Func Offset: 0x210
+	// Line 342, Address: 0x309288, Func Offset: 0x218
+	// Line 343, Address: 0x309338, Func Offset: 0x2c8
+	// Line 345, Address: 0x3093f4, Func Offset: 0x384
+	// Line 346, Address: 0x3093fc, Func Offset: 0x38c
+	// Line 351, Address: 0x309400, Func Offset: 0x390
+	// Line 352, Address: 0x309408, Func Offset: 0x398
+	// Line 351, Address: 0x30940c, Func Offset: 0x39c
+	// Line 352, Address: 0x309410, Func Offset: 0x3a0
+	// Line 353, Address: 0x309418, Func Offset: 0x3a8
+	// Line 351, Address: 0x309420, Func Offset: 0x3b0
+	// Line 352, Address: 0x30943c, Func Offset: 0x3cc
+	// Line 353, Address: 0x309458, Func Offset: 0x3e8
+	// Line 354, Address: 0x3094c4, Func Offset: 0x454
+	// Line 364, Address: 0x3094d8, Func Offset: 0x468
+	// Line 370, Address: 0x3094e0, Func Offset: 0x470
+	// Line 362, Address: 0x3094e4, Func Offset: 0x474
+	// Line 370, Address: 0x3094e8, Func Offset: 0x478
+	// Line 362, Address: 0x3094ec, Func Offset: 0x47c
+	// Line 359, Address: 0x3094f0, Func Offset: 0x480
+	// Line 362, Address: 0x3094fc, Func Offset: 0x48c
+	// Line 364, Address: 0x30950c, Func Offset: 0x49c
+	// Line 365, Address: 0x309554, Func Offset: 0x4e4
+	// Line 366, Address: 0x309560, Func Offset: 0x4f0
+	// Line 367, Address: 0x3095a8, Func Offset: 0x538
+	// Line 370, Address: 0x3095b0, Func Offset: 0x540
+	// Line 373, Address: 0x3095b8, Func Offset: 0x548
+	// Line 376, Address: 0x3095bc, Func Offset: 0x54c
+	// Line 373, Address: 0x3095c8, Func Offset: 0x558
+	// Line 376, Address: 0x3095cc, Func Offset: 0x55c
+	// Line 373, Address: 0x3095d0, Func Offset: 0x560
+	// Line 376, Address: 0x309600, Func Offset: 0x590
+	// Line 377, Address: 0x309608, Func Offset: 0x598
+	// Line 379, Address: 0x309610, Func Offset: 0x5a0
+	// Line 381, Address: 0x309618, Func Offset: 0x5a8
+	// Line 383, Address: 0x309628, Func Offset: 0x5b8
+	// Line 384, Address: 0x30962c, Func Offset: 0x5bc
+	// Line 383, Address: 0x309630, Func Offset: 0x5c0
+	// Line 384, Address: 0x309634, Func Offset: 0x5c4
+	// Line 386, Address: 0x309640, Func Offset: 0x5d0
+	// Line 387, Address: 0x309644, Func Offset: 0x5d4
+	// Line 386, Address: 0x309648, Func Offset: 0x5d8
+	// Line 387, Address: 0x30964c, Func Offset: 0x5dc
+	// Line 389, Address: 0x309658, Func Offset: 0x5e8
+	// Line 391, Address: 0x309660, Func Offset: 0x5f0
+	// Line 392, Address: 0x309678, Func Offset: 0x608
+	// Line 393, Address: 0x30968c, Func Offset: 0x61c
+	// Line 395, Address: 0x309690, Func Offset: 0x620
+	// Line 398, Address: 0x309698, Func Offset: 0x628
+	// Line 403, Address: 0x30969c, Func Offset: 0x62c
+	// Line 408, Address: 0x3096f0, Func Offset: 0x680
+	// Line 411, Address: 0x309708, Func Offset: 0x698
+	// Line 422, Address: 0x30972c, Func Offset: 0x6bc
+	// Line 411, Address: 0x309744, Func Offset: 0x6d4
+	// Line 412, Address: 0x309748, Func Offset: 0x6d8
+	// Line 413, Address: 0x30975c, Func Offset: 0x6ec
+	// Line 414, Address: 0x30978c, Func Offset: 0x71c
+	// Line 415, Address: 0x30979c, Func Offset: 0x72c
+	// Line 418, Address: 0x3097a0, Func Offset: 0x730
+	// Line 415, Address: 0x3097a4, Func Offset: 0x734
+	// Line 418, Address: 0x3097bc, Func Offset: 0x74c
+	// Line 415, Address: 0x3097c0, Func Offset: 0x750
+	// Line 418, Address: 0x3097c8, Func Offset: 0x758
+	// Line 422, Address: 0x3097d0, Func Offset: 0x760
+	// Line 424, Address: 0x309808, Func Offset: 0x798
+	// Line 426, Address: 0x30980c, Func Offset: 0x79c
+	// Line 427, Address: 0x309810, Func Offset: 0x7a0
+	// Line 428, Address: 0x309854, Func Offset: 0x7e4
+	// Line 430, Address: 0x309858, Func Offset: 0x7e8
+	// Line 429, Address: 0x309860, Func Offset: 0x7f0
+	// Line 430, Address: 0x309864, Func Offset: 0x7f4
+	// Line 433, Address: 0x309878, Func Offset: 0x808
+	// Line 441, Address: 0x3098a0, Func Offset: 0x830
+	// Line 443, Address: 0x3098b4, Func Offset: 0x844
+	// Line 444, Address: 0x3098e4, Func Offset: 0x874
+	// Line 445, Address: 0x3098f4, Func Offset: 0x884
+	// Line 448, Address: 0x30990c, Func Offset: 0x89c
+	// Line 445, Address: 0x309910, Func Offset: 0x8a0
+	// Line 448, Address: 0x309920, Func Offset: 0x8b0
+	// Line 449, Address: 0x309954, Func Offset: 0x8e4
+	// Line 448, Address: 0x309958, Func Offset: 0x8e8
+	// Line 451, Address: 0x30995c, Func Offset: 0x8ec
+	// Line 448, Address: 0x309960, Func Offset: 0x8f0
+	// Line 450, Address: 0x309964, Func Offset: 0x8f4
+	// Line 451, Address: 0x309968, Func Offset: 0x8f8
+	// Line 458, Address: 0x309974, Func Offset: 0x904
+	// Line 461, Address: 0x309980, Func Offset: 0x910
+	// Line 458, Address: 0x309984, Func Offset: 0x914
+	// Line 461, Address: 0x309988, Func Offset: 0x918
+	// Line 458, Address: 0x30998c, Func Offset: 0x91c
+	// Line 461, Address: 0x309994, Func Offset: 0x924
+	// Line 458, Address: 0x30999c, Func Offset: 0x92c
+	// Line 461, Address: 0x3099a0, Func Offset: 0x930
+	// Line 458, Address: 0x3099a8, Func Offset: 0x938
+	// Line 461, Address: 0x3099b0, Func Offset: 0x940
+	// Line 458, Address: 0x3099c0, Func Offset: 0x950
+	// Line 461, Address: 0x3099c4, Func Offset: 0x954
+	// Line 464, Address: 0x3099f4, Func Offset: 0x984
+	// Line 466, Address: 0x309a14, Func Offset: 0x9a4
+	// Line 467, Address: 0x309a20, Func Offset: 0x9b0
+	// Line 466, Address: 0x309a24, Func Offset: 0x9b4
+	// Line 467, Address: 0x309a34, Func Offset: 0x9c4
+	// Line 469, Address: 0x309a60, Func Offset: 0x9f0
+	// Line 470, Address: 0x309a68, Func Offset: 0x9f8
+	// Line 469, Address: 0x309a6c, Func Offset: 0x9fc
+	// Line 470, Address: 0x309a84, Func Offset: 0xa14
+	// Line 472, Address: 0x309ab0, Func Offset: 0xa40
+	// Line 474, Address: 0x309ad0, Func Offset: 0xa60
+	// Line 478, Address: 0x309ad8, Func Offset: 0xa68
+	// Line 479, Address: 0x309ae8, Func Offset: 0xa78
+	// Line 480, Address: 0x309af0, Func Offset: 0xa80
+	// Line 481, Address: 0x309afc, Func Offset: 0xa8c
+	// Line 482, Address: 0x309b00, Func Offset: 0xa90
+	// Line 484, Address: 0x309b20, Func Offset: 0xab0
+	// Line 488, Address: 0x309b54, Func Offset: 0xae4
+	// Line 492, Address: 0x309b78, Func Offset: 0xb08
+	// Line 491, Address: 0x309b80, Func Offset: 0xb10
+	// Line 492, Address: 0x309b84, Func Offset: 0xb14
+	// Line 495, Address: 0x309b98, Func Offset: 0xb28
+	// Line 503, Address: 0x309bc0, Func Offset: 0xb50
+	// Line 504, Address: 0x309bd4, Func Offset: 0xb64
+	// Line 505, Address: 0x309c04, Func Offset: 0xb94
+	// Line 506, Address: 0x309c14, Func Offset: 0xba4
+	// Line 509, Address: 0x309c18, Func Offset: 0xba8
+	// Line 506, Address: 0x309c1c, Func Offset: 0xbac
+	// Line 509, Address: 0x309c34, Func Offset: 0xbc4
+	// Line 506, Address: 0x309c38, Func Offset: 0xbc8
+	// Line 509, Address: 0x309c40, Func Offset: 0xbd0
+	// Line 513, Address: 0x309c48, Func Offset: 0xbd8
+	// Line 515, Address: 0x309c9c, Func Offset: 0xc2c
+	// Line 518, Address: 0x309ca0, Func Offset: 0xc30
+	// Line 519, Address: 0x309ce4, Func Offset: 0xc74
+	// Line 521, Address: 0x309ce8, Func Offset: 0xc78
+	// Line 520, Address: 0x309cec, Func Offset: 0xc7c
+	// Line 521, Address: 0x309cf0, Func Offset: 0xc80
+	// Line 520, Address: 0x309cf4, Func Offset: 0xc84
+	// Line 521, Address: 0x309cf8, Func Offset: 0xc88
+	// Line 531, Address: 0x309d14, Func Offset: 0xca4
+	// Line 539, Address: 0x309d50, Func Offset: 0xce0
+	// Line 540, Address: 0x309d54, Func Offset: 0xce4
+	// Line 544, Address: 0x309d58, Func Offset: 0xce8
+	// Line 550, Address: 0x309d64, Func Offset: 0xcf4
+	// Line 551, Address: 0x309d70, Func Offset: 0xd00
+	// Line 552, Address: 0x309d90, Func Offset: 0xd20
+	// Line 561, Address: 0x309db8, Func Offset: 0xd48
+	// Line 562, Address: 0x309dc8, Func Offset: 0xd58
+	// Line 568, Address: 0x309dd8, Func Offset: 0xd68
+	// Line 569, Address: 0x309df8, Func Offset: 0xd88
+	// Line 572, Address: 0x309dfc, Func Offset: 0xd8c
+	// Line 574, Address: 0x309e00, Func Offset: 0xd90
+	// Line 573, Address: 0x309e08, Func Offset: 0xd98
+	// Line 574, Address: 0x309e0c, Func Offset: 0xd9c
+	// Line 577, Address: 0x309e20, Func Offset: 0xdb0
+	// Line 583, Address: 0x309e44, Func Offset: 0xdd4
+	// Line 584, Address: 0x309e58, Func Offset: 0xde8
+	// Line 585, Address: 0x309e84, Func Offset: 0xe14
+	// Line 589, Address: 0x309e90, Func Offset: 0xe20
+	// Line 586, Address: 0x309e94, Func Offset: 0xe24
+	// Line 589, Address: 0x309e98, Func Offset: 0xe28
+	// Line 586, Address: 0x309e9c, Func Offset: 0xe2c
+	// Line 589, Address: 0x309ec0, Func Offset: 0xe50
+	// Line 591, Address: 0x309ee8, Func Offset: 0xe78
+	// Line 593, Address: 0x309f20, Func Offset: 0xeb0
+	// Line 603, Address: 0x309f34, Func Offset: 0xec4
+	// Line 604, Address: 0x309f44, Func Offset: 0xed4
+	// Line 607, Address: 0x309f64, Func Offset: 0xef4
+	// Line 610, Address: 0x309f84, Func Offset: 0xf14
+	// Line 617, Address: 0x309fa4, Func Offset: 0xf34
+	// Line 621, Address: 0x30a000, Func Offset: 0xf90
+	// Line 624, Address: 0x30a004, Func Offset: 0xf94
+	// Line 626, Address: 0x30a008, Func Offset: 0xf98
+	// Line 625, Address: 0x30a010, Func Offset: 0xfa0
+	// Line 626, Address: 0x30a014, Func Offset: 0xfa4
+	// Line 628, Address: 0x30a028, Func Offset: 0xfb8
+	// Line 629, Address: 0x30a048, Func Offset: 0xfd8
+	// Line 631, Address: 0x30a084, Func Offset: 0x1014
+	// Line 638, Address: 0x30a090, Func Offset: 0x1020
+	// Line 644, Address: 0x30a098, Func Offset: 0x1028
+	// Line 638, Address: 0x30a09c, Func Offset: 0x102c
+	// Line 639, Address: 0x30a0a4, Func Offset: 0x1034
+	// Line 638, Address: 0x30a0a8, Func Offset: 0x1038
+	// Line 639, Address: 0x30a0ac, Func Offset: 0x103c
+	// Line 643, Address: 0x30a0bc, Func Offset: 0x104c
+	// Line 638, Address: 0x30a0d0, Func Offset: 0x1060
+	// Line 644, Address: 0x30a0d4, Func Offset: 0x1064
+	// Line 638, Address: 0x30a0d8, Func Offset: 0x1068
+	// Line 639, Address: 0x30a0dc, Func Offset: 0x106c
+	// Line 644, Address: 0x30a0e0, Func Offset: 0x1070
+	// Line 645, Address: 0x30a0f4, Func Offset: 0x1084
+	// Line 644, Address: 0x30a0f8, Func Offset: 0x1088
+	// Line 645, Address: 0x30a100, Func Offset: 0x1090
+	// Line 646, Address: 0x30a110, Func Offset: 0x10a0
+	// Line 647, Address: 0x30a128, Func Offset: 0x10b8
+	// Line 649, Address: 0x30a134, Func Offset: 0x10c4
+	// Line 654, Address: 0x30a138, Func Offset: 0x10c8
+	// Line 655, Address: 0x30a140, Func Offset: 0x10d0
+	// Line 656, Address: 0x30a14c, Func Offset: 0x10dc
+	// Line 655, Address: 0x30a150, Func Offset: 0x10e0
+	// Line 656, Address: 0x30a154, Func Offset: 0x10e4
+	// Line 655, Address: 0x30a158, Func Offset: 0x10e8
+	// Line 656, Address: 0x30a15c, Func Offset: 0x10ec
+	// Line 659, Address: 0x30a174, Func Offset: 0x1104
+	// Line 660, Address: 0x30a184, Func Offset: 0x1114
+	// Line 662, Address: 0x30a190, Func Offset: 0x1120
+	// Line 665, Address: 0x30a1cc, Func Offset: 0x115c
+	// Line 662, Address: 0x30a1d0, Func Offset: 0x1160
+	// Line 664, Address: 0x30a1d4, Func Offset: 0x1164
+	// Line 665, Address: 0x30a1d8, Func Offset: 0x1168
+	// Line 662, Address: 0x30a1dc, Func Offset: 0x116c
+	// Line 665, Address: 0x30a1e4, Func Offset: 0x1174
+	// Line 664, Address: 0x30a1e8, Func Offset: 0x1178
+	// Line 665, Address: 0x30a1f4, Func Offset: 0x1184
+	// Line 666, Address: 0x30a1fc, Func Offset: 0x118c
+	// Line 674, Address: 0x30a224, Func Offset: 0x11b4
+	// Line 678, Address: 0x30a238, Func Offset: 0x11c8
+	// Line 677, Address: 0x30a23c, Func Offset: 0x11cc
+	// Line 678, Address: 0x30a264, Func Offset: 0x11f4
+	// Line 695, Address: 0x30a27c, Func Offset: 0x120c
+	// Line 697, Address: 0x30a280, Func Offset: 0x1210
+	// Line 699, Address: 0x30a288, Func Offset: 0x1218
+	// Line 704, Address: 0x30a2a4, Func Offset: 0x1234
+	// Line 705, Address: 0x30a2cc, Func Offset: 0x125c
+	// Line 706, Address: 0x30a2e0, Func Offset: 0x1270
+	// Line 707, Address: 0x30a2e8, Func Offset: 0x1278
+	// Line 708, Address: 0x30a324, Func Offset: 0x12b4
+	// Line 710, Address: 0x30a328, Func Offset: 0x12b8
+	// Line 711, Address: 0x30a334, Func Offset: 0x12c4
+	// Line 713, Address: 0x30a33c, Func Offset: 0x12cc
+	// Line 711, Address: 0x30a340, Func Offset: 0x12d0
+	// Line 713, Address: 0x30a344, Func Offset: 0x12d4
+	// Line 711, Address: 0x30a348, Func Offset: 0x12d8
+	// Line 712, Address: 0x30a374, Func Offset: 0x1304
+	// Line 713, Address: 0x30a3b4, Func Offset: 0x1344
+	// Line 715, Address: 0x30a3d8, Func Offset: 0x1368
+	// Line 717, Address: 0x30a3e0, Func Offset: 0x1370
+	// Line 715, Address: 0x30a3e4, Func Offset: 0x1374
+	// Line 717, Address: 0x30a3ec, Func Offset: 0x137c
+	// Line 715, Address: 0x30a3f0, Func Offset: 0x1380
+	// Line 716, Address: 0x30a3f4, Func Offset: 0x1384
+	// Line 717, Address: 0x30a3f8, Func Offset: 0x1388
+	// Line 716, Address: 0x30a400, Func Offset: 0x1390
+	// Line 717, Address: 0x30a414, Func Offset: 0x13a4
+	// Line 716, Address: 0x30a418, Func Offset: 0x13a8
+	// Line 717, Address: 0x30a41c, Func Offset: 0x13ac
+	// Line 720, Address: 0x30a42c, Func Offset: 0x13bc
+	// Line 717, Address: 0x30a430, Func Offset: 0x13c0
+	// Line 722, Address: 0x30a434, Func Offset: 0x13c4
+	// Line 717, Address: 0x30a438, Func Offset: 0x13c8
+	// Line 722, Address: 0x30a43c, Func Offset: 0x13cc
+	// Line 723, Address: 0x30a448, Func Offset: 0x13d8
+	// Line 725, Address: 0x30a454, Func Offset: 0x13e4
+	// Line 723, Address: 0x30a458, Func Offset: 0x13e8
+	// Line 725, Address: 0x30a460, Func Offset: 0x13f0
+	// Line 726, Address: 0x30a46c, Func Offset: 0x13fc
+	// Line 729, Address: 0x30a470, Func Offset: 0x1400
+	// Line 726, Address: 0x30a474, Func Offset: 0x1404
+	// Line 729, Address: 0x30a478, Func Offset: 0x1408
+	// Line 731, Address: 0x30a4a8, Func Offset: 0x1438
+	// Line 732, Address: 0x30a4c4, Func Offset: 0x1454
+	// Line 731, Address: 0x30a4c8, Func Offset: 0x1458
+	// Line 732, Address: 0x30a4cc, Func Offset: 0x145c
+	// Line 733, Address: 0x30a4d4, Func Offset: 0x1464
+	// Line 732, Address: 0x30a4d8, Func Offset: 0x1468
+	// Line 736, Address: 0x30a4dc, Func Offset: 0x146c
+	// Line 737, Address: 0x30a4e8, Func Offset: 0x1478
+	// Line 732, Address: 0x30a4ec, Func Offset: 0x147c
+	// Line 736, Address: 0x30a4f0, Func Offset: 0x1480
+	// Line 737, Address: 0x30a500, Func Offset: 0x1490
+	// Line 736, Address: 0x30a508, Func Offset: 0x1498
+	// Line 737, Address: 0x30a52c, Func Offset: 0x14bc
+	// Line 736, Address: 0x30a538, Func Offset: 0x14c8
+	// Line 737, Address: 0x30a53c, Func Offset: 0x14cc
+	// Line 740, Address: 0x30a56c, Func Offset: 0x14fc
+	// Line 741, Address: 0x30a574, Func Offset: 0x1504
+	// Line 742, Address: 0x30a5a0, Func Offset: 0x1530
+	// Line 743, Address: 0x30a5b0, Func Offset: 0x1540
+	// Line 745, Address: 0x30a5d8, Func Offset: 0x1568
+	// Line 746, Address: 0x30a600, Func Offset: 0x1590
+	// Line 748, Address: 0x30a608, Func Offset: 0x1598
+	// Line 746, Address: 0x30a60c, Func Offset: 0x159c
+	// Line 748, Address: 0x30a610, Func Offset: 0x15a0
+	// Line 746, Address: 0x30a614, Func Offset: 0x15a4
+	// Line 748, Address: 0x30a618, Func Offset: 0x15a8
+	// Line 746, Address: 0x30a630, Func Offset: 0x15c0
+	// Line 748, Address: 0x30a634, Func Offset: 0x15c4
+	// Line 746, Address: 0x30a638, Func Offset: 0x15c8
+	// Line 748, Address: 0x30a63c, Func Offset: 0x15cc
+	// Line 754, Address: 0x30a644, Func Offset: 0x15d4
+	// Line 748, Address: 0x30a648, Func Offset: 0x15d8
+	// Line 757, Address: 0x30a64c, Func Offset: 0x15dc
+	// Line 758, Address: 0x30a654, Func Offset: 0x15e4
+	// Line 759, Address: 0x30a678, Func Offset: 0x1608
+	// Line 764, Address: 0x30a6b8, Func Offset: 0x1648
+	// Line 765, Address: 0x30a6c8, Func Offset: 0x1658
+	// Line 767, Address: 0x30a6d8, Func Offset: 0x1668
+	// Line 768, Address: 0x30a6ec, Func Offset: 0x167c
+	// Line 770, Address: 0x30a6f0, Func Offset: 0x1680
+	// Func End, Address: 0x30a738, Func Offset: 0x16c8
 }
 
 // xEntBoulder_RealBUpdate__FP4xEntP5xVec3
@@ -4003,18 +4860,40 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, float32 dt)
 void xEntBoulder_RealBUpdate(xEnt* ent, xVec3* pos)
 {
 	xEntBoulder* boul;
+	// Line 279, Address: 0x30a740, Func Offset: 0
+	// Line 284, Address: 0x30a74c, Func Offset: 0xc
+	// Line 280, Address: 0x30a758, Func Offset: 0x18
+	// Line 284, Address: 0x30a75c, Func Offset: 0x1c
+	// Line 285, Address: 0x30a760, Func Offset: 0x20
+	// Line 284, Address: 0x30a764, Func Offset: 0x24
+	// Line 285, Address: 0x30a778, Func Offset: 0x38
+	// Line 284, Address: 0x30a780, Func Offset: 0x40
+	// Line 285, Address: 0x30a7a4, Func Offset: 0x64
+	// Line 284, Address: 0x30a7b0, Func Offset: 0x70
+	// Line 285, Address: 0x30a7b4, Func Offset: 0x74
+	// Line 287, Address: 0x30a7dc, Func Offset: 0x9c
+	// Line 288, Address: 0x30a7e4, Func Offset: 0xa4
+	// Line 291, Address: 0x30a7ec, Func Offset: 0xac
+	// Func End, Address: 0x30a7fc, Func Offset: 0xbc
 }
 
 // xEntBoulder_BUpdate__FP4xEntP5xVec3
 // Start address: 0x30a800
 void xEntBoulder_BUpdate()
 {
+	// Line 277, Address: 0x30a800, Func Offset: 0
+	// Func End, Address: 0x30a808, Func Offset: 0x8
 }
 
 // xEntBoulder_AddForce__FP11xEntBoulderP5xVec3
 // Start address: 0x30a810
 void xEntBoulder_AddForce(xEntBoulder* ent, xVec3* force)
 {
+	// Line 267, Address: 0x30a810, Func Offset: 0
+	// Line 268, Address: 0x30a81c, Func Offset: 0xc
+	// Line 269, Address: 0x30a84c, Func Offset: 0x3c
+	// Line 270, Address: 0x30a850, Func Offset: 0x40
+	// Func End, Address: 0x30a858, Func Offset: 0x48
 }
 
 // xEntBoulder_ApplyForces__FP10xEntCollis
@@ -4024,6 +4903,27 @@ void xEntBoulder_ApplyForces(xEntCollis* collis)
 	int32 i;
 	xEntBoulder* boul;
 	xEntDrive* drv;
+	// Line 228, Address: 0x30a860, Func Offset: 0
+	// Line 231, Address: 0x30a874, Func Offset: 0x14
+	// Line 232, Address: 0x30a89c, Func Offset: 0x3c
+	// Line 234, Address: 0x30a8a4, Func Offset: 0x44
+	// Line 237, Address: 0x30a8b4, Func Offset: 0x54
+	// Line 238, Address: 0x30a8c0, Func Offset: 0x60
+	// Line 237, Address: 0x30a8c4, Func Offset: 0x64
+	// Line 238, Address: 0x30a8c8, Func Offset: 0x68
+	// Line 237, Address: 0x30a8cc, Func Offset: 0x6c
+	// Line 239, Address: 0x30a8d0, Func Offset: 0x70
+	// Line 237, Address: 0x30a8d4, Func Offset: 0x74
+	// Line 239, Address: 0x30a8dc, Func Offset: 0x7c
+	// Line 241, Address: 0x30a90c, Func Offset: 0xac
+	// Line 242, Address: 0x30a910, Func Offset: 0xb0
+	// Line 243, Address: 0x30a914, Func Offset: 0xb4
+	// Line 244, Address: 0x30a918, Func Offset: 0xb8
+	// Line 245, Address: 0x30a948, Func Offset: 0xe8
+	// Line 254, Address: 0x30a95c, Func Offset: 0xfc
+	// Line 257, Address: 0x30a964, Func Offset: 0x104
+	// Line 258, Address: 0x30a980, Func Offset: 0x120
+	// Func End, Address: 0x30a998, Func Offset: 0x138
 }
 
 // xEntBoulder_Init__FP11xEntBoulderP9xEntAsset
@@ -4031,12 +4931,67 @@ void xEntBoulder_ApplyForces(xEntCollis* collis)
 void xEntBoulder_Init(xEntBoulder* ent, xEntAsset* asset)
 {
 	xEntBoulderAsset* basset;
+	// Line 152, Address: 0x30a9a0, Func Offset: 0
+	// Line 154, Address: 0x30a9b4, Func Offset: 0x14
+	// Line 156, Address: 0x30a9bc, Func Offset: 0x1c
+	// Line 158, Address: 0x30a9c0, Func Offset: 0x20
+	// Line 156, Address: 0x30a9c4, Func Offset: 0x24
+	// Line 157, Address: 0x30a9c8, Func Offset: 0x28
+	// Line 158, Address: 0x30a9cc, Func Offset: 0x2c
+	// Line 159, Address: 0x30a9d0, Func Offset: 0x30
+	// Line 161, Address: 0x30a9dc, Func Offset: 0x3c
+	// Line 164, Address: 0x30a9e8, Func Offset: 0x48
+	// Line 165, Address: 0x30a9f4, Func Offset: 0x54
+	// Line 166, Address: 0x30a9f8, Func Offset: 0x58
+	// Line 165, Address: 0x30a9fc, Func Offset: 0x5c
+	// Line 166, Address: 0x30aa00, Func Offset: 0x60
+	// Line 168, Address: 0x30aa0c, Func Offset: 0x6c
+	// Line 169, Address: 0x30aa20, Func Offset: 0x80
+	// Line 181, Address: 0x30aa30, Func Offset: 0x90
+	// Line 179, Address: 0x30aa34, Func Offset: 0x94
+	// Line 172, Address: 0x30aa38, Func Offset: 0x98
+	// Line 181, Address: 0x30aa3c, Func Offset: 0x9c
+	// Line 180, Address: 0x30aa40, Func Offset: 0xa0
+	// Line 181, Address: 0x30aa44, Func Offset: 0xa4
+	// Line 182, Address: 0x30aa48, Func Offset: 0xa8
+	// Line 183, Address: 0x30aa54, Func Offset: 0xb4
+	// Line 184, Address: 0x30aa60, Func Offset: 0xc0
+	// Line 186, Address: 0x30aa6c, Func Offset: 0xcc
+	// Line 187, Address: 0x30aa78, Func Offset: 0xd8
+	// Line 189, Address: 0x30aa88, Func Offset: 0xe8
+	// Line 192, Address: 0x30aa90, Func Offset: 0xf0
+	// Line 195, Address: 0x30aa94, Func Offset: 0xf4
+	// Line 192, Address: 0x30aa98, Func Offset: 0xf8
+	// Line 195, Address: 0x30ab14, Func Offset: 0x174
+	// Line 198, Address: 0x30ab28, Func Offset: 0x188
+	// Line 201, Address: 0x30ab38, Func Offset: 0x198
+	// Line 202, Address: 0x30ab54, Func Offset: 0x1b4
+	// Line 209, Address: 0x30ab58, Func Offset: 0x1b8
+	// Line 203, Address: 0x30ab5c, Func Offset: 0x1bc
+	// Line 208, Address: 0x30ab60, Func Offset: 0x1c0
+	// Line 209, Address: 0x30ab64, Func Offset: 0x1c4
+	// Line 203, Address: 0x30ab68, Func Offset: 0x1c8
+	// Line 204, Address: 0x30ab70, Func Offset: 0x1d0
+	// Line 205, Address: 0x30ab74, Func Offset: 0x1d4
+	// Line 206, Address: 0x30ab78, Func Offset: 0x1d8
+	// Line 207, Address: 0x30ab7c, Func Offset: 0x1dc
+	// Line 208, Address: 0x30ab80, Func Offset: 0x1e0
+	// Line 209, Address: 0x30ab84, Func Offset: 0x1e4
+	// Line 213, Address: 0x30abb0, Func Offset: 0x210
+	// Line 214, Address: 0x30abb4, Func Offset: 0x214
+	// Line 216, Address: 0x30abb8, Func Offset: 0x218
+	// Line 217, Address: 0x30abd4, Func Offset: 0x234
+	// Line 225, Address: 0x30abe0, Func Offset: 0x240
+	// Line 226, Address: 0x30abec, Func Offset: 0x24c
+	// Func End, Address: 0x30ac00, Func Offset: 0x260
 }
 
 // xEntBoulder_Init__FPvPv
 // Start address: 0x30ac00
 void xEntBoulder_Init(void* ent, void* asset)
 {
+	// Line 148, Address: 0x30ac00, Func Offset: 0
+	// Func End, Address: 0x30ac08, Func Offset: 0x8
 }
 
 // xEntBoulder_Render__FP4xEnt
@@ -4047,5 +5002,34 @@ void xEntBoulder_Render(xEnt* ent)
 	int32 shadowResult;
 	xVec3 shadVec;
 	float32 radius;
+	// Line 112, Address: 0x30ac10, Func Offset: 0
+	// Line 114, Address: 0x30ac20, Func Offset: 0x10
+	// Line 115, Address: 0x30ac24, Func Offset: 0x14
+	// Line 117, Address: 0x30ac58, Func Offset: 0x48
+	// Line 119, Address: 0x30ac60, Func Offset: 0x50
+	// Line 120, Address: 0x30ac70, Func Offset: 0x60
+	// Line 121, Address: 0x30ac84, Func Offset: 0x74
+	// Line 123, Address: 0x30ac8c, Func Offset: 0x7c
+	// Line 127, Address: 0x30ac98, Func Offset: 0x88
+	// Line 128, Address: 0x30ac9c, Func Offset: 0x8c
+	// Line 130, Address: 0x30aca0, Func Offset: 0x90
+	// Line 128, Address: 0x30aca4, Func Offset: 0x94
+	// Line 127, Address: 0x30aca8, Func Offset: 0x98
+	// Line 128, Address: 0x30acb0, Func Offset: 0xa0
+	// Line 129, Address: 0x30acc0, Func Offset: 0xb0
+	// Line 130, Address: 0x30accc, Func Offset: 0xbc
+	// Line 132, Address: 0x30ace4, Func Offset: 0xd4
+	// Line 133, Address: 0x30acec, Func Offset: 0xdc
+	// Line 134, Address: 0x30acf0, Func Offset: 0xe0
+	// Line 135, Address: 0x30acfc, Func Offset: 0xec
+	// Line 136, Address: 0x30ad0c, Func Offset: 0xfc
+	// Line 137, Address: 0x30ad14, Func Offset: 0x104
+	// Line 138, Address: 0x30ad20, Func Offset: 0x110
+	// Line 139, Address: 0x30ad24, Func Offset: 0x114
+	// Line 138, Address: 0x30ad2c, Func Offset: 0x11c
+	// Line 139, Address: 0x30ad34, Func Offset: 0x124
+	// Line 140, Address: 0x30ad48, Func Offset: 0x138
+	// Line 144, Address: 0x30ad68, Func Offset: 0x158
+	// Func End, Address: 0x30ad7c, Func Offset: 0x16c
 }
 

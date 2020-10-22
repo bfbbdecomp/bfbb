@@ -107,7 +107,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_14 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -153,7 +153,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_15 pad;
+	uint32 pad[4];
 };
 
 struct RpMeshHeader
@@ -202,7 +202,7 @@ struct xMorphTargetFile
 
 struct RpTriangle
 {
-	type_11 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -215,7 +215,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_13 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -295,7 +295,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_20 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 enum RxClusterValidityReq
@@ -313,7 +313,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_5 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 enum RxNodeDefEditable
@@ -361,8 +361,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_18 name;
-	type_19 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -397,9 +397,9 @@ struct xMorphFrame
 	float32 Scale;
 	uint16 Flags;
 	uint16 NumVerts;
-	type_0 Targets;
-	type_1 WeightStart;
-	type_2 WeightEnd;
+	int16* Targets[4];
+	int16 WeightStart[4];
+	int16 WeightEnd[4];
 };
 
 struct RwSphere
@@ -455,13 +455,13 @@ struct RxIoSpec
 
 struct RxNodeMethods
 {
-	type_4 nodeBody;
-	type_6 nodeInit;
-	type_7 nodeTerm;
-	type_9 pipelineNodeInit;
-	type_10 pipelineNodeTerm;
-	type_12 pipelineNodeConfig;
-	type_3 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -516,7 +516,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_21 clusters;
+	RxCluster clusters[1];
 };
 
 struct RpMaterialList
@@ -530,7 +530,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_22 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RwLinkList
@@ -541,12 +541,15 @@ struct RwLinkList
 
 float32 xMorphSeqDuration(xMorphSeqFile* seq);
 void xMorphRender(xMorphSeqFile* seq, RwMatrixTag* mat, float32 time);
-xMorphSeqFile* xMorphSeqSetup(void* data, type_8 FindAssetCB);
+xMorphSeqFile* xMorphSeqSetup(void* data, void*(*FindAssetCB)(uint32, int8*));
 
 // xMorphSeqDuration__FP13xMorphSeqFile
 // Start address: 0x1f2400
 float32 xMorphSeqDuration(xMorphSeqFile* seq)
 {
+	// Line 179, Address: 0x1f2400, Func Offset: 0
+	// Line 180, Address: 0x1f240c, Func Offset: 0xc
+	// Func End, Address: 0x1f2414, Func Offset: 0x14
 }
 
 // xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf
@@ -555,15 +558,45 @@ void xMorphRender(xMorphSeqFile* seq, RwMatrixTag* mat, float32 time)
 {
 	float32 lerp;
 	uint32 tidx;
-	type_16 weight;
+	int16 weight[4];
 	int16* wptr;
 	float32* times;
 	xMorphFrame* frame;
+	// Line 125, Address: 0x1f2420, Func Offset: 0
+	// Line 131, Address: 0x1f2424, Func Offset: 0x4
+	// Line 125, Address: 0x1f2428, Func Offset: 0x8
+	// Line 136, Address: 0x1f242c, Func Offset: 0xc
+	// Line 125, Address: 0x1f2430, Func Offset: 0x10
+	// Line 136, Address: 0x1f2434, Func Offset: 0x14
+	// Line 137, Address: 0x1f2450, Func Offset: 0x30
+	// Line 146, Address: 0x1f2460, Func Offset: 0x40
+	// Line 147, Address: 0x1f2470, Func Offset: 0x50
+	// Line 148, Address: 0x1f2484, Func Offset: 0x64
+	// Line 150, Address: 0x1f249c, Func Offset: 0x7c
+	// Line 151, Address: 0x1f24ac, Func Offset: 0x8c
+	// Line 153, Address: 0x1f24d0, Func Offset: 0xb0
+	// Line 156, Address: 0x1f24e0, Func Offset: 0xc0
+	// Line 157, Address: 0x1f24ec, Func Offset: 0xcc
+	// Line 158, Address: 0x1f24f4, Func Offset: 0xd4
+	// Line 159, Address: 0x1f24fc, Func Offset: 0xdc
+	// Line 162, Address: 0x1f2500, Func Offset: 0xe0
+	// Line 164, Address: 0x1f2510, Func Offset: 0xf0
+	// Line 162, Address: 0x1f2514, Func Offset: 0xf4
+	// Line 164, Address: 0x1f251c, Func Offset: 0xfc
+	// Line 166, Address: 0x1f2528, Func Offset: 0x108
+	// Line 167, Address: 0x1f2530, Func Offset: 0x110
+	// Line 168, Address: 0x1f2534, Func Offset: 0x114
+	// Line 167, Address: 0x1f2538, Func Offset: 0x118
+	// Line 168, Address: 0x1f253c, Func Offset: 0x11c
+	// Line 172, Address: 0x1f25f4, Func Offset: 0x1d4
+	// Line 174, Address: 0x1f25f8, Func Offset: 0x1d8
+	// Line 175, Address: 0x1f2610, Func Offset: 0x1f0
+	// Func End, Address: 0x1f261c, Func Offset: 0x1fc
 }
 
 // xMorphSeqSetup__FPvPFUiPc_Pv
 // Start address: 0x1f2620
-xMorphSeqFile* xMorphSeqSetup(void* data, type_8 FindAssetCB)
+xMorphSeqFile* xMorphSeqSetup(void* data, void*(*FindAssetCB)(uint32, int8*))
 {
 	int32 i;
 	int32 j;
@@ -574,5 +607,62 @@ xMorphSeqFile* xMorphSeqSetup(void* data, type_8 FindAssetCB)
 	int8* namelist;
 	void* assetPtr;
 	uint32 skipsize;
+	// Line 45, Address: 0x1f2620, Func Offset: 0
+	// Line 60, Address: 0x1f2624, Func Offset: 0x4
+	// Line 45, Address: 0x1f2628, Func Offset: 0x8
+	// Line 53, Address: 0x1f2648, Func Offset: 0x28
+	// Line 45, Address: 0x1f264c, Func Offset: 0x2c
+	// Line 53, Address: 0x1f2650, Func Offset: 0x30
+	// Line 57, Address: 0x1f2654, Func Offset: 0x34
+	// Line 60, Address: 0x1f2658, Func Offset: 0x38
+	// Line 55, Address: 0x1f265c, Func Offset: 0x3c
+	// Line 56, Address: 0x1f2660, Func Offset: 0x40
+	// Line 55, Address: 0x1f2664, Func Offset: 0x44
+	// Line 57, Address: 0x1f2668, Func Offset: 0x48
+	// Line 56, Address: 0x1f266c, Func Offset: 0x4c
+	// Line 55, Address: 0x1f2670, Func Offset: 0x50
+	// Line 56, Address: 0x1f2674, Func Offset: 0x54
+	// Line 57, Address: 0x1f267c, Func Offset: 0x5c
+	// Line 60, Address: 0x1f2680, Func Offset: 0x60
+	// Line 61, Address: 0x1f268c, Func Offset: 0x6c
+	// Line 62, Address: 0x1f2694, Func Offset: 0x74
+	// Line 63, Address: 0x1f2698, Func Offset: 0x78
+	// Line 66, Address: 0x1f26a0, Func Offset: 0x80
+	// Line 67, Address: 0x1f26b0, Func Offset: 0x90
+	// Line 68, Address: 0x1f26b4, Func Offset: 0x94
+	// Line 71, Address: 0x1f26b8, Func Offset: 0x98
+	// Line 73, Address: 0x1f26d4, Func Offset: 0xb4
+	// Line 74, Address: 0x1f26dc, Func Offset: 0xbc
+	// Line 76, Address: 0x1f26e4, Func Offset: 0xc4
+	// Line 78, Address: 0x1f26e8, Func Offset: 0xc8
+	// Line 79, Address: 0x1f2700, Func Offset: 0xe0
+	// Line 83, Address: 0x1f2718, Func Offset: 0xf8
+	// Line 84, Address: 0x1f272c, Func Offset: 0x10c
+	// Line 87, Address: 0x1f2734, Func Offset: 0x114
+	// Line 89, Address: 0x1f2744, Func Offset: 0x124
+	// Line 93, Address: 0x1f2760, Func Offset: 0x140
+	// Line 106, Address: 0x1f2770, Func Offset: 0x150
+	// Line 101, Address: 0x1f2774, Func Offset: 0x154
+	// Line 93, Address: 0x1f2778, Func Offset: 0x158
+	// Line 100, Address: 0x1f277c, Func Offset: 0x15c
+	// Line 93, Address: 0x1f2788, Func Offset: 0x168
+	// Line 96, Address: 0x1f278c, Func Offset: 0x16c
+	// Line 98, Address: 0x1f2790, Func Offset: 0x170
+	// Line 101, Address: 0x1f2798, Func Offset: 0x178
+	// Line 103, Address: 0x1f27a4, Func Offset: 0x184
+	// Line 106, Address: 0x1f27b0, Func Offset: 0x190
+	// Line 107, Address: 0x1f27c4, Func Offset: 0x1a4
+	// Line 108, Address: 0x1f27d0, Func Offset: 0x1b0
+	// Line 110, Address: 0x1f27d8, Func Offset: 0x1b8
+	// Line 111, Address: 0x1f27e0, Func Offset: 0x1c0
+	// Line 112, Address: 0x1f27e4, Func Offset: 0x1c4
+	// Line 113, Address: 0x1f27ec, Func Offset: 0x1cc
+	// Line 114, Address: 0x1f27fc, Func Offset: 0x1dc
+	// Line 116, Address: 0x1f2800, Func Offset: 0x1e0
+	// Line 118, Address: 0x1f2818, Func Offset: 0x1f8
+	// Line 119, Address: 0x1f2828, Func Offset: 0x208
+	// Line 121, Address: 0x1f2840, Func Offset: 0x220
+	// Line 122, Address: 0x1f2848, Func Offset: 0x228
+	// Func End, Address: 0x1f2870, Func Offset: 0x250
 }
 

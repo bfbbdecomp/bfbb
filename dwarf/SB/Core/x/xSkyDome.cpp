@@ -163,7 +163,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_23 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -175,8 +175,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_29 Conditional;
-	type_29 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -191,7 +191,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_2 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xAnimState
@@ -212,14 +212,14 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_12 BeforeEnter;
-	type_6 StateCallback;
-	type_17 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_5 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RpMaterial
@@ -311,16 +311,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_24 update;
-	type_24 endUpdate;
-	type_27 bupdate;
-	type_28 move;
-	type_30 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_32 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -343,7 +343,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_43 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -380,7 +380,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_8 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xEntAsset : xBaseAsset
@@ -439,7 +439,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_33 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -475,7 +475,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_10 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RwRGBA
@@ -503,7 +503,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_17 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpMorphTarget
@@ -526,7 +526,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_14 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RwV3d
@@ -548,7 +548,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_35 pad;
+	uint32 pad[4];
 };
 
 struct xEntFrame
@@ -601,7 +601,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_46 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -612,7 +612,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_39 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -646,7 +646,7 @@ struct xVec3
 
 struct xShadowSimplePoly
 {
-	type_19 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -671,7 +671,7 @@ struct RwMatrixTag
 
 struct RpTriangle
 {
-	type_22 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -728,7 +728,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_25 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -743,7 +743,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_4 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -753,7 +753,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_42 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xScene
@@ -783,9 +783,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_18 resolvID;
-	type_20 base2Name;
-	type_21 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xShadowSimpleCache
@@ -803,7 +803,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_34 corner;
+	xVec3 corner[4];
 };
 
 enum RxNodeDefEditable
@@ -826,9 +826,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_38 colls;
-	type_26 post;
-	type_31 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 enum RxClusterValid
@@ -882,7 +882,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_44 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -915,8 +915,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_40 name;
-	type_41 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -980,7 +980,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_1 radius;
+	float32 radius[2];
 };
 
 struct RwTexDictionary
@@ -1057,13 +1057,13 @@ struct RxIoSpec
 
 struct RxNodeMethods
 {
-	type_11 nodeBody;
-	type_13 nodeInit;
-	type_15 nodeTerm;
-	type_0 pipelineNodeInit;
-	type_3 pipelineNodeTerm;
-	type_7 pipelineNodeConfig;
-	type_9 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct xAnimMultiFileEntry
@@ -1110,7 +1110,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_45 clusters;
+	RxCluster clusters[1];
 };
 
 struct RpInterpolator
@@ -1148,10 +1148,10 @@ struct _class_1
 	float32 v;
 };
 
-type_16 sSkyList;
+SkyDomeInfo sSkyList[8];
 int32 sSkyCount;
-type_36 xSkyDome_EmptyRender;
-type_37 ourGlobals;
+void(*xSkyDome_EmptyRender)(xEnt*);
+uint32 ourGlobals[4096];
 
 void xSkyDome_Render();
 void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY);
@@ -1165,6 +1165,31 @@ void xSkyDome_Render()
 	RwMatrixTag* cammat;
 	int32 i;
 	xEnt* ent;
+	// Line 90, Address: 0x2ad7e0, Func Offset: 0
+	// Line 93, Address: 0x2ad7e4, Func Offset: 0x4
+	// Line 90, Address: 0x2ad7e8, Func Offset: 0x8
+	// Line 96, Address: 0x2ad7f8, Func Offset: 0x18
+	// Line 90, Address: 0x2ad7fc, Func Offset: 0x1c
+	// Line 93, Address: 0x2ad80c, Func Offset: 0x2c
+	// Line 96, Address: 0x2ad810, Func Offset: 0x30
+	// Line 93, Address: 0x2ad814, Func Offset: 0x34
+	// Line 96, Address: 0x2ad818, Func Offset: 0x38
+	// Line 97, Address: 0x2ad830, Func Offset: 0x50
+	// Line 102, Address: 0x2ad834, Func Offset: 0x54
+	// Line 105, Address: 0x2ad840, Func Offset: 0x60
+	// Line 108, Address: 0x2ad854, Func Offset: 0x74
+	// Line 115, Address: 0x2ad878, Func Offset: 0x98
+	// Line 114, Address: 0x2ad87c, Func Offset: 0x9c
+	// Line 115, Address: 0x2ad888, Func Offset: 0xa8
+	// Line 116, Address: 0x2ad88c, Func Offset: 0xac
+	// Line 117, Address: 0x2ad89c, Func Offset: 0xbc
+	// Line 118, Address: 0x2ad8a8, Func Offset: 0xc8
+	// Line 120, Address: 0x2ad8bc, Func Offset: 0xdc
+	// Line 121, Address: 0x2ad8d4, Func Offset: 0xf4
+	// Line 123, Address: 0x2ad8e0, Func Offset: 0x100
+	// Line 124, Address: 0x2ad8f4, Func Offset: 0x114
+	// Line 125, Address: 0x2ad910, Func Offset: 0x130
+	// Func End, Address: 0x2ad938, Func Offset: 0x158
 }
 
 // xSkyDome_AddEntity__FP4xEntii
@@ -1173,17 +1198,57 @@ void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
 {
 	int32 i;
 	int32 j;
+	// Line 46, Address: 0x2ad940, Func Offset: 0
+	// Line 49, Address: 0x2ad944, Func Offset: 0x4
+	// Line 46, Address: 0x2ad948, Func Offset: 0x8
+	// Line 49, Address: 0x2ad950, Func Offset: 0x10
+	// Line 50, Address: 0x2ad968, Func Offset: 0x28
+	// Line 54, Address: 0x2ad974, Func Offset: 0x34
+	// Line 59, Address: 0x2ad988, Func Offset: 0x48
+	// Line 60, Address: 0x2ad9a0, Func Offset: 0x60
+	// Line 63, Address: 0x2ad9b0, Func Offset: 0x70
+	// Line 64, Address: 0x2ad9c0, Func Offset: 0x80
+	// Line 65, Address: 0x2ad9e8, Func Offset: 0xa8
+	// Line 66, Address: 0x2ad9ec, Func Offset: 0xac
+	// Line 65, Address: 0x2ad9f4, Func Offset: 0xb4
+	// Line 66, Address: 0x2ada08, Func Offset: 0xc8
+	// Line 67, Address: 0x2ada18, Func Offset: 0xd8
+	// Line 68, Address: 0x2ada24, Func Offset: 0xe4
+	// Line 67, Address: 0x2ada28, Func Offset: 0xe8
+	// Line 68, Address: 0x2ada2c, Func Offset: 0xec
+	// Line 67, Address: 0x2ada30, Func Offset: 0xf0
+	// Line 68, Address: 0x2ada34, Func Offset: 0xf4
+	// Line 83, Address: 0x2ada38, Func Offset: 0xf8
+	// Line 69, Address: 0x2ada3c, Func Offset: 0xfc
+	// Line 68, Address: 0x2ada40, Func Offset: 0x100
+	// Line 69, Address: 0x2ada44, Func Offset: 0x104
+	// Line 83, Address: 0x2ada48, Func Offset: 0x108
+	// Line 69, Address: 0x2ada4c, Func Offset: 0x10c
+	// Line 70, Address: 0x2ada54, Func Offset: 0x114
+	// Line 74, Address: 0x2ada58, Func Offset: 0x118
+	// Line 70, Address: 0x2ada60, Func Offset: 0x120
+	// Line 74, Address: 0x2ada68, Func Offset: 0x128
+	// Line 77, Address: 0x2ada6c, Func Offset: 0x12c
+	// Line 80, Address: 0x2ada7c, Func Offset: 0x13c
+	// Line 83, Address: 0x2ada84, Func Offset: 0x144
+	// Line 84, Address: 0x2ada8c, Func Offset: 0x14c
+	// Line 85, Address: 0x2ada98, Func Offset: 0x158
+	// Func End, Address: 0x2adaa8, Func Offset: 0x168
 }
 
 // xSkyDome_Setup__Fv
 // Start address: 0x2adab0
 void xSkyDome_Setup()
 {
+	// Line 41, Address: 0x2adab0, Func Offset: 0
+	// Func End, Address: 0x2adab8, Func Offset: 0x8
 }
 
 // xSkyDome_EmptyRender__FP4xEnt
 // Start address: 0x2adac0
 void xSkyDome_EmptyRender()
 {
+	// Line 34, Address: 0x2adac0, Func Offset: 0
+	// Func End, Address: 0x2adac8, Func Offset: 0x8
 }
 

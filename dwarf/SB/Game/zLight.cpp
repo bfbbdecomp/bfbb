@@ -119,7 +119,7 @@ typedef struct anim_coll_data;
 typedef struct iLight;
 typedef struct RxCluster;
 typedef struct RpInterpolator;
-typedef union _class_2;
+typedef struct _class_2;
 typedef struct RxPacket;
 typedef struct RwRGBAReal;
 typedef struct RpMaterialList;
@@ -173,8 +173,8 @@ typedef RwFrame* type_32[2];
 typedef RwTexCoords* type_33[8];
 typedef float32 type_35[16];
 typedef uint32 type_39[4];
-typedef type_22 type_43[18];
-typedef type_17 type_45[18];
+typedef void(*type_43)(_zLight*)[18];
+typedef void(*type_45)(_zLight*, float32)[18];
 typedef xVec3 type_46[4];
 typedef float32 type_47[2];
 typedef uint8 type_49[3];
@@ -209,16 +209,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_34 update;
-	type_34 endUpdate;
-	type_37 bupdate;
-	type_38 move;
-	type_41 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_44 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -232,7 +232,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_0 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xAnimPlay
@@ -245,7 +245,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_10 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xLightKit
@@ -275,7 +275,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_13 radius;
+	float32 radius[2];
 };
 
 struct xAnimEffect
@@ -284,7 +284,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_8 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RxPipelineNode
@@ -328,7 +328,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_9 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RpAtomic
@@ -340,7 +340,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_25 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -379,7 +379,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_47 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -405,7 +405,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_33 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -417,7 +417,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_11 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -451,9 +451,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_4 BeforeEnter;
-	type_30 StateCallback;
-	type_10 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct rxHeapSuperBlockDescriptor
@@ -495,7 +495,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_40 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -549,7 +549,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_48 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -559,7 +559,7 @@ struct xMemPool
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_60 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xQuat
@@ -648,7 +648,7 @@ struct xModelInstance
 
 struct xJSPHeader
 {
-	type_14 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -687,7 +687,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_39 pad;
+	uint32 pad[4];
 };
 
 struct xSurface
@@ -701,7 +701,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_20 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RpMeshHeader
@@ -726,16 +726,16 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_54 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct zLightAsset : xBaseAsset
 {
 	uint8 lightType;
 	uint8 lightEffect;
-	type_53 lightPad;
+	uint8 lightPad[2];
 	uint32 lightFlags;
-	type_56 lightColor;
+	float32 lightColor[4];
 	xVec3 lightDir;
 	float32 lightConeAngle;
 	xSphere lightSphere;
@@ -786,7 +786,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_57 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -818,7 +818,7 @@ struct xEntAsset : xBaseAsset
 
 struct RpTriangle
 {
-	type_24 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -826,8 +826,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_26 Conditional;
-	type_26 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -868,7 +868,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_2 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -941,8 +941,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_31 light;
-	type_32 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -977,7 +977,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_49 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -989,7 +989,7 @@ struct xBound
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_58 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct xRot
@@ -1000,7 +1000,7 @@ struct xRot
 
 struct xShadowSimplePoly
 {
-	type_29 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1106,8 +1106,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_51 name;
-	type_52 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -1116,7 +1116,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_35 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1164,9 +1164,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_3 resolvID;
-	type_5 base2Name;
-	type_7 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct RxClusterDefinition
@@ -1192,7 +1192,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_46 corner;
+	xVec3 corner[4];
 };
 
 struct _tagPartSpace
@@ -1214,9 +1214,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_55 colls;
-	type_36 post;
-	type_42 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xGridBound
@@ -1338,13 +1338,13 @@ struct xClumpCollBSPTriangle
 
 struct RxNodeMethods
 {
-	type_15 nodeBody;
-	type_16 nodeInit;
-	type_18 nodeTerm;
-	type_21 pipelineNodeInit;
-	type_1 pipelineNodeTerm;
-	type_6 pipelineNodeConfig;
-	type_12 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct st_SERIAL_CLIENTINFO
@@ -1393,10 +1393,13 @@ struct RpInterpolator
 	float32 position;
 };
 
-union _class_2
+struct _class_2
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct RxPacket
@@ -1407,7 +1410,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_59 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwRGBAReal
@@ -1430,20 +1433,20 @@ struct RwLinkList
 	RwLLLink link;
 };
 
-type_19 buffer;
-type_27 buffer;
-type_23 sLight;
+int8 buffer[16];
+int8 buffer[16];
+_zLight* sLight[32];
 int32 sLightTotal;
 _tagPartition sLightPart;
 zVolume* sPartitionVolume;
 int32 gNumTemporaryLights;
-type_28 gTemporaryLights;
-type_45 sEffectFuncs;
-type_43 sEffectInitFuncs;
+_zLight* gTemporaryLights[32];
+void(*sEffectFuncs)(_zLight*, float32)[18];
+void(*sEffectInitFuncs)(_zLight*)[18];
 xVec3 sDefaultShadowVec;
 RpWorld* gLightWorld;
 uint32 gActiveHeap;
-type_50 zLightEventCB;
+int32(*zLightEventCB)(xBase*, xBase*, uint32, float32*, xBase*);
 
 void zLightOn(_zLight* zl, int32 on);
 void zLightSetVolume(zVolume* vol);
@@ -1464,6 +1467,12 @@ void zLightResetAll(xEnv* env);
 // Start address: 0x180590
 void zLightOn(_zLight* zl, int32 on)
 {
+	// Line 864, Address: 0x180590, Func Offset: 0
+	// Line 866, Address: 0x180598, Func Offset: 0x8
+	// Line 867, Address: 0x1805a0, Func Offset: 0x10
+	// Line 870, Address: 0x1805a8, Func Offset: 0x18
+	// Line 872, Address: 0x1805b8, Func Offset: 0x28
+	// Func End, Address: 0x1805c0, Func Offset: 0x30
 }
 
 // zLightSetVolume__FP7zVolume
@@ -1471,6 +1480,15 @@ void zLightOn(_zLight* zl, int32 on)
 void zLightSetVolume(zVolume* vol)
 {
 	uint32 lp_id;
+	// Line 826, Address: 0x1805c0, Func Offset: 0
+	// Line 827, Address: 0x1805d0, Func Offset: 0x10
+	// Line 831, Address: 0x1805d8, Func Offset: 0x18
+	// Line 835, Address: 0x1805e0, Func Offset: 0x20
+	// Line 836, Address: 0x1805ec, Func Offset: 0x2c
+	// Line 840, Address: 0x1805f8, Func Offset: 0x38
+	// Line 842, Address: 0x1805fc, Func Offset: 0x3c
+	// Line 843, Address: 0x180600, Func Offset: 0x40
+	// Func End, Address: 0x180610, Func Offset: 0x50
 }
 
 // zLightRemoveLocalEnv__Fv
@@ -1479,6 +1497,14 @@ void zLightRemoveLocalEnv()
 {
 	int32 i;
 	RwLLLink* link;
+	// Line 801, Address: 0x180610, Func Offset: 0
+	// Line 803, Address: 0x180620, Func Offset: 0x10
+	// Line 805, Address: 0x180624, Func Offset: 0x14
+	// Line 803, Address: 0x180628, Func Offset: 0x18
+	// Line 804, Address: 0x18062c, Func Offset: 0x1c
+	// Line 805, Address: 0x180644, Func Offset: 0x34
+	// Line 807, Address: 0x180658, Func Offset: 0x48
+	// Func End, Address: 0x180660, Func Offset: 0x50
 }
 
 // zLightAddLocal__FP4xEnt
@@ -1486,6 +1512,25 @@ void zLightRemoveLocalEnv()
 void zLightAddLocal(xEnt* ent)
 {
 	xVec3 default_light_pos;
+	// Line 555, Address: 0x180660, Func Offset: 0
+	// Line 561, Address: 0x180664, Func Offset: 0x4
+	// Line 555, Address: 0x180668, Func Offset: 0x8
+	// Line 561, Address: 0x18066c, Func Offset: 0xc
+	// Line 555, Address: 0x180670, Func Offset: 0x10
+	// Line 560, Address: 0x180674, Func Offset: 0x14
+	// Line 561, Address: 0x180698, Func Offset: 0x38
+	// Line 567, Address: 0x1806a4, Func Offset: 0x44
+	// Line 569, Address: 0x1806b0, Func Offset: 0x50
+	// Line 571, Address: 0x1806c4, Func Offset: 0x64
+	// Line 574, Address: 0x1806d0, Func Offset: 0x70
+	// Line 575, Address: 0x1806d8, Func Offset: 0x78
+	// Line 574, Address: 0x1806dc, Func Offset: 0x7c
+	// Line 575, Address: 0x1806f0, Func Offset: 0x90
+	// Line 576, Address: 0x180714, Func Offset: 0xb4
+	// Line 575, Address: 0x180718, Func Offset: 0xb8
+	// Line 785, Address: 0x18071c, Func Offset: 0xbc
+	// Line 796, Address: 0x18072c, Func Offset: 0xcc
+	// Func End, Address: 0x18073c, Func Offset: 0xdc
 }
 
 // zLightAddLocalEnv__Fv
@@ -1495,6 +1540,22 @@ void zLightAddLocalEnv()
 	int32 i;
 	_zLight* zlight;
 	iLight* light;
+	// Line 517, Address: 0x180740, Func Offset: 0
+	// Line 519, Address: 0x180758, Func Offset: 0x18
+	// Line 521, Address: 0x180770, Func Offset: 0x30
+	// Line 524, Address: 0x180774, Func Offset: 0x34
+	// Line 527, Address: 0x180784, Func Offset: 0x44
+	// Line 531, Address: 0x180798, Func Offset: 0x58
+	// Line 534, Address: 0x1807a4, Func Offset: 0x64
+	// Line 535, Address: 0x1807a8, Func Offset: 0x68
+	// Line 534, Address: 0x1807ac, Func Offset: 0x6c
+	// Line 535, Address: 0x1807b0, Func Offset: 0x70
+	// Line 534, Address: 0x1807b4, Func Offset: 0x74
+	// Line 535, Address: 0x1807f0, Func Offset: 0xb0
+	// Line 536, Address: 0x180800, Func Offset: 0xc0
+	// Line 539, Address: 0x18080c, Func Offset: 0xcc
+	// Line 540, Address: 0x180828, Func Offset: 0xe8
+	// Func End, Address: 0x180844, Func Offset: 0x104
 }
 
 // zLightUpdate__FP5xBaseP6xScenef
@@ -1503,6 +1564,27 @@ void zLightUpdate(xBase* to, float32 dt)
 {
 	_zLight* t;
 	xVec3 pos;
+	// Line 478, Address: 0x180850, Func Offset: 0
+	// Line 482, Address: 0x180860, Func Offset: 0x10
+	// Line 487, Address: 0x180864, Func Offset: 0x14
+	// Line 490, Address: 0x180878, Func Offset: 0x28
+	// Line 494, Address: 0x180880, Func Offset: 0x30
+	// Line 495, Address: 0x180884, Func Offset: 0x34
+	// Line 494, Address: 0x18088c, Func Offset: 0x3c
+	// Line 496, Address: 0x180890, Func Offset: 0x40
+	// Line 494, Address: 0x180894, Func Offset: 0x44
+	// Line 495, Address: 0x1808b0, Func Offset: 0x60
+	// Line 496, Address: 0x1808b8, Func Offset: 0x68
+	// Line 499, Address: 0x1808c0, Func Offset: 0x70
+	// Line 502, Address: 0x1808c4, Func Offset: 0x74
+	// Line 499, Address: 0x1808d0, Func Offset: 0x80
+	// Line 502, Address: 0x1808e4, Func Offset: 0x94
+	// Line 504, Address: 0x1808f4, Func Offset: 0xa4
+	// Line 502, Address: 0x1808f8, Func Offset: 0xa8
+	// Line 508, Address: 0x180910, Func Offset: 0xc0
+	// Line 510, Address: 0x180918, Func Offset: 0xc8
+	// Line 512, Address: 0x180920, Func Offset: 0xd0
+	// Func End, Address: 0x180934, Func Offset: 0xe4
 }
 
 // zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase
@@ -1510,18 +1592,38 @@ void zLightUpdate(xBase* to, float32 dt)
 int32 zLightEventCB(xBase* to, uint32 toEvent)
 {
 	_zLight* t;
+	// Line 441, Address: 0x180940, Func Offset: 0
+	// Line 448, Address: 0x180944, Func Offset: 0x4
+	// Line 441, Address: 0x180948, Func Offset: 0x8
+	// Line 448, Address: 0x180950, Func Offset: 0x10
+	// Line 450, Address: 0x180974, Func Offset: 0x34
+	// Line 451, Address: 0x180978, Func Offset: 0x38
+	// Line 452, Address: 0x180980, Func Offset: 0x40
+	// Line 455, Address: 0x180988, Func Offset: 0x48
+	// Line 456, Address: 0x180994, Func Offset: 0x54
+	// Line 458, Address: 0x18099c, Func Offset: 0x5c
+	// Line 459, Address: 0x1809a0, Func Offset: 0x60
+	// Line 461, Address: 0x180a0c, Func Offset: 0xcc
+	// Line 464, Address: 0x180a10, Func Offset: 0xd0
+	// Line 463, Address: 0x180a18, Func Offset: 0xd8
+	// Line 464, Address: 0x180a1c, Func Offset: 0xdc
+	// Func End, Address: 0x180a24, Func Offset: 0xe4
 }
 
 // zLightLoad__FP7_zLightP7xSerial
 // Start address: 0x180a30
 void zLightLoad(_zLight* ent, xSerial* s)
 {
+	// Line 422, Address: 0x180a30, Func Offset: 0
+	// Func End, Address: 0x180a38, Func Offset: 0x8
 }
 
 // zLightSave__FP7_zLightP7xSerial
 // Start address: 0x180a40
 void zLightSave(_zLight* ent, xSerial* s)
 {
+	// Line 403, Address: 0x180a40, Func Offset: 0
+	// Func End, Address: 0x180a48, Func Offset: 0x8
 }
 
 // zLightDestroyAll__Fv
@@ -1530,6 +1632,16 @@ void zLightDestroyAll()
 {
 	int32 total;
 	int32 i;
+	// Line 354, Address: 0x180a50, Func Offset: 0
+	// Line 356, Address: 0x180a68, Func Offset: 0x18
+	// Line 358, Address: 0x180a80, Func Offset: 0x30
+	// Line 359, Address: 0x180a8c, Func Offset: 0x3c
+	// Line 360, Address: 0x180a90, Func Offset: 0x40
+	// Line 359, Address: 0x180a98, Func Offset: 0x48
+	// Line 360, Address: 0x180aa0, Func Offset: 0x50
+	// Line 361, Address: 0x180aa8, Func Offset: 0x58
+	// Line 362, Address: 0x180aac, Func Offset: 0x5c
+	// Func End, Address: 0x180ac4, Func Offset: 0x74
 }
 
 // zLightResolveLinks__Fv
@@ -1538,6 +1650,15 @@ void zLightResolveLinks()
 {
 	int32 i;
 	_zLight* zl;
+	// Line 338, Address: 0x180ad0, Func Offset: 0
+	// Line 339, Address: 0x180ae4, Func Offset: 0x14
+	// Line 341, Address: 0x180b00, Func Offset: 0x30
+	// Line 345, Address: 0x180b0c, Func Offset: 0x3c
+	// Line 346, Address: 0x180b14, Func Offset: 0x44
+	// Line 348, Address: 0x180b28, Func Offset: 0x58
+	// Line 349, Address: 0x180b30, Func Offset: 0x60
+	// Line 350, Address: 0x180b48, Func Offset: 0x78
+	// Func End, Address: 0x180b60, Func Offset: 0x90
 }
 
 // zLightInit__FP5xBaseP11zLightAsset
@@ -1546,17 +1667,71 @@ void zLightInit(xBase* b, zLightAsset* tasset)
 {
 	_zLight* t;
 	uint32 itype;
+	// Line 195, Address: 0x180b60, Func Offset: 0
+	// Line 199, Address: 0x180b74, Func Offset: 0x14
+	// Line 209, Address: 0x180b7c, Func Offset: 0x1c
+	// Line 210, Address: 0x180b88, Func Offset: 0x28
+	// Line 212, Address: 0x180b8c, Func Offset: 0x2c
+	// Line 213, Address: 0x180b98, Func Offset: 0x38
+	// Line 215, Address: 0x180ba8, Func Offset: 0x48
+	// Line 219, Address: 0x180bb0, Func Offset: 0x50
+	// Line 221, Address: 0x180be4, Func Offset: 0x84
+	// Line 225, Address: 0x180be8, Func Offset: 0x88
+	// Line 228, Address: 0x180bf0, Func Offset: 0x90
+	// Line 232, Address: 0x180bf8, Func Offset: 0x98
+	// Line 241, Address: 0x180c00, Func Offset: 0xa0
+	// Line 244, Address: 0x180c10, Func Offset: 0xb0
+	// Line 262, Address: 0x180c1c, Func Offset: 0xbc
+	// Line 244, Address: 0x180c24, Func Offset: 0xc4
+	// Line 247, Address: 0x180c3c, Func Offset: 0xdc
+	// Line 248, Address: 0x180c44, Func Offset: 0xe4
+	// Line 249, Address: 0x180c4c, Func Offset: 0xec
+	// Line 250, Address: 0x180c54, Func Offset: 0xf4
+	// Line 253, Address: 0x180c5c, Func Offset: 0xfc
+	// Line 254, Address: 0x180c64, Func Offset: 0x104
+	// Line 255, Address: 0x180c6c, Func Offset: 0x10c
+	// Line 256, Address: 0x180c74, Func Offset: 0x114
+	// Line 257, Address: 0x180c7c, Func Offset: 0x11c
+	// Line 260, Address: 0x180c88, Func Offset: 0x128
+	// Line 262, Address: 0x180c8c, Func Offset: 0x12c
+	// Line 266, Address: 0x180c94, Func Offset: 0x134
+	// Line 267, Address: 0x180c98, Func Offset: 0x138
+	// Line 268, Address: 0x180cac, Func Offset: 0x14c
+	// Line 271, Address: 0x180cb8, Func Offset: 0x158
+	// Line 273, Address: 0x180cc8, Func Offset: 0x168
+	// Line 274, Address: 0x180cdc, Func Offset: 0x17c
+	// Line 275, Address: 0x180d18, Func Offset: 0x1b8
+	// Line 278, Address: 0x180d20, Func Offset: 0x1c0
+	// Line 279, Address: 0x180d24, Func Offset: 0x1c4
+	// Line 283, Address: 0x180d28, Func Offset: 0x1c8
+	// Line 333, Address: 0x180d40, Func Offset: 0x1e0
+	// Func End, Address: 0x180d54, Func Offset: 0x1f4
 }
 
 // zLightInit__FPvPv
 // Start address: 0x180d60
 void zLightInit(void* b, void* tasset)
 {
+	// Line 192, Address: 0x180d60, Func Offset: 0
+	// Func End, Address: 0x180d68, Func Offset: 0x8
 }
 
 // zLightResetAll__FP4xEnv
 // Start address: 0x180d70
 void zLightResetAll(xEnv* env)
 {
+	// Line 155, Address: 0x180d70, Func Offset: 0
+	// Line 159, Address: 0x180d74, Func Offset: 0x4
+	// Line 155, Address: 0x180d78, Func Offset: 0x8
+	// Line 159, Address: 0x180d7c, Func Offset: 0xc
+	// Line 155, Address: 0x180d80, Func Offset: 0x10
+	// Line 159, Address: 0x180d88, Func Offset: 0x18
+	// Line 160, Address: 0x180d94, Func Offset: 0x24
+	// Line 163, Address: 0x180d98, Func Offset: 0x28
+	// Line 164, Address: 0x180da0, Func Offset: 0x30
+	// Line 166, Address: 0x180dc0, Func Offset: 0x50
+	// Line 168, Address: 0x180de0, Func Offset: 0x70
+	// Line 178, Address: 0x180df4, Func Offset: 0x84
+	// Func End, Address: 0x180e04, Func Offset: 0x94
 }
 

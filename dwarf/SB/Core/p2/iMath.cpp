@@ -2,6 +2,6 @@
 
 typedef float32 type[16];
 
-type cosSinPolynomial;
+float32 cosSinPolynomial[16];
 
 

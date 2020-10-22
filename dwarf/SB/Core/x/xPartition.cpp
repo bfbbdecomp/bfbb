@@ -74,7 +74,7 @@ typedef struct RxCluster;
 typedef struct RxPacket;
 typedef struct RwRGBAReal;
 typedef struct RwObjectHasFrame;
-typedef union _class;
+typedef struct _class;
 typedef struct RwLinkList;
 
 typedef int32(*type_0)(RxPipelineNode*, RxPipeline*);
@@ -110,7 +110,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_14 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RxPipelineNodeParam
@@ -136,7 +136,7 @@ struct xQCData
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_1 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xBBox
@@ -239,7 +239,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_13 pad;
+	uint32 pad[4];
 };
 
 struct _tagPartSpace
@@ -270,7 +270,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_8 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RpWorldSector
@@ -279,7 +279,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_10 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -321,7 +321,7 @@ struct xVec3
 
 struct xJSPHeader
 {
-	type_9 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -438,7 +438,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_19 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xMat4x3 : xMat3x3
@@ -467,7 +467,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_12 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -519,8 +519,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_22 light;
-	type_23 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -572,7 +572,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_11 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -587,8 +587,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_16 name;
-	type_18 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -657,13 +657,13 @@ struct RpLight
 
 struct RxNodeMethods
 {
-	type_3 nodeBody;
-	type_4 nodeInit;
-	type_5 nodeTerm;
-	type_6 pipelineNodeInit;
-	type_7 pipelineNodeTerm;
-	type_0 pipelineNodeConfig;
-	type_2 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RwFrame
@@ -699,7 +699,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_15 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -713,7 +713,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_17 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -757,7 +757,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_20 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwRGBAReal
@@ -772,13 +772,16 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_21 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
-union _class
+struct _class
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct RwLinkList
@@ -800,6 +803,8 @@ void xPartitionReset();
 // Start address: 0x1f6880
 void xPartitionDump()
 {
+	// Line 411, Address: 0x1f6880, Func Offset: 0
+	// Func End, Address: 0x1f6888, Func Offset: 0x8
 }
 
 // xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi
@@ -809,6 +814,23 @@ void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, uint32 data)
 	_tagPartLink* dest_lnk;
 	_tagPartLink* src_lnk;
 	_tagPartLink* src_pre;
+	// Line 323, Address: 0x1f6890, Func Offset: 0
+	// Line 326, Address: 0x1f6894, Func Offset: 0x4
+	// Line 328, Address: 0x1f68a0, Func Offset: 0x10
+	// Line 329, Address: 0x1f68a8, Func Offset: 0x18
+	// Line 337, Address: 0x1f68b8, Func Offset: 0x28
+	// Line 333, Address: 0x1f68bc, Func Offset: 0x2c
+	// Line 337, Address: 0x1f68c0, Func Offset: 0x30
+	// Line 339, Address: 0x1f68c8, Func Offset: 0x38
+	// Line 340, Address: 0x1f68cc, Func Offset: 0x3c
+	// Line 341, Address: 0x1f68d0, Func Offset: 0x40
+	// Line 344, Address: 0x1f68e0, Func Offset: 0x50
+	// Line 347, Address: 0x1f68e8, Func Offset: 0x58
+	// Line 348, Address: 0x1f68ec, Func Offset: 0x5c
+	// Line 351, Address: 0x1f68f4, Func Offset: 0x64
+	// Line 352, Address: 0x1f6900, Func Offset: 0x70
+	// Line 353, Address: 0x1f6908, Func Offset: 0x78
+	// Func End, Address: 0x1f6910, Func Offset: 0x80
 }
 
 // xPartitionUpdate__FP13_tagPartitionPviP5xVec3
@@ -817,12 +839,39 @@ int32 xPartitionUpdate(_tagPartition* part, void* data, int32 old_idx, xVec3* cu
 {
 	int32 cur_idx;
 	_tagPartSpace* src;
+	// Line 264, Address: 0x1f6910, Func Offset: 0
+	// Line 266, Address: 0x1f6924, Func Offset: 0x14
+	// Line 272, Address: 0x1f6988, Func Offset: 0x78
+	// Line 286, Address: 0x1f6994, Func Offset: 0x84
+	// Line 292, Address: 0x1f69f0, Func Offset: 0xe0
+	// Line 295, Address: 0x1f69f8, Func Offset: 0xe8
+	// Line 302, Address: 0x1f6a00, Func Offset: 0xf0
+	// Line 311, Address: 0x1f6a28, Func Offset: 0x118
+	// Line 313, Address: 0x1f6a5c, Func Offset: 0x14c
+	// Line 314, Address: 0x1f6a60, Func Offset: 0x150
+	// Func End, Address: 0x1f6a70, Func Offset: 0x160
 }
 
 // xPartitionInsert__FP13_tagPartitionPvP5xVec3
 // Start address: 0x1f6a70
 int32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos)
 {
+	// Line 230, Address: 0x1f6a70, Func Offset: 0
+	// Line 232, Address: 0x1f6a8c, Func Offset: 0x1c
+	// Line 237, Address: 0x1f6af0, Func Offset: 0x80
+	// Line 238, Address: 0x1f6b38, Func Offset: 0xc8
+	// Line 237, Address: 0x1f6b3c, Func Offset: 0xcc
+	// Line 238, Address: 0x1f6b44, Func Offset: 0xd4
+	// Line 239, Address: 0x1f6b4c, Func Offset: 0xdc
+	// Line 238, Address: 0x1f6b50, Func Offset: 0xe0
+	// Line 254, Address: 0x1f6b54, Func Offset: 0xe4
+	// Line 256, Address: 0x1f6b5c, Func Offset: 0xec
+	// Line 254, Address: 0x1f6b60, Func Offset: 0xf0
+	// Line 256, Address: 0x1f6bb4, Func Offset: 0x144
+	// Line 258, Address: 0x1f6c10, Func Offset: 0x1a0
+	// Line 256, Address: 0x1f6c14, Func Offset: 0x1a4
+	// Line 259, Address: 0x1f6c20, Func Offset: 0x1b0
+	// Func End, Address: 0x1f6c38, Func Offset: 0x1c8
 }
 
 // xPartitionWorld__FP13_tagPartitionP4xEnviii
@@ -836,6 +885,42 @@ void xPartitionWorld(_tagPartition* part, xEnv* env, int32 x_spaces, int32 y_spa
 	int32 z;
 	int32 y;
 	int32 x;
+	// Line 182, Address: 0x1f6c40, Func Offset: 0
+	// Line 187, Address: 0x1f6c78, Func Offset: 0x38
+	// Line 190, Address: 0x1f6c84, Func Offset: 0x44
+	// Line 209, Address: 0x1f6c88, Func Offset: 0x48
+	// Line 190, Address: 0x1f6c8c, Func Offset: 0x4c
+	// Line 191, Address: 0x1f6c90, Func Offset: 0x50
+	// Line 192, Address: 0x1f6ca8, Func Offset: 0x68
+	// Line 196, Address: 0x1f6cc0, Func Offset: 0x80
+	// Line 195, Address: 0x1f6cc8, Func Offset: 0x88
+	// Line 197, Address: 0x1f6cd0, Func Offset: 0x90
+	// Line 196, Address: 0x1f6cd8, Func Offset: 0x98
+	// Line 200, Address: 0x1f6cdc, Func Offset: 0x9c
+	// Line 195, Address: 0x1f6ce0, Func Offset: 0xa0
+	// Line 201, Address: 0x1f6ce4, Func Offset: 0xa4
+	// Line 202, Address: 0x1f6ce8, Func Offset: 0xa8
+	// Line 203, Address: 0x1f6cec, Func Offset: 0xac
+	// Line 197, Address: 0x1f6cf0, Func Offset: 0xb0
+	// Line 203, Address: 0x1f6cf4, Func Offset: 0xb4
+	// Line 204, Address: 0x1f6d00, Func Offset: 0xc0
+	// Line 205, Address: 0x1f6d10, Func Offset: 0xd0
+	// Line 209, Address: 0x1f6d20, Func Offset: 0xe0
+	// Line 211, Address: 0x1f6d48, Func Offset: 0x108
+	// Line 209, Address: 0x1f6d4c, Func Offset: 0x10c
+	// Line 211, Address: 0x1f6d50, Func Offset: 0x110
+	// Line 213, Address: 0x1f6d58, Func Offset: 0x118
+	// Line 215, Address: 0x1f6d68, Func Offset: 0x128
+	// Line 217, Address: 0x1f6d7c, Func Offset: 0x13c
+	// Line 218, Address: 0x1f6d80, Func Offset: 0x140
+	// Line 217, Address: 0x1f6d8c, Func Offset: 0x14c
+	// Line 218, Address: 0x1f6da0, Func Offset: 0x160
+	// Line 219, Address: 0x1f6db4, Func Offset: 0x174
+	// Line 220, Address: 0x1f6dc8, Func Offset: 0x188
+	// Line 221, Address: 0x1f6dd8, Func Offset: 0x198
+	// Line 224, Address: 0x1f6de8, Func Offset: 0x1a8
+	// Line 225, Address: 0x1f6df8, Func Offset: 0x1b8
+	// Func End, Address: 0x1f6e20, Func Offset: 0x1e0
 }
 
 // xPartitionVolume__FP13_tagPartitionP7xVolumeiii
@@ -850,11 +935,49 @@ void xPartitionVolume(_tagPartition* part, xVolume* volume, int32 x_spaces, int3
 	int32 z;
 	int32 y;
 	int32 x;
+	// Line 131, Address: 0x1f6e20, Func Offset: 0
+	// Line 138, Address: 0x1f6e58, Func Offset: 0x38
+	// Line 141, Address: 0x1f6e64, Func Offset: 0x44
+	// Line 143, Address: 0x1f6e6c, Func Offset: 0x4c
+	// Line 161, Address: 0x1f6e70, Func Offset: 0x50
+	// Line 143, Address: 0x1f6e74, Func Offset: 0x54
+	// Line 144, Address: 0x1f6e88, Func Offset: 0x68
+	// Line 148, Address: 0x1f6ea0, Func Offset: 0x80
+	// Line 147, Address: 0x1f6ea8, Func Offset: 0x88
+	// Line 149, Address: 0x1f6eb0, Func Offset: 0x90
+	// Line 148, Address: 0x1f6eb8, Func Offset: 0x98
+	// Line 152, Address: 0x1f6ebc, Func Offset: 0x9c
+	// Line 147, Address: 0x1f6ec0, Func Offset: 0xa0
+	// Line 153, Address: 0x1f6ec4, Func Offset: 0xa4
+	// Line 154, Address: 0x1f6ec8, Func Offset: 0xa8
+	// Line 155, Address: 0x1f6ecc, Func Offset: 0xac
+	// Line 149, Address: 0x1f6ed0, Func Offset: 0xb0
+	// Line 155, Address: 0x1f6ed4, Func Offset: 0xb4
+	// Line 156, Address: 0x1f6ee0, Func Offset: 0xc0
+	// Line 157, Address: 0x1f6ef0, Func Offset: 0xd0
+	// Line 161, Address: 0x1f6f00, Func Offset: 0xe0
+	// Line 163, Address: 0x1f6f28, Func Offset: 0x108
+	// Line 161, Address: 0x1f6f2c, Func Offset: 0x10c
+	// Line 163, Address: 0x1f6f30, Func Offset: 0x110
+	// Line 165, Address: 0x1f6f38, Func Offset: 0x118
+	// Line 167, Address: 0x1f6f48, Func Offset: 0x128
+	// Line 169, Address: 0x1f6f5c, Func Offset: 0x13c
+	// Line 170, Address: 0x1f6f60, Func Offset: 0x140
+	// Line 169, Address: 0x1f6f6c, Func Offset: 0x14c
+	// Line 170, Address: 0x1f6f80, Func Offset: 0x160
+	// Line 171, Address: 0x1f6f94, Func Offset: 0x174
+	// Line 172, Address: 0x1f6fa8, Func Offset: 0x188
+	// Line 173, Address: 0x1f6fb8, Func Offset: 0x198
+	// Line 176, Address: 0x1f6fc8, Func Offset: 0x1a8
+	// Line 177, Address: 0x1f6fd8, Func Offset: 0x1b8
+	// Func End, Address: 0x1f7000, Func Offset: 0x1e0
 }
 
 // xPartitionReset__Fv
 // Start address: 0x1f7000
 void xPartitionReset()
 {
+	// Line 60, Address: 0x1f7000, Func Offset: 0
+	// Func End, Address: 0x1f7008, Func Offset: 0x8
 }
 

@@ -42,7 +42,7 @@ typedef struct RwRGBAReal;
 typedef struct sound_context;
 typedef struct zFrag;
 typedef struct RwCamera;
-typedef union _class_0;
+typedef struct _class_0;
 typedef struct RwObjectHasFrame;
 typedef struct RwLLLink;
 typedef struct zFragAsset;
@@ -72,7 +72,7 @@ typedef struct _class_1;
 typedef struct xAnimFile;
 typedef enum _enum_0;
 typedef struct rxHeapFreeBlock;
-typedef union zFragLocInfo;
+typedef struct zFragLocInfo;
 typedef struct xShadowSimpleCache;
 typedef struct ztextbox;
 typedef struct RwRaster;
@@ -220,7 +220,7 @@ typedef struct zPlatform;
 typedef struct _class_9;
 typedef struct _tagEmitOffsetPoint;
 typedef struct xListItem_1;
-typedef union zFragInfo;
+typedef struct zFragInfo;
 typedef struct xMemPool;
 typedef struct _class_10;
 typedef enum rxEmbeddedPacketState;
@@ -299,7 +299,7 @@ typedef enum _zPlayerType;
 typedef struct RwTexture;
 typedef struct xQCData;
 typedef struct xModelBucket;
-typedef union _class_12;
+typedef struct _class_12;
 typedef struct _class_13;
 typedef struct RxNodeMethods;
 typedef struct analog_data;
@@ -316,7 +316,7 @@ typedef struct _class_16;
 typedef struct zCheckPoint;
 typedef struct RxCluster;
 typedef struct xEntMotionOrbitData;
-typedef union _class_17;
+typedef struct _class_17;
 typedef struct zPlayerCarryInfo;
 typedef struct next_state_type;
 
@@ -337,7 +337,7 @@ typedef void(*type_24)(xEnt*, xScene*, float32);
 typedef RwObjectHasFrame*(*type_25)(RwObjectHasFrame*);
 typedef void(*type_27)(RxPipelineNode*);
 typedef RpWorldSector*(*type_28)(RpWorldSector*);
-typedef void(*type_30)(zShrapnelAsset*, xModelInstance*, xVec3*, type_11);
+typedef void(*type_30)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 typedef void(*type_32)(xEnt*, xVec3*);
 typedef void(*type_35)(xEnt*, xScene*, float32, xEntCollis*);
 typedef void(*type_37)(xEnt*, xScene*, float32, xEntFrame*);
@@ -419,7 +419,7 @@ typedef xVec3 type_76[4];
 typedef uint8 type_77[2];
 typedef xAnimMultiFileEntry type_79[1];
 typedef int8 type_82[128];
-typedef type_82 type_83[6];
+typedef int8 type_83[128][6];
 typedef uint8 type_85[14];
 typedef xModelTag type_86[4];
 typedef float32 type_87[4];
@@ -448,7 +448,7 @@ typedef xVec3 type_113[2];
 typedef float32 type_114[12];
 typedef uint8 type_116[22];
 typedef float32 type_117[1];
-typedef type_117 type_119[5];
+typedef float32 type_119[1][5];
 typedef uint16 type_120[3];
 typedef uint8 type_121[3];
 typedef uint8 type_122[22];
@@ -499,7 +499,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_13 clusters;
+	RxCluster clusters[1];
 };
 
 struct xBase
@@ -509,7 +509,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_127 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xScene
@@ -539,9 +539,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_5 resolvID;
-	type_12 base2Name;
-	type_23 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xUpdateCullMgr
@@ -555,8 +555,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_42 activateCB;
-	type_42 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct xFactoryInst : RyzMemData
@@ -575,6 +575,15 @@ struct ztalkbox : xBase
 	ztextbox* quit_box;
 	_class_15 prompt;
 	zNPCCommon* npc;
+
+	void MasterLoveSlave(xBase* slave, int32 starting);
+	void MasterTellSlaves(int32 isBeginning);
+	void stop_talk();
+	void start_talk(uint32 text_id, callback_0* cb, zNPCCommon* npc);
+	void start_talk(int8* s, callback_0* cb, zNPCCommon* npc);
+	void set_text(uint32 id);
+	void set_text(int8* s);
+	void load(asset_type_1& a);
 };
 
 struct zFragLightning
@@ -596,8 +605,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_67 Conditional;
-	type_67 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -611,10 +620,10 @@ struct xAnimTransition
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_34 MoveSpeed;
-	type_40 AnimSneak;
-	type_45 AnimWalk;
-	type_49 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -632,7 +641,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_98 talk_filter;
+	uint8 talk_filter[4];
 };
 
 enum query_enum
@@ -682,16 +691,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_24 update;
-	type_24 endUpdate;
-	type_32 bupdate;
-	type_37 move;
-	type_41 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_58 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -724,7 +733,7 @@ struct RwFrame
 
 struct xShadowSimplePoly
 {
-	type_7 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -871,7 +880,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_36 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct RpSector
@@ -911,7 +920,7 @@ struct xSurface : xBase
 	};
 	float32 friction;
 	uint8 state;
-	type_55 pad;
+	uint8 pad[3];
 	void* moprops;
 };
 
@@ -932,7 +941,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_14 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -943,7 +952,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_10 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xAnimState
@@ -964,9 +973,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_99 BeforeEnter;
-	type_80 StateCallback;
-	type_108 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xIniSection
@@ -1042,11 +1051,11 @@ struct RwRGBAReal
 struct sound_context
 {
 	uint32 id;
-	union
+	struct
 	{
-		_enum_0 action;
-		_enum_1 type;
-		_enum_2 source;
+		_enum_0 action : 8;
+		_enum_1 type : 8;
+		_enum_2 source : 8;
 	};
 	uint8 anim;
 	union
@@ -1065,8 +1074,8 @@ struct zFrag
 	float32 delay;
 	float32 alivetime;
 	float32 lifetime;
-	type_138 update;
-	type_148 parent;
+	void(*update)(zFrag*, float32);
+	xModelInstance* parent[2];
 	zFrag* prev;
 	zFrag* next;
 };
@@ -1075,8 +1084,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_15 beginUpdate;
-	type_22 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -1088,25 +1097,28 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_61 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_72 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
-union _class_0
+struct _class_0
 {
-	uint8 time;
-	uint8 prompt;
-	uint8 sound;
-	uint8 event;
-	uint16 pad;
+	struct
+	{
+		uint8 time : 1;
+		uint8 prompt : 1;
+		uint8 sound : 1;
+		uint8 event : 1;
+		uint16 pad : 12;
+	};
 };
 
 struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_25 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RwLLLink
@@ -1119,7 +1131,7 @@ struct zFragAsset
 {
 	zFragType type;
 	uint32 id;
-	type_111 parentID;
+	uint32 parentID[2];
 	float32 lifetime;
 	float32 delay;
 };
@@ -1131,21 +1143,25 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_102 light;
-	type_107 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
 struct wait_state_type : state_type
 {
 	uint8 answer_yes;
+
+	void start();
+	void stop();
+	state_enum update(float32 dt);
 };
 
 struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_115 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1258,7 +1274,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_123 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -1270,7 +1286,7 @@ struct zShrapnelAsset
 {
 	int32 fassetCount;
 	uint32 shrapnelID;
-	type_30 initCB;
+	void(*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 };
 
 struct tri_data_0
@@ -1284,7 +1300,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_33 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1319,7 +1335,7 @@ struct zNPCCommon : xNPCBasic
 	xModelAssetParam* parmdata;
 	uint32 pdatsize;
 	zNPCLassoInfo* lassdata;
-	type_147 snd_queue;
+	NPCSndQueue snd_queue[4];
 };
 
 struct xSpline3
@@ -1358,7 +1374,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_77 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -1375,10 +1391,13 @@ struct rxHeapFreeBlock
 	rxHeapBlockHeader* ptr;
 };
 
-union zFragLocInfo
+struct zFragLocInfo
 {
-	zFragBone bone;
-	xModelTag tag;
+	union
+	{
+		zFragBone bone;
+		xModelTag tag;
+	};
 };
 
 struct xShadowSimpleCache
@@ -1396,7 +1415,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_76 corner;
+	xVec3 corner[4];
 };
 
 struct ztextbox : xBase
@@ -1404,7 +1423,7 @@ struct ztextbox : xBase
 	_class_12 flag;
 	asset_type_0* asset;
 	xtextbox tb;
-	type_18 segments;
+	int8* segments[16];
 	uint32 segments_size;
 	ztextbox* next;
 	ztextbox* prev;
@@ -1481,9 +1500,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_93 colls;
-	type_35 post;
-	type_53 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xAnimSingle
@@ -1492,7 +1511,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_48 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -1548,13 +1567,13 @@ struct xPsyche : RyzMemData
 	xPSYNote* cb_notice;
 	int32 flg_psyche;
 	xGoal* goallist;
-	type_112 goalstak;
-	type_119 tmr_stack;
+	xGoal* goalstak[5];
+	float32 tmr_stack[1][5];
 	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
 	int32 gid_safegoal;
-	type_133 fun_remap;
+	void(*fun_remap)(int32*, en_trantype*);
 	void* userContext;
 	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
@@ -1585,7 +1604,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_135 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -1691,7 +1710,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_94 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1740,9 +1759,9 @@ struct xGoal : xListItem_0, xFactoryInst
 	int32 goalID;
 	en_GOALSTATE stat;
 	int32 flg_able;
-	type_84 fun_process;
-	type_65 fun_precalc;
-	type_78 fun_chkRule;
+	int32(*fun_process)(xGoal*, void*, en_trantype*, float32, void*);
+	int32(*fun_precalc)(xGoal*, void*, float32, void*);
+	int32(*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
 	void* cbdata;
 };
 
@@ -1782,13 +1801,13 @@ struct st_PACKER_ASSETTYPE
 	uint32 typetag;
 	uint32 tflags;
 	int32 typalign;
-	type_63 readXForm;
-	type_68 writeXForm;
-	type_73 assetLoaded;
-	type_21 makeData;
-	type_38 cleanup;
-	type_6 assetUnloaded;
-	type_81 writePeek;
+	void*(*readXForm)(void*, uint32, void*, uint32, uint32*);
+	void*(*writeXForm)(void*, uint32, void*, void*, uint32, uint32*);
+	int32(*assetLoaded)(void*, uint32, void*, int32);
+	void*(*makeData)(void*, uint32, void*, int32*, int32*);
+	void(*cleanup)(void*, uint32, void*);
+	void(*assetUnloaded)(void*, uint32);
+	void(*writePeek)(void*, uint32, void*, int8*);
 };
 
 struct xEntMotionMPData
@@ -1825,13 +1844,13 @@ struct xEntERData
 
 struct _class_3
 {
-	type_51 base_point;
-	type_56 point;
+	xVec3 base_point[16];
+	xVec3 point[16];
 	int16 total_points;
 	int16 end_points;
 	float32 arc_height;
 	xVec3 arc_normal;
-	type_74 thickness;
+	float32 thickness[16];
 	union
 	{
 		_tagLightningLine line;
@@ -1856,7 +1875,7 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_71 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
@@ -1895,7 +1914,7 @@ struct RwRGBA
 
 struct xJSPHeader
 {
-	type_57 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1927,7 +1946,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_44 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xQuat
@@ -1987,7 +2006,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_131 pad;
+	uint32 pad[4];
 };
 
 enum _tagPadState
@@ -2006,7 +2025,7 @@ struct xFFX
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_75 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct _tagEmitLine
@@ -2071,7 +2090,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_88 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xAnimPlay
@@ -2084,7 +2103,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_108 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct zNPCLassoInfo
@@ -2117,10 +2136,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_83 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_92 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -2162,8 +2181,8 @@ struct zFragShockwave
 	float32 deltVelocity;
 	float32 currSpin;
 	float32 deltSpin;
-	type_87 currColor;
-	type_90 deltColor;
+	float32 currColor[4];
+	float32 deltColor[4];
 };
 
 struct xModelPool
@@ -2213,7 +2232,7 @@ struct xEntMotionMechData
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_79 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 enum en_trantype
@@ -2243,25 +2262,25 @@ struct RpMaterial
 
 struct _class_6
 {
-	union
+	struct
 	{
-		uint8 invisible;
-		uint8 ethereal;
-		uint8 merge;
-		uint8 word_break;
-		uint8 word_end;
-		uint8 line_break;
-		uint8 stop;
-		uint8 tab;
+		uint8 invisible : 1;
+		uint8 ethereal : 1;
+		uint8 merge : 1;
+		uint8 word_break : 1;
+		uint8 word_end : 1;
+		uint8 line_break : 1;
+		uint8 stop : 1;
+		uint8 tab : 1;
 	};
-	union
+	struct
 	{
-		uint8 insert;
-		uint8 dynamic;
-		uint8 page_break;
-		uint8 stateful;
+		uint8 insert : 1;
+		uint8 dynamic : 1;
+		uint8 page_break : 1;
+		uint8 stateful : 1;
 	};
-	uint16 dummy;
+	uint16 dummy : 4;
 };
 
 struct zFragShockwaveAsset : zFragAsset
@@ -2273,8 +2292,8 @@ struct zFragShockwaveAsset : zFragAsset
 	float32 deathVelocity;
 	float32 birthSpin;
 	float32 deathSpin;
-	type_164 birthColor;
-	type_167 deathColor;
+	float32 birthColor[4];
+	float32 deathColor[4];
 };
 
 struct xEnvAsset : xBaseAsset
@@ -2298,8 +2317,8 @@ struct xEnvAsset : xBaseAsset
 
 struct _tagxPad
 {
-	type_116 value;
-	type_122 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -2314,9 +2333,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_150 up_tmr;
-	type_152 down_tmr;
-	type_0 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 enum en_pendtype
@@ -2354,7 +2373,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_143 radius;
+	float32 radius[2];
 };
 
 struct _tagLightningLine
@@ -2405,9 +2424,11 @@ enum zFragType
 
 struct sound_queue
 {
-	type_91 _playing;
+	uint32 _playing[5];
 	int32 head;
 	int32 tail;
+
+	void clear();
 };
 
 struct zNPCSettings : xDynAsset
@@ -2418,7 +2439,7 @@ struct zNPCSettings : xDynAsset
 	int8 allowWander;
 	int8 reduceCollide;
 	int8 useNavSplines;
-	type_19 pad;
+	int8 pad[3];
 	int8 allowChase;
 	int8 allowAttack;
 	int8 assumeLOS;
@@ -2453,7 +2474,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_151 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -2476,7 +2497,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_96 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -2604,14 +2625,14 @@ struct NPCConfig : xListItem_1
 	float32 rad_shadowRaster;
 	float32 rad_dmgSize;
 	int32 flg_vert;
-	type_166 tag_vert;
-	type_168 animFrameRange;
-	type_1 cnt_esteem;
+	xModelTag tag_vert[20];
+	xVec3 animFrameRange[9];
+	int32 cnt_esteem[5];
 	float32 rad_sound;
 	NPCSndTrax* snd_trax;
 	NPCSndTrax* snd_traxShare;
 	int32 test_count;
-	type_16 talk_filter;
+	uint8 talk_filter[4];
 	uint8 talk_filter_size;
 };
 
@@ -2644,8 +2665,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_121 emit_pad;
-	type_124 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -2678,7 +2699,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_28 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -2693,17 +2714,17 @@ struct pointer_asset : xDynAsset
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_97 tmrs;
-	type_100 ttms;
-	type_101 atms;
-	type_105 dtms;
-	type_109 vms;
-	type_114 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct _tagLightningRot
 {
-	type_95 deg;
+	float32 deg[16];
 	float32 degrees;
 	float32 height;
 };
@@ -2836,7 +2857,7 @@ struct xRot
 
 struct zFragGroup
 {
-	type_104 list;
+	zFrag* list[21];
 };
 
 struct xParEmitterPropsAsset : xBaseAsset
@@ -2845,13 +2866,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_3 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_39 color_birth;
-	type_43 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -2917,14 +2938,17 @@ struct xListItem_1
 	NPCConfig* prev;
 };
 
-union zFragInfo
+struct zFragInfo
 {
-	zFragGroup group;
-	zFragParticle particle;
-	zFragProjectile projectile;
-	zFragLightning lightning;
-	zFragSound sound;
-	zFragShockwave shockwave;
+	union
+	{
+		zFragGroup group;
+		zFragParticle particle;
+		zFragProjectile projectile;
+		zFragLightning lightning;
+		zFragSound sound;
+		zFragShockwave shockwave;
+	};
 };
 
 struct xMemPool
@@ -2933,7 +2957,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_2 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -2942,14 +2966,14 @@ struct xMemPool
 
 struct _class_10
 {
-	type_113 endPoint;
+	xVec3 endPoint[2];
 	xVec3 direction;
 	float32 length;
 	float32 scale;
 	float32 width;
-	type_126 endParam;
-	type_129 endVel;
-	type_132 paramSpan;
+	float32 endParam[2];
+	float32 endVel[2];
+	float32 paramSpan[2];
 	float32 arc_height;
 	xVec3 arc_normal;
 };
@@ -3012,14 +3036,14 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_54 baseCount;
-	type_62 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
 struct RpTriangle
 {
-	type_120 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -3096,8 +3120,8 @@ struct xIniFile
 	xIniValue* Values;
 	xIniSection* Sections;
 	void* mem;
-	type_52 name;
-	type_59 pathname;
+	int8 name[256];
+	int8 pathname[256];
 };
 
 struct zGlobalSettings
@@ -3186,15 +3210,15 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_26 PowerUp;
-	type_31 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_128 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -3222,21 +3246,21 @@ struct RxClusterDefinition
 
 struct xNPCBasic : xEnt, xFactoryInst
 {
-	type_110 f_setup;
-	type_118 f_reset;
-	union
+	void(*f_setup)(xEnt*);
+	void(*f_reset)(xEnt*);
+	struct
 	{
-		int32 flg_basenpc;
-		int32 inUpdate;
-		int32 flg_upward;
+		int32 flg_basenpc : 16;
+		int32 inUpdate : 8;
+		int32 flg_upward : 8;
 	};
 	int32 colFreq;
 	int32 colFreqReset;
-	union
+	struct
 	{
-		uint32 flg_colCheck;
-		uint32 flg_penCheck;
-		uint32 flg_unused;
+		uint32 flg_colCheck : 8;
+		uint32 flg_penCheck : 8;
+		uint32 flg_unused : 16;
 	};
 	int32 myNPCType;
 	xEntShadow entShadow_embedded;
@@ -3246,13 +3270,13 @@ struct xNPCBasic : xEnt, xFactoryInst
 struct layout
 {
 	xtextbox tb;
-	type_149 _jots;
+	jot _jots[512];
 	uint32 _jots_size;
-	type_153 _lines;
+	jot_line _lines[128];
 	uint32 _lines_size;
-	type_157 context_buffer;
+	uint8 context_buffer[1024];
 	uint32 context_buffer_size;
-	type_160 dynamics;
+	uint16 dynamics[64];
 	uint32 dynamics_size;
 };
 
@@ -3308,7 +3332,7 @@ struct zFragParticleAsset : zFragAsset
 
 struct xCoef
 {
-	type_134 a;
+	float32 a[4];
 };
 
 struct xPortalAsset : xBaseAsset
@@ -3325,7 +3349,7 @@ struct shared_type
 	uint32 permit;
 	ztalkbox* active;
 	state_type* state;
-	type_141 states;
+	state_type* states[5];
 	layout lt;
 	int32 begin_jot;
 	int32 end_jot;
@@ -3337,7 +3361,7 @@ struct shared_type
 	float32 quit_delay;
 	uint8 prompt_ready;
 	uint8 quit_ready;
-	type_161 stream_locked;
+	uint8 stream_locked[2];
 	int32 next_stream;
 	sound_queue sounds;
 	uint8 allow_quit;
@@ -3354,7 +3378,7 @@ struct fixed_queue
 {
 	uint32 _first;
 	uint32 _last;
-	type_145 _buffer;
+	trigger_pair _buffer[33];
 };
 
 enum en_GOALSTATE
@@ -3398,7 +3422,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_140 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -3421,7 +3445,7 @@ struct zLedgeGrabParams
 
 struct xParInterp
 {
-	type_136 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -3435,7 +3459,7 @@ struct RwSphere
 
 struct _class_11
 {
-	uint8 visible;
+	uint8 visible : 1;
 };
 
 struct xAnimTransitionList
@@ -3446,9 +3470,9 @@ struct xAnimTransitionList
 
 struct callback_1
 {
-	type_137 render;
-	type_144 layout_update;
-	type_144 render_update;
+	void(*render)(jot&, xtextbox&, float32, float32);
+	void(*layout_update)(jot&, xtextbox&, xtextbox&);
+	void(*render_update)(jot&, xtextbox&, xtextbox&);
 };
 
 struct RwTexDictionary
@@ -3470,7 +3494,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_156 wt;
+	float32 wt[4];
 };
 
 enum en_dupowavmod
@@ -3484,8 +3508,8 @@ enum en_dupowavmod
 struct tag_type
 {
 	substr name;
-	type_154 parse_tag;
-	type_154 reset_tag;
+	void(*parse_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
+	void(*reset_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
 	void* context;
 };
 
@@ -3625,14 +3649,14 @@ struct asset_type_1 : xDynAsset
 	uint32 dialog_box;
 	uint32 prompt_box;
 	uint32 quit_box;
-	uint8 trap;
-	uint8 pause;
-	uint8 allow_quit;
-	uint8 trigger_pads;
-	uint8 page;
-	uint8 show;
-	uint8 hide;
-	uint8 audio_effect;
+	uint8 trap : 8;
+	uint8 pause : 8;
+	uint8 allow_quit : 8;
+	uint8 trigger_pads : 8;
+	uint8 page : 8;
+	uint8 show : 8;
+	uint8 hide : 8;
+	uint8 audio_effect : 8;
 	uint32 teleport;
 	_class_13 auto_wait;
 	_class_2 prompt;
@@ -3678,8 +3702,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_139 lastRefs;
-	type_142 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -3737,8 +3761,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_162 name;
-	type_165 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -3766,13 +3790,16 @@ struct xModelBucket
 	uint32 PipeFlags;
 };
 
-union _class_12
+struct _class_12
 {
-	uint8 active;
-	uint8 dirty;
-	uint8 show_backdrop;
-	uint8 visible;
-	uint8 hack_invisible;
+	struct
+	{
+		uint8 active : 1;
+		uint8 dirty : 1;
+		uint8 show_backdrop : 1;
+		uint8 visible : 1;
+		uint8 hack_invisible : 1;
+	};
 };
 
 struct _class_13
@@ -3784,13 +3811,13 @@ struct _class_13
 
 struct RxNodeMethods
 {
-	type_69 nodeBody;
-	type_4 nodeInit;
-	type_9 nodeTerm;
-	type_17 pipelineNodeInit;
-	type_27 pipelineNodeTerm;
-	type_46 pipelineNodeConfig;
-	type_64 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct analog_data
@@ -3811,10 +3838,10 @@ struct zParEmitter : xParEmitter
 
 struct _class_14
 {
-	uint8 time;
-	uint8 prompt;
-	uint8 sound;
-	uint8 event;
+	uint8 time : 8;
+	uint8 prompt : 8;
+	uint8 sound : 8;
+	uint8 event : 8;
 };
 
 struct xPECircle
@@ -3931,7 +3958,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_47 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -3943,7 +3970,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_86 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -3969,10 +3996,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_155 Inv_PatsSock;
-	type_159 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_163 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -3984,21 +4011,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_29 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_70 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_85 sb_model_indices;
-	type_89 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -4043,10 +4070,13 @@ struct xEntMotionOrbitData
 	float32 period;
 };
 
-union _class_17
+struct _class_17
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct zPlayerCarryInfo
@@ -4093,14 +4123,14 @@ struct next_state_type : state_type
 	int32 prev_wait_jot;
 };
 
-type_8 buffer;
-type_20 buffer;
+int8 buffer[16];
+int8 buffer[16];
 basic_rect screen_bounds;
 basic_rect default_adjust;
 shared_type shared;
 uint32 zero;
 uint32 zero;
-type_125 new_tags;
+tag_type new_tags[9];
 uint32 new_tags_size;
 float32 music_fade;
 float32 music_fade_delay;
@@ -4110,8 +4140,8 @@ _anon3 __vt__Q222@unnamed@zTalkBox_cpp@10state_type;
 _anon4 __vt__Q222@unnamed@zTalkBox_cpp@15wait_state_type;
 _anon1 __vt__Q222@unnamed@zTalkBox_cpp@15next_state_type;
 _anon0 __vt__Q222@unnamed@zTalkBox_cpp@16start_state_type;
-type_130 cb_dispatch;
-type_50 parse_tag_wait;
+int32(*cb_dispatch)(xBase*, xBase*, uint32, float32*, xBase*);
+void(*parse_tag_wait)(jot&, xtextbox&, xtextbox&, split_tag&);
 
 void permit(uint32 add_flags, uint32 remove_flags);
 ztalkbox* get_active();
@@ -4121,14 +4151,14 @@ void update_all(xScene& s, float32 dt);
 void load(xBase& data, xDynAsset& asset);
 void init();
 void load_settings(xIniFile& ini);
-void MasterLoveSlave(ztalkbox* this, xBase* slave, int32 starting);
-void MasterTellSlaves(ztalkbox* this, int32 isBeginning);
-void stop_talk(ztalkbox* this);
-void start_talk(ztalkbox* this, uint32 text_id, callback_0* cb, zNPCCommon* npc);
-void start_talk(ztalkbox* this, int8* s, callback_0* cb, zNPCCommon* npc);
-void set_text(ztalkbox* this, uint32 id);
-void set_text(ztalkbox* this, int8* s);
-void load(ztalkbox* this, asset_type_1& a);
+void MasterLoveSlave(xBase* slave, int32 starting);
+void MasterTellSlaves(int32 isBeginning);
+void stop_talk();
+void start_talk(uint32 text_id, callback_0* cb, zNPCCommon* npc);
+void start_talk(int8* s, callback_0* cb, zNPCCommon* npc);
+void set_text(uint32 id);
+void set_text(int8* s);
+void load(asset_type_1& a);
 int32 cb_dispatch(xBase* to, uint32 event, float32* argf);
 void stop_wait(ztalkbox& e, float32* args, uint32 args_size);
 void hide_prompts();
@@ -4165,9 +4195,9 @@ void speak_stop();
 void start();
 void stop();
 state_enum update();
-void start(wait_state_type* this);
-void stop(wait_state_type* this);
-state_enum update(wait_state_type* this, float32 dt);
+void start();
+void stop();
+state_enum update(float32 dt);
 void start();
 void stop();
 state_enum update();
@@ -4177,46 +4207,107 @@ state_enum update();
 
 // permit__8ztalkboxFUiUi
 // Start address: 0x31d6f0
-void permit(uint32 add_flags, uint32 remove_flags)
+void ztalkbox::permit(uint32 add_flags, uint32 remove_flags)
 {
+	// Line 2012, Address: 0x31d6f0, Func Offset: 0
+	// Line 2013, Address: 0x31d708, Func Offset: 0x18
+	// Line 2014, Address: 0x31d718, Func Offset: 0x28
+	// Func End, Address: 0x31d720, Func Offset: 0x30
 }
 
 // get_active__8ztalkboxFv
 // Start address: 0x31d720
-ztalkbox* get_active()
+ztalkbox* ztalkbox::get_active()
 {
+	// Line 2007, Address: 0x31d720, Func Offset: 0
+	// Line 2008, Address: 0x31d724, Func Offset: 0x4
+	// Func End, Address: 0x31d72c, Func Offset: 0xc
 }
 
 // reset_all__8ztalkboxFv
 // Start address: 0x31d730
-void reset_all()
+void ztalkbox::reset_all()
 {
+	// Line 1989, Address: 0x31d730, Func Offset: 0
+	// Line 2000, Address: 0x31d734, Func Offset: 0x4
+	// Line 1989, Address: 0x31d738, Func Offset: 0x8
+	// Line 1990, Address: 0x31d73c, Func Offset: 0xc
+	// Line 1991, Address: 0x31d740, Func Offset: 0x10
+	// Line 2000, Address: 0x31d744, Func Offset: 0x14
+	// Line 1991, Address: 0x31d748, Func Offset: 0x18
+	// Line 1990, Address: 0x31d74c, Func Offset: 0x1c
+	// Line 1992, Address: 0x31d754, Func Offset: 0x24
+	// Line 1993, Address: 0x31d75c, Func Offset: 0x2c
+	// Line 1994, Address: 0x31d764, Func Offset: 0x34
+	// Line 1995, Address: 0x31d76c, Func Offset: 0x3c
+	// Line 1996, Address: 0x31d774, Func Offset: 0x44
+	// Line 1997, Address: 0x31d784, Func Offset: 0x54
+	// Line 1998, Address: 0x31d794, Func Offset: 0x64
+	// Line 1999, Address: 0x31d79c, Func Offset: 0x6c
+	// Line 2000, Address: 0x31d7a8, Func Offset: 0x78
+	// Func End, Address: 0x31d7b0, Func Offset: 0x80
 }
 
 // render_all__8ztalkboxFv
 // Start address: 0x31d7b0
-void render_all()
+void ztalkbox::render_all()
 {
 	ztextbox& d;
+	// Line 1973, Address: 0x31d7b0, Func Offset: 0
+	// Line 1974, Address: 0x31d7b4, Func Offset: 0x4
+	// Line 1973, Address: 0x31d7b8, Func Offset: 0x8
+	// Line 1974, Address: 0x31d7c0, Func Offset: 0x10
+	// Line 1975, Address: 0x31d7d0, Func Offset: 0x20
+	// Line 1978, Address: 0x31d7e4, Func Offset: 0x34
+	// Line 1979, Address: 0x31d7f4, Func Offset: 0x44
+	// Line 1980, Address: 0x31d7f8, Func Offset: 0x48
+	// Line 1981, Address: 0x31d810, Func Offset: 0x60
+	// Line 1983, Address: 0x31d830, Func Offset: 0x80
+	// Line 1985, Address: 0x31d850, Func Offset: 0xa0
+	// Func End, Address: 0x31d860, Func Offset: 0xb0
 }
 
 // update_all__8ztalkboxFR6xScenef
 // Start address: 0x31d860
-void update_all(xScene& s, float32 dt)
+void ztalkbox::update_all(xScene& s, float32 dt)
 {
 	state_enum newtype;
 	trigger_pads_enum tp;
+	// Line 1936, Address: 0x31d860, Func Offset: 0
+	// Line 1937, Address: 0x31d888, Func Offset: 0x28
+	// Line 1940, Address: 0x31d8a0, Func Offset: 0x40
+	// Line 1941, Address: 0x31d8a8, Func Offset: 0x48
+	// Line 1940, Address: 0x31d8ac, Func Offset: 0x4c
+	// Line 1941, Address: 0x31d8b0, Func Offset: 0x50
+	// Line 1942, Address: 0x31d8d4, Func Offset: 0x74
+	// Line 1943, Address: 0x31d8e0, Func Offset: 0x80
+	// Line 1944, Address: 0x31d8f0, Func Offset: 0x90
+	// Line 1945, Address: 0x31d990, Func Offset: 0x130
+	// Line 1946, Address: 0x31d9ac, Func Offset: 0x14c
+	// Line 1947, Address: 0x31d9c4, Func Offset: 0x164
+	// Line 1948, Address: 0x31d9cc, Func Offset: 0x16c
+	// Line 1949, Address: 0x31da70, Func Offset: 0x210
+	// Line 1950, Address: 0x31da80, Func Offset: 0x220
+	// Line 1954, Address: 0x31da9c, Func Offset: 0x23c
+	// Line 1955, Address: 0x31daa4, Func Offset: 0x244
+	// Line 1956, Address: 0x31dad8, Func Offset: 0x278
+	// Line 1958, Address: 0x31db08, Func Offset: 0x2a8
+	// Line 1959, Address: 0x31db18, Func Offset: 0x2b8
+	// Line 1960, Address: 0x31dbc8, Func Offset: 0x368
+	// Func End, Address: 0x31dc08, Func Offset: 0x3a8
 }
 
 // load__8ztalkboxFR5xBaseR9xDynAssetUi
 // Start address: 0x31dca0
-void load(xBase& data, xDynAsset& asset)
+void ztalkbox::load(xBase& data, xDynAsset& asset)
 {
+	// Line 1932, Address: 0x31dca0, Func Offset: 0
+	// Func End, Address: 0x31dca8, Func Offset: 0x8
 }
 
 // init__8ztalkboxFv
 // Start address: 0x31dcb0
-void init()
+void ztalkbox::init()
 {
 	stop_state_type stop_state;
 	int8 @6594;
@@ -4226,73 +4317,224 @@ void init()
 	int8 @6588;
 	start_state_type start_state;
 	int8 @6585;
+	// Line 1916, Address: 0x31dcb0, Func Offset: 0
+	// Line 1917, Address: 0x31dcb4, Func Offset: 0x4
+	// Line 1916, Address: 0x31dcb8, Func Offset: 0x8
+	// Line 1917, Address: 0x31dcbc, Func Offset: 0xc
+	// Line 1918, Address: 0x31dcc8, Func Offset: 0x18
+	// Line 1919, Address: 0x31dce8, Func Offset: 0x38
+	// Line 1920, Address: 0x31dcf4, Func Offset: 0x44
+	// Line 1921, Address: 0x31dd20, Func Offset: 0x70
+	// Line 1922, Address: 0x31dd30, Func Offset: 0x80
+	// Line 1923, Address: 0x31dd60, Func Offset: 0xb0
+	// Line 1924, Address: 0x31dd70, Func Offset: 0xc0
+	// Line 1926, Address: 0x31dd98, Func Offset: 0xe8
+	// Line 1925, Address: 0x31dda8, Func Offset: 0xf8
+	// Line 1926, Address: 0x31ddac, Func Offset: 0xfc
+	// Line 1925, Address: 0x31ddb4, Func Offset: 0x104
+	// Line 1926, Address: 0x31ddbc, Func Offset: 0x10c
+	// Line 1927, Address: 0x31de24, Func Offset: 0x174
+	// Func End, Address: 0x31de30, Func Offset: 0x180
 }
 
 // load_settings__8ztalkboxFR8xIniFile
 // Start address: 0x31de30
-void load_settings(xIniFile& ini)
+void ztalkbox::load_settings(xIniFile& ini)
 {
+	// Line 1910, Address: 0x31de30, Func Offset: 0
+	// Line 1903, Address: 0x31de34, Func Offset: 0x4
+	// Line 1910, Address: 0x31de38, Func Offset: 0x8
+	// Line 1903, Address: 0x31de3c, Func Offset: 0xc
+	// Line 1910, Address: 0x31de40, Func Offset: 0x10
+	// Line 1913, Address: 0x31de54, Func Offset: 0x24
+	// Func End, Address: 0x31de60, Func Offset: 0x30
 }
 
 // MasterLoveSlave__8ztalkboxFP5xBasei
 // Start address: 0x31de60
-void MasterLoveSlave(ztalkbox* this, xBase* slave, int32 starting)
+void ztalkbox::MasterLoveSlave(xBase* slave, int32 starting)
 {
 	xGroup* grp;
 	int32 cnt;
 	int32 i;
 	xBase* grpitem;
 	zNPCCommon* npc;
+	// Line 1869, Address: 0x31de60, Func Offset: 0
+	// Line 1870, Address: 0x31de64, Func Offset: 0x4
+	// Line 1869, Address: 0x31de68, Func Offset: 0x8
+	// Line 1870, Address: 0x31de84, Func Offset: 0x24
+	// Line 1871, Address: 0x31dea4, Func Offset: 0x44
+	// Line 1873, Address: 0x31dea8, Func Offset: 0x48
+	// Line 1874, Address: 0x31deac, Func Offset: 0x4c
+	// Line 1875, Address: 0x31deb8, Func Offset: 0x58
+	// Line 1876, Address: 0x31dec8, Func Offset: 0x68
+	// Line 1878, Address: 0x31ded8, Func Offset: 0x78
+	// Line 1879, Address: 0x31dee0, Func Offset: 0x80
+	// Line 1880, Address: 0x31dee8, Func Offset: 0x88
+	// Line 1881, Address: 0x31def8, Func Offset: 0x98
+	// Line 1887, Address: 0x31df00, Func Offset: 0xa0
+	// Line 1888, Address: 0x31df20, Func Offset: 0xc0
+	// Line 1899, Address: 0x31df30, Func Offset: 0xd0
+	// Func End, Address: 0x31df50, Func Offset: 0xf0
 }
 
 // MasterTellSlaves__8ztalkboxFi
 // Start address: 0x31df50
-void MasterTellSlaves(ztalkbox* this, int32 isBeginning)
+void ztalkbox::MasterTellSlaves(int32 isBeginning)
 {
 	int32 i;
 	xLinkAsset* link;
 	xBase* mychild;
+	// Line 1842, Address: 0x31df50, Func Offset: 0
+	// Line 1843, Address: 0x31df74, Func Offset: 0x24
+	// Line 1844, Address: 0x31df88, Func Offset: 0x38
+	// Line 1848, Address: 0x31df8c, Func Offset: 0x3c
+	// Line 1844, Address: 0x31df90, Func Offset: 0x40
+	// Line 1848, Address: 0x31df94, Func Offset: 0x44
+	// Line 1851, Address: 0x31dfa0, Func Offset: 0x50
+	// Line 1855, Address: 0x31dfbc, Func Offset: 0x6c
+	// Line 1858, Address: 0x31dfc8, Func Offset: 0x78
+	// Line 1861, Address: 0x31dfd0, Func Offset: 0x80
+	// Line 1863, Address: 0x31dfd8, Func Offset: 0x88
+	// Line 1866, Address: 0x31dff0, Func Offset: 0xa0
+	// Func End, Address: 0x31e010, Func Offset: 0xc0
 }
 
 // stop_talk__8ztalkboxFv
 // Start address: 0x31e010
-void stop_talk(ztalkbox* this)
+void ztalkbox::stop_talk()
 {
+	// Line 1802, Address: 0x31e010, Func Offset: 0
+	// Line 1803, Address: 0x31e014, Func Offset: 0x4
+	// Line 1802, Address: 0x31e018, Func Offset: 0x8
+	// Line 1803, Address: 0x31e01c, Func Offset: 0xc
+	// Line 1804, Address: 0x31e02c, Func Offset: 0x1c
+	// Line 1805, Address: 0x31e0b8, Func Offset: 0xa8
+	// Func End, Address: 0x31e0c4, Func Offset: 0xb4
 }
 
 // start_talk__8ztalkboxFUiPQ28ztalkbox8callbackP10zNPCCommon
 // Start address: 0x31e0d0
-void start_talk(ztalkbox* this, uint32 text_id, callback_0* cb, zNPCCommon* npc)
+void ztalkbox::start_talk(uint32 text_id, callback_0* cb, zNPCCommon* npc)
 {
 	xTextAsset* ta;
+	// Line 1786, Address: 0x31e0d0, Func Offset: 0
+	// Line 1787, Address: 0x31e0ec, Func Offset: 0x1c
+	// Line 1789, Address: 0x31e0f4, Func Offset: 0x24
+	// Line 1790, Address: 0x31e0fc, Func Offset: 0x2c
+	// Line 1793, Address: 0x31e108, Func Offset: 0x38
+	// Line 1794, Address: 0x31e114, Func Offset: 0x44
+	// Line 1797, Address: 0x31e11c, Func Offset: 0x4c
+	// Line 1798, Address: 0x31e12c, Func Offset: 0x5c
+	// Line 1799, Address: 0x31e130, Func Offset: 0x60
+	// Func End, Address: 0x31e148, Func Offset: 0x78
 }
 
 // start_talk__8ztalkboxFPCcPQ28ztalkbox8callbackP10zNPCCommon
 // Start address: 0x31e150
-void start_talk(ztalkbox* this, int8* s, callback_0* cb, zNPCCommon* npc)
+void ztalkbox::start_talk(int8* s, callback_0* cb, zNPCCommon* npc)
 {
 	ztextbox& d;
 	uint8 registered;
+	// Line 1744, Address: 0x31e150, Func Offset: 0
+	// Line 1745, Address: 0x31e154, Func Offset: 0x4
+	// Line 1744, Address: 0x31e158, Func Offset: 0x8
+	// Line 1745, Address: 0x31e17c, Func Offset: 0x2c
+	// Line 1748, Address: 0x31e184, Func Offset: 0x34
+	// Line 1749, Address: 0x31e1a0, Func Offset: 0x50
+	// Line 1750, Address: 0x31e2e4, Func Offset: 0x194
+	// Line 1749, Address: 0x31e2e8, Func Offset: 0x198
+	// Line 1750, Address: 0x31e2f8, Func Offset: 0x1a8
+	// Line 1751, Address: 0x31e2fc, Func Offset: 0x1ac
+	// Line 1752, Address: 0x31e300, Func Offset: 0x1b0
+	// Line 1754, Address: 0x31e308, Func Offset: 0x1b8
+	// Line 1755, Address: 0x31e30c, Func Offset: 0x1bc
+	// Line 1754, Address: 0x31e310, Func Offset: 0x1c0
+	// Line 1755, Address: 0x31e314, Func Offset: 0x1c4
+	// Line 1754, Address: 0x31e318, Func Offset: 0x1c8
+	// Line 1757, Address: 0x31e324, Func Offset: 0x1d4
+	// Line 1758, Address: 0x31e348, Func Offset: 0x1f8
+	// Line 1762, Address: 0x31e350, Func Offset: 0x200
+	// Line 1764, Address: 0x31e3d0, Func Offset: 0x280
+	// Line 1766, Address: 0x31e3d8, Func Offset: 0x288
+	// Line 1767, Address: 0x31e3dc, Func Offset: 0x28c
+	// Line 1768, Address: 0x31e3f8, Func Offset: 0x2a8
+	// Line 1769, Address: 0x31e408, Func Offset: 0x2b8
+	// Line 1770, Address: 0x31e410, Func Offset: 0x2c0
+	// Line 1771, Address: 0x31e424, Func Offset: 0x2d4
+	// Line 1773, Address: 0x31e528, Func Offset: 0x3d8
+	// Line 1774, Address: 0x31e530, Func Offset: 0x3e0
+	// Line 1773, Address: 0x31e538, Func Offset: 0x3e8
+	// Line 1774, Address: 0x31e53c, Func Offset: 0x3ec
+	// Line 1775, Address: 0x31e600, Func Offset: 0x4b0
+	// Line 1776, Address: 0x31e618, Func Offset: 0x4c8
+	// Line 1779, Address: 0x31e630, Func Offset: 0x4e0
+	// Func End, Address: 0x31e654, Func Offset: 0x504
 }
 
 // set_text__8ztalkboxFUi
 // Start address: 0x31e660
-void set_text(ztalkbox* this, uint32 id)
+void ztalkbox::set_text(uint32 id)
 {
 	xTextAsset* ta;
+	// Line 1710, Address: 0x31e660, Func Offset: 0
+	// Line 1711, Address: 0x31e66c, Func Offset: 0xc
+	// Line 1712, Address: 0x31e674, Func Offset: 0x14
+	// Line 1713, Address: 0x31e680, Func Offset: 0x20
+	// Line 1715, Address: 0x31e698, Func Offset: 0x38
+	// Line 1716, Address: 0x31e6a4, Func Offset: 0x44
+	// Func End, Address: 0x31e6b8, Func Offset: 0x58
 }
 
 // set_text__8ztalkboxFPCc
 // Start address: 0x31e6c0
-void set_text(ztalkbox* this, int8* s)
+void ztalkbox::set_text(int8* s)
 {
 	ztextbox& d;
+	// Line 1691, Address: 0x31e6c0, Func Offset: 0
+	// Line 1693, Address: 0x31e6d0, Func Offset: 0x10
+	// Line 1694, Address: 0x31e6d4, Func Offset: 0x14
+	// Line 1695, Address: 0x31e6f0, Func Offset: 0x30
+	// Line 1696, Address: 0x31e6f8, Func Offset: 0x38
+	// Line 1698, Address: 0x31e700, Func Offset: 0x40
+	// Line 1700, Address: 0x31e714, Func Offset: 0x54
+	// Line 1701, Address: 0x31e738, Func Offset: 0x78
+	// Line 1702, Address: 0x31e74c, Func Offset: 0x8c
+	// Line 1704, Address: 0x31e850, Func Offset: 0x190
+	// Line 1705, Address: 0x31e860, Func Offset: 0x1a0
+	// Line 1707, Address: 0x31e878, Func Offset: 0x1b8
+	// Func End, Address: 0x31e88c, Func Offset: 0x1cc
 }
 
 // load__8ztalkboxFRCQ28ztalkbox10asset_type
 // Start address: 0x31e890
-void load(ztalkbox* this, asset_type_1& a)
+void ztalkbox::load(asset_type_1& a)
 {
+	// Line 1614, Address: 0x31e890, Func Offset: 0
+	// Line 1615, Address: 0x31e8a4, Func Offset: 0x14
+	// Line 1616, Address: 0x31e8ac, Func Offset: 0x1c
+	// Line 1618, Address: 0x31e8b0, Func Offset: 0x20
+	// Line 1616, Address: 0x31e8b4, Func Offset: 0x24
+	// Line 1618, Address: 0x31e8b8, Func Offset: 0x28
+	// Line 1617, Address: 0x31e8bc, Func Offset: 0x2c
+	// Line 1618, Address: 0x31e8c0, Func Offset: 0x30
+	// Line 1619, Address: 0x31e8c4, Func Offset: 0x34
+	// Line 1620, Address: 0x31e8d8, Func Offset: 0x48
+	// Line 1628, Address: 0x31e8e8, Func Offset: 0x58
+	// Line 1630, Address: 0x31e8f8, Func Offset: 0x68
+	// Line 1634, Address: 0x31e904, Func Offset: 0x74
+	// Line 1630, Address: 0x31e908, Func Offset: 0x78
+	// Line 1636, Address: 0x31e90c, Func Offset: 0x7c
+	// Line 1638, Address: 0x31e920, Func Offset: 0x90
+	// Line 1642, Address: 0x31e92c, Func Offset: 0x9c
+	// Line 1644, Address: 0x31e930, Func Offset: 0xa0
+	// Line 1645, Address: 0x31e96c, Func Offset: 0xdc
+	// Line 1646, Address: 0x31e9a4, Func Offset: 0x114
+	// Line 1647, Address: 0x31e9dc, Func Offset: 0x14c
+	// Line 1648, Address: 0x31ea14, Func Offset: 0x184
+	// Line 1650, Address: 0x31ea4c, Func Offset: 0x1bc
+	// Line 1682, Address: 0x31eb00, Func Offset: 0x270
+	// Func End, Address: 0x31eb14, Func Offset: 0x284
 }
 
 // cb_dispatch__22@unnamed@zTalkBox_cpp@FP5xBaseP5xBaseUiPCfP5xBase
@@ -4300,6 +4542,46 @@ void load(ztalkbox* this, asset_type_1& a)
 int32 cb_dispatch(xBase* to, uint32 event, float32* argf)
 {
 	ztalkbox& e;
+	// Line 1505, Address: 0x31eb20, Func Offset: 0
+	// Line 1511, Address: 0x31eb24, Func Offset: 0x4
+	// Line 1505, Address: 0x31eb28, Func Offset: 0x8
+	// Line 1513, Address: 0x31eb2c, Func Offset: 0xc
+	// Line 1505, Address: 0x31eb30, Func Offset: 0x10
+	// Line 1511, Address: 0x31eb34, Func Offset: 0x14
+	// Line 1505, Address: 0x31eb38, Func Offset: 0x18
+	// Line 1507, Address: 0x31eb40, Func Offset: 0x20
+	// Line 1513, Address: 0x31eb44, Func Offset: 0x24
+	// Line 1517, Address: 0x31ed40, Func Offset: 0x220
+	// Line 1518, Address: 0x31edec, Func Offset: 0x2cc
+	// Line 1520, Address: 0x31edf4, Func Offset: 0x2d4
+	// Line 1521, Address: 0x31edf8, Func Offset: 0x2d8
+	// Line 1522, Address: 0x31ee3c, Func Offset: 0x31c
+	// Line 1524, Address: 0x31ee44, Func Offset: 0x324
+	// Line 1525, Address: 0x31ee48, Func Offset: 0x328
+	// Line 1526, Address: 0x31eeb8, Func Offset: 0x398
+	// Line 1530, Address: 0x31eec0, Func Offset: 0x3a0
+	// Line 1531, Address: 0x31ef18, Func Offset: 0x3f8
+	// Line 1532, Address: 0x31efb8, Func Offset: 0x498
+	// Line 1534, Address: 0x31efc0, Func Offset: 0x4a0
+	// Line 1535, Address: 0x31efd0, Func Offset: 0x4b0
+	// Line 1536, Address: 0x31f07c, Func Offset: 0x55c
+	// Line 1537, Address: 0x31f084, Func Offset: 0x564
+	// Line 1538, Address: 0x31f088, Func Offset: 0x568
+	// Line 1539, Address: 0x31f0a8, Func Offset: 0x588
+	// Line 1540, Address: 0x31f0b8, Func Offset: 0x598
+	// Line 1541, Address: 0x31f158, Func Offset: 0x638
+	// Line 1543, Address: 0x31f160, Func Offset: 0x640
+	// Line 1544, Address: 0x31f1a4, Func Offset: 0x684
+	// Line 1545, Address: 0x31f1ac, Func Offset: 0x68c
+	// Line 1546, Address: 0x31f1b0, Func Offset: 0x690
+	// Line 1547, Address: 0x31f204, Func Offset: 0x6e4
+	// Line 1548, Address: 0x31f20c, Func Offset: 0x6ec
+	// Line 1549, Address: 0x31f210, Func Offset: 0x6f0
+	// Line 1594, Address: 0x31f21c, Func Offset: 0x6fc
+	// Line 1596, Address: 0x31f220, Func Offset: 0x700
+	// Line 1598, Address: 0x31f228, Func Offset: 0x708
+	// Line 1599, Address: 0x31f250, Func Offset: 0x730
+	// Func End, Address: 0x31f268, Func Offset: 0x748
 }
 
 // stop_wait__22@unnamed@zTalkBox_cpp@FR8ztalkboxPCfUi
@@ -4309,6 +4591,21 @@ void stop_wait(ztalkbox& e, float32* args, uint32 args_size)
 	uint32 mask;
 	uint32 i;
 	uint32 v;
+	// Line 1490, Address: 0x31f270, Func Offset: 0
+	// Line 1491, Address: 0x31f278, Func Offset: 0x8
+	// Line 1492, Address: 0x31f280, Func Offset: 0x10
+	// Line 1493, Address: 0x31f284, Func Offset: 0x14
+	// Line 1496, Address: 0x31f28c, Func Offset: 0x1c
+	// Line 1498, Address: 0x31f298, Func Offset: 0x28
+	// Line 1493, Address: 0x31f29c, Func Offset: 0x2c
+	// Line 1496, Address: 0x31f2a0, Func Offset: 0x30
+	// Line 1497, Address: 0x31f2d4, Func Offset: 0x64
+	// Line 1498, Address: 0x31f2e4, Func Offset: 0x74
+	// Line 1499, Address: 0x31f2ec, Func Offset: 0x7c
+	// Line 1500, Address: 0x31f300, Func Offset: 0x90
+	// Line 1501, Address: 0x31f310, Func Offset: 0xa0
+	// Line 1502, Address: 0x31f328, Func Offset: 0xb8
+	// Func End, Address: 0x31f330, Func Offset: 0xc0
 }
 
 // hide_prompts__22@unnamed@zTalkBox_cpp@Fv
@@ -4316,6 +4613,14 @@ void stop_wait(ztalkbox& e, float32* args, uint32 args_size)
 void hide_prompts()
 {
 	ztalkbox& active;
+	// Line 1203, Address: 0x31f330, Func Offset: 0
+	// Line 1205, Address: 0x31f334, Func Offset: 0x4
+	// Line 1203, Address: 0x31f338, Func Offset: 0x8
+	// Line 1205, Address: 0x31f340, Func Offset: 0x10
+	// Line 1206, Address: 0x31f348, Func Offset: 0x18
+	// Line 1207, Address: 0x31f35c, Func Offset: 0x2c
+	// Line 1208, Address: 0x31f370, Func Offset: 0x40
+	// Func End, Address: 0x31f380, Func Offset: 0x50
 }
 
 // refresh_prompts__22@unnamed@zTalkBox_cpp@Fv
@@ -4324,19 +4629,69 @@ void refresh_prompts()
 {
 	ztalkbox& active;
 	int8* message;
-	type_66 queries;
+	int8* queries[2];
+	// Line 1132, Address: 0x31f380, Func Offset: 0
+	// Line 1134, Address: 0x31f384, Func Offset: 0x4
+	// Line 1132, Address: 0x31f388, Func Offset: 0x8
+	// Line 1134, Address: 0x31f390, Func Offset: 0x10
+	// Line 1136, Address: 0x31f394, Func Offset: 0x14
+	// Line 1139, Address: 0x31f3a0, Func Offset: 0x20
+	// Line 1141, Address: 0x31f3c4, Func Offset: 0x44
+	// Line 1146, Address: 0x31f3e8, Func Offset: 0x68
+	// Line 1141, Address: 0x31f3f0, Func Offset: 0x70
+	// Line 1146, Address: 0x31f3f8, Func Offset: 0x78
+	// Line 1141, Address: 0x31f400, Func Offset: 0x80
+	// Line 1147, Address: 0x31f404, Func Offset: 0x84
+	// Line 1148, Address: 0x31f410, Func Offset: 0x90
+	// Line 1149, Address: 0x31f418, Func Offset: 0x98
+	// Line 1151, Address: 0x31f420, Func Offset: 0xa0
+	// Line 1152, Address: 0x31f428, Func Offset: 0xa8
+	// Line 1153, Address: 0x31f438, Func Offset: 0xb8
+	// Line 1154, Address: 0x31f440, Func Offset: 0xc0
+	// Line 1155, Address: 0x31f448, Func Offset: 0xc8
+	// Line 1158, Address: 0x31f454, Func Offset: 0xd4
+	// Line 1160, Address: 0x31f460, Func Offset: 0xe0
+	// Line 1162, Address: 0x31f480, Func Offset: 0x100
+	// Line 1163, Address: 0x31f488, Func Offset: 0x108
+	// Line 1164, Address: 0x31f498, Func Offset: 0x118
+	// Line 1165, Address: 0x31f4a0, Func Offset: 0x120
+	// Line 1166, Address: 0x31f4a8, Func Offset: 0x128
+	// Line 1169, Address: 0x31f4d4, Func Offset: 0x154
+	// Line 1170, Address: 0x31f4dc, Func Offset: 0x15c
+	// Line 1171, Address: 0x31f4ec, Func Offset: 0x16c
+	// Line 1172, Address: 0x31f4f4, Func Offset: 0x174
+	// Line 1173, Address: 0x31f500, Func Offset: 0x180
+	// Line 1175, Address: 0x31f508, Func Offset: 0x188
+	// Func End, Address: 0x31f518, Func Offset: 0x198
 }
 
 // unlock_stream__22@unnamed@zTalkBox_cpp@Fv
 // Start address: 0x31f520
 void unlock_stream()
 {
+	// Line 1124, Address: 0x31f520, Func Offset: 0
+	// Line 1125, Address: 0x31f524, Func Offset: 0x4
+	// Line 1124, Address: 0x31f528, Func Offset: 0x8
+	// Line 1125, Address: 0x31f52c, Func Offset: 0xc
+	// Line 1126, Address: 0x31f534, Func Offset: 0x14
+	// Line 1127, Address: 0x31f540, Func Offset: 0x20
+	// Line 1128, Address: 0x31f548, Func Offset: 0x28
+	// Line 1129, Address: 0x31f550, Func Offset: 0x30
+	// Func End, Address: 0x31f55c, Func Offset: 0x3c
 }
 
 // deactivate__22@unnamed@zTalkBox_cpp@Fv
 // Start address: 0x31f560
 void deactivate()
 {
+	// Line 1011, Address: 0x31f560, Func Offset: 0
+	// Line 1012, Address: 0x31f574, Func Offset: 0x14
+	// Line 1013, Address: 0x31f5b8, Func Offset: 0x58
+	// Line 1015, Address: 0x31f5c4, Func Offset: 0x64
+	// Line 1016, Address: 0x31f5d8, Func Offset: 0x78
+	// Line 1017, Address: 0x31f5e0, Func Offset: 0x80
+	// Line 1018, Address: 0x31f600, Func Offset: 0xa0
+	// Func End, Address: 0x31f610, Func Offset: 0xb0
 }
 
 // trigger_wait__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
@@ -4344,6 +4699,13 @@ void deactivate()
 uint8 trigger_wait(jot& j)
 {
 	wait_context& c;
+	// Line 946, Address: 0x31f610, Func Offset: 0
+	// Line 947, Address: 0x31f648, Func Offset: 0x38
+	// Line 948, Address: 0x31f658, Func Offset: 0x48
+	// Line 947, Address: 0x31f65c, Func Offset: 0x4c
+	// Line 948, Address: 0x31f68c, Func Offset: 0x7c
+	// Line 949, Address: 0x31f690, Func Offset: 0x80
+	// Func End, Address: 0x31f698, Func Offset: 0x88
 }
 
 // parse_tag_wait__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4352,18 +4714,45 @@ void parse_tag_wait(jot& j, xtextbox& ctb, split_tag& ti)
 {
 	wait_context& c;
 	tag_entry_list el;
+	// Line 931, Address: 0x31f6a0, Func Offset: 0
+	// Line 932, Address: 0x31f6b4, Func Offset: 0x14
+	// Line 933, Address: 0x31f6bc, Func Offset: 0x1c
+	// Line 934, Address: 0x31f6cc, Func Offset: 0x2c
+	// Line 935, Address: 0x31f6d0, Func Offset: 0x30
+	// Line 936, Address: 0x31f6d4, Func Offset: 0x34
+	// Line 935, Address: 0x31f6d8, Func Offset: 0x38
+	// Line 936, Address: 0x31f6dc, Func Offset: 0x3c
+	// Line 939, Address: 0x31f6f0, Func Offset: 0x50
+	// Line 936, Address: 0x31f6f4, Func Offset: 0x54
+	// Line 939, Address: 0x31f700, Func Offset: 0x60
+	// Line 940, Address: 0x31f760, Func Offset: 0xc0
+	// Line 941, Address: 0x31f770, Func Offset: 0xd0
+	// Func End, Address: 0x31f780, Func Offset: 0xe0
 }
 
 // trigger_trap__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
 // Start address: 0x31f780
 uint8 trigger_trap(jot& j)
 {
+	// Line 924, Address: 0x31f780, Func Offset: 0
+	// Line 925, Address: 0x31f788, Func Offset: 0x8
+	// Line 926, Address: 0x31f7a8, Func Offset: 0x28
+	// Line 928, Address: 0x31f7b0, Func Offset: 0x30
+	// Line 927, Address: 0x31f7b4, Func Offset: 0x34
+	// Line 928, Address: 0x31f7b8, Func Offset: 0x38
+	// Func End, Address: 0x31f7c0, Func Offset: 0x40
 }
 
 // reset_tag_trap__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
 // Start address: 0x31f7c0
 void reset_tag_trap(jot& j, xtextbox& ctb)
 {
+	// Line 916, Address: 0x31f7c0, Func Offset: 0
+	// Line 917, Address: 0x31f7c8, Func Offset: 0x8
+	// Line 918, Address: 0x31f7d0, Func Offset: 0x10
+	// Line 921, Address: 0x31f7e0, Func Offset: 0x20
+	// Line 922, Address: 0x31f7f0, Func Offset: 0x30
+	// Func End, Address: 0x31f7f8, Func Offset: 0x38
 }
 
 // parse_tag_trap__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4371,6 +4760,10 @@ void reset_tag_trap(jot& j, xtextbox& ctb)
 void parse_tag_trap(jot& j, split_tag& ti)
 {
 	uint8& c;
+	// Line 910, Address: 0x31f800, Func Offset: 0
+	// Line 912, Address: 0x31f80c, Func Offset: 0xc
+	// Line 914, Address: 0x31f848, Func Offset: 0x48
+	// Func End, Address: 0x31f858, Func Offset: 0x58
 }
 
 // trigger_teleport__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
@@ -4378,6 +4771,16 @@ void parse_tag_trap(jot& j, split_tag& ti)
 uint8 trigger_teleport(jot& j)
 {
 	teleport_context& c;
+	// Line 901, Address: 0x31f860, Func Offset: 0
+	// Line 902, Address: 0x31f864, Func Offset: 0x4
+	// Line 901, Address: 0x31f868, Func Offset: 0x8
+	// Line 902, Address: 0x31f874, Func Offset: 0x14
+	// Line 903, Address: 0x31f888, Func Offset: 0x28
+	// Line 904, Address: 0x31f88c, Func Offset: 0x2c
+	// Line 905, Address: 0x31f8d8, Func Offset: 0x78
+	// Line 906, Address: 0x31f910, Func Offset: 0xb0
+	// Line 907, Address: 0x31f918, Func Offset: 0xb8
+	// Func End, Address: 0x31f92c, Func Offset: 0xcc
 }
 
 // parse_tag_teleport__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4389,18 +4792,54 @@ void parse_tag_teleport(jot& j, split_tag& ti)
 	xDynAsset* a;
 	location_asset& ta;
 	pointer_asset& ta;
+	// Line 843, Address: 0x31f930, Func Offset: 0
+	// Line 844, Address: 0x31f950, Func Offset: 0x20
+	// Line 846, Address: 0x31f958, Func Offset: 0x28
+	// Line 848, Address: 0x31f95c, Func Offset: 0x2c
+	// Line 846, Address: 0x31f960, Func Offset: 0x30
+	// Line 848, Address: 0x31f964, Func Offset: 0x34
+	// Line 849, Address: 0x31f9b0, Func Offset: 0x80
+	// Line 850, Address: 0x31f9b8, Func Offset: 0x88
+	// Line 853, Address: 0x31f9bc, Func Offset: 0x8c
+	// Line 859, Address: 0x31f9cc, Func Offset: 0x9c
+	// Line 862, Address: 0x31f9d4, Func Offset: 0xa4
+	// Line 865, Address: 0x31f9ec, Func Offset: 0xbc
+	// Line 866, Address: 0x31f9f0, Func Offset: 0xc0
+	// Line 867, Address: 0x31fa04, Func Offset: 0xd4
+	// Line 868, Address: 0x31fa10, Func Offset: 0xe0
+	// Line 873, Address: 0x31fa28, Func Offset: 0xf8
+	// Line 871, Address: 0x31fa2c, Func Offset: 0xfc
+	// Line 873, Address: 0x31fa30, Func Offset: 0x100
+	// Line 871, Address: 0x31fa34, Func Offset: 0x104
+	// Line 873, Address: 0x31fa38, Func Offset: 0x108
+	// Line 872, Address: 0x31fa3c, Func Offset: 0x10c
+	// Line 873, Address: 0x31fa54, Func Offset: 0x124
+	// Line 884, Address: 0x31fa60, Func Offset: 0x130
+	// Line 885, Address: 0x31fa68, Func Offset: 0x138
+	// Func End, Address: 0x31fa84, Func Offset: 0x154
 }
 
 // trigger_allow_quit__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
 // Start address: 0x31fa90
 uint8 trigger_allow_quit(jot& j)
 {
+	// Line 838, Address: 0x31fa90, Func Offset: 0
+	// Line 839, Address: 0x31fa98, Func Offset: 0x8
+	// Line 838, Address: 0x31fa9c, Func Offset: 0xc
+	// Line 840, Address: 0x31faa0, Func Offset: 0x10
+	// Func End, Address: 0x31faa8, Func Offset: 0x18
 }
 
 // reset_tag_allow_quit__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
 // Start address: 0x31fab0
 void reset_tag_allow_quit(jot& j, xtextbox& ctb)
 {
+	// Line 829, Address: 0x31fab0, Func Offset: 0
+	// Line 830, Address: 0x31fab8, Func Offset: 0x8
+	// Line 831, Address: 0x31fac0, Func Offset: 0x10
+	// Line 834, Address: 0x31fad0, Func Offset: 0x20
+	// Line 835, Address: 0x31fae0, Func Offset: 0x30
+	// Func End, Address: 0x31fae8, Func Offset: 0x38
 }
 
 // parse_tag_allow_quit__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4408,24 +4847,34 @@ void reset_tag_allow_quit(jot& j, xtextbox& ctb)
 void parse_tag_allow_quit(jot& j, split_tag& ti)
 {
 	uint8& c;
+	// Line 823, Address: 0x31faf0, Func Offset: 0
+	// Line 825, Address: 0x31fafc, Func Offset: 0xc
+	// Line 827, Address: 0x31fb38, Func Offset: 0x48
+	// Func End, Address: 0x31fb48, Func Offset: 0x58
 }
 
 // trigger_pause__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
 // Start address: 0x31fb50
 uint8 trigger_pause()
 {
+	// Line 799, Address: 0x31fb50, Func Offset: 0
+	// Func End, Address: 0x31fb58, Func Offset: 0x8
 }
 
 // reset_tag_pause__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
 // Start address: 0x31fb60
 void reset_tag_pause()
 {
+	// Line 795, Address: 0x31fb60, Func Offset: 0
+	// Func End, Address: 0x31fb68, Func Offset: 0x8
 }
 
 // parse_tag_pause__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
 // Start address: 0x31fb70
 void parse_tag_pause()
 {
+	// Line 792, Address: 0x31fb70, Func Offset: 0
+	// Func End, Address: 0x31fb78, Func Offset: 0x8
 }
 
 // trigger_sound__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
@@ -4440,6 +4889,57 @@ uint8 trigger_sound(jot& j)
 	uint32 i;
 	uint32 size;
 	xBase* entry;
+	// Line 707, Address: 0x31fb80, Func Offset: 0
+	// Line 708, Address: 0x31fb84, Func Offset: 0x4
+	// Line 707, Address: 0x31fb88, Func Offset: 0x8
+	// Line 708, Address: 0x31fba0, Func Offset: 0x20
+	// Line 710, Address: 0x31fbac, Func Offset: 0x2c
+	// Line 711, Address: 0x31fc3c, Func Offset: 0xbc
+	// Line 712, Address: 0x31fc80, Func Offset: 0x100
+	// Line 716, Address: 0x31fc88, Func Offset: 0x108
+	// Line 718, Address: 0x31fc8c, Func Offset: 0x10c
+	// Line 721, Address: 0x31fcb8, Func Offset: 0x138
+	// Line 722, Address: 0x31fd1c, Func Offset: 0x19c
+	// Line 724, Address: 0x31fd24, Func Offset: 0x1a4
+	// Line 725, Address: 0x31fdac, Func Offset: 0x22c
+	// Line 728, Address: 0x31fdf4, Func Offset: 0x274
+	// Line 731, Address: 0x31fe10, Func Offset: 0x290
+	// Line 733, Address: 0x31fef0, Func Offset: 0x370
+	// Line 739, Address: 0x31fef8, Func Offset: 0x378
+	// Line 735, Address: 0x31fefc, Func Offset: 0x37c
+	// Line 733, Address: 0x31ff00, Func Offset: 0x380
+	// Line 735, Address: 0x31ff04, Func Offset: 0x384
+	// Line 733, Address: 0x31ff08, Func Offset: 0x388
+	// Line 731, Address: 0x31ff10, Func Offset: 0x390
+	// Line 742, Address: 0x31ff18, Func Offset: 0x398
+	// Line 731, Address: 0x31ff1c, Func Offset: 0x39c
+	// Line 741, Address: 0x31ff20, Func Offset: 0x3a0
+	// Line 742, Address: 0x31ff24, Func Offset: 0x3a4
+	// Line 747, Address: 0x31ff48, Func Offset: 0x3c8
+	// Line 748, Address: 0x31ff4c, Func Offset: 0x3cc
+	// Line 749, Address: 0x31ff54, Func Offset: 0x3d4
+	// Line 751, Address: 0x31ff58, Func Offset: 0x3d8
+	// Line 754, Address: 0x31ff60, Func Offset: 0x3e0
+	// Line 755, Address: 0x31ff70, Func Offset: 0x3f0
+	// Line 756, Address: 0x31ff7c, Func Offset: 0x3fc
+	// Line 757, Address: 0x31ff90, Func Offset: 0x410
+	// Line 758, Address: 0x31ffa8, Func Offset: 0x428
+	// Line 760, Address: 0x31ffb4, Func Offset: 0x434
+	// Line 761, Address: 0x31ffc0, Func Offset: 0x440
+	// Line 763, Address: 0x31ffd0, Func Offset: 0x450
+	// Line 764, Address: 0x31ffdc, Func Offset: 0x45c
+	// Line 766, Address: 0x31fff4, Func Offset: 0x474
+	// Line 767, Address: 0x31fff8, Func Offset: 0x478
+	// Line 768, Address: 0x320010, Func Offset: 0x490
+	// Line 774, Address: 0x320020, Func Offset: 0x4a0
+	// Line 776, Address: 0x320028, Func Offset: 0x4a8
+	// Line 778, Address: 0x320048, Func Offset: 0x4c8
+	// Line 779, Address: 0x32004c, Func Offset: 0x4cc
+	// Line 780, Address: 0x320060, Func Offset: 0x4e0
+	// Line 781, Address: 0x320074, Func Offset: 0x4f4
+	// Line 787, Address: 0x320080, Func Offset: 0x500
+	// Line 788, Address: 0x320088, Func Offset: 0x508
+	// Func End, Address: 0x3200a8, Func Offset: 0x528
 }
 
 // reset_tag_sound__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4447,6 +4947,15 @@ uint8 trigger_sound(jot& j)
 void reset_tag_sound(jot& j, xtextbox& ctb)
 {
 	sound_context& c;
+	// Line 697, Address: 0x3200b0, Func Offset: 0
+	// Line 698, Address: 0x3200b8, Func Offset: 0x8
+	// Line 699, Address: 0x3200c0, Func Offset: 0x10
+	// Line 700, Address: 0x3200d0, Func Offset: 0x20
+	// Line 701, Address: 0x3200d4, Func Offset: 0x24
+	// Line 702, Address: 0x3200dc, Func Offset: 0x2c
+	// Line 703, Address: 0x3200e0, Func Offset: 0x30
+	// Line 704, Address: 0x3200e4, Func Offset: 0x34
+	// Func End, Address: 0x3200f0, Func Offset: 0x40
 }
 
 // parse_tag_sound__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4461,6 +4970,59 @@ void parse_tag_sound(jot& j, xtextbox& ctb, split_tag& ti)
 	int32 anim;
 	st_PKR_ASSET_TOCINFO ainfo;
 	uint32 source;
+	// Line 605, Address: 0x3200f0, Func Offset: 0
+	// Line 606, Address: 0x32010c, Func Offset: 0x1c
+	// Line 607, Address: 0x320114, Func Offset: 0x24
+	// Line 608, Address: 0x320124, Func Offset: 0x34
+	// Line 611, Address: 0x320128, Func Offset: 0x38
+	// Line 617, Address: 0x320140, Func Offset: 0x50
+	// Line 611, Address: 0x320144, Func Offset: 0x54
+	// Line 617, Address: 0x32014c, Func Offset: 0x5c
+	// Line 611, Address: 0x320150, Func Offset: 0x60
+	// Line 617, Address: 0x320154, Func Offset: 0x64
+	// Line 618, Address: 0x3201a0, Func Offset: 0xb0
+	// Line 620, Address: 0x3201b4, Func Offset: 0xc4
+	// Line 621, Address: 0x3201b8, Func Offset: 0xc8
+	// Line 622, Address: 0x320210, Func Offset: 0x120
+	// Line 623, Address: 0x320218, Func Offset: 0x128
+	// Line 624, Address: 0x320270, Func Offset: 0x180
+	// Line 625, Address: 0x320274, Func Offset: 0x184
+	// Line 629, Address: 0x320278, Func Offset: 0x188
+	// Line 630, Address: 0x320288, Func Offset: 0x198
+	// Line 631, Address: 0x320290, Func Offset: 0x1a0
+	// Line 632, Address: 0x3202b0, Func Offset: 0x1c0
+	// Line 637, Address: 0x3202c8, Func Offset: 0x1d8
+	// Line 641, Address: 0x3202d0, Func Offset: 0x1e0
+	// Line 642, Address: 0x3202ec, Func Offset: 0x1fc
+	// Line 645, Address: 0x320390, Func Offset: 0x2a0
+	// Line 646, Address: 0x320398, Func Offset: 0x2a8
+	// Line 647, Address: 0x3203e8, Func Offset: 0x2f8
+	// Line 649, Address: 0x3203fc, Func Offset: 0x30c
+	// Line 650, Address: 0x320400, Func Offset: 0x310
+	// Line 651, Address: 0x320458, Func Offset: 0x368
+	// Line 652, Address: 0x320468, Func Offset: 0x378
+	// Line 653, Address: 0x3204c0, Func Offset: 0x3d0
+	// Line 654, Address: 0x3204cc, Func Offset: 0x3dc
+	// Line 655, Address: 0x3204d4, Func Offset: 0x3e4
+	// Line 660, Address: 0x3204e0, Func Offset: 0x3f0
+	// Line 659, Address: 0x3204e4, Func Offset: 0x3f4
+	// Line 660, Address: 0x3204e8, Func Offset: 0x3f8
+	// Line 661, Address: 0x320538, Func Offset: 0x448
+	// Line 665, Address: 0x32054c, Func Offset: 0x45c
+	// Line 666, Address: 0x320558, Func Offset: 0x468
+	// Line 671, Address: 0x320564, Func Offset: 0x474
+	// Line 677, Address: 0x320580, Func Offset: 0x490
+	// Line 679, Address: 0x320588, Func Offset: 0x498
+	// Line 680, Address: 0x32058c, Func Offset: 0x49c
+	// Line 679, Address: 0x320594, Func Offset: 0x4a4
+	// Line 680, Address: 0x320598, Func Offset: 0x4a8
+	// Line 681, Address: 0x3205a0, Func Offset: 0x4b0
+	// Line 682, Address: 0x3205a8, Func Offset: 0x4b8
+	// Line 683, Address: 0x3205b4, Func Offset: 0x4c4
+	// Line 690, Address: 0x3205c0, Func Offset: 0x4d0
+	// Line 693, Address: 0x3205c8, Func Offset: 0x4d8
+	// Line 694, Address: 0x3205d0, Func Offset: 0x4e0
+	// Func End, Address: 0x3205e8, Func Offset: 0x4f8
 }
 
 // trigger_signal__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
@@ -4469,7 +5031,18 @@ uint8 trigger_signal(jot& j)
 {
 	signal_context& c;
 	uint32 i;
-	type_146 signals;
+	uint32 signals[20];
+	// Line 537, Address: 0x3205f0, Func Offset: 0
+	// Line 563, Address: 0x3205f4, Func Offset: 0x4
+	// Line 537, Address: 0x3205f8, Func Offset: 0x8
+	// Line 563, Address: 0x320610, Func Offset: 0x20
+	// Line 564, Address: 0x320638, Func Offset: 0x48
+	// Line 566, Address: 0x320650, Func Offset: 0x60
+	// Line 567, Address: 0x320720, Func Offset: 0x130
+	// Line 568, Address: 0x320738, Func Offset: 0x148
+	// Line 569, Address: 0x320758, Func Offset: 0x168
+	// Line 570, Address: 0x320760, Func Offset: 0x170
+	// Func End, Address: 0x320780, Func Offset: 0x190
 }
 
 // parse_tag_signal__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4479,15 +5052,46 @@ void parse_tag_signal(jot& j, xtextbox& ctb, split_tag& ti)
 	signal_context& c;
 	tag_entry* e;
 	tag_entry_list el;
-	type_103 v;
+	int32 v[20];
 	uint32 r;
 	uint32 i;
+	// Line 501, Address: 0x320780, Func Offset: 0
+	// Line 502, Address: 0x320794, Func Offset: 0x14
+	// Line 503, Address: 0x32079c, Func Offset: 0x1c
+	// Line 507, Address: 0x3207ac, Func Offset: 0x2c
+	// Line 506, Address: 0x3207b0, Func Offset: 0x30
+	// Line 510, Address: 0x3207b4, Func Offset: 0x34
+	// Line 514, Address: 0x3207cc, Func Offset: 0x4c
+	// Line 510, Address: 0x3207d0, Func Offset: 0x50
+	// Line 513, Address: 0x3207dc, Func Offset: 0x5c
+	// Line 514, Address: 0x3207e0, Func Offset: 0x60
+	// Line 517, Address: 0x3207ec, Func Offset: 0x6c
+	// Line 519, Address: 0x3207f4, Func Offset: 0x74
+	// Line 522, Address: 0x320810, Func Offset: 0x90
+	// Line 525, Address: 0x320820, Func Offset: 0xa0
+	// Line 522, Address: 0x320824, Func Offset: 0xa4
+	// Line 524, Address: 0x32082c, Func Offset: 0xac
+	// Line 525, Address: 0x320838, Func Offset: 0xb8
+	// Line 526, Address: 0x320844, Func Offset: 0xc4
+	// Line 530, Address: 0x320858, Func Offset: 0xd8
+	// Line 531, Address: 0x320860, Func Offset: 0xe0
+	// Line 530, Address: 0x320868, Func Offset: 0xe8
+	// Line 531, Address: 0x320874, Func Offset: 0xf4
+	// Line 532, Address: 0x3208c0, Func Offset: 0x140
+	// Line 533, Address: 0x3208f8, Func Offset: 0x178
+	// Line 534, Address: 0x320908, Func Offset: 0x188
+	// Func End, Address: 0x320918, Func Offset: 0x198
 }
 
 // trigger_auto_wait__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot
 // Start address: 0x320920
 uint8 trigger_auto_wait(jot& j)
 {
+	// Line 496, Address: 0x320920, Func Offset: 0
+	// Line 497, Address: 0x320928, Func Offset: 0x8
+	// Line 496, Address: 0x32092c, Func Offset: 0xc
+	// Line 498, Address: 0x320964, Func Offset: 0x44
+	// Func End, Address: 0x32096c, Func Offset: 0x4c
 }
 
 // reset_tag_auto_wait__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4495,6 +5099,15 @@ uint8 trigger_auto_wait(jot& j)
 void reset_tag_auto_wait(jot& j, xtextbox& ctb)
 {
 	wait_context& c;
+	// Line 485, Address: 0x320970, Func Offset: 0
+	// Line 486, Address: 0x320984, Func Offset: 0x14
+	// Line 487, Address: 0x32098c, Func Offset: 0x1c
+	// Line 488, Address: 0x32099c, Func Offset: 0x2c
+	// Line 489, Address: 0x3209a0, Func Offset: 0x30
+	// Line 490, Address: 0x3209a4, Func Offset: 0x34
+	// Line 491, Address: 0x3209ac, Func Offset: 0x3c
+	// Line 492, Address: 0x3209ec, Func Offset: 0x7c
+	// Func End, Address: 0x320a00, Func Offset: 0x90
 }
 
 // parse_tag_auto_wait__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag
@@ -4504,6 +5117,28 @@ void parse_tag_auto_wait(jot& j, xtextbox& ctb, split_tag& ti)
 	wait_context& c;
 	tag_entry_list el;
 	tag_entry& e;
+	// Line 461, Address: 0x320a00, Func Offset: 0
+	// Line 462, Address: 0x320a14, Func Offset: 0x14
+	// Line 463, Address: 0x320a1c, Func Offset: 0x1c
+	// Line 464, Address: 0x320a2c, Func Offset: 0x2c
+	// Line 465, Address: 0x320a30, Func Offset: 0x30
+	// Line 466, Address: 0x320a34, Func Offset: 0x34
+	// Line 465, Address: 0x320a38, Func Offset: 0x38
+	// Line 466, Address: 0x320a3c, Func Offset: 0x3c
+	// Line 471, Address: 0x320a50, Func Offset: 0x50
+	// Line 466, Address: 0x320a54, Func Offset: 0x54
+	// Line 470, Address: 0x320a60, Func Offset: 0x60
+	// Line 471, Address: 0x320a64, Func Offset: 0x64
+	// Line 473, Address: 0x320a90, Func Offset: 0x90
+	// Line 475, Address: 0x320a94, Func Offset: 0x94
+	// Line 478, Address: 0x320aa0, Func Offset: 0xa0
+	// Line 479, Address: 0x320aa8, Func Offset: 0xa8
+	// Line 478, Address: 0x320ab0, Func Offset: 0xb0
+	// Line 479, Address: 0x320abc, Func Offset: 0xbc
+	// Line 480, Address: 0x320ac4, Func Offset: 0xc4
+	// Line 481, Address: 0x320ac8, Func Offset: 0xc8
+	// Line 482, Address: 0x320b08, Func Offset: 0x108
+	// Func End, Address: 0x320b18, Func Offset: 0x118
 }
 
 // load_wait_context__22@unnamed@zTalkBox_cpp@FRQ222@unnamed@zTalkBox_cpp@12wait_contextRCQ28xtextbox14tag_entry_list
@@ -4514,7 +5149,52 @@ void load_wait_context(wait_context& c, tag_entry_list& el)
 	tag_entry* prompt;
 	uint32 r;
 	uint32 i;
-	type_106 v;
+	int32 v[32];
+	// Line 409, Address: 0x320b20, Func Offset: 0
+	// Line 416, Address: 0x320b24, Func Offset: 0x4
+	// Line 409, Address: 0x320b28, Func Offset: 0x8
+	// Line 416, Address: 0x320b2c, Func Offset: 0xc
+	// Line 409, Address: 0x320b30, Func Offset: 0x10
+	// Line 410, Address: 0x320b44, Func Offset: 0x24
+	// Line 416, Address: 0x320b48, Func Offset: 0x28
+	// Line 417, Address: 0x320b94, Func Offset: 0x74
+	// Line 418, Address: 0x320bb4, Func Offset: 0x94
+	// Line 421, Address: 0x320bd0, Func Offset: 0xb0
+	// Line 422, Address: 0x320c20, Func Offset: 0x100
+	// Line 424, Address: 0x320c28, Func Offset: 0x108
+	// Line 425, Address: 0x320c34, Func Offset: 0x114
+	// Line 424, Address: 0x320c38, Func Offset: 0x118
+	// Line 425, Address: 0x320c44, Func Offset: 0x124
+	// Line 427, Address: 0x320cb0, Func Offset: 0x190
+	// Line 428, Address: 0x320cc0, Func Offset: 0x1a0
+	// Line 429, Address: 0x320cc4, Func Offset: 0x1a4
+	// Line 432, Address: 0x320cc8, Func Offset: 0x1a8
+	// Line 435, Address: 0x320d28, Func Offset: 0x208
+	// Line 432, Address: 0x320d30, Func Offset: 0x210
+	// Line 435, Address: 0x320d38, Func Offset: 0x218
+	// Line 436, Address: 0x320d88, Func Offset: 0x268
+	// Line 438, Address: 0x320d90, Func Offset: 0x270
+	// Line 440, Address: 0x320d98, Func Offset: 0x278
+	// Line 438, Address: 0x320d9c, Func Offset: 0x27c
+	// Line 440, Address: 0x320da0, Func Offset: 0x280
+	// Line 438, Address: 0x320dac, Func Offset: 0x28c
+	// Line 440, Address: 0x320db4, Func Offset: 0x294
+	// Line 441, Address: 0x320dbc, Func Offset: 0x29c
+	// Line 442, Address: 0x320dd0, Func Offset: 0x2b0
+	// Line 444, Address: 0x320de0, Func Offset: 0x2c0
+	// Line 447, Address: 0x320df0, Func Offset: 0x2d0
+	// Line 444, Address: 0x320df4, Func Offset: 0x2d4
+	// Line 446, Address: 0x320dfc, Func Offset: 0x2dc
+	// Line 447, Address: 0x320e08, Func Offset: 0x2e8
+	// Line 448, Address: 0x320e14, Func Offset: 0x2f4
+	// Line 449, Address: 0x320e28, Func Offset: 0x308
+	// Line 451, Address: 0x320e3c, Func Offset: 0x31c
+	// Line 454, Address: 0x320e40, Func Offset: 0x320
+	// Line 455, Address: 0x320e90, Func Offset: 0x370
+	// Line 456, Address: 0x320ec8, Func Offset: 0x3a8
+	// Line 457, Address: 0x320ed8, Func Offset: 0x3b8
+	// Line 458, Address: 0x320ee0, Func Offset: 0x3c0
+	// Func End, Address: 0x320ef8, Func Offset: 0x3d8
 }
 
 // reset_auto_wait__22@unnamed@zTalkBox_cpp@Fv
@@ -4522,6 +5202,26 @@ void load_wait_context(wait_context& c, tag_entry_list& el)
 void reset_auto_wait()
 {
 	asset_type_1& a;
+	// Line 394, Address: 0x320f00, Func Offset: 0
+	// Line 395, Address: 0x320f04, Func Offset: 0x4
+	// Line 394, Address: 0x320f08, Func Offset: 0x8
+	// Line 396, Address: 0x320f0c, Func Offset: 0xc
+	// Line 397, Address: 0x320f10, Func Offset: 0x10
+	// Line 398, Address: 0x320f14, Func Offset: 0x14
+	// Line 395, Address: 0x320f18, Func Offset: 0x18
+	// Line 394, Address: 0x320f1c, Func Offset: 0x1c
+	// Line 395, Address: 0x320f20, Func Offset: 0x20
+	// Line 396, Address: 0x320f3c, Func Offset: 0x3c
+	// Line 397, Address: 0x320f60, Func Offset: 0x60
+	// Line 398, Address: 0x320f84, Func Offset: 0x84
+	// Line 399, Address: 0x320fa8, Func Offset: 0xa8
+	// Line 400, Address: 0x320fb4, Func Offset: 0xb4
+	// Line 401, Address: 0x320fc0, Func Offset: 0xc0
+	// Line 403, Address: 0x320fd0, Func Offset: 0xd0
+	// Line 404, Address: 0x320fe0, Func Offset: 0xe0
+	// Line 405, Address: 0x320ff0, Func Offset: 0xf0
+	// Line 406, Address: 0x320ff4, Func Offset: 0xf4
+	// Func End, Address: 0x320ffc, Func Offset: 0xfc
 }
 
 // read_bool__22@unnamed@zTalkBox_cpp@FRC6substrb
@@ -4530,62 +5230,200 @@ uint8 read_bool(substr& s, uint8 def)
 {
 	uint32 i;
 	uint32 i;
-	type_158 positive;
-	type_60 negative;
+	substr positive[6];
+	substr negative[6];
+	// Line 369, Address: 0x321000, Func Offset: 0
+	// Line 376, Address: 0x321014, Func Offset: 0x14
+	// Line 378, Address: 0x32101c, Func Offset: 0x1c
+	// Line 379, Address: 0x321028, Func Offset: 0x28
+	// Line 380, Address: 0x321058, Func Offset: 0x58
+	// Line 384, Address: 0x321060, Func Offset: 0x60
+	// Line 385, Address: 0x321070, Func Offset: 0x70
+	// Line 386, Address: 0x3210a0, Func Offset: 0xa0
+	// Line 388, Address: 0x3210a8, Func Offset: 0xa8
+	// Func End, Address: 0x3210c0, Func Offset: 0xc0
 }
 
 // trigger_pads__22@unnamed@zTalkBox_cpp@FUi
 // Start address: 0x3210c0
 void trigger_pads(uint32 pressed)
 {
+	// Line 323, Address: 0x3210c0, Func Offset: 0
+	// Line 324, Address: 0x3210c4, Func Offset: 0x4
+	// Line 323, Address: 0x3210c8, Func Offset: 0x8
+	// Line 324, Address: 0x3210d0, Func Offset: 0x10
+	// Line 325, Address: 0x3211a0, Func Offset: 0xe0
+	// Line 326, Address: 0x321270, Func Offset: 0x1b0
+	// Line 327, Address: 0x321340, Func Offset: 0x280
+	// Line 328, Address: 0x321410, Func Offset: 0x350
+	// Line 329, Address: 0x3214e0, Func Offset: 0x420
+	// Line 330, Address: 0x3215b0, Func Offset: 0x4f0
+	// Line 331, Address: 0x321680, Func Offset: 0x5c0
+	// Line 332, Address: 0x321750, Func Offset: 0x690
+	// Line 333, Address: 0x321820, Func Offset: 0x760
+	// Line 334, Address: 0x3218f0, Func Offset: 0x830
+	// Line 335, Address: 0x3219c8, Func Offset: 0x908
+	// Line 336, Address: 0x321aa0, Func Offset: 0x9e0
+	// Line 337, Address: 0x321b78, Func Offset: 0xab8
+	// Line 338, Address: 0x321c50, Func Offset: 0xb90
+	// Func End, Address: 0x321c60, Func Offset: 0xba0
 }
 
 // trigger__22@unnamed@zTalkBox_cpp@FUi
 // Start address: 0x321c60
 void trigger(uint32 event)
 {
+	// Line 311, Address: 0x321c60, Func Offset: 0
+	// Line 312, Address: 0x321c64, Func Offset: 0x4
+	// Line 311, Address: 0x321c68, Func Offset: 0x8
+	// Line 312, Address: 0x321c6c, Func Offset: 0xc
+	// Line 314, Address: 0x321c78, Func Offset: 0x18
+	// Line 315, Address: 0x321c7c, Func Offset: 0x1c
+	// Line 314, Address: 0x321c80, Func Offset: 0x20
+	// Line 315, Address: 0x321c84, Func Offset: 0x24
+	// Line 314, Address: 0x321c8c, Func Offset: 0x2c
+	// Line 315, Address: 0x321c90, Func Offset: 0x30
+	// Line 314, Address: 0x321c9c, Func Offset: 0x3c
+	// Line 315, Address: 0x321cb8, Func Offset: 0x58
+	// Line 316, Address: 0x321cc4, Func Offset: 0x64
+	// Line 315, Address: 0x321cc8, Func Offset: 0x68
+	// Line 316, Address: 0x321cfc, Func Offset: 0x9c
+	// Line 315, Address: 0x321d00, Func Offset: 0xa0
+	// Line 316, Address: 0x321d08, Func Offset: 0xa8
+	// Line 318, Address: 0x321d0c, Func Offset: 0xac
+	// Line 319, Address: 0x321d20, Func Offset: 0xc0
+	// Line 320, Address: 0x321d28, Func Offset: 0xc8
+	// Func End, Address: 0x321d34, Func Offset: 0xd4
 }
 
 // speak_stop__22@unnamed@zTalkBox_cpp@Fv
 // Start address: 0x321d40
 void speak_stop()
 {
+	// Line 297, Address: 0x321d40, Func Offset: 0
+	// Line 298, Address: 0x321d50, Func Offset: 0x10
+	// Line 300, Address: 0x321d58, Func Offset: 0x18
+	// Line 302, Address: 0x321d68, Func Offset: 0x28
+	// Line 304, Address: 0x321d70, Func Offset: 0x30
+	// Line 305, Address: 0x321d80, Func Offset: 0x40
+	// Line 306, Address: 0x321d88, Func Offset: 0x48
+	// Line 308, Address: 0x321d90, Func Offset: 0x50
+	// Func End, Address: 0x321d9c, Func Offset: 0x5c
 }
 
 // start__Q222@unnamed@zTalkBox_cpp@15stop_state_typeFv
 // Start address: 0x321da0
 void start()
 {
+	// Line 1462, Address: 0x321da0, Func Offset: 0
+	// Func End, Address: 0x321da8, Func Offset: 0x8
 }
 
 // stop__Q222@unnamed@zTalkBox_cpp@15stop_state_typeFv
 // Start address: 0x321db0
 void stop()
 {
+	// Line 1463, Address: 0x321db0, Func Offset: 0
+	// Func End, Address: 0x321db8, Func Offset: 0x8
 }
 
 // update__Q222@unnamed@zTalkBox_cpp@15stop_state_typeFR6xScenef
 // Start address: 0x321dc0
 state_enum update()
 {
+	// Line 1468, Address: 0x321dc0, Func Offset: 0
+	// Func End, Address: 0x321dc8, Func Offset: 0x8
 }
 
 // start__Q222@unnamed@zTalkBox_cpp@15wait_state_typeFv
 // Start address: 0x321dd0
-void start(wait_state_type* this)
+void wait_state_type::start()
 {
+	// Line 1348, Address: 0x321dd0, Func Offset: 0
+	// Func End, Address: 0x321dd8, Func Offset: 0x8
 }
 
 // stop__Q222@unnamed@zTalkBox_cpp@15wait_state_typeFv
 // Start address: 0x321de0
-void stop(wait_state_type* this)
+void wait_state_type::stop()
 {
+	// Line 1351, Address: 0x321de0, Func Offset: 0
+	// Line 1355, Address: 0x321de4, Func Offset: 0x4
+	// Line 1351, Address: 0x321de8, Func Offset: 0x8
+	// Line 1355, Address: 0x321df4, Func Offset: 0x14
+	// Line 1358, Address: 0x321e10, Func Offset: 0x30
+	// Line 1357, Address: 0x321e18, Func Offset: 0x38
+	// Line 1360, Address: 0x321e28, Func Offset: 0x48
+	// Line 1361, Address: 0x321e30, Func Offset: 0x50
+	// Line 1364, Address: 0x321e34, Func Offset: 0x54
+	// Line 1361, Address: 0x321e40, Func Offset: 0x60
+	// Line 1364, Address: 0x321e44, Func Offset: 0x64
+	// Line 1366, Address: 0x321e64, Func Offset: 0x84
+	// Line 1367, Address: 0x321e6c, Func Offset: 0x8c
+	// Line 1369, Address: 0x321e84, Func Offset: 0xa4
+	// Line 1371, Address: 0x321f50, Func Offset: 0x170
+	// Line 1372, Address: 0x321f58, Func Offset: 0x178
+	// Line 1373, Address: 0x321f5c, Func Offset: 0x17c
+	// Line 1372, Address: 0x321f60, Func Offset: 0x180
+	// Line 1373, Address: 0x321f64, Func Offset: 0x184
+	// Line 1374, Address: 0x321f68, Func Offset: 0x188
+	// Line 1372, Address: 0x321f70, Func Offset: 0x190
+	// Line 1375, Address: 0x321f88, Func Offset: 0x1a8
+	// Func End, Address: 0x321f98, Func Offset: 0x1b8
 }
 
 // update__Q222@unnamed@zTalkBox_cpp@15wait_state_typeFR6xScenef
 // Start address: 0x321fa0
-state_enum update(wait_state_type* this, float32 dt)
+state_enum wait_state_type::update(float32 dt)
 {
+	// Line 1377, Address: 0x321fa0, Func Offset: 0
+	// Line 1382, Address: 0x321fa4, Func Offset: 0x4
+	// Line 1377, Address: 0x321fa8, Func Offset: 0x8
+	// Line 1382, Address: 0x321fbc, Func Offset: 0x1c
+	// Line 1383, Address: 0x322050, Func Offset: 0xb0
+	// Line 1385, Address: 0x322090, Func Offset: 0xf0
+	// Line 1388, Address: 0x3220b8, Func Offset: 0x118
+	// Line 1390, Address: 0x3220c8, Func Offset: 0x128
+	// Line 1391, Address: 0x3220f0, Func Offset: 0x150
+	// Line 1395, Address: 0x3220f8, Func Offset: 0x158
+	// Line 1397, Address: 0x32210c, Func Offset: 0x16c
+	// Line 1398, Address: 0x322110, Func Offset: 0x170
+	// Line 1397, Address: 0x322118, Func Offset: 0x178
+	// Line 1398, Address: 0x322120, Func Offset: 0x180
+	// Line 1399, Address: 0x322134, Func Offset: 0x194
+	// Line 1402, Address: 0x322138, Func Offset: 0x198
+	// Line 1404, Address: 0x32215c, Func Offset: 0x1bc
+	// Line 1406, Address: 0x32217c, Func Offset: 0x1dc
+	// Line 1404, Address: 0x322180, Func Offset: 0x1e0
+	// Line 1407, Address: 0x322184, Func Offset: 0x1e4
+	// Line 1411, Address: 0x322194, Func Offset: 0x1f4
+	// Line 1409, Address: 0x322198, Func Offset: 0x1f8
+	// Line 1411, Address: 0x3221a4, Func Offset: 0x204
+	// Line 1412, Address: 0x3221ac, Func Offset: 0x20c
+	// Line 1413, Address: 0x3221b0, Func Offset: 0x210
+	// Line 1416, Address: 0x3221c0, Func Offset: 0x220
+	// Line 1415, Address: 0x3221c4, Func Offset: 0x224
+	// Line 1416, Address: 0x3221cc, Func Offset: 0x22c
+	// Line 1420, Address: 0x3221d4, Func Offset: 0x234
+	// Line 1421, Address: 0x3221d8, Func Offset: 0x238
+	// Line 1424, Address: 0x3221ec, Func Offset: 0x24c
+	// Line 1423, Address: 0x3221f0, Func Offset: 0x250
+	// Line 1424, Address: 0x3221f8, Func Offset: 0x258
+	// Line 1431, Address: 0x322200, Func Offset: 0x260
+	// Line 1433, Address: 0x322230, Func Offset: 0x290
+	// Line 1435, Address: 0x322238, Func Offset: 0x298
+	// Line 1436, Address: 0x322244, Func Offset: 0x2a4
+	// Line 1437, Address: 0x322250, Func Offset: 0x2b0
+	// Line 1436, Address: 0x322254, Func Offset: 0x2b4
+	// Line 1437, Address: 0x322258, Func Offset: 0x2b8
+	// Line 1443, Address: 0x322260, Func Offset: 0x2c0
+	// Line 1444, Address: 0x322318, Func Offset: 0x378
+	// Line 1447, Address: 0x322320, Func Offset: 0x380
+	// Line 1450, Address: 0x322350, Func Offset: 0x3b0
+	// Line 1451, Address: 0x32235c, Func Offset: 0x3bc
+	// Line 1454, Address: 0x322368, Func Offset: 0x3c8
+	// Line 1455, Address: 0x322370, Func Offset: 0x3d0
+	// Func End, Address: 0x322388, Func Offset: 0x3e8
 }
 
 // start__Q222@unnamed@zTalkBox_cpp@15next_state_typeFv
@@ -4596,35 +5434,80 @@ void start()
 	int32 size;
 	int32 jots_size;
 	jot* prev;
+	// Line 1277, Address: 0x322390, Func Offset: 0
+	// Line 1278, Address: 0x3223a4, Func Offset: 0x14
+	// Line 1285, Address: 0x3223b4, Func Offset: 0x24
+	// Line 1280, Address: 0x3223b8, Func Offset: 0x28
+	// Line 1285, Address: 0x3223bc, Func Offset: 0x2c
+	// Line 1281, Address: 0x3223c8, Func Offset: 0x38
+	// Line 1280, Address: 0x3223cc, Func Offset: 0x3c
+	// Line 1281, Address: 0x3223d0, Func Offset: 0x40
+	// Line 1284, Address: 0x3223d4, Func Offset: 0x44
+	// Line 1285, Address: 0x3223dc, Func Offset: 0x4c
+	// Line 1287, Address: 0x3223f0, Func Offset: 0x60
+	// Line 1289, Address: 0x322410, Func Offset: 0x80
+	// Line 1297, Address: 0x322424, Func Offset: 0x94
+	// Line 1298, Address: 0x322430, Func Offset: 0xa0
+	// Line 1300, Address: 0x3224c8, Func Offset: 0x138
+	// Line 1303, Address: 0x3224d8, Func Offset: 0x148
+	// Line 1304, Address: 0x3224e8, Func Offset: 0x158
+	// Line 1305, Address: 0x322510, Func Offset: 0x180
+	// Line 1307, Address: 0x322518, Func Offset: 0x188
+	// Line 1308, Address: 0x32259c, Func Offset: 0x20c
+	// Line 1324, Address: 0x3225a0, Func Offset: 0x210
+	// Func End, Address: 0x3225c8, Func Offset: 0x238
 }
 
 // stop__Q222@unnamed@zTalkBox_cpp@15next_state_typeFv
 // Start address: 0x3225d0
 void stop()
 {
+	// Line 1325, Address: 0x3225d0, Func Offset: 0
+	// Func End, Address: 0x3225d8, Func Offset: 0x8
 }
 
 // update__Q222@unnamed@zTalkBox_cpp@15next_state_typeFR6xScenef
 // Start address: 0x3225e0
 state_enum update()
 {
+	// Line 1329, Address: 0x3225e0, Func Offset: 0
+	// Line 1336, Address: 0x3225fc, Func Offset: 0x1c
+	// Func End, Address: 0x322604, Func Offset: 0x24
 }
 
 // start__Q222@unnamed@zTalkBox_cpp@16start_state_typeFv
 // Start address: 0x322610
 void start()
 {
+	// Line 1254, Address: 0x322610, Func Offset: 0
+	// Line 1259, Address: 0x322614, Func Offset: 0x4
+	// Line 1254, Address: 0x322618, Func Offset: 0x8
+	// Line 1256, Address: 0x32261c, Func Offset: 0xc
+	// Line 1254, Address: 0x322620, Func Offset: 0x10
+	// Line 1256, Address: 0x322624, Func Offset: 0x14
+	// Line 1254, Address: 0x322628, Func Offset: 0x18
+	// Line 1255, Address: 0x322634, Func Offset: 0x24
+	// Line 1257, Address: 0x32263c, Func Offset: 0x2c
+	// Line 1259, Address: 0x322644, Func Offset: 0x34
+	// Line 1260, Address: 0x322654, Func Offset: 0x44
+	// Line 1256, Address: 0x322664, Func Offset: 0x54
+	// Line 1261, Address: 0x322678, Func Offset: 0x68
+	// Func End, Address: 0x322680, Func Offset: 0x70
 }
 
 // stop__Q222@unnamed@zTalkBox_cpp@16start_state_typeFv
 // Start address: 0x322680
 void stop()
 {
+	// Line 1263, Address: 0x322680, Func Offset: 0
+	// Func End, Address: 0x322688, Func Offset: 0x8
 }
 
 // update__Q222@unnamed@zTalkBox_cpp@16start_state_typeFR6xScenef
 // Start address: 0x322690
 state_enum update()
 {
+	// Line 1268, Address: 0x322690, Func Offset: 0
+	// Func End, Address: 0x322698, Func Offset: 0x8
 }
 

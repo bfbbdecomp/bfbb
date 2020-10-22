@@ -1,14 +1,14 @@
 typedef struct sceIpuDmaEnv;
-typedef union sceGsScissor;
+typedef struct sceGsScissor;
 typedef struct ThreadParam;
 typedef struct _tagPadAnalog;
 typedef struct VoData;
 typedef struct _tagiPad;
-typedef union sceGsFrame;
+typedef struct sceGsFrame;
 typedef struct tGS_DISPLAY2;
-typedef union sceGsPrim;
+typedef struct sceGsPrim;
 typedef enum sceMpegCbType;
-typedef union sceGsZbuf;
+typedef struct sceGsZbuf;
 typedef struct _tagxPad;
 typedef struct VideoDec;
 typedef struct ReadBuf;
@@ -18,10 +18,10 @@ typedef struct sceGsClear;
 typedef struct tGS_PMODE;
 typedef struct VoTag;
 typedef struct sceGsDispEnv;
-typedef union sceGsDthe;
+typedef struct sceGsDthe;
 typedef enum _tagRumbleType;
 typedef struct tGS_BGCOLOR;
-typedef union sceGsTest;
+typedef struct sceGsTest;
 typedef struct xVec2;
 typedef struct sceGsDBuff;
 typedef struct analog_data;
@@ -30,16 +30,16 @@ typedef struct sceMpegCbDataStr;
 typedef struct VoBuf;
 typedef struct SpuStreamHeader;
 typedef struct sceGsDrawEnv1;
-typedef union sceGsPrmodecont;
-typedef union sceGsColclamp;
+typedef struct sceGsPrmodecont;
+typedef struct sceGsColclamp;
 typedef struct tGS_SMODE2;
-typedef union sceGsXyoffset;
+typedef struct sceGsXyoffset;
 typedef struct ViBuf;
 typedef struct sceMpeg;
 typedef struct sceGsRgbaq;
 typedef struct tGS_DISPFB2;
 typedef struct SpuStreamBody;
-typedef union sceGsXyz;
+typedef struct sceGsXyz;
 typedef struct AudioDec;
 typedef enum _tagPadState;
 typedef struct sceGifTag;
@@ -59,7 +59,7 @@ typedef _tagxPad type_4[4];
 typedef uint8 type_6[327680];
 typedef int32 type_7[15];
 typedef uint32 type_8[29248];
-typedef type_8 type_9[2];
+typedef uint32 type_9[29248][2];
 typedef float32 type_10[22];
 typedef float32 type_11[22];
 typedef sceGsDispEnv type_12[2];
@@ -80,22 +80,25 @@ struct sceIpuDmaEnv
 	uint32 ipuctrl;
 };
 
-union sceGsScissor
+struct sceGsScissor
 {
-	ulong32 SCAX0;
-	ulong32 pad11;
-	ulong32 SCAX1;
-	ulong32 pad27;
-	ulong32 SCAY0;
-	ulong32 pad43;
-	ulong32 SCAY1;
-	ulong32 pad59;
+	struct
+	{
+		ulong32 SCAX0 : 11;
+		ulong32 pad11 : 5;
+		ulong32 SCAX1 : 11;
+		ulong32 pad27 : 5;
+		ulong32 SCAY0 : 11;
+		ulong32 pad43 : 5;
+		ulong32 SCAY1 : 11;
+		ulong32 pad59 : 5;
+	};
 };
 
 struct ThreadParam
 {
 	int32 status;
-	type_0 entry;
+	void(*entry)(void*);
 	void* stack;
 	int32 stackSize;
 	void* gpReg;
@@ -116,7 +119,7 @@ struct _tagPadAnalog
 
 struct VoData
 {
-	type_3 v;
+	uint8 v[1228800];
 };
 
 struct _tagiPad
@@ -124,47 +127,53 @@ struct _tagiPad
 	int32 port;
 };
 
-union sceGsFrame
+struct sceGsFrame
 {
-	ulong32 FBP;
-	ulong32 pad09;
-	ulong32 FBW;
-	ulong32 pad22;
-	ulong32 PSM;
-	ulong32 pad30;
-	ulong32 FBMSK;
+	struct
+	{
+		ulong32 FBP : 9;
+		ulong32 pad09 : 7;
+		ulong32 FBW : 6;
+		ulong32 pad22 : 2;
+		ulong32 PSM : 6;
+		ulong32 pad30 : 2;
+		ulong32 FBMSK : 32;
+	};
 };
 
 struct tGS_DISPLAY2
 {
-	union
+	struct
 	{
-		uint32 DX;
-		uint32 DY;
-		uint32 MAGH;
-		uint32 MAGV;
-		uint32 p0;
+		uint32 DX : 12;
+		uint32 DY : 11;
+		uint32 MAGH : 4;
+		uint32 MAGV : 2;
+		uint32 p0 : 3;
 	};
-	union
+	struct
 	{
-		uint32 DW;
-		uint32 DH;
-		uint32 p1;
+		uint32 DW : 12;
+		uint32 DH : 11;
+		uint32 p1 : 9;
 	};
 };
 
-union sceGsPrim
+struct sceGsPrim
 {
-	ulong32 PRIM;
-	ulong32 IIP;
-	ulong32 TME;
-	ulong32 FGE;
-	ulong32 ABE;
-	ulong32 AA1;
-	ulong32 FST;
-	ulong32 CTXT;
-	ulong32 FIX;
-	ulong32 pad11;
+	struct
+	{
+		ulong32 PRIM : 3;
+		ulong32 IIP : 1;
+		ulong32 TME : 1;
+		ulong32 FGE : 1;
+		ulong32 ABE : 1;
+		ulong32 AA1 : 1;
+		ulong32 FST : 1;
+		ulong32 CTXT : 1;
+		ulong32 FIX : 1;
+		ulong32 pad11 : 53;
+	};
 };
 
 enum sceMpegCbType
@@ -178,20 +187,23 @@ enum sceMpegCbType
 	sceMpegCbStr
 };
 
-union sceGsZbuf
+struct sceGsZbuf
 {
-	ulong32 ZBP;
-	ulong32 pad09;
-	ulong32 PSM;
-	ulong32 pad28;
-	ulong32 ZMSK;
-	ulong32 pad33;
+	struct
+	{
+		ulong32 ZBP : 9;
+		ulong32 pad09 : 15;
+		ulong32 PSM : 4;
+		ulong32 pad28 : 4;
+		ulong32 ZMSK : 1;
+		ulong32 pad33 : 31;
+	};
 };
 
 struct _tagxPad
 {
-	type_1 value;
-	type_2 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -206,9 +218,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_10 up_tmr;
-	type_11 down_tmr;
-	type_15 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct VideoDec
@@ -223,7 +235,7 @@ struct VideoDec
 
 struct ReadBuf
 {
-	type_6 data;
+	uint8 data[327680];
 	int32 put;
 	int32 count;
 	int32 size;
@@ -263,16 +275,16 @@ struct sceGsClear
 
 struct tGS_PMODE
 {
-	union
+	struct
 	{
-		uint32 EN1;
-		uint32 EN2;
-		uint32 CRTMD;
-		uint32 MMOD;
-		uint32 AMOD;
-		uint32 SLBG;
-		uint32 ALP;
-		uint32 p0;
+		uint32 EN1 : 1;
+		uint32 EN2 : 1;
+		uint32 CRTMD : 3;
+		uint32 MMOD : 1;
+		uint32 AMOD : 1;
+		uint32 SLBG : 1;
+		uint32 ALP : 8;
+		uint32 p0 : 16;
 	};
 	uint32 p1;
 };
@@ -280,8 +292,8 @@ struct tGS_PMODE
 struct VoTag
 {
 	int32 status;
-	type_7 dummy;
-	type_9 v;
+	int32 dummy[15];
+	uint32 v[29248][2];
 };
 
 struct sceGsDispEnv
@@ -293,10 +305,13 @@ struct sceGsDispEnv
 	tGS_BGCOLOR bgcolor;
 };
 
-union sceGsDthe
+struct sceGsDthe
 {
-	ulong32 DTHE;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 DTHE : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
 enum _tagRumbleType
@@ -319,27 +334,30 @@ enum _tagRumbleType
 
 struct tGS_BGCOLOR
 {
-	union
+	struct
 	{
-		uint32 R;
-		uint32 G;
-		uint32 B;
-		uint32 p0;
+		uint32 R : 8;
+		uint32 G : 8;
+		uint32 B : 8;
+		uint32 p0 : 8;
 	};
 	uint32 p1;
 };
 
-union sceGsTest
+struct sceGsTest
 {
-	ulong32 ATE;
-	ulong32 ATST;
-	ulong32 AREF;
-	ulong32 AFAIL;
-	ulong32 DATE;
-	ulong32 DATM;
-	ulong32 ZTE;
-	ulong32 ZTST;
-	ulong32 pad19;
+	struct
+	{
+		ulong32 ATE : 1;
+		ulong32 ATST : 3;
+		ulong32 AREF : 8;
+		ulong32 AFAIL : 2;
+		ulong32 DATE : 1;
+		ulong32 DATM : 1;
+		ulong32 ZTE : 1;
+		ulong32 ZTST : 2;
+		ulong32 pad19 : 45;
+	};
 };
 
 struct xVec2
@@ -350,7 +368,7 @@ struct xVec2
 
 struct sceGsDBuff
 {
-	type_12 disp;
+	sceGsDispEnv disp[2];
 	sceGifTag giftag0;
 	sceGsDrawEnv1 draw0;
 	sceGsClear clear0;
@@ -396,7 +414,7 @@ struct VoBuf
 
 struct SpuStreamHeader
 {
-	type_13 id;
+	int8 id[4];
 	int32 size;
 	int32 type;
 	int32 rate;
@@ -426,42 +444,51 @@ struct sceGsDrawEnv1
 	long32 test1addr;
 };
 
-union sceGsPrmodecont
+struct sceGsPrmodecont
 {
-	ulong32 AC;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 AC : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
-union sceGsColclamp
+struct sceGsColclamp
 {
-	ulong32 CLAMP;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 CLAMP : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
 struct tGS_SMODE2
 {
-	union
+	struct
 	{
-		uint32 INT;
-		uint32 FFMD;
-		uint32 DPMS;
-		uint32 p0;
+		uint32 INT : 1;
+		uint32 FFMD : 1;
+		uint32 DPMS : 2;
+		uint32 p0 : 28;
 	};
 	uint32 p1;
 };
 
-union sceGsXyoffset
+struct sceGsXyoffset
 {
-	ulong32 OFX;
-	ulong32 pad16;
-	ulong32 OFY;
-	ulong32 pad48;
+	struct
+	{
+		ulong32 OFX : 16;
+		ulong32 pad16 : 16;
+		ulong32 OFY : 16;
+		ulong32 pad48 : 16;
+	};
 };
 
 struct ViBuf
 {
-	<unknown type (0xa510)>* data;
-	<unknown type (0xa510)>* tag;
+	<unknown fundamental type (0xa510)>* data;
+	<unknown fundamental type (0xa510)>* tag;
 	int32 n;
 	int32 dmaStart;
 	int32 dmaN;
@@ -493,44 +520,47 @@ struct sceMpeg
 
 struct sceGsRgbaq
 {
-	union
+	struct
 	{
-		uint32 R;
-		uint32 G;
-		uint32 B;
-		uint32 A;
+		uint32 R : 8;
+		uint32 G : 8;
+		uint32 B : 8;
+		uint32 A : 8;
 	};
 	float32 Q;
 };
 
 struct tGS_DISPFB2
 {
-	union
+	struct
 	{
-		uint32 FBP;
-		uint32 FBW;
-		uint32 PSM;
-		uint32 p0;
+		uint32 FBP : 9;
+		uint32 FBW : 6;
+		uint32 PSM : 5;
+		uint32 p0 : 12;
 	};
-	union
+	struct
 	{
-		uint32 DBX;
-		uint32 DBY;
-		uint32 p1;
+		uint32 DBX : 11;
+		uint32 DBY : 11;
+		uint32 p1 : 10;
 	};
 };
 
 struct SpuStreamBody
 {
-	type_17 id;
+	int8 id[4];
 	int32 size;
 };
 
-union sceGsXyz
+struct sceGsXyz
 {
-	ulong32 X;
-	ulong32 Y;
-	ulong32 Z;
+	struct
+	{
+		ulong32 X : 16;
+		ulong32 Y : 16;
+		ulong32 Z : 32;
+	};
 };
 
 struct AudioDec
@@ -563,47 +593,47 @@ enum _tagPadState
 
 struct sceGifTag
 {
-	union
+	struct
 	{
-		ulong32 NLOOP;
-		ulong32 EOP;
-		ulong32 pad16;
-		ulong32 id;
-		ulong32 PRE;
-		ulong32 PRIM;
-		ulong32 FLG;
-		ulong32 NREG;
+		ulong32 NLOOP : 15;
+		ulong32 EOP : 1;
+		ulong32 pad16 : 16;
+		ulong32 id : 14;
+		ulong32 PRE : 1;
+		ulong32 PRIM : 11;
+		ulong32 FLG : 2;
+		ulong32 NREG : 4;
 	};
-	union
+	struct
 	{
-		ulong32 REGS0;
-		ulong32 REGS1;
-		ulong32 REGS2;
-		ulong32 REGS3;
-		ulong32 REGS4;
-		ulong32 REGS5;
-		ulong32 REGS6;
-		ulong32 REGS7;
-		ulong32 REGS8;
-		ulong32 REGS9;
-		ulong32 REGS10;
-		ulong32 REGS11;
-		ulong32 REGS12;
-		ulong32 REGS13;
-		ulong32 REGS14;
-		ulong32 REGS15;
+		ulong32 REGS0 : 4;
+		ulong32 REGS1 : 4;
+		ulong32 REGS2 : 4;
+		ulong32 REGS3 : 4;
+		ulong32 REGS4 : 4;
+		ulong32 REGS5 : 4;
+		ulong32 REGS6 : 4;
+		ulong32 REGS7 : 4;
+		ulong32 REGS8 : 4;
+		ulong32 REGS9 : 4;
+		ulong32 REGS10 : 4;
+		ulong32 REGS11 : 4;
+		ulong32 REGS12 : 4;
+		ulong32 REGS13 : 4;
+		ulong32 REGS14 : 4;
+		ulong32 REGS15 : 4;
 	};
 };
 
 VoData* voBufData;
 VoTag* voBufTag;
-<unknown type (0xa510)>* viBufTag;
+<unknown fundamental type (0xa510)>* viBufTag;
 uint8* mpegWork;
 int32 mpegWorkSz;
 int8* defStack;
 ReadBuf* readBufp;
 uint8* audioBuff;
-<unknown type (0xa510)>* viBufData;
+<unknown fundamental type (0xa510)>* viBufData;
 int8* videoDecStack;
 TimeStamp* timeStamp;
 int32 videoDecTh;
@@ -618,14 +648,14 @@ int32 isWithAudio;
 sceGsDBuff sony_db;
 uint32 skip_buttons;
 uint32 skip_time;
-type_20 handler_endimage;
-type_19 vblankHandler;
+int32(*handler_endimage)(int32);
+int32(*vblankHandler)(int32);
 void* _gp;
-type_14 videoDecMain;
-type_5 defMain;
-type_18 pcmCallback;
-type_16 videoCallback;
-type_4 mPad;
+void(*videoDecMain)(VideoDec*);
+void(*defMain)(void*);
+int32(*pcmCallback)(sceMpeg*, sceMpegCbDataStr*, void*);
+int32(*videoCallback)(sceMpeg*, sceMpegCbDataStr*, void*);
+_tagxPad mPad[4];
 
 void ErrMessage(int8* message);
 void defMain();
@@ -638,12 +668,18 @@ int32 ps2_mpeg_play(int8* fname, int8* work_area, int32 work_area_size, uint32 b
 // Start address: 0x1bcb80
 void ErrMessage(int8* message)
 {
+	// Line 578, Address: 0x1bcb84, Func Offset: 0x4
+	// Func End, Address: 0x1bcb90, Func Offset: 0x10
 }
 
 // defMain__FPv
 // Start address: 0x1bcb90
 void defMain()
 {
+	// Line 566, Address: 0x1bcb90, Func Offset: 0
+	// Line 568, Address: 0x1bcb98, Func Offset: 0x8
+	// Line 569, Address: 0x1bcba0, Func Offset: 0x10
+	// Func End, Address: 0x1bcba8, Func Offset: 0x18
 }
 
 // initAll__FPCc
@@ -651,12 +687,68 @@ void defMain()
 int32 initAll(int8* bsfilename)
 {
 	ThreadParam th_param;
+	// Line 436, Address: 0x1bcbb0, Func Offset: 0
+	// Line 439, Address: 0x1bcbb4, Func Offset: 0x4
+	// Line 436, Address: 0x1bcbb8, Func Offset: 0x8
+	// Line 440, Address: 0x1bcbbc, Func Offset: 0xc
+	// Line 436, Address: 0x1bcbc0, Func Offset: 0x10
+	// Line 439, Address: 0x1bcbe0, Func Offset: 0x30
+	// Line 440, Address: 0x1bcbf0, Func Offset: 0x40
+	// Line 446, Address: 0x1bcbf8, Func Offset: 0x48
+	// Line 452, Address: 0x1bcc00, Func Offset: 0x50
+	// Line 453, Address: 0x1bcc08, Func Offset: 0x58
+	// Line 462, Address: 0x1bcc30, Func Offset: 0x80
+	// Line 468, Address: 0x1bcc48, Func Offset: 0x98
+	// Line 470, Address: 0x1bcc68, Func Offset: 0xb8
+	// Line 471, Address: 0x1bcc74, Func Offset: 0xc4
+	// Line 473, Address: 0x1bcc94, Func Offset: 0xe4
+	// Line 479, Address: 0x1bcc98, Func Offset: 0xe8
+	// Line 485, Address: 0x1bccc0, Func Offset: 0x110
+	// Line 479, Address: 0x1bccc4, Func Offset: 0x114
+	// Line 485, Address: 0x1bccc8, Func Offset: 0x118
+	// Line 486, Address: 0x1bccd4, Func Offset: 0x124
+	// Line 487, Address: 0x1bccdc, Func Offset: 0x12c
+	// Line 488, Address: 0x1bcce4, Func Offset: 0x134
+	// Line 489, Address: 0x1bccec, Func Offset: 0x13c
+	// Line 491, Address: 0x1bccf4, Func Offset: 0x144
+	// Line 486, Address: 0x1bccf8, Func Offset: 0x148
+	// Line 487, Address: 0x1bccfc, Func Offset: 0x14c
+	// Line 488, Address: 0x1bcd00, Func Offset: 0x150
+	// Line 489, Address: 0x1bcd04, Func Offset: 0x154
+	// Line 491, Address: 0x1bcd08, Func Offset: 0x158
+	// Line 492, Address: 0x1bcd14, Func Offset: 0x164
+	// Line 500, Address: 0x1bcd20, Func Offset: 0x170
+	// Line 502, Address: 0x1bcd24, Func Offset: 0x174
+	// Line 500, Address: 0x1bcd28, Func Offset: 0x178
+	// Line 503, Address: 0x1bcd2c, Func Offset: 0x17c
+	// Line 500, Address: 0x1bcd30, Func Offset: 0x180
+	// Line 506, Address: 0x1bcd34, Func Offset: 0x184
+	// Line 501, Address: 0x1bcd38, Func Offset: 0x188
+	// Line 504, Address: 0x1bcd3c, Func Offset: 0x18c
+	// Line 501, Address: 0x1bcd40, Func Offset: 0x190
+	// Line 502, Address: 0x1bcd44, Func Offset: 0x194
+	// Line 503, Address: 0x1bcd48, Func Offset: 0x198
+	// Line 504, Address: 0x1bcd4c, Func Offset: 0x19c
+	// Line 506, Address: 0x1bcd50, Func Offset: 0x1a0
+	// Line 507, Address: 0x1bcd5c, Func Offset: 0x1ac
+	// Line 513, Address: 0x1bcd6c, Func Offset: 0x1bc
+	// Line 514, Address: 0x1bcd84, Func Offset: 0x1d4
+	// Line 515, Address: 0x1bcd90, Func Offset: 0x1e0
+	// Line 522, Address: 0x1bcd98, Func Offset: 0x1e8
+	// Line 523, Address: 0x1bcdb0, Func Offset: 0x200
+	// Line 525, Address: 0x1bcdbc, Func Offset: 0x20c
+	// Line 526, Address: 0x1bcdd4, Func Offset: 0x224
+	// Line 528, Address: 0x1bcde0, Func Offset: 0x230
+	// Line 529, Address: 0x1bcde8, Func Offset: 0x238
+	// Func End, Address: 0x1bce10, Func Offset: 0x260
 }
 
 // switchThread__Fv
 // Start address: 0x1bce10
 void switchThread()
 {
+	// Line 419, Address: 0x1bce10, Func Offset: 0
+	// Func End, Address: 0x1bce18, Func Offset: 0x8
 }
 
 // readMpeg__FP8VideoDecP7ReadBufP7StrFile
@@ -674,6 +766,53 @@ int32 readMpeg(VideoDec* vd, ReadBuf* rb, StrFile* file)
 	int32 isStarted;
 	long32 t0;
 	long32 t1;
+	// Line 298, Address: 0x1bce20, Func Offset: 0
+	// Line 309, Address: 0x1bce3c, Func Offset: 0x1c
+	// Line 298, Address: 0x1bce40, Func Offset: 0x20
+	// Line 316, Address: 0x1bce5c, Func Offset: 0x3c
+	// Line 319, Address: 0x1bce64, Func Offset: 0x44
+	// Line 323, Address: 0x1bce74, Func Offset: 0x54
+	// Line 329, Address: 0x1bce7c, Func Offset: 0x5c
+	// Line 335, Address: 0x1bcea0, Func Offset: 0x80
+	// Line 343, Address: 0x1bcea8, Func Offset: 0x88
+	// Line 344, Address: 0x1bceb4, Func Offset: 0x94
+	// Line 345, Address: 0x1bcec8, Func Offset: 0xa8
+	// Line 346, Address: 0x1bced8, Func Offset: 0xb8
+	// Line 347, Address: 0x1bcee4, Func Offset: 0xc4
+	// Line 350, Address: 0x1bcee8, Func Offset: 0xc8
+	// Line 356, Address: 0x1bcef0, Func Offset: 0xd0
+	// Line 357, Address: 0x1bcefc, Func Offset: 0xdc
+	// Line 359, Address: 0x1bcf04, Func Offset: 0xe4
+	// Line 362, Address: 0x1bcf24, Func Offset: 0x104
+	// Line 363, Address: 0x1bcf30, Func Offset: 0x110
+	// Line 365, Address: 0x1bcf34, Func Offset: 0x114
+	// Line 371, Address: 0x1bcf38, Func Offset: 0x118
+	// Line 373, Address: 0x1bcf44, Func Offset: 0x124
+	// Line 374, Address: 0x1bcf50, Func Offset: 0x130
+	// Line 375, Address: 0x1bcf78, Func Offset: 0x158
+	// Line 376, Address: 0x1bcf80, Func Offset: 0x160
+	// Line 377, Address: 0x1bcf84, Func Offset: 0x164
+	// Line 383, Address: 0x1bcf88, Func Offset: 0x168
+	// Line 385, Address: 0x1bcfc0, Func Offset: 0x1a0
+	// Line 386, Address: 0x1bcfc8, Func Offset: 0x1a8
+	// Line 387, Address: 0x1bcfd4, Func Offset: 0x1b4
+	// Line 388, Address: 0x1bcfdc, Func Offset: 0x1bc
+	// Line 389, Address: 0x1bcfe0, Func Offset: 0x1c0
+	// Line 391, Address: 0x1bcfe4, Func Offset: 0x1c4
+	// Line 394, Address: 0x1bd008, Func Offset: 0x1e8
+	// Line 395, Address: 0x1bd010, Func Offset: 0x1f0
+	// Line 396, Address: 0x1bd018, Func Offset: 0x1f8
+	// Line 399, Address: 0x1bd030, Func Offset: 0x210
+	// Line 402, Address: 0x1bd038, Func Offset: 0x218
+	// Line 403, Address: 0x1bd040, Func Offset: 0x220
+	// Line 405, Address: 0x1bd068, Func Offset: 0x248
+	// Line 406, Address: 0x1bd070, Func Offset: 0x250
+	// Line 407, Address: 0x1bd07c, Func Offset: 0x25c
+	// Line 408, Address: 0x1bd084, Func Offset: 0x264
+	// Line 411, Address: 0x1bd088, Func Offset: 0x268
+	// Line 410, Address: 0x1bd090, Func Offset: 0x270
+	// Line 411, Address: 0x1bd094, Func Offset: 0x274
+	// Func End, Address: 0x1bd0b8, Func Offset: 0x298
 }
 
 // ps2_mpeg_play__FPCcPciUif
@@ -684,5 +823,74 @@ int32 ps2_mpeg_play(int8* fname, int8* work_area, int32 work_area_size, uint32 b
 	int8* ptr;
 	int8* extra_buf;
 	int8* bp;
+	// Line 160, Address: 0x1bd0c0, Func Offset: 0
+	// Line 175, Address: 0x1bd0c4, Func Offset: 0x4
+	// Line 160, Address: 0x1bd0c8, Func Offset: 0x8
+	// Line 175, Address: 0x1bd0f4, Func Offset: 0x34
+	// Line 176, Address: 0x1bd104, Func Offset: 0x44
+	// Line 177, Address: 0x1bd10c, Func Offset: 0x4c
+	// Line 179, Address: 0x1bd118, Func Offset: 0x58
+	// Line 180, Address: 0x1bd124, Func Offset: 0x64
+	// Line 182, Address: 0x1bd13c, Func Offset: 0x7c
+	// Line 185, Address: 0x1bd158, Func Offset: 0x98
+	// Line 187, Address: 0x1bd164, Func Offset: 0xa4
+	// Line 195, Address: 0x1bd16c, Func Offset: 0xac
+	// Line 187, Address: 0x1bd170, Func Offset: 0xb0
+	// Line 195, Address: 0x1bd174, Func Offset: 0xb4
+	// Line 188, Address: 0x1bd178, Func Offset: 0xb8
+	// Line 187, Address: 0x1bd17c, Func Offset: 0xbc
+	// Line 188, Address: 0x1bd180, Func Offset: 0xc0
+	// Line 195, Address: 0x1bd184, Func Offset: 0xc4
+	// Line 188, Address: 0x1bd188, Func Offset: 0xc8
+	// Line 189, Address: 0x1bd18c, Func Offset: 0xcc
+	// Line 186, Address: 0x1bd190, Func Offset: 0xd0
+	// Line 189, Address: 0x1bd194, Func Offset: 0xd4
+	// Line 190, Address: 0x1bd198, Func Offset: 0xd8
+	// Line 189, Address: 0x1bd19c, Func Offset: 0xdc
+	// Line 190, Address: 0x1bd1a0, Func Offset: 0xe0
+	// Line 191, Address: 0x1bd1a4, Func Offset: 0xe4
+	// Line 190, Address: 0x1bd1a8, Func Offset: 0xe8
+	// Line 191, Address: 0x1bd1ac, Func Offset: 0xec
+	// Line 190, Address: 0x1bd1b0, Func Offset: 0xf0
+	// Line 191, Address: 0x1bd1b4, Func Offset: 0xf4
+	// Line 192, Address: 0x1bd1b8, Func Offset: 0xf8
+	// Line 193, Address: 0x1bd1c0, Func Offset: 0x100
+	// Line 192, Address: 0x1bd1c4, Func Offset: 0x104
+	// Line 193, Address: 0x1bd1c8, Func Offset: 0x108
+	// Line 192, Address: 0x1bd1cc, Func Offset: 0x10c
+	// Line 193, Address: 0x1bd1d0, Func Offset: 0x110
+	// Line 195, Address: 0x1bd1d4, Func Offset: 0x114
+	// Line 197, Address: 0x1bd1dc, Func Offset: 0x11c
+	// Line 198, Address: 0x1bd1e4, Func Offset: 0x124
+	// Line 201, Address: 0x1bd1f0, Func Offset: 0x130
+	// Line 204, Address: 0x1bd254, Func Offset: 0x194
+	// Line 203, Address: 0x1bd258, Func Offset: 0x198
+	// Line 206, Address: 0x1bd25c, Func Offset: 0x19c
+	// Line 204, Address: 0x1bd264, Func Offset: 0x1a4
+	// Line 206, Address: 0x1bd268, Func Offset: 0x1a8
+	// Line 204, Address: 0x1bd26c, Func Offset: 0x1ac
+	// Line 209, Address: 0x1bd270, Func Offset: 0x1b0
+	// Line 212, Address: 0x1bd274, Func Offset: 0x1b4
+	// Line 206, Address: 0x1bd278, Func Offset: 0x1b8
+	// Line 209, Address: 0x1bd27c, Func Offset: 0x1bc
+	// Line 210, Address: 0x1bd284, Func Offset: 0x1c4
+	// Line 214, Address: 0x1bd288, Func Offset: 0x1c8
+	// Line 215, Address: 0x1bd290, Func Offset: 0x1d0
+	// Line 217, Address: 0x1bd2a0, Func Offset: 0x1e0
+	// Line 218, Address: 0x1bd2a8, Func Offset: 0x1e8
+	// Line 220, Address: 0x1bd2b0, Func Offset: 0x1f0
+	// Line 223, Address: 0x1bd2c4, Func Offset: 0x204
+	// Line 225, Address: 0x1bd2dc, Func Offset: 0x21c
+	// Line 227, Address: 0x1bd300, Func Offset: 0x240
+	// Line 229, Address: 0x1bd308, Func Offset: 0x248
+	// Line 231, Address: 0x1bd3f4, Func Offset: 0x334
+	// Line 233, Address: 0x1bd3f8, Func Offset: 0x338
+	// Line 234, Address: 0x1bd400, Func Offset: 0x340
+	// Line 236, Address: 0x1bd410, Func Offset: 0x350
+	// Line 238, Address: 0x1bd428, Func Offset: 0x368
+	// Line 239, Address: 0x1bd430, Func Offset: 0x370
+	// Line 241, Address: 0x1bd438, Func Offset: 0x378
+	// Line 242, Address: 0x1bd440, Func Offset: 0x380
+	// Func End, Address: 0x1bd464, Func Offset: 0x3a4
 }
 

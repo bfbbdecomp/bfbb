@@ -43,7 +43,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_0 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xDynAsset : xBaseAsset
@@ -107,7 +107,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_6 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -118,9 +118,14 @@ struct font_meter_widget : meter_widget
 	font_context start_font;
 	int32 precision;
 	xVec2 offset;
-	type_3 buffer;
+	int8 buffer[12];
 	int32 last_value;
 	xfont xf;
+
+	void render();
+	void update(float32 dt);
+	uint8 is(uint32 id);
+	void destroy();
 };
 
 struct color32u
@@ -224,7 +229,7 @@ struct motive
 	float32 max_offset;
 	float32 offset;
 	float32 accel;
-	type_5 fp_update;
+	uint8(*fp_update)(widget&, motive&, float32);
 	void* context;
 	uint8 inverse;
 };
@@ -245,7 +250,7 @@ struct meter_widget : widget
 
 struct sound_queue
 {
-	type_4 _playing;
+	uint32 _playing[5];
 	int32 head;
 	int32 tail;
 };
@@ -266,61 +271,124 @@ struct iColor_tag
 
 basic_rect screen_bounds;
 basic_rect default_adjust;
-type_7 buffer;
-type_1 buffer;
+int8 buffer[16];
+int8 buffer[16];
 _anon2 __vt__Q24xhud17font_meter_widget;
 _anon0 __vt__Q24xhud6widget;
 _anon1 __vt__Q24xhud12meter_widget;
 
-void render(font_meter_widget* this);
-void update(font_meter_widget* this, float32 dt);
-uint8 is(font_meter_widget* this, uint32 id);
+void render();
+void update(float32 dt);
+uint8 is(uint32 id);
 uint32 type();
-void destroy(font_meter_widget* this);
+void destroy();
 void load(xBase& data, xDynAsset& asset);
 
 // render__Q24xhud17font_meter_widgetFv
 // Start address: 0x2996c0
-void render(font_meter_widget* this)
+void font_meter_widget::render()
 {
 	float32 x;
 	float32 y;
+	// Line 81, Address: 0x2996c0, Func Offset: 0
+	// Line 82, Address: 0x2996e0, Func Offset: 0x20
+	// Line 83, Address: 0x2996e4, Func Offset: 0x24
+	// Line 82, Address: 0x2996e8, Func Offset: 0x28
+	// Line 83, Address: 0x2996f8, Func Offset: 0x38
+	// Line 85, Address: 0x299700, Func Offset: 0x40
+	// Line 86, Address: 0x299704, Func Offset: 0x44
+	// Line 85, Address: 0x299708, Func Offset: 0x48
+	// Line 86, Address: 0x299724, Func Offset: 0x64
+	// Line 87, Address: 0x299754, Func Offset: 0x94
+	// Line 88, Address: 0x299758, Func Offset: 0x98
+	// Line 90, Address: 0x299764, Func Offset: 0xa4
+	// Line 91, Address: 0x299768, Func Offset: 0xa8
+	// Line 90, Address: 0x29976c, Func Offset: 0xac
+	// Line 91, Address: 0x299784, Func Offset: 0xc4
+	// Line 96, Address: 0x2997a8, Func Offset: 0xe8
+	// Func End, Address: 0x2997c8, Func Offset: 0x108
 }
 
 // update__Q24xhud17font_meter_widgetFf
 // Start address: 0x2997d0
-void update(font_meter_widget* this, float32 dt)
+void font_meter_widget::update(float32 dt)
 {
 	float32 a;
 	int32 new_value;
 	font_meter_asset& fma;
 	basic_rect bounds;
-	type_2 format_text;
+	int8* format_text[3];
+	// Line 51, Address: 0x2997d0, Func Offset: 0
+	// Line 52, Address: 0x2997dc, Func Offset: 0xc
+	// Line 53, Address: 0x2997e4, Func Offset: 0x14
+	// Line 54, Address: 0x2997ec, Func Offset: 0x1c
+	// Line 55, Address: 0x2997f4, Func Offset: 0x24
+	// Line 56, Address: 0x299800, Func Offset: 0x30
+	// Line 57, Address: 0x29980c, Func Offset: 0x3c
+	// Line 58, Address: 0x299848, Func Offset: 0x78
+	// Line 57, Address: 0x29984c, Func Offset: 0x7c
+	// Line 58, Address: 0x299854, Func Offset: 0x84
+	// Line 59, Address: 0x2998cc, Func Offset: 0xfc
+	// Line 60, Address: 0x299908, Func Offset: 0x138
+	// Line 59, Address: 0x29990c, Func Offset: 0x13c
+	// Line 60, Address: 0x299914, Func Offset: 0x144
+	// Line 62, Address: 0x29998c, Func Offset: 0x1bc
+	// Line 63, Address: 0x299998, Func Offset: 0x1c8
+	// Line 62, Address: 0x29999c, Func Offset: 0x1cc
+	// Line 63, Address: 0x2999ac, Func Offset: 0x1dc
+	// Line 65, Address: 0x2999b4, Func Offset: 0x1e4
+	// Line 66, Address: 0x2999b8, Func Offset: 0x1e8
+	// Line 73, Address: 0x2999bc, Func Offset: 0x1ec
+	// Line 74, Address: 0x299a04, Func Offset: 0x234
+	// Line 75, Address: 0x299a3c, Func Offset: 0x26c
+	// Line 76, Address: 0x299a48, Func Offset: 0x278
+	// Line 77, Address: 0x299a54, Func Offset: 0x284
+	// Line 78, Address: 0x299a58, Func Offset: 0x288
+	// Func End, Address: 0x299a68, Func Offset: 0x298
 }
 
 // is__Q24xhud17font_meter_widgetCFUi
 // Start address: 0x299a70
-uint8 is(font_meter_widget* this, uint32 id)
+uint8 font_meter_widget::is(uint32 id)
 {
 	uint32 myid;
 	int8 @3845;
+	// Line 46, Address: 0x299a70, Func Offset: 0
+	// Line 47, Address: 0x299a84, Func Offset: 0x14
+	// Line 48, Address: 0x299ac8, Func Offset: 0x58
+	// Func End, Address: 0x299adc, Func Offset: 0x6c
 }
 
 // type__Q24xhud17font_meter_widgetCFv
 // Start address: 0x299ae0
 uint32 type()
 {
+	// Line 40, Address: 0x299ae0, Func Offset: 0
+	// Line 41, Address: 0x299ae8, Func Offset: 0x8
+	// Line 43, Address: 0x299b08, Func Offset: 0x28
+	// Line 42, Address: 0x299b0c, Func Offset: 0x2c
+	// Line 43, Address: 0x299b10, Func Offset: 0x30
+	// Func End, Address: 0x299b18, Func Offset: 0x38
 }
 
 // destroy__Q24xhud17font_meter_widgetFv
 // Start address: 0x299b20
-void destroy(font_meter_widget* this)
+void font_meter_widget::destroy()
 {
+	// Line 36, Address: 0x299b20, Func Offset: 0
+	// Func End, Address: 0x299b28, Func Offset: 0x8
 }
 
 // load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUi
 // Start address: 0x299b30
 void load(xBase& data, xDynAsset& asset)
 {
+	// Line 9, Address: 0x299b30, Func Offset: 0
+	// Line 11, Address: 0x299b34, Func Offset: 0x4
+	// Line 9, Address: 0x299b38, Func Offset: 0x8
+	// Line 11, Address: 0x299b48, Func Offset: 0x18
+	// Line 13, Address: 0x299b50, Func Offset: 0x20
+	// Line 14, Address: 0x299c88, Func Offset: 0x158
+	// Func End, Address: 0x299c9c, Func Offset: 0x16c
 }
 

@@ -1,51 +1,51 @@
 typedef struct sceGpTextureArg;
-typedef union sceGsTex1;
-typedef union sceGsBitbltbuf;
+typedef struct sceGsTex1;
+typedef struct sceGsBitbltbuf;
 typedef struct _sceDmaTag;
-typedef union sceGsFrame;
-typedef union sceGsPrim;
+typedef struct sceGsFrame;
+typedef struct sceGsPrim;
 typedef struct _sceGpChain;
-typedef union sceGsTrxpos;
-typedef union sceGsZbuf;
+typedef struct sceGsTrxpos;
+typedef struct sceGsZbuf;
 typedef struct tGS_DISPLAY2;
 typedef struct sceGpLoadImage;
 typedef struct _sceGpAdc;
 typedef struct sceGpAlphaEnv;
 typedef struct sceGsClear;
-typedef union sceGsTrxreg;
+typedef struct sceGsTrxreg;
 typedef struct sceGsSt;
-typedef union sceGsClamp;
-typedef union _sceGpReg;
+typedef struct sceGsClamp;
+typedef struct _sceGpReg;
 typedef struct tGS_PMODE;
-typedef union sceGsDthe;
-typedef union sceGsTest;
+typedef struct sceGsDthe;
+typedef struct sceGsTest;
 typedef struct sceGsDispEnv;
-typedef union sceGsUv;
-typedef union sceGsTexa;
+typedef struct sceGsUv;
+typedef struct sceGsTexa;
 typedef struct tGS_BGCOLOR;
-typedef union sceGsFba;
-typedef union sceGsPrmodecont;
-typedef union sceGsColclamp;
+typedef struct sceGsFba;
+typedef struct sceGsPrmodecont;
+typedef struct sceGsColclamp;
 typedef struct sceGsDBuff;
-typedef union sceGsXyoffset;
+typedef struct sceGsXyoffset;
 typedef struct sceGsDrawEnv1;
 typedef struct sceGsRgbaq;
-typedef union sceGsTex0;
+typedef struct sceGsTex0;
 typedef struct _sceGifPackAd;
 typedef struct tGS_SMODE2;
-typedef union sceGsFog;
+typedef struct sceGsFog;
 typedef struct tGS_DISPFB2;
-typedef union sceGsXyz;
-typedef union sceGsAlpha;
+typedef struct sceGsXyz;
+typedef struct sceGsAlpha;
 typedef struct sceGifTag;
 typedef struct sceGpPrimR;
 typedef struct sceGsTexflush;
 typedef struct sceGpTexEnv;
 typedef struct xSysFontTbl;
-typedef union sceGsPabe;
-typedef union sceGsXyzf;
-typedef union sceGsTrxdir;
-typedef union sceGsScissor;
+typedef struct sceGsPabe;
+typedef struct sceGsXyzf;
+typedef struct sceGsTrxdir;
+typedef struct sceGsScissor;
 
 
 typedef _sceGpReg type_0[1];
@@ -73,35 +73,41 @@ struct sceGpTextureArg
 	int16 cpsm;
 };
 
-union sceGsTex1
+struct sceGsTex1
 {
-	ulong32 LCM;
-	ulong32 pad01;
-	ulong32 MXL;
-	ulong32 MMAG;
-	ulong32 MMIN;
-	ulong32 MTBA;
-	ulong32 pad10;
-	ulong32 L;
-	ulong32 pad21;
-	ulong32 K;
-	ulong32 pad44;
+	struct
+	{
+		ulong32 LCM : 1;
+		ulong32 pad01 : 1;
+		ulong32 MXL : 3;
+		ulong32 MMAG : 1;
+		ulong32 MMIN : 3;
+		ulong32 MTBA : 1;
+		ulong32 pad10 : 9;
+		ulong32 L : 2;
+		ulong32 pad21 : 11;
+		ulong32 K : 12;
+		ulong32 pad44 : 20;
+	};
 };
 
-union sceGsBitbltbuf
+struct sceGsBitbltbuf
 {
-	ulong32 SBP;
-	ulong32 pad14;
-	ulong32 SBW;
-	ulong32 pad22;
-	ulong32 SPSM;
-	ulong32 pad30;
-	ulong32 DBP;
-	ulong32 pad46;
-	ulong32 DBW;
-	ulong32 pad54;
-	ulong32 DPSM;
-	ulong32 pad62;
+	struct
+	{
+		ulong32 SBP : 14;
+		ulong32 pad14 : 2;
+		ulong32 SBW : 6;
+		ulong32 pad22 : 2;
+		ulong32 SPSM : 6;
+		ulong32 pad30 : 2;
+		ulong32 DBP : 14;
+		ulong32 pad46 : 2;
+		ulong32 DBW : 6;
+		ulong32 pad54 : 2;
+		ulong32 DPSM : 6;
+		ulong32 pad62 : 2;
+	};
 };
 
 struct _sceDmaTag
@@ -110,80 +116,92 @@ struct _sceDmaTag
 	uint8 mark;
 	uint8 id;
 	_sceDmaTag* next;
-	type_2 p;
+	uint32 p[2];
 };
 
-union sceGsFrame
+struct sceGsFrame
 {
-	ulong32 FBP;
-	ulong32 pad09;
-	ulong32 FBW;
-	ulong32 pad22;
-	ulong32 PSM;
-	ulong32 pad30;
-	ulong32 FBMSK;
+	struct
+	{
+		ulong32 FBP : 9;
+		ulong32 pad09 : 7;
+		ulong32 FBW : 6;
+		ulong32 pad22 : 2;
+		ulong32 PSM : 6;
+		ulong32 pad30 : 2;
+		ulong32 FBMSK : 32;
+	};
 };
 
-union sceGsPrim
+struct sceGsPrim
 {
-	ulong32 PRIM;
-	ulong32 IIP;
-	ulong32 TME;
-	ulong32 FGE;
-	ulong32 ABE;
-	ulong32 AA1;
-	ulong32 FST;
-	ulong32 CTXT;
-	ulong32 FIX;
-	ulong32 pad11;
+	struct
+	{
+		ulong32 PRIM : 3;
+		ulong32 IIP : 1;
+		ulong32 TME : 1;
+		ulong32 FGE : 1;
+		ulong32 ABE : 1;
+		ulong32 AA1 : 1;
+		ulong32 FST : 1;
+		ulong32 CTXT : 1;
+		ulong32 FIX : 1;
+		ulong32 pad11 : 53;
+	};
 };
 
 struct _sceGpChain
 {
-	<unknown type (0xa510)>* ot;
-	<unknown type (0xa510)>* pKick;
-	<unknown type (0xa510)>* pEnd;
+	<unknown fundamental type (0xa510)>* ot;
+	<unknown fundamental type (0xa510)>* pKick;
+	<unknown fundamental type (0xa510)>* pEnd;
 	int32 resolution;
 };
 
-union sceGsTrxpos
+struct sceGsTrxpos
 {
-	ulong32 SSAX;
-	ulong32 pad11;
-	ulong32 SSAY;
-	ulong32 pad27;
-	ulong32 DSAX;
-	ulong32 pad43;
-	ulong32 DSAY;
-	ulong32 DIR;
-	ulong32 pad61;
+	struct
+	{
+		ulong32 SSAX : 11;
+		ulong32 pad11 : 5;
+		ulong32 SSAY : 11;
+		ulong32 pad27 : 5;
+		ulong32 DSAX : 11;
+		ulong32 pad43 : 5;
+		ulong32 DSAY : 11;
+		ulong32 DIR : 2;
+		ulong32 pad61 : 3;
+	};
 };
 
-union sceGsZbuf
+struct sceGsZbuf
 {
-	ulong32 ZBP;
-	ulong32 pad09;
-	ulong32 PSM;
-	ulong32 pad28;
-	ulong32 ZMSK;
-	ulong32 pad33;
+	struct
+	{
+		ulong32 ZBP : 9;
+		ulong32 pad09 : 15;
+		ulong32 PSM : 4;
+		ulong32 pad28 : 4;
+		ulong32 ZMSK : 1;
+		ulong32 pad33 : 31;
+	};
 };
 
 struct tGS_DISPLAY2
 {
-	union
+	struct
 	{
-		uint32 DX;
-		uint32 DY;
-		uint32 MAGH;
-		uint32 MAGV;
-		uint32 p0;
+		uint32 DX : 12;
+		uint32 DY : 11;
+		uint32 MAGH : 4;
+		uint32 MAGV : 2;
+		uint32 p0 : 3;
 	};
-	union
+	struct
 	{
-		uint32 DW;
-		uint32 DH;
-		uint32 p1;
+		uint32 DW : 12;
+		uint32 DH : 11;
+		uint32 p1 : 9;
 	};
 };
 
@@ -243,12 +261,15 @@ struct sceGsClear
 	long32 testbaddr;
 };
 
-union sceGsTrxreg
+struct sceGsTrxreg
 {
-	ulong32 RRW;
-	ulong32 pad12;
-	ulong32 RRH;
-	ulong32 pad44;
+	struct
+	{
+		ulong32 RRW : 12;
+		ulong32 pad12 : 20;
+		ulong32 RRH : 12;
+		ulong32 pad44 : 20;
+	};
 };
 
 struct sceGsSt
@@ -257,66 +278,78 @@ struct sceGsSt
 	float32 T;
 };
 
-union sceGsClamp
+struct sceGsClamp
 {
-	ulong32 WMS;
-	ulong32 WMT;
-	ulong32 MINU;
-	ulong32 MAXU;
-	ulong32 MINV;
-	ulong32 MAXV;
-	ulong32 pad44;
+	struct
+	{
+		ulong32 WMS : 2;
+		ulong32 WMT : 2;
+		ulong32 MINU : 10;
+		ulong32 MAXU : 10;
+		ulong32 MINV : 10;
+		ulong32 MAXV : 10;
+		ulong32 pad44 : 20;
+	};
 };
 
-union _sceGpReg
+struct _sceGpReg
 {
-	sceGsPrim prim;
-	sceGsRgbaq rgbaq;
-	sceGsSt st;
-	sceGsUv uv;
-	sceGsXyzf xyzf;
-	sceGsXyz xyz;
-	sceGsTex0 tex0;
-	sceGsClamp clamp;
-	sceGsFog fog;
-	_sceGpAdc adc;
-	ulong32 ul;
-	type_5 ui;
+	union
+	{
+		sceGsPrim prim;
+		sceGsRgbaq rgbaq;
+		sceGsSt st;
+		sceGsUv uv;
+		sceGsXyzf xyzf;
+		sceGsXyz xyz;
+		sceGsTex0 tex0;
+		sceGsClamp clamp;
+		sceGsFog fog;
+		_sceGpAdc adc;
+		ulong32 ul;
+		uint32 ui[2];
+	};
 };
 
 struct tGS_PMODE
 {
-	union
+	struct
 	{
-		uint32 EN1;
-		uint32 EN2;
-		uint32 CRTMD;
-		uint32 MMOD;
-		uint32 AMOD;
-		uint32 SLBG;
-		uint32 ALP;
-		uint32 p0;
+		uint32 EN1 : 1;
+		uint32 EN2 : 1;
+		uint32 CRTMD : 3;
+		uint32 MMOD : 1;
+		uint32 AMOD : 1;
+		uint32 SLBG : 1;
+		uint32 ALP : 8;
+		uint32 p0 : 16;
 	};
 	uint32 p1;
 };
 
-union sceGsDthe
+struct sceGsDthe
 {
-	ulong32 DTHE;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 DTHE : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
-union sceGsTest
+struct sceGsTest
 {
-	ulong32 ATE;
-	ulong32 ATST;
-	ulong32 AREF;
-	ulong32 AFAIL;
-	ulong32 DATE;
-	ulong32 DATM;
-	ulong32 ZTE;
-	ulong32 ZTST;
-	ulong32 pad19;
+	struct
+	{
+		ulong32 ATE : 1;
+		ulong32 ATST : 3;
+		ulong32 AREF : 8;
+		ulong32 AFAIL : 2;
+		ulong32 DATE : 1;
+		ulong32 DATM : 1;
+		ulong32 ZTE : 1;
+		ulong32 ZTST : 2;
+		ulong32 pad19 : 45;
+	};
 };
 
 struct sceGsDispEnv
@@ -328,57 +361,72 @@ struct sceGsDispEnv
 	tGS_BGCOLOR bgcolor;
 };
 
-union sceGsUv
+struct sceGsUv
 {
-	ulong32 U;
-	ulong32 pad14;
-	ulong32 V;
-	ulong32 pad30;
+	struct
+	{
+		ulong32 U : 14;
+		ulong32 pad14 : 2;
+		ulong32 V : 14;
+		ulong32 pad30 : 34;
+	};
 };
 
-union sceGsTexa
+struct sceGsTexa
 {
-	ulong32 TA0;
-	ulong32 pad08;
-	ulong32 AEM;
-	ulong32 pad16;
-	ulong32 TA1;
-	ulong32 pad40;
+	struct
+	{
+		ulong32 TA0 : 8;
+		ulong32 pad08 : 7;
+		ulong32 AEM : 1;
+		ulong32 pad16 : 16;
+		ulong32 TA1 : 8;
+		ulong32 pad40 : 24;
+	};
 };
 
 struct tGS_BGCOLOR
 {
-	union
+	struct
 	{
-		uint32 R;
-		uint32 G;
-		uint32 B;
-		uint32 p0;
+		uint32 R : 8;
+		uint32 G : 8;
+		uint32 B : 8;
+		uint32 p0 : 8;
 	};
 	uint32 p1;
 };
 
-union sceGsFba
+struct sceGsFba
 {
-	ulong32 FBA;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 FBA : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
-union sceGsPrmodecont
+struct sceGsPrmodecont
 {
-	ulong32 AC;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 AC : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
-union sceGsColclamp
+struct sceGsColclamp
 {
-	ulong32 CLAMP;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 CLAMP : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
 struct sceGsDBuff
 {
-	type_6 disp;
+	sceGsDispEnv disp[2];
 	sceGifTag giftag0;
 	sceGsDrawEnv1 draw0;
 	sceGsClear clear0;
@@ -387,12 +435,15 @@ struct sceGsDBuff
 	sceGsClear clear1;
 };
 
-union sceGsXyoffset
+struct sceGsXyoffset
 {
-	ulong32 OFX;
-	ulong32 pad16;
-	ulong32 OFY;
-	ulong32 pad48;
+	struct
+	{
+		ulong32 OFX : 16;
+		ulong32 pad16 : 16;
+		ulong32 OFY : 16;
+		ulong32 pad48 : 16;
+	};
 };
 
 struct sceGsDrawEnv1
@@ -417,30 +468,33 @@ struct sceGsDrawEnv1
 
 struct sceGsRgbaq
 {
-	union
+	struct
 	{
-		uint32 R;
-		uint32 G;
-		uint32 B;
-		uint32 A;
+		uint32 R : 8;
+		uint32 G : 8;
+		uint32 B : 8;
+		uint32 A : 8;
 	};
 	float32 Q;
 };
 
-union sceGsTex0
+struct sceGsTex0
 {
-	ulong32 TBP0;
-	ulong32 TBW;
-	ulong32 PSM;
-	ulong32 TW;
-	ulong32 TH;
-	ulong32 TCC;
-	ulong32 TFX;
-	ulong32 CBP;
-	ulong32 CPSM;
-	ulong32 CSM;
-	ulong32 CSA;
-	ulong32 CLD;
+	struct
+	{
+		ulong32 TBP0 : 14;
+		ulong32 TBW : 6;
+		ulong32 PSM : 6;
+		ulong32 TW : 4;
+		ulong32 TH : 4;
+		ulong32 TCC : 1;
+		ulong32 TFX : 2;
+		ulong32 CBP : 14;
+		ulong32 CPSM : 4;
+		ulong32 CSM : 1;
+		ulong32 CSA : 5;
+		ulong32 CLD : 3;
+	};
 };
 
 struct _sceGifPackAd
@@ -451,88 +505,97 @@ struct _sceGifPackAd
 
 struct tGS_SMODE2
 {
-	union
+	struct
 	{
-		uint32 INT;
-		uint32 FFMD;
-		uint32 DPMS;
-		uint32 p0;
+		uint32 INT : 1;
+		uint32 FFMD : 1;
+		uint32 DPMS : 2;
+		uint32 p0 : 28;
 	};
 	uint32 p1;
 };
 
-union sceGsFog
+struct sceGsFog
 {
-	ulong32 pad00;
-	ulong32 F;
+	struct
+	{
+		ulong32 pad00 : 56;
+		ulong32 F : 8;
+	};
 };
 
 struct tGS_DISPFB2
 {
-	union
+	struct
 	{
-		uint32 FBP;
-		uint32 FBW;
-		uint32 PSM;
-		uint32 p0;
+		uint32 FBP : 9;
+		uint32 FBW : 6;
+		uint32 PSM : 5;
+		uint32 p0 : 12;
 	};
-	union
+	struct
 	{
-		uint32 DBX;
-		uint32 DBY;
-		uint32 p1;
+		uint32 DBX : 11;
+		uint32 DBY : 11;
+		uint32 p1 : 10;
 	};
 };
 
-union sceGsXyz
+struct sceGsXyz
 {
-	ulong32 X;
-	ulong32 Y;
-	ulong32 Z;
+	struct
+	{
+		ulong32 X : 16;
+		ulong32 Y : 16;
+		ulong32 Z : 32;
+	};
 };
 
-union sceGsAlpha
+struct sceGsAlpha
 {
-	ulong32 A;
-	ulong32 B;
-	ulong32 C;
-	ulong32 D;
-	ulong32 pad8;
-	ulong32 FIX;
-	ulong32 pad40;
+	struct
+	{
+		ulong32 A : 2;
+		ulong32 B : 2;
+		ulong32 C : 2;
+		ulong32 D : 2;
+		ulong32 pad8 : 24;
+		ulong32 FIX : 8;
+		ulong32 pad40 : 24;
+	};
 };
 
 struct sceGifTag
 {
-	union
+	struct
 	{
-		ulong32 NLOOP;
-		ulong32 EOP;
-		ulong32 pad16;
-		ulong32 id;
-		ulong32 PRE;
-		ulong32 PRIM;
-		ulong32 FLG;
-		ulong32 NREG;
+		ulong32 NLOOP : 15;
+		ulong32 EOP : 1;
+		ulong32 pad16 : 16;
+		ulong32 id : 14;
+		ulong32 PRE : 1;
+		ulong32 PRIM : 11;
+		ulong32 FLG : 2;
+		ulong32 NREG : 4;
 	};
-	union
+	struct
 	{
-		ulong32 REGS0;
-		ulong32 REGS1;
-		ulong32 REGS2;
-		ulong32 REGS3;
-		ulong32 REGS4;
-		ulong32 REGS5;
-		ulong32 REGS6;
-		ulong32 REGS7;
-		ulong32 REGS8;
-		ulong32 REGS9;
-		ulong32 REGS10;
-		ulong32 REGS11;
-		ulong32 REGS12;
-		ulong32 REGS13;
-		ulong32 REGS14;
-		ulong32 REGS15;
+		ulong32 REGS0 : 4;
+		ulong32 REGS1 : 4;
+		ulong32 REGS2 : 4;
+		ulong32 REGS3 : 4;
+		ulong32 REGS4 : 4;
+		ulong32 REGS5 : 4;
+		ulong32 REGS6 : 4;
+		ulong32 REGS7 : 4;
+		ulong32 REGS8 : 4;
+		ulong32 REGS9 : 4;
+		ulong32 REGS10 : 4;
+		ulong32 REGS11 : 4;
+		ulong32 REGS12 : 4;
+		ulong32 REGS13 : 4;
+		ulong32 REGS14 : 4;
+		ulong32 REGS15 : 4;
 	};
 };
 
@@ -542,7 +605,7 @@ struct sceGpPrimR
 	sceGifTag giftag1;
 	_sceGifPackAd userreg;
 	sceGifTag giftag2;
-	type_0 reg;
+	_sceGpReg reg[1];
 };
 
 struct sceGsTexflush
@@ -568,42 +631,54 @@ struct xSysFontTbl
 	int32 y;
 };
 
-union sceGsPabe
+struct sceGsPabe
 {
-	ulong32 PABE;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 PABE : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
-union sceGsXyzf
+struct sceGsXyzf
 {
-	ulong32 X;
-	ulong32 Y;
-	ulong32 Z;
-	ulong32 F;
+	struct
+	{
+		ulong32 X : 16;
+		ulong32 Y : 16;
+		ulong32 Z : 24;
+		ulong32 F : 8;
+	};
 };
 
-union sceGsTrxdir
+struct sceGsTrxdir
 {
-	ulong32 XDR;
-	ulong32 pad02;
+	struct
+	{
+		ulong32 XDR : 2;
+		ulong32 pad02 : 62;
+	};
 };
 
-union sceGsScissor
+struct sceGsScissor
 {
-	ulong32 SCAX0;
-	ulong32 pad11;
-	ulong32 SCAX1;
-	ulong32 pad27;
-	ulong32 SCAY0;
-	ulong32 pad43;
-	ulong32 SCAY1;
-	ulong32 pad59;
+	struct
+	{
+		ulong32 SCAX0 : 11;
+		ulong32 pad11 : 5;
+		ulong32 SCAX1 : 11;
+		ulong32 pad27 : 5;
+		ulong32 SCAY0 : 11;
+		ulong32 pad43 : 5;
+		ulong32 SCAY1 : 11;
+		ulong32 pad59 : 5;
+	};
 };
 
-type_1 xSysFontLookup;
-type_3 xSysFontRGBA;
-type_9 excep_table;
-type_10 reg_table;
+xSysFontTbl xSysFontLookup[128];
+uint32 xSysFontRGBA[4096];
+int8* excep_table[14];
+int8* reg_table[32];
 _sceGpChain sChain;
 sceGpPrimR* sSprpac;
 long32 iExceptionHangCurr;
@@ -619,11 +694,15 @@ void iExceptionInit();
 // Start address: 0x3d7280
 void iExceptionRwDMAInit()
 {
+	// Line 444, Address: 0x3d7280, Func Offset: 0
+	// Func End, Address: 0x3d7288, Func Offset: 0x8
 }
 
 // iExceptionInit__Fv
 // Start address: 0x3d7290
 void iExceptionInit()
 {
+	// Line 414, Address: 0x3d7290, Func Offset: 0
+	// Func End, Address: 0x3d7298, Func Offset: 0x8
 }
 

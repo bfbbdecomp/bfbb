@@ -122,7 +122,7 @@ typedef struct xAnimMultiFileEntry;
 typedef struct xAnimActiveEffect;
 typedef struct xCamera;
 typedef struct RwSphere;
-typedef union _class_1;
+typedef struct _class_1;
 typedef struct zPlayerSettings;
 typedef struct zEnt;
 typedef struct RwTexDictionary;
@@ -240,7 +240,7 @@ typedef uint32 type_67[2];
 typedef uint8 type_68[2];
 typedef float32 type_69[6];
 typedef uint32 type_70[2];
-typedef type_70 type_71[24];
+typedef uint32 type_71[2][24];
 typedef float32 type_72[3];
 typedef float32 type_73[3];
 typedef xModelTag type_75[2];
@@ -260,7 +260,7 @@ typedef xBase* type_89[72];
 typedef float32 type_90[4];
 typedef int8 type_91[128];
 typedef RxCluster type_92[1];
-typedef type_91 type_93[6];
+typedef int8 type_93[128][6];
 typedef RwTexCoords* type_94[8];
 
 struct xUpdateCullMgr
@@ -274,8 +274,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_33 activateCB;
-	type_33 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct _tagiPad
@@ -287,7 +287,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_2 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct zJumpParam
@@ -345,16 +345,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_57 update;
-	type_57 endUpdate;
-	type_59 bupdate;
-	type_60 move;
-	type_64 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_13 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -403,7 +403,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_12 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RwResEntry
@@ -412,7 +412,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_84 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct RwRaster
@@ -442,7 +442,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_74 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -475,7 +475,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_15 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xModelInstance
@@ -545,7 +545,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_48 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -556,8 +556,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_24 light;
-	type_28 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -613,9 +613,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_44 BeforeEnter;
-	type_46 StateCallback;
-	type_12 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RxPipelineCluster
@@ -626,7 +626,7 @@ struct RxPipelineCluster
 
 struct RpTriangle
 {
-	type_17 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -645,7 +645,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_20 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -659,7 +659,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_6 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RxHeap
@@ -692,8 +692,8 @@ struct tri_data_0 : tri_data_1
 
 struct _tagxPad
 {
-	type_26 value;
-	type_29 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -708,9 +708,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_47 up_tmr;
-	type_49 down_tmr;
-	type_55 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct xModelPool
@@ -726,7 +726,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_40 radius;
+	float32 radius[2];
 };
 
 struct RwTexCoords
@@ -740,14 +740,14 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_90 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
 
 struct xJSPHeader
 {
-	type_86 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -761,7 +761,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_56 pad;
+	uint32 pad[4];
 };
 
 struct zAssetPickupTable
@@ -777,7 +777,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_79 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -824,7 +824,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_42 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -862,8 +862,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_35 Conditional;
-	type_35 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -979,8 +979,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_62 PowerUp;
-	type_68 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct RpClump
@@ -990,14 +990,14 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_9 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_45 wt;
+	float32 wt[4];
 };
 
 struct _class_0
@@ -1005,7 +1005,7 @@ struct _class_0
 	float32 cur;
 	float32 end;
 	float32 inc;
-	type_39 adjusted;
+	uint32 adjusted[2];
 };
 
 struct xGroup : xBase
@@ -1051,16 +1051,16 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_18 resolvID;
-	type_23 base2Name;
-	type_32 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_25 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1117,8 +1117,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_85 baseCount;
-	type_89 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -1153,7 +1153,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_43 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -1192,7 +1192,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_66 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -1222,7 +1222,7 @@ enum RxClusterValidityReq
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_81 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RwTexture
@@ -1230,8 +1230,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_78 name;
-	type_82 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -1286,8 +1286,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_38 lastRefs;
-	type_41 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -1327,7 +1327,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_94 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -1635,7 +1635,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_75 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -1647,7 +1647,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_4 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -1673,10 +1673,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_50 Inv_PatsSock;
-	type_51 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_53 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -1688,21 +1688,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_67 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_88 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_3 sb_model_indices;
-	type_11 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -1729,7 +1729,7 @@ struct RxClusterDefinition
 
 struct xShadowSimplePoly
 {
-	type_54 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1867,7 +1867,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_63 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct RwSphere
@@ -1876,19 +1876,22 @@ struct RwSphere
 	float32 radius;
 };
 
-union _class_1
+struct _class_1
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_69 MoveSpeed;
-	type_72 AnimSneak;
-	type_73 AnimWalk;
-	type_77 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -1906,7 +1909,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_16 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct zEnt : xEnt
@@ -1925,8 +1928,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_65 beginUpdate;
-	type_0 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -1938,9 +1941,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_21 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_30 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct zMusicSituation
@@ -1976,7 +1979,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_61 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -2008,7 +2011,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_58 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -2046,7 +2049,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_80 corner;
+	xVec3 corner[4];
 };
 
 struct xEntCollis
@@ -2062,9 +2065,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_1 colls;
-	type_5 post;
-	type_10 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct RxClusterRef
@@ -2135,19 +2138,19 @@ struct xJSPNodeInfo
 
 struct RxNodeMethods
 {
-	type_27 nodeBody;
-	type_31 nodeInit;
-	type_34 nodeTerm;
-	type_36 pipelineNodeInit;
-	type_7 pipelineNodeTerm;
-	type_14 pipelineNodeConfig;
-	type_22 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_76 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct _class_3
@@ -2212,10 +2215,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_93 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_8 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -2242,7 +2245,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_92 clusters;
+	RxCluster clusters[1];
 };
 
 struct xEntDrive
@@ -2317,12 +2320,12 @@ struct _tagPadAnalog
 };
 
 uint32 sMusicPaused;
-type_71 sMusicSoundID;
-type_19 sMusicLastEnum;
-type_52 sMusicTimer;
-type_87 sMusicQueueData;
-type_37 sMusicInfo;
-type_83 sMusicTrack;
+uint32 sMusicSoundID[2][24];
+int32 sMusicLastEnum[2];
+float32 sMusicTimer[2];
+zMusicSituation* sMusicQueueData[2];
+zMusicSituation sMusicInfo[8];
+zMusicTrackInfo sMusicTrack[2];
 _class_0 volume;
 eGameMode gGameMode;
 zGlobals globals;
@@ -2344,12 +2347,28 @@ void zMusicRefreshVolume();
 // Start address: 0x18b1f0
 void zMusicReset()
 {
+	// Line 628, Address: 0x18b1f0, Func Offset: 0
+	// Line 631, Address: 0x18b1fc, Func Offset: 0xc
+	// Line 632, Address: 0x18b20c, Func Offset: 0x1c
+	// Line 633, Address: 0x18b218, Func Offset: 0x28
+	// Func End, Address: 0x18b228, Func Offset: 0x38
 }
 
 // zMusicSetVolume__Fff
 // Start address: 0x18b230
 void zMusicSetVolume(float32 vol, float32 delay)
 {
+	// Line 620, Address: 0x18b230, Func Offset: 0
+	// Line 622, Address: 0x18b234, Func Offset: 0x4
+	// Line 620, Address: 0x18b238, Func Offset: 0x8
+	// Line 622, Address: 0x18b23c, Func Offset: 0xc
+	// Line 621, Address: 0x18b240, Func Offset: 0x10
+	// Line 622, Address: 0x18b248, Func Offset: 0x18
+	// Line 621, Address: 0x18b254, Func Offset: 0x24
+	// Line 622, Address: 0x18b25c, Func Offset: 0x2c
+	// Line 623, Address: 0x18b264, Func Offset: 0x34
+	// Line 624, Address: 0x18b278, Func Offset: 0x48
+	// Func End, Address: 0x18b280, Func Offset: 0x50
 }
 
 // zMusicUnpause__Fi
@@ -2357,6 +2376,20 @@ void zMusicSetVolume(float32 vol, float32 delay)
 void zMusicUnpause(int32 kill)
 {
 	int32 i;
+	// Line 579, Address: 0x18b280, Func Offset: 0
+	// Line 580, Address: 0x18b298, Func Offset: 0x18
+	// Line 582, Address: 0x18b2a4, Func Offset: 0x24
+	// Line 584, Address: 0x18b2b8, Func Offset: 0x38
+	// Line 586, Address: 0x18b2c4, Func Offset: 0x44
+	// Line 589, Address: 0x18b2cc, Func Offset: 0x4c
+	// Line 592, Address: 0x18b2d4, Func Offset: 0x54
+	// Line 602, Address: 0x18b31c, Func Offset: 0x9c
+	// Line 603, Address: 0x18b320, Func Offset: 0xa0
+	// Line 592, Address: 0x18b328, Func Offset: 0xa8
+	// Line 603, Address: 0x18b32c, Func Offset: 0xac
+	// Line 606, Address: 0x18b334, Func Offset: 0xb4
+	// Line 615, Address: 0x18b338, Func Offset: 0xb8
+	// Func End, Address: 0x18b354, Func Offset: 0xd4
 }
 
 // zMusicPause__Fv
@@ -2364,6 +2397,16 @@ void zMusicUnpause(int32 kill)
 void zMusicPause()
 {
 	int32 i;
+	// Line 558, Address: 0x18b360, Func Offset: 0
+	// Line 559, Address: 0x18b370, Func Offset: 0x10
+	// Line 562, Address: 0x18b37c, Func Offset: 0x1c
+	// Line 564, Address: 0x18b38c, Func Offset: 0x2c
+	// Line 567, Address: 0x18b394, Func Offset: 0x34
+	// Line 568, Address: 0x18b39c, Func Offset: 0x3c
+	// Line 569, Address: 0x18b3a0, Func Offset: 0x40
+	// Line 571, Address: 0x18b3b0, Func Offset: 0x50
+	// Line 575, Address: 0x18b3b8, Func Offset: 0x58
+	// Func End, Address: 0x18b3cc, Func Offset: 0x6c
 }
 
 // zMusicKill__Fv
@@ -2371,6 +2414,16 @@ void zMusicPause()
 void zMusicKill()
 {
 	int32 i;
+	// Line 540, Address: 0x18b3d0, Func Offset: 0
+	// Line 544, Address: 0x18b3e0, Func Offset: 0x10
+	// Line 546, Address: 0x18b3f4, Func Offset: 0x24
+	// Line 548, Address: 0x18b3fc, Func Offset: 0x2c
+	// Line 549, Address: 0x18b404, Func Offset: 0x34
+	// Line 550, Address: 0x18b408, Func Offset: 0x38
+	// Line 551, Address: 0x18b40c, Func Offset: 0x3c
+	// Line 553, Address: 0x18b410, Func Offset: 0x40
+	// Line 556, Address: 0x18b420, Func Offset: 0x50
+	// Func End, Address: 0x18b434, Func Offset: 0x64
 }
 
 // zMusicUpdate__Ff
@@ -2378,6 +2431,28 @@ void zMusicKill()
 void zMusicUpdate(float32 dt)
 {
 	int32 i;
+	// Line 493, Address: 0x18b440, Func Offset: 0
+	// Line 495, Address: 0x18b45c, Func Offset: 0x1c
+	// Line 501, Address: 0x18b468, Func Offset: 0x28
+	// Line 510, Address: 0x18b46c, Func Offset: 0x2c
+	// Line 501, Address: 0x18b470, Func Offset: 0x30
+	// Line 510, Address: 0x18b474, Func Offset: 0x34
+	// Line 501, Address: 0x18b47c, Func Offset: 0x3c
+	// Line 510, Address: 0x18b514, Func Offset: 0xd4
+	// Line 515, Address: 0x18b51c, Func Offset: 0xdc
+	// Line 517, Address: 0x18b540, Func Offset: 0x100
+	// Line 521, Address: 0x18b55c, Func Offset: 0x11c
+	// Line 523, Address: 0x18b570, Func Offset: 0x130
+	// Line 524, Address: 0x18b578, Func Offset: 0x138
+	// Line 525, Address: 0x18b584, Func Offset: 0x144
+	// Line 528, Address: 0x18b588, Func Offset: 0x148
+	// Line 530, Address: 0x18b5ac, Func Offset: 0x16c
+	// Line 534, Address: 0x18b5b4, Func Offset: 0x174
+	// Line 530, Address: 0x18b5c0, Func Offset: 0x180
+	// Line 534, Address: 0x18b5c4, Func Offset: 0x184
+	// Line 536, Address: 0x18b5cc, Func Offset: 0x18c
+	// Line 537, Address: 0x18b72c, Func Offset: 0x2ec
+	// Func End, Address: 0x18b750, Func Offset: 0x310
 }
 
 // zMusicNotifyEvent__FPCfP5xBase
@@ -2385,6 +2460,24 @@ void zMusicUpdate(float32 dt)
 void zMusicNotifyEvent(float32* toParam)
 {
 	zMusicSituation* s;
+	// Line 443, Address: 0x18b750, Func Offset: 0
+	// Line 452, Address: 0x18b75c, Func Offset: 0xc
+	// Line 458, Address: 0x18b790, Func Offset: 0x40
+	// Line 452, Address: 0x18b794, Func Offset: 0x44
+	// Line 458, Address: 0x18b79c, Func Offset: 0x4c
+	// Line 452, Address: 0x18b7a0, Func Offset: 0x50
+	// Line 458, Address: 0x18b7a8, Func Offset: 0x58
+	// Line 462, Address: 0x18b7c4, Func Offset: 0x74
+	// Line 468, Address: 0x18b7d8, Func Offset: 0x88
+	// Line 475, Address: 0x18b7f0, Func Offset: 0xa0
+	// Line 481, Address: 0x18b804, Func Offset: 0xb4
+	// Line 482, Address: 0x18b810, Func Offset: 0xc0
+	// Line 481, Address: 0x18b814, Func Offset: 0xc4
+	// Line 482, Address: 0x18b818, Func Offset: 0xc8
+	// Line 483, Address: 0x18b828, Func Offset: 0xd8
+	// Line 488, Address: 0x18b848, Func Offset: 0xf8
+	// Line 489, Address: 0x18b86c, Func Offset: 0x11c
+	// Func End, Address: 0x18b878, Func Offset: 0x128
 }
 
 // zMusicNotify__Fi
@@ -2392,6 +2485,18 @@ void zMusicNotifyEvent(float32* toParam)
 void zMusicNotify(int32 situation)
 {
 	zMusicSituation* s;
+	// Line 400, Address: 0x18b880, Func Offset: 0
+	// Line 408, Address: 0x18b88c, Func Offset: 0xc
+	// Line 420, Address: 0x18b8ac, Func Offset: 0x2c
+	// Line 424, Address: 0x18b8c4, Func Offset: 0x44
+	// Line 427, Address: 0x18b8c8, Func Offset: 0x48
+	// Line 433, Address: 0x18b8dc, Func Offset: 0x5c
+	// Line 434, Address: 0x18b8e8, Func Offset: 0x68
+	// Line 433, Address: 0x18b8ec, Func Offset: 0x6c
+	// Line 434, Address: 0x18b8f8, Func Offset: 0x78
+	// Line 435, Address: 0x18b908, Func Offset: 0x88
+	// Line 437, Address: 0x18b928, Func Offset: 0xa8
+	// Func End, Address: 0x18b930, Func Offset: 0xb0
 }
 
 // zMusicDo__Fi
@@ -2401,6 +2506,64 @@ int32 zMusicDo(int32 track)
 	int32 snd_enum;
 	float32 vol;
 	float32 pitch;
+	// Line 301, Address: 0x18b930, Func Offset: 0
+	// Line 308, Address: 0x18b934, Func Offset: 0x4
+	// Line 301, Address: 0x18b938, Func Offset: 0x8
+	// Line 303, Address: 0x18b93c, Func Offset: 0xc
+	// Line 301, Address: 0x18b940, Func Offset: 0x10
+	// Line 308, Address: 0x18b960, Func Offset: 0x30
+	// Line 303, Address: 0x18b964, Func Offset: 0x34
+	// Line 308, Address: 0x18b968, Func Offset: 0x38
+	// Line 309, Address: 0x18b970, Func Offset: 0x40
+	// Line 311, Address: 0x18b978, Func Offset: 0x48
+	// Line 314, Address: 0x18b99c, Func Offset: 0x6c
+	// Line 321, Address: 0x18b9c4, Func Offset: 0x94
+	// Line 323, Address: 0x18b9c8, Func Offset: 0x98
+	// Line 327, Address: 0x18b9d0, Func Offset: 0xa0
+	// Line 331, Address: 0x18b9d8, Func Offset: 0xa8
+	// Line 333, Address: 0x18b9e0, Func Offset: 0xb0
+	// Line 337, Address: 0x18b9e8, Func Offset: 0xb8
+	// Line 341, Address: 0x18b9f0, Func Offset: 0xc0
+	// Line 344, Address: 0x18b9f8, Func Offset: 0xc8
+	// Line 346, Address: 0x18ba14, Func Offset: 0xe4
+	// Line 344, Address: 0x18ba1c, Func Offset: 0xec
+	// Line 348, Address: 0x18ba34, Func Offset: 0x104
+	// Line 350, Address: 0x18ba3c, Func Offset: 0x10c
+	// Line 351, Address: 0x18ba44, Func Offset: 0x114
+	// Line 352, Address: 0x18ba54, Func Offset: 0x124
+	// Line 351, Address: 0x18ba58, Func Offset: 0x128
+	// Line 354, Address: 0x18ba5c, Func Offset: 0x12c
+	// Line 351, Address: 0x18ba60, Func Offset: 0x130
+	// Line 354, Address: 0x18ba68, Func Offset: 0x138
+	// Line 351, Address: 0x18ba6c, Func Offset: 0x13c
+	// Line 354, Address: 0x18ba70, Func Offset: 0x140
+	// Line 356, Address: 0x18ba78, Func Offset: 0x148
+	// Line 357, Address: 0x18ba7c, Func Offset: 0x14c
+	// Line 358, Address: 0x18ba88, Func Offset: 0x158
+	// Line 359, Address: 0x18baa4, Func Offset: 0x174
+	// Line 360, Address: 0x18baa8, Func Offset: 0x178
+	// Line 359, Address: 0x18bab0, Func Offset: 0x180
+	// Line 360, Address: 0x18bab4, Func Offset: 0x184
+	// Line 363, Address: 0x18bab8, Func Offset: 0x188
+	// Line 374, Address: 0x18bb14, Func Offset: 0x1e4
+	// Line 377, Address: 0x18bb20, Func Offset: 0x1f0
+	// Line 378, Address: 0x18bb30, Func Offset: 0x200
+	// Line 377, Address: 0x18bb3c, Func Offset: 0x20c
+	// Line 378, Address: 0x18bb40, Func Offset: 0x210
+	// Line 380, Address: 0x18bb48, Func Offset: 0x218
+	// Line 384, Address: 0x18bb50, Func Offset: 0x220
+	// Line 380, Address: 0x18bb54, Func Offset: 0x224
+	// Line 384, Address: 0x18bb5c, Func Offset: 0x22c
+	// Line 385, Address: 0x18bb60, Func Offset: 0x230
+	// Line 386, Address: 0x18bb68, Func Offset: 0x238
+	// Line 388, Address: 0x18bb78, Func Offset: 0x248
+	// Line 389, Address: 0x18bb7c, Func Offset: 0x24c
+	// Line 390, Address: 0x18bb80, Func Offset: 0x250
+	// Line 391, Address: 0x18bb88, Func Offset: 0x258
+	// Line 392, Address: 0x18bb94, Func Offset: 0x264
+	// Line 394, Address: 0x18bb98, Func Offset: 0x268
+	// Line 395, Address: 0x18bba0, Func Offset: 0x270
+	// Func End, Address: 0x18bbcc, Func Offset: 0x29c
 }
 
 // getCurrLevelMusicEnum__Fv
@@ -2408,12 +2571,166 @@ int32 zMusicDo(int32 track)
 int32 getCurrLevelMusicEnum()
 {
 	int32 snd_enum;
+	// Line 231, Address: 0x18bbd0, Func Offset: 0
+	// Line 233, Address: 0x18bbd8, Func Offset: 0x8
+	// Line 235, Address: 0x18bc04, Func Offset: 0x34
+	// Line 237, Address: 0x18bc08, Func Offset: 0x38
+	// Line 240, Address: 0x18bc10, Func Offset: 0x40
+	// Line 243, Address: 0x18bc18, Func Offset: 0x48
+	// Line 246, Address: 0x18bc20, Func Offset: 0x50
+	// Line 249, Address: 0x18bc28, Func Offset: 0x58
+	// Line 252, Address: 0x18bc30, Func Offset: 0x60
+	// Line 255, Address: 0x18bc38, Func Offset: 0x68
+	// Line 258, Address: 0x18bc40, Func Offset: 0x70
+	// Line 261, Address: 0x18bc48, Func Offset: 0x78
+	// Line 264, Address: 0x18bc50, Func Offset: 0x80
+	// Line 267, Address: 0x18bc58, Func Offset: 0x88
+	// Line 270, Address: 0x18bc60, Func Offset: 0x90
+	// Line 273, Address: 0x18bc68, Func Offset: 0x98
+	// Line 276, Address: 0x18bc70, Func Offset: 0xa0
+	// Line 280, Address: 0x18bc78, Func Offset: 0xa8
+	// Line 285, Address: 0x18bc80, Func Offset: 0xb0
+	// Line 286, Address: 0x18bca0, Func Offset: 0xd0
+	// Line 288, Address: 0x18bcb0, Func Offset: 0xe0
+	// Line 292, Address: 0x18bcd0, Func Offset: 0x100
+	// Line 295, Address: 0x18bcd4, Func Offset: 0x104
+	// Line 298, Address: 0x18bcd8, Func Offset: 0x108
+	// Func End, Address: 0x18bce4, Func Offset: 0x114
 }
 
 // zMusicInit__Fv
 // Start address: 0x18bcf0
 void zMusicInit()
 {
+	// Line 179, Address: 0x18bcf0, Func Offset: 0
+	// Line 196, Address: 0x18bcf4, Func Offset: 0x4
+	// Line 179, Address: 0x18bcf8, Func Offset: 0x8
+	// Line 186, Address: 0x18bcfc, Func Offset: 0xc
+	// Line 196, Address: 0x18bd04, Func Offset: 0x14
+	// Line 187, Address: 0x18bd08, Func Offset: 0x18
+	// Line 181, Address: 0x18bd0c, Func Offset: 0x1c
+	// Line 187, Address: 0x18bd10, Func Offset: 0x20
+	// Line 188, Address: 0x18bd14, Func Offset: 0x24
+	// Line 196, Address: 0x18bd30, Func Offset: 0x40
+	// Line 197, Address: 0x18bd3c, Func Offset: 0x4c
+	// Line 196, Address: 0x18bd40, Func Offset: 0x50
+	// Line 197, Address: 0x18bd44, Func Offset: 0x54
+	// Line 196, Address: 0x18bd48, Func Offset: 0x58
+	// Line 197, Address: 0x18bd50, Func Offset: 0x60
+	// Line 198, Address: 0x18bd5c, Func Offset: 0x6c
+	// Line 197, Address: 0x18bd60, Func Offset: 0x70
+	// Line 198, Address: 0x18bd64, Func Offset: 0x74
+	// Line 197, Address: 0x18bd68, Func Offset: 0x78
+	// Line 198, Address: 0x18bd70, Func Offset: 0x80
+	// Line 199, Address: 0x18bd7c, Func Offset: 0x8c
+	// Line 198, Address: 0x18bd80, Func Offset: 0x90
+	// Line 199, Address: 0x18bd84, Func Offset: 0x94
+	// Line 198, Address: 0x18bd88, Func Offset: 0x98
+	// Line 199, Address: 0x18bd90, Func Offset: 0xa0
+	// Line 200, Address: 0x18bd9c, Func Offset: 0xac
+	// Line 199, Address: 0x18bda0, Func Offset: 0xb0
+	// Line 200, Address: 0x18bda4, Func Offset: 0xb4
+	// Line 199, Address: 0x18bda8, Func Offset: 0xb8
+	// Line 200, Address: 0x18bdb0, Func Offset: 0xc0
+	// Line 201, Address: 0x18bdbc, Func Offset: 0xcc
+	// Line 200, Address: 0x18bdc0, Func Offset: 0xd0
+	// Line 201, Address: 0x18bdc4, Func Offset: 0xd4
+	// Line 200, Address: 0x18bdc8, Func Offset: 0xd8
+	// Line 201, Address: 0x18bdd0, Func Offset: 0xe0
+	// Line 202, Address: 0x18bddc, Func Offset: 0xec
+	// Line 201, Address: 0x18bde0, Func Offset: 0xf0
+	// Line 202, Address: 0x18bde4, Func Offset: 0xf4
+	// Line 201, Address: 0x18bde8, Func Offset: 0xf8
+	// Line 202, Address: 0x18bdf0, Func Offset: 0x100
+	// Line 203, Address: 0x18bdfc, Func Offset: 0x10c
+	// Line 202, Address: 0x18be00, Func Offset: 0x110
+	// Line 203, Address: 0x18be04, Func Offset: 0x114
+	// Line 202, Address: 0x18be08, Func Offset: 0x118
+	// Line 203, Address: 0x18be10, Func Offset: 0x120
+	// Line 204, Address: 0x18be1c, Func Offset: 0x12c
+	// Line 203, Address: 0x18be20, Func Offset: 0x130
+	// Line 204, Address: 0x18be24, Func Offset: 0x134
+	// Line 203, Address: 0x18be28, Func Offset: 0x138
+	// Line 204, Address: 0x18be30, Func Offset: 0x140
+	// Line 205, Address: 0x18be3c, Func Offset: 0x14c
+	// Line 204, Address: 0x18be40, Func Offset: 0x150
+	// Line 205, Address: 0x18be44, Func Offset: 0x154
+	// Line 204, Address: 0x18be48, Func Offset: 0x158
+	// Line 205, Address: 0x18be50, Func Offset: 0x160
+	// Line 206, Address: 0x18be5c, Func Offset: 0x16c
+	// Line 205, Address: 0x18be60, Func Offset: 0x170
+	// Line 206, Address: 0x18be64, Func Offset: 0x174
+	// Line 205, Address: 0x18be68, Func Offset: 0x178
+	// Line 206, Address: 0x18be70, Func Offset: 0x180
+	// Line 207, Address: 0x18be7c, Func Offset: 0x18c
+	// Line 206, Address: 0x18be80, Func Offset: 0x190
+	// Line 207, Address: 0x18be84, Func Offset: 0x194
+	// Line 206, Address: 0x18be88, Func Offset: 0x198
+	// Line 207, Address: 0x18be90, Func Offset: 0x1a0
+	// Line 208, Address: 0x18be9c, Func Offset: 0x1ac
+	// Line 207, Address: 0x18bea0, Func Offset: 0x1b0
+	// Line 208, Address: 0x18bea4, Func Offset: 0x1b4
+	// Line 207, Address: 0x18bea8, Func Offset: 0x1b8
+	// Line 208, Address: 0x18beb0, Func Offset: 0x1c0
+	// Line 209, Address: 0x18bebc, Func Offset: 0x1cc
+	// Line 208, Address: 0x18bec0, Func Offset: 0x1d0
+	// Line 209, Address: 0x18bec4, Func Offset: 0x1d4
+	// Line 208, Address: 0x18bec8, Func Offset: 0x1d8
+	// Line 209, Address: 0x18bed0, Func Offset: 0x1e0
+	// Line 210, Address: 0x18bedc, Func Offset: 0x1ec
+	// Line 209, Address: 0x18bee0, Func Offset: 0x1f0
+	// Line 210, Address: 0x18bee4, Func Offset: 0x1f4
+	// Line 209, Address: 0x18bee8, Func Offset: 0x1f8
+	// Line 210, Address: 0x18bef0, Func Offset: 0x200
+	// Line 211, Address: 0x18befc, Func Offset: 0x20c
+	// Line 210, Address: 0x18bf00, Func Offset: 0x210
+	// Line 211, Address: 0x18bf04, Func Offset: 0x214
+	// Line 210, Address: 0x18bf08, Func Offset: 0x218
+	// Line 211, Address: 0x18bf10, Func Offset: 0x220
+	// Line 212, Address: 0x18bf1c, Func Offset: 0x22c
+	// Line 211, Address: 0x18bf20, Func Offset: 0x230
+	// Line 212, Address: 0x18bf24, Func Offset: 0x234
+	// Line 211, Address: 0x18bf28, Func Offset: 0x238
+	// Line 212, Address: 0x18bf30, Func Offset: 0x240
+	// Line 213, Address: 0x18bf3c, Func Offset: 0x24c
+	// Line 212, Address: 0x18bf40, Func Offset: 0x250
+	// Line 213, Address: 0x18bf44, Func Offset: 0x254
+	// Line 212, Address: 0x18bf48, Func Offset: 0x258
+	// Line 213, Address: 0x18bf50, Func Offset: 0x260
+	// Line 214, Address: 0x18bf5c, Func Offset: 0x26c
+	// Line 213, Address: 0x18bf60, Func Offset: 0x270
+	// Line 214, Address: 0x18bf64, Func Offset: 0x274
+	// Line 213, Address: 0x18bf68, Func Offset: 0x278
+	// Line 214, Address: 0x18bf70, Func Offset: 0x280
+	// Line 216, Address: 0x18bf7c, Func Offset: 0x28c
+	// Line 214, Address: 0x18bf80, Func Offset: 0x290
+	// Line 216, Address: 0x18bf84, Func Offset: 0x294
+	// Line 214, Address: 0x18bf88, Func Offset: 0x298
+	// Line 216, Address: 0x18bf90, Func Offset: 0x2a0
+	// Line 217, Address: 0x18bf9c, Func Offset: 0x2ac
+	// Line 216, Address: 0x18bfa0, Func Offset: 0x2b0
+	// Line 217, Address: 0x18bfa4, Func Offset: 0x2b4
+	// Line 216, Address: 0x18bfa8, Func Offset: 0x2b8
+	// Line 217, Address: 0x18bfb0, Func Offset: 0x2c0
+	// Line 218, Address: 0x18bfbc, Func Offset: 0x2cc
+	// Line 217, Address: 0x18bfc0, Func Offset: 0x2d0
+	// Line 218, Address: 0x18bfc4, Func Offset: 0x2d4
+	// Line 217, Address: 0x18bfc8, Func Offset: 0x2d8
+	// Line 218, Address: 0x18bfd0, Func Offset: 0x2e0
+	// Line 227, Address: 0x18bfdc, Func Offset: 0x2ec
+	// Line 218, Address: 0x18bfe0, Func Offset: 0x2f0
+	// Line 227, Address: 0x18bfe4, Func Offset: 0x2f4
+	// Line 218, Address: 0x18bfe8, Func Offset: 0x2f8
+	// Line 227, Address: 0x18bff4, Func Offset: 0x304
+	// Line 224, Address: 0x18c008, Func Offset: 0x318
+	// Line 227, Address: 0x18c048, Func Offset: 0x358
+	// Line 223, Address: 0x18c058, Func Offset: 0x368
+	// Line 224, Address: 0x18c060, Func Offset: 0x370
+	// Line 223, Address: 0x18c088, Func Offset: 0x398
+	// Line 224, Address: 0x18c090, Func Offset: 0x3a0
+	// Line 227, Address: 0x18c0d4, Func Offset: 0x3e4
+	// Line 228, Address: 0x18c0dc, Func Offset: 0x3ec
+	// Func End, Address: 0x18c0e8, Func Offset: 0x3f8
 }
 
 // zMusicRefreshVolume__Fv
@@ -2421,5 +2738,12 @@ void zMusicInit()
 void zMusicRefreshVolume()
 {
 	int32 i;
+	// Line 169, Address: 0x18c0f0, Func Offset: 0
+	// Line 170, Address: 0x18c100, Func Offset: 0x10
+	// Line 173, Address: 0x18c114, Func Offset: 0x24
+	// Line 174, Address: 0x18c11c, Func Offset: 0x2c
+	// Line 175, Address: 0x18c124, Func Offset: 0x34
+	// Line 176, Address: 0x18c138, Func Offset: 0x48
+	// Func End, Address: 0x18c14c, Func Offset: 0x5c
 }
 

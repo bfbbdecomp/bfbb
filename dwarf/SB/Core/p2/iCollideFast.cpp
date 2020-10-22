@@ -41,7 +41,7 @@ typedef struct xJSPNodeInfo;
 typedef struct rxHeapSuperBlockDescriptor;
 typedef struct RwResEntry;
 typedef struct rxReq;
-typedef union RpIntersectData;
+typedef struct RpIntersectData;
 typedef struct xAnimEffect;
 typedef struct RwRaster;
 typedef struct RpWorldSector;
@@ -86,7 +86,7 @@ typedef struct RwFrame;
 typedef struct RxPipelineCluster;
 typedef struct RxNodeDefinition;
 typedef struct RxCluster;
-typedef union _class_0;
+typedef struct _class_0;
 typedef struct RxPacket;
 typedef struct RwRGBAReal;
 typedef struct RwObjectHasFrame;
@@ -158,7 +158,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_9 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -182,9 +182,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_18 BeforeEnter;
-	type_16 StateCallback;
-	type_20 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RxHeap
@@ -278,7 +278,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_28 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RwTexCoords
@@ -307,7 +307,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_19 pad;
+	uint32 pad[4];
 };
 
 struct xAnimFile
@@ -319,7 +319,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_14 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -332,7 +332,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_2 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -342,7 +342,7 @@ struct RpAtomic
 
 struct xJSPHeader
 {
-	type_5 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -356,7 +356,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_11 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -451,7 +451,7 @@ struct RxPipeline
 
 struct RpTriangle
 {
-	type_34 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -465,8 +465,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_25 name;
-	type_26 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -488,8 +488,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_12 Conditional;
-	type_12 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -554,20 +554,23 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_27 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct rxReq
 {
 };
 
-union RpIntersectData
+struct RpIntersectData
 {
-	RwLine line;
-	RwV3d point;
-	RwSphere sphere;
-	RwBBox box;
-	void* object;
+	union
+	{
+		RwLine line;
+		RwV3d point;
+		RwSphere sphere;
+		RwBBox box;
+		void* object;
+	};
 };
 
 struct xAnimEffect
@@ -576,7 +579,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_7 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RwRaster
@@ -606,7 +609,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_29 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -652,7 +655,7 @@ struct RpLight
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_15 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct xAnimPlay
@@ -665,7 +668,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_20 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpWorld
@@ -683,7 +686,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_13 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -707,7 +710,7 @@ struct RpCollisionTriangle
 	RwV3d normal;
 	RwV3d point;
 	int32 index;
-	type_21 vertices;
+	RwV3d* vertices[3];
 };
 
 struct rxHeapFreeBlock
@@ -738,8 +741,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_30 light;
-	type_31 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -803,7 +806,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_24 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -844,7 +847,7 @@ struct RxClusterRef
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_22 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xClumpCollBSPVertInfo
@@ -866,7 +869,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_23 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -923,13 +926,13 @@ struct xModelBucket
 
 struct RxNodeMethods
 {
-	type_3 nodeBody;
-	type_4 nodeInit;
-	type_6 nodeTerm;
-	type_8 pipelineNodeInit;
-	type_10 pipelineNodeTerm;
-	type_0 pipelineNodeConfig;
-	type_1 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RwFrame
@@ -972,10 +975,13 @@ struct RxCluster
 	uint32 attributes;
 };
 
-union _class_0
+struct _class_0
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct RxPacket
@@ -986,7 +992,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_32 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwRGBAReal
@@ -1001,7 +1007,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_33 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RwLinkList
@@ -1015,8 +1021,8 @@ struct _class_1
 };
 
 uint32 hitzhit;
-type_17 rayHitsEnvFastCB;
-type_35 rayHitsModelFastCB;
+RpCollisionTriangle*(*rayHitsEnvFastCB)(RpIntersection*, RpWorldSector*, RpCollisionTriangle*, float32, void*);
+RpCollisionTriangle*(*rayHitsModelFastCB)(RpIntersection*, RpCollisionTriangle*, float32, void*);
 
 void iCollideFastInit();
 
@@ -1024,5 +1030,7 @@ void iCollideFastInit();
 // Start address: 0x1a7e40
 void iCollideFastInit()
 {
+	// Line 32, Address: 0x1a7e40, Func Offset: 0
+	// Func End, Address: 0x1a7e48, Func Offset: 0x8
 }
 

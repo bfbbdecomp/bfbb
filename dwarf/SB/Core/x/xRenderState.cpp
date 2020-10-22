@@ -17,8 +17,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_3 name;
-	type_4 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -71,9 +71,9 @@ struct RwLLLink
 	RwLLLink* prev;
 };
 
-type_1 buffer;
-type_2 buffer;
-type_0 sBlendTable;
+int8 buffer[16];
+int8 buffer[16];
+int32 sBlendTable[11];
 
 void xRenderStateSetDstBlendMode(int32 xmode);
 void xRenderStateSetSrcBlendMode(int32 xmode);
@@ -83,12 +83,16 @@ void xRenderStateSetTexture(RwTexture* texture);
 // Start address: 0x301890
 void xRenderStateSetDstBlendMode(int32 xmode)
 {
+	// Line 73, Address: 0x301890, Func Offset: 0
+	// Func End, Address: 0x3018ac, Func Offset: 0x1c
 }
 
 // xRenderStateSetSrcBlendMode__Fi
 // Start address: 0x3018b0
 void xRenderStateSetSrcBlendMode(int32 xmode)
 {
+	// Line 68, Address: 0x3018b0, Func Offset: 0
+	// Func End, Address: 0x3018cc, Func Offset: 0x1c
 }
 
 // xRenderStateSetTexture__FP9RwTexture
@@ -96,5 +100,15 @@ void xRenderStateSetSrcBlendMode(int32 xmode)
 void xRenderStateSetTexture(RwTexture* texture)
 {
 	RwRaster* raster;
+	// Line 53, Address: 0x3018d0, Func Offset: 0
+	// Line 54, Address: 0x3018d4, Func Offset: 0x4
+	// Line 56, Address: 0x3018dc, Func Offset: 0xc
+	// Line 57, Address: 0x3018e0, Func Offset: 0x10
+	// Line 58, Address: 0x3018e8, Func Offset: 0x18
+	// Line 59, Address: 0x3018f0, Func Offset: 0x20
+	// Line 62, Address: 0x3018f8, Func Offset: 0x28
+	// Line 63, Address: 0x301904, Func Offset: 0x34
+	// Line 64, Address: 0x301908, Func Offset: 0x38
+	// Func End, Address: 0x301914, Func Offset: 0x44
 }
 

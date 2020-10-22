@@ -109,7 +109,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_3 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RxPipelineNode
@@ -128,7 +128,7 @@ struct RxPipelineNode
 
 struct tag_xFile
 {
-	type_9 relname;
+	int8 relname[32];
 	tag_iFile ps;
 	void* user_data;
 };
@@ -162,9 +162,9 @@ struct xCutscene
 	void* MemCurr;
 	uint32 SndStarted;
 	uint32 SndNumChannel;
-	type_25 SndChannelReq;
-	type_27 SndAssetID;
-	type_29 SndHandle;
+	uint32 SndChannelReq[2];
+	uint32 SndAssetID[2];
+	uint32 SndHandle[2];
 	XCSNNosey* cb_nosey;
 };
 
@@ -295,7 +295,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_14 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct rxHeapBlockHeader
@@ -304,7 +304,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_23 pad;
+	uint32 pad[4];
 };
 
 struct xCutsceneInfo
@@ -321,8 +321,8 @@ struct xCutsceneInfo
 	uint32 VisSize;
 	uint32 BreakCount;
 	uint32 pad;
-	type_16 SoundLeft;
-	type_17 SoundRight;
+	int8 SoundLeft[16];
+	int8 SoundRight[16];
 };
 
 struct RpGeometry
@@ -338,7 +338,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_24 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -368,7 +368,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_19 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -447,7 +447,7 @@ struct XCSNNosey
 
 struct RpTriangle
 {
-	type_18 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -481,13 +481,13 @@ struct st_PACKER_ASSETTYPE
 	uint32 typetag;
 	uint32 tflags;
 	int32 typalign;
-	type_20 readXForm;
-	type_22 writeXForm;
-	type_0 assetLoaded;
-	type_2 makeData;
-	type_5 cleanup;
-	type_6 assetUnloaded;
-	type_7 writePeek;
+	void*(*readXForm)(void*, uint32, void*, uint32, uint32*);
+	void*(*writeXForm)(void*, uint32, void*, void*, uint32, uint32*);
+	int32(*assetLoaded)(void*, uint32, void*, int32);
+	void*(*makeData)(void*, uint32, void*, int32*, int32*);
+	void(*cleanup)(void*, uint32, void*);
+	void(*assetUnloaded)(void*, uint32);
+	void(*writePeek)(void*, uint32, void*, int8*);
 };
 
 struct RwResEntry
@@ -496,7 +496,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_34 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 enum rxEmbeddedPacketState
@@ -541,8 +541,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_31 name;
-	type_33 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -587,13 +587,13 @@ struct RxIoSpec
 
 struct RxNodeMethods
 {
-	type_11 nodeBody;
-	type_12 nodeInit;
-	type_15 nodeTerm;
-	type_1 pipelineNodeInit;
-	type_4 pipelineNodeTerm;
-	type_8 pipelineNodeConfig;
-	type_10 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxCluster
@@ -616,13 +616,13 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_36 clusters;
+	RxCluster clusters[1];
 };
 
 struct tag_iFile
 {
 	uint32 flags;
-	type_35 path;
+	int8 path[128];
 	int32 fd;
 	int32 offset;
 	int32 length;
@@ -643,12 +643,12 @@ enum XFILE_READSECTOR_STATUS
 	XFILE_RDSTAT_EXPIRED
 };
 
-type_28 buffer;
-type_30 buffer;
-type_32 iCSAsyncReadCB;
-type_21 iCSSoundCutsceneCB;
-type_13 FastPipeAtomicCB;
-type_26 ourGlobals;
+int8 buffer[16];
+int8 buffer[16];
+void(*iCSAsyncReadCB)(tag_xFile*);
+void(*iCSSoundCutsceneCB)(uint32, uint8);
+RpAtomic*(*FastPipeAtomicCB)(RpAtomic*, void*);
+uint32 ourGlobals[4096];
 xCutscene sActiveCutscene;
 
 int32 iCSLoadStep(xCutscene* csn);
@@ -670,18 +670,114 @@ int32 iCSLoadStep(xCutscene* csn)
 	uint32 tmpSize;
 	void* foundModel;
 	uint32 i;
+	// Line 223, Address: 0x34b9a0, Func Offset: 0
+	// Line 227, Address: 0x34b9b4, Func Offset: 0x14
+	// Line 236, Address: 0x34b9c0, Func Offset: 0x20
+	// Line 237, Address: 0x34b9cc, Func Offset: 0x2c
+	// Line 239, Address: 0x34b9e0, Func Offset: 0x40
+	// Line 242, Address: 0x34b9e8, Func Offset: 0x48
+	// Line 243, Address: 0x34b9fc, Func Offset: 0x5c
+	// Line 242, Address: 0x34ba00, Func Offset: 0x60
+	// Line 246, Address: 0x34ba04, Func Offset: 0x64
+	// Line 248, Address: 0x34ba0c, Func Offset: 0x6c
+	// Line 254, Address: 0x34ba30, Func Offset: 0x90
+	// Line 248, Address: 0x34ba34, Func Offset: 0x94
+	// Line 254, Address: 0x34ba38, Func Offset: 0x98
+	// Line 259, Address: 0x34ba58, Func Offset: 0xb8
+	// Line 263, Address: 0x34ba7c, Func Offset: 0xdc
+	// Line 266, Address: 0x34ba80, Func Offset: 0xe0
+	// Line 267, Address: 0x34ba88, Func Offset: 0xe8
+	// Line 266, Address: 0x34ba8c, Func Offset: 0xec
+	// Line 267, Address: 0x34ba98, Func Offset: 0xf8
+	// Line 268, Address: 0x34baa8, Func Offset: 0x108
+	// Line 267, Address: 0x34baac, Func Offset: 0x10c
+	// Line 268, Address: 0x34bab0, Func Offset: 0x110
+	// Line 267, Address: 0x34bab4, Func Offset: 0x114
+	// Line 270, Address: 0x34babc, Func Offset: 0x11c
+	// Line 273, Address: 0x34bac8, Func Offset: 0x128
+	// Line 274, Address: 0x34bad0, Func Offset: 0x130
+	// Line 275, Address: 0x34badc, Func Offset: 0x13c
+	// Line 279, Address: 0x34bae0, Func Offset: 0x140
+	// Line 280, Address: 0x34baf0, Func Offset: 0x150
+	// Line 279, Address: 0x34baf4, Func Offset: 0x154
+	// Line 280, Address: 0x34bb00, Func Offset: 0x160
+	// Line 281, Address: 0x34bb0c, Func Offset: 0x16c
+	// Line 284, Address: 0x34bb3c, Func Offset: 0x19c
+	// Line 287, Address: 0x34bb4c, Func Offset: 0x1ac
+	// Line 288, Address: 0x34bb58, Func Offset: 0x1b8
+	// Line 291, Address: 0x34bb68, Func Offset: 0x1c8
+	// Line 288, Address: 0x34bb6c, Func Offset: 0x1cc
+	// Line 291, Address: 0x34bb70, Func Offset: 0x1d0
+	// Line 288, Address: 0x34bb74, Func Offset: 0x1d4
+	// Line 291, Address: 0x34bb80, Func Offset: 0x1e0
+	// Line 293, Address: 0x34bba0, Func Offset: 0x200
+	// Line 298, Address: 0x34bbac, Func Offset: 0x20c
+	// Line 293, Address: 0x34bbb0, Func Offset: 0x210
+	// Line 296, Address: 0x34bbc4, Func Offset: 0x224
+	// Line 297, Address: 0x34bbd0, Func Offset: 0x230
+	// Line 299, Address: 0x34bbd4, Func Offset: 0x234
+	// Line 300, Address: 0x34bbe0, Func Offset: 0x240
+	// Line 301, Address: 0x34bcb0, Func Offset: 0x310
+	// Line 302, Address: 0x34bcb8, Func Offset: 0x318
+	// Line 305, Address: 0x34bcc0, Func Offset: 0x320
+	// Line 302, Address: 0x34bcc4, Func Offset: 0x324
+	// Line 305, Address: 0x34bcc8, Func Offset: 0x328
+	// Line 308, Address: 0x34bcd8, Func Offset: 0x338
+	// Line 309, Address: 0x34bce0, Func Offset: 0x340
+	// Line 310, Address: 0x34bcec, Func Offset: 0x34c
+	// Line 313, Address: 0x34bcf0, Func Offset: 0x350
+	// Line 317, Address: 0x34bcf8, Func Offset: 0x358
+	// Line 318, Address: 0x34bd08, Func Offset: 0x368
+	// Line 321, Address: 0x34bd18, Func Offset: 0x378
+	// Line 322, Address: 0x34bd90, Func Offset: 0x3f0
+	// Line 325, Address: 0x34bd9c, Func Offset: 0x3fc
+	// Line 329, Address: 0x34bda4, Func Offset: 0x404
+	// Line 330, Address: 0x34bdac, Func Offset: 0x40c
+	// Line 332, Address: 0x34bdb8, Func Offset: 0x418
+	// Line 334, Address: 0x34bdc8, Func Offset: 0x428
+	// Line 336, Address: 0x34be00, Func Offset: 0x460
+	// Line 338, Address: 0x34be34, Func Offset: 0x494
+	// Line 339, Address: 0x34be40, Func Offset: 0x4a0
+	// Line 341, Address: 0x34be78, Func Offset: 0x4d8
+	// Line 343, Address: 0x34be7c, Func Offset: 0x4dc
+	// Line 345, Address: 0x34be80, Func Offset: 0x4e0
+	// Line 346, Address: 0x34be84, Func Offset: 0x4e4
+	// Line 347, Address: 0x34be88, Func Offset: 0x4e8
+	// Line 348, Address: 0x34be94, Func Offset: 0x4f4
+	// Line 349, Address: 0x34bf50, Func Offset: 0x5b0
+	// Line 350, Address: 0x34bf58, Func Offset: 0x5b8
+	// Line 356, Address: 0x34bf60, Func Offset: 0x5c0
+	// Line 357, Address: 0x34bf70, Func Offset: 0x5d0
+	// Line 358, Address: 0x34bf88, Func Offset: 0x5e8
+	// Line 360, Address: 0x34c040, Func Offset: 0x6a0
+	// Line 364, Address: 0x34c048, Func Offset: 0x6a8
+	// Line 365, Address: 0x34c060, Func Offset: 0x6c0
+	// Line 366, Address: 0x34c070, Func Offset: 0x6d0
+	// Line 368, Address: 0x34c078, Func Offset: 0x6d8
+	// Line 371, Address: 0x34c090, Func Offset: 0x6f0
+	// Line 373, Address: 0x34c098, Func Offset: 0x6f8
+	// Func End, Address: 0x34c0b0, Func Offset: 0x710
 }
 
 // FastPipeAtomicCB__FP8RpAtomicPv
 // Start address: 0x34c0b0
 RpAtomic* FastPipeAtomicCB(RpAtomic* atomic)
 {
+	// Line 219, Address: 0x34c0b0, Func Offset: 0
+	// Func End, Address: 0x34c0b8, Func Offset: 0x8
 }
 
 // iCSFileClose__FP9xCutscene
 // Start address: 0x34c0c0
 void iCSFileClose(xCutscene* csn)
 {
+	// Line 202, Address: 0x34c0c0, Func Offset: 0
+	// Line 203, Address: 0x34c0cc, Func Offset: 0xc
+	// Line 204, Address: 0x34c0d4, Func Offset: 0x14
+	// Line 205, Address: 0x34c0d8, Func Offset: 0x18
+	// Line 206, Address: 0x34c0e4, Func Offset: 0x24
+	// Line 207, Address: 0x34c0e8, Func Offset: 0x28
+	// Func End, Address: 0x34c0f8, Func Offset: 0x38
 }
 
 // iCSFileAsyncRead__FP9xCutscenePvUi
@@ -690,6 +786,19 @@ void iCSFileAsyncRead(xCutscene* csn, void* dest, uint32 size)
 {
 	uint32* tp;
 	uint32 i;
+	// Line 176, Address: 0x34c100, Func Offset: 0
+	// Line 178, Address: 0x34c10c, Func Offset: 0xc
+	// Line 176, Address: 0x34c110, Func Offset: 0x10
+	// Line 180, Address: 0x34c114, Func Offset: 0x14
+	// Line 181, Address: 0x34c138, Func Offset: 0x38
+	// Line 182, Address: 0x34c188, Func Offset: 0x88
+	// Line 181, Address: 0x34c18c, Func Offset: 0x8c
+	// Line 182, Address: 0x34c190, Func Offset: 0x90
+	// Line 181, Address: 0x34c194, Func Offset: 0x94
+	// Line 182, Address: 0x34c198, Func Offset: 0x98
+	// Line 191, Address: 0x34c1a0, Func Offset: 0xa0
+	// Line 193, Address: 0x34c1b8, Func Offset: 0xb8
+	// Func End, Address: 0x34c1c8, Func Offset: 0xc8
 }
 
 // iCSFileOpen__FP9xCutscene
@@ -699,12 +808,38 @@ uint32 iCSFileOpen(xCutscene* csn)
 	uint32 headerskip;
 	st_PKR_ASSET_TOCINFO ainfo;
 	int8* filename;
+	// Line 137, Address: 0x34c1d0, Func Offset: 0
+	// Line 139, Address: 0x34c1d4, Func Offset: 0x4
+	// Line 137, Address: 0x34c1d8, Func Offset: 0x8
+	// Line 142, Address: 0x34c1dc, Func Offset: 0xc
+	// Line 137, Address: 0x34c1e0, Func Offset: 0x10
+	// Line 139, Address: 0x34c1f0, Func Offset: 0x20
+	// Line 142, Address: 0x34c1f4, Func Offset: 0x24
+	// Line 139, Address: 0x34c1f8, Func Offset: 0x28
+	// Line 142, Address: 0x34c1fc, Func Offset: 0x2c
+	// Line 143, Address: 0x34c20c, Func Offset: 0x3c
+	// Line 144, Address: 0x34c214, Func Offset: 0x44
+	// Line 146, Address: 0x34c218, Func Offset: 0x48
+	// Line 147, Address: 0x34c224, Func Offset: 0x54
+	// Line 148, Address: 0x34c23c, Func Offset: 0x6c
+	// Line 149, Address: 0x34c254, Func Offset: 0x84
+	// Line 150, Address: 0x34c258, Func Offset: 0x88
+	// Line 151, Address: 0x34c264, Func Offset: 0x94
+	// Line 152, Address: 0x34c268, Func Offset: 0x98
+	// Line 154, Address: 0x34c270, Func Offset: 0xa0
+	// Func End, Address: 0x34c284, Func Offset: 0xb4
 }
 
 // iCSAsyncReadCB__FP9tag_xFile
 // Start address: 0x34c290
 void iCSAsyncReadCB()
 {
+	// Line 130, Address: 0x34c290, Func Offset: 0
+	// Line 131, Address: 0x34c294, Func Offset: 0x4
+	// Line 130, Address: 0x34c298, Func Offset: 0x8
+	// Line 131, Address: 0x34c29c, Func Offset: 0xc
+	// Line 132, Address: 0x34c2a0, Func Offset: 0x10
+	// Func End, Address: 0x34c2a8, Func Offset: 0x18
 }
 
 // iCSSoundCutsceneCB__FUib
@@ -712,6 +847,24 @@ void iCSAsyncReadCB()
 void iCSSoundCutsceneCB(uint32 id, uint8 first)
 {
 	void* data;
+	// Line 111, Address: 0x34c2b0, Func Offset: 0
+	// Line 114, Address: 0x34c2b4, Func Offset: 0x4
+	// Line 111, Address: 0x34c2b8, Func Offset: 0x8
+	// Line 113, Address: 0x34c2bc, Func Offset: 0xc
+	// Line 111, Address: 0x34c2c0, Func Offset: 0x10
+	// Line 114, Address: 0x34c2c4, Func Offset: 0x14
+	// Line 111, Address: 0x34c2c8, Func Offset: 0x18
+	// Line 114, Address: 0x34c2d4, Func Offset: 0x24
+	// Line 113, Address: 0x34c2d8, Func Offset: 0x28
+	// Line 114, Address: 0x34c2e8, Func Offset: 0x38
+	// Line 115, Address: 0x34c2fc, Func Offset: 0x4c
+	// Line 116, Address: 0x34c304, Func Offset: 0x54
+	// Line 117, Address: 0x34c314, Func Offset: 0x64
+	// Line 118, Address: 0x34c318, Func Offset: 0x68
+	// Line 119, Address: 0x34c324, Func Offset: 0x74
+	// Line 120, Address: 0x34c330, Func Offset: 0x80
+	// Line 122, Address: 0x34c340, Func Offset: 0x90
+	// Func End, Address: 0x34c358, Func Offset: 0xa8
 }
 
 // iCSSoundGetData__FP9xCutsceneUiUi
@@ -723,5 +876,34 @@ void* iCSSoundGetData(xCutscene* csn, uint32 channel, uint32 chunk)
 	uint32 dataIndex;
 	uint32 numData;
 	uint32 channelIndex;
+	// Line 52, Address: 0x34c360, Func Offset: 0
+	// Line 54, Address: 0x34c37c, Func Offset: 0x1c
+	// Line 55, Address: 0x34c380, Func Offset: 0x20
+	// Line 57, Address: 0x34c38c, Func Offset: 0x2c
+	// Line 56, Address: 0x34c390, Func Offset: 0x30
+	// Line 67, Address: 0x34c394, Func Offset: 0x34
+	// Line 71, Address: 0x34c398, Func Offset: 0x38
+	// Line 69, Address: 0x34c39c, Func Offset: 0x3c
+	// Line 71, Address: 0x34c3a0, Func Offset: 0x40
+	// Line 89, Address: 0x34c3a8, Func Offset: 0x48
+	// Line 72, Address: 0x34c3ac, Func Offset: 0x4c
+	// Line 75, Address: 0x34c3bc, Func Offset: 0x5c
+	// Line 77, Address: 0x34c3c4, Func Offset: 0x64
+	// Line 81, Address: 0x34c3c8, Func Offset: 0x68
+	// Line 84, Address: 0x34c3d0, Func Offset: 0x70
+	// Line 87, Address: 0x34c3d8, Func Offset: 0x78
+	// Line 88, Address: 0x34c3dc, Func Offset: 0x7c
+	// Line 89, Address: 0x34c3e0, Func Offset: 0x80
+	// Line 90, Address: 0x34c3e4, Func Offset: 0x84
+	// Line 91, Address: 0x34c3e8, Func Offset: 0x88
+	// Line 89, Address: 0x34c3ec, Func Offset: 0x8c
+	// Line 91, Address: 0x34c3f8, Func Offset: 0x98
+	// Line 94, Address: 0x34c400, Func Offset: 0xa0
+	// Line 96, Address: 0x34c408, Func Offset: 0xa8
+	// Line 105, Address: 0x34c410, Func Offset: 0xb0
+	// Line 106, Address: 0x34c414, Func Offset: 0xb4
+	// Line 107, Address: 0x34c42c, Func Offset: 0xcc
+	// Line 108, Address: 0x34c430, Func Offset: 0xd0
+	// Func End, Address: 0x34c438, Func Offset: 0xd8
 }
 

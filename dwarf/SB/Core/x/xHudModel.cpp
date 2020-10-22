@@ -125,7 +125,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_4 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xLinkAsset
@@ -133,7 +133,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_23 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -165,7 +165,7 @@ struct RxPipelineNode
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_19 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RwTexture
@@ -173,8 +173,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_27 name;
-	type_28 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -226,7 +226,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_30 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct rxHeapFreeBlock
@@ -242,7 +242,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_2 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xModelInstance
@@ -325,6 +325,11 @@ struct model_widget : widget
 {
 	uint32 mid;
 	xModelInstance* model;
+
+	void render();
+	void update(float32 dt);
+	uint8 is(uint32 id);
+	void destroy();
 };
 
 struct rxHeapSuperBlockDescriptor
@@ -399,8 +404,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_16 Conditional;
-	type_16 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -424,7 +429,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_20 pad;
+	uint32 pad[4];
 };
 
 struct RwMatrixTag
@@ -457,9 +462,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_3 BeforeEnter;
-	type_5 StateCallback;
-	type_7 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct widget
@@ -502,7 +507,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_25 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -524,7 +529,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_18 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -532,7 +537,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_13 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -569,7 +574,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_15 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -644,7 +649,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_14 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct asset : xDynAsset
@@ -686,7 +691,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_7 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpMaterialList
@@ -736,7 +741,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_21 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RpGeometry
@@ -752,7 +757,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_0 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -774,7 +779,7 @@ struct motive
 	float32 max_offset;
 	float32 offset;
 	float32 accel;
-	type_22 fp_update;
+	uint8(*fp_update)(widget&, motive&, float32);
 	void* context;
 	uint8 inverse;
 };
@@ -812,7 +817,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_26 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -845,19 +850,19 @@ struct RxIoSpec
 
 struct RpTriangle
 {
-	type_24 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
 struct RxNodeMethods
 {
-	type_10 nodeBody;
-	type_11 nodeInit;
-	type_12 nodeTerm;
-	type_1 pipelineNodeInit;
-	type_6 pipelineNodeTerm;
-	type_8 pipelineNodeConfig;
-	type_9 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct _class_1
@@ -890,7 +895,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_32 clusters;
+	RxCluster clusters[1];
 };
 
 struct xSurface
@@ -924,56 +929,87 @@ enum _enum
 
 basic_rect screen_bounds;
 basic_rect default_adjust;
-type_29 buffer;
-type_31 buffer;
+int8 buffer[16];
+int8 buffer[16];
 _anon0 __vt__Q24xhud12model_widget;
 _anon1 __vt__Q24xhud6widget;
-type_17 xAnimDefaultBeforeEnter;
+void(*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
 
-void render(model_widget* this);
-void update(model_widget* this, float32 dt);
-uint8 is(model_widget* this, uint32 id);
+void render();
+void update(float32 dt);
+uint8 is(uint32 id);
 uint32 type();
-void destroy(model_widget* this);
+void destroy();
 void load(xBase& data, xDynAsset& asset);
 xAnimTable* XHUD_AnimTable_Idle();
 
 // render__Q24xhud12model_widgetFv
 // Start address: 0x29a3d0
-void render(model_widget* this)
+void model_widget::render()
 {
+	// Line 121, Address: 0x29a3d0, Func Offset: 0
+	// Line 122, Address: 0x29a3d8, Func Offset: 0x8
+	// Line 258, Address: 0x29a3ec, Func Offset: 0x1c
+	// Line 259, Address: 0x29a3f8, Func Offset: 0x28
+	// Func End, Address: 0x29a404, Func Offset: 0x34
 }
 
 // update__Q24xhud12model_widgetFf
 // Start address: 0x29a410
-void update(model_widget* this, float32 dt)
+void model_widget::update(float32 dt)
 {
+	// Line 103, Address: 0x29a410, Func Offset: 0
+	// Line 104, Address: 0x29a424, Func Offset: 0x14
+	// Line 105, Address: 0x29a42c, Func Offset: 0x1c
+	// Line 106, Address: 0x29a478, Func Offset: 0x68
+	// Line 107, Address: 0x29a484, Func Offset: 0x74
+	// Line 108, Address: 0x29a48c, Func Offset: 0x7c
+	// Func End, Address: 0x29a4a4, Func Offset: 0x94
 }
 
 // is__Q24xhud12model_widgetCFUi
 // Start address: 0x29a4b0
-uint8 is(model_widget* this, uint32 id)
+uint8 model_widget::is(uint32 id)
 {
 	uint32 myid;
 	int8 @3734;
+	// Line 98, Address: 0x29a4b0, Func Offset: 0
+	// Line 99, Address: 0x29a4c4, Func Offset: 0x14
+	// Line 100, Address: 0x29a508, Func Offset: 0x58
+	// Func End, Address: 0x29a51c, Func Offset: 0x6c
 }
 
 // type__Q24xhud12model_widgetCFv
 // Start address: 0x29a520
 uint32 type()
 {
+	// Line 92, Address: 0x29a520, Func Offset: 0
+	// Line 93, Address: 0x29a528, Func Offset: 0x8
+	// Line 95, Address: 0x29a548, Func Offset: 0x28
+	// Line 94, Address: 0x29a54c, Func Offset: 0x2c
+	// Line 95, Address: 0x29a550, Func Offset: 0x30
+	// Func End, Address: 0x29a558, Func Offset: 0x38
 }
 
 // destroy__Q24xhud12model_widgetFv
 // Start address: 0x29a560
-void destroy(model_widget* this)
+void model_widget::destroy()
 {
+	// Line 88, Address: 0x29a560, Func Offset: 0
+	// Func End, Address: 0x29a568, Func Offset: 0x8
 }
 
 // load__Q24xhud12model_widgetFR5xBaseR9xDynAssetUi
 // Start address: 0x29a570
 void load(xBase& data, xDynAsset& asset)
 {
+	// Line 56, Address: 0x29a570, Func Offset: 0
+	// Line 58, Address: 0x29a574, Func Offset: 0x4
+	// Line 56, Address: 0x29a578, Func Offset: 0x8
+	// Line 58, Address: 0x29a588, Func Offset: 0x18
+	// Line 60, Address: 0x29a590, Func Offset: 0x20
+	// Line 61, Address: 0x29a5c8, Func Offset: 0x58
+	// Func End, Address: 0x29a5dc, Func Offset: 0x6c
 }
 
 // XHUD_AnimTable_Idle__Fv
@@ -981,5 +1017,13 @@ void load(xBase& data, xDynAsset& asset)
 xAnimTable* XHUD_AnimTable_Idle()
 {
 	xAnimTable* table;
+	// Line 9, Address: 0x29a5e0, Func Offset: 0
+	// Line 16, Address: 0x29a5e4, Func Offset: 0x4
+	// Line 9, Address: 0x29a5e8, Func Offset: 0x8
+	// Line 16, Address: 0x29a5ec, Func Offset: 0xc
+	// Line 21, Address: 0x29a604, Func Offset: 0x24
+	// Line 27, Address: 0x29a64c, Func Offset: 0x6c
+	// Line 28, Address: 0x29a650, Func Offset: 0x70
+	// Func End, Address: 0x29a660, Func Offset: 0x80
 }
 

@@ -53,7 +53,7 @@ typedef int8 type_1[16];
 typedef float32 type_4[4];
 typedef xGoal* type_8[5];
 typedef float32 type_9[1];
-typedef type_9 type_10[5];
+typedef float32 type_10[1][5];
 
 struct _anon0
 {
@@ -66,7 +66,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_7 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xGoal : xListItem, xFactoryInst
@@ -75,9 +75,9 @@ struct xGoal : xListItem, xFactoryInst
 	int32 goalID;
 	en_GOALSTATE stat;
 	int32 flg_able;
-	type_6 fun_process;
-	type_3 fun_precalc;
-	type_5 fun_chkRule;
+	int32(*fun_process)(xGoal*, void*, en_trantype*, float32, void*);
+	int32(*fun_precalc)(xGoal*, void*, float32, void*);
+	int32(*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
 	void* cbdata;
 };
 
@@ -154,10 +154,10 @@ struct zNPCGoalCommon : xGoal
 	int32 flg_npcgauto;
 	int32 flg_npcgable;
 	uint32 anid_played;
-	union
+	struct
 	{
-		int32 flg_info;
-		int32 flg_user;
+		int32 flg_info : 16;
+		int32 flg_user : 16;
 	};
 };
 
@@ -182,7 +182,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_4 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -197,13 +197,13 @@ struct xPsyche : RyzMemData
 	xPSYNote* cb_notice;
 	int32 flg_psyche;
 	xGoal* goallist;
-	type_8 goalstak;
-	type_10 tmr_stack;
+	xGoal* goalstak[5];
+	float32 tmr_stack[1][5];
 	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
 	int32 gid_safegoal;
-	type_2 fun_remap;
+	void(*fun_remap)(int32*, en_trantype*);
 	void* userContext;
 	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
@@ -319,8 +319,8 @@ struct _anon28
 {
 };
 
-type_0 buffer;
-type_1 buffer;
+int8 buffer[16];
+int8 buffer[16];
 _anon28 __vt__20zNPCGoalBossPatFudge;
 _anon0 __vt__14zNPCGoalCommon;
 _anon12 __vt__5xGoal;
@@ -358,5 +358,66 @@ xFactoryInst* GOALCreate_Boss(int32 who, RyzMemGrow* grow);
 xFactoryInst* GOALCreate_Boss(int32 who, RyzMemGrow* grow)
 {
 	xGoal* goal;
+	// Line 53, Address: 0x325180, Func Offset: 0
+	// Line 57, Address: 0x325184, Func Offset: 0x4
+	// Line 53, Address: 0x325188, Func Offset: 0x8
+	// Line 57, Address: 0x325198, Func Offset: 0x18
+	// Line 58, Address: 0x3252b4, Func Offset: 0x134
+	// Line 59, Address: 0x3252b8, Func Offset: 0x138
+	// Line 60, Address: 0x325328, Func Offset: 0x1a8
+	// Line 65, Address: 0x325330, Func Offset: 0x1b0
+	// Line 66, Address: 0x3253a0, Func Offset: 0x220
+	// Line 68, Address: 0x3253a8, Func Offset: 0x228
+	// Line 69, Address: 0x325418, Func Offset: 0x298
+	// Line 71, Address: 0x325420, Func Offset: 0x2a0
+	// Line 72, Address: 0x325490, Func Offset: 0x310
+	// Line 74, Address: 0x325498, Func Offset: 0x318
+	// Line 75, Address: 0x325508, Func Offset: 0x388
+	// Line 77, Address: 0x325510, Func Offset: 0x390
+	// Line 78, Address: 0x325580, Func Offset: 0x400
+	// Line 80, Address: 0x325588, Func Offset: 0x408
+	// Line 81, Address: 0x3255f8, Func Offset: 0x478
+	// Line 83, Address: 0x325600, Func Offset: 0x480
+	// Line 84, Address: 0x325670, Func Offset: 0x4f0
+	// Line 86, Address: 0x325678, Func Offset: 0x4f8
+	// Line 87, Address: 0x3256e8, Func Offset: 0x568
+	// Line 89, Address: 0x3256f0, Func Offset: 0x570
+	// Line 90, Address: 0x325760, Func Offset: 0x5e0
+	// Line 92, Address: 0x325768, Func Offset: 0x5e8
+	// Line 93, Address: 0x3257d8, Func Offset: 0x658
+	// Line 95, Address: 0x3257e0, Func Offset: 0x660
+	// Line 96, Address: 0x325850, Func Offset: 0x6d0
+	// Line 100, Address: 0x325858, Func Offset: 0x6d8
+	// Line 101, Address: 0x3258c8, Func Offset: 0x748
+	// Line 103, Address: 0x3258d0, Func Offset: 0x750
+	// Line 104, Address: 0x325940, Func Offset: 0x7c0
+	// Line 106, Address: 0x325948, Func Offset: 0x7c8
+	// Line 107, Address: 0x3259b8, Func Offset: 0x838
+	// Line 109, Address: 0x3259c0, Func Offset: 0x840
+	// Line 110, Address: 0x325a30, Func Offset: 0x8b0
+	// Line 112, Address: 0x325a38, Func Offset: 0x8b8
+	// Line 113, Address: 0x325aa8, Func Offset: 0x928
+	// Line 117, Address: 0x325ab0, Func Offset: 0x930
+	// Line 118, Address: 0x325b20, Func Offset: 0x9a0
+	// Line 120, Address: 0x325b28, Func Offset: 0x9a8
+	// Line 121, Address: 0x325b98, Func Offset: 0xa18
+	// Line 123, Address: 0x325ba0, Func Offset: 0xa20
+	// Line 124, Address: 0x325c10, Func Offset: 0xa90
+	// Line 126, Address: 0x325c18, Func Offset: 0xa98
+	// Line 127, Address: 0x325c88, Func Offset: 0xb08
+	// Line 129, Address: 0x325c90, Func Offset: 0xb10
+	// Line 130, Address: 0x325d00, Func Offset: 0xb80
+	// Line 132, Address: 0x325d08, Func Offset: 0xb88
+	// Line 133, Address: 0x325d78, Func Offset: 0xbf8
+	// Line 135, Address: 0x325d80, Func Offset: 0xc00
+	// Line 136, Address: 0x325df0, Func Offset: 0xc70
+	// Line 138, Address: 0x325df8, Func Offset: 0xc78
+	// Line 139, Address: 0x325e68, Func Offset: 0xce8
+	// Line 141, Address: 0x325e70, Func Offset: 0xcf0
+	// Line 142, Address: 0x325ee0, Func Offset: 0xd60
+	// Line 144, Address: 0x325ee8, Func Offset: 0xd68
+	// Line 151, Address: 0x325f58, Func Offset: 0xdd8
+	// Line 152, Address: 0x325f68, Func Offset: 0xde8
+	// Func End, Address: 0x325f78, Func Offset: 0xdf8
 }
 

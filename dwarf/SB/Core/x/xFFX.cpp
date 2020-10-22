@@ -153,7 +153,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_1 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xAnimPlay
@@ -166,7 +166,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_9 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpClump
@@ -176,7 +176,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_0 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xEnt : xBase
@@ -200,16 +200,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_18 update;
-	type_18 endUpdate;
-	type_20 bupdate;
-	type_22 move;
-	type_23 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_26 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -252,7 +252,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_5 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RxPipelineNode
@@ -278,7 +278,7 @@ struct xQuat
 struct xFFX
 {
 	uint32 flags;
-	type_37 doEffect;
+	void(*doEffect)(xEnt*, xScene*, float32, void*);
 	void* fdata;
 	xFFX* next;
 };
@@ -296,7 +296,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_27 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -321,7 +321,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_36 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -361,7 +361,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_30 pad;
+	uint32 pad[4];
 };
 
 struct xAnimState
@@ -382,9 +382,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_3 BeforeEnter;
-	type_29 StateCallback;
-	type_9 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xFFXShakeState
@@ -435,7 +435,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_32 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -447,7 +447,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_40 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -492,7 +492,7 @@ struct xModelInstance
 
 struct xShadowSimplePoly
 {
-	type_11 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -548,7 +548,7 @@ struct xFFXRotMatchState
 
 struct RpTriangle
 {
-	type_16 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -580,7 +580,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_17 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -639,7 +639,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_19 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -670,7 +670,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_43 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -680,7 +680,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_35 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xScene
@@ -710,9 +710,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_8 resolvID;
-	type_12 base2Name;
-	type_14 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xShadowSimpleCache
@@ -730,7 +730,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_28 corner;
+	xVec3 corner[4];
 };
 
 struct xEntCollis
@@ -746,17 +746,17 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_31 colls;
-	type_21 post;
-	type_25 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_24 Conditional;
-	type_24 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -837,7 +837,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_38 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -877,7 +877,7 @@ struct xSurface
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_44 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RwTexture
@@ -885,8 +885,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_33 name;
-	type_34 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -940,7 +940,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_41 radius;
+	float32 radius[2];
 };
 
 struct RwSphere
@@ -1035,13 +1035,13 @@ struct xAnimActiveEffect
 
 struct RxNodeMethods
 {
-	type_4 nodeBody;
-	type_6 nodeInit;
-	type_7 nodeTerm;
-	type_10 pipelineNodeInit;
-	type_13 pipelineNodeTerm;
-	type_15 pipelineNodeConfig;
-	type_2 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -1113,7 +1113,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_39 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwRGBAReal
@@ -1128,7 +1128,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_42 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct _class_1
@@ -1189,7 +1189,7 @@ void xFFXShakePoolInit(uint32 num);
 void xFFXShakeUpdateEnt(xEnt* ent, float32 dt, void* fdata);
 void xFFXApply(xEnt* ent, xScene* sc, float32 dt);
 void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, float32 dt);
-int16 xFFXAddEffect(xEnt* ent, type_37 dof, void* fd);
+int16 xFFXAddEffect(xEnt* ent, void(*dof)(xEnt*, xScene*, float32, void*), void* fd);
 int16 xFFXAddEffect(xEnt* ent, xFFX* f);
 void xFFXTurnOff(xFFX* f);
 void xFFXTurnOn(xFFX* f);
@@ -1200,6 +1200,13 @@ void xFFXPoolInit(uint32 num_ffx);
 // Start address: 0x1da8c0
 xFFXRotMatchState* xFFXRotMatchAlloc()
 {
+	// Line 497, Address: 0x1da8c0, Func Offset: 0
+	// Line 499, Address: 0x1da8c4, Func Offset: 0x4
+	// Line 500, Address: 0x1da8cc, Func Offset: 0xc
+	// Line 501, Address: 0x1da8d4, Func Offset: 0x14
+	// Line 504, Address: 0x1da8d8, Func Offset: 0x18
+	// Line 506, Address: 0x1da8e0, Func Offset: 0x20
+	// Func End, Address: 0x1da8e8, Func Offset: 0x28
 }
 
 // xFFXRotMatchPoolInit__FUi
@@ -1207,18 +1214,43 @@ xFFXRotMatchState* xFFXRotMatchAlloc()
 void xFFXRotMatchPoolInit(uint32 num)
 {
 	uint32 i;
+	// Line 483, Address: 0x1da8f0, Func Offset: 0
+	// Line 488, Address: 0x1da8f4, Func Offset: 0x4
+	// Line 483, Address: 0x1da8f8, Func Offset: 0x8
+	// Line 488, Address: 0x1da8fc, Func Offset: 0xc
+	// Line 487, Address: 0x1da900, Func Offset: 0x10
+	// Line 488, Address: 0x1da904, Func Offset: 0x14
+	// Line 489, Address: 0x1da918, Func Offset: 0x28
+	// Line 490, Address: 0x1da920, Func Offset: 0x30
+	// Line 491, Address: 0x1da93c, Func Offset: 0x4c
+	// Line 492, Address: 0x1da940, Func Offset: 0x50
+	// Line 491, Address: 0x1da944, Func Offset: 0x54
+	// Line 492, Address: 0x1da950, Func Offset: 0x60
+	// Line 493, Address: 0x1da960, Func Offset: 0x70
+	// Line 494, Address: 0x1da97c, Func Offset: 0x8c
+	// Func End, Address: 0x1da988, Func Offset: 0x98
 }
 
 // xFFXShakeFree__FP14xFFXShakeState
 // Start address: 0x1da990
 void xFFXShakeFree(xFFXShakeState* s)
 {
+	// Line 325, Address: 0x1da990, Func Offset: 0
+	// Line 327, Address: 0x1da998, Func Offset: 0x8
+	// Func End, Address: 0x1da9a0, Func Offset: 0x10
 }
 
 // xFFXShakeAlloc__Fv
 // Start address: 0x1da9a0
 xFFXShakeState* xFFXShakeAlloc()
 {
+	// Line 309, Address: 0x1da9a0, Func Offset: 0
+	// Line 311, Address: 0x1da9a4, Func Offset: 0x4
+	// Line 312, Address: 0x1da9ac, Func Offset: 0xc
+	// Line 313, Address: 0x1da9b4, Func Offset: 0x14
+	// Line 316, Address: 0x1da9b8, Func Offset: 0x18
+	// Line 318, Address: 0x1da9c0, Func Offset: 0x20
+	// Func End, Address: 0x1da9c8, Func Offset: 0x28
 }
 
 // xFFXShakePoolInit__FUi
@@ -1226,6 +1258,21 @@ xFFXShakeState* xFFXShakeAlloc()
 void xFFXShakePoolInit(uint32 num)
 {
 	uint32 i;
+	// Line 295, Address: 0x1da9d0, Func Offset: 0
+	// Line 300, Address: 0x1da9d4, Func Offset: 0x4
+	// Line 295, Address: 0x1da9d8, Func Offset: 0x8
+	// Line 300, Address: 0x1da9dc, Func Offset: 0xc
+	// Line 299, Address: 0x1da9e0, Func Offset: 0x10
+	// Line 300, Address: 0x1da9e4, Func Offset: 0x14
+	// Line 301, Address: 0x1da9f8, Func Offset: 0x28
+	// Line 302, Address: 0x1daa00, Func Offset: 0x30
+	// Line 303, Address: 0x1daa1c, Func Offset: 0x4c
+	// Line 304, Address: 0x1daa20, Func Offset: 0x50
+	// Line 303, Address: 0x1daa24, Func Offset: 0x54
+	// Line 304, Address: 0x1daa30, Func Offset: 0x60
+	// Line 305, Address: 0x1daa40, Func Offset: 0x70
+	// Line 306, Address: 0x1daa5c, Func Offset: 0x8c
+	// Func End, Address: 0x1daa68, Func Offset: 0x98
 }
 
 // xFFXShakeUpdateEnt__FP4xEntP6xScenefPv
@@ -1235,48 +1282,114 @@ void xFFXShakeUpdateEnt(xEnt* ent, float32 dt, void* fdata)
 	xFFXShakeState* ss;
 	float32 tnext;
 	float32 mag;
+	// Line 252, Address: 0x1daa70, Func Offset: 0
+	// Line 259, Address: 0x1daa90, Func Offset: 0x20
+	// Line 263, Address: 0x1daa94, Func Offset: 0x24
+	// Line 259, Address: 0x1daa98, Func Offset: 0x28
+	// Line 263, Address: 0x1daa9c, Func Offset: 0x2c
+	// Line 266, Address: 0x1daab8, Func Offset: 0x48
+	// Line 272, Address: 0x1daacc, Func Offset: 0x5c
+	// Line 273, Address: 0x1daafc, Func Offset: 0x8c
+	// Line 274, Address: 0x1dab50, Func Offset: 0xe0
+	// Line 275, Address: 0x1dab58, Func Offset: 0xe8
+	// Line 279, Address: 0x1dab60, Func Offset: 0xf0
+	// Line 278, Address: 0x1dab64, Func Offset: 0xf4
+	// Line 279, Address: 0x1dab68, Func Offset: 0xf8
+	// Line 278, Address: 0x1dab6c, Func Offset: 0xfc
+	// Line 279, Address: 0x1dab74, Func Offset: 0x104
+	// Line 278, Address: 0x1dab78, Func Offset: 0x108
+	// Line 279, Address: 0x1dab7c, Func Offset: 0x10c
+	// Line 278, Address: 0x1dab8c, Func Offset: 0x11c
+	// Line 279, Address: 0x1dab90, Func Offset: 0x120
+	// Line 278, Address: 0x1dab9c, Func Offset: 0x12c
+	// Line 279, Address: 0x1daba0, Func Offset: 0x130
+	// Line 281, Address: 0x1daba8, Func Offset: 0x138
+	// Line 282, Address: 0x1dabac, Func Offset: 0x13c
+	// Line 283, Address: 0x1dabb0, Func Offset: 0x140
+	// Func End, Address: 0x1dabcc, Func Offset: 0x15c
 }
 
 // xFFXApply__FP4xEntP6xScenef
 // Start address: 0x1dabd0
 void xFFXApply(xEnt* ent, xScene* sc, float32 dt)
 {
+	// Line 242, Address: 0x1dabd0, Func Offset: 0
+	// Line 245, Address: 0x1dabe4, Func Offset: 0x14
+	// Line 246, Address: 0x1dabec, Func Offset: 0x1c
+	// Line 247, Address: 0x1dabf4, Func Offset: 0x24
+	// Line 248, Address: 0x1dabf8, Func Offset: 0x28
+	// Func End, Address: 0x1dac04, Func Offset: 0x34
 }
 
 // xFFXApplyOne__FP4xFFXP4xEntP6xScenef
 // Start address: 0x1dac10
 void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, float32 dt)
 {
+	// Line 227, Address: 0x1dac10, Func Offset: 0
+	// Line 233, Address: 0x1dac4c, Func Offset: 0x3c
+	// Line 234, Address: 0x1dac58, Func Offset: 0x48
+	// Line 236, Address: 0x1dad60, Func Offset: 0x150
+	// Line 237, Address: 0x1dad70, Func Offset: 0x160
+	// Line 239, Address: 0x1dad88, Func Offset: 0x178
+	// Func End, Address: 0x1dadb8, Func Offset: 0x1a8
 }
 
 // xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv
 // Start address: 0x1dadc0
-int16 xFFXAddEffect(xEnt* ent, type_37 dof, void* fd)
+int16 xFFXAddEffect(xEnt* ent, void(*dof)(xEnt*, xScene*, float32, void*), void* fd)
 {
+	// Line 126, Address: 0x1dadc0, Func Offset: 0
+	// Line 127, Address: 0x1dadc4, Func Offset: 0x4
+	// Line 129, Address: 0x1dade0, Func Offset: 0x20
+	// Line 130, Address: 0x1dade8, Func Offset: 0x28
+	// Line 133, Address: 0x1dadf0, Func Offset: 0x30
+	// Line 134, Address: 0x1dadf4, Func Offset: 0x34
+	// Line 135, Address: 0x1dadf8, Func Offset: 0x38
+	// Line 136, Address: 0x1dae20, Func Offset: 0x60
+	// Func End, Address: 0x1dae28, Func Offset: 0x68
 }
 
 // xFFXAddEffect__FP4xEntP4xFFX
 // Start address: 0x1dae30
 int16 xFFXAddEffect(xEnt* ent, xFFX* f)
 {
+	// Line 119, Address: 0x1dae30, Func Offset: 0
+	// Line 120, Address: 0x1dae38, Func Offset: 0x8
+	// Line 121, Address: 0x1dae44, Func Offset: 0x14
+	// Line 122, Address: 0x1dae48, Func Offset: 0x18
+	// Line 123, Address: 0x1dae50, Func Offset: 0x20
+	// Func End, Address: 0x1dae58, Func Offset: 0x28
 }
 
 // xFFXTurnOff__FP4xFFX
 // Start address: 0x1dae60
 void xFFXTurnOff(xFFX* f)
 {
+	// Line 78, Address: 0x1dae60, Func Offset: 0
+	// Line 79, Address: 0x1dae6c, Func Offset: 0xc
+	// Func End, Address: 0x1dae74, Func Offset: 0x14
 }
 
 // xFFXTurnOn__FP4xFFX
 // Start address: 0x1dae80
 void xFFXTurnOn(xFFX* f)
 {
+	// Line 72, Address: 0x1dae80, Func Offset: 0
+	// Line 73, Address: 0x1dae88, Func Offset: 0x8
+	// Func End, Address: 0x1dae90, Func Offset: 0x10
 }
 
 // xFFXAlloc__Fv
 // Start address: 0x1dae90
 xFFX* xFFXAlloc()
 {
+	// Line 43, Address: 0x1dae90, Func Offset: 0
+	// Line 45, Address: 0x1dae94, Func Offset: 0x4
+	// Line 46, Address: 0x1dae9c, Func Offset: 0xc
+	// Line 47, Address: 0x1daea4, Func Offset: 0x14
+	// Line 50, Address: 0x1daea8, Func Offset: 0x18
+	// Line 52, Address: 0x1daeb0, Func Offset: 0x20
+	// Func End, Address: 0x1daeb8, Func Offset: 0x28
 }
 
 // xFFXPoolInit__FUi
@@ -1284,5 +1397,19 @@ xFFX* xFFXAlloc()
 void xFFXPoolInit(uint32 num_ffx)
 {
 	uint32 i;
+	// Line 29, Address: 0x1daec0, Func Offset: 0
+	// Line 34, Address: 0x1daec4, Func Offset: 0x4
+	// Line 29, Address: 0x1daec8, Func Offset: 0x8
+	// Line 33, Address: 0x1daecc, Func Offset: 0xc
+	// Line 34, Address: 0x1daed0, Func Offset: 0x10
+	// Line 35, Address: 0x1daee0, Func Offset: 0x20
+	// Line 36, Address: 0x1daee8, Func Offset: 0x28
+	// Line 37, Address: 0x1daf04, Func Offset: 0x44
+	// Line 38, Address: 0x1daf0c, Func Offset: 0x4c
+	// Line 37, Address: 0x1daf10, Func Offset: 0x50
+	// Line 38, Address: 0x1daf1c, Func Offset: 0x5c
+	// Line 39, Address: 0x1daf30, Func Offset: 0x70
+	// Line 40, Address: 0x1daf44, Func Offset: 0x84
+	// Func End, Address: 0x1daf50, Func Offset: 0x90
 }
 

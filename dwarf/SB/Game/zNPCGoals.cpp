@@ -41,14 +41,14 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_2 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct XGOFTypeInfo
 {
 	int32 tid;
-	type_0 creator;
-	type_1 destroyer;
+	xFactoryInst*(*creator)(int32, RyzMemGrow*, void*);
+	void(*destroyer)(xFactoryInst*);
 };
 
 struct st_XORDEREDARRAY
@@ -64,7 +64,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_5 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -81,8 +81,8 @@ struct xFactory : RyzMemData
 	RyzMemGrow growContextData;
 };
 
-type_3 buffer;
-type_4 buffer;
+int8 buffer[16];
+int8 buffer[16];
 
 void zNPCGoals_RegisterTypes(xFactory* fac);
 
@@ -90,6 +90,13 @@ void zNPCGoals_RegisterTypes(xFactory* fac);
 // Start address: 0x2c5ce0
 void zNPCGoals_RegisterTypes(xFactory* fac)
 {
-	type_6 typelist;
+	XGOFTypeInfo typelist[179];
+	// Line 59, Address: 0x2c5ce0, Func Offset: 0
+	// Line 64, Address: 0x2c5ce4, Func Offset: 0x4
+	// Line 59, Address: 0x2c5ce8, Func Offset: 0x8
+	// Line 64, Address: 0x2c5cec, Func Offset: 0xc
+	// Line 314, Address: 0x2c5d1c, Func Offset: 0x3c
+	// Line 317, Address: 0x2c5d28, Func Offset: 0x48
+	// Func End, Address: 0x2c5d34, Func Offset: 0x54
 }
 

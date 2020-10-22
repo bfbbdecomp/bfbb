@@ -59,7 +59,7 @@ typedef struct xClumpCollBSPTriangle;
 typedef struct RwRGBAReal;
 typedef struct RwObjectHasFrame;
 typedef struct RwLinkList;
-typedef union _class;
+typedef struct _class;
 
 typedef uint32(*type_2)(RxPipelineNode*, uint32, uint32, void*);
 typedef int32(*type_3)(RxPipelineNode*, RxPipelineNodeParam*);
@@ -141,7 +141,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_20 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -192,7 +192,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_13 pad;
+	uint32 pad[4];
 };
 
 struct RxPipelineRequiresCluster
@@ -205,7 +205,7 @@ struct RxPipelineRequiresCluster
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_6 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct RpMaterialList
@@ -289,7 +289,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_10 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct rxReq
@@ -323,7 +323,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_12 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -349,7 +349,7 @@ enum RxClusterValidityReq
 
 struct xJSPHeader
 {
-	type_11 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -409,7 +409,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_19 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 enum rxEmbeddedPacketState
@@ -457,8 +457,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_0 light;
-	type_1 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -514,8 +514,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_16 name;
-	type_18 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -527,13 +527,13 @@ struct RpSector
 
 struct RxNodeMethods
 {
-	type_3 nodeBody;
-	type_4 nodeInit;
-	type_5 nodeTerm;
-	type_7 pipelineNodeInit;
-	type_8 pipelineNodeTerm;
-	type_9 pipelineNodeConfig;
-	type_2 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -585,7 +585,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_17 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -603,7 +603,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_21 clusters;
+	RxCluster clusters[1];
 };
 
 struct xClumpCollBSPTriangle
@@ -626,7 +626,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_22 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RwLinkList
@@ -634,15 +634,18 @@ struct RwLinkList
 	RwLLLink link;
 };
 
-union _class
+struct _class
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 xEnv* gCurXEnv;
-type_14 buffer;
-type_15 buffer;
+int8 buffer[16];
+int8 buffer[16];
 
 void xEnvRender(xEnv* env);
 void xEnvFree(xEnv* env);
@@ -653,23 +656,48 @@ void xEnvLoadBsp(xEnv* env, void* data, uint32 datasize, int32 dataType);
 // Start address: 0x1da7e0
 void xEnvRender(xEnv* env)
 {
+	// Line 130, Address: 0x1da7e0, Func Offset: 0
+	// Line 135, Address: 0x1da7ec, Func Offset: 0xc
+	// Line 136, Address: 0x1da7f4, Func Offset: 0x14
+	// Line 137, Address: 0x1da800, Func Offset: 0x20
+	// Func End, Address: 0x1da80c, Func Offset: 0x2c
 }
 
 // xEnvFree__FP4xEnv
 // Start address: 0x1da810
 void xEnvFree(xEnv* env)
 {
+	// Line 110, Address: 0x1da810, Func Offset: 0
+	// Line 114, Address: 0x1da824, Func Offset: 0x14
+	// Line 117, Address: 0x1da82c, Func Offset: 0x1c
+	// Line 119, Address: 0x1da834, Func Offset: 0x24
+	// Line 123, Address: 0x1da838, Func Offset: 0x28
+	// Func End, Address: 0x1da848, Func Offset: 0x38
 }
 
 // xEnvSetup__FP4xEnv
 // Start address: 0x1da850
 void xEnvSetup(xEnv* env)
 {
+	// Line 81, Address: 0x1da850, Func Offset: 0
+	// Line 84, Address: 0x1da860, Func Offset: 0x10
+	// Line 87, Address: 0x1da868, Func Offset: 0x18
+	// Line 89, Address: 0x1da86c, Func Offset: 0x1c
+	// Line 90, Address: 0x1da870, Func Offset: 0x20
+	// Func End, Address: 0x1da880, Func Offset: 0x30
 }
 
 // xEnvLoadBsp__FP4xEnvPCvUii
 // Start address: 0x1da880
 void xEnvLoadBsp(xEnv* env, void* data, uint32 datasize, int32 dataType)
 {
+	// Line 43, Address: 0x1da880, Func Offset: 0
+	// Line 46, Address: 0x1da88c, Func Offset: 0xc
+	// Line 49, Address: 0x1da894, Func Offset: 0x14
+	// Line 50, Address: 0x1da89c, Func Offset: 0x1c
+	// Line 52, Address: 0x1da8a0, Func Offset: 0x20
+	// Line 56, Address: 0x1da8a8, Func Offset: 0x28
+	// Line 57, Address: 0x1da8ac, Func Offset: 0x2c
+	// Func End, Address: 0x1da8bc, Func Offset: 0x3c
 }
 

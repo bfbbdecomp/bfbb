@@ -147,7 +147,7 @@ typedef struct xModelPool;
 typedef struct xBBox;
 typedef struct xAnimSingle;
 typedef struct zLedgeGrabParams;
-typedef union _class_2;
+typedef struct _class_2;
 typedef enum en_ISGMCA_STATUS;
 typedef struct xEntAsset;
 typedef enum _zPlayerWallJumpState;
@@ -223,18 +223,18 @@ typedef uint8 type_14[2];
 typedef xVec4 type_16[12];
 typedef uint8 type_17[68];
 typedef uint32 type_18[2];
-typedef type_121 type_19[4];
+typedef int32 type_19[4][4];
 typedef uint8 type_21[2];
 typedef float32 type_22[6];
 typedef int8 type_23[25];
 typedef int8 type_24[64];
-typedef type_23 type_25[3];
-typedef type_125 type_26[3];
+typedef int8 type_25[25][3];
+typedef float32 type_26[4][3];
 typedef float32 type_30[3];
-typedef type_125 type_31[3];
+typedef float32 type_31[4][3];
 typedef float32 type_32[3];
 typedef int8 type_33[25];
-typedef type_33 type_34[3];
+typedef int8 type_34[25][3];
 typedef xModelTag type_35[2];
 typedef float32 type_36[3];
 typedef xVec3 type_37[4];
@@ -256,7 +256,7 @@ typedef int8 type_57[64];
 typedef int8 type_58[32];
 typedef int8 type_59[128];
 typedef xCollis type_60[18];
-typedef type_59 type_61[6];
+typedef int8 type_61[128][6];
 typedef int8 type_62[32];
 typedef int8 type_67[64];
 typedef uint8 type_68[14];
@@ -275,16 +275,16 @@ typedef float32 type_90[2];
 typedef RwFrustumPlane type_91[6];
 typedef uint16 type_92[3];
 typedef _tagxPad type_93[4];
-typedef type_121 type_95[4];
+typedef int32 type_95[4][4];
 typedef xVec3 type_96[5];
 typedef RwV3d type_97[8];
 typedef uint8 type_98[32];
 typedef uint8 type_99[5];
 typedef int8 type_100[32];
-typedef type_100 type_101[8];
+typedef int8 type_101[32][8];
 typedef xVec3 type_102[60];
 typedef float32 type_103[2];
-typedef type_125 type_104[3];
+typedef float32 type_104[4][3];
 typedef float32 type_105[22];
 typedef float32 type_107[22];
 typedef int8 type_108[32];
@@ -292,7 +292,7 @@ typedef uint32 type_109[15];
 typedef RwTexCoords* type_110[8];
 typedef uint32 type_111[15];
 typedef uint8 type_112[2];
-typedef type_125 type_113[3];
+typedef float32 type_113[4][3];
 typedef xAnimMultiFileEntry type_114[1];
 typedef xVec3 type_115[3];
 typedef uint32 type_116[15];
@@ -316,7 +316,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_83 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -334,7 +334,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_39 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -349,7 +349,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_15 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -363,7 +363,7 @@ struct st_ISG_MEMCARD_DATA
 	int32 mcslot;
 	int32 mcfp;
 	en_ISG_IOMODE fmode;
-	type_9 gamepath;
+	int8 gamepath[64];
 	sceMcTblGetDir finfo;
 	int32 cur_mcop;
 	en_ISGMC_ERRSTATUS mcerr;
@@ -391,16 +391,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_28 update;
-	type_28 endUpdate;
-	type_4 bupdate;
-	type_6 move;
-	type_8 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_29 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -422,7 +422,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_10 pad;
+	uint32 pad[4];
 };
 
 struct xModelInstance
@@ -512,14 +512,14 @@ struct xAnimTable
 struct st_ISGSESSION
 {
 	st_ISG_MEMCARD_DATA* mcdata;
-	type_45 gameroot;
-	type_50 gamedir;
+	int8 gameroot[64];
+	int8 gamedir[64];
 	en_ASYNC_OPCODE as_curop;
 	en_ASYNC_OPSTAT as_opstat;
 	en_ASYNC_OPERR as_operr;
 	void* cltdata;
 	en_CHGCODE chgcode;
-	type_13 chgfunc;
+	void(*chgfunc)(void*, en_CHGCODE);
 };
 
 struct xAnimPlay
@@ -532,7 +532,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_12 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xScene
@@ -562,9 +562,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_63 resolvID;
-	type_73 base2Name;
-	type_76 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct RpLight
@@ -585,7 +585,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_66 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -599,7 +599,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_106 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xQuat
@@ -626,7 +626,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_42 wt;
+	float32 wt[4];
 };
 
 struct xEntFrame
@@ -667,10 +667,10 @@ struct xMat4x3 : xMat3x3
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_22 MoveSpeed;
-	type_30 AnimSneak;
-	type_32 AnimWalk;
-	type_36 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -688,7 +688,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_79 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct RwSphere
@@ -704,7 +704,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_54 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xEntCollis
@@ -720,9 +720,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_60 colls;
-	type_2 post;
-	type_20 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xCollis
@@ -786,9 +786,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_3 BeforeEnter;
-	type_70 StateCallback;
-	type_12 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xUpdateCullGroup
@@ -803,7 +803,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_5 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -841,7 +841,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_7 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct zScene : xScene
@@ -859,8 +859,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_118 baseCount;
-	type_124 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -871,8 +871,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_46 light;
-	type_52 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -888,7 +888,7 @@ struct RpMaterial
 
 struct RpTriangle
 {
-	type_122 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -907,7 +907,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_51 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -977,7 +977,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_0 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1004,8 +1004,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_58 name;
-	type_62 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -1025,7 +1025,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_112 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -1038,8 +1038,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_43 beginUpdate;
-	type_53 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -1051,9 +1051,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_91 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_97 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct RwObject
@@ -1099,7 +1099,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_37 corner;
+	xVec3 corner[4];
 };
 
 struct sceMcTblGetDir
@@ -1111,7 +1111,7 @@ struct sceMcTblGetDir
 	uint16 Reserve1;
 	uint32 Reserve2;
 	uint32 PdaAplNo;
-	type_98 EntryName;
+	uint8 EntryName[32];
 };
 
 struct RxIoSpec
@@ -1142,15 +1142,15 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_64 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_49 Conditional;
-	type_49 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -1171,7 +1171,7 @@ enum en_ASYNC_OPCODE
 
 struct xJSPHeader
 {
-	type_120 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1191,7 +1191,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_90 radius;
+	float32 radius[2];
 };
 
 enum RxClusterValidityReq
@@ -1208,7 +1208,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_110 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -1240,10 +1240,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_61 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_72 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -1272,13 +1272,13 @@ struct anim_coll_data
 
 struct RxNodeMethods
 {
-	type_65 nodeBody;
-	type_74 nodeInit;
-	type_77 nodeTerm;
-	type_80 pipelineNodeInit;
-	type_82 pipelineNodeTerm;
-	type_87 pipelineNodeConfig;
-	type_94 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct xLightKit
@@ -1309,8 +1309,8 @@ struct RxPipelineCluster
 
 struct _tagxPad
 {
-	type_84 value;
-	type_86 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -1325,9 +1325,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_105 up_tmr;
-	type_107 down_tmr;
-	type_119 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct RwRaster
@@ -1417,7 +1417,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_11 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1456,7 +1456,7 @@ struct xGroupAsset : xBaseAsset
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_114 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RxPipelineNodeParam
@@ -1487,8 +1487,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_27 activateCB;
-	type_27 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct RwMatrixTag
@@ -1516,7 +1516,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_78 clusters;
+	RxCluster clusters[1];
 };
 
 struct RxPipelineRequiresCluster
@@ -1555,7 +1555,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_81 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xClumpCollBSPTree
@@ -1607,20 +1607,20 @@ struct xClumpCollBSPBranchNode
 
 struct sceMcIconSys
 {
-	type_1 Head;
+	uint8 Head[4];
 	uint16 Reserv1;
 	uint16 OffsLF;
 	uint32 Reserv2;
 	uint32 TransRate;
-	type_19 BgColor;
-	type_26 LightDir;
-	type_31 LightColor;
-	type_125 Ambient;
-	type_38 TitleName;
-	type_40 FnameView;
-	type_44 FnameCopy;
-	type_47 FnameDel;
-	type_55 Reserve3;
+	int32 BgColor[4][4];
+	float32 LightDir[4][3];
+	float32 LightColor[4][3];
+	float32 Ambient[4];
+	uint8 TitleName[68];
+	uint8 FnameView[64];
+	uint8 FnameCopy[64];
+	uint8 FnameDel[64];
+	uint8 Reserve3[512];
 };
 
 enum en_ISGMC_ERRSTATUS
@@ -1677,8 +1677,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_96 lastRefs;
-	type_99 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -1796,8 +1796,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_14 PowerUp;
-	type_21 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct xAnimMultiFileEntry
@@ -1847,7 +1847,7 @@ struct RwBBox
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_92 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xVec2
@@ -1918,7 +1918,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_103 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -1935,7 +1935,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_102 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -1956,10 +1956,13 @@ struct zLedgeGrabParams
 	float32 endrot;
 };
 
-union _class_2
+struct _class_2
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 enum en_ISGMCA_STATUS
@@ -2113,7 +2116,7 @@ enum en_MEMCARD_SEEKPT
 
 struct xShadowSimplePoly
 {
-	type_115 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -2217,7 +2220,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_35 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -2229,7 +2232,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_69 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -2255,10 +2258,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_109 Inv_PatsSock;
-	type_111 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_116 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -2270,21 +2273,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_18 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_48 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_68 sb_model_indices;
-	type_75 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -2452,7 +2455,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_16 frustplane;
+	xVec4 frustplane[12];
 };
 
 enum RwCameraProjection
@@ -2491,9 +2494,9 @@ st_ISG_MEMCARD_DATA g_mcdata_MAIN;
 st_ISGSESSION g_isgdata_MAIN;
 st_ISG_MEMCARD_DATA g_mcdata_MONITOR;
 st_ISGSESSION g_isgdata_MONITOR;
-type_56 g_isg_scemodule;
-type_127 g_strz_egotrip;
-type_93 mPad;
+int8* g_isg_scemodule[3];
+int8* g_strz_egotrip[8];
+_tagxPad mPad[4];
 zGlobals globals;
 
 uint8 iSGCheckMemoryCard(int32 index);
@@ -2524,7 +2527,7 @@ int32 iSG_add_cfgholder(st_ISG_MEMCARD_DATA* mcdata);
 int32 iSG_start_your_engines();
 int32 iSGAutoSave_Monitor(st_ISGSESSION* isg, int32 idx_target);
 void iSGAutoSave_Disconnect(st_ISGSESSION* isg);
-st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, type_13 chg);
+st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, void(*chg)(void*, en_CHGCODE));
 void iSGAutoSave_Startup();
 en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, int8* errmsg);
 en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, int32 block);
@@ -2545,7 +2548,7 @@ int32 iSGTgtFormat(st_ISGSESSION* isgdata, int32 tgtidx, int32 async);
 int32 iSGTgtPhysSlotIdx();
 int32 iSGTgtCount(int32* max);
 void iSGSessionEnd(st_ISGSESSION* isgdata);
-st_ISGSESSION* iSGSessionBegin(void* cltdata, type_13 chgfunc, int32 monitor);
+st_ISGSESSION* iSGSessionBegin(void* cltdata, void(*chgfunc)(void*, en_CHGCODE), int32 monitor);
 int8* iSGMakeName(en_NAMEGEN_TYPE type, int8* base, int32 idx);
 int32 iSGShutdown();
 int32 iSGStartup();
@@ -2555,38 +2558,108 @@ int32 iSGStartup();
 uint8 iSGCheckMemoryCard(int32 index)
 {
 	int32 result;
+	// Line 5247, Address: 0x1b3230, Func Offset: 0
+	// Line 5249, Address: 0x1b3234, Func Offset: 0x4
+	// Line 5247, Address: 0x1b3238, Func Offset: 0x8
+	// Line 5249, Address: 0x1b323c, Func Offset: 0xc
+	// Line 5250, Address: 0x1b3254, Func Offset: 0x24
+	// Line 5252, Address: 0x1b3268, Func Offset: 0x38
+	// Line 5254, Address: 0x1b3280, Func Offset: 0x50
+	// Line 5257, Address: 0x1b3288, Func Offset: 0x58
+	// Line 5258, Address: 0x1b3290, Func Offset: 0x60
+	// Func End, Address: 0x1b329c, Func Offset: 0x6c
 }
 
 // iSGCheckForGameFiles__Fi
 // Start address: 0x1b32a0
 uint8 iSGCheckForGameFiles(int32 mcPort)
 {
-	type_34 fileNames;
+	int8 fileNames[25][3];
 	int8* gameDir;
 	int32 resultCode;
 	int32 i;
+	// Line 5198, Address: 0x1b32a0, Func Offset: 0
+	// Line 5203, Address: 0x1b32a4, Func Offset: 0x4
+	// Line 5198, Address: 0x1b32a8, Func Offset: 0x8
+	// Line 5211, Address: 0x1b32ac, Func Offset: 0xc
+	// Line 5198, Address: 0x1b32b0, Func Offset: 0x10
+	// Line 5203, Address: 0x1b32b4, Func Offset: 0x14
+	// Line 5198, Address: 0x1b32b8, Func Offset: 0x18
+	// Line 5203, Address: 0x1b32bc, Func Offset: 0x1c
+	// Line 5198, Address: 0x1b32c0, Func Offset: 0x20
+	// Line 5211, Address: 0x1b32c4, Func Offset: 0x24
+	// Line 5203, Address: 0x1b32c8, Func Offset: 0x28
+	// Line 5215, Address: 0x1b32d4, Func Offset: 0x34
+	// Line 5203, Address: 0x1b32d8, Func Offset: 0x38
+	// Line 5215, Address: 0x1b32dc, Func Offset: 0x3c
+	// Line 5203, Address: 0x1b32e0, Func Offset: 0x40
+	// Line 5215, Address: 0x1b3308, Func Offset: 0x68
+	// Line 5216, Address: 0x1b3310, Func Offset: 0x70
+	// Line 5219, Address: 0x1b3320, Func Offset: 0x80
+	// Line 5223, Address: 0x1b332c, Func Offset: 0x8c
+	// Line 5226, Address: 0x1b3330, Func Offset: 0x90
+	// Line 5227, Address: 0x1b3344, Func Offset: 0xa4
+	// Line 5230, Address: 0x1b3358, Func Offset: 0xb8
+	// Line 5233, Address: 0x1b3360, Func Offset: 0xc0
+	// Line 5234, Address: 0x1b3368, Func Offset: 0xc8
+	// Line 5237, Address: 0x1b3378, Func Offset: 0xd8
+	// Line 5239, Address: 0x1b3380, Func Offset: 0xe0
+	// Line 5244, Address: 0x1b3390, Func Offset: 0xf0
+	// Line 5245, Address: 0x1b3398, Func Offset: 0xf8
+	// Func End, Address: 0x1b33b0, Func Offset: 0x110
 }
 
 // iSGIsGameCorrupt__FP13st_ISGSESSIONi
 // Start address: 0x1b33b0
 uint8 iSGIsGameCorrupt(st_ISGSESSION* sess)
 {
-	type_25 fileNames;
+	int8 fileNames[25][3];
 	int8* gameDir;
 	int32 resultCode;
 	int32 i;
+	// Line 5148, Address: 0x1b33b0, Func Offset: 0
+	// Line 5153, Address: 0x1b33b4, Func Offset: 0x4
+	// Line 5148, Address: 0x1b33b8, Func Offset: 0x8
+	// Line 5161, Address: 0x1b33bc, Func Offset: 0xc
+	// Line 5148, Address: 0x1b33c0, Func Offset: 0x10
+	// Line 5153, Address: 0x1b33c4, Func Offset: 0x14
+	// Line 5148, Address: 0x1b33c8, Func Offset: 0x18
+	// Line 5153, Address: 0x1b33cc, Func Offset: 0x1c
+	// Line 5148, Address: 0x1b33d0, Func Offset: 0x20
+	// Line 5161, Address: 0x1b33d4, Func Offset: 0x24
+	// Line 5153, Address: 0x1b33d8, Func Offset: 0x28
+	// Line 5161, Address: 0x1b3414, Func Offset: 0x64
+	// Line 5165, Address: 0x1b3418, Func Offset: 0x68
+	// Line 5166, Address: 0x1b3428, Func Offset: 0x78
+	// Line 5169, Address: 0x1b3438, Func Offset: 0x88
+	// Line 5173, Address: 0x1b3444, Func Offset: 0x94
+	// Line 5176, Address: 0x1b344c, Func Offset: 0x9c
+	// Line 5177, Address: 0x1b3460, Func Offset: 0xb0
+	// Line 5180, Address: 0x1b3474, Func Offset: 0xc4
+	// Line 5183, Address: 0x1b347c, Func Offset: 0xcc
+	// Line 5184, Address: 0x1b3484, Func Offset: 0xd4
+	// Line 5187, Address: 0x1b3494, Func Offset: 0xe4
+	// Line 5189, Address: 0x1b349c, Func Offset: 0xec
+	// Line 5194, Address: 0x1b34b0, Func Offset: 0x100
+	// Line 5195, Address: 0x1b34b8, Func Offset: 0x108
+	// Func End, Address: 0x1b34d0, Func Offset: 0x120
 }
 
 // iSGIconInit__FPvUi
 // Start address: 0x1b34d0
 void iSGIconInit(void* iconData, uint32 size)
 {
+	// Line 5140, Address: 0x1b34d0, Func Offset: 0
+	// Line 5144, Address: 0x1b34d4, Func Offset: 0x4
+	// Func End, Address: 0x1b34dc, Func Offset: 0xc
 }
 
 // iSGMakeTimeStamp__FPc
 // Start address: 0x1b34e0
 void iSGMakeTimeStamp(int8* str)
 {
+	// Line 5128, Address: 0x1b34e0, Func Offset: 0
+	// Func End, Address: 0x1b34e8, Func Offset: 0x8
 }
 
 // iSG_is_MCOP_realerr__Fii
@@ -2594,6 +2667,13 @@ void iSGMakeTimeStamp(int8* str)
 int32 iSG_is_MCOP_realerr(int32 mcop, int32 que_rc)
 {
 	int32 is_ok;
+	// Line 4158, Address: 0x1b34f0, Func Offset: 0
+	// Line 4180, Address: 0x1b3518, Func Offset: 0x28
+	// Line 4198, Address: 0x1b3520, Func Offset: 0x30
+	// Line 4202, Address: 0x1b3528, Func Offset: 0x38
+	// Line 4204, Address: 0x1b352c, Func Offset: 0x3c
+	// Line 4207, Address: 0x1b3530, Func Offset: 0x40
+	// Func End, Address: 0x1b3538, Func Offset: 0x48
 }
 
 // iSG_is_synccode_realerr__FiiP19st_ISG_MEMCARD_DATA
@@ -2601,6 +2681,103 @@ int32 iSG_is_MCOP_realerr(int32 mcop, int32 que_rc)
 int32 iSG_is_synccode_realerr(int32 mcop, int32 mcopret)
 {
 	int32 is_ok;
+	// Line 3770, Address: 0x1b3540, Func Offset: 0
+	// Line 3771, Address: 0x1b3548, Func Offset: 0x8
+	// Line 3775, Address: 0x1b3554, Func Offset: 0x14
+	// Line 3779, Address: 0x1b3560, Func Offset: 0x20
+	// Line 3782, Address: 0x1b3568, Func Offset: 0x28
+	// Line 3801, Address: 0x1b3588, Func Offset: 0x48
+	// Line 3802, Address: 0x1b3590, Func Offset: 0x50
+	// Line 3803, Address: 0x1b359c, Func Offset: 0x5c
+	// Line 3807, Address: 0x1b35e0, Func Offset: 0xa0
+	// Line 3811, Address: 0x1b35e8, Func Offset: 0xa8
+	// Line 3816, Address: 0x1b35f0, Func Offset: 0xb0
+	// Line 3832, Address: 0x1b35f8, Func Offset: 0xb8
+	// Line 3833, Address: 0x1b3600, Func Offset: 0xc0
+	// Line 3834, Address: 0x1b360c, Func Offset: 0xcc
+	// Line 3838, Address: 0x1b3638, Func Offset: 0xf8
+	// Line 3842, Address: 0x1b3640, Func Offset: 0x100
+	// Line 3851, Address: 0x1b3648, Func Offset: 0x108
+	// Line 3859, Address: 0x1b3650, Func Offset: 0x110
+	// Line 3860, Address: 0x1b3658, Func Offset: 0x118
+	// Line 3861, Address: 0x1b3664, Func Offset: 0x124
+	// Line 3862, Address: 0x1b3684, Func Offset: 0x144
+	// Line 3865, Address: 0x1b3688, Func Offset: 0x148
+	// Line 3869, Address: 0x1b3690, Func Offset: 0x150
+	// Line 3877, Address: 0x1b3698, Func Offset: 0x158
+	// Line 3878, Address: 0x1b36a0, Func Offset: 0x160
+	// Line 3879, Address: 0x1b36ac, Func Offset: 0x16c
+	// Line 3883, Address: 0x1b36d8, Func Offset: 0x198
+	// Line 3887, Address: 0x1b36e0, Func Offset: 0x1a0
+	// Line 3891, Address: 0x1b36e8, Func Offset: 0x1a8
+	// Line 3899, Address: 0x1b36f0, Func Offset: 0x1b0
+	// Line 3900, Address: 0x1b36f8, Func Offset: 0x1b8
+	// Line 3901, Address: 0x1b3704, Func Offset: 0x1c4
+	// Line 3905, Address: 0x1b3748, Func Offset: 0x208
+	// Line 3909, Address: 0x1b3750, Func Offset: 0x210
+	// Line 3913, Address: 0x1b3758, Func Offset: 0x218
+	// Line 3917, Address: 0x1b3760, Func Offset: 0x220
+	// Line 3922, Address: 0x1b3768, Func Offset: 0x228
+	// Line 3930, Address: 0x1b3770, Func Offset: 0x230
+	// Line 3931, Address: 0x1b3778, Func Offset: 0x238
+	// Line 3932, Address: 0x1b3784, Func Offset: 0x244
+	// Line 3933, Address: 0x1b37a4, Func Offset: 0x264
+	// Line 3936, Address: 0x1b37a8, Func Offset: 0x268
+	// Line 3940, Address: 0x1b37b0, Func Offset: 0x270
+	// Line 3948, Address: 0x1b37b8, Func Offset: 0x278
+	// Line 3949, Address: 0x1b37c0, Func Offset: 0x280
+	// Line 3950, Address: 0x1b37cc, Func Offset: 0x28c
+	// Line 3954, Address: 0x1b37f8, Func Offset: 0x2b8
+	// Line 3959, Address: 0x1b3800, Func Offset: 0x2c0
+	// Line 3965, Address: 0x1b3808, Func Offset: 0x2c8
+	// Line 3973, Address: 0x1b3810, Func Offset: 0x2d0
+	// Line 3974, Address: 0x1b3818, Func Offset: 0x2d8
+	// Line 3975, Address: 0x1b3824, Func Offset: 0x2e4
+	// Line 3979, Address: 0x1b3850, Func Offset: 0x310
+	// Line 3983, Address: 0x1b3858, Func Offset: 0x318
+	// Line 3988, Address: 0x1b3860, Func Offset: 0x320
+	// Line 3996, Address: 0x1b3868, Func Offset: 0x328
+	// Line 3997, Address: 0x1b3870, Func Offset: 0x330
+	// Line 3998, Address: 0x1b387c, Func Offset: 0x33c
+	// Line 3999, Address: 0x1b389c, Func Offset: 0x35c
+	// Line 4002, Address: 0x1b38a0, Func Offset: 0x360
+	// Line 4006, Address: 0x1b38a8, Func Offset: 0x368
+	// Line 4014, Address: 0x1b38b0, Func Offset: 0x370
+	// Line 4015, Address: 0x1b38b8, Func Offset: 0x378
+	// Line 4016, Address: 0x1b38c4, Func Offset: 0x384
+	// Line 4017, Address: 0x1b38e4, Func Offset: 0x3a4
+	// Line 4021, Address: 0x1b38e8, Func Offset: 0x3a8
+	// Line 4026, Address: 0x1b38f0, Func Offset: 0x3b0
+	// Line 4034, Address: 0x1b38f8, Func Offset: 0x3b8
+	// Line 4035, Address: 0x1b3900, Func Offset: 0x3c0
+	// Line 4036, Address: 0x1b390c, Func Offset: 0x3cc
+	// Line 4037, Address: 0x1b3944, Func Offset: 0x404
+	// Line 4040, Address: 0x1b3948, Func Offset: 0x408
+	// Line 4045, Address: 0x1b3950, Func Offset: 0x410
+	// Line 4051, Address: 0x1b3958, Func Offset: 0x418
+	// Line 4055, Address: 0x1b3960, Func Offset: 0x420
+	// Line 4063, Address: 0x1b3968, Func Offset: 0x428
+	// Line 4064, Address: 0x1b3970, Func Offset: 0x430
+	// Line 4073, Address: 0x1b397c, Func Offset: 0x43c
+	// Line 4074, Address: 0x1b3988, Func Offset: 0x448
+	// Line 4083, Address: 0x1b3994, Func Offset: 0x454
+	// Line 4084, Address: 0x1b39a0, Func Offset: 0x460
+	// Line 4085, Address: 0x1b39ac, Func Offset: 0x46c
+	// Line 4086, Address: 0x1b39cc, Func Offset: 0x48c
+	// Line 4090, Address: 0x1b39d0, Func Offset: 0x490
+	// Line 4103, Address: 0x1b39d8, Func Offset: 0x498
+	// Line 4104, Address: 0x1b39e0, Func Offset: 0x4a0
+	// Line 4105, Address: 0x1b39ec, Func Offset: 0x4ac
+	// Line 4106, Address: 0x1b3a0c, Func Offset: 0x4cc
+	// Line 4109, Address: 0x1b3a10, Func Offset: 0x4d0
+	// Line 4115, Address: 0x1b3a18, Func Offset: 0x4d8
+	// Line 4123, Address: 0x1b3a20, Func Offset: 0x4e0
+	// Line 4124, Address: 0x1b3a28, Func Offset: 0x4e8
+	// Line 4134, Address: 0x1b3a34, Func Offset: 0x4f4
+	// Line 4135, Address: 0x1b3a40, Func Offset: 0x500
+	// Line 4141, Address: 0x1b3a4c, Func Offset: 0x50c
+	// Line 4145, Address: 0x1b3a50, Func Offset: 0x510
+	// Func End, Address: 0x1b3a58, Func Offset: 0x518
 }
 
 // iSG_mcasync_chkop__FP19st_ISG_MEMCARD_DATAiPi
@@ -2612,6 +2789,34 @@ en_ISGMCA_STATUS iSG_mcasync_chkop(st_ISG_MEMCARD_DATA* mcdata, int32 block, int
 	int32 ret;
 	int32 mcf;
 	uint32 on;
+	// Line 3664, Address: 0x1b3a60, Func Offset: 0
+	// Line 3668, Address: 0x1b3a88, Func Offset: 0x28
+	// Line 3670, Address: 0x1b3a8c, Func Offset: 0x2c
+	// Line 3672, Address: 0x1b3a90, Func Offset: 0x30
+	// Line 3674, Address: 0x1b3aac, Func Offset: 0x4c
+	// Line 3677, Address: 0x1b3ab0, Func Offset: 0x50
+	// Line 3691, Address: 0x1b3ac0, Func Offset: 0x60
+	// Line 3692, Address: 0x1b3ae4, Func Offset: 0x84
+	// Line 3695, Address: 0x1b3ae8, Func Offset: 0x88
+	// Line 3700, Address: 0x1b3af0, Func Offset: 0x90
+	// Line 3704, Address: 0x1b3af8, Func Offset: 0x98
+	// Line 3708, Address: 0x1b3b00, Func Offset: 0xa0
+	// Line 3710, Address: 0x1b3b04, Func Offset: 0xa4
+	// Line 3714, Address: 0x1b3b08, Func Offset: 0xa8
+	// Line 3719, Address: 0x1b3b20, Func Offset: 0xc0
+	// Line 3721, Address: 0x1b3b28, Func Offset: 0xc8
+	// Line 3722, Address: 0x1b3b58, Func Offset: 0xf8
+	// Line 3726, Address: 0x1b3b68, Func Offset: 0x108
+	// Line 3729, Address: 0x1b3b74, Func Offset: 0x114
+	// Line 3730, Address: 0x1b3b84, Func Offset: 0x124
+	// Line 3732, Address: 0x1b3b8c, Func Offset: 0x12c
+	// Line 3736, Address: 0x1b3b90, Func Offset: 0x130
+	// Line 3739, Address: 0x1b3ba0, Func Offset: 0x140
+	// Line 3741, Address: 0x1b3bb8, Func Offset: 0x158
+	// Line 3743, Address: 0x1b3bc0, Func Offset: 0x160
+	// Line 3750, Address: 0x1b3bc8, Func Offset: 0x168
+	// Line 3751, Address: 0x1b3bcc, Func Offset: 0x16c
+	// Func End, Address: 0x1b3bec, Func Offset: 0x18c
 }
 
 // iSG_mca_fwrite__FP19st_ISG_MEMCARD_DATAPci
@@ -2620,6 +2825,16 @@ int32 iSG_mca_fwrite(st_ISG_MEMCARD_DATA* mcdata, int8* data, int32 n)
 {
 	int32 result;
 	int32 rc;
+	// Line 3530, Address: 0x1b3bf0, Func Offset: 0
+	// Line 3535, Address: 0x1b3c04, Func Offset: 0x14
+	// Line 3538, Address: 0x1b3c08, Func Offset: 0x18
+	// Line 3540, Address: 0x1b3c20, Func Offset: 0x30
+	// Line 3541, Address: 0x1b3c28, Func Offset: 0x38
+	// Line 3542, Address: 0x1b3c30, Func Offset: 0x40
+	// Line 3543, Address: 0x1b3c3c, Func Offset: 0x4c
+	// Line 3553, Address: 0x1b3c48, Func Offset: 0x58
+	// Line 3554, Address: 0x1b3c4c, Func Offset: 0x5c
+	// Func End, Address: 0x1b3c60, Func Offset: 0x70
 }
 
 // iSG_mca_fread__FP19st_ISG_MEMCARD_DATAPci
@@ -2628,6 +2843,15 @@ int32 iSG_mca_fread(st_ISG_MEMCARD_DATA* mcdata, int8* buf, int32 bufsize)
 {
 	int32 result;
 	int32 rc;
+	// Line 3479, Address: 0x1b3c60, Func Offset: 0
+	// Line 3484, Address: 0x1b3c74, Func Offset: 0x14
+	// Line 3486, Address: 0x1b3c88, Func Offset: 0x28
+	// Line 3487, Address: 0x1b3c90, Func Offset: 0x30
+	// Line 3488, Address: 0x1b3c98, Func Offset: 0x38
+	// Line 3489, Address: 0x1b3ca4, Func Offset: 0x44
+	// Line 3499, Address: 0x1b3cb0, Func Offset: 0x50
+	// Line 3500, Address: 0x1b3cb4, Func Offset: 0x54
+	// Func End, Address: 0x1b3cc8, Func Offset: 0x68
 }
 
 // iSG_mca_fopen__FP19st_ISG_MEMCARD_DATAPCc13en_ISG_IOMODE
@@ -2637,6 +2861,18 @@ int32 iSG_mca_fopen(st_ISG_MEMCARD_DATA* mcdata, int8* fname, en_ISG_IOMODE mode
 	int32 result;
 	int32 rc;
 	int32 ps2mode;
+	// Line 3278, Address: 0x1b3cd0, Func Offset: 0
+	// Line 3279, Address: 0x1b3ce0, Func Offset: 0x10
+	// Line 3292, Address: 0x1b3ce4, Func Offset: 0x14
+	// Line 3295, Address: 0x1b3cf8, Func Offset: 0x28
+	// Line 3296, Address: 0x1b3cfc, Func Offset: 0x2c
+	// Line 3295, Address: 0x1b3d00, Func Offset: 0x30
+	// Line 3296, Address: 0x1b3d04, Func Offset: 0x34
+	// Line 3297, Address: 0x1b3d10, Func Offset: 0x40
+	// Line 3298, Address: 0x1b3d1c, Func Offset: 0x4c
+	// Line 3307, Address: 0x1b3d28, Func Offset: 0x58
+	// Line 3309, Address: 0x1b3d2c, Func Offset: 0x5c
+	// Func End, Address: 0x1b3d40, Func Offset: 0x70
 }
 
 // iSG_mca_unfmt__FP19st_ISG_MEMCARD_DATA
@@ -2645,6 +2881,19 @@ int32 iSG_mca_unfmt(st_ISG_MEMCARD_DATA* mcdata)
 {
 	int32 result;
 	int32 rc;
+	// Line 3098, Address: 0x1b3d40, Func Offset: 0
+	// Line 3103, Address: 0x1b3d54, Func Offset: 0x14
+	// Line 3107, Address: 0x1b3d58, Func Offset: 0x18
+	// Line 3108, Address: 0x1b3d64, Func Offset: 0x24
+	// Line 3113, Address: 0x1b3d6c, Func Offset: 0x2c
+	// Line 3118, Address: 0x1b3d78, Func Offset: 0x38
+	// Line 3119, Address: 0x1b3d80, Func Offset: 0x40
+	// Line 3120, Address: 0x1b3d8c, Func Offset: 0x4c
+	// Line 3121, Address: 0x1b3d98, Func Offset: 0x58
+	// Line 3123, Address: 0x1b3da4, Func Offset: 0x64
+	// Line 3132, Address: 0x1b3da8, Func Offset: 0x68
+	// Line 3133, Address: 0x1b3dac, Func Offset: 0x6c
+	// Func End, Address: 0x1b3dc0, Func Offset: 0x80
 }
 
 // iSG_mca_fmt__FP19st_ISG_MEMCARD_DATAi
@@ -2653,6 +2902,22 @@ int32 iSG_mca_fmt(st_ISG_MEMCARD_DATA* mcdata, int32 force)
 {
 	int32 result;
 	int32 rc;
+	// Line 3012, Address: 0x1b3dc0, Func Offset: 0
+	// Line 3017, Address: 0x1b3ddc, Func Offset: 0x1c
+	// Line 3020, Address: 0x1b3de0, Func Offset: 0x20
+	// Line 3021, Address: 0x1b3dec, Func Offset: 0x2c
+	// Line 3024, Address: 0x1b3dfc, Func Offset: 0x3c
+	// Line 3029, Address: 0x1b3e18, Func Offset: 0x58
+	// Line 3030, Address: 0x1b3e24, Func Offset: 0x64
+	// Line 3038, Address: 0x1b3e2c, Func Offset: 0x6c
+	// Line 3046, Address: 0x1b3e38, Func Offset: 0x78
+	// Line 3048, Address: 0x1b3e40, Func Offset: 0x80
+	// Line 3049, Address: 0x1b3e4c, Func Offset: 0x8c
+	// Line 3050, Address: 0x1b3e58, Func Offset: 0x98
+	// Line 3052, Address: 0x1b3e64, Func Offset: 0xa4
+	// Line 3061, Address: 0x1b3e68, Func Offset: 0xa8
+	// Line 3062, Address: 0x1b3e6c, Func Offset: 0xac
+	// Func End, Address: 0x1b3e84, Func Offset: 0xc4
 }
 
 // iSG_get_fmoddate__FP19st_ISG_MEMCARD_DATAPCcPiPiPiPiPiPi
@@ -2662,6 +2927,21 @@ int32 iSG_get_fmoddate(st_ISG_MEMCARD_DATA* mcdata, int8* fname, int32* sec, int
 	int32 result;
 	int32 rc;
 	sceMcTblGetDir* finf;
+	// Line 2932, Address: 0x1b3e90, Func Offset: 0
+	// Line 2933, Address: 0x1b3ea0, Func Offset: 0x10
+	// Line 2932, Address: 0x1b3ea4, Func Offset: 0x14
+	// Line 2935, Address: 0x1b3ed4, Func Offset: 0x44
+	// Line 2938, Address: 0x1b3ed8, Func Offset: 0x48
+	// Line 2939, Address: 0x1b3ee0, Func Offset: 0x50
+	// Line 2943, Address: 0x1b3ef0, Func Offset: 0x60
+	// Line 2944, Address: 0x1b3f00, Func Offset: 0x70
+	// Line 2945, Address: 0x1b3f10, Func Offset: 0x80
+	// Line 2946, Address: 0x1b3f20, Func Offset: 0x90
+	// Line 2947, Address: 0x1b3f30, Func Offset: 0xa0
+	// Line 2948, Address: 0x1b3f40, Func Offset: 0xb0
+	// Line 2952, Address: 0x1b3f50, Func Offset: 0xc0
+	// Line 2953, Address: 0x1b3f54, Func Offset: 0xc4
+	// Func End, Address: 0x1b3f80, Func Offset: 0xf0
 }
 
 // iSG_get_finfo__FP19st_ISG_MEMCARD_DATAPCcPCc
@@ -2670,9 +2950,42 @@ int32 iSG_get_finfo(st_ISG_MEMCARD_DATA* mcdata, int8* fname, int8* path)
 {
 	int32 result;
 	int32 rc;
-	type_41 str_buf;
+	int8 str_buf[64];
 	int32 len;
 	int32 numfound;
+	// Line 2852, Address: 0x1b3f80, Func Offset: 0
+	// Line 2855, Address: 0x1b3f84, Func Offset: 0x4
+	// Line 2852, Address: 0x1b3f88, Func Offset: 0x8
+	// Line 2855, Address: 0x1b3f8c, Func Offset: 0xc
+	// Line 2852, Address: 0x1b3f90, Func Offset: 0x10
+	// Line 2855, Address: 0x1b3fac, Func Offset: 0x2c
+	// Line 2857, Address: 0x1b3fcc, Func Offset: 0x4c
+	// Line 2863, Address: 0x1b3fd0, Func Offset: 0x50
+	// Line 2867, Address: 0x1b3ffc, Func Offset: 0x7c
+	// Line 2871, Address: 0x1b4004, Func Offset: 0x84
+	// Line 2875, Address: 0x1b4008, Func Offset: 0x88
+	// Line 2878, Address: 0x1b400c, Func Offset: 0x8c
+	// Line 2879, Address: 0x1b4034, Func Offset: 0xb4
+	// Line 2880, Address: 0x1b4044, Func Offset: 0xc4
+	// Line 2881, Address: 0x1b4060, Func Offset: 0xe0
+	// Line 2882, Address: 0x1b4078, Func Offset: 0xf8
+	// Line 2883, Address: 0x1b4080, Func Offset: 0x100
+	// Line 2884, Address: 0x1b4098, Func Offset: 0x118
+	// Line 2885, Address: 0x1b40a0, Func Offset: 0x120
+	// Line 2886, Address: 0x1b40c8, Func Offset: 0x148
+	// Line 2889, Address: 0x1b40d8, Func Offset: 0x158
+	// Line 2891, Address: 0x1b40f4, Func Offset: 0x174
+	// Line 2892, Address: 0x1b4100, Func Offset: 0x180
+	// Line 2894, Address: 0x1b4110, Func Offset: 0x190
+	// Line 2896, Address: 0x1b4120, Func Offset: 0x1a0
+	// Line 2897, Address: 0x1b4138, Func Offset: 0x1b8
+	// Line 2901, Address: 0x1b4144, Func Offset: 0x1c4
+	// Line 2907, Address: 0x1b4148, Func Offset: 0x1c8
+	// Line 2910, Address: 0x1b4160, Func Offset: 0x1e0
+	// Line 2911, Address: 0x1b4168, Func Offset: 0x1e8
+	// Line 2913, Address: 0x1b4170, Func Offset: 0x1f0
+	// Line 2914, Address: 0x1b4178, Func Offset: 0x1f8
+	// Func End, Address: 0x1b4194, Func Offset: 0x214
 }
 
 // iSG_isSpaceForFile__FP19st_ISG_MEMCARD_DATAiiPCcPCcPiPi
@@ -2686,6 +2999,34 @@ int32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, int32 mcidx, int32 fsize, 
 	int32 estclust;
 	int32 totclust;
 	int32 reset_mcpath;
+	// Line 2479, Address: 0x1b41a0, Func Offset: 0
+	// Line 2494, Address: 0x1b41e4, Func Offset: 0x44
+	// Line 2497, Address: 0x1b41f8, Func Offset: 0x58
+	// Line 2498, Address: 0x1b4204, Func Offset: 0x64
+	// Line 2501, Address: 0x1b4208, Func Offset: 0x68
+	// Line 2505, Address: 0x1b421c, Func Offset: 0x7c
+	// Line 2506, Address: 0x1b422c, Func Offset: 0x8c
+	// Line 2556, Address: 0x1b4234, Func Offset: 0x94
+	// Line 2568, Address: 0x1b4240, Func Offset: 0xa0
+	// Line 2570, Address: 0x1b4250, Func Offset: 0xb0
+	// Line 2584, Address: 0x1b4254, Func Offset: 0xb4
+	// Line 2570, Address: 0x1b4258, Func Offset: 0xb8
+	// Line 2584, Address: 0x1b425c, Func Offset: 0xbc
+	// Line 2586, Address: 0x1b4270, Func Offset: 0xd0
+	// Line 2587, Address: 0x1b428c, Func Offset: 0xec
+	// Line 2589, Address: 0x1b4294, Func Offset: 0xf4
+	// Line 2591, Address: 0x1b42a8, Func Offset: 0x108
+	// Line 2596, Address: 0x1b42c0, Func Offset: 0x120
+	// Line 2597, Address: 0x1b42c4, Func Offset: 0x124
+	// Line 2601, Address: 0x1b42c8, Func Offset: 0x128
+	// Line 2612, Address: 0x1b42d4, Func Offset: 0x134
+	// Line 2614, Address: 0x1b42e0, Func Offset: 0x140
+	// Line 2615, Address: 0x1b42f0, Func Offset: 0x150
+	// Line 2617, Address: 0x1b4300, Func Offset: 0x160
+	// Line 2618, Address: 0x1b4304, Func Offset: 0x164
+	// Line 2617, Address: 0x1b4308, Func Offset: 0x168
+	// Line 2618, Address: 0x1b430c, Func Offset: 0x16c
+	// Func End, Address: 0x1b4338, Func Offset: 0x198
 }
 
 // iSG_mc_availDirEnt__FP19st_ISG_MEMCARD_DATAiPCc
@@ -2694,6 +3035,30 @@ int32 iSG_mc_availDirEnt(st_ISG_MEMCARD_DATA* mcdata, int32 mcidx, int8* dpath)
 {
 	int32 result;
 	int32 rc;
+	// Line 2424, Address: 0x1b4340, Func Offset: 0
+	// Line 2433, Address: 0x1b4344, Func Offset: 0x4
+	// Line 2424, Address: 0x1b4348, Func Offset: 0x8
+	// Line 2436, Address: 0x1b434c, Func Offset: 0xc
+	// Line 2424, Address: 0x1b4350, Func Offset: 0x10
+	// Line 2433, Address: 0x1b4364, Func Offset: 0x24
+	// Line 2436, Address: 0x1b4368, Func Offset: 0x28
+	// Line 2426, Address: 0x1b4370, Func Offset: 0x30
+	// Line 2436, Address: 0x1b4374, Func Offset: 0x34
+	// Line 2439, Address: 0x1b437c, Func Offset: 0x3c
+	// Line 2440, Address: 0x1b438c, Func Offset: 0x4c
+	// Line 2441, Address: 0x1b4398, Func Offset: 0x58
+	// Line 2443, Address: 0x1b43a8, Func Offset: 0x68
+	// Line 2445, Address: 0x1b43b0, Func Offset: 0x70
+	// Line 2446, Address: 0x1b43bc, Func Offset: 0x7c
+	// Line 2459, Address: 0x1b43c8, Func Offset: 0x88
+	// Line 2461, Address: 0x1b43cc, Func Offset: 0x8c
+	// Line 2459, Address: 0x1b43d0, Func Offset: 0x90
+	// Line 2461, Address: 0x1b43d4, Func Offset: 0x94
+	// Line 2459, Address: 0x1b43d8, Func Offset: 0x98
+	// Line 2461, Address: 0x1b43dc, Func Offset: 0x9c
+	// Line 2459, Address: 0x1b43e0, Func Offset: 0xa0
+	// Line 2461, Address: 0x1b43e4, Func Offset: 0xa4
+	// Func End, Address: 0x1b43f0, Func Offset: 0xb0
 }
 
 // iSG_mc_availclust__FP19st_ISG_MEMCARD_DATAi
@@ -2703,6 +3068,22 @@ int32 iSG_mc_availclust(st_ISG_MEMCARD_DATA* mcdata, int32 mcidx)
 	int32 result;
 	int32 rc;
 	int32 clust;
+	// Line 2367, Address: 0x1b43f0, Func Offset: 0
+	// Line 2379, Address: 0x1b43f4, Func Offset: 0x4
+	// Line 2367, Address: 0x1b43f8, Func Offset: 0x8
+	// Line 2372, Address: 0x1b4408, Func Offset: 0x18
+	// Line 2369, Address: 0x1b440c, Func Offset: 0x1c
+	// Line 2376, Address: 0x1b4410, Func Offset: 0x20
+	// Line 2379, Address: 0x1b4414, Func Offset: 0x24
+	// Line 2382, Address: 0x1b4424, Func Offset: 0x34
+	// Line 2383, Address: 0x1b443c, Func Offset: 0x4c
+	// Line 2384, Address: 0x1b4448, Func Offset: 0x58
+	// Line 2386, Address: 0x1b4458, Func Offset: 0x68
+	// Line 2390, Address: 0x1b4460, Func Offset: 0x70
+	// Line 2391, Address: 0x1b446c, Func Offset: 0x7c
+	// Line 2399, Address: 0x1b4478, Func Offset: 0x88
+	// Line 2401, Address: 0x1b4484, Func Offset: 0x94
+	// Func End, Address: 0x1b4498, Func Offset: 0xa8
 }
 
 // iSG_mc_isPSIIcard__FP19st_ISG_MEMCARD_DATAi
@@ -2712,6 +3093,25 @@ int32 iSG_mc_isPSIIcard(st_ISG_MEMCARD_DATA* mcdata, int32 mcidx)
 	int32 result;
 	int32 rc;
 	int32 type;
+	// Line 2306, Address: 0x1b44a0, Func Offset: 0
+	// Line 2318, Address: 0x1b44a4, Func Offset: 0x4
+	// Line 2306, Address: 0x1b44a8, Func Offset: 0x8
+	// Line 2311, Address: 0x1b44b8, Func Offset: 0x18
+	// Line 2308, Address: 0x1b44bc, Func Offset: 0x1c
+	// Line 2313, Address: 0x1b44c0, Func Offset: 0x20
+	// Line 2318, Address: 0x1b44c4, Func Offset: 0x24
+	// Line 2321, Address: 0x1b44d4, Func Offset: 0x34
+	// Line 2322, Address: 0x1b44ec, Func Offset: 0x4c
+	// Line 2323, Address: 0x1b44f8, Func Offset: 0x58
+	// Line 2325, Address: 0x1b4508, Func Offset: 0x68
+	// Line 2329, Address: 0x1b4510, Func Offset: 0x70
+	// Line 2331, Address: 0x1b451c, Func Offset: 0x7c
+	// Line 2334, Address: 0x1b4530, Func Offset: 0x90
+	// Line 2356, Address: 0x1b4540, Func Offset: 0xa0
+	// Line 2360, Address: 0x1b4544, Func Offset: 0xa4
+	// Line 2362, Address: 0x1b4548, Func Offset: 0xa8
+	// Line 2363, Address: 0x1b454c, Func Offset: 0xac
+	// Func End, Address: 0x1b4560, Func Offset: 0xc0
 }
 
 // iSG_mc_isformatted__FP19st_ISG_MEMCARD_DATAi
@@ -2721,6 +3121,24 @@ int32 iSG_mc_isformatted(st_ISG_MEMCARD_DATA* mcdata, int32 mcidx)
 	int32 result;
 	int32 rc;
 	int32 is_fmtd;
+	// Line 2263, Address: 0x1b4560, Func Offset: 0
+	// Line 2273, Address: 0x1b4564, Func Offset: 0x4
+	// Line 2263, Address: 0x1b4568, Func Offset: 0x8
+	// Line 2268, Address: 0x1b4578, Func Offset: 0x18
+	// Line 2265, Address: 0x1b457c, Func Offset: 0x1c
+	// Line 2270, Address: 0x1b4580, Func Offset: 0x20
+	// Line 2273, Address: 0x1b4584, Func Offset: 0x24
+	// Line 2276, Address: 0x1b4594, Func Offset: 0x34
+	// Line 2277, Address: 0x1b45ac, Func Offset: 0x4c
+	// Line 2278, Address: 0x1b45b8, Func Offset: 0x58
+	// Line 2281, Address: 0x1b45c8, Func Offset: 0x68
+	// Line 2283, Address: 0x1b45d0, Func Offset: 0x70
+	// Line 2284, Address: 0x1b45dc, Func Offset: 0x7c
+	// Line 2287, Address: 0x1b45e4, Func Offset: 0x84
+	// Line 2292, Address: 0x1b45e8, Func Offset: 0x88
+	// Line 2300, Address: 0x1b45fc, Func Offset: 0x9c
+	// Line 2302, Address: 0x1b4600, Func Offset: 0xa0
+	// Func End, Address: 0x1b4614, Func Offset: 0xb4
 }
 
 // iSG_mc_exists__FP19st_ISG_MEMCARD_DATAi
@@ -2729,6 +3147,23 @@ int32 iSG_mc_exists(st_ISG_MEMCARD_DATA* mcdata, int32 mcidx)
 {
 	int32 result;
 	int32 rc;
+	// Line 2224, Address: 0x1b4620, Func Offset: 0
+	// Line 2237, Address: 0x1b4624, Func Offset: 0x4
+	// Line 2224, Address: 0x1b4628, Func Offset: 0x8
+	// Line 2226, Address: 0x1b4638, Func Offset: 0x18
+	// Line 2237, Address: 0x1b463c, Func Offset: 0x1c
+	// Line 2232, Address: 0x1b4640, Func Offset: 0x20
+	// Line 2237, Address: 0x1b4644, Func Offset: 0x24
+	// Line 2240, Address: 0x1b4650, Func Offset: 0x30
+	// Line 2241, Address: 0x1b4668, Func Offset: 0x48
+	// Line 2242, Address: 0x1b4674, Func Offset: 0x54
+	// Line 2244, Address: 0x1b4680, Func Offset: 0x60
+	// Line 2246, Address: 0x1b4688, Func Offset: 0x68
+	// Line 2248, Address: 0x1b4694, Func Offset: 0x74
+	// Line 2249, Address: 0x1b46a4, Func Offset: 0x84
+	// Line 2258, Address: 0x1b46a8, Func Offset: 0x88
+	// Line 2259, Address: 0x1b46ac, Func Offset: 0x8c
+	// Func End, Address: 0x1b46c0, Func Offset: 0xa0
 }
 
 // iSG_mcidx_portslot__FiPiPiPi
@@ -2745,18 +3180,110 @@ int32 iSG_mcidx_portslot(int32 mcidx, int32* port, int32* slot, int32* concnt)
 	int32 con_p1;
 	int32 use_port;
 	int32 cur_mcop;
+	// Line 1961, Address: 0x1b46c0, Func Offset: 0
+	// Line 1962, Address: 0x1b46d8, Func Offset: 0x18
+	// Line 1961, Address: 0x1b46dc, Func Offset: 0x1c
+	// Line 2121, Address: 0x1b46f0, Func Offset: 0x30
+	// Line 1961, Address: 0x1b46f4, Func Offset: 0x34
+	// Line 1975, Address: 0x1b46fc, Func Offset: 0x3c
+	// Line 1961, Address: 0x1b4700, Func Offset: 0x40
+	// Line 1976, Address: 0x1b4704, Func Offset: 0x44
+	// Line 1978, Address: 0x1b470c, Func Offset: 0x4c
+	// Line 1964, Address: 0x1b4710, Func Offset: 0x50
+	// Line 1968, Address: 0x1b4714, Func Offset: 0x54
+	// Line 2121, Address: 0x1b4718, Func Offset: 0x58
+	// Line 2124, Address: 0x1b4720, Func Offset: 0x60
+	// Line 2140, Address: 0x1b4728, Func Offset: 0x68
+	// Line 2144, Address: 0x1b4730, Func Offset: 0x70
+	// Line 2151, Address: 0x1b4734, Func Offset: 0x74
+	// Line 2152, Address: 0x1b4750, Func Offset: 0x90
+	// Line 2153, Address: 0x1b475c, Func Offset: 0x9c
+	// Line 2155, Address: 0x1b4764, Func Offset: 0xa4
+	// Line 2159, Address: 0x1b4770, Func Offset: 0xb0
+	// Line 2163, Address: 0x1b4778, Func Offset: 0xb8
+	// Line 2165, Address: 0x1b4788, Func Offset: 0xc8
+	// Line 2173, Address: 0x1b47b0, Func Offset: 0xf0
+	// Line 2177, Address: 0x1b47bc, Func Offset: 0xfc
+	// Line 2180, Address: 0x1b47c0, Func Offset: 0x100
+	// Line 2181, Address: 0x1b47d0, Func Offset: 0x110
+	// Line 2192, Address: 0x1b47d4, Func Offset: 0x114
+	// Line 2194, Address: 0x1b47d8, Func Offset: 0x118
+	// Line 2196, Address: 0x1b47ec, Func Offset: 0x12c
+	// Line 2201, Address: 0x1b4800, Func Offset: 0x140
+	// Line 2203, Address: 0x1b480c, Func Offset: 0x14c
+	// Line 2204, Address: 0x1b4814, Func Offset: 0x154
+	// Line 2205, Address: 0x1b4818, Func Offset: 0x158
+	// Line 2206, Address: 0x1b481c, Func Offset: 0x15c
+	// Line 2208, Address: 0x1b4820, Func Offset: 0x160
+	// Line 2209, Address: 0x1b4824, Func Offset: 0x164
+	// Line 2211, Address: 0x1b4828, Func Offset: 0x168
+	// Line 2212, Address: 0x1b4830, Func Offset: 0x170
+	// Line 2219, Address: 0x1b4838, Func Offset: 0x178
+	// Line 2220, Address: 0x1b483c, Func Offset: 0x17c
+	// Func End, Address: 0x1b486c, Func Offset: 0x1ac
 }
 
 // SQUIB_init_st_iconsys__FP12sceMcIconSys
 // Start address: 0x1b4870
 void SQUIB_init_st_iconsys(sceMcIconSys* icsys)
 {
-	type_95 bgcolor;
-	type_104 lightdir;
-	type_113 lightcol;
-	type_125 ambient;
+	int32 bgcolor[4][4];
+	float32 lightdir[4][3];
+	float32 lightcol[4][3];
+	float32 ambient[4];
 	int8* iconname;
-	type_17 sjistitle;
+	uint8 sjistitle[68];
+	// Line 1842, Address: 0x1b4870, Func Offset: 0
+	// Line 1852, Address: 0x1b4874, Func Offset: 0x4
+	// Line 1842, Address: 0x1b4878, Func Offset: 0x8
+	// Line 1866, Address: 0x1b487c, Func Offset: 0xc
+	// Line 1842, Address: 0x1b4880, Func Offset: 0x10
+	// Line 1852, Address: 0x1b4884, Func Offset: 0x14
+	// Line 1876, Address: 0x1b488c, Func Offset: 0x1c
+	// Line 1852, Address: 0x1b4890, Func Offset: 0x20
+	// Line 1882, Address: 0x1b489c, Func Offset: 0x2c
+	// Line 1852, Address: 0x1b48a0, Func Offset: 0x30
+	// Line 1866, Address: 0x1b48a8, Func Offset: 0x38
+	// Line 1876, Address: 0x1b48b0, Func Offset: 0x40
+	// Line 1882, Address: 0x1b48b8, Func Offset: 0x48
+	// Line 1886, Address: 0x1b48c0, Func Offset: 0x50
+	// Line 1852, Address: 0x1b48c4, Func Offset: 0x54
+	// Line 1886, Address: 0x1b48c8, Func Offset: 0x58
+	// Line 1852, Address: 0x1b48cc, Func Offset: 0x5c
+	// Line 1866, Address: 0x1b48d8, Func Offset: 0x68
+	// Line 1876, Address: 0x1b48f0, Func Offset: 0x80
+	// Line 1882, Address: 0x1b4908, Func Offset: 0x98
+	// Line 1886, Address: 0x1b490c, Func Offset: 0x9c
+	// Line 1891, Address: 0x1b492c, Func Offset: 0xbc
+	// Line 1894, Address: 0x1b493c, Func Offset: 0xcc
+	// Line 1895, Address: 0x1b4940, Func Offset: 0xd0
+	// Line 1894, Address: 0x1b4944, Func Offset: 0xd4
+	// Line 1897, Address: 0x1b4948, Func Offset: 0xd8
+	// Line 1896, Address: 0x1b494c, Func Offset: 0xdc
+	// Line 1895, Address: 0x1b4950, Func Offset: 0xe0
+	// Line 1896, Address: 0x1b4954, Func Offset: 0xe4
+	// Line 1904, Address: 0x1b4958, Func Offset: 0xe8
+	// Line 1900, Address: 0x1b495c, Func Offset: 0xec
+	// Line 1897, Address: 0x1b4960, Func Offset: 0xf0
+	// Line 1900, Address: 0x1b4964, Func Offset: 0xf4
+	// Line 1904, Address: 0x1b4968, Func Offset: 0xf8
+	// Line 1906, Address: 0x1b4970, Func Offset: 0x100
+	// Line 1908, Address: 0x1b4980, Func Offset: 0x110
+	// Line 1911, Address: 0x1b4990, Func Offset: 0x120
+	// Line 1912, Address: 0x1b49a0, Func Offset: 0x130
+	// Line 1913, Address: 0x1b49ac, Func Offset: 0x13c
+	// Line 1914, Address: 0x1b49bc, Func Offset: 0x14c
+	// Line 1915, Address: 0x1b49c8, Func Offset: 0x158
+	// Line 1916, Address: 0x1b49d8, Func Offset: 0x168
+	// Line 1919, Address: 0x1b49e4, Func Offset: 0x174
+	// Line 1920, Address: 0x1b49e8, Func Offset: 0x178
+	// Line 1919, Address: 0x1b49ec, Func Offset: 0x17c
+	// Line 1920, Address: 0x1b49f0, Func Offset: 0x180
+	// Line 1921, Address: 0x1b49fc, Func Offset: 0x18c
+	// Line 1922, Address: 0x1b4a0c, Func Offset: 0x19c
+	// Line 1923, Address: 0x1b4a1c, Func Offset: 0x1ac
+	// Line 1926, Address: 0x1b4a2c, Func Offset: 0x1bc
+	// Func End, Address: 0x1b4a3c, Func Offset: 0x1cc
 }
 
 // iSG_add_sysicons__FP19st_ISG_MEMCARD_DATA
@@ -2765,15 +3292,56 @@ int32 iSG_add_sysicons(st_ISG_MEMCARD_DATA* mcdata)
 {
 	sceMcIconSys icsysdata;
 	int8* iconname;
+	// Line 1682, Address: 0x1b4a40, Func Offset: 0
+	// Line 1692, Address: 0x1b4a54, Func Offset: 0x14
+	// Line 1696, Address: 0x1b4a5c, Func Offset: 0x1c
+	// Line 1697, Address: 0x1b4a6c, Func Offset: 0x2c
+	// Line 1698, Address: 0x1b4aa8, Func Offset: 0x68
+	// Line 1704, Address: 0x1b4ab4, Func Offset: 0x74
+	// Line 1705, Address: 0x1b4ac4, Func Offset: 0x84
+	// Line 1707, Address: 0x1b4ad4, Func Offset: 0x94
+	// Line 1708, Address: 0x1b4af8, Func Offset: 0xb8
+	// Line 1709, Address: 0x1b4b3c, Func Offset: 0xfc
+	// Line 1720, Address: 0x1b4b40, Func Offset: 0x100
+	// Line 1721, Address: 0x1b4b50, Func Offset: 0x110
+	// Line 1722, Address: 0x1b4b88, Func Offset: 0x148
+	// Line 1727, Address: 0x1b4b90, Func Offset: 0x150
+	// Line 1729, Address: 0x1b4bb8, Func Offset: 0x178
+	// Line 1730, Address: 0x1b4bfc, Func Offset: 0x1bc
+	// Line 1764, Address: 0x1b4c00, Func Offset: 0x1c0
+	// Line 1763, Address: 0x1b4c08, Func Offset: 0x1c8
+	// Line 1764, Address: 0x1b4c0c, Func Offset: 0x1cc
+	// Func End, Address: 0x1b4c18, Func Offset: 0x1d8
 }
 
 // iSG_add_cfgholder__FP19st_ISG_MEMCARD_DATA
 // Start address: 0x1b4c20
 int32 iSG_add_cfgholder(st_ISG_MEMCARD_DATA* mcdata)
 {
-	type_126 cfgdata;
+	int8 cfgdata[992];
 	int8* strptr;
 	int8* cfgname;
+	// Line 1632, Address: 0x1b4c20, Func Offset: 0
+	// Line 1637, Address: 0x1b4c24, Func Offset: 0x4
+	// Line 1632, Address: 0x1b4c28, Func Offset: 0x8
+	// Line 1637, Address: 0x1b4c2c, Func Offset: 0xc
+	// Line 1632, Address: 0x1b4c30, Func Offset: 0x10
+	// Line 1637, Address: 0x1b4c3c, Func Offset: 0x1c
+	// Line 1655, Address: 0x1b4c5c, Func Offset: 0x3c
+	// Line 1658, Address: 0x1b4c6c, Func Offset: 0x4c
+	// Line 1659, Address: 0x1b4c88, Func Offset: 0x68
+	// Line 1660, Address: 0x1b4c98, Func Offset: 0x78
+	// Line 1662, Address: 0x1b4c9c, Func Offset: 0x7c
+	// Line 1665, Address: 0x1b4ca8, Func Offset: 0x88
+	// Line 1668, Address: 0x1b4cb8, Func Offset: 0x98
+	// Line 1669, Address: 0x1b4cf0, Func Offset: 0xd0
+	// Line 1673, Address: 0x1b4cf8, Func Offset: 0xd8
+	// Line 1674, Address: 0x1b4d18, Func Offset: 0xf8
+	// Line 1675, Address: 0x1b4d5c, Func Offset: 0x13c
+	// Line 1678, Address: 0x1b4d60, Func Offset: 0x140
+	// Line 1677, Address: 0x1b4d68, Func Offset: 0x148
+	// Line 1678, Address: 0x1b4d6c, Func Offset: 0x14c
+	// Func End, Address: 0x1b4d7c, Func Offset: 0x15c
 }
 
 // iSG_start_your_engines__Fv
@@ -2782,6 +3350,22 @@ int32 iSG_start_your_engines()
 {
 	int32 result;
 	int32 rc;
+	// Line 1466, Address: 0x1b4d80, Func Offset: 0
+	// Line 1476, Address: 0x1b4d84, Func Offset: 0x4
+	// Line 1466, Address: 0x1b4d88, Func Offset: 0x8
+	// Line 1476, Address: 0x1b4d94, Func Offset: 0x14
+	// Line 1477, Address: 0x1b4da8, Func Offset: 0x28
+	// Line 1479, Address: 0x1b4db8, Func Offset: 0x38
+	// Line 1528, Address: 0x1b4dc8, Func Offset: 0x48
+	// Line 1529, Address: 0x1b4dd0, Func Offset: 0x50
+	// Line 1533, Address: 0x1b4df4, Func Offset: 0x74
+	// Line 1536, Address: 0x1b4df8, Func Offset: 0x78
+	// Line 1540, Address: 0x1b4e00, Func Offset: 0x80
+	// Line 1543, Address: 0x1b4e08, Func Offset: 0x88
+	// Line 1546, Address: 0x1b4e0c, Func Offset: 0x8c
+	// Line 1548, Address: 0x1b4e10, Func Offset: 0x90
+	// Line 1549, Address: 0x1b4e14, Func Offset: 0x94
+	// Func End, Address: 0x1b4e28, Func Offset: 0xa8
 }
 
 // iSGAutoSave_Monitor__FP13st_ISGSESSIONi
@@ -2789,31 +3373,109 @@ int32 iSG_start_your_engines()
 int32 iSGAutoSave_Monitor(st_ISGSESSION* isg, int32 idx_target)
 {
 	uint32 stat;
+	// Line 1433, Address: 0x1b4e30, Func Offset: 0
+	// Line 1434, Address: 0x1b4e40, Func Offset: 0x10
+	// Line 1441, Address: 0x1b4e50, Func Offset: 0x20
+	// Line 1442, Address: 0x1b4e58, Func Offset: 0x28
+	// Line 1445, Address: 0x1b4e70, Func Offset: 0x40
+	// Line 1447, Address: 0x1b4e7c, Func Offset: 0x4c
+	// Line 1448, Address: 0x1b4e80, Func Offset: 0x50
+	// Line 1450, Address: 0x1b4e90, Func Offset: 0x60
+	// Line 1454, Address: 0x1b4e98, Func Offset: 0x68
+	// Line 1455, Address: 0x1b4ea0, Func Offset: 0x70
+	// Func End, Address: 0x1b4eb0, Func Offset: 0x80
 }
 
 // iSGAutoSave_Disconnect__FP13st_ISGSESSION
 // Start address: 0x1b4eb0
 void iSGAutoSave_Disconnect(st_ISGSESSION* isg)
 {
+	// Line 1428, Address: 0x1b4eb0, Func Offset: 0
+	// Func End, Address: 0x1b4ebc, Func Offset: 0xc
 }
 
 // iSGAutoSave_Connect__FiPvPFPv10en_CHGCODE_v
 // Start address: 0x1b4ec0
-st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, type_13 chg)
+st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, void(*chg)(void*, en_CHGCODE))
 {
 	st_ISGSESSION* isg;
+	// Line 1411, Address: 0x1b4ec0, Func Offset: 0
+	// Line 1412, Address: 0x1b4ed8, Func Offset: 0x18
+	// Line 1413, Address: 0x1b4eec, Func Offset: 0x2c
+	// Line 1415, Address: 0x1b4f00, Func Offset: 0x40
+	// Line 1418, Address: 0x1b4f48, Func Offset: 0x88
+	// Line 1419, Address: 0x1b4f50, Func Offset: 0x90
+	// Line 1420, Address: 0x1b4f5c, Func Offset: 0x9c
+	// Line 1423, Address: 0x1b4f60, Func Offset: 0xa0
+	// Line 1424, Address: 0x1b4f68, Func Offset: 0xa8
+	// Func End, Address: 0x1b4f80, Func Offset: 0xc0
 }
 
 // iSGAutoSave_Startup__Fv
 // Start address: 0x1b4f80
 void iSGAutoSave_Startup()
 {
+	// Line 1403, Address: 0x1b4f80, Func Offset: 0
+	// Func End, Address: 0x1b4f88, Func Offset: 0x8
 }
 
 // iSGOpError__FP13st_ISGSESSIONPc
 // Start address: 0x1b4f90
 en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, int8* errmsg)
 {
+	// Line 1338, Address: 0x1b4f90, Func Offset: 0
+	// Line 1339, Address: 0x1b4fa4, Func Offset: 0x14
+	// Line 1341, Address: 0x1b4fac, Func Offset: 0x1c
+	// Line 1342, Address: 0x1b4fb4, Func Offset: 0x24
+	// Line 1341, Address: 0x1b4fb8, Func Offset: 0x28
+	// Line 1343, Address: 0x1b4fbc, Func Offset: 0x2c
+	// Line 1345, Address: 0x1b4fe0, Func Offset: 0x50
+	// Line 1346, Address: 0x1b4ff4, Func Offset: 0x64
+	// Line 1347, Address: 0x1b4ffc, Func Offset: 0x6c
+	// Line 1348, Address: 0x1b5000, Func Offset: 0x70
+	// Line 1349, Address: 0x1b5014, Func Offset: 0x84
+	// Line 1350, Address: 0x1b501c, Func Offset: 0x8c
+	// Line 1351, Address: 0x1b5020, Func Offset: 0x90
+	// Line 1352, Address: 0x1b5034, Func Offset: 0xa4
+	// Line 1353, Address: 0x1b503c, Func Offset: 0xac
+	// Line 1354, Address: 0x1b5040, Func Offset: 0xb0
+	// Line 1355, Address: 0x1b5054, Func Offset: 0xc4
+	// Line 1356, Address: 0x1b505c, Func Offset: 0xcc
+	// Line 1357, Address: 0x1b5060, Func Offset: 0xd0
+	// Line 1358, Address: 0x1b5074, Func Offset: 0xe4
+	// Line 1359, Address: 0x1b507c, Func Offset: 0xec
+	// Line 1360, Address: 0x1b5080, Func Offset: 0xf0
+	// Line 1361, Address: 0x1b5094, Func Offset: 0x104
+	// Line 1362, Address: 0x1b509c, Func Offset: 0x10c
+	// Line 1363, Address: 0x1b50a0, Func Offset: 0x110
+	// Line 1364, Address: 0x1b50b4, Func Offset: 0x124
+	// Line 1365, Address: 0x1b50bc, Func Offset: 0x12c
+	// Line 1366, Address: 0x1b50c0, Func Offset: 0x130
+	// Line 1367, Address: 0x1b50d4, Func Offset: 0x144
+	// Line 1368, Address: 0x1b50dc, Func Offset: 0x14c
+	// Line 1369, Address: 0x1b50e0, Func Offset: 0x150
+	// Line 1370, Address: 0x1b50f4, Func Offset: 0x164
+	// Line 1371, Address: 0x1b50fc, Func Offset: 0x16c
+	// Line 1372, Address: 0x1b5100, Func Offset: 0x170
+	// Line 1373, Address: 0x1b5114, Func Offset: 0x184
+	// Line 1374, Address: 0x1b511c, Func Offset: 0x18c
+	// Line 1375, Address: 0x1b5120, Func Offset: 0x190
+	// Line 1376, Address: 0x1b5134, Func Offset: 0x1a4
+	// Line 1377, Address: 0x1b513c, Func Offset: 0x1ac
+	// Line 1378, Address: 0x1b5140, Func Offset: 0x1b0
+	// Line 1379, Address: 0x1b5154, Func Offset: 0x1c4
+	// Line 1380, Address: 0x1b515c, Func Offset: 0x1cc
+	// Line 1381, Address: 0x1b5160, Func Offset: 0x1d0
+	// Line 1382, Address: 0x1b5174, Func Offset: 0x1e4
+	// Line 1383, Address: 0x1b517c, Func Offset: 0x1ec
+	// Line 1384, Address: 0x1b5180, Func Offset: 0x1f0
+	// Line 1385, Address: 0x1b5194, Func Offset: 0x204
+	// Line 1386, Address: 0x1b519c, Func Offset: 0x20c
+	// Line 1387, Address: 0x1b51a0, Func Offset: 0x210
+	// Line 1391, Address: 0x1b51b8, Func Offset: 0x228
+	// Line 1393, Address: 0x1b51bc, Func Offset: 0x22c
+	// Line 1394, Address: 0x1b51c0, Func Offset: 0x230
+	// Func End, Address: 0x1b51d4, Func Offset: 0x244
 }
 
 // iSGPollStatus__FP13st_ISGSESSIONP15en_ASYNC_OPCODEi
@@ -2822,6 +3484,50 @@ en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, in
 {
 	int32 rc;
 	int32 sceResultCode;
+	// Line 1252, Address: 0x1b51e0, Func Offset: 0
+	// Line 1256, Address: 0x1b51f4, Func Offset: 0x14
+	// Line 1261, Address: 0x1b5208, Func Offset: 0x28
+	// Line 1264, Address: 0x1b5214, Func Offset: 0x34
+	// Line 1263, Address: 0x1b5218, Func Offset: 0x38
+	// Line 1264, Address: 0x1b521c, Func Offset: 0x3c
+	// Line 1265, Address: 0x1b5220, Func Offset: 0x40
+	// Line 1266, Address: 0x1b5224, Func Offset: 0x44
+	// Line 1267, Address: 0x1b522c, Func Offset: 0x4c
+	// Line 1277, Address: 0x1b5230, Func Offset: 0x50
+	// Line 1279, Address: 0x1b5240, Func Offset: 0x60
+	// Line 1280, Address: 0x1b5248, Func Offset: 0x68
+	// Line 1281, Address: 0x1b524c, Func Offset: 0x6c
+	// Line 1283, Address: 0x1b5250, Func Offset: 0x70
+	// Line 1284, Address: 0x1b5258, Func Offset: 0x78
+	// Line 1285, Address: 0x1b5264, Func Offset: 0x84
+	// Line 1286, Address: 0x1b5268, Func Offset: 0x88
+	// Line 1288, Address: 0x1b5298, Func Offset: 0xb8
+	// Line 1289, Address: 0x1b52a0, Func Offset: 0xc0
+	// Line 1290, Address: 0x1b52a4, Func Offset: 0xc4
+	// Line 1291, Address: 0x1b52ac, Func Offset: 0xcc
+	// Line 1293, Address: 0x1b52b0, Func Offset: 0xd0
+	// Line 1294, Address: 0x1b52b8, Func Offset: 0xd8
+	// Line 1295, Address: 0x1b52bc, Func Offset: 0xdc
+	// Line 1296, Address: 0x1b52c4, Func Offset: 0xe4
+	// Line 1298, Address: 0x1b52c8, Func Offset: 0xe8
+	// Line 1299, Address: 0x1b52d0, Func Offset: 0xf0
+	// Line 1300, Address: 0x1b52d4, Func Offset: 0xf4
+	// Line 1307, Address: 0x1b52dc, Func Offset: 0xfc
+	// Line 1310, Address: 0x1b52e0, Func Offset: 0x100
+	// Line 1313, Address: 0x1b52f0, Func Offset: 0x110
+	// Line 1312, Address: 0x1b52f4, Func Offset: 0x114
+	// Line 1315, Address: 0x1b52f8, Func Offset: 0x118
+	// Line 1317, Address: 0x1b5300, Func Offset: 0x120
+	// Line 1323, Address: 0x1b5304, Func Offset: 0x124
+	// Line 1327, Address: 0x1b5310, Func Offset: 0x130
+	// Line 1330, Address: 0x1b5318, Func Offset: 0x138
+	// Line 1328, Address: 0x1b531c, Func Offset: 0x13c
+	// Line 1329, Address: 0x1b5320, Func Offset: 0x140
+	// Line 1330, Address: 0x1b5324, Func Offset: 0x144
+	// Line 1331, Address: 0x1b5364, Func Offset: 0x184
+	// Line 1333, Address: 0x1b5368, Func Offset: 0x188
+	// Line 1334, Address: 0x1b5370, Func Offset: 0x190
+	// Func End, Address: 0x1b5388, Func Offset: 0x1a8
 }
 
 // iSGReadLeader__FP13st_ISGSESSIONPCcPcii
@@ -2830,12 +3536,76 @@ int32 iSGReadLeader(st_ISGSESSION* isgdata, int8* fname, int8* databuf, int32 nu
 {
 	int32 result;
 	int32 rc;
+	// Line 1143, Address: 0x1b5390, Func Offset: 0
+	// Line 1155, Address: 0x1b5394, Func Offset: 0x4
+	// Line 1143, Address: 0x1b5398, Func Offset: 0x8
+	// Line 1144, Address: 0x1b53cc, Func Offset: 0x3c
+	// Line 1143, Address: 0x1b53d0, Func Offset: 0x40
+	// Line 1155, Address: 0x1b53d4, Func Offset: 0x44
+	// Line 1143, Address: 0x1b53d8, Func Offset: 0x48
+	// Line 1155, Address: 0x1b53dc, Func Offset: 0x4c
+	// Line 1144, Address: 0x1b53e0, Func Offset: 0x50
+	// Line 1155, Address: 0x1b53e4, Func Offset: 0x54
+	// Line 1157, Address: 0x1b5440, Func Offset: 0xb0
+	// Line 1159, Address: 0x1b5448, Func Offset: 0xb8
+	// Line 1160, Address: 0x1b544c, Func Offset: 0xbc
+	// Line 1163, Address: 0x1b5454, Func Offset: 0xc4
+	// Line 1161, Address: 0x1b5458, Func Offset: 0xc8
+	// Line 1162, Address: 0x1b5460, Func Offset: 0xd0
+	// Line 1166, Address: 0x1b5468, Func Offset: 0xd8
+	// Line 1169, Address: 0x1b5478, Func Offset: 0xe8
+	// Line 1178, Address: 0x1b5480, Func Offset: 0xf0
+	// Line 1170, Address: 0x1b5484, Func Offset: 0xf4
+	// Line 1178, Address: 0x1b5488, Func Offset: 0xf8
+	// Line 1171, Address: 0x1b548c, Func Offset: 0xfc
+	// Line 1178, Address: 0x1b5490, Func Offset: 0x100
+	// Line 1172, Address: 0x1b5494, Func Offset: 0x104
+	// Line 1178, Address: 0x1b5498, Func Offset: 0x108
+	// Line 1180, Address: 0x1b54c8, Func Offset: 0x138
+	// Line 1184, Address: 0x1b54d0, Func Offset: 0x140
+	// Line 1183, Address: 0x1b54d4, Func Offset: 0x144
+	// Line 1186, Address: 0x1b54d8, Func Offset: 0x148
+	// Line 1185, Address: 0x1b54dc, Func Offset: 0x14c
+	// Line 1184, Address: 0x1b54e0, Func Offset: 0x150
+	// Line 1187, Address: 0x1b54e4, Func Offset: 0x154
+	// Line 1193, Address: 0x1b54f0, Func Offset: 0x160
+	// Line 1195, Address: 0x1b54f8, Func Offset: 0x168
+	// Line 1197, Address: 0x1b5508, Func Offset: 0x178
+	// Line 1200, Address: 0x1b5510, Func Offset: 0x180
+	// Line 1201, Address: 0x1b5514, Func Offset: 0x184
+	// Line 1200, Address: 0x1b5518, Func Offset: 0x188
+	// Line 1203, Address: 0x1b551c, Func Offset: 0x18c
+	// Line 1202, Address: 0x1b5520, Func Offset: 0x190
+	// Line 1201, Address: 0x1b5524, Func Offset: 0x194
+	// Line 1202, Address: 0x1b5528, Func Offset: 0x198
+	// Line 1206, Address: 0x1b552c, Func Offset: 0x19c
+	// Line 1209, Address: 0x1b5574, Func Offset: 0x1e4
+	// Line 1213, Address: 0x1b5580, Func Offset: 0x1f0
+	// Line 1215, Address: 0x1b55c0, Func Offset: 0x230
+	// Line 1221, Address: 0x1b55c8, Func Offset: 0x238
+	// Line 1220, Address: 0x1b55cc, Func Offset: 0x23c
+	// Line 1223, Address: 0x1b55d0, Func Offset: 0x240
+	// Line 1222, Address: 0x1b55d4, Func Offset: 0x244
+	// Line 1221, Address: 0x1b55d8, Func Offset: 0x248
+	// Line 1222, Address: 0x1b55dc, Func Offset: 0x24c
+	// Line 1226, Address: 0x1b55e0, Func Offset: 0x250
+	// Line 1231, Address: 0x1b5624, Func Offset: 0x294
+	// Line 1233, Address: 0x1b5628, Func Offset: 0x298
+	// Line 1234, Address: 0x1b5630, Func Offset: 0x2a0
+	// Func End, Address: 0x1b5660, Func Offset: 0x2d0
 }
 
 // iSGLoadFile__FP13st_ISGSESSIONPCcPci
 // Start address: 0x1b5660
 int32 iSGLoadFile(st_ISGSESSION* isgdata, int8* fname, int8* databuf, int32 async)
 {
+	// Line 1123, Address: 0x1b5660, Func Offset: 0
+	// Line 1131, Address: 0x1b568c, Func Offset: 0x2c
+	// Line 1137, Address: 0x1b56b8, Func Offset: 0x58
+	// Line 1139, Address: 0x1b56cc, Func Offset: 0x6c
+	// Line 1138, Address: 0x1b56d0, Func Offset: 0x70
+	// Line 1139, Address: 0x1b56d4, Func Offset: 0x74
+	// Func End, Address: 0x1b56f0, Func Offset: 0x90
 }
 
 // iSGSaveFile__FP13st_ISGSESSIONPCcPciiPc
@@ -2844,6 +3614,61 @@ int32 iSGSaveFile(st_ISGSESSION* isgdata, int8* fname, int8* data, int32 n, int3
 {
 	int32 result;
 	int32 rc;
+	// Line 1018, Address: 0x1b56f0, Func Offset: 0
+	// Line 1028, Address: 0x1b56f4, Func Offset: 0x4
+	// Line 1018, Address: 0x1b56f8, Func Offset: 0x8
+	// Line 1019, Address: 0x1b5730, Func Offset: 0x40
+	// Line 1018, Address: 0x1b5734, Func Offset: 0x44
+	// Line 1028, Address: 0x1b5738, Func Offset: 0x48
+	// Line 1019, Address: 0x1b573c, Func Offset: 0x4c
+	// Line 1028, Address: 0x1b5740, Func Offset: 0x50
+	// Line 1030, Address: 0x1b57a0, Func Offset: 0xb0
+	// Line 1032, Address: 0x1b57a8, Func Offset: 0xb8
+	// Line 1033, Address: 0x1b57ac, Func Offset: 0xbc
+	// Line 1036, Address: 0x1b57b4, Func Offset: 0xc4
+	// Line 1034, Address: 0x1b57b8, Func Offset: 0xc8
+	// Line 1035, Address: 0x1b57c0, Func Offset: 0xd0
+	// Line 1039, Address: 0x1b57c8, Func Offset: 0xd8
+	// Line 1043, Address: 0x1b57d8, Func Offset: 0xe8
+	// Line 1053, Address: 0x1b57e0, Func Offset: 0xf0
+	// Line 1044, Address: 0x1b57e4, Func Offset: 0xf4
+	// Line 1053, Address: 0x1b57e8, Func Offset: 0xf8
+	// Line 1045, Address: 0x1b57ec, Func Offset: 0xfc
+	// Line 1046, Address: 0x1b57f0, Func Offset: 0x100
+	// Line 1053, Address: 0x1b57f4, Func Offset: 0x104
+	// Line 1055, Address: 0x1b5828, Func Offset: 0x138
+	// Line 1059, Address: 0x1b5830, Func Offset: 0x140
+	// Line 1058, Address: 0x1b5834, Func Offset: 0x144
+	// Line 1061, Address: 0x1b5838, Func Offset: 0x148
+	// Line 1060, Address: 0x1b583c, Func Offset: 0x14c
+	// Line 1059, Address: 0x1b5840, Func Offset: 0x150
+	// Line 1062, Address: 0x1b5844, Func Offset: 0x154
+	// Line 1068, Address: 0x1b5850, Func Offset: 0x160
+	// Line 1074, Address: 0x1b5858, Func Offset: 0x168
+	// Line 1076, Address: 0x1b5868, Func Offset: 0x178
+	// Line 1079, Address: 0x1b5870, Func Offset: 0x180
+	// Line 1080, Address: 0x1b5874, Func Offset: 0x184
+	// Line 1079, Address: 0x1b5878, Func Offset: 0x188
+	// Line 1082, Address: 0x1b587c, Func Offset: 0x18c
+	// Line 1081, Address: 0x1b5880, Func Offset: 0x190
+	// Line 1080, Address: 0x1b5884, Func Offset: 0x194
+	// Line 1081, Address: 0x1b5888, Func Offset: 0x198
+	// Line 1084, Address: 0x1b588c, Func Offset: 0x19c
+	// Line 1087, Address: 0x1b58d4, Func Offset: 0x1e4
+	// Line 1091, Address: 0x1b58e0, Func Offset: 0x1f0
+	// Line 1093, Address: 0x1b5920, Func Offset: 0x230
+	// Line 1096, Address: 0x1b5928, Func Offset: 0x238
+	// Line 1100, Address: 0x1b5970, Func Offset: 0x280
+	// Line 1101, Address: 0x1b59b0, Func Offset: 0x2c0
+	// Line 1103, Address: 0x1b59b8, Func Offset: 0x2c8
+	// Line 1106, Address: 0x1b59c0, Func Offset: 0x2d0
+	// Line 1109, Address: 0x1b59c8, Func Offset: 0x2d8
+	// Line 1107, Address: 0x1b59cc, Func Offset: 0x2dc
+	// Line 1108, Address: 0x1b59d4, Func Offset: 0x2e4
+	// Line 1114, Address: 0x1b59dc, Func Offset: 0x2ec
+	// Line 1116, Address: 0x1b59e0, Func Offset: 0x2f0
+	// Line 1117, Address: 0x1b59e8, Func Offset: 0x2f8
+	// Func End, Address: 0x1b5a18, Func Offset: 0x328
 }
 
 // iSGSetupGameDir__FP13st_ISGSESSIONPCci
@@ -2855,12 +3680,75 @@ int32 iSGSetupGameDir(st_ISGSESSION* isgdata, int8* dname, int32 force_iconfix)
 	st_ISG_MEMCARD_DATA* mcdata;
 	int32 dir_isnew;
 	int8* strptr;
+	// Line 879, Address: 0x1b5a20, Func Offset: 0
+	// Line 880, Address: 0x1b5a3c, Func Offset: 0x1c
+	// Line 879, Address: 0x1b5a40, Func Offset: 0x20
+	// Line 884, Address: 0x1b5a48, Func Offset: 0x28
+	// Line 883, Address: 0x1b5a4c, Func Offset: 0x2c
+	// Line 892, Address: 0x1b5a54, Func Offset: 0x34
+	// Line 893, Address: 0x1b5a5c, Func Offset: 0x3c
+	// Line 898, Address: 0x1b5a74, Func Offset: 0x54
+	// Line 899, Address: 0x1b5a84, Func Offset: 0x64
+	// Line 906, Address: 0x1b5a8c, Func Offset: 0x6c
+	// Line 902, Address: 0x1b5a98, Func Offset: 0x78
+	// Line 906, Address: 0x1b5a9c, Func Offset: 0x7c
+	// Line 907, Address: 0x1b5af8, Func Offset: 0xd8
+	// Line 909, Address: 0x1b5b04, Func Offset: 0xe4
+	// Line 911, Address: 0x1b5b08, Func Offset: 0xe8
+	// Line 915, Address: 0x1b5b10, Func Offset: 0xf0
+	// Line 916, Address: 0x1b5b78, Func Offset: 0x158
+	// Line 918, Address: 0x1b5b84, Func Offset: 0x164
+	// Line 920, Address: 0x1b5b88, Func Offset: 0x168
+	// Line 925, Address: 0x1b5b90, Func Offset: 0x170
+	// Line 926, Address: 0x1b5bf8, Func Offset: 0x1d8
+	// Line 927, Address: 0x1b5c04, Func Offset: 0x1e4
+	// Line 929, Address: 0x1b5c08, Func Offset: 0x1e8
+	// Line 938, Address: 0x1b5c18, Func Offset: 0x1f8
+	// Line 939, Address: 0x1b5c24, Func Offset: 0x204
+	// Line 940, Address: 0x1b5c38, Func Offset: 0x218
+	// Line 941, Address: 0x1b5c48, Func Offset: 0x228
+	// Line 949, Address: 0x1b5c5c, Func Offset: 0x23c
+	// Line 950, Address: 0x1b5c6c, Func Offset: 0x24c
+	// Line 954, Address: 0x1b5c80, Func Offset: 0x260
+	// Line 967, Address: 0x1b5c8c, Func Offset: 0x26c
+	// Line 968, Address: 0x1b5ca0, Func Offset: 0x280
+	// Line 974, Address: 0x1b5ca4, Func Offset: 0x284
+	// Line 977, Address: 0x1b5ca8, Func Offset: 0x288
+	// Line 979, Address: 0x1b5cb0, Func Offset: 0x290
+	// Line 980, Address: 0x1b5cb4, Func Offset: 0x294
+	// Line 982, Address: 0x1b5cb8, Func Offset: 0x298
+	// Line 987, Address: 0x1b5cc0, Func Offset: 0x2a0
+	// Line 993, Address: 0x1b5cc8, Func Offset: 0x2a8
+	// Line 994, Address: 0x1b5cd4, Func Offset: 0x2b4
+	// Line 995, Address: 0x1b5ce4, Func Offset: 0x2c4
+	// Line 996, Address: 0x1b5cec, Func Offset: 0x2cc
+	// Line 997, Address: 0x1b5cf4, Func Offset: 0x2d4
+	// Line 1001, Address: 0x1b5d00, Func Offset: 0x2e0
+	// Line 1002, Address: 0x1b5d08, Func Offset: 0x2e8
+	// Line 1005, Address: 0x1b5d14, Func Offset: 0x2f4
+	// Line 1010, Address: 0x1b5d18, Func Offset: 0x2f8
+	// Line 1011, Address: 0x1b5d1c, Func Offset: 0x2fc
+	// Func End, Address: 0x1b5d40, Func Offset: 0x320
 }
 
 // iSGSelectGameDir__FP13st_ISGSESSIONPCc
 // Start address: 0x1b5d40
 int32 iSGSelectGameDir(st_ISGSESSION* isgdata, int8* dname)
 {
+	// Line 850, Address: 0x1b5d40, Func Offset: 0
+	// Line 861, Address: 0x1b5d44, Func Offset: 0x4
+	// Line 850, Address: 0x1b5d48, Func Offset: 0x8
+	// Line 861, Address: 0x1b5d5c, Func Offset: 0x1c
+	// Line 862, Address: 0x1b5d68, Func Offset: 0x28
+	// Line 863, Address: 0x1b5d78, Func Offset: 0x38
+	// Line 864, Address: 0x1b5d80, Func Offset: 0x40
+	// Line 865, Address: 0x1b5d98, Func Offset: 0x58
+	// Line 867, Address: 0x1b5d9c, Func Offset: 0x5c
+	// Line 865, Address: 0x1b5dac, Func Offset: 0x6c
+	// Line 867, Address: 0x1b5db4, Func Offset: 0x74
+	// Line 869, Address: 0x1b5e10, Func Offset: 0xd0
+	// Line 870, Address: 0x1b5e14, Func Offset: 0xd4
+	// Func End, Address: 0x1b5e2c, Func Offset: 0xec
 }
 
 // iSGFileModDate__FP13st_ISGSESSIONPCcPiPiPiPiPiPi
@@ -2870,7 +3758,33 @@ int8* iSGFileModDate(st_ISGSESSION* isgdata, int8* fname, int32* sec, int32* min
 	int32 rc;
 	sceMcTblGetDir* finf;
 	sceCdCLOCK clock;
-	type_24 datestr;
+	int8 datestr[64];
+	// Line 800, Address: 0x1b5e30, Func Offset: 0
+	// Line 807, Address: 0x1b5e34, Func Offset: 0x4
+	// Line 800, Address: 0x1b5e38, Func Offset: 0x8
+	// Line 803, Address: 0x1b5e58, Func Offset: 0x28
+	// Line 807, Address: 0x1b5e5c, Func Offset: 0x2c
+	// Line 809, Address: 0x1b5e60, Func Offset: 0x30
+	// Line 811, Address: 0x1b5e6c, Func Offset: 0x3c
+	// Line 816, Address: 0x1b5e80, Func Offset: 0x50
+	// Line 817, Address: 0x1b5e90, Func Offset: 0x60
+	// Line 818, Address: 0x1b5ea0, Func Offset: 0x70
+	// Line 819, Address: 0x1b5eb0, Func Offset: 0x80
+	// Line 820, Address: 0x1b5ec0, Func Offset: 0x90
+	// Line 821, Address: 0x1b5ed0, Func Offset: 0xa0
+	// Line 823, Address: 0x1b5ee0, Func Offset: 0xb0
+	// Line 825, Address: 0x1b5ee8, Func Offset: 0xb8
+	// Line 826, Address: 0x1b5ef4, Func Offset: 0xc4
+	// Line 827, Address: 0x1b5f00, Func Offset: 0xd0
+	// Line 828, Address: 0x1b5f0c, Func Offset: 0xdc
+	// Line 829, Address: 0x1b5f18, Func Offset: 0xe8
+	// Line 830, Address: 0x1b5f24, Func Offset: 0xf4
+	// Line 833, Address: 0x1b5f30, Func Offset: 0x100
+	// Line 830, Address: 0x1b5f34, Func Offset: 0x104
+	// Line 833, Address: 0x1b5f38, Func Offset: 0x108
+	// Line 837, Address: 0x1b5f60, Func Offset: 0x130
+	// Line 838, Address: 0x1b5f68, Func Offset: 0x138
+	// Func End, Address: 0x1b5f90, Func Offset: 0x160
 }
 
 // iSGFileModDate__FP13st_ISGSESSIONPCc
@@ -2878,6 +3792,8 @@ int8* iSGFileModDate(st_ISGSESSION* isgdata, int8* fname, int32* sec, int32* min
 int8* iSGFileModDate(st_ISGSESSION* isgdata, int8* fname)
 {
 	int8* date_str;
+	// Line 775, Address: 0x1b5f90, Func Offset: 0
+	// Func End, Address: 0x1b5fac, Func Offset: 0x1c
 }
 
 // iSGFileSize__FP13st_ISGSESSIONPCc
@@ -2885,6 +3801,11 @@ int8* iSGFileModDate(st_ISGSESSION* isgdata, int8* fname)
 int32 iSGFileSize(st_ISGSESSION* isgdata, int8* fname)
 {
 	int32 size;
+	// Line 721, Address: 0x1b5fb0, Func Offset: 0
+	// Line 726, Address: 0x1b5fbc, Func Offset: 0xc
+	// Line 728, Address: 0x1b5fe0, Func Offset: 0x30
+	// Line 730, Address: 0x1b5ff0, Func Offset: 0x40
+	// Func End, Address: 0x1b6000, Func Offset: 0x50
 }
 
 // iSGGameExists__FP13st_ISGSESSIONPCc
@@ -2892,11 +3813,41 @@ int32 iSGFileSize(st_ISGSESSION* isgdata, int8* fname)
 uint8 iSGGameExists(st_ISGSESSION* isgdata, int8* fname)
 {
 	int32 rc;
-	type_117 str_buf;
+	int8 str_buf[64];
 	int32 len;
 	int32 numfound;
 	st_ISG_MEMCARD_DATA* mcdata;
 	int8* path;
+	// Line 640, Address: 0x1b6000, Func Offset: 0
+	// Line 643, Address: 0x1b6004, Func Offset: 0x4
+	// Line 640, Address: 0x1b6008, Func Offset: 0x8
+	// Line 643, Address: 0x1b600c, Func Offset: 0xc
+	// Line 640, Address: 0x1b6010, Func Offset: 0x10
+	// Line 643, Address: 0x1b601c, Func Offset: 0x1c
+	// Line 645, Address: 0x1b603c, Func Offset: 0x3c
+	// Line 655, Address: 0x1b6040, Func Offset: 0x40
+	// Line 647, Address: 0x1b6044, Func Offset: 0x44
+	// Line 648, Address: 0x1b6048, Func Offset: 0x48
+	// Line 658, Address: 0x1b604c, Func Offset: 0x4c
+	// Line 660, Address: 0x1b6074, Func Offset: 0x74
+	// Line 661, Address: 0x1b6084, Func Offset: 0x84
+	// Line 663, Address: 0x1b60a0, Func Offset: 0xa0
+	// Line 664, Address: 0x1b60b8, Func Offset: 0xb8
+	// Line 667, Address: 0x1b60c0, Func Offset: 0xc0
+	// Line 669, Address: 0x1b60d8, Func Offset: 0xd8
+	// Line 670, Address: 0x1b60e0, Func Offset: 0xe0
+	// Line 671, Address: 0x1b6108, Func Offset: 0x108
+	// Line 674, Address: 0x1b6118, Func Offset: 0x118
+	// Line 676, Address: 0x1b6134, Func Offset: 0x134
+	// Line 677, Address: 0x1b6140, Func Offset: 0x140
+	// Line 683, Address: 0x1b6148, Func Offset: 0x148
+	// Line 685, Address: 0x1b6154, Func Offset: 0x154
+	// Line 691, Address: 0x1b6160, Func Offset: 0x160
+	// Line 693, Address: 0x1b616c, Func Offset: 0x16c
+	// Line 696, Address: 0x1b6174, Func Offset: 0x174
+	// Line 697, Address: 0x1b6178, Func Offset: 0x178
+	// Line 698, Address: 0x1b6180, Func Offset: 0x180
+	// Func End, Address: 0x1b6198, Func Offset: 0x198
 }
 
 // iSGTgtHaveRoomStartup__FP13st_ISGSESSIONiiPCcPCcPiPiPi
@@ -2904,6 +3855,8 @@ uint8 iSGGameExists(st_ISGSESSION* isgdata, int8* fname)
 int32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, int8* dpath, int8* fname, int32* bytesNeeded, int32* availOnDisk)
 {
 	int32 result;
+	// Line 597, Address: 0x1b61a0, Func Offset: 0
+	// Func End, Address: 0x1b61a8, Func Offset: 0x8
 }
 
 // iSGTgtHaveRoom__FP13st_ISGSESSIONiiPCcPCcPiPiPi
@@ -2913,12 +3866,32 @@ int32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, int8* dpat
 	int32 result;
 	int32 i;
 	int8* gameName;
+	// Line 570, Address: 0x1b61b0, Func Offset: 0
+	// Line 573, Address: 0x1b61f4, Func Offset: 0x44
+	// Line 576, Address: 0x1b61f8, Func Offset: 0x48
+	// Line 577, Address: 0x1b6208, Func Offset: 0x58
+	// Line 580, Address: 0x1b6224, Func Offset: 0x74
+	// Line 582, Address: 0x1b6244, Func Offset: 0x94
+	// Line 583, Address: 0x1b624c, Func Offset: 0x9c
+	// Line 584, Address: 0x1b6250, Func Offset: 0xa0
+	// Line 586, Address: 0x1b6260, Func Offset: 0xb0
+	// Line 589, Address: 0x1b6280, Func Offset: 0xd0
+	// Func End, Address: 0x1b62ac, Func Offset: 0xfc
 }
 
 // iSGTgtSetActive__FP13st_ISGSESSIONi
 // Start address: 0x1b62b0
 int32 iSGTgtSetActive(st_ISGSESSION* isgdata, int32 tgtidx)
 {
+	// Line 549, Address: 0x1b62b0, Func Offset: 0
+	// Line 553, Address: 0x1b62b4, Func Offset: 0x4
+	// Line 549, Address: 0x1b62b8, Func Offset: 0x8
+	// Line 553, Address: 0x1b62bc, Func Offset: 0xc
+	// Line 549, Address: 0x1b62c0, Func Offset: 0x10
+	// Line 553, Address: 0x1b62c8, Func Offset: 0x18
+	// Line 555, Address: 0x1b6308, Func Offset: 0x58
+	// Line 556, Address: 0x1b630c, Func Offset: 0x5c
+	// Func End, Address: 0x1b6320, Func Offset: 0x70
 }
 
 // iSGTgtState__FP13st_ISGSESSIONiPCc
@@ -2927,6 +3900,25 @@ uint32 iSGTgtState(st_ISGSESSION* isgdata, int32 tgtidx, int8* dpath)
 {
 	uint32 state;
 	int32 rc;
+	// Line 508, Address: 0x1b6320, Func Offset: 0
+	// Line 509, Address: 0x1b6330, Func Offset: 0x10
+	// Line 508, Address: 0x1b6334, Func Offset: 0x14
+	// Line 516, Address: 0x1b6344, Func Offset: 0x24
+	// Line 517, Address: 0x1b6350, Func Offset: 0x30
+	// Line 518, Address: 0x1b6358, Func Offset: 0x38
+	// Line 520, Address: 0x1b6360, Func Offset: 0x40
+	// Line 521, Address: 0x1b636c, Func Offset: 0x4c
+	// Line 522, Address: 0x1b6374, Func Offset: 0x54
+	// Line 525, Address: 0x1b6380, Func Offset: 0x60
+	// Line 526, Address: 0x1b638c, Func Offset: 0x6c
+	// Line 527, Address: 0x1b63a0, Func Offset: 0x80
+	// Line 529, Address: 0x1b63a8, Func Offset: 0x88
+	// Line 530, Address: 0x1b63b0, Func Offset: 0x90
+	// Line 531, Address: 0x1b6420, Func Offset: 0x100
+	// Line 532, Address: 0x1b642c, Func Offset: 0x10c
+	// Line 534, Address: 0x1b6430, Func Offset: 0x110
+	// Line 535, Address: 0x1b6438, Func Offset: 0x118
+	// Func End, Address: 0x1b6454, Func Offset: 0x134
 }
 
 // iSGTgtFormat__FP13st_ISGSESSIONiiPi
@@ -2935,15 +3927,49 @@ int32 iSGTgtFormat(st_ISGSESSION* isgdata, int32 tgtidx, int32 async)
 {
 	int32 result;
 	int32 rc;
+	// Line 464, Address: 0x1b6460, Func Offset: 0
+	// Line 465, Address: 0x1b6478, Func Offset: 0x18
+	// Line 464, Address: 0x1b647c, Func Offset: 0x1c
+	// Line 468, Address: 0x1b6484, Func Offset: 0x24
+	// Line 470, Address: 0x1b6490, Func Offset: 0x30
+	// Line 473, Address: 0x1b649c, Func Offset: 0x3c
+	// Line 474, Address: 0x1b64a8, Func Offset: 0x48
+	// Line 476, Address: 0x1b64b8, Func Offset: 0x58
+	// Line 477, Address: 0x1b64f0, Func Offset: 0x90
+	// Line 478, Address: 0x1b64f8, Func Offset: 0x98
+	// Line 479, Address: 0x1b6500, Func Offset: 0xa0
+	// Line 483, Address: 0x1b6508, Func Offset: 0xa8
+	// Line 485, Address: 0x1b6510, Func Offset: 0xb0
+	// Line 486, Address: 0x1b651c, Func Offset: 0xbc
+	// Line 487, Address: 0x1b6524, Func Offset: 0xc4
+	// Line 488, Address: 0x1b6528, Func Offset: 0xc8
+	// Line 487, Address: 0x1b652c, Func Offset: 0xcc
+	// Line 490, Address: 0x1b6530, Func Offset: 0xd0
+	// Line 489, Address: 0x1b6534, Func Offset: 0xd4
+	// Line 488, Address: 0x1b6538, Func Offset: 0xd8
+	// Line 491, Address: 0x1b653c, Func Offset: 0xdc
+	// Line 494, Address: 0x1b6548, Func Offset: 0xe8
+	// Line 495, Address: 0x1b654c, Func Offset: 0xec
+	// Line 496, Address: 0x1b6550, Func Offset: 0xf0
+	// Line 498, Address: 0x1b6554, Func Offset: 0xf4
+	// Line 501, Address: 0x1b6558, Func Offset: 0xf8
+	// Line 502, Address: 0x1b655c, Func Offset: 0xfc
+	// Func End, Address: 0x1b6578, Func Offset: 0x118
 }
 
 // iSGTgtPhysSlotIdx__FP13st_ISGSESSIONi
 // Start address: 0x1b6580
 int32 iSGTgtPhysSlotIdx()
 {
-	type_71 concnt;
+	int32 concnt[2];
 	int32 dp;
 	int32 ds;
+	// Line 401, Address: 0x1b6580, Func Offset: 0
+	// Line 403, Address: 0x1b6584, Func Offset: 0x4
+	// Line 409, Address: 0x1b65ac, Func Offset: 0x2c
+	// Line 418, Address: 0x1b65c0, Func Offset: 0x40
+	// Line 419, Address: 0x1b65c4, Func Offset: 0x44
+	// Func End, Address: 0x1b65d0, Func Offset: 0x50
 }
 
 // iSGTgtCount__FP13st_ISGSESSIONPi
@@ -2952,22 +3978,65 @@ int32 iSGTgtCount(int32* max)
 {
 	int32 rc;
 	int32 tgtmax;
-	type_88 concnt;
+	int32 concnt[2];
 	int32 dp;
 	int32 ds;
+	// Line 371, Address: 0x1b65d0, Func Offset: 0
+	// Line 374, Address: 0x1b65d4, Func Offset: 0x4
+	// Line 371, Address: 0x1b65d8, Func Offset: 0x8
+	// Line 374, Address: 0x1b65dc, Func Offset: 0xc
+	// Line 371, Address: 0x1b65e0, Func Offset: 0x10
+	// Line 374, Address: 0x1b65e8, Func Offset: 0x18
+	// Line 379, Address: 0x1b6608, Func Offset: 0x38
+	// Line 382, Address: 0x1b661c, Func Offset: 0x4c
+	// Line 386, Address: 0x1b6628, Func Offset: 0x58
+	// Line 388, Address: 0x1b6630, Func Offset: 0x60
+	// Line 390, Address: 0x1b6640, Func Offset: 0x70
+	// Line 394, Address: 0x1b6650, Func Offset: 0x80
+	// Line 395, Address: 0x1b6658, Func Offset: 0x88
+	// Line 394, Address: 0x1b6664, Func Offset: 0x94
+	// Line 395, Address: 0x1b6668, Func Offset: 0x98
+	// Func End, Address: 0x1b6670, Func Offset: 0xa0
 }
 
 // iSGSessionEnd__FP13st_ISGSESSION
 // Start address: 0x1b6670
 void iSGSessionEnd(st_ISGSESSION* isgdata)
 {
+	// Line 347, Address: 0x1b6670, Func Offset: 0
+	// Func End, Address: 0x1b667c, Func Offset: 0xc
 }
 
 // iSGSessionBegin__FPvPFPv10en_CHGCODE_vi
 // Start address: 0x1b6680
-st_ISGSESSION* iSGSessionBegin(void* cltdata, type_13 chgfunc, int32 monitor)
+st_ISGSESSION* iSGSessionBegin(void* cltdata, void(*chgfunc)(void*, en_CHGCODE), int32 monitor)
 {
 	st_ISGSESSION* isgdata;
+	// Line 301, Address: 0x1b6680, Func Offset: 0
+	// Line 305, Address: 0x1b66a0, Func Offset: 0x20
+	// Line 309, Address: 0x1b66bc, Func Offset: 0x3c
+	// Line 312, Address: 0x1b66cc, Func Offset: 0x4c
+	// Line 313, Address: 0x1b66e0, Func Offset: 0x60
+	// Line 315, Address: 0x1b66f0, Func Offset: 0x70
+	// Line 316, Address: 0x1b66f4, Func Offset: 0x74
+	// Line 325, Address: 0x1b66f8, Func Offset: 0x78
+	// Line 316, Address: 0x1b66fc, Func Offset: 0x7c
+	// Line 325, Address: 0x1b6700, Func Offset: 0x80
+	// Line 317, Address: 0x1b6704, Func Offset: 0x84
+	// Line 325, Address: 0x1b6708, Func Offset: 0x88
+	// Line 319, Address: 0x1b670c, Func Offset: 0x8c
+	// Line 322, Address: 0x1b6710, Func Offset: 0x90
+	// Line 325, Address: 0x1b6714, Func Offset: 0x94
+	// Line 330, Address: 0x1b671c, Func Offset: 0x9c
+	// Line 339, Address: 0x1b6724, Func Offset: 0xa4
+	// Line 330, Address: 0x1b6728, Func Offset: 0xa8
+	// Line 331, Address: 0x1b672c, Func Offset: 0xac
+	// Line 332, Address: 0x1b6734, Func Offset: 0xb4
+	// Line 333, Address: 0x1b673c, Func Offset: 0xbc
+	// Line 334, Address: 0x1b6744, Func Offset: 0xc4
+	// Line 335, Address: 0x1b674c, Func Offset: 0xcc
+	// Line 340, Address: 0x1b6754, Func Offset: 0xd4
+	// Func End, Address: 0x1b6770, Func Offset: 0xf0
 }
 
 // iSGMakeName__F15en_NAMEGEN_TYPEPCci
@@ -2979,18 +4048,68 @@ int8* iSGMakeName(en_NAMEGEN_TYPE type, int8* base, int32 idx)
 	int8* fmt_sd;
 	int8* fmt_sbd;
 	int32 rotate;
-	type_101 rotatebuf;
+	int8 rotatebuf[32][8];
+	// Line 188, Address: 0x1b6770, Func Offset: 0
+	// Line 199, Address: 0x1b6784, Func Offset: 0x14
+	// Line 192, Address: 0x1b678c, Func Offset: 0x1c
+	// Line 193, Address: 0x1b6790, Func Offset: 0x20
+	// Line 194, Address: 0x1b6794, Func Offset: 0x24
+	// Line 199, Address: 0x1b6798, Func Offset: 0x28
+	// Line 200, Address: 0x1b679c, Func Offset: 0x2c
+	// Line 192, Address: 0x1b67a0, Func Offset: 0x30
+	// Line 193, Address: 0x1b67a4, Func Offset: 0x34
+	// Line 194, Address: 0x1b67a8, Func Offset: 0x38
+	// Line 199, Address: 0x1b67ac, Func Offset: 0x3c
+	// Line 200, Address: 0x1b67b8, Func Offset: 0x48
+	// Line 216, Address: 0x1b67c8, Func Offset: 0x58
+	// Line 219, Address: 0x1b67f8, Func Offset: 0x88
+	// Line 220, Address: 0x1b6818, Func Offset: 0xa8
+	// Line 221, Address: 0x1b682c, Func Offset: 0xbc
+	// Line 224, Address: 0x1b6834, Func Offset: 0xc4
+	// Line 249, Address: 0x1b6838, Func Offset: 0xc8
+	// Line 251, Address: 0x1b6840, Func Offset: 0xd0
+	// Line 252, Address: 0x1b6860, Func Offset: 0xf0
+	// Line 253, Address: 0x1b6874, Func Offset: 0x104
+	// Line 255, Address: 0x1b6880, Func Offset: 0x110
+	// Line 256, Address: 0x1b6888, Func Offset: 0x118
+	// Line 258, Address: 0x1b68a0, Func Offset: 0x130
+	// Line 259, Address: 0x1b68a8, Func Offset: 0x138
+	// Line 261, Address: 0x1b68c4, Func Offset: 0x154
+	// Line 263, Address: 0x1b68cc, Func Offset: 0x15c
+	// Line 265, Address: 0x1b68d0, Func Offset: 0x160
+	// Line 266, Address: 0x1b68d8, Func Offset: 0x168
+	// Line 268, Address: 0x1b68ec, Func Offset: 0x17c
+	// Line 269, Address: 0x1b68f8, Func Offset: 0x188
+	// Line 271, Address: 0x1b6900, Func Offset: 0x190
+	// Line 272, Address: 0x1b690c, Func Offset: 0x19c
+	// Line 273, Address: 0x1b691c, Func Offset: 0x1ac
+	// Line 276, Address: 0x1b6928, Func Offset: 0x1b8
+	// Line 277, Address: 0x1b693c, Func Offset: 0x1cc
+	// Line 285, Address: 0x1b694c, Func Offset: 0x1dc
+	// Line 289, Address: 0x1b6950, Func Offset: 0x1e0
+	// Line 290, Address: 0x1b6954, Func Offset: 0x1e4
+	// Func End, Address: 0x1b6964, Func Offset: 0x1f4
 }
 
 // iSGShutdown__Fv
 // Start address: 0x1b6970
 int32 iSGShutdown()
 {
+	// Line 167, Address: 0x1b6970, Func Offset: 0
+	// Line 179, Address: 0x1b697c, Func Offset: 0xc
+	// Func End, Address: 0x1b6984, Func Offset: 0x14
 }
 
 // iSGStartup__Fv
 // Start address: 0x1b6990
 int32 iSGStartup()
 {
+	// Line 108, Address: 0x1b6990, Func Offset: 0
+	// Line 114, Address: 0x1b6998, Func Offset: 0x8
+	// Line 122, Address: 0x1b69a8, Func Offset: 0x18
+	// Line 160, Address: 0x1b69b0, Func Offset: 0x20
+	// Line 159, Address: 0x1b69b4, Func Offset: 0x24
+	// Line 160, Address: 0x1b69b8, Func Offset: 0x28
+	// Func End, Address: 0x1b69c0, Func Offset: 0x30
 }
 

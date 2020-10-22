@@ -132,7 +132,7 @@ typedef uint8 type_17[3];
 typedef uint32 type_18[4];
 typedef int8 type_19[128];
 typedef float32 type_20[4];
-typedef type_19 type_21[6];
+typedef int8 type_21[128][6];
 typedef int8 type_22[32];
 typedef uint16 type_24[3];
 typedef xParInterp type_26[1];
@@ -173,15 +173,15 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_0 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_23 beginUpdate;
-	type_25 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -193,9 +193,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_1 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_5 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct RxHeap
@@ -296,7 +296,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_18 pad;
+	uint32 pad[4];
 };
 
 struct _tagClimate
@@ -361,7 +361,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_37 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -370,7 +370,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_27 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -386,13 +386,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_26 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_34 color_birth;
-	type_35 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -411,8 +411,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_14 activateCB;
-	type_14 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 enum RpWorldRenderOrder
@@ -469,8 +469,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_29 name;
-	type_31 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -512,7 +512,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_28 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -565,8 +565,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_16 emit_pad;
-	type_17 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -582,7 +582,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_36 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -652,7 +652,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_13 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -684,7 +684,7 @@ struct xQCData
 
 struct xParInterp
 {
-	type_15 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -724,7 +724,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_20 wt;
+	float32 wt[4];
 };
 
 struct xCylinder
@@ -782,10 +782,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_21 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_22 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -825,8 +825,8 @@ struct xEnvAsset : xBaseAsset
 
 struct _tagxPad
 {
-	type_30 value;
-	type_32 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -841,9 +841,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_40 up_tmr;
-	type_41 down_tmr;
-	type_9 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct RpVertexNormal
@@ -940,7 +940,7 @@ struct RxIoSpec
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_24 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct RpMaterialList
@@ -952,13 +952,13 @@ struct RpMaterialList
 
 struct RxNodeMethods
 {
-	type_4 nodeBody;
-	type_6 nodeInit;
-	type_8 nodeTerm;
-	type_10 pipelineNodeInit;
-	type_11 pipelineNodeTerm;
-	type_12 pipelineNodeConfig;
-	type_2 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct _tagEmitSphere
@@ -1008,7 +1008,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_33 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct RwPlane
@@ -1049,7 +1049,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_38 clusters;
+	RxCluster clusters[1];
 };
 
 enum RwFogType
@@ -1065,7 +1065,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_39 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RpMeshHeader
@@ -1200,7 +1200,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_7 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct xParEmitterCustomSettings : xParEmitterPropsAsset
@@ -1210,7 +1210,7 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_3 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
@@ -1236,6 +1236,8 @@ void xClimateInit(_tagClimate* climate);
 // Start address: 0x1c4f20
 void xClimateUpdate(_tagClimate* climate, float32 seconds)
 {
+	// Line 404, Address: 0x1c4f20, Func Offset: 0
+	// Func End, Address: 0x1c4f28, Func Offset: 0x8
 }
 
 // UpdateRain__FP11_tagClimatef
@@ -1258,18 +1260,127 @@ void UpdateRain(_tagClimate* climate, float32 seconds)
 	float32 xx;
 	float32 zz;
 	float32 perc;
+	// Line 222, Address: 0x1c4f30, Func Offset: 0
+	// Line 265, Address: 0x1c4f34, Func Offset: 0x4
+	// Line 222, Address: 0x1c4f38, Func Offset: 0x8
+	// Line 265, Address: 0x1c4f3c, Func Offset: 0xc
+	// Line 222, Address: 0x1c4f40, Func Offset: 0x10
+	// Line 265, Address: 0x1c4f60, Func Offset: 0x30
+	// Line 222, Address: 0x1c4f64, Func Offset: 0x34
+	// Line 265, Address: 0x1c4f80, Func Offset: 0x50
+	// Line 267, Address: 0x1c4f8c, Func Offset: 0x5c
+	// Line 269, Address: 0x1c4f94, Func Offset: 0x64
+	// Line 271, Address: 0x1c4fa0, Func Offset: 0x70
+	// Line 278, Address: 0x1c4fc0, Func Offset: 0x90
+	// Line 280, Address: 0x1c4fd8, Func Offset: 0xa8
+	// Line 282, Address: 0x1c501c, Func Offset: 0xec
+	// Line 283, Address: 0x1c503c, Func Offset: 0x10c
+	// Line 282, Address: 0x1c5040, Func Offset: 0x110
+	// Line 283, Address: 0x1c5050, Func Offset: 0x120
+	// Line 284, Address: 0x1c5060, Func Offset: 0x130
+	// Line 286, Address: 0x1c5074, Func Offset: 0x144
+	// Line 284, Address: 0x1c5078, Func Offset: 0x148
+	// Line 286, Address: 0x1c5094, Func Offset: 0x164
+	// Line 287, Address: 0x1c50a0, Func Offset: 0x170
+	// Line 288, Address: 0x1c50b0, Func Offset: 0x180
+	// Line 292, Address: 0x1c50b8, Func Offset: 0x188
+	// Line 300, Address: 0x1c50c0, Func Offset: 0x190
+	// Line 292, Address: 0x1c50c4, Func Offset: 0x194
+	// Line 306, Address: 0x1c50c8, Func Offset: 0x198
+	// Line 304, Address: 0x1c50cc, Func Offset: 0x19c
+	// Line 292, Address: 0x1c50d4, Func Offset: 0x1a4
+	// Line 300, Address: 0x1c50d8, Func Offset: 0x1a8
+	// Line 304, Address: 0x1c50e0, Func Offset: 0x1b0
+	// Line 306, Address: 0x1c50e4, Func Offset: 0x1b4
+	// Line 292, Address: 0x1c50e8, Func Offset: 0x1b8
+	// Line 304, Address: 0x1c50f0, Func Offset: 0x1c0
+	// Line 306, Address: 0x1c511c, Func Offset: 0x1ec
+	// Line 309, Address: 0x1c5124, Func Offset: 0x1f4
+	// Line 311, Address: 0x1c5148, Func Offset: 0x218
+	// Line 314, Address: 0x1c5150, Func Offset: 0x220
+	// Line 315, Address: 0x1c517c, Func Offset: 0x24c
+	// Line 320, Address: 0x1c519c, Func Offset: 0x26c
+	// Line 321, Address: 0x1c51a4, Func Offset: 0x274
+	// Line 315, Address: 0x1c51a8, Func Offset: 0x278
+	// Line 320, Address: 0x1c51b8, Func Offset: 0x288
+	// Line 321, Address: 0x1c51c4, Func Offset: 0x294
+	// Line 320, Address: 0x1c51c8, Func Offset: 0x298
+	// Line 323, Address: 0x1c51e0, Func Offset: 0x2b0
+	// Line 324, Address: 0x1c5200, Func Offset: 0x2d0
+	// Line 325, Address: 0x1c5220, Func Offset: 0x2f0
+	// Line 327, Address: 0x1c522c, Func Offset: 0x2fc
+	// Line 325, Address: 0x1c5230, Func Offset: 0x300
+	// Line 331, Address: 0x1c5234, Func Offset: 0x304
+	// Line 327, Address: 0x1c5238, Func Offset: 0x308
+	// Line 329, Address: 0x1c5244, Func Offset: 0x314
+	// Line 325, Address: 0x1c5248, Func Offset: 0x318
+	// Line 327, Address: 0x1c525c, Func Offset: 0x32c
+	// Line 329, Address: 0x1c5270, Func Offset: 0x340
+	// Line 331, Address: 0x1c527c, Func Offset: 0x34c
+	// Line 332, Address: 0x1c5288, Func Offset: 0x358
+	// Line 334, Address: 0x1c5298, Func Offset: 0x368
+	// Line 340, Address: 0x1c52a0, Func Offset: 0x370
+	// Line 342, Address: 0x1c52c8, Func Offset: 0x398
+	// Line 343, Address: 0x1c52d0, Func Offset: 0x3a0
+	// Line 344, Address: 0x1c52e0, Func Offset: 0x3b0
+	// Line 343, Address: 0x1c52e4, Func Offset: 0x3b4
+	// Line 344, Address: 0x1c52e8, Func Offset: 0x3b8
+	// Line 345, Address: 0x1c52f0, Func Offset: 0x3c0
+	// Line 348, Address: 0x1c52f8, Func Offset: 0x3c8
+	// Line 346, Address: 0x1c52fc, Func Offset: 0x3cc
+	// Line 347, Address: 0x1c5300, Func Offset: 0x3d0
+	// Line 348, Address: 0x1c5304, Func Offset: 0x3d4
+	// Line 349, Address: 0x1c5310, Func Offset: 0x3e0
+	// Line 352, Address: 0x1c5318, Func Offset: 0x3e8
+	// Line 353, Address: 0x1c5344, Func Offset: 0x414
+	// Line 359, Address: 0x1c5364, Func Offset: 0x434
+	// Line 358, Address: 0x1c5368, Func Offset: 0x438
+	// Line 361, Address: 0x1c5370, Func Offset: 0x440
+	// Line 353, Address: 0x1c5374, Func Offset: 0x444
+	// Line 358, Address: 0x1c537c, Func Offset: 0x44c
+	// Line 361, Address: 0x1c5380, Func Offset: 0x450
+	// Line 353, Address: 0x1c5384, Func Offset: 0x454
+	// Line 356, Address: 0x1c538c, Func Offset: 0x45c
+	// Line 357, Address: 0x1c5390, Func Offset: 0x460
+	// Line 359, Address: 0x1c5394, Func Offset: 0x464
+	// Line 361, Address: 0x1c5398, Func Offset: 0x468
+	// Line 356, Address: 0x1c539c, Func Offset: 0x46c
+	// Line 357, Address: 0x1c53a0, Func Offset: 0x470
+	// Line 358, Address: 0x1c53a4, Func Offset: 0x474
+	// Line 359, Address: 0x1c53b0, Func Offset: 0x480
+	// Line 361, Address: 0x1c53b4, Func Offset: 0x484
+	// Line 363, Address: 0x1c53c0, Func Offset: 0x490
+	// Line 364, Address: 0x1c53e0, Func Offset: 0x4b0
+	// Line 365, Address: 0x1c5400, Func Offset: 0x4d0
+	// Line 372, Address: 0x1c540c, Func Offset: 0x4dc
+	// Line 365, Address: 0x1c5410, Func Offset: 0x4e0
+	// Line 372, Address: 0x1c5414, Func Offset: 0x4e4
+	// Line 365, Address: 0x1c541c, Func Offset: 0x4ec
+	// Line 372, Address: 0x1c5430, Func Offset: 0x500
+	// Line 374, Address: 0x1c5438, Func Offset: 0x508
+	// Line 375, Address: 0x1c5448, Func Offset: 0x518
+	// Line 381, Address: 0x1c5450, Func Offset: 0x520
+	// Func End, Address: 0x1c5494, Func Offset: 0x564
 }
 
 // xClimateSetRain__Ff
 // Start address: 0x1c54a0
 void xClimateSetRain(float32 stre)
 {
+	// Line 167, Address: 0x1c54a0, Func Offset: 0
+	// Line 168, Address: 0x1c54ac, Func Offset: 0xc
+	// Line 169, Address: 0x1c54b0, Func Offset: 0x10
+	// Func End, Address: 0x1c54b8, Func Offset: 0x18
 }
 
 // xClimateSetSnow__Ff
 // Start address: 0x1c54c0
 void xClimateSetSnow(float32 stre)
 {
+	// Line 160, Address: 0x1c54c0, Func Offset: 0
+	// Line 161, Address: 0x1c54c8, Func Offset: 0x8
+	// Line 162, Address: 0x1c54cc, Func Offset: 0xc
+	// Func End, Address: 0x1c54d4, Func Offset: 0x14
 }
 
 // xClimateInitAsset__FP11_tagClimateP9xEnvAsset
@@ -1277,11 +1388,47 @@ void xClimateSetSnow(float32 stre)
 void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset)
 {
 	_tagWind* w;
+	// Line 107, Address: 0x1c54e0, Func Offset: 0
+	// Line 120, Address: 0x1c54e4, Func Offset: 0x4
+	// Line 107, Address: 0x1c54e8, Func Offset: 0x8
+	// Line 120, Address: 0x1c5504, Func Offset: 0x24
+	// Line 114, Address: 0x1c5508, Func Offset: 0x28
+	// Line 120, Address: 0x1c550c, Func Offset: 0x2c
+	// Line 119, Address: 0x1c5510, Func Offset: 0x30
+	// Line 118, Address: 0x1c5514, Func Offset: 0x34
+	// Line 120, Address: 0x1c5518, Func Offset: 0x38
+	// Line 124, Address: 0x1c557c, Func Offset: 0x9c
+	// Line 127, Address: 0x1c5584, Func Offset: 0xa4
+	// Line 129, Address: 0x1c5588, Func Offset: 0xa8
+	// Line 130, Address: 0x1c5590, Func Offset: 0xb0
+	// Line 133, Address: 0x1c559c, Func Offset: 0xbc
+	// Line 134, Address: 0x1c55a0, Func Offset: 0xc0
+	// Line 133, Address: 0x1c55a4, Func Offset: 0xc4
+	// Line 134, Address: 0x1c55a8, Func Offset: 0xc8
+	// Line 135, Address: 0x1c55c0, Func Offset: 0xe0
+	// Line 136, Address: 0x1c55cc, Func Offset: 0xec
+	// Line 137, Address: 0x1c55d8, Func Offset: 0xf8
+	// Line 140, Address: 0x1c55e4, Func Offset: 0x104
+	// Line 141, Address: 0x1c55e8, Func Offset: 0x108
+	// Line 142, Address: 0x1c5608, Func Offset: 0x128
+	// Line 154, Address: 0x1c5618, Func Offset: 0x138
+	// Func End, Address: 0x1c5634, Func Offset: 0x154
 }
 
 // xClimateInit__FP11_tagClimate
 // Start address: 0x1c5640
 void xClimateInit(_tagClimate* climate)
 {
+	// Line 85, Address: 0x1c5640, Func Offset: 0
+	// Line 88, Address: 0x1c564c, Func Offset: 0xc
+	// Line 89, Address: 0x1c5654, Func Offset: 0x14
+	// Line 93, Address: 0x1c566c, Func Offset: 0x2c
+	// Line 91, Address: 0x1c5670, Func Offset: 0x30
+	// Line 93, Address: 0x1c5674, Func Offset: 0x34
+	// Line 91, Address: 0x1c5678, Func Offset: 0x38
+	// Line 93, Address: 0x1c5680, Func Offset: 0x40
+	// Line 95, Address: 0x1c5694, Func Offset: 0x54
+	// Line 100, Address: 0x1c56a4, Func Offset: 0x64
+	// Func End, Address: 0x1c56b4, Func Offset: 0x74
 }
 

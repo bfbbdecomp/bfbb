@@ -5,31 +5,31 @@ typedef struct RwMatrixTag;
 typedef struct tGS_DISPLAY2;
 typedef struct xVec3;
 typedef struct sceGsDrawEnv1;
-typedef union sceGsTest;
-typedef union sceGsDthe;
+typedef struct sceGsTest;
+typedef struct sceGsDthe;
 typedef struct rwDMA_flipData;
 typedef struct sceGsDBuffDc;
 typedef struct tGS_PMODE;
-typedef union sceGsPrmodecont;
+typedef struct sceGsPrmodecont;
 typedef struct tGS_DISPLAY1;
-typedef union sceGsXyoffset;
-typedef union sceGsColclamp;
+typedef struct sceGsXyoffset;
+typedef struct sceGsColclamp;
 typedef struct sceGsRgbaq;
 typedef struct tGS_BGCOLOR;
 typedef struct sceGsDrawEnv2;
-typedef union sceGsXyz;
+typedef struct sceGsXyz;
 typedef struct RwV3d;
 typedef struct RwRGBA;
 typedef struct tGS_SMODE2;
 typedef struct sceGifTag;
 typedef struct tGS_DISPFB2;
-typedef union sceGsScissor;
-typedef union RxColorUnion;
+typedef struct sceGsScissor;
+typedef struct RxColorUnion;
 typedef struct RwRaster;
 typedef struct sceGsClear;
-typedef union sceGsZbuf;
-typedef union sceGsPrim;
-typedef union sceGsFrame;
+typedef struct sceGsZbuf;
+typedef struct sceGsPrim;
+typedef struct sceGsFrame;
 typedef struct tGS_DISPFB1;
 
 
@@ -37,7 +37,7 @@ typedef RxObjSpace3DVertex type_0[384];
 typedef uint32 type_1[4096];
 typedef sceGsDispEnv type_2[2];
 typedef sceGsDispEnv type_3[2];
-typedef <unknown type (0xa510)>* type_4[4];
+typedef <unknown fundamental type (0xa510)>* type_4[4];
 
 struct sceGsDispEnv
 {
@@ -79,19 +79,19 @@ struct RwMatrixTag
 
 struct tGS_DISPLAY2
 {
-	union
+	struct
 	{
-		uint32 DX;
-		uint32 DY;
-		uint32 MAGH;
-		uint32 MAGV;
-		uint32 p0;
+		uint32 DX : 12;
+		uint32 DY : 11;
+		uint32 MAGH : 4;
+		uint32 MAGV : 2;
+		uint32 p0 : 3;
 	};
-	union
+	struct
 	{
-		uint32 DW;
-		uint32 DH;
-		uint32 p1;
+		uint32 DW : 12;
+		uint32 DH : 11;
+		uint32 p1 : 9;
 	};
 };
 
@@ -122,37 +122,43 @@ struct sceGsDrawEnv1
 	long32 test1addr;
 };
 
-union sceGsTest
+struct sceGsTest
 {
-	ulong32 ATE;
-	ulong32 ATST;
-	ulong32 AREF;
-	ulong32 AFAIL;
-	ulong32 DATE;
-	ulong32 DATM;
-	ulong32 ZTE;
-	ulong32 ZTST;
-	ulong32 pad19;
+	struct
+	{
+		ulong32 ATE : 1;
+		ulong32 ATST : 3;
+		ulong32 AREF : 8;
+		ulong32 AFAIL : 2;
+		ulong32 DATE : 1;
+		ulong32 DATM : 1;
+		ulong32 ZTE : 1;
+		ulong32 ZTST : 2;
+		ulong32 pad19 : 45;
+	};
 };
 
-union sceGsDthe
+struct sceGsDthe
 {
-	ulong32 DTHE;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 DTHE : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
 struct rwDMA_flipData
 {
 	sceGsDBuffDc db;
 	rwDMAReadCircuitOneTag tcaaDisp;
-	type_2 disp1;
+	sceGsDispEnv disp1[2];
 	rwDMAReadCircuitOneTag tcaaDisp1;
-	type_4 dmaPkt;
+	<unknown fundamental type (0xa510)>* dmaPkt[4];
 };
 
 struct sceGsDBuffDc
 {
-	type_3 disp;
+	sceGsDispEnv disp[2];
 	sceGifTag giftag0;
 	sceGsDrawEnv1 draw01;
 	sceGsDrawEnv2 draw02;
@@ -165,78 +171,87 @@ struct sceGsDBuffDc
 
 struct tGS_PMODE
 {
-	union
+	struct
 	{
-		uint32 EN1;
-		uint32 EN2;
-		uint32 CRTMD;
-		uint32 MMOD;
-		uint32 AMOD;
-		uint32 SLBG;
-		uint32 ALP;
-		uint32 p0;
+		uint32 EN1 : 1;
+		uint32 EN2 : 1;
+		uint32 CRTMD : 3;
+		uint32 MMOD : 1;
+		uint32 AMOD : 1;
+		uint32 SLBG : 1;
+		uint32 ALP : 8;
+		uint32 p0 : 16;
 	};
 	uint32 p1;
 };
 
-union sceGsPrmodecont
+struct sceGsPrmodecont
 {
-	ulong32 AC;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 AC : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
 struct tGS_DISPLAY1
 {
-	union
+	struct
 	{
-		uint32 DX;
-		uint32 DY;
-		uint32 MAGH;
-		uint32 MAGV;
-		uint32 p0;
+		uint32 DX : 12;
+		uint32 DY : 11;
+		uint32 MAGH : 4;
+		uint32 MAGV : 2;
+		uint32 p0 : 3;
 	};
-	union
+	struct
 	{
-		uint32 DW;
-		uint32 DH;
-		uint32 p1;
+		uint32 DW : 12;
+		uint32 DH : 11;
+		uint32 p1 : 9;
 	};
 };
 
-union sceGsXyoffset
+struct sceGsXyoffset
 {
-	ulong32 OFX;
-	ulong32 pad16;
-	ulong32 OFY;
-	ulong32 pad48;
+	struct
+	{
+		ulong32 OFX : 16;
+		ulong32 pad16 : 16;
+		ulong32 OFY : 16;
+		ulong32 pad48 : 16;
+	};
 };
 
-union sceGsColclamp
+struct sceGsColclamp
 {
-	ulong32 CLAMP;
-	ulong32 pad01;
+	struct
+	{
+		ulong32 CLAMP : 1;
+		ulong32 pad01 : 63;
+	};
 };
 
 struct sceGsRgbaq
 {
-	union
+	struct
 	{
-		uint32 R;
-		uint32 G;
-		uint32 B;
-		uint32 A;
+		uint32 R : 8;
+		uint32 G : 8;
+		uint32 B : 8;
+		uint32 A : 8;
 	};
 	float32 Q;
 };
 
 struct tGS_BGCOLOR
 {
-	union
+	struct
 	{
-		uint32 R;
-		uint32 G;
-		uint32 B;
-		uint32 p0;
+		uint32 R : 8;
+		uint32 G : 8;
+		uint32 B : 8;
+		uint32 p0 : 8;
 	};
 	uint32 p1;
 };
@@ -261,11 +276,14 @@ struct sceGsDrawEnv2
 	long32 test2addr;
 };
 
-union sceGsXyz
+struct sceGsXyz
 {
-	ulong32 X;
-	ulong32 Y;
-	ulong32 Z;
+	struct
+	{
+		ulong32 X : 16;
+		ulong32 Y : 16;
+		ulong32 Z : 32;
+	};
 };
 
 struct RwV3d
@@ -285,83 +303,89 @@ struct RwRGBA
 
 struct tGS_SMODE2
 {
-	union
+	struct
 	{
-		uint32 INT;
-		uint32 FFMD;
-		uint32 DPMS;
-		uint32 p0;
+		uint32 INT : 1;
+		uint32 FFMD : 1;
+		uint32 DPMS : 2;
+		uint32 p0 : 28;
 	};
 	uint32 p1;
 };
 
 struct sceGifTag
 {
-	union
+	struct
 	{
-		ulong32 NLOOP;
-		ulong32 EOP;
-		ulong32 pad16;
-		ulong32 id;
-		ulong32 PRE;
-		ulong32 PRIM;
-		ulong32 FLG;
-		ulong32 NREG;
+		ulong32 NLOOP : 15;
+		ulong32 EOP : 1;
+		ulong32 pad16 : 16;
+		ulong32 id : 14;
+		ulong32 PRE : 1;
+		ulong32 PRIM : 11;
+		ulong32 FLG : 2;
+		ulong32 NREG : 4;
 	};
-	union
+	struct
 	{
-		ulong32 REGS0;
-		ulong32 REGS1;
-		ulong32 REGS2;
-		ulong32 REGS3;
-		ulong32 REGS4;
-		ulong32 REGS5;
-		ulong32 REGS6;
-		ulong32 REGS7;
-		ulong32 REGS8;
-		ulong32 REGS9;
-		ulong32 REGS10;
-		ulong32 REGS11;
-		ulong32 REGS12;
-		ulong32 REGS13;
-		ulong32 REGS14;
-		ulong32 REGS15;
+		ulong32 REGS0 : 4;
+		ulong32 REGS1 : 4;
+		ulong32 REGS2 : 4;
+		ulong32 REGS3 : 4;
+		ulong32 REGS4 : 4;
+		ulong32 REGS5 : 4;
+		ulong32 REGS6 : 4;
+		ulong32 REGS7 : 4;
+		ulong32 REGS8 : 4;
+		ulong32 REGS9 : 4;
+		ulong32 REGS10 : 4;
+		ulong32 REGS11 : 4;
+		ulong32 REGS12 : 4;
+		ulong32 REGS13 : 4;
+		ulong32 REGS14 : 4;
+		ulong32 REGS15 : 4;
 	};
 };
 
 struct tGS_DISPFB2
 {
-	union
+	struct
 	{
-		uint32 FBP;
-		uint32 FBW;
-		uint32 PSM;
-		uint32 p0;
+		uint32 FBP : 9;
+		uint32 FBW : 6;
+		uint32 PSM : 5;
+		uint32 p0 : 12;
 	};
-	union
+	struct
 	{
-		uint32 DBX;
-		uint32 DBY;
-		uint32 p1;
+		uint32 DBX : 11;
+		uint32 DBY : 11;
+		uint32 p1 : 10;
 	};
 };
 
-union sceGsScissor
+struct sceGsScissor
 {
-	ulong32 SCAX0;
-	ulong32 pad11;
-	ulong32 SCAX1;
-	ulong32 pad27;
-	ulong32 SCAY0;
-	ulong32 pad43;
-	ulong32 SCAY1;
-	ulong32 pad59;
+	struct
+	{
+		ulong32 SCAX0 : 11;
+		ulong32 pad11 : 5;
+		ulong32 SCAX1 : 11;
+		ulong32 pad27 : 5;
+		ulong32 SCAY0 : 11;
+		ulong32 pad43 : 5;
+		ulong32 SCAY1 : 11;
+		ulong32 pad59 : 5;
+	};
 };
 
-union RxColorUnion
+struct RxColorUnion
 {
-	RwRGBA preLitColor;
-	RwRGBA color;
+	union
+	{
+		RwRGBA preLitColor;
+		RwRGBA color;
+	};
 };
 
 struct RwRaster
@@ -401,61 +425,70 @@ struct sceGsClear
 	long32 testbaddr;
 };
 
-union sceGsZbuf
+struct sceGsZbuf
 {
-	ulong32 ZBP;
-	ulong32 pad09;
-	ulong32 PSM;
-	ulong32 pad28;
-	ulong32 ZMSK;
-	ulong32 pad33;
+	struct
+	{
+		ulong32 ZBP : 9;
+		ulong32 pad09 : 15;
+		ulong32 PSM : 4;
+		ulong32 pad28 : 4;
+		ulong32 ZMSK : 1;
+		ulong32 pad33 : 31;
+	};
 };
 
-union sceGsPrim
+struct sceGsPrim
 {
-	ulong32 PRIM;
-	ulong32 IIP;
-	ulong32 TME;
-	ulong32 FGE;
-	ulong32 ABE;
-	ulong32 AA1;
-	ulong32 FST;
-	ulong32 CTXT;
-	ulong32 FIX;
-	ulong32 pad11;
+	struct
+	{
+		ulong32 PRIM : 3;
+		ulong32 IIP : 1;
+		ulong32 TME : 1;
+		ulong32 FGE : 1;
+		ulong32 ABE : 1;
+		ulong32 AA1 : 1;
+		ulong32 FST : 1;
+		ulong32 CTXT : 1;
+		ulong32 FIX : 1;
+		ulong32 pad11 : 53;
+	};
 };
 
-union sceGsFrame
+struct sceGsFrame
 {
-	ulong32 FBP;
-	ulong32 pad09;
-	ulong32 FBW;
-	ulong32 pad22;
-	ulong32 PSM;
-	ulong32 pad30;
-	ulong32 FBMSK;
+	struct
+	{
+		ulong32 FBP : 9;
+		ulong32 pad09 : 7;
+		ulong32 FBW : 6;
+		ulong32 pad22 : 2;
+		ulong32 PSM : 6;
+		ulong32 pad30 : 2;
+		ulong32 FBMSK : 32;
+	};
 };
 
 struct tGS_DISPFB1
 {
-	union
+	struct
 	{
-		uint32 FBP;
-		uint32 FBW;
-		uint32 PSM;
-		uint32 p0;
+		uint32 FBP : 9;
+		uint32 FBW : 6;
+		uint32 PSM : 5;
+		uint32 p0 : 12;
 	};
-	union
+	struct
 	{
-		uint32 DBX;
-		uint32 DBY;
-		uint32 p1;
+		uint32 DBX : 11;
+		uint32 DBY : 11;
+		uint32 p1 : 10;
 	};
 };
 
-type_1 ourGlobals;
+uint32 ourGlobals[4096];
 rwDMA_flipData _rwDMAFlipData;
-<unknown type (0xa510)>* _rwDMAPktPtr;
+<unknown fundamental type (0xa510)>* _rwDMAPktPtr;
 long32 skyFrame_1;
 
 void iDrawSetTEST2(int32 value);
@@ -467,6 +500,22 @@ void iDrawSetFBMSK(uint32 abgr);
 void iDrawSetTEST2(int32 value)
 {
 	ulong32 tmp;
+	// Line 109, Address: 0x1a7e50, Func Offset: 0
+	// Line 112, Address: 0x1a7e54, Func Offset: 0x4
+	// Line 109, Address: 0x1a7e58, Func Offset: 0x8
+	// Line 112, Address: 0x1a7e64, Func Offset: 0x14
+	// Line 113, Address: 0x1a7e6c, Func Offset: 0x1c
+	// Line 120, Address: 0x1a7e70, Func Offset: 0x20
+	// Line 113, Address: 0x1a7e74, Func Offset: 0x24
+	// Line 120, Address: 0x1a7e78, Func Offset: 0x28
+	// Line 113, Address: 0x1a7e7c, Func Offset: 0x2c
+	// Line 118, Address: 0x1a7e84, Func Offset: 0x34
+	// Line 119, Address: 0x1a7e8c, Func Offset: 0x3c
+	// Line 120, Address: 0x1a7e90, Func Offset: 0x40
+	// Line 119, Address: 0x1a7e98, Func Offset: 0x48
+	// Line 121, Address: 0x1a7ea8, Func Offset: 0x58
+	// Line 122, Address: 0x1a7ebc, Func Offset: 0x6c
+	// Func End, Address: 0x1a7ecc, Func Offset: 0x7c
 }
 
 // iDrawSetFBA1__Fi
@@ -474,6 +523,23 @@ void iDrawSetTEST2(int32 value)
 void iDrawSetFBA1(int32 value)
 {
 	ulong32 tmp;
+	// Line 91, Address: 0x1a7ed0, Func Offset: 0
+	// Line 94, Address: 0x1a7ed4, Func Offset: 0x4
+	// Line 91, Address: 0x1a7ed8, Func Offset: 0x8
+	// Line 94, Address: 0x1a7ee4, Func Offset: 0x14
+	// Line 95, Address: 0x1a7eec, Func Offset: 0x1c
+	// Line 102, Address: 0x1a7f00, Func Offset: 0x30
+	// Line 95, Address: 0x1a7f04, Func Offset: 0x34
+	// Line 100, Address: 0x1a7f08, Func Offset: 0x38
+	// Line 101, Address: 0x1a7f10, Func Offset: 0x40
+	// Line 104, Address: 0x1a7f14, Func Offset: 0x44
+	// Line 102, Address: 0x1a7f18, Func Offset: 0x48
+	// Line 104, Address: 0x1a7f1c, Func Offset: 0x4c
+	// Line 101, Address: 0x1a7f20, Func Offset: 0x50
+	// Line 103, Address: 0x1a7f30, Func Offset: 0x60
+	// Line 105, Address: 0x1a7f44, Func Offset: 0x74
+	// Line 106, Address: 0x1a7f58, Func Offset: 0x88
+	// Func End, Address: 0x1a7f68, Func Offset: 0x98
 }
 
 // iDrawSetFBMSK__FUi
@@ -482,5 +548,28 @@ void iDrawSetFBMSK(uint32 abgr)
 {
 	ulong32 tmp;
 	ulong32 hi;
+	// Line 31, Address: 0x1a7f70, Func Offset: 0
+	// Line 61, Address: 0x1a7f74, Func Offset: 0x4
+	// Line 31, Address: 0x1a7f78, Func Offset: 0x8
+	// Line 61, Address: 0x1a7f84, Func Offset: 0x14
+	// Line 65, Address: 0x1a7f94, Func Offset: 0x24
+	// Line 70, Address: 0x1a7f98, Func Offset: 0x28
+	// Line 65, Address: 0x1a7fa0, Func Offset: 0x30
+	// Line 70, Address: 0x1a7fa4, Func Offset: 0x34
+	// Line 65, Address: 0x1a7fac, Func Offset: 0x3c
+	// Line 70, Address: 0x1a7fb4, Func Offset: 0x44
+	// Line 71, Address: 0x1a7fb8, Func Offset: 0x48
+	// Line 73, Address: 0x1a7fbc, Func Offset: 0x4c
+	// Line 84, Address: 0x1a7fc4, Func Offset: 0x54
+	// Line 73, Address: 0x1a7fc8, Func Offset: 0x58
+	// Line 75, Address: 0x1a7fcc, Func Offset: 0x5c
+	// Line 78, Address: 0x1a7fd0, Func Offset: 0x60
+	// Line 76, Address: 0x1a7fd4, Func Offset: 0x64
+	// Line 81, Address: 0x1a7fd8, Func Offset: 0x68
+	// Line 82, Address: 0x1a7fdc, Func Offset: 0x6c
+	// Line 84, Address: 0x1a7fe0, Func Offset: 0x70
+	// Line 85, Address: 0x1a7fe4, Func Offset: 0x74
+	// Line 87, Address: 0x1a7fe8, Func Offset: 0x78
+	// Func End, Address: 0x1a7ff8, Func Offset: 0x88
 }
 

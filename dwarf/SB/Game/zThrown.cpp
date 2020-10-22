@@ -78,7 +78,7 @@ typedef struct zSurfacePropTexAnim;
 typedef struct zFragGroup;
 typedef struct xEntBoulderAsset;
 typedef struct _tagxPad;
-typedef union zFragInfo;
+typedef struct zFragInfo;
 typedef struct xEnv;
 typedef struct xAnimTable;
 typedef struct xEnvAsset;
@@ -108,7 +108,7 @@ typedef struct zFragParticle;
 typedef struct zAssetPickupTable;
 typedef struct zFragSoundAsset;
 typedef struct zSurfaceProps;
-typedef union _class_0;
+typedef struct _class_0;
 typedef enum RxClusterValidityReq;
 typedef struct ThrowableStats;
 typedef struct CarryableStats;
@@ -154,7 +154,7 @@ typedef struct xCoef;
 typedef enum RwCameraProjection;
 typedef struct xEntMotionAsset;
 typedef struct zLightning;
-typedef union xiMat4x3Union;
+typedef struct xiMat4x3Union;
 typedef enum RpWorldRenderOrder;
 typedef enum RxClusterForcePresent;
 typedef struct xParabola;
@@ -215,7 +215,7 @@ typedef struct iFogParams;
 typedef struct zEntButtonAsset;
 typedef struct xAnimActiveEffect;
 typedef struct xParEmitter;
-typedef union zFragLocInfo;
+typedef struct zFragLocInfo;
 typedef struct _tagEmitOffsetPoint;
 typedef struct RwFrustumPlane;
 typedef struct _class_2;
@@ -285,7 +285,7 @@ typedef RpWorldSector*(*type_94)(RpWorldSector*);
 typedef RwCamera*(*type_103)(RwCamera*);
 typedef void(*type_104)(zFrag*, zFragAsset*);
 typedef void(*type_105)(zThrownStruct*, xEntCollis*, float32*, float32*);
-typedef void(*type_110)(zShrapnelAsset*, xModelInstance*, xVec3*, type_104);
+typedef void(*type_110)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 typedef void(*type_112)(xMemPool*, void*);
 typedef void(*type_121)(RwResEntry*);
 typedef xBase*(*type_125)(xBase*, zScene*, void*);
@@ -298,7 +298,7 @@ typedef float32 type_5[2];
 typedef int8 type_7[128];
 typedef float32 type_8[2];
 typedef uint8 type_9[2];
-typedef type_7 type_10[6];
+typedef int8 type_10[128][6];
 typedef xAnimMultiFileEntry type_11[1];
 typedef float32 type_12[2];
 typedef float32 type_13[18];
@@ -395,7 +395,7 @@ struct zShrapnelAsset
 {
 	int32 fassetCount;
 	uint32 shrapnelID;
-	type_110 initCB;
+	void(*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 };
 
 struct xPlatformAsset
@@ -406,15 +406,15 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_3 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_68 Conditional;
-	type_68 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -434,7 +434,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_55 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -459,7 +459,7 @@ struct xEntBoulder : xEnt
 	uint32 rollingID;
 	uint8 collis_chk;
 	uint8 collis_pen;
-	type_77 pad1;
+	uint8 pad1[2];
 };
 
 struct xVec3
@@ -487,9 +487,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_30 BeforeEnter;
-	type_14 StateCallback;
-	type_45 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xModelPool
@@ -501,7 +501,7 @@ struct xModelPool
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_11 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct xModelInstance
@@ -646,7 +646,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_128 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -682,7 +682,7 @@ struct zThrownStruct
 	xEnt* stackEnt;
 	xEnt* stackTgt;
 	xEnt* patLauncher;
-	type_57 oldupdate;
+	void(*oldupdate)(xEnt*, xScene*, float32);
 	xVec3 vel;
 	xVec3 oldcollpos;
 	float32 collResetTimer;
@@ -711,8 +711,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_46 activateCB;
-	type_46 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct _tagiPad
@@ -745,16 +745,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_57 update;
-	type_57 endUpdate;
-	type_33 bupdate;
-	type_63 move;
-	type_66 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_75 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -822,7 +822,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_52 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -840,9 +840,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_102 colls;
-	type_61 post;
-	type_72 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xEntAsset : xBaseAsset
@@ -880,7 +880,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_22 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xEntMotionSplineData
@@ -928,7 +928,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_79 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -964,7 +964,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_29 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -1000,13 +1000,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_49 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_67 color_birth;
-	type_69 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -1038,7 +1038,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_26 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RwRGBA
@@ -1064,7 +1064,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_94 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -1084,7 +1084,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_45 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpMorphTarget
@@ -1104,7 +1104,7 @@ struct xClumpCollBSPVertInfo
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_4 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct zParEmitter : xParEmitter
@@ -1114,12 +1114,12 @@ struct zParEmitter : xParEmitter
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_113 tmrs;
-	type_116 ttms;
-	type_120 atms;
-	type_123 dtms;
-	type_126 vms;
-	type_129 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct xAnimEffect
@@ -1128,7 +1128,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_36 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xClumpCollBSPBranchNode
@@ -1158,7 +1158,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_83 pad;
+	uint32 pad[4];
 };
 
 struct zFragLightningAsset : zFragAsset
@@ -1257,8 +1257,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_56 lastRefs;
-	type_58 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -1276,7 +1276,7 @@ struct zSurfacePropTexAnim
 
 struct zFragGroup
 {
-	type_34 list;
+	zFrag* list[21];
 };
 
 struct xEntBoulderAsset
@@ -1303,8 +1303,8 @@ struct xEntBoulderAsset
 
 struct _tagxPad
 {
-	type_39 value;
-	type_44 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -1319,19 +1319,22 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_71 up_tmr;
-	type_74 down_tmr;
-	type_97 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
-union zFragInfo
+struct zFragInfo
 {
-	zFragGroup group;
-	zFragParticle particle;
-	zFragProjectile projectile;
-	zFragLightning lightning;
-	zFragSound sound;
-	zFragShockwave shockwave;
+	union
+	{
+		zFragGroup group;
+		zFragParticle particle;
+		zFragProjectile projectile;
+		zFragLightning lightning;
+		zFragSound sound;
+		zFragShockwave shockwave;
+	};
 };
 
 struct xEnv
@@ -1378,8 +1381,8 @@ struct zFrag
 	float32 delay;
 	float32 alivetime;
 	float32 lifetime;
-	type_62 update;
-	type_73 parent;
+	void(*update)(zFrag*, float32);
+	xModelInstance* parent[2];
 	zFrag* prev;
 	zFrag* next;
 };
@@ -1398,7 +1401,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_141 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1409,7 +1412,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_112 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -1422,7 +1425,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_121 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xMovePointAsset : xBaseAsset
@@ -1451,7 +1454,7 @@ struct xSurface : xBase
 	};
 	float32 friction;
 	uint8 state;
-	type_84 pad;
+	uint8 pad[3];
 	void* moprops;
 };
 
@@ -1466,7 +1469,7 @@ struct _tagxRumble
 
 struct xShadowSimplePoly
 {
-	type_47 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1615,8 +1618,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_107 PowerUp;
-	type_109 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct _tagEmitSphere
@@ -1634,7 +1637,7 @@ struct xGroup : xBase
 
 struct RpTriangle
 {
-	type_53 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -1646,7 +1649,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_38 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1691,15 +1694,18 @@ struct zSurfaceProps
 {
 	zSurfAssetBase* asset;
 	uint32 texanim_flags;
-	type_95 texanim;
+	zSurfacePropTexAnim texanim[2];
 	uint32 uvfx_flags;
-	type_100 uvfx;
+	zSurfacePropUVFX uvfx[2];
 };
 
-union _class_0
+struct _class_0
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 enum RxClusterValidityReq
@@ -1713,7 +1719,7 @@ enum RxClusterValidityReq
 struct ThrowableStats
 {
 	int8* name;
-	type_54 collCB;
+	void(*collCB)(zThrownStruct*, xEntCollis*, float32*, float32*);
 	CarryableStats* carry;
 	LaunchStats* launch;
 	iColor_tag glowColor;
@@ -1786,8 +1792,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_86 baseCount;
-	type_93 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -1803,7 +1809,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_60 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1838,7 +1844,7 @@ struct zSurfacePropUVFX
 	int32 mode;
 	float32 rot;
 	float32 rot_spd;
-	type_64 minmax_timer;
+	float32 minmax_timer[2];
 	xVec3 trans;
 	xVec3 trans_spd;
 	xVec3 scale;
@@ -1852,7 +1858,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_65 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -1882,7 +1888,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_9 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -1920,9 +1926,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_43 resolvID;
-	type_48 base2Name;
-	type_50 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xShadowSimpleCache
@@ -1940,7 +1946,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_80 corner;
+	xVec3 corner[4];
 };
 
 enum RxNodeDefEditable
@@ -2001,8 +2007,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_127 light;
-	type_130 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -2010,7 +2016,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_82 wt;
+	float32 wt[4];
 };
 
 struct RpLight
@@ -2137,8 +2143,8 @@ struct zFragShockwaveAsset : zFragAsset
 	float32 deathVelocity;
 	float32 birthSpin;
 	float32 deathSpin;
-	type_91 birthColor;
-	type_96 deathColor;
+	float32 birthColor[4];
+	float32 deathColor[4];
 };
 
 enum _zPlayerType
@@ -2161,7 +2167,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_131 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -2173,7 +2179,7 @@ struct xBound
 
 struct xCoef
 {
-	type_76 a;
+	float32 a[4];
 };
 
 enum RwCameraProjection
@@ -2214,10 +2220,13 @@ struct zLightning
 	float32 time_total;
 };
 
-union xiMat4x3Union
+struct xiMat4x3Union
 {
-	xMat4x3 xm;
-	RwMatrixTag im;
+	union
+	{
+		xMat4x3 xm;
+		RwMatrixTag im;
+	};
 };
 
 enum RpWorldRenderOrder
@@ -2331,8 +2340,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_114 name;
-	type_117 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -2393,7 +2402,7 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_98 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
@@ -2402,13 +2411,13 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 
 struct _class_1
 {
-	type_85 base_point;
-	type_90 point;
+	xVec3 base_point[16];
+	xVec3 point[16];
 	int16 total_points;
 	int16 end_points;
 	float32 arc_height;
 	xVec3 arc_normal;
-	type_101 thickness;
+	float32 thickness[16];
 	union
 	{
 		_tagLightningLine line;
@@ -2425,7 +2434,7 @@ struct xEntSplineData
 
 struct xJSPHeader
 {
-	type_88 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -2454,11 +2463,11 @@ struct zSurfAssetBase : xBaseAsset
 	zSurfMatFX matfx;
 	zSurfColorFX colorfx;
 	uint32 texture_anim_flags;
-	type_133 texture_anim;
+	zSurfTextureAnim texture_anim[2];
 	uint32 uvfx_flags;
-	type_139 uvfx;
+	zSurfUVFX uvfx[2];
 	uint8 on;
-	type_2 surf_pad;
+	uint8 surf_pad[3];
 	float32 oob_delay;
 	float32 walljump_scale_xz;
 	float32 walljump_scale_y;
@@ -2550,7 +2559,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_122 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -2562,7 +2571,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_16 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -2588,10 +2597,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_78 Inv_PatsSock;
-	type_81 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_89 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -2603,21 +2612,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_108 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_135 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_15 sb_model_indices;
-	type_21 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -2634,7 +2643,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_1 radius;
+	float32 radius[2];
 };
 
 struct xEntDrive
@@ -2661,7 +2670,7 @@ struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_99 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -2827,7 +2836,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_106 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct _zEnv : xBase
@@ -2848,10 +2857,10 @@ struct xMat3x3
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_111 MoveSpeed;
-	type_115 AnimSneak;
-	type_119 AnimWalk;
-	type_124 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -2869,7 +2878,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_25 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct zFragLightning
@@ -2909,8 +2918,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_103 beginUpdate;
-	type_0 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -2922,9 +2931,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_23 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_31 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct zFragBone
@@ -2989,7 +2998,7 @@ struct zFragAsset
 {
 	zFragType type;
 	uint32 id;
-	type_42 parentID;
+	uint32 parentID[2];
 	float32 lifetime;
 	float32 delay;
 };
@@ -3006,13 +3015,13 @@ struct xEntMotionERData
 
 struct RxNodeMethods
 {
-	type_28 nodeBody;
-	type_32 nodeInit;
-	type_35 nodeTerm;
-	type_41 pipelineNodeInit;
-	type_6 pipelineNodeTerm;
-	type_17 pipelineNodeConfig;
-	type_24 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RwFrame
@@ -3071,8 +3080,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_138 emit_pad;
-	type_142 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -3082,10 +3091,13 @@ struct xParEmitter : xBase
 	xVec3 last_attach_loc;
 };
 
-union zFragLocInfo
+struct zFragLocInfo
 {
-	zFragBone bone;
-	xModelTag tag;
+	union
+	{
+		zFragBone bone;
+		xModelTag tag;
+	};
 };
 
 struct _tagEmitOffsetPoint
@@ -3123,7 +3135,7 @@ struct RwPlane
 
 struct _tagLightningRot
 {
-	type_118 deg;
+	float32 deg[16];
 	float32 degrees;
 	float32 height;
 };
@@ -3173,7 +3185,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_136 clusters;
+	RxCluster clusters[1];
 };
 
 struct RpInterpolator
@@ -3215,14 +3227,14 @@ struct zFragLocation
 
 struct _class_3
 {
-	type_134 endPoint;
+	xVec3 endPoint[2];
 	xVec3 direction;
 	float32 length;
 	float32 scale;
 	float32 width;
-	type_5 endParam;
-	type_8 endVel;
-	type_12 paramSpan;
+	float32 endParam[2];
+	float32 endVel[2];
+	float32 paramSpan[2];
 	float32 arc_height;
 	xVec3 arc_normal;
 };
@@ -3252,10 +3264,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_10 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_19 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -3292,7 +3304,7 @@ struct RwRGBAReal
 
 struct xParInterp
 {
-	type_140 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -3306,8 +3318,8 @@ struct zFragShockwave
 	float32 deltVelocity;
 	float32 currSpin;
 	float32 deltSpin;
-	type_18 currColor;
-	type_20 deltColor;
+	float32 currColor[4];
+	float32 deltColor[4];
 };
 
 struct RwLinkList
@@ -3336,9 +3348,9 @@ struct RpMaterialList
 	int32 space;
 };
 
-type_27 buffer;
-type_40 buffer;
-type_51 zThrownList;
+int8 buffer[16];
+int8 buffer[16];
+zThrownStruct zThrownList[32];
 uint32 zThrownCount;
 uint32 sThrowButtonMask;
 float32 sSNDLandTimer;
@@ -3346,16 +3358,16 @@ LaunchStats l_normal;
 CarryableStats c_normal;
 CarryableStats c_fruit;
 uint32 sFruitIsFreezy;
-type_37 zThrowableModels;
+ThrowableStats zThrowableModels[23];
 int32 sDebugDepth;
-type_125 zThrown_ButtonIteratorCB;
+xBase*(*zThrown_ButtonIteratorCB)(xBase*, zScene*, void*);
 zGlobals globals;
-type_59 zThrownCollide_ThrowFruit;
-type_87 zThrownCollide_BSandyHead;
-type_70 zThrownCollide_ThrowFreeze;
-type_105 zThrownCollide_StoneTiki;
-type_92 zFruit_Update;
-type_132 zThrown_Update;
+void(*zThrownCollide_ThrowFruit)(zThrownStruct*, xEntCollis*, float32*, float32*);
+void(*zThrownCollide_BSandyHead)(zThrownStruct*, xEntCollis*, float32*, float32*);
+void(*zThrownCollide_ThrowFreeze)(zThrownStruct*, xEntCollis*, float32*, float32*);
+void(*zThrownCollide_StoneTiki)(zThrownStruct*, xEntCollis*, float32*, float32*);
+void(*zFruit_Update)(xEnt*, xScene*, float32);
+void(*zThrown_Update)(xEnt*, xScene*, float32);
 xEnt* gReticleTarget;
 
 xBase* zThrown_ButtonIteratorCB(xBase* b, void* user);
@@ -3388,6 +3400,14 @@ xBase* zThrown_ButtonIteratorCB(xBase* b, void* user)
 {
 	_zEntButton* button;
 	xCollis coll;
+	// Line 1516, Address: 0x27faf0, Func Offset: 0
+	// Line 1526, Address: 0x27fb00, Func Offset: 0x10
+	// Line 1527, Address: 0x27fb04, Func Offset: 0x14
+	// Line 1532, Address: 0x27fb14, Func Offset: 0x24
+	// Line 1533, Address: 0x27fb24, Func Offset: 0x34
+	// Line 1536, Address: 0x27fb30, Func Offset: 0x40
+	// Line 1537, Address: 0x27fb34, Func Offset: 0x44
+	// Func End, Address: 0x27fb44, Func Offset: 0x54
 }
 
 // zThrown_IsStacked__FP4xEnt
@@ -3395,6 +3415,13 @@ xBase* zThrown_ButtonIteratorCB(xBase* b, void* user)
 int32 zThrown_IsStacked(xEnt* ent)
 {
 	uint32 i;
+	// Line 1485, Address: 0x27fb50, Func Offset: 0
+	// Line 1486, Address: 0x27fb6c, Func Offset: 0x1c
+	// Line 1488, Address: 0x27fb88, Func Offset: 0x38
+	// Line 1490, Address: 0x27fb90, Func Offset: 0x40
+	// Line 1491, Address: 0x27fba0, Func Offset: 0x50
+	// Line 1492, Address: 0x27fba8, Func Offset: 0x58
+	// Func End, Address: 0x27fbb0, Func Offset: 0x60
 }
 
 // zThrown_IsFruit__FP4xEntPf
@@ -3402,6 +3429,18 @@ int32 zThrown_IsStacked(xEnt* ent)
 int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
 {
 	ThrowableStats* stats;
+	// Line 1465, Address: 0x27fbb0, Func Offset: 0
+	// Line 1466, Address: 0x27fbb8, Func Offset: 0x8
+	// Line 1467, Address: 0x27fbd0, Func Offset: 0x20
+	// Line 1470, Address: 0x27fbe8, Func Offset: 0x38
+	// Line 1471, Address: 0x27fbec, Func Offset: 0x3c
+	// Line 1472, Address: 0x27fbf8, Func Offset: 0x48
+	// Line 1473, Address: 0x27fc10, Func Offset: 0x60
+	// Line 1474, Address: 0x27fc18, Func Offset: 0x68
+	// Line 1476, Address: 0x27fc20, Func Offset: 0x70
+	// Line 1478, Address: 0x27fc28, Func Offset: 0x78
+	// Line 1479, Address: 0x27fc30, Func Offset: 0x80
+	// Func End, Address: 0x27fc38, Func Offset: 0x88
 }
 
 // zThrownCollide_StoneTiki__FP13zThrownStructP10xEntCollisPfPf
@@ -3411,30 +3450,100 @@ void zThrownCollide_StoneTiki(zThrownStruct* thrown, xEntCollis* collis, float32
 	uint32 collidx;
 	xEnt* hitent;
 	uint32 collfound;
+	// Line 1401, Address: 0x27fc40, Func Offset: 0
+	// Line 1406, Address: 0x27fc44, Func Offset: 0x4
+	// Line 1401, Address: 0x27fc48, Func Offset: 0x8
+	// Line 1402, Address: 0x27fc74, Func Offset: 0x34
+	// Line 1403, Address: 0x27fc7c, Func Offset: 0x3c
+	// Line 1407, Address: 0x27fc80, Func Offset: 0x40
+	// Line 1409, Address: 0x27fc88, Func Offset: 0x48
+	// Line 1410, Address: 0x27fc8c, Func Offset: 0x4c
+	// Line 1414, Address: 0x27fc9c, Func Offset: 0x5c
+	// Line 1416, Address: 0x27fca4, Func Offset: 0x64
+	// Line 1419, Address: 0x27fcb4, Func Offset: 0x74
+	// Line 1421, Address: 0x27fcd0, Func Offset: 0x90
+	// Line 1423, Address: 0x27fcdc, Func Offset: 0x9c
+	// Line 1424, Address: 0x27fce0, Func Offset: 0xa0
+	// Line 1426, Address: 0x27fcf0, Func Offset: 0xb0
+	// Line 1429, Address: 0x27fcfc, Func Offset: 0xbc
+	// Line 1426, Address: 0x27fd00, Func Offset: 0xc0
+	// Line 1430, Address: 0x27fd04, Func Offset: 0xc4
+	// Line 1431, Address: 0x27fd08, Func Offset: 0xc8
+	// Line 1440, Address: 0x27fd28, Func Offset: 0xe8
+	// Line 1441, Address: 0x27fd2c, Func Offset: 0xec
+	// Line 1442, Address: 0x27fd3c, Func Offset: 0xfc
+	// Line 1443, Address: 0x27fd4c, Func Offset: 0x10c
+	// Line 1444, Address: 0x27fd5c, Func Offset: 0x11c
+	// Line 1445, Address: 0x27fd6c, Func Offset: 0x12c
+	// Line 1446, Address: 0x27fd7c, Func Offset: 0x13c
+	// Line 1448, Address: 0x27fd80, Func Offset: 0x140
+	// Line 1449, Address: 0x27fd88, Func Offset: 0x148
+	// Line 1452, Address: 0x27fdb4, Func Offset: 0x174
+	// Line 1450, Address: 0x27fdb8, Func Offset: 0x178
+	// Line 1452, Address: 0x27fdbc, Func Offset: 0x17c
+	// Line 1453, Address: 0x27fdc4, Func Offset: 0x184
+	// Line 1454, Address: 0x27fdc8, Func Offset: 0x188
+	// Line 1457, Address: 0x27fdd0, Func Offset: 0x190
+	// Line 1458, Address: 0x27fdd4, Func Offset: 0x194
+	// Line 1460, Address: 0x27fdd8, Func Offset: 0x198
+	// Func End, Address: 0x27fe00, Func Offset: 0x1c0
 }
 
 // zThrownCollide_Tiki__FP13zThrownStructP10xEntCollisPfPf
 // Start address: 0x27fe00
 void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, float32* bounce, float32* friction)
 {
+	// Line 1391, Address: 0x27fe00, Func Offset: 0
+	// Line 1393, Address: 0x27fe04, Func Offset: 0x4
+	// Line 1391, Address: 0x27fe08, Func Offset: 0x8
+	// Line 1394, Address: 0x27fe24, Func Offset: 0x24
+	// Line 1396, Address: 0x27fe2c, Func Offset: 0x2c
+	// Line 1397, Address: 0x27fe30, Func Offset: 0x30
+	// Line 1398, Address: 0x27fe34, Func Offset: 0x34
+	// Line 1399, Address: 0x27fe40, Func Offset: 0x40
+	// Func End, Address: 0x27fe58, Func Offset: 0x58
 }
 
 // zThrownCollide_BSandyHead__FP13zThrownStructP10xEntCollisPfPf
 // Start address: 0x27fe60
 void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, float32* bounce, float32* friction)
 {
+	// Line 1382, Address: 0x27fe60, Func Offset: 0
+	// Line 1384, Address: 0x27fe64, Func Offset: 0x4
+	// Line 1382, Address: 0x27fe68, Func Offset: 0x8
+	// Line 1385, Address: 0x27fe7c, Func Offset: 0x1c
+	// Line 1387, Address: 0x27fe84, Func Offset: 0x24
+	// Line 1388, Address: 0x27fe88, Func Offset: 0x28
+	// Line 1389, Address: 0x27fe8c, Func Offset: 0x2c
+	// Func End, Address: 0x27fea0, Func Offset: 0x40
 }
 
 // zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 // Start address: 0x27fea0
 void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, float32* bounce, float32* friction)
 {
+	// Line 1372, Address: 0x27fea0, Func Offset: 0
+	// Line 1374, Address: 0x27fea4, Func Offset: 0x4
+	// Line 1372, Address: 0x27fea8, Func Offset: 0x8
+	// Line 1375, Address: 0x27fec4, Func Offset: 0x24
+	// Line 1377, Address: 0x27fecc, Func Offset: 0x2c
+	// Line 1378, Address: 0x27fed0, Func Offset: 0x30
+	// Line 1379, Address: 0x27fed4, Func Offset: 0x34
+	// Line 1380, Address: 0x27fee0, Func Offset: 0x40
+	// Func End, Address: 0x27fef8, Func Offset: 0x58
 }
 
 // zThrownCollide_ThrowFreeze__FP13zThrownStructP10xEntCollisPfPf
 // Start address: 0x27ff00
 void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, float32* bounce, float32* friction)
 {
+	// Line 1366, Address: 0x27ff00, Func Offset: 0
+	// Line 1367, Address: 0x27ff04, Func Offset: 0x4
+	// Line 1366, Address: 0x27ff08, Func Offset: 0x8
+	// Line 1368, Address: 0x27ff0c, Func Offset: 0xc
+	// Line 1369, Address: 0x27ff14, Func Offset: 0x14
+	// Line 1370, Address: 0x27ff18, Func Offset: 0x18
+	// Func End, Address: 0x27ff24, Func Offset: 0x24
 }
 
 // zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
@@ -3458,6 +3567,98 @@ void zThrownCollide_ThrowFruit(zThrownStruct* thrown, xEntCollis* collis, float3
 	float32 dx;
 	float32 dy;
 	float32 dz;
+	// Line 1222, Address: 0x27ff30, Func Offset: 0
+	// Line 1224, Address: 0x27ff34, Func Offset: 0x4
+	// Line 1222, Address: 0x27ff38, Func Offset: 0x8
+	// Line 1225, Address: 0x27ff5c, Func Offset: 0x2c
+	// Line 1226, Address: 0x27ff6c, Func Offset: 0x3c
+	// Line 1228, Address: 0x27ff70, Func Offset: 0x40
+	// Line 1227, Address: 0x27ff74, Func Offset: 0x44
+	// Line 1228, Address: 0x27ff78, Func Offset: 0x48
+	// Line 1229, Address: 0x27ff7c, Func Offset: 0x4c
+	// Line 1230, Address: 0x27ff84, Func Offset: 0x54
+	// Line 1236, Address: 0x27ff88, Func Offset: 0x58
+	// Line 1240, Address: 0x27ffa8, Func Offset: 0x78
+	// Line 1243, Address: 0x27ffb4, Func Offset: 0x84
+	// Line 1252, Address: 0x280040, Func Offset: 0x110
+	// Line 1251, Address: 0x280044, Func Offset: 0x114
+	// Line 1252, Address: 0x280048, Func Offset: 0x118
+	// Line 1251, Address: 0x280050, Func Offset: 0x120
+	// Line 1252, Address: 0x280054, Func Offset: 0x124
+	// Line 1253, Address: 0x280068, Func Offset: 0x138
+	// Line 1254, Address: 0x28008c, Func Offset: 0x15c
+	// Line 1256, Address: 0x280090, Func Offset: 0x160
+	// Line 1258, Address: 0x2800a4, Func Offset: 0x174
+	// Line 1261, Address: 0x2800a8, Func Offset: 0x178
+	// Line 1258, Address: 0x2800b0, Func Offset: 0x180
+	// Line 1261, Address: 0x2800b4, Func Offset: 0x184
+	// Line 1258, Address: 0x2800b8, Func Offset: 0x188
+	// Line 1261, Address: 0x2800dc, Func Offset: 0x1ac
+	// Line 1262, Address: 0x280108, Func Offset: 0x1d8
+	// Line 1263, Address: 0x280118, Func Offset: 0x1e8
+	// Line 1264, Address: 0x28011c, Func Offset: 0x1ec
+	// Line 1266, Address: 0x280120, Func Offset: 0x1f0
+	// Line 1272, Address: 0x280128, Func Offset: 0x1f8
+	// Line 1274, Address: 0x280144, Func Offset: 0x214
+	// Line 1275, Address: 0x280154, Func Offset: 0x224
+	// Line 1279, Address: 0x280178, Func Offset: 0x248
+	// Line 1278, Address: 0x28017c, Func Offset: 0x24c
+	// Line 1279, Address: 0x280180, Func Offset: 0x250
+	// Line 1280, Address: 0x280184, Func Offset: 0x254
+	// Line 1283, Address: 0x28018c, Func Offset: 0x25c
+	// Line 1287, Address: 0x280190, Func Offset: 0x260
+	// Line 1286, Address: 0x280194, Func Offset: 0x264
+	// Line 1287, Address: 0x2801ac, Func Offset: 0x27c
+	// Line 1286, Address: 0x2801b0, Func Offset: 0x280
+	// Line 1287, Address: 0x2801c8, Func Offset: 0x298
+	// Line 1288, Address: 0x2801d4, Func Offset: 0x2a4
+	// Line 1289, Address: 0x2801dc, Func Offset: 0x2ac
+	// Line 1290, Address: 0x2801e4, Func Offset: 0x2b4
+	// Line 1291, Address: 0x280204, Func Offset: 0x2d4
+	// Line 1293, Address: 0x280208, Func Offset: 0x2d8
+	// Line 1297, Address: 0x280210, Func Offset: 0x2e0
+	// Line 1295, Address: 0x280214, Func Offset: 0x2e4
+	// Line 1297, Address: 0x280220, Func Offset: 0x2f0
+	// Line 1298, Address: 0x280228, Func Offset: 0x2f8
+	// Line 1297, Address: 0x28022c, Func Offset: 0x2fc
+	// Line 1298, Address: 0x280230, Func Offset: 0x300
+	// Line 1299, Address: 0x28023c, Func Offset: 0x30c
+	// Line 1300, Address: 0x280240, Func Offset: 0x310
+	// Line 1305, Address: 0x280248, Func Offset: 0x318
+	// Line 1306, Address: 0x280268, Func Offset: 0x338
+	// Line 1307, Address: 0x280288, Func Offset: 0x358
+	// Line 1308, Address: 0x2802a0, Func Offset: 0x370
+	// Line 1313, Address: 0x2802a8, Func Offset: 0x378
+	// Line 1316, Address: 0x2802c0, Func Offset: 0x390
+	// Line 1325, Address: 0x280348, Func Offset: 0x418
+	// Line 1324, Address: 0x28034c, Func Offset: 0x41c
+	// Line 1325, Address: 0x280350, Func Offset: 0x420
+	// Line 1324, Address: 0x280358, Func Offset: 0x428
+	// Line 1325, Address: 0x28035c, Func Offset: 0x42c
+	// Line 1326, Address: 0x280370, Func Offset: 0x440
+	// Line 1327, Address: 0x280394, Func Offset: 0x464
+	// Line 1329, Address: 0x280398, Func Offset: 0x468
+	// Line 1331, Address: 0x2803ac, Func Offset: 0x47c
+	// Line 1335, Address: 0x2803b0, Func Offset: 0x480
+	// Line 1331, Address: 0x2803bc, Func Offset: 0x48c
+	// Line 1335, Address: 0x2803e0, Func Offset: 0x4b0
+	// Line 1336, Address: 0x280428, Func Offset: 0x4f8
+	// Line 1337, Address: 0x280438, Func Offset: 0x508
+	// Line 1338, Address: 0x28045c, Func Offset: 0x52c
+	// Line 1339, Address: 0x280470, Func Offset: 0x540
+	// Line 1340, Address: 0x280474, Func Offset: 0x544
+	// Line 1342, Address: 0x280478, Func Offset: 0x548
+	// Line 1348, Address: 0x280480, Func Offset: 0x550
+	// Line 1349, Address: 0x280488, Func Offset: 0x558
+	// Line 1352, Address: 0x2804b4, Func Offset: 0x584
+	// Line 1353, Address: 0x2804b8, Func Offset: 0x588
+	// Line 1356, Address: 0x2804c0, Func Offset: 0x590
+	// Line 1357, Address: 0x2804cc, Func Offset: 0x59c
+	// Line 1358, Address: 0x2804d0, Func Offset: 0x5a0
+	// Line 1361, Address: 0x2804d8, Func Offset: 0x5a8
+	// Line 1362, Address: 0x2804dc, Func Offset: 0x5ac
+	// Line 1363, Address: 0x2804e0, Func Offset: 0x5b0
+	// Func End, Address: 0x2804fc, Func Offset: 0x5cc
 }
 
 // zThrownCollide_CauseDamage__FP13zThrownStructP10xEntCollis
@@ -3470,6 +3671,57 @@ int32 zThrownCollide_CauseDamage(zThrownStruct* thrown, xEntCollis* collis)
 	xEnt* hitent;
 	float32 dummy;
 	xVec3 pos;
+	// Line 1155, Address: 0x280500, Func Offset: 0
+	// Line 1157, Address: 0x280510, Func Offset: 0x10
+	// Line 1155, Address: 0x280514, Func Offset: 0x14
+	// Line 1157, Address: 0x280518, Func Offset: 0x18
+	// Line 1155, Address: 0x28051c, Func Offset: 0x1c
+	// Line 1156, Address: 0x280528, Func Offset: 0x28
+	// Line 1155, Address: 0x28052c, Func Offset: 0x2c
+	// Line 1157, Address: 0x280530, Func Offset: 0x30
+	// Line 1155, Address: 0x280534, Func Offset: 0x34
+	// Line 1158, Address: 0x28053c, Func Offset: 0x3c
+	// Line 1160, Address: 0x280548, Func Offset: 0x48
+	// Line 1161, Address: 0x28054c, Func Offset: 0x4c
+	// Line 1164, Address: 0x280558, Func Offset: 0x58
+	// Line 1167, Address: 0x280568, Func Offset: 0x68
+	// Line 1168, Address: 0x280570, Func Offset: 0x70
+	// Line 1169, Address: 0x280574, Func Offset: 0x74
+	// Line 1170, Address: 0x28057c, Func Offset: 0x7c
+	// Line 1172, Address: 0x280580, Func Offset: 0x80
+	// Line 1173, Address: 0x280584, Func Offset: 0x84
+	// Line 1174, Address: 0x280590, Func Offset: 0x90
+	// Line 1177, Address: 0x280598, Func Offset: 0x98
+	// Line 1179, Address: 0x2805a0, Func Offset: 0xa0
+	// Line 1180, Address: 0x2805ac, Func Offset: 0xac
+	// Line 1182, Address: 0x2805c8, Func Offset: 0xc8
+	// Line 1184, Address: 0x2805d0, Func Offset: 0xd0
+	// Line 1185, Address: 0x2805dc, Func Offset: 0xdc
+	// Line 1186, Address: 0x2805e4, Func Offset: 0xe4
+	// Line 1187, Address: 0x2805f0, Func Offset: 0xf0
+	// Line 1188, Address: 0x280600, Func Offset: 0x100
+	// Line 1189, Address: 0x280610, Func Offset: 0x110
+	// Line 1191, Address: 0x280618, Func Offset: 0x118
+	// Line 1192, Address: 0x280620, Func Offset: 0x120
+	// Line 1193, Address: 0x28062c, Func Offset: 0x12c
+	// Line 1194, Address: 0x280638, Func Offset: 0x138
+	// Line 1196, Address: 0x280640, Func Offset: 0x140
+	// Line 1197, Address: 0x280648, Func Offset: 0x148
+	// Line 1198, Address: 0x280654, Func Offset: 0x154
+	// Line 1203, Address: 0x280658, Func Offset: 0x158
+	// Line 1204, Address: 0x280684, Func Offset: 0x184
+	// Line 1205, Address: 0x2806ac, Func Offset: 0x1ac
+	// Line 1206, Address: 0x2806f8, Func Offset: 0x1f8
+	// Line 1208, Address: 0x280708, Func Offset: 0x208
+	// Line 1212, Address: 0x280728, Func Offset: 0x228
+	// Line 1213, Address: 0x280740, Func Offset: 0x240
+	// Line 1215, Address: 0x280744, Func Offset: 0x244
+	// Line 1213, Address: 0x280748, Func Offset: 0x248
+	// Line 1216, Address: 0x28074c, Func Offset: 0x24c
+	// Line 1217, Address: 0x280750, Func Offset: 0x250
+	// Line 1218, Address: 0x280770, Func Offset: 0x270
+	// Line 1219, Address: 0x280778, Func Offset: 0x278
+	// Func End, Address: 0x2807a4, Func Offset: 0x2a4
 }
 
 // zThrown_KillFruit__FP4xEnt
@@ -3477,6 +3729,21 @@ int32 zThrownCollide_CauseDamage(zThrownStruct* thrown, xEntCollis* collis)
 int32 zThrown_KillFruit(xEnt* ent)
 {
 	uint32 i;
+	// Line 1140, Address: 0x2807b0, Func Offset: 0
+	// Line 1141, Address: 0x2807c8, Func Offset: 0x18
+	// Line 1142, Address: 0x2807d4, Func Offset: 0x24
+	// Line 1141, Address: 0x2807d8, Func Offset: 0x28
+	// Line 1142, Address: 0x2807dc, Func Offset: 0x2c
+	// Line 1141, Address: 0x2807e8, Func Offset: 0x38
+	// Line 1142, Address: 0x2807f0, Func Offset: 0x40
+	// Line 1143, Address: 0x280804, Func Offset: 0x54
+	// Line 1144, Address: 0x28081c, Func Offset: 0x6c
+	// Line 1145, Address: 0x280824, Func Offset: 0x74
+	// Line 1147, Address: 0x280828, Func Offset: 0x78
+	// Line 1149, Address: 0x280830, Func Offset: 0x80
+	// Line 1150, Address: 0x280840, Func Offset: 0x90
+	// Line 1151, Address: 0x280848, Func Offset: 0x98
+	// Func End, Address: 0x280850, Func Offset: 0xa0
 }
 
 // zThrown_Remove__FP4xEnt
@@ -3485,7 +3752,58 @@ void zThrown_Remove(xEnt* ent)
 {
 	uint32 i;
 	xModelInstance* mod;
-	type_54 thisCollCB;
+	void(*thisCollCB)(zThrownStruct*, xEntCollis*, float32*, float32*);
+	// Line 1090, Address: 0x280850, Func Offset: 0
+	// Line 1092, Address: 0x28086c, Func Offset: 0x1c
+	// Line 1093, Address: 0x280888, Func Offset: 0x38
+	// Line 1094, Address: 0x2808bc, Func Offset: 0x6c
+	// Line 1096, Address: 0x2808c0, Func Offset: 0x70
+	// Line 1094, Address: 0x2808c4, Func Offset: 0x74
+	// Line 1095, Address: 0x2808cc, Func Offset: 0x7c
+	// Line 1096, Address: 0x2808e0, Func Offset: 0x90
+	// Line 1097, Address: 0x2808ec, Func Offset: 0x9c
+	// Line 1100, Address: 0x2808f8, Func Offset: 0xa8
+	// Line 1097, Address: 0x2808fc, Func Offset: 0xac
+	// Line 1100, Address: 0x280900, Func Offset: 0xb0
+	// Line 1099, Address: 0x280904, Func Offset: 0xb4
+	// Line 1100, Address: 0x280908, Func Offset: 0xb8
+	// Line 1103, Address: 0x28090c, Func Offset: 0xbc
+	// Line 1109, Address: 0x280910, Func Offset: 0xc0
+	// Line 1103, Address: 0x280914, Func Offset: 0xc4
+	// Line 1109, Address: 0x280918, Func Offset: 0xc8
+	// Line 1103, Address: 0x28091c, Func Offset: 0xcc
+	// Line 1109, Address: 0x280920, Func Offset: 0xd0
+	// Line 1099, Address: 0x280934, Func Offset: 0xe4
+	// Line 1100, Address: 0x280938, Func Offset: 0xe8
+	// Line 1109, Address: 0x28093c, Func Offset: 0xec
+	// Line 1100, Address: 0x280958, Func Offset: 0x108
+	// Line 1109, Address: 0x28095c, Func Offset: 0x10c
+	// Line 1100, Address: 0x280960, Func Offset: 0x110
+	// Line 1109, Address: 0x280964, Func Offset: 0x114
+	// Line 1100, Address: 0x280968, Func Offset: 0x118
+	// Line 1109, Address: 0x28096c, Func Offset: 0x11c
+	// Line 1103, Address: 0x280970, Func Offset: 0x120
+	// Line 1109, Address: 0x280974, Func Offset: 0x124
+	// Line 1103, Address: 0x280978, Func Offset: 0x128
+	// Line 1109, Address: 0x28097c, Func Offset: 0x12c
+	// Line 1103, Address: 0x280998, Func Offset: 0x148
+	// Line 1107, Address: 0x2809a0, Func Offset: 0x150
+	// Line 1109, Address: 0x2809a4, Func Offset: 0x154
+	// Line 1107, Address: 0x2809a8, Func Offset: 0x158
+	// Line 1109, Address: 0x2809ac, Func Offset: 0x15c
+	// Line 1110, Address: 0x280ab8, Func Offset: 0x268
+	// Line 1113, Address: 0x280abc, Func Offset: 0x26c
+	// Line 1110, Address: 0x280ac0, Func Offset: 0x270
+	// Line 1113, Address: 0x280ac8, Func Offset: 0x278
+	// Line 1115, Address: 0x280ad4, Func Offset: 0x284
+	// Line 1119, Address: 0x280ae8, Func Offset: 0x298
+	// Line 1120, Address: 0x280af8, Func Offset: 0x2a8
+	// Line 1125, Address: 0x280b28, Func Offset: 0x2d8
+	// Line 1131, Address: 0x280b78, Func Offset: 0x328
+	// Line 1133, Address: 0x280b80, Func Offset: 0x330
+	// Line 1134, Address: 0x280b88, Func Offset: 0x338
+	// Line 1135, Address: 0x280b98, Func Offset: 0x348
+	// Func End, Address: 0x280bb4, Func Offset: 0x364
 }
 
 // zThrown_AddFruit__FP4xEnt
@@ -3495,6 +3813,67 @@ void zThrown_AddFruit(xEnt* ent)
 	uint32 i;
 	ThrowableStats* stats;
 	zThrownStruct* newThrown;
+	// Line 1032, Address: 0x280bc0, Func Offset: 0
+	// Line 1035, Address: 0x280bc4, Func Offset: 0x4
+	// Line 1032, Address: 0x280bc8, Func Offset: 0x8
+	// Line 1035, Address: 0x280bd8, Func Offset: 0x18
+	// Line 1036, Address: 0x280bf0, Func Offset: 0x30
+	// Line 1039, Address: 0x280bfc, Func Offset: 0x3c
+	// Line 1036, Address: 0x280c00, Func Offset: 0x40
+	// Line 1040, Address: 0x280c04, Func Offset: 0x44
+	// Line 1041, Address: 0x280c0c, Func Offset: 0x4c
+	// Line 1036, Address: 0x280c10, Func Offset: 0x50
+	// Line 1039, Address: 0x280c14, Func Offset: 0x54
+	// Line 1040, Address: 0x280c1c, Func Offset: 0x5c
+	// Line 1039, Address: 0x280c20, Func Offset: 0x60
+	// Line 1045, Address: 0x280c24, Func Offset: 0x64
+	// Line 1040, Address: 0x280c28, Func Offset: 0x68
+	// Line 1039, Address: 0x280c2c, Func Offset: 0x6c
+	// Line 1041, Address: 0x280c30, Func Offset: 0x70
+	// Line 1040, Address: 0x280c34, Func Offset: 0x74
+	// Line 1041, Address: 0x280c38, Func Offset: 0x78
+	// Line 1045, Address: 0x280c3c, Func Offset: 0x7c
+	// Line 1042, Address: 0x280c40, Func Offset: 0x80
+	// Line 1045, Address: 0x280c44, Func Offset: 0x84
+	// Line 1042, Address: 0x280c48, Func Offset: 0x88
+	// Line 1045, Address: 0x280c50, Func Offset: 0x90
+	// Line 1046, Address: 0x280c5c, Func Offset: 0x9c
+	// Line 1047, Address: 0x280c7c, Func Offset: 0xbc
+	// Line 1048, Address: 0x280c80, Func Offset: 0xc0
+	// Line 1049, Address: 0x280c8c, Func Offset: 0xcc
+	// Line 1048, Address: 0x280c90, Func Offset: 0xd0
+	// Line 1049, Address: 0x280c94, Func Offset: 0xd4
+	// Line 1050, Address: 0x280c9c, Func Offset: 0xdc
+	// Line 1051, Address: 0x280ca4, Func Offset: 0xe4
+	// Line 1054, Address: 0x280cb8, Func Offset: 0xf8
+	// Line 1055, Address: 0x280cc4, Func Offset: 0x104
+	// Line 1056, Address: 0x280cd8, Func Offset: 0x118
+	// Line 1059, Address: 0x280cf0, Func Offset: 0x130
+	// Line 1060, Address: 0x280cf8, Func Offset: 0x138
+	// Line 1061, Address: 0x280d00, Func Offset: 0x140
+	// Line 1062, Address: 0x280d18, Func Offset: 0x158
+	// Line 1069, Address: 0x280d20, Func Offset: 0x160
+	// Line 1068, Address: 0x280d24, Func Offset: 0x164
+	// Line 1079, Address: 0x280d40, Func Offset: 0x180
+	// Line 1069, Address: 0x280d44, Func Offset: 0x184
+	// Line 1068, Address: 0x280d48, Func Offset: 0x188
+	// Line 1069, Address: 0x280d4c, Func Offset: 0x18c
+	// Line 1079, Address: 0x280d50, Func Offset: 0x190
+	// Line 1072, Address: 0x280d54, Func Offset: 0x194
+	// Line 1073, Address: 0x280d60, Func Offset: 0x1a0
+	// Line 1074, Address: 0x280d64, Func Offset: 0x1a4
+	// Line 1075, Address: 0x280d6c, Func Offset: 0x1ac
+	// Line 1076, Address: 0x280d70, Func Offset: 0x1b0
+	// Line 1077, Address: 0x280d74, Func Offset: 0x1b4
+	// Line 1078, Address: 0x280d78, Func Offset: 0x1b8
+	// Line 1079, Address: 0x280d84, Func Offset: 0x1c4
+	// Line 1080, Address: 0x280d88, Func Offset: 0x1c8
+	// Line 1081, Address: 0x280d94, Func Offset: 0x1d4
+	// Line 1084, Address: 0x280e48, Func Offset: 0x288
+	// Line 1085, Address: 0x280e54, Func Offset: 0x294
+	// Line 1086, Address: 0x280e58, Func Offset: 0x298
+	// Line 1087, Address: 0x280e5c, Func Offset: 0x29c
+	// Func End, Address: 0x280e78, Func Offset: 0x2b8
 }
 
 // zThrown_PatrickLauncher__FP4xEntP4xEnt
@@ -3502,6 +3881,13 @@ void zThrown_AddFruit(xEnt* ent)
 void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
 {
 	uint32 i;
+	// Line 1017, Address: 0x280e80, Func Offset: 0
+	// Line 1018, Address: 0x280e98, Func Offset: 0x18
+	// Line 1020, Address: 0x280ea4, Func Offset: 0x24
+	// Line 1021, Address: 0x280eb8, Func Offset: 0x38
+	// Line 1027, Address: 0x280ec0, Func Offset: 0x40
+	// Line 1028, Address: 0x280ee0, Func Offset: 0x60
+	// Func End, Address: 0x280ee8, Func Offset: 0x68
 }
 
 // zThrown_LaunchStack__FP4xEntP4xEnt
@@ -3512,6 +3898,42 @@ void zThrown_LaunchStack(xEnt* ent, xEnt* stackTgt)
 	xVec3 stackDir;
 	xBox tmpbox;
 	uint32 i;
+	// Line 965, Address: 0x280ef0, Func Offset: 0
+	// Line 969, Address: 0x280ef4, Func Offset: 0x4
+	// Line 965, Address: 0x280ef8, Func Offset: 0x8
+	// Line 969, Address: 0x280f08, Func Offset: 0x18
+	// Line 971, Address: 0x280f34, Func Offset: 0x44
+	// Line 972, Address: 0x280f40, Func Offset: 0x50
+	// Line 974, Address: 0x280f4c, Func Offset: 0x5c
+	// Line 975, Address: 0x280f50, Func Offset: 0x60
+	// Line 977, Address: 0x280f58, Func Offset: 0x68
+	// Line 978, Address: 0x280f68, Func Offset: 0x78
+	// Line 977, Address: 0x280f6c, Func Offset: 0x7c
+	// Line 979, Address: 0x280f70, Func Offset: 0x80
+	// Line 981, Address: 0x280f78, Func Offset: 0x88
+	// Line 979, Address: 0x280f7c, Func Offset: 0x8c
+	// Line 981, Address: 0x280f80, Func Offset: 0x90
+	// Line 983, Address: 0x280f8c, Func Offset: 0x9c
+	// Line 984, Address: 0x280f90, Func Offset: 0xa0
+	// Line 992, Address: 0x280fa0, Func Offset: 0xb0
+	// Line 985, Address: 0x280fa4, Func Offset: 0xb4
+	// Line 992, Address: 0x280fa8, Func Offset: 0xb8
+	// Line 984, Address: 0x280fac, Func Offset: 0xbc
+	// Line 985, Address: 0x280fb4, Func Offset: 0xc4
+	// Line 986, Address: 0x280fc4, Func Offset: 0xd4
+	// Line 989, Address: 0x280fd4, Func Offset: 0xe4
+	// Line 990, Address: 0x280fe8, Func Offset: 0xf8
+	// Line 989, Address: 0x280fec, Func Offset: 0xfc
+	// Line 991, Address: 0x280ff0, Func Offset: 0x100
+	// Line 992, Address: 0x281004, Func Offset: 0x114
+	// Line 995, Address: 0x28100c, Func Offset: 0x11c
+	// Line 1002, Address: 0x281024, Func Offset: 0x134
+	// Line 1003, Address: 0x281040, Func Offset: 0x150
+	// Line 1005, Address: 0x28104c, Func Offset: 0x15c
+	// Line 1008, Address: 0x281060, Func Offset: 0x170
+	// Line 1009, Address: 0x281084, Func Offset: 0x194
+	// Line 1010, Address: 0x281088, Func Offset: 0x198
+	// Func End, Address: 0x28109c, Func Offset: 0x1ac
 }
 
 // zThrown_LaunchPos__FP4xEntP5xVec3P5xVec3
@@ -3525,6 +3947,50 @@ int32 zThrown_LaunchPos(xEnt* ent, xVec3* pos, xVec3* dir)
 	float32 hpeak;
 	xVec3 tempVel;
 	float32 speed;
+	// Line 913, Address: 0x2810a0, Func Offset: 0
+	// Line 917, Address: 0x2810a4, Func Offset: 0x4
+	// Line 913, Address: 0x2810a8, Func Offset: 0x8
+	// Line 917, Address: 0x2810ac, Func Offset: 0xc
+	// Line 913, Address: 0x2810b0, Func Offset: 0x10
+	// Line 917, Address: 0x2810b4, Func Offset: 0x14
+	// Line 918, Address: 0x2810b8, Func Offset: 0x18
+	// Line 919, Address: 0x2810c8, Func Offset: 0x28
+	// Line 922, Address: 0x2810e0, Func Offset: 0x40
+	// Line 923, Address: 0x2810e8, Func Offset: 0x48
+	// Line 925, Address: 0x2810f0, Func Offset: 0x50
+	// Line 926, Address: 0x2810f8, Func Offset: 0x58
+	// Line 930, Address: 0x281100, Func Offset: 0x60
+	// Line 933, Address: 0x281108, Func Offset: 0x68
+	// Line 930, Address: 0x28110c, Func Offset: 0x6c
+	// Line 933, Address: 0x281110, Func Offset: 0x70
+	// Line 930, Address: 0x281114, Func Offset: 0x74
+	// Line 931, Address: 0x281118, Func Offset: 0x78
+	// Line 933, Address: 0x281124, Func Offset: 0x84
+	// Line 934, Address: 0x28112c, Func Offset: 0x8c
+	// Line 935, Address: 0x281150, Func Offset: 0xb0
+	// Line 936, Address: 0x281160, Func Offset: 0xc0
+	// Line 940, Address: 0x281184, Func Offset: 0xe4
+	// Line 943, Address: 0x281194, Func Offset: 0xf4
+	// Line 946, Address: 0x281198, Func Offset: 0xf8
+	// Line 943, Address: 0x28119c, Func Offset: 0xfc
+	// Line 944, Address: 0x2811a8, Func Offset: 0x108
+	// Line 945, Address: 0x2811b4, Func Offset: 0x114
+	// Line 948, Address: 0x2811c4, Func Offset: 0x124
+	// Line 951, Address: 0x2811d0, Func Offset: 0x130
+	// Line 957, Address: 0x2811dc, Func Offset: 0x13c
+	// Line 951, Address: 0x2811e0, Func Offset: 0x140
+	// Line 954, Address: 0x281200, Func Offset: 0x160
+	// Line 952, Address: 0x281208, Func Offset: 0x168
+	// Line 951, Address: 0x281210, Func Offset: 0x170
+	// Line 952, Address: 0x281214, Func Offset: 0x174
+	// Line 954, Address: 0x281224, Func Offset: 0x184
+	// Line 955, Address: 0x28122c, Func Offset: 0x18c
+	// Line 956, Address: 0x281238, Func Offset: 0x198
+	// Line 958, Address: 0x281244, Func Offset: 0x1a4
+	// Line 960, Address: 0x281248, Func Offset: 0x1a8
+	// Line 961, Address: 0x281250, Func Offset: 0x1b0
+	// Line 962, Address: 0x281254, Func Offset: 0x1b4
+	// Func End, Address: 0x281264, Func Offset: 0x1c4
 }
 
 // zThrown_LaunchDir__FP4xEntP5xVec3
@@ -3533,6 +3999,25 @@ void zThrown_LaunchDir(xEnt* ent, xVec3* dir)
 {
 	ThrowableStats* stats;
 	xVec3 tempVel;
+	// Line 889, Address: 0x281270, Func Offset: 0
+	// Line 893, Address: 0x281274, Func Offset: 0x4
+	// Line 889, Address: 0x281278, Func Offset: 0x8
+	// Line 890, Address: 0x28127c, Func Offset: 0xc
+	// Line 893, Address: 0x281284, Func Offset: 0x14
+	// Line 894, Address: 0x28128c, Func Offset: 0x1c
+	// Line 895, Address: 0x2812a0, Func Offset: 0x30
+	// Line 898, Address: 0x2812b8, Func Offset: 0x48
+	// Line 899, Address: 0x2812c0, Func Offset: 0x50
+	// Line 901, Address: 0x2812c8, Func Offset: 0x58
+	// Line 902, Address: 0x2812d0, Func Offset: 0x60
+	// Line 906, Address: 0x2812d8, Func Offset: 0x68
+	// Line 907, Address: 0x2812ec, Func Offset: 0x7c
+	// Line 908, Address: 0x2812f8, Func Offset: 0x88
+	// Line 909, Address: 0x281304, Func Offset: 0x94
+	// Line 908, Address: 0x281308, Func Offset: 0x98
+	// Line 909, Address: 0x28130c, Func Offset: 0x9c
+	// Line 910, Address: 0x281314, Func Offset: 0xa4
+	// Func End, Address: 0x281320, Func Offset: 0xb0
 }
 
 // zThrown_LaunchVel__FP4xEntP5xVec3
@@ -3542,6 +4027,55 @@ void zThrown_LaunchVel(xEnt* ent, xVec3* vel)
 	ThrowableStats* stats;
 	zThrownStruct* newThrown;
 	uint32 i;
+	// Line 831, Address: 0x281320, Func Offset: 0
+	// Line 833, Address: 0x281338, Func Offset: 0x18
+	// Line 831, Address: 0x28133c, Func Offset: 0x1c
+	// Line 833, Address: 0x281340, Func Offset: 0x20
+	// Line 834, Address: 0x281348, Func Offset: 0x28
+	// Line 835, Address: 0x281358, Func Offset: 0x38
+	// Line 838, Address: 0x281370, Func Offset: 0x50
+	// Line 839, Address: 0x281378, Func Offset: 0x58
+	// Line 841, Address: 0x281380, Func Offset: 0x60
+	// Line 842, Address: 0x281388, Func Offset: 0x68
+	// Line 846, Address: 0x281390, Func Offset: 0x70
+	// Line 850, Address: 0x2813a4, Func Offset: 0x84
+	// Line 851, Address: 0x2813c0, Func Offset: 0xa0
+	// Line 852, Address: 0x2813cc, Func Offset: 0xac
+	// Line 853, Address: 0x2813e8, Func Offset: 0xc8
+	// Line 854, Address: 0x2813f0, Func Offset: 0xd0
+	// Line 857, Address: 0x281400, Func Offset: 0xe0
+	// Line 860, Address: 0x281408, Func Offset: 0xe8
+	// Line 862, Address: 0x281410, Func Offset: 0xf0
+	// Line 876, Address: 0x28141c, Func Offset: 0xfc
+	// Line 863, Address: 0x281420, Func Offset: 0x100
+	// Line 862, Address: 0x281424, Func Offset: 0x104
+	// Line 863, Address: 0x281428, Func Offset: 0x108
+	// Line 862, Address: 0x28142c, Func Offset: 0x10c
+	// Line 866, Address: 0x281430, Func Offset: 0x110
+	// Line 862, Address: 0x281434, Func Offset: 0x114
+	// Line 876, Address: 0x281444, Func Offset: 0x124
+	// Line 866, Address: 0x281448, Func Offset: 0x128
+	// Line 867, Address: 0x281450, Func Offset: 0x130
+	// Line 868, Address: 0x281454, Func Offset: 0x134
+	// Line 869, Address: 0x28145c, Func Offset: 0x13c
+	// Line 870, Address: 0x281460, Func Offset: 0x140
+	// Line 871, Address: 0x281464, Func Offset: 0x144
+	// Line 872, Address: 0x281468, Func Offset: 0x148
+	// Line 873, Address: 0x28146c, Func Offset: 0x14c
+	// Line 876, Address: 0x281474, Func Offset: 0x154
+	// Line 877, Address: 0x28147c, Func Offset: 0x15c
+	// Line 878, Address: 0x281480, Func Offset: 0x160
+	// Line 879, Address: 0x281484, Func Offset: 0x164
+	// Line 883, Address: 0x281488, Func Offset: 0x168
+	// Line 880, Address: 0x28148c, Func Offset: 0x16c
+	// Line 883, Address: 0x281490, Func Offset: 0x170
+	// Line 880, Address: 0x281494, Func Offset: 0x174
+	// Line 881, Address: 0x2814a8, Func Offset: 0x188
+	// Line 883, Address: 0x2814b4, Func Offset: 0x194
+	// Line 884, Address: 0x2814b8, Func Offset: 0x198
+	// Line 885, Address: 0x2814c4, Func Offset: 0x1a4
+	// Line 886, Address: 0x281578, Func Offset: 0x258
+	// Func End, Address: 0x281594, Func Offset: 0x274
 }
 
 // zThrown_Reset__Fv
@@ -3550,6 +4084,24 @@ void zThrown_Reset()
 {
 	uint32 i;
 	xModelInstance* mod;
+	// Line 812, Address: 0x2815a0, Func Offset: 0
+	// Line 819, Address: 0x2815b8, Func Offset: 0x18
+	// Line 812, Address: 0x2815bc, Func Offset: 0x1c
+	// Line 813, Address: 0x2815c0, Func Offset: 0x20
+	// Line 815, Address: 0x2815c8, Func Offset: 0x28
+	// Line 813, Address: 0x2815cc, Func Offset: 0x2c
+	// Line 814, Address: 0x2815d0, Func Offset: 0x30
+	// Line 815, Address: 0x2815e8, Func Offset: 0x48
+	// Line 816, Address: 0x2815f4, Func Offset: 0x54
+	// Line 818, Address: 0x2815f8, Func Offset: 0x58
+	// Line 826, Address: 0x2815fc, Func Offset: 0x5c
+	// Line 818, Address: 0x281600, Func Offset: 0x60
+	// Line 819, Address: 0x281604, Func Offset: 0x64
+	// Line 824, Address: 0x281610, Func Offset: 0x70
+	// Line 825, Address: 0x281620, Func Offset: 0x80
+	// Line 826, Address: 0x281634, Func Offset: 0x94
+	// Line 828, Address: 0x281648, Func Offset: 0xa8
+	// Func End, Address: 0x281650, Func Offset: 0xb0
 }
 
 // zThrown_Update__FP4xEntP6xScenef
@@ -3566,7 +4118,7 @@ void zThrown_Update(xEnt* ent, xScene* sc, float32 dt)
 	xBound oldbound;
 	uint8 oldpflags;
 	uint8 oldcollType;
-	type_33 old_bupdateFunc;
+	void(*old_bupdateFunc)(xEnt*, xVec3*);
 	float32 oldgrav;
 	float32 posdot;
 	xVec3 velunit;
@@ -3586,7 +4138,346 @@ void zThrown_Update(xEnt* ent, xScene* sc, float32 dt)
 	float32 boxZ;
 	zShrapnelAsset* shrap;
 	xCollis* fcoll;
-	type_13 fruitPattern;
+	float32 fruitPattern[18];
+	// Line 338, Address: 0x281650, Func Offset: 0
+	// Line 342, Address: 0x281688, Func Offset: 0x38
+	// Line 338, Address: 0x28168c, Func Offset: 0x3c
+	// Line 342, Address: 0x281690, Func Offset: 0x40
+	// Line 343, Address: 0x2816b0, Func Offset: 0x60
+	// Line 345, Address: 0x2816bc, Func Offset: 0x6c
+	// Line 350, Address: 0x2816d0, Func Offset: 0x80
+	// Line 347, Address: 0x2816d4, Func Offset: 0x84
+	// Line 350, Address: 0x2816f0, Func Offset: 0xa0
+	// Line 351, Address: 0x2816fc, Func Offset: 0xac
+	// Line 352, Address: 0x281704, Func Offset: 0xb4
+	// Line 351, Address: 0x28170c, Func Offset: 0xbc
+	// Line 352, Address: 0x281728, Func Offset: 0xd8
+	// Line 353, Address: 0x281734, Func Offset: 0xe4
+	// Line 354, Address: 0x281758, Func Offset: 0x108
+	// Line 362, Address: 0x281770, Func Offset: 0x120
+	// Line 363, Address: 0x281788, Func Offset: 0x138
+	// Line 364, Address: 0x28178c, Func Offset: 0x13c
+	// Line 365, Address: 0x281798, Func Offset: 0x148
+	// Line 366, Address: 0x28179c, Func Offset: 0x14c
+	// Line 380, Address: 0x2817a8, Func Offset: 0x158
+	// Line 377, Address: 0x2817ac, Func Offset: 0x15c
+	// Line 387, Address: 0x2817b0, Func Offset: 0x160
+	// Line 378, Address: 0x2817b4, Func Offset: 0x164
+	// Line 388, Address: 0x2817b8, Func Offset: 0x168
+	// Line 379, Address: 0x2817bc, Func Offset: 0x16c
+	// Line 397, Address: 0x2817c0, Func Offset: 0x170
+	// Line 401, Address: 0x2817c4, Func Offset: 0x174
+	// Line 402, Address: 0x2817d0, Func Offset: 0x180
+	// Line 380, Address: 0x2817d4, Func Offset: 0x184
+	// Line 381, Address: 0x2817e4, Func Offset: 0x194
+	// Line 382, Address: 0x2817fc, Func Offset: 0x1ac
+	// Line 384, Address: 0x281814, Func Offset: 0x1c4
+	// Line 385, Address: 0x281818, Func Offset: 0x1c8
+	// Line 387, Address: 0x28181c, Func Offset: 0x1cc
+	// Line 388, Address: 0x281820, Func Offset: 0x1d0
+	// Line 389, Address: 0x281824, Func Offset: 0x1d4
+	// Line 390, Address: 0x281828, Func Offset: 0x1d8
+	// Line 391, Address: 0x28182c, Func Offset: 0x1dc
+	// Line 392, Address: 0x281830, Func Offset: 0x1e0
+	// Line 393, Address: 0x28184c, Func Offset: 0x1fc
+	// Line 397, Address: 0x281858, Func Offset: 0x208
+	// Line 401, Address: 0x28185c, Func Offset: 0x20c
+	// Line 402, Address: 0x281918, Func Offset: 0x2c8
+	// Line 404, Address: 0x28193c, Func Offset: 0x2ec
+	// Line 402, Address: 0x281944, Func Offset: 0x2f4
+	// Line 405, Address: 0x281968, Func Offset: 0x318
+	// Line 407, Address: 0x281984, Func Offset: 0x334
+	// Line 410, Address: 0x28198c, Func Offset: 0x33c
+	// Line 407, Address: 0x281990, Func Offset: 0x340
+	// Line 409, Address: 0x281998, Func Offset: 0x348
+	// Line 407, Address: 0x28199c, Func Offset: 0x34c
+	// Line 409, Address: 0x2819a4, Func Offset: 0x354
+	// Line 408, Address: 0x2819a8, Func Offset: 0x358
+	// Line 410, Address: 0x2819b8, Func Offset: 0x368
+	// Line 411, Address: 0x2819c0, Func Offset: 0x370
+	// Line 417, Address: 0x281a64, Func Offset: 0x414
+	// Line 418, Address: 0x281a68, Func Offset: 0x418
+	// Line 424, Address: 0x281a70, Func Offset: 0x420
+	// Line 425, Address: 0x281a7c, Func Offset: 0x42c
+	// Line 426, Address: 0x281a8c, Func Offset: 0x43c
+	// Line 425, Address: 0x281a94, Func Offset: 0x444
+	// Line 426, Address: 0x281aa0, Func Offset: 0x450
+	// Line 427, Address: 0x281aac, Func Offset: 0x45c
+	// Line 431, Address: 0x281ab0, Func Offset: 0x460
+	// Line 432, Address: 0x281ac0, Func Offset: 0x470
+	// Line 433, Address: 0x281ad0, Func Offset: 0x480
+	// Line 434, Address: 0x281ad8, Func Offset: 0x488
+	// Line 440, Address: 0x281af0, Func Offset: 0x4a0
+	// Line 439, Address: 0x281afc, Func Offset: 0x4ac
+	// Line 438, Address: 0x281b04, Func Offset: 0x4b4
+	// Line 439, Address: 0x281b08, Func Offset: 0x4b8
+	// Line 440, Address: 0x281b0c, Func Offset: 0x4bc
+	// Line 441, Address: 0x281b14, Func Offset: 0x4c4
+	// Line 444, Address: 0x281b24, Func Offset: 0x4d4
+	// Line 448, Address: 0x281b30, Func Offset: 0x4e0
+	// Line 444, Address: 0x281b34, Func Offset: 0x4e4
+	// Line 448, Address: 0x281b3c, Func Offset: 0x4ec
+	// Line 444, Address: 0x281b48, Func Offset: 0x4f8
+	// Line 448, Address: 0x281b4c, Func Offset: 0x4fc
+	// Line 453, Address: 0x281b70, Func Offset: 0x520
+	// Line 456, Address: 0x281b74, Func Offset: 0x524
+	// Line 454, Address: 0x281b78, Func Offset: 0x528
+	// Line 455, Address: 0x281b80, Func Offset: 0x530
+	// Line 456, Address: 0x281b84, Func Offset: 0x534
+	// Line 455, Address: 0x281b88, Func Offset: 0x538
+	// Line 456, Address: 0x281b8c, Func Offset: 0x53c
+	// Line 463, Address: 0x281b94, Func Offset: 0x544
+	// Line 456, Address: 0x281b98, Func Offset: 0x548
+	// Line 463, Address: 0x281b9c, Func Offset: 0x54c
+	// Line 456, Address: 0x281ba4, Func Offset: 0x554
+	// Line 457, Address: 0x281bc8, Func Offset: 0x578
+	// Line 459, Address: 0x281bd8, Func Offset: 0x588
+	// Line 460, Address: 0x281be0, Func Offset: 0x590
+	// Line 463, Address: 0x281bf0, Func Offset: 0x5a0
+	// Line 465, Address: 0x281c04, Func Offset: 0x5b4
+	// Line 466, Address: 0x281c08, Func Offset: 0x5b8
+	// Line 467, Address: 0x281c10, Func Offset: 0x5c0
+	// Line 468, Address: 0x281c18, Func Offset: 0x5c8
+	// Line 470, Address: 0x281c1c, Func Offset: 0x5cc
+	// Line 473, Address: 0x281c50, Func Offset: 0x600
+	// Line 476, Address: 0x281c54, Func Offset: 0x604
+	// Line 480, Address: 0x281c58, Func Offset: 0x608
+	// Line 481, Address: 0x281c64, Func Offset: 0x614
+	// Line 482, Address: 0x281c74, Func Offset: 0x624
+	// Line 485, Address: 0x281c78, Func Offset: 0x628
+	// Line 486, Address: 0x281c7c, Func Offset: 0x62c
+	// Line 485, Address: 0x281c80, Func Offset: 0x630
+	// Line 486, Address: 0x281c98, Func Offset: 0x648
+	// Line 487, Address: 0x281ca4, Func Offset: 0x654
+	// Line 488, Address: 0x281ca8, Func Offset: 0x658
+	// Line 487, Address: 0x281cac, Func Offset: 0x65c
+	// Line 488, Address: 0x281cb4, Func Offset: 0x664
+	// Line 489, Address: 0x281cc0, Func Offset: 0x670
+	// Line 490, Address: 0x281cd4, Func Offset: 0x684
+	// Line 491, Address: 0x281ce4, Func Offset: 0x694
+	// Line 492, Address: 0x281cf0, Func Offset: 0x6a0
+	// Line 496, Address: 0x281d00, Func Offset: 0x6b0
+	// Line 497, Address: 0x281d18, Func Offset: 0x6c8
+	// Line 498, Address: 0x281d24, Func Offset: 0x6d4
+	// Line 499, Address: 0x281d2c, Func Offset: 0x6dc
+	// Line 500, Address: 0x281d30, Func Offset: 0x6e0
+	// Line 501, Address: 0x281d3c, Func Offset: 0x6ec
+	// Line 503, Address: 0x281d44, Func Offset: 0x6f4
+	// Line 510, Address: 0x281d60, Func Offset: 0x710
+	// Line 513, Address: 0x281d6c, Func Offset: 0x71c
+	// Line 510, Address: 0x281d74, Func Offset: 0x724
+	// Line 511, Address: 0x281d8c, Func Offset: 0x73c
+	// Line 512, Address: 0x281db0, Func Offset: 0x760
+	// Line 513, Address: 0x281dd4, Func Offset: 0x784
+	// Line 514, Address: 0x281de4, Func Offset: 0x794
+	// Line 519, Address: 0x281e20, Func Offset: 0x7d0
+	// Line 514, Address: 0x281e28, Func Offset: 0x7d8
+	// Line 519, Address: 0x281e3c, Func Offset: 0x7ec
+	// Line 521, Address: 0x281e40, Func Offset: 0x7f0
+	// Line 525, Address: 0x281e64, Func Offset: 0x814
+	// Line 521, Address: 0x281e68, Func Offset: 0x818
+	// Line 522, Address: 0x281e70, Func Offset: 0x820
+	// Line 521, Address: 0x281e74, Func Offset: 0x824
+	// Line 522, Address: 0x281e78, Func Offset: 0x828
+	// Line 525, Address: 0x281ed0, Func Offset: 0x880
+	// Line 526, Address: 0x281edc, Func Offset: 0x88c
+	// Line 527, Address: 0x281ee0, Func Offset: 0x890
+	// Line 526, Address: 0x281ee4, Func Offset: 0x894
+	// Line 527, Address: 0x281eec, Func Offset: 0x89c
+	// Line 528, Address: 0x281ef8, Func Offset: 0x8a8
+	// Line 529, Address: 0x281f0c, Func Offset: 0x8bc
+	// Line 530, Address: 0x281f1c, Func Offset: 0x8cc
+	// Line 531, Address: 0x281f28, Func Offset: 0x8d8
+	// Line 536, Address: 0x281f38, Func Offset: 0x8e8
+	// Line 539, Address: 0x281f48, Func Offset: 0x8f8
+	// Line 541, Address: 0x281f60, Func Offset: 0x910
+	// Line 539, Address: 0x281f64, Func Offset: 0x914
+	// Line 540, Address: 0x281f68, Func Offset: 0x918
+	// Line 541, Address: 0x281f74, Func Offset: 0x924
+	// Line 542, Address: 0x281f7c, Func Offset: 0x92c
+	// Line 543, Address: 0x281f80, Func Offset: 0x930
+	// Line 544, Address: 0x281f8c, Func Offset: 0x93c
+	// Line 546, Address: 0x281f94, Func Offset: 0x944
+	// Line 549, Address: 0x281fb0, Func Offset: 0x960
+	// Line 554, Address: 0x281fc4, Func Offset: 0x974
+	// Line 557, Address: 0x281fc8, Func Offset: 0x978
+	// Line 560, Address: 0x281fd8, Func Offset: 0x988
+	// Line 567, Address: 0x282038, Func Offset: 0x9e8
+	// Line 568, Address: 0x282050, Func Offset: 0xa00
+	// Line 570, Address: 0x282090, Func Offset: 0xa40
+	// Line 572, Address: 0x28209c, Func Offset: 0xa4c
+	// Line 576, Address: 0x2820b0, Func Offset: 0xa60
+	// Line 575, Address: 0x2820b4, Func Offset: 0xa64
+	// Line 576, Address: 0x2820b8, Func Offset: 0xa68
+	// Line 577, Address: 0x2820c8, Func Offset: 0xa78
+	// Line 578, Address: 0x2820d8, Func Offset: 0xa88
+	// Line 579, Address: 0x2820e8, Func Offset: 0xa98
+	// Line 580, Address: 0x2820f0, Func Offset: 0xaa0
+	// Line 582, Address: 0x282104, Func Offset: 0xab4
+	// Line 583, Address: 0x282108, Func Offset: 0xab8
+	// Line 586, Address: 0x28211c, Func Offset: 0xacc
+	// Line 589, Address: 0x282128, Func Offset: 0xad8
+	// Line 597, Address: 0x282144, Func Offset: 0xaf4
+	// Line 601, Address: 0x282158, Func Offset: 0xb08
+	// Line 602, Address: 0x282178, Func Offset: 0xb28
+	// Line 603, Address: 0x28219c, Func Offset: 0xb4c
+	// Line 604, Address: 0x2821a0, Func Offset: 0xb50
+	// Line 605, Address: 0x2821b0, Func Offset: 0xb60
+	// Line 606, Address: 0x2821b8, Func Offset: 0xb68
+	// Line 607, Address: 0x2821c0, Func Offset: 0xb70
+	// Line 608, Address: 0x2821c4, Func Offset: 0xb74
+	// Line 609, Address: 0x2821d0, Func Offset: 0xb80
+	// Line 611, Address: 0x2821d8, Func Offset: 0xb88
+	// Line 612, Address: 0x2821e0, Func Offset: 0xb90
+	// Line 613, Address: 0x2821e8, Func Offset: 0xb98
+	// Line 619, Address: 0x282208, Func Offset: 0xbb8
+	// Line 631, Address: 0x282210, Func Offset: 0xbc0
+	// Line 621, Address: 0x282214, Func Offset: 0xbc4
+	// Line 631, Address: 0x282218, Func Offset: 0xbc8
+	// Line 620, Address: 0x282220, Func Offset: 0xbd0
+	// Line 621, Address: 0x282224, Func Offset: 0xbd4
+	// Line 631, Address: 0x282228, Func Offset: 0xbd8
+	// Line 619, Address: 0x28222c, Func Offset: 0xbdc
+	// Line 621, Address: 0x282230, Func Offset: 0xbe0
+	// Line 631, Address: 0x282238, Func Offset: 0xbe8
+	// Line 620, Address: 0x28223c, Func Offset: 0xbec
+	// Line 621, Address: 0x282240, Func Offset: 0xbf0
+	// Line 622, Address: 0x282244, Func Offset: 0xbf4
+	// Line 624, Address: 0x282254, Func Offset: 0xc04
+	// Line 625, Address: 0x282258, Func Offset: 0xc08
+	// Line 626, Address: 0x28225c, Func Offset: 0xc0c
+	// Line 631, Address: 0x282260, Func Offset: 0xc10
+	// Line 632, Address: 0x282278, Func Offset: 0xc28
+	// Line 633, Address: 0x2822a4, Func Offset: 0xc54
+	// Line 634, Address: 0x2822cc, Func Offset: 0xc7c
+	// Line 636, Address: 0x2822d4, Func Offset: 0xc84
+	// Line 641, Address: 0x2822e8, Func Offset: 0xc98
+	// Line 646, Address: 0x2822ec, Func Offset: 0xc9c
+	// Line 641, Address: 0x2822f0, Func Offset: 0xca0
+	// Line 642, Address: 0x282308, Func Offset: 0xcb8
+	// Line 643, Address: 0x28230c, Func Offset: 0xcbc
+	// Line 644, Address: 0x282310, Func Offset: 0xcc0
+	// Line 646, Address: 0x282314, Func Offset: 0xcc4
+	// Line 648, Address: 0x282338, Func Offset: 0xce8
+	// Line 651, Address: 0x28233c, Func Offset: 0xcec
+	// Line 654, Address: 0x282348, Func Offset: 0xcf8
+	// Line 653, Address: 0x282350, Func Offset: 0xd00
+	// Line 651, Address: 0x282358, Func Offset: 0xd08
+	// Line 654, Address: 0x282368, Func Offset: 0xd18
+	// Line 655, Address: 0x28236c, Func Offset: 0xd1c
+	// Line 653, Address: 0x282370, Func Offset: 0xd20
+	// Line 651, Address: 0x282374, Func Offset: 0xd24
+	// Line 655, Address: 0x282378, Func Offset: 0xd28
+	// Line 654, Address: 0x28237c, Func Offset: 0xd2c
+	// Line 653, Address: 0x282380, Func Offset: 0xd30
+	// Line 655, Address: 0x282384, Func Offset: 0xd34
+	// Line 657, Address: 0x282388, Func Offset: 0xd38
+	// Line 658, Address: 0x28238c, Func Offset: 0xd3c
+	// Line 657, Address: 0x282390, Func Offset: 0xd40
+	// Line 658, Address: 0x282394, Func Offset: 0xd44
+	// Line 659, Address: 0x282398, Func Offset: 0xd48
+	// Line 661, Address: 0x28239c, Func Offset: 0xd4c
+	// Line 659, Address: 0x2823a0, Func Offset: 0xd50
+	// Line 662, Address: 0x2823a4, Func Offset: 0xd54
+	// Line 661, Address: 0x2823a8, Func Offset: 0xd58
+	// Line 663, Address: 0x2823ac, Func Offset: 0xd5c
+	// Line 662, Address: 0x2823b0, Func Offset: 0xd60
+	// Line 663, Address: 0x2823b4, Func Offset: 0xd64
+	// Line 665, Address: 0x2823b8, Func Offset: 0xd68
+	// Line 666, Address: 0x2823cc, Func Offset: 0xd7c
+	// Line 667, Address: 0x2823e0, Func Offset: 0xd90
+	// Line 668, Address: 0x2823f0, Func Offset: 0xda0
+	// Line 673, Address: 0x2823f8, Func Offset: 0xda8
+	// Line 674, Address: 0x2823fc, Func Offset: 0xdac
+	// Line 675, Address: 0x282414, Func Offset: 0xdc4
+	// Line 674, Address: 0x282418, Func Offset: 0xdc8
+	// Line 675, Address: 0x282450, Func Offset: 0xe00
+	// Line 676, Address: 0x282454, Func Offset: 0xe04
+	// Line 677, Address: 0x28245c, Func Offset: 0xe0c
+	// Line 679, Address: 0x282460, Func Offset: 0xe10
+	// Line 681, Address: 0x282470, Func Offset: 0xe20
+	// Line 680, Address: 0x282480, Func Offset: 0xe30
+	// Line 681, Address: 0x282484, Func Offset: 0xe34
+	// Line 687, Address: 0x282490, Func Offset: 0xe40
+	// Line 690, Address: 0x282498, Func Offset: 0xe48
+	// Line 687, Address: 0x2824a0, Func Offset: 0xe50
+	// Line 688, Address: 0x2824ac, Func Offset: 0xe5c
+	// Line 687, Address: 0x2824b0, Func Offset: 0xe60
+	// Line 688, Address: 0x2824b4, Func Offset: 0xe64
+	// Line 689, Address: 0x2824d0, Func Offset: 0xe80
+	// Line 690, Address: 0x2824ec, Func Offset: 0xe9c
+	// Line 693, Address: 0x2824f4, Func Offset: 0xea4
+	// Line 696, Address: 0x28250c, Func Offset: 0xebc
+	// Line 697, Address: 0x282518, Func Offset: 0xec8
+	// Line 698, Address: 0x28251c, Func Offset: 0xecc
+	// Line 699, Address: 0x2825c8, Func Offset: 0xf78
+	// Line 702, Address: 0x2825d0, Func Offset: 0xf80
+	// Line 699, Address: 0x2825d4, Func Offset: 0xf84
+	// Line 702, Address: 0x2825d8, Func Offset: 0xf88
+	// Line 704, Address: 0x2825e4, Func Offset: 0xf94
+	// Line 703, Address: 0x2825e8, Func Offset: 0xf98
+	// Line 705, Address: 0x2825ec, Func Offset: 0xf9c
+	// Line 706, Address: 0x2825f0, Func Offset: 0xfa0
+	// Line 707, Address: 0x2825fc, Func Offset: 0xfac
+	// Line 710, Address: 0x282600, Func Offset: 0xfb0
+	// Line 711, Address: 0x282608, Func Offset: 0xfb8
+	// Line 712, Address: 0x28261c, Func Offset: 0xfcc
+	// Line 713, Address: 0x28262c, Func Offset: 0xfdc
+	// Line 716, Address: 0x282630, Func Offset: 0xfe0
+	// Line 717, Address: 0x282638, Func Offset: 0xfe8
+	// Line 718, Address: 0x282644, Func Offset: 0xff4
+	// Line 719, Address: 0x282654, Func Offset: 0x1004
+	// Line 720, Address: 0x28265c, Func Offset: 0x100c
+	// Line 721, Address: 0x282664, Func Offset: 0x1014
+	// Line 722, Address: 0x282670, Func Offset: 0x1020
+	// Line 725, Address: 0x28267c, Func Offset: 0x102c
+	// Line 728, Address: 0x282694, Func Offset: 0x1044
+	// Line 725, Address: 0x28269c, Func Offset: 0x104c
+	// Line 726, Address: 0x2826a0, Func Offset: 0x1050
+	// Line 727, Address: 0x2826ac, Func Offset: 0x105c
+	// Line 728, Address: 0x2826b0, Func Offset: 0x1060
+	// Line 730, Address: 0x2826b8, Func Offset: 0x1068
+	// Line 731, Address: 0x2826c4, Func Offset: 0x1074
+	// Line 733, Address: 0x2826c8, Func Offset: 0x1078
+	// Line 735, Address: 0x2826e0, Func Offset: 0x1090
+	// Line 737, Address: 0x2826e8, Func Offset: 0x1098
+	// Line 741, Address: 0x282790, Func Offset: 0x1140
+	// Line 743, Address: 0x2827c4, Func Offset: 0x1174
+	// Line 746, Address: 0x2827dc, Func Offset: 0x118c
+	// Line 747, Address: 0x2827e4, Func Offset: 0x1194
+	// Line 748, Address: 0x2827f8, Func Offset: 0x11a8
+	// Line 749, Address: 0x282800, Func Offset: 0x11b0
+	// Line 750, Address: 0x282814, Func Offset: 0x11c4
+	// Line 753, Address: 0x282818, Func Offset: 0x11c8
+	// Line 754, Address: 0x28281c, Func Offset: 0x11cc
+	// Line 757, Address: 0x282824, Func Offset: 0x11d4
+	// Line 763, Address: 0x282870, Func Offset: 0x1220
+	// Line 764, Address: 0x28287c, Func Offset: 0x122c
+	// Line 765, Address: 0x28288c, Func Offset: 0x123c
+	// Line 768, Address: 0x2828a8, Func Offset: 0x1258
+	// Line 771, Address: 0x2828b0, Func Offset: 0x1260
+	// Line 774, Address: 0x2828b8, Func Offset: 0x1268
+	// Line 777, Address: 0x2828d8, Func Offset: 0x1288
+	// Line 778, Address: 0x2828e4, Func Offset: 0x1294
+	// Line 779, Address: 0x2828f4, Func Offset: 0x12a4
+	// Line 781, Address: 0x282908, Func Offset: 0x12b8
+	// Line 782, Address: 0x282910, Func Offset: 0x12c0
+	// Line 784, Address: 0x282914, Func Offset: 0x12c4
+	// Line 785, Address: 0x282918, Func Offset: 0x12c8
+	// Line 788, Address: 0x28291c, Func Offset: 0x12cc
+	// Line 785, Address: 0x282920, Func Offset: 0x12d0
+	// Line 788, Address: 0x282924, Func Offset: 0x12d4
+	// Line 789, Address: 0x282934, Func Offset: 0x12e4
+	// Line 790, Address: 0x282938, Func Offset: 0x12e8
+	// Line 791, Address: 0x282944, Func Offset: 0x12f4
+	// Line 795, Address: 0x282948, Func Offset: 0x12f8
+	// Line 798, Address: 0x282954, Func Offset: 0x1304
+	// Line 800, Address: 0x282968, Func Offset: 0x1318
+	// Line 801, Address: 0x282974, Func Offset: 0x1324
+	// Line 803, Address: 0x282978, Func Offset: 0x1328
+	// Line 804, Address: 0x282980, Func Offset: 0x1330
+	// Line 807, Address: 0x282988, Func Offset: 0x1338
+	// Func End, Address: 0x2829c0, Func Offset: 0x1370
 }
 
 // Recurse_TranslateStack__FP4xEntP5xVec3
@@ -3594,6 +4485,22 @@ void zThrown_Update(xEnt* ent, xScene* sc, float32 dt)
 void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
 {
 	uint32 i;
+	// Line 318, Address: 0x2829c0, Func Offset: 0
+	// Line 322, Address: 0x2829d4, Func Offset: 0x14
+	// Line 318, Address: 0x2829d8, Func Offset: 0x18
+	// Line 320, Address: 0x2829f4, Func Offset: 0x34
+	// Line 322, Address: 0x2829f8, Func Offset: 0x38
+	// Line 320, Address: 0x282a00, Func Offset: 0x40
+	// Line 322, Address: 0x282a04, Func Offset: 0x44
+	// Line 323, Address: 0x282a18, Func Offset: 0x58
+	// Line 326, Address: 0x282a28, Func Offset: 0x68
+	// Line 329, Address: 0x282b8c, Func Offset: 0x1cc
+	// Line 330, Address: 0x282ba8, Func Offset: 0x1e8
+	// Line 331, Address: 0x282bc4, Func Offset: 0x204
+	// Line 333, Address: 0x282be0, Func Offset: 0x220
+	// Line 334, Address: 0x282bf8, Func Offset: 0x238
+	// Line 335, Address: 0x282c04, Func Offset: 0x244
+	// Func End, Address: 0x282c34, Func Offset: 0x274
 }
 
 // zFruit_Update__FP4xEntP6xScenef
@@ -3603,6 +4510,71 @@ void zFruit_Update(xEnt* ent, xScene* sc, float32 dt)
 	uint32 i;
 	zThrownStruct* thrown;
 	zShrapnelAsset* shrap;
+	// Line 220, Address: 0x282c40, Func Offset: 0
+	// Line 222, Address: 0x282c48, Func Offset: 0x8
+	// Line 220, Address: 0x282c4c, Func Offset: 0xc
+	// Line 222, Address: 0x282c6c, Func Offset: 0x2c
+	// Line 225, Address: 0x282c78, Func Offset: 0x38
+	// Line 226, Address: 0x282c94, Func Offset: 0x54
+	// Line 229, Address: 0x282cf8, Func Offset: 0xb8
+	// Line 230, Address: 0x282d00, Func Offset: 0xc0
+	// Line 231, Address: 0x282d10, Func Offset: 0xd0
+	// Line 233, Address: 0x282d18, Func Offset: 0xd8
+	// Line 234, Address: 0x282d24, Func Offset: 0xe4
+	// Line 237, Address: 0x282d28, Func Offset: 0xe8
+	// Line 240, Address: 0x282d34, Func Offset: 0xf4
+	// Line 237, Address: 0x282d38, Func Offset: 0xf8
+	// Line 240, Address: 0x282d40, Func Offset: 0x100
+	// Line 237, Address: 0x282d48, Func Offset: 0x108
+	// Line 238, Address: 0x282d54, Func Offset: 0x114
+	// Line 239, Address: 0x282d60, Func Offset: 0x120
+	// Line 240, Address: 0x282d6c, Func Offset: 0x12c
+	// Line 241, Address: 0x282d7c, Func Offset: 0x13c
+	// Line 242, Address: 0x282d80, Func Offset: 0x140
+	// Line 246, Address: 0x282d88, Func Offset: 0x148
+	// Line 247, Address: 0x282d98, Func Offset: 0x158
+	// Line 248, Address: 0x282da8, Func Offset: 0x168
+	// Line 254, Address: 0x282db0, Func Offset: 0x170
+	// Line 255, Address: 0x282dc8, Func Offset: 0x188
+	// Line 257, Address: 0x282dd4, Func Offset: 0x194
+	// Line 259, Address: 0x282de8, Func Offset: 0x1a8
+	// Line 262, Address: 0x282df0, Func Offset: 0x1b0
+	// Line 259, Address: 0x282df4, Func Offset: 0x1b4
+	// Line 262, Address: 0x282e08, Func Offset: 0x1c8
+	// Line 263, Address: 0x282e18, Func Offset: 0x1d8
+	// Line 266, Address: 0x282e28, Func Offset: 0x1e8
+	// Line 269, Address: 0x282e40, Func Offset: 0x200
+	// Line 271, Address: 0x282e4c, Func Offset: 0x20c
+	// Line 272, Address: 0x282e50, Func Offset: 0x210
+	// Line 275, Address: 0x282ef8, Func Offset: 0x2b8
+	// Line 277, Address: 0x282f08, Func Offset: 0x2c8
+	// Line 276, Address: 0x282f0c, Func Offset: 0x2cc
+	// Line 279, Address: 0x282f10, Func Offset: 0x2d0
+	// Line 280, Address: 0x282f1c, Func Offset: 0x2dc
+	// Line 285, Address: 0x282f20, Func Offset: 0x2e0
+	// Line 286, Address: 0x282f28, Func Offset: 0x2e8
+	// Line 287, Address: 0x282f3c, Func Offset: 0x2fc
+	// Line 288, Address: 0x282f4c, Func Offset: 0x30c
+	// Line 291, Address: 0x282f50, Func Offset: 0x310
+	// Line 292, Address: 0x282f58, Func Offset: 0x318
+	// Line 293, Address: 0x282f64, Func Offset: 0x324
+	// Line 294, Address: 0x282f74, Func Offset: 0x334
+	// Line 295, Address: 0x282f7c, Func Offset: 0x33c
+	// Line 296, Address: 0x282f84, Func Offset: 0x344
+	// Line 297, Address: 0x282f90, Func Offset: 0x350
+	// Line 300, Address: 0x282f9c, Func Offset: 0x35c
+	// Line 303, Address: 0x282fb4, Func Offset: 0x374
+	// Line 300, Address: 0x282fbc, Func Offset: 0x37c
+	// Line 301, Address: 0x282fc0, Func Offset: 0x380
+	// Line 302, Address: 0x282fcc, Func Offset: 0x38c
+	// Line 303, Address: 0x282fd0, Func Offset: 0x390
+	// Line 305, Address: 0x282fd8, Func Offset: 0x398
+	// Line 306, Address: 0x282fe4, Func Offset: 0x3a4
+	// Line 308, Address: 0x282fe8, Func Offset: 0x3a8
+	// Line 310, Address: 0x282ffc, Func Offset: 0x3bc
+	// Line 311, Address: 0x283008, Func Offset: 0x3c8
+	// Line 314, Address: 0x2830b0, Func Offset: 0x470
+	// Func End, Address: 0x2830cc, Func Offset: 0x48c
 }
 
 // zThrown_Setup__FP6zScene
@@ -3611,6 +4583,54 @@ void zThrown_Setup(zScene* sc)
 {
 	uint32 i;
 	ThrowableStats* stats;
-	type_137 tmpstr;
+	int8 tmpstr[256];
+	// Line 123, Address: 0x2830d0, Func Offset: 0
+	// Line 128, Address: 0x2830d4, Func Offset: 0x4
+	// Line 123, Address: 0x2830d8, Func Offset: 0x8
+	// Line 125, Address: 0x2830dc, Func Offset: 0xc
+	// Line 123, Address: 0x2830e0, Func Offset: 0x10
+	// Line 128, Address: 0x2830e4, Func Offset: 0x14
+	// Line 123, Address: 0x2830e8, Func Offset: 0x18
+	// Line 135, Address: 0x2830ec, Func Offset: 0x1c
+	// Line 125, Address: 0x2830f0, Func Offset: 0x20
+	// Line 135, Address: 0x2830f8, Func Offset: 0x28
+	// Line 125, Address: 0x2830fc, Func Offset: 0x2c
+	// Line 128, Address: 0x283108, Func Offset: 0x38
+	// Line 131, Address: 0x283114, Func Offset: 0x44
+	// Line 128, Address: 0x283118, Func Offset: 0x48
+	// Line 130, Address: 0x283120, Func Offset: 0x50
+	// Line 131, Address: 0x283124, Func Offset: 0x54
+	// Line 136, Address: 0x283130, Func Offset: 0x60
+	// Line 130, Address: 0x283138, Func Offset: 0x68
+	// Line 131, Address: 0x283140, Func Offset: 0x70
+	// Line 136, Address: 0x283148, Func Offset: 0x78
+	// Line 138, Address: 0x283150, Func Offset: 0x80
+	// Line 139, Address: 0x28315c, Func Offset: 0x8c
+	// Line 140, Address: 0x283168, Func Offset: 0x98
+	// Line 141, Address: 0x283178, Func Offset: 0xa8
+	// Line 144, Address: 0x283184, Func Offset: 0xb4
+	// Line 145, Address: 0x283190, Func Offset: 0xc0
+	// Line 146, Address: 0x2831a4, Func Offset: 0xd4
+	// Line 147, Address: 0x2831b0, Func Offset: 0xe0
+	// Line 148, Address: 0x2831b4, Func Offset: 0xe4
+	// Line 150, Address: 0x2831b8, Func Offset: 0xe8
+	// Line 151, Address: 0x2831bc, Func Offset: 0xec
+	// Line 153, Address: 0x2831c8, Func Offset: 0xf8
+	// Line 154, Address: 0x2831dc, Func Offset: 0x10c
+	// Line 153, Address: 0x2831e4, Func Offset: 0x114
+	// Line 154, Address: 0x2831f8, Func Offset: 0x128
+	// Line 158, Address: 0x283208, Func Offset: 0x138
+	// Line 157, Address: 0x283210, Func Offset: 0x140
+	// Line 158, Address: 0x283214, Func Offset: 0x144
+	// Line 159, Address: 0x283228, Func Offset: 0x158
+	// Line 161, Address: 0x283248, Func Offset: 0x178
+	// Line 162, Address: 0x283254, Func Offset: 0x184
+	// Line 163, Address: 0x28326c, Func Offset: 0x19c
+	// Line 164, Address: 0x283274, Func Offset: 0x1a4
+	// Line 165, Address: 0x283278, Func Offset: 0x1a8
+	// Line 166, Address: 0x28327c, Func Offset: 0x1ac
+	// Line 168, Address: 0x283288, Func Offset: 0x1b8
+	// Line 169, Address: 0x2832a0, Func Offset: 0x1d0
+	// Func End, Address: 0x2832b4, Func Offset: 0x1e4
 }
 

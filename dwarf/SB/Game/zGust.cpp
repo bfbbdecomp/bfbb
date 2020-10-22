@@ -44,7 +44,7 @@ typedef struct zGustData;
 typedef struct RxPipelineRequiresCluster;
 typedef struct xAnimTable;
 typedef struct xParEmitterAsset;
-typedef union _class_1;
+typedef struct _class_1;
 typedef struct xAnimTransition;
 typedef struct xEntAsset;
 typedef struct _tagEmitOffsetPoint;
@@ -214,7 +214,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_1 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct zGust : xBase
@@ -235,7 +235,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_35 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -319,7 +319,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_32 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct zGustAsset : xBaseAsset
@@ -388,14 +388,14 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_3 resolvID;
-	type_9 base2Name;
-	type_12 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_43 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RpInterpolator
@@ -502,7 +502,7 @@ struct RwRGBA
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_13 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xQuat
@@ -520,7 +520,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_22 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -546,16 +546,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_34 update;
-	type_34 endUpdate;
-	type_38 bupdate;
-	type_40 move;
-	type_41 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_47 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -591,7 +591,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_45 pad;
+	uint32 pad[4];
 };
 
 struct xParGroup
@@ -624,8 +624,8 @@ struct RpMaterial
 struct zGustData
 {
 	uint32 gust_on;
-	type_18 g;
-	type_20 lerp;
+	zGust* g[4];
+	float32 lerp[4];
 };
 
 struct RxPipelineRequiresCluster
@@ -672,18 +672,21 @@ struct xParEmitterAsset : xBaseAsset
 	float32 cull_dist_sqr;
 };
 
-union _class_1
+struct _class_1
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_36 Conditional;
-	type_36 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -726,7 +729,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_23 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xParEmitter : xBase
@@ -740,8 +743,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_28 emit_pad;
-	type_30 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -757,13 +760,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_49 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_57 color_birth;
-	type_59 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -784,7 +787,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_50 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -808,9 +811,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_4 BeforeEnter;
-	type_7 StateCallback;
-	type_10 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpWorldSector
@@ -819,7 +822,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_24 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -870,7 +873,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_51 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -887,8 +890,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_52 light;
-	type_54 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -982,7 +985,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_42 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -999,7 +1002,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_29 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -1043,7 +1046,7 @@ struct RpMeshHeader
 
 struct xParInterp
 {
-	type_26 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -1051,7 +1054,7 @@ struct xParInterp
 
 struct xShadowSimplePoly
 {
-	type_27 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1067,7 +1070,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_60 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 enum RxNodeDefEditable
@@ -1100,7 +1103,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_44 wt;
+	float32 wt[4];
 };
 
 struct xAnimEffect
@@ -1109,12 +1112,12 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_25 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RpTriangle
 {
-	type_31 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -1129,7 +1132,7 @@ enum rxEmbeddedPacketState
 
 struct xJSPHeader
 {
-	type_33 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1158,7 +1161,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_39 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1206,7 +1209,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_48 corner;
+	xVec3 corner[4];
 };
 
 struct xAnimPlay
@@ -1219,7 +1222,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_10 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xEntCollis
@@ -1235,9 +1238,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_56 colls;
-	type_37 post;
-	type_46 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct xBox
@@ -1354,8 +1357,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_55 name;
-	type_58 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -1375,7 +1378,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_0 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -1433,7 +1436,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_11 radius;
+	float32 radius[2];
 };
 
 struct xMemPool
@@ -1442,7 +1445,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_53 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -1464,13 +1467,13 @@ struct xVolumeAsset : xBaseAsset
 
 struct RxNodeMethods
 {
-	type_16 nodeBody;
-	type_17 nodeInit;
-	type_19 nodeTerm;
-	type_21 pipelineNodeInit;
-	type_2 pipelineNodeTerm;
-	type_6 pipelineNodeConfig;
-	type_14 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RwFrame
@@ -1511,7 +1514,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_62 clusters;
+	RxCluster clusters[1];
 };
 
 struct xPEEntBound
@@ -1563,20 +1566,20 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_5 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
 	void* emit_volume;
 };
 
-type_8 buffer;
-type_15 buffer;
+int8 buffer[16];
+int8 buffer[16];
 zGust* gusts;
 uint16 ngusts;
 zParEmitter* sGustDustEmitter;
 zParEmitter* sGustDebrisEmitter;
-type_61 zGustEventCB;
+int32(*zGustEventCB)(xBase*, xBase*, uint32, float32*, xBase*);
 uint32 gActiveHeap;
 
 void zGustUpdateFX(float32 seconds);
@@ -1594,6 +1597,15 @@ void zGustInit();
 void zGustUpdateFX(float32 seconds)
 {
 	int32 i;
+	// Line 509, Address: 0x17f090, Func Offset: 0
+	// Line 510, Address: 0x17f0a0, Func Offset: 0x10
+	// Line 509, Address: 0x17f0a4, Func Offset: 0x14
+	// Line 510, Address: 0x17f0a8, Func Offset: 0x18
+	// Line 512, Address: 0x17f0c8, Func Offset: 0x38
+	// Line 514, Address: 0x17f0d8, Func Offset: 0x48
+	// Line 516, Address: 0x17f0e0, Func Offset: 0x50
+	// Line 517, Address: 0x17f0f8, Func Offset: 0x68
+	// Func End, Address: 0x17f110, Func Offset: 0x80
 }
 
 // UpdateGustFX__FP5zGustf
@@ -1606,6 +1618,67 @@ void UpdateGustFX(zGust* g, float32 seconds)
 	int32 total_debris;
 	int32 vol_area;
 	int32 i;
+	// Line 410, Address: 0x17f110, Func Offset: 0
+	// Line 417, Address: 0x17f118, Func Offset: 0x8
+	// Line 410, Address: 0x17f11c, Func Offset: 0xc
+	// Line 417, Address: 0x17f144, Func Offset: 0x34
+	// Line 421, Address: 0x17f158, Func Offset: 0x48
+	// Line 422, Address: 0x17f160, Func Offset: 0x50
+	// Line 433, Address: 0x17f16c, Func Offset: 0x5c
+	// Line 434, Address: 0x17f18c, Func Offset: 0x7c
+	// Line 438, Address: 0x17f1b4, Func Offset: 0xa4
+	// Line 439, Address: 0x17f1c0, Func Offset: 0xb0
+	// Line 440, Address: 0x17f1c8, Func Offset: 0xb8
+	// Line 443, Address: 0x17f1d0, Func Offset: 0xc0
+	// Line 444, Address: 0x17f1d4, Func Offset: 0xc4
+	// Line 445, Address: 0x17f1e0, Func Offset: 0xd0
+	// Line 446, Address: 0x17f1e8, Func Offset: 0xd8
+	// Line 447, Address: 0x17f1f0, Func Offset: 0xe0
+	// Line 449, Address: 0x17f1f8, Func Offset: 0xe8
+	// Line 454, Address: 0x17f21c, Func Offset: 0x10c
+	// Line 455, Address: 0x17f23c, Func Offset: 0x12c
+	// Line 460, Address: 0x17f244, Func Offset: 0x134
+	// Line 462, Address: 0x17f268, Func Offset: 0x158
+	// Line 465, Address: 0x17f278, Func Offset: 0x168
+	// Line 466, Address: 0x17f280, Func Offset: 0x170
+	// Line 465, Address: 0x17f288, Func Offset: 0x178
+	// Line 466, Address: 0x17f28c, Func Offset: 0x17c
+	// Line 469, Address: 0x17f2a0, Func Offset: 0x190
+	// Line 470, Address: 0x17f2c0, Func Offset: 0x1b0
+	// Line 480, Address: 0x17f2d4, Func Offset: 0x1c4
+	// Line 474, Address: 0x17f2d8, Func Offset: 0x1c8
+	// Line 470, Address: 0x17f2dc, Func Offset: 0x1cc
+	// Line 480, Address: 0x17f2e0, Func Offset: 0x1d0
+	// Line 473, Address: 0x17f2e4, Func Offset: 0x1d4
+	// Line 470, Address: 0x17f2e8, Func Offset: 0x1d8
+	// Line 473, Address: 0x17f2f0, Func Offset: 0x1e0
+	// Line 474, Address: 0x17f2f4, Func Offset: 0x1e4
+	// Line 475, Address: 0x17f2f8, Func Offset: 0x1e8
+	// Line 479, Address: 0x17f300, Func Offset: 0x1f0
+	// Line 480, Address: 0x17f318, Func Offset: 0x208
+	// Line 481, Address: 0x17f320, Func Offset: 0x210
+	// Line 488, Address: 0x17f328, Func Offset: 0x218
+	// Line 489, Address: 0x17f334, Func Offset: 0x224
+	// Line 490, Address: 0x17f350, Func Offset: 0x240
+	// Line 491, Address: 0x17f370, Func Offset: 0x260
+	// Line 494, Address: 0x17f37c, Func Offset: 0x26c
+	// Line 497, Address: 0x17f384, Func Offset: 0x274
+	// Line 491, Address: 0x17f38c, Func Offset: 0x27c
+	// Line 494, Address: 0x17f39c, Func Offset: 0x28c
+	// Line 495, Address: 0x17f3b0, Func Offset: 0x2a0
+	// Line 496, Address: 0x17f3c0, Func Offset: 0x2b0
+	// Line 497, Address: 0x17f3d4, Func Offset: 0x2c4
+	// Line 498, Address: 0x17f3e4, Func Offset: 0x2d4
+	// Line 499, Address: 0x17f3e8, Func Offset: 0x2d8
+	// Line 500, Address: 0x17f3ec, Func Offset: 0x2dc
+	// Line 499, Address: 0x17f3fc, Func Offset: 0x2ec
+	// Line 500, Address: 0x17f400, Func Offset: 0x2f0
+	// Line 499, Address: 0x17f404, Func Offset: 0x2f4
+	// Line 500, Address: 0x17f40c, Func Offset: 0x2fc
+	// Line 501, Address: 0x17f414, Func Offset: 0x304
+	// Line 503, Address: 0x17f424, Func Offset: 0x314
+	// Line 504, Address: 0x17f428, Func Offset: 0x318
+	// Func End, Address: 0x17f45c, Func Offset: 0x34c
 }
 
 // zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase
@@ -1613,18 +1686,40 @@ void UpdateGustFX(zGust* g, float32 seconds)
 int32 zGustEventCB(xBase* to, uint32 toEvent)
 {
 	zGust* g;
+	// Line 378, Address: 0x17f460, Func Offset: 0
+	// Line 386, Address: 0x17f464, Func Offset: 0x4
+	// Line 378, Address: 0x17f468, Func Offset: 0x8
+	// Line 386, Address: 0x17f470, Func Offset: 0x10
+	// Line 389, Address: 0x17f4a0, Func Offset: 0x40
+	// Line 390, Address: 0x17f4b4, Func Offset: 0x54
+	// Line 392, Address: 0x17f4bc, Func Offset: 0x5c
+	// Line 393, Address: 0x17f4c0, Func Offset: 0x60
+	// Line 394, Address: 0x17f4cc, Func Offset: 0x6c
+	// Line 396, Address: 0x17f4d4, Func Offset: 0x74
+	// Line 397, Address: 0x17f4d8, Func Offset: 0x78
+	// Line 398, Address: 0x17f4ec, Func Offset: 0x8c
+	// Line 400, Address: 0x17f4f4, Func Offset: 0x94
+	// Line 401, Address: 0x17f4f8, Func Offset: 0x98
+	// Line 405, Address: 0x17f510, Func Offset: 0xb0
+	// Line 404, Address: 0x17f518, Func Offset: 0xb8
+	// Line 405, Address: 0x17f51c, Func Offset: 0xbc
+	// Func End, Address: 0x17f524, Func Offset: 0xc4
 }
 
 // zGustLoad__FP5zGustP7xSerial
 // Start address: 0x17f530
 void zGustLoad(zGust* ent, xSerial* s)
 {
+	// Line 347, Address: 0x17f530, Func Offset: 0
+	// Func End, Address: 0x17f538, Func Offset: 0x8
 }
 
 // zGustSave__FP5zGustP7xSerial
 // Start address: 0x17f540
 void zGustSave(zGust* ent, xSerial* s)
 {
+	// Line 328, Address: 0x17f540, Func Offset: 0
+	// Func End, Address: 0x17f548, Func Offset: 0x8
 }
 
 // zGustUpdateEnt__FP4xEntP6xScenefPv
@@ -1640,12 +1735,73 @@ void zGustUpdateEnt(xEnt* ent, float32 dt, void* gdata)
 	float32 lerpinc;
 	xVec3* gvel;
 	xVec3 dpos;
+	// Line 183, Address: 0x17f550, Func Offset: 0
+	// Line 189, Address: 0x17f570, Func Offset: 0x20
+	// Line 197, Address: 0x17f57c, Func Offset: 0x2c
+	// Line 201, Address: 0x17f580, Func Offset: 0x30
+	// Line 205, Address: 0x17f584, Func Offset: 0x34
+	// Line 208, Address: 0x17f590, Func Offset: 0x40
+	// Line 214, Address: 0x17f5b4, Func Offset: 0x64
+	// Line 218, Address: 0x17f5cc, Func Offset: 0x7c
+	// Line 219, Address: 0x17f5dc, Func Offset: 0x8c
+	// Line 221, Address: 0x17f600, Func Offset: 0xb0
+	// Line 223, Address: 0x17f618, Func Offset: 0xc8
+	// Line 224, Address: 0x17f61c, Func Offset: 0xcc
+	// Line 225, Address: 0x17f620, Func Offset: 0xd0
+	// Line 231, Address: 0x17f634, Func Offset: 0xe4
+	// Line 232, Address: 0x17f648, Func Offset: 0xf8
+	// Line 233, Address: 0x17f654, Func Offset: 0x104
+	// Line 234, Address: 0x17f66c, Func Offset: 0x11c
+	// Line 233, Address: 0x17f674, Func Offset: 0x124
+	// Line 236, Address: 0x17f67c, Func Offset: 0x12c
+	// Line 237, Address: 0x17f688, Func Offset: 0x138
+	// Line 239, Address: 0x17f6b0, Func Offset: 0x160
+	// Line 240, Address: 0x17f6d4, Func Offset: 0x184
+	// Line 241, Address: 0x17f6d8, Func Offset: 0x188
+	// Line 249, Address: 0x17f6e0, Func Offset: 0x190
+	// Line 251, Address: 0x17f6f4, Func Offset: 0x1a4
+	// Line 254, Address: 0x17f710, Func Offset: 0x1c0
+	// Line 257, Address: 0x17f720, Func Offset: 0x1d0
+	// Line 261, Address: 0x17f734, Func Offset: 0x1e4
+	// Line 266, Address: 0x17f744, Func Offset: 0x1f4
+	// Line 267, Address: 0x17f758, Func Offset: 0x208
+	// Line 271, Address: 0x17f768, Func Offset: 0x218
+	// Line 276, Address: 0x17f770, Func Offset: 0x220
+	// Line 277, Address: 0x17f774, Func Offset: 0x224
+	// Line 276, Address: 0x17f778, Func Offset: 0x228
+	// Line 277, Address: 0x17f780, Func Offset: 0x230
+	// Line 280, Address: 0x17f78c, Func Offset: 0x23c
+	// Line 281, Address: 0x17f794, Func Offset: 0x244
+	// Line 284, Address: 0x17f7a4, Func Offset: 0x254
+	// Line 287, Address: 0x17f7b0, Func Offset: 0x260
+	// Line 288, Address: 0x17f7b8, Func Offset: 0x268
+	// Line 294, Address: 0x17f7c8, Func Offset: 0x278
+	// Line 295, Address: 0x17f7d4, Func Offset: 0x284
+	// Line 296, Address: 0x17f7d8, Func Offset: 0x288
+	// Line 299, Address: 0x17f7ec, Func Offset: 0x29c
+	// Line 300, Address: 0x17f7f0, Func Offset: 0x2a0
+	// Line 303, Address: 0x17f800, Func Offset: 0x2b0
+	// Line 307, Address: 0x17f814, Func Offset: 0x2c4
+	// Line 310, Address: 0x17f818, Func Offset: 0x2c8
+	// Line 312, Address: 0x17f81c, Func Offset: 0x2cc
+	// Line 310, Address: 0x17f820, Func Offset: 0x2d0
+	// Line 312, Address: 0x17f828, Func Offset: 0x2d8
+	// Line 313, Address: 0x17f840, Func Offset: 0x2f0
+	// Line 312, Address: 0x17f844, Func Offset: 0x2f4
+	// Line 313, Address: 0x17f858, Func Offset: 0x308
+	// Line 314, Address: 0x17f88c, Func Offset: 0x33c
+	// Line 315, Address: 0x17f8a4, Func Offset: 0x354
+	// Func End, Address: 0x17f8c8, Func Offset: 0x378
 }
 
 // zGustGetGust__FUs
 // Start address: 0x17f8d0
 zGust* zGustGetGust(uint16 n)
 {
+	// Line 161, Address: 0x17f8d0, Func Offset: 0
+	// Line 165, Address: 0x17f8d4, Func Offset: 0x4
+	// Line 170, Address: 0x17f8f0, Func Offset: 0x20
+	// Func End, Address: 0x17f8f8, Func Offset: 0x28
 }
 
 // zGustSetup__Fv
@@ -1653,6 +1809,17 @@ zGust* zGustGetGust(uint16 n)
 void zGustSetup()
 {
 	uint16 i;
+	// Line 104, Address: 0x17f900, Func Offset: 0
+	// Line 106, Address: 0x17f914, Func Offset: 0x14
+	// Line 111, Address: 0x17f920, Func Offset: 0x20
+	// Line 112, Address: 0x17f938, Func Offset: 0x38
+	// Line 113, Address: 0x17f960, Func Offset: 0x60
+	// Line 115, Address: 0x17f978, Func Offset: 0x78
+	// Line 116, Address: 0x17f98c, Func Offset: 0x8c
+	// Line 115, Address: 0x17f990, Func Offset: 0x90
+	// Line 116, Address: 0x17f994, Func Offset: 0x94
+	// Line 117, Address: 0x17f9a8, Func Offset: 0xa8
+	// Func End, Address: 0x17f9c0, Func Offset: 0xc0
 }
 
 // zGustInit__Fv
@@ -1662,5 +1829,22 @@ void zGustInit()
 	uint16 i;
 	uint32 size;
 	zGustAsset* asset;
+	// Line 82, Address: 0x17f9c0, Func Offset: 0
+	// Line 83, Address: 0x17f9c4, Func Offset: 0x4
+	// Line 82, Address: 0x17f9c8, Func Offset: 0x8
+	// Line 83, Address: 0x17f9cc, Func Offset: 0xc
+	// Line 82, Address: 0x17f9d0, Func Offset: 0x10
+	// Line 83, Address: 0x17f9dc, Func Offset: 0x1c
+	// Line 86, Address: 0x17f9ec, Func Offset: 0x2c
+	// Line 87, Address: 0x17f9f4, Func Offset: 0x34
+	// Line 90, Address: 0x17fa10, Func Offset: 0x50
+	// Line 92, Address: 0x17fa28, Func Offset: 0x68
+	// Line 95, Address: 0x17fa40, Func Offset: 0x80
+	// Line 96, Address: 0x17fa9c, Func Offset: 0xdc
+	// Line 97, Address: 0x17fab4, Func Offset: 0xf4
+	// Line 98, Address: 0x17fac0, Func Offset: 0x100
+	// Line 99, Address: 0x17fac4, Func Offset: 0x104
+	// Line 100, Address: 0x17fac8, Func Offset: 0x108
+	// Func End, Address: 0x17fae4, Func Offset: 0x124
 }
 

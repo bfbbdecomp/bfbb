@@ -56,7 +56,7 @@ typedef struct xUpdateCullGroup;
 typedef struct _zPortal;
 typedef struct rxHeapFreeBlock;
 typedef struct RwRaster;
-typedef union zFragInfo;
+typedef struct zFragInfo;
 typedef struct RxPipelineNodeTopSortData;
 typedef struct zFrag;
 typedef struct RwV2d;
@@ -212,7 +212,7 @@ typedef struct xEntMotionPenData;
 typedef struct zFragBone;
 typedef struct _class_3;
 typedef struct _tagPadAnalog;
-typedef union _class_4;
+typedef struct _class_4;
 typedef struct xEnv;
 typedef struct xBox;
 typedef struct RpMeshHeader;
@@ -231,7 +231,7 @@ typedef struct RpTriangle;
 typedef struct _tagEmitSphere;
 typedef struct xCutsceneMgr;
 typedef struct RwTexDictionary;
-typedef union zFragLocInfo;
+typedef struct zFragLocInfo;
 typedef struct zLasso;
 typedef struct RxOutputSpec;
 typedef struct xEntMotionERData;
@@ -317,7 +317,7 @@ typedef int32(*type_112)(void*, void*);
 typedef void(*type_116)(int32*, en_trantype*);
 typedef void(*type_117)(zFrag*, zFragAsset*);
 typedef int32(*type_128)(void*, void*);
-typedef void(*type_130)(zShrapnelAsset*, xModelInstance*, xVec3*, type_117);
+typedef void(*type_130)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 typedef RpAtomic*(*type_134)(RpAtomic*);
 typedef void(*type_135)(xEnt*, xScene*, float32);
 typedef void(*type_137)(xEnt*, xScene*, float32, xEntFrame*);
@@ -391,13 +391,13 @@ typedef float32 type_93[4];
 typedef xModelTag type_95[20];
 typedef float32 type_97[1];
 typedef float32 type_98[12];
-typedef type_97 type_99[5];
+typedef float32 type_99[1][5];
 typedef xVec3 type_100[9];
 typedef int32 type_102[5];
 typedef RwTexCoords* type_103[8];
 typedef int8 type_105[128];
 typedef xCutsceneZbuffer type_106[4];
-typedef type_105 type_107[6];
+typedef int8 type_107[128][6];
 typedef xVec3 type_108[5];
 typedef uint8 type_109[2];
 typedef xVec3 type_110[2];
@@ -463,7 +463,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_101 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xShadowSimpleCache
@@ -481,7 +481,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_155 corner;
+	xVec3 corner[4];
 };
 
 struct RwResEntry
@@ -490,7 +490,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_13 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xEntNPCAsset
@@ -542,16 +542,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_135 update;
-	type_135 endUpdate;
-	type_8 bupdate;
-	type_137 move;
-	type_141 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_38 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -579,9 +579,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_104 BeforeEnter;
-	type_83 StateCallback;
-	type_4 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RxNodeDefinition
@@ -600,7 +600,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_103 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -653,7 +653,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_73 radius;
+	float32 radius[2];
 };
 
 struct RpMorphTarget
@@ -705,6 +705,14 @@ struct zNPCMgr : RyzMemData
 	xFactory* npcFactory;
 	xBehaveMgr* bmgr;
 	xBase selfbase;
+
+	en_NPCTYPES NPCTypeForModel(uint32 brainID, uint32 mdl_hash);
+	xEnt* CreateNPC(xEntAsset* asset);
+	void ScenePostParticleRender();
+	void ScenePostRender();
+	void SceneFinish();
+	void Shutdown();
+	void* __dt();
 };
 
 enum RwFogType
@@ -754,14 +762,14 @@ struct NPCConfig : xListItem_0
 	float32 rad_shadowRaster;
 	float32 rad_dmgSize;
 	int32 flg_vert;
-	type_95 tag_vert;
-	type_100 animFrameRange;
-	type_102 cnt_esteem;
+	xModelTag tag_vert[20];
+	xVec3 animFrameRange[9];
+	int32 cnt_esteem[5];
 	float32 rad_sound;
 	NPCSndTrax* snd_trax;
 	NPCSndTrax* snd_traxShare;
 	int32 test_count;
-	type_123 talk_filter;
+	uint8 talk_filter[4];
 	uint8 talk_filter_size;
 };
 
@@ -769,7 +777,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_1 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -796,13 +804,13 @@ struct xPsyche : RyzMemData
 	xPSYNote* cb_notice;
 	int32 flg_psyche;
 	xGoal* goallist;
-	type_90 goalstak;
-	type_99 tmr_stack;
+	xGoal* goalstak[5];
+	float32 tmr_stack[1][5];
 	int32 staktop;
 	xGoal* pendgoal;
 	en_pendtype pendtype;
 	int32 gid_safegoal;
-	type_116 fun_remap;
+	void(*fun_remap)(int32*, en_trantype*);
 	void* userContext;
 	int32 cnt_transLastTimestep;
 	PSY_BRAIN_STATUS psystat;
@@ -817,7 +825,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_15 clusters;
+	RxCluster clusters[1];
 };
 
 struct xEntDrive
@@ -893,7 +901,7 @@ struct zNPCCommon : xNPCBasic
 	xModelAssetParam* parmdata;
 	uint32 pdatsize;
 	zNPCLassoInfo* lassdata;
-	type_67 snd_queue;
+	NPCSndQueue snd_queue[4];
 };
 
 enum _tagRumbleType
@@ -918,7 +926,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_20 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xEntMechData
@@ -990,7 +998,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_9 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -1005,9 +1013,9 @@ struct xGoal : xListItem_1, xFactoryInst
 	int32 goalID;
 	en_GOALSTATE stat;
 	int32 flg_able;
-	type_56 fun_process;
-	type_29 fun_precalc;
-	type_44 fun_chkRule;
+	int32(*fun_process)(xGoal*, void*, en_trantype*, float32, void*);
+	int32(*fun_precalc)(xGoal*, void*, float32, void*);
+	int32(*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
 	void* cbdata;
 };
 
@@ -1060,8 +1068,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_36 light;
-	type_41 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -1079,8 +1087,8 @@ struct xCutsceneInfo
 	uint32 VisSize;
 	uint32 BreakCount;
 	uint32 pad;
-	type_53 SoundLeft;
-	type_58 SoundRight;
+	int8 SoundLeft[16];
+	int8 SoundRight[16];
 };
 
 struct analog_data
@@ -1107,8 +1115,8 @@ struct xParEmitter : xBase
 	float32 rate_fraction;
 	float32 rate_fraction_cull;
 	uint8 emit_flags;
-	type_47 emit_pad;
-	type_51 rot;
+	uint8 emit_pad[3];
+	uint8 rot[3];
 	xModelTag tag;
 	float32 oocull_distance_sqr;
 	float32 distance_to_cull_sqr;
@@ -1135,8 +1143,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_65 Conditional;
-	type_65 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -1149,7 +1157,7 @@ struct xAnimTransition
 
 struct zFragGroup
 {
-	type_24 list;
+	zFrag* list[21];
 };
 
 struct xUpdateCullGroup
@@ -1192,14 +1200,17 @@ struct RwRaster
 	int32 originalStride;
 };
 
-union zFragInfo
+struct zFragInfo
 {
-	zFragGroup group;
-	zFragParticle particle;
-	zFragProjectile projectile;
-	zFragLightning lightning;
-	zFragSound sound;
-	zFragShockwave shockwave;
+	union
+	{
+		zFragGroup group;
+		zFragParticle particle;
+		zFragProjectile projectile;
+		zFragLightning lightning;
+		zFragSound sound;
+		zFragShockwave shockwave;
+	};
 };
 
 struct RxPipelineNodeTopSortData
@@ -1216,8 +1227,8 @@ struct zFrag
 	float32 delay;
 	float32 alivetime;
 	float32 lifetime;
-	type_59 update;
-	type_71 parent;
+	void(*update)(zFrag*, float32);
+	xModelInstance* parent[2];
 	zFrag* prev;
 	zFrag* next;
 };
@@ -1378,9 +1389,9 @@ struct xCutscene
 	void* MemCurr;
 	uint32 SndStarted;
 	uint32 SndNumChannel;
-	type_111 SndChannelReq;
-	type_118 SndAssetID;
-	type_124 SndHandle;
+	uint32 SndChannelReq[2];
+	uint32 SndAssetID[2];
+	uint32 SndHandle[2];
 	XCSNNosey* cb_nosey;
 };
 
@@ -1462,7 +1473,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_76 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -1474,7 +1485,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_115 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -1500,10 +1511,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_19 Inv_PatsSock;
-	type_23 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_31 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -1515,21 +1526,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_64 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_87 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_113 sb_model_indices;
-	type_120 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -1546,13 +1557,13 @@ struct xParEmitterPropsAsset : xBaseAsset
 	union
 	{
 		xParInterp rate;
-		type_126 value;
+		xParInterp value[1];
 	};
 	xParInterp life;
 	xParInterp size_birth;
 	xParInterp size_death;
-	type_142 color_birth;
-	type_145 color_death;
+	xParInterp color_birth[4];
+	xParInterp color_death[4];
 	xParInterp vel_scale;
 	xParInterp vel_angle;
 	xVec3 vel;
@@ -1570,7 +1581,7 @@ struct xCutsceneTime
 
 struct xJSPHeader
 {
-	type_149 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1660,9 +1671,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_21 colls;
-	type_26 post;
-	type_28 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct RxHeap
@@ -1697,7 +1708,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_134 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -1761,9 +1772,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_25 resolvID;
-	type_34 base2Name;
-	type_43 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct zPlayerCarryInfo
@@ -1830,17 +1841,17 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_77 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_68 MoveSpeed;
-	type_72 AnimSneak;
-	type_75 AnimWalk;
-	type_80 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -1858,7 +1869,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_132 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct _class_0
@@ -1881,7 +1892,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_57 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -1919,7 +1930,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_69 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1954,7 +1965,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_62 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -1965,18 +1976,18 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_122 pad;
+	uint32 pad[4];
 };
 
 struct _class_1
 {
-	type_48 base_point;
-	type_55 point;
+	xVec3 base_point[16];
+	xVec3 point[16];
 	int16 total_points;
 	int16 end_points;
 	float32 arc_height;
 	xVec3 arc_normal;
-	type_61 thickness;
+	float32 thickness[16];
 	union
 	{
 		_tagLightningLine line;
@@ -1998,7 +2009,7 @@ struct xSurface : xBase
 	};
 	float32 friction;
 	uint8 state;
-	type_32 pad;
+	uint8 pad[3];
 	void* moprops;
 };
 
@@ -2011,7 +2022,7 @@ struct tri_data_1 : tri_data_0
 
 struct xCoef
 {
-	type_52 a;
+	float32 a[4];
 };
 
 struct xCutsceneBreak
@@ -2031,8 +2042,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_78 activateCB;
-	type_78 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct xMovePointAsset : xBaseAsset
@@ -2132,7 +2143,7 @@ struct zShrapnelAsset
 {
 	int32 fassetCount;
 	uint32 shrapnelID;
-	type_130 initCB;
+	void(*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
 };
 
 struct xCamera : xBase
@@ -2212,7 +2223,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_79 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct xBehaveMgr : RyzMemData
@@ -2228,7 +2239,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_50 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xListItem_1
@@ -2272,7 +2283,7 @@ struct xModelAssetParam
 {
 	uint32 HashID;
 	uint8 WordLength;
-	type_0 String;
+	uint8 String[3];
 };
 
 struct xPEVCyl
@@ -2308,8 +2319,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_16 beginUpdate;
-	type_18 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -2321,9 +2332,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_45 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_54 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct xVec4
@@ -2387,7 +2398,7 @@ struct _tagxRumble
 
 struct xParInterp
 {
-	type_70 val;
+	float32 val[2];
 	uint32 interp;
 	float32 freq;
 	float32 oofreq;
@@ -2400,7 +2411,7 @@ struct xParSys
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_74 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xFFX
@@ -2416,8 +2427,8 @@ struct zFragShockwaveAsset : zFragAsset
 	float32 deathVelocity;
 	float32 birthSpin;
 	float32 deathSpin;
-	type_89 birthColor;
-	type_93 deathColor;
+	float32 birthColor[4];
+	float32 deathColor[4];
 };
 
 struct xCurveAsset
@@ -2463,7 +2474,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_4 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct _tagLightningLine
@@ -2488,8 +2499,8 @@ struct RpMaterialList
 
 struct _tagxPad
 {
-	type_139 value;
-	type_143 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -2504,9 +2515,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_11 up_tmr;
-	type_14 down_tmr;
-	type_40 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 enum zFragLocType
@@ -2538,7 +2549,7 @@ struct xModelPool
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_81 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct zEntHangable
@@ -2548,12 +2559,12 @@ struct zEntHangable
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_82 tmrs;
-	type_84 ttms;
-	type_85 atms;
-	type_88 dtms;
-	type_92 vms;
-	type_98 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct RpMaterial
@@ -2642,7 +2653,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_60 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -2733,7 +2744,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_96 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 enum RxClusterValid
@@ -2757,7 +2768,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_154 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -2778,8 +2789,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_148 baseCount;
-	type_150 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -2795,7 +2806,7 @@ struct xRot
 
 struct _tagLightningRot
 {
-	type_91 deg;
+	float32 deg[16];
 	float32 degrees;
 	float32 height;
 };
@@ -2808,10 +2819,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_107 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_119 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -2838,7 +2849,7 @@ struct zNPCSettings : xDynAsset
 	int8 allowWander;
 	int8 reduceCollide;
 	int8 useNavSplines;
-	type_125 pad;
+	int8 pad[3];
 	int8 allowChase;
 	int8 allowAttack;
 	int8 assumeLOS;
@@ -2932,26 +2943,26 @@ enum en_GOALSTATE
 struct xCutsceneZbufferHack
 {
 	int8* name;
-	type_106 times;
+	xCutsceneZbuffer times[4];
 };
 
 struct xNPCBasic : xEnt, xFactoryInst
 {
-	type_86 f_setup;
-	type_94 f_reset;
-	union
+	void(*f_setup)(xEnt*);
+	void(*f_reset)(xEnt*);
+	struct
 	{
-		int32 flg_basenpc;
-		int32 inUpdate;
-		int32 flg_upward;
+		int32 flg_basenpc : 16;
+		int32 inUpdate : 8;
+		int32 flg_upward : 8;
 	};
 	int32 colFreq;
 	int32 colFreqReset;
-	union
+	struct
 	{
-		uint32 flg_colCheck;
-		uint32 flg_penCheck;
-		uint32 flg_unused;
+		uint32 flg_colCheck : 8;
+		uint32 flg_penCheck : 8;
+		uint32 flg_unused : 16;
 	};
 	int32 myNPCType;
 	xEntShadow entShadow_embedded;
@@ -3094,7 +3105,7 @@ struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_109 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -3109,14 +3120,14 @@ struct zFragBone
 
 struct _class_3
 {
-	type_110 endPoint;
+	xVec3 endPoint[2];
 	xVec3 direction;
 	float32 length;
 	float32 scale;
 	float32 width;
-	type_127 endParam;
-	type_129 endVel;
-	type_133 paramSpan;
+	float32 endParam[2];
+	float32 endVel[2];
+	float32 paramSpan[2];
 	float32 arc_height;
 	xVec3 arc_normal;
 };
@@ -3127,10 +3138,13 @@ struct _tagPadAnalog
 	int8 y;
 };
 
-union _class_4
+struct _class_4
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct xEnv
@@ -3169,7 +3183,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_3 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -3180,7 +3194,7 @@ struct zFragAsset
 {
 	zFragType type;
 	uint32 id;
-	type_30 parentID;
+	uint32 parentID[2];
 	float32 lifetime;
 	float32 delay;
 };
@@ -3218,7 +3232,7 @@ struct xEntMPData
 
 struct xShadowSimplePoly
 {
-	type_121 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -3255,7 +3269,7 @@ struct _tagiPad
 
 struct RpTriangle
 {
-	type_131 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -3280,10 +3294,13 @@ struct RwTexDictionary
 	RwLLLink lInInstance;
 };
 
-union zFragLocInfo
+struct zFragLocInfo
 {
-	zFragBone bone;
-	xModelTag tag;
+	union
+	{
+		zFragBone bone;
+		xModelTag tag;
+	};
 };
 
 struct zLasso
@@ -3308,8 +3325,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_108 lastRefs;
-	type_114 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -3337,9 +3354,9 @@ struct xCutsceneMgrAsset : xBaseAsset
 	uint32 cutsceneAssetID;
 	uint32 flags;
 	float32 interpSpeed;
-	type_33 startTime;
-	type_37 endTime;
-	type_42 emitID;
+	float32 startTime[15];
+	float32 endTime[15];
+	uint32 emitID[15];
 };
 
 struct xJSPNodeInfo
@@ -3352,7 +3369,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_136 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -3393,8 +3410,8 @@ struct RxClusterRef
 struct XGOFTypeInfo
 {
 	int32 tid;
-	type_138 creator;
-	type_144 destroyer;
+	xFactoryInst*(*creator)(int32, RyzMemGrow*, void*);
+	void(*destroyer)(xFactoryInst*);
 };
 
 struct st_XORDEREDARRAY
@@ -3453,7 +3470,7 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_156 wt;
+	float32 wt[4];
 };
 
 struct zFragLocation
@@ -3472,7 +3489,7 @@ struct xDynAsset : xBaseAsset
 struct tag_iFile
 {
 	uint32 flags;
-	type_146 path;
+	int8 path[128];
 	int32 fd;
 	int32 offset;
 	int32 length;
@@ -3483,21 +3500,21 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_151 name;
-	type_153 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
 
 struct RxNodeMethods
 {
-	type_49 nodeBody;
-	type_5 nodeInit;
-	type_12 nodeTerm;
-	type_17 pipelineNodeInit;
-	type_22 pipelineNodeTerm;
-	type_35 pipelineNodeConfig;
-	type_46 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct xParEmitterCustomSettings : xParEmitterPropsAsset
@@ -3507,7 +3524,7 @@ struct xParEmitterCustomSettings : xParEmitterPropsAsset
 	xVec3 pos;
 	xVec3 vel;
 	float32 vel_angle_variation;
-	type_152 rot;
+	uint8 rot[3];
 	uint8 padding;
 	float32 radius;
 	float32 emit_interval_current;
@@ -3600,8 +3617,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_63 PowerUp;
-	type_66 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct zFragShockwave
@@ -3612,8 +3629,8 @@ struct zFragShockwave
 	float32 deltVelocity;
 	float32 currSpin;
 	float32 deltSpin;
-	type_6 currColor;
-	type_10 deltColor;
+	float32 currColor[4];
+	float32 deltColor[4];
 };
 
 enum RpWorldRenderOrder
@@ -3659,7 +3676,7 @@ struct zPlayerLassoInfo
 
 struct tag_xFile
 {
-	type_7 relname;
+	int8 relname[32];
 	tag_iFile ps;
 	void* user_data;
 };
@@ -3698,7 +3715,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_2 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -3802,25 +3819,25 @@ enum _zPlayerWallJumpState
 	k_WALLJUMP_LAND
 };
 
-type_140 buffer;
-type_147 buffer;
+int8 buffer[16];
+int8 buffer[16];
 int32 g_modinit;
 zNPCMgr* g_npcmgr;
 int32 g_firstFrameUpdateAllNPC;
-type_27 g_brainTable;
-type_39 g_tbltype;
+NPCBrainTableEntry g_brainTable[63];
+NPCMTypeTable g_tbltype[250];
 zGlobals globals;
-type_128 zNPCMgr_OrdComp_npcid;
-type_112 zNPCMgr_OrdTest_npcid;
+int32(*zNPCMgr_OrdComp_npcid)(void*, void*);
+int32(*zNPCMgr_OrdTest_npcid)(void*, void*);
 
 int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem);
 int32 zNPCMgr_OrdTest_npcid(void* vkey, void* vitem);
 en_NPCTYPES NPCTypeForModel(uint32 brainID, uint32 mdl_hash);
-xEnt* CreateNPC(zNPCMgr* this, xEntAsset* asset);
-void ScenePostParticleRender(zNPCMgr* this);
-void ScenePostRender(zNPCMgr* this);
-void SceneFinish(zNPCMgr* this);
-void Shutdown(zNPCMgr* this);
+xEnt* CreateNPC(xEntAsset* asset);
+void ScenePostParticleRender();
+void ScenePostRender();
+void SceneFinish();
+void Shutdown();
 xEnt* zNPCMgr_createNPCInst(xEntAsset* assdat);
 void zNPCMgr_scenePostParticleRender();
 void zNPCMgr_scenePostRender();
@@ -3840,6 +3857,12 @@ zNPCMgr* zNPCMgrSelf();
 int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {
 	int32 rc;
+	// Line 1029, Address: 0x2cc720, Func Offset: 0
+	// Line 1035, Address: 0x2cc728, Func Offset: 0x8
+	// Line 1036, Address: 0x2cc740, Func Offset: 0x20
+	// Line 1037, Address: 0x2cc758, Func Offset: 0x38
+	// Line 1040, Address: 0x2cc760, Func Offset: 0x40
+	// Func End, Address: 0x2cc768, Func Offset: 0x48
 }
 
 // zNPCMgr_OrdTest_npcid__FPCvPv
@@ -3848,74 +3871,176 @@ int32 zNPCMgr_OrdTest_npcid(void* vkey, void* vitem)
 {
 	int32 rc;
 	uint32 key;
+	// Line 1017, Address: 0x2cc770, Func Offset: 0
+	// Line 1021, Address: 0x2cc774, Func Offset: 0x4
+	// Line 1022, Address: 0x2cc788, Func Offset: 0x18
+	// Line 1023, Address: 0x2cc7a0, Func Offset: 0x30
+	// Line 1026, Address: 0x2cc7a8, Func Offset: 0x38
+	// Func End, Address: 0x2cc7b0, Func Offset: 0x40
 }
 
 // NPCTypeForModel__7zNPCMgrFUiUi
 // Start address: 0x2cc7b0
-en_NPCTYPES NPCTypeForModel(uint32 brainID, uint32 mdl_hash)
+en_NPCTYPES zNPCMgr::NPCTypeForModel(uint32 brainID, uint32 mdl_hash)
 {
 	int32 i;
 	en_NPCTYPES usetype;
 	NPCMTypeTable* rec;
+	// Line 978, Address: 0x2cc7b0, Func Offset: 0
+	// Line 979, Address: 0x2cc7b8, Func Offset: 0x8
+	// Line 980, Address: 0x2cc7c0, Func Offset: 0x10
+	// Line 981, Address: 0x2cc7cc, Func Offset: 0x1c
+	// Line 982, Address: 0x2cc7ec, Func Offset: 0x3c
+	// Line 996, Address: 0x2cc800, Func Offset: 0x50
+	// Line 995, Address: 0x2cc808, Func Offset: 0x58
+	// Line 990, Address: 0x2cc80c, Func Offset: 0x5c
+	// Line 996, Address: 0x2cc810, Func Offset: 0x60
+	// Line 997, Address: 0x2cc818, Func Offset: 0x68
+	// Line 999, Address: 0x2cc824, Func Offset: 0x74
+	// Line 1000, Address: 0x2cc82c, Func Offset: 0x7c
+	// Line 1001, Address: 0x2cc830, Func Offset: 0x80
+	// Line 1002, Address: 0x2cc834, Func Offset: 0x84
+	// Line 1005, Address: 0x2cc840, Func Offset: 0x90
+	// Line 1008, Address: 0x2cc850, Func Offset: 0xa0
+	// Func End, Address: 0x2cc858, Func Offset: 0xa8
 }
 
 // CreateNPC__7zNPCMgrFP9xEntAsset
 // Start address: 0x2cc860
-xEnt* CreateNPC(zNPCMgr* this, xEntAsset* asset)
+xEnt* zNPCMgr::CreateNPC(xEntAsset* asset)
 {
 	zNPCCommon* npc;
 	en_NPCTYPES nt;
 	uint32 size;
 	xModelAssetInfo* modelAsset;
+	// Line 815, Address: 0x2cc860, Func Offset: 0
+	// Line 847, Address: 0x2cc874, Func Offset: 0x14
+	// Line 851, Address: 0x2cc884, Func Offset: 0x24
+	// Line 863, Address: 0x2cc894, Func Offset: 0x34
+	// Line 868, Address: 0x2cc8b8, Func Offset: 0x58
+	// Line 863, Address: 0x2cc8c0, Func Offset: 0x60
+	// Line 868, Address: 0x2cc8c4, Func Offset: 0x64
+	// Line 872, Address: 0x2cc8d0, Func Offset: 0x70
+	// Line 882, Address: 0x2cc8dc, Func Offset: 0x7c
+	// Line 883, Address: 0x2cc8ec, Func Offset: 0x8c
+	// Line 889, Address: 0x2cc8f8, Func Offset: 0x98
+	// Line 890, Address: 0x2cc8fc, Func Offset: 0x9c
+	// Func End, Address: 0x2cc910, Func Offset: 0xb0
 }
 
 // ScenePostParticleRender__7zNPCMgrFv
 // Start address: 0x2cc910
-void ScenePostParticleRender(zNPCMgr* this)
+void zNPCMgr::ScenePostParticleRender()
 {
 	_SDRenderState old_rendstat;
 	int32 i;
 	zNPCCommon* npc;
+	// Line 744, Address: 0x2cc910, Func Offset: 0
+	// Line 749, Address: 0x2cc914, Func Offset: 0x4
+	// Line 744, Address: 0x2cc918, Func Offset: 0x8
+	// Line 749, Address: 0x2cc930, Func Offset: 0x20
+	// Line 754, Address: 0x2cc940, Func Offset: 0x30
+	// Line 755, Address: 0x2cc94c, Func Offset: 0x3c
+	// Line 759, Address: 0x2cc954, Func Offset: 0x44
+	// Line 760, Address: 0x2cc968, Func Offset: 0x58
+	// Line 761, Address: 0x2cc974, Func Offset: 0x64
+	// Line 765, Address: 0x2cc984, Func Offset: 0x74
+	// Line 768, Address: 0x2cc98c, Func Offset: 0x7c
+	// Line 769, Address: 0x2cc9a0, Func Offset: 0x90
+	// Line 775, Address: 0x2cc9b8, Func Offset: 0xa8
+	// Line 777, Address: 0x2cc9c8, Func Offset: 0xb8
+	// Line 781, Address: 0x2cc9e0, Func Offset: 0xd0
+	// Line 784, Address: 0x2cc9f0, Func Offset: 0xe0
+	// Line 787, Address: 0x2cc9f8, Func Offset: 0xe8
+	// Func End, Address: 0x2cca14, Func Offset: 0x104
 }
 
 // ScenePostRender__7zNPCMgrFv
 // Start address: 0x2cca30
-void ScenePostRender(zNPCMgr* this)
+void zNPCMgr::ScenePostRender()
 {
 	_SDRenderState old_rendstat;
 	int32 i;
 	zNPCCommon* npc;
+	// Line 698, Address: 0x2cca30, Func Offset: 0
+	// Line 703, Address: 0x2cca34, Func Offset: 0x4
+	// Line 698, Address: 0x2cca38, Func Offset: 0x8
+	// Line 703, Address: 0x2cca50, Func Offset: 0x20
+	// Line 708, Address: 0x2cca60, Func Offset: 0x30
+	// Line 709, Address: 0x2cca6c, Func Offset: 0x3c
+	// Line 713, Address: 0x2cca74, Func Offset: 0x44
+	// Line 714, Address: 0x2cca88, Func Offset: 0x58
+	// Line 715, Address: 0x2cca94, Func Offset: 0x64
+	// Line 719, Address: 0x2ccaa4, Func Offset: 0x74
+	// Line 722, Address: 0x2ccaac, Func Offset: 0x7c
+	// Line 723, Address: 0x2ccac0, Func Offset: 0x90
+	// Line 729, Address: 0x2ccad8, Func Offset: 0xa8
+	// Line 731, Address: 0x2ccae8, Func Offset: 0xb8
+	// Line 735, Address: 0x2ccb00, Func Offset: 0xd0
+	// Line 738, Address: 0x2ccb10, Func Offset: 0xe0
+	// Line 741, Address: 0x2ccb18, Func Offset: 0xe8
+	// Func End, Address: 0x2ccb34, Func Offset: 0x104
 }
 
 // SceneFinish__7zNPCMgrFv
 // Start address: 0x2ccb60
-void SceneFinish(zNPCMgr* this)
+void zNPCMgr::SceneFinish()
 {
 	int32 i;
+	// Line 605, Address: 0x2ccb60, Func Offset: 0
+	// Line 618, Address: 0x2ccb78, Func Offset: 0x18
+	// Line 620, Address: 0x2ccb90, Func Offset: 0x30
+	// Line 621, Address: 0x2ccbac, Func Offset: 0x4c
+	// Line 623, Address: 0x2ccbc0, Func Offset: 0x60
+	// Line 626, Address: 0x2ccbcc, Func Offset: 0x6c
+	// Line 632, Address: 0x2ccbd4, Func Offset: 0x74
+	// Line 633, Address: 0x2ccbdc, Func Offset: 0x7c
+	// Line 634, Address: 0x2ccbe4, Func Offset: 0x84
+	// Line 635, Address: 0x2ccbec, Func Offset: 0x8c
+	// Line 636, Address: 0x2ccbf4, Func Offset: 0x94
+	// Line 640, Address: 0x2ccbfc, Func Offset: 0x9c
+	// Line 643, Address: 0x2ccc04, Func Offset: 0xa4
+	// Line 644, Address: 0x2ccc0c, Func Offset: 0xac
+	// Line 648, Address: 0x2ccc14, Func Offset: 0xb4
+	// Line 652, Address: 0x2ccc1c, Func Offset: 0xbc
+	// Func End, Address: 0x2ccc34, Func Offset: 0xd4
 }
 
 // Shutdown__7zNPCMgrFv
 // Start address: 0x2ccc40
-void Shutdown(zNPCMgr* this)
+void zNPCMgr::Shutdown()
 {
+	// Line 560, Address: 0x2ccc40, Func Offset: 0
+	// Line 561, Address: 0x2ccc54, Func Offset: 0x14
+	// Line 564, Address: 0x2ccc68, Func Offset: 0x28
+	// Line 565, Address: 0x2ccc70, Func Offset: 0x30
+	// Line 566, Address: 0x2ccc78, Func Offset: 0x38
+	// Line 569, Address: 0x2ccc80, Func Offset: 0x40
+	// Func End, Address: 0x2ccc90, Func Offset: 0x50
 }
 
 // zNPCMgr_createNPCInst__FiP9xEntAsset
 // Start address: 0x2ccc90
 xEnt* zNPCMgr_createNPCInst(xEntAsset* assdat)
 {
+	// Line 518, Address: 0x2ccc90, Func Offset: 0
+	// Func End, Address: 0x2ccc98, Func Offset: 0x8
 }
 
 // zNPCMgr_scenePostParticleRender__Fv
 // Start address: 0x2ccca0
 void zNPCMgr_scenePostParticleRender()
 {
+	// Line 505, Address: 0x2ccca0, Func Offset: 0
+	// Func End, Address: 0x2ccca8, Func Offset: 0x8
 }
 
 // zNPCMgr_scenePostRender__Fv
 // Start address: 0x2cccb0
 void zNPCMgr_scenePostRender()
 {
+	// Line 498, Address: 0x2cccb0, Func Offset: 0
+	// Func End, Address: 0x2cccb8, Func Offset: 0x8
 }
 
 // zNPCMgr_sceneTimestep__FP6xScenef
@@ -3923,6 +4048,12 @@ void zNPCMgr_scenePostRender()
 void zNPCMgr_sceneTimestep(xScene* xscn, float32 dt)
 {
 	zNPCMgr* mgr;
+	// Line 489, Address: 0x2cccc0, Func Offset: 0
+	// Line 491, Address: 0x2ccce4, Func Offset: 0x24
+	// Line 490, Address: 0x2ccce8, Func Offset: 0x28
+	// Line 491, Address: 0x2cccec, Func Offset: 0x2c
+	// Line 493, Address: 0x2ccdb4, Func Offset: 0xf4
+	// Func End, Address: 0x2ccdd8, Func Offset: 0x118
 }
 
 // zNPCMgr_scenePostSetup__Fv
@@ -3930,12 +4061,20 @@ void zNPCMgr_sceneTimestep(xScene* xscn, float32 dt)
 void zNPCMgr_scenePostSetup()
 {
 	zNPCMgr* mgr;
+	// Line 481, Address: 0x2ccde0, Func Offset: 0
+	// Line 484, Address: 0x2ccdf8, Func Offset: 0x18
+	// Line 486, Address: 0x2cce40, Func Offset: 0x60
+	// Func End, Address: 0x2cce58, Func Offset: 0x78
 }
 
 // zNPCMgr_scenePostInit__Fv
 // Start address: 0x2cce60
 void zNPCMgr_scenePostInit()
 {
+	// Line 473, Address: 0x2cce60, Func Offset: 0
+	// Line 476, Address: 0x2cce68, Func Offset: 0x8
+	// Line 478, Address: 0x2cce88, Func Offset: 0x28
+	// Func End, Address: 0x2cce94, Func Offset: 0x34
 }
 
 // zNPCMgr_sceneReset__Fv
@@ -3943,41 +4082,73 @@ void zNPCMgr_scenePostInit()
 void zNPCMgr_sceneReset()
 {
 	zNPCMgr* mgr;
+	// Line 465, Address: 0x2ccea0, Func Offset: 0
+	// Line 468, Address: 0x2ccebc, Func Offset: 0x1c
+	// Line 470, Address: 0x2ccf68, Func Offset: 0xc8
+	// Func End, Address: 0x2ccf88, Func Offset: 0xe8
 }
 
 // zNPCMgr_sceneFinish__Fv
 // Start address: 0x2ccf90
 void zNPCMgr_sceneFinish()
 {
+	// Line 460, Address: 0x2ccf90, Func Offset: 0
+	// Func End, Address: 0x2ccf98, Func Offset: 0x8
 }
 
 // zNPCMgr_scenePrepare__Fi
 // Start address: 0x2ccfa0
 void zNPCMgr_scenePrepare(int32 npccnt)
 {
+	// Line 450, Address: 0x2ccfa0, Func Offset: 0
+	// Line 452, Address: 0x2ccfac, Func Offset: 0xc
+	// Line 454, Address: 0x2cd008, Func Offset: 0x68
+	// Func End, Address: 0x2cd014, Func Offset: 0x74
 }
 
 // zNPCMgr_Shutdown__Fv
 // Start address: 0x2cd020
 void zNPCMgr_Shutdown()
 {
+	// Line 427, Address: 0x2cd020, Func Offset: 0
+	// Line 429, Address: 0x2cd02c, Func Offset: 0xc
+	// Line 433, Address: 0x2cd040, Func Offset: 0x20
+	// Line 434, Address: 0x2cd04c, Func Offset: 0x2c
+	// Line 435, Address: 0x2cd078, Func Offset: 0x58
+	// Line 436, Address: 0x2cd088, Func Offset: 0x68
+	// Line 437, Address: 0x2cd08c, Func Offset: 0x6c
+	// Line 440, Address: 0x2cd090, Func Offset: 0x70
+	// Line 441, Address: 0x2cd1b0, Func Offset: 0x190
+	// Line 445, Address: 0x2cd1b8, Func Offset: 0x198
+	// Func End, Address: 0x2cd1c8, Func Offset: 0x1a8
 }
 
 // zNPCMgr_Startup__Fv
 // Start address: 0x2cd220
 void zNPCMgr_Startup()
 {
+	// Line 404, Address: 0x2cd220, Func Offset: 0
+	// Line 408, Address: 0x2cd234, Func Offset: 0x14
+	// Line 412, Address: 0x2cd244, Func Offset: 0x24
+	// Line 416, Address: 0x2cd24c, Func Offset: 0x2c
+	// Line 420, Address: 0x2cd264, Func Offset: 0x44
+	// Line 423, Address: 0x2cd338, Func Offset: 0x118
+	// Func End, Address: 0x2cd350, Func Offset: 0x130
 }
 
 // zNPCMgr_GetNPCList__Fv
 // Start address: 0x2cd350
 st_XORDEREDARRAY* zNPCMgr_GetNPCList()
 {
+	// Line 399, Address: 0x2cd350, Func Offset: 0
+	// Func End, Address: 0x2cd358, Func Offset: 0x8
 }
 
 // zNPCMgrSelf__Fv
 // Start address: 0x2cd360
 zNPCMgr* zNPCMgrSelf()
 {
+	// Line 392, Address: 0x2cd360, Func Offset: 0
+	// Func End, Address: 0x2cd368, Func Offset: 0x8
 }
 

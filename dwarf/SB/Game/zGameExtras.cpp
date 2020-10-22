@@ -151,7 +151,7 @@ typedef struct RpMaterialList;
 typedef struct xFFX;
 typedef struct xModelPool;
 typedef struct RwSphere;
-typedef union EGGData;
+typedef struct EGGData;
 typedef struct RwTexDictionary;
 typedef struct RxOutputSpec;
 typedef struct xEntShadow;
@@ -177,7 +177,7 @@ typedef struct zPlayerLassoInfo;
 typedef struct RwPlane;
 typedef struct zScene;
 typedef struct zLedgeGrabParams;
-typedef union _class_2;
+typedef struct _class_2;
 typedef struct RxCluster;
 typedef struct zJumpParam;
 typedef enum _zPlayerWallJumpState;
@@ -290,7 +290,7 @@ typedef int8* type_83[2];
 typedef uint8 type_84[3];
 typedef int8 type_86[128];
 typedef uint32 type_88[16];
-typedef type_86 type_89[6];
+typedef int8 type_89[128][6];
 typedef int8 type_90[16];
 typedef uint32 type_93[7];
 typedef uint16 type_94[3];
@@ -371,9 +371,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_23 BeforeEnter;
-	type_29 StateCallback;
-	type_34 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct zPlayerGlobals
@@ -454,7 +454,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_64 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -466,7 +466,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_98 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -492,10 +492,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_9 Inv_PatsSock;
-	type_13 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_17 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -507,21 +507,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_54 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_75 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_96 sb_model_indices;
-	type_103 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -554,7 +554,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_6 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xCoef3
@@ -567,12 +567,12 @@ struct xCoef3
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_14 tmrs;
-	type_15 ttms;
-	type_18 atms;
-	type_22 dtms;
-	type_28 vms;
-	type_31 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct RpAtomic
@@ -584,7 +584,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_7 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -619,16 +619,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_67 update;
-	type_67 endUpdate;
-	type_72 bupdate;
-	type_77 move;
-	type_81 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_92 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -741,9 +741,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_85 resolvID;
-	type_91 base2Name;
-	type_8 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xEntMotion
@@ -826,7 +826,7 @@ struct xEntMotionAsset
 
 struct RpTriangle
 {
-	type_132 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -873,7 +873,7 @@ struct xSurface : xBase
 	};
 	float32 friction;
 	uint8 state;
-	type_122 pad;
+	uint8 pad[3];
 	void* moprops;
 };
 
@@ -929,14 +929,14 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_130 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_84 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -951,15 +951,15 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_125 name;
-	type_128 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_105 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RxPipelineNodeParam
@@ -987,7 +987,7 @@ struct RwTexCoords
 
 struct xJSPHeader
 {
-	type_26 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1032,8 +1032,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_57 activateCB;
-	type_57 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct RpMeshHeader
@@ -1112,7 +1112,7 @@ struct xQuat
 
 struct EGGItem
 {
-	type_38 fun_check;
+	int32(*fun_check)(EGGItem*);
 	EGGItemFuncs* funcs;
 	int32 enabled;
 	EGGData eggdata;
@@ -1124,7 +1124,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_131 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xEntDrive
@@ -1224,7 +1224,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_52 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct xBBox
@@ -1248,10 +1248,10 @@ struct xCounterAsset : xBaseAsset
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_56 MoveSpeed;
-	type_62 AnimSneak;
-	type_63 AnimWalk;
-	type_65 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -1269,7 +1269,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_108 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct RpWorldSector
@@ -1278,7 +1278,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_119 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -1308,7 +1308,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_101 pad;
+	uint32 pad[4];
 };
 
 struct xEntSplineData
@@ -1333,15 +1333,15 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_113 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_0 beginUpdate;
-	type_5 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -1353,9 +1353,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_35 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_42 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct RpLight
@@ -1479,15 +1479,15 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_51 PowerUp;
-	type_55 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_114 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1507,7 +1507,7 @@ struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_49 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -1535,7 +1535,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_39 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -1616,8 +1616,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_126 lastRefs;
-	type_129 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -1641,8 +1641,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_3 Conditional;
-	type_3 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -1664,7 +1664,7 @@ struct xVec4
 struct GECheat
 {
 	uint32* key_code;
-	type_107 fun_cheat;
+	void(*fun_cheat)();
 	int32 flg_keep;
 	int32 flg_mode;
 };
@@ -1751,7 +1751,7 @@ struct xUpdateCullGroup
 
 struct xShadowSimplePoly
 {
-	type_60 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1767,7 +1767,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_110 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -1779,8 +1779,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_69 light;
-	type_76 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -1822,10 +1822,10 @@ struct xAnimMultiFileEntry
 
 struct EGGItemFuncs
 {
-	type_53 fun_update;
-	type_44 fun_init;
-	type_59 fun_reset;
-	type_48 fun_done;
+	void(*fun_update)(float32, EGGItem*);
+	void(*fun_init)(EGGItem*);
+	void(*fun_reset)(EGGItem*);
+	void(*fun_done)(EGGItem*);
 };
 
 struct xAnimActiveEffect
@@ -1860,7 +1860,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_104 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -1887,7 +1887,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_70 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1924,7 +1924,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_80 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -1984,7 +1984,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_102 corner;
+	xVec3 corner[4];
 };
 
 struct xGlobals
@@ -1995,10 +1995,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_89 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_99 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -2030,9 +2030,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_118 colls;
-	type_71 post;
-	type_87 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct zEntHangable
@@ -2053,8 +2053,8 @@ struct RwFrame
 
 struct _tagxPad
 {
-	type_115 value;
-	type_117 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -2069,9 +2069,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_138 up_tmr;
-	type_139 down_tmr;
-	type_25 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 enum rxEmbeddedPacketState
@@ -2117,7 +2117,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_74 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 enum RwCameraProjection
@@ -2175,7 +2175,7 @@ struct xBox
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_94 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct xLinkAsset
@@ -2183,7 +2183,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_112 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -2214,7 +2214,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_34 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct _tagiPad
@@ -2246,10 +2246,13 @@ struct RwSphere
 	float32 radius;
 };
 
-union EGGData
+struct EGGData
 {
-	int32 placeholder;
-	EGGMisc misc;
+	union
+	{
+		int32 placeholder;
+		EGGMisc misc;
+	};
 };
 
 struct RwTexDictionary
@@ -2272,7 +2275,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_11 radius;
+	float32 radius[2];
 };
 
 struct RpGeometry
@@ -2288,7 +2291,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_20 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -2412,13 +2415,13 @@ struct xQCData
 
 struct RxNodeMethods
 {
-	type_40 nodeBody;
-	type_43 nodeInit;
-	type_47 nodeTerm;
-	type_2 pipelineNodeInit;
-	type_10 pipelineNodeTerm;
-	type_19 pipelineNodeConfig;
-	type_36 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct xMemPool
@@ -2427,7 +2430,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_121 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -2501,8 +2504,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_24 baseCount;
-	type_30 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -2510,7 +2513,7 @@ struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_134 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -2531,10 +2534,13 @@ struct zLedgeGrabParams
 	float32 endrot;
 };
 
-union _class_2
+struct _class_2
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct RxCluster
@@ -2573,7 +2579,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_140 clusters;
+	RxCluster clusters[1];
 };
 
 struct xEntMotionMechData
@@ -2596,7 +2602,7 @@ struct xEntMotionMechData
 
 struct xCoef
 {
-	type_135 a;
+	float32 a[4];
 };
 
 enum RwFogType
@@ -2658,11 +2664,11 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_27 wt;
+	float32 wt[4];
 };
 
-type_79 buffer;
-type_90 buffer;
+int8 buffer[16];
+int8 buffer[16];
 int32 g_enableGameExtras;
 int32 g_currDay;
 int32 g_currMonth;
@@ -2672,38 +2678,38 @@ EGGItemFuncs EGGBirthDay;
 EGGItemFuncs EGGSnow;
 EGGItemFuncs EGGRain;
 EGGItemFuncs EGGEmpty;
-type_46 g_eggBasket;
+EGGItem g_eggBasket[2];
 int32 g_flg_chEnabled;
 float32 sCheatTimer;
 int32 sCheatInputCount;
-type_16 sCheatAddShiny;
-type_78 sCheatAddSpatulas;
-type_124 sCheatBubbleBowl;
-type_41 sCheatCruiseBubble;
-type_95 sCheatMonsterGallery;
-type_136 sCheatArtTheatre;
-type_58 sCheatChaChing;
-type_111 sCheatExpertMode;
-type_12 sCheatTikiCheat;
-type_68 sCheatSwapCCLR;
-type_120 sCheatSwapCCUD;
-type_33 sCheatRestoreHealth;
-type_88 sCheatTeflonPlayer;
-type_133 sCheatVikingFeet;
-type_50 sCheatDryBobMode;
-type_106 sCheatShrapBob;
-type_4 sCheatBigFlopper;
-type_66 sCheatNoPants;
-type_116 sCheatCruiseControl;
-type_21 sCheatBigPlank;
-type_82 sCheatSmallPeep;
-type_127 sCheatSmallCoStars;
-type_45 sCheatRichPeep;
-type_100 sCheatPanHandle;
-type_137 sCheatMedics;
-type_61 sCheatDogTrix;
-type_123 cheatList;
-type_32 sCheatPressed;
+uint32 sCheatAddShiny[16];
+uint32 sCheatAddSpatulas[16];
+uint32 sCheatBubbleBowl[16];
+uint32 sCheatCruiseBubble[16];
+uint32 sCheatMonsterGallery[16];
+uint32 sCheatArtTheatre[16];
+uint32 sCheatChaChing[16];
+uint32 sCheatExpertMode[16];
+uint32 sCheatTikiCheat[16];
+uint32 sCheatSwapCCLR[16];
+uint32 sCheatSwapCCUD[16];
+uint32 sCheatRestoreHealth[16];
+uint32 sCheatTeflonPlayer[16];
+uint32 sCheatVikingFeet[16];
+uint32 sCheatDryBobMode[16];
+uint32 sCheatShrapBob[16];
+uint32 sCheatBigFlopper[16];
+uint32 sCheatNoPants[16];
+uint32 sCheatCruiseControl[16];
+uint32 sCheatBigPlank[16];
+uint32 sCheatSmallPeep[16];
+uint32 sCheatSmallCoStars[16];
+uint32 sCheatRichPeep[16];
+uint32 sCheatPanHandle[16];
+uint32 sCheatMedics[16];
+uint32 sCheatDogTrix[16];
+GECheat cheatList[22];
+uint32 sCheatPressed[16];
 xEnt* sGalleryTitle;
 zGlobals globals;
 
@@ -2747,104 +2753,181 @@ int32 zGameExtras_ExtrasFlags();
 // Start address: 0x17cee0
 uint32 zGame_HackIsGallery()
 {
+	// Line 1712, Address: 0x17cee0, Func Offset: 0
+	// Line 1713, Address: 0x17cf10, Func Offset: 0x30
+	// Line 1714, Address: 0x17cf18, Func Offset: 0x38
+	// Func End, Address: 0x17cf20, Func Offset: 0x40
 }
 
 // zGame_HackGalleryInit__Fv
 // Start address: 0x17cf20
 void zGame_HackGalleryInit()
 {
+	// Line 1707, Address: 0x17cf20, Func Offset: 0
+	// Line 1708, Address: 0x17cf24, Func Offset: 0x4
+	// Line 1707, Address: 0x17cf28, Func Offset: 0x8
+	// Line 1708, Address: 0x17cf2c, Func Offset: 0xc
+	// Line 1709, Address: 0x17cf40, Func Offset: 0x20
+	// Func End, Address: 0x17cf4c, Func Offset: 0x2c
 }
 
 // GEC_cb_PanHandle__Fv
 // Start address: 0x17cf50
 void GEC_cb_PanHandle()
 {
-	type_73 aid_sndList;
+	uint32 aid_sndList[6];
 	int8 @5620;
+	// Line 1695, Address: 0x17cf50, Func Offset: 0
+	// Line 1697, Address: 0x17cf58, Func Offset: 0x8
+	// Line 1699, Address: 0x17d088, Func Offset: 0x138
+	// Func End, Address: 0x17d094, Func Offset: 0x144
 }
 
 // GEC_cb_RichPeep__Fv
 // Start address: 0x17d0a0
 void GEC_cb_RichPeep()
 {
+	// Line 1688, Address: 0x17d0a0, Func Offset: 0
+	// Line 1690, Address: 0x17d0a8, Func Offset: 0x8
+	// Line 1692, Address: 0x17d1d8, Func Offset: 0x138
+	// Func End, Address: 0x17d1e4, Func Offset: 0x144
 }
 
 // GEC_cb_SmallCostars__Fv
 // Start address: 0x17d1f0
 void GEC_cb_SmallCostars()
 {
+	// Line 1681, Address: 0x17d1f0, Func Offset: 0
+	// Line 1683, Address: 0x17d1f8, Func Offset: 0x8
+	// Line 1685, Address: 0x17d328, Func Offset: 0x138
+	// Func End, Address: 0x17d334, Func Offset: 0x144
 }
 
 // GEC_cb_SmallPeep__Fv
 // Start address: 0x17d340
 void GEC_cb_SmallPeep()
 {
+	// Line 1674, Address: 0x17d340, Func Offset: 0
+	// Line 1676, Address: 0x17d348, Func Offset: 0x8
+	// Line 1678, Address: 0x17d478, Func Offset: 0x138
+	// Func End, Address: 0x17d484, Func Offset: 0x144
 }
 
 // GEC_cb_DogTrix__Fv
 // Start address: 0x17d490
 void GEC_cb_DogTrix()
 {
+	// Line 1667, Address: 0x17d490, Func Offset: 0
+	// Line 1669, Address: 0x17d498, Func Offset: 0x8
+	// Line 1671, Address: 0x17d5c8, Func Offset: 0x138
+	// Func End, Address: 0x17d5d4, Func Offset: 0x144
 }
 
 // GEC_cb_Medics__Fv
 // Start address: 0x17d5e0
 void GEC_cb_Medics()
 {
+	// Line 1660, Address: 0x17d5e0, Func Offset: 0
+	// Line 1662, Address: 0x17d5e8, Func Offset: 0x8
+	// Line 1664, Address: 0x17d718, Func Offset: 0x138
+	// Func End, Address: 0x17d724, Func Offset: 0x144
 }
 
 // GEC_cb_BigPlank__Fv
 // Start address: 0x17d730
 void GEC_cb_BigPlank()
 {
+	// Line 1653, Address: 0x17d730, Func Offset: 0
+	// Line 1655, Address: 0x17d738, Func Offset: 0x8
+	// Line 1657, Address: 0x17d868, Func Offset: 0x138
+	// Func End, Address: 0x17d874, Func Offset: 0x144
 }
 
 // GEC_cb_SwapCCUD__Fv
 // Start address: 0x17d880
 void GEC_cb_SwapCCUD()
 {
-	type_93 aid_sndList;
+	uint32 aid_sndList[7];
 	int8 @5449;
+	// Line 1624, Address: 0x17d880, Func Offset: 0
+	// Line 1626, Address: 0x17d888, Func Offset: 0x8
+	// Line 1628, Address: 0x17d9d0, Func Offset: 0x150
+	// Func End, Address: 0x17d9dc, Func Offset: 0x15c
 }
 
 // GEC_cb_SwapCCLR__Fv
 // Start address: 0x17d9e0
 void GEC_cb_SwapCCLR()
 {
+	// Line 1617, Address: 0x17d9e0, Func Offset: 0
+	// Line 1619, Address: 0x17d9e8, Func Offset: 0x8
+	// Line 1621, Address: 0x17db30, Func Offset: 0x150
+	// Func End, Address: 0x17db3c, Func Offset: 0x15c
 }
 
 // GEC_cb_CruiseControl__Fv
 // Start address: 0x17db40
 void GEC_cb_CruiseControl()
 {
-	type_37 choices;
+	uint32 choices[3];
 	int8 @5598;
+	// Line 1593, Address: 0x17db40, Func Offset: 0
+	// Line 1596, Address: 0x17db48, Func Offset: 0x8
+	// Line 1603, Address: 0x17db98, Func Offset: 0x58
+	// Line 1604, Address: 0x17dc10, Func Offset: 0xd0
+	// Line 1607, Address: 0x17dc40, Func Offset: 0x100
+	// Func End, Address: 0x17dc4c, Func Offset: 0x10c
 }
 
 // GEC_cb_NoPantsMode__Fv
 // Start address: 0x17dc50
 void GEC_cb_NoPantsMode()
 {
+	// Line 1586, Address: 0x17dc50, Func Offset: 0
+	// Line 1588, Address: 0x17dc54, Func Offset: 0x4
+	// Line 1586, Address: 0x17dc58, Func Offset: 0x8
+	// Line 1588, Address: 0x17dc5c, Func Offset: 0xc
+	// Line 1590, Address: 0x17dc8c, Func Offset: 0x3c
+	// Func End, Address: 0x17dc98, Func Offset: 0x48
 }
 
 // GEC_cb_ShrapBobMode__Fv
 // Start address: 0x17dca0
 void GEC_cb_ShrapBobMode()
 {
+	// Line 1572, Address: 0x17dca0, Func Offset: 0
+	// Line 1574, Address: 0x17dca8, Func Offset: 0x8
+	// Line 1576, Address: 0x17ddf0, Func Offset: 0x150
+	// Func End, Address: 0x17ddfc, Func Offset: 0x15c
 }
 
 // GEC_cb_ExpertMode__Fv
 // Start address: 0x17de00
 void GEC_cb_ExpertMode()
 {
+	// Line 1551, Address: 0x17de00, Func Offset: 0
+	// Line 1553, Address: 0x17de08, Func Offset: 0x8
+	// Line 1555, Address: 0x17df50, Func Offset: 0x150
+	// Func End, Address: 0x17df5c, Func Offset: 0x15c
 }
 
 // GEC_cb_RestoreHealth__Fv
 // Start address: 0x17df60
 void GEC_cb_RestoreHealth()
 {
-	type_97 choices;
+	uint32 choices[2];
 	int8 @5558;
+	// Line 1510, Address: 0x17df60, Func Offset: 0
+	// Line 1514, Address: 0x17df64, Func Offset: 0x4
+	// Line 1510, Address: 0x17df68, Func Offset: 0x8
+	// Line 1514, Address: 0x17df6c, Func Offset: 0xc
+	// Line 1518, Address: 0x17df70, Func Offset: 0x10
+	// Line 1514, Address: 0x17df74, Func Offset: 0x14
+	// Line 1518, Address: 0x17df78, Func Offset: 0x18
+	// Line 1523, Address: 0x17dfa8, Func Offset: 0x48
+	// Line 1524, Address: 0x17e018, Func Offset: 0xb8
+	// Line 1527, Address: 0x17e048, Func Offset: 0xe8
+	// Func End, Address: 0x17e054, Func Offset: 0xf4
 }
 
 // GEC_cb_ChaChing__Fv
@@ -2853,6 +2936,23 @@ void GEC_cb_ChaChing()
 {
 	zGlobalSettings* gs;
 	uint32 aid_snd;
+	// Line 1484, Address: 0x17e060, Func Offset: 0
+	// Line 1487, Address: 0x17e064, Func Offset: 0x4
+	// Line 1484, Address: 0x17e068, Func Offset: 0x8
+	// Line 1487, Address: 0x17e06c, Func Offset: 0xc
+	// Line 1495, Address: 0x17e070, Func Offset: 0x10
+	// Line 1496, Address: 0x17e074, Func Offset: 0x14
+	// Line 1495, Address: 0x17e078, Func Offset: 0x18
+	// Line 1503, Address: 0x17e07c, Func Offset: 0x1c
+	// Line 1496, Address: 0x17e080, Func Offset: 0x20
+	// Line 1497, Address: 0x17e084, Func Offset: 0x24
+	// Line 1498, Address: 0x17e08c, Func Offset: 0x2c
+	// Line 1499, Address: 0x17e090, Func Offset: 0x30
+	// Line 1498, Address: 0x17e094, Func Offset: 0x34
+	// Line 1503, Address: 0x17e098, Func Offset: 0x38
+	// Line 1504, Address: 0x17e0a4, Func Offset: 0x44
+	// Line 1507, Address: 0x17e0cc, Func Offset: 0x6c
+	// Func End, Address: 0x17e0d8, Func Offset: 0x78
 }
 
 // GEC_cb_UnlockArtTheatre__Fv
@@ -2862,17 +2962,51 @@ void GEC_cb_UnlockArtTheatre()
 	int8* nam_theatreCounter;
 	uint32 aid_theatreCounter;
 	_xCounter* cntr;
+	// Line 1465, Address: 0x17e0e0, Func Offset: 0
+	// Line 1468, Address: 0x17e0e4, Func Offset: 0x4
+	// Line 1465, Address: 0x17e0e8, Func Offset: 0x8
+	// Line 1469, Address: 0x17e0ec, Func Offset: 0xc
+	// Line 1471, Address: 0x17e0f4, Func Offset: 0x14
+	// Line 1474, Address: 0x17e0fc, Func Offset: 0x1c
+	// Line 1477, Address: 0x17e100, Func Offset: 0x20
+	// Line 1480, Address: 0x17e110, Func Offset: 0x30
+	// Func End, Address: 0x17e11c, Func Offset: 0x3c
 }
 
 // GEC_cb_MonsterGallery__Fv
 // Start address: 0x17e120
 void GEC_cb_MonsterGallery()
 {
-	type_109 tempString;
+	int8 tempString[32];
 	int8 c;
 	int32 i;
 	uint32 id;
 	_xCounter* cntr;
+	// Line 1433, Address: 0x17e120, Func Offset: 0
+	// Line 1439, Address: 0x17e124, Func Offset: 0x4
+	// Line 1433, Address: 0x17e128, Func Offset: 0x8
+	// Line 1439, Address: 0x17e12c, Func Offset: 0xc
+	// Line 1433, Address: 0x17e130, Func Offset: 0x10
+	// Line 1439, Address: 0x17e134, Func Offset: 0x14
+	// Line 1433, Address: 0x17e138, Func Offset: 0x18
+	// Line 1439, Address: 0x17e140, Func Offset: 0x20
+	// Line 1440, Address: 0x17e148, Func Offset: 0x28
+	// Line 1441, Address: 0x17e14c, Func Offset: 0x2c
+	// Line 1442, Address: 0x17e158, Func Offset: 0x38
+	// Line 1443, Address: 0x17e168, Func Offset: 0x48
+	// Line 1444, Address: 0x17e16c, Func Offset: 0x4c
+	// Line 1443, Address: 0x17e170, Func Offset: 0x50
+	// Line 1446, Address: 0x17e178, Func Offset: 0x58
+	// Line 1447, Address: 0x17e17c, Func Offset: 0x5c
+	// Line 1449, Address: 0x17e180, Func Offset: 0x60
+	// Line 1450, Address: 0x17e18c, Func Offset: 0x6c
+	// Line 1455, Address: 0x17e194, Func Offset: 0x74
+	// Line 1456, Address: 0x17e198, Func Offset: 0x78
+	// Line 1455, Address: 0x17e19c, Func Offset: 0x7c
+	// Line 1456, Address: 0x17e1a0, Func Offset: 0x80
+	// Line 1459, Address: 0x17e1ac, Func Offset: 0x8c
+	// Line 1462, Address: 0x17e1b8, Func Offset: 0x98
+	// Func End, Address: 0x17e1d4, Func Offset: 0xb4
 }
 
 // GEC_cb_CruiseBubble__Fv
@@ -2880,6 +3014,14 @@ void GEC_cb_MonsterGallery()
 void GEC_cb_CruiseBubble()
 {
 	uint32 aid_snd;
+	// Line 1417, Address: 0x17e1e0, Func Offset: 0
+	// Line 1426, Address: 0x17e1e4, Func Offset: 0x4
+	// Line 1417, Address: 0x17e1e8, Func Offset: 0x8
+	// Line 1423, Address: 0x17e1ec, Func Offset: 0xc
+	// Line 1426, Address: 0x17e1f4, Func Offset: 0x14
+	// Line 1427, Address: 0x17e204, Func Offset: 0x24
+	// Line 1430, Address: 0x17e230, Func Offset: 0x50
+	// Func End, Address: 0x17e23c, Func Offset: 0x5c
 }
 
 // GEC_cb_BubbleBowl__Fv
@@ -2887,6 +3029,14 @@ void GEC_cb_CruiseBubble()
 void GEC_cb_BubbleBowl()
 {
 	uint32 aid_snd;
+	// Line 1400, Address: 0x17e240, Func Offset: 0
+	// Line 1410, Address: 0x17e244, Func Offset: 0x4
+	// Line 1400, Address: 0x17e248, Func Offset: 0x8
+	// Line 1407, Address: 0x17e24c, Func Offset: 0xc
+	// Line 1410, Address: 0x17e254, Func Offset: 0x14
+	// Line 1411, Address: 0x17e264, Func Offset: 0x24
+	// Line 1414, Address: 0x17e290, Func Offset: 0x50
+	// Func End, Address: 0x17e29c, Func Offset: 0x5c
 }
 
 // GEC_cb_AddSpatulas__Fv
@@ -2895,6 +3045,17 @@ void GEC_cb_AddSpatulas()
 {
 	zPlayerGlobals* pg;
 	uint32 aid_snd;
+	// Line 1378, Address: 0x17e2a0, Func Offset: 0
+	// Line 1387, Address: 0x17e2a4, Func Offset: 0x4
+	// Line 1378, Address: 0x17e2a8, Func Offset: 0x8
+	// Line 1387, Address: 0x17e2ac, Func Offset: 0xc
+	// Line 1390, Address: 0x17e2b8, Func Offset: 0x18
+	// Line 1393, Address: 0x17e2d0, Func Offset: 0x30
+	// Line 1390, Address: 0x17e2d4, Func Offset: 0x34
+	// Line 1393, Address: 0x17e2d8, Func Offset: 0x38
+	// Line 1394, Address: 0x17e2e4, Func Offset: 0x44
+	// Line 1397, Address: 0x17e310, Func Offset: 0x70
+	// Func End, Address: 0x17e31c, Func Offset: 0x7c
 }
 
 // GEC_cb_AddShiny__Fv
@@ -2903,6 +3064,19 @@ void GEC_cb_AddShiny()
 {
 	zPlayerGlobals* pg;
 	uint32 aid_snd;
+	// Line 1352, Address: 0x17e320, Func Offset: 0
+	// Line 1356, Address: 0x17e324, Func Offset: 0x4
+	// Line 1352, Address: 0x17e328, Func Offset: 0x8
+	// Line 1356, Address: 0x17e32c, Func Offset: 0xc
+	// Line 1364, Address: 0x17e334, Func Offset: 0x14
+	// Line 1365, Address: 0x17e344, Func Offset: 0x24
+	// Line 1366, Address: 0x17e350, Func Offset: 0x30
+	// Line 1367, Address: 0x17e354, Func Offset: 0x34
+	// Line 1368, Address: 0x17e360, Func Offset: 0x40
+	// Line 1372, Address: 0x17e368, Func Offset: 0x48
+	// Line 1373, Address: 0x17e378, Func Offset: 0x58
+	// Line 1375, Address: 0x17e3a8, Func Offset: 0x88
+	// Func End, Address: 0x17e3b4, Func Offset: 0x94
 }
 
 // zGameCheats__Ff
@@ -2913,6 +3087,60 @@ void zGameCheats(float32 dt)
 	int32 match;
 	GECheat* rec_next;
 	GECheat* rec_curr;
+	// Line 1219, Address: 0x17e3c0, Func Offset: 0
+	// Line 1221, Address: 0x17e3d4, Func Offset: 0x14
+	// Line 1248, Address: 0x17e3e8, Func Offset: 0x28
+	// Line 1245, Address: 0x17e3ec, Func Offset: 0x2c
+	// Line 1248, Address: 0x17e3f0, Func Offset: 0x30
+	// Line 1245, Address: 0x17e3f4, Func Offset: 0x34
+	// Line 1248, Address: 0x17e3fc, Func Offset: 0x3c
+	// Line 1249, Address: 0x17e420, Func Offset: 0x60
+	// Line 1250, Address: 0x17e438, Func Offset: 0x78
+	// Line 1254, Address: 0x17e448, Func Offset: 0x88
+	// Line 1256, Address: 0x17e44c, Func Offset: 0x8c
+	// Line 1254, Address: 0x17e454, Func Offset: 0x94
+	// Line 1256, Address: 0x17e458, Func Offset: 0x98
+	// Line 1257, Address: 0x17e470, Func Offset: 0xb0
+	// Line 1264, Address: 0x17e478, Func Offset: 0xb8
+	// Line 1265, Address: 0x17e480, Func Offset: 0xc0
+	// Line 1266, Address: 0x17e498, Func Offset: 0xd8
+	// Line 1267, Address: 0x17e4a4, Func Offset: 0xe4
+	// Line 1270, Address: 0x17e4a8, Func Offset: 0xe8
+	// Line 1271, Address: 0x17e4b0, Func Offset: 0xf0
+	// Line 1273, Address: 0x17e4b4, Func Offset: 0xf4
+	// Line 1271, Address: 0x17e4b8, Func Offset: 0xf8
+	// Line 1273, Address: 0x17e4bc, Func Offset: 0xfc
+	// Line 1271, Address: 0x17e4c0, Func Offset: 0x100
+	// Line 1273, Address: 0x17e4c4, Func Offset: 0x104
+	// Line 1274, Address: 0x17e4d4, Func Offset: 0x114
+	// Line 1275, Address: 0x17e4dc, Func Offset: 0x11c
+	// Line 1283, Address: 0x17e4e0, Func Offset: 0x120
+	// Line 1284, Address: 0x17e534, Func Offset: 0x174
+	// Line 1283, Address: 0x17e538, Func Offset: 0x178
+	// Line 1284, Address: 0x17e53c, Func Offset: 0x17c
+	// Line 1293, Address: 0x17e544, Func Offset: 0x184
+	// Line 1292, Address: 0x17e54c, Func Offset: 0x18c
+	// Line 1291, Address: 0x17e550, Func Offset: 0x190
+	// Line 1293, Address: 0x17e554, Func Offset: 0x194
+	// Line 1294, Address: 0x17e560, Func Offset: 0x1a0
+	// Line 1299, Address: 0x17e564, Func Offset: 0x1a4
+	// Line 1295, Address: 0x17e568, Func Offset: 0x1a8
+	// Line 1299, Address: 0x17e56c, Func Offset: 0x1ac
+	// Line 1300, Address: 0x17e5b0, Func Offset: 0x1f0
+	// Line 1306, Address: 0x17e5b8, Func Offset: 0x1f8
+	// Line 1307, Address: 0x17e5c8, Func Offset: 0x208
+	// Line 1309, Address: 0x17e5e0, Func Offset: 0x220
+	// Line 1313, Address: 0x17e5f4, Func Offset: 0x234
+	// Line 1315, Address: 0x17e604, Func Offset: 0x244
+	// Line 1318, Address: 0x17e618, Func Offset: 0x258
+	// Line 1319, Address: 0x17e620, Func Offset: 0x260
+	// Line 1320, Address: 0x17e624, Func Offset: 0x264
+	// Line 1319, Address: 0x17e62c, Func Offset: 0x26c
+	// Line 1320, Address: 0x17e630, Func Offset: 0x270
+	// Line 1321, Address: 0x17e63c, Func Offset: 0x27c
+	// Line 1323, Address: 0x17e640, Func Offset: 0x280
+	// Line 1324, Address: 0x17e658, Func Offset: 0x298
+	// Func End, Address: 0x17e670, Func Offset: 0x2b0
 }
 
 // zGameExtras_Load__FP7xSerial
@@ -2920,12 +3148,19 @@ void zGameCheats(float32 dt)
 void zGameExtras_Load(xSerial* xser)
 {
 	int32 keepers;
+	// Line 745, Address: 0x17e670, Func Offset: 0
+	// Line 750, Address: 0x17e678, Func Offset: 0x8
+	// Line 751, Address: 0x17e684, Func Offset: 0x14
+	// Line 753, Address: 0x17e694, Func Offset: 0x24
+	// Func End, Address: 0x17e6a0, Func Offset: 0x30
 }
 
 // zGameExtras_Save__FP7xSerial
 // Start address: 0x17e6a0
 void zGameExtras_Save(xSerial* xser)
 {
+	// Line 739, Address: 0x17e6a0, Func Offset: 0
+	// Func End, Address: 0x17e6a8, Func Offset: 0x8
 }
 
 // zGameExtras_NewGameReset__Fv
@@ -2933,18 +3168,62 @@ void zGameExtras_Save(xSerial* xser)
 void zGameExtras_NewGameReset()
 {
 	zGlobalSettings* gs;
+	// Line 718, Address: 0x17e6b0, Func Offset: 0
+	// Line 715, Address: 0x17e6b4, Func Offset: 0x4
+	// Line 718, Address: 0x17e6b8, Func Offset: 0x8
+	// Line 725, Address: 0x17e6bc, Func Offset: 0xc
+	// Line 726, Address: 0x17e6c4, Func Offset: 0x14
+	// Line 727, Address: 0x17e6cc, Func Offset: 0x1c
+	// Line 728, Address: 0x17e6d4, Func Offset: 0x24
+	// Line 729, Address: 0x17e6dc, Func Offset: 0x2c
+	// Line 732, Address: 0x17e6e0, Func Offset: 0x30
+	// Func End, Address: 0x17e6e8, Func Offset: 0x38
 }
 
 // zGameExtras_CheatFlags__Fv
 // Start address: 0x17e6f0
 int32 zGameExtras_CheatFlags()
 {
+	// Line 712, Address: 0x17e6f0, Func Offset: 0
+	// Func End, Address: 0x17e6f8, Func Offset: 0x8
 }
 
 // EGG_check_ExtrasFlags__FP7EGGItem
 // Start address: 0x17e700
 int32 EGG_check_ExtrasFlags()
 {
+	// Line 611, Address: 0x17e700, Func Offset: 0
+	// Line 614, Address: 0x17e728, Func Offset: 0x28
+	// Line 615, Address: 0x17e740, Func Offset: 0x40
+	// Line 619, Address: 0x17e748, Func Offset: 0x48
+	// Line 620, Address: 0x17e760, Func Offset: 0x60
+	// Line 624, Address: 0x17e76c, Func Offset: 0x6c
+	// Line 626, Address: 0x17e788, Func Offset: 0x88
+	// Line 628, Address: 0x17e7a0, Func Offset: 0xa0
+	// Line 630, Address: 0x17e7b8, Func Offset: 0xb8
+	// Line 634, Address: 0x17e7d0, Func Offset: 0xd0
+	// Line 635, Address: 0x17e7e4, Func Offset: 0xe4
+	// Line 637, Address: 0x17e7ec, Func Offset: 0xec
+	// Line 638, Address: 0x17e7f0, Func Offset: 0xf0
+	// Line 639, Address: 0x17e808, Func Offset: 0x108
+	// Line 645, Address: 0x17e810, Func Offset: 0x110
+	// Line 646, Address: 0x17e828, Func Offset: 0x128
+	// Line 649, Address: 0x17e830, Func Offset: 0x130
+	// Line 650, Address: 0x17e848, Func Offset: 0x148
+	// Line 653, Address: 0x17e850, Func Offset: 0x150
+	// Line 654, Address: 0x17e868, Func Offset: 0x168
+	// Line 658, Address: 0x17e870, Func Offset: 0x170
+	// Line 659, Address: 0x17e888, Func Offset: 0x188
+	// Line 662, Address: 0x17e894, Func Offset: 0x194
+	// Line 663, Address: 0x17e8b0, Func Offset: 0x1b0
+	// Line 664, Address: 0x17e8c8, Func Offset: 0x1c8
+	// Line 665, Address: 0x17e8e0, Func Offset: 0x1e0
+	// Line 666, Address: 0x17e8f4, Func Offset: 0x1f4
+	// Line 668, Address: 0x17e8fc, Func Offset: 0x1fc
+	// Line 670, Address: 0x17e900, Func Offset: 0x200
+	// Line 679, Address: 0x17e91c, Func Offset: 0x21c
+	// Line 683, Address: 0x17e920, Func Offset: 0x220
+	// Func End, Address: 0x17e928, Func Offset: 0x228
 }
 
 // zGameExtras_SceneUpdate__Ff
@@ -2953,6 +3232,19 @@ void zGameExtras_SceneUpdate(float32 dt)
 {
 	EGGItem* egg_next;
 	EGGItem* egg;
+	// Line 335, Address: 0x17e930, Func Offset: 0
+	// Line 336, Address: 0x17e940, Func Offset: 0x10
+	// Line 337, Address: 0x17e94c, Func Offset: 0x1c
+	// Line 338, Address: 0x17e95c, Func Offset: 0x2c
+	// Line 341, Address: 0x17e96c, Func Offset: 0x3c
+	// Line 342, Address: 0x17e970, Func Offset: 0x40
+	// Line 343, Address: 0x17e980, Func Offset: 0x50
+	// Line 347, Address: 0x17e984, Func Offset: 0x54
+	// Line 349, Address: 0x17e998, Func Offset: 0x68
+	// Line 351, Address: 0x17e9a0, Func Offset: 0x70
+	// Line 353, Address: 0x17e9a8, Func Offset: 0x78
+	// Line 356, Address: 0x17e9b8, Func Offset: 0x88
+	// Func End, Address: 0x17e9cc, Func Offset: 0x9c
 }
 
 // zGameExtras_SceneExit__Fv
@@ -2961,6 +3253,24 @@ void zGameExtras_SceneExit()
 {
 	EGGItem* egg_next;
 	EGGItem* egg;
+	// Line 302, Address: 0x17e9d0, Func Offset: 0
+	// Line 303, Address: 0x17e9dc, Func Offset: 0xc
+	// Line 304, Address: 0x17e9e8, Func Offset: 0x18
+	// Line 305, Address: 0x17e9f4, Func Offset: 0x24
+	// Line 308, Address: 0x17ea04, Func Offset: 0x34
+	// Line 309, Address: 0x17ea08, Func Offset: 0x38
+	// Line 310, Address: 0x17ea18, Func Offset: 0x48
+	// Line 315, Address: 0x17ea1c, Func Offset: 0x4c
+	// Line 316, Address: 0x17ea28, Func Offset: 0x58
+	// Line 318, Address: 0x17ea34, Func Offset: 0x64
+	// Line 319, Address: 0x17ea3c, Func Offset: 0x6c
+	// Line 321, Address: 0x17ea44, Func Offset: 0x74
+	// Line 324, Address: 0x17ea58, Func Offset: 0x88
+	// Line 325, Address: 0x17ea5c, Func Offset: 0x8c
+	// Line 326, Address: 0x17ea60, Func Offset: 0x90
+	// Line 328, Address: 0x17ea64, Func Offset: 0x94
+	// Line 329, Address: 0x17ea68, Func Offset: 0x98
+	// Func End, Address: 0x17ea78, Func Offset: 0xa8
 }
 
 // zGameExtras_SceneReset__Fv
@@ -2969,6 +3279,17 @@ void zGameExtras_SceneReset()
 {
 	EGGItem* egg_next;
 	EGGItem* egg;
+	// Line 278, Address: 0x17ea80, Func Offset: 0
+	// Line 279, Address: 0x17ea8c, Func Offset: 0xc
+	// Line 282, Address: 0x17ea98, Func Offset: 0x18
+	// Line 283, Address: 0x17ea9c, Func Offset: 0x1c
+	// Line 284, Address: 0x17eaa8, Func Offset: 0x28
+	// Line 289, Address: 0x17eaac, Func Offset: 0x2c
+	// Line 292, Address: 0x17eac0, Func Offset: 0x40
+	// Line 293, Address: 0x17eac8, Func Offset: 0x48
+	// Line 295, Address: 0x17ead0, Func Offset: 0x50
+	// Line 298, Address: 0x17eae0, Func Offset: 0x60
+	// Func End, Address: 0x17eaf0, Func Offset: 0x70
 }
 
 // zGameExtras_SceneInit__Fv
@@ -2978,17 +3299,41 @@ void zGameExtras_SceneInit()
 	int32 somethingIsEnabled;
 	EGGItem* egg_next;
 	EGGItem* egg;
+	// Line 237, Address: 0x17eaf0, Func Offset: 0
+	// Line 244, Address: 0x17eb04, Func Offset: 0x14
+	// Line 245, Address: 0x17eb10, Func Offset: 0x20
+	// Line 250, Address: 0x17eb1c, Func Offset: 0x2c
+	// Line 245, Address: 0x17eb20, Func Offset: 0x30
+	// Line 251, Address: 0x17eb24, Func Offset: 0x34
+	// Line 248, Address: 0x17eb2c, Func Offset: 0x3c
+	// Line 251, Address: 0x17eb30, Func Offset: 0x40
+	// Line 252, Address: 0x17eb38, Func Offset: 0x48
+	// Line 257, Address: 0x17eb3c, Func Offset: 0x4c
+	// Line 260, Address: 0x17eb50, Func Offset: 0x60
+	// Line 262, Address: 0x17eb5c, Func Offset: 0x6c
+	// Line 264, Address: 0x17eb64, Func Offset: 0x74
+	// Line 265, Address: 0x17eb6c, Func Offset: 0x7c
+	// Line 267, Address: 0x17eb74, Func Offset: 0x84
+	// Line 269, Address: 0x17eb88, Func Offset: 0x98
+	// Line 272, Address: 0x17eb98, Func Offset: 0xa8
+	// Func End, Address: 0x17ebb0, Func Offset: 0xc0
 }
 
 // zGameExtras_MoDay__FPiPi
 // Start address: 0x17ebb0
 void zGameExtras_MoDay(int32* month, int32* day)
 {
+	// Line 138, Address: 0x17ebb0, Func Offset: 0
+	// Line 139, Address: 0x17ebb8, Func Offset: 0x8
+	// Line 140, Address: 0x17ebbc, Func Offset: 0xc
+	// Func End, Address: 0x17ebc4, Func Offset: 0x14
 }
 
 // zGameExtras_ExtrasFlags__Fv
 // Start address: 0x17ebd0
 int32 zGameExtras_ExtrasFlags()
 {
+	// Line 134, Address: 0x17ebd0, Func Offset: 0
+	// Func End, Address: 0x17ebd8, Func Offset: 0x8
 }
 

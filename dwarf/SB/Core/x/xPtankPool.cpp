@@ -78,7 +78,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_1 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RxPipelineNode
@@ -104,7 +104,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_12 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -256,7 +256,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_13 pad;
+	uint32 pad[4];
 };
 
 struct RxPipelineRequiresCluster
@@ -273,7 +273,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_8 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RpGeometry
@@ -289,7 +289,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_14 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -393,7 +393,7 @@ enum RxClusterValid
 
 struct RpTriangle
 {
-	type_11 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -403,6 +403,9 @@ struct ptank_pool
 	uint32 used;
 	RpAtomic* ptank;
 	_class hide;
+
+	void flush();
+	void grab_block(ptank_group_type type);
 };
 
 struct _class
@@ -434,7 +437,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_17 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct RxClusterDefinition
@@ -456,8 +459,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_15 name;
-	type_16 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -516,13 +519,13 @@ struct RxIoSpec
 
 struct RxNodeMethods
 {
-	type_5 nodeBody;
-	type_6 nodeInit;
-	type_7 nodeTerm;
-	type_0 pipelineNodeInit;
-	type_2 pipelineNodeTerm;
-	type_3 pipelineNodeConfig;
-	type_4 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct render_state
@@ -553,7 +556,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_18 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwLinkList
@@ -562,13 +565,13 @@ struct RwLinkList
 };
 
 uint8 inited;
-type_10 groups;
+group_data groups[2];
 int32 _rpPTankAtomicDataOffset;
-type_9 compare_ptanks;
+int32(*compare_ptanks)(void*, void*);
 uint32 gActiveHeap;
 
-void flush(ptank_pool* this);
-void grab_block(ptank_pool* this, ptank_group_type type);
+void flush();
+void grab_block(ptank_group_type type);
 void xPTankPoolRender();
 void xPTankPoolSceneExit();
 void xPTankPoolSceneEnter();
@@ -579,23 +582,74 @@ void sort_buckets(group_data& group);
 
 // flush__10ptank_poolFv
 // Start address: 0x3afc10
-void flush(ptank_pool* this)
+void ptank_pool::flush()
 {
 	int32 oldused;
 	int32 expand;
 	int32 total;
 	uint8* it;
 	uint8* end;
+	// Line 360, Address: 0x3afc10, Func Offset: 0
+	// Line 361, Address: 0x3afc28, Func Offset: 0x18
+	// Line 367, Address: 0x3afc34, Func Offset: 0x24
+	// Line 368, Address: 0x3afc3c, Func Offset: 0x2c
+	// Line 369, Address: 0x3afc54, Func Offset: 0x44
+	// Line 370, Address: 0x3afc70, Func Offset: 0x60
+	// Line 372, Address: 0x3afc88, Func Offset: 0x78
+	// Line 373, Address: 0x3afc98, Func Offset: 0x88
+	// Line 374, Address: 0x3afcc0, Func Offset: 0xb0
+	// Line 375, Address: 0x3afcf4, Func Offset: 0xe4
+	// Line 377, Address: 0x3afcf8, Func Offset: 0xe8
+	// Func End, Address: 0x3afd14, Func Offset: 0x104
 }
 
 // grab_block__10ptank_poolF16ptank_group_type
 // Start address: 0x3afd20
-void grab_block(ptank_pool* this, ptank_group_type type)
+void ptank_pool::grab_block(ptank_group_type type)
 {
 	group_data& group;
 	ptank_context** end;
 	ptank_context** it;
 	ptank_context** it;
+	// Line 294, Address: 0x3afd20, Func Offset: 0
+	// Line 298, Address: 0x3afd24, Func Offset: 0x4
+	// Line 294, Address: 0x3afd28, Func Offset: 0x8
+	// Line 297, Address: 0x3afd44, Func Offset: 0x24
+	// Line 298, Address: 0x3afd48, Func Offset: 0x28
+	// Line 301, Address: 0x3afd60, Func Offset: 0x40
+	// Line 304, Address: 0x3afe18, Func Offset: 0xf8
+	// Line 301, Address: 0x3afe1c, Func Offset: 0xfc
+	// Line 304, Address: 0x3afe20, Func Offset: 0x100
+	// Line 307, Address: 0x3afe24, Func Offset: 0x104
+	// Line 304, Address: 0x3afe28, Func Offset: 0x108
+	// Line 307, Address: 0x3afe2c, Func Offset: 0x10c
+	// Line 309, Address: 0x3afe3c, Func Offset: 0x11c
+	// Line 314, Address: 0x3afe48, Func Offset: 0x128
+	// Line 321, Address: 0x3afe9c, Func Offset: 0x17c
+	// Line 322, Address: 0x3afea0, Func Offset: 0x180
+	// Line 323, Address: 0x3afeb4, Func Offset: 0x194
+	// Line 324, Address: 0x3afec0, Func Offset: 0x1a0
+	// Line 325, Address: 0x3afec8, Func Offset: 0x1a8
+	// Line 326, Address: 0x3afed0, Func Offset: 0x1b0
+	// Line 329, Address: 0x3afee0, Func Offset: 0x1c0
+	// Line 331, Address: 0x3afef4, Func Offset: 0x1d4
+	// Line 336, Address: 0x3afefc, Func Offset: 0x1dc
+	// Line 338, Address: 0x3aff1c, Func Offset: 0x1fc
+	// Line 339, Address: 0x3aff50, Func Offset: 0x230
+	// Line 344, Address: 0x3b0010, Func Offset: 0x2f0
+	// Line 345, Address: 0x3b001c, Func Offset: 0x2fc
+	// Line 347, Address: 0x3b0034, Func Offset: 0x314
+	// Line 352, Address: 0x3b0040, Func Offset: 0x320
+	// Line 347, Address: 0x3b0044, Func Offset: 0x324
+	// Line 348, Address: 0x3b0088, Func Offset: 0x368
+	// Line 349, Address: 0x3b0094, Func Offset: 0x374
+	// Line 352, Address: 0x3b00a0, Func Offset: 0x380
+	// Line 353, Address: 0x3b00b0, Func Offset: 0x390
+	// Line 354, Address: 0x3b00bc, Func Offset: 0x39c
+	// Line 355, Address: 0x3b00c4, Func Offset: 0x3a4
+	// Line 356, Address: 0x3b00cc, Func Offset: 0x3ac
+	// Line 357, Address: 0x3b00e0, Func Offset: 0x3c0
+	// Func End, Address: 0x3b0100, Func Offset: 0x3e0
 }
 
 // xPTankPoolRender__Fv
@@ -606,6 +660,29 @@ void xPTankPoolRender()
 	group_data* endg;
 	ptank_context* p;
 	ptank_context* endp;
+	// Line 264, Address: 0x3b0100, Func Offset: 0
+	// Line 266, Address: 0x3b0104, Func Offset: 0x4
+	// Line 264, Address: 0x3b0108, Func Offset: 0x8
+	// Line 266, Address: 0x3b010c, Func Offset: 0xc
+	// Line 264, Address: 0x3b0110, Func Offset: 0x10
+	// Line 266, Address: 0x3b011c, Func Offset: 0x1c
+	// Line 267, Address: 0x3b0124, Func Offset: 0x24
+	// Line 270, Address: 0x3b0130, Func Offset: 0x30
+	// Line 272, Address: 0x3b0148, Func Offset: 0x48
+	// Line 273, Address: 0x3b0154, Func Offset: 0x54
+	// Line 274, Address: 0x3b016c, Func Offset: 0x6c
+	// Line 276, Address: 0x3b0194, Func Offset: 0x94
+	// Line 278, Address: 0x3b01a4, Func Offset: 0xa4
+	// Line 279, Address: 0x3b01d0, Func Offset: 0xd0
+	// Line 280, Address: 0x3b01e0, Func Offset: 0xe0
+	// Line 281, Address: 0x3b01e8, Func Offset: 0xe8
+	// Line 283, Address: 0x3b01f8, Func Offset: 0xf8
+	// Line 284, Address: 0x3b0210, Func Offset: 0x110
+	// Line 286, Address: 0x3b0220, Func Offset: 0x120
+	// Line 288, Address: 0x3b0230, Func Offset: 0x130
+	// Line 289, Address: 0x3b023c, Func Offset: 0x13c
+	// Line 290, Address: 0x3b0250, Func Offset: 0x150
+	// Func End, Address: 0x3b026c, Func Offset: 0x16c
 }
 
 // xPTankPoolSceneExit__Fv
@@ -616,6 +693,14 @@ void xPTankPoolSceneExit()
 	group_data* endg;
 	ptank_context* p;
 	ptank_context* endp;
+	// Line 255, Address: 0x3b0270, Func Offset: 0
+	// Line 258, Address: 0x3b028c, Func Offset: 0x1c
+	// Line 255, Address: 0x3b0294, Func Offset: 0x24
+	// Line 258, Address: 0x3b0298, Func Offset: 0x28
+	// Line 259, Address: 0x3b02a8, Func Offset: 0x38
+	// Line 260, Address: 0x3b02c8, Func Offset: 0x58
+	// Line 261, Address: 0x3b0320, Func Offset: 0xb0
+	// Func End, Address: 0x3b0344, Func Offset: 0xd4
 }
 
 // xPTankPoolSceneEnter__Fv
@@ -624,6 +709,15 @@ void xPTankPoolSceneEnter()
 {
 	group_data* it;
 	group_data* end;
+	// Line 240, Address: 0x3b0350, Func Offset: 0
+	// Line 242, Address: 0x3b0354, Func Offset: 0x4
+	// Line 240, Address: 0x3b0358, Func Offset: 0x8
+	// Line 243, Address: 0x3b036c, Func Offset: 0x1c
+	// Line 246, Address: 0x3b0374, Func Offset: 0x24
+	// Line 249, Address: 0x3b0394, Func Offset: 0x44
+	// Line 251, Address: 0x3b04a8, Func Offset: 0x158
+	// Line 252, Address: 0x3b04b8, Func Offset: 0x168
+	// Func End, Address: 0x3b04d4, Func Offset: 0x184
 }
 
 // compare_ptanks__24@unnamed@xPtankPool_cpp@FPCvPCv
@@ -634,6 +728,25 @@ int32 compare_ptanks(void* e1, void* e2)
 	ptank_context* p2;
 	RwTexture* tex1;
 	RwTexture* tex2;
+	// Line 219, Address: 0x3b04e0, Func Offset: 0
+	// Line 224, Address: 0x3b04e8, Func Offset: 0x8
+	// Line 225, Address: 0x3b0500, Func Offset: 0x20
+	// Line 226, Address: 0x3b0520, Func Offset: 0x40
+	// Line 227, Address: 0x3b0538, Func Offset: 0x58
+	// Line 228, Address: 0x3b0550, Func Offset: 0x70
+	// Line 229, Address: 0x3b0554, Func Offset: 0x74
+	// Line 228, Address: 0x3b0558, Func Offset: 0x78
+	// Line 229, Address: 0x3b055c, Func Offset: 0x7c
+	// Line 228, Address: 0x3b0560, Func Offset: 0x80
+	// Line 229, Address: 0x3b0564, Func Offset: 0x84
+	// Line 228, Address: 0x3b0568, Func Offset: 0x88
+	// Line 229, Address: 0x3b056c, Func Offset: 0x8c
+	// Line 228, Address: 0x3b0570, Func Offset: 0x90
+	// Line 229, Address: 0x3b0574, Func Offset: 0x94
+	// Line 230, Address: 0x3b0578, Func Offset: 0x98
+	// Line 231, Address: 0x3b0590, Func Offset: 0xb0
+	// Line 233, Address: 0x3b0598, Func Offset: 0xb8
+	// Func End, Address: 0x3b05a0, Func Offset: 0xc0
 }
 
 // create_ptank__24@unnamed@xPtankPool_cpp@FUi
@@ -642,6 +755,26 @@ RpAtomic* create_ptank(uint32 flags)
 {
 	RpAtomic* ptank;
 	RwFrame* frame;
+	// Line 169, Address: 0x3b05a0, Func Offset: 0
+	// Line 168, Address: 0x3b05a4, Func Offset: 0x4
+	// Line 169, Address: 0x3b05a8, Func Offset: 0x8
+	// Line 168, Address: 0x3b05ac, Func Offset: 0xc
+	// Line 169, Address: 0x3b05b0, Func Offset: 0x10
+	// Line 170, Address: 0x3b05c4, Func Offset: 0x24
+	// Line 171, Address: 0x3b05d8, Func Offset: 0x38
+	// Line 172, Address: 0x3b05e0, Func Offset: 0x40
+	// Line 173, Address: 0x3b05f8, Func Offset: 0x58
+	// Line 174, Address: 0x3b0610, Func Offset: 0x70
+	// Line 173, Address: 0x3b0614, Func Offset: 0x74
+	// Line 174, Address: 0x3b0618, Func Offset: 0x78
+	// Line 173, Address: 0x3b061c, Func Offset: 0x7c
+	// Line 174, Address: 0x3b0644, Func Offset: 0xa4
+	// Line 175, Address: 0x3b064c, Func Offset: 0xac
+	// Line 176, Address: 0x3b0654, Func Offset: 0xb4
+	// Line 175, Address: 0x3b0658, Func Offset: 0xb8
+	// Line 176, Address: 0x3b0664, Func Offset: 0xc4
+	// Line 178, Address: 0x3b0668, Func Offset: 0xc8
+	// Func End, Address: 0x3b0678, Func Offset: 0xd8
 }
 
 // init_groups__24@unnamed@xPtankPool_cpp@Fv
@@ -654,6 +787,34 @@ void init_groups()
 	uint8* mem;
 	group_data* it;
 	group_data* end;
+	// Line 141, Address: 0x3b0680, Func Offset: 0
+	// Line 144, Address: 0x3b0684, Func Offset: 0x4
+	// Line 141, Address: 0x3b0688, Func Offset: 0x8
+	// Line 144, Address: 0x3b068c, Func Offset: 0xc
+	// Line 141, Address: 0x3b0690, Func Offset: 0x10
+	// Line 144, Address: 0x3b0694, Func Offset: 0x14
+	// Line 141, Address: 0x3b0698, Func Offset: 0x18
+	// Line 144, Address: 0x3b069c, Func Offset: 0x1c
+	// Line 141, Address: 0x3b06a0, Func Offset: 0x20
+	// Line 144, Address: 0x3b06a4, Func Offset: 0x24
+	// Line 147, Address: 0x3b06b0, Func Offset: 0x30
+	// Line 148, Address: 0x3b06b4, Func Offset: 0x34
+	// Line 147, Address: 0x3b06b8, Func Offset: 0x38
+	// Line 148, Address: 0x3b06bc, Func Offset: 0x3c
+	// Line 151, Address: 0x3b06c8, Func Offset: 0x48
+	// Line 155, Address: 0x3b06ec, Func Offset: 0x6c
+	// Line 157, Address: 0x3b0708, Func Offset: 0x88
+	// Line 163, Address: 0x3b0710, Func Offset: 0x90
+	// Line 157, Address: 0x3b0714, Func Offset: 0x94
+	// Line 158, Address: 0x3b0718, Func Offset: 0x98
+	// Line 159, Address: 0x3b071c, Func Offset: 0x9c
+	// Line 160, Address: 0x3b0730, Func Offset: 0xb0
+	// Line 161, Address: 0x3b0734, Func Offset: 0xb4
+	// Line 162, Address: 0x3b0740, Func Offset: 0xc0
+	// Line 163, Address: 0x3b0748, Func Offset: 0xc8
+	// Line 164, Address: 0x3b0750, Func Offset: 0xd0
+	// Line 165, Address: 0x3b0760, Func Offset: 0xe0
+	// Func End, Address: 0x3b0778, Func Offset: 0xf8
 }
 
 // sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data
@@ -666,5 +827,29 @@ void sort_buckets(group_data& group)
 	ptank_context** bucket;
 	ptank_context** end;
 	ptank_context* front;
+	// Line 107, Address: 0x3b0780, Func Offset: 0
+	// Line 108, Address: 0x3b0784, Func Offset: 0x4
+	// Line 107, Address: 0x3b0788, Func Offset: 0x8
+	// Line 108, Address: 0x3b0790, Func Offset: 0x10
+	// Line 109, Address: 0x3b07a4, Func Offset: 0x24
+	// Line 110, Address: 0x3b07ac, Func Offset: 0x2c
+	// Line 112, Address: 0x3b07d0, Func Offset: 0x50
+	// Line 114, Address: 0x3b07e4, Func Offset: 0x64
+	// Line 116, Address: 0x3b07ec, Func Offset: 0x6c
+	// Line 117, Address: 0x3b07fc, Func Offset: 0x7c
+	// Line 121, Address: 0x3b0808, Func Offset: 0x88
+	// Line 120, Address: 0x3b080c, Func Offset: 0x8c
+	// Line 121, Address: 0x3b0810, Func Offset: 0x90
+	// Line 122, Address: 0x3b081c, Func Offset: 0x9c
+	// Line 124, Address: 0x3b0828, Func Offset: 0xa8
+	// Line 127, Address: 0x3b082c, Func Offset: 0xac
+	// Line 132, Address: 0x3b0880, Func Offset: 0x100
+	// Line 133, Address: 0x3b0890, Func Offset: 0x110
+	// Line 134, Address: 0x3b08a4, Func Offset: 0x124
+	// Line 135, Address: 0x3b08a8, Func Offset: 0x128
+	// Line 136, Address: 0x3b08b0, Func Offset: 0x130
+	// Line 137, Address: 0x3b08b4, Func Offset: 0x134
+	// Line 138, Address: 0x3b08c0, Func Offset: 0x140
+	// Func End, Address: 0x3b08d0, Func Offset: 0x150
 }
 

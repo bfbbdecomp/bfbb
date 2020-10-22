@@ -82,7 +82,7 @@ typedef struct xEntFrame;
 typedef struct RpWorld;
 typedef struct RwMatrixTag;
 typedef struct RpVertexNormal;
-typedef union _class_1;
+typedef struct _class_1;
 typedef struct rxReq;
 typedef struct xMovePoint;
 typedef struct zJumpParam;
@@ -242,7 +242,7 @@ typedef float32 type_30[12];
 typedef xAnimMultiFileEntry type_31[1];
 typedef int8 type_34[128];
 typedef RwV3d type_35[8];
-typedef type_34 type_36[6];
+typedef int8 type_36[128][6];
 typedef uint8 type_39[2];
 typedef uint8 type_40[14];
 typedef xModelTag type_41[4];
@@ -324,7 +324,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_6 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xScene
@@ -354,9 +354,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_53 resolvID;
-	type_57 base2Name;
-	type_60 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct NPCGlyph
@@ -369,6 +369,15 @@ struct NPCGlyph
 	xMat3x3 rot_glyph;
 	xVec3 scl_glyph;
 	float32 tmr_glyph;
+
+	void Timestep(float32 dt);
+	void RotAddDelta(xMat3x3* mat_rot);
+	void VelSet_Shiny();
+	void RotSet(xVec3* ang, int32 doautospin);
+	void ScaleSet(xVec3* scale);
+	void PosSet(xVec3* pos);
+	void Discard();
+	void Enable(int32 ison);
 };
 
 struct RpInterpolator
@@ -401,7 +410,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_28 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -436,12 +445,12 @@ struct RxPipelineNodeTopSortData
 struct zPlatFMRunTime
 {
 	uint32 flags;
-	type_13 tmrs;
-	type_16 ttms;
-	type_20 atms;
-	type_22 dtms;
-	type_25 vms;
-	type_30 dss;
+	float32 tmrs[12];
+	float32 ttms[12];
+	float32 atms[12];
+	float32 dtms[12];
+	float32 vms[12];
+	float32 dss[12];
 };
 
 struct RwV2d
@@ -463,15 +472,15 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_4 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_18 Conditional;
-	type_18 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -601,7 +610,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_64 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -619,7 +628,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_9 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -686,7 +695,7 @@ struct xAnimActiveEffect
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_24 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct RxPipelineNodeParam
@@ -703,10 +712,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_36 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_43 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -735,7 +744,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_52 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct zEntHangable
@@ -770,16 +779,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_62 update;
-	type_62 endUpdate;
-	type_66 bupdate;
-	type_67 move;
-	type_69 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_79 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -847,8 +856,8 @@ struct xQuat
 
 struct _tagxPad
 {
-	type_56 value;
-	type_59 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -863,9 +872,9 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_80 up_tmr;
-	type_82 down_tmr;
-	type_94 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct xAnimState
@@ -886,14 +895,14 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_49 BeforeEnter;
-	type_33 StateCallback;
-	type_52 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_31 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RpMaterial
@@ -961,7 +970,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_77 pad;
+	uint32 pad[4];
 };
 
 struct xMovePointAsset : xBaseAsset
@@ -1028,7 +1037,7 @@ struct xEntMotionPenData
 {
 	uint8 flags;
 	uint8 plane;
-	type_39 pad;
+	uint8 pad[2];
 	float32 len;
 	float32 range;
 	float32 period;
@@ -1042,7 +1051,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_46 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct _tagPadAnalog
@@ -1070,7 +1079,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_83 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -1082,7 +1091,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_48 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -1109,8 +1118,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_3 activateCB;
-	type_3 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct _tagiPad
@@ -1175,7 +1184,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_47 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xVec4
@@ -1230,7 +1239,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_90 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -1254,10 +1263,13 @@ struct RpVertexNormal
 	uint8 pad;
 };
 
-union _class_1
+struct _class_1
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct rxReq
@@ -1272,7 +1284,7 @@ struct xMovePoint : xBase
 	xMovePoint* prev;
 	uint32 node_wt_sum;
 	uint8 on;
-	type_91 pad;
+	uint8 pad[2];
 	float32 delay;
 	xSpline3* spl;
 };
@@ -1329,7 +1341,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_96 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -1342,7 +1354,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_99 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xLinkAsset
@@ -1350,14 +1362,14 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_23 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
 
 struct xShadowSimplePoly
 {
-	type_54 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -1405,8 +1417,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_100 light;
-	type_101 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -1427,7 +1439,7 @@ struct _tagxRumble
 
 struct RpTriangle
 {
-	type_61 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -1569,8 +1581,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_104 PowerUp;
-	type_107 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 enum rxEmbeddedPacketState
@@ -1600,7 +1612,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_55 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1609,7 +1621,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_68 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -1628,9 +1640,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_95 colls;
-	type_65 post;
-	type_74 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 enum RwCameraProjection
@@ -1693,8 +1705,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_72 baseCount;
-	type_78 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -1713,14 +1725,14 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_84 corner;
+	xVec3 corner[4];
 };
 
 struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_75 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -1773,12 +1785,12 @@ struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_85 wt;
+	float32 wt[4];
 };
 
 struct xJSPHeader
 {
-	type_76 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1857,7 +1869,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_14 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -1929,8 +1941,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_70 lastRefs;
-	type_73 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -1973,8 +1985,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_97 name;
-	type_98 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -2039,15 +2051,15 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_19 radius;
+	float32 radius[2];
 };
 
 struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_0 beginUpdate;
-	type_5 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -2059,9 +2071,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_27 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_35 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct xBBox
@@ -2183,7 +2195,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_11 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -2195,7 +2207,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_41 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -2221,10 +2233,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_86 Inv_PatsSock;
-	type_87 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_92 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -2236,21 +2248,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_105 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_21 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_40 sb_model_indices;
-	type_45 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -2263,13 +2275,13 @@ struct zPlayerGlobals
 
 struct RxNodeMethods
 {
-	type_32 nodeBody;
-	type_37 nodeInit;
-	type_38 nodeTerm;
-	type_1 pipelineNodeInit;
-	type_10 pipelineNodeTerm;
-	type_17 pipelineNodeConfig;
-	type_29 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct xEntMotionMPData
@@ -2357,10 +2369,10 @@ struct RwFrustumPlane
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_109 MoveSpeed;
-	type_2 AnimSneak;
-	type_8 AnimWalk;
-	type_12 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -2378,7 +2390,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_50 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct RwPlane
@@ -2477,7 +2489,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_106 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct RxCluster
@@ -2500,7 +2512,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_108 clusters;
+	RxCluster clusters[1];
 };
 
 struct xEntMotionMechData
@@ -2579,33 +2591,33 @@ struct iFogParams
 	uint8* table;
 };
 
-type_7 buffer;
-type_15 buffer;
-type_102 g_strz_glyphmodel;
-type_89 g_glyphs_animModelInstRef;
-type_44 g_cnt_activeGlyphs;
-type_81 g_glyphs_talk;
-type_93 g_glyphs_talkOther;
-type_103 g_glyphs_friend;
-type_58 g_glyphs_dazed;
-type_71 g_glyphs_shinyOne;
-type_63 g_glyphs_shinyFive;
-type_51 g_glyphs_shinyTen;
-type_42 g_glyphs_shinyFifty;
-type_26 g_glyphs_shinyHundred;
+int8 buffer[16];
+int8 buffer[16];
+int8* g_strz_glyphmodel[10];
+xModelInstance* g_glyphs_animModelInstRef[10];
+int32 g_cnt_activeGlyphs[10];
+NPCGlyph g_glyphs_talk[8];
+NPCGlyph g_glyphs_talkOther[8];
+NPCGlyph g_glyphs_friend[1];
+NPCGlyph g_glyphs_dazed[8];
+NPCGlyph g_glyphs_shinyOne[16];
+NPCGlyph g_glyphs_shinyFive[16];
+NPCGlyph g_glyphs_shinyTen[16];
+NPCGlyph g_glyphs_shinyFifty[16];
+NPCGlyph g_glyphs_shinyHundred[16];
 xVec3 g_Y3;
 zGlobals globals;
 xVec3 g_O3;
 xVec3 g_Onez;
 
-void Timestep(NPCGlyph* this, float32 dt);
-void RotAddDelta(NPCGlyph* this, xMat3x3* mat_rot);
-void VelSet_Shiny(NPCGlyph* this);
-void RotSet(NPCGlyph* this, xVec3* ang, int32 doautospin);
-void ScaleSet(NPCGlyph* this, xVec3* scale);
-void PosSet(NPCGlyph* this, xVec3* pos);
-void Discard(NPCGlyph* this);
-void Enable(NPCGlyph* this, int32 ison);
+void Timestep(float32 dt);
+void RotAddDelta(xMat3x3* mat_rot);
+void VelSet_Shiny();
+void RotSet(xVec3* ang, int32 doautospin);
+void ScaleSet(xVec3* scale);
+void PosSet(xVec3* pos);
+void Discard();
+void Enable(int32 ison);
 NPCGlyph* GLYF_Acquire(en_npcglyph type);
 void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff);
 int32 zNPCGlyph_TypeToList(en_npcglyph gtyp, NPCGlyph** glist);
@@ -2619,7 +2631,7 @@ void zNPCGlyph_Startup();
 
 // Timestep__8NPCGlyphFf
 // Start address: 0x3cd930
-void Timestep(NPCGlyph* this, float32 dt)
+void NPCGlyph::Timestep(float32 dt)
 {
 	xVec3 pos_new;
 	float32 dx__;
@@ -2628,17 +2640,61 @@ void Timestep(NPCGlyph* this, float32 dt)
 	float32 chkdist;
 	xVec3 delta;
 	float32 ds2_cam;
+	// Line 724, Address: 0x3cd930, Func Offset: 0
+	// Line 725, Address: 0x3cd944, Func Offset: 0x14
+	// Line 728, Address: 0x3cd968, Func Offset: 0x38
+	// Line 736, Address: 0x3cd990, Func Offset: 0x60
+	// Line 737, Address: 0x3cd998, Func Offset: 0x68
+	// Line 742, Address: 0x3cd9c4, Func Offset: 0x94
+	// Line 744, Address: 0x3cd9f4, Func Offset: 0xc4
+	// Line 745, Address: 0x3cd9fc, Func Offset: 0xcc
+	// Line 749, Address: 0x3cda1c, Func Offset: 0xec
+	// Line 751, Address: 0x3cda24, Func Offset: 0xf4
+	// Line 753, Address: 0x3cda28, Func Offset: 0xf8
+	// Line 758, Address: 0x3cda34, Func Offset: 0x104
+	// Line 759, Address: 0x3cda3c, Func Offset: 0x10c
+	// Line 760, Address: 0x3cda58, Func Offset: 0x128
+	// Line 761, Address: 0x3cda60, Func Offset: 0x130
+	// Line 762, Address: 0x3cda68, Func Offset: 0x138
+	// Line 763, Address: 0x3cda84, Func Offset: 0x154
+	// Line 762, Address: 0x3cda88, Func Offset: 0x158
+	// Line 769, Address: 0x3cda8c, Func Offset: 0x15c
+	// Line 763, Address: 0x3cda90, Func Offset: 0x160
+	// Line 767, Address: 0x3cdacc, Func Offset: 0x19c
+	// Line 768, Address: 0x3cdad0, Func Offset: 0x1a0
+	// Line 767, Address: 0x3cdad4, Func Offset: 0x1a4
+	// Line 768, Address: 0x3cdad8, Func Offset: 0x1a8
+	// Line 769, Address: 0x3cdaec, Func Offset: 0x1bc
+	// Line 771, Address: 0x3cdb0c, Func Offset: 0x1dc
+	// Line 770, Address: 0x3cdb10, Func Offset: 0x1e0
+	// Line 771, Address: 0x3cdb28, Func Offset: 0x1f8
+	// Line 773, Address: 0x3cdb90, Func Offset: 0x260
+	// Line 775, Address: 0x3cdba0, Func Offset: 0x270
+	// Line 780, Address: 0x3cdba8, Func Offset: 0x278
+	// Line 781, Address: 0x3cdbb8, Func Offset: 0x288
+	// Line 782, Address: 0x3cdbd8, Func Offset: 0x2a8
+	// Line 783, Address: 0x3cdc14, Func Offset: 0x2e4
+	// Line 788, Address: 0x3cdc54, Func Offset: 0x324
+	// Line 792, Address: 0x3cdc58, Func Offset: 0x328
+	// Func End, Address: 0x3cdc6c, Func Offset: 0x33c
 }
 
 // RotAddDelta__8NPCGlyphFP7xMat3x3
 // Start address: 0x3cdc70
-void RotAddDelta(NPCGlyph* this, xMat3x3* mat_rot)
+void NPCGlyph::RotAddDelta(xMat3x3* mat_rot)
 {
+	// Line 707, Address: 0x3cdc70, Func Offset: 0
+	// Line 711, Address: 0x3cdc80, Func Offset: 0x10
+	// Line 713, Address: 0x3cdc90, Func Offset: 0x20
+	// Line 715, Address: 0x3cdc98, Func Offset: 0x28
+	// Line 717, Address: 0x3cdca4, Func Offset: 0x34
+	// Line 720, Address: 0x3cdcb8, Func Offset: 0x48
+	// Func End, Address: 0x3cdccc, Func Offset: 0x5c
 }
 
 // VelSet_Shiny__8NPCGlyphFv
 // Start address: 0x3cdcd0
-void VelSet_Shiny(NPCGlyph* this)
+void NPCGlyph::VelSet_Shiny()
 {
 	xVec3 vel;
 	xVec3* dest;
@@ -2648,38 +2704,117 @@ void VelSet_Shiny(NPCGlyph* this)
 	float32 dy__;
 	float32 dz__;
 	float32 total_mult;
+	// Line 655, Address: 0x3cdcd0, Func Offset: 0
+	// Line 657, Address: 0x3cdcd4, Func Offset: 0x4
+	// Line 655, Address: 0x3cdcd8, Func Offset: 0x8
+	// Line 659, Address: 0x3cdcdc, Func Offset: 0xc
+	// Line 655, Address: 0x3cdce0, Func Offset: 0x10
+	// Line 657, Address: 0x3cdcec, Func Offset: 0x1c
+	// Line 659, Address: 0x3cdcf0, Func Offset: 0x20
+	// Line 668, Address: 0x3cdd10, Func Offset: 0x40
+	// Line 674, Address: 0x3cdd14, Func Offset: 0x44
+	// Line 668, Address: 0x3cdd18, Func Offset: 0x48
+	// Line 674, Address: 0x3cdd1c, Func Offset: 0x4c
+	// Line 671, Address: 0x3cdd20, Func Offset: 0x50
+	// Line 672, Address: 0x3cdd30, Func Offset: 0x60
+	// Line 673, Address: 0x3cdd40, Func Offset: 0x70
+	// Line 674, Address: 0x3cdd4c, Func Offset: 0x7c
+	// Line 676, Address: 0x3cdd54, Func Offset: 0x84
+	// Line 687, Address: 0x3cdd58, Func Offset: 0x88
+	// Line 676, Address: 0x3cdd5c, Func Offset: 0x8c
+	// Line 687, Address: 0x3cdd60, Func Offset: 0x90
+	// Line 676, Address: 0x3cdd68, Func Offset: 0x98
+	// Line 687, Address: 0x3cdd6c, Func Offset: 0x9c
+	// Line 676, Address: 0x3cdd70, Func Offset: 0xa0
+	// Line 687, Address: 0x3cdd74, Func Offset: 0xa4
+	// Line 692, Address: 0x3cdd7c, Func Offset: 0xac
+	// Line 676, Address: 0x3cdd80, Func Offset: 0xb0
+	// Line 692, Address: 0x3cdd8c, Func Offset: 0xbc
+	// Line 676, Address: 0x3cdd90, Func Offset: 0xc0
+	// Line 681, Address: 0x3cdd94, Func Offset: 0xc4
+	// Line 687, Address: 0x3cddac, Func Offset: 0xdc
+	// Line 681, Address: 0x3cddb0, Func Offset: 0xe0
+	// Line 687, Address: 0x3cddd0, Func Offset: 0x100
+	// Line 692, Address: 0x3cdddc, Func Offset: 0x10c
+	// Line 693, Address: 0x3cdde8, Func Offset: 0x118
+	// Line 694, Address: 0x3cddf0, Func Offset: 0x120
+	// Line 695, Address: 0x3cde08, Func Offset: 0x138
+	// Line 697, Address: 0x3cde10, Func Offset: 0x140
+	// Line 701, Address: 0x3cde18, Func Offset: 0x148
+	// Line 697, Address: 0x3cde1c, Func Offset: 0x14c
+	// Line 701, Address: 0x3cde38, Func Offset: 0x168
+	// Line 704, Address: 0x3cde98, Func Offset: 0x1c8
+	// Func End, Address: 0x3cdeac, Func Offset: 0x1dc
 }
 
 // RotSet__8NPCGlyphFP5xVec3i
 // Start address: 0x3cdeb0
-void RotSet(NPCGlyph* this, xVec3* ang, int32 doautospin)
+void NPCGlyph::RotSet(xVec3* ang, int32 doautospin)
 {
 	xMat3x3 mat_rot;
+	// Line 629, Address: 0x3cdeb0, Func Offset: 0
+	// Line 630, Address: 0x3cdeb4, Func Offset: 0x4
+	// Line 629, Address: 0x3cdeb8, Func Offset: 0x8
+	// Line 630, Address: 0x3cdebc, Func Offset: 0xc
+	// Line 629, Address: 0x3cdec0, Func Offset: 0x10
+	// Line 630, Address: 0x3cdecc, Func Offset: 0x1c
+	// Line 631, Address: 0x3cdeec, Func Offset: 0x3c
+	// Line 632, Address: 0x3cdef4, Func Offset: 0x44
+	// Line 634, Address: 0x3cdf30, Func Offset: 0x80
+	// Func End, Address: 0x3cdf44, Func Offset: 0x94
 }
 
 // ScaleSet__8NPCGlyphFP5xVec3
 // Start address: 0x3cdf50
-void ScaleSet(NPCGlyph* this, xVec3* scale)
+void NPCGlyph::ScaleSet(xVec3* scale)
 {
 	xVec3 allone;
+	// Line 616, Address: 0x3cdf50, Func Offset: 0
+	// Line 617, Address: 0x3cdf58, Func Offset: 0x8
+	// Line 618, Address: 0x3cdf70, Func Offset: 0x20
+	// Line 619, Address: 0x3cdf78, Func Offset: 0x28
+	// Line 621, Address: 0x3cdf80, Func Offset: 0x30
+	// Line 623, Address: 0x3cdf98, Func Offset: 0x48
+	// Line 621, Address: 0x3cdf9c, Func Offset: 0x4c
+	// Line 622, Address: 0x3cdfa0, Func Offset: 0x50
+	// Line 623, Address: 0x3cdfb8, Func Offset: 0x68
+	// Line 624, Address: 0x3cdfc4, Func Offset: 0x74
+	// Line 626, Address: 0x3cdfc8, Func Offset: 0x78
+	// Func End, Address: 0x3cdfd0, Func Offset: 0x80
 }
 
 // PosSet__8NPCGlyphFP5xVec3
 // Start address: 0x3cdfd0
-void PosSet(NPCGlyph* this, xVec3* pos)
+void NPCGlyph::PosSet(xVec3* pos)
 {
+	// Line 593, Address: 0x3cdfd0, Func Offset: 0
+	// Line 594, Address: 0x3cdff8, Func Offset: 0x28
+	// Line 596, Address: 0x3ce024, Func Offset: 0x54
+	// Line 597, Address: 0x3ce02c, Func Offset: 0x5c
+	// Line 600, Address: 0x3ce048, Func Offset: 0x78
+	// Func End, Address: 0x3ce050, Func Offset: 0x80
 }
 
 // Discard__8NPCGlyphFv
 // Start address: 0x3ce050
-void Discard(NPCGlyph* this)
+void NPCGlyph::Discard()
 {
+	// Line 575, Address: 0x3ce050, Func Offset: 0
+	// Line 579, Address: 0x3ce054, Func Offset: 0x4
+	// Line 581, Address: 0x3ce064, Func Offset: 0x14
+	// Line 582, Address: 0x3ce08c, Func Offset: 0x3c
+	// Line 588, Address: 0x3ce0a0, Func Offset: 0x50
+	// Func End, Address: 0x3ce0a8, Func Offset: 0x58
 }
 
 // Enable__8NPCGlyphFi
 // Start address: 0x3ce0b0
-void Enable(NPCGlyph* this, int32 ison)
+void NPCGlyph::Enable(int32 ison)
 {
+	// Line 569, Address: 0x3ce0b0, Func Offset: 0
+	// Line 570, Address: 0x3ce0c8, Func Offset: 0x18
+	// Line 572, Address: 0x3ce0d8, Func Offset: 0x28
+	// Func End, Address: 0x3ce0e0, Func Offset: 0x30
 }
 
 // GLYF_Acquire__F11en_npcglyph
@@ -2690,6 +2825,27 @@ NPCGlyph* GLYF_Acquire(en_npcglyph type)
 	int32 i;
 	int32 cnt;
 	NPCGlyph* list;
+	// Line 456, Address: 0x3ce0e0, Func Offset: 0
+	// Line 464, Address: 0x3ce0e8, Func Offset: 0x8
+	// Line 456, Address: 0x3ce0ec, Func Offset: 0xc
+	// Line 462, Address: 0x3ce0f8, Func Offset: 0x18
+	// Line 464, Address: 0x3ce0fc, Func Offset: 0x1c
+	// Line 466, Address: 0x3ce108, Func Offset: 0x28
+	// Line 469, Address: 0x3ce120, Func Offset: 0x40
+	// Line 471, Address: 0x3ce130, Func Offset: 0x50
+	// Line 474, Address: 0x3ce140, Func Offset: 0x60
+	// Line 479, Address: 0x3ce14c, Func Offset: 0x6c
+	// Line 475, Address: 0x3ce158, Func Offset: 0x78
+	// Line 479, Address: 0x3ce15c, Func Offset: 0x7c
+	// Line 476, Address: 0x3ce160, Func Offset: 0x80
+	// Line 474, Address: 0x3ce164, Func Offset: 0x84
+	// Line 475, Address: 0x3ce1a8, Func Offset: 0xc8
+	// Line 479, Address: 0x3ce1ac, Func Offset: 0xcc
+	// Line 480, Address: 0x3ce1b4, Func Offset: 0xd4
+	// Line 481, Address: 0x3ce1bc, Func Offset: 0xdc
+	// Line 483, Address: 0x3ce1d0, Func Offset: 0xf0
+	// Line 484, Address: 0x3ce1d8, Func Offset: 0xf8
+	// Func End, Address: 0x3ce1ec, Func Offset: 0x10c
 }
 
 // zNPCCommon_Glyphs_RenderAll__Fi
@@ -2702,6 +2858,31 @@ void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff)
 	int32 cnt;
 	NPCGlyph* list;
 	_SDRenderState old_rendstat;
+	// Line 386, Address: 0x3ce1f0, Func Offset: 0
+	// Line 399, Address: 0x3ce21c, Func Offset: 0x2c
+	// Line 400, Address: 0x3ce224, Func Offset: 0x34
+	// Line 401, Address: 0x3ce240, Func Offset: 0x50
+	// Line 404, Address: 0x3ce248, Func Offset: 0x58
+	// Line 410, Address: 0x3ce258, Func Offset: 0x68
+	// Line 412, Address: 0x3ce2a0, Func Offset: 0xb0
+	// Line 416, Address: 0x3ce2e8, Func Offset: 0xf8
+	// Line 417, Address: 0x3ce330, Func Offset: 0x140
+	// Line 418, Address: 0x3ce340, Func Offset: 0x150
+	// Line 419, Address: 0x3ce348, Func Offset: 0x158
+	// Line 422, Address: 0x3ce358, Func Offset: 0x168
+	// Line 423, Address: 0x3ce368, Func Offset: 0x178
+	// Line 426, Address: 0x3ce37c, Func Offset: 0x18c
+	// Line 432, Address: 0x3ce388, Func Offset: 0x198
+	// Line 433, Address: 0x3ce398, Func Offset: 0x1a8
+	// Line 434, Address: 0x3ce3a4, Func Offset: 0x1b4
+	// Line 436, Address: 0x3ce3b0, Func Offset: 0x1c0
+	// Line 439, Address: 0x3ce3bc, Func Offset: 0x1cc
+	// Line 440, Address: 0x3ce420, Func Offset: 0x230
+	// Line 444, Address: 0x3ce430, Func Offset: 0x240
+	// Line 447, Address: 0x3ce440, Func Offset: 0x250
+	// Line 450, Address: 0x3ce450, Func Offset: 0x260
+	// Line 453, Address: 0x3ce458, Func Offset: 0x268
+	// Func End, Address: 0x3ce484, Func Offset: 0x294
 }
 
 // zNPCGlyph_TypeToList__F11en_npcglyphPP8NPCGlyph
@@ -2709,6 +2890,38 @@ void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff)
 int32 zNPCGlyph_TypeToList(en_npcglyph gtyp, NPCGlyph** glist)
 {
 	int32 cnt;
+	// Line 331, Address: 0x3ce490, Func Offset: 0
+	// Line 329, Address: 0x3ce494, Func Offset: 0x4
+	// Line 331, Address: 0x3ce498, Func Offset: 0x8
+	// Line 333, Address: 0x3ce4bc, Func Offset: 0x2c
+	// Line 334, Address: 0x3ce4c0, Func Offset: 0x30
+	// Line 336, Address: 0x3ce4cc, Func Offset: 0x3c
+	// Line 337, Address: 0x3ce4d4, Func Offset: 0x44
+	// Line 338, Address: 0x3ce4d8, Func Offset: 0x48
+	// Line 340, Address: 0x3ce4e4, Func Offset: 0x54
+	// Line 341, Address: 0x3ce4ec, Func Offset: 0x5c
+	// Line 342, Address: 0x3ce4f0, Func Offset: 0x60
+	// Line 344, Address: 0x3ce4fc, Func Offset: 0x6c
+	// Line 345, Address: 0x3ce504, Func Offset: 0x74
+	// Line 346, Address: 0x3ce508, Func Offset: 0x78
+	// Line 348, Address: 0x3ce514, Func Offset: 0x84
+	// Line 349, Address: 0x3ce51c, Func Offset: 0x8c
+	// Line 350, Address: 0x3ce520, Func Offset: 0x90
+	// Line 352, Address: 0x3ce52c, Func Offset: 0x9c
+	// Line 355, Address: 0x3ce534, Func Offset: 0xa4
+	// Line 356, Address: 0x3ce538, Func Offset: 0xa8
+	// Line 358, Address: 0x3ce544, Func Offset: 0xb4
+	// Line 359, Address: 0x3ce54c, Func Offset: 0xbc
+	// Line 360, Address: 0x3ce550, Func Offset: 0xc0
+	// Line 362, Address: 0x3ce55c, Func Offset: 0xcc
+	// Line 363, Address: 0x3ce564, Func Offset: 0xd4
+	// Line 364, Address: 0x3ce568, Func Offset: 0xd8
+	// Line 366, Address: 0x3ce574, Func Offset: 0xe4
+	// Line 367, Address: 0x3ce57c, Func Offset: 0xec
+	// Line 368, Address: 0x3ce580, Func Offset: 0xf0
+	// Line 369, Address: 0x3ce58c, Func Offset: 0xfc
+	// Line 379, Address: 0x3ce590, Func Offset: 0x100
+	// Func End, Address: 0x3ce598, Func Offset: 0x108
 }
 
 // zNPCGlyph_Timestep__Ff
@@ -2720,18 +2933,51 @@ void zNPCGlyph_Timestep(float32 dt)
 	int32 cnt;
 	NPCGlyph* list;
 	NPCGlyph* glyph;
+	// Line 216, Address: 0x3ce5a0, Func Offset: 0
+	// Line 225, Address: 0x3ce5b8, Func Offset: 0x18
+	// Line 216, Address: 0x3ce5bc, Func Offset: 0x1c
+	// Line 225, Address: 0x3ce5c8, Func Offset: 0x28
+	// Line 216, Address: 0x3ce5cc, Func Offset: 0x2c
+	// Line 225, Address: 0x3ce5d0, Func Offset: 0x30
+	// Line 221, Address: 0x3ce5d8, Func Offset: 0x38
+	// Line 225, Address: 0x3ce5dc, Func Offset: 0x3c
+	// Line 227, Address: 0x3ce5e0, Func Offset: 0x40
+	// Line 228, Address: 0x3ce5ec, Func Offset: 0x4c
+	// Line 231, Address: 0x3ce600, Func Offset: 0x60
+	// Line 235, Address: 0x3ce60c, Func Offset: 0x6c
+	// Line 236, Address: 0x3ce618, Func Offset: 0x78
+	// Line 238, Address: 0x3ce624, Func Offset: 0x84
+	// Line 242, Address: 0x3ce630, Func Offset: 0x90
+	// Line 244, Address: 0x3ce664, Func Offset: 0xc4
+	// Line 246, Address: 0x3ce6b0, Func Offset: 0x110
+	// Line 248, Address: 0x3ce6b8, Func Offset: 0x118
+	// Line 246, Address: 0x3ce6bc, Func Offset: 0x11c
+	// Line 248, Address: 0x3ce6c0, Func Offset: 0x120
+	// Line 251, Address: 0x3ce6e4, Func Offset: 0x144
+	// Line 252, Address: 0x3ce6fc, Func Offset: 0x15c
+	// Line 253, Address: 0x3ce724, Func Offset: 0x184
+	// Line 256, Address: 0x3ce728, Func Offset: 0x188
+	// Line 257, Address: 0x3ce738, Func Offset: 0x198
+	// Line 260, Address: 0x3ce740, Func Offset: 0x1a0
+	// Line 264, Address: 0x3ce750, Func Offset: 0x1b0
+	// Line 267, Address: 0x3ce760, Func Offset: 0x1c0
+	// Func End, Address: 0x3ce78c, Func Offset: 0x1ec
 }
 
 // zNPCGlyph_ScenePostInit__Fv
 // Start address: 0x3ce790
 void zNPCGlyph_ScenePostInit()
 {
+	// Line 213, Address: 0x3ce790, Func Offset: 0
+	// Func End, Address: 0x3ce798, Func Offset: 0x8
 }
 
 // zNPCGlyph_SceneReset__Fv
 // Start address: 0x3ce7a0
 void zNPCGlyph_SceneReset()
 {
+	// Line 206, Address: 0x3ce7a0, Func Offset: 0
+	// Func End, Address: 0x3ce7a8, Func Offset: 0x8
 }
 
 // zNPCGlyph_SceneFinish__Fv
@@ -2743,6 +2989,21 @@ void zNPCGlyph_SceneFinish()
 	int32 k;
 	int32 cnt;
 	NPCGlyph* list;
+	// Line 178, Address: 0x3ce7b0, Func Offset: 0
+	// Line 186, Address: 0x3ce7cc, Func Offset: 0x1c
+	// Line 184, Address: 0x3ce7d0, Func Offset: 0x20
+	// Line 186, Address: 0x3ce7d4, Func Offset: 0x24
+	// Line 188, Address: 0x3ce7d8, Func Offset: 0x28
+	// Line 189, Address: 0x3ce7e4, Func Offset: 0x34
+	// Line 192, Address: 0x3ce7f8, Func Offset: 0x48
+	// Line 193, Address: 0x3ce808, Func Offset: 0x58
+	// Line 194, Address: 0x3ce814, Func Offset: 0x64
+	// Line 195, Address: 0x3ce838, Func Offset: 0x88
+	// Line 194, Address: 0x3ce840, Func Offset: 0x90
+	// Line 195, Address: 0x3ce884, Func Offset: 0xd4
+	// Line 196, Address: 0x3ce88c, Func Offset: 0xdc
+	// Line 201, Address: 0x3ce8a0, Func Offset: 0xf0
+	// Func End, Address: 0x3ce8c0, Func Offset: 0x110
 }
 
 // zNPCGlyph_ScenePrepare__Fv
@@ -2756,17 +3017,48 @@ void zNPCGlyph_ScenePrepare()
 	int32 k;
 	int32 cnt;
 	NPCGlyph* list;
+	// Line 125, Address: 0x3ce8c0, Func Offset: 0
+	// Line 148, Address: 0x3ce8c4, Func Offset: 0x4
+	// Line 125, Address: 0x3ce8c8, Func Offset: 0x8
+	// Line 148, Address: 0x3ce8cc, Func Offset: 0xc
+	// Line 125, Address: 0x3ce8d0, Func Offset: 0x10
+	// Line 148, Address: 0x3ce8d4, Func Offset: 0x14
+	// Line 125, Address: 0x3ce8d8, Func Offset: 0x18
+	// Line 133, Address: 0x3ce8f8, Func Offset: 0x38
+	// Line 148, Address: 0x3ce900, Func Offset: 0x40
+	// Line 151, Address: 0x3ce920, Func Offset: 0x60
+	// Line 154, Address: 0x3ce938, Func Offset: 0x78
+	// Line 155, Address: 0x3ce944, Func Offset: 0x84
+	// Line 160, Address: 0x3ce958, Func Offset: 0x98
+	// Line 161, Address: 0x3ce964, Func Offset: 0xa4
+	// Line 163, Address: 0x3ce970, Func Offset: 0xb0
+	// Line 164, Address: 0x3ce984, Func Offset: 0xc4
+	// Line 168, Address: 0x3ce988, Func Offset: 0xc8
+	// Line 169, Address: 0x3ce998, Func Offset: 0xd8
+	// Line 170, Address: 0x3ce99c, Func Offset: 0xdc
+	// Line 171, Address: 0x3cea48, Func Offset: 0x188
+	// Line 170, Address: 0x3cea4c, Func Offset: 0x18c
+	// Line 171, Address: 0x3cea50, Func Offset: 0x190
+	// Line 170, Address: 0x3cea54, Func Offset: 0x194
+	// Line 171, Address: 0x3cea98, Func Offset: 0x1d8
+	// Line 172, Address: 0x3ceaa0, Func Offset: 0x1e0
+	// Line 175, Address: 0x3ceab0, Func Offset: 0x1f0
+	// Func End, Address: 0x3ceae0, Func Offset: 0x220
 }
 
 // zNPCGlyph_Shutdown__Fv
 // Start address: 0x3ceae0
 void zNPCGlyph_Shutdown()
 {
+	// Line 122, Address: 0x3ceae0, Func Offset: 0
+	// Func End, Address: 0x3ceae8, Func Offset: 0x8
 }
 
 // zNPCGlyph_Startup__Fv
 // Start address: 0x3ceaf0
 void zNPCGlyph_Startup()
 {
+	// Line 117, Address: 0x3ceaf0, Func Offset: 0
+	// Func End, Address: 0x3ceaf8, Func Offset: 0x8
 }
 

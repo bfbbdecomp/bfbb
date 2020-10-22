@@ -161,7 +161,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_11 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -197,7 +197,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_5 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -351,16 +351,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_17 update;
-	type_17 endUpdate;
-	type_20 bupdate;
-	type_21 move;
-	type_23 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_27 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -404,7 +404,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_28 pad;
+	uint32 pad[4];
 };
 
 struct xAnimState
@@ -425,9 +425,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_22 BeforeEnter;
-	type_15 StateCallback;
-	type_26 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xAnimMultiFileBase
@@ -446,8 +446,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_8 Conditional;
-	type_8 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -467,7 +467,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_31 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -514,7 +514,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_1 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xEntFrame
@@ -570,7 +570,7 @@ struct rxHeapSuperBlockDescriptor
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_12 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct rxReq
@@ -587,12 +587,12 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_26 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xShadowSimplePoly
 {
-	type_13 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -688,7 +688,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_18 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -740,9 +740,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_10 resolvID;
-	type_14 base2Name;
-	type_16 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct RpClump
@@ -752,7 +752,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_24 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct xShadowSimpleCache
@@ -770,14 +770,14 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_29 corner;
+	xVec3 corner[4];
 };
 
 struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_32 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -800,7 +800,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_39 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -819,9 +819,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_33 colls;
-	type_19 post;
-	type_25 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 enum rxEmbeddedPacketState
@@ -931,7 +931,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_35 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -976,14 +976,14 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_34 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
 
 struct RpTriangle
 {
-	type_30 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -993,7 +993,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_43 radius;
+	float32 radius[2];
 };
 
 struct xMat3x3
@@ -1053,7 +1053,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_38 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xBase
@@ -1063,7 +1063,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_41 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RwTexture
@@ -1071,21 +1071,21 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_36 name;
-	type_37 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
 
 struct RxNodeMethods
 {
-	type_3 nodeBody;
-	type_4 nodeInit;
-	type_6 nodeTerm;
-	type_7 pipelineNodeInit;
-	type_9 pipelineNodeTerm;
-	type_0 pipelineNodeConfig;
-	type_2 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -1124,7 +1124,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_40 clusters;
+	RxCluster clusters[1];
 };
 
 struct xSurface
@@ -1152,7 +1152,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_42 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RwLinkList
@@ -1191,12 +1191,141 @@ void xEntDriveUpdate(xEntDrive* drv, float32 dt)
 	xVec3 world_loc;
 	xVec3 new_loc;
 	xMat4x3 oldmat;
+	// Line 169, Address: 0x1d5810, Func Offset: 0
+	// Line 173, Address: 0x1d5820, Func Offset: 0x10
+	// Line 177, Address: 0x1d5828, Func Offset: 0x18
+	// Line 187, Address: 0x1d5840, Func Offset: 0x30
+	// Line 189, Address: 0x1d5870, Func Offset: 0x60
+	// Line 190, Address: 0x1d58a0, Func Offset: 0x90
+	// Line 193, Address: 0x1d58a8, Func Offset: 0x98
+	// Line 194, Address: 0x1d58c0, Func Offset: 0xb0
+	// Line 195, Address: 0x1d58c4, Func Offset: 0xb4
+	// Line 199, Address: 0x1d58d0, Func Offset: 0xc0
+	// Line 202, Address: 0x1d58d4, Func Offset: 0xc4
+	// Line 203, Address: 0x1d58e0, Func Offset: 0xd0
+	// Line 205, Address: 0x1d58ec, Func Offset: 0xdc
+	// Line 206, Address: 0x1d58f0, Func Offset: 0xe0
+	// Line 208, Address: 0x1d5908, Func Offset: 0xf8
+	// Line 210, Address: 0x1d5914, Func Offset: 0x104
+	// Line 212, Address: 0x1d591c, Func Offset: 0x10c
+	// Line 213, Address: 0x1d5928, Func Offset: 0x118
+	// Line 215, Address: 0x1d5944, Func Offset: 0x134
+	// Line 217, Address: 0x1d5948, Func Offset: 0x138
+	// Line 222, Address: 0x1d5970, Func Offset: 0x160
+	// Line 224, Address: 0x1d5998, Func Offset: 0x188
+	// Line 225, Address: 0x1d59b0, Func Offset: 0x1a0
+	// Line 226, Address: 0x1d59e0, Func Offset: 0x1d0
+	// Line 235, Address: 0x1d59e8, Func Offset: 0x1d8
+	// Line 236, Address: 0x1d5ad8, Func Offset: 0x2c8
+	// Line 237, Address: 0x1d5c08, Func Offset: 0x3f8
+	// Line 238, Address: 0x1d5d38, Func Offset: 0x528
+	// Line 239, Address: 0x1d5d44, Func Offset: 0x534
+	// Line 240, Address: 0x1d5d60, Func Offset: 0x550
+	// Line 241, Address: 0x1d5d74, Func Offset: 0x564
+	// Line 242, Address: 0x1d5d7c, Func Offset: 0x56c
+	// Line 244, Address: 0x1d5d80, Func Offset: 0x570
+	// Line 247, Address: 0x1d5d90, Func Offset: 0x580
+	// Line 248, Address: 0x1d5da0, Func Offset: 0x590
+	// Line 249, Address: 0x1d5db8, Func Offset: 0x5a8
+	// Line 250, Address: 0x1d5de8, Func Offset: 0x5d8
+	// Line 253, Address: 0x1d5df0, Func Offset: 0x5e0
+	// Line 254, Address: 0x1d5e78, Func Offset: 0x668
+	// Line 253, Address: 0x1d5e7c, Func Offset: 0x66c
+	// Line 254, Address: 0x1d5e90, Func Offset: 0x680
+	// Line 255, Address: 0x1d5ec4, Func Offset: 0x6b4
+	// Line 256, Address: 0x1d5ef4, Func Offset: 0x6e4
+	// Line 257, Address: 0x1d5f2c, Func Offset: 0x71c
+	// Line 258, Address: 0x1d5f64, Func Offset: 0x754
+	// Line 259, Address: 0x1d5f68, Func Offset: 0x758
+	// Line 260, Address: 0x1d5f80, Func Offset: 0x770
+	// Line 261, Address: 0x1d5f98, Func Offset: 0x788
+	// Line 262, Address: 0x1d5fc8, Func Offset: 0x7b8
+	// Line 265, Address: 0x1d5fd0, Func Offset: 0x7c0
+	// Line 267, Address: 0x1d5fe0, Func Offset: 0x7d0
+	// Line 268, Address: 0x1d5fe4, Func Offset: 0x7d4
+	// Line 271, Address: 0x1d6000, Func Offset: 0x7f0
+	// Line 272, Address: 0x1d6008, Func Offset: 0x7f8
+	// Line 271, Address: 0x1d600c, Func Offset: 0x7fc
+	// Line 272, Address: 0x1d6010, Func Offset: 0x800
+	// Line 271, Address: 0x1d6014, Func Offset: 0x804
+	// Line 272, Address: 0x1d6018, Func Offset: 0x808
+	// Line 271, Address: 0x1d601c, Func Offset: 0x80c
+	// Line 272, Address: 0x1d60ac, Func Offset: 0x89c
+	// Line 273, Address: 0x1d60b8, Func Offset: 0x8a8
+	// Line 272, Address: 0x1d60bc, Func Offset: 0x8ac
+	// Line 273, Address: 0x1d60c0, Func Offset: 0x8b0
+	// Line 272, Address: 0x1d60c4, Func Offset: 0x8b4
+	// Line 273, Address: 0x1d60c8, Func Offset: 0x8b8
+	// Line 272, Address: 0x1d60cc, Func Offset: 0x8bc
+	// Line 273, Address: 0x1d60d8, Func Offset: 0x8c8
+	// Line 288, Address: 0x1d6148, Func Offset: 0x938
+	// Line 291, Address: 0x1d61b8, Func Offset: 0x9a8
+	// Line 293, Address: 0x1d61d8, Func Offset: 0x9c8
+	// Line 294, Address: 0x1d6208, Func Offset: 0x9f8
+	// Line 296, Address: 0x1d620c, Func Offset: 0x9fc
+	// Line 294, Address: 0x1d6210, Func Offset: 0xa00
+	// Line 296, Address: 0x1d6214, Func Offset: 0xa04
+	// Line 294, Address: 0x1d621c, Func Offset: 0xa0c
+	// Line 296, Address: 0x1d629c, Func Offset: 0xa8c
+	// Line 297, Address: 0x1d62a8, Func Offset: 0xa98
+	// Line 296, Address: 0x1d62b0, Func Offset: 0xaa0
+	// Line 297, Address: 0x1d62c4, Func Offset: 0xab4
+	// Line 298, Address: 0x1d6300, Func Offset: 0xaf0
+	// Line 299, Address: 0x1d6390, Func Offset: 0xb80
+	// Line 302, Address: 0x1d6398, Func Offset: 0xb88
+	// Line 303, Address: 0x1d6420, Func Offset: 0xc10
+	// Line 302, Address: 0x1d6424, Func Offset: 0xc14
+	// Line 303, Address: 0x1d6438, Func Offset: 0xc28
+	// Line 304, Address: 0x1d646c, Func Offset: 0xc5c
+	// Line 306, Address: 0x1d6470, Func Offset: 0xc60
+	// Line 307, Address: 0x1d64a0, Func Offset: 0xc90
+	// Line 308, Address: 0x1d64d8, Func Offset: 0xcc8
+	// Line 313, Address: 0x1d6510, Func Offset: 0xd00
+	// Line 314, Address: 0x1d6520, Func Offset: 0xd10
+	// Line 318, Address: 0x1d6540, Func Offset: 0xd30
+	// Line 319, Address: 0x1d6544, Func Offset: 0xd34
+	// Line 318, Address: 0x1d6548, Func Offset: 0xd38
+	// Line 319, Address: 0x1d6564, Func Offset: 0xd54
+	// Line 320, Address: 0x1d6574, Func Offset: 0xd64
+	// Line 321, Address: 0x1d6590, Func Offset: 0xd80
+	// Line 322, Address: 0x1d65c0, Func Offset: 0xdb0
+	// Line 325, Address: 0x1d65c8, Func Offset: 0xdb8
+	// Line 326, Address: 0x1d6604, Func Offset: 0xdf4
+	// Line 327, Address: 0x1d6608, Func Offset: 0xdf8
+	// Line 328, Address: 0x1d6620, Func Offset: 0xe10
+	// Line 329, Address: 0x1d6638, Func Offset: 0xe28
+	// Line 330, Address: 0x1d6668, Func Offset: 0xe58
+	// Line 333, Address: 0x1d6670, Func Offset: 0xe60
+	// Line 334, Address: 0x1d66ac, Func Offset: 0xe9c
+	// Line 336, Address: 0x1d66b0, Func Offset: 0xea0
+	// Func End, Address: 0x1d66c4, Func Offset: 0xeb4
 }
 
 // xEntDriveDismount__FP9xEntDrivef
 // Start address: 0x1d66d0
 void xEntDriveDismount(xEntDrive* drv, float32 dmt)
 {
+	// Line 131, Address: 0x1d66d0, Func Offset: 0
+	// Line 135, Address: 0x1d66d4, Func Offset: 0x4
+	// Line 139, Address: 0x1d66e0, Func Offset: 0x10
+	// Line 146, Address: 0x1d66ec, Func Offset: 0x1c
+	// Line 148, Address: 0x1d6710, Func Offset: 0x40
+	// Line 149, Address: 0x1d6740, Func Offset: 0x70
+	// Line 152, Address: 0x1d6748, Func Offset: 0x78
+	// Line 153, Address: 0x1d674c, Func Offset: 0x7c
+	// Line 154, Address: 0x1d6754, Func Offset: 0x84
+	// Line 155, Address: 0x1d6758, Func Offset: 0x88
+	// Line 156, Address: 0x1d6768, Func Offset: 0x98
+	// Line 157, Address: 0x1d6780, Func Offset: 0xb0
+	// Line 158, Address: 0x1d6784, Func Offset: 0xb4
+	// Line 161, Address: 0x1d6788, Func Offset: 0xb8
+	// Line 159, Address: 0x1d678c, Func Offset: 0xbc
+	// Line 160, Address: 0x1d6790, Func Offset: 0xc0
+	// Line 161, Address: 0x1d6794, Func Offset: 0xc4
+	// Line 163, Address: 0x1d67a0, Func Offset: 0xd0
+	// Line 165, Address: 0x1d67c0, Func Offset: 0xf0
+	// Line 166, Address: 0x1d6804, Func Offset: 0x134
+	// Func End, Address: 0x1d6814, Func Offset: 0x144
 }
 
 // xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis
@@ -1212,11 +1341,81 @@ void xEntDriveMount(xEntDrive* drv, xEnt* driver, float32 mt, xCollis* coll)
 	float32 len_inv;
 	float32 len2;
 	float32 len_inv;
+	// Line 50, Address: 0x1d6820, Func Offset: 0
+	// Line 60, Address: 0x1d683c, Func Offset: 0x1c
+	// Line 62, Address: 0x1d6868, Func Offset: 0x48
+	// Line 63, Address: 0x1d6898, Func Offset: 0x78
+	// Line 66, Address: 0x1d68a0, Func Offset: 0x80
+	// Line 68, Address: 0x1d68b0, Func Offset: 0x90
+	// Line 70, Address: 0x1d68cc, Func Offset: 0xac
+	// Line 74, Address: 0x1d68d0, Func Offset: 0xb0
+	// Line 71, Address: 0x1d68d4, Func Offset: 0xb4
+	// Line 74, Address: 0x1d68dc, Func Offset: 0xbc
+	// Line 75, Address: 0x1d68e4, Func Offset: 0xc4
+	// Line 77, Address: 0x1d68ec, Func Offset: 0xcc
+	// Line 79, Address: 0x1d68f8, Func Offset: 0xd8
+	// Line 78, Address: 0x1d68fc, Func Offset: 0xdc
+	// Line 79, Address: 0x1d6900, Func Offset: 0xe0
+	// Line 78, Address: 0x1d6910, Func Offset: 0xf0
+	// Line 79, Address: 0x1d6914, Func Offset: 0xf4
+	// Line 81, Address: 0x1d6918, Func Offset: 0xf8
+	// Line 82, Address: 0x1d691c, Func Offset: 0xfc
+	// Line 83, Address: 0x1d6920, Func Offset: 0x100
+	// Line 84, Address: 0x1d6924, Func Offset: 0x104
+	// Line 86, Address: 0x1d6928, Func Offset: 0x108
+	// Line 87, Address: 0x1d6930, Func Offset: 0x110
+	// Line 88, Address: 0x1d6934, Func Offset: 0x114
+	// Line 91, Address: 0x1d6938, Func Offset: 0x118
+	// Line 88, Address: 0x1d6944, Func Offset: 0x124
+	// Line 91, Address: 0x1d6948, Func Offset: 0x128
+	// Line 92, Address: 0x1d6950, Func Offset: 0x130
+	// Line 94, Address: 0x1d6958, Func Offset: 0x138
+	// Line 95, Address: 0x1d6960, Func Offset: 0x140
+	// Line 96, Address: 0x1d6964, Func Offset: 0x144
+	// Line 99, Address: 0x1d6968, Func Offset: 0x148
+	// Line 100, Address: 0x1d696c, Func Offset: 0x14c
+	// Line 102, Address: 0x1d6970, Func Offset: 0x150
+	// Line 108, Address: 0x1d6980, Func Offset: 0x160
+	// Line 109, Address: 0x1d6a78, Func Offset: 0x258
+	// Line 110, Address: 0x1d6ba8, Func Offset: 0x388
+	// Line 111, Address: 0x1d6cd8, Func Offset: 0x4b8
+	// Line 112, Address: 0x1d6ce4, Func Offset: 0x4c4
+	// Line 113, Address: 0x1d6cec, Func Offset: 0x4cc
+	// Line 115, Address: 0x1d6cf0, Func Offset: 0x4d0
+	// Line 117, Address: 0x1d6d08, Func Offset: 0x4e8
+	// Line 119, Address: 0x1d6d0c, Func Offset: 0x4ec
+	// Line 117, Address: 0x1d6d10, Func Offset: 0x4f0
+	// Line 118, Address: 0x1d6d18, Func Offset: 0x4f8
+	// Line 119, Address: 0x1d6d30, Func Offset: 0x510
+	// Line 120, Address: 0x1d6d40, Func Offset: 0x520
+	// Line 119, Address: 0x1d6d48, Func Offset: 0x528
+	// Line 120, Address: 0x1d6d5c, Func Offset: 0x53c
+	// Line 121, Address: 0x1d6d98, Func Offset: 0x578
+	// Line 122, Address: 0x1d6d9c, Func Offset: 0x57c
+	// Line 124, Address: 0x1d6da0, Func Offset: 0x580
+	// Line 126, Address: 0x1d6da4, Func Offset: 0x584
+	// Line 124, Address: 0x1d6dac, Func Offset: 0x58c
+	// Line 126, Address: 0x1d6dc8, Func Offset: 0x5a8
+	// Line 127, Address: 0x1d6e04, Func Offset: 0x5e4
+	// Func End, Address: 0x1d6e20, Func Offset: 0x600
 }
 
 // xEntDriveInit__FP9xEntDriveP4xEnt
 // Start address: 0x1d6e20
 void xEntDriveInit(xEntDrive* drv, xEnt* driven)
 {
+	// Line 33, Address: 0x1d6e20, Func Offset: 0
+	// Line 37, Address: 0x1d6e28, Func Offset: 0x8
+	// Line 38, Address: 0x1d6e2c, Func Offset: 0xc
+	// Line 39, Address: 0x1d6e30, Func Offset: 0x10
+	// Line 40, Address: 0x1d6e34, Func Offset: 0x14
+	// Line 41, Address: 0x1d6e38, Func Offset: 0x18
+	// Line 42, Address: 0x1d6e3c, Func Offset: 0x1c
+	// Line 43, Address: 0x1d6e40, Func Offset: 0x20
+	// Line 44, Address: 0x1d6e44, Func Offset: 0x24
+	// Line 45, Address: 0x1d6e48, Func Offset: 0x28
+	// Line 46, Address: 0x1d6e4c, Func Offset: 0x2c
+	// Line 47, Address: 0x1d6e50, Func Offset: 0x30
+	// Func End, Address: 0x1d6e58, Func Offset: 0x38
 }
 

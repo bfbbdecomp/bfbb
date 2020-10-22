@@ -35,7 +35,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_0 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xQCData
@@ -67,7 +67,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_2 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -75,6 +75,12 @@ struct xLinkAsset
 struct xVolume : xBase
 {
 	xVolumeAsset* asset;
+
+	xBound* GetBound();
+	void Load(xSerial* s);
+	void Save(xSerial* s);
+	void Reset();
+	void Init(xVolumeAsset* asset);
 };
 
 struct xVec3
@@ -96,7 +102,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_1 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -142,39 +148,56 @@ struct xMat3x3
 };
 
 
-xBound* GetBound(xVolume* this);
-void Load(xVolume* this, xSerial* s);
-void Save(xVolume* this, xSerial* s);
-void Reset(xVolume* this);
-void Init(xVolume* this, xVolumeAsset* asset);
+xBound* GetBound();
+void Load(xSerial* s);
+void Save(xSerial* s);
+void Reset();
+void Init(xVolumeAsset* asset);
 
 // GetBound__7xVolumeFv
 // Start address: 0x2fe2f0
-xBound* GetBound(xVolume* this)
+xBound* xVolume::GetBound()
 {
+	// Line 84, Address: 0x2fe2f0, Func Offset: 0
+	// Line 85, Address: 0x2fe2f4, Func Offset: 0x4
+	// Func End, Address: 0x2fe2fc, Func Offset: 0xc
 }
 
 // Load__7xVolumeFP7xSerial
 // Start address: 0x2fe300
-void Load(xVolume* this, xSerial* s)
+void xVolume::Load(xSerial* s)
 {
+	// Line 73, Address: 0x2fe300, Func Offset: 0
+	// Func End, Address: 0x2fe308, Func Offset: 0x8
 }
 
 // Save__7xVolumeFP7xSerial
 // Start address: 0x2fe310
-void Save(xVolume* this, xSerial* s)
+void xVolume::Save(xSerial* s)
 {
+	// Line 55, Address: 0x2fe310, Func Offset: 0
+	// Func End, Address: 0x2fe318, Func Offset: 0x8
 }
 
 // Reset__7xVolumeFv
 // Start address: 0x2fe320
-void Reset(xVolume* this)
+void xVolume::Reset()
 {
+	// Line 40, Address: 0x2fe320, Func Offset: 0
+	// Func End, Address: 0x2fe328, Func Offset: 0x8
 }
 
 // Init__7xVolumeFP12xVolumeAsset
 // Start address: 0x2fe330
-void Init(xVolume* this, xVolumeAsset* asset)
+void xVolume::Init(xVolumeAsset* asset)
 {
+	// Line 22, Address: 0x2fe330, Func Offset: 0
+	// Line 24, Address: 0x2fe344, Func Offset: 0x14
+	// Line 27, Address: 0x2fe34c, Func Offset: 0x1c
+	// Line 29, Address: 0x2fe350, Func Offset: 0x20
+	// Line 30, Address: 0x2fe35c, Func Offset: 0x2c
+	// Line 32, Address: 0x2fe370, Func Offset: 0x40
+	// Line 33, Address: 0x2fe378, Func Offset: 0x48
+	// Func End, Address: 0x2fe38c, Func Offset: 0x5c
 }
 

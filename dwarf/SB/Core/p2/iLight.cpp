@@ -155,7 +155,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_8 pad;
+	uint32 pad[4];
 };
 
 struct RxPipelineRequiresCluster
@@ -212,8 +212,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_10 name;
-	type_11 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -300,7 +300,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_13 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -350,7 +350,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_7 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -445,7 +445,7 @@ struct RwObject
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_9 vertIndex;
+	uint16 vertIndex[3];
 };
 
 struct RxIoSpec
@@ -466,13 +466,13 @@ struct RpMaterialList
 
 struct RxNodeMethods
 {
-	type_1 nodeBody;
-	type_2 nodeInit;
-	type_3 nodeTerm;
-	type_4 pipelineNodeInit;
-	type_5 pipelineNodeTerm;
-	type_6 pipelineNodeConfig;
-	type_0 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -497,7 +497,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_12 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct RxCluster
@@ -526,7 +526,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_14 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwRGBAReal
@@ -541,7 +541,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_15 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RpMeshHeader
@@ -574,6 +574,15 @@ void iLightInit(RpWorld* world);
 void iLightEnv(iLight* light, int32 env)
 {
 	uint32 flags;
+	// Line 205, Address: 0x1aaf40, Func Offset: 0
+	// Line 209, Address: 0x1aaf70, Func Offset: 0x30
+	// Line 213, Address: 0x1aaf78, Func Offset: 0x38
+	// Line 217, Address: 0x1aaf80, Func Offset: 0x40
+	// Line 220, Address: 0x1aaf88, Func Offset: 0x48
+	// Line 226, Address: 0x1aaf8c, Func Offset: 0x4c
+	// Line 228, Address: 0x1aaf90, Func Offset: 0x50
+	// Line 229, Address: 0x1aaf94, Func Offset: 0x54
+	// Func End, Address: 0x1aaf9c, Func Offset: 0x5c
 }
 
 // iLightDestroy__FP6iLight
@@ -581,6 +590,15 @@ void iLightEnv(iLight* light, int32 env)
 void iLightDestroy(iLight* light)
 {
 	RwFrame* frame;
+	// Line 165, Address: 0x1aafa0, Func Offset: 0
+	// Line 169, Address: 0x1aafac, Func Offset: 0xc
+	// Line 173, Address: 0x1aafb0, Func Offset: 0x10
+	// Line 175, Address: 0x1aafb8, Func Offset: 0x18
+	// Line 176, Address: 0x1aafc0, Func Offset: 0x20
+	// Line 177, Address: 0x1aafc8, Func Offset: 0x28
+	// Line 180, Address: 0x1aafd0, Func Offset: 0x30
+	// Line 181, Address: 0x1aafd8, Func Offset: 0x38
+	// Func End, Address: 0x1aafe8, Func Offset: 0x48
 }
 
 // iLightSetPos__FP6iLightP5xVec3
@@ -589,12 +607,26 @@ void iLightSetPos(iLight* light, xVec3* pos)
 {
 	RwFrame* f;
 	RwMatrixTag* m;
+	// Line 132, Address: 0x1aaff0, Func Offset: 0
+	// Line 134, Address: 0x1aaffc, Func Offset: 0xc
+	// Line 137, Address: 0x1ab000, Func Offset: 0x10
+	// Line 134, Address: 0x1ab004, Func Offset: 0x14
+	// Line 137, Address: 0x1ab008, Func Offset: 0x18
+	// Line 135, Address: 0x1ab00c, Func Offset: 0x1c
+	// Line 138, Address: 0x1ab010, Func Offset: 0x20
+	// Line 139, Address: 0x1ab018, Func Offset: 0x28
+	// Line 142, Address: 0x1ab01c, Func Offset: 0x2c
+	// Line 145, Address: 0x1ab024, Func Offset: 0x34
+	// Line 146, Address: 0x1ab02c, Func Offset: 0x3c
+	// Func End, Address: 0x1ab03c, Func Offset: 0x4c
 }
 
 // iLightSetColor__FP6iLightP8_xFColor
 // Start address: 0x1ab040
 void iLightSetColor(iLight* light, _xFColor* col)
 {
+	// Line 127, Address: 0x1ab040, Func Offset: 0
+	// Func End, Address: 0x1ab048, Func Offset: 0x8
 }
 
 // iLightModify__FP6iLightUi
@@ -603,6 +635,31 @@ void iLightModify(iLight* light, uint32 flags)
 {
 	RwFrame* frame;
 	RwMatrixTag temp;
+	// Line 98, Address: 0x1ab050, Func Offset: 0
+	// Line 99, Address: 0x1ab054, Func Offset: 0x4
+	// Line 98, Address: 0x1ab058, Func Offset: 0x8
+	// Line 99, Address: 0x1ab068, Func Offset: 0x18
+	// Line 104, Address: 0x1ab070, Func Offset: 0x20
+	// Line 102, Address: 0x1ab074, Func Offset: 0x24
+	// Line 104, Address: 0x1ab078, Func Offset: 0x28
+	// Line 105, Address: 0x1ab080, Func Offset: 0x30
+	// Line 106, Address: 0x1ab084, Func Offset: 0x34
+	// Line 108, Address: 0x1ab088, Func Offset: 0x38
+	// Line 102, Address: 0x1ab090, Func Offset: 0x40
+	// Line 104, Address: 0x1ab094, Func Offset: 0x44
+	// Line 105, Address: 0x1ab0b0, Func Offset: 0x60
+	// Line 106, Address: 0x1ab0cc, Func Offset: 0x7c
+	// Line 107, Address: 0x1ab0e4, Func Offset: 0x94
+	// Line 108, Address: 0x1ab0f8, Func Offset: 0xa8
+	// Line 110, Address: 0x1ab100, Func Offset: 0xb0
+	// Line 111, Address: 0x1ab10c, Func Offset: 0xbc
+	// Line 113, Address: 0x1ab118, Func Offset: 0xc8
+	// Line 114, Address: 0x1ab124, Func Offset: 0xd4
+	// Line 116, Address: 0x1ab130, Func Offset: 0xe0
+	// Line 120, Address: 0x1ab158, Func Offset: 0x108
+	// Line 121, Address: 0x1ab164, Func Offset: 0x114
+	// Line 122, Address: 0x1ab168, Func Offset: 0x118
+	// Func End, Address: 0x1ab17c, Func Offset: 0x12c
 }
 
 // iLightCreate__FP6iLightUi
@@ -610,11 +667,53 @@ void iLightModify(iLight* light, uint32 flags)
 iLight* iLightCreate(iLight* light, uint32 type)
 {
 	RwFrame* frame;
+	// Line 37, Address: 0x1ab180, Func Offset: 0
+	// Line 39, Address: 0x1ab184, Func Offset: 0x4
+	// Line 37, Address: 0x1ab188, Func Offset: 0x8
+	// Line 39, Address: 0x1ab19c, Func Offset: 0x1c
+	// Line 42, Address: 0x1ab1c0, Func Offset: 0x40
+	// Line 43, Address: 0x1ab1c8, Func Offset: 0x48
+	// Line 45, Address: 0x1ab1d0, Func Offset: 0x50
+	// Line 46, Address: 0x1ab1d8, Func Offset: 0x58
+	// Line 48, Address: 0x1ab1e0, Func Offset: 0x60
+	// Line 49, Address: 0x1ab1e8, Func Offset: 0x68
+	// Line 52, Address: 0x1ab1f0, Func Offset: 0x70
+	// Line 55, Address: 0x1ab1f8, Func Offset: 0x78
+	// Line 58, Address: 0x1ab204, Func Offset: 0x84
+	// Line 59, Address: 0x1ab20c, Func Offset: 0x8c
+	// Line 62, Address: 0x1ab210, Func Offset: 0x90
+	// Line 63, Address: 0x1ab21c, Func Offset: 0x9c
+	// Line 65, Address: 0x1ab224, Func Offset: 0xa4
+	// Line 67, Address: 0x1ab22c, Func Offset: 0xac
+	// Line 68, Address: 0x1ab234, Func Offset: 0xb4
+	// Line 71, Address: 0x1ab238, Func Offset: 0xb8
+	// Line 72, Address: 0x1ab244, Func Offset: 0xc4
+	// Line 74, Address: 0x1ab250, Func Offset: 0xd0
+	// Line 77, Address: 0x1ab258, Func Offset: 0xd8
+	// Line 82, Address: 0x1ab25c, Func Offset: 0xdc
+	// Line 78, Address: 0x1ab260, Func Offset: 0xe0
+	// Line 92, Address: 0x1ab264, Func Offset: 0xe4
+	// Line 79, Address: 0x1ab268, Func Offset: 0xe8
+	// Line 80, Address: 0x1ab26c, Func Offset: 0xec
+	// Line 81, Address: 0x1ab270, Func Offset: 0xf0
+	// Line 82, Address: 0x1ab274, Func Offset: 0xf4
+	// Line 83, Address: 0x1ab278, Func Offset: 0xf8
+	// Line 84, Address: 0x1ab27c, Func Offset: 0xfc
+	// Line 85, Address: 0x1ab280, Func Offset: 0x100
+	// Line 86, Address: 0x1ab284, Func Offset: 0x104
+	// Line 87, Address: 0x1ab288, Func Offset: 0x108
+	// Line 88, Address: 0x1ab28c, Func Offset: 0x10c
+	// Line 89, Address: 0x1ab290, Func Offset: 0x110
+	// Line 92, Address: 0x1ab294, Func Offset: 0x114
+	// Line 93, Address: 0x1ab298, Func Offset: 0x118
+	// Func End, Address: 0x1ab2b0, Func Offset: 0x130
 }
 
 // iLightInit__FP7RpWorld
 // Start address: 0x1ab2b0
 void iLightInit(RpWorld* world)
 {
+	// Line 29, Address: 0x1ab2b0, Func Offset: 0
+	// Func End, Address: 0x1ab2b8, Func Offset: 0x8
 }
 

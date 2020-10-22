@@ -125,7 +125,7 @@ typedef int8 type_27[32];
 typedef int8 type_28[32];
 typedef float32 type_29[4];
 typedef xModelInstance* type_31[2];
-typedef type_31 type_32[6];
+typedef xModelInstance* type_32[2][6];
 typedef int8 type_33[16];
 typedef RxCluster type_34[1];
 typedef model_info type_35[2];
@@ -134,7 +134,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_3 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RxPipelineNode
@@ -161,7 +161,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_4 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct xMemPool
@@ -170,7 +170,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_26 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -184,7 +184,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_7 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct xDynAsset : xBaseAsset
@@ -210,8 +210,15 @@ struct xVec3
 struct unit_meter_widget : meter_widget
 {
 	unit_meter_asset res;
-	type_32 model;
+	xModelInstance* model[2][6];
 	float32 anim_time;
+
+	void render();
+	void update(float32 dt);
+	void setup();
+	uint8 is(uint32 id);
+	void destroy();
+	void* __ct(unit_meter_asset& a);
 };
 
 struct xModelInstance
@@ -260,7 +267,7 @@ struct RxPipelineNodeTopSortData
 
 struct RpTriangle
 {
-	type_8 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -282,9 +289,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_17 BeforeEnter;
-	type_18 StateCallback;
-	type_4 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RxNodeDefinition
@@ -306,7 +313,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_9 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -320,7 +327,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_1 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct _anon0
@@ -382,7 +389,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_29 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -404,7 +411,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_30 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xModelPool
@@ -423,7 +430,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_24 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -448,7 +455,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_16 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -482,8 +489,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_13 Conditional;
-	type_13 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -506,7 +513,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_20 pad;
+	uint32 pad[4];
 };
 
 struct RpClump
@@ -516,7 +523,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_0 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RxPipelineRequiresCluster
@@ -567,7 +574,7 @@ struct RwMatrixTag
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_25 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RwTexture
@@ -575,8 +582,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_27 name;
-	type_28 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -766,7 +773,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_21 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -805,7 +812,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_22 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -863,7 +870,7 @@ struct motive
 	float32 max_offset;
 	float32 offset;
 	float32 accel;
-	type_23 fp_update;
+	uint8(*fp_update)(widget&, motive&, float32);
 	void* context;
 	uint8 inverse;
 };
@@ -915,18 +922,18 @@ struct RpMaterialList
 
 struct RxNodeMethods
 {
-	type_12 nodeBody;
-	type_14 nodeInit;
-	type_15 nodeTerm;
-	type_2 pipelineNodeInit;
-	type_5 pipelineNodeTerm;
-	type_10 pipelineNodeConfig;
-	type_11 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct unit_meter_asset : meter_asset
 {
-	type_35 model;
+	model_info model[2];
 	xVec3 offset;
 	uint32 fill_forward;
 };
@@ -945,7 +952,7 @@ struct RxCluster
 
 struct sound_queue
 {
-	type_19 _playing;
+	uint32 _playing[5];
 	int32 head;
 	int32 tail;
 };
@@ -958,7 +965,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_34 clusters;
+	RxCluster clusters[1];
 };
 
 struct _anon2
@@ -986,35 +993,60 @@ struct RwLinkList
 
 basic_rect screen_bounds;
 basic_rect default_adjust;
-type_33 buffer;
-type_6 buffer;
+int8 buffer[16];
+int8 buffer[16];
 float32 tweak_anim_time_delta;
 _anon2 __vt__Q24xhud17unit_meter_widget;
 _anon0 __vt__Q24xhud6widget;
 _anon1 __vt__Q24xhud12meter_widget;
 
-void render(unit_meter_widget* this);
-void update(unit_meter_widget* this, float32 dt);
-void setup(unit_meter_widget* this);
-uint8 is(unit_meter_widget* this, uint32 id);
+void render();
+void update(float32 dt);
+void setup();
+uint8 is(uint32 id);
 uint32 type();
-void destroy(unit_meter_widget* this);
-void* __ct(unit_meter_widget* this, unit_meter_asset& a);
+void destroy();
+void* __ct(unit_meter_asset& a);
 void load(xBase& data, xDynAsset& asset);
 
 // render__Q24xhud17unit_meter_widgetFv
 // Start address: 0x29a660
-void render(unit_meter_widget* this)
+void unit_meter_widget::render()
 {
 	render_context unitrc;
 	int32 units;
 	int32 i;
 	int32 which;
+	// Line 99, Address: 0x29a660, Func Offset: 0
+	// Line 100, Address: 0x29a668, Func Offset: 0x8
+	// Line 99, Address: 0x29a66c, Func Offset: 0xc
+	// Line 100, Address: 0x29a688, Func Offset: 0x28
+	// Line 99, Address: 0x29a68c, Func Offset: 0x2c
+	// Line 100, Address: 0x29a690, Func Offset: 0x30
+	// Line 99, Address: 0x29a694, Func Offset: 0x34
+	// Line 100, Address: 0x29a69c, Func Offset: 0x3c
+	// Line 101, Address: 0x29a6b8, Func Offset: 0x58
+	// Line 102, Address: 0x29a6d8, Func Offset: 0x78
+	// Line 104, Address: 0x29a6e8, Func Offset: 0x88
+	// Line 106, Address: 0x29a710, Func Offset: 0xb0
+	// Line 107, Address: 0x29a714, Func Offset: 0xb4
+	// Line 109, Address: 0x29a758, Func Offset: 0xf8
+	// Line 111, Address: 0x29a76c, Func Offset: 0x10c
+	// Line 113, Address: 0x29a788, Func Offset: 0x128
+	// Line 114, Address: 0x29a7a8, Func Offset: 0x148
+	// Line 115, Address: 0x29a7c0, Func Offset: 0x160
+	// Line 117, Address: 0x29a7d8, Func Offset: 0x178
+	// Line 118, Address: 0x29a7e8, Func Offset: 0x188
+	// Line 119, Address: 0x29a7f8, Func Offset: 0x198
+	// Line 121, Address: 0x29a808, Func Offset: 0x1a8
+	// Line 122, Address: 0x29a814, Func Offset: 0x1b4
+	// Line 123, Address: 0x29a828, Func Offset: 0x1c8
+	// Func End, Address: 0x29a858, Func Offset: 0x1f8
 }
 
 // update__Q24xhud17unit_meter_widgetFf
 // Start address: 0x29a860
-void update(unit_meter_widget* this, float32 dt)
+void unit_meter_widget::update(float32 dt)
 {
 	int32 units;
 	int32 i;
@@ -1022,46 +1054,107 @@ void update(unit_meter_widget* this, float32 dt)
 	xModelInstance* m;
 	float32 duration;
 	float32 time;
+	// Line 67, Address: 0x29a860, Func Offset: 0
+	// Line 68, Address: 0x29a884, Func Offset: 0x24
+	// Line 69, Address: 0x29a88c, Func Offset: 0x2c
+	// Line 71, Address: 0x29a8d8, Func Offset: 0x78
+	// Line 70, Address: 0x29a8dc, Func Offset: 0x7c
+	// Line 71, Address: 0x29a8e0, Func Offset: 0x80
+	// Line 70, Address: 0x29a8e8, Func Offset: 0x88
+	// Line 71, Address: 0x29a8f0, Func Offset: 0x90
+	// Line 72, Address: 0x29a904, Func Offset: 0xa4
+	// Line 76, Address: 0x29a918, Func Offset: 0xb8
+	// Line 78, Address: 0x29a928, Func Offset: 0xc8
+	// Line 79, Address: 0x29a92c, Func Offset: 0xcc
+	// Line 81, Address: 0x29a970, Func Offset: 0x110
+	// Line 82, Address: 0x29a978, Func Offset: 0x118
+	// Line 83, Address: 0x29a984, Func Offset: 0x124
+	// Line 85, Address: 0x29a998, Func Offset: 0x138
+	// Line 86, Address: 0x29a99c, Func Offset: 0x13c
+	// Line 85, Address: 0x29a9a0, Func Offset: 0x140
+	// Line 86, Address: 0x29a9ac, Func Offset: 0x14c
+	// Line 87, Address: 0x29a9b8, Func Offset: 0x158
+	// Line 89, Address: 0x29a9d0, Func Offset: 0x170
+	// Line 90, Address: 0x29a9e8, Func Offset: 0x188
+	// Line 93, Address: 0x29a9ec, Func Offset: 0x18c
+	// Line 90, Address: 0x29a9f0, Func Offset: 0x190
+	// Line 93, Address: 0x29a9f4, Func Offset: 0x194
+	// Line 94, Address: 0x29a9fc, Func Offset: 0x19c
+	// Line 95, Address: 0x29aa10, Func Offset: 0x1b0
+	// Func End, Address: 0x29aa34, Func Offset: 0x1d4
 }
 
 // setup__Q24xhud17unit_meter_widgetFv
 // Start address: 0x29aa40
-void setup(unit_meter_widget* this)
+void unit_meter_widget::setup()
 {
+	// Line 63, Address: 0x29aa40, Func Offset: 0
+	// Func End, Address: 0x29aa48, Func Offset: 0x8
 }
 
 // is__Q24xhud17unit_meter_widgetCFUi
 // Start address: 0x29aa50
-uint8 is(unit_meter_widget* this, uint32 id)
+uint8 unit_meter_widget::is(uint32 id)
 {
 	uint32 myid;
 	int8 @3861;
+	// Line 57, Address: 0x29aa50, Func Offset: 0
+	// Line 58, Address: 0x29aa64, Func Offset: 0x14
+	// Line 59, Address: 0x29aaa8, Func Offset: 0x58
+	// Func End, Address: 0x29aabc, Func Offset: 0x6c
 }
 
 // type__Q24xhud17unit_meter_widgetCFv
 // Start address: 0x29aac0
 uint32 type()
 {
+	// Line 51, Address: 0x29aac0, Func Offset: 0
+	// Line 52, Address: 0x29aac8, Func Offset: 0x8
+	// Line 54, Address: 0x29aae8, Func Offset: 0x28
+	// Line 53, Address: 0x29aaec, Func Offset: 0x2c
+	// Line 54, Address: 0x29aaf0, Func Offset: 0x30
+	// Func End, Address: 0x29aaf8, Func Offset: 0x38
 }
 
 // destroy__Q24xhud17unit_meter_widgetFv
 // Start address: 0x29ab00
-void destroy(unit_meter_widget* this)
+void unit_meter_widget::destroy()
 {
+	// Line 47, Address: 0x29ab00, Func Offset: 0
+	// Func End, Address: 0x29ab08, Func Offset: 0x8
 }
 
 // __ct__Q24xhud17unit_meter_widgetFRCQ24xhud16unit_meter_asset
 // Start address: 0x29ab10
-void* __ct(unit_meter_widget* this, unit_meter_asset& a)
+void* unit_meter_widget::__ct(unit_meter_asset& a)
 {
 	int32 i;
 	int32 j;
 	uint8 registered;
+	// Line 22, Address: 0x29ab10, Func Offset: 0
+	// Line 25, Address: 0x29ab6c, Func Offset: 0x5c
+	// Line 27, Address: 0x29ab78, Func Offset: 0x68
+	// Line 28, Address: 0x29ab80, Func Offset: 0x70
+	// Line 29, Address: 0x29aba8, Func Offset: 0x98
+	// Line 28, Address: 0x29abac, Func Offset: 0x9c
+	// Line 29, Address: 0x29abb0, Func Offset: 0xa0
+	// Line 32, Address: 0x29abbc, Func Offset: 0xac
+	// Line 34, Address: 0x29abc8, Func Offset: 0xb8
+	// Line 36, Address: 0x29abcc, Func Offset: 0xbc
+	// Line 37, Address: 0x29abd0, Func Offset: 0xc0
+	// Func End, Address: 0x29abf8, Func Offset: 0xe8
 }
 
 // load__Q24xhud17unit_meter_widgetFR5xBaseR9xDynAssetUi
 // Start address: 0x29ac00
 void load(xBase& data, xDynAsset& asset)
 {
+	// Line 14, Address: 0x29ac00, Func Offset: 0
+	// Line 16, Address: 0x29ac04, Func Offset: 0x4
+	// Line 14, Address: 0x29ac08, Func Offset: 0x8
+	// Line 16, Address: 0x29ac18, Func Offset: 0x18
+	// Line 18, Address: 0x29ac20, Func Offset: 0x20
+	// Line 19, Address: 0x29ac38, Func Offset: 0x38
+	// Func End, Address: 0x29ac4c, Func Offset: 0x4c
 }
 

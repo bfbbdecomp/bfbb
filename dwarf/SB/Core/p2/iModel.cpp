@@ -81,10 +81,10 @@ typedef enum RxClusterValidityReq;
 typedef struct zScene;
 typedef struct xSphere;
 typedef struct RwLLLink;
-typedef union RwStreamUnion;
+typedef struct RwStreamUnion;
 typedef struct zLedgeGrabParams;
 typedef struct xAnimMultiFile;
-typedef union _class_1;
+typedef struct _class_1;
 typedef struct xMat4x3;
 typedef struct xVec2;
 typedef enum RxNodeDefEditable;
@@ -156,7 +156,7 @@ typedef struct xEntDrive;
 typedef struct xEntAsset;
 typedef struct iFogParams;
 typedef struct RxNodeDefinition;
-typedef union RwStreamFile;
+typedef struct RwStreamFile;
 typedef struct RwPlane;
 typedef struct RxCluster;
 typedef struct RpTriangle;
@@ -293,7 +293,7 @@ typedef RwFrame* type_107[2];
 typedef RxCluster type_108[1];
 typedef xVec3 type_109[3];
 typedef int8 type_111[128];
-typedef type_111 type_112[6];
+typedef int8 type_112[128][6];
 typedef float32 type_113[4];
 typedef uint8 type_114[14];
 typedef xModelTag type_115[4];
@@ -325,7 +325,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_104 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -351,9 +351,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_44 BeforeEnter;
-	type_47 StateCallback;
-	type_10 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpHAnimHierarchy
@@ -387,7 +387,7 @@ struct xBase
 	uint8 linkCount;
 	uint16 baseFlags;
 	xLinkAsset* link;
-	type_24 eventFunc;
+	int32(*eventFunc)(xBase*, xBase*, uint32, float32*, xBase*);
 };
 
 struct RpSector
@@ -442,7 +442,7 @@ struct RpWorld
 	RwLinkList directionalLightList;
 	RwV3d worldOrigin;
 	RwBBox boundingBox;
-	type_14 renderCallBack;
+	RpWorldSector*(*renderCallBack)(RpWorldSector*);
 	RxPipeline* pipeline;
 };
 
@@ -467,16 +467,16 @@ struct xEnt : xBase
 	xModelInstance* collModel;
 	xModelInstance* camcollModel;
 	xLightKit* lightKit;
-	type_18 update;
-	type_18 endUpdate;
-	type_41 bupdate;
-	type_2 move;
-	type_4 render;
+	void(*update)(xEnt*, xScene*, float32);
+	void(*endUpdate)(xEnt*, xScene*, float32);
+	void(*bupdate)(xEnt*, xVec3*);
+	void(*move)(xEnt*, xScene*, float32, xEntFrame*);
+	void(*render)(xEnt*);
 	xEntFrame* frame;
 	xEntCollis* collis;
 	xGridBound gridb;
 	xBound bound;
-	type_16 transl;
+	void(*transl)(xEnt*, xVec3*, xMat4x3*);
 	xFFX* ffx;
 	xEnt* driver;
 	int32 driveMode;
@@ -586,8 +586,8 @@ struct RwCamera
 {
 	RwObjectHasFrame object;
 	RwCameraProjection projectionType;
-	type_78 beginUpdate;
-	type_82 endUpdate;
+	RwCamera*(*beginUpdate)(RwCamera*);
+	RwCamera*(*endUpdate)(RwCamera*);
 	RwMatrixTag viewMatrix;
 	RwRaster* frameBuffer;
 	RwRaster* zBuffer;
@@ -599,9 +599,9 @@ struct RwCamera
 	float32 fogPlane;
 	float32 zScale;
 	float32 zShift;
-	type_8 frustumPlanes;
+	RwFrustumPlane frustumPlanes[6];
 	RwBBox frustumBoundBox;
-	type_17 frustumCorners;
+	RwV3d frustumCorners[8];
 };
 
 struct xScene
@@ -631,9 +631,9 @@ struct xScene
 	xEnt** nact_ents;
 	xEnv* env;
 	xMemPool mempool;
-	type_50 resolvID;
-	type_54 base2Name;
-	type_58 id2Name;
+	xBase*(*resolvID)(uint32);
+	int8*(*base2Name)(xBase*);
+	int8*(*id2Name)(uint32);
 };
 
 struct xAnimEffect
@@ -642,7 +642,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_73 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct RpMeshHeader
@@ -689,7 +689,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_100 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct xEntCollis
@@ -705,9 +705,9 @@ struct xEntCollis
 	uint8 stat_sidx;
 	uint8 stat_eidx;
 	uint8 idx;
-	type_51 colls;
-	type_52 post;
-	type_12 depenq;
+	xCollis colls[18];
+	void(*post)(xEnt*, xScene*, float32, xEntCollis*);
+	uint32(*depenq)(xEnt*, xEnt*, xScene*, float32, xCollis*);
 };
 
 struct RxPipelineNodeTopSortData
@@ -727,15 +727,15 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_64 pad;
+	uint32 pad[4];
 };
 
 struct RwStreamCustom
 {
-	type_15 sfnclose;
-	type_22 sfnread;
-	type_25 sfnwrite;
-	type_6 sfnskip;
+	int32(*sfnclose)(void*);
+	uint32(*sfnread)(void*, void*, uint32);
+	int32(*sfnwrite)(void*, void*, uint32);
+	int32(*sfnskip)(void*, uint32);
 	void* data;
 };
 
@@ -745,7 +745,7 @@ struct RpWorldSector
 	RpPolygon* polygons;
 	RwV3d* vertices;
 	RpVertexNormal* normals;
-	type_80 texCoords;
+	RwTexCoords* texCoords[8];
 	RwRGBA* preLitLum;
 	RwResEntry* repEntry;
 	RwLinkList collAtomicsInWorldSector;
@@ -789,7 +789,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_3 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -800,14 +800,14 @@ struct RtAnimInterpolatorInfo
 	int32 typeID;
 	int32 interpKeyFrameSize;
 	int32 animKeyFrameSize;
-	type_29 keyFrameApplyCB;
-	type_36 keyFrameBlendCB;
-	type_39 keyFrameInterpolateCB;
-	type_40 keyFrameAddCB;
-	type_42 keyFrameMulRecipCB;
-	type_43 keyFrameStreamReadCB;
-	type_46 keyFrameStreamWriteCB;
-	type_7 keyFrameStreamGetSizeCB;
+	void(*keyFrameApplyCB)(void*, void*);
+	void(*keyFrameBlendCB)(void*, void*, void*, float32);
+	void(*keyFrameInterpolateCB)(void*, void*, void*, float32, void*);
+	void(*keyFrameAddCB)(void*, void*, void*);
+	void(*keyFrameMulRecipCB)(void*, void*);
+	RtAnimAnimation*(*keyFrameStreamReadCB)(RwStream*, RtAnimAnimation*);
+	int32(*keyFrameStreamWriteCB)(RtAnimAnimation*, RwStream*);
+	int32(*keyFrameStreamGetSizeCB)(RtAnimAnimation*);
 	int32 customDataSize;
 };
 
@@ -838,7 +838,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_98 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -867,8 +867,8 @@ struct xClumpCollBSPBranchNode
 
 struct _tagxPad
 {
-	type_27 value;
-	type_32 last_value;
+	uint8 value[22];
+	uint8 last_value[22];
 	uint32 on;
 	uint32 pressed;
 	uint32 released;
@@ -883,16 +883,16 @@ struct _tagxPad
 	float32 al2d_timer;
 	float32 ar2d_timer;
 	float32 d_timer;
-	type_55 up_tmr;
-	type_57 down_tmr;
-	type_68 analog;
+	float32 up_tmr[22];
+	float32 down_tmr[22];
+	analog_data analog[2];
 };
 
 struct xModelTag
 {
 	xVec3 v;
 	uint32 matidx;
-	type_56 wt;
+	float32 wt[4];
 };
 
 struct xClumpCollBSPTriangle
@@ -918,8 +918,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_30 Conditional;
-	type_30 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -972,8 +972,8 @@ struct zLasso
 	float32 crSlack;
 	float32 currDist;
 	float32 lastDist;
-	type_45 lastRefs;
-	type_48 reindex;
+	xVec3 lastRefs[5];
+	uint8 reindex[5];
 	xVec3 anchor;
 	xModelTag tag;
 	xModelInstance* model;
@@ -1029,7 +1029,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_10 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct zGlobals : xGlobals
@@ -1076,7 +1076,7 @@ struct xShadowSimpleCache
 	uint32 raster;
 	float32 dydx;
 	float32 dydz;
-	type_31 corner;
+	xVec3 corner[4];
 };
 
 struct RtAnimInterpolator
@@ -1084,10 +1084,10 @@ struct RtAnimInterpolator
 	RtAnimAnimation* pCurrentAnim;
 	float32 currentTime;
 	void* pNextFrame;
-	type_5 pAnimCallBack;
+	RtAnimInterpolator*(*pAnimCallBack)(RtAnimInterpolator*, void*);
 	void* pAnimCallBackData;
 	float32 animCallBackTime;
-	type_5 pAnimLoopCallBack;
+	RtAnimInterpolator*(*pAnimLoopCallBack)(RtAnimInterpolator*, void*);
 	void* pAnimLoopCallBackData;
 	int32 maxInterpKeyFrameSize;
 	int32 currentInterpKeyFrameSize;
@@ -1096,10 +1096,10 @@ struct RtAnimInterpolator
 	int32 isSubInterpolator;
 	int32 offsetInParent;
 	RtAnimInterpolator* parentAnimation;
-	type_29 keyFrameApplyCB;
-	type_36 keyFrameBlendCB;
-	type_39 keyFrameInterpolateCB;
-	type_40 keyFrameAddCB;
+	void(*keyFrameApplyCB)(void*, void*);
+	void(*keyFrameBlendCB)(void*, void*, void*, float32);
+	void(*keyFrameInterpolateCB)(void*, void*, void*, float32, void*);
+	void(*keyFrameAddCB)(void*, void*, void*);
 };
 
 struct RwSurfaceProperties
@@ -1195,8 +1195,8 @@ struct zGlobalSettings
 	float32 SlideAirDblSlowTime;
 	float32 SlideVelDblBoost;
 	uint8 SlideApplyPhysics;
-	type_85 PowerUp;
-	type_90 InitialPowerUp;
+	uint8 PowerUp[2];
+	uint8 InitialPowerUp[2];
 };
 
 struct xLinkAsset
@@ -1204,7 +1204,7 @@ struct xLinkAsset
 	uint16 srcEvent;
 	uint16 dstEvent;
 	uint32 dstAssetID;
-	type_113 param;
+	float32 param[4];
 	uint32 paramWidgetAssetID;
 	uint32 chkAssetID;
 };
@@ -1222,7 +1222,7 @@ struct xEntShadow
 	xVec3 vec;
 	RpAtomic* shadowModel;
 	float32 dst_cast;
-	type_75 radius;
+	float32 radius[2];
 };
 
 struct _zPortal : xBase
@@ -1245,7 +1245,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_77 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct zAssetPickupTable
@@ -1260,7 +1260,7 @@ struct xUpdateCullEnt
 {
 	uint16 index;
 	int16 groupIndex;
-	type_26 cb;
+	uint32(*cb)(void*, void*);
 	void* cbdata;
 	xUpdateCullEnt* nextInGroup;
 };
@@ -1338,8 +1338,8 @@ struct zScene : xScene
 	};
 	uint32 num_update_base;
 	xBase** update_base;
-	type_67 baseCount;
-	type_70 baseList;
+	uint32 baseCount[72];
+	xBase* baseList[72];
 	_zEnv* zen;
 };
 
@@ -1355,18 +1355,21 @@ struct RwLLLink
 	RwLLLink* prev;
 };
 
-union RwStreamUnion
+struct RwStreamUnion
 {
-	RwStreamMemory memory;
-	RwStreamFile file;
-	RwStreamCustom custom;
+	union
+	{
+		RwStreamMemory memory;
+		RwStreamFile file;
+		RwStreamCustom custom;
+	};
 };
 
 struct zLedgeGrabParams
 {
 	float32 animGrab;
 	float32 zdist;
-	type_49 tranTable;
+	xVec3 tranTable[60];
 	int32 tranCount;
 	xEnt* optr;
 	xMat4x3 omat;
@@ -1389,13 +1392,16 @@ struct zLedgeGrabParams
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_102 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
-union _class_1
+struct _class_1
 {
-	xClumpCollBSPVertInfo i;
-	RwV3d* p;
+	union
+	{
+		xClumpCollBSPVertInfo i;
+		RwV3d* p;
+	};
 };
 
 struct xMat4x3 : xMat3x3
@@ -1495,7 +1501,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_99 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -1512,8 +1518,8 @@ struct iEnv
 	RpWorld* fx;
 	RpWorld* camera;
 	xJSPHeader* jsp;
-	type_105 light;
-	type_107 light_frame;
+	RpLight* light[2];
+	RwFrame* light_frame[2];
 	int32 memlvl;
 };
 
@@ -1669,7 +1675,7 @@ struct RxClusterDefinition
 struct RpPolygon
 {
 	uint16 matIndex;
-	type_62 vertIndex;
+	uint16 vertIndex[3];
 };
 
 enum RwStreamAccessType
@@ -1766,7 +1772,7 @@ struct zPlayerGlobals
 	float32 DigTimer;
 	zPlayerCarryInfo carry;
 	zPlayerLassoInfo lassoInfo;
-	type_97 BubbleWandTag;
+	xModelTag BubbleWandTag[2];
 	xModelInstance* model_wand;
 	xEntBoulder* bubblebowl;
 	float32 bbowlInitVel;
@@ -1778,7 +1784,7 @@ struct zPlayerGlobals
 	float32 HangLength;
 	xVec3 HangStartPos;
 	float32 HangStartLerp;
-	type_115 HangPawTag;
+	xModelTag HangPawTag[4];
 	float32 HangPawOffset;
 	float32 HangElapsed;
 	float32 Jump_CurrGravity;
@@ -1804,10 +1810,10 @@ struct zPlayerGlobals
 	int32 cheat_mode;
 	uint32 Inv_Shiny;
 	uint32 Inv_Spatula;
-	type_59 Inv_PatsSock;
-	type_60 Inv_PatsSock_Max;
+	uint32 Inv_PatsSock[15];
+	uint32 Inv_PatsSock_Max[15];
 	uint32 Inv_PatsSock_CurrentLevel;
-	type_65 Inv_LevelPickups;
+	uint32 Inv_LevelPickups[15];
 	uint32 Inv_LevelPickups_CurrentLevel;
 	uint32 Inv_PatsSock_Total;
 	xModelTag BubbleTag;
@@ -1819,21 +1825,21 @@ struct zPlayerGlobals
 	xSphere head_sph;
 	xModelTag center_tag;
 	xModelTag head_tag;
-	type_87 TongueFlags;
+	uint32 TongueFlags[2];
 	xVec3 RootUp;
 	xVec3 RootUpTarget;
 	zCheckPoint cp;
 	uint32 SlideTrackSliding;
 	uint32 SlideTrackCount;
-	type_106 SlideTrackEnt;
+	xEnt* SlideTrackEnt[111];
 	uint32 SlideNotGroundedSinceSlide;
 	xVec3 SlideTrackDir;
 	xVec3 SlideTrackVel;
 	float32 SlideTrackDecay;
 	float32 SlideTrackLean;
 	float32 SlideTrackLand;
-	type_114 sb_model_indices;
-	type_1 sb_models;
+	uint8 sb_model_indices[14];
+	xModelInstance* sb_models[14];
 	uint32 currentPlayer;
 	xVec3 PredictRotate;
 	xVec3 PredictTranslate;
@@ -1871,7 +1877,7 @@ struct xAnimActiveEffect
 
 struct xJSPHeader
 {
-	type_69 idtag;
+	int8 idtag[4];
 	uint32 version;
 	uint32 jspNodeCount;
 	RpClump* clump;
@@ -1973,8 +1979,8 @@ struct xUpdateCullMgr
 	xUpdateCullEnt* mgrList;
 	uint32 grpCount;
 	xUpdateCullGroup* grpList;
-	type_35 activateCB;
-	type_35 deactivateCB;
+	void(*activateCB)(void*);
+	void(*deactivateCB)(void*);
 };
 
 struct RwMemory
@@ -1986,10 +1992,10 @@ struct RwMemory
 struct zPlayerSettings
 {
 	_zPlayerType pcType;
-	type_91 MoveSpeed;
-	type_92 AnimSneak;
-	type_95 AnimWalk;
-	type_101 AnimRun;
+	float32 MoveSpeed[6];
+	float32 AnimSneak[3];
+	float32 AnimWalk[3];
+	float32 AnimRun[3];
 	float32 JumpGravity;
 	float32 GravSmooth;
 	float32 FloatSpeed;
@@ -2007,7 +2013,7 @@ struct zPlayerSettings
 	float32 spin_damp_y;
 	uint8 talk_anims;
 	uint8 talk_filter_size;
-	type_9 talk_filter;
+	uint8 talk_filter[4];
 };
 
 struct xAnimSingle
@@ -2016,7 +2022,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_81 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -2033,7 +2039,7 @@ struct xLightKitLight
 {
 	uint32 type;
 	RwRGBAReal color;
-	type_74 matrix;
+	float32 matrix[16];
 	float32 radius;
 	float32 angle;
 	RpLight* platLight;
@@ -2126,7 +2132,7 @@ struct xCamera : xBase
 	float32 roll_cd;
 	float32 roll_ccv;
 	float32 roll_csv;
-	type_89 frustplane;
+	xVec4 frustplane[12];
 };
 
 struct RwStreamMemory
@@ -2190,7 +2196,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_88 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -2202,21 +2208,21 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_94 name;
-	type_96 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
 
 struct RxNodeMethods
 {
-	type_13 nodeBody;
-	type_19 nodeInit;
-	type_23 nodeTerm;
-	type_28 pipelineNodeInit;
-	type_34 pipelineNodeTerm;
-	type_37 pipelineNodeConfig;
-	type_11 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -2286,10 +2292,13 @@ struct RxNodeDefinition
 	int32 InputPipesCnt;
 };
 
-union RwStreamFile
+struct RwStreamFile
 {
-	void* fpFile;
-	void* constfpFile;
+	union
+	{
+		void* fpFile;
+		void* constfpFile;
+	};
 };
 
 struct RwPlane
@@ -2312,7 +2321,7 @@ struct RxCluster
 
 struct RpTriangle
 {
-	type_103 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -2338,7 +2347,7 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_108 clusters;
+	RxCluster clusters[1];
 };
 
 struct xEntBoulder
@@ -2375,10 +2384,10 @@ struct xGlobals
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
-	type_112 profFunc;
+	int8 profFunc[128][6];
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
-	type_116 sceneStart;
+	int8 sceneStart[32];
 	RpWorld* currWorld;
 	iFogParams fog;
 	iFogParams fogA;
@@ -2409,7 +2418,7 @@ struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_110 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct xEnv
@@ -2421,7 +2430,7 @@ struct xEnv
 
 struct xShadowSimplePoly
 {
-	type_109 vert;
+	xVec3 vert[3];
 	xVec3 norm;
 };
 
@@ -2469,27 +2478,27 @@ struct _tagiPad
 	int32 port;
 };
 
-type_61 buffer;
-type_66 buffer;
+int8 buffer[16];
+int8 buffer[16];
 uint32 gLastAtomicCount;
-type_79 gLastAtomicList;
-type_86 sEmptyDirectionalLight;
+RpAtomic* gLastAtomicList[256];
+RpLight* sEmptyDirectionalLight[4];
 RpLight* sEmptyAmbientLight;
-type_53 sMaterialColor;
-type_93 sMaterialTexture;
-type_20 sMaterialAlpha;
+RwRGBA sMaterialColor[16];
+RwTexture* sMaterialTexture[16];
+uint8 sMaterialAlpha[16];
 uint32 sMaterialIdx;
 uint32 sMaterialFlags;
 RpAtomic* sLastMaterial;
-type_63 iModelMaterialMulCB;
-type_33 iModelSetMaterialTextureCB;
+RpMaterial*(*iModelMaterialMulCB)(RpMaterial*, void*);
+RpMaterial*(*iModelSetMaterialTextureCB)(RpMaterial*, void*);
 uint8* giAnimScratch;
-type_72 ourGlobals;
+uint32 ourGlobals[4096];
 zGlobals globals;
 int32 iModelHack_DisablePrelight;
-type_83 GetChildFrameHierarchy;
-type_38 NextAtomicCallback;
-type_21 FindAtomicCallback;
+RwFrame*(*GetChildFrameHierarchy)(RwFrame*, void*);
+RpAtomic*(*NextAtomicCallback)(RpAtomic*, void*);
+RpAtomic*(*FindAtomicCallback)(RpAtomic*, void*);
 
 void iModelMaterialMul(RpAtomic* model, float32 rm, float32 gm, float32 bm);
 RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data);
@@ -2527,7 +2536,22 @@ RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data);
 void iModelMaterialMul(RpAtomic* model, float32 rm, float32 gm, float32 bm)
 {
 	RpGeometry* geom;
-	type_84 cols;
+	float32 cols[3];
+	// Line 2181, Address: 0x1accc0, Func Offset: 0
+	// Line 2185, Address: 0x1accd0, Func Offset: 0x10
+	// Line 2186, Address: 0x1accdc, Func Offset: 0x1c
+	// Line 2190, Address: 0x1acce0, Func Offset: 0x20
+	// Line 2197, Address: 0x1acce4, Func Offset: 0x24
+	// Line 2190, Address: 0x1accf0, Func Offset: 0x30
+	// Line 2193, Address: 0x1accf8, Func Offset: 0x38
+	// Line 2196, Address: 0x1accfc, Func Offset: 0x3c
+	// Line 2194, Address: 0x1acd00, Func Offset: 0x40
+	// Line 2197, Address: 0x1acd04, Func Offset: 0x44
+	// Line 2199, Address: 0x1acd0c, Func Offset: 0x4c
+	// Line 2200, Address: 0x1acd10, Func Offset: 0x50
+	// Line 2199, Address: 0x1acd14, Func Offset: 0x54
+	// Line 2201, Address: 0x1acd1c, Func Offset: 0x5c
+	// Func End, Address: 0x1acd2c, Func Offset: 0x6c
 }
 
 // iModelMaterialMulCB__FP10RpMaterialPv
@@ -2538,6 +2562,25 @@ RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
 	RwRGBA col;
 	float32 tmp;
 	float32* mods;
+	// Line 2163, Address: 0x1acd30, Func Offset: 0
+	// Line 2161, Address: 0x1acd38, Func Offset: 0x8
+	// Line 2163, Address: 0x1acd3c, Func Offset: 0xc
+	// Line 2167, Address: 0x1acd94, Func Offset: 0x64
+	// Line 2168, Address: 0x1acdc8, Func Offset: 0x98
+	// Line 2167, Address: 0x1acdd0, Func Offset: 0xa0
+	// Line 2168, Address: 0x1acdd4, Func Offset: 0xa4
+	// Line 2169, Address: 0x1ace50, Func Offset: 0x120
+	// Line 2170, Address: 0x1ace88, Func Offset: 0x158
+	// Line 2169, Address: 0x1ace90, Func Offset: 0x160
+	// Line 2170, Address: 0x1ace94, Func Offset: 0x164
+	// Line 2171, Address: 0x1acf10, Func Offset: 0x1e0
+	// Line 2172, Address: 0x1acf48, Func Offset: 0x218
+	// Line 2171, Address: 0x1acf50, Func Offset: 0x220
+	// Line 2172, Address: 0x1acf54, Func Offset: 0x224
+	// Line 2176, Address: 0x1acfcc, Func Offset: 0x29c
+	// Line 2174, Address: 0x1acfd0, Func Offset: 0x2a0
+	// Line 2177, Address: 0x1acff0, Func Offset: 0x2c0
+	// Func End, Address: 0x1acff8, Func Offset: 0x2c8
 }
 
 // iModelSetMaterialTexture__FP8RpAtomicPv
@@ -2545,12 +2588,32 @@ RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
 void iModelSetMaterialTexture(RpAtomic* model, void* texture)
 {
 	RpGeometry* geom;
+	// Line 2131, Address: 0x1ad000, Func Offset: 0
+	// Line 2136, Address: 0x1ad00c, Func Offset: 0xc
+	// Line 2137, Address: 0x1ad01c, Func Offset: 0x1c
+	// Line 2139, Address: 0x1ad020, Func Offset: 0x20
+	// Line 2143, Address: 0x1ad024, Func Offset: 0x24
+	// Line 2145, Address: 0x1ad034, Func Offset: 0x34
+	// Line 2146, Address: 0x1ad038, Func Offset: 0x38
+	// Line 2145, Address: 0x1ad03c, Func Offset: 0x3c
+	// Line 2147, Address: 0x1ad044, Func Offset: 0x44
+	// Func End, Address: 0x1ad054, Func Offset: 0x54
 }
 
 // iModelSetMaterialTextureCB__FP10RpMaterialPv
 // Start address: 0x1ad060
 RpMaterial* iModelSetMaterialTextureCB(RpMaterial* material, void* data)
 {
+	// Line 2119, Address: 0x1ad060, Func Offset: 0
+	// Line 2122, Address: 0x1ad064, Func Offset: 0x4
+	// Line 2119, Address: 0x1ad068, Func Offset: 0x8
+	// Line 2122, Address: 0x1ad06c, Func Offset: 0xc
+	// Line 2119, Address: 0x1ad070, Func Offset: 0x10
+	// Line 2122, Address: 0x1ad074, Func Offset: 0x14
+	// Line 2124, Address: 0x1ad094, Func Offset: 0x34
+	// Line 2126, Address: 0x1ad09c, Func Offset: 0x3c
+	// Line 2127, Address: 0x1ad0a0, Func Offset: 0x40
+	// Func End, Address: 0x1ad0b0, Func Offset: 0x50
 }
 
 // iModelResetMaterial__FP8RpAtomic
@@ -2563,6 +2626,36 @@ void iModelResetMaterial(RpAtomic* model)
 	RwRGBA newColor;
 	RwRGBA newColor;
 	RwRGBA newColor;
+	// Line 2077, Address: 0x1ad0b0, Func Offset: 0
+	// Line 2081, Address: 0x1ad0dc, Func Offset: 0x2c
+	// Line 2082, Address: 0x1ad0e8, Func Offset: 0x38
+	// Line 2085, Address: 0x1ad0f0, Func Offset: 0x40
+	// Line 2088, Address: 0x1ad0f4, Func Offset: 0x44
+	// Line 2090, Address: 0x1ad130, Func Offset: 0x80
+	// Line 2092, Address: 0x1ad138, Func Offset: 0x88
+	// Line 2090, Address: 0x1ad13c, Func Offset: 0x8c
+	// Line 2092, Address: 0x1ad140, Func Offset: 0x90
+	// Line 2093, Address: 0x1ad14c, Func Offset: 0x9c
+	// Line 2094, Address: 0x1ad170, Func Offset: 0xc0
+	// Line 2095, Address: 0x1ad178, Func Offset: 0xc8
+	// Line 2096, Address: 0x1ad19c, Func Offset: 0xec
+	// Line 2097, Address: 0x1ad1a8, Func Offset: 0xf8
+	// Line 2098, Address: 0x1ad1b4, Func Offset: 0x104
+	// Line 2099, Address: 0x1ad1d8, Func Offset: 0x128
+	// Line 2100, Address: 0x1ad1e0, Func Offset: 0x130
+	// Line 2102, Address: 0x1ad208, Func Offset: 0x158
+	// Line 2103, Address: 0x1ad218, Func Offset: 0x168
+	// Line 2104, Address: 0x1ad23c, Func Offset: 0x18c
+	// Line 2105, Address: 0x1ad244, Func Offset: 0x194
+	// Line 2107, Address: 0x1ad26c, Func Offset: 0x1bc
+	// Line 2108, Address: 0x1ad270, Func Offset: 0x1c0
+	// Line 2109, Address: 0x1ad280, Func Offset: 0x1d0
+	// Line 2111, Address: 0x1ad288, Func Offset: 0x1d8
+	// Line 2109, Address: 0x1ad290, Func Offset: 0x1e0
+	// Line 2111, Address: 0x1ad29c, Func Offset: 0x1ec
+	// Line 2113, Address: 0x1ad2a8, Func Offset: 0x1f8
+	// Line 2114, Address: 0x1ad2ac, Func Offset: 0x1fc
+	// Func End, Address: 0x1ad2dc, Func Offset: 0x22c
 }
 
 // iModelSetMaterialAlpha__FP8RpAtomicUc
@@ -2574,6 +2667,28 @@ void iModelSetMaterialAlpha(RpAtomic* model, uint8 alpha)
 	RpMaterial* material;
 	RwRGBA* col;
 	RwRGBA new_col;
+	// Line 2051, Address: 0x1ad2e0, Func Offset: 0
+	// Line 2047, Address: 0x1ad2e4, Func Offset: 0x4
+	// Line 2051, Address: 0x1ad2e8, Func Offset: 0x8
+	// Line 2052, Address: 0x1ad2f0, Func Offset: 0x10
+	// Line 2056, Address: 0x1ad2f8, Func Offset: 0x18
+	// Line 2059, Address: 0x1ad304, Func Offset: 0x24
+	// Line 2061, Address: 0x1ad30c, Func Offset: 0x2c
+	// Line 2066, Address: 0x1ad334, Func Offset: 0x54
+	// Line 2063, Address: 0x1ad338, Func Offset: 0x58
+	// Line 2069, Address: 0x1ad33c, Func Offset: 0x5c
+	// Line 2063, Address: 0x1ad340, Func Offset: 0x60
+	// Line 2068, Address: 0x1ad348, Func Offset: 0x68
+	// Line 2065, Address: 0x1ad34c, Func Offset: 0x6c
+	// Line 2066, Address: 0x1ad354, Func Offset: 0x74
+	// Line 2067, Address: 0x1ad374, Func Offset: 0x94
+	// Line 2068, Address: 0x1ad378, Func Offset: 0x98
+	// Line 2069, Address: 0x1ad398, Func Offset: 0xb8
+	// Line 2071, Address: 0x1ad3a8, Func Offset: 0xc8
+	// Line 2072, Address: 0x1ad3ac, Func Offset: 0xcc
+	// Line 2071, Address: 0x1ad3b0, Func Offset: 0xd0
+	// Line 2073, Address: 0x1ad3b8, Func Offset: 0xd8
+	// Func End, Address: 0x1ad3c0, Func Offset: 0xe0
 }
 
 // iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3
@@ -2582,6 +2697,19 @@ void iModelTagEval(RpAtomic* model, xModelTagWithNormal* tag, RwMatrixTag* mat, 
 {
 	RpSkin* skin;
 	RwMatrixTag* skinmat;
+	// Line 1850, Address: 0x1ad3c0, Func Offset: 0
+	// Line 1851, Address: 0x1ad3f8, Func Offset: 0x38
+	// Line 1853, Address: 0x1ad400, Func Offset: 0x40
+	// Line 1855, Address: 0x1ad418, Func Offset: 0x58
+	// Line 1856, Address: 0x1ad420, Func Offset: 0x60
+	// Line 1857, Address: 0x1ad428, Func Offset: 0x68
+	// Line 1856, Address: 0x1ad43c, Func Offset: 0x7c
+	// Line 1857, Address: 0x1ad440, Func Offset: 0x80
+	// Line 1858, Address: 0x1ad62c, Func Offset: 0x26c
+	// Line 1862, Address: 0x1ad638, Func Offset: 0x278
+	// Line 1863, Address: 0x1ad64c, Func Offset: 0x28c
+	// Line 1864, Address: 0x1ad650, Func Offset: 0x290
+	// Func End, Address: 0x1ad680, Func Offset: 0x2c0
 }
 
 // iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3
@@ -2591,6 +2719,19 @@ void iModelTagEval(RpAtomic* model, xModelTag* tag, RwMatrixTag* mat, xVec3* des
 	RpGeometry* geom;
 	RpSkin* skin;
 	RwMatrixTag* skinmat;
+	// Line 1832, Address: 0x1ad680, Func Offset: 0
+	// Line 1834, Address: 0x1ad688, Func Offset: 0x8
+	// Line 1832, Address: 0x1ad68c, Func Offset: 0xc
+	// Line 1834, Address: 0x1ad6b8, Func Offset: 0x38
+	// Line 1837, Address: 0x1ad6c8, Func Offset: 0x48
+	// Line 1838, Address: 0x1ad6d0, Func Offset: 0x50
+	// Line 1839, Address: 0x1ad6d8, Func Offset: 0x58
+	// Line 1838, Address: 0x1ad6dc, Func Offset: 0x5c
+	// Line 1839, Address: 0x1ad6e0, Func Offset: 0x60
+	// Line 1840, Address: 0x1ad918, Func Offset: 0x298
+	// Line 1845, Address: 0x1ad920, Func Offset: 0x2a0
+	// Line 1847, Address: 0x1ad930, Func Offset: 0x2b0
+	// Func End, Address: 0x1ad960, Func Offset: 0x2e0
 }
 
 // iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff
@@ -2599,12 +2740,22 @@ uint32 iModelTagSetup(xModelTagWithNormal* tag, RpAtomic* model, float32 x, floa
 {
 	uint32 index;
 	xVec3* normals;
+	// Line 1817, Address: 0x1ad960, Func Offset: 0
+	// Line 1818, Address: 0x1ad964, Func Offset: 0x4
+	// Line 1817, Address: 0x1ad968, Func Offset: 0x8
+	// Line 1818, Address: 0x1ad978, Func Offset: 0x18
+	// Line 1821, Address: 0x1ad980, Func Offset: 0x20
+	// Line 1823, Address: 0x1ad998, Func Offset: 0x38
+	// Line 1825, Address: 0x1ad9b4, Func Offset: 0x54
+	// Func End, Address: 0x1ad9c8, Func Offset: 0x68
 }
 
 // iModelTagSetup__FP9xModelTagP8RpAtomicfff
 // Start address: 0x1ad9d0
 uint32 iModelTagSetup(xModelTag* tag, RpAtomic* model, float32 x, float32 y, float32 z)
 {
+	// Line 1813, Address: 0x1ad9d0, Func Offset: 0
+	// Func End, Address: 0x1ad9d8, Func Offset: 0x8
 }
 
 // iModelTagInternal__FP9xModelTagP8RpAtomicfffi
@@ -2619,6 +2770,52 @@ uint32 iModelTagInternal(xModelTag* tag, RpAtomic* model, float32 x, float32 y, 
 	float32 closeDistSqr;
 	RpSkin* skin;
 	RwMatrixWeights* wt;
+	// Line 1729, Address: 0x1ad9e0, Func Offset: 0
+	// Line 1730, Address: 0x1ad9f8, Func Offset: 0x18
+	// Line 1731, Address: 0x1ad9fc, Func Offset: 0x1c
+	// Line 1734, Address: 0x1ada04, Func Offset: 0x24
+	// Line 1735, Address: 0x1ada0c, Func Offset: 0x2c
+	// Line 1736, Address: 0x1ada1c, Func Offset: 0x3c
+	// Line 1739, Address: 0x1ada20, Func Offset: 0x40
+	// Line 1741, Address: 0x1ada2c, Func Offset: 0x4c
+	// Line 1743, Address: 0x1ada40, Func Offset: 0x60
+	// Line 1742, Address: 0x1ada44, Func Offset: 0x64
+	// Line 1743, Address: 0x1ada48, Func Offset: 0x68
+	// Line 1744, Address: 0x1ada64, Func Offset: 0x84
+	// Line 1748, Address: 0x1ada78, Func Offset: 0x98
+	// Line 1750, Address: 0x1ada84, Func Offset: 0xa4
+	// Line 1749, Address: 0x1ada88, Func Offset: 0xa8
+	// Line 1752, Address: 0x1ada8c, Func Offset: 0xac
+	// Line 1754, Address: 0x1adaa0, Func Offset: 0xc0
+	// Line 1755, Address: 0x1adaa8, Func Offset: 0xc8
+	// Line 1756, Address: 0x1adaac, Func Offset: 0xcc
+	// Line 1759, Address: 0x1adab0, Func Offset: 0xd0
+	// Line 1760, Address: 0x1adab8, Func Offset: 0xd8
+	// Line 1761, Address: 0x1adac8, Func Offset: 0xe8
+	// Line 1762, Address: 0x1adad4, Func Offset: 0xf4
+	// Line 1763, Address: 0x1adadc, Func Offset: 0xfc
+	// Line 1765, Address: 0x1adae4, Func Offset: 0x104
+	// Line 1767, Address: 0x1adae8, Func Offset: 0x108
+	// Line 1771, Address: 0x1adaf0, Func Offset: 0x110
+	// Line 1772, Address: 0x1adafc, Func Offset: 0x11c
+	// Line 1773, Address: 0x1adb04, Func Offset: 0x124
+	// Line 1774, Address: 0x1adb0c, Func Offset: 0x12c
+	// Line 1773, Address: 0x1adb10, Func Offset: 0x130
+	// Line 1774, Address: 0x1adb14, Func Offset: 0x134
+	// Line 1775, Address: 0x1adb2c, Func Offset: 0x14c
+	// Line 1776, Address: 0x1adb34, Func Offset: 0x154
+	// Line 1777, Address: 0x1adb3c, Func Offset: 0x15c
+	// Line 1778, Address: 0x1adb44, Func Offset: 0x164
+	// Line 1779, Address: 0x1adb48, Func Offset: 0x168
+	// Line 1783, Address: 0x1adb50, Func Offset: 0x170
+	// Line 1784, Address: 0x1adb54, Func Offset: 0x174
+	// Line 1785, Address: 0x1adb58, Func Offset: 0x178
+	// Line 1786, Address: 0x1adb5c, Func Offset: 0x17c
+	// Line 1787, Address: 0x1adb60, Func Offset: 0x180
+	// Line 1789, Address: 0x1adb64, Func Offset: 0x184
+	// Line 1791, Address: 0x1adb68, Func Offset: 0x188
+	// Line 1792, Address: 0x1adb70, Func Offset: 0x190
+	// Func End, Address: 0x1adb88, Func Offset: 0x1a8
 }
 
 // iModelTagUserData__FP9xModelTagP8RpAtomicfffi
@@ -2634,6 +2831,40 @@ uint32 iModelTagUserData(xModelTag* tag, RpAtomic* model, float32 x, float32 y, 
 	int32 numTags;
 	int32 t;
 	xModelTag* tagList;
+	// Line 1678, Address: 0x1adb90, Func Offset: 0
+	// Line 1680, Address: 0x1adbcc, Func Offset: 0x3c
+	// Line 1681, Address: 0x1adbe4, Func Offset: 0x54
+	// Line 1682, Address: 0x1adbe8, Func Offset: 0x58
+	// Line 1683, Address: 0x1adbf8, Func Offset: 0x68
+	// Line 1684, Address: 0x1adc04, Func Offset: 0x74
+	// Line 1683, Address: 0x1adc0c, Func Offset: 0x7c
+	// Line 1684, Address: 0x1adc10, Func Offset: 0x80
+	// Line 1686, Address: 0x1adc20, Func Offset: 0x90
+	// Line 1688, Address: 0x1adc28, Func Offset: 0x98
+	// Line 1689, Address: 0x1adc38, Func Offset: 0xa8
+	// Line 1690, Address: 0x1adc40, Func Offset: 0xb0
+	// Line 1691, Address: 0x1adc4c, Func Offset: 0xbc
+	// Line 1692, Address: 0x1adc54, Func Offset: 0xc4
+	// Line 1695, Address: 0x1adc58, Func Offset: 0xc8
+	// Line 1698, Address: 0x1adc68, Func Offset: 0xd8
+	// Line 1703, Address: 0x1adc6c, Func Offset: 0xdc
+	// Line 1705, Address: 0x1adc80, Func Offset: 0xf0
+	// Line 1704, Address: 0x1adc84, Func Offset: 0xf4
+	// Line 1705, Address: 0x1adc88, Func Offset: 0xf8
+	// Line 1706, Address: 0x1adcac, Func Offset: 0x11c
+	// Line 1710, Address: 0x1adcc0, Func Offset: 0x130
+	// Line 1712, Address: 0x1adccc, Func Offset: 0x13c
+	// Line 1711, Address: 0x1adcd0, Func Offset: 0x140
+	// Line 1714, Address: 0x1adcd4, Func Offset: 0x144
+	// Line 1716, Address: 0x1adce8, Func Offset: 0x158
+	// Line 1717, Address: 0x1adcf0, Func Offset: 0x160
+	// Line 1719, Address: 0x1add30, Func Offset: 0x1a0
+	// Line 1720, Address: 0x1add38, Func Offset: 0x1a8
+	// Line 1721, Address: 0x1add40, Func Offset: 0x1b0
+	// Line 1723, Address: 0x1add84, Func Offset: 0x1f4
+	// Line 1725, Address: 0x1add88, Func Offset: 0x1f8
+	// Line 1726, Address: 0x1add90, Func Offset: 0x200
+	// Func End, Address: 0x1addc4, Func Offset: 0x234
 }
 
 // iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3
@@ -2647,6 +2878,29 @@ uint32 iModelNormalEval(xVec3* out, RpAtomic& m, RwMatrixTag* mat, uint32 index,
 	float32* bone_weights;
 	uint32* bone_indices;
 	xMat4x3 nmat;
+	// Line 1636, Address: 0x1addd0, Func Offset: 0
+	// Line 1637, Address: 0x1ade0c, Func Offset: 0x3c
+	// Line 1643, Address: 0x1ade10, Func Offset: 0x40
+	// Line 1645, Address: 0x1ade18, Func Offset: 0x48
+	// Line 1646, Address: 0x1ade20, Func Offset: 0x50
+	// Line 1647, Address: 0x1ade40, Func Offset: 0x70
+	// Line 1650, Address: 0x1ade48, Func Offset: 0x78
+	// Line 1652, Address: 0x1ade60, Func Offset: 0x90
+	// Line 1655, Address: 0x1ade6c, Func Offset: 0x9c
+	// Line 1656, Address: 0x1ade78, Func Offset: 0xa8
+	// Line 1659, Address: 0x1ade80, Func Offset: 0xb0
+	// Line 1660, Address: 0x1ade8c, Func Offset: 0xbc
+	// Line 1661, Address: 0x1ade9c, Func Offset: 0xcc
+	// Line 1662, Address: 0x1adeac, Func Offset: 0xdc
+	// Line 1663, Address: 0x1ae0e8, Func Offset: 0x318
+	// Line 1669, Address: 0x1ae0f0, Func Offset: 0x320
+	// Line 1671, Address: 0x1ae0fc, Func Offset: 0x32c
+	// Line 1670, Address: 0x1ae10c, Func Offset: 0x33c
+	// Line 1671, Address: 0x1ae114, Func Offset: 0x344
+	// Line 1672, Address: 0x1ae11c, Func Offset: 0x34c
+	// Line 1674, Address: 0x1ae120, Func Offset: 0x350
+	// Line 1675, Address: 0x1ae128, Func Offset: 0x358
+	// Func End, Address: 0x1ae158, Func Offset: 0x388
 }
 
 // iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3
@@ -2656,6 +2910,25 @@ uint32 iModelVertEval(RpAtomic* model, uint32 index, uint32 count, RwMatrixTag* 
 	RpGeometry* geom;
 	uint32 numV;
 	RpSkin* skin;
+	// Line 1593, Address: 0x1ae160, Func Offset: 0
+	// Line 1594, Address: 0x1ae19c, Func Offset: 0x3c
+	// Line 1600, Address: 0x1ae1a0, Func Offset: 0x40
+	// Line 1602, Address: 0x1ae1a8, Func Offset: 0x48
+	// Line 1605, Address: 0x1ae1ac, Func Offset: 0x4c
+	// Line 1606, Address: 0x1ae1c8, Func Offset: 0x68
+	// Line 1609, Address: 0x1ae1e8, Func Offset: 0x88
+	// Line 1610, Address: 0x1ae1ec, Func Offset: 0x8c
+	// Line 1609, Address: 0x1ae1f8, Func Offset: 0x98
+	// Line 1610, Address: 0x1ae1fc, Func Offset: 0x9c
+	// Line 1614, Address: 0x1ae200, Func Offset: 0xa0
+	// Line 1615, Address: 0x1ae20c, Func Offset: 0xac
+	// Line 1618, Address: 0x1ae214, Func Offset: 0xb4
+	// Line 1622, Address: 0x1ae484, Func Offset: 0x324
+	// Line 1627, Address: 0x1ae490, Func Offset: 0x330
+	// Line 1628, Address: 0x1ae4a4, Func Offset: 0x344
+	// Line 1630, Address: 0x1ae4a8, Func Offset: 0x348
+	// Line 1631, Address: 0x1ae4b0, Func Offset: 0x350
+	// Func End, Address: 0x1ae4e0, Func Offset: 0x380
 }
 
 // iModel_SetLightKit__FP9xLightKit
@@ -2663,15 +2936,50 @@ uint32 iModelVertEval(RpAtomic* model, uint32 index, uint32 count, RwMatrixTag* 
 void iModel_SetLightKit(xLightKit* lightKit)
 {
 	RpLight* amb;
-	type_71 dir;
-	type_76 lightTypes;
+	RpLight* dir[4];
+	int32 lightTypes[5];
 	uint32 i;
+	// Line 1249, Address: 0x1ae4e0, Func Offset: 0
+	// Line 1253, Address: 0x1ae4e4, Func Offset: 0x4
+	// Line 1258, Address: 0x1ae4ec, Func Offset: 0xc
+	// Line 1260, Address: 0x1ae510, Func Offset: 0x30
+	// Line 1261, Address: 0x1ae528, Func Offset: 0x48
+	// Line 1262, Address: 0x1ae52c, Func Offset: 0x4c
+	// Line 1261, Address: 0x1ae530, Func Offset: 0x50
+	// Line 1262, Address: 0x1ae54c, Func Offset: 0x6c
+	// Line 1263, Address: 0x1ae560, Func Offset: 0x80
+	// Line 1269, Address: 0x1ae598, Func Offset: 0xb8
+	// Line 1275, Address: 0x1ae5a0, Func Offset: 0xc0
+	// Line 1274, Address: 0x1ae5a8, Func Offset: 0xc8
+	// Line 1276, Address: 0x1ae5ac, Func Offset: 0xcc
+	// Line 1275, Address: 0x1ae5b0, Func Offset: 0xd0
+	// Line 1276, Address: 0x1ae5b4, Func Offset: 0xd4
+	// Line 1277, Address: 0x1ae5b8, Func Offset: 0xd8
+	// Line 1276, Address: 0x1ae5bc, Func Offset: 0xdc
+	// Line 1277, Address: 0x1ae5c0, Func Offset: 0xe0
+	// Line 1278, Address: 0x1ae5c4, Func Offset: 0xe4
+	// Line 1277, Address: 0x1ae5c8, Func Offset: 0xe8
+	// Line 1278, Address: 0x1ae5cc, Func Offset: 0xec
+	// Line 1281, Address: 0x1ae5d4, Func Offset: 0xf4
+	// Line 1284, Address: 0x1ae5ec, Func Offset: 0x10c
+	// Line 1282, Address: 0x1ae5f0, Func Offset: 0x110
+	// Line 1281, Address: 0x1ae5f4, Func Offset: 0x114
+	// Line 1282, Address: 0x1ae604, Func Offset: 0x124
+	// Line 1284, Address: 0x1ae60c, Func Offset: 0x12c
+	// Line 1285, Address: 0x1ae620, Func Offset: 0x140
+	// Line 1287, Address: 0x1ae62c, Func Offset: 0x14c
+	// Line 1290, Address: 0x1ae648, Func Offset: 0x168
+	// Line 1291, Address: 0x1ae654, Func Offset: 0x174
+	// Func End, Address: 0x1ae664, Func Offset: 0x184
 }
 
 // iModelVertCount__FP8RpAtomic
 // Start address: 0x1ae670
 uint32 iModelVertCount(RpAtomic* model)
 {
+	// Line 1241, Address: 0x1ae670, Func Offset: 0
+	// Line 1242, Address: 0x1ae674, Func Offset: 0x4
+	// Func End, Address: 0x1ae67c, Func Offset: 0xc
 }
 
 // iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi
@@ -2690,18 +2998,150 @@ int32 iModelCullPlusShadow(RpAtomic* model, RwMatrixTag* mat, xVec3* shadowVec, 
 	float32 nDot;
 	float32 nDot;
 	float32 sDot;
+	// Line 1150, Address: 0x1ae680, Func Offset: 0
+	// Line 1154, Address: 0x1ae684, Func Offset: 0x4
+	// Line 1150, Address: 0x1ae688, Func Offset: 0x8
+	// Line 1154, Address: 0x1ae6ac, Func Offset: 0x2c
+	// Line 1158, Address: 0x1ae6b4, Func Offset: 0x34
+	// Line 1162, Address: 0x1ae6c8, Func Offset: 0x48
+	// Line 1163, Address: 0x1ae6d0, Func Offset: 0x50
+	// Line 1162, Address: 0x1ae6d8, Func Offset: 0x58
+	// Line 1164, Address: 0x1ae6dc, Func Offset: 0x5c
+	// Line 1163, Address: 0x1ae6e0, Func Offset: 0x60
+	// Line 1164, Address: 0x1ae6ec, Func Offset: 0x6c
+	// Line 1163, Address: 0x1ae6f8, Func Offset: 0x78
+	// Line 1164, Address: 0x1ae6fc, Func Offset: 0x7c
+	// Line 1163, Address: 0x1ae700, Func Offset: 0x80
+	// Line 1164, Address: 0x1ae704, Func Offset: 0x84
+	// Line 1165, Address: 0x1ae708, Func Offset: 0x88
+	// Line 1164, Address: 0x1ae710, Func Offset: 0x90
+	// Line 1165, Address: 0x1ae714, Func Offset: 0x94
+	// Line 1167, Address: 0x1ae71c, Func Offset: 0x9c
+	// Line 1180, Address: 0x1ae760, Func Offset: 0xe0
+	// Line 1167, Address: 0x1ae764, Func Offset: 0xe4
+	// Line 1181, Address: 0x1ae768, Func Offset: 0xe8
+	// Line 1167, Address: 0x1ae76c, Func Offset: 0xec
+	// Line 1171, Address: 0x1ae770, Func Offset: 0xf0
+	// Line 1179, Address: 0x1ae774, Func Offset: 0xf4
+	// Line 1181, Address: 0x1ae778, Func Offset: 0xf8
+	// Line 1169, Address: 0x1ae77c, Func Offset: 0xfc
+	// Line 1171, Address: 0x1ae788, Func Offset: 0x108
+	// Line 1181, Address: 0x1ae7a4, Func Offset: 0x124
+	// Line 1183, Address: 0x1ae7cc, Func Offset: 0x14c
+	// Line 1184, Address: 0x1ae7d4, Func Offset: 0x154
+	// Line 1183, Address: 0x1ae7d8, Func Offset: 0x158
+	// Line 1184, Address: 0x1ae7e8, Func Offset: 0x168
+	// Line 1186, Address: 0x1ae7ec, Func Offset: 0x16c
+	// Line 1193, Address: 0x1ae7f8, Func Offset: 0x178
+	// Line 1194, Address: 0x1ae7fc, Func Offset: 0x17c
+	// Line 1197, Address: 0x1ae808, Func Offset: 0x188
+	// Line 1198, Address: 0x1ae80c, Func Offset: 0x18c
+	// Line 1203, Address: 0x1ae814, Func Offset: 0x194
+	// Line 1198, Address: 0x1ae818, Func Offset: 0x198
+	// Line 1206, Address: 0x1ae824, Func Offset: 0x1a4
+	// Line 1207, Address: 0x1ae834, Func Offset: 0x1b4
+	// Line 1208, Address: 0x1ae838, Func Offset: 0x1b8
+	// Line 1212, Address: 0x1ae844, Func Offset: 0x1c4
+	// Line 1214, Address: 0x1ae84c, Func Offset: 0x1cc
+	// Line 1217, Address: 0x1ae850, Func Offset: 0x1d0
+	// Line 1216, Address: 0x1ae854, Func Offset: 0x1d4
+	// Line 1217, Address: 0x1ae858, Func Offset: 0x1d8
+	// Line 1219, Address: 0x1ae86c, Func Offset: 0x1ec
+	// Line 1220, Address: 0x1ae880, Func Offset: 0x200
+	// Line 1221, Address: 0x1ae884, Func Offset: 0x204
+	// Line 1223, Address: 0x1ae894, Func Offset: 0x214
+	// Line 1226, Address: 0x1ae8ac, Func Offset: 0x22c
+	// Line 1227, Address: 0x1ae8b4, Func Offset: 0x234
+	// Line 1229, Address: 0x1ae8b8, Func Offset: 0x238
+	// Line 1228, Address: 0x1ae8bc, Func Offset: 0x23c
+	// Line 1229, Address: 0x1ae8c0, Func Offset: 0x240
+	// Line 1232, Address: 0x1ae8c8, Func Offset: 0x248
+	// Line 1233, Address: 0x1ae8cc, Func Offset: 0x24c
+	// Line 1234, Address: 0x1ae8d0, Func Offset: 0x250
+	// Func End, Address: 0x1ae8f0, Func Offset: 0x270
 }
 
 // iModelSphereCull__FP7xSphere
 // Start address: 0x1ae8f0
 int32 iModelSphereCull(xSphere* sphere)
 {
+	// Line 1133, Address: 0x1ae8f0, Func Offset: 0
+	// Line 1139, Address: 0x1ae8fc, Func Offset: 0xc
+	// Line 1141, Address: 0x1ae908, Func Offset: 0x18
+	// Line 1139, Address: 0x1ae90c, Func Offset: 0x1c
+	// Line 1141, Address: 0x1ae914, Func Offset: 0x24
+	// Func End, Address: 0x1ae91c, Func Offset: 0x2c
 }
 
 // iModelCull__FP8RpAtomicP11RwMatrixTag
 // Start address: 0x1ae920
 int32 iModelCull(RpAtomic* model, RwMatrixTag* mat)
 {
+	// Line 1018, Address: 0x1ae920, Func Offset: 0
+	// Line 1019, Address: 0x1ae930, Func Offset: 0x10
+	// Line 1020, Address: 0x1ae934, Func Offset: 0x14
+	// Line 1021, Address: 0x1ae938, Func Offset: 0x18
+	// Line 1022, Address: 0x1ae93c, Func Offset: 0x1c
+	// Line 1023, Address: 0x1ae940, Func Offset: 0x20
+	// Line 1024, Address: 0x1ae944, Func Offset: 0x24
+	// Line 1025, Address: 0x1ae948, Func Offset: 0x28
+	// Line 1026, Address: 0x1ae94c, Func Offset: 0x2c
+	// Line 1027, Address: 0x1ae950, Func Offset: 0x30
+	// Line 1028, Address: 0x1ae954, Func Offset: 0x34
+	// Line 1029, Address: 0x1ae958, Func Offset: 0x38
+	// Line 1030, Address: 0x1ae95c, Func Offset: 0x3c
+	// Line 1031, Address: 0x1ae960, Func Offset: 0x40
+	// Line 1032, Address: 0x1ae964, Func Offset: 0x44
+	// Line 1033, Address: 0x1ae968, Func Offset: 0x48
+	// Line 1034, Address: 0x1ae96c, Func Offset: 0x4c
+	// Line 1035, Address: 0x1ae970, Func Offset: 0x50
+	// Line 1036, Address: 0x1ae974, Func Offset: 0x54
+	// Line 1037, Address: 0x1ae978, Func Offset: 0x58
+	// Line 1038, Address: 0x1ae97c, Func Offset: 0x5c
+	// Line 1039, Address: 0x1ae980, Func Offset: 0x60
+	// Line 1040, Address: 0x1ae984, Func Offset: 0x64
+	// Line 1041, Address: 0x1ae988, Func Offset: 0x68
+	// Line 1042, Address: 0x1ae98c, Func Offset: 0x6c
+	// Line 1043, Address: 0x1ae990, Func Offset: 0x70
+	// Line 1044, Address: 0x1ae994, Func Offset: 0x74
+	// Line 1045, Address: 0x1ae998, Func Offset: 0x78
+	// Line 1046, Address: 0x1ae99c, Func Offset: 0x7c
+	// Line 1047, Address: 0x1ae9a0, Func Offset: 0x80
+	// Line 1048, Address: 0x1ae9a4, Func Offset: 0x84
+	// Line 1049, Address: 0x1ae9a8, Func Offset: 0x88
+	// Line 1050, Address: 0x1ae9ac, Func Offset: 0x8c
+	// Line 1051, Address: 0x1ae9b0, Func Offset: 0x90
+	// Line 1052, Address: 0x1ae9b4, Func Offset: 0x94
+	// Line 1053, Address: 0x1ae9b8, Func Offset: 0x98
+	// Line 1054, Address: 0x1ae9bc, Func Offset: 0x9c
+	// Line 1055, Address: 0x1ae9c0, Func Offset: 0xa0
+	// Line 1056, Address: 0x1ae9c4, Func Offset: 0xa4
+	// Line 1057, Address: 0x1ae9c8, Func Offset: 0xa8
+	// Line 1058, Address: 0x1ae9cc, Func Offset: 0xac
+	// Line 1059, Address: 0x1ae9d0, Func Offset: 0xb0
+	// Line 1060, Address: 0x1ae9d4, Func Offset: 0xb4
+	// Line 1061, Address: 0x1ae9d8, Func Offset: 0xb8
+	// Line 1062, Address: 0x1ae9dc, Func Offset: 0xbc
+	// Line 1063, Address: 0x1ae9e0, Func Offset: 0xc0
+	// Line 1064, Address: 0x1ae9e4, Func Offset: 0xc4
+	// Line 1065, Address: 0x1ae9e8, Func Offset: 0xc8
+	// Line 1066, Address: 0x1ae9ec, Func Offset: 0xcc
+	// Line 1067, Address: 0x1ae9f0, Func Offset: 0xd0
+	// Line 1068, Address: 0x1ae9f4, Func Offset: 0xd4
+	// Line 1069, Address: 0x1ae9f8, Func Offset: 0xd8
+	// Line 1070, Address: 0x1ae9fc, Func Offset: 0xdc
+	// Line 1071, Address: 0x1aea00, Func Offset: 0xe0
+	// Line 1072, Address: 0x1aea04, Func Offset: 0xe4
+	// Line 1074, Address: 0x1aea0c, Func Offset: 0xec
+	// Line 1075, Address: 0x1aea10, Func Offset: 0xf0
+	// Line 1076, Address: 0x1aea14, Func Offset: 0xf4
+	// Line 1077, Address: 0x1aea18, Func Offset: 0xf8
+	// Line 1078, Address: 0x1aea1c, Func Offset: 0xfc
+	// Line 1079, Address: 0x1aea20, Func Offset: 0x100
+	// Line 1084, Address: 0x1aea28, Func Offset: 0x108
+	// Line 1086, Address: 0x1aea30, Func Offset: 0x110
+	// Line 1087, Address: 0x1aea38, Func Offset: 0x118
+	// Func End, Address: 0x1aea40, Func Offset: 0x120
 }
 
 // iModelRender__FP8RpAtomicP11RwMatrixTag
@@ -2710,6 +3150,26 @@ void iModelRender(RpAtomic* model, RwMatrixTag* mat)
 {
 	RwMatrixTag* pAnimOldMatrix;
 	RwFrame* frame;
+	// Line 762, Address: 0x1aea40, Func Offset: 0
+	// Line 763, Address: 0x1aea68, Func Offset: 0x28
+	// Line 767, Address: 0x1aeaa4, Func Offset: 0x64
+	// Line 768, Address: 0x1aeaac, Func Offset: 0x6c
+	// Line 769, Address: 0x1aeab0, Func Offset: 0x70
+	// Line 773, Address: 0x1aeab8, Func Offset: 0x78
+	// Line 781, Address: 0x1aeabc, Func Offset: 0x7c
+	// Line 782, Address: 0x1aeb3c, Func Offset: 0xfc
+	// Line 797, Address: 0x1aeb44, Func Offset: 0x104
+	// Line 798, Address: 0x1aeb50, Func Offset: 0x110
+	// Line 799, Address: 0x1aeb64, Func Offset: 0x124
+	// Line 920, Address: 0x1aeb68, Func Offset: 0x128
+	// Line 929, Address: 0x1aeb74, Func Offset: 0x134
+	// Line 930, Address: 0x1aeb90, Func Offset: 0x150
+	// Line 931, Address: 0x1aeb9c, Func Offset: 0x15c
+	// Line 938, Address: 0x1aeba0, Func Offset: 0x160
+	// Line 939, Address: 0x1aeba8, Func Offset: 0x168
+	// Line 940, Address: 0x1aebac, Func Offset: 0x16c
+	// Line 941, Address: 0x1aebb0, Func Offset: 0x170
+	// Func End, Address: 0x1aebd0, Func Offset: 0x190
 }
 
 // iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag
@@ -2717,19 +3177,71 @@ void iModelRender(RpAtomic* model, RwMatrixTag* mat)
 void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat)
 {
 	RpHAnimHierarchy* pHierarchy;
-	type_0 matrixStack;
+	RwMatrixTag matrixStack[32];
 	RwMatrixTag* pMatrixStackTop;
 	RpHAnimNodeInfo* pCurrentFrame;
 	int32 pCurrentFrameFlags;
 	int32 i;
 	int32 numFrames;
 	RwMatrixTag* pMatrixArray;
+	// Line 564, Address: 0x1aebd0, Func Offset: 0
+	// Line 565, Address: 0x1aebf0, Func Offset: 0x20
+	// Line 567, Address: 0x1aec34, Func Offset: 0x64
+	// Line 581, Address: 0x1aec3c, Func Offset: 0x6c
+	// Line 582, Address: 0x1aec40, Func Offset: 0x70
+	// Line 583, Address: 0x1aec44, Func Offset: 0x74
+	// Line 584, Address: 0x1aec48, Func Offset: 0x78
+	// Line 585, Address: 0x1aec4c, Func Offset: 0x7c
+	// Line 586, Address: 0x1aec50, Func Offset: 0x80
+	// Line 587, Address: 0x1aec54, Func Offset: 0x84
+	// Line 588, Address: 0x1aec58, Func Offset: 0x88
+	// Line 589, Address: 0x1aec5c, Func Offset: 0x8c
+	// Line 590, Address: 0x1aec60, Func Offset: 0x90
+	// Line 591, Address: 0x1aec64, Func Offset: 0x94
+	// Line 606, Address: 0x1aec68, Func Offset: 0x98
+	// Line 604, Address: 0x1aec6c, Func Offset: 0x9c
+	// Line 607, Address: 0x1aec70, Func Offset: 0xa0
+	// Line 612, Address: 0x1aec74, Func Offset: 0xa4
+	// Line 615, Address: 0x1aec80, Func Offset: 0xb0
+	// Line 616, Address: 0x1aec84, Func Offset: 0xb4
+	// Line 620, Address: 0x1aec90, Func Offset: 0xc0
+	// Line 621, Address: 0x1aec94, Func Offset: 0xc4
+	// Line 622, Address: 0x1aec98, Func Offset: 0xc8
+	// Line 623, Address: 0x1aec9c, Func Offset: 0xcc
+	// Line 627, Address: 0x1aeca0, Func Offset: 0xd0
+	// Line 630, Address: 0x1aeca4, Func Offset: 0xd4
+	// Line 631, Address: 0x1aed28, Func Offset: 0x158
+	// Line 632, Address: 0x1aed70, Func Offset: 0x1a0
+	// Line 634, Address: 0x1aed7c, Func Offset: 0x1ac
+	// Line 637, Address: 0x1aed80, Func Offset: 0x1b0
+	// Line 638, Address: 0x1aed84, Func Offset: 0x1b4
+	// Line 639, Address: 0x1aed88, Func Offset: 0x1b8
+	// Line 640, Address: 0x1aed8c, Func Offset: 0x1bc
+	// Line 644, Address: 0x1aed90, Func Offset: 0x1c0
+	// Line 647, Address: 0x1aed98, Func Offset: 0x1c8
+	// Line 648, Address: 0x1aed9c, Func Offset: 0x1cc
+	// Line 649, Address: 0x1aeda0, Func Offset: 0x1d0
+	// Line 650, Address: 0x1aeda4, Func Offset: 0x1d4
+	// Line 680, Address: 0x1aeda8, Func Offset: 0x1d8
+	// Line 681, Address: 0x1aedac, Func Offset: 0x1dc
+	// Line 682, Address: 0x1aedb0, Func Offset: 0x1e0
+	// Line 684, Address: 0x1aedb4, Func Offset: 0x1e4
+	// Line 685, Address: 0x1aedb8, Func Offset: 0x1e8
+	// Line 686, Address: 0x1aedcc, Func Offset: 0x1fc
+	// Func End, Address: 0x1aedec, Func Offset: 0x21c
 }
 
 // iModelNumBones__FP8RpAtomic
 // Start address: 0x1aedf0
 uint32 iModelNumBones(RpAtomic* model)
 {
+	// Line 359, Address: 0x1aedf0, Func Offset: 0
+	// Line 360, Address: 0x1aedfc, Func Offset: 0xc
+	// Line 362, Address: 0x1aee3c, Func Offset: 0x4c
+	// Line 363, Address: 0x1aee44, Func Offset: 0x54
+	// Line 367, Address: 0x1aee50, Func Offset: 0x60
+	// Line 368, Address: 0x1aee58, Func Offset: 0x68
+	// Func End, Address: 0x1aee68, Func Offset: 0x78
 }
 
 // iModelFile_RWMultiAtomic__FP8RpAtomic
@@ -2738,6 +3250,15 @@ RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model)
 {
 	RpClump* clump;
 	RpAtomic* nextModel;
+	// Line 349, Address: 0x1aee70, Func Offset: 0
+	// Line 350, Address: 0x1aee74, Func Offset: 0x4
+	// Line 352, Address: 0x1aee88, Func Offset: 0x18
+	// Line 354, Address: 0x1aee8c, Func Offset: 0x1c
+	// Line 353, Address: 0x1aee98, Func Offset: 0x28
+	// Line 354, Address: 0x1aee9c, Func Offset: 0x2c
+	// Line 355, Address: 0x1aeea4, Func Offset: 0x34
+	// Line 356, Address: 0x1aeea8, Func Offset: 0x38
+	// Func End, Address: 0x1aeeb4, Func Offset: 0x44
 }
 
 // NextAtomicCallback__FP8RpAtomicPv
@@ -2745,6 +3266,13 @@ RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model)
 RpAtomic* NextAtomicCallback(RpAtomic* atomic, void* data)
 {
 	RpAtomic** nextModel;
+	// Line 335, Address: 0x1aeec0, Func Offset: 0
+	// Line 337, Address: 0x1aeec4, Func Offset: 0x4
+	// Line 338, Address: 0x1aeecc, Func Offset: 0xc
+	// Line 339, Address: 0x1aeed8, Func Offset: 0x18
+	// Line 340, Address: 0x1aeee0, Func Offset: 0x20
+	// Line 343, Address: 0x1aeee8, Func Offset: 0x28
+	// Func End, Address: 0x1aeef0, Func Offset: 0x30
 }
 
 // iModelUnload__FP8RpAtomic
@@ -2754,6 +3282,18 @@ void iModelUnload(RpAtomic* userdata)
 	RpClump* clump;
 	RwFrame* frame;
 	RwFrame* root;
+	// Line 300, Address: 0x1aeef0, Func Offset: 0
+	// Line 306, Address: 0x1aef00, Func Offset: 0x10
+	// Line 311, Address: 0x1aef04, Func Offset: 0x14
+	// Line 312, Address: 0x1aef08, Func Offset: 0x18
+	// Line 314, Address: 0x1aef10, Func Offset: 0x20
+	// Line 315, Address: 0x1aef18, Func Offset: 0x28
+	// Line 316, Address: 0x1aef28, Func Offset: 0x38
+	// Line 317, Address: 0x1aef30, Func Offset: 0x40
+	// Line 318, Address: 0x1aef34, Func Offset: 0x44
+	// Line 321, Address: 0x1aef38, Func Offset: 0x48
+	// Line 323, Address: 0x1aef48, Func Offset: 0x58
+	// Func End, Address: 0x1aef5c, Func Offset: 0x6c
 }
 
 // iModelFileNew__FPvUi
@@ -2761,6 +3301,13 @@ void iModelUnload(RpAtomic* userdata)
 RpAtomic* iModelFileNew(void* buffer, uint32 size)
 {
 	RwMemory rwmem;
+	// Line 284, Address: 0x1aef60, Func Offset: 0
+	// Line 288, Address: 0x1aef68, Func Offset: 0x8
+	// Line 286, Address: 0x1aef6c, Func Offset: 0xc
+	// Line 287, Address: 0x1aef70, Func Offset: 0x10
+	// Line 288, Address: 0x1aef74, Func Offset: 0x14
+	// Line 289, Address: 0x1aef88, Func Offset: 0x28
+	// Func End, Address: 0x1aef94, Func Offset: 0x34
 }
 
 // iModelStreamRead__FP8RwStream
@@ -2772,6 +3319,48 @@ RpAtomic* iModelStreamRead(RwStream* stream)
 	uint32 maxIndex;
 	float32 maxRadius;
 	float32 testRadius;
+	// Line 201, Address: 0x1aefa0, Func Offset: 0
+	// Line 205, Address: 0x1aefb0, Func Offset: 0x10
+	// Line 206, Address: 0x1aefb8, Func Offset: 0x18
+	// Line 209, Address: 0x1aefc0, Func Offset: 0x20
+	// Line 212, Address: 0x1aefd8, Func Offset: 0x38
+	// Line 213, Address: 0x1aefe0, Func Offset: 0x40
+	// Line 217, Address: 0x1aefe8, Func Offset: 0x48
+	// Line 218, Address: 0x1aeff4, Func Offset: 0x54
+	// Line 219, Address: 0x1af000, Func Offset: 0x60
+	// Line 220, Address: 0x1af008, Func Offset: 0x68
+	// Line 224, Address: 0x1af010, Func Offset: 0x70
+	// Line 233, Address: 0x1af02c, Func Offset: 0x8c
+	// Line 238, Address: 0x1af038, Func Offset: 0x98
+	// Line 237, Address: 0x1af03c, Func Offset: 0x9c
+	// Line 236, Address: 0x1af040, Func Offset: 0xa0
+	// Line 238, Address: 0x1af044, Func Offset: 0xa4
+	// Line 239, Address: 0x1af060, Func Offset: 0xc0
+	// Line 240, Address: 0x1af06c, Func Offset: 0xcc
+	// Line 241, Address: 0x1af070, Func Offset: 0xd0
+	// Line 243, Address: 0x1af074, Func Offset: 0xd4
+	// Line 246, Address: 0x1af088, Func Offset: 0xe8
+	// Line 247, Address: 0x1af0a8, Func Offset: 0x108
+	// Line 249, Address: 0x1af0b0, Func Offset: 0x110
+	// Line 253, Address: 0x1af0fc, Func Offset: 0x15c
+	// Line 254, Address: 0x1af108, Func Offset: 0x168
+	// Line 257, Address: 0x1af10c, Func Offset: 0x16c
+	// Line 260, Address: 0x1af120, Func Offset: 0x180
+	// Line 263, Address: 0x1af128, Func Offset: 0x188
+	// Line 260, Address: 0x1af12c, Func Offset: 0x18c
+	// Line 263, Address: 0x1af130, Func Offset: 0x190
+	// Line 272, Address: 0x1af14c, Func Offset: 0x1ac
+	// Line 264, Address: 0x1af150, Func Offset: 0x1b0
+	// Line 265, Address: 0x1af158, Func Offset: 0x1b8
+	// Line 267, Address: 0x1af178, Func Offset: 0x1d8
+	// Line 273, Address: 0x1af17c, Func Offset: 0x1dc
+	// Line 267, Address: 0x1af180, Func Offset: 0x1e0
+	// Line 272, Address: 0x1af184, Func Offset: 0x1e4
+	// Line 273, Address: 0x1af194, Func Offset: 0x1f4
+	// Line 274, Address: 0x1af1a4, Func Offset: 0x204
+	// Line 277, Address: 0x1af1a8, Func Offset: 0x208
+	// Line 278, Address: 0x1af1b0, Func Offset: 0x210
+	// Func End, Address: 0x1af1c4, Func Offset: 0x224
 }
 
 // FindAtomicCallback__FP8RpAtomicPv
@@ -2780,6 +3369,26 @@ RpAtomic* FindAtomicCallback(RpAtomic* atomic)
 {
 	RpHAnimHierarchy* pHier;
 	RpSkin* pSkin;
+	// Line 142, Address: 0x1af1d0, Func Offset: 0
+	// Line 144, Address: 0x1af1ec, Func Offset: 0x1c
+	// Line 149, Address: 0x1af22c, Func Offset: 0x5c
+	// Line 152, Address: 0x1af238, Func Offset: 0x68
+	// Line 153, Address: 0x1af248, Func Offset: 0x78
+	// Line 166, Address: 0x1af268, Func Offset: 0x98
+	// Line 153, Address: 0x1af26c, Func Offset: 0x9c
+	// Line 166, Address: 0x1af270, Func Offset: 0xa0
+	// Line 168, Address: 0x1af278, Func Offset: 0xa8
+	// Line 171, Address: 0x1af288, Func Offset: 0xb8
+	// Line 175, Address: 0x1af290, Func Offset: 0xc0
+	// Line 176, Address: 0x1af298, Func Offset: 0xc8
+	// Line 177, Address: 0x1af29c, Func Offset: 0xcc
+	// Line 176, Address: 0x1af2a0, Func Offset: 0xd0
+	// Line 179, Address: 0x1af2a4, Func Offset: 0xd4
+	// Line 180, Address: 0x1af2b0, Func Offset: 0xe0
+	// Line 184, Address: 0x1af2d0, Func Offset: 0x100
+	// Line 190, Address: 0x1af2d8, Func Offset: 0x108
+	// Line 191, Address: 0x1af2dc, Func Offset: 0x10c
+	// Func End, Address: 0x1af2f8, Func Offset: 0x128
 }
 
 // iModelInit__Fv
@@ -2789,6 +3398,21 @@ void iModelInit()
 	RwFrame* frame;
 	RwRGBAReal black;
 	int32 i;
+	// Line 122, Address: 0x1af300, Func Offset: 0
+	// Line 123, Address: 0x1af30c, Func Offset: 0xc
+	// Line 126, Address: 0x1af314, Func Offset: 0x14
+	// Line 127, Address: 0x1af338, Func Offset: 0x38
+	// Line 129, Address: 0x1af348, Func Offset: 0x48
+	// Line 130, Address: 0x1af350, Func Offset: 0x50
+	// Line 131, Address: 0x1af35c, Func Offset: 0x5c
+	// Line 132, Address: 0x1af368, Func Offset: 0x68
+	// Line 133, Address: 0x1af370, Func Offset: 0x70
+	// Line 134, Address: 0x1af37c, Func Offset: 0x7c
+	// Line 135, Address: 0x1af38c, Func Offset: 0x8c
+	// Line 136, Address: 0x1af398, Func Offset: 0x98
+	// Line 137, Address: 0x1af3a4, Func Offset: 0xa4
+	// Line 138, Address: 0x1af3a8, Func Offset: 0xa8
+	// Func End, Address: 0x1af3bc, Func Offset: 0xbc
 }
 
 // GetChildFrameHierarchy__FP7RwFramePv
@@ -2796,5 +3420,15 @@ void iModelInit()
 RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data)
 {
 	RpHAnimHierarchy* hierarchy;
+	// Line 92, Address: 0x1af3c0, Func Offset: 0
+	// Line 94, Address: 0x1af3d4, Func Offset: 0x14
+	// Line 95, Address: 0x1af3dc, Func Offset: 0x1c
+	// Line 96, Address: 0x1af3e4, Func Offset: 0x24
+	// Line 97, Address: 0x1af3f4, Func Offset: 0x34
+	// Line 98, Address: 0x1af3fc, Func Offset: 0x3c
+	// Line 99, Address: 0x1af400, Func Offset: 0x40
+	// Line 100, Address: 0x1af404, Func Offset: 0x44
+	// Line 101, Address: 0x1af408, Func Offset: 0x48
+	// Func End, Address: 0x1af41c, Func Offset: 0x5c
 }
 

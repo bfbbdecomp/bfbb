@@ -130,7 +130,7 @@ struct RpAtomic
 	RwSphere worldBoundingSphere;
 	RpClump* clump;
 	RwLLLink inClumpLink;
-	type_2 renderCallBack;
+	RpAtomic*(*renderCallBack)(RpAtomic*);
 	RpInterpolator interpolator;
 	uint16 renderFrame;
 	uint16 pad;
@@ -171,7 +171,7 @@ struct xBound
 {
 	xQCData qcd;
 	uint8 type;
-	type_13 pad;
+	uint8 pad[3];
 	union
 	{
 		xSphere sph;
@@ -212,7 +212,7 @@ struct RpClump
 	RwLinkList lightList;
 	RwLinkList cameraList;
 	RwLLLink inWorldLink;
-	type_22 callback;
+	RpClump*(*callback)(RpClump*, void*);
 };
 
 struct RwV3d
@@ -241,7 +241,7 @@ struct rxHeapBlockHeader
 	rxHeapBlockHeader* next;
 	uint32 size;
 	rxHeapFreeBlock* freeEntry;
-	type_15 pad;
+	uint32 pad[4];
 };
 
 struct RxPipelineRequiresCluster
@@ -253,7 +253,7 @@ struct RxPipelineRequiresCluster
 
 struct xAnimMultiFile : xAnimMultiFileBase
 {
-	type_18 Files;
+	xAnimMultiFileEntry Files[1];
 };
 
 struct RpMaterial
@@ -285,7 +285,7 @@ struct RxPipeline
 
 struct RpTriangle
 {
-	type_26 vertIndex;
+	uint16 vertIndex[3];
 	int16 matIndex;
 };
 
@@ -300,8 +300,8 @@ struct RwTexture
 	RwRaster* raster;
 	RwTexDictionary* dict;
 	RwLLLink lInDictionary;
-	type_20 name;
-	type_21 mask;
+	int8 name[32];
+	int8 mask[32];
 	uint32 filterAddressing;
 	int32 refCount;
 };
@@ -370,7 +370,7 @@ struct RwResEntry
 	int32 size;
 	void* owner;
 	RwResEntry** ownerRef;
-	type_23 destroyNotify;
+	void(*destroyNotify)(RwResEntry*);
 };
 
 struct rxReq
@@ -496,8 +496,8 @@ struct xAnimTransition
 {
 	xAnimTransition* Next;
 	xAnimState* Dest;
-	type_0 Conditional;
-	type_0 Callback;
+	uint32(*Conditional)(xAnimTransition*, xAnimSingle*, void*);
+	uint32(*Callback)(xAnimTransition*, xAnimSingle*, void*);
 	uint32 Flags;
 	uint32 UserFlags;
 	float32 SrcTime;
@@ -576,9 +576,9 @@ struct xAnimState
 	uint16* FadeOffset;
 	void* CallbackData;
 	xAnimMultiFile* MultiFile;
-	type_6 BeforeEnter;
-	type_8 StateCallback;
-	type_11 BeforeAnimMatrices;
+	void(*BeforeEnter)(xAnimPlay*, xAnimState*);
+	void(*StateCallback)(xAnimState*, xAnimSingle*, void*);
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 enum rxEmbeddedPacketState
@@ -625,7 +625,7 @@ struct xAnimFile
 	float32 Duration;
 	float32 TimeOffset;
 	uint16 BoneCount;
-	type_17 NumAnims;
+	uint8 NumAnims[2];
 	void** RawData;
 };
 
@@ -635,7 +635,7 @@ struct xAnimSingle
 	xAnimState* State;
 	float32 Time;
 	float32 CurrentSpeed;
-	type_16 BilinearLerp;
+	float32 BilinearLerp[2];
 	xAnimEffect* Effect;
 	uint32 ActiveCount;
 	float32 LastTime;
@@ -709,7 +709,7 @@ struct xAnimEffect
 	uint32 Flags;
 	float32 StartTime;
 	float32 EndTime;
-	type_14 Callback;
+	uint32(*Callback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 };
 
 struct xMat3x3
@@ -754,7 +754,7 @@ struct xAnimPlay
 	xAnimTable* Table;
 	xMemPool* Pool;
 	xModelInstance* ModelInst;
-	type_11 BeforeAnimMatrices;
+	void(*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
 
 struct RpMaterialList
@@ -786,7 +786,7 @@ struct xMemPool
 	uint16 NextOffset;
 	uint16 Flags;
 	void* UsedList;
-	type_19 InitCB;
+	void(*InitCB)(xMemPool*, void*);
 	void* Buffer;
 	uint16 Size;
 	uint16 NumRealloc;
@@ -795,13 +795,13 @@ struct xMemPool
 
 struct RxNodeMethods
 {
-	type_3 nodeBody;
-	type_4 nodeInit;
-	type_5 nodeTerm;
-	type_7 pipelineNodeInit;
-	type_10 pipelineNodeTerm;
-	type_12 pipelineNodeConfig;
-	type_1 configMsgHandler;
+	int32(*nodeBody)(RxPipelineNode*, RxPipelineNodeParam*);
+	int32(*nodeInit)(RxNodeDefinition*);
+	void(*nodeTerm)(RxNodeDefinition*);
+	int32(*pipelineNodeInit)(RxPipelineNode*);
+	void(*pipelineNodeTerm)(RxPipelineNode*);
+	int32(*pipelineNodeConfig)(RxPipelineNode*, RxPipeline*);
+	uint32(*configMsgHandler)(RxPipelineNode*, uint32, uint32, void*);
 };
 
 struct RxPipelineCluster
@@ -840,7 +840,7 @@ struct RpGeometry
 	RpMaterialList matList;
 	RpTriangle* triangles;
 	RwRGBA* preLitLum;
-	type_9 texCoords;
+	RwTexCoords* texCoords[8];
 	RpMeshHeader* mesh;
 	RwResEntry* repEntry;
 	RpMorphTarget* morphTarget;
@@ -872,14 +872,14 @@ struct RxPacket
 	uint32* inputToClusterSlot;
 	uint32* slotsContinue;
 	RxPipelineCluster** slotClusterRefs;
-	type_24 clusters;
+	RxCluster clusters[1];
 };
 
 struct RwObjectHasFrame
 {
 	RwObject object;
 	RwLLLink lFrame;
-	type_25 sync;
+	RwObjectHasFrame*(*sync)(RwObjectHasFrame*);
 };
 
 struct RwLinkList
@@ -909,6 +909,8 @@ void xBoundUpdate(xBound* b);
 // Start address: 0x1c0530
 void xBoundDraw()
 {
+	// Line 408, Address: 0x1c0530, Func Offset: 0
+	// Func End, Address: 0x1c0538, Func Offset: 0x8
 }
 
 // xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis
@@ -917,12 +919,40 @@ void xVecHitsBound(xVec3* v, xBound* b, xCollis* c)
 {
 	xIsect isect;
 	xVec3 lv;
+	// Line 368, Address: 0x1c0540, Func Offset: 0
+	// Line 375, Address: 0x1c054c, Func Offset: 0xc
+	// Line 368, Address: 0x1c0550, Func Offset: 0x10
+	// Line 375, Address: 0x1c0560, Func Offset: 0x20
+	// Line 376, Address: 0x1c0568, Func Offset: 0x28
+	// Line 377, Address: 0x1c0578, Func Offset: 0x38
+	// Line 379, Address: 0x1c058c, Func Offset: 0x4c
+	// Line 380, Address: 0x1c05cc, Func Offset: 0x8c
+	// Line 381, Address: 0x1c05dc, Func Offset: 0x9c
+	// Line 382, Address: 0x1c05f4, Func Offset: 0xb4
+	// Line 387, Address: 0x1c0604, Func Offset: 0xc4
+	// Line 388, Address: 0x1c0608, Func Offset: 0xc8
+	// Line 389, Address: 0x1c0620, Func Offset: 0xe0
+	// Line 390, Address: 0x1c0628, Func Offset: 0xe8
+	// Line 391, Address: 0x1c0630, Func Offset: 0xf0
+	// Line 393, Address: 0x1c0640, Func Offset: 0x100
+	// Func End, Address: 0x1c0654, Func Offset: 0x114
 }
 
 // xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis
 // Start address: 0x1c0660
 void xSphereHitsBound(xSphere* o, xBound* b, xCollis* c)
 {
+	// Line 338, Address: 0x1c0660, Func Offset: 0
+	// Line 340, Address: 0x1c066c, Func Offset: 0xc
+	// Line 342, Address: 0x1c06a4, Func Offset: 0x44
+	// Line 343, Address: 0x1c06a8, Func Offset: 0x48
+	// Line 344, Address: 0x1c06b0, Func Offset: 0x50
+	// Line 346, Address: 0x1c06b8, Func Offset: 0x58
+	// Line 347, Address: 0x1c06c4, Func Offset: 0x64
+	// Line 348, Address: 0x1c06cc, Func Offset: 0x6c
+	// Line 349, Address: 0x1c06d0, Func Offset: 0x70
+	// Line 356, Address: 0x1c06d8, Func Offset: 0x78
+	// Func End, Address: 0x1c06e4, Func Offset: 0x84
 }
 
 // xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis
@@ -930,6 +960,23 @@ void xSphereHitsBound(xSphere* o, xBound* b, xCollis* c)
 void xRayHitsBound(xRay3* r, xBound* b, xCollis* c)
 {
 	xIsect isect;
+	// Line 290, Address: 0x1c06f0, Func Offset: 0
+	// Line 297, Address: 0x1c06fc, Func Offset: 0xc
+	// Line 290, Address: 0x1c0700, Func Offset: 0x10
+	// Line 297, Address: 0x1c0708, Func Offset: 0x18
+	// Line 298, Address: 0x1c0710, Func Offset: 0x20
+	// Line 300, Address: 0x1c0720, Func Offset: 0x30
+	// Line 302, Address: 0x1c0734, Func Offset: 0x44
+	// Line 307, Address: 0x1c0748, Func Offset: 0x58
+	// Line 308, Address: 0x1c075c, Func Offset: 0x6c
+	// Line 315, Address: 0x1c076c, Func Offset: 0x7c
+	// Line 316, Address: 0x1c0770, Func Offset: 0x80
+	// Line 317, Address: 0x1c0788, Func Offset: 0x98
+	// Line 321, Address: 0x1c0794, Func Offset: 0xa4
+	// Line 323, Address: 0x1c0798, Func Offset: 0xa8
+	// Line 324, Address: 0x1c07a0, Func Offset: 0xb0
+	// Line 326, Address: 0x1c07b0, Func Offset: 0xc0
+	// Func End, Address: 0x1c07c0, Func Offset: 0xd0
 }
 
 // xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect
@@ -946,12 +993,62 @@ void xBoundOBBIsectRay(xBox* b, xMat4x3* m, xRay3* r, xIsect* isect)
 	float32 len_inv;
 	float32 len2;
 	float32 len_inv;
+	// Line 229, Address: 0x1c07c0, Func Offset: 0
+	// Line 240, Address: 0x1c07c4, Func Offset: 0x4
+	// Line 229, Address: 0x1c07c8, Func Offset: 0x8
+	// Line 240, Address: 0x1c07cc, Func Offset: 0xc
+	// Line 229, Address: 0x1c07d0, Func Offset: 0x10
+	// Line 240, Address: 0x1c07dc, Func Offset: 0x1c
+	// Line 241, Address: 0x1c08b0, Func Offset: 0xf0
+	// Line 242, Address: 0x1c0998, Func Offset: 0x1d8
+	// Line 243, Address: 0x1c0a80, Func Offset: 0x2c0
+	// Line 244, Address: 0x1c0a84, Func Offset: 0x2c4
+	// Line 243, Address: 0x1c0a90, Func Offset: 0x2d0
+	// Line 246, Address: 0x1c0a98, Func Offset: 0x2d8
+	// Line 243, Address: 0x1c0a9c, Func Offset: 0x2dc
+	// Line 246, Address: 0x1c0aa4, Func Offset: 0x2e4
+	// Line 243, Address: 0x1c0aa8, Func Offset: 0x2e8
+	// Line 246, Address: 0x1c0aac, Func Offset: 0x2ec
+	// Line 244, Address: 0x1c0ab0, Func Offset: 0x2f0
+	// Line 246, Address: 0x1c0ab4, Func Offset: 0x2f4
+	// Line 244, Address: 0x1c0ab8, Func Offset: 0x2f8
+	// Line 245, Address: 0x1c0ad8, Func Offset: 0x318
+	// Line 246, Address: 0x1c0af8, Func Offset: 0x338
+	// Line 245, Address: 0x1c0b00, Func Offset: 0x340
+	// Line 246, Address: 0x1c0b04, Func Offset: 0x344
+	// Line 247, Address: 0x1c0b2c, Func Offset: 0x36c
+	// Line 257, Address: 0x1c0b3c, Func Offset: 0x37c
+	// Line 260, Address: 0x1c0b40, Func Offset: 0x380
+	// Line 257, Address: 0x1c0b4c, Func Offset: 0x38c
+	// Line 258, Address: 0x1c0b50, Func Offset: 0x390
+	// Line 259, Address: 0x1c0b58, Func Offset: 0x398
+	// Line 260, Address: 0x1c0b5c, Func Offset: 0x39c
+	// Line 286, Address: 0x1c0b64, Func Offset: 0x3a4
+	// Func End, Address: 0x1c0b78, Func Offset: 0x3b8
 }
 
 // xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis
 // Start address: 0x1c0b80
 void xBoundHitsBound(xBound* a, xBound* b, xCollis* c)
 {
+	// Line 142, Address: 0x1c0b80, Func Offset: 0
+	// Line 148, Address: 0x1c0b9c, Func Offset: 0x1c
+	// Line 149, Address: 0x1c0bac, Func Offset: 0x2c
+	// Line 156, Address: 0x1c0bb8, Func Offset: 0x38
+	// Line 160, Address: 0x1c0bc0, Func Offset: 0x40
+	// Line 163, Address: 0x1c0c78, Func Offset: 0xf8
+	// Line 164, Address: 0x1c0c88, Func Offset: 0x108
+	// Line 167, Address: 0x1c0c90, Func Offset: 0x110
+	// Line 171, Address: 0x1c0ca4, Func Offset: 0x124
+	// Line 172, Address: 0x1c0cac, Func Offset: 0x12c
+	// Line 173, Address: 0x1c0cb0, Func Offset: 0x130
+	// Line 174, Address: 0x1c0cc0, Func Offset: 0x140
+	// Line 176, Address: 0x1c0cc8, Func Offset: 0x148
+	// Line 177, Address: 0x1c0cd8, Func Offset: 0x158
+	// Line 179, Address: 0x1c0ce0, Func Offset: 0x160
+	// Line 195, Address: 0x1c0cf4, Func Offset: 0x174
+	// Line 196, Address: 0x1c0cf8, Func Offset: 0x178
+	// Func End, Address: 0x1c0d10, Func Offset: 0x190
 }
 
 // xBoundGetSphere__FR7xSphereRC6xBound
@@ -960,6 +1057,29 @@ void xBoundGetSphere(xSphere& o, xBound& bound)
 {
 	xMat4x3& mat;
 	xVec3 v;
+	// Line 67, Address: 0x1c0d10, Func Offset: 0
+	// Line 70, Address: 0x1c0d48, Func Offset: 0x38
+	// Line 71, Address: 0x1c0d64, Func Offset: 0x54
+	// Line 72, Address: 0x1c0d6c, Func Offset: 0x5c
+	// Line 74, Address: 0x1c0d70, Func Offset: 0x60
+	// Line 73, Address: 0x1c0d74, Func Offset: 0x64
+	// Line 74, Address: 0x1c0d78, Func Offset: 0x68
+	// Line 73, Address: 0x1c0d7c, Func Offset: 0x6c
+	// Line 74, Address: 0x1c0d90, Func Offset: 0x80
+	// Line 75, Address: 0x1c0e10, Func Offset: 0x100
+	// Line 78, Address: 0x1c0e18, Func Offset: 0x108
+	// Line 79, Address: 0x1c0e1c, Func Offset: 0x10c
+	// Line 83, Address: 0x1c0ed4, Func Offset: 0x1c4
+	// Line 79, Address: 0x1c0efc, Func Offset: 0x1ec
+	// Line 83, Address: 0x1c0f00, Func Offset: 0x1f0
+	// Line 79, Address: 0x1c0f0c, Func Offset: 0x1fc
+	// Line 83, Address: 0x1c0f14, Func Offset: 0x204
+	// Line 79, Address: 0x1c0f18, Func Offset: 0x208
+	// Line 83, Address: 0x1c0f20, Func Offset: 0x210
+	// Line 84, Address: 0x1c0f44, Func Offset: 0x234
+	// Line 91, Address: 0x1c0f5c, Func Offset: 0x24c
+	// Line 92, Address: 0x1c0f60, Func Offset: 0x250
+	// Func End, Address: 0x1c0f68, Func Offset: 0x258
 }
 
 // xBoundGetBox__FR4xBoxRC6xBound
@@ -967,11 +1087,38 @@ void xBoundGetSphere(xSphere& o, xBound& bound)
 void xBoundGetBox(xBox& box, xBound& bound)
 {
 	xSphere& o;
+	// Line 42, Address: 0x1c0f70, Func Offset: 0
+	// Line 43, Address: 0x1c0f7c, Func Offset: 0xc
+	// Line 47, Address: 0x1c0fb0, Func Offset: 0x40
+	// Line 48, Address: 0x1c0fb4, Func Offset: 0x44
+	// Line 49, Address: 0x1c0fdc, Func Offset: 0x6c
+	// Line 51, Address: 0x1c0ffc, Func Offset: 0x8c
+	// Line 52, Address: 0x1c1004, Func Offset: 0x94
+	// Line 53, Address: 0x1c1008, Func Offset: 0x98
+	// Line 54, Address: 0x1c1034, Func Offset: 0xc4
+	// Line 55, Address: 0x1c103c, Func Offset: 0xcc
+	// Line 56, Address: 0x1c1040, Func Offset: 0xd0
+	// Line 62, Address: 0x1c104c, Func Offset: 0xdc
+	// Line 63, Address: 0x1c1050, Func Offset: 0xe0
+	// Func End, Address: 0x1c105c, Func Offset: 0xec
 }
 
 // xBoundUpdate__FP6xBound
 // Start address: 0x1c1060
 void xBoundUpdate(xBound* b)
 {
+	// Line 22, Address: 0x1c1060, Func Offset: 0
+	// Line 23, Address: 0x1c106c, Func Offset: 0xc
+	// Line 22, Address: 0x1c1070, Func Offset: 0x10
+	// Line 23, Address: 0x1c1074, Func Offset: 0x14
+	// Line 24, Address: 0x1c107c, Func Offset: 0x1c
+	// Line 25, Address: 0x1c10d8, Func Offset: 0x78
+	// Line 26, Address: 0x1c10ec, Func Offset: 0x8c
+	// Line 27, Address: 0x1c114c, Func Offset: 0xec
+	// Line 28, Address: 0x1c11ec, Func Offset: 0x18c
+	// Line 30, Address: 0x1c11f0, Func Offset: 0x190
+	// Line 32, Address: 0x1c11fc, Func Offset: 0x19c
+	// Line 39, Address: 0x1c1208, Func Offset: 0x1a8
+	// Func End, Address: 0x1c1214, Func Offset: 0x1b4
 }
 
