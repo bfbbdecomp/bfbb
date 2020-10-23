@@ -3,32 +3,124 @@
 
 #include <types.h>
 
-struct xAnimPlay;
-
-#include "xModel.h"
-#include "xMemMgr.h"
 #include "xMath3.h"
-#include "xVec3.h"
+#include "xMemMgr.h"
 
-struct xAnimState;
-struct xAnimFile;
-struct xAnimMultiFile;
-struct xAnimTransitionList;
+typedef struct xAnimState;
+typedef struct xAnimTransition;
+typedef struct xAnimTransitionList;
+typedef struct xAnimEffect;
+typedef struct xAnimActiveEffect;
+typedef struct xAnimSingle;
+typedef struct xAnimPlay;
+
+struct xAnimFile
+{
+    xAnimFile* Next;
+    const char* Name;
+    uint32 ID;
+    uint32 FileFlags;
+    float32 Duration;
+    float32 TimeOffset;
+    uint16 BoneCount;
+    uint8 NumAnims[2];
+    void** RawData;
+};
+
+struct xAnimMultiFileEntry
+{
+    uint32 ID;
+    xAnimFile* File;
+};
+
+struct xAnimMultiFileBase
+{
+    uint32 Count;
+};
+
+struct xAnimMultiFile : xAnimMultiFileBase
+{
+    xAnimMultiFileEntry Files[1];
+};
+
+typedef void (*xAnimStateBeforeEnterCallback)(xAnimPlay*, xAnimState*);
+typedef void (*xAnimStateCallback)(xAnimState*, xAnimSingle*, void*);
+typedef void (*xAnimStateBeforeAnimMatricesCallback)(xAnimPlay*, xQuat*, xVec3*, int32);
+
+struct xAnimState
+{
+    xAnimState* Next;
+    const char* Name;
+    uint32 ID;
+    uint32 Flags;
+    uint32 UserFlags;
+    float32 Speed;
+    xAnimFile* Data;
+    xAnimEffect* Effects;
+    xAnimTransitionList* Default;
+    xAnimTransitionList* List;
+    float32* BoneBlend;
+    float32* TimeSnap;
+    float32 FadeRecip;
+    uint16* FadeOffset;
+    void* CallbackData;
+    xAnimMultiFile* MultiFile;
+    xAnimStateBeforeEnterCallback BeforeEnter;
+    xAnimStateCallback StateCallback;
+    xAnimStateBeforeAnimMatricesCallback BeforeAnimMatrices;
+};
+
+typedef uint32 (*xAnimTransitionConditionalCallback)(xAnimTransition*, xAnimSingle*, void*);
+typedef uint32 (*xAnimTransitionCallback)(xAnimTransition*, xAnimSingle*, void*);
+
+struct xAnimTransition
+{
+    xAnimTransition* Next;
+    xAnimState* Dest;
+    xAnimTransitionConditionalCallback Conditional;
+    xAnimTransitionCallback Callback;
+    uint32 Flags;
+    uint32 UserFlags;
+    float32 SrcTime;
+    float32 DestTime;
+    uint16 Priority;
+    uint16 QueuePriority;
+    float32 BlendRecip;
+    uint16* BlendOffset;
+};
+
+struct xAnimTransitionList
+{
+    xAnimTransitionList* Next;
+    xAnimTransition* T;
+};
 
 struct xAnimTable
 {
+    xAnimTable* Next;
+    const char* Name;
+    xAnimTransition* TransitionList;
+    xAnimState* StateList;
+    uint32 AnimIndex;
+    uint32 MorphIndex;
+    uint32 UserFlags;
 };
+
+typedef uint32 (*xAnimEffectCallback)(uint32, xAnimActiveEffect*, xAnimSingle*, void*);
 
 struct xAnimEffect
 {
+    xAnimEffect* Next;
+    uint32 Flags;
+    float32 StartTime;
+    float32 EndTime;
+    xAnimEffectCallback Callback;
 };
 
 struct xAnimActiveEffect
 {
-};
-
-struct xAnimTransition
-{
+    xAnimEffect* Effect;
+    uint32 Handle;
 };
 
 struct xAnimSingle
@@ -50,12 +142,7 @@ struct xAnimSingle
     uint32 pad;
 };
 
-typedef void (*type_7)(xAnimPlay*, xQuat*, xVec3*, int32);
-
-// have to do this because for some reason
-// including xModel.h doesn't put this before
-// xAnimPlay is defined, which references it
-struct xModelInstance;
+typedef struct xModelInstance;
 
 struct xAnimPlay
 {
@@ -67,30 +154,9 @@ struct xAnimPlay
     xAnimTable* Table;
     xMemPool* Pool;
     xModelInstance* ModelInst;
-    type_7 BeforeAnimMatrices;
-};
-
-struct xAnimState
-{
-    xAnimState* Next;
-    int8* Name;
-    uint32 ID;
-    uint32 Flags;
-    uint32 UserFlags;
-    float32 Speed;
-    xAnimFile* Data;
-    xAnimEffect* Effects;
-    xAnimTransitionList* Default;
-    xAnimTransitionList* List;
-    float32* BoneBlend;
-    float32* TimeSnap;
-    float32 FadeRecip;
-    uint16* FadeOffset;
-    void* CallbackData;
-    xAnimMultiFile* MultiFile;
-    void (*BeforeEnter)(xAnimPlay*, xAnimState*);
-    void (*StateCallback)(xAnimState*, xAnimSingle*, void*);
     void (*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32);
 };
+
+extern uint32 gxAnimUseGrowAlloc;
 
 #endif
