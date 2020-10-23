@@ -2,41 +2,41 @@
 
 #include <types.h>
 
-// xPartitionReset()
+// func_80038B98
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionReset__Fv")
 
-// PartitionGetFreeLink()
+// func_80038B9C
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "PartitionGetFreeLink__Fv")
 
-// PartitionSpaceReset(_tagPartSpace*)
+// func_80038BC8
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "PartitionSpaceReset__FP13_tagPartSpace")
 
-// PartitionSpaceInsert(_tagPartSpace*,void*)
+// func_80038BF0
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "PartitionSpaceInsert__FP13_tagPartSpacePv")
 
-// xPartitionGetTrueIdx(_tagPartition*,int,int,int)
+// func_80038C60
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionGetTrueIdx__FP13_tagPartitioniii")
 
-// xPartitionVolume(_tagPartition*,xVolume*,int,int,int)
+// func_80038C80
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionVolume__FP13_tagPartitionP7xVolumeiii")
 
-// xPartitionWorld(_tagPartition*,xEnv*,int,int,int)
+// func_80038E18
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionWorld__FP13_tagPartitionP4xEnviii")
 
-// xPartitionInsert(_tagPartition*,void*,xVec3*)
+// func_80038FB4
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionInsert__FP13_tagPartitionPvP5xVec3")
 
-// xPartitionUpdate(_tagPartition*,void*,int,xVec3*)
+// func_800390B8
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionUpdate__FP13_tagPartitionPviP5xVec3")
 
-// xPartitionSpaceMove(_tagPartSpace*,_tagPartSpace*,unsigned int)
+// func_80039200
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi")
 
-// xPartitionDump(_tagPartition*,char*)
+// func_8003926C
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionDump__FP13_tagPartitionPc")
 
-// xEnvGetBBox(xEnv*)
+// func_80039270
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xEnvGetBBox__FP4xEnv")
 
-// iEnvGetBBox(iEnv*)
+// func_80039294
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "iEnvGetBBox__FP4iEnv")

@@ -2,27 +2,29 @@
 
 #include <types.h>
 
-// xUpdateCull_Swap(xUpdateCullMgr*,unsigned int,unsigned int)
+// func_8013A5D0
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_Swap__FP14xUpdateCullMgrUiUi")
 
-// xUpdateCull_MakeActive(xUpdateCullMgr*,xUpdateCullEnt*)
+// func_8013A650
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt")
 
-// xUpdateCull_MakeInactive(xUpdateCullMgr*,xUpdateCullEnt*)
+// func_8013A6CC
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt")
 
+// func_8013A750
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_AlwaysTrueCB__FPvPv")
 
+// func_8013A758
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_DistanceSquaredCB__FPvPv")
 
-// xUpdateCull_Init(void**,unsigned int,xGroup**,unsigned int)
+// func_8013A7D0
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_Init__FPPvUiPP6xGroupUi")
 
-// xUpdateCull_Update(xUpdateCullMgr*,unsigned int)
+// func_8013ACBC
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_Update__FP14xUpdateCullMgrUi")
 
-// xUpdateCull_SetCB(xUpdateCullMgr*,void*,unsigned int (*)(void*, void*),void*)
+// func_8013AEA8
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv")
 
-// xUpdateCull_Reset(xUpdateCullMgr*)
+// func_8013AEFC
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_Reset__FP14xUpdateCullMgr")

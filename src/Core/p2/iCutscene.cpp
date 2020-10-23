@@ -2,23 +2,26 @@
 
 #include <types.h>
 
-// iCSSoundSetup(xCutscene*)
+// func_801352A4
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSSoundSetup__FP9xCutscene")
 
-// iCSSoundGetData(xSndVoiceInfo*,unsigned int*)
+// func_8013530C
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSSoundGetData__FP13xSndVoiceInfoPUi")
 
-// iCSFileOpen(xCutscene*)
+// func_8013549C
+#pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSAsyncReadCB__FP9tag_xFile")
+
+// func_801354F8
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSFileOpen__FP9xCutscene")
 
-// iCSFileAsyncRead(xCutscene*,void*,unsigned int)
+// func_801355AC
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSFileAsyncRead__FP9xCutscenePvUi")
 
-// iCSFileAsyncSkip(xCutscene*,unsigned int)
+// func_8013567C
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSFileAsyncSkip__FP9xCutsceneUi")
 
-// iCSFileClose(xCutscene*)
+// func_801356AC
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSFileClose__FP9xCutscene")
 
-// iCSLoadStep(xCutscene*)
+// func_801356E0
 #pragma GLOBAL_ASM("asm/Core/p2/iCutscene.s", "iCSLoadStep__FP9xCutscene")

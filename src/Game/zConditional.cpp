@@ -2,20 +2,23 @@
 
 #include <types.h>
 
-// zConditionalInit(void*,void*)
+// func_80052558
 #pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalInit__FPvPv")
 
-// zConditionalInit(xBase*,zCondAsset*)
+// func_80052584
 #pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalInit__FP5xBaseP10zCondAsset")
 
-// zConditionalReset(_zConditional*)
+// func_800525F0
 #pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalReset__FP13_zConditional")
 
-// zConditionalSave(_zConditional*,xSerial*)
+// func_80052614
 #pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalSave__FP13_zConditionalP7xSerial")
 
-// zConditionalLoad(_zConditional*,xSerial*)
+// func_80052634
 #pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalLoad__FP13_zConditionalP7xSerial")
 
-// zConditional_Evaluate(_zConditional*)
+// func_80052654
 #pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditional_Evaluate__FP13_zConditional")
+
+// func_800527EC
+#pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase")

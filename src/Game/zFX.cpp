@@ -2,188 +2,212 @@
 
 #include <types.h>
 
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "func_80092D1C")
+// func_80092D1C
+#pragma GLOBAL_ASM("asm/Game/zFX.s", "on_spawn_bubble_wall__FRC10tweak_info")
 
-// zFX_SceneEnter(RpWorld*)
+// func_80092D3C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SceneEnter__FP7RpWorld")
 
-// zFX_SceneExit(RpWorld*)
+// func_80092E28
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SceneExit__FP7RpWorld")
 
-// zFX_SceneReset()
+// func_80092E4C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SceneReset__Fv")
 
-// zFXPatrickStun(const xVec3*)
+// func_80092E74
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPatrickStun__FPC5xVec3")
 
-// zFXHammer(const xVec3*)
+// func_80092ED0
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXHammer__FPC5xVec3")
 
-// zFXPorterWave(const xVec3*)
+// func_80092F24
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPorterWave__FPC5xVec3")
 
-// zFXMuscleArmWave(const xVec3*)
+// func_80092F6C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXMuscleArmWave__FPC5xVec3")
 
-// zFXGooEnable(RpAtomic*,int)
+// func_80092F94
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEnable__FP8RpAtomici")
 
-// zFXGoo_SceneEnter()
+// func_8009337C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneEnter__Fv")
 
-// zFXGoo_SceneReset()
+// func_80093404
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneReset__Fv")
 
-// zFXGoo_SceneExit()
+// func_800934EC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneExit__Fv")
 
-// zFXGooUpdateInstance(zFXGooInstance*,float)
+// func_8009355C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooUpdateInstance__FP14zFXGooInstancef")
 
-// zFXGooUpdate(float)
+// func_80093980
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooUpdate__Ff")
 
-// zFXUpdate(float)
+// func_800939F4
+#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooRenderAtomic__FP8RpAtomic")
+
+// func_80093F88
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXUpdate__Ff")
 
-// zFXGooFreeze(RpAtomic*,const xVec3*,xVec3*)
+// func_80093FCC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooFreeze__FP8RpAtomicPC5xVec3P5xVec3")
 
-// zFXGooIs(xEnt*,float&,unsigned int)
+// func_80094240
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooIs__FP4xEntRfUi")
 
-// zFXGooEventSetWarb(xEnt*,const float*)
+// func_80094430
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEventSetWarb__FP4xEntPCf")
 
-// zFXGooEventSetFreezeDuration(xEnt*,float)
+// func_8009459C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEventSetFreezeDuration__FP4xEntf")
 
-// zFXGooEventMelt(xEnt*)
+// func_800947A8
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEventMelt__FP4xEnt")
 
-// zFXGooFreezeTimeLeft()
+// func_800949BC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooFreezeTimeLeft__Fv")
 
-// zFX_SpawnBubbleHit(const xVec3*,unsigned int)
+// func_80094A38
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleHit__FPC5xVec3Ui")
 
-// zFX_SpawnBubbleHit(const xVec3*,unsigned int,const xVec3*,const xVec3*,float)
+// func_80094A6C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleHit__FPC5xVec3UiPC5xVec3PC5xVec3f")
 
-// zFX_SpawnBubbleTrail(const xVec3*,unsigned int)
+// func_80094C44
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3Ui")
 
-// zFX_SpawnBubbleTrail(const xVec3*,unsigned int,const xVec3*,const xVec3*)
+// func_80094C74
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3UiPC5xVec3PC5xVec3")
 
-// zFX_SpawnBubbleTrailNoNegRandVel(const xVec3*,unsigned int,const xVec3*,const xVec3*)
+// func_80094DDC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrailNoNegRandVel__FPC5xVec3UiPC5xVec3PC5xVec3")
 
-// zFX_SpawnBubbleTrail(const xVec3*,const xVec3*,unsigned int,const xVec3*,const xVec3*)
+// func_80094F20
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3PC5xVec3UiPC5xVec3PC5xVec3")
 
-// zFX_SpawnBubbleTrail(const xVec3*,const xVec3*,const xVec3*,const xVec3*,unsigned int,const xVec3*,const xVec3*,float)
+// func_800950C8
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3PC5xVec3PC5xVec3PC5xVec3UiPC5xVec3PC5xVec3f")
 
-// zFX_SpawnBubbleMenuTrail(const xVec3*,unsigned int,const xVec3*,const xVec3*)
+// func_80095300
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleMenuTrail__FPC5xVec3UiPC5xVec3PC5xVec3")
 
-// zFX_SpawnBubbleWall()
+// func_80095458
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleWall__Fv")
 
-// zFX_SpawnBubbleSlam(const xVec3*,unsigned int,float,float,float)
+// func_80095648
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleSlam__FPC5xVec3Uifff")
 
-// zFX_SpawnBubbleBlast(const xVec3*,unsigned int,float,float,float)
+// func_80095804
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleBlast__FPC5xVec3Uifff")
 
+// func_800959F4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "model_is_preinstanced__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP8RpAtomic")
 
+// func_80095A2C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "setup_popper_emitter__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
+// func_80095B64
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "get_triangle_area__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3")
 
+// func_80095C58
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "count_faces__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP14xModelInstance")
 
+// func_80095C84
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "eval_tri__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle")
 
+// func_80095DDC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "SkinXformVertAndNormal__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi")
 
+// func_80095FF0
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "random_point_on_triangle__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3PC5xVec3PC5xVec3")
 
+// func_80096158
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "random_surface_point__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3RCQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
+// func_80096214
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "find_weight__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataCFf")
 
+// func_8009627C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "find_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP4xEnt")
 
+// func_800962B4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "find_free_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
 
+// func_800962F8
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "emit_popper_bubbles__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataiff")
 
+// func_80096538
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "emit_popper_bubbles_immediate__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
+// func_800965A4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "update_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf")
 
+// func_8009676C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "set_popper_alpha__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf")
 
+// func_800967D0
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "destroy_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
+// func_80096868
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "grab_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR4xEnt")
 
-// init_poppers()
+// func_800968FC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "init_poppers__Fv")
 
+// func_80096920
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "add_popper_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
 
-// reset_poppers()
+// func_80096924
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "reset_poppers__Fv")
 
-// update_poppers(float)
+// func_80096950
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "update_poppers__Ff")
 
-// zFXPopOn(xEnt&,float,float)
+// func_800969E4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPopOn__FR4xEntff")
 
+// func_80096B48
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "validate_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC4xEnt")
 
-// zFXPopOff(xEnt&,float,float)
+// func_80096C44
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPopOff__FR4xEntff")
 
+// func_80096D84
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "add_entrail_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
 
-// reset_entrails()
+// func_80096D88
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "reset_entrails__Fv")
 
+// func_80096DE0
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "reset__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFv")
 
-// update_entrails(float)
+// func_80096DF4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "update_entrails__Ff")
 
+// func_80096E5C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "update__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFf")
 
-// setup_entrails(zScene&)
+// func_80097094
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "setup_entrails__FR6zScene")
 
-// xDebugAddTweak(const char*,const char*,const tweak_callback*,void*,unsigned int)
+// func_800972B0
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xDebugAddTweak__FPCcPCcPC14tweak_callbackPvUi")
 
-// tweak_callback::create_change(void (*)(const tweak_info&))
+// func_800972B4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "create_change__14tweak_callbackFPFRC10tweak_info_v")
 
-// xDrawSphere2(const xVec3*,float,unsigned int)
+// func_80097354
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xDrawSphere2__FPC5xVec3fUi")
 
-// xVec3::up_normalize()
+// func_80097358
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "up_normalize__5xVec3Fv")
 
-// xMat3x3RMulVec(xVec3*,const xMat3x3*,const xVec3*)
-namespace {
+// func_80097380
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
-}
 
-// xModelSetScale(xModelInstance*,const xVec3&)
+// func_800973E4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xModelSetScale__FP14xModelInstanceRC5xVec3")
 
-// xSCurve(float&,float&,float&,float)
+// func_80097434
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xSCurve__FRfRfRff")

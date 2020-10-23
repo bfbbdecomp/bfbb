@@ -2,8 +2,8 @@
 
 #include <types.h>
 
-// zFMVPlay(char*,unsigned int,float,bool,bool)
+// func_80092BEC
 #pragma GLOBAL_ASM("asm/Game/zFMV.s", "zFMVPlay__FPcUifbb")
 
-// zFMVFileGetName(eFMVFile)
+// func_80092CD0
 #pragma GLOBAL_ASM("asm/Game/zFMV.s", "zFMVFileGetName__F8eFMVFile")

@@ -2,11 +2,11 @@
 
 #include <types.h>
 
-// zNPCTypes_StartupTypes()
+// func_800EED74
 #pragma GLOBAL_ASM("asm/Game/zNPCTypes.s", "zNPCTypes_StartupTypes__Fv")
 
-// zNPCTypes_ShutdownTypes()
+// func_800EEDB4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypes.s", "zNPCTypes_ShutdownTypes__Fv")
 
-// zNPCTypes_RegisterTypes(xFactory*)
+// func_800EEDF4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypes.s", "zNPCTypes_RegisterTypes__FP8xFactory")

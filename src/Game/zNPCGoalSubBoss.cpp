@@ -2,44 +2,44 @@
 
 #include <types.h>
 
-// GOALCreate_SubBoss(int,RyzMemGrow*,void*)
+// func_80138CA0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "GOALCreate_SubBoss__FiP10RyzMemGrowPv")
 
-// zNPCGoalPrawnDeath::zNPCGoalPrawnDeath(int)
+// func_80138F0C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__18zNPCGoalPrawnDeathFi")
 
-// zNPCGoalPrawnDamage::zNPCGoalPrawnDamage(int)
+// func_80138F48
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__19zNPCGoalPrawnDamageFi")
 
-// zNPCGoalPrawnBowl::zNPCGoalPrawnBowl(int)
+// func_80138F84
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__17zNPCGoalPrawnBowlFi")
 
-// zNPCGoalPrawnBeam::zNPCGoalPrawnBeam(int)
+// func_80138FC0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__17zNPCGoalPrawnBeamFi")
 
-// zNPCGoalPrawnIdle::zNPCGoalPrawnIdle(int)
+// func_80138FFC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__17zNPCGoalPrawnIdleFi")
 
-// zNPCGoalKJDeath::zNPCGoalKJDeath(int)
+// func_80139038
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__15zNPCGoalKJDeathFi")
 
-// zNPCGoalKJDamage::zNPCGoalKJDamage(int)
+// func_80139074
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__16zNPCGoalKJDamageFi")
 
-// zNPCGoalKJShockGround::zNPCGoalKJShockGround(int)
+// func_801390B0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__21zNPCGoalKJShockGroundFi")
 
-// zNPCGoalKJTaunt::zNPCGoalKJTaunt(int)
+// func_801390EC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__15zNPCGoalKJTauntFi")
 
-// zNPCGoalKJSpawnKids::zNPCGoalKJSpawnKids(int)
+// func_80139128
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__19zNPCGoalKJSpawnKidsFi")
 
-// zNPCGoalKJBored::zNPCGoalKJBored(int)
+// func_80139164
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__15zNPCGoalKJBoredFi")
 
-// zNPCGoalKJIdle::zNPCGoalKJIdle(int)
+// func_801391A0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__14zNPCGoalKJIdleFi")
 
-// zNPCGoalHere::zNPCGoalHere(int)
+// func_801391DC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalSubBoss.s", "__ct__12zNPCGoalHereFi")

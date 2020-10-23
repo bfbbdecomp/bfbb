@@ -2,5 +2,5 @@
 
 #include <types.h>
 
-// zNPCGoals_RegisterTypes(xFactory*)
+// func_800D50BC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoals.s", "zNPCGoals_RegisterTypes__FP8xFactory")

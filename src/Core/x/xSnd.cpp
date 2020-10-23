@@ -2,124 +2,125 @@
 
 #include <types.h>
 
-// xSndInit()
+// func_800480B0
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndInit__Fv")
 
-// xSndSceneInit()
+// func_80048174
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSceneInit__Fv")
 
-// xSndSetEnvironmentalEffect(sound_effect)
+// func_80048288
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetEnvironmentalEffect__F12sound_effect")
 
-// xSndSuspend()
+// func_800482D0
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSuspend__Fv")
 
-// xSndResume()
+// func_80048304
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndResume__Fv")
 
-// xSndPauseAll(unsigned int,unsigned int)
+// func_80048334
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPauseAll__FUiUi")
 
-// xSndPauseCategory(unsigned int,unsigned int)
+// func_800483D0
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPauseCategory__FUiUi")
 
-// xSndSetCategoryVol(sound_category,float)
+// func_80048444
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetCategoryVol__F14sound_categoryf")
 
-// xSndStopAll(unsigned int)
+// func_8004845C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopAll__FUi")
 
-// xSndDelayedInit()
+// func_800484E4
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndDelayedInit__Fv")
 
-// xSndDelayedUpdate()
+// func_80048578
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndDelayedUpdate__Fv")
 
-// xSndAddDelayed(unsigned int,float,float,unsigned int,unsigned int,unsigned int,xEnt*,xVec3*,float,float,sound_category,float)
+// func_80048634
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf")
 
-// xSndCalculateListenerPosition()
+// func_80048698
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndCalculateListenerPosition__Fv")
 
-// xSndProcessSoundPos(const xVec3*,xVec3*)
+// func_80048794
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndProcessSoundPos__FPC5xVec3P5xVec3")
 
-// xSndInternalUpdateVoicePos(xSndVoiceInfo*)
+// func_800488BC
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo")
 
-// xSndUpdate()
+// func_80048994
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndUpdate__Fv")
 
-// xSndSetListenerData(sound_listener_type,const xMat4x3*)
+// func_800489C4
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetListenerData__F19sound_listener_typePC7xMat4x3")
 
-// xSndSelectListenerMode(sound_listener_game_mode)
+// func_800489F8
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSelectListenerMode__F24sound_listener_game_mode")
 
-// xSndExit()
+// func_80048A08
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndExit__Fv")
 
-// xSndPlay(unsigned int,float,float,unsigned int,unsigned int,unsigned int,sound_category,float)
+// func_80048A2C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPlay__FUiffUiUiUi14sound_categoryf")
 
-// xSndPlay3D(unsigned int,float,float,unsigned int,unsigned int,xEnt*,float,float,sound_category,float)
+// func_80048A64
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf")
 
-// xSndPlay3D(unsigned int,float,float,unsigned int,unsigned int,const xVec3*,float,float,sound_category,float)
+// func_80048A94
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf")
 
-// xSndPlayInternal(unsigned int,float,float,unsigned int,unsigned int,unsigned int,xEnt*,const xVec3*,float,float,sound_category,float)
+// func_80048AE0
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf")
 
-// xSndStartStereo(unsigned int,unsigned int,float)
+// func_80049128
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStartStereo__FUiUif")
 
-// xSndIDIsPlaying(unsigned int)
+// func_80049148
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndIDIsPlaying__FUi")
 
-// xSndStop(unsigned int)
+// func_80049200
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStop__FUi")
 
-// xSndParentDied(unsigned int)
+// func_80049220
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndParentDied__FUi")
 
-// xSndStopChildren(unsigned int)
+// func_80049324
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopChildren__FUi")
 
-// xSndSetVol(unsigned int,float)
+// func_800493A8
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetVol__FUif")
 
-// xSndSetPitch(unsigned int,float)
+// func_800493C8
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetPitch__FUif")
 
-// xSndSetExternalCallback(void (*)(unsigned int))
+// func_800493E8
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetExternalCallback__FPFUi_v")
 
-// reset_faders()
+// func_80049408
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "reset_faders__Fv")
 
-// update_faders(float)
+// func_80049414
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "update_faders__Ff")
 
+// func_80049538
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "__as__Q218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_dataFRCQ218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_data")
 
-// xSndPlay3DFade(unsigned int,float,float,unsigned int,unsigned int,const xVec3*,float,float,sound_category,float,float)
+// func_8004956C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff")
 
-// xSndStopFade(unsigned int,float)
+// func_80049644
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopFade__FUif")
 
-// xSndStreamLock(unsigned int,sound_category,bool)
+// func_800497A4
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamLock__FUi14sound_categoryb")
 
-// xSndStreamReady(unsigned int)
+// func_80049910
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamReady__FUi")
 
-// xSndStreamUnlock(unsigned int)
+// func_8004995C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamUnlock__FUi")
 
-// xSndCategoryGetsEffects(sound_category)
+// func_8004999C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndCategoryGetsEffects__F14sound_category")
 
-// xSndGetVol(unsigned int)
+// func_800499C4
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndGetVol__FUi")

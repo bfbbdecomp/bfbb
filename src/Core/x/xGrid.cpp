@@ -2,44 +2,44 @@
 
 #include <types.h>
 
-// xGridBoundInit(xGridBound*,void*)
+// func_80121E0C
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridBoundInit__FP10xGridBoundPv")
 
-// xGridInit(xGrid*,const xBox*,unsigned short,unsigned short,unsigned char)
+// func_80121E40
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridInit__FP5xGridPC4xBoxUsUsUc")
 
-// xGridKill(xGrid*)
+// func_80121FE8
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridKill__FP5xGrid")
 
-// xGridEmpty(xGrid*)
+// func_8012201C
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridEmpty__FP5xGrid")
 
-// xGridAddToCell(xGridBound**,xGridBound*)
+// func_801220E0
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAddToCell__FPP10xGridBoundP10xGridBound")
 
-// xGridAdd(xGrid*,xGridBound*,int,int)
+// func_80122160
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAdd__FP5xGridP10xGridBoundii")
 
-// xGridAdd(xGrid*,xEnt*)
+// func_8012219C
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAdd__FP5xGridP4xEnt")
 
-// xGridRemove(xGridBound*)
+// func_801224D4
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridRemove__FP10xGridBound")
 
-// xGridUpdate(xGrid*,xEnt*)
+// func_80122554
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridUpdate__FP5xGridP4xEnt")
 
-// xGridGetCell(xGrid*,const xEnt*,int&,int&)
+// func_801225D8
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridGetCell__FP5xGridPC4xEntRiRi")
 
-// xGridGetCell(xGrid*,float,float,float,int&,int&)
+// func_80122694
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridGetCell__FP5xGridfffRiRi")
 
-// xGridIterFirstCell(xGrid*,float,float,float,int&,int&,xGridIterator&)
+// func_801227B0
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator")
 
-// xGridEntIsTooBig(xGrid*,const xEnt*)
+// func_80122814
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridEntIsTooBig__FP5xGridPC4xEnt")
 
-// xGridCheckPosition(xGrid*,xVec3*,xQCData*,int (*)(xEnt*, void*),void*)
+// func_8012296C
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv")

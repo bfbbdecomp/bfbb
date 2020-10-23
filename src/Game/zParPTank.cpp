@@ -2,67 +2,80 @@
 
 #include <types.h>
 
-// zParPTankSparkleCreate(zParPTank*,unsigned int,void (*)(zParPTank*, float))
+// func_8017047C
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
-// RwV2d::operator =(const RwV2d&)
+// func_8017066C
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "__as__5RwV2dFRC5RwV2d")
 
-// zParPTankSpawnSparkles(xVec3*,unsigned int)
+// func_80170680
+#pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSparkleUpdate__FP9zParPTankf")
+
+// func_80170808
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSpawnSparkles__FP5xVec3Ui")
 
-// zParPTankBubbleCreate(zParPTank*,unsigned int,void (*)(zParPTank*, float))
+// func_801709B0
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
-// zParPTankMenuBubbleCreate(zParPTank*,unsigned int,void (*)(zParPTank*, float))
+// func_80170B14
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
-// zParPTankSpawnBubbles(xVec3*,xVec3*,unsigned int,float,zParPTank*)
+// func_80170C78
+#pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankBubbleUpdate__FP9zParPTankf")
+
+// func_801710A4
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSpawnBubbles__FP5xVec3P5xVec3UifP9zParPTank")
 
-// zParPTankSpawnBubbles(xVec3*,xVec3*,unsigned int,float)
+// func_80171348
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSpawnBubbles__FP5xVec3P5xVec3Uif")
 
-// zParPTankBubblesAvailable()
+// func_801713B8
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankBubblesAvailable__Fv")
 
-// zParPTankSpawnMenuBubbles(xVec3*,xVec3*,unsigned int)
+// func_801713CC
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSpawnMenuBubbles__FP5xVec3P5xVec3Ui")
 
-// zParPTankSnowCreate(zParPTank*,unsigned int,void (*)(zParPTank*, float))
+// func_801713F4
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSnowCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
-// zParPTankSpawnSnow(xVec3*,xVec3*,unsigned int)
+// func_80171484
+#pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSnowUpdate__FP9zParPTankf")
+
+// func_801716E0
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSpawnSnow__FP5xVec3P5xVec3Ui")
 
-// zParPTankSteamCreate(zParPTank*,unsigned int,void (*)(zParPTank*, float))
+// func_801717D0
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSteamCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
-// zParPTankAdd()
+// func_801719C4
+#pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSteamUpdate__FP9zParPTankf")
+
+// func_80171B80
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankAdd__Fv")
 
-// zParPTankInit()
+// func_80171BA0
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankInit__Fv")
 
-// zParPTankSceneEnter()
+// func_80171C44
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSceneEnter__Fv")
 
-// zParPTankSceneExit()
+// func_80171C7C
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankSceneExit__Fv")
 
-// zParPTankExit()
+// func_80171C80
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankExit__Fv")
 
-// zParPTankUpdate(float)
+// func_80171D34
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankUpdate__Ff")
 
-// zParPTankRender()
+// func_80171DD4
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankRender__Fv")
 
-// zParPTankConvertEmitRate(xParEmitter*,float)
+// func_80171EA4
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankConvertEmitRate__FP11xParEmitterf")
 
-// xVec2::assign(float)
+// func_80171FAC
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "assign__5xVec2Ff")
 
+// func_80171FD0
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "__as__Q223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_dataFRCQ223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_data")

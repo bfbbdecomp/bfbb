@@ -2,29 +2,41 @@
 
 #include <types.h>
 
-// GOALCreate_Script(int,RyzMemGrow*,void*)
+// func_801245D4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "GOALCreate_Script__FiP10RyzMemGrowPv")
 
-// zNPCGoalScriptWait::zNPCGoalScriptWait(int)
+// func_80124778
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "Enter__14zNPCGoalScriptFfPv")
+
+// func_801247DC
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "Exit__14zNPCGoalScriptFfPv")
+
+// func_801247FC
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "SysEvent__14zNPCGoalScriptFP5xBaseP5xBaseUiPCfP5xBasePi")
+
+// func_8012481C
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "NPCMessage__14zNPCGoalScriptFP6NPCMsg")
+
+// func_801248A4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptWaitFi")
 
-// zNPCGoalScriptLead::zNPCGoalScriptLead(int)
+// func_801248EC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptLeadFi")
 
-// zNPCGoalScriptFollow::zNPCGoalScriptFollow(int)
+// func_80124934
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__20zNPCGoalScriptFollowFi")
 
-// zNPCGoalScriptTalk::zNPCGoalScriptTalk(int)
+// func_8012497C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptTalkFi")
 
-// zNPCGoalScriptMove::zNPCGoalScriptMove(int)
+// func_801249C4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptMoveFi")
 
-// zNPCGoalScriptAttack::zNPCGoalScriptAttack(int)
+// func_80124A0C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__20zNPCGoalScriptAttackFi")
 
-// zNPCGoalScriptAnim::zNPCGoalScriptAnim(int)
+// func_80124A54
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptAnimFi")
 
-// zNPCGoalScript::zNPCGoalScript(int)
+// func_80124A9C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__14zNPCGoalScriptFi")

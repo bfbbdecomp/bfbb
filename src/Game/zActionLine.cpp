@@ -2,14 +2,14 @@
 
 #include <types.h>
 
-// zActionLineInit()
+// func_8004E510
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineInit__Fv")
 
-// zActionLineUpdate(float)
+// func_8004E57C
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineUpdate__Ff")
 
-// RenderActionLine(_tagActionLine*)
+// func_8004E628
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "RenderActionLine__FP14_tagActionLine")
 
-// zActionLineRender()
+// func_8004E770
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineRender__Fv")

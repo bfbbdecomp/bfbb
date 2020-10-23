@@ -2,50 +2,50 @@
 
 #include <types.h>
 
-// iGetMinute()
+// func_800D44F0
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetMinute__Fv")
 
-// iGetHour()
+// func_800D451C
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetHour__Fv")
 
-// iGetDay()
+// func_800D4548
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetDay__Fv")
 
-// iGetMonth()
+// func_800D4574
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetMonth__Fv")
 
-// iGetCurrFormattedDate(char*)
+// func_800D45A4
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetCurrFormattedDate__FPc")
 
-// iGetCurrFormattedTime(char*)
+// func_800D475C
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetCurrFormattedTime__FPc")
 
-// iTimeInit()
+// func_800D4924
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeInit__Fv")
 
-// iTimeExit()
+// func_800D494C
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeExit__Fv")
 
-// iTimeGet()
+// func_800D4950
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeGet__Fv")
 
-// iTimeDiffSec(long long)
+// func_800D4980
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeDiffSec__Fx")
 
-// iTimeDiffSec(long long,long long)
+// func_800D49C8
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeDiffSec__Fxx")
 
-// iTimeGameAdvance(float)
+// func_800D49F0
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeGameAdvance__Ff")
 
-// iTimeSetGame(float)
+// func_800D4A00
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeSetGame__Ff")
 
-// iProfileClear(unsigned int)
+// func_800D4A08
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iProfileClear__FUi")
 
-// iFuncProfileDump()
+// func_800D4A0C
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iFuncProfileDump__Fv")
 
-// iFuncProfileParse(char*,int)
+// func_800D4A10
 #pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iFuncProfileParse__FPci")

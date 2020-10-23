@@ -2,92 +2,92 @@
 
 #include <types.h>
 
-// xSTStartup(st_PACKER_ASSETTYPE*)
+// func_8004B108
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTStartup__FP19st_PACKER_ASSETTYPE")
 
-// xSTShutdown()
+// func_8004B154
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTShutdown__Fv")
 
-// xSTPreLoadScene(unsigned int,void*,int)
+// func_8004B194
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTPreLoadScene__FUiPvi")
 
-// xSTQueueSceneAssets(unsigned int,int)
+// func_8004B344
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTQueueSceneAssets__FUii")
 
-// xSTUnLoadScene(unsigned int,int)
+// func_8004B3B4
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTUnLoadScene__FUii")
 
-// xSTLoadStep(unsigned int)
+// func_8004B494
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTLoadStep__FUi")
 
-// xSTDisconnect(unsigned int,int)
+// func_8004B4E8
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTDisconnect__FUii")
 
-// xSTSwitchScene(unsigned int,void*,int (*)(void*, float))
+// func_8004B534
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTSwitchScene__FUiPvPFPvf_i")
 
-// xSTAssetName(unsigned int)
+// func_8004B5E0
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTAssetName__FUi")
 
-// xSTAssetName(void*)
+// func_8004B674
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTAssetName__FPv")
 
-// xSTFindAsset(unsigned int,unsigned int*)
+// func_8004B70C
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTFindAsset__FUiPUi")
 
-// xSTAssetCountByType(unsigned int)
+// func_8004B818
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTAssetCountByType__FUi")
 
-// xSTFindAssetByType(unsigned int,int,unsigned int*)
+// func_8004B8A0
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTFindAssetByType__FUiiPUi")
 
-// xSTGetAssetInfo(unsigned int,st_PKR_ASSET_TOCINFO*)
+// func_8004B95C
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO")
 
-// xSTGetAssetInfoByType(unsigned int,int,st_PKR_ASSET_TOCINFO*)
+// func_8004BA18
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO")
 
-// xSTGetAssetInfoInHxP(unsigned int,st_PKR_ASSET_TOCINFO*,unsigned int)
+// func_8004BB64
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTGetAssetInfoInHxP__FUiP20st_PKR_ASSET_TOCINFOUi")
 
-// xST_xAssetID_HIPFullPath(unsigned int)
+// func_8004BC34
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xST_xAssetID_HIPFullPath__FUi")
 
-// xST_xAssetID_HIPFullPath(unsigned int,unsigned int*)
+// func_8004BC58
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xST_xAssetID_HIPFullPath__FUiPUi")
 
-// XST_PreLoadScene(st_STRAN_SCENE*,const char*)
+// func_8004BCEC
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_PreLoadScene__FP14st_STRAN_SCENEPCc")
 
-// XST_translate_sid(unsigned int,char*)
+// func_8004BD58
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_translate_sid__FUiPc")
 
-// XST_translate_sid_path(unsigned int,char*)
+// func_8004BDB4
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_translate_sid_path__FUiPc")
 
-// XST_reset_raw()
+// func_8004BE60
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_reset_raw__Fv")
 
-// XST_lock_next()
+// func_8004BE90
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_lock_next__Fv")
 
-// XST_unlock(st_STRAN_SCENE*)
+// func_8004BF38
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_unlock__FP14st_STRAN_SCENE")
 
-// XST_unlock_all()
+// func_8004BF90
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_unlock_all__Fv")
 
-// XST_get_rawinst(int)
+// func_8004C008
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_get_rawinst__Fi")
 
-// XST_cnt_locked()
+// func_8004C01C
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_cnt_locked__Fv")
 
-// XST_nth_locked(int)
+// func_8004C0E4
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_nth_locked__Fi")
 
-// XST_find_bySID(unsigned int,int)
+// func_8004C144
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_find_bySID__FUii")
 
-// iFileAsyncService()
+// func_8004C210
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "iFileAsyncService__Fv")

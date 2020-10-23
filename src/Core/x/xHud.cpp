@@ -2,160 +2,226 @@
 
 #include <types.h>
 
-// xhud::block_allocator::flush_all()
+// func_8002D98C
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "flush_all__Q24xhud15block_allocatorFv")
 
-// xhud::block_allocator::block_allocator(unsigned int,unsigned int)
+// func_8002D9CC
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__ct__Q24xhud15block_allocatorFUiUi")
 
-// xhud::block_allocator::set_increment(unsigned int)
+// func_8002DA24
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "set_increment__Q24xhud15block_allocatorFUi")
 
-// xhud::block_allocator::size_reserve(unsigned int)
+// func_8002DA34
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "size_reserve__Q24xhud15block_allocatorFUi")
 
-// xhud::block_allocator::alloc()
+// func_8002DA98
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "alloc__Q24xhud15block_allocatorFv")
 
-// xhud::block_allocator::free(void*)
+// func_8002DAE4
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "free__Q24xhud15block_allocatorFPv")
 
-// xhud::block_allocator::flush()
+// func_8002DAF4
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "flush__Q24xhud15block_allocatorFv")
 
-// xhud::widget::motive_allocator()
+// func_8002DB00
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "motive_allocator__Q24xhud6widgetFv")
 
-// xhud::init()
+// func_8002DB4C
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "init__4xhudFv")
 
-// xhud::setup()
+// func_8002DB88
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "setup__4xhudFv")
 
-// xhud::destroy()
+// func_8002DBA8
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "destroy__4xhudFv")
 
-// xhud::update(float)
+// func_8002DBDC
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "update__4xhudFf")
 
-// xhud::render()
+// func_8002DBFC
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "render__4xhudFv")
 
-// xhud::widget::widget(const xhud::asset&)
+// func_8002DC28
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__ct__Q24xhud6widgetFRCQ24xhud5asset")
 
-// xhud::render_context::operator =(const xhud::render_context&)
+// func_8002DCC4
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__as__Q24xhud14render_contextFRCQ24xhud14render_context")
 
-// xhud::widget::init_base(xBase&,const xBaseAsset&,unsigned long)
+// func_8002DD30
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "init_base__Q24xhud6widgetFR5xBaseRC10xBaseAssetUl")
 
-// xhud::widget::destruct()
+// func_8002DD94
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "destruct__Q24xhud6widgetFv")
 
-// xhud::widget::presetup()
+// func_8002DDB4
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "presetup__Q24xhud6widgetFv")
 
-// xhud::widget::updater(float)
+// func_8002DDDC
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "updater__Q24xhud6widgetFf")
 
-// xhud::widget::dispatcher(xBase*,unsigned int,const float*,xBase*)
+// func_8002DEB4
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "dispatcher__Q24xhud6widgetFP5xBaseUiPCfP5xBase")
 
-// xhud::widget::type() const
+// func_8002DF5C
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "type__Q24xhud6widgetCFv")
 
-// xhud::widget::is(unsigned int) const
+// func_8002DF9C
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "is__Q24xhud6widgetCFUi")
 
-// xhud::widget::show()
+// func_8002DFD4
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "show__Q24xhud6widgetFv")
 
-// xhud::widget::hide()
+// func_8002E168
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "hide__Q24xhud6widgetFv")
 
-// xhud::widget::disable_all(bool)
+// func_8002E358
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "fp_setup__Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FRQ24xhud6widget")
+
+// func_8002E384
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "fp_render__Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FRQ24xhud6widget")
+
+// func_8002E3CC
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "disable_all__Q24xhud6widgetFb")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__ct__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disableFb")
+// func_8002E438
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "__ct__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disableFb")
 
-// xhud::widget::setup_all()
+// func_8002E440
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "setup_all__Q24xhud6widgetFv")
 
-// xhud::widget::update_all(float)
+// func_8002E4A8
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "update_all__Q24xhud6widgetFf")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__ct__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_updateFf")
+// func_8002E510
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "__ct__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_updateFf")
 
-// xhud::widget::render_all()
+// func_8002E518
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "render_all__Q24xhud6widgetFv")
 
-// xhud::widget::add_motive(const xhud::motive&)
+// func_8002E584
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "add_motive__Q24xhud6widgetFRCQ24xhud6motive")
 
-// xhud::widget::clear_motives()
+// func_8002E628
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "clear_motives__Q24xhud6widgetFv")
 
-// xhud::widget::clear_motives(bool (*)(xhud::widget&, xhud::motive&, float),void*)
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "clear_motives__Q24xhud6widgetFPFRQ24xhud6widgetRQ24xhud6motivef_bPv")
+// func_8002E690
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "clear_motives__Q24xhud6widgetFPFRQ24xhud6widgetRQ24xhud6motivef_bPv")
 
-// xhud::load_model(unsigned int)
+// func_8002E720
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "cb_dispatch__Q24xhud6widgetFP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_8002E75C
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "load_model__4xhudFUi")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "render_one_model__Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FR14xModelInstancefRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3RC7xMat4x3")
+// func_8002E804
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xHud.s",                                                                           \
+    "render_one_model__Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FR14xModelInstancefRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3RC7xMat4x3")
 
-// xhud::render_model(xModelInstance&,const xhud::render_context&)
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "render_model__4xhudFR14xModelInstanceRCQ24xhud14render_context")
+// func_8002E878
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "render_model__4xhudFR14xModelInstanceRCQ24xhud14render_context")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "xhud_rename_me_2")
+// func_8002E9BC
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "linear_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "xhud_rename_me")
+// func_8002EA48
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "accelerate_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "for_each_esc__0_Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_update_esc__1___Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FUcUiQ34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_update")
+// func_8002EAF0
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "shake_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "for_each_esc__0_PFRQ24xhud6widget_v_esc__1___Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FUcUiPFRQ24xhud6widget_v")
+// func_8002EB84
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "delay_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "for_each_esc__0_Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disable_esc__1___Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FUcUiQ34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disable")
+// func_8002EBDC
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xHud.s",                                                                           \
+    "for_each_esc__0_Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_update_esc__1___Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FUcUiQ34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_update")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__cl__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disableFRQ24xhud6widget")
+// func_8002EC60
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xHud.s",                                                                           \
+    "for_each_esc__0_PFRQ24xhud6widget_v_esc__1___Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FUcUiPFRQ24xhud6widget_v")
 
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__cl__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_updateFRQ24xhud6widget")
+// func_8002ECE8
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xHud.s",                                                                           \
+    "for_each_esc__0_Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disable_esc__1___Q24xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_FUcUiQ34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disable")
 
-// xhud::widget::disable()
+// func_8002ED6C
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xHud.s",                                                                           \
+    "__cl__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_15functor_disableFRQ24xhud6widget")
+
+// func_8002EDC8
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xHud.s",                                                                           \
+    "__cl__Q34xhud18_esc__2_unnamed_esc__2_xHud_cpp_esc__2_14functor_updateFRQ24xhud6widget")
+
+// func_8002EE24
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "disable__Q24xhud6widgetFv")
 
-// xhud::widget::add_tweaks()
+// func_8002EE30
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "add_tweaks__Q24xhud6widgetFv")
 
-// xhud::motive::update(xhud::widget&,float)
+// func_8002EE34
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "update__Q24xhud6motiveFRQ24xhud6widgetf")
 
-// xhud::widget::enable()
+// func_8002EE68
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "enable__Q24xhud6widgetFv")
 
-// xhud::motive::motive(float*,float,float,float,bool (*)(xhud::widget&, xhud::motive&, float),void*)
-#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__ct__Q24xhud6motiveFPffffPFRQ24xhud6widgetRQ24xhud6motivef_bPv")
+// func_8002EE74
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s",                                                            \
+                   "__ct__Q24xhud6motiveFPffffPFRQ24xhud6widgetRQ24xhud6motivef_bPv")
 
-// xhud::widget::visible() const
+// func_8002DDB4
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "setup__Q24xhud6widgetFv")
+
+// func_8002EEBC
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "render__Q24xhud6widgetFv")
+
+// func_8002EEC0
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "visible__Q24xhud6widgetCFv")
 
-// xhud::widget::enabled() const
+// func_8002EF08
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "enabled__Q24xhud6widgetCFv")
 
-// xhud::widget::debug_render()
+// func_8002EF10
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "debug_render__Q24xhud6widgetFv")
 
-// xhud::motive::motive(const xhud::motive&)
+// func_8002EF14
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__ct__Q24xhud6motiveFRCQ24xhud6motive")
 
-// xhud::motive::finish()
+// func_8002EF58
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "finish__Q24xhud6motiveFv")
 
-// xhud::asset::type_name()
+// func_8002EF88
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "dispatch__Q24xhud6widgetFP5xBaseUiPCfP5xBase")
+
+// func_8002EFA8
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "destroy__Q24xhud6widgetFv")
+
+// func_8002EFAC
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "init__Q24xhud6widgetFv")
+
+// func_8002EFB0
+#pragma GLOBAL_ASM("asm/Core/x/xHud.s", "update__Q24xhud6widgetFf")
+
+// func_8002EFD0
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "type_name__Q24xhud5assetFv")
 
-// operator new(unsigned long,void*)
+// func_8002EFE0
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "__nw__FUlPv")
 
-// xColorFromRGBA(unsigned char,unsigned char,unsigned char,unsigned char)
+// func_8002EFE8
 #pragma GLOBAL_ASM("asm/Core/x/xHud.s", "xColorFromRGBA__FUcUcUcUc")

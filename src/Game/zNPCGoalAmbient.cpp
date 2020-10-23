@@ -2,52 +2,74 @@
 
 #include <types.h>
 
-// GOALCreate_Ambient(int,RyzMemGrow*,void*)
+// func_8018FDC4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "GOALCreate_Ambient__FiP10RyzMemGrowPv")
 
-// zNPCGoalJellyBumped::MoveSwoosh(float)
+// func_8018FEA8
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Enter__19zNPCGoalJellyBumpedFfPv")
+
+// func_8018FF68
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Exit__19zNPCGoalJellyBumpedFfPv")
+
+// func_8018FFEC
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Process__19zNPCGoalJellyBumpedFP11en_trantypefPvP6xScene")
+
+// func_80190144
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "MoveSwoosh__19zNPCGoalJellyBumpedFf")
 
-// zNPCGoalJellyBumped::PlayWithAnimSpd()
+// func_80190220
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "PlayWithAnimSpd__19zNPCGoalJellyBumpedFv")
 
-// zNPCGoalJellyBumped::StreakPrep()
+// func_801902D0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "StreakPrep__19zNPCGoalJellyBumpedFv")
 
-// zNPCGoalJellyBumped::StreakDone()
+// func_8019032C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "StreakDone__19zNPCGoalJellyBumpedFv")
 
-// zNPCGoalJellyBumped::StreakUpdate()
+// func_80190368
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "StreakUpdate__19zNPCGoalJellyBumpedFv")
 
-// zNPCGoalJellyBumped::ExtractAimDir(xVec3*)
+// func_801903D0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "ExtractAimDir__19zNPCGoalJellyBumpedFP5xVec3")
 
-// zNPCGoalJellyBumped::CalcEndPoint(xVec3*,const xVec3*)
+// func_80190488
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "CalcEndPoint__19zNPCGoalJellyBumpedFP5xVec3PC5xVec3")
 
-// zNPCGoalJellyAttack::ZapperStart()
+// func_801905C8
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Enter__19zNPCGoalJellyAttackFfPv")
+
+// func_8019064C
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Exit__19zNPCGoalJellyAttackFfPv")
+
+// func_801906A0
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Process__19zNPCGoalJellyAttackFP11en_trantypefPvP6xScene")
+
+// func_80190714
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "ZapperStart__19zNPCGoalJellyAttackFv")
 
-// zNPCGoalJellyAttack::ZapperStop()
+// func_8019082C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "ZapperStop__19zNPCGoalJellyAttackFv")
 
-// zNPCGoalJellyAttack::ZapperUpdate()
+// func_8019089C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "ZapperUpdate__19zNPCGoalJellyAttackFv")
 
-// zNPCGoalJellyBirth::BirthInfoSet(const xVec3*,float)
+// func_80190BC8
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Enter__18zNPCGoalJellyBirthFfPv")
+
+// func_80190C9C
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "Process__18zNPCGoalJellyBirthFP11en_trantypefPvP6xScene")
+
+// func_80190DF8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "BirthInfoSet__18zNPCGoalJellyBirthFPC5xVec3f")
 
-// zNPCGoalJellyBirth::zNPCGoalJellyBirth(int)
+// func_80190E44
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "__ct__18zNPCGoalJellyBirthFi")
 
-// zNPCGoalJellyAttack::zNPCGoalJellyAttack(int)
+// func_80190E8C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "__ct__19zNPCGoalJellyAttackFi")
 
-// zNPCGoalJellyBumped::zNPCGoalJellyBumped(int)
+// func_80190ED4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "__ct__19zNPCGoalJellyBumpedFi")
 
-// xMat3x3RMulVec(xVec3*,const xMat3x3*,const xVec3*)
-namespace {
+// func_80190F1C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalAmbient.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
-}
