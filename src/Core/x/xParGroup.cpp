@@ -2,47 +2,47 @@
 
 #include <types.h>
 
-// xParGroupInit(xParGroup*)
+// func_80038428
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupInit__FP9xParGroup")
 
-// xParGroupRegisterInit()
+// func_80038480
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupRegisterInit__Fv")
 
-// xParGroupSetAging(xParGroup*,int)
+// func_80038508
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupSetAging__FP9xParGroupi")
 
-// xParGroupSetBack2Life(xParGroup*,int)
+// func_80038538
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupSetBack2Life__FP9xParGroupi")
 
-// xParGroupSetVisibility(xParGroup*,int)
+// func_80038568
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupSetVisibility__FP9xParGroupi")
 
-// xParGroupSetPriority(xParGroup*,unsigned char)
+// func_80038570
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupSetPriority__FP9xParGroupUc")
 
-// xParGroupRegister(xParGroup*)
+// func_80038578
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupRegister__FP9xParGroup")
 
-// xParGroupUnregister(xParGroup*)
+// func_800385FC
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupUnregister__FP9xParGroup")
 
-// xParGroupSetActive(xParGroup*,unsigned int)
+// func_80038650
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupSetActive__FP9xParGroupUi")
 
-// xParGroupKillAllParticles(xParGroup*)
+// func_80038658
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupKillAllParticles__FP9xParGroup")
 
-// xParGroupAnimate(xParGroup*,float)
+// func_800386A8
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupAnimate__FP9xParGroupf")
 
-// xParGroupAddParP(xParGroup*,xPar*)
+// func_80038884
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupAddParP__FP9xParGroupP4xPar")
 
-// xParGroupAddPar(xParGroup*)
+// func_800388CC
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupAddPar__FP9xParGroup")
 
-// xParGroupKillPar(xParGroup*,xPar*)
+// func_800389FC
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupKillPar__FP9xParGroupP4xPar")
 
-// xParGroupAddParToDeadList(xParGroup*,xPar*)
+// func_80038AAC
 #pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupAddParToDeadList__FP9xParGroupP4xPar")
