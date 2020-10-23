@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800B96B8 - 0x800BC558
 
 /* refresh_model__17@unnamed@zUI_cpp@FR4_zUI */
@@ -3353,6 +3355,9 @@ xMat3x3Scale__FP7xMat3x3PC5xVec3:
 /* 800BC54C 000B934C  7C 08 03 A6 */	mtlr r0
 /* 800BC550 000B9350  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BC554 000B9354  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025F740:
 	.incbin "baserom.dol", 0x25C720, 0x10
