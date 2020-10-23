@@ -53,7 +53,7 @@ lbl_800C63C0:
 /* 800C6408 000C3208  90 09 00 14 */	stw r0, 0x14(r9)
 /* 800C640C 000C320C  90 8D 92 24 */	stw r4, HeapSize-_SDA_BASE_(r13)
 /* 800C6410 000C3210  80 6D 86 40 */	lwz r3, lbl_803CAF40-_SDA_BASE_(r13)
-/* 800C6414 000C3214  48 10 B9 ED */	bl func_801D1E00
+/* 800C6414 000C3214  48 10 B9 ED */	bl OSAllocFromHeap
 /* 800C6418 000C3218  90 6D 92 14 */	stw r3, mem_base_alloc-_SDA_BASE_(r13)
 /* 800C641C 000C321C  3C 80 80 39 */	lis r4, gMemInfo@ha
 /* 800C6420 000C3220  38 E4 C3 20 */	addi r7, r4, gMemInfo@l
