@@ -4,7 +4,8 @@
 
 .section .text  # 0x8010EED8 - 0x8010F150
 
-lbl_8010EED8:
+
+xSkyDome_EmptyRender__FP4xEnt:
 /* 8010EED8 0010BCD8  4E 80 00 20 */	blr 
 
 .global xSkyDome_Setup__Fv
@@ -68,11 +69,11 @@ lbl_8010EF94:
 /* 8010EF98 0010BD98  40 80 FF E0 */	bge lbl_8010EF78
 /* 8010EF9C 0010BD9C  1C 1A 00 0C */	mulli r0, r26, 0xc
 /* 8010EFA0 0010BDA0  3C 80 80 31 */	lis r4, lbl_80313728@ha
-/* 8010EFA4 0010BDA4  3C 60 80 11 */	lis r3, lbl_8010EED8@ha
+/* 8010EFA4 0010BDA4  3C 60 80 11 */	lis r3, xSkyDome_EmptyRender__FP4xEnt@ha
 /* 8010EFA8 0010BDA8  38 84 37 28 */	addi r4, r4, lbl_80313728@l
 /* 8010EFAC 0010BDAC  7F A4 01 2E */	stwx r29, r4, r0
 /* 8010EFB0 0010BDB0  7C A4 02 14 */	add r5, r4, r0
-/* 8010EFB4 0010BDB4  38 03 EE D8 */	addi r0, r3, lbl_8010EED8@l
+/* 8010EFB4 0010BDB4  38 03 EE D8 */	addi r0, r3, xSkyDome_EmptyRender__FP4xEnt@l
 /* 8010EFB8 0010BDB8  7F A3 EB 78 */	mr r3, r29
 /* 8010EFBC 0010BDBC  93 C5 00 04 */	stw r30, 4(r5)
 /* 8010EFC0 0010BDC0  38 80 00 54 */	li r4, 0x54
@@ -117,9 +118,9 @@ xSkyDome_Render__Fv:
 /* 8010F040 0010BE40  90 01 00 34 */	stw r0, 0x34(r1)
 /* 8010F044 0010BE44  BF 61 00 1C */	stmw r27, 0x1c(r1)
 /* 8010F048 0010BE48  3B A3 37 28 */	addi r29, r3, lbl_80313728@l
-/* 8010F04C 0010BE4C  3C 60 80 11 */	lis r3, lbl_8010EED8@ha
+/* 8010F04C 0010BE4C  3C 60 80 11 */	lis r3, xSkyDome_EmptyRender__FP4xEnt@ha
 /* 8010F050 0010BE50  3B 80 00 00 */	li r28, 0
-/* 8010F054 0010BE54  3B E3 EE D8 */	addi r31, r3, lbl_8010EED8@l
+/* 8010F054 0010BE54  3B E3 EE D8 */	addi r31, r3, xSkyDome_EmptyRender__FP4xEnt@l
 /* 8010F058 0010BE58  80 8D 9F 7C */	lwz r4, RwEngineInstance-_SDA_BASE_(r13)
 /* 8010F05C 0010BE5C  80 84 00 00 */	lwz r4, 0(r4)
 /* 8010F060 0010BE60  83 C4 00 04 */	lwz r30, 4(r4)
