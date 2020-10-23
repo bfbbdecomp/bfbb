@@ -2,8 +2,8 @@
 
 #include <types.h>
 
-// xJaw_FindData(unsigned int)
+// func_8015FF60
 #pragma GLOBAL_ASM("asm/Core/x/xJaw.s", "xJaw_FindData__FUi")
 
-// xJaw_EvalData(void*,float)
+// func_80160034
 #pragma GLOBAL_ASM("asm/Core/x/xJaw.s", "xJaw_EvalData__FPvf")
