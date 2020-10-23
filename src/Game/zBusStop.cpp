@@ -2,14 +2,17 @@
 
 #include <types.h>
 
-// zBusStop_Init(xBase&,xDynAsset&,unsigned long)
+// func_8012D888
 #pragma GLOBAL_ASM("asm/Game/zBusStop.s", "zBusStop_Init__FR5xBaseR9xDynAssetUl")
 
-// zBusStop_Init(zBusStop*,busstop_asset*)
+// func_8012D8A8
 #pragma GLOBAL_ASM("asm/Game/zBusStop.s", "zBusStop_Init__FP8zBusStopP13busstop_asset")
 
-// zBusStop_Setup(zBusStop*)
+// func_8012D948
 #pragma GLOBAL_ASM("asm/Game/zBusStop.s", "zBusStop_Setup__FP8zBusStop")
 
-// zBusStop_Update(xBase*,xScene*,float)
+// func_8012D9A8
 #pragma GLOBAL_ASM("asm/Game/zBusStop.s", "zBusStop_Update__FP5xBaseP6xScenef")
+
+// func_8012DD5C
+#pragma GLOBAL_ASM("asm/Game/zBusStop.s", "zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
