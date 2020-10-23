@@ -423,6 +423,14 @@ struct RwBBox
     RwV3d inf;
 };
 
+enum RwCameraClearMode
+{
+    rwCAMERACLEARIMAGE = 0x1,
+    rwCAMERACLEARZ = 0x2,
+    rwCAMERACLEARSTENCIL = 0x4,
+    rwCAMERACLEARMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 enum RwCameraProjection
 {
     rwNACAMERAPROJECTION = 0,
