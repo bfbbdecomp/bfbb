@@ -2,103 +2,113 @@
 
 #include <types.h>
 
-// zNPCMgrSelf()
+// func_800EE2CC
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgrSelf__Fv")
 
-// zNPCMgr_GetNPCList()
+// func_800EE2D4
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_GetNPCList__Fv")
 
-// zNPCMgr_Startup()
+// func_800EE2F4
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Startup__Fv")
 
-// zNPCMgr_Shutdown()
+// func_800EE358
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Shutdown__Fv")
 
-// zNPCMgr_scenePrepare(int)
+// func_800EE3B8
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePrepare__Fi")
 
-// zNPCMgr_sceneFinish()
+// func_800EE3EC
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_sceneFinish__Fv")
 
-// zNPCMgr_sceneReset()
+// func_800EE410
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_sceneReset__Fv")
 
-// zNPCMgr_scenePostInit()
+// func_800EE434
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostInit__Fv")
 
-// zNPCMgr_scenePostSetup()
+// func_800EE458
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostSetup__Fv")
 
-// zNPCMgr_sceneTimestep(xScene*,float)
+// func_800EE47C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_sceneTimestep__FP6xScenef")
 
-// zNPCMgr_scenePostRender()
+// func_800EE4C0
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostRender__Fv")
 
-// zNPCMgr_scenePostParticleRender()
+// func_800EE4E4
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostParticleRender__Fv")
 
-// zNPCMgr_createNPCInst(int,xEntAsset*)
+// func_800EE508
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_createNPCInst__FiP9xEntAsset")
 
-// zNPCMgr::Startup()
+// func_800EE53C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Startup__7zNPCMgrFv")
 
-// zNPCMgr::Shutdown()
+// func_800EE5C8
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Shutdown__7zNPCMgrFv")
 
-// zNPCMgr::ScenePrepare(int)
+// func_800EE618
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePrepare__7zNPCMgrFi")
 
-// zNPCMgr::SceneFinish()
+// func_800EE668
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneFinish__7zNPCMgrFv")
 
-// zNPCMgr::SceneReset()
+// func_800EE710
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneReset__7zNPCMgrFv")
 
-// zNPCMgr::ScenePostInit()
+// func_800EE764
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostInit__7zNPCMgrFv")
 
-// zNPCMgr::ScenePostSetup()
+// func_800EE790
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostSetup__7zNPCMgrFv")
 
-// zNPCMgr::ScenePostRender()
+// func_800EE800
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostRender__7zNPCMgrFv")
 
-// zNPCMgr::ScenePostParticleRender()
+// func_800EE8D4
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostParticleRender__7zNPCMgrFv")
 
-// zNPCMgr::CreateNPC(xEntAsset*)
+// func_800EE9A8
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "CreateNPC__7zNPCMgrFP9xEntAsset")
 
-// zNPCMgr::BackdoorUpdateAllNPCsOnce(xScene*,float)
+// func_800EEA74
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "BackdoorUpdateAllNPCsOnce__7zNPCMgrFP6xScenef")
 
-// zNPCMgr::SceneTimestep(xScene*,float)
+// func_800EEB08
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneTimestep__7zNPCMgrFP6xScenef")
 
-// zNPCMgr::PrepTypeTable()
+// func_800EEBAC
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "PrepTypeTable__7zNPCMgrFv")
 
-// zNPCMgr::NPCTypeForModel(unsigned int,unsigned int)
+// func_800EEC2C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "NPCTypeForModel__7zNPCMgrFUiUi")
 
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "func_800EECC4")
+// func_800EECC4
+#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_OrdTest_npcid__FPCvPv")
 
-// zNPCMgr::zNPCMgr()
+// func_800EECEC
+#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_OrdComp_npcid__FPvPv")
+
+// func_800EED18
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "__ct__7zNPCMgrFv")
 
-// zNPCMgr::~zNPCMgr()
+// func_800EED1C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "__dt__7zNPCMgrFv")
 
-// zNPCMgr::DBG_Reset()
+// func_800EED58
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "DBG_Reset__7zNPCMgrFv")
 
-// zNPCMgr::DBG_PerfTrack()
+// func_800EED5C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "DBG_PerfTrack__7zNPCMgrFv")
 
-// xBehaveMgr::GetFactory()
+// func_800EED60
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "GetFactory__10xBehaveMgrFv")
 
-// zNPCCommon::RenderExtra()
+// func_800EED68
+#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "PostSetup__9xNPCBasicFv")
+
+// func_800EED6C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "RenderExtra__10zNPCCommonFv")
+
+// func_800EED70
+#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "RenderExtraPostParticles__10zNPCCommonFv")
