@@ -2,44 +2,44 @@
 
 #include <types.h>
 
-// xPadInit()
+// func_80035E70
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadInit__Fv")
 
-// xPadEnable(int)
+// func_80035ED8
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadEnable__Fi")
 
-// xPadRumbleEnable(int,int)
+// func_80035F50
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadRumbleEnable__Fii")
 
-// xPadUpdate(int,float)
+// func_80035FC4
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadUpdate__Fif")
 
-// xPadNormalizeAnalog(_tagxPad&,int,int)
+// func_80036478
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadNormalizeAnalog__FR8_tagxPadii")
 
-// xPadKill()
+// func_80036584
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadKill__Fv")
 
-// xPadGetRumbleSlot()
+// func_800365A4
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadGetRumbleSlot__Fv")
 
-// xPadDestroyRumbleChain(_tagxPad*)
+// func_80036620
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadDestroyRumbleChain__FP8_tagxPad")
 
-// xPadDestroyRumbleChain(int)
+// func_80036680
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadDestroyRumbleChain__Fi")
 
-// xPadAddRumble(int,_tagRumbleType,float,int,unsigned int)
+// func_800366B0
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadAddRumble__Fi14_tagRumbleTypefiUi")
 
-// xPadAnalogIsDigital(int,int)
+// func_800367AC
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadAnalogIsDigital__Fii")
 
-// xVec2::operator /=(float)
+// func_80036834
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "__adv__5xVec2Ff")
 
-// xVec2::length() const
+// func_80036858
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "length__5xVec2CFv")
 
-// normalize_analog(int,int,int,int,int,int)
+// func_8003687C
 #pragma GLOBAL_ASM("asm/Core/x/xPad.s", "normalize_analog__Fiiiiii")
