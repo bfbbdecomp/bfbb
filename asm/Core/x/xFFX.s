@@ -213,8 +213,9 @@ lbl_8001FB4C:
 /* 8001FB54 0001C954  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FB58 0001C958  4E 80 00 20 */	blr 
 
-.global xffx_rename_me
-xffx_rename_me:
+.global xFFXShakeUpdateEnt__FP4xEntP6xScenefPv
+
+xFFXShakeUpdateEnt__FP4xEntP6xScenefPv:
 /* 8001FB5C 0001C95C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8001FB60 0001C960  7C 08 02 A6 */	mflr r0
 /* 8001FB64 0001C964  90 01 00 44 */	stw r0, 0x44(r1)

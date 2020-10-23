@@ -2872,9 +2872,9 @@ zPlatform_Shake__FP9zPlatformfff:
 /* 800AB80C 000A860C  48 00 00 58 */	b lbl_800AB864
 lbl_800AB810:
 /* 800AB810 000A8610  C0 22 94 34 */	lfs f1, lbl_803CDDB4-_SDA2_BASE_(r2)
-/* 800AB814 000A8614  3C 60 80 02 */	lis r3, xffx_rename_me@ha
+/* 800AB814 000A8614  3C 60 80 02 */	lis r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@ha
 /* 800AB818 000A8618  FC 00 F0 50 */	fneg f0, f30
-/* 800AB81C 000A861C  38 03 FB 5C */	addi r0, r3, xffx_rename_me@l
+/* 800AB81C 000A861C  38 03 FB 5C */	addi r0, r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@l
 /* 800AB820 000A8620  D0 3F 00 00 */	stfs f1, 0(r31)
 /* 800AB824 000A8624  7F C3 F3 78 */	mr r3, r30
 /* 800AB828 000A8628  D0 1F 00 04 */	stfs f0, 4(r31)
@@ -2938,8 +2938,8 @@ lbl_800AB8F0:
 /* 800AB900 000A8700  38 84 00 14 */	addi r4, r4, 0x14
 /* 800AB904 000A8704  4B F5 F7 8D */	bl xVec3SMul__FP5xVec3PC5xVec3f
 /* 800AB908 000A8708  D3 FF 00 0C */	stfs f31, 0xc(r31)
-/* 800AB90C 000A870C  3C 60 80 02 */	lis r3, xffx_rename_me@ha
-/* 800AB910 000A8710  38 03 FB 5C */	addi r0, r3, xffx_rename_me@l
+/* 800AB90C 000A870C  3C 60 80 02 */	lis r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@ha
+/* 800AB910 000A8710  38 03 FB 5C */	addi r0, r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@l
 /* 800AB914 000A8714  7F A3 EB 78 */	mr r3, r29
 /* 800AB918 000A8718  C0 02 94 30 */	lfs f0, lbl_803CDDB0-_SDA2_BASE_(r2)
 /* 800AB91C 000A871C  7F C4 F3 78 */	mr r4, r30
