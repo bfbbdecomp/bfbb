@@ -17,4 +17,6 @@ struct xQCData
     xVec3 max;
 };
 
+void xQuickCullForEverything(xQCData* q);
+
 #endif

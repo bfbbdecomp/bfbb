@@ -2,23 +2,7 @@
 
 .if 0
 
-.section .text 
-
-zVolumeInit__FP7zVolumeP12xVolumeAsset:
-/* 800BE470 000BB270  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800BE474 000BB274  7C 08 02 A6 */	mflr r0
-/* 800BE478 000BB278  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800BE47C 000BB27C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800BE480 000BB280  7C 7F 1B 78 */	mr r31, r3
-/* 800BE484 000BB284  48 05 A4 B1 */	bl Init__7xVolumeFP12xVolumeAsset
-/* 800BE488 000BB288  3C 60 80 0C */	lis r3, zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
-/* 800BE48C 000BB28C  38 03 E8 E8 */	addi r0, r3, zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
-/* 800BE490 000BB290  90 1F 00 0C */	stw r0, 0xc(r31)
-/* 800BE494 000BB294  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800BE498 000BB298  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800BE49C 000BB29C  7C 08 03 A6 */	mtlr r0
-/* 800BE4A0 000BB2A0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800BE4A4 000BB2A4  4E 80 00 20 */	blr 
+.section .text
 
 .global zVolumeInit__Fv
 zVolumeInit__Fv:
@@ -30,15 +14,15 @@ zVolumeInit__Fv:
 /* 800BE4BC 000BB2BC  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 800BE4C0 000BB2C0  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 800BE4C4 000BB2C4  4B F8 D3 55 */	bl xSTAssetCountByType__FUi
-/* 800BE4C8 000BB2C8  B0 6D 91 74 */	sth r3, lbl_803CBA74-_SDA_BASE_(r13)
-/* 800BE4CC 000BB2CC  A0 0D 91 74 */	lhz r0, lbl_803CBA74-_SDA_BASE_(r13)
+/* 800BE4C8 000BB2C8  B0 6D 91 74 */	sth r3, nvols-_SDA_BASE_(r13)
+/* 800BE4CC 000BB2CC  A0 0D 91 74 */	lhz r0, nvols-_SDA_BASE_(r13)
 /* 800BE4D0 000BB2D0  28 00 00 00 */	cmplwi r0, 0
 /* 800BE4D4 000BB2D4  41 82 00 64 */	beq lbl_800BE538
 /* 800BE4D8 000BB2D8  1C 80 00 14 */	mulli r4, r0, 0x14
 /* 800BE4DC 000BB2DC  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 800BE4E0 000BB2E0  38 A0 00 00 */	li r5, 0
 /* 800BE4E4 000BB2E4  4B F7 54 5D */	bl xMemAlloc__FUiUii
-/* 800BE4E8 000BB2E8  90 6D 91 70 */	stw r3, lbl_803CBA70-_SDA_BASE_(r13)
+/* 800BE4E8 000BB2E8  90 6D 91 70 */	stw r3, vols-_SDA_BASE_(r13)
 /* 800BE4EC 000BB2EC  3B C0 00 00 */	li r30, 0
 /* 800BE4F0 000BB2F0  3F E0 56 4F */	lis r31, 0x564f
 /* 800BE4F4 000BB2F4  48 00 00 30 */	b lbl_800BE524
@@ -48,21 +32,21 @@ lbl_800BE4F8:
 /* 800BE500 000BB300  38 A1 00 08 */	addi r5, r1, 8
 /* 800BE504 000BB304  4B F8 D3 9D */	bl xSTFindAssetByType__FUiiPUi
 /* 800BE508 000BB308  57 C0 04 3E */	clrlwi r0, r30, 0x10
-/* 800BE50C 000BB30C  80 AD 91 70 */	lwz r5, lbl_803CBA70-_SDA_BASE_(r13)
+/* 800BE50C 000BB30C  80 AD 91 70 */	lwz r5, vols-_SDA_BASE_(r13)
 /* 800BE510 000BB310  1C 00 00 14 */	mulli r0, r0, 0x14
 /* 800BE514 000BB314  7C 64 1B 78 */	mr r4, r3
 /* 800BE518 000BB318  7C 65 02 14 */	add r3, r5, r0
 /* 800BE51C 000BB31C  4B FF FF 55 */	bl zVolumeInit__FP7zVolumeP12xVolumeAsset
 /* 800BE520 000BB320  3B DE 00 01 */	addi r30, r30, 1
 lbl_800BE524:
-/* 800BE524 000BB324  A0 0D 91 74 */	lhz r0, lbl_803CBA74-_SDA_BASE_(r13)
+/* 800BE524 000BB324  A0 0D 91 74 */	lhz r0, nvols-_SDA_BASE_(r13)
 /* 800BE528 000BB328  57 C3 04 3E */	clrlwi r3, r30, 0x10
 /* 800BE52C 000BB32C  7C 03 00 40 */	cmplw r3, r0
 /* 800BE530 000BB330  41 80 FF C8 */	blt lbl_800BE4F8
 /* 800BE534 000BB334  48 00 00 0C */	b lbl_800BE540
 lbl_800BE538:
 /* 800BE538 000BB338  38 00 00 00 */	li r0, 0
-/* 800BE53C 000BB33C  90 0D 91 70 */	stw r0, lbl_803CBA70-_SDA_BASE_(r13)
+/* 800BE53C 000BB33C  90 0D 91 70 */	stw r0, vols-_SDA_BASE_(r13)
 lbl_800BE540:
 /* 800BE540 000BB340  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800BE544 000BB344  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -70,43 +54,6 @@ lbl_800BE540:
 /* 800BE54C 000BB34C  7C 08 03 A6 */	mtlr r0
 /* 800BE550 000BB350  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BE554 000BB354  4E 80 00 20 */	blr 
-
-.global zVolumeSetup__Fv
-zVolumeSetup__Fv:
-/* 800BE558 000BB358  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800BE55C 000BB35C  7C 08 02 A6 */	mflr r0
-/* 800BE560 000BB360  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800BE564 000BB364  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800BE568 000BB368  3B E0 00 00 */	li r31, 0
-/* 800BE56C 000BB36C  93 C1 00 08 */	stw r30, 8(r1)
-/* 800BE570 000BB370  3B C0 00 00 */	li r30, 0
-/* 800BE574 000BB374  48 00 00 20 */	b lbl_800BE594
-lbl_800BE578:
-/* 800BE578 000BB378  80 6D 91 70 */	lwz r3, lbl_803CBA70-_SDA_BASE_(r13)
-/* 800BE57C 000BB37C  38 1F 00 10 */	addi r0, r31, 0x10
-/* 800BE580 000BB380  7C 63 00 2E */	lwzx r3, r3, r0
-/* 800BE584 000BB384  38 63 00 0C */	addi r3, r3, 0xc
-/* 800BE588 000BB388  4B F7 E6 99 */	bl xQuickCullForEverything__FP7xQCData
-/* 800BE58C 000BB38C  3B FF 00 14 */	addi r31, r31, 0x14
-/* 800BE590 000BB390  3B DE 00 01 */	addi r30, r30, 1
-lbl_800BE594:
-/* 800BE594 000BB394  A0 0D 91 74 */	lhz r0, lbl_803CBA74-_SDA_BASE_(r13)
-/* 800BE598 000BB398  7C 1E 00 40 */	cmplw r30, r0
-/* 800BE59C 000BB39C  41 80 FF DC */	blt lbl_800BE578
-/* 800BE5A0 000BB3A0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800BE5A4 000BB3A4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800BE5A8 000BB3A8  83 C1 00 08 */	lwz r30, 8(r1)
-/* 800BE5AC 000BB3AC  7C 08 03 A6 */	mtlr r0
-/* 800BE5B0 000BB3B0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800BE5B4 000BB3B4  4E 80 00 20 */	blr 
-
-.global zVolumeGetVolume__FUs
-zVolumeGetVolume__FUs:
-/* 800BE5B8 000BB3B8  54 60 04 3E */	clrlwi r0, r3, 0x10
-/* 800BE5BC 000BB3BC  80 6D 91 70 */	lwz r3, lbl_803CBA70-_SDA_BASE_(r13)
-/* 800BE5C0 000BB3C0  1C 00 00 14 */	mulli r0, r0, 0x14
-/* 800BE5C4 000BB3C4  7C 63 02 14 */	add r3, r3, r0
-/* 800BE5C8 000BB3C8  4E 80 00 20 */	blr 
 
 .global zVolume_OccludePrecalc__FP5xVec3
 zVolume_OccludePrecalc__FP5xVec3:
@@ -403,9 +350,11 @@ lbl_800BE9E4:
 .endif
 
 .section .sbss
-lbl_803CBA70:
+.global vols
+vols:
 	.skip 0x4
-lbl_803CBA74:
+.global nvols
+nvols:
 	.skip 0x4
 /* SPECULATION: link order */
 .global gOccludeCount
@@ -421,5 +370,6 @@ globalCamera:
 	.skip 0x4
 
 .section .sdata2
+.global lbl_803CDFB8
 lbl_803CDFB8:
 	.incbin "baserom.dol", 0x2B7858, 0x8

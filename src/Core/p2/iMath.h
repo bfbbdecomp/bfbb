@@ -3,6 +3,12 @@
 
 #include <types.h>
 
+#ifdef _MSC_VER
+#define __fabs
+#endif
+
+#define iabs __fabs
+
 float32 isin(float32 x);
 float32 icos(float32 x);
 float32 itan(float32 x);

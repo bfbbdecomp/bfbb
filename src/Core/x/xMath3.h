@@ -2,6 +2,7 @@
 #define XMATH3_H
 
 #include "xVec3.h"
+#include "xVec3Inlines.h"
 
 struct xMat3x3
 {
