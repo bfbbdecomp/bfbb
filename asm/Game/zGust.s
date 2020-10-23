@@ -13,8 +13,8 @@ zGustInit__FP5zGustP10zGustAsset:
 /* 8009AD64 00097B64  93 C1 00 08 */	stw r30, 8(r1)
 /* 8009AD68 00097B68  7C 7E 1B 78 */	mr r30, r3
 /* 8009AD6C 00097B6C  4B F6 E6 95 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8009AD70 00097B70  3C 60 80 0A */	lis r3, lbl_8009B310@ha
-/* 8009AD74 00097B74  38 03 B3 10 */	addi r0, r3, lbl_8009B310@l
+/* 8009AD70 00097B70  3C 60 80 0A */	lis r3, zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 8009AD74 00097B74  38 03 B3 10 */	addi r0, r3, zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8009AD78 00097B78  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8009AD7C 00097B7C  93 FE 00 14 */	stw r31, 0x14(r30)
 /* 8009AD80 00097B80  80 1F 00 08 */	lwz r0, 8(r31)
@@ -189,8 +189,9 @@ lbl_8009AFAC:
 /* 8009AFAC 00097DAC  38 60 00 00 */	li r3, 0
 /* 8009AFB0 00097DB0  4E 80 00 20 */	blr 
 
-.global func_8009AFB4
-func_8009AFB4:
+.global zGustUpdateEnt__FP4xEntP6xScenefPv
+
+zGustUpdateEnt__FP4xEntP6xScenefPv:
 /* 8009AFB4 00097DB4  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 8009AFB8 00097DB8  7C 08 02 A6 */	mflr r0
 /* 8009AFBC 00097DBC  90 01 00 94 */	stw r0, 0x94(r1)
@@ -434,7 +435,8 @@ zGustReset__FP5zGust:
 /* 8009B304 00098104  7C 08 03 A6 */	mtlr r0
 /* 8009B308 00098108  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009B30C 0009810C  4E 80 00 20 */	blr 
-lbl_8009B310:
+
+zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8009B310 00098110  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009B314 00098114  7C 08 02 A6 */	mflr r0
 /* 8009B318 00098118  2C 05 00 0F */	cmpwi r5, 0xf

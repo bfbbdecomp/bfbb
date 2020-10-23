@@ -9102,9 +9102,9 @@ lbl_8006E4E8:
 /* 8006E4F4 0006B2F4  80 03 00 F4 */	lwz r0, 0xf4(r3)
 /* 8006E4F8 0006B2F8  28 00 00 00 */	cmplwi r0, 0
 /* 8006E4FC 0006B2FC  41 82 00 1C */	beq lbl_8006E518
-/* 8006E500 0006B300  3C 60 80 0A */	lis r3, func_8009AFB4@ha
+/* 8006E500 0006B300  3C 60 80 0A */	lis r3, zGustUpdateEnt__FP4xEntP6xScenefPv@ha
 /* 8006E504 0006B304  3C A0 80 3C */	lis r5, gust_data@ha
-/* 8006E508 0006B308  38 83 AF B4 */	addi r4, r3, func_8009AFB4@l
+/* 8006E508 0006B308  38 83 AF B4 */	addi r4, r3, zGustUpdateEnt__FP4xEntP6xScenefPv@l
 /* 8006E50C 0006B30C  7F A3 EB 78 */	mr r3, r29
 /* 8006E510 0006B310  38 A5 F6 00 */	addi r5, r5, gust_data@l
 /* 8006E514 0006B314  4B FB 14 B1 */	bl xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv
@@ -12712,9 +12712,9 @@ lbl_800718EC:
 /* 800719B8 0006E7B8  80 03 00 F4 */	lwz r0, 0xf4(r3)
 /* 800719BC 0006E7BC  28 00 00 00 */	cmplwi r0, 0
 /* 800719C0 0006E7C0  41 82 00 7C */	beq lbl_80071A3C
-/* 800719C4 0006E7C4  3C 60 80 0A */	lis r3, func_8009AFB4@ha
+/* 800719C4 0006E7C4  3C 60 80 0A */	lis r3, zGustUpdateEnt__FP4xEntP6xScenefPv@ha
 /* 800719C8 0006E7C8  83 9A 00 B4 */	lwz r28, 0xb4(r26)
-/* 800719CC 0006E7CC  3B 23 AF B4 */	addi r25, r3, func_8009AFB4@l
+/* 800719CC 0006E7CC  3B 23 AF B4 */	addi r25, r3, zGustUpdateEnt__FP4xEntP6xScenefPv@l
 /* 800719D0 0006E7D0  48 00 00 60 */	b lbl_80071A30
 lbl_800719D4:
 /* 800719D4 0006E7D4  80 1C 00 04 */	lwz r0, 4(r28)
