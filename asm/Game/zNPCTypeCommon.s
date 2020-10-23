@@ -39,6 +39,8 @@ lbl_800EEEAC:
 /* 800EEEB4 000EBCB4  7C 08 03 A6 */	mtlr r0
 /* 800EEEB8 000EBCB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EEEBC 000EBCBC  4E 80 00 20 */	blr 
+
+ZNPC_Destroy_Common__FP12xFactoryInst:
 /* 800EEEC0 000EBCC0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800EEEC4 000EBCC4  7C 08 02 A6 */	mflr r0
 /* 800EEEC8 000EBCC8  38 80 00 01 */	li r4, 1
@@ -1285,6 +1287,8 @@ lbl_800EFFE4:
 /* 800EFFF8 000ECDF8  7C 08 03 A6 */	mtlr r0
 /* 800EFFFC 000ECDFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F0000 000ECE00  4E 80 00 20 */	blr 
+
+Move__10zNPCCommonFP6xScenefP9xEntFrame:
 /* 800F0004 000ECE04  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F0008 000ECE08  7C 08 02 A6 */	mflr r0
 /* 800F000C 000ECE0C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2922,6 +2926,8 @@ lbl_800F16E8:
 /* 800F170C 000EE50C  7C 08 03 A6 */	mtlr r0
 /* 800F1710 000EE510  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F1714 000EE514  4E 80 00 20 */	blr 
+
+ParseProps__10zNPCCommonFv:
 /* 800F1718 000EE518  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800F171C 000EE51C  7C 08 02 A6 */	mflr r0
 /* 800F1720 000EE520  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3116,6 +3122,8 @@ lbl_800F199C:
 lbl_800F19A4:
 /* 800F19A4 000EE7A4  38 60 00 00 */	li r3, 0
 /* 800F19A8 000EE7A8  4E 80 00 20 */	blr 
+
+SelfDestroy__10zNPCCommonFv:
 /* 800F19AC 000EE7AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800F19B0 000EE7B0  7C 08 02 A6 */	mflr r0
 /* 800F19B4 000EE7B4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3912,6 +3920,8 @@ GetParm__10zNPCCommonF10en_npcparmPP10zMovePoint:
 /* 800F243C 000EF23C  7C 08 03 A6 */	mtlr r0
 /* 800F2440 000EF240  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F2444 000EF244  4E 80 00 20 */	blr 
+
+GetParm__10zNPCCommonF10en_npcparmPv:
 /* 800F2448 000EF248  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F244C 000EF24C  7C 08 02 A6 */	mflr r0
 /* 800F2450 000EF250  3C C0 80 29 */	lis r6, lbl_80294F48@ha
@@ -4011,6 +4021,8 @@ lbl_800F25BC:
 /* 800F25C4 000EF3C4  7C 08 03 A6 */	mtlr r0
 /* 800F25C8 000EF3C8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F25CC 000EF3CC  4E 80 00 20 */	blr 
+
+GetParmDefault__10zNPCCommonF10en_npcparmPv:
 /* 800F25D0 000EF3D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800F25D4 000EF3D4  7C 08 02 A6 */	mflr r0
 /* 800F25D8 000EF3D8  28 04 00 42 */	cmplwi r4, 0x42
@@ -6131,6 +6143,8 @@ lbl_800F4230:
 .global AddDEVGoals__10zNPCCommonFP7xPsyche
 AddDEVGoals__10zNPCCommonFP7xPsyche:
 /* 800F4244 000F1044  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_Common__Fv:
 /* 800F4248 000F1048  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800F424C 000F104C  7C 08 02 A6 */	mflr r0
 /* 800F4250 000F1050  3C 60 80 27 */	lis r3, lbl_80268CC0@ha
@@ -6166,6 +6180,8 @@ AddDEVGoals__10zNPCCommonFP7xPsyche:
 /* 800F42C8 000F10C8  7C 08 03 A6 */	mtlr r0
 /* 800F42CC 000F10CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F42D0 000F10D0  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_LassoGuide__Fv:
 /* 800F42D4 000F10D4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F42D8 000F10D8  7C 08 02 A6 */	mflr r0
 /* 800F42DC 000F10DC  3C 60 80 27 */	lis r3, lbl_80268CC0@ha
@@ -6407,6 +6423,8 @@ DBG_Name__10zNPCCommonFv:
 .global DBG_AddTweakers__10zNPCCommonFv
 DBG_AddTweakers__10zNPCCommonFv:
 /* 800F4638 000F1438  4E 80 00 20 */	blr 
+
+SelfSetup__10zNPCCommonFv:
 /* 800F463C 000F143C  4E 80 00 20 */	blr 
 
 .global DBG_RptDataSize__10zNPCCommonFv
@@ -6423,6 +6441,8 @@ DBG_InstName__10zNPCCommonFv:
 /* 800F4658 000F1458  7C 08 03 A6 */	mtlr r0
 /* 800F465C 000F145C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F4660 000F1460  4E 80 00 20 */	blr 
+
+PRIV_GetDriverData__10zNPCCommonFv:
 /* 800F4664 000F1464  38 60 00 00 */	li r3, 0
 /* 800F4668 000F1468  4E 80 00 20 */	blr 
 
@@ -6446,6 +6466,8 @@ AnimGetTable__10zNPCCommonFv:
 /* 800F469C 000F149C  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 800F46A0 000F14A0  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 800F46A4 000F14A4  4E 80 00 20 */	blr 
+
+PRIV_GetLassoData__10zNPCCommonFv:
 /* 800F46A8 000F14A8  38 60 00 00 */	li r3, 0
 /* 800F46AC 000F14AC  4E 80 00 20 */	blr 
 
@@ -6453,10 +6475,20 @@ AnimGetTable__10zNPCCommonFv:
 DuploOwner__10zNPCCommonFP10zNPCCommon:
 /* 800F46B0 000F14B0  90 83 02 2C */	stw r4, 0x22c(r3)
 /* 800F46B4 000F14B4  4E 80 00 20 */	blr 
+
+SpeakBegin__10zNPCCommonFv:
 /* 800F46B8 000F14B8  4E 80 00 20 */	blr 
+
+SpeakEnd__10zNPCCommonFv:
 /* 800F46BC 000F14BC  4E 80 00 20 */	blr 
+
+SpeakStart__10zNPCCommonFUiUii:
 /* 800F46C0 000F14C0  4E 80 00 20 */	blr 
+
+SpeakStop__10zNPCCommonFv:
 /* 800F46C4 000F14C4  4E 80 00 20 */	blr 
+
+GenShadCacheRad__10zNPCCommonFv:
 /* 800F46C8 000F14C8  C0 22 9B 40 */	lfs f1, lbl_803CE4C0-_SDA2_BASE_(r2)
 /* 800F46CC 000F14CC  4E 80 00 20 */	blr 
 
@@ -6503,6 +6535,8 @@ DBG_PStatOn__9xNPCBasicF10en_npcperf:
 .global DBG_PStatCont__9xNPCBasicF10en_npcperf
 DBG_PStatCont__9xNPCBasicF10en_npcperf:
 /* 800F4734 000F1534  4E 80 00 20 */	blr 
+
+PostInit__9xNPCBasicFv:
 /* 800F4738 000F1538  4E 80 00 20 */	blr 
 
 .global Render__9xNPCBasicFv
