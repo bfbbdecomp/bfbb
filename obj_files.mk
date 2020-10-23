@@ -139,6 +139,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zEntButton.o                \
     $(OBJ_DIR)/src/Game/zEntButton.o                \
     $(OBJ_DIR)/asm/Game/zEntCruiseBubble.o          \
+    $(OBJ_DIR)/src/Game/zEntCruiseBubble.o          \
     $(OBJ_DIR)/asm/Game/zEntDestructObj.o           \
     $(OBJ_DIR)/src/Game/zEntDestructObj.o           \
     $(OBJ_DIR)/asm/Game/zEntHangable.o              \

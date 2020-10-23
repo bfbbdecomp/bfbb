@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8005720C - 0x800609B4
 
 /* init_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
@@ -10861,6 +10863,9 @@ lbl_800609A0:
 /* 800609A8 0005D7A8  7C 08 03 A6 */	mtlr r0
 /* 800609AC 0005D7AC  38 21 00 60 */	addi r1, r1, 0x60
 /* 800609B0 0005D7B0  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_802550B8:
 	.incbin "baserom.dol", 0x252098, 0xC
