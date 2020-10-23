@@ -4,7 +4,8 @@
 
 .section .text  # 0x800C2EAC - 0x800C3300
 
-some_bullshit_function_rename_me:
+
+SetPipelineCB__FP8RpAtomicPv:
 /* 800C2EAC 000BFCAC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C2EB0 000BFCB0  7C 08 02 A6 */	mflr r0
 /* 800C2EB4 000BFCB4  90 01 00 14 */	stw r0, 0x14(r1)

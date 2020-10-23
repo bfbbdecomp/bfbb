@@ -1417,7 +1417,8 @@ lbl_80017284:
 /* 8001729C 0001409C  7C 08 03 A6 */	mtlr r0
 /* 800172A0 000140A0  38 21 02 50 */	addi r1, r1, 0x250
 /* 800172A4 000140A4  4E 80 00 20 */	blr 
-lbl_800172A8:
+
+CutsceneShadowRender__FP19CutsceneShadowModel:
 /* 800172A8 000140A8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800172AC 000140AC  7C 08 02 A6 */	mflr r0
 /* 800172B0 000140B0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2047,8 +2048,8 @@ lbl_80017B0C:
 /* 80017BB8 000149B8  38 81 00 14 */	addi r4, r1, 0x14
 /* 80017BBC 000149BC  48 02 F4 15 */	bl xShadowVertical_FillCache__FP12xShadowCacheP5xVec3fff
 /* 80017BC0 000149C0  FC 20 E8 90 */	fmr f1, f29
-/* 80017BC4 000149C4  3C 60 80 01 */	lis r3, lbl_800172A8@ha
-/* 80017BC8 000149C8  38 83 72 A8 */	addi r4, r3, lbl_800172A8@l
+/* 80017BC4 000149C4  3C 60 80 01 */	lis r3, CutsceneShadowRender__FP19CutsceneShadowModel@ha
+/* 80017BC8 000149C8  38 83 72 A8 */	addi r4, r3, CutsceneShadowRender__FP19CutsceneShadowModel@l
 /* 80017BCC 000149CC  38 A1 00 14 */	addi r5, r1, 0x14
 /* 80017BD0 000149D0  38 61 00 20 */	addi r3, r1, 0x20
 /* 80017BD4 000149D4  38 C0 00 00 */	li r6, 0
@@ -2155,7 +2156,11 @@ xVec3Lerp__FP5xVec3PC5xVec3PC5xVec3f:
 /* 80017D28 00014B28  D0 43 00 04 */	stfs f2, 4(r3)
 /* 80017D2C 00014B2C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80017D30 00014B30  4E 80 00 20 */	blr 
+
+CanRenderNow__9XCSNNoseyFv:
 /* 80017D34 00014B34  4E 80 00 20 */	blr 
+
+UpdatedAnimated__9XCSNNoseyFP8RpAtomicP11RwMatrixTagUiUi:
 /* 80017D38 00014B38  4E 80 00 20 */	blr 
 
 .endif

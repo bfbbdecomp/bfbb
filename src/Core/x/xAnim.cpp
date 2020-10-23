@@ -98,7 +98,7 @@ float32 xatan2(float32 y, float32 x)
     return xAngleClampFast(std::atan2f(y, x));
 }
 
-// CalcRecipBlendMax(unsigned short*)
+// func_800060B8
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "CalcRecipBlendMax__FPUs")
 
 float CalcRecipBlendMax(uint16*);
@@ -182,7 +182,7 @@ static void TransitionTimeInit(xAnimSingle* single, xAnimTransition* tran)
 }
 #endif
 
-// xAnimFileNewBilinear(void**,const char*,unsigned int,xAnimFile**,unsigned int,unsigned int)
+// func_80006300
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi")
 
 xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, uint32 flags,
@@ -193,10 +193,10 @@ xAnimFile* xAnimFileNew(void* rawData, const char* name, uint32 flags, xAnimFile
     return xAnimFileNewBilinear(&rawData, name, flags, linkedList, 1, 1);
 }
 
-// xAnimFileSetTime(xAnimFile*,float,float)
+// func_80006598
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimFileSetTime__FP9xAnimFileff")
 
-// xAnimFileEval(xAnimFile*,float,float*,unsigned int,xVec3*,xQuat*,float*)
+// func_80006658
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf")
 
 void xAnimFileEval(xAnimFile* data, float32 time, float32* bilinear, uint32 flags, xVec3* tran,
@@ -364,7 +364,7 @@ void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const cha
     "asm/Core/x/xAnim.s",                                                                          \
     "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs")
 
-// xAnimTableAddFile(xAnimTable*,xAnimFile*,const char*)
+// func_80007574
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc")
 
 xAnimState* xAnimTableGetStateID(xAnimTable* table, uint32 ID);
@@ -615,7 +615,7 @@ static void EffectSingleRun(xAnimSingle* single)
     single->Effect = effect;
 }
 
-// EffectSingleLoop(xAnimSingle*)
+// func_80007C68
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "EffectSingleLoop__FP11xAnimSingle")
 
 void EffectSingleLoop(xAnimSingle* single);
@@ -643,10 +643,10 @@ static void LoopUpdate(xAnimSingle* single)
     }
 }
 
-// xAnimPlaySetState(xAnimSingle*,xAnimState*,float)
+// func_80007F1C
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef")
 
-// SingleUpdate(xAnimSingle*,float)
+// func_8000804C
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "SingleUpdate__FP11xAnimSinglef")
 
 void SingleUpdate(xAnimSingle* single, float32 timeDelta);
@@ -727,7 +727,7 @@ void xAnimPlayChooseTransition(xAnimPlay* play)
     }
 }
 
-// xAnimPlayStartTransition(xAnimPlay*,xAnimTransition*)
+// func_80008A44
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition")
 
 void xAnimPlayUpdate(xAnimPlay* play, float32 timeDelta)
@@ -748,7 +748,7 @@ void xAnimPlayUpdate(xAnimPlay* play, float32 timeDelta)
     }
 }
 
-// xAnimPlayEval(xAnimPlay*)
+// func_80008D08
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimPlayEval__FP9xAnimPlay")
 
 void xAnimPoolCB(xMemPool* pool, void* data)
@@ -814,7 +814,7 @@ void xAnimPoolCB(xMemPool* pool, void* data)
     clone->Pool = pool;
 }
 
-// xAnimPoolInit(xMemPool*,unsigned int,unsigned int,unsigned int,unsigned int)
+// func_800090BC
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "xAnimPoolInit__FP8xMemPoolUiUiUiUi")
 
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,

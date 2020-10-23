@@ -2,21 +2,17 @@
 
 #include <types.h>
 
-#include "xEnt.h"
+// func_8010EED8
+#pragma GLOBAL_ASM("asm/Core/x/xSkyDome.s", "xSkyDome_EmptyRender__FP4xEnt")
 
-void xSkyDome_EmptyRender(xEnt* ent)
-{
-    return;
-}
-
-// xSkyDome_Setup()
+// func_8010EEDC
 #pragma GLOBAL_ASM("asm/Core/x/xSkyDome.s", "xSkyDome_Setup__Fv")
 
-// xSkyDome_AddEntity(xEnt*,int,int)
+// func_8010EEE8
 #pragma GLOBAL_ASM("asm/Core/x/xSkyDome.s", "xSkyDome_AddEntity__FP4xEntii")
 
-// SkyDomeInfo::operator =(const SkyDomeInfo&)
+// func_8010F018
 #pragma GLOBAL_ASM("asm/Core/x/xSkyDome.s", "__as__11SkyDomeInfoFRC11SkyDomeInfo")
 
-// xSkyDome_Render()
+// func_8010F034
 #pragma GLOBAL_ASM("asm/Core/x/xSkyDome.s", "xSkyDome_Render__Fv")

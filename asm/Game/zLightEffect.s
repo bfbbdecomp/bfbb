@@ -60,10 +60,20 @@ leGetRandom__Fv:
 /* 8009E8A8 0009B6A8  7C 08 03 A6 */	mtlr r0
 /* 8009E8AC 0009B6AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E8B0 0009B6B0  4E 80 00 20 */	blr 
+
+zLightEffectInitStrobe__FP7_zLight:
 /* 8009E8B4 0009B6B4  4E 80 00 20 */	blr 
+
+zLightEffectInitDim__FP7_zLight:
 /* 8009E8B8 0009B6B8  4E 80 00 20 */	blr 
+
+zLightEffectInitHalfDim__FP7_zLight:
 /* 8009E8BC 0009B6BC  4E 80 00 20 */	blr 
+
+zLightEffectInitRandomCol__FP7_zLight:
 /* 8009E8C0 0009B6C0  4E 80 00 20 */	blr 
+
+zLightEffectInitFlicker__FP7_zLight:
 /* 8009E8C4 0009B6C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009E8C8 0009B6C8  7C 08 02 A6 */	mflr r0
 /* 8009E8CC 0009B6CC  38 80 00 01 */	li r4, 1
@@ -182,6 +192,8 @@ lbl_8009EA4C:
 /* 8009EA6C 0009B86C  7C 08 03 A6 */	mtlr r0
 /* 8009EA70 0009B870  38 21 00 40 */	addi r1, r1, 0x40
 /* 8009EA74 0009B874  4E 80 00 20 */	blr 
+
+zLightEffectFlicker__FP7_zLightf:
 /* 8009EA78 0009B878  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009EA7C 0009B87C  7C 08 02 A6 */	mflr r0
 /* 8009EA80 0009B880  90 01 00 14 */	stw r0, 0x14(r1)
@@ -192,6 +204,8 @@ lbl_8009EA4C:
 /* 8009EA94 0009B894  7C 08 03 A6 */	mtlr r0
 /* 8009EA98 0009B898  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009EA9C 0009B89C  4E 80 00 20 */	blr 
+
+zLightEffectFlickerSlow__FP7_zLightf:
 /* 8009EAA0 0009B8A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009EAA4 0009B8A4  7C 08 02 A6 */	mflr r0
 /* 8009EAA8 0009B8A8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -202,6 +216,8 @@ lbl_8009EA4C:
 /* 8009EABC 0009B8BC  7C 08 03 A6 */	mtlr r0
 /* 8009EAC0 0009B8C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009EAC4 0009B8C4  4E 80 00 20 */	blr 
+
+zLightEffectFlickerErratic__FP7_zLightf:
 /* 8009EAC8 0009B8C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009EACC 0009B8CC  7C 08 02 A6 */	mflr r0
 /* 8009EAD0 0009B8D0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -212,18 +228,44 @@ lbl_8009EA4C:
 /* 8009EAE4 0009B8E4  7C 08 03 A6 */	mtlr r0
 /* 8009EAE8 0009B8E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009EAEC 0009B8EC  4E 80 00 20 */	blr 
+
+zLightEffectStrobeSlow__FP7_zLightf:
 /* 8009EAF0 0009B8F0  4E 80 00 20 */	blr 
+
+zLightEffectStrobe__FP7_zLightf:
 /* 8009EAF4 0009B8F4  4E 80 00 20 */	blr 
+
+zLightEffectStrobeFast__FP7_zLightf:
 /* 8009EAF8 0009B8F8  4E 80 00 20 */	blr 
+
+zLightEffectDimSlow__FP7_zLightf:
 /* 8009EAFC 0009B8FC  4E 80 00 20 */	blr 
+
+zLightEffectDim__FP7_zLightf:
 /* 8009EB00 0009B900  4E 80 00 20 */	blr 
+
+zLightEffectDimFast__FP7_zLightf:
 /* 8009EB04 0009B904  4E 80 00 20 */	blr 
+
+zLightEffectHalfDimSlow__FP7_zLightf:
 /* 8009EB08 0009B908  4E 80 00 20 */	blr 
+
+zLightEffectHalfDim__FP7_zLightf:
 /* 8009EB0C 0009B90C  4E 80 00 20 */	blr 
+
+zLightEffectHalfDimFast__FP7_zLightf:
 /* 8009EB10 0009B910  4E 80 00 20 */	blr 
+
+zLightEffectRandomColSlow__FP7_zLightf:
 /* 8009EB14 0009B914  4E 80 00 20 */	blr 
+
+zLightEffectRandomCol__FP7_zLightf:
 /* 8009EB18 0009B918  4E 80 00 20 */	blr 
+
+zLightEffectRandomColFast__FP7_zLightf:
 /* 8009EB1C 0009B91C  4E 80 00 20 */	blr 
+
+zLightEffectInitCauldron__FP7_zLight:
 /* 8009EB20 0009B920  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009EB24 0009B924  7C 08 02 A6 */	mflr r0
 /* 8009EB28 0009B928  38 80 00 01 */	li r4, 1
@@ -252,6 +294,8 @@ lbl_8009EB6C:
 /* 8009EB78 0009B978  4C 81 00 20 */	blelr 
 /* 8009EB7C 0009B97C  FC 20 10 90 */	fmr f1, f2
 /* 8009EB80 0009B980  4E 80 00 20 */	blr 
+
+zLightEffectCauldron__FP7_zLightf:
 /* 8009EB84 0009B984  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8009EB88 0009B988  7C 08 02 A6 */	mflr r0
 /* 8009EB8C 0009B98C  90 01 00 24 */	stw r0, 0x24(r1)

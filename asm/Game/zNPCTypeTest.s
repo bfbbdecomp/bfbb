@@ -37,6 +37,8 @@ lbl_80135AF8:
 .global ZNPC_Test_Shutdown__Fv
 ZNPC_Test_Shutdown__Fv:
 /* 80135B34 00132934  4E 80 00 20 */	blr 
+
+ZNPC_Create_Test__FiP10RyzMemGrowPv:
 /* 80135B38 00132938  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80135B3C 0013293C  7C 08 02 A6 */	mflr r0
 /* 80135B40 00132940  3C A0 4E 54 */	lis r5, 0x4E545334@ha
@@ -70,6 +72,8 @@ lbl_80135B98:
 /* 80135BA0 001329A0  7C 08 03 A6 */	mtlr r0
 /* 80135BA4 001329A4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80135BA8 001329A8  4E 80 00 20 */	blr 
+
+ZNPC_Destroy_Test__FP12xFactoryInst:
 /* 80135BAC 001329AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80135BB0 001329B0  7C 08 02 A6 */	mflr r0
 /* 80135BB4 001329B4  38 80 00 01 */	li r4, 1
@@ -79,6 +83,8 @@ lbl_80135B98:
 /* 80135BC4 001329C4  7C 08 03 A6 */	mtlr r0
 /* 80135BC8 001329C8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80135BCC 001329CC  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_Test__Fv:
 /* 80135BD0 001329D0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80135BD4 001329D4  7C 08 02 A6 */	mflr r0
 /* 80135BD8 001329D8  3C 60 80 27 */	lis r3, lbl_8026CA50@ha
@@ -185,6 +191,8 @@ __ct__8zNPCTestFi:
 /* 80135D50 00132B50  7C 08 03 A6 */	mtlr r0
 /* 80135D54 00132B54  38 21 00 10 */	addi r1, r1, 0x10
 /* 80135D58 00132B58  4E 80 00 20 */	blr 
+
+Reset__8zNPCTestFv:
 /* 80135D5C 00132B5C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80135D60 00132B60  7C 08 02 A6 */	mflr r0
 /* 80135D64 00132B64  90 01 00 14 */	stw r0, 0x14(r1)
@@ -198,6 +206,8 @@ __ct__8zNPCTestFi:
 /* 80135D84 00132B84  7C 08 03 A6 */	mtlr r0
 /* 80135D88 00132B88  38 21 00 10 */	addi r1, r1, 0x10
 /* 80135D8C 00132B8C  4E 80 00 20 */	blr 
+
+Process__8zNPCTestFP6xScenef:
 /* 80135D90 00132B90  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80135D94 00132B94  7C 08 02 A6 */	mflr r0
 /* 80135D98 00132B98  90 01 00 24 */	stw r0, 0x24(r1)
@@ -255,6 +265,8 @@ lbl_80135E34:
 /* 80135E58 00132C58  7C 08 03 A6 */	mtlr r0
 /* 80135E5C 00132C5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80135E60 00132C60  4E 80 00 20 */	blr 
+
+SelfSetup__8zNPCTestFv:
 /* 80135E64 00132C64  38 00 00 00 */	li r0, 0
 /* 80135E68 00132C68  90 03 02 A4 */	stw r0, 0x2a4(r3)
 /* 80135E6C 00132C6C  80 83 01 D8 */	lwz r4, 0x1d8(r3)
@@ -263,6 +275,8 @@ lbl_80135E34:
 /* 80135E78 00132C78  C0 02 A3 80 */	lfs f0, lbl_803CED00-_SDA2_BASE_(r2)
 /* 80135E7C 00132C7C  D0 03 02 A8 */	stfs f0, 0x2a8(r3)
 /* 80135E80 00132C80  4E 80 00 20 */	blr 
+
+AnimPick__8zNPCTestFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 80135E84 00132C84  80 03 02 A4 */	lwz r0, 0x2a4(r3)
 /* 80135E88 00132C88  3C 60 80 2A */	lis r3, g_hash_testanim@ha
 /* 80135E8C 00132C8C  38 63 8F B8 */	addi r3, r3, g_hash_testanim@l

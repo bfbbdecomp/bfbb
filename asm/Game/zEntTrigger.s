@@ -91,12 +91,12 @@ zEntTriggerInit__FP11zEntTriggerP9xEntAsset:
 /* 800921B0 0008EFB0  D0 1D 01 1C */	stfs f0, 0x11c(r29)
 lbl_800921B4:
 /* 800921B4 0008EFB4  38 80 00 00 */	li r4, 0
-/* 800921B8 0008EFB8  3C 60 80 09 */	lis r3, lbl_80092218@ha
+/* 800921B8 0008EFB8  3C 60 80 09 */	lis r3, zEntTriggerUpdate__FP11zEntTriggerP6xScenef@ha
 /* 800921BC 0008EFBC  90 9D 00 40 */	stw r4, 0x40(r29)
-/* 800921C0 0008EFC0  38 03 22 18 */	addi r0, r3, lbl_80092218@l
-/* 800921C4 0008EFC4  3C 60 80 09 */	lis r3, lbl_800924D4@ha
+/* 800921C0 0008EFC0  38 03 22 18 */	addi r0, r3, zEntTriggerUpdate__FP11zEntTriggerP6xScenef@l
+/* 800921C4 0008EFC4  3C 60 80 09 */	lis r3, zEntTriggerEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800921C8 0008EFC8  90 1D 00 34 */	stw r0, 0x34(r29)
-/* 800921CC 0008EFCC  38 03 24 D4 */	addi r0, r3, lbl_800924D4@l
+/* 800921CC 0008EFCC  38 03 24 D4 */	addi r0, r3, zEntTriggerEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800921D0 0008EFD0  90 1D 00 0C */	stw r0, 0xc(r29)
 /* 800921D4 0008EFD4  88 1D 00 05 */	lbz r0, 5(r29)
 /* 800921D8 0008EFD8  28 00 00 00 */	cmplwi r0, 0
@@ -117,7 +117,8 @@ lbl_800921F4:
 /* 8009220C 0008F00C  7C 08 03 A6 */	mtlr r0
 /* 80092210 0008F010  38 21 00 40 */	addi r1, r1, 0x40
 /* 80092214 0008F014  4E 80 00 20 */	blr 
-lbl_80092218:
+
+zEntTriggerUpdate__FP11zEntTriggerP6xScenef:
 /* 80092218 0008F018  94 21 FE F0 */	stwu r1, -0x110(r1)
 /* 8009221C 0008F01C  7C 08 02 A6 */	mflr r0
 /* 80092220 0008F020  90 01 01 14 */	stw r0, 0x114(r1)
@@ -308,7 +309,8 @@ lbl_800924C0:
 /* 800924C8 0008F2C8  7C 08 03 A6 */	mtlr r0
 /* 800924CC 0008F2CC  38 21 01 10 */	addi r1, r1, 0x110
 /* 800924D0 0008F2D0  4E 80 00 20 */	blr 
-lbl_800924D4:
+
+zEntTriggerEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800924D4 0008F2D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800924D8 0008F2D8  7C 08 02 A6 */	mflr r0
 /* 800924DC 0008F2DC  2C 05 00 0A */	cmpwi r5, 0xa

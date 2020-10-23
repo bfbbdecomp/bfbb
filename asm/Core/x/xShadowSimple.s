@@ -67,7 +67,8 @@ lbl_801392D8:
 /* 801392F0 001360F0  7C 08 03 A6 */	mtlr r0
 /* 801392F4 001360F4  38 21 00 40 */	addi r1, r1, 0x40
 /* 801392F8 001360F8  4E 80 00 20 */	blr 
-lbl_801392FC:
+
+shadowRayModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv:
 /* 801392FC 001360FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80139300 00136100  7C 08 02 A6 */	mflr r0
 /* 80139304 00136104  7C A6 2B 78 */	mr r6, r5
@@ -79,7 +80,8 @@ lbl_801392FC:
 /* 8013931C 0013611C  7C 08 03 A6 */	mtlr r0
 /* 80139320 00136120  38 21 00 10 */	addi r1, r1, 0x10
 /* 80139324 00136124  4E 80 00 20 */	blr 
-lbl_80139328:
+
+shadowRayEntCB__FP4xEntPv:
 /* 80139328 00136128  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8013932C 0013612C  7C 08 02 A6 */	mflr r0
 /* 80139330 00136130  90 01 00 44 */	stw r0, 0x44(r1)
@@ -271,8 +273,8 @@ lbl_801395F4:
 /* 80139608 00136408  80 9D 00 4C */	lwz r4, 0x4c(r29)
 /* 8013960C 0013640C  48 0F FD 71 */	bl RwFrameTransform
 /* 80139610 00136410  80 1D 00 4C */	lwz r0, 0x4c(r29)
-/* 80139614 00136414  3C 60 80 14 */	lis r3, lbl_801392FC@ha
-/* 80139618 00136418  38 A3 92 FC */	addi r5, r3, lbl_801392FC@l
+/* 80139614 00136414  3C 60 80 14 */	lis r3, shadowRayModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv@ha
+/* 80139618 00136418  38 A3 92 FC */	addi r5, r3, shadowRayModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv@l
 /* 8013961C 0013641C  90 0D 96 58 */	stw r0, lbl_803CBF58-_SDA_BASE_(r13)
 /* 80139620 00136420  80 7D 00 10 */	lwz r3, 0x10(r29)
 /* 80139624 00136424  80 9F 00 04 */	lwz r4, 4(r31)
@@ -365,17 +367,17 @@ lbl_8013975C:
 /* 80139764 00136564  48 00 0E 39 */	bl xQuickCullForLine__FP7xQCDataPC6xLine3
 /* 80139768 00136568  38 81 00 30 */	addi r4, r1, 0x30
 /* 8013976C 0013656C  3C 60 80 3D */	lis r3, colls_grid@ha
-/* 80139770 00136570  3C A0 80 14 */	lis r5, lbl_80139328@ha
+/* 80139770 00136570  3C A0 80 14 */	lis r5, shadowRayEntCB__FP4xEntPv@ha
 /* 80139774 00136574  93 E1 00 08 */	stw r31, 8(r1)
-/* 80139778 00136578  38 C5 93 28 */	addi r6, r5, lbl_80139328@l
+/* 80139778 00136578  38 C5 93 28 */	addi r6, r5, shadowRayEntCB__FP4xEntPv@l
 /* 8013977C 0013657C  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 80139780 00136580  90 81 00 0C */	stw r4, 0xc(r1)
 /* 80139784 00136584  38 A1 00 10 */	addi r5, r1, 0x10
 /* 80139788 00136588  38 E1 00 08 */	addi r7, r1, 8
 /* 8013978C 0013658C  4B FE 91 E1 */	bl xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv
 /* 80139790 00136590  3C 60 80 3D */	lis r3, colls_oso_grid@ha
-/* 80139794 00136594  3C A0 80 14 */	lis r5, lbl_80139328@ha
-/* 80139798 00136598  38 C5 93 28 */	addi r6, r5, lbl_80139328@l
+/* 80139794 00136594  3C A0 80 14 */	lis r5, shadowRayEntCB__FP4xEntPv@ha
+/* 80139798 00136598  38 C5 93 28 */	addi r6, r5, shadowRayEntCB__FP4xEntPv@l
 /* 8013979C 0013659C  38 81 00 30 */	addi r4, r1, 0x30
 /* 801397A0 001365A0  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 801397A4 001365A4  38 A1 00 10 */	addi r5, r1, 0x10
@@ -385,8 +387,8 @@ lbl_8013975C:
 /* 801397B4 001365B4  54 00 07 39 */	rlwinm. r0, r0, 0, 0x1c, 0x1c
 /* 801397B8 001365B8  41 82 00 24 */	beq lbl_801397DC
 /* 801397BC 001365BC  3C 60 80 3D */	lis r3, npcs_grid@ha
-/* 801397C0 001365C0  3C A0 80 14 */	lis r5, lbl_80139328@ha
-/* 801397C4 001365C4  38 C5 93 28 */	addi r6, r5, lbl_80139328@l
+/* 801397C0 001365C0  3C A0 80 14 */	lis r5, shadowRayEntCB__FP4xEntPv@ha
+/* 801397C4 001365C4  38 C5 93 28 */	addi r6, r5, shadowRayEntCB__FP4xEntPv@l
 /* 801397C8 001365C8  38 81 00 30 */	addi r4, r1, 0x30
 /* 801397CC 001365CC  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 801397D0 001365D0  38 A1 00 10 */	addi r5, r1, 0x10

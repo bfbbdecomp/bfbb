@@ -162,6 +162,8 @@ lbl_800629EC:
 .global zEntPickup_Startup__Fv
 zEntPickup_Startup__Fv:
 /* 80062A08 0005F808  4E 80 00 20 */	blr 
+
+zEntPickupInit__FPvPv:
 /* 80062A0C 0005F80C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80062A10 0005F810  7C 08 02 A6 */	mflr r0
 /* 80062A14 0005F814  90 01 00 14 */	stw r0, 0x14(r1)
@@ -212,13 +214,13 @@ lbl_80062AA4:
 /* 80062AA8 0005F8A8  7C 05 00 40 */	cmplw r5, r0
 /* 80062AAC 0005F8AC  41 80 FF D4 */	blt lbl_80062A80
 /* 80062AB0 0005F8B0  38 C0 00 00 */	li r6, 0
-/* 80062AB4 0005F8B4  3C A0 80 06 */	lis r5, lbl_80063C9C@ha
+/* 80062AB4 0005F8B4  3C A0 80 06 */	lis r5, zEntPickup_Update__FP10zEntPickupP6xScenef@ha
 /* 80062AB8 0005F8B8  98 DC 00 1B */	stb r6, 0x1b(r28)
-/* 80062ABC 0005F8BC  3C 80 80 06 */	lis r4, lbl_80062F28@ha
+/* 80062ABC 0005F8BC  3C 80 80 06 */	lis r4, zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80062AC0 0005F8C0  3C 60 80 3C */	lis r3, globals@ha
-/* 80062AC4 0005F8C4  38 A5 3C 9C */	addi r5, r5, lbl_80063C9C@l
+/* 80062AC4 0005F8C4  38 A5 3C 9C */	addi r5, r5, zEntPickup_Update__FP10zEntPickupP6xScenef@l
 /* 80062AC8 0005F8C8  98 DC 00 22 */	stb r6, 0x22(r28)
-/* 80062ACC 0005F8CC  38 04 2F 28 */	addi r0, r4, lbl_80062F28@l
+/* 80062ACC 0005F8CC  38 04 2F 28 */	addi r0, r4, zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80062AD0 0005F8D0  3B 63 05 58 */	addi r27, r3, globals@l
 /* 80062AD4 0005F8D4  98 DC 00 23 */	stb r6, 0x23(r28)
 /* 80062AD8 0005F8D8  90 BC 00 34 */	stw r5, 0x34(r28)
@@ -524,7 +526,8 @@ lbl_80062F08:
 /* 80062F1C 0005FD1C  7C 08 03 A6 */	mtlr r0
 /* 80062F20 0005FD20  38 21 00 20 */	addi r1, r1, 0x20
 /* 80062F24 0005FD24  4E 80 00 20 */	blr 
-lbl_80062F28:
+
+zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80062F28 0005FD28  94 21 FE F0 */	stwu r1, -0x110(r1)
 /* 80062F2C 0005FD2C  7C 08 02 A6 */	mflr r0
 /* 80062F30 0005FD30  2C 05 00 23 */	cmpwi r5, 0x23
@@ -728,11 +731,11 @@ zEntPickup_CheckAllPickupsAgainstPlayer__FP6xScenef:
 /* 800631F8 0005FFF8  3C C0 80 3D */	lis r6, colls_grid@ha
 /* 800631FC 0005FFFC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80063200 00060000  38 A4 05 58 */	addi r5, r4, globals@l
-/* 80063204 00060004  3C 80 80 06 */	lis r4, lbl_80063240@ha
+/* 80063204 00060004  3C 80 80 06 */	lis r4, CheckPickupAgainstPlayer__FP4xEntPv@ha
 /* 80063208 00060008  90 61 00 08 */	stw r3, 8(r1)
 /* 8006320C 0006000C  38 66 A6 D8 */	addi r3, r6, colls_grid@l
 /* 80063210 00060010  80 E5 07 04 */	lwz r7, 0x704(r5)
-/* 80063214 00060014  38 C4 32 40 */	addi r6, r4, lbl_80063240@l
+/* 80063214 00060014  38 C4 32 40 */	addi r6, r4, CheckPickupAgainstPlayer__FP4xEntPv@l
 /* 80063218 00060018  D0 21 00 0C */	stfs f1, 0xc(r1)
 /* 8006321C 0006001C  38 A5 07 44 */	addi r5, r5, 0x744
 /* 80063220 00060020  80 87 00 4C */	lwz r4, 0x4c(r7)
@@ -743,7 +746,8 @@ zEntPickup_CheckAllPickupsAgainstPlayer__FP6xScenef:
 /* 80063234 00060034  7C 08 03 A6 */	mtlr r0
 /* 80063238 00060038  38 21 00 10 */	addi r1, r1, 0x10
 /* 8006323C 0006003C  4E 80 00 20 */	blr 
-lbl_80063240:
+
+CheckPickupAgainstPlayer__FP4xEntPv:
 /* 80063240 00060040  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80063244 00060044  7C 08 02 A6 */	mflr r0
 /* 80063248 00060048  90 01 00 44 */	stw r0, 0x44(r1)
@@ -1462,7 +1466,8 @@ lbl_80063C74:
 /* 80063C90 00060A90  7C 08 03 A6 */	mtlr r0
 /* 80063C94 00060A94  38 21 00 20 */	addi r1, r1, 0x20
 /* 80063C98 00060A98  4E 80 00 20 */	blr 
-lbl_80063C9C:
+
+zEntPickup_Update__FP10zEntPickupP6xScenef:
 /* 80063C9C 00060A9C  94 21 FE C0 */	stwu r1, -0x140(r1)
 /* 80063CA0 00060AA0  7C 08 02 A6 */	mflr r0
 /* 80063CA4 00060AA4  90 01 01 44 */	stw r0, 0x144(r1)

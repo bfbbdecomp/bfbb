@@ -4,8 +4,9 @@
 
 .section .text  # 0x800A26A0 - 0x800A6000
 
-.global func_800A26A0
-func_800A26A0:
+.global main
+
+main:
 /* 800A26A0 0009F4A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A26A4 0009F4A4  7C 08 02 A6 */	mflr r0
 /* 800A26A8 0009F4A8  3C 60 80 3C */	lis r3, globals@ha
@@ -22,8 +23,8 @@ func_800A26A0:
 /* 800A26D4 0009F4D4  98 04 06 D2 */	stb r0, 0x6d2(r4)
 /* 800A26D8 0009F4D8  48 03 0C 8D */	bl iSystemInit__FUi
 /* 800A26DC 0009F4DC  48 00 01 19 */	bl zMainOutputMgrSetup__Fv
-/* 800A26E0 0009F4E0  3C 60 80 0A */	lis r3, lbl_800A4BB0@ha
-/* 800A26E4 0009F4E4  38 63 4B B0 */	addi r3, r3, lbl_800A4BB0@l
+/* 800A26E0 0009F4E0  3C 60 80 0A */	lis r3, zMainMemLvlChkCB__Fv@ha
+/* 800A26E4 0009F4E4  38 63 4B B0 */	addi r3, r3, zMainMemLvlChkCB__Fv@l
 /* 800A26E8 0009F4E8  4B F9 15 2D */	bl xMemRegisterBaseNotifyFunc__FPFv_v
 /* 800A26EC 0009F4EC  48 00 01 31 */	bl zMainInitGlobals__Fv
 /* 800A26F0 0009F4F0  48 01 B9 31 */	bl var_init__Fv
@@ -2405,7 +2406,8 @@ lbl_800A3AC0:
 /* 800A4BA4 000A19A4  7C 08 03 A6 */	mtlr r0
 /* 800A4BA8 000A19A8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A4BAC 000A19AC  4E 80 00 20 */	blr 
-lbl_800A4BB0:
+
+zMainMemLvlChkCB__Fv:
 /* 800A4BB0 000A19B0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A4BB4 000A19B4  7C 08 02 A6 */	mflr r0
 /* 800A4BB8 000A19B8  90 01 00 14 */	stw r0, 0x14(r1)

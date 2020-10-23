@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8017D544 - 0x8017EEA4
 
 .global init__17xLaserBoltEmitterFUlPCc
@@ -1883,6 +1885,9 @@ full__13xDecalEmitterCFv:
 /* 8017EE98 0017BC98  7C 08 03 A6 */	mtlr r0
 /* 8017EE9C 0017BC9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017EEA0 0017BCA0  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_80272C40:
 	.incbin "baserom.dol", 0x26FC20, 0x10

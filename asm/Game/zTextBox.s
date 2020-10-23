@@ -22,6 +22,8 @@ render_bk_fill__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox:
 /* 80133E70 00130C70  7C 08 03 A6 */	mtlr r0
 /* 80133E74 00130C74  38 21 00 20 */	addi r1, r1, 0x20
 /* 80133E78 00130C78  4E 80 00 20 */	blr 
+
+render_bk_tex_scale__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox:
 /* 80133E7C 00130C7C  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80133E80 00130C80  7C 08 02 A6 */	mflr r0
 /* 80133E84 00130C84  90 01 00 64 */	stw r0, 0x64(r1)
@@ -161,6 +163,8 @@ set_vert__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FR18rwGameCube2DVertexfff
 /* 80134090 00130E90  88 04 00 03 */	lbz r0, 3(r4)
 /* 80134094 00130E94  98 03 00 0F */	stb r0, 0xf(r3)
 /* 80134098 00130E98  4E 80 00 20 */	blr 
+
+render_bk_tex_wrap__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox:
 /* 8013409C 00130E9C  4E 80 00 20 */	blr 
 
 /* init_textbox__22@unnamed@zTextBox_cpp@FR8ztextbox */
@@ -299,8 +303,11 @@ lbl_80134234:
 /* 80134298 00131098  7C 08 03 A6 */	mtlr r0
 /* 8013429C 0013109C  38 21 00 30 */	addi r1, r1, 0x30
 /* 801342A0 001310A0  4E 80 00 20 */	blr 
+
+parse_tag_blahblah__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 801342A4 001310A4  4E 80 00 20 */	blr 
-lbl_801342A8:
+
+cb_dispatch__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase:
 /* 801342A8 001310A8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801342AC 001310AC  7C 08 02 A6 */	mflr r0
 /* 801342B0 001310B0  2C 05 00 4E */	cmpwi r5, 0x4e
@@ -404,9 +411,9 @@ load__8ztextboxFRCQ28ztextbox10asset_type:
 /* 801343F8 001311F8  7C 7E 1B 78 */	mr r30, r3
 /* 801343FC 001311FC  4B ED 50 05 */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 80134400 00131200  38 00 00 33 */	li r0, 0x33
-/* 80134404 00131204  3C 60 80 13 */	lis r3, lbl_801342A8@ha
+/* 80134404 00131204  3C 60 80 13 */	lis r3, cb_dispatch__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80134408 00131208  98 1E 00 04 */	stb r0, 4(r30)
-/* 8013440C 0013120C  38 03 42 A8 */	addi r0, r3, lbl_801342A8@l
+/* 8013440C 0013120C  38 03 42 A8 */	addi r0, r3, cb_dispatch__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80134410 00131210  93 FE 00 14 */	stw r31, 0x14(r30)
 /* 80134414 00131214  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 80134418 00131218  88 1E 00 05 */	lbz r0, 5(r30)
@@ -760,6 +767,8 @@ init__8ztextboxFv:
 /* 801348A0 001316A0  7C 08 03 A6 */	mtlr r0
 /* 801348A4 001316A4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801348A8 001316A8  4E 80 00 20 */	blr 
+
+load__8ztextboxFR5xBaseR9xDynAssetUl:
 /* 801348AC 001316AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801348B0 001316B0  7C 08 02 A6 */	mflr r0
 /* 801348B4 001316B4  90 01 00 14 */	stw r0, 0x14(r1)

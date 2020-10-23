@@ -265,7 +265,8 @@ render_ptank__24_esc__2_unnamed_esc__2_xPtankPool_cpp_esc__2_FRCQ224_esc__2_unna
 /* 8017F970 0017C770  7C 08 03 A6 */	mtlr r0
 /* 8017F974 0017C774  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F978 0017C778  4E 80 00 20 */	blr 
-lbl_8017F97C:
+
+compare_ptanks__24_esc__2_unnamed_esc__2_xPtankPool_cpp_esc__2_FPCvPCv:
 /* 8017F97C 0017C77C  80 A3 00 10 */	lwz r5, 0x10(r3)
 /* 8017F980 0017C780  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 8017F984 0017C784  7C 05 00 40 */	cmplw r5, r0
@@ -469,9 +470,9 @@ lbl_8017FC2C:
 /* 8017FC2C 0017CA2C  80 1F 00 14 */	lwz r0, 0x14(r31)
 /* 8017FC30 0017CA30  28 00 00 00 */	cmplwi r0, 0
 /* 8017FC34 0017CA34  41 82 00 9C */	beq lbl_8017FCD0
-/* 8017FC38 0017CA38  3C 80 80 18 */	lis r4, lbl_8017F97C@ha
+/* 8017FC38 0017CA38  3C 80 80 18 */	lis r4, compare_ptanks__24_esc__2_unnamed_esc__2_xPtankPool_cpp_esc__2_FPCvPCv@ha
 /* 8017FC3C 0017CA3C  80 7F 00 08 */	lwz r3, 8(r31)
-/* 8017FC40 0017CA40  38 C4 F9 7C */	addi r6, r4, lbl_8017F97C@l
+/* 8017FC40 0017CA40  38 C4 F9 7C */	addi r6, r4, compare_ptanks__24_esc__2_unnamed_esc__2_xPtankPool_cpp_esc__2_FPCvPCv@l
 /* 8017FC44 0017CA44  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 8017FC48 0017CA48  38 A0 00 14 */	li r5, 0x14
 /* 8017FC4C 0017CA4C  48 06 64 29 */	bl qsort

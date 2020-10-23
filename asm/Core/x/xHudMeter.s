@@ -517,6 +517,8 @@ type_name__Q24xhud11meter_assetFv:
 /* 8002FC5C 0002CA5C  38 63 2F 38 */	addi r3, r3, lbl_80252F38@l
 /* 8002FC60 0002CA60  38 63 00 22 */	addi r3, r3, 0x22
 /* 8002FC64 0002CA64  4E 80 00 20 */	blr 
+
+update__Q24xhud12meter_widgetFf:
 /* 8002FC68 0002CA68  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002FC6C 0002CA6C  7C 08 02 A6 */	mflr r0
 /* 8002FC70 0002CA70  90 01 00 14 */	stw r0, 0x14(r1)

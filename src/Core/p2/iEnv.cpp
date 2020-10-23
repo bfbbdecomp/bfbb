@@ -2,28 +2,29 @@
 
 #include <types.h>
 
-#pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "some_bullshit_function_rename_me")
+// func_800C2EAC
+#pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "SetPipelineCB__FP8RpAtomicPv")
 
-// iEnvSetBSP(iEnv*,int,RpWorld*)
+// func_800C2F10
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvSetBSP__FP4iEnviP7RpWorld")
 
-// iEnvLoad(iEnv*,const void*,unsigned int,int)
+// func_800C2F50
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvLoad__FP4iEnvPCvUii")
 
-// iEnvFree(iEnv*)
+// func_800C30B4
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvFree__FP4iEnv")
 
-// iEnvDefaultLighting(iEnv*)
+// func_800C3120
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvDefaultLighting__FP4iEnv")
 
-// iEnvLightingBasics(iEnv*,xEnvAsset*)
+// func_800C3124
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvLightingBasics__FP4iEnvP9xEnvAsset")
 
-// Jsp_ClumpRender(RpClump*,xJSPNodeInfo*)
+// func_800C3128
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "Jsp_ClumpRender__FP7RpClumpP12xJSPNodeInfo")
 
-// iEnvRender(iEnv*)
+// func_800C3234
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvRender__FP4iEnv")
 
-// iEnvEndRenderFX(iEnv*)
+// func_800C329C
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvEndRenderFX__FP4iEnv")

@@ -2,5 +2,5 @@
 
 #include <types.h>
 
-// zFeetGetIDs()
+// func_80092B0C
 #pragma GLOBAL_ASM("asm/Game/zFeet.s", "zFeetGetIDs__Fv")

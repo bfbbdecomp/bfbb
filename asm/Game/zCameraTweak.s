@@ -410,6 +410,8 @@ zCameraTweakGlobal_GetH__Fv:
 zCameraTweakGlobal_GetPitch__Fv:
 /* 8017F438 0017C238  C0 2D 97 E4 */	lfs f1, lbl_803CC0E4-_SDA_BASE_(r13)
 /* 8017F43C 0017C23C  4E 80 00 20 */	blr 
+
+zCameraTweak_Init__FR5xBaseR9xDynAssetUl:
 /* 8017F440 0017C240  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F444 0017C244  7C 08 02 A6 */	mflr r0
 /* 8017F448 0017C248  90 01 00 14 */	stw r0, 0x14(r1)
@@ -429,9 +431,9 @@ zCameraTweak_Init__FP12zCameraTweakP17CameraTweak_asset:
 /* 8017F474 0017C274  93 C1 00 08 */	stw r30, 8(r1)
 /* 8017F478 0017C278  7C 7E 1B 78 */	mr r30, r3
 /* 8017F47C 0017C27C  4B E8 9F 85 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8017F480 0017C280  3C 60 80 18 */	lis r3, lbl_8017F508@ha
+/* 8017F480 0017C280  3C 60 80 18 */	lis r3, zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8017F484 0017C284  93 FE 00 10 */	stw r31, 0x10(r30)
-/* 8017F488 0017C288  38 03 F5 08 */	addi r0, r3, lbl_8017F508@l
+/* 8017F488 0017C288  38 03 F5 08 */	addi r0, r3, zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8017F48C 0017C28C  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8017F490 0017C290  88 1E 00 05 */	lbz r0, 5(r30)
 /* 8017F494 0017C294  28 00 00 00 */	cmplwi r0, 0
@@ -471,7 +473,8 @@ zCameraTweak_Load__FP12zCameraTweakP7xSerial:
 /* 8017F4FC 0017C2FC  7C 08 03 A6 */	mtlr r0
 /* 8017F500 0017C300  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017F504 0017C304  4E 80 00 20 */	blr 
-lbl_8017F508:
+
+zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8017F508 0017C308  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017F50C 0017C30C  7C 08 02 A6 */	mflr r0
 /* 8017F510 0017C310  2C 05 00 12 */	cmpwi r5, 0x12

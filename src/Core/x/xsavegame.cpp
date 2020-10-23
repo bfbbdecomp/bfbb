@@ -2,203 +2,218 @@
 
 #include <types.h>
 
-// xSGStartup()
+// func_8003CC4C
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGStartup__Fv")
 
-// xSGShutdown()
+// func_8003CCA0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGShutdown__Fv")
 
-// xSGInit(en_SAVEGAME_MODE)
+// func_8003CCD8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGInit__F16en_SAVEGAME_MODE")
 
-// xSGDone(st_XSAVEGAME_DATA*)
+// func_8003CDD4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGDone__FP17st_XSAVEGAME_DATA")
 
-// xSGCheckForCorruptFiles(st_XSAVEGAME_DATA*,char (*)[64])
+// func_8003CEF8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGCheckForCorruptFiles__FP17st_XSAVEGAME_DATAPA64_c")
 
-// xSGTgtCount(st_XSAVEGAME_DATA*,int*)
+// func_8003CF1C
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtCount__FP17st_XSAVEGAME_DATAPi")
 
-// xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA*,int)
+// func_8003CF40
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtPhysSlotIdx__FP17st_XSAVEGAME_DATAi")
 
-// xSGTgtIsFormat(st_XSAVEGAME_DATA*,int,int*)
+// func_8003CF64
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtIsFormat__FP17st_XSAVEGAME_DATAiPi")
 
-// xSGTgtFormatTgt(st_XSAVEGAME_DATA*,int,int*)
+// func_8003CFDC
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtFormatTgt__FP17st_XSAVEGAME_DATAiPi")
 
-// xSGTgtSelect(st_XSAVEGAME_DATA*,int)
+// func_8003D008
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtSelect__FP17st_XSAVEGAME_DATAi")
 
-// xSGTgtHasGameDir(st_XSAVEGAME_DATA*,int)
+// func_8003D064
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtHasGameDir__FP17st_XSAVEGAME_DATAi")
 
-// xSGTgtHaveRoom(st_XSAVEGAME_DATA*,int,int,int,int*,int*,int*)
+// func_8003D0A4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtHaveRoom__FP17st_XSAVEGAME_DATAiiiPiPiPi")
 
-// xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA*,int,int,int,int*,int*,int*)
+// func_8003D17C
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtHaveRoomStartup__FP17st_XSAVEGAME_DATAiiiPiPiPi")
 
-// xSGCheckMemoryCard(st_XSAVEGAME_DATA*,int)
+// func_8003D254
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGCheckMemoryCard__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameSet(st_XSAVEGAME_DATA*,int)
+// func_8003D278
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameSet__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameIsEmpty(st_XSAVEGAME_DATA*,int)
+// func_8003D280
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameIsEmpty__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameSize(st_XSAVEGAME_DATA*,int)
+// func_8003D2B0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameSize__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameModDate(st_XSAVEGAME_DATA*,int)
+// func_8003D320
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameModDate__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameLabel(st_XSAVEGAME_DATA*,int)
+// func_8003D3C4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameLabel__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameThumbIndex(st_XSAVEGAME_DATA*,int)
+// func_8003D420
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameThumbIndex__FP17st_XSAVEGAME_DATAi")
 
-// xSGGameProgress(st_XSAVEGAME_DATA*,int)
+// func_8003D478
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameProgress__FP17st_XSAVEGAME_DATAi")
 
-// xSGAddSaveClient(st_XSAVEGAME_DATA*,unsigned int,void*,int (*)(void*, st_XSAVEGAME_DATA*, int*, int*),int (*)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_WRITECONTEXT*))
+// func_8003D4D0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i")
 
-// xSGAddLoadClient(st_XSAVEGAME_DATA*,unsigned int,void*,int (*)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_READCONTEXT*, unsigned int, int))
+// func_8003D5A4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i")
 
-// xSGSetup(st_XSAVEGAME_DATA*)
+// func_8003D6E4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGSetup__FP17st_XSAVEGAME_DATA")
 
-// xSGSetup(st_XSAVEGAME_DATA*,int,char*,int,long long,int)
+// func_8003D724
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGSetup__FP17st_XSAVEGAME_DATAiPcixi")
 
-// xSGProcess(st_XSAVEGAME_DATA*)
+// func_8003D82C
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGProcess__FP17st_XSAVEGAME_DATA")
 
-// xSGWrapup(st_XSAVEGAME_DATA*)
+// func_8003D96C
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWrapup__FP17st_XSAVEGAME_DATA")
 
-// xSGAsyncStatus(st_XSAVEGAME_DATA*,int,en_XSG_WHYFAIL*,char*)
+// func_8003DAB4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAsyncStatus__FP17st_XSAVEGAME_DATAiP14en_XSG_WHYFAILPc")
 
-// xSGWriteData(st_XSAVEGAME_DATA*,st_XSAVEGAME_WRITECONTEXT*,char*,int,int)
+// func_8003DBB0
+#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_cb_leader_svinfo__FPvP17st_XSAVEGAME_DATAPiPi")
+
+// func_8003DBC4
+#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_cb_leader_svproc__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+
+// func_8003DCD4
+#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_cb_leader_load__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+
+// func_8003DDB0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPcii")
 
-// xSGWriteStrLen(const char*)
+// func_8003DEC0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteStrLen__FPCc")
 
-// xSGWriteData(st_XSAVEGAME_DATA*,st_XSAVEGAME_WRITECONTEXT*,char*,int)
+// func_8003DEF0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci")
 
-// xSGWriteData(st_XSAVEGAME_DATA*,st_XSAVEGAME_WRITECONTEXT*,int*,int)
+// func_8003DF18
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii")
 
-// xSGWriteData(st_XSAVEGAME_DATA*,st_XSAVEGAME_WRITECONTEXT*,unsigned int*,int)
+// func_8003DF40
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPUii")
 
-// xSGWriteData(st_XSAVEGAME_DATA*,st_XSAVEGAME_WRITECONTEXT*,float*,int)
+// func_8003DF68
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPfi")
 
-// xSGReadData(st_XSAVEGAME_DATA*,st_XSAVEGAME_READCONTEXT*,char*,int,int)
+// func_8003DF90
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPcii")
 
-// xSGReadData(st_XSAVEGAME_DATA*,st_XSAVEGAME_READCONTEXT*,char*,int)
+// func_8003E090
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci")
 
-// xSGReadData(st_XSAVEGAME_DATA*,st_XSAVEGAME_READCONTEXT*,int*,int)
+// func_8003E0B8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii")
 
-// xSGReadData(st_XSAVEGAME_DATA*,st_XSAVEGAME_READCONTEXT*,unsigned int*,int)
+// func_8003E0E0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPUii")
 
-// xSGReadData(st_XSAVEGAME_DATA*,st_XSAVEGAME_READCONTEXT*,float*,int)
+// func_8003E108
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPfi")
 
-// xSG_grab_leaders(st_XSAVEGAME_DATA*)
+// func_8003E130
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_grab_leaders__FP17st_XSAVEGAME_DATA")
 
-// xSG_chdir_gamedir(st_XSAVEGAME_DATA*)
+// func_8003E238
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_chdir_gamedir__FP17st_XSAVEGAME_DATA")
 
-// xSG_cm_slotname(st_XSAVEGAME_DATA*,int)
+// func_8003E29C
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_cm_slotname__FP17st_XSAVEGAME_DATAi")
 
-// xSG_areaComposeLabel(char*,int,char*,int)
+// func_8003E308
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_areaComposeLabel__FPciPci")
 
-// xSG_sv_flipinfo(st_XSAVEGAME_DATA*)
+// func_8003E3DC
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_flipinfo__FP17st_XSAVEGAME_DATA")
 
-// xSG_sv_prepdest(st_XSAVEGAME_DATA*)
+// func_8003E4E8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_prepdest__FP17st_XSAVEGAME_DATA")
 
-// xSG_sv_flipproc(st_XSAVEGAME_DATA*)
+// func_8003E590
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_flipproc__FP17st_XSAVEGAME_DATA")
 
-// xSG_sv_bldchksum(st_XSAVEGAME_DATA*)
+// func_8003E6A0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_bldchksum__FP17st_XSAVEGAME_DATA")
 
-// xSG_smem_blkopen(st_XSAVEGAME_DATA*)
+// func_8003E6E8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_smem_blkopen__FP17st_XSAVEGAME_DATA")
 
-// xSG_smem_blkclose(st_XSAVEGAME_DATA*)
+// func_8003E790
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_smem_blkclose__FP17st_XSAVEGAME_DATA")
 
-// xSG_smem_cltopen(st_XSAVEGAME_DATA*,st_XSAVEGAME_CLIENT*)
+// func_8003E818
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_smem_cltopen__FP17st_XSAVEGAME_DATAP19st_XSAVEGAME_CLIENT")
 
-// xSG_smem_cltclose(st_XSAVEGAME_DATA*,st_XSAVEGAME_CLIENT*)
+// func_8003E8D0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_smem_cltclose__FP17st_XSAVEGAME_DATAP19st_XSAVEGAME_CLIENT")
 
-// xSG_sv_commit(st_XSAVEGAME_DATA*)
+// func_8003E998
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_commit__FP17st_XSAVEGAME_DATA")
 
-// xSG_ld_prepload(st_XSAVEGAME_DATA*)
+// func_8003EAD4
+#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_cb_ISGChange__FPv10en_CHGCODE")
+
+// func_8003EB28
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_prepload__FP17st_XSAVEGAME_DATA")
 
-// xSG_ld_readgame(st_XSAVEGAME_DATA*)
+// func_8003EBB0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_readgame__FP17st_XSAVEGAME_DATA")
 
-// xSG_ld_readhead(st_XSAVEGAME_DATA*)
+// func_8003EC40
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_readhead__FP17st_XSAVEGAME_DATA")
 
-// xSG_ld_validate(st_XSAVEGAME_DATA*)
+// func_8003ED34
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_validate__FP17st_XSAVEGAME_DATA")
 
-// xSG_ld_findcltblk(st_XSAVEGAME_DATA*)
+// func_8003EDB4
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_findcltblk__FP17st_XSAVEGAME_DATA")
 
-// xSG_ld_flipload(st_XSAVEGAME_DATA*)
+// func_8003F054
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_flipload__FP17st_XSAVEGAME_DATA")
 
-// xSGAutoSave_GetCache()
+// func_8003F128
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAutoSave_GetCache__Fv")
 
-// xSGAutoSave_Startup()
+// func_8003F134
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAutoSave_Startup__Fv")
 
-// XSGAutoData::IsValid()
+// func_8003F170
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "IsValid__11XSGAutoDataFv")
 
-// XSGAutoData::MarkInvalid()
+// func_8003F1C8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "MarkInvalid__11XSGAutoDataFv")
 
-// XSGAutoData::SetCache(int,int,int)
+// func_8003F1D8
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "SetCache__11XSGAutoDataFiii")
 
-// XSGAutoData::Discard()
+// func_8003F268
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "Discard__11XSGAutoDataFv")
 
-// XSGAutoData::HWConnect(int)
+// func_8003F2C0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "HWConnect__11XSGAutoDataFi")
 
-// XSGAutoData::HWDisconnect(st_ISGSESSION*)
+// func_8003F300
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "HWDisconnect__11XSGAutoDataFP13st_ISGSESSION")
 
-// XSGAutoData::HWCheckConnect(int)
+// func_8003F324
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "HWCheckConnect__11XSGAutoDataFi")
+
+// func_8003F350
+#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "ASG_ISG_changed__FPv10en_CHGCODE")

@@ -38,16 +38,16 @@ lbl_800A88CC:
 /* 800A88CC 000A56CC  38 00 00 00 */	li r0, 0
 /* 800A88D0 000A56D0  90 1E 00 08 */	stw r0, 8(r30)
 lbl_800A88D4:
-/* 800A88D4 000A56D4  3C 80 80 0B */	lis r4, lbl_800A8AB8@ha
-/* 800A88D8 000A56D8  3C 60 80 0B */	lis r3, lbl_800A8B54@ha
-/* 800A88DC 000A56DC  38 04 8A B8 */	addi r0, r4, lbl_800A8AB8@l
-/* 800A88E0 000A56E0  3C 80 80 0B */	lis r4, lbl_800A8BCC@ha
+/* 800A88D4 000A56D4  3C 80 80 0B */	lis r4, zPendulum_Update__FP10_zPendulumP6xScenef@ha
+/* 800A88D8 000A56D8  3C 60 80 0B */	lis r3, zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame@ha
+/* 800A88DC 000A56DC  38 04 8A B8 */	addi r0, r4, zPendulum_Update__FP10_zPendulumP6xScenef@l
+/* 800A88E0 000A56E0  3C 80 80 0B */	lis r4, zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800A88E4 000A56E4  90 1E 00 34 */	stw r0, 0x34(r30)
-/* 800A88E8 000A56E8  38 03 8B 54 */	addi r0, r3, lbl_800A8B54@l
-/* 800A88EC 000A56EC  3C 60 80 0B */	lis r3, lbl_800A8B78@ha
-/* 800A88F0 000A56F0  38 84 8B CC */	addi r4, r4, lbl_800A8BCC@l
+/* 800A88E8 000A56E8  38 03 8B 54 */	addi r0, r3, zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame@l
+/* 800A88EC 000A56EC  3C 60 80 0B */	lis r3, zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3@ha
+/* 800A88F0 000A56F0  38 84 8B CC */	addi r4, r4, zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800A88F4 000A56F4  90 1E 00 40 */	stw r0, 0x40(r30)
-/* 800A88F8 000A56F8  38 03 8B 78 */	addi r0, r3, lbl_800A8B78@l
+/* 800A88F8 000A56F8  38 03 8B 78 */	addi r0, r3, zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3@l
 /* 800A88FC 000A56FC  7F C3 F3 78 */	mr r3, r30
 /* 800A8900 000A5700  90 9E 00 0C */	stw r4, 0xc(r30)
 /* 800A8904 000A5704  90 1E 00 B0 */	stw r0, 0xb0(r30)
@@ -175,7 +175,8 @@ lbl_800A8A80:
 /* 800A8AAC 000A58AC  7C 08 03 A6 */	mtlr r0
 /* 800A8AB0 000A58B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A8AB4 000A58B4  4E 80 00 20 */	blr 
-lbl_800A8AB8:
+
+zPendulum_Update__FP10_zPendulumP6xScenef:
 /* 800A8AB8 000A58B8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8ABC 000A58BC  7C 08 02 A6 */	mflr r0
 /* 800A8AC0 000A58C0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -218,7 +219,8 @@ lbl_800A8B38:
 /* 800A8B48 000A5948  7C 08 03 A6 */	mtlr r0
 /* 800A8B4C 000A594C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A8B50 000A5950  4E 80 00 20 */	blr 
-lbl_800A8B54:
+
+zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame:
 /* 800A8B54 000A5954  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8B58 000A5958  7C 08 02 A6 */	mflr r0
 /* 800A8B5C 000A595C  38 63 00 D4 */	addi r3, r3, 0xd4
@@ -228,7 +230,8 @@ lbl_800A8B54:
 /* 800A8B6C 000A596C  7C 08 03 A6 */	mtlr r0
 /* 800A8B70 000A5970  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A8B74 000A5974  4E 80 00 20 */	blr 
-lbl_800A8B78:
+
+zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3:
 /* 800A8B78 000A5978  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A8B7C 000A597C  7C 08 02 A6 */	mflr r0
 /* 800A8B80 000A5980  90 01 00 24 */	stw r0, 0x24(r1)
@@ -250,7 +253,8 @@ lbl_800A8B78:
 /* 800A8BC0 000A59C0  7C 08 03 A6 */	mtlr r0
 /* 800A8BC4 000A59C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A8BC8 000A59C8  4E 80 00 20 */	blr 
-lbl_800A8BCC:
+
+zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800A8BCC 000A59CC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A8BD0 000A59D0  7C 08 02 A6 */	mflr r0
 /* 800A8BD4 000A59D4  2C 05 00 56 */	cmpwi r5, 0x56

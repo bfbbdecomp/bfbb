@@ -1302,7 +1302,8 @@ lbl_8011E828:
 /* 8011E838 0011B638  7C 08 03 A6 */	mtlr r0
 /* 8011E83C 0011B63C  38 21 04 C0 */	addi r1, r1, 0x4c0
 /* 8011E840 0011B640  4E 80 00 20 */	blr 
-lbl_8011E844:
+
+LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv:
 /* 8011E844 0011B644  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 8011E848 0011B648  7C 08 02 A6 */	mflr r0
 /* 8011E84C 0011B64C  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -1552,7 +1553,8 @@ lbl_8011EBDC:
 /* 8011EBF4 0011B9F4  7C 08 03 A6 */	mtlr r0
 /* 8011EBF8 0011B9F8  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8011EBFC 0011B9FC  4E 80 00 20 */	blr 
-lbl_8011EC00:
+
+LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv:
 /* 8011EC00 0011BA00  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8011EC04 0011BA04  7C 08 02 A6 */	mflr r0
 /* 8011EC08 0011BA08  90 01 00 64 */	stw r0, 0x64(r1)
@@ -1620,7 +1622,8 @@ lbl_8011ECE4:
 /* 8011ECEC 0011BAEC  7C 08 03 A6 */	mtlr r0
 /* 8011ECF0 0011BAF0  38 21 00 60 */	addi r1, r1, 0x60
 /* 8011ECF4 0011BAF4  4E 80 00 20 */	blr 
-lbl_8011ECF8:
+
+LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv:
 /* 8011ECF8 0011BAF8  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8011ECFC 0011BAFC  7C 08 02 A6 */	mflr r0
 /* 8011ED00 0011BB00  90 01 00 54 */	stw r0, 0x54(r1)
@@ -1803,9 +1806,9 @@ lbl_8011EF68:
 /* 8011EF90 0011BD90  EC 40 08 24 */	fdivs f2, f0, f1
 lbl_8011EF94:
 /* 8011EF94 0011BD94  C0 21 00 74 */	lfs f1, 0x74(r1)
-/* 8011EF98 0011BD98  3C 60 80 12 */	lis r3, lbl_8011E844@ha
+/* 8011EF98 0011BD98  3C 60 80 12 */	lis r3, LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv@ha
 /* 8011EF9C 0011BD9C  C0 01 00 78 */	lfs f0, 0x78(r1)
-/* 8011EFA0 0011BDA0  38 C3 E8 44 */	addi r6, r3, lbl_8011E844@l
+/* 8011EFA0 0011BDA0  38 C3 E8 44 */	addi r6, r3, LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv@l
 /* 8011EFA4 0011BDA4  EC 21 00 B2 */	fmuls f1, f1, f2
 /* 8011EFA8 0011BDA8  7F C3 F3 78 */	mr r3, r30
 /* 8011EFAC 0011BDAC  EC 00 00 B2 */	fmuls f0, f0, f2
@@ -1823,11 +1826,11 @@ lbl_8011EFCC:
 /* 8011EFD8 0011BDD8  38 61 00 4C */	addi r3, r1, 0x4c
 /* 8011EFDC 0011BDDC  4B EF 12 4D */	bl __as__5RwV3dFRC5RwV3d
 /* 8011EFE0 0011BDE0  C0 DF 00 0C */	lfs f6, 0xc(r31)
-/* 8011EFE4 0011BDE4  3C 60 80 12 */	lis r3, lbl_8011EC00@ha
+/* 8011EFE4 0011BDE4  3C 60 80 12 */	lis r3, LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv@ha
 /* 8011EFE8 0011BDE8  C0 41 00 4C */	lfs f2, 0x4c(r1)
 /* 8011EFEC 0011BDEC  38 81 00 40 */	addi r4, r1, 0x40
 /* 8011EFF0 0011BDF0  C0 21 00 50 */	lfs f1, 0x50(r1)
-/* 8011EFF4 0011BDF4  38 A3 EC 00 */	addi r5, r3, lbl_8011EC00@l
+/* 8011EFF4 0011BDF4  38 A3 EC 00 */	addi r5, r3, LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv@l
 /* 8011EFF8 0011BDF8  EC A2 30 28 */	fsubs f5, f2, f6
 /* 8011EFFC 0011BDFC  C0 01 00 54 */	lfs f0, 0x54(r1)
 /* 8011F000 0011BE00  EC 81 30 28 */	fsubs f4, f1, f6
@@ -1861,10 +1864,10 @@ lbl_8011F06C:
 /* 8011F06C 0011BE6C  38 61 00 1C */	addi r3, r1, 0x1c
 /* 8011F070 0011BE70  4B EF 11 D5 */	bl __as__6RwBBoxFRC6RwBBox
 /* 8011F074 0011BE74  38 01 00 10 */	addi r0, r1, 0x10
-/* 8011F078 0011BE78  3C 60 80 12 */	lis r3, lbl_8011ECF8@ha
+/* 8011F078 0011BE78  3C 60 80 12 */	lis r3, LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv@ha
 /* 8011F07C 0011BE7C  38 81 00 1C */	addi r4, r1, 0x1c
 /* 8011F080 0011BE80  90 01 00 3C */	stw r0, 0x3c(r1)
-/* 8011F084 0011BE84  38 A3 EC F8 */	addi r5, r3, lbl_8011ECF8@l
+/* 8011F084 0011BE84  38 A3 EC F8 */	addi r5, r3, LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv@l
 /* 8011F088 0011BE88  7F C3 F3 78 */	mr r3, r30
 /* 8011F08C 0011BE8C  7C 86 23 78 */	mr r6, r4
 /* 8011F090 0011BE90  4B FF E5 69 */	bl xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv

@@ -2,212 +2,230 @@
 
 #include <types.h>
 
-// zUpdateThumbIcon()
+// func_800AD20C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zUpdateThumbIcon__Fv")
 
-// zSaveLoad_Tick()
+// func_800AD328
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_Tick__Fv")
 
-// zSaveLoad_poll(int)
+// func_800AD598
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_poll__Fi")
 
-// zSendEventToThumbIcon(unsigned int)
+// func_800AD600
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSendEventToThumbIcon__FUi")
 
-// zChangeThumbIcon(const char*)
+// func_800AD654
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zChangeThumbIcon__FPCc")
 
-// zSaveLoadInit()
+// func_800AD6C8
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadInit__Fv")
 
-// zSaveLoadGameTableInit(zSaveLoadGame*)
+// func_800AD6FC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadGameTableInit__FP13zSaveLoadGame")
 
-// zSaveLoadUITableInit(zSaveLoadUI*)
+// func_800AD740
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadUITableInit__FP11zSaveLoadUI")
 
-// zSaveLoad_UIEvent(int,unsigned int)
+// func_800AD790
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_UIEvent__FiUi")
 
-// zSaveLoadSGInit(en_SAVEGAME_MODE)
+// func_800AD7D8
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadSGInit__F16en_SAVEGAME_MODE")
 
-// zSaveLoadSGDone(st_XSAVEGAME_DATA*)
+// func_800AD874
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadSGDone__FP17st_XSAVEGAME_DATA")
 
-// zSaveLoad_getgame()
+// func_800AD8CC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getgame__Fv")
 
-// zSaveLoad_getcard()
+// func_800AD8D4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getcard__Fv")
 
-// zSaveLoad_getMCavailable()
+// func_800AD8DC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getMCavailable__Fv")
 
-// zSaveLoad_getMCneeded()
+// func_800AD8E4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getMCneeded__Fv")
 
-// zSaveLoad_getMCAccessType()
+// func_800AD8EC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getMCAccessType__Fv")
 
-// zSaveLoadGetAutoSaveCard()
+// func_800AD8F4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadGetAutoSaveCard__Fv")
 
-// format(int,int)
+// func_800AD8FC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "format__Fii")
 
-// CardtoTgt(int)
+// func_800ADA64
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "CardtoTgt__Fi")
 
-// zSaveLoad_CardCount()
+// func_800ADAFC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCount__Fv")
 
-// zSaveLoad_CardPrompt(int)
+// func_800ADB04
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPrompt__Fi")
 
-// zSaveLoad_CardPromptFormat(int)
+// func_800ADBD8
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptFormat__Fi")
 
-// zSaveLoad_CardPromptSpace(int)
+// func_800ADC70
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptSpace__Fi")
 
-// zSaveLoad_CardPromptGames(int)
+// func_800ADCF0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptGames__Fi")
 
-// zSaveLoad_CardPromptGameSlotEmpty()
+// func_800ADD70
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptGameSlotEmpty__Fv")
 
-// zSaveLoad_CardPromptOverwrite()
+// func_800ADDD0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptOverwrite__Fv")
 
-// zSaveLoad_CardPromptOverwriteDamaged()
+// func_800ADE38
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptOverwriteDamaged__Fv")
 
-// zSaveLoad_ErrorPrompt(int)
+// func_800ADEA0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_ErrorPrompt__Fi")
 
-// zSaveLoad_DamagedSaveGameErrorPrompt(int)
+// func_800ADF18
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DamagedSaveGameErrorPrompt__Fi")
 
-// zSaveLoad_CardWrongDeviceErrorPrompt(int)
+// func_800ADF6C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardWrongDeviceErrorPrompt__Fi")
 
-// zSaveLoad_CardDamagedErrorPrompt(int)
+// func_800ADFE4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardDamagedErrorPrompt__Fi")
 
-// zSaveLoad_SaveDamagedErrorPrompt(int)
+// func_800AE05C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveDamagedErrorPrompt__Fi")
 
-// zSaveLoad_CardYankedErrorPrompt(int)
+// func_800AE0B0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardYankedErrorPrompt__Fi")
 
-// zSaveLoad_ErrorFormatPrompt(int)
+// func_800AE104
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_ErrorFormatPrompt__Fi")
 
-// zSaveLoad_ErrorFormatCardYankedPrompt(int)
+// func_800AE17C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_ErrorFormatCardYankedPrompt__Fi")
 
-// zSaveLoad_CardCheckSingle(int)
+// func_800AE1F4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSingle__Fi")
 
-// zSaveLoad_CardCheckFormattedSingle(int)
+// func_800AE300
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckFormattedSingle__Fi")
 
-// zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA*,int)
+// func_800AE43C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi")
 
-// zSaveLoad_CardCheckSpaceSingle(int)
+// func_800AE500
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSpaceSingle__Fi")
 
-// zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA*,int)
+// func_800AE5D0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGamesSingle_doCheck__FP17st_XSAVEGAME_DATAi")
 
-// zSaveLoad_CardCheckGamesSingle(int)
+// func_800AE674
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGamesSingle__Fi")
 
-// zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA*,int,int)
+// func_800AE744
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii")
 
-// zSaveLoad_CardCheckSlotEmpty_hasGame(int,int)
+// func_800AE7CC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotEmpty_hasGame__Fii")
 
-// zSaveLoad_CardCheckSlotOverwrite_Free(int,int)
+// func_800AE8BC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotOverwrite_Free__Fii")
 
-// zSaveLoad_CardCheck(int,int)
+// func_800AE924
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheck__Fii")
 
-// zSaveLoad_CardCheckFormatted(int,int)
+// func_800AE9B0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckFormatted__Fii")
 
-// zSaveLoad_CardCheckValid(int,int)
+// func_800AEA7C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckValid__Fii")
 
-// zSaveLoad_CardCheckSpace(int,int)
+// func_800AEAAC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSpace__Fii")
 
-// zSaveLoad_CardCheckGames(int,int)
+// func_800AEB48
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGames__Fii")
 
-// zSaveLoad_CardCheckGameSlot(int,int,int)
+// func_800AEBE4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGameSlot__Fiii")
 
-// zSaveLoad_CardCheckSlotEmpty(int,int)
+// func_800AEC14
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotEmpty__Fii")
 
-// zSaveLoad_CardCheckSlotOverwrite(int,int)
+// func_800AEC98
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotOverwrite__Fii")
 
-// zSaveLoad_CardPick(int)
+// func_800AED3C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPick__Fi")
 
-// IsValidName(char*)
+// func_800AEFA0
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "IsValidName__FPc")
 
-// BuildIt(char*,int)
+// func_800AF03C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "BuildIt__FPci")
 
-// zSaveLoad_BuildName(char*,int)
+// func_800AF22C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_BuildName__FPci")
 
-// zSaveLoad_GameSelect(int)
+// func_800AF30C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_GameSelect__Fi")
 
-// zSaveLoadGetPreAutoSave()
+// func_800AF790
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadGetPreAutoSave__Fv")
 
-// zSaveLoadPreAutoSave(bool)
+// func_800AF798
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadPreAutoSave__Fb")
 
-// zSaveLoadAutoSaveUpdate()
+// func_800AF7CC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadAutoSaveUpdate__Fv")
 
-// zSaveLoad_DoAutoSave()
+// func_800AF8D4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DoAutoSave__Fv")
 
-// zSaveLoad_SaveGame()
+// func_800AFB84
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveGame__Fv")
 
-// zSaveLoad_LoadGame()
+// func_800AFE6C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadGame__Fv")
 
-// zSaveLoad_LoadLoop()
+// func_800B0064
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadLoop__Fv")
 
-// zSaveLoad_SaveLoop()
+// func_800B023C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveLoop__Fv")
 
-// zSaveLoad_DispatchCB(unsigned int,const float*)
+// func_800B0548
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DispatchCB__FUiPCf")
 
-// zSaveLoad_slotIsEmpty(unsigned int)
+// func_800B061C
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveInfoCB__FPvP17st_XSAVEGAME_DATAPiPi")
+
+// func_800B0670
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+
+// func_800B0728
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi")
+
+// func_800B0744
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+
+// func_800B0800
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+
+// func_800B08F0
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+
+// func_800B09CC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_slotIsEmpty__FUi")
 
-// XSGAutoData::LastPhysicalSlot()
+// func_800B0A10
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "LastPhysicalSlot__11XSGAutoDataFv")
 
-// XSGAutoData::LastGame()
+// func_800B0A18
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "LastGame__11XSGAutoDataFv")
 
-// XSGAutoData::LastTarget()
+// func_800B0A20
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "LastTarget__11XSGAutoDataFv")

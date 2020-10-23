@@ -1133,25 +1133,25 @@ __ct__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_
 /* 8011BA68 00118868  7C 7F 1B 78 */	mr r31, r3
 /* 8011BA6C 0011886C  48 00 05 01 */	bl __ct__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_10state_typeFQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_10state_enum
 /* 8011BA70 00118870  3C 80 80 29 */	lis r4, __vt__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_type@ha
-/* 8011BA74 00118874  3C 60 80 12 */	lis r3, lbl_8011BE3C@ha
+/* 8011BA74 00118874  3C 60 80 12 */	lis r3, supdate_moving_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
 /* 8011BA78 00118878  38 04 7F 68 */	addi r0, r4, __vt__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_type@l
-/* 8011BA7C 0011887C  3C 80 80 12 */	lis r4, lbl_8011BD88@ha
+/* 8011BA7C 0011887C  3C 80 80 12 */	lis r4, supdate_stopping__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
 /* 8011BA80 00118880  90 1F 00 04 */	stw r0, 4(r31)
-/* 8011BA84 00118884  38 03 BE 3C */	addi r0, r3, lbl_8011BE3C@l
-/* 8011BA88 00118888  3C 60 80 12 */	lis r3, lbl_8011BCFC@ha
-/* 8011BA8C 0011888C  3C C0 80 12 */	lis r6, lbl_8011BC7C@ha
+/* 8011BA84 00118884  38 03 BE 3C */	addi r0, r3, supdate_moving_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
+/* 8011BA88 00118888  3C 60 80 12 */	lis r3, supdate_stopped__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
+/* 8011BA8C 0011888C  3C C0 80 12 */	lis r6, supdate_starting__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
 /* 8011BA90 00118890  90 1F 00 28 */	stw r0, 0x28(r31)
-/* 8011BA94 00118894  38 04 BD 88 */	addi r0, r4, lbl_8011BD88@l
-/* 8011BA98 00118898  3C A0 80 12 */	lis r5, lbl_8011BBD4@ha
-/* 8011BA9C 0011889C  3C 80 80 12 */	lis r4, lbl_8011BB78@ha
+/* 8011BA94 00118894  38 04 BD 88 */	addi r0, r4, supdate_stopping__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
+/* 8011BA98 00118898  3C A0 80 12 */	lis r5, supdate_moving_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
+/* 8011BA9C 0011889C  3C 80 80 12 */	lis r4, supdate_start_fade_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
 /* 8011BAA0 001188A0  90 1F 00 2C */	stw r0, 0x2c(r31)
-/* 8011BAA4 001188A4  38 03 BC FC */	addi r0, r3, lbl_8011BCFC@l
-/* 8011BAA8 001188A8  3C 60 80 12 */	lis r3, lbl_8011BAE8@ha
-/* 8011BAAC 001188AC  38 C6 BC 7C */	addi r6, r6, lbl_8011BC7C@l
+/* 8011BAA4 001188A4  38 03 BC FC */	addi r0, r3, supdate_stopped__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
+/* 8011BAA8 001188A8  3C 60 80 12 */	lis r3, supdate_fade_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@ha
+/* 8011BAAC 001188AC  38 C6 BC 7C */	addi r6, r6, supdate_starting__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
 /* 8011BAB0 001188B0  90 1F 00 30 */	stw r0, 0x30(r31)
-/* 8011BAB4 001188B4  38 A5 BB D4 */	addi r5, r5, lbl_8011BBD4@l
-/* 8011BAB8 001188B8  38 84 BB 78 */	addi r4, r4, lbl_8011BB78@l
-/* 8011BABC 001188BC  38 03 BA E8 */	addi r0, r3, lbl_8011BAE8@l
+/* 8011BAB4 001188B4  38 A5 BB D4 */	addi r5, r5, supdate_moving_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
+/* 8011BAB8 001188B8  38 84 BB 78 */	addi r4, r4, supdate_start_fade_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
+/* 8011BABC 001188BC  38 03 BA E8 */	addi r0, r3, supdate_fade_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf@l
 /* 8011BAC0 001188C0  90 DF 00 34 */	stw r6, 0x34(r31)
 /* 8011BAC4 001188C4  7F E3 FB 78 */	mr r3, r31
 /* 8011BAC8 001188C8  90 BF 00 38 */	stw r5, 0x38(r31)
@@ -1162,7 +1162,8 @@ __ct__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_
 /* 8011BADC 001188DC  7C 08 03 A6 */	mtlr r0
 /* 8011BAE0 001188E0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BAE4 001188E4  4E 80 00 20 */	blr 
-lbl_8011BAE8:
+
+supdate_fade_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BAE8 001188E8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BAEC 001188EC  7C 08 02 A6 */	mflr r0
 /* 8011BAF0 001188F0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1204,7 +1205,8 @@ lbl_8011BB64:
 /* 8011BB6C 0011896C  EC 00 08 2A */	fadds f0, f0, f1
 /* 8011BB70 00118970  D0 05 00 00 */	stfs f0, 0(r5)
 /* 8011BB74 00118974  4E 80 00 20 */	blr 
-lbl_8011BB78:
+
+supdate_start_fade_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BB78 00118978  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BB7C 0011897C  7C 08 02 A6 */	mflr r0
 /* 8011BB80 00118980  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1232,7 +1234,8 @@ lbl_8011BBC0:
 /* 8011BBC8 001189C8  EC 00 08 2A */	fadds f0, f0, f1
 /* 8011BBCC 001189CC  D0 05 00 00 */	stfs f0, 0(r5)
 /* 8011BBD0 001189D0  4E 80 00 20 */	blr 
-lbl_8011BBD4:
+
+supdate_moving_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BBD4 001189D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BBD8 001189D8  7C 08 02 A6 */	mflr r0
 /* 8011BBDC 001189DC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1280,7 +1283,8 @@ lbl_8011BC68:
 /* 8011BC70 00118A70  7C 08 03 A6 */	mtlr r0
 /* 8011BC74 00118A74  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011BC78 00118A78  4E 80 00 20 */	blr 
-lbl_8011BC7C:
+
+supdate_starting__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BC7C 00118A7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BC80 00118A80  7C 08 02 A6 */	mflr r0
 /* 8011BC84 00118A84  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1318,7 +1322,8 @@ lbl_8011BCEC:
 /* 8011BCF0 00118AF0  7C 08 03 A6 */	mtlr r0
 /* 8011BCF4 00118AF4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BCF8 00118AF8  4E 80 00 20 */	blr 
-lbl_8011BCFC:
+
+supdate_stopped__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BCFC 00118AFC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BD00 00118B00  7C 08 02 A6 */	mflr r0
 /* 8011BD04 00118B04  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1358,7 +1363,8 @@ lbl_8011BD44:
 /* 8011BD7C 00118B7C  EC 01 00 24 */	fdivs f0, f1, f0
 /* 8011BD80 00118B80  D0 04 00 48 */	stfs f0, 0x48(r4)
 /* 8011BD84 00118B84  4E 80 00 20 */	blr 
-lbl_8011BD88:
+
+supdate_stopping__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BD88 00118B88  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BD8C 00118B8C  7C 08 02 A6 */	mflr r0
 /* 8011BD90 00118B90  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1409,7 +1415,8 @@ lbl_8011BE24:
 /* 8011BE30 00118C30  7C 08 03 A6 */	mtlr r0
 /* 8011BE34 00118C34  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011BE38 00118C38  4E 80 00 20 */	blr 
-lbl_8011BE3C:
+
+supdate_moving_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeR6xSceneRf:
 /* 8011BE3C 00118C3C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011BE40 00118C40  7C 08 02 A6 */	mflr r0
 /* 8011BE44 00118C44  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1517,32 +1524,32 @@ __ct__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_
 /* 8011BFA8 00118DA8  38 7F 00 08 */	addi r3, r31, 8
 /* 8011BFAC 00118DAC  90 1F 00 04 */	stw r0, 4(r31)
 /* 8011BFB0 00118DB0  48 00 06 6D */	bl __ct__Q49oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_type17tutorial_callbackFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_type
-/* 8011BFB4 00118DB4  3C 80 80 12 */	lis r4, lbl_8011C5F4@ha
-/* 8011BFB8 00118DB8  3C 60 80 12 */	lis r3, lbl_8011C594@ha
-/* 8011BFBC 00118DBC  38 04 C5 F4 */	addi r0, r4, lbl_8011C5F4@l
-/* 8011BFC0 00118DC0  3C A0 80 12 */	lis r5, lbl_8011C464@ha
+/* 8011BFB4 00118DB4  3C 80 80 12 */	lis r4, supdate_reorient__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
+/* 8011BFB8 00118DB8  3C 60 80 12 */	lis r3, supdate_begin_wait__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
+/* 8011BFBC 00118DBC  38 04 C5 F4 */	addi r0, r4, supdate_reorient__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011BFC0 00118DC0  3C A0 80 12 */	lis r5, supdate_moving_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
 /* 8011BFC4 00118DC4  90 1F 00 40 */	stw r0, 0x40(r31)
-/* 8011BFC8 00118DC8  38 03 C5 94 */	addi r0, r3, lbl_8011C594@l
-/* 8011BFCC 00118DCC  3C 80 80 12 */	lis r4, lbl_8011C370@ha
-/* 8011BFD0 00118DD0  3C 60 80 12 */	lis r3, lbl_8011C2E4@ha
+/* 8011BFC8 00118DC8  38 03 C5 94 */	addi r0, r3, supdate_begin_wait__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011BFCC 00118DCC  3C 80 80 12 */	lis r4, supdate_stopping__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
+/* 8011BFD0 00118DD0  3C 60 80 12 */	lis r3, supdate_stopped__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
 /* 8011BFD4 00118DD4  90 1F 00 44 */	stw r0, 0x44(r31)
-/* 8011BFD8 00118DD8  38 05 C4 64 */	addi r0, r5, lbl_8011C464@l
-/* 8011BFDC 00118DDC  3C E0 80 12 */	lis r7, lbl_8011C254@ha
-/* 8011BFE0 00118DE0  3C C0 80 12 */	lis r6, lbl_8011C1D4@ha
+/* 8011BFD8 00118DD8  38 05 C4 64 */	addi r0, r5, supdate_moving_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011BFDC 00118DDC  3C E0 80 12 */	lis r7, supdate_tutorial__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
+/* 8011BFE0 00118DE0  3C C0 80 12 */	lis r6, supdate_starting__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
 /* 8011BFE4 00118DE4  90 1F 00 48 */	stw r0, 0x48(r31)
-/* 8011BFE8 00118DE8  38 04 C3 70 */	addi r0, r4, lbl_8011C370@l
-/* 8011BFEC 00118DEC  3C A0 80 12 */	lis r5, lbl_8011C12C@ha
-/* 8011BFF0 00118DF0  3C 80 80 12 */	lis r4, lbl_8011C0D0@ha
+/* 8011BFE8 00118DE8  38 04 C3 70 */	addi r0, r4, supdate_stopping__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011BFEC 00118DEC  3C A0 80 12 */	lis r5, supdate_moving_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
+/* 8011BFF0 00118DF0  3C 80 80 12 */	lis r4, supdate_start_fade_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
 /* 8011BFF4 00118DF4  90 1F 00 4C */	stw r0, 0x4c(r31)
-/* 8011BFF8 00118DF8  39 03 C2 E4 */	addi r8, r3, lbl_8011C2E4@l
-/* 8011BFFC 00118DFC  3C 60 80 12 */	lis r3, lbl_8011C044@ha
-/* 8011C000 00118E00  38 07 C2 54 */	addi r0, r7, lbl_8011C254@l
+/* 8011BFF8 00118DF8  39 03 C2 E4 */	addi r8, r3, supdate_stopped__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011BFFC 00118DFC  3C 60 80 12 */	lis r3, supdate_fade_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@ha
+/* 8011C000 00118E00  38 07 C2 54 */	addi r0, r7, supdate_tutorial__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
 /* 8011C004 00118E04  91 1F 00 50 */	stw r8, 0x50(r31)
-/* 8011C008 00118E08  38 C6 C1 D4 */	addi r6, r6, lbl_8011C1D4@l
-/* 8011C00C 00118E0C  38 A5 C1 2C */	addi r5, r5, lbl_8011C12C@l
-/* 8011C010 00118E10  38 84 C0 D0 */	addi r4, r4, lbl_8011C0D0@l
+/* 8011C008 00118E08  38 C6 C1 D4 */	addi r6, r6, supdate_starting__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011C00C 00118E0C  38 A5 C1 2C */	addi r5, r5, supdate_moving_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
+/* 8011C010 00118E10  38 84 C0 D0 */	addi r4, r4, supdate_start_fade_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
 /* 8011C014 00118E14  90 1F 00 54 */	stw r0, 0x54(r31)
-/* 8011C018 00118E18  38 03 C0 44 */	addi r0, r3, lbl_8011C044@l
+/* 8011C018 00118E18  38 03 C0 44 */	addi r0, r3, supdate_fade_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf@l
 /* 8011C01C 00118E1C  7F E3 FB 78 */	mr r3, r31
 /* 8011C020 00118E20  90 DF 00 58 */	stw r6, 0x58(r31)
 /* 8011C024 00118E24  90 BF 00 5C */	stw r5, 0x5c(r31)
@@ -1553,7 +1560,8 @@ __ct__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_
 /* 8011C038 00118E38  7C 08 03 A6 */	mtlr r0
 /* 8011C03C 00118E3C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C040 00118E40  4E 80 00 20 */	blr 
-lbl_8011C044:
+
+supdate_fade_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C044 00118E44  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C048 00118E48  7C 08 02 A6 */	mflr r0
 /* 8011C04C 00118E4C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1594,7 +1602,8 @@ lbl_8011C0BC:
 /* 8011C0C4 00118EC4  EC 00 08 2A */	fadds f0, f0, f1
 /* 8011C0C8 00118EC8  D0 05 00 00 */	stfs f0, 0(r5)
 /* 8011C0CC 00118ECC  4E 80 00 20 */	blr 
-lbl_8011C0D0:
+
+supdate_start_fade_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C0D0 00118ED0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C0D4 00118ED4  7C 08 02 A6 */	mflr r0
 /* 8011C0D8 00118ED8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1622,7 +1631,8 @@ lbl_8011C118:
 /* 8011C120 00118F20  EC 00 08 2A */	fadds f0, f0, f1
 /* 8011C124 00118F24  D0 05 00 00 */	stfs f0, 0(r5)
 /* 8011C128 00118F28  4E 80 00 20 */	blr 
-lbl_8011C12C:
+
+supdate_moving_out__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C12C 00118F2C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C130 00118F30  7C 08 02 A6 */	mflr r0
 /* 8011C134 00118F34  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1670,7 +1680,8 @@ lbl_8011C1C0:
 /* 8011C1C8 00118FC8  7C 08 03 A6 */	mtlr r0
 /* 8011C1CC 00118FCC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011C1D0 00118FD0  4E 80 00 20 */	blr 
-lbl_8011C1D4:
+
+supdate_starting__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C1D4 00118FD4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C1D8 00118FD8  7C 08 02 A6 */	mflr r0
 /* 8011C1DC 00118FDC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1708,7 +1719,8 @@ lbl_8011C244:
 /* 8011C248 00119048  7C 08 03 A6 */	mtlr r0
 /* 8011C24C 0011904C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C250 00119050  4E 80 00 20 */	blr 
-lbl_8011C254:
+
+supdate_tutorial__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C254 00119054  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C258 00119058  7C 08 02 A6 */	mflr r0
 /* 8011C25C 0011905C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1750,7 +1762,8 @@ lbl_8011C2A8:
 /* 8011C2D8 001190D8  EC 01 00 24 */	fdivs f0, f1, f0
 /* 8011C2DC 001190DC  D0 04 00 48 */	stfs f0, 0x48(r4)
 /* 8011C2E0 001190E0  4E 80 00 20 */	blr 
-lbl_8011C2E4:
+
+supdate_stopped__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C2E4 001190E4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C2E8 001190E8  7C 08 02 A6 */	mflr r0
 /* 8011C2EC 001190EC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1790,7 +1803,8 @@ lbl_8011C32C:
 /* 8011C364 00119164  EC 01 00 24 */	fdivs f0, f1, f0
 /* 8011C368 00119168  D0 04 00 48 */	stfs f0, 0x48(r4)
 /* 8011C36C 0011916C  4E 80 00 20 */	blr 
-lbl_8011C370:
+
+supdate_stopping__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C370 00119170  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C374 00119174  7C 08 02 A6 */	mflr r0
 /* 8011C378 00119178  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1858,7 +1872,8 @@ lbl_8011C44C:
 /* 8011C458 00119258  7C 08 03 A6 */	mtlr r0
 /* 8011C45C 0011925C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C460 00119260  4E 80 00 20 */	blr 
-lbl_8011C464:
+
+supdate_moving_in__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C464 00119264  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C468 00119268  7C 08 02 A6 */	mflr r0
 /* 8011C46C 0011926C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1942,7 +1957,8 @@ lbl_8011C57C:
 /* 8011C588 00119388  7C 08 03 A6 */	mtlr r0
 /* 8011C58C 0011938C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011C590 00119390  4E 80 00 20 */	blr 
-lbl_8011C594:
+
+supdate_begin_wait__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C594 00119394  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C598 00119398  7C 08 02 A6 */	mflr r0
 /* 8011C59C 0011939C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1971,7 +1987,8 @@ lbl_8011C5DC:
 /* 8011C5E8 001193E8  38 60 00 02 */	li r3, 2
 /* 8011C5EC 001193EC  98 04 00 40 */	stb r0, 0x40(r4)
 /* 8011C5F0 001193F0  4E 80 00 20 */	blr 
-lbl_8011C5F4:
+
+supdate_reorient__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFRQ39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeR6xSceneRf:
 /* 8011C5F4 001193F4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011C5F8 001193F8  7C 08 02 A6 */	mflr r0
 /* 8011C5FC 001193FC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2052,7 +2069,11 @@ __ct__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_13in_st
 /* 8011C6EC 001194EC  7C 08 03 A6 */	mtlr r0
 /* 8011C6F0 001194F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011C6F4 001194F4  4E 80 00 20 */	blr 
+
+start__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_10state_typeFv:
 /* 8011C6F8 001194F8  4E 80 00 20 */	blr 
+
+stop__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_10state_typeFv:
 /* 8011C6FC 001194FC  4E 80 00 20 */	blr 
 
 .global update__9oob_stateFR6xScenef
@@ -2356,6 +2377,8 @@ lbl_8011CAD0:
 /* 8011CB08 00119908  7C 08 03 A6 */	mtlr r0
 /* 8011CB0C 0011990C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011CB10 00119910  4E 80 00 20 */	blr 
+
+start__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_13in_state_typeFv:
 /* 8011CB14 00119914  3C 60 80 29 */	lis r3, lbl_80297E48@ha
 /* 8011CB18 00119918  C0 02 9F A8 */	lfs f0, lbl_803CE928-_SDA2_BASE_(r2)
 /* 8011CB1C 0011991C  38 63 7E 48 */	addi r3, r3, lbl_80297E48@l
@@ -2364,7 +2387,11 @@ lbl_8011CAD0:
 /* 8011CB28 00119928  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 8011CB2C 0011992C  98 03 00 08 */	stb r0, 8(r3)
 /* 8011CB30 00119930  4E 80 00 20 */	blr 
+
+stop__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_13in_state_typeFv:
 /* 8011CB34 00119934  4E 80 00 20 */	blr 
+
+update__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_13in_state_typeFR6xSceneRf:
 /* 8011CB38 00119938  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011CB3C 0011993C  7C 08 02 A6 */	mflr r0
 /* 8011CB40 00119940  3C 60 80 3C */	lis r3, globals@ha
@@ -2407,6 +2434,8 @@ lbl_8011CBBC:
 /* 8011CBC8 001199C8  7C 08 03 A6 */	mtlr r0
 /* 8011CBCC 001199CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011CBD0 001199D0  4E 80 00 20 */	blr 
+
+start__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_14out_state_typeFv:
 /* 8011CBD4 001199D4  3C 80 80 29 */	lis r4, lbl_80297E48@ha
 /* 8011CBD8 001199D8  3C 60 80 31 */	lis r3, lbl_80314530@ha
 /* 8011CBDC 001199DC  38 84 7E 48 */	addi r4, r4, lbl_80297E48@l
@@ -2416,7 +2445,11 @@ lbl_8011CBBC:
 /* 8011CBEC 001199EC  D0 24 00 1C */	stfs f1, 0x1c(r4)
 /* 8011CBF0 001199F0  D0 04 00 24 */	stfs f0, 0x24(r4)
 /* 8011CBF4 001199F4  4E 80 00 20 */	blr 
+
+stop__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_14out_state_typeFv:
 /* 8011CBF8 001199F8  4E 80 00 20 */	blr 
+
+update__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_14out_state_typeFR6xSceneRf:
 /* 8011CBFC 001199FC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011CC00 00119A00  7C 08 02 A6 */	mflr r0
 /* 8011CC04 00119A04  3C 60 80 3C */	lis r3, globals@ha
@@ -2490,10 +2523,14 @@ lbl_8011CCF0:
 /* 8011CD00 00119B00  7C 08 03 A6 */	mtlr r0
 /* 8011CD04 00119B04  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011CD08 00119B08  4E 80 00 20 */	blr 
+
+on_stop__Q49oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_type17tutorial_callbackFv:
 /* 8011CD0C 00119B0C  80 63 00 04 */	lwz r3, 4(r3)
 /* 8011CD10 00119B10  38 00 00 01 */	li r0, 1
 /* 8011CD14 00119B14  98 03 00 3C */	stb r0, 0x3c(r3)
 /* 8011CD18 00119B18  4E 80 00 20 */	blr 
+
+start__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFv:
 /* 8011CD1C 00119B1C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8011CD20 00119B20  7C 08 02 A6 */	mflr r0
 /* 8011CD24 00119B24  90 01 00 44 */	stw r0, 0x44(r1)
@@ -2622,7 +2659,11 @@ lbl_8011CCF0:
 /* 8011CF10 00119D10  7C 08 03 A6 */	mtlr r0
 /* 8011CF14 00119D14  38 21 00 40 */	addi r1, r1, 0x40
 /* 8011CF18 00119D18  4E 80 00 20 */	blr 
+
+stop__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFv:
 /* 8011CF1C 00119D1C  4E 80 00 20 */	blr 
+
+update__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15grab_state_typeFR6xSceneRf:
 /* 8011CF20 00119D20  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011CF24 00119D24  7C 08 02 A6 */	mflr r0
 /* 8011CF28 00119D28  3C C0 80 29 */	lis r6, lbl_80297E48@ha
@@ -2745,6 +2786,8 @@ lbl_8011D0BC:
 /* 8011D0CC 00119ECC  7C 08 03 A6 */	mtlr r0
 /* 8011D0D0 00119ED0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011D0D4 00119ED4  4E 80 00 20 */	blr 
+
+start__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFv:
 /* 8011D0D8 00119ED8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011D0DC 00119EDC  7C 08 02 A6 */	mflr r0
 /* 8011D0E0 00119EE0  3C 80 80 3C */	lis r4, globals@ha
@@ -2866,6 +2909,8 @@ lbl_8011D0BC:
 /* 8011D2B0 0011A0B0  7C 08 03 A6 */	mtlr r0
 /* 8011D2B4 0011A0B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011D2B8 0011A0B8  4E 80 00 20 */	blr 
+
+stop__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFv:
 /* 8011D2BC 0011A0BC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011D2C0 0011A0C0  7C 08 02 A6 */	mflr r0
 /* 8011D2C4 0011A0C4  38 60 00 04 */	li r3, 4
@@ -2889,6 +2934,8 @@ lbl_8011D0BC:
 /* 8011D30C 0011A10C  7C 08 03 A6 */	mtlr r0
 /* 8011D310 0011A110  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011D314 0011A114  4E 80 00 20 */	blr 
+
+update__Q39oob_state32_esc__2_unnamed_esc__2_zEntPlayerOOBState_cpp_esc__2_15drop_state_typeFR6xSceneRf:
 /* 8011D318 0011A118  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011D31C 0011A11C  7C 08 02 A6 */	mflr r0
 /* 8011D320 0011A120  3C C0 80 29 */	lis r6, lbl_80297E48@ha
@@ -3053,9 +3100,17 @@ normalize__5xVec2Fv:
 /* 8011D548 0011A348  7C 08 03 A6 */	mtlr r0
 /* 8011D54C 0011A34C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011D550 0011A350  4E 80 00 20 */	blr 
+
+on_signal__Q28ztalkbox8callbackFUi:
 /* 8011D554 0011A354  4E 80 00 20 */	blr 
+
+on_start__Q28ztalkbox8callbackFv:
 /* 8011D558 0011A358  4E 80 00 20 */	blr 
+
+on_stop__Q28ztalkbox8callbackFv:
 /* 8011D55C 0011A35C  4E 80 00 20 */	blr 
+
+on_answer__Q28ztalkbox8callbackFQ28ztalkbox11answer_enum:
 /* 8011D560 0011A360  4E 80 00 20 */	blr 
 
 .endif

@@ -151,7 +151,8 @@ lbl_80135480:
 /* 80135490 00132290  7C 08 03 A6 */	mtlr r0
 /* 80135494 00132294  38 21 00 20 */	addi r1, r1, 0x20
 /* 80135498 00132298  4E 80 00 20 */	blr 
-lbl_8013549C:
+
+iCSAsyncReadCB__FP9tag_xFile:
 /* 8013549C 0013229C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801354A0 001322A0  7C 08 02 A6 */	mflr r0
 /* 801354A4 001322A4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -279,9 +280,9 @@ lbl_8013564C:
 /* 80135650 00132450  38 E7 00 04 */	addi r7, r7, 4
 /* 80135654 00132454  42 00 FF F8 */	bdnz lbl_8013564C
 lbl_80135658:
-/* 80135658 00132458  3C C0 80 13 */	lis r6, lbl_8013549C@ha
+/* 80135658 00132458  3C C0 80 13 */	lis r6, iCSAsyncReadCB__FP9tag_xFile@ha
 /* 8013565C 0013245C  38 63 00 54 */	addi r3, r3, 0x54
-/* 80135660 00132460  38 C6 54 9C */	addi r6, r6, lbl_8013549C@l
+/* 80135660 00132460  38 C6 54 9C */	addi r6, r6, iCSAsyncReadCB__FP9tag_xFile@l
 /* 80135664 00132464  38 E0 00 00 */	li r7, 0
 /* 80135668 00132468  4B F8 E0 D1 */	bl iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi
 /* 8013566C 0013246C  80 01 00 14 */	lwz r0, 0x14(r1)

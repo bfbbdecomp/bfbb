@@ -37,6 +37,8 @@ zAssetShutdown__Fv:
 /* 8004EC2C 0004BA2C  7C 08 03 A6 */	mtlr r0
 /* 8004EC30 0004BA30  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004EC34 0004BA34  4E 80 00 20 */	blr 
+
+Model_Read__FPvUiPvUiPUi:
 /* 8004EC38 0004BA38  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004EC3C 0004BA3C  7C 08 02 A6 */	mflr r0
 /* 8004EC40 0004BA40  7C A3 2B 78 */	mr r3, r5
@@ -97,6 +99,8 @@ lbl_8004ECF4:
 /* 8004ED08 0004BB08  7C 08 03 A6 */	mtlr r0
 /* 8004ED0C 0004BB0C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004ED10 0004BB10  4E 80 00 20 */	blr 
+
+Curve_Read__FPvUiPvUiPUi:
 /* 8004ED14 0004BB14  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004ED18 0004BB18  7C 08 02 A6 */	mflr r0
 /* 8004ED1C 0004BB1C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -123,6 +127,8 @@ lbl_8004ECF4:
 /* 8004ED70 0004BB70  7C 08 03 A6 */	mtlr r0
 /* 8004ED74 0004BB74  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004ED78 0004BB78  4E 80 00 20 */	blr 
+
+Model_Unload__FPvUi:
 /* 8004ED7C 0004BB7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004ED80 0004BB80  7C 08 02 A6 */	mflr r0
 /* 8004ED84 0004BB84  28 03 00 00 */	cmplwi r3, 0
@@ -134,6 +140,8 @@ lbl_8004ED94:
 /* 8004ED98 0004BB98  7C 08 03 A6 */	mtlr r0
 /* 8004ED9C 0004BB9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004EDA0 0004BBA0  4E 80 00 20 */	blr 
+
+BSP_Read__FPvUiPvUiPUi:
 /* 8004EDA4 0004BBA4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8004EDA8 0004BBA8  7C 08 02 A6 */	mflr r0
 /* 8004EDAC 0004BBAC  38 60 00 03 */	li r3, 3
@@ -197,6 +205,8 @@ lbl_8004EE74:
 /* 8004EE84 0004BC84  7C 08 03 A6 */	mtlr r0
 /* 8004EE88 0004BC88  38 21 00 40 */	addi r1, r1, 0x40
 /* 8004EE8C 0004BC8C  4E 80 00 20 */	blr 
+
+BSP_Unload__FPvUi:
 /* 8004EE90 0004BC90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004EE94 0004BC94  7C 08 02 A6 */	mflr r0
 /* 8004EE98 0004BC98  3C 60 80 3C */	lis r3, globals@ha
@@ -209,7 +219,8 @@ lbl_8004EE74:
 /* 8004EEB4 0004BCB4  7C 08 03 A6 */	mtlr r0
 /* 8004EEB8 0004BCB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004EEBC 0004BCBC  4E 80 00 20 */	blr 
-lbl_8004EEC0:
+
+jsp_shadow_hack_atomic_cb__FP8RpAtomicPv:
 /* 8004EEC0 0004BCC0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004EEC4 0004BCC4  7C 08 02 A6 */	mflr r0
 /* 8004EEC8 0004BCC8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -331,12 +342,12 @@ jsp_shadow_hack__FP10xJSPHeader:
 /* 8004F054 0004BE54  48 00 00 3C */	b lbl_8004F090
 lbl_8004F058:
 /* 8004F058 0004BE58  3C A0 80 25 */	lis r5, lbl_80254398@ha
-/* 8004F05C 0004BE5C  3C 80 80 05 */	lis r4, lbl_8004EEC0@ha
+/* 8004F05C 0004BE5C  3C 80 80 05 */	lis r4, jsp_shadow_hack_atomic_cb__FP8RpAtomicPv@ha
 /* 8004F060 0004BE60  38 E5 43 98 */	addi r7, r5, lbl_80254398@l
 /* 8004F064 0004BE64  80 07 00 00 */	lwz r0, 0(r7)
 /* 8004F068 0004BE68  38 A1 00 08 */	addi r5, r1, 8
 /* 8004F06C 0004BE6C  80 C7 00 04 */	lwz r6, 4(r7)
-/* 8004F070 0004BE70  38 84 EE C0 */	addi r4, r4, lbl_8004EEC0@l
+/* 8004F070 0004BE70  38 84 EE C0 */	addi r4, r4, jsp_shadow_hack_atomic_cb__FP8RpAtomicPv@l
 /* 8004F074 0004BE74  90 01 00 08 */	stw r0, 8(r1)
 /* 8004F078 0004BE78  80 07 00 08 */	lwz r0, 8(r7)
 /* 8004F07C 0004BE7C  90 61 00 08 */	stw r3, 8(r1)
@@ -349,6 +360,8 @@ lbl_8004F090:
 /* 8004F094 0004BE94  7C 08 03 A6 */	mtlr r0
 /* 8004F098 0004BE98  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004F09C 0004BE9C  4E 80 00 20 */	blr 
+
+JSP_Read__FPvUiPvUiPUi:
 /* 8004F0A0 0004BEA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004F0A4 0004BEA4  7C 08 02 A6 */	mflr r0
 /* 8004F0A8 0004BEA8  3C 60 80 2E */	lis r3, lbl_802DBA50@ha
@@ -383,6 +396,8 @@ lbl_8004F100:
 /* 8004F118 0004BF18  7C 08 03 A6 */	mtlr r0
 /* 8004F11C 0004BF1C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004F120 0004BF20  4E 80 00 20 */	blr 
+
+JSP_Unload__FPvUi:
 /* 8004F124 0004BF24  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004F128 0004BF28  7C 08 02 A6 */	mflr r0
 /* 8004F12C 0004BF2C  3C 80 80 2E */	lis r4, lbl_802DBA50@ha
@@ -396,12 +411,15 @@ lbl_8004F144:
 /* 8004F148 0004BF48  7C 08 03 A6 */	mtlr r0
 /* 8004F14C 0004BF4C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004F150 0004BF50  4E 80 00 20 */	blr 
-lbl_8004F154:
+
+TexCB__FP9RwTexturePv:
 /* 8004F154 0004BF54  80 04 00 00 */	lwz r0, 0(r4)
 /* 8004F158 0004BF58  28 00 00 00 */	cmplwi r0, 0
 /* 8004F15C 0004BF5C  4C 82 00 20 */	bnelr 
 /* 8004F160 0004BF60  90 64 00 00 */	stw r3, 0(r4)
 /* 8004F164 0004BF64  4E 80 00 20 */	blr 
+
+RWTX_Read__FPvUiPvUiPUi:
 /* 8004F168 0004BF68  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8004F16C 0004BF6C  7C 08 02 A6 */	mflr r0
 /* 8004F170 0004BF70  90 01 00 34 */	stw r0, 0x34(r1)
@@ -448,9 +466,9 @@ lbl_8004F1F8:
 /* 8004F210 0004C010  48 1E 38 91 */	bl RwStreamClose
 /* 8004F214 0004C014  28 1F 00 00 */	cmplwi r31, 0
 /* 8004F218 0004C018  41 82 00 70 */	beq lbl_8004F288
-/* 8004F21C 0004C01C  3C 80 80 05 */	lis r4, lbl_8004F154@ha
+/* 8004F21C 0004C01C  3C 80 80 05 */	lis r4, TexCB__FP9RwTexturePv@ha
 /* 8004F220 0004C020  7F E3 FB 78 */	mr r3, r31
-/* 8004F224 0004C024  38 84 F1 54 */	addi r4, r4, lbl_8004F154@l
+/* 8004F224 0004C024  38 84 F1 54 */	addi r4, r4, TexCB__FP9RwTexturePv@l
 /* 8004F228 0004C028  38 A1 00 08 */	addi r5, r1, 8
 /* 8004F22C 0004C02C  48 1E F4 6D */	bl RwTexDictionaryForAllTextures
 /* 8004F230 0004C030  80 61 00 08 */	lwz r3, 8(r1)
@@ -487,6 +505,8 @@ lbl_8004F290:
 /* 8004F2A0 0004C0A0  7C 08 03 A6 */	mtlr r0
 /* 8004F2A4 0004C0A4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004F2A8 0004C0A8  4E 80 00 20 */	blr 
+
+TextureRW3_Unload__FPvUi:
 /* 8004F2AC 0004C0AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004F2B0 0004C0B0  7C 08 02 A6 */	mflr r0
 /* 8004F2B4 0004C0B4  28 03 00 00 */	cmplwi r3, 0
@@ -564,8 +584,12 @@ FootstepHackSceneEnter__Fv:
 /* 8004F3B8 0004C1B8  7C 08 03 A6 */	mtlr r0
 /* 8004F3BC 0004C1BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004F3C0 0004C1C0  4E 80 00 20 */	blr 
+
+dummyEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv:
 /* 8004F3C4 0004C1C4  38 60 00 00 */	li r3, 0
 /* 8004F3C8 0004C1C8  4E 80 00 20 */	blr 
+
+soundEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv:
 /* 8004F3CC 0004C1CC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004F3D0 0004C1D0  7C 08 02 A6 */	mflr r0
 /* 8004F3D4 0004C1D4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -718,7 +742,8 @@ lbl_8004F5C0:
 /* 8004F5D8 0004C3D8  7C 08 03 A6 */	mtlr r0
 /* 8004F5DC 0004C3DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004F5E0 0004C3E0  4E 80 00 20 */	blr 
-lbl_8004F5E4:
+
+FindAssetCB__FUiPc:
 /* 8004F5E4 0004C3E4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004F5E8 0004C3E8  7C 08 02 A6 */	mflr r0
 /* 8004F5EC 0004C3EC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -728,6 +753,8 @@ lbl_8004F5E4:
 /* 8004F5FC 0004C3FC  7C 08 03 A6 */	mtlr r0
 /* 8004F600 0004C400  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004F604 0004C404  4E 80 00 20 */	blr 
+
+ATBL_Read__FPvUiPvUiPUi:
 /* 8004F608 0004C408  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8004F60C 0004C40C  7C 08 02 A6 */	mflr r0
 /* 8004F610 0004C410  90 01 00 74 */	stw r0, 0x74(r1)
@@ -787,9 +814,9 @@ lbl_8004F6CC:
 /* 8004F6CC 0004C4CC  80 B8 00 04 */	lwz r5, 4(r24)
 /* 8004F6D0 0004C4D0  7C 06 28 40 */	cmplw r6, r5
 /* 8004F6D4 0004C4D4  41 80 FF A8 */	blt lbl_8004F67C
-/* 8004F6D8 0004C4D8  3C 60 80 05 */	lis r3, lbl_8004F5E4@ha
+/* 8004F6D8 0004C4D8  3C 60 80 05 */	lis r3, FindAssetCB__FUiPc@ha
 /* 8004F6DC 0004C4DC  7F 9F E3 78 */	mr r31, r28
-/* 8004F6E0 0004C4E0  3B C3 F5 E4 */	addi r30, r3, lbl_8004F5E4@l
+/* 8004F6E0 0004C4E0  3B C3 F5 E4 */	addi r30, r3, FindAssetCB__FUiPc@l
 /* 8004F6E4 0004C4E4  3A E0 00 00 */	li r23, 0
 /* 8004F6E8 0004C4E8  48 00 00 28 */	b lbl_8004F710
 lbl_8004F6EC:
@@ -1063,7 +1090,11 @@ lbl_8004FA84:
 /* 8004FAAC 0004C8AC  7C 08 03 A6 */	mtlr r0
 /* 8004FAB0 0004C8B0  38 21 00 70 */	addi r1, r1, 0x70
 /* 8004FAB4 0004C8B4  4E 80 00 20 */	blr 
+
+Anim_Unload__FPvUi:
 /* 8004FAB8 0004C8B8  4E 80 00 20 */	blr 
+
+LightKit_Unload__FPvUi:
 /* 8004FABC 0004C8BC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FAC0 0004C8C0  7C 08 02 A6 */	mflr r0
 /* 8004FAC4 0004C8C4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1084,6 +1115,8 @@ Anim_ATBL_getTable__FPFv_P10xAnimTable:
 /* 8004FAF8 0004C8F8  7C 08 03 A6 */	mtlr r0
 /* 8004FAFC 0004C8FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FB00 0004C900  4E 80 00 20 */	blr 
+
+MovePoint_Unload__FPvUi:
 /* 8004FB04 0004C904  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004FB08 0004C908  7C 08 02 A6 */	mflr r0
 /* 8004FB0C 0004C90C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1092,6 +1125,8 @@ Anim_ATBL_getTable__FPFv_P10xAnimTable:
 /* 8004FB18 0004C918  7C 08 03 A6 */	mtlr r0
 /* 8004FB1C 0004C91C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004FB20 0004C920  4E 80 00 20 */	blr 
+
+SndInfoRead__FPvUiPvUiPUi:
 /* 8004FB24 0004C924  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8004FB28 0004C928  7C 08 02 A6 */	mflr r0
 /* 8004FB2C 0004C92C  90 01 00 24 */	stw r0, 0x24(r1)

@@ -241,6 +241,73 @@ typedef RwUInt32* RxNodeOutput;
 typedef RxPipelineNode* RxNodeInput;
 typedef RxPipeline RxLockedPipe;
 
+enum RwRasterLockMode
+{
+    rwRASTERLOCKWRITE = 0x01,
+    rwRASTERLOCKREAD = 0x02,
+    rwRASTERLOCKNOFETCH = 0x04,
+    rwRASTERLOCKRAW = 0x08,
+    rwRASTERLOCKMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define rwRASTERLOCKREADWRITE (rwRASTERLOCKREAD | rwRASTERLOCKWRITE)
+
+enum RwRasterFlipMode
+{
+    rwRASTERFLIPDONTWAIT = 0,
+    rwRASTERFLIPWAITVSYNC = 1,
+    rwRASTERFLIPMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwRasterType
+{
+    rwRASTERTYPENORMAL = 0x00,
+    rwRASTERTYPEZBUFFER = 0x01,
+    rwRASTERTYPECAMERA = 0x02,
+    rwRASTERTYPETEXTURE = 0x04,
+    rwRASTERTYPECAMERATEXTURE = 0x05,
+    rwRASTERTYPEMASK = 0x07,
+    rwRASTERDONTALLOCATE = 0x80,
+    rwRASTERTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwRasterFormat
+{
+    rwRASTERFORMATDEFAULT = 0x0000,
+    rwRASTERFORMAT1555 = 0x0100,
+    rwRASTERFORMAT565 = 0x0200,
+    rwRASTERFORMAT4444 = 0x0300,
+    rwRASTERFORMATLUM8 = 0x0400,
+    rwRASTERFORMAT8888 = 0x0500,
+    rwRASTERFORMAT888 = 0x0600,
+    rwRASTERFORMAT16 = 0x0700,
+    rwRASTERFORMAT24 = 0x0800,
+    rwRASTERFORMAT32 = 0x0900,
+    rwRASTERFORMAT555 = 0x0a00,
+    rwRASTERFORMATAUTOMIPMAP = 0x1000,
+    rwRASTERFORMATPAL8 = 0x2000,
+    rwRASTERFORMATPAL4 = 0x4000,
+    rwRASTERFORMATMIPMAP = 0x8000,
+    rwRASTERFORMATPIXELFORMATMASK = 0x0f00,
+    rwRASTERFORMATMASK = 0xff00,
+    rwRASTERFORMATFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwRasterPrivateFlag
+{
+    rwRASTERGAMMACORRECTED = 0x01,
+    rwRASTERPIXELLOCKEDREAD = 0x02,
+    rwRASTERPIXELLOCKEDWRITE = 0x04,
+    rwRASTERPALETTELOCKEDREAD = 0x08,
+    rwRASTERPALETTELOCKEDWRITE = 0x10,
+    rwRASTERPIXELLOCKEDRAW = 0x20,
+    rwRASTERPRIVATEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define rwRASTERPIXELLOCKED (rwRASTERPIXELLOCKEDREAD | rwRASTERPIXELLOCKEDWRITE)
+#define rwRASTERPALETTELOCKED (rwRASTERPALETTELOCKEDREAD | rwRASTERPALETTELOCKEDWRITE)
+#define rwRASTERLOCKED (rwRASTERPIXELLOCKED | rwRASTERPALETTELOCKED)
+
 struct RwRaster
 {
     RwRaster* parent;
@@ -258,6 +325,20 @@ struct RwRaster
     RwInt32 originalHeight;
     RwInt32 originalStride;
 };
+
+#define RwRasterGetWidth(_raster) ((_raster)->width)
+
+#define RwRasterGetHeight(_raster) ((_raster)->height)
+
+#define RwRasterGetStride(_raster) ((_raster)->stride)
+
+#define RwRasterGetDepth(_raster) ((_raster)->depth)
+
+#define RwRasterGetFormat(_raster) ((((_raster)->cFormat) & (rwRASTERFORMATMASK >> 8)) << 8)
+
+#define RwRasterGetType(_raster) (((_raster)->cType) & rwRASTERTYPEMASK)
+
+#define RwRasterGetParent(_raster) ((_raster)->parent)
 
 struct RxRenderStateVector
 {
@@ -342,6 +423,14 @@ struct RwBBox
     RwV3d inf;
 };
 
+enum RwCameraClearMode
+{
+    rwCAMERACLEARIMAGE = 0x1,
+    rwCAMERACLEARZ = 0x2,
+    rwCAMERACLEARSTENCIL = 0x4,
+    rwCAMERACLEARMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 enum RwCameraProjection
 {
     rwNACAMERAPROJECTION = 0,
@@ -394,6 +483,37 @@ struct RwCamera
 };
 
 typedef RwCamera* (*RwCameraCallBack)(RwCamera* camera, void* data);
+
+#define RwCameraGetViewOffset(_camera) (&((_camera)->viewOffset))
+
+#define RwCameraSetRaster(_camera, _raster) (((_camera)->frameBuffer = (_raster)), (_camera))
+
+#define RwCameraGetRaster(_camera) ((_camera)->frameBuffer)
+
+#define RwCameraSetZRaster(_camera, _raster) (((_camera)->zBuffer = (_raster)), (_camera))
+
+#define RwCameraGetZRaster(_camera) ((_camera)->zBuffer)
+
+#define RwCameraGetNearClipPlane(_camera) ((_camera)->nearPlane)
+
+#define RwCameraGetFarClipPlane(_camera) ((_camera)->farPlane)
+
+#define RwCameraSetFogDistance(_camera, _distance) (((_camera)->fogPlane = (_distance)), (_camera))
+
+#define RwCameraGetFogDistance(_camera) ((_camera)->fogPlane)
+
+#define RwCameraGetCurrentCamera() ((RwCamera*)RWSRCGLOBAL(curCamera))
+
+#define RwCameraGetProjection(_camera) ((_camera)->projectionType)
+
+#define RwCameraGetViewWindow(_camera) (&((_camera)->viewWindow))
+
+#define RwCameraGetViewMatrix(_camera) (&((_camera)->viewMatrix))
+
+#define RwCameraSetFrame(_camera, _frame)                                                          \
+    (_rwObjectHasFrameSetFrame((_camera), (_frame)), (_camera))
+
+#define RwCameraGetFrame(_camera) ((RwFrame*)rwObjectGetParent((_camera)))
 
 #ifdef __cplusplus
 extern "C" {

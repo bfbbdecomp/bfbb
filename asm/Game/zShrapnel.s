@@ -708,7 +708,8 @@ lbl_80127C84:
 /* 80127C8C 00124A8C  7C 08 03 A6 */	mtlr r0
 /* 80127C90 00124A90  38 21 00 30 */	addi r1, r1, 0x30
 /* 80127C94 00124A94  4E 80 00 20 */	blr 
-lbl_80127C98:
+
+CinFragCB__FP5zFragP10zFragAsset:
 /* 80127C98 00124A98  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80127C9C 00124A9C  7C 08 02 A6 */	mflr r0
 /* 80127CA0 00124AA0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -797,8 +798,8 @@ lbl_80127DC4:
 /* 80127DC8 00124BC8  7C 1A 00 00 */	cmpw r26, r0
 /* 80127DCC 00124BCC  41 80 FF DC */	blt lbl_80127DA8
 /* 80127DD0 00124BD0  92 ED 95 B8 */	stw r23, lbl_803CBEB8-_SDA_BASE_(r13)
-/* 80127DD4 00124BD4  3C 60 80 12 */	lis r3, lbl_80127C98@ha
-/* 80127DD8 00124BD8  38 C3 7C 98 */	addi r6, r3, lbl_80127C98@l
+/* 80127DD4 00124BD4  3C 60 80 12 */	lis r3, CinFragCB__FP5zFragP10zFragAsset@ha
+/* 80127DD8 00124BD8  38 C3 7C 98 */	addi r6, r3, CinFragCB__FP5zFragP10zFragAsset@l
 /* 80127DDC 00124BDC  7F 04 C3 78 */	mr r4, r24
 /* 80127DE0 00124BE0  93 2D 95 BC */	stw r25, lbl_803CBEBC-_SDA_BASE_(r13)
 /* 80127DE4 00124BE4  7F C3 F3 78 */	mr r3, r30
@@ -1124,9 +1125,9 @@ lbl_80128224:
 /* 8012822C 0012502C  40 80 01 80 */	bge lbl_801283AC
 /* 80128230 00125030  48 00 01 48 */	b lbl_80128378
 lbl_80128234:
-/* 80128234 00125034  3C 60 80 13 */	lis r3, lbl_8012891C@ha
+/* 80128234 00125034  3C 60 80 13 */	lis r3, zFrag_DefaultProjectileUpdate__FP5zFragf@ha
 /* 80128238 00125038  93 DF 00 04 */	stw r30, 4(r31)
-/* 8012823C 0012503C  38 03 89 1C */	addi r0, r3, lbl_8012891C@l
+/* 8012823C 0012503C  38 03 89 1C */	addi r0, r3, zFrag_DefaultProjectileUpdate__FP5zFragf@l
 /* 80128240 00125040  90 1F 00 70 */	stw r0, 0x70(r31)
 /* 80128244 00125044  80 7E 00 1C */	lwz r3, 0x1c(r30)
 /* 80128248 00125048  28 03 00 00 */	cmplwi r3, 0
@@ -1181,9 +1182,9 @@ lbl_801282B4:
 /* 801282FC 001250FC  D0 1F 00 40 */	stfs f0, 0x40(r31)
 /* 80128300 00125100  48 00 00 AC */	b lbl_801283AC
 lbl_80128304:
-/* 80128304 00125104  3C 60 80 13 */	lis r3, lbl_80128E8C@ha
+/* 80128304 00125104  3C 60 80 13 */	lis r3, zFrag_DefaultLightningUpdate__FP5zFragf@ha
 /* 80128308 00125108  93 DF 00 04 */	stw r30, 4(r31)
-/* 8012830C 0012510C  38 03 8E 8C */	addi r0, r3, lbl_80128E8C@l
+/* 8012830C 0012510C  38 03 8E 8C */	addi r0, r3, zFrag_DefaultLightningUpdate__FP5zFragf@l
 /* 80128310 00125110  90 1F 00 70 */	stw r0, 0x70(r31)
 /* 80128314 00125114  80 9F 00 74 */	lwz r4, 0x74(r31)
 /* 80128318 00125118  28 04 00 00 */	cmplwi r4, 0
@@ -1198,9 +1199,9 @@ lbl_80128304:
 /* 8012833C 0012513C  4B FF FA E1 */	bl zFragLoc_Setup__FP13zFragLocationP14xModelInstance
 /* 80128340 00125140  48 00 00 6C */	b lbl_801283AC
 lbl_80128344:
-/* 80128344 00125144  3C 60 80 13 */	lis r3, lbl_801283C4@ha
+/* 80128344 00125144  3C 60 80 13 */	lis r3, zFrag_DefaultParticleUpdate__FP5zFragf@ha
 /* 80128348 00125148  93 DF 00 04 */	stw r30, 4(r31)
-/* 8012834C 0012514C  38 03 83 C4 */	addi r0, r3, lbl_801283C4@l
+/* 8012834C 0012514C  38 03 83 C4 */	addi r0, r3, zFrag_DefaultParticleUpdate__FP5zFragf@l
 /* 80128350 00125150  90 1F 00 70 */	stw r0, 0x70(r31)
 /* 80128354 00125154  80 9F 00 74 */	lwz r4, 0x74(r31)
 /* 80128358 00125158  28 04 00 00 */	cmplwi r4, 0
@@ -1212,9 +1213,9 @@ lbl_80128344:
 /* 80128370 00125170  4B FF FA AD */	bl zFragLoc_Setup__FP13zFragLocationP14xModelInstance
 /* 80128374 00125174  48 00 00 38 */	b lbl_801283AC
 lbl_80128378:
-/* 80128378 00125178  3C 60 80 13 */	lis r3, lbl_80129098@ha
+/* 80128378 00125178  3C 60 80 13 */	lis r3, zFrag_DefaultSoundUpdate__FP5zFragf@ha
 /* 8012837C 0012517C  93 DF 00 04 */	stw r30, 4(r31)
-/* 80128380 00125180  38 03 90 98 */	addi r0, r3, lbl_80129098@l
+/* 80128380 00125180  38 03 90 98 */	addi r0, r3, zFrag_DefaultSoundUpdate__FP5zFragf@l
 /* 80128384 00125184  90 1F 00 70 */	stw r0, 0x70(r31)
 /* 80128388 00125188  80 9F 00 74 */	lwz r4, 0x74(r31)
 /* 8012838C 0012518C  28 04 00 00 */	cmplwi r4, 0
@@ -1232,7 +1233,8 @@ lbl_801283AC:
 /* 801283B8 001251B8  7C 08 03 A6 */	mtlr r0
 /* 801283BC 001251BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801283C0 001251C0  4E 80 00 20 */	blr 
-lbl_801283C4:
+
+zFrag_DefaultParticleUpdate__FP5zFragf:
 /* 801283C4 001251C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801283C8 001251C8  7C 08 02 A6 */	mflr r0
 /* 801283CC 001251CC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1609,7 +1611,8 @@ lbl_801288FC:
 /* 80128910 00125710  7C 08 03 A6 */	mtlr r0
 /* 80128914 00125714  38 21 00 20 */	addi r1, r1, 0x20
 /* 80128918 00125718  4E 80 00 20 */	blr 
-lbl_8012891C:
+
+zFrag_DefaultProjectileUpdate__FP5zFragf:
 /* 8012891C 0012571C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80128920 00125720  7C 08 02 A6 */	mflr r0
 /* 80128924 00125724  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1988,7 +1991,8 @@ lbl_80128E58:
 /* 80128E80 00125C80  7C 08 03 A6 */	mtlr r0
 /* 80128E84 00125C84  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 80128E88 00125C88  4E 80 00 20 */	blr 
-lbl_80128E8C:
+
+zFrag_DefaultLightningUpdate__FP5zFragf:
 /* 80128E8C 00125C8C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80128E90 00125C90  7C 08 02 A6 */	mflr r0
 /* 80128E94 00125C94  90 01 00 34 */	stw r0, 0x34(r1)
@@ -2136,7 +2140,8 @@ lbl_80129068:
 /* 8012908C 00125E8C  7C 08 03 A6 */	mtlr r0
 /* 80129090 00125E90  38 21 00 40 */	addi r1, r1, 0x40
 /* 80129094 00125E94  4E 80 00 20 */	blr 
-lbl_80129098:
+
+zFrag_DefaultSoundUpdate__FP5zFragf:
 /* 80129098 00125E98  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8012909C 00125E9C  7C 08 02 A6 */	mflr r0
 /* 801290A0 00125EA0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2312,6 +2317,8 @@ lbl_801292DC:
 /* 801292FC 001260FC  7C 08 03 A6 */	mtlr r0
 /* 80129300 00126100  38 21 00 10 */	addi r1, r1, 0x10
 /* 80129304 00126104  4E 80 00 20 */	blr 
+
+zShrapnel_DestructObjInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v:
 /* 80129308 00126108  94 21 FF 30 */	stwu r1, -0xd0(r1)
 /* 8012930C 0012610C  7C 08 02 A6 */	mflr r0
 /* 80129310 00126110  90 01 00 D4 */	stw r0, 0xd4(r1)
@@ -2375,9 +2382,9 @@ lbl_801293EC:
 /* 801293F0 001261F0  40 81 00 08 */	ble lbl_801293F8
 /* 801293F4 001261F4  3B 40 00 0A */	li r26, 0xa
 lbl_801293F8:
-/* 801293F8 001261F8  3C 60 80 13 */	lis r3, lbl_8012891C@ha
+/* 801293F8 001261F8  3C 60 80 13 */	lis r3, zFrag_DefaultProjectileUpdate__FP5zFragf@ha
 /* 801293FC 001261FC  3B 60 00 00 */	li r27, 0
-/* 80129400 00126200  3B E3 89 1C */	addi r31, r3, lbl_8012891C@l
+/* 80129400 00126200  3B E3 89 1C */	addi r31, r3, zFrag_DefaultProjectileUpdate__FP5zFragf@l
 /* 80129404 00126204  3F C0 43 30 */	lis r30, 0x4330
 /* 80129408 00126208  48 00 03 68 */	b lbl_80129770
 lbl_8012940C:
@@ -2625,6 +2632,8 @@ lbl_80129778:
 /* 80129798 00126598  7C 08 03 A6 */	mtlr r0
 /* 8012979C 0012659C  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801297A0 001265A0  4E 80 00 20 */	blr 
+
+zShrapnel_BB03FloorInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v:
 /* 801297A4 001265A4  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 801297A8 001265A8  7C 08 02 A6 */	mflr r0
 /* 801297AC 001265AC  28 03 00 00 */	cmplwi r3, 0
@@ -2696,9 +2705,9 @@ lbl_80129838:
 /* 801298AC 001266AC  38 61 00 08 */	addi r3, r1, 8
 /* 801298B0 001266B0  38 81 00 20 */	addi r4, r1, 0x20
 /* 801298B4 001266B4  4B EF 20 AD */	bl xVec3SubFrom__FP5xVec3PC5xVec3
-/* 801298B8 001266B8  3C 60 80 13 */	lis r3, lbl_8012891C@ha
+/* 801298B8 001266B8  3C 60 80 13 */	lis r3, zFrag_DefaultProjectileUpdate__FP5zFragf@ha
 /* 801298BC 001266BC  3B 61 00 2C */	addi r27, r1, 0x2c
-/* 801298C0 001266C0  3B 83 89 1C */	addi r28, r3, lbl_8012891C@l
+/* 801298C0 001266C0  3B 83 89 1C */	addi r28, r3, zFrag_DefaultProjectileUpdate__FP5zFragf@l
 /* 801298C4 001266C4  3B E0 FF FE */	li r31, -2
 lbl_801298C8:
 /* 801298C8 001266C8  3B C0 FF FE */	li r30, -2
@@ -2817,7 +2826,8 @@ lbl_80129A68:
 /* 80129A70 00126870  7C 08 03 A6 */	mtlr r0
 /* 80129A74 00126874  38 21 00 70 */	addi r1, r1, 0x70
 /* 80129A78 00126878  4E 80 00 20 */	blr 
-lbl_80129A7C:
+
+BB03FloorChildCB__FP5zFragP10zFragAsset:
 /* 80129A7C 0012687C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80129A80 00126880  7C 08 02 A6 */	mflr r0
 /* 80129A84 00126884  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2850,16 +2860,20 @@ lbl_80129AE4:
 /* 80129AEC 001268EC  7C 08 03 A6 */	mtlr r0
 /* 80129AF0 001268F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80129AF4 001268F4  4E 80 00 20 */	blr 
+
+zShrapnel_BB03FloorChildInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v:
 /* 80129AF8 001268F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80129AFC 001268FC  7C 08 02 A6 */	mflr r0
-/* 80129B00 00126900  3C C0 80 13 */	lis r6, lbl_80129A7C@ha
+/* 80129B00 00126900  3C C0 80 13 */	lis r6, BB03FloorChildCB__FP5zFragP10zFragAsset@ha
 /* 80129B04 00126904  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80129B08 00126908  38 C6 9A 7C */	addi r6, r6, lbl_80129A7C@l
+/* 80129B08 00126908  38 C6 9A 7C */	addi r6, r6, BB03FloorChildCB__FP5zFragP10zFragAsset@l
 /* 80129B0C 0012690C  4B FF DF BD */	bl zShrapnel_DefaultInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v
 /* 80129B10 00126910  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80129B14 00126914  7C 08 03 A6 */	mtlr r0
 /* 80129B18 00126918  38 21 00 10 */	addi r1, r1, 0x10
 /* 80129B1C 0012691C  4E 80 00 20 */	blr 
+
+zShrapnel_GlobalRobotInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v:
 /* 80129B20 00126920  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80129B24 00126924  7C 08 02 A6 */	mflr r0
 /* 80129B28 00126928  90 01 00 44 */	stw r0, 0x44(r1)
@@ -2999,6 +3013,8 @@ lbl_80129CEC:
 /* 80129CFC 00126AFC  7C 08 03 A6 */	mtlr r0
 /* 80129D00 00126B00  38 21 00 40 */	addi r1, r1, 0x40
 /* 80129D04 00126B04  4E 80 00 20 */	blr 
+
+zShrapnel_SpongebobInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v:
 /* 80129D08 00126B08  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80129D0C 00126B0C  7C 08 02 A6 */	mflr r0
 /* 80129D10 00126B10  90 01 00 44 */	stw r0, 0x44(r1)

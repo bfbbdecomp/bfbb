@@ -15,6 +15,9 @@ lbl_80252BA8:
 lbl_80252BD4:
 	.incbin "baserom.dol", 0x24FBB4, 0x144
 
+
+.if 0
+
 .section .text  # 0x800266C8 - 0x8002CAA0
 
 .global xFXInit__Fv
@@ -829,8 +832,8 @@ lbl_8002719C:
 /* 8002727C 0002407C  7C 83 23 78 */	mr r3, r4
 /* 80027280 00024080  48 02 43 61 */	bl xSTAssetName__FUi
 /* 80027284 00024084  80 7C 00 24 */	lwz r3, 0x24(r28)
-/* 80027288 00024088  3C 80 80 02 */	lis r4, lbl_800276AC@ha
-/* 8002728C 0002408C  38 04 76 AC */	addi r0, r4, lbl_800276AC@l
+/* 80027288 00024088  3C 80 80 02 */	lis r4, xFXBubbleRender__FP8RpAtomic@ha
+/* 8002728C 0002408C  38 04 76 AC */	addi r0, r4, xFXBubbleRender__FP8RpAtomic@l
 /* 80027290 00024090  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80027294 00024094  90 03 00 48 */	stw r0, 0x48(r3)
 /* 80027298 00024098  80 7C 00 24 */	lwz r3, 0x24(r28)
@@ -915,7 +918,8 @@ LightResetFrame__FP7RpLight:
 /* 800273AC 000241AC  7C 08 03 A6 */	mtlr r0
 /* 800273B0 000241B0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800273B4 000241B4  4E 80 00 20 */	blr 
-lbl_800273B8:
+
+MaterialDisableMatFX__FP10RpMaterialPv:
 /* 800273B8 000241B8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800273BC 000241BC  7C 08 02 A6 */	mflr r0
 /* 800273C0 000241C0  38 80 00 00 */	li r4, 0
@@ -941,9 +945,9 @@ AtomicDisableMatFX__FP8RpAtomic:
 /* 80027404 00024204  80 7F 00 18 */	lwz r3, 0x18(r31)
 /* 80027408 00024208  28 03 00 00 */	cmplwi r3, 0
 /* 8002740C 0002420C  41 82 00 14 */	beq lbl_80027420
-/* 80027410 00024210  3C 80 80 02 */	lis r4, lbl_800273B8@ha
+/* 80027410 00024210  3C 80 80 02 */	lis r4, MaterialDisableMatFX__FP10RpMaterialPv@ha
 /* 80027414 00024214  38 A0 00 00 */	li r5, 0
-/* 80027418 00024218  38 84 73 B8 */	addi r4, r4, lbl_800273B8@l
+/* 80027418 00024218  38 84 73 B8 */	addi r4, r4, MaterialDisableMatFX__FP10RpMaterialPv@l
 /* 8002741C 0002421C  48 1E E0 99 */	bl RpGeometryForAllMaterials
 lbl_80027420:
 /* 80027420 00024220  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -952,7 +956,8 @@ lbl_80027420:
 /* 8002742C 0002422C  7C 08 03 A6 */	mtlr r0
 /* 80027430 00024230  38 21 00 10 */	addi r1, r1, 0x10
 /* 80027434 00024234  4E 80 00 20 */	blr 
-lbl_80027438:
+
+PreAllocMatFX_cb__FP8RpAtomicPv:
 /* 80027438 00024238  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002743C 0002423C  7C 08 02 A6 */	mflr r0
 /* 80027440 00024240  90 01 00 14 */	stw r0, 0x14(r1)
@@ -970,16 +975,17 @@ lbl_80027438:
 xFXPreAllocMatFX__FP7RpClump:
 /* 80027468 00024268  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002746C 0002426C  7C 08 02 A6 */	mflr r0
-/* 80027470 00024270  3C 80 80 02 */	lis r4, lbl_80027438@ha
+/* 80027470 00024270  3C 80 80 02 */	lis r4, PreAllocMatFX_cb__FP8RpAtomicPv@ha
 /* 80027474 00024274  38 A0 00 00 */	li r5, 0
 /* 80027478 00024278  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8002747C 0002427C  38 84 74 38 */	addi r4, r4, lbl_80027438@l
+/* 8002747C 0002427C  38 84 74 38 */	addi r4, r4, PreAllocMatFX_cb__FP8RpAtomicPv@l
 /* 80027480 00024280  48 1E BB B1 */	bl RpClumpForAllAtomics
 /* 80027484 00024284  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80027488 00024288  7C 08 03 A6 */	mtlr r0
 /* 8002748C 0002428C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80027490 00024290  4E 80 00 20 */	blr 
-lbl_80027494:
+
+MaterialSetShininess__FP10RpMaterialPv:
 /* 80027494 00024294  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80027498 00024298  7C 08 02 A6 */	mflr r0
 /* 8002749C 0002429C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1011,8 +1017,8 @@ AtomicSetShininess__FP8RpAtomicPv:
 /* 800274F4 000242F4  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 800274F8 000242F8  28 03 00 00 */	cmplwi r3, 0
 /* 800274FC 000242FC  41 82 00 18 */	beq lbl_80027514
-/* 80027500 00024300  3C A0 80 02 */	lis r5, lbl_80027494@ha
-/* 80027504 00024304  38 05 74 94 */	addi r0, r5, lbl_80027494@l
+/* 80027500 00024300  3C A0 80 02 */	lis r5, MaterialSetShininess__FP10RpMaterialPv@ha
+/* 80027504 00024304  38 05 74 94 */	addi r0, r5, MaterialSetShininess__FP10RpMaterialPv@l
 /* 80027508 00024308  7C 85 23 78 */	mr r5, r4
 /* 8002750C 0002430C  7C 04 03 78 */	mr r4, r0
 /* 80027510 00024310  48 1E DF A5 */	bl RpGeometryForAllMaterials
@@ -1083,7 +1089,8 @@ lbl_800275DC:
 /* 800275EC 000243EC  7C 08 03 A6 */	mtlr r0
 /* 800275F0 000243F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800275F4 000243F4  4E 80 00 20 */	blr 
-lbl_800275F8:
+
+MaterialSetEnvMap2__FP10RpMaterialPv:
 /* 800275F8 000243F8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800275FC 000243FC  7C 08 02 A6 */	mflr r0
 /* 80027600 00024400  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1133,8 +1140,9 @@ lbl_8002768C:
 /* 800276A4 000244A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800276A8 000244A8  4E 80 00 20 */	blr 
 
-.global lbl_800276AC
-lbl_800276AC:
+.global xFXBubbleRender__FP8RpAtomic
+
+xFXBubbleRender__FP8RpAtomic:
 /* 800276AC 000244AC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800276B0 000244B0  7C 08 02 A6 */	mflr r0
 /* 800276B4 000244B4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1218,6 +1226,8 @@ lbl_800277C4:
 /* 800277E0 000245E0  7C 08 03 A6 */	mtlr r0
 /* 800277E4 000245E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800277E8 000245E8  4E 80 00 20 */	blr 
+
+xFXShinyRender__FP8RpAtomic:
 /* 800277EC 000245EC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800277F0 000245F0  7C 08 02 A6 */	mflr r0
 /* 800277F4 000245F4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1312,9 +1322,9 @@ AtomicSetEnvMap__FP8RpAtomicPv:
 /* 8002794C 0002474C  80 7E 00 18 */	lwz r3, 0x18(r30)
 /* 80027950 00024750  28 03 00 00 */	cmplwi r3, 0
 /* 80027954 00024754  41 82 00 14 */	beq lbl_80027968
-/* 80027958 00024758  3C 80 80 02 */	lis r4, lbl_800275F8@ha
+/* 80027958 00024758  3C 80 80 02 */	lis r4, MaterialSetEnvMap2__FP10RpMaterialPv@ha
 /* 8002795C 0002475C  7F E5 FB 78 */	mr r5, r31
-/* 80027960 00024760  38 84 75 F8 */	addi r4, r4, lbl_800275F8@l
+/* 80027960 00024760  38 84 75 F8 */	addi r4, r4, MaterialSetEnvMap2__FP10RpMaterialPv@l
 /* 80027964 00024764  48 1E DB 51 */	bl RpGeometryForAllMaterials
 lbl_80027968:
 /* 80027968 00024768  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -4204,7 +4214,8 @@ lbl_8002A1E0:
 xFXShineStart__FPC5xVec3ffffUiPC10iColor_tagPC10iColor_tagfi:
 /* 8002A20C 0002700C  38 60 00 02 */	li r3, 2
 /* 8002A210 00027010  4E 80 00 20 */	blr 
-lbl_8002A214:
+
+compare_ribbons__17_esc__2_unnamed_esc__2_xFX_cpp_esc__2_FPCvPCv:
 /* 8002A214 00027014  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002A218 00027018  7C 08 02 A6 */	mflr r0
 /* 8002A21C 0002701C  7C 03 20 40 */	cmplw r3, r4
@@ -4246,8 +4257,8 @@ sort_ribbons__17_esc__2_unnamed_esc__2_xFX_cpp_esc__2_Fv:
 /* 8002A290 00027090  48 00 00 24 */	b lbl_8002A2B4
 lbl_8002A294:
 /* 8002A294 00027094  3C 60 80 2D */	lis r3, lbl_802C81C8@ha
-/* 8002A298 00027098  3C A0 80 03 */	lis r5, lbl_8002A214@ha
-/* 8002A29C 0002709C  38 C5 A2 14 */	addi r6, r5, lbl_8002A214@l
+/* 8002A298 00027098  3C A0 80 03 */	lis r5, compare_ribbons__17_esc__2_unnamed_esc__2_xFX_cpp_esc__2_FPCvPCv@ha
+/* 8002A29C 0002709C  38 C5 A2 14 */	addi r6, r5, compare_ribbons__17_esc__2_unnamed_esc__2_xFX_cpp_esc__2_FPCvPCv@l
 /* 8002A2A0 000270A0  38 63 81 C8 */	addi r3, r3, lbl_802C81C8@l
 /* 8002A2A4 000270A4  38 A0 00 04 */	li r5, 4
 /* 8002A2A8 000270A8  48 1B BD CD */	bl qsort
@@ -7215,6 +7226,8 @@ lbl_8002CA94:
 /* 8002CA94 00029894  28 04 00 01 */	cmplwi r4, 1
 /* 8002CA98 00029898  41 81 FF F4 */	bgt lbl_8002CA8C
 /* 8002CA9C 0002989C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027D010:

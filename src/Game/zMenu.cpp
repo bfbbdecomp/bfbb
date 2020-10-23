@@ -2,44 +2,44 @@
 
 #include <types.h>
 
-// zMenuRunning()
+// func_800A6000
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuRunning__Fv")
 
-// zMenuInit(unsigned int)
+// func_800A6008
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuInit__FUi")
 
-// zMenuExit()
+// func_800A608C
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuExit__Fv")
 
-// zMenuSetup()
+// func_800A60D0
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuSetup__Fv")
 
-// zMenuLoop()
+// func_800A6180
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuLoop__Fv")
 
-// zMenuIsPaused()
+// func_800A6748
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuIsPaused__Fv")
 
-// zMenuLoopContinue()
+// func_800A6750
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuLoopContinue__Fv")
 
-// zMenuUpdateMode()
+// func_800A6768
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuUpdateMode__Fv")
 
-// zMenuGetCorruptFiles(char (*)[64])
+// func_800A6828
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuGetCorruptFiles__FPA64_c")
 
-// zMenuCardCheckStartup(int*,int*,int*)
+// func_800A6894
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuCardCheckStartup__FPiPiPi")
 
-// zMenuGetBadCard()
+// func_800A6B98
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuGetBadCard__Fv")
 
-// zMenuFMVPlay(char*,unsigned int,float,bool,bool)
+// func_800A6BA4
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuFMVPlay__FPcUifbb")
 
-// zMenuIsFirstBoot()
+// func_800A6BE8
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuIsFirstBoot__Fv")
 
-// zMenuFirstBootSet(int)
+// func_800A6BF0
 #pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuFirstBootSet__Fi")

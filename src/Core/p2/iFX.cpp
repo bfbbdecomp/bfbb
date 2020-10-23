@@ -2,11 +2,11 @@
 
 #include <types.h>
 
-#pragma GLOBAL_ASM("asm/Core/p2/iFX.s", "ifx_rename_me_1")
+// func_800C477C
+#pragma GLOBAL_ASM("asm/Core/p2/iFX.s", "_iGCUVRenderCallback__FPvP18RxGameCubePipeData")
 
-namespace {
+// func_800C4A28
 #pragma GLOBAL_ASM("asm/Core/p2/iFX.s", "GXSetTexCoordGen")
-}
 
-// iFXanimUVCreatePipe()
+// func_800C4A50
 #pragma GLOBAL_ASM("asm/Core/p2/iFX.s", "iFXanimUVCreatePipe__Fv")

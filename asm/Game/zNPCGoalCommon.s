@@ -93,6 +93,8 @@ lbl_800D521C:
 /* 800D5240 000D2040  7C 08 03 A6 */	mtlr r0
 /* 800D5244 000D2044  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D5248 000D2048  4E 80 00 20 */	blr 
+
+PreCalc__14zNPCGoalCommonFfPv:
 /* 800D524C 000D204C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800D5250 000D2050  7C 08 02 A6 */	mflr r0
 /* 800D5254 000D2054  90 01 00 24 */	stw r0, 0x24(r1)
@@ -244,12 +246,16 @@ Suspend__5xGoalFfPv:
 SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi:
 /* 800D542C 000D222C  38 60 00 01 */	li r3, 1
 /* 800D5430 000D2230  4E 80 00 20 */	blr 
+
+Notice__8xPSYNoteF10en_psynoteP5xGoalPv:
 /* 800D5434 000D2234  4E 80 00 20 */	blr 
 
 .global Name__14zNPCGoalCommonFv
 Name__14zNPCGoalCommonFv:
 /* 800D5438 000D2238  38 60 00 00 */	li r3, 0
 /* 800D543C 000D223C  4E 80 00 20 */	blr 
+
+Clear__14zNPCGoalCommonFv:
 /* 800D5440 000D2240  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D5444 000D2244  7C 08 02 A6 */	mflr r0
 /* 800D5448 000D2248  90 01 00 14 */	stw r0, 0x14(r1)
@@ -260,10 +266,16 @@ Name__14zNPCGoalCommonFv:
 /* 800D545C 000D225C  7C 08 03 A6 */	mtlr r0
 /* 800D5460 000D2260  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D5464 000D2264  4E 80 00 20 */	blr 
+
+NPCMessage__14zNPCGoalCommonFP6NPCMsg:
 /* 800D5468 000D2268  38 60 00 00 */	li r3, 0
 /* 800D546C 000D226C  4E 80 00 20 */	blr 
+
+CollReview__14zNPCGoalCommonFPv:
 /* 800D5470 000D2270  38 60 00 00 */	li r3, 0
 /* 800D5474 000D2274  4E 80 00 20 */	blr 
+
+AnimPick__10zNPCCommonFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 800D5478 000D2278  38 60 00 00 */	li r3, 0
 /* 800D547C 000D227C  4E 80 00 20 */	blr 
 

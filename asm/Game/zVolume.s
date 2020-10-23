@@ -11,8 +11,8 @@ zVolumeInit__FP7zVolumeP12xVolumeAsset:
 /* 800BE47C 000BB27C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800BE480 000BB280  7C 7F 1B 78 */	mr r31, r3
 /* 800BE484 000BB284  48 05 A4 B1 */	bl Init__7xVolumeFP12xVolumeAsset
-/* 800BE488 000BB288  3C 60 80 0C */	lis r3, lbl_800BE8E8@ha
-/* 800BE48C 000BB28C  38 03 E8 E8 */	addi r0, r3, lbl_800BE8E8@l
+/* 800BE488 000BB288  3C 60 80 0C */	lis r3, zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 800BE48C 000BB28C  38 03 E8 E8 */	addi r0, r3, zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800BE490 000BB290  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 800BE494 000BB294  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 800BE498 000BB298  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -317,7 +317,8 @@ lbl_800BE8B8:
 /* 800BE8DC 000BB6DC  7C 08 03 A6 */	mtlr r0
 /* 800BE8E0 000BB6E0  38 21 01 00 */	addi r1, r1, 0x100
 /* 800BE8E4 000BB6E4  4E 80 00 20 */	blr 
-lbl_800BE8E8:
+
+zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800BE8E8 000BB6E8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BE8EC 000BB6EC  7C 08 02 A6 */	mflr r0
 /* 800BE8F0 000BB6F0  2C 05 01 08 */	cmpwi r5, 0x108

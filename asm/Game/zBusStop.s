@@ -25,9 +25,9 @@ zBusStop_Init__FP8zBusStopP13busstop_asset:
 /* 8012D8BC 0012A6BC  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 8012D8C0 0012A6C0  7C 7E 1B 78 */	mr r30, r3
 /* 8012D8C4 0012A6C4  4B ED BB 3D */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8012D8C8 0012A6C8  3C 60 80 13 */	lis r3, lbl_8012DD5C@ha
+/* 8012D8C8 0012A6C8  3C 60 80 13 */	lis r3, zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8012D8CC 0012A6CC  93 FE 00 10 */	stw r31, 0x10(r30)
-/* 8012D8D0 0012A6D0  38 03 DD 5C */	addi r0, r3, lbl_8012DD5C@l
+/* 8012D8D0 0012A6D0  38 03 DD 5C */	addi r0, r3, zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8012D8D4 0012A6D4  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8012D8D8 0012A6D8  88 1E 00 05 */	lbz r0, 5(r30)
 /* 8012D8DC 0012A6DC  28 00 00 00 */	cmplwi r0, 0
@@ -349,7 +349,8 @@ lbl_8012DD40:
 /* 8012DD50 0012AB50  7C 08 03 A6 */	mtlr r0
 /* 8012DD54 0012AB54  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012DD58 0012AB58  4E 80 00 20 */	blr 
-lbl_8012DD5C:
+
+zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8012DD5C 0012AB5C  38 60 00 01 */	li r3, 1
 /* 8012DD60 0012AB60  4E 80 00 20 */	blr 
 

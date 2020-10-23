@@ -15,9 +15,9 @@ load__8ztaskboxFRCQ28ztaskbox10asset_type:
 /* 801349B4 001317B4  7C 7E 1B 78 */	mr r30, r3
 /* 801349B8 001317B8  4B ED 4A 49 */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 801349BC 001317BC  38 00 00 35 */	li r0, 0x35
-/* 801349C0 001317C0  3C 60 80 13 */	lis r3, lbl_801351A4@ha
+/* 801349C0 001317C0  3C 60 80 13 */	lis r3, cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 801349C4 001317C4  98 1E 00 04 */	stb r0, 4(r30)
-/* 801349C8 001317C8  38 03 51 A4 */	addi r0, r3, lbl_801351A4@l
+/* 801349C8 001317C8  38 03 51 A4 */	addi r0, r3, cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase@l
 /* 801349CC 001317CC  93 FE 00 14 */	stw r31, 0x14(r30)
 /* 801349D0 001317D0  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 801349D4 001317D4  88 1E 00 05 */	lbz r0, 5(r30)
@@ -404,6 +404,8 @@ __ct__Q28ztaskbox13talk_callbackFv:
 /* 80134EC0 00131CC0  7C 08 03 A6 */	mtlr r0
 /* 80134EC4 00131CC4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134EC8 00131CC8  4E 80 00 20 */	blr 
+
+load__8ztaskboxFR5xBaseR9xDynAssetUl:
 /* 80134ECC 00131CCC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80134ED0 00131CD0  7C 08 02 A6 */	mflr r0
 /* 80134ED4 00131CD4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -623,7 +625,8 @@ lbl_80135190:
 /* 80135198 00131F98  7C 08 03 A6 */	mtlr r0
 /* 8013519C 00131F9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 801351A0 00131FA0  4E 80 00 20 */	blr 
-lbl_801351A4:
+
+cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase:
 /* 801351A4 00131FA4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801351A8 00131FA8  7C 08 02 A6 */	mflr r0
 /* 801351AC 00131FAC  2C 05 01 6B */	cmpwi r5, 0x16b
@@ -675,6 +678,8 @@ lbl_80135238:
 /* 80135240 00132040  7C 08 03 A6 */	mtlr r0
 /* 80135244 00132044  38 21 00 10 */	addi r1, r1, 0x10
 /* 80135248 00132048  4E 80 00 20 */	blr 
+
+on_start__Q28ztaskbox13talk_callbackFv:
 /* 8013524C 0013204C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80135250 00132050  7C 08 02 A6 */	mflr r0
 /* 80135254 00132054  90 01 00 14 */	stw r0, 0x14(r1)
@@ -684,6 +689,8 @@ lbl_80135238:
 /* 80135264 00132064  7C 08 03 A6 */	mtlr r0
 /* 80135268 00132068  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013526C 0013206C  4E 80 00 20 */	blr 
+
+on_stop__Q28ztaskbox13talk_callbackFv:
 /* 80135270 00132070  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80135274 00132074  7C 08 02 A6 */	mflr r0
 /* 80135278 00132078  7C 64 1B 78 */	mr r4, r3
@@ -695,6 +702,8 @@ lbl_80135238:
 /* 80135290 00132090  7C 08 03 A6 */	mtlr r0
 /* 80135294 00132094  38 21 00 10 */	addi r1, r1, 0x10
 /* 80135298 00132098  4E 80 00 20 */	blr 
+
+on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum:
 /* 8013529C 0013209C  90 83 00 08 */	stw r4, 8(r3)
 /* 801352A0 001320A0  4E 80 00 20 */	blr 
 

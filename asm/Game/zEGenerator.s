@@ -38,16 +38,16 @@ lbl_80054264:
 /* 80054264 00051064  38 00 00 00 */	li r0, 0
 /* 80054268 00051068  90 1F 00 08 */	stw r0, 8(r31)
 lbl_8005426C:
-/* 8005426C 0005106C  3C 80 80 05 */	lis r4, lbl_8005452C@ha
-/* 80054270 00051070  3C 60 80 05 */	lis r3, lbl_80054528@ha
-/* 80054274 00051074  38 04 45 2C */	addi r0, r4, lbl_8005452C@l
-/* 80054278 00051078  3C 80 80 05 */	lis r4, lbl_80054A48@ha
+/* 8005426C 0005106C  3C 80 80 05 */	lis r4, zEGenerator_Update__FP11zEGeneratorP6xScenef@ha
+/* 80054270 00051070  3C 60 80 05 */	lis r3, zEGenerator_Move__FP11zEGeneratorP6xScenef@ha
+/* 80054274 00051074  38 04 45 2C */	addi r0, r4, zEGenerator_Update__FP11zEGeneratorP6xScenef@l
+/* 80054278 00051078  3C 80 80 05 */	lis r4, zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8005427C 0005107C  90 1F 00 34 */	stw r0, 0x34(r31)
-/* 80054280 00051080  38 03 45 28 */	addi r0, r3, lbl_80054528@l
-/* 80054284 00051084  3C 60 80 05 */	lis r3, lbl_80054640@ha
-/* 80054288 00051088  38 84 4A 48 */	addi r4, r4, lbl_80054A48@l
+/* 80054280 00051080  38 03 45 28 */	addi r0, r3, zEGenerator_Move__FP11zEGeneratorP6xScenef@l
+/* 80054284 00051084  3C 60 80 05 */	lis r3, zEGenerator_Render__FP11zEGenerator@ha
+/* 80054288 00051088  38 84 4A 48 */	addi r4, r4, zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8005428C 0005108C  90 1F 00 40 */	stw r0, 0x40(r31)
-/* 80054290 00051090  38 63 46 40 */	addi r3, r3, lbl_80054640@l
+/* 80054290 00051090  38 63 46 40 */	addi r3, r3, zEGenerator_Render__FP11zEGenerator@l
 /* 80054294 00051094  38 00 00 00 */	li r0, 0
 /* 80054298 00051098  90 9F 00 0C */	stw r4, 0xc(r31)
 /* 8005429C 0005109C  90 7F 00 44 */	stw r3, 0x44(r31)
@@ -234,9 +234,11 @@ lbl_800544F4:
 /* 8005451C 0005131C  7C 08 03 A6 */	mtlr r0
 /* 80054520 00051320  38 21 00 10 */	addi r1, r1, 0x10
 /* 80054524 00051324  4E 80 00 20 */	blr 
-lbl_80054528:
+
+zEGenerator_Move__FP11zEGeneratorP6xScenef:
 /* 80054528 00051328  4E 80 00 20 */	blr 
-lbl_8005452C:
+
+zEGenerator_Update__FP11zEGeneratorP6xScenef:
 /* 8005452C 0005132C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80054530 00051330  7C 08 02 A6 */	mflr r0
 /* 80054534 00051334  90 01 00 24 */	stw r0, 0x24(r1)
@@ -311,7 +313,8 @@ lbl_80054624:
 /* 80054634 00051434  7C 08 03 A6 */	mtlr r0
 /* 80054638 00051438  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005463C 0005143C  4E 80 00 20 */	blr 
-lbl_80054640:
+
+zEGenerator_Render__FP11zEGenerator:
 /* 80054640 00051440  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80054644 00051444  7C 08 02 A6 */	mflr r0
 /* 80054648 00051448  90 01 00 14 */	stw r0, 0x14(r1)
@@ -596,7 +599,8 @@ lbl_80054A38:
 /* 80054A3C 0005183C  7C 08 03 A6 */	mtlr r0
 /* 80054A40 00051840  38 21 00 10 */	addi r1, r1, 0x10
 /* 80054A44 00051844  4E 80 00 20 */	blr 
-lbl_80054A48:
+
+zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80054A48 00051848  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80054A4C 0005184C  7C 08 02 A6 */	mflr r0
 /* 80054A50 00051850  2C 05 00 54 */	cmpwi r5, 0x54

@@ -1,6 +1,8 @@
 #include "xString.h"
 
-uint32 xStrHash(const char* str)
+#include <types.h>
+
+uint32 xStrHash(const int8* str)
 {
     uint32 hash = 0;
     uint32 i;
@@ -14,7 +16,7 @@ uint32 xStrHash(const char* str)
     return hash;
 }
 
-uint32 xStrHash(const char* str, ulong32 size)
+uint32 xStrHash(const int8* str, ulong32 size)
 {
     uint32 hash = 0;
     uint32 i = 0;
@@ -30,7 +32,7 @@ uint32 xStrHash(const char* str, ulong32 size)
     return hash;
 }
 
-uint32 xStrHashCat(uint32 prefix, const char* str)
+uint32 xStrHashCat(uint32 prefix, const int8* str)
 {
     uint32 hash;
     uint32 i;
@@ -44,16 +46,16 @@ uint32 xStrHashCat(uint32 prefix, const char* str)
     return hash;
 }
 
-// char* xStrTok(char* string, char* control, char** nextoken)
+// func_8004C2D0
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStrTok__FPcPCcPPc")
 
-// char* xStrTokBuffer(char* string, char* control, void* buffer)
+// func_8004C434
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStrTokBuffer__FPCcPCcPv")
 
-// int xStricmp(char* string1, char* string2)
+// func_8004C5AC
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStricmp__FPCcPCc")
 
-int8* xStrupr(char* string)
+int8* xStrupr(int8* string)
 {
     int8 p;
 
@@ -78,9 +80,10 @@ int8* xStrupr(char* string)
     }
 }
 
-// int xStrParseFloatList(float* dest, char* strbuf, int max)
+// func_8004C6E8
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStrParseFloatList__FPfPCci")
 
+// func_8004C88C
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "imemcmp__FPCvPCvUl")
 
 // @unnamed@xString_cpp@::tolower(char)
@@ -133,9 +136,12 @@ int32 icompare(const substr& s1, const substr& s2)
     return result;
 }
 */
+
+// func_8004C934
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "icompare__FRC6substrRC6substr")
 
+// func_8004C9B8
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "atox__FRC6substrRUl")
 
-// char* find_char(substr& s, substr& cs)
+// func_8004CA68
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "find_char__FRC6substrRC6substr")

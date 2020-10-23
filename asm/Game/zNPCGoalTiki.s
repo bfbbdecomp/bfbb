@@ -124,6 +124,8 @@ lbl_800ECD7C:
 /* 800ECD84 000E9B84  7C 08 03 A6 */	mtlr r0
 /* 800ECD88 000E9B88  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECD8C 000E9B8C  4E 80 00 20 */	blr 
+
+Enter__16zNPCGoalTikiIdleFfPv:
 /* 800ECD90 000E9B90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECD94 000E9B94  7C 08 02 A6 */	mflr r0
 /* 800ECD98 000E9B98  90 01 00 14 */	stw r0, 0x14(r1)
@@ -157,6 +159,8 @@ lbl_800ECDEC:
 /* 800ECDFC 000E9BFC  7C 08 03 A6 */	mtlr r0
 /* 800ECE00 000E9C00  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECE04 000E9C04  4E 80 00 20 */	blr 
+
+Enter__18zNPCGoalTikiPatrolFfPv:
 /* 800ECE08 000E9C08  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECE0C 000E9C0C  7C 08 02 A6 */	mflr r0
 /* 800ECE10 000E9C10  90 01 00 14 */	stw r0, 0x14(r1)
@@ -188,6 +192,8 @@ lbl_800ECDEC:
 /* 800ECE78 000E9C78  7C 08 03 A6 */	mtlr r0
 /* 800ECE7C 000E9C7C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECE80 000E9C80  4E 80 00 20 */	blr 
+
+Enter__16zNPCGoalTikiHideFfPv:
 /* 800ECE84 000E9C84  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECE88 000E9C88  7C 08 02 A6 */	mflr r0
 /* 800ECE8C 000E9C8C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -199,6 +205,8 @@ lbl_800ECDEC:
 /* 800ECEA4 000E9CA4  7C 08 03 A6 */	mtlr r0
 /* 800ECEA8 000E9CA8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECEAC 000E9CAC  4E 80 00 20 */	blr 
+
+Exit__16zNPCGoalTikiHideFfPv:
 /* 800ECEB0 000E9CB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECEB4 000E9CB4  7C 08 02 A6 */	mflr r0
 /* 800ECEB8 000E9CB8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -211,6 +219,8 @@ lbl_800ECDEC:
 /* 800ECED4 000E9CD4  7C 08 03 A6 */	mtlr r0
 /* 800ECED8 000E9CD8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECEDC 000E9CDC  4E 80 00 20 */	blr 
+
+Enter__17zNPCGoalTikiCountFfPv:
 /* 800ECEE0 000E9CE0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECEE4 000E9CE4  7C 08 02 A6 */	mflr r0
 /* 800ECEE8 000E9CE8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -229,6 +239,8 @@ lbl_800ECDEC:
 /* 800ECF1C 000E9D1C  7C 08 03 A6 */	mtlr r0
 /* 800ECF20 000E9D20  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECF24 000E9D24  4E 80 00 20 */	blr 
+
+Enter__17zNPCGoalTikiDyingFfPv:
 /* 800ECF28 000E9D28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECF2C 000E9D2C  7C 08 02 A6 */	mflr r0
 /* 800ECF30 000E9D30  90 01 00 14 */	stw r0, 0x14(r1)
@@ -245,6 +257,8 @@ lbl_800ECDEC:
 /* 800ECF5C 000E9D5C  7C 08 03 A6 */	mtlr r0
 /* 800ECF60 000E9D60  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECF64 000E9D64  4E 80 00 20 */	blr 
+
+Exit__17zNPCGoalTikiDyingFfPv:
 /* 800ECF68 000E9D68  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECF6C 000E9D6C  7C 08 02 A6 */	mflr r0
 /* 800ECF70 000E9D70  90 01 00 14 */	stw r0, 0x14(r1)
@@ -261,6 +275,8 @@ lbl_800ECDEC:
 /* 800ECF9C 000E9D9C  7C 08 03 A6 */	mtlr r0
 /* 800ECFA0 000E9DA0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ECFA4 000E9DA4  4E 80 00 20 */	blr 
+
+Enter__16zNPCGoalTikiDeadFfPv:
 /* 800ECFA8 000E9DA8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ECFAC 000E9DAC  7C 08 02 A6 */	mflr r0
 /* 800ECFB0 000E9DB0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -288,6 +304,8 @@ lbl_800ECDEC:
 /* 800ED008 000E9E08  7C 08 03 A6 */	mtlr r0
 /* 800ED00C 000E9E0C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ED010 000E9E10  4E 80 00 20 */	blr 
+
+Exit__16zNPCGoalTikiDeadFfPv:
 /* 800ED014 000E9E14  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800ED018 000E9E18  7C 08 02 A6 */	mflr r0
 /* 800ED01C 000E9E1C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -415,11 +433,23 @@ __ct__16zNPCGoalTikiIdleFi:
 /* 800ED1BC 000E9FBC  7C 08 03 A6 */	mtlr r0
 /* 800ED1C0 000E9FC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ED1C4 000E9FC4  4E 80 00 20 */	blr 
+
+Clear__16zNPCGoalTikiDeadFv:
 /* 800ED1C8 000E9FC8  4E 80 00 20 */	blr 
+
+Clear__17zNPCGoalTikiDyingFv:
 /* 800ED1CC 000E9FCC  4E 80 00 20 */	blr 
+
+Clear__17zNPCGoalTikiCountFv:
 /* 800ED1D0 000E9FD0  4E 80 00 20 */	blr 
+
+Clear__16zNPCGoalTikiHideFv:
 /* 800ED1D4 000E9FD4  4E 80 00 20 */	blr 
+
+Clear__18zNPCGoalTikiPatrolFv:
 /* 800ED1D8 000E9FD8  4E 80 00 20 */	blr 
+
+Clear__16zNPCGoalTikiIdleFv:
 /* 800ED1DC 000E9FDC  4E 80 00 20 */	blr 
 
 .endif

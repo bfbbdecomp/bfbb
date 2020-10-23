@@ -44,6 +44,8 @@ lbl_8004D26C:
 /* 8004D278 0004A078  7C 08 03 A6 */	mtlr r0
 /* 8004D27C 0004A07C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004D280 0004A080  4E 80 00 20 */	blr 
+
+xTimerInit__FPvPv:
 /* 8004D284 0004A084  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D288 0004A088  7C 08 02 A6 */	mflr r0
 /* 8004D28C 0004A08C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -150,8 +152,8 @@ xTimerInit__FP5xBaseP11xTimerAsset:
 /* 8004D3E8 0004A1E8  93 C1 00 08 */	stw r30, 8(r1)
 /* 8004D3EC 0004A1EC  7C 7E 1B 78 */	mr r30, r3
 /* 8004D3F0 0004A1F0  4B FB C0 11 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8004D3F4 0004A1F4  3C 60 80 05 */	lis r3, lbl_8004D554@ha
-/* 8004D3F8 0004A1F8  38 03 D5 54 */	addi r0, r3, lbl_8004D554@l
+/* 8004D3F4 0004A1F4  3C 60 80 05 */	lis r3, xTimerEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 8004D3F8 0004A1F8  38 03 D5 54 */	addi r0, r3, xTimerEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8004D3FC 0004A1FC  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8004D400 0004A200  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 8004D404 0004A204  88 1E 00 05 */	lbz r0, 5(r30)
@@ -249,7 +251,8 @@ xTimerLoad__FP6xTimerP7xSerial:
 /* 8004D548 0004A348  7C 08 03 A6 */	mtlr r0
 /* 8004D54C 0004A34C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D550 0004A350  4E 80 00 20 */	blr 
-lbl_8004D554:
+
+xTimerEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8004D554 0004A354  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D558 0004A358  7C 08 02 A6 */	mflr r0
 /* 8004D55C 0004A35C  2C 05 00 14 */	cmpwi r5, 0x14

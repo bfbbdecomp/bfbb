@@ -2,36 +2,35 @@
 
 #include <types.h>
 
-// NPCS_Startup()
+// func_80124AE4
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_Startup__Fv")
 
-// NPCS_Shutdown()
+// func_80124B4C
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_Shutdown__Fv")
 
-// NPCS_SndTimersUpdate(float)
+// func_80124B50
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTimersUpdate__Ff")
 
-// NPCS_SndTimersReset()
+// func_80124BB4
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTimersReset__Fv")
 
-// NPCS_SndTypePlayed(en_NPC_SOUND,float)
+// func_80124CB0
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTypePlayed__F12en_NPC_SOUNDf")
 
-// NPCS_SndOkToPlay(en_NPC_SOUND)
+// func_80124D00
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndOkToPlay__F12en_NPC_SOUND")
 
-// NPCS_SndTablePrepare(NPCSndTrax*)
+// func_80124D44
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTablePrepare__FP10NPCSndTrax")
 
-// NPCS_SndFindProps(en_NPC_SOUND)
+// func_80124DBC
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndFindProps__F12en_NPC_SOUND")
 
-// NPCS_SndTypeFromHash(unsigned int,NPCSndTrax*,NPCSndTrax*)
+// func_80124DEC
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTypeFromHash__FUiP10NPCSndTraxP10NPCSndTrax")
 
-// NPCS_SndPickSimilar(en_NPC_SOUND,NPCSndTrax*,NPCSndTrax*)
+// func_80124EF4
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndPickSimilar__F12en_NPC_SOUNDP10NPCSndTraxP10NPCSndTrax")
 
-namespace {
+// func_801250A8
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "xUtil_choose_esc__0_i_esc__1___FPCiiPCf")
-}

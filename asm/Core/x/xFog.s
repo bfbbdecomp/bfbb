@@ -16,6 +16,8 @@ xFogClearFog__Fv:
 /* 8001FDD8 0001CBD8  7C 08 03 A6 */	mtlr r0
 /* 8001FDDC 0001CBDC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FDE0 0001CBE0  4E 80 00 20 */	blr 
+
+xFogInit__FPvPv:
 /* 8001FDE4 0001CBE4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001FDE8 0001CBE8  7C 08 02 A6 */	mflr r0
 /* 8001FDEC 0001CBEC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -35,8 +37,8 @@ xFogInit__FP5xBaseP9xFogAsset:
 /* 8001FE18 0001CC18  93 C1 00 08 */	stw r30, 8(r1)
 /* 8001FE1C 0001CC1C  7C 7E 1B 78 */	mr r30, r3
 /* 8001FE20 0001CC20  4B FE 95 E1 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8001FE24 0001CC24  3C 60 80 02 */	lis r3, lbl_8001FED4@ha
-/* 8001FE28 0001CC28  38 03 FE D4 */	addi r0, r3, lbl_8001FED4@l
+/* 8001FE24 0001CC24  3C 60 80 02 */	lis r3, xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 8001FE28 0001CC28  38 03 FE D4 */	addi r0, r3, xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8001FE2C 0001CC2C  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8001FE30 0001CC30  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 8001FE34 0001CC34  88 1E 00 05 */	lbz r0, 5(r30)
@@ -90,7 +92,8 @@ xFogLoad__FP5_xFogP7xSerial:
 /* 8001FEC8 0001CCC8  7C 08 03 A6 */	mtlr r0
 /* 8001FECC 0001CCCC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001FED0 0001CCD0  4E 80 00 20 */	blr 
-lbl_8001FED4:
+
+xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8001FED4 0001CCD4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8001FED8 0001CCD8  7C 08 02 A6 */	mflr r0
 /* 8001FEDC 0001CCDC  2C 05 00 26 */	cmpwi r5, 0x26

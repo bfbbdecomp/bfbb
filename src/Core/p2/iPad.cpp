@@ -2,31 +2,32 @@
 
 #include <types.h>
 
-// iPadInit()
+// func_800CA920
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadInit__Fv")
 
-// iPadEnable(_tagxPad*,short)
+// func_800CA944
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadEnable__FP8_tagxPads")
 
-// iPadConvStick(float)
+// func_800CA98C
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadConvStick__Ff")
 
-// iPadUpdate(_tagxPad*,unsigned int*)
+// func_800CA9F4
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadUpdate__FP8_tagxPadPUi")
 
-// iPadConvFromGCN(unsigned int,unsigned int,unsigned int)
+// func_800CAE38
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadConvFromGCN__FUiUiUi")
 
-// iPadRumbleFx(_tagxPad*,_tagxRumble*,float)
+// func_800CAE50
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadRumbleFx__FP8_tagxPadP11_tagxRumblef")
 
-// iPadStopRumble(_tagxPad*)
+// func_800CAE54
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadStopRumble__FP8_tagxPad")
 
-#pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "ipad_rename_me")
+// func_800CAE7C
+#pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadStopRumble__Fv")
 
-// iPadStartRumble(_tagxPad*,_tagxRumble*)
+// func_800CAEC0
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadStartRumble__FP8_tagxPadP11_tagxRumble")
 
-// iPadKill()
+// func_800CAEE8
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadKill__Fv")
