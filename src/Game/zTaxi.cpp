@@ -2,26 +2,41 @@
 
 #include <types.h>
 
-// zTaxi_Init(xBase&,xDynAsset&,unsigned long)
+// func_80172034
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Init__FR5xBaseR9xDynAssetUl")
 
-// zTaxi_Init(zTaxi*,taxi_asset*)
+// func_80172054
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Init__FP5zTaxiP10taxi_asset")
 
-// taxiCB::taxiCB()
+// func_80172128
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "__ct__6taxiCBFv")
 
-// zTaxi_Setup(zTaxi*)
+// func_80172164
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Setup__FP5zTaxi")
 
-// zTaxi_Update(xBase*,xScene*,float)
+// func_801721E4
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Update__FP5xBaseP6xScenef")
 
-// zTaxi_tb_answer(unsigned int)
+// func_80172594
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_tb_answer__FUi")
 
-// zTaxi_Save(zTaxi*,xSerial*)
+// func_8017259C
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Save__FP5zTaxiP7xSerial")
 
-// zTaxi_Load(zTaxi*,xSerial*)
+// func_801725BC
 #pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Load__FP5zTaxiP7xSerial")
+
+// func_801725DC
+#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_80172634
+#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "on_signal__6taxiCBFUi")
+
+// func_80172638
+#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "on_start__6taxiCBFv")
+
+// func_8017263C
+#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "on_answer__6taxiCBFQ28ztalkbox11answer_enum")
+
+// func_80172660
+#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "on_stop__6taxiCBFv")
