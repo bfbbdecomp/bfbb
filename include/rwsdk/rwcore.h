@@ -395,6 +395,37 @@ struct RwCamera
 
 typedef RwCamera* (*RwCameraCallBack)(RwCamera* camera, void* data);
 
+#define RwCameraGetViewOffset(_camera) (&((_camera)->viewOffset))
+
+#define RwCameraSetRaster(_camera, _raster) (((_camera)->frameBuffer = (_raster)), (_camera))
+
+#define RwCameraGetRaster(_camera) ((_camera)->frameBuffer)
+
+#define RwCameraSetZRaster(_camera, _raster) (((_camera)->zBuffer = (_raster)), (_camera))
+
+#define RwCameraGetZRaster(_camera) ((_camera)->zBuffer)
+
+#define RwCameraGetNearClipPlane(_camera) ((_camera)->nearPlane)
+
+#define RwCameraGetFarClipPlane(_camera) ((_camera)->farPlane)
+
+#define RwCameraSetFogDistance(_camera, _distance) (((_camera)->fogPlane = (_distance)), (_camera))
+
+#define RwCameraGetFogDistance(_camera) ((_camera)->fogPlane)
+
+#define RwCameraGetCurrentCamera() ((RwCamera*)RWSRCGLOBAL(curCamera))
+
+#define RwCameraGetProjection(_camera) ((_camera)->projectionType)
+
+#define RwCameraGetViewWindow(_camera) (&((_camera)->viewWindow))
+
+#define RwCameraGetViewMatrix(_camera) (&((_camera)->viewMatrix))
+
+#define RwCameraSetFrame(_camera, _frame)                                                          \
+    (_rwObjectHasFrameSetFrame((_camera), (_frame)), (_camera))
+
+#define RwCameraGetFrame(_camera) ((RwFrame*)rwObjectGetParent((_camera)))
+
 #ifdef __cplusplus
 extern "C" {
 #endif
