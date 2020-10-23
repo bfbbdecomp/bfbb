@@ -2,26 +2,26 @@
 
 #include <types.h>
 
-// zGameStateGet()
+// func_8009A924
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameStateGet__Fv")
 
-// zGameModeGet()
+// func_8009A92C
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameModeGet__Fv")
 
-// zGameGetOstrich()
+// func_8009A934
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameGetOstrich__Fv")
 
-// zGameSetOstrich(_GameOstrich)
+// func_8009A93C
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameSetOstrich__F12_GameOstrich")
 
-// zGameStateFindEvent(unsigned int*,int,int,int,int*,int*)
+// func_8009A944
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameStateFindEvent__FPUiiiiPiPi")
 
-// zGameStateSwitchEvent(int)
+// func_8009A984
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameStateSwitchEvent__Fi")
 
-// zGameStateSwitch(int)
+// func_8009AB2C
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameStateSwitch__Fi")
 
-// zGameModeSwitch(eGameMode)
+// func_8009AC18
 #pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameModeSwitch__F9eGameMode")
