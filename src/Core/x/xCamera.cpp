@@ -51,7 +51,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCam_CorrectRoll__FP7xCamerafff")
 
 // func_8000BBBC
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv")
+#pragma GLOBAL_ASM("asm/Core/x/xCamera.s",                                                         \
+                   "SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv")
 
 // func_8000BE28
 #pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "_xCameraUpdate__FP7xCameraf")

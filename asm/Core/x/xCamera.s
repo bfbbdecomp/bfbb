@@ -6,6 +6,8 @@
 lbl_80251F68:
 	.incbin "baserom.dol", 0x24EF48, 0x188
 
+.if 0
+
 .section .text  # 0x8000B2B0 - 0x8000E96C
 
 .global xCameraInit__FP7xCameraUiUi
@@ -3862,6 +3864,8 @@ __as__5xVec2Ff:
 /* 8000E960 0000B760  D0 23 00 04 */	stfs f1, 4(r3)
 /* 8000E964 0000B764  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8000E968 0000B768  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_802B8A00:
