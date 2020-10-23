@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80172664 - 0x8017C0A0
 
 /* look_at__30@unnamed@zNPCTypeDutchman_cpp@FR7xMat3x3RC5xVec3 */
@@ -10902,6 +10904,8 @@ xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f:
 /* 8017C094 00178E94  7C 08 03 A6 */	mtlr r0
 /* 8017C098 00178E98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C09C 00178E9C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .rodata
 lbl_80271E58:
