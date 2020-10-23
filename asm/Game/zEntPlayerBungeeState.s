@@ -472,6 +472,8 @@ trigger__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc_
 /* 80110924 0010D724  7C 08 03 A6 */	mtlr r0
 /* 80110928 0010D728  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011092C 0010D72C  4E 80 00 20 */	blr 
+
+on_tweak_collision__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFRC10tweak_info:
 /* 80110930 0010D730  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110934 0010D734  7C 08 02 A6 */	mflr r0
 /* 80110938 0010D738  80 63 00 10 */	lwz r3, 0x10(r3)
@@ -497,7 +499,7 @@ reset_props_collision__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungee
 /* 8011097C 0010D77C  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80110980 0010D780  38 7F 01 8C */	addi r3, r31, 0x18c
 /* 80110984 0010D784  38 84 00 80 */	addi r4, r4, 0x80
-/* 80110988 0010D788  48 00 00 69 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cpp
+/* 80110988 0010D788  48 00 00 69 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_913zEntPlayerBungeeState_cpp
 /* 8011098C 0010D78C  C0 02 9E A0 */	lfs f0, lbl_803CE820-_SDA2_BASE_(r2)
 /* 80110990 0010D790  C0 3F 01 90 */	lfs f1, 0x190(r31)
 /* 80110994 0010D794  FC 00 08 00 */	fcmpu cr0, f0, f1
@@ -529,8 +531,9 @@ lbl_801109DC:
 /* 801109EC 0010D7EC  4E 80 00 20 */	blr 
 
 /* __as__Q312bungee_state10hook_asset35@class$913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35@class$913zEntPlayerBungeeState_cpp */
-.global __as__Q312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cpp
-__as__Q312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cpp:
+.global __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_913zEntPlayerBungeeState_cpp
+
+__as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_913zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_913zEntPlayerBungeeState_cpp:
 /* 801109F0 0010D7F0  C0 04 00 00 */	lfs f0, 0(r4)
 /* 801109F4 0010D7F4  C0 24 00 04 */	lfs f1, 4(r4)
 /* 801109F8 0010D7F8  D0 03 00 00 */	stfs f0, 0(r3)
@@ -538,6 +541,8 @@ __as__Q312bungee_state10hook_asset35_esc__2_class$913zEntPlayerBungeeState_cppFR
 /* 80110A00 0010D800  D0 23 00 04 */	stfs f1, 4(r3)
 /* 80110A04 0010D804  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80110A08 0010D808  4E 80 00 20 */	blr 
+
+on_tweak_camera__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFRC10tweak_info:
 /* 80110A0C 0010D80C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110A10 0010D810  7C 08 02 A6 */	mflr r0
 /* 80110A14 0010D814  80 63 00 10 */	lwz r3, 0x10(r3)
@@ -563,7 +568,7 @@ reset_props_camera__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeSta
 /* 80110A58 0010D858  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80110A5C 0010D85C  38 7F 01 64 */	addi r3, r31, 0x164
 /* 80110A60 0010D860  38 84 00 58 */	addi r4, r4, 0x58
-/* 80110A64 0010D864  48 00 00 69 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cpp
+/* 80110A64 0010D864  48 00 00 69 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_912zEntPlayerBungeeState_cpp
 /* 80110A68 0010D868  C0 3F 01 78 */	lfs f1, 0x178(r31)
 /* 80110A6C 0010D86C  C0 1F 00 A8 */	lfs f0, 0xa8(r31)
 /* 80110A70 0010D870  EC 01 00 24 */	fdivs f0, f1, f0
@@ -592,8 +597,9 @@ lbl_80110AB8:
 /* 80110AC8 0010D8C8  4E 80 00 20 */	blr 
 
 /* __as__Q312bungee_state10hook_asset35@class$912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35@class$912zEntPlayerBungeeState_cpp */
-.global __as__Q312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cpp
-__as__Q312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cpp:
+.global __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_912zEntPlayerBungeeState_cpp
+
+__as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_912zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_912zEntPlayerBungeeState_cpp:
 /* 80110ACC 0010D8CC  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80110AD0 0010D8D0  C0 24 00 04 */	lfs f1, 4(r4)
 /* 80110AD4 0010D8D4  D0 03 00 00 */	stfs f0, 0(r3)
@@ -615,6 +621,8 @@ __as__Q312bungee_state10hook_asset35_esc__2_class$912zEntPlayerBungeeState_cppFR
 /* 80110B14 0010D914  90 A3 00 20 */	stw r5, 0x20(r3)
 /* 80110B18 0010D918  90 03 00 24 */	stw r0, 0x24(r3)
 /* 80110B1C 0010D91C  4E 80 00 20 */	blr 
+
+on_tweak_horizontal__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFRC10tweak_info:
 /* 80110B20 0010D920  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110B24 0010D924  7C 08 02 A6 */	mflr r0
 /* 80110B28 0010D928  80 63 00 10 */	lwz r3, 0x10(r3)
@@ -638,7 +646,7 @@ reset_props_horizontal__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBunge
 /* 80110B64 0010D964  80 84 00 10 */	lwz r4, 0x10(r4)
 /* 80110B68 0010D968  38 63 01 60 */	addi r3, r3, 0x160
 /* 80110B6C 0010D96C  38 84 00 54 */	addi r4, r4, 0x54
-/* 80110B70 0010D970  48 00 00 15 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class$911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$911zEntPlayerBungeeState_cpp
+/* 80110B70 0010D970  48 00 00 15 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_911zEntPlayerBungeeState_cpp
 lbl_80110B74:
 /* 80110B74 0010D974  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80110B78 0010D978  7C 08 03 A6 */	mtlr r0
@@ -646,11 +654,14 @@ lbl_80110B74:
 /* 80110B80 0010D980  4E 80 00 20 */	blr 
 
 /* __as__Q312bungee_state10hook_asset35@class$911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35@class$911zEntPlayerBungeeState_cpp */
-.global __as__Q312bungee_state10hook_asset35_esc__2_class$911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$911zEntPlayerBungeeState_cpp
-__as__Q312bungee_state10hook_asset35_esc__2_class$911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$911zEntPlayerBungeeState_cpp:
+.global __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_911zEntPlayerBungeeState_cpp
+
+__as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_911zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_911zEntPlayerBungeeState_cpp:
 /* 80110B84 0010D984  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80110B88 0010D988  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80110B8C 0010D98C  4E 80 00 20 */	blr 
+
+on_tweak_vertical__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFRC10tweak_info:
 /* 80110B90 0010D990  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110B94 0010D994  7C 08 02 A6 */	mflr r0
 /* 80110B98 0010D998  80 63 00 10 */	lwz r3, 0x10(r3)
@@ -677,7 +688,7 @@ reset_props_vertical__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeS
 /* 80110BE0 0010D9E0  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80110BE4 0010D9E4  38 7E 01 48 */	addi r3, r30, 0x148
 /* 80110BE8 0010D9E8  38 84 00 3C */	addi r4, r4, 0x3c
-/* 80110BEC 0010D9EC  48 00 03 79 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cpp
+/* 80110BEC 0010D9EC  48 00 03 79 */	bl __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_910zEntPlayerBungeeState_cpp
 /* 80110BF0 0010D9F0  C0 5E 01 48 */	lfs f2, 0x148(r30)
 /* 80110BF4 0010D9F4  C0 02 9E AC */	lfs f0, lbl_803CE82C-_SDA2_BASE_(r2)
 /* 80110BF8 0010D9F8  C0 3E 01 4C */	lfs f1, 0x14c(r30)
@@ -923,8 +934,9 @@ find_spring_min__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_
 /* 80110F60 0010DD60  4E 80 00 20 */	blr 
 
 /* __as__Q312bungee_state10hook_asset35@class$910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35@class$910zEntPlayerBungeeState_cpp */
-.global __as__Q312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cpp
-__as__Q312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cpp:
+.global __as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_910zEntPlayerBungeeState_cpp
+
+__as__Q312bungee_state10hook_asset35_esc__2_class_esc__6_910zEntPlayerBungeeState_cppFRCQ312bungee_state10hook_asset35_esc__2_class_esc__6_910zEntPlayerBungeeState_cpp:
 /* 80110F64 0010DD64  C0 24 00 00 */	lfs f1, 0(r4)
 /* 80110F68 0010DD68  C0 04 00 04 */	lfs f0, 4(r4)
 /* 80110F6C 0010DD6C  D0 23 00 00 */	stfs f1, 0(r3)
@@ -938,10 +950,12 @@ __as__Q312bungee_state10hook_asset35_esc__2_class$910zEntPlayerBungeeState_cppFR
 /* 80110F8C 0010DD8C  D0 23 00 10 */	stfs f1, 0x10(r3)
 /* 80110F90 0010DD90  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 80110F94 0010DD94  4E 80 00 20 */	blr 
-lbl_80110F98:
+
+check_anim_start__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
 /* 80110F98 0010DD98  38 60 00 00 */	li r3, 0
 /* 80110F9C 0010DD9C  4E 80 00 20 */	blr 
-lbl_80110FA0:
+
+check_anim_hit_to_dive__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
 /* 80110FA0 0010DDA0  3C 80 80 29 */	lis r4, lbl_80297A68@ha
 /* 80110FA4 0010DDA4  38 60 00 00 */	li r3, 0
 /* 80110FA8 0010DDA8  38 A4 7A 68 */	addi r5, r4, lbl_80297A68@l
@@ -956,7 +970,8 @@ lbl_80110FA0:
 lbl_80110FCC:
 /* 80110FCC 0010DDCC  54 63 06 3E */	clrlwi r3, r3, 0x18
 /* 80110FD0 0010DDD0  4E 80 00 20 */	blr 
-lbl_80110FD4:
+
+check_anim_hit_to_top__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
 /* 80110FD4 0010DDD4  3C 80 80 29 */	lis r4, lbl_80297A68@ha
 /* 80110FD8 0010DDD8  38 60 00 00 */	li r3, 0
 /* 80110FDC 0010DDDC  38 A4 7A 68 */	addi r5, r4, lbl_80297A68@l
@@ -971,7 +986,8 @@ lbl_80110FD4:
 lbl_80111000:
 /* 80111000 0010DE00  54 63 06 3E */	clrlwi r3, r3, 0x18
 /* 80111004 0010DE04  4E 80 00 20 */	blr 
-lbl_80111008:
+
+check_anim_hit_to_bottom__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
 /* 80111008 0010DE08  3C 80 80 29 */	lis r4, lbl_80297A68@ha
 /* 8011100C 0010DE0C  38 60 00 00 */	li r3, 0
 /* 80111010 0010DE10  38 A4 7A 68 */	addi r5, r4, lbl_80297A68@l
@@ -986,7 +1002,8 @@ lbl_80111008:
 lbl_80111034:
 /* 80111034 0010DE34  54 63 06 3E */	clrlwi r3, r3, 0x18
 /* 80111038 0010DE38  4E 80 00 20 */	blr 
-lbl_8011103C:
+
+check_anim_hit_to_cycle__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
 /* 8011103C 0010DE3C  3C 80 80 29 */	lis r4, lbl_80297A68@ha
 /* 80111040 0010DE40  38 60 00 00 */	li r3, 0
 /* 80111044 0010DE44  38 A4 7A 68 */	addi r5, r4, lbl_80297A68@l
@@ -1001,7 +1018,8 @@ lbl_8011103C:
 lbl_80111068:
 /* 80111068 0010DE68  54 63 06 3E */	clrlwi r3, r3, 0x18
 /* 8011106C 0010DE6C  4E 80 00 20 */	blr 
-lbl_80111070:
+
+check_anim_hit_to_death__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
 /* 80111070 0010DE70  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80111074 0010DE74  7C 08 02 A6 */	mflr r0
 /* 80111078 0010DE78  3C 60 80 29 */	lis r3, lbl_80297A68@ha
@@ -1409,6 +1427,8 @@ lbl_8011160C:
 /* 80111620 0010E420  7C 08 03 A6 */	mtlr r0
 /* 80111624 0010E424  38 21 00 20 */	addi r1, r1, 0x20
 /* 80111628 0010E428  4E 80 00 20 */	blr 
+
+start__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_10state_typeFv:
 /* 8011162C 0010E42C  4E 80 00 20 */	blr 
 
 /* cache_hook__Q212bungee_state35@unnamed@zEntPlayerBungeeState_cpp@FRQ212bungee_state9hook_type */
@@ -1545,6 +1565,8 @@ common_update__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cp
 /* 801117EC 0010E5EC  7C 08 03 A6 */	mtlr r0
 /* 801117F0 0010E5F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801117F4 0010E5F4  4E 80 00 20 */	blr 
+
+load__12bungee_stateFR5xBaseR9xDynAssetUl:
 /* 801117F8 0010E5F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801117FC 0010E5FC  7C 08 02 A6 */	mflr r0
 /* 80111800 0010E600  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2535,6 +2557,8 @@ lbl_801125FC:
 /* 8011260C 0010F40C  7C 08 03 A6 */	mtlr r0
 /* 80112610 0010F410  38 21 00 20 */	addi r1, r1, 0x20
 /* 80112614 0010F414  4E 80 00 20 */	blr 
+
+stop__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_10state_typeFv:
 /* 80112618 0010F418  4E 80 00 20 */	blr 
 
 .global render__12bungee_stateFv
@@ -2561,6 +2585,8 @@ lbl_8011265C:
 /* 80112660 0010F460  7C 08 03 A6 */	mtlr r0
 /* 80112664 0010F464  38 21 00 10 */	addi r1, r1, 0x10
 /* 80112668 0010F468  4E 80 00 20 */	blr 
+
+render__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_10state_typeFv:
 /* 8011266C 0010F46C  4E 80 00 20 */	blr 
 
 .global stop__12bungee_stateFv
@@ -2759,9 +2785,9 @@ lbl_80112934:
 /* 80112954 0010F754  98 0D 95 04 */	stb r0, lbl_803CBE04-_SDA_BASE_(r13)
 lbl_80112958:
 /* 80112958 0010F758  38 00 00 00 */	li r0, 0
-/* 8011295C 0010F75C  3C 60 80 11 */	lis r3, lbl_80110F98@ha
+/* 8011295C 0010F75C  3C 60 80 11 */	lis r3, check_anim_start__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha
 /* 80112960 0010F760  90 01 00 08 */	stw r0, 8(r1)
-/* 80112964 0010F764  38 C3 0F 98 */	addi r6, r3, lbl_80110F98@l
+/* 80112964 0010F764  38 C3 0F 98 */	addi r6, r3, check_anim_start__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l
 /* 80112968 0010F768  7F C3 F3 78 */	mr r3, r30
 /* 8011296C 0010F76C  38 E0 00 00 */	li r7, 0
 /* 80112970 0010F770  90 01 00 0C */	stw r0, 0xc(r1)
@@ -2929,11 +2955,11 @@ lbl_80112958:
 /* 80112BF8 0010F9F8  38 C4 7A 68 */	addi r6, r4, lbl_80297A68@l
 /* 80112BFC 0010F9FC  38 00 00 00 */	li r0, 0
 /* 80112C00 0010FA00  90 66 00 38 */	stw r3, 0x38(r6)
-/* 80112C04 0010FA04  3C 80 80 11 */	lis r4, lbl_80110FA0@ha
+/* 80112C04 0010FA04  3C 80 80 11 */	lis r4, check_anim_hit_to_dive__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha
 /* 80112C08 0010FA08  38 A5 A6 88 */	addi r5, r5, lbl_8026A688@l
 /* 80112C0C 0010FA0C  7F C3 F3 78 */	mr r3, r30
 /* 80112C10 0010FA10  90 01 00 08 */	stw r0, 8(r1)
-/* 80112C14 0010FA14  38 C4 0F A0 */	addi r6, r4, lbl_80110FA0@l
+/* 80112C14 0010FA14  38 C4 0F A0 */	addi r6, r4, check_anim_hit_to_dive__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l
 /* 80112C18 0010FA18  38 85 06 21 */	addi r4, r5, 0x621
 /* 80112C1C 0010FA1C  38 A5 06 13 */	addi r5, r5, 0x613
 /* 80112C20 0010FA20  90 01 00 0C */	stw r0, 0xc(r1)
@@ -2949,10 +2975,10 @@ lbl_80112958:
 /* 80112C48 0010FA48  3C 60 80 27 */	lis r3, lbl_8026A688@ha
 /* 80112C4C 0010FA4C  90 01 00 08 */	stw r0, 8(r1)
 /* 80112C50 0010FA50  38 A3 A6 88 */	addi r5, r3, lbl_8026A688@l
-/* 80112C54 0010FA54  3C 80 80 11 */	lis r4, lbl_80110FD4@ha
+/* 80112C54 0010FA54  3C 80 80 11 */	lis r4, check_anim_hit_to_top__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha
 /* 80112C58 0010FA58  7F C3 F3 78 */	mr r3, r30
 /* 80112C5C 0010FA5C  90 01 00 0C */	stw r0, 0xc(r1)
-/* 80112C60 0010FA60  38 C4 0F D4 */	addi r6, r4, lbl_80110FD4@l
+/* 80112C60 0010FA60  38 C4 0F D4 */	addi r6, r4, check_anim_hit_to_top__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l
 /* 80112C64 0010FA64  38 85 06 21 */	addi r4, r5, 0x621
 /* 80112C68 0010FA68  38 A5 06 06 */	addi r5, r5, 0x606
 /* 80112C6C 0010FA6C  C0 22 9E A0 */	lfs f1, lbl_803CE820-_SDA2_BASE_(r2)
@@ -2967,10 +2993,10 @@ lbl_80112958:
 /* 80112C90 0010FA90  3C 60 80 27 */	lis r3, lbl_8026A688@ha
 /* 80112C94 0010FA94  90 01 00 08 */	stw r0, 8(r1)
 /* 80112C98 0010FA98  38 A3 A6 88 */	addi r5, r3, lbl_8026A688@l
-/* 80112C9C 0010FA9C  3C 80 80 11 */	lis r4, lbl_80111008@ha
+/* 80112C9C 0010FA9C  3C 80 80 11 */	lis r4, check_anim_hit_to_bottom__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha
 /* 80112CA0 0010FAA0  7F C3 F3 78 */	mr r3, r30
 /* 80112CA4 0010FAA4  90 01 00 0C */	stw r0, 0xc(r1)
-/* 80112CA8 0010FAA8  38 C4 10 08 */	addi r6, r4, lbl_80111008@l
+/* 80112CA8 0010FAA8  38 C4 10 08 */	addi r6, r4, check_anim_hit_to_bottom__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l
 /* 80112CAC 0010FAAC  38 85 06 21 */	addi r4, r5, 0x621
 /* 80112CB0 0010FAB0  38 A5 05 F6 */	addi r5, r5, 0x5f6
 /* 80112CB4 0010FAB4  C0 22 9E A0 */	lfs f1, lbl_803CE820-_SDA2_BASE_(r2)
@@ -2985,10 +3011,10 @@ lbl_80112958:
 /* 80112CD8 0010FAD8  3C 60 80 27 */	lis r3, lbl_8026A688@ha
 /* 80112CDC 0010FADC  90 01 00 08 */	stw r0, 8(r1)
 /* 80112CE0 0010FAE0  38 A3 A6 88 */	addi r5, r3, lbl_8026A688@l
-/* 80112CE4 0010FAE4  3C 80 80 11 */	lis r4, lbl_8011103C@ha
+/* 80112CE4 0010FAE4  3C 80 80 11 */	lis r4, check_anim_hit_to_cycle__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha
 /* 80112CE8 0010FAE8  7F C3 F3 78 */	mr r3, r30
 /* 80112CEC 0010FAEC  90 01 00 0C */	stw r0, 0xc(r1)
-/* 80112CF0 0010FAF0  38 C4 10 3C */	addi r6, r4, lbl_8011103C@l
+/* 80112CF0 0010FAF0  38 C4 10 3C */	addi r6, r4, check_anim_hit_to_cycle__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l
 /* 80112CF4 0010FAF4  38 85 06 21 */	addi r4, r5, 0x621
 /* 80112CF8 0010FAF8  38 A5 06 3D */	addi r5, r5, 0x63d
 /* 80112CFC 0010FAFC  C0 22 9E A0 */	lfs f1, lbl_803CE820-_SDA2_BASE_(r2)
@@ -3003,10 +3029,10 @@ lbl_80112958:
 /* 80112D20 0010FB20  3C 60 80 27 */	lis r3, lbl_8026A688@ha
 /* 80112D24 0010FB24  90 01 00 08 */	stw r0, 8(r1)
 /* 80112D28 0010FB28  38 A3 A6 88 */	addi r5, r3, lbl_8026A688@l
-/* 80112D2C 0010FB2C  3C 80 80 11 */	lis r4, lbl_80111070@ha
+/* 80112D2C 0010FB2C  3C 80 80 11 */	lis r4, check_anim_hit_to_death__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha
 /* 80112D30 0010FB30  7F C3 F3 78 */	mr r3, r30
 /* 80112D34 0010FB34  90 01 00 0C */	stw r0, 0xc(r1)
-/* 80112D38 0010FB38  38 C4 10 70 */	addi r6, r4, lbl_80111070@l
+/* 80112D38 0010FB38  38 C4 10 70 */	addi r6, r4, check_anim_hit_to_death__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l
 /* 80112D3C 0010FB3C  38 85 06 21 */	addi r4, r5, 0x621
 /* 80112D40 0010FB40  38 A5 06 4C */	addi r5, r5, 0x64c
 /* 80112D44 0010FB44  C0 22 9E A0 */	lfs f1, lbl_803CE820-_SDA2_BASE_(r2)
@@ -3043,6 +3069,8 @@ lbl_80112958:
 /* 80112DC0 0010FBC0  7C 08 03 A6 */	mtlr r0
 /* 80112DC4 0010FBC4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80112DC8 0010FBC8  4E 80 00 20 */	blr 
+
+start__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_20attaching_state_typeFv:
 /* 80112DCC 0010FBCC  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80112DD0 0010FBD0  7C 08 02 A6 */	mflr r0
 /* 80112DD4 0010FBD4  3C 80 80 3C */	lis r4, globals@ha
@@ -3137,6 +3165,8 @@ lbl_80112EFC:
 /* 80112F34 0010FD34  7C 08 03 A6 */	mtlr r0
 /* 80112F38 0010FD38  38 21 00 50 */	addi r1, r1, 0x50
 /* 80112F3C 0010FD3C  4E 80 00 20 */	blr 
+
+stop__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_20attaching_state_typeFv:
 /* 80112F40 0010FD40  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80112F44 0010FD44  7C 08 02 A6 */	mflr r0
 /* 80112F48 0010FD48  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3155,6 +3185,8 @@ lbl_80112EFC:
 /* 80112F7C 0010FD7C  7C 08 03 A6 */	mtlr r0
 /* 80112F80 0010FD80  38 21 00 10 */	addi r1, r1, 0x10
 /* 80112F84 0010FD84  4E 80 00 20 */	blr 
+
+update__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_20attaching_state_typeFR6xSceneRf:
 /* 80112F88 0010FD88  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80112F8C 0010FD8C  7C 08 02 A6 */	mflr r0
 /* 80112F90 0010FD90  90 01 00 54 */	stw r0, 0x54(r1)
@@ -3274,6 +3306,8 @@ lbl_8011312C:
 /* 80113144 0010FF44  7C 08 03 A6 */	mtlr r0
 /* 80113148 0010FF48  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011314C 0010FF4C  4E 80 00 20 */	blr 
+
+render__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_20attaching_state_typeFv:
 /* 80113150 0010FF50  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80113154 0010FF54  7C 08 02 A6 */	mflr r0
 /* 80113158 0010FF58  38 60 00 00 */	li r3, 0
@@ -3283,6 +3317,8 @@ lbl_8011312C:
 /* 80113168 0010FF68  7C 08 03 A6 */	mtlr r0
 /* 8011316C 0010FF6C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80113170 0010FF70  4E 80 00 20 */	blr 
+
+start__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFv:
 /* 80113174 0010FF74  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80113178 0010FF78  7C 08 02 A6 */	mflr r0
 /* 8011317C 0010FF7C  3C 80 80 27 */	lis r4, lbl_8026A408@ha
@@ -3865,6 +3901,8 @@ lbl_80113A28:
 /* 80113A2C 0011082C  7C 08 03 A6 */	mtlr r0
 /* 80113A30 00110830  38 21 00 10 */	addi r1, r1, 0x10
 /* 80113A34 00110834  4E 80 00 20 */	blr 
+
+stop__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFv:
 /* 80113A38 00110838  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80113A3C 0011083C  7C 08 02 A6 */	mflr r0
 /* 80113A40 00110840  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3970,6 +4008,8 @@ lbl_80113BB4:
 /* 80113BB8 001109B8  7C 08 03 A6 */	mtlr r0
 /* 80113BBC 001109BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80113BC0 001109C0  4E 80 00 20 */	blr 
+
+update__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFR6xSceneRf:
 /* 80113BC4 001109C4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80113BC8 001109C8  7C 08 02 A6 */	mflr r0
 /* 80113BCC 001109CC  3C C0 80 3C */	lis r6, globals@ha
@@ -6608,6 +6648,8 @@ calc_drop_off_velocity__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBunge
 /* 80116198 00112F98  7C 08 03 A6 */	mtlr r0
 /* 8011619C 00112F9C  38 21 00 50 */	addi r1, r1, 0x50
 /* 801161A0 00112FA0  4E 80 00 20 */	blr 
+
+render__Q312bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cpp_esc__2_18hanging_state_typeFv:
 /* 801161A4 00112FA4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801161A8 00112FA8  7C 08 02 A6 */	mflr r0
 /* 801161AC 00112FAC  38 60 00 01 */	li r3, 1
