@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801305FC - 0x80133E38
 
 /* speak_stop__22@unnamed@zTalkBox_cpp@Fv */
@@ -4197,6 +4199,9 @@ type_name__14location_assetFv:
 jots__Q28xtextbox6layoutCFv:
 /* 80133E30 00130C30  38 63 00 68 */	addi r3, r3, 0x68
 /* 80133E34 00130C34  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026C870:
 	.incbin "baserom.dol", 0x269850, 0x30

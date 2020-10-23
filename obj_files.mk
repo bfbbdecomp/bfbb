@@ -360,6 +360,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCSupport.o               \
     $(OBJ_DIR)/src/Game/zNPCSupport.o               \
     $(OBJ_DIR)/asm/Game/zTalkBox.o                  \
+    $(OBJ_DIR)/src/Game/zTalkBox.o                  \
     $(OBJ_DIR)/asm/Game/zTextBox.o                  \
     $(OBJ_DIR)/src/Game/zTextBox.o                  \
     $(OBJ_DIR)/asm/Game/zTaskBox.o                  \
