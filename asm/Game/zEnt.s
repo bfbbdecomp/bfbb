@@ -17,8 +17,8 @@ zEntInit__FP4zEntP9xEntAssetUi:
 /* 80054C1C 00051A1C  7C BD 2B 78 */	mr r29, r5
 /* 80054C20 00051A20  4B FC 39 91 */	bl xEntInit__FP4xEntP9xEntAsset
 /* 80054C24 00051A24  3C 7D AF B4 */	addis r3, r29, 0xafb4
-/* 80054C28 00051A28  3C 80 80 05 */	lis r4, lbl_80055360@ha
-/* 80054C2C 00051A2C  38 04 53 60 */	addi r0, r4, lbl_80055360@l
+/* 80054C28 00051A28  3C 80 80 05 */	lis r4, zEntUpdate__FP4zEntP6zScenef@ha
+/* 80054C2C 00051A2C  38 04 53 60 */	addi r0, r4, zEntUpdate__FP4zEntP6zScenef@l
 /* 80054C30 00051A30  28 03 59 52 */	cmplwi r3, 0x5952
 /* 80054C34 00051A34  90 1E 00 34 */	stw r0, 0x34(r30)
 /* 80054C38 00051A38  40 82 00 2C */	bne lbl_80054C64
@@ -528,7 +528,8 @@ lbl_80055344:
 /* 80055354 00052154  7C 08 03 A6 */	mtlr r0
 /* 80055358 00052158  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005535C 0005215C  4E 80 00 20 */	blr 
-lbl_80055360:
+
+zEntUpdate__FP4zEntP6zScenef:
 /* 80055360 00052160  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80055364 00052164  7C 08 02 A6 */	mflr r0
 /* 80055368 00052168  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1032,6 +1033,8 @@ lbl_80055A7C:
 /* 80055A8C 0005288C  7C 08 03 A6 */	mtlr r0
 /* 80055A90 00052890  38 21 00 70 */	addi r1, r1, 0x70
 /* 80055A94 00052894  4E 80 00 20 */	blr 
+
+xEnt_AnimTable_AutoEventSmall__Fv:
 /* 80055A98 00052898  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80055A9C 0005289C  7C 08 02 A6 */	mflr r0
 /* 80055AA0 000528A0  3C 60 80 29 */	lis r3, g_hash_xentanim@ha
