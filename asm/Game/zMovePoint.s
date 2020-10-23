@@ -39,8 +39,8 @@ zMovePointInit__FP10zMovePointP15xMovePointAsset:
 /* 800A6C5C 000A3A5C  93 C1 00 08 */	stw r30, 8(r1)
 /* 800A6C60 000A3A60  7C 7E 1B 78 */	mr r30, r3
 /* 800A6C64 000A3A64  4B F8 E8 31 */	bl xMovePointInit__FP10xMovePointP15xMovePointAsset
-/* 800A6C68 000A3A68  3C 60 80 0A */	lis r3, lbl_800A6D88@ha
-/* 800A6C6C 000A3A6C  38 03 6D 88 */	addi r0, r3, lbl_800A6D88@l
+/* 800A6C68 000A3A68  3C 60 80 0A */	lis r3, zMovePointEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 800A6C6C 000A3A6C  38 03 6D 88 */	addi r0, r3, zMovePointEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800A6C70 000A3A70  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 800A6C74 000A3A74  88 1E 00 05 */	lbz r0, 5(r30)
 /* 800A6C78 000A3A78  28 00 00 00 */	cmplwi r0, 0
@@ -134,7 +134,8 @@ zMovePointReset__FP10zMovePoint:
 /* 800A6D7C 000A3B7C  7C 08 03 A6 */	mtlr r0
 /* 800A6D80 000A3B80  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A6D84 000A3B84  4E 80 00 20 */	blr 
-lbl_800A6D88:
+
+zMovePointEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800A6D88 000A3B88  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A6D8C 000A3B8C  7C 08 02 A6 */	mflr r0
 /* 800A6D90 000A3B90  2C 05 00 26 */	cmpwi r5, 0x26
