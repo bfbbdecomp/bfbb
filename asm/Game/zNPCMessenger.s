@@ -1220,8 +1220,12 @@ lbl_800EE290:
 /* 800EE2B4 000EB0B4  7C 08 03 A6 */	mtlr r0
 /* 800EE2B8 000EB0B8  38 21 00 70 */	addi r1, r1, 0x70
 /* 800EE2BC 000EB0BC  4E 80 00 20 */	blr 
+
+IsAlive__10zNPCCommonFv:
 /* 800EE2C0 000EB0C0  38 60 00 01 */	li r3, 1
 /* 800EE2C4 000EB0C4  4E 80 00 20 */	blr 
+
+Stun__10zNPCCommonFf:
 /* 800EE2C8 000EB0C8  4E 80 00 20 */	blr 
 
 .endif
