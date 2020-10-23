@@ -2,14 +2,14 @@
 
 #include <types.h>
 
-// xVec3Normalize(xVec3*,const xVec3*)
+// func_8004E2F0
 #pragma GLOBAL_ASM("asm/Core/x/xVec3.s", "xVec3Normalize__FP5xVec3PC5xVec3")
 
-// xVec3NormalizeFast(xVec3*,const xVec3*)
+// func_8004E3DC
 #pragma GLOBAL_ASM("asm/Core/x/xVec3.s", "xVec3NormalizeFast__FP5xVec3PC5xVec3")
 
-// xVec3Copy(xVec3*,const xVec3*)
+// func_8004E4DC
 #pragma GLOBAL_ASM("asm/Core/x/xVec3.s", "xVec3Copy__FP5xVec3PC5xVec3")
 
-// xVec3Dot(const xVec3*,const xVec3*)
+// func_8004E4F0
 #pragma GLOBAL_ASM("asm/Core/x/xVec3.s", "xVec3Dot__FPC5xVec3PC5xVec3")
