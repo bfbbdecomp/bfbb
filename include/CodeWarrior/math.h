@@ -8,6 +8,7 @@ extern "C" {
 double sin(double);
 double cos(double);
 double tan(double);
+double atan2(double, double);
 
 #ifdef __cplusplus
 }
