@@ -2,16 +2,17 @@
 
 #include <types.h>
 
-#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "func_8004E7E0")
+// func_8004E7E0
+#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "AlwaysConditional__FP15xAnimTransitionP11xAnimSinglePv")
 
-// zAnimListInit()
+// func_8004E7E8
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListInit__Fv")
 
-// zAnimListExit()
+// func_8004EB44
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListExit__Fv")
 
-// zAnimListGetTable(unsigned int)
+// func_8004EB5C
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListGetTable__FUi")
 
-// zAnimListGetNumUsed(unsigned int)
+// func_8004EBA4
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListGetNumUsed__FUi")
