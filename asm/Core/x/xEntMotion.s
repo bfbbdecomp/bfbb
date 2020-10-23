@@ -1905,9 +1905,9 @@ xEntMotionDebugInit__FUs:
 /* 8001E348 0001B148  7C 7F 1B 78 */	mr r31, r3
 /* 8001E34C 0001B14C  41 82 00 40 */	beq lbl_8001E38C
 /* 8001E350 0001B150  3C 60 80 25 */	lis r3, lbl_8025228C@ha
-/* 8001E354 0001B154  3C 80 80 02 */	lis r4, lbl_8001E3E4@ha
+/* 8001E354 0001B154  3C 80 80 02 */	lis r4, xEntMotionDebugCB__Fv@ha
 /* 8001E358 0001B158  38 63 22 8C */	addi r3, r3, lbl_8025228C@l
-/* 8001E35C 0001B15C  38 84 E3 E4 */	addi r4, r4, lbl_8001E3E4@l
+/* 8001E35C 0001B15C  38 84 E3 E4 */	addi r4, r4, xEntMotionDebugCB__Fv@l
 /* 8001E360 0001B160  4B FF 9A 2D */	bl xDebugModeAdd__FPCcPFv_v
 /* 8001E364 0001B164  38 00 00 00 */	li r0, 0
 /* 8001E368 0001B168  57 E4 13 BA */	rlwinm r4, r31, 2, 0xe, 0x1d
@@ -1947,7 +1947,8 @@ xEntMotionDebugAdd__FP10xEntMotion:
 /* 8001E3D8 0001B1D8  B0 8D 88 DC */	sth r4, lbl_803CB1DC-_SDA_BASE_(r13)
 /* 8001E3DC 0001B1DC  7C 65 01 2E */	stwx r3, r5, r0
 /* 8001E3E0 0001B1E0  4E 80 00 20 */	blr 
-lbl_8001E3E4:
+
+xEntMotionDebugCB__Fv:
 /* 8001E3E4 0001B1E4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001E3E8 0001B1E8  7C 08 02 A6 */	mflr r0
 /* 8001E3EC 0001B1EC  90 01 00 14 */	stw r0, 0x14(r1)
