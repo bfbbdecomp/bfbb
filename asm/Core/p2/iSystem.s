@@ -178,14 +178,14 @@ TRCInit__Fv:
 /* 800D3300 000D0100  3C 60 80 0D */	lis r3, iPadStopRumble__Fv@ha
 /* 800D3304 000D0104  38 63 AE 7C */	addi r3, r3, iPadStopRumble__Fv@l
 /* 800D3308 000D0108  48 0A D7 85 */	bl SetPadStopRumblingFunction__8iTRCDiskFPFv_v
-/* 800D330C 000D010C  3C 60 80 0D */	lis r3, iSnd_rename_1@ha
-/* 800D3310 000D0110  38 63 2F 00 */	addi r3, r3, iSnd_rename_1@l
+/* 800D330C 000D010C  3C 60 80 0D */	lis r3, iSndSuspend__Fv@ha
+/* 800D3310 000D0110  38 63 2F 00 */	addi r3, r3, iSndSuspend__Fv@l
 /* 800D3314 000D0114  48 0A D7 81 */	bl SetSndSuspendFunction__8iTRCDiskFPFv_v
-/* 800D3318 000D0118  3C 60 80 0D */	lis r3, iSnd_rename_2@ha
-/* 800D331C 000D011C  38 63 2F 94 */	addi r3, r3, iSnd_rename_2@l
+/* 800D3318 000D0118  3C 60 80 0D */	lis r3, iSndResume__Fv@ha
+/* 800D331C 000D011C  38 63 2F 94 */	addi r3, r3, iSndResume__Fv@l
 /* 800D3320 000D0120  48 0A D7 7D */	bl SetSndResumeFunction__8iTRCDiskFPFv_v
-/* 800D3324 000D0124  3C 60 80 0D */	lis r3, iSnd_rename_3@ha
-/* 800D3328 000D0128  38 63 2D F0 */	addi r3, r3, iSnd_rename_3@l
+/* 800D3324 000D0124  3C 60 80 0D */	lis r3, iSndDIEDIEDIE__Fv@ha
+/* 800D3328 000D0128  38 63 2D F0 */	addi r3, r3, iSndDIEDIEDIE__Fv@l
 /* 800D332C 000D012C  48 0A D7 79 */	bl SetSndKillFunction__8iTRCDiskFPFv_v
 /* 800D3330 000D0130  3C 60 80 0C */	lis r3, Suspend__4iFMVFv@ha
 /* 800D3334 000D0134  38 63 46 84 */	addi r3, r3, Suspend__4iFMVFv@l
@@ -193,8 +193,8 @@ TRCInit__Fv:
 /* 800D333C 000D013C  3C 60 80 0C */	lis r3, Resume__4iFMVFv@ha
 /* 800D3340 000D0140  38 63 46 88 */	addi r3, r3, Resume__4iFMVFv@l
 /* 800D3344 000D0144  48 0A D7 71 */	bl SetMovieResumeFunction__8iTRCDiskFPFv_v
-/* 800D3348 000D0148  3C 60 80 0D */	lis r3, iSnd_rename_3@ha
-/* 800D334C 000D014C  38 63 2D F0 */	addi r3, r3, iSnd_rename_3@l
+/* 800D3348 000D0148  3C 60 80 0D */	lis r3, iSndDIEDIEDIE__Fv@ha
+/* 800D334C 000D014C  38 63 2D F0 */	addi r3, r3, iSndDIEDIEDIE__Fv@l
 /* 800D3350 000D0150  48 0A D5 E9 */	bl SetSndKillFunction__11ResetButtonFPFv_v
 /* 800D3354 000D0154  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800D3358 000D0158  7C 08 03 A6 */	mtlr r0
