@@ -126,6 +126,8 @@ lbl_802529C8:
 lbl_802529D4:
 	.incbin "baserom.dol", 0x24F9B4, 0x1BC
 
+.if 0
+
 .section .text  # 0x8001FFB0 - 0x800266C8
 
 /* find_bounds__19@unnamed@xFont_cpp@FPC10iColor_tagRC13basic_rect<i>i */
@@ -7627,6 +7629,8 @@ lbl_800266AC:
 /* 800266BC 000234BC  7C 08 03 A6 */	mtlr r0
 /* 800266C0 000234C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800266C4 000234C4  4E 80 00 20 */	blr 
+
+.endif
 
 .section .data
 lbl_8027B590:
