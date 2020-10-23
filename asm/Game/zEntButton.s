@@ -70,17 +70,17 @@ lbl_800565C0:
 /* 800565C4 000533C4  D0 1E 01 64 */	stfs f0, 0x164(r30)
 lbl_800565C8:
 /* 800565C8 000533C8  88 1E 00 1B */	lbz r0, 0x1b(r30)
-/* 800565CC 000533CC  3C C0 80 05 */	lis r6, lbl_8005695C@ha
-/* 800565D0 000533D0  3C A0 80 05 */	lis r5, lbl_800566B0@ha
-/* 800565D4 000533D4  3C 80 80 05 */	lis r4, lbl_80056F04@ha
+/* 800565CC 000533CC  3C C0 80 05 */	lis r6, zEntButton_Update__FP11_zEntButtonP6xScenef@ha
+/* 800565D0 000533D0  3C A0 80 05 */	lis r5, zEntButton_Move__FP11_zEntButtonP6xScenefP9xEntFrame@ha
+/* 800565D4 000533D4  3C 80 80 05 */	lis r4, zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800565D8 000533D8  60 00 00 01 */	ori r0, r0, 1
-/* 800565DC 000533DC  3C 60 80 05 */	lis r3, lbl_80056B88@ha
+/* 800565DC 000533DC  3C 60 80 05 */	lis r3, zEntButton_Render__FP11_zEntButton@ha
 /* 800565E0 000533E0  98 1E 00 1B */	stb r0, 0x1b(r30)
-/* 800565E4 000533E4  38 C6 69 5C */	addi r6, r6, lbl_8005695C@l
-/* 800565E8 000533E8  38 A5 66 B0 */	addi r5, r5, lbl_800566B0@l
-/* 800565EC 000533EC  38 84 6F 04 */	addi r4, r4, lbl_80056F04@l
+/* 800565E4 000533E4  38 C6 69 5C */	addi r6, r6, zEntButton_Update__FP11_zEntButtonP6xScenef@l
+/* 800565E8 000533E8  38 A5 66 B0 */	addi r5, r5, zEntButton_Move__FP11_zEntButtonP6xScenefP9xEntFrame@l
+/* 800565EC 000533EC  38 84 6F 04 */	addi r4, r4, zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800565F0 000533F0  88 FE 00 23 */	lbz r7, 0x23(r30)
-/* 800565F4 000533F4  38 03 6B 88 */	addi r0, r3, lbl_80056B88@l
+/* 800565F4 000533F4  38 03 6B 88 */	addi r0, r3, zEntButton_Render__FP11_zEntButton@l
 /* 800565F8 000533F8  60 E3 00 10 */	ori r3, r7, 0x10
 /* 800565FC 000533FC  98 7E 00 23 */	stb r3, 0x23(r30)
 /* 80056600 00053400  88 7E 00 22 */	lbz r3, 0x22(r30)
@@ -100,9 +100,9 @@ lbl_80056634:
 /* 80056634 00053434  38 00 00 00 */	li r0, 0
 /* 80056638 00053438  90 1E 00 08 */	stw r0, 8(r30)
 lbl_8005663C:
-/* 8005663C 0005343C  3C 60 80 05 */	lis r3, lbl_80056F04@ha
+/* 8005663C 0005343C  3C 60 80 05 */	lis r3, zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80056640 00053440  38 00 00 00 */	li r0, 0
-/* 80056644 00053444  38 83 6F 04 */	addi r4, r3, lbl_80056F04@l
+/* 80056644 00053444  38 83 6F 04 */	addi r4, r3, zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80056648 00053448  7F C3 F3 78 */	mr r3, r30
 /* 8005664C 0005344C  90 9E 00 0C */	stw r4, 0xc(r30)
 /* 80056650 00053450  90 1E 01 44 */	stw r0, 0x144(r30)
@@ -129,7 +129,8 @@ lbl_8005663C:
 /* 800566A4 000534A4  7C 08 03 A6 */	mtlr r0
 /* 800566A8 000534A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800566AC 000534AC  4E 80 00 20 */	blr 
-lbl_800566B0:
+
+zEntButton_Move__FP11_zEntButtonP6xScenefP9xEntFrame:
 /* 800566B0 000534B0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800566B4 000534B4  7C 08 02 A6 */	mflr r0
 /* 800566B8 000534B8  90 01 00 34 */	stw r0, 0x34(r1)
@@ -321,7 +322,8 @@ lbl_800568FC:
 /* 80056950 00053750  7C 08 03 A6 */	mtlr r0
 /* 80056954 00053754  38 21 00 10 */	addi r1, r1, 0x10
 /* 80056958 00053758  4E 80 00 20 */	blr 
-lbl_8005695C:
+
+zEntButton_Update__FP11_zEntButtonP6xScenef:
 /* 8005695C 0005375C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80056960 00053760  7C 08 02 A6 */	mflr r0
 /* 80056964 00053764  90 01 00 24 */	stw r0, 0x24(r1)
@@ -479,7 +481,8 @@ lbl_80056B6C:
 /* 80056B7C 0005397C  7C 08 03 A6 */	mtlr r0
 /* 80056B80 00053980  38 21 00 20 */	addi r1, r1, 0x20
 /* 80056B84 00053984  4E 80 00 20 */	blr 
-lbl_80056B88:
+
+zEntButton_Render__FP11_zEntButton:
 /* 80056B88 00053988  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80056B8C 0005398C  7C 08 02 A6 */	mflr r0
 /* 80056B90 00053990  90 01 00 14 */	stw r0, 0x14(r1)
@@ -732,7 +735,8 @@ lbl_80056EE0:
 /* 80056EF8 00053CF8  D0 0D 81 70 */	stfs f0, lbl_803CAA70-_SDA_BASE_(r13)
 /* 80056EFC 00053CFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80056F00 00053D00  4E 80 00 20 */	blr 
-lbl_80056F04:
+
+zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80056F04 00053D04  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80056F08 00053D08  7C 08 02 A6 */	mflr r0
 /* 80056F0C 00053D0C  2C 05 00 56 */	cmpwi r5, 0x56
