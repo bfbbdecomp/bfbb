@@ -4,7 +4,8 @@
 
 .section .text  # 0x8009B684 - 0x8009C000
 
-func_8009B684:
+
+hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive:
 /* 8009B684 00098484  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009B688 00098488  7C 08 02 A6 */	mflr r0
 /* 8009B68C 0009848C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -45,9 +46,9 @@ delay_hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6wid
 /* 8009B700 00098500  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8009B704 00098504  7C 08 02 A6 */	mflr r0
 /* 8009B708 00098508  3C A0 80 03 */	lis r5, xhud_rename_me@ha
-/* 8009B70C 0009850C  3C 80 80 0A */	lis r4, func_8009B684@ha
+/* 8009B70C 0009850C  3C 80 80 0A */	lis r4, hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive@ha
 /* 8009B710 00098510  90 01 00 44 */	stw r0, 0x44(r1)
-/* 8009B714 00098514  38 C4 B6 84 */	addi r6, r4, func_8009B684@l
+/* 8009B714 00098514  38 C4 B6 84 */	addi r6, r4, hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive@l
 /* 8009B718 00098518  38 A5 EB 84 */	addi r5, r5, xhud_rename_me@l
 /* 8009B71C 0009851C  38 80 00 00 */	li r4, 0
 /* 8009B720 00098520  93 E1 00 3C */	stw r31, 0x3c(r1)
@@ -541,12 +542,12 @@ show__4zhudFv:
 /* 8009BDF0 00098BF0  3C 80 80 03 */	lis r4, xhud_rename_me@ha
 /* 8009BDF4 00098BF4  90 01 00 24 */	stw r0, 0x24(r1)
 /* 8009BDF8 00098BF8  38 A3 57 60 */	addi r5, r3, lbl_802E5760@l
-/* 8009BDFC 00098BFC  3C 60 80 0A */	lis r3, func_8009B684@ha
+/* 8009BDFC 00098BFC  3C 60 80 0A */	lis r3, hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive@ha
 /* 8009BE00 00098C00  BF 61 00 0C */	stmw r27, 0xc(r1)
 /* 8009BE04 00098C04  7C BD 2B 78 */	mr r29, r5
 /* 8009BE08 00098C08  3B C4 EB 84 */	addi r30, r4, xhud_rename_me@l
 /* 8009BE0C 00098C0C  3B 85 00 24 */	addi r28, r5, 0x24
-/* 8009BE10 00098C10  3B E3 B6 84 */	addi r31, r3, func_8009B684@l
+/* 8009BE10 00098C10  3B E3 B6 84 */	addi r31, r3, hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive@l
 /* 8009BE14 00098C14  48 00 00 3C */	b lbl_8009BE50
 lbl_8009BE18:
 /* 8009BE18 00098C18  83 7D 00 00 */	lwz r27, 0(r29)
