@@ -2,11 +2,11 @@
 
 #include <types.h>
 
-// zRenderStateInit()
+// func_800AC9E8
 #pragma GLOBAL_ASM("asm/Game/zRenderState.s", "zRenderStateInit__Fv")
 
-// zRenderStateCurrent()
+// func_800AC9F4
 #pragma GLOBAL_ASM("asm/Game/zRenderState.s", "zRenderStateCurrent__Fv")
 
-// zRenderState(_SDRenderState)
+// func_800AC9FC
 #pragma GLOBAL_ASM("asm/Game/zRenderState.s", "zRenderState__F14_SDRenderState")
