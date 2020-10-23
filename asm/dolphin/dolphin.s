@@ -32856,8 +32856,8 @@ lbl_801D1DF8:
 /* 801D1DF8 001CEBF8  7C 83 23 78 */	mr r3, r4
 /* 801D1DFC 001CEBFC  4E 80 00 20 */	blr 
 
-.global func_801D1E00
-func_801D1E00:
+.global OSAllocFromHeap
+OSAllocFromHeap:
 /* 801D1E00 001CEC00  1C 03 00 0C */	mulli r0, r3, 0xc
 /* 801D1E04 001CEC04  80 6D 9C 48 */	lwz r3, lbl_803CC548-_SDA_BASE_(r13)
 /* 801D1E08 001CEC08  7C A3 02 14 */	add r5, r3, r0
@@ -32934,8 +32934,8 @@ lbl_801D1EF0:
 /* 801D1EF4 001CECF4  38 66 00 20 */	addi r3, r6, 0x20
 /* 801D1EF8 001CECF8  4E 80 00 20 */	blr 
 
-.global func_801D1EFC
-func_801D1EFC:
+.global OSFreeToHeap
+OSFreeToHeap:
 /* 801D1EFC 001CECFC  7C 08 02 A6 */	mflr r0
 /* 801D1F00 001CED00  38 C4 FF E0 */	addi r6, r4, -32
 /* 801D1F04 001CED04  90 01 00 04 */	stw r0, 4(r1)
