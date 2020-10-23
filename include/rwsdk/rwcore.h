@@ -241,6 +241,73 @@ typedef RwUInt32* RxNodeOutput;
 typedef RxPipelineNode* RxNodeInput;
 typedef RxPipeline RxLockedPipe;
 
+enum RwRasterLockMode
+{
+    rwRASTERLOCKWRITE = 0x01,
+    rwRASTERLOCKREAD = 0x02,
+    rwRASTERLOCKNOFETCH = 0x04,
+    rwRASTERLOCKRAW = 0x08,
+    rwRASTERLOCKMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define rwRASTERLOCKREADWRITE (rwRASTERLOCKREAD | rwRASTERLOCKWRITE)
+
+enum RwRasterFlipMode
+{
+    rwRASTERFLIPDONTWAIT = 0,
+    rwRASTERFLIPWAITVSYNC = 1,
+    rwRASTERFLIPMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwRasterType
+{
+    rwRASTERTYPENORMAL = 0x00,
+    rwRASTERTYPEZBUFFER = 0x01,
+    rwRASTERTYPECAMERA = 0x02,
+    rwRASTERTYPETEXTURE = 0x04,
+    rwRASTERTYPECAMERATEXTURE = 0x05,
+    rwRASTERTYPEMASK = 0x07,
+    rwRASTERDONTALLOCATE = 0x80,
+    rwRASTERTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwRasterFormat
+{
+    rwRASTERFORMATDEFAULT = 0x0000,
+    rwRASTERFORMAT1555 = 0x0100,
+    rwRASTERFORMAT565 = 0x0200,
+    rwRASTERFORMAT4444 = 0x0300,
+    rwRASTERFORMATLUM8 = 0x0400,
+    rwRASTERFORMAT8888 = 0x0500,
+    rwRASTERFORMAT888 = 0x0600,
+    rwRASTERFORMAT16 = 0x0700,
+    rwRASTERFORMAT24 = 0x0800,
+    rwRASTERFORMAT32 = 0x0900,
+    rwRASTERFORMAT555 = 0x0a00,
+    rwRASTERFORMATAUTOMIPMAP = 0x1000,
+    rwRASTERFORMATPAL8 = 0x2000,
+    rwRASTERFORMATPAL4 = 0x4000,
+    rwRASTERFORMATMIPMAP = 0x8000,
+    rwRASTERFORMATPIXELFORMATMASK = 0x0f00,
+    rwRASTERFORMATMASK = 0xff00,
+    rwRASTERFORMATFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwRasterPrivateFlag
+{
+    rwRASTERGAMMACORRECTED = 0x01,
+    rwRASTERPIXELLOCKEDREAD = 0x02,
+    rwRASTERPIXELLOCKEDWRITE = 0x04,
+    rwRASTERPALETTELOCKEDREAD = 0x08,
+    rwRASTERPALETTELOCKEDWRITE = 0x10,
+    rwRASTERPIXELLOCKEDRAW = 0x20,
+    rwRASTERPRIVATEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define rwRASTERPIXELLOCKED (rwRASTERPIXELLOCKEDREAD | rwRASTERPIXELLOCKEDWRITE)
+#define rwRASTERPALETTELOCKED (rwRASTERPALETTELOCKEDREAD | rwRASTERPALETTELOCKEDWRITE)
+#define rwRASTERLOCKED (rwRASTERPIXELLOCKED | rwRASTERPALETTELOCKED)
+
 struct RwRaster
 {
     RwRaster* parent;
@@ -258,6 +325,20 @@ struct RwRaster
     RwInt32 originalHeight;
     RwInt32 originalStride;
 };
+
+#define RwRasterGetWidth(_raster) ((_raster)->width)
+
+#define RwRasterGetHeight(_raster) ((_raster)->height)
+
+#define RwRasterGetStride(_raster) ((_raster)->stride)
+
+#define RwRasterGetDepth(_raster) ((_raster)->depth)
+
+#define RwRasterGetFormat(_raster) ((((_raster)->cFormat) & (rwRASTERFORMATMASK >> 8)) << 8)
+
+#define RwRasterGetType(_raster) (((_raster)->cType) & rwRASTERTYPEMASK)
+
+#define RwRasterGetParent(_raster) ((_raster)->parent)
 
 struct RxRenderStateVector
 {
