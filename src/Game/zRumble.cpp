@@ -2,23 +2,23 @@
 
 #include <types.h>
 
-// zRumbleStart(int,_tagSDRumbleType,xEnt*)
+// func_800ACDE0
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt")
 
-// zRumbleStart(int,_tagSDRumbleType)
+// func_800AD030
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStart__Fi16_tagSDRumbleType")
 
-// zRumbleStart(_tagSDRumbleType)
+// func_800AD054
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStart__F16_tagSDRumbleType")
 
-// zRumbleStart(_tagSDRumbleType,xEnt*)
+// func_800AD084
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStart__F16_tagSDRumbleTypeP4xEnt")
 
-// zRumbleStartDistance(int,float,float,_tagRumbleType,float)
+// func_800AD0B8
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStartDistance__Fiff14_tagRumbleTypef")
 
-// zRumbleStartEntDistance(xEnt*,float,_tagRumbleType,float)
+// func_800AD11C
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef")
 
-// zPadAddRumble(_tagRumbleType,float,int,unsigned int)
+// func_800AD1CC
 #pragma GLOBAL_ASM("asm/Game/zRumble.s", "zPadAddRumble__F14_tagRumbleTypefiUi")
