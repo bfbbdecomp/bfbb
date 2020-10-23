@@ -4,8 +4,9 @@
 
 .section .text  # 0x8002CAA0 - 0x8002CF70
 
-.global xgroup_rename_me
-xgroup_rename_me:
+.global xGroupInit__FPvPv
+
+xGroupInit__FPvPv:
 /* 8002CAA0 000298A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002CAA4 000298A4  7C 08 02 A6 */	mflr r0
 /* 8002CAA8 000298A8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -25,8 +26,8 @@ xGroupInit__FP5xBaseP11xGroupAsset:
 /* 8002CAD4 000298D4  93 C1 00 08 */	stw r30, 8(r1)
 /* 8002CAD8 000298D8  7C 9E 23 78 */	mr r30, r4
 /* 8002CADC 000298DC  4B FD C9 25 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8002CAE0 000298E0  3C 60 80 03 */	lis r3, lbl_8002CC78@ha
-/* 8002CAE4 000298E4  38 03 CC 78 */	addi r0, r3, lbl_8002CC78@l
+/* 8002CAE0 000298E0  3C 60 80 03 */	lis r3, xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 8002CAE4 000298E4  38 03 CC 78 */	addi r0, r3, xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8002CAE8 000298E8  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 8002CAEC 000298EC  93 DF 00 10 */	stw r30, 0x10(r31)
 /* 8002CAF0 000298F0  88 1F 00 05 */	lbz r0, 5(r31)
@@ -146,7 +147,8 @@ xGroupReset__FP6xGroup:
 /* 8002CC6C 00029A6C  7C 08 03 A6 */	mtlr r0
 /* 8002CC70 00029A70  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002CC74 00029A74  4E 80 00 20 */	blr 
-lbl_8002CC78:
+
+xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8002CC78 00029A78  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8002CC7C 00029A7C  7C 08 02 A6 */	mflr r0
 /* 8002CC80 00029A80  90 01 00 34 */	stw r0, 0x34(r1)
