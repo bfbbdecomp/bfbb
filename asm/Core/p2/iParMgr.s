@@ -975,6 +975,8 @@ lbl_800CBD1C:
 /* 800CBD28 000C8B28  7C 08 03 A6 */	mtlr r0
 /* 800CBD2C 000C8B2C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CBD30 000C8B30  4E 80 00 20 */	blr 
+
+iParMgrRenderParSys_Streak__FPvP9xParGroup:
 /* 800CBD34 000C8B34  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CBD38 000C8B38  7C 08 02 A6 */	mflr r0
 /* 800CBD3C 000C8B3C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1090,6 +1092,8 @@ lbl_800CBEC8:
 /* 800CBEE0 000C8CE0  7C 08 03 A6 */	mtlr r0
 /* 800CBEE4 000C8CE4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CBEE8 000C8CE8  4E 80 00 20 */	blr 
+
+iParMgrRenderParSys_InvStreak__FPvP9xParGroup:
 /* 800CBEEC 000C8CEC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CBEF0 000C8CF0  7C 08 02 A6 */	mflr r0
 /* 800CBEF4 000C8CF4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1205,6 +1209,8 @@ lbl_800CC080:
 /* 800CC098 000C8E98  7C 08 03 A6 */	mtlr r0
 /* 800CC09C 000C8E9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CC0A0 000C8EA0  4E 80 00 20 */	blr 
+
+iParMgrRenderParSys_QuadStreak__FPvP9xParGroup:
 /* 800CC0A4 000C8EA4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800CC0A8 000C8EA8  7C 08 02 A6 */	mflr r0
 /* 800CC0AC 000C8EAC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1249,7 +1255,11 @@ lbl_800CC120:
 /* 800CC13C 000C8F3C  7C 08 03 A6 */	mtlr r0
 /* 800CC140 000C8F40  38 21 00 20 */	addi r1, r1, 0x20
 /* 800CC144 000C8F44  4E 80 00 20 */	blr 
+
+iParMgrRenderParSys_Static__FPvP9xParGroup:
 /* 800CC148 000C8F48  4E 80 00 20 */	blr 
+
+iParMgrRenderParSys_Ground__FPvP9xParGroup:
 /* 800CC14C 000C8F4C  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 800CC150 000C8F50  7C 08 02 A6 */	mflr r0
 /* 800CC154 000C8F54  90 01 00 94 */	stw r0, 0x94(r1)
@@ -1518,6 +1528,8 @@ lbl_800CC52C:
 /* 800CC548 000C9348  7C 08 03 A6 */	mtlr r0
 /* 800CC54C 000C934C  38 21 00 90 */	addi r1, r1, 0x90
 /* 800CC550 000C9350  4E 80 00 20 */	blr 
+
+iParMgrRenderParSys_Flat__FPvP9xParGroup:
 /* 800CC554 000C9354  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800CC558 000C9358  7C 08 02 A6 */	mflr r0
 /* 800CC55C 000C935C  90 01 00 24 */	stw r0, 0x24(r1)
