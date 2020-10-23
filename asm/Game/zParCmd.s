@@ -10,44 +10,44 @@ zParCmdInit__Fv:
 /* 800A7CC8 000A4AC8  7C 08 02 A6 */	mflr r0
 /* 800A7CCC 000A4ACC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800A7CD0 000A4AD0  4B F8 EE BD */	bl xParCmdInit__Fv
-/* 800A7CD4 000A4AD4  3C 80 80 0B */	lis r4, lbl_800A8298@ha
+/* 800A7CD4 000A4AD4  3C 80 80 0B */	lis r4, xParCmdJet_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7CD8 000A4AD8  38 60 00 04 */	li r3, 4
-/* 800A7CDC 000A4ADC  38 A4 82 98 */	addi r5, r4, lbl_800A8298@l
+/* 800A7CDC 000A4ADC  38 A4 82 98 */	addi r5, r4, xParCmdJet_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7CE0 000A4AE0  38 80 00 2C */	li r4, 0x2c
 /* 800A7CE4 000A4AE4  4B F8 F0 DD */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7CE8 000A4AE8  3C 80 80 0A */	lis r4, lbl_800A7FA0@ha
+/* 800A7CE8 000A4AE8  3C 80 80 0A */	lis r4, xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7CEC 000A4AEC  38 60 00 0E */	li r3, 0xe
-/* 800A7CF0 000A4AF0  38 A4 7F A0 */	addi r5, r4, lbl_800A7FA0@l
+/* 800A7CF0 000A4AF0  38 A4 7F A0 */	addi r5, r4, xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7CF4 000A4AF4  38 80 00 10 */	li r4, 0x10
 /* 800A7CF8 000A4AF8  4B F8 F0 C9 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7CFC 000A4AFC  3C 80 80 0B */	lis r4, lbl_800A8630@ha
+/* 800A7CFC 000A4AFC  3C 80 80 0B */	lis r4, xParCmdCustom_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7D00 000A4B00  38 60 00 10 */	li r3, 0x10
-/* 800A7D04 000A4B04  38 A4 86 30 */	addi r5, r4, lbl_800A8630@l
+/* 800A7D04 000A4B04  38 A4 86 30 */	addi r5, r4, xParCmdCustom_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7D08 000A4B08  38 80 00 1C */	li r4, 0x1c
 /* 800A7D0C 000A4B0C  4B F8 F0 B5 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D10 000A4B10  3C 80 80 0A */	lis r4, lbl_800A7EFC@ha
+/* 800A7D10 000A4B10  3C 80 80 0A */	lis r4, xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7D14 000A4B14  38 60 00 1A */	li r3, 0x1a
-/* 800A7D18 000A4B18  38 A4 7E FC */	addi r5, r4, lbl_800A7EFC@l
+/* 800A7D18 000A4B18  38 A4 7E FC */	addi r5, r4, xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7D1C 000A4B1C  38 80 00 0C */	li r4, 0xc
 /* 800A7D20 000A4B20  4B F8 F0 A1 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D24 000A4B24  3C 80 80 0A */	lis r4, lbl_800A7FA4@ha
+/* 800A7D24 000A4B24  3C 80 80 0A */	lis r4, xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7D28 000A4B28  38 60 00 1B */	li r3, 0x1b
-/* 800A7D2C 000A4B2C  38 A4 7F A4 */	addi r5, r4, lbl_800A7FA4@l
+/* 800A7D2C 000A4B2C  38 A4 7F A4 */	addi r5, r4, xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7D30 000A4B30  38 80 00 0C */	li r4, 0xc
 /* 800A7D34 000A4B34  4B F8 F0 8D */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D38 000A4B38  3C 80 80 0B */	lis r4, lbl_800A812C@ha
+/* 800A7D38 000A4B38  3C 80 80 0B */	lis r4, xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7D3C 000A4B3C  38 60 00 1C */	li r3, 0x1c
-/* 800A7D40 000A4B40  38 A4 81 2C */	addi r5, r4, lbl_800A812C@l
+/* 800A7D40 000A4B40  38 A4 81 2C */	addi r5, r4, xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7D44 000A4B44  38 80 00 10 */	li r4, 0x10
 /* 800A7D48 000A4B48  4B F8 F0 79 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D4C 000A4B4C  3C 80 80 0B */	lis r4, lbl_800A8518@ha
+/* 800A7D4C 000A4B4C  3C 80 80 0B */	lis r4, xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7D50 000A4B50  38 60 00 16 */	li r3, 0x16
-/* 800A7D54 000A4B54  38 A4 85 18 */	addi r5, r4, lbl_800A8518@l
+/* 800A7D54 000A4B54  38 A4 85 18 */	addi r5, r4, xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7D58 000A4B58  38 80 00 14 */	li r4, 0x14
 /* 800A7D5C 000A4B5C  4B F8 F0 65 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D60 000A4B60  3C 80 80 0A */	lis r4, lbl_800A7E2C@ha
+/* 800A7D60 000A4B60  3C 80 80 0A */	lis r4, xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf@ha
 /* 800A7D64 000A4B64  38 60 00 11 */	li r3, 0x11
-/* 800A7D68 000A4B68  38 A4 7E 2C */	addi r5, r4, lbl_800A7E2C@l
+/* 800A7D68 000A4B68  38 A4 7E 2C */	addi r5, r4, xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf@l
 /* 800A7D6C 000A4B6C  38 80 00 10 */	li r4, 0x10
 /* 800A7D70 000A4B70  4B F8 F0 51 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
 /* 800A7D74 000A4B74  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -102,7 +102,8 @@ lbl_800A7E14:
 /* 800A7E20 000A4C20  7C 08 03 A6 */	mtlr r0
 /* 800A7E24 000A4C24  38 21 00 50 */	addi r1, r1, 0x50
 /* 800A7E28 000A4C28  4E 80 00 20 */	blr 
-lbl_800A7E2C:
+
+xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf:
 /* 800A7E2C 000A4C2C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800A7E30 000A4C30  7C 08 02 A6 */	mflr r0
 /* 800A7E34 000A4C34  90 01 00 34 */	stw r0, 0x34(r1)
@@ -162,7 +163,8 @@ lbl_800A7EE0:
 /* 800A7EF0 000A4CF0  7C 08 03 A6 */	mtlr r0
 /* 800A7EF4 000A4CF4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7EF8 000A4CF8  4E 80 00 20 */	blr 
-lbl_800A7EFC:
+
+xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf:
 /* 800A7EFC 000A4CFC  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800A7F00 000A4D00  7C 08 02 A6 */	mflr r0
 /* 800A7F04 000A4D04  3C 60 80 2F */	lis r3, lbl_802F2B50@ha
@@ -209,9 +211,11 @@ lbl_800A7F78:
 /* 800A7F94 000A4D94  7C 08 03 A6 */	mtlr r0
 /* 800A7F98 000A4D98  38 21 00 70 */	addi r1, r1, 0x70
 /* 800A7F9C 000A4D9C  4E 80 00 20 */	blr 
-lbl_800A7FA0:
+
+xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf:
 /* 800A7FA0 000A4DA0  4E 80 00 20 */	blr 
-lbl_800A7FA4:
+
+xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf:
 /* 800A7FA4 000A4DA4  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800A7FA8 000A4DA8  7C 08 02 A6 */	mflr r0
 /* 800A7FAC 000A4DAC  90 01 00 74 */	stw r0, 0x74(r1)
@@ -314,7 +318,8 @@ lbl_800A80EC:
 /* 800A8120 000A4F20  7C 08 03 A6 */	mtlr r0
 /* 800A8124 000A4F24  38 21 00 70 */	addi r1, r1, 0x70
 /* 800A8128 000A4F28  4E 80 00 20 */	blr 
-lbl_800A812C:
+
+xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf:
 /* 800A812C 000A4F2C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800A8130 000A4F30  7C 08 02 A6 */	mflr r0
 /* 800A8134 000A4F34  3C A0 80 3C */	lis r5, globals@ha
@@ -415,7 +420,8 @@ lbl_800A827C:
 /* 800A828C 000A508C  7C 08 03 A6 */	mtlr r0
 /* 800A8290 000A5090  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A8294 000A5094  4E 80 00 20 */	blr 
-lbl_800A8298:
+
+xParCmdJet_Update__FP7xParCmdP9xParGroupf:
 /* 800A8298 000A5098  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800A829C 000A509C  7C 08 02 A6 */	mflr r0
 /* 800A82A0 000A50A0  90 01 00 44 */	stw r0, 0x44(r1)
@@ -592,7 +598,8 @@ lbl_800A84EC:
 /* 800A850C 000A530C  7C 08 03 A6 */	mtlr r0
 /* 800A8510 000A5310  38 21 00 50 */	addi r1, r1, 0x50
 /* 800A8514 000A5314  4E 80 00 20 */	blr 
-lbl_800A8518:
+
+xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf:
 /* 800A8518 000A5318  80 C3 00 04 */	lwz r6, 4(r3)
 /* 800A851C 000A531C  3C 60 80 3C */	lis r3, globals@ha
 /* 800A8520 000A5320  C0 02 94 04 */	lfs f0, lbl_803CDD84-_SDA2_BASE_(r2)
@@ -671,7 +678,8 @@ lbl_800A8624:
 /* 800A8624 000A5424  28 04 00 00 */	cmplwi r4, 0
 /* 800A8628 000A5428  40 82 FF C8 */	bne lbl_800A85F0
 /* 800A862C 000A542C  4E 80 00 20 */	blr 
-lbl_800A8630:
+
+xParCmdCustom_Update__FP7xParCmdP9xParGroupf:
 /* 800A8630 000A5430  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 800A8634 000A5434  7C 08 02 A6 */	mflr r0
 /* 800A8638 000A5438  90 01 00 44 */	stw r0, 0x44(r1)
