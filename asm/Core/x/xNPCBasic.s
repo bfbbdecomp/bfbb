@@ -114,24 +114,24 @@ lbl_8010F978:
 lbl_8010F9A8:
 /* 8010F9A8 0010C7A8  7F E3 FB 78 */	mr r3, r31
 /* 8010F9AC 0010C7AC  4B FC 97 89 */	bl RestoreColFlags__9xNPCBasicFv
-/* 8010F9B0 0010C7B0  3C 60 80 11 */	lis r3, lbl_80110000@ha
-/* 8010F9B4 0010C7B4  3C 80 80 11 */	lis r4, lbl_80110048@ha
-/* 8010F9B8 0010C7B8  38 03 00 00 */	addi r0, r3, lbl_80110000@l
-/* 8010F9BC 0010C7BC  3C 60 80 11 */	lis r3, lbl_8011020C@ha
+/* 8010F9B0 0010C7B0  3C 60 80 11 */	lis r3, NPC_entwrap_setup__FP4xEnt@ha
+/* 8010F9B4 0010C7B4  3C 80 80 11 */	lis r4, NPC_entwrap_reset__FP4xEnt@ha
+/* 8010F9B8 0010C7B8  38 03 00 00 */	addi r0, r3, NPC_entwrap_setup__FP4xEnt@l
+/* 8010F9BC 0010C7BC  3C 60 80 11 */	lis r3, NPC_entwrap_event__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8010F9C0 0010C7C0  90 1F 00 DC */	stw r0, 0xdc(r31)
-/* 8010F9C4 0010C7C4  38 04 00 48 */	addi r0, r4, lbl_80110048@l
-/* 8010F9C8 0010C7C8  3C C0 80 11 */	lis r6, lbl_80110090@ha
-/* 8010F9CC 0010C7CC  3C A0 80 11 */	lis r5, lbl_801101B4@ha
+/* 8010F9C4 0010C7C4  38 04 00 48 */	addi r0, r4, NPC_entwrap_reset__FP4xEnt@l
+/* 8010F9C8 0010C7C8  3C C0 80 11 */	lis r6, NPC_entwrap_update__FP4xEntP6xScenef@ha
+/* 8010F9CC 0010C7CC  3C A0 80 11 */	lis r5, NPC_entwrap_bupdate__FP4xEntP5xVec3@ha
 /* 8010F9D0 0010C7D0  90 1F 00 E0 */	stw r0, 0xe0(r31)
-/* 8010F9D4 0010C7D4  38 03 02 0C */	addi r0, r3, lbl_8011020C@l
-/* 8010F9D8 0010C7D8  3C 80 80 11 */	lis r4, lbl_801101E0@ha
-/* 8010F9DC 0010C7DC  3C 60 80 11 */	lis r3, lbl_80110264@ha
+/* 8010F9D4 0010C7D4  38 03 02 0C */	addi r0, r3, NPC_entwrap_event__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 8010F9D8 0010C7D8  3C 80 80 11 */	lis r4, NPC_entwrap_move__FP4xEntP6xScenefP9xEntFrame@ha
+/* 8010F9DC 0010C7DC  3C 60 80 11 */	lis r3, NPC_entwrap_render__FP4xEnt@ha
 /* 8010F9E0 0010C7E0  90 1F 00 0C */	stw r0, 0xc(r31)
-/* 8010F9E4 0010C7E4  38 06 00 90 */	addi r0, r6, lbl_80110090@l
-/* 8010F9E8 0010C7E8  38 A5 01 B4 */	addi r5, r5, lbl_801101B4@l
-/* 8010F9EC 0010C7EC  38 84 01 E0 */	addi r4, r4, lbl_801101E0@l
+/* 8010F9E4 0010C7E4  38 06 00 90 */	addi r0, r6, NPC_entwrap_update__FP4xEntP6xScenef@l
+/* 8010F9E8 0010C7E8  38 A5 01 B4 */	addi r5, r5, NPC_entwrap_bupdate__FP4xEntP5xVec3@l
+/* 8010F9EC 0010C7EC  38 84 01 E0 */	addi r4, r4, NPC_entwrap_move__FP4xEntP6xScenefP9xEntFrame@l
 /* 8010F9F0 0010C7F0  90 1F 00 34 */	stw r0, 0x34(r31)
-/* 8010F9F4 0010C7F4  38 03 02 64 */	addi r0, r3, lbl_80110264@l
+/* 8010F9F4 0010C7F4  38 03 02 64 */	addi r0, r3, NPC_entwrap_render__FP4xEnt@l
 /* 8010F9F8 0010C7F8  90 BF 00 3C */	stw r5, 0x3c(r31)
 /* 8010F9FC 0010C7FC  90 9F 00 40 */	stw r4, 0x40(r31)
 /* 8010FA00 0010C800  90 1F 00 44 */	stw r0, 0x44(r31)
@@ -199,7 +199,8 @@ lbl_8010FA98:
 /* 8010FAE8 0010C8E8  7C 08 03 A6 */	mtlr r0
 /* 8010FAEC 0010C8EC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010FAF0 0010C8F0  4E 80 00 20 */	blr 
-lbl_8010FAF4:
+
+NPC_alwaysUseSphere__FP4xEntP5xVec3:
 /* 8010FAF4 0010C8F4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8010FAF8 0010C8F8  7C 08 02 A6 */	mflr r0
 /* 8010FAFC 0010C8FC  3C 80 80 27 */	lis r4, lbl_8026A3F8@ha
@@ -464,10 +465,10 @@ lbl_8010FE30:
 /* 8010FE84 0010CC84  90 1F 00 4C */	stw r0, 0x4c(r31)
 lbl_8010FE88:
 /* 8010FE88 0010CC88  88 BF 00 F0 */	lbz r5, 0xf0(r31)
-/* 8010FE8C 0010CC8C  3C 60 80 11 */	lis r3, lbl_8010FAF4@ha
+/* 8010FE8C 0010CC8C  3C 60 80 11 */	lis r3, NPC_alwaysUseSphere__FP4xEntP5xVec3@ha
 /* 8010FE90 0010CC90  80 9F 00 4C */	lwz r4, 0x4c(r31)
 /* 8010FE94 0010CC94  FC 20 F8 90 */	fmr f1, f31
-/* 8010FE98 0010CC98  38 03 FA F4 */	addi r0, r3, lbl_8010FAF4@l
+/* 8010FE98 0010CC98  38 03 FA F4 */	addi r0, r3, NPC_alwaysUseSphere__FP4xEntP5xVec3@l
 /* 8010FE9C 0010CC9C  7F E3 FB 78 */	mr r3, r31
 /* 8010FEA0 0010CCA0  98 A4 00 00 */	stb r5, 0(r4)
 /* 8010FEA4 0010CCA4  7F A4 EB 78 */	mr r4, r29
@@ -537,6 +538,8 @@ lbl_8010FF78:
 /* 8010FF90 0010CD90  7C 08 03 A6 */	mtlr r0
 /* 8010FF94 0010CD94  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010FF98 0010CD98  4E 80 00 20 */	blr 
+
+CollideReview__9xNPCBasicFv:
 /* 8010FF9C 0010CD9C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8010FFA0 0010CDA0  7C 08 02 A6 */	mflr r0
 /* 8010FFA4 0010CDA4  38 80 00 08 */	li r4, 8
@@ -566,7 +569,8 @@ NewTime__9xNPCBasicFP6xScenef:
 /* 8010FFF4 0010CDF4  54 00 07 B8 */	rlwinm r0, r0, 0, 0x1e, 0x1c
 /* 8010FFF8 0010CDF8  B0 03 00 E4 */	sth r0, 0xe4(r3)
 /* 8010FFFC 0010CDFC  4E 80 00 20 */	blr 
-lbl_80110000:
+
+NPC_entwrap_setup__FP4xEnt:
 /* 80110000 0010CE00  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110004 0010CE04  7C 08 02 A6 */	mflr r0
 /* 80110008 0010CE08  38 80 00 00 */	li r4, 0
@@ -585,7 +589,8 @@ lbl_80110000:
 /* 8011003C 0010CE3C  7C 08 03 A6 */	mtlr r0
 /* 80110040 0010CE40  38 21 00 10 */	addi r1, r1, 0x10
 /* 80110044 0010CE44  4E 80 00 20 */	blr 
-lbl_80110048:
+
+NPC_entwrap_reset__FP4xEnt:
 /* 80110048 0010CE48  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011004C 0010CE4C  7C 08 02 A6 */	mflr r0
 /* 80110050 0010CE50  38 80 00 00 */	li r4, 0
@@ -604,7 +609,8 @@ lbl_80110048:
 /* 80110084 0010CE84  7C 08 03 A6 */	mtlr r0
 /* 80110088 0010CE88  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011008C 0010CE8C  4E 80 00 20 */	blr 
-lbl_80110090:
+
+NPC_entwrap_update__FP4xEntP6xScenef:
 /* 80110090 0010CE90  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80110094 0010CE94  7C 08 02 A6 */	mflr r0
 /* 80110098 0010CE98  90 01 00 24 */	stw r0, 0x24(r1)
@@ -681,7 +687,8 @@ lbl_80110138:
 /* 801101A8 0010CFA8  7C 08 03 A6 */	mtlr r0
 /* 801101AC 0010CFAC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801101B0 0010CFB0  4E 80 00 20 */	blr 
-lbl_801101B4:
+
+NPC_entwrap_bupdate__FP4xEntP5xVec3:
 /* 801101B4 0010CFB4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801101B8 0010CFB8  7C 08 02 A6 */	mflr r0
 /* 801101BC 0010CFBC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -693,7 +700,8 @@ lbl_801101B4:
 /* 801101D4 0010CFD4  7C 08 03 A6 */	mtlr r0
 /* 801101D8 0010CFD8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801101DC 0010CFDC  4E 80 00 20 */	blr 
-lbl_801101E0:
+
+NPC_entwrap_move__FP4xEntP6xScenefP9xEntFrame:
 /* 801101E0 0010CFE0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801101E4 0010CFE4  7C 08 02 A6 */	mflr r0
 /* 801101E8 0010CFE8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -705,7 +713,8 @@ lbl_801101E0:
 /* 80110200 0010D000  7C 08 03 A6 */	mtlr r0
 /* 80110204 0010D004  38 21 00 10 */	addi r1, r1, 0x10
 /* 80110208 0010D008  4E 80 00 20 */	blr 
-lbl_8011020C:
+
+NPC_entwrap_event__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8011020C 0010D00C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110210 0010D010  7C 08 02 A6 */	mflr r0
 /* 80110214 0010D014  7C 89 23 78 */	mr r9, r4
@@ -728,7 +737,8 @@ lbl_8011020C:
 /* 80110258 0010D058  7C 08 03 A6 */	mtlr r0
 /* 8011025C 0010D05C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80110260 0010D060  4E 80 00 20 */	blr 
-lbl_80110264:
+
+NPC_entwrap_render__FP4xEnt:
 /* 80110264 0010D064  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80110268 0010D068  7C 08 02 A6 */	mflr r0
 /* 8011026C 0010D06C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -748,6 +758,8 @@ DBG_PStatClear__9xNPCBasicFv:
 .global DBG_HaltOnMe__9xNPCBasicFUiPc
 DBG_HaltOnMe__9xNPCBasicFUiPc:
 /* 80110294 0010D094  4E 80 00 20 */	blr 
+
+BUpdate__9xNPCBasicFP5xVec3:
 /* 80110298 0010D098  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011029C 0010D09C  7C 08 02 A6 */	mflr r0
 /* 801102A0 0010D0A0  90 01 00 14 */	stw r0, 0x14(r1)
