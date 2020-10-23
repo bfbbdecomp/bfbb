@@ -46,6 +46,8 @@ XHUD_AnimTable_Idle__Fv:
 /* 8002FD04 0002CB04  7C 08 03 A6 */	mtlr r0
 /* 8002FD08 0002CB08  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002FD0C 0002CB0C  4E 80 00 20 */	blr 
+
+load__Q24xhud12model_widgetFR5xBaseR9xDynAssetUl:
 /* 8002FD10 0002CB10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002FD14 0002CB14  7C 08 02 A6 */	mflr r0
 /* 8002FD18 0002CB18  38 A0 00 9C */	li r5, 0x9c
@@ -108,6 +110,8 @@ destruct__Q24xhud12model_widgetFv:
 /* 8002FDE0 0002CBE0  7C 08 03 A6 */	mtlr r0
 /* 8002FDE4 0002CBE4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002FDE8 0002CBE8  4E 80 00 20 */	blr 
+
+destroy__Q24xhud12model_widgetFv:
 /* 8002FDEC 0002CBEC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002FDF0 0002CBF0  7C 08 02 A6 */	mflr r0
 /* 8002FDF4 0002CBF4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -136,6 +140,8 @@ lbl_8002FE38:
 /* 8002FE40 0002CC40  7C 08 03 A6 */	mtlr r0
 /* 8002FE44 0002CC44  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002FE48 0002CC48  4E 80 00 20 */	blr 
+
+is__Q24xhud12model_widgetCFUi:
 /* 8002FE4C 0002CC4C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002FE50 0002CC50  7C 08 02 A6 */	mflr r0
 /* 8002FE54 0002CC54  90 01 00 24 */	stw r0, 0x24(r1)
@@ -164,6 +170,8 @@ lbl_8002FE94:
 /* 8002FEA8 0002CCA8  7C 08 03 A6 */	mtlr r0
 /* 8002FEAC 0002CCAC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002FEB0 0002CCB0  4E 80 00 20 */	blr 
+
+update__Q24xhud12model_widgetFf:
 /* 8002FEB4 0002CCB4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002FEB8 0002CCB8  7C 08 02 A6 */	mflr r0
 /* 8002FEBC 0002CCBC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -197,6 +205,8 @@ lbl_8002FF14:
 /* 8002FF24 0002CD24  7C 08 03 A6 */	mtlr r0
 /* 8002FF28 0002CD28  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002FF2C 0002CD2C  4E 80 00 20 */	blr 
+
+render__Q24xhud12model_widgetFv:
 /* 8002FF30 0002CD30  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002FF34 0002CD34  7C 08 02 A6 */	mflr r0
 /* 8002FF38 0002CD38  7C 64 1B 78 */	mr r4, r3
