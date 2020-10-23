@@ -2,110 +2,122 @@
 
 #include <types.h>
 
-// PickupFallPhysics(zEntPickup*,xScene*,float)
+// func_800627CC
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "PickupFallPhysics__FP10zEntPickupP6xScenef")
 
-// isRewardPickup(zEntPickup*)
+// func_80062980
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "isRewardPickup__FP10zEntPickup")
 
-// zEntPickup_Startup()
+// func_80062A08
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Startup__Fv")
 
-// zEntPickupInit(zEntPickup*,xEntAsset*)
+// func_80062A0C
+#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickupInit__FPvPv")
+
+// func_80062A2C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickupInit__FP10zEntPickupP9xEntAsset")
 
-// zEntPickup_Setup(zEntPickup*)
+// func_80062DD8
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Setup__FP10zEntPickup")
 
-// zEntPickup_Setup()
+// func_80062DF8
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Setup__Fv")
 
-// zEntPickup_FlyToInterface(zEntPickup*,float)
+// func_80062F28
+#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_800631E8
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_FlyToInterface__FP10zEntPickupf")
 
-// zEntPickup_CheckAllPickupsAgainstPlayer(xScene*,float)
+// func_800631EC
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_CheckAllPickupsAgainstPlayer__FP6xScenef")
 
-// zEntPickup_DoPickup(zEntPickup*)
+// func_80063240
+#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "CheckPickupAgainstPlayer__FP4xEntPv")
+
+// func_800635C8
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_DoPickup__FP10zEntPickup")
 
-// zEntPickup_GivePickup(zEntPickup*)
+// func_80063690
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_GivePickup__FP10zEntPickup")
 
-// collectPickup(zEntPickup*)
+// func_80063914
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "collectPickup__FP10zEntPickup")
 
-// zEntPickup_GiveAllRewardsNow()
+// func_80063AD4
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_GiveAllRewardsNow__Fv")
 
-// zEntPickup_Reset(zEntPickup*)
+// func_80063C9C
+#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Update__FP10zEntPickupP6xScenef")
+
+// func_80064464
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Reset__FP10zEntPickup")
 
-// zEntPickup_Save(zEntPickup*,xSerial*)
+// func_8006451C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Save__FP10zEntPickupP7xSerial")
 
-// zEntPickup_Load(zEntPickup*,xSerial*)
+// func_80064588
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Load__FP10zEntPickupP7xSerial")
 
-// zEntPickup_FlushGrabbed()
+// func_80064708
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_FlushGrabbed__Fv")
 
-// zEntPickup_MakeDroppable(zEntPickup*,xVec3*,xBase*)
+// func_800647E0
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_MakeDroppable__FP10zEntPickupP5xVec3P5xBase")
 
-// zEntPickup_Drop(zEntPickup*)
+// func_8006485C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Drop__FP10zEntPickup")
 
-// ShowPickupFx(zEntPickup*)
+// func_800649A8
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "ShowPickupFx__FP10zEntPickup")
 
-// zEntPickup_UpdateFX(zEntPickup*,xScene*,float)
+// func_800649D4
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef")
 
-// set_alpha_blend(xModelInstance*)
+// func_80064FA0
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "set_alpha_blend__FP14xModelInstance")
 
-// zEntPickup_Render(zEntPickup*,unsigned int)
+// func_80064FC4
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Render__FP10zEntPickupUi")
 
-// zEntPickup_RenderOne(xEnt*)
+// func_8006509C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_RenderOne__FP4xEnt")
 
-// zEntPickup_RenderList(zEntPickup*,unsigned int)
+// func_800651CC
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_RenderList__FP10zEntPickupUi")
 
-// zEntPickup_UpdateFlyToInterface(zEntPickup*,unsigned int,float)
+// func_8006541C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif")
 
-// rewardRequest(unsigned int,xVec3*,xVec3)
+// func_800659D8
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "rewardRequest__FUiP5xVec35xVec3")
 
-// zEntPickup_SceneEnter()
+// func_80065AD0
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SceneEnter__Fv")
 
-// zEntPickup_SceneReset()
+// func_80065AF0
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SceneReset__Fv")
 
-// zEntPickup_SceneUpdate(float)
+// func_80065B08
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SceneUpdate__Ff")
 
-// spawnNRewards(unsigned int*,unsigned int,xVec3*,xVec3)
+// func_80065E84
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "spawnNRewards__FPUiUiP5xVec35xVec3")
 
-// zEntPickup_SpawnNRewards(unsigned int*,unsigned int,xVec3*)
+// func_80066000
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SpawnNRewards__FPUiUiP5xVec3")
 
-// zEntPickup_SpawnNRewards(unsigned int*,unsigned int,xVec3)
+// func_80066044
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SpawnNRewards__FPUiUi5xVec3")
 
-// zEntPickup_RewardPostSetup()
+// func_8006608C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_RewardPostSetup__Fv")
 
-// zLODTable::operator =(const zLODTable&)
+// func_80066128
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "__as__9zLODTableFRC9zLODTable")
 
-// xVec3DistFast(const xVec3*,const xVec3*)
+// func_8006616C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "xVec3DistFast__FPC5xVec3PC5xVec3")
 
-// xMat3x3MulRotC(xMat3x3*,xMat3x3*,float,float,float,float)
+// func_800661C4
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "xMat3x3MulRotC__FP7xMat3x3P7xMat3x3ffff")
