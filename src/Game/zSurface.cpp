@@ -2,83 +2,86 @@
 
 #include <types.h>
 
-// zSurfaceInit()
+// func_800B55F0
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInit__Fv")
 
-// zSurfaceInitDefaultSurface()
+// func_800B5800
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInitDefaultSurface__Fv")
 
-// zSurfaceRegisterMapper(unsigned int)
+// func_800B585C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceRegisterMapper__FUi")
 
-// zSurfaceExit()
+// func_800B58B8
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceExit__Fv")
 
-// zSurfaceResetSurface(xSurface*)
+// func_800B58E0
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceResetSurface__FP8xSurface")
 
-// zSurfaceGetSurface(unsigned int)
+// func_800B591C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSurface__FUi")
 
-// zSurfaceGetSurface(const xCollis*)
+// func_800B59E4
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSurface__FPC7xCollis")
 
-// zSurfaceGetSlide(const xSurface*)
+// func_800B5A4C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSlide__FPC8xSurface")
 
-// zSurfaceGetStep(const xSurface*)
+// func_800B5A70
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetStep__FPC8xSurface")
 
-// zSurfaceOutOfBounds(const xSurface&)
+// func_800B5A94
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceOutOfBounds__FRC8xSurface")
 
-// zSurfaceGetSlideStartAngle(const xSurface*)
+// func_800B5AB8
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSlideStartAngle__FPC8xSurface")
 
-// zSurfaceGetSlideStopAngle(const xSurface*)
+// func_800B5B08
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSlideStopAngle__FPC8xSurface")
 
-// zSurfaceGetMatchOrient(const xSurface*)
+// func_800B5B58
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetMatchOrient__FPC8xSurface")
 
-// zSurfaceGetDamageType(const xSurface*)
+// func_800B5B7C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetDamageType__FPC8xSurface")
 
-// zSurfaceGetDamagePassthrough(const xSurface*)
+// func_800B5B9C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetDamagePassthrough__FPC8xSurface")
 
-// zSurfaceGetSticky(const xSurface*)
+// func_800B5BC0
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSticky__FPC8xSurface")
 
-// zSurfaceGetStandOn(const xSurface*)
+// func_800B5BE0
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetStandOn__FPC8xSurface")
 
-// zSurfaceGetFriction(const xSurface*)
+// func_800B5C0C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetFriction__FPC8xSurface")
 
-// zSurfaceGetOutOfBoundsDelay(const xSurface&)
+// func_800B5C14
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetOutOfBoundsDelay__FRC8xSurface")
 
-// zSurfaceGetSlickness(const xSurface*)
+// func_800B5C34
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSlickness__FPC8xSurface")
 
-// zSurfaceGetDamping(const xSurface*,float)
+// func_800B5C58
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetDamping__FPC8xSurfacef")
 
-// zSurfaceSave(xSurface*,xSerial*)
+// func_800B5C7C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceSave__FP8xSurfaceP7xSerial")
 
-// zSurfaceLoad(xSurface*,xSerial*)
+// func_800B5C9C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceLoad__FP8xSurfaceP7xSerial")
 
-// zSurfaceSetup(xSurface*)
+// func_800B5CBC
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceSetup__FP8xSurface")
 
-// zSurfaceUpdate(xBase*,xScene*,float)
+// func_800B5D30
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceUpdate__FP5xBaseP6xScenef")
 
-// zSurfaceGetName(int,char*)
+// func_800B63E8
+#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_800B66B8
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetName__FiPc")
 
-// zSurfaceGetDefault()
+// func_800B691C
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetDefault__Fv")
