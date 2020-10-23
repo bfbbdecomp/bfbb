@@ -2,47 +2,53 @@
 
 #include <types.h>
 
-// add_tweaks(xParEmitter&)
+// func_80117690
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "add_tweaks__FR11xParEmitter")
 
-// xParInterpConvertInterpMode(xParInterp*)
+// func_80117694
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParInterpConvertInterpMode__FP10xParInterp")
 
-// xParEmitterInit(xBase*,xParEmitterAsset*)
+// func_801177CC
+#pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterInit__FPvPv")
+
+// func_801177EC
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterInit__FP5xBaseP16xParEmitterAsset")
 
-// xParEmitterSetup(xParEmitter*)
+// func_80117A0C
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterSetup__FP11xParEmitter")
 
-// xParEmitterReset(xParEmitter*)
+// func_80117ADC
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterReset__FP11xParEmitter")
 
-// xParEmitterEmitCustom(xParEmitter*,float,xParEmitterCustomSettings*)
+// func_80117B18
+#pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_80117BC8
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings")
 
-// xParEmitterCull(xParEmitter*,xPar*)
+// func_80117E10
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterCull__FP11xParEmitterP4xPar")
 
-// xParInterpCompute(int,xParInterp*,float,int,float)
+// func_80117EC0
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParInterpCompute__FiP10xParInterpfif")
 
-// xParEmitterEmitSetTexIdxs(xPar*,const xParSys*)
+// func_80118004
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEmitSetTexIdxs__FP4xParPC7xParSys")
 
-// xParEmitterEmit(xParEmitter*,float,float)
+// func_801180C0
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEmit__FP11xParEmitterff")
 
-// xParEmitterUpdate(xBase*,xScene*,float)
+// func_80118864
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterUpdate__FP5xBaseP6xScenef")
 
-// xParEmitterDestroy()
+// func_8011889C
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterDestroy__Fv")
 
-// xParInterp::order()
+// func_801188C8
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "order__10xParInterpFv")
 
-// xParEmitterEmit(xParEmitter*,float)
+// func_801188E4
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEmit__FP11xParEmitterf")
 
-// xParInterp::operator =(const xParInterp&)
+// func_80118908
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "__as__10xParInterpFRC10xParInterp")
