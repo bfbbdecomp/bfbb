@@ -2,14 +2,14 @@
 
 #include <types.h>
 
-// xLightKit_Prepare(void*)
+// func_80123228
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Prepare__FPv")
 
-// xLightKit_Enable(xLightKit*,RpWorld*)
+// func_801234C0
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Enable__FP9xLightKitP7RpWorld")
 
-// xLightKit_GetCurrent(RpWorld*)
+// func_801235A4
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_GetCurrent__FP7RpWorld")
 
-// xLightKit_Destroy(xLightKit*)
+// func_801235AC
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Destroy__FP9xLightKit")
