@@ -305,6 +305,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xNPCBasic.o               \
     $(OBJ_DIR)/src/Core/x/xNPCBasic.o               \
     $(OBJ_DIR)/asm/Game/zEntPlayerBungeeState.o     \
+    $(OBJ_DIR)/src/Game/zEntPlayerBungeeState.o     \
     $(OBJ_DIR)/asm/Game/zCollGeom.o                 \
     $(OBJ_DIR)/src/Game/zCollGeom.o                 \
     $(OBJ_DIR)/asm/Core/x/xParSys.o                 \

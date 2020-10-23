@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x801102B8 - 0x80116588
 
 /* play_sound__Q212bungee_state35@unnamed@zEntPlayerBungeeState_cpp@FQ312bungee_state35@unnamed@zEntPlayerBungeeState_cpp@10sound_enumf */
@@ -6930,6 +6932,9 @@ lbl_80116574:
 /* 8011657C 0011337C  7C 08 03 A6 */	mtlr r0
 /* 80116580 00113380  38 21 00 60 */	addi r1, r1, 0x60
 /* 80116584 00113384  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026A408:
 	.incbin "baserom.dol", 0x2673E8, 0x168
