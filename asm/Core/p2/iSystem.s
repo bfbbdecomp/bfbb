@@ -187,11 +187,11 @@ TRCInit__Fv:
 /* 800D3324 000D0124  3C 60 80 0D */	lis r3, iSnd_rename_3@ha
 /* 800D3328 000D0128  38 63 2D F0 */	addi r3, r3, iSnd_rename_3@l
 /* 800D332C 000D012C  48 0A D7 79 */	bl SetSndKillFunction__8iTRCDiskFPFv_v
-/* 800D3330 000D0130  3C 60 80 0C */	lis r3, iFMV_rename_me_1@ha
-/* 800D3334 000D0134  38 63 46 84 */	addi r3, r3, iFMV_rename_me_1@l
+/* 800D3330 000D0130  3C 60 80 0C */	lis r3, Suspend__4iFMVFv@ha
+/* 800D3334 000D0134  38 63 46 84 */	addi r3, r3, Suspend__4iFMVFv@l
 /* 800D3338 000D0138  48 0A D7 75 */	bl SetMovieSuspendFunction__8iTRCDiskFPFv_v
-/* 800D333C 000D013C  3C 60 80 0C */	lis r3, iFMV_rename_me_2@ha
-/* 800D3340 000D0140  38 63 46 88 */	addi r3, r3, iFMV_rename_me_2@l
+/* 800D333C 000D013C  3C 60 80 0C */	lis r3, Resume__4iFMVFv@ha
+/* 800D3340 000D0140  38 63 46 88 */	addi r3, r3, Resume__4iFMVFv@l
 /* 800D3344 000D0144  48 0A D7 71 */	bl SetMovieResumeFunction__8iTRCDiskFPFv_v
 /* 800D3348 000D0148  3C 60 80 0D */	lis r3, iSnd_rename_3@ha
 /* 800D334C 000D014C  38 63 2D F0 */	addi r3, r3, iSnd_rename_3@l

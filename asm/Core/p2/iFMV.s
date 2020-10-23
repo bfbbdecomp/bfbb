@@ -413,7 +413,8 @@ Show_frame__Fv:
 /* 800C3F84 000C0D84  7C 08 03 A6 */	mtlr r0
 /* 800C3F88 000C0D88  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C3F8C 000C0D8C  4E 80 00 20 */	blr 
-lbl_800C3F90:
+
+arammalloc__FUl:
 /* 800C3F90 000C0D90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C3F94 000C0D94  7C 08 02 A6 */	mflr r0
 /* 800C3F98 000C0D98  90 01 00 14 */	stw r0, 0x14(r1)
@@ -422,7 +423,8 @@ lbl_800C3F90:
 /* 800C3FA4 000C0DA4  7C 08 03 A6 */	mtlr r0
 /* 800C3FA8 000C0DA8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C3FAC 000C0DAC  4E 80 00 20 */	blr 
-lbl_800C3FB0:
+
+aramfree__FPv:
 /* 800C3FB0 000C0DB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C3FB4 000C0DB4  7C 08 02 A6 */	mflr r0
 /* 800C3FB8 000C0DB8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -454,10 +456,10 @@ PlayFMV__FPcUlf:
 /* 800C4018 000C0E18  3B E3 05 58 */	addi r31, r3, globals@l
 /* 800C401C 000C0E1C  80 7F 03 1C */	lwz r3, 0x31c(r31)
 /* 800C4020 000C0E20  48 00 6E 35 */	bl iPadStopRumble__FP8_tagxPad
-/* 800C4024 000C0E24  3C 60 80 0C */	lis r3, lbl_800C3F90@ha
-/* 800C4028 000C0E28  3C 80 80 0C */	lis r4, lbl_800C3FB0@ha
-/* 800C402C 000C0E2C  38 63 3F 90 */	addi r3, r3, lbl_800C3F90@l
-/* 800C4030 000C0E30  38 84 3F B0 */	addi r4, r4, lbl_800C3FB0@l
+/* 800C4024 000C0E24  3C 60 80 0C */	lis r3, arammalloc__FUl@ha
+/* 800C4028 000C0E28  3C 80 80 0C */	lis r4, aramfree__FPv@ha
+/* 800C402C 000C0E2C  38 63 3F 90 */	addi r3, r3, arammalloc__FUl@l
+/* 800C4030 000C0E30  38 84 3F B0 */	addi r4, r4, aramfree__FPv@l
 /* 800C4034 000C0E34  48 0D 2B F5 */	bl RADSetAudioMemory
 /* 800C4038 000C0E38  3C 60 80 0C */	lis r3, iFMVmalloc__FUl@ha
 /* 800C403C 000C0E3C  3C 80 80 0C */	lis r4, iFMVfree__FPv@ha
@@ -894,12 +896,14 @@ lbl_800C4674:
 /* 800C467C 000C147C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C4680 000C1480  4E 80 00 20 */	blr 
 
-.global iFMV_rename_me_1
-iFMV_rename_me_1:
+.global Suspend__4iFMVFv
+
+Suspend__4iFMVFv:
 /* 800C4684 000C1484  4E 80 00 20 */	blr 
 
-.global iFMV_rename_me_2
-iFMV_rename_me_2:
+.global Resume__4iFMVFv
+
+Resume__4iFMVFv:
 /* 800C4688 000C1488  4E 80 00 20 */	blr 
 
 xDrawLine2D_LocaliFMVVersion__Fffff:
