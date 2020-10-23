@@ -237,7 +237,8 @@ lbl_80195C34:
 /* 80195C60 00192A60  90 6D 98 E0 */	stw r3, lbl_803CC1E0-_SDA_BASE_(r13)
 /* 80195C64 00192A64  90 0D 98 D8 */	stw r0, lbl_803CC1D8-_SDA_BASE_(r13)
 /* 80195C68 00192A68  4E 80 00 20 */	blr 
-lbl_80195C6C:
+
+zComboHideMessage__FRQ24xhud6widgetRQ24xhud6motive:
 /* 80195C6C 00192A6C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80195C70 00192A70  7C 08 02 A6 */	mflr r0
 /* 80195C74 00192A74  90 01 00 14 */	stw r0, 0x14(r1)
@@ -445,11 +446,11 @@ lbl_80195F5C:
 /* 80195F64 00192D64  41 82 00 3C */	beq lbl_80195FA0
 /* 80195F68 00192D68  C0 22 B2 64 */	lfs f1, lbl_803CFBE4-_SDA2_BASE_(r2)
 /* 80195F6C 00192D6C  3C 80 80 03 */	lis r4, xhud_rename_me@ha
-/* 80195F70 00192D70  3C 60 80 19 */	lis r3, lbl_80195C6C@ha
+/* 80195F70 00192D70  3C 60 80 19 */	lis r3, zComboHideMessage__FRQ24xhud6widgetRQ24xhud6motive@ha
 /* 80195F74 00192D74  C0 4D 84 CC */	lfs f2, lbl_803CADCC-_SDA_BASE_(r13)
 /* 80195F78 00192D78  FC 60 08 90 */	fmr f3, f1
 /* 80195F7C 00192D7C  38 A4 EB 84 */	addi r5, r4, xhud_rename_me@l
-/* 80195F80 00192D80  38 C3 5C 6C */	addi r6, r3, lbl_80195C6C@l
+/* 80195F80 00192D80  38 C3 5C 6C */	addi r6, r3, zComboHideMessage__FRQ24xhud6widgetRQ24xhud6motive@l
 /* 80195F84 00192D84  38 61 00 08 */	addi r3, r1, 8
 /* 80195F88 00192D88  38 80 00 00 */	li r4, 0
 /* 80195F8C 00192D8C  4B E9 8E E9 */	bl __ct__Q24xhud6motiveFPffffPFRQ24xhud6widgetRQ24xhud6motivef_bPv
