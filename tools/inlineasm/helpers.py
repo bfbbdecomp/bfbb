@@ -17,7 +17,7 @@ def getPragmaArgs(argString):
     return list(args)
 
 
-labelRegex = r".+:"
+labelRegex = r"\b.+:"
 
 
 def getLabels(fileText):
@@ -34,9 +34,11 @@ def getAsmFunctionBlock(fileText, label):
     data = []
     found = False
     for line in fileText.splitlines():
-        if label in line:
-            found = True
-            continue
+        if ":" in line:
+            match = re.match(labelRegex, line)
+            if match and match.group(0) == label:
+                found = True
+                continue
         if found:
             data.append(line.strip())
             if len(line) == 0:
