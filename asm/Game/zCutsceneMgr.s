@@ -31,9 +31,9 @@ zCutsceneMgrInit__FP5xBaseP17xCutsceneMgrAsset:
 /* 800528A8 0004F6A8  93 C1 00 08 */	stw r30, 8(r1)
 /* 800528AC 0004F6AC  7C 7E 1B 78 */	mr r30, r3
 /* 800528B0 0004F6B0  4B FB 6B 51 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 800528B4 0004F6B4  3C 80 80 05 */	lis r4, lbl_80052DB0@ha
+/* 800528B4 0004F6B4  3C 80 80 05 */	lis r4, zCutsceneMgrEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800528B8 0004F6B8  38 60 00 00 */	li r3, 0
-/* 800528BC 0004F6BC  38 04 2D B0 */	addi r0, r4, lbl_80052DB0@l
+/* 800528BC 0004F6BC  38 04 2D B0 */	addi r0, r4, zCutsceneMgrEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800528C0 0004F6C0  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 800528C4 0004F6C4  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 800528C8 0004F6C8  90 7E 00 14 */	stw r3, 0x14(r30)
@@ -147,7 +147,8 @@ lbl_80052A0C:
 /* 80052A38 0004F838  7C 08 03 A6 */	mtlr r0
 /* 80052A3C 0004F83C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80052A40 0004F840  4E 80 00 20 */	blr 
-lbl_80052A44:
+
+HackBoundCB__FP8RpAtomicPv:
 /* 80052A44 0004F844  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80052A48 0004F848  D0 03 00 38 */	stfs f0, 0x38(r3)
 /* 80052A4C 0004F84C  C0 04 00 00 */	lfs f0, 0(r4)
@@ -160,7 +161,8 @@ lbl_80052A44:
 /* 80052A68 0004F868  54 00 07 FA */	rlwinm r0, r0, 0, 0x1f, 0x1d
 /* 80052A6C 0004F86C  90 03 00 4C */	stw r0, 0x4c(r3)
 /* 80052A70 0004F870  4E 80 00 20 */	blr 
-lbl_80052A74:
+
+HackAlphaSetMaterialAlphaCB__FP10RpMaterialPv:
 /* 80052A74 0004F874  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80052A78 0004F878  7C 08 02 A6 */	mflr r0
 /* 80052A7C 0004F87C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -190,7 +192,8 @@ __as__6RwRGBAFRC6RwRGBA:
 /* 80052AD0 0004F8D0  98 A3 00 02 */	stb r5, 2(r3)
 /* 80052AD4 0004F8D4  98 03 00 03 */	stb r0, 3(r3)
 /* 80052AD8 0004F8D8  4E 80 00 20 */	blr 
-lbl_80052ADC:
+
+HackAlphaCB__FP8RpAtomicPv:
 /* 80052ADC 0004F8DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80052AE0 0004F8E0  7C 08 02 A6 */	mflr r0
 /* 80052AE4 0004F8E4  38 A0 00 01 */	li r5, 1
@@ -202,9 +205,9 @@ lbl_80052ADC:
 /* 80052AFC 0004F8FC  7C A0 00 30 */	slw r0, r5, r0
 /* 80052B00 0004F900  7C 80 00 39 */	and. r0, r4, r0
 /* 80052B04 0004F904  41 82 00 14 */	beq lbl_80052B18
-/* 80052B08 0004F908  3C 80 80 05 */	lis r4, lbl_80052A74@ha
+/* 80052B08 0004F908  3C 80 80 05 */	lis r4, HackAlphaSetMaterialAlphaCB__FP10RpMaterialPv@ha
 /* 80052B0C 0004F90C  38 A0 00 FE */	li r5, 0xfe
-/* 80052B10 0004F910  38 84 2A 74 */	addi r4, r4, lbl_80052A74@l
+/* 80052B10 0004F910  38 84 2A 74 */	addi r4, r4, HackAlphaSetMaterialAlphaCB__FP10RpMaterialPv@l
 /* 80052B14 0004F914  48 1C 29 A1 */	bl RpGeometryForAllMaterials
 lbl_80052B18:
 /* 80052B18 0004F918  80 8D 8C 1C */	lwz r4, lbl_803CB51C-_SDA_BASE_(r13)
@@ -310,9 +313,9 @@ lbl_80052C4C:
 /* 80052C80 0004FA80  C0 02 88 E8 */	lfs f0, lbl_803CD268-_SDA2_BASE_(r2)
 /* 80052C84 0004FA84  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 80052C88 0004FA88  41 82 00 2C */	beq lbl_80052CB4
-/* 80052C8C 0004FA8C  3C 80 80 05 */	lis r4, lbl_80052A44@ha
+/* 80052C8C 0004FA8C  3C 80 80 05 */	lis r4, HackBoundCB__FP8RpAtomicPv@ha
 /* 80052C90 0004FA90  80 63 00 3C */	lwz r3, 0x3c(r3)
-/* 80052C94 0004FA94  38 84 2A 44 */	addi r4, r4, lbl_80052A44@l
+/* 80052C94 0004FA94  38 84 2A 44 */	addi r4, r4, HackBoundCB__FP8RpAtomicPv@l
 /* 80052C98 0004FA98  7F A5 EB 78 */	mr r5, r29
 /* 80052C9C 0004FA9C  48 1C 03 95 */	bl RpClumpForAllAtomics
 /* 80052CA0 0004FAA0  80 75 00 14 */	lwz r3, 0x14(r21)
@@ -343,9 +346,9 @@ lbl_80052CF4:
 /* 80052CF8 0004FAF8  28 00 00 00 */	cmplwi r0, 0
 /* 80052CFC 0004FAFC  41 82 00 30 */	beq lbl_80052D2C
 /* 80052D00 0004FB00  38 00 00 00 */	li r0, 0
-/* 80052D04 0004FB04  3C 60 80 05 */	lis r3, lbl_80052ADC@ha
+/* 80052D04 0004FB04  3C 60 80 05 */	lis r3, HackAlphaCB__FP8RpAtomicPv@ha
 /* 80052D08 0004FB08  90 0D 8C 1C */	stw r0, lbl_803CB51C-_SDA_BASE_(r13)
-/* 80052D0C 0004FB0C  38 83 2A DC */	addi r4, r3, lbl_80052ADC@l
+/* 80052D0C 0004FB0C  38 83 2A DC */	addi r4, r3, HackAlphaCB__FP8RpAtomicPv@l
 /* 80052D10 0004FB10  38 1E 00 0C */	addi r0, r30, 0xc
 /* 80052D14 0004FB14  80 75 00 14 */	lwz r3, 0x14(r21)
 /* 80052D18 0004FB18  80 BA 00 00 */	lwz r5, 0(r26)
@@ -390,7 +393,8 @@ lbl_80052D8C:
 /* 80052DA4 0004FBA4  7C 08 03 A6 */	mtlr r0
 /* 80052DA8 0004FBA8  38 21 00 40 */	addi r1, r1, 0x40
 /* 80052DAC 0004FBAC  4E 80 00 20 */	blr 
-lbl_80052DB0:
+
+zCutsceneMgrEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80052DB0 0004FBB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80052DB4 0004FBB4  7C 08 02 A6 */	mflr r0
 /* 80052DB8 0004FBB8  2C 05 00 18 */	cmpwi r5, 0x18
