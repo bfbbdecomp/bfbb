@@ -154,9 +154,9 @@ ZDSP_instInit__FP17st_ZDISPATCH_DATAP10xBaseAsset:
 /* 80053680 00050480  93 C1 00 08 */	stw r30, 8(r1)
 /* 80053684 00050484  7C 7E 1B 78 */	mr r30, r3
 /* 80053688 00050488  4B FB 5D 79 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8005368C 0005048C  3C 60 80 05 */	lis r3, lbl_80053BD4@ha
+/* 8005368C 0005048C  3C 60 80 05 */	lis r3, ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80053690 00050490  93 FE 00 10 */	stw r31, 0x10(r30)
-/* 80053694 00050494  38 03 3B D4 */	addi r0, r3, lbl_80053BD4@l
+/* 80053694 00050494  38 03 3B D4 */	addi r0, r3, ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80053698 00050498  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8005369C 0005049C  88 1E 00 05 */	lbz r0, 5(r30)
 /* 800536A0 000504A0  28 00 00 00 */	cmplwi r0, 0
@@ -530,7 +530,8 @@ zDispatcherRestoreOptions__Fv:
 /* 80053BC8 000509C8  7C 08 03 A6 */	mtlr r0
 /* 80053BCC 000509CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80053BD0 000509D0  4E 80 00 20 */	blr 
-lbl_80053BD4:
+
+ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80053BD4 000509D4  94 21 FB D0 */	stwu r1, -0x430(r1)
 /* 80053BD8 000509D8  7C 08 02 A6 */	mflr r0
 /* 80053BDC 000509DC  2C 05 00 AE */	cmpwi r5, 0xae
