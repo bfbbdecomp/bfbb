@@ -175,8 +175,8 @@ TRCInit__Fv:
 /* 800D32F4 000D00F4  7C 08 02 A6 */	mflr r0
 /* 800D32F8 000D00F8  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800D32FC 000D00FC  48 0A D7 15 */	bl Init__8iTRCDiskFv
-/* 800D3300 000D0100  3C 60 80 0D */	lis r3, ipad_rename_me@ha
-/* 800D3304 000D0104  38 63 AE 7C */	addi r3, r3, ipad_rename_me@l
+/* 800D3300 000D0100  3C 60 80 0D */	lis r3, iPadStopRumble__Fv@ha
+/* 800D3304 000D0104  38 63 AE 7C */	addi r3, r3, iPadStopRumble__Fv@l
 /* 800D3308 000D0108  48 0A D7 85 */	bl SetPadStopRumblingFunction__8iTRCDiskFPFv_v
 /* 800D330C 000D010C  3C 60 80 0D */	lis r3, iSnd_rename_1@ha
 /* 800D3310 000D0110  38 63 2F 00 */	addi r3, r3, iSnd_rename_1@l
