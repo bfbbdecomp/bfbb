@@ -8470,19 +8470,19 @@ lbl_8005EA0C:
 /* 8005EA38 0005B838  C0 02 89 B8 */	lfs f0, lbl_803CD338-_SDA2_BASE_(r2)
 /* 8005EA3C 0005B83C  D0 01 00 2C */	stfs f0, 0x2c(r1)
 lbl_8005EA40:
-/* 8005EA40 0005B840  3C 80 80 01 */	lis r4, lbl_8000BBBC@ha
+/* 8005EA40 0005B840  3C 80 80 01 */	lis r4, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
 /* 8005EA44 0005B844  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 8005EA48 0005B848  3B A1 00 F0 */	addi r29, r1, 0xf0
 /* 8005EA4C 0005B84C  38 A1 00 14 */	addi r5, r1, 0x14
-/* 8005EA50 0005B850  38 C4 BB BC */	addi r6, r4, lbl_8000BBBC@l
+/* 8005EA50 0005B850  38 C4 BB BC */	addi r6, r4, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 8005EA54 0005B854  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
 /* 8005EA58 0005B858  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 8005EA5C 0005B85C  7F A7 EB 78 */	mr r7, r29
 /* 8005EA60 0005B860  39 01 00 38 */	addi r8, r1, 0x38
 /* 8005EA64 0005B864  4B FE 0E 2D */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
 /* 8005EA68 0005B868  3C 60 80 3D */	lis r3, colls_oso_grid@ha
-/* 8005EA6C 0005B86C  3C A0 80 01 */	lis r5, lbl_8000BBBC@ha
-/* 8005EA70 0005B870  38 C5 BB BC */	addi r6, r5, lbl_8000BBBC@l
+/* 8005EA6C 0005B86C  3C A0 80 01 */	lis r5, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 8005EA70 0005B870  38 C5 BB BC */	addi r6, r5, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 8005EA74 0005B874  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
 /* 8005EA78 0005B878  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 8005EA7C 0005B87C  7F A7 EB 78 */	mr r7, r29

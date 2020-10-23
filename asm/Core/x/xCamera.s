@@ -643,8 +643,9 @@ xCam_CorrectRoll__FP7xCamerafff:
 /* 8000BBB4 000089B4  D0 03 01 E4 */	stfs f0, 0x1e4(r3)
 /* 8000BBB8 000089B8  4E 80 00 20 */	blr 
 
-.global lbl_8000BBBC
-lbl_8000BBBC:
+.global SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv
+
+SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv:
 /* 8000BBBC 000089BC  94 21 FF 50 */	stwu r1, -0xb0(r1)
 /* 8000BBC0 000089C0  7C 08 02 A6 */	mflr r0
 /* 8000BBC4 000089C4  90 01 00 B4 */	stw r0, 0xb4(r1)
@@ -1661,19 +1662,19 @@ lbl_8000CAA4:
 /* 8000CAD0 000098D0  C0 02 80 54 */	lfs f0, lbl_803CC9D4-_SDA2_BASE_(r2)
 /* 8000CAD4 000098D4  D0 01 00 E0 */	stfs f0, 0xe0(r1)
 lbl_8000CAD8:
-/* 8000CAD8 000098D8  3C 80 80 01 */	lis r4, lbl_8000BBBC@ha
+/* 8000CAD8 000098D8  3C 80 80 01 */	lis r4, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
 /* 8000CADC 000098DC  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 8000CAE0 000098E0  3B A1 02 04 */	addi r29, r1, 0x204
 /* 8000CAE4 000098E4  38 A1 00 C8 */	addi r5, r1, 0xc8
-/* 8000CAE8 000098E8  38 C4 BB BC */	addi r6, r4, lbl_8000BBBC@l
+/* 8000CAE8 000098E8  38 C4 BB BC */	addi r6, r4, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 8000CAEC 000098EC  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
 /* 8000CAF0 000098F0  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 8000CAF4 000098F4  7F A7 EB 78 */	mr r7, r29
 /* 8000CAF8 000098F8  39 01 01 4C */	addi r8, r1, 0x14c
 /* 8000CAFC 000098FC  48 03 2D 95 */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
 /* 8000CB00 00009900  3C 60 80 3D */	lis r3, colls_oso_grid@ha
-/* 8000CB04 00009904  3C A0 80 01 */	lis r5, lbl_8000BBBC@ha
-/* 8000CB08 00009908  38 C5 BB BC */	addi r6, r5, lbl_8000BBBC@l
+/* 8000CB04 00009904  3C A0 80 01 */	lis r5, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 8000CB08 00009908  38 C5 BB BC */	addi r6, r5, SweptSphereHitsCameraEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 8000CB0C 0000990C  80 9E 1F C0 */	lwz r4, 0x1fc0(r30)
 /* 8000CB10 00009910  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 8000CB14 00009914  7F A7 EB 78 */	mr r7, r29
@@ -1901,6 +1902,8 @@ lbl_8000CE20:
 /* 8000CE24 00009C24  42 00 FF D4 */	bdnz lbl_8000CDF8
 /* 8000CE28 00009C28  38 60 00 00 */	li r3, 0
 /* 8000CE2C 00009C2C  4E 80 00 20 */	blr 
+
+xCameraFXZoomUpdate__FP8cameraFXfPC7xMat4x3P7xMat4x3:
 /* 8000CE30 00009C30  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000CE34 00009C34  7C 08 02 A6 */	mflr r0
 /* 8000CE38 00009C38  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2058,6 +2061,8 @@ lbl_8000D030:
 /* 8000D068 00009E68  7C 08 03 A6 */	mtlr r0
 /* 8000D06C 00009E6C  38 21 00 70 */	addi r1, r1, 0x70
 /* 8000D070 00009E70  4E 80 00 20 */	blr 
+
+xCameraFXShakeUpdate__FP8cameraFXfPC7xMat4x3P7xMat4x3:
 /* 8000D074 00009E74  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8000D078 00009E78  7C 08 02 A6 */	mflr r0
 /* 8000D07C 00009E7C  90 01 00 64 */	stw r0, 0x64(r1)
