@@ -132,7 +132,8 @@ lbl_800A1EC4:
 /* 800A1EE0 0009ECE0  7C 08 03 A6 */	mtlr r0
 /* 800A1EE4 0009ECE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A1EE8 0009ECE8  4E 80 00 20 */	blr 
-lbl_800A1EEC:
+
+AddToLODList__FP4xEntP6xScenePv:
 /* 800A1EEC 0009ECEC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A1EF0 0009ECF0  7C 08 02 A6 */	mflr r0
 /* 800A1EF4 0009ECF4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -299,9 +300,9 @@ lbl_800A2120:
 /* 800A2130 0009EF30  3C 60 80 3C */	lis r3, globals@ha
 /* 800A2134 0009EF34  90 0D 90 14 */	stw r0, lbl_803CB914-_SDA_BASE_(r13)
 /* 800A2138 0009EF38  38 C3 05 58 */	addi r6, r3, globals@l
-/* 800A213C 0009EF3C  3C 60 80 0A */	lis r3, lbl_800A1EEC@ha
+/* 800A213C 0009EF3C  3C 60 80 0A */	lis r3, AddToLODList__FP4xEntP6xScenePv@ha
 /* 800A2140 0009EF40  38 A0 00 00 */	li r5, 0
-/* 800A2144 0009EF44  38 83 1E EC */	addi r4, r3, lbl_800A1EEC@l
+/* 800A2144 0009EF44  38 83 1E EC */	addi r4, r3, AddToLODList__FP4xEntP6xScenePv@l
 /* 800A2148 0009EF48  80 66 1F C0 */	lwz r3, 0x1fc0(r6)
 /* 800A214C 0009EF4C  4B F9 D5 15 */	bl xSceneForAllEnts__FP6xScenePFP4xEntP6xScenePv_P4xEntPv
 lbl_800A2150:
