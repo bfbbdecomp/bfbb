@@ -2,86 +2,86 @@
 
 #include <types.h>
 
-// GOALCreate_Boss(int,RyzMemGrow*,void*)
+// func_8014EC7C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "GOALCreate_Boss__FiP10RyzMemGrowPv")
 
-// zNPCGoalBossPatFudge::zNPCGoalBossPatFudge(int)
+// func_8014F118
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossPatFudgeFi")
 
-// zNPCGoalBossPatSpin::zNPCGoalBossPatSpin(int)
+// func_8014F154
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__19zNPCGoalBossPatSpinFi")
 
-// zNPCGoalBossPatSpawn::zNPCGoalBossPatSpawn(int)
+// func_8014F190
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossPatSpawnFi")
 
-// zNPCGoalBossPatFreeze::zNPCGoalBossPatFreeze(int)
+// func_8014F1CC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__21zNPCGoalBossPatFreezeFi")
 
-// zNPCGoalBossPatSmack::zNPCGoalBossPatSmack(int)
+// func_8014F208
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossPatSmackFi")
 
-// zNPCGoalBossPatRun::zNPCGoalBossPatRun(int)
+// func_8014F244
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__18zNPCGoalBossPatRunFi")
 
-// zNPCGoalBossPatSpit::zNPCGoalBossPatSpit(int)
+// func_8014F280
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__19zNPCGoalBossPatSpitFi")
 
-// zNPCGoalBossPatHit::zNPCGoalBossPatHit(int)
+// func_8014F2BC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__18zNPCGoalBossPatHitFi")
 
-// zNPCGoalBossPatTaunt::zNPCGoalBossPatTaunt(int)
+// func_8014F2F8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossPatTauntFi")
 
-// zNPCGoalBossPatIdle::zNPCGoalBossPatIdle(int)
+// func_8014F334
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__19zNPCGoalBossPatIdleFi")
 
-// zNPCGoalBossSB1Deflate::zNPCGoalBossSB1Deflate(int)
+// func_8014F370
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__22zNPCGoalBossSB1DeflateFi")
 
-// zNPCGoalBossSB1Smash::zNPCGoalBossSB1Smash(int)
+// func_8014F3AC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossSB1SmashFi")
 
-// zNPCGoalBossSB1Stomp::zNPCGoalBossSB1Stomp(int)
+// func_8014F3E8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossSB1StompFi")
 
-// zNPCGoalBossSB1Taunt::zNPCGoalBossSB1Taunt(int)
+// func_8014F424
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossSB1TauntFi")
 
-// zNPCGoalBossSB1Idle::zNPCGoalBossSB1Idle(int)
+// func_8014F460
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__19zNPCGoalBossSB1IdleFi")
 
-// zNPCGoalBossSandyClothesline::zNPCGoalBossSandyClothesline(int)
+// func_8014F49C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__28zNPCGoalBossSandyClotheslineFi")
 
-// zNPCGoalBossSandyRunToRope::zNPCGoalBossSandyRunToRope(int)
+// func_8014F4D8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__26zNPCGoalBossSandyRunToRopeFi")
 
-// zNPCGoalBossSandyGetUp::zNPCGoalBossSandyGetUp(int)
+// func_8014F514
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__22zNPCGoalBossSandyGetUpFi")
 
-// zNPCGoalBossSandySit::zNPCGoalBossSandySit(int)
+// func_8014F550
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__20zNPCGoalBossSandySitFi")
 
-// zNPCGoalBossSandyLeap::zNPCGoalBossSandyLeap(int)
+// func_8014F58C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__21zNPCGoalBossSandyLeapFi")
 
-// zNPCGoalBossSandyElbowDrop::zNPCGoalBossSandyElbowDrop(int)
+// func_8014F5C8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__26zNPCGoalBossSandyElbowDropFi")
 
-// zNPCGoalBossSandyNoHead::zNPCGoalBossSandyNoHead(int)
+// func_8014F604
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__23zNPCGoalBossSandyNoHeadFi")
 
-// zNPCGoalBossSandyMelee::zNPCGoalBossSandyMelee(int)
+// func_8014F640
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__22zNPCGoalBossSandyMeleeFi")
 
-// zNPCGoalBossSandyChase::zNPCGoalBossSandyChase(int)
+// func_8014F67C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__22zNPCGoalBossSandyChaseFi")
 
-// zNPCGoalBossSandyTaunt::zNPCGoalBossSandyTaunt(int)
+// func_8014F6B8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__22zNPCGoalBossSandyTauntFi")
 
-// zNPCGoalBossSandyIdle::zNPCGoalBossSandyIdle(int)
+// func_8014F6F4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__21zNPCGoalBossSandyIdleFi")
 
-// zNPCGoalExist::zNPCGoalExist(int)
+// func_8014F730
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalBoss.s", "__ct__13zNPCGoalExistFi")
