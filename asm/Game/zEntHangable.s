@@ -36,17 +36,17 @@ zEntHangable_SetupFX__Fv:
 HangableSetup__FP12zEntHangableP9xEntAsset:
 /* 80061874 0005E674  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80061878 0005E678  7C 08 02 A6 */	mflr r0
-/* 8006187C 0005E67C  3C A0 80 06 */	lis r5, lbl_80061B24@ha
+/* 8006187C 0005E67C  3C A0 80 06 */	lis r5, zEntHangable_Update__FP12zEntHangableP6xScenef@ha
 /* 80061880 0005E680  38 C0 00 00 */	li r6, 0
 /* 80061884 0005E684  90 01 00 44 */	stw r0, 0x44(r1)
-/* 80061888 0005E688  38 A5 1B 24 */	addi r5, r5, lbl_80061B24@l
+/* 80061888 0005E688  38 A5 1B 24 */	addi r5, r5, zEntHangable_Update__FP12zEntHangableP6xScenef@l
 /* 8006188C 0005E68C  38 E4 00 54 */	addi r7, r4, 0x54
 /* 80061890 0005E690  38 00 00 01 */	li r0, 1
 /* 80061894 0005E694  93 E1 00 3C */	stw r31, 0x3c(r1)
 /* 80061898 0005E698  7C 7F 1B 78 */	mr r31, r3
 /* 8006189C 0005E69C  98 C3 00 1B */	stb r6, 0x1b(r3)
-/* 800618A0 0005E6A0  3C 60 80 06 */	lis r3, lbl_80061E60@ha
-/* 800618A4 0005E6A4  38 83 1E 60 */	addi r4, r3, lbl_80061E60@l
+/* 800618A0 0005E6A0  3C 60 80 06 */	lis r3, zEntHangableEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 800618A4 0005E6A4  38 83 1E 60 */	addi r4, r3, zEntHangableEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800618A8 0005E6A8  98 DF 00 22 */	stb r6, 0x22(r31)
 /* 800618AC 0005E6AC  38 61 00 08 */	addi r3, r1, 8
 /* 800618B0 0005E6B0  98 DF 00 23 */	stb r6, 0x23(r31)
@@ -105,6 +105,8 @@ HangableSetup__FP12zEntHangableP9xEntAsset:
 /* 80061984 0005E784  7C 08 03 A6 */	mtlr r0
 /* 80061988 0005E788  38 21 00 40 */	addi r1, r1, 0x40
 /* 8006198C 0005E78C  4E 80 00 20 */	blr 
+
+zEntHangable_Init__FPvPv:
 /* 80061990 0005E790  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80061994 0005E794  7C 08 02 A6 */	mflr r0
 /* 80061998 0005E798  90 01 00 14 */	stw r0, 0x14(r1)
@@ -219,7 +221,8 @@ lbl_80061B10:
 /* 80061B18 0005E918  7C 08 03 A6 */	mtlr r0
 /* 80061B1C 0005E91C  38 21 02 00 */	addi r1, r1, 0x200
 /* 80061B20 0005E920  4E 80 00 20 */	blr 
-lbl_80061B24:
+
+zEntHangable_Update__FP12zEntHangableP6xScenef:
 /* 80061B24 0005E924  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80061B28 0005E928  7C 08 02 A6 */	mflr r0
 /* 80061B2C 0005E92C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -437,7 +440,8 @@ lbl_80061E44:
 /* 80061E54 0005EC54  7C 08 03 A6 */	mtlr r0
 /* 80061E58 0005EC58  38 21 01 90 */	addi r1, r1, 0x190
 /* 80061E5C 0005EC5C  4E 80 00 20 */	blr 
-lbl_80061E60:
+
+zEntHangableEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80061E60 0005EC60  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80061E64 0005EC64  7C 08 02 A6 */	mflr r0
 /* 80061E68 0005EC68  90 01 00 34 */	stw r0, 0x34(r1)
