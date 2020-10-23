@@ -1,10 +1,15 @@
 #ifndef _MSL_CMATH
 #define _MSL_CMATH
 
-#include "math.h"
+#include <math.h>
 
 namespace std
 {
+    inline float atan2f(float y, float x)
+    {
+        return (float)atan2((double)y, (double)x);
+    }
+    
     inline float sinf(float x)
     {
         return (float)sin((double)x);
