@@ -581,12 +581,15 @@ lbl_801609F0:
 /* 80160A00 0015D800  7C 08 03 A6 */	mtlr r0
 /* 80160A04 0015D804  38 21 00 60 */	addi r1, r1, 0x60
 /* 80160A08 0015D808  4E 80 00 20 */	blr 
-lbl_80160A0C:
+
+BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80160A0C 0015D80C  38 60 00 01 */	li r3, 1
 /* 80160A10 0015D810  4E 80 00 20 */	blr 
 
 Pat_ResetGlobalStuff__Fv:
 /* 80160A14 0015D814  4E 80 00 20 */	blr 
+
+Init__12zNPCBPatrickFP9xEntAsset:
 /* 80160A18 0015D818  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80160A1C 0015D81C  7C 08 02 A6 */	mflr r0
 /* 80160A20 0015D820  3C A0 80 2A */	lis r5, lbl_8029AA68@ha
@@ -604,12 +607,12 @@ Pat_ResetGlobalStuff__Fv:
 /* 80160A50 0015D850  38 80 00 10 */	li r4, 0x10
 /* 80160A54 0015D854  38 A0 00 00 */	li r5, 0
 /* 80160A58 0015D858  4B ED 2E E9 */	bl xMemAlloc__FUiUii
-/* 80160A5C 0015D85C  3C 80 80 16 */	lis r4, lbl_80160A0C@ha
+/* 80160A5C 0015D85C  3C 80 80 16 */	lis r4, BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80160A60 0015D860  90 77 13 C4 */	stw r3, 0x13c4(r23)
 /* 80160A64 0015D864  3B 9E 00 38 */	addi r28, r30, 0x38
 /* 80160A68 0015D868  3B 7E 00 48 */	addi r27, r30, 0x48
 /* 80160A6C 0015D86C  3B 5E 00 28 */	addi r26, r30, 0x28
-/* 80160A70 0015D870  3B E4 0A 0C */	addi r31, r4, lbl_80160A0C@l
+/* 80160A70 0015D870  3B E4 0A 0C */	addi r31, r4, BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80160A74 0015D874  3A DE 00 00 */	addi r22, r30, 0
 /* 80160A78 0015D878  3B 20 00 00 */	li r25, 0
 /* 80160A7C 0015D87C  3B A0 00 00 */	li r29, 0
@@ -718,6 +721,8 @@ lbl_80160BE4:
 /* 80160C08 0015DA08  7C 08 03 A6 */	mtlr r0
 /* 80160C0C 0015DA0C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80160C10 0015DA10  4E 80 00 20 */	blr 
+
+on_change_newsfish__FRC10tweak_info:
 /* 80160C14 0015DA14  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80160C18 0015DA18  7C 08 02 A6 */	mflr r0
 /* 80160C1C 0015DA1C  3C 60 80 2A */	lis r3, lbl_8029AAE0@ha
@@ -739,11 +744,15 @@ lbl_80160BE4:
 /* 80160C5C 0015DA5C  7C 08 03 A6 */	mtlr r0
 /* 80160C60 0015DA60  38 21 00 10 */	addi r1, r1, 0x10
 /* 80160C64 0015DA64  4E 80 00 20 */	blr 
+
+on_change_recenter__FRC10tweak_info:
 /* 80160C68 0015DA68  80 6D 97 04 */	lwz r3, lbl_803CC004-_SDA_BASE_(r13)
 /* 80160C6C 0015DA6C  80 03 02 B4 */	lwz r0, 0x2b4(r3)
 /* 80160C70 0015DA70  60 00 02 00 */	ori r0, r0, 0x200
 /* 80160C74 0015DA74  90 03 02 B4 */	stw r0, 0x2b4(r3)
 /* 80160C78 0015DA78  4E 80 00 20 */	blr 
+
+Setup__12zNPCBPatrickFv:
 /* 80160C7C 0015DA7C  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80160C80 0015DA80  7C 08 02 A6 */	mflr r0
 /* 80160C84 0015DA84  3C 80 80 27 */	lis r4, lbl_8027089C@ha
@@ -1212,6 +1221,8 @@ lbl_80161208:
 /* 801613A4 0015E1A4  7C 08 03 A6 */	mtlr r0
 /* 801613A8 0015E1A8  38 21 00 60 */	addi r1, r1, 0x60
 /* 801613AC 0015E1AC  4E 80 00 20 */	blr 
+
+SelfSetup__12zNPCBPatrickFv:
 /* 801613B0 0015E1B0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801613B4 0015E1B4  7C 08 02 A6 */	mflr r0
 /* 801613B8 0015E1B8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1231,9 +1242,9 @@ lbl_80161208:
 /* 801613F0 0015E1F0  38 84 42 5A */	addi r4, r4, 0x4E47425A@l
 /* 801613F4 0015E1F4  38 A0 00 00 */	li r5, 0
 /* 801613F8 0015E1F8  4B FA BE 49 */	bl AddGoal__7xPsycheFiPv
-/* 801613FC 0015E1FC  3C 80 80 16 */	lis r4, lbl_80164A94@ha
+/* 801613FC 0015E1FC  3C 80 80 16 */	lis r4, idleCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 80161400 0015E200  38 A0 00 00 */	li r5, 0
-/* 80161404 0015E204  38 84 4A 94 */	addi r4, r4, lbl_80164A94@l
+/* 80161404 0015E204  38 84 4A 94 */	addi r4, r4, idleCB__FP5xGoalPvP11en_trantypefPv@l
 /* 80161408 0015E208  38 C0 00 00 */	li r6, 0
 /* 8016140C 0015E20C  38 E0 00 00 */	li r7, 0
 /* 80161410 0015E210  4B F9 36 25 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1242,9 +1253,9 @@ lbl_80161208:
 /* 8016141C 0015E21C  38 84 42 5B */	addi r4, r4, 0x4E47425B@l
 /* 80161420 0015E220  38 A0 00 00 */	li r5, 0
 /* 80161424 0015E224  4B FA BE 1D */	bl AddGoal__7xPsycheFiPv
-/* 80161428 0015E228  3C 80 80 16 */	lis r4, lbl_80164B40@ha
+/* 80161428 0015E228  3C 80 80 16 */	lis r4, tauntCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 8016142C 0015E22C  38 A0 00 00 */	li r5, 0
-/* 80161430 0015E230  38 84 4B 40 */	addi r4, r4, lbl_80164B40@l
+/* 80161430 0015E230  38 84 4B 40 */	addi r4, r4, tauntCB__FP5xGoalPvP11en_trantypefPv@l
 /* 80161434 0015E234  38 C0 00 00 */	li r6, 0
 /* 80161438 0015E238  38 E0 00 00 */	li r7, 0
 /* 8016143C 0015E23C  4B F9 35 F9 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1253,9 +1264,9 @@ lbl_80161208:
 /* 80161448 0015E248  38 84 42 5C */	addi r4, r4, 0x4E47425C@l
 /* 8016144C 0015E24C  38 A0 00 00 */	li r5, 0
 /* 80161450 0015E250  4B FA BD F1 */	bl AddGoal__7xPsycheFiPv
-/* 80161454 0015E254  3C 80 80 16 */	lis r4, lbl_80164C00@ha
+/* 80161454 0015E254  3C 80 80 16 */	lis r4, hitCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 80161458 0015E258  38 A0 00 00 */	li r5, 0
-/* 8016145C 0015E25C  38 84 4C 00 */	addi r4, r4, lbl_80164C00@l
+/* 8016145C 0015E25C  38 84 4C 00 */	addi r4, r4, hitCB__FP5xGoalPvP11en_trantypefPv@l
 /* 80161460 0015E260  38 C0 00 00 */	li r6, 0
 /* 80161464 0015E264  38 E0 00 00 */	li r7, 0
 /* 80161468 0015E268  4B F9 35 CD */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1264,9 +1275,9 @@ lbl_80161208:
 /* 80161474 0015E274  38 84 42 5D */	addi r4, r4, 0x4E47425D@l
 /* 80161478 0015E278  38 A0 00 00 */	li r5, 0
 /* 8016147C 0015E27C  4B FA BD C5 */	bl AddGoal__7xPsycheFiPv
-/* 80161480 0015E280  3C 80 80 16 */	lis r4, lbl_80164CD4@ha
+/* 80161480 0015E280  3C 80 80 16 */	lis r4, spitCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 80161484 0015E284  38 A0 00 00 */	li r5, 0
-/* 80161488 0015E288  38 84 4C D4 */	addi r4, r4, lbl_80164CD4@l
+/* 80161488 0015E288  38 84 4C D4 */	addi r4, r4, spitCB__FP5xGoalPvP11en_trantypefPv@l
 /* 8016148C 0015E28C  38 C0 00 00 */	li r6, 0
 /* 80161490 0015E290  38 E0 00 00 */	li r7, 0
 /* 80161494 0015E294  4B F9 35 A1 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1275,9 +1286,9 @@ lbl_80161208:
 /* 801614A0 0015E2A0  38 84 42 5E */	addi r4, r4, 0x4E47425E@l
 /* 801614A4 0015E2A4  38 A0 00 00 */	li r5, 0
 /* 801614A8 0015E2A8  4B FA BD 99 */	bl AddGoal__7xPsycheFiPv
-/* 801614AC 0015E2AC  3C 80 80 16 */	lis r4, lbl_80164DAC@ha
+/* 801614AC 0015E2AC  3C 80 80 16 */	lis r4, runCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 801614B0 0015E2B0  38 A0 00 00 */	li r5, 0
-/* 801614B4 0015E2B4  38 84 4D AC */	addi r4, r4, lbl_80164DAC@l
+/* 801614B4 0015E2B4  38 84 4D AC */	addi r4, r4, runCB__FP5xGoalPvP11en_trantypefPv@l
 /* 801614B8 0015E2B8  38 C0 00 00 */	li r6, 0
 /* 801614BC 0015E2BC  38 E0 00 00 */	li r7, 0
 /* 801614C0 0015E2C0  4B F9 35 75 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1286,9 +1297,9 @@ lbl_80161208:
 /* 801614CC 0015E2CC  38 84 42 5F */	addi r4, r4, 0x4E47425F@l
 /* 801614D0 0015E2D0  38 A0 00 00 */	li r5, 0
 /* 801614D4 0015E2D4  4B FA BD 6D */	bl AddGoal__7xPsycheFiPv
-/* 801614D8 0015E2D8  3C 80 80 16 */	lis r4, lbl_80164E60@ha
+/* 801614D8 0015E2D8  3C 80 80 16 */	lis r4, smackCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 801614DC 0015E2DC  38 A0 00 00 */	li r5, 0
-/* 801614E0 0015E2E0  38 84 4E 60 */	addi r4, r4, lbl_80164E60@l
+/* 801614E0 0015E2E0  38 84 4E 60 */	addi r4, r4, smackCB__FP5xGoalPvP11en_trantypefPv@l
 /* 801614E4 0015E2E4  38 C0 00 00 */	li r6, 0
 /* 801614E8 0015E2E8  38 E0 00 00 */	li r7, 0
 /* 801614EC 0015E2EC  4B F9 35 49 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1297,9 +1308,9 @@ lbl_80161208:
 /* 801614F8 0015E2F8  38 84 42 60 */	addi r4, r4, 0x4E474260@l
 /* 801614FC 0015E2FC  38 A0 00 00 */	li r5, 0
 /* 80161500 0015E300  4B FA BD 41 */	bl AddGoal__7xPsycheFiPv
-/* 80161504 0015E304  3C 80 80 16 */	lis r4, lbl_80164F14@ha
+/* 80161504 0015E304  3C 80 80 16 */	lis r4, freezeCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 80161508 0015E308  38 A0 00 00 */	li r5, 0
-/* 8016150C 0015E30C  38 84 4F 14 */	addi r4, r4, lbl_80164F14@l
+/* 8016150C 0015E30C  38 84 4F 14 */	addi r4, r4, freezeCB__FP5xGoalPvP11en_trantypefPv@l
 /* 80161510 0015E310  38 C0 00 00 */	li r6, 0
 /* 80161514 0015E314  38 E0 00 00 */	li r7, 0
 /* 80161518 0015E318  4B F9 35 1D */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1308,9 +1319,9 @@ lbl_80161208:
 /* 80161524 0015E324  38 84 42 61 */	addi r4, r4, 0x4E474261@l
 /* 80161528 0015E328  38 A0 00 00 */	li r5, 0
 /* 8016152C 0015E32C  4B FA BD 15 */	bl AddGoal__7xPsycheFiPv
-/* 80161530 0015E330  3C 80 80 16 */	lis r4, lbl_80164FC8@ha
+/* 80161530 0015E330  3C 80 80 16 */	lis r4, spawnCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 80161534 0015E334  38 A0 00 00 */	li r5, 0
-/* 80161538 0015E338  38 84 4F C8 */	addi r4, r4, lbl_80164FC8@l
+/* 80161538 0015E338  38 84 4F C8 */	addi r4, r4, spawnCB__FP5xGoalPvP11en_trantypefPv@l
 /* 8016153C 0015E33C  38 C0 00 00 */	li r6, 0
 /* 80161540 0015E340  38 E0 00 00 */	li r7, 0
 /* 80161544 0015E344  4B F9 34 F1 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1319,9 +1330,9 @@ lbl_80161208:
 /* 80161550 0015E350  38 84 42 62 */	addi r4, r4, 0x4E474262@l
 /* 80161554 0015E354  38 A0 00 00 */	li r5, 0
 /* 80161558 0015E358  4B FA BC E9 */	bl AddGoal__7xPsycheFiPv
-/* 8016155C 0015E35C  3C 80 80 16 */	lis r4, lbl_80165094@ha
+/* 8016155C 0015E35C  3C 80 80 16 */	lis r4, spinCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 80161560 0015E360  38 A0 00 00 */	li r5, 0
-/* 80161564 0015E364  38 84 50 94 */	addi r4, r4, lbl_80165094@l
+/* 80161564 0015E364  38 84 50 94 */	addi r4, r4, spinCB__FP5xGoalPvP11en_trantypefPv@l
 /* 80161568 0015E368  38 C0 00 00 */	li r6, 0
 /* 8016156C 0015E36C  38 E0 00 00 */	li r7, 0
 /* 80161570 0015E370  4B F9 34 C5 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1330,9 +1341,9 @@ lbl_80161208:
 /* 8016157C 0015E37C  38 84 42 63 */	addi r4, r4, 0x4E474263@l
 /* 80161580 0015E380  38 A0 00 00 */	li r5, 0
 /* 80161584 0015E384  4B FA BC BD */	bl AddGoal__7xPsycheFiPv
-/* 80161588 0015E388  3C 80 80 16 */	lis r4, lbl_80165320@ha
+/* 80161588 0015E388  3C 80 80 16 */	lis r4, fudgeCB__FP5xGoalPvP11en_trantypefPv@ha
 /* 8016158C 0015E38C  38 A0 00 00 */	li r5, 0
-/* 80161590 0015E390  38 84 53 20 */	addi r4, r4, lbl_80165320@l
+/* 80161590 0015E390  38 84 53 20 */	addi r4, r4, fudgeCB__FP5xGoalPvP11en_trantypefPv@l
 /* 80161594 0015E394  38 C0 00 00 */	li r6, 0
 /* 80161598 0015E398  38 E0 00 00 */	li r7, 0
 /* 8016159C 0015E39C  4B F9 34 99 */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -1347,6 +1358,8 @@ lbl_80161208:
 /* 801615C0 0015E3C0  7C 08 03 A6 */	mtlr r0
 /* 801615C4 0015E3C4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801615C8 0015E3C8  4E 80 00 20 */	blr 
+
+Reset__12zNPCBPatrickFv:
 /* 801615CC 0015E3CC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801615D0 0015E3D0  7C 08 02 A6 */	mflr r0
 /* 801615D4 0015E3D4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1636,6 +1649,8 @@ lbl_801618BC:
 /* 80161A30 0015E830  7C 08 03 A6 */	mtlr r0
 /* 80161A34 0015E834  38 21 00 10 */	addi r1, r1, 0x10
 /* 80161A38 0015E838  4E 80 00 20 */	blr 
+
+Destroy__12zNPCBPatrickFv:
 /* 80161A3C 0015E83C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80161A40 0015E840  7C 08 02 A6 */	mflr r0
 /* 80161A44 0015E844  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1662,6 +1677,8 @@ lbl_80161A80:
 /* 80161A90 0015E890  7C 08 03 A6 */	mtlr r0
 /* 80161A94 0015E894  38 21 00 10 */	addi r1, r1, 0x10
 /* 80161A98 0015E898  4E 80 00 20 */	blr 
+
+AnimPick__12zNPCBPatrickFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 80161A9C 0015E89C  3C A4 B1 B9 */	addis r5, r4, 0xb1b9
 /* 80161AA0 0015E8A0  38 E0 FF FF */	li r7, -1
 /* 80161AA4 0015E8A4  38 A5 BD A6 */	addi r5, r5, -16986
@@ -1776,6 +1793,8 @@ lbl_80161C0C:
 /* 80161C1C 0015EA1C  38 63 92 68 */	addi r3, r3, g_hash_bossanim@l
 /* 80161C20 0015EA20  7C 63 00 2E */	lwzx r3, r3, r0
 /* 80161C24 0015EA24  4E 80 00 20 */	blr 
+
+Process__12zNPCBPatrickFP6xScenef:
 /* 80161C28 0015EA28  94 21 FE 80 */	stwu r1, -0x180(r1)
 /* 80161C2C 0015EA2C  7C 08 02 A6 */	mflr r0
 /* 80161C30 0015EA30  90 01 01 84 */	stw r0, 0x184(r1)
@@ -3393,6 +3412,8 @@ lbl_8016336C:
 /* 801633B4 001601B4  7C 08 03 A6 */	mtlr r0
 /* 801633B8 001601B8  38 21 01 80 */	addi r1, r1, 0x180
 /* 801633BC 001601BC  4E 80 00 20 */	blr 
+
+DuploNotice__12zNPCBPatrickF13en_SM_NOTICESPv:
 /* 801633C0 001601C0  2C 04 00 01 */	cmpwi r4, 1
 /* 801633C4 001601C4  4C 82 00 20 */	bnelr 
 /* 801633C8 001601C8  80 03 13 D4 */	lwz r0, 0x13d4(r3)
@@ -3417,6 +3438,8 @@ lbl_801633F8:
 /* 8016340C 0016020C  60 00 00 01 */	ori r0, r0, 1
 /* 80163410 00160210  90 03 13 C8 */	stw r0, 0x13c8(r3)
 /* 80163414 00160214  4E 80 00 20 */	blr 
+
+Damage__12zNPCBPatrickF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3:
 /* 80163418 00160218  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8016341C 0016021C  7C 08 02 A6 */	mflr r0
 /* 80163420 00160220  2C 04 00 03 */	cmpwi r4, 3
@@ -3915,6 +3938,8 @@ lbl_80163B2C:
 /* 80163B34 00160934  7C 08 03 A6 */	mtlr r0
 /* 80163B38 00160938  38 21 00 80 */	addi r1, r1, 0x80
 /* 80163B3C 0016093C  4E 80 00 20 */	blr 
+
+RenderExtra__12zNPCBPatrickFv:
 /* 80163B40 00160940  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80163B44 00160944  7C 08 02 A6 */	mflr r0
 /* 80163B48 00160948  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3949,6 +3974,8 @@ lbl_80163B9C:
 /* 80163BB8 001609B8  7C 08 03 A6 */	mtlr r0
 /* 80163BBC 001609BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80163BC0 001609C0  4E 80 00 20 */	blr 
+
+NewTime__12zNPCBPatrickFP6xScenef:
 /* 80163BC4 001609C4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80163BC8 001609C8  7C 08 02 A6 */	mflr r0
 /* 80163BCC 001609CC  90 01 00 44 */	stw r0, 0x44(r1)
@@ -4975,7 +5002,8 @@ lbl_80164A50:
 /* 80164A88 00161888  7C 08 03 A6 */	mtlr r0
 /* 80164A8C 0016188C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80164A90 00161890  4E 80 00 20 */	blr 
-lbl_80164A94:
+
+idleCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164A94 00161894  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80164A98 00161898  7C 08 02 A6 */	mflr r0
 /* 80164A9C 0016189C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -5023,7 +5051,8 @@ lbl_80164B28:
 /* 80164B34 00161934  7C 08 03 A6 */	mtlr r0
 /* 80164B38 00161938  38 21 00 10 */	addi r1, r1, 0x10
 /* 80164B3C 0016193C  4E 80 00 20 */	blr 
-lbl_80164B40:
+
+tauntCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164B40 00161940  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164B44 00161944  7C 08 02 A6 */	mflr r0
 /* 80164B48 00161948  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5075,7 +5104,8 @@ lbl_80164BDC:
 /* 80164BF4 001619F4  7C 08 03 A6 */	mtlr r0
 /* 80164BF8 001619F8  38 21 00 30 */	addi r1, r1, 0x30
 /* 80164BFC 001619FC  4E 80 00 20 */	blr 
-lbl_80164C00:
+
+hitCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164C00 00161A00  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164C04 00161A04  7C 08 02 A6 */	mflr r0
 /* 80164C08 00161A08  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5133,7 +5163,8 @@ lbl_80164CB0:
 /* 80164CC8 00161AC8  7C 08 03 A6 */	mtlr r0
 /* 80164CCC 00161ACC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80164CD0 00161AD0  4E 80 00 20 */	blr 
-lbl_80164CD4:
+
+spitCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164CD4 00161AD4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164CD8 00161AD8  7C 08 02 A6 */	mflr r0
 /* 80164CDC 00161ADC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5192,7 +5223,8 @@ lbl_80164D84:
 /* 80164DA0 00161BA0  7C 08 03 A6 */	mtlr r0
 /* 80164DA4 00161BA4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80164DA8 00161BA8  4E 80 00 20 */	blr 
-lbl_80164DAC:
+
+runCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164DAC 00161BAC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164DB0 00161BB0  7C 08 02 A6 */	mflr r0
 /* 80164DB4 00161BB4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5241,7 +5273,8 @@ lbl_80164E3C:
 /* 80164E54 00161C54  7C 08 03 A6 */	mtlr r0
 /* 80164E58 00161C58  38 21 00 30 */	addi r1, r1, 0x30
 /* 80164E5C 00161C5C  4E 80 00 20 */	blr 
-lbl_80164E60:
+
+smackCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164E60 00161C60  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164E64 00161C64  7C 08 02 A6 */	mflr r0
 /* 80164E68 00161C68  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5290,7 +5323,8 @@ lbl_80164EF0:
 /* 80164F08 00161D08  7C 08 03 A6 */	mtlr r0
 /* 80164F0C 00161D0C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80164F10 00161D10  4E 80 00 20 */	blr 
-lbl_80164F14:
+
+freezeCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164F14 00161D14  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164F18 00161D18  7C 08 02 A6 */	mflr r0
 /* 80164F1C 00161D1C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5339,7 +5373,8 @@ lbl_80164FA4:
 /* 80164FBC 00161DBC  7C 08 03 A6 */	mtlr r0
 /* 80164FC0 00161DC0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80164FC4 00161DC4  4E 80 00 20 */	blr 
-lbl_80164FC8:
+
+spawnCB__FP5xGoalPvP11en_trantypefPv:
 /* 80164FC8 00161DC8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80164FCC 00161DCC  7C 08 02 A6 */	mflr r0
 /* 80164FD0 00161DD0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5394,7 +5429,8 @@ lbl_8016506C:
 /* 80165088 00161E88  7C 08 03 A6 */	mtlr r0
 /* 8016508C 00161E8C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80165090 00161E90  4E 80 00 20 */	blr 
-lbl_80165094:
+
+spinCB__FP5xGoalPvP11en_trantypefPv:
 /* 80165094 00161E94  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80165098 00161E98  7C 08 02 A6 */	mflr r0
 /* 8016509C 00161E9C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5569,7 +5605,8 @@ lbl_801652F8:
 /* 80165314 00162114  7C 08 03 A6 */	mtlr r0
 /* 80165318 00162118  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016531C 0016211C  4E 80 00 20 */	blr 
-lbl_80165320:
+
+fudgeCB__FP5xGoalPvP11en_trantypefPv:
 /* 80165320 00162120  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80165324 00162124  7C 08 02 A6 */	mflr r0
 /* 80165328 00162128  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5729,6 +5766,8 @@ lbl_8016552C:
 /* 80165564 00162364  7C 08 03 A6 */	mtlr r0
 /* 80165568 00162368  38 21 00 50 */	addi r1, r1, 0x50
 /* 8016556C 0016236C  4E 80 00 20 */	blr 
+
+Enter__19zNPCGoalBossPatIdleFfPv:
 /* 80165570 00162370  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80165574 00162374  7C 08 02 A6 */	mflr r0
 /* 80165578 00162378  90 01 00 24 */	stw r0, 0x24(r1)
@@ -5763,6 +5802,8 @@ lbl_8016552C:
 /* 801655EC 001623EC  7C 08 03 A6 */	mtlr r0
 /* 801655F0 001623F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 801655F4 001623F4  4E 80 00 20 */	blr 
+
+Process__19zNPCGoalBossPatIdleFP11en_trantypefPvP6xScene:
 /* 801655F8 001623F8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801655FC 001623FC  7C 08 02 A6 */	mflr r0
 /* 80165600 00162400  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5805,6 +5846,8 @@ lbl_8016552C:
 /* 80165694 00162494  7C 08 03 A6 */	mtlr r0
 /* 80165698 00162498  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016569C 0016249C  4E 80 00 20 */	blr 
+
+Enter__20zNPCGoalBossPatTauntFfPv:
 /* 801656A0 001624A0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801656A4 001624A4  7C 08 02 A6 */	mflr r0
 /* 801656A8 001624A8  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5923,6 +5966,8 @@ lbl_8016552C:
 /* 8016586C 0016266C  7C 08 03 A6 */	mtlr r0
 /* 80165870 00162670  38 21 00 30 */	addi r1, r1, 0x30
 /* 80165874 00162674  4E 80 00 20 */	blr 
+
+Process__20zNPCGoalBossPatTauntFP11en_trantypefPvP6xScene:
 /* 80165878 00162678  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8016587C 0016267C  7C 08 02 A6 */	mflr r0
 /* 80165880 00162680  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5965,6 +6010,8 @@ lbl_8016552C:
 /* 80165914 00162714  7C 08 03 A6 */	mtlr r0
 /* 80165918 00162718  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016591C 0016271C  4E 80 00 20 */	blr 
+
+Enter__18zNPCGoalBossPatHitFfPv:
 /* 80165920 00162720  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80165924 00162724  7C 08 02 A6 */	mflr r0
 /* 80165928 00162728  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6069,6 +6116,8 @@ lbl_80165A84:
 /* 80165AAC 001628AC  7C 08 03 A6 */	mtlr r0
 /* 80165AB0 001628B0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80165AB4 001628B4  4E 80 00 20 */	blr 
+
+Process__18zNPCGoalBossPatHitFP11en_trantypefPvP6xScene:
 /* 80165AB8 001628B8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80165ABC 001628BC  7C 08 02 A6 */	mflr r0
 /* 80165AC0 001628C0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6111,6 +6160,8 @@ lbl_80165A84:
 /* 80165B54 00162954  7C 08 03 A6 */	mtlr r0
 /* 80165B58 00162958  38 21 00 30 */	addi r1, r1, 0x30
 /* 80165B5C 0016295C  4E 80 00 20 */	blr 
+
+Exit__18zNPCGoalBossPatHitFfPv:
 /* 80165B60 00162960  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80165B64 00162964  7C 08 02 A6 */	mflr r0
 /* 80165B68 00162968  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6156,6 +6207,8 @@ lbl_80165A84:
 /* 80165C08 00162A08  7C 08 03 A6 */	mtlr r0
 /* 80165C0C 00162A0C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80165C10 00162A10  4E 80 00 20 */	blr 
+
+Enter__19zNPCGoalBossPatSpitFfPv:
 /* 80165C14 00162A14  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80165C18 00162A18  7C 08 02 A6 */	mflr r0
 /* 80165C1C 00162A1C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6191,6 +6244,8 @@ lbl_80165A84:
 /* 80165C94 00162A94  7C 08 03 A6 */	mtlr r0
 /* 80165C98 00162A98  38 21 00 20 */	addi r1, r1, 0x20
 /* 80165C9C 00162A9C  4E 80 00 20 */	blr 
+
+Process__19zNPCGoalBossPatSpitFP11en_trantypefPvP6xScene:
 /* 80165CA0 00162AA0  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 80165CA4 00162AA4  7C 08 02 A6 */	mflr r0
 /* 80165CA8 00162AA8  90 01 00 E4 */	stw r0, 0xe4(r1)
@@ -6502,6 +6557,8 @@ lbl_80166110:
 /* 80166140 00162F40  7C 08 03 A6 */	mtlr r0
 /* 80166144 00162F44  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80166148 00162F48  4E 80 00 20 */	blr 
+
+Enter__18zNPCGoalBossPatRunFfPv:
 /* 8016614C 00162F4C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80166150 00162F50  7C 08 02 A6 */	mflr r0
 /* 80166154 00162F54  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6548,6 +6605,8 @@ lbl_80166110:
 /* 801661F8 00162FF8  7C 08 03 A6 */	mtlr r0
 /* 801661FC 00162FFC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80166200 00163000  4E 80 00 20 */	blr 
+
+Process__18zNPCGoalBossPatRunFP11en_trantypefPvP6xScene:
 /* 80166204 00163004  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80166208 00163008  7C 08 02 A6 */	mflr r0
 /* 8016620C 0016300C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6582,6 +6641,8 @@ lbl_80166110:
 /* 80166280 00163080  7C 08 03 A6 */	mtlr r0
 /* 80166284 00163084  38 21 00 30 */	addi r1, r1, 0x30
 /* 80166288 00163088  4E 80 00 20 */	blr 
+
+Exit__18zNPCGoalBossPatRunFfPv:
 /* 8016628C 0016308C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80166290 00163090  7C 08 02 A6 */	mflr r0
 /* 80166294 00163094  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6605,6 +6666,8 @@ lbl_80166110:
 /* 801662DC 001630DC  7C 08 03 A6 */	mtlr r0
 /* 801662E0 001630E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 801662E4 001630E4  4E 80 00 20 */	blr 
+
+Enter__20zNPCGoalBossPatSmackFfPv:
 /* 801662E8 001630E8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801662EC 001630EC  7C 08 02 A6 */	mflr r0
 /* 801662F0 001630F0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6638,6 +6701,8 @@ lbl_80166110:
 /* 80166360 00163160  7C 08 03 A6 */	mtlr r0
 /* 80166364 00163164  38 21 00 20 */	addi r1, r1, 0x20
 /* 80166368 00163168  4E 80 00 20 */	blr 
+
+Process__20zNPCGoalBossPatSmackFP11en_trantypefPvP6xScene:
 /* 8016636C 0016316C  94 21 FF 40 */	stwu r1, -0xc0(r1)
 /* 80166370 00163170  7C 08 02 A6 */	mflr r0
 /* 80166374 00163174  90 01 00 C4 */	stw r0, 0xc4(r1)
@@ -6983,6 +7048,8 @@ StopFreezeBreath__Fv:
 /* 8016687C 0016367C  38 03 00 01 */	addi r0, r3, 1
 /* 80166880 00163680  90 05 15 70 */	stw r0, 0x1570(r5)
 /* 80166884 00163684  4E 80 00 20 */	blr 
+
+Enter__21zNPCGoalBossPatFreezeFfPv:
 /* 80166888 00163688  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8016688C 0016368C  7C 08 02 A6 */	mflr r0
 /* 80166890 00163690  90 01 00 34 */	stw r0, 0x34(r1)
@@ -7029,6 +7096,8 @@ StopFreezeBreath__Fv:
 /* 80166934 00163734  7C 08 03 A6 */	mtlr r0
 /* 80166938 00163738  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016693C 0016373C  4E 80 00 20 */	blr 
+
+Process__21zNPCGoalBossPatFreezeFP11en_trantypefPvP6xScene:
 /* 80166940 00163740  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80166944 00163744  7C 08 02 A6 */	mflr r0
 /* 80166948 00163748  90 01 00 64 */	stw r0, 0x64(r1)
@@ -7154,6 +7223,8 @@ lbl_80166AF0:
 /* 80166B18 00163918  7C 08 03 A6 */	mtlr r0
 /* 80166B1C 0016391C  38 21 00 60 */	addi r1, r1, 0x60
 /* 80166B20 00163920  4E 80 00 20 */	blr 
+
+Enter__20zNPCGoalBossPatSpawnFfPv:
 /* 80166B24 00163924  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80166B28 00163928  7C 08 02 A6 */	mflr r0
 /* 80166B2C 0016392C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -7184,6 +7255,8 @@ lbl_80166AF0:
 /* 80166B90 00163990  7C 08 03 A6 */	mtlr r0
 /* 80166B94 00163994  38 21 00 20 */	addi r1, r1, 0x20
 /* 80166B98 00163998  4E 80 00 20 */	blr 
+
+Process__20zNPCGoalBossPatSpawnFP11en_trantypefPvP6xScene:
 /* 80166B9C 0016399C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80166BA0 001639A0  7C 08 02 A6 */	mflr r0
 /* 80166BA4 001639A4  90 01 00 54 */	stw r0, 0x54(r1)
@@ -7302,6 +7375,8 @@ lbl_80166D30:
 /* 80166D58 00163B58  7C 08 03 A6 */	mtlr r0
 /* 80166D5C 00163B5C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80166D60 00163B60  4E 80 00 20 */	blr 
+
+Enter__19zNPCGoalBossPatSpinFfPv:
 /* 80166D64 00163B64  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80166D68 00163B68  7C 08 02 A6 */	mflr r0
 /* 80166D6C 00163B6C  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -7513,6 +7588,8 @@ lbl_80166FE8:
 /* 8016708C 00163E8C  7C 08 03 A6 */	mtlr r0
 /* 80167090 00163E90  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80167094 00163E94  4E 80 00 20 */	blr 
+
+Process__19zNPCGoalBossPatSpinFP11en_trantypefPvP6xScene:
 /* 80167098 00163E98  94 21 FE C0 */	stwu r1, -0x140(r1)
 /* 8016709C 00163E9C  7C 08 02 A6 */	mflr r0
 /* 801670A0 00163EA0  90 01 01 44 */	stw r0, 0x144(r1)
@@ -8580,6 +8657,8 @@ lbl_80168058:
 /* 80168088 00164E88  7C 08 03 A6 */	mtlr r0
 /* 8016808C 00164E8C  38 21 01 40 */	addi r1, r1, 0x140
 /* 80168090 00164E90  4E 80 00 20 */	blr 
+
+Exit__19zNPCGoalBossPatSpinFfPv:
 /* 80168094 00164E94  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80168098 00164E98  7C 08 02 A6 */	mflr r0
 /* 8016809C 00164E9C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -8605,6 +8684,8 @@ lbl_80168058:
 /* 801680EC 00164EEC  7C 08 03 A6 */	mtlr r0
 /* 801680F0 00164EF0  38 21 00 20 */	addi r1, r1, 0x20
 /* 801680F4 00164EF4  4E 80 00 20 */	blr 
+
+Enter__20zNPCGoalBossPatFudgeFfPv:
 /* 801680F8 00164EF8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801680FC 00164EFC  7C 08 02 A6 */	mflr r0
 /* 80168100 00164F00  90 01 00 24 */	stw r0, 0x24(r1)
@@ -8641,6 +8722,8 @@ lbl_80168058:
 /* 8016817C 00164F7C  7C 08 03 A6 */	mtlr r0
 /* 80168180 00164F80  38 21 00 20 */	addi r1, r1, 0x20
 /* 80168184 00164F84  4E 80 00 20 */	blr 
+
+Process__20zNPCGoalBossPatFudgeFP11en_trantypefPvP6xScene:
 /* 80168188 00164F88  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 8016818C 00164F8C  7C 08 02 A6 */	mflr r0
 /* 80168190 00164F90  90 01 00 E4 */	stw r0, 0xe4(r1)

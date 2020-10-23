@@ -95,6 +95,8 @@ lbl_801177B8:
 /* 801177C0 001145C0  7C 08 03 A6 */	mtlr r0
 /* 801177C4 001145C4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801177C8 001145C8  4E 80 00 20 */	blr 
+
+xParEmitterInit__FPvPv:
 /* 801177CC 001145CC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801177D0 001145D0  7C 08 02 A6 */	mflr r0
 /* 801177D4 001145D4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -115,9 +117,9 @@ xParEmitterInit__FP5xBaseP16xParEmitterAsset:
 /* 80117804 00114604  7C 7E 1B 78 */	mr r30, r3
 /* 80117808 00114608  7C 9F 23 78 */	mr r31, r4
 /* 8011780C 0011460C  4B EF 1B F5 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 80117810 00114610  3C 60 80 11 */	lis r3, lbl_80117B18@ha
+/* 80117810 00114610  3C 60 80 11 */	lis r3, xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80117814 00114614  38 80 00 00 */	li r4, 0
-/* 80117818 00114618  38 03 7B 18 */	addi r0, r3, lbl_80117B18@l
+/* 80117818 00114618  38 03 7B 18 */	addi r0, r3, xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8011781C 0011461C  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 80117820 00114620  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 80117824 00114624  80 7F 00 0C */	lwz r3, 0xc(r31)
@@ -338,7 +340,8 @@ xParEmitterReset__FP11xParEmitter:
 /* 80117B0C 0011490C  7C 08 03 A6 */	mtlr r0
 /* 80117B10 00114910  38 21 00 10 */	addi r1, r1, 0x10
 /* 80117B14 00114914  4E 80 00 20 */	blr 
-lbl_80117B18:
+
+xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80117B18 00114918  94 21 FE 80 */	stwu r1, -0x180(r1)
 /* 80117B1C 0011491C  7C 08 02 A6 */	mflr r0
 /* 80117B20 00114920  2C 05 00 27 */	cmpwi r5, 0x27

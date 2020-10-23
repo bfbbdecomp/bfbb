@@ -2,65 +2,65 @@
 
 #include <types.h>
 
-// xMemDebug_SoakLog(const char*)
+// func_80033554
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemDebug_SoakLog__FPCc")
 
-// xMemInit()
+// func_80033558
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemInit__Fv")
 
-// xMemExit()
+// func_8003361C
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemExit__Fv")
 
-// xMemInitHeap(xMemHeap_tag*,unsigned int,unsigned int,unsigned int)
+// func_8003363C
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemInitHeap__FP12xMemHeap_tagUiUiUi")
 
-// xMemGetBlockInfo(xMemHeap_tag*,unsigned int,int,xMemBlkInfo_tag*)
+// func_80033734
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag")
 
-// xMemGrowAlloc(unsigned int,unsigned int)
+// func_80033864
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGrowAlloc__FUiUi")
 
-// xMemAlloc(unsigned int,unsigned int,int)
+// func_80033940
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemAlloc__FUiUii")
 
-// xMemPushTemp(unsigned int)
+// func_80033A58
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPushTemp__FUi")
 
-// xMemPopTemp(void*)
+// func_80033A84
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopTemp__FPv")
 
-// xMemPushBase(unsigned int)
+// func_80033AB0
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPushBase__FUi")
 
-// xHeapState_tag::operator =(const xHeapState_tag&)
+// func_80033B24
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "__as__14xHeapState_tagFRC14xHeapState_tag")
 
-// xMemPushBase()
+// func_80033B50
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPushBase__Fv")
 
-// xMemPopBase(unsigned int,int)
+// func_80033B74
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopBase__FUii")
 
-// xMemPopBase(int)
+// func_80033BD4
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopBase__Fi")
 
-// xMemGetBase(unsigned int)
+// func_80033BFC
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGetBase__FUi")
 
-// xMemRegisterBaseNotifyFunc(void (*)(void))
+// func_80033C14
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemRegisterBaseNotifyFunc__FPFv_v")
 
-// xMemGetBase()
+// func_80033C1C
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGetBase__Fv")
 
-// xMemPoolAddElements(xMemPool*,void*,unsigned int)
+// func_80033C40
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolAddElements__FP8xMemPoolPvUi")
 
-// xMemPoolSetup(xMemPool*,void*,unsigned int,unsigned int,void (*)(xMemPool*, void*),unsigned int,unsigned int,unsigned int)
+// func_80033CE8
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi")
 
-// xMemPoolAlloc(xMemPool*)
+// func_80033D34
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolAlloc__FP8xMemPool")
 
-// xMemPoolFree(xMemPool*,void*)
+// func_80033DD0
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolFree__FP8xMemPoolPv")

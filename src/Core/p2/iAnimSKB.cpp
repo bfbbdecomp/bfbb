@@ -2,19 +2,20 @@
 
 #include <types.h>
 
-// iAnimEvalSKB(iAnimSKBHeader*,float,unsigned int,xVec3*,xQuat*)
+// func_800BF1C0
 #pragma GLOBAL_ASM("asm/Core/p2/iAnimSKB.s", "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat")
 
-// iAnimDurationSKB(iAnimSKBHeader*)
+// func_800BF7B0
 #pragma GLOBAL_ASM("asm/Core/p2/iAnimSKB.s", "iAnimDurationSKB__FP14iAnimSKBHeader")
 
-// std::fabsf(float)
+// func_800BF7D0
 #pragma GLOBAL_ASM("asm/Core/p2/iAnimSKB.s", "fabsf__3stdFf")
 
+// func_800BF7F4
 #pragma GLOBAL_ASM("asm/Core/p2/iAnimSKB.s", "fabs")
 
-// _iAnimSKBAdjustTranslate(iAnimSKBHeader*,unsigned int,float*,float*)
+// func_800BF7FC
 #pragma GLOBAL_ASM("asm/Core/p2/iAnimSKB.s", "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf")
 
-// _iAnimSKBExtractTranslate(iAnimSKBHeader*,unsigned int,xVec3*,int)
+// func_800BFC20
 #pragma GLOBAL_ASM("asm/Core/p2/iAnimSKB.s", "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i")

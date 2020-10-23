@@ -26,9 +26,9 @@ zEnvInit__FP5_zEnvP9xEnvAsset:
 /* 80092758 0008F558  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8009275C 0008F55C  7C 7D 1B 78 */	mr r29, r3
 /* 80092760 0008F560  4B F7 6C A1 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 80092764 0008F564  3C 60 80 09 */	lis r3, lbl_80092A88@ha
+/* 80092764 0008F564  3C 60 80 09 */	lis r3, zEnvEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80092768 0008F568  93 DD 00 10 */	stw r30, 0x10(r29)
-/* 8009276C 0008F56C  38 03 2A 88 */	addi r0, r3, lbl_80092A88@l
+/* 8009276C 0008F56C  38 03 2A 88 */	addi r0, r3, zEnvEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80092770 0008F570  90 1D 00 0C */	stw r0, 0xc(r29)
 /* 80092774 0008F574  88 1D 00 05 */	lbz r0, 5(r29)
 /* 80092778 0008F578  28 00 00 00 */	cmplwi r0, 0
@@ -255,7 +255,8 @@ zEnvReset__FP5_zEnv:
 /* 80092A7C 0008F87C  7C 08 03 A6 */	mtlr r0
 /* 80092A80 0008F880  38 21 00 10 */	addi r1, r1, 0x10
 /* 80092A84 0008F884  4E 80 00 20 */	blr 
-lbl_80092A88:
+
+zEnvEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80092A88 0008F888  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80092A8C 0008F88C  7C 08 02 A6 */	mflr r0
 /* 80092A90 0008F890  2C 05 01 0C */	cmpwi r5, 0x10c

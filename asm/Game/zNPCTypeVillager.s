@@ -90,6 +90,8 @@ zNPCVillager_SceneTimestep__FP6xScenef:
 /* 80102D20 000FFB20  7C 08 03 A6 */	mtlr r0
 /* 80102D24 000FFB24  38 21 00 10 */	addi r1, r1, 0x10
 /* 80102D28 000FFB28  4E 80 00 20 */	blr 
+
+ZNPC_Create_Villager__FiP10RyzMemGrowPv:
 /* 80102D2C 000FFB2C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80102D30 000FFB30  7C 08 02 A6 */	mflr r0
 /* 80102D34 000FFB34  3C C0 4E 54 */	lis r6, 0x4E544646@ha
@@ -252,6 +254,8 @@ lbl_80102F44:
 /* 80102F4C 000FFD4C  7C 08 03 A6 */	mtlr r0
 /* 80102F50 000FFD50  38 21 00 10 */	addi r1, r1, 0x10
 /* 80102F54 000FFD54  4E 80 00 20 */	blr 
+
+ZNPC_Destroy_Villager__FP12xFactoryInst:
 /* 80102F58 000FFD58  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80102F5C 000FFD5C  7C 08 02 A6 */	mflr r0
 /* 80102F60 000FFD60  38 80 00 01 */	li r4, 1
@@ -261,6 +265,8 @@ lbl_80102F44:
 /* 80102F70 000FFD70  7C 08 03 A6 */	mtlr r0
 /* 80102F74 000FFD74  38 21 00 10 */	addi r1, r1, 0x10
 /* 80102F78 000FFD78  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_Villager__Fv:
 /* 80102F7C 000FFD7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80102F80 000FFD80  7C 08 02 A6 */	mflr r0
 /* 80102F84 000FFD84  38 60 00 00 */	li r3, 0
@@ -518,6 +524,8 @@ lbl_8010304C:
 /* 80103360 00100160  7C 08 03 A6 */	mtlr r0
 /* 80103364 00100164  38 21 00 60 */	addi r1, r1, 0x60
 /* 80103368 00100168  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_BalloonBoy__Fv:
 /* 8010336C 0010016C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80103370 00100170  7C 08 02 A6 */	mflr r0
 /* 80103374 00100174  38 60 00 00 */	li r3, 0
@@ -714,6 +722,8 @@ lbl_80103418:
 /* 8010365C 0010045C  7C 08 03 A6 */	mtlr r0
 /* 80103660 00100460  38 21 00 40 */	addi r1, r1, 0x40
 /* 80103664 00100464  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_SuperFriend__Fv:
 /* 80103668 00100468  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010366C 0010046C  7C 08 02 A6 */	mflr r0
 /* 80103670 00100470  38 60 00 00 */	li r3, 0
@@ -982,6 +992,8 @@ lbl_8010372C:
 /* 80103A78 00100878  7C 08 03 A6 */	mtlr r0
 /* 80103A7C 0010087C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80103A80 00100880  4E 80 00 20 */	blr 
+
+ColChkFlags__12zNPCVillagerCFv:
 /* 80103A84 00100884  3C 80 80 3C */	lis r4, globals@ha
 /* 80103A88 00100888  38 A0 00 3E */	li r5, 0x3e
 /* 80103A8C 0010088C  38 84 05 58 */	addi r4, r4, globals@l
@@ -1007,6 +1019,8 @@ lbl_80103AC4:
 lbl_80103AD4:
 /* 80103AD4 001008D4  54 A3 06 3E */	clrlwi r3, r5, 0x18
 /* 80103AD8 001008D8  4E 80 00 20 */	blr 
+
+ColPenFlags__12zNPCVillagerCFv:
 /* 80103ADC 001008DC  3C 80 80 3C */	lis r4, globals@ha
 /* 80103AE0 001008E0  38 A0 00 3E */	li r5, 0x3e
 /* 80103AE4 001008E4  38 84 05 58 */	addi r4, r4, globals@l
@@ -1032,6 +1046,8 @@ lbl_80103B1C:
 lbl_80103B2C:
 /* 80103B2C 0010092C  54 A3 06 3E */	clrlwi r3, r5, 0x18
 /* 80103B30 00100930  4E 80 00 20 */	blr 
+
+PhysicsFlags__12zNPCVillagerCFv:
 /* 80103B34 00100934  80 63 01 CC */	lwz r3, 0x1cc(r3)
 /* 80103B38 00100938  38 80 00 00 */	li r4, 0
 /* 80103B3C 0010093C  54 60 07 7D */	rlwinm. r0, r3, 0, 0x1d, 0x1e
@@ -1333,6 +1349,8 @@ lbl_80103F3C:
 /* 80103F48 00100D48  7C 08 03 A6 */	mtlr r0
 /* 80103F4C 00100D4C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80103F50 00100D50  4E 80 00 20 */	blr 
+
+CollideReview__12zNPCVillagerFv:
 /* 80103F54 00100D54  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80103F58 00100D58  7C 08 02 A6 */	mflr r0
 /* 80103F5C 00100D5C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1369,6 +1387,8 @@ lbl_80103FC0:
 /* 80103FD0 00100DD0  7C 08 03 A6 */	mtlr r0
 /* 80103FD4 00100DD4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80103FD8 00100DD8  4E 80 00 20 */	blr 
+
+SelfSetup__12zNPCVillagerFv:
 /* 80103FDC 00100DDC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80103FE0 00100DE0  7C 08 02 A6 */	mflr r0
 /* 80103FE4 00100DE4  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1383,9 +1403,9 @@ lbl_80103FC0:
 /* 80104008 00100E08  83 FE 02 28 */	lwz r31, 0x228(r30)
 /* 8010400C 00100E0C  7F E3 FB 78 */	mr r3, r31
 /* 80104010 00100E10  48 00 91 79 */	bl BrainBegin__7xPsycheFv
-/* 80104014 00100E14  3C 80 80 10 */	lis r4, lbl_801070E8@ha
+/* 80104014 00100E14  3C 80 80 10 */	lis r4, FOLK_grul_goAlert__FP5xGoalPvP11en_trantypefPv@ha
 /* 80104018 00100E18  7F C3 F3 78 */	mr r3, r30
-/* 8010401C 00100E1C  38 A4 70 E8 */	addi r5, r4, lbl_801070E8@l
+/* 8010401C 00100E1C  38 A4 70 E8 */	addi r5, r4, FOLK_grul_goAlert__FP5xGoalPvP11en_trantypefPv@l
 /* 80104020 00100E20  39 20 00 00 */	li r9, 0
 /* 80104024 00100E24  7F E4 FB 78 */	mr r4, r31
 /* 80104028 00100E28  7C A6 2B 78 */	mr r6, r5
@@ -1628,6 +1648,8 @@ lbl_80104368:
 /* 8010437C 0010117C  7C 08 03 A6 */	mtlr r0
 /* 80104380 00101180  38 21 00 40 */	addi r1, r1, 0x40
 /* 80104384 00101184  4E 80 00 20 */	blr 
+
+NPCMessage__12zNPCVillagerFP6NPCMsg:
 /* 80104388 00101188  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8010438C 0010118C  7C 08 02 A6 */	mflr r0
 /* 80104390 00101190  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1766,6 +1788,8 @@ lbl_80104560:
 /* 80104570 00101370  7C 08 03 A6 */	mtlr r0
 /* 80104574 00101374  38 21 00 10 */	addi r1, r1, 0x10
 /* 80104578 00101378  4E 80 00 20 */	blr 
+
+SpeakBegin__12zNPCVillagerFv:
 /* 8010457C 0010137C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80104580 00101380  7C 08 02 A6 */	mflr r0
 /* 80104584 00101384  3C 80 4E 47 */	lis r4, 0x4E47533D@ha
@@ -1778,6 +1802,8 @@ lbl_80104560:
 /* 801045A0 001013A0  7C 08 03 A6 */	mtlr r0
 /* 801045A4 001013A4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801045A8 001013A8  4E 80 00 20 */	blr 
+
+SpeakEnd__12zNPCVillagerFv:
 /* 801045AC 001013AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801045B0 001013B0  7C 08 02 A6 */	mflr r0
 /* 801045B4 001013B4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1802,6 +1828,8 @@ lbl_801045F4:
 /* 801045FC 001013FC  7C 08 03 A6 */	mtlr r0
 /* 80104600 00101400  38 21 00 10 */	addi r1, r1, 0x10
 /* 80104604 00101404  4E 80 00 20 */	blr 
+
+SpeakStart__12zNPCVillagerFUiUii:
 /* 80104608 00101408  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010460C 0010140C  7C 08 02 A6 */	mflr r0
 /* 80104610 00101410  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1853,6 +1881,8 @@ lbl_801046AC:
 /* 801046B8 001014B8  7C 08 03 A6 */	mtlr r0
 /* 801046BC 001014BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801046C0 001014C0  4E 80 00 20 */	blr 
+
+SpeakStop__12zNPCVillagerFv:
 /* 801046C4 001014C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801046C8 001014C8  7C 08 02 A6 */	mflr r0
 /* 801046CC 001014CC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2234,6 +2264,8 @@ lbl_80104BF4:
 /* 80104BFC 001019FC  7C 08 03 A6 */	mtlr r0
 /* 80104C00 00101A00  38 21 00 10 */	addi r1, r1, 0x10
 /* 80104C04 00101A04  4E 80 00 20 */	blr 
+
+ParseINI__8zNPCFishFv:
 /* 80104C08 00101A08  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80104C0C 00101A0C  7C 08 02 A6 */	mflr r0
 /* 80104C10 00101A10  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2357,9 +2389,9 @@ SelfSetup__8zNPCFishFv:
 /* 80104DC8 00101BC8  83 FE 02 28 */	lwz r31, 0x228(r30)
 /* 80104DCC 00101BCC  7F E3 FB 78 */	mr r3, r31
 /* 80104DD0 00101BD0  48 00 83 B9 */	bl BrainBegin__7xPsycheFv
-/* 80104DD4 00101BD4  3C 80 80 10 */	lis r4, lbl_801070E8@ha
+/* 80104DD4 00101BD4  3C 80 80 10 */	lis r4, FOLK_grul_goAlert__FP5xGoalPvP11en_trantypefPv@ha
 /* 80104DD8 00101BD8  7F C3 F3 78 */	mr r3, r30
-/* 80104DDC 00101BDC  38 A4 70 E8 */	addi r5, r4, lbl_801070E8@l
+/* 80104DDC 00101BDC  38 A4 70 E8 */	addi r5, r4, FOLK_grul_goAlert__FP5xGoalPvP11en_trantypefPv@l
 /* 80104DE0 00101BE0  39 20 00 00 */	li r9, 0
 /* 80104DE4 00101BE4  7F E4 FB 78 */	mr r4, r31
 /* 80104DE8 00101BE8  7C A6 2B 78 */	mr r6, r5
@@ -2484,6 +2516,8 @@ lbl_80104F80:
 /* 80104F8C 00101D8C  7C 08 03 A6 */	mtlr r0
 /* 80104F90 00101D90  38 21 00 10 */	addi r1, r1, 0x10
 /* 80104F94 00101D94  4E 80 00 20 */	blr 
+
+Process__8zNPCFishFP6xScenef:
 /* 80104F98 00101D98  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80104F9C 00101D9C  7C 08 02 A6 */	mflr r0
 /* 80104FA0 00101DA0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2768,6 +2802,8 @@ lbl_8010536C:
 .global CheckDoChat__8zNPCFishFv
 CheckDoChat__8zNPCFishFv:
 /* 80105390 00102190  4E 80 00 20 */	blr 
+
+Init__15zNPCMerManChairFP9xEntAsset:
 /* 80105394 00102194  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80105398 00102198  7C 08 02 A6 */	mflr r0
 /* 8010539C 0010219C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2788,6 +2824,8 @@ CheckDoChat__8zNPCFishFv:
 /* 801053D8 001021D8  7C 08 03 A6 */	mtlr r0
 /* 801053DC 001021DC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801053E0 001021E0  4E 80 00 20 */	blr 
+
+Reset__15zNPCMerManChairFv:
 /* 801053E4 001021E4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801053E8 001021E8  7C 08 02 A6 */	mflr r0
 /* 801053EC 001021EC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2822,6 +2860,8 @@ lbl_80105454:
 /* 8010545C 0010225C  7C 08 03 A6 */	mtlr r0
 /* 80105460 00102260  38 21 00 10 */	addi r1, r1, 0x10
 /* 80105464 00102264  4E 80 00 20 */	blr 
+
+SelfSetup__15zNPCMerManChairFv:
 /* 80105468 00102268  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010546C 0010226C  7C 08 02 A6 */	mflr r0
 /* 80105470 00102270  90 01 00 14 */	stw r0, 0x14(r1)
@@ -2841,9 +2881,9 @@ lbl_80105454:
 /* 801054A8 001022A8  38 84 4E 30 */	addi r4, r4, 0x4E474E30@l
 /* 801054AC 001022AC  38 A0 00 00 */	li r5, 0
 /* 801054B0 001022B0  48 00 7D 91 */	bl AddGoal__7xPsycheFiPv
-/* 801054B4 001022B4  3C 80 80 10 */	lis r4, lbl_80107168@ha
+/* 801054B4 001022B4  3C 80 80 10 */	lis r4, MERC_grul_goAlert__FP5xGoalPvP11en_trantypefPv@ha
 /* 801054B8 001022B8  38 A0 00 00 */	li r5, 0
-/* 801054BC 001022BC  38 84 71 68 */	addi r4, r4, lbl_80107168@l
+/* 801054BC 001022BC  38 84 71 68 */	addi r4, r4, MERC_grul_goAlert__FP5xGoalPvP11en_trantypefPv@l
 /* 801054C0 001022C0  38 C0 00 00 */	li r6, 0
 /* 801054C4 001022C4  38 E0 00 00 */	li r7, 0
 /* 801054C8 001022C8  4B FE F5 6D */	bl SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
@@ -2876,6 +2916,8 @@ lbl_80105454:
 /* 80105534 00102334  7C 08 03 A6 */	mtlr r0
 /* 80105538 00102338  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010553C 0010233C  4E 80 00 20 */	blr 
+
+AnimPick__15zNPCMerManChairFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 80105540 00102340  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80105544 00102344  7C 08 02 A6 */	mflr r0
 /* 80105548 00102348  3C E0 4E 47 */	lis r7, 0x4E474E33@ha
@@ -3003,6 +3045,8 @@ lbl_801056E0:
 /* 801056F4 001024F4  7C 08 03 A6 */	mtlr r0
 /* 801056F8 001024F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801056FC 001024FC  4E 80 00 20 */	blr 
+
+Process__15zNPCMerManChairFP6xScenef:
 /* 80105700 00102500  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80105704 00102504  7C 08 02 A6 */	mflr r0
 /* 80105708 00102508  38 80 00 00 */	li r4, 0
@@ -3033,6 +3077,8 @@ lbl_80105754:
 /* 80105760 00102560  7C 08 03 A6 */	mtlr r0
 /* 80105764 00102564  38 21 00 10 */	addi r1, r1, 0x10
 /* 80105768 00102568  4E 80 00 20 */	blr 
+
+Init__12zNPCNewsFishFP9xEntAsset:
 /* 8010576C 0010256C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80105770 00102570  7C 08 02 A6 */	mflr r0
 /* 80105774 00102574  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3089,6 +3135,8 @@ lbl_80105808:
 /* 8010583C 0010263C  7C 08 03 A6 */	mtlr r0
 /* 80105840 00102640  38 21 00 20 */	addi r1, r1, 0x20
 /* 80105844 00102644  4E 80 00 20 */	blr 
+
+PostSetup__12zNPCNewsFishFv:
 /* 80105848 00102648  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010584C 0010264C  7C 08 02 A6 */	mflr r0
 /* 80105850 00102650  3C 80 80 3C */	lis r4, globals@ha
@@ -3104,6 +3152,8 @@ lbl_80105808:
 /* 80105878 00102678  7C 08 03 A6 */	mtlr r0
 /* 8010587C 0010267C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80105880 00102680  4E 80 00 20 */	blr 
+
+Process__12zNPCNewsFishFP6xScenef:
 /* 80105884 00102684  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80105888 00102688  7C 08 02 A6 */	mflr r0
 /* 8010588C 0010268C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -3284,6 +3334,8 @@ lbl_80105B0C:
 /* 80105B20 00102920  7C 08 03 A6 */	mtlr r0
 /* 80105B24 00102924  38 21 00 30 */	addi r1, r1, 0x30
 /* 80105B28 00102928  4E 80 00 20 */	blr 
+
+Reset__12zNPCNewsFishFv:
 /* 80105B2C 0010292C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80105B30 00102930  7C 08 02 A6 */	mflr r0
 /* 80105B34 00102934  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3392,6 +3444,8 @@ lbl_80105CC4:
 /* 80105CCC 00102ACC  7C 08 03 A6 */	mtlr r0
 /* 80105CD0 00102AD0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80105CD4 00102AD4  4E 80 00 20 */	blr 
+
+SpeakStart__12zNPCNewsFishFUiUii:
 /* 80105CD8 00102AD8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80105CDC 00102ADC  7C 08 02 A6 */	mflr r0
 /* 80105CE0 00102AE0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3448,6 +3502,8 @@ lbl_80105D90:
 /* 80105DA0 00102BA0  7C 08 03 A6 */	mtlr r0
 /* 80105DA4 00102BA4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80105DA8 00102BA8  4E 80 00 20 */	blr 
+
+SpeakStop__12zNPCNewsFishFv:
 /* 80105DAC 00102BAC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80105DB0 00102BB0  7C 08 02 A6 */	mflr r0
 /* 80105DB4 00102BB4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3502,6 +3558,8 @@ lbl_80105E4C:
 /* 80105E50 00102C50  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
 /* 80105E54 00102C54  90 03 05 00 */	stw r0, 0x500(r3)
 /* 80105E58 00102C58  4E 80 00 20 */	blr 
+
+Render__12zNPCNewsFishFv:
 /* 80105E5C 00102C5C  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80105E60 00102C60  7C 08 02 A6 */	mflr r0
 /* 80105E64 00102C64  3C 80 80 27 */	lis r4, lbl_80269AC8@ha
@@ -3842,6 +3900,8 @@ lbl_8010631C:
 /* 8010631C 0010311C  7C 03 20 40 */	cmplw r3, r4
 /* 80106320 00103120  40 82 FF F0 */	bne lbl_80106310
 /* 80106324 00103124  4E 80 00 20 */	blr 
+
+Reset__15zNPCSandyBikiniFv:
 /* 80106328 00103128  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010632C 0010312C  7C 08 02 A6 */	mflr r0
 /* 80106330 00103130  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3855,6 +3915,8 @@ lbl_8010631C:
 /* 80106350 00103150  7C 08 03 A6 */	mtlr r0
 /* 80106354 00103154  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106358 00103158  4E 80 00 20 */	blr 
+
+Process__15zNPCSandyBikiniFP6xScenef:
 /* 8010635C 0010315C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80106360 00103160  7C 08 02 A6 */	mflr r0
 /* 80106364 00103164  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3975,6 +4037,8 @@ lbl_80106500:
 /* 80106520 00103320  7C 08 03 A6 */	mtlr r0
 /* 80106524 00103324  38 21 00 60 */	addi r1, r1, 0x60
 /* 80106528 00103328  4E 80 00 20 */	blr 
+
+Init__14zNPCBalloonBoyFP9xEntAsset:
 /* 8010652C 0010332C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106530 00103330  7C 08 02 A6 */	mflr r0
 /* 80106534 00103334  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3991,6 +4055,8 @@ lbl_80106500:
 /* 80106560 00103360  7C 08 03 A6 */	mtlr r0
 /* 80106564 00103364  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106568 00103368  4E 80 00 20 */	blr 
+
+Reset__14zNPCBalloonBoyFv:
 /* 8010656C 0010336C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106570 00103370  7C 08 02 A6 */	mflr r0
 /* 80106574 00103374  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4008,6 +4074,8 @@ lbl_8010659C:
 /* 801065A0 001033A0  7C 08 03 A6 */	mtlr r0
 /* 801065A4 001033A4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801065A8 001033A8  4E 80 00 20 */	blr 
+
+SelfSetup__14zNPCBalloonBoyFv:
 /* 801065AC 001033AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801065B0 001033B0  7C 08 02 A6 */	mflr r0
 /* 801065B4 001033B4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4029,6 +4097,8 @@ lbl_8010659C:
 /* 801065F4 001033F4  7C 08 03 A6 */	mtlr r0
 /* 801065F8 001033F8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801065FC 001033FC  4E 80 00 20 */	blr 
+
+Render__14zNPCBalloonBoyFv:
 /* 80106600 00103400  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106604 00103404  7C 08 02 A6 */	mflr r0
 /* 80106608 00103408  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4244,6 +4314,8 @@ AddBallooning__14zNPCBalloonBoyFP7xPsyche:
 /* 801068FC 001036FC  7C 08 03 A6 */	mtlr r0
 /* 80106900 00103700  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106904 00103704  4E 80 00 20 */	blr 
+
+AnimPick__14zNPCBalloonBoyFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 80106908 00103708  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010690C 0010370C  7C 08 02 A6 */	mflr r0
 /* 80106910 00103710  3C E0 4E 47 */	lis r7, 0x4E475340@ha
@@ -4338,6 +4410,8 @@ lbl_80106A24:
 /* 80106A30 00103830  7C 08 03 A6 */	mtlr r0
 /* 80106A34 00103834  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106A38 00103838  4E 80 00 20 */	blr 
+
+FolkHandleMail__14zNPCBalloonBoyFP6NPCMsg:
 /* 80106A3C 0010383C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106A40 00103840  7C 08 02 A6 */	mflr r0
 /* 80106A44 00103844  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4541,6 +4615,8 @@ lbl_80106CD4:
 /* 80106CE0 00103AE0  7C 08 03 A6 */	mtlr r0
 /* 80106CE4 00103AE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80106CE8 00103AE8  4E 80 00 20 */	blr 
+
+Init__15zNPCBubbleBuddyFP9xEntAsset:
 /* 80106CEC 00103AEC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106CF0 00103AF0  7C 08 02 A6 */	mflr r0
 /* 80106CF4 00103AF4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4562,6 +4638,8 @@ lbl_80106CD4:
 /* 80106D34 00103B34  7C 08 03 A6 */	mtlr r0
 /* 80106D38 00103B38  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106D3C 00103B3C  4E 80 00 20 */	blr 
+
+Setup__15zNPCBubbleBuddyFv:
 /* 80106D40 00103B40  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106D44 00103B44  7C 08 02 A6 */	mflr r0
 /* 80106D48 00103B48  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4598,8 +4676,8 @@ lbl_80106CD4:
 /* 80106DC4 00103BC4  90 6D 94 B4 */	stw r3, rast_enviro__15zNPCBubbleBuddy-_SDA_BASE_(r13)
 lbl_80106DC8:
 /* 80106DC8 00103BC8  80 9E 00 24 */	lwz r4, 0x24(r30)
-/* 80106DCC 00103BCC  3C 60 80 10 */	lis r3, lbl_80106FB8@ha
-/* 80106DD0 00103BD0  38 03 6F B8 */	addi r0, r3, lbl_80106FB8@l
+/* 80106DCC 00103BCC  3C 60 80 10 */	lis r3, NPC_BubBud_RenderCB__FP8RpAtomic@ha
+/* 80106DD0 00103BD0  38 03 6F B8 */	addi r0, r3, NPC_BubBud_RenderCB__FP8RpAtomic@l
 /* 80106DD4 00103BD4  80 64 00 14 */	lwz r3, 0x14(r4)
 /* 80106DD8 00103BD8  54 63 07 32 */	rlwinm r3, r3, 0, 0x1c, 0x19
 /* 80106DDC 00103BDC  60 63 00 10 */	ori r3, r3, 0x10
@@ -4622,6 +4700,8 @@ lbl_80106E10:
 /* 80106E1C 00103C1C  7C 08 03 A6 */	mtlr r0
 /* 80106E20 00103C20  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106E24 00103C24  4E 80 00 20 */	blr 
+
+Reset__15zNPCBubbleBuddyFv:
 /* 80106E28 00103C28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80106E2C 00103C2C  7C 08 02 A6 */	mflr r0
 /* 80106E30 00103C30  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4636,6 +4716,8 @@ lbl_80106E10:
 /* 80106E54 00103C54  7C 08 03 A6 */	mtlr r0
 /* 80106E58 00103C58  38 21 00 10 */	addi r1, r1, 0x10
 /* 80106E5C 00103C5C  4E 80 00 20 */	blr 
+
+RenderExtra__15zNPCBubbleBuddyFv:
 /* 80106E60 00103C60  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80106E64 00103C64  7C 08 02 A6 */	mflr r0
 /* 80106E68 00103C68  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4730,7 +4812,8 @@ lbl_80106F90:
 /* 80106FAC 00103DAC  7C 08 03 A6 */	mtlr r0
 /* 80106FB0 00103DB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80106FB4 00103DB4  4E 80 00 20 */	blr 
-lbl_80106FB8:
+
+NPC_BubBud_RenderCB__FP8RpAtomic:
 /* 80106FB8 00103DB8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80106FBC 00103DBC  7C 08 02 A6 */	mflr r0
 /* 80106FC0 00103DC0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -4809,7 +4892,8 @@ lbl_801070C8:
 /* 801070DC 00103EDC  7C 08 03 A6 */	mtlr r0
 /* 801070E0 00103EE0  38 21 00 30 */	addi r1, r1, 0x30
 /* 801070E4 00103EE4  4E 80 00 20 */	blr 
-lbl_801070E8:
+
+FOLK_grul_goAlert__FP5xGoalPvP11en_trantypefPv:
 /* 801070E8 00103EE8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801070EC 00103EEC  7C 08 02 A6 */	mflr r0
 /* 801070F0 00103EF0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4845,7 +4929,8 @@ lbl_8010714C:
 /* 8010715C 00103F5C  7C 08 03 A6 */	mtlr r0
 /* 80107160 00103F60  38 21 00 20 */	addi r1, r1, 0x20
 /* 80107164 00103F64  4E 80 00 20 */	blr 
-lbl_80107168:
+
+MERC_grul_goAlert__FP5xGoalPvP11en_trantypefPv:
 /* 80107168 00103F68  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8010716C 00103F6C  7C 08 02 A6 */	mflr r0
 /* 80107170 00103F70  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5125,6 +5210,8 @@ __ct__Q28ztaskbox8callbackFv:
 /* 80107510 00104310  38 04 6E 70 */	addi r0, r4, __vt__Q28ztaskbox8callback@l
 /* 80107514 00104314  90 03 00 00 */	stw r0, 0(r3)
 /* 80107518 00104318  4E 80 00 20 */	blr 
+
+GenShadCacheRad__12zNPCVillagerFv:
 /* 8010751C 0010431C  C0 22 9C A4 */	lfs f1, lbl_803CE624-_SDA2_BASE_(r2)
 /* 80107520 00104320  4E 80 00 20 */	blr 
 
@@ -5135,23 +5222,41 @@ get_said__12zNPCNewsFishFQ212zNPCNewsFish8say_enum:
 /* 8010752C 0010432C  38 64 02 B0 */	addi r3, r4, 0x2b0
 /* 80107530 00104330  7C 60 1A 14 */	add r3, r0, r3
 /* 80107534 00104334  4E 80 00 20 */	blr 
+
+Render__15zNPCBubbleBuddyFv:
 /* 80107538 00104338  80 03 02 34 */	lwz r0, 0x234(r3)
 /* 8010753C 0010433C  60 00 00 01 */	ori r0, r0, 1
 /* 80107540 00104340  90 03 02 34 */	stw r0, 0x234(r3)
 /* 80107544 00104344  4E 80 00 20 */	blr 
+
+PRIV_GetDriverData__8zNPCFishFv:
 /* 80107548 00104348  38 63 02 CC */	addi r3, r3, 0x2cc
 /* 8010754C 0010434C  4E 80 00 20 */	blr 
+
+ColChkByFlags__12zNPCVillagerCFv:
 /* 80107550 00104350  38 60 00 18 */	li r3, 0x18
 /* 80107554 00104354  4E 80 00 20 */	blr 
+
+ColPenByFlags__12zNPCVillagerCFv:
 /* 80107558 00104358  38 60 00 18 */	li r3, 0x18
 /* 8010755C 0010435C  4E 80 00 20 */	blr 
+
+SelfSetup__12zNPCNewsFishFv:
 /* 80107560 00104360  4E 80 00 20 */	blr 
+
+ColChkFlags__15zNPCMerManChairCFv:
 /* 80107564 00104364  38 60 00 00 */	li r3, 0
 /* 80107568 00104368  4E 80 00 20 */	blr 
+
+ColPenFlags__15zNPCMerManChairCFv:
 /* 8010756C 0010436C  38 60 00 00 */	li r3, 0
 /* 80107570 00104370  4E 80 00 20 */	blr 
+
+PhysicsFlags__15zNPCMerManChairCFv:
 /* 80107574 00104374  38 60 00 00 */	li r3, 0
 /* 80107578 00104378  4E 80 00 20 */	blr 
+
+on_talk_stop__7HiThereFv:
 /* 8010757C 0010437C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80107580 00104380  7C 08 02 A6 */	mflr r0
 /* 80107584 00104384  90 01 00 14 */	stw r0, 0x14(r1)
@@ -5165,6 +5270,8 @@ lbl_8010759C:
 /* 801075A0 001043A0  7C 08 03 A6 */	mtlr r0
 /* 801075A4 001043A4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801075A8 001043A8  4E 80 00 20 */	blr 
+
+on_talk_start__7HiThereFv:
 /* 801075AC 001043AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801075B0 001043B0  7C 08 02 A6 */	mflr r0
 /* 801075B4 001043B4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -5178,14 +5285,24 @@ lbl_801075CC:
 /* 801075D0 001043D0  7C 08 03 A6 */	mtlr r0
 /* 801075D4 001043D4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801075D8 001043D8  4E 80 00 20 */	blr 
+
+ColChkFlags__14zNPCNewsFishTVCFv:
 /* 801075DC 001043DC  38 60 00 00 */	li r3, 0
 /* 801075E0 001043E0  4E 80 00 20 */	blr 
+
+ColPenFlags__14zNPCNewsFishTVCFv:
 /* 801075E4 001043E4  38 60 00 00 */	li r3, 0
 /* 801075E8 001043E8  4E 80 00 20 */	blr 
+
+ColChkByFlags__14zNPCNewsFishTVCFv:
 /* 801075EC 001043EC  38 60 00 00 */	li r3, 0
 /* 801075F0 001043F0  4E 80 00 20 */	blr 
+
+ColPenByFlags__14zNPCNewsFishTVCFv:
 /* 801075F4 001043F4  38 60 00 00 */	li r3, 0
 /* 801075F8 001043F8  4E 80 00 20 */	blr 
+
+PhysicsFlags__14zNPCNewsFishTVCFv:
 /* 801075FC 001043FC  38 60 00 00 */	li r3, 0
 /* 80107600 00104400  4E 80 00 20 */	blr 
 
@@ -5282,7 +5399,11 @@ HaveTarget__9NPCTargetFv:
 StatusGet__8ztaskboxCFv:
 /* 8010772C 0010452C  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 80107730 00104530  4E 80 00 20 */	blr 
+
+on_talk_start__Q28ztaskbox8callbackFv:
 /* 80107734 00104534  4E 80 00 20 */	blr 
+
+on_talk_stop__Q28ztaskbox8callbackFv:
 /* 80107738 00104538  4E 80 00 20 */	blr 
 
 xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:

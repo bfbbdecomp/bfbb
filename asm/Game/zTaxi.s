@@ -35,10 +35,10 @@ zTaxi_Init__FP5zTaxiP10taxi_asset:
 /* 80172090 0016EE90  98 0D 97 6C */	stb r0, lbl_803CC06C-_SDA_BASE_(r13)
 lbl_80172094:
 /* 80172094 0016EE94  3C 80 80 33 */	lis r4, lbl_8032A568@ha
-/* 80172098 0016EE98  3C 60 80 17 */	lis r3, lbl_801725DC@ha
+/* 80172098 0016EE98  3C 60 80 17 */	lis r3, zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8017209C 0016EE9C  38 04 A5 68 */	addi r0, r4, lbl_8032A568@l
 /* 801720A0 0016EEA0  90 0D 97 68 */	stw r0, lbl_803CC068-_SDA_BASE_(r13)
-/* 801720A4 0016EEA4  38 03 25 DC */	addi r0, r3, lbl_801725DC@l
+/* 801720A4 0016EEA4  38 03 25 DC */	addi r0, r3, zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 801720A8 0016EEA8  93 DF 00 10 */	stw r30, 0x10(r31)
 /* 801720AC 0016EEAC  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 801720B0 0016EEB0  88 1F 00 05 */	lbz r0, 5(r31)
@@ -413,7 +413,8 @@ zTaxi_Load__FP5zTaxiP7xSerial:
 /* 801725D0 0016F3D0  7C 08 03 A6 */	mtlr r0
 /* 801725D4 0016F3D4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801725D8 0016F3D8  4E 80 00 20 */	blr 
-lbl_801725DC:
+
+zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 801725DC 0016F3DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801725E0 0016F3E0  7C 08 02 A6 */	mflr r0
 /* 801725E4 0016F3E4  2C 05 00 02 */	cmpwi r5, 2
@@ -440,8 +441,14 @@ lbl_80172620:
 /* 80172628 0016F428  7C 08 03 A6 */	mtlr r0
 /* 8017262C 0016F42C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80172630 0016F430  4E 80 00 20 */	blr 
+
+on_signal__6taxiCBFUi:
 /* 80172634 0016F434  4E 80 00 20 */	blr 
+
+on_start__6taxiCBFv:
 /* 80172638 0016F438  4E 80 00 20 */	blr 
+
+on_answer__6taxiCBFQ28ztalkbox11answer_enum:
 /* 8017263C 0016F43C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80172640 0016F440  7C 08 02 A6 */	mflr r0
 /* 80172644 0016F444  7C 83 23 78 */	mr r3, r4
@@ -451,6 +458,8 @@ lbl_80172620:
 /* 80172654 0016F454  7C 08 03 A6 */	mtlr r0
 /* 80172658 0016F458  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017265C 0016F45C  4E 80 00 20 */	blr 
+
+on_stop__6taxiCBFv:
 /* 80172660 0016F460  4E 80 00 20 */	blr 
 
 .endif

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8013AF64 - 0x8013D054
 
 /* create_glow_light__25@unnamed@zDiscoFloor_cpp@Fv */
@@ -1221,6 +1223,8 @@ lbl_8013BFD8:
 /* 8013C000 00138E00  7C 08 03 A6 */	mtlr r0
 /* 8013C004 00138E04  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013C008 00138E08  4E 80 00 20 */	blr 
+
+init__13z_disco_floorFPvPv:
 /* 8013C00C 00138E0C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013C010 00138E10  7C 08 02 A6 */	mflr r0
 /* 8013C014 00138E14  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1242,9 +1246,9 @@ load__13z_disco_floorFR19z_disco_floor_asset:
 /* 8013C048 00138E48  93 A1 00 14 */	stw r29, 0x14(r1)
 /* 8013C04C 00138E4C  4B EC D3 B5 */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 8013C050 00138E50  38 00 00 38 */	li r0, 0x38
-/* 8013C054 00138E54  3C 60 80 14 */	lis r3, lbl_8013CF08@ha
+/* 8013C054 00138E54  3C 60 80 14 */	lis r3, event_handler__13z_disco_floorFP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8013C058 00138E58  98 1E 00 04 */	stb r0, 4(r30)
-/* 8013C05C 00138E5C  38 03 CF 08 */	addi r0, r3, lbl_8013CF08@l
+/* 8013C05C 00138E5C  38 03 CF 08 */	addi r0, r3, event_handler__13z_disco_floorFP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8013C060 00138E60  93 FE 00 14 */	stw r31, 0x14(r30)
 /* 8013C064 00138E64  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8013C068 00138E68  88 1E 00 05 */	lbz r0, 5(r30)
@@ -2300,7 +2304,8 @@ lbl_8013CECC:
 /* 8013CEFC 00139CFC  7C 08 03 A6 */	mtlr r0
 /* 8013CF00 00139D00  38 21 00 80 */	addi r1, r1, 0x80
 /* 8013CF04 00139D04  4E 80 00 20 */	blr 
-lbl_8013CF08:
+
+event_handler__13z_disco_floorFP5xBaseP5xBaseUiPCfP5xBase:
 /* 8013CF08 00139D08  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013CF0C 00139D0C  7C 08 02 A6 */	mflr r0
 /* 8013CF10 00139D10  2C 05 01 A6 */	cmpwi r5, 0x1a6
@@ -2405,6 +2410,9 @@ lbl_8013D044:
 /* 8013D048 00139E48  4D 80 00 20 */	bltlr 
 /* 8013D04C 00139E4C  7C A3 2B 78 */	mr r3, r5
 /* 8013D050 00139E50  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026D090:
 	.incbin "baserom.dol", 0x26A070, 0x14

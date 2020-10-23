@@ -139,7 +139,8 @@ __as__5RwV2dFRC5RwV2d:
 /* 80170674 0016D474  D0 23 00 00 */	stfs f1, 0(r3)
 /* 80170678 0016D478  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8017067C 0016D47C  4E 80 00 20 */	blr 
-lbl_80170680:
+
+zParPTankSparkleUpdate__FP9zParPTankf:
 /* 80170680 0016D480  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80170684 0016D484  7C 08 02 A6 */	mflr r0
 /* 80170688 0016D488  90 01 00 34 */	stw r0, 0x34(r1)
@@ -542,7 +543,8 @@ lbl_80170C60:
 /* 80170C6C 0016DA6C  7C 08 03 A6 */	mtlr r0
 /* 80170C70 0016DA70  38 21 00 10 */	addi r1, r1, 0x10
 /* 80170C74 0016DA74  4E 80 00 20 */	blr 
-lbl_80170C78:
+
+zParPTankBubbleUpdate__FP9zParPTankf:
 /* 80170C78 0016DA78  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80170C7C 0016DA7C  7C 08 02 A6 */	mflr r0
 /* 80170C80 0016DA80  90 01 00 94 */	stw r0, 0x94(r1)
@@ -1095,7 +1097,8 @@ zParPTankSnowCreate__FP9zParPTankUiPFP9zParPTankf_v:
 /* 80171478 0016E278  7C 08 03 A6 */	mtlr r0
 /* 8017147C 0016E27C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80171480 0016E280  4E 80 00 20 */	blr 
-lbl_80171484:
+
+zParPTankSnowUpdate__FP9zParPTankf:
 /* 80171484 0016E284  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 80171488 0016E288  7C 08 02 A6 */	mflr r0
 /* 8017148C 0016E28C  90 01 00 84 */	stw r0, 0x84(r1)
@@ -1451,7 +1454,8 @@ lbl_801719AC:
 /* 801719B8 0016E7B8  7C 08 03 A6 */	mtlr r0
 /* 801719BC 0016E7BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801719C0 0016E7C0  4E 80 00 20 */	blr 
-lbl_801719C4:
+
+zParPTankSteamUpdate__FP9zParPTankf:
 /* 801719C4 0016E7C4  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 801719C8 0016E7C8  7C 08 02 A6 */	mflr r0
 /* 801719CC 0016E7CC  90 01 00 44 */	stw r0, 0x44(r1)
@@ -1588,15 +1592,15 @@ zParPTankInit__Fv:
 /* 80171BB0 0016E9B0  90 0D 97 38 */	stw r0, lbl_803CC038-_SDA_BASE_(r13)
 /* 80171BB4 0016E9B4  4B FF FF CD */	bl zParPTankAdd__Fv
 /* 80171BB8 0016E9B8  90 6D 97 3C */	stw r3, lbl_803CC03C-_SDA_BASE_(r13)
-/* 80171BBC 0016E9BC  3C 60 80 17 */	lis r3, lbl_80170680@ha
-/* 80171BC0 0016E9C0  38 A3 06 80 */	addi r5, r3, lbl_80170680@l
+/* 80171BBC 0016E9BC  3C 60 80 17 */	lis r3, zParPTankSparkleUpdate__FP9zParPTankf@ha
+/* 80171BC0 0016E9C0  38 A3 06 80 */	addi r5, r3, zParPTankSparkleUpdate__FP9zParPTankf@l
 /* 80171BC4 0016E9C4  38 80 00 80 */	li r4, 0x80
 /* 80171BC8 0016E9C8  80 6D 97 3C */	lwz r3, lbl_803CC03C-_SDA_BASE_(r13)
 /* 80171BCC 0016E9CC  4B FF E8 B1 */	bl zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171BD0 0016E9D0  4B FF FF B1 */	bl zParPTankAdd__Fv
 /* 80171BD4 0016E9D4  90 6D 97 44 */	stw r3, lbl_803CC044-_SDA_BASE_(r13)
-/* 80171BD8 0016E9D8  3C 60 80 17 */	lis r3, lbl_80170C78@ha
-/* 80171BDC 0016E9DC  38 A3 0C 78 */	addi r5, r3, lbl_80170C78@l
+/* 80171BD8 0016E9D8  3C 60 80 17 */	lis r3, zParPTankBubbleUpdate__FP9zParPTankf@ha
+/* 80171BDC 0016E9DC  38 A3 0C 78 */	addi r5, r3, zParPTankBubbleUpdate__FP9zParPTankf@l
 /* 80171BE0 0016E9E0  38 80 00 10 */	li r4, 0x10
 /* 80171BE4 0016E9E4  80 6D 97 44 */	lwz r3, lbl_803CC044-_SDA_BASE_(r13)
 /* 80171BE8 0016E9E8  4B FF EF 2D */	bl zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v
@@ -1606,15 +1610,15 @@ zParPTankInit__Fv:
 /* 80171BF8 0016E9F8  90 03 00 00 */	stw r0, 0(r3)
 /* 80171BFC 0016E9FC  4B FF FF 85 */	bl zParPTankAdd__Fv
 /* 80171C00 0016EA00  90 6D 97 40 */	stw r3, lbl_803CC040-_SDA_BASE_(r13)
-/* 80171C04 0016EA04  3C 60 80 17 */	lis r3, lbl_80170C78@ha
-/* 80171C08 0016EA08  38 A3 0C 78 */	addi r5, r3, lbl_80170C78@l
+/* 80171C04 0016EA04  3C 60 80 17 */	lis r3, zParPTankBubbleUpdate__FP9zParPTankf@ha
+/* 80171C08 0016EA08  38 A3 0C 78 */	addi r5, r3, zParPTankBubbleUpdate__FP9zParPTankf@l
 /* 80171C0C 0016EA0C  38 80 03 00 */	li r4, 0x300
 /* 80171C10 0016EA10  80 6D 97 40 */	lwz r3, lbl_803CC040-_SDA_BASE_(r13)
 /* 80171C14 0016EA14  4B FF ED 9D */	bl zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v
 /* 80171C18 0016EA18  4B FF FF 69 */	bl zParPTankAdd__Fv
 /* 80171C1C 0016EA1C  90 6D 97 4C */	stw r3, lbl_803CC04C-_SDA_BASE_(r13)
-/* 80171C20 0016EA20  3C 60 80 17 */	lis r3, lbl_801719C4@ha
-/* 80171C24 0016EA24  38 A3 19 C4 */	addi r5, r3, lbl_801719C4@l
+/* 80171C20 0016EA20  3C 60 80 17 */	lis r3, zParPTankSteamUpdate__FP9zParPTankf@ha
+/* 80171C24 0016EA24  38 A3 19 C4 */	addi r5, r3, zParPTankSteamUpdate__FP9zParPTankf@l
 /* 80171C28 0016EA28  38 80 00 80 */	li r4, 0x80
 /* 80171C2C 0016EA2C  80 6D 97 4C */	lwz r3, lbl_803CC04C-_SDA_BASE_(r13)
 /* 80171C30 0016EA30  4B FF FB A1 */	bl zParPTankSteamCreate__FP9zParPTankUiPFP9zParPTankf_v
@@ -1630,8 +1634,8 @@ zParPTankSceneEnter__Fv:
 /* 80171C4C 0016EA4C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80171C50 0016EA50  4B FF FF 31 */	bl zParPTankAdd__Fv
 /* 80171C54 0016EA54  90 6D 97 48 */	stw r3, lbl_803CC048-_SDA_BASE_(r13)
-/* 80171C58 0016EA58  3C 60 80 17 */	lis r3, lbl_80171484@ha
-/* 80171C5C 0016EA5C  38 A3 14 84 */	addi r5, r3, lbl_80171484@l
+/* 80171C58 0016EA58  3C 60 80 17 */	lis r3, zParPTankSnowUpdate__FP9zParPTankf@ha
+/* 80171C5C 0016EA5C  38 A3 14 84 */	addi r5, r3, zParPTankSnowUpdate__FP9zParPTankf@l
 /* 80171C60 0016EA60  38 80 04 00 */	li r4, 0x400
 /* 80171C64 0016EA64  80 6D 97 48 */	lwz r3, lbl_803CC048-_SDA_BASE_(r13)
 /* 80171C68 0016EA68  4B FF F7 8D */	bl zParPTankSnowCreate__FP9zParPTankUiPFP9zParPTankf_v

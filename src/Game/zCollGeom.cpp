@@ -2,14 +2,14 @@
 
 #include <types.h>
 
-// zCollGeom_EntSetup(xEnt*)
+// func_80116588
 #pragma GLOBAL_ASM("asm/Game/zCollGeom.s", "zCollGeom_EntSetup__FP4xEnt")
 
-// zCollGeom_Init()
+// func_8011676C
 #pragma GLOBAL_ASM("asm/Game/zCollGeom.s", "zCollGeom_Init__Fv")
 
-// zCollGeom_CamEnable(xEnt*)
+// func_801168C8
 #pragma GLOBAL_ASM("asm/Game/zCollGeom.s", "zCollGeom_CamEnable__FP4xEnt")
 
-// zCollGeom_CamDisable(xEnt*)
+// func_801168E0
 #pragma GLOBAL_ASM("asm/Game/zCollGeom.s", "zCollGeom_CamDisable__FP4xEnt")

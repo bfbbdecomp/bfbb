@@ -971,7 +971,8 @@ lbl_80040070:
 /* 800400E0 0003CEE0  7C 08 03 A6 */	mtlr r0
 /* 800400E4 0003CEE4  38 21 01 50 */	addi r1, r1, 0x150
 /* 800400E8 0003CEE8  4E 80 00 20 */	blr 
-lbl_800400EC:
+
+xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv:
 /* 800400EC 0003CEEC  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800400F0 0003CEF0  7C 08 02 A6 */	mflr r0
 /* 800400F4 0003CEF4  90 01 00 74 */	stw r0, 0x74(r1)
@@ -1099,8 +1100,8 @@ xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis:
 /* 800402B0 0003D0B0  D0 05 00 10 */	stfs f0, 0x10(r5)
 /* 800402B4 0003D0B4  4B FD 56 41 */	bl xQuickCullForRay__FP7xQCDataPC5xRay3
 /* 800402B8 0003D0B8  3C 60 80 3D */	lis r3, colls_grid@ha
-/* 800402BC 0003D0BC  3C A0 80 04 */	lis r5, lbl_800400EC@ha
-/* 800402C0 0003D0C0  38 C5 00 EC */	addi r6, r5, lbl_800400EC@l
+/* 800402BC 0003D0BC  3C A0 80 04 */	lis r5, xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 800402C0 0003D0C0  38 C5 00 EC */	addi r6, r5, xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 800402C4 0003D0C4  7F A4 EB 78 */	mr r4, r29
 /* 800402C8 0003D0C8  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 800402CC 0003D0CC  7F C5 F3 78 */	mr r5, r30
@@ -1108,8 +1109,8 @@ xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis:
 /* 800402D4 0003D0D4  38 E1 00 08 */	addi r7, r1, 8
 /* 800402D8 0003D0D8  4B FF F5 B9 */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
 /* 800402DC 0003D0DC  3C 60 80 3D */	lis r3, colls_oso_grid@ha
-/* 800402E0 0003D0E0  3C A0 80 04 */	lis r5, lbl_800400EC@ha
-/* 800402E4 0003D0E4  38 C5 00 EC */	addi r6, r5, lbl_800400EC@l
+/* 800402E0 0003D0E0  3C A0 80 04 */	lis r5, xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 800402E4 0003D0E4  38 C5 00 EC */	addi r6, r5, xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 800402E8 0003D0E8  7F A4 EB 78 */	mr r4, r29
 /* 800402EC 0003D0EC  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 800402F0 0003D0F0  7F C5 F3 78 */	mr r5, r30
@@ -1117,8 +1118,8 @@ xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis:
 /* 800402F8 0003D0F8  38 E1 00 08 */	addi r7, r1, 8
 /* 800402FC 0003D0FC  4B FF F5 95 */	bl xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv
 /* 80040300 0003D100  3C 60 80 3D */	lis r3, npcs_grid@ha
-/* 80040304 0003D104  3C A0 80 04 */	lis r5, lbl_800400EC@ha
-/* 80040308 0003D108  38 C5 00 EC */	addi r6, r5, lbl_800400EC@l
+/* 80040304 0003D104  3C A0 80 04 */	lis r5, xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@ha
+/* 80040308 0003D108  38 C5 00 EC */	addi r6, r5, xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv@l
 /* 8004030C 0003D10C  7F A4 EB 78 */	mr r4, r29
 /* 80040310 0003D110  38 63 A7 A8 */	addi r3, r3, npcs_grid@l
 /* 80040314 0003D114  7F C5 F3 78 */	mr r5, r30
@@ -1927,7 +1928,8 @@ lbl_80040E88:
 /* 80040EA8 0003DCA8  7C 08 03 A6 */	mtlr r0
 /* 80040EAC 0003DCAC  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80040EB0 0003DCB0  4E 80 00 20 */	blr 
-lbl_80040EB4:
+
+boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv:
 /* 80040EB4 0003DCB4  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80040EB8 0003DCB8  7C 08 02 A6 */	mflr r0
 /* 80040EBC 0003DCBC  90 01 00 54 */	stw r0, 0x54(r1)
@@ -1988,7 +1990,8 @@ lbl_80040F74:
 /* 80040F88 0003DD88  7C 08 03 A6 */	mtlr r0
 /* 80040F8C 0003DD8C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80040F90 0003DD90  4E 80 00 20 */	blr 
-lbl_80040F94:
+
+sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 80040F94 0003DD94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80040F98 0003DD98  7C 08 02 A6 */	mflr r0
 /* 80040F9C 0003DD9C  7C A4 2B 78 */	mr r4, r5
@@ -1999,7 +2002,8 @@ lbl_80040F94:
 /* 80040FB0 0003DDB0  7C 08 03 A6 */	mtlr r0
 /* 80040FB4 0003DDB4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80040FB8 0003DDB8  4E 80 00 20 */	blr 
-lbl_80040FBC:
+
+gridNearestFloorCB__FP4xEntPv:
 /* 80040FBC 0003DDBC  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80040FC0 0003DDC0  7C 08 02 A6 */	mflr r0
 /* 80040FC4 0003DDC4  90 01 00 64 */	stw r0, 0x64(r1)
@@ -2058,11 +2062,11 @@ lbl_80041070:
 /* 80041080 0003DE80  80 63 00 04 */	lwz r3, 4(r3)
 /* 80041084 0003DE84  48 1F 82 F9 */	bl RwFrameTransform
 /* 80041088 0003DE88  80 ED 8A 70 */	lwz r7, lbl_803CB370-_SDA_BASE_(r13)
-/* 8004108C 0003DE8C  3C 60 80 04 */	lis r3, lbl_80040EB4@ha
+/* 8004108C 0003DE8C  3C 60 80 04 */	lis r3, boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv@ha
 /* 80041090 0003DE90  3C 80 80 2D */	lis r4, lbl_802C89D4@ha
 /* 80041094 0003DE94  7F E6 FB 78 */	mr r6, r31
 /* 80041098 0003DE98  80 07 00 4C */	lwz r0, 0x4c(r7)
-/* 8004109C 0003DE9C  38 A3 0E B4 */	addi r5, r3, lbl_80040EB4@l
+/* 8004109C 0003DE9C  38 A3 0E B4 */	addi r5, r3, boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv@l
 /* 800410A0 0003DEA0  38 84 89 D4 */	addi r4, r4, lbl_802C89D4@l
 /* 800410A4 0003DEA4  90 0D 8A 64 */	stw r0, lbl_803CB364-_SDA_BASE_(r13)
 /* 800410A8 0003DEA8  80 67 00 10 */	lwz r3, 0x10(r7)
@@ -2156,9 +2160,9 @@ xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc:
 /* 800411F4 0003DFF4  9B AD 8A 74 */	stb r29, lbl_803CB374-_SDA_BASE_(r13)
 /* 800411F8 0003DFF8  3C 60 80 3D */	lis r3, colls_grid@ha
 /* 800411FC 0003DFFC  3C A0 80 2D */	lis r5, lbl_802C8988@ha
-/* 80041200 0003E000  3C 80 80 04 */	lis r4, lbl_80040FBC@ha
+/* 80041200 0003E000  3C 80 80 04 */	lis r4, gridNearestFloorCB__FP4xEntPv@ha
 /* 80041204 0003E004  9B 8D 8A 75 */	stb r28, lbl_803CB375-_SDA_BASE_(r13)
-/* 80041208 0003E008  38 C4 0F BC */	addi r6, r4, lbl_80040FBC@l
+/* 80041208 0003E008  38 C4 0F BC */	addi r6, r4, gridNearestFloorCB__FP4xEntPv@l
 /* 8004120C 0003E00C  38 63 A6 D8 */	addi r3, r3, colls_grid@l
 /* 80041210 0003E010  38 A5 89 88 */	addi r5, r5, lbl_802C8988@l
 /* 80041214 0003E014  7F E4 FB 78 */	mr r4, r31
@@ -2166,11 +2170,11 @@ xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc:
 /* 8004121C 0003E01C  48 0E 17 51 */	bl xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv
 /* 80041220 0003E020  3C 60 80 3D */	lis r3, colls_oso_grid@ha
 /* 80041224 0003E024  3C A0 80 2D */	lis r5, lbl_802C8988@ha
-/* 80041228 0003E028  3C C0 80 04 */	lis r6, lbl_80040FBC@ha
+/* 80041228 0003E028  3C C0 80 04 */	lis r6, gridNearestFloorCB__FP4xEntPv@ha
 /* 8004122C 0003E02C  7F E4 FB 78 */	mr r4, r31
 /* 80041230 0003E030  38 63 A7 74 */	addi r3, r3, colls_oso_grid@l
 /* 80041234 0003E034  38 A5 89 88 */	addi r5, r5, lbl_802C8988@l
-/* 80041238 0003E038  38 C6 0F BC */	addi r6, r6, lbl_80040FBC@l
+/* 80041238 0003E038  38 C6 0F BC */	addi r6, r6, gridNearestFloorCB__FP4xEntPv@l
 /* 8004123C 0003E03C  7F 67 DB 78 */	mr r7, r27
 /* 80041240 0003E040  48 0E 17 2D */	bl xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv
 lbl_80041244:
@@ -2186,9 +2190,9 @@ lbl_80041244:
 /* 80041268 0003E068  28 00 00 00 */	cmplwi r0, 0
 /* 8004126C 0003E06C  41 82 00 3C */	beq lbl_800412A8
 /* 80041270 0003E070  38 00 00 01 */	li r0, 1
-/* 80041274 0003E074  3C 60 80 04 */	lis r3, lbl_80040F94@ha
+/* 80041274 0003E074  3C 60 80 04 */	lis r3, sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 80041278 0003E078  98 0D 8A 68 */	stb r0, lbl_803CB368-_SDA_BASE_(r13)
-/* 8004127C 0003E07C  38 A3 0F 94 */	addi r5, r3, lbl_80040F94@l
+/* 8004127C 0003E07C  38 A3 0F 94 */	addi r5, r3, sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 80041280 0003E080  7F 66 DB 78 */	mr r6, r27
 /* 80041284 0003E084  38 81 00 08 */	addi r4, r1, 8
 /* 80041288 0003E088  80 7A 00 44 */	lwz r3, 0x44(r26)
@@ -2200,9 +2204,9 @@ lbl_80041244:
 /* 800412A0 0003E0A0  98 0D 8A 68 */	stb r0, lbl_803CB368-_SDA_BASE_(r13)
 /* 800412A4 0003E0A4  48 00 00 1C */	b lbl_800412C0
 lbl_800412A8:
-/* 800412A8 0003E0A8  3C 80 80 04 */	lis r4, lbl_80040F94@ha
+/* 800412A8 0003E0A8  3C 80 80 04 */	lis r4, sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800412AC 0003E0AC  80 63 00 00 */	lwz r3, 0(r3)
-/* 800412B0 0003E0B0  38 A4 0F 94 */	addi r5, r4, lbl_80040F94@l
+/* 800412B0 0003E0B0  38 A4 0F 94 */	addi r5, r4, sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800412B4 0003E0B4  7F 66 DB 78 */	mr r6, r27
 /* 800412B8 0003E0B8  38 81 00 08 */	addi r4, r1, 8
 /* 800412BC 0003E0BC  48 1B 83 DD */	bl RpCollisionWorldForAllIntersections

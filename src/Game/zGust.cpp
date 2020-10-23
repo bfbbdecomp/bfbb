@@ -2,43 +2,47 @@
 
 #include <types.h>
 
-// zGustInit(zGust*,zGustAsset*)
+// func_8009AD50
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustInit__FP5zGustP10zGustAsset")
 
-// zGustSetup(zGust*)
+// func_8009ADCC
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustSetup__FP5zGust")
 
-// zGustInit()
+// func_8009AE14
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustInit__Fv")
 
-// zGustSetup()
+// func_8009AEC4
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustSetup__Fv")
 
-// zGustTurnOn(zGust*)
+// func_8009AF50
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustTurnOn__FP5zGust")
 
-// zGustTurnOff(zGust*)
+// func_8009AF68
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustTurnOff__FP5zGust")
 
-// zGustToggleOn(zGust*)
+// func_8009AF78
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustToggleOn__FP5zGust")
 
-// zGustGetGust(unsigned short)
+// func_8009AF90
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustGetGust__FUs")
 
-#pragma GLOBAL_ASM("asm/Game/zGust.s", "func_8009AFB4")
+// func_8009AFB4
+#pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustUpdateEnt__FP4xEntP6xScenefPv")
 
-// zGustSave(zGust*,xSerial*)
+// func_8009B294
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustSave__FP5zGustP7xSerial")
 
-// zGustLoad(zGust*,xSerial*)
+// func_8009B2B4
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustLoad__FP5zGustP7xSerial")
 
-// zGustReset(zGust*)
+// func_8009B2D4
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustReset__FP5zGust")
 
-// UpdateGustFX(zGust*,float)
+// func_8009B310
+#pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_8009B38C
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "UpdateGustFX__FP5zGustf")
 
-// zGustUpdateFX(float)
+// func_8009B610
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustUpdateFX__Ff")

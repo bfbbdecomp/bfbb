@@ -4,7 +4,8 @@
 
 .section .text  # 0x80092D1C - 0x800974A8
 
-func_80092D1C:
+
+on_spawn_bubble_wall__FRC10tweak_info:
 /* 80092D1C 0008FB1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80092D20 0008FB20  7C 08 02 A6 */	mflr r0
 /* 80092D24 0008FB24  90 01 00 14 */	stw r0, 0x14(r1)
@@ -34,9 +35,9 @@ zFX_SceneEnter__FP7RpWorld:
 /* 80092D78 0008FB78  88 0D 8E 8C */	lbz r0, lbl_803CB78C-_SDA_BASE_(r13)
 /* 80092D7C 0008FB7C  7C 00 07 75 */	extsb. r0, r0
 /* 80092D80 0008FB80  40 82 00 74 */	bne lbl_80092DF4
-/* 80092D84 0008FB84  3C 80 80 09 */	lis r4, func_80092D1C@ha
+/* 80092D84 0008FB84  3C 80 80 09 */	lis r4, on_spawn_bubble_wall__FRC10tweak_info@ha
 /* 80092D88 0008FB88  38 61 00 08 */	addi r3, r1, 8
-/* 80092D8C 0008FB8C  38 84 2D 1C */	addi r4, r4, func_80092D1C@l
+/* 80092D8C 0008FB8C  38 84 2D 1C */	addi r4, r4, on_spawn_bubble_wall__FRC10tweak_info@l
 /* 80092D90 0008FB90  48 00 45 25 */	bl create_change__14tweak_callbackFPFRC10tweak_info_v
 /* 80092D94 0008FB94  3C 60 80 29 */	lis r3, lbl_8028EFE0@ha
 /* 80092D98 0008FB98  81 81 00 08 */	lwz r12, 8(r1)
@@ -385,8 +386,8 @@ lbl_80093210:
 /* 80093280 00090080  7E 43 93 78 */	mr r3, r18
 /* 80093284 00090084  57 45 18 38 */	slwi r5, r26, 3
 /* 80093288 00090088  4B F7 02 B9 */	bl memcpy
-/* 8009328C 0009008C  3C 60 80 09 */	lis r3, lbl_800939F4@ha
-/* 80093290 00090090  38 03 39 F4 */	addi r0, r3, lbl_800939F4@l
+/* 8009328C 0009008C  3C 60 80 09 */	lis r3, zFXGooRenderAtomic__FP8RpAtomic@ha
+/* 80093290 00090090  38 03 39 F4 */	addi r0, r3, zFXGooRenderAtomic__FP8RpAtomic@l
 /* 80093294 00090094  90 1E 00 48 */	stw r0, 0x48(r30)
 /* 80093298 00090098  80 1E 00 48 */	lwz r0, 0x48(r30)
 /* 8009329C 0009009C  28 00 00 00 */	cmplwi r0, 0
@@ -906,7 +907,8 @@ lbl_800939C8:
 /* 800939E8 000907E8  7C 08 03 A6 */	mtlr r0
 /* 800939EC 000907EC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800939F0 000907F0  4E 80 00 20 */	blr 
-lbl_800939F4:
+
+zFXGooRenderAtomic__FP8RpAtomic:
 /* 800939F4 000907F4  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 800939F8 000907F8  7C 08 02 A6 */	mflr r0
 /* 800939FC 000907FC  90 01 00 A4 */	stw r0, 0xa4(r1)

@@ -2,11 +2,11 @@
 
 #include <types.h>
 
-// xCollideFastInit(xScene*)
+// func_800159D4
 #pragma GLOBAL_ASM("asm/Core/x/xCollideFast.s", "xCollideFastInit__FP6xScene")
 
-// xRayHitsSphereFast(const xRay3*,const xSphere*)
+// func_800159F4
 #pragma GLOBAL_ASM("asm/Core/x/xCollideFast.s", "xRayHitsSphereFast__FPC5xRay3PC7xSphere")
 
-// xRayHitsBoxFast(const xRay3*,const xBox*)
+// func_80015ADC
 #pragma GLOBAL_ASM("asm/Core/x/xCollideFast.s", "xRayHitsBoxFast__FPC5xRay3PC4xBox")

@@ -16,6 +16,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xBound.o                  \
     $(OBJ_DIR)/src/Core/x/xBound.o                  \
     $(OBJ_DIR)/asm/Core/x/xCamera.o                 \
+    $(OBJ_DIR)/src/Core/x/xCamera.o                 \
     $(OBJ_DIR)/asm/Core/x/xClimate.o                \
     $(OBJ_DIR)/src/Core/x/xClimate.o                \
     $(OBJ_DIR)/asm/Core/x/xCollide.o                \
@@ -41,7 +42,9 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xFog.o                    \
     $(OBJ_DIR)/src/Core/x/xFog.o                    \
     $(OBJ_DIR)/asm/Core/x/xFont.o                   \
+    $(OBJ_DIR)/src/Core/x/xFont.o                   \
     $(OBJ_DIR)/asm/Core/x/xFX.o                     \
+    $(OBJ_DIR)/src/Core/x/xFX.o                     \
     $(OBJ_DIR)/asm/Core/x/xGroup.o                  \
     $(OBJ_DIR)/src/Core/x/xGroup.o                  \
     $(OBJ_DIR)/asm/Core/x/xhipio.o                  \
@@ -139,6 +142,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zEntButton.o                \
     $(OBJ_DIR)/src/Game/zEntButton.o                \
     $(OBJ_DIR)/asm/Game/zEntCruiseBubble.o          \
+    $(OBJ_DIR)/src/Game/zEntCruiseBubble.o          \
     $(OBJ_DIR)/asm/Game/zEntDestructObj.o           \
     $(OBJ_DIR)/src/Game/zEntDestructObj.o           \
     $(OBJ_DIR)/asm/Game/zEntHangable.o              \
@@ -213,6 +217,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zThrown.o                   \
     $(OBJ_DIR)/src/Game/zThrown.o                   \
     $(OBJ_DIR)/asm/Game/zUI.o                       \
+    $(OBJ_DIR)/src/Game/zUI.o                       \
     $(OBJ_DIR)/asm/Game/zUIFont.o                   \
     $(OBJ_DIR)/src/Game/zUIFont.o                   \
     $(OBJ_DIR)/asm/Game/zVar.o                      \
@@ -305,6 +310,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xNPCBasic.o               \
     $(OBJ_DIR)/src/Core/x/xNPCBasic.o               \
     $(OBJ_DIR)/asm/Game/zEntPlayerBungeeState.o     \
+    $(OBJ_DIR)/src/Game/zEntPlayerBungeeState.o     \
     $(OBJ_DIR)/asm/Game/zCollGeom.o                 \
     $(OBJ_DIR)/src/Game/zCollGeom.o                 \
     $(OBJ_DIR)/asm/Core/x/xParSys.o                 \
@@ -355,6 +361,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCSupport.o               \
     $(OBJ_DIR)/src/Game/zNPCSupport.o               \
     $(OBJ_DIR)/asm/Game/zTalkBox.o                  \
+    $(OBJ_DIR)/src/Game/zTalkBox.o                  \
     $(OBJ_DIR)/asm/Game/zTextBox.o                  \
     $(OBJ_DIR)/src/Game/zTextBox.o                  \
     $(OBJ_DIR)/asm/Game/zTaskBox.o                  \
@@ -376,6 +383,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xUpdateCull.o             \
     $(OBJ_DIR)/src/Core/x/xUpdateCull.o             \
     $(OBJ_DIR)/asm/Game/zDiscoFloor.o               \
+    $(OBJ_DIR)/src/Game/zDiscoFloor.o               \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossSandy.o         \
     $(OBJ_DIR)/src/Game/zNPCTypeBossSandy.o         \
     $(OBJ_DIR)/asm/Game/zNPCTypeKingJelly.o         \
@@ -383,6 +391,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCGoalBoss.o              \
     $(OBJ_DIR)/src/Game/zNPCGoalBoss.o              \
     $(OBJ_DIR)/asm/Game/zNPCTypePrawn.o             \
+    $(OBJ_DIR)/src/Game/zNPCTypePrawn.o             \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossSB1.o           \
     $(OBJ_DIR)/src/Game/zNPCTypeBossSB1.o           \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossSB2.o           \
@@ -398,6 +407,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zTaxi.o                     \
     $(OBJ_DIR)/src/Game/zTaxi.o                     \
     $(OBJ_DIR)/asm/Game/zNPCTypeDutchman.o          \
+    $(OBJ_DIR)/src/Game/zNPCTypeDutchman.o          \
     $(OBJ_DIR)/asm/Game/zCameraFly.o                \
     $(OBJ_DIR)/src/Game/zCameraFly.o                \
     $(OBJ_DIR)/asm/Core/x/xCurveAsset.o             \
@@ -405,6 +415,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xDecal.o                  \
     $(OBJ_DIR)/src/Core/x/xDecal.o                  \
     $(OBJ_DIR)/asm/Core/x/xLaserBolt.o              \
+    $(OBJ_DIR)/src/Core/x/xLaserBolt.o              \
     $(OBJ_DIR)/asm/Game/zCameraTweak.o              \
     $(OBJ_DIR)/src/Game/zCameraTweak.o              \
     $(OBJ_DIR)/asm/Core/x/xPtankPool.o              \

@@ -72,6 +72,8 @@ lbl_8018FE94:
 /* 8018FE9C 0018CC9C  7C 08 03 A6 */	mtlr r0
 /* 8018FEA0 0018CCA0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8018FEA4 0018CCA4  4E 80 00 20 */	blr 
+
+Enter__19zNPCGoalJellyBumpedFfPv:
 /* 8018FEA8 0018CCA8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8018FEAC 0018CCAC  7C 08 02 A6 */	mflr r0
 /* 8018FEB0 0018CCB0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -120,6 +122,8 @@ lbl_8018FE94:
 /* 8018FF5C 0018CD5C  7C 08 03 A6 */	mtlr r0
 /* 8018FF60 0018CD60  38 21 00 30 */	addi r1, r1, 0x30
 /* 8018FF64 0018CD64  4E 80 00 20 */	blr 
+
+Exit__19zNPCGoalJellyBumpedFfPv:
 /* 8018FF68 0018CD68  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8018FF6C 0018CD6C  7C 08 02 A6 */	mflr r0
 /* 8018FF70 0018CD70  90 01 00 24 */	stw r0, 0x24(r1)
@@ -153,6 +157,8 @@ lbl_8018FE94:
 /* 8018FFE0 0018CDE0  7C 08 03 A6 */	mtlr r0
 /* 8018FFE4 0018CDE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018FFE8 0018CDE8  4E 80 00 20 */	blr 
+
+Process__19zNPCGoalJellyBumpedFP11en_trantypefPvP6xScene:
 /* 8018FFEC 0018CDEC  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8018FFF0 0018CDF0  7C 08 02 A6 */	mflr r0
 /* 8018FFF4 0018CDF4  90 01 00 54 */	stw r0, 0x54(r1)
@@ -572,6 +578,8 @@ lbl_801905A0:
 /* 801905BC 0018D3BC  7C 08 03 A6 */	mtlr r0
 /* 801905C0 0018D3C0  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801905C4 0018D3C4  4E 80 00 20 */	blr 
+
+Enter__19zNPCGoalJellyAttackFfPv:
 /* 801905C8 0018D3C8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801905CC 0018D3CC  7C 08 02 A6 */	mflr r0
 /* 801905D0 0018D3D0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -605,6 +613,8 @@ lbl_801905A0:
 /* 80190640 0018D440  7C 08 03 A6 */	mtlr r0
 /* 80190644 0018D444  38 21 00 20 */	addi r1, r1, 0x20
 /* 80190648 0018D448  4E 80 00 20 */	blr 
+
+Exit__19zNPCGoalJellyAttackFfPv:
 /* 8019064C 0018D44C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80190650 0018D450  7C 08 02 A6 */	mflr r0
 /* 80190654 0018D454  90 01 00 24 */	stw r0, 0x24(r1)
@@ -626,6 +636,8 @@ lbl_801905A0:
 /* 80190694 0018D494  7C 08 03 A6 */	mtlr r0
 /* 80190698 0018D498  38 21 00 20 */	addi r1, r1, 0x20
 /* 8019069C 0018D49C  4E 80 00 20 */	blr 
+
+Process__19zNPCGoalJellyAttackFP11en_trantypefPvP6xScene:
 /* 801906A0 0018D4A0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801906A4 0018D4A4  7C 08 02 A6 */	mflr r0
 /* 801906A8 0018D4A8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -980,6 +992,8 @@ lbl_80190BA0:
 /* 80190BBC 0018D9BC  7C 08 03 A6 */	mtlr r0
 /* 80190BC0 0018D9C0  38 21 00 90 */	addi r1, r1, 0x90
 /* 80190BC4 0018D9C4  4E 80 00 20 */	blr 
+
+Enter__18zNPCGoalJellyBirthFfPv:
 /* 80190BC8 0018D9C8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80190BCC 0018D9CC  7C 08 02 A6 */	mflr r0
 /* 80190BD0 0018D9D0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1035,6 +1049,8 @@ lbl_80190C44:
 /* 80190C90 0018DA90  7C 08 03 A6 */	mtlr r0
 /* 80190C94 0018DA94  38 21 00 30 */	addi r1, r1, 0x30
 /* 80190C98 0018DA98  4E 80 00 20 */	blr 
+
+Process__18zNPCGoalJellyBirthFP11en_trantypefPvP6xScene:
 /* 80190C9C 0018DA9C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80190CA0 0018DAA0  7C 08 02 A6 */	mflr r0
 /* 80190CA4 0018DAA4  90 01 00 54 */	stw r0, 0x54(r1)

@@ -2,38 +2,38 @@
 
 #include <types.h>
 
-// xClimateVecFromAngle(float,xVec3*)
+// func_8000E96C
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateVecFromAngle__FfP5xVec3")
 
-// xClimateInit(_tagClimate*)
+// func_8000E9F4
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateInit__FP11_tagClimate")
 
-// xClimateInitAsset(_tagClimate*,xEnvAsset*)
+// func_8000EA70
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateInitAsset__FP11_tagClimateP9xEnvAsset")
 
-// xClimateSetSnow(float)
+// func_8000EB50
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateSetSnow__Ff")
 
-// xClimateSetRain(float)
+// func_8000EB68
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateSetRain__Ff")
 
-// GetPosBigDogWhattupFool(xVec3*)
+// func_8000EB80
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "GetPosBigDogWhattupFool__FP5xVec3")
 
-// UpdateRain(_tagClimate*,float)
+// func_8000EBC4
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "UpdateRain__FP11_tagClimatef")
 
-// UpdateWind(_tagClimate*,float)
+// func_8000EFB4
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "UpdateWind__FP11_tagClimatef")
 
-// xClimateUpdate(_tagClimate*,float)
+// func_8000EFB8
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateUpdate__FP11_tagClimatef")
 
-// xVec3Init(xVec3*,float,float,float)
+// func_8000EFFC
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xVec3Init__FP5xVec3fff")
 
-// xMat3x3Identity(xMat3x3*)
+// func_8000F00C
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xMat3x3Identity__FP7xMat3x3")
 
-// xMat3x3Copy(xMat3x3*,const xMat3x3*)
+// func_8000F034
 #pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xMat3x3Copy__FP7xMat3x3PC7xMat3x3")

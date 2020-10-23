@@ -2,65 +2,80 @@
 
 #include <types.h>
 
-// ztaskbox::load(const ztaskbox::asset_type&)
+// func_8013499C
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "load__8ztaskboxFRCQ28ztaskbox10asset_type")
 
-// ztaskbox::read(xSerial&)
+// func_80134A54
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "read__8ztaskboxFR7xSerial")
 
-// ztaskbox::write(xSerial&)
+// func_80134A9C
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "write__8ztaskboxFR7xSerial")
 
-// ztaskbox::start_talk(zNPCCommon*)
+// func_80134AC8
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "start_talk__8ztaskboxFP10zNPCCommon")
 
-// ztaskbox::talk_callback::reset(ztaskbox&)
+// func_80134BC4
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "reset__Q28ztaskbox13talk_callbackFR8ztaskbox")
 
-// ztaskbox::stop_talk()
+// func_80134BD4
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "stop_talk__8ztaskboxFv")
 
-// ztaskbox::enable()
+// func_80134C58
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "enable__8ztaskboxFv")
 
-// ztaskbox::disable()
+// func_80134C90
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "disable__8ztaskboxFv")
 
-// ztaskbox::reset()
+// func_80134CDC
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "reset__8ztaskboxFv")
 
-// ztaskbox::initiate()
+// func_80134D20
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "initiate__8ztaskboxFv")
 
-// ztaskbox::succeed()
+// func_80134D50
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "succeed__8ztaskboxFv")
 
-// ztaskbox::fail()
+// func_80134D90
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "fail__8ztaskboxFv")
 
-// ztaskbox::complete()
+// func_80134DD0
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "complete__8ztaskboxFv")
 
-// ztaskbox::set_callback(ztaskbox::callback*)
+// func_80134E38
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "set_callback__8ztaskboxFPQ28ztaskbox8callback")
 
-// ztaskbox::init()
+// func_80134E40
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "init__8ztaskboxFv")
 
-// ztaskbox::talk_callback::talk_callback()
+// func_80134E90
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "__ct__Q28ztaskbox13talk_callbackFv")
 
-// ztaskbox::exists(ztaskbox::state_enum)
+// func_80134ECC
+#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "load__8ztaskboxFR5xBaseR9xDynAssetUl")
+
+// func_80134EEC
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "exists__8ztaskboxFQ28ztaskbox10state_enum")
 
-// ztaskbox::set_state(ztaskbox::state_enum)
+// func_80134F44
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "set_state__8ztaskboxFQ28ztaskbox10state_enum")
 
-// ztaskbox::on_talk_start()
+// func_80135014
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_talk_start__8ztaskboxFv")
 
-// ztaskbox::on_talk_stop(ztalkbox::answer_enum)
+// func_8013504C
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_talk_stop__8ztaskboxFQ28ztalkbox11answer_enum")
 
-// ztaskbox::get_text(unsigned int)
+// func_80135124
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "get_text__8ztaskboxFUi")
+
+// func_801351A4
+#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_8013524C
+#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_start__Q28ztaskbox13talk_callbackFv")
+
+// func_80135270
+#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_stop__Q28ztaskbox13talk_callbackFv")
+
+// func_8013529C
+#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum")

@@ -755,7 +755,8 @@ lbl_80018AC8:
 /* 80018AE0 000158E0  7C 08 03 A6 */	mtlr r0
 /* 80018AE4 000158E4  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80018AE8 000158E8  4E 80 00 20 */	blr 
-lbl_80018AEC:
+
+stacked_owner_destroyed__18_esc__2_unnamed_esc__2_xEnt_cpp_esc__2_FR15zEntDestructObjPv:
 /* 80018AEC 000158EC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80018AF0 000158F0  7C 08 02 A6 */	mflr r0
 /* 80018AF4 000158F4  7C 83 23 78 */	mr r3, r4
@@ -785,8 +786,8 @@ lbl_80018B34:
 /* 80018B44 00015944  88 04 00 04 */	lbz r0, 4(r4)
 /* 80018B48 00015948  28 00 00 1B */	cmplwi r0, 0x1b
 /* 80018B4C 0001594C  4C 82 00 20 */	bnelr 
-/* 80018B50 00015950  3C A0 80 02 */	lis r5, lbl_80018AEC@ha
-/* 80018B54 00015954  38 05 8A EC */	addi r0, r5, lbl_80018AEC@l
+/* 80018B50 00015950  3C A0 80 02 */	lis r5, stacked_owner_destroyed__18_esc__2_unnamed_esc__2_xEnt_cpp_esc__2_FR15zEntDestructObjPv@ha
+/* 80018B54 00015954  38 05 8A EC */	addi r0, r5, stacked_owner_destroyed__18_esc__2_unnamed_esc__2_xEnt_cpp_esc__2_FR15zEntDestructObjPv@l
 /* 80018B58 00015958  90 04 01 04 */	stw r0, 0x104(r4)
 /* 80018B5C 0001595C  90 64 01 08 */	stw r3, 0x108(r4)
 /* 80018B60 00015960  4E 80 00 20 */	blr 
@@ -2208,9 +2209,9 @@ lbl_80019EE4:
 /* 80019EE8 00016CE8  88 03 00 00 */	lbz r0, 0(r3)
 /* 80019EEC 00016CEC  54 00 07 39 */	rlwinm. r0, r0, 0, 0x1c, 0x1c
 /* 80019EF0 00016CF0  41 82 00 18 */	beq lbl_80019F08
-/* 80019EF4 00016CF4  3C 80 80 02 */	lis r4, lbl_8001A70C@ha
+/* 80019EF4 00016CF4  3C 80 80 02 */	lis r4, xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv@ha
 /* 80019EF8 00016CF8  7F C3 F3 78 */	mr r3, r30
-/* 80019EFC 00016CFC  38 A4 A7 0C */	addi r5, r4, lbl_8001A70C@l
+/* 80019EFC 00016CFC  38 A4 A7 0C */	addi r5, r4, xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv@l
 /* 80019F00 00016D00  7F E4 FB 78 */	mr r4, r31
 /* 80019F04 00016D04  48 00 06 C1 */	bl xEntCollCheckNPCsByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt
 lbl_80019F08:
@@ -2218,9 +2219,9 @@ lbl_80019F08:
 /* 80019F0C 00016D0C  88 03 00 00 */	lbz r0, 0(r3)
 /* 80019F10 00016D10  54 00 07 7D */	rlwinm. r0, r0, 0, 0x1d, 0x1e
 /* 80019F14 00016D14  41 82 00 18 */	beq lbl_80019F2C
-/* 80019F18 00016D18  3C 80 80 02 */	lis r4, lbl_8001A70C@ha
+/* 80019F18 00016D18  3C 80 80 02 */	lis r4, xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv@ha
 /* 80019F1C 00016D1C  7F C3 F3 78 */	mr r3, r30
-/* 80019F20 00016D20  38 A4 A7 0C */	addi r5, r4, lbl_8001A70C@l
+/* 80019F20 00016D20  38 A4 A7 0C */	addi r5, r4, xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv@l
 /* 80019F24 00016D24  7F E4 FB 78 */	mr r4, r31
 /* 80019F28 00016D28  48 00 06 09 */	bl xEntCollCheckByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt
 lbl_80019F2C:
@@ -2786,7 +2787,8 @@ xEntCollCheckNPCs__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt:
 /* 8001A700 00017500  7C 08 03 A6 */	mtlr r0
 /* 8001A704 00017504  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001A708 00017508  4E 80 00 20 */	blr 
-lbl_8001A70C:
+
+xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv:
 /* 8001A70C 0001750C  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 8001A710 00017510  7C 08 02 A6 */	mflr r0
 /* 8001A714 00017514  90 01 00 84 */	stw r0, 0x84(r1)

@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x80172664 - 0x8017C0A0
 
 /* look_at__30@unnamed@zNPCTypeDutchman_cpp@FR7xMat3x3RC5xVec3 */
@@ -229,6 +231,8 @@ set_volume__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiUif:
 /* 80172984 0016F784  7C 08 03 A6 */	mtlr r0
 /* 80172988 0016F788  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017298C 0016F78C  4E 80 00 20 */	blr 
+
+ZNPC_AnimTable_Dutchman__Fv:
 /* 80172990 0016F790  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 80172994 0016F794  7C 08 02 A6 */	mflr r0
 /* 80172998 0016F798  3C 60 80 27 */	lis r3, lbl_802720F0@ha
@@ -670,6 +674,8 @@ __ct__12zNPCDutchmanFi:
 /* 8017305C 0016FE5C  7C 08 03 A6 */	mtlr r0
 /* 80173060 0016FE60  38 21 00 10 */	addi r1, r1, 0x10
 /* 80173064 0016FE64  4E 80 00 20 */	blr 
+
+Init__12zNPCDutchmanFP9xEntAsset:
 /* 80173068 0016FE68  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017306C 0016FE6C  7C 08 02 A6 */	mflr r0
 /* 80173070 0016FE70  3C A0 80 2A */	lis r5, lbl_8029B460@ha
@@ -761,6 +767,8 @@ lbl_801731AC:
 /* 801731B4 0016FFB4  7C 08 03 A6 */	mtlr r0
 /* 801731B8 0016FFB8  38 21 00 30 */	addi r1, r1, 0x30
 /* 801731BC 0016FFBC  4E 80 00 20 */	blr 
+
+Setup__12zNPCDutchmanFv:
 /* 801731C0 0016FFC0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801731C4 0016FFC4  7C 08 02 A6 */	mflr r0
 /* 801731C8 0016FFC8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -769,6 +777,8 @@ lbl_801731AC:
 /* 801731D4 0016FFD4  7C 08 03 A6 */	mtlr r0
 /* 801731D8 0016FFD8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801731DC 0016FFDC  4E 80 00 20 */	blr 
+
+Reset__12zNPCDutchmanFv:
 /* 801731E0 0016FFE0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801731E4 0016FFE4  7C 08 02 A6 */	mflr r0
 /* 801731E8 0016FFE8  3C 80 80 33 */	lis r4, lbl_8032A578@ha
@@ -974,6 +984,8 @@ lbl_801731AC:
 /* 80173508 00170308  7C 08 03 A6 */	mtlr r0
 /* 8017350C 0017030C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80173510 00170310  4E 80 00 20 */	blr 
+
+Destroy__12zNPCDutchmanFv:
 /* 80173514 00170314  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80173518 00170318  7C 08 02 A6 */	mflr r0
 /* 8017351C 0017031C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -985,6 +997,8 @@ lbl_801731AC:
 /* 80173534 00170334  7C 08 03 A6 */	mtlr r0
 /* 80173538 00170338  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017353C 0017033C  4E 80 00 20 */	blr 
+
+Process__12zNPCDutchmanFP6xScenef:
 /* 80173540 00170340  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80173544 00170344  7C 08 02 A6 */	mflr r0
 /* 80173548 00170348  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1092,6 +1106,8 @@ lbl_801736B4:
 /* 801736CC 001704CC  7C 08 03 A6 */	mtlr r0
 /* 801736D0 001704D0  38 21 00 30 */	addi r1, r1, 0x30
 /* 801736D4 001704D4  4E 80 00 20 */	blr 
+
+SysEvent__12zNPCDutchmanFP5xBaseP5xBaseUiPCfP5xBasePi:
 /* 801736D8 001704D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801736DC 001704DC  7C 08 02 A6 */	mflr r0
 /* 801736E0 001704E0  2C 06 01 D9 */	cmpwi r6, 0x1d9
@@ -1123,6 +1139,8 @@ lbl_80173730:
 /* 80173734 00170534  7C 08 03 A6 */	mtlr r0
 /* 80173738 00170538  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017373C 0017053C  4E 80 00 20 */	blr 
+
+Render__12zNPCDutchmanFv:
 /* 80173740 00170540  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80173744 00170544  7C 08 02 A6 */	mflr r0
 /* 80173748 00170548  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1131,6 +1149,8 @@ lbl_80173730:
 /* 80173754 00170554  7C 08 03 A6 */	mtlr r0
 /* 80173758 00170558  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017375C 0017055C  4E 80 00 20 */	blr 
+
+RenderExtra__12zNPCDutchmanFv:
 /* 80173760 00170560  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80173764 00170564  7C 08 02 A6 */	mflr r0
 /* 80173768 00170568  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1229,6 +1249,8 @@ lbl_80173884:
 /* 801738C0 001706C0  7C 08 03 A6 */	mtlr r0
 /* 801738C4 001706C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801738C8 001706C8  4E 80 00 20 */	blr 
+
+ParseINI__12zNPCDutchmanFv:
 /* 801738CC 001706CC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801738D0 001706D0  7C 08 02 A6 */	mflr r0
 /* 801738D4 001706D4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3127,6 +3149,8 @@ lbl_8017545C:
 /* 80175470 00172270  7C 08 03 A6 */	mtlr r0
 /* 80175474 00172274  38 21 00 60 */	addi r1, r1, 0x60
 /* 80175478 00172278  4E 80 00 20 */	blr 
+
+SelfSetup__12zNPCDutchmanFv:
 /* 8017547C 0017227C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80175480 00172280  7C 08 02 A6 */	mflr r0
 /* 80175484 00172284  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3170,6 +3194,8 @@ lbl_801754E0:
 /* 80175514 00172314  7C 08 03 A6 */	mtlr r0
 /* 80175518 00172318  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017551C 0017231C  4E 80 00 20 */	blr 
+
+Damage__12zNPCDutchmanF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3:
 /* 80175520 00172320  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80175524 00172324  7C 08 02 A6 */	mflr r0
 /* 80175528 00172328  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3179,6 +3205,8 @@ lbl_801754E0:
 /* 80175538 00172338  7C 08 03 A6 */	mtlr r0
 /* 8017553C 0017233C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80175540 00172340  4E 80 00 20 */	blr 
+
+AnimPick__12zNPCDutchmanFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 80175544 00172344  3C A4 B1 B9 */	addis r5, r4, 0xb1b9
 /* 80175548 00172348  38 C0 00 00 */	li r6, 0
 /* 8017554C 0017234C  38 A5 B2 C3 */	addi r5, r5, -19773
@@ -3222,6 +3250,8 @@ lbl_801755C0:
 lbl_801755D8:
 /* 801755D8 001723D8  7C C3 33 78 */	mr r3, r6
 /* 801755DC 001723DC  4E 80 00 20 */	blr 
+
+LassoNotify__12zNPCDutchmanF14en_LASSO_EVENT:
 /* 801755E0 001723E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801755E4 001723E4  7C 08 02 A6 */	mflr r0
 /* 801755E8 001723E8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3252,6 +3282,8 @@ lbl_8017562C:
 /* 80175644 00172444  7C 08 03 A6 */	mtlr r0
 /* 80175648 00172448  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017564C 0017244C  4E 80 00 20 */	blr 
+
+LassoSetup__12zNPCDutchmanFv:
 /* 80175650 00172450  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80175654 00172454  7C 08 02 A6 */	mflr r0
 /* 80175658 00172458  38 80 00 01 */	li r4, 1
@@ -6476,6 +6508,8 @@ render_halo__12zNPCDutchmanFv:
 /* 80178444 00175244  7C 08 03 A6 */	mtlr r0
 /* 80178448 00175248  38 21 00 90 */	addi r1, r1, 0x90
 /* 8017844C 0017524C  4E 80 00 20 */	blr 
+
+create__19zNPCGoalDutchmanNilFiP10RyzMemGrowPv:
 /* 80178450 00175250  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178454 00175254  7C 08 02 A6 */	mflr r0
 /* 80178458 00175258  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6506,6 +6540,8 @@ lbl_801784A4:
 /* 801784B4 001752B4  7C 08 03 A6 */	mtlr r0
 /* 801784B8 001752B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801784BC 001752BC  4E 80 00 20 */	blr 
+
+create__24zNPCGoalDutchmanInitiateFiP10RyzMemGrowPv:
 /* 801784C0 001752C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801784C4 001752C4  7C 08 02 A6 */	mflr r0
 /* 801784C8 001752C8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6536,6 +6572,8 @@ lbl_80178514:
 /* 80178524 00175324  7C 08 03 A6 */	mtlr r0
 /* 80178528 00175328  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017852C 0017532C  4E 80 00 20 */	blr 
+
+Enter__24zNPCGoalDutchmanInitiateFfPv:
 /* 80178530 00175330  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80178534 00175334  7C 08 02 A6 */	mflr r0
 /* 80178538 00175338  90 01 00 44 */	stw r0, 0x44(r1)
@@ -6637,6 +6675,8 @@ lbl_80178630:
 /* 801786B0 001754B0  7C 08 03 A6 */	mtlr r0
 /* 801786B4 001754B4  38 21 00 40 */	addi r1, r1, 0x40
 /* 801786B8 001754B8  4E 80 00 20 */	blr 
+
+Exit__24zNPCGoalDutchmanInitiateFfPv:
 /* 801786BC 001754BC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801786C0 001754C0  7C 08 02 A6 */	mflr r0
 /* 801786C4 001754C4  3C C0 80 33 */	lis r6, lbl_8032A578@ha
@@ -6650,6 +6690,8 @@ lbl_80178630:
 /* 801786E4 001754E4  7C 08 03 A6 */	mtlr r0
 /* 801786E8 001754E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801786EC 001754EC  4E 80 00 20 */	blr 
+
+Process__24zNPCGoalDutchmanInitiateFP11en_trantypefPvP6xScene:
 /* 801786F0 001754F0  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 801786F4 001754F4  7C 08 02 A6 */	mflr r0
 /* 801786F8 001754F8  90 01 00 44 */	stw r0, 0x44(r1)
@@ -6710,6 +6752,8 @@ lbl_801787B0:
 /* 801787CC 001755CC  7C 08 03 A6 */	mtlr r0
 /* 801787D0 001755D0  38 21 00 40 */	addi r1, r1, 0x40
 /* 801787D4 001755D4  4E 80 00 20 */	blr 
+
+create__20zNPCGoalDutchmanIdleFiP10RyzMemGrowPv:
 /* 801787D8 001755D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801787DC 001755DC  7C 08 02 A6 */	mflr r0
 /* 801787E0 001755E0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6740,6 +6784,8 @@ lbl_8017882C:
 /* 8017883C 0017563C  7C 08 03 A6 */	mtlr r0
 /* 80178840 00175640  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178844 00175644  4E 80 00 20 */	blr 
+
+Enter__20zNPCGoalDutchmanIdleFfPv:
 /* 80178848 00175648  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017884C 0017564C  7C 08 02 A6 */	mflr r0
 /* 80178850 00175650  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6762,6 +6808,8 @@ lbl_8017882C:
 /* 80178894 00175694  7C 08 03 A6 */	mtlr r0
 /* 80178898 00175698  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017889C 0017569C  4E 80 00 20 */	blr 
+
+Exit__20zNPCGoalDutchmanIdleFfPv:
 /* 801788A0 001756A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801788A4 001756A4  7C 08 02 A6 */	mflr r0
 /* 801788A8 001756A8  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6770,6 +6818,8 @@ lbl_8017882C:
 /* 801788B4 001756B4  7C 08 03 A6 */	mtlr r0
 /* 801788B8 001756B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801788BC 001756BC  4E 80 00 20 */	blr 
+
+Process__20zNPCGoalDutchmanIdleFP11en_trantypefPvP6xScene:
 /* 801788C0 001756C0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801788C4 001756C4  7C 08 02 A6 */	mflr r0
 /* 801788C8 001756C8  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6814,6 +6864,8 @@ lbl_80178940:
 /* 8017895C 0017575C  7C 08 03 A6 */	mtlr r0
 /* 80178960 00175760  38 21 00 30 */	addi r1, r1, 0x30
 /* 80178964 00175764  4E 80 00 20 */	blr 
+
+create__25zNPCGoalDutchmanDisappearFiP10RyzMemGrowPv:
 /* 80178968 00175768  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017896C 0017576C  7C 08 02 A6 */	mflr r0
 /* 80178970 00175770  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6844,6 +6896,8 @@ lbl_801789BC:
 /* 801789CC 001757CC  7C 08 03 A6 */	mtlr r0
 /* 801789D0 001757D0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801789D4 001757D4  4E 80 00 20 */	blr 
+
+Enter__25zNPCGoalDutchmanDisappearFfPv:
 /* 801789D8 001757D8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801789DC 001757DC  7C 08 02 A6 */	mflr r0
 /* 801789E0 001757E0  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6874,6 +6928,8 @@ lbl_801789BC:
 /* 80178A44 00175844  7C 08 03 A6 */	mtlr r0
 /* 80178A48 00175848  38 21 00 20 */	addi r1, r1, 0x20
 /* 80178A4C 0017584C  4E 80 00 20 */	blr 
+
+Exit__25zNPCGoalDutchmanDisappearFfPv:
 /* 80178A50 00175850  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178A54 00175854  7C 08 02 A6 */	mflr r0
 /* 80178A58 00175858  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6882,6 +6938,8 @@ lbl_801789BC:
 /* 80178A64 00175864  7C 08 03 A6 */	mtlr r0
 /* 80178A68 00175868  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178A6C 0017586C  4E 80 00 20 */	blr 
+
+Process__25zNPCGoalDutchmanDisappearFP11en_trantypefPvP6xScene:
 /* 80178A70 00175870  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178A74 00175874  7C 08 02 A6 */	mflr r0
 /* 80178A78 00175878  3C E0 80 33 */	lis r7, lbl_8032A578@ha
@@ -6905,6 +6963,8 @@ lbl_80178AB4:
 /* 80178AB8 001758B8  7C 08 03 A6 */	mtlr r0
 /* 80178ABC 001758BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178AC0 001758C0  4E 80 00 20 */	blr 
+
+create__24zNPCGoalDutchmanTeleportFiP10RyzMemGrowPv:
 /* 80178AC4 001758C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178AC8 001758C8  7C 08 02 A6 */	mflr r0
 /* 80178ACC 001758CC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6935,6 +6995,8 @@ lbl_80178B18:
 /* 80178B28 00175928  7C 08 03 A6 */	mtlr r0
 /* 80178B2C 0017592C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178B30 00175930  4E 80 00 20 */	blr 
+
+Enter__24zNPCGoalDutchmanTeleportFfPv:
 /* 80178B34 00175934  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80178B38 00175938  7C 08 02 A6 */	mflr r0
 /* 80178B3C 0017593C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -6993,6 +7055,8 @@ lbl_80178B18:
 /* 80178C10 00175A10  7C 08 03 A6 */	mtlr r0
 /* 80178C14 00175A14  38 21 00 30 */	addi r1, r1, 0x30
 /* 80178C18 00175A18  4E 80 00 20 */	blr 
+
+Exit__24zNPCGoalDutchmanTeleportFfPv:
 /* 80178C1C 00175A1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178C20 00175A20  7C 08 02 A6 */	mflr r0
 /* 80178C24 00175A24  90 01 00 14 */	stw r0, 0x14(r1)
@@ -7001,6 +7065,8 @@ lbl_80178B18:
 /* 80178C30 00175A30  7C 08 03 A6 */	mtlr r0
 /* 80178C34 00175A34  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178C38 00175A38  4E 80 00 20 */	blr 
+
+Process__24zNPCGoalDutchmanTeleportFP11en_trantypefPvP6xScene:
 /* 80178C3C 00175A3C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80178C40 00175A40  7C 08 02 A6 */	mflr r0
 /* 80178C44 00175A44  90 01 00 44 */	stw r0, 0x44(r1)
@@ -7056,6 +7122,8 @@ lbl_80178CE8:
 /* 80178D04 00175B04  7C 08 03 A6 */	mtlr r0
 /* 80178D08 00175B08  38 21 00 40 */	addi r1, r1, 0x40
 /* 80178D0C 00175B0C  4E 80 00 20 */	blr 
+
+create__24zNPCGoalDutchmanReappearFiP10RyzMemGrowPv:
 /* 80178D10 00175B10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178D14 00175B14  7C 08 02 A6 */	mflr r0
 /* 80178D18 00175B18  90 01 00 14 */	stw r0, 0x14(r1)
@@ -7086,6 +7154,8 @@ lbl_80178D64:
 /* 80178D74 00175B74  7C 08 03 A6 */	mtlr r0
 /* 80178D78 00175B78  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178D7C 00175B7C  4E 80 00 20 */	blr 
+
+Enter__24zNPCGoalDutchmanReappearFfPv:
 /* 80178D80 00175B80  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80178D84 00175B84  7C 08 02 A6 */	mflr r0
 /* 80178D88 00175B88  90 01 00 24 */	stw r0, 0x24(r1)
@@ -7118,6 +7188,8 @@ lbl_80178D64:
 /* 80178DF4 00175BF4  7C 08 03 A6 */	mtlr r0
 /* 80178DF8 00175BF8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80178DFC 00175BFC  4E 80 00 20 */	blr 
+
+Exit__24zNPCGoalDutchmanReappearFfPv:
 /* 80178E00 00175C00  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80178E04 00175C04  7C 08 02 A6 */	mflr r0
 /* 80178E08 00175C08  90 01 00 24 */	stw r0, 0x24(r1)
@@ -7140,6 +7212,8 @@ lbl_80178D64:
 /* 80178E4C 00175C4C  7C 08 03 A6 */	mtlr r0
 /* 80178E50 00175C50  38 21 00 20 */	addi r1, r1, 0x20
 /* 80178E54 00175C54  4E 80 00 20 */	blr 
+
+Process__24zNPCGoalDutchmanReappearFP11en_trantypefPvP6xScene:
 /* 80178E58 00175C58  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80178E5C 00175C5C  7C 08 02 A6 */	mflr r0
 /* 80178E60 00175C60  90 01 00 24 */	stw r0, 0x24(r1)
@@ -7189,6 +7263,8 @@ lbl_80178EEC:
 /* 80178F04 00175D04  7C 08 03 A6 */	mtlr r0
 /* 80178F08 00175D08  38 21 00 20 */	addi r1, r1, 0x20
 /* 80178F0C 00175D0C  4E 80 00 20 */	blr 
+
+create__20zNPCGoalDutchmanBeamFiP10RyzMemGrowPv:
 /* 80178F10 00175D10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178F14 00175D14  7C 08 02 A6 */	mflr r0
 /* 80178F18 00175D18  90 01 00 14 */	stw r0, 0x14(r1)
@@ -7219,6 +7295,8 @@ lbl_80178F64:
 /* 80178F74 00175D74  7C 08 03 A6 */	mtlr r0
 /* 80178F78 00175D78  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178F7C 00175D7C  4E 80 00 20 */	blr 
+
+Enter__20zNPCGoalDutchmanBeamFfPv:
 /* 80178F80 00175D80  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80178F84 00175D84  7C 08 02 A6 */	mflr r0
 /* 80178F88 00175D88  90 01 00 34 */	stw r0, 0x34(r1)
@@ -7254,6 +7332,8 @@ lbl_80178F64:
 /* 80179000 00175E00  7C 08 03 A6 */	mtlr r0
 /* 80179004 00175E04  38 21 00 30 */	addi r1, r1, 0x30
 /* 80179008 00175E08  4E 80 00 20 */	blr 
+
+Exit__20zNPCGoalDutchmanBeamFfPv:
 /* 8017900C 00175E0C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80179010 00175E10  7C 08 02 A6 */	mflr r0
 /* 80179014 00175E14  90 01 00 14 */	stw r0, 0x14(r1)
@@ -7262,6 +7342,8 @@ lbl_80178F64:
 /* 80179020 00175E20  7C 08 03 A6 */	mtlr r0
 /* 80179024 00175E24  38 21 00 10 */	addi r1, r1, 0x10
 /* 80179028 00175E28  4E 80 00 20 */	blr 
+
+Process__20zNPCGoalDutchmanBeamFP11en_trantypefPvP6xScene:
 /* 8017902C 00175E2C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80179030 00175E30  7C 08 02 A6 */	mflr r0
 /* 80179034 00175E34  90 01 00 24 */	stw r0, 0x24(r1)
@@ -8188,6 +8270,8 @@ lbl_80179D7C:
 /* 80179D90 00176B90  7C 08 03 A6 */	mtlr r0
 /* 80179D94 00176B94  38 21 00 40 */	addi r1, r1, 0x40
 /* 80179D98 00176B98  4E 80 00 20 */	blr 
+
+create__21zNPCGoalDutchmanFlameFiP10RyzMemGrowPv:
 /* 80179D9C 00176B9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80179DA0 00176BA0  7C 08 02 A6 */	mflr r0
 /* 80179DA4 00176BA4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8218,6 +8302,8 @@ lbl_80179DF0:
 /* 80179E00 00176C00  7C 08 03 A6 */	mtlr r0
 /* 80179E04 00176C04  38 21 00 10 */	addi r1, r1, 0x10
 /* 80179E08 00176C08  4E 80 00 20 */	blr 
+
+Enter__21zNPCGoalDutchmanFlameFfPv:
 /* 80179E0C 00176C0C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80179E10 00176C10  7C 08 02 A6 */	mflr r0
 /* 80179E14 00176C14  90 01 00 24 */	stw r0, 0x24(r1)
@@ -8252,6 +8338,8 @@ lbl_80179DF0:
 /* 80179E88 00176C88  7C 08 03 A6 */	mtlr r0
 /* 80179E8C 00176C8C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80179E90 00176C90  4E 80 00 20 */	blr 
+
+Exit__21zNPCGoalDutchmanFlameFfPv:
 /* 80179E94 00176C94  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80179E98 00176C98  7C 08 02 A6 */	mflr r0
 /* 80179E9C 00176C9C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -8280,6 +8368,8 @@ lbl_80179DF0:
 /* 80179EF8 00176CF8  7C 08 03 A6 */	mtlr r0
 /* 80179EFC 00176CFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80179F00 00176D00  4E 80 00 20 */	blr 
+
+Process__21zNPCGoalDutchmanFlameFP11en_trantypefPvP6xScene:
 /* 80179F04 00176D04  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80179F08 00176D08  7C 08 02 A6 */	mflr r0
 /* 80179F0C 00176D0C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -8751,6 +8841,8 @@ angle_difference__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRC5xVec2
 /* 8017A5CC 001773CC  7C 08 03 A6 */	mtlr r0
 /* 8017A5D0 001773D0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017A5D4 001773D4  4E 80 00 20 */	blr 
+
+create__25zNPCGoalDutchmanPostFlameFiP10RyzMemGrowPv:
 /* 8017A5D8 001773D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017A5DC 001773DC  7C 08 02 A6 */	mflr r0
 /* 8017A5E0 001773E0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8781,6 +8873,8 @@ lbl_8017A62C:
 /* 8017A63C 0017743C  7C 08 03 A6 */	mtlr r0
 /* 8017A640 00177440  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017A644 00177444  4E 80 00 20 */	blr 
+
+Enter__25zNPCGoalDutchmanPostFlameFfPv:
 /* 8017A648 00177448  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017A64C 0017744C  7C 08 02 A6 */	mflr r0
 /* 8017A650 00177450  90 01 00 34 */	stw r0, 0x34(r1)
@@ -8831,6 +8925,8 @@ lbl_8017A6D0:
 /* 8017A700 00177500  7C 08 03 A6 */	mtlr r0
 /* 8017A704 00177504  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017A708 00177508  4E 80 00 20 */	blr 
+
+Exit__25zNPCGoalDutchmanPostFlameFfPv:
 /* 8017A70C 0017750C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017A710 00177510  7C 08 02 A6 */	mflr r0
 /* 8017A714 00177514  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8842,6 +8938,8 @@ lbl_8017A6D0:
 /* 8017A72C 0017752C  7C 08 03 A6 */	mtlr r0
 /* 8017A730 00177530  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017A734 00177534  4E 80 00 20 */	blr 
+
+Process__25zNPCGoalDutchmanPostFlameFP11en_trantypefPvP6xScene:
 /* 8017A738 00177538  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8017A73C 0017753C  7C 08 02 A6 */	mflr r0
 /* 8017A740 00177540  90 01 00 54 */	stw r0, 0x54(r1)
@@ -8963,6 +9061,8 @@ lbl_8017A8F0:
 /* 8017A900 00177700  7C 08 03 A6 */	mtlr r0
 /* 8017A904 00177704  38 21 00 50 */	addi r1, r1, 0x50
 /* 8017A908 00177708  4E 80 00 20 */	blr 
+
+create__22zNPCGoalDutchmanCaughtFiP10RyzMemGrowPv:
 /* 8017A90C 0017770C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017A910 00177710  7C 08 02 A6 */	mflr r0
 /* 8017A914 00177714  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8993,6 +9093,8 @@ lbl_8017A960:
 /* 8017A970 00177770  7C 08 03 A6 */	mtlr r0
 /* 8017A974 00177774  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017A978 00177778  4E 80 00 20 */	blr 
+
+Enter__22zNPCGoalDutchmanCaughtFfPv:
 /* 8017A97C 0017777C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017A980 00177780  7C 08 02 A6 */	mflr r0
 /* 8017A984 00177784  90 01 00 24 */	stw r0, 0x24(r1)
@@ -9028,6 +9130,8 @@ lbl_8017A960:
 /* 8017A9FC 001777FC  7C 08 03 A6 */	mtlr r0
 /* 8017AA00 00177800  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017AA04 00177804  4E 80 00 20 */	blr 
+
+Exit__22zNPCGoalDutchmanCaughtFfPv:
 /* 8017AA08 00177808  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AA0C 0017780C  7C 08 02 A6 */	mflr r0
 /* 8017AA10 00177810  90 01 00 14 */	stw r0, 0x14(r1)
@@ -9036,6 +9140,8 @@ lbl_8017A960:
 /* 8017AA1C 0017781C  7C 08 03 A6 */	mtlr r0
 /* 8017AA20 00177820  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017AA24 00177824  4E 80 00 20 */	blr 
+
+Process__22zNPCGoalDutchmanCaughtFP11en_trantypefPvP6xScene:
 /* 8017AA28 00177828  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017AA2C 0017782C  7C 08 02 A6 */	mflr r0
 /* 8017AA30 00177830  90 01 00 34 */	stw r0, 0x34(r1)
@@ -9118,6 +9224,8 @@ lbl_8017AB48:
 /* 8017AB58 00177958  7C 08 03 A6 */	mtlr r0
 /* 8017AB5C 0017795C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017AB60 00177960  4E 80 00 20 */	blr 
+
+create__22zNPCGoalDutchmanDamageFiP10RyzMemGrowPv:
 /* 8017AB64 00177964  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AB68 00177968  7C 08 02 A6 */	mflr r0
 /* 8017AB6C 0017796C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -9148,6 +9256,8 @@ lbl_8017ABB8:
 /* 8017ABC8 001779C8  7C 08 03 A6 */	mtlr r0
 /* 8017ABCC 001779CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017ABD0 001779D0  4E 80 00 20 */	blr 
+
+Enter__22zNPCGoalDutchmanDamageFfPv:
 /* 8017ABD4 001779D4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017ABD8 001779D8  7C 08 02 A6 */	mflr r0
 /* 8017ABDC 001779DC  90 01 00 34 */	stw r0, 0x34(r1)
@@ -9225,6 +9335,8 @@ lbl_8017ABB8:
 /* 8017ACFC 00177AFC  7C 08 03 A6 */	mtlr r0
 /* 8017AD00 00177B00  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017AD04 00177B04  4E 80 00 20 */	blr 
+
+Exit__22zNPCGoalDutchmanDamageFfPv:
 /* 8017AD08 00177B08  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AD0C 00177B0C  7C 08 02 A6 */	mflr r0
 /* 8017AD10 00177B10  90 01 00 14 */	stw r0, 0x14(r1)
@@ -9233,6 +9345,8 @@ lbl_8017ABB8:
 /* 8017AD1C 00177B1C  7C 08 03 A6 */	mtlr r0
 /* 8017AD20 00177B20  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017AD24 00177B24  4E 80 00 20 */	blr 
+
+Process__22zNPCGoalDutchmanDamageFP11en_trantypefPvP6xScene:
 /* 8017AD28 00177B28  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8017AD2C 00177B2C  7C 08 02 A6 */	mflr r0
 /* 8017AD30 00177B30  90 01 00 44 */	stw r0, 0x44(r1)
@@ -9300,6 +9414,8 @@ lbl_8017AE00:
 /* 8017AE1C 00177C1C  7C 08 03 A6 */	mtlr r0
 /* 8017AE20 00177C20  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017AE24 00177C24  4E 80 00 20 */	blr 
+
+create__21zNPCGoalDutchmanDeathFiP10RyzMemGrowPv:
 /* 8017AE28 00177C28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AE2C 00177C2C  7C 08 02 A6 */	mflr r0
 /* 8017AE30 00177C30  90 01 00 14 */	stw r0, 0x14(r1)
@@ -9330,6 +9446,8 @@ lbl_8017AE7C:
 /* 8017AE8C 00177C8C  7C 08 03 A6 */	mtlr r0
 /* 8017AE90 00177C90  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017AE94 00177C94  4E 80 00 20 */	blr 
+
+Enter__21zNPCGoalDutchmanDeathFfPv:
 /* 8017AE98 00177C98  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AE9C 00177C9C  7C 08 02 A6 */	mflr r0
 /* 8017AEA0 00177CA0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -9341,6 +9459,8 @@ lbl_8017AE7C:
 /* 8017AEB8 00177CB8  7C 08 03 A6 */	mtlr r0
 /* 8017AEBC 00177CBC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017AEC0 00177CC0  4E 80 00 20 */	blr 
+
+Exit__21zNPCGoalDutchmanDeathFfPv:
 /* 8017AEC4 00177CC4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017AEC8 00177CC8  7C 08 02 A6 */	mflr r0
 /* 8017AECC 00177CCC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -9371,6 +9491,8 @@ lbl_8017AE7C:
 /* 8017AF30 00177D30  7C 08 03 A6 */	mtlr r0
 /* 8017AF34 00177D34  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017AF38 00177D38  4E 80 00 20 */	blr 
+
+Process__21zNPCGoalDutchmanDeathFP11en_trantypefPvP6xScene:
 /* 8017AF3C 00177D3C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017AF40 00177D40  7C 08 02 A6 */	mflr r0
 /* 8017AF44 00177D44  90 01 00 34 */	stw r0, 0x34(r1)
@@ -10589,21 +10711,35 @@ __ct__21zNPCGoalDutchmanDeathFiR12zNPCDutchman:
 /* 8017BE1C 00178C1C  7C 08 03 A6 */	mtlr r0
 /* 8017BE20 00178C20  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017BE24 00178C24  4E 80 00 20 */	blr 
+
+ColChkFlags__12zNPCDutchmanCFv:
 /* 8017BE28 00178C28  38 60 00 00 */	li r3, 0
 /* 8017BE2C 00178C2C  4E 80 00 20 */	blr 
+
+ColPenFlags__12zNPCDutchmanCFv:
 /* 8017BE30 00178C30  38 60 00 00 */	li r3, 0
 /* 8017BE34 00178C34  4E 80 00 20 */	blr 
+
+ColChkByFlags__12zNPCDutchmanCFv:
 /* 8017BE38 00178C38  38 60 00 10 */	li r3, 0x10
 /* 8017BE3C 00178C3C  4E 80 00 20 */	blr 
+
+ColPenByFlags__12zNPCDutchmanCFv:
 /* 8017BE40 00178C40  38 60 00 10 */	li r3, 0x10
 /* 8017BE44 00178C44  4E 80 00 20 */	blr 
+
+PhysicsFlags__12zNPCDutchmanCFv:
 /* 8017BE48 00178C48  38 60 00 03 */	li r3, 3
 /* 8017BE4C 00178C4C  4E 80 00 20 */	blr 
+
+IsAlive__12zNPCDutchmanFv:
 /* 8017BE50 00178C50  80 63 02 C4 */	lwz r3, 0x2c4(r3)
 /* 8017BE54 00178C54  7C 03 00 D0 */	neg r0, r3
 /* 8017BE58 00178C58  7C 00 18 78 */	andc r0, r0, r3
 /* 8017BE5C 00178C5C  54 03 0F FE */	srwi r3, r0, 0x1f
 /* 8017BE60 00178C60  4E 80 00 20 */	blr 
+
+PRIV_GetLassoData__12zNPCDutchmanFv:
 /* 8017BE64 00178C64  38 63 06 30 */	addi r3, r3, 0x630
 /* 8017BE68 00178C68  4E 80 00 20 */	blr 
 
@@ -10768,6 +10904,8 @@ xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f:
 /* 8017C094 00178E94  7C 08 03 A6 */	mtlr r0
 /* 8017C098 00178E98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C09C 00178E9C  4E 80 00 20 */	blr 
+
+.endif
 
 .section .rodata
 lbl_80271E58:

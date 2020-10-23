@@ -2,44 +2,44 @@
 
 #include <types.h>
 
-// volume_reset()
+// func_800A6E9C
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "volume_reset__Fv")
 
-// zMusicRefreshVolume()
+// func_800A6EE4
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicRefreshVolume__Fv")
 
-// zMusicInit()
+// func_800A6F50
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicInit__Fv")
 
-// getCurrLevelMusicEnum()
+// func_800A7314
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "getCurrLevelMusicEnum__Fv")
 
-// zMusicDo(int)
+// func_800A7414
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
 
-// zMusicNotify(int)
+// func_800A7640
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
 
-// zMusicNotifyEvent(const float*,xBase*)
+// func_800A76BC
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotifyEvent__FPCfP5xBase")
 
-// zMusicUpdate(float)
+// func_800A77B4
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicUpdate__Ff")
 
-// volume_update(float)
+// func_800A7924
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "volume_update__Ff")
 
-// zMusicKill()
+// func_800A7AA0
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicKill__Fv")
 
-// zMusicPause()
+// func_800A7B10
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicPause__Fv")
 
-// zMusicUnpause(int)
+// func_800A7B7C
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicUnpause__Fi")
 
-// zMusicSetVolume(float,float)
+// func_800A7C60
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicSetVolume__Fff")
 
-// zMusicReset()
+// func_800A7C90
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicReset__Fv")

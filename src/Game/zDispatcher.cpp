@@ -2,68 +2,71 @@
 
 #include <types.h>
 
-// zDispatcher_Startup()
+// func_800534E4
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_Startup__Fv")
 
-// zDispatcher_Shutdown()
+// func_800534E8
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_Shutdown__Fv")
 
-// zDispatcher_scenePrepare()
+// func_800534EC
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_scenePrepare__Fv")
 
-// zDispatcher_sceneFinish()
+// func_8005352C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_sceneFinish__Fv")
 
-// zDispatcher_memPool(int)
+// func_80053568
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_memPool__Fi")
 
-// zDispatcher_getInst(st_ZDISPATCH_DATA*,int)
+// func_800535E0
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_getInst__FP17st_ZDISPATCH_DATAi")
 
-// zDispatcher_Init(st_ZDISPATCH_DATA*,xBaseAsset*)
+// func_800535EC
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_Init__FP17st_ZDISPATCH_DATAP10xBaseAsset")
 
-// zDispatcher_InitDep(st_ZDISPATCH_DATA*,zScene*)
+// func_8005360C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_InitDep__FP17st_ZDISPATCH_DATAP6zScene")
 
-// zDispatcher_Save(st_ZDISPATCH_DATA*,xSerial*)
+// func_8005362C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_Save__FP17st_ZDISPATCH_DATAP7xSerial")
 
-// zDispatcher_Load(st_ZDISPATCH_DATA*,xSerial*)
+// func_8005364C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_Load__FP17st_ZDISPATCH_DATAP7xSerial")
 
-// ZDSP_instInit(st_ZDISPATCH_DATA*,xBaseAsset*)
+// func_8005366C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_instInit__FP17st_ZDISPATCH_DATAP10xBaseAsset")
 
-// ZDSP_instInitDep(st_ZDISPATCH_DATA*,zScene*)
+// func_800536F4
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_instInitDep__FP17st_ZDISPATCH_DATAP6zScene")
 
-// ZDSP_instReset(st_ZDISPATCH_DATA*,zScene*)
+// func_80053724
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_instReset__FP17st_ZDISPATCH_DATAP6zScene")
 
-// ZDSP_readAsset(st_ZDISPATCH_DATA*)
+// func_80053794
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_readAsset__FP17st_ZDISPATCH_DATA")
 
-// ZDSP_injectCmd(st_ZDISPATCH_DATA*,en_DISPATCH_COMMAND)
+// func_80053798
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMAND")
 
-// ZDSP_injectCmd(st_ZDISPATCH_DATA*,en_DISPATCH_COMMAND,int)
+// func_800537C4
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMANDi")
 
-// ZDSP_injectCmd(st_ZDISPATCH_DATA*,en_DISPATCH_COMMAND,void*,void*,void*)
+// func_800537F4
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMANDPvPvPv")
 
-// ZDSP_doCommand(st_ZDISPATCH_DATA*,st_ZDISPATCH_CONTEXT*)
+// func_80053850
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_doCommand__FP17st_ZDISPATCH_DATAP20st_ZDISPATCH_CONTEXT")
 
-// zDispatcherStoreOptions()
+// func_80053B2C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcherStoreOptions__Fv")
 
-// zDispatcherRestoreOptions()
+// func_80053B7C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcherRestoreOptions__Fv")
 
-// WRAP_xsnd_setMusicVolume(int)
+// func_80053BD4
+#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase")
+
+// func_800540D4
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "WRAP_xsnd_setMusicVolume__Fi")
 
-// WRAP_xsnd_setSFXVolume(int)
+// func_80054158
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "WRAP_xsnd_setSFXVolume__Fi")

@@ -2,20 +2,20 @@
 
 #include <types.h>
 
-// RyzMemData::operator new(unsigned long,int,RyzMemGrow*)
+// func_8010F150
 #pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "__nw__10RyzMemDataFUliP10RyzMemGrow")
 
-// RyzMemData::operator delete(void*)
+// func_8010F1EC
 #pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "__dl__10RyzMemDataFPv")
 
-// RyzMemGrow::Init(xBase*)
+// func_8010F1F0
 #pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "Init__10RyzMemGrowFP5xBase")
 
-// RyzMemGrow::Resume(xBase*)
+// func_8010F270
 #pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "Resume__10RyzMemGrowFP5xBase")
 
-// RyzMemGrow::Done()
+// func_8010F294
 #pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "Done__10RyzMemGrowFv")
 
-// RyzMemGrow::IsEnabled()
+// func_8010F2C4
 #pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "IsEnabled__10RyzMemGrowFv")

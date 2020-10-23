@@ -25,9 +25,9 @@ zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset:
 /* 8017C0D4 00178ED4  93 C1 00 08 */	stw r30, 8(r1)
 /* 8017C0D8 00178ED8  7C 7E 1B 78 */	mr r30, r3
 /* 8017C0DC 00178EDC  4B E8 D3 25 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8017C0E0 00178EE0  3C 60 80 18 */	lis r3, lbl_8017C220@ha
+/* 8017C0E0 00178EE0  3C 60 80 18 */	lis r3, zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 8017C0E4 00178EE4  93 FE 00 10 */	stw r31, 0x10(r30)
-/* 8017C0E8 00178EE8  38 03 C2 20 */	addi r0, r3, lbl_8017C220@l
+/* 8017C0E8 00178EE8  38 03 C2 20 */	addi r0, r3, zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8017C0EC 00178EEC  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 8017C0F0 00178EF0  88 1E 00 05 */	lbz r0, 5(r30)
 /* 8017C0F4 00178EF4  28 00 00 00 */	cmplwi r0, 0
@@ -127,7 +127,8 @@ lbl_8017C20C:
 /* 8017C214 00179014  7C 08 03 A6 */	mtlr r0
 /* 8017C218 00179018  38 21 00 10 */	addi r1, r1, 0x10
 /* 8017C21C 0017901C  4E 80 00 20 */	blr 
-lbl_8017C220:
+
+zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8017C220 00179020  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017C224 00179024  7C 08 02 A6 */	mflr r0
 /* 8017C228 00179028  2C 05 00 12 */	cmpwi r5, 0x12

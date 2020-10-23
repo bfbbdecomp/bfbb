@@ -2,44 +2,47 @@
 
 #include <types.h>
 
+// func_801263C0
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "CmpAlphaBucket__FPCvPCv")
 
-// xModelBucket_PreCountReset()
+// func_80126410
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_PreCountReset__Fv")
 
+// func_8012643C
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_PreCountBucket__FP8RpAtomicUiUi")
 
-// xModelBucket_PreCountAlloc(int)
+// func_8012652C
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_PreCountAlloc__Fi")
 
-// FullAtomicDupe(RpAtomic*,int,RpAtomic**)
+// func_801265E0
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "FullAtomicDupe__FP8RpAtomiciPP8RpAtomic")
 
+// func_801267B8
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_InsertBucket__FP8RpAtomicUiUi")
 
-// xModelBucket_Init()
+// func_801269F8
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_Init__Fv")
 
-// xModelBucket_GetBuckets(RpAtomic*)
+// func_80126A44
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_GetBuckets__FP8RpAtomic")
 
-// xModelBucket_Begin()
+// func_80126A98
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_Begin__Fv")
 
-// xModelBucket_Add(xModelInstance*)
+// func_80126AD4
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_Add__FP14xModelInstance")
 
-// xModelBucket_RenderOpaque()
+// func_80126D40
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderOpaque__Fv")
 
-// xModelBucket_RenderAlphaBegin()
+// func_80126EA4
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderAlphaBegin__Fv")
 
-// xModelBucket_RenderAlphaLayer(int)
+// func_80126EEC
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderAlphaLayer__Fi")
 
-// xModelBucket_RenderAlphaEnd()
+// func_80127264
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderAlphaEnd__Fv")
 
-// xModelBucket_Deinit()
+// func_80127270
 #pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_Deinit__Fv")

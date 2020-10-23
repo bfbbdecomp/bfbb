@@ -2,86 +2,92 @@
 
 #include <types.h>
 
-// zEntInit(zEnt*,xEntAsset*,unsigned int)
+// func_80054BFC
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntInit__FP4zEntP9xEntAssetUi")
 
-// zEntSetup(zEnt*)
+// func_80055064
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntSetup__FP4zEnt")
 
-// checkpoint_collision_hack(zEnt*)
+// func_80055098
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "checkpoint_collision_hack__FP4zEnt")
 
-// zEntSave(zEnt*,xSerial*)
+// func_80055210
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntSave__FP4zEntP7xSerial")
 
-// zEntLoad(zEnt*,xSerial*)
+// func_80055230
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntLoad__FP4zEntP7xSerial")
 
-// zEntReset(zEnt*)
+// func_80055250
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntReset__FP4zEnt")
 
-// zEntEventAll(xBase*,unsigned int,unsigned int,float*)
+// func_80055360
+#pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntUpdate__FP4zEntP6zScenef")
+
+// func_80055380
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntEventAll__FP5xBaseUiUiPf")
 
-// zEntEventAllOfType(xBase*,unsigned int,unsigned int,float*,unsigned int)
+// func_80055404
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntEventAllOfType__FP5xBaseUiUiPfUi")
 
-// zEntEventAllOfType(unsigned int,unsigned int)
+// func_800554A0
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntEventAllOfType__FUiUi")
 
-// zEntRecurseModelInfo(void*,xEnt*)
+// func_800554D4
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntRecurseModelInfo__FPvP4xEnt")
 
-// zEntParseModelInfo(xEnt*,unsigned int)
+// func_80055698
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntParseModelInfo__FP4xEntUi")
 
-// zEntAnimEvent(zEnt*,unsigned int,const float*)
+// func_8005570C
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntAnimEvent__FP4zEntUiPCf")
 
-// zEntAnimEvent_AutoAnim(zEnt*,unsigned int,const float*)
+// func_80055A98
+#pragma GLOBAL_ASM("asm/Game/zEnt.s", "xEnt_AnimTable_AutoEventSmall__Fv")
+
+// func_80055C34
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntAnimEvent_AutoAnim__FP4zEntUiPCf")
 
-// zEntGetModelParams(unsigned int,unsigned int*)
+// func_80055EF4
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntGetModelParams__FUiPUi")
 
-// zParamGetString(xModelAssetParam*,unsigned int,char*,char*)
+// func_80055F7C
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetString__FP16xModelAssetParamUiPcPc")
 
-// zParamGetInt(xModelAssetParam*,unsigned int,const char*,int)
+// func_80056004
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetInt__FP16xModelAssetParamUiPCci")
 
-// zParamGetInt(xModelAssetParam*,unsigned int,char*,int)
+// func_80056024
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetInt__FP16xModelAssetParamUiPci")
 
-// zParamGetFloat(xModelAssetParam*,unsigned int,const char*,float)
+// func_80056068
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetFloat__FP16xModelAssetParamUiPCcf")
 
-// zParamGetFloat(xModelAssetParam*,unsigned int,char*,float)
+// func_80056088
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetFloat__FP16xModelAssetParamUiPcf")
 
-// zParamGetFloatList(xModelAssetParam*,unsigned int,const char*,int,float*,float*)
+// func_800560CC
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf")
 
-// zParamGetFloatList(xModelAssetParam*,unsigned int,char*,int,float*,float*)
+// func_800560EC
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetFloatList__FP16xModelAssetParamUiPciPfPf")
 
-// zParamGetVector(xModelAssetParam*,unsigned int,const char*,xVec3,xVec3*)
+// func_8005620C
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3")
 
-// zParamGetVector(xModelAssetParam*,unsigned int,char*,xVec3,xVec3*)
+// func_80056248
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetVector__FP16xModelAssetParamUiPc5xVec3P5xVec3")
 
-// zEntGetShadowParams(xEnt*,xVec3*,float*,xEntShadow::radius_enum)
+// func_80056310
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntGetShadowParams__FP4xEntP5xVec3PfQ210xEntShadow11radius_enum")
 
-// xModelAnimCollStop(xModelInstance&)
+// func_80056480
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "xModelAnimCollStop__FR14xModelInstance")
 
-// xEntGetFrame(const xEnt*)
+// func_80056490
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "xEntGetFrame__FPC4xEnt")
 
-// xSndPlay3D(unsigned int,float,float,unsigned int,unsigned int,const xVec3*,float,sound_category,float)
+// func_800564B4
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "xSndPlay3D__FUiffUiUiPC5xVec3f14sound_categoryf")
 
-// xNPCBasic::SelfType() const
+// func_800564E4
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "SelfType__9xNPCBasicCFv")

@@ -168,7 +168,8 @@ lbl_800C3504:
 /* 800C3510 000C0310  7C 08 03 A6 */	mtlr r0
 /* 800C3514 000C0314  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C3518 000C0318  4E 80 00 20 */	blr 
-lbl_800C351C:
+
+ifilereadCB__FP9tag_xFile:
 /* 800C351C 000C031C  38 00 00 00 */	li r0, 0
 /* 800C3520 000C0320  90 0D 91 C4 */	stw r0, iFileSyncAsyncReadActive-_SDA_BASE_(r13)
 /* 800C3524 000C0324  4E 80 00 20 */	blr 
@@ -188,9 +189,9 @@ iFileRead__FP9tag_xFilePvUi:
 /* 800C3550 000C0350  80 83 01 0C */	lwz r4, 0x10c(r3)
 /* 800C3554 000C0354  4B FF FF 25 */	bl iFileSeek__FP9tag_xFileii
 /* 800C3558 000C0358  38 00 00 01 */	li r0, 1
-/* 800C355C 000C035C  3C 60 80 0C */	lis r3, lbl_800C351C@ha
+/* 800C355C 000C035C  3C 60 80 0C */	lis r3, ifilereadCB__FP9tag_xFile@ha
 /* 800C3560 000C0360  90 0D 91 C4 */	stw r0, iFileSyncAsyncReadActive-_SDA_BASE_(r13)
-/* 800C3564 000C0364  38 C3 35 1C */	addi r6, r3, lbl_800C351C@l
+/* 800C3564 000C0364  38 C3 35 1C */	addi r6, r3, ifilereadCB__FP9tag_xFile@l
 /* 800C3568 000C0368  7F A3 EB 78 */	mr r3, r29
 /* 800C356C 000C036C  7F C4 F3 78 */	mr r4, r30
 /* 800C3570 000C0370  7F E5 FB 78 */	mr r5, r31
@@ -211,7 +212,8 @@ lbl_800C3584:
 /* 800C35A4 000C03A4  7C 08 03 A6 */	mtlr r0
 /* 800C35A8 000C03A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C35AC 000C03AC  4E 80 00 20 */	blr 
-lbl_800C35B0:
+
+async_cb__FlP11DVDFileInfo:
 /* 800C35B0 000C03B0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C35B4 000C03B4  7C 08 02 A6 */	mflr r0
 /* 800C35B8 000C03B8  2C 03 FF FE */	cmpwi r3, -2
@@ -308,8 +310,8 @@ lbl_800C36D8:
 /* 800C3700 000C0500  54 A5 00 34 */	rlwinm r5, r5, 0, 0, 0x1a
 lbl_800C3704:
 /* 800C3704 000C0504  80 9F 00 04 */	lwz r4, 4(r31)
-/* 800C3708 000C0508  3C 60 80 0C */	lis r3, lbl_800C35B0@ha
-/* 800C370C 000C050C  38 E3 35 B0 */	addi r7, r3, lbl_800C35B0@l
+/* 800C3708 000C0508  3C 60 80 0C */	lis r3, async_cb__FlP11DVDFileInfo@ha
+/* 800C370C 000C050C  38 E3 35 B0 */	addi r7, r3, async_cb__FlP11DVDFileInfo@l
 /* 800C3710 000C0510  7C 84 32 14 */	add r4, r4, r6
 /* 800C3714 000C0514  38 68 00 A8 */	addi r3, r8, 0xa8
 /* 800C3718 000C0518  7C C9 32 14 */	add r6, r9, r6
@@ -375,8 +377,8 @@ lbl_800C3784:
 /* 800C37F0 000C05F0  55 08 00 3A */	rlwinm r8, r8, 0, 0, 0x1d
 lbl_800C37F4:
 /* 800C37F4 000C05F4  93 FE 00 D4 */	stw r31, 0xd4(r30)
-/* 800C37F8 000C05F8  3C 60 80 0C */	lis r3, lbl_800C35B0@ha
-/* 800C37FC 000C05FC  38 E3 35 B0 */	addi r7, r3, lbl_800C35B0@l
+/* 800C37F8 000C05F8  3C 60 80 0C */	lis r3, async_cb__FlP11DVDFileInfo@ha
+/* 800C37FC 000C05FC  38 E3 35 B0 */	addi r7, r3, async_cb__FlP11DVDFileInfo@l
 /* 800C3800 000C0600  7D 05 43 78 */	mr r5, r8
 /* 800C3804 000C0604  80 DE 01 0C */	lwz r6, 0x10c(r30)
 /* 800C3808 000C0608  38 7E 00 A8 */	addi r3, r30, 0xa8

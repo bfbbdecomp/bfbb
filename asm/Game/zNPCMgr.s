@@ -567,9 +567,9 @@ lbl_800EEA08:
 /* 800EEA30 000EB830  80 1D 00 08 */	lwz r0, 8(r29)
 /* 800EEA34 000EB834  7C 03 00 00 */	cmpw r3, r0
 /* 800EEA38 000EB838  40 82 00 14 */	bne lbl_800EEA4C
-/* 800EEA3C 000EB83C  3C 80 80 0F */	lis r4, lbl_800EECEC@ha
+/* 800EEA3C 000EB83C  3C 80 80 0F */	lis r4, zNPCMgr_OrdComp_npcid__FPvPv@ha
 /* 800EEA40 000EB840  7F A3 EB 78 */	mr r3, r29
-/* 800EEA44 000EB844  38 84 EC EC */	addi r4, r4, lbl_800EECEC@l
+/* 800EEA44 000EB844  38 84 EC EC */	addi r4, r4, zNPCMgr_OrdComp_npcid__FPvPv@l
 /* 800EEA48 000EB848  4B F4 73 45 */	bl XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i
 lbl_800EEA4C:
 /* 800EEA4C 000EB84C  7F A3 EB 78 */	mr r3, r29
@@ -757,8 +757,9 @@ lbl_800EECB0:
 /* 800EECBC 000EBABC  38 63 30 31 */	addi r3, r3, 0x4E543031@l
 /* 800EECC0 000EBAC0  4E 80 00 20 */	blr 
 
-.global func_800EECC4
-func_800EECC4:
+.global zNPCMgr_OrdTest_npcid__FPCvPv
+
+zNPCMgr_OrdTest_npcid__FPCvPv:
 /* 800EECC4 000EBAC4  80 04 00 00 */	lwz r0, 0(r4)
 /* 800EECC8 000EBAC8  7C 03 00 40 */	cmplw r3, r0
 /* 800EECCC 000EBACC  40 80 00 0C */	bge lbl_800EECD8
@@ -771,7 +772,8 @@ lbl_800EECD8:
 lbl_800EECE4:
 /* 800EECE4 000EBAE4  38 60 00 00 */	li r3, 0
 /* 800EECE8 000EBAE8  4E 80 00 20 */	blr 
-lbl_800EECEC:
+
+zNPCMgr_OrdComp_npcid__FPvPv:
 /* 800EECEC 000EBAEC  80 63 00 00 */	lwz r3, 0(r3)
 /* 800EECF0 000EBAF0  80 04 00 00 */	lwz r0, 0(r4)
 /* 800EECF4 000EBAF4  7C 03 00 40 */	cmplw r3, r0
@@ -821,11 +823,15 @@ DBG_PerfTrack__7zNPCMgrFv:
 GetFactory__10xBehaveMgrFv:
 /* 800EED60 000EBB60  80 63 00 00 */	lwz r3, 0(r3)
 /* 800EED64 000EBB64  4E 80 00 20 */	blr 
+
+PostSetup__9xNPCBasicFv:
 /* 800EED68 000EBB68  4E 80 00 20 */	blr 
 
 .global RenderExtra__10zNPCCommonFv
 RenderExtra__10zNPCCommonFv:
 /* 800EED6C 000EBB6C  4E 80 00 20 */	blr 
+
+RenderExtraPostParticles__10zNPCCommonFv:
 /* 800EED70 000EBB70  4E 80 00 20 */	blr 
 
 .endif

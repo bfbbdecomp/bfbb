@@ -2,56 +2,56 @@
 
 #include <types.h>
 
-// xMathInit()
+// func_80030C04
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathInit__Fv")
 
-// xMathExit()
+// func_80030C24
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathExit__Fv")
 
-// xatof(const char*)
+// func_80030C3C
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xatof__FPCc")
 
-// xsrand(unsigned int)
+// func_80030C60
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xsrand__FUi")
 
-// xrand()
+// func_80030C68
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xrand__Fv")
 
-// xurand()
+// func_80030C88
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xurand__Fv")
 
-// xMathSolveQuadratic(float,float,float,float*,float*)
+// func_80030CC8
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathSolveQuadratic__FfffPfPf")
 
-// xMathSolveCubic(float,float,float,float,float*,float*,float*)
+// func_80030DF4
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathSolveCubic__FffffPfPfPf")
 
-// xAngleClamp(float)
+// func_80031098
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAngleClamp__Ff")
 
-// xAngleClampFast(float)
+// func_800310D0
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAngleClampFast__Ff")
 
-// xDangleClamp(float)
+// func_80031100
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xDangleClamp__Ff")
 
-// xAccelMove(float&,float&,float,float,float,float)
+// func_80031154
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMove__FRfRfffff")
 
-// xAccelMoveTime(float,float,float,float)
+// func_8003142C
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMoveTime__Fffff")
 
-// xAccelMove(float&,float&,float,float,float)
+// func_80031490
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMove__FRfRffff")
 
-// xAccelStop(float&,float&,float,float)
+// func_8003157C
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelStop__FRfRfff")
 
-// xFuncPiece_Eval(xFuncPiece*,float,xFuncPiece**)
+// func_80031680
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece")
 
-// xFuncPiece_EndPoints(xFuncPiece*,float,float,float,float)
+// func_80031768
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xFuncPiece_EndPoints__FP10xFuncPieceffff")
 
-// xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,float)
+// func_800317BC
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef")

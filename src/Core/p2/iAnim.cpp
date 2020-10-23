@@ -2,20 +2,20 @@
 
 #include <types.h>
 
-// iAnimInit()
+// func_800BE9F4
 #pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "iAnimInit__Fv")
 
-// iAnimEval(void*,float,unsigned int,xVec3*,xQuat*)
+// func_800BE9F8
 #pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "iAnimEval__FPvfUiP5xVec3P5xQuat")
 
-// iAnimDuration(void*)
+// func_800BEA18
 #pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "iAnimDuration__FPv")
 
-// iAnimBoneCount(void*)
+// func_800BEA38
 #pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "iAnimBoneCount__FPv")
 
-// iAnimBlend(float,float,unsigned short*,float*,unsigned int,xVec3*,xQuat*,xVec3*,xQuat*,xVec3*,xQuat*)
+// func_800BEA58
 #pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat")
 
-// RtQuat::operator =(const RtQuat&)
+// func_800BF19C
 #pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "__as__6RtQuatFRC6RtQuat")

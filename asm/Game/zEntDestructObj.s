@@ -122,6 +122,8 @@ zEntDestructObj_FindFX__Fv:
 /* 80060B60 0005D960  7C 08 03 A6 */	mtlr r0
 /* 80060B64 0005D964  38 21 00 10 */	addi r1, r1, 0x10
 /* 80060B68 0005D968  4E 80 00 20 */	blr 
+
+zEntDestructObj_Init__FPvPv:
 /* 80060B6C 0005D96C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80060B70 0005D970  7C 08 02 A6 */	mflr r0
 /* 80060B74 0005D974  90 01 00 14 */	stw r0, 0x14(r1)
@@ -230,14 +232,14 @@ lbl_80060CD8:
 /* 80060CD8 0005DAD8  98 9E 00 22 */	stb r4, 0x22(r30)
 lbl_80060CDC:
 /* 80060CDC 0005DADC  88 1E 00 22 */	lbz r0, 0x22(r30)
-/* 80060CE0 0005DAE0  3C A0 80 06 */	lis r5, lbl_80060ED0@ha
-/* 80060CE4 0005DAE4  3C 80 80 06 */	lis r4, lbl_8006136C@ha
-/* 80060CE8 0005DAE8  3C 60 80 06 */	lis r3, lbl_80060ED4@ha
+/* 80060CE0 0005DAE0  3C A0 80 06 */	lis r5, zEntDestructObj_Move__FP15zEntDestructObjP6xScenefP9xEntFrame@ha
+/* 80060CE4 0005DAE4  3C 80 80 06 */	lis r4, zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 80060CE8 0005DAE8  3C 60 80 06 */	lis r3, zEntDestructObj_Update__FP15zEntDestructObjP6xScenef@ha
 /* 80060CEC 0005DAEC  60 00 00 04 */	ori r0, r0, 4
-/* 80060CF0 0005DAF0  38 A5 0E D0 */	addi r5, r5, lbl_80060ED0@l
+/* 80060CF0 0005DAF0  38 A5 0E D0 */	addi r5, r5, zEntDestructObj_Move__FP15zEntDestructObjP6xScenefP9xEntFrame@l
 /* 80060CF4 0005DAF4  98 1E 00 22 */	stb r0, 0x22(r30)
-/* 80060CF8 0005DAF8  38 84 13 6C */	addi r4, r4, lbl_8006136C@l
-/* 80060CFC 0005DAFC  38 03 0E D4 */	addi r0, r3, lbl_80060ED4@l
+/* 80060CF8 0005DAF8  38 84 13 6C */	addi r4, r4, zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 80060CFC 0005DAFC  38 03 0E D4 */	addi r0, r3, zEntDestructObj_Update__FP15zEntDestructObjP6xScenef@l
 /* 80060D00 0005DB00  90 BE 00 40 */	stw r5, 0x40(r30)
 /* 80060D04 0005DB04  90 9E 00 0C */	stw r4, 0xc(r30)
 /* 80060D08 0005DB08  90 1E 00 34 */	stw r0, 0x34(r30)
@@ -252,9 +254,9 @@ lbl_80060D28:
 /* 80060D28 0005DB28  38 00 00 00 */	li r0, 0
 /* 80060D2C 0005DB2C  90 1E 00 08 */	stw r0, 8(r30)
 lbl_80060D30:
-/* 80060D30 0005DB30  3C 60 80 06 */	lis r3, lbl_8006136C@ha
+/* 80060D30 0005DB30  3C 60 80 06 */	lis r3, zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80060D34 0005DB34  38 00 00 00 */	li r0, 0
-/* 80060D38 0005DB38  38 63 13 6C */	addi r3, r3, lbl_8006136C@l
+/* 80060D38 0005DB38  38 63 13 6C */	addi r3, r3, zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80060D3C 0005DB3C  90 7E 00 0C */	stw r3, 0xc(r30)
 /* 80060D40 0005DB40  90 1E 00 EC */	stw r0, 0xec(r30)
 /* 80060D44 0005DB44  88 1E 00 84 */	lbz r0, 0x84(r30)
@@ -362,9 +364,11 @@ lbl_80060EA4:
 /* 80060EC4 0005DCC4  7C 08 03 A6 */	mtlr r0
 /* 80060EC8 0005DCC8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80060ECC 0005DCCC  4E 80 00 20 */	blr 
-lbl_80060ED0:
+
+zEntDestructObj_Move__FP15zEntDestructObjP6xScenefP9xEntFrame:
 /* 80060ED0 0005DCD0  4E 80 00 20 */	blr 
-lbl_80060ED4:
+
+zEntDestructObj_Update__FP15zEntDestructObjP6xScenef:
 /* 80060ED4 0005DCD4  94 21 FE 70 */	stwu r1, -0x190(r1)
 /* 80060ED8 0005DCD8  7C 08 02 A6 */	mflr r0
 /* 80060EDC 0005DCDC  90 01 01 94 */	stw r0, 0x194(r1)
@@ -700,7 +704,8 @@ lbl_80061350:
 /* 80061360 0005E160  7C 08 03 A6 */	mtlr r0
 /* 80061364 0005E164  38 21 00 30 */	addi r1, r1, 0x30
 /* 80061368 0005E168  4E 80 00 20 */	blr 
-lbl_8006136C:
+
+zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8006136C 0005E16C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80061370 0005E170  7C 08 02 A6 */	mflr r0
 /* 80061374 0005E174  2C 05 01 64 */	cmpwi r5, 0x164

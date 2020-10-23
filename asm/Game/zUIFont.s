@@ -63,6 +63,8 @@ lbl_800BC600:
 .global zUIFontInit__Fv
 zUIFontInit__Fv:
 /* 800BC61C 000B941C  4E 80 00 20 */	blr 
+
+zUIFont_Init__FPvPv:
 /* 800BC620 000B9420  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BC624 000B9424  7C 08 02 A6 */	mflr r0
 /* 800BC628 000B9428  90 01 00 14 */	stw r0, 0x14(r1)
@@ -94,9 +96,9 @@ zUIFont_Init__FP7zUIFontP9xEntAsset:
 lbl_800BC684:
 /* 800BC684 000B9484  80 03 00 84 */	lwz r0, 0x84(r3)
 lbl_800BC688:
-/* 800BC688 000B9488  3C 60 80 0C */	lis r3, lbl_800BC848@ha
+/* 800BC688 000B9488  3C 60 80 0C */	lis r3, zUIFont_Update__FP7zUIFontP6xScenef@ha
 /* 800BC68C 000B948C  90 1F 00 EC */	stw r0, 0xec(r31)
-/* 800BC690 000B9490  38 03 C8 48 */	addi r0, r3, lbl_800BC848@l
+/* 800BC690 000B9490  38 03 C8 48 */	addi r0, r3, zUIFont_Update__FP7zUIFontP6xScenef@l
 /* 800BC694 000B9494  3C 60 80 0C */	lis r3, zUIFontEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800BC698 000B9498  90 1F 00 34 */	stw r0, 0x34(r31)
 /* 800BC69C 000B949C  38 03 CA E8 */	addi r0, r3, zUIFontEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
@@ -225,7 +227,8 @@ zUIFont_PreUpdate__FP7zUIFontP6xScenef:
 /* 800BC83C 000B963C  7C 08 03 A6 */	mtlr r0
 /* 800BC840 000B9640  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BC844 000B9644  4E 80 00 20 */	blr 
-lbl_800BC848:
+
+zUIFont_Update__FP7zUIFontP6xScenef:
 /* 800BC848 000B9648  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BC84C 000B964C  7C 08 02 A6 */	mflr r0
 /* 800BC850 000B9650  90 01 00 14 */	stw r0, 0x14(r1)

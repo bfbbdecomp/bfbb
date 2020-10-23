@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x800B96B8 - 0x800BC558
 
 /* refresh_model__17@unnamed@zUI_cpp@FR4_zUI */
@@ -428,6 +430,8 @@ zUI_Init__Fv:
 /* 800B9C48 000B6A48  7C 08 03 A6 */	mtlr r0
 /* 800B9C4C 000B6A4C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B9C50 000B6A50  4E 80 00 20 */	blr 
+
+zUI_Init__FPvPv:
 /* 800B9C54 000B6A54  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800B9C58 000B6A58  7C 08 02 A6 */	mflr r0
 /* 800B9C5C 000B6A5C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -567,10 +571,10 @@ zUI_Init__FP4_zUIP9xEntAsset:
 /* 800B9E3C 000B6C3C  4B FF FE DD */	bl load_anim_list__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI
 lbl_800B9E40:
 /* 800B9E40 000B6C40  38 A0 00 00 */	li r5, 0
-/* 800B9E44 000B6C44  3C 80 80 0C */	lis r4, lbl_800BA35C@ha
+/* 800B9E44 000B6C44  3C 80 80 0C */	lis r4, zUI_Update__FP4_zUIP6xScenef@ha
 /* 800B9E48 000B6C48  98 BF 00 23 */	stb r5, 0x23(r31)
 /* 800B9E4C 000B6C4C  3C 60 80 0C */	lis r3, zUIEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
-/* 800B9E50 000B6C50  38 84 A3 5C */	addi r4, r4, lbl_800BA35C@l
+/* 800B9E50 000B6C50  38 84 A3 5C */	addi r4, r4, zUI_Update__FP4_zUIP6xScenef@l
 /* 800B9E54 000B6C54  98 BF 00 22 */	stb r5, 0x22(r31)
 /* 800B9E58 000B6C58  38 03 AD 78 */	addi r0, r3, zUIEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800B9E5C 000B6C5C  90 9F 00 34 */	stw r4, 0x34(r31)
@@ -937,7 +941,8 @@ lbl_800BA334:
 /* 800BA350 000B7150  7C 08 03 A6 */	mtlr r0
 /* 800BA354 000B7154  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BA358 000B7158  4E 80 00 20 */	blr 
-lbl_800BA35C:
+
+zUI_Update__FP4_zUIP6xScenef:
 /* 800BA35C 000B715C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800BA360 000B7160  7C 08 02 A6 */	mflr r0
 /* 800BA364 000B7164  90 01 00 24 */	stw r0, 0x24(r1)
@@ -1097,7 +1102,8 @@ lbl_800BA57C:
 /* 800BA588 000B7388  7C 08 03 A6 */	mtlr r0
 /* 800BA58C 000B738C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BA590 000B7390  4E 80 00 20 */	blr 
-lbl_800BA594:
+
+zUIRenderIteratorInsert__FP5xBaseP6zScenePv:
 /* 800BA594 000B7394  80 CD 91 10 */	lwz r6, lbl_803CBA10-_SDA_BASE_(r13)
 /* 800BA598 000B7398  3C 80 80 3C */	lis r4, sSorted@ha
 /* 800BA59C 000B739C  38 84 26 88 */	addi r4, r4, sSorted@l
@@ -1106,7 +1112,8 @@ lbl_800BA594:
 /* 800BA5A8 000B73A8  90 AD 91 10 */	stw r5, lbl_803CBA10-_SDA_BASE_(r13)
 /* 800BA5AC 000B73AC  7C 64 01 2E */	stwx r3, r4, r0
 /* 800BA5B0 000B73B0  4E 80 00 20 */	blr 
-lbl_800BA5B4:
+
+iRenderQSort_Face__FPCvPCv:
 /* 800BA5B4 000B73B4  80 E3 00 00 */	lwz r7, 0(r3)
 /* 800BA5B8 000B73B8  81 04 00 00 */	lwz r8, 0(r4)
 /* 800BA5BC 000B73BC  88 A7 00 04 */	lbz r5, 4(r7)
@@ -1202,22 +1209,22 @@ lbl_800BA6F4:
 /* 800BA6F4 000B74F4  80 0D 91 10 */	lwz r0, lbl_803CBA10-_SDA_BASE_(r13)
 /* 800BA6F8 000B74F8  28 00 00 00 */	cmplwi r0, 0
 /* 800BA6FC 000B74FC  40 82 00 50 */	bne lbl_800BA74C
-/* 800BA700 000B7500  3C 60 80 0C */	lis r3, lbl_800BA594@ha
+/* 800BA700 000B7500  3C 60 80 0C */	lis r3, zUIRenderIteratorInsert__FP5xBaseP6zScenePv@ha
 /* 800BA704 000B7504  38 80 00 20 */	li r4, 0x20
-/* 800BA708 000B7508  38 63 A5 94 */	addi r3, r3, lbl_800BA594@l
+/* 800BA708 000B7508  38 63 A5 94 */	addi r3, r3, zUIRenderIteratorInsert__FP5xBaseP6zScenePv@l
 /* 800BA70C 000B750C  38 A0 00 00 */	li r5, 0
 /* 800BA710 000B7510  4B FF A4 DD */	bl zSceneForAllBase__FPFP5xBaseP6zScenePv_P5xBaseiPv
-/* 800BA714 000B7514  3C 60 80 0C */	lis r3, lbl_800BA594@ha
+/* 800BA714 000B7514  3C 60 80 0C */	lis r3, zUIRenderIteratorInsert__FP5xBaseP6zScenePv@ha
 /* 800BA718 000B7518  38 80 00 21 */	li r4, 0x21
-/* 800BA71C 000B751C  38 63 A5 94 */	addi r3, r3, lbl_800BA594@l
+/* 800BA71C 000B751C  38 63 A5 94 */	addi r3, r3, zUIRenderIteratorInsert__FP5xBaseP6zScenePv@l
 /* 800BA720 000B7520  38 A0 00 00 */	li r5, 0
 /* 800BA724 000B7524  4B FF A4 C9 */	bl zSceneForAllBase__FPFP5xBaseP6zScenePv_P5xBaseiPv
 /* 800BA728 000B7528  80 8D 91 10 */	lwz r4, lbl_803CBA10-_SDA_BASE_(r13)
 /* 800BA72C 000B752C  28 04 00 01 */	cmplwi r4, 1
 /* 800BA730 000B7530  40 81 00 1C */	ble lbl_800BA74C
 /* 800BA734 000B7534  3C 60 80 3C */	lis r3, sSorted@ha
-/* 800BA738 000B7538  3C A0 80 0C */	lis r5, lbl_800BA5B4@ha
-/* 800BA73C 000B753C  38 C5 A5 B4 */	addi r6, r5, lbl_800BA5B4@l
+/* 800BA738 000B7538  3C A0 80 0C */	lis r5, iRenderQSort_Face__FPCvPCv@ha
+/* 800BA73C 000B753C  38 C5 A5 B4 */	addi r6, r5, iRenderQSort_Face__FPCvPCv@l
 /* 800BA740 000B7540  38 63 26 88 */	addi r3, r3, sSorted@l
 /* 800BA744 000B7544  38 A0 00 04 */	li r5, 4
 /* 800BA748 000B7548  48 12 B9 2D */	bl qsort
@@ -2018,7 +2025,8 @@ lbl_800BB284:
 /* 800BB298 000B8098  7C 08 03 A6 */	mtlr r0
 /* 800BB29C 000B809C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BB2A0 000B80A0  4E 80 00 20 */	blr 
-lbl_800BB2A4:
+
+zUIPortalEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800BB2A4 000B80A4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800BB2A8 000B80A8  7C 08 02 A6 */	mflr r0
 /* 800BB2AC 000B80AC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2780,10 +2788,10 @@ lbl_800BBD08:
 /* 800BBD78 000B8B78  7F E3 FB 78 */	mr r3, r31
 /* 800BBD7C 000B8B7C  4B FF F4 8D */	bl findUIFont__FP6zSceneUi
 /* 800BBD80 000B8B80  90 6D 91 54 */	stw r3, sPauseManager-_SDA_BASE_(r13)
-/* 800BBD84 000B8B84  3C A0 80 0C */	lis r5, lbl_800BB2A4@ha
+/* 800BBD84 000B8B84  3C A0 80 0C */	lis r5, zUIPortalEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800BBD88 000B8B88  3C 60 80 26 */	lis r3, lbl_8025F750@ha
 /* 800BBD8C 000B8B8C  80 8D 91 54 */	lwz r4, sPauseManager-_SDA_BASE_(r13)
-/* 800BBD90 000B8B90  38 05 B2 A4 */	addi r0, r5, lbl_800BB2A4@l
+/* 800BBD90 000B8B90  38 05 B2 A4 */	addi r0, r5, zUIPortalEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800BBD94 000B8B94  38 63 F7 50 */	addi r3, r3, lbl_8025F750@l
 /* 800BBD98 000B8B98  90 04 00 0C */	stw r0, 0xc(r4)
 /* 800BBD9C 000B8B9C  38 63 01 DC */	addi r3, r3, 0x1dc
@@ -3284,6 +3292,8 @@ lbl_800BC440:
 /* 800BC464 000B9264  7C 08 03 A6 */	mtlr r0
 /* 800BC468 000B9268  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BC46C 000B926C  4E 80 00 20 */	blr 
+
+__sinit_zUI_cpp:
 /* 800BC470 000B9270  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800BC474 000B9274  7C 08 02 A6 */	mflr r0
 /* 800BC478 000B9278  3C 60 80 26 */	lis r3, lbl_8025F750@ha
@@ -3345,6 +3355,9 @@ xMat3x3Scale__FP7xMat3x3PC5xVec3:
 /* 800BC54C 000B934C  7C 08 03 A6 */	mtlr r0
 /* 800BC550 000B9350  38 21 00 10 */	addi r1, r1, 0x10
 /* 800BC554 000B9354  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8025F740:
 	.incbin "baserom.dol", 0x25C720, 0x10

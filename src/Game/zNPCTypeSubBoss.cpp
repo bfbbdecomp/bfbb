@@ -2,23 +2,44 @@
 
 #include <types.h>
 
-// ZNPC_SubBoss_Startup()
+// func_80135EA0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ZNPC_SubBoss_Startup__Fv")
 
-// ZNPC_SubBoss_Shutdown()
+// func_80135F08
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ZNPC_SubBoss_Shutdown__Fv")
 
-// zNPCSubBoss_ScenePrepare()
+// func_80135F0C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "zNPCSubBoss_ScenePrepare__Fv")
 
-// zNPCSubBoss_SceneFinish()
+// func_80135F18
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "zNPCSubBoss_SceneFinish__Fv")
 
-// zNPCSubBoss::Setup()
+// func_80135F24
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ZNPC_Create_SubBoss__FiP10RyzMemGrowPv")
+
+// func_8013602C
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ZNPC_Destroy_SubBoss__FP12xFactoryInst")
+
+// func_80136050
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "Setup__11zNPCSubBossFv")
 
-// SUBB_InitEffects()
+// func_80136088
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "SUBB_InitEffects__Fv")
 
-// zNPCSubBoss::zNPCSubBoss(int)
+// func_801360C8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "__ct__11zNPCSubBossFi")
+
+// func_80136104
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ColChkFlags__11zNPCSubBossCFv")
+
+// func_8013610C
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ColPenFlags__11zNPCSubBossCFv")
+
+// func_80136114
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ColChkByFlags__11zNPCSubBossCFv")
+
+// func_8013611C
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "ColPenByFlags__11zNPCSubBossCFv")
+
+// func_80136124
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "PhysicsFlags__11zNPCSubBossCFv")

@@ -120,6 +120,8 @@ destruct__Q24xhud17font_meter_widgetFv:
 /* 8002F184 0002BF84  7C 08 03 A6 */	mtlr r0
 /* 8002F188 0002BF88  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002F18C 0002BF8C  4E 80 00 20 */	blr 
+
+destroy__Q24xhud17font_meter_widgetFv:
 /* 8002F190 0002BF90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002F194 0002BF94  7C 08 02 A6 */	mflr r0
 /* 8002F198 0002BF98  90 01 00 14 */	stw r0, 0x14(r1)
@@ -148,6 +150,8 @@ lbl_8002F1DC:
 /* 8002F1E4 0002BFE4  7C 08 03 A6 */	mtlr r0
 /* 8002F1E8 0002BFE8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8002F1EC 0002BFEC  4E 80 00 20 */	blr 
+
+is__Q24xhud17font_meter_widgetCFUi:
 /* 8002F1F0 0002BFF0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002F1F4 0002BFF4  7C 08 02 A6 */	mflr r0
 /* 8002F1F8 0002BFF8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -176,6 +180,8 @@ lbl_8002F238:
 /* 8002F24C 0002C04C  7C 08 03 A6 */	mtlr r0
 /* 8002F250 0002C050  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002F254 0002C054  4E 80 00 20 */	blr 
+
+update__Q24xhud17font_meter_widgetFf:
 /* 8002F258 0002C058  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8002F25C 0002C05C  7C 08 02 A6 */	mflr r0
 /* 8002F260 0002C060  90 01 00 64 */	stw r0, 0x64(r1)
@@ -308,6 +314,8 @@ lbl_8002F430:
 /* 8002F438 0002C238  7C 08 03 A6 */	mtlr r0
 /* 8002F43C 0002C23C  38 21 00 60 */	addi r1, r1, 0x60
 /* 8002F440 0002C240  4E 80 00 20 */	blr 
+
+render__Q24xhud17font_meter_widgetFv:
 /* 8002F444 0002C244  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8002F448 0002C248  7C 08 02 A6 */	mflr r0
 /* 8002F44C 0002C24C  90 01 00 34 */	stw r0, 0x34(r1)

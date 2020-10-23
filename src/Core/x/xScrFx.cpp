@@ -2,92 +2,95 @@
 
 #include <types.h>
 
-// xScrFxInit()
+// func_80041920
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxInit__Fv")
 
-// xScrFxReset()
+// func_8004194C
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxReset__Fv")
 
-// xScrFxUpdate(RwCamera*,float)
+// func_8004196C
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxUpdate__FP8RwCameraf")
 
-// xScrFxRender(RwCamera*)
+// func_800419CC
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxRender__FP8RwCamera")
 
-// xScrFxDrawScreenSizeRectangle()
+// func_80041A0C
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxDrawScreenSizeRectangle__Fv")
 
-// xScrFxFadeInit()
+// func_80041A8C
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxFadeInit__Fv")
 
-// InterpCol(float,unsigned char,unsigned char)
+// func_80041ABC
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "InterpCol__FfUcUc")
 
-// xScrFxFade(iColor_tag*,iColor_tag*,float,void (*)(void),int)
+// func_80041B18
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi")
 
-// xScrFxStopFade()
+// func_80041BCC
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxStopFade__Fv")
 
-// xScrFxIsFading()
+// func_80041BDC
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxIsFading__Fv")
 
-// xScrFxUpdateFade(RwCamera*,float)
+// func_80041BEC
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxUpdateFade__FP8RwCameraf")
 
-// xScrFxLetterBoxInit()
+// func_80041DF0
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxLetterBoxInit__Fv")
 
-// xScrFxLetterboxReset()
+// func_80041E04
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxLetterboxReset__Fv")
 
-// xScrFxLetterBoxSetSize(float)
+// func_80041E18
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxLetterBoxSetSize__Ff")
 
-// xScrFxLetterBoxSetAlpha(unsigned char)
+// func_80041E20
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxLetterBoxSetAlpha__FUc")
 
-// xScrFxLetterbox(int)
+// func_80041E28
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxLetterbox__Fi")
 
-// xScrFxUpdateLetterBox(RwCamera*,float)
+// func_80041E78
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxUpdateLetterBox__FP8RwCameraf")
 
-// xScrFxIsLetterbox()
+// func_80041FC8
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxIsLetterbox__Fv")
 
-// xScrFxDrawSafeArea()
+// func_80041FE0
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxDrawSafeArea__Fv")
 
-// xScrFxDistortionAdd(xVec3*,xVec3*,int)
+// func_8004223C
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxDistortionAdd__FP5xVec3P5xVec3i")
 
-// xScrFxDistortionUpdate(float)
+// func_80042240
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxDistortionUpdate__Ff")
 
-// xScrFxDistortionRender(RwCamera*)
+// func_80042398
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxDistortionRender__FP8RwCamera")
 
-// xScrFXGlareInit()
+// func_8004239C
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFXGlareInit__Fv")
 
-// xScrFXGlareReset()
+// func_800423D0
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFXGlareReset__Fv")
 
-// xScrFXGlareAdd(xVec3*,float,float,float,float,float,float,float,RwRaster*)
+// func_800423F0
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster")
 
-// xScrFXGlareUpdate(float)
+// func_80042578
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFXGlareUpdate__Ff")
 
-// xScrFXFullScreenGlareRender()
+// func_80042620
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFXFullScreenGlareRender__Fv")
 
-// xScrFXGlareRender(xCamera*)
+// func_800427BC
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFXGlareRender__FP7xCamera")
 
-// xScrFxDrawBox(float,float,float,float,unsigned char,unsigned char,unsigned char,unsigned char,float,float)
+// func_80042B54
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "xScrFxDrawBox__FffffUcUcUcUcff")
 
-// DistortionParticle::operator =(const DistortionParticle&)
+// func_80042CD8
+#pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "__sinit_xScrFx_cpp")
+
+// func_80042D08
 #pragma GLOBAL_ASM("asm/Core/x/xScrFx.s", "__as__18DistortionParticleFRC18DistortionParticle")

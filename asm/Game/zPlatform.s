@@ -4,7 +4,8 @@
 
 .section .text  # 0x800A8EC8 - 0x800AC8A0
 
-func_800A8EC8:
+
+genericPlatRender__FP4xEnt:
 /* 800A8EC8 000A5CC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8ECC 000A5CCC  7C 08 02 A6 */	mflr r0
 /* 800A8ED0 000A5CD0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -26,6 +27,8 @@ lbl_800A8F00:
 /* 800A8F08 000A5D08  7C 08 03 A6 */	mtlr r0
 /* 800A8F0C 000A5D0C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A8F10 000A5D10  4E 80 00 20 */	blr 
+
+zPlatform_Init__FPvPv:
 /* 800A8F14 000A5D14  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8F18 000A5D18  7C 08 02 A6 */	mflr r0
 /* 800A8F1C 000A5D1C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -60,18 +63,18 @@ lbl_800A8F80:
 /* 800A8F80 000A5D80  38 00 00 00 */	li r0, 0
 /* 800A8F84 000A5D84  90 1E 00 08 */	stw r0, 8(r30)
 lbl_800A8F88:
-/* 800A8F88 000A5D88  3C 80 80 0B */	lis r4, lbl_800AADE4@ha
-/* 800A8F8C 000A5D8C  3C 60 80 0B */	lis r3, lbl_800AB760@ha
-/* 800A8F90 000A5D90  38 04 AD E4 */	addi r0, r4, lbl_800AADE4@l
-/* 800A8F94 000A5D94  3C A0 80 0B */	lis r5, lbl_800ABC04@ha
+/* 800A8F88 000A5D88  3C 80 80 0B */	lis r4, zPlatform_Update__FP4xEntP6xScenef@ha
+/* 800A8F8C 000A5D8C  3C 60 80 0B */	lis r3, zPlatform_Move__FP4xEntP6xScenefP9xEntFrame@ha
+/* 800A8F90 000A5D90  38 04 AD E4 */	addi r0, r4, zPlatform_Update__FP4xEntP6xScenef@l
+/* 800A8F94 000A5D94  3C A0 80 0B */	lis r5, zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 800A8F98 000A5D98  90 1E 00 34 */	stw r0, 0x34(r30)
-/* 800A8F9C 000A5D9C  38 03 B7 60 */	addi r0, r3, lbl_800AB760@l
-/* 800A8FA0 000A5DA0  3C 80 80 0B */	lis r4, lbl_800ABAF4@ha
-/* 800A8FA4 000A5DA4  3C 60 80 0B */	lis r3, func_800A8EC8@ha
+/* 800A8F9C 000A5D9C  38 03 B7 60 */	addi r0, r3, zPlatform_Move__FP4xEntP6xScenefP9xEntFrame@l
+/* 800A8FA0 000A5DA0  3C 80 80 0B */	lis r4, zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3@ha
+/* 800A8FA4 000A5DA4  3C 60 80 0B */	lis r3, genericPlatRender__FP4xEnt@ha
 /* 800A8FA8 000A5DA8  90 1E 00 40 */	stw r0, 0x40(r30)
-/* 800A8FAC 000A5DAC  38 05 BC 04 */	addi r0, r5, lbl_800ABC04@l
-/* 800A8FB0 000A5DB0  38 84 BA F4 */	addi r4, r4, lbl_800ABAF4@l
-/* 800A8FB4 000A5DB4  38 63 8E C8 */	addi r3, r3, func_800A8EC8@l
+/* 800A8FAC 000A5DAC  38 05 BC 04 */	addi r0, r5, zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 800A8FB0 000A5DB0  38 84 BA F4 */	addi r4, r4, zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3@l
+/* 800A8FB4 000A5DB4  38 63 8E C8 */	addi r3, r3, genericPlatRender__FP4xEnt@l
 /* 800A8FB8 000A5DB8  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 800A8FBC 000A5DBC  38 00 00 00 */	li r0, 0
 /* 800A8FC0 000A5DC0  90 9E 00 B0 */	stw r4, 0xb0(r30)
@@ -2161,7 +2164,8 @@ lbl_800AAD98:
 /* 800AADD8 000A7BD8  7C 08 03 A6 */	mtlr r0
 /* 800AADDC 000A7BDC  38 21 01 A0 */	addi r1, r1, 0x1a0
 /* 800AADE0 000A7BE0  4E 80 00 20 */	blr 
-lbl_800AADE4:
+
+zPlatform_Update__FP4xEntP6xScenef:
 /* 800AADE4 000A7BE4  94 21 FF 50 */	stwu r1, -0xb0(r1)
 /* 800AADE8 000A7BE8  7C 08 02 A6 */	mflr r0
 /* 800AADEC 000A7BEC  90 01 00 B4 */	stw r0, 0xb4(r1)
@@ -2822,7 +2826,8 @@ lbl_800AB734:
 /* 800AB754 000A8554  7C 08 03 A6 */	mtlr r0
 /* 800AB758 000A8558  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800AB75C 000A855C  4E 80 00 20 */	blr 
-lbl_800AB760:
+
+zPlatform_Move__FP4xEntP6xScenefP9xEntFrame:
 /* 800AB760 000A8560  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800AB764 000A8564  7C 08 02 A6 */	mflr r0
 /* 800AB768 000A8568  90 01 00 24 */	stw r0, 0x24(r1)
@@ -2872,9 +2877,9 @@ zPlatform_Shake__FP9zPlatformfff:
 /* 800AB80C 000A860C  48 00 00 58 */	b lbl_800AB864
 lbl_800AB810:
 /* 800AB810 000A8610  C0 22 94 34 */	lfs f1, lbl_803CDDB4-_SDA2_BASE_(r2)
-/* 800AB814 000A8614  3C 60 80 02 */	lis r3, xffx_rename_me@ha
+/* 800AB814 000A8614  3C 60 80 02 */	lis r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@ha
 /* 800AB818 000A8618  FC 00 F0 50 */	fneg f0, f30
-/* 800AB81C 000A861C  38 03 FB 5C */	addi r0, r3, xffx_rename_me@l
+/* 800AB81C 000A861C  38 03 FB 5C */	addi r0, r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@l
 /* 800AB820 000A8620  D0 3F 00 00 */	stfs f1, 0(r31)
 /* 800AB824 000A8624  7F C3 F3 78 */	mr r3, r30
 /* 800AB828 000A8628  D0 1F 00 04 */	stfs f0, 4(r31)
@@ -2938,8 +2943,8 @@ lbl_800AB8F0:
 /* 800AB900 000A8700  38 84 00 14 */	addi r4, r4, 0x14
 /* 800AB904 000A8704  4B F5 F7 8D */	bl xVec3SMul__FP5xVec3PC5xVec3f
 /* 800AB908 000A8708  D3 FF 00 0C */	stfs f31, 0xc(r31)
-/* 800AB90C 000A870C  3C 60 80 02 */	lis r3, xffx_rename_me@ha
-/* 800AB910 000A8710  38 03 FB 5C */	addi r0, r3, xffx_rename_me@l
+/* 800AB90C 000A870C  3C 60 80 02 */	lis r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@ha
+/* 800AB910 000A8710  38 03 FB 5C */	addi r0, r3, xFFXShakeUpdateEnt__FP4xEntP6xScenefPv@l
 /* 800AB914 000A8714  7F A3 EB 78 */	mr r3, r29
 /* 800AB918 000A8718  C0 02 94 30 */	lfs f0, lbl_803CDDB0-_SDA2_BASE_(r2)
 /* 800AB91C 000A871C  7F C4 F3 78 */	mr r4, r30
@@ -3075,7 +3080,8 @@ zPlatform_Dismount__FP9zPlatform:
 /* 800ABAE8 000A88E8  38 00 00 00 */	li r0, 0
 /* 800ABAEC 000A88EC  B0 03 01 44 */	sth r0, 0x144(r3)
 /* 800ABAF0 000A88F0  4E 80 00 20 */	blr 
-lbl_800ABAF4:
+
+zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3:
 /* 800ABAF4 000A88F4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800ABAF8 000A88F8  7C 08 02 A6 */	mflr r0
 /* 800ABAFC 000A88FC  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3150,7 +3156,8 @@ lbl_800ABBC0:
 /* 800ABBF8 000A89F8  7C 00 33 78 */	or r0, r0, r6
 /* 800ABBFC 000A89FC  90 07 00 00 */	stw r0, 0(r7)
 /* 800ABC00 000A8A00  4E 80 00 20 */	blr 
-lbl_800ABC04:
+
+zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800ABC04 000A8A04  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 800ABC08 000A8A08  7C 08 02 A6 */	mflr r0
 /* 800ABC0C 000A8A0C  90 01 00 E4 */	stw r0, 0xe4(r1)
