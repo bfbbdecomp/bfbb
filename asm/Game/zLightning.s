@@ -87,7 +87,8 @@ lbl_8009EDA0:
 /* 8009EDA4 0009BBA4  7C 08 03 A6 */	mtlr r0
 /* 8009EDA8 0009BBA8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009EDAC 0009BBAC  4E 80 00 20 */	blr 
-lbl_8009EDB0:
+
+lightningTweakStart__FRC10tweak_info:
 /* 8009EDB0 0009BBB0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8009EDB4 0009BBB4  7C 08 02 A6 */	mflr r0
 /* 8009EDB8 0009BBB8  3C 80 80 2F */	lis r4, lbl_802E96D8@ha
@@ -408,7 +409,7 @@ lbl_8009F1BC:
 /* 8009F280 0009C080  C0 62 92 30 */	lfs f3, lbl_803CDBB0-_SDA2_BASE_(r2)
 /* 8009F284 0009C084  4B F6 FD 79 */	bl xVec3Init__FP5xVec3fff
 /* 8009F288 0009C088  3C 60 80 3C */	lis r3, gLightningTweakAddInfo@ha
-/* 8009F28C 0009C08C  3C C0 80 0A */	lis r6, lbl_8009EDB0@ha
+/* 8009F28C 0009C08C  3C C0 80 0A */	lis r6, lightningTweakStart__FRC10tweak_info@ha
 /* 8009F290 0009C090  39 43 05 18 */	addi r10, r3, gLightningTweakAddInfo@l
 /* 8009F294 0009C094  3C A0 80 0A */	lis r5, lightningTweakChangeType__FRC10tweak_info@ha
 /* 8009F298 0009C098  3B AA 00 28 */	addi r29, r10, 0x28
@@ -428,7 +429,7 @@ lbl_8009F1BC:
 /* 8009F2D0 0009C0D0  98 0A 00 2A */	stb r0, 0x2a(r10)
 /* 8009F2D4 0009C0D4  3B 6A 00 18 */	addi r27, r10, 0x18
 /* 8009F2D8 0009C0D8  39 20 00 10 */	li r9, 0x10
-/* 8009F2DC 0009C0DC  39 06 ED B0 */	addi r8, r6, lbl_8009EDB0@l
+/* 8009F2DC 0009C0DC  39 06 ED B0 */	addi r8, r6, lightningTweakStart__FRC10tweak_info@l
 /* 8009F2E0 0009C0E0  98 EA 00 2B */	stb r7, 0x2b(r10)
 /* 8009F2E4 0009C0E4  38 05 EC 78 */	addi r0, r5, lightningTweakChangeType__FRC10tweak_info@l
 /* 8009F2E8 0009C0E8  38 64 00 F2 */	addi r3, r4, 0xf2
