@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8014F76C - 0x80154DD8
 
 /* init_sound__27@unnamed@zNPCTypePrawn_cpp@Fv */
@@ -6158,11 +6160,14 @@ lbl_80154DAC:
 /* 80154DC4 00151BC4  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 80154DC8 00151BC8  7C 08 03 A6 */	mtlr r0
 /* 80154DCC 00151BCC  38 21 00 20 */	addi r1, r1, 0x20
-/* 80154DD0 00151BD0  4E 80 00 20 */	blr 
+/* 80154DD0 00151BD0  4E 80 00 20 */	blr
 
 .global xDebugAddTweak__FPCcP5xVec3PC14tweak_callbackPvUi
 xDebugAddTweak__FPCcP5xVec3PC14tweak_callbackPvUi:
 /* 80154DD4 00151BD4  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026E838:
 	.incbin "baserom.dol", 0x26B818, 0xE0

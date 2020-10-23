@@ -389,6 +389,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zNPCGoalBoss.o              \
     $(OBJ_DIR)/src/Game/zNPCGoalBoss.o              \
     $(OBJ_DIR)/asm/Game/zNPCTypePrawn.o             \
+    $(OBJ_DIR)/src/Game/zNPCTypePrawn.o             \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossSB1.o           \
     $(OBJ_DIR)/src/Game/zNPCTypeBossSB1.o           \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossSB2.o           \
