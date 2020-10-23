@@ -218,10 +218,10 @@ lbl_8011F37C:
 /* 8011F3BC 0011C1BC  38 A0 00 00 */	li r5, 0
 /* 8011F3C0 0011C1C0  3C 80 80 3C */	lis r4, globals@ha
 /* 8011F3C4 0011C1C4  98 BF 00 22 */	stb r5, 0x22(r31)
-/* 8011F3C8 0011C1C8  3C 60 80 02 */	lis r3, lbl_800276AC@ha
+/* 8011F3C8 0011C1C8  3C 60 80 02 */	lis r3, xFXBubbleRender__FP8RpAtomic@ha
 /* 8011F3CC 0011C1CC  38 84 05 58 */	addi r4, r4, globals@l
 /* 8011F3D0 0011C1D0  98 BF 00 23 */	stb r5, 0x23(r31)
-/* 8011F3D4 0011C1D4  38 03 76 AC */	addi r0, r3, lbl_800276AC@l
+/* 8011F3D4 0011C1D4  38 03 76 AC */	addi r0, r3, xFXBubbleRender__FP8RpAtomic@l
 /* 8011F3D8 0011C1D8  98 BF 01 E4 */	stb r5, 0x1e4(r31)
 /* 8011F3DC 0011C1DC  98 BF 01 E5 */	stb r5, 0x1e5(r31)
 /* 8011F3E0 0011C1E0  93 E4 19 E4 */	stw r31, 0x19e4(r4)
