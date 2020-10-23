@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.if 0
+
 .section .text  # 0x8013AF64 - 0x8013D054
 
 /* create_glow_light__25@unnamed@zDiscoFloor_cpp@Fv */
@@ -2408,6 +2410,9 @@ lbl_8013D044:
 /* 8013D048 00139E48  4D 80 00 20 */	bltlr 
 /* 8013D04C 00139E4C  7C A3 2B 78 */	mr r3, r5
 /* 8013D050 00139E50  4E 80 00 20 */	blr 
+
+.endif
+
 .section .rodata
 lbl_8026D090:
 	.incbin "baserom.dol", 0x26A070, 0x14
