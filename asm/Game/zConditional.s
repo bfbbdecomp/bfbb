@@ -28,8 +28,8 @@ zConditionalInit__FP5xBaseP10zCondAsset:
 /* 80052598 0004F398  93 C1 00 08 */	stw r30, 8(r1)
 /* 8005259C 0004F39C  7C 7E 1B 78 */	mr r30, r3
 /* 800525A0 0004F3A0  4B FB 6E 61 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 800525A4 0004F3A4  3C 60 80 05 */	lis r3, lbl_800527EC@ha
-/* 800525A8 0004F3A8  38 03 27 EC */	addi r0, r3, lbl_800527EC@l
+/* 800525A4 0004F3A4  3C 60 80 05 */	lis r3, zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 800525A8 0004F3A8  38 03 27 EC */	addi r0, r3, zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 800525AC 0004F3AC  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 800525B0 0004F3B0  93 FE 00 10 */	stw r31, 0x10(r30)
 /* 800525B4 0004F3B4  88 1E 00 05 */	lbz r0, 5(r30)
@@ -201,7 +201,8 @@ lbl_800527CC:
 /* 800527E0 0004F5E0  7C 08 03 A6 */	mtlr r0
 /* 800527E4 0004F5E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800527E8 0004F5E8  4E 80 00 20 */	blr 
-lbl_800527EC:
+
+zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800527EC 0004F5EC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800527F0 0004F5F0  7C 08 02 A6 */	mflr r0
 /* 800527F4 0004F5F4  2C 05 00 3C */	cmpwi r5, 0x3c
