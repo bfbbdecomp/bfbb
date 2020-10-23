@@ -5,24 +5,24 @@
 
 struct xMat3x3
 {
-	xVec3 right;
-	int32 flags;
-	xVec3 up;
-	uint32 pad1;
-	xVec3 at;
-	uint32 pad2;
+    xVec3 right;
+    int32 flags;
+    xVec3 up;
+    uint32 pad1;
+    xVec3 at;
+    uint32 pad2;
 };
 
 struct xMat4x3 : xMat3x3
 {
-	xVec3 pos;
-	uint32 pad3;
+    xVec3 pos;
+    uint32 pad3;
 };
 
 struct xSphere
 {
-	xVec3 center;
-	float32 r;
+    xVec3 center;
+    float32 r;
 };
 
 struct xBox
@@ -57,5 +57,7 @@ struct xVec4
     float32 z;
     float32 w;
 };
+
+void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 
 #endif
