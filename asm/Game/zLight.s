@@ -47,6 +47,8 @@ lbl_8009E0A0:
 /* 8009E0BC 0009AEBC  7C 08 03 A6 */	mtlr r0
 /* 8009E0C0 0009AEC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E0C4 0009AEC4  4E 80 00 20 */	blr 
+
+zLightInit__FPvPv:
 /* 8009E0C8 0009AEC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009E0CC 0009AECC  7C 08 02 A6 */	mflr r0
 /* 8009E0D0 0009AED0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -66,8 +68,8 @@ zLightInit__FP5xBaseP11zLightAsset:
 /* 8009E0FC 0009AEFC  93 C1 00 08 */	stw r30, 8(r1)
 /* 8009E100 0009AF00  7C 9E 23 78 */	mr r30, r4
 /* 8009E104 0009AF04  4B F6 B2 FD */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8009E108 0009AF08  3C 60 80 0A */	lis r3, lbl_8009E46C@ha
-/* 8009E10C 0009AF0C  38 03 E4 6C */	addi r0, r3, lbl_8009E46C@l
+/* 8009E108 0009AF08  3C 60 80 0A */	lis r3, zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 8009E10C 0009AF0C  38 03 E4 6C */	addi r0, r3, zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 8009E110 0009AF10  90 1F 00 0C */	stw r0, 0xc(r31)
 /* 8009E114 0009AF14  93 DF 00 14 */	stw r30, 0x14(r31)
 /* 8009E118 0009AF18  88 1F 00 05 */	lbz r0, 5(r31)
@@ -320,7 +322,8 @@ zLightLoad__FP7_zLightP7xSerial:
 /* 8009E460 0009B260  7C 08 03 A6 */	mtlr r0
 /* 8009E464 0009B264  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E468 0009B268  4E 80 00 20 */	blr 
-lbl_8009E46C:
+
+zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 8009E46C 0009B26C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009E470 0009B270  7C 08 02 A6 */	mflr r0
 /* 8009E474 0009B274  2C 05 00 26 */	cmpwi r5, 0x26
