@@ -1,6 +1,6 @@
 #include "xString.h"
 
-uint32 xStrHash(const int8* str)
+uint32 xStrHash(const char* str)
 {
     uint32 hash = 0;
     uint32 i;
@@ -14,7 +14,7 @@ uint32 xStrHash(const int8* str)
     return hash;
 }
 
-uint32 xStrHash(const int8* str, ulong32 size)
+uint32 xStrHash(const char* str, ulong32 size)
 {
     uint32 hash = 0;
     uint32 i = 0;
@@ -30,7 +30,7 @@ uint32 xStrHash(const int8* str, ulong32 size)
     return hash;
 }
 
-uint32 xStrHashCat(uint32 prefix, const int8* str)
+uint32 xStrHashCat(uint32 prefix, const char* str)
 {
     uint32 hash;
     uint32 i;
@@ -53,7 +53,7 @@ uint32 xStrHashCat(uint32 prefix, const int8* str)
 // int xStricmp(char* string1, char* string2)
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStricmp__FPCcPCc")
 
-int8* xStrupr(int8* string)
+int8* xStrupr(char* string)
 {
     int8 p;
 
