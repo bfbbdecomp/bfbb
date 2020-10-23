@@ -554,9 +554,9 @@ xAnimInit__Fv:
 /* 80005FE0 00002DE0  7C 08 02 A6 */	mflr r0
 /* 80005FE4 00002DE4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80005FE8 00002DE8  48 0B 8A 0D */	bl iAnimInit__Fv
-/* 80005FEC 00002DEC  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
+/* 80005FEC 00002DEC  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
 /* 80005FF0 00002DF0  38 80 00 00 */	li r4, 0
-/* 80005FF4 00002DF4  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 80005FF4 00002DF4  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 80005FF8 00002DF8  38 A0 00 1C */	li r5, 0x1c
 /* 80005FFC 00002DFC  4B FF D4 5D */	bl memset
 /* 80006000 00002E00  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -575,9 +575,9 @@ xAnimTempTransitionInit__FUi:
 /* 80006028 00002E28  1C 9F 00 2C */	mulli r4, r31, 0x2c
 /* 8000602C 00002E2C  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
 /* 80006030 00002E30  48 02 D9 11 */	bl xMemAlloc__FUiUii
-/* 80006034 00002E34  3C A0 80 2C */	lis r5, lbl_802B89E0@ha
+/* 80006034 00002E34  3C A0 80 2C */	lis r5, sxAnimTempTranPool@ha
 /* 80006038 00002E38  7C 64 1B 78 */	mr r4, r3
-/* 8000603C 00002E3C  38 65 89 E0 */	addi r3, r5, lbl_802B89E0@l
+/* 8000603C 00002E3C  38 65 89 E0 */	addi r3, r5, sxAnimTempTranPool@l
 /* 80006040 00002E40  7F E9 FB 78 */	mr r9, r31
 /* 80006044 00002E44  57 EA F8 7E */	srwi r10, r31, 1
 /* 80006048 00002E48  38 A0 00 00 */	li r5, 0
@@ -2912,8 +2912,8 @@ lbl_80007FB0:
 /* 80008004 00004E04  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 80008008 00004E08  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 8000800C 00004E0C  41 82 00 10 */	beq lbl_8000801C
-/* 80008010 00004E10  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 80008014 00004E14  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 80008010 00004E10  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 80008014 00004E14  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 80008018 00004E18  48 02 BD B9 */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_8000801C:
 /* 8000801C 00004E1C  38 00 00 00 */	li r0, 0
@@ -3170,8 +3170,8 @@ lbl_8000836C:
 /* 800083AC 000051AC  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 800083B0 000051B0  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 800083B4 000051B4  41 82 00 10 */	beq lbl_800083C4
-/* 800083B8 000051B8  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 800083BC 000051BC  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 800083B8 000051B8  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 800083BC 000051BC  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 800083C0 000051C0  48 02 BA 11 */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_800083C4:
 /* 800083C4 000051C4  38 00 00 00 */	li r0, 0
@@ -3185,8 +3185,8 @@ lbl_800083D0:
 /* 800083E0 000051E0  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 800083E4 000051E4  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 800083E8 000051E8  41 82 00 10 */	beq lbl_800083F8
-/* 800083EC 000051EC  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 800083F0 000051F0  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 800083EC 000051EC  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 800083F0 000051F0  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 800083F4 000051F4  48 02 B9 DD */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_800083F8:
 /* 800083F8 000051F8  38 00 00 00 */	li r0, 0
@@ -3229,8 +3229,8 @@ lbl_80008464:
 /* 80008478 00005278  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 8000847C 0000527C  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 80008480 00005280  41 82 00 10 */	beq lbl_80008490
-/* 80008484 00005284  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 80008488 00005288  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 80008484 00005284  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 80008488 00005288  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 8000848C 0000528C  48 02 B9 45 */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_80008490:
 /* 80008490 00005290  38 00 00 00 */	li r0, 0
@@ -3266,8 +3266,8 @@ lbl_8000849C:
 /* 80008504 00005304  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 80008508 00005308  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 8000850C 0000530C  41 82 00 10 */	beq lbl_8000851C
-/* 80008510 00005310  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 80008514 00005314  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 80008510 00005310  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 80008514 00005314  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 80008518 00005318  48 02 B8 B9 */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_8000851C:
 /* 8000851C 0000531C  93 9F 00 30 */	stw r28, 0x30(r31)
@@ -3700,8 +3700,8 @@ lbl_80008B00:
 /* 80008B14 00005914  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 80008B18 00005918  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 80008B1C 0000591C  41 82 00 10 */	beq lbl_80008B2C
-/* 80008B20 00005920  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 80008B24 00005924  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 80008B20 00005920  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 80008B24 00005924  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 80008B28 00005928  48 02 B2 A9 */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_80008B2C:
 /* 80008B2C 0000592C  38 00 00 00 */	li r0, 0
@@ -3739,8 +3739,8 @@ lbl_80008B98:
 /* 80008BA4 000059A4  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 80008BA8 000059A8  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 80008BAC 000059AC  41 82 00 10 */	beq lbl_80008BBC
-/* 80008BB0 000059B0  3C 60 80 2C */	lis r3, lbl_802B89E0@ha
-/* 80008BB4 000059B4  38 63 89 E0 */	addi r3, r3, lbl_802B89E0@l
+/* 80008BB0 000059B0  3C 60 80 2C */	lis r3, sxAnimTempTranPool@ha
+/* 80008BB4 000059B4  38 63 89 E0 */	addi r3, r3, sxAnimTempTranPool@l
 /* 80008BB8 000059B8  48 02 B2 19 */	bl xMemPoolFree__FP8xMemPoolPv
 lbl_80008BBC:
 /* 80008BBC 000059BC  93 DF 00 30 */	stw r30, 0x30(r31)
@@ -4341,7 +4341,8 @@ lbl_800093F4:
 .endif
 
 .section .bss
-lbl_802B89E0:
+.global sxAnimTempTranPool
+sxAnimTempTranPool:
 	.skip 0x20
 
 .section .sbss
