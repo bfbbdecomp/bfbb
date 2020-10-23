@@ -489,6 +489,8 @@ reset_type__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_12wait_contextFv:
 /* 80130C90 0012DA90  38 00 00 00 */	li r0, 0
 /* 80130C94 0012DA94  B0 03 00 00 */	sth r0, 0(r3)
 /* 80130C98 0012DA98  4E 80 00 20 */	blr 
+
+parse_tag_auto_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80130C9C 0012DA9C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80130CA0 0012DAA0  7C 08 02 A6 */	mflr r0
 /* 80130CA4 0012DAA4  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -562,6 +564,8 @@ __as__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_12wait_contextFRCQ222_esc__
 /* 80130D9C 0012DB9C  90 A3 00 08 */	stw r5, 8(r3)
 /* 80130DA0 0012DBA0  90 03 00 0C */	stw r0, 0xc(r3)
 /* 80130DA4 0012DBA4  4E 80 00 20 */	blr 
+
+reset_tag_auto_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80130DA8 0012DBA8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80130DAC 0012DBAC  7C 08 02 A6 */	mflr r0
 /* 80130DB0 0012DBB0  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -591,6 +595,8 @@ lbl_80130E04:
 /* 80130E0C 0012DC0C  7C 08 03 A6 */	mtlr r0
 /* 80130E10 0012DC10  38 21 00 10 */	addi r1, r1, 0x10
 /* 80130E14 0012DC14  4E 80 00 20 */	blr 
+
+trigger_auto_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 80130E18 0012DC18  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80130E1C 0012DC1C  7C 08 02 A6 */	mflr r0
 /* 80130E20 0012DC20  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -605,6 +611,8 @@ lbl_80130E04:
 /* 80130E44 0012DC44  7C 08 03 A6 */	mtlr r0
 /* 80130E48 0012DC48  38 21 00 10 */	addi r1, r1, 0x10
 /* 80130E4C 0012DC4C  4E 80 00 20 */	blr 
+
+parse_tag_signal__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80130E50 0012DC50  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 80130E54 0012DC54  7C 08 02 A6 */	mflr r0
 /* 80130E58 0012DC58  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -693,6 +701,8 @@ lbl_80130F84:
 /* 80130F8C 0012DD8C  7C 08 03 A6 */	mtlr r0
 /* 80130F90 0012DD90  38 21 00 70 */	addi r1, r1, 0x70
 /* 80130F94 0012DD94  4E 80 00 20 */	blr 
+
+trigger_signal__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 80130F98 0012DD98  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80130F9C 0012DD9C  7C 08 02 A6 */	mflr r0
 /* 80130FA0 0012DDA0  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -796,6 +806,8 @@ lbl_801310F0:
 /* 801310FC 0012DEFC  7C 08 03 A6 */	mtlr r0
 /* 80131100 0012DF00  38 21 00 20 */	addi r1, r1, 0x20
 /* 80131104 0012DF04  4E 80 00 20 */	blr 
+
+parse_tag_sound__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131108 0012DF08  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 8013110C 0012DF0C  7C 08 02 A6 */	mflr r0
 /* 80131110 0012DF10  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -1015,6 +1027,8 @@ lbl_80131424:
 /* 80131434 0012E234  7C 08 03 A6 */	mtlr r0
 /* 80131438 0012E238  38 21 00 80 */	addi r1, r1, 0x80
 /* 8013143C 0012E23C  4E 80 00 20 */	blr 
+
+reset_tag_sound__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131440 0012E240  3C 80 80 32 */	lis r4, lbl_8031B320@ha
 /* 80131444 0012E244  38 84 B3 20 */	addi r4, r4, lbl_8031B320@l
 /* 80131448 0012E248  80 84 00 08 */	lwz r4, 8(r4)
@@ -1031,6 +1045,8 @@ lbl_80131424:
 /* 80131474 0012E274  90 05 00 00 */	stw r0, 0(r5)
 /* 80131478 0012E278  98 05 00 04 */	stb r0, 4(r5)
 /* 8013147C 0012E27C  4E 80 00 20 */	blr 
+
+trigger_sound__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 80131480 0012E280  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80131484 0012E284  7C 08 02 A6 */	mflr r0
 /* 80131488 0012E288  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -1212,10 +1228,18 @@ lbl_801316F0:
 /* 801316F8 0012E4F8  7C 08 03 A6 */	mtlr r0
 /* 801316FC 0012E4FC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80131700 0012E500  4E 80 00 20 */	blr 
+
+parse_tag_pause__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131704 0012E504  4E 80 00 20 */	blr 
+
+reset_tag_pause__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131708 0012E508  4E 80 00 20 */	blr 
+
+trigger_pause__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 8013170C 0012E50C  38 60 00 01 */	li r3, 1
 /* 80131710 0012E510  4E 80 00 20 */	blr 
+
+parse_tag_allow_quit__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131714 0012E514  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80131718 0012E518  7C 08 02 A6 */	mflr r0
 /* 8013171C 0012E51C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1245,6 +1269,8 @@ lbl_80131764:
 /* 80131774 0012E574  7C 08 03 A6 */	mtlr r0
 /* 80131778 0012E578  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013177C 0012E57C  4E 80 00 20 */	blr 
+
+reset_tag_allow_quit__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131780 0012E580  3C 80 80 32 */	lis r4, lbl_8031B320@ha
 /* 80131784 0012E584  38 84 B3 20 */	addi r4, r4, lbl_8031B320@l
 /* 80131788 0012E588  80 C4 00 08 */	lwz r6, 8(r4)
@@ -1261,6 +1287,8 @@ lbl_80131764:
 /* 801317B4 0012E5B4  54 00 0F FE */	srwi r0, r0, 0x1f
 /* 801317B8 0012E5B8  98 03 00 10 */	stb r0, 0x10(r3)
 /* 801317BC 0012E5BC  4E 80 00 20 */	blr 
+
+trigger_allow_quit__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 801317C0 0012E5C0  80 A3 00 10 */	lwz r5, 0x10(r3)
 /* 801317C4 0012E5C4  3C 60 80 32 */	lis r3, lbl_8031B320@ha
 /* 801317C8 0012E5C8  38 83 B3 20 */	addi r4, r3, lbl_8031B320@l
@@ -1271,6 +1299,8 @@ lbl_80131764:
 /* 801317DC 0012E5DC  54 00 0F FE */	srwi r0, r0, 0x1f
 /* 801317E0 0012E5E0  98 04 8D 78 */	stb r0, -0x7288(r4)
 /* 801317E4 0012E5E4  4E 80 00 20 */	blr 
+
+parse_tag_teleport__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 801317E8 0012E5E8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801317EC 0012E5EC  7C 08 02 A6 */	mflr r0
 /* 801317F0 0012E5F0  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -1402,6 +1432,8 @@ turn_player__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_Ff:
 /* 801319BC 0012E7BC  7C 08 03 A6 */	mtlr r0
 /* 801319C0 0012E7C0  38 21 00 30 */	addi r1, r1, 0x30
 /* 801319C4 0012E7C4  4E 80 00 20 */	blr 
+
+trigger_teleport__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 801319C8 0012E7C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801319CC 0012E7CC  7C 08 02 A6 */	mflr r0
 /* 801319D0 0012E7D0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1432,6 +1464,8 @@ lbl_80131A1C:
 /* 80131A24 0012E824  7C 08 03 A6 */	mtlr r0
 /* 80131A28 0012E828  38 21 00 10 */	addi r1, r1, 0x10
 /* 80131A2C 0012E82C  4E 80 00 20 */	blr 
+
+parse_tag_trap__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131A30 0012E830  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80131A34 0012E834  7C 08 02 A6 */	mflr r0
 /* 80131A38 0012E838  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1461,6 +1495,8 @@ lbl_80131A80:
 /* 80131A90 0012E890  7C 08 03 A6 */	mtlr r0
 /* 80131A94 0012E894  38 21 00 10 */	addi r1, r1, 0x10
 /* 80131A98 0012E898  4E 80 00 20 */	blr 
+
+reset_tag_trap__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131A9C 0012E89C  3C 80 80 32 */	lis r4, lbl_8031B320@ha
 /* 80131AA0 0012E8A0  38 84 B3 20 */	addi r4, r4, lbl_8031B320@l
 /* 80131AA4 0012E8A4  80 C4 00 08 */	lwz r6, 8(r4)
@@ -1477,6 +1513,8 @@ lbl_80131A80:
 /* 80131AD0 0012E8D0  54 00 0F FE */	srwi r0, r0, 0x1f
 /* 80131AD4 0012E8D4  98 03 00 10 */	stb r0, 0x10(r3)
 /* 80131AD8 0012E8D8  4E 80 00 20 */	blr 
+
+trigger_trap__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 80131ADC 0012E8DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80131AE0 0012E8E0  7C 08 02 A6 */	mflr r0
 /* 80131AE4 0012E8E4  90 01 00 14 */	stw r0, 0x14(r1)
@@ -1495,7 +1533,8 @@ lbl_80131B08:
 /* 80131B10 0012E910  7C 08 03 A6 */	mtlr r0
 /* 80131B14 0012E914  38 21 00 10 */	addi r1, r1, 0x10
 /* 80131B18 0012E918  4E 80 00 20 */	blr 
-lbl_80131B1C:
+
+parse_tag_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag:
 /* 80131B1C 0012E91C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80131B20 0012E920  7C 08 02 A6 */	mflr r0
 /* 80131B24 0012E924  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -1538,6 +1577,8 @@ lbl_80131BA8:
 /* 80131BB0 0012E9B0  7C 08 03 A6 */	mtlr r0
 /* 80131BB4 0012E9B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80131BB8 0012E9B8  4E 80 00 20 */	blr 
+
+trigger_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 80131BBC 0012E9BC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80131BC0 0012E9C0  7C 08 02 A6 */	mflr r0
 /* 80131BC4 0012E9C4  3C A0 80 32 */	lis r5, lbl_8031B320@ha
@@ -1735,9 +1776,9 @@ is_wait_jot__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRCQ28xtextbox3jot:
 /* 80131E54 0012EC54  38 60 00 00 */	li r3, 0
 /* 80131E58 0012EC58  28 05 00 00 */	cmplwi r5, 0
 /* 80131E5C 0012EC5C  4D 82 00 20 */	beqlr 
-/* 80131E60 0012EC60  3C 80 80 13 */	lis r4, lbl_80131B1C@ha
+/* 80131E60 0012EC60  3C 80 80 13 */	lis r4, parse_tag_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag@ha
 /* 80131E64 0012EC64  80 A5 00 08 */	lwz r5, 8(r5)
-/* 80131E68 0012EC68  38 04 1B 1C */	addi r0, r4, lbl_80131B1C@l
+/* 80131E68 0012EC68  38 04 1B 1C */	addi r0, r4, parse_tag_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag@l
 /* 80131E6C 0012EC6C  7C 05 00 40 */	cmplw r5, r0
 /* 80131E70 0012EC70  4C 82 00 20 */	bnelr 
 /* 80131E74 0012EC74  38 60 00 01 */	li r3, 1
@@ -2099,7 +2140,8 @@ lbl_80132344:
 /* 8013234C 0012F14C  7C 08 03 A6 */	mtlr r0
 /* 80132350 0012F150  38 21 00 20 */	addi r1, r1, 0x20
 /* 80132354 0012F154  4E 80 00 20 */	blr 
-lbl_80132358:
+
+cb_dispatch__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80132358 0012F158  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013235C 0012F15C  7C 08 02 A6 */	mflr r0
 /* 80132360 0012F160  3C 60 80 32 */	lis r3, lbl_8031B320@ha
@@ -2262,9 +2304,9 @@ load__8ztalkboxFRCQ28ztalkbox10asset_type:
 /* 80132560 0012F360  7C 7E 1B 78 */	mr r30, r3
 /* 80132564 0012F364  4B ED 6E 9D */	bl xBaseInit__FP5xBaseP10xBaseAsset
 /* 80132568 0012F368  38 00 00 34 */	li r0, 0x34
-/* 8013256C 0012F36C  3C 60 80 13 */	lis r3, lbl_80132358@ha
+/* 8013256C 0012F36C  3C 60 80 13 */	lis r3, cb_dispatch__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase@ha
 /* 80132570 0012F370  98 1E 00 04 */	stb r0, 4(r30)
-/* 80132574 0012F374  38 03 23 58 */	addi r0, r3, lbl_80132358@l
+/* 80132574 0012F374  38 03 23 58 */	addi r0, r3, cb_dispatch__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase@l
 /* 80132578 0012F378  93 FE 00 14 */	stw r31, 0x14(r30)
 /* 8013257C 0012F37C  90 1E 00 0C */	stw r0, 0xc(r30)
 /* 80132580 0012F380  88 1E 00 05 */	lbz r0, 5(r30)
@@ -2405,7 +2447,11 @@ lbl_80132748:
 /* 80132758 0012F558  7C 08 03 A6 */	mtlr r0
 /* 8013275C 0012F55C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80132760 0012F560  4E 80 00 20 */	blr 
+
+start__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_10state_typeFv:
 /* 80132764 0012F564  4E 80 00 20 */	blr 
+
+stop__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_10state_typeFv:
 /* 80132768 0012F568  4E 80 00 20 */	blr 
 
 .global set_text__8ztalkboxFUi
@@ -3073,6 +3119,8 @@ __ct__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_16start_state_typeFv:
 /* 80133050 0012FE50  7C 08 03 A6 */	mtlr r0
 /* 80133054 0012FE54  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133058 0012FE58  4E 80 00 20 */	blr 
+
+load__8ztalkboxFR5xBaseR9xDynAssetUl:
 /* 8013305C 0012FE5C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133060 0012FE60  7C 08 02 A6 */	mflr r0
 /* 80133064 0012FE64  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3302,6 +3350,8 @@ permit__8ztalkboxFUiUi:
 /* 8013336C 0013016C  7C 00 1B 78 */	or r0, r0, r3
 /* 80133370 00130170  90 05 00 04 */	stw r0, 4(r5)
 /* 80133374 00130174  4E 80 00 20 */	blr 
+
+start__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_16start_state_typeFv:
 /* 80133378 00130178  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013337C 0013017C  7C 08 02 A6 */	mflr r0
 /* 80133380 00130180  3C 60 80 32 */	lis r3, lbl_8031B320@ha
@@ -3337,9 +3387,15 @@ permit__8ztalkboxFUiUi:
 /* 801333F8 001301F8  7C 08 03 A6 */	mtlr r0
 /* 801333FC 001301FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133400 00130200  4E 80 00 20 */	blr 
+
+stop__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_16start_state_typeFv:
 /* 80133404 00130204  4E 80 00 20 */	blr 
+
+update__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_16start_state_typeFR6xScenef:
 /* 80133408 00130208  38 60 00 02 */	li r3, 2
 /* 8013340C 0013020C  4E 80 00 20 */	blr 
+
+start__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15next_state_typeFv:
 /* 80133410 00130210  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80133414 00130214  7C 08 02 A6 */	mflr r0
 /* 80133418 00130218  3C 60 80 32 */	lis r3, lbl_8031B320@ha
@@ -3487,7 +3543,11 @@ lbl_80133610:
 /* 80133614 00130414  7C 08 03 A6 */	mtlr r0
 /* 80133618 00130418  38 21 00 10 */	addi r1, r1, 0x10
 /* 8013361C 0013041C  4E 80 00 20 */	blr 
+
+stop__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15next_state_typeFv:
 /* 80133620 00130420  4E 80 00 20 */	blr 
+
+update__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15next_state_typeFR6xScenef:
 /* 80133624 00130424  3C 80 80 32 */	lis r4, lbl_8031B320@ha
 /* 80133628 00130428  38 60 00 03 */	li r3, 3
 /* 8013362C 0013042C  38 84 B3 20 */	addi r4, r4, lbl_8031B320@l
@@ -3498,6 +3558,8 @@ lbl_80133610:
 /* 80133640 00130440  4C 82 00 20 */	bnelr 
 /* 80133644 00130444  38 60 00 04 */	li r3, 4
 /* 80133648 00130448  4E 80 00 20 */	blr 
+
+start__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15wait_state_typeFv:
 /* 8013364C 0013044C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133650 00130450  7C 08 02 A6 */	mflr r0
 /* 80133654 00130454  90 01 00 14 */	stw r0, 0x14(r1)
@@ -3508,6 +3570,8 @@ lbl_80133610:
 /* 80133668 00130468  7C 08 03 A6 */	mtlr r0
 /* 8013366C 0013046C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133670 00130470  4E 80 00 20 */	blr 
+
+stop__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15wait_state_typeFv:
 /* 80133674 00130474  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133678 00130478  7C 08 02 A6 */	mflr r0
 /* 8013367C 0013047C  3C 80 80 32 */	lis r4, lbl_8031B320@ha
@@ -3586,6 +3650,8 @@ lbl_80133748:
 /* 80133788 00130588  7C 08 03 A6 */	mtlr r0
 /* 8013378C 0013058C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133790 00130590  4E 80 00 20 */	blr 
+
+update__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15wait_state_typeFR6xScenef:
 /* 80133794 00130594  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80133798 00130598  7C 08 02 A6 */	mflr r0
 /* 8013379C 0013059C  90 01 00 24 */	stw r0, 0x24(r1)
@@ -3736,10 +3802,18 @@ lbl_801339A0:
 /* 801339B4 001307B4  7C 08 03 A6 */	mtlr r0
 /* 801339B8 001307B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801339BC 001307BC  4E 80 00 20 */	blr 
+
+start__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15stop_state_typeFv:
 /* 801339C0 001307C0  4E 80 00 20 */	blr 
+
+stop__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15stop_state_typeFv:
 /* 801339C4 001307C4  4E 80 00 20 */	blr 
+
+update__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_15stop_state_typeFR6xScenef:
 /* 801339C8 001307C8  38 60 FF FF */	li r3, -1
 /* 801339CC 001307CC  4E 80 00 20 */	blr 
+
+__sinit_zTalkBox_cpp:
 /* 801339D0 001307D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801339D4 001307D4  7C 08 02 A6 */	mflr r0
 /* 801339D8 001307D8  3C 60 80 32 */	lis r3, lbl_8031B320@ha
