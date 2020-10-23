@@ -401,6 +401,10 @@ struct RwFrame
 
 typedef RwFrame* (*RwFrameCallBack)(RwFrame* frame, void* data);
 
+#define RwFrameGetParent(_f) ((RwFrame*)rwObjectGetParent(_f))
+
+#define RwFrameGetMatrix(_f) (&(_f)->modelling)
+
 typedef struct RwObjectHasFrame;
 typedef RwObjectHasFrame* (*RwObjectHasFrameSyncFunction)(RwObjectHasFrame* object);
 
