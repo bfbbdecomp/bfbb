@@ -809,7 +809,8 @@ lbl_800C1850:
 /* 800C1860 000BE660  7C 08 03 A6 */	mtlr r0
 /* 800C1864 000BE664  38 21 00 50 */	addi r1, r1, 0x50
 /* 800C1868 000BE668  4E 80 00 20 */	blr 
-lbl_800C186C:
+
+sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv:
 /* 800C186C 000BE66C  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 800C1870 000BE670  7C 08 02 A6 */	mflr r0
 /* 800C1874 000BE674  90 01 00 94 */	stw r0, 0x94(r1)
@@ -943,7 +944,8 @@ lbl_800C1A2C:
 /* 800C1A44 000BE844  7C 08 03 A6 */	mtlr r0
 /* 800C1A48 000BE848  38 21 00 90 */	addi r1, r1, 0x90
 /* 800C1A4C 000BE84C  4E 80 00 20 */	blr 
-lbl_800C1A50:
+
+sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv:
 /* 800C1A50 000BE850  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C1A54 000BE854  7C 08 02 A6 */	mflr r0
 /* 800C1A58 000BE858  3C 60 80 30 */	lis r3, lbl_802FAE44@ha
@@ -1071,7 +1073,8 @@ lbl_800C1BF0:
 /* 800C1C04 000BEA04  80 05 00 18 */	lwz r0, 0x18(r5)
 /* 800C1C08 000BEA08  90 06 00 44 */	stw r0, 0x44(r6)
 /* 800C1C0C 000BEA0C  4E 80 00 20 */	blr 
-lbl_800C1C10:
+
+rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv:
 /* 800C1C10 000BEA10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C1C14 000BEA14  7C 08 02 A6 */	mflr r0
 /* 800C1C18 000BEA18  7C A6 2B 78 */	mr r6, r5
@@ -1083,7 +1086,8 @@ lbl_800C1C10:
 /* 800C1C30 000BEA30  7C 08 03 A6 */	mtlr r0
 /* 800C1C34 000BEA34  38 21 00 10 */	addi r1, r1, 0x10
 /* 800C1C38 000BEA38  4E 80 00 20 */	blr 
-lbl_800C1C3C:
+
+rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv:
 /* 800C1C3C 000BEA3C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800C1C40 000BEA40  7C 08 02 A6 */	mflr r0
 /* 800C1C44 000BEA44  7C A6 2B 78 */	mr r6, r5
@@ -1332,9 +1336,9 @@ iSphereHitsEnv4__FPC7xSpherePC4xEnvPC7xMat3x3P7xCollis:
 /* 800C1FC4 000BEDC4  28 00 00 00 */	cmplwi r0, 0
 /* 800C1FC8 000BEDC8  41 82 00 34 */	beq lbl_800C1FFC
 /* 800C1FCC 000BEDCC  38 00 00 01 */	li r0, 1
-/* 800C1FD0 000BEDD0  3C 60 80 0C */	lis r3, lbl_800C186C@ha
+/* 800C1FD0 000BEDD0  3C 60 80 0C */	lis r3, sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C1FD4 000BEDD4  90 0D 91 88 */	stw r0, lbl_803CBA88-_SDA_BASE_(r13)
-/* 800C1FD8 000BEDD8  38 A3 18 6C */	addi r5, r3, lbl_800C186C@l
+/* 800C1FD8 000BEDD8  38 A3 18 6C */	addi r5, r3, sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C1FDC 000BEDDC  7F C6 F3 78 */	mr r6, r30
 /* 800C1FE0 000BEDE0  38 81 00 08 */	addi r4, r1, 8
 /* 800C1FE4 000BEDE4  80 67 00 10 */	lwz r3, 0x10(r7)
@@ -1344,9 +1348,9 @@ iSphereHitsEnv4__FPC7xSpherePC4xEnvPC7xMat3x3P7xCollis:
 /* 800C1FF4 000BEDF4  90 0D 91 88 */	stw r0, lbl_803CBA88-_SDA_BASE_(r13)
 /* 800C1FF8 000BEDF8  48 00 00 1C */	b lbl_800C2014
 lbl_800C1FFC:
-/* 800C1FFC 000BEDFC  3C 80 80 0C */	lis r4, lbl_800C186C@ha
+/* 800C1FFC 000BEDFC  3C 80 80 0C */	lis r4, sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C2000 000BEE00  80 67 00 00 */	lwz r3, 0(r7)
-/* 800C2004 000BEE04  38 A4 18 6C */	addi r5, r4, lbl_800C186C@l
+/* 800C2004 000BEE04  38 A4 18 6C */	addi r5, r4, sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C2008 000BEE08  7F C6 F3 78 */	mr r6, r30
 /* 800C200C 000BEE0C  38 81 00 08 */	addi r4, r1, 8
 /* 800C2010 000BEE10  48 13 76 89 */	bl RpCollisionWorldForAllIntersections
@@ -1374,9 +1378,9 @@ lbl_800C2054:
 /* 800C2058 000BEE58  80 63 00 04 */	lwz r3, 4(r3)
 /* 800C205C 000BEE5C  28 03 00 00 */	cmplwi r3, 0
 /* 800C2060 000BEE60  41 82 00 70 */	beq lbl_800C20D0
-/* 800C2064 000BEE64  3C 80 80 0C */	lis r4, lbl_800C186C@ha
+/* 800C2064 000BEE64  3C 80 80 0C */	lis r4, sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@ha
 /* 800C2068 000BEE68  7F C6 F3 78 */	mr r6, r30
-/* 800C206C 000BEE6C  38 A4 18 6C */	addi r5, r4, lbl_800C186C@l
+/* 800C206C 000BEE6C  38 A4 18 6C */	addi r5, r4, sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv@l
 /* 800C2070 000BEE70  38 81 00 08 */	addi r4, r1, 8
 /* 800C2074 000BEE74  48 13 76 25 */	bl RpCollisionWorldForAllIntersections
 /* 800C2078 000BEE78  38 7F 00 4F */	addi r3, r31, 0x4f
@@ -1625,11 +1629,11 @@ lbl_800C23D4:
 /* 800C23EC 000BF1EC  98 0D 91 97 */	stb r0, lbl_803CBA97-_SDA_BASE_(r13)
 /* 800C23F0 000BF1F0  98 0D 91 96 */	stb r0, lbl_803CBA96-_SDA_BASE_(r13)
 /* 800C23F4 000BF1F4  48 01 25 5D */	bl iTimeGet__Fv
-/* 800C23F8 000BF1F8  3C A0 80 0C */	lis r5, lbl_800C1A50@ha
+/* 800C23F8 000BF1F8  3C A0 80 0C */	lis r5, sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv@ha
 /* 800C23FC 000BF1FC  7C 7B 1B 78 */	mr r27, r3
 /* 800C2400 000BF200  7C 9F 23 78 */	mr r31, r4
 /* 800C2404 000BF204  80 7C 00 10 */	lwz r3, 0x10(r28)
-/* 800C2408 000BF208  38 A5 1A 50 */	addi r5, r5, lbl_800C1A50@l
+/* 800C2408 000BF208  38 A5 1A 50 */	addi r5, r5, sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv@l
 /* 800C240C 000BF20C  7F A6 EB 78 */	mr r6, r29
 /* 800C2410 000BF210  38 81 00 08 */	addi r4, r1, 8
 /* 800C2414 000BF214  48 13 62 01 */	bl RpAtomicForAllIntersections
@@ -2079,9 +2083,9 @@ lbl_800C2A1C:
 /* 800C2A74 000BF874  60 60 04 00 */	ori r0, r3, 0x400
 /* 800C2A78 000BF878  90 1F 00 00 */	stw r0, 0(r31)
 lbl_800C2A7C:
-/* 800C2A7C 000BF87C  3C 80 80 0C */	lis r4, lbl_800C1C10@ha
+/* 800C2A7C 000BF87C  3C 80 80 0C */	lis r4, rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv@ha
 /* 800C2A80 000BF880  80 7E 00 10 */	lwz r3, 0x10(r30)
-/* 800C2A84 000BF884  38 A4 1C 10 */	addi r5, r4, lbl_800C1C10@l
+/* 800C2A84 000BF884  38 A4 1C 10 */	addi r5, r4, rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv@l
 /* 800C2A88 000BF888  7F E6 FB 78 */	mr r6, r31
 /* 800C2A8C 000BF88C  38 81 00 2C */	addi r4, r1, 0x2c
 /* 800C2A90 000BF890  48 13 5B 85 */	bl RpAtomicForAllIntersections
@@ -2098,9 +2102,9 @@ lbl_800C2A7C:
 /* 800C2ABC 000BF8BC  7F 83 E3 78 */	mr r3, r28
 /* 800C2AC0 000BF8C0  38 81 00 20 */	addi r4, r1, 0x20
 /* 800C2AC4 000BF8C4  4B F4 D7 65 */	bl __as__5RwV3dFRC5RwV3d
-/* 800C2AC8 000BF8C8  3C 80 80 0C */	lis r4, lbl_800C1C3C@ha
+/* 800C2AC8 000BF8C8  3C 80 80 0C */	lis r4, rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv@ha
 /* 800C2ACC 000BF8CC  80 7E 00 10 */	lwz r3, 0x10(r30)
-/* 800C2AD0 000BF8D0  38 A4 1C 3C */	addi r5, r4, lbl_800C1C3C@l
+/* 800C2AD0 000BF8D0  38 A4 1C 3C */	addi r5, r4, rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv@l
 /* 800C2AD4 000BF8D4  7F E6 FB 78 */	mr r6, r31
 /* 800C2AD8 000BF8D8  38 81 00 2C */	addi r4, r1, 0x2c
 /* 800C2ADC 000BF8DC  48 13 5B 39 */	bl RpAtomicForAllIntersections
