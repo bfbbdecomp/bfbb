@@ -5,14 +5,14 @@
 
 struct substr
 {
-    int8* text;
+    const char* text;
     uint32 size;
 };
 
 uint32 xStrHash(const char* str);
 uint32 xStrHash(const char* str, ulong32 size);
 uint32 xStrHashCat(uint32 prefix, const char* str);
-int8* xStrupr(char* string);
+char* xStrupr(char* string);
 
 int32 imemcmp(void const* d1, void const* d2, ulong32 size);
 

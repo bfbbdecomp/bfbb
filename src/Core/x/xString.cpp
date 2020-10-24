@@ -55,9 +55,9 @@ uint32 xStrHashCat(uint32 prefix, const int8* str)
 // func_8004C5AC
 #pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStricmp__FPCcPCc")
 
-int8* xStrupr(int8* string)
+char* xStrupr(char* string)
 {
-    int8 p;
+    char p;
 
     while (p = *string, p != NULL)
     {
