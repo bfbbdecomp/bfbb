@@ -75,15 +75,18 @@ INCLUDES := -Iinclude -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk
 
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
-CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -O4,p -msgstyle gcc \
+CFLAGS  := -g -Cpp_exceptions off -proc gekko -fp hard -O4,p -msgstyle gcc \
            -pragma "check_header_flags off" -pragma "force_active on" \
-           -str reuse,pool,readonly -char unsigned -use_lmw_stmw on -inline off -gccincludes $(INCLUDES)
-PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES)
+           -str reuse,pool,readonly -char unsigned -use_lmw_stmw on -inline off -gccincludes $(INCLUDES) 
+PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES) -DGAMECUBE
 PPROCFLAGS := -fsymbol-fixup
 
 # elf2dol needs to know these in order to calculate sbss correctly.
 SDATA_PDHR := 9
 SBSS_PDHR := 10
+
+# Silences most build commands. Run make S= to show all commands being invoked.
+S := @
 
 #-------------------------------------------------------------------------------
 # Recipes
@@ -101,8 +104,9 @@ DUMMY != mkdir -p $(ALL_DIRS)
 .PHONY: tools
 	
 $(DOL): $(ELF) | tools
-	$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
-	$(SHA1SUM) -c bfbb.sha1 || $(ASMDIFF)
+	@echo " ELF2DOL "$@
+	$S$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
+	$S$(SHA1SUM) -c bfbb.sha1 || $(ASMDIFF)
 
 clean:
 	rm -f $(DOL) $(ELF) $(O_FILES) $(MAP)
@@ -112,20 +116,23 @@ tools:
 	$(MAKE) -C tools
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
-	$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) $(O_FILES)
+	@echo " LINK    "$@
+	$S$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) $(O_FILES) 1>&2
 # The Metrowerks linker doesn't generate physical addresses in the ELF program headers. This fixes it somehow.
-	$(OBJCOPY) $@ $@
+	$S$(OBJCOPY) $@ $@
 
 $(OBJ_DIR)/%.o: %.s
-	$(AS) $(ASFLAGS) -o $@ $<
-	@$(PPROC) $(PPROCFLAGS) $@
+	@echo " AS      "$<
+	$S$(AS) $(ASFLAGS) -o $@ $<
+	$S$(PPROC) $(PPROCFLAGS) $@
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@echo " CC      "$<
+	$S$(CC) $(CFLAGS) -c -o $@ $< 1>&2
 
 $(OBJ_DIR)/%.o: %.cpp
-	$(CC) $(PREPROCESS) -o $*.cp $<
-	$(GLBLASM) -s $*.cp
-	$(CC) $(CFLAGS) -c -o $@ $*.cp
-	$(CC) -S -o $*.asm $@
-	@$(PPROC) $(PPROCFLAGS) $@
+	@echo " CXX     "$<
+	$S$(CC) $(PREPROCESS) -o $*.cp $< 1>&2
+	$S$(GLBLASM) -s $*.cp
+	$S$(CC) $(CFLAGS) -c -o $@ $*.cp 1>&2
+	$S$(PPROC) $(PPROCFLAGS) $@
