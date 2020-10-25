@@ -17,3 +17,4 @@ tools/elf2dol
 *.o
 *.cp
 .vscode
+.pragma

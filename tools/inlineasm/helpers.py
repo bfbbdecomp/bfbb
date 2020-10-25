@@ -1,4 +1,14 @@
 import re
+import hashlib
+
+
+def emptyHash():
+    return hashlib.sha1()
+
+
+def hashString(string):
+    return hashlib.sha1(string.encode())
+
 
 pragmaRegex = r"(#pragma\sGLOBAL_ASM\((.*?)\))"
 
@@ -6,6 +16,7 @@ pragmaRegex = r"(#pragma\sGLOBAL_ASM\((.*?)\))"
 def getPragmaMatches(fileText):
     matches = re.findall(pragmaRegex, fileText, flags=re.DOTALL)
     return matches
+
 
 # Arguments are processed outside of the regex to keep it simple
 # and support any changes we may make in the future
