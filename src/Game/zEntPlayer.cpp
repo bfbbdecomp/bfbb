@@ -10,6 +10,7 @@
 #include "../Core/x/xEntBoulder.h"
 
 #include "zGame.h"
+#include "zGameExtras.h"
 #include "zGlobals.h"
 #include "zGoo.h"
 #include "zEntTeleportBox.h"
@@ -484,8 +485,24 @@ uint32 Hit05CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return false;
 }
 
+#if 0
+uint32 Defeated01Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    // if this can be decompiled, it can be copied and pasted 4 more times.
+    bool result = false;
+
+    int32 flags = zGameExtras_CheatFlags();
+
+    if (globals.player.Health == 0)
+    {
+        result = true;
+    }
+    return result;
+}
+#else
 // func_80069694
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv")
+#endif
 
 // func_800696F8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated02Check__FP15xAnimTransitionP11xAnimSinglePv")
