@@ -21,6 +21,8 @@ extern uint32 sShouldBubbleBowl;
 extern float32 sBubbleBowlLastWindupTime;
 extern float32 sBubbleBowlMultiplier;
 
+extern int32 in_goo;
+
 extern float32 lbl_803CD5A0; // 0.0
 
 // Multidimensional sound arrays for each player type
@@ -354,9 +356,19 @@ uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void
     return result;
 }
 
+#if 0
+uint32 GooCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    if (globals.player.ControlOff & 0x8000 != 0)
+    {
+        return false;
+    }
+}
+#else
 // func_800694D0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
+#endif
 // func_80069508
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv")
 
@@ -1143,32 +1155,33 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
 
-/*
+#if 0
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
 {
     // only 1 slightly incorrect instruction preventing match
-    if (sPlayerSnd[gCurrentPlayer][player_snd] != 0)
+    if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
         xSndSetVol(sPlayerSndID[gCurrentPlayer][player_snd], new_vol);
     }
-}*/
-
+}
+#else
 // func_80081198
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetVol__F14_tagePlayerSndf")
+#endif
 
-/*
+#if 0
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
 {
     // only 1 slightly incorrect instruction preventing match
-    if (sPlayerSnd[gCurrentPlayer][player_snd] != 0)
+    if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
         xSndSetPitch(sPlayerSndID[gCurrentPlayer][player_snd], new_pitch);
     }
 }
-*/
-
+#else
 // func_800811EC
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetPitch__F14_tagePlayerSndf")
+#endif
 
 // func_80081240
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDStop__F14_tagePlayerSnd")

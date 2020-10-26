@@ -213,6 +213,8 @@ uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, v
 uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
 uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
 
+uint32 GooCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 
