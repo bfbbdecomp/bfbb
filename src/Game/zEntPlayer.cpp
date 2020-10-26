@@ -342,13 +342,31 @@ uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, v
     return result;
 }
 
-// func_80069428
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    {
+        if (RunOutOfWorldCheck(tranny, anim, param_3) != false)
+        {
+            result = true;
+        }
+    }
+    return result;
+}
 
-// func_8006947C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    {
+        if (RunSlipCheck(tranny, anim, param_3) != false)
+        {
+            result = true;
+        }
+    }
+    return result;
+}
 
 // func_800694D0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooCheck__FP15xAnimTransitionP11xAnimSinglePv")
