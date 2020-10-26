@@ -359,10 +359,14 @@ uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void
 #if 0
 uint32 GooCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
-    if (globals.player.ControlOff & 0x8000 != 0)
+    if (globals.player.ControlOff & 0x8000)
     {
         return false;
     }
+    // not sure what this is doing, but it's almost matching.
+    // it's only using the wrong registers right now.
+    // the function is apparently 11 lines of code?
+    return in_goo & ~((-globals.player.cheat_mode | globals.player.cheat_mode) >> 0x1f);
 }
 #else
 // func_800694D0
