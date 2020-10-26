@@ -293,12 +293,9 @@ uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 uint32 BbowlRecoverWalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && WalkCheck(tranny, anim, param_3))
     {
-        if (WalkCheck(tranny, anim, param_3) != false)
-        {
-            result = true;
-        }
+        result = true;
     }
     return result;
 }
@@ -306,12 +303,9 @@ uint32 BbowlRecoverWalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* p
 uint32 BbowlRecoverRunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunCheck(tranny, anim, param_3))
     {
-        if (RunCheck(tranny, anim, param_3) != false)
-        {
-            result = true;
-        }
+        result = true;
     }
     return result;
 }
@@ -319,12 +313,10 @@ uint32 BbowlRecoverRunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* pa
 uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunScaredCheck(tranny, anim, param_3))
     {
-        if (RunScaredCheck(tranny, anim, param_3) != false)
-        {
-            result = true;
-        }
+        result = true;
     }
     return result;
 }
@@ -332,12 +324,10 @@ uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tranny, xAnimSingle* anim, vo
 uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunVictoryCheck(tranny, anim, param_3))
     {
-        if (RunVictoryCheck(tranny, anim, param_3) != false)
-        {
-            result = true;
-        }
+        result = true;
     }
     return result;
 }
@@ -345,12 +335,10 @@ uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, v
 uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunOutOfWorldCheck(tranny, anim, param_3))
     {
-        if (RunOutOfWorldCheck(tranny, anim, param_3) != false)
-        {
-            result = true;
-        }
+        result = true;
     }
     return result;
 }
@@ -358,12 +346,10 @@ uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tranny, xAnimSingle* anim
 uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunSlipCheck(tranny, anim, param_3))
     {
-        if (RunSlipCheck(tranny, anim, param_3) != false)
-        {
-            result = true;
-        }
+        result = true;
     }
     return result;
 }
