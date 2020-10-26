@@ -24,6 +24,8 @@ extern float32 sBubbleBowlMultiplier;
 
 extern int32 in_goo;
 extern int32 sPlayerDiedLastTime;
+extern int32 player_hit;
+extern int32 player_hit_anim;
 
 extern float32 lbl_803CD5A0; // 0.0
 extern float32 lbl_803CD638; // 10.0
@@ -292,7 +294,7 @@ uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     globals.player.IsBubbleBowling = false;
     zEntPlayer_SNDStop(ePlayerSnd_BowlWindup);
     zEntPlayer_SNDPlay(ePlayerSnd_BowlRelease, lbl_803CD5A0);
-    return 0;
+    return false;
 }
 
 uint32 BbowlRecoverWalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
@@ -392,8 +394,16 @@ uint32 GooDeathCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv")
 #endif
 
-// func_80069554
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit01Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit01Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 1)
+    {
+        result = true;
+    }
+    return result;
+}
 
 // func_8006957C
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit01CB__FP15xAnimTransitionP11xAnimSinglePv")

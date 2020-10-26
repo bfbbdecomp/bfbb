@@ -3438,25 +3438,12 @@ GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8006954C 0006634C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80069550 00066350  4E 80 00 20 */	blr 
 
-Hit01Check__FP15xAnimTransitionP11xAnimSinglePv:
-/* 80069554 00066354  80 0D 8D B0 */	lwz r0, player_hit-_SDA_BASE_(r13)
-/* 80069558 00066358  38 60 00 00 */	li r3, 0
-/* 8006955C 0006635C  2C 00 00 00 */	cmpwi r0, 0
-/* 80069560 00066360  41 82 00 14 */	beq lbl_80069574
-/* 80069564 00066364  80 0D 81 E0 */	lwz r0, lbl_803CAAE0-_SDA_BASE_(r13)
-/* 80069568 00066368  2C 00 00 01 */	cmpwi r0, 1
-/* 8006956C 0006636C  40 82 00 08 */	bne lbl_80069574
-/* 80069570 00066370  38 60 00 01 */	li r3, 1
-lbl_80069574:
-/* 80069574 00066374  54 63 06 3E */	clrlwi r3, r3, 0x18
-/* 80069578 00066378  4E 80 00 20 */	blr 
-
 Hit01CB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8006957C 0006637C  38 60 00 00 */	li r3, 0
 /* 80069580 00066380  38 00 00 02 */	li r0, 2
 /* 80069584 00066384  90 6D 8D B0 */	stw r3, player_hit-_SDA_BASE_(r13)
 /* 80069588 00066388  38 60 00 00 */	li r3, 0
-/* 8006958C 0006638C  90 0D 81 E0 */	stw r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 8006958C 0006638C  90 0D 81 E0 */	stw r0, player_hit_anim-_SDA_BASE_(r13)
 /* 80069590 00066390  4E 80 00 20 */	blr 
 
 Hit02Check__FP15xAnimTransitionP11xAnimSinglePv:
@@ -3464,7 +3451,7 @@ Hit02Check__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069598 00066398  38 60 00 00 */	li r3, 0
 /* 8006959C 0006639C  2C 00 00 00 */	cmpwi r0, 0
 /* 800695A0 000663A0  41 82 00 14 */	beq lbl_800695B4
-/* 800695A4 000663A4  80 0D 81 E0 */	lwz r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 800695A4 000663A4  80 0D 81 E0 */	lwz r0, player_hit_anim-_SDA_BASE_(r13)
 /* 800695A8 000663A8  2C 00 00 02 */	cmpwi r0, 2
 /* 800695AC 000663AC  40 82 00 08 */	bne lbl_800695B4
 /* 800695B0 000663B0  38 60 00 01 */	li r3, 1
@@ -3477,7 +3464,7 @@ Hit02CB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 800695C0 000663C0  38 00 00 03 */	li r0, 3
 /* 800695C4 000663C4  90 6D 8D B0 */	stw r3, player_hit-_SDA_BASE_(r13)
 /* 800695C8 000663C8  38 60 00 00 */	li r3, 0
-/* 800695CC 000663CC  90 0D 81 E0 */	stw r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 800695CC 000663CC  90 0D 81 E0 */	stw r0, player_hit_anim-_SDA_BASE_(r13)
 /* 800695D0 000663D0  4E 80 00 20 */	blr 
 
 Hit03Check__FP15xAnimTransitionP11xAnimSinglePv:
@@ -3485,7 +3472,7 @@ Hit03Check__FP15xAnimTransitionP11xAnimSinglePv:
 /* 800695D8 000663D8  38 60 00 00 */	li r3, 0
 /* 800695DC 000663DC  2C 00 00 00 */	cmpwi r0, 0
 /* 800695E0 000663E0  41 82 00 14 */	beq lbl_800695F4
-/* 800695E4 000663E4  80 0D 81 E0 */	lwz r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 800695E4 000663E4  80 0D 81 E0 */	lwz r0, player_hit_anim-_SDA_BASE_(r13)
 /* 800695E8 000663E8  2C 00 00 03 */	cmpwi r0, 3
 /* 800695EC 000663EC  40 82 00 08 */	bne lbl_800695F4
 /* 800695F0 000663F0  38 60 00 01 */	li r3, 1
@@ -3498,7 +3485,7 @@ Hit03CB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069600 00066400  38 00 00 04 */	li r0, 4
 /* 80069604 00066404  90 6D 8D B0 */	stw r3, player_hit-_SDA_BASE_(r13)
 /* 80069608 00066408  38 60 00 00 */	li r3, 0
-/* 8006960C 0006640C  90 0D 81 E0 */	stw r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 8006960C 0006640C  90 0D 81 E0 */	stw r0, player_hit_anim-_SDA_BASE_(r13)
 /* 80069610 00066410  4E 80 00 20 */	blr 
 
 Hit04Check__FP15xAnimTransitionP11xAnimSinglePv:
@@ -3506,7 +3493,7 @@ Hit04Check__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069618 00066418  38 60 00 00 */	li r3, 0
 /* 8006961C 0006641C  2C 00 00 00 */	cmpwi r0, 0
 /* 80069620 00066420  41 82 00 14 */	beq lbl_80069634
-/* 80069624 00066424  80 0D 81 E0 */	lwz r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 80069624 00066424  80 0D 81 E0 */	lwz r0, player_hit_anim-_SDA_BASE_(r13)
 /* 80069628 00066428  2C 00 00 04 */	cmpwi r0, 4
 /* 8006962C 0006642C  40 82 00 08 */	bne lbl_80069634
 /* 80069630 00066430  38 60 00 01 */	li r3, 1
@@ -3519,7 +3506,7 @@ Hit04CB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069640 00066440  38 00 00 05 */	li r0, 5
 /* 80069644 00066444  90 6D 8D B0 */	stw r3, player_hit-_SDA_BASE_(r13)
 /* 80069648 00066448  38 60 00 00 */	li r3, 0
-/* 8006964C 0006644C  90 0D 81 E0 */	stw r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 8006964C 0006644C  90 0D 81 E0 */	stw r0, player_hit_anim-_SDA_BASE_(r13)
 /* 80069650 00066450  4E 80 00 20 */	blr 
 
 Hit05Check__FP15xAnimTransitionP11xAnimSinglePv:
@@ -3527,7 +3514,7 @@ Hit05Check__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069658 00066458  38 60 00 00 */	li r3, 0
 /* 8006965C 0006645C  2C 00 00 00 */	cmpwi r0, 0
 /* 80069660 00066460  41 82 00 14 */	beq lbl_80069674
-/* 80069664 00066464  80 0D 81 E0 */	lwz r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 80069664 00066464  80 0D 81 E0 */	lwz r0, player_hit_anim-_SDA_BASE_(r13)
 /* 80069668 00066468  2C 00 00 05 */	cmpwi r0, 5
 /* 8006966C 0006646C  40 82 00 08 */	bne lbl_80069674
 /* 80069670 00066470  38 60 00 01 */	li r3, 1
@@ -3540,7 +3527,7 @@ Hit05CB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069680 00066480  38 00 00 01 */	li r0, 1
 /* 80069684 00066484  90 6D 8D B0 */	stw r3, player_hit-_SDA_BASE_(r13)
 /* 80069688 00066488  38 60 00 00 */	li r3, 0
-/* 8006968C 0006648C  90 0D 81 E0 */	stw r0, lbl_803CAAE0-_SDA_BASE_(r13)
+/* 8006968C 0006648C  90 0D 81 E0 */	stw r0, player_hit_anim-_SDA_BASE_(r13)
 /* 80069690 00066490  4E 80 00 20 */	blr 
 
 Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv:
@@ -46316,7 +46303,8 @@ default_player_radius:
 .global lastgCurrentPlayer
 lastgCurrentPlayer:
 	.incbin "baserom.dol", 0x2B5B9C, 0x4
-lbl_803CAAE0:
+.global player_hit_anim
+player_hit_anim:
 	.incbin "baserom.dol", 0x2B5BA0, 0x4
 lbl_803CAAE4:
 	.incbin "baserom.dol", 0x2B5BA4, 0x4
