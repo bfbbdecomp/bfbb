@@ -412,29 +412,77 @@ uint32 Hit01CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-// func_80069594
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit02Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit02Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 2)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_800695BC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit02CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit02CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 3;
+    return false;
+}
 
-// func_800695D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit03Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit03Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 3)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_800695FC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit03CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit03CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 4;
+    return false;
+}
 
-// func_80069614
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit04Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit04Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 4)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006963C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit04CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit04CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 5;
+    return false;
+}
 
-// func_80069654
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit05Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit05Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 5)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006967C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit05CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit05CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 1;
+    return false;
+}
 
 // func_80069694
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv")
