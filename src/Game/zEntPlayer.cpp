@@ -405,8 +405,12 @@ uint32 Hit01Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return result;
 }
 
-// func_8006957C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit01CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit01CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 2;
+    return false;
+}
 
 // func_80069594
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit02Check__FP15xAnimTransitionP11xAnimSinglePv")

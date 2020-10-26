@@ -3438,14 +3438,6 @@ GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8006954C 0006634C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80069550 00066350  4E 80 00 20 */	blr 
 
-Hit01CB__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8006957C 0006637C  38 60 00 00 */	li r3, 0
-/* 80069580 00066380  38 00 00 02 */	li r0, 2
-/* 80069584 00066384  90 6D 8D B0 */	stw r3, player_hit-_SDA_BASE_(r13)
-/* 80069588 00066388  38 60 00 00 */	li r3, 0
-/* 8006958C 0006638C  90 0D 81 E0 */	stw r0, player_hit_anim-_SDA_BASE_(r13)
-/* 80069590 00066390  4E 80 00 20 */	blr 
-
 Hit02Check__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069594 00066394  80 0D 8D B0 */	lwz r0, player_hit-_SDA_BASE_(r13)
 /* 80069598 00066398  38 60 00 00 */	li r3, 0
