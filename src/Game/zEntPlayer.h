@@ -197,6 +197,13 @@ struct zPlayerLassoInfo
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
 
 uint32 WalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 RunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+
+uint32 BbowlCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 BbowlWindupEndCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverWalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverRunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
 
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
