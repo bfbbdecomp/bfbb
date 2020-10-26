@@ -11,6 +11,7 @@
 
 #include "zGame.h"
 #include "zGlobals.h"
+#include "zGoo.h"
 #include "zEntTeleportBox.h"
 
 extern zGlobals globals;
@@ -22,8 +23,10 @@ extern float32 sBubbleBowlLastWindupTime;
 extern float32 sBubbleBowlMultiplier;
 
 extern int32 in_goo;
+extern int32 sPlayerDiedLastTime;
 
 extern float32 lbl_803CD5A0; // 0.0
+extern float32 lbl_803CD638; // 10.0
 
 // Multidimensional sound arrays for each player type
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
@@ -371,10 +374,23 @@ uint32 GooCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 #else
 // func_800694D0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooCheck__FP15xAnimTransitionP11xAnimSinglePv")
-
 #endif
+
+#if 0
+uint32 GooDeathCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    // Decompiled, but instructions are out of order?
+    globals.player.Health = 0;
+    globals.player.DamageTimer = lbl_803CD638; // 10.0
+    zGooStopTide();
+    sPlayerDiedLastTime = 1;
+    zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
+    return false;
+}
+#else
 // func_80069508
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv")
+#endif
 
 // func_80069554
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit01Check__FP15xAnimTransitionP11xAnimSinglePv")

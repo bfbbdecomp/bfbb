@@ -3430,7 +3430,7 @@ GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8006952C 0006632C  48 0B A4 F5 */	bl zGooStopTide__Fv
 /* 80069530 00066330  38 00 00 01 */	li r0, 1
 /* 80069534 00066334  38 60 00 01 */	li r3, 1
-/* 80069538 00066338  90 0D 8C C0 */	stw r0, lbl_803CB5C0-_SDA_BASE_(r13)
+/* 80069538 00066338  90 0D 8C C0 */	stw r0, sPlayerDiedLastTime-_SDA_BASE_(r13)
 /* 8006953C 0006633C  4B FF D0 1D */	bl zEntPlayerControlOff__F13zControlOwner
 /* 80069540 00066340  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80069544 00066344  38 60 00 00 */	li r3, 0
@@ -9118,7 +9118,7 @@ lbl_8006E62C:
 /* 8006E648 0006B448  48 00 BA D9 */	bl zEntPlayerReset__FP4xEnt
 /* 8006E64C 0006B44C  48 00 F9 95 */	bl zEntPlayer_SNDInit__Fv
 /* 8006E650 0006B450  38 00 00 00 */	li r0, 0
-/* 8006E654 0006B454  90 0D 8C C0 */	stw r0, lbl_803CB5C0-_SDA_BASE_(r13)
+/* 8006E654 0006B454  90 0D 8C C0 */	stw r0, sPlayerDiedLastTime-_SDA_BASE_(r13)
 /* 8006E658 0006B458  48 00 00 19 */	bl zEntPlayer_RestoreSounds__Fv
 /* 8006E65C 0006B45C  BA A1 00 14 */	lmw r21, 0x14(r1)
 /* 8006E660 0006B460  80 01 00 44 */	lwz r0, 0x44(r1)
@@ -17826,7 +17826,7 @@ lbl_800765D8:
 /* 800765E0 000733E0  40 82 00 BC */	bne lbl_8007669C
 /* 800765E4 000733E4  38 00 00 01 */	li r0, 1
 /* 800765E8 000733E8  38 60 00 1F */	li r3, 0x1f
-/* 800765EC 000733EC  90 0D 8C C0 */	stw r0, lbl_803CB5C0-_SDA_BASE_(r13)
+/* 800765EC 000733EC  90 0D 8C C0 */	stw r0, sPlayerDiedLastTime-_SDA_BASE_(r13)
 /* 800765F0 000733F0  C0 22 8C 20 */	lfs f1, lbl_803CD5A0-_SDA2_BASE_(r2)
 /* 800765F4 000733F4  48 00 A1 9D */	bl zEntPlayer_SNDPlay__F14_tagePlayerSndf
 /* 800765F8 000733F8  4B FB A6 71 */	bl xrand__Fv
@@ -26215,12 +26215,12 @@ zEntPlayer_LoadCheckPoint__Fv:
 /* 8007DEFC 0007ACFC  38 63 05 58 */	addi r3, r3, globals@l
 /* 8007DF00 0007AD00  38 84 F6 A4 */	addi r4, r4, sCameraLastMat@l
 /* 8007DF04 0007AD04  4B F8 F6 85 */	bl xCameraSetTargetOMatrix__FP7xCameraP7xMat4x3
-/* 8007DF08 0007AD08  80 0D 8C C0 */	lwz r0, lbl_803CB5C0-_SDA_BASE_(r13)
+/* 8007DF08 0007AD08  80 0D 8C C0 */	lwz r0, sPlayerDiedLastTime-_SDA_BASE_(r13)
 /* 8007DF0C 0007AD0C  2C 00 00 00 */	cmpwi r0, 0
 /* 8007DF10 0007AD10  41 82 00 84 */	beq lbl_8007DF94
 /* 8007DF14 0007AD14  38 00 00 00 */	li r0, 0
 /* 8007DF18 0007AD18  38 60 00 00 */	li r3, 0
-/* 8007DF1C 0007AD1C  90 0D 8C C0 */	stw r0, lbl_803CB5C0-_SDA_BASE_(r13)
+/* 8007DF1C 0007AD1C  90 0D 8C C0 */	stw r0, sPlayerDiedLastTime-_SDA_BASE_(r13)
 /* 8007DF20 0007AD20  38 80 00 01 */	li r4, 1
 /* 8007DF24 0007AD24  38 A0 00 07 */	li r5, 7
 /* 8007DF28 0007AD28  38 C0 00 09 */	li r6, 9
@@ -46011,7 +46011,8 @@ sCurrentStreamSndID:
 	.skip 0x4
 lbl_803CB5BC:
 	.skip 0x4
-lbl_803CB5C0:
+.global sPlayerDiedLastTime
+sPlayerDiedLastTime:
 	.skip 0x4
 lbl_803CB5C4:
 	.skip 0x4
@@ -46418,6 +46419,7 @@ lbl_803CD630:
 	.incbin "baserom.dol", 0x2B6ED0, 0x4
 lbl_803CD634:
 	.incbin "baserom.dol", 0x2B6ED4, 0x4
+.global lbl_803CD638
 lbl_803CD638:
 	.incbin "baserom.dol", 0x2B6ED8, 0x4
 lbl_803CD63C:
