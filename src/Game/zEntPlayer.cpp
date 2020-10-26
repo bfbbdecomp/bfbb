@@ -10,6 +10,7 @@
 
 #include "zGame.h"
 #include "zGlobals.h"
+#include "zEntTeleportBox.h"
 
 extern zGlobals globals;
 extern int32 gCurrentPlayer;
@@ -239,8 +240,29 @@ void HealthReset()
 // func_8006905C
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceToJumpCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800690E0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    if (globals.player.cheat_mode)
+    {
+        return false;
+    }
+
+    if (zEntTeleportBox_playerIn())
+    {
+        return false;
+    }
+
+    bool canBowl = false;
+
+    // TODO: replace hardcoded pad number with button constant
+    if (!globals.player.ControlOff && ((globals.pad0->pressed & 0x20000) != 0) &&
+        globals.player.g.PowerUp[0] != 0)
+    {
+        canBowl = true;
+    }
+
+    return canBowl;
+}
 
 // func_80069168
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlCB__FP15xAnimTransitionP11xAnimSinglePv")
