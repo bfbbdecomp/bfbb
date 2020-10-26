@@ -3428,32 +3428,17 @@ lbl_800691EC:
 /* 80069224 00066024  C0 05 00 28 */	lfs f0, 0x28(r5)
 /* 80069228 00066028  EC 01 00 32 */	fmuls f0, f1, f0
 /* 8006922C 0006602C  D0 1F 00 DC */	stfs f0, 0xdc(r31)
-/* 80069230 00066030  90 8D 8D C8 */	stw r4, lbl_803CB6C8-_SDA_BASE_(r13)
+/* 80069230 00066030  90 8D 8D C8 */	stw r4, sShouldBubbleBowl-_SDA_BASE_(r13)
 /* 80069234 00066034  90 06 1A EC */	stw r0, 0x1aec(r6)
 /* 80069238 00066038  C0 02 8C 20 */	lfs f0, lbl_803CD5A0-_SDA2_BASE_(r2)
 /* 8006923C 0006603C  D0 0D 8D CC */	stfs f0, lbl_803CB6CC-_SDA_BASE_(r13)
 /* 80069240 00066040  C0 02 8C 78 */	lfs f0, lbl_803CD5F8-_SDA2_BASE_(r2)
-/* 80069244 00066044  D0 0D 81 E8 */	stfs f0, lbl_803CAAE8-_SDA_BASE_(r13)
+/* 80069244 00066044  D0 0D 81 E8 */	stfs f0, sBubbleBowlLastWindupTime-_SDA_BASE_(r13)
 /* 80069248 00066048  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 8006924C 0006604C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80069250 00066050  7C 08 03 A6 */	mtlr r0
 /* 80069254 00066054  38 21 00 10 */	addi r1, r1, 0x10
 /* 80069258 00066058  4E 80 00 20 */	blr 
-
-BbowlWindupEndCheck__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8006925C 0006605C  C0 24 00 08 */	lfs f1, 8(r4)
-/* 80069260 00066060  C0 0D 81 E8 */	lfs f0, lbl_803CAAE8-_SDA_BASE_(r13)
-/* 80069264 00066064  FC 01 00 40 */	fcmpo cr0, f1, f0
-/* 80069268 00066068  40 80 00 18 */	bge lbl_80069280
-/* 8006926C 0006606C  80 0D 8D C8 */	lwz r0, lbl_803CB6C8-_SDA_BASE_(r13)
-/* 80069270 00066070  28 00 00 00 */	cmplwi r0, 0
-/* 80069274 00066074  41 82 00 0C */	beq lbl_80069280
-/* 80069278 00066078  38 60 00 01 */	li r3, 1
-/* 8006927C 0006607C  4E 80 00 20 */	blr 
-lbl_80069280:
-/* 80069280 00066080  D0 2D 81 E8 */	stfs f1, lbl_803CAAE8-_SDA_BASE_(r13)
-/* 80069284 00066084  38 60 00 00 */	li r3, 0
-/* 80069288 00066088  4E 80 00 20 */	blr 
 
 BbowlTossEndCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8006928C 0006608C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -11263,7 +11248,7 @@ lbl_80070240:
 /* 80070240 0006D040  C0 0D 8D CC */	lfs f0, lbl_803CB6CC-_SDA_BASE_(r13)
 /* 80070244 0006D044  EC 00 F8 2A */	fadds f0, f0, f31
 /* 80070248 0006D048  D0 0D 8D CC */	stfs f0, lbl_803CB6CC-_SDA_BASE_(r13)
-/* 8007024C 0006D04C  80 0D 8D C8 */	lwz r0, lbl_803CB6C8-_SDA_BASE_(r13)
+/* 8007024C 0006D04C  80 0D 8D C8 */	lwz r0, sShouldBubbleBowl-_SDA_BASE_(r13)
 /* 80070250 0006D050  28 00 00 00 */	cmplwi r0, 0
 /* 80070254 0006D054  40 82 00 74 */	bne lbl_800702C8
 /* 80070258 0006D058  80 12 17 88 */	lwz r0, 0x1788(r18)
@@ -11288,7 +11273,7 @@ lbl_8007028C:
 lbl_800702A0:
 /* 800702A0 0006D0A0  38 00 00 01 */	li r0, 1
 /* 800702A4 0006D0A4  3C 60 80 3C */	lis r3, globals@ha
-/* 800702A8 0006D0A8  90 0D 8D C8 */	stw r0, lbl_803CB6C8-_SDA_BASE_(r13)
+/* 800702A8 0006D0A8  90 0D 8D C8 */	stw r0, sShouldBubbleBowl-_SDA_BASE_(r13)
 /* 800702AC 0006D0AC  38 63 05 58 */	addi r3, r3, globals@l
 /* 800702B0 0006D0B0  C0 0D 8D CC */	lfs f0, lbl_803CB6CC-_SDA_BASE_(r13)
 /* 800702B4 0006D0B4  C0 43 09 70 */	lfs f2, 0x970(r3)
@@ -46381,7 +46366,8 @@ lbl_803CB6C0:
 	.skip 0x4
 lbl_803CB6C4:
 	.skip 0x4
-lbl_803CB6C8:
+.global sShouldBubbleBowl
+sShouldBubbleBowl:
 	.skip 0x4
 lbl_803CB6CC:
 	.skip 0x4
@@ -46537,7 +46523,8 @@ lbl_803CAAE0:
 	.incbin "baserom.dol", 0x2B5BA0, 0x4
 lbl_803CAAE4:
 	.incbin "baserom.dol", 0x2B5BA4, 0x4
-lbl_803CAAE8:
+.global sBubbleBowlLastWindupTime 
+sBubbleBowlLastWindupTime:
 	.incbin "baserom.dol", 0x2B5BA8, 0x4
 lbl_803CAAEC:
 	.incbin "baserom.dol", 0x2B5BAC, 0x4
