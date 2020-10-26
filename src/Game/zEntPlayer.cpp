@@ -252,7 +252,7 @@ void HealthReset()
 // func_8006905C
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceToJumpCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 BbowlCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.cheat_mode)
     {
@@ -279,7 +279,7 @@ uint32 BbowlCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 // func_80069168
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 BbowlWindupEndCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (anim->Time < sBubbleBowlLastWindupTime && sShouldBubbleBowl != false)
     {
@@ -289,7 +289,7 @@ uint32 BbowlWindupEndCheck(xAnimTransition* tranny, xAnimSingle* anim, void* par
     return false;
 }
 
-uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     xEntBoulder_BubbleBowl(sBubbleBowlMultiplier);
     globals.player.IsBubbleBowling = false;
@@ -298,64 +298,63 @@ uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-uint32 BbowlRecoverWalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && WalkCheck(tranny, anim, param_3))
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && WalkCheck(tran, anim, param_3))
     {
         result = true;
     }
     return result;
 }
 
-uint32 BbowlRecoverRunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunCheck(tranny, anim, param_3))
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunCheck(tran, anim, param_3))
     {
         result = true;
     }
     return result;
 }
 
-uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-        RunScaredCheck(tranny, anim, param_3))
+        RunScaredCheck(tran, anim, param_3))
     {
         result = true;
     }
     return result;
 }
 
-uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-        RunVictoryCheck(tranny, anim, param_3))
+        RunVictoryCheck(tran, anim, param_3))
     {
         result = true;
     }
     return result;
 }
 
-uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-        RunOutOfWorldCheck(tranny, anim, param_3))
+        RunOutOfWorldCheck(tran, anim, param_3))
     {
         result = true;
     }
     return result;
 }
 
-uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
-    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-        RunSlipCheck(tranny, anim, param_3))
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunSlipCheck(tran, anim, param_3))
     {
         result = true;
     }
@@ -363,7 +362,7 @@ uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tranny, xAnimSingle* anim, void
 }
 
 #if 0
-uint32 GooCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.ControlOff & 0x8000)
     {
@@ -380,7 +379,7 @@ uint32 GooCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 #endif
 
 #if 0
-uint32 GooDeathCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // Decompiled, but instructions are out of order?
     globals.player.Health = 0;
@@ -395,7 +394,7 @@ uint32 GooDeathCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv")
 #endif
 
-uint32 Hit01Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     // TODO: replace hardcoded anim constant
@@ -406,14 +405,14 @@ uint32 Hit01Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return result;
 }
 
-uint32 Hit01CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 2;
     return false;
 }
 
-uint32 Hit02Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     // TODO: replace hardcoded anim constant
@@ -424,14 +423,14 @@ uint32 Hit02Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return result;
 }
 
-uint32 Hit02CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 3;
     return false;
 }
 
-uint32 Hit03Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     // TODO: replace hardcoded anim constant
@@ -442,14 +441,14 @@ uint32 Hit03Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return result;
 }
 
-uint32 Hit03CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 4;
     return false;
 }
 
-uint32 Hit04Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     // TODO: replace hardcoded anim constant
@@ -460,14 +459,14 @@ uint32 Hit04Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return result;
 }
 
-uint32 Hit04CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 5;
     return false;
 }
 
-uint32 Hit05Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     bool result = false;
     // TODO: replace hardcoded anim constant
@@ -478,7 +477,7 @@ uint32 Hit05Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return result;
 }
 
-uint32 Hit05CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 1;
@@ -486,7 +485,7 @@ uint32 Hit05CB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
 }
 
 #if 0
-uint32 Defeated01Check(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // if this can be decompiled, it can be copied and pasted 4 more times.
     bool result = false;
