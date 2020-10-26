@@ -195,5 +195,7 @@ struct zPlayerLassoInfo
 };
 
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
+void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
+void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 
 #endif

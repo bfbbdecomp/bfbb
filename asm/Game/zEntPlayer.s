@@ -3440,27 +3440,6 @@ lbl_800691EC:
 /* 80069254 00066054  38 21 00 10 */	addi r1, r1, 0x10
 /* 80069258 00066058  4E 80 00 20 */	blr 
 
-BbowlTossEndCB__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8006928C 0006608C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80069290 00066090  7C 08 02 A6 */	mflr r0
-/* 80069294 00066094  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80069298 00066098  C0 2D 81 EC */	lfs f1, lbl_803CAAEC-_SDA_BASE_(r13)
-/* 8006929C 0006609C  48 0B 74 19 */	bl xEntBoulder_BubbleBowl__Ff
-/* 800692A0 000660A0  3C 60 80 3C */	lis r3, globals@ha
-/* 800692A4 000660A4  38 00 00 00 */	li r0, 0
-/* 800692A8 000660A8  38 83 05 58 */	addi r4, r3, globals@l
-/* 800692AC 000660AC  38 60 00 04 */	li r3, 4
-/* 800692B0 000660B0  90 04 1A EC */	stw r0, 0x1aec(r4)
-/* 800692B4 000660B4  48 01 7F 8D */	bl zEntPlayer_SNDStop__F14_tagePlayerSnd
-/* 800692B8 000660B8  C0 22 8C 20 */	lfs f1, lbl_803CD5A0-_SDA2_BASE_(r2)
-/* 800692BC 000660BC  38 60 00 05 */	li r3, 5
-/* 800692C0 000660C0  48 01 74 D1 */	bl zEntPlayer_SNDPlay__F14_tagePlayerSndf
-/* 800692C4 000660C4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800692C8 000660C8  38 60 00 00 */	li r3, 0
-/* 800692CC 000660CC  7C 08 03 A6 */	mtlr r0
-/* 800692D0 000660D0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800692D4 000660D4  4E 80 00 20 */	blr 
-
 BbowlRecoverWalkCheck__FP15xAnimTransitionP11xAnimSinglePv:
 /* 800692D8 000660D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800692DC 000660DC  7C 08 02 A6 */	mflr r0
@@ -11280,7 +11259,7 @@ lbl_800702A0:
 /* 800702B8 0006D0B8  EC 20 08 24 */	fdivs f1, f0, f1
 /* 800702BC 0006D0BC  C0 02 8C 10 */	lfs f0, lbl_803CD590-_SDA2_BASE_(r2)
 /* 800702C0 0006D0C0  EC 02 00 7A */	fmadds f0, f2, f1, f0
-/* 800702C4 0006D0C4  D0 0D 81 EC */	stfs f0, lbl_803CAAEC-_SDA_BASE_(r13)
+/* 800702C4 0006D0C4  D0 0D 81 EC */	stfs f0, sBubbleBowlMultiplier-_SDA_BASE_(r13)
 lbl_800702C8:
 /* 800702C8 0006D0C8  FC 20 F8 90 */	fmr f1, f31
 /* 800702CC 0006D0CC  7F 63 DB 78 */	mr r3, r27
@@ -46526,8 +46505,11 @@ lbl_803CAAE4:
 .global sBubbleBowlLastWindupTime 
 sBubbleBowlLastWindupTime:
 	.incbin "baserom.dol", 0x2B5BA8, 0x4
-lbl_803CAAEC:
+
+.global sBubbleBowlMultiplier
+sBubbleBowlMultiplier:
 	.incbin "baserom.dol", 0x2B5BAC, 0x4
+
 lbl_803CAAF0:
 	.incbin "baserom.dol", 0x2B5BB0, 0x4
 lbl_803CAAF4:
@@ -46546,6 +46528,7 @@ lbl_803CD590:
 	.incbin "baserom.dol", 0x2B6E30, 0x8
 lbl_803CD598:
 	.incbin "baserom.dol", 0x2B6E38, 0x8
+.global lbl_803CD5A0
 lbl_803CD5A0:
 	.incbin "baserom.dol", 0x2B6E40, 0x8
 lbl_803CD5A8:

@@ -7,6 +7,7 @@
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEntBoulder.h"
 
 #include "zGame.h"
 #include "zGlobals.h"
@@ -18,6 +19,9 @@ extern uint32 sCurrentStreamSndID;
 
 extern uint32 sShouldBubbleBowl;
 extern float32 sBubbleBowlLastWindupTime;
+extern float32 sBubbleBowlMultiplier;
+
+extern float32 lbl_803CD5A0; // 0.0
 
 // Multidimensional sound arrays for each player type
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
@@ -277,8 +281,14 @@ uint32 BbowlWindupEndCheck(xAnimTransition* tranny, xAnimSingle* anim, void* par
     return false;
 }
 
-// func_8006928C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlTossEndCB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    xEntBoulder_BubbleBowl(sBubbleBowlMultiplier);
+    globals.player.IsBubbleBowling = false;
+    zEntPlayer_SNDStop(ePlayerSnd_BowlWindup);
+    zEntPlayer_SNDPlay(ePlayerSnd_BowlRelease, lbl_803CD5A0);
+    return 0;
+}
 
 // func_800692D8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
