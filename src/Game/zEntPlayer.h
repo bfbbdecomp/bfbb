@@ -198,6 +198,8 @@ int32 zEntPlayer_Damage(xBase* src, uint32 damage);
 
 uint32 WalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
 uint32 RunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 RunScaredCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+uint32 RunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
 
 uint32 BbowlCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
 uint32 BbowlWindupEndCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);

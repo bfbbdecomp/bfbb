@@ -316,13 +316,31 @@ uint32 BbowlRecoverRunCheck(xAnimTransition* tranny, xAnimSingle* anim, void* pa
     return result;
 }
 
-// func_80069380
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    {
+        if (RunScaredCheck(tranny, anim, param_3) != false)
+        {
+            result = true;
+        }
+    }
+    return result;
+}
 
-// func_800693D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    {
+        if (RunVictoryCheck(tranny, anim, param_3) != false)
+        {
+            result = true;
+        }
+    }
+    return result;
+}
 
 // func_80069428
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \

@@ -3440,54 +3440,6 @@ lbl_800691EC:
 /* 80069254 00066054  38 21 00 10 */	addi r1, r1, 0x10
 /* 80069258 00066058  4E 80 00 20 */	blr 
 
-BbowlRecoverRunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv:
-/* 80069380 00066180  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80069384 00066184  7C 08 02 A6 */	mflr r0
-/* 80069388 00066188  3C C0 80 3C */	lis r6, globals@ha
-/* 8006938C 0006618C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80069390 00066190  38 C6 05 58 */	addi r6, r6, globals@l
-/* 80069394 00066194  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80069398 00066198  3B E0 00 00 */	li r31, 0
-/* 8006939C 0006619C  C0 24 00 08 */	lfs f1, 8(r4)
-/* 800693A0 000661A0  C0 06 09 78 */	lfs f0, 0x978(r6)
-/* 800693A4 000661A4  FC 01 00 40 */	fcmpo cr0, f1, f0
-/* 800693A8 000661A8  40 81 00 14 */	ble lbl_800693BC
-/* 800693AC 000661AC  4B FF EE 6D */	bl RunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv
-/* 800693B0 000661B0  28 03 00 00 */	cmplwi r3, 0
-/* 800693B4 000661B4  41 82 00 08 */	beq lbl_800693BC
-/* 800693B8 000661B8  3B E0 00 01 */	li r31, 1
-lbl_800693BC:
-/* 800693BC 000661BC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800693C0 000661C0  57 E3 06 3E */	clrlwi r3, r31, 0x18
-/* 800693C4 000661C4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800693C8 000661C8  7C 08 03 A6 */	mtlr r0
-/* 800693CC 000661CC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800693D0 000661D0  4E 80 00 20 */	blr 
-
-BbowlRecoverRunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv:
-/* 800693D4 000661D4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800693D8 000661D8  7C 08 02 A6 */	mflr r0
-/* 800693DC 000661DC  3C C0 80 3C */	lis r6, globals@ha
-/* 800693E0 000661E0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800693E4 000661E4  38 C6 05 58 */	addi r6, r6, globals@l
-/* 800693E8 000661E8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800693EC 000661EC  3B E0 00 00 */	li r31, 0
-/* 800693F0 000661F0  C0 24 00 08 */	lfs f1, 8(r4)
-/* 800693F4 000661F4  C0 06 09 78 */	lfs f0, 0x978(r6)
-/* 800693F8 000661F8  FC 01 00 40 */	fcmpo cr0, f1, f0
-/* 800693FC 000661FC  40 81 00 14 */	ble lbl_80069410
-/* 80069400 00066200  4B FF EE B1 */	bl RunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv
-/* 80069404 00066204  28 03 00 00 */	cmplwi r3, 0
-/* 80069408 00066208  41 82 00 08 */	beq lbl_80069410
-/* 8006940C 0006620C  3B E0 00 01 */	li r31, 1
-lbl_80069410:
-/* 80069410 00066210  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80069414 00066214  57 E3 06 3E */	clrlwi r3, r31, 0x18
-/* 80069418 00066218  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8006941C 0006621C  7C 08 03 A6 */	mtlr r0
-/* 80069420 00066220  38 21 00 10 */	addi r1, r1, 0x10
-/* 80069424 00066224  4E 80 00 20 */	blr 
-
 BbowlRecoverRunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069428 00066228  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8006942C 0006622C  7C 08 02 A6 */	mflr r0
