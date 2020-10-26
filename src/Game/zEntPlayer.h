@@ -195,6 +195,9 @@ struct zPlayerLassoInfo
 };
 
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
+
+uint32 WalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3);
+
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 

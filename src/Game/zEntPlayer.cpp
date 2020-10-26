@@ -290,9 +290,20 @@ uint32 BbowlTossEndCB(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
     return 0;
 }
 
-// func_800692D8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverWalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverWalkCheck(xAnimTransition* tranny, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime)
+    {
+        if (WalkCheck(tranny, anim, param_3) != false)
+        {
+            result = true;
+        }
+    }
+
+    return result;
+}
 
 // func_8006932C
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
