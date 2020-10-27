@@ -9,6 +9,7 @@ extern "C" {
 
 void* memset(void*, int, size_t);
 size_t strlen(const char*);
+int atoi(const char* nptr);
 
 #ifdef __cplusplus
 }

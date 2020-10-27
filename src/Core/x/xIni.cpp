@@ -1,6 +1,7 @@
 #include "xIni.h"
 
 #include <types.h>
+#include <CodeWarrior/string.h>
 
 // func_80030640
 #pragma GLOBAL_ASM("asm/Core/x/xIni.s", "TrimWhitespace__FPc")
@@ -17,8 +18,15 @@
 // func_80030A60
 #pragma GLOBAL_ASM("asm/Core/x/xIni.s", "xIniGetIndex__FP8xIniFilePc")
 
-// func_80030AE8
-#pragma GLOBAL_ASM("asm/Core/x/xIni.s", "xIniGetInt__FP8xIniFilePci")
+int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def)
+{
+    int32 index = xIniGetIndex(ini, tok);
+    if (index == -1)
+    {
+        return def;
+    }
+    return atoi(ini->Values[index].val);
+}
 
 // func_80030B44
 #pragma GLOBAL_ASM("asm/Core/x/xIni.s", "xIniGetFloat__FP8xIniFilePcf")
