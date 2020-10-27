@@ -29442,56 +29442,6 @@ lbl_8008117C:
 /* 80081190 0007DF90  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80081194 0007DF94  4E 80 00 20 */	blr 
 
-.global zEntPlayer_SNDSetVol__F14_tagePlayerSndf
-zEntPlayer_SNDSetVol__F14_tagePlayerSndf:
-/* 80081198 0007DF98  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8008119C 0007DF9C  7C 08 02 A6 */	mflr r0
-/* 800811A0 0007DFA0  3C 80 80 29 */	lis r4, sPlayerSnd@ha
-/* 800811A4 0007DFA4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800811A8 0007DFA8  38 04 C9 B0 */	addi r0, r4, sPlayerSnd@l
-/* 800811AC 0007DFAC  54 64 10 3A */	slwi r4, r3, 2
-/* 800811B0 0007DFB0  80 AD 8D 60 */	lwz r5, gCurrentPlayer-_SDA_BASE_(r13)
-/* 800811B4 0007DFB4  1C A5 00 BC */	mulli r5, r5, 0xbc
-/* 800811B8 0007DFB8  7C 60 2A 14 */	add r3, r0, r5
-/* 800811BC 0007DFBC  7C 03 20 2E */	lwzx r0, r3, r4
-/* 800811C0 0007DFC0  28 00 00 00 */	cmplwi r0, 0
-/* 800811C4 0007DFC4  41 82 00 18 */	beq lbl_800811DC
-/* 800811C8 0007DFC8  3C 60 80 29 */	lis r3, sPlayerSndID@ha
-/* 800811CC 0007DFCC  38 03 CE 18 */	addi r0, r3, sPlayerSndID@l
-/* 800811D0 0007DFD0  7C 60 2A 14 */	add r3, r0, r5
-/* 800811D4 0007DFD4  7C 63 20 2E */	lwzx r3, r3, r4
-/* 800811D8 0007DFD8  4B FC 81 D1 */	bl xSndSetVol__FUif
-lbl_800811DC:
-/* 800811DC 0007DFDC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800811E0 0007DFE0  7C 08 03 A6 */	mtlr r0
-/* 800811E4 0007DFE4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800811E8 0007DFE8  4E 80 00 20 */	blr 
-
-.global zEntPlayer_SNDSetPitch__F14_tagePlayerSndf
-zEntPlayer_SNDSetPitch__F14_tagePlayerSndf:
-/* 800811EC 0007DFEC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800811F0 0007DFF0  7C 08 02 A6 */	mflr r0
-/* 800811F4 0007DFF4  3C 80 80 29 */	lis r4, sPlayerSnd@ha
-/* 800811F8 0007DFF8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800811FC 0007DFFC  38 04 C9 B0 */	addi r0, r4, sPlayerSnd@l
-/* 80081200 0007E000  54 64 10 3A */	slwi r4, r3, 2
-/* 80081204 0007E004  80 AD 8D 60 */	lwz r5, gCurrentPlayer-_SDA_BASE_(r13)
-/* 80081208 0007E008  1C A5 00 BC */	mulli r5, r5, 0xbc
-/* 8008120C 0007E00C  7C 60 2A 14 */	add r3, r0, r5
-/* 80081210 0007E010  7C 03 20 2E */	lwzx r0, r3, r4
-/* 80081214 0007E014  28 00 00 00 */	cmplwi r0, 0
-/* 80081218 0007E018  41 82 00 18 */	beq lbl_80081230
-/* 8008121C 0007E01C  3C 60 80 29 */	lis r3, sPlayerSndID@ha
-/* 80081220 0007E020  38 03 CE 18 */	addi r0, r3, sPlayerSndID@l
-/* 80081224 0007E024  7C 60 2A 14 */	add r3, r0, r5
-/* 80081228 0007E028  7C 63 20 2E */	lwzx r3, r3, r4
-/* 8008122C 0007E02C  4B FC 81 9D */	bl xSndSetPitch__FUif
-lbl_80081230:
-/* 80081230 0007E030  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80081234 0007E034  7C 08 03 A6 */	mtlr r0
-/* 80081238 0007E038  38 21 00 10 */	addi r1, r1, 0x10
-/* 8008123C 0007E03C  4E 80 00 20 */	blr 
-
 .global zEntPlayer_SNDStop__F14_tagePlayerSnd
 zEntPlayer_SNDStop__F14_tagePlayerSnd:
 /* 80081240 0007E040  94 21 FF F0 */	stwu r1, -0x10(r1)
