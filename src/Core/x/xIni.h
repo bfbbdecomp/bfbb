@@ -28,5 +28,6 @@ struct xIniFile
 };
 
 int32 xIniGetIndex(xIniFile* ini, int8* tok);
+int8* xIniGetString(xIniFile* ini, int8* tok, int8* def);
 
 #endif

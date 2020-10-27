@@ -31,5 +31,12 @@ int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def)
 // func_80030B44
 #pragma GLOBAL_ASM("asm/Core/x/xIni.s", "xIniGetFloat__FP8xIniFilePcf")
 
-// func_80030BAC
-#pragma GLOBAL_ASM("asm/Core/x/xIni.s", "xIniGetString__FP8xIniFilePcPc")
+int8* xIniGetString(xIniFile* ini, int8* tok, int8* def)
+{
+    int32 index = xIniGetIndex(ini, tok);
+    if (index == -1)
+    {
+        return def;
+    }
+    return ini->Values[index].val;
+}
