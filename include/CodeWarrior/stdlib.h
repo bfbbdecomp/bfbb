@@ -6,6 +6,8 @@ extern "C" {
 #endif
 
 int rand(void);
+int atoi(const char* nptr);
+double atof(const char* nptr);
 
 #ifdef __cplusplus
 }

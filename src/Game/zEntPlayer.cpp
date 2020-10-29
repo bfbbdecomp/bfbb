@@ -7,13 +7,29 @@
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEntBoulder.h"
 
 #include "zGame.h"
+#include "zGameExtras.h"
 #include "zGlobals.h"
+#include "zGoo.h"
+#include "zEntTeleportBox.h"
 
 extern zGlobals globals;
 extern int32 gCurrentPlayer;
 extern uint32 sCurrentStreamSndID;
+
+extern uint32 sShouldBubbleBowl;
+extern float32 sBubbleBowlLastWindupTime;
+extern float32 sBubbleBowlMultiplier;
+
+extern int32 in_goo;
+extern int32 sPlayerDiedLastTime;
+extern int32 player_hit;
+extern int32 player_hit_anim;
+
+extern float32 lbl_803CD5A0; // 0.0
+extern float32 lbl_803CD638; // 10.0
 
 // Multidimensional sound arrays for each player type
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
@@ -236,81 +252,256 @@ void HealthReset()
 // func_8006905C
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceToJumpCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800690E0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    if (globals.player.cheat_mode)
+    {
+        return false;
+    }
+
+    if (zEntTeleportBox_playerIn())
+    {
+        return false;
+    }
+
+    bool canBowl = false;
+
+    // TODO: replace hardcoded pad number with button constant
+    if (!globals.player.ControlOff && ((globals.pad0->pressed & 0x20000) != 0) &&
+        globals.player.g.PowerUp[0] != 0)
+    {
+        canBowl = true;
+    }
+
+    return canBowl;
+}
 
 // func_80069168
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006925C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlWindupEndCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    if (anim->Time < sBubbleBowlLastWindupTime && sShouldBubbleBowl != false)
+    {
+        return true;
+    }
+    sBubbleBowlLastWindupTime = anim->Time;
+    return false;
+}
 
-// func_8006928C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlTossEndCB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    xEntBoulder_BubbleBowl(sBubbleBowlMultiplier);
+    globals.player.IsBubbleBowling = false;
+    zEntPlayer_SNDStop(ePlayerSnd_BowlWindup);
+    zEntPlayer_SNDPlay(ePlayerSnd_BowlRelease, lbl_803CD5A0);
+    return false;
+}
 
-// func_800692D8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverWalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && WalkCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006932C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_80069380
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunScaredCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_800693D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunVictoryCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_80069428
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunOutOfWorldCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006947C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BbowlRecoverRunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunSlipCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
+}
 
+#if 0
+uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    if (globals.player.ControlOff & 0x8000)
+    {
+        return false;
+    }
+    // not sure what this is doing, but it's almost matching.
+    // it's only using the wrong registers right now.
+    // the function is apparently 11 lines of code?
+    return in_goo & ~((-globals.player.cheat_mode | globals.player.cheat_mode) >> 0x1f);
+}
+#else
 // func_800694D0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooCheck__FP15xAnimTransitionP11xAnimSinglePv")
+#endif
 
+#if 0
+uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    // Decompiled, but instructions are out of order?
+    globals.player.Health = 0;
+    globals.player.DamageTimer = lbl_803CD638; // 10.0
+    zGooStopTide();
+    sPlayerDiedLastTime = 1;
+    zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
+    return false;
+}
+#else
 // func_80069508
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv")
+#endif
 
-// func_80069554
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit01Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 1)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006957C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit01CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 2;
+    return false;
+}
 
-// func_80069594
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit02Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 2)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_800695BC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit02CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 3;
+    return false;
+}
 
-// func_800695D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit03Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 3)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_800695FC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit03CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 4;
+    return false;
+}
 
-// func_80069614
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit04Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 4)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006963C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit04CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 5;
+    return false;
+}
 
-// func_80069654
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit05Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 5)
+    {
+        result = true;
+    }
+    return result;
+}
 
-// func_8006967C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Hit05CB__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    player_hit = 0;
+    player_hit_anim = 1;
+    return false;
+}
 
+#if 0
+uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    // if this can be decompiled, it can be copied and pasted 4 more times.
+    bool result = false;
+
+    int32 flags = zGameExtras_CheatFlags();
+
+    if (globals.player.Health == 0)
+    {
+        result = true;
+    }
+    return result;
+}
+#else
 // func_80069694
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv")
+#endif
 
 // func_800696F8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated02Check__FP15xAnimTransitionP11xAnimSinglePv")
@@ -1062,32 +1253,21 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
 
-/*
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
 {
-    // only 1 slightly incorrect instruction preventing match
-    if (sPlayerSnd[gCurrentPlayer][player_snd] != 0)
+    if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
         xSndSetVol(sPlayerSndID[gCurrentPlayer][player_snd], new_vol);
     }
-}*/
+}
 
-// func_80081198
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetVol__F14_tagePlayerSndf")
-
-/*
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
 {
-    // only 1 slightly incorrect instruction preventing match
-    if (sPlayerSnd[gCurrentPlayer][player_snd] != 0)
+    if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
         xSndSetPitch(sPlayerSndID[gCurrentPlayer][player_snd], new_pitch);
     }
 }
-*/
-
-// func_800811EC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDSetPitch__F14_tagePlayerSndf")
 
 // func_80081240
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDStop__F14_tagePlayerSnd")
