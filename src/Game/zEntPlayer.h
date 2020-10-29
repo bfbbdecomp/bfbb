@@ -6,6 +6,26 @@
 #include "../Core/x/xAnim.h"
 #include "zLasso.h"
 
+enum zControlOwner
+{
+    CONTROL_OWNER_GLOBAL = 0x1,
+    CONTROL_OWNER_EVENT,
+    CONTROL_OWNER_OOB = 0x4,
+    CONTROL_OWNER_BOSS = 0x8,
+    CONTROL_OWNER_TALK_BOX = 0x10,
+    CONTROL_OWNER_TAXI = 0x20,
+    CONTROL_OWNER_BUS_STOP = 0x40,
+    CONTROL_OWNER_TELEPORT_BOX = 0x80,
+    CONTROL_OWNER_CRUISE_BUBBLE = 0x100,
+    CONTROL_OWNER_FLY_CAM = 0x200,
+    CONTROL_OWNER_FROZEN = 0x400,
+    CONTROL_OWNER_TURRET = 0x800,
+    CONTROL_OWNER_REWARDANIM = 0x1000,
+    CONTROL_OWNER_BUNGEE = 0x2000,
+    CONTROL_OWNER_SPRINGBOARD = 0x4000,
+    CONTROL_OWNER_CUTSCENE = 0x8000
+};
+
 enum _tagePlayerSnd
 {
     ePlayerSnd_Invalid,
@@ -195,5 +215,29 @@ struct zPlayerLassoInfo
 };
 
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
+
+uint32 WalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 RunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 RunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 RunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 RunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 RunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+
+uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+
+uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+
+void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
+void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
+
+void zEntPlayerControlOff(zControlOwner owner);
 
 #endif

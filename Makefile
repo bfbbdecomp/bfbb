@@ -77,7 +77,7 @@ ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
 CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -O4,p -msgstyle gcc \
            -pragma "check_header_flags off" -pragma "force_active on" \
-           -str reuse,pool,readonly -char unsigned -use_lmw_stmw on -inline off -gccincludes $(INCLUDES) 
+           -str reuse,pool,readonly -char unsigned -enum int -use_lmw_stmw on -inline off -gccincludes $(INCLUDES) 
 PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES)
 PPROCFLAGS := -fsymbol-fixup
 
