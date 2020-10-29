@@ -4,57 +4,6 @@
 
 .section .text  # 0x800C2EAC - 0x800C3300
 
-
-SetPipelineCB__FP8RpAtomicPv:
-/* 800C2EAC 000BFCAC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800C2EB0 000BFCB0  7C 08 02 A6 */	mflr r0
-/* 800C2EB4 000BFCB4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800C2EB8 000BFCB8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800C2EBC 000BFCBC  7C 9F 23 78 */	mr r31, r4
-/* 800C2EC0 000BFCC0  93 C1 00 08 */	stw r30, 8(r1)
-/* 800C2EC4 000BFCC4  7C 7E 1B 78 */	mr r30, r3
-/* 800C2EC8 000BFCC8  80 6D 91 B8 */	lwz r3, lbl_803CBAB8-_SDA_BASE_(r13)
-/* 800C2ECC 000BFCCC  48 17 46 E5 */	bl RwCameraBeginUpdate
-/* 800C2ED0 000BFCD0  28 03 00 00 */	cmplwi r3, 0
-/* 800C2ED4 000BFCD4  41 82 00 14 */	beq lbl_800C2EE8
-/* 800C2ED8 000BFCD8  7F C3 F3 78 */	mr r3, r30
-/* 800C2EDC 000BFCDC  48 15 1F 9D */	bl RpAtomicInstance
-/* 800C2EE0 000BFCE0  80 6D 91 B8 */	lwz r3, lbl_803CBAB8-_SDA_BASE_(r13)
-/* 800C2EE4 000BFCE4  48 17 46 A5 */	bl RwCameraEndUpdate
-lbl_800C2EE8:
-/* 800C2EE8 000BFCE8  28 1F 00 00 */	cmplwi r31, 0
-/* 800C2EEC 000BFCEC  41 82 00 08 */	beq lbl_800C2EF4
-/* 800C2EF0 000BFCF0  93 FE 00 6C */	stw r31, 0x6c(r30)
-lbl_800C2EF4:
-/* 800C2EF4 000BFCF4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800C2EF8 000BFCF8  7F C3 F3 78 */	mr r3, r30
-/* 800C2EFC 000BFCFC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800C2F00 000BFD00  83 C1 00 08 */	lwz r30, 8(r1)
-/* 800C2F04 000BFD04  7C 08 03 A6 */	mtlr r0
-/* 800C2F08 000BFD08  38 21 00 10 */	addi r1, r1, 0x10
-/* 800C2F0C 000BFD0C  4E 80 00 20 */	blr 
-
-iEnvSetBSP__FP4iEnviP7RpWorld:
-/* 800C2F10 000BFD10  2C 04 00 00 */	cmpwi r4, 0
-/* 800C2F14 000BFD14  40 82 00 0C */	bne lbl_800C2F20
-/* 800C2F18 000BFD18  90 A3 00 00 */	stw r5, 0(r3)
-/* 800C2F1C 000BFD1C  4E 80 00 20 */	blr 
-lbl_800C2F20:
-/* 800C2F20 000BFD20  2C 04 00 01 */	cmpwi r4, 1
-/* 800C2F24 000BFD24  40 82 00 0C */	bne lbl_800C2F30
-/* 800C2F28 000BFD28  90 A3 00 04 */	stw r5, 4(r3)
-/* 800C2F2C 000BFD2C  4E 80 00 20 */	blr 
-lbl_800C2F30:
-/* 800C2F30 000BFD30  2C 04 00 02 */	cmpwi r4, 2
-/* 800C2F34 000BFD34  40 82 00 0C */	bne lbl_800C2F40
-/* 800C2F38 000BFD38  90 A3 00 08 */	stw r5, 8(r3)
-/* 800C2F3C 000BFD3C  4E 80 00 20 */	blr 
-lbl_800C2F40:
-/* 800C2F40 000BFD40  2C 04 00 03 */	cmpwi r4, 3
-/* 800C2F44 000BFD44  4C 82 00 20 */	bnelr 
-/* 800C2F48 000BFD48  90 A3 00 0C */	stw r5, 0xc(r3)
-/* 800C2F4C 000BFD4C  4E 80 00 20 */	blr 
-
 .global iEnvLoad__FP4iEnvPCvUii
 iEnvLoad__FP4iEnvPCvUii:
 /* 800C2F50 000BFD50  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -150,46 +99,6 @@ lbl_800C3098:
 /* 800C30A8 000BFEA8  7C 08 03 A6 */	mtlr r0
 /* 800C30AC 000BFEAC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C30B0 000BFEB0  4E 80 00 20 */	blr 
-
-.global iEnvFree__FP4iEnv
-iEnvFree__FP4iEnv:
-/* 800C30B4 000BFEB4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800C30B8 000BFEB8  7C 08 02 A6 */	mflr r0
-/* 800C30BC 000BFEBC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800C30C0 000BFEC0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800C30C4 000BFEC4  7C 7F 1B 78 */	mr r31, r3
-/* 800C30C8 000BFEC8  48 17 9D 35 */	bl _rwFrameSyncDirty
-/* 800C30CC 000BFECC  80 7F 00 00 */	lwz r3, 0(r31)
-/* 800C30D0 000BFED0  48 15 9E 51 */	bl RpWorldDestroy
-/* 800C30D4 000BFED4  38 00 00 00 */	li r0, 0
-/* 800C30D8 000BFED8  90 1F 00 00 */	stw r0, 0(r31)
-/* 800C30DC 000BFEDC  80 7F 00 08 */	lwz r3, 8(r31)
-/* 800C30E0 000BFEE0  28 03 00 00 */	cmplwi r3, 0
-/* 800C30E4 000BFEE4  41 82 00 10 */	beq lbl_800C30F4
-/* 800C30E8 000BFEE8  48 15 9E 39 */	bl RpWorldDestroy
-/* 800C30EC 000BFEEC  38 00 00 00 */	li r0, 0
-/* 800C30F0 000BFEF0  90 1F 00 08 */	stw r0, 8(r31)
-lbl_800C30F4:
-/* 800C30F4 000BFEF4  80 7F 00 04 */	lwz r3, 4(r31)
-/* 800C30F8 000BFEF8  28 03 00 00 */	cmplwi r3, 0
-/* 800C30FC 000BFEFC  41 82 00 10 */	beq lbl_800C310C
-/* 800C3100 000BFF00  48 15 9E 21 */	bl RpWorldDestroy
-/* 800C3104 000BFF04  38 00 00 00 */	li r0, 0
-/* 800C3108 000BFF08  90 1F 00 04 */	stw r0, 4(r31)
-lbl_800C310C:
-/* 800C310C 000BFF0C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800C3110 000BFF10  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800C3114 000BFF14  7C 08 03 A6 */	mtlr r0
-/* 800C3118 000BFF18  38 21 00 10 */	addi r1, r1, 0x10
-/* 800C311C 000BFF1C  4E 80 00 20 */	blr 
-
-.global iEnvDefaultLighting__FP4iEnv
-iEnvDefaultLighting__FP4iEnv:
-/* 800C3120 000BFF20  4E 80 00 20 */	blr 
-
-.global iEnvLightingBasics__FP4iEnvP9xEnvAsset
-iEnvLightingBasics__FP4iEnvP9xEnvAsset:
-/* 800C3124 000BFF24  4E 80 00 20 */	blr 
 
 Jsp_ClumpRender__FP7RpClumpP12xJSPNodeInfo:
 /* 800C3128 000BFF28  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -328,17 +237,3 @@ lbl_800C32EC:
 /* 800C32FC 000C00FC  4E 80 00 20 */	blr 
 
 .endif
-
-.section .rodata
-lbl_80260130:
-	.incbin "baserom.dol", 0x25D110, 0x18
-
-.section .sbss
-lbl_803CBAB0:
-	.skip 0x4
-lbl_803CBAB4:
-	.skip 0x4
-lbl_803CBAB8:
-	.skip 0x4
-lbl_803CBABC:
-	.skip 0x4
