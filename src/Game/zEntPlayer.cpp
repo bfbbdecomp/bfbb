@@ -1253,7 +1253,7 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
 
-void zEntPlayer_SNDSetVol(int32 player_snd, float32 new_vol)
+void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
 {
     if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
@@ -1261,7 +1261,7 @@ void zEntPlayer_SNDSetVol(int32 player_snd, float32 new_vol)
     }
 }
 
-void zEntPlayer_SNDSetPitch(int32 player_snd, float32 new_pitch)
+void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
 {
     if (sPlayerSnd[gCurrentPlayer][player_snd])
     {

@@ -1,7 +1,7 @@
 #include "xIni.h"
 
 #include <types.h>
-#include <CodeWarrior/stdlib.h>
+#include <stdlib.h>
 
 // func_80030640
 #pragma GLOBAL_ASM("asm/Core/x/xIni.s", "TrimWhitespace__FPc")
