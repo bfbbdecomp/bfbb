@@ -1,45 +1,193 @@
 #include "xMath.h"
 
 #include <types.h>
+#include <stdlib.h>
 
-// func_80030C04
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathInit__Fv")
+#include "xMathInlines.h"
 
-// func_80030C24
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathExit__Fv")
+extern float32 lbl_803CCE0C; // 0.5f
+extern float32 lbl_803CCE14; // 2.0f
+extern float32 lbl_803CCE18; // 0.0f
+extern float32 lbl_803CCE54; // 3.1415927f
+extern float32 lbl_803CCE5C; // 6.2831855f
+extern float32 lbl_803CCE60; // -3.1415927f
 
-// func_80030C3C
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xatof__FPCc")
+extern int32 xmath_inited;
+extern int32 xmath_exited;
+extern volatile uint32 rndseed; // made this volatile so xrand() matches
 
-// func_80030C60
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xsrand__FUi")
+void xMathInit()
+{
+    if (!xmath_inited)
+    {
+        xmath_inited = 1;
+        rndseed = 0;
+    }
+}
 
-// func_80030C68
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xrand__Fv")
+void xMathExit()
+{
+    if (!xmath_exited)
+    {
+        xmath_exited = 1;
+    }
+}
 
+float32 xatof(const char* x)
+{
+    return atof(x);
+}
+
+void xsrand(uint32 seed)
+{
+    rndseed = seed;
+}
+
+uint32 xrand()
+{
+    rndseed = rndseed * 1103515245 + 12345;
+    return rndseed;
+}
+
+#ifndef NONMATCHING
 // func_80030C88
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xurand__Fv")
+#else
+float32 xurand()
+{
+    return xrand() * 2.3283064e-10f;
+}
+#endif
 
+#ifndef NONMATCHING
 // func_80030CC8
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathSolveQuadratic__FfffPfPf")
+#else
+uint32 xMathSolveQuadratic(float32 a, float32 b, float32 c, float32* x1, float32* x2)
+{
+    float32 d;
+    float32 dx;
+    float32 p;
+
+    if (a == 0.0f)
+    {
+        if (b == 0.0f)
+        {
+            return 0;
+        }
+
+        *x1 = -c / b;
+        return 1;
+    }
+
+    d = b * b - (4.0f * a * c);
+
+    if (d < 0.0f)
+    {
+        return 0;
+    }
+
+    dx = 1.0f / (2.0f * a);
+
+    *x1 = -b * dx;
+
+    if (d == 0.0f)
+    {
+        return 1;
+    }
+
+    *x2 = *x1;
+
+    p = dx * xsqrt(d);
+
+    if (a > 0.0f)
+    {
+        *x1 -= p;
+        *x2 += p;
+    }
+    else
+    {
+        *x1 += p;
+        *x2 -= p;
+    }
+
+    return 2;
+}
+#endif
 
 // func_80030DF4
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathSolveCubic__FffffPfPfPf")
 
-// func_80031098
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAngleClamp__Ff")
+float32 xAngleClamp(float32 a)
+{
+    float32 b;
 
-// func_800310D0
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAngleClampFast__Ff")
+    b = xfmod(a, lbl_803CCE5C);
 
-// func_80031100
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xDangleClamp__Ff")
+    if (b < lbl_803CCE18)
+    {
+        return b + lbl_803CCE5C;
+    }
+
+    return b;
+}
+
+float32 xAngleClampFast(float32 a)
+{
+    if (a < lbl_803CCE18)
+    {
+        return a + lbl_803CCE5C;
+    }
+
+    if (a >= lbl_803CCE5C)
+    {
+        return a - lbl_803CCE5C;
+    }
+
+    return a;
+}
+
+float32 xDangleClamp(float32 a)
+{
+    float32 b;
+
+    b = xfmod(a, lbl_803CCE5C);
+
+    if (b >= lbl_803CCE54)
+    {
+        return b - lbl_803CCE5C;
+    }
+
+    if (b < lbl_803CCE60)
+    {
+        return b + lbl_803CCE5C;
+    }
+
+    return b;
+}
 
 // func_80031154
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMove__FRfRfffff")
 
+#ifndef NONMATCHING
 // func_8003142C
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMoveTime__Fffff")
+#else
+float32 xAccelMoveTime(float32 dx, float32 a, float32, float32 maxv)
+{
+    //float32 time;
+    //float32 atime;
+    //float32 adist;
+
+    float f5 = maxv / a;
+    float f1 = dx * lbl_803CCE0C;
+    float f0 = f5 * (lbl_803CCE0C * a * f5);
+
+    f1 = (f0 < f1) ? xsqrt(lbl_803CCE14 * f1 / a) : (f5 + (f1 - f0) / maxv);
+
+    return lbl_803CCE14 * f1;
+}
+#endif
 
 // func_80031490
 #pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMove__FRfRffff")
