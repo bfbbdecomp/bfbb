@@ -28,6 +28,15 @@ Thanks to [@mattbruv](https://github.com/mattbruv) for setting this up!
 * (NOTE: These compilers' executables [mwcceppc.exe mwasmeppc.exe and mwldeppc.exe] can be installed with Codewarrior 2.0 for Gamecube and Codewarrior 2.7 for Gamecube, but no license or crack is provided with this project. Please obtain access to the compiler on your own.) If you are in the Gamecube/Wii Decompilation discord (not public at this time, but if you are interested and have the skillset to contribute, please DM Revo#7090 on Discord for access), download GC_COMPILERS.zip and extract it to tools/mwcc_compiler/.
 4. Run the `make` command
 
+### Notes
+
+The following environment variables must be set in order to prevent some common errors and warnings during the compiling and linking process:
+
+* `Path` - A folder containing mwldeppc.exe must be added to this variable (either the 2.0 or 2.7 folder will work)
+* `MWCIncludes` - Can be set to any folder (for example `C:/`)
+* `MWLibraries` - Can be set to any folder (for example `C:/`)
+* `MWLibraryFiles` - Unsure what this should be set to yet.
+
 ## Contributions
 
 Contributions and PRs are welcome.
