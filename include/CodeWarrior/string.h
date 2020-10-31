@@ -9,6 +9,8 @@ extern "C" {
 
 void* memset(void*, int, size_t);
 size_t strlen(const char*);
+char* strcpy(char* dest, const char* source);
+char* strcat(char* dest, const char* source);
 
 #ifdef __cplusplus
 }

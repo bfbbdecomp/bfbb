@@ -6,10 +6,10 @@
 
 struct xBaseAsset
 {
-	uint32 id;
-	uint8 baseType;
-	uint8 linkCount;
-	uint16 baseFlags;
+    uint32 id;
+    uint8 baseType;
+    uint8 linkCount;
+    uint16 baseFlags;
 };
 
 struct xBase;
@@ -18,12 +18,12 @@ typedef int32 (*xBaseEventCB)(xBase*, xBase*, uint32, const float32*, xBase*);
 
 struct xBase
 {
-	uint32 id;
-	uint8 baseType;
-	uint8 linkCount;
-	uint16 baseFlags;
-	xLinkAsset* link;
-	xBaseEventCB eventFunc;
+    uint32 id;
+    uint8 baseType;
+    uint8 linkCount;
+    uint16 baseFlags;
+    xLinkAsset* link;
+    xBaseEventCB eventFunc;
 };
 
 void xBaseInit(xBase* xb, xBaseAsset* asset);
