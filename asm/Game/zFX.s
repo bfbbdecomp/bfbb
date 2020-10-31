@@ -5141,10 +5141,21 @@ lbl_8028F038:
 	.incbin "baserom.dol", 0x28C018, 0x178
 
 .section .bss
+
+.balign 8
+
 lbl_802DF490:
 	.skip 0x6280
 
 .section .sbss
+
+.balign 8
+
+/* SPECULATION: link order */
+.global gFXSurfaceFlags
+gFXSurfaceFlags:
+	.skip 0x4
+
 lbl_803CB78C:
 	.skip 0x4
 lbl_803CB790:

@@ -158,7 +158,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zEnv.o                      \
     $(OBJ_DIR)/src/Game/zEnv.o                      \
     $(OBJ_DIR)/src/Game/zEvent.o                    \
-    $(OBJ_DIR)/asm/Game/zFeet.o                     \
     $(OBJ_DIR)/src/Game/zFeet.o                     \
     $(OBJ_DIR)/asm/Game/zFMV.o                      \
     $(OBJ_DIR)/src/Game/zFMV.o                      \
