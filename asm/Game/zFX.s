@@ -5087,6 +5087,9 @@ lbl_80097470:
 .endif
 
 .section .rodata
+
+.balign 8
+
 lbl_8025BA30:
 	.incbin "baserom.dol", 0x258A10, 0xF8
 lbl_8025BB28:
@@ -5119,6 +5122,9 @@ lbl_8025BE04:
 	.incbin "baserom.dol", 0x258DE4, 0x74
 
 .section .data
+
+.balign 8
+
 lbl_8028EFE0:
 	.incbin "baserom.dol", 0x28BFC0, 0x28
 /* SPECULATION: link order */
