@@ -30,5 +30,6 @@ struct zScene : xScene
 
 xBase* zSceneFindObject(uint32 gameID);
 void zSceneSwitch(_zPortal* p, int32 forceSameScene);
+uint32 zSceneGetLevelIndex();
 
 #endif
