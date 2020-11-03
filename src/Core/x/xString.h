@@ -5,7 +5,7 @@
 
 struct substr
 {
-    const char* text;
+    int8* text;
     uint32 size;
 };
 

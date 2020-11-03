@@ -4,17 +4,6 @@
 
 .section .text  # 0x80092D1C - 0x800974A8
 
-
-on_spawn_bubble_wall__FRC10tweak_info:
-/* 80092D1C 0008FB1C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092D20 0008FB20  7C 08 02 A6 */	mflr r0
-/* 80092D24 0008FB24  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092D28 0008FB28  48 00 27 31 */	bl zFX_SpawnBubbleWall__Fv
-/* 80092D2C 0008FB2C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092D30 0008FB30  7C 08 03 A6 */	mtlr r0
-/* 80092D34 0008FB34  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092D38 0008FB38  4E 80 00 20 */	blr 
-
 .global zFX_SceneEnter__FP7RpWorld
 zFX_SceneEnter__FP7RpWorld:
 /* 80092D3C 0008FB3C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -77,115 +66,6 @@ lbl_80092DF4:
 /* 80092E1C 0008FC1C  7C 08 03 A6 */	mtlr r0
 /* 80092E20 0008FC20  38 21 00 40 */	addi r1, r1, 0x40
 /* 80092E24 0008FC24  4E 80 00 20 */	blr 
-
-.global zFX_SceneExit__FP7RpWorld
-zFX_SceneExit__FP7RpWorld:
-/* 80092E28 0008FC28  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092E2C 0008FC2C  7C 08 02 A6 */	mflr r0
-/* 80092E30 0008FC30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092E34 0008FC34  4B F9 44 B5 */	bl xFX_SceneExit__FP7RpWorld
-/* 80092E38 0008FC38  48 00 06 B5 */	bl zFXGoo_SceneExit__Fv
-/* 80092E3C 0008FC3C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092E40 0008FC40  7C 08 03 A6 */	mtlr r0
-/* 80092E44 0008FC44  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092E48 0008FC48  4E 80 00 20 */	blr 
-
-.global zFX_SceneReset__Fv
-zFX_SceneReset__Fv:
-/* 80092E4C 0008FC4C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092E50 0008FC50  7C 08 02 A6 */	mflr r0
-/* 80092E54 0008FC54  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092E58 0008FC58  48 00 05 AD */	bl zFXGoo_SceneReset__Fv
-/* 80092E5C 0008FC5C  48 00 3A C9 */	bl reset_poppers__Fv
-/* 80092E60 0008FC60  48 00 3F 29 */	bl reset_entrails__Fv
-/* 80092E64 0008FC64  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092E68 0008FC68  7C 08 03 A6 */	mtlr r0
-/* 80092E6C 0008FC6C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092E70 0008FC70  4E 80 00 20 */	blr 
-
-.global zFXPatrickStun__FPC5xVec3
-zFXPatrickStun__FPC5xVec3:
-/* 80092E74 0008FC74  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092E78 0008FC78  7C 08 02 A6 */	mflr r0
-/* 80092E7C 0008FC7C  3C 80 80 26 */	lis r4, lbl_8025BB98@ha
-/* 80092E80 0008FC80  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092E84 0008FC84  38 84 BB 98 */	addi r4, r4, lbl_8025BB98@l
-/* 80092E88 0008FC88  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80092E8C 0008FC8C  7C 7F 1B 78 */	mr r31, r3
-/* 80092E90 0008FC90  4B F9 3E BD */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092E94 0008FC94  3C 80 80 26 */	lis r4, lbl_8025BB98@ha
-/* 80092E98 0008FC98  7F E3 FB 78 */	mr r3, r31
-/* 80092E9C 0008FC9C  38 84 BB 98 */	addi r4, r4, lbl_8025BB98@l
-/* 80092EA0 0008FCA0  38 84 00 3C */	addi r4, r4, 0x3c
-/* 80092EA4 0008FCA4  4B F9 3E A9 */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092EA8 0008FCA8  3C 80 80 26 */	lis r4, lbl_8025BB98@ha
-/* 80092EAC 0008FCAC  7F E3 FB 78 */	mr r3, r31
-/* 80092EB0 0008FCB0  38 84 BB 98 */	addi r4, r4, lbl_8025BB98@l
-/* 80092EB4 0008FCB4  38 84 00 78 */	addi r4, r4, 0x78
-/* 80092EB8 0008FCB8  4B F9 3E 95 */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092EBC 0008FCBC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092EC0 0008FCC0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80092EC4 0008FCC4  7C 08 03 A6 */	mtlr r0
-/* 80092EC8 0008FCC8  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092ECC 0008FCCC  4E 80 00 20 */	blr 
-
-.global zFXHammer__FPC5xVec3
-zFXHammer__FPC5xVec3:
-/* 80092ED0 0008FCD0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092ED4 0008FCD4  7C 08 02 A6 */	mflr r0
-/* 80092ED8 0008FCD8  3C 80 80 26 */	lis r4, lbl_8025BC88@ha
-/* 80092EDC 0008FCDC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092EE0 0008FCE0  38 84 BC 88 */	addi r4, r4, lbl_8025BC88@l
-/* 80092EE4 0008FCE4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80092EE8 0008FCE8  7C 7F 1B 78 */	mr r31, r3
-/* 80092EEC 0008FCEC  4B F9 3E 61 */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092EF0 0008FCF0  4B F9 DD 79 */	bl xrand__Fv
-/* 80092EF4 0008FCF4  54 64 06 FE */	clrlwi r4, r3, 0x1b
-/* 80092EF8 0008FCF8  C0 22 8F E8 */	lfs f1, lbl_803CD968-_SDA2_BASE_(r2)
-/* 80092EFC 0008FCFC  C0 42 8F EC */	lfs f2, lbl_803CD96C-_SDA2_BASE_(r2)
-/* 80092F00 0008FD00  7F E3 FB 78 */	mr r3, r31
-/* 80092F04 0008FD04  C0 62 8F F0 */	lfs f3, lbl_803CD970-_SDA2_BASE_(r2)
-/* 80092F08 0008FD08  38 84 00 20 */	addi r4, r4, 0x20
-/* 80092F0C 0008FD0C  48 00 27 3D */	bl zFX_SpawnBubbleSlam__FPC5xVec3Uifff
-/* 80092F10 0008FD10  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092F14 0008FD14  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80092F18 0008FD18  7C 08 03 A6 */	mtlr r0
-/* 80092F1C 0008FD1C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092F20 0008FD20  4E 80 00 20 */	blr 
-
-.global zFXPorterWave__FPC5xVec3
-zFXPorterWave__FPC5xVec3:
-/* 80092F24 0008FD24  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092F28 0008FD28  7C 08 02 A6 */	mflr r0
-/* 80092F2C 0008FD2C  3C 80 80 26 */	lis r4, lbl_8025BCC4@ha
-/* 80092F30 0008FD30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092F34 0008FD34  38 84 BC C4 */	addi r4, r4, lbl_8025BCC4@l
-/* 80092F38 0008FD38  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80092F3C 0008FD3C  7C 7F 1B 78 */	mr r31, r3
-/* 80092F40 0008FD40  4B F9 3E 0D */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092F44 0008FD44  3C 80 80 26 */	lis r4, lbl_8025BCC4@ha
-/* 80092F48 0008FD48  7F E3 FB 78 */	mr r3, r31
-/* 80092F4C 0008FD4C  38 84 BC C4 */	addi r4, r4, lbl_8025BCC4@l
-/* 80092F50 0008FD50  38 84 00 3C */	addi r4, r4, 0x3c
-/* 80092F54 0008FD54  4B F9 3D F9 */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092F58 0008FD58  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092F5C 0008FD5C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80092F60 0008FD60  7C 08 03 A6 */	mtlr r0
-/* 80092F64 0008FD64  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092F68 0008FD68  4E 80 00 20 */	blr 
-
-.global zFXMuscleArmWave__FPC5xVec3
-zFXMuscleArmWave__FPC5xVec3:
-/* 80092F6C 0008FD6C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80092F70 0008FD70  7C 08 02 A6 */	mflr r0
-/* 80092F74 0008FD74  3C 80 80 26 */	lis r4, lbl_8025BD3C@ha
-/* 80092F78 0008FD78  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80092F7C 0008FD7C  38 84 BD 3C */	addi r4, r4, lbl_8025BD3C@l
-/* 80092F80 0008FD80  4B F9 3D CD */	bl xFXRingCreate__FPC5xVec3PC7xFXRing
-/* 80092F84 0008FD84  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80092F88 0008FD88  7C 08 03 A6 */	mtlr r0
-/* 80092F8C 0008FD8C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80092F90 0008FD90  4E 80 00 20 */	blr 
 
 .global zFXGooEnable__FP8RpAtomici
 zFXGooEnable__FP8RpAtomici:
@@ -5094,14 +4974,23 @@ lbl_8025BA30:
 	.incbin "baserom.dol", 0x258A10, 0xF8
 lbl_8025BB28:
 	.incbin "baserom.dol", 0x258B08, 0x70
-lbl_8025BB98:
+
+.global sPatrickStunRing
+sPatrickStunRing:
 	.incbin "baserom.dol", 0x258B78, 0xF0
-lbl_8025BC88:
+
+.global sHammerRing
+sHammerRing:
 	.incbin "baserom.dol", 0x258C68, 0x3C
-lbl_8025BCC4:
+
+.global sPorterRing
+sPorterRing:
 	.incbin "baserom.dol", 0x258CA4, 0x78
-lbl_8025BD3C:
+
+.global sMuscleArmRing
+sMuscleArmRing:
 	.incbin "baserom.dol", 0x258D1C, 0x3C
+
 lbl_8025BD78:
 	.incbin "baserom.dol", 0x258D58, 0x10
 lbl_8025BD88:
@@ -5218,12 +5107,19 @@ soaktime:
 	.incbin "baserom.dol", 0x2B5BDC, 0x4
 
 .section .sdata2
+
+.global lbl_803CD968
 lbl_803CD968:
 	.incbin "baserom.dol", 0x2B7208, 0x4
+
+.global lbl_803CD96C
 lbl_803CD96C:
 	.incbin "baserom.dol", 0x2B720C, 0x4
+
+.global lbl_803CD970
 lbl_803CD970:
 	.incbin "baserom.dol", 0x2B7210, 0x4
+
 lbl_803CD974:
 	.incbin "baserom.dol", 0x2B7214, 0x4
 lbl_803CD978:

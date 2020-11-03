@@ -1,30 +1,67 @@
+#include <types.h>
+#include <rpworld.h>
+#include "../Core/x/xFX.h"
+#include "../Core/x/xMath.h"
+#include "../Core/x/xVec3.h"
 #include "zFX.h"
 
-#include <types.h>
+extern zFXGooInstance zFXGooInstances[24];
 
-// func_80092D1C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "on_spawn_bubble_wall__FRC10tweak_info")
+extern xFXRing sHammerRing[1];
+extern xFXRing sMuscleArmRing[1];
+extern xFXRing sPorterRing[2];
+extern xFXRing sPatrickStunRing[3];
+
+extern float32 lbl_803CD968; // 0.15
+extern float32 lbl_803CD96C; // 12.0
+extern float32 lbl_803CD970; // 2.0
+
+void on_spawn_bubble_wall(tweak_info const& tweak)
+{
+    zFX_SpawnBubbleWall();
+}
 
 // func_80092D3C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SceneEnter__FP7RpWorld")
 
-// func_80092E28
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SceneExit__FP7RpWorld")
+void zFX_SceneExit(RpWorld* world)
+{
+    xFX_SceneExit(world);
+    zFXGoo_SceneExit();
+}
 
-// func_80092E4C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SceneReset__Fv")
+void zFX_SceneReset()
+{
+    zFXGoo_SceneReset();
+    reset_poppers();
+    reset_entrails();
+}
 
-// func_80092E74
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPatrickStun__FPC5xVec3")
+void zFXPatrickStun(xVec3* pos)
+{
+    xFXRingCreate(pos, &sPatrickStunRing[0]);
+    xFXRingCreate(pos, &sPatrickStunRing[1]);
+    xFXRingCreate(pos, &sPatrickStunRing[2]);
+}
 
-// func_80092ED0
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXHammer__FPC5xVec3")
+void zFXHammer(xVec3* pos)
+{
+    xFXRingCreate(pos, &sHammerRing[0]);
+    // weird xrand arithmetic might have something to do with signed integers
+    zFX_SpawnBubbleSlam(pos, (xrand() & 31) + 32, lbl_803CD968, lbl_803CD96C, lbl_803CD970);
+}
 
-// func_80092F24
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPorterWave__FPC5xVec3")
+void zFXPorterWave(xVec3* pos)
+{
+    xFXRingCreate(pos, &sPorterRing[0]);
+    xFXRingCreate(pos, &sPorterRing[1]);
+}
 
-// func_80092F6C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXMuscleArmWave__FPC5xVec3")
+// PS2 dwarf data says this returns an xFXRing*, but gamecube symbols say it's void
+void zFXMuscleArmWave(xVec3* pos)
+{
+    xFXRingCreate(pos, &sMuscleArmRing[0]);
+}
 
 // func_80092F94
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEnable__FP8RpAtomici")
@@ -81,13 +118,15 @@
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3UiPC5xVec3PC5xVec3")
 
 // func_80094DDC
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrailNoNegRandVel__FPC5xVec3UiPC5xVec3PC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "zFX_SpawnBubbleTrailNoNegRandVel__FPC5xVec3UiPC5xVec3PC5xVec3")
 
 // func_80094F20
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3PC5xVec3UiPC5xVec3PC5xVec3")
 
 // func_800950C8
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleTrail__FPC5xVec3PC5xVec3PC5xVec3PC5xVec3UiPC5xVec3PC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "zFX_SpawnBubbleTrail__FPC5xVec3PC5xVec3PC5xVec3PC5xVec3UiPC5xVec3PC5xVec3f")
 
 // func_80095300
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleMenuTrail__FPC5xVec3UiPC5xVec3PC5xVec3")
@@ -102,31 +141,46 @@
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFX_SpawnBubbleBlast__FPC5xVec3Uifff")
 
 // func_800959F4
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "model_is_preinstanced__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP8RpAtomic")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "model_is_preinstanced__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP8RpAtomic")
 
 // func_80095A2C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "setup_popper_emitter__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "setup_popper_emitter__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
 // func_80095B64
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "get_triangle_area__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "get_triangle_area__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3")
 
 // func_80095C58
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "count_faces__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "count_faces__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP14xModelInstance")
 
 // func_80095C84
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "eval_tri__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "eval_tri__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC7xMat4x3PC10RpGeometryPC10RpTriangle")
 
 // func_80095DDC
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "SkinXformVertAndNormal__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "SkinXformVertAndNormal__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP5xVec3P5xVec3PC5xVec3PC5xVec3PC7xMat4x3PC7xMat4x3PCfPCUiPCUsUi")
 
 // func_80095FF0
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "random_point_on_triangle__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3PC5xVec3PC5xVec3")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "random_point_on_triangle__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3PC5xVec3PC5xVec3")
 
 // func_80096158
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "random_surface_point__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3RCQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "random_surface_point__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR5xVec3R5xVec3RCQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
 // func_80096214
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "find_weight__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataCFf")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "find_weight__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataCFf")
 
 // func_8009627C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "find_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FP4xEnt")
@@ -135,19 +189,29 @@
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "find_free_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
 
 // func_800962F8
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "emit_popper_bubbles__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataiff")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "emit_popper_bubbles__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataiff")
 
 // func_80096538
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "emit_popper_bubbles_immediate__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "emit_popper_bubbles_immediate__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
 // func_800965A4
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "update_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "update_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf")
 
 // func_8009676C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "set_popper_alpha__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "set_popper_alpha__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_dataf")
 
 // func_800967D0
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "destroy_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zFX.s",                                                                              \
+    "destroy_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRQ217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_11popper_data")
 
 // func_80096868
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "grab_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR4xEnt")
@@ -156,7 +220,8 @@
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "init_poppers__Fv")
 
 // func_80096920
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "add_popper_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "add_popper_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
 
 // func_80096924
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "reset_poppers__Fv")
@@ -168,25 +233,29 @@
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPopOn__FR4xEntff")
 
 // func_80096B48
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "validate_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC4xEnt")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "validate_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FRC4xEnt")
 
 // func_80096C44
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXPopOff__FR4xEntff")
 
 // func_80096D84
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "add_entrail_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "add_entrail_tweaks__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_Fv")
 
 // func_80096D88
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "reset_entrails__Fv")
 
 // func_80096DE0
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "reset__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFv")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "reset__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFv")
 
 // func_80096DF4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "update_entrails__Ff")
 
 // func_80096E5C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "update__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFf")
+#pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
+                   "update__Q217_esc__2_unnamed_esc__2_zFX_cpp_esc__2_12entrail_dataFf")
 
 // func_80097094
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "setup_entrails__FR6zScene")
