@@ -4,17 +4,6 @@
 
 .section .text  # 0x80172034 - 0x80172664
 
-.global zTaxi_Init__FR5xBaseR9xDynAssetUl
-zTaxi_Init__FR5xBaseR9xDynAssetUl:
-/* 80172034 0016EE34  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80172038 0016EE38  7C 08 02 A6 */	mflr r0
-/* 8017203C 0016EE3C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80172040 0016EE40  48 00 00 15 */	bl zTaxi_Init__FP5zTaxiP10taxi_asset
-/* 80172044 0016EE44  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80172048 0016EE48  7C 08 03 A6 */	mtlr r0
-/* 8017204C 0016EE4C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80172050 0016EE50  4E 80 00 20 */	blr 
-
 .global zTaxi_Init__FP5zTaxiP10taxi_asset
 zTaxi_Init__FP5zTaxiP10taxi_asset:
 /* 80172054 0016EE54  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -93,41 +82,6 @@ __ct__6taxiCBFv:
 /* 8017215C 0016EF5C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80172160 0016EF60  4E 80 00 20 */	blr 
 
-.global zTaxi_Setup__FP5zTaxi
-zTaxi_Setup__FP5zTaxi:
-/* 80172164 0016EF64  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80172168 0016EF68  7C 08 02 A6 */	mflr r0
-/* 8017216C 0016EF6C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80172170 0016EF70  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80172174 0016EF74  7C 7F 1B 78 */	mr r31, r3
-/* 80172178 0016EF78  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 8017217C 0016EF7C  80 63 00 14 */	lwz r3, 0x14(r3)
-/* 80172180 0016EF80  4B F4 28 BD */	bl zSceneFindObject__FUi
-/* 80172184 0016EF84  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 80172188 0016EF88  80 63 00 18 */	lwz r3, 0x18(r3)
-/* 8017218C 0016EF8C  4B F4 28 B1 */	bl zSceneFindObject__FUi
-/* 80172190 0016EF90  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 80172194 0016EF94  80 63 00 1C */	lwz r3, 0x1c(r3)
-/* 80172198 0016EF98  4B F4 28 A5 */	bl zSceneFindObject__FUi
-/* 8017219C 0016EF9C  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 801721A0 0016EFA0  38 80 00 00 */	li r4, 0
-/* 801721A4 0016EFA4  80 63 00 20 */	lwz r3, 0x20(r3)
-/* 801721A8 0016EFA8  4B ED 95 65 */	bl xSTFindAsset__FUiPUi
-/* 801721AC 0016EFAC  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 801721B0 0016EFB0  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 801721B4 0016EFB4  4B F4 28 89 */	bl zSceneFindObject__FUi
-/* 801721B8 0016EFB8  90 7F 00 14 */	stw r3, 0x14(r31)
-/* 801721BC 0016EFBC  C0 02 AC 94 */	lfs f0, lbl_803CF614-_SDA2_BASE_(r2)
-/* 801721C0 0016EFC0  D0 1F 00 2C */	stfs f0, 0x2c(r31)
-/* 801721C4 0016EFC4  A0 1F 00 06 */	lhz r0, 6(r31)
-/* 801721C8 0016EFC8  60 00 00 02 */	ori r0, r0, 2
-/* 801721CC 0016EFCC  B0 1F 00 06 */	sth r0, 6(r31)
-/* 801721D0 0016EFD0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 801721D4 0016EFD4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801721D8 0016EFD8  7C 08 03 A6 */	mtlr r0
-/* 801721DC 0016EFDC  38 21 00 10 */	addi r1, r1, 0x10
-/* 801721E0 0016EFE0  4E 80 00 20 */	blr 
-
 .global zTaxi_Update__FP5xBaseP6xScenef
 zTaxi_Update__FP5xBaseP6xScenef:
 /* 801721E4 0016EFE4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -154,7 +108,7 @@ zTaxi_Update__FP5xBaseP6xScenef:
 /* 80172238 0016F038  80 84 00 4C */	lwz r4, 0x4c(r4)
 /* 8017223C 0016F03C  38 84 00 30 */	addi r4, r4, 0x30
 /* 80172240 0016F040  4B F5 30 D9 */	bl iCylinderIsectVec__FPC9xCylinderPC5xVec3P6xIsect
-/* 80172244 0016F044  C0 22 AC 94 */	lfs f1, lbl_803CF614-_SDA2_BASE_(r2)
+/* 80172244 0016F044  C0 22 AC 94 */	lfs f1, portalTimer-_SDA2_BASE_(r2)
 /* 80172248 0016F048  C0 01 00 20 */	lfs f0, 0x20(r1)
 /* 8017224C 0016F04C  FC 01 00 00 */	fcmpu cr0, f1, f0
 /* 80172250 0016F050  40 82 00 3C */	bne lbl_8017228C
@@ -167,7 +121,7 @@ zTaxi_Update__FP5xBaseP6xScenef:
 /* 8017226C 0016F06C  40 82 00 30 */	bne lbl_8017229C
 /* 80172270 0016F070  38 60 00 03 */	li r3, 3
 /* 80172274 0016F074  38 00 00 01 */	li r0, 1
-/* 80172278 0016F078  90 6D 84 B0 */	stw r3, lbl_803CADB0-_SDA_BASE_(r13)
+/* 80172278 0016F078  90 6D 84 B0 */	stw r3, sAnswer-_SDA_BASE_(r13)
 /* 8017227C 0016F07C  90 1F 00 24 */	stw r0, 0x24(r31)
 /* 80172280 0016F080  C0 02 AC 9C */	lfs f0, lbl_803CF61C-_SDA2_BASE_(r2)
 /* 80172284 0016F084  D0 1F 00 34 */	stfs f0, 0x34(r31)
@@ -199,7 +153,7 @@ lbl_801722C8:
 /* 801722DC 0016F0DC  80 03 16 D4 */	lwz r0, 0x16d4(r3)
 /* 801722E0 0016F0E0  2C 00 00 00 */	cmpwi r0, 0
 /* 801722E4 0016F0E4  40 82 00 50 */	bne lbl_80172334
-/* 801722E8 0016F0E8  80 0D 84 B0 */	lwz r0, lbl_803CADB0-_SDA_BASE_(r13)
+/* 801722E8 0016F0E8  80 0D 84 B0 */	lwz r0, sAnswer-_SDA_BASE_(r13)
 /* 801722EC 0016F0EC  2C 00 00 01 */	cmpwi r0, 1
 /* 801722F0 0016F0F0  40 82 00 24 */	bne lbl_80172314
 /* 801722F4 0016F0F4  38 00 00 03 */	li r0, 3
@@ -211,7 +165,7 @@ lbl_801722C8:
 /* 8017230C 0016F10C  38 60 00 24 */	li r3, 0x24
 /* 80172310 0016F110  4B F0 E4 81 */	bl zEntPlayer_SNDPlay__F14_tagePlayerSndf
 lbl_80172314:
-/* 80172314 0016F114  80 0D 84 B0 */	lwz r0, lbl_803CADB0-_SDA_BASE_(r13)
+/* 80172314 0016F114  80 0D 84 B0 */	lwz r0, sAnswer-_SDA_BASE_(r13)
 /* 80172318 0016F118  2C 00 00 02 */	cmpwi r0, 2
 /* 8017231C 0016F11C  40 82 00 18 */	bne lbl_80172334
 /* 80172320 0016F120  38 00 00 02 */	li r0, 2
@@ -387,33 +341,6 @@ lbl_80172574:
 /* 8017258C 0016F38C  38 21 00 60 */	addi r1, r1, 0x60
 /* 80172590 0016F390  4E 80 00 20 */	blr 
 
-.global zTaxi_tb_answer__FUi
-zTaxi_tb_answer__FUi:
-/* 80172594 0016F394  90 6D 84 B0 */	stw r3, lbl_803CADB0-_SDA_BASE_(r13)
-/* 80172598 0016F398  4E 80 00 20 */	blr 
-
-.global zTaxi_Save__FP5zTaxiP7xSerial
-zTaxi_Save__FP5zTaxiP7xSerial:
-/* 8017259C 0016F39C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801725A0 0016F3A0  7C 08 02 A6 */	mflr r0
-/* 801725A4 0016F3A4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801725A8 0016F3A8  4B E9 6E A5 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 801725AC 0016F3AC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801725B0 0016F3B0  7C 08 03 A6 */	mtlr r0
-/* 801725B4 0016F3B4  38 21 00 10 */	addi r1, r1, 0x10
-/* 801725B8 0016F3B8  4E 80 00 20 */	blr 
-
-.global zTaxi_Load__FP5zTaxiP7xSerial
-zTaxi_Load__FP5zTaxiP7xSerial:
-/* 801725BC 0016F3BC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801725C0 0016F3C0  7C 08 02 A6 */	mflr r0
-/* 801725C4 0016F3C4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801725C8 0016F3C8  4B E9 6E D5 */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 801725CC 0016F3CC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801725D0 0016F3D0  7C 08 03 A6 */	mtlr r0
-/* 801725D4 0016F3D4  38 21 00 10 */	addi r1, r1, 0x10
-/* 801725D8 0016F3D8  4E 80 00 20 */	blr 
-
 zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 801725DC 0016F3DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801725E0 0016F3E0  7C 08 02 A6 */	mflr r0
@@ -442,26 +369,6 @@ lbl_80172620:
 /* 8017262C 0016F42C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80172630 0016F430  4E 80 00 20 */	blr 
 
-on_signal__6taxiCBFUi:
-/* 80172634 0016F434  4E 80 00 20 */	blr 
-
-on_start__6taxiCBFv:
-/* 80172638 0016F438  4E 80 00 20 */	blr 
-
-on_answer__6taxiCBFQ28ztalkbox11answer_enum:
-/* 8017263C 0016F43C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80172640 0016F440  7C 08 02 A6 */	mflr r0
-/* 80172644 0016F444  7C 83 23 78 */	mr r3, r4
-/* 80172648 0016F448  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017264C 0016F44C  4B FF FF 49 */	bl zTaxi_tb_answer__FUi
-/* 80172650 0016F450  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80172654 0016F454  7C 08 03 A6 */	mtlr r0
-/* 80172658 0016F458  38 21 00 10 */	addi r1, r1, 0x10
-/* 8017265C 0016F45C  4E 80 00 20 */	blr 
-
-on_stop__6taxiCBFv:
-/* 80172660 0016F460  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata
@@ -479,7 +386,8 @@ lbl_803CC06C:
 	.skip 0x4
 
 .section .sdata
-lbl_803CADB0:
+.global sAnswer
+sAnswer:
 	.incbin "baserom.dol", 0x2B5E70, 0x8
 /* SPECULATION: link order */
 .global mFirstFrame__7ROMFont
@@ -493,7 +401,8 @@ mResetEnabled__11ResetButton:
 .section .sdata2
 lbl_803CF610:
 	.incbin "baserom.dol", 0x2B8EB0, 0x4
-lbl_803CF614:
+.global portalTimer
+portalTimer:
 	.incbin "baserom.dol", 0x2B8EB4, 0x4
 lbl_803CF618:
 	.incbin "baserom.dol", 0x2B8EB8, 0x4

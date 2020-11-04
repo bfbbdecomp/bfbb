@@ -4,81 +4,6 @@
 
 .section .text  # 0x8017C0A0 - 0x8017C2B4
 
-.global zCameraFly_Init__FR5xBaseR9xDynAssetUl
-zCameraFly_Init__FR5xBaseR9xDynAssetUl:
-/* 8017C0A0 00178EA0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8017C0A4 00178EA4  7C 08 02 A6 */	mflr r0
-/* 8017C0A8 00178EA8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017C0AC 00178EAC  48 00 00 15 */	bl zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset
-/* 8017C0B0 00178EB0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8017C0B4 00178EB4  7C 08 03 A6 */	mtlr r0
-/* 8017C0B8 00178EB8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8017C0BC 00178EBC  4E 80 00 20 */	blr 
-
-.global zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset
-zCameraFly_Init__FP10zCameraFlyP15CameraFly_asset:
-/* 8017C0C0 00178EC0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8017C0C4 00178EC4  7C 08 02 A6 */	mflr r0
-/* 8017C0C8 00178EC8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017C0CC 00178ECC  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8017C0D0 00178ED0  7C 9F 23 78 */	mr r31, r4
-/* 8017C0D4 00178ED4  93 C1 00 08 */	stw r30, 8(r1)
-/* 8017C0D8 00178ED8  7C 7E 1B 78 */	mr r30, r3
-/* 8017C0DC 00178EDC  4B E8 D3 25 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 8017C0E0 00178EE0  3C 60 80 18 */	lis r3, zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
-/* 8017C0E4 00178EE4  93 FE 00 10 */	stw r31, 0x10(r30)
-/* 8017C0E8 00178EE8  38 03 C2 20 */	addi r0, r3, zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
-/* 8017C0EC 00178EEC  90 1E 00 0C */	stw r0, 0xc(r30)
-/* 8017C0F0 00178EF0  88 1E 00 05 */	lbz r0, 5(r30)
-/* 8017C0F4 00178EF4  28 00 00 00 */	cmplwi r0, 0
-/* 8017C0F8 00178EF8  41 82 00 10 */	beq lbl_8017C108
-/* 8017C0FC 00178EFC  38 1F 00 14 */	addi r0, r31, 0x14
-/* 8017C100 00178F00  90 1E 00 08 */	stw r0, 8(r30)
-/* 8017C104 00178F04  48 00 00 0C */	b lbl_8017C110
-lbl_8017C108:
-/* 8017C108 00178F08  38 00 00 00 */	li r0, 0
-/* 8017C10C 00178F0C  90 1E 00 08 */	stw r0, 8(r30)
-lbl_8017C110:
-/* 8017C110 00178F10  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8017C114 00178F14  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8017C118 00178F18  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8017C11C 00178F1C  7C 08 03 A6 */	mtlr r0
-/* 8017C120 00178F20  38 21 00 10 */	addi r1, r1, 0x10
-/* 8017C124 00178F24  4E 80 00 20 */	blr 
-
-.global zCameraFly_Setup__FP10zCameraFly
-zCameraFly_Setup__FP10zCameraFly:
-/* 8017C128 00178F28  A0 03 00 06 */	lhz r0, 6(r3)
-/* 8017C12C 00178F2C  60 00 00 02 */	ori r0, r0, 2
-/* 8017C130 00178F30  B0 03 00 06 */	sth r0, 6(r3)
-/* 8017C134 00178F34  4E 80 00 20 */	blr 
-
-.global zCameraFly_Update__FP5xBaseP6xScenef
-zCameraFly_Update__FP5xBaseP6xScenef:
-/* 8017C138 00178F38  4E 80 00 20 */	blr 
-
-.global zCameraFly_Save__FP10zCameraFlyP7xSerial
-zCameraFly_Save__FP10zCameraFlyP7xSerial:
-/* 8017C13C 00178F3C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8017C140 00178F40  7C 08 02 A6 */	mflr r0
-/* 8017C144 00178F44  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017C148 00178F48  4B E8 D3 05 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 8017C14C 00178F4C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8017C150 00178F50  7C 08 03 A6 */	mtlr r0
-/* 8017C154 00178F54  38 21 00 10 */	addi r1, r1, 0x10
-/* 8017C158 00178F58  4E 80 00 20 */	blr 
-
-.global zCameraFly_Load__FP10zCameraFlyP7xSerial
-zCameraFly_Load__FP10zCameraFlyP7xSerial:
-/* 8017C15C 00178F5C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8017C160 00178F60  7C 08 02 A6 */	mflr r0
-/* 8017C164 00178F64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8017C168 00178F68  4B E8 D3 35 */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 8017C16C 00178F6C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8017C170 00178F70  7C 08 03 A6 */	mtlr r0
-/* 8017C174 00178F74  38 21 00 10 */	addi r1, r1, 0x10
-/* 8017C178 00178F78  4E 80 00 20 */	blr 
-
 .global zCameraFlyProcessStopEvent__Fv
 zCameraFlyProcessStopEvent__Fv:
 /* 8017C17C 00178F7C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -91,8 +16,8 @@ zCameraFlyProcessStopEvent__Fv:
 /* 8017C198 00178F98  4B ED 63 11 */	bl zCamera_FlyOnly__Fv
 /* 8017C19C 00178F9C  28 03 00 00 */	cmplwi r3, 0
 /* 8017C1A0 00178FA0  40 82 00 10 */	bne lbl_8017C1B0
-/* 8017C1A4 00178FA4  C0 22 AD D8 */	lfs f1, lbl_803CF758-_SDA2_BASE_(r2)
-/* 8017C1A8 00178FA8  C0 42 AD DC */	lfs f2, lbl_803CF75C-_SDA2_BASE_(r2)
+/* 8017C1A4 00178FA4  C0 22 AD D8 */	lfs f1, musVolume-_SDA2_BASE_(r2)
+/* 8017C1A8 00178FA8  C0 42 AD DC */	lfs f2, musDelay-_SDA2_BASE_(r2)
 /* 8017C1AC 00178FAC  4B F2 BA B5 */	bl zMusicSetVolume__Fff
 lbl_8017C1B0:
 /* 8017C1B0 00178FB0  80 AD 8B BC */	lwz r5, zcam_flyasset_current-_SDA_BASE_(r13)
@@ -175,7 +100,9 @@ lbl_8017C29C:
 .endif
 
 .section .sdata2
-lbl_803CF758:
+.global musVolume
+musVolume:
 	.incbin "baserom.dol", 0x2B8FF8, 0x4
-lbl_803CF75C:
+.global musDelay
+musDelay:
 	.incbin "baserom.dol", 0x2B8FFC, 0x4
