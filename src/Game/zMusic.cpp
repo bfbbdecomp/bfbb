@@ -22,8 +22,8 @@ void zMusicRefreshVolume()
         zMusicTrackInfo* track = &sMusicTrack[i];
         if (track->snd_id != 0)
         {
-            xSndSetVol(track->snd_id,
-                       volume.cur); // Only reset volume if the sound ID is not blank.
+            // Only reset volume if the sound ID is not blank.
+            xSndSetVol(track->snd_id, volume.cur);
         }
     }
 }
@@ -139,7 +139,7 @@ void zMusicKill()
             xSndStop(track->snd_id);
             track->snd_id = 0;
             track->loop = 0;
-            track->situation = 0;
+            track->situation = NULL;
         }
     }
 }

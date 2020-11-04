@@ -47,8 +47,8 @@ struct ztalkbox : xBase
 
 struct taxiCB : callback
 {
-    //zTaxi* taxi;
-    //answer_enum answer;
+    zTaxi* taxi;
+    ztalkbox::answer_enum answer;
 
     void on_start();
     void on_signal();

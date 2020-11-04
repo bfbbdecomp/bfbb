@@ -3,6 +3,21 @@
 
 #include <types.h>
 
+struct zMusicSituation
+{
+    int32 track;
+    uint32 priority;
+    uint32 countMax;
+    float32 delay;
+    float32 punchDelay;
+    float32 elapsedTime;
+    uint32 count;
+    uint32 sndid;
+    int32 situation;
+    int32 music_enum;
+    int32 game_state;
+};
+
 struct zVolumeInfo
 {
     float32 cur;
@@ -15,7 +30,7 @@ struct zMusicTrackInfo
 {
     uint32 snd_id;
     uint32 loop;
-    int32 situation; // Is actually a zMusicSituation*.
+    zMusicSituation* situation;
     uint32 assetID;
     float32 lastVol;
 };
