@@ -4,17 +4,6 @@
 
 .section .text  # 0x800B5228 - 0x800B55F0
 
-.global zScriptInit__FPvPv
-zScriptInit__FPvPv:
-/* 800B5228 000B2028  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B522C 000B202C  7C 08 02 A6 */	mflr r0
-/* 800B5230 000B2030  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B5234 000B2034  48 00 00 15 */	bl zScriptInit__FP5xBaseP12xScriptAsset
-/* 800B5238 000B2038  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B523C 000B203C  7C 08 03 A6 */	mtlr r0
-/* 800B5240 000B2040  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B5244 000B2044  4E 80 00 20 */	blr 
-
 .global zScriptInit__FP5xBaseP12xScriptAsset
 zScriptInit__FP5xBaseP12xScriptAsset:
 /* 800B5248 000B2048  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -76,28 +65,6 @@ zScriptReset__FP8_zScript:
 /* 800B5314 000B2114  7C 08 03 A6 */	mtlr r0
 /* 800B5318 000B2118  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B531C 000B211C  4E 80 00 20 */	blr 
-
-.global zScriptSave__FP8_zScriptP7xSerial
-zScriptSave__FP8_zScriptP7xSerial:
-/* 800B5320 000B2120  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B5324 000B2124  7C 08 02 A6 */	mflr r0
-/* 800B5328 000B2128  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B532C 000B212C  4B F5 41 21 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 800B5330 000B2130  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5334 000B2134  7C 08 03 A6 */	mtlr r0
-/* 800B5338 000B2138  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B533C 000B213C  4E 80 00 20 */	blr 
-
-.global zScriptLoad__FP8_zScriptP7xSerial
-zScriptLoad__FP8_zScriptP7xSerial:
-/* 800B5340 000B2140  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B5344 000B2144  7C 08 02 A6 */	mflr r0
-/* 800B5348 000B2148  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B534C 000B214C  4B F5 41 51 */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 800B5350 000B2150  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5354 000B2154  7C 08 03 A6 */	mtlr r0
-/* 800B5358 000B2158  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B535C 000B215C  4E 80 00 20 */	blr 
 
 zScriptEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800B5360 000B2160  94 21 FF F0 */	stwu r1, -0x10(r1)

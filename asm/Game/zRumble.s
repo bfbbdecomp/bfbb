@@ -156,49 +156,6 @@ lbl_800AD01C:
 /* 800AD028 000A9E28  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AD02C 000A9E2C  4E 80 00 20 */	blr 
 
-.global zRumbleStart__Fi16_tagSDRumbleType
-zRumbleStart__Fi16_tagSDRumbleType:
-/* 800AD030 000A9E30  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD034 000A9E34  7C 08 02 A6 */	mflr r0
-/* 800AD038 000A9E38  38 A0 00 00 */	li r5, 0
-/* 800AD03C 000A9E3C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD040 000A9E40  4B FF FD A1 */	bl zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt
-/* 800AD044 000A9E44  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD048 000A9E48  7C 08 03 A6 */	mtlr r0
-/* 800AD04C 000A9E4C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD050 000A9E50  4E 80 00 20 */	blr 
-
-.global zRumbleStart__F16_tagSDRumbleType
-zRumbleStart__F16_tagSDRumbleType:
-/* 800AD054 000A9E54  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD058 000A9E58  7C 08 02 A6 */	mflr r0
-/* 800AD05C 000A9E5C  3C A0 80 3C */	lis r5, globals@ha
-/* 800AD060 000A9E60  7C 64 1B 78 */	mr r4, r3
-/* 800AD064 000A9E64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD068 000A9E68  38 65 05 58 */	addi r3, r5, globals@l
-/* 800AD06C 000A9E6C  88 63 06 D1 */	lbz r3, 0x6d1(r3)
-/* 800AD070 000A9E70  4B FF FF C1 */	bl zRumbleStart__Fi16_tagSDRumbleType
-/* 800AD074 000A9E74  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD078 000A9E78  7C 08 03 A6 */	mtlr r0
-/* 800AD07C 000A9E7C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD080 000A9E80  4E 80 00 20 */	blr 
-
-.global zRumbleStart__F16_tagSDRumbleTypeP4xEnt
-zRumbleStart__F16_tagSDRumbleTypeP4xEnt:
-/* 800AD084 000A9E84  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD088 000A9E88  7C 08 02 A6 */	mflr r0
-/* 800AD08C 000A9E8C  3C C0 80 3C */	lis r6, globals@ha
-/* 800AD090 000A9E90  7C 85 23 78 */	mr r5, r4
-/* 800AD094 000A9E94  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD098 000A9E98  38 C6 05 58 */	addi r6, r6, globals@l
-/* 800AD09C 000A9E9C  7C 64 1B 78 */	mr r4, r3
-/* 800AD0A0 000A9EA0  88 66 06 D1 */	lbz r3, 0x6d1(r6)
-/* 800AD0A4 000A9EA4  4B FF FD 3D */	bl zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt
-/* 800AD0A8 000A9EA8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD0AC 000A9EAC  7C 08 03 A6 */	mtlr r0
-/* 800AD0B0 000A9EB0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD0B4 000A9EB4  4E 80 00 20 */	blr 
-
 .global zRumbleStartDistance__Fiff14_tagRumbleTypef
 zRumbleStartDistance__Fiff14_tagRumbleTypef:
 /* 800AD0B8 000A9EB8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -277,25 +234,6 @@ zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef:
 /* 800AD1C4 000A9FC4  38 21 00 40 */	addi r1, r1, 0x40
 /* 800AD1C8 000A9FC8  4E 80 00 20 */	blr 
 
-.global zPadAddRumble__F14_tagRumbleTypefiUi
-zPadAddRumble__F14_tagRumbleTypefiUi:
-/* 800AD1CC 000A9FCC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD1D0 000A9FD0  7C 08 02 A6 */	mflr r0
-/* 800AD1D4 000A9FD4  3C C0 80 3C */	lis r6, globals@ha
-/* 800AD1D8 000A9FD8  7C 67 1B 78 */	mr r7, r3
-/* 800AD1DC 000A9FDC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD1E0 000A9FE0  38 C6 05 58 */	addi r6, r6, globals@l
-/* 800AD1E4 000A9FE4  7C 80 23 78 */	mr r0, r4
-/* 800AD1E8 000A9FE8  7C E4 3B 78 */	mr r4, r7
-/* 800AD1EC 000A9FEC  88 66 06 D1 */	lbz r3, 0x6d1(r6)
-/* 800AD1F0 000A9FF0  7C A6 2B 78 */	mr r6, r5
-/* 800AD1F4 000A9FF4  7C 05 03 78 */	mr r5, r0
-/* 800AD1F8 000A9FF8  4B F8 94 B9 */	bl xPadAddRumble__Fi14_tagRumbleTypefiUi
-/* 800AD1FC 000A9FFC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD200 000AA000  7C 08 03 A6 */	mtlr r0
-/* 800AD204 000AA004  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD208 000AA008  4E 80 00 20 */	blr 
-
 .endif
 
 .section .data
@@ -303,31 +241,45 @@ lbl_80290090:
 	.incbin "baserom.dol", 0x28D070, 0x50
 
 .section .sdata2
+.global lbl_803CDE30
 lbl_803CDE30:
 	.incbin "baserom.dol", 0x2B76D0, 0x4
+.global lbl_803CDE34
 lbl_803CDE34:
 	.incbin "baserom.dol", 0x2B76D4, 0x4
+.global lbl_803CDE38
 lbl_803CDE38:
 	.incbin "baserom.dol", 0x2B76D8, 0x4
+.global lbl_803CDE3C
 lbl_803CDE3C:
 	.incbin "baserom.dol", 0x2B76DC, 0x4
+.global lbl_803CDE40
 lbl_803CDE40:
 	.incbin "baserom.dol", 0x2B76E0, 0x4
+.global lbl_803CDE44
 lbl_803CDE44:
 	.incbin "baserom.dol", 0x2B76E4, 0x4
+.global lbl_803CDE48
 lbl_803CDE48:
 	.incbin "baserom.dol", 0x2B76E8, 0x4
+.global lbl_803CDE4C
 lbl_803CDE4C:
 	.incbin "baserom.dol", 0x2B76EC, 0x4
+.global lbl_803CDE50
 lbl_803CDE50:
 	.incbin "baserom.dol", 0x2B76F0, 0x4
+.global lbl_803CDE54
 lbl_803CDE54:
 	.incbin "baserom.dol", 0x2B76F4, 0x4
+.global lbl_803CDE58
 lbl_803CDE58:
 	.incbin "baserom.dol", 0x2B76F8, 0x4
+.global lbl_803CDE5C
 lbl_803CDE5C:
 	.incbin "baserom.dol", 0x2B76FC, 0x4
+.global lbl_803CDE60
 lbl_803CDE60:
 	.incbin "baserom.dol", 0x2B7700, 0x4
+.global lbl_803CDE64
 lbl_803CDE64:
 	.incbin "baserom.dol", 0x2B7704, 0x4
