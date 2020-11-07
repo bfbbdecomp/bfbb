@@ -88,4 +88,6 @@ struct _tagxPad
     analog_data analog[2];
 };
 
+void xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
+
 #endif
