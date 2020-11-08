@@ -19,7 +19,7 @@ void zScriptInit(void* data, void* asset)
 
 #else
 
-// 2nd and 3rd line seem to be off, I'm still not sure of the xScript data structure yet.
+// 2nd and 3rd line seem to be off.
 void zScriptReset(zScript* script)
 {
     xBaseReset((xBase*)script, (xBaseAsset*)script->asset);

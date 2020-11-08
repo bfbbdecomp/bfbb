@@ -7,13 +7,17 @@
 
 struct xScriptAsset : xDynAsset
 {
-    // There is definitely more here, but idk what.
+    float32 scriptStartTime;
+    uint32 eventCount;
 };
 
 struct zScript : xBase
 {
-    xScriptAsset* asset;
-    // I'm 90% sure there is more here, but idk what.
+    xScriptAsset* tasset;
+    uint8 state;
+    uint8 more;
+    uint8 pad[2];
+    float32 time;
 };
 
 void zScriptInit(void* data, void* asset);

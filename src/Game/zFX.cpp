@@ -86,11 +86,13 @@ xFXRing* zFXMuscleArmWave(xVec3* pos)
 // Can't figure out what's going on here.
 void zFXGoo_SceneEnter()
 {
-    for (int32 i = 0; i < 0x18; i++)
+    int32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 0x18; i++)
     {
-        zFXGooInstance* goo = &zFXGooInstances[i];
         memset(goo, 0, 4);
         goo->state = zFXGooStateInactive;
+        goo++;
     }
     uint32 gameID = xStrHash("FREEZY_TIMER_TEXTBOX");
     goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
@@ -154,22 +156,22 @@ void zFXGoo_SceneReset()
 
 #endif
 
-#if 1
+#if 0
 
 // func_800934EC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneExit__Fv")
 
 #else
 
-// Can't figure out what's going on here.
 void zFXGoo_SceneExit()
 {
-    zFXGooInstance* goo = &zFXGooInstances[0];
-    for (int32 i = 1; i < 0x18; i++)
+    int32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 0x18; i++)
     {
-        goo->state = zFXGooStateInactive;
         memset(goo, 0, 4);
-        goo = &zFXGooInstances[i];
+        goo->state = zFXGooStateInactive;
+        goo++;
     }
 }
 

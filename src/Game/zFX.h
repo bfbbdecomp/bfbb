@@ -76,8 +76,6 @@ struct tweak_info
         flag_data flag_context;
         raw_data all_context;
     };
-
-    //void create_change(function func)
 };
 
 struct tweak_callback
