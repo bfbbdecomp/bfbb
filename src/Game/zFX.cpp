@@ -13,9 +13,11 @@
 #include <cmath>
 
 extern xFXRing sPatrickStunRing[3];
-extern xFXRing sHammerRing;
 extern xFXRing sPorterRing[2];
-extern xFXRing sMuscleArmRing;
+extern xFXRing sHammerRing[1];
+extern xFXRing sMuscleArmRing[1];
+extern xFXRing sPorterRing[2];
+extern xFXRing sPatrickStunRing[3];
 
 extern zFXGooInstance zFXGooInstances[0x18];
 
@@ -57,20 +59,21 @@ void zFXPatrickStun(xVec3* pos)
 
 void zFXHammer(xVec3* pos)
 {
-    xFXRingCreate(pos, &sHammerRing);
-    uint32 randV = xrand();
-    zFX_SpawnBubbleSlam(pos, (randV & 0x1f) + 0x20, lbl_803CD968, lbl_803CD96C, lbl_803CD970);
+    xFXRingCreate(pos, &sHammerRing[0]);
+    // weird xrand arithmetic might have something to do with signed integers
+    zFX_SpawnBubbleSlam(pos, (xrand() & 31) + 32, lbl_803CD968, lbl_803CD96C, lbl_803CD970);
 }
 
-void zFXPorterWave(const xVec3* pos)
+void zFXPorterWave(xVec3* pos)
 {
     xFXRingCreate(pos, &sPorterRing[0]);
     xFXRingCreate(pos, &sPorterRing[1]);
 }
 
-xFXRing* zFXMuscleArmWave(xVec3* pos)
+// PS2 dwarf data says this returns an xFXRing*, but gamecube symbols say it's void
+void zFXMuscleArmWave(xVec3* pos)
 {
-    return xFXRingCreate(pos, &sMuscleArmRing);
+    xFXRingCreate(pos, &sMuscleArmRing[0]);
 }
 
 // func_80092F94

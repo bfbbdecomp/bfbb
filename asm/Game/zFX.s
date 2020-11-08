@@ -4,7 +4,6 @@
 
 .section .text  # 0x80092D1C - 0x800974A8
 
-
 .global zFX_SceneEnter__FP7RpWorld
 zFX_SceneEnter__FP7RpWorld:
 /* 80092D3C 0008FB3C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4906,18 +4905,23 @@ lbl_8025BA30:
 	.incbin "baserom.dol", 0x258A10, 0xF8
 lbl_8025BB28:
 	.incbin "baserom.dol", 0x258B08, 0x70
+
 .global sPatrickStunRing
 sPatrickStunRing:
 	.incbin "baserom.dol", 0x258B78, 0xF0
+
 .global sHammerRing
 sHammerRing:
 	.incbin "baserom.dol", 0x258C68, 0x3C
+
 .global sPorterRing
 sPorterRing:
 	.incbin "baserom.dol", 0x258CA4, 0x78
+
 .global sMuscleArmRing
 sMuscleArmRing:
 	.incbin "baserom.dol", 0x258D1C, 0x3C
+
 lbl_8025BD78:
 	.incbin "baserom.dol", 0x258D58, 0x10
 lbl_8025BD88:
@@ -5035,15 +5039,19 @@ soaktime:
 	.incbin "baserom.dol", 0x2B5BDC, 0x4
 
 .section .sdata2
+
 .global lbl_803CD968
 lbl_803CD968:
 	.incbin "baserom.dol", 0x2B7208, 0x4
+
 .global lbl_803CD96C
 lbl_803CD96C:
 	.incbin "baserom.dol", 0x2B720C, 0x4
+
 .global lbl_803CD970
 lbl_803CD970:
 	.incbin "baserom.dol", 0x2B7210, 0x4
+
 lbl_803CD974:
 	.incbin "baserom.dol", 0x2B7214, 0x4
 lbl_803CD978:

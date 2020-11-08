@@ -98,7 +98,6 @@ void zFX_SceneExit(RpWorld* world);
 void zFX_SceneReset();
 void zFXHammer(xVec3* pos);
 void zFXPorterWave(const xVec3* pos);
-xFXRing* zFXMuscleArmWave(xVec3* pos);
 
 void zFXGoo_SceneEnter();
 void zFXGoo_SceneReset();
@@ -126,4 +125,5 @@ void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* un
 
 void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
 
+void zFXMuscleArmWave(xVec3* pos);
 #endif
