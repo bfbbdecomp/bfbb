@@ -1,12 +1,11 @@
 #ifndef XFX_H
 #define XFX_H
 
-#include <types.h>
-#include <rpworld.h>
 #include "../p2/iColor.h"
 #include "xVec3.h"
 
-typedef struct xFXRing;
+#include <types.h>
+#include <rpworld.h>
 
 struct xFXRing
 {
@@ -27,7 +26,10 @@ struct xFXRing
     xFXRing** parent;
 };
 
-xFXRing* xFXRingCreate(xVec3 const* pos, xFXRing const* params);
+xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params);
+
+void xFXUpdate(float32 dt);
+
 void xFX_SceneExit(RpWorld* world);
 
 #endif

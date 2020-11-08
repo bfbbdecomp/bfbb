@@ -64,28 +64,31 @@ uint32 zCameraFlyProcessStopEvent()
 {
     // Ghidra disassembly.
     /*uint local_r3_28;
-	xBase *pxVar1;
-	uint uVar2;
-	zScene *temp_3f17c03b02;
-  
-	temp_3f17c03b02 = globals.scenePreload;
-	local_r3_28 = zCamera_FlyOnly();
-	if (local_r3_28 == 0) {
-		zMusicSetVolume(musVolume,musDelay);
-	}
-	uVar2 = 0;
-	while(true) {
-		if ((uint)temp_3f17c03b02->field_1 <= (uVar2 & 0xffff)) {
-			return 0;
-    	}
-    	pxVar1 = *(xBase **)(temp_3f17c03b02->field_2 + (uVar2 & 0xffff) * 4);
-    	if ((pxVar1->baseType == 0x3e) && (*(uint32_t *)(pxVar1[1].id + 0x10) == zcam_flyasset_current))
-			break;
-		uVar2 = uVar2 + 1;
-	}
-	zEntEvent(pxVar1, eEventStop);
-	return 1;
-	*/
+    xBase* pxVar1;
+    uint uVar2;
+    zScene* temp_3f17c03b02;
+
+    temp_3f17c03b02 = globals.scenePreload;
+    local_r3_28 = zCamera_FlyOnly();
+    if (local_r3_28 == 0)
+    {
+        zMusicSetVolume(musVolume, musDelay);
+    }
+    uVar2 = 0;
+    while (true)
+    {
+        if ((uint)temp_3f17c03b02->field_1 <= (uVar2 & 0xffff))
+        {
+            return 0;
+        }
+        pxVar1 = *(xBase**)(temp_3f17c03b02->field_2 + (uVar2 & 0xffff) * 4);
+        if ((pxVar1->baseType == 0x3e) &&
+            (*(uint32_t*)(pxVar1[1].id + 0x10) == zcam_flyasset_current))
+            break;
+        uVar2 = uVar2 + 1;
+    }
+    zEntEvent(pxVar1, eEventStop);
+    return 1;*/
 
     // Attempted rewrite.
     zScene* scene;

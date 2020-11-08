@@ -1,71 +1,37 @@
 #ifndef ZFX_H
 #define ZFX_H
 
-#include <types.h>
 #include "../Core/x/xString.h"
+#include "../Core/x/xMath3.h"
+#include "../Core/x/xVec3.h"
 
-enum zFXGooState
-{
-    zFXGooStateNormal,
-    zFXGooStateFreezing,
-    zFXGooStateFrozen,
-    zFXGooStateMelting,
-    zFXGooStateInactive = 0xDEADBEEF,
-    zFXGooStateForce32Bit = 0xFFFFFFFF
-};
+#include "zGoo.h"
 
-struct zFXGooInstance
-{
-    RpAtomic* atomic;
-    int32 freezeGroup;
-    xVec3* orig_verts;
-    RwRGBA* orig_colors;
-    float32 time;
-    float32 timer;
-    float32 w0;
-    float32 w2;
-    float32 warbc[4];
-    float32 state_time[4];
-    xVec3 center;
-    zFXGooState state;
-    float32 warb_time;
-    float32 alpha;
-    float32 min;
-    float32 max;
-    xVec3* ref_parentPos;
-    xVec3 pos_parentOnFreeze;
-};
+#include <types.h>
+#include <rpworld.h>
 
-// TODO: figure out the best place for this struct
-typedef struct tweak_info;
+struct tweak_callback;
 
-struct _class_13
-{
-    int32 value_def;
-    int32 value_min;
-    int32 value_max;
-};
-
-struct _class_0
+struct uint_data
 {
     uint32 value_def;
     uint32 value_min;
     uint32 value_max;
 };
 
-struct _class_3
+struct float_data
 {
     float32 value_def;
     float32 value_min;
     float32 value_max;
 };
 
-struct _class_5
+struct bool_data
 {
     uint8 value_def;
 };
 
-struct _class_6
+struct select_data
 {
     uint32 value_def;
     uint32 labels_size;
@@ -73,15 +39,43 @@ struct _class_6
     void* values;
 };
 
-struct _class_9
+struct flag_data
 {
     uint32 value_def;
     uint32 mask;
 };
 
-struct _class_11
+struct raw_data
 {
     uint8 pad[16];
+};
+
+struct int_data
+{
+    int32 value_def;
+    int32 value_min;
+    int32 value_max;
+};
+
+struct tweak_info
+{
+    substr name;
+    void* value;
+    tweak_callback* cb;
+    void* context;
+    uint8 type;
+    uint8 value_size;
+    uint16 flags;
+    union
+    {
+        int_data int_context;
+        uint_data uint_context;
+        float_data float_context;
+        bool_data bool_context;
+        select_data select_context;
+        flag_data flag_context;
+        raw_data all_context;
+    };
 };
 
 struct tweak_callback
@@ -98,33 +92,38 @@ struct tweak_callback
     void (*convert_tweak_to_mem)(tweak_info&, void*);
 };
 
-struct tweak_info
-{
-    substr name;
-    void* value;
-    tweak_callback* cb;
-    void* context;
-    uint8 type;
-    uint8 value_size;
-    uint16 flags;
-    union
-    {
-        _class_13 int_context;
-        _class_0 uint_context;
-        _class_3 float_context;
-        _class_5 bool_context;
-        _class_6 select_context;
-        _class_9 flag_context;
-        _class_11 all_context;
-    };
-};
+void on_spawn_bubble_wall(const tweak_info& tweak);
+void zFX_SceneEnter(RpWorld* world);
+void zFX_SceneExit(RpWorld* world);
+void zFX_SceneReset();
+void zFXHammer(xVec3* pos);
+void zFXPorterWave(const xVec3* pos);
+
+void zFXGoo_SceneEnter();
+void zFXGoo_SceneReset();
+void zFXGoo_SceneExit();
+
+void zFXGooUpdate(float32 dt);
+
+void zFXUpdate(float32 dt);
+
+void zFX_SpawnBubbleWall();
+void zFX_SpawnBubbleSlam(const xVec3* pos, uint32 num, float32 rang, float32 bvel, float32 rvel);
 
 void reset_poppers();
-void reset_entrails();
-void zFX_SpawnBubbleWall();
-void zFX_SceneReset();
-void zFXGoo_SceneExit();
-void zFXGoo_SceneReset();
-void zFX_SpawnBubbleSlam(xVec3 const* pos, uint32 num, float32 rang, float32 bvel, float32 rvel);
 
+void reset_entrails();
+
+void init_poppers();
+
+void update_poppers(float32 dt);
+
+void update_entrails(float32 dt);
+
+void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
+                    uint32 unk5);
+
+void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
+
+void zFXMuscleArmWave(xVec3* pos);
 #endif

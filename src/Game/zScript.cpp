@@ -1,21 +1,33 @@
+#include "../Core/x/xBase.h"
+
 #include "zScript.h"
 
 #include <types.h>
 
-// func_800B5228
-#pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptInit__FPvPv")
+void zScriptInit(void* data, void* asset)
+{
+    zScriptInit((xBase*)data, (xScriptAsset*)asset);
+}
 
 // func_800B5248
 #pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptInit__FP5xBaseP12xScriptAsset")
 
-// func_800B52DC
-#pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptReset__FP8_zScript")
+void zScriptReset(zScript* script)
+{
+    xBaseReset((xBase*)script, (xBaseAsset*)script->tasset);
+    script->time = script->tasset->scriptStartTime;
+    script->more = 1;
+}
 
-// func_800B5320
-#pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptSave__FP8_zScriptP7xSerial")
+void zScript_Save(zScript* script, xSerial* s)
+{
+    xBaseSave((xBase*)script, s);
+}
 
-// func_800B5340
-#pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptLoad__FP8_zScriptP7xSerial")
+void zScript_Load(zScript* script, xSerial* s)
+{
+    xBaseLoad((xBase*)script, s);
+}
 
 // func_800B5360
 #pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
