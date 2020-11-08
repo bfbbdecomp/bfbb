@@ -8,7 +8,7 @@ extern zMusicTrackInfo sMusicTrack[2];
 extern zVolumeInfo volume;
 extern uint32 sMusicPaused;
 extern int32 sMusicLastEnum[2];
-extern float32 unkFloat; //0f by default.
+extern float32 lbl_803CDD48; //0f by default.
 extern float32 minDelay; //Value is defaulted at 0.001f.
 
 // func_800A6E9C
@@ -187,10 +187,10 @@ void zMusicUnpause(int32 kill)
                 else
                 {
                     uint32 res =
-                        xSndPlay(track->assetID, track->lastVol, unkFloat, 0xff,
+                        xSndPlay(track->assetID, track->lastVol, lbl_803CDD48, 0xff,
                                  prioBase | (int)(-track->loop | track->loop) >> 0x1f & 0x8000U |
                                      0x10000 | 0x20000,
-                                 0, SND_CAT_MUSIC, unkFloat);
+                                 0, SND_CAT_MUSIC, lbl_803CDD48);
                     track->snd_id = res;
                 }
             }

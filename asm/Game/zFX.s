@@ -358,7 +358,7 @@ lbl_800933AC:
 /* 800933D8 000901D8  38 63 00 19 */	addi r3, r3, 0x19
 /* 800933DC 000901DC  4B FB 8E 39 */	bl xStrHash__FPCc
 /* 800933E0 000901E0  48 02 16 5D */	bl zSceneFindObject__FUi
-/* 800933E4 000901E4  90 6D 8E 90 */	stw r3, lbl_803CB790-_SDA_BASE_(r13)
+/* 800933E4 000901E4  90 6D 8E 90 */	stw r3, goo_timer_textbox-_SDA_BASE_(r13)
 /* 800933E8 000901E8  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 800933EC 000901EC  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 800933F0 000901F0  83 C1 00 18 */	lwz r30, 0x18(r1)
@@ -435,38 +435,6 @@ lbl_800934DC:
 /* 800934E0 000902E0  38 C6 00 74 */	addi r6, r6, 0x74
 /* 800934E4 000902E4  42 00 FF 3C */	bdnz lbl_80093420
 /* 800934E8 000902E8  4E 80 00 20 */	blr 
-
-.global zFXGoo_SceneExit__Fv
-zFXGoo_SceneExit__Fv:
-/* 800934EC 000902EC  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800934F0 000902F0  7C 08 02 A6 */	mflr r0
-/* 800934F4 000902F4  3C 80 80 3C */	lis r4, zFXGooInstances@ha
-/* 800934F8 000902F8  3C 60 DE AE */	lis r3, 0xDEADBEEF@ha
-/* 800934FC 000902FC  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80093500 00090300  38 04 FA 0C */	addi r0, r4, zFXGooInstances@l
-/* 80093504 00090304  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80093508 00090308  3B E3 BE EF */	addi r31, r3, 0xDEADBEEF@l
-/* 8009350C 0009030C  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 80093510 00090310  3B C0 00 00 */	li r30, 0
-/* 80093514 00090314  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 80093518 00090318  7C 1D 03 78 */	mr r29, r0
-lbl_8009351C:
-/* 8009351C 0009031C  7F A3 EB 78 */	mr r3, r29
-/* 80093520 00090320  38 80 00 00 */	li r4, 0
-/* 80093524 00090324  38 A0 00 04 */	li r5, 4
-/* 80093528 00090328  4B F6 FF 31 */	bl memset
-/* 8009352C 0009032C  3B DE 00 01 */	addi r30, r30, 1
-/* 80093530 00090330  93 FD 00 50 */	stw r31, 0x50(r29)
-/* 80093534 00090334  2C 1E 00 18 */	cmpwi r30, 0x18
-/* 80093538 00090338  3B BD 00 74 */	addi r29, r29, 0x74
-/* 8009353C 0009033C  41 80 FF E0 */	blt lbl_8009351C
-/* 80093540 00090340  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80093544 00090344  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80093548 00090348  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8009354C 0009034C  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80093550 00090350  7C 08 03 A6 */	mtlr r0
-/* 80093554 00090354  38 21 00 20 */	addi r1, r1, 0x20
-/* 80093558 00090358  4E 80 00 20 */	blr 
 
 .global zFXGooUpdateInstance__FP14zFXGooInstancef
 zFXGooUpdateInstance__FP14zFXGooInstancef:
@@ -712,7 +680,7 @@ lbl_800938D4:
 /* 800938E0 000906E0  7F A3 EB 78 */	mr r3, r29
 /* 800938E4 000906E4  48 18 1C AD */	bl RpGeometryUnlock
 lbl_800938E8:
-/* 800938E8 000906E8  80 0D 8E 90 */	lwz r0, lbl_803CB790-_SDA_BASE_(r13)
+/* 800938E8 000906E8  80 0D 8E 90 */	lwz r0, goo_timer_textbox-_SDA_BASE_(r13)
 /* 800938EC 000906EC  28 00 00 00 */	cmplwi r0, 0
 /* 800938F0 000906F0  41 82 00 64 */	beq lbl_80093954
 /* 800938F4 000906F4  48 00 10 C9 */	bl zFXGooFreezeTimeLeft__Fv
@@ -732,14 +700,14 @@ lbl_8009391C:
 /* 80093928 00090728  38 84 00 2E */	addi r4, r4, 0x2e
 /* 8009392C 0009072C  4C C6 31 82 */	crclr 6
 /* 80093930 00090730  48 15 06 05 */	bl sprintf
-/* 80093934 00090734  80 6D 8E 90 */	lwz r3, lbl_803CB790-_SDA_BASE_(r13)
+/* 80093934 00090734  80 6D 8E 90 */	lwz r3, goo_timer_textbox-_SDA_BASE_(r13)
 /* 80093938 00090738  38 8D 81 F8 */	addi r4, r13, lbl_803CAAF8-_SDA_BASE_
 /* 8009393C 0009073C  48 0A 0D 15 */	bl set_text__8ztextboxFPCc
-/* 80093940 00090740  80 6D 8E 90 */	lwz r3, lbl_803CB790-_SDA_BASE_(r13)
+/* 80093940 00090740  80 6D 8E 90 */	lwz r3, goo_timer_textbox-_SDA_BASE_(r13)
 /* 80093944 00090744  48 0A 0C 5D */	bl activate__8ztextboxFv
 /* 80093948 00090748  48 00 00 0C */	b lbl_80093954
 lbl_8009394C:
-/* 8009394C 0009074C  80 6D 8E 90 */	lwz r3, lbl_803CB790-_SDA_BASE_(r13)
+/* 8009394C 0009074C  80 6D 8E 90 */	lwz r3, goo_timer_textbox-_SDA_BASE_(r13)
 /* 80093950 00090750  48 0A 0C 9D */	bl deactivate__8ztextboxFv
 lbl_80093954:
 /* 80093954 00090754  E3 E1 00 58 */	psq_l f31, 88(r1), 0, qr0
@@ -1172,26 +1140,6 @@ lbl_80093F60:
 /* 80093F7C 00090D7C  7C 08 03 A6 */	mtlr r0
 /* 80093F80 00090D80  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80093F84 00090D84  4E 80 00 20 */	blr 
-
-.global zFXUpdate__Ff
-zFXUpdate__Ff:
-/* 80093F88 00090D88  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80093F8C 00090D8C  7C 08 02 A6 */	mflr r0
-/* 80093F90 00090D90  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80093F94 00090D94  DB E1 00 08 */	stfd f31, 8(r1)
-/* 80093F98 00090D98  FF E0 08 90 */	fmr f31, f1
-/* 80093F9C 00090D9C  4B FF F9 E5 */	bl zFXGooUpdate__Ff
-/* 80093FA0 00090DA0  FC 20 F8 90 */	fmr f1, f31
-/* 80093FA4 00090DA4  48 00 29 AD */	bl update_poppers__Ff
-/* 80093FA8 00090DA8  FC 20 F8 90 */	fmr f1, f31
-/* 80093FAC 00090DAC  48 00 2E 49 */	bl update_entrails__Ff
-/* 80093FB0 00090DB0  FC 20 F8 90 */	fmr f1, f31
-/* 80093FB4 00090DB4  4B F9 33 39 */	bl xFXUpdate__Ff
-/* 80093FB8 00090DB8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80093FBC 00090DBC  CB E1 00 08 */	lfd f31, 8(r1)
-/* 80093FC0 00090DC0  7C 08 03 A6 */	mtlr r0
-/* 80093FC4 00090DC4  38 21 00 10 */	addi r1, r1, 0x10
-/* 80093FC8 00090DC8  4E 80 00 20 */	blr 
 
 .global zFXGooFreeze__FP8RpAtomicPC5xVec3P5xVec3
 zFXGooFreeze__FP8RpAtomicPC5xVec3P5xVec3:
@@ -4815,10 +4763,6 @@ lbl_8009729C:
 /* 800972A8 000940A8  38 21 00 50 */	addi r1, r1, 0x50
 /* 800972AC 000940AC  4E 80 00 20 */	blr 
 
-.global xDebugAddTweak__FPCcPCcPC14tweak_callbackPvUi
-xDebugAddTweak__FPCcPCcPC14tweak_callbackPvUi:
-/* 800972B0 000940B0  4E 80 00 20 */	blr 
-
 .global create_change__14tweak_callbackFPFRC10tweak_info_v
 create_change__14tweak_callbackFPFRC10tweak_info_v:
 /* 800972B4 000940B4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4865,19 +4809,6 @@ create_change__14tweak_callbackFPFRC10tweak_info_v:
 .global xDrawSphere2__FPC5xVec3fUi
 xDrawSphere2__FPC5xVec3fUi:
 /* 80097354 00094154  4E 80 00 20 */	blr 
-
-.global up_normalize__5xVec3Fv
-up_normalize__5xVec3Fv:
-/* 80097358 00094158  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009735C 0009415C  7C 08 02 A6 */	mflr r0
-/* 80097360 00094160  3C 80 80 25 */	lis r4, m_UnitAxisY__5xVec3@ha
-/* 80097364 00094164  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80097368 00094168  38 84 42 F8 */	addi r4, r4, m_UnitAxisY__5xVec3@l
-/* 8009736C 0009416C  4B F7 75 65 */	bl safe_normalize__5xVec3FRC5xVec3
-/* 80097370 00094170  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80097374 00094174  7C 08 03 A6 */	mtlr r0
-/* 80097378 00094178  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009737C 0009417C  4E 80 00 20 */	blr 
 
 xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
 /* 80097380 00094180  C0 65 00 04 */	lfs f3, 4(r5)
@@ -5053,7 +4984,8 @@ gFXSurfaceFlags:
 
 lbl_803CB78C:
 	.skip 0x4
-lbl_803CB790:
+.global goo_timer_textbox
+goo_timer_textbox:
 	.skip 0x4
 lbl_803CB794:
 	.skip 0x4

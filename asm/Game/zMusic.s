@@ -917,8 +917,8 @@ lbl_803CABD8:
 	.incbin "baserom.dol", 0x2B5C98, 0x8
 
 .section .sdata2
-.global unkFloat
-unkFloat:
+.global lbl_803CDD48
+lbl_803CDD48:
 	.incbin "baserom.dol", 0x2B75E8, 0x4
 lbl_803CDD4C:
 	.incbin "baserom.dol", 0x2B75EC, 0x4

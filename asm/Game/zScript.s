@@ -4,17 +4,6 @@
 
 .section .text  # 0x800B5228 - 0x800B55F0
 
-.global zScriptInit__FPvPv
-zScriptInit__FPvPv:
-/* 800B5228 000B2028  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B522C 000B202C  7C 08 02 A6 */	mflr r0
-/* 800B5230 000B2030  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B5234 000B2034  48 00 00 15 */	bl zScriptInit__FP5xBaseP12xScriptAsset
-/* 800B5238 000B2038  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B523C 000B203C  7C 08 03 A6 */	mtlr r0
-/* 800B5240 000B2040  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B5244 000B2044  4E 80 00 20 */	blr 
-
 .global zScriptInit__FP5xBaseP12xScriptAsset
 zScriptInit__FP5xBaseP12xScriptAsset:
 /* 800B5248 000B2048  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -56,48 +45,6 @@ lbl_800B52B0:
 /* 800B52D0 000B20D0  7C 08 03 A6 */	mtlr r0
 /* 800B52D4 000B20D4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B52D8 000B20D8  4E 80 00 20 */	blr 
-
-.global zScriptReset__FP8_zScript
-zScriptReset__FP8_zScript:
-/* 800B52DC 000B20DC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B52E0 000B20E0  7C 08 02 A6 */	mflr r0
-/* 800B52E4 000B20E4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B52E8 000B20E8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800B52EC 000B20EC  7C 7F 1B 78 */	mr r31, r3
-/* 800B52F0 000B20F0  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 800B52F4 000B20F4  4B F5 42 05 */	bl xBaseReset__FP5xBaseP10xBaseAsset
-/* 800B52F8 000B20F8  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 800B52FC 000B20FC  38 00 00 01 */	li r0, 1
-/* 800B5300 000B2100  C0 03 00 08 */	lfs f0, 8(r3)
-/* 800B5304 000B2104  D0 1F 00 18 */	stfs f0, 0x18(r31)
-/* 800B5308 000B2108  98 1F 00 15 */	stb r0, 0x15(r31)
-/* 800B530C 000B210C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800B5310 000B2110  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5314 000B2114  7C 08 03 A6 */	mtlr r0
-/* 800B5318 000B2118  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B531C 000B211C  4E 80 00 20 */	blr 
-
-.global zScriptSave__FP8_zScriptP7xSerial
-zScriptSave__FP8_zScriptP7xSerial:
-/* 800B5320 000B2120  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B5324 000B2124  7C 08 02 A6 */	mflr r0
-/* 800B5328 000B2128  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B532C 000B212C  4B F5 41 21 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 800B5330 000B2130  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5334 000B2134  7C 08 03 A6 */	mtlr r0
-/* 800B5338 000B2138  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B533C 000B213C  4E 80 00 20 */	blr 
-
-.global zScriptLoad__FP8_zScriptP7xSerial
-zScriptLoad__FP8_zScriptP7xSerial:
-/* 800B5340 000B2140  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B5344 000B2144  7C 08 02 A6 */	mflr r0
-/* 800B5348 000B2148  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B534C 000B214C  4B F5 41 51 */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 800B5350 000B2150  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5354 000B2154  7C 08 03 A6 */	mtlr r0
-/* 800B5358 000B2158  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B535C 000B215C  4E 80 00 20 */	blr 
 
 zScriptEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800B5360 000B2160  94 21 FF F0 */	stwu r1, -0x10(r1)

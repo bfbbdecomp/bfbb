@@ -1,22 +1,35 @@
-#include <types.h>
-#include <rpworld.h>
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
-#include "../Core/x/xVec3.h"
+#include "../Core/x/xMath3.h"
+
 #include "zFX.h"
+#include "zGoo.h"
+#include "zScene.h"
+#include "zTextBox.h"
 
-extern zFXGooInstance zFXGooInstances[24];
+#include <types.h>
+#include <string.h>
+#include <stdlib.h>
+#include <cmath>
 
+extern xFXRing sPatrickStunRing[3];
+extern xFXRing sPorterRing[2];
 extern xFXRing sHammerRing[1];
 extern xFXRing sMuscleArmRing[1];
 extern xFXRing sPorterRing[2];
 extern xFXRing sPatrickStunRing[3];
 
-extern float32 lbl_803CD968; // 0.15
-extern float32 lbl_803CD96C; // 12.0
-extern float32 lbl_803CD970; // 2.0
+extern zFXGooInstance zFXGooInstances[0x18];
 
-void on_spawn_bubble_wall(tweak_info const& tweak)
+extern ztextbox* goo_timer_textbox;
+
+extern float32 lbl_803CD968; // 0.15f
+extern float32 lbl_803CD96C; // 12.0f
+extern float32 lbl_803CD970; // 2.0f
+
+extern xVec3 m_UnitAxisY__5xVec3;
+
+void on_spawn_bubble_wall(const tweak_info& tweak)
 {
     zFX_SpawnBubbleWall();
 }
@@ -66,14 +79,97 @@ void zFXMuscleArmWave(xVec3* pos)
 // func_80092F94
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEnable__FP8RpAtomici")
 
+#if 1
+
 // func_8009337C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneEnter__Fv")
+
+#else
+
+// Can't figure out what's going on here.
+void zFXGoo_SceneEnter()
+{
+    int32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 0x18; i++)
+    {
+        memset(goo, 0, 4);
+        goo->state = zFXGooStateInactive;
+        goo++;
+    }
+    uint32 gameID = xStrHash("FREEZY_TIMER_TEXTBOX");
+    goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
+}
+
+#endif
+
+#if 1
 
 // func_80093404
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneReset__Fv")
 
-// func_800934EC
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneExit__Fv")
+#else
+
+// Idk how to structure the loop properly.
+void zFXGoo_SceneReset()
+{
+    for (int32 i = 3; i != 0; i--)
+    {
+        if ((&zFXGooInstances[(i - 3) * 8 + 0])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 0])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 1])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 1])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 2])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 2])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 3])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 3])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 4])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 4])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 5])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 5])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 6])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 6])->state = zFXGooStateNormal;
+        }
+
+        if ((&zFXGooInstances[(i - 3) * 8 + 7])->state != zFXGooStateInactive)
+        {
+            (&zFXGooInstances[(i - 3) * 8 + 7])->state = zFXGooStateNormal;
+        }
+    }
+}
+
+#endif
+
+void zFXGoo_SceneExit()
+{
+    int32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 0x18; i++)
+    {
+        memset(goo, 0, 4);
+        goo->state = zFXGooStateInactive;
+        goo++;
+    }
+}
 
 // func_8009355C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooUpdateInstance__FP14zFXGooInstancef")
@@ -84,8 +180,13 @@ void zFXMuscleArmWave(xVec3* pos)
 // func_800939F4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooRenderAtomic__FP8RpAtomic")
 
-// func_80093F88
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXUpdate__Ff")
+void zFXUpdate(float32 dt)
+{
+    zFXGooUpdate(dt);
+    update_poppers(dt);
+    update_entrails(dt);
+    xFXUpdate(dt);
+}
 
 // func_80093FCC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooFreeze__FP8RpAtomicPC5xVec3P5xVec3")
@@ -216,8 +317,21 @@ void zFXMuscleArmWave(xVec3* pos)
 // func_80096868
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "grab_popper__17_esc__2_unnamed_esc__2_zFX_cpp_esc__2_FR4xEnt")
 
+#if 1
+
 // func_800968FC
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "init_poppers__Fv")
+
+#else
+
+// Idk what the name of the other function is.
+void init_poppers()
+{
+    reset_poppers();
+    add_popper_tweaks__17 @unnamed @zFX_cpp @Fv();
+}
+
+#endif
 
 // func_80096920
 #pragma GLOBAL_ASM("asm/Game/zFX.s",                                                               \
@@ -260,8 +374,10 @@ void zFXMuscleArmWave(xVec3* pos)
 // func_80097094
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "setup_entrails__FR6zScene")
 
-// func_800972B0
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "xDebugAddTweak__FPCcPCcPC14tweak_callbackPvUi")
+void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
+                    uint32 unk5)
+{
+}
 
 // func_800972B4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "create_change__14tweak_callbackFPFRC10tweak_info_v")
@@ -269,11 +385,47 @@ void zFXMuscleArmWave(xVec3* pos)
 // func_80097354
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xDrawSphere2__FPC5xVec3fUi")
 
-// func_80097358
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "up_normalize__5xVec3Fv")
+void xVec3::up_normalize()
+{
+    safe_normalize(m_UnitAxisY__5xVec3);
+}
+
+#if 1
 
 // func_80097380
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+
+#else
+
+// Haven't really looked into it much.
+void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec)
+{
+    float32 fVar1;
+    float32 fVar2;
+    float32 fVar3;
+    float32 fVar4;
+    float32 fVar5;
+    float32 fVar6;
+    float32 fVar7;
+    float32 fVar8;
+    float32 fVar9;
+
+    fVar1 = (float32)vec->y;
+    fVar2 = (float32)(mat->up).y;
+    fVar3 = (float32)vec->x;
+    fVar4 = (float32)(mat->up).z;
+    fVar5 = (float32)(mat->right).y;
+    fVar6 = (float32)vec->z;
+    fVar7 = (float32)(mat->right).z;
+    fVar8 = (float32)(mat->at).y;
+    fVar9 = (float32)(mat->at).z;
+    *(float32*)&result->x = (float32)(mat->at).x * fVar6 + (float32)(mat->right).x * fVar3 +
+                            (float32)(mat->up).x * fVar1;
+    *(float32*)&result->y = fVar8 * fVar6 + fVar5 * fVar3 + fVar2 * fVar1;
+    *(float32*)&result->z = fVar9 * fVar6 + fVar7 * fVar3 + fVar4 * fVar1;
+}
+
+#endif
 
 // func_800973E4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xModelSetScale__FP14xModelInstanceRC5xVec3")
