@@ -5,7 +5,7 @@
 #include "../Core/x/xBase.h"
 #include "../Core/x/xDynAsset.h"
 
-struct xScriptAsset : xDynAsset
+struct xScriptAsset : xBaseAsset
 {
     float32 scriptStartTime;
     uint32 eventCount;

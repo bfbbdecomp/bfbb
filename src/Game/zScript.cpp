@@ -12,22 +12,12 @@ void zScriptInit(void* data, void* asset)
 // func_800B5248
 #pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptInit__FP5xBaseP12xScriptAsset")
 
-#if 1
-
-// func_800B52DC
-#pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptReset__FP8_zScript")
-
-#else
-
-// 2nd and 3rd line seem to be off.
 void zScriptReset(zScript* script)
 {
-    xBaseReset((xBase*)script, (xBaseAsset*)script->asset);
-    script->link = *(xLinkAsset**)(script->id + 8);
-    script->linkCount = 1;
+    xBaseReset((xBase*)script, (xBaseAsset*)script->tasset);
+    script->time = script->tasset->scriptStartTime;
+    script->more = 1;
 }
-
-#endif
 
 void zScript_Save(zScript* script, xSerial* s)
 {

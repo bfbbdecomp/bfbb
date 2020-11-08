@@ -30,7 +30,7 @@ struct zFXGooInstance
     float32 warbc[4];
     float32 state_time[4];
     xVec3 center;
-    int32 padding; // Padding.
+    int32 padding; // Padding used for zFXGoo_SceneExit().
     zFXGooState state;
     float32 warb_time;
     float32 alpha;

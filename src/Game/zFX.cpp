@@ -159,13 +159,6 @@ void zFXGoo_SceneReset()
 
 #endif
 
-#if 0
-
-// func_800934EC
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneExit__Fv")
-
-#else
-
 void zFXGoo_SceneExit()
 {
     int32 i;
@@ -177,8 +170,6 @@ void zFXGoo_SceneExit()
         goo++;
     }
 }
-
-#endif
 
 // func_8009355C
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooUpdateInstance__FP14zFXGooInstancef")
