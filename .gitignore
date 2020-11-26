@@ -18,3 +18,4 @@ tools/elf2dol
 *.cp
 .vscode
 .pragma
+inspect.s
