@@ -17,11 +17,15 @@ struct zGlobalSettings
 	float32 SundaeMult;
 	uint32 InitialShinyCount;
 	uint32 InitialSpatulaCount;
+
+	// 0x888 in globals
 	int32 ShinyValuePurple;
 	int32 ShinyValueBlue;
 	int32 ShinyValueGreen;
 	int32 ShinyValueYellow;
 	int32 ShinyValueRed;
+
+	// 0x89C in globals
 	int32 ShinyValueCombo0;
 	int32 ShinyValueCombo1;
 	int32 ShinyValueCombo2;
@@ -38,6 +42,8 @@ struct zGlobalSettings
 	int32 ShinyValueCombo13;
 	int32 ShinyValueCombo14;
 	int32 ShinyValueCombo15;
+
+	// 0x8DC in globals
 	float32 ComboTimer;
 	uint32 Initial_Specials;
 	uint32 TakeDamage;
@@ -115,17 +121,26 @@ struct zCheckPoint
 
 struct zPlayerGlobals
 {
+	// 0x6E0 in globals
 	zEnt ent;
 	xEntShadow entShadow_embedded;
 	xShadowSimpleCache simpShadow_embedded;
+
+	// 0x874 in globals
 	zGlobalSettings g;
+
+	// 0x9C4 in globals
 	zPlayerSettings* s;
 	zPlayerSettings sb;
 	zPlayerSettings patrick;
 	zPlayerSettings sandy;
+
+	// 0x16A0 in globals
 	xModelInstance* model_spongebob;
 	xModelInstance* model_patrick;
 	xModelInstance* model_sandy;
+
+	// 0x16AC in globals
 	uint32 Visible;
 	uint32 Health;
 	int32 Speed;
@@ -138,6 +153,8 @@ struct zPlayerGlobals
 	int32 Stepping;
 	int32 JumpState;
 	int32 LastJumpState;
+
+	// 0x16DC in globals
 	float32 JumpTimer;
 	float32 LookAroundTimer;
 	uint32 LookAroundRand;

@@ -5,6 +5,11 @@
 #include "../p2/iColor.h"
 #include "xString.h"
 
+struct xTextAsset
+{
+	uint32 len;
+};
+
 struct xfont
 {
     uint32 id;

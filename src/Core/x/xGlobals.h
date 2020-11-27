@@ -12,17 +12,26 @@
 
 struct xGlobals
 {
+	// 0x00 in globals
 	xCamera camera;
+
+	// 0x31C in globals
 	_tagxPad* pad0;
 	_tagxPad* pad1;
 	_tagxPad* pad2;
 	_tagxPad* pad3;
 	int32 profile;
+
+	// 0x330 in globals
 	char profFunc[6][128];
+
+	// 0x630 in globals
 	xUpdateCullMgr* updateMgr;
 	int32 sceneFirst;
 	char sceneStart[32];
 	RpWorld* currWorld;
+
+	// 0x65C in globals
 	iFogParams fog;
 	iFogParams fogA;
 	iFogParams fogB;
