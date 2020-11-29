@@ -83,11 +83,11 @@ zCombo_Setup__Fv:
 /* 80195A14 00192814  38 00 00 00 */	li r0, 0
 /* 80195A18 00192818  BE E1 00 0C */	stmw r23, 0xc(r1)
 /* 80195A1C 0019281C  38 63 00 C1 */	addi r3, r3, 0xc1
-/* 80195A20 00192820  90 0D 98 E0 */	stw r0, comboCounter-_SDA_BASE_(r13)
-/* 80195A24 00192824  90 0D 98 DC */	stw r0, comboLastCounter-_SDA_BASE_(r13)
-/* 80195A28 00192828  90 0D 98 D8 */	stw r0, comboPending-_SDA_BASE_(r13)
-/* 80195A2C 0019282C  C0 02 B2 60 */	lfs f0, someComboFloatConstant-_SDA2_BASE_(r2)
-/* 80195A30 00192830  D0 0D 98 E4 */	stfs f0, comboTimer-_SDA_BASE_(r13)
+/* 80195A20 00192820  90 0D 98 E0 */	stw r0, zCombo_int32_3-_SDA_BASE_(r13)
+/* 80195A24 00192824  90 0D 98 DC */	stw r0, zCombo_int32_2-_SDA_BASE_(r13)
+/* 80195A28 00192828  90 0D 98 D8 */	stw r0, zCombo_int32_1-_SDA_BASE_(r13)
+/* 80195A2C 0019282C  C0 02 B2 60 */	lfs f0, zCombo_float_minusone-_SDA2_BASE_(r2)
+/* 80195A30 00192830  D0 0D 98 E4 */	stfs f0, zCombo_float32_3-_SDA_BASE_(r13)
 /* 80195A34 00192834  4B EB 67 E1 */	bl xStrHash__FPCc
 /* 80195A38 00192838  4B F1 F0 05 */	bl zSceneFindObject__FUi
 /* 80195A3C 0019283C  90 6D 98 D0 */	stw r3, comboHUD-_SDA_BASE_(r13)
@@ -152,7 +152,7 @@ lbl_80195A70:
 /* 80195B20 00192920  90 99 02 D8 */	stw r4, 0x2d8(r25)
 /* 80195B24 00192924  90 79 03 10 */	stw r3, 0x310(r25)
 /* 80195B28 00192928  90 19 03 48 */	stw r0, 0x348(r25)
-/* 80195B2C 0019292C  D0 0D 84 C8 */	stfs f0, comboMaxTime-_SDA_BASE_(r13)
+/* 80195B2C 0019292C  D0 0D 84 C8 */	stfs f0, zCombo_float32_1-_SDA_BASE_(r13)
 lbl_80195B30:
 /* 80195B30 00192930  7F E3 FB 78 */	mr r3, r31
 /* 80195B34 00192934  4B FF FD D9 */	bl fillCombo__FP12zComboReward
@@ -213,29 +213,29 @@ lbl_80195B30:
 
 .global zCombo_Add__Fi
 zCombo_Add__Fi:
-/* 80195C10 00192A10  C0 2D 98 E4 */	lfs f1, lbl_803CC1E4-_SDA_BASE_(r13)
-/* 80195C14 00192A14  C0 02 B2 64 */	lfs f0, lbl_803CFBE4-_SDA2_BASE_(r2)
+/* 80195C10 00192A10  C0 2D 98 E4 */	lfs f1, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195C14 00192A14  C0 02 B2 64 */	lfs f0, zCombo_float_zero-_SDA2_BASE_(r2)
 /* 80195C18 00192A18  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80195C1C 00192A1C  40 80 00 18 */	bge lbl_80195C34
-/* 80195C20 00192A20  C0 0D 84 C8 */	lfs f0, lbl_803CADC8-_SDA_BASE_(r13)
+/* 80195C20 00192A20  C0 0D 84 C8 */	lfs f0, zCombo_float32_1-_SDA_BASE_(r13)
 /* 80195C24 00192A24  38 03 FF FF */	addi r0, r3, -1
-/* 80195C28 00192A28  D0 0D 98 E4 */	stfs f0, lbl_803CC1E4-_SDA_BASE_(r13)
-/* 80195C2C 00192A2C  90 0D 98 D8 */	stw r0, lbl_803CC1D8-_SDA_BASE_(r13)
+/* 80195C28 00192A28  D0 0D 98 E4 */	stfs f0, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195C2C 00192A2C  90 0D 98 D8 */	stw r0, zCombo_int32_1-_SDA_BASE_(r13)
 /* 80195C30 00192A30  4E 80 00 20 */	blr 
 lbl_80195C34:
-/* 80195C34 00192A34  C0 0D 84 C8 */	lfs f0, lbl_803CADC8-_SDA_BASE_(r13)
-/* 80195C38 00192A38  D0 0D 98 E4 */	stfs f0, lbl_803CC1E4-_SDA_BASE_(r13)
-/* 80195C3C 00192A3C  80 0D 98 E0 */	lwz r0, lbl_803CC1E0-_SDA_BASE_(r13)
+/* 80195C34 00192A34  C0 0D 84 C8 */	lfs f0, zCombo_float32_1-_SDA_BASE_(r13)
+/* 80195C38 00192A38  D0 0D 98 E4 */	stfs f0, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195C3C 00192A3C  80 0D 98 E0 */	lwz r0, zCombo_int32_3-_SDA_BASE_(r13)
 /* 80195C40 00192A40  7C 00 1A 14 */	add r0, r0, r3
-/* 80195C44 00192A44  90 0D 98 E0 */	stw r0, lbl_803CC1E0-_SDA_BASE_(r13)
-/* 80195C48 00192A48  80 8D 98 D8 */	lwz r4, lbl_803CC1D8-_SDA_BASE_(r13)
+/* 80195C44 00192A44  90 0D 98 E0 */	stw r0, zCombo_int32_3-_SDA_BASE_(r13)
+/* 80195C48 00192A48  80 8D 98 D8 */	lwz r4, zCombo_int32_1-_SDA_BASE_(r13)
 /* 80195C4C 00192A4C  2C 04 00 00 */	cmpwi r4, 0
 /* 80195C50 00192A50  4D 82 00 20 */	beqlr 
-/* 80195C54 00192A54  80 6D 98 E0 */	lwz r3, lbl_803CC1E0-_SDA_BASE_(r13)
+/* 80195C54 00192A54  80 6D 98 E0 */	lwz r3, zCombo_int32_3-_SDA_BASE_(r13)
 /* 80195C58 00192A58  38 00 00 00 */	li r0, 0
 /* 80195C5C 00192A5C  7C 63 22 14 */	add r3, r3, r4
-/* 80195C60 00192A60  90 6D 98 E0 */	stw r3, lbl_803CC1E0-_SDA_BASE_(r13)
-/* 80195C64 00192A64  90 0D 98 D8 */	stw r0, lbl_803CC1D8-_SDA_BASE_(r13)
+/* 80195C60 00192A60  90 6D 98 E0 */	stw r3, zCombo_int32_3-_SDA_BASE_(r13)
+/* 80195C64 00192A64  90 0D 98 D8 */	stw r0, zCombo_int32_1-_SDA_BASE_(r13)
 /* 80195C68 00192A68  4E 80 00 20 */	blr 
 
 zComboHideMessage__FRQ24xhud6widgetRQ24xhud6motive:
@@ -282,13 +282,13 @@ zCombo_Update__Ff:
 /* 80195CF4 00192AF4  38 63 2B 68 */	addi r3, r3, lbl_80362B68@l
 /* 80195CF8 00192AF8  38 84 00 24 */	addi r4, r4, 0x24
 /* 80195CFC 00192AFC  4B E7 F3 5D */	bl xVec3AddScaled__FP5xVec3PC5xVec3f
-/* 80195D00 00192B00  80 8D 98 E0 */	lwz r4, comboCounter-_SDA_BASE_(r13)
+/* 80195D00 00192B00  80 8D 98 E0 */	lwz r4, zCombo_int32_3-_SDA_BASE_(r13)
 /* 80195D04 00192B04  2C 04 00 10 */	cmpwi r4, 0x10
 /* 80195D08 00192B08  7C 9F 23 78 */	mr r31, r4
 /* 80195D0C 00192B0C  41 80 00 08 */	blt lbl_80195D14
 /* 80195D10 00192B10  3B E0 00 0F */	li r31, 0xf
 lbl_80195D14:
-/* 80195D14 00192B14  80 0D 98 DC */	lwz r0, comboLastCounter-_SDA_BASE_(r13)
+/* 80195D14 00192B14  80 0D 98 DC */	lwz r0, zCombo_int32_2-_SDA_BASE_(r13)
 /* 80195D18 00192B18  3C 60 80 2A */	lis r3, comboReward@ha
 /* 80195D1C 00192B1C  1C BF 00 38 */	mulli r5, r31, 0x38
 /* 80195D20 00192B20  7C 00 20 00 */	cmpw r0, r4
@@ -309,8 +309,8 @@ lbl_80195D14:
 /* 80195D5C 00192B5C  38 63 00 10 */	addi r3, r3, 0x10
 /* 80195D60 00192B60  4B E9 82 75 */	bl show__Q24xhud6widgetFv
 lbl_80195D64:
-/* 80195D64 00192B64  80 0D 98 E0 */	lwz r0, comboCounter-_SDA_BASE_(r13)
-/* 80195D68 00192B68  90 0D 98 DC */	stw r0, comboLastCounter-_SDA_BASE_(r13)
+/* 80195D64 00192B64  80 0D 98 E0 */	lwz r0, zCombo_int32_3-_SDA_BASE_(r13)
+/* 80195D68 00192B68  90 0D 98 DC */	stw r0, zCombo_int32_2-_SDA_BASE_(r13)
 lbl_80195D6C:
 /* 80195D6C 00192B6C  3C 60 80 36 */	lis r3, sHideText@ha
 /* 80195D70 00192B70  3B 80 00 00 */	li r28, 0
@@ -342,15 +342,15 @@ lbl_80195DB0:
 /* 80195DCC 00192BCC  38 00 00 00 */	li r0, 0
 /* 80195DD0 00192BD0  98 03 00 94 */	stb r0, 0x94(r3)
 lbl_80195DD4:
-/* 80195DD4 00192BD4  C0 2D 98 E4 */	lfs f1, comboTimer-_SDA_BASE_(r13)
-/* 80195DD8 00192BD8  C0 02 B2 64 */	lfs f0, lbl_803CFBE4-_SDA2_BASE_(r2)
+/* 80195DD4 00192BD4  C0 2D 98 E4 */	lfs f1, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195DD8 00192BD8  C0 02 B2 64 */	lfs f0, zCombo_float_zero-_SDA2_BASE_(r2)
 /* 80195DDC 00192BDC  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80195DE0 00192BE0  4C 41 13 82 */	cror 2, 1, 2
 /* 80195DE4 00192BE4  40 82 01 D0 */	bne lbl_80195FB4
 /* 80195DE8 00192BE8  EC 01 F8 28 */	fsubs f0, f1, f31
-/* 80195DEC 00192BEC  D0 0D 98 E4 */	stfs f0, comboTimer-_SDA_BASE_(r13)
-/* 80195DF0 00192BF0  C0 2D 98 E4 */	lfs f1, comboTimer-_SDA_BASE_(r13)
-/* 80195DF4 00192BF4  C0 02 B2 64 */	lfs f0, lbl_803CFBE4-_SDA2_BASE_(r2)
+/* 80195DEC 00192BEC  D0 0D 98 E4 */	stfs f0, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195DF0 00192BF0  C0 2D 98 E4 */	lfs f1, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195DF4 00192BF4  C0 02 B2 64 */	lfs f0, zCombo_float_zero-_SDA2_BASE_(r2)
 /* 80195DF8 00192BF8  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80195DFC 00192BFC  40 80 01 B8 */	bge lbl_80195FB4
 /* 80195E00 00192C00  80 1E 00 00 */	lwz r0, 0(r30)
@@ -444,7 +444,7 @@ lbl_80195F5C:
 /* 80195F5C 00192D5C  80 0D 98 D0 */	lwz r0, comboHUD-_SDA_BASE_(r13)
 /* 80195F60 00192D60  28 00 00 00 */	cmplwi r0, 0
 /* 80195F64 00192D64  41 82 00 3C */	beq lbl_80195FA0
-/* 80195F68 00192D68  C0 22 B2 64 */	lfs f1, lbl_803CFBE4-_SDA2_BASE_(r2)
+/* 80195F68 00192D68  C0 22 B2 64 */	lfs f1, zCombo_float_zero-_SDA2_BASE_(r2)
 /* 80195F6C 00192D6C  3C 80 80 03 */	lis r4, delay_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef@ha
 /* 80195F70 00192D70  3C 60 80 19 */	lis r3, zComboHideMessage__FRQ24xhud6widgetRQ24xhud6motive@ha
 /* 80195F74 00192D74  C0 4D 84 CC */	lfs f2, lbl_803CADCC-_SDA_BASE_(r13)
@@ -459,11 +459,11 @@ lbl_80195F5C:
 /* 80195F98 00192D98  38 65 00 10 */	addi r3, r5, 0x10
 /* 80195F9C 00192D9C  4B E9 85 E9 */	bl add_motive__Q24xhud6widgetFRCQ24xhud6motive
 lbl_80195FA0:
-/* 80195FA0 00192DA0  C0 02 B2 60 */	lfs f0, someComboFloatConstant-_SDA2_BASE_(r2)
+/* 80195FA0 00192DA0  C0 02 B2 60 */	lfs f0, zCombo_float_minusone-_SDA2_BASE_(r2)
 /* 80195FA4 00192DA4  38 00 00 00 */	li r0, 0
-/* 80195FA8 00192DA8  D0 0D 98 E4 */	stfs f0, comboTimer-_SDA_BASE_(r13)
-/* 80195FAC 00192DAC  90 0D 98 E0 */	stw r0, comboCounter-_SDA_BASE_(r13)
-/* 80195FB0 00192DB0  90 0D 98 DC */	stw r0, comboLastCounter-_SDA_BASE_(r13)
+/* 80195FA8 00192DA8  D0 0D 98 E4 */	stfs f0, zCombo_float32_3-_SDA_BASE_(r13)
+/* 80195FAC 00192DAC  90 0D 98 E0 */	stw r0, zCombo_int32_3-_SDA_BASE_(r13)
+/* 80195FB0 00192DB0  90 0D 98 DC */	stw r0, zCombo_int32_2-_SDA_BASE_(r13)
 lbl_80195FB4:
 /* 80195FB4 00192DB4  E3 E1 00 48 */	psq_l f31, 72(r1), 0, qr0
 /* 80195FB8 00192DB8  80 01 00 54 */	lwz r0, 0x54(r1)
@@ -530,27 +530,27 @@ lbl_80363888:
 sHideUIF:
 	.skip 0x4
 
-.global comboPending
-comboPending:
+.global zCombo_int32_1
+zCombo_int32_1:
 	.skip 0x4
 
-.global comboLastCounter
-comboLastCounter:
+.global zCombo_int32_2
+zCombo_int32_2:
 	.skip 0x4
 
-.global comboCounter
-comboCounter:
+.global zCombo_int32_3
+zCombo_int32_3:
 	.skip 0x4
 
-.global comboTimer
-comboTimer:
+.global zCombo_float32_3
+zCombo_float32_3:
 	.skip 0x4
 
 
 .section .sdata
 
-.global comboMaxTime
-comboMaxTime:
+.global zCombo_float32_1
+zCombo_float32_1:
 	/* Initial value: 1.0f */
 	.incbin "baserom.dol", 0x2B5E88, 0x4
 
@@ -562,12 +562,15 @@ dtscale:
 	.incbin "baserom.dol", 0x2B5E90, 0x4
 
 .section .sdata2
-.global someComboFloatConstant
-someComboFloatConstant:
+
+/* = -1.0f */
+.global zCombo_float_minusone
+zCombo_float_minusone:
 	.incbin "baserom.dol", 0x2B9480, 0x4
 
-.global lbl_803CFBE4
-lbl_803CFBE4:
+/* = 0.0f */
+.global zCombo_float_zero
+zCombo_float_zero:
 	.incbin "baserom.dol", 0x2B9484, 0x4
 
 lbl_803CFBE8:

@@ -8,6 +8,10 @@
 #include "zGlobals.h"
 #include "zTextBox.h"
 
+extern const int8 zCombo_Strings[];
+extern const float32 zCombo_float_zero;
+extern const float32 zCombo_float_minusone;
+
 struct zComboReward
 {
 	int32 reward;
@@ -17,7 +21,8 @@ struct zComboReward
 	xTextAsset* textAsset;
 };
 
-// TODO: Something is wrong with this struct
+// TODO: Something is wrong with this struct. It looks like the debug symbols
+// for the xhud header files may be somewhat wrong in some places.
 struct widget_chunk : xBase
 {
     xhud::text_widget w;
@@ -27,16 +32,12 @@ extern widget_chunk* comboHUD;
 
 extern zComboReward comboReward[16];
 
-extern int32 comboCounter;
-extern int32 comboLastCounter;
-extern int32 comboPending;
+extern int32 zCombo_int32_1; // probably comboPending
+extern int32 zCombo_int32_2; // probably comboLastCounter
+extern int32 zCombo_int32_3; // probably comboCounter
 
-extern float comboMaxTime;
-extern float lbl_803CFBE4;
-extern float comboTimer;
-
-extern float32 someComboFloatConstant;
-extern int8 zCombo_Strings[];
+extern float32 zCombo_float32_1; // probably comboMaxTime
+extern float32 zCombo_float32_3; // probably comboTimer
 
 extern xBase* sHideText[5];
 extern xBase* sHideUIF[1];
@@ -84,22 +85,22 @@ void fillCombo(zComboReward* reward)
 #pragma GLOBAL_ASM("asm/Game/zCombo.s", "zCombo_Setup__Fv")
 #else
 // Can't get the floating point instructions to go in the right order
-// the comboTimer = someComboFloatConstant always gets lifted to the
+// the zCombo_float32_3 = zCombo_float_minusone always gets lifted to the
 // start regardless of what order the code is in, despite it remaining
 // after the other assignments in the original assembly.
 void zCombo_Setup()
 {
-    comboCounter = 0;
-    comboLastCounter = 0;
-    comboPending = 0;
-    comboTimer = someComboFloatConstant;
+    zCombo_int32_3 = 0;
+    zCombo_int32_2 = 0;
+    zCombo_int32_1 = 0;
+    zCombo_float32_3 = zCombo_float_minusone;
 
     // "HUD_TEXT_COMBOMESSAGE"
     uint32 id = xStrHash(zCombo_Strings + 0xc1);
     comboHUD = (widget_chunk*)zSceneFindObject(id);
 
     // Junk to make the size match temporarily, REMOVE THIS
-    comboCounter = 6;
+    zCombo_int32_3 = 6;
 
     if (comboHUD != NULL)
     {
@@ -129,7 +130,7 @@ void zCombo_Setup()
     comboReward[13].reward = globals.player.g.ShinyValueCombo13;
     comboReward[14].reward = globals.player.g.ShinyValueCombo14;
     comboReward[15].reward = globals.player.g.ShinyValueCombo15;
-    comboMaxTime = globals.player.g.ComboTimer;
+    zCombo_float32_1 = globals.player.g.ComboTimer;
 
     for (int i = 0; i < 16; ++i)
     {
@@ -169,15 +170,15 @@ void zCombo_Setup()
 /* Can't figure out how to get the assignments to happen in the right order */
 void zCombo_Add(int32 points)
 {
-    if (comboTimer < lbl_803CFBE4) {
-        comboTimer = comboMaxTime;
-        comboPending = points - 1;
+    if (zCombo_float32_3 < zCombo_float_zero) {
+        zCombo_float32_3 = zCombo_float32_1;
+        zCombo_int32_1 = points - 1;
     } else {
-        comboTimer = comboMaxTime;
-        comboCounter += points;
-        if (comboPending != 0) {
-            comboCounter += comboPending;
-            comboPending = 0;
+        zCombo_float32_3 = zCombo_float32_1;
+        zCombo_int32_3 += points;
+        if (zCombo_int32_1 != 0) {
+            zCombo_int32_3 += zCombo_int32_1;
+            zCombo_int32_1 = 0;
         }
     }
 }
@@ -193,8 +194,8 @@ void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
 void zCombo_HideImmediately()
 {
     if (comboHUD != NULL) {
-        // This is probably wrong, but generates the right code
-        // Something is likely not correct with widget_chunk
+        // TODO: This is probably wrong, but generates the right code.
+        // Something is likely not correct with widget_chunk, see definition.
         comboHUD->w.text[4] = '\0';
     }
 }

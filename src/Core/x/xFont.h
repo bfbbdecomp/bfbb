@@ -7,7 +7,7 @@
 
 struct xTextAsset
 {
-	uint32 len;
+    uint32 len;
 };
 
 struct xfont

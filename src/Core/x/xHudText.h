@@ -4,19 +4,19 @@
 #include "xHud.h"
 #include "xFont.h"
 
-namespace xhud {
-	
-struct text_widget : widget
+namespace xhud
 {
-	int8 text[128];
-	xtextbox tb;
+    struct text_widget : widget
+    {
+        int8 text[128];
+        xtextbox tb;
 
-	void render();
-	void update(float32 dt);
-	uint8 is(uint32 id);
-	void destroy();
-	void setup();
-};
+        void render();
+        void update(float32 dt);
+        uint8 is(uint32 id);
+        void destroy();
+        void setup();
+    };
 
 }; // namespace xhud
 
