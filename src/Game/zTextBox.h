@@ -63,14 +63,11 @@ struct ztextbox : xBase
 
     struct
     {
-        struct
-        {
-            bool active : 1;
-            bool dirty : 1;
-            bool show_backdrop : 1;
-            bool visible : 1;
-            bool hack_invisible : 1;
-        };
+        bool active : 1;
+        bool dirty : 1;
+        bool show_backdrop : 1;
+        bool visible : 1;
+        bool hack_invisible : 1;
     } flag;
     asset_type* asset;
     xtextbox tb;
@@ -79,6 +76,8 @@ struct ztextbox : xBase
     ztextbox* next;
     ztextbox* prev;
     RwRaster* bgtex;
+
+    bool visible();
 };
 
 #endif
