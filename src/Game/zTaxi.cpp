@@ -54,42 +54,23 @@ void zTaxi_Load(zTaxi* taxi, xSerial* s)
     xBaseLoad((xBase*)taxi, s);
 }
 
-#if 1
-
-// func_801725DC
-#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
-
-#else
-
-// Can't seem to do comparisons quite right for the conditions surrounding xBaseEnable(to);
 int32 zTaxiEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3)
 {
-    if ((int32)toEvent != eEventDisable)
+    switch (toEvent)
     {
-        if (((int)toEvent < eEventDisable) && (eEventEnable <= (int)toEvent))
-        {
-            xBaseEnable(to);
-        }
-    }
-    else
-    {
+    case eEventSceneBegin:
+        break;
+
+    case eEventEnable:
+        xBaseEnable(to);
+        break;
+
+    case eEventDisable:
         xBaseDisable(to);
+        break;
     }
-    return 1;
-
-    /*switch (toEvent)
-    {
-    	case eEventDisable:
-        	xBaseDisable(to);
-        	break;
-    	case eEventEnable:
-        	xBaseEnable(to);
-       		break;
-    }
-    return eEventEnable;*/
+    return eEventEnable;
 }
-
-#endif
 
 void taxiCB::on_start()
 {
