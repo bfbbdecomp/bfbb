@@ -4,132 +4,6 @@
 
 .section .text  # 0x80035494 - 0x80035A00
 
-.global xMovePointInit__FP10xMovePointP15xMovePointAsset
-xMovePointInit__FP10xMovePointP15xMovePointAsset:
-/* 80035494 00032294  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80035498 00032298  7C 08 02 A6 */	mflr r0
-/* 8003549C 0003229C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800354A0 000322A0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800354A4 000322A4  7C 9F 23 78 */	mr r31, r4
-/* 800354A8 000322A8  93 C1 00 08 */	stw r30, 8(r1)
-/* 800354AC 000322AC  7C 7E 1B 78 */	mr r30, r3
-/* 800354B0 000322B0  4B FD 3F 51 */	bl xBaseInit__FP5xBaseP10xBaseAsset
-/* 800354B4 000322B4  93 FE 00 10 */	stw r31, 0x10(r30)
-/* 800354B8 000322B8  38 00 00 00 */	li r0, 0
-/* 800354BC 000322BC  80 7E 00 10 */	lwz r3, 0x10(r30)
-/* 800354C0 000322C0  38 63 00 08 */	addi r3, r3, 8
-/* 800354C4 000322C4  90 7E 00 14 */	stw r3, 0x14(r30)
-/* 800354C8 000322C8  88 7F 00 16 */	lbz r3, 0x16(r31)
-/* 800354CC 000322CC  98 7E 00 24 */	stb r3, 0x24(r30)
-/* 800354D0 000322D0  C0 1F 00 1C */	lfs f0, 0x1c(r31)
-/* 800354D4 000322D4  D0 1E 00 28 */	stfs f0, 0x28(r30)
-/* 800354D8 000322D8  90 1E 00 2C */	stw r0, 0x2c(r30)
-/* 800354DC 000322DC  A0 9F 00 1A */	lhz r4, 0x1a(r31)
-/* 800354E0 000322E0  28 04 00 00 */	cmplwi r4, 0
-/* 800354E4 000322E4  41 82 00 1C */	beq lbl_80035500
-/* 800354E8 000322E8  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
-/* 800354EC 000322EC  54 84 13 BA */	rlwinm r4, r4, 2, 0xe, 0x1d
-/* 800354F0 000322F0  38 A0 00 00 */	li r5, 0
-/* 800354F4 000322F4  4B FF E4 4D */	bl xMemAlloc__FUiUii
-/* 800354F8 000322F8  90 7E 00 18 */	stw r3, 0x18(r30)
-/* 800354FC 000322FC  48 00 00 08 */	b lbl_80035504
-lbl_80035500:
-/* 80035500 00032300  90 1E 00 18 */	stw r0, 0x18(r30)
-lbl_80035504:
-/* 80035504 00032304  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80035508 00032308  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8003550C 0003230C  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80035510 00032310  7C 08 03 A6 */	mtlr r0
-/* 80035514 00032314  38 21 00 10 */	addi r1, r1, 0x10
-/* 80035518 00032318  4E 80 00 20 */	blr 
-
-.global xMovePointSave__FP10xMovePointP7xSerial
-xMovePointSave__FP10xMovePointP7xSerial:
-/* 8003551C 0003231C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80035520 00032320  7C 08 02 A6 */	mflr r0
-/* 80035524 00032324  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035528 00032328  4B FD 3F 25 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 8003552C 0003232C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80035530 00032330  7C 08 03 A6 */	mtlr r0
-/* 80035534 00032334  38 21 00 10 */	addi r1, r1, 0x10
-/* 80035538 00032338  4E 80 00 20 */	blr 
-
-.global xMovePointLoad__FP10xMovePointP7xSerial
-xMovePointLoad__FP10xMovePointP7xSerial:
-/* 8003553C 0003233C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80035540 00032340  7C 08 02 A6 */	mflr r0
-/* 80035544 00032344  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035548 00032348  4B FD 3F 55 */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 8003554C 0003234C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80035550 00032350  7C 08 03 A6 */	mtlr r0
-/* 80035554 00032354  38 21 00 10 */	addi r1, r1, 0x10
-/* 80035558 00032358  4E 80 00 20 */	blr 
-
-.global xMovePointReset__FP10xMovePoint
-xMovePointReset__FP10xMovePoint:
-/* 8003555C 0003235C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80035560 00032360  7C 08 02 A6 */	mflr r0
-/* 80035564 00032364  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035568 00032368  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8003556C 0003236C  7C 7F 1B 78 */	mr r31, r3
-/* 80035570 00032370  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 80035574 00032374  4B FD 3F 85 */	bl xBaseReset__FP5xBaseP10xBaseAsset
-/* 80035578 00032378  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 8003557C 0003237C  88 03 00 16 */	lbz r0, 0x16(r3)
-/* 80035580 00032380  98 1F 00 24 */	stb r0, 0x24(r31)
-/* 80035584 00032384  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 80035588 00032388  C0 03 00 1C */	lfs f0, 0x1c(r3)
-/* 8003558C 0003238C  D0 1F 00 28 */	stfs f0, 0x28(r31)
-/* 80035590 00032390  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80035594 00032394  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80035598 00032398  7C 08 03 A6 */	mtlr r0
-/* 8003559C 0003239C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800355A0 000323A0  4E 80 00 20 */	blr 
-
-.global xMovePointSetup__FP10xMovePointP6xScene
-xMovePointSetup__FP10xMovePointP6xScene:
-/* 800355A4 000323A4  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800355A8 000323A8  7C 08 02 A6 */	mflr r0
-/* 800355AC 000323AC  90 01 00 24 */	stw r0, 0x24(r1)
-/* 800355B0 000323B0  38 00 00 00 */	li r0, 0
-/* 800355B4 000323B4  BF 61 00 0C */	stmw r27, 0xc(r1)
-/* 800355B8 000323B8  7C 7F 1B 78 */	mr r31, r3
-/* 800355BC 000323BC  7C 9B 23 78 */	mr r27, r4
-/* 800355C0 000323C0  3B 80 00 00 */	li r28, 0
-/* 800355C4 000323C4  90 03 00 20 */	stw r0, 0x20(r3)
-/* 800355C8 000323C8  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 800355CC 000323CC  3B A3 00 28 */	addi r29, r3, 0x28
-/* 800355D0 000323D0  48 00 00 48 */	b lbl_80035618
-lbl_800355D4:
-/* 800355D4 000323D4  57 9E 13 BA */	rlwinm r30, r28, 2, 0xe, 0x1d
-/* 800355D8 000323D8  7F 63 DB 78 */	mr r3, r27
-/* 800355DC 000323DC  7C 9D F0 2E */	lwzx r4, r29, r30
-/* 800355E0 000323E0  48 00 A0 09 */	bl xSceneResolvID__FP6xSceneUi
-/* 800355E4 000323E4  80 9F 00 18 */	lwz r4, 0x18(r31)
-/* 800355E8 000323E8  3B 9C 00 01 */	addi r28, r28, 1
-/* 800355EC 000323EC  7C 64 F1 2E */	stwx r3, r4, r30
-/* 800355F0 000323F0  80 7F 00 18 */	lwz r3, 0x18(r31)
-/* 800355F4 000323F4  80 9F 00 20 */	lwz r4, 0x20(r31)
-/* 800355F8 000323F8  7C 63 F0 2E */	lwzx r3, r3, r30
-/* 800355FC 000323FC  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 80035600 00032400  A0 03 00 14 */	lhz r0, 0x14(r3)
-/* 80035604 00032404  7C 04 02 14 */	add r0, r4, r0
-/* 80035608 00032408  90 1F 00 20 */	stw r0, 0x20(r31)
-/* 8003560C 0003240C  80 7F 00 18 */	lwz r3, 0x18(r31)
-/* 80035610 00032410  7C 63 F0 2E */	lwzx r3, r3, r30
-/* 80035614 00032414  93 E3 00 1C */	stw r31, 0x1c(r3)
-lbl_80035618:
-/* 80035618 00032418  80 7F 00 10 */	lwz r3, 0x10(r31)
-/* 8003561C 0003241C  57 84 04 3E */	clrlwi r4, r28, 0x10
-/* 80035620 00032420  A0 03 00 1A */	lhz r0, 0x1a(r3)
-/* 80035624 00032424  7C 04 00 40 */	cmplw r4, r0
-/* 80035628 00032428  41 80 FF AC */	blt lbl_800355D4
-/* 8003562C 0003242C  BB 61 00 0C */	lmw r27, 0xc(r1)
-/* 80035630 00032430  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80035634 00032434  7C 08 03 A6 */	mtlr r0
-/* 80035638 00032438  38 21 00 20 */	addi r1, r1, 0x20
-/* 8003563C 0003243C  4E 80 00 20 */	blr 
-
 .global xMovePointSplineSetup__FP10xMovePoint
 xMovePointSplineSetup__FP10xMovePoint:
 /* 80035640 00032440  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -224,15 +98,6 @@ lbl_80035784:
 /* 80035798 00032598  38 21 00 50 */	addi r1, r1, 0x50
 /* 8003579C 0003259C  4E 80 00 20 */	blr 
 
-.global xMovePointSplineDestroy__FP10xMovePoint
-xMovePointSplineDestroy__FP10xMovePoint:
-/* 800357A0 000325A0  80 03 00 2C */	lwz r0, 0x2c(r3)
-/* 800357A4 000325A4  28 00 00 00 */	cmplwi r0, 0
-/* 800357A8 000325A8  4D 82 00 20 */	beqlr 
-/* 800357AC 000325AC  38 00 00 00 */	li r0, 0
-/* 800357B0 000325B0  90 03 00 2C */	stw r0, 0x2c(r3)
-/* 800357B4 000325B4  4E 80 00 20 */	blr 
-
 .global xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3
 xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3:
 /* 800357B8 000325B8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -322,11 +187,6 @@ lbl_800358D0:
 /* 800358D8 000326D8  7C 08 03 A6 */	mtlr r0
 /* 800358DC 000326DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800358E0 000326E0  4E 80 00 20 */	blr 
-
-.global xMovePointGetPos__FPC10xMovePoint
-xMovePointGetPos__FPC10xMovePoint:
-/* 800358E4 000326E4  80 63 00 14 */	lwz r3, 0x14(r3)
-/* 800358E8 000326E8  4E 80 00 20 */	blr 
 
 .global xVec3Hdng__FP5xVec3PC5xVec3PC5xVec3
 xVec3Hdng__FP5xVec3PC5xVec3PC5xVec3:
