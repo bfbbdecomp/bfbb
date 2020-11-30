@@ -16,7 +16,6 @@
 #include "zEntTeleportBox.h"
 
 extern zGlobals globals;
-extern int32 gCurrentPlayer;
 extern uint32 sCurrentStreamSndID;
 
 extern uint32 sShouldBubbleBowl;

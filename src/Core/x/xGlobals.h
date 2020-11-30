@@ -35,6 +35,8 @@ struct xGlobals
     iFogParams fog;
     iFogParams fogA;
     iFogParams fogB;
+
+    // 0x6B0 in globals
     iTime fog_t0;
     iTime fog_t1;
     int32 option_vibration;
@@ -44,6 +46,8 @@ struct xGlobals
     uint8 NoMusic;
     int8 currentActivePad;
     uint8 firstStartPressed;
+
+    // 0x6D4 in globals
     uint32 minVSyncCnt;
     uint8 dontShowPadMessageDuringLoadingOrCutScene;
     uint8 autoSaveFeature;

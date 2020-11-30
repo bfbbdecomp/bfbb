@@ -84,12 +84,21 @@ enum _tagePlayerSnd
     ePlayerSnd_Total
 };
 
+// TODO: Why are there two of these enums with the same effect, should there be?
 enum _zPlayerType
 {
     ePlayer_SB,
     ePlayer_Patrick,
     ePlayer_Sandy,
     ePlayer_MAXTYPES
+};
+
+enum _CurrentPlayer
+{
+    eCurrentPlayerSpongeBob,
+    eCurrentPlayerPatrick,
+    eCurrentPlayerSandy,
+    eCurrentPlayerCount
 };
 
 enum _zPlayerWallJumpState
@@ -214,6 +223,8 @@ struct zPlayerLassoInfo
     xAnimState* zeroAnim;
 };
 
+extern _CurrentPlayer gCurrentPlayer;
+
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
 
 uint32 WalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
@@ -239,5 +250,6 @@ void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 
 void zEntPlayerControlOff(zControlOwner owner);
+void zEntPlayerControlOn(zControlOwner owner);
 
 #endif

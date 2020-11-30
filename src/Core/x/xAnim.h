@@ -129,9 +129,13 @@ struct xAnimSingle
     xAnimState* State;
     float32 Time;
     float32 CurrentSpeed;
+
+    // Offset: 0x10
     float32 BilinearLerp[2];
     xAnimEffect* Effect;
     uint32 ActiveCount;
+
+    // Offset: 0x20
     float32 LastTime;
     xAnimActiveEffect* ActiveList;
     xAnimPlay* Play;
