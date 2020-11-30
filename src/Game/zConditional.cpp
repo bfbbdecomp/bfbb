@@ -6,8 +6,6 @@
 #include "zScene.h"
 #include "../Core/x/xEvent.h"
 
-extern zVarEntry zVarEntryTable[];
-
 int32 zConditionalEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
 
 // func_80052558
