@@ -11,6 +11,7 @@
 
 struct zGlobalSettings
 {
+	// 0x874 in globals
 	uint16 AnalogMin;
 	uint16 AnalogMax;
 	float32 SundaeTime;
@@ -123,6 +124,8 @@ struct zPlayerGlobals
 {
 	// 0x6E0 in globals
 	zEnt ent;
+
+	// 0x7B4 in globals
 	xEntShadow entShadow_embedded;
 	xShadowSimpleCache simpShadow_embedded;
 

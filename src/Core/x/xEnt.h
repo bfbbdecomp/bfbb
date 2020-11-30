@@ -78,9 +78,12 @@ struct xEnt : xBase
         xVec3* normals;
     };
 
+    // Offset: 0x10
     xEntAsset* asset;
     uint16 idx;
     uint16 num_updates;
+
+    // Offset: 0x18
     uint8 flags;
     uint8 miscflags;
     uint8 subType;
@@ -89,22 +92,34 @@ struct xEnt : xBase
     uint8 isCulled;
     uint8 driving_count;
     uint8 num_ffx;
+
+    // Offset: 0x20
     uint8 collType;
     uint8 collLev;
     uint8 chkby;
     uint8 penby;
+
+    // Offset: 0x24
     xModelInstance* model;
     xModelInstance* collModel;
     xModelInstance* camcollModel;
     xLightKit* lightKit;
+
+    // Offset: 0x34
     xEntUpdateCallback update;
     xEntUpdateCallback endUpdate;
     xEntBoundUpdateCallback bupdate;
     xEntMoveCallback move;
+
+    // Offset: 0x44
     xEntRenderCallback render;
     xEntFrame* frame;
     xEntCollis* collis;
+
+    // Offset: 0x50
     xGridBound gridb;
+
+    // Offset: 0x64
     xBound bound;
     xEntTranslateCallback transl;
     xFFX* ffx;
@@ -124,5 +139,7 @@ struct xEntShadow
     float32 dst_cast;
     float32 radius[2];
 };
+
+uint32 xEntIsVisible(const xEnt* ent);
 
 #endif
