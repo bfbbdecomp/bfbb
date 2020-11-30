@@ -223,6 +223,8 @@ uint32 RunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 RunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 RunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 
+uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+
 uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3);

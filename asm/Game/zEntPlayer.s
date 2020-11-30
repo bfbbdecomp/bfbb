@@ -3188,28 +3188,6 @@ BBashToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80068ED4 00065CD4  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 80068ED8 00065CD8  4E 80 00 20 */	blr 
 
-BubbleBounceCheck__FP15xAnimTransitionP11xAnimSinglePv:
-/* 80068EDC 00065CDC  3C 60 80 3C */	lis r3, globals@ha
-/* 80068EE0 00065CE0  38 63 05 58 */	addi r3, r3, globals@l
-/* 80068EE4 00065CE4  80 03 1A FC */	lwz r0, 0x1afc(r3)
-/* 80068EE8 00065CE8  2C 00 00 00 */	cmpwi r0, 0
-/* 80068EEC 00065CEC  41 82 00 0C */	beq lbl_80068EF8
-/* 80068EF0 00065CF0  38 60 00 00 */	li r3, 0
-/* 80068EF4 00065CF4  4E 80 00 20 */	blr 
-lbl_80068EF8:
-/* 80068EF8 00065CF8  80 03 17 88 */	lwz r0, 0x1788(r3)
-/* 80068EFC 00065CFC  38 80 00 00 */	li r4, 0
-/* 80068F00 00065D00  28 00 00 00 */	cmplwi r0, 0
-/* 80068F04 00065D04  40 82 00 18 */	bne lbl_80068F1C
-/* 80068F08 00065D08  80 63 03 1C */	lwz r3, 0x31c(r3)
-/* 80068F0C 00065D0C  80 03 00 30 */	lwz r0, 0x30(r3)
-/* 80068F10 00065D10  54 00 03 9D */	rlwinm. r0, r0, 0, 0xe, 0xe
-/* 80068F14 00065D14  41 82 00 08 */	beq lbl_80068F1C
-/* 80068F18 00065D18  38 80 00 01 */	li r4, 1
-lbl_80068F1C:
-/* 80068F1C 00065D1C  54 83 06 3E */	clrlwi r3, r4, 0x18
-/* 80068F20 00065D20  4E 80 00 20 */	blr 
-
 BubbleBounceCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80068F24 00065D24  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80068F28 00065D28  7C 08 02 A6 */	mflr r0

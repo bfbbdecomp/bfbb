@@ -229,8 +229,24 @@ void HealthReset()
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBashToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_80068EDC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BubbleBounceCheck__FP15xAnimTransitionP11xAnimSinglePv")
+// #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+//                    "BubbleBounceCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    if (globals.player.cheat_mode)
+    {
+        return false;
+    }
+
+    bool canBounce = false;
+
+    if (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000) != 0)
+    {
+        canBounce = true;
+    }
+
+    return canBounce;
+}
 
 // func_80068F24
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBounceCB__FP15xAnimTransitionP11xAnimSinglePv")
