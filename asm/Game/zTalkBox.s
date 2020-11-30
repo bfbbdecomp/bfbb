@@ -2116,7 +2116,7 @@ stop_wait__22_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_FR8ztalkboxPCfUl:
 /* 801322F8 0012F0F8  48 00 00 2C */	b lbl_80132324
 lbl_801322FC:
 /* 801322FC 0012F0FC  C0 3E 00 00 */	lfs f1, 0(r30)
-/* 80132300 0012F100  48 0B B0 DD */	bl func_801ED3DC
+/* 80132300 0012F100  48 0B B0 DD */	bl __cvt_fp2unsigned
 /* 80132304 0012F104  28 03 00 00 */	cmplwi r3, 0
 /* 80132308 0012F108  41 82 00 14 */	beq lbl_8013231C
 /* 8013230C 0012F10C  28 03 00 20 */	cmplwi r3, 0x20
