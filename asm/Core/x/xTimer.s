@@ -14,7 +14,7 @@ GetRandomizedTime__FP11xTimerAsset:
 /* 8004D208 0004A008  C0 22 87 98 */	lfs f1, lbl_803CD118-_SDA2_BASE_(r2)
 /* 8004D20C 0004A00C  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 8004D210 0004A010  EC 21 00 32 */	fmuls f1, f1, f0
-/* 8004D214 0004A014  48 1A 01 C9 */	bl func_801ED3DC
+/* 8004D214 0004A014  48 1A 01 C9 */	bl __cvt_fp2unsigned
 /* 8004D218 0004A018  7C 7F 1B 79 */	or. r31, r3, r3
 /* 8004D21C 0004A01C  40 82 00 0C */	bne lbl_8004D228
 /* 8004D220 0004A020  C0 3E 00 08 */	lfs f1, 8(r30)

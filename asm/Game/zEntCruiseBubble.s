@@ -2099,7 +2099,7 @@ add_trail_sample__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 80058E4C 00055C4C  C0 48 00 FC */	lfs f2, 0xfc(r8)
 /* 80058E50 00055C50  EC 21 00 BA */	fmadds f1, f1, f2, f0
 /* 80058E54 00055C54  D0 3A 01 10 */	stfs f1, 0x110(r26)
-/* 80058E58 00055C58  48 19 45 85 */	bl func_801ED3DC
+/* 80058E58 00055C58  48 19 45 85 */	bl __cvt_fp2unsigned
 /* 80058E5C 00055C5C  7C 7E 1B 79 */	or. r30, r3, r3
 /* 80058E60 00055C60  41 82 01 E0 */	beq lbl_80059040
 /* 80058E64 00055C64  3C 00 43 30 */	lis r0, 0x4330
@@ -7998,7 +7998,7 @@ reset_quadrants__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_
 /* 8005E290 0005B090  C8 01 00 08 */	lfd f0, 8(r1)
 /* 8005E294 0005B094  EC 20 08 28 */	fsubs f1, f0, f1
 /* 8005E298 0005B098  4B FA C5 65 */	bl xsqrt__Ff
-/* 8005E29C 0005B09C  48 18 F1 41 */	bl func_801ED3DC
+/* 8005E29C 0005B09C  48 18 F1 41 */	bl __cvt_fp2unsigned
 /* 8005E2A0 0005B0A0  38 03 FF FF */	addi r0, r3, -1
 /* 8005E2A4 0005B0A4  3C 80 80 2E */	lis r4, lbl_802DC920@ha
 /* 8005E2A8 0005B0A8  7C 1E 02 14 */	add r0, r30, r0

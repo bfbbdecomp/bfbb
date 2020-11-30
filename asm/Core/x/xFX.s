@@ -4397,7 +4397,7 @@ refresh_config__9xFXRibbonFv:
 /* 8002A468 00027268  C0 22 83 B8 */	lfs f1, lbl_803CCD38-_SDA2_BASE_(r2)
 /* 8002A46C 0002726C  C0 03 00 00 */	lfs f0, 0(r3)
 /* 8002A470 00027270  EC 21 00 32 */	fmuls f1, f1, f0
-/* 8002A474 00027274  48 1C 2F 69 */	bl func_801ED3DC
+/* 8002A474 00027274  48 1C 2F 69 */	bl __cvt_fp2unsigned
 /* 8002A478 00027278  90 7F 01 3C */	stw r3, 0x13c(r31)
 /* 8002A47C 0002727C  88 1F 00 10 */	lbz r0, 0x10(r31)
 /* 8002A480 00027280  28 00 00 00 */	cmplwi r0, 0
@@ -4607,7 +4607,7 @@ update__9xFXRibbonFf:
 /* 8002A73C 0002753C  48 00 18 6D */	bl debug_update__9xFXRibbonFf
 /* 8002A740 00027540  C0 02 83 B8 */	lfs f0, lbl_803CCD38-_SDA2_BASE_(r2)
 /* 8002A744 00027544  EC 20 07 F2 */	fmuls f1, f0, f31
-/* 8002A748 00027548  48 1C 2C 95 */	bl func_801ED3DC
+/* 8002A748 00027548  48 1C 2C 95 */	bl __cvt_fp2unsigned
 /* 8002A74C 0002754C  80 1F 01 38 */	lwz r0, 0x138(r31)
 /* 8002A750 00027550  7C 00 1A 14 */	add r0, r0, r3
 /* 8002A754 00027554  90 1F 01 38 */	stw r0, 0x138(r31)

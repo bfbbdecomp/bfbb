@@ -966,7 +966,7 @@ zVarEntryCB_SndMusicVol__FPv:
 /* 800BE108 000BAF08  C8 02 96 30 */	lfd f0, volumeMod2-_SDA2_BASE_(r2)
 /* 800BE10C 000BAF0C  FC 42 00 72 */	fmul f2, f2, f1
 /* 800BE110 000BAF10  FC 20 10 2A */	fadd f1, f0, f2
-/* 800BE114 000BAF14  48 12 F2 C9 */	bl func_801ED3DC
+/* 800BE114 000BAF14  48 12 F2 C9 */	bl __cvt_fp2unsigned
 /* 800BE118 000BAF18  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BE11C 000BAF1C  7C 08 03 A6 */	mtlr r0
 /* 800BE120 000BAF20  38 21 00 10 */	addi r1, r1, 0x10
@@ -984,7 +984,7 @@ zVarEntryCB_SndFXVol__FPv:
 /* 800BE144 000BAF44  C8 02 96 30 */	lfd f0, volumeMod2-_SDA2_BASE_(r2)
 /* 800BE148 000BAF48  FC 42 00 72 */	fmul f2, f2, f1
 /* 800BE14C 000BAF4C  FC 20 10 2A */	fadd f1, f0, f2
-/* 800BE150 000BAF50  48 12 F2 8D */	bl func_801ED3DC
+/* 800BE150 000BAF50  48 12 F2 8D */	bl __cvt_fp2unsigned
 /* 800BE154 000BAF54  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800BE158 000BAF58  7C 08 03 A6 */	mtlr r0
 /* 800BE15C 000BAF5C  38 21 00 10 */	addi r1, r1, 0x10
