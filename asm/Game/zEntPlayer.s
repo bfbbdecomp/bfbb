@@ -3220,16 +3220,6 @@ BubbleBounceCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80068F94 00065D94  38 21 00 10 */	addi r1, r1, 0x10
 /* 80068F98 00065D98  4E 80 00 20 */	blr 
 
-BBounceAttackCB__FP15xAnimTransitionP11xAnimSinglePv:
-/* 80068F9C 00065D9C  3C 80 80 3C */	lis r4, globals@ha
-/* 80068FA0 00065DA0  38 60 00 00 */	li r3, 0
-/* 80068FA4 00065DA4  38 84 05 58 */	addi r4, r4, globals@l
-/* 80068FA8 00065DA8  C0 04 09 38 */	lfs f0, 0x938(r4)
-/* 80068FAC 00065DAC  80 84 07 28 */	lwz r4, 0x728(r4)
-/* 80068FB0 00065DB0  FC 00 00 50 */	fneg f0, f0
-/* 80068FB4 00065DB4  D0 04 00 D8 */	stfs f0, 0xd8(r4)
-/* 80068FB8 00065DB8  4E 80 00 20 */	blr 
-
 BBounceStrikeCheck__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80068FBC 00065DBC  3C 60 80 3C */	lis r3, globals@ha
 /* 80068FC0 00065DC0  38 00 00 00 */	li r0, 0
