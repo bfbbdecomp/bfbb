@@ -162,7 +162,6 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
             gBusStopIsRunning = 0;
             break;
 
-
         case 2:
             zEntEvent(zBusStop_Strings, eEventUIFocusOff_Unselect);
             zEntPlayerControlOff(CONTROL_OWNER_BUS_STOP);

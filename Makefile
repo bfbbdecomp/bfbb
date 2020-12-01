@@ -110,6 +110,7 @@ $(DOL): $(ELF) | tools
 
 clean:
 	rm -f $(DOL) $(ELF) $(O_FILES) $(MAP)
+	rm -rf .pragma
 	$(MAKE) -C tools clean
 
 tools:
