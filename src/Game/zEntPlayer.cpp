@@ -258,8 +258,10 @@ uint32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 }
 
 // func_80068FBC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BBounceStrikeCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    return globals.player.JumpState == 0 || globals.player.JumpState == 1;
+}
 
 // func_80068FE8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceStrikeCB__FP15xAnimTransitionP11xAnimSinglePv")
