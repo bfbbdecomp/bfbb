@@ -59,6 +59,7 @@ struct xVec4
     float32 w;
 };
 
+void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 
 #endif
