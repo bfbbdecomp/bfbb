@@ -1,8 +1,12 @@
 #include <types.h>
 #include "../Core/x/xString.h"
 #include "../Core/x/xSnd.h"
+#include "../Core/x/xEnt.h"
+#include "../Core/x/xCounter.h"
 #include "zGameExtras.h"
+#include "zEntPlayer.h"
 #include "zGlobals.h"
+#include "zScene.h"
 
 extern int8 zGameExtras_strings[];
 
@@ -10,6 +14,7 @@ extern float32 zGameExtras_f_0;
 extern float32 zGameExtras_f_1;
 
 extern zGlobals globals;
+extern xEnt* sGalleryTitle;
 
 extern int32 g_currDay;
 extern int32 g_currMonth;
@@ -168,62 +173,114 @@ void GEC_cb_CruiseBubble()
 // func_8009A220
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_MonsterGallery__Fv")
 
-// func_8009A2C0
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_UnlockArtTheatre__Fv")
+void GEC_cb_UnlockArtTheatre()
+{
+    uint32 aid_theatreCounter = xStrHash(zGameExtras_strings + 120); // "HB01_FREE_MOVIE_PASS"
+    _xCounter* cntr = (_xCounter*)zSceneFindObject(aid_theatreCounter);
+    cntr->count = 1;
+    zEntPlayer_SNDPlay(ePlayerSnd_Taxi, zGameExtras_f_0);
+}
 
-// func_8009A304
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_ChaChing__Fv")
+void GEC_cb_ChaChing()
+{
+    zGlobalSettings* gs = &globals.player.g;
+    gs->ShinyValuePurple = 100;
+    gs->ShinyValueBlue = 50;
+    gs->ShinyValueGreen = 25;
+    gs->ShinyValueYellow = 10;
+    gs->ShinyValueRed = 5;
+
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 54); // "SBG01019"
+    xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME, zGameExtras_f_0);
+}
 
 // func_8009A380
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_RestoreHealth__Fv")
 
-// func_8009A424
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_ExpertMode__Fv")
+void GEC_cb_ExpertMode()
+{
+    GEC_dfltSound();
+}
 
-// func_8009A444
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_ShrapBobMode__Fv")
+void GEC_cb_ShrapBobMode()
+{
+    GEC_dfltSound();
+}
 
-// func_8009A464
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_NoPantsMode__Fv")
+void GEC_cb_NoPantsMode()
+{
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 159); // "SBG01023"
+    xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME, zGameExtras_f_0);
+}
 
 // func_8009A4B0
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_CruiseControl__Fv")
 
-// func_8009A56C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_SwapCCLR__Fv")
+void GEC_cb_SwapCCLR()
+{
+    GEC_dfltSound();
+}
 
-// func_8009A58C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_SwapCCUD__Fv")
+void GEC_cb_SwapCCUD()
+{
+    GEC_dfltSound();
+}
 
 // func_8009A5AC
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_villSound__Fv")
 
-// func_8009A6BC
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_BigPlank__Fv")
+void GEC_cb_BigPlank()
+{
+    GEC_villSound();
+}
 
-// func_8009A6DC
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_Medics__Fv")
+void GEC_cb_Medics()
+{
+    GEC_villSound();
+}
 
-// func_8009A6FC
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_DogTrix__Fv")
+void GEC_cb_DogTrix()
+{
+    GEC_villSound();
+}
 
-// func_8009A71C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_SmallPeep__Fv")
+void GEC_cb_SmallPeep()
+{
+    GEC_villSound();
+}
 
-// func_8009A73C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_SmallCostars__Fv")
+void GEC_cb_SmallCostars()
+{
+    GEC_villSound();
+}
 
-// func_8009A75C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_RichPeep__Fv")
+void GEC_cb_RichPeep()
+{
+    GEC_villSound();
+}
 
-// func_8009A77C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_PanHandle__Fv")
+void GEC_cb_PanHandle()
+{
+    GEC_villSound();
+}
 
-// func_8009A79C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGame_HackGalleryInit__Fv")
+void zGame_HackGalleryInit()
+{
+    uint32 obj = xStrHash(zGameExtras_strings + 263); // "KIOSK SELECT UIF"
+    sGalleryTitle = (xEnt*)zSceneFindObject(obj);
+}
 
 // func_8009A7D0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGame_HackIsGallery__Fv")
+#else
+uint32 zGame_HackIsGallery()
+{
+    // probably a ternary, only 2 lines in dwarf?
+    uint32 res = (sGalleryTitle == NULL || xEntIsVisible(sGalleryTitle) == 0) ? 0 : 1;
+    return res;
+}
+#endif
 
 // func_8009A810
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf")
