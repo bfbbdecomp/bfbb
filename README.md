@@ -1,6 +1,6 @@
 # SpongeBob SquarePants: Battle for Bikini Bottom
 
-This repo contains a WIP decompilation of SpongeBob SquarePants: Battle for Bikini Bottom (US).
+This repo contains a WIP decompilation of SpongeBob SquarePants: Battle for Bikini Bottom (US) for Nintendo GameCube.
 
 It builds the following DOL:
 
