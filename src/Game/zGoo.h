@@ -41,5 +41,6 @@ struct zFXGooInstance
 };
 
 void zGooStopTide();
+int32 zGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
 
 #endif
