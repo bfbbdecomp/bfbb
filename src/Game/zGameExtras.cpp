@@ -1,12 +1,33 @@
-#include "zGameExtras.h"
-
 #include <types.h>
+#include "../Core/x/xString.h"
+#include "../Core/x/xSnd.h"
+#include "zGameExtras.h"
+#include "zGlobals.h"
 
-// func_80099680
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_ExtrasFlags__Fv")
+extern int8 zGameExtras_strings[];
 
-// func_80099688
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_MoDay__FPiPi")
+extern float32 zGameExtras_f_0;
+extern float32 zGameExtras_f_1;
+
+extern zGlobals globals;
+
+extern int32 g_currDay;
+extern int32 g_currMonth;
+extern int32 g_gameExtraFlags;
+extern int32 g_flg_chEnabled;
+// extern int32 g_enableGameExtras;
+extern uint32 sCheatPressed[16];
+
+int32 zGameExtras_ExtrasFlags()
+{
+    return g_gameExtraFlags;
+}
+
+void zGameExtras_MoDay(int32* month, int32* day)
+{
+    *month = g_currMonth;
+    *day = g_currDay;
+}
 
 // func_8009969C
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneInit__Fv")
@@ -23,32 +44,81 @@
 // func_80099938
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "EGG_check_ExtrasFlags__FP7EGGItem")
 
-// func_80099B04
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_CheatFlags__Fv")
+int32 zGameExtras_CheatFlags()
+{
+    return g_flg_chEnabled;
+}
 
 // func_80099B0C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_NewGameReset__Fv")
+#else if
+void zGameExtras_NewGameReset()
+{
+    // very close to matching
+    g_flg_chEnabled = 0;
+    zGlobalSettings* gs = &globals.player.g;
+    gs->ShinyValuePurple = 50;
+    gs->ShinyValueBlue = 10;
+    gs->ShinyValueGreen = 5;
+    gs->ShinyValueYellow = 2;
+    gs->ShinyValueRed = 1;
+}
+#endif
 
-// func_80099B48
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_Save__FP7xSerial")
+void zGameExtras_Save(xSerial* xser)
+{
+    xser->Write(g_flg_chEnabled & 0xFFFF);
+}
 
-// func_80099B70
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_Load__FP7xSerial")
+void zGameExtras_Load(xSerial* xser)
+{
+    // local variable isn't defined as an array in the dwarf data
+    int32 keepers[2];
+    keepers[0] = 0;
+    xser->Read(keepers);
+    g_flg_chEnabled |= keepers[0];
+}
 
 // func_80099BAC
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "TestCheat__FPUi")
+#else
+// function not in dwarf files/PS2 version
+uint32 TestCheat(uint32* param_1)
+{
+    // no clue what's going on here...
+    uint32* var1;
+    if (param_1[15] == 0)
+    {
+        return 0;
+    }
+    param_1++;
+}
+#endif
 
-// func_80099CB4
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "AddToCheatPressed__FUi")
+// a cool example of loop unrolling done by the compiler
+void AddToCheatPressed(uint32 param_1)
+{
+    for (int32 i = 0; i < 15; i++)
+    {
+        sCheatPressed[i] = sCheatPressed[i + 1];
+    }
+    sCheatPressed[15] = param_1;
+}
 
 // func_80099D3C
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameCheats__Ff")
 
-// func_80099F0C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_CheatFlagAdd__Fi")
+void GEC_CheatFlagAdd(int32 bit)
+{
+    g_flg_chEnabled |= bit;
+}
 
-// func_80099F1C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_CheatFlagToggle__Fi")
+void GEC_CheatFlagToggle(int32 bit)
+{
+    g_flg_chEnabled ^= bit;
+}
 
 // func_80099F2C
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_dfltSound__Fv")
@@ -56,14 +126,44 @@
 // func_8009A058
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_AddShiny__Fv")
 
-// func_8009A0E0
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_AddSpatulas__Fv")
+void GEC_cb_AddSpatulas()
+{
+    zPlayerGlobals* pg = &globals.player;
 
-// func_8009A158
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_BubbleBowl__Fv")
+    // can only get this to match with a ternary operator
+    pg->Inv_Spatula = (pg->Inv_Spatula + 10 >= 100) ? 100 : pg->Inv_Spatula + 10;
 
-// func_8009A1BC
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_CruiseBubble__Fv")
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 63); // "gspatula_sb"
+    if (aid_snd != 0)
+    {
+        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
+                 zGameExtras_f_0);
+    }
+}
+
+void GEC_cb_BubbleBowl()
+{
+    globals.player.g.PowerUp[0] = true;
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 75); // "SBG01092"
+
+    if (aid_snd != 0)
+    {
+        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
+                 zGameExtras_f_0);
+    }
+}
+
+void GEC_cb_CruiseBubble()
+{
+    globals.player.g.PowerUp[1] = true;
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 84); // "SB_cruise_hit"
+
+    if (aid_snd != 0)
+    {
+        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
+                 zGameExtras_f_0);
+    }
+}
 
 // func_8009A220
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_MonsterGallery__Fv")
