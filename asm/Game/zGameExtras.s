@@ -709,58 +709,6 @@ lbl_8009A274:
 /* 8009A2B8 000970B8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8009A2BC 000970BC  4E 80 00 20 */	blr 
 
-GEC_cb_UnlockArtTheatre__Fv:
-/* 8009A2C0 000970C0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A2C4 000970C4  7C 08 02 A6 */	mflr r0
-/* 8009A2C8 000970C8  3C 60 80 26 */	lis r3, zGameExtras_strings@ha
-/* 8009A2CC 000970CC  38 63 CA 20 */	addi r3, r3, zGameExtras_strings@l
-/* 8009A2D0 000970D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A2D4 000970D4  38 63 00 78 */	addi r3, r3, 0x78
-/* 8009A2D8 000970D8  4B FB 1F 3D */	bl xStrHash__FPCc
-/* 8009A2DC 000970DC  48 01 A7 61 */	bl zSceneFindObject__FUi
-/* 8009A2E0 000970E0  38 00 00 01 */	li r0, 1
-/* 8009A2E4 000970E4  B0 03 00 14 */	sth r0, 0x14(r3)
-/* 8009A2E8 000970E8  38 60 00 25 */	li r3, 0x25
-/* 8009A2EC 000970EC  C0 22 90 F8 */	lfs f1, zGameExtras_f_0-_SDA2_BASE_(r2)
-/* 8009A2F0 000970F0  4B FE 64 A1 */	bl zEntPlayer_SNDPlay__F14_tagePlayerSndf
-/* 8009A2F4 000970F4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A2F8 000970F8  7C 08 03 A6 */	mtlr r0
-/* 8009A2FC 000970FC  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A300 00097100  4E 80 00 20 */	blr 
-
-GEC_cb_ChaChing__Fv:
-/* 8009A304 00097104  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A308 00097108  7C 08 02 A6 */	mflr r0
-/* 8009A30C 0009710C  3C 80 80 3C */	lis r4, globals@ha
-/* 8009A310 00097110  3C 60 80 26 */	lis r3, zGameExtras_strings@ha
-/* 8009A314 00097114  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A318 00097118  39 04 05 58 */	addi r8, r4, globals@l
-/* 8009A31C 0009711C  38 E0 00 64 */	li r7, 0x64
-/* 8009A320 00097120  38 C0 00 32 */	li r6, 0x32
-/* 8009A324 00097124  38 A0 00 19 */	li r5, 0x19
-/* 8009A328 00097128  38 80 00 0A */	li r4, 0xa
-/* 8009A32C 0009712C  38 00 00 05 */	li r0, 5
-/* 8009A330 00097130  38 63 CA 20 */	addi r3, r3, zGameExtras_strings@l
-/* 8009A334 00097134  90 E8 08 88 */	stw r7, 0x888(r8)
-/* 8009A338 00097138  38 63 00 36 */	addi r3, r3, 0x36
-/* 8009A33C 0009713C  90 C8 08 8C */	stw r6, 0x88c(r8)
-/* 8009A340 00097140  90 A8 08 90 */	stw r5, 0x890(r8)
-/* 8009A344 00097144  90 88 08 94 */	stw r4, 0x894(r8)
-/* 8009A348 00097148  90 08 08 98 */	stw r0, 0x898(r8)
-/* 8009A34C 0009714C  4B FB 1E C9 */	bl xStrHash__FPCc
-/* 8009A350 00097150  C0 42 90 F8 */	lfs f2, zGameExtras_f_0-_SDA2_BASE_(r2)
-/* 8009A354 00097154  38 80 00 80 */	li r4, 0x80
-/* 8009A358 00097158  C0 22 91 04 */	lfs f1, zGameExtras_f_1-_SDA2_BASE_(r2)
-/* 8009A35C 0009715C  38 A0 00 00 */	li r5, 0
-/* 8009A360 00097160  FC 60 10 90 */	fmr f3, f2
-/* 8009A364 00097164  38 C0 00 00 */	li r6, 0
-/* 8009A368 00097168  38 E0 00 00 */	li r7, 0
-/* 8009A36C 0009716C  4B FA E6 C1 */	bl xSndPlay__FUiffUiUiUi14sound_categoryf
-/* 8009A370 00097170  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A374 00097174  7C 08 03 A6 */	mtlr r0
-/* 8009A378 00097178  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A37C 0009717C  4E 80 00 20 */	blr 
-
 GEC_cb_RestoreHealth__Fv:
 /* 8009A380 00097180  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009A384 00097184  7C 08 02 A6 */	mflr r0
@@ -805,47 +753,6 @@ lbl_8009A414:
 /* 8009A418 00097218  7C 08 03 A6 */	mtlr r0
 /* 8009A41C 0009721C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009A420 00097220  4E 80 00 20 */	blr 
-
-GEC_cb_ExpertMode__Fv:
-/* 8009A424 00097224  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A428 00097228  7C 08 02 A6 */	mflr r0
-/* 8009A42C 0009722C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A430 00097230  4B FF FA FD */	bl GEC_dfltSound__Fv
-/* 8009A434 00097234  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A438 00097238  7C 08 03 A6 */	mtlr r0
-/* 8009A43C 0009723C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A440 00097240  4E 80 00 20 */	blr 
-
-GEC_cb_ShrapBobMode__Fv:
-/* 8009A444 00097244  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A448 00097248  7C 08 02 A6 */	mflr r0
-/* 8009A44C 0009724C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A450 00097250  4B FF FA DD */	bl GEC_dfltSound__Fv
-/* 8009A454 00097254  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A458 00097258  7C 08 03 A6 */	mtlr r0
-/* 8009A45C 0009725C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A460 00097260  4E 80 00 20 */	blr 
-
-GEC_cb_NoPantsMode__Fv:
-/* 8009A464 00097264  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A468 00097268  7C 08 02 A6 */	mflr r0
-/* 8009A46C 0009726C  3C 60 80 26 */	lis r3, zGameExtras_strings@ha
-/* 8009A470 00097270  38 63 CA 20 */	addi r3, r3, zGameExtras_strings@l
-/* 8009A474 00097274  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A478 00097278  38 63 00 9F */	addi r3, r3, 0x9f
-/* 8009A47C 0009727C  4B FB 1D 99 */	bl xStrHash__FPCc
-/* 8009A480 00097280  C0 42 90 F8 */	lfs f2, zGameExtras_f_0-_SDA2_BASE_(r2)
-/* 8009A484 00097284  38 80 00 80 */	li r4, 0x80
-/* 8009A488 00097288  C0 22 91 04 */	lfs f1, zGameExtras_f_1-_SDA2_BASE_(r2)
-/* 8009A48C 0009728C  38 A0 00 00 */	li r5, 0
-/* 8009A490 00097290  FC 60 10 90 */	fmr f3, f2
-/* 8009A494 00097294  38 C0 00 00 */	li r6, 0
-/* 8009A498 00097298  38 E0 00 00 */	li r7, 0
-/* 8009A49C 0009729C  4B FA E5 91 */	bl xSndPlay__FUiffUiUiUi14sound_categoryf
-/* 8009A4A0 000972A0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A4A4 000972A4  7C 08 03 A6 */	mtlr r0
-/* 8009A4A8 000972A8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A4AC 000972AC  4E 80 00 20 */	blr 
 
 GEC_cb_CruiseControl__Fv:
 /* 8009A4B0 000972B0  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -897,26 +804,6 @@ lbl_8009A55C:
 /* 8009A560 00097360  7C 08 03 A6 */	mtlr r0
 /* 8009A564 00097364  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009A568 00097368  4E 80 00 20 */	blr 
-
-GEC_cb_SwapCCLR__Fv:
-/* 8009A56C 0009736C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A570 00097370  7C 08 02 A6 */	mflr r0
-/* 8009A574 00097374  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A578 00097378  4B FF F9 B5 */	bl GEC_dfltSound__Fv
-/* 8009A57C 0009737C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A580 00097380  7C 08 03 A6 */	mtlr r0
-/* 8009A584 00097384  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A588 00097388  4E 80 00 20 */	blr 
-
-GEC_cb_SwapCCUD__Fv:
-/* 8009A58C 0009738C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A590 00097390  7C 08 02 A6 */	mflr r0
-/* 8009A594 00097394  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A598 00097398  4B FF F9 95 */	bl GEC_dfltSound__Fv
-/* 8009A59C 0009739C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A5A0 000973A0  7C 08 03 A6 */	mtlr r0
-/* 8009A5A4 000973A4  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A5A8 000973A8  4E 80 00 20 */	blr 
 
 GEC_villSound__Fv:
 /* 8009A5AC 000973AC  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -990,98 +877,12 @@ lbl_8009A6AC:
 /* 8009A6B4 000974B4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009A6B8 000974B8  4E 80 00 20 */	blr 
 
-GEC_cb_BigPlank__Fv:
-/* 8009A6BC 000974BC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A6C0 000974C0  7C 08 02 A6 */	mflr r0
-/* 8009A6C4 000974C4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A6C8 000974C8  4B FF FE E5 */	bl GEC_villSound__Fv
-/* 8009A6CC 000974CC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A6D0 000974D0  7C 08 03 A6 */	mtlr r0
-/* 8009A6D4 000974D4  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A6D8 000974D8  4E 80 00 20 */	blr 
-
-GEC_cb_Medics__Fv:
-/* 8009A6DC 000974DC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A6E0 000974E0  7C 08 02 A6 */	mflr r0
-/* 8009A6E4 000974E4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A6E8 000974E8  4B FF FE C5 */	bl GEC_villSound__Fv
-/* 8009A6EC 000974EC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A6F0 000974F0  7C 08 03 A6 */	mtlr r0
-/* 8009A6F4 000974F4  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A6F8 000974F8  4E 80 00 20 */	blr 
-
-GEC_cb_DogTrix__Fv:
-/* 8009A6FC 000974FC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A700 00097500  7C 08 02 A6 */	mflr r0
-/* 8009A704 00097504  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A708 00097508  4B FF FE A5 */	bl GEC_villSound__Fv
-/* 8009A70C 0009750C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A710 00097510  7C 08 03 A6 */	mtlr r0
-/* 8009A714 00097514  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A718 00097518  4E 80 00 20 */	blr 
-
-GEC_cb_SmallPeep__Fv:
-/* 8009A71C 0009751C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A720 00097520  7C 08 02 A6 */	mflr r0
-/* 8009A724 00097524  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A728 00097528  4B FF FE 85 */	bl GEC_villSound__Fv
-/* 8009A72C 0009752C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A730 00097530  7C 08 03 A6 */	mtlr r0
-/* 8009A734 00097534  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A738 00097538  4E 80 00 20 */	blr 
-
-GEC_cb_SmallCostars__Fv:
-/* 8009A73C 0009753C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A740 00097540  7C 08 02 A6 */	mflr r0
-/* 8009A744 00097544  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A748 00097548  4B FF FE 65 */	bl GEC_villSound__Fv
-/* 8009A74C 0009754C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A750 00097550  7C 08 03 A6 */	mtlr r0
-/* 8009A754 00097554  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A758 00097558  4E 80 00 20 */	blr 
-
-GEC_cb_RichPeep__Fv:
-/* 8009A75C 0009755C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A760 00097560  7C 08 02 A6 */	mflr r0
-/* 8009A764 00097564  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A768 00097568  4B FF FE 45 */	bl GEC_villSound__Fv
-/* 8009A76C 0009756C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A770 00097570  7C 08 03 A6 */	mtlr r0
-/* 8009A774 00097574  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A778 00097578  4E 80 00 20 */	blr 
-
-GEC_cb_PanHandle__Fv:
-/* 8009A77C 0009757C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A780 00097580  7C 08 02 A6 */	mflr r0
-/* 8009A784 00097584  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A788 00097588  4B FF FE 25 */	bl GEC_villSound__Fv
-/* 8009A78C 0009758C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A790 00097590  7C 08 03 A6 */	mtlr r0
-/* 8009A794 00097594  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A798 00097598  4E 80 00 20 */	blr 
-
-.global zGame_HackGalleryInit__Fv
-zGame_HackGalleryInit__Fv:
-/* 8009A79C 0009759C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A7A0 000975A0  7C 08 02 A6 */	mflr r0
-/* 8009A7A4 000975A4  3C 60 80 26 */	lis r3, zGameExtras_strings@ha
-/* 8009A7A8 000975A8  38 63 CA 20 */	addi r3, r3, zGameExtras_strings@l
-/* 8009A7AC 000975AC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A7B0 000975B0  38 63 01 07 */	addi r3, r3, 0x107
-/* 8009A7B4 000975B4  4B FB 1A 61 */	bl xStrHash__FPCc
-/* 8009A7B8 000975B8  48 01 A2 85 */	bl zSceneFindObject__FUi
-/* 8009A7BC 000975BC  90 6D 8F A0 */	stw r3, lbl_803CB8A0-_SDA_BASE_(r13)
-/* 8009A7C0 000975C0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A7C4 000975C4  7C 08 03 A6 */	mtlr r0
-/* 8009A7C8 000975C8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A7CC 000975CC  4E 80 00 20 */	blr 
-
 .global zGame_HackIsGallery__Fv
 zGame_HackIsGallery__Fv:
 /* 8009A7D0 000975D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009A7D4 000975D4  7C 08 02 A6 */	mflr r0
 /* 8009A7D8 000975D8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A7DC 000975DC  80 6D 8F A0 */	lwz r3, lbl_803CB8A0-_SDA_BASE_(r13)
+/* 8009A7DC 000975DC  80 6D 8F A0 */	lwz r3, sGalleryTitle-_SDA_BASE_(r13)
 /* 8009A7E0 000975E0  28 03 00 00 */	cmplwi r3, 0
 /* 8009A7E4 000975E4  41 82 00 18 */	beq lbl_8009A7FC
 /* 8009A7E8 000975E8  4B F7 3E 51 */	bl xEntIsVisible__FPC4xEnt
@@ -1238,7 +1039,8 @@ lbl_803CB89E:
 	.skip 0x1
 lbl_803CB89F:
 	.skip 0x1
-lbl_803CB8A0:
+.global sGalleryTitle
+sGalleryTitle:
 	.skip 0x8
 /* SPECULATION: link order */
 .global gGameMode
