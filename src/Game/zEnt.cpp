@@ -78,7 +78,8 @@
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetVector__FP16xModelAssetParamUiPc5xVec3P5xVec3")
 
 // func_80056310
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntGetShadowParams__FP4xEntP5xVec3PfQ210xEntShadow11radius_enum")
+#pragma GLOBAL_ASM("asm/Game/zEnt.s",                                                              \
+                   "zEntGetShadowParams__FP4xEntP5xVec3PfQ210xEntShadow11radius_enum")
 
 // func_80056480
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "xModelAnimCollStop__FR14xModelInstance")

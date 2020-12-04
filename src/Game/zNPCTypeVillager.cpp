@@ -81,7 +81,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "SelfSetup__12zNPCVillagerFv")
 
 // func_801040C4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "AnimPick__12zNPCVillagerFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s",                                                  \
+                   "AnimPick__12zNPCVillagerFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80104388
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "NPCMessage__12zNPCVillagerFP6NPCMsg")
@@ -105,7 +106,9 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "PlayerIsStaring__12zNPCVillagerFv")
 
 // func_80104838
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "AddTalking__12zNPCVillagerFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zNPCTypeVillager.s",                                                                 \
+    "AddTalking__12zNPCVillagerFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_80104930
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "FindMyConverse__12zNPCVillagerFv")
@@ -153,7 +156,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "SelfSetup__15zNPCMerManChairFv")
 
 // func_80105540
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "AnimPick__15zNPCMerManChairFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s",                                                  \
+                   "AnimPick__15zNPCMerManChairFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80105700
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "Process__15zNPCMerManChairFP6xScenef")
@@ -189,7 +193,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "say__12zNPCNewsFishFQ212zNPCNewsFish8say_enumi")
 
 // func_8010611C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUlii")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s",                                                  \
+                   "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUlii")
 
 // func_80106300
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "reset_said__12zNPCNewsFishFv")
@@ -222,7 +227,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "AddBallooning__14zNPCBalloonBoyFP7xPsyche")
 
 // func_80106908
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "AnimPick__14zNPCBalloonBoyFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s",                                                  \
+                   "AnimPick__14zNPCBalloonBoyFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80106A3C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "FolkHandleMail__14zNPCBalloonBoyFP6NPCMsg")
@@ -231,7 +237,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ParseSysEvent__14zNPCBalloonBoyFP11NPCSysEvent")
 
 // func_80106BBC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "PlatAnimSet__14zNPCBalloonBoyF16en_BBOY_PLATANIM")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s",                                                  \
+                   "PlatAnimSet__14zNPCBalloonBoyF16en_BBOY_PLATANIM")
 
 // func_80106C38
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "PlatAnimSync__14zNPCBalloonBoyFv")
@@ -303,7 +310,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "GenShadCacheRad__12zNPCVillagerFv")
 
 // func_80107524
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "get_said__12zNPCNewsFishFQ212zNPCNewsFish8say_enum")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s",                                                  \
+                   "get_said__12zNPCNewsFishFQ212zNPCNewsFish8say_enum")
 
 // func_80107538
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "Render__15zNPCBubbleBuddyFv")

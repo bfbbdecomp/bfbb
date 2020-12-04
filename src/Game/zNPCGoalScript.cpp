@@ -12,7 +12,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "Exit__14zNPCGoalScriptFfPv")
 
 // func_801247FC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "SysEvent__14zNPCGoalScriptFP5xBaseP5xBaseUiPCfP5xBasePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s",                                                    \
+                   "SysEvent__14zNPCGoalScriptFP5xBaseP5xBaseUiPCfP5xBasePi")
 
 // func_8012481C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "NPCMessage__14zNPCGoalScriptFP6NPCMsg")

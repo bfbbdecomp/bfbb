@@ -9,7 +9,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalDuplotron.s", "Enter__17zNPCGoalDuploLiveFfPv")
 
 // func_8012A090
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalDuplotron.s", "Process__17zNPCGoalDuploLiveFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalDuplotron.s",                                                 \
+                   "Process__17zNPCGoalDuploLiveFP11en_trantypefPvP6xScene")
 
 // func_8012A1DC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalDuplotron.s", "CheckPlayer__17zNPCGoalDuploLiveFv")

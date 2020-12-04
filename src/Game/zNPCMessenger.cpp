@@ -63,19 +63,23 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "NPCPS_freeMsg__FP6NPCMsg")
 
 // func_800EDA60
-#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "zNPCMsg_AreaNotify__FP10zNPCCommon13en_NPC_MSG_IDfi11en_NPCTYPES")
+#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s",                                                     \
+                   "zNPCMsg_AreaNotify__FP10zNPCCommon13en_NPC_MSG_IDfi11en_NPCTYPES")
 
 // func_800EDB38
-#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "zNPCMsg_AreaNotify__FP10zNPCCommon13en_NPC_MSG_IDfiP11en_NPCTYPES")
+#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s",                                                     \
+                   "zNPCMsg_AreaNotify__FP10zNPCCommon13en_NPC_MSG_IDfiP11en_NPCTYPES")
 
 // func_800EDC08
-#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "zNPCMsg_AreaNotify__FP10zNPCCommonP6NPCMsgfiP11en_NPCTYPES")
+#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s",                                                     \
+                   "zNPCMsg_AreaNotify__FP10zNPCCommonP6NPCMsgfiP11en_NPCTYPES")
 
 // func_800EDEB0
 #pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "zNPCMsg_AreaPlayerStun__FffP5xVec3")
 
 // func_800EE070
-#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "zNPCMsg_AreaNPCExplodeNoRobo__FP10zNPCCommonfPC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s",                                                     \
+                   "zNPCMsg_AreaNPCExplodeNoRobo__FP10zNPCCommonfPC5xVec3")
 
 // func_800EE2C0
 #pragma GLOBAL_ASM("asm/Game/zNPCMessenger.s", "IsAlive__10zNPCCommonFv")

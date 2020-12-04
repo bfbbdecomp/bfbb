@@ -36,7 +36,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SelfSetup__11zNPCAmbientFv")
 
 // func_801080A8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AnimPick__11zNPCAmbientFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
+                   "AnimPick__11zNPCAmbientFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80108100
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "NPCMessage__11zNPCAmbientFP6NPCMsg")
@@ -96,7 +97,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ActLikeOctopus__9zNPCJellyFv")
 
 // func_80108F04
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AnimPick__11zNPCNeptuneFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
+                   "AnimPick__11zNPCNeptuneFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80108FD8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ParseINI__11zNPCNeptuneFv")
@@ -108,7 +110,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__11zNPCNeptuneFP6xScenef")
 
 // func_80109224
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AnimPick__12zNPCMimeFishFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
+                   "AnimPick__12zNPCMimeFishFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_8010927C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__12zNPCMimeFishFv")

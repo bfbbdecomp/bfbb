@@ -78,7 +78,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "IsNearbyMover__11zNPCSpawnerFP6xBoundiP7xCollis")
 
 // func_8012B980
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "SetNPCStatus__11zNPCSpawnerFP10zNPCCommon16en_SM_NPC_STATUS")
+#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
+                   "SetNPCStatus__11zNPCSpawnerFP10zNPCCommon16en_SM_NPC_STATUS")
 
 // func_8012B9B8
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "StatForSP__11zNPCSpawnerFP10zMovePointi")
@@ -87,7 +88,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "StatForNPC__11zNPCSpawnerFP10zNPCCommon")
 
 // func_8012BC00
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "SpawnBeastie__11zNPCSpawnerFP11SMNPCStatusP10SMSPStatus")
+#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
+                   "SpawnBeastie__11zNPCSpawnerFP11SMNPCStatusP10SMSPStatus")
 
 // func_8012BD0C
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ToastedBeastie__11zNPCSpawnerFP10zNPCCommon")
@@ -99,10 +101,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ChildCleanup__11zNPCSpawnerFf")
 
 // func_8012BE78
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "xUtil_select_esc__0_10SMSPStatus_esc__1___FPP10SMSPStatusiPCf")
+#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
+                   "xUtil_select_esc__0_10SMSPStatus_esc__1___FPP10SMSPStatusiPCf")
 
 // func_8012BF8C
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "xUtil_select_esc__0_11SMNPCStatus_esc__1___FPP11SMNPCStatusiPCf")
+#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
+                   "xUtil_select_esc__0_11SMNPCStatus_esc__1___FPP11SMNPCStatusiPCf")
 
 // func_8012C0A0
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "IsOn__10zMovePointFv")

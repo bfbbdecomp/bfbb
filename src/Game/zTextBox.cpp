@@ -3,25 +3,37 @@
 #include <types.h>
 
 // func_80133E38
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "render_bk_fill__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
+#pragma GLOBAL_ASM("asm/Game/zTextBox.s",                                                          \
+                   "render_bk_fill__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
 
 // func_80133E7C
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "render_bk_tex_scale__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zTextBox.s",                                                                         \
+    "render_bk_tex_scale__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
 
 // func_80134064
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "set_vert__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FR18rwGameCube2DVertexffff10iColor_tagff")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zTextBox.s",                                                                         \
+    "set_vert__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FR18rwGameCube2DVertexffff10iColor_tagff")
 
 // func_8013409C
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "render_bk_tex_wrap__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zTextBox.s",                                                                         \
+    "render_bk_tex_wrap__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
 
 // func_801340A0
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "init_textbox__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FR8ztextbox")
+#pragma GLOBAL_ASM("asm/Game/zTextBox.s",                                                          \
+                   "init_textbox__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FR8ztextbox")
 
 // func_801342A4
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "parse_tag_blahblah__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zTextBox.s",                                                                         \
+    "parse_tag_blahblah__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
 
 // func_801342A8
-#pragma GLOBAL_ASM("asm/Game/zTextBox.s", "cb_dispatch__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zTextBox.s",                                                                         \
+    "cb_dispatch__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_801343E0
 #pragma GLOBAL_ASM("asm/Game/zTextBox.s", "load__8ztextboxFRCQ28ztextbox10asset_type")

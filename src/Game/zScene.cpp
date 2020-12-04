@@ -3,49 +3,65 @@
 #include <types.h>
 
 // func_800B0A28
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "count_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FPCc")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "count_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FPCc")
 
 // func_800B0AAC
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "add_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zScene")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "add_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zScene")
 
 // func_800B0B24
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "init_dynamic_type__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUiRCQ220_esc__2_unnamed_esc__2_zScene_cpp_esc__2_17dynamic_type_data")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zScene.s",                                                                           \
+    "init_dynamic_type__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUiRCQ220_esc__2_unnamed_esc__2_zScene_cpp_esc__2_17dynamic_type_data")
 
 // func_800B0C94
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "init_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "init_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FR6zSceneUi")
 
 // func_800B0D08
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_DefaultEnt__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_DefaultEnt__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B0E08
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Default__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Default__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B0EF0
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_MovePoint__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_MovePoint__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B0FC4
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_SBNPC__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_SBNPC__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B1088
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Player__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Player__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B116C
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Camera__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Camera__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B1238
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Surface__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Surface__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B12D4
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Gust__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Gust__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B1374
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Volume__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Volume__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B141C
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_LobMaster__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_LobMaster__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B1424
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInitFunc_Dispatcher__FP6zSceneP24zSceneObjectInstanceDescUi")
+#pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
+                   "zSceneInitFunc_Dispatcher__FP6zSceneP24zSceneObjectInstanceDescUi")
 
 // func_800B14F4
 #pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneSet__FP5xBaseUi")

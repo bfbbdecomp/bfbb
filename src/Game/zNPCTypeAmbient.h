@@ -1,6 +1,4 @@
 #ifndef ZNPCTYPEAMBIENT_H
 #define ZNPCTYPEAMBIENT_H
 
-
-
 #endif
