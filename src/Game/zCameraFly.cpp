@@ -1,14 +1,15 @@
+#include <types.h>
+
 #include "../Core/x/xBase.h"
 #include "../Core/x/xEvent.h"
 #include "../Core/x/xScene.h"
 
 #include "zAssetTypes.h"
+#include "zBase.h"
 #include "zCameraFly.h"
 #include "zCamera.h"
 #include "zGlobals.h"
 #include "zMusic.h"
-
-#include <types.h>
 
 void zCameraFly_Init(xBase& data, xDynAsset& asset)
 {
@@ -20,9 +21,10 @@ void zCameraFly_Init(zCameraFly* data, CameraFly_asset* asset)
     xBaseInit((xBase*)data, (xBaseAsset*)asset);
     data->casset = asset;
     data->eventFunc = (xBaseEventCB)zCameraFlyEventCB;
-    if (data->linkCount != 0)
+
+    if (data->linkCount)
     {
-        *(CameraFly_asset**)&data->link = asset + 1;
+        data->link = (xLinkAsset*)(asset + 1);
     }
     else
     {
@@ -58,15 +60,15 @@ uint32 zCameraFlyProcessStopEvent()
         zMusicSetVolume(1.0f, 2.0f);
     }
 
-    for (uint16 i = 0; i < s->num_base; ++i)
+    for (uint16 i = 0; i < s->num_base; i++)
     {
         xBase* entry = s->base[i];
-        if (entry->baseType == 0x3e)
+        if (entry->baseType == eBaseTypeCameraFly)
         {
             uint32 id = ((zCameraFly*)entry)->casset->flyID;
             if (id == zcam_flyasset_current)
             {
-                zEntEvent(entry, 0x13);
+                zEntEvent(entry, eEventStop);
                 return 1;
             }
         }
