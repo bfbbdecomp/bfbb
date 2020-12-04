@@ -31,7 +31,8 @@ struct zBusStop : xBase
     float32 switchTimer;
 };
 
+int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
+void zBusStop_Init(xBase& base, xDynAsset& asset, ulong32);
 void zBusStop_Init(zBusStop* bstop, busstop_asset* asset);
-void zBusStop_Init(xBase& base, xDynAsset& asset, unsigned long);
 
 #endif
