@@ -406,7 +406,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zTaxi.o                     \
     $(OBJ_DIR)/asm/Game/zNPCTypeDutchman.o          \
     $(OBJ_DIR)/src/Game/zNPCTypeDutchman.o          \
-    $(OBJ_DIR)/asm/Game/zCameraFly.o                \
     $(OBJ_DIR)/src/Game/zCameraFly.o                \
     $(OBJ_DIR)/asm/Core/x/xCurveAsset.o             \
     $(OBJ_DIR)/src/Core/x/xCurveAsset.o             \
