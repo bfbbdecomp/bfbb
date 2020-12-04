@@ -3,49 +3,70 @@
 #include <types.h>
 
 // func_8013AF64
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "create_glow_light__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "create_glow_light__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
 
 // func_8013AFD4
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "destroy_glow_light__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "destroy_glow_light__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
 
 // func_8013AFFC
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "object_prefix__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCcRUlRUl")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "object_prefix__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCcRUlRUl")
 
 // func_8013B0B0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "find_object__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCc")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "find_object__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCc")
 
 // func_8013B0E0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "find_tiles__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCcPQ213z_disco_floor9tile_dataUl")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "find_tiles__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCcPQ213z_disco_floor9tile_dataUl")
 
 // func_8013B1C4
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "get_tile__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCUcUl")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "get_tile__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCUcUl")
 
 // func_8013B260
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "set_tile__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPUcUlUi")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "set_tile__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPUcUlUi")
 
 // func_8013B288
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "translate_mask__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPUcPCUcUl")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "translate_mask__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPUcPCUcUl")
 
 // func_8013B304
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "refresh_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "refresh_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
 
 // func_8013B424
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "set_object_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FRC13z_disco_floorUli")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "set_object_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FRC13z_disco_floorUli")
 
 // func_8013B564
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "play_sound__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "play_sound__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
 
 // func_8013B718
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "update_transition__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floorf")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "update_transition__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floorf")
 
 // func_8013B7E0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "state_byte_size__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FUl")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "state_byte_size__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FUl")
 
 // func_8013B7F0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "update_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floorf")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "update_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floorf")
 
 // func_8013B958
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "get_damage_surface__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "get_damage_surface__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
 
 // func_8013BA08
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "__as__14zSurfAssetBaseFRC14zSurfAssetBase")
@@ -54,31 +75,41 @@
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "__as__13zSurfacePropsFRC13zSurfaceProps")
 
 // func_8013BC10
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "render_model__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FP14xModelInstanceRC7xSphere")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "render_model__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FP14xModelInstanceRC7xSphere")
 
 // func_8013BCC0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "render_model__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FP14xModelInstanceR7xSpheref")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "render_model__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FP14xModelInstanceR7xSpheref")
 
 // func_8013BD90
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "init__13z_disco_floorFv")
 
 // func_8013BDCC
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "init__Q225_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_15clone_pipe_dataFv")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "init__Q225_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_15clone_pipe_dataFv")
 
 // func_8013BDD0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "add_global_tweaks__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "add_global_tweaks__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
 
 // func_8013BDD4
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "post_setup__13z_disco_floorFv")
 
 // func_8013BDF8
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "post_setup__Q225_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_15clone_pipe_dataFv")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "post_setup__Q225_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_15clone_pipe_dataFv")
 
 // func_8013BDFC
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "destroy__13z_disco_floorFv")
 
 // func_8013BE24
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "destroy__Q225_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_15clone_pipe_dataFv")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "destroy__Q225_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_15clone_pipe_dataFv")
 
 // func_8013BE28
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "render_all__13z_disco_floorFv")
@@ -96,7 +127,9 @@
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "setup__13z_disco_floorFv")
 
 // func_8013C390
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "add_tweaks__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zDiscoFloor.s",                                                                      \
+    "add_tweaks__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
 
 // func_8013C394
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "reset__13z_disco_floorFv")
@@ -144,7 +177,8 @@
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "effects_render__13z_disco_floorFi")
 
 // func_8013CF08
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "event_handler__13z_disco_floorFP5xBaseP5xBaseUiPCfP5xBase")
+#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
+                   "event_handler__13z_disco_floorFP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_8013D014
 #pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "range_limit_esc__0_Ul_esc__1___FUlUlUl")

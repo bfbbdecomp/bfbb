@@ -36,7 +36,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__19zNPCGoalAlertFodderFfPv")
 
 // func_800DA588
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__19zNPCGoalAlertFodderFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__19zNPCGoalAlertFodderFP11en_trantypefPvP6xScene")
 
 // func_800DA8AC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "CheckSpot__19zNPCGoalAlertFodderFf")
@@ -57,7 +58,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__20zNPCGoalAlertFodBombFfPv")
 
 // func_800DB00C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAlertFodBombFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAlertFodBombFP11en_trantypefPvP6xScene")
 
 // func_800DB360
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Detonate__20zNPCGoalAlertFodBombFv")
@@ -78,7 +80,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__20zNPCGoalAlertFodBzztFfPv")
 
 // func_800DB8EC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAlertFodBzztFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAlertFodBzztFP11en_trantypefPvP6xScene")
 
 // func_800DBB68
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ToggleOrbit__20zNPCGoalAlertFodBzztFv")
@@ -99,7 +102,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__20zNPCGoalAlertChomperFfPv")
 
 // func_800DC50C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAlertChomperFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAlertChomperFP11en_trantypefPvP6xScene")
 
 // func_800DC878
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "CirclePlayer__20zNPCGoalAlertChomperFf")
@@ -123,7 +127,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__19zNPCGoalAlertHammerFfPv")
 
 // func_800DCF78
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__19zNPCGoalAlertHammerFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__19zNPCGoalAlertHammerFP11en_trantypefPvP6xScene")
 
 // func_800DD254
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "PlayerInSpot__19zNPCGoalAlertHammerFf")
@@ -141,7 +146,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__19zNPCGoalAlertTarTarFfPv")
 
 // func_800DD938
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__19zNPCGoalAlertTarTarFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__19zNPCGoalAlertTarTarFP11en_trantypefPvP6xScene")
 
 // func_800DDC9C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__19zNPCGoalAlertTarTarFP6NPCMsg")
@@ -165,7 +171,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__18zNPCGoalAlertGloveFfPv")
 
 // func_800DE2A4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalAlertGloveFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalAlertGloveFP11en_trantypefPvP6xScene")
 
 // func_800DE668
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "FXTurbulence__18zNPCGoalAlertGloveFv")
@@ -192,7 +199,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__20zNPCGoalAlertMonsoonFfPv")
 
 // func_800DF1CC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAlertMonsoonFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAlertMonsoonFP11en_trantypefPvP6xScene")
 
 // func_800DF5EC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "MoveCorner__20zNPCGoalAlertMonsoonFf")
@@ -204,7 +212,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__19zNPCGoalAlertSleepyFfPv")
 
 // func_800DF89C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__19zNPCGoalAlertSleepyFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__19zNPCGoalAlertSleepyFP11en_trantypefPvP6xScene")
 
 // func_800DFB1C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__19zNPCGoalAlertSleepyFP6NPCMsg")
@@ -219,7 +228,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__16zNPCGoalAlertArfFfPv")
 
 // func_800DFC74
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__16zNPCGoalAlertArfFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__16zNPCGoalAlertArfFP11en_trantypefPvP6xScene")
 
 // func_800DFFD8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__16zNPCGoalAlertArfFP6NPCMsg")
@@ -234,7 +244,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__18zNPCGoalAlertPuppyFfPv")
 
 // func_800E01E0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalAlertPuppyFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalAlertPuppyFP11en_trantypefPvP6xScene")
 
 // func_800E0350
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__18zNPCGoalAlertChuckFfPv")
@@ -243,7 +254,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__18zNPCGoalAlertChuckFfPv")
 
 // func_800E03E0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalAlertChuckFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalAlertChuckFP11en_trantypefPvP6xScene")
 
 // func_800E0A28
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "GetInArena__18zNPCGoalAlertChuckFf")
@@ -261,10 +273,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__20zNPCGoalAlertTubeletFfPv")
 
 // func_800E0D4C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAlertTubeletFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAlertTubeletFP11en_trantypefPvP6xScene")
 
 // func_800E0ED8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__20zNPCGoalAlertTubeletFP11en_trantypePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "ChkPrelimTran__20zNPCGoalAlertTubeletFP11en_trantypePi")
 
 // func_800E101C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "MoveToHome__20zNPCGoalAlertTubeletFf")
@@ -285,7 +299,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__18zNPCGoalAlertSlickFfPv")
 
 // func_800E14D0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalAlertSlickFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalAlertSlickFP11en_trantypefPvP6xScene")
 
 // func_800E18E0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__18zNPCGoalAlertSlickFP6NPCMsg")
@@ -303,7 +318,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__17zNPCGoalAttackCQCFfPv")
 
 // func_800E1E60
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalAttackCQCFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalAttackCQCFP11en_trantypefPvP6xScene")
 
 // func_800E1FD8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__20zNPCGoalAttackFodderFfPv")
@@ -312,10 +328,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__20zNPCGoalAttackFodderFfPv")
 
 // func_800E2114
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAttackFodderFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAttackFodderFP11en_trantypefPvP6xScene")
 
 // func_800E21A4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Notify__Q220zNPCGoalAttackFodder12CattleNotifyF10en_haznoteP9NPCHazard")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Notify__Q220zNPCGoalAttackFodder12CattleNotifyF10en_haznoteP9NPCHazard")
 
 // func_800E21E4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "SyncCattleProd__20zNPCGoalAttackFodderFv")
@@ -324,7 +342,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__21zNPCGoalAttackChomperFfPv")
 
 // func_800E2334
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__21zNPCGoalAttackChomperFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__21zNPCGoalAttackChomperFP11en_trantypefPvP6xScene")
 
 // func_800E23DC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "BreathAttack__21zNPCGoalAttackChomperFv")
@@ -336,10 +355,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__20zNPCGoalAttackHammerFfPv")
 
 // func_800E2674
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAttackHammerFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAttackHammerFP11en_trantypefPvP6xScene")
 
 // func_800E29F8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__20zNPCGoalAttackHammerFP11en_trantypePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "ChkPrelimTran__20zNPCGoalAttackHammerFP11en_trantypePi")
 
 // func_800E2AF0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "PlayerTests__20zNPCGoalAttackHammerFP5xVec3f")
@@ -366,7 +387,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__20zNPCGoalAttackTarTarFfPv")
 
 // func_800E3120
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalAttackTarTarFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalAttackTarTarFP11en_trantypefPvP6xScene")
 
 // func_800E3260
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__20zNPCGoalAttackTarTarFP6NPCMsg")
@@ -381,7 +403,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__21zNPCGoalAttackMonsoonFfPv")
 
 // func_800E35E8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__21zNPCGoalAttackMonsoonFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__21zNPCGoalAttackMonsoonFP11en_trantypefPvP6xScene")
 
 // func_800E375C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "SpitCloud__21zNPCGoalAttackMonsoonFf")
@@ -393,7 +416,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__22zNPCGoalAttackArfMeleeFfPv")
 
 // func_800E3984
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__22zNPCGoalAttackArfMeleeFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__22zNPCGoalAttackArfMeleeFP11en_trantypefPvP6xScene")
 
 // func_800E3A3C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "PlayerTests__22zNPCGoalAttackArfMeleeFv")
@@ -414,7 +438,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__17zNPCGoalAttackArfFfPv")
 
 // func_800E3F70
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalAttackArfFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalAttackArfFP11en_trantypefPvP6xScene")
 
 // func_800E4140
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "SetAttackMode__17zNPCGoalAttackArfFii")
@@ -432,7 +457,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__19zNPCGoalAttackChuckFfPv")
 
 // func_800E4454
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__19zNPCGoalAttackChuckFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__19zNPCGoalAttackChuckFP11en_trantypefPvP6xScene")
 
 // func_800E4590
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "BombzAway__19zNPCGoalAttackChuckFf")
@@ -441,7 +467,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__19zNPCGoalAttackSlickFfPv")
 
 // func_800E4664
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__19zNPCGoalAttackSlickFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__19zNPCGoalAttackSlickFP11en_trantypefPvP6xScene")
 
 // func_800E47AC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "FireOne__19zNPCGoalAttackSlickFi")
@@ -450,10 +477,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__17zNPCGoalDogLaunchFfPv")
 
 // func_800E48F8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalDogLaunchFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalDogLaunchFP11en_trantypefPvP6xScene")
 
 // func_800E4A04
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ViciousAttack__17zNPCGoalDogLaunchFP5xVec3P5xVec3P10zMovePointi")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "ViciousAttack__17zNPCGoalDogLaunchFP5xVec3P5xVec3P10zMovePointi")
 
 // func_800E4A9C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "PreCollide__17zNPCGoalDogLaunchFv")
@@ -462,7 +491,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "BallisticUpdate__17zNPCGoalDogLaunchFf")
 
 // func_800E4DE8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "BubTrailCone__17zNPCGoalDogLaunchFPC5xVec3iPC5xVec3PC5xVec3PC7xMat3x3")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "BubTrailCone__17zNPCGoalDogLaunchFPC5xVec3iPC5xVec3PC5xVec3PC7xMat3x3")
 
 // func_800E5050
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "FurryFlurry__17zNPCGoalDogLaunchFv")
@@ -471,13 +501,15 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__15zNPCGoalDogBarkFfPv")
 
 // func_800E5170
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__15zNPCGoalDogBarkFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__15zNPCGoalDogBarkFP11en_trantypefPvP6xScene")
 
 // func_800E5248
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__15zNPCGoalDogDashFfPv")
 
 // func_800E52A0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__15zNPCGoalDogDashFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__15zNPCGoalDogDashFP11en_trantypefPvP6xScene")
 
 // func_800E5364
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "HoundPlayer__15zNPCGoalDogDashFf")
@@ -501,7 +533,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__16zNPCGoalTeleportFfPv")
 
 // func_800E5628
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__16zNPCGoalTeleportFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__16zNPCGoalTeleportFP11en_trantypefPvP6xScene")
 
 // func_800E57F4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__16zNPCGoalTeleportFP6NPCMsg")
@@ -510,7 +543,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__18zNPCGoalHokeyPokeyFfPv")
 
 // func_800E58A4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalHokeyPokeyFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalHokeyPokeyFP11en_trantypefPvP6xScene")
 
 // func_800E5AE8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__15zNPCGoalEvilPatFfPv")
@@ -519,7 +553,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__15zNPCGoalEvilPatFfPv")
 
 // func_800E5C08
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__15zNPCGoalEvilPatFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__15zNPCGoalEvilPatFP11en_trantypefPvP6xScene")
 
 // func_800E5C78
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "NPCMessage__15zNPCGoalEvilPatFP6NPCMsg")
@@ -537,7 +572,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__15zNPCGoalStunnedFfPv")
 
 // func_800E5EAC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__15zNPCGoalStunnedFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__15zNPCGoalStunnedFP11en_trantypefPvP6xScene")
 
 // func_800E5F94
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "InputInfo__15zNPCGoalStunnedFP11NPCStunInfo")
@@ -546,7 +582,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__16zNPCGoalPatCarryFfPv")
 
 // func_800E6038
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__16zNPCGoalPatCarryFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__16zNPCGoalPatCarryFP11en_trantypefPvP6xScene")
 
 // func_800E60E4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__16zNPCGoalPatThrowFfPv")
@@ -558,10 +595,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__17zNPCGoalLassoBaseFfPv")
 
 // func_800E625C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalLassoBaseFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalLassoBaseFP11en_trantypefPvP6xScene")
 
 // func_800E6334
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalLassoGrabFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalLassoGrabFP11en_trantypefPvP6xScene")
 
 // func_800E6520
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "DoTurnAway__17zNPCGoalLassoGrabFf")
@@ -573,7 +612,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__18zNPCGoalLassoThrowFfPv")
 
 // func_800E67A0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalLassoThrowFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalLassoThrowFP11en_trantypefPvP6xScene")
 
 // func_800E6954
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "CollReview__18zNPCGoalLassoThrowFPv")
@@ -648,7 +688,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__15zNPCGoalRespawnFfPv")
 
 // func_800E87AC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__15zNPCGoalRespawnFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__15zNPCGoalRespawnFP11en_trantypefPvP6xScene")
 
 // func_800E8904
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "LaunchRoboBits__15zNPCGoalRespawnFv")
@@ -678,10 +719,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__20zNPCGoalTubeDucklingFfPv")
 
 // func_800E93D0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__20zNPCGoalTubeDucklingFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__20zNPCGoalTubeDucklingFP11en_trantypefPvP6xScene")
 
 // func_800E952C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__20zNPCGoalTubeDucklingFP11en_trantypePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "ChkPrelimTran__20zNPCGoalTubeDucklingFP11en_trantypePi")
 
 // func_800E95F4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "MoveFrolic__20zNPCGoalTubeDucklingFf")
@@ -699,10 +742,12 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Resume__18zNPCGoalTubeAttackFfPv")
 
 // func_800E9C14
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalTubeAttackFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalTubeAttackFP11en_trantypefPvP6xScene")
 
 // func_800E9CF0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__18zNPCGoalTubeAttackFP11en_trantypePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "ChkPrelimTran__18zNPCGoalTubeAttackFP11en_trantypePi")
 
 // func_800E9DB4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "LaserRender__18zNPCGoalTubeAttackFv")
@@ -732,7 +777,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__17zNPCGoalTubeLassoFfPv")
 
 // func_800EA1C4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalTubeLassoFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalTubeLassoFP11en_trantypefPvP6xScene")
 
 // func_800EA258
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__17zNPCGoalTubeLassoFP11en_trantypePi")
@@ -744,7 +790,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Enter__17zNPCGoalTubeBirthFfPv")
 
 // func_800EA5C8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalTubeBirthFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalTubeBirthFP11en_trantypefPvP6xScene")
 
 // func_800EA68C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__17zNPCGoalTubeBirthFP11en_trantypePi")
@@ -756,13 +803,15 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__18zNPCGoalTubeBonkedFfPv")
 
 // func_800EA900
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__18zNPCGoalTubeBonkedFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__18zNPCGoalTubeBonkedFP11en_trantypefPvP6xScene")
 
 // func_800EAAE4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "CheckForTran__18zNPCGoalTubeBonkedFP11en_trantypePi")
 
 // func_800EABBC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__16zNPCGoalTubeDeadFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__16zNPCGoalTubeDeadFP11en_trantypefPvP6xScene")
 
 // func_800EAC80
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ChkPrelimTran__16zNPCGoalTubeDeadFP11en_trantypePi")
@@ -774,7 +823,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__17zNPCGoalTubeDyingFfPv")
 
 // func_800EAEE4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__17zNPCGoalTubeDyingFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__17zNPCGoalTubeDyingFP11en_trantypefPvP6xScene")
 
 // func_800EB128
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "DeathByLasso__17zNPCGoalTubeDyingFPC5xVec3")
@@ -786,7 +836,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Exit__15zNPCGoalDeflateFfPv")
 
 // func_800EB2CC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "Process__15zNPCGoalDeflateFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "Process__15zNPCGoalDeflateFP11en_trantypefPvP6xScene")
 
 // func_800EB4C4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "ROBO_PrepRoboCop__Fv")
@@ -978,7 +1029,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "__ct__14zNPCGoalNoticeFi")
 
 // func_800EC714
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "SilentSwimout__17zNPCGoalDogLaunchFP5xVec3P5xVec3P10zMovePoint")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s",                                                      \
+                   "SilentSwimout__17zNPCGoalDogLaunchFP5xVec3P5xVec3P10zMovePoint")
 
 // func_800EC738
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalRobo.s", "CollReview__16zNPCGoalPatThrowFPv")

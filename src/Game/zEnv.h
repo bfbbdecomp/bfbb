@@ -6,7 +6,7 @@
 
 struct _zEnv : xBase
 {
-	xEnvAsset* easset;
+    xEnvAsset* easset;
 };
 
 #endif

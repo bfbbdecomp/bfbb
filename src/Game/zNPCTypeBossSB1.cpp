@@ -15,7 +15,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "SB1Dummy_RenderFunc__FP4xEnt")
 
 // func_801552FC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "SB1Dummy_TgtEventFunc__FP5xBaseP5xBaseUiPCfP5xBase")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s",                                                   \
+                   "SB1Dummy_TgtEventFunc__FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_80155310
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "SB1_ResetGlobalStuff__Fv")
@@ -72,13 +73,15 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Enter__19zNPCGoalBossSB1IdleFfPv")
 
 // func_80156268
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Process__19zNPCGoalBossSB1IdleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s",                                                   \
+                   "Process__19zNPCGoalBossSB1IdleFP11en_trantypefPvP6xScene")
 
 // func_80156340
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Enter__20zNPCGoalBossSB1TauntFfPv")
 
 // func_801563AC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Process__20zNPCGoalBossSB1TauntFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s",                                                   \
+                   "Process__20zNPCGoalBossSB1TauntFP11en_trantypefPvP6xScene")
 
 // func_80156450
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Enter__20zNPCGoalBossSB1StompFfPv")
@@ -87,7 +90,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "AddStompRing__FP9zNPCB_SB1P5xVec3")
 
 // func_80156538
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Process__20zNPCGoalBossSB1StompFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s",                                                   \
+                   "Process__20zNPCGoalBossSB1StompFP11en_trantypefPvP6xScene")
 
 // func_8015667C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Enter__20zNPCGoalBossSB1SmashFfPv")
@@ -96,7 +100,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Exit__20zNPCGoalBossSB1SmashFfPv")
 
 // func_801567C8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Process__20zNPCGoalBossSB1SmashFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s",                                                   \
+                   "Process__20zNPCGoalBossSB1SmashFP11en_trantypefPvP6xScene")
 
 // func_801569E0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Enter__22zNPCGoalBossSB1DeflateFfPv")
@@ -105,4 +110,5 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Exit__22zNPCGoalBossSB1DeflateFfPv")
 
 // func_80156C54
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s", "Process__22zNPCGoalBossSB1DeflateFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB1.s",                                                   \
+                   "Process__22zNPCGoalBossSB1DeflateFP11en_trantypefPvP6xScene")

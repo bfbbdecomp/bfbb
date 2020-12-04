@@ -30,7 +30,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTypeFromHash__FUiP10NPCSndTraxP10NPCSndTrax")
 
 // func_80124EF4
-#pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndPickSimilar__F12en_NPC_SOUNDP10NPCSndTraxP10NPCSndTrax")
+#pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s",                                                      \
+                   "NPCS_SndPickSimilar__F12en_NPC_SOUNDP10NPCSndTraxP10NPCSndTrax")
 
 // func_801250A8
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "xUtil_choose_esc__0_i_esc__1___FPCiiPCf")

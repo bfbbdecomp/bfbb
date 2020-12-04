@@ -15,7 +15,8 @@
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpInCB__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8012C16C
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpOutCheck__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpOutCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8012C180
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpOutCB__FP15xAnimTransitionP11xAnimSinglePv")
@@ -39,31 +40,39 @@
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "CtoOCB__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8012C2B0
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpInEffectPlrInvisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpInEffectPlrInvisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C2E4
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpInEffectPlrTeleportCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpInEffectPlrTeleportCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C2F4
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpInEffectJIAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpInEffectJIAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C304
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "CtoOEffectTboxEnableCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "CtoOEffectTboxEnableCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C320
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpOutEffectPlrVisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpOutEffectPlrVisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C35C
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpOutEffectPlrEjectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpOutEffectPlrEjectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C3BC
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "JumpOutEffectJOAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "JumpOutEffectJOAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8012C3CC
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Init__FR5xBaseR9xDynAssetUl")
 
 // func_8012C3EC
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Init__FP16_zEntTeleportBoxP14teleport_asset")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "zEntTeleportBox_Init__FP16_zEntTeleportBoxP14teleport_asset")
 
 // func_8012CDD4
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_InitAll__Fv")
@@ -75,10 +84,12 @@
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Update__FP4xEntP6xScenef")
 
 // func_8012D610
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Save__FP16_zEntTeleportBoxP7xSerial")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "zEntTeleportBox_Save__FP16_zEntTeleportBoxP7xSerial")
 
 // func_8012D67C
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Load__FP16_zEntTeleportBoxP7xSerial")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "zEntTeleportBox_Load__FP16_zEntTeleportBoxP7xSerial")
 
 // func_8012D6F4
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Open__FP16_zEntTeleportBox")
@@ -96,4 +107,5 @@
 #pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_playerIn__Fv")
 
 // func_8012D780
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBoxEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
+                   "zEntTeleportBoxEventCB__FP5xBaseP5xBaseUiPCfP5xBase")

@@ -3,25 +3,35 @@
 #include <types.h>
 
 // func_8009B684
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zHud.s",                                                                             \
+    "hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widgetRQ24xhud6motive")
 
 // func_8009B6A4
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "ping_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widget")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zHud.s",                                                                             \
+    "ping_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widget")
 
 // func_8009B700
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "delay_hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widget")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Game/zHud.s",                                                                             \
+    "delay_hide_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_FRQ24xhud6widget")
 
 // func_8009B75C
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "get_meter_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fi")
+#pragma GLOBAL_ASM("asm/Game/zHud.s",                                                              \
+                   "get_meter_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fi")
 
 // func_8009B7B4
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "get_model_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fi")
+#pragma GLOBAL_ASM("asm/Game/zHud.s",                                                              \
+                   "get_model_widget__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fi")
 
 // func_8009B80C
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "on_pause__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zHud.s",                                                              \
+                   "on_pause__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fv")
 
 // func_8009B82C
-#pragma GLOBAL_ASM("asm/Game/zHud.s", "on_unpause__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zHud.s",                                                              \
+                   "on_unpause__Q24zhud18_esc__2_unnamed_esc__2_zHud_cpp_esc__2_Fv")
 
 // func_8009B838
 #pragma GLOBAL_ASM("asm/Game/zHud.s", "init__4zhudFv")
