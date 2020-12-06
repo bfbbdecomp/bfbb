@@ -354,7 +354,39 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "GenShadCacheRad__10zNPCCommonFv")
 
 // func_800F46D0
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "__ct__9xNPCBasicFi")
+#else
+// xNPCBasic vtable at: 0x2949F4
+// vtable reference is stored immidately _after_ object fields in an xNPCBasic
+// instance. That is, sizeof(xNPCBasic) = sizeof(visible fields) + an extra 4
+// bytes for the vtable pointer after those fields.
+// vtable[0] = NULL (I think these first two are for RTTI which is disabled)
+// vtable[1] = NULL
+// vtable[2] = Init(FP9xEntAsset)
+// vtable[3] = PostInit(Fv)
+// vtable[4] = Setup(Fv)
+// vtable[5] = PostSetup(Fv)
+// vtable[6] = Reset(Fv)
+// vtable[7] = Process(FP6xScenef)
+// vtable[8] = BUpdate(FP5xVec3)
+// vtable[9] = NewTime(FP6xScenef)
+// vtable[10] = Move(FP6xScenefP9xEntFrame)
+// vtable[11] = SysEvent(FP5xBaseP5xBaseUiPCfP5xBasePi)
+// vtable[12] = Render(Fv)
+// vtable[13] = Save(CFP7xSerial)
+// vtable[14] = Load(FP7xSerial)
+// vtable[15] = CollideReview(Fv)
+// vtable[16] = ColChkFlags(CFv)
+// vtable[17] = ColPenFlags(CFv)
+// vtable[18] = ColChkByFlags(CFv)
+// vtable[19] = ColPenByFlags(CFv)
+// vtable[20] = PhysicsFlags(CFv)
+xNPCBasic::xNPCBasic(int32 value)
+{
+    myNPCType = value;
+}
+#endif
 
 // func_800F4720
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Setup__9xNPCBasicFv")
