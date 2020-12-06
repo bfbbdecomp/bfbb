@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+#include "../Core/x/xNPCBasic.h"
+
 // func_80054BFC
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntInit__FP4zEntP9xEntAssetUi")
 
@@ -91,4 +93,7 @@
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "xSndPlay3D__FUiffUiUiPC5xVec3f14sound_categoryf")
 
 // func_800564E4
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "SelfType__9xNPCBasicCFv")
+int32 xNPCBasic::SelfType() const
+{
+    return myNPCType;
+};
