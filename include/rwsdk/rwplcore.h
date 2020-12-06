@@ -608,10 +608,16 @@ struct RwMatrixTag
 {
     RwV3d right;
     RwUInt32 flags;
+
+    // Offset: 0x10
     RwV3d up;
     RwUInt32 pad1;
+
+    // Offset: 0x20
     RwV3d at;
     RwUInt32 pad2;
+
+    // Offset: 0x30
     RwV3d pos;
     RwUInt32 pad3;
 };
