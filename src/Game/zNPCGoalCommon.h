@@ -1,4 +1,6 @@
 #ifndef ZNPCGOALCOMMON_H
 #define ZNPCGOALCOMMON_H
 
+
+
 #endif

@@ -54,8 +54,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "SelfSetup__13zNPCDuplotronFv")
 
 // func_80125978
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s",                                                 \
-                   "AnimPick__13zNPCDuplotronFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "AnimPick__13zNPCDuplotronFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80125A38
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "DuploNotice__13zNPCDuplotronF13en_SM_NOTICESPv")

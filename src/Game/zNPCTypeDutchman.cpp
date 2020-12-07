@@ -3,25 +3,19 @@
 #include <types.h>
 
 // func_80172664
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "look_at__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR7xMat3x3RC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "look_at__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR7xMat3x3RC5xVec3")
 
 // func_801727B4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "init_sound__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "init_sound__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_Fv")
 
 // func_80172830
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "play_sound__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiPC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "play_sound__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiPC5xVec3f")
 
 // func_801728F0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "kill_sound__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "kill_sound__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiUi")
 
 // func_80172954
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "set_volume__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiUif")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "set_volume__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FiUif")
 
 // func_80172990
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "ZNPC_AnimTable_Dutchman__Fv")
@@ -45,8 +39,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__12zNPCDutchmanFP6xScenef")
 
 // func_801736D8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "SysEvent__12zNPCDutchmanFP5xBaseP5xBaseUiPCfP5xBasePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "SysEvent__12zNPCDutchmanFP5xBaseP5xBaseUiPCfP5xBasePi")
 
 // func_80173740
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Render__12zNPCDutchmanFv")
@@ -58,25 +51,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "ParseINI__12zNPCDutchmanFv")
 
 // func_80173934
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "load__Q230_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "load__Q230_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
 
 // func_80173964
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "register_tweaks__Q230_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "register_tweaks__Q230_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
 
 // func_8017547C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "SelfSetup__12zNPCDutchmanFv")
 
 // func_80175520
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Damage__12zNPCDutchmanF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Damage__12zNPCDutchmanF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_80175544
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "AnimPick__12zNPCDutchmanFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "AnimPick__12zNPCDutchmanFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_801755E0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "LassoNotify__12zNPCDutchmanF14en_LASSO_EVENT")
@@ -97,29 +84,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "decompose__12zNPCDutchmanFv")
 
 // func_801757E4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "set_yaw_matrix__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR7xMat3x3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "set_yaw_matrix__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR7xMat3x3f")
 
 // func_80175880
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "update_move_follow__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infoRC7xMat3x3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_move_follow__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infoRC7xMat3x3f")
 
 // func_80175998
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "update_move_accel__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infof")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_move_accel__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infof")
 
 // func_80175A3C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "update_move_vel__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infof")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_move_vel__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infof")
 
 // func_80175A7C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "update_move_stop__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infof")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_move_stop__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR5xVec3RQ212zNPCDutchman9move_infof")
 
 // func_80175AFC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_turn__12zNPCDutchmanFf")
@@ -134,26 +111,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_camera__12zNPCDutchmanFf")
 
 // func_80175CE4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "clip_outside_circle__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRfRC5xVec2RC5xVec2ffRC5xVec2f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "clip_outside_circle__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRfRC5xVec2RC5xVec2ffRC5xVec2f")
 
 // func_80175E90
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "clip_outside_circle__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRfRC5xVec3RC5xVec3ffRC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "clip_outside_circle__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRfRC5xVec3RC5xVec3ffRC5xVec3f")
 
 // func_80175F1C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "update_wave__12zNPCDutchmanFRQ212zNPCDutchman9wave_dataf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_wave__12zNPCDutchmanFRQ212zNPCDutchman9wave_dataf")
 
 // func_80176234
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "init_wave__12zNPCDutchmanFRQ212zNPCDutchman9wave_dataRC5xVec3RC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "init_wave__12zNPCDutchmanFRQ212zNPCDutchman9wave_dataRC5xVec3RC5xVec3")
 
 // func_801762FC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "kill_wave__12zNPCDutchmanFRQ212zNPCDutchman9wave_data")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "kill_wave__12zNPCDutchmanFRQ212zNPCDutchman9wave_data")
 
 // func_80176324
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "start_eye_glow__12zNPCDutchmanFv")
@@ -258,29 +228,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "halt__12zNPCDutchmanFf")
 
 // func_80177E68
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "set_beam_verts__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FP18RxObjSpace3DVertexRC5xVec3RC5xVec3UcUcRC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "set_beam_verts__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FP18RxObjSpace3DVertexRC5xVec3RC5xVec3UcUcRC5xVec3")
 
 // func_80177F58
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "set_vert__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR18RxObjSpace3DVertexRC5xVec3ffUc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "set_vert__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FR18RxObjSpace3DVertexRC5xVec3ffUc")
 
 // func_80177F90
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "world_to_screen__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "world_to_screen__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRC5xVec3")
 
 // func_80178030
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "render_beam__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FP18RxObjSpace3DVertexRCQ212zNPCDutchman9beam_infoUlUc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "render_beam__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FP18RxObjSpace3DVertexRCQ212zNPCDutchman9beam_infoUlUc")
 
 // func_80178228
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "render_beam__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FP18RxObjSpace3DVertexRCQ212zNPCDutchman9beam_info")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "render_beam__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FP18RxObjSpace3DVertexRCQ212zNPCDutchman9beam_info")
 
 // func_801782D0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "render_beam__12zNPCDutchmanFv")
@@ -292,8 +252,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__19zNPCGoalDutchmanNilFiP10RyzMemGrowPv")
 
 // func_801784C0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__24zNPCGoalDutchmanInitiateFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__24zNPCGoalDutchmanInitiateFiP10RyzMemGrowPv")
 
 // func_80178530
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__24zNPCGoalDutchmanInitiateFfPv")
@@ -302,8 +261,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__24zNPCGoalDutchmanInitiateFfPv")
 
 // func_801786F0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__24zNPCGoalDutchmanInitiateFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__24zNPCGoalDutchmanInitiateFP11en_trantypefPvP6xScene")
 
 // func_801787D8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__20zNPCGoalDutchmanIdleFiP10RyzMemGrowPv")
@@ -315,12 +273,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__20zNPCGoalDutchmanIdleFfPv")
 
 // func_801788C0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__20zNPCGoalDutchmanIdleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__20zNPCGoalDutchmanIdleFP11en_trantypefPvP6xScene")
 
 // func_80178968
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__25zNPCGoalDutchmanDisappearFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__25zNPCGoalDutchmanDisappearFiP10RyzMemGrowPv")
 
 // func_801789D8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__25zNPCGoalDutchmanDisappearFfPv")
@@ -329,12 +285,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__25zNPCGoalDutchmanDisappearFfPv")
 
 // func_80178A70
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__25zNPCGoalDutchmanDisappearFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__25zNPCGoalDutchmanDisappearFP11en_trantypefPvP6xScene")
 
 // func_80178AC4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__24zNPCGoalDutchmanTeleportFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__24zNPCGoalDutchmanTeleportFiP10RyzMemGrowPv")
 
 // func_80178B34
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__24zNPCGoalDutchmanTeleportFfPv")
@@ -343,12 +297,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__24zNPCGoalDutchmanTeleportFfPv")
 
 // func_80178C3C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__24zNPCGoalDutchmanTeleportFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__24zNPCGoalDutchmanTeleportFP11en_trantypefPvP6xScene")
 
 // func_80178D10
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__24zNPCGoalDutchmanReappearFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__24zNPCGoalDutchmanReappearFiP10RyzMemGrowPv")
 
 // func_80178D80
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__24zNPCGoalDutchmanReappearFfPv")
@@ -357,8 +309,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__24zNPCGoalDutchmanReappearFfPv")
 
 // func_80178E58
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__24zNPCGoalDutchmanReappearFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__24zNPCGoalDutchmanReappearFP11en_trantypefPvP6xScene")
 
 // func_80178F10
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__20zNPCGoalDutchmanBeamFiP10RyzMemGrowPv")
@@ -370,8 +321,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__20zNPCGoalDutchmanBeamFfPv")
 
 // func_8017902C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__20zNPCGoalDutchmanBeamFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__20zNPCGoalDutchmanBeamFP11en_trantypefPvP6xScene")
 
 // func_80179100
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_stop__20zNPCGoalDutchmanBeamFf")
@@ -386,18 +336,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_unfocus__20zNPCGoalDutchmanBeamFf")
 
 // func_80179520
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "aim_beam__20zNPCGoalDutchmanBeamCFRQ220zNPCGoalDutchmanBeam9beam_dataRC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "aim_beam__20zNPCGoalDutchmanBeamCFRQ220zNPCGoalDutchmanBeam9beam_dataRC5xVec3f")
 
 // func_80179620
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "calc_beam_loc__20zNPCGoalDutchmanBeamCFR5xVec2fRCQ220zNPCGoalDutchmanBeam9beam_data")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "calc_beam_loc__20zNPCGoalDutchmanBeamCFR5xVec2fRCQ220zNPCGoalDutchmanBeam9beam_data")
 
 // func_8017973C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "update_beam__20zNPCGoalDutchmanBeamFfRQ220zNPCGoalDutchmanBeam9beam_datai")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_beam__20zNPCGoalDutchmanBeamFfRQ220zNPCGoalDutchmanBeam9beam_datai")
 
 // func_801798B8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "refresh_beam__20zNPCGoalDutchmanBeamFi")
@@ -418,8 +363,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "predict_target__20zNPCGoalDutchmanBeamCFR5xVec3")
 
 // func_80179D9C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__21zNPCGoalDutchmanFlameFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__21zNPCGoalDutchmanFlameFiP10RyzMemGrowPv")
 
 // func_80179E0C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__21zNPCGoalDutchmanFlameFfPv")
@@ -428,8 +372,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__21zNPCGoalDutchmanFlameFfPv")
 
 // func_80179F04
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__21zNPCGoalDutchmanFlameFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__21zNPCGoalDutchmanFlameFP11en_trantypefPvP6xScene")
 
 // func_80179FCC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_wait__21zNPCGoalDutchmanFlameFf")
@@ -441,17 +384,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "update_stop__21zNPCGoalDutchmanFlameFf")
 
 // func_8017A3A8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "refresh_vulnerability__21zNPCGoalDutchmanFlameFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "refresh_vulnerability__21zNPCGoalDutchmanFlameFv")
 
 // func_8017A56C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "angle_difference__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRC5xVec2RC5xVec2")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "angle_difference__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRC5xVec2RC5xVec2")
 
 // func_8017A5D8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__25zNPCGoalDutchmanPostFlameFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__25zNPCGoalDutchmanPostFlameFiP10RyzMemGrowPv")
 
 // func_8017A648
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__25zNPCGoalDutchmanPostFlameFfPv")
@@ -460,12 +399,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__25zNPCGoalDutchmanPostFlameFfPv")
 
 // func_8017A738
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__25zNPCGoalDutchmanPostFlameFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__25zNPCGoalDutchmanPostFlameFP11en_trantypefPvP6xScene")
 
 // func_8017A90C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__22zNPCGoalDutchmanCaughtFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__22zNPCGoalDutchmanCaughtFiP10RyzMemGrowPv")
 
 // func_8017A97C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__22zNPCGoalDutchmanCaughtFfPv")
@@ -474,12 +411,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__22zNPCGoalDutchmanCaughtFfPv")
 
 // func_8017AA28
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__22zNPCGoalDutchmanCaughtFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__22zNPCGoalDutchmanCaughtFP11en_trantypefPvP6xScene")
 
 // func_8017AB64
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__22zNPCGoalDutchmanDamageFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__22zNPCGoalDutchmanDamageFiP10RyzMemGrowPv")
 
 // func_8017ABD4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__22zNPCGoalDutchmanDamageFfPv")
@@ -488,12 +423,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__22zNPCGoalDutchmanDamageFfPv")
 
 // func_8017AD28
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__22zNPCGoalDutchmanDamageFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__22zNPCGoalDutchmanDamageFP11en_trantypefPvP6xScene")
 
 // func_8017AE28
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "create__21zNPCGoalDutchmanDeathFiP10RyzMemGrowPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__21zNPCGoalDutchmanDeathFiP10RyzMemGrowPv")
 
 // func_8017AE98
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Enter__21zNPCGoalDutchmanDeathFfPv")
@@ -502,184 +435,130 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Exit__21zNPCGoalDutchmanDeathFfPv")
 
 // func_8017AF3C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "Process__21zNPCGoalDutchmanDeathFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "Process__21zNPCGoalDutchmanDeathFP11en_trantypefPvP6xScene")
 
 // func_8017AFD8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "init__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_FUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "init__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_FUl")
 
 // func_8017B054
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "clear__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "clear__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
 
 // func_8017B064
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "init__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_FUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "init__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_FUl")
 
 // func_8017B0E0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "clear__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "clear__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
 
 // func_8017B0F0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__ne__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorCFRCQ243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iterator")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ne__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorCFRCQ243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iterator")
 
 // func_8017B10C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__pp__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__pp__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorFv")
 
 // func_8017B140
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__apl__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__apl__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorFi")
 
 // func_8017B180
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "mod_max_size__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "mod_max_size__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFUl")
 
 // func_8017B18C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "erase__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_FRCQ243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorRCQ243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iterator")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "erase__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_FRCQ243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorRCQ243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iterator")
 
 // func_8017B200
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "end__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "end__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
 
 // func_8017B244
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "create_iterator__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create_iterator__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFUl")
 
 // func_8017B264
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__ml__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorCFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ml__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorCFv")
 
 // func_8017B27C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "begin__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "begin__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
 
 // func_8017B2A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "pop_back__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "pop_back__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
 
 // func_8017B2B0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "full__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "full__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
 
 // func_8017B2FC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "max_size__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "max_size__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
 
 // func_8017B2FC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "size__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "size__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
 
 // func_8017B310
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "front__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "front__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
 
 // func_8017B340
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "push_front__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "push_front__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
 
 // func_8017B38C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "empty__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "empty__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_CFv")
 
 // func_8017B3B4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "front__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "front__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
 
 // func_8017B3E4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "push_front__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "push_front__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
 
 // func_8017B430
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "mod_max_size__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "mod_max_size__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFUl")
 
 // func_8017B43C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "pop_back__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "pop_back__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
 
 // func_8017B43C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "back__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "back__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_Fv")
 
 // func_8017B490
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__mi__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorCFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__mi__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorCFi")
 
 // func_8017B4CC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ami__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ami__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorFi")
 
 // func_8017B4FC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__apl__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__apl__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorFi")
 
 // func_8017B53C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "full__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "full__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
 
 // func_8017B588
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "max_size__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "max_size__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
 
 // func_8017B588
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "size__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "size__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
 
 // func_8017B59C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "erase__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_FRCQ240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorRCQ240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iterator")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "erase__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_FRCQ240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorRCQ240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iterator")
 
 // func_8017B610
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__ne__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorCFRCQ240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iterator")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ne__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorCFRCQ240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iterator")
 
 // func_8017B62C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "end__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "end__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
 
 // func_8017B670
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "create_iterator__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create_iterator__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFUl")
 
 // func_8017B690
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__pp__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__pp__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorFv")
 
 // func_8017B6C4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ml__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorCFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ml__Q240static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_8iteratorCFv")
 
 // func_8017B6DC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "begin__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "begin__40static_queue_esc__0_Q212zNPCDutchman9wave_data_esc__1_CFv")
 
 // func_8017B2A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "back__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "back__43static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_Fv")
 
 // func_8017B744
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__mi__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorCFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__mi__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorCFi")
 
 // func_8017B780
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "__ami__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ami__Q243static_queue_esc__0_Q212zNPCDutchman11slime_slice_esc__1_8iteratorFi")
 
 // func_8017B7B0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "init__9xFXRibbonFiPCc")
@@ -706,8 +585,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "turning__12zNPCDutchmanCFv")
 
 // func_8017B924
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "emit_particles__12zNPCDutchmanCFR11zParEmitterfR25xParEmitterCustomSettings")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "emit_particles__12zNPCDutchmanCFR11zParEmitterfR25xParEmitterCustomSettings")
 
 // func_8017B94C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "get_orbit__12zNPCDutchmanCFv")
@@ -731,8 +609,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__19zNPCGoalDutchmanNilFiR12zNPCDutchman")
 
 // func_8017BA40
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ct__24zNPCGoalDutchmanInitiateFiR12zNPCDutchman")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__24zNPCGoalDutchmanInitiateFiR12zNPCDutchman")
 
 // func_8017BA8C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "turning__12zNPCDutchmanCFf")
@@ -741,16 +618,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__20zNPCGoalDutchmanIdleFiR12zNPCDutchman")
 
 // func_8017BB7C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ct__25zNPCGoalDutchmanDisappearFiR12zNPCDutchman")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__25zNPCGoalDutchmanDisappearFiR12zNPCDutchman")
 
 // func_8017BBC8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ct__24zNPCGoalDutchmanTeleportFiR12zNPCDutchman")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__24zNPCGoalDutchmanTeleportFiR12zNPCDutchman")
 
 // func_8017BC14
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ct__24zNPCGoalDutchmanReappearFiR12zNPCDutchman")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__24zNPCGoalDutchmanReappearFiR12zNPCDutchman")
 
 // func_8017BC60
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__20zNPCGoalDutchmanBeamFiR12zNPCDutchman")
@@ -759,8 +633,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__21zNPCGoalDutchmanFlameFiR12zNPCDutchman")
 
 // func_8017BCF8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "__ct__25zNPCGoalDutchmanPostFlameFiR12zNPCDutchman")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__25zNPCGoalDutchmanPostFlameFiR12zNPCDutchman")
 
 // func_8017BD44
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "__ct__22zNPCGoalDutchmanCaughtFiR12zNPCDutchman")
@@ -796,23 +669,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "create__5xVec2Fff")
 
 // func_8017BE98
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "load_param_esc__0_i_esc__4_i_esc__1___10auto_tweakFRiiiiP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "load_param_esc__0_i_esc__4_i_esc__1___10auto_tweakFRiiiiP16xModelAssetParamUiPCc")
 
 // func_8017BF1C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "load_param_esc__0_5xVec3_esc__4_i_esc__1___10auto_tweakFR5xVec3iiiP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "load_param_esc__0_5xVec3_esc__4_i_esc__1___10auto_tweakFR5xVec3iiiP16xModelAssetParamUiPCc")
 
 // func_8017BF6C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeDutchman.s",                                                                 \
-    "load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc")
 
 // func_8017C014
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
 
 // func_8017C078
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s",                                                  \
-                   "xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeDutchman.s", "xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f")

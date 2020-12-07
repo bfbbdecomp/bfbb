@@ -3,44 +3,31 @@
 #include <types.h>
 
 // func_80156D98
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "init_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "init_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_Fv")
 
 // func_80156F50
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "reset_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "reset_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_Fv")
 
 // func_80156F88
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "play_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FiPC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "play_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FiPC5xVec3f")
 
 // func_801570A4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "kill_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FiUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "kill_sound__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FiUi")
 
 // func_8015712C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "set_yaw_matrix__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FR7xMat3x3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "set_yaw_matrix__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FR7xMat3x3f")
 
 // func_801571C8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "set_alpha_blend__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FP14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "set_alpha_blend__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FP14xModelInstance")
 
 // func_801571EC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "init_bound_entity__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FR4xEntUiP14xModelInstanceP7xMat4x3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "init_bound_entity__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FR4xEntUiP14xModelInstanceP7xMat4x3")
 
 // func_80157294
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "parallelepiped_to_obb__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FR6xBoundP5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "parallelepiped_to_obb__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_FR6xBoundP5xVec3")
 
 // func_801575D4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "max__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_Fff")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "max__29_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_Fff")
 
 // func_801575E4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "ZNPC_AnimTable_BossSB2__Fv")
@@ -49,22 +36,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Init__9zNPCB_SB2FP9xEntAsset")
 
 // func_8015846C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "init__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFUlPCvUlPCcPPCcPC14tweak_callbackPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "init__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFUlPCvUlPCcPPCcPC14tweak_callbackPv")
 
 // func_80158484
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "ParseINI__9zNPCB_SB2Fv")
 
 // func_801584C4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "load__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "load__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
 
 // func_801584F4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "register_tweaks__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "register_tweaks__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
 
 // func_8015A118
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Setup__9zNPCB_SB2Fv")
@@ -106,12 +87,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "player_platform__9zNPCB_SB2Fv")
 
 // func_8015AA60
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "activate_hand__9zNPCB_SB2FQ29zNPCB_SB29hand_enumb")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "activate_hand__9zNPCB_SB2FQ29zNPCB_SB29hand_enumb")
 
 // func_8015AA84
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "deactivate_hand__9zNPCB_SB2FQ29zNPCB_SB29hand_enum")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "deactivate_hand__9zNPCB_SB2FQ29zNPCB_SB29hand_enum")
 
 // func_8015AAA8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "player_on_ground__9zNPCB_SB2CFv")
@@ -126,8 +105,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "slugs_inactive__9zNPCB_SB2CFv")
 
 // func_8015ADC0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data")
 
 // func_8015AF24
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "abandon_slugs__9zNPCB_SB2Fv")
@@ -181,8 +159,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "bind_nodes__9zNPCB_SB2Fv")
 
 // func_8015BD14
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "rebind_nodes__9zNPCB_SB2FP8RpAtomicP11RwMatrixTag")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "rebind_nodes__9zNPCB_SB2FP8RpAtomicP11RwMatrixTag")
 
 // func_8015BE7C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "setup_node_tags__9zNPCB_SB2Fv")
@@ -206,12 +183,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf")
 
 // func_8015C590
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "spin_platform__9zNPCB_SB2FRQ29zNPCB_SB213platform_dataRC5xVec3ff")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "spin_platform__9zNPCB_SB2FRQ29zNPCB_SB213platform_dataRC5xVec3ff")
 
 // func_8015C634
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data")
 
 // func_8015C7A8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "update_platforms__9zNPCB_SB2Ff")
@@ -229,58 +204,40 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "init_slugs__9zNPCB_SB2Fv")
 
 // func_8015CD94
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
 
 // func_8015CED0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "update_delay_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "update_delay_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
 
 // func_8015CF54
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "update_dying_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "update_dying_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
 
 // func_8015D00C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf")
 
 // func_8015D1EC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "slug_interp__9zNPCB_SB2FfRf")
 
 // func_8015D268
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "eval_linear__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFfPf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "eval_linear__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFfPf")
 
 // func_8015D370
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "find_active_node__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "find_active_node__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFf")
 
 // func_8015D3D0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "eval_smooth__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFfPf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "eval_smooth__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveFfPf")
 
 // func_8015D640
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "clamp_t__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "clamp_t__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFf")
 
 // func_8015D69C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "end_t__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "end_t__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFv")
 
 // func_8015D6C8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "get_node__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "get_node__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFUl")
 
 // func_8015D6E4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "start_t__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "start_t__Q229_esc__2_unnamed_esc__2_zNPCTypeBossSB2_cpp_esc__2_14response_curveCFv")
 
 // func_8015D6F0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "update_slugs__9zNPCB_SB2Ff")
@@ -316,8 +273,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__20zNPCGoalBossSB2IntroFfPv")
 
 // func_8015DE50
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__20zNPCGoalBossSB2IntroFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__20zNPCGoalBossSB2IntroFP11en_trantypefPvP6xScene")
 
 // func_8015DE8C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "create__19zNPCGoalBossSB2IdleFiP10RyzMemGrowPv")
@@ -329,8 +285,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__19zNPCGoalBossSB2IdleFfPv")
 
 // func_8015DF44
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__19zNPCGoalBossSB2IdleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__19zNPCGoalBossSB2IdleFP11en_trantypefPvP6xScene")
 
 // func_8015E024
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "create__20zNPCGoalBossSB2TauntFiP10RyzMemGrowPv")
@@ -342,8 +297,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__20zNPCGoalBossSB2TauntFfPv")
 
 // func_8015E12C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__20zNPCGoalBossSB2TauntFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__20zNPCGoalBossSB2TauntFP11en_trantypefPvP6xScene")
 
 // func_8015E1A8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "create__20zNPCGoalBossSB2DizzyFiP10RyzMemGrowPv")
@@ -355,8 +309,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__20zNPCGoalBossSB2DizzyFfPv")
 
 // func_8015E34C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__20zNPCGoalBossSB2DizzyFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__20zNPCGoalBossSB2DizzyFP11en_trantypefPvP6xScene")
 
 // func_8015E3C0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "create__18zNPCGoalBossSB2HitFiP10RyzMemGrowPv")
@@ -368,8 +321,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__18zNPCGoalBossSB2HitFfPv")
 
 // func_8015E54C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__18zNPCGoalBossSB2HitFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__18zNPCGoalBossSB2HitFP11en_trantypefPvP6xScene")
 
 // func_8015E60C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "create__19zNPCGoalBossSB2HuntFiP10RyzMemGrowPv")
@@ -384,8 +336,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__19zNPCGoalBossSB2HuntFfPv")
 
 // func_8015E8F4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene")
 
 // func_8015EA38
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "create__20zNPCGoalBossSB2SwipeFiP10RyzMemGrowPv")
@@ -397,8 +348,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__20zNPCGoalBossSB2SwipeFfPv")
 
 // func_8015EBD8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene")
 
 // func_8015EDD0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "can_start__20zNPCGoalBossSB2SwipeCFv")
@@ -413,8 +363,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__19zNPCGoalBossSB2ChopFfPv")
 
 // func_8015EFA0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene")
 
 // func_8015F1A0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "can_start__19zNPCGoalBossSB2ChopCFv")
@@ -429,8 +378,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__21zNPCGoalBossSB2KarateFfPv")
 
 // func_8015F3E0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene")
 
 // func_8015F6A4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "can_start__21zNPCGoalBossSB2KarateCFv")
@@ -445,28 +393,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Exit__20zNPCGoalBossSB2DeathFfPv")
 
 // func_8015F7BC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "Process__20zNPCGoalBossSB2DeathFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "Process__20zNPCGoalBossSB2DeathFP11en_trantypefPvP6xScene")
 
 // func_8015F7C4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "load_param_esc__0_i_esc__4_i_esc__1___10auto_tweakFRiiiiP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "load_param_esc__0_i_esc__4_i_esc__1___10auto_tweakFRiiiiP16xModelAssetParamUiPCc")
 
 // func_8015F848
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "load_param_esc__0_b_esc__4_i_esc__1___10auto_tweakFRbiiiP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "load_param_esc__0_b_esc__4_i_esc__1___10auto_tweakFRbiiiP16xModelAssetParamUiPCc")
 
 // func_8015F894
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "load_param_esc__0_5xVec3_esc__4_i_esc__1___10auto_tweakFR5xVec3iiiP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "load_param_esc__0_5xVec3_esc__4_i_esc__1___10auto_tweakFR5xVec3iiiP16xModelAssetParamUiPCc")
 
 // func_8015F8E4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeBossSB2.s",                                                                  \
-    "load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc")
 
 // func_8015F98C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "choose_hand__9zNPCB_SB2Fv")
@@ -526,8 +465,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "__ct__21zNPCGoalBossSB2KarateFiR9zNPCB_SB2")
 
 // func_8015FE4C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s",                                                   \
-                   "platform_index__9zNPCB_SB2CFRCQ29zNPCB_SB213platform_data")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "platform_index__9zNPCB_SB2CFRCQ29zNPCB_SB213platform_data")
 
 // func_8015FE74
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSB2.s", "__ct__20zNPCGoalBossSB2DeathFiR9zNPCB_SB2")

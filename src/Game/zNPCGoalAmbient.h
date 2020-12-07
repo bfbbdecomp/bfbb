@@ -1,4 +1,6 @@
 #ifndef ZNPCGOALAMBIENT_H
 #define ZNPCGOALAMBIENT_H
 
+
+
 #endif

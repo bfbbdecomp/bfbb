@@ -268,6 +268,11 @@ lbl_8012DD40:
 
 .endif
 
+.section .rodata
+.global zBusStop_Strings
+zBusStop_Strings:
+	.incbin "baserom.dol", 0x2693E0, 0x10
+
 .section .sbss
 .global sBusStopUI
 sBusStopUI:

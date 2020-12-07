@@ -18,8 +18,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Resume__18zNPCGoalPlayerNearFfPv")
 
 // func_80136BDC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__18zNPCGoalPlayerNearFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__18zNPCGoalPlayerNearFP11en_trantypefPvP6xScene")
 
 // func_8013703C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "NPCMessage__18zNPCGoalPlayerNearFP6NPCMsg")
@@ -31,8 +30,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "DoCheatPanHandle__18zNPCGoalPlayerNearFv")
 
 // func_8013710C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "ChkCheatDogTrix__18zNPCGoalPlayerNearFPiP11en_trantype")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "ChkCheatDogTrix__18zNPCGoalPlayerNearFPiP11en_trantype")
 
 // func_801374F8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Enter__12zNPCGoalTalkFfPv")
@@ -41,8 +39,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Exit__12zNPCGoalTalkFfPv")
 
 // func_80137690
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__12zNPCGoalTalkFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__12zNPCGoalTalkFP11en_trantypefPvP6xScene")
 
 // func_8013799C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "NPCMessage__12zNPCGoalTalkFP6NPCMsg")
@@ -57,8 +54,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Exit__13zNPCGoalSpeakFfPv")
 
 // func_80137B74
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__13zNPCGoalSpeakFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__13zNPCGoalSpeakFP11en_trantypefPvP6xScene")
 
 // func_80137D34
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "NPCMessage__13zNPCGoalSpeakFP6NPCMsg")
@@ -67,22 +63,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Enter__13zNPCGoalCheerFfPv")
 
 // func_80137DC4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__13zNPCGoalCheerFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__13zNPCGoalCheerFP11en_trantypefPvP6xScene")
 
 // func_80137EB8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Enter__15zNPCGoalChatterFfPv")
 
 // func_80137F78
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__15zNPCGoalChatterFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__15zNPCGoalChatterFP11en_trantypefPvP6xScene")
 
 // func_801380E4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Enter__12zNPCGoalHurtFfPv")
 
 // func_8013814C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__12zNPCGoalHurtFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__12zNPCGoalHurtFP11en_trantypefPvP6xScene")
 
 // func_801381C8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "ChkRewardCheat__12zNPCGoalHurtFv")
@@ -94,8 +87,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Exit__15zNPCGoalBalloonFfPv")
 
 // func_8013827C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__15zNPCGoalBalloonFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__15zNPCGoalBalloonFP11en_trantypefPvP6xScene")
 
 // func_801382FC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "NPCMessage__15zNPCGoalBalloonFP6NPCMsg")
@@ -107,15 +99,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Exit__15zNPCGoalBoyRideFfPv")
 
 // func_801383E4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__15zNPCGoalBoyRideFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__15zNPCGoalBoyRideFP11en_trantypefPvP6xScene")
 
 // func_801384C8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "NPCMessage__15zNPCGoalBoyRideFP6NPCMsg")
 
 // func_8013856C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__15zNPCGoalBoyFallFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__15zNPCGoalBoyFallFP11en_trantypefPvP6xScene")
 
 // func_80138688
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "CollReview__15zNPCGoalBoyFallFPv")
@@ -124,8 +114,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Enter__15zNPCGoalBoyWeepFfPv")
 
 // func_801387D0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
-                   "Process__15zNPCGoalBoyWeepFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "Process__15zNPCGoalBoyWeepFP11en_trantypefPvP6xScene")
 
 // func_801388D8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "NPCMessage__15zNPCGoalBoyWeepFP6NPCMsg")

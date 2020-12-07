@@ -6,24 +6,19 @@
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
 
 // func_8004FCF4
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
 
 // func_8004FD28
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
 
 // func_8004FD54
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
 
 // func_8004FD9C
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
 
 // func_8004FDC8
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
 
 // func_8004FE10
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "EaseInOut__Ff")

@@ -39,19 +39,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Destroy__12zNPCBPatrickFv")
 
 // func_80161A9C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "AnimPick__12zNPCBPatrickFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "AnimPick__12zNPCBPatrickFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_80161C28
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__12zNPCBPatrickFP6xScenef")
 
 // func_801633C0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "DuploNotice__12zNPCBPatrickF13en_SM_NOTICESPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "DuploNotice__12zNPCBPatrickF13en_SM_NOTICESPv")
 
 // func_80163418
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Damage__12zNPCBPatrickF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Damage__12zNPCBPatrickF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_801635F0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "zNPCBPatrick_AddBoundEntsToGrid__FP6zScene")
@@ -90,20 +87,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "hiddenByCutscene__12zNPCBPatrickFv")
 
 // func_801644A4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "ConveyorTimeLeft__12zNPCBPatrickFP9zPlatformP5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "ConveyorTimeLeft__12zNPCBPatrickFP9zPlatformP5xVec3")
 
 // func_8016454C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "ParabolaHitsConveyors__12zNPCBPatrickFP9xParabolaP7xCollis")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "ParabolaHitsConveyors__12zNPCBPatrickFP9xParabolaP7xCollis")
 
 // func_80164718
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "bossPatBoxCheckCollide__12zNPCBPatrickFP10bossPatBox")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "bossPatBoxCheckCollide__12zNPCBPatrickFP10bossPatBox")
 
 // func_801647E4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "bossPatBoxUpdate__12zNPCBPatrickFP10bossPatBoxf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "bossPatBoxUpdate__12zNPCBPatrickFP10bossPatBoxf")
 
 // func_80164A94
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "idleCB__FP5xGoalPvP11en_trantypefPv")
@@ -142,22 +135,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__19zNPCGoalBossPatIdleFfPv")
 
 // func_801655F8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__19zNPCGoalBossPatIdleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__19zNPCGoalBossPatIdleFP11en_trantypefPvP6xScene")
 
 // func_801656A0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__20zNPCGoalBossPatTauntFfPv")
 
 // func_80165878
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__20zNPCGoalBossPatTauntFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__20zNPCGoalBossPatTauntFP11en_trantypefPvP6xScene")
 
 // func_80165920
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__18zNPCGoalBossPatHitFfPv")
 
 // func_80165AB8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__18zNPCGoalBossPatHitFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__18zNPCGoalBossPatHitFP11en_trantypefPvP6xScene")
 
 // func_80165B60
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Exit__18zNPCGoalBossPatHitFfPv")
@@ -166,15 +156,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__19zNPCGoalBossPatSpitFfPv")
 
 // func_80165CA0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__19zNPCGoalBossPatSpitFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__19zNPCGoalBossPatSpitFP11en_trantypefPvP6xScene")
 
 // func_8016614C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__18zNPCGoalBossPatRunFfPv")
 
 // func_80166204
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__18zNPCGoalBossPatRunFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__18zNPCGoalBossPatRunFP11en_trantypefPvP6xScene")
 
 // func_8016628C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Exit__18zNPCGoalBossPatRunFfPv")
@@ -183,8 +171,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__20zNPCGoalBossPatSmackFfPv")
 
 // func_8016636C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__20zNPCGoalBossPatSmackFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__20zNPCGoalBossPatSmackFP11en_trantypefPvP6xScene")
 
 // func_80166700
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "StartFreezeBreath__Fv")
@@ -199,22 +186,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__21zNPCGoalBossPatFreezeFfPv")
 
 // func_80166940
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__21zNPCGoalBossPatFreezeFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__21zNPCGoalBossPatFreezeFP11en_trantypefPvP6xScene")
 
 // func_80166B24
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__20zNPCGoalBossPatSpawnFfPv")
 
 // func_80166B9C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__20zNPCGoalBossPatSpawnFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__20zNPCGoalBossPatSpawnFP11en_trantypefPvP6xScene")
 
 // func_80166D64
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__19zNPCGoalBossPatSpinFfPv")
 
 // func_80167098
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__19zNPCGoalBossPatSpinFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__19zNPCGoalBossPatSpinFP11en_trantypefPvP6xScene")
 
 // func_80168094
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Exit__19zNPCGoalBossPatSpinFfPv")
@@ -223,12 +207,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Enter__20zNPCGoalBossPatFudgeFfPv")
 
 // func_80168188
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "Process__20zNPCGoalBossPatFudgeFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "Process__20zNPCGoalBossPatFudgeFP11en_trantypefPvP6xScene")
 
 // func_80168A2C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
 
 // func_80168A90
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s",                                               \
-                   "xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossPatrick.s", "xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi")

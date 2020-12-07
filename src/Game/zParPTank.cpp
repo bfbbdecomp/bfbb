@@ -18,8 +18,7 @@
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
 // func_80170B14
-#pragma GLOBAL_ASM("asm/Game/zParPTank.s",                                                         \
-                   "zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v")
+#pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v")
 
 // func_80170C78
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "zParPTankBubbleUpdate__FP9zParPTankf")
@@ -79,6 +78,4 @@
 #pragma GLOBAL_ASM("asm/Game/zParPTank.s", "assign__5xVec2Ff")
 
 // func_80171FD0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zParPTank.s",                                                                        \
-    "__as__Q223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_dataFRCQ223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_data")
+#pragma GLOBAL_ASM("asm/Game/zParPTank.s", "__as__Q223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_dataFRCQ223_esc__2_unnamed_esc__2_zParPTank_cpp_esc__2_18snow_particle_data")

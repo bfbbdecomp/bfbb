@@ -18,8 +18,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Resume__16zNPCGoalPushAnimFfPv")
 
 // func_800D57AC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
-                   "Process__16zNPCGoalPushAnimFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__16zNPCGoalPushAnimFP11en_trantypefPvP6xScene")
 
 // func_800D5914
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Enter__16zNPCGoalLoopAnimFfPv")
@@ -28,8 +27,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Exit__16zNPCGoalLoopAnimFfPv")
 
 // func_800D5A84
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
-                   "Process__16zNPCGoalLoopAnimFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__16zNPCGoalLoopAnimFP11en_trantypefPvP6xScene")
 
 // func_800D5C0C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "MolestLoopAnim__16zNPCGoalLoopAnimFv")
@@ -146,8 +144,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Exit__20zNPCGoalDEVAnimCycleFfPv")
 
 // func_800D8588
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
-                   "Process__20zNPCGoalDEVAnimCycleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__20zNPCGoalDEVAnimCycleFP11en_trantypefPvP6xScene")
 
 // func_800D8670
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "NPCMessage__20zNPCGoalDEVAnimCycleFP6NPCMsg")
@@ -162,8 +159,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Exit__19zNPCGoalDEVAnimSpinFfPv")
 
 // func_800D8834
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
-                   "Process__19zNPCGoalDEVAnimSpinFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__19zNPCGoalDEVAnimSpinFP11en_trantypefPvP6xScene")
 
 // func_800D88D8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "NPCMessage__19zNPCGoalDEVAnimSpinFP6NPCMsg")

@@ -55,11 +55,11 @@ O_FILES := $(INIT_O_FILES) $(EXTAB_O_FILES) $(EXTABINDEX_O_FILES) $(TEXT_O_FILES
 #-------------------------------------------------------------------------------
 
 # Programs
-ifeq ($(WINDOWS),1)
+#ifeq ($(WINDOWS),1)
   WINE :=
-else
-  WINE := wine
-endif
+#else
+#  WINE := wine
+#endif
 AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
 OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy
 CC      := $(WINE) tools/mwcc_compiler/2.0/mwcceppc.exe
@@ -76,7 +76,7 @@ INCLUDES := -Iinclude -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk
 ASFLAGS := -mgekko -I include
 LDFLAGS := -map $(MAP)
 CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -fp_contract on -O4,p -msgstyle gcc \
-           -pragma "check_header_flags off" -RTTI off -pragma "force_active on" \
+           -pragma "check_header_flags off" -pragma "force_active on" \
            -str reuse,pool,readonly -char unsigned -enum int -use_lmw_stmw on -inline off -gccincludes $(INCLUDES) 
 PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES)
 PPROCFLAGS := -fsymbol-fixup

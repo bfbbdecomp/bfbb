@@ -9,7 +9,7 @@
 
 struct zCamMarker : xBase
 {
-    xCamAsset* asset;
+	xCamAsset* asset;
 };
 
 void zCamMarkerInit(xBase* b, xCamAsset* asset);

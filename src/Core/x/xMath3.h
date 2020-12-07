@@ -4,7 +4,6 @@
 #include "xVec3.h"
 #include "xVec3Inlines.h"
 
-// Size: 0x30
 struct xMat3x3
 {
     xVec3 right;
@@ -15,7 +14,6 @@ struct xMat3x3
     uint32 pad2;
 };
 
-// Size: 0x40
 struct xMat4x3 : xMat3x3
 {
     xVec3 pos;
@@ -60,10 +58,6 @@ struct xVec4
     float32 z;
     float32 w;
 };
-
-extern xVec3 g_X3;
-extern xVec3 g_Y3;
-extern xVec3 g_Z3;
 
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);

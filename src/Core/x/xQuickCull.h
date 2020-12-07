@@ -3,7 +3,6 @@
 
 #include "xVec3.h"
 
-// Size: 0x20
 struct xQCData
 {
     int8 xmin;

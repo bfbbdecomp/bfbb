@@ -27,8 +27,7 @@
 #pragma GLOBAL_ASM("asm/Game/zEntHangable.s", "zEntHangableEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_8006209C
-#pragma GLOBAL_ASM("asm/Game/zEntHangable.s",                                                      \
-                   "HangableIsMovingTooMuch__FP5xVec3P5xVec3P5xVec3P5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zEntHangable.s", "HangableIsMovingTooMuch__FP5xVec3P5xVec3P5xVec3P5xVec3")
 
 // func_80062108
 #pragma GLOBAL_ASM("asm/Game/zEntHangable.s", "zEntHangable_SetMatrix__FP12zEntHangablef")

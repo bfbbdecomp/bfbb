@@ -2947,7 +2947,6 @@ IsLocked__9NPCWidgetFv:
 .endif
 
 .section .rodata
-.balign 8
 lbl_8026C410:
 	.incbin "baserom.dol", 0x2693F0, 0x1E0
 lbl_8026C5F0:

@@ -1,12 +1,11 @@
-#include <types.h>
-
 #include "xEvent.h"
-#include "xString.h"
-#include "xstransvc.h"
 
 #include "../../Game/zScene.h"
 
-void zEntEvent(int8* to, uint32 toEvent)
+#include "xString.h"
+#include "xstransvc.h"
+
+void zEntEvent(char* to, uint32 toEvent)
 {
     uint32 id = xStrHash(to);
     xBase* sendTo = zSceneFindObject(id);
@@ -123,11 +122,13 @@ void zEntEvent(xBase* from, uint32 fromEvent, xBase* to, uint32 toEvent, const f
 
                             if (!b)
                             {
-                                b = (xBase*)xSTFindAsset(idx->paramWidgetAssetID, NULL);
+                                b = (xBase*)
+                                    xSTFindAsset(idx->paramWidgetAssetID, NULL);
                             }
                         }
 
-                        zEntEvent(to, toEvent, sendTo, idx->dstEvent, idx->param, b, 0);
+                        zEntEvent(to, toEvent, sendTo, idx->dstEvent,
+                                  idx->param, b, 0);
                     }
                 }
             }

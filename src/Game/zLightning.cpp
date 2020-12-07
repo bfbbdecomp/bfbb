@@ -39,8 +39,7 @@
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningKill__FP10zLightning")
 
 // func_800A18C8
-#pragma GLOBAL_ASM("asm/Game/zLightning.s",                                                        \
-                   "zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3")
 
 // func_800A1D08
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "xDebugAddTweak__FPCcPUcUcUcPC14tweak_callbackPvUi")
@@ -49,8 +48,7 @@
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "xDebugAddFlagTweak__FPCcPUiUiPC14tweak_callbackPvUi")
 
 // func_800A1D10
-#pragma GLOBAL_ASM("asm/Game/zLightning.s",                                                        \
-                   "xDebugAddSelectTweak__FPCcPUiPPCcPCUiUiPC14tweak_callbackPvUi")
+#pragma GLOBAL_ASM("asm/Game/zLightning.s", "xDebugAddSelectTweak__FPCcPUiPPCcPCUiUiPC14tweak_callbackPvUi")
 
 // func_800A1D14
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "xDebugAddTweak__FPCcPsssPC14tweak_callbackPvUi")

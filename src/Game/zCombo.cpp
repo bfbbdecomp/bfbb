@@ -14,11 +14,11 @@ extern const float32 zCombo_float_minusone;
 
 struct zComboReward
 {
-    int32 reward;
-    int8* textName;
-    uint32 rewardList[10];
-    uint32 rewardNum;
-    xTextAsset* textAsset;
+	int32 reward;
+	int8* textName;
+	uint32 rewardList[10];
+	uint32 rewardNum;
+	xTextAsset* textAsset;
 };
 
 // TODO: Something is wrong with this struct. It looks like the debug symbols
@@ -170,17 +170,13 @@ void zCombo_Setup()
 /* Can't figure out how to get the assignments to happen in the right order */
 void zCombo_Add(int32 points)
 {
-    if (zCombo_float32_3 < zCombo_float_zero)
-    {
+    if (zCombo_float32_3 < zCombo_float_zero) {
         zCombo_float32_3 = zCombo_float32_1;
         zCombo_int32_1 = points - 1;
-    }
-    else
-    {
+    } else {
         zCombo_float32_3 = zCombo_float32_1;
         zCombo_int32_3 += points;
-        if (zCombo_int32_1 != 0)
-        {
+        if (zCombo_int32_1 != 0) {
             zCombo_int32_3 += zCombo_int32_1;
             zCombo_int32_1 = 0;
         }
@@ -197,8 +193,7 @@ void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
 // func_80195C8C
 void zCombo_HideImmediately()
 {
-    if (comboHUD != NULL)
-    {
+    if (comboHUD != NULL) {
         // TODO: This is probably wrong, but generates the right code.
         // Something is likely not correct with widget_chunk, see definition.
         comboHUD->w.text[4] = '\0';

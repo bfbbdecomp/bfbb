@@ -45,8 +45,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "Init__8zNPCTikiFP9xEntAsset")
 
 // func_8010A530
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s",                                                      \
-                   "Damage__8zNPCTikiF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "Damage__8zNPCTikiF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_8010A5BC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "SetCarryState__8zNPCTikiF18en_NPC_CARRY_STATE")

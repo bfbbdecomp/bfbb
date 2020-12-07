@@ -33,34 +33,24 @@ struct xModelInstance
     xModelInstance* Parent;
     xModelPool* Pool;
     xAnimPlay* Anim;
-
-    // Offset: 0x10
     RpAtomic* Data;
     uint32 PipeFlags;
     float32 RedMultiplier;
     float32 GreenMultiplier;
-
-    // Offset: 0x20
     float32 BlueMultiplier;
     float32 Alpha;
     float32 FadeStart;
     float32 FadeEnd;
-
-    // Offset: 0x30
     xSurface* Surf;
     xModelBucket** Bucket;
     xModelInstance* BucketNext;
     xLightKit* LightKit;
-
-    // Offset: 0x40
     void* Object;
     uint16 Flags;
     uint8 BoneCount;
     uint8 BoneIndex;
     uint8* BoneRemap;
     RwMatrixTag* Mat;
-
-    // Offset: 0x50
     xVec3 Scale;
     uint32 modelID;
     uint32 shadowID;

@@ -51,31 +51,25 @@
 #pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_KillFruit__FP4xEnt")
 
 // func_800B895C
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_CauseDamage__FP13zThrownStructP10xEntCollis")
+#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_CauseDamage__FP13zThrownStructP10xEntCollis")
 
 // func_800B8B88
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf")
+#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf")
 
 // func_800B8F54
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_ThrowFreeze__FP13zThrownStructP10xEntCollisPfPf")
+#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_ThrowFreeze__FP13zThrownStructP10xEntCollisPfPf")
 
 // func_800B8F84
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf")
+#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf")
 
 // func_800B8FEC
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_BSandyHead__FP13zThrownStructP10xEntCollisPfPf")
+#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_BSandyHead__FP13zThrownStructP10xEntCollisPfPf")
 
 // func_800B903C
 #pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_Tiki__FP13zThrownStructP10xEntCollisPfPf")
 
 // func_800B90A4
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_StoneTiki__FP13zThrownStructP10xEntCollisPfPf")
+#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrownCollide_StoneTiki__FP13zThrownStructP10xEntCollisPfPf")
 
 // func_800B9204
 #pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_IsFruit__FP4xEntPf")

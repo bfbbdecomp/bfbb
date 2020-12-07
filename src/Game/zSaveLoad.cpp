@@ -114,22 +114,19 @@
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckFormattedSingle__Fi")
 
 // func_800AE43C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi")
 
 // func_800AE500
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSpaceSingle__Fi")
 
 // func_800AE5D0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "zSaveLoad_CardCheckGamesSingle_doCheck__FP17st_XSAVEGAME_DATAi")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGamesSingle_doCheck__FP17st_XSAVEGAME_DATAi")
 
 // func_800AE674
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGamesSingle__Fi")
 
 // func_800AE744
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii")
 
 // func_800AE7CC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotEmpty_hasGame__Fii")
@@ -207,23 +204,19 @@
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveInfoCB__FPvP17st_XSAVEGAME_DATAPiPi")
 
 // func_800B0670
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
 
 // func_800B0728
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi")
 
 // func_800B0744
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
 
 // func_800B0800
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
 
 // func_800B08F0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
 
 // func_800B09CC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_slotIsEmpty__FUi")

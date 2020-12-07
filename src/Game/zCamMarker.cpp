@@ -7,7 +7,7 @@ void zCamMarkerInit(xBase* b, xCamAsset* asset)
     // xCamAsset, like most of the asset types, extends from xBaseAsset
     // they all have a xLinkAsset array at the end (or near the end) of their data
     // in xCamAsset's case, the xLinkAsset array appears right after it
-    if (b->linkCount)
+    if (b->linkCount != 0)
     {
         b->link = (xLinkAsset*)(asset + 1);
     }

@@ -24,8 +24,7 @@
 #pragma GLOBAL_ASM("asm/Game/zEntTrigger.s", "zEntTriggerReset__FP11zEntTrigger")
 
 // func_80092570
-#pragma GLOBAL_ASM("asm/Game/zEntTrigger.s",                                                       \
-                   "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zEntTrigger.s", "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3")
 
 // func_80092694
 #pragma GLOBAL_ASM("asm/Game/zEntTrigger.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")

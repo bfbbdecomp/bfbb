@@ -12,8 +12,7 @@
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_GameInit__Fv")
 
 // func_80127588
-#pragma GLOBAL_ASM("asm/Game/zShrapnel.s",                                                         \
-                   "zShrapnel_ProjectileSceneInit__FP20zFragProjectileAsset")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_ProjectileSceneInit__FP20zFragProjectileAsset")
 
 // func_801275F8
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_ParticleSceneInit__FP18zFragParticleAsset")
@@ -34,32 +33,25 @@
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_Render__Fv")
 
 // func_80127AC8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_DefaultInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_DefaultInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_80127C98
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "CinFragCB__FP5zFragP10zFragAsset")
 
 // func_80127CF0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_CinematicInit__FP14zShrapnelAssetP8RpAtomicP11RwMatrixTagP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_CinematicInit__FP14zShrapnelAssetP8RpAtomicP11RwMatrixTagP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_80127E1C
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFragLoc_Setup__FP13zFragLocationP14xModelInstance")
 
 // func_80127E64
-#pragma GLOBAL_ASM("asm/Game/zShrapnel.s",                                                         \
-                   "zFragLoc_InitMat__FP13zFragLocationP7xMat4x3P14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFragLoc_InitMat__FP13zFragLocationP7xMat4x3P14xModelInstance")
 
 // func_80127F98
-#pragma GLOBAL_ASM("asm/Game/zShrapnel.s",                                                         \
-                   "zFragLoc_InitVec__FP13zFragLocationP5xVec3P14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFragLoc_InitVec__FP13zFragLocationP5xVec3P14xModelInstance")
 
 // func_801280D4
-#pragma GLOBAL_ASM("asm/Game/zShrapnel.s",                                                         \
-                   "zFragLoc_InitDir__FP13zFragLocationP5xVec3P14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFragLoc_InitDir__FP13zFragLocationP5xVec3P14xModelInstance")
 
 // func_801281D0
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFrag_DefaultInit__FP5zFragP10zFragAsset")
@@ -74,8 +66,7 @@
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFrag_ProjectileCollData__FP5zFrag")
 
 // func_80128614
-#pragma GLOBAL_ASM("asm/Game/zShrapnel.s",                                                         \
-                   "zFrag_ProjectileSetupPath__FP5zFragP20zFragProjectileAsset")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFrag_ProjectileSetupPath__FP5zFragP20zFragProjectileAsset")
 
 // func_8012891C
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFrag_DefaultProjectileUpdate__FP5zFragf")
@@ -102,32 +93,22 @@
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zFrag_ProjectileRenderer__Fv")
 
 // func_80129308
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_DestructObjInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_DestructObjInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_801297A4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_BB03FloorInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_BB03FloorInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_80129A7C
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "BB03FloorChildCB__FP5zFragP10zFragAsset")
 
 // func_80129AF8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_BB03FloorChildInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_BB03FloorChildInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_80129B20
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_GlobalRobotInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_GlobalRobotInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_80129D08
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zShrapnel.s",                                                                        \
-    "zShrapnel_SpongebobInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
+#pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "zShrapnel_SpongebobInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v")
 
 // func_80129F50
 #pragma GLOBAL_ASM("asm/Game/zShrapnel.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")

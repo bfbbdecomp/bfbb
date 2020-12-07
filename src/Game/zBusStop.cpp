@@ -1,3 +1,5 @@
+#include "zBusStop.h"
+
 #include <types.h>
 
 #include "../Core/x/xstransvc.h"
@@ -5,13 +7,14 @@
 #include "../Core/x/xString.h"
 #include "../Core/x/xEnt.h"
 
-#include "zBusStop.h"
 #include "zGame.h"
 #include "zGlobals.h"
 #include "zScene.h"
 
 #include "zEntPlayer.h"
 #include "zEntCruiseBubble.h"
+
+extern int8 zBusStop_Strings[];
 
 extern float32 zBusStop_float_minusone;
 extern float32 zBusStop_float_6p25;
@@ -22,20 +25,24 @@ extern float32 zBusStop_float_two;
 
 extern xEnt* sBusStopUI;
 
-void zBusStop_Init(xBase& base, xDynAsset& asset, ulong32)
+int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
+
+// func_8012D888
+void zBusStop_Init(xBase& base, xDynAsset& asset, unsigned long)
 {
     zBusStop_Init((zBusStop*)&base, (busstop_asset*)&asset);
 }
 
+// func_8012D8A8
 void zBusStop_Init(zBusStop* bstop, busstop_asset* asset)
 {
     xBaseInit(bstop, asset);
     bstop->basset = asset;
     bstop->eventFunc = zBusStopEventCB;
 
-    if (bstop->linkCount)
+    if (bstop->linkCount != 0)
     {
-        bstop->link = (xLinkAsset*)(asset + 1);
+        bstop->link = (xLinkAsset*)(((uint8*)asset) + 0x24);
     }
     else
     {
@@ -44,7 +51,6 @@ void zBusStop_Init(zBusStop* bstop, busstop_asset* asset)
 
     uint32 size;
     void* marker = xSTFindAsset(asset->marker, &size);
-
     if (marker != NULL)
     {
         if (size == sizeof(xVec3))
@@ -56,12 +62,13 @@ void zBusStop_Init(zBusStop* bstop, busstop_asset* asset)
     }
 }
 
+// func_8012D948
 void zBusStop_Setup(zBusStop* bstop)
 {
     zSceneFindObject(bstop->basset->cameraID);
     bstop->bus = (zEnt*)zSceneFindObject(bstop->basset->busID);
     bstop->switchTimer = zBusStop_float_minusone;
-    sBusStopUI = (xEnt*)zSceneFindObject(xStrHash("mnu4 busstop"));
+    sBusStopUI = (xEnt*)zSceneFindObject(xStrHash(zBusStop_Strings));
 }
 
 // func_8012D9A8
@@ -112,11 +119,11 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
 
         if (cruise_bubble::active())
         {
-            zEntEvent("mnu4 busstop", eEventInvisible);
+            zEntEvent(zBusStop_Strings, eEventInvisible);
         }
         else if (!xEntIsVisible(sBusStopUI))
         {
-            zEntEvent("mnu4 busstop", eEventVisible);
+            zEntEvent(zBusStop_Strings, eEventVisible);
         }
         break;
 
@@ -144,11 +151,11 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
         switch (bstop->currState)
         {
         case 0:
-            zEntEvent("mnu4 busstop", eEventUIFocusOff_Unselect);
+            zEntEvent(zBusStop_Strings, eEventUIFocusOff_Unselect);
             break;
 
         case 1:
-            zEntEvent("mnu4 busstop", eEventUIFocusOn_Select);
+            zEntEvent(zBusStop_Strings, eEventUIFocusOn_Select);
             zEntPlayerControlOn(CONTROL_OWNER_BUS_STOP);
             zEntEvent(bstop->basset->cameraID, eEventEndConversation);
             zEntEvent(bstop->basset->busID, eEventInvisible);
@@ -156,7 +163,7 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
             break;
 
         case 2:
-            zEntEvent("mnu4 busstop", eEventUIFocusOff_Unselect);
+            zEntEvent(zBusStop_Strings, eEventUIFocusOff_Unselect);
             zEntPlayerControlOff(CONTROL_OWNER_BUS_STOP);
             zEntEvent(bstop->basset->cameraID, eEventStartConversation);
             zEntEvent(bstop->basset->cameraID, eEventSwitch, zBusStop_float_0p5,
@@ -173,11 +180,11 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
             {
                 gCurrentPlayer = eCurrentPlayerSpongeBob;
             }
-            else if (bstop->basset->character == eCurrentPlayerSpongeBob)
+            else if (bstop->basset->character == 0)
             {
                 gCurrentPlayer = eCurrentPlayerPatrick;
             }
-            else if (bstop->basset->character == eCurrentPlayerPatrick)
+            else if (bstop->basset->character == 1)
             {
                 gCurrentPlayer = eCurrentPlayerSandy;
             }
@@ -205,6 +212,7 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
 }
 #endif
 
+// func_8012DD5C
 int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*)
 {
     return eEventEnable;

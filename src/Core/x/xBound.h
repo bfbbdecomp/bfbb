@@ -4,7 +4,6 @@
 #include "xQuickCull.h"
 #include "xMath3.h"
 
-// Size: 0x4C
 struct xBound
 {
     xQCData qcd;
@@ -18,7 +17,5 @@ struct xBound
     };
     xMat4x3* mat;
 };
-
-void xBoundDraw(const xBound* bound);
 
 #endif

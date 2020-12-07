@@ -138,29 +138,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "BunnyHopSet__9zNPCRobotFP5xVec3")
 
 // func_800F8858
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeRobot.s",                                                                    \
-    "AddLassoing__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AddLassoing__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F8928
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeRobot.s",                                                                    \
-    "AddMiscTypical__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AddMiscTypical__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F89EC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeRobot.s",                                                                    \
-    "AddStunThrow__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AddStunThrow__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F8AD8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeRobot.s",                                                                    \
-    "AddDamage__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AddDamage__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F8B9C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeRobot.s",                                                                    \
-    "AddSpawning__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AddSpawning__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F8C2C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LassoSetup__9zNPCRobotFv")
@@ -538,8 +528,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Process__11zNPCTubeletFP6xScenef")
 
 // func_800FF298
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "Respawn__11zNPCTubeletFPC5xVec3P10zMovePointP10zMovePoint")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Respawn__11zNPCTubeletFPC5xVec3P10zMovePointP10zMovePoint")
 
 // func_800FF2E0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "PrepTheBand__11zNPCTubeletFv")
@@ -593,12 +582,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SelfSetup__13zNPCTubeSlaveFv")
 
 // func_800FFD74
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "AnimPick__13zNPCTubeSlaveFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AnimPick__13zNPCTubeSlaveFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_800FFE1C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "SetMaster__13zNPCTubeSlaveFP11zNPCTubelet11en_tubespot")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SetMaster__13zNPCTubeSlaveFP11zNPCTubelet11en_tubespot")
 
 // func_800FFEC0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Process__13zNPCTubeSlaveFP6xScenef")
@@ -640,8 +627,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "StuffToDoIfAlive__9zNPCSlickFf")
 
 // func_801005EC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "Damage__9zNPCSlickF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Damage__9zNPCSlickF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_801006E4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ShieldUpdate__9zNPCSlickFf")
@@ -680,16 +666,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SlipSlidenAway__9zNPCSlickFf")
 
 // func_80100D64
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "DUMY_grul_returnToIdle__FP5xGoalPvP11en_trantypefPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "DUMY_grul_returnToIdle__FP5xGoalPvP11en_trantypefPv")
 
 // func_80100DC4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "ROBO_grul_goAlertMelee__FP5xGoalPvP11en_trantypefPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ROBO_grul_goAlertMelee__FP5xGoalPvP11en_trantypefPv")
 
 // func_80100EFC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "ROBO_grul_goAlertLobber__FP5xGoalPvP11en_trantypefPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ROBO_grul_goAlertLobber__FP5xGoalPvP11en_trantypefPv")
 
 // func_801010BC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "FODR_grul_alert__FP5xGoalPvP11en_trantypefPv")
@@ -749,8 +732,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "VFXStarTrek__9zNPCRobotFfP5xVec3P5xVec3")
 
 // func_8010178C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s",                                                     \
-                   "LaunchProjectile__9zNPCRobotF9en_npchazff10en_mdlvertff")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LaunchProjectile__9zNPCRobotF9en_npchazff10en_mdlvertff")
 
 // func_80101A40
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IncludesPos__8NPCArenaFP5xVec3fP5xVec3")

@@ -43,6 +43,4 @@ struct xParabola
     float32 maxTime;
 };
 
-float32 xVec3Length2(const xVec3* vec);
-
 #endif

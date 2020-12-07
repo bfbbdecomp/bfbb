@@ -23,7 +23,6 @@ void zCameraFly_Update(xBase* to, xScene* scene, float32 dt);
 void zCameraFly_Save(zCameraFly* fly, xSerial* s);
 void zCameraFly_Load(zCameraFly* fly, xSerial* s);
 uint32 zCameraFlyProcessStopEvent();
-void zCameraFlyStart(uint32 id);
 int32 zCameraFlyEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3);
 
 #endif

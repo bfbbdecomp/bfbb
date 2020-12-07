@@ -54,12 +54,10 @@
 #pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "FootstepHackSceneEnter__Fv")
 
 // func_8004F3C4
-#pragma GLOBAL_ASM("asm/Game/zAssetTypes.s",                                                       \
-                   "dummyEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "dummyEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8004F3CC
-#pragma GLOBAL_ASM("asm/Game/zAssetTypes.s",                                                       \
-                   "soundEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "soundEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv")
 
 // func_8004F5E4
 #pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "FindAssetCB__FUiPc")

@@ -12,20 +12,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ZNPC_AnimTable_BossSandy__Fv")
 
 // func_8013D880
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadIsCarried__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "HeadIsCarried__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8013D8A4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8013D8CC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadIsShocked__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "HeadIsShocked__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8013D8DC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadNotShocked__FP15xAnimTransitionP11xAnimSinglePv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "HeadNotShocked__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8013D8F4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ZNPC_AnimTable_BossSandyHead__Fv")
@@ -49,8 +45,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ParseINI__10zNPCBSandyFv")
 
 // func_8013F1F8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "AnimPick__10zNPCBSandyFi16en_NPC_GOAL_SPOTP5xGoal")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "AnimPick__10zNPCBSandyFi16en_NPC_GOAL_SPOTP5xGoal")
 
 // func_8013F36C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "SpringRender__FP15SandyLimbSpring")
@@ -59,8 +54,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_BossDamageEffect_Init__Fv")
 
 // func_8013F6D8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi")
 
 // func_8013F87C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_BossDamageEffect_Update__Ff")
@@ -96,8 +90,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
 
 // func_8014184C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Damage__10zNPCBSandyF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Damage__10zNPCBSandyF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_80141864
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_AddBoundEntsToGrid__FP6zScene")
@@ -145,8 +138,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__21zNPCGoalBossSandyIdleFfPv")
 
 // func_80143090
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__21zNPCGoalBossSandyIdleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__21zNPCGoalBossSandyIdleFP11en_trantypefPvP6xScene")
 
 // func_801431E4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__21zNPCGoalBossSandyIdleFfPv")
@@ -155,15 +147,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__22zNPCGoalBossSandyTauntFfPv")
 
 // func_801432F4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__22zNPCGoalBossSandyTauntFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__22zNPCGoalBossSandyTauntFP11en_trantypefPvP6xScene")
 
 // func_8014340C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__22zNPCGoalBossSandyChaseFfPv")
 
 // func_80143468
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__22zNPCGoalBossSandyChaseFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__22zNPCGoalBossSandyChaseFP11en_trantypefPvP6xScene")
 
 // func_801435A4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__22zNPCGoalBossSandyChaseFfPv")
@@ -175,22 +165,19 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__22zNPCGoalBossSandyMeleeFfPv")
 
 // func_80143798
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__22zNPCGoalBossSandyMeleeFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__22zNPCGoalBossSandyMeleeFP11en_trantypefPvP6xScene")
 
 // func_8014393C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__23zNPCGoalBossSandyNoHeadFfPv")
 
 // func_80143A04
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__23zNPCGoalBossSandyNoHeadFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__23zNPCGoalBossSandyNoHeadFP11en_trantypefPvP6xScene")
 
 // func_80144378
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__26zNPCGoalBossSandyElbowDropFfPv")
 
 // func_801444BC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__26zNPCGoalBossSandyElbowDropFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__26zNPCGoalBossSandyElbowDropFP11en_trantypefPvP6xScene")
 
 // func_80144754
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__26zNPCGoalBossSandyElbowDropFfPv")
@@ -199,8 +186,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__21zNPCGoalBossSandyLeapFfPv")
 
 // func_801449A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__21zNPCGoalBossSandyLeapFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__21zNPCGoalBossSandyLeapFP11en_trantypefPvP6xScene")
 
 // func_80144E20
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__21zNPCGoalBossSandyLeapFfPv")
@@ -209,8 +195,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__20zNPCGoalBossSandySitFfPv")
 
 // func_80144F58
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__20zNPCGoalBossSandySitFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__20zNPCGoalBossSandySitFP11en_trantypefPvP6xScene")
 
 // func_80145698
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__20zNPCGoalBossSandySitFfPv")
@@ -219,15 +204,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__22zNPCGoalBossSandyGetUpFfPv")
 
 // func_8014583C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__22zNPCGoalBossSandyGetUpFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__22zNPCGoalBossSandyGetUpFP11en_trantypefPvP6xScene")
 
 // func_80145868
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__26zNPCGoalBossSandyRunToRopeFfPv")
 
 // func_80145AB4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__26zNPCGoalBossSandyRunToRopeFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__26zNPCGoalBossSandyRunToRopeFP11en_trantypefPvP6xScene")
 
 // func_80145BE8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Exit__26zNPCGoalBossSandyRunToRopeFfPv")
@@ -236,8 +219,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__28zNPCGoalBossSandyClotheslineFfPv")
 
 // func_80145D90
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene")
 
 // func_8014657C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "add_tweaks__13xBinaryCameraFPCc")

@@ -3,24 +3,19 @@
 #include <types.h>
 
 // func_8014F76C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "init_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "init_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_Fv")
 
 // func_8014F87C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "reset_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "reset_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_Fv")
 
 // func_8014F89C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "play_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FiPC5xVec3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "play_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FiPC5xVec3f")
 
 // func_8014F9B8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "kill_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FiUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "kill_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FiUi")
 
 // func_8014FA40
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "kill_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_Fi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "kill_sound__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_Fi")
 
 // func_8014FAD0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "load__9aqua_beamFRCQ29aqua_beam6configUi")
@@ -56,13 +51,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "kill_ring__9aqua_beamFv")
 
 // func_801500F4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "update_ring__9aqua_beamFQ242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "update_ring__9aqua_beamFQ242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorf")
 
 // func_801501A8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "render_ring__9aqua_beamFRQ29aqua_beam12ring_segment")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "render_ring__9aqua_beamFRQ29aqua_beam12ring_segment")
 
 // func_801502A4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "ZNPC_AnimTable_Prawn__Fv")
@@ -74,20 +66,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Init__9zNPCPrawnFP9xEntAsset")
 
 // func_801507B8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "create__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFii")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "create__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFii")
 
 // func_801509D0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "destroy__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "destroy__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFv")
 
 // func_80150A80
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Setup__9zNPCPrawnFv")
 
 // func_80150C08
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "set_background__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionF10iColor_tag")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "set_background__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionF10iColor_tag")
 
 // func_80150C34
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Reset__9zNPCPrawnFv")
@@ -105,22 +93,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "SysEvent__9zNPCPrawnFP5xBaseP5xBaseUiPCfP5xBasePi")
 
 // func_80151004
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "load_patterns__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FP16xModelAssetParamUiPCcPQ29zNPCPrawn10range_typei")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "load_patterns__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FP16xModelAssetParamUiPCcPQ29zNPCPrawn10range_typei")
 
 // func_801510E8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "ParseINI__9zNPCPrawnFv")
 
 // func_80151B6C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "load__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "load__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
 
 // func_80151B9C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "register_tweaks__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "register_tweaks__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
 
 // func_8015210C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "ParseLinks__9zNPCPrawnFv")
@@ -129,8 +111,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "SelfSetup__9zNPCPrawnFv")
 
 // func_80152270
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "Damage__9zNPCPrawnF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Damage__9zNPCPrawnF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_801522DC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "DuploNotice__9zNPCPrawnF13en_SM_NOTICESPv")
@@ -154,9 +135,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "add_child__9zNPCPrawnFR5xBasei")
 
 // func_801526C0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "set_yaw_matrix__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FR7xMat3x3f")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "set_yaw_matrix__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FR7xMat3x3f")
 
 // func_8015275C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "update_turn__9zNPCPrawnFf")
@@ -171,9 +150,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "update_beam__9zNPCPrawnFf")
 
 // func_80152DD0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "mulat__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FR5xVec3RC7xMat3x3RC7xMat3x3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "mulat__27_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_FR5xVec3RC7xMat3x3RC7xMat3x3")
 
 // func_80152E34
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "update_particles__9zNPCPrawnFf")
@@ -185,20 +162,16 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "start_fight__9zNPCPrawnFv")
 
 // func_80152F14
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "get_floor_info__9zNPCPrawnFQ29zNPCPrawn16floor_state_enumRQ29zNPCPrawn10range_typeRfRf")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "get_floor_info__9zNPCPrawnFQ29zNPCPrawn16floor_state_enumRQ29zNPCPrawn10range_typeRfRf")
 
 // func_80153134
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "__as__Q29zNPCPrawn10range_typeFRCQ29zNPCPrawn10range_type")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__as__Q29zNPCPrawn10range_typeFRCQ29zNPCPrawn10range_type")
 
 // func_80153148
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "apply_pending__9zNPCPrawnFv")
 
 // func_801531A4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "set_floor_state__9zNPCPrawnFQ29zNPCPrawn16floor_state_enumbb")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "set_floor_state__9zNPCPrawnFQ29zNPCPrawn16floor_state_enumbb")
 
 // func_8015325C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "vanish__9zNPCPrawnFv")
@@ -210,34 +183,22 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "render_closeup__9zNPCPrawnFv")
 
 // func_8015345C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "set_model_texture__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFR14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "set_model_texture__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFR14xModelInstance")
 
 // func_801534EC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "update__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFR14xModelInstanceP9xLightKit")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "update__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFR14xModelInstanceP9xLightKit")
 
 // func_80153618
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "render_static__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "render_static__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFv")
 
 // func_8015361C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "render_background__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "render_background__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFv")
 
 // func_8015370C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "set_vert__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFR18rwGameCube2DVertexffff")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "set_vert__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFR18rwGameCube2DVertexffff")
 
 // func_8015373C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "move__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFRC5xVec3RC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "move__Q227_esc__2_unnamed_esc__2_zNPCTypePrawn_cpp_esc__2_10televisionFRC5xVec3RC5xVec3")
 
 // func_801537C4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "set_life__9zNPCPrawnFi")
@@ -264,8 +225,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Exit__17zNPCGoalPrawnIdleFfPv")
 
 // func_80153C9C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "Process__17zNPCGoalPrawnIdleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Process__17zNPCGoalPrawnIdleFP11en_trantypefPvP6xScene")
 
 // func_80153D00
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Enter__17zNPCGoalPrawnBeamFfPv")
@@ -274,8 +234,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Exit__17zNPCGoalPrawnBeamFfPv")
 
 // func_80153EC0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "Process__17zNPCGoalPrawnBeamFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Process__17zNPCGoalPrawnBeamFP11en_trantypefPvP6xScene")
 
 // func_80153FB8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "update_aim__17zNPCGoalPrawnBeamFf")
@@ -302,8 +261,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Exit__17zNPCGoalPrawnBowlFfPv")
 
 // func_8015448C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "Process__17zNPCGoalPrawnBowlFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Process__17zNPCGoalPrawnBowlFP11en_trantypefPvP6xScene")
 
 // func_80154580
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Enter__19zNPCGoalPrawnDamageFfPv")
@@ -312,8 +270,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Exit__19zNPCGoalPrawnDamageFfPv")
 
 // func_80154644
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "Process__19zNPCGoalPrawnDamageFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Process__19zNPCGoalPrawnDamageFP11en_trantypefPvP6xScene")
 
 // func_80154720
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Enter__18zNPCGoalPrawnDeathFfPv")
@@ -322,97 +279,67 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Exit__18zNPCGoalPrawnDeathFfPv")
 
 // func_8015479C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "Process__18zNPCGoalPrawnDeathFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "Process__18zNPCGoalPrawnDeathFP11en_trantypefPvP6xScene")
 
 // func_801547BC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "reset__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "reset__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
 
 // func_801547DC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "clear__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "clear__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
 
 // func_801547EC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__as__Q29aqua_beam6configFRCQ29aqua_beam6config")
 
 // func_80154868
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "empty__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "empty__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
 
 // func_80154880
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "__ne__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorCFRCQ242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iterator")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__ne__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorCFRCQ242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iterator")
 
 // func_8015489C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "end__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "end__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
 
 // func_801548C0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "create_iterator__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFUl")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "create_iterator__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFUl")
 
 // func_801548E0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "__pp__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__pp__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorFv")
 
 // func_80154914
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "__apl__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__apl__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorFi")
 
 // func_8015492C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "__ml__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorCFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__ml__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorCFv")
 
 // func_80154944
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "begin__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "begin__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
 
 // func_80154968
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "back__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "back__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
 
 // func_801549AC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "__mi__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorCFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__mi__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorCFi")
 
 // func_801549E8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "__ami__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorFi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "__ami__Q242fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_8iteratorFi")
 
 // func_80154A18
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "front__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "front__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
 
 // func_80154A48
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "push_front__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "push_front__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
 
 // func_80154A5C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "full__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "full__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
 
 // func_80154AA8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "max_size__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "max_size__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
 
 // func_80154AA8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s",                                                     \
-                   "size__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "size__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_CFv")
 
 // func_80154AC8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "pop_back__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "pop_back__42fixed_queue_esc__0_Q29aqua_beam12ring_segment_esc__4_31_esc__1_Fv")
 
 // func_80154ADC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "get_center__9zNPCPrawnCFv")
@@ -451,14 +378,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "IsAlive__9zNPCPrawnFv")
 
 // func_80154CA8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc")
 
 // func_80154D50
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypePrawn.s",                                                                    \
-    "load_param_esc__0_i_esc__4_i_esc__1___10auto_tweakFRiiiiP16xModelAssetParamUiPCc")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "load_param_esc__0_i_esc__4_i_esc__1___10auto_tweakFRiiiiP16xModelAssetParamUiPCc")
 
 // func_80154DD4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypePrawn.s", "xDebugAddTweak__FPCcP5xVec3PC14tweak_callbackPvUi")

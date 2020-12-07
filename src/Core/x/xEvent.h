@@ -549,8 +549,7 @@ enum en_xEventTags
     eEventCount
 };
 
-// Oddly, all the zEntEvent functions are in xEvent, not zEvent
-void zEntEvent(int8* to, uint32 toEvent);
+void zEntEvent(char* to, uint32 toEvent);
 void zEntEvent(uint32 toID, uint32 toEvent);
 void zEntEvent(uint32 toID, uint32 toEvent, float32 toParam0, float32 toParam1, float32 toParam2,
                float32 toParam3);

@@ -45,12 +45,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Destroy__10zNPCCommonFv")
 
 // func_800EFA3C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "Damage__10zNPCCommonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Damage__10zNPCCommonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_800EFC34
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "Respawn__10zNPCCommonFPC5xVec3P10zMovePointP10zMovePoint")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Respawn__10zNPCCommonFPC5xVec3P10zMovePointP10zMovePoint")
 
 // func_800EFD30
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "NPCMessage__10zNPCCommonFP6NPCMsg")
@@ -71,12 +69,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "NewTime__10zNPCCommonFP6xScenef")
 
 // func_800F03D0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "SysEvent__10zNPCCommonFP5xBaseP5xBaseUiPCfP5xBasePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SysEvent__10zNPCCommonFP5xBaseP5xBaseUiPCfP5xBasePi")
 
 // func_800F0D18
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "ConvertHitEvent__10zNPCCommonFP5xBaseP5xBaseUiPCfP5xBasePi")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ConvertHitEvent__10zNPCCommonFP5xBaseP5xBaseUiPCfP5xBasePi")
 
 // func_800F0EEC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "VelStop__10zNPCCommonFv")
@@ -175,8 +171,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "MvptCycle__10zNPCCommonFv")
 
 // func_800F2A0C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "HaveLOSToPos__10zNPCCommonFP5xVec3fP6xSceneP5xBaseP7xCollis")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "HaveLOSToPos__10zNPCCommonFP5xVec3fP6xSceneP5xBaseP7xCollis")
 
 // func_800F2C60
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ModelAtomicHide__10zNPCCommonFiP14xModelInstance")
@@ -278,8 +273,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "LassoUseGuides__10zNPCCommonFii")
 
 // func_800F3CE8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "LassoGetAnims__10zNPCCommonFP14xModelInstanceP14xModelInstance")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "LassoGetAnims__10zNPCCommonFP14xModelInstanceP14xModelInstance")
 
 // func_800F3E5C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "LassoSyncAnims__10zNPCCommonF11en_lassanim")
@@ -291,14 +285,10 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "LassoNotify__10zNPCCommonF14en_LASSO_EVENT")
 
 // func_800F3FAC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeCommon.s",                                                                   \
-    "AddBaseline__10zNPCCommonFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "AddBaseline__10zNPCCommonFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F40D4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeCommon.s",                                                                   \
-    "AddScripting__10zNPCCommonFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "AddScripting__10zNPCCommonFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
 // func_800F4244
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "AddDEVGoals__10zNPCCommonFP7xPsyche")
@@ -364,39 +354,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "GenShadCacheRad__10zNPCCommonFv")
 
 // func_800F46D0
-#if 0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "__ct__9xNPCBasicFi")
-#else
-// xNPCBasic vtable at: 0x2949F4
-// vtable reference is stored immidately _after_ object fields in an xNPCBasic
-// instance. That is, sizeof(xNPCBasic) = sizeof(visible fields) + an extra 4
-// bytes for the vtable pointer after those fields.
-// vtable[0] = NULL (I think these first two are for RTTI which is disabled)
-// vtable[1] = NULL
-// vtable[2] = Init(FP9xEntAsset)
-// vtable[3] = PostInit(Fv)
-// vtable[4] = Setup(Fv)
-// vtable[5] = PostSetup(Fv)
-// vtable[6] = Reset(Fv)
-// vtable[7] = Process(FP6xScenef)
-// vtable[8] = BUpdate(FP5xVec3)
-// vtable[9] = NewTime(FP6xScenef)
-// vtable[10] = Move(FP6xScenefP9xEntFrame)
-// vtable[11] = SysEvent(FP5xBaseP5xBaseUiPCfP5xBasePi)
-// vtable[12] = Render(Fv)
-// vtable[13] = Save(CFP7xSerial)
-// vtable[14] = Load(FP7xSerial)
-// vtable[15] = CollideReview(Fv)
-// vtable[16] = ColChkFlags(CFv)
-// vtable[17] = ColPenFlags(CFv)
-// vtable[18] = ColChkByFlags(CFv)
-// vtable[19] = ColPenByFlags(CFv)
-// vtable[20] = PhysicsFlags(CFv)
-xNPCBasic::xNPCBasic(int32 value)
-{
-    myNPCType = value;
-}
-#endif
 
 // func_800F4720
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Setup__9xNPCBasicFv")
@@ -453,10 +411,7 @@ xNPCBasic::xNPCBasic(int32 value)
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "xSndIsPlaying__FUiUi")
 
 // func_800F4A34
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCTypeCommon.s",                                                                   \
-    "SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv")
 
 // func_800F4A48
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
-                   "Insert__21xListItem_esc__0_9NPCConfig_esc__1_FP9NPCConfig")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Insert__21xListItem_esc__0_9NPCConfig_esc__1_FP9NPCConfig")

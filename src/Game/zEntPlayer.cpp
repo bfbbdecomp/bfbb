@@ -1,26 +1,23 @@
+#include "zEntPlayer.h"
+
 #include <types.h>
 
 #include "../Core/p2/iSnd.h"
 
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xEntBoulder.h"
 #include "../Core/x/xSnd.h"
+#include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEntBoulder.h"
 
-#include "zCamera.h"
-#include "zEntPlayer.h"
-#include "zEntTeleportBox.h"
 #include "zGame.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
 #include "zGoo.h"
+#include "zEntTeleportBox.h"
 
 extern zGlobals globals;
 extern uint32 sCurrentStreamSndID;
 
-extern zPlayerLassoInfo* sLassoInfo;
-
-extern uint32 sSpatulaGrabbed;
 extern uint32 sShouldBubbleBowl;
 extern float32 sBubbleBowlLastWindupTime;
 extern float32 sBubbleBowlMultiplier;
@@ -29,7 +26,6 @@ extern int32 in_goo;
 extern int32 sPlayerDiedLastTime;
 extern int32 player_hit;
 extern int32 player_hit_anim;
-extern uint32 player_dead_anim;
 
 extern float32 lbl_803CD5A0; // 0.0
 extern float32 lbl_803CD638; // 10.0
@@ -231,29 +227,19 @@ void HealthReset()
 // func_80068EB8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBashToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    if (globals.player.cheat_mode)
-    {
-        return false;
-    }
-
-    return (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000));
-}
+// func_80068EDC
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "BubbleBounceCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_80068F24
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBounceCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    globals.player.ent.frame->vel.y = -globals.player.g.BBounceSpeed;
-    return 0;
-}
+// func_80068F9C
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceAttackCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    return (globals.player.JumpState == 0 || globals.player.JumpState == 1);
-}
+// func_80068FBC
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "BBounceStrikeCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_80068FE8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceStrikeCB__FP15xAnimTransitionP11xAnimSinglePv")
@@ -277,8 +263,16 @@ uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
         return false;
     }
 
-    return (!globals.player.ControlOff && ((globals.pad0->pressed & 0x20000)) &&
-            globals.player.g.PowerUp[0]);
+    bool canBowl = false;
+
+    // TODO: replace hardcoded pad number with button constant
+    if (!globals.player.ControlOff && ((globals.pad0->pressed & 0x20000) != 0) &&
+        globals.player.g.PowerUp[0] != 0)
+    {
+        canBowl = true;
+    }
+
+    return canBowl;
 }
 
 // func_80069168
@@ -286,7 +280,7 @@ uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    if (anim->Time < sBubbleBowlLastWindupTime && sShouldBubbleBowl)
+    if (anim->Time < sBubbleBowlLastWindupTime && sShouldBubbleBowl != false)
     {
         return true;
     }
@@ -305,38 +299,65 @@ uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-            WalkCheck(tran, anim, param_3));
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && WalkCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-            RunCheck(tran, anim, param_3));
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-            RunScaredCheck(tran, anim, param_3));
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunScaredCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-            RunVictoryCheck(tran, anim, param_3));
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunVictoryCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-            RunOutOfWorldCheck(tran, anim, param_3));
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
+        RunOutOfWorldCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
-            RunSlipCheck(tran, anim, param_3));
+    bool result = false;
+    if (anim->Time > globals.player.g.BubbleBowlMinRecoverTime && RunSlipCheck(tran, anim, param_3))
+    {
+        result = true;
+    }
+    return result;
 }
 
 #if 0
@@ -374,7 +395,13 @@ uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (player_hit && player_hit_anim == 1);
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 1)
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -386,7 +413,13 @@ uint32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (player_hit && player_hit_anim == 2);
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 2)
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -398,7 +431,13 @@ uint32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (player_hit && player_hit_anim == 3);
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 3)
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -410,7 +449,13 @@ uint32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (player_hit && player_hit_anim == 4);
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 4)
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -422,7 +467,13 @@ uint32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 
 uint32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (player_hit && player_hit_anim == 5);
+    bool result = false;
+    // TODO: replace hardcoded anim constant
+    if (player_hit && player_hit_anim == 5)
+    {
+        result = true;
+    }
+    return result;
 }
 
 uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -436,10 +487,15 @@ uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // if this can be decompiled, it can be copied and pasted 4 more times.
-    zGameExtras_CheatFlags(); // it seems like this is a useless function call
+    bool result = false;
 
-    return ((globals.player.Health == 0) &&
-            (player_dead_anim == (player_dead_anim / tran->UserFlags) * tran->UserFlags));
+    int32 flags = zGameExtras_CheatFlags();
+
+    if (globals.player.Health == 0)
+    {
+        result = true;
+    }
+    return result;
 }
 #else
 // func_80069694
@@ -461,19 +517,11 @@ uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 // func_800698A8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DefeatedCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*)
-{
-    // much different than PS2 version of this function
-    return sSpatulaGrabbed;
-}
+// func_8006999C
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SpatulaGrabCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-int32 zEntPlayer_InBossBattle()
-{
-    // TODO: figure out these hardcoded values.
-    // Maybe they are string hashes?
-    return (globals.sceneCur->sceneID == 0x42313031 || globals.sceneCur->sceneID == 0x42323031 ||
-            globals.sceneCur->sceneID == 0x42333032 || globals.sceneCur->sceneID == 0x42333033);
-}
+// func_800699A4
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_InBossBattle__Fv")
 
 // func_800699F0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SpatulaGrabCB__FP15xAnimTransitionP11xAnimSinglePv")
@@ -482,11 +530,8 @@ int32 zEntPlayer_InBossBattle()
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "SpatulaGrabStopCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 LCopterCheck(xAnimTransition*, xAnimSingle*)
-{
-    return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
-            (globals.pad0->pressed & 0x10000));
-}
+// func_80069CA0
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LCopterCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_80069CF0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LCopterCB__FP15xAnimTransitionP11xAnimSinglePv")
@@ -509,33 +554,23 @@ uint32 LCopterCheck(xAnimTransition*, xAnimSingle*)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WallJumpCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8006A20C
-#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "WallJumpFlightLandCheck__FP15xAnimTransitionP11xAnimSinglePv")
-#else
-#endif
 
-uint32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    globals.player.WallJumpState = k_WALLJUMP_LAND;
-    return 0;
-}
+// func_8006A220
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "WallJumpFlightLandCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8006A238
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "WallJumpLandFlightCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    globals.player.WallJumpState = k_WALLJUMP_FLIGHT;
-    return 0;
-}
+// func_8006A250
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
+                   "WallJumpLandFlightCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
-uint32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    return (globals.player.CanJump && !globals.player.ControlOff &&
-            (globals.pad0->pressed & 0x10000));
-}
+// func_80068EB8
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "JumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8006905C
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "JumpCB__FP15xAnimTransitionP11xAnimSinglePv")
@@ -550,21 +585,8 @@ uint32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BounceCB__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8006A4A4
-#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
                    "BounceStopLCopterCB__FP15xAnimTransitionP11xAnimSinglePv")
-#else
-// surprisingly doesn't match at all even though it appears to be simple
-uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
-{
-    zCameraSetBbounce(1);
-    globals.player.Bounced = 0;
-    globals.player.Jump_CanDouble = 1;
-    globals.player.Jump_CanFloat = 1;
-    sLassoInfo->canCopter = 1;
-    return 0;
-}
-#endif
 
 // func_8006A4FC
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DblJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
@@ -828,10 +850,7 @@ uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param
 // func_8006D0A4
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CheckObjectAgainstMeleeBound__FP4xEntPv")
 
-// func_8006D5CC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_IsSneaking__Fv")
-#else
+/*
 int32 zEntPlayer_IsSneaking()
 {
     if (gCurrentPlayer != eCurrentPlayerSpongeBob)
@@ -861,7 +880,10 @@ int32 zEntPlayer_IsSneaking()
 
     return false;
 }
-#endif
+*/
+
+// func_8006D5CC
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_IsSneaking__Fv")
 
 // func_8006D628
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_talk_filter__FPUcP16xModelAssetParamUii")
@@ -978,19 +1000,23 @@ int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
 {
     int32 newDamage = zEntPlayer_Damage(src, damage);
 
-    if (!newDamage)
+    if (newDamage == 0)
     {
-        return false;
+        newDamage = 0; // galaxy brain
+    }
+    else
+    {
+        if (knockback != NULL)
+        {
+            globals.player.ent.frame->vel.x = knockback->x;
+            globals.player.ent.frame->vel.y = knockback->y;
+            globals.player.ent.frame->vel.z = knockback->z;
+        }
+
+        newDamage = 1;
     }
 
-    if (knockback)
-    {
-        globals.player.ent.frame->vel.x = knockback->x;
-        globals.player.ent.frame->vel.y = knockback->y;
-        globals.player.ent.frame->vel.z = knockback->z;
-    }
-
-    return true;
+    return newDamage;
 }
 
 // func_800762A8

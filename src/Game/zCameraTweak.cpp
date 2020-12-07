@@ -36,8 +36,7 @@
 #pragma GLOBAL_ASM("asm/Game/zCameraTweak.s", "zCameraTweak_Init__FR5xBaseR9xDynAssetUl")
 
 // func_8017F460
-#pragma GLOBAL_ASM("asm/Game/zCameraTweak.s",                                                      \
-                   "zCameraTweak_Init__FP12zCameraTweakP17CameraTweak_asset")
+#pragma GLOBAL_ASM("asm/Game/zCameraTweak.s", "zCameraTweak_Init__FP12zCameraTweakP17CameraTweak_asset")
 
 // func_8017F4C8
 #pragma GLOBAL_ASM("asm/Game/zCameraTweak.s", "zCameraTweak_Save__FP12zCameraTweakP7xSerial")

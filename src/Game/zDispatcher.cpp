@@ -45,20 +45,16 @@
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_readAsset__FP17st_ZDISPATCH_DATA")
 
 // func_80053798
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s",                                                       \
-                   "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMAND")
+#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMAND")
 
 // func_800537C4
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s",                                                       \
-                   "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMANDi")
+#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMANDi")
 
 // func_800537F4
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s",                                                       \
-                   "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMANDPvPvPv")
+#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_injectCmd__FP17st_ZDISPATCH_DATA19en_DISPATCH_COMMANDPvPvPv")
 
 // func_80053850
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s",                                                       \
-                   "ZDSP_doCommand__FP17st_ZDISPATCH_DATAP20st_ZDISPATCH_CONTEXT")
+#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_doCommand__FP17st_ZDISPATCH_DATAP20st_ZDISPATCH_CONTEXT")
 
 // func_80053B2C
 #pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcherStoreOptions__Fv")
