@@ -26,9 +26,6 @@ struct xRay3
 };
 
 
-#define float32 float
-#define uint32 unsigned int
-
 //EXTERN FUNCTIONS
 extern float32 xsqrt(float num);
 
