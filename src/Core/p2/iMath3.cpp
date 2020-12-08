@@ -1,5 +1,5 @@
 #include "iMath3.h"
-
+#include <types.h>
 // func_800C4F18
 void iMath3Init(){
 
