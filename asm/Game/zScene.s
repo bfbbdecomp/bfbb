@@ -5084,12 +5084,6 @@ xModelBucket_RenderAlpha__Fv:
 /* 800B51EC 000B1FEC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B51F0 000B1FF0  4E 80 00 20 */	blr 
 
-Save__9xNPCBasicCFP7xSerial:
-/* 800B51F4 000B1FF4  4E 80 00 20 */	blr 
-
-Load__9xNPCBasicFP7xSerial:
-/* 800B51F8 000B1FF8  4E 80 00 20 */	blr 
-
 .global xQuickCullInit__FPC4xBox
 xQuickCullInit__FPC4xBox:
 /* 800B51FC 000B1FFC  94 21 FF F0 */	stwu r1, -0x10(r1)

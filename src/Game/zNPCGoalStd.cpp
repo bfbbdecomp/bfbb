@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+#include "../Core/x/xNPCBasic.h"
+
 // func_800D5480
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "GOALCreate_Standard__FiP10RyzMemGrowPv")
 
@@ -259,19 +261,34 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "RestoreColFlags__9xNPCBasicFv")
 
 // func_800D91D8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "PhysicsFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColChkFlags() const
+{
+    return 0;
+}
 
 // func_800D91E0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColPenByFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColPenFlags()
+{
+    return 0;
+}
 
 // func_800D91E8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColChkByFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColChkByFlags() const
+{
+    return 0;
+}
 
 // func_800D91F0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColPenFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColPenByFlags() const
+{
+    return 0;
+}
 
 // func_800D91F8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColChkFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::PhysicsFlags() const
+{
+    return 0;
+}
 
 // func_800D9200
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "DBG_IsNormLog__9xNPCBasicF10en_npcdcati")

@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+#include "../Core/x/xNPCBasic.h"
+
 // func_800B0A28
 #pragma GLOBAL_ASM("asm/Game/zScene.s",                                                            \
                    "count_dynamic_types__20_esc__2_unnamed_esc__2_zScene_cpp_esc__2_FPCc")
@@ -232,10 +234,14 @@
 #pragma GLOBAL_ASM("asm/Game/zScene.s", "xModelBucket_RenderAlpha__Fv")
 
 // func_800B51F4
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "Save__9xNPCBasicCFP7xSerial")
+void xNPCBasic::Save(xSerial*) const
+{
+}
 
 // func_800B51F8
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "Load__9xNPCBasicFP7xSerial")
+void xNPCBasic::Load(xSerial*)
+{
+}
 
 // func_800B51FC
 #pragma GLOBAL_ASM("asm/Game/zScene.s", "xQuickCullInit__FPC4xBox")

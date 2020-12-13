@@ -2,6 +2,7 @@
 #define ZGOO_H
 
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEnt.h"
 
 #include <types.h>
 #include <rwcore.h>

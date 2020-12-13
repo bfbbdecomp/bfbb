@@ -824,6 +824,7 @@ GetFactory__10xBehaveMgrFv:
 /* 800EED60 000EBB60  80 63 00 00 */	lwz r3, 0(r3)
 /* 800EED64 000EBB64  4E 80 00 20 */	blr 
 
+.global PostSetup__9xNPCBasicFv
 PostSetup__9xNPCBasicFv:
 /* 800EED68 000EBB68  4E 80 00 20 */	blr 
 

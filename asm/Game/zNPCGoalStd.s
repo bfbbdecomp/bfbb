@@ -4384,26 +4384,6 @@ RestoreColFlags__9xNPCBasicFv:
 /* 800D91D0 000D5FD0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D91D4 000D5FD4  4E 80 00 20 */	blr 
 
-PhysicsFlags__9xNPCBasicCFv:
-/* 800D91D8 000D5FD8  38 60 00 00 */	li r3, 0
-/* 800D91DC 000D5FDC  4E 80 00 20 */	blr 
-
-ColPenByFlags__9xNPCBasicCFv:
-/* 800D91E0 000D5FE0  38 60 00 00 */	li r3, 0
-/* 800D91E4 000D5FE4  4E 80 00 20 */	blr 
-
-ColChkByFlags__9xNPCBasicCFv:
-/* 800D91E8 000D5FE8  38 60 00 00 */	li r3, 0
-/* 800D91EC 000D5FEC  4E 80 00 20 */	blr 
-
-ColPenFlags__9xNPCBasicCFv:
-/* 800D91F0 000D5FF0  38 60 00 00 */	li r3, 0
-/* 800D91F4 000D5FF4  4E 80 00 20 */	blr 
-
-ColChkFlags__9xNPCBasicCFv:
-/* 800D91F8 000D5FF8  38 60 00 00 */	li r3, 0
-/* 800D91FC 000D5FFC  4E 80 00 20 */	blr 
-
 .global DBG_IsNormLog__9xNPCBasicF10en_npcdcati
 DBG_IsNormLog__9xNPCBasicF10en_npcdcati:
 /* 800D9200 000D6000  38 60 00 00 */	li r3, 0
