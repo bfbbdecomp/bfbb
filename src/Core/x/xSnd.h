@@ -70,5 +70,6 @@ void xSndSetPitch(uint32 snd, float32 pitch);
 uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
                 uint32 parentID, sound_category category, float32 delay);
 void xSndStop(uint32 snd);
+void xSndPauseAll(uint32 pause_effects, uint32 pause_streams);
 
 #endif

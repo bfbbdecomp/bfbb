@@ -68,10 +68,18 @@ struct analog_data
 struct _tagxPad
 {
     int8 value[22];
+
+    // Offset: 0x16
     int8 last_value[22];
+
+    // Offset: 0x2C
     uint32 on;
+
+    // Offset: 0x30
     uint32 pressed;
     uint32 released;
+
+    // Offset: 0x38
     _tagPadAnalog analog1;
     _tagPadAnalog analog2;
     _tagPadState state;
