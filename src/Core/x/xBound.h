@@ -19,6 +19,13 @@ struct xBound
     xMat4x3* mat;
 };
 
+// TODO: Figure out which is which for the other two bound types! I know that
+// type 1 is sphere from the code in xNPCBasic.cpp, but I do not know which is
+// which for the other two yet.
+#define BOUND_TYPE_SPHERE 1
+#define BOUND_TYPE_2 2
+#define BOUND_TYPE_4 4
+
 void xBoundDraw(const xBound* bound);
 
 #endif
