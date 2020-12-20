@@ -3,28 +3,116 @@
 #include <types.h>
 #include <string.h>
 
+// Weird... why does x depend on z here?
+#include "../../Game/zEnt.h"
+#include "../../Game/zGrid.h"
+
 #include "xMath.h"
 #include "xModel.h"
 #include "xEntMotion.h"
+#include "xCamera.h"
 
 #include "../p2/iColor.h"
+#include "../p2/iCollide.h"
 
 extern float xNPCBasic_float_0;
+extern float xNPCBasic_float_1;
 extern float xNPCBasic_float_onehalf;
 extern float xNPCBasic_float_onequarter;
 extern float xNPCBasic_float_15;
 extern float xNCPBasic_float_0p10000000;
+extern float xNPCBasic_float_0p75;
+extern float xNPCBasic_float_1eminus5;
+extern float xNPCBasic_float_0p2;
+extern float xNPCBasic_float_thirty;
+extern float xNPCBasic_float_0p04;
+extern float xNPCBasic_float_0p025;
 
 extern iColor_tag g_BLUE;
-extern xEntCollis g_colrec;
+extern iColor_tag g_LAVENDER;
+extern iColor_tag g_PIMP_GOLD;
 
-void NPC_alwaysUseSphere(xEnt* ent, xVec3* vec);
+extern xEntCollis g_colrec;
+extern xVec3 lbl_8026A3F8;
+
+void NPC_alwaysUseSphere(xEnt*, xVec3*);
+void NPC_entwrap_setup(xEnt*);
+void NPC_entwrap_reset(xEnt*);
+int32 NPC_entwrap_event(xBase*, xBase*, uint32, const float32*, xBase*);
+void NPC_entwrap_update(xEnt*, xScene*, float32);
+void NPC_entwrap_bupdate(xEnt*, xVec3*);
+void NPC_entwrap_move(xEnt*, xScene*, float32, xEntFrame*);
+void NPC_entwrap_render(xEnt*);
 
 // func_8010F82C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "Init__9xNPCBasicFP9xEntAsset")
+#else
+// The order of the function pointer assignment instructions at the end of the
+// function is slightly incorrect.
+void xNPCBasic::Init(xEntAsset* asset)
+{
+    if (xNPCBasic_float_0 == asset->scale.x)
+    {
+        asset->scale.x = xNPCBasic_float_1;
+    }
+    if (xNPCBasic_float_0 == asset->scale.y)
+    {
+        asset->scale.y = xNPCBasic_float_1;
+    }
+    if (xNPCBasic_float_0 == asset->scale.z)
+    {
+        asset->scale.z = xNPCBasic_float_1;
+    }
+
+    xEnt* thisEnt = this;
+    xEntInit(thisEnt, asset);
+    collType = 8;
+    collLev = 4;
+    bound.type = 1; // [int8] 0x84
+    moreFlags |= 0x10;
+    zEntParseModelInfo(thisEnt, asset->modelInfoID);
+    xEntInitForType(thisEnt);
+    xEntInitShadow(*thisEnt, entShadow_embedded);
+    simpShadow = &simpShadow_embedded;
+    xShadowSimple_CacheInit(simpShadow, thisEnt, 0x50);
+    if (bound.type == 2)
+    {
+        iBoxForModel(&bound.box.box, collModel ? collModel : model);
+    }
+    else if (bound.type == 4)
+    {
+        iBoxForModelLocal(&bound.box.box, collModel ? collModel : model);
+    }
+
+    if (flags1.flg_basenpc & 0x1)
+    {
+        collis = (xEntCollis*)xMemAlloc(sizeof(xEntCollis));
+        memset(collis, 0, sizeof(xEntCollis));
+    }
+
+    if ((flags1.flg_basenpc & 0x2) == 0)
+    {
+        frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+        memset(frame, 0, sizeof(xEntFrame));
+    }
+
+    RestoreColFlags();
+
+    f_setup = &NPC_entwrap_setup;
+    f_reset = &NPC_entwrap_reset;
+    eventFunc = &NPC_entwrap_event;
+    update = &NPC_entwrap_update;
+    bupdate = &NPC_entwrap_bupdate;
+    move = &NPC_entwrap_move;
+    render = &NPC_entwrap_render;
+
+    baseFlags &= 0xffef;
+}
+#endif
 
 // func_8010FA28
-#if 1
+#ifndef NOT_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "Reset__9xNPCBasicFv")
 #else
 // Register assignment in the floating point instructions is slightly wrong.
@@ -57,10 +145,57 @@ void xNPCBasic::Reset()
 #endif
 
 // func_8010FAF4
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_alwaysUseSphere__FP4xEntP5xVec3")
+void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
+{
+    xNPCBasic* npc = (xNPCBasic*)ent;
+    xVec3 bndcent = lbl_8026A3F8;
+
+    xVec3Copy(&bndcent, xEntGetPos(npc));
+    bndcent.y += xNPCBasic_float_0p75;
+
+    npc->bound.type = 1;
+    xVec3Copy(&npc->bound.sph.center, &bndcent);
+    npc->bound.sph.r = xNPCBasic_float_0p75;
+    if (npc->bound.type != 0)
+    {
+        xQuickCullForBound(&npc->bound.qcd, &npc->bound);
+    }
+
+    zGridUpdateEnt(npc);
+    if (npc->DBG_IsNormLog(eNPCDCAT_Eight, 2) || npc->DBG_IsNormLog(eNPCDCAT_Seven, 2))
+    {
+        xDrawSetColor(g_PIMP_GOLD);
+        xBoundDraw(&npc->bound);
+    }
+}
 
 // func_8010FBE0
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_spdBasedColFreq__FP9xNPCBasicf")
+void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
+{
+    if (dt < xNPCBasic_float_1eminus5)
+    {
+        return;
+    }
+    float32 d = xVec3Length(&npc->frame->vel);
+    if (d < xNPCBasic_float_0p2)
+    {
+        return;
+    }
+
+    float32 radius;
+    if (npc->bound.type == 1)
+    {
+        radius = npc->bound.sph.r;
+    }
+    else
+    {
+        radius = MAX(npc->bound.box.box.upper.x - npc->bound.box.box.lower.x,
+            npc->bound.box.box.upper.z - npc->bound.box.box.lower.z);
+    }
+
+    int32 nf = xNPCBasic_float_thirty * (radius / d);
+    npc->colFreq = MIN(npc->colFreq, nf);
+}
 
 // func_8010FC98
 void xNPCBasic::Process(xScene* xscn, float32 dt)
@@ -162,37 +297,107 @@ void xNPCBasic::Process(xScene* xscn, float32 dt)
 }
 
 // func_8010FF9C
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "CollideReview__9xNPCBasicFv")
+void xNPCBasic::CollideReview()
+{
+    if (DBG_IsNormLog(eNPCDCAT_Eight, 2))
+    {
+        xDrawSetColor(g_LAVENDER);
+        xBoundDraw(&bound);
+    }
+}
 
 // func_8010FFF0
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NewTime__9xNPCBasicFP6xScenef")
+void xNPCBasic::NewTime(xScene*, float32)
+{
+    flags1.flg_basenpc &= ~0x4;
+}
 
 // func_80110000
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_setup__FP4xEnt")
+void NPC_entwrap_setup(xEnt* ent)
+{
+    xNPCBasic* npc = (xNPCBasic*)ent;
+    npc->DBG_HaltOnMe(0, NULL);
+    npc->Setup();
+}
 
 // func_80110048
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_reset__FP4xEnt")
+void NPC_entwrap_reset(xEnt* ent)
+{
+    xNPCBasic* npc = (xNPCBasic*)ent;
+    npc->DBG_HaltOnMe(0, NULL);
+    npc->Reset();
+}
 
 // func_80110090
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_update__FP4xEntP6xScenef")
+void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
+{
+    float32 dt = dt_caller;
+    if (dt > xNPCBasic_float_0p04)
+    {
+        dt = xNPCBasic_float_0p025;
+    }
+
+    xNPCBasic* npc = (xNPCBasic*)ent;
+    xEntBeginUpdate(npc, scn, dt);
+    npc->flags1.inUpdate = 1;
+    npc->DBG_HaltOnMe(0, NULL);
+    npc->DBG_PStatOn(eNPCPerfEnable);
+
+    if (npc->isCulled)
+    {
+        npc->model->Flags &= 0xfffd;
+    } 
+    else if ((npc->flags1.flg_upward & 0x1) == 0)
+    {
+        npc->model->Flags |= 0x2;
+    }
+
+    npc->Process(scn, dt);
+
+    npc->DBG_PStatCont(eNPCPerfEnable);
+    npc->flags1.inUpdate = 0;
+    xEntEndUpdate(npc, scn, dt);
+
+    npc->NewTime(scn, dt);
+}
 
 // func_801101B4
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_bupdate__FP4xEntP5xVec3")
+void NPC_entwrap_bupdate(xEnt* ent, xVec3* pos)
+{
+    ((xNPCBasic*)ent)->BUpdate(pos);
+}
 
 // func_801101E0
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_move__FP4xEntP6xScenefP9xEntFrame")
+void NPC_entwrap_move(xEnt* ent, xScene* scn, float32 dt, xEntFrame* frame)
+{
+    ((xNPCBasic*)ent)->Move(scn, dt, frame);
+}
 
 // func_8011020C
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_event__FP5xBaseP5xBaseUiPCfP5xBase")
+int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* toParamWidget)
+{
+    int32 handled = 0;
+    return ((xNPCBasic*)to)->SysEvent(from, to, toEvent, toParam, toParamWidget, &handled);
+}
 
 // func_80110264
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "NPC_entwrap_render__FP4xEnt")
+void NPC_entwrap_render(xEnt* ent)
+{
+    ((xNPCBasic*)ent)->Render();
+}
 
 // func_80110290
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "DBG_PStatClear__9xNPCBasicFv")
+void xNPCBasic::DBG_PStatClear()
+{
+}
 
 // func_80110294
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "DBG_HaltOnMe__9xNPCBasicFUiPc")
+void xNPCBasic::DBG_HaltOnMe(uint32, int8*)
+{
+}
 
 // func_80110298
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "BUpdate__9xNPCBasicFP5xVec3")
+void xNPCBasic::BUpdate(xVec3* v)
+{
+    xEntDefaultBoundUpdate(this, v);
+}

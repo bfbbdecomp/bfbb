@@ -30,6 +30,9 @@ void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags
 void* xMemPoolAlloc(xMemPool* pool);
 void xMemPoolFree(xMemPool* pool, void* data);
 
+void* xMemPushTemp(uint32 size);
+void xMemPopTemp(void* memory);
+
 #define xMemGrowAlloc(size) xMemGrowAlloc(gActiveHeap, size)
 #define xMemAlloc(size) xMemAlloc(gActiveHeap, size, 0)
 

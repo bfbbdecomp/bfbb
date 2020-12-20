@@ -6515,30 +6515,6 @@ __ct__9xNPCBasicFi:
 /* 800F4718 000F1518  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F471C 000F151C  4E 80 00 20 */	blr 
 
-.global Setup__9xNPCBasicFv
-Setup__9xNPCBasicFv:
-/* 800F4720 000F1520  4E 80 00 20 */	blr 
-
-.global Move__9xNPCBasicFP6xScenefP9xEntFrame
-Move__9xNPCBasicFP6xScenefP9xEntFrame:
-/* 800F4724 000F1524  4E 80 00 20 */	blr 
-
-.global SysEvent__9xNPCBasicFP5xBaseP5xBaseUiPCfP5xBasePi
-SysEvent__9xNPCBasicFP5xBaseP5xBaseUiPCfP5xBasePi:
-/* 800F4728 000F1528  38 60 00 01 */	li r3, 1
-/* 800F472C 000F152C  4E 80 00 20 */	blr 
-
-.global DBG_PStatOn__9xNPCBasicF10en_npcperf
-DBG_PStatOn__9xNPCBasicF10en_npcperf:
-/* 800F4730 000F1530  4E 80 00 20 */	blr 
-
-.global DBG_PStatCont__9xNPCBasicF10en_npcperf
-DBG_PStatCont__9xNPCBasicF10en_npcperf:
-/* 800F4734 000F1534  4E 80 00 20 */	blr 
-
-PostInit__9xNPCBasicFv:
-/* 800F4738 000F1538  4E 80 00 20 */	blr 
-
 .global Render__9xNPCBasicFv
 Render__9xNPCBasicFv:
 /* 800F473C 000F153C  94 21 FF F0 */	stwu r1, -0x10(r1)

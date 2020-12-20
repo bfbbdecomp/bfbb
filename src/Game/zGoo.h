@@ -2,6 +2,7 @@
 #define ZGOO_H
 
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEnt.h"
 
 #include <types.h>
 #include <rwcore.h>
@@ -41,5 +42,6 @@ struct zFXGooInstance
 };
 
 void zGooStopTide();
+int32 zGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
 
 #endif

@@ -8,6 +8,8 @@
 struct xBound
 {
     xQCData qcd;
+
+    // Offset: 0x20
     uint8 type;
     uint8 pad[3];
     union
@@ -20,5 +22,6 @@ struct xBound
 };
 
 void xBoundDraw(const xBound* bound);
+void xQuickCullForBound(xQCData* qc, const xBound* bound);
 
 #endif
