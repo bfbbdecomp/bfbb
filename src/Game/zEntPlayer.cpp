@@ -1,4 +1,6 @@
 #include <types.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "../Core/p2/iSnd.h"
 
@@ -6,6 +8,7 @@
 #include "../Core/x/xEntBoulder.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xMemMgr.h"
 
 #include "zCamera.h"
 #include "zEntPlayer.h"
@@ -14,6 +17,8 @@
 #include "zGameExtras.h"
 #include "zGlobals.h"
 #include "zGoo.h"
+#include "zLasso.h"
+#include "zNPCTypeTiki.h"
 
 extern zGlobals globals;
 extern uint32 sCurrentStreamSndID;
@@ -25,6 +30,9 @@ extern uint32 sShouldBubbleBowl;
 extern float32 sBubbleBowlLastWindupTime;
 extern float32 sBubbleBowlMultiplier;
 
+extern zPlayerLassoInfo* sLassoInfo;
+extern zLasso* sLasso;
+
 extern int32 in_goo;
 extern int32 sPlayerDiedLastTime;
 extern int32 player_hit;
@@ -33,6 +41,8 @@ extern uint32 player_dead_anim;
 
 extern float32 lbl_803CD5A0; // 0.0
 extern float32 lbl_803CD638; // 10.0
+
+extern int8 zEntPlayer_Strings[];
 
 // Multidimensional sound arrays for each player type
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
@@ -700,23 +710,34 @@ uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoStartCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8006BE94
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoLostTargetCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*)
+{
+    return !sLassoInfo->target;
+}
 
 // func_8006BEA8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoStraightToDestroyCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*)
+{
+    return sLasso->flags & (1 << 11);
+}
 
 // func_8006BEB8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoAboutToDestroyCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*)
+{
+    return 0;
+}
 
 // func_8006BEC0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoDestroyCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*)
+{
+    return sLasso->flags & (1 << 11);
+}
 
 // func_8006BED0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoReyankCheck__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 LassoReyankCheck(xAnimTransition*, xAnimSingle*)
+{
+    return 0;
+}
 
 // func_8006BED8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
@@ -829,10 +850,7 @@ uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CheckObjectAgainstMeleeBound__FP4xEntPv")
 
 // func_8006D5CC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_IsSneaking__Fv")
-#else
-int32 zEntPlayer_IsSneaking()
+bool zEntPlayer_IsSneaking()
 {
     if (gCurrentPlayer != eCurrentPlayerSpongeBob)
     {
@@ -840,34 +858,86 @@ int32 zEntPlayer_IsSneaking()
     }
 
     uint32 flags = globals.player.ent.model->Anim->Single->State->UserFlags;
-
-    // only two instructions before this matches
-    // it seems to be branching to the wrong result.
-    // inverting this chain of logic should fix it?
-    // flipping the return values below is the
-    // correct logic, but non-matching
-    if ((flags & 1) == 0)
+    if ((flags & 1) != 0 || (flags & 0x1e) == 2 || (flags & 0x1e) == 4)
     {
-        flags &= 0x1e;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
-        if (flags != 2)
+// func_8006D628
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_talk_filter__FPUcP16xModelAssetParamUii")
+#else
+// The cmpw instruction used in `if ((int32)non_choices[j] - 1 == i)` has its
+// operands in the wrong order.
+int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_size, int32 max_size)
+{
+    int32 found = 0;
+    float32* non_choices = (float32*)xMemPushTemp(max_size * 4);
+    int32 size = zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, 
+        max_size, non_choices, non_choices);
+
+    for (int32 i = 0; i < max_size; ++i)
+    {
+        bool skip = 0;
+        for (int32 j = 0; j < size; ++j)
         {
-            if (flags == 4)
+            if ((int32)non_choices[j] - 1 == i)
             {
-                return true;
+                skip = true;
+                break;
             }
+        }
+
+        if (!skip)
+        {
+            filter[found] = i;
+            found += 1;
         }
     }
 
-    return false;
+    if (found <= 0)
+    {
+        found = 1;
+        filter[0] = 0;
+    }
+    xMemPopTemp(non_choices);
+    return found;
 }
 #endif
 
-// func_8006D628
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_talk_filter__FPUcP16xModelAssetParamUii")
-
 // func_8006D71C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "count_talk_anims__FP10xAnimTable")
+#else
+// Slightly off instruction order in the first few lines, loop is correct
+uint32 count_talk_anims(xAnimTable* anims)
+{
+    int32 talkAnimCount = 0;
+    xAnimFile* firstData = anims->StateList->Data;
+
+    int8 talkAnimName[20];
+    sprintf(talkAnimName, &zEntPlayer_Strings[0x29ff], 1);
+
+    for (xAnimState* state = anims->StateList; state != NULL; state = state->Next)
+    {
+        if (stricmp(state->Name, talkAnimName) == 0)
+        {
+            if (state->Data == firstData || ++talkAnimCount >= 4)
+            {
+                break;
+            }
+            sprintf(talkAnimName, &zEntPlayer_Strings[0x29ff], talkAnimCount + 1);
+        }
+    }
+
+    return talkAnimCount;
+}
+#endif
 
 // func_8006D7E4
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
@@ -1362,10 +1432,16 @@ uint8 xSndIsPlaying(uint32 assetID)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "__as__13xiMat4x3UnionFRC13xiMat4x3Union")
 
 // func_80090DF4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IsHealthy__8zNPCTikiFv")
+bool zNPCTiki::IsHealthy()
+{
+    return flg_vuln;
+}
 
 // func_80090E08
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zCameraTranslate__FP7xCameraP5xVec3")
+void zCameraTranslate(xCamera* cam, xVec3* pos)
+{
+    zCameraTranslate(cam, pos->x, pos->y, pos->z);
+}
 
 // TODO: This belongs in zNPCSupport.h
 // but the compiler put it here for some reason?
@@ -1390,4 +1466,8 @@ xVec3* NPCC_upDir(xEnt* ent)
 }
 
 // func_80090E60
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zGooIs__FP4xEnt")
+int32 zGooIs(xEnt* ent)
+{
+    float32 temp;
+    return zGooIs(ent, temp, 0);
+}

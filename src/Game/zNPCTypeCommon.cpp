@@ -399,22 +399,36 @@ xNPCBasic::xNPCBasic(int32 value)
 #endif
 
 // func_800F4720
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Setup__9xNPCBasicFv")
+void xNPCBasic::Setup()
+{
+}
 
 // func_800F4724
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Move__9xNPCBasicFP6xScenefP9xEntFrame")
+void xNPCBasic::Move(xScene* xscn, float32 dt, xEntFrame* frm)
+{
+}
 
 // func_800F4728
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SysEvent__9xNPCBasicFP5xBaseP5xBaseUiPCfP5xBasePi")
+int32 xNPCBasic::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+                           xBase* toParamWidget, int32* handled)
+{
+    return 1;
+}
 
 // func_800F4730
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DBG_PStatOn__9xNPCBasicF10en_npcperf")
+void xNPCBasic::DBG_PStatOn(en_npcperf stat)
+{
+}
 
 // func_800F4734
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DBG_PStatCont__9xNPCBasicF10en_npcperf")
+void xNPCBasic::DBG_PStatCont(en_npcperf stat)
+{
+}
 
 // func_800F4738
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "PostInit__9xNPCBasicFv")
+void xNPCBasic::PostInit()
+{
+}
 
 // func_800F473C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Render__9xNPCBasicFv")

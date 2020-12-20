@@ -8,6 +8,8 @@
 #include "zEnv.h"
 #include "zBase.h"
 
+struct zEnt;
+
 struct zScene : xScene
 {
     _zPortal* pendingPortal;

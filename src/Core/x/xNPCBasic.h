@@ -20,6 +20,7 @@ enum en_npcdcat
 {
     eNPCDCAT_Zero,
     eNPCDCAT_Seven = 7,
+    eNPCDCAT_Eight = 8,
 };
 
 struct xNPCBasic : xEnt, xFactoryInst
@@ -66,6 +67,7 @@ struct xNPCBasic : xEnt, xFactoryInst
     void DBG_PStatCont(en_npcperf stat);
     void DBG_PStatOn(en_npcperf stat);
     int32 DBG_IsNormLog(en_npcdcat input, int32 input2);
+    void DBG_HaltOnMe(uint32, int8*);
 
     // DO NOT CHANGE THE ORDER OF THESE, the order determines the
     // vtable layout which needs to remain fixed.
@@ -78,7 +80,7 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual void BUpdate(xVec3*);
     virtual void NewTime(xScene* xscn, float32 dt);
     virtual void Move(xScene* xscn, float32 dt, xEntFrame* frm);
-    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam,
+    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
                            xBase* toParamWidget, int32* handled);
     virtual void Render();
     virtual void Save(xSerial*) const;
@@ -89,13 +91,6 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual uint8 ColChkByFlags() const;
     virtual uint8 ColPenByFlags() const;
     virtual uint8 PhysicsFlags() const;
-
-    // We will need this once all of the functions in file are translated.
-    // Force the vtable to remain uninitialized so that the original extern
-    // __vt__9xNPCBasic symbol is used instead and there is no collision. This
-    // works because the compiler does not emit a vtable for classes which don't
-    // have definitions for all of their virtual functions.
-    //virtual void dummy();
 };
 
 void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt);
