@@ -173,7 +173,7 @@ struct zPlayerGlobals
     float32 SundaeTimer;
     float32 ControlOffTimer;
     float32 HelmetTimer;
-    
+
     // Offset: 0x1718
     uint32 WorldDisguise;
     uint32 Bounced;

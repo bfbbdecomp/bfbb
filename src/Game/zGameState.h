@@ -13,20 +13,20 @@ enum _GameOstrich
 
 enum eGameMode
 {
-	eGameMode_Boot,
-	eGameMode_Intro,
-	eGameMode_Title,
-	eGameMode_Start,
-	eGameMode_Load,
-	eGameMode_Options,
-	eGameMode_Save,
-	eGameMode_Pause,
-	eGameMode_Stall,
-	eGameMode_WorldMap,
-	eGameMode_MonsterGallery,
-	eGameMode_ConceptArtGallery,
-	eGameMode_Game,
-	eGameMode_Count
+    eGameMode_Boot,
+    eGameMode_Intro,
+    eGameMode_Title,
+    eGameMode_Start,
+    eGameMode_Load,
+    eGameMode_Options,
+    eGameMode_Save,
+    eGameMode_Pause,
+    eGameMode_Stall,
+    eGameMode_WorldMap,
+    eGameMode_MonsterGallery,
+    eGameMode_ConceptArtGallery,
+    eGameMode_Game,
+    eGameMode_Count
 };
 
 extern int32 gGameState;
