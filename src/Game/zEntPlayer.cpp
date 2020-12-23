@@ -878,8 +878,8 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
 {
     int32 found = 0;
     float32* non_choices = (float32*)xMemPushTemp(max_size * 4);
-    int32 size = zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, 
-        max_size, non_choices, non_choices);
+    int32 size = zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, max_size,
+                                    non_choices, non_choices);
 
     for (int32 i = 0; i < max_size; ++i)
     {

@@ -63,7 +63,7 @@ int32 zScriptEventCB(xBase* to, xBase* from, uint32 event, const float32*, xBase
         fromScript->state = ZSCRIPT_STATE_RUNNING;
         break;
     case eEventStop:
-        if (fromScript->state == ZSCRIPT_STATE_RUNNING || 
+        if (fromScript->state == ZSCRIPT_STATE_RUNNING ||
             fromScript->state == ZSCRIPT_STATE_WAITING)
         {
             fromScript->state = ZSCRIPT_STATE_READY;
@@ -103,7 +103,8 @@ void zScriptExecuteEvents(_zScript* script, float32 start, float32 end)
             {
                 if (xBase* widget = zSceneFindObject(a[i].widget))
                 {
-                    xBase* paramWidget = (!a[i].paramWidget) ? NULL : zSceneFindObject(a[i].paramWidget);
+                    xBase* paramWidget =
+                        (!a[i].paramWidget) ? NULL : zSceneFindObject(a[i].paramWidget);
                     zEntEvent(script, 0, widget, a[i].paramEvent, a[i].param, paramWidget, 0);
                 }
             }

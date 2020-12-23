@@ -245,7 +245,6 @@ void zMenuLoop()
             }
         }
 
-
         time_last = time_current;
         xPadUpdate(globals.currentActivePad, time_elapsed);
 
@@ -411,7 +410,6 @@ bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* needed
         }
         else
         {
-
             corruptFileCount = xSGCheckForCorruptFiles(ldinst, corruptFiles);
             if (corruptFileCount != 0)
             {
@@ -484,7 +482,8 @@ bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* needed
             }
             else
             {
-                rc = xSGTgtHaveRoomStartup(ldinst, 0, 0x0000CC00, -1, bytesNeeded, availOnDisk, neededFiles);
+                rc = xSGTgtHaveRoomStartup(ldinst, 0, 0x0000CC00, -1, bytesNeeded, availOnDisk,
+                                           neededFiles);
                 if (rc)
                 {
                     break;

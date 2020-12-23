@@ -410,7 +410,7 @@ void xNPCBasic::Move(xScene* xscn, float32 dt, xEntFrame* frm)
 
 // func_800F4728
 int32 xNPCBasic::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                           xBase* toParamWidget, int32* handled)
+                          xBase* toParamWidget, int32* handled)
 {
     return 1;
 }
