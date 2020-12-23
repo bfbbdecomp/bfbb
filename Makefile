@@ -116,6 +116,14 @@ clean:
 tools:
 	$(MAKE) -C tools
 
+inspect:
+ifeq ($(WINDOWS),1)
+	$(CC) $(CFLAGS) -o inspect.s -S $(subst \,/,$(subst C:\,/c/,$(INSPECT)))
+else
+	$(CC) $(CFLAGS) -o inspect.s -S $(INSPECT)
+endif
+	python3 tools/inspect_postprocess.py inspect.s
+
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	@echo " LINK    "$@
 	$S$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) $(O_FILES) 1>&2

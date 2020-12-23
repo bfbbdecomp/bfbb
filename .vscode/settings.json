@@ -1,0 +1,20 @@
+{
+	"C_Cpp.default.cppStandard": "c++98",
+	"C_Cpp.default.cStandard": "c99",
+	"C_Cpp.default.includePath": [
+		"include",
+		"include/dolphin",
+		"include/rwsdk",
+		"include/CodeWarrior"
+	],
+	"C_Cpp.default.defines": [
+		"GAMECUBE"
+	],
+	"files.associations": {
+		"*.cp": "cpp"
+	},
+	"[C_Cpp]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4
+	},
+}
