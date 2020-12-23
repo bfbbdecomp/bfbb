@@ -1,12 +1,23 @@
 #include "zNPCTypeTiki.h"
 
 #include <types.h>
+#include <../Core/x/xString.h>
 
-// func_80109588
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_Tiki_Startup__Fv")
+extern int8* g_strz_tikianim[2];
+extern uint32 g_hash_tikianim[2];
 
-// func_801095E8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_Tiki_Shutdown__Fv")
+void ZNPC_Tiki_Startup()
+{
+	for (int32 i = 0; i < 2; i++)
+    {
+        g_hash_tikianim[i] = xStrHash(g_strz_tikianim[i]);
+    }
+}
+
+void ZNPC_Tiki_Shutdown()
+{
+
+}
 
 // func_801095EC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "zNPCTiki_InitStacking__FP6zScene")
