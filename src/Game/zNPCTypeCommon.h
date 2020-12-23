@@ -184,4 +184,7 @@ struct zNPCCommon : xNPCBasic
     NPCSndQueue snd_queue[4];
 };
 
+void ZNPC_Common_Startup();
+void ZNPC_Common_Shutdown();
+
 #endif

@@ -49,4 +49,7 @@ struct zNPCTiki : zNPCCommon
     bool IsHealthy();
 };
 
+void ZNPC_Tiki_Startup();
+void ZNPC_Tiki_Shutdown();
+
 #endif
