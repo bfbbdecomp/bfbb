@@ -39,10 +39,14 @@ struct xGlobals
     // 0x6B0 in globals
     iTime fog_t0;
     iTime fog_t1;
+
+    // 0x6C0 in globals
     int32 option_vibration;
     uint32 QuarterSpeed;
     float32 update_dt;
     int32 useHIPHOP;
+
+    // 0x6D0 in globals
     uint8 NoMusic;
     int8 currentActivePad;
     uint8 firstStartPressed;

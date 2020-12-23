@@ -173,6 +173,8 @@ struct zPlayerGlobals
     float32 SundaeTimer;
     float32 ControlOffTimer;
     float32 HelmetTimer;
+    
+    // Offset: 0x1718
     uint32 WorldDisguise;
     uint32 Bounced;
     float32 FallDeathTimer;
@@ -182,6 +184,8 @@ struct zPlayerGlobals
     xEnt* MountChimney;
     float32 MountChimOldY;
     uint32 MaxHealth;
+
+    // Offset: 0x173C
     uint32 DoMeleeCheck;
     float32 VictoryTimer;
     float32 BadGuyNearTimer;
@@ -190,6 +194,8 @@ struct zPlayerGlobals
     float32 ShockRadius;
     float32 ShockRadiusOld;
     float32 Face_ScareTimer;
+
+    // Offset: 0x175C
     uint32 Face_ScareRandom;
     uint32 Face_Event;
     float32 Face_EventTimer;
@@ -203,6 +209,8 @@ struct zPlayerGlobals
     zEnt* FireTarget;
     uint32 ControlOff;
     uint32 ControlOnEvent;
+
+    // Offset: 0x1790
     uint32 AutoMoveSpeed;
     float32 AutoMoveDist;
     xVec3 AutoMoveTarget;
@@ -229,6 +237,8 @@ struct zPlayerGlobals
     float32 Jump_CurrGravity;
     float32 Jump_HoldTimer;
     float32 Jump_ChangeTimer;
+
+    // Offset: 0x1AB8
     int32 Jump_CanDouble;
     int32 Jump_CanFloat;
     int32 Jump_SpringboardStart;

@@ -16,4 +16,6 @@ public:
     int32 Read(int32* buf);
 };
 
+void xSerialWipeMainBuffer();
+
 #endif
