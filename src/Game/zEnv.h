@@ -9,4 +9,6 @@ struct _zEnv : xBase
     xEnvAsset* easset;
 };
 
+void zEnvStartingCamera(_zEnv* env);
+
 #endif
