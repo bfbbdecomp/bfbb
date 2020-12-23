@@ -37,4 +37,7 @@ _GameOstrich zGameGetOstrich();
 void zGameModeSwitch(eGameMode modeNew);
 void zGameStateSwitch(int32 theNewState);
 
+int32 zGameStateGet();
+eGameMode zGameModeGet();
+
 #endif

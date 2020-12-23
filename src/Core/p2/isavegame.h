@@ -128,4 +128,6 @@ struct st_ISGSESSION
     void (*chgfunc)(void*, en_CHGCODE);
 };
 
+int32 iSGCheckForWrongDevice();
+
 #endif

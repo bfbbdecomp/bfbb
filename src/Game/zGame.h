@@ -5,4 +5,8 @@
 
 extern uint32 gBusStopIsRunning;
 
+void zGameSetupPlayer();
+void xDrawBegin();
+void xDrawEnd();
+
 #endif

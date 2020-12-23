@@ -96,6 +96,9 @@ struct _tagxPad
     analog_data analog[2];
 };
 
+extern _tagxPad mPad[4];
+
 void xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
+void xPadUpdate(int32, float32);
 
 #endif

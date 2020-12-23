@@ -169,5 +169,12 @@ struct xCamera : xBase
 };
 
 float32 xVec3Length(const xVec3* vec);
+void xCameraInit(xCamera* cam, uint32 width, uint32 height);
+void xCameraSetScene(xCamera* cam, xScene* sc);
+void xCameraExit(xCamera* cam);
+void xCameraUpdate(xCamera* cam, float32 dt);
+void xCameraBegin(xCamera* cam, int32);
+void xCameraEnd(xCamera* cam, float32 seconds, int32 update_scrn_fx);
+void xCameraShowRaster(xCamera* cam);
 
 #endif
