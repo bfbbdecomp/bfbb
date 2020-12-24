@@ -13,6 +13,13 @@ struct iAnimSKBHeader
     float32 Scale[3];
 };
 
+struct iAnimSKBKey
+{
+    uint16 TimeIndex;
+    int16 Quat[4];
+    int16 Tran[3];
+};
+
 void iAnimEvalSKB(iAnimSKBHeader* data, float32 time, uint32 flags, xVec3* tran, xQuat* quat);
 float32 iAnimDurationSKB(iAnimSKBHeader* data);
 
