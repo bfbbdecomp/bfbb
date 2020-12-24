@@ -10,7 +10,19 @@ int32 iPadInit()
 }
 
 // func_800CA944
+#if 1
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadEnable__FP8_tagxPads")
+#else
+_tagxPad* iPadEnable(_tagxPad* pad, int16 port)
+{
+    pad->port = port;
+    pad->slot = 0;
+    pad->state = ePad_Enabled;
+    // *(undefined4*)(gTrcPad + (int)*(short*)(pad + 0x54) * 0xc + 8) = 2;
+    // *(uint*)(pad + 0x40) = *(uint*)(pad + 0x40) | 3;
+    // *(uint*)(pad + 0x40) = *(uint*)(pad + 0x40) | 4;
+}
+#endif
 
 // func_800CA98C
 #pragma GLOBAL_ASM("asm/Core/p2/iPad.s", "iPadConvStick__Ff")
