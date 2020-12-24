@@ -405,17 +405,6 @@ lbl_800BF774:
 /* 800BF7A8 000BC5A8  38 21 01 10 */	addi r1, r1, 0x110
 /* 800BF7AC 000BC5AC  4E 80 00 20 */	blr 
 
-.global iAnimDurationSKB__FP14iAnimSKBHeader
-iAnimDurationSKB__FP14iAnimSKBHeader:
-/* 800BF7B0 000BC5B0  80 83 00 0C */	lwz r4, 0xc(r3)
-/* 800BF7B4 000BC5B4  A0 03 00 0A */	lhz r0, 0xa(r3)
-/* 800BF7B8 000BC5B8  54 84 20 36 */	slwi r4, r4, 4
-/* 800BF7BC 000BC5BC  7C 63 22 14 */	add r3, r3, r4
-/* 800BF7C0 000BC5C0  54 00 10 3A */	slwi r0, r0, 2
-/* 800BF7C4 000BC5C4  7C 63 02 14 */	add r3, r3, r0
-/* 800BF7C8 000BC5C8  C0 23 00 18 */	lfs f1, 0x18(r3)
-/* 800BF7CC 000BC5CC  4E 80 00 20 */	blr 
-
 .global fabsf__3stdFf
 fabsf__3stdFf:
 /* 800BF7D0 000BC5D0  94 21 FF F0 */	stwu r1, -0x10(r1)
