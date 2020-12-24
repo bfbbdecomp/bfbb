@@ -1,0 +1,6 @@
+#ifndef _MSL_CLIMITS
+#define _MSL_CLIMITS
+
+#include <limits.h>
+
+#endif
