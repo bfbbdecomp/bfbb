@@ -237,6 +237,8 @@ zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef:
 .endif
 
 .section .data
+/* purpose not known, padding needed to make things line up */
+	.long 0
 lbl_80290090:
 	.incbin "baserom.dol", 0x28D070, 0x50
 
