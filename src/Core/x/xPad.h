@@ -2,13 +2,7 @@
 #define XPAD_H
 
 #include <types.h>
-
-// TODO: figure out where to put this:
-struct xVec2
-{
-    float32 x;
-    float32 y;
-};
+#include "xVec3.h"
 
 enum _tagPadState
 {

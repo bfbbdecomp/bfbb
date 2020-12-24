@@ -3,6 +3,13 @@
 
 #include <types.h>
 
+// TODO: this might belong somewhere else?
+struct xVec2
+{
+    float32 x;
+    float32 y;
+};
+
 struct xVec3
 {
     float32 x;
