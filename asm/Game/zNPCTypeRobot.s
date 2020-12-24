@@ -97,42 +97,14 @@ lbl_800F4B78:
 /* 800F4BB4 000F19B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F4BB8 000F19B8  4E 80 00 20 */	blr 
 
-.global PlayTheFiddle__Fv
-PlayTheFiddle__Fv:
-/* 800F4BBC 000F19BC  4E 80 00 20 */	blr 
-
-.global ZNPC_Robot_Shutdown__Fv
-ZNPC_Robot_Shutdown__Fv:
-/* 800F4BC0 000F19C0  4E 80 00 20 */	blr 
-
-.global zNPCRobot_ScenePrepare__Fv
-zNPCRobot_ScenePrepare__Fv:
-/* 800F4BC4 000F19C4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4BC8 000F19C8  7C 08 02 A6 */	mflr r0
-/* 800F4BCC 000F19CC  3C 60 80 31 */	lis r3, lbl_80312390@ha
-/* 800F4BD0 000F19D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4BD4 000F19D4  38 00 00 00 */	li r0, 0
-/* 800F4BD8 000F19D8  38 63 23 90 */	addi r3, r3, lbl_80312390@l
-/* 800F4BDC 000F19DC  90 0D 93 F8 */	stw r0, lbl_803CBCF8-_SDA_BASE_(r13)
-/* 800F4BE0 000F19E0  90 0D 93 FC */	stw r0, lbl_803CBCFC-_SDA_BASE_(r13)
-/* 800F4BE4 000F19E4  90 0D 94 00 */	stw r0, lbl_803CBD00-_SDA_BASE_(r13)
-/* 800F4BE8 000F19E8  90 0D 94 04 */	stw r0, lbl_803CBD04-_SDA_BASE_(r13)
-/* 800F4BEC 000F19EC  90 0D 94 08 */	stw r0, lbl_803CBD08-_SDA_BASE_(r13)
-/* 800F4BF0 000F19F0  90 0D 94 0C */	stw r0, lbl_803CBD0C-_SDA_BASE_(r13)
-/* 800F4BF4 000F19F4  48 00 D6 21 */	bl Clear__12UVAModelInfoFv
-/* 800F4BF8 000F19F8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4BFC 000F19FC  7C 08 03 A6 */	mtlr r0
-/* 800F4C00 000F1A00  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4C04 000F1A04  4E 80 00 20 */	blr 
-
 .global zNPCRobot_SceneFinish__Fv
 zNPCRobot_SceneFinish__Fv:
 /* 800F4C08 000F1A08  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800F4C0C 000F1A0C  7C 08 02 A6 */	mflr r0
 /* 800F4C10 000F1A10  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800F4C14 000F1A14  48 00 CA 35 */	bl ROBO_KillEffects__Fv
-/* 800F4C18 000F1A18  3C 60 80 31 */	lis r3, lbl_80312390@ha
-/* 800F4C1C 000F1A1C  38 63 23 90 */	addi r3, r3, lbl_80312390@l
+/* 800F4C18 000F1A18  3C 60 80 31 */	lis r3, g_uvaShield@ha
+/* 800F4C1C 000F1A1C  38 63 23 90 */	addi r3, r3, g_uvaShield@l
 /* 800F4C20 000F1A20  48 09 A7 59 */	bl Hemorrage__12UVAModelInfoFv
 /* 800F4C24 000F1A24  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800F4C28 000F1A28  7C 08 03 A6 */	mtlr r0
@@ -169,7 +141,7 @@ zNPCRobot_Timestep__FP6xScenef:
 /* 800F4C80 000F1A80  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800F4C84 000F1A84  DB E1 00 08 */	stfd f31, 8(r1)
 /* 800F4C88 000F1A88  FF E0 08 90 */	fmr f31, f1
-/* 800F4C8C 000F1A8C  80 0D 93 F8 */	lwz r0, lbl_803CBCF8-_SDA_BASE_(r13)
+/* 800F4C8C 000F1A8C  80 0D 93 F8 */	lwz r0, g_cnt_fodbzzt-_SDA_BASE_(r13)
 /* 800F4C90 000F1A90  2C 00 00 00 */	cmpwi r0, 0
 /* 800F4C94 000F1A94  41 82 00 08 */	beq lbl_800F4C9C
 /* 800F4C98 000F1A98  48 00 5E 1D */	bl zNPCFodBzzt_DoTheHokeyPokey__Ff
@@ -6242,10 +6214,10 @@ Init__11zNPCFodBzztFP9xEntAsset:
 /* 800FA534 000F7334  90 9F 01 C8 */	stw r4, 0x1c8(r31)
 /* 800FA538 000F7338  90 1F 02 CC */	stw r0, 0x2cc(r31)
 /* 800FA53C 000F733C  48 00 85 6D */	bl Prepare__8NPCLaserFv
-/* 800FA540 000F7340  80 6D 93 F8 */	lwz r3, lbl_803CBCF8-_SDA_BASE_(r13)
+/* 800FA540 000F7340  80 6D 93 F8 */	lwz r3, g_cnt_fodbzzt-_SDA_BASE_(r13)
 /* 800FA544 000F7344  38 00 00 00 */	li r0, 0
 /* 800FA548 000F7348  38 63 00 01 */	addi r3, r3, 1
-/* 800FA54C 000F734C  90 6D 93 F8 */	stw r3, lbl_803CBCF8-_SDA_BASE_(r13)
+/* 800FA54C 000F734C  90 6D 93 F8 */	stw r3, g_cnt_fodbzzt-_SDA_BASE_(r13)
 /* 800FA550 000F7350  C0 02 9B 80 */	lfs f0, lbl_803CE500-_SDA2_BASE_(r2)
 /* 800FA554 000F7354  D0 0D 94 18 */	stfs f0, tmr_hokeypokey__11zNPCFodBzzt-_SDA_BASE_(r13)
 /* 800FA558 000F7358  90 0D 83 B8 */	stw r0, g_needMusician-_SDA_BASE_(r13)
@@ -12697,10 +12669,10 @@ Init__9zNPCSlickFP9xEntAsset:
 /* 801000A0 000FCEA0  7C 7F 1B 78 */	mr r31, r3
 /* 801000A4 000FCEA4  4B FF 78 BD */	bl Init__9zNPCRobotFP9xEntAsset
 /* 801000A8 000FCEA8  80 9F 01 CC */	lwz r4, 0x1cc(r31)
-/* 801000AC 000FCEAC  3C 60 80 31 */	lis r3, lbl_80312390@ha
+/* 801000AC 000FCEAC  3C 60 80 31 */	lis r3, g_uvaShield@ha
 /* 801000B0 000FCEB0  38 00 FF FF */	li r0, -1
 /* 801000B4 000FCEB4  54 84 07 FA */	rlwinm r4, r4, 0, 0x1f, 0x1d
-/* 801000B8 000FCEB8  38 63 23 90 */	addi r3, r3, lbl_80312390@l
+/* 801000B8 000FCEB8  38 63 23 90 */	addi r3, r3, g_uvaShield@l
 /* 801000BC 000FCEBC  90 9F 01 CC */	stw r4, 0x1cc(r31)
 /* 801000C0 000FCEC0  80 9F 01 CC */	lwz r4, 0x1cc(r31)
 /* 801000C4 000FCEC4  60 84 00 04 */	ori r4, r4, 4
@@ -12725,14 +12697,14 @@ Init__9zNPCSlickFP9xEntAsset:
 /* 80100110 000FCF10  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80100114 000FCF14  28 04 00 00 */	cmplwi r4, 0
 /* 80100118 000FCF18  41 82 00 28 */	beq lbl_80100140
-/* 8010011C 000FCF1C  3C 60 80 31 */	lis r3, lbl_80312390@ha
+/* 8010011C 000FCF1C  3C 60 80 31 */	lis r3, g_uvaShield@ha
 /* 80100120 000FCF20  38 A0 00 00 */	li r5, 0
-/* 80100124 000FCF24  38 63 23 90 */	addi r3, r3, lbl_80312390@l
+/* 80100124 000FCF24  38 63 23 90 */	addi r3, r3, g_uvaShield@l
 /* 80100128 000FCF28  48 08 F1 71 */	bl Init__12UVAModelInfoFP8RpAtomicUi
-/* 8010012C 000FCF2C  3C 60 80 31 */	lis r3, lbl_80312390@ha
+/* 8010012C 000FCF2C  3C 60 80 31 */	lis r3, g_uvaShield@ha
 /* 80100130 000FCF30  C0 22 9B 4C */	lfs f1, lbl_803CE4CC-_SDA2_BASE_(r2)
 /* 80100134 000FCF34  C0 42 9C 60 */	lfs f2, lbl_803CE5E0-_SDA2_BASE_(r2)
-/* 80100138 000FCF38  38 63 23 90 */	addi r3, r3, lbl_80312390@l
+/* 80100138 000FCF38  38 63 23 90 */	addi r3, r3, g_uvaShield@l
 /* 8010013C 000FCF3C  48 00 21 01 */	bl UVVelSet__12UVAModelInfoFff
 lbl_80100140:
 /* 80100140 000FCF40  38 60 00 01 */	li r3, 1
@@ -13303,9 +13275,9 @@ ShieldFX__9zNPCSlickFf:
 /* 8010091C 000FD71C  80 0D 94 0C */	lwz r0, lbl_803CBD0C-_SDA_BASE_(r13)
 /* 80100920 000FD720  2C 00 00 00 */	cmpwi r0, 0
 /* 80100924 000FD724  41 82 00 1C */	beq lbl_80100940
-/* 80100928 000FD728  3C 60 80 31 */	lis r3, lbl_80312390@ha
+/* 80100928 000FD728  3C 60 80 31 */	lis r3, g_uvaShield@ha
 /* 8010092C 000FD72C  38 80 00 00 */	li r4, 0
-/* 80100930 000FD730  38 63 23 90 */	addi r3, r3, lbl_80312390@l
+/* 80100930 000FD730  38 63 23 90 */	addi r3, r3, g_uvaShield@l
 /* 80100934 000FD734  48 08 EA 55 */	bl Update__12UVAModelInfoFfPC5xVec2
 /* 80100938 000FD738  38 00 00 00 */	li r0, 0
 /* 8010093C 000FD73C  90 0D 94 0C */	stw r0, lbl_803CBD0C-_SDA_BASE_(r13)
@@ -14146,12 +14118,12 @@ ROBO_InitEffects__Fv:
 /* 80101480 000FE280  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80101484 000FE284  7C 08 02 A6 */	mflr r0
 /* 80101488 000FE288  3C 60 80 27 */	lis r3, lbl_802696F4@ha
-/* 8010148C 000FE28C  3C 80 80 31 */	lis r4, lbl_80312390@ha
+/* 8010148C 000FE28C  3C 80 80 31 */	lis r4, g_uvaShield@ha
 /* 80101490 000FE290  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80101494 000FE294  38 63 96 F4 */	addi r3, r3, lbl_802696F4@l
 /* 80101498 000FE298  38 63 03 50 */	addi r3, r3, 0x350
 /* 8010149C 000FE29C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 801014A0 000FE2A0  3B E4 23 90 */	addi r31, r4, lbl_80312390@l
+/* 801014A0 000FE2A0  3B E4 23 90 */	addi r31, r4, g_uvaShield@l
 /* 801014A4 000FE2A4  4B FA 73 A1 */	bl zParEmitterFind__FPCc
 /* 801014A8 000FE2A8  3C 80 80 27 */	lis r4, lbl_802696F4@ha
 /* 801014AC 000FE2AC  90 6D 94 78 */	stw r3, lbl_803CBD78-_SDA_BASE_(r13)
@@ -15104,25 +15076,6 @@ lbl_80102200:
 /* 80102208 000FF008  7C 08 03 A6 */	mtlr r0
 /* 8010220C 000FF00C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80102210 000FF010  4E 80 00 20 */	blr 
-
-.global Clear__12UVAModelInfoFv
-Clear__12UVAModelInfoFv:
-/* 80102214 000FF014  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80102218 000FF018  7C 08 02 A6 */	mflr r0
-/* 8010221C 000FF01C  38 80 00 00 */	li r4, 0
-/* 80102220 000FF020  38 A0 00 20 */	li r5, 0x20
-/* 80102224 000FF024  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80102228 000FF028  4B F0 12 31 */	bl memset
-/* 8010222C 000FF02C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80102230 000FF030  7C 08 03 A6 */	mtlr r0
-/* 80102234 000FF034  38 21 00 10 */	addi r1, r1, 0x10
-/* 80102238 000FF038  4E 80 00 20 */	blr 
-
-.global UVVelSet__12UVAModelInfoFff
-UVVelSet__12UVAModelInfoFff:
-/* 8010223C 000FF03C  D0 23 00 00 */	stfs f1, 0(r3)
-/* 80102240 000FF040  D0 43 00 04 */	stfs f2, 4(r3)
-/* 80102244 000FF044  4E 80 00 20 */	blr 
 
 .global Valid__12UVAModelInfoCFv
 Valid__12UVAModelInfoCFv:
@@ -16127,7 +16080,8 @@ g_strz_folkanim:
 	.incbin "baserom.dol", 0x293660, 0x88
 
 .section .bss
-lbl_80312390:
+.global g_uvaShield
+g_uvaShield:
 	.skip 0x20
 lbl_803123B0:
 	.skip 0x44
@@ -16139,17 +16093,23 @@ lbl_80312BD8:
 	.skip 0x5B0
 
 .section .sbss
-lbl_803CBCF8:
+.global g_cnt_fodbzzt
+g_cnt_fodbzzt:
 	.skip 0x4
-lbl_803CBCFC:
+.global g_cnt_sleepy
+g_cnt_sleepy:
 	.skip 0x4
-lbl_803CBD00:
+.global g_needuvincr_tube
+g_needuvincr_tube:
 	.skip 0x4
-lbl_803CBD04:
+.global g_needuvincr_bzzt
+g_needuvincr_bzzt:
 	.skip 0x4
-lbl_803CBD08:
+.global g_needuvincr_nightlight
+g_needuvincr_nightlight:
 	.skip 0x4
-lbl_803CBD0C:
+.global g_needuvincr_slickshield
+g_needuvincr_slickshield:
 	.skip 0x4
 /* SPECULATION: link order */
 .global rast_blink__11zNPCFodBomb

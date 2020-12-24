@@ -35,11 +35,16 @@
 // func_8010EEB4
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveGoalSimple.s", "Name__12xGoalGenericFv")
 
-// func_8010EEC0
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveGoalSimple.s", "Clear__12xGoalGenericFv")
+void xGoalGeneric::Clear()
+{
+
+
+}
 
 // func_8010EEC4
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveGoalSimple.s", "Name__10xGoalEmptyFv")
 
-// func_8010EED4
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveGoalSimple.s", "Clear__10xGoalEmptyFv")
+void Clear()
+{
+
+}

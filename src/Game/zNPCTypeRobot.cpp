@@ -1,18 +1,39 @@
 #include "zNPCTypeRobot.h"
 
 #include <types.h>
+#include <string.h>
+
+extern UVAModelInfo g_uvaShield;
+extern int32 g_cnt_fodbzzt;
+extern int32 g_cnt_sleepy;
+extern int32 g_needuvincr_tube;
+extern int32 g_needuvincr_bzzt;
+extern int32 g_needuvincr_nightlight;
+extern int32 g_needuvincr_slickshield;
 
 // func_800F4A6C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Robot_Startup__Fv")
 
-// func_800F4BBC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "PlayTheFiddle__Fv")
+void PlayTheFiddle()
+{
 
-// func_800F4BC0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Robot_Shutdown__Fv")
+}
 
-// func_800F4BC4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCRobot_ScenePrepare__Fv")
+void ZNPC_Robot_Shutdown()
+{
+
+}
+
+void zNPCRobot_ScenePrepare()
+{
+    g_cnt_fodbzzt = 0;
+    g_cnt_sleepy = 0;
+    g_needuvincr_tube = 0;
+    g_needuvincr_bzzt = 0;
+    g_needuvincr_nightlight = 0;
+    g_needuvincr_slickshield = 0;
+    g_uvaShield.Clear();
+}
 
 // func_800F4C08
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCRobot_SceneFinish__Fv")
@@ -779,11 +800,16 @@
 // func_801021A0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SyncHomeFromNav__8NPCArenaFv")
 
-// func_80102214
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Clear__12UVAModelInfoFv")
+void UVAModelInfo::Clear()
+{
+    memset(this, 0, 32);
+}
 
-// func_8010223C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "UVVelSet__12UVAModelInfoFff")
+void UVAModelInfo::UVVelSet(float x, float y)
+{
+    offset_vel.x = x;
+    offset_vel.y = y;
+}
 
 // func_80102248
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Valid__12UVAModelInfoCFv")
