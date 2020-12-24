@@ -1,16 +1,16 @@
 #include "zNPCTypes.h"
 
-#include <types.h>
+#include "types.h"
 
-#include <zNPCTypeCommon.h>
-#include <zNPCTypeRobot.h>
-#include <zNPCTypeTiki.h>
-#include <zNPCTypeDuplotron.h>
-#include <zNPCTypeVillager.h>
-#include <zNPCTypeAmbient.h>
-#include <zNPCTypeSubBoss.h>
-#include <zNPCTypeBoss.h>
-#include <zNPCTypeTest.h>
+#include "zNPCTypeCommon.h"
+#include "zNPCTypeRobot.h"
+#include "zNPCTypeTiki.h"
+#include "zNPCTypeDuplotron.h"
+#include "zNPCTypeVillager.h"
+#include "zNPCTypeAmbient.h"
+#include "zNPCTypeSubBoss.h"
+#include "zNPCTypeBoss.h"
+#include "zNPCTypeTest.h"
 
 void zNPCTypes_StartupTypes()
 {

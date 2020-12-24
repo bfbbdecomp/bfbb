@@ -91,6 +91,7 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual uint8 ColChkByFlags() const;
     virtual uint8 ColPenByFlags() const;
     virtual uint8 PhysicsFlags() const;
+    virtual void Destroy();
 };
 
 void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt);

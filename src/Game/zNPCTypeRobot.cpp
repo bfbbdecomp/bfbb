@@ -2,6 +2,9 @@
 
 #include <types.h>
 #include <string.h>
+#include <zNPCGoalRobo.h>
+#include <zNPCTypes.h>
+#include <../Core/x/xFactory.h>
 
 extern UVAModelInfo g_uvaShield;
 extern int32 g_cnt_fodbzzt;
@@ -10,6 +13,12 @@ extern int32 g_needuvincr_tube;
 extern int32 g_needuvincr_bzzt;
 extern int32 g_needuvincr_nightlight;
 extern int32 g_needuvincr_slickshield;
+extern int32 cnt_alerthokey__11zNPCFodBzzt;
+
+void zNPCRobot_Timestep(float32 dt);
+void zNPCSleepy_Timestep(float32 dt);
+void zNPCFodBzzt_DoTheHokeyPokey(float32 dt);
+void ZNPC_Destroy_Robot(xFactoryInst* inst);
 
 // func_800F4A6C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Robot_Startup__Fv")
@@ -35,23 +44,47 @@ void zNPCRobot_ScenePrepare()
     g_uvaShield.Clear();
 }
 
-// func_800F4C08
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCRobot_SceneFinish__Fv")
+void zNPCRobot_SceneFinish()
+{
+    ROBO_KillEffects();
+    g_uvaShield.Hemorrage();
+}
 
-// func_800F4C34
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCRobot_SceneReset__Fv")
+void zNPCRobot_SceneReset()
+{
+    zNPCFodBzzt_ResetDanceParty();
+}
 
-// func_800F4C54
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCRobot_ScenePostInit__Fv")
+void zNPCRobot_ScenePostInit()
+{
+    ROBO_InitEffects();
+    ROBO_PrepRoboCop();
+}
 
-// func_800F4C78
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCRobot_Timestep__FP6xScenef")
+void zNPCRobot_Timestep(float dt)
+{
+    if (g_cnt_fodbzzt != 0)
+    {
+        zNPCFodBzzt_DoTheHokeyPokey(dt);
+    }
+    if (g_cnt_sleepy != 0)
+    {
+        zNPCSleepy_Timestep(dt);
+    }
+
+    g_needuvincr_tube = 1;
+    g_needuvincr_bzzt = 1;
+    g_needuvincr_nightlight = 1;
+    g_needuvincr_slickshield = 1;
+}
 
 // func_800F4CD8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Create_Robot__FiP10RyzMemGrowPv")
 
-// func_800F50A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Destroy_Robot__FP12xFactoryInst")
+void ZNPC_Destroy_Robot(xFactoryInst* inst)
+{
+    delete inst;
+}
 
 // func_800F50C4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_AnimTable_RobotBase__FP10xAnimTable")
@@ -104,14 +137,47 @@ void zNPCRobot_ScenePrepare()
 // func_800F7744
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_AnimTable_Slick__Fv")
 
-// func_800F7900
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ColChkFlags__9zNPCRobotCFv")
+uint8 zNPCRobot::ColChkFlags() const
+{
+    int32 flags = 0x3E;
 
-// func_800F791C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ColPenFlags__9zNPCRobotCFv")
+    if (npcset.reduceCollide)
+    {
+        flags &= ~0x6;
+    }
 
-// func_800F7938
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "PhysicsFlags__9zNPCRobotCFv")
+    return flags;
+}
+
+uint8 zNPCRobot::ColPenFlags() const
+{
+    int32 flags = 0x3E;
+
+    if (npcset.reduceCollide)
+    {
+        flags &= ~0x6;
+    }
+
+    return flags;
+}
+
+
+uint8 zNPCRobot::PhysicsFlags() const
+{
+    int32 flags = 0;
+
+    if ((flg_move & 0x6) != 0)
+    {
+        flags |= 3;
+    }
+
+    if ((flg_move & 0x2) != 0)
+    {
+        flags |= 4;
+    }
+
+    return flags;
+}
 
 // func_800F7960
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Init__9zNPCRobotFP9xEntAsset")
@@ -125,8 +191,20 @@ void zNPCRobot_ScenePrepare()
 // func_800F7BD8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ParseINI__9zNPCRobotFv")
 
+void zNPCRobot::Process(xScene* xscn, float32 dt)
+{
+    psy_instinct->Timestep(dt, NULL);
+
+    if(IsAlive())
+    {
+        DoAliveStuff(dt);
+    }
+
+    zNPCCommon::Process(xscn, dt);
+}
+
 // func_800F7C18
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Process__9zNPCRobotFP6xScenef")
+//#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Process__9zNPCRobotFP6xScenef")
 
 // func_800F7C9C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "NewTime__9zNPCRobotFP6xScenef")
@@ -300,8 +378,10 @@ void zNPCRobot_ScenePrepare()
 // func_800FAA38
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "RenderExtra__11zNPCFodBzztFv")
 
-// func_800FAAA8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCFodBzzt_ResetDanceParty__Fv")
+void zNPCFodBzzt_ResetDanceParty()
+{
+    cnt_alerthokey__11zNPCFodBzzt = 0;
+}
 
 // func_800FAAB4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "zNPCFodBzzt_DoTheHokeyPokey__Ff")
@@ -760,8 +840,10 @@ void zNPCRobot_ScenePrepare()
 // func_80101480
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ROBO_InitEffects__Fv")
 
-// func_80101648
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ROBO_KillEffects__Fv")
+void ROBO_KillEffects()
+{
+
+}
 
 // func_8010164C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "DoFX_Motorboat__9zNPCRobotFf")

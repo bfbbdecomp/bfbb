@@ -1,6 +1,7 @@
 #include "zNPCHazard.h"
 
 #include <types.h>
+#include <zNPCTypes.h>
 
 // func_80187630
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_Startup__Fv")
@@ -281,8 +282,14 @@
 // func_8018F298
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Init__12UVAModelInfoFP8RpAtomicUi")
 
+void UVAModelInfo::Hemorrage()
+{
+    model = 0;
+    uv = 0;
+}
+
 // func_8018F378
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Hemorrage__12UVAModelInfoFv")
+//#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Hemorrage__12UVAModelInfoFv")
 
 // func_8018F388
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Update__12UVAModelInfoFfPC5xVec2")

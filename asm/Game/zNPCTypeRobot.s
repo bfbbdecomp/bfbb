@@ -97,72 +97,6 @@ lbl_800F4B78:
 /* 800F4BB4 000F19B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F4BB8 000F19B8  4E 80 00 20 */	blr 
 
-.global zNPCRobot_SceneFinish__Fv
-zNPCRobot_SceneFinish__Fv:
-/* 800F4C08 000F1A08  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4C0C 000F1A0C  7C 08 02 A6 */	mflr r0
-/* 800F4C10 000F1A10  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4C14 000F1A14  48 00 CA 35 */	bl ROBO_KillEffects__Fv
-/* 800F4C18 000F1A18  3C 60 80 31 */	lis r3, g_uvaShield@ha
-/* 800F4C1C 000F1A1C  38 63 23 90 */	addi r3, r3, g_uvaShield@l
-/* 800F4C20 000F1A20  48 09 A7 59 */	bl Hemorrage__12UVAModelInfoFv
-/* 800F4C24 000F1A24  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4C28 000F1A28  7C 08 03 A6 */	mtlr r0
-/* 800F4C2C 000F1A2C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4C30 000F1A30  4E 80 00 20 */	blr 
-
-.global zNPCRobot_SceneReset__Fv
-zNPCRobot_SceneReset__Fv:
-/* 800F4C34 000F1A34  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4C38 000F1A38  7C 08 02 A6 */	mflr r0
-/* 800F4C3C 000F1A3C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4C40 000F1A40  48 00 5E 69 */	bl zNPCFodBzzt_ResetDanceParty__Fv
-/* 800F4C44 000F1A44  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4C48 000F1A48  7C 08 03 A6 */	mtlr r0
-/* 800F4C4C 000F1A4C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4C50 000F1A50  4E 80 00 20 */	blr 
-
-.global zNPCRobot_ScenePostInit__Fv
-zNPCRobot_ScenePostInit__Fv:
-/* 800F4C54 000F1A54  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4C58 000F1A58  7C 08 02 A6 */	mflr r0
-/* 800F4C5C 000F1A5C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4C60 000F1A60  48 00 C8 21 */	bl ROBO_InitEffects__Fv
-/* 800F4C64 000F1A64  4B FF 68 61 */	bl ROBO_PrepRoboCop__Fv
-/* 800F4C68 000F1A68  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4C6C 000F1A6C  7C 08 03 A6 */	mtlr r0
-/* 800F4C70 000F1A70  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4C74 000F1A74  4E 80 00 20 */	blr 
-
-.global zNPCRobot_Timestep__FP6xScenef
-zNPCRobot_Timestep__FP6xScenef:
-/* 800F4C78 000F1A78  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4C7C 000F1A7C  7C 08 02 A6 */	mflr r0
-/* 800F4C80 000F1A80  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4C84 000F1A84  DB E1 00 08 */	stfd f31, 8(r1)
-/* 800F4C88 000F1A88  FF E0 08 90 */	fmr f31, f1
-/* 800F4C8C 000F1A8C  80 0D 93 F8 */	lwz r0, g_cnt_fodbzzt-_SDA_BASE_(r13)
-/* 800F4C90 000F1A90  2C 00 00 00 */	cmpwi r0, 0
-/* 800F4C94 000F1A94  41 82 00 08 */	beq lbl_800F4C9C
-/* 800F4C98 000F1A98  48 00 5E 1D */	bl zNPCFodBzzt_DoTheHokeyPokey__Ff
-lbl_800F4C9C:
-/* 800F4C9C 000F1A9C  80 0D 93 FC */	lwz r0, lbl_803CBCFC-_SDA_BASE_(r13)
-/* 800F4CA0 000F1AA0  2C 00 00 00 */	cmpwi r0, 0
-/* 800F4CA4 000F1AA4  41 82 00 0C */	beq lbl_800F4CB0
-/* 800F4CA8 000F1AA8  FC 20 F8 90 */	fmr f1, f31
-/* 800F4CAC 000F1AAC  48 00 78 4D */	bl zNPCSleepy_Timestep__Ff
-lbl_800F4CB0:
-/* 800F4CB0 000F1AB0  38 00 00 01 */	li r0, 1
-/* 800F4CB4 000F1AB4  90 0D 94 00 */	stw r0, lbl_803CBD00-_SDA_BASE_(r13)
-/* 800F4CB8 000F1AB8  90 0D 94 04 */	stw r0, lbl_803CBD04-_SDA_BASE_(r13)
-/* 800F4CBC 000F1ABC  90 0D 94 08 */	stw r0, lbl_803CBD08-_SDA_BASE_(r13)
-/* 800F4CC0 000F1AC0  90 0D 94 0C */	stw r0, lbl_803CBD0C-_SDA_BASE_(r13)
-/* 800F4CC4 000F1AC4  CB E1 00 08 */	lfd f31, 8(r1)
-/* 800F4CC8 000F1AC8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4CCC 000F1ACC  7C 08 03 A6 */	mtlr r0
-/* 800F4CD0 000F1AD0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4CD4 000F1AD4  4E 80 00 20 */	blr 
-
 ZNPC_Create_Robot__FiP10RyzMemGrowPv:
 /* 800F4CD8 000F1AD8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800F4CDC 000F1ADC  7C 08 02 A6 */	mflr r0
@@ -448,17 +382,6 @@ lbl_800F508C:
 /* 800F5094 000F1E94  7C 08 03 A6 */	mtlr r0
 /* 800F5098 000F1E98  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F509C 000F1E9C  4E 80 00 20 */	blr 
-
-ZNPC_Destroy_Robot__FP12xFactoryInst:
-/* 800F50A0 000F1EA0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F50A4 000F1EA4  7C 08 02 A6 */	mflr r0
-/* 800F50A8 000F1EA8  38 80 00 01 */	li r4, 1
-/* 800F50AC 000F1EAC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F50B0 000F1EB0  4B FE 3E F5 */	bl __dt__12xFactoryInstFv
-/* 800F50B4 000F1EB4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F50B8 000F1EB8  7C 08 03 A6 */	mtlr r0
-/* 800F50BC 000F1EBC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F50C0 000F1EC0  4E 80 00 20 */	blr 
 
 .global ZNPC_AnimTable_RobotBase__FP10xAnimTable
 ZNPC_AnimTable_RobotBase__FP10xAnimTable:
@@ -3072,40 +2995,6 @@ ZNPC_AnimTable_Slick__Fv:
 /* 800F78F8 000F46F8  38 21 00 40 */	addi r1, r1, 0x40
 /* 800F78FC 000F46FC  4E 80 00 20 */	blr 
 
-ColChkFlags__9zNPCRobotCFv:
-/* 800F7900 000F4700  88 03 01 F3 */	lbz r0, 0x1f3(r3)
-/* 800F7904 000F4704  38 60 00 3E */	li r3, 0x3e
-/* 800F7908 000F4708  28 00 00 00 */	cmplwi r0, 0
-/* 800F790C 000F470C  41 82 00 08 */	beq lbl_800F7914
-/* 800F7910 000F4710  54 63 07 F8 */	rlwinm r3, r3, 0, 0x1f, 0x1c
-lbl_800F7914:
-/* 800F7914 000F4714  54 63 06 3E */	clrlwi r3, r3, 0x18
-/* 800F7918 000F4718  4E 80 00 20 */	blr 
-
-ColPenFlags__9zNPCRobotCFv:
-/* 800F791C 000F471C  88 03 01 F3 */	lbz r0, 0x1f3(r3)
-/* 800F7920 000F4720  38 60 00 3E */	li r3, 0x3e
-/* 800F7924 000F4724  28 00 00 00 */	cmplwi r0, 0
-/* 800F7928 000F4728  41 82 00 08 */	beq lbl_800F7930
-/* 800F792C 000F472C  54 63 07 F8 */	rlwinm r3, r3, 0, 0x1f, 0x1c
-lbl_800F7930:
-/* 800F7930 000F4730  54 63 06 3E */	clrlwi r3, r3, 0x18
-/* 800F7934 000F4734  4E 80 00 20 */	blr 
-
-PhysicsFlags__9zNPCRobotCFv:
-/* 800F7938 000F4738  80 63 01 CC */	lwz r3, 0x1cc(r3)
-/* 800F793C 000F473C  38 80 00 00 */	li r4, 0
-/* 800F7940 000F4740  54 60 07 7D */	rlwinm. r0, r3, 0, 0x1d, 0x1e
-/* 800F7944 000F4744  41 82 00 08 */	beq lbl_800F794C
-/* 800F7948 000F4748  60 84 00 03 */	ori r4, r4, 3
-lbl_800F794C:
-/* 800F794C 000F474C  54 60 07 BD */	rlwinm. r0, r3, 0, 0x1e, 0x1e
-/* 800F7950 000F4750  41 82 00 08 */	beq lbl_800F7958
-/* 800F7954 000F4754  60 84 00 04 */	ori r4, r4, 4
-lbl_800F7958:
-/* 800F7958 000F4758  54 83 06 3E */	clrlwi r3, r4, 0x18
-/* 800F795C 000F475C  4E 80 00 20 */	blr 
-
 .global Init__9zNPCRobotFP9xEntAsset
 Init__9zNPCRobotFP9xEntAsset:
 /* 800F7960 000F4760  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -3300,43 +3189,6 @@ ParseINI__9zNPCRobotFv:
 /* 800F7C0C 000F4A0C  7C 08 03 A6 */	mtlr r0
 /* 800F7C10 000F4A10  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F7C14 000F4A14  4E 80 00 20 */	blr 
-
-.global Process__9zNPCRobotFP6xScenef
-Process__9zNPCRobotFP6xScenef:
-/* 800F7C18 000F4A18  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800F7C1C 000F4A1C  7C 08 02 A6 */	mflr r0
-/* 800F7C20 000F4A20  90 01 00 24 */	stw r0, 0x24(r1)
-/* 800F7C24 000F4A24  DB E1 00 18 */	stfd f31, 0x18(r1)
-/* 800F7C28 000F4A28  FF E0 08 90 */	fmr f31, f1
-/* 800F7C2C 000F4A2C  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 800F7C30 000F4A30  7C 9F 23 78 */	mr r31, r4
-/* 800F7C34 000F4A34  38 80 00 00 */	li r4, 0
-/* 800F7C38 000F4A38  93 C1 00 10 */	stw r30, 0x10(r1)
-/* 800F7C3C 000F4A3C  7C 7E 1B 78 */	mr r30, r3
-/* 800F7C40 000F4A40  80 63 02 28 */	lwz r3, 0x228(r3)
-/* 800F7C44 000F4A44  48 01 64 1D */	bl Timestep__7xPsycheFfPv
-/* 800F7C48 000F4A48  7F C3 F3 78 */	mr r3, r30
-/* 800F7C4C 000F4A4C  81 9E 01 B8 */	lwz r12, 0x1b8(r30)
-/* 800F7C50 000F4A50  81 8C 00 7C */	lwz r12, 0x7c(r12)
-/* 800F7C54 000F4A54  7D 89 03 A6 */	mtctr r12
-/* 800F7C58 000F4A58  4E 80 04 21 */	bctrl 
-/* 800F7C5C 000F4A5C  2C 03 00 00 */	cmpwi r3, 0
-/* 800F7C60 000F4A60  41 82 00 10 */	beq lbl_800F7C70
-/* 800F7C64 000F4A64  FC 20 F8 90 */	fmr f1, f31
-/* 800F7C68 000F4A68  7F C3 F3 78 */	mr r3, r30
-/* 800F7C6C 000F4A6C  48 00 08 CD */	bl DoAliveStuff__9zNPCRobotFf
-lbl_800F7C70:
-/* 800F7C70 000F4A70  FC 20 F8 90 */	fmr f1, f31
-/* 800F7C74 000F4A74  7F C3 F3 78 */	mr r3, r30
-/* 800F7C78 000F4A78  7F E4 FB 78 */	mr r4, r31
-/* 800F7C7C 000F4A7C  4B FF 84 75 */	bl Process__10zNPCCommonFP6xScenef
-/* 800F7C80 000F4A80  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800F7C84 000F4A84  CB E1 00 18 */	lfd f31, 0x18(r1)
-/* 800F7C88 000F4A88  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 800F7C8C 000F4A8C  83 C1 00 10 */	lwz r30, 0x10(r1)
-/* 800F7C90 000F4A90  7C 08 03 A6 */	mtlr r0
-/* 800F7C94 000F4A94  38 21 00 20 */	addi r1, r1, 0x20
-/* 800F7C98 000F4A98  4E 80 00 20 */	blr 
 
 .global NewTime__9zNPCRobotFP6xScenef
 NewTime__9zNPCRobotFP6xScenef:
@@ -6434,13 +6286,13 @@ Process__11zNPCFodBzztFP6xScenef:
 /* 800FA870 000F7670  DB E1 00 08 */	stfd f31, 8(r1)
 /* 800FA874 000F7674  FF E0 08 90 */	fmr f31, f1
 /* 800FA878 000F7678  4B FF D3 A1 */	bl Process__9zNPCRobotFP6xScenef
-/* 800FA87C 000F767C  80 0D 94 04 */	lwz r0, lbl_803CBD04-_SDA_BASE_(r13)
+/* 800FA87C 000F767C  80 0D 94 04 */	lwz r0, g_needuvincr_bzzt-_SDA_BASE_(r13)
 /* 800FA880 000F7680  2C 00 00 00 */	cmpwi r0, 0
 /* 800FA884 000F7684  41 82 00 1C */	beq lbl_800FA8A0
 /* 800FA888 000F7688  38 00 00 00 */	li r0, 0
 /* 800FA88C 000F768C  FC 20 F8 90 */	fmr f1, f31
 /* 800FA890 000F7690  3C 60 80 3D */	lis r3, laser__11zNPCFodBzzt@ha
-/* 800FA894 000F7694  90 0D 94 04 */	stw r0, lbl_803CBD04-_SDA_BASE_(r13)
+/* 800FA894 000F7694  90 0D 94 04 */	stw r0, g_needuvincr_bzzt-_SDA_BASE_(r13)
 /* 800FA898 000F7698  38 63 A6 90 */	addi r3, r3, laser__11zNPCFodBzzt@l
 /* 800FA89C 000F769C  48 00 82 51 */	bl UVScrollUpdate__8NPCLaserFf
 lbl_800FA8A0:
@@ -8505,9 +8357,9 @@ Init__10zNPCSleepyFP9xEntAsset:
 /* 800FC5A8 000F93A8  90 DF 02 CC */	stw r6, 0x2cc(r31)
 /* 800FC5AC 000F93AC  90 0D 94 30 */	stw r0, rast_detectcone__10zNPCSleepy-_SDA_BASE_(r13)
 /* 800FC5B0 000F93B0  90 0D 94 2C */	stw r0, rast_killcone__10zNPCSleepy-_SDA_BASE_(r13)
-/* 800FC5B4 000F93B4  80 CD 93 FC */	lwz r6, lbl_803CBCFC-_SDA_BASE_(r13)
+/* 800FC5B4 000F93B4  80 CD 93 FC */	lwz r6, lbl_g_cnt_sleepy-_SDA_BASE_(r13)
 /* 800FC5B8 000F93B8  38 06 00 01 */	addi r0, r6, 1
-/* 800FC5BC 000F93BC  90 0D 93 FC */	stw r0, lbl_803CBCFC-_SDA_BASE_(r13)
+/* 800FC5BC 000F93BC  90 0D 93 FC */	stw r0, lbl_g_cnt_sleepy-_SDA_BASE_(r13)
 /* 800FC5C0 000F93C0  48 08 58 19 */	bl NPAR_PartySetup__F11en_nparptypPPvP12NPARXtraData
 /* 800FC5C4 000F93C4  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 800FC5C8 000F93C8  83 E1 00 0C */	lwz r31, 0xc(r1)
@@ -8784,12 +8636,12 @@ lbl_800FC984:
 /* 800FC9A0 000F97A0  7F C3 F3 78 */	mr r3, r30
 /* 800FC9A4 000F97A4  48 00 01 D9 */	bl SnoreNZeez__10zNPCSleepyFf
 lbl_800FC9A8:
-/* 800FC9A8 000F97A8  80 0D 94 08 */	lwz r0, lbl_803CBD08-_SDA_BASE_(r13)
+/* 800FC9A8 000F97A8  80 0D 94 08 */	lwz r0, g_needuvincr_nightlight-_SDA_BASE_(r13)
 /* 800FC9AC 000F97AC  2C 00 00 00 */	cmpwi r0, 0
 /* 800FC9B0 000F97B0  41 82 00 18 */	beq lbl_800FC9C8
 /* 800FC9B4 000F97B4  38 00 00 00 */	li r0, 0
 /* 800FC9B8 000F97B8  FC 20 F8 90 */	fmr f1, f31
-/* 800FC9BC 000F97BC  90 0D 94 08 */	stw r0, lbl_803CBD08-_SDA_BASE_(r13)
+/* 800FC9BC 000F97BC  90 0D 94 08 */	stw r0, g_needuvincr_nightlight-_SDA_BASE_(r13)
 /* 800FC9C0 000F97C0  7F C3 F3 78 */	mr r3, r30
 /* 800FC9C4 000F97C4  48 00 00 F1 */	bl NightLightUVStep__10zNPCSleepyFf
 lbl_800FC9C8:
@@ -13272,7 +13124,7 @@ ShieldFX__9zNPCSlickFf:
 /* 80100910 000FD710  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80100914 000FD714  7C 08 02 A6 */	mflr r0
 /* 80100918 000FD718  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010091C 000FD71C  80 0D 94 0C */	lwz r0, lbl_803CBD0C-_SDA_BASE_(r13)
+/* 8010091C 000FD71C  80 0D 94 0C */	lwz r0, g_needuvincr_slickshield-_SDA_BASE_(r13)
 /* 80100920 000FD720  2C 00 00 00 */	cmpwi r0, 0
 /* 80100924 000FD724  41 82 00 1C */	beq lbl_80100940
 /* 80100928 000FD728  3C 60 80 31 */	lis r3, g_uvaShield@ha
@@ -13280,7 +13132,7 @@ ShieldFX__9zNPCSlickFf:
 /* 80100930 000FD730  38 63 23 90 */	addi r3, r3, g_uvaShield@l
 /* 80100934 000FD734  48 08 EA 55 */	bl Update__12UVAModelInfoFfPC5xVec2
 /* 80100938 000FD738  38 00 00 00 */	li r0, 0
-/* 8010093C 000FD73C  90 0D 94 0C */	stw r0, lbl_803CBD0C-_SDA_BASE_(r13)
+/* 8010093C 000FD73C  90 0D 94 0C */	stw r0, g_needuvincr_slickshield-_SDA_BASE_(r13)
 lbl_80100940:
 /* 80100940 000FD740  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80100944 000FD744  7C 08 03 A6 */	mtlr r0

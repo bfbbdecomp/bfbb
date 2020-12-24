@@ -33,20 +33,30 @@ struct zNPCTiki : zNPCCommon
     float32 tikiAnimTime;
 
     void BUpdate(xVec3* pos);
-    int32 IsAlive();
     void RemoveFromFamily();
     void FindParents(zScene* zsc);
     int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget,
                    int32* handled);
     void Process(xScene* xscn, float32 dt);
-    void ParseINI();
-    void SelfSetup();
     int32 SetCarryState(en_NPC_CARRY_STATE cs);
     void Damage(en_NPC_DAMAGE_TYPE damtype);
     void Init(xEntAsset* entass);
     void Setup();
     void Reset();
-    bool IsHealthy();
+    int32 NPCMessage(NPCMsg* mail);
+	void RenderExtra();
+    void RenderExtraPostParticles();
+    void ParseINI();
+    void ParseLinks();
+    void ParseProps();
+    void SelfSetup();
+    void SelfDestroy();
+    int32 IsHealthy();
+    int32 IsAlive();
+    void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
+    int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
+    void DuploOwner(zNPCCommon* duper);
+    void DuploNotice();
 };
 
 void ZNPC_Tiki_Startup();

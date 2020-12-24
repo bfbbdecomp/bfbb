@@ -8720,13 +8720,6 @@ lbl_8018F360:
 /* 8018F370 0018C170  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018F374 0018C174  4E 80 00 20 */	blr 
 
-.global Hemorrage__12UVAModelInfoFv
-Hemorrage__12UVAModelInfoFv:
-/* 8018F378 0018C178  38 00 00 00 */	li r0, 0
-/* 8018F37C 0018C17C  90 03 00 0C */	stw r0, 0xc(r3)
-/* 8018F380 0018C180  90 03 00 10 */	stw r0, 0x10(r3)
-/* 8018F384 0018C184  4E 80 00 20 */	blr 
-
 .global Update__12UVAModelInfoFfPC5xVec2
 Update__12UVAModelInfoFfPC5xVec2:
 /* 8018F388 0018C188  94 21 FF D0 */	stwu r1, -0x30(r1)
