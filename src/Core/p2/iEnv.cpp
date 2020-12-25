@@ -1,104 +1,223 @@
 #include "iEnv.h"
 
-#include <types.h>
+#include "iModel.h"
 
-static void* lbl_803CBAB0;
-static void* lbl_803CBAB4;
+#include "../x/iCamera.h"
+#include "../x/xMemMgr.h"
+
+static int32 sBeginDrawFX;
+static RpWorld* sPipeWorld;
 static RwCamera* sPipeCamera;
 static iEnv* lastEnv;
 
-const static float lbl_80260130[6] = { 1000.0f, 1000.0f, 1000.0f, -1000.0f, -1000.0f, -1000.0f };
+const static RwBBox lbl_80260130 = { 1000.0f, 1000.0f, 1000.0f, -1000.0f, -1000.0f, -1000.0f };
 
-RpAtomic* SetPipelineCB(RpAtomic* param_1, void* param_2)
+static RpAtomic* SetPipelineCB(RpAtomic* atomic, void* data)
 {
-    if (RwCameraBeginUpdate(sPipeCamera) != NULL)
+    if (RwCameraBeginUpdate(sPipeCamera))
     {
-        RpAtomicInstance(param_1);
+        RpAtomicInstance(atomic);
         RwCameraEndUpdate(sPipeCamera);
     }
-    if (param_2 != NULL)
+
+    if (data)
     {
-        param_1->pipeline = (RxPipeline*)param_2;
+        RpAtomicSetPipeline(atomic, (RxPipeline*)data);
     }
-    return param_1;
+
+    return atomic;
 }
 
-void iEnvSetBSP(iEnv* env, int32 envDataType, RpWorld* bsp)
+static void iEnvSetBSP(iEnv* env, int32 envDataType, RpWorld* bsp)
 {
     if (envDataType == 0)
     {
         env->world = bsp;
-        return;
     }
-    if (envDataType == 1)
+    else if (envDataType == 1)
     {
         env->collision = bsp;
-        return;
     }
-    if (envDataType == 2)
+    else if (envDataType == 2)
     {
         env->fx = bsp;
-        return;
     }
-    if (envDataType == 3)
+    else if (envDataType == 3)
     {
         env->camera = bsp;
-        return;
     }
 }
 
+#ifndef NON_MATCHING
 // func_800C2F50
 #pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvLoad__FP4iEnvPCvUii")
-
-void iEnvFree(iEnv* param_1)
+#else
+void iEnvLoad(iEnv* env, const void* data, uint32, int32 dataType)
 {
-    _rwFrameSyncDirty();
-    RpWorldDestroy(param_1->world);
-    param_1->world = NULL;
-    if (param_1->fx != NULL)
+    RpWorld* bsp = (RpWorld*)data;
+    xJSPHeader* jsp = (xJSPHeader*)data;
+
+    if (jsp->idtag[0] == 'J' && jsp->idtag[1] == 'S' && jsp->idtag[2] == 'P' &&
+        jsp->idtag[3] == '\0')
     {
-        RpWorldDestroy(param_1->fx);
-        param_1->fx = NULL;
-    }
-    if (param_1->collision != NULL)
-    {
-        RpWorldDestroy(param_1->collision);
-        param_1->collision = NULL;
-    }
-    return;
-}
+        if (dataType == 0)
+        {
+            RwBBox tmpbbox = { 1000.0f, 1000.0f, 1000.0f, -1000.0f, -1000.0f, -1000.0f };
 
-void iEnvDefaultLighting(iEnv* param)
-{
-}
+            env->world = RpWorldCreate(&tmpbbox);
 
-void iEnvLightingBasics(iEnv* param_1, xEnvAsset* param_2)
-{
-}
+            sPipeCamera = iCameraCreate(640, 480, 0);
+            sPipeWorld = env->world;
 
-// func_800C3128
-#pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "Jsp_ClumpRender__FP7RpClumpP12xJSPNodeInfo")
+            // non-matching: sPipeCamera and sPipeWorld loads are skipped
 
-#ifdef NON_MATCHING
-// this cant cant possibly match until we add the type for xJSPHeader
-void iEnvRender(iEnv* param_1)
-{
-    RwRenderStateSet(rwRENDERSTATESRCBLEND, 5);
-    RwRenderStateSet(rwRENDERSTATEDESTBLEND, 6);
-    if (param_1->jsp == NULL)
-    {
-        RpWorldRender(param_1->world);
+            RpWorldAddCamera(sPipeWorld, sPipeCamera);
+
+            env->jsp = jsp;
+
+            RpClumpForAllAtomics(env->jsp->clump, SetPipelineCB, NULL);
+            xClumpColl_InstancePointers(env->jsp->colltree, env->jsp->clump);
+
+            RpWorldRemoveCamera(sPipeWorld, sPipeCamera);
+
+            iCameraDestroy(sPipeCamera);
+
+            sPipeWorld = NULL;
+            sPipeCamera = NULL;
+        }
     }
     else
     {
-        Jsp_ClumpRender(param_1->jsp->field_0xc, param_1->jsp->field_0x14);
+        if (dataType == 0)
+        {
+            env->jsp = NULL;
+        }
+
+        iEnvSetBSP(env, dataType, bsp);
     }
-    lastEnv = param_1;
-    return;
+
+    if (dataType == 0)
+    {
+        env->memlvl = xMemGetBase();
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvRender__FP4iEnv")
 #endif
 
-// func_800C329C
-#pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvEndRenderFX__FP4iEnv")
+void iEnvFree(iEnv* env)
+{
+    _rwFrameSyncDirty();
+
+    RpWorldDestroy(env->world);
+    env->world = NULL;
+
+    if (env->fx)
+    {
+        RpWorldDestroy(env->fx);
+        env->fx = NULL;
+    }
+
+    if (env->collision)
+    {
+        RpWorldDestroy(env->collision);
+        env->collision = NULL;
+    }
+}
+
+void iEnvDefaultLighting(iEnv*)
+{
+}
+
+void iEnvLightingBasics(iEnv*, xEnvAsset*)
+{
+}
+
+// This is named JspPS2_ClumpRender on PS2
+static void Jsp_ClumpRender(RpClump* clump, xJSPNodeInfo* nodeInfo)
+{
+    int32 backcullon = 1;
+    int32 zbufferon = 1;
+    RwLLLink* cur = rwLinkListGetFirstLLLink(&clump->atomicList);
+    RwLLLink* end = rwLinkListGetTerminator(&clump->atomicList);
+
+    while (cur != end)
+    {
+        RpAtomic* apAtom = rwLLLinkGetData(cur, RpAtomic, inClumpLink);
+
+        if (RpAtomicGetFlags(apAtom) & rpATOMICRENDER)
+        {
+            RwFrame* frame = RpAtomicGetFrame(apAtom);
+
+            if (!iModelCull(apAtom, &frame->ltm))
+            {
+                if (backcullon)
+                {
+                    if (nodeInfo->nodeFlags & 0x4)
+                    {
+                        backcullon = 0;
+                        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLNONE);
+                    }
+                }
+                else
+                {
+                    if (!(nodeInfo->nodeFlags & 0x4))
+                    {
+                        backcullon = 1;
+                        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLBACK);
+                    }
+                }
+
+                if (zbufferon)
+                {
+                    if (nodeInfo->nodeFlags & 0x2)
+                    {
+                        zbufferon = 0;
+                        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)FALSE);
+                    }
+                }
+                else
+                {
+                    if (!(nodeInfo->nodeFlags & 0x2))
+                    {
+                        zbufferon = 1;
+                        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)TRUE);
+                    }
+                }
+
+                RpAtomicRender(apAtom);
+            }
+        }
+
+        cur = rwLLLinkGetNext(cur);
+        nodeInfo++;
+    }
+}
+
+void iEnvRender(iEnv* env)
+{
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+
+    if (env->jsp)
+    {
+        Jsp_ClumpRender(env->jsp->clump, env->jsp->jspNodeList);
+    }
+    else
+    {
+        RpWorldRender(env->world);
+    }
+
+    lastEnv = env;
+}
+
+void iEnvEndRenderFX(iEnv*)
+{
+    iEnv* env = lastEnv;
+
+    if (env->fx && globalCamera && sBeginDrawFX)
+    {
+        RpWorldRemoveCamera(env->fx, globalCamera);
+        RpWorldAddCamera(env->world, globalCamera);
+
+        sBeginDrawFX = 0;
+    }
+}
