@@ -4,38 +4,6 @@
 
 .section .text  # 0x80109588 - 0x8010CE24
 
-.global ZNPC_Tiki_Startup__Fv
-ZNPC_Tiki_Startup__Fv:
-/* 80109588 00106388  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8010958C 0010638C  7C 08 02 A6 */	mflr r0
-/* 80109590 00106390  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80109594 00106394  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80109598 00106398  3B ED 84 20 */	addi r31, r13, g_strz_tikianim-_SDA_BASE_
-/* 8010959C 0010639C  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 801095A0 001063A0  3B CD 84 18 */	addi r30, r13, g_hash_tikianim-_SDA_BASE_
-/* 801095A4 001063A4  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 801095A8 001063A8  3B A0 00 00 */	li r29, 0
-lbl_801095AC:
-/* 801095AC 001063AC  80 7F 00 00 */	lwz r3, 0(r31)
-/* 801095B0 001063B0  4B F4 2C 65 */	bl xStrHash__FPCc
-/* 801095B4 001063B4  3B BD 00 01 */	addi r29, r29, 1
-/* 801095B8 001063B8  90 7E 00 00 */	stw r3, 0(r30)
-/* 801095BC 001063BC  2C 1D 00 02 */	cmpwi r29, 2
-/* 801095C0 001063C0  3B FF 00 04 */	addi r31, r31, 4
-/* 801095C4 001063C4  3B DE 00 04 */	addi r30, r30, 4
-/* 801095C8 001063C8  41 80 FF E4 */	blt lbl_801095AC
-/* 801095CC 001063CC  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 801095D0 001063D0  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 801095D4 001063D4  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 801095D8 001063D8  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 801095DC 001063DC  7C 08 03 A6 */	mtlr r0
-/* 801095E0 001063E0  38 21 00 20 */	addi r1, r1, 0x20
-/* 801095E4 001063E4  4E 80 00 20 */	blr 
-
-.global ZNPC_Tiki_Shutdown__Fv
-ZNPC_Tiki_Shutdown__Fv:
-/* 801095E8 001063E8  4E 80 00 20 */	blr 
-
 .global zNPCTiki_InitStacking__FP6zScene
 zNPCTiki_InitStacking__FP6zScene:
 /* 801095EC 001063EC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4105,3 +4073,6 @@ lbl_803CE7B4:
 	.incbin "baserom.dol", 0x2B8054, 0x4
 lbl_803CE7B8:
 	.incbin "baserom.dol", 0x2B8058, 0x8
+
+.global g_strz_tikianim
+.global g_hash_tikianim

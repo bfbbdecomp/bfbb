@@ -48,6 +48,8 @@ struct xPsyche : RyzMemData
     int32 cnt_transLastTimestep;
     PSY_BRAIN_STATUS psystat;
     xBase fakebase;
+
+	int32 Timestep(float32 dt, void* updCtxt);
 };
 
 #endif
