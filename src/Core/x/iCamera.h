@@ -19,6 +19,8 @@ struct iFogParams
     uint8* table;
 };
 
+extern RwCamera* globalCamera;
+
 RwCamera* iCameraCreate(int32 width, int32 height, int32 mainGameCamera);
 void iCameraDestroy(RwCamera* camera);
 void iCameraBegin(RwCamera* cam, int32 clear);
