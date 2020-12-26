@@ -415,6 +415,9 @@ struct RwObjectHasFrame
     RwObjectHasFrameSyncFunction sync;
 };
 
+#define rwObjectHasFrameSetFrame(object, frame) _rwObjectHasFrameSetFrame(object, frame)
+#define rwObjectHasFrameReleaseFrame(object) _rwObjectHasFrameReleaseFrame(object)
+
 struct rwFrameList
 {
     RwFrame** frames;

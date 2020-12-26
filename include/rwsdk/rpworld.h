@@ -352,6 +352,29 @@ struct RpWorld
     RxPipeline* pipeline;
 };
 
+#define rpLIGHTPOSITIONINGSTART 0x80
+
+enum RpLightType
+{
+    rpNALIGHTTYPE = 0,
+    rpLIGHTDIRECTIONAL,
+    rpLIGHTAMBIENT,
+    rpLIGHTPOINT = rpLIGHTPOSITIONINGSTART,
+    rpLIGHTSPOT,
+    rpLIGHTSPOTSOFT,
+    rpLIGHTTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define rpLIGHTMINCONEANGLE ((RwReal)0.0f)
+#define rpLIGHTMAXCONEANGLE (rwPIOVER2)
+
+enum RpLightFlag
+{
+    rpLIGHTLIGHTATOMICS = 0x01,
+    rpLIGHTLIGHTWORLD = 0x02,
+    rpLIGHTFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 struct RpLight
 {
     RwObjectHasFrame object;
@@ -365,6 +388,35 @@ struct RpLight
 };
 
 typedef RpLight* (*RpLightCallBack)(RpLight* light, void* data);
+
+#define RpLightGetRadiusMacro(_light) ((_light)->radius)
+
+#define RpLightGetColorMacro(_light) (&((_light)->color))
+
+#define RpLightSetFrameMacro(_light, _frame)                                                       \
+    (rwObjectHasFrameSetFrame((_light), (_frame)), (_light))
+
+#define RpLightGetFrameMacro(_light) ((RwFrame*)rwObjectGetParent((_light)))
+
+#define RpLightGetTypeMacro(_light) ((RpLightType)rwObjectGetSubType((_light)))
+
+#define RpLightSetFlagsMacro(_light, _flags) ((rwObjectSetFlags((_light), (_flags))), (_light))
+
+#define RpLightGetFlagsMacro(_light) (rwObjectGetFlags((_light)))
+
+#define RpLightGetRadius(_light) RpLightGetRadiusMacro(_light)
+
+#define RpLightGetColor(_light) RpLightGetColorMacro(_light)
+
+#define RpLightSetFrame(_light, _frame) RpLightSetFrameMacro(_light, _frame)
+
+#define RpLightGetFrame(_light) RpLightGetFrameMacro(_light)
+
+#define RpLightGetType(_light) RpLightGetTypeMacro(_light)
+
+#define RpLightSetFlags(_light, _flags) RpLightSetFlagsMacro(_light, _flags)
+
+#define RpLightGetFlags(_light) RpLightGetFlagsMacro(_light)
 
 typedef RpMaterial* (*RpMaterialCallBack)(RpMaterial* material, void* data);
 
