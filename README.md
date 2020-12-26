@@ -1,4 +1,10 @@
 # SpongeBob SquarePants: Battle for Bikini Bottom
+<a href="https://pslehisl.github.io/bfbbdecomp/progress" alt="Percentage Decompiled">
+        <img src="https://img.shields.io/badge/dynamic/json?color=green&label=Decompiled&query=percentage&url=https%3A%2F%2Fpslehisl.github.io%2Fbfbbdecomp%2Fapi.json" /></a>
+<a href="https://discord.gg/Dvu2UAS">
+        <img src="https://img.shields.io/discord/446321271635050506?logo=discord"
+            alt="chat on Discord"></a>
+
 
 This repo contains a WIP decompilation of SpongeBob SquarePants: Battle for Bikini Bottom (US) for Nintendo GameCube.
 
@@ -10,8 +16,7 @@ Join us on the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) under `#decomp
 
 ## Progress
 
-View our progress here: https://pslehisl.github.io/bfbbdecomp
-
+View our progress and other statistics [here](https://pslehisl.github.io/bfbbdecomp/progress).
 Thanks to [@mattbruv](https://github.com/mattbruv) for setting this up!
 
 ## Building
