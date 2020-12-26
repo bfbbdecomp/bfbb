@@ -6,16 +6,16 @@
 
 struct UVAModelInfo
 {
-	xVec2 offset_vel;
-	uint32 flg_uvam;
-	RpAtomic* model;
-	RwTexCoords* uv;
-	int32 uvsize;
-	xVec2 offset;
+    xVec2 offset_vel;
+    uint32 flg_uvam;
+    RpAtomic* model;
+    RwTexCoords* uv;
+    int32 uvsize;
+    xVec2 offset;
 
     void Hemorrage();
-	void Clear();
-	void UVVelSet(float, float);
+    void Clear();
+    void UVVelSet(float, float);
 };
 
 #endif

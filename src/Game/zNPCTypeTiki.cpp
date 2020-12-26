@@ -9,7 +9,7 @@ extern uint32 g_hash_tikianim[2];
 
 void ZNPC_Tiki_Startup()
 {
-	for (int32 i = 0; i < 2; i++)
+    for (int32 i = 0; i < 2; i++)
     {
         g_hash_tikianim[i] = xStrHash(g_strz_tikianim[i]);
     }
@@ -17,7 +17,6 @@ void ZNPC_Tiki_Startup()
 
 void ZNPC_Tiki_Shutdown()
 {
-
 }
 
 // func_801095EC

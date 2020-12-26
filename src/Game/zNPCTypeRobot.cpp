@@ -21,18 +21,15 @@ void zNPCSleepy_Timestep(float32 dt);
 void zNPCFodBzzt_DoTheHokeyPokey(float32 dt);
 void ZNPC_Destroy_Robot(xFactoryInst* inst);
 
-
 // func_800F4A6C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Robot_Startup__Fv")
 
 void PlayTheFiddle()
 {
-
 }
 
 void ZNPC_Robot_Shutdown()
 {
-
 }
 
 void zNPCRobot_ScenePrepare()
@@ -163,7 +160,6 @@ uint8 zNPCRobot::ColPenFlags() const
     return flags;
 }
 
-
 uint8 zNPCRobot::PhysicsFlags() const
 {
     int32 flags = 0;
@@ -197,7 +193,7 @@ void zNPCRobot::Process(xScene* xscn, float32 dt)
 {
     psy_instinct->Timestep(dt, NULL);
 
-    if(IsAlive())
+    if (IsAlive())
     {
         DoAliveStuff(dt);
     }
@@ -841,7 +837,6 @@ void zNPCFodBzzt_ResetDanceParty()
 
 void ROBO_KillEffects()
 {
-
 }
 
 // func_8010164C
