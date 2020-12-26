@@ -292,8 +292,8 @@ struct zNPCCommon : xNPCBasic
     virtual void ParseProps();
     virtual void SelfSetup();
     virtual void SelfDestroy();
-    virtual bool IsHealthy();
-    virtual bool IsAlive();
+    virtual int32 IsHealthy();
+    virtual int32 IsAlive();
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
     virtual int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     virtual void DuploOwner(zNPCCommon* duper);

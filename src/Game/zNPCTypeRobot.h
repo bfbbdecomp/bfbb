@@ -86,8 +86,8 @@ struct zNPCRobot : zNPCCommon
     void ParseProps();
     void SelfSetup();
     void SelfDestroy();
-    bool IsHealthy();
-    bool IsAlive();
+    int32 IsHealthy();
+    int32 IsAlive();
     void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
     int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     void DuploOwner(zNPCCommon* duper);
