@@ -33,7 +33,6 @@ struct zNPCTiki : zNPCCommon
     float32 tikiAnimTime;
 
     void BUpdate(xVec3* pos);
-    int32 IsAlive();
     void RemoveFromFamily();
     void FindParents(zScene* zsc);
     int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget,
@@ -46,7 +45,15 @@ struct zNPCTiki : zNPCCommon
     void Init(xEntAsset* entass);
     void Setup();
     void Reset();
-    bool IsHealthy();
+    int32 IsHealthy();
+    virtual int32 IsAlive();
+    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
+    virtual int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
+    virtual void DuploOwner(zNPCCommon* duper);
+    virtual void DuploNotice();
 };
+
+void ZNPC_Tiki_Startup();
+void ZNPC_Tiki_Shutdown();
 
 #endif

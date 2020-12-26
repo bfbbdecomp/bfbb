@@ -1432,9 +1432,9 @@ uint8 xSndIsPlaying(uint32 assetID)
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "__as__13xiMat4x3UnionFRC13xiMat4x3Union")
 
 // func_80090DF4
-bool zNPCTiki::IsHealthy()
+int32 zNPCTiki::IsHealthy()
 {
-    return flg_vuln;
+    return flg_vuln != 0;
 }
 
 // func_80090E08
