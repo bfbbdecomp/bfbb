@@ -72,10 +72,10 @@ void iLightModify(iLight* light, uint32 flags)
         RwFrame* frame = RpLightGetFrame(light->hw);
         RwMatrix temp;
 
-        *(xVec3*)&temp.right = g_O3;
-        *(xVec3*)&temp.up = g_O3;
-        *(xVec3*)&temp.at = light->dir;
-        *(xVec3*)&temp.pos = light->sph.center;
+        *(xVec3*)RwMatrixGetRight(&temp) = g_O3;
+        *(xVec3*)RwMatrixGetUp(&temp) = g_O3;
+        *(xVec3*)RwMatrixGetAt(&temp) = light->dir;
+        *(xVec3*)RwMatrixGetPos(&temp) = light->sph.center;
 
         RwFrameTransform(frame, &temp, rwCOMBINEREPLACE);
     }
