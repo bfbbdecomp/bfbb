@@ -61,6 +61,7 @@ struct xVec4
     float32 w;
 };
 
+extern xVec3 g_O3;
 extern xVec3 g_X3;
 extern xVec3 g_Y3;
 extern xVec3 g_Z3;
