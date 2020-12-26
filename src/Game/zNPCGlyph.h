@@ -1,7 +1,7 @@
 #ifndef ZNPCGLYPH_H
 #define ZNPCGLYPH_H
 
-#include <../Core/x/xModel.h>
+#include "../Core/x/xModel.h"
 
 enum en_npcglyph
 {

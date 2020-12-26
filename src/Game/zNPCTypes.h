@@ -1,7 +1,7 @@
 #ifndef ZNPCTYPES_H
 #define ZNPCTYPES_H
 
-#include <../Core/x/xPad.h>
+#include "../Core/x/xPad.h"
 #include "../Core/x/xModel.h"
 
 struct UVAModelInfo

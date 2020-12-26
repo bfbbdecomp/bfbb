@@ -1,12 +1,12 @@
 #ifndef ZNPCTYPEROBOT_H
 #define ZNPCTYPEROBOT_H
 
-#include <../Core/x/xPad.h>
+#include "../Core/x/xPad.h"
 #include "../Core/x/xModel.h"
 
 #include "zNPCTypeCommon.h"
-#include <zNPCGlyph.h>
-#include <zNPCHazard.h>
+#include "zNPCGlyph.h"
+#include "zNPCHazard.h"
 
 typedef struct zNPCRobot;
 
@@ -86,8 +86,8 @@ struct zNPCRobot : zNPCCommon
     void ParseProps();
     void SelfSetup();
     void SelfDestroy();
-    int32 IsHealthy();
-    int32 IsAlive();
+    bool IsHealthy();
+    bool IsAlive();
     void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
     int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     void DuploOwner(zNPCCommon* duper);

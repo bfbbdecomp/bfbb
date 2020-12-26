@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-#include <../Core/x/xString.h>
+#include "../Core/x/xString.h"
 
 extern int8* g_strz_tikianim[2];
 extern uint32 g_hash_tikianim[2];

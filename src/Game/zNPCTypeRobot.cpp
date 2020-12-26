@@ -3,9 +3,9 @@
 #include <types.h>
 #include <string.h>
 
-#include <zNPCGoalRobo.h>
-#include <zNPCTypes.h>
-#include <../Core/x/xFactory.h>
+#include "zNPCGoalRobo.h"
+#include "zNPCTypes.h"
+#include "../Core/x/xFactory.h"
 
 extern UVAModelInfo g_uvaShield;
 extern int32 g_cnt_fodbzzt;

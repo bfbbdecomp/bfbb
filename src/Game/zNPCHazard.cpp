@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-#include <zNPCTypes.h>
+#include "zNPCTypes.h"
 
 // func_80187630
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_Startup__Fv")
