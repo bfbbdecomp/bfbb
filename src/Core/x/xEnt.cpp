@@ -1,5 +1,13 @@
 #include "xEnt.h"
 
+#include "xEvent.h"
+#include "xString.h"
+
+#include "../../Game/zBase.h"
+#include "../../Game/zPlatform.h"
+
+#include "../p2/iMath3.h"
+
 extern float32 _780; // 1.0f
 extern float32 _781_0; // 3.0f
 extern float32 _942; // 0.0f
@@ -22,6 +30,12 @@ extern float32 _1818; // 1.0471976f
 extern float32 _1819; // 0.001f
 extern float32 _1820; // 0.64999998f
 extern float32 _1821; // 1.5f
+
+extern const char _stringBase0_4[];
+
+extern float32 sEntityTimePassed;
+extern xBox all_ents_box;
+extern int32 all_ents_box_init;
 
 namespace
 {
@@ -101,26 +115,219 @@ namespace
     } // namespace anim_coll
 } // namespace
 
-// func_8001824C
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntSetTimePassed__Ff")
+void xEntSetTimePassed(float32 sec)
+{
+    sEntityTimePassed = sec;
+}
 
-// func_80018254
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntSceneInit__Fv")
+void xEntSceneInit()
+{
+    all_ents_box_init = 1;
+}
 
-// func_80018260
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntSceneExit__Fv")
+void xEntSceneExit()
+{
+}
 
-// func_80018264
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntAddHittableFlag__FP4xEnt")
+void xEntAddHittableFlag(xEnt* ent)
+{
+    if (ent->baseType == eBaseTypeNPC || ent->baseType == eBaseTypeDestructObj ||
+        ent->baseType == eBaseTypeButton || ent->baseType == eBaseTypeBoulder ||
+        (ent->baseType == eBaseTypePlatform && ent->subType == ZPLATFROM_SUBTYPE_PADDLE))
+    {
+        ent->moreFlags |= 0x10;
+    }
+    else
+    {
+        for (uint32 i = 0; i < ent->linkCount; i++)
+        {
+            if (ent->link[i].srcEvent == eEventHit || ent->link[i].srcEvent == eEventHit_Cruise ||
+                ent->link[i].srcEvent == eEventHit_Melee ||
+                ent->link[i].srcEvent == eEventHit_BubbleBounce ||
+                ent->link[i].srcEvent == eEventHit_BubbleBash ||
+                ent->link[i].srcEvent == eEventHit_BubbleBowl ||
+                ent->link[i].srcEvent == eEventHit_PatrickSlam ||
+                ent->link[i].srcEvent == eEventHit_Throw ||
+                ent->link[i].srcEvent == eEventHit_PaddleLeft ||
+                ent->link[i].srcEvent == eEventHit_PaddleRight)
+            {
+                ent->moreFlags |= 0x10;
+                break;
+            }
+        }
+    }
+}
 
+#ifndef NON_MATCHING
 // func_8001830C
+void hack_receive_shadow(xEnt* ent);
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "hack_receive_shadow__FP4xEnt")
+#else
+static void hack_receive_shadow(xEnt* ent)
+{
+    extern signed char init_856; // todo: static
+    extern uint32 receive_models_855[15]; // todo: static
 
+    if (!init_856)
+    {
+        receive_models_855[0] = xStrHash(&_stringBase0_4[0x1]);
+        receive_models_855[1] = xStrHash(&_stringBase0_4[0xD]);
+        receive_models_855[2] = xStrHash(&_stringBase0_4[0x19]);
+        receive_models_855[3] = xStrHash(&_stringBase0_4[0x25]);
+        receive_models_855[4] = xStrHash(&_stringBase0_4[0x31]);
+        receive_models_855[5] = xStrHash(&_stringBase0_4[0x3D]);
+        receive_models_855[6] = xStrHash(&_stringBase0_4[0x49]);
+        receive_models_855[7] = xStrHash(&_stringBase0_4[0x55]);
+        receive_models_855[8] = xStrHash(&_stringBase0_4[0x61]);
+        receive_models_855[9] = xStrHash(&_stringBase0_4[0x6D]);
+        receive_models_855[10] = xStrHash(&_stringBase0_4[0x79]);
+        receive_models_855[11] = xStrHash(&_stringBase0_4[0x85]);
+        receive_models_855[12] = xStrHash(&_stringBase0_4[0x91]);
+        receive_models_855[13] = xStrHash(&_stringBase0_4[0x9D]);
+        receive_models_855[14] = xStrHash(&_stringBase0_4[0xA9]);
+
+        // non-matching: init_856 is assigned too early
+        init_856 = 1;
+    }
+
+    uint32* end = receive_models_855 + sizeof(receive_models_855) / sizeof(uint32);
+    uint32* cur = receive_models_855;
+
+    while (cur != end)
+    {
+        if (ent->asset->modelInfoID == *cur)
+        {
+            ent->baseFlags |= 0x10;
+            ent->asset->baseFlags |= 0x10;
+            break;
+        }
+
+        cur++;
+    }
+}
+#endif
+
+#ifndef NON_MATCHING
 // func_8001853C
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntAddShadowRecFlag__FP4xEnt")
+#else
+static void xEntAddShadowRecFlag(xEnt* ent)
+{
+    // non-matching: asm jumptable needs to be removed.
+    // also some other things are wrong, not sure why
 
+    switch (ent->baseType)
+    {
+    case eBaseTypeTrigger:
+    case eBaseTypeVillain:
+    case eBaseTypePlayer:
+    case eBaseTypePickup:
+    case eBaseTypePlatform:
+    case eBaseTypeCamera:
+    case eBaseTypeDoor:
+    case eBaseTypeSavePoint:
+    case eBaseTypeItem:
+    case eBaseTypeStatic:
+    case eBaseTypeDynamic:
+    case eBaseTypeMovePoint:
+    case eBaseTypeTimer:
+    case eBaseTypeBubble:
+    case eBaseTypePortal:
+    case eBaseTypeGroup:
+    case eBaseTypeSFX:
+    case eBaseTypeFFX:
+    case eBaseTypeCounter:
+    case eBaseTypeHangable:
+    case eBaseTypeButton:
+    case eBaseTypeProjectile:
+    case eBaseTypeSurface:
+    case eBaseTypeDestructObj:
+    case eBaseTypeGust:
+    case eBaseTypeVolume:
+    case eBaseTypeDispatcher:
+    case eBaseTypeCond:
+    case eBaseTypeUI:
+    case eBaseTypeUIFont:
+    case eBaseTypeProjectileType:
+    case eBaseTypeLobMaster:
+    case eBaseTypeFog:
+    case eBaseTypeParticleEmitter:
+    case eBaseTypeParticleSystem:
+    case eBaseTypeCutsceneMgr:
+    default:
+    {
+        ent->baseFlags &= ~0x10;
+        break;
+    }
+    case eBaseTypeUnknown:
+    case eBaseTypeEnv:
+    case eBaseTypePendulum:
+    case eBaseTypeVFX:
+    case eBaseTypeLight:
+    case eBaseTypeEGenerator:
+    {
+        if (ent->model->PipeFlags & 0x0000ff00)
+        {
+            ent->baseFlags &= ~0x10;
+        }
+
+        break;
+    }
+    }
+
+    hack_receive_shadow(ent);
+}
+#endif
+
+#ifndef NON_MATCHING
 // func_800185B0
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntInit__FP4xEntP9xEntAsset")
+#else
+void xEntInit(xEnt* ent, xEntAsset* asset)
+{
+    xBaseInit(ent, asset);
+
+    // non-matching: instruction order
+
+    ent->asset = asset;
+    ent->update = xEntUpdate;
+    ent->bupdate = xEntDefaultBoundUpdate;
+    ent->render = xEntRender;
+    ent->move = NULL;
+    ent->transl = xEntDefaultTranslate;
+    ent->flags = asset->flags;
+    ent->miscflags = 0;
+    ent->moreFlags = asset->moreFlags;
+    ent->subType = asset->subtype;
+    ent->pflags = asset->pflags;
+    ent->ffx = NULL;
+    ent->num_ffx = 0;
+    ent->driver = NULL;
+    ent->model = NULL;
+    ent->collModel = NULL;
+    ent->camcollModel = NULL;
+    ent->frame = NULL;
+    ent->collis = NULL;
+    ent->lightKit = NULL;
+    ent->simpShadow = NULL;
+    ent->entShadow = NULL;
+    ent->baseFlags |= 0x20;
+
+    xGridBoundInit(&ent->gridb, ent);
+
+    ent->anim_coll = NULL;
+
+    if (all_ents_box_init)
+    {
+        iBoxInitBoundVec(&all_ents_box, &asset->pos);
+        all_ents_box_init = 0;
+    }
+    else
+    {
+        iBoxBoundVec(&all_ents_box, &all_ents_box, &asset->pos);
+    }
+}
+#endif
 
 // func_800186D0
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntInitForType__FP4xEnt")

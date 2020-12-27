@@ -56,6 +56,7 @@ struct xGridIterator
     uint32 delfound;
 };
 
+void xGridBoundInit(xGridBound* gridb, void* data);
 void xGridEmpty(xGrid* grid);
 int32 xGridRemove(xGridBound* gridb);
 xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz);

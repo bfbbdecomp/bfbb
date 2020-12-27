@@ -21,7 +21,7 @@ struct xEntAsset : xBaseAsset
     uint8 pflags;
     uint8 moreFlags;
     uint8 pad;
-    uint8 padding[3];
+    //uint8 padding[3]; // this padding is added automatically. it should not be here
 
     // Offset: 0x10
     uint32 surfaceID;
