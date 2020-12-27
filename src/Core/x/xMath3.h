@@ -69,5 +69,6 @@ extern xMat4x3 g_I3;
 
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
+void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
 
 #endif

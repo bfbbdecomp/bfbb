@@ -87,12 +87,19 @@ namespace
                 }
             }
         }
+
+        void refresh(xEnt& ent)
+        {
+            xEnt::anim_coll_data& ac = *ent.anim_coll;
+            xMat4x3& bone_mat = *(xMat4x3*)(ent.model->Mat + 1);
+
+            xMat4x3Mul((xMat4x3*)ent.model->Mat, &bone_mat, &ac.old_mat);
+
+            ac.new_mat = bone_mat;
+            bone_mat = g_I3;
+        }
     } // namespace anim_coll
 } // namespace
-
-// func_800181E8
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "refresh__Q218_esc__2_unnamed_esc__2_xEnt_cpp_esc__2_9anim_collFR4xEnt")
 
 // func_8001824C
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntSetTimePassed__Ff")
