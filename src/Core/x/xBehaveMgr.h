@@ -3,6 +3,8 @@
 
 #include "xBase.h"
 #include "xBehaviour.h"
+#include "xordarray.h"
+#include "xFactory.h"
 
 struct xPSYNote
 {
@@ -52,6 +54,22 @@ struct xPsyche : RyzMemData
     int32 Timestep(float32 dt, void* updCtxt);
     xGoal* FindGoal(int32 gid);
     int32 GoalSet(int32 gid, int32 param_2);
+    xGoal* AddGoal(int32 gid, void* createData);
+    void BrainBegin();
+    void BrainEnd();
+    void SetSafety(int32);
 };
+
+struct xBehaveMgr : RyzMemData
+{
+    xFactory* goalFactory;
+    xPsyche* psypool;
+    st_XORDEREDARRAY psylist;
+
+    void UnSubscribe(xPsyche* psy);
+    xPsyche* Subscribe(xBase* owner, int32 i);
+};
+
+xBehaveMgr* xBehaveMgr_GetSelf();
 
 #endif

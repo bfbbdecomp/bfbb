@@ -353,6 +353,20 @@ struct zNPCCommon : xNPCBasic
     zNPCLassoInfo* lassdata;
     NPCSndQueue snd_queue[4];
 
+    void AddScripting(xPsyche* psy,
+                      int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
+                      int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
+                      int32 (*eval_attack)(xGoal*, void*, en_trantype*, float32, void*),
+                      int32 (*eval_move)(xGoal*, void*, en_trantype*, float32, void*),
+                      int32 (*eval_follow)(xGoal*, void*, en_trantype*, float32, void*),
+                      int32 (*eval_lead)(xGoal*, void*, en_trantype*, float32, void*),
+                      int32 (*eval_wait)(xGoal*, void*, en_trantype*, float32, void*));
+    void AddBaseline(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*));
+
     // vTable (xNPCBasic)
 
     void Init(xEntAsset* asset);

@@ -223,8 +223,26 @@ void zNPCRobot::NewTime(xScene* xscn, float32 dt)
     zNPCCommon::NewTime(xscn, dt);
 }
 
-// func_800F7D18
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SelfSetup__9zNPCRobotFv")
+void zNPCRobot::SelfSetup()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    psy_instinct = bmgr->Subscribe(this, 0);
+    xPsyche* psy = psy_instinct;
+    xGoal* goal = NULL;
+
+    psy->BrainBegin();
+    goal = psy->AddGoal('NGR4', NULL);
+    goal->SetCallbacks(DUMY_grul_returnToIdle, NULL, NULL, NULL);
+    AddBaseline(psy, NULL, NULL, NULL, NULL, NULL);
+    AddStunThrow(psy, NULL, NULL, NULL, NULL);
+    AddLassoing(psy, NULL, NULL, NULL, NULL, NULL);
+    AddDamage(psy, NULL, NULL, NULL, NULL, NULL);
+    AddSpawning(psy, NULL, NULL);
+    AddScripting(psy, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    AddMiscTypical(psy, NULL, NULL, NULL);
+    psy->BrainEnd();
+    psy->SetSafety('NGN0');
+}
 
 // func_800F7E80
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AnimPick__9zNPCRobotFi16en_NPC_GOAL_SPOTP5xGoal")
@@ -237,6 +255,7 @@ void zNPCRobot::NewTime(xScene* xscn, float32 dt)
 
 // func_800F8304
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "RoboHandleMail__9zNPCRobotFP6NPCMsg")
+
 void zNPCRobot::DuploOwner(zNPCCommon* duper)
 {
     zNPCCommon::DuploOwner(duper);

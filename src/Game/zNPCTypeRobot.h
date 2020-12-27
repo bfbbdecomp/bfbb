@@ -65,6 +65,21 @@ struct zNPCRobot : zNPCCommon
                       int32 (*eval_stunned)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_patcarry)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_patthrow)(xGoal*, void*, en_trantype*, float32, void*));
+    void AddLassoing(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddDamage(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddSpawning(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddMiscTypical(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                        int (*)(xGoal*, void*, en_trantype*, float, void*),
+                        int (*)(xGoal*, void*, en_trantype*, float, void*));
     void CheckFalling();
     void DoAliveStuff(float32 dt);
     float32 GenShadCacheRad();
@@ -115,5 +130,6 @@ void zNPCRobot_ScenePostInit();
 void ROBO_KillEffects();
 void zNPCFodBzzt_ResetDanceParty();
 void ROBO_InitEffects();
+int32 DUMY_grul_returnToIdle(xGoal*, void*, en_trantype*, float32, void*);
 
 #endif
