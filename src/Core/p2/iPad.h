@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-#include "../x/xVec3.h"
+#include "../x/xMath2.h"
 
 enum _tagPadState
 {

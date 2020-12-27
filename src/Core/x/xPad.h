@@ -2,7 +2,7 @@
 #define XPAD_H
 
 #include <types.h>
-#include "xVec3.h"
+#include "xMath2.h"
 
 enum _tagPadState
 {
