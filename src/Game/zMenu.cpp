@@ -1,7 +1,7 @@
 #include "zMenu.h"
 
-#include "rwplcore.h"
-#include "string.h"
+#include <rwplcore.h>
+#include <string.h>
 
 #include "../Core/p2/iSystem.h"
 #include "../Core/p2/iTRC.h"
@@ -67,11 +67,6 @@ extern int8 menu_fmv_played;
 // for initializing the structs.
 extern iColor_tag BlackColorInitializer;
 extern iColor_tag ClearColorInitializer;
-
-// TODO: figure out what header to put this in
-extern "C" {
-void memcpy(void* a, const void* b, int32 size);
-}
 
 // func_800A6000
 int32 zMenuRunning()
