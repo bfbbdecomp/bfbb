@@ -92,6 +92,13 @@ struct RpGeometry
     RpMorphTarget* morphTarget;
 };
 
+enum RpAtomicFlag
+{
+    rpATOMICCOLLISIONTEST = 0x01,
+    rpATOMICRENDER = 0x04,
+    rpATOMICFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 typedef struct RpClump;
 
 typedef RpClump* (*RpClumpCallBack)(RpClump* clump, void* data);
@@ -119,6 +126,139 @@ struct RpInterpolator
 typedef struct RpAtomic;
 
 typedef RpAtomic* (*RpAtomicCallBackRender)(RpAtomic* atomic);
+
+#define RpAtomicRenderMacro(_atomic) ((_atomic)->renderCallBack(_atomic))
+
+#define RpAtomicGetGeometryMacro(_atomic) ((_atomic)->geometry)
+
+#define RpAtomicSetRenderCallBackMacro(_atomic, _callback)                                         \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (_atomic)->renderCallBack = (_callback);                                                   \
+        if (!(_atomic)->renderCallBack)                                                            \
+        {                                                                                          \
+            (_atomic)->renderCallBack = AtomicDefaultRenderCallBack;                               \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RpAtomicGetRenderCallBackMacro(_atomic) ((_atomic)->renderCallBack)
+
+#define RpAtomicGetInterpolatorMacro(_atomic) (&((_atomic)->interpolator))
+
+#define RpInterpolatorGetStartMorphTargetMacro(_intrp) ((_intrp)->startMorphTarget)
+
+#define RpInterpolatorGetEndMorphTargetMacro(_intrp) ((_intrp)->endMorphTarget)
+
+#define RpInterpolatorGetValueMacro(_intrp) ((_intrp)->position)
+
+#define RpInterpolatorGetScaleMacro(_intrp) ((_intrp)->time)
+
+#define RpInterpolatorSetStartMorphTargetMacro(_intrp, _target, _atomic)                           \
+    ((_intrp)->startMorphTarget = (RwInt16)(_target),                                              \
+     (_intrp)->flags |= (RwInt32)(rpINTERPOLATORDIRTYINSTANCE | rpINTERPOLATORDIRTYSPHERE),        \
+     ((!((_intrp)->flags & rpINTERPOLATORNOFRAMEDIRTY)) ?                                          \
+          ((RpAtomicGetFrame(_atomic)) ? (RwFrameUpdateObjects(RpAtomicGetFrame(_atomic))) :       \
+                                         (0)) :                                                    \
+          (0)),                                                                                    \
+     (_intrp))
+
+#define RpInterpolatorSetEndMorphTargetMacro(_intrp, _target, _atomic)                             \
+    ((_intrp)->endMorphTarget = (RwInt16)(_target),                                                \
+     (_intrp)->flags |= (RwInt32)(rpINTERPOLATORDIRTYINSTANCE | rpINTERPOLATORDIRTYSPHERE),        \
+     ((!((_intrp)->flags & rpINTERPOLATORNOFRAMEDIRTY)) ?                                          \
+          ((RpAtomicGetFrame(_atomic)) ? (RwFrameUpdateObjects(RpAtomicGetFrame(_atomic))) :       \
+                                         (0)) :                                                    \
+          (0)),                                                                                    \
+     (_intrp))
+
+#define RpInterpolatorSetValueMacro(_intrp, _value, _atomic)                                       \
+    ((_intrp)->position = (_value),                                                                \
+     (_intrp)->flags |= (RwInt32)(rpINTERPOLATORDIRTYINSTANCE | rpINTERPOLATORDIRTYSPHERE),        \
+     ((!((_intrp)->flags & rpINTERPOLATORNOFRAMEDIRTY)) ?                                          \
+          ((RpAtomicGetFrame(_atomic)) ? (RwFrameUpdateObjects(RpAtomicGetFrame(_atomic))) :       \
+                                         (0)) :                                                    \
+          (0)),                                                                                    \
+     (_intrp))
+
+#define RpInterpolatorSetScaleMacro(_intrp, _scale, _atomic)                                       \
+    ((_intrp)->time = (_scale), (_intrp)->recipTime = (RwReal)(1.0) / (_scale),                    \
+     (_intrp)->flags |= (RwInt32)(rpINTERPOLATORDIRTYINSTANCE | rpINTERPOLATORDIRTYSPHERE),        \
+     ((!((_intrp)->flags & rpINTERPOLATORNOFRAMEDIRTY)) ?                                          \
+          ((RpAtomicGetFrame(_atomic)) ? (RwFrameUpdateObjects(RpAtomicGetFrame(_atomic))) :       \
+                                         (0)) :                                                    \
+          (0)),                                                                                    \
+     (_intrp))
+
+#define RpAtomicGetClumpMacro(_atomic) ((_atomic)->clump)
+
+#define RpAtomicGetBoundingSphereMacro(_atomic)                                                    \
+    ((((_atomic)->interpolator.flags & rpINTERPOLATORDIRTYSPHERE) ?                                \
+      _rpAtomicResyncInterpolatedSphere(_atomic),                                                  \
+      0 : 0),                                                                                      \
+     &((_atomic)->boundingSphere))
+
+#define RpAtomicGetFrameMacro(_atomic) ((RwFrame*)rwObjectGetParent(_atomic))
+
+#define RpClumpSetFrameMacro(_clump, _frame) (rwObjectSetParent(_clump, _frame), (_clump))
+
+#define RpClumpSetFrameVoidMacro(_clump, _frame)                                                   \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        rwObjectSetParent(_clump, _frame);                                                         \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RpClumpGetFrameMacro(_clump) ((RwFrame*)rwObjectGetParent(_clump))
+
+#define RpAtomicSetFlagsMacro(_atomic, _flags) (rwObjectSetFlags(_atomic, _flags), (_atomic))
+
+#define RpAtomicGetFlagsMacro(_atomic) (rwObjectGetFlags(_atomic))
+
+#define RpAtomicRender(_atomic) RpAtomicRenderMacro(_atomic)
+
+#define RpAtomicGetGeometry(_atomic) RpAtomicGetGeometryMacro(_atomic)
+
+#define RpAtomicSetRenderCallBack(_atomic, _callback)                                              \
+    RpAtomicSetRenderCallBackMacro(_atomic, _callback)
+
+#define RpAtomicGetRenderCallBack(_atomic) RpAtomicGetRenderCallBackMacro(_atomic)
+
+#define RpAtomicGetInterpolator(_atomic) RpAtomicGetInterpolatorMacro(_atomic)
+
+#define RpInterpolatorGetStartMorphTarget(_intrp) RpInterpolatorGetStartMorphTargetMacro(_intrp)
+
+#define RpInterpolatorGetEndMorphTarget(_intrp) RpInterpolatorGetEndMorphTargetMacro(_intrp)
+
+#define RpInterpolatorGetValue(_intrp) RpInterpolatorGetValueMacro(_intrp)
+
+#define RpInterpolatorGetScale(_intrp) RpInterpolatorGetScaleMacro(_intrp)
+
+#define RpInterpolatorSetStartMorphTarget(_intrp, _target, _atomic)                                \
+    RpInterpolatorSetStartMorphTargetMacro(_intrp, _target, _atomic)
+
+#define RpInterpolatorSetEndMorphTarget(_intrp, _target, _atomic)                                  \
+    RpInterpolatorSetEndMorphTargetMacro(_intrp, _target, _atomic)
+
+#define RpInterpolatorSetValue(_intrp, _value, _atomic)                                            \
+    RpInterpolatorSetValueMacro(_intrp, _value, _atomic)
+
+#define RpInterpolatorSetScale(_intrp, _scale, _atomic)                                            \
+    RpInterpolatorSetScaleMacro(_intrp, _scale, _atomic)
+
+#define RpAtomicGetClump(_atomic) RpAtomicGetClumpMacro(_atomic)
+
+#define RpAtomicGetBoundingSphere(_atomic) RpAtomicGetBoundingSphereMacro(_atomic)
+
+#define RpAtomicGetFrame(_atomic) RpAtomicGetFrameMacro(_atomic)
+
+#define RpClumpSetFrame(_clump, _frame) RpClumpSetFrameMacro(_clump, _frame)
+
+#define RpClumpGetFrame(_clump) RpClumpGetFrameMacro(_clump)
+
+#define RpAtomicSetFlags(_atomic, _flags) RpAtomicSetFlagsMacro(_atomic, _flags)
+
+#define RpAtomicGetFlags(_atomic) RpAtomicGetFlagsMacro(_atomic)
 
 struct RpAtomic
 {
@@ -212,6 +352,29 @@ struct RpWorld
     RxPipeline* pipeline;
 };
 
+#define rpLIGHTPOSITIONINGSTART 0x80
+
+enum RpLightType
+{
+    rpNALIGHTTYPE = 0,
+    rpLIGHTDIRECTIONAL,
+    rpLIGHTAMBIENT,
+    rpLIGHTPOINT = rpLIGHTPOSITIONINGSTART,
+    rpLIGHTSPOT,
+    rpLIGHTSPOTSOFT,
+    rpLIGHTTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define rpLIGHTMINCONEANGLE ((RwReal)0.0f)
+#define rpLIGHTMAXCONEANGLE (rwPIOVER2)
+
+enum RpLightFlag
+{
+    rpLIGHTLIGHTATOMICS = 0x01,
+    rpLIGHTLIGHTWORLD = 0x02,
+    rpLIGHTFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 struct RpLight
 {
     RwObjectHasFrame object;
@@ -226,7 +389,43 @@ struct RpLight
 
 typedef RpLight* (*RpLightCallBack)(RpLight* light, void* data);
 
+#define RpLightGetRadiusMacro(_light) ((_light)->radius)
+
+#define RpLightGetColorMacro(_light) (&((_light)->color))
+
+#define RpLightSetFrameMacro(_light, _frame)                                                       \
+    (rwObjectHasFrameSetFrame((_light), (_frame)), (_light))
+
+#define RpLightGetFrameMacro(_light) ((RwFrame*)rwObjectGetParent((_light)))
+
+#define RpLightGetTypeMacro(_light) ((RpLightType)rwObjectGetSubType((_light)))
+
+#define RpLightSetFlagsMacro(_light, _flags) ((rwObjectSetFlags((_light), (_flags))), (_light))
+
+#define RpLightGetFlagsMacro(_light) (rwObjectGetFlags((_light)))
+
+#define RpLightGetRadius(_light) RpLightGetRadiusMacro(_light)
+
+#define RpLightGetColor(_light) RpLightGetColorMacro(_light)
+
+#define RpLightSetFrame(_light, _frame) RpLightSetFrameMacro(_light, _frame)
+
+#define RpLightGetFrame(_light) RpLightGetFrameMacro(_light)
+
+#define RpLightGetType(_light) RpLightGetTypeMacro(_light)
+
+#define RpLightSetFlags(_light, _flags) RpLightSetFlagsMacro(_light, _flags)
+
+#define RpLightGetFlags(_light) RpLightGetFlagsMacro(_light)
+
 typedef RpMaterial* (*RpMaterialCallBack)(RpMaterial* material, void* data);
+
+#define RpAtomicSetPipelineMacro(_atomic, _pipeline) (((_atomic)->pipeline = _pipeline), _atomic)
+
+#define RpAtomicGetPipelineMacro(_atomic, _pipeline) ((*(_pipeline) = (_atomic)->pipeline), _atomic)
+
+#define RpAtomicSetPipeline RpAtomicSetPipelineMacro
+#define RpAtomicGetPipeline RpAtomicGetPipelineMacro
 
 #ifdef __cplusplus
 extern "C" {

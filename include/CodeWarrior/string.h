@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 void* memset(void*, int, size_t);
+void* memcpy(void*, const void*, size_t);
 size_t strlen(const char*);
 char* strcpy(char* dest, const char* source);
 char* strcat(char* dest, const char* source);
