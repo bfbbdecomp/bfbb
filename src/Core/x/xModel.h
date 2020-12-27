@@ -85,4 +85,6 @@ struct xModelAssetParam
     uint8 String[3];
 };
 
+void xModelAnimCollStart(xModelInstance& m);
+
 #endif

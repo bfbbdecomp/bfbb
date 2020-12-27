@@ -10,6 +10,9 @@ struct xVec3
     float32 z;
 
     xVec3& operator=(const xVec3&);
+    xVec3 operator-(const xVec3&) const;
+    xVec3& operator+=(float);
+    xVec3& operator-=(float);
 
     void safe_normalize(const xVec3& val);
     void up_normalize();
