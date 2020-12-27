@@ -15,6 +15,7 @@ extern int32 g_needuvincr_bzzt;
 extern int32 g_needuvincr_nightlight;
 extern int32 g_needuvincr_slickshield;
 extern int32 cnt_alerthokey__11zNPCFodBzzt;
+extern NPCSndTrax g_sndTrax_Robot[2];
 
 void zNPCRobot_Timestep(float32 dt);
 void zNPCSleepy_Timestep(float32 dt);
@@ -186,8 +187,15 @@ uint8 zNPCRobot::PhysicsFlags() const
 // func_800F7B48
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "GenShadCacheRad__9zNPCRobotFv")
 
+void zNPCRobot::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_traxShare = g_sndTrax_Robot;
+    NPCS_SndTablePrepare(g_sndTrax_Robot);
+}
+
 // func_800F7BD8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ParseINI__9zNPCRobotFv")
+//#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ParseINI__9zNPCRobotFv")
 
 void zNPCRobot::Process(xScene* xscn, float32 dt)
 {
@@ -878,7 +886,7 @@ void ROBO_KillEffects()
 
 void UVAModelInfo::Clear()
 {
-    memset(this, 0, 32);
+    memset(this, 0, sizeof(UVAModelInfo));
 }
 
 void UVAModelInfo::UVVelSet(float x, float y)

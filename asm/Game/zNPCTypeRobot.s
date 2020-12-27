@@ -3171,25 +3171,6 @@ lbl_800F7BAC:
 /* 800F7BD0 000F49D0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F7BD4 000F49D4  4E 80 00 20 */	blr 
 
-.global ParseINI__9zNPCRobotFv
-ParseINI__9zNPCRobotFv:
-/* 800F7BD8 000F49D8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F7BDC 000F49DC  7C 08 02 A6 */	mflr r0
-/* 800F7BE0 000F49E0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F7BE4 000F49E4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800F7BE8 000F49E8  7C 7F 1B 78 */	mr r31, r3
-/* 800F7BEC 000F49EC  4B FF 98 45 */	bl ParseINI__10zNPCCommonFv
-/* 800F7BF0 000F49F0  3C 60 80 2A */	lis r3, g_sndTrax_Robot@ha
-/* 800F7BF4 000F49F4  80 9F 01 D8 */	lwz r4, 0x1d8(r31)
-/* 800F7BF8 000F49F8  38 63 87 C4 */	addi r3, r3, g_sndTrax_Robot@l
-/* 800F7BFC 000F49FC  90 64 03 A0 */	stw r3, 0x3a0(r4)
-/* 800F7C00 000F4A00  48 02 D1 45 */	bl NPCS_SndTablePrepare__FP10NPCSndTrax
-/* 800F7C04 000F4A04  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F7C08 000F4A08  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800F7C0C 000F4A0C  7C 08 03 A6 */	mtlr r0
-/* 800F7C10 000F4A10  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F7C14 000F4A14  4E 80 00 20 */	blr 
-
 .global NewTime__9zNPCRobotFP6xScenef
 NewTime__9zNPCRobotFP6xScenef:
 /* 800F7C9C 000F4A9C  94 21 FF E0 */	stwu r1, -0x20(r1)

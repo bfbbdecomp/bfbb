@@ -14,6 +14,79 @@
 
 typedef struct NPCMsg;
 
+enum en_npcparm
+{
+    NPC_PARM_NONE,
+    NPC_PARM_MOVERATE,
+    NPC_PARM_TURNRATE,
+    NPC_PARM_ACCEL,
+    NPC_PARM_DRIFT,
+    NPC_PARM_MASS,
+    NPC_PARM_TOSSGRAV,
+    NPC_PARM_TOSSELASTIC,
+    NPC_PARM_BND_ISBOX,
+    NPC_PARM_BND_CENTER,
+    NPC_PARM_BND_EXTENT,
+    NPC_PARM_HITPOINTS,
+    NPC_PARM_MODELSCALE,
+    NPC_PARM_DETECT_RAD,
+    NPC_PARM_DETECT_HYT,
+    NPC_PARM_DETECT_OFF,
+    NPC_PARM_ATTACK_RAD,
+    NPC_PARM_ATTACK_FOV,
+    NPC_PARM_SND_RAD,
+    NPC_PARM_TIMEFIDGET,
+    NPC_PARM_TIMEATTACK,
+    NPC_PARM_TIMESTUN,
+    NPC_PARM_TIMEALERT,
+    NPC_PARM_VTX_ATTACKBASE,
+    NPC_PARM_VTX_ATTACK,
+    NPC_PARM_VTX_ATTACK1,
+    NPC_PARM_VTX_ATTACK2,
+    NPC_PARM_VTX_ATTACK3,
+    NPC_PARM_VTX_ATTACK4,
+    NPC_PARM_VTX_EYEBALL,
+    NPC_PARM_VTX_DMGSMOKEA,
+    NPC_PARM_VTX_DMGSMOKEB,
+    NPC_PARM_VTX_DMGSMOKEC,
+    NPC_PARM_VTX_DMGFLAMEA,
+    NPC_PARM_VTX_DMGFLAMEB,
+    NPC_PARM_VTX_DMGFLAMEC,
+    NPC_PARM_VTX_PROPEL,
+    NPC_PARM_VTX_EXHAUST,
+    NPC_PARM_VTX_GEN01,
+    NPC_PARM_VTX_GEN02,
+    NPC_PARM_VTX_GEN03,
+    NPC_PARM_VTX_GEN04,
+    NPC_PARM_VTX_GEN05,
+    NPC_PARM_ATK_SIZE01,
+    NPC_PARM_ATK_FRAMES01,
+    NPC_PARM_ATK_FRAMES01A,
+    NPC_PARM_ATK_FRAMES01B,
+    NPC_PARM_ATK_FRAMES02,
+    NPC_PARM_ATK_FRAMES02A,
+    NPC_PARM_ATK_FRAMES02B,
+    NPC_PARM_ATK_FRAMES03,
+    NPC_PARM_ATK_FRAMES03A,
+    NPC_PARM_ATK_FRAMES03B,
+    NPC_PARM_ESTEEM_A,
+    NPC_PARM_ESTEEM_B,
+    NPC_PARM_ESTEEM_C,
+    NPC_PARM_ESTEEM_D,
+    NPC_PARM_ESTEEM_E,
+    NPC_PARM_SHADOW_CASTDIST,
+    NPC_PARM_SHADOW_RADCACHE,
+    NPC_PARM_SHADOW_RADRASTER,
+    NPC_PARAM_TEST_COUNT,
+    NPC_PARM_ENDTAG_INI,
+    NPC_PARM_FIRSTMVPT,
+    NPC_PARM_ENDTAG_PROPS,
+    NPC_PARM_BOGUSSHARE,
+    NPC_PARM_ENDTAG_SHARE,
+    NPC_PARM_NOMORE,
+    NPC_PARM_FORCEINT = 0x7fffffff
+};
+
 enum en_NPC_CARRY_STATE
 {
     zNPCCARRY_NONE,
@@ -298,7 +371,19 @@ struct zNPCCommon : xNPCBasic
     virtual int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     virtual void DuploOwner(zNPCCommon* duper);
     virtual void DuploNotice();
-    // Continue with 0x2935A0
+    virtual int32 CanRope();
+    virtual void LassoNotify(en_LASSO_EVENT event);
+    virtual int32 SetCarryState();
+    virtual void stun();
+    virtual void SpeakBegin();
+    virtual void SpeakEnd();
+    virtual void SpeakStart();
+    virtual void SpeakStop();
+    virtual uint32 AnimPick();
+    virtual void GetParm(en_npcparm pid, zMovePoint** val);
+    virtual void GetParmDefault(en_npcparm pid, void* val);
+    virtual float32 GenShadCacheRad();
+    // Continue with 0x2935D0
 };
 
 struct NPCSysEvent
