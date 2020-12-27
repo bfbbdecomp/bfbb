@@ -5,6 +5,8 @@
 
 #include "zNPCGoalRobo.h"
 #include "zNPCTypes.h"
+#include "zNPCGoalStd.h"
+
 #include "../Core/x/xFactory.h"
 
 extern UVAModelInfo g_uvaShield;
@@ -165,12 +167,12 @@ uint8 zNPCRobot::PhysicsFlags() const
 {
     int32 flags = 0;
 
-    if ((flg_move & 0x6) != 0)
+    if (flg_move & 0x6)
     {
         flags |= 3;
     }
 
-    if ((flg_move & 0x2) != 0)
+    if (flg_move & 0x2)
     {
         flags |= 4;
     }
@@ -178,8 +180,14 @@ uint8 zNPCRobot::PhysicsFlags() const
     return flags;
 }
 
-// func_800F7960
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Init__9zNPCRobotFP9xEntAsset")
+void zNPCRobot::Init(xEntAsset* asset)
+{
+    zNPCCommon::Init(asset);
+    this->flg_move = 10;
+    this->flg_vuln = -1;
+    this->idx_neckBone = -1;
+    this->flags1.flg_basenpc |= 8;
+}
 
 // func_800F79AC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Reset__9zNPCRobotFv")
@@ -194,9 +202,6 @@ void zNPCRobot::ParseINI()
     NPCS_SndTablePrepare(g_sndTrax_Robot);
 }
 
-// func_800F7BD8
-//#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ParseINI__9zNPCRobotFv")
-
 void zNPCRobot::Process(xScene* xscn, float32 dt)
 {
     psy_instinct->Timestep(dt, NULL);
@@ -209,8 +214,14 @@ void zNPCRobot::Process(xScene* xscn, float32 dt)
     zNPCCommon::Process(xscn, dt);
 }
 
-// func_800F7C9C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "NewTime__9zNPCRobotFP6xScenef")
+void zNPCRobot::NewTime(xScene* xscn, float32 dt)
+{
+    if (idx_neckBone >= 0 && !IsDying())
+    {
+        TurnThemHeads();
+    }
+    zNPCCommon::NewTime(xscn, dt);
+}
 
 // func_800F7D18
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SelfSetup__9zNPCRobotFv")
@@ -226,9 +237,19 @@ void zNPCRobot::Process(xScene* xscn, float32 dt)
 
 // func_800F8304
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "RoboHandleMail__9zNPCRobotFP6NPCMsg")
+void zNPCRobot::DuploOwner(zNPCCommon* duper)
+{
+    zNPCCommon::DuploOwner(duper);
 
-// func_800F84D8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "DuploOwner__9zNPCRobotFP10zNPCCommon")
+    xPsyche* psyche = this->psy_instinct;
+
+    if (psyche)
+    {
+        zNPCGoalDead* dead = (zNPCGoalDead*)psyche->FindGoal('NGRj'); // 0x4E47526A
+        dead->DieQuietly();
+        psyche->GoalSet('NGRj', 1);
+    }
+}
 
 // func_800F8538
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "DoAliveStuff__9zNPCRobotFf")

@@ -353,10 +353,14 @@ struct zNPCCommon : xNPCBasic
     zNPCLassoInfo* lassdata;
     NPCSndQueue snd_queue[4];
 
+    // vTable (xNPCBasic)
+
+    void Init(xEntAsset* asset);
     void Process(xScene* xscn, float32 dt);
+    void NewTime(xScene* xscn, float32 dt);
     void Destroy();
 
-    // vTable
+    // vTable (zNPCCommon)
     virtual int32 NPCMessage(NPCMsg* mail);
     virtual void RenderExtra();
     virtual void RenderExtraPostParticles();
