@@ -133,7 +133,7 @@ $(OBJ_DIR)/%.o: %.c
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo " CXX     "$<
-	$S$(CC) $(PREPROCESS) -o $(OBJ_DIR)/$*.cp $< 1>&2
-	$S$(GLBLASM) -s $(OBJ_DIR)/$*.cp
-	$S$(CC) $(CFLAGS) -c -o $@ $(OBJ_DIR)/$*.cp 1>&2
+	$S$(CC) $(PREPROCESS) -o $(OBJ_DIR)/$*.cpp $< 1>&2
+	$S$(GLBLASM) -s $(OBJ_DIR)/$*.cpp
+	$S$(CC) $(CFLAGS) -c -o $@ $(OBJ_DIR)/$*.cpp 1>&2
 	$S$(PPROC) $(PPROCFLAGS) $@

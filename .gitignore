@@ -2,6 +2,7 @@ __pycache__
 *.pyc
 tools/mwcc_compiler/*.*
 tools/elf2dol
+obj/*
 *.asm
 *.exe
 *.dol
