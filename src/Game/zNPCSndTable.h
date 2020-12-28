@@ -52,4 +52,6 @@ struct NPCSndQueue
     float32 radius;
 };
 
+void NPCS_SndTablePrepare(NPCSndTrax* trax);
+
 #endif
