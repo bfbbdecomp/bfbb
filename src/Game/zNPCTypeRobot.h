@@ -47,8 +47,6 @@ struct zNPCRobot : zNPCCommon
     zNPCLassoInfo raw_lassoinfo;
     xEntDrive raw_drvdata;
 
-    xEntDrive* PRIV_GetDriverData();
-    zNPCLassoInfo* PRIV_GetLassoData();
     int32 LaunchProjectile(en_npchaz haztyp, float32 spd_proj, float32 dst_minRange,
                            en_mdlvert idx_mvtx, float32 tym_predictMax, float32 hyt_offset);
     void ShowerConfetti(xVec3* pos);
@@ -58,31 +56,48 @@ struct zNPCRobot : zNPCCommon
     float32 FacePos(xVec3* pos, float32 dt, float32 spd_turn);
     void TurnThemHeads();
     void InflictPain(int32 numHitPoints, int32 giveCreditToPlayer);
-    void CollideReview();
     void LassoNotify(en_LASSO_EVENT event);
     void SyncStunGlyph(float32 tmr_remain, float32 height);
     void Stun(float32 stuntime);
     int32 SetCarryState(en_NPC_CARRY_STATE stat);
-    int32 IsDying();
-    int32 LassoSetup();
     void AddStunThrow(xPsyche* psy,
                       int32 (*eval_evilpat)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_stunned)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_patcarry)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_patthrow)(xGoal*, void*, en_trantype*, float32, void*));
+    void AddLassoing(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddDamage(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*),
+                   int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddSpawning(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                     int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddMiscTypical(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
+                        int (*)(xGoal*, void*, en_trantype*, float, void*),
+                        int (*)(xGoal*, void*, en_trantype*, float, void*));
     void CheckFalling();
     void DoAliveStuff(float32 dt);
-    int32 RoboHandleMail(NPCMsg* mail);
+    float32 GenShadCacheRad();
+
+    // vTable (xNPCBasic)
+
+    void Init(xEntAsset* asset);
+    void Reset();
+    void Process(xScene* xscn, float32 dt);
+    void NewTime(xScene* xscn, float32 dt);
     int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, float32* toParam, xBase* toParamWidget,
                    int32* handled);
-    void NewTime(xScene* xscn, float32 dt);
-    void Process(xScene* xscn, float32 dt);
-    float32 GenShadCacheRad();
-    void Reset();
-    void Init(xEntAsset* asset);
+    void CollideReview();
     uint8 PhysicsFlags() const;
     uint8 ColPenFlags() const;
     uint8 ColChkFlags() const;
+
+    // vTable (zNPCCommon)
 
     int32 NPCMessage(NPCMsg* mail);
     void RenderExtra();
@@ -97,6 +112,14 @@ struct zNPCRobot : zNPCCommon
     void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
     int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     void DuploOwner(zNPCCommon* duper);
+
+    // vTable (zNPCRobot)
+
+    virtual xEntDrive* PRIV_GetDriverData();
+    virtual zNPCLassoInfo* PRIV_GetLassoData();
+    virtual int32 LassoSetup();
+    virtual int32 RoboHandleMail(NPCMsg* mail);
+    virtual int32 IsDying();
 };
 
 void ZNPC_Robot_Startup();
@@ -107,5 +130,6 @@ void zNPCRobot_ScenePostInit();
 void ROBO_KillEffects();
 void zNPCFodBzzt_ResetDanceParty();
 void ROBO_InitEffects();
+int32 DUMY_grul_returnToIdle(xGoal*, void*, en_trantype*, float32, void*);
 
 #endif

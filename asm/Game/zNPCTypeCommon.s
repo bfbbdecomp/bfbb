@@ -6476,18 +6476,6 @@ DuploOwner__10zNPCCommonFP10zNPCCommon:
 /* 800F46B0 000F14B0  90 83 02 2C */	stw r4, 0x22c(r3)
 /* 800F46B4 000F14B4  4E 80 00 20 */	blr 
 
-SpeakBegin__10zNPCCommonFv:
-/* 800F46B8 000F14B8  4E 80 00 20 */	blr 
-
-SpeakEnd__10zNPCCommonFv:
-/* 800F46BC 000F14BC  4E 80 00 20 */	blr 
-
-SpeakStart__10zNPCCommonFUiUii:
-/* 800F46C0 000F14C0  4E 80 00 20 */	blr 
-
-SpeakStop__10zNPCCommonFv:
-/* 800F46C4 000F14C4  4E 80 00 20 */	blr 
-
 GenShadCacheRad__10zNPCCommonFv:
 /* 800F46C8 000F14C8  C0 22 9B 40 */	lfs f1, lbl_803CE4C0-_SDA2_BASE_(r2)
 /* 800F46CC 000F14CC  4E 80 00 20 */	blr 

@@ -348,17 +348,21 @@
 // func_800F46B0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DuploOwner__10zNPCCommonFP10zNPCCommon")
 
-// func_800F46B8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SpeakBegin__10zNPCCommonFv")
+void SpeakBegin()
+{
+}
 
-// func_800F46BC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SpeakEnd__10zNPCCommonFv")
+void SpeakEnd()
+{
+}
 
-// func_800F46C0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SpeakStart__10zNPCCommonFUiUii")
+void SpeakStart()
+{
+}
 
-// func_800F46C4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SpeakStop__10zNPCCommonFv")
+void SpeakStop()
+{
+}
 
 // func_800F46C8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "GenShadCacheRad__10zNPCCommonFv")

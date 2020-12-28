@@ -45,6 +45,10 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     int32 (*fun_precalc)(xGoal*, void*, float32, void*);
     int32 (*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
     void* cbdata;
+
+    void SetCallbacks(int (*)(xGoal*, void*, en_trantype*, float, void*),
+                      int (*)(xGoal*, void*, en_trantype*, float, void*),
+                      int (*)(xGoal*, void*, float, void*), void*);
 };
 
 #endif

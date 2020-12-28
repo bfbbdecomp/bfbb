@@ -5,6 +5,8 @@
 
 #include "zNPCGoalRobo.h"
 #include "zNPCTypes.h"
+#include "zNPCGoalStd.h"
+
 #include "../Core/x/xFactory.h"
 
 extern UVAModelInfo g_uvaShield;
@@ -15,6 +17,7 @@ extern int32 g_needuvincr_bzzt;
 extern int32 g_needuvincr_nightlight;
 extern int32 g_needuvincr_slickshield;
 extern int32 cnt_alerthokey__11zNPCFodBzzt;
+extern NPCSndTrax g_sndTrax_Robot[2];
 
 void zNPCRobot_Timestep(float32 dt);
 void zNPCSleepy_Timestep(float32 dt);
@@ -164,12 +167,12 @@ uint8 zNPCRobot::PhysicsFlags() const
 {
     int32 flags = 0;
 
-    if ((flg_move & 0x6) != 0)
+    if (flg_move & 0x6)
     {
         flags |= 3;
     }
 
-    if ((flg_move & 0x2) != 0)
+    if (flg_move & 0x2)
     {
         flags |= 4;
     }
@@ -177,8 +180,14 @@ uint8 zNPCRobot::PhysicsFlags() const
     return flags;
 }
 
-// func_800F7960
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Init__9zNPCRobotFP9xEntAsset")
+void zNPCRobot::Init(xEntAsset* asset)
+{
+    zNPCCommon::Init(asset);
+    this->flg_move = 10;
+    this->flg_vuln = -1;
+    this->idx_neckBone = -1;
+    this->flags1.flg_basenpc |= 8;
+}
 
 // func_800F79AC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Reset__9zNPCRobotFv")
@@ -186,8 +195,12 @@ uint8 zNPCRobot::PhysicsFlags() const
 // func_800F7B48
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "GenShadCacheRad__9zNPCRobotFv")
 
-// func_800F7BD8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ParseINI__9zNPCRobotFv")
+void zNPCRobot::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_traxShare = g_sndTrax_Robot;
+    NPCS_SndTablePrepare(g_sndTrax_Robot);
+}
 
 void zNPCRobot::Process(xScene* xscn, float32 dt)
 {
@@ -201,11 +214,35 @@ void zNPCRobot::Process(xScene* xscn, float32 dt)
     zNPCCommon::Process(xscn, dt);
 }
 
-// func_800F7C9C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "NewTime__9zNPCRobotFP6xScenef")
+void zNPCRobot::NewTime(xScene* xscn, float32 dt)
+{
+    if (idx_neckBone >= 0 && !IsDying())
+    {
+        TurnThemHeads();
+    }
+    zNPCCommon::NewTime(xscn, dt);
+}
 
-// func_800F7D18
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SelfSetup__9zNPCRobotFv")
+void zNPCRobot::SelfSetup()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    psy_instinct = bmgr->Subscribe(this, 0);
+    xPsyche* psy = psy_instinct;
+    xGoal* goal = NULL;
+
+    psy->BrainBegin();
+    goal = psy->AddGoal('NGR4', NULL);
+    goal->SetCallbacks(DUMY_grul_returnToIdle, NULL, NULL, NULL);
+    AddBaseline(psy, NULL, NULL, NULL, NULL, NULL);
+    AddStunThrow(psy, NULL, NULL, NULL, NULL);
+    AddLassoing(psy, NULL, NULL, NULL, NULL, NULL);
+    AddDamage(psy, NULL, NULL, NULL, NULL, NULL);
+    AddSpawning(psy, NULL, NULL);
+    AddScripting(psy, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    AddMiscTypical(psy, NULL, NULL, NULL);
+    psy->BrainEnd();
+    psy->SetSafety('NGN0');
+}
 
 // func_800F7E80
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "AnimPick__9zNPCRobotFi16en_NPC_GOAL_SPOTP5xGoal")
@@ -219,8 +256,19 @@ void zNPCRobot::Process(xScene* xscn, float32 dt)
 // func_800F8304
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "RoboHandleMail__9zNPCRobotFP6NPCMsg")
 
-// func_800F84D8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "DuploOwner__9zNPCRobotFP10zNPCCommon")
+void zNPCRobot::DuploOwner(zNPCCommon* duper)
+{
+    zNPCCommon::DuploOwner(duper);
+
+    xPsyche* psyche = this->psy_instinct;
+
+    if (psyche)
+    {
+        zNPCGoalDead* dead = (zNPCGoalDead*)psyche->FindGoal('NGRj'); // 0x4E47526A
+        dead->DieQuietly();
+        psyche->GoalSet('NGRj', 1);
+    }
+}
 
 // func_800F8538
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "DoAliveStuff__9zNPCRobotFf")
@@ -878,7 +926,7 @@ void ROBO_KillEffects()
 
 void UVAModelInfo::Clear()
 {
-    memset(this, 0, 32);
+    memset(this, 0, sizeof(UVAModelInfo));
 }
 
 void UVAModelInfo::UVVelSet(float x, float y)
