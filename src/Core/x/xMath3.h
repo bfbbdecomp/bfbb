@@ -61,6 +61,12 @@ struct xVec4
     float32 w;
 };
 
+struct xRot
+{
+    xVec3 axis;
+    float32 angle;
+};
+
 extern xVec3 g_O3;
 extern xVec3 g_X3;
 extern xVec3 g_Y3;
@@ -70,5 +76,10 @@ extern xMat4x3 g_I3;
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
+void xMat3x3Euler(xMat3x3* m, float32 yaw, float32 pitch, float32 roll);
+void xRotCopy(xRot* o, const xRot* r);
+void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
+void xMat3x3Rot(xMat3x3* m, const xVec3* a, float32 t);
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
 #endif

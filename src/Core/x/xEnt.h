@@ -50,12 +50,6 @@ struct xEntAsset : xBaseAsset
 struct xEnt;
 struct xScene;
 
-struct xRot
-{
-    xVec3 axis;
-    float32 angle;
-};
-
 struct xEntFrame
 {
     xMat4x3 mat;
@@ -145,10 +139,10 @@ struct xEnt : xBase
     uint8 num_ffx;
 
     // Offset: 0x20
-    uint8 collType;
+    uint8 collType; // XENT_COLLTYPE_* (defined below)
     uint8 collLev;
-    uint8 chkby;
-    uint8 penby;
+    uint8 chkby; // XENT_COLLTYPE_* bitmask
+    uint8 penby; // XENT_COLLTYPE_* bitmask
 
     // Offset: 0x24
     xModelInstance* model;
@@ -186,6 +180,14 @@ struct xEnt : xBase
     void* user_data;
 };
 
+// collision types
+#define XENT_COLLTYPE_NONE 0x0
+#define XENT_COLLTYPE_TRIG 0x1 // trigger (TRIG)
+#define XENT_COLLTYPE_STAT 0x2 // static (SIMP)
+#define XENT_COLLTYPE_DYN 0x4 // dynamic (PLAT)
+#define XENT_COLLTYPE_NPC 0x8 // npc/enemy (VIL)
+#define XENT_COLLTYPE_PLYR 0x10 // player (PLYR)
+
 // Size: 0x40
 struct xEntShadow
 {
@@ -196,7 +198,11 @@ struct xEntShadow
     float32 radius[2];
 };
 
+xVec3* xEntGetCenter(const xEnt* ent);
+xVec3* xEntGetPos(const xEnt* ent);
 uint32 xEntIsVisible(const xEnt* ent);
+void xEntHide(xEnt* ent);
+void xEntShow(xEnt* ent);
 void xEntInitShadow(xEnt& ent, xEntShadow& shadow);
 void xEntReposition(xEnt& ent, xMat4x3& mat);
 uint8 xEntValidType(uint8 type);
@@ -206,7 +212,7 @@ void xEntSetNostepNormAngle(float32 angle);
 void xEntCollideWalls(xEnt* p, xScene* sc, float32 dt);
 void xEntCollideCeiling(xEnt* p, xScene* sc, float32 dt);
 void xEntCollideFloor(xEnt* p, xScene* sc, float32 dt);
-xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, void* data);
+xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data);
 void xEntCollCheckNPCs(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*));
 void xEntCollCheckDyns(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*));
 void xEntCollCheckStats(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*));
@@ -214,7 +220,7 @@ void xEntCollCheckNPCsByGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*,
 void xEntCollCheckByGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*));
 void xEntCollCheckEnv(xEnt* p, xScene* sc);
 void xEntEndCollide(xEnt* ent, xScene* sc, float32 dt);
-void xEntBeginCollide(xEnt* ent);
+void xEntBeginCollide(xEnt* ent, xScene* sc, float32 dt);
 void xEntCollide(xEnt* ent, xScene* sc, float32 dt);
 void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt);
 void xEntMove(xEnt* ent, xScene* sc, float32 dt);
@@ -225,10 +231,11 @@ void xEntEndUpdate(xEnt* ent, xScene* sc, float32 dt);
 void xEntBeginUpdate(xEnt* ent, xScene* sc, float32 dt);
 void xEntUpdate(xEnt* ent, xScene* sc, float32 dt);
 void xEntRender(xEnt* ent);
-void xEntRestorePipeline(RpAtomic* model);
+void xEntRestorePipeline(xSurface*, RpAtomic* model);
 void xEntRestorePipeline(xModelInstance* model);
 void xEntSetupPipeline(xSurface* surf, RpAtomic* model);
 void xEntSetupPipeline(xModelInstance* model);
+void xEntAddToPos(xEnt* ent, const xVec3* v);
 xModelInstance* xEntLoadModel(xEnt* ent, RpAtomic* imodel);
 void xEntReset(xEnt* ent);
 void xEntLoad(xEnt* ent, xSerial* s);

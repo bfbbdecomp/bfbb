@@ -194,17 +194,17 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
 {
     const xBound* bound = &ent->bound;
     const xVec3* center;
-    if (bound->type == BOUND_TYPE_SPHERE)
+    if (bound->type == XBOUND_TYPE_SPHERE)
     {
         center = &bound->sph.center;
     }
-    else if (bound->type == BOUND_TYPE_4)
+    else if (bound->type == XBOUND_TYPE_BOXLOCAL)
     {
         // TODO: Possibly should be cyl.center depending what type 4 is, the
         // code matches either way.
         center = &bound->box.center;
     }
-    else if (bound->type == BOUND_TYPE_2)
+    else if (bound->type == XBOUND_TYPE_BOX)
     {
         // TODO: Possibly should be box.center depending what type 2 is, the
         // code matches either way.

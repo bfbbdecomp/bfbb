@@ -16,6 +16,7 @@ struct xVec3
 
     void safe_normalize(const xVec3& val);
     void up_normalize();
+    xVec3& assign(float32 x, float32 y, float32 z);
 };
 
 float32 xVec3Normalize(xVec3* o, const xVec3* v);

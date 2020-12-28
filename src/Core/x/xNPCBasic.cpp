@@ -70,18 +70,18 @@ void xNPCBasic::Init(xEntAsset* asset)
     xEntInit(thisEnt, asset);
     collType = 8;
     collLev = 4;
-    bound.type = 1; // [int8] 0x84
+    bound.type = XBOUND_TYPE_SPHERE; // [int8] 0x84
     moreFlags |= 0x10;
     zEntParseModelInfo(thisEnt, asset->modelInfoID);
     xEntInitForType(thisEnt);
     xEntInitShadow(*thisEnt, entShadow_embedded);
     simpShadow = &simpShadow_embedded;
     xShadowSimple_CacheInit(simpShadow, thisEnt, 0x50);
-    if (bound.type == 2)
+    if (bound.type == XBOUND_TYPE_BOX)
     {
         iBoxForModel(&bound.box.box, collModel ? collModel : model);
     }
-    else if (bound.type == 4)
+    else if (bound.type == XBOUND_TYPE_BOXLOCAL)
     {
         iBoxForModelLocal(&bound.box.box, collModel ? collModel : model);
     }
@@ -154,10 +154,10 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
     xVec3Copy(&bndcent, xEntGetPos(npc));
     bndcent.y += xNPCBasic_float_0p75;
 
-    npc->bound.type = 1;
+    npc->bound.type = XBOUND_TYPE_SPHERE;
     xVec3Copy(&npc->bound.sph.center, &bndcent);
     npc->bound.sph.r = xNPCBasic_float_0p75;
-    if (npc->bound.type != 0)
+    if (npc->bound.type != XBOUND_TYPE_0)
     {
         xQuickCullForBound(&npc->bound.qcd, &npc->bound);
     }
@@ -184,7 +184,7 @@ void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
     }
 
     float32 radius;
-    if (npc->bound.type == 1)
+    if (npc->bound.type == XBOUND_TYPE_SPHERE)
     {
         radius = npc->bound.sph.r;
     }

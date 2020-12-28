@@ -86,5 +86,13 @@ struct xModelAssetParam
 };
 
 void xModelAnimCollStart(xModelInstance& m);
+void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame);
+xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, uint16 flags, uint8 boneIndex,
+                                    uint8* boneRemap);
+void xModelInstanceAttach(xModelInstance* inst, xModelInstance* parent);
+void xModelRender(xModelInstance* modelInst);
+void xModelUpdate(xModelInstance* modelInst, float32 timeDelta);
+xMat4x3* xModelGetFrame(xModelInstance* modelInst);
+void xModelEval(xModelInstance* modelInst);
 
 #endif
