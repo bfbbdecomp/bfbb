@@ -86,5 +86,17 @@ void RenderActionLine(_tagActionLine* l)
 }
 #endif
 
-// func_8004E770
-#pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineRender__Fv")
+void zActionLineRender()
+{
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, sActionLineRaster);
+
+    for (int32 i = 0; i < 8; i++)
+    {
+        _tagActionLine* line = sActionLine[i];
+
+        if (line && line->flags & 1)
+        {
+            RenderActionLine(line);
+        }
+    }
+}

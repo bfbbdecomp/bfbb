@@ -10,4 +10,6 @@ struct _tagActionLine
     float32 time_left;
 };
 
+void RenderActionLine(_tagActionLine* l);
+
 #endif

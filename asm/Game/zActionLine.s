@@ -175,39 +175,6 @@ lbl_8004E760:
 /* 8004E768 0004B568  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004E76C 0004B56C  4E 80 00 20 */	blr 
 
-.global zActionLineRender__Fv
-zActionLineRender__Fv:
-/* 8004E770 0004B570  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004E774 0004B574  7C 08 02 A6 */	mflr r0
-/* 8004E778 0004B578  38 60 00 01 */	li r3, 1
-/* 8004E77C 0004B57C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004E780 0004B580  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8004E784 0004B584  93 C1 00 08 */	stw r30, 8(r1)
-/* 8004E788 0004B588  80 8D 8B 38 */	lwz r4, sActionLineRaster-_SDA_BASE_(r13)
-/* 8004E78C 0004B58C  48 1E 10 51 */	bl RwRenderStateSet
-/* 8004E790 0004B590  3C 60 80 2E */	lis r3, sActionLine@ha
-/* 8004E794 0004B594  3B C0 00 00 */	li r30, 0
-/* 8004E798 0004B598  3B E3 B9 A0 */	addi r31, r3, sActionLine@l
-lbl_8004E79C:
-/* 8004E79C 0004B59C  80 7F 00 00 */	lwz r3, 0(r31)
-/* 8004E7A0 0004B5A0  28 03 00 00 */	cmplwi r3, 0
-/* 8004E7A4 0004B5A4  41 82 00 14 */	beq lbl_8004E7B8
-/* 8004E7A8 0004B5A8  80 03 00 00 */	lwz r0, 0(r3)
-/* 8004E7AC 0004B5AC  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 8004E7B0 0004B5B0  41 82 00 08 */	beq lbl_8004E7B8
-/* 8004E7B4 0004B5B4  4B FF FE 75 */	bl RenderActionLine__FP14_tagActionLine
-lbl_8004E7B8:
-/* 8004E7B8 0004B5B8  3B DE 00 01 */	addi r30, r30, 1
-/* 8004E7BC 0004B5BC  3B FF 00 04 */	addi r31, r31, 4
-/* 8004E7C0 0004B5C0  2C 1E 00 08 */	cmpwi r30, 8
-/* 8004E7C4 0004B5C4  41 80 FF D8 */	blt lbl_8004E79C
-/* 8004E7C8 0004B5C8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004E7CC 0004B5CC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8004E7D0 0004B5D0  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8004E7D4 0004B5D4  7C 08 03 A6 */	mtlr r0
-/* 8004E7D8 0004B5D8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004E7DC 0004B5DC  4E 80 00 20 */	blr 
-
 .endif
 
 .section .bss
