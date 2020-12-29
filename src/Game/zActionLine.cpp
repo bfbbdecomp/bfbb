@@ -55,6 +55,10 @@ void RenderActionLine(_tagActionLine* l)
 
         This is sort of close, but needs a lot
         of work in the loop to make it closer.
+
+        It also may not even be a loop,
+        but it probably is because int32 i
+        is defined in the dwarf data
     */
     for (int32 i = 0; i < 4; i++)
     {
