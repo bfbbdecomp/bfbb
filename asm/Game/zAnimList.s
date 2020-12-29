@@ -10,11 +10,6 @@ lbl_80254318:
 
 .section .text  # 0x8004E7E0 - 0x8004EBEC
 
-
-AlwaysConditional__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8004E7E0 0004B5E0  38 60 00 01 */	li r3, 1
-/* 8004E7E4 0004B5E4  4E 80 00 20 */	blr 
-
 .global zAnimListInit__Fv
 zAnimListInit__Fv:
 /* 8004E7E8 0004B5E8  94 21 FF 90 */	stwu r1, -0x70(r1)

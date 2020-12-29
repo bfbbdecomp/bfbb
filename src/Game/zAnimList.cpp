@@ -1,9 +1,13 @@
-#include "zAnimList.h"
-
 #include <types.h>
 
-// func_8004E7E0
-#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "AlwaysConditional__FP15xAnimTransitionP11xAnimSinglePv")
+#include "../Core/x/xAnim.h"
+
+#include "zAnimList.h"
+
+uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
+{
+    return 1;
+}
 
 // func_8004E7E8
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListInit__Fv")
