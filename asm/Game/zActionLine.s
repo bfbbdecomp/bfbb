@@ -3,8 +3,8 @@
 .section .rodata   # 0x80254308 - 0x80254318
 
 /*
-.global lbl_80254308
-lbl_80254308:
+.global zActionLineStrings
+zActionLineStrings:
 	.incbin "baserom.dol", 0x2512E8, 0x10
 */
 
@@ -16,11 +16,11 @@ lbl_80254308:
 zActionLineInit__Fv:
 /* 8004E510 0004B310  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004E514 0004B314  7C 08 02 A6 */	mflr r0
-/* 8004E518 0004B318  3C 60 80 25 */	lis r3, lbl_80254308@ha
+/* 8004E518 0004B318  3C 60 80 25 */	lis r3, zActionLineStrings@ha
 /* 8004E51C 0004B31C  3C 80 80 2E */	lis r4, sActionLine@ha
 /* 8004E520 0004B320  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8004E524 0004B324  38 00 00 00 */	li r0, 0
-/* 8004E528 0004B328  38 63 43 08 */	addi r3, r3, lbl_80254308@l
+/* 8004E528 0004B328  38 63 43 08 */	addi r3, r3, zActionLineStrings@l
 /* 8004E52C 0004B32C  94 04 B9 A0 */	stwu r0, sActionLine@l(r4)
 /* 8004E530 0004B330  90 04 00 04 */	stw r0, 4(r4)
 /* 8004E534 0004B334  90 04 00 08 */	stw r0, 8(r4)
