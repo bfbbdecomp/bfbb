@@ -2,9 +2,11 @@
 
 .section .rodata   # 0x80254308 - 0x80254318
 
+/*
 .global lbl_80254308
 lbl_80254308:
 	.incbin "baserom.dol", 0x2512E8, 0x10
+*/
 
 .if 0
 
@@ -15,11 +17,11 @@ zActionLineInit__Fv:
 /* 8004E510 0004B310  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004E514 0004B314  7C 08 02 A6 */	mflr r0
 /* 8004E518 0004B318  3C 60 80 25 */	lis r3, lbl_80254308@ha
-/* 8004E51C 0004B31C  3C 80 80 2E */	lis r4, lbl_802DB9A0@ha
+/* 8004E51C 0004B31C  3C 80 80 2E */	lis r4, sActionLine@ha
 /* 8004E520 0004B320  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8004E524 0004B324  38 00 00 00 */	li r0, 0
 /* 8004E528 0004B328  38 63 43 08 */	addi r3, r3, lbl_80254308@l
-/* 8004E52C 0004B32C  94 04 B9 A0 */	stwu r0, lbl_802DB9A0@l(r4)
+/* 8004E52C 0004B32C  94 04 B9 A0 */	stwu r0, sActionLine@l(r4)
 /* 8004E530 0004B330  90 04 00 04 */	stw r0, 4(r4)
 /* 8004E534 0004B334  90 04 00 08 */	stw r0, 8(r4)
 /* 8004E538 0004B338  90 04 00 0C */	stw r0, 0xc(r4)
@@ -27,14 +29,14 @@ zActionLineInit__Fv:
 /* 8004E540 0004B340  90 04 00 14 */	stw r0, 0x14(r4)
 /* 8004E544 0004B344  90 04 00 18 */	stw r0, 0x18(r4)
 /* 8004E548 0004B348  90 04 00 1C */	stw r0, 0x1c(r4)
-/* 8004E54C 0004B34C  90 0D 8B 38 */	stw r0, lbl_803CB438-_SDA_BASE_(r13)
+/* 8004E54C 0004B34C  90 0D 8B 38 */	stw r0, sActionLineRaster-_SDA_BASE_(r13)
 /* 8004E550 0004B350  4B FF DC C5 */	bl xStrHash__FPCc
 /* 8004E554 0004B354  38 80 00 00 */	li r4, 0
 /* 8004E558 0004B358  4B FF D1 B5 */	bl xSTFindAsset__FUiPUi
 /* 8004E55C 0004B35C  28 03 00 00 */	cmplwi r3, 0
 /* 8004E560 0004B360  41 82 00 0C */	beq lbl_8004E56C
 /* 8004E564 0004B364  80 03 00 00 */	lwz r0, 0(r3)
-/* 8004E568 0004B368  90 0D 8B 38 */	stw r0, lbl_803CB438-_SDA_BASE_(r13)
+/* 8004E568 0004B368  90 0D 8B 38 */	stw r0, sActionLineRaster-_SDA_BASE_(r13)
 lbl_8004E56C:
 /* 8004E56C 0004B36C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8004E570 0004B370  7C 08 03 A6 */	mtlr r0
@@ -43,9 +45,9 @@ lbl_8004E56C:
 
 .global zActionLineUpdate__Ff
 zActionLineUpdate__Ff:
-/* 8004E57C 0004B37C  3C 60 80 2E */	lis r3, lbl_802DB9A0@ha
+/* 8004E57C 0004B37C  3C 60 80 2E */	lis r3, sActionLine@ha
 /* 8004E580 0004B380  38 00 00 04 */	li r0, 4
-/* 8004E584 0004B384  38 63 B9 A0 */	addi r3, r3, lbl_802DB9A0@l
+/* 8004E584 0004B384  38 63 B9 A0 */	addi r3, r3, sActionLine@l
 /* 8004E588 0004B388  38 80 00 00 */	li r4, 0
 /* 8004E58C 0004B38C  7C 09 03 A6 */	mtctr r0
 lbl_8004E590:
@@ -183,11 +185,11 @@ zActionLineRender__Fv:
 /* 8004E77C 0004B57C  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8004E780 0004B580  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8004E784 0004B584  93 C1 00 08 */	stw r30, 8(r1)
-/* 8004E788 0004B588  80 8D 8B 38 */	lwz r4, lbl_803CB438-_SDA_BASE_(r13)
+/* 8004E788 0004B588  80 8D 8B 38 */	lwz r4, sActionLineRaster-_SDA_BASE_(r13)
 /* 8004E78C 0004B58C  48 1E 10 51 */	bl RwRenderStateSet
-/* 8004E790 0004B590  3C 60 80 2E */	lis r3, lbl_802DB9A0@ha
+/* 8004E790 0004B590  3C 60 80 2E */	lis r3, sActionLine@ha
 /* 8004E794 0004B594  3B C0 00 00 */	li r30, 0
-/* 8004E798 0004B598  3B E3 B9 A0 */	addi r31, r3, lbl_802DB9A0@l
+/* 8004E798 0004B598  3B E3 B9 A0 */	addi r31, r3, sActionLine@l
 lbl_8004E79C:
 /* 8004E79C 0004B59C  80 7F 00 00 */	lwz r3, 0(r31)
 /* 8004E7A0 0004B5A0  28 03 00 00 */	cmplwi r3, 0
@@ -211,14 +213,19 @@ lbl_8004E7B8:
 .endif
 
 .section .bss
-lbl_802DB9A0:
+
+.global sActionLine
+sActionLine:
 	.skip 0x20
+
 lbl_802DB9C0:
 	.skip 0x90
 
 .section .sbss
+
 .balign 8
-lbl_803CB438:
+.global sActionLineRaster
+sActionLineRaster:
 	.skip 0x8
 
 .section .sdata2
