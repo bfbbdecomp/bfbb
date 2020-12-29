@@ -208,7 +208,7 @@ zCollGeom_CamEnable__FP4xEnt:
 /* 801168C8 001136C8  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 801168CC 001136CC  28 00 00 00 */	cmplwi r0, 0
 +
-- /* newlines between instructions break it! */
++ /* newlines between instructions break it! */
 /* 801168D0 001136D0  4C 82 00 20 */	bnelr
 /* 801168D4 001136D4  80 03 00 24 */	lwz r0, 0x24(r3)
 /* 801168D8 001136D8  90 03 00 2C */	stw r0, 0x2c(r3)
