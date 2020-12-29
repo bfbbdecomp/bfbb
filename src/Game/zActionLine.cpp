@@ -8,6 +8,7 @@
 
 extern _tagActionLine* sActionLine[8];
 extern RwRaster* sActionLineRaster;
+extern const int8 zActionLineStrings[];
 
 // func_8004E510
 #if 0
@@ -15,15 +16,15 @@ extern RwRaster* sActionLineRaster;
 #else
 void zActionLineInit()
 {
-    RwTexture* tex;
-
     for (int32 i = 0; i < 8; i++)
     {
         sActionLine[i] = NULL;
     }
 
+    uint32 hash = xStrHash(zActionLineStrings);
+    RwTexture* tex = (RwTexture*)xSTFindAsset(hash, 0);
+
     sActionLineRaster = NULL;
-    tex = (RwTexture*)xSTFindAsset(xStrHash("ACTIONLINES"), 0);
 
     if (tex != NULL)
     {

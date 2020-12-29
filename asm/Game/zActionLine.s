@@ -2,11 +2,9 @@
 
 .section .rodata   # 0x80254308 - 0x80254318
 
-/*
 .global zActionLineStrings
 zActionLineStrings:
 	.incbin "baserom.dol", 0x2512E8, 0x10
-*/
 
 .if 0
 
