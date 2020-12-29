@@ -7,6 +7,7 @@
 #include "xFX.h"
 #include "xShadow.h"
 #include "xMathInlines.h"
+#include "xMath.h"
 
 #include "../../Game/zBase.h"
 #include "../../Game/zPlatform.h"
@@ -50,12 +51,14 @@ extern xVec3 _1405_0; // { 0, 0, 0 }
 
 extern const char _stringBase0_4[];
 
+extern float32 nsn_angle;
 extern float32 sEntityTimePassed;
 extern xBox all_ents_box;
 extern int32 all_ents_box_init;
 extern int32 setMaterialTextureRestore;
 extern int32 sSetPipeline;
 extern RxPipeline* oldPipe;
+extern int32 xent_entent;
 
 namespace
 {
@@ -188,7 +191,7 @@ void hack_receive_shadow(xEnt* ent);
 #else
 static void hack_receive_shadow(xEnt* ent)
 {
-    extern signed char init_856; // todo: static
+    extern volatile signed char init_856; // todo: static
     extern uint32 receive_models_855[15]; // todo: static
 
     if (!init_856)
@@ -382,7 +385,7 @@ void xEntInitForType(xEnt* ent)
 
         memset(ent->frame, 0, sizeof(xEntFrame));
 
-        ent->pflags &= 0xFD; // not sure why ~0x2 doesn't work
+        ent->pflags &= (uint8)~0x2;
         ent->chkby = XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR;
         ent->penby = XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR;
     }
@@ -420,9 +423,7 @@ void xEntInitForType(xEnt* ent)
         memset(ent->frame, 0, sizeof(xEntFrame));
     }
 
-    xBase* base = (xBase*)ent;
-
-    base->baseFlags |= 0x20;
+    ent->baseFlags |= 0x20;
 
     // non-matching: instruction order in epilogue :|
     // no idea how to fix that
@@ -1389,122 +1390,878 @@ void xEntCollide(xEnt* ent, xScene* sc, float32 dt)
 }
 #endif
 
-// func_8001A0A4
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntBeginCollide__FP4xEntP6xScenef")
+void xEntBeginCollide(xEnt* ent, xScene*, float32)
+{
+    uint8 idx;
+    xCollis* coll;
 
-// func_8001A21C
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntEndCollide__FP4xEntP6xScenef")
+    if (ent->bupdate)
+    {
+        ent->bupdate(ent, &ent->frame->mat.pos);
+    }
 
-// func_8001A250
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollCheckEnv__FP4xEntP6xScene")
+    for (idx = 0; idx < 18; idx++)
+    {
+        coll = &ent->collis->colls[idx];
 
+        coll->flags = 0x1F00;
+        coll->optr = NULL;
+        coll->mptr = NULL;
+        coll->dist = _951;
+    }
+
+    ent->collis->idx = 6;
+    ent->collis->stat_sidx = 6;
+    ent->collis->stat_eidx = 6;
+    ent->collis->dyn_sidx = 6;
+    ent->collis->dyn_eidx = 6;
+    ent->collis->npc_sidx = 6;
+    ent->collis->npc_eidx = 6;
+    ent->collis->env_sidx = 6;
+    ent->collis->env_eidx = 6;
+}
+
+void xEntEndCollide(xEnt* ent, xScene* sc, float32 dt)
+{
+    if (ent->collis->post)
+    {
+        ent->collis->post(ent, sc, dt, ent->collis);
+    }
+}
+
+void xEntCollCheckEnv(xEnt* p, xScene* sc)
+{
+    xCollis* coll;
+    uint8 ncolls;
+
+    p->collis->env_sidx = p->collis->idx;
+
+    coll = &p->collis->colls[p->collis->idx];
+    coll->flags = 0x1F00;
+
+    ncolls = 18 - p->collis->idx;
+
+    p->collis->idx += (uint8)iSphereHitsEnv3(&p->bound.sph, sc->env, coll, ncolls, _1541);
+    p->collis->env_eidx = p->collis->idx;
+}
+
+#ifndef NON_MATCHING
 // func_8001A2E0
+void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*), xGrid* grid);
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
                    "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid")
+#else
+static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*),
+                                 xGrid* grid)
+{
+    xVec3* r26 = xEntGetCenter(p);
+    xGridIterator it;
+    int32 px, pz;
 
-// func_8001A530
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "xEntCollCheckByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt")
+    xGridBound* cell = xGridIterFirstCell(grid, r26->x, r26->y, r26->z, px, pz, it);
 
-// func_8001A5C4
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "xEntCollCheckNPCsByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt")
+    while (cell)
+    {
+        if (xQuickCullIsects(&p->bound.qcd, (xQCData*)(cell + 1)))
+        {
+            hitIt((xEnt*)cell->data, sc, p);
+        }
 
-// func_8001A610
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "xEntCollCheckStats__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt")
+        cell = xGridIterNextCell(it);
+    }
 
-// func_8001A664
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "xEntCollCheckDyns__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt")
+    // non-matching: int to float conversion
 
-// func_8001A6B8
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "xEntCollCheckNPCs__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt")
+    float32 clcenterx = (_1435 * grid->csizex) + (grid->csizex * px + grid->minx);
+    float32 clcenterz = (_1435 * grid->csizez) + (grid->csizez * pz + grid->minz);
 
+    extern int32 k_1552;
+
+    if (r26->x < clcenterx)
+    {
+        if (r26->z < clcenterz)
+        {
+            k_1552 = 0;
+        }
+        else
+        {
+            k_1552 = 1;
+        }
+    }
+    else
+    {
+        if (r26->z < clcenterz)
+        {
+            k_1552 = 3;
+        }
+        else
+        {
+            k_1552 = 2;
+        }
+    }
+
+    extern int32 offs_1551[4][3][2];
+
+    for (int32 i = 0; i < 3; i++)
+    {
+        int32 _x = px + offs_1551[k_1552][i][0];
+        int32 _z = pz + offs_1551[k_1552][i][1];
+
+        cell = xGridIterFirstCell(grid, _x, _z, it);
+
+        while (cell)
+        {
+            if (xQuickCullIsects(&p->bound.qcd, (xQCData*)(cell + 1)))
+            {
+                hitIt((xEnt*)cell->data, sc, p);
+            }
+
+            cell = xGridIterNextCell(it);
+        }
+    }
+
+    cell = xGridIterFirstCell(&grid->other, it);
+
+    while (cell)
+    {
+        if (xQuickCullIsects(&p->bound.qcd, (xQCData*)(cell + 1)))
+        {
+            hitIt((xEnt*)cell->data, sc, p);
+        }
+
+        cell = xGridIterNextCell(it);
+    }
+}
+#endif
+
+void xEntCollCheckByGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*))
+{
+    p->collis->stat_sidx = p->collis->idx;
+    p->collis->dyn_sidx = p->collis->idx;
+
+    xEntCollCheckOneGrid(p, sc, hitIt, &colls_grid);
+    xEntCollCheckOneGrid(p, sc, hitIt, &colls_oso_grid);
+
+    p->collis->stat_eidx = p->collis->idx;
+    p->collis->dyn_eidx = p->collis->idx;
+}
+
+void xEntCollCheckNPCsByGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*))
+{
+    p->collis->npc_sidx = p->collis->idx;
+
+    xEntCollCheckOneGrid(p, sc, hitIt, &npcs_grid);
+
+    p->collis->npc_eidx = p->collis->idx;
+}
+
+void xEntCollCheckStats(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*))
+{
+    p->collis->stat_sidx = p->collis->idx;
+
+    xSceneForAllStatics(sc, hitIt, p);
+
+    p->collis->stat_eidx = p->collis->idx;
+}
+
+void xEntCollCheckDyns(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*))
+{
+    p->collis->dyn_sidx = p->collis->idx;
+
+    xSceneForAllDynamics(sc, hitIt, p);
+
+    p->collis->dyn_eidx = p->collis->idx;
+}
+
+void xEntCollCheckNPCs(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*))
+{
+    p->collis->npc_sidx = p->collis->idx;
+
+    xSceneForAllNPCs(sc, hitIt, p);
+
+    p->collis->npc_eidx = p->collis->idx;
+}
+
+#ifndef NON_MATCHING
 // func_8001A70C
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv")
+#else
+xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
+{
+    xent_entent = 1;
 
-// func_8001AB80
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollideFloor__FP4xEntP6xScenef")
+    xEnt* p = (xEnt*)data;
+    xCollis* coll;
+    uint32 modl_coll = 0;
 
-// func_8001AE78
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollideCeiling__FP4xEntP6xScenef")
+    if (p->collis->idx >= 15)
+    {
+        xent_entent = 0;
+        return NULL;
+    }
 
-// func_8001B018
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollideWalls__FP4xEntP6xScenef")
+    if ((ent->chkby & p->collType) == 0)
+    {
+        xent_entent = 0;
+        return ent;
+    }
 
-// func_8001B30C
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntSetNostepNormAngle__Ff")
+    if (ent->id == p->id && (ent == p || ent->baseType != eBaseTypeBoulder))
+    {
+        xent_entent = 0;
+        return ent;
+    }
 
-// func_8001B314
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntGetAllEntsBox__Fv")
+    coll = &p->collis->colls[p->collis->idx];
 
-// func_8001B320
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntAnimateCollision__FR4xEntb")
+    if (ent->collLev == 5 && p->collType & (XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR))
+    {
+        modl_coll = 1;
+    }
 
+    if (modl_coll)
+    {
+        coll->flags = 0;
+    }
+    else
+    {
+        coll->flags = 0x1F00;
+    }
+
+    xBoundHitsBound(&p->bound, &ent->bound, coll);
+
+    if (coll->flags & 0x1)
+    {
+        if (modl_coll)
+        {
+            xBound tmp;
+            xBound* bptr; // unused
+            uint8 ncolls;
+            xVec3 *upper, *lower;
+            uint8 idx;
+
+            coll->flags = 0x1F00;
+
+            if (p->bound.type == XBOUND_TYPE_SPHERE)
+            {
+                xModelInstance* r4 = (ent->collModel) ? ent->collModel : ent->model;
+                ncolls = 15 - p->collis->idx;
+                idx = iSphereHitsModel3(&p->bound.sph, r4, coll, ncolls, _1541);
+            }
+            else if (p->bound.type == XBOUND_TYPE_BOX)
+            {
+                upper = &p->bound.box.box.upper;
+                lower = &p->bound.box.box.lower;
+
+                tmp.type = XBOUND_TYPE_SPHERE;
+
+                xVec3Add(&tmp.sph.center, upper, lower);
+                xVec3SMulBy(&tmp.sph.center, _1435);
+
+                float32 rsum = upper->x + upper->y + upper->z - lower->x - lower->y - lower->z;
+
+                tmp.sph.r = _1724 * rsum;
+
+                // none of the code above is used for anything... maybe debug stuff
+
+                xModelInstance* r4 = (ent->collModel) ? ent->collModel : ent->model;
+                ncolls = 15 - p->collis->idx;
+                idx = iSphereHitsModel3(&p->bound.sph, r4, coll, ncolls, _1541);
+            }
+
+            // idx might be undefined here...!
+
+            for (uint8 i = 0; i < idx; i++)
+            {
+                coll[i].optr = ent;
+                coll[i].mptr = ent->model;
+
+                p->collis->idx++;
+            }
+
+            xent_entent = 0;
+            return ent;
+        }
+        else
+        {
+            coll->oid = ent->id;
+            coll->optr = ent;
+            coll->mptr = ent->model;
+
+            p->collis->idx++;
+
+            if (ent->pflags & 0x20 && ent->bound.type == XBOUND_TYPE_SPHERE &&
+                p->bound.type == XBOUND_TYPE_SPHERE && coll->hdng.y < _1725)
+            {
+                float32 dx = p->bound.sph.center.x - ent->bound.sph.center.x;
+                float32 dy = p->bound.sph.center.y - ent->bound.sph.center.y;
+                float32 dz = p->bound.sph.center.z - ent->bound.sph.center.z;
+
+                // non-matching: can't seem to generate a fmsubs here
+                float32 hsqr = SQR(p->bound.sph.r + ent->bound.sph.r) - (SQR(dx) + SQR(dz));
+
+                if (hsqr >= _942)
+                {
+                    coll->depen.x = _942;
+                    coll->depen.y = xsqrt(hsqr) - dy;
+                    coll->depen.z = _942;
+                    coll->dist = _1300 - coll->depen.y;
+                    coll->hdng.x = _942;
+                    coll->hdng.y = _950;
+                    coll->hdng.z = _942;
+                }
+            }
+        }
+    }
+
+    xent_entent = 0;
+    return ent;
+}
+#endif
+
+void xEntCollideFloor(xEnt* p, xScene* sc, float32 dt)
+{
+    xCollis* coll = &p->collis->colls[0];
+    uint8 idx;
+    xCollis* ml = coll;
+    xVec3 motion;
+    float32 mlen;
+    int32 stepping = 0;
+    float32 sbr;
+
+    if (p->bound.type == XBOUND_TYPE_SPHERE)
+    {
+        sbr = p->bound.sph.r;
+    }
+    else
+    {
+        sbr = _1300;
+    }
+
+    xVec3Copy(&motion, &p->frame->mat.pos);
+    xVec3SubFrom(&motion, &p->frame->oldmat.pos);
+
+    motion.y = _942;
+    mlen = xVec3Length(&motion);
+
+    for (idx = 6; idx < p->collis->idx; idx++)
+    {
+        xCollis* mf = &p->collis->colls[idx];
+
+        if (mf->flags & 0x1)
+        {
+            xEnt* fent = (xEnt*)mf->optr;
+
+            if (fent)
+            {
+                if ((fent->collType == XENT_COLLTYPE_DYN || fent->collType == XENT_COLLTYPE_STAT) ||
+                    (fent->pflags & 0x20 && _942 == mf->hdng.x && _942 == mf->hdng.z))
+                {
+                    if (!((p->collis->depenq) ?
+                              p->collis->depenq(p, fent, sc, dt, mf) :
+                              (fent->collType & p->collis->pen && fent->penby & p->collType)))
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else if (!(p->collis->pen & 0x20))
+            {
+                continue;
+            }
+
+            if (mf->dist < ml->dist)
+            {
+                if (mf->hdng.y < -icos(_1818) &&
+                    (mf->norm.y > icos(nsn_angle) ||
+                     p->frame->oldmat.pos.y > dt * (sc->gravity * dt) + p->frame->mat.pos.y))
+                {
+                    ml = mf;
+                    stepping = 0;
+                }
+                else if (mlen > _1819 && mf->hdng.y < _1820 / sbr - _780 &&
+                         mf->norm.y > icos(nsn_angle))
+                {
+                    stepping = 1;
+                    ml = mf;
+                }
+            }
+        }
+    }
+
+    if (ml != coll)
+    {
+        float32 flr_dist = ml->dist * (float32)iabs(ml->hdng.y);
+        xEnt* fent; // unused
+
+        *coll = *ml;
+
+        if (flr_dist < sbr)
+        {
+            ml->flags |= 0x6;
+
+            if (stepping)
+            {
+                p->frame->mat.pos.y += _1821 * dt;
+                p->frame->mat.pos.x += ml->depen.x;
+                p->frame->mat.pos.z += ml->depen.z;
+            }
+            else
+            {
+                p->frame->mat.pos.y += ml->depen.y;
+            }
+
+            p->frame->vel.y = _942;
+        }
+    }
+}
+
+void xEntCollideCeiling(xEnt* p, xScene* sc, float32 dt)
+{
+    xCollis* coll = &p->collis->colls[1];
+    uint8 idx;
+    xCollis* ml = coll;
+    float32 sbr;
+
+    if (p->bound.type == XBOUND_TYPE_SPHERE)
+    {
+        sbr = p->bound.sph.r;
+    }
+    else
+    {
+        sbr = _1300;
+    }
+
+    for (idx = 6; idx < p->collis->idx; idx++)
+    {
+        xCollis* mf = &p->collis->colls[idx];
+        xEnt* fent = (xEnt*)mf->optr;
+
+        if (fent)
+        {
+            if (!((p->collis->depenq) ?
+                      p->collis->depenq(p, fent, sc, dt, mf) :
+                      (fent->collType & p->collis->pen && fent->penby & p->collType)))
+            {
+                continue;
+            }
+        }
+        else if (!(p->collis->pen & 0x20))
+        {
+            continue;
+        }
+
+        if (mf->hdng.y > icos(_1541) && mf->dist < ml->dist)
+        {
+            ml = mf;
+        }
+    }
+
+    if (ml != coll)
+    {
+        float32 ceil_dist = ml->dist * (float32)iabs(ml->hdng.y);
+
+        *coll = *ml;
+
+        ml->flags |= 0xA;
+
+        if (ceil_dist < sbr)
+        {
+            p->frame->mat.pos.y -= sbr - ceil_dist;
+            p->frame->vel.y = _942;
+        }
+    }
+}
+
+void xEntCollideWalls(xEnt* p, xScene* sc, float32 dt)
+{
+    xCollis* coll;
+    xEnt* cent;
+    uint8 idx, sidx;
+    float32 sbr;
+
+    if (p->bound.type == XBOUND_TYPE_SPHERE)
+    {
+        sbr = p->bound.sph.r;
+    }
+    else
+    {
+        sbr = _1300;
+    }
+
+    if (p->collis->pen & 0x8)
+    {
+        idx = p->collis->npc_eidx;
+        sidx = p->collis->npc_sidx;
+
+        while (sidx < idx)
+        {
+            coll = &p->collis->colls[sidx];
+            cent = (xEnt*)coll->optr;
+
+            if (!(coll->flags & 0x2) && coll->dist < sbr &&
+                ((p->collis->depenq) ? p->collis->depenq(p, cent, sc, dt, coll) :
+                                       cent->penby & p->collType))
+            {
+                if (_942 != coll->depen.x || _942 != coll->depen.z)
+                {
+                    coll->depen.y = *(const float32*)&_942;
+                }
+
+                xEntAddToPos(p, &coll->depen);
+            }
+
+            sidx++;
+        }
+    }
+
+    if (p->collis->pen & 0x4)
+    {
+        idx = p->collis->dyn_eidx;
+        sidx = p->collis->dyn_sidx;
+
+        while (sidx < idx)
+        {
+            coll = &p->collis->colls[sidx];
+            cent = (xEnt*)coll->optr;
+
+            if (!(coll->flags & 0x2) && coll->dist < sbr &&
+                ((p->collis->depenq) ? p->collis->depenq(p, cent, sc, dt, coll) :
+                                       cent->penby & p->collType))
+            {
+                coll->depen.y = _942;
+
+                xEntAddToPos(p, &coll->depen);
+            }
+
+            sidx++;
+        }
+    }
+
+    if (p->collis->pen & 0x2)
+    {
+        idx = p->collis->stat_eidx;
+        sidx = p->collis->stat_sidx;
+
+        while (sidx < idx)
+        {
+            coll = &p->collis->colls[sidx];
+            cent = (xEnt*)coll->optr;
+
+            if (!(coll->flags & 0x2) && coll->dist < sbr &&
+                ((p->collis->depenq) ? p->collis->depenq(p, cent, sc, dt, coll) :
+                                       cent->penby & p->collType))
+            {
+                coll->depen.y = _942;
+
+                xEntAddToPos(p, &coll->depen);
+            }
+
+            sidx++;
+        }
+    }
+
+    if (p->collis->pen & 0x20)
+    {
+        idx = p->collis->env_eidx;
+        sidx = p->collis->env_sidx;
+
+        while (sidx < idx)
+        {
+            coll = &p->collis->colls[sidx];
+            cent = (xEnt*)coll->optr;
+
+            if (!(coll->flags & 0x2) && coll->dist < sbr)
+            {
+                coll->depen.y = _942;
+
+                xEntAddToPos(p, &coll->depen);
+            }
+
+            sidx++;
+        }
+    }
+}
+
+void xEntSetNostepNormAngle(float32 angle)
+{
+    nsn_angle = angle;
+}
+
+xBox* xEntGetAllEntsBox()
+{
+    return &all_ents_box;
+}
+
+void xEntAnimateCollision(xEnt& ent, bool on)
+{
+    if (on && !(ent.moreFlags & 0x20))
+    {
+        ent.moreFlags |= 0x20;
+
+        if (!ent.frame)
+        {
+            ent.frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+
+            memset(ent.frame, 0, sizeof(xEntFrame));
+        }
+
+        anim_coll::reset(ent);
+    }
+    else if (!on && ent.moreFlags & 0x20)
+    {
+        ent.moreFlags &= (uint8)~0x20;
+    }
+}
+
+#ifndef NON_MATCHING
 // func_8001B3BC
 #pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntValidType__FUc")
+#else
+bool xEntValidType(uint8 type)
+{
+    // I have no idea how to match this lol
 
-// func_8001B664
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntReposition__FR4xEntRC7xMat4x3")
+    return (type == eBaseTypeTrigger || type == eBaseTypePlayer || type == eBaseTypePickup ||
+            type == eBaseTypePlatform || type == eBaseTypeDoor || type == eBaseTypeSavePoint ||
+            type == eBaseTypeItem || type == eBaseTypeStatic || type == eBaseTypeDynamic ||
+            type == eBaseTypeBubble || type == eBaseTypePendulum || type == eBaseTypeHangable ||
+            type == eBaseTypeButton || type == eBaseTypeProjectile ||
+            type == eBaseTypeDestructObj || type == eBaseTypeUI || type == eBaseTypeUIFont ||
+            type == eBaseTypeProjectileType || type == eBaseTypeEGenerator ||
+            type == eBaseTypeNPC || type == eBaseTypeBoulder || type == eBaseTypeTeleportBox ||
+            type == eBaseTypeZipLine);
+}
+#endif
 
-// func_8001B70C
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntInitShadow__FR4xEntR10xEntShadow")
+void xEntReposition(xEnt& ent, const xMat4x3& mat)
+{
+    *(xMat4x3*)ent.model->Mat = mat;
 
-// func_8001B788
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "__ami__5xVec3Ff")
+    if (ent.collModel && ent.collModel != ent.model)
+    {
+        *(xMat4x3*)ent.collModel->Mat = mat;
+    }
 
-// func_8001B7B0
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "__apl__5xVec3Ff")
+    if (ent.frame)
+    {
+        ent.frame->mat = mat;
+    }
 
-// func_8001B7D8
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xBoundCenter__FP6xBound")
+    if (ent.bound.mat)
+    {
+        *ent.bound.mat = mat;
+    }
 
-// func_8001B7E0
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xBoundCenter__FPC6xBound")
+    ent.bound.sph.center = mat.pos;
 
-// func_8001B7E8
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntHide__FP4xEnt")
+    xBoundUpdate(&ent.bound);
+    zGridUpdateEnt(&ent);
+}
 
-// func_8001B7F8
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntShow__FP4xEnt")
+void xEntInitShadow(xEnt& ent, xEntShadow& shadow)
+{
+    ent.entShadow = &shadow;
 
-// func_8001B808
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntGetPos__FPC4xEnt")
+    shadow.vec.assign(_942, _780, _942);
+    shadow.pos = ent.asset->pos;
+    shadow.shadowModel = NULL;
+    shadow.dst_cast = _950;
+    shadow.radius[0] = _950;
+    shadow.radius[1] = _950;
+}
 
-// func_8001B830
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntGetCenter__FPC4xEnt")
+xVec3& xVec3::operator-=(float32 f)
+{
+    this->x -= f;
+    this->y -= f;
+    this->z -= f;
 
-// func_8001B854
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xRotCopy__FP4xRotPC4xRot")
+    return *this;
+}
 
-// func_8001B878
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+xVec3& xVec3::operator+=(float32 f)
+{
+    this->x += f;
+    this->y += f;
+    this->z += f;
 
-// func_8001B8DC
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xMat3x3Rot__FP7xMat3x3PC5xVec3f")
+    return *this;
+}
 
-// func_8001B90C
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xModelSetFrame__FP14xModelInstancePC7xMat4x3")
+xVec3* xBoundCenter(xBound* bound)
+{
+    return &bound->sph.center;
+}
 
-// func_8001B930
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xModelGetFrame__FP14xModelInstance")
+const xVec3* xBoundCenter(const xBound* bound)
+{
+    return &bound->sph.center;
+}
 
-// func_8001B938
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xVec3SMulBy__FP5xVec3f")
+void xEntHide(xEnt* ent)
+{
+    ent->flags &= ~0x1;
+}
 
-// func_8001B960
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xVec3SubFrom__FP5xVec3PC5xVec3")
+void xEntShow(xEnt* ent)
+{
+    ent->flags |= 0x1;
+}
 
-// func_8001B994
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xGridIterFirstCell__FPP10xGridBoundR13xGridIterator")
+xVec3* xEntGetPos(const xEnt* ent)
+{
+    return &xModelGetFrame(ent->model)->pos;
+}
 
-// func_8001B9CC
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xGridIterFirstCell__FP5xGridiiR13xGridIterator")
+xVec3* xEntGetCenter(const xEnt* ent)
+{
+    return (xVec3*)xBoundCenter(&ent->bound);
+}
 
-// func_8001BA40
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xGridIterNextCell__FR13xGridIterator")
+void xRotCopy(xRot* o, const xRot* r)
+{
+    o->axis.x = r->axis.x;
+    o->axis.y = r->axis.y;
+    o->axis.z = r->axis.z;
+    o->angle = r->angle;
+}
 
-// func_8001BAB0
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xGridIterClose__FR13xGridIterator")
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}
+
+void xMat3x3Rot(xMat3x3* m, const xVec3* a, float32 t)
+{
+    xMat3x3RotC(m, a->x, a->y, a->z, t);
+}
+
+void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame)
+{
+    xMat4x3Copy((xMat4x3*)modelInst->Mat, frame);
+}
+
+xMat4x3* xModelGetFrame(xModelInstance* modelInst)
+{
+    return (xMat4x3*)modelInst->Mat;
+}
+
+void xVec3SMulBy(xVec3* v, float32 s)
+{
+    v->x *= s;
+    v->y *= s;
+    v->z *= s;
+}
+
+void xVec3SubFrom(xVec3* o, const xVec3* v)
+{
+    o->x -= v->x;
+    o->y -= v->y;
+    o->z -= v->z;
+}
+
+xGridBound* xGridIterFirstCell(xGridBound** head, xGridIterator& it)
+{
+    xGridBound* cell = *head;
+
+    if (!cell)
+    {
+        return NULL;
+    }
+
+    it.delfound = 0;
+    it.listhead = head;
+    it.curcell = cell;
+
+    gGridIterActive++;
+
+    return cell;
+}
+
+xGridBound* xGridIterFirstCell(xGrid* grid, int32 grx, int32 grz, xGridIterator& iter)
+{
+    if (grx < 0 || grx >= grid->nx)
+    {
+        return NULL;
+    }
+
+    if (grz < 0 || grz >= grid->nz)
+    {
+        return NULL;
+    }
+
+    return xGridIterFirstCell(grid->cells + grz * grid->nx + grx, iter);
+}
+
+xGridBound* xGridIterNextCell(xGridIterator& it)
+{
+    if (it.curcell)
+    {
+        it.curcell = it.curcell->next;
+    }
+
+    while (it.curcell)
+    {
+        if (!it.curcell->deleted)
+        {
+            return it.curcell;
+        }
+
+        it.delfound = 1;
+        it.curcell = it.curcell->next;
+    }
+
+    xGridIterClose(it);
+    return NULL;
+}
+
+void xGridIterClose(xGridIterator& it)
+{
+    if (it.listhead)
+    {
+        gGridIterActive--;
+
+        if (it.delfound && !gGridIterActive)
+        {
+            xGridBound* cell = *it.listhead;
+            xGridBound** head = it.listhead;
+
+            while (cell)
+            {
+                if (cell->deleted)
+                {
+                    *head = cell->next;
+
+                    cell->next = NULL;
+                    cell->head = NULL;
+                    cell->ingrid = 0;
+                    cell->deleted = 0;
+                    cell->gx = 0xFFFF;
+                    cell->gz = 0xFFFF;
+
+                    cell = *head;
+                }
+                else
+                {
+                    head = &cell->next;
+                    cell = cell->next;
+                }
+            }
+        }
+
+        it.listhead = NULL;
+        it.curcell = NULL;
+        it.delfound = 0;
+    }
+}

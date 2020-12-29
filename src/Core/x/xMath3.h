@@ -81,5 +81,6 @@ void xRotCopy(xRot* o, const xRot* r);
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat3x3Rot(xMat3x3* m, const xVec3* a, float32 t);
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
+void xMat3x3RotC(xMat3x3* m, float32 _x, float32 _y, float32 _z, float32 t);
 
 #endif

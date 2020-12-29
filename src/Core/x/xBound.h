@@ -3,6 +3,7 @@
 
 #include "xQuickCull.h"
 #include "xMath3.h"
+#include "xCollide.h"
 
 // Size: 0x4C
 struct xBound
@@ -34,6 +35,8 @@ void xBoundGetBox(xBox& box, const xBound& bound);
 void xBoundDraw(const xBound* bound);
 void xQuickCullForBound(xQCData* qc, const xBound* bound);
 xVec3* xBoundCenter(xBound* bound);
+const xVec3* xBoundCenter(const xBound* bound);
 void xBoundUpdate(xBound* b);
+void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c);
 
 #endif

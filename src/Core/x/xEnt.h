@@ -204,8 +204,8 @@ uint32 xEntIsVisible(const xEnt* ent);
 void xEntHide(xEnt* ent);
 void xEntShow(xEnt* ent);
 void xEntInitShadow(xEnt& ent, xEntShadow& shadow);
-void xEntReposition(xEnt& ent, xMat4x3& mat);
-uint8 xEntValidType(uint8 type);
+void xEntReposition(xEnt& ent, const xMat4x3& mat);
+bool xEntValidType(uint8 type);
 void xEntAnimateCollision(xEnt& ent, uint8 on);
 xBox* xEntGetAllEntsBox();
 void xEntSetNostepNormAngle(float32 angle);
@@ -247,6 +247,5 @@ void xEntAddHittableFlag(xEnt* ent);
 void xEntSceneExit();
 void xEntSceneInit();
 void xEntSetTimePassed(float32 sec);
-xVec3* xEntGetPos(const xEnt* ent);
 
 #endif

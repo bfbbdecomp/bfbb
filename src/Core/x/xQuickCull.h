@@ -19,5 +19,6 @@ struct xQCData
 };
 
 void xQuickCullForEverything(xQCData* q);
+int32 xQuickCullIsects(const xQCData* a, const xQCData* b);
 
 #endif
