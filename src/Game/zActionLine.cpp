@@ -6,8 +6,8 @@
 
 #include "zActionLine.h"
 
-extern float32 zActionLine_f_0;
-extern float32 zActionLine_f_1;
+extern float32 zActionLine_f_0; // 0.0
+extern float32 zActionLine_f_1; // 1.0
 
 extern _tagActionLine* sActionLine[8];
 extern RwRaster* sActionLineRaster;
@@ -36,29 +36,24 @@ void zActionLineInit()
 }
 #endif
 
-// func_8004E57C
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineUpdate__Ff")
-#else
 void zActionLineUpdate(float32 seconds)
 {
-    // 14 lines
-    int32 i;
-
-    for (i = 0; i < 8; i++)
+    for (int32 i = 0; i < 8; i++)
     {
         _tagActionLine* line = sActionLine[i];
-        if (line != NULL && (line->flags & 1) != 0)
+
+        if (line && line->flags & 1)
         {
             line->time_left -= seconds;
+
             if (line->time_left <= zActionLine_f_0)
             {
-                line->flags = line->flags & 0xfffffffe;
+                // clear the first bit
+                line->flags &= ~1;
             }
         }
     }
 }
-#endif
 
 // func_8004E628
 #if 1
