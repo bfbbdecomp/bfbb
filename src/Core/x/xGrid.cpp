@@ -10,8 +10,6 @@ extern float xGrid_float_0p001;
 extern float xGrid_float_one;
 extern float xGrid_float_one_quarter;
 
-extern int32 gGridIterActive;
-
 // func_80121E0C
 void xGridBoundInit(xGridBound* bound, void* data)
 {
@@ -194,17 +192,17 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
 {
     const xBound* bound = &ent->bound;
     const xVec3* center;
-    if (bound->type == BOUND_TYPE_SPHERE)
+    if (bound->type == XBOUND_TYPE_SPHERE)
     {
         center = &bound->sph.center;
     }
-    else if (bound->type == BOUND_TYPE_4)
+    else if (bound->type == XBOUND_TYPE_BOXLOCAL)
     {
         // TODO: Possibly should be cyl.center depending what type 4 is, the
         // code matches either way.
         center = &bound->box.center;
     }
-    else if (bound->type == BOUND_TYPE_2)
+    else if (bound->type == XBOUND_TYPE_BOX)
     {
         // TODO: Possibly should be box.center depending what type 2 is, the
         // code matches either way.
@@ -234,11 +232,11 @@ void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int3
 #endif
 
 // func_801227B0
-void xGridIterFirstCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx,
-                        int32& grz, xGridIterator& iter)
+xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx,
+                               int32& grz, xGridIterator& iter)
 {
     xGridGetCell(grid, posx, posy, posz, grx, grz);
-    xGridIterFirstCell(grid, grx, grz, iter);
+    return xGridIterFirstCell(grid, grx, grz, iter);
 }
 
 // func_80122814

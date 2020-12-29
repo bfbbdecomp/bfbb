@@ -11,6 +11,7 @@
 #include "xModel.h"
 #include "xEntMotion.h"
 #include "xCamera.h"
+#include "xDraw.h"
 
 #include "../p2/iColor.h"
 #include "../p2/iCollide.h"
@@ -69,18 +70,18 @@ void xNPCBasic::Init(xEntAsset* asset)
     xEntInit(thisEnt, asset);
     collType = 8;
     collLev = 4;
-    bound.type = 1; // [int8] 0x84
+    bound.type = XBOUND_TYPE_SPHERE; // [int8] 0x84
     moreFlags |= 0x10;
     zEntParseModelInfo(thisEnt, asset->modelInfoID);
     xEntInitForType(thisEnt);
     xEntInitShadow(*thisEnt, entShadow_embedded);
     simpShadow = &simpShadow_embedded;
     xShadowSimple_CacheInit(simpShadow, thisEnt, 0x50);
-    if (bound.type == 2)
+    if (bound.type == XBOUND_TYPE_BOX)
     {
         iBoxForModel(&bound.box.box, collModel ? collModel : model);
     }
-    else if (bound.type == 4)
+    else if (bound.type == XBOUND_TYPE_BOXLOCAL)
     {
         iBoxForModelLocal(&bound.box.box, collModel ? collModel : model);
     }
@@ -153,10 +154,10 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
     xVec3Copy(&bndcent, xEntGetPos(npc));
     bndcent.y += xNPCBasic_float_0p75;
 
-    npc->bound.type = 1;
+    npc->bound.type = XBOUND_TYPE_SPHERE;
     xVec3Copy(&npc->bound.sph.center, &bndcent);
     npc->bound.sph.r = xNPCBasic_float_0p75;
-    if (npc->bound.type != 0)
+    if (npc->bound.type != XBOUND_TYPE_0)
     {
         xQuickCullForBound(&npc->bound.qcd, &npc->bound);
     }
@@ -183,14 +184,14 @@ void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
     }
 
     float32 radius;
-    if (npc->bound.type == 1)
+    if (npc->bound.type == XBOUND_TYPE_SPHERE)
     {
         radius = npc->bound.sph.r;
     }
     else
     {
         radius = MAX(npc->bound.box.box.upper.x - npc->bound.box.box.lower.x,
-            npc->bound.box.box.upper.z - npc->bound.box.box.lower.z);
+                     npc->bound.box.box.upper.z - npc->bound.box.box.lower.z);
     }
 
     int32 nf = xNPCBasic_float_thirty * (radius / d);
@@ -207,7 +208,7 @@ void xNPCBasic::Process(xScene* xscn, float32 dt)
     if (flags2.flg_colCheck || flags2.flg_penCheck)
     {
         colFreq -= 1;
-    } 
+    }
     else
     {
         colFreq = 1;
@@ -278,7 +279,7 @@ void xNPCBasic::Process(xScene* xscn, float32 dt)
         DBG_PStatCont(eNPCPerfDisable);
         DBG_PStatOn(eNPCPerfEnable);
     }
-    
+
     if ((pflags & (0x2 | 0x1)) != 0 && xVec3Length2(&frame->vel) > xNCPBasic_float_0p10000000)
     {
         NPC_spdBasedColFreq(this, dt);
@@ -346,7 +347,7 @@ void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
     if (npc->isCulled)
     {
         npc->model->Flags &= 0xfffd;
-    } 
+    }
     else if ((npc->flags1.flg_upward & 0x1) == 0)
     {
         npc->model->Flags |= 0x2;
@@ -374,7 +375,8 @@ void NPC_entwrap_move(xEnt* ent, xScene* scn, float32 dt, xEntFrame* frame)
 }
 
 // func_8011020C
-int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* toParamWidget)
+int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+                        xBase* toParamWidget)
 {
     int32 handled = 0;
     return ((xNPCBasic*)to)->SysEvent(from, to, toEvent, toParam, toParamWidget, &handled);

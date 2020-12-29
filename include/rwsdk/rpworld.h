@@ -92,6 +92,14 @@ struct RpGeometry
     RpMorphTarget* morphTarget;
 };
 
+enum RpInterpolatorFlag
+{
+    rpINTERPOLATORDIRTYINSTANCE = 0x01,
+    rpINTERPOLATORDIRTYSPHERE = 0x02,
+    rpINTERPOLATORNOFRAMEDIRTY = 0x04,
+    rpINTERPOLATORFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 enum RpAtomicFlag
 {
     rpATOMICCOLLISIONTEST = 0x01,

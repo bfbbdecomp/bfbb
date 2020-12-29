@@ -19,7 +19,7 @@ typedef int32 (*xBaseEventCB)(xBase*, xBase*, uint32, const float32*, xBase*);
 struct xBase
 {
     uint32 id;
-    uint8 baseType;
+    uint8 baseType; // see en_ZBASETYPE in zBase.h
     uint8 linkCount;
     uint16 baseFlags;
     xLinkAsset* link;

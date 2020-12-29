@@ -5,6 +5,7 @@
 #include "xEnt.h"
 #include "xEnv.h"
 #include "xMemMgr.h"
+#include "xRay3.h"
 
 typedef char* (*xSceneBase2NameCallback)(xBase*);
 typedef char* (*xSceneID2NameCallback)(uint32);
@@ -42,6 +43,12 @@ struct xScene
     xSceneID2NameCallback id2Name;
 };
 
+extern xScene* g_xSceneCur;
+
 xBase* xSceneResolvID(xScene* sc, uint32 id);
+void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, uint8 collType, uint8 chk);
+void xSceneForAllStatics(xScene* sc, xEnt* (*func)(xEnt*, xScene*, void*), void* data);
+void xSceneForAllDynamics(xScene* sc, xEnt* (*func)(xEnt*, xScene*, void*), void* data);
+void xSceneForAllNPCs(xScene* sc, xEnt* (*func)(xEnt*, xScene*, void*), void* data);
 
 #endif

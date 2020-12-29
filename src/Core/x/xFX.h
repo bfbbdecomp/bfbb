@@ -4,7 +4,7 @@
 #include "../p2/iColor.h"
 #include "xVec3.h"
 
-#include <types.h>
+#include <rwcore.h>
 #include <rpworld.h>
 
 struct xFXRing
@@ -31,5 +31,13 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params);
 void xFXUpdate(float32 dt);
 
 void xFX_SceneExit(RpWorld* world);
+void xFXanimUV2PSetTexture(RwTexture* texture);
+void xFXanimUVSetTranslation(const xVec3* trans);
+void xFXanimUV2PSetTranslation(const xVec3* trans);
+void xFXanimUVSetScale(const xVec3* scale);
+void xFXanimUV2PSetScale(const xVec3* scale);
+void xFXanimUVSetAngle(float32 angle);
+void xFXanimUV2PSetAngle(float32 angle);
+RpAtomic* xFXanimUVAtomicSetup(RpAtomic* atomic);
 
 #endif
