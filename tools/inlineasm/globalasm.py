@@ -10,7 +10,7 @@ Specified by #pragma GLOBAL_ASM(assemblyFilePath, functionName)
 """
 
 parser = argparse.ArgumentParser(description=info)
-parser.add_argument("cpFile", help="The .cp file to process")
+parser.add_argument("file", help="The source file to process")
 parser.add_argument("-s",
                     "--scope",
                     help="Set function scope equal to scope in assembly",
@@ -20,13 +20,13 @@ parser.add_argument("-s",
 def run():
 
     args = parser.parse_args()
-    cpPath = Path(args.cpFile)
-    cpText = open(cpPath).read()
-    matches = getPragmaMatches(cpText)
+    sourcePath = Path(args.file)
+    sourceText = open(sourcePath).read()
+    matches = getPragmaMatches(sourceText)
 
     # Create path to cache if not exists
     createCacheFolder()
-    fileCache = getFileCache(cpPath)
+    fileCache = getFileCache(sourcePath)
 
     if len(matches) == 0:
         return
@@ -67,7 +67,8 @@ def run():
         hashKey = funcHash.hexdigest()
 
         if hashKey in fileCache:
-            cpText = cpText.replace(replacePragmaText, fileCache[hashKey])
+            sourceText = sourceText.replace(replacePragmaText,
+                                            fileCache[hashKey])
             continue
 
         asmPath = Path(pragmaArgs[0])
@@ -84,18 +85,18 @@ def run():
 
         newSource = ""
         newSource = writeCode(newSource, funcToImport, codeBytes, isGlobal)
-        cpText = cpText.replace(replacePragmaText, newSource)
+        sourceText = sourceText.replace(replacePragmaText, newSource)
 
         # update our file cache to avoid re-processing
         # the same function on every build
         fileCache[hashKey] = newSource
 
-    open(cpPath, "w").write(cpText)
+    open(sourcePath, "w").write(sourceText)
 
     if fileCache["size"] != len(fileCache):
         fileCache["size"] = len(fileCache)
-        fileCache["name"] = str(cpPath)
-        saveFileCache(cpPath, fileCache)
+        fileCache["name"] = str(sourcePath)
+        saveFileCache(sourcePath, fileCache)
 
 
 run()
