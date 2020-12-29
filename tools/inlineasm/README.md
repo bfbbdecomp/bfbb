@@ -263,7 +263,14 @@ Because it outputted the exact assembly instructions, we can just piggyback off 
 becomes
 `opword 0x4E800020`.
 
-### Output
+### Assumption 3.
+
+The assembly file's text section needs to be wrapped in a `.if 0` and `.endif` block.
+This allows us to include the assembly file and its data sections without including the program code.
+However, the program code must exist somewhere in order for our script to know what to insert.
+This simple little hack solves the problem of not inserting the code twice, but still allowing it to exist in the assembly files.
+
+## Output
 
 Let's finally take a look at the final function and understand the parts, and why each one is there:
 
