@@ -6,12 +6,15 @@
 
 #include "zActionLine.h"
 
+extern float32 zActionLine_f_0;
+extern float32 zActionLine_f_1;
+
 extern _tagActionLine* sActionLine[8];
 extern RwRaster* sActionLineRaster;
 extern const int8 zActionLineStrings[];
 
 // func_8004E510
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineInit__Fv")
 #else
 void zActionLineInit()
@@ -37,7 +40,47 @@ void zActionLineInit()
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineUpdate__Ff")
 
 // func_8004E628
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "RenderActionLine__FP14_tagActionLine")
+#else
+void RenderActionLine(_tagActionLine* l)
+{
+    static RxObjSpace3DVertex sStripVert[4];
+
+    /*
+        this loop is hard to understand with ghidra.
+        The compiler will unroll it,
+        but the order that it does things in
+        is very confusing to me.
+
+        This is sort of close, but needs a lot
+        of work in the loop to make it closer.
+    */
+    for (int32 i = 0; i < 4; i++)
+    {
+        RxObjSpace3DVertex* vert = &sStripVert[i];
+        RwRGBA* _col = &vert->c.color;
+
+        vert->objVertex.x = l->pos[i].x;
+        vert->objVertex.y = l->pos[i].y;
+        vert->objVertex.z = l->pos[i].z;
+
+        _col->red = 0xff;
+        _col->blue = 0xff;
+        _col->green = 0xff;
+        _col->alpha = 0x80;
+
+        vert->u = zActionLine_f_0;
+        vert->v = zActionLine_f_1;
+    }
+
+    if (RwIm3DTransform(sStripVert, 4, NULL, 0x19))
+    {
+        RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
+        RwIm3DEnd();
+    }
+}
+#endif
 
 // func_8004E770
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineRender__Fv")
