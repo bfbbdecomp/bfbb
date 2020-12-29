@@ -1,10 +1,10 @@
 #ifndef XJSP_H
 #define XJSP_H
 
-#include "xClumpColl.h"
-
+#include <types.h>
 #include <rwcore.h>
 #include <rpworld.h>
+#include "xClumpColl.h"
 
 struct xJSPNodeInfo
 {
