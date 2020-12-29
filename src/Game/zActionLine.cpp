@@ -37,7 +37,28 @@ void zActionLineInit()
 #endif
 
 // func_8004E57C
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineUpdate__Ff")
+#else
+void zActionLineUpdate(float32 seconds)
+{
+    // 14 lines
+    int32 i;
+
+    for (i = 0; i < 8; i++)
+    {
+        _tagActionLine* line = sActionLine[i];
+        if (line != NULL && (line->flags & 1) != 0)
+        {
+            line->time_left -= seconds;
+            if (line->time_left <= zActionLine_f_0)
+            {
+                line->flags = line->flags & 0xfffffffe;
+            }
+        }
+    }
+}
+#endif
 
 // func_8004E628
 #if 1
