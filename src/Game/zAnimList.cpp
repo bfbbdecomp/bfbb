@@ -1,6 +1,8 @@
 #include <types.h>
 
 #include "../Core/x/xAnim.h"
+#include "../Core/x/xstransvc.h"
+#include "../Core/x/xMemMgr.h"
 
 #include "zAnimList.h"
 #include "zAssetTypes.h"
@@ -30,7 +32,28 @@ void zAnimListInit()
     xAnimFile* afile;
     int32 idle_exists;
     int32 j;
-    xAnimFile* afile;
+    xAnimFile* afile2;
+
+    // ALST = Animation list https://battlepedia.org/ALST
+    nals = xSTAssetCountByType('ALST'); // 0x414C5354
+
+    if (!nals)
+    {
+        return;
+    }
+
+    // << 2 is the same as multiplying by 4
+    // so it's just allocating size in bytes
+    aids = (uint32*)xMemAlloc(nals * 4);
+    atbls = (xAnimTable**)xMemAlloc(nals * 4);
+    anused = (int32*)xMemAlloc(nals * 4);
+
+    for (i = 0; i < nals; i++)
+    {
+        for (j = 0; j < 10; j++)
+        {
+        }
+    }
 }
 #endif
 
