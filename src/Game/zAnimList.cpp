@@ -4,6 +4,11 @@
 
 #include "zAnimList.h"
 
+extern int32 nals;
+extern uint32* aids;
+extern xAnimTable** atbls;
+extern int32* anused;
+
 uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
 {
     return 1;
@@ -12,8 +17,13 @@ uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
 // func_8004E7E8
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListInit__Fv")
 
-// func_8004EB44
-#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListExit__Fv")
+void zAnimListExit()
+{
+    nals = 0;
+    aids = NULL;
+    atbls = NULL;
+    anused = NULL;
+}
 
 // func_8004EB5C
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListGetTable__FUi")
