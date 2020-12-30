@@ -5,8 +5,8 @@
 #include "zAnimList.h"
 
 extern int32 nals;
-extern uint32* aids;
-extern xAnimTable** atbls;
+extern uint32* aids; // anim IDs (not AIDS, you fool)
+extern xAnimTable** atbls; // anim tables
 extern int32* anused;
 
 uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
@@ -41,5 +41,18 @@ xAnimTable* zAnimListGetTable(uint32 id)
     return NULL;
 }
 
-// func_8004EBA4
-#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListGetNumUsed__FUi")
+int32 zAnimListGetNumUsed(uint32 id)
+{
+    uint32* current_id = aids;
+
+    for (int32 i = 0; i < nals; i++)
+    {
+        if (id == *current_id)
+        {
+            return anused[i];
+        }
+        current_id++;
+    }
+
+    return 0;
+}
