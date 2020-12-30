@@ -25,8 +25,21 @@ void zAnimListExit()
     anused = NULL;
 }
 
-// func_8004EB5C
-#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListGetTable__FUi")
+xAnimTable* zAnimListGetTable(uint32 id)
+{
+    uint32* current_id = aids;
+
+    for (int32 i = 0; i < nals; i++)
+    {
+        if (id == *current_id)
+        {
+            return atbls[i];
+        }
+        current_id++;
+    }
+
+    return NULL;
+}
 
 // func_8004EBA4
 #pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListGetNumUsed__FUi")
