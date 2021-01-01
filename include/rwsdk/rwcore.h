@@ -4,9 +4,23 @@
 #include "rwplcore.h"
 
 typedef struct _RxObjSpace3DVertex RxObjSpace3DVertex;
+
+struct RxColorUnion
+{
+    union
+    {
+        RwRGBA preLitColor;
+        RwRGBA color;
+    };
+};
+
 struct _RxObjSpace3DVertex
 {
-    /* unknown */
+    RwV3d objVertex;
+    RxColorUnion c;
+    RwV3d objNormal;
+    float32 u;
+    float32 v;
 };
 
 typedef RxObjSpace3DVertex RxObjSpace3DLitVertex;
