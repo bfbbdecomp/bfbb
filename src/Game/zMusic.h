@@ -44,5 +44,7 @@ void zMusicKill();
 void zMusicPause();
 void zMusicUnpause(int32 kill);
 void zMusicReset();
+void zMusicInit();
+void zMusicUpdate(float32 dt);
 
 #endif

@@ -1,45 +1,247 @@
 #include "xGrid.h"
 
-#include <types.h>
+#include "string.h"
+
+#include "xMath.h"
+#include "xMemMgr.h"
+#include "xEnt.h"
+
+extern float xGrid_float_0p001;
+extern float xGrid_float_one;
+extern float xGrid_float_one_quarter;
 
 // func_80121E0C
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridBoundInit__FP10xGridBoundPv")
+void xGridBoundInit(xGridBound* bound, void* data)
+{
+    bound->data = data;
+    bound->gx = -1;
+    bound->gz = -1;
+    bound->ingrid = 0;
+    bound->oversize = 0;
+    bound->head = 0;
+    bound->next = 0;
+    bound->gpad = 0xea;
+}
 
 // func_80121E40
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridInit__FP5xGridPC4xBoxUsUsUc")
+#else
+// Usual floating point problems, floating point loads get pulled to the start.
+// Also, there's something funny going on with the malloc + memset at the end,
+// I think they may not have used the obvious pattern for it, since changing
+// the multiplication order for the second one generates closer machine code
+// than the same for both lines.
+void xGridInit(xGrid* grid, xBox* bounds, uint16 nx, uint16 nz, uint8 ingrid_id)
+{
+    grid->ingrid_id = ingrid_id;
+    grid->nx = nx;
+    grid->nz = nz;
+    grid->minx = bounds->upper.x;
+    grid->minz = bounds->upper.z;
+    grid->maxx = bounds->lower.x;
+    grid->maxz = bounds->lower.z;
+    float32 gsizex = grid->maxx - grid->minx;
+    float32 gsizez = grid->maxz - grid->minz;
+    grid->csizex = gsizex / nx;
+    grid->csizez = gsizex / nz;
+
+    if (__fabs(gsizex) <= xGrid_float_0p001)
+    {
+        grid->inv_csizex = xGrid_float_one;
+    }
+    else
+    {
+        grid->inv_csizex = nx / gsizex;
+    }
+
+    if (__fabs(gsizez) <= xGrid_float_0p001)
+    {
+        grid->inv_csizez = xGrid_float_one;
+    }
+    else
+    {
+        grid->inv_csizez = nz / gsizez;
+    }
+
+    grid->maxr = xGrid_float_one_quarter * MAX(grid->csizex, grid->csizez);
+    grid->cells = (xGridBound**)xMemAlloc(nx * nz * sizeof(xGridBound*));
+    memset(grid->cells, 0, sizeof(xGridBound*) * (nz * nx));
+}
+#endif
 
 // func_80121FE8
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridKill__FP5xGrid")
+void xGridKill(xGrid* grid)
+{
+    xGridEmpty(grid);
+    grid->cells = NULL;
+}
 
 // func_8012201C
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridEmpty__FP5xGrid")
+void xGridEmpty(xGrid* grid)
+{
+    for (int32 x = 0; x < grid->nx; ++x)
+    {
+        for (int32 z = 0; z < grid->nz; ++z)
+        {
+            xGridBound** head = &grid->cells[z * grid->nx];
+            xGridBound* curr = head[x];
+            while (curr)
+            {
+                xGridBound* currnext = curr->next;
+                xGridBoundInit(curr, curr->data);
+                curr = currnext;
+            }
+            head[x] = NULL;
+        }
+    }
+
+    xGridBound* curr = grid->other;
+    while (curr)
+    {
+        xGridBound* nextnext = curr->next;
+        xGridBoundInit(curr, curr->data);
+        curr = nextnext;
+    }
+    grid->other = NULL;
+}
 
 // func_801220E0
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAddToCell__FPP10xGridBoundP10xGridBound")
+bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
+{
+    if (bound->head)
+    {
+        if (gGridIterActive == 0)
+        {
+            if (!xGridRemove(bound))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bound->head = boundList;
+    bound->next = boundList[0];
+    boundList[0] = bound;
+    return true;
+}
 
 // func_80122160
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAdd__FP5xGridP10xGridBoundii")
+void xGridAdd(xGrid* grid, xGridBound* bound, int32 x, int32 z)
+{
+    xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
+}
 
 // func_8012219C
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAdd__FP5xGridP4xEnt")
 
 // func_801224D4
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridRemove__FP10xGridBound")
+int32 xGridRemove(xGridBound* bound)
+{
+    if (bound->head)
+    {
+        if (gGridIterActive)
+        {
+            bound->deleted = 1;
+            return 0;
+        }
+        else
+        {
+            xGridBound* curr = bound->head[0];
+            xGridBound** prev = bound->head;
+            while (curr && curr != bound)
+            {
+                prev = &curr->next;
+                curr = curr->next;
+            }
+
+            *prev = curr->next;
+            curr->next = NULL;
+            curr->head = NULL;
+            curr->ingrid = 0;
+            curr->deleted = 0;
+            curr->gx = -1;
+            curr->gz = -1;
+        }
+    }
+    return 1;
+}
 
 // func_80122554
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridUpdate__FP5xGridP4xEnt")
+void xGridUpdate(xGrid* grid, xEnt* ent)
+{
+    int32 dx;
+    int32 dz;
+    xGridGetCell(grid, ent, dx, dz);
+
+    if (dx != ent->gridb.gx || dz != ent->gridb.gz)
+    {
+        if (xGridRemove(&ent->gridb))
+        {
+            xGridAdd(grid, &ent->gridb, dx, dz);
+        }
+    }
+}
 
 // func_801225D8
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridGetCell__FP5xGridPC4xEntRiRi")
+xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
+{
+    const xBound* bound = &ent->bound;
+    const xVec3* center;
+    if (bound->type == XBOUND_TYPE_SPHERE)
+    {
+        center = &bound->sph.center;
+    }
+    else if (bound->type == XBOUND_TYPE_BOXLOCAL)
+    {
+        // TODO: Possibly should be cyl.center depending what type 4 is, the
+        // code matches either way.
+        center = &bound->box.center;
+    }
+    else if (bound->type == XBOUND_TYPE_BOX)
+    {
+        // TODO: Possibly should be box.center depending what type 2 is, the
+        // code matches either way.
+        center = &bound->cyl.center;
+    }
+    else
+    {
+        return 0;
+    }
+
+    xGridGetCell(grid, center->x, center->y, center->z, grx, grz);
+    return &grid->cells[grz * grid->nx] + grx;
+}
 
 // func_80122694
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridGetCell__FP5xGridfffRiRi")
+#else
+void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int32& grz)
+{
+    float32 pgridx = (x - grid->minx) * grid->inv_csizex;
+    float32 pgridz = (z - grid->minz) * grid->inv_csizez;
+
+    grx = MIN(float32((grid->nx - 1) ^ 0x8000), MAX(0, pgridx));
+    grz = MIN(float32((grid->nz - 1) ^ 0x8000), MAX(0, pgridx));
+}
+#endif
 
 // func_801227B0
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator")
+xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx,
+                               int32& grz, xGridIterator& iter)
+{
+    xGridGetCell(grid, posx, posy, posz, grx, grz);
+    return xGridIterFirstCell(grid, grx, grz, iter);
+}
 
 // func_80122814
 #pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridEntIsTooBig__FP5xGridPC4xEnt")
 
 // func_8012296C
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv")
+#pragma GLOBAL_ASM("asm/Core/x/xGrid.s",                                                           \
+                   "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv")

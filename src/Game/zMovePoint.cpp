@@ -30,7 +30,8 @@
 #pragma GLOBAL_ASM("asm/Game/zMovePoint.s", "zMovePointEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_800A6E34
-#pragma GLOBAL_ASM("asm/Game/zMovePoint.s", "zMovePointGetNext__FPC10zMovePointPC10zMovePointPP10zMovePointP5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zMovePoint.s",                                                        \
+                   "zMovePointGetNext__FPC10zMovePointPC10zMovePointPP10zMovePointP5xVec3")
 
 // func_800A6E54
 #pragma GLOBAL_ASM("asm/Game/zMovePoint.s", "zMovePointGetPos__FPC10zMovePoint")

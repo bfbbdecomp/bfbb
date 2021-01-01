@@ -5,4 +5,6 @@
 
 typedef int64 iTime;
 
+iTime iTimeGet();
+
 #endif

@@ -3,6 +3,7 @@
 
 #include "xVec3.h"
 
+// Size: 0x20
 struct xQCData
 {
     int8 xmin;
@@ -18,5 +19,6 @@ struct xQCData
 };
 
 void xQuickCullForEverything(xQCData* q);
+int32 xQuickCullIsects(const xQCData* a, const xQCData* b);
 
 #endif

@@ -5,44 +5,6 @@
 .section .text  # 0x800BE470 - 0x800BF1C0
 
 
-.global iAnimInit__Fv
-iAnimInit__Fv:
-/* 800BE9F4 000BB7F4  4E 80 00 20 */	blr 
-
-.global iAnimEval__FPvfUiP5xVec3P5xQuat
-iAnimEval__FPvfUiP5xVec3P5xQuat:
-/* 800BE9F8 000BB7F8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800BE9FC 000BB7FC  7C 08 02 A6 */	mflr r0
-/* 800BEA00 000BB800  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800BEA04 000BB804  48 00 07 BD */	bl iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat
-/* 800BEA08 000BB808  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800BEA0C 000BB80C  7C 08 03 A6 */	mtlr r0
-/* 800BEA10 000BB810  38 21 00 10 */	addi r1, r1, 0x10
-/* 800BEA14 000BB814  4E 80 00 20 */	blr 
-
-.global iAnimDuration__FPv
-iAnimDuration__FPv:
-/* 800BEA18 000BB818  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800BEA1C 000BB81C  7C 08 02 A6 */	mflr r0
-/* 800BEA20 000BB820  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800BEA24 000BB824  48 00 0D 8D */	bl iAnimDurationSKB__FP14iAnimSKBHeader
-/* 800BEA28 000BB828  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800BEA2C 000BB82C  7C 08 03 A6 */	mtlr r0
-/* 800BEA30 000BB830  38 21 00 10 */	addi r1, r1, 0x10
-/* 800BEA34 000BB834  4E 80 00 20 */	blr 
-
-.global iAnimBoneCount__FPv
-iAnimBoneCount__FPv:
-/* 800BEA38 000BB838  80 83 00 00 */	lwz r4, 0(r3)
-/* 800BEA3C 000BB83C  3C 04 CE BE */	addis r0, r4, 0xcebe
-/* 800BEA40 000BB840  28 00 4B 53 */	cmplwi r0, 0x4b53
-/* 800BEA44 000BB844  40 82 00 0C */	bne lbl_800BEA50
-/* 800BEA48 000BB848  A0 63 00 08 */	lhz r3, 8(r3)
-/* 800BEA4C 000BB84C  4E 80 00 20 */	blr 
-lbl_800BEA50:
-/* 800BEA50 000BB850  38 60 00 00 */	li r3, 0
-/* 800BEA54 000BB854  4E 80 00 20 */	blr 
-
 .global iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat
 iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat:
 /* 800BEA58 000BB858  94 21 FF 20 */	stwu r1, -0xe0(r1)

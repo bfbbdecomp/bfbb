@@ -6476,18 +6476,6 @@ DuploOwner__10zNPCCommonFP10zNPCCommon:
 /* 800F46B0 000F14B0  90 83 02 2C */	stw r4, 0x22c(r3)
 /* 800F46B4 000F14B4  4E 80 00 20 */	blr 
 
-SpeakBegin__10zNPCCommonFv:
-/* 800F46B8 000F14B8  4E 80 00 20 */	blr 
-
-SpeakEnd__10zNPCCommonFv:
-/* 800F46BC 000F14BC  4E 80 00 20 */	blr 
-
-SpeakStart__10zNPCCommonFUiUii:
-/* 800F46C0 000F14C0  4E 80 00 20 */	blr 
-
-SpeakStop__10zNPCCommonFv:
-/* 800F46C4 000F14C4  4E 80 00 20 */	blr 
-
 GenShadCacheRad__10zNPCCommonFv:
 /* 800F46C8 000F14C8  C0 22 9B 40 */	lfs f1, lbl_803CE4C0-_SDA2_BASE_(r2)
 /* 800F46CC 000F14CC  4E 80 00 20 */	blr 
@@ -6514,30 +6502,6 @@ __ct__9xNPCBasicFi:
 /* 800F4714 000F1514  7C 08 03 A6 */	mtlr r0
 /* 800F4718 000F1518  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F471C 000F151C  4E 80 00 20 */	blr 
-
-.global Setup__9xNPCBasicFv
-Setup__9xNPCBasicFv:
-/* 800F4720 000F1520  4E 80 00 20 */	blr 
-
-.global Move__9xNPCBasicFP6xScenefP9xEntFrame
-Move__9xNPCBasicFP6xScenefP9xEntFrame:
-/* 800F4724 000F1524  4E 80 00 20 */	blr 
-
-.global SysEvent__9xNPCBasicFP5xBaseP5xBaseUiPCfP5xBasePi
-SysEvent__9xNPCBasicFP5xBaseP5xBaseUiPCfP5xBasePi:
-/* 800F4728 000F1528  38 60 00 01 */	li r3, 1
-/* 800F472C 000F152C  4E 80 00 20 */	blr 
-
-.global DBG_PStatOn__9xNPCBasicF10en_npcperf
-DBG_PStatOn__9xNPCBasicF10en_npcperf:
-/* 800F4730 000F1530  4E 80 00 20 */	blr 
-
-.global DBG_PStatCont__9xNPCBasicF10en_npcperf
-DBG_PStatCont__9xNPCBasicF10en_npcperf:
-/* 800F4734 000F1534  4E 80 00 20 */	blr 
-
-PostInit__9xNPCBasicFv:
-/* 800F4738 000F1538  4E 80 00 20 */	blr 
 
 .global Render__9xNPCBasicFv
 Render__9xNPCBasicFv:

@@ -96,3 +96,23 @@ iMemExit__Fv:
 
 .endif
 
+.section .sbss
+.balign 8
+.global mem_top_alloc
+mem_top_alloc:
+	.skip 0x4
+.global mem_base_alloc
+mem_base_alloc:
+	.skip 0x4
+.global the_heap
+the_heap:
+	.skip 0x4
+.global hs
+hs:
+	.skip 0x4
+.global he
+he:
+	.skip 0x4
+.global HeapSize
+HeapSize:
+	.skip 0x4

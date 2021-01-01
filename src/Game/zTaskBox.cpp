@@ -78,4 +78,5 @@
 #pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_stop__Q28ztaskbox13talk_callbackFv")
 
 // func_8013529C
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum")
+#pragma GLOBAL_ASM("asm/Game/zTaskBox.s",                                                          \
+                   "on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum")

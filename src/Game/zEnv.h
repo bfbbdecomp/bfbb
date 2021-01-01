@@ -6,7 +6,9 @@
 
 struct _zEnv : xBase
 {
-	xEnvAsset* easset;
+    xEnvAsset* easset;
 };
+
+void zEnvStartingCamera(_zEnv* env);
 
 #endif

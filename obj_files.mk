@@ -200,7 +200,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Game/zPlatform.o                 \
     $(OBJ_DIR)/src/Game/zPlatform.o                 \
     $(OBJ_DIR)/src/Game/zPortal.o                   \
-    $(OBJ_DIR)/asm/Game/zRenderState.o              \
     $(OBJ_DIR)/src/Game/zRenderState.o              \
     $(OBJ_DIR)/asm/Game/zRumble.o                   \
     $(OBJ_DIR)/src/Game/zRumble.o                   \
@@ -208,7 +207,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zSaveLoad.o                 \
     $(OBJ_DIR)/asm/Game/zScene.o                    \
     $(OBJ_DIR)/src/Game/zScene.o                    \
-    $(OBJ_DIR)/asm/Game/zScript.o                   \
     $(OBJ_DIR)/src/Game/zScript.o                   \
     $(OBJ_DIR)/asm/Game/zSurface.o                  \
     $(OBJ_DIR)/src/Game/zSurface.o                  \
@@ -406,7 +404,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zTaxi.o                     \
     $(OBJ_DIR)/asm/Game/zNPCTypeDutchman.o          \
     $(OBJ_DIR)/src/Game/zNPCTypeDutchman.o          \
-    $(OBJ_DIR)/asm/Game/zCameraFly.o                \
     $(OBJ_DIR)/src/Game/zCameraFly.o                \
     $(OBJ_DIR)/asm/Core/x/xCurveAsset.o             \
     $(OBJ_DIR)/src/Core/x/xCurveAsset.o             \

@@ -3,6 +3,13 @@
 
 #include <types.h>
 
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+#define CLAMP(x, a, b) (MAX((a), MIN((x), (b))))
+
+#define SQR(x) ((x) * (x))
+
 struct xFuncPiece
 {
     float32 coef[5];

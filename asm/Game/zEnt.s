@@ -1781,11 +1781,6 @@ xSndPlay3D__FUiffUiUiPC5xVec3f14sound_categoryf:
 /* 800564DC 000532DC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800564E0 000532E0  4E 80 00 20 */	blr 
 
-.global SelfType__9xNPCBasicCFv
-SelfType__9xNPCBasicCFv:
-/* 800564E4 000532E4  80 63 00 F4 */	lwz r3, 0xf4(r3)
-/* 800564E8 000532E8  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata

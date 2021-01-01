@@ -1,6 +1,4 @@
 #ifndef ZNPCGOALVILLAGER_H
 #define ZNPCGOALVILLAGER_H
 
-
-
 #endif

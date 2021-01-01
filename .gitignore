@@ -1,6 +1,8 @@
 __pycache__
+*.pyc
 tools/mwcc_compiler/*.*
 tools/elf2dol
+obj/*
 *.asm
 *.exe
 *.dol
@@ -18,3 +20,4 @@ tools/elf2dol
 *.cp
 .vscode
 .pragma
+inspect.s

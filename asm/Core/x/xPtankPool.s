@@ -337,7 +337,7 @@ lbl_8017FA4C:
 /* 8017FA64 0017C864  C0 02 AE 70 */	lfs f0, lbl_803CF7F0-_SDA2_BASE_(r2)
 /* 8017FA68 0017C868  EC 21 10 28 */	fsubs f1, f1, f2
 /* 8017FA6C 0017C86C  EC 23 00 7A */	fmadds f1, f3, f1, f0
-/* 8017FA70 0017C870  48 06 D9 6D */	bl func_801ED3DC
+/* 8017FA70 0017C870  48 06 D9 6D */	bl __cvt_fp2unsigned
 /* 8017FA74 0017C874  7C 64 1B 78 */	mr r4, r3
 /* 8017FA78 0017C878  7F C3 F3 78 */	mr r3, r30
 /* 8017FA7C 0017C87C  48 00 00 2D */	bl create_ptanks__24_esc__2_unnamed_esc__2_xPtankPool_cpp_esc__2_FRQ224_esc__2_unnamed_esc__2_xPtankPool_cpp_esc__2_10group_dataUl

@@ -2,11 +2,22 @@
 
 #include <types.h>
 
-// func_80109588
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_Tiki_Startup__Fv")
+#include "../Core/x/xString.h"
 
-// func_801095E8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_Tiki_Shutdown__Fv")
+extern int8* g_strz_tikianim[2];
+extern uint32 g_hash_tikianim[2];
+
+void ZNPC_Tiki_Startup()
+{
+    for (int32 i = 0; i < 2; i++)
+    {
+        g_hash_tikianim[i] = xStrHash(g_strz_tikianim[i]);
+    }
+}
+
+void ZNPC_Tiki_Shutdown()
+{
+}
 
 // func_801095EC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "zNPCTiki_InitStacking__FP6zScene")
@@ -45,7 +56,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "Init__8zNPCTikiFP9xEntAsset")
 
 // func_8010A530
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "Damage__8zNPCTikiF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s",                                                      \
+                   "Damage__8zNPCTikiF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
 
 // func_8010A5BC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "SetCarryState__8zNPCTikiF18en_NPC_CARRY_STATE")

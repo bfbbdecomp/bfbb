@@ -63,7 +63,8 @@
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_FlushGrabbed__Fv")
 
 // func_800647E0
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_MakeDroppable__FP10zEntPickupP5xVec3P5xBase")
+#pragma GLOBAL_ASM("asm/Game/zEntPickup.s",                                                        \
+                   "zEntPickup_MakeDroppable__FP10zEntPickupP5xVec3P5xBase")
 
 // func_8006485C
 #pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Drop__FP10zEntPickup")

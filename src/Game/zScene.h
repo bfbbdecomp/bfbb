@@ -8,6 +8,8 @@
 #include "zEnv.h"
 #include "zBase.h"
 
+struct zEnt;
+
 struct zScene : xScene
 {
     _zPortal* pendingPortal;
@@ -31,5 +33,10 @@ struct zScene : xScene
 xBase* zSceneFindObject(uint32 gameID);
 void zSceneSwitch(_zPortal* p, int32 forceSameScene);
 uint32 zSceneGetLevelIndex();
+void zSceneInit(uint32 theSceneID, int32 reloadInProgress);
+void zSceneSetup();
+void zSceneExit(int32 beginReload);
+void zSceneRender();
+void zSceneUpdate(float32 dt);
 
 #endif

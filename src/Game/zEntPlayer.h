@@ -84,12 +84,28 @@ enum _tagePlayerSnd
     ePlayerSnd_Total
 };
 
+// TODO: Why are there two of these enums with the same effect, should there be?
 enum _zPlayerType
 {
     ePlayer_SB,
     ePlayer_Patrick,
     ePlayer_Sandy,
     ePlayer_MAXTYPES
+};
+
+enum _CurrentPlayer
+{
+    eCurrentPlayerSpongeBob,
+    eCurrentPlayerPatrick,
+    eCurrentPlayerSandy,
+    eCurrentPlayerCount
+};
+
+// was originally called _enum in DWARF data
+enum _zPlayerWallJumpResult
+{
+    WallJumpResult_NoJump,
+    WallJumpResult_Jump
 };
 
 enum _zPlayerWallJumpState
@@ -214,6 +230,8 @@ struct zPlayerLassoInfo
     xAnimState* zeroAnim;
 };
 
+extern _CurrentPlayer gCurrentPlayer;
+
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
 
 uint32 WalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
@@ -222,6 +240,10 @@ uint32 RunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 RunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 RunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 RunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+
+uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+uint32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 
 uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
@@ -239,5 +261,6 @@ void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 
 void zEntPlayerControlOff(zControlOwner owner);
+void zEntPlayerControlOn(zControlOwner owner);
 
 #endif

@@ -488,8 +488,8 @@ func_801ED36C:
 /* 801ED3D4 001EA1D4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801ED3D8 001EA1D8  4E 80 00 20 */	blr 
 
-.global func_801ED3DC
-func_801ED3DC:
+.global __cvt_fp2unsigned
+__cvt_fp2unsigned:
 /* 801ED3DC 001EA1DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801ED3E0 001EA1E0  3C 80 80 27 */	lis r4, lbl_8027A1B0@h
 /* 801ED3E4 001EA1E4  60 84 A1 B0 */	ori r4, r4, lbl_8027A1B0@l
@@ -1045,8 +1045,8 @@ lbl_801ED9E4:
 /* 801ED9E4 001EA7E4  7C 63 2E 30 */	sraw r3, r3, r5
 /* 801ED9E8 001EA7E8  4E 80 00 20 */	blr 
 
-.global func_801ED9EC
-func_801ED9EC:
+.global __cvt_sll_flt
+__cvt_sll_flt:
 /* 801ED9EC 001EA7EC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801ED9F0 001EA7F0  54 65 00 01 */	rlwinm. r5, r3, 0, 0, 0
 /* 801ED9F4 001EA7F4  41 82 00 0C */	beq lbl_801EDA00
@@ -1097,8 +1097,8 @@ lbl_801EDA88:
 /* 801EDA98 001EA898  38 21 00 10 */	addi r1, r1, 0x10
 /* 801EDA9C 001EA89C  4E 80 00 20 */	blr 
 
-.global func_801EDAA0
-func_801EDAA0:
+.global __cvt_dbl_usll
+__cvt_dbl_usll:
 /* 801EDAA0 001EA8A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801EDAA4 001EA8A4  D8 21 00 08 */	stfd f1, 8(r1)
 /* 801EDAA8 001EA8A8  80 61 00 08 */	lwz r3, 8(r1)

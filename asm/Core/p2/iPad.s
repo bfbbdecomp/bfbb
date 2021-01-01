@@ -4,18 +4,6 @@
 
 .section .text  # 0x800CA920 - 0x800CAEEC
 
-.global iPadInit__Fv
-iPadInit__Fv:
-/* 800CA920 000C7720  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800CA924 000C7724  7C 08 02 A6 */	mflr r0
-/* 800CA928 000C7728  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800CA92C 000C772C  48 10 DD DD */	bl PADInit
-/* 800CA930 000C7730  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800CA934 000C7734  38 60 00 01 */	li r3, 1
-/* 800CA938 000C7738  7C 08 03 A6 */	mtlr r0
-/* 800CA93C 000C773C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800CA940 000C7740  4E 80 00 20 */	blr 
-
 .global iPadEnable__FP8_tagxPads
 iPadEnable__FP8_tagxPads:
 /* 800CA944 000C7744  B0 83 00 54 */	sth r4, 0x54(r3)
@@ -358,33 +346,7 @@ lbl_800CAE1C:
 /* 800CAE30 000C7C30  38 21 00 40 */	addi r1, r1, 0x40
 /* 800CAE34 000C7C34  4E 80 00 20 */	blr 
 
-iPadConvFromGCN__FUiUiUi:
-/* 800CAE38 000C7C38  7C 63 20 38 */	and r3, r3, r4
-/* 800CAE3C 000C7C3C  7C 03 00 D0 */	neg r0, r3
-/* 800CAE40 000C7C40  7C 00 1B 78 */	or r0, r0, r3
-/* 800CAE44 000C7C44  7C 00 FE 70 */	srawi r0, r0, 0x1f
-/* 800CAE48 000C7C48  7C A3 00 38 */	and r3, r5, r0
-/* 800CAE4C 000C7C4C  4E 80 00 20 */	blr 
-
-.global iPadRumbleFx__FP8_tagxPadP11_tagxRumblef
-iPadRumbleFx__FP8_tagxPadP11_tagxRumblef:
-/* 800CAE50 000C7C50  4E 80 00 20 */	blr 
-
-.global iPadStopRumble__FP8_tagxPad
-iPadStopRumble__FP8_tagxPad:
-/* 800CAE54 000C7C54  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800CAE58 000C7C58  7C 08 02 A6 */	mflr r0
-/* 800CAE5C 000C7C5C  38 80 00 00 */	li r4, 0
-/* 800CAE60 000C7C60  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800CAE64 000C7C64  A8 63 00 54 */	lha r3, 0x54(r3)
-/* 800CAE68 000C7C68  48 10 DE 65 */	bl PADControlMotor
-/* 800CAE6C 000C7C6C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800CAE70 000C7C70  7C 08 03 A6 */	mtlr r0
-/* 800CAE74 000C7C74  38 21 00 10 */	addi r1, r1, 0x10
-/* 800CAE78 000C7C78  4E 80 00 20 */	blr 
-
 .global iPadStopRumble__Fv
-
 iPadStopRumble__Fv:
 /* 800CAE7C 000C7C7C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800CAE80 000C7C80  7C 08 02 A6 */	mflr r0
@@ -403,23 +365,6 @@ iPadStopRumble__Fv:
 /* 800CAEB4 000C7CB4  7C 08 03 A6 */	mtlr r0
 /* 800CAEB8 000C7CB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CAEBC 000C7CBC  4E 80 00 20 */	blr 
-
-.global iPadStartRumble__FP8_tagxPadP11_tagxRumble
-iPadStartRumble__FP8_tagxPadP11_tagxRumble:
-/* 800CAEC0 000C7CC0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800CAEC4 000C7CC4  7C 08 02 A6 */	mflr r0
-/* 800CAEC8 000C7CC8  38 80 00 01 */	li r4, 1
-/* 800CAECC 000C7CCC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800CAED0 000C7CD0  A8 63 00 54 */	lha r3, 0x54(r3)
-/* 800CAED4 000C7CD4  48 10 DD F9 */	bl PADControlMotor
-/* 800CAED8 000C7CD8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800CAEDC 000C7CDC  7C 08 03 A6 */	mtlr r0
-/* 800CAEE0 000C7CE0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800CAEE4 000C7CE4  4E 80 00 20 */	blr 
-
-.global iPadKill__Fv
-iPadKill__Fv:
-/* 800CAEE8 000C7CE8  4E 80 00 20 */	blr 
 
 .endif
 

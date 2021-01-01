@@ -540,7 +540,7 @@ xScrFxDrawSafeArea__Fv:
 /* 80042038 0003EE38  83 C1 00 0C */	lwz r30, 0xc(r1)
 /* 8004203C 0003EE3C  EC 00 08 28 */	fsubs f0, f0, f1
 /* 80042040 0003EE40  EC 22 00 32 */	fmuls f1, f2, f0
-/* 80042044 0003EE44  48 1A B3 99 */	bl func_801ED3DC
+/* 80042044 0003EE44  48 1A B3 99 */	bl __cvt_fp2unsigned
 /* 80042048 0003EE48  3C 00 43 30 */	lis r0, 0x4330
 /* 8004204C 0003EE4C  7C 63 F8 50 */	subf r3, r3, r31
 /* 80042050 0003EE50  93 C1 00 2C */	stw r30, 0x2c(r1)
@@ -551,7 +551,7 @@ xScrFxDrawSafeArea__Fv:
 /* 80042064 0003EE64  C8 01 00 28 */	lfd f0, 0x28(r1)
 /* 80042068 0003EE68  EC 00 08 28 */	fsubs f0, f0, f1
 /* 8004206C 0003EE6C  EC 22 00 32 */	fmuls f1, f2, f0
-/* 80042070 0003EE70  48 1A B3 6D */	bl func_801ED3DC
+/* 80042070 0003EE70  48 1A B3 6D */	bl __cvt_fp2unsigned
 /* 80042074 0003EE74  7F 9D F8 50 */	subf r28, r29, r31
 /* 80042078 0003EE78  3D 00 43 30 */	lis r8, 0x4330
 /* 8004207C 0003EE7C  6F A4 80 00 */	xoris r4, r29, 0x8000

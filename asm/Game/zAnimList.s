@@ -301,6 +301,7 @@ lbl_8004EBE4:
 .endif
 
 .section .data
+.balign 8
 lbl_8028A7B8:
 	.incbin "baserom.dol", 0x287798, 0x50
 

@@ -3,13 +3,15 @@
 #include <types.h>
 
 // func_800B96B8
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "refresh_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI")
+#pragma GLOBAL_ASM("asm/Game/zUI.s",                                                               \
+                   "refresh_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI")
 
 // func_800B9740
 #pragma GLOBAL_ASM("asm/Game/zUI.s", "init_tweaks__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_Fv")
 
 // func_800B9744
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "debug_update__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR6zScenef")
+#pragma GLOBAL_ASM("asm/Game/zUI.s",                                                               \
+                   "debug_update__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR6zScenef")
 
 // func_800B9748
 #pragma GLOBAL_ASM("asm/Game/zUI.s", "debug_render__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_Fv")
@@ -54,7 +56,8 @@
 #pragma GLOBAL_ASM("asm/Game/zUI.s", "load_model__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FUi")
 
 // func_800B9D18
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "load_anim_list__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI")
+#pragma GLOBAL_ASM("asm/Game/zUI.s",                                                               \
+                   "load_anim_list__17_esc__2_unnamed_esc__2_zUI_cpp_esc__2_FR4_zUI")
 
 // func_800B9DE4
 #pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_Init__FP4_zUIP9xEntAsset")

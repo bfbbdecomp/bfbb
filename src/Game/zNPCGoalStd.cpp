@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+#include "../Core/x/xNPCBasic.h"
+
 // func_800D5480
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "GOALCreate_Standard__FiP10RyzMemGrowPv")
 
@@ -18,7 +20,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Resume__16zNPCGoalPushAnimFfPv")
 
 // func_800D57AC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__16zNPCGoalPushAnimFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
+                   "Process__16zNPCGoalPushAnimFP11en_trantypefPvP6xScene")
 
 // func_800D5914
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Enter__16zNPCGoalLoopAnimFfPv")
@@ -27,7 +30,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Exit__16zNPCGoalLoopAnimFfPv")
 
 // func_800D5A84
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__16zNPCGoalLoopAnimFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
+                   "Process__16zNPCGoalLoopAnimFP11en_trantypefPvP6xScene")
 
 // func_800D5C0C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "MolestLoopAnim__16zNPCGoalLoopAnimFv")
@@ -144,7 +148,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Exit__20zNPCGoalDEVAnimCycleFfPv")
 
 // func_800D8588
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__20zNPCGoalDEVAnimCycleFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
+                   "Process__20zNPCGoalDEVAnimCycleFP11en_trantypefPvP6xScene")
 
 // func_800D8670
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "NPCMessage__20zNPCGoalDEVAnimCycleFP6NPCMsg")
@@ -159,7 +164,8 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Exit__19zNPCGoalDEVAnimSpinFfPv")
 
 // func_800D8834
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "Process__19zNPCGoalDEVAnimSpinFP11en_trantypefPvP6xScene")
+#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s",                                                       \
+                   "Process__19zNPCGoalDEVAnimSpinFP11en_trantypefPvP6xScene")
 
 // func_800D88D8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "NPCMessage__19zNPCGoalDEVAnimSpinFP6NPCMsg")
@@ -255,19 +261,34 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "RestoreColFlags__9xNPCBasicFv")
 
 // func_800D91D8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "PhysicsFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColChkFlags() const
+{
+    return 0;
+}
 
 // func_800D91E0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColPenByFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColPenFlags()
+{
+    return 0;
+}
 
 // func_800D91E8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColChkByFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColChkByFlags() const
+{
+    return 0;
+}
 
 // func_800D91F0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColPenFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::ColPenByFlags() const
+{
+    return 0;
+}
 
 // func_800D91F8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "ColChkFlags__9xNPCBasicCFv")
+uint8 xNPCBasic::PhysicsFlags() const
+{
+    return 0;
+}
 
 // func_800D9200
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "DBG_IsNormLog__9xNPCBasicF10en_npcdcati")

@@ -5,6 +5,11 @@
 #include "../p2/iColor.h"
 #include "xString.h"
 
+struct xTextAsset
+{
+    uint32 len;
+};
+
 struct xfont
 {
     uint32 id;
@@ -90,6 +95,8 @@ struct xtextbox
     uint32 texts_size;
     substr text;
     uint32 text_hash;
+
+    static void register_tags(const tag_type* tag, unsigned long count);
 };
 
 #endif
