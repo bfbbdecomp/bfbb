@@ -46,6 +46,8 @@ struct var_type
     int8* (*get_text)();
 };
 
+extern int32 bad_card_needed;
+
 void zVarNewGame();
 void zVarInit(zVarEntry* table);
 

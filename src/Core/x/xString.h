@@ -13,6 +13,7 @@ uint32 xStrHash(const char* str);
 uint32 xStrHash(const char* str, ulong32 size);
 uint32 xStrHashCat(uint32 prefix, const char* str);
 char* xStrupr(char* string);
+int32 xStricmp(const int8* string1, const int8* string2);
 
 int32 imemcmp(void const* d1, void const* d2, ulong32 size);
 int32 icompare(const substr& s1, const substr& s2);
