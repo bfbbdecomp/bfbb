@@ -247,6 +247,8 @@ struct zPlayerGlobals
     int32 CanBubbleSpin;
     int32 CanBubbleBounce;
     int32 CanBubbleBash;
+
+    // Offset: 0x1AD8 in globals
     int32 IsJumping;
     int32 IsDJumping;
     int32 IsBubbleSpinning;
@@ -257,18 +259,26 @@ struct zPlayerGlobals
     int32 IsCoptering;
     _zPlayerWallJumpState WallJumpState;
     int32 cheat_mode;
+
+    // Offset: 0x1B00 in globals
     uint32 Inv_Shiny;
     uint32 Inv_Spatula;
     uint32 Inv_PatsSock[15];
     uint32 Inv_PatsSock_Max[15];
+
+    // Offset: 0x1B80 in globals
     uint32 Inv_PatsSock_CurrentLevel;
     uint32 Inv_LevelPickups[15];
     uint32 Inv_LevelPickups_CurrentLevel;
+
+    // Offset: 0x1BC4 in globals
     uint32 Inv_PatsSock_Total;
     xModelTag BubbleTag;
     xEntDrive drv;
     xSurface* floor_surf;
     xVec3 floor_norm;
+
+    // Offset: 0x1C74 in globals
     int32 slope;
     xCollis earc_coll;
     xSphere head_sph;

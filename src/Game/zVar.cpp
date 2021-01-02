@@ -2,14 +2,22 @@
 
 #include <types.h>
 #include <stdio.h>
+#include <string.h>
+
+#include "../Core/p2/iTime.h"
 
 #include "../Core/x/xString.h"
 #include "../Core/x/xFont.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xsavegame.h"
+#include "../Core/x/xutil.h"
 
+#include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zUI.h"
+#include "zMenu.h"
+#include "zScene.h"
+#include "zSaveLoad.h"
 
 extern var_type vars[39];
 /*
@@ -69,206 +77,510 @@ NameStr  | NameLen  | Callback
 8025FFE7 | 00000003 | 800BDF80
 */
 
-var_type* find_var(const substr& str);
+int8* var_text(const substr& str);
+uint32 zVarEntryCB_SndFXVol(void*);
+uint32 zVarEntryCB_SndMusicVol(void*);
 
 // func_800BD1B0
-// TODO: Why is the format "%d,%d,%d" even though only one int is being passed?
-// Maybe this is a copy-paste error in the original code that worked anyways?
-extern const int8 zVar_fmt_number[]; // "%d,%d,%d"
-int8* var_text_ActivePad()
+extern const int8 zVar_strings[];
+
+// Buffers for var_text callbacks. These should all be changed to:
+// static int8 buffer[...]
+// inside the respective functions in the final version.
+extern int8 zVar_printf_buffer1[];
+extern int8 zVar_printf_buffer2[];
+extern int8 zVar_printf_buffer3[];
+extern int8 zVar_printf_buffer4[];
+extern int8 zVar_printf_buffer5[];
+extern int8 zVar_printf_buffer6[];
+extern int8 zVar_printf_buffer7[];
+extern int8 zVar_printf_buffer8[];
+extern int8 zVar_printf_buffer9[];
+extern int8 zVar_printf_buffer10[];
+extern int8 zVar_buffer11[0x40];
+extern int8 zVar_buffer12[0x40];
+extern int8 zVar_buffer13[0x40];
+extern int8 zVar_buffer14[0x40];
+extern int8 zVar_buffer15[0x40];
+extern int8 zVar_buffer16[0x40];
+extern int8 zVar_buffer17[0x40];
+extern int8 zVar_buffer18[0x40];
+extern int8 zVar_buffer19[];
+extern int8 zVar_buffer20[];
+extern int8 zVar_buffer21[];
+extern int8 zVar_buffer22[];
+extern int8 zVar_buffer23[];
+extern int8 zVar_buffer24[0x30];
+extern int8 zVar_buffer25[];
+extern int8 zVar_buffer26[];
+extern int8 zVar_buffer27[];
+extern int8 zVar_buffer28[];
+extern int8 zVar_buffer29[];
+extern int8 zVar_buffer30[];
+extern int8 zVar_buffer31[];
+extern int8 zVar_buffer32[];
+extern int8* playername_text[3]; // originally called "text"
+extern int8* heshe_text[3]; // also originally called "text"
+extern int8 lbl_80291708[];
+extern int32 selSceneID;
+extern int8* state_text[4];
+
+// var_text callbacks
+namespace
 {
-    extern int8 zVar_printf_buffer1[];
-    sprintf(zVar_printf_buffer1, zVar_fmt_number, globals.currentActivePad + 1);
-    return zVar_printf_buffer1;
-}
-
-// func_800BD1FC
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "var_text_BadCard__Fv")
-
-// func_800BD26C
-int8* var_text_BadCardAvailable()
-{
-    extern int8 zVar_printf_buffer3[];
-    sprintf(zVar_printf_buffer3, zVar_fmt_number, bad_card_available);
-    return zVar_printf_buffer3;
-}
-
-// func_800BD2AC
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_BadCardNeeded__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD2EC
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_CorruptFileName__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD380
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_CurrentArea__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD3B0
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_CurrentDate__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD3E0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zVar.s",                                                                             \
-    "var_text_CurrentLevelCollectable__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD428
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_CurrentLevelPatsSocks__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD470
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_CurrentScene__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD4CC
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_CurrentTime__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD4FC
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "zVarGameSlotInfo__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_FiPcUl")
-
-// func_800BD7B8
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot0__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD7E8
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot1__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD818
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot2__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD848
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot3__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD878
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot4__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD8A8
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot5__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD8D8
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot6__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD908
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_GameSlot7__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD938
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCAccessType__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD968
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCAutoSaveCard__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD9B4
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCPS2MaxSpace__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BD9F4
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCPS2MinSpace__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDA34
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCSelectedCard__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDA80
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCSelectedGame__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDAC8
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_PlayerHeShe__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDAE0
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_PlayerName__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDAF8
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_PlayerPosition__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDB74
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_SelectedArea__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDB98
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_ShinyCount__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDBE0
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_ShinyCountText__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDC74
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_SoundFXVolume__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDCBC
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_SoundMusicVolume__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDD04
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_SpaceAvailable__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDD48
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_SpaceAvailableString__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDDDC
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_SpaceNeeded__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDE20
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_TotalPatsSocks__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDE68
-#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
-                   "var_text_MCName__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
-
-// func_800BDEF8
-var_type* find_var(const substr& str)
-{
-    uint32 start = 0;
-    uint32 end = 0x27;
-    while (start != end)
+    int8* var_text_ActivePad()
     {
-        int32 c = (start + end) / 2;
-        var_type* t = &vars[c];
-        int i = icompare(str, t->name);
-        if (i < 0)
+        sprintf(zVar_printf_buffer1, &zVar_strings[0] /*"%d"*/, globals.currentActivePad + 1);
+        return zVar_printf_buffer1;
+    }
+
+    // func_800BD1FC
+    int8* var_text_BadCard()
+    {
+        int32 badCardCount = zMenuGetBadCard();
+        if (badCardCount > 0)
         {
-            end = c;
-        }
-        else if (i > 0)
-        {
-            start = c + 1;
+            sprintf(zVar_printf_buffer2, &zVar_strings[3] /*"%c"*/, 'A' + (badCardCount - 1));
         }
         else
         {
-            return t;
+            strcpy(zVar_printf_buffer2, &zVar_strings[6] /*"A or B"*/);
+        }
+        return zVar_printf_buffer2;
+    }
+
+    // func_800BD26C
+    int8* var_text_BadCardAvailable()
+    {
+        sprintf(zVar_printf_buffer3, &zVar_strings[0] /*"%d"*/, bad_card_available);
+        return zVar_printf_buffer3;
+    }
+
+    // func_800BD2AC
+    // var_text_BadCardNeeded__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv
+    int8* var_text_BadCardNeeded()
+    {
+        sprintf(zVar_printf_buffer4, &zVar_strings[0] /*"%d"*/, bad_card_needed);
+        return zVar_printf_buffer4;
+    }
+
+// func_800BD2EC
+#ifndef NON_MATCHING
+#pragma GLOBAL_ASM("asm/Game/zVar.s",                                                              \
+                   "var_text_CorruptFileName__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv")
+#else
+    // Indexing into zVar_strings didn't get pulled out of the loop in the original
+    // code for some reason.
+    int8* var_text_CorruptFileName()
+    {
+        int8 corruptedNames[3][64];
+        uint32 corruptCount = zMenuGetCorruptFiles(corruptedNames);
+        strcpy(zVar_printf_buffer5, &zVar_strings[0xD] /*""*/);
+        for (uint32 i = 0; i < corruptCount; ++i)
+        {
+            strcat(zVar_printf_buffer5, corruptedNames[i]);
+            strcat(zVar_printf_buffer5, &zVar_strings[0xE] /*" "*/);
+        }
+        return zVar_printf_buffer5;
+    }
+#endif
+
+    // func_800BD380
+    int8* var_text_CurrentArea()
+    {
+        return zSceneGetAreaname(globals.sceneCur->sceneID);
+    }
+
+    // func_800BD3B0
+    int8* var_text_CurrentData()
+    {
+        iGetCurrFormattedDate(zVar_printf_buffer6);
+        return zVar_printf_buffer6;
+    }
+
+    // func_800BD3E0
+    int8* var_text_CurrentLevelCollectable()
+    {
+        sprintf(zVar_printf_buffer7, zVar_strings /*"%d"*/,
+                globals.player.Inv_LevelPickups_CurrentLevel);
+        return zVar_printf_buffer7;
+    }
+
+    // func_800BD428
+    int8* var_text_CurrentLevelPatsSocks()
+    {
+        sprintf(zVar_printf_buffer8, zVar_strings /*"%d"*/,
+                globals.player.Inv_PatsSock_CurrentLevel);
+        return zVar_printf_buffer8;
+    }
+
+    // func_800BD470
+    int8* var_text_CurrentScene()
+    {
+        sprintf(zVar_printf_buffer9, &zVar_strings[0x10] /*"%s"*/,
+                xUtil_idtag2string(globals.sceneCur->sceneID, 0));
+        return zVar_printf_buffer9;
+    }
+
+    // func_800BD4CC
+    int8* var_text_CurrentTime()
+    {
+        iGetCurrFormattedTime(zVar_printf_buffer10);
+        return zVar_printf_buffer10;
+    }
+
+} // namespace
+
+// func_800BD4FC
+// Note: zVarGameSlotInfo should be in the anonymous namespace, need the
+// anomymous namespace symbol formatting fix from Seil to move it in though.
+#if 1
+// Needed for the following functions to call, but not to be exposed in the
+// header file.
+int8* zVarGameSlotInfo(int32 i, int8* buffer, ulong32 something);
+
+#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarGameSlotInfo__FiPcUl")
+#else
+// I don't understand this function. The behavior perfectly matches... but
+// it never ends up doing anything with the buffer it makes up?? It just returns
+// the same buffer it takes in, throwing away all the work it just did.
+// Still needs the strings to be pulled out
+int8* zVarGameSlotInfo(int32 i, int8* buffer, ulong32 something)
+{
+    int8 date[0x20] = "";
+    int8 time[0x20] = "";
+    int32 hour;
+    int8 ampm[0x20] = "";
+    int8 anotherBuffer[0x100] = "";
+
+    // Get the date
+    strncpy(date, zSaveLoadGameTable[i].date, 5);
+    date[2] = '/';
+
+    sprintf(anotherBuffer, &zVar_strings[0x13] /*"%s/%c%c"*/, date, zSaveLoadGameTable[i].date[0x8],
+            zSaveLoadGameTable[i].date[0x9]);
+    strncpy(date, anotherBuffer, 0x20);
+    date[0x20 - 1] = '\0';
+
+    // Get the hour
+    sprintf(time, &zVar_strings[0x1B] /*"%c%c"*/, zSaveLoadGameTable[i].date[0xB],
+            zSaveLoadGameTable[i].date[0xC]);
+
+    // Get the AM/PM
+    hour = atoi(time);
+    if (hour >= 12)
+    {
+        strncpy(ampm, &zVar_strings[0x20] /*"PM"*/, 3);
+        if (hour != 12)
+        {
+            hour -= 12;
+        }
+    }
+    else
+    {
+        strncpy(ampm, &zVar_strings[0x23] /*"AM"*/, 3);
+        if (hour == 0)
+        {
+            hour = 12;
         }
     }
 
-    return NULL;
+    // Construct final date
+    sprintf(time, &zVar_strings[0x26] /*"%d:%c%c %s"*/, hour, zSaveLoadGameTable[i].date[0xE],
+            zSaveLoadGameTable[i].date[0xF], ampm);
+    sprintf(date, &zVar_strings[0x31] /*"%s %s"*/, date, time);
+    time[0x20 - 1] = '\0';
+    date[0x20 - 1] = '\0';
+
+    if (xStricmp(zSaveLoadGameTable[i].label, &zVar_strings[0x37] /*"Empty"*/) == 0)
+    {
+        sprintf(buffer, &zVar_strings[0x37] /*"Empty"*/);
+    }
+    else
+    {
+        zSaveLoad_BuildName(buffer, i);
+    }
+
+    return buffer;
 }
+#endif
+
+namespace
+{
+    // func_800BD7B8
+    int8* var_text_GameSlot0()
+    {
+        return zVarGameSlotInfo(0, zVar_buffer11, 0x3f);
+    }
+
+    // func_800BD7E8
+    int8* var_text_GameSlot1()
+    {
+        return zVarGameSlotInfo(1, zVar_buffer12, 0x3f);
+    }
+
+    // func_800BD818
+    int8* var_text_GameSlot2()
+    {
+        return zVarGameSlotInfo(2, zVar_buffer13, 0x3f);
+    }
+
+    // func_800BD848
+    int8* var_text_GameSlot3()
+    {
+        return zVarGameSlotInfo(3, zVar_buffer14, 0x3f);
+    }
+
+    // func_800BD878
+    int8* var_text_GameSlot4()
+    {
+        return zVarGameSlotInfo(4, zVar_buffer15, 0x3f);
+    }
+
+    // func_800BD8A8
+    int8* var_text_GameSlot5()
+    {
+        return zVarGameSlotInfo(5, zVar_buffer16, 0x3f);
+    }
+
+    // func_800BD8D8
+    int8* var_text_GameSlot6()
+    {
+        return zVarGameSlotInfo(6, zVar_buffer17, 0x3f);
+    }
+
+    // func_800BD908
+    int8* var_text_GameSlot7()
+    {
+        return zVarGameSlotInfo(7, zVar_buffer18, 0x3f);
+    }
+
+    // func_800BD938
+    int8* var_text_MCAccessType()
+    {
+        return state_text[zSaveLoad_getMCAccessType()];
+    }
+
+    int8* var_text_MCAutoSaveCard()
+    {
+        sprintf(zVar_buffer19, &zVar_strings[0x3] /*"%c"*/, 'A' + zSaveLoadGetAutoSaveCard());
+        return zVar_buffer19;
+    }
+
+    // func_800BD9B4
+    int8* var_text_MCPS2MaxSpace()
+    {
+        // Yes... this matches. Probably just stripped out during porting since it
+        // was a PS2 thing.
+        sprintf(zVar_buffer20, &zVar_strings[0] /*"%d*/, 0);
+        return zVar_buffer20;
+    }
+
+    // func_800BD9F4
+    int8* var_text_MCPS2MinSpace()
+    {
+        sprintf(zVar_buffer21, &zVar_strings[0] /*"%d*/, 0);
+        return zVar_buffer21;
+    }
+
+    // func_800BDA34
+    int8* var_text_MCSelectedCard()
+    {
+        sprintf(zVar_buffer22, &zVar_strings[0x3] /*"%c"*/, 'A' + zSaveLoad_getcard());
+        return zVar_buffer22;
+    }
+
+    // func_800BDA80
+    int8* var_text_MCSelectedGame()
+    {
+        sprintf(zVar_buffer23, &zVar_strings[0] /*"%d"*/, zSaveLoad_getgame() + 1);
+        return zVar_buffer23;
+    }
+
+    // func_800BDAC8
+    int8* var_text_PlayerHeShe()
+    {
+        return heshe_text[gCurrentPlayer];
+    }
+
+    // func_800bdae0
+    int8* var_text_PlayerName()
+    {
+        return playername_text[gCurrentPlayer];
+    }
+
+    // func_800BDAF8
+    int8* var_text_PlayerPosition()
+    {
+        xEntFrame* frame = globals.player.ent.frame;
+        sprintf(zVar_buffer24, &zVar_strings[0xE0] /*"%d,%d,%d"*/, int32(frame->mat.pos.x),
+                int32(frame->mat.pos.y), int32(frame->mat.pos.z));
+        return zVar_buffer24;
+    }
+
+    // func_800BDB74
+    int8* var_text_SelectedArea()
+    {
+        // Looks like this variable was actually declared in this function given
+        // the context, it needs to be here to show up in the right order.
+        return zSceneGetAreaname(selSceneID);
+    }
+
+    // func_800BDB98
+    int8* var_text_ShinyCount()
+    {
+        sprintf(zVar_buffer25, &zVar_strings[0] /*"%d"*/, globals.player.Inv_Shiny);
+        return zVar_buffer25;
+    }
+
+    // func_800BDBE0
+    int8* var_text_ShinyCountText()
+    {
+        if (globals.player.Inv_Shiny == 0)
+        {
+            strcpy(lbl_80291708, &zVar_strings[0xE9] /*"{i:text_noshinies}"*/);
+        }
+        else if (globals.player.Inv_Shiny == 1)
+        {
+            strcpy(lbl_80291708, &zVar_strings[0xFC] /*"1 {i:text_shiny}"*/);
+        }
+        else
+        {
+            sprintf(lbl_80291708, &zVar_strings[0x10D] /*"%d {i:text_shinies}"*/,
+                    globals.player.Inv_Shiny);
+        }
+        return lbl_80291708;
+    }
+
+    // func_800BDC74
+    int8* var_text_SoundFXVolume()
+    {
+        sprintf(zVar_buffer26, &zVar_strings[0] /*"%d"*/, zVarEntryCB_SndFXVol(NULL));
+        return zVar_buffer26;
+    }
+
+    // func_800BDCBC
+    int8* var_text_SoundMusicVolume()
+    {
+        sprintf(zVar_buffer27, &zVar_strings[0] /*"%d"*/, zVarEntryCB_SndMusicVol(NULL));
+        return zVar_buffer27;
+    }
+
+    // func_800BDD04
+    int8* var_text_SpaceAvailable()
+    {
+        sprintf(zVar_buffer28, &zVar_strings[0], zSaveLoad_getMCavailable());
+        return zVar_buffer28;
+    }
+
+    // func_800BDD48
+    int8* var_text_SpaceAvailableString()
+    {
+        // What a wierd dance... they could have just used zVar_buffer29 directly.
+        int8 tmp[0x20];
+        int32 available = zSaveLoad_getMCavailable();
+        memset(tmp, 0, 0x20);
+        memset(zVar_buffer29, 0, 0x40);
+        sprintf(tmp, &zVar_strings[0] /*"%d"*/, available);
+        sprintf(zVar_buffer29, &zVar_strings[0x10] /*"%s"*/, tmp);
+        return zVar_buffer29;
+    }
+
+    // func_800BDDDC
+    int8* var_text_SpaceNeeded()
+    {
+        sprintf(zVar_buffer30, &zVar_strings[0] /*"%d"*/, zSaveLoad_getMCneeded());
+        return zVar_buffer30;
+    }
+
+    // func_800BDE20
+    int8* var_text_TotalPatsSocks()
+    {
+        sprintf(zVar_buffer31, &zVar_strings[0] /*"%d"*/, globals.player.Inv_PatsSock_Total);
+        return zVar_buffer31;
+    }
+
+    // func_800BDE68
+    int8* var_text_MCName()
+    {
+        switch (zSaveLoad_getcard())
+        {
+        case 0:
+            strcpy(zVar_buffer32, &zVar_strings[0x121] /*"{i:LD MC1 TXT}"*/);
+            break;
+        case 1:
+            strcpy(zVar_buffer32, &zVar_strings[0x130] /*"{i:LD MC2 TXT}"*/);
+            break;
+        default:
+            strcpy(zVar_buffer32, &zVar_strings[0xD] /*""*/);
+            break;
+        }
+        return zVar_buffer32;
+    }
+
+    // func_800BDEF8
+    var_type* find_var(const substr& str)
+    {
+        uint32 start = 0;
+        uint32 end = 0x27;
+        while (start != end)
+        {
+            int32 c = (start + end) / 2;
+            var_type* t = &vars[c];
+            int i = icompare(str, t->name);
+            if (i < 0)
+            {
+                end = c;
+            }
+            else if (i > 0)
+            {
+                start = c + 1;
+            }
+            else
+            {
+                return t;
+            }
+        }
+
+        return NULL;
+    }
 
 // func_800BDF80
+// Note: This function is actually in the anonymous namespace
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zVar.s",                                                                             \
-    "parse_tag_var__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
+    "parse_tag_var__FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
+#else
+    // Not close, don't know enough about the data structures to know if things are
+    // looking correct or not.
+    void parse_tag_var(xtextbox::jot& r31, const xtextbox& r4, const xtextbox& r5,
+                       const xtextbox::split_tag& r6)
+    {
+        if (r6.action.size != 1)
+            return;
+
+        if (r6.action.text[0] != 0x3A)
+            return;
+
+        if (r6.value.size > 1)
+        {
+            r31.context = var_text(r6.value);
+            r31.context_size = 0;
+            if (r31.context)
+            {
+                r31.context_size = 0xFC00;
+                // Maybe not the correct flags, something is up with the struct
+                r31.flag.upper.dynamic = 1;
+                // No clue what this line is:
+                // r31.flag.upper. something = something??
+                r31.flag.upper.insert = 1;
+            }
+        }
+    }
+#endif
+
+} // namespace
 
 // func_800BE020
 void var_init()
@@ -384,40 +696,122 @@ uint32 zVarEntryCB_VibrationOn(void* arg)
 }
 
 // func_800BE230
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_CurrentSceneLetter__FPv")
+int32 zVarEntryCB_CurrentSceneLetter()
+{
+    int8 buffer[16];
+    sprintf(buffer, &zVar_strings[0x10] /*"%s"*/, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
+
+    // Convert the most significant char to uppercase
+    // The lowercase variable doesn't exist in the ps4 symbols but I can't
+    // figure out how to get a match otherwise.
+    uint32 mostSignificantChar = buffer[0];
+    bool lowercase = false;
+    if (mostSignificantChar >= 'a' && mostSignificantChar <= 'z')
+    {
+        lowercase = true;
+    }
+    if (lowercase)
+    {
+        mostSignificantChar -= 0x20;
+    }
+
+    return (mostSignificantChar - 'A') + 1;
+}
 
 // func_800BE2AC
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_CurrentRoom__FPv")
+int32 zVarEntryCB_CurrentRoom()
+{
+    int8 buffer[16];
+    sprintf(buffer, &zVar_strings[0x10] /*"%s"*/, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
+
+    int32 room = (buffer[2] - '0') * 10 + (buffer[3] - '0');
+
+    // Convert the most significant char to uppercase
+    // The lowercase variable doesn't exist in the ps4 symbols but I can't
+    // figure out how to get a match otherwise.
+    uint32 mostSignificantChar = buffer[0];
+    bool lowercase = false;
+    if (mostSignificantChar >= 'a' && mostSignificantChar <= 'z')
+    {
+        lowercase = true;
+    }
+    if (lowercase)
+    {
+        mostSignificantChar -= 0x20;
+    }
+
+    return room + ((mostSignificantChar - 'A') + 1) * 100;
+}
 
 // func_800BE348
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_CurrentLevelPickup__FPv")
+int32 zVarEntryCB_CurrentLevelPickup()
+{
+    return globals.player.Inv_LevelPickups_CurrentLevel;
+}
 
 // func_800BE358
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_CurrentLevelPSocks__FPv")
+int32 zVarEntryCB_CurrentLevelPSocks()
+{
+    return globals.player.Inv_PatsSock_CurrentLevel;
+}
 
 // func_800BE368
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_TotalPSocks__FPv")
+int32 zVarEntryCB_TotalPSocks()
+{
+    return globals.player.Inv_PatsSock_Total;
+}
 
 // func_800BE378
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_Shinies__FPv")
+int32 zVarEntryCB_Shinies()
+{
+    return globals.player.Inv_Shiny;
+}
 
 // func_800BE388
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_Spatulas__FPv")
+int32 zVarEntryCB_Spatulas()
+{
+    return globals.player.Inv_Spatula;
+}
 
 // func_800BE398
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_Date__FPv")
+int32 zVarEntryCB_Date()
+{
+    return iGetDay() + iGetMonth() * 0x64;
+}
 
 // func_800BE3CC
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_Hour__FPv")
+int32 zVarEntryCB_Hour()
+{
+    return iGetHour();
+}
 
 // func_800BE3EC
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_Minute__FPv")
+int32 zVarEntryCB_Minute()
+{
+    return iGetMinute();
+}
 
 // func_800BE40C
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_CounterValue__FPv")
+int32 zVarEntryCB_CounterValue(void* arg)
+{
+    // Given the void argument type, no idea what type this actually is.
+    // What we do know that at an offset 5 words in there's a signed int16.
+    struct something
+    {
+        uint32 stuff[5];
+        int16 theValue;
+    };
+    return ((something*)arg)->theValue;
+}
 
 // func_800BE414
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_IsEnabled__FPv")
+int32 zVarEntryCB_IsEnabled(void* arg)
+{
+    return xBaseIsEnabled((xBase*)arg) != 0;
+}
 
 // func_800BE444
-#pragma GLOBAL_ASM("asm/Game/zVar.s", "zVarEntryCB_IsVisible__FPv")
+int32 zVarEntryCB_IsVisible(void* arg)
+{
+    return xEntIsVisible((xEnt*)arg) != 0;
+}
