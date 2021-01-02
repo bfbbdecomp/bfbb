@@ -28,6 +28,8 @@ struct xtextbox
     struct jot
     {
         substr s;
+
+        // Offset: 0x8
         struct
         {
             struct
@@ -40,17 +42,25 @@ struct xtextbox
                 bool line_break : 1;
                 bool stop : 1;
                 bool tab : 1;
-            };
+            } lower;
             struct
             {
                 bool insert : 1;
                 bool dynamic : 1;
                 bool page_break : 1;
                 bool stateful : 1;
-            };
+            } upper;
             uint16 dummy : 4;
+
+            // Added speculatively. More offset is almost certainly needed to
+            // put context_size / context at the right offset, but I don't know
+            // exactly where that offset should be in the struct.
+            uint16 padding: 16;
         } flag;
+        // Offset: 0xC
         uint16 context_size;
+
+        // Offset: 0x10
         void* context;
         basic_rect<float32> bounds;
         basic_rect<float32> render_bounds;
