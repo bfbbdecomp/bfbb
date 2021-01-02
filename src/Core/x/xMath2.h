@@ -15,6 +15,8 @@ struct xVec2
 {
     float32 x;
     float32 y;
+
+    xVec2& operator=(float32);
 };
 
 float32 xVec2Dist(float32 x1, float32 y1, float32 x2, float32 y2);

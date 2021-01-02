@@ -98,6 +98,13 @@ float32 xatan2(float32 y, float32 x)
     return xAngleClampFast(std::atan2f(y, x));
 }
 
+#ifndef INLINE
+float std::atan2f(float y, float x)
+{
+    return (float)atan2((double)y, (double)x);
+}
+#endif
+
 // func_800060B8
 #pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "CalcRecipBlendMax__FPUs")
 
@@ -202,8 +209,12 @@ xAnimFile* xAnimFileNew(void* rawData, const char* name, uint32 flags, xAnimFile
 void xAnimFileEval(xAnimFile* data, float32 time, float32* bilinear, uint32 flags, xVec3* tran,
                    xQuat* quat, float32*);
 
-// std::floorf(float)
-#pragma GLOBAL_ASM("asm/Core/x/xAnim.s", "floorf__3stdFf")
+#ifndef INLINE
+float std::floorf(float x)
+{
+    return (float)floor((double)x);
+}
+#endif
 
 xAnimEffect* xAnimStateNewEffect(xAnimState* state, uint32 flags, float32 startTime,
                                  float32 endTime, xAnimEffectCallback callback, uint32 userDataSize)

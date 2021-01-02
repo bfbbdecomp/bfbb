@@ -38,4 +38,8 @@ float32 xFuncPiece_Eval(xFuncPiece* func, float32 param, xFuncPiece** iterator);
 void xFuncPiece_EndPoints(xFuncPiece* func, float32 pi, float32 pf, float32 fi, float32 ff);
 void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, float32 newZero);
 
+float32 xrmod(float32 ang);
+
+template <class T> T range_limit(T v, T minv, T maxv);
+
 #endif
