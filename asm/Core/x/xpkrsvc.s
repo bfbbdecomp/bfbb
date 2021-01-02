@@ -3667,8 +3667,7 @@ lbl_8028685C:
 	.incbin "baserom.dol", 0x28383C, 0x2C
 
 .section .sbss
-	/* needed to ensure correct alignment */
-    .skip 0x8
+
 lbl_803CB328:
 	.skip 0x4
 lbl_803CB32C:
