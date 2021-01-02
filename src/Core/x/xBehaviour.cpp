@@ -2,17 +2,25 @@
 
 #include <types.h>
 
-// func_8010E9B0
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "SetPsyche__5xGoalFP7xPsyche")
+void xGoal::SetPsyche(xPsyche* psyche)
+{
+    this->psyche = psyche;
+}
 
-// func_8010E9B8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Name__5xGoalFv")
+char* xGoal::Name()
+{
+    return NULL;
+}
 
-// func_8010E9C0
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "SetState__5xGoalF12en_GOALSTATE")
+void xGoal::SetState(en_GOALSTATE state)
+{
+    this->stat = state;
+}
 
-// func_8010E9C8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "GetState__5xGoalCFv")
+en_GOALSTATE xGoal::GetState()
+{
+    return this->stat;
+}
 
 // func_8010E9D0
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Next__17xListItem_esc__0_5xGoal_esc__1_Fv")
@@ -26,11 +34,25 @@
 // func_8010EA6C
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Head__17xListItem_esc__0_5xGoal_esc__1_Fv")
 
+#if 1
+
 // func_8010EA94
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "GetOwner__5xGoalCFv")
 
-// func_8010EAB8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Clear__5xGoalFv")
+#else
+
+// The instructions are in reverse for some reason.
+xBase* xGoal::GetOwner()
+{
+    return this->psyche->GetClient();
+}
+
+#endif
+
+void xGoal::Clear()
+{
+    this->stat = GOAL_STAT_UNKNOWN;
+}
 
 // func_8010EAC4
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "PreCalc__5xGoalFfPv")
@@ -41,5 +63,7 @@
 // func_8010EB48
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Process__5xGoalFP11en_trantypefPvP6xScene")
 
-// func_8010EB8C
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "GetClient__7xPsycheFv")
+xPsyche* xPsyche::GetClient()
+{
+    return *(xPsyche**)this;
+}

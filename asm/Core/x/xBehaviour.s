@@ -4,26 +4,6 @@
 
 .section .text  # 0x8010E9B0 - 0x8010EB94
 
-.global SetPsyche__5xGoalFP7xPsyche
-SetPsyche__5xGoalFP7xPsyche:
-/* 8010E9B0 0010B7B0  90 83 00 18 */	stw r4, 0x18(r3)
-/* 8010E9B4 0010B7B4  4E 80 00 20 */	blr 
-
-.global Name__5xGoalFv
-Name__5xGoalFv:
-/* 8010E9B8 0010B7B8  38 60 00 00 */	li r3, 0
-/* 8010E9BC 0010B7BC  4E 80 00 20 */	blr 
-
-.global SetState__5xGoalF12en_GOALSTATE
-SetState__5xGoalF12en_GOALSTATE:
-/* 8010E9C0 0010B7C0  90 83 00 20 */	stw r4, 0x20(r3)
-/* 8010E9C4 0010B7C4  4E 80 00 20 */	blr 
-
-.global GetState__5xGoalCFv
-GetState__5xGoalCFv:
-/* 8010E9C8 0010B7C8  80 63 00 20 */	lwz r3, 0x20(r3)
-/* 8010E9CC 0010B7CC  4E 80 00 20 */	blr 
-
 /* Next__17xListItem<5xGoal>Fv */
 .global Next__17xListItem_esc__0_5xGoal_esc__1_Fv
 Next__17xListItem_esc__0_5xGoal_esc__1_Fv:
@@ -108,12 +88,6 @@ GetOwner__5xGoalCFv:
 /* 8010EAB0 0010B8B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EAB4 0010B8B4  4E 80 00 20 */	blr 
 
-.global Clear__5xGoalFv
-Clear__5xGoalFv:
-/* 8010EAB8 0010B8B8  38 00 00 00 */	li r0, 0
-/* 8010EABC 0010B8BC  90 03 00 20 */	stw r0, 0x20(r3)
-/* 8010EAC0 0010B8C0  4E 80 00 20 */	blr 
-
 .global PreCalc__5xGoalFfPv
 PreCalc__5xGoalFfPv:
 /* 8010EAC4 0010B8C4  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -177,12 +151,7 @@ lbl_8010EB7C:
 /* 8010EB7C 0010B97C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8010EB80 0010B980  7C 08 03 A6 */	mtlr r0
 /* 8010EB84 0010B984  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010EB88 0010B988  4E 80 00 20 */	blr 
-
-.global GetClient__7xPsycheFv
-GetClient__7xPsycheFv:
-/* 8010EB8C 0010B98C  80 63 00 00 */	lwz r3, 0(r3)
-/* 8010EB90 0010B990  4E 80 00 20 */	blr 
+/* 8010EB88 0010B988  4E 80 00 20 */	blr  
 
 .endif
 

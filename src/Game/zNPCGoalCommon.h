@@ -1,7 +1,7 @@
 #ifndef ZNPCGOALCOMMON_H
 #define ZNPCGOALCOMMON_H
 
-#include "../Core/x/xBehaviour.h"
+#include "../Core/x/xBehaveMgr.h"
 
 enum en_NPC_GOAL_SPOT
 {
