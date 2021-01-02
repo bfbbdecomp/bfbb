@@ -19,8 +19,8 @@ struct _RxObjSpace3DVertex
     RwV3d objVertex;
     RxColorUnion c;
     RwV3d objNormal;
-    float32 u;
-    float32 v;
+    RwReal u;
+    RwReal v;
 };
 
 typedef RxObjSpace3DVertex RxObjSpace3DLitVertex;
