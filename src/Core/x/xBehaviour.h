@@ -4,6 +4,7 @@
 #include "xBase.h"
 #include "xListItem.h"
 #include "xFactory.h"
+#include "xScene.h"
 
 typedef struct xPsyche;
 
@@ -81,6 +82,9 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
 
     xBase* GetOwner();
     void Clear();
+    int32 PreCalc(float32 dt, void* updCtxt);
+    int32 EvalRules(en_trantype* trantype, float32 dt, void* updCtxt);
+    int32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
 struct xPSYNote
