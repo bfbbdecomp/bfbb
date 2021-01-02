@@ -74,8 +74,8 @@ ASMDIFF := ./asmdiff.sh
 INCLUDES := -Iinclude -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk
 
 ASFLAGS := -mgekko -I include
-LDFLAGS := -map $(MAP) -w off
-CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -fp_contract on -O4,p -msgstyle gcc \
+LDFLAGS := -map $(MAP) -w off -maxerrors 1
+CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -fp_contract on -O4,p -msgstyle gcc -maxerrors 1 \
            -pragma "check_header_flags off" -RTTI off -pragma "force_active on" \
            -str reuse,pool,readonly -char unsigned -enum int -use_lmw_stmw on -inline off -gccincludes $(INCLUDES) 
 PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES)
@@ -115,14 +115,6 @@ clean:
 
 tools:
 	$(MAKE) -C tools
-
-inspect:
-ifeq ($(WINDOWS),1)
-	$(CC) $(CFLAGS) -o inspect.s -S $(subst \,/,$(subst C:\,/c/,$(INSPECT)))
-else
-	$(CC) $(CFLAGS) -o inspect.s -S $(INSPECT)
-endif
-	python3 tools/inspect_postprocess.py inspect.s
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	@echo " LINK    "$@
