@@ -3433,14 +3433,6 @@ sConfirmation:
 .global sTaxiConfirmGrp
 sTaxiConfirmGrp:
 	.skip 0x4
-/* SPECULATION: link order */
-.global bad_card_available
-bad_card_available:
-	.skip 0x4
-/* SPECULATION: link order */
-.global bad_card_needed
-bad_card_needed:
-	.skip 0x4
 
 .section .sdata
 lbl_803CAC20:

@@ -38,5 +38,6 @@ void zSceneSetup();
 void zSceneExit(int32 beginReload);
 void zSceneRender();
 void zSceneUpdate(float32 dt);
+int8* zSceneGetAreaname(uint32 theSceneID);
 
 #endif
