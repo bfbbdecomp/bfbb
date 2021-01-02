@@ -5,6 +5,14 @@
 #include "../x/xIsect.h"
 #include "../x/xRay3.h"
 
+#include <rwcore.h>
+
+union xiMat4x3Union
+{
+    xMat4x3 xm;
+    RwMatrix im;
+};
+
 void iMath3Init();
 void iSphereIsectVec(const xSphere* s, const xVec3* v, xIsect* isx);
 void iSphereIsectRay(const xSphere* s, const xRay3* r, xIsect* isx);

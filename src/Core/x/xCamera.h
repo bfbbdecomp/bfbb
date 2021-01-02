@@ -4,6 +4,7 @@
 #include "xBase.h"
 #include "xMath3.h"
 #include "xBound.h"
+#include "xMath2.h"
 
 #include <rwcore.h>
 
@@ -168,6 +169,43 @@ struct xCamera : xBase
     xVec4 frustplane[12];
 };
 
+struct xBinaryCamera
+{
+    struct zone_data
+    {
+        float32 distance;
+        float32 height;
+        float32 height_focus;
+    };
+
+    struct config
+    {
+        zone_data zone_rest;
+        zone_data zone_above;
+        zone_data zone_below;
+        float32 move_speed;
+        float32 turn_speed;
+        float32 stick_speed;
+        float32 stick_yaw_vel;
+        float32 max_yaw_vel;
+        float32 margin_angle;
+    };
+
+    config cfg;
+    xCamera* camera;
+    xQuat cam_dir;
+    xVec3* s1;
+    xVec3* s2;
+    float32 s2_radius;
+    xVec2 stick_offset;
+
+    void init();
+    void start(xCamera& camera);
+    void stop();
+    void update(float32 dt);
+    void render_debug();
+};
+
 float32 xVec3Length(const xVec3* vec);
 void xCameraInit(xCamera* cam, uint32 width, uint32 height);
 void xCameraSetScene(xCamera* cam, xScene* sc);
@@ -176,5 +214,9 @@ void xCameraUpdate(xCamera* cam, float32 dt);
 void xCameraBegin(xCamera* cam, int32);
 void xCameraEnd(xCamera* cam, float32 seconds, int32 update_scrn_fx);
 void xCameraShowRaster(xCamera* cam);
+void xCameraSetFOV(xCamera* cam, float32 fov);
+void xCameraMove(xCamera* cam, uint32 flags, float32 dgoal, float32 hgoal, float32 pgoal,
+                 float32 tm, float32 tm_acc, float32 tm_dec);
+float32 xCameraGetFOV(const xCamera* cam);
 
 #endif
