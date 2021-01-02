@@ -27,8 +27,6 @@ extern float32 lbl_803CD968; // 0.15f
 extern float32 lbl_803CD96C; // 12.0f
 extern float32 lbl_803CD970; // 2.0f
 
-extern xVec3 m_UnitAxisY__5xVec3;
-
 void on_spawn_bubble_wall(const tweak_info& tweak)
 {
     zFX_SpawnBubbleWall();
@@ -385,9 +383,9 @@ void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* un
 // func_80097354
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xDrawSphere2__FPC5xVec3fUi")
 
-void xVec3::up_normalize()
+xVec3& xVec3::up_normalize()
 {
-    safe_normalize(m_UnitAxisY__5xVec3);
+    return safe_normalize(xVec3::m_UnitAxisY);
 }
 
 #if 1

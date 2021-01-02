@@ -9,14 +9,24 @@ struct xVec3
     float32 y;
     float32 z;
 
+    static xVec3 m_Null;
+    static xVec3 m_UnitAxisX;
+    static xVec3 m_UnitAxisY;
+
     xVec3& operator=(const xVec3&);
     xVec3 operator-(const xVec3&) const;
-    xVec3& operator+=(float);
-    xVec3& operator-=(float);
+    xVec3& operator+=(float32);
+    xVec3& operator-=(float32);
+    xVec3& operator*=(float32);
+    xVec3& operator/=(float32);
 
-    void safe_normalize(const xVec3& val);
-    void up_normalize();
+    xVec3& right_normalize();
+    xVec3& safe_normalize(const xVec3& val);
+    xVec3& up_normalize();
     xVec3& assign(float32 x, float32 y, float32 z);
+    float32 length() const;
+    float32 length2() const;
+    xVec3& invert();
 };
 
 float32 xVec3Normalize(xVec3* o, const xVec3* v);
