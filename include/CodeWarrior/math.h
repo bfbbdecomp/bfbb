@@ -9,6 +9,11 @@ double sin(double);
 double cos(double);
 double tan(double);
 double atan2(double, double);
+double ceil(double);
+double asin(double);
+double acos(double);
+double exp(double);
+double floor(double);
 
 #ifdef __cplusplus
 }
