@@ -1,6 +1,7 @@
 #ifndef RWCORE_H
 #define RWCORE_H
 
+#include <types.h>
 #include "rwplcore.h"
 
 typedef struct _RxObjSpace3DVertex RxObjSpace3DVertex;
