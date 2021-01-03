@@ -196,17 +196,13 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
     {
         center = &bound->sph.center;
     }
-    else if (bound->type == XBOUND_TYPE_BOXLOCAL)
+    else if (bound->type == XBOUND_TYPE_OBB)
     {
-        // TODO: Possibly should be cyl.center depending what type 4 is, the
-        // code matches either way.
         center = &bound->box.center;
     }
     else if (bound->type == XBOUND_TYPE_BOX)
     {
-        // TODO: Possibly should be box.center depending what type 2 is, the
-        // code matches either way.
-        center = &bound->cyl.center;
+        center = &bound->box.center;
     }
     else
     {

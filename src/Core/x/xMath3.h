@@ -30,12 +30,16 @@ struct xSphere
 {
     xVec3 center;
     float32 r;
+
+    xSphere& operator=(const xSphere&); // temp
 };
 
 struct xBox
 {
     xVec3 upper;
     xVec3 lower;
+
+    xBox& operator=(const xBox&); // temp
 };
 
 struct xBBox
@@ -110,5 +114,6 @@ void xQuatFromMat(xQuat* q, const xMat3x3* m);
 void xQuatConj(xQuat* o, const xQuat* q);
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at);
 float32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
+void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
 
 #endif
