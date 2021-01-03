@@ -57,27 +57,16 @@ uint32 xStrHashCat(uint32 prefix, const int8* str)
 
 char* xStrupr(char* string)
 {
-    char p;
+    char* p = string;
 
-    while (p = *string, p != NULL)
+    while (*p != '\0')
     {
-        bool isLowercase = false;
+        *p = (*p >= 'a' && *p <= 'z' ? *p - 32 : *p);
 
-        // check if between lowercase ascii a-z
-        if ((p >= 97) && (p <= 122))
-        {
-            isLowercase = true;
-        }
-
-        if (isLowercase)
-        {
-            // Uppercase ascii character is offset by 32
-            p -= 32;
-        }
-
-        *string = p;
-        string++;
+        p++;
     }
+
+    return string;
 }
 
 // func_8004C6E8
@@ -90,7 +79,7 @@ char* xStrupr(char* string)
 extern "C" {
 uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(uint32 param_1)
 {
-    tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(param_1 & 0xff);
+    return tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(param_1 & 0xff);
 }
 }
 
