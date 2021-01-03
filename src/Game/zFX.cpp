@@ -3,7 +3,6 @@
 #include "../Core/x/xMath3.h"
 
 #include "zFX.h"
-#include "zGoo.h"
 #include "zScene.h"
 #include "zTextBox.h"
 

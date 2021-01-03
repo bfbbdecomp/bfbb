@@ -534,7 +534,7 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
                     xSweptSphereToBox(sws, &ent->bound.box.box, NULL);
                     return;
                 }
-                else if (ent->bound.type == XBOUND_TYPE_BOXLOCAL)
+                else if (ent->bound.type == XBOUND_TYPE_OBB)
                 {
                     xSweptSphereToBox(sws, &ent->bound.box.box, ent->bound.mat);
                     return;
@@ -576,7 +576,7 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
 
             break;
         }
-        case XBOUND_TYPE_BOXLOCAL:
+        case XBOUND_TYPE_OBB:
         {
             xBox tmpbox;
             xRay3 lr;

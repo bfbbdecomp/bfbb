@@ -434,10 +434,6 @@ namespace
 {
     float32 get_lower_extent(const xBound& bound)
     {
-        // I might be accessing the wrong members from bound here.
-        // We won't really know for sure which members are correct
-        // until the values for bound.type are known.
-
         switch (bound.type)
         {
         case XBOUND_TYPE_SPHERE:
@@ -448,7 +444,7 @@ namespace
         {
             return bound.box.center.y - bound.box.box.lower.y;
         }
-        case XBOUND_TYPE_BOXLOCAL:
+        case XBOUND_TYPE_OBB:
         {
             if (_942 == bound.mat->up.x && _942 == bound.mat->up.z)
             {
@@ -463,7 +459,7 @@ namespace
                 return bound.box.center.y - box.lower.y;
             }
         }
-        case XBOUND_TYPE_3:
+        case XBOUND_TYPE_CYL:
         default:
         {
             return _942;
@@ -665,7 +661,7 @@ void xEntSetup(xEnt* ent)
         {
             iBoxForModel(&ent->bound.box.box, (ent->collModel) ? ent->collModel : ent->model);
         }
-        else if (ent->bound.type == XBOUND_TYPE_BOXLOCAL)
+        else if (ent->bound.type == XBOUND_TYPE_OBB)
         {
             iBoxForModelLocal(&ent->bound.box.box, (ent->collModel) ? ent->collModel : ent->model);
         }
