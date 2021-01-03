@@ -392,7 +392,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zNPCTypeBossSB1.o           \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossSB2.o           \
     $(OBJ_DIR)/src/Game/zNPCTypeBossSB2.o           \
-    $(OBJ_DIR)/asm/Core/x/xJaw.o                    \
     $(OBJ_DIR)/src/Core/x/xJaw.o                    \
     $(OBJ_DIR)/asm/Game/zNPCTypeBossPatrick.o       \
     $(OBJ_DIR)/src/Game/zNPCTypeBossPatrick.o       \

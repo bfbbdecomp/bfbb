@@ -9337,6 +9337,13 @@ xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi:
 .endif
 
 .section .rodata
+/* SPECULATION: This seems to be located after zNPCTypeBossSB2 but before zNPCTypeBossPatrick */
+.global lbl_80270004
+lbl_80270004:
+	.incbin "baserom.dol", 0x26CFE4, 0x4
+.global lbl_80270008
+lbl_80270008:
+	.incbin "baserom.dol", 0x26CFE8, 0x7E8
 lbl_802707F0:
 	.incbin "baserom.dol", 0x26D7D0, 0x5C
 lbl_8027084C:
