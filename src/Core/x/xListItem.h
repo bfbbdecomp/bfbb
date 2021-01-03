@@ -8,6 +8,12 @@ template <class T> struct xListItem
     int32 flg_travFilter;
     T* next;
     T* prev;
+
+    T* Next();
+    void Insert(T* list);
+    T* RemHead(T** listhead);
+    T* Head();
+    void Remove();
 };
 
 #endif

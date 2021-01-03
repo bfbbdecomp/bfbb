@@ -2,44 +2,140 @@
 
 #include <types.h>
 
-// func_8010E9B0
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "SetPsyche__5xGoalFP7xPsyche")
+void xGoal::SetPsyche(xPsyche* psyche)
+{
+    this->psyche = psyche;
+}
 
-// func_8010E9B8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Name__5xGoalFv")
+char* xGoal::Name()
+{
+    return NULL;
+}
 
-// func_8010E9C0
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "SetState__5xGoalF12en_GOALSTATE")
+void xGoal::SetState(en_GOALSTATE state)
+{
+    this->stat = state;
+}
 
-// func_8010E9C8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "GetState__5xGoalCFv")
+en_GOALSTATE xGoal::GetState()
+{
+    return this->stat;
+}
 
-// func_8010E9D0
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Next__17xListItem_esc__0_5xGoal_esc__1_Fv")
+xGoal* xListItem<xGoal>::Next()
+{
+    return this->next;
+}
 
-// func_8010E9D8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Insert__17xListItem_esc__0_5xGoal_esc__1_FP5xGoal")
+void xListItem<xGoal>::Insert(xGoal* list)
+{
+    this->prev = list;
+    this->next = list->next;
+    if (list->next != NULL)
+    {
+        (xListItem<xGoal>*)list->next->prev = this;
+    }
+    (xListItem<xGoal>*)list->next = this;
+}
+
+#if 1
 
 // func_8010E9FC
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "RemHead__17xListItem_esc__0_5xGoal_esc__1_FPP5xGoal")
 
+#else
+
+// Two instructions near the end are reversed.
+xGoal* xListItem<xGoal>::RemHead(xGoal** listhead)
+{
+    xGoal* tmp;
+    xGoal* next;
+    if (*listhead == NULL)
+    {
+        tmp = NULL;
+    }
+    else
+    {
+        tmp = ((xListItem<xGoal>*)*listhead)->Head();
+        if (tmp == NULL)
+        {
+            *listhead = NULL;
+        }
+        else
+        {
+            next = tmp->Next();
+            *listhead = next;
+            tmp->Remove();
+        }
+    }
+    return tmp;
+}
+
+#endif
+
+#if 1
+
 // func_8010EA6C
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Head__17xListItem_esc__0_5xGoal_esc__1_Fv")
+
+#else
+
+// Something wrong with the comparison it looks like.
+xGoal* xListItem<xGoal>::Head()
+{
+    xGoal* curr = (xGoal*)this;
+    if (curr == NULL)
+    {
+        return NULL;
+    }
+    xGoal* prev;
+    do
+    {
+        prev = curr;
+        curr = prev->prev;
+    } while (curr != NULL);
+    return prev;
+}
+
+#endif
+
+#if 1
 
 // func_8010EA94
 #pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "GetOwner__5xGoalCFv")
 
-// func_8010EAB8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Clear__5xGoalFv")
+#else
 
-// func_8010EAC4
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "PreCalc__5xGoalFfPv")
+// The instructions are in reverse for some reason.
+xBase* xGoal::GetOwner()
+{
+    return (xBase*)this->psyche->GetClient();
+}
 
-// func_8010EB04
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "EvalRules__5xGoalFP11en_trantypefPv")
+#endif
 
-// func_8010EB48
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "Process__5xGoalFP11en_trantypefPvP6xScene")
+void xGoal::Clear()
+{
+    this->stat = GOAL_STAT_UNKNOWN;
+}
 
-// func_8010EB8C
-#pragma GLOBAL_ASM("asm/Core/x/xBehaviour.s", "GetClient__7xPsycheFv")
+int32 xGoal::PreCalc(float32 dt, void* updCtxt)
+{
+    return this->fun_precalc ? (this->fun_precalc)(this, this->cbdata, dt, updCtxt) : NULL;
+}
+
+int32 xGoal::EvalRules(en_trantype* trantype, float32 dt, void* updCtxt)
+{
+    return this->fun_chkRule ? (this->fun_chkRule)(this, this->cbdata, trantype, dt, updCtxt) :
+                               NULL;
+}
+
+int32 xGoal::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+{
+    return this->fun_process ? (this->fun_process)(this, this->cbdata, trantype, dt, ctxt) : NULL;
+}
+
+xPsyche* xPsyche::GetClient()
+{
+    return *(xPsyche**)this;
+}
