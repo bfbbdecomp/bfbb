@@ -2,13 +2,43 @@
 #define ZFX_H
 
 #include "../Core/x/xString.h"
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xVec3.h"
+#include "../Core/x/xEnt.h"
 
-#include "zGoo.h"
-
-#include <types.h>
+#include <rwcore.h>
 #include <rpworld.h>
+
+enum zFXGooState
+{
+    zFXGooStateNormal,
+    zFXGooStateFreezing,
+    zFXGooStateFrozen,
+    zFXGooStateMelting,
+    zFXGooStateInactive = 0xdeadbeef,
+    zFXGooStateForce32Bit = 0xffffffff
+};
+
+struct zFXGooInstance
+{
+    RpAtomic* atomic;
+    int32 freezeGroup;
+    xVec3* orig_verts;
+    RwRGBA* orig_colors;
+    float32 time;
+    float32 timer;
+    float32 w0;
+    float32 w2;
+    float32 warbc[4];
+    float32 state_time[4];
+    xVec3 center;
+    int32 padding; // Padding used for zFXGoo_SceneExit().
+    zFXGooState state;
+    float32 warb_time;
+    float32 alpha;
+    float32 min;
+    float32 max;
+    xVec3* ref_parentPos;
+    xVec3 pos_parentOnFreeze;
+};
 
 struct tweak_callback;
 
@@ -99,6 +129,8 @@ void zFX_SceneReset();
 void zFXHammer(xVec3* pos);
 void zFXPorterWave(const xVec3* pos);
 
+void zFXGooEnable(RpAtomic* atomic, int32 freezeGroup);
+
 void zFXGoo_SceneEnter();
 void zFXGoo_SceneReset();
 void zFXGoo_SceneExit();
@@ -106,6 +138,8 @@ void zFXGoo_SceneExit();
 void zFXGooUpdate(float32 dt);
 
 void zFXUpdate(float32 dt);
+
+int32 zFXGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
 
 void zFX_SpawnBubbleWall();
 void zFX_SpawnBubbleSlam(const xVec3* pos, uint32 num, float32 rang, float32 bvel, float32 rvel);
