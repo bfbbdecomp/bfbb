@@ -3,6 +3,7 @@
 
 #include "xBase.h"
 #include "xVec3.h"
+#include "xDynAsset.h"
 
 typedef struct asset;
 typedef struct widget;
@@ -51,6 +52,12 @@ namespace xhud
         ACT_SHOW,
         ACT_HIDE,
         MAX_ACT
+    };
+
+    struct asset : xDynAsset
+    {
+        xVec3 loc;
+        xVec3 size;
     };
 
     struct widget

@@ -353,6 +353,8 @@ struct zNPCCommon : xNPCBasic
     zNPCLassoInfo* lassdata;
     NPCSndQueue snd_queue[4];
 
+    zNPCCommon(int32);
+
     void AddScripting(xPsyche* psy,
                       int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
