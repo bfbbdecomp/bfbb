@@ -2,10 +2,7 @@
 #define IMATH_H
 
 #include <types.h>
-
-#ifdef _MSC_VER
-#define __fabs
-#endif
+#include <intrin.h>
 
 #define iabs __fabs
 
