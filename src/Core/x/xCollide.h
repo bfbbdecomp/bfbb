@@ -72,5 +72,10 @@ struct xSweptSphere
 float32 xVec3Length2(const xVec3* vec);
 int32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 int32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
+uint32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);
+uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll);
+uint32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll);
+uint32 xBoxHitsSphere(const xBox* a, const xSphere* b, xCollis* coll);
+uint32 xBoxHitsObb(const xBox* a, const xBox* b, const xMat4x3* mat, xCollis* coll);
 
 #endif

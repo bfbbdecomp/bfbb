@@ -81,7 +81,7 @@ void xNPCBasic::Init(xEntAsset* asset)
     {
         iBoxForModel(&bound.box.box, collModel ? collModel : model);
     }
-    else if (bound.type == XBOUND_TYPE_BOXLOCAL)
+    else if (bound.type == XBOUND_TYPE_OBB)
     {
         iBoxForModelLocal(&bound.box.box, collModel ? collModel : model);
     }
@@ -157,7 +157,7 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
     npc->bound.type = XBOUND_TYPE_SPHERE;
     xVec3Copy(&npc->bound.sph.center, &bndcent);
     npc->bound.sph.r = xNPCBasic_float_0p75;
-    if (npc->bound.type != XBOUND_TYPE_0)
+    if (npc->bound.type != XBOUND_TYPE_NA)
     {
         xQuickCullForBound(&npc->bound.qcd, &npc->bound);
     }

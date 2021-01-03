@@ -22,14 +22,11 @@ struct xBound
     xMat4x3* mat;
 };
 
-// TODO: Figure out which is which for the other two bound types! I know that
-// type 1 is sphere from the code in xNPCBasic.cpp, but I do not know which is
-// which for the other two yet.
-#define XBOUND_TYPE_0 0
-#define XBOUND_TYPE_SPHERE 1
-#define XBOUND_TYPE_BOX 2
-#define XBOUND_TYPE_3 3
-#define XBOUND_TYPE_BOXLOCAL 4
+#define XBOUND_TYPE_NA 0 // None/invalid
+#define XBOUND_TYPE_SPHERE 1 // Sphere - xBound::sph
+#define XBOUND_TYPE_BOX 2 // Axis aligned bounding box - xBound::box
+#define XBOUND_TYPE_CYL 3 // Cylinder - xBound::cyl (unused?)
+#define XBOUND_TYPE_OBB 4 // Oriented bounding box - xBound::box and xBound::mat
 
 void xBoundGetBox(xBox& box, const xBound& bound);
 void xBoundDraw(const xBound* bound);
