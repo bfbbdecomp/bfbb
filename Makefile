@@ -71,14 +71,13 @@ SHA1SUM := sha1sum
 ASMDIFF := ./asmdiff.sh
 
 # Options
-INCLUDES := -Iinclude -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk
+INCLUDES := -ir src -ir include -Iinclude -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk
 
 ASFLAGS := -mgekko -I include
-LDFLAGS := -map $(MAP) -w off -maxerrors 1
+LDFLAGS := -map $(MAP) -w off -maxerrors 1 -nostdlib
 CFLAGS  := -g -DGAMECUBE -Cpp_exceptions off -proc gekko -fp hard -fp_contract on -O4,p -msgstyle gcc -maxerrors 1 \
            -pragma "check_header_flags off" -RTTI off -pragma "force_active on" \
-           -str reuse,pool,readonly -char unsigned -enum int -use_lmw_stmw on -inline off -gccincludes $(INCLUDES) 
-PREPROCESS := -preprocess -DGAMECUBE -gccincludes $(INCLUDES)
+           -str reuse,pool,readonly -char unsigned -enum int -use_lmw_stmw on -inline off -nostdinc -i- $(INCLUDES)
 PPROCFLAGS := -fsymbol-fixup
 
 # elf2dol needs to know these in order to calculate sbss correctly.
@@ -106,11 +105,11 @@ DUMMY != mkdir -p $(ALL_DIRS)
 $(DOL): $(ELF) | tools
 	@echo " ELF2DOL "$@
 	$S$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
-	$S$(SHA1SUM) -c bfbb.sha1 || $(ASMDIFF)
+	$S$(SHA1SUM) -c bfbb.sha1 || ( rm -f main.dump; $(ASMDIFF) )
 
 clean:
-	rm -f $(DOL) $(ELF) $(O_FILES) $(MAP)
-	rm -rf .pragma
+	rm -f $(DOL) $(ELF) $(MAP) baserom.dump main.dump
+	rm -rf .pragma obj
 	$(MAKE) -C tools clean
 
 tools:
@@ -141,7 +140,6 @@ $(OBJ_DIR)/%.o: %.c
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo " CXX     "$<
-	$S$(CC) $(PREPROCESS) -o $(OBJ_DIR)/$*.cpp $< 1>&2
-	$S$(GLBLASM) -s $(OBJ_DIR)/$*.cpp
+	$S$(GLBLASM) -s $< $(OBJ_DIR)/$*.cpp 1>&2
 	$S$(CC) $(CFLAGS) -c -o $@ $(OBJ_DIR)/$*.cpp 1>&2
 	$S$(PPROC) $(PPROCFLAGS) $@

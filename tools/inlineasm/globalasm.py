@@ -11,6 +11,7 @@ Specified by #pragma GLOBAL_ASM(assemblyFilePath, functionName)
 
 parser = argparse.ArgumentParser(description=info)
 parser.add_argument("file", help="The source file to process")
+parser.add_argument("outfile", help="The file to output to")
 parser.add_argument("-s",
                     "--scope",
                     help="Set function scope equal to scope in assembly",
@@ -22,14 +23,12 @@ def run():
     args = parser.parse_args()
     sourcePath = Path(args.file)
     sourceText = open(sourcePath).read()
+    outPath = Path(args.outfile)
     matches = getPragmaMatches(sourceText)
 
     # Create path to cache if not exists
     createCacheFolder()
     fileCache = getFileCache(sourcePath)
-
-    if len(matches) == 0:
-        return
 
     # in-memory dictionary to optimize the script
     # will hold a bunch of info about each
@@ -91,7 +90,7 @@ def run():
         # the same function on every build
         fileCache[hashKey] = newSource
 
-    open(sourcePath, "w").write(sourceText)
+    open(outPath, "w").write(sourceText)
 
     if fileCache["size"] != len(fileCache):
         fileCache["size"] = len(fileCache)

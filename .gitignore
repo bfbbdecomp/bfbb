@@ -1,3 +1,4 @@
+# Ignore
 __pycache__
 *.pyc
 tools/mwcc_compiler/*.*
@@ -21,3 +22,6 @@ obj/*
 .vscode
 .pragma
 inspect.s
+
+# Allow
+!tools/mwcc_compiler/README.md
