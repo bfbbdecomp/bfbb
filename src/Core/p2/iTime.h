@@ -5,12 +5,21 @@
 
 typedef int64 iTime;
 
+int32 iGetMinute();
+int32 iGetHour();
+int32 iGetDay();
+int32 iGetMonth();
+char* iGetCurrFormattedDate(char* input);
+char* iGetCurrFormattedTime(char* input);
+void iTimeInit();
+void iTimeExit();
 iTime iTimeGet();
-uint32 iGetCurrFormattedDate(int8* str);
-uint32 iGetCurrFormattedTime(int8* str);
-uint32 iGetMinute();
-uint32 iGetHour();
-uint32 iGetMonth();
-uint32 iGetDay();
+float32 iTimeDiffSec(iTime t0, iTime t1);
+float32 iTimeDiffSec(iTime time);
+void iTimeGameAdvance(float32 elapsed);
+void iTimeSetGame(float32 time);
+void iProfileClear(uint32 sceneID);
+void iFuncProfileDump();
+void iFuncProfileParse(char* elfPath, int32 profile);
 
 #endif

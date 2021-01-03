@@ -6,60 +6,6 @@
 #include "xordarray.h"
 #include "xFactory.h"
 
-struct xPSYNote
-{
-};
-
-enum en_pendtype
-{
-    PEND_TRAN_NONE,
-    PEND_TRAN_SET,
-    PEND_TRAN_PUSH,
-    PEND_TRAN_POP,
-    PEND_TRAN_POPTO,
-    PEND_TRAN_POPALL,
-    PEND_TRAN_SWAP,
-    PEND_TRAN_INPROG,
-    PEND_TRAN_NOMORE
-};
-
-enum PSY_BRAIN_STATUS
-{
-    PSY_STAT_BLANK,
-    PSY_STAT_GROW,
-    PSY_STAT_EXTEND,
-    PSY_STAT_THINK,
-    PSY_STAT_NOMORE,
-    PSY_STAT_FORCE = 0x7fffffff
-};
-
-struct xPsyche : RyzMemData
-{
-    xBase* clt_owner;
-    xPSYNote* cb_notice;
-    int32 flg_psyche;
-    xGoal* goallist;
-    xGoal* goalstak[5];
-    float32 tmr_stack[1][5];
-    int32 staktop;
-    xGoal* pendgoal;
-    en_pendtype pendtype;
-    int32 gid_safegoal;
-    void (*fun_remap)(int32*, en_trantype*);
-    void* userContext;
-    int32 cnt_transLastTimestep;
-    PSY_BRAIN_STATUS psystat;
-    xBase fakebase;
-
-    int32 Timestep(float32 dt, void* updCtxt);
-    xGoal* FindGoal(int32 gid);
-    int32 GoalSet(int32 gid, int32 param_2);
-    xGoal* AddGoal(int32 gid, void* createData);
-    void BrainBegin();
-    void BrainEnd();
-    void SetSafety(int32);
-};
-
 struct xBehaveMgr : RyzMemData
 {
     xFactory* goalFactory;
