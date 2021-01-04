@@ -57,41 +57,6 @@ lbl_80134A3C:
 /* 80134A4C 0013184C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134A50 00131850  4E 80 00 20 */	blr 
 
-.global read__8ztaskboxFR7xSerial
-read__8ztaskboxFR7xSerial:
-/* 80134A54 00131854  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80134A58 00131858  7C 08 02 A6 */	mflr r0
-/* 80134A5C 0013185C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80134A60 00131860  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80134A64 00131864  7C 7F 1B 78 */	mr r31, r3
-/* 80134A68 00131868  80 03 00 18 */	lwz r0, 0x18(r3)
-/* 80134A6C 0013186C  7C 83 23 78 */	mr r3, r4
-/* 80134A70 00131870  38 81 00 08 */	addi r4, r1, 8
-/* 80134A74 00131874  98 01 00 08 */	stb r0, 8(r1)
-/* 80134A78 00131878  4B F0 E8 85 */	bl Read__7xSerialFPUc
-/* 80134A7C 0013187C  88 81 00 08 */	lbz r4, 8(r1)
-/* 80134A80 00131880  7F E3 FB 78 */	mr r3, r31
-/* 80134A84 00131884  48 00 04 C1 */	bl set_state__8ztaskboxFQ28ztaskbox10state_enum
-/* 80134A88 00131888  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80134A8C 0013188C  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80134A90 00131890  7C 08 03 A6 */	mtlr r0
-/* 80134A94 00131894  38 21 00 20 */	addi r1, r1, 0x20
-/* 80134A98 00131898  4E 80 00 20 */	blr 
-
-.global write__8ztaskboxFR7xSerial
-write__8ztaskboxFR7xSerial:
-/* 80134A9C 0013189C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134AA0 001318A0  7C 08 02 A6 */	mflr r0
-/* 80134AA4 001318A4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134AA8 001318A8  80 03 00 18 */	lwz r0, 0x18(r3)
-/* 80134AAC 001318AC  7C 83 23 78 */	mr r3, r4
-/* 80134AB0 001318B0  54 04 06 3E */	clrlwi r4, r0, 0x18
-/* 80134AB4 001318B4  4B F0 E5 B9 */	bl Write__7xSerialFUc
-/* 80134AB8 001318B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134ABC 001318BC  7C 08 03 A6 */	mtlr r0
-/* 80134AC0 001318C0  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134AC4 001318C4  4E 80 00 20 */	blr 
-
 .global start_talk__8ztaskboxFP10zNPCCommon
 start_talk__8ztaskboxFP10zNPCCommon:
 /* 80134AC8 001318C8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -123,7 +88,7 @@ lbl_80134B18:
 /* 80134B2C 0013192C  40 82 00 08 */	bne lbl_80134B34
 /* 80134B30 00131930  48 00 00 74 */	b lbl_80134BA4
 lbl_80134B34:
-/* 80134B34 00131934  80 6D 96 24 */	lwz r3, lbl_803CBF24-_SDA_BASE_(r13)
+/* 80134B34 00131934  80 6D 96 24 */	lwz r3, shared-_SDA_BASE_(r13)
 /* 80134B38 00131938  28 03 00 00 */	cmplwi r3, 0
 /* 80134B3C 0013193C  41 82 00 10 */	beq lbl_80134B4C
 /* 80134B40 00131940  7C 03 E0 40 */	cmplw r3, r28
@@ -143,7 +108,7 @@ lbl_80134B4C:
 /* 80134B74 00131974  48 00 05 B1 */	bl get_text__8ztaskboxFUi
 /* 80134B78 00131978  7C 7E 1B 79 */	or. r30, r3, r3
 /* 80134B7C 0013197C  41 82 00 28 */	beq lbl_80134BA4
-/* 80134B80 00131980  93 8D 96 24 */	stw r28, lbl_803CBF24-_SDA_BASE_(r13)
+/* 80134B80 00131980  93 8D 96 24 */	stw r28, shared-_SDA_BASE_(r13)
 /* 80134B84 00131984  7F 84 E3 78 */	mr r4, r28
 /* 80134B88 00131988  80 6D 96 20 */	lwz r3, tcb__8ztaskbox-_SDA_BASE_(r13)
 /* 80134B8C 0013198C  48 00 00 39 */	bl reset__Q28ztaskbox13talk_callbackFR8ztaskbox
@@ -161,13 +126,6 @@ lbl_80134BA4:
 /* 80134BB8 001319B8  7C 08 03 A6 */	mtlr r0
 /* 80134BBC 001319BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80134BC0 001319C0  4E 80 00 20 */	blr 
-
-.global reset__Q28ztaskbox13talk_callbackFR8ztaskbox
-reset__Q28ztaskbox13talk_callbackFR8ztaskbox:
-/* 80134BC4 001319C4  90 83 00 04 */	stw r4, 4(r3)
-/* 80134BC8 001319C8  38 00 00 00 */	li r0, 0
-/* 80134BCC 001319CC  90 03 00 08 */	stw r0, 8(r3)
-/* 80134BD0 001319D0  4E 80 00 20 */	blr 
 
 .global stop_talk__8ztaskboxFv
 stop_talk__8ztaskboxFv:
@@ -191,7 +149,7 @@ lbl_80134C00:
 /* 80134C14 00131A14  40 82 00 08 */	bne lbl_80134C1C
 /* 80134C18 00131A18  48 00 00 30 */	b lbl_80134C48
 lbl_80134C1C:
-/* 80134C1C 00131A1C  80 0D 96 24 */	lwz r0, lbl_803CBF24-_SDA_BASE_(r13)
+/* 80134C1C 00131A1C  80 0D 96 24 */	lwz r0, shared-_SDA_BASE_(r13)
 /* 80134C20 00131A20  7C 00 18 40 */	cmplw r0, r3
 /* 80134C24 00131A24  40 82 00 24 */	bne lbl_80134C48
 /* 80134C28 00131A28  80 63 00 14 */	lwz r3, 0x14(r3)
@@ -201,90 +159,12 @@ lbl_80134C1C:
 /* 80134C38 00131A38  41 82 00 10 */	beq lbl_80134C48
 /* 80134C3C 00131A3C  4B FF DE 55 */	bl stop_talk__8ztalkboxFv
 /* 80134C40 00131A40  38 00 00 00 */	li r0, 0
-/* 80134C44 00131A44  90 0D 96 24 */	stw r0, lbl_803CBF24-_SDA_BASE_(r13)
+/* 80134C44 00131A44  90 0D 96 24 */	stw r0, shared-_SDA_BASE_(r13)
 lbl_80134C48:
 /* 80134C48 00131A48  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80134C4C 00131A4C  7C 08 03 A6 */	mtlr r0
 /* 80134C50 00131A50  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134C54 00131A54  4E 80 00 20 */	blr 
-
-.global enable__8ztaskboxFv
-enable__8ztaskboxFv:
-/* 80134C58 00131A58  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134C5C 00131A5C  7C 08 02 A6 */	mflr r0
-/* 80134C60 00131A60  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134C64 00131A64  88 03 00 10 */	lbz r0, 0x10(r3)
-/* 80134C68 00131A68  28 00 00 00 */	cmplwi r0, 0
-/* 80134C6C 00131A6C  40 82 00 14 */	bne lbl_80134C80
-/* 80134C70 00131A70  38 00 00 01 */	li r0, 1
-/* 80134C74 00131A74  38 80 00 00 */	li r4, 0
-/* 80134C78 00131A78  98 03 00 10 */	stb r0, 0x10(r3)
-/* 80134C7C 00131A7C  48 00 02 C9 */	bl set_state__8ztaskboxFQ28ztaskbox10state_enum
-lbl_80134C80:
-/* 80134C80 00131A80  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134C84 00131A84  7C 08 03 A6 */	mtlr r0
-/* 80134C88 00131A88  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134C8C 00131A8C  4E 80 00 20 */	blr 
-
-.global disable__8ztaskboxFv
-disable__8ztaskboxFv:
-/* 80134C90 00131A90  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134C94 00131A94  7C 08 02 A6 */	mflr r0
-/* 80134C98 00131A98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134C9C 00131A9C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80134CA0 00131AA0  7C 7F 1B 78 */	mr r31, r3
-/* 80134CA4 00131AA4  88 03 00 10 */	lbz r0, 0x10(r3)
-/* 80134CA8 00131AA8  28 00 00 00 */	cmplwi r0, 0
-/* 80134CAC 00131AAC  41 82 00 1C */	beq lbl_80134CC8
-/* 80134CB0 00131AB0  4B FF FF 25 */	bl stop_talk__8ztaskboxFv
-/* 80134CB4 00131AB4  38 00 00 00 */	li r0, 0
-/* 80134CB8 00131AB8  7F E3 FB 78 */	mr r3, r31
-/* 80134CBC 00131ABC  98 1F 00 10 */	stb r0, 0x10(r31)
-/* 80134CC0 00131AC0  38 80 FF FF */	li r4, -1
-/* 80134CC4 00131AC4  48 00 02 81 */	bl set_state__8ztaskboxFQ28ztaskbox10state_enum
-lbl_80134CC8:
-/* 80134CC8 00131AC8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134CCC 00131ACC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80134CD0 00131AD0  7C 08 03 A6 */	mtlr r0
-/* 80134CD4 00131AD4  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134CD8 00131AD8  4E 80 00 20 */	blr 
-
-.global reset__8ztaskboxFv
-reset__8ztaskboxFv:
-/* 80134CDC 00131ADC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134CE0 00131AE0  7C 08 02 A6 */	mflr r0
-/* 80134CE4 00131AE4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134CE8 00131AE8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80134CEC 00131AEC  7C 7F 1B 78 */	mr r31, r3
-/* 80134CF0 00131AF0  4B FF FF A1 */	bl disable__8ztaskboxFv
-/* 80134CF4 00131AF4  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 80134CF8 00131AF8  88 03 00 12 */	lbz r0, 0x12(r3)
-/* 80134CFC 00131AFC  28 00 00 00 */	cmplwi r0, 0
-/* 80134D00 00131B00  41 82 00 0C */	beq lbl_80134D0C
-/* 80134D04 00131B04  7F E3 FB 78 */	mr r3, r31
-/* 80134D08 00131B08  4B FF FF 51 */	bl enable__8ztaskboxFv
-lbl_80134D0C:
-/* 80134D0C 00131B0C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134D10 00131B10  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80134D14 00131B14  7C 08 03 A6 */	mtlr r0
-/* 80134D18 00131B18  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134D1C 00131B1C  4E 80 00 20 */	blr 
-
-.global initiate__8ztaskboxFv
-initiate__8ztaskboxFv:
-/* 80134D20 00131B20  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134D24 00131B24  7C 08 02 A6 */	mflr r0
-/* 80134D28 00131B28  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134D2C 00131B2C  80 03 00 18 */	lwz r0, 0x18(r3)
-/* 80134D30 00131B30  2C 00 00 00 */	cmpwi r0, 0
-/* 80134D34 00131B34  40 82 00 0C */	bne lbl_80134D40
-/* 80134D38 00131B38  38 80 00 01 */	li r4, 1
-/* 80134D3C 00131B3C  48 00 02 09 */	bl set_state__8ztaskboxFQ28ztaskbox10state_enum
-lbl_80134D40:
-/* 80134D40 00131B40  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134D44 00131B44  7C 08 03 A6 */	mtlr r0
-/* 80134D48 00131B48  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134D4C 00131B4C  4E 80 00 20 */	blr 
 
 .global succeed__8ztaskboxFv
 succeed__8ztaskboxFv:
@@ -358,18 +238,13 @@ lbl_80134E24:
 /* 80134E30 00131C30  38 21 00 10 */	addi r1, r1, 0x10
 /* 80134E34 00131C34  4E 80 00 20 */	blr 
 
-.global set_callback__8ztaskboxFPQ28ztaskbox8callback
-set_callback__8ztaskboxFPQ28ztaskbox8callback:
-/* 80134E38 00131C38  90 83 00 1C */	stw r4, 0x1c(r3)
-/* 80134E3C 00131C3C  4E 80 00 20 */	blr 
-
 .global init__8ztaskboxFv
 init__8ztaskboxFv:
 /* 80134E40 00131C40  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80134E44 00131C44  7C 08 02 A6 */	mflr r0
 /* 80134E48 00131C48  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80134E4C 00131C4C  38 00 00 00 */	li r0, 0
-/* 80134E50 00131C50  90 0D 96 24 */	stw r0, lbl_803CBF24-_SDA_BASE_(r13)
+/* 80134E50 00131C50  90 0D 96 24 */	stw r0, shared-_SDA_BASE_(r13)
 /* 80134E54 00131C54  88 0D 96 28 */	lbz r0, lbl_803CBF28-_SDA_BASE_(r13)
 /* 80134E58 00131C58  7C 00 07 75 */	extsb. r0, r0
 /* 80134E5C 00131C5C  40 82 00 18 */	bne lbl_80134E74
@@ -385,61 +260,7 @@ lbl_80134E74:
 /* 80134E80 00131C80  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80134E84 00131C84  7C 08 03 A6 */	mtlr r0
 /* 80134E88 00131C88  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134E8C 00131C8C  4E 80 00 20 */	blr 
-
-.global __ct__Q28ztaskbox13talk_callbackFv
-__ct__Q28ztaskbox13talk_callbackFv:
-/* 80134E90 00131C90  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134E94 00131C94  7C 08 02 A6 */	mflr r0
-/* 80134E98 00131C98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134E9C 00131C9C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80134EA0 00131CA0  7C 7F 1B 78 */	mr r31, r3
-/* 80134EA4 00131CA4  4B FE 77 C5 */	bl __ct__Q28ztalkbox8callbackFv
-/* 80134EA8 00131CA8  3C 80 80 2A */	lis r4, __vt__Q28ztaskbox13talk_callback@ha
-/* 80134EAC 00131CAC  7F E3 FB 78 */	mr r3, r31
-/* 80134EB0 00131CB0  38 04 8F A0 */	addi r0, r4, __vt__Q28ztaskbox13talk_callback@l
-/* 80134EB4 00131CB4  90 1F 00 00 */	stw r0, 0(r31)
-/* 80134EB8 00131CB8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80134EBC 00131CBC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134EC0 00131CC0  7C 08 03 A6 */	mtlr r0
-/* 80134EC4 00131CC4  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134EC8 00131CC8  4E 80 00 20 */	blr 
-
-load__8ztaskboxFR5xBaseR9xDynAssetUl:
-/* 80134ECC 00131CCC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134ED0 00131CD0  7C 08 02 A6 */	mflr r0
-/* 80134ED4 00131CD4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134ED8 00131CD8  4B FF FA C5 */	bl load__8ztaskboxFRCQ28ztaskbox10asset_type
-/* 80134EDC 00131CDC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134EE0 00131CE0  7C 08 03 A6 */	mtlr r0
-/* 80134EE4 00131CE4  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134EE8 00131CE8  4E 80 00 20 */	blr 
-
-.global exists__8ztaskboxFQ28ztaskbox10state_enum
-exists__8ztaskboxFQ28ztaskbox10state_enum:
-/* 80134EEC 00131CEC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80134EF0 00131CF0  7C 08 02 A6 */	mflr r0
-/* 80134EF4 00131CF4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80134EF8 00131CF8  54 80 10 3A */	slwi r0, r4, 2
-/* 80134EFC 00131CFC  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80134F00 00131D00  3B E0 00 00 */	li r31, 0
-/* 80134F04 00131D04  80 63 00 14 */	lwz r3, 0x14(r3)
-/* 80134F08 00131D08  7C 63 02 14 */	add r3, r3, r0
-/* 80134F0C 00131D0C  80 63 00 1C */	lwz r3, 0x1c(r3)
-/* 80134F10 00131D10  28 03 00 00 */	cmplwi r3, 0
-/* 80134F14 00131D14  41 82 00 18 */	beq lbl_80134F2C
-/* 80134F18 00131D18  38 80 00 00 */	li r4, 0
-/* 80134F1C 00131D1C  4B F1 67 F1 */	bl xSTFindAsset__FUiPUi
-/* 80134F20 00131D20  28 03 00 00 */	cmplwi r3, 0
-/* 80134F24 00131D24  41 82 00 08 */	beq lbl_80134F2C
-/* 80134F28 00131D28  3B E0 00 01 */	li r31, 1
-lbl_80134F2C:
-/* 80134F2C 00131D2C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80134F30 00131D30  7F E3 FB 78 */	mr r3, r31
-/* 80134F34 00131D34  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80134F38 00131D38  7C 08 03 A6 */	mtlr r0
-/* 80134F3C 00131D3C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80134F40 00131D40  4E 80 00 20 */	blr 
+/* 80134E8C 00131C8C  4E 80 00 20 */	blr
 
 .global set_state__8ztaskboxFQ28ztaskbox10state_enum
 set_state__8ztaskboxFQ28ztaskbox10state_enum:
@@ -714,7 +535,8 @@ lbl_803242E8:
 	.skip 0x10
 
 .section .sbss
-lbl_803CBF24:
+.global shared
+shared:
 	.skip 0x4
 lbl_803CBF28:
 	.skip 0x8

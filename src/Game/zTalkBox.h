@@ -75,6 +75,8 @@ struct ztalkbox : xBase
         const char* yesno;
     } prompt;
     zNPCCommon* npc;
+
+    void stop_talk();
 };
 
 #endif
