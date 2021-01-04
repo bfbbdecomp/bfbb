@@ -61,3 +61,5 @@ writing [documentation](https://github.com/pslehisl/bfbbdecomp/blob/master/docs/
 
 **[@mkst](https://github.com/mkst)** ([conker](https://github.com/mkst/conker)) -
 Continuous Integration.
+
+And to [everyone else](https://github.com/pslehisl/bfbbdecomp/graphs/contributors) who has contributed to the project in any way.
