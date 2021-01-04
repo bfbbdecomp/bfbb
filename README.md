@@ -51,10 +51,10 @@ Contributions and PRs are welcome.
 Starting the project, working on tools, decompilation, support, etc. (too many things to list).
 
 **[@mattbruv](https://github.com/mattbruv)** -
-Creating the [project tracking website](https://github.com/pslehisl), [inlineasm](tools/inlineasm/README.md), decompilation.
+Creating the [project tracking website](https://pslehisl.github.io/bfbbdecomp/progress), [inlineasm](tools/inlineasm/README.md), decompilation.
 
 **[@DarkRTA](https://github.com/DarkRTA)** -
-Creating the formatting rules, splitting data files, improving the build process, decompilation.
+Exporting datatypes for Ghidra, creating the formatting rules, splitting data files, improving the build process, decompilation.
 
 **[@stravant](https://github.com/stravant)** -
 writing [documentation](https://github.com/pslehisl/bfbbdecomp/blob/master/docs/WalkthroughAndTips.md), decompilation.
