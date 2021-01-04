@@ -1,3 +1,5 @@
+#include "xMath3.h"
+#include "xVec3.h"
 #include "xEntBoulder.h"
 
 #include <types.h>
@@ -18,7 +20,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_ApplyForces__FP10xEntCollis")
 
 // func_8011F564
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_AddInstantForce__FP11xEntBoulderP5xVec3")
+#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
+                   "xEntBoulder_AddInstantForce__FP11xEntBoulderP5xVec3")
 
 // func_8011F594
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_AddForce__FP11xEntBoulderP5xVec3")
@@ -33,7 +36,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_Update__FP11xEntBoulderP6xScenef")
 
 // func_801203D8
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_KilledBySurface__FP11xEntBoulderP6xScenef")
+#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
+                   "xEntBoulder_KilledBySurface__FP11xEntBoulderP6xScenef")
 
 // func_80120640
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_Kill__FP11xEntBoulder")
@@ -60,7 +64,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xBoulderGenerator_Init__FR5xBaseR9xDynAssetUl")
 
 // func_801210DC
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xBoulderGenerator_Init__FP17xBoulderGeneratorP22xBoulderGeneratorAsset")
+#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
+                   "xBoulderGenerator_Init__FP17xBoulderGeneratorP22xBoulderGeneratorAsset")
 
 // func_80121288
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xBoulderGenerator_Reset__FP17xBoulderGenerator")
@@ -72,16 +77,27 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "GetBoulderForGenerating__FP17xBoulderGenerator")
 
 // func_801214AC
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xBoulderGenerator_Launch__FP17xBoulderGeneratorP5xVec3f")
+#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
+                   "xBoulderGenerator_Launch__FP17xBoulderGeneratorP5xVec3f")
 
 // func_80121654
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase")
+#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
+                   "xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_80121944
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xBoulderGenerator_GenBoulder__FP17xBoulderGenerator")
+#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
+                   "xBoulderGenerator_GenBoulder__FP17xBoulderGenerator")
 
 // func_80121D5C
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xVec3LengthFast__FPC5xVec3")
 
-// func_80121DA8
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}

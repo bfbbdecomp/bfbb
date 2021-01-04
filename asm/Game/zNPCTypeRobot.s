@@ -15531,33 +15531,6 @@ lbl_80102B8C:
 /* 80102B98 000FF998  41 80 FF E4 */	blt lbl_80102B7C
 /* 80102B9C 000FF99C  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 80102BA0 000FF9A0  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80102BA4 000FF9A4  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80102BA8 000FF9A8  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 80102BAC 000FF9AC  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 80102BB0 000FF9B0  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 80102BB4 000FF9B4  C0 24 00 00 */	lfs f1, 0(r4)
-/* 80102BB8 000FF9B8  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 80102BBC 000FF9BC  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 80102BC0 000FF9C0  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 80102BC4 000FF9C4  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 80102BC8 000FF9C8  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 80102BCC 000FF9CC  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 80102BD0 000FF9D0  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 80102BD4 000FF9D4  C0 64 00 08 */	lfs f3, 8(r4)
-/* 80102BD8 000FF9D8  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 80102BDC 000FF9DC  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 80102BE0 000FF9E0  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 80102BE4 000FF9E4  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 80102BE8 000FF9E8  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 80102BEC 000FF9EC  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 80102BF0 000FF9F0  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80102BF4 000FF9F4  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 80102BF8 000FF9F8  D0 63 00 04 */	stfs f3, 4(r3)
-/* 80102BFC 000FF9FC  D0 03 00 08 */	stfs f0, 8(r3)
-/* 80102C00 000FFA00  4E 80 00 20 */	blr 
-
 .global RadiusArena__10zMovePointFv
 RadiusArena__10zMovePointFv:
 /* 80102C04 000FFA04  80 63 00 10 */	lwz r3, 0x10(r3)

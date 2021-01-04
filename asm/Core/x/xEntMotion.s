@@ -2927,33 +2927,6 @@ xQuatCopy__FP5xQuatPC5xQuat:
 /* 8001F1F0 0001BFF0  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8001F1F4 0001BFF4  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 8001F1F8 0001BFF8  C0 65 00 04 */	lfs f3, 4(r5)
-/* 8001F1FC 0001BFFC  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 8001F200 0001C000  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 8001F204 0001C004  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 8001F208 0001C008  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 8001F20C 0001C00C  C0 24 00 00 */	lfs f1, 0(r4)
-/* 8001F210 0001C010  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 8001F214 0001C014  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 8001F218 0001C018  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 8001F21C 0001C01C  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 8001F220 0001C020  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 8001F224 0001C024  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 8001F228 0001C028  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 8001F22C 0001C02C  C0 64 00 08 */	lfs f3, 8(r4)
-/* 8001F230 0001C030  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 8001F234 0001C034  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 8001F238 0001C038  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 8001F23C 0001C03C  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 8001F240 0001C040  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 8001F244 0001C044  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 8001F248 0001C048  D0 03 00 00 */	stfs f0, 0(r3)
-/* 8001F24C 0001C04C  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 8001F250 0001C050  D0 63 00 04 */	stfs f3, 4(r3)
-/* 8001F254 0001C054  D0 03 00 08 */	stfs f0, 8(r3)
-/* 8001F258 0001C058  4E 80 00 20 */	blr 
-
 .global xQuatEquals__FPC5xQuatPC5xQuat
 xQuatEquals__FPC5xQuatPC5xQuat:
 /* 8001F25C 0001C05C  94 21 FF F0 */	stwu r1, -0x10(r1)

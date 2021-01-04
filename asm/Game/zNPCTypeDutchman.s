@@ -10865,33 +10865,6 @@ lbl_8017BFDC:
 /* 8017C00C 00178E0C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017C010 00178E10  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 8017C014 00178E14  C0 65 00 04 */	lfs f3, 4(r5)
-/* 8017C018 00178E18  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 8017C01C 00178E1C  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 8017C020 00178E20  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 8017C024 00178E24  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 8017C028 00178E28  C0 24 00 00 */	lfs f1, 0(r4)
-/* 8017C02C 00178E2C  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 8017C030 00178E30  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 8017C034 00178E34  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 8017C038 00178E38  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 8017C03C 00178E3C  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 8017C040 00178E40  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 8017C044 00178E44  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 8017C048 00178E48  C0 64 00 08 */	lfs f3, 8(r4)
-/* 8017C04C 00178E4C  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 8017C050 00178E50  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 8017C054 00178E54  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 8017C058 00178E58  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 8017C05C 00178E5C  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 8017C060 00178E60  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 8017C064 00178E64  D0 03 00 00 */	stfs f0, 0(r3)
-/* 8017C068 00178E68  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 8017C06C 00178E6C  D0 63 00 04 */	stfs f3, 4(r3)
-/* 8017C070 00178E70  D0 03 00 08 */	stfs f0, 8(r3)
-/* 8017C074 00178E74  4E 80 00 20 */	blr 
-
 .global xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f
 xSphereHitsCapsule__FRC7xSphereRC5xVec3RC5xVec3f:
 /* 8017C078 00178E78  94 21 FF F0 */	stwu r1, -0x10(r1)

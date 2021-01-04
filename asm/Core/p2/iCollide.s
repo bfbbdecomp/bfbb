@@ -2320,33 +2320,6 @@ lbl_800C2DB4:
 /* 800C2DCC 000BFBCC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C2DD0 000BFBD0  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 800C2DD4 000BFBD4  C0 65 00 04 */	lfs f3, 4(r5)
-/* 800C2DD8 000BFBD8  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 800C2DDC 000BFBDC  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 800C2DE0 000BFBE0  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 800C2DE4 000BFBE4  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 800C2DE8 000BFBE8  C0 24 00 00 */	lfs f1, 0(r4)
-/* 800C2DEC 000BFBEC  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 800C2DF0 000BFBF0  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 800C2DF4 000BFBF4  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 800C2DF8 000BFBF8  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 800C2DFC 000BFBFC  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 800C2E00 000BFC00  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 800C2E04 000BFC04  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 800C2E08 000BFC08  C0 64 00 08 */	lfs f3, 8(r4)
-/* 800C2E0C 000BFC0C  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 800C2E10 000BFC10  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 800C2E14 000BFC14  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 800C2E18 000BFC18  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 800C2E1C 000BFC1C  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 800C2E20 000BFC20  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 800C2E24 000BFC24  D0 03 00 00 */	stfs f0, 0(r3)
-/* 800C2E28 000BFC28  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 800C2E2C 000BFC2C  D0 63 00 04 */	stfs f3, 4(r3)
-/* 800C2E30 000BFC30  D0 03 00 08 */	stfs f0, 8(r3)
-/* 800C2E34 000BFC34  4E 80 00 20 */	blr 
-
 .endif
 
 .section .bss

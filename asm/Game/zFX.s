@@ -4810,33 +4810,6 @@ create_change__14tweak_callbackFPFRC10tweak_info_v:
 xDrawSphere2__FPC5xVec3fUi:
 /* 80097354 00094154  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 80097380 00094180  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80097384 00094184  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80097388 00094188  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 8009738C 0009418C  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 80097390 00094190  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 80097394 00094194  C0 24 00 00 */	lfs f1, 0(r4)
-/* 80097398 00094198  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 8009739C 0009419C  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 800973A0 000941A0  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 800973A4 000941A4  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 800973A8 000941A8  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 800973AC 000941AC  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 800973B0 000941B0  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 800973B4 000941B4  C0 64 00 08 */	lfs f3, 8(r4)
-/* 800973B8 000941B8  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 800973BC 000941BC  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 800973C0 000941C0  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 800973C4 000941C4  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 800973C8 000941C8  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 800973CC 000941CC  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 800973D0 000941D0  D0 03 00 00 */	stfs f0, 0(r3)
-/* 800973D4 000941D4  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 800973D8 000941D8  D0 63 00 04 */	stfs f3, 4(r3)
-/* 800973DC 000941DC  D0 03 00 08 */	stfs f0, 8(r3)
-/* 800973E0 000941E0  4E 80 00 20 */	blr 
-
 .global xModelSetScale__FP14xModelInstanceRC5xVec3
 xModelSetScale__FP14xModelInstanceRC5xVec3:
 /* 800973E4 000941E4  94 21 FF F0 */	stwu r1, -0x10(r1)
