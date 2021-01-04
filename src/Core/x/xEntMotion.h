@@ -168,4 +168,7 @@ struct xEntMotion
     xEnt* target;
 };
 
+void xEntMotionMove(xEntMotion* motion, xScene* sc, float32 dt, xEntFrame* frame);
+void xEntMotionTranslate(xEntMotion* motion, const xVec3* dpos, xMat4x3* dmat);
+
 #endif

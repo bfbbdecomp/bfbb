@@ -2,44 +2,112 @@
 
 #include <types.h>
 
-// func_80017D3C
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "xprintf__FPCce")
+extern float32 _781; // 0.0020833334f.
+extern float32 _783; // 0.0015625f.
 
-// func_80017D8C
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "xDebugModeAdd__FPCcPFv_v")
+void xprintf(char* msg, ...)
+{
+    // Redacted. :}
+}
 
-// func_80017D94
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "xDebugInit__Fv")
+int32 xDebugModeAdd(char* mode, void(*debugFunc))
+{
+    // Redacted. :}
+    return -1;
+}
 
-// func_80017D98
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "xDebugUpdate__Fv")
+void xDebugInit()
+{
+    // Redacted. :}
+}
 
-// func_80017D9C
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "xDebugExit__Fv")
+void xDebugUpdate()
+{
+    // Redacted. :}
+}
 
-// func_80017DA0
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "xDebugTimestampScreen__Fv")
+void xDebugExit()
+{
+    // Redacted. :}
+}
+
+void xDebugTimestampScreen()
+{
+    // Redacted. :}
+}
+
+#if 1
 
 // func_80017DA4
 #pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "render__8xtextboxCFb")
 
+#else
+
+// Have to figure out how to implement the layout struct correctly.
+void xtextbox::render(bool cache)
+{
+    render(temp_layout(cache), 0, -1);
+}
+
+#endif
+
 // func_80017DE4
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff")
+#pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \
+                   "create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff")
+
+#if 1
 
 // func_80017EA8
 #pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "__as__5xfontFRC5xfont")
 
+#else
+
+// WIP.
+xfont& xfont::operator=(const xfont& other)
+{
+    iColor_tag tmpColor;
+    float32 tmp;
+    float32 tmp2;
+
+    tmp = other.width;
+    this->id = other.id;
+    tmp2 = other.height;
+    this->width = tmp;
+    tmp = other.space;
+    this->height = tmp2;
+    tmpColor = other.color;
+    this->space = tmp;
+    tmp2 = other.clip.x;
+    this->color = tmpColor;
+    tmp = other.clip.y;
+    this->clip.x = tmp2;
+    tmp2 = other.clip.w;
+    this->clip.y = tmp;
+    tmp = other.clip.h;
+    this->clip.w = tmp2;
+    this->clip.h = tmp;
+
+    return *this;
+}
+
+#endif
+
 // func_80017EF4
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "create__5xfontFUifff10iColor_tagRC13basic_rect_esc__0_f_esc__1_")
+#pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \
+                   "create__5xfontFUifff10iColor_tagRC13basic_rect_esc__0_f_esc__1_")
 
 // func_80017F98
 #pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "__as__10iColor_tagFRC10iColor_tag")
 
-// func_80017FBC
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "NSCREENY__Ff")
+float32 NSCREENY(float32 scale)
+{
+    return _781 * scale;
+}
 
-// func_80017FC8
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "NSCREENX__Ff")
+float32 NSCREENX(float32 scale)
+{
+    return _783 * scale;
+}
 
 // func_80017FD4
 #pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "contract__13basic_rect_esc__0_f_esc__1_Fffff")
@@ -48,4 +116,5 @@
 #pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "expand__13basic_rect_esc__0_f_esc__1_Fffff")
 
 // func_80018040
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "__as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_")
+#pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \
+                   "__as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_")
