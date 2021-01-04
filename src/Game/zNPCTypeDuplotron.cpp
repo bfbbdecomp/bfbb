@@ -1,3 +1,6 @@
+#include "../Core/x/xVec3.h"
+#include "../Core/x/xMath3.h"
+
 #include "zNPCTypeDuplotron.h"
 
 #include <types.h>
@@ -105,5 +108,13 @@
 // func_80126354
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "PhysicsFlags__13zNPCDuplotronCFv")
 
-// func_8012635C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}

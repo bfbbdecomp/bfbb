@@ -1,3 +1,5 @@
+#include "xMath3.h"
+#include "xVec3.h"
 #include "xParCmd.h"
 
 #include <types.h>
@@ -54,7 +56,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdAlpha3rdPolyReg_Update__FP7xParCmdP9xParGroupf")
 
 // func_800374C8
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdRandomVelocityPar_Update__FP7xParCmdP9xParGroupf")
+#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s",                                                         \
+                   "xParCmdRandomVelocityPar_Update__FP7xParCmdP9xParGroupf")
 
 // func_800375BC
 #pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdApplyWind_Update__FP7xParCmdP9xParGroupf")
@@ -78,7 +81,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdCollideFall_Update__FP7xParCmdP9xParGroupf")
 
 // func_80037CF8
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdCollideFallSticky_Update__FP7xParCmdP9xParGroupf")
+#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s",                                                         \
+                   "xParCmdCollideFallSticky_Update__FP7xParCmdP9xParGroupf")
 
 // func_80037D7C
 #pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmd_DampenSpeed_Update__FP7xParCmdP9xParGroupf")
@@ -95,5 +99,13 @@
 // func_80038390
 #pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xVec3LengthFast__Ffff")
 
-// func_800383C4
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}
