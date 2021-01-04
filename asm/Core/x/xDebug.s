@@ -4,51 +4,6 @@
 
 .section .text  # 0x80017D3C - 0x80018064
 
-.global xprintf__FPCce
-xprintf__FPCce:
-/* 80017D3C 00014B3C  94 21 FF 90 */	stwu r1, -0x70(r1)
-/* 80017D40 00014B40  40 86 00 24 */	bne cr1, lbl_80017D64
-/* 80017D44 00014B44  D8 21 00 28 */	stfd f1, 0x28(r1)
-/* 80017D48 00014B48  D8 41 00 30 */	stfd f2, 0x30(r1)
-/* 80017D4C 00014B4C  D8 61 00 38 */	stfd f3, 0x38(r1)
-/* 80017D50 00014B50  D8 81 00 40 */	stfd f4, 0x40(r1)
-/* 80017D54 00014B54  D8 A1 00 48 */	stfd f5, 0x48(r1)
-/* 80017D58 00014B58  D8 C1 00 50 */	stfd f6, 0x50(r1)
-/* 80017D5C 00014B5C  D8 E1 00 58 */	stfd f7, 0x58(r1)
-/* 80017D60 00014B60  D9 01 00 60 */	stfd f8, 0x60(r1)
-lbl_80017D64:
-/* 80017D64 00014B64  90 61 00 08 */	stw r3, 8(r1)
-/* 80017D68 00014B68  90 81 00 0C */	stw r4, 0xc(r1)
-/* 80017D6C 00014B6C  90 A1 00 10 */	stw r5, 0x10(r1)
-/* 80017D70 00014B70  90 C1 00 14 */	stw r6, 0x14(r1)
-/* 80017D74 00014B74  90 E1 00 18 */	stw r7, 0x18(r1)
-/* 80017D78 00014B78  91 01 00 1C */	stw r8, 0x1c(r1)
-/* 80017D7C 00014B7C  91 21 00 20 */	stw r9, 0x20(r1)
-/* 80017D80 00014B80  91 41 00 24 */	stw r10, 0x24(r1)
-/* 80017D84 00014B84  38 21 00 70 */	addi r1, r1, 0x70
-/* 80017D88 00014B88  4E 80 00 20 */	blr 
-
-.global xDebugModeAdd__FPCcPFv_v
-xDebugModeAdd__FPCcPFv_v:
-/* 80017D8C 00014B8C  38 60 FF FF */	li r3, -1
-/* 80017D90 00014B90  4E 80 00 20 */	blr 
-
-.global xDebugInit__Fv
-xDebugInit__Fv:
-/* 80017D94 00014B94  4E 80 00 20 */	blr 
-
-.global xDebugUpdate__Fv
-xDebugUpdate__Fv:
-/* 80017D98 00014B98  4E 80 00 20 */	blr 
-
-.global xDebugExit__Fv
-xDebugExit__Fv:
-/* 80017D9C 00014B9C  4E 80 00 20 */	blr 
-
-.global xDebugTimestampScreen__Fv
-xDebugTimestampScreen__Fv:
-/* 80017DA0 00014BA0  4E 80 00 20 */	blr 
-
 .global render__8xtextboxCFb
 render__8xtextboxCFb:
 /* 80017DA4 00014BA4  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -201,18 +156,6 @@ __as__10iColor_tagFRC10iColor_tag:
 /* 80017FB4 00014DB4  98 03 00 03 */	stb r0, 3(r3)
 /* 80017FB8 00014DB8  4E 80 00 20 */	blr 
 
-.global NSCREENY__Ff
-NSCREENY__Ff:
-/* 80017FBC 00014DBC  C0 02 82 20 */	lfs f0, lbl_803CCBA0-_SDA2_BASE_(r2)
-/* 80017FC0 00014DC0  EC 20 00 72 */	fmuls f1, f0, f1
-/* 80017FC4 00014DC4  4E 80 00 20 */	blr 
-
-.global NSCREENX__Ff
-NSCREENX__Ff:
-/* 80017FC8 00014DC8  C0 02 82 24 */	lfs f0, lbl_803CCBA4-_SDA2_BASE_(r2)
-/* 80017FCC 00014DCC  EC 20 00 72 */	fmuls f1, f0, f1
-/* 80017FD0 00014DD0  4E 80 00 20 */	blr 
-
 /* contract__13basic_rect<f>Fffff */
 .global contract__13basic_rect_esc__0_f_esc__1_Fffff
 contract__13basic_rect_esc__0_f_esc__1_Fffff:
@@ -264,7 +207,9 @@ __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_:
 .endif
 
 .section .sdata2
-lbl_803CCBA0:
+.global _781
+_781:
 	.incbin "baserom.dol", 0x2B6440, 0x4
-lbl_803CCBA4:
+.global _783
+_783:
 	.incbin "baserom.dol", 0x2B6444, 0x4

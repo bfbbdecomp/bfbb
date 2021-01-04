@@ -5,6 +5,8 @@
 #include "../p2/iColor.h"
 #include "xString.h"
 
+struct layout;
+
 struct xTextAsset
 {
     uint32 len;
@@ -18,6 +20,8 @@ struct xfont
     float32 space;
     iColor_tag color;
     basic_rect<float32> clip;
+
+    xfont& operator=(const xfont& other);
 };
 
 struct xtextbox
@@ -55,7 +59,7 @@ struct xtextbox
             // Added speculatively. More offset is almost certainly needed to
             // put context_size / context at the right offset, but I don't know
             // exactly where that offset should be in the struct.
-            uint16 padding: 16;
+            uint16 padding : 16;
         } flag;
         // Offset: 0xC
         uint16 context_size;
@@ -107,6 +111,19 @@ struct xtextbox
     uint32 text_hash;
 
     static void register_tags(const tag_type* tag, unsigned long count);
+
+    void render(bool cache);
+    void render(layout& ctb, int32 begin_jot, int32 end_jot);
+    layout* temp_layout(bool cache);
+};
+
+struct jot_line
+{
+    basic_rect<float32> bounds;
+    float32 baseline;
+    uint32 first;
+    uint32 last;
+    uint8 page_break;
 };
 
 #endif
