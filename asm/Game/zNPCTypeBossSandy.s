@@ -10122,33 +10122,6 @@ set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f:
 /* 80146588 00143388  D0 23 00 58 */	stfs f1, 0x58(r3)
 /* 8014658C 0014338C  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 80146590 00143390  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80146594 00143394  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80146598 00143398  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 8014659C 0014339C  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 801465A0 001433A0  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 801465A4 001433A4  C0 24 00 00 */	lfs f1, 0(r4)
-/* 801465A8 001433A8  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 801465AC 001433AC  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 801465B0 001433B0  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 801465B4 001433B4  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 801465B8 001433B8  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 801465BC 001433BC  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 801465C0 001433C0  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 801465C4 001433C4  C0 64 00 08 */	lfs f3, 8(r4)
-/* 801465C8 001433C8  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 801465CC 001433CC  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 801465D0 001433D0  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 801465D4 001433D4  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 801465D8 001433D8  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 801465DC 001433DC  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 801465E0 001433E0  D0 03 00 00 */	stfs f0, 0(r3)
-/* 801465E4 001433E4  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 801465E8 001433E8  D0 63 00 04 */	stfs f3, 4(r3)
-/* 801465EC 001433EC  D0 03 00 08 */	stfs f0, 8(r3)
-/* 801465F0 001433F0  4E 80 00 20 */	blr 
-
 .global Name__21zNPCGoalBossSandyLeapFv
 Name__21zNPCGoalBossSandyLeapFv:
 /* 801465F4 001433F4  38 60 00 00 */	li r3, 0

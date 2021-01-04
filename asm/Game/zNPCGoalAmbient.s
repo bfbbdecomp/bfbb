@@ -1231,33 +1231,6 @@ __ct__19zNPCGoalJellyBumpedFi:
 /* 80190F14 0018DD14  38 21 00 10 */	addi r1, r1, 0x10
 /* 80190F18 0018DD18  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 80190F1C 0018DD1C  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80190F20 0018DD20  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80190F24 0018DD24  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 80190F28 0018DD28  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 80190F2C 0018DD2C  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 80190F30 0018DD30  C0 24 00 00 */	lfs f1, 0(r4)
-/* 80190F34 0018DD34  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 80190F38 0018DD38  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 80190F3C 0018DD3C  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 80190F40 0018DD40  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 80190F44 0018DD44  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 80190F48 0018DD48  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 80190F4C 0018DD4C  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 80190F50 0018DD50  C0 64 00 08 */	lfs f3, 8(r4)
-/* 80190F54 0018DD54  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 80190F58 0018DD58  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 80190F5C 0018DD5C  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 80190F60 0018DD60  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 80190F64 0018DD64  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 80190F68 0018DD68  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 80190F6C 0018DD6C  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80190F70 0018DD70  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 80190F74 0018DD74  D0 63 00 04 */	stfs f3, 4(r3)
-/* 80190F78 0018DD78  D0 03 00 08 */	stfs f0, 8(r3)
-/* 80190F7C 0018DD7C  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata

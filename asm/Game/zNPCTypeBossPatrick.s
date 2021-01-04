@@ -9303,33 +9303,6 @@ lbl_801689CC:
 /* 80168A24 00165824  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80168A28 00165828  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 80168A2C 0016582C  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80168A30 00165830  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80168A34 00165834  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 80168A38 00165838  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 80168A3C 0016583C  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 80168A40 00165840  C0 24 00 00 */	lfs f1, 0(r4)
-/* 80168A44 00165844  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 80168A48 00165848  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 80168A4C 0016584C  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 80168A50 00165850  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 80168A54 00165854  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 80168A58 00165858  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 80168A5C 0016585C  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 80168A60 00165860  C0 64 00 08 */	lfs f3, 8(r4)
-/* 80168A64 00165864  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 80168A68 00165868  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 80168A6C 0016586C  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 80168A70 00165870  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 80168A74 00165874  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 80168A78 00165878  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 80168A7C 0016587C  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80168A80 00165880  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 80168A84 00165884  D0 63 00 04 */	stfs f3, 4(r3)
-/* 80168A88 00165888  D0 03 00 08 */	stfs f0, 8(r3)
-/* 80168A8C 0016588C  4E 80 00 20 */	blr 
-
 .global xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi
 xDebugAddTweak__FPCcPUiUiUiPC14tweak_callbackPvUi:
 /* 80168A90 00165890  4E 80 00 20 */	blr 

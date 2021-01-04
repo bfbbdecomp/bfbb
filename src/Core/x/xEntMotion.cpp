@@ -3,7 +3,8 @@
 #include <types.h>
 
 // func_8001C888
-#pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset")
+#pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s",                                                      \
+                   "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset")
 
 // func_8001CACC
 #pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xEntMotionReset__FP10xEntMotionP6xScene")
@@ -42,7 +43,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xEntMechReverse__FP10xEntMotion")
 
 // func_8001E19C
-#pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3")
+#pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s",                                                      \
+                   "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3")
 
 // func_8001E334
 #pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xEntMotionDebugInit__FUs")
@@ -74,8 +76,16 @@
 // func_8001F1D4
 #pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xQuatCopy__FP5xQuatPC5xQuat")
 
-// func_8001F1F8
-#pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}
 
 // func_8001F25C
 #pragma GLOBAL_ASM("asm/Core/x/xEntMotion.s", "xQuatEquals__FPC5xQuatPC5xQuat")

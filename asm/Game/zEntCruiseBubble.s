@@ -10102,33 +10102,6 @@ zEntTriggerAsset__FRC11zEntTrigger:
 /* 80060034 0005CE34  38 63 00 54 */	addi r3, r3, 0x54
 /* 80060038 0005CE38  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 8006003C 0005CE3C  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80060040 0005CE40  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80060044 0005CE44  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 80060048 0005CE48  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 8006004C 0005CE4C  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 80060050 0005CE50  C0 24 00 00 */	lfs f1, 0(r4)
-/* 80060054 0005CE54  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 80060058 0005CE58  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 8006005C 0005CE5C  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 80060060 0005CE60  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 80060064 0005CE64  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 80060068 0005CE68  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 8006006C 0005CE6C  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 80060070 0005CE70  C0 64 00 08 */	lfs f3, 8(r4)
-/* 80060074 0005CE74  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 80060078 0005CE78  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 8006007C 0005CE7C  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 80060080 0005CE80  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 80060084 0005CE84  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 80060088 0005CE88  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 8006008C 0005CE8C  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80060090 0005CE90  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 80060094 0005CE94  D0 63 00 04 */	stfs f3, 4(r3)
-/* 80060098 0005CE98  D0 03 00 08 */	stfs f0, 8(r3)
-/* 8006009C 0005CE9C  4E 80 00 20 */	blr 
-
 .global __apl__5xVec2FRC5xVec2
 __apl__5xVec2FRC5xVec2:
 /* 800600A0 0005CEA0  C0 43 00 00 */	lfs f2, 0(r3)

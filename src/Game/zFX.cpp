@@ -387,42 +387,16 @@ xVec3& xVec3::up_normalize()
     return safe_normalize(xVec3::m_UnitAxisY);
 }
 
-#if 1
-
-// func_80097380
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
-
-#else
-
-// Haven't really looked into it much.
-void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec)
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 fVar1;
-    float32 fVar2;
-    float32 fVar3;
-    float32 fVar4;
-    float32 fVar5;
-    float32 fVar6;
-    float32 fVar7;
-    float32 fVar8;
-    float32 fVar9;
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
-    fVar1 = (float32)vec->y;
-    fVar2 = (float32)(mat->up).y;
-    fVar3 = (float32)vec->x;
-    fVar4 = (float32)(mat->up).z;
-    fVar5 = (float32)(mat->right).y;
-    fVar6 = (float32)vec->z;
-    fVar7 = (float32)(mat->right).z;
-    fVar8 = (float32)(mat->at).y;
-    fVar9 = (float32)(mat->at).z;
-    *(float32*)&result->x = (float32)(mat->at).x * fVar6 + (float32)(mat->right).x * fVar3 +
-                            (float32)(mat->up).x * fVar1;
-    *(float32*)&result->y = fVar8 * fVar6 + fVar5 * fVar3 + fVar2 * fVar1;
-    *(float32*)&result->z = fVar9 * fVar6 + fVar7 * fVar3 + fVar4 * fVar1;
+    o->x = x;
+    o->y = y;
+    o->z = z;
 }
-
-#endif
 
 // func_800973E4
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "xModelSetScale__FP14xModelInstanceRC5xVec3")

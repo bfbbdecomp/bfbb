@@ -3136,33 +3136,6 @@ xVec3LengthFast__FPC5xVec3:
 /* 80121DA0 0011EBA0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80121DA4 0011EBA4  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 80121DA8 0011EBA8  C0 65 00 04 */	lfs f3, 4(r5)
-/* 80121DAC 0011EBAC  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 80121DB0 0011EBB0  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 80121DB4 0011EBB4  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 80121DB8 0011EBB8  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 80121DBC 0011EBBC  C0 24 00 00 */	lfs f1, 0(r4)
-/* 80121DC0 0011EBC0  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 80121DC4 0011EBC4  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 80121DC8 0011EBC8  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 80121DCC 0011EBCC  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 80121DD0 0011EBD0  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 80121DD4 0011EBD4  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 80121DD8 0011EBD8  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 80121DDC 0011EBDC  C0 64 00 08 */	lfs f3, 8(r4)
-/* 80121DE0 0011EBE0  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 80121DE4 0011EBE4  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 80121DE8 0011EBE8  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 80121DEC 0011EBEC  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 80121DF0 0011EBF0  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 80121DF4 0011EBF4  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 80121DF8 0011EBF8  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80121DFC 0011EBFC  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 80121E00 0011EC00  D0 63 00 04 */	stfs f3, 4(r3)
-/* 80121E04 0011EC04  D0 03 00 08 */	stfs f0, 8(r3)
-/* 80121E08 0011EC08  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata
