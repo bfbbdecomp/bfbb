@@ -22091,33 +22091,6 @@ EASE__Ff:
 /* 800ECB90 000E9990  EC 21 00 32 */	fmuls f1, f1, f0
 /* 800ECB94 000E9994  4E 80 00 20 */	blr 
 
-xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3:
-/* 800ECB98 000E9998  C0 65 00 04 */	lfs f3, 4(r5)
-/* 800ECB9C 000E999C  C0 04 00 10 */	lfs f0, 0x10(r4)
-/* 800ECBA0 000E99A0  C0 44 00 14 */	lfs f2, 0x14(r4)
-/* 800ECBA4 000E99A4  EC 00 00 F2 */	fmuls f0, f0, f3
-/* 800ECBA8 000E99A8  C0 C5 00 00 */	lfs f6, 0(r5)
-/* 800ECBAC 000E99AC  C0 24 00 00 */	lfs f1, 0(r4)
-/* 800ECBB0 000E99B0  EC 82 00 F2 */	fmuls f4, f2, f3
-/* 800ECBB4 000E99B4  C0 44 00 18 */	lfs f2, 0x18(r4)
-/* 800ECBB8 000E99B8  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 800ECBBC 000E99BC  EC 01 01 BA */	fmadds f0, f1, f6, f0
-/* 800ECBC0 000E99C0  C0 E5 00 08 */	lfs f7, 8(r5)
-/* 800ECBC4 000E99C4  C0 24 00 20 */	lfs f1, 0x20(r4)
-/* 800ECBC8 000E99C8  EC 42 00 F2 */	fmuls f2, f2, f3
-/* 800ECBCC 000E99CC  C0 64 00 08 */	lfs f3, 8(r4)
-/* 800ECBD0 000E99D0  EC 85 21 BA */	fmadds f4, f5, f6, f4
-/* 800ECBD4 000E99D4  EC 01 01 FA */	fmadds f0, f1, f7, f0
-/* 800ECBD8 000E99D8  C0 A4 00 24 */	lfs f5, 0x24(r4)
-/* 800ECBDC 000E99DC  EC 23 11 BA */	fmadds f1, f3, f6, f2
-/* 800ECBE0 000E99E0  C0 44 00 28 */	lfs f2, 0x28(r4)
-/* 800ECBE4 000E99E4  EC 65 21 FA */	fmadds f3, f5, f7, f4
-/* 800ECBE8 000E99E8  D0 03 00 00 */	stfs f0, 0(r3)
-/* 800ECBEC 000E99EC  EC 02 09 FA */	fmadds f0, f2, f7, f1
-/* 800ECBF0 000E99F0  D0 63 00 04 */	stfs f3, 4(r3)
-/* 800ECBF4 000E99F4  D0 03 00 08 */	stfs f0, 8(r3)
-/* 800ECBF8 000E99F8  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata

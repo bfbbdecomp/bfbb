@@ -15,13 +15,16 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis")
 
 // func_8000F474
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis")
 
 // func_8000F830
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "sphereHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "sphereHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv")
 
 // func_8000F864
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis")
 
 // func_8000FA50
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xParabolaRecenter__FP9xParabolaf")
@@ -51,16 +54,22 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis")
 
 // func_80010F48
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3")
 
 // func_800114F4
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "render_tri__22_esc__2_unnamed_esc__2_xCollide_cpp_esc__2_FRQ27xCollis8tri_dataRC14xModelInstance")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xCollide.s",                                                                       \
+    "render_tri__22_esc__2_unnamed_esc__2_xCollide_cpp_esc__2_FRQ27xCollis8tri_dataRC14xModelInstance")
 
 // func_800114F8
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance")
 
 // func_80011774
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xCollide.s",                                                                       \
+    "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv")
 
 // func_80011F1C
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "__as__8nodeInfoFRC8nodeInfo")
@@ -75,7 +84,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereGetResults__FP12xSweptSphere")
 
 // func_8001232C
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3")
 
 // func_80012B58
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xsqrtfast__FRff")
@@ -90,7 +100,9 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3")
 
 // func_800136B8
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xCollide.s",                                                                       \
+    "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv")
 
 // func_80013740
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv")
@@ -102,22 +114,26 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "SweptSphereModelCB__FiiPv")
 
 // func_80013A20
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag")
 
 // func_80013CB4
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv")
 
 // func_80014088
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc")
 
 // func_80014204
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc")
 
 // func_8001432C
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc")
 
 // func_80014430
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc")
+#pragma GLOBAL_ASM("asm/Core/x/xCollide.s",                                                        \
+                   "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc")
 
 // func_80014594
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSphereHitsCapsule__FRC5xVec3fRC5xVec3RC5xVec3f")
@@ -146,8 +162,16 @@
 // func_800150F0
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xVec3Dist__FPC5xVec3PC5xVec3")
 
-// func_80015140
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3")
+void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}
 
 // func_800151A4
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xMat4x3OrthoInv__FP7xMat4x3PC7xMat4x3")

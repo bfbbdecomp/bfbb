@@ -152,5 +152,5 @@ void zRumbleStartEntDistance(xEnt* ent, float32 dist, _tagRumbleType type, float
 
 int32 zPadAddRumble(_tagRumbleType type, float32 time, int32 replace, uint32 fxflags)
 {
-    xPadAddRumble(globals.currentActivePad, type, time, replace, fxflags);
+    return xPadAddRumble(globals.currentActivePad, type, time, replace, fxflags);
 }

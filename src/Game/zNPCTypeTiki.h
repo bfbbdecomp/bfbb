@@ -32,6 +32,8 @@ struct zNPCTiki : zNPCCommon
     void* tikiAnim;
     float32 tikiAnimTime;
 
+    zNPCTiki(int32);
+
     void BUpdate(xVec3* pos);
     void RemoveFromFamily();
     void FindParents(zScene* zsc);

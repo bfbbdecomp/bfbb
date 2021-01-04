@@ -92,7 +92,7 @@ struct _tagxPad
 
 extern _tagxPad mPad[4];
 
-void xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
-void xPadUpdate(int32, float32);
+int32 xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
+int32 xPadUpdate(int32 idx, float32 time_passed);
 
 #endif

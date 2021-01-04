@@ -47,6 +47,8 @@ struct zNPCRobot : zNPCCommon
     zNPCLassoInfo raw_lassoinfo;
     xEntDrive raw_drvdata;
 
+    zNPCRobot(int32);
+
     int32 LaunchProjectile(en_npchaz haztyp, float32 spd_proj, float32 dst_minRange,
                            en_mdlvert idx_mvtx, float32 tym_predictMax, float32 hyt_offset);
     void ShowerConfetti(xVec3* pos);

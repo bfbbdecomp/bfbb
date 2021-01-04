@@ -77,5 +77,10 @@ uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll);
 uint32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll);
 uint32 xBoxHitsSphere(const xBox* a, const xSphere* b, xCollis* coll);
 uint32 xBoxHitsObb(const xBox* a, const xBox* b, const xMat4x3* mat, xCollis* coll);
+bool xSphereHitsOBB(const xSphere&, const xBox&, const xMat4x3&);
+bool xSphereHitsSphere(const xVec3&, float32, const xVec3&, float32);
+bool xSphereHitsVCylinder(const xVec3& sc, float32 sr, const xVec3& cc, float32 cr, float32 ch);
+bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, float32 r);
+bool xSphereHitsVCircle(const xVec3& sc, float32 sr, const xVec3& cc, float32 cr);
 
 #endif

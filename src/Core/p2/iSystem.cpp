@@ -70,7 +70,7 @@ int32 RenderWareExit()
 {
     RwEngineStop();
     RwEngineClose();
-    RwEngineTerm();
+    return RwEngineTerm();
 }
 
 // func_800D3664
