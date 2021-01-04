@@ -29,6 +29,7 @@ struct xVec3
     float32 length() const;
     float32 length2() const;
     xVec3& invert();
+    float32 dot(const xVec3& c) const;
 };
 
 float32 xVec3Normalize(xVec3* o, const xVec3* v);
