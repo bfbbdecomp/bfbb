@@ -1,84 +1,186 @@
 #include "zLightEffect.h"
 
 #include <types.h>
+#include <stdlib.h>
 
-// func_8009E7F8
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectSet__FP7_zLighti")
+extern lightInitFunc sEffectInitFuncs[18];
+extern float32 lbl_803CDB60; // 65535f
+extern float32 lbl_803CDB68; // 176f
+extern float32 lbl_803CDB70; // 0.0f
+extern float32 lbl_803CDB74; // 0.1f
+extern float32 lbl_803CDB78; // 0.2f
+extern float32 lbl_803CDB80; // 0.05f
+extern float32 lbl_803CDB84; // 0.3f
 
-// func_8009E848
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightOn__FP7_zLighti")
+void zLightEffectSet(_zLight* zlight, int32 idx)
+{
+    if (zlight->reg)
+    {
+        zlight->effect_idx = idx;
+        if (sEffectInitFuncs[zlight->effect_idx] != NULL)
+        {
+            sEffectInitFuncs[zlight->effect_idx](zlight);
+        }
+    }
+}
+
+void zLightOn(_zLight* zl, int32 on)
+{
+    if (on)
+    {
+        zl->flags |= 1;
+    }
+    else
+    {
+        zl->flags &= 0xfffffffe;
+    }
+}
+
+#if 1
 
 // func_8009E870
 #pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "leGetRandom__Fv")
 
-// func_8009E8B4
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectInitStrobe__FP7_zLight")
+#else
 
-// func_8009E8B8
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectInitDim__FP7_zLight")
+// WIP.
+float32 leGetRandom()
+{
+    uint32 rnd = rand();
+    return ((float)(rnd & 0xffff) - lbl_803CDB68) / lbl_803CDB60;
+}
 
-// func_8009E8BC
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectInitHalfDim__FP7_zLight")
+#endif
 
-// func_8009E8C0
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectInitRandomCol__FP7_zLight")
+void zLightEffectInitStrobe(_zLight* zlight)
+{
+}
 
-// func_8009E8C4
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectInitFlicker__FP7_zLight")
+void zLightEffectInitDim(_zLight* zlight)
+{
+}
+
+void zLightEffectInitHalfDim(_zLight* zlight)
+{
+}
+
+void zLightEffectInitRandomCol(_zLight* zlight)
+{
+}
+
+void zLightEffectInitFlicker(_zLight* zlight)
+{
+    *zlight->reg = lbl_803CDB70;
+    zLightOn(zlight, true);
+}
+
+#if 1
 
 // func_8009E8F4
 #pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "EffectFlicker__FP7_zLightfff")
 
-// func_8009EA78
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectFlicker__FP7_zLightf")
+#else
 
-// func_8009EAA0
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectFlickerSlow__FP7_zLightf")
+// WIP.
+void EffectFlicker(_zLight* zlight, float32 seconds, float32 min, float32 rnd)
+{
+}
 
-// func_8009EAC8
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectFlickerErratic__FP7_zLightf")
+#endif
 
-// func_8009EAF0
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectStrobeSlow__FP7_zLightf")
+void zLightEffectFlicker(_zLight* zlight, float32 seconds)
+{
+    EffectFlicker(zlight, seconds, lbl_803CDB80, lbl_803CDB78);
+}
 
-// func_8009EAF4
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectStrobe__FP7_zLightf")
+void zLightEffectFlickerSlow(_zLight* zlight, float32 seconds)
+{
+    EffectFlicker(zlight, seconds, lbl_803CDB78, lbl_803CDB84);
+}
 
-// func_8009EAF8
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectStrobeFast__FP7_zLightf")
+void zLightEffectFlickerErratic(_zLight* zlight, float32 seconds)
+{
+    EffectFlicker(zlight, seconds, lbl_803CDB70, lbl_803CDB74);
+}
 
-// func_8009EAFC
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectDimSlow__FP7_zLightf")
+void zLightEffectStrobeSlow()
+{
+}
 
-// func_8009EB00
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectDim__FP7_zLightf")
+void zLightEffectStrobe()
+{
+}
 
-// func_8009EB04
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectDimFast__FP7_zLightf")
+void zLightEffectStrobeFast()
+{
+}
 
-// func_8009EB08
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectHalfDimSlow__FP7_zLightf")
+void zLightEffectDimSlow()
+{
+}
 
-// func_8009EB0C
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectHalfDim__FP7_zLightf")
+void zLightEffectDim()
+{
+}
 
-// func_8009EB10
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectHalfDimFast__FP7_zLightf")
+void zLightEffectDimFast()
+{
+}
 
-// func_8009EB14
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectRandomColSlow__FP7_zLightf")
+void zLightEffectHalfDimSlow()
+{
+}
 
-// func_8009EB18
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectRandomCol__FP7_zLightf")
+void zLightEffectHalfDim()
+{
+}
 
-// func_8009EB1C
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectRandomColFast__FP7_zLightf")
+void zLightEffectHalfDimFast()
+{
+}
 
-// func_8009EB20
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectInitCauldron__FP7_zLight")
+void zLightEffectRandomColSlow()
+{
+}
+
+void zLightEffectRandomCol()
+{
+}
+
+void zLightEffectRandomColFast()
+{
+}
+
+void zLightEffectInitCauldron(_zLight* zlight)
+{
+    *zlight->reg = lbl_803CDB70;
+    zLightOn(zlight, true);
+}
+
+#if 1
 
 // func_8009EB50
 #pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "leBlendToCol__Ffff")
 
+#else
+
+// WIP.
+float32 leBlendToCol(float32 f1, float32 f2, float32 f3)
+{
+}
+
+#endif
+
+#if 1
+
 // func_8009EB84
 #pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectCauldron__FP7_zLightf")
+
+#else
+
+// WIP.
+void zLightEffectCauldron(_zLight* zlight, float32 seconds)
+{
+}
+
+#endif

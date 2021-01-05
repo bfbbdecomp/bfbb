@@ -17,15 +17,25 @@
 #define ILIGHT_ENV_WORLD 2
 #define ILIGHT_ENV_ATOMICWORLD 3
 
+// Size: 0x3C
 struct iLight
 {
+
+	// 0x0
     uint32 type;
     RpLight* hw;
+
+    //0x8
     xSphere sph;
     float32 radius_sq;
+
+    //0x1C
     _xFColor color;
+
+    //0x2C
     xVec3 dir;
     float32 coneangle;
+
 };
 
 extern RpWorld* gLightWorld;
