@@ -55,7 +55,7 @@ void xMovePointReset(xMovePoint* m)
 void xMovePointSetup(xMovePoint* m, xScene* sc)
 {
     m->node_wt_sum = 0;
-    uint32* pointIds = (uint32*)(m->asset + 1);
+    uint32* pointIds = (uint32*)(m->asset + 1) - 1;
     for (uint16 idx = 0; idx < m->asset->numPoints; ++idx)
     {
         uint32 id = pointIds[idx];
@@ -79,13 +79,14 @@ void xMovePointSplineDestroy(xMovePoint* m)
 
 // func_800357B8
 #if 1
-#pragma GLOBAL_ASM("asm/Core/x/xMovePoint.s", "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3")
+#pragma GLOBAL_ASM("asm/Core/x/xMovePoint.s",                                                      \
+                   "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3")
 #else
 // If you uncomment the numPoints variable then this function is a perfect match
 // minus ordering. In the original assembly some variable fetches are lifted to
 // places earlier in the assembly listing than what this comiles to for some
-// reason. 
-// The r27-30 registers used to hold the main varibles of the function are all 
+// reason.
+// The r27-30 registers used to hold the main varibles of the function are all
 // perfect matches with this code.
 extern float xMovePoint_float_0;
 float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng)

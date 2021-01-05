@@ -4,6 +4,7 @@
 #include "xLinkAsset.h"
 #include "xserializer.h"
 
+// Size: 0x8
 struct xBaseAsset
 {
     uint32 id;
@@ -16,6 +17,7 @@ struct xBase;
 
 typedef int32 (*xBaseEventCB)(xBase*, xBase*, uint32, const float32*, xBase*);
 
+// Size: 0x10
 struct xBase
 {
     uint32 id;

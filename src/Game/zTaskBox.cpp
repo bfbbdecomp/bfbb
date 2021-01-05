@@ -99,40 +99,39 @@ void ztaskbox::talk_callback::reset(ztaskbox& task)
     this->answer = ztalkbox::ANSWER_CONTINUE;
 }
 
-#if 1
-
-// func_80134BD4
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "stop_talk__8ztaskboxFv")
-
-#else
-
-// Need to fix up the conditions.
 void ztaskbox::stop_talk()
 {
     ztaskbox* curr = this->current;
-    if (curr != NULL)
+
+    if (curr == NULL)
     {
-        if (curr != this)
-        {
-            curr->stop_talk();
-        }
-        else
-        {
-            if (this->flag.enabled && this->state != STATE_INVALID &&
-                shared == this) // Does not like this condition.
-            {
-                ztalkbox* other = (ztalkbox*)zSceneFindObject(this->asset->talk_box);
-                if (other != NULL)
-                {
-                    other->stop_talk();
-                    shared = NULL;
-                }
-            }
-        }
+        return;
+    }
+
+    if (curr != this)
+    {
+        curr->stop_talk();
+        return;
+    }
+
+    if (!this->flag.enabled || this->state == STATE_INVALID)
+    {
+        return;
+    }
+
+    if (shared != this)
+    {
+        return;
+    }
+
+    ztalkbox* other = (ztalkbox*)zSceneFindObject(this->asset->talk_box);
+
+    if (other)
+    {
+        other->stop_talk();
+        shared = NULL;
     }
 }
-
-#endif
 
 void ztaskbox::enable()
 {
