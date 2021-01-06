@@ -479,10 +479,8 @@ uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*)
 
 int32 zEntPlayer_InBossBattle()
 {
-    // TODO: figure out these hardcoded values.
-    // Maybe they are string hashes?
-    return (globals.sceneCur->sceneID == 0x42313031 || globals.sceneCur->sceneID == 0x42323031 ||
-            globals.sceneCur->sceneID == 0x42333032 || globals.sceneCur->sceneID == 0x42333033);
+    return (globals.sceneCur->sceneID == 'B101' || globals.sceneCur->sceneID == 'B201' ||
+            globals.sceneCur->sceneID == 'B302' || globals.sceneCur->sceneID == 'B303');
 }
 
 // func_800699F0
