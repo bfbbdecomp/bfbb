@@ -164,9 +164,20 @@ void zLightEffectInitCauldron(_zLight* zlight)
 
 #else
 
-// WIP.
+// Need to figure out proper conditional checks.
 float32 leBlendToCol(float32 f1, float32 f2, float32 f3)
 {
+    if (f1 > f2)
+    {
+        f1 -= f3;
+        return f1 >= f2 ? f1 : f2;
+    }
+    if (f1 >= f2)
+    {
+        return f1;
+    }
+    f1 += f3;
+    return f1 <= f2 ? f1 : f2;
 }
 
 #endif
