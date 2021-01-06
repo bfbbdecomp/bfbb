@@ -4052,6 +4052,7 @@ lbl_800AC898:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8025E7F0:
 	.incbin "baserom.dol", 0x25B7D0, 0x90
 
