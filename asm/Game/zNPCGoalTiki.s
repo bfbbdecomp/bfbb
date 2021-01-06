@@ -434,24 +434,6 @@ __ct__16zNPCGoalTikiIdleFi:
 /* 800ED1C0 000E9FC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800ED1C4 000E9FC4  4E 80 00 20 */	blr 
 
-Clear__16zNPCGoalTikiDeadFv:
-/* 800ED1C8 000E9FC8  4E 80 00 20 */	blr 
-
-Clear__17zNPCGoalTikiDyingFv:
-/* 800ED1CC 000E9FCC  4E 80 00 20 */	blr 
-
-Clear__17zNPCGoalTikiCountFv:
-/* 800ED1D0 000E9FD0  4E 80 00 20 */	blr 
-
-Clear__16zNPCGoalTikiHideFv:
-/* 800ED1D4 000E9FD4  4E 80 00 20 */	blr 
-
-Clear__18zNPCGoalTikiPatrolFv:
-/* 800ED1D8 000E9FD8  4E 80 00 20 */	blr 
-
-Clear__16zNPCGoalTikiIdleFv:
-/* 800ED1DC 000E9FDC  4E 80 00 20 */	blr 
-
 .endif
 
 .section .sdata2

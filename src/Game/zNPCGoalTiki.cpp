@@ -1,4 +1,5 @@
 #include "zNPCGoalTiki.h"
+#include "zNPCTypeTiki.h"
 
 #include <types.h>
 
@@ -47,23 +48,41 @@
 // func_800ED150
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__18zNPCGoalTikiPatrolFi")
 
+#if 1
+
 // func_800ED18C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__16zNPCGoalTikiIdleFi")
 
-// func_800ED1C8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Clear__16zNPCGoalTikiDeadFv")
+#else
 
-// func_800ED1CC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Clear__17zNPCGoalTikiDyingFv")
+// Need to make it so compiler likes this.
+zNPCGoalTikiIdle::zNPCGoalTikiIdle(int32 goalID) : zNPCGoalCommon(goalID)
+{
+    this->flg_npcgauto = -0x7fd6bfe4;
+}
 
-// func_800ED1D0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Clear__17zNPCGoalTikiCountFv")
+#endif
 
-// func_800ED1D4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Clear__16zNPCGoalTikiHideFv")
+void zNPCGoalTikiDead::Clear()
+{
+}
 
-// func_800ED1D8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Clear__18zNPCGoalTikiPatrolFv")
+void zNPCGoalTikiDying::Clear()
+{
+}
 
-// func_800ED1DC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Clear__16zNPCGoalTikiIdleFv")
+void zNPCGoalTikiCount::Clear()
+{
+}
+
+void zNPCGoalTikiHide::Clear()
+{
+}
+
+void zNPCGoalTikiPatrol::Clear()
+{
+}
+
+void zNPCGoalTikiIdle::Clear()
+{
+}

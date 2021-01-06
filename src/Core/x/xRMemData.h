@@ -2,6 +2,7 @@
 #define XRMEMDATA_H
 
 #include "xBase.h"
+#include <size_t.h>
 
 struct RyzMemData
 {
@@ -17,9 +18,12 @@ struct RyzMemGrow
     int8* ptr_last;
     xBase* user_last;
 
-    void Done();
-    RyzMemGrow* Resume();
     RyzMemGrow* Init(xBase* growuser);
+    RyzMemGrow* Resume();
+    void Done();
+    int32 IsEnabled();
+    void* operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt);
+    void operator delete(void*);
 };
 
 #endif
