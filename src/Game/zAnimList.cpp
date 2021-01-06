@@ -5,7 +5,6 @@
 #include "../Core/x/xMemMgr.h"
 
 #include "zAnimList.h"
-#include "zAssetTypes.h"
 
 extern int32 nals;
 extern uint32* aids; // anim IDs (not AIDS, you fool)

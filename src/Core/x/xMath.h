@@ -10,6 +10,8 @@
 
 #define SQR(x) ((x) * (x))
 
+#define ALIGN(x, a) ((x) + ((a)-1) & ~((a)-1))
+
 struct xFuncPiece
 {
     float32 coef[5];

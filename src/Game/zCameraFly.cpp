@@ -4,12 +4,13 @@
 #include "../Core/x/xEvent.h"
 #include "../Core/x/xScene.h"
 
-#include "zAssetTypes.h"
 #include "zBase.h"
 #include "zCameraFly.h"
 #include "zCamera.h"
 #include "zGlobals.h"
 #include "zMusic.h"
+
+extern uint32 zcam_flyasset_current;
 
 void zCameraFly_Init(xBase& data, xDynAsset& asset)
 {
