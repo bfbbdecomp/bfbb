@@ -4,6 +4,7 @@
 #include "dolphin/types.h"
 #include "dolphin/gx.h"
 #include "dolphin/os.h"
+#include "dolphin/dvd.h"
 
 extern "C" {
 void OSPanic(int8* param_1, uint32 param_2, int8* param_3);
