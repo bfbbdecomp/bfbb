@@ -292,6 +292,7 @@ lbl_8026CA50:
 	.incbin "baserom.dol", 0x269A30, 0x58
 
 .section .sdata2
+.balign 8
 lbl_803CECF0:
 	.incbin "baserom.dol", 0x2B8590, 0x4
 lbl_803CECF4:
