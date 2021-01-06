@@ -44,7 +44,7 @@ void zMovePointInit(zMovePoint* m, xMovePointAsset* asset)
     m->eventFunc = zMovePointEventCB;
     if (m->linkCount)
     {
-        m->link = (xLinkAsset*)(&asset->link + *(uint16*)&asset->numPoints);
+        m->link = (xLinkAsset*)(((uint32*)asset + sizeof(xMovePointAsset) / 4) + (uint32)asset->numPoints);
     }
     else
     {

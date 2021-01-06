@@ -7,7 +7,6 @@ struct xGroupAsset : xBaseAsset
 {
     uint16 itemCount;
     uint16 groupFlags;
-    uint32* link;
 };
 
 struct xGroup : xBase

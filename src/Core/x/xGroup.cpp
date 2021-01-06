@@ -26,7 +26,7 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     if (b->linkCount)
     {
         b->link =
-            (xLinkAsset*)(&asset->link + ((xGroup*)b)->asset->itemCount); // lwz and lhz swap here.
+            (xLinkAsset*)((uint32*)asset + sizeof(xGroupAsset) / 4 + (uint32)((xGroup*)b)->asset->itemCount); // lwz and lhz swap here.
     }
     else
     {
@@ -145,12 +145,12 @@ xBase* xGroupGetItemPtr(xGroup* g, uint32 index)
 
 xBase* xGroupFindItemPtr(xGroup* g, uint32 index)
 {
-    return (xBase*)zSceneFindObject((uint32)(&g->asset->link)[index]);
+    return (xBase*)zSceneFindObject((uint32)((uint32*)(g->asset + 1))[index]);
 }
 
 uint32 xGroupGetItem(xGroup* g, uint32 index)
 {
-    return (uint32)(&g->asset->link)[index];
+    return (uint32)((uint32*)(g->asset + 1))[index];
 }
 
 #if 1
@@ -169,7 +169,7 @@ uint32 xGroup::get_any()
         return NULL;
     }
     uint32 cnt = this->last_index + 1;
-    uint32 last = (uint32)(&this->asset->link)[this->last_index];
+    uint32 last = (uint32)((uint32*)((uint32*)this->asset + sizeof(xGroupAsset) / 4))[this->last_index];
     this->last_index = cnt - (cnt / numItems) * numItems;
     return last;
 }
