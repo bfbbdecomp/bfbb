@@ -479,8 +479,11 @@ uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*)
 
 int32 zEntPlayer_InBossBattle()
 {
-    return (globals.sceneCur->sceneID == 'B101' || globals.sceneCur->sceneID == 'B201' ||
-            globals.sceneCur->sceneID == 'B302' || globals.sceneCur->sceneID == 'B303');
+    return (globals.sceneCur->sceneID == 'B101' || // Robo Sandy
+            globals.sceneCur->sceneID == 'B201' || // Robo Patrick
+            globals.sceneCur->sceneID == 'B302' || // Robo Spongebob
+            globals.sceneCur->sceneID == 'B303' // Brain Fight
+    );
 }
 
 // func_800699F0
