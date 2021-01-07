@@ -1,9 +1,7 @@
 #ifndef XFFX_H
 #define XFFX_H
 
-#include "../Core/x/xMath3.h"
-
-#include <types.h>
+#include "xMath3.h"
 
 struct xScene;
 struct xEnt;
