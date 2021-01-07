@@ -38,6 +38,7 @@ struct xFactory : RyzMemData
     int32 RegItemType(int32 tid, xFactoryInst* (*create)(int32, RyzMemGrow*, void*),
                       void (*destroy)(xFactoryInst*));
     int32 RegItemType(XGOFTypeInfo* info);
+    ~xFactory();
 };
 
 #endif
