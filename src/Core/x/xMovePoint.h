@@ -21,7 +21,6 @@ struct xMovePointAsset : xBaseAsset
     float32 delay;
     float32 zoneRadius;
     float32 arenaRadius;
-    xLinkAsset* link;
 };
 
 struct xMovePoint : xBase

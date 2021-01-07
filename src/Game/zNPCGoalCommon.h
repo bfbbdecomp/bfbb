@@ -27,11 +27,13 @@ struct zNPCGoalCommon : xGoal
         int32 flg_user : 16;
     };
 
+    zNPCGoalCommon(int32 goalID);
     uint32 DoExplicitAnim(uint32 anid, int32 forceRestart);
     uint32 DoAutoAnim(en_NPC_GOAL_SPOT gspot, int32 forceRestart);
     int32 PreCalc(float32 dt, void* updCtxt);
     int32 Resume();
     int32 Enter();
+    ~zNPCGoalCommon();
 };
 
 #endif
