@@ -38,7 +38,7 @@ void* RyzMemGrow::operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt)
 
 #endif
 
-void RyzMemGrow::operator delete(void* p)
+void RyzMemData::operator delete(void* p)
 {
 }
 
