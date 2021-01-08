@@ -6,6 +6,27 @@
 typedef struct xMemPool;
 typedef void (*xMemPoolInitCB)(xMemPool*, void*);
 
+struct xMemArea_tag
+{
+    uint32 addr;
+    uint32 size;
+    uint32 flags;
+};
+
+struct xMemInfo_tag
+{
+    xMemArea_tag system;
+
+    // Offset: 0xC
+    xMemArea_tag stack;
+
+    // Offset: 0x18
+    xMemArea_tag DRAM;
+
+    // Offset: 0x24
+    xMemArea_tag SRAM;
+};
+
 struct xMemPool
 {
     void* FreeList;

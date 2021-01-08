@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-void iMemExit();
 void iMemInit();
+void iMemExit();
 
 #endif

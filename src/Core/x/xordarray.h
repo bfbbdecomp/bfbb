@@ -11,4 +11,8 @@ struct st_XORDEREDARRAY
     int32 warnlvl;
 };
 
+void XOrdInit(st_XORDEREDARRAY* array, int32 size, int32 tempAlloc);
+void XOrdDone(st_XORDEREDARRAY* array, int32 wasTempAlloc);
+int32 XOrdLookup(st_XORDEREDARRAY* array, void* key, int32 (*test)(void*, void*));
+
 #endif
