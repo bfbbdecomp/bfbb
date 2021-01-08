@@ -44,5 +44,23 @@
 // func_8009B38C
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "UpdateGustFX__FP5zGustf")
 
+#if 1
+
 // func_8009B610
 #pragma GLOBAL_ASM("asm/Game/zGust.s", "zGustUpdateFX__Ff")
+
+#else
+
+void zGustUpdateFX(float32 seconds)
+{
+    for (int32 i = 0; i < ngusts; i++)
+    {
+        zGust* curr = gusts[i];
+        if (curr->flags & 1)
+        {
+            UpdateGustFX(curr, seconds);
+        }
+    }
+}
+
+#endif

@@ -5,6 +5,7 @@
 
 extern "C" {
 void* malloc(uint32 __size);
+void free(void* __ptr);
 }
 
 #define GET_MAKER_CODE() (*((uint32*)0x80000004))

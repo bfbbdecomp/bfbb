@@ -4,10 +4,6 @@
 #include "xBase.h"
 #include <size_t.h>
 
-struct RyzMemData
-{
-};
-
 struct RyzMemGrow
 {
     int32 flg_grow;
@@ -22,6 +18,10 @@ struct RyzMemGrow
     RyzMemGrow* Resume();
     void Done();
     int32 IsEnabled();
+};
+
+struct RyzMemData
+{
     void* operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt);
     void operator delete(void*);
 };
