@@ -6947,6 +6947,7 @@ lbl_8031382C:
 	.skip 0x9CC
 
 .section .sbss
+.balign 8
 lbl_803CBDF0:
 	.skip 0x4
 lbl_803CBDF4:
