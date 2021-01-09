@@ -20,7 +20,6 @@ extern xFXRing sPatrickStunRing[3];
 
 extern zFXGooInstance zFXGooInstances[24];
 
-// extern int8 zGameExtras_strings[];
 extern int8 zFX_strings[];
 extern ztextbox* goo_timer_textbox;
 
