@@ -3,6 +3,7 @@
 
 #include "../Core/x/xBase.h"
 #include "../Core/x/xMath3.h"
+#include "../Core/x/xSurface.h"
 
 struct zSurfMatFX
 {
@@ -104,5 +105,7 @@ struct zSurfaceProps
 };
 
 void zSurfaceGetName(int32 type, int8* buffer);
+void zSurfaceRegisterMapper(uint32 assetId);
+xSurface* zSurfaceGetSurface(uint32 mat_id);
 
 #endif

@@ -263,4 +263,6 @@ void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 void zEntPlayerControlOff(zControlOwner owner);
 void zEntPlayerControlOn(zControlOwner owner);
 
+void zEntPlayer_StoreCheckPoint(xVec3* pos, float32 rot, uint32 initCamID);
+
 #endif
