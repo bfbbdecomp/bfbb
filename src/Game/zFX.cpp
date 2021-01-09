@@ -102,15 +102,15 @@ void zFXGoo_SceneReset()
     // This almost matches, only two instructions are flipped.
     // otherwise, its perfect.
     int32 i;
-    zFXGooInstance* curr = zFXGooInstances;
+    zFXGooInstance* goo = zFXGooInstances;
 
     for (i = 0; i < 24; i++)
     {
-        if (curr->state != zFXGooStateInactive)
+        if (goo->state != zFXGooStateInactive)
         {
-            curr->state = zFXGooStateNormal;
+            goo->state = zFXGooStateNormal;
         }
-        curr++;
+        goo++;
     }
 }
 
