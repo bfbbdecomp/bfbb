@@ -4239,6 +4239,7 @@ HACK_BASETYPE:
 	.skip 0x4
 
 .section .sdata
+.balign 8
 lbl_803CABE8:
 	.incbin "baserom.dol", 0x2B5CA8, 0x4
 lbl_803CABEC:

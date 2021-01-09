@@ -55,7 +55,7 @@ void xMovePointReset(xMovePoint* m)
 void xMovePointSetup(xMovePoint* m, xScene* sc)
 {
     m->node_wt_sum = 0;
-    uint32* pointIds = (uint32*)(m->asset + 1) - 1;
+    uint32* pointIds = (uint32*)(m->asset + 1);
     for (uint16 idx = 0; idx < m->asset->numPoints; ++idx)
     {
         uint32 id = pointIds[idx];

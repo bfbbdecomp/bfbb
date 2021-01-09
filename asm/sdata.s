@@ -191,8 +191,8 @@ lbl_803CAF34:
 .global lbl_803CAF3C
 lbl_803CAF3C:
 	.incbin "baserom.dol", 0x2B5FFC, 0x4
-.global lbl_803CAF40
-lbl_803CAF40:
+.global __OSCurrHeap
+__OSCurrHeap:
 	.incbin "baserom.dol", 0x2B6000, 0x8
 .global lbl_803CAF48
 lbl_803CAF48:

@@ -4,6 +4,7 @@
 #include "xBase.h"
 #include "xVec3.h"
 #include "xDynAsset.h"
+#include "xModel.h"
 
 typedef struct asset;
 typedef struct widget;
@@ -60,6 +61,13 @@ namespace xhud
         xVec3 size;
     };
 
+    struct model_asset : asset
+    {
+        uint32 model;
+
+        char* type_name();
+    };
+
     struct widget
     {
         _class_5 flag;
@@ -83,6 +91,12 @@ namespace xhud
         void updater(float32 dt);
         void presetup();
         void destruct();
+    };
+
+    struct model_widget : widget
+    {
+        uint32 mid;
+        xModelInstance* model;
     };
 
 }; // namespace xhud

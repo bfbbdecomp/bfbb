@@ -11,5 +11,7 @@ RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model);
 void iModelSetMaterialTexture(RpAtomic* model, void* texture);
 void iModelResetMaterial(RpAtomic* model);
 int32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, int32* shadowOutside);
+RpAtomic* iModelFileNew(void* buffer, uint32 size);
+void iModelRender(RpAtomic* model, RwMatrix* mat);
 
 #endif

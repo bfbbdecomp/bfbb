@@ -501,7 +501,3 @@ shared:
 	.skip 0x4
 lbl_803CBF28:
 	.skip 0x8
-/* SPECULATION: link order */
-.global read_sizzze
-read_sizzze:
-	.skip 0x8

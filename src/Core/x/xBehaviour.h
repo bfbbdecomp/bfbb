@@ -71,6 +71,7 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     int32 (*fun_chkRule)(xGoal*, void*, en_trantype*, float32, void*);
     void* cbdata;
 
+    xGoal(int32 goalID);
     void SetCallbacks(int (*)(xGoal*, void*, en_trantype*, float, void*),
                       int (*)(xGoal*, void*, en_trantype*, float, void*),
                       int (*)(xGoal*, void*, float, void*), void*);

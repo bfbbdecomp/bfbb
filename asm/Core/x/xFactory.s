@@ -4,67 +4,6 @@
 
 .section .text  # 0x8010F2D0 - 0x8010F82C
 
-.global __ct__8xFactoryFi
-__ct__8xFactoryFi:
-/* 8010F2D0 0010C0D0  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8010F2D4 0010C0D4  7C 08 02 A6 */	mflr r0
-/* 8010F2D8 0010C0D8  38 A0 00 00 */	li r5, 0
-/* 8010F2DC 0010C0DC  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8010F2E0 0010C0E0  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8010F2E4 0010C0E4  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8010F2E8 0010C0E8  7C 9E 23 78 */	mr r30, r4
-/* 8010F2EC 0010C0EC  1F FE 00 0C */	mulli r31, r30, 0xc
-/* 8010F2F0 0010C0F0  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8010F2F4 0010C0F4  7C 7D 1B 78 */	mr r29, r3
-/* 8010F2F8 0010C0F8  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
-/* 8010F2FC 0010C0FC  7F E4 FB 78 */	mr r4, r31
-/* 8010F300 0010C100  4B F2 46 41 */	bl xMemAlloc__FUiUii
-/* 8010F304 0010C104  90 7D 00 00 */	stw r3, 0(r29)
-/* 8010F308 0010C108  7F E5 FB 78 */	mr r5, r31
-/* 8010F30C 0010C10C  38 80 00 00 */	li r4, 0
-/* 8010F310 0010C110  80 7D 00 00 */	lwz r3, 0(r29)
-/* 8010F314 0010C114  4B EF 41 45 */	bl memset
-/* 8010F318 0010C118  7F C4 F3 78 */	mr r4, r30
-/* 8010F31C 0010C11C  38 7D 00 04 */	addi r3, r29, 4
-/* 8010F320 0010C120  38 A0 00 00 */	li r5, 0
-/* 8010F324 0010C124  4B F2 66 DD */	bl XOrdInit__FP16st_XORDEREDARRAYii
-/* 8010F328 0010C128  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8010F32C 0010C12C  7F A3 EB 78 */	mr r3, r29
-/* 8010F330 0010C130  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8010F334 0010C134  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8010F338 0010C138  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8010F33C 0010C13C  7C 08 03 A6 */	mtlr r0
-/* 8010F340 0010C140  38 21 00 20 */	addi r1, r1, 0x20
-/* 8010F344 0010C144  4E 80 00 20 */	blr 
-
-.global __dt__8xFactoryFv
-__dt__8xFactoryFv:
-/* 8010F348 0010C148  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010F34C 0010C14C  7C 08 02 A6 */	mflr r0
-/* 8010F350 0010C150  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010F354 0010C154  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010F358 0010C158  7C 9F 23 78 */	mr r31, r4
-/* 8010F35C 0010C15C  93 C1 00 08 */	stw r30, 8(r1)
-/* 8010F360 0010C160  7C 7E 1B 79 */	or. r30, r3, r3
-/* 8010F364 0010C164  41 82 00 28 */	beq lbl_8010F38C
-/* 8010F368 0010C168  38 00 00 00 */	li r0, 0
-/* 8010F36C 0010C16C  38 7E 00 04 */	addi r3, r30, 4
-/* 8010F370 0010C170  90 1E 00 00 */	stw r0, 0(r30)
-/* 8010F374 0010C174  38 80 00 00 */	li r4, 0
-/* 8010F378 0010C178  4B F2 67 61 */	bl XOrdDone__FP16st_XORDEREDARRAYi
-/* 8010F37C 0010C17C  7F E0 07 35 */	extsh. r0, r31
-/* 8010F380 0010C180  40 81 00 0C */	ble lbl_8010F38C
-/* 8010F384 0010C184  7F C3 F3 78 */	mr r3, r30
-/* 8010F388 0010C188  4B FF FE 65 */	bl __dl__10RyzMemDataFPv
-lbl_8010F38C:
-/* 8010F38C 0010C18C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010F390 0010C190  7F C3 F3 78 */	mr r3, r30
-/* 8010F394 0010C194  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010F398 0010C198  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8010F39C 0010C19C  7C 08 03 A6 */	mtlr r0
-/* 8010F3A0 0010C1A0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010F3A4 0010C1A4  4E 80 00 20 */	blr 
-
 .global RegItemType__8xFactoryFP12XGOFTypeInfo
 RegItemType__8xFactoryFP12XGOFTypeInfo:
 /* 8010F3A8 0010C1A8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -163,37 +102,6 @@ RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v:
 /* 8010F4F4 0010C2F4  7C 08 03 A6 */	mtlr r0
 /* 8010F4F8 0010C2F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010F4FC 0010C2FC  4E 80 00 20 */	blr 
-
-.global GrowDataEnable__8xFactoryFP5xBasei
-GrowDataEnable__8xFactoryFP5xBasei:
-/* 8010F500 0010C300  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010F504 0010C304  7C 08 02 A6 */	mflr r0
-/* 8010F508 0010C308  2C 05 00 00 */	cmpwi r5, 0
-/* 8010F50C 0010C30C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010F510 0010C310  41 82 00 10 */	beq lbl_8010F520
-/* 8010F514 0010C314  38 63 00 18 */	addi r3, r3, 0x18
-/* 8010F518 0010C318  4B FF FD 59 */	bl Resume__10RyzMemGrowFP5xBase
-/* 8010F51C 0010C31C  48 00 00 0C */	b lbl_8010F528
-lbl_8010F520:
-/* 8010F520 0010C320  38 63 00 18 */	addi r3, r3, 0x18
-/* 8010F524 0010C324  4B FF FC CD */	bl Init__10RyzMemGrowFP5xBase
-lbl_8010F528:
-/* 8010F528 0010C328  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010F52C 0010C32C  7C 08 03 A6 */	mtlr r0
-/* 8010F530 0010C330  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010F534 0010C334  4E 80 00 20 */	blr 
-
-.global GrowDataDisable__8xFactoryFv
-GrowDataDisable__8xFactoryFv:
-/* 8010F538 0010C338  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010F53C 0010C33C  7C 08 02 A6 */	mflr r0
-/* 8010F540 0010C340  38 63 00 18 */	addi r3, r3, 0x18
-/* 8010F544 0010C344  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010F548 0010C348  4B FF FD 4D */	bl Done__10RyzMemGrowFv
-/* 8010F54C 0010C34C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010F550 0010C350  7C 08 03 A6 */	mtlr r0
-/* 8010F554 0010C354  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010F558 0010C358  4E 80 00 20 */	blr 
 
 .global CreateItem__8xFactoryFiPvP10RyzMemGrow
 CreateItem__8xFactoryFiPvP10RyzMemGrow:

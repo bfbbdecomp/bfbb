@@ -4,11 +4,18 @@
 #include "dolphin/types.h"
 #include "dolphin/gx.h"
 #include "dolphin/os.h"
+#include "dolphin/dvd.h"
 
 extern "C" {
+typedef int32 OSHeapHandle;
 void OSPanic(int8* param_1, uint32 param_2, int8* param_3);
 void* OSAllocFromHeap(void* handle_t, uint32 size_t);
 void OSFreeToHeap(void* handle_t, void* param_2);
+OSHeapHandle OSCreateHeap(void* start, void* end);
+OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap);
+void* OSInitAlloc(void* arenaStart, void* arenaEnd, int32 maxHeaps);
+void* OSGetArenaHi();
+void* OSGetArenaLo();
 void PADInit();
 void PADControlMotor(int32 chan, uint32 command);
 }

@@ -1,8 +1,8 @@
 # SpongeBob SquarePants: Battle for Bikini Bottom
 
-![OK](https://github.com/pslehisl/bfbbdecomp/workflows/build/badge.svg)
-<a href="https://pslehisl.github.io/bfbbdecomp/progress" alt="Percentage Decompiled">
-<img src="https://img.shields.io/badge/dynamic/json?color=blue&label=decompiled&query=percentage&url=https%3A%2F%2Fpslehisl.github.io%2Fbfbbdecomp%2Fapi.json" />
+![OK](https://github.com/bfbbdecomp/bfbb/workflows/build/badge.svg)
+<a href="https://bfbbdecomp.github.io/bfbb/progress" alt="Percentage Decompiled">
+<img src="https://img.shields.io/badge/dynamic/json?color=blue&label=decompiled&query=percentage&url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json" />
 </a>
 <a href="https://discord.gg/Dvu2UAS">
 <img src="https://img.shields.io/discord/446321271635050506?logo=discord"
@@ -18,7 +18,7 @@ Join us on the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) under `#decomp
 
 ## Progress
 
-View our progress and answers to frequently asked questions on the [project tracking website](https://pslehisl.github.io/bfbbdecomp/progress).
+View our progress and answers to frequently asked questions on the [project tracking website](https://bfbbdecomp.github.io/bfbb/progress).
 
 ## Building
 
@@ -51,15 +51,15 @@ Contributions and PRs are welcome.
 Starting the project, working on tools, decompilation, support, etc. (too many things to list).
 
 **[@mattbruv](https://github.com/mattbruv)** -
-Creating the [project tracking website](https://pslehisl.github.io/bfbbdecomp/progress), [inlineasm](tools/inlineasm/README.md), decompilation.
+Creating the [project tracking website](https://bfbbdecomp.github.io/bfbb/), [inlineasm](tools/inlineasm/README.md), decompilation.
 
 **[@DarkRTA](https://github.com/DarkRTA)** -
 Exporting datatypes for Ghidra, creating the formatting rules, splitting data files, improving the build process, decompilation.
 
 **[@stravant](https://github.com/stravant)** -
-writing [documentation](https://github.com/pslehisl/bfbbdecomp/blob/master/docs/WalkthroughAndTips.md), decompilation.
+writing [documentation](https://github.com/bfbbdecomp/bfbb/blob/master/docs/WalkthroughAndTips.md), decompilation.
 
 **[@mkst](https://github.com/mkst)** ([conker](https://github.com/mkst/conker)) -
 Continuous Integration.
 
-And to [everyone else](https://github.com/pslehisl/bfbbdecomp/graphs/contributors) who has contributed to the project in any way.
+And to [everyone else](https://github.com/bfbbdecomp/bfbb/graphs/contributors) who has contributed to the project in any way.
