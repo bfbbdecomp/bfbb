@@ -42,7 +42,10 @@ extern uint32 player_dead_anim;
 extern float32 lbl_803CD5A0; // 0.0
 extern float32 lbl_803CD638; // 10.0
 
-extern int8 zEntPlayer_Strings[];
+// This needs to be const
+// because the address is used in the context of a const char pointer
+// when being passed to certain functions.
+extern const int8 zEntPlayer_Strings[];
 
 // Multidimensional sound arrays for each player type
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
@@ -884,10 +887,10 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
 
     for (int32 i = 0; i < max_size; ++i)
     {
-        bool skip = 0;
+        bool skip = false;
         for (int32 j = 0; j < size; ++j)
         {
-            if ((int32)non_choices[j] - 1 == i)
+            if (i == (int32)non_choices[j] - 1)
             {
                 skip = true;
                 break;
@@ -896,8 +899,7 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
 
         if (!skip)
         {
-            filter[found] = i;
-            found += 1;
+            filter[found++] = i;
         }
     }
 
