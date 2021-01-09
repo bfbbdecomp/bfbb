@@ -107,6 +107,8 @@ void zFXGoo_SceneEnter()
 
 void zFXGoo_SceneReset()
 {
+    // This almost matches, only two instructions are flipped.
+    // otherwise, its perfect.
     int32 i;
     zFXGooInstance* curr = zFXGooInstances;
 
