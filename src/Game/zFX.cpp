@@ -18,7 +18,7 @@ extern xFXRing sMuscleArmRing[1];
 extern xFXRing sPorterRing[2];
 extern xFXRing sPatrickStunRing[3];
 
-extern zFXGooInstance zFXGooInstances[0x18];
+extern zFXGooInstance zFXGooInstances[24];
 
 extern ztextbox* goo_timer_textbox;
 
@@ -101,56 +101,22 @@ void zFXGoo_SceneEnter()
 #endif
 
 #if 1
-
 // func_80093404
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneReset__Fv")
-
 #else
 
-// Idk how to structure the loop properly.
 void zFXGoo_SceneReset()
 {
-    for (int32 i = 3; i != 0; i--)
+    int32 i;
+    zFXGooInstance* curr = zFXGooInstances;
+
+    for (i = 0; i < 24; i++)
     {
-        if ((&zFXGooInstances[(i - 3) * 8 + 0])->state != zFXGooStateInactive)
+        if (curr->state != zFXGooStateInactive)
         {
-            (&zFXGooInstances[(i - 3) * 8 + 0])->state = zFXGooStateNormal;
+            curr->state = zFXGooStateNormal;
         }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 1])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 1])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 2])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 2])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 3])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 3])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 4])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 4])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 5])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 5])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 6])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 6])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 7])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 7])->state = zFXGooStateNormal;
-        }
+        curr++;
     }
 }
 
