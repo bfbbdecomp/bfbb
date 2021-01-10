@@ -36,4 +36,8 @@ typedef int32 bool32;
 #endif
 #define FALSE 0
 
+#ifndef __MWERKS__
+#define __declspec(x)
+#endif
+
 #endif

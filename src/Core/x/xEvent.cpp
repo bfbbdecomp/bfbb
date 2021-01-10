@@ -6,7 +6,7 @@
 
 #include "../../Game/zScene.h"
 
-void zEntEvent(int8* to, uint32 toEvent)
+void zEntEvent(char* to, uint32 toEvent)
 {
     uint32 id = xStrHash(to);
     xBase* sendTo = zSceneFindObject(id);
