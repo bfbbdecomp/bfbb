@@ -687,6 +687,7 @@ extern RxHeap* RxHeapCreate(RwUInt32 size);
 extern RxRenderStateVector*
 RxRenderStateVectorSetDefaultRenderStateVector(RxRenderStateVector* rsvp);
 extern RxRenderStateVector* RxRenderStateVectorLoadDriverState(RxRenderStateVector* rsvp);
+extern void RwGameCubeCameraTextureFlush(RwRaster* ras, RwUInt32 param);
 
 #ifdef __cplusplus
 }

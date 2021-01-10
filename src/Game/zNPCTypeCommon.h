@@ -380,6 +380,7 @@ struct zNPCCommon : xNPCBasic
     virtual int32 NPCMessage(NPCMsg* mail);
     virtual void RenderExtra();
     virtual void RenderExtraPostParticles();
+    virtual void PostSetup();
     virtual void ParseINI();
     virtual void ParseLinks();
     virtual void ParseProps();
