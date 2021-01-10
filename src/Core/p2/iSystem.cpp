@@ -19,7 +19,7 @@ extern uint32 mem_base_alloc;
 extern uint32 add;
 extern uint32 size;
 extern int32 gEmergencyMemLevel;
-extern void* the_heap;
+extern OSHeapHandle the_heap;
 extern void* bad_val;
 
 // func_800D30B4
