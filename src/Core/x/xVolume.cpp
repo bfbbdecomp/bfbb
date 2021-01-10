@@ -12,8 +12,10 @@
 // func_801189B8
 #pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Save__7xVolumeFP7xSerial")
 
-// func_801189D8
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Load__7xVolumeFP7xSerial")
+void xVolume::Load(xSerial* s)
+{
+    xBaseLoad(this, s);
+}
 
 xBound* xVolume::GetBound()
 {
