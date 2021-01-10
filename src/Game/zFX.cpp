@@ -18,8 +18,9 @@ extern xFXRing sMuscleArmRing[1];
 extern xFXRing sPorterRing[2];
 extern xFXRing sPatrickStunRing[3];
 
-extern zFXGooInstance zFXGooInstances[0x18];
+extern zFXGooInstance zFXGooInstances[24];
 
+extern int8 zFX_strings[];
 extern ztextbox* goo_timer_textbox;
 
 extern float32 lbl_803CD968; // 0.15f
@@ -76,81 +77,39 @@ void zFXMuscleArmWave(xVec3* pos)
 // func_80092F94
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGooEnable__FP8RpAtomici")
 
-#if 1
-
-// func_8009337C
-#pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneEnter__Fv")
-
-#else
-
-// Can't figure out what's going on here.
 void zFXGoo_SceneEnter()
 {
     int32 i;
     zFXGooInstance* goo = zFXGooInstances;
-    for (i = 0; i < 0x18; i++)
+    for (i = 0; i < 24; i++)
     {
         memset(goo, 0, 4);
         goo->state = zFXGooStateInactive;
         goo++;
     }
-    uint32 gameID = xStrHash("FREEZY_TIMER_TEXTBOX");
+    uint32 gameID = xStrHash(zFX_strings + 0x19); // "FREEZY_TIMER_TEXTBOX"
     goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
 }
 
-#endif
-
 #if 1
-
 // func_80093404
 #pragma GLOBAL_ASM("asm/Game/zFX.s", "zFXGoo_SceneReset__Fv")
-
 #else
 
-// Idk how to structure the loop properly.
 void zFXGoo_SceneReset()
 {
-    for (int32 i = 3; i != 0; i--)
+    // This almost matches, only two instructions are flipped.
+    // otherwise, its perfect.
+    int32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+
+    for (i = 0; i < 24; i++)
     {
-        if ((&zFXGooInstances[(i - 3) * 8 + 0])->state != zFXGooStateInactive)
+        if (goo->state != zFXGooStateInactive)
         {
-            (&zFXGooInstances[(i - 3) * 8 + 0])->state = zFXGooStateNormal;
+            goo->state = zFXGooStateNormal;
         }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 1])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 1])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 2])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 2])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 3])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 3])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 4])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 4])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 5])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 5])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 6])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 6])->state = zFXGooStateNormal;
-        }
-
-        if ((&zFXGooInstances[(i - 3) * 8 + 7])->state != zFXGooStateInactive)
-        {
-            (&zFXGooInstances[(i - 3) * 8 + 7])->state = zFXGooStateNormal;
-        }
+        goo++;
     }
 }
 

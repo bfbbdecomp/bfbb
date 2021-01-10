@@ -53,9 +53,9 @@ zFX_SceneEnter__FP7RpWorld:
 /* 80092DEC 0008FBEC  90 7F 00 24 */	stw r3, 0x24(r31)
 /* 80092DF0 0008FBF0  98 0D 8E 8C */	stb r0, lbl_803CB78C-_SDA_BASE_(r13)
 lbl_80092DF4:
-/* 80092DF4 0008FBF4  3C 60 80 26 */	lis r3, lbl_8025BE04@ha
+/* 80092DF4 0008FBF4  3C 60 80 26 */	lis r3, zFX_strings@ha
 /* 80092DF8 0008FBF8  3C 80 80 29 */	lis r4, lbl_8028EFE0@ha
-/* 80092DFC 0008FBFC  38 63 BE 04 */	addi r3, r3, lbl_8025BE04@l
+/* 80092DFC 0008FBFC  38 63 BE 04 */	addi r3, r3, zFX_strings@l
 /* 80092E00 0008FC00  38 C0 00 00 */	li r6, 0
 /* 80092E04 0008FC04  38 A4 EF E0 */	addi r5, r4, lbl_8028EFE0@l
 /* 80092E08 0008FC08  38 E0 00 00 */	li r7, 0
@@ -328,44 +328,6 @@ lbl_80093368:
 /* 80093370 00090170  7C 08 03 A6 */	mtlr r0
 /* 80093374 00090174  38 21 00 60 */	addi r1, r1, 0x60
 /* 80093378 00090178  4E 80 00 20 */	blr 
-
-.global zFXGoo_SceneEnter__Fv
-zFXGoo_SceneEnter__Fv:
-/* 8009337C 0009017C  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80093380 00090180  7C 08 02 A6 */	mflr r0
-/* 80093384 00090184  3C 80 80 3C */	lis r4, zFXGooInstances@ha
-/* 80093388 00090188  3C 60 DE AE */	lis r3, 0xDEADBEEF@ha
-/* 8009338C 0009018C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80093390 00090190  38 04 FA 0C */	addi r0, r4, zFXGooInstances@l
-/* 80093394 00090194  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80093398 00090198  3B E3 BE EF */	addi r31, r3, 0xDEADBEEF@l
-/* 8009339C 0009019C  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800933A0 000901A0  3B C0 00 00 */	li r30, 0
-/* 800933A4 000901A4  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800933A8 000901A8  7C 1D 03 78 */	mr r29, r0
-lbl_800933AC:
-/* 800933AC 000901AC  7F A3 EB 78 */	mr r3, r29
-/* 800933B0 000901B0  38 80 00 00 */	li r4, 0
-/* 800933B4 000901B4  38 A0 00 04 */	li r5, 4
-/* 800933B8 000901B8  4B F7 00 A1 */	bl memset
-/* 800933BC 000901BC  3B DE 00 01 */	addi r30, r30, 1
-/* 800933C0 000901C0  93 FD 00 50 */	stw r31, 0x50(r29)
-/* 800933C4 000901C4  2C 1E 00 18 */	cmpwi r30, 0x18
-/* 800933C8 000901C8  3B BD 00 74 */	addi r29, r29, 0x74
-/* 800933CC 000901CC  41 80 FF E0 */	blt lbl_800933AC
-/* 800933D0 000901D0  3C 60 80 26 */	lis r3, lbl_8025BE04@ha
-/* 800933D4 000901D4  38 63 BE 04 */	addi r3, r3, lbl_8025BE04@l
-/* 800933D8 000901D8  38 63 00 19 */	addi r3, r3, 0x19
-/* 800933DC 000901DC  4B FB 8E 39 */	bl xStrHash__FPCc
-/* 800933E0 000901E0  48 02 16 5D */	bl zSceneFindObject__FUi
-/* 800933E4 000901E4  90 6D 8E 90 */	stw r3, goo_timer_textbox-_SDA_BASE_(r13)
-/* 800933E8 000901E8  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800933EC 000901EC  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 800933F0 000901F0  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 800933F4 000901F4  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 800933F8 000901F8  7C 08 03 A6 */	mtlr r0
-/* 800933FC 000901FC  38 21 00 20 */	addi r1, r1, 0x20
-/* 80093400 00090200  4E 80 00 20 */	blr 
 
 zFXGoo_SceneReset__Fv:
 /* 80093404 00090204  3C 60 80 3C */	lis r3, zFXGooInstances@ha
@@ -694,8 +656,8 @@ lbl_800938E8:
 /* 80093914 00090714  40 81 00 08 */	ble lbl_8009391C
 /* 80093918 00090718  38 A0 00 63 */	li r5, 0x63
 lbl_8009391C:
-/* 8009391C 0009071C  3C 60 80 26 */	lis r3, lbl_8025BE04@ha
-/* 80093920 00090720  38 83 BE 04 */	addi r4, r3, lbl_8025BE04@l
+/* 8009391C 0009071C  3C 60 80 26 */	lis r3, zFX_strings@ha
+/* 80093920 00090720  38 83 BE 04 */	addi r4, r3, zFX_strings@l
 /* 80093924 00090724  38 6D 81 F8 */	addi r3, r13, lbl_803CAAF8-_SDA_BASE_
 /* 80093928 00090728  38 84 00 2E */	addi r4, r4, 0x2e
 /* 8009392C 0009072C  4C C6 31 82 */	crclr 6
@@ -4622,12 +4584,12 @@ setup_entrails__FR6zScene:
 /* 800970AC 00093EAC  3B 44 F0 38 */	addi r26, r4, lbl_8028F038@l
 /* 800970B0 00093EB0  3B A1 00 10 */	addi r29, r1, 0x10
 /* 800970B4 00093EB4  3B 81 00 08 */	addi r28, r1, 8
-/* 800970B8 00093EB8  3C 80 80 26 */	lis r4, lbl_8025BE04@ha
+/* 800970B8 00093EB8  3C 80 80 26 */	lis r4, zFX_strings@ha
 /* 800970BC 00093EBC  7C 78 1B 78 */	mr r24, r3
 /* 800970C0 00093EC0  7F DB F3 78 */	mr r27, r30
 /* 800970C4 00093EC4  7F BF EB 78 */	mr r31, r29
 /* 800970C8 00093EC8  7F 97 E3 78 */	mr r23, r28
-/* 800970CC 00093ECC  3B 24 BE 04 */	addi r25, r4, lbl_8025BE04@l
+/* 800970CC 00093ECC  3B 24 BE 04 */	addi r25, r4, zFX_strings@l
 /* 800970D0 00093ED0  3A C0 00 00 */	li r22, 0
 lbl_800970D4:
 /* 800970D4 00093ED4  80 7A 00 00 */	lwz r3, 0(r26)
@@ -4911,7 +4873,9 @@ lbl_8025BDEC:
 	.incbin "baserom.dol", 0x258DCC, 0xC
 lbl_8025BDF8:
 	.incbin "baserom.dol", 0x258DD8, 0xC
-lbl_8025BE04:
+
+.global zFX_strings
+zFX_strings:
 	.incbin "baserom.dol", 0x258DE4, 0x74
 
 .section .data
