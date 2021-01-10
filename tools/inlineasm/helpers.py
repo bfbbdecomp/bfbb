@@ -10,11 +10,21 @@ def hashString(string):
     return hashlib.sha1(string.encode())
 
 
-pragmaRegex = r"(#pragma\sGLOBAL_ASM\((.*?)\))"
+"""
+(?:^|(?:^\s+))
+Included before the pragma search in order to match the beginning of a line
+or the beginning + any whitespace. Ignore the result of this capture.
+Used to enforce that are no comments or anything else before the pragma.
+
+(#pragma\sGLOBAL_ASM\((.*?)\))
+1st Match = entire pragma line
+2nd Match = pragma arguments
+"""
+pragmaRegex = r"(?:^|(?:^\s+))(#pragma\sGLOBAL_ASM\((.*?)\))"
 
 
 def getPragmaMatches(fileText):
-    matches = re.findall(pragmaRegex, fileText, flags=re.DOTALL)
+    matches = re.findall(pragmaRegex, fileText, flags=re.DOTALL | re.MULTILINE)
     return matches
 
 
