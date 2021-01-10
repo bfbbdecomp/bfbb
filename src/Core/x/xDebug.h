@@ -5,7 +5,7 @@
 
 #include <types.h>
 
-void xprintf(char* msg, ...);
+void xprintf(const char* msg, ...);
 int32 xDebugModeAdd(char* mode, void(*debugFunc));
 void xDebugInit();
 void xDebugUpdate();

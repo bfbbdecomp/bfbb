@@ -374,6 +374,7 @@ zVar_strings:
 	.incbin "baserom.dol", 0x25CC90, 0x354
 
 .section .data
+.balign 8
 .global state_text
 state_text:
 	.incbin "baserom.dol", 0x28E6C0, 0x10
@@ -408,6 +409,7 @@ __MIXAIVolumeTable:
 	.incbin "baserom.dol", 0x28F5CC, 0x34
 
 .section .bss
+.balign 8
 .global zVar_printf_buffer1
 zVar_printf_buffer1:
 	.skip 0xC
@@ -507,6 +509,7 @@ zVar_buffer32:
 	.skip 0x23C4
 
 .section .sbss
+.balign 8
 .global bad_card_available
 bad_card_available:
 	.skip 0x4

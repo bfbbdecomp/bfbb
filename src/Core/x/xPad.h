@@ -1,8 +1,9 @@
 #ifndef XPAD_H
 #define XPAD_H
 
-#include <types.h>
+#include "xRumble.h"
 #include "xMath2.h"
+#include "../p2/iPad.h"
 
 enum _tagPadState
 {
@@ -13,42 +14,25 @@ enum _tagPadState
     ePad_Total
 };
 
-enum _tagRumbleType
+enum _tagPadInit
 {
-    eRumble_Off,
-    eRumble_Hi,
-    eRumble_VeryLightHi,
-    eRumble_VeryLight,
-    eRumble_LightHi,
-    eRumble_Light,
-    eRumble_MediumHi,
-    eRumble_Medium,
-    eRumble_HeavyHi,
-    eRumble_Heavy,
-    eRumble_VeryHeavyHi,
-    eRumble_VeryHeavy,
-    eRumble_Total,
-    eRumbleForceU32 = 0x7fffffff
+    ePadInit_Open1,
+    ePadInit_WaitStable2,
+    ePadInit_EnableAnalog3,
+    ePadInit_EnableAnalog3LetsAllPissOffChris,
+    ePadInit_EnableRumble4,
+    ePadInit_EnableRumbleTest5,
+    ePadInit_PressureS6,
+    ePadInit_PressureSTest7,
+    ePadInit_Complete8a,
+    ePadInit_Complete8b,
+    ePadInit_Finished9
 };
 
 struct _tagPadAnalog
 {
     int8 x;
     int8 y;
-};
-
-struct _tagxRumble
-{
-    _tagRumbleType type;
-    float32 seconds;
-    _tagxRumble* next;
-    int16 active;
-    uint16 fxflags;
-};
-
-struct _tagiPad
-{
-    int32 port;
 };
 
 struct analog_data
@@ -90,9 +74,29 @@ struct _tagxPad
     analog_data analog[2];
 };
 
+// Named after PS2 buttons to match the "PadPress*" events
+#define XPAD_BUTTON_START 0x1
+#define XPAD_BUTTON_SELECT 0x2
+#define XPAD_BUTTON_UP 0x10
+#define XPAD_BUTTON_RIGHT 0x20
+#define XPAD_BUTTON_DOWN 0x40
+#define XPAD_BUTTON_LEFT 0x80
+#define XPAD_BUTTON_L1 0x100 // L on gamecube
+#define XPAD_BUTTON_L2 0x200
+#define XPAD_BUTTON_R1 0x1000 // R on gamecube
+#define XPAD_BUTTON_R2 0x2000
+#define XPAD_BUTTON_X 0x10000 // A on gamecube
+#define XPAD_BUTTON_O 0x20000 // X on gamecube
+#define XPAD_BUTTON_SQUARE 0x40000 // Y on gamecube
+#define XPAD_BUTTON_TRIANGLE 0x80000 // B on gamecube
+
+// GameCube
+#define XPAD_BUTTON_Z 0x100000
+
 extern _tagxPad mPad[4];
 
 int32 xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
 int32 xPadUpdate(int32 idx, float32 time_passed);
+void xPadRumbleEnable(int32 idx, int32 enable);
 
 #endif

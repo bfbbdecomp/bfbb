@@ -530,6 +530,20 @@ __as__6RtQuatFRC6RtQuat:
 
 .endif
 
+.section .sdata
+.balign 8
+.global giAnimScratch
+giAnimScratch:
+	.incbin "baserom.dol", 0x2B5CF0, 0x8
+/* SPECULATION: link order */
+.global sCameraNearClip
+sCameraNearClip:
+	.incbin "baserom.dol", 0x2B5CF8, 0x4
+/* SPECULATION: link order */
+.global sCameraFarClip
+sCameraFarClip:
+	.incbin "baserom.dol", 0x2B5CFC, 0x4
+
 .section .rodata
 /* this apparently goes to iAnimSKB but putting it there breaks the linking order */
 .global lbl_80260004

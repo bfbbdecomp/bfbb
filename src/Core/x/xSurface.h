@@ -25,6 +25,7 @@ struct xSurface : xBase
 };
 
 #define XSURFACE_TYPE_1 1
+#define XSURFACE_TYPE_3 3
 
 void xSurfaceInit(uint16 num_surfs);
 void xSurfaceExit();

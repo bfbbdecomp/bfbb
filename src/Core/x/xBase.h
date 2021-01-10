@@ -33,6 +33,7 @@ void xBaseSetup(xBase* xb);
 void xBaseSave(xBase* ent, xSerial* s);
 void xBaseLoad(xBase* ent, xSerial* s);
 void xBaseReset(xBase* xb, xBaseAsset* asset);
+uint32 xBaseIsValid(xBase* xb);
 void xBaseValidate(xBase* xb);
 bool xBaseIsEnabled(const xBase* xb);
 void xBaseDisable(xBase* xb);
