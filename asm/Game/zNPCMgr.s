@@ -4,31 +4,15 @@
 
 .section .text  # 0x800EE2CC - 0x800EED74
 
-.global zNPCMgrSelf__Fv
-zNPCMgrSelf__Fv:
-/* 800EE2CC 000EB0CC  80 6D 93 C4 */	lwz r3, lbl_803CBCC4-_SDA_BASE_(r13)
-/* 800EE2D0 000EB0D0  4E 80 00 20 */	blr 
-
-.global zNPCMgr_GetNPCList__Fv
-zNPCMgr_GetNPCList__Fv:
-/* 800EE2D4 000EB0D4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EE2D8 000EB0D8  7C 08 02 A6 */	mflr r0
-/* 800EE2DC 000EB0DC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EE2E0 000EB0E0  4B FF FF ED */	bl zNPCMgrSelf__Fv
-/* 800EE2E4 000EB0E4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EE2E8 000EB0E8  7C 08 03 A6 */	mtlr r0
-/* 800EE2EC 000EB0EC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EE2F0 000EB0F0  4E 80 00 20 */	blr 
-
 .global zNPCMgr_Startup__Fv
 zNPCMgr_Startup__Fv:
 /* 800EE2F4 000EB0F4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800EE2F8 000EB0F8  7C 08 02 A6 */	mflr r0
 /* 800EE2FC 000EB0FC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EE300 000EB100  80 6D 93 C0 */	lwz r3, lbl_803CBCC0-_SDA_BASE_(r13)
+/* 800EE300 000EB100  80 6D 93 C0 */	lwz r3, g_modinit-_SDA_BASE_(r13)
 /* 800EE304 000EB104  38 03 00 01 */	addi r0, r3, 1
 /* 800EE308 000EB108  2C 03 00 00 */	cmpwi r3, 0
-/* 800EE30C 000EB10C  90 0D 93 C0 */	stw r0, lbl_803CBCC0-_SDA_BASE_(r13)
+/* 800EE30C 000EB10C  90 0D 93 C0 */	stw r0, g_modinit-_SDA_BASE_(r13)
 /* 800EE310 000EB110  40 82 00 38 */	bne lbl_800EE348
 /* 800EE314 000EB114  48 01 EB 11 */	bl xBehaveMgr_Startup__Fv
 /* 800EE318 000EB118  3C 80 4E 50 */	lis r4, 0x4E50434D@ha
@@ -41,7 +25,7 @@ zNPCMgr_Startup__Fv:
 /* 800EE334 000EB134  48 00 09 E5 */	bl __ct__7zNPCMgrFv
 /* 800EE338 000EB138  7C 60 1B 78 */	mr r0, r3
 lbl_800EE33C:
-/* 800EE33C 000EB13C  90 0D 93 C4 */	stw r0, lbl_803CBCC4-_SDA_BASE_(r13)
+/* 800EE33C 000EB13C  90 0D 93 C4 */	stw r0, g_npcmgr-_SDA_BASE_(r13)
 /* 800EE340 000EB140  7C 03 03 78 */	mr r3, r0
 /* 800EE344 000EB144  48 00 01 F9 */	bl Startup__7zNPCMgrFv
 lbl_800EE348:
@@ -56,9 +40,9 @@ zNPCMgr_Shutdown__Fv:
 /* 800EE35C 000EB15C  7C 08 02 A6 */	mflr r0
 /* 800EE360 000EB160  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800EE364 000EB164  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800EE368 000EB168  80 6D 93 C0 */	lwz r3, lbl_803CBCC0-_SDA_BASE_(r13)
+/* 800EE368 000EB168  80 6D 93 C0 */	lwz r3, g_modinit-_SDA_BASE_(r13)
 /* 800EE36C 000EB16C  34 03 FF FF */	addic. r0, r3, -1
-/* 800EE370 000EB170  90 0D 93 C0 */	stw r0, lbl_803CBCC0-_SDA_BASE_(r13)
+/* 800EE370 000EB170  90 0D 93 C0 */	stw r0, g_modinit-_SDA_BASE_(r13)
 /* 800EE374 000EB174  40 82 00 30 */	bne lbl_800EE3A4
 /* 800EE378 000EB178  4B FF FF 55 */	bl zNPCMgrSelf__Fv
 /* 800EE37C 000EB17C  7C 7F 1B 79 */	or. r31, r3, r3
@@ -68,7 +52,7 @@ zNPCMgr_Shutdown__Fv:
 /* 800EE38C 000EB18C  38 80 00 01 */	li r4, 1
 /* 800EE390 000EB190  48 00 09 8D */	bl __dt__7zNPCMgrFv
 /* 800EE394 000EB194  38 00 00 00 */	li r0, 0
-/* 800EE398 000EB198  90 0D 93 C4 */	stw r0, lbl_803CBCC4-_SDA_BASE_(r13)
+/* 800EE398 000EB198  90 0D 93 C4 */	stw r0, g_npcmgr-_SDA_BASE_(r13)
 lbl_800EE39C:
 /* 800EE39C 000EB19C  4B FF FF BD */	bl zNPCMgr_Shutdown__Fv
 /* 800EE3A0 000EB1A0  48 01 EA ED */	bl xBehaveMgr_Shutdown__Fv
@@ -850,9 +834,11 @@ g_strz_lassanim:
 	.incbin "baserom.dol", 0x291F1C, 0xC
 
 .section .sbss
-lbl_803CBCC0:
+.global g_modinit
+g_modinit:
 	.skip 0x4
-lbl_803CBCC4:
+.global g_npcmgr
+g_npcmgr:
 	.skip 0x4
 lbl_803CBCC8:
 	.skip 0x8

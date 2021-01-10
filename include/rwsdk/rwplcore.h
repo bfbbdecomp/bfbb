@@ -1123,6 +1123,33 @@ struct RwChunkHeaderInfo
     RwBool isComplex; /**< Internal Use */
 };
 
+struct RwSky2DVertexFields
+{
+    RwV3d scrVertex;
+    RwReal camVertex_z;
+    RwReal u;
+    RwReal v;
+    RwReal recipZ;
+    RwReal pad1;
+    RwRGBAReal color;
+    RwV3d objNormal;
+    RwReal pad2;
+};
+
+struct RwSky2DVertexAlignmentOverlay
+{
+    union
+    {
+        RwSky2DVertexFields els;
+        //<unknown fundamental type (0xa510)> qWords[4];
+    };
+};
+
+struct RwSky2DVertex
+{
+    RwSky2DVertexAlignmentOverlay u;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif

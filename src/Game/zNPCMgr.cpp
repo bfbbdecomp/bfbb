@@ -2,14 +2,38 @@
 
 #include <types.h>
 
-// func_800EE2CC
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgrSelf__Fv")
+extern int32 g_modinit;
+extern zNPCMgr* g_npcmgr;
 
-// func_800EE2D4
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_GetNPCList__Fv")
+zNPCMgr* zNPCMgrSelf()
+{
+    return g_npcmgr;
+}
+
+st_XORDEREDARRAY* zNPCMgr_GetNPCList()
+{
+    return &zNPCMgrSelf()->npclist;
+}
+
+#if 1
 
 // func_800EE2F4
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Startup__Fv")
+
+#else
+
+void zNPCMgr_Startup()
+{
+    if (g_modinit++ == 0)
+    {
+        xBehaveMgr_Startup();
+        zNPCMgr* npc = (zNPCMgr*) //NEW!!!
+            g_npcmgr = npc;
+        Startup(npc);
+    }
+}
+
+#endif
 
 // func_800EE358
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Shutdown__Fv")
