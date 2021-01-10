@@ -2,6 +2,7 @@
 #include <dolphin.h>
 
 #include "iPad.h"
+#include "../x/xPad.h"
 
 int32 iPadInit()
 {

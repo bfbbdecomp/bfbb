@@ -886,6 +886,7 @@ yextent__8xtextboxCFfRib:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8025F998:
 	.incbin "baserom.dol", 0x25C978, 0x10
 lbl_8025F9A8:

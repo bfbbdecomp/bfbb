@@ -16,6 +16,8 @@ struct _xCounter : xBase
     uint8 counterFlags;
 };
 
+#define XCOUNTER_ISSPATULA 0x1
+
 void xCounterInit();
 void xCounterInit(void* b, void* asset);
 void xCounterInit(xBase* b, xCounterAsset* asset);

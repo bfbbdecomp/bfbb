@@ -171,5 +171,8 @@ xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, uint32 flags
                                void (*stateCallback)(xAnimState*, xAnimSingle*, void*),
                                void (*beforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32));
 void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state);
+xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
+                          xModelInstance* modelInst);
+xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);
 
 #endif
