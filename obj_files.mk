@@ -311,7 +311,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Core/x/xParSys.o                 \
     $(OBJ_DIR)/asm/Core/x/xParEmitter.o             \
     $(OBJ_DIR)/src/Core/x/xParEmitter.o             \
-    $(OBJ_DIR)/asm/Core/x/xVolume.o                 \
     $(OBJ_DIR)/src/Core/x/xVolume.o                 \
     $(OBJ_DIR)/asm/Core/x/xParEmitterType.o         \
     $(OBJ_DIR)/src/Core/x/xParEmitterType.o         \

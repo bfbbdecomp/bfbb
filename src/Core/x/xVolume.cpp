@@ -1,10 +1,23 @@
 #include <types.h>
 
 #include "xBound.h"
+#include "xLinkAsset.h"
 #include "xVolume.h"
 
-// func_80118934
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Init__7xVolumeFP12xVolumeAsset")
+void xVolume::Init(xVolumeAsset* asset)
+{
+    xBaseInit(this, asset);
+    this->asset = asset;
+
+    if (this->linkCount)
+    {
+        this->link = (xLinkAsset*)(this->asset + 1);
+    }
+    else
+    {
+        this->link = NULL;
+    }
+}
 
 void xVolume::Reset()
 {
