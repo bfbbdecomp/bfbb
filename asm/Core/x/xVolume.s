@@ -67,11 +67,5 @@ Load__7xVolumeFP7xSerial:
 /* 801189F0 001157F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801189F4 001157F4  4E 80 00 20 */	blr 
 
-.global GetBound__7xVolumeFv
-GetBound__7xVolumeFv:
-/* 801189F8 001157F8  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 801189FC 001157FC  38 63 00 0C */	addi r3, r3, 0xc
-/* 80118A00 00115800  4E 80 00 20 */	blr 
-
 .endif
 
