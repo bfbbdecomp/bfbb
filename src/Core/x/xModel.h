@@ -58,7 +58,7 @@ struct xModelInstance
     uint8 BoneCount;
     uint8 BoneIndex;
     uint8* BoneRemap;
-    RwMatrixTag* Mat;
+    RwMatrix* Mat;
 
     // Offset: 0x50
     xVec3 Scale;
