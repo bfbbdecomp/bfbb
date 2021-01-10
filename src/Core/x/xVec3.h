@@ -14,6 +14,7 @@ struct xVec3
     static xVec3 m_UnitAxisY;
 
     xVec3& operator=(const xVec3&); // temp
+    xVec3& operator=(float32);
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(float32) const;
     xVec3& operator+=(float32);

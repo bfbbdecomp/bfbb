@@ -39,5 +39,6 @@ void zSceneExit(int32 beginReload);
 void zSceneRender();
 void zSceneUpdate(float32 dt);
 int8* zSceneGetAreaname(uint32 theSceneID);
+void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), int32 baseType, void* data);
 
 #endif

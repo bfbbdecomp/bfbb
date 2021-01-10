@@ -8,13 +8,13 @@
 
 enum sound_category
 {
-    SND_CAT_GAME,
+    SND_CAT_INVALID = 0xffffffff,
+    SND_CAT_GAME = 0,
     SND_CAT_DIALOG,
     SND_CAT_MUSIC,
     SND_CAT_CUTSCENE,
     SND_CAT_UI,
-    SND_CAT_NUM_CATEGORIES,
-    SND_CAT_INVALID = 0xffffffff
+    SND_CAT_NUM_CATEGORIES
 };
 
 struct xSndVoiceInfo
@@ -73,5 +73,6 @@ uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 f
 void xSndStop(uint32 snd);
 void xSndStopAll(uint32 mask);
 void xSndPauseAll(uint32 pause_effects, uint32 pause_streams);
+void xSndPauseCategory(uint32 mask, uint32 pause);
 
 #endif

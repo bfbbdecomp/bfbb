@@ -743,7 +743,12 @@ struct RwRGBA
 
 struct rwGameCube2DVertex
 {
-    /* unknown */
+    RwReal x;
+    RwReal y;
+    RwReal z;
+    RwRGBA emissiveColor;
+    RwReal u;
+    RwReal v;
 };
 
 typedef rwGameCube2DVertex RwIm2DVertex;
