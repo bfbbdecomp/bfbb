@@ -77,15 +77,25 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
                       int (*)(xGoal*, void*, float, void*), void*);
 
     void SetPsyche(xPsyche* psyche);
-    char* Name();
     void SetState(en_GOALSTATE state);
     en_GOALSTATE GetState();
 
     xBase* GetOwner();
-    void Clear();
     int32 PreCalc(float32 dt, void* updCtxt);
     int32 EvalRules(en_trantype* trantype, float32 dt, void* updCtxt);
     int32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
+
+    // Known virtual functions.
+    int32 Enter(float32 dt, void* updCtxt);
+    int32 Exit(float32 dt, void* updCtxt);
+    int32 Suspend(float32 dt, void* updCtxt);
+    int32 Resume(float32 dt, void* updCtxt);
+    int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+                   xBase* toParamWidget, int32* handled);
+    char* Name();
+    void Clear();
+
+    uint32 daVtable; // 0 wise ones... Forgive me for 1 not have the skill to set up this vtable...
 };
 
 struct xPSYNote

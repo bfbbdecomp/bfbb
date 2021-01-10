@@ -4,34 +4,6 @@
 
 .section .text  # 0x8010EB94 - 0x8010EED8
 
-.global xGoalSimple_RegisterTypes__FP8xFactory
-xGoalSimple_RegisterTypes__FP8xFactory:
-/* 8010EB94 0010B994  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010EB98 0010B998  7C 08 02 A6 */	mflr r0
-/* 8010EB9C 0010B99C  3C A0 80 11 */	lis r5, GOALCreate_Generic__FiP10RyzMemGrowPv@ha
-/* 8010EBA0 0010B9A0  3C 80 80 11 */	lis r4, GOALDestroy_Generic__FP12xFactoryInst@ha
-/* 8010EBA4 0010B9A4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010EBA8 0010B9A8  3C E0 47 53 */	lis r7, 0x47534D00@ha
-/* 8010EBAC 0010B9AC  38 C4 EC A4 */	addi r6, r4, GOALDestroy_Generic__FP12xFactoryInst@l
-/* 8010EBB0 0010B9B0  38 A5 EB F8 */	addi r5, r5, GOALCreate_Generic__FiP10RyzMemGrowPv@l
-/* 8010EBB4 0010B9B4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010EBB8 0010B9B8  7C 7F 1B 78 */	mr r31, r3
-/* 8010EBBC 0010B9BC  38 87 4D 00 */	addi r4, r7, 0x47534D00@l
-/* 8010EBC0 0010B9C0  48 00 08 D9 */	bl RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v
-/* 8010EBC4 0010B9C4  3C 80 80 11 */	lis r4, GOALCreate_Generic__FiP10RyzMemGrowPv@ha
-/* 8010EBC8 0010B9C8  3C 60 80 11 */	lis r3, GOALDestroy_Generic__FP12xFactoryInst@ha
-/* 8010EBCC 0010B9CC  38 A4 EB F8 */	addi r5, r4, GOALCreate_Generic__FiP10RyzMemGrowPv@l
-/* 8010EBD0 0010B9D0  3C 80 47 53 */	lis r4, 0x47534D01@ha
-/* 8010EBD4 0010B9D4  38 C3 EC A4 */	addi r6, r3, GOALDestroy_Generic__FP12xFactoryInst@l
-/* 8010EBD8 0010B9D8  7F E3 FB 78 */	mr r3, r31
-/* 8010EBDC 0010B9DC  38 84 4D 01 */	addi r4, r4, 0x47534D01@l
-/* 8010EBE0 0010B9E0  48 00 08 B9 */	bl RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v
-/* 8010EBE4 0010B9E4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010EBE8 0010B9E8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010EBEC 0010B9EC  7C 08 03 A6 */	mtlr r0
-/* 8010EBF0 0010B9F0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010EBF4 0010B9F4  4E 80 00 20 */	blr 
-
 GOALCreate_Generic__FiP10RyzMemGrowPv:
 /* 8010EBF8 0010B9F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010EBFC 0010B9FC  7C 08 02 A6 */	mflr r0
@@ -83,130 +55,6 @@ lbl_8010EC90:
 /* 8010EC9C 0010BA9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010ECA0 0010BAA0  4E 80 00 20 */	blr 
 
-GOALDestroy_Generic__FP12xFactoryInst:
-/* 8010ECA4 0010BAA4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010ECA8 0010BAA8  7C 08 02 A6 */	mflr r0
-/* 8010ECAC 0010BAAC  38 80 00 01 */	li r4, 1
-/* 8010ECB0 0010BAB0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010ECB4 0010BAB4  4B FC A2 F1 */	bl __dt__12xFactoryInstFv
-/* 8010ECB8 0010BAB8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010ECBC 0010BABC  7C 08 03 A6 */	mtlr r0
-/* 8010ECC0 0010BAC0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010ECC4 0010BAC4  4E 80 00 20 */	blr 
-
-Enter__12xGoalGenericFfPv:
-/* 8010ECC8 0010BAC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010ECCC 0010BACC  7C 08 02 A6 */	mflr r0
-/* 8010ECD0 0010BAD0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010ECD4 0010BAD4  81 83 00 3C */	lwz r12, 0x3c(r3)
-/* 8010ECD8 0010BAD8  28 0C 00 00 */	cmplwi r12, 0
-/* 8010ECDC 0010BADC  41 82 00 18 */	beq lbl_8010ECF4
-/* 8010ECE0 0010BAE0  7C 85 23 78 */	mr r5, r4
-/* 8010ECE4 0010BAE4  80 83 00 50 */	lwz r4, 0x50(r3)
-/* 8010ECE8 0010BAE8  7D 89 03 A6 */	mtctr r12
-/* 8010ECEC 0010BAEC  4E 80 04 21 */	bctrl 
-/* 8010ECF0 0010BAF0  48 00 00 08 */	b lbl_8010ECF8
-lbl_8010ECF4:
-/* 8010ECF4 0010BAF4  4B FC 67 11 */	bl Enter__5xGoalFfPv
-lbl_8010ECF8:
-/* 8010ECF8 0010BAF8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010ECFC 0010BAFC  7C 08 03 A6 */	mtlr r0
-/* 8010ED00 0010BB00  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010ED04 0010BB04  4E 80 00 20 */	blr 
-
-Exit__12xGoalGenericFfPv:
-/* 8010ED08 0010BB08  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010ED0C 0010BB0C  7C 08 02 A6 */	mflr r0
-/* 8010ED10 0010BB10  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010ED14 0010BB14  81 83 00 40 */	lwz r12, 0x40(r3)
-/* 8010ED18 0010BB18  28 0C 00 00 */	cmplwi r12, 0
-/* 8010ED1C 0010BB1C  41 82 00 18 */	beq lbl_8010ED34
-/* 8010ED20 0010BB20  7C 85 23 78 */	mr r5, r4
-/* 8010ED24 0010BB24  80 83 00 50 */	lwz r4, 0x50(r3)
-/* 8010ED28 0010BB28  7D 89 03 A6 */	mtctr r12
-/* 8010ED2C 0010BB2C  4E 80 04 21 */	bctrl 
-/* 8010ED30 0010BB30  48 00 00 08 */	b lbl_8010ED38
-lbl_8010ED34:
-/* 8010ED34 0010BB34  4B FC 66 E9 */	bl Exit__5xGoalFfPv
-lbl_8010ED38:
-/* 8010ED38 0010BB38  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010ED3C 0010BB3C  7C 08 03 A6 */	mtlr r0
-/* 8010ED40 0010BB40  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010ED44 0010BB44  4E 80 00 20 */	blr 
-
-Suspend__12xGoalGenericFfPv:
-/* 8010ED48 0010BB48  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010ED4C 0010BB4C  7C 08 02 A6 */	mflr r0
-/* 8010ED50 0010BB50  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010ED54 0010BB54  81 83 00 44 */	lwz r12, 0x44(r3)
-/* 8010ED58 0010BB58  28 0C 00 00 */	cmplwi r12, 0
-/* 8010ED5C 0010BB5C  41 82 00 18 */	beq lbl_8010ED74
-/* 8010ED60 0010BB60  7C 85 23 78 */	mr r5, r4
-/* 8010ED64 0010BB64  80 83 00 50 */	lwz r4, 0x50(r3)
-/* 8010ED68 0010BB68  7D 89 03 A6 */	mtctr r12
-/* 8010ED6C 0010BB6C  4E 80 04 21 */	bctrl 
-/* 8010ED70 0010BB70  48 00 00 08 */	b lbl_8010ED78
-lbl_8010ED74:
-/* 8010ED74 0010BB74  4B FC 66 B1 */	bl Suspend__5xGoalFfPv
-lbl_8010ED78:
-/* 8010ED78 0010BB78  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010ED7C 0010BB7C  7C 08 03 A6 */	mtlr r0
-/* 8010ED80 0010BB80  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010ED84 0010BB84  4E 80 00 20 */	blr 
-
-Resume__12xGoalGenericFfPv:
-/* 8010ED88 0010BB88  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010ED8C 0010BB8C  7C 08 02 A6 */	mflr r0
-/* 8010ED90 0010BB90  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010ED94 0010BB94  81 83 00 48 */	lwz r12, 0x48(r3)
-/* 8010ED98 0010BB98  28 0C 00 00 */	cmplwi r12, 0
-/* 8010ED9C 0010BB9C  41 82 00 18 */	beq lbl_8010EDB4
-/* 8010EDA0 0010BBA0  7C 85 23 78 */	mr r5, r4
-/* 8010EDA4 0010BBA4  80 83 00 50 */	lwz r4, 0x50(r3)
-/* 8010EDA8 0010BBA8  7D 89 03 A6 */	mtctr r12
-/* 8010EDAC 0010BBAC  4E 80 04 21 */	bctrl 
-/* 8010EDB0 0010BBB0  48 00 00 08 */	b lbl_8010EDB8
-lbl_8010EDB4:
-/* 8010EDB4 0010BBB4  4B FC 66 61 */	bl Resume__5xGoalFfPv
-lbl_8010EDB8:
-/* 8010EDB8 0010BBB8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010EDBC 0010BBBC  7C 08 03 A6 */	mtlr r0
-/* 8010EDC0 0010BBC0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010EDC4 0010BBC4  4E 80 00 20 */	blr 
-
-SysEvent__12xGoalGenericFP5xBaseP5xBaseUiPCfP5xBasePi:
-/* 8010EDC8 0010BBC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010EDCC 0010BBCC  7C 08 02 A6 */	mflr r0
-/* 8010EDD0 0010BBD0  7C EB 3B 78 */	mr r11, r7
-/* 8010EDD4 0010BBD4  7D 2A 4B 78 */	mr r10, r9
-/* 8010EDD8 0010BBD8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010EDDC 0010BBDC  7D 00 43 78 */	mr r0, r8
-/* 8010EDE0 0010BBE0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010EDE4 0010BBE4  7C DF 33 78 */	mr r31, r6
-/* 8010EDE8 0010BBE8  93 C1 00 08 */	stw r30, 8(r1)
-/* 8010EDEC 0010BBEC  7C BE 2B 78 */	mr r30, r5
-/* 8010EDF0 0010BBF0  81 83 00 4C */	lwz r12, 0x4c(r3)
-/* 8010EDF4 0010BBF4  28 0C 00 00 */	cmplwi r12, 0
-/* 8010EDF8 0010BBF8  41 82 00 28 */	beq lbl_8010EE20
-/* 8010EDFC 0010BBFC  7C 85 23 78 */	mr r5, r4
-/* 8010EE00 0010BC00  7F C6 F3 78 */	mr r6, r30
-/* 8010EE04 0010BC04  7F E7 FB 78 */	mr r7, r31
-/* 8010EE08 0010BC08  7D 68 5B 78 */	mr r8, r11
-/* 8010EE0C 0010BC0C  7C 09 03 78 */	mr r9, r0
-/* 8010EE10 0010BC10  80 83 00 50 */	lwz r4, 0x50(r3)
-/* 8010EE14 0010BC14  7D 89 03 A6 */	mtctr r12
-/* 8010EE18 0010BC18  4E 80 04 21 */	bctrl 
-/* 8010EE1C 0010BC1C  48 00 00 08 */	b lbl_8010EE24
-lbl_8010EE20:
-/* 8010EE20 0010BC20  4B FC 66 0D */	bl SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi
-lbl_8010EE24:
-/* 8010EE24 0010BC24  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010EE28 0010BC28  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010EE2C 0010BC2C  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8010EE30 0010BC30  7C 08 03 A6 */	mtlr r0
-/* 8010EE34 0010BC34  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010EE38 0010BC38  4E 80 00 20 */	blr 
-
 .global __ct__10xGoalEmptyFi
 __ct__10xGoalEmptyFi:
 /* 8010EE3C 0010BC3C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -243,25 +91,9 @@ __ct__12xGoalGenericFi:
 /* 8010EEAC 0010BCAC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EEB0 0010BCB0  4E 80 00 20 */	blr 
 
-Name__12xGoalGenericFv:
-/* 8010EEB4 0010BCB4  3C 60 80 27 */	lis r3, lbl_8026A3B0@ha
-/* 8010EEB8 0010BCB8  38 63 A3 B0 */	addi r3, r3, lbl_8026A3B0@l
-/* 8010EEBC 0010BCBC  4E 80 00 20 */	blr 
-
-Clear__12xGoalGenericFv:
-/* 8010EEC0 0010BCC0  4E 80 00 20 */	blr 
-
-Name__10xGoalEmptyFv:
-/* 8010EEC4 0010BCC4  3C 60 80 27 */	lis r3, lbl_8026A3B0@ha
-/* 8010EEC8 0010BCC8  38 63 A3 B0 */	addi r3, r3, lbl_8026A3B0@l
-/* 8010EECC 0010BCCC  38 63 00 0D */	addi r3, r3, 0xd
-/* 8010EED0 0010BCD0  4E 80 00 20 */	blr 
-
-Clear__10xGoalEmptyFv:
-/* 8010EED4 0010BCD4  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata
-lbl_8026A3B0:
+.global xBehaveGoalSimple_strings
+xBehaveGoalSimple_strings:
 	.incbin "baserom.dol", 0x267390, 0x18
