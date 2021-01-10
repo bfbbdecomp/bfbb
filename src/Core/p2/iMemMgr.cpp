@@ -12,7 +12,6 @@ extern OSHeapHandle hs;
 extern volatile OSHeapHandle the_heap;
 extern unsigned char _stack_addr[];
 extern uint32 HeapSize;
-extern OSHeapHandle __OSCurrHeap;
 extern uint32 mem_top_alloc;
 extern uint32 mem_base_alloc;
 
