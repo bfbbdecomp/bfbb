@@ -91,15 +91,9 @@ __ct__12xGoalGenericFi:
 /* 8010EEAC 0010BCAC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010EEB0 0010BCB0  4E 80 00 20 */	blr 
 
-Name__10xGoalEmptyFv:
-/* 8010EEC4 0010BCC4  3C 60 80 27 */	lis r3, lbl_8026A3B0@ha
-/* 8010EEC8 0010BCC8  38 63 A3 B0 */	addi r3, r3, lbl_8026A3B0@l
-/* 8010EECC 0010BCCC  38 63 00 0D */	addi r3, r3, 0xd
-/* 8010EED0 0010BCD0  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata
-.global lbl_8026A3B0
-lbl_8026A3B0:
+.global xBehaveGoalSimple_strings
+xBehaveGoalSimple_strings:
 	.incbin "baserom.dol", 0x267390, 0x18

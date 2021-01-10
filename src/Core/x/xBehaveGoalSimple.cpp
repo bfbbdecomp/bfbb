@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-extern const char lbl_8026A3B0[];
+extern const char xBehaveGoalSimple_strings[];
 
 void xGoalSimple_RegisterTypes(xFactory* fac)
 {
@@ -127,7 +127,7 @@ xGoalGeneric::xGoalGeneric(int32 goalID) : xGoal(goalID)
 
 const char* xGoalGeneric::Name()
 {
-    return &lbl_8026A3B0[0];
+    return &xBehaveGoalSimple_strings[0];
 }
 
 void xGoalGeneric::Clear()
@@ -136,7 +136,7 @@ void xGoalGeneric::Clear()
 
 const char* xGoalEmpty::Name()
 {
-    return &lbl_8026A3B0[0xd];
+    return &xBehaveGoalSimple_strings[0xd];
 }
 
 void xGoalEmpty::Clear()
