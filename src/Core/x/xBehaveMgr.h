@@ -14,8 +14,11 @@ struct xBehaveMgr : RyzMemData
 
     void UnSubscribe(xPsyche* psy);
     xPsyche* Subscribe(xBase* owner, int32 i);
+    xFactory* GetFactory();
 };
 
+void xBehaveMgr_Startup();
+void xBehaveMgr_Shutdown();
 xBehaveMgr* xBehaveMgr_GetSelf();
 
 #endif

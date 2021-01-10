@@ -1,4 +1,5 @@
 #include "zNPCMgr.h"
+#include "zNPCTypeCommon.h"
 
 #include <types.h>
 
@@ -22,54 +23,123 @@ st_XORDEREDARRAY* zNPCMgr_GetNPCList()
 
 #else
 
+// Can't find the new operator declaration for some reason?
 void zNPCMgr_Startup()
 {
     if (g_modinit++ == 0)
     {
         xBehaveMgr_Startup();
-        zNPCMgr* npc = (zNPCMgr*) //NEW!!!
-            g_npcmgr = npc;
+        zNPCMgr* npc = new (0x4e50434d, NULL) zNPCMgr(); //NPCM
+        g_npcmgr = npc;
         Startup(npc);
     }
 }
 
 #endif
 
+#if 1
+
 // func_800EE358
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Shutdown__Fv")
 
-// func_800EE3B8
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePrepare__Fi")
+#else
 
-// func_800EE3EC
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_sceneFinish__Fv")
+// Doesn't set r4 to 1 before calling the delete operator...
+void zNPCMgr_Shutdown()
+{
+    g_modinit--;
+    if (g_modinit == 0)
+    {
+        zNPCMgr* mgr = zNPCMgrSelf();
+        if (mgr != NULL)
+        {
+            mgr->Shutdown();
+            delete mgr;
+            g_npcmgr = NULL;
+        }
+        zNPCMgr_Shutdown();
+        xBehaveMgr_Shutdown();
+    }
+}
 
-// func_800EE410
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_sceneReset__Fv")
+#endif
 
-// func_800EE434
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostInit__Fv")
+void zNPCMgr_scenePrepare(int32 npccnt)
+{
+    zNPCMgrSelf()->ScenePrepare(npccnt);
+}
 
-// func_800EE458
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostSetup__Fv")
+void zNPCMgr_sceneFinish()
+{
+    zNPCMgrSelf()->SceneFinish();
+}
 
-// func_800EE47C
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_sceneTimestep__FP6xScenef")
+void zNPCMgr_sceneReset()
+{
+    zNPCMgrSelf()->SceneReset();
+}
 
-// func_800EE4C0
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostRender__Fv")
+void zNPCMgr_scenePostInit()
+{
+    zNPCMgrSelf()->ScenePostInit();
+}
 
-// func_800EE4E4
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_scenePostParticleRender__Fv")
+void zNPCMgr_scenePostSetup()
+{
+    zNPCMgrSelf()->ScenePostSetup();
+}
+
+void zNPCMgr_sceneTimestep(xScene* xscn, float32 dt)
+{
+    zNPCMgrSelf()->SceneTimestep(xscn, dt);
+}
+
+void zNPCMgr_scenePostRender()
+{
+    zNPCMgrSelf()->ScenePostRender();
+}
+
+void zNPCMgr_scenePostParticleRender()
+{
+    zNPCMgrSelf()->ScenePostParticleRender();
+}
+
+#if 1
 
 // func_800EE508
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_createNPCInst__FiP9xEntAsset")
 
+#else
+
+// The wrong register gets or'd before the call to zNPCMgrSelf... Huh?
+xEnt* zNPCMgr_createNPCInst(xEntAsset* assdat)
+{
+    return zNPCMgrSelf()->CreateNPC(assdat);
+}
+
+#endif
+
 // func_800EE53C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Startup__7zNPCMgrFv")
 
+#if 1
+
 // func_800EE5C8
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Shutdown__7zNPCMgrFv")
+
+#else
+
+// Have to define the functions this uses.
+void zNPCMgr::Shutdown()
+{
+    delete this->npcFactory;
+    this->npcFactory = NULL;
+    zNPCTypes_ShutdownTypes();
+    zNPCSpawner_Shutdown();
+    zNPCMsg_Shutdown();
+}
+
+#endif
 
 // func_800EE618
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePrepare__7zNPCMgrFi")
@@ -110,29 +180,58 @@ void zNPCMgr_Startup()
 // func_800EECC4
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_OrdTest_npcid__FPCvPv")
 
+#if 1
+
 // func_800EECEC
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_OrdComp_npcid__FPvPv")
 
-// func_800EED18
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "__ct__7zNPCMgrFv")
+#else
 
-// func_800EED1C
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "__dt__7zNPCMgrFv")
+// WIP.
+int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
+{
+    if (*(uint32*)vkey < *(uint32*)vitem)
+    {
+        return 0xffffffff;
+    }
+    else if (*(uint32*)vkey > *(uint32*)vitem)
+    {
+        return 1;
+    }
+    return 0;
+}
 
-// func_800EED58
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "DBG_Reset__7zNPCMgrFv")
+#endif
 
-// func_800EED5C
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "DBG_PerfTrack__7zNPCMgrFv")
+zNPCMgr::zNPCMgr()
+{
+}
 
-// func_800EED60
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "GetFactory__10xBehaveMgrFv")
+zNPCMgr::~zNPCMgr()
+{
+}
 
-// func_800EED68
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "PostSetup__9xNPCBasicFv")
+void zNPCMgr::DBG_Reset()
+{
+}
 
-// func_800EED6C
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "RenderExtra__10zNPCCommonFv")
+void zNPCMgr::DBG_PerfTrack()
+{
+}
 
-// func_800EED70
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "RenderExtraPostParticles__10zNPCCommonFv")
+xFactory* xBehaveMgr::GetFactory()
+{
+    return this->goalFactory;
+}
+
+void zNPCCommon::PostSetup()
+{
+}
+
+void zNPCCommon::RenderExtra()
+{
+}
+
+void zNPCCommon::RenderExtraPostParticles()
+{
+}
