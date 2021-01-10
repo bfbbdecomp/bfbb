@@ -33,28 +33,5 @@ lbl_8011897C:
 /* 8011898C 0011578C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80118990 00115790  4E 80 00 20 */	blr 
 
-.global Reset__7xVolumeFv
-Reset__7xVolumeFv:
-/* 80118994 00115794  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80118998 00115798  7C 08 02 A6 */	mflr r0
-/* 8011899C 0011579C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801189A0 001157A0  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 801189A4 001157A4  4B EF 0B 55 */	bl xBaseReset__FP5xBaseP10xBaseAsset
-/* 801189A8 001157A8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801189AC 001157AC  7C 08 03 A6 */	mtlr r0
-/* 801189B0 001157B0  38 21 00 10 */	addi r1, r1, 0x10
-/* 801189B4 001157B4  4E 80 00 20 */	blr 
-
-.global Save__7xVolumeFP7xSerial
-Save__7xVolumeFP7xSerial:
-/* 801189B8 001157B8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801189BC 001157BC  7C 08 02 A6 */	mflr r0
-/* 801189C0 001157C0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801189C4 001157C4  4B EF 0A 89 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 801189C8 001157C8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801189CC 001157CC  7C 08 03 A6 */	mtlr r0
-/* 801189D0 001157D0  38 21 00 10 */	addi r1, r1, 0x10
-/* 801189D4 001157D4  4E 80 00 20 */	blr 
-
 .endif
 

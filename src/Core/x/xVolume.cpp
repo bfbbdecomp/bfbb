@@ -6,11 +6,15 @@
 // func_80118934
 #pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Init__7xVolumeFP12xVolumeAsset")
 
-// func_80118994
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Reset__7xVolumeFv")
+void xVolume::Reset()
+{
+    xBaseReset(this, this->asset);
+}
 
-// func_801189B8
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Save__7xVolumeFP7xSerial")
+void xVolume::Save(xSerial* s)
+{
+    xBaseSave(this, s);
+}
 
 void xVolume::Load(xSerial* s)
 {
