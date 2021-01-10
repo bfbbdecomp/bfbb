@@ -36,20 +36,10 @@ void xDebugTimestampScreen()
     // Redacted. :}
 }
 
-#if 1
-
-// func_80017DA4
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "render__8xtextboxCFb")
-
-#else
-
-// Have to figure out how to implement the layout struct correctly.
-void xtextbox::render(bool cache)
+void xtextbox::render(bool cache) const
 {
     render(temp_layout(cache), 0, -1);
 }
-
-#endif
 
 // func_80017DE4
 #pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \

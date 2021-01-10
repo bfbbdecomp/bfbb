@@ -23,5 +23,6 @@ int32 zSaveLoad_getcard();
 int32 zSaveLoad_getgame();
 int32 zSaveLoad_getMCneeded();
 int32 zSaveLoad_getMCavailable();
+uint32 zSaveLoad_slotIsEmpty(uint32 i);
 
 #endif

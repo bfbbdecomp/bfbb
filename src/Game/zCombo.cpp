@@ -5,6 +5,7 @@
 #include "../Core/x/xBase.h"
 #include "../Core/x/xHudText.h"
 #include "../Core/x/xstransvc.h"
+#include "../Core/x/xTextAsset.h"
 #include "zGlobals.h"
 #include "zTextBox.h"
 
