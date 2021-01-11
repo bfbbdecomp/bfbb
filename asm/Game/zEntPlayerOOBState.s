@@ -3162,6 +3162,10 @@ lbl_803145AC:
 	.skip 0xEC
 
 .section .sbss
+.balign 8
+.global oob_player_teleported
+oob_player_teleported:
+	.skip 0x1
 lbl_803CBE11:
 	.skip 0x3
 lbl_803CBE14:
