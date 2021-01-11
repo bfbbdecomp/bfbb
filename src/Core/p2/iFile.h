@@ -40,17 +40,29 @@ struct tag_iFile
 #endif
 #endif
 
+#define IFILE_OPEN_ABSPATH 0x4
+
 #define IFILE_SEEK_SET 0
 #define IFILE_SEEK_CUR 1
 #define IFILE_SEEK_END 2
 
 struct tag_xFile;
 
+void iFileInit();
+void iFileExit();
+uint32* iFileLoad(char* name, uint32* buffer, uint32* size);
 uint32 iFileOpen(const char* name, int32 flags, tag_xFile* file);
 int32 iFileSeek(tag_xFile* file, int32 offset, int32 whence);
-IFILE_READSECTOR_STATUS iFileReadAsyncStatus(int32 key, int32* amtToFar);
+uint32 iFileRead(tag_xFile* file, void* buf, uint32 size);
 int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(tag_xFile*),
                      int32 priority);
+IFILE_READSECTOR_STATUS iFileReadAsyncStatus(int32 key, int32* amtToFar);
+uint32 iFileClose(tag_xFile* file);
+uint32 iFileGetSize(tag_xFile* file);
 void iFileReadStop();
+void iFileFullPath(const char* relname, char* fullname);
+void iFileSetPath(char* path);
+uint32 iFileFind(const char* name, tag_xFile* file);
+void iFileGetInfo(tag_xFile* file, uint32* addr, uint32* length);
 
 #endif

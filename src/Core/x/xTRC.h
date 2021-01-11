@@ -31,5 +31,6 @@ extern _tagTRCPadInfo gTrcPad[4];
 
 void xTRCPad(int32 pad_id, _tagTRCState state);
 void xTRCReset();
+void xTRCDisk(_tagTRCState state);
 
 #endif
