@@ -5,6 +5,8 @@
 #include "../p2/iColor.h"
 #include "xString.h"
 
+#include <rwcore.h>
+
 #define XFONT_ID_1 1
 
 struct xfont
@@ -15,6 +17,9 @@ struct xfont
     float32 space;
     iColor_tag color;
     basic_rect<float32> clip;
+
+    static void set_render_state(RwRaster* raster);
+    static void restore_render_state();
 
     xfont& operator=(const xfont& other);
 };
@@ -79,8 +84,8 @@ struct xtextbox
     struct tag_type
     {
         substr name;
-        void (*parse_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
-        void (*reset_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
+        void (*parse_tag)(jot&, const xtextbox&, const xtextbox&, const split_tag&);
+        void (*reset_tag)(jot&, const xtextbox&, const xtextbox&, const split_tag&);
         void* context;
     };
 
@@ -124,6 +129,7 @@ struct xtextbox
     float32 yextent(float32 max, int32& size, const layout& l, int32 begin_jot,
                     int32 end_jot) const;
     void set_text(const char* text);
+    void set_text(const char** texts, ulong32 size);
 };
 
 void render_fill_rect(const basic_rect<float32>& bounds, iColor_tag color);

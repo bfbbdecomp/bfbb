@@ -401,6 +401,86 @@ struct RwTexture
 typedef RwTexture* (*RwTextureCallBackRead)(const RwChar* name, const RwChar* maskName);
 typedef RwTexture* (*RwTextureCallBack)(RwTexture* texture, void* pData);
 
+#define RwTextureGetRasterMacro(_tex) ((_tex)->raster)
+
+#define RwTextureAddRefMacro(_tex) (((_tex)->refCount++), (_tex))
+
+#define RwTextureAddRefVoidMacro(_tex)                                                             \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (_tex)->refCount++;                                                                        \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RwTextureGetNameMacro(_tex) ((_tex)->name)
+
+#define RwTextureGetMaskNameMacro(_tex) ((_tex)->mask)
+
+#define RwTextureGetDictionaryMacro(_tex) ((_tex)->dict)
+
+#define RwTextureSetFilterModeMacro(_tex, _filtering)                                              \
+    (((_tex)->filterAddressing = ((_tex)->filterAddressing & ~rwTEXTUREFILTERMODEMASK) |           \
+                                 (((RwUInt32)(_filtering)) & rwTEXTUREFILTERMODEMASK)),            \
+     (_tex))
+
+#define RwTextureGetFilterModeMacro(_tex)                                                          \
+    ((RwTextureFilterMode)((_tex)->filterAddressing & rwTEXTUREFILTERMODEMASK))
+
+#define RwTextureSetAddressingMacro(_tex, _addressing)                                             \
+    (((_tex)->filterAddressing =                                                                   \
+          ((_tex)->filterAddressing & ~rwTEXTUREADDRESSINGMASK) |                                  \
+          (((((RwUInt32)(_addressing)) << 8) & rwTEXTUREADDRESSINGUMASK) |                         \
+           ((((RwUInt32)(_addressing)) << 12) & rwTEXTUREADDRESSINGVMASK))),                       \
+     (_tex))
+
+#define RwTextureSetAddressingUMacro(_tex, _addressing)                                            \
+    (((_tex)->filterAddressing = ((_tex)->filterAddressing & ~rwTEXTUREADDRESSINGUMASK) |          \
+                                 (((RwUInt32)(_addressing) << 8) & rwTEXTUREADDRESSINGUMASK)),     \
+     (_tex))
+
+#define RwTextureSetAddressingVMacro(_tex, _addressing)                                            \
+    (((_tex)->filterAddressing = ((_tex)->filterAddressing & ~rwTEXTUREADDRESSINGVMASK) |          \
+                                 (((RwUInt32)(_addressing) << 12) & rwTEXTUREADDRESSINGVMASK)),    \
+     (_tex))
+
+#define RwTextureGetAddressingMacro(_tex)                                                          \
+    (((((_tex)->filterAddressing & rwTEXTUREADDRESSINGUMASK) >> 8) ==                              \
+      (((_tex)->filterAddressing & rwTEXTUREADDRESSINGVMASK) >> 12)) ?                             \
+         ((RwTextureAddressMode)(((_tex)->filterAddressing & rwTEXTUREADDRESSINGVMASK) >> 12)) :   \
+         rwTEXTUREADDRESSNATEXTUREADDRESS)
+
+#define RwTextureGetAddressingUMacro(_tex)                                                         \
+    ((RwTextureAddressMode)(((_tex)->filterAddressing & rwTEXTUREADDRESSINGUMASK) >> 8))
+
+#define RwTextureGetAddressingVMacro(_tex)                                                         \
+    ((RwTextureAddressMode)(((_tex)->filterAddressing & rwTEXTUREADDRESSINGVMASK) >> 12))
+
+#define RwTextureGetRaster(_tex) RwTextureGetRasterMacro(_tex)
+
+#define RwTextureAddRef(_tex) RwTextureAddRefMacro(_tex)
+
+#define RwTextureGetName(_tex) RwTextureGetNameMacro(_tex)
+
+#define RwTextureGetMaskName(_tex) RwTextureGetMaskNameMacro(_tex)
+
+#define RwTextureGetDictionary(_tex) RwTextureGetDictionaryMacro(_tex)
+
+#define RwTextureSetFilterMode(_tex, _filtering) RwTextureSetFilterModeMacro(_tex, _filtering)
+
+#define RwTextureGetFilterMode(_tex) RwTextureGetFilterModeMacro(_tex)
+
+#define RwTextureSetAddressing(_tex, _addressing) RwTextureSetAddressingMacro(_tex, _addressing)
+
+#define RwTextureSetAddressingU(_tex, _addressing) RwTextureSetAddressingUMacro(_tex, _addressing)
+
+#define RwTextureSetAddressingV(_tex, _addressing) RwTextureSetAddressingVMacro(_tex, _addressing)
+
+#define RwTextureGetAddressing(_tex) RwTextureGetAddressingMacro(_tex)
+
+#define RwTextureGetAddressingU(_tex) RwTextureGetAddressingUMacro(_tex)
+
+#define RwTextureGetAddressingV(_tex) RwTextureGetAddressingVMacro(_tex)
+
 struct RwFrame
 {
     RwObject object;

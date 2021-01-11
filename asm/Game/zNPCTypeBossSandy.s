@@ -10236,6 +10236,7 @@ lbl_803CBFAC:
 	.skip 0x4
 
 .section .sdata
+.balign 8
 lbl_803CAD80:
 	.incbin "baserom.dol", 0x2B5E40, 0x1
 lbl_803CAD81:

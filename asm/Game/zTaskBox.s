@@ -491,11 +491,58 @@ on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum:
 
 .endif
 
+.section .data
+.balign 8
+.global __vt__Q28ztaskbox13talk_callback
+__vt__Q28ztaskbox13talk_callback:
+	.incbin "baserom.dol", 0x295F80, 0x18
+/* SPECULATION: link order */
+.global g_hash_testanim
+g_hash_testanim:
+	.incbin "baserom.dol", 0x295F98, 0x2C
+/* SPECULATION: link order */
+.global g_strz_testanim
+g_strz_testanim:
+	.incbin "baserom.dol", 0x295FC4, 0x2C
+/* SPECULATION: link order */
+.global __vt__8zNPCTest
+__vt__8zNPCTest:
+	.incbin "baserom.dol", 0x295FF0, 0xD0
+/* SPECULATION: link order */
+.global g_hash_subbanim
+g_hash_subbanim:
+	.incbin "baserom.dol", 0x2960C0, 0x5C
+/* SPECULATION: link order */
+.global g_strz_subbanim
+g_strz_subbanim:
+	.incbin "baserom.dol", 0x29611C, 0x5C
+/* SPECULATION: link order */
+.global __vt__11zNPCSubBoss
+__vt__11zNPCSubBoss:
+	.incbin "baserom.dol", 0x296178, 0xD0
+/* SPECULATION: link order */
+.global g_hash_bossanim
+g_hash_bossanim:
+	.incbin "baserom.dol", 0x296248, 0x138
+/* SPECULATION: link order */
+.global g_strz_bossanim
+g_strz_bossanim:
+	.incbin "baserom.dol", 0x296380, 0x138
+/* SPECULATION: link order */
+.global __vt__8zNPCBoss
+__vt__8zNPCBoss:
+	.incbin "baserom.dol", 0x2964B8, 0xD8
+
 .section .bss
+.balign 8
 lbl_803242E8:
 	.skip 0x10
 
 .section .sbss
+.balign 8
+.global tcb__8ztaskbox
+tcb__8ztaskbox:
+	.skip 0x4
 .global shared
 shared:
 	.skip 0x4
