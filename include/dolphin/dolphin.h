@@ -98,6 +98,28 @@ struct DVDFileInfo
     DVDCallback callback;
 };
 
+#define DVD_STATE_FATAL_ERROR -1
+#define DVD_STATE_END 0
+#define DVD_STATE_BUSY 1
+#define DVD_STATE_WAITING 2
+#define DVD_STATE_COVER_CLOSED 3
+#define DVD_STATE_NO_DISK 4
+#define DVD_STATE_COVER_OPEN 5
+#define DVD_STATE_WRONG_DISK 6
+#define DVD_STATE_MOTOR_STOPPED 7
+#define DVD_STATE_PAUSING 8
+#define DVD_STATE_IGNORED 9
+#define DVD_STATE_CANCELED 10
+#define DVD_STATE_RETRY 11
+
+#define DVD_RESULT_GOOD 0
+#define DVD_RESULT_FATAL_ERROR -1
+#define DVD_RESULT_IGNORED -2
+#define DVD_RESULT_CANCELED -3
+
+#define DVDReadAsync(fileInfo, addr, length, offset, callback)                                     \
+    DVDReadAsyncPrio((fileInfo), (addr), (length), (offset), (callback), 2)
+
 typedef int OSHeapHandle;
 
 #define OSRoundUp32B(x) (((u32)(x) + 32 - 1) & ~(32 - 1))
@@ -125,6 +147,13 @@ extern volatile OSHeapHandle __OSCurrHeap;
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
 #define OSFree(ptr) OSFreeToHeap(__OSCurrHeap, (ptr))
 
+BOOL DVDFastOpen(s32 entrynum, DVDFileInfo* fileInfo);
+BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset,
+                      DVDCallback callback, s32 prio);
+BOOL DVDClose(DVDFileInfo* fileInfo);
+s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block);
+s32 DVDConvertPathToEntrynum(const char* pathPtr);
+BOOL DVDCancelAllAsync(DVDCBCallback callback);
 void GXSetColorUpdate(GXBool update_enable);
 void GXSetAlphaUpdate(GXBool update_enable);
 void OSPanic(const char* file, int line, const char* msg, ...);

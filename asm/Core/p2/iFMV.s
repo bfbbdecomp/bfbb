@@ -971,10 +971,12 @@ xDrawLine2D_LocaliFMVVersion__Fffff:
 .endif
 
 .section .bss
+.balign 8
 lbl_802FBE80:
 	.skip 0x18
 
 .section .sbss
+.balign 8
 lbl_803CBAD0:
 	.skip 0x4
 .global fuckingSurfaceType
