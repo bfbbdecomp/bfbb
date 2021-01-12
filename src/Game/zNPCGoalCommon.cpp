@@ -2,8 +2,30 @@
 
 #include <types.h>
 
+#if 1
+
 // func_800D5114
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Enter__14zNPCGoalCommonFfPv")
+
+#else
+
+// WIP.
+int32 zNPCGoalCommon::Enter(float32 dt, void* updCtxt)
+{
+    int32 gid = GIDOfPending(((zNPCGoalCommon*)updCtxt)->psyche);
+    if (((zNPCGoalCommon*)updCtxt)->flg_npcgauto)
+    {
+        int32 id = ((xGoal*)updCtxt)->GetID();
+        if (gid == 0 || id == gid)
+        {
+            ((zNPCGoalCommon*)updCtxt)->DoAutoAnim(NPC_GSPOT_START, 0);
+        }
+    }
+    gid = xGoal::Enter(dt, updCtxt);
+    return gid;
+}
+
+#endif
 
 // func_800D51AC
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Resume__14zNPCGoalCommonFfPv")
@@ -41,14 +63,23 @@
 // func_800D5438
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Name__14zNPCGoalCommonFv")
 
-// func_800D5440
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Clear__14zNPCGoalCommonFv")
+void zNPCGoalCommon::Clear()
+{
+    this->flg_info = 0;
+    this->xGoal::Clear();
+}
 
-// func_800D5468
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "NPCMessage__14zNPCGoalCommonFP6NPCMsg")
+int32 zNPCGoalCommon::NPCMessage(NPCMsg* mail)
+{
+    return 0;
+}
 
-// func_800D5470
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "CollReview__14zNPCGoalCommonFPv")
+uint8 zNPCGoalCommon::CollReview()
+{
+    return 0;
+}
 
-// func_800D5478
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "AnimPick__10zNPCCommonFi16en_NPC_GOAL_SPOTP5xGoal")
+uint32 zNPCCommon::AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    return 0;
+}
