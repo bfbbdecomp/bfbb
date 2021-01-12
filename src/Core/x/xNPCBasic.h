@@ -14,7 +14,7 @@ enum en_npcperf
     eNPCPerfDisable,
 };
 
-// Values names in this enum not known at all, it is not present in the dwarf 
+// Values names in this enum not known at all, it is not present in the dwarf
 // debug info.
 enum en_npcdcat
 {
