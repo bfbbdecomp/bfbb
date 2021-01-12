@@ -118,30 +118,6 @@ lbl_800EE588:
 /* 800EE5C0 000EB3C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EE5C4 000EB3C4  4E 80 00 20 */	blr 
 
-.global Shutdown__7zNPCMgrFv
-Shutdown__7zNPCMgrFv:
-/* 800EE5C8 000EB3C8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EE5CC 000EB3CC  7C 08 02 A6 */	mflr r0
-/* 800EE5D0 000EB3D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EE5D4 000EB3D4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800EE5D8 000EB3D8  7C 7F 1B 78 */	mr r31, r3
-/* 800EE5DC 000EB3DC  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 800EE5E0 000EB3E0  28 03 00 00 */	cmplwi r3, 0
-/* 800EE5E4 000EB3E4  41 82 00 0C */	beq lbl_800EE5F0
-/* 800EE5E8 000EB3E8  38 80 00 01 */	li r4, 1
-/* 800EE5EC 000EB3EC  48 02 0D 5D */	bl __dt__8xFactoryFv
-lbl_800EE5F0:
-/* 800EE5F0 000EB3F0  38 00 00 00 */	li r0, 0
-/* 800EE5F4 000EB3F4  90 1F 00 10 */	stw r0, 0x10(r31)
-/* 800EE5F8 000EB3F8  48 00 07 BD */	bl zNPCTypes_ShutdownTypes__Fv
-/* 800EE5FC 000EB3FC  48 03 C1 31 */	bl zNPCSpawner_Shutdown__Fv
-/* 800EE600 000EB400  4B FF EC 21 */	bl zNPCMsg_Shutdown__Fv
-/* 800EE604 000EB404  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EE608 000EB408  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800EE60C 000EB40C  7C 08 03 A6 */	mtlr r0
-/* 800EE610 000EB410  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EE614 000EB414  4E 80 00 20 */	blr 
-
 .global ScenePrepare__7zNPCMgrFi
 ScenePrepare__7zNPCMgrFi:
 /* 800EE618 000EB418  94 21 FF F0 */	stwu r1, -0x10(r1)

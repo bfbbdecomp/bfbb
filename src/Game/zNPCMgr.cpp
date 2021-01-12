@@ -1,5 +1,8 @@
 #include "zNPCMgr.h"
 #include "zNPCTypeCommon.h"
+#include "zNPCTypes.h"
+#include "zNPCSpawner.h"
+#include "zNPCMessenger.h"
 
 #include <types.h>
 
@@ -122,27 +125,42 @@ xEnt* zNPCMgr_createNPCInst(xEntAsset* assdat)
 // func_800EE53C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Startup__7zNPCMgrFv")
 
-#if 1
-
-// func_800EE5C8
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Shutdown__7zNPCMgrFv")
-
-#else
-
-// Have to define the functions this uses.
 void zNPCMgr::Shutdown()
 {
-    delete this->npcFactory;
+    if (this->npcFactory != NULL)
+    {
+        delete this->npcFactory;
+    }
     this->npcFactory = NULL;
     zNPCTypes_ShutdownTypes();
     zNPCSpawner_Shutdown();
     zNPCMsg_Shutdown();
 }
 
-#endif
+#if 1
 
 // func_800EE618
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePrepare__7zNPCMgrFi")
+
+#else
+
+// Need to define all the functions.
+void zNPCMgr::ScenePrepare(int32 npccnt)
+{
+    XOrdInit(&this->npclist, npccnt, 0);
+    xBehaveMgr_ScenePrepare();
+    zNPCMsg_ScenePrepare();
+    zNPCSpawner_ScenePrepare();
+    zNPCCommon_ScenePrepare();
+    zNPCVillager_ScenePrepare();
+    zNPCRobot_ScenePrepare();
+    zNPCDuplotron_ScenePrepare();
+    zNPCSubBoss_ScenePrepare();
+    zNPCBoss_ScenePrepare();
+    g_firstFrameUpdateAllNPC = 1;
+}
+
+#endif
 
 // func_800EE668
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneFinish__7zNPCMgrFv")
@@ -187,18 +205,26 @@ void zNPCMgr::Shutdown()
 
 #else
 
-// WIP.
+// Yeah good luck getting it to spit out an li instead of doing a shift.
 int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {
-    if (*(uint32*)vkey < *(uint32*)vitem)
+    uint32 key = *(uint32*)vkey;
+    uint32 item = *(uint32*)vitem;
+    if (key < item)
     {
-        return 0xffffffff;
+        return -1;
     }
-    else if (*(uint32*)vkey > *(uint32*)vitem)
+    else
     {
-        return 1;
+        if (key > item)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
-    return 0;
 }
 
 #endif

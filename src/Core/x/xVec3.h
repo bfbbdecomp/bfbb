@@ -34,6 +34,8 @@ struct xVec3
 };
 
 float32 xVec3Normalize(xVec3* o, const xVec3* v);
+float32 xVec3NormalizeFast(xVec3* o, const xVec3* v);
+void xVec3Copy(xVec3* dst, const xVec3* src);
 float32 xVec3Dot(const xVec3* a, const xVec3* b);
 
 #endif

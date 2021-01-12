@@ -69,6 +69,7 @@ struct xSweptSphere
     xVec3 worldPolynorm;
 };
 
+void xsqrtfast(float32& dst, float32 num);
 float32 xVec3Length2(const xVec3* vec);
 int32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 int32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);

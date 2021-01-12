@@ -3,6 +3,7 @@
 
 #include "../Core/x/xPad.h"
 #include "../Core/x/xModel.h"
+#include "../Core/x/xFactory.h"
 
 struct UVAModelInfo
 {
@@ -17,5 +18,9 @@ struct UVAModelInfo
     void Clear();
     void UVVelSet(float, float);
 };
+
+void zNPCTypes_StartupTypes();
+void zNPCTypes_ShutdownTypes();
+void zNPCTypes_RegisterTypes(xFactory* fac);
 
 #endif

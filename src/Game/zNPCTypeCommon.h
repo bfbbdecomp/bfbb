@@ -87,6 +87,19 @@ enum en_npcparm
     NPC_PARM_FORCEINT = 0x7fffffff
 };
 
+enum en_NPC_GOAL_SPOT
+{
+    NPC_GSPOT_START = 0x20,
+    NPC_GSPOT_RESUME,
+    NPC_GSPOT_FINISH,
+    NPC_GSPOT_STARTALT,
+    NPC_GSPOT_ALTA,
+    NPC_GSPOT_ALTB,
+    NPC_GSPOT_PATROLPAUSE,
+    NPC_GSPOT_NOMORE,
+    NPC_GSPOT_FORCEINT = 0x7fffffff
+};
+
 enum en_NPC_CARRY_STATE
 {
     zNPCCARRY_NONE,
@@ -400,7 +413,7 @@ struct zNPCCommon : xNPCBasic
     virtual void SpeakEnd();
     virtual void SpeakStart();
     virtual void SpeakStop();
-    virtual uint32 AnimPick();
+    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
     virtual void GetParm(en_npcparm pid, zMovePoint** val);
     virtual void GetParmDefault(en_npcparm pid, void* val);
     virtual float32 GenShadCacheRad();
