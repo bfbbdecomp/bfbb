@@ -1,18 +1,40 @@
-#include "xVolume.h"
-
 #include <types.h>
 
-// func_80118934
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Init__7xVolumeFP12xVolumeAsset")
+#include "xBound.h"
+#include "xLinkAsset.h"
+#include "xVolume.h"
 
-// func_80118994
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Reset__7xVolumeFv")
+void xVolume::Init(xVolumeAsset* asset)
+{
+    xBaseInit(this, asset);
+    this->asset = asset;
 
-// func_801189B8
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Save__7xVolumeFP7xSerial")
+    if (this->linkCount)
+    {
+        this->link = (xLinkAsset*)(this->asset + 1);
+    }
+    else
+    {
+        this->link = NULL;
+    }
+}
 
-// func_801189D8
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "Load__7xVolumeFP7xSerial")
+void xVolume::Reset()
+{
+    xBaseReset(this, this->asset);
+}
 
-// func_801189F8
-#pragma GLOBAL_ASM("asm/Core/x/xVolume.s", "GetBound__7xVolumeFv")
+void xVolume::Save(xSerial* s)
+{
+    xBaseSave(this, s);
+}
+
+void xVolume::Load(xSerial* s)
+{
+    xBaseLoad(this, s);
+}
+
+xBound* xVolume::GetBound()
+{
+    return &this->asset->bound;
+}

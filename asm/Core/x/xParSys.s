@@ -1000,6 +1000,7 @@ lbl_80297CE0:
 	.incbin "baserom.dol", 0x294CC0, 0x38
 
 .section .bss
+.balign 8
 lbl_80314210:
 	.skip 0xC
 lbl_8031421C:

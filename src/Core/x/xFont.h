@@ -5,12 +5,9 @@
 #include "../p2/iColor.h"
 #include "xString.h"
 
-struct layout;
+#include <rwcore.h>
 
-struct xTextAsset
-{
-    uint32 len;
-};
+#define XFONT_ID_1 1
 
 struct xfont
 {
@@ -21,6 +18,9 @@ struct xfont
     iColor_tag color;
     basic_rect<float32> clip;
 
+    static void set_render_state(RwRaster* raster);
+    static void restore_render_state();
+
     xfont& operator=(const xfont& other);
 };
 
@@ -28,6 +28,7 @@ struct xtextbox
 {
     struct callback;
     struct tag_type;
+    struct layout;
 
     struct jot
     {
@@ -83,8 +84,8 @@ struct xtextbox
     struct tag_type
     {
         substr name;
-        void (*parse_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
-        void (*reset_tag)(jot&, xtextbox&, xtextbox&, split_tag&);
+        void (*parse_tag)(jot&, const xtextbox&, const xtextbox&, const split_tag&);
+        void (*reset_tag)(jot&, const xtextbox&, const xtextbox&, const split_tag&);
         void* context;
     };
 
@@ -93,6 +94,15 @@ struct xtextbox
         void (*render)(jot&, xtextbox&, float32, float32);
         void (*layout_update)(jot&, xtextbox&, xtextbox&);
         void (*render_update)(jot&, xtextbox&, xtextbox&);
+    };
+
+    struct jot_line
+    {
+        basic_rect<float32> bounds;
+        float32 baseline;
+        uint32 first;
+        uint32 last;
+        uint8 page_break;
     };
 
     xfont font;
@@ -112,18 +122,19 @@ struct xtextbox
 
     static void register_tags(const tag_type* tag, unsigned long count);
 
-    void render(bool cache);
-    void render(layout& ctb, int32 begin_jot, int32 end_jot);
-    layout* temp_layout(bool cache);
+    void render(bool cache) const;
+    void render(layout& ctb, int32 begin_jot, int32 end_jot) const;
+    layout& temp_layout(bool cache) const;
+    float32 yextent(float32 max, int32& size, bool cache) const;
+    float32 yextent(float32 max, int32& size, const layout& l, int32 begin_jot,
+                    int32 end_jot) const;
+    void set_text(const char* text);
+    void set_text(const char** texts, ulong32 size);
 };
 
-struct jot_line
-{
-    basic_rect<float32> bounds;
-    float32 baseline;
-    uint32 first;
-    uint32 last;
-    uint8 page_break;
-};
+void render_fill_rect(const basic_rect<float32>& bounds, iColor_tag color);
+
+float32 NSCREENX(float32);
+float32 NSCREENY(float32);
 
 #endif

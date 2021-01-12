@@ -4,25 +4,6 @@
 
 .section .text  # 0x80017D3C - 0x80018064
 
-.global render__8xtextboxCFb
-render__8xtextboxCFb:
-/* 80017DA4 00014BA4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80017DA8 00014BA8  7C 08 02 A6 */	mflr r0
-/* 80017DAC 00014BAC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80017DB0 00014BB0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80017DB4 00014BB4  7C 7F 1B 78 */	mr r31, r3
-/* 80017DB8 00014BB8  48 00 A8 79 */	bl temp_layout__8xtextboxCFb
-/* 80017DBC 00014BBC  7C 64 1B 78 */	mr r4, r3
-/* 80017DC0 00014BC0  7F E3 FB 78 */	mr r3, r31
-/* 80017DC4 00014BC4  38 A0 00 00 */	li r5, 0
-/* 80017DC8 00014BC8  38 C0 FF FF */	li r6, -1
-/* 80017DCC 00014BCC  48 00 AA E5 */	bl render__8xtextboxCFRQ28xtextbox6layoutii
-/* 80017DD0 00014BD0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80017DD4 00014BD4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80017DD8 00014BD8  7C 08 03 A6 */	mtlr r0
-/* 80017DDC 00014BDC  38 21 00 10 */	addi r1, r1, 0x10
-/* 80017DE0 00014BE0  4E 80 00 20 */	blr 
-
 /* create__8xtextboxFRC5xfontRC13basic_rect<f>Uiffff */
 .global create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff
 create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff:

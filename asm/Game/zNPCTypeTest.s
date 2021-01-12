@@ -288,6 +288,7 @@ AnimPick__8zNPCTestFi16en_NPC_GOAL_SPOTP5xGoal:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8026CA50:
 	.incbin "baserom.dol", 0x269A30, 0x58
 

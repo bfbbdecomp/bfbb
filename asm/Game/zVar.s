@@ -364,6 +364,7 @@ lbl_800BE20C:
 .endif
 
 .section .rodata
+.balign 8
 .global lbl_8025F9E8
 /* Offset to first 1.0f pair: 0x150 */
 /* Offset to second 1.0f pair: 0x160 */
@@ -521,6 +522,7 @@ selSceneID:
 	.skip 0x8
 
 .section .sdata2
+.balign 8
 .global volumeMod1
 volumeMod1:
 	.incbin "baserom.dol", 0x2B7848, 0x8

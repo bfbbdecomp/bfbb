@@ -9,6 +9,9 @@ struct substr
     uint32 size;
 };
 
+// substr constructor
+#define SUBSTR(str) (str), (sizeof((str)) - 1)
+
 uint32 xStrHash(const char* str);
 uint32 xStrHash(const char* str, ulong32 size);
 uint32 xStrHashCat(uint32 prefix, const char* str);

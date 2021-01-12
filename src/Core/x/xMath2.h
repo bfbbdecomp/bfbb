@@ -9,6 +9,12 @@ template <class T> struct basic_rect
     T y;
     T w;
     T h;
+
+    basic_rect& assign(T x, T y, T w, T h);
+    basic_rect& contract(T x, T y, T w, T h);
+    basic_rect& scale(T x, T y);
+
+    basic_rect& operator=(const basic_rect&); // temp
 };
 
 struct xVec2
