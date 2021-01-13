@@ -13,6 +13,20 @@
 
 #include <string.h>
 
+namespace
+{
+    struct cb_ray_hits_ent
+    {
+        const xRay3& ray;
+        xCollis& coll;
+        uint8 chkby;
+        uint8 collType;
+
+        cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType);
+        bool operator()(xEnt& ent, xGridBound& gridb);
+    };
+} // namespace
+
 void xSceneInit(xScene* sc, uint16 num_trigs, uint16 num_stats, uint16 num_dyns, uint16 num_npcs)
 {
     sc->flags = 0;
@@ -246,20 +260,6 @@ void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
 
 // func_800404C4
 #pragma GLOBAL_ASM("asm/Core/x/xScene.s", "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc")
-
-namespace
-{
-    struct cb_ray_hits_ent
-    {
-        const xRay3& ray;
-        xCollis& coll;
-        uint8 chkby;
-        uint8 collType;
-
-        cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType);
-        bool operator()(xEnt& ent, xGridBound& gridb);
-    };
-} // namespace
 
 cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType)
     : ray(ray), coll(coll), chkby(chkby), collType(collType)
