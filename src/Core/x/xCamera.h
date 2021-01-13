@@ -209,6 +209,7 @@ struct xBinaryCamera
 float32 xVec3Length(const xVec3* vec);
 void xCameraInit(xCamera* cam, uint32 width, uint32 height);
 void xCameraSetScene(xCamera* cam, xScene* sc);
+void xCameraReset(xCamera* cam, float32 d, float32 h, float32 pitch);
 void xCameraExit(xCamera* cam);
 void xCameraUpdate(xCamera* cam, float32 dt);
 void xCameraBegin(xCamera* cam, int32);

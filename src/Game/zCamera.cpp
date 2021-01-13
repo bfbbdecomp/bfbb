@@ -101,13 +101,51 @@ extern float32 rewardTiltAmount;
 extern xVec3 g_O3;
 extern float32 gSkipTimeFlythrough;
 
+extern float32 lbl_803CD198;
+extern float32 lbl_803CD19C;
+extern float32 lbl_803CD1A0;
+extern float32 lbl_803CD1A4;
 extern float32 lbl_803CD1A8;
 extern float32 lbl_803CD1AC;
 extern float32 lbl_803CD1B0;
 extern float32 lbl_803CD1B4;
 
 // func_8004FBFC
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
+#else
+void zCameraReset(xCamera* cam)
+{
+    zcam_mode = 0;
+    zcam_bbounce = 0;
+    zcam_lbbounce = 0;
+    zcam_lconvers = 0;
+    zcam_longbounce = 0;
+    zcam_highbounce = 0;
+    zcam_convers = 0;
+    zcam_fly = 0;
+    zcam_flypaused = 0;
+    zcam_cutscene = 0;
+    zcam_reward = 0;
+    zcam_fovcurr = lbl_803CD198;
+    zcam_overrot_tmr = lbl_803CD19C;
+
+    wall_jump_enabled = WJVS_DISABLED;
+    lassocam_enabled = false;
+    stop_track = 0;
+    zcam_mintgtheight = lbl_803CD1A0;
+
+    xCameraSetFOV(cam, lbl_803CD198);
+    zCameraTweakGlobal_Update(lbl_803CD19C);
+    xCameraReset(cam, GetCurrentD(), GetCurrentH(), GetCurrentPitch());
+
+    input_enabled = true;
+    dMultiplier = lbl_803CD1A4;
+    dOffset = lbl_803CD19C;
+    hMultiplier = lbl_803CD1A4;
+    hOffset = lbl_803CD19C;
+}
+#endif
 
 float32 GetCurrentPitch()
 {
@@ -209,10 +247,38 @@ void zCameraSetBbounce(int32 bbouncing)
 }
 
 // func_80052098
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetLongbounce__Fi")
+#else
+void zCameraSetLongbounce(int32 lbounce)
+{
+    if (zcam_highbounce != 0 || zcam_longbounce != lbounce)
+    {
+        zcam_lbbounce = 0;
+    }
+    
+    zcam_longbounce = lbounce;
+    // li r0 happens too early
+    zcam_highbounce = 0;
+}
+#endif
 
 // func_800520C8
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetHighbounce__Fi")
+#else
+void zCameraSetHighbounce(int32 lbounce)
+{
+    if (zcam_longbounce != 0 || zcam_highbounce != lbounce)
+    {
+        zcam_lbbounce = 0;
+    }
+    
+    zcam_highbounce = lbounce;
+    // li r0 happens too early
+    zcam_longbounce = 0;
+}
+#endif
 
 void zCameraSetPlayerVel(xVec3* vel)
 {

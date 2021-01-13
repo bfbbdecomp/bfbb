@@ -2816,9 +2816,11 @@ lbl_802DBA70:
 	.skip 0x10
 
 .section .sbss
-lbl_803CB4D4:
+.global stop_track
+stop_track:
 	.skip 0x4
-lbl_803CB4D8:
+.global lassocam_enabled
+lassocam_enabled:
 	.skip 0x4
 lbl_803CB4DC:
 	.skip 0x4
@@ -2831,9 +2833,11 @@ dMultiplier:
 .global dOffset
 dOffset:
 	.skip 0x4
-lbl_803CB4EC:
+.global hMultiplier
+hMultiplier:
 	.skip 0x4
-lbl_803CB4F0:
+.global hOffset
+hOffset:
 	.skip 0x4
 lbl_803CB4F4:
 	.skip 0x4
@@ -2853,7 +2857,8 @@ lbl_803CB50A:
 	.skip 0x6
 
 .section .sdata
-lbl_803CAA40:
+.global input_enabled
+input_enabled:
 	.incbin "baserom.dol", 0x2B5B00, 0x4
 lbl_803CAA44:
 	.incbin "baserom.dol", 0x2B5B04, 0x4
@@ -2868,13 +2873,17 @@ lbl_803CAA54:
 lbl_803CAA58:
 	.incbin "baserom.dol", 0x2B5B18, 0x8
 
-.section .sdata2
+.section .sdata2 
+.global lbl_803CD198
 lbl_803CD198:
 	.incbin "baserom.dol", 0x2B6A38, 0x4
+.global lbl_803CD19C
 lbl_803CD19C:
 	.incbin "baserom.dol", 0x2B6A3C, 0x4
+.global lbl_803CD1A0
 lbl_803CD1A0:
 	.incbin "baserom.dol", 0x2B6A40, 0x4
+.global lbl_803CD1A4
 lbl_803CD1A4:
 	.incbin "baserom.dol", 0x2B6A44, 0x4
 .global lbl_803CD1A8

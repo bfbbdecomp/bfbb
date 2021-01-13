@@ -5,6 +5,7 @@
 
 struct zFlyKey;
 
+void zCameraReset(xCamera* cam);
 float32 GetCurrentPitch();
 float32 GetCurrentH();
 float32 _GetCurrentH();
@@ -15,6 +16,8 @@ float32 EaseInOut();
 float32 TranSpeed(zFlyKey keys[]);
 
 void zCameraSetPlayerVel(xVec3* vel);
+void zCameraSetHighbounce(int32 hbounce);
+void zCameraSetLongbounce(int32 hbounce);
 void zCameraSetBbounce(int32 bbouncing);
 void zCameraSetConvers(int on);
 void zCameraDoTrans(xCamAsset* asset, float ttime);
