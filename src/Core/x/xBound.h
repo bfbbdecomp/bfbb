@@ -35,5 +35,6 @@ xVec3* xBoundCenter(xBound* bound);
 const xVec3* xBoundCenter(const xBound* bound);
 void xBoundUpdate(xBound* b);
 void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c);
+void xRayHitsBound(const xRay3* r, const xBound* b, xCollis* c);
 
 #endif

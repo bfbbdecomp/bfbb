@@ -85,6 +85,8 @@ struct xModelAssetParam
     uint8 String[3];
 };
 
+void xModelInit();
+void xModelPoolInit(uint32 count, uint32 numMatrices);
 void xModelAnimCollStart(xModelInstance& m);
 void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame);
 xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, uint16 flags, uint8 boneIndex,
