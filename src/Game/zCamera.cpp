@@ -109,10 +109,6 @@ extern float32 lbl_803CD1B4;
 // func_8004FBFC
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
 
-// func_8004FCF4
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
-#else
 float32 GetCurrentPitch()
 {
     if (zcam_highbounce != 0)
@@ -122,22 +118,12 @@ float32 GetCurrentPitch()
 
     return zCameraTweakGlobal_GetPitch();
 }
-#endif
 
-// func_8004FD28
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
-#else
 float32 GetCurrentH()
 {
     return dMultiplier * _GetCurrentH() + dOffset;
 }
-#endif
 
-// func_8004FD54
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
-#else
 float32 _GetCurrentH()
 {
     if (zcam_highbounce != 0)
@@ -153,22 +139,12 @@ float32 _GetCurrentH()
     return zCameraTweakGlobal_GetH();
     
 }
-#endif
 
-// func_8004FD9C
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
-#else
 float32 GetCurrentD()
 {
     return dMultiplier * _GetCurrentD() + dOffset;
 }
-#endif
 
-// func_8004FDC8
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
-#else
 float32 _GetCurrentD()
 {
     if (zcam_highbounce != 0)
@@ -183,12 +159,7 @@ float32 _GetCurrentD()
 
     return zCameraTweakGlobal_GetD();
 }
-#endif
 
-// func_8004FE10
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "EaseInOut__Ff")
-#else
 float32 EaseInOut(float32 param)
 {
     // using shorter symbols the return expression below reads:
@@ -196,20 +167,14 @@ float32 EaseInOut(float32 param)
     // to which wolframalpha associates the geometric figure 'line'
     return param * (param * (lbl_803CD1AC - lbl_803CD1B0 * param) + lbl_803CD1A8);
 }
-#endif
 
 // func_8004FE2C
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraConversUpdate__FP7xCameraf")
 
-// func_8004FFA8
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "TranSpeed__FP7zFlyKey")
-#else
 float32 TranSpeed(zFlyKey keys[])
 {
     return lbl_803CD1B4 * xVec3Dist((xVec3*) &keys[0].matrix[9], (xVec3*) &keys[1].matrix[9]);
 }
-#endif
 
 // func_8004FFDC
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "MatrixSpeed__FP7zFlyKey")
@@ -238,15 +203,10 @@ float32 TranSpeed(zFlyKey keys[])
 // func_8005115C
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraUpdate__FP7xCameraf")
 
-// func_80052090
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetBbounce__Fi")
-#else
 void zCameraSetBbounce(int32 bbouncing)
 {
     zcam_bbounce = bbouncing;
 }
-#endif
 
 // func_80052098
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetLongbounce__Fi")
@@ -254,15 +214,10 @@ void zCameraSetBbounce(int32 bbouncing)
 // func_800520C8
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetHighbounce__Fi")
 
-// func_800520F8
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetPlayerVel__FP5xVec3")
-#else
 void zCameraSetPlayerVel(xVec3* vel)
 {
     zcam_playervel = vel;
 }
-#endif
 
 // func_80052100
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableTracking__F17camera_owner_enum")

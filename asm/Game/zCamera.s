@@ -75,109 +75,6 @@ zCameraReset__FP7xCamera:
 /* 8004FCEC 0004CAEC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004FCF0 0004CAF0  4E 80 00 20 */	blr 
 
-/* GetCurrentPitch__21@unnamed@zCamera_cpp@Fv */
-GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
-/* 8004FCF4 0004CAF4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004FCF8 0004CAF8  7C 08 02 A6 */	mflr r0
-/* 8004FCFC 0004CAFC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FD00 0004CB00  80 0D 8B 98 */	lwz r0, zcam_highbounce-_SDA_BASE_(r13)
-/* 8004FD04 0004CB04  2C 00 00 00 */	cmpwi r0, 0
-/* 8004FD08 0004CB08  41 82 00 0C */	beq lbl_8004FD14
-/* 8004FD0C 0004CB0C  C0 2D 81 14 */	lfs f1, zcam_highbounce_pitch-_SDA_BASE_(r13)
-/* 8004FD10 0004CB10  48 00 00 08 */	b lbl_8004FD18
-lbl_8004FD14:
-/* 8004FD14 0004CB14  48 12 F7 25 */	bl zCameraTweakGlobal_GetPitch__Fv
-lbl_8004FD18:
-/* 8004FD18 0004CB18  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004FD1C 0004CB1C  7C 08 03 A6 */	mtlr r0
-/* 8004FD20 0004CB20  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004FD24 0004CB24  4E 80 00 20 */	blr 
-
-/* GetCurrentH__21@unnamed@zCamera_cpp@Fv */
-GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
-/* 8004FD28 0004CB28  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004FD2C 0004CB2C  7C 08 02 A6 */	mflr r0
-/* 8004FD30 0004CB30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FD34 0004CB34  48 00 00 21 */	bl _GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
-/* 8004FD38 0004CB38  C0 4D 8B E4 */	lfs f2, lbl_803CB4E4-_SDA_BASE_(r13)
-/* 8004FD3C 0004CB3C  C0 0D 8B E8 */	lfs f0, lbl_803CB4E8-_SDA_BASE_(r13)
-/* 8004FD40 0004CB40  EC 22 00 7A */	fmadds f1, f2, f1, f0
-/* 8004FD44 0004CB44  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004FD48 0004CB48  7C 08 03 A6 */	mtlr r0
-/* 8004FD4C 0004CB4C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004FD50 0004CB50  4E 80 00 20 */	blr 
-
-/* _GetCurrentH__21@unnamed@zCamera_cpp@Fv */
-_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
-/* 8004FD54 0004CB54  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004FD58 0004CB58  7C 08 02 A6 */	mflr r0
-/* 8004FD5C 0004CB5C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FD60 0004CB60  80 0D 8B 98 */	lwz r0, zcam_highbounce-_SDA_BASE_(r13)
-/* 8004FD64 0004CB64  2C 00 00 00 */	cmpwi r0, 0
-/* 8004FD68 0004CB68  41 82 00 0C */	beq lbl_8004FD74
-/* 8004FD6C 0004CB6C  C0 2D 81 10 */	lfs f1, zcam_highbounce_h-_SDA_BASE_(r13)
-/* 8004FD70 0004CB70  48 00 00 1C */	b lbl_8004FD8C
-lbl_8004FD74:
-/* 8004FD74 0004CB74  80 0D 8B E0 */	lwz r0, lbl_803CB4E0-_SDA_BASE_(r13)
-/* 8004FD78 0004CB78  2C 00 00 02 */	cmpwi r0, 2
-/* 8004FD7C 0004CB7C  40 82 00 0C */	bne lbl_8004FD88
-/* 8004FD80 0004CB80  C0 2D 80 EC */	lfs f1, zcam_wall_h-_SDA_BASE_(r13)
-/* 8004FD84 0004CB84  48 00 00 08 */	b lbl_8004FD8C
-lbl_8004FD88:
-/* 8004FD88 0004CB88  48 12 F6 A9 */	bl zCameraTweakGlobal_GetH__Fv
-lbl_8004FD8C:
-/* 8004FD8C 0004CB8C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004FD90 0004CB90  7C 08 03 A6 */	mtlr r0
-/* 8004FD94 0004CB94  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004FD98 0004CB98  4E 80 00 20 */	blr 
-
-/* GetCurrentD__21@unnamed@zCamera_cpp@Fv */
-GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
-/* 8004FD9C 0004CB9C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004FDA0 0004CBA0  7C 08 02 A6 */	mflr r0
-/* 8004FDA4 0004CBA4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FDA8 0004CBA8  48 00 00 21 */	bl _GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
-/* 8004FDAC 0004CBAC  C0 4D 8B E4 */	lfs f2, lbl_803CB4E4-_SDA_BASE_(r13)
-/* 8004FDB0 0004CBB0  C0 0D 8B E8 */	lfs f0, lbl_803CB4E8-_SDA_BASE_(r13)
-/* 8004FDB4 0004CBB4  EC 22 00 7A */	fmadds f1, f2, f1, f0
-/* 8004FDB8 0004CBB8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004FDBC 0004CBBC  7C 08 03 A6 */	mtlr r0
-/* 8004FDC0 0004CBC0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004FDC4 0004CBC4  4E 80 00 20 */	blr 
-
-/* _GetCurrentD__21@unnamed@zCamera_cpp@Fv */
-_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv:
-/* 8004FDC8 0004CBC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004FDCC 0004CBCC  7C 08 02 A6 */	mflr r0
-/* 8004FDD0 0004CBD0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FDD4 0004CBD4  80 0D 8B 98 */	lwz r0, zcam_highbounce-_SDA_BASE_(r13)
-/* 8004FDD8 0004CBD8  2C 00 00 00 */	cmpwi r0, 0
-/* 8004FDDC 0004CBDC  41 82 00 0C */	beq lbl_8004FDE8
-/* 8004FDE0 0004CBE0  C0 2D 81 0C */	lfs f1, zcam_highbounce_d-_SDA_BASE_(r13)
-/* 8004FDE4 0004CBE4  48 00 00 1C */	b lbl_8004FE00
-lbl_8004FDE8:
-/* 8004FDE8 0004CBE8  80 0D 8B E0 */	lwz r0, lbl_803CB4E0-_SDA_BASE_(r13)
-/* 8004FDEC 0004CBEC  2C 00 00 02 */	cmpwi r0, 2
-/* 8004FDF0 0004CBF0  40 82 00 0C */	bne lbl_8004FDFC
-/* 8004FDF4 0004CBF4  C0 2D 80 E8 */	lfs f1, zcam_wall_d-_SDA_BASE_(r13)
-/* 8004FDF8 0004CBF8  48 00 00 08 */	b lbl_8004FE00
-lbl_8004FDFC:
-/* 8004FDFC 0004CBFC  48 12 F6 2D */	bl zCameraTweakGlobal_GetD__Fv
-lbl_8004FE00:
-/* 8004FE00 0004CC00  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004FE04 0004CC04  7C 08 03 A6 */	mtlr r0
-/* 8004FE08 0004CC08  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004FE0C 0004CC0C  4E 80 00 20 */	blr 
-
-EaseInOut__Ff:
-/* 8004FE10 0004CC10  C0 62 88 30 */	lfs f3, lbl_803CD1B0-_SDA2_BASE_(r2)
-/* 8004FE14 0004CC14  C0 42 88 2C */	lfs f2, lbl_803CD1AC-_SDA2_BASE_(r2)
-/* 8004FE18 0004CC18  C0 02 88 28 */	lfs f0, lbl_803CD1A8-_SDA2_BASE_(r2)
-/* 8004FE1C 0004CC1C  EC 43 10 7C */	fnmsubs f2, f3, f1, f2
-/* 8004FE20 0004CC20  EC 01 00 BA */	fmadds f0, f1, f2, f0
-/* 8004FE24 0004CC24  EC 21 00 32 */	fmuls f1, f1, f0
-/* 8004FE28 0004CC28  4E 80 00 20 */	blr 
-
 zCameraConversUpdate__FP7xCameraf:
 /* 8004FE2C 0004CC2C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8004FE30 0004CC30  7C 08 02 A6 */	mflr r0
@@ -278,21 +175,6 @@ lbl_8004FF84:
 /* 8004FF9C 0004CD9C  7C 08 03 A6 */	mtlr r0
 /* 8004FFA0 0004CDA0  38 21 00 50 */	addi r1, r1, 0x50
 /* 8004FFA4 0004CDA4  4E 80 00 20 */	blr 
-
-TranSpeed__FP7zFlyKey:
-/* 8004FFA8 0004CDA8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004FFAC 0004CDAC  7C 08 02 A6 */	mflr r0
-/* 8004FFB0 0004CDB0  7C 64 1B 78 */	mr r4, r3
-/* 8004FFB4 0004CDB4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004FFB8 0004CDB8  38 64 00 28 */	addi r3, r4, 0x28
-/* 8004FFBC 0004CDBC  38 84 00 68 */	addi r4, r4, 0x68
-/* 8004FFC0 0004CDC0  4B FC 51 31 */	bl xVec3Dist__FPC5xVec3PC5xVec3
-/* 8004FFC4 0004CDC4  C0 02 88 34 */	lfs f0, lbl_803CD1B4-_SDA2_BASE_(r2)
-/* 8004FFC8 0004CDC8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004FFCC 0004CDCC  EC 20 00 72 */	fmuls f1, f0, f1
-/* 8004FFD0 0004CDD0  7C 08 03 A6 */	mtlr r0
-/* 8004FFD4 0004CDD4  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004FFD8 0004CDD8  4E 80 00 20 */	blr 
 
 MatrixSpeed__FP7zFlyKey:
 /* 8004FFDC 0004CDDC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2541,11 +2423,6 @@ lbl_80052028:
 /* 80052088 0004EE88  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8005208C 0004EE8C  4E 80 00 20 */	blr 
 
-.global zCameraSetBbounce__Fi
-zCameraSetBbounce__Fi:
-/* 80052090 0004EE90  90 6D 8B 84 */	stw r3, zcam_bbounce-_SDA_BASE_(r13)
-/* 80052094 0004EE94  4E 80 00 20 */	blr 
-
 .global zCameraSetLongbounce__Fi
 zCameraSetLongbounce__Fi:
 /* 80052098 0004EE98  80 0D 8B 98 */	lwz r0, zcam_highbounce-_SDA_BASE_(r13)
@@ -2579,11 +2456,6 @@ lbl_800520E8:
 /* 800520EC 0004EEEC  38 00 00 00 */	li r0, 0
 /* 800520F0 0004EEF0  90 0D 8B 94 */	stw r0, zcam_longbounce-_SDA_BASE_(r13)
 /* 800520F4 0004EEF4  4E 80 00 20 */	blr 
-
-.global zCameraSetPlayerVel__FP5xVec3
-zCameraSetPlayerVel__FP5xVec3:
-/* 800520F8 0004EEF8  90 6D 8B A4 */	stw r3, zcam_playervel-_SDA_BASE_(r13)
-/* 800520FC 0004EEFC  4E 80 00 20 */	blr 
 
 .global zCameraDisableTracking__F17camera_owner_enum
 zCameraDisableTracking__F17camera_owner_enum:
