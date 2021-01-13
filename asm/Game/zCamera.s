@@ -2950,11 +2950,14 @@ lbl_803CB4D8:
 	.skip 0x4
 lbl_803CB4DC:
 	.skip 0x4
-lbl_803CB4E0:
+.global wall_jump_enabled
+wall_jump_enabled:
 	.skip 0x4
-lbl_803CB4E4:
+.global dMultiplier
+dMultiplier:
 	.skip 0x4
-lbl_803CB4E8:
+.global dOffset
+dOffset:
 	.skip 0x4
 lbl_803CB4EC:
 	.skip 0x4

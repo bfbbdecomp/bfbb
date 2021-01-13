@@ -3,6 +3,11 @@
 
 #include "../Core/x/xCamera.h"
 
+float32 GetCurrentH();
+float32 _GetCurrentH();
+float32 GetCurrentD();
+float32 _GetCurrentD();
+
 void zCameraSetBbounce(int32 bbouncing);
 void zCameraSetConvers(int on);
 void zCameraDoTrans(xCamAsset* asset, float ttime);

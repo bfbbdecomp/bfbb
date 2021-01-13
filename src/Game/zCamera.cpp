@@ -2,28 +2,162 @@
 
 #include <types.h>
 
+#include "zCameraTweak.h"
+
+enum WallJumpViewState
+{
+	WJVS_DISABLED,
+	WJVS_DISABLING,
+	WJVS_ENABLED,
+	WJVS_ENABLING
+};
+
+// extern int8 buffer[16];
+// extern int8 buffer[16];
+// extern basic_rect screen_bounds;
+// extern basic_rect default_adjust;
+extern float32 zcam_pad_pyaw_scale;
+extern float32 zcam_pad_pitch_scale;
+extern float32 zcam_near_d;
+extern float32 zcam_near_h;
+extern float32 zcam_near_pitch;
+extern float32 zcam_far_d;
+extern float32 zcam_far_h;
+extern float32 zcam_far_pitch;
+extern float32 zcam_wall_d;
+extern float32 zcam_wall_h;
+extern float32 zcam_wall_pitch;
+extern float32 zcam_above_d;
+extern float32 zcam_above_h;
+extern float32 zcam_above_pitch;
+extern float32 zcam_below_d;
+extern float32 zcam_below_h;
+extern float32 zcam_below_pitch;
+extern float32 zcam_highbounce_d;
+extern float32 zcam_highbounce_h;
+extern float32 zcam_highbounce_pitch;
+extern float32 zcam_overrot_min;
+extern float32 zcam_overrot_mid;
+extern float32 zcam_overrot_max;
+extern float32 zcam_overrot_rate;
+extern float32 zcam_overrot_tstart;
+extern float32 zcam_overrot_tend;
+extern float32 zcam_overrot_velmin;
+extern float32 zcam_overrot_velmax;
+extern float32 zcam_overrot_tmanual;
+extern float32 zcam_overrot_tmr;
+extern xCamera zcam_backupcam;
+extern xCamera zcam_backupconvers;
+extern int32 zcam_near;
+extern int32 zcam_mode;
+extern int32 zcam_bbounce;
+extern int32 zcam_lbbounce;
+extern int32 zcam_convers;
+extern int32 zcam_lconvers;
+extern int32 zcam_longbounce;
+extern int32 zcam_highbounce;
+extern int32 zcam_cutscene;
+extern int32 zcam_reward;
+extern xVec3* zcam_playervel;
+extern float32 zcam_mintgtheight;
+extern int32 zcam_fly;
+extern int32 zcam_flypaused;
+extern void* zcam_flydata;
+extern uint32 zcam_flysize;
+extern float32 zcam_flytime;
+extern uint32 zcam_flyasset_current;
+extern xCamAsset* zcam_dest;
+extern xQuat zcam_quat;
+extern float32 zcam_tmr;
+extern float32 zcam_ttm;
+extern float32 zcam_fovcurr;
+extern float32 zcam_fovdest;
+extern uint32 stop_track;
+extern uint8 input_enabled;
+extern uint8 lassocam_enabled;
+extern float32 lassocam_factor;
+extern WallJumpViewState wall_jump_enabled;
+extern xVec3 wall_jump_view;
+extern float32 dMultiplier;
+extern float32 dOffset;
+extern float32 hMultiplier;
+extern float32 hOffset;
+extern float32 rewardMove;
+extern float32 rewardMoveSpeed;
+extern float32 rewardZoomSpeed;
+extern float32 rewardZoomAmount;
+extern float32 rewardTiltTime;
+extern float32 rewardTiltAmount;
+// extern zGlobals globals;
+extern xVec3 g_O3;
+extern float32 gSkipTimeFlythrough;
+
 // func_8004FBFC
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
 
 // func_8004FCF4
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
 
 // func_8004FD28
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#if 0
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#else
+float32 GetCurrentH()
+{
+    return dMultiplier * _GetCurrentH() + dOffset;
+}
+#endif
 
 // func_8004FD54
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#if 0
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "_GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#else
+float32 _GetCurrentH()
+{
+    if (zcam_highbounce != 0)
+    {
+        return zcam_highbounce_h;
+    }
+
+    if (wall_jump_enabled == WJVS_ENABLED)
+    {
+        return zcam_wall_h;
+    }
+
+    return zCameraTweakGlobal_GetH();
+    
+}
+#endif
 
 // func_8004FD9C
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#if 0
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#else
+float32 GetCurrentD()
+{
+    return dMultiplier * _GetCurrentD() + dOffset;
+}
+#endif
 
 // func_8004FDC8
-#pragma GLOBAL_ASM("asm/Game/zCamera.s",                                                           \
-                   "_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#if 0
+#pragma GLOBAL_ASM("asm/Game/zCamera.s", "_GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#else
+float32 _GetCurrentD()
+{
+    if (zcam_highbounce != 0)
+    {
+        return zcam_highbounce_d;
+    }
+
+    if (wall_jump_enabled == WJVS_ENABLED)
+    {
+        return zcam_wall_d;
+    }
+
+    return zCameraTweakGlobal_GetD();
+}
+#endif
 
 // func_8004FE10
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "EaseInOut__Ff")
