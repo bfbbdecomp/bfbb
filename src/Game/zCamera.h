@@ -3,6 +3,8 @@
 
 #include "../Core/x/xCamera.h"
 
+struct zFlyKey;
+
 float32 GetCurrentPitch();
 float32 GetCurrentH();
 float32 _GetCurrentH();
@@ -10,6 +12,7 @@ float32 GetCurrentD();
 float32 _GetCurrentD();
 
 float32 EaseInOut();
+float32 TranSpeed(zFlyKey keys[]);
 
 void zCameraSetBbounce(int32 bbouncing);
 void zCameraSetConvers(int on);

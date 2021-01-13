@@ -3014,6 +3014,7 @@ lbl_803CD1AC:
 .global lbl_803CD1B0
 lbl_803CD1B0:
 	.incbin "baserom.dol", 0x2B6A50, 0x4
+.global lbl_803CD1B4
 lbl_803CD1B4:
 	.incbin "baserom.dol", 0x2B6A54, 0x4
 lbl_803CD1B8:

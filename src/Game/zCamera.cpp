@@ -3,6 +3,7 @@
 #include <types.h>
 
 #include "zCameraTweak.h"
+#include "../Core/x/xVec3Inlines.h"
 
 enum WallJumpViewState
 {
@@ -10,6 +11,14 @@ enum WallJumpViewState
 	WJVS_DISABLING,
 	WJVS_ENABLED,
 	WJVS_ENABLING
+};
+
+struct zFlyKey
+{
+	int32 frame;
+	float32 matrix[12];
+	float32 aperture[2];
+	float32 focal;
 };
 
 // extern int8 buffer[16];
@@ -95,6 +104,7 @@ extern float32 gSkipTimeFlythrough;
 extern float32 lbl_803CD1A8;
 extern float32 lbl_803CD1AC;
 extern float32 lbl_803CD1B0;
+extern float32 lbl_803CD1B4;
 
 // func_8004FBFC
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
@@ -192,7 +202,14 @@ float32 EaseInOut(float32 param)
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraConversUpdate__FP7xCameraf")
 
 // func_8004FFA8
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "TranSpeed__FP7zFlyKey")
+#else
+float32 TranSpeed(zFlyKey keys[])
+{
+    return lbl_803CD1B4 * xVec3Dist((xVec3*) &keys[0].matrix[9], (xVec3*) &keys[1].matrix[9]);
+}
+#endif
 
 // func_8004FFDC
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "MatrixSpeed__FP7zFlyKey")
