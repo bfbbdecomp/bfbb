@@ -3005,10 +3005,13 @@ lbl_803CD1A0:
 	.incbin "baserom.dol", 0x2B6A40, 0x4
 lbl_803CD1A4:
 	.incbin "baserom.dol", 0x2B6A44, 0x4
+.global lbl_803CD1A8
 lbl_803CD1A8:
 	.incbin "baserom.dol", 0x2B6A48, 0x4
+.global lbl_803CD1AC
 lbl_803CD1AC:
 	.incbin "baserom.dol", 0x2B6A4C, 0x4
+.global lbl_803CD1B0
 lbl_803CD1B0:
 	.incbin "baserom.dol", 0x2B6A50, 0x4
 lbl_803CD1B4:

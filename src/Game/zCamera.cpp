@@ -92,6 +92,10 @@ extern float32 rewardTiltAmount;
 extern xVec3 g_O3;
 extern float32 gSkipTimeFlythrough;
 
+extern float32 lbl_803CD1A8;
+extern float32 lbl_803CD1AC;
+extern float32 lbl_803CD1B0;
+
 // func_8004FBFC
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
 
@@ -172,7 +176,17 @@ float32 _GetCurrentD()
 #endif
 
 // func_8004FE10
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "EaseInOut__Ff")
+#else
+float32 EaseInOut(float32 param)
+{
+    // using shorter symbols the return expression below reads:
+    // p (p (b - cp) + a) <=> ap + bp^2 - cp^3
+    // to which wolframalpha associates the geometric figure 'line'
+    return param * (param * (lbl_803CD1AC - lbl_803CD1B0 * param) + lbl_803CD1A8);
+}
+#endif
 
 // func_8004FE2C
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraConversUpdate__FP7xCameraf")
