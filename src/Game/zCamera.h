@@ -3,6 +3,7 @@
 
 #include "../Core/x/xCamera.h"
 
+float32 GetCurrentPitch();
 float32 GetCurrentH();
 float32 _GetCurrentH();
 float32 GetCurrentD();

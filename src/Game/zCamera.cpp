@@ -96,7 +96,19 @@ extern float32 gSkipTimeFlythrough;
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
 
 // func_8004FCF4
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv")
+#else
+float32 GetCurrentPitch()
+{
+    if (zcam_highbounce != 0)
+    {
+        return zcam_highbounce_pitch;
+    }
+
+    return zCameraTweakGlobal_GetPitch();
+}
+#endif
 
 // func_8004FD28
 #if 0
