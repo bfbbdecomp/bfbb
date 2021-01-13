@@ -101,14 +101,14 @@ extern float32 rewardTiltAmount;
 extern xVec3 g_O3;
 extern float32 gSkipTimeFlythrough;
 
-extern float32 lbl_803CD198;
-extern float32 lbl_803CD19C;
-extern float32 lbl_803CD1A0;
-extern float32 lbl_803CD1A4;
-extern float32 lbl_803CD1A8;
-extern float32 lbl_803CD1AC;
-extern float32 lbl_803CD1B0;
-extern float32 lbl_803CD1B4;
+extern float32 zCamera_f_75_0; // 75.0
+extern float32 zCamera_f_0_0; // 0.0
+extern float32 zCamera_f_n1_0_e38; // -1e38 ~ neg infinity
+extern float32 zCamera_f_1_0; // 1.0
+extern float32 zCamera_f_0_5; // 0.5
+extern float32 zCamera_f_2_0; // 2.0
+extern float32 zCamera_f_1_5; // 1.5
+extern float32 zCamera_f_30_0; // 30.0
 
 // func_8004FBFC
 #if 1
@@ -127,23 +127,23 @@ void zCameraReset(xCamera* cam)
     zcam_flypaused = 0;
     zcam_cutscene = 0;
     zcam_reward = 0;
-    zcam_fovcurr = lbl_803CD198;
-    zcam_overrot_tmr = lbl_803CD19C;
+    zcam_fovcurr = zCamera_f_75_0;
+    zcam_overrot_tmr = zCamera_f_0_0;
 
     wall_jump_enabled = WJVS_DISABLED;
     lassocam_enabled = false;
     stop_track = 0;
-    zcam_mintgtheight = lbl_803CD1A0;
+    zcam_mintgtheight = zCamera_f_n1_0_e38; 
 
-    xCameraSetFOV(cam, lbl_803CD198);
-    zCameraTweakGlobal_Update(lbl_803CD19C);
+    xCameraSetFOV(cam, zCamera_f_75_0);
+    zCameraTweakGlobal_Update(zCamera_f_0_0);
     xCameraReset(cam, GetCurrentD(), GetCurrentH(), GetCurrentPitch());
 
     input_enabled = true;
-    dMultiplier = lbl_803CD1A4;
-    dOffset = lbl_803CD19C;
-    hMultiplier = lbl_803CD1A4;
-    hOffset = lbl_803CD19C;
+    dMultiplier = zCamera_f_1_0;
+    dOffset = zCamera_f_0_0;
+    hMultiplier = zCamera_f_1_0;
+    hOffset = zCamera_f_0_0;
 }
 #endif
 
@@ -203,7 +203,7 @@ float32 EaseInOut(float32 param)
     // using shorter symbols the return expression below reads:
     // p (p (b - cp) + a) <=> ap + bp^2 - cp^3
     // to which wolframalpha associates the geometric figure 'line'
-    return param * (param * (lbl_803CD1AC - lbl_803CD1B0 * param) + lbl_803CD1A8);
+    return param * (param * (zCamera_f_2_0 - zCamera_f_1_5 * param) + zCamera_f_0_5);
 }
 
 // func_8004FE2C
@@ -211,7 +211,7 @@ float32 EaseInOut(float32 param)
 
 float32 TranSpeed(zFlyKey keys[])
 {
-    return lbl_803CD1B4 * xVec3Dist((xVec3*) &keys[0].matrix[9], (xVec3*) &keys[1].matrix[9]);
+    return zCamera_f_30_0 * xVec3Dist((xVec3*) &keys[0].matrix[9], (xVec3*) &keys[1].matrix[9]);
 }
 
 // func_8004FFDC
