@@ -163,6 +163,8 @@ struct xAnimPlay
 
 extern uint32 gxAnimUseGrowAlloc;
 
+void xAnimInit();
+void xAnimTempTransitionInit(uint32 count);
 xAnimTable* xAnimTableNew(const char* name, xAnimTable** linkedList, uint32 userFlags);
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, uint32 flags, uint32 userFlags,
                                float32 speed, float32* boneBlend, float32* timeSnap,
@@ -171,6 +173,8 @@ xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, uint32 flags
                                void (*stateCallback)(xAnimState*, xAnimSingle*, void*),
                                void (*beforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32));
 void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state);
+void xAnimPoolInit(xMemPool* pool, uint32 count, uint32 singles, uint32 blendFlags,
+                   uint32 effectMax);
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
                           xModelInstance* modelInst);
 xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);
