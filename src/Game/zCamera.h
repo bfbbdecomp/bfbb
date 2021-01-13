@@ -14,6 +14,7 @@ float32 _GetCurrentD();
 float32 EaseInOut();
 float32 TranSpeed(zFlyKey keys[]);
 
+void zCameraSetPlayerVel(xVec3* vel);
 void zCameraSetBbounce(int32 bbouncing);
 void zCameraSetConvers(int on);
 void zCameraDoTrans(xCamAsset* asset, float ttime);

@@ -239,7 +239,14 @@ float32 TranSpeed(zFlyKey keys[])
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraUpdate__FP7xCameraf")
 
 // func_80052090
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetBbounce__Fi")
+#else
+void zCameraSetBbounce(int32 bbouncing)
+{
+    zcam_bbounce = bbouncing;
+}
+#endif
 
 // func_80052098
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetLongbounce__Fi")
@@ -248,7 +255,14 @@ float32 TranSpeed(zFlyKey keys[])
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetHighbounce__Fi")
 
 // func_800520F8
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetPlayerVel__FP5xVec3")
+#else
+void zCameraSetPlayerVel(xVec3* vel)
+{
+    zcam_playervel = vel;
+}
+#endif
 
 // func_80052100
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableTracking__F17camera_owner_enum")
