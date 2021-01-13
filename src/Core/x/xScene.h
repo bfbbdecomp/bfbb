@@ -10,6 +10,7 @@
 typedef char* (*xSceneBase2NameCallback)(xBase*);
 typedef char* (*xSceneID2NameCallback)(uint32);
 typedef xBase* (*xSceneResolvIDCallback)(uint32);
+typedef xEnt* (*xSceneEntCallback)(xEnt* ent, xScene* sc, void* data);
 
 struct xScene
 {
@@ -45,10 +46,20 @@ struct xScene
 
 extern xScene* g_xSceneCur;
 
+void xSceneInit(xScene* sc, uint16 num_trigs, uint16 num_stats, uint16 num_dyns, uint16 num_npcs);
+void xSceneExit(xScene* sc);
+void xSceneSave(xScene* sc, xSerial* s);
+void xSceneLoad(xScene* sc, xSerial* s);
+void xSceneSetup(xScene* sc);
+void xSceneAddEnt(xScene* sc, xEnt* ent);
 xBase* xSceneResolvID(xScene* sc, uint32 id);
+char* xSceneID2Name(xScene* sc, uint32 id);
+void xSceneForAllEnts(xScene* sc, xSceneEntCallback func, void* data);
+void xSceneForAllStatics(xScene* sc, xSceneEntCallback func, void* data);
+void xSceneForAllDynamics(xScene* sc, xSceneEntCallback func, void* data);
+void xSceneForAllNPCs(xScene* sc, xSceneEntCallback func, void* data);
+void xRayHitsTikiLandableEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata);
+void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata);
 void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, uint8 collType, uint8 chk);
-void xSceneForAllStatics(xScene* sc, xEnt* (*func)(xEnt*, xScene*, void*), void* data);
-void xSceneForAllDynamics(xScene* sc, xEnt* (*func)(xEnt*, xScene*, void*), void* data);
-void xSceneForAllNPCs(xScene* sc, xEnt* (*func)(xEnt*, xScene*, void*), void* data);
 
 #endif
