@@ -61,10 +61,25 @@ struct xSndGlobals
     xVec3 pos;
 };
 
+template <int32 N> struct sound_queue
+{
+    uint32 _playing[N + 1];
+    int32 head;
+    int32 tail;
+};
+
+enum sound_effect
+{
+    SND_EFFECT_NONE,
+    SND_EFFECT_CAVE
+};
+
 extern xSndGlobals gSnd;
 
+void xSndSceneInit();
 void xSndResume();
 void xSndUpdate();
+void xSndSetEnvironmentalEffect(sound_effect effectType);
 void xSndSuspend();
 void xSndSetVol(uint32 snd, float32 vol);
 void xSndSetPitch(uint32 snd, float32 pitch);
@@ -74,5 +89,6 @@ void xSndStop(uint32 snd);
 void xSndStopAll(uint32 mask);
 void xSndPauseAll(uint32 pause_effects, uint32 pause_streams);
 void xSndPauseCategory(uint32 mask, uint32 pause);
+void xSndParentDied(uint32 pid);
 
 #endif

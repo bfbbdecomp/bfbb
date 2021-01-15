@@ -218,6 +218,8 @@ void xCameraShowRaster(xCamera* cam);
 void xCameraSetFOV(xCamera* cam, float32 fov);
 void xCameraMove(xCamera* cam, uint32 flags, float32 dgoal, float32 hgoal, float32 pgoal,
                  float32 tm, float32 tm_acc, float32 tm_dec);
+void xCameraMove(xCamera* cam, const xVec3& loc);
 float32 xCameraGetFOV(const xCamera* cam);
+void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
 
 #endif

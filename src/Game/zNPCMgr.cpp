@@ -107,20 +107,10 @@ void zNPCMgr_scenePostParticleRender()
     zNPCMgrSelf()->ScenePostParticleRender();
 }
 
-#if 1
-
-// func_800EE508
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_createNPCInst__FiP9xEntAsset")
-
-#else
-
-// The wrong register gets or'd before the call to zNPCMgrSelf... Huh?
-xEnt* zNPCMgr_createNPCInst(xEntAsset* assdat)
+xEnt* zNPCMgr_createNPCInst(int32, xEntAsset* assdat)
 {
     return zNPCMgrSelf()->CreateNPC(assdat);
 }
-
-#endif
 
 // func_800EE53C
 #pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Startup__7zNPCMgrFv")

@@ -47,6 +47,7 @@ void* xMemGrowAlloc(uint32 heapID, uint32 size);
 void* xMemAlloc(uint32 heapID, uint32 size, int32 align);
 void* xMemPushTemp(uint32 size);
 void xMemPopTemp(void* memory);
+int32 xMemPushBase();
 int32 xMemPopBase(int32 depth);
 int32 xMemGetBase();
 void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags,

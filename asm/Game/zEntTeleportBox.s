@@ -244,6 +244,7 @@ JumpOutEffectJOAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv:
 /* 8012C3C4 001291C4  90 06 00 F0 */	stw r0, 0xf0(r6)
 /* 8012C3C8 001291C8  4E 80 00 20 */	blr 
 
+.global zEntTeleportBox_Init__FR5xBaseR9xDynAssetUl
 zEntTeleportBox_Init__FR5xBaseR9xDynAssetUl:
 /* 8012C3CC 001291CC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8012C3D0 001291D0  7C 08 02 A6 */	mflr r0

@@ -38,5 +38,6 @@ struct xUpdateCullMgr
 };
 
 void xUpdateCull_Update(xUpdateCullMgr* m, uint32 percent_update);
+void xUpdateCull_Reset(xUpdateCullMgr* m);
 
 #endif

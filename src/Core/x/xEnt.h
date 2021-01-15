@@ -198,6 +198,7 @@ struct xEntShadow
     float32 radius[2];
 };
 
+xMat4x3* xEntGetFrame(const xEnt* ent);
 void xEntEnable(xEnt* ent);
 xVec3* xEntGetCenter(const xEnt* ent);
 xVec3* xEntGetPos(const xEnt* ent);

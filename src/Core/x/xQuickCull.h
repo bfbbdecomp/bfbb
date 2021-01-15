@@ -40,6 +40,10 @@ struct xQCControl
 extern xQCControl xqc_def_ctrl;
 
 struct xBound;
+struct xBox;
+
+void xQuickCullInit(const xBox* box);
+void xQuickCullInit(xQCControl* ctrl, const xBox* box);
 
 void xQuickCullForEverything(xQCData* q);
 int32 xQuickCullIsects(const xQCData* a, const xQCData* b);

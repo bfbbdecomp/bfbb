@@ -57,5 +57,7 @@ struct zNPCTiki : zNPCCommon
 
 void ZNPC_Tiki_Startup();
 void ZNPC_Tiki_Shutdown();
+void zNPCTiki_InitStacking(zScene* zsc);
+void zNPCTiki_InitFX(zScene*);
 
 #endif

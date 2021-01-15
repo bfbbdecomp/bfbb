@@ -7,8 +7,8 @@
 #include "xMemMgr.h"
 #include "xRay3.h"
 
-typedef char* (*xSceneBase2NameCallback)(xBase*);
-typedef char* (*xSceneID2NameCallback)(uint32);
+typedef const char* (*xSceneBase2NameCallback)(xBase*);
+typedef const char* (*xSceneID2NameCallback)(uint32);
 typedef xBase* (*xSceneResolvIDCallback)(uint32);
 typedef xEnt* (*xSceneEntCallback)(xEnt* ent, xScene* sc, void* data);
 

@@ -48,6 +48,7 @@ lbl_8009E0A0:
 /* 8009E0C0 0009AEC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E0C4 0009AEC4  4E 80 00 20 */	blr 
 
+.global zLightInit__FPvPv
 zLightInit__FPvPv:
 /* 8009E0C8 0009AEC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009E0CC 0009AECC  7C 08 02 A6 */	mflr r0

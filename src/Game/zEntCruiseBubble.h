@@ -4,6 +4,7 @@
 namespace cruise_bubble
 {
     bool active();
-}
+    void render_screen();
+} // namespace cruise_bubble
 
 #endif

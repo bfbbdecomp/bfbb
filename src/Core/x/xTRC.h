@@ -30,7 +30,9 @@ struct _tagTRCPadInfo : _tagiTRCPadInfo
 extern _tagTRCPadInfo gTrcPad[4];
 
 void xTRCPad(int32 pad_id, _tagTRCState state);
+void xTRCRender();
 void xTRCReset();
 void xTRCDisk(_tagTRCState state);
+void render_mem_card_no_space(int32 needed, int32 available, int32 neededFiles, bool enabled);
 
 #endif

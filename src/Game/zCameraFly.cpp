@@ -12,7 +12,7 @@
 
 extern uint32 zcam_flyasset_current;
 
-void zCameraFly_Init(xBase& data, xDynAsset& asset)
+void zCameraFly_Init(xBase& data, xDynAsset& asset, ulong32)
 {
     zCameraFly_Init((zCameraFly*)&data, (CameraFly_asset*)&asset);
 }

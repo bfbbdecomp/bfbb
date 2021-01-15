@@ -104,8 +104,14 @@ struct zSurfaceProps
     zSurfacePropUVFX uvfx[2];
 };
 
+struct xScene;
+
+void zSurfaceExit();
+void zSurfaceSave(xSurface* ent, xSerial* s);
+void zSurfaceLoad(xSurface* ent, xSerial* s);
 void zSurfaceGetName(int32 type, int8* buffer);
 void zSurfaceRegisterMapper(uint32 assetId);
 xSurface* zSurfaceGetSurface(uint32 mat_id);
+void zSurfaceUpdate(xBase* to, xScene*, float32 dt);
 
 #endif

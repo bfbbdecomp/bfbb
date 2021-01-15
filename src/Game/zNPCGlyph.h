@@ -40,4 +40,6 @@ struct NPCGlyph
     void Enable(int32 ison);
 };
 
+void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff);
+
 #endif

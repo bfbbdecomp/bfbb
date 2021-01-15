@@ -120,6 +120,8 @@ struct zCheckPoint
     uint32 initCamID;
 };
 
+#define LEVEL_COUNT 15
+
 struct zPlayerGlobals
 {
     // 0x6E0 in globals
@@ -263,12 +265,12 @@ struct zPlayerGlobals
     // Offset: 0x1B00 in globals
     uint32 Inv_Shiny;
     uint32 Inv_Spatula;
-    uint32 Inv_PatsSock[15];
-    uint32 Inv_PatsSock_Max[15];
+    uint32 Inv_PatsSock[LEVEL_COUNT];
+    uint32 Inv_PatsSock_Max[LEVEL_COUNT];
 
     // Offset: 0x1B80 in globals
     uint32 Inv_PatsSock_CurrentLevel;
-    uint32 Inv_LevelPickups[15];
+    uint32 Inv_LevelPickups[LEVEL_COUNT];
     uint32 Inv_LevelPickups_CurrentLevel;
 
     // Offset: 0x1BC4 in globals

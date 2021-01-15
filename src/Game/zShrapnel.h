@@ -214,4 +214,11 @@ struct zShrapnelAsset
     void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
 };
 
+struct zScene;
+
+void zShrapnel_SceneInit(zScene*);
+void zShrapnel_Update(float32 dt);
+void zShrapnel_Reset();
+void zShrapnel_Render();
+
 #endif

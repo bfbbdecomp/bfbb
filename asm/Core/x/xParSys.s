@@ -310,6 +310,7 @@ xParCmdTexInit__FP10xParCmdTex:
 /* 80116D48 00113B48  38 21 00 20 */	addi r1, r1, 0x20
 /* 80116D4C 00113B4C  4E 80 00 20 */	blr 
 
+.global xParSysInit__FPvPv
 xParSysInit__FPvPv:
 /* 80116D50 00113B50  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80116D54 00113B54  7C 08 02 A6 */	mflr r0

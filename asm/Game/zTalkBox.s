@@ -3122,6 +3122,7 @@ __ct__Q222_esc__2_unnamed_esc__2_zTalkBox_cpp_esc__2_16start_state_typeFv:
 /* 80133054 0012FE54  38 21 00 10 */	addi r1, r1, 0x10
 /* 80133058 0012FE58  4E 80 00 20 */	blr 
 
+.global load__8ztalkboxFR5xBaseR9xDynAssetUl
 load__8ztalkboxFR5xBaseR9xDynAssetUl:
 /* 8013305C 0012FE5C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80133060 0012FE60  7C 08 02 A6 */	mflr r0

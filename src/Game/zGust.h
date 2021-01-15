@@ -27,6 +27,10 @@ struct zGust : xBase
     float32 debris_timer;
 };
 
+void zGustInit();
+zGust* zGustGetGust(uint16 n);
+void zGustSave(zGust* ent, xSerial* s);
+void zGustLoad(zGust* ent, xSerial* s);
 void zGustUpdateFX(float32 seconds);
 
 #endif
