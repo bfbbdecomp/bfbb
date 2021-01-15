@@ -3,6 +3,8 @@
 #include <types.h>
 
 #include "zCameraTweak.h"
+#include "../Core/p2/iMath.h"
+#include "../Core/x/xMathInlines.h"
 #include "../Core/x/xVec3Inlines.h"
 
 enum WallJumpViewState
@@ -109,6 +111,7 @@ extern float32 zCamera_f_0_5; // 0.5
 extern float32 zCamera_f_2_0; // 2.0
 extern float32 zCamera_f_1_5; // 1.5
 extern float32 zCamera_f_30_0; // 30.0
+extern float32 zCamera_f_114_592; // 114.592
 
 // func_8004FBFC
 #if 1
@@ -215,7 +218,33 @@ float32 TranSpeed(zFlyKey keys[])
 }
 
 // func_8004FFDC
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "MatrixSpeed__FP7zFlyKey")
+#else
+float32 MatrixSpeed(zFlyKey keys[])
+{
+    float32 dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[0], (xVec3*) &keys[1].matrix[0]));
+    float32 dot2 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[3], (xVec3*) &keys[1].matrix[3]));
+
+    // dot1 = max(dot1, dot2)
+    if (dot2 > dot1)
+    {
+        dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[3], (xVec3*) &keys[1].matrix[3]));
+    }
+
+    dot2 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[6], (xVec3*) &keys[1].matrix[6]));
+
+    // dot1 = max(dot1, dot2)
+    if (dot2 > dot1)
+    {
+        dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[6], (xVec3*) &keys[1].matrix[6]));
+    }
+
+    // m = max(1.0, dot1)
+    float32 m = zCamera_f_1_0 < dot1 ? zCamera_f_1_0 : dot1;
+    return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
+}
+#endif
 
 // func_800500B0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyUpdate__FP7xCameraf")

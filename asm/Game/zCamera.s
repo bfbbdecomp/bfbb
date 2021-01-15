@@ -223,7 +223,7 @@ lbl_8005007C:
 /* 8005007C 0004CE7C  FC 20 F8 90 */	fmr f1, f31
 lbl_80050080:
 /* 80050080 0004CE80  4B FB E6 91 */	bl xacos__Ff
-/* 80050084 0004CE84  C0 42 88 3C */	lfs f2, lbl_803CD1BC-_SDA2_BASE_(r2)
+/* 80050084 0004CE84  C0 42 88 3C */	lfs f2, zCamera_f_114_592-_SDA2_BASE_(r2)
 /* 80050088 0004CE88  C0 02 88 34 */	lfs f0, zCamera_f_30_0-_SDA2_BASE_(r2)
 /* 8005008C 0004CE8C  EC 22 00 72 */	fmuls f1, f2, f1
 /* 80050090 0004CE90  EC 20 00 72 */	fmuls f1, f0, f1
@@ -2900,7 +2900,8 @@ zCamera_f_30_0:
 	.incbin "baserom.dol", 0x2B6A54, 0x4
 lbl_803CD1B8:
 	.incbin "baserom.dol", 0x2B6A58, 0x4
-lbl_803CD1BC:
+.global zCamera_f_114_592
+zCamera_f_114_592:
 	.incbin "baserom.dol", 0x2B6A5C, 0x4
 lbl_803CD1C0:
 	.incbin "baserom.dol", 0x2B6A60, 0x4
