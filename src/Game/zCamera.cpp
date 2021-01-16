@@ -3,9 +3,14 @@
 #include <types.h>
 
 #include "zCameraTweak.h"
+#include "zEntPlayer.h"
+#include "zGlobals.h"
+#include "zMusic.h"
 #include "../Core/p2/iMath.h"
 #include "../Core/x/xMathInlines.h"
 #include "../Core/x/xVec3Inlines.h"
+#include "../Core/x/xScrFx.h"
+#include "../Core/x/xstransvc.h"
 
 enum WallJumpViewState
 {
@@ -91,7 +96,7 @@ extern float32 rewardZoomSpeed;
 extern float32 rewardZoomAmount;
 extern float32 rewardTiltTime;
 extern float32 rewardTiltAmount;
-// extern zGlobals globals;
+extern zGlobals globals;
 extern xVec3 g_O3;
 extern float32 gSkipTimeFlythrough;
 
@@ -104,6 +109,8 @@ extern float32 zCamera_f_2_0; // 2.0
 extern float32 zCamera_f_1_5; // 1.5
 extern float32 zCamera_f_30_0; // 30.0
 extern float32 zCamera_f_114_592; // 114.592
+extern float32 zCamera_f_0_033; // 0.0333333
+extern float32 zCamera_f_0_1; // 0.1
 
 // func_8004FBFC
 #if 1
@@ -309,7 +316,36 @@ zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 #endif
 
 // func_800504C0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyStart__FUi")
+#else
+void zCameraFlyStart(uint32 assetID)
+{
+    st_PKR_ASSET_TOCINFO info;
+    if (xSTGetAssetInfo(assetID, &info) == 0)
+    {
+        return;
+    }
+    
+    zcam_fly = 1;
+    zcam_flypaused = 0;
+    zcam_flydata = info.mempos;
+    zcam_flysize = info.size;
+
+    zcam_flytime = zCamera_f_0_033;
+    zcam_flyasset_current = assetID;
+
+    zEntPlayerControlOff(CONTROL_OWNER_FLY_CAM);
+    xScrFxLetterbox(1);
+    
+    zcam_backupcam = globals.camera;
+
+    if (zCamera_FlyOnly() == 0)
+    {
+        zMusicSetVolume(zCamera_f_0_5, zCamera_f_0_1);
+    }
+}
+#endif
 
 // func_80050560
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "__as__7xCameraFRC7xCamera")

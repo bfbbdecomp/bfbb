@@ -265,7 +265,7 @@ zCameraFlyUpdate__FP7xCameraf:
 /* 80050118 0004CF18  90 01 01 68 */	stw r0, 0x168(r1)
 /* 8005011C 0004CF1C  C8 22 88 50 */	lfd f1, lbl_803CD1D0-_SDA2_BASE_(r2)
 /* 80050120 0004CF20  90 61 01 6C */	stw r3, 0x16c(r1)
-/* 80050124 0004CF24  C0 42 88 40 */	lfs f2, lbl_803CD1C0-_SDA2_BASE_(r2)
+/* 80050124 0004CF24  C0 42 88 40 */	lfs f2, zCamera_f_0_033-_SDA2_BASE_(r2)
 /* 80050128 0004CF28  C8 01 01 68 */	lfd f0, 0x168(r1)
 /* 8005012C 0004CF2C  EC 00 08 28 */	fsubs f0, f0, f1
 /* 80050130 0004CF30  EC 02 00 32 */	fmuls f0, f2, f0
@@ -529,7 +529,7 @@ zCameraFlyStart__FUi:
 /* 800504FC 0004D2FC  90 0D 8B B0 */	stw r0, zcam_flydata-_SDA_BASE_(r13)
 /* 80050500 0004D300  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 80050504 0004D304  90 0D 8B B4 */	stw r0, zcam_flysize-_SDA_BASE_(r13)
-/* 80050508 0004D308  C0 02 88 40 */	lfs f0, lbl_803CD1C0-_SDA2_BASE_(r2)
+/* 80050508 0004D308  C0 02 88 40 */	lfs f0, zCamera_f_0_033-_SDA2_BASE_(r2)
 /* 8005050C 0004D30C  D0 0D 8B B8 */	stfs f0, zcam_flytime-_SDA_BASE_(r13)
 /* 80050510 0004D310  93 ED 8B BC */	stw r31, zcam_flyasset_current-_SDA_BASE_(r13)
 /* 80050514 0004D314  48 01 60 45 */	bl zEntPlayerControlOff__F13zControlOwner
@@ -544,7 +544,7 @@ zCameraFlyStart__FUi:
 /* 80050538 0004D338  28 03 00 00 */	cmplwi r3, 0
 /* 8005053C 0004D33C  40 82 00 10 */	bne lbl_8005054C
 /* 80050540 0004D340  C0 22 88 28 */	lfs f1, zCamera_f_0_5-_SDA2_BASE_(r2)
-/* 80050544 0004D344  C0 42 88 58 */	lfs f2, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80050544 0004D344  C0 42 88 58 */	lfs f2, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80050548 0004D348  48 05 77 19 */	bl zMusicSetVolume__Fff
 lbl_8005054C:
 /* 8005054C 0004D34C  80 01 00 34 */	lwz r0, 0x34(r1)
@@ -1123,7 +1123,7 @@ lbl_80050DB8:
 /* 80050E04 0004DC04  7F E3 FB 78 */	mr r3, r31
 /* 80050E08 0004DC08  4B FB CA 25 */	bl xCameraFOV__FP7xCamerafff
 lbl_80050E0C:
-/* 80050E0C 0004DC0C  C0 A2 88 58 */	lfs f5, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80050E0C 0004DC0C  C0 A2 88 58 */	lfs f5, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80050E10 0004DC10  3C 60 80 3C */	lis r3, globals@ha
 /* 80050E14 0004DC14  38 63 05 58 */	addi r3, r3, globals@l
 /* 80050E18 0004DC18  C0 4D 81 58 */	lfs f2, lbl_803CAA58-_SDA_BASE_(r13)
@@ -1331,13 +1331,13 @@ lbl_800510C0:
 /* 800510F0 0004DEF0  D0 1E 00 00 */	stfs f0, 0(r30)
 lbl_800510F4:
 /* 800510F4 0004DEF4  C0 3F 00 00 */	lfs f1, 0(r31)
-/* 800510F8 0004DEF8  C0 02 88 58 */	lfs f0, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 800510F8 0004DEF8  C0 02 88 58 */	lfs f0, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 800510FC 0004DEFC  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80051100 0004DF00  40 81 00 24 */	ble lbl_80051124
 /* 80051104 0004DF04  EC 01 F8 28 */	fsubs f0, f1, f31
 /* 80051108 0004DF08  D0 1F 00 00 */	stfs f0, 0(r31)
 /* 8005110C 0004DF0C  C0 3F 00 00 */	lfs f1, 0(r31)
-/* 80051110 0004DF10  C0 02 88 58 */	lfs f0, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80051110 0004DF10  C0 02 88 58 */	lfs f0, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80051114 0004DF14  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80051118 0004DF18  40 80 00 10 */	bge lbl_80051128
 /* 8005111C 0004DF1C  D0 1F 00 00 */	stfs f0, 0(r31)
@@ -1706,7 +1706,7 @@ lbl_80051644:
 /* 80051644 0004E444  88 0D 8B F8 */	lbz r0, lbl_803CB4F8-_SDA_BASE_(r13)
 /* 80051648 0004E448  7C 00 07 75 */	extsb. r0, r0
 /* 8005164C 0004E44C  40 82 00 14 */	bne lbl_80051660
-/* 80051650 0004E450  C0 02 88 58 */	lfs f0, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80051650 0004E450  C0 02 88 58 */	lfs f0, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80051654 0004E454  38 00 00 01 */	li r0, 1
 /* 80051658 0004E458  D0 0D 8B F4 */	stfs f0, lbl_803CB4F4-_SDA_BASE_(r13)
 /* 8005165C 0004E45C  98 0D 8B F8 */	stb r0, lbl_803CB4F8-_SDA_BASE_(r13)
@@ -1714,7 +1714,7 @@ lbl_80051660:
 /* 80051660 0004E460  88 0D 8C 00 */	lbz r0, lbl_803CB500-_SDA_BASE_(r13)
 /* 80051664 0004E464  7C 00 07 75 */	extsb. r0, r0
 /* 80051668 0004E468  40 82 00 14 */	bne lbl_8005167C
-/* 8005166C 0004E46C  C0 02 88 58 */	lfs f0, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 8005166C 0004E46C  C0 02 88 58 */	lfs f0, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80051670 0004E470  38 00 00 01 */	li r0, 1
 /* 80051674 0004E474  D0 0D 8B FC */	stfs f0, lbl_803CB4FC-_SDA_BASE_(r13)
 /* 80051678 0004E478  98 0D 8C 00 */	stb r0, lbl_803CB500-_SDA_BASE_(r13)
@@ -1777,13 +1777,13 @@ lbl_80051720:
 /* 80051748 0004E548  48 00 00 30 */	b lbl_80051778
 lbl_8005174C:
 /* 8005174C 0004E54C  C0 2D 8B F4 */	lfs f1, lbl_803CB4F4-_SDA_BASE_(r13)
-/* 80051750 0004E550  C0 02 88 58 */	lfs f0, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80051750 0004E550  C0 02 88 58 */	lfs f0, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80051754 0004E554  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80051758 0004E558  40 81 00 20 */	ble lbl_80051778
 /* 8005175C 0004E55C  EC 01 F8 28 */	fsubs f0, f1, f31
 /* 80051760 0004E560  D0 0D 8B F4 */	stfs f0, lbl_803CB4F4-_SDA_BASE_(r13)
 /* 80051764 0004E564  C0 2D 8B F4 */	lfs f1, lbl_803CB4F4-_SDA_BASE_(r13)
-/* 80051768 0004E568  C0 02 88 58 */	lfs f0, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80051768 0004E568  C0 02 88 58 */	lfs f0, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 8005176C 0004E56C  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80051770 0004E570  40 80 00 08 */	bge lbl_80051778
 /* 80051774 0004E574  D0 0D 8B F4 */	stfs f0, lbl_803CB4F4-_SDA_BASE_(r13)
@@ -2328,7 +2328,7 @@ lbl_80051EF8:
 /* 80051F1C 0004ED1C  80 0D 8B E0 */	lwz r0, lbl_803CB4E0-_SDA_BASE_(r13)
 /* 80051F20 0004ED20  2C 00 00 02 */	cmpwi r0, 2
 /* 80051F24 0004ED24  40 82 00 9C */	bne lbl_80051FC0
-/* 80051F28 0004ED28  C0 62 88 58 */	lfs f3, lbl_803CD1D8-_SDA2_BASE_(r2)
+/* 80051F28 0004ED28  C0 62 88 58 */	lfs f3, zCamera_f_0_1-_SDA2_BASE_(r2)
 /* 80051F2C 0004ED2C  3C 60 80 2E */	lis r3, lbl_802DBA70@ha
 /* 80051F30 0004ED30  38 83 BA 70 */	addi r4, r3, lbl_802DBA70@l
 /* 80051F34 0004ED34  C0 22 88 1C */	lfs f1, zCamera_f_0_0-_SDA2_BASE_(r2)
@@ -2903,7 +2903,8 @@ lbl_803CD1B8:
 .global zCamera_f_114_592
 zCamera_f_114_592:
 	.incbin "baserom.dol", 0x2B6A5C, 0x4
-lbl_803CD1C0:
+.global zCamera_f_0_033
+zCamera_f_0_033:
 	.incbin "baserom.dol", 0x2B6A60, 0x4
 lbl_803CD1C4:
 	.incbin "baserom.dol", 0x2B6A64, 0x4
@@ -2913,7 +2914,8 @@ lbl_803CD1CC:
 	.incbin "baserom.dol", 0x2B6A6C, 0x4
 lbl_803CD1D0:
 	.incbin "baserom.dol", 0x2B6A70, 0x8
-lbl_803CD1D8:
+.global zCamera_f_0_1
+zCamera_f_0_1:
 	.incbin "baserom.dol", 0x2B6A78, 0x4
 lbl_803CD1DC:
 	.incbin "baserom.dol", 0x2B6A7C, 0x4
