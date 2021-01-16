@@ -210,7 +210,51 @@ float32 EaseInOut(float32 param)
 }
 
 // func_8004FE2C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraConversUpdate__FP7xCameraf")
+#else
+void zCameraConversUpdate(xCamera* cam, float32 dt)
+{
+    if (zcam_dest == NULL)
+    {
+        return;
+    }
+
+    // zcam_tmr should use f2 instead of f1
+    if (zcam_tmr <= zCamera_f_0_0)
+    {
+        zcam_tmr = zCamera_f_0_0;
+        return;
+    }
+    
+    // zCamera_f_1_0 should use f1 instead of f2
+    if ((dt / zcam_tmr) > zCamera_f_1_0)
+    {
+        cam->mat.right = zcam_dest->right;
+        cam->mat.up = zcam_dest->up;
+        cam->mat.at = zcam_dest->at;
+        cam->mat.pos = zcam_dest->pos;
+
+        zcam_fovcurr = zcam_fovdest;
+    }
+    else
+    {
+        float32 ease1 = EaseInOut(zCamera_f_1_0 - (zcam_tmr / zcam_ttm));
+        float32 ease2 = EaseInOut(zCamera_f_1_0 - (zcam_tmr - dt) / zcam_ttm);
+        float32 t = (ease2 - ease1) / (zCamera_f_1_0 - ease1);
+
+        xQuat tOld;
+        xQuat tNew;
+        xQuatFromMat(&tOld, &cam->mat);
+        xQuatSlerp(&tNew, &tOld, &zcam_quat, t);
+        xQuatToMat(&tNew, &cam->mat);
+        xVec3Lerp(&cam->mat.pos, &cam->mat.pos, &zcam_dest->pos, t);
+        zcam_fovcurr = zcam_fovcurr * (zCamera_f_1_0 - t) + (zcam_fovdest * t);
+    }
+
+    zcam_tmr = zcam_tmr - dt;
+}
+#endif
 
 float32 TranSpeed(zFlyKey keys[])
 {
