@@ -21,12 +21,14 @@ float32 GetCurrentD();
 float32 _GetCurrentD();
 
 float32 EaseInOut();
+void zCameraConversUpdate(xCamera* cam, float32 dt);
 float32 TranSpeed(zFlyKey keys[]);
+float32 MatrixSpeed(zFlyKey keys[]);
 
-void zCameraSetPlayerVel(xVec3* vel);
+void zCameraSetBbounce(int32 bbouncing);
 void zCameraSetHighbounce(int32 hbounce);
 void zCameraSetLongbounce(int32 hbounce);
-void zCameraSetBbounce(int32 bbouncing);
+void zCameraSetPlayerVel(xVec3* vel);
 void zCameraSetConvers(int on);
 void zCameraDoTrans(xCamAsset* asset, float ttime);
 uint32 zCamera_FlyOnly();
