@@ -119,6 +119,8 @@ extern float32 zCamera_f_114_592; // 114.592
 #else
 void zCameraReset(xCamera* cam)
 {
+    // classic multiple float assign non match
+    // float assigns should f0 everytime instead of f1, f2, ...
     zcam_mode = 0;
     zcam_bbounce = 0;
     zcam_lbbounce = 0;
