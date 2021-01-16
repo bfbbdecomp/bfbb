@@ -15,14 +15,6 @@ enum WallJumpViewState
 	WJVS_ENABLING
 };
 
-struct zFlyKey
-{
-	int32 frame;
-	float32 matrix[12];
-	float32 aperture[2];
-	float32 focal;
-};
-
 // extern int8 buffer[16];
 // extern int8 buffer[16];
 // extern basic_rect screen_bounds;
@@ -296,7 +288,25 @@ float32 MatrixSpeed(zFlyKey keys[])
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyUpdate__FP7xCameraf")
 
 // func_8005043C
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "__as__7zFlyKeyFRC7zFlyKey")
+#else
+zFlyKey& zFlyKey::operator=(const zFlyKey& other)
+{
+    this->frame = other.frame;
+    
+    for (int i = 0; i < 12; i++)
+    {
+        *(uint32*)&this->matrix[i] = *(uint32*)&other.matrix[i];
+    }
+    for (int i = 0; i < 2; i++)
+    {
+        *(uint32*)&this->aperture[i] = *(uint32*)&other.aperture[i];
+    }
+
+    this->focal = other.focal;
+}
+#endif
 
 // func_800504C0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyStart__FUi")

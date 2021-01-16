@@ -3,7 +3,15 @@
 
 #include "../Core/x/xCamera.h"
 
-struct zFlyKey;
+struct zFlyKey
+{
+	int32 frame;
+	float32 matrix[12];
+	float32 aperture[2];
+	float32 focal;
+
+    zFlyKey& operator=(const zFlyKey&);
+};
 
 void zCameraReset(xCamera* cam);
 float32 GetCurrentPitch();
