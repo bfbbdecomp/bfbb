@@ -165,6 +165,7 @@ extern uint32 gxAnimUseGrowAlloc;
 
 void xAnimInit();
 void xAnimTempTransitionInit(uint32 count);
+xAnimFile* xAnimFileNew(void* rawData, const char* name, uint32 flags, xAnimFile** linkedList);
 xAnimTable* xAnimTableNew(const char* name, xAnimTable** linkedList, uint32 userFlags);
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, uint32 flags, uint32 userFlags,
                                float32 speed, float32* boneBlend, float32* timeSnap,

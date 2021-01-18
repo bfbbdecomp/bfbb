@@ -1,7 +1,10 @@
 .include "macros.inc"
 
+.if 1
+
 .section .text  # 0x800D4A14 - 0x800D50BC
 
+.global Setup_surface_array__Fv
 Setup_surface_array__Fv:
 /* 800D4A14 000D1814  80 0D 93 50 */	lwz r0, lbl_803CBC50-_SDA_BASE_(r13)
 /* 800D4A18 000D1818  2C 00 00 00 */	cmpwi r0, 0
@@ -167,6 +170,7 @@ lbl_800D4C3C:
 /* 800D4C44 000D1A44  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D4C48 000D1A48  4E 80 00 20 */	blr 
 
+.global Submit_vertices__Fffffllf
 Submit_vertices__Fffffllf:
 /* 800D4C4C 000D1A4C  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 800D4C50 000D1A50  7C 08 02 A6 */	mflr r0
@@ -327,6 +331,7 @@ GXColor4u8:
 /* 800D4EA4 000D1CA4  98 C7 80 00 */	stb r6, -0x8000(r7)
 /* 800D4EA8 000D1CA8  4E 80 00 20 */	blr 
 
+.global GXPosition3s16
 GXPosition3s16:
 /* 800D4EAC 000D1CAC  3C C0 CC 01 */	lis r6, 0xCC008000@ha
 /* 800D4EB0 000D1CB0  B0 66 80 00 */	sth r3, 0xCC008000@l(r6)
@@ -459,6 +464,7 @@ lbl_800D5078:
 /* 800D508C 000D1E8C  38 21 00 70 */	addi r1, r1, 0x70
 /* 800D5090 000D1E90  4E 80 00 20 */	blr 
 
+.global GXSetTexCoordGen
 GXSetTexCoordGen:
 /* 800D5094 000D1E94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D5098 000D1E98  7C 08 02 A6 */	mflr r0
@@ -470,6 +476,8 @@ GXSetTexCoordGen:
 /* 800D50B0 000D1EB0  7C 08 03 A6 */	mtlr r0
 /* 800D50B4 000D1EB4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D50B8 000D1EB8  4E 80 00 20 */	blr 
+
+.endif
 
 .section .bss
 lbl_80312150:

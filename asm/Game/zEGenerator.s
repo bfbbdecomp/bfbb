@@ -4,17 +4,6 @@
 
 .section .text  # 0x80054200 - 0x80054BFC
 
-.global zEGenerator_Init__FPvPv
-zEGenerator_Init__FPvPv:
-/* 80054200 00051000  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80054204 00051004  7C 08 02 A6 */	mflr r0
-/* 80054208 00051008  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005420C 0005100C  48 00 00 15 */	bl zEGenerator_Init__FP11zEGeneratorP9xEntAsset
-/* 80054210 00051010  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80054214 00051014  7C 08 03 A6 */	mtlr r0
-/* 80054218 00051018  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005421C 0005101C  4E 80 00 20 */	blr 
-
 .global zEGenerator_Init__FP11zEGeneratorP9xEntAsset
 zEGenerator_Init__FP11zEGeneratorP9xEntAsset:
 /* 80054220 00051020  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -59,24 +48,24 @@ lbl_8005426C:
 /* 800542B4 000510B4  4B FF 74 59 */	bl xSTFindAsset__FUiPUi
 /* 800542B8 000510B8  28 03 00 00 */	cmplwi r3, 0
 /* 800542BC 000510BC  41 82 00 B8 */	beq lbl_80054374
-/* 800542C0 000510C0  3C 80 80 25 */	lis r4, lbl_80255010@ha
+/* 800542C0 000510C0  3C 80 80 25 */	lis r4, zEGeneratorStringBase@ha
 /* 800542C4 000510C4  38 A0 00 00 */	li r5, 0
-/* 800542C8 000510C8  38 84 50 10 */	addi r4, r4, lbl_80255010@l
+/* 800542C8 000510C8  38 84 50 10 */	addi r4, r4, zEGeneratorStringBase@l
 /* 800542CC 000510CC  38 C0 00 00 */	li r6, 0
 /* 800542D0 000510D0  4B FB 22 99 */	bl xAnimFileNew__FPvPCcUiPP9xAnimFile
-/* 800542D4 000510D4  3C 80 80 25 */	lis r4, lbl_80255010@ha
+/* 800542D4 000510D4  3C 80 80 25 */	lis r4, zEGeneratorStringBase@ha
 /* 800542D8 000510D8  90 7F 00 E0 */	stw r3, 0xe0(r31)
-/* 800542DC 000510DC  38 64 50 10 */	addi r3, r4, lbl_80255010@l
+/* 800542DC 000510DC  38 64 50 10 */	addi r3, r4, zEGeneratorStringBase@l
 /* 800542E0 000510E0  38 A0 00 00 */	li r5, 0
 /* 800542E4 000510E4  38 80 00 00 */	li r4, 0
 /* 800542E8 000510E8  4B FB 29 89 */	bl xAnimTableNew__FPCcPP10xAnimTableUi
 /* 800542EC 000510EC  3C 80 80 00 */	lis r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
 /* 800542F0 000510F0  90 7F 00 D0 */	stw r3, 0xd0(r31)
 /* 800542F4 000510F4  38 04 6C FC */	addi r0, r4, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
-/* 800542F8 000510F8  3C 60 80 25 */	lis r3, lbl_80255010@ha
+/* 800542F8 000510F8  3C 60 80 25 */	lis r3, zEGeneratorStringBase@ha
 /* 800542FC 000510FC  90 01 00 08 */	stw r0, 8(r1)
 /* 80054300 00051100  38 00 00 00 */	li r0, 0
-/* 80054304 00051104  38 63 50 10 */	addi r3, r3, lbl_80255010@l
+/* 80054304 00051104  38 63 50 10 */	addi r3, r3, zEGeneratorStringBase@l
 /* 80054308 00051108  38 A0 00 10 */	li r5, 0x10
 /* 8005430C 0005110C  90 01 00 0C */	stw r0, 0xc(r1)
 /* 80054310 00051110  38 83 00 01 */	addi r4, r3, 1
@@ -90,9 +79,9 @@ lbl_8005426C:
 /* 80054330 00051130  C0 22 89 10 */	lfs f1, lbl_803CD290-_SDA2_BASE_(r2)
 /* 80054334 00051134  C0 42 89 14 */	lfs f2, lbl_803CD294-_SDA2_BASE_(r2)
 /* 80054338 00051138  4B FB 2A 21 */	bl xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v
-/* 8005433C 0005113C  3C 80 80 25 */	lis r4, lbl_80255010@ha
+/* 8005433C 0005113C  3C 80 80 25 */	lis r4, zEGeneratorStringBase@ha
 /* 80054340 00051140  80 7F 00 D0 */	lwz r3, 0xd0(r31)
-/* 80054344 00051144  38 A4 50 10 */	addi r5, r4, lbl_80255010@l
+/* 80054344 00051144  38 A4 50 10 */	addi r5, r4, zEGeneratorStringBase@l
 /* 80054348 00051148  80 9F 00 E0 */	lwz r4, 0xe0(r31)
 /* 8005434C 0005114C  38 A5 00 01 */	addi r5, r5, 1
 /* 80054350 00051150  4B FB 32 25 */	bl xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc
@@ -111,132 +100,6 @@ lbl_80054374:
 /* 80054380 00051180  7C 08 03 A6 */	mtlr r0
 /* 80054384 00051184  38 21 00 30 */	addi r1, r1, 0x30
 /* 80054388 00051188  4E 80 00 20 */	blr 
-
-.global zEGenerator_Setup__FP11zEGeneratorP6xScene
-zEGenerator_Setup__FP11zEGeneratorP6xScene:
-/* 8005438C 0005118C  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80054390 00051190  7C 08 02 A6 */	mflr r0
-/* 80054394 00051194  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80054398 00051198  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8005439C 0005119C  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800543A0 000511A0  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800543A4 000511A4  93 81 00 10 */	stw r28, 0x10(r1)
-/* 800543A8 000511A8  7C 7C 1B 78 */	mr r28, r3
-/* 800543AC 000511AC  48 00 0C B9 */	bl zEntSetup__FP4zEnt
-/* 800543B0 000511B0  3B E0 00 00 */	li r31, 0
-/* 800543B4 000511B4  3B C0 00 00 */	li r30, 0
-/* 800543B8 000511B8  B3 FC 00 DA */	sth r31, 0xda(r28)
-/* 800543BC 000511BC  48 00 00 64 */	b lbl_80054420
-lbl_800543C0:
-/* 800543C0 000511C0  80 1C 00 08 */	lwz r0, 8(r28)
-/* 800543C4 000511C4  7F A0 FA 14 */	add r29, r0, r31
-/* 800543C8 000511C8  80 7D 00 04 */	lwz r3, 4(r29)
-/* 800543CC 000511CC  48 06 06 71 */	bl zSceneFindObject__FUi
-/* 800543D0 000511D0  28 03 00 00 */	cmplwi r3, 0
-/* 800543D4 000511D4  41 82 00 44 */	beq lbl_80054418
-/* 800543D8 000511D8  A0 1D 00 02 */	lhz r0, 2(r29)
-/* 800543DC 000511DC  28 00 00 C0 */	cmplwi r0, 0xc0
-/* 800543E0 000511E0  40 82 00 38 */	bne lbl_80054418
-/* 800543E4 000511E4  88 03 00 04 */	lbz r0, 4(r3)
-/* 800543E8 000511E8  28 00 00 0D */	cmplwi r0, 0xd
-/* 800543EC 000511EC  40 82 00 14 */	bne lbl_80054400
-/* 800543F0 000511F0  A0 7C 00 DA */	lhz r3, 0xda(r28)
-/* 800543F4 000511F4  38 03 00 01 */	addi r0, r3, 1
-/* 800543F8 000511F8  B0 1C 00 DA */	sth r0, 0xda(r28)
-/* 800543FC 000511FC  48 00 00 1C */	b lbl_80054418
-lbl_80054400:
-/* 80054400 00051200  A0 03 00 06 */	lhz r0, 6(r3)
-/* 80054404 00051204  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
-/* 80054408 00051208  41 82 00 10 */	beq lbl_80054418
-/* 8005440C 0005120C  A0 7C 00 DA */	lhz r3, 0xda(r28)
-/* 80054410 00051210  38 03 00 01 */	addi r0, r3, 1
-/* 80054414 00051214  B0 1C 00 DA */	sth r0, 0xda(r28)
-lbl_80054418:
-/* 80054418 00051218  3B FF 00 20 */	addi r31, r31, 0x20
-/* 8005441C 0005121C  3B DE 00 01 */	addi r30, r30, 1
-lbl_80054420:
-/* 80054420 00051220  88 1C 00 05 */	lbz r0, 5(r28)
-/* 80054424 00051224  7C 1E 00 00 */	cmpw r30, r0
-/* 80054428 00051228  41 80 FF 98 */	blt lbl_800543C0
-/* 8005442C 0005122C  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80054430 00051230  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80054434 00051234  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80054438 00051238  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8005443C 0005123C  83 81 00 10 */	lwz r28, 0x10(r1)
-/* 80054440 00051240  7C 08 03 A6 */	mtlr r0
-/* 80054444 00051244  38 21 00 20 */	addi r1, r1, 0x20
-/* 80054448 00051248  4E 80 00 20 */	blr 
-
-.global zEGenerator_Save__FP11zEGeneratorP7xSerial
-zEGenerator_Save__FP11zEGeneratorP7xSerial:
-/* 8005444C 0005124C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80054450 00051250  7C 08 02 A6 */	mflr r0
-/* 80054454 00051254  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80054458 00051258  48 00 0D B9 */	bl zEntSave__FP4zEntP7xSerial
-/* 8005445C 0005125C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80054460 00051260  7C 08 03 A6 */	mtlr r0
-/* 80054464 00051264  38 21 00 10 */	addi r1, r1, 0x10
-/* 80054468 00051268  4E 80 00 20 */	blr 
-
-.global zEGenerator_Load__FP11zEGeneratorP7xSerial
-zEGenerator_Load__FP11zEGeneratorP7xSerial:
-/* 8005446C 0005126C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80054470 00051270  7C 08 02 A6 */	mflr r0
-/* 80054474 00051274  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80054478 00051278  48 00 0D B9 */	bl zEntLoad__FP4zEntP7xSerial
-/* 8005447C 0005127C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80054480 00051280  7C 08 03 A6 */	mtlr r0
-/* 80054484 00051284  38 21 00 10 */	addi r1, r1, 0x10
-/* 80054488 00051288  4E 80 00 20 */	blr 
-
-.global zEGenerator_Reset__FP11zEGeneratorP6xScene
-zEGenerator_Reset__FP11zEGeneratorP6xScene:
-/* 8005448C 0005128C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80054490 00051290  7C 08 02 A6 */	mflr r0
-/* 80054494 00051294  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80054498 00051298  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8005449C 0005129C  93 C1 00 08 */	stw r30, 8(r1)
-/* 800544A0 000512A0  7C 7E 1B 78 */	mr r30, r3
-/* 800544A4 000512A4  48 00 0D AD */	bl zEntReset__FP4zEnt
-/* 800544A8 000512A8  83 FE 00 10 */	lwz r31, 0x10(r30)
-/* 800544AC 000512AC  88 1F 00 61 */	lbz r0, 0x61(r31)
-/* 800544B0 000512B0  B0 1E 00 D8 */	sth r0, 0xd8(r30)
-/* 800544B4 000512B4  A0 1E 00 D8 */	lhz r0, 0xd8(r30)
-/* 800544B8 000512B8  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 800544BC 000512BC  41 82 00 10 */	beq lbl_800544CC
-/* 800544C0 000512C0  7F C3 F3 78 */	mr r3, r30
-/* 800544C4 000512C4  48 00 01 9D */	bl zEGenerator_TurnOn__FP11zEGenerator
-/* 800544C8 000512C8  48 00 00 0C */	b lbl_800544D4
-lbl_800544CC:
-/* 800544CC 000512CC  7F C3 F3 78 */	mr r3, r30
-/* 800544D0 000512D0  48 00 04 B5 */	bl zEGenerator_TurnOff__FP11zEGenerator
-lbl_800544D4:
-/* 800544D4 000512D4  88 1F 00 0B */	lbz r0, 0xb(r31)
-/* 800544D8 000512D8  54 00 07 7B */	rlwinm. r0, r0, 0, 0x1d, 0x1d
-/* 800544DC 000512DC  41 82 00 10 */	beq lbl_800544EC
-/* 800544E0 000512E0  38 00 00 00 */	li r0, 0
-/* 800544E4 000512E4  98 1E 00 22 */	stb r0, 0x22(r30)
-/* 800544E8 000512E8  48 00 00 0C */	b lbl_800544F4
-lbl_800544EC:
-/* 800544EC 000512EC  38 00 00 18 */	li r0, 0x18
-/* 800544F0 000512F0  98 1E 00 22 */	stb r0, 0x22(r30)
-lbl_800544F4:
-/* 800544F4 000512F4  80 9E 00 24 */	lwz r4, 0x24(r30)
-/* 800544F8 000512F8  7F C3 F3 78 */	mr r3, r30
-/* 800544FC 000512FC  81 9E 00 3C */	lwz r12, 0x3c(r30)
-/* 80054500 00051300  80 84 00 4C */	lwz r4, 0x4c(r4)
-/* 80054504 00051304  38 84 00 30 */	addi r4, r4, 0x30
-/* 80054508 00051308  7D 89 03 A6 */	mtctr r12
-/* 8005450C 0005130C  4E 80 04 21 */	bctrl 
-/* 80054510 00051310  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80054514 00051314  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80054518 00051318  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8005451C 0005131C  7C 08 03 A6 */	mtlr r0
-/* 80054520 00051320  38 21 00 10 */	addi r1, r1, 0x10
-/* 80054524 00051324  4E 80 00 20 */	blr 
-
-zEGenerator_Move__FP11zEGeneratorP6xScenef:
-/* 80054528 00051328  4E 80 00 20 */	blr 
 
 zEGenerator_Update__FP11zEGeneratorP6xScenef:
 /* 8005452C 0005132C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -313,16 +176,6 @@ lbl_80054624:
 /* 80054634 00051434  7C 08 03 A6 */	mtlr r0
 /* 80054638 00051438  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005463C 0005143C  4E 80 00 20 */	blr 
-
-zEGenerator_Render__FP11zEGenerator:
-/* 80054640 00051440  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80054644 00051444  7C 08 02 A6 */	mflr r0
-/* 80054648 00051448  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005464C 0005144C  4B FC 4E 81 */	bl xEntRender__FP4xEnt
-/* 80054650 00051450  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80054654 00051454  7C 08 03 A6 */	mtlr r0
-/* 80054658 00051458  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005465C 0005145C  4E 80 00 20 */	blr 
 
 .global zEGenerator_TurnOn__FP11zEGenerator
 zEGenerator_TurnOn__FP11zEGenerator:
@@ -540,66 +393,6 @@ lbl_8005490C:
 /* 8005497C 0005177C  38 21 00 80 */	addi r1, r1, 0x80
 /* 80054980 00051780  4E 80 00 20 */	blr 
 
-.global zEGenerator_TurnOff__FP11zEGenerator
-zEGenerator_TurnOff__FP11zEGenerator:
-/* 80054984 00051784  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80054988 00051788  7C 08 02 A6 */	mflr r0
-/* 8005498C 0005178C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80054990 00051790  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80054994 00051794  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 80054998 00051798  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8005499C 0005179C  A0 03 00 D8 */	lhz r0, 0xd8(r3)
-/* 800549A0 000517A0  54 00 04 3C */	rlwinm r0, r0, 0, 0x10, 0x1e
-/* 800549A4 000517A4  B0 03 00 D8 */	sth r0, 0xd8(r3)
-/* 800549A8 000517A8  80 03 00 E0 */	lwz r0, 0xe0(r3)
-/* 800549AC 000517AC  28 00 00 00 */	cmplwi r0, 0
-/* 800549B0 000517B0  41 82 00 18 */	beq lbl_800549C8
-/* 800549B4 000517B4  80 83 00 24 */	lwz r4, 0x24(r3)
-/* 800549B8 000517B8  C0 02 89 14 */	lfs f0, lbl_803CD294-_SDA2_BASE_(r2)
-/* 800549BC 000517BC  80 84 00 0C */	lwz r4, 0xc(r4)
-/* 800549C0 000517C0  80 84 00 08 */	lwz r4, 8(r4)
-/* 800549C4 000517C4  D0 04 00 0C */	stfs f0, 0xc(r4)
-lbl_800549C8:
-/* 800549C8 000517C8  7C 7E 1B 78 */	mr r30, r3
-/* 800549CC 000517CC  3B A0 00 00 */	li r29, 0
-/* 800549D0 000517D0  3B E0 00 00 */	li r31, 0
-lbl_800549D4:
-/* 800549D4 000517D4  80 7E 01 0C */	lwz r3, 0x10c(r30)
-/* 800549D8 000517D8  28 03 00 00 */	cmplwi r3, 0
-/* 800549DC 000517DC  41 82 00 0C */	beq lbl_800549E8
-/* 800549E0 000517E0  48 04 CE D5 */	bl zLightningKill__FP10zLightning
-/* 800549E4 000517E4  93 FE 01 0C */	stw r31, 0x10c(r30)
-lbl_800549E8:
-/* 800549E8 000517E8  3B BD 00 01 */	addi r29, r29, 1
-/* 800549EC 000517EC  3B DE 00 04 */	addi r30, r30, 4
-/* 800549F0 000517F0  2C 1D 00 02 */	cmpwi r29, 2
-/* 800549F4 000517F4  41 80 FF E0 */	blt lbl_800549D4
-/* 800549F8 000517F8  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800549FC 000517FC  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80054A00 00051800  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80054A04 00051804  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80054A08 00051808  7C 08 03 A6 */	mtlr r0
-/* 80054A0C 0005180C  38 21 00 20 */	addi r1, r1, 0x20
-/* 80054A10 00051810  4E 80 00 20 */	blr 
-
-.global zEGenerator_ToggleOn__FP11zEGenerator
-zEGenerator_ToggleOn__FP11zEGenerator:
-/* 80054A14 00051814  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80054A18 00051818  7C 08 02 A6 */	mflr r0
-/* 80054A1C 0005181C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80054A20 00051820  A0 03 00 D8 */	lhz r0, 0xd8(r3)
-/* 80054A24 00051824  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 80054A28 00051828  41 82 00 0C */	beq lbl_80054A34
-/* 80054A2C 0005182C  4B FF FF 59 */	bl zEGenerator_TurnOff__FP11zEGenerator
-/* 80054A30 00051830  48 00 00 08 */	b lbl_80054A38
-lbl_80054A34:
-/* 80054A34 00051834  4B FF FC 2D */	bl zEGenerator_TurnOn__FP11zEGenerator
-lbl_80054A38:
-/* 80054A38 00051838  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80054A3C 0005183C  7C 08 03 A6 */	mtlr r0
-/* 80054A40 00051840  38 21 00 10 */	addi r1, r1, 0x10
-/* 80054A44 00051844  4E 80 00 20 */	blr 
-
 zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 80054A48 00051848  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80054A4C 0005184C  7C 08 02 A6 */	mflr r0
@@ -734,12 +527,15 @@ lbl_80054BE4:
 .endif
 
 .section .rodata
-lbl_80255010:
+.global zEGeneratorStringBase
+zEGeneratorStringBase:
 	.incbin "baserom.dol", 0x251FF0, 0x8
 
 .section .sdata2
+.global lbl_803CD290
 lbl_803CD290:
 	.incbin "baserom.dol", 0x2B6B30, 0x4
+.global lbl_803CD294
 lbl_803CD294:
 	.incbin "baserom.dol", 0x2B6B34, 0x4
 lbl_803CD298:

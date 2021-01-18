@@ -2,10 +2,33 @@
 #define XFX_H
 
 #include "../p2/iColor.h"
+#include "xMath3.h"
 #include "xVec3.h"
 
 #include <rwcore.h>
 #include <rpworld.h>
+
+struct tagiRenderInput
+{
+    uint16* m_index;
+    RxObjSpace3DVertex* m_vertex;
+    float32* m_vertexTZ;
+    uint32 m_mode;
+    int32 m_vertexType;
+    int32 m_vertexTypeSize;
+    int32 m_indexCount;
+    int32 m_vertexCount;
+    xMat4x3 m_camViewMatrix;
+    xVec4 m_camViewR;
+    xVec4 m_camViewU;
+};
+
+struct curve_node
+{
+    float32 time;
+    iColor_tag color;
+    float32 scale;
+};
 
 struct xFXRing
 {

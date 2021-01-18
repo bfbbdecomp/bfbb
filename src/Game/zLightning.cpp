@@ -1,12 +1,55 @@
 #include "zLightning.h"
+#include "zGlobals.h"
 
 #include <types.h>
+
+extern _tagLightningAdd gLightningTweakAddInfo;
+extern xVec3 sTweakStart;
+extern xVec3 sTweakEnd;
+
+#if 1
 
 // func_8009EC78
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "lightningTweakChangeType__FRC10tweak_info")
 
+#else
+
+// WIP.
+void lightningTweakChangeType(tweak_info& t)
+{
+    xDebugRemoveTweak(WEFEW);
+    if (gLightningTweakAddInfo.type == 1)
+    {
+        xDebugAddTweaK(WEFEWFEF, &gLightningTweakAddInfo.setup_degrees, @668, @669, NULL, NULL, 2);
+        xDebugAddTweaK(WEFEWFEF, &gLightningTweakAddInfo.move_degrees, @668, @669, NULL, NULL, 2);
+    }
+    else if (FFWEFEWF)
+    {
+        // TODO!!!
+    }
+}
+
+#endif
+
+#if 1
+
 // func_8009EDB0
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "lightningTweakStart__FRC10tweak_info")
+
+#else
+
+// Structure is off?
+void lightningTweakStart(tweak_info& t)
+{
+    xVec3 s, e;
+    xVec3Add(&s, (xVec3*)&globals.player.ent.collModel->Mat->pos, &sTweakStart);
+    xVec3Add(&e, (xVec3*)&globals.player.ent.collModel->Mat->pos, &sTweakEnd);
+    gLightningTweakAddInfo.start = &s;
+    gLightningTweakAddInfo.end = &e;
+    zLightningAdd(&gLightningTweakAddInfo);
+}
+
+#endif
 
 // func_8009EE30
 #pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningInit__Fv")

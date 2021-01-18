@@ -4,6 +4,29 @@
 #include "../Core/x/xMath3.h"
 #include "../Core/p2/iColor.h"
 
+#include "zFX.h"
+
+struct _tagLightningAdd
+{
+    uint32 type;
+    float32 setup_degrees;
+    float32 move_degrees;
+    float32 rot_radius;
+    xVec3* start;
+    xVec3* end;
+    int16 total_points;
+    int16 end_points;
+    float32 time;
+    float32 arc_height;
+    float32 thickness;
+    iColor_tag color;
+    float32 rand_radius;
+    uint32 flags;
+    float32 zeus_normal_offset;
+    float32 zeus_back_offset;
+    float32 zeus_side_offset;
+};
+
 struct _tagLightningLine
 {
     float32 unused;
@@ -64,5 +87,12 @@ struct zLightning
     float32 time_left;
     float32 time_total;
 };
+
+void lightningTweakChangeType(tweak_info& t);
+void lightningTweakStart(tweak_info& t);
+
+zLightning* zLightningAdd(_tagLightningAdd* add);
+
+void zLightningKill(zLightning* l);
 
 #endif

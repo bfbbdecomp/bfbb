@@ -91,10 +91,10 @@ lbl_8009EDA0:
 lightningTweakStart__FRC10tweak_info:
 /* 8009EDB0 0009BBB0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8009EDB4 0009BBB4  7C 08 02 A6 */	mflr r0
-/* 8009EDB8 0009BBB8  3C 80 80 2F */	lis r4, lbl_802E96D8@ha
+/* 8009EDB8 0009BBB8  3C 80 80 2F */	lis r4, sTweakStart@ha
 /* 8009EDBC 0009BBBC  3C 60 80 3C */	lis r3, globals@ha
 /* 8009EDC0 0009BBC0  90 01 00 34 */	stw r0, 0x34(r1)
-/* 8009EDC4 0009BBC4  38 A4 96 D8 */	addi r5, r4, lbl_802E96D8@l
+/* 8009EDC4 0009BBC4  38 A4 96 D8 */	addi r5, r4, sTweakStart@l
 /* 8009EDC8 0009BBC8  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 8009EDCC 0009BBCC  3B E3 05 58 */	addi r31, r3, globals@l
 /* 8009EDD0 0009BBD0  38 61 00 14 */	addi r3, r1, 0x14
@@ -103,8 +103,8 @@ lightningTweakStart__FRC10tweak_info:
 /* 8009EDDC 0009BBDC  38 84 00 30 */	addi r4, r4, 0x30
 /* 8009EDE0 0009BBE0  4B F6 C2 D9 */	bl xVec3Add__FP5xVec3PC5xVec3PC5xVec3
 /* 8009EDE4 0009BBE4  80 9F 07 04 */	lwz r4, 0x704(r31)
-/* 8009EDE8 0009BBE8  3C 60 80 2F */	lis r3, lbl_802E96E4@ha
-/* 8009EDEC 0009BBEC  38 A3 96 E4 */	addi r5, r3, lbl_802E96E4@l
+/* 8009EDE8 0009BBE8  3C 60 80 2F */	lis r3, sTweakEnd@ha
+/* 8009EDEC 0009BBEC  38 A3 96 E4 */	addi r5, r3, sTweakEnd@l
 /* 8009EDF0 0009BBF0  80 84 00 4C */	lwz r4, 0x4c(r4)
 /* 8009EDF4 0009BBF4  38 61 00 08 */	addi r3, r1, 8
 /* 8009EDF8 0009BBF8  38 84 00 30 */	addi r4, r4, 0x30
@@ -3339,9 +3339,11 @@ lbl_802E90C8:
 	.skip 0x5E8
 lbl_802E96B0:
 	.skip 0x28
-lbl_802E96D8:
+.global sTweakStart
+sTweakStart:
 	.skip 0xC
-lbl_802E96E4:
+.global sTweakEnd
+sTweakEnd:
 	.skip 0xAC
 lbl_802E9790:
 	.skip 0x1200

@@ -147,6 +147,8 @@ extern volatile OSHeapHandle __OSCurrHeap;
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
 #define OSFree(ptr) OSFreeToHeap(__OSCurrHeap, (ptr))
 
+void ARAlloc(u32 size);
+void ARFree(void* mem);
 BOOL DVDFastOpen(s32 entrynum, DVDFileInfo* fileInfo);
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset,
                       DVDCallback callback, s32 prio);
