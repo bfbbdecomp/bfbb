@@ -1181,7 +1181,7 @@ lbl_80050EDC:
 /* 80050EDC 0004DCDC  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 80050EE0 0004DCE0  2C 00 00 00 */	cmpwi r0, 0
 /* 80050EE4 0004DCE4  41 82 00 0C */	beq lbl_80050EF0
-/* 80050EE8 0004DCE8  C0 22 88 8C */	lfs f1, lbl_803CD20C-_SDA2_BASE_(r2)
+/* 80050EE8 0004DCE8  C0 22 88 8C */	lfs f1, zCamera_f_3_5-_SDA2_BASE_(r2)
 /* 80050EEC 0004DCEC  48 00 00 08 */	b lbl_80050EF4
 lbl_80050EF0:
 /* 80050EF0 0004DCF0  4B FF EE AD */	bl GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
@@ -1190,7 +1190,7 @@ lbl_80050EF4:
 /* 80050EF8 0004DCF8  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 80050EFC 0004DCFC  2C 00 00 00 */	cmpwi r0, 0
 /* 80050F00 0004DD00  41 82 00 0C */	beq lbl_80050F0C
-/* 80050F04 0004DD04  C0 22 88 90 */	lfs f1, lbl_803CD210-_SDA2_BASE_(r2)
+/* 80050F04 0004DD04  C0 22 88 90 */	lfs f1, zCamera_f_2_4-_SDA2_BASE_(r2)
 /* 80050F08 0004DD08  48 00 00 08 */	b lbl_80050F10
 lbl_80050F0C:
 /* 80050F0C 0004DD0C  4B FF EE 1D */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
@@ -1245,15 +1245,16 @@ lbl_80050FB8:
 /* 80050FB8 0004DDB8  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 80050FBC 0004DDBC  2C 00 00 00 */	cmpwi r0, 0
 /* 80050FC0 0004DDC0  41 82 00 20 */	beq lbl_80050FE0
-/* 80050FC4 0004DDC4  C0 02 88 98 */	lfs f0, lbl_803CD218-_SDA2_BASE_(r2)
-/* 80050FC8 0004DDC8  C0 42 88 94 */	lfs f2, lbl_803CD214-_SDA2_BASE_(r2)
+.global zCamera_f_20_0
+/* 80050FC4 0004DDC4  C0 02 88 98 */	lfs f0, zCamera_f_20_0-_SDA2_BASE_(r2)
+/* 80050FC8 0004DDC8  C0 42 88 94 */	lfs f2, zCamera_f_3_141-_SDA2_BASE_(r2)
 /* 80050FCC 0004DDCC  EC 20 00 7A */	fmadds f1, f0, f1, f0
-/* 80050FD0 0004DDD0  C0 02 88 9C */	lfs f0, lbl_803CD21C-_SDA2_BASE_(r2)
+/* 80050FD0 0004DDD0  C0 02 88 9C */	lfs f0, zCamera_f_180_0-_SDA2_BASE_(r2)
 /* 80050FD4 0004DDD4  EC 22 00 72 */	fmuls f1, f2, f1
 /* 80050FD8 0004DDD8  EC 01 00 24 */	fdivs f0, f1, f0
 /* 80050FDC 0004DDDC  48 00 00 08 */	b lbl_80050FE4
 lbl_80050FE0:
-/* 80050FE0 0004DDE0  C0 02 88 A0 */	lfs f0, lbl_803CD220-_SDA2_BASE_(r2)
+/* 80050FE0 0004DDE0  C0 02 88 A0 */	lfs f0, zCamera_f_0_523-_SDA2_BASE_(r2)
 lbl_80050FE4:
 /* 80050FE4 0004DDE4  D0 1E 00 00 */	stfs f0, 0(r30)
 /* 80050FE8 0004DDE8  48 00 01 40 */	b lbl_80051128
@@ -1264,7 +1265,7 @@ lbl_80050FEC:
 /* 80050FF8 0004DDF8  C0 02 88 A4 */	lfs f0, lbl_803CD224-_SDA2_BASE_(r2)
 /* 80050FFC 0004DDFC  48 00 00 08 */	b lbl_80051004
 lbl_80051000:
-/* 80051000 0004DE00  C0 02 88 A0 */	lfs f0, lbl_803CD220-_SDA2_BASE_(r2)
+/* 80051000 0004DE00  C0 02 88 A0 */	lfs f0, zCamera_f_0_523-_SDA2_BASE_(r2)
 lbl_80051004:
 /* 80051004 0004DE04  D0 1E 00 00 */	stfs f0, 0(r30)
 /* 80051008 0004DE08  48 00 01 20 */	b lbl_80051128
@@ -2941,17 +2942,23 @@ lbl_803CD204:
 	.incbin "baserom.dol", 0x2B6AA4, 0x4
 lbl_803CD208:
 	.incbin "baserom.dol", 0x2B6AA8, 0x4
-lbl_803CD20C:
+.global zCamera_f_3_5
+zCamera_f_3_5:
 	.incbin "baserom.dol", 0x2B6AAC, 0x4
-lbl_803CD210:
+.global zCamera_f_2_4
+zCamera_f_2_4:
 	.incbin "baserom.dol", 0x2B6AB0, 0x4
-lbl_803CD214:
+.global zCamera_f_3_141
+zCamera_f_3_141:
 	.incbin "baserom.dol", 0x2B6AB4, 0x4
-lbl_803CD218:
+.global zCamera_f_20_0
+zCamera_f_20_0:
 	.incbin "baserom.dol", 0x2B6AB8, 0x4
-lbl_803CD21C:
+.global zCamera_f_180_0
+zCamera_f_180_0:
 	.incbin "baserom.dol", 0x2B6ABC, 0x4
-lbl_803CD220:
+.global zCamera_f_0_523
+zCamera_f_0_523:
 	.incbin "baserom.dol", 0x2B6AC0, 0x4
 lbl_803CD224:
 	.incbin "baserom.dol", 0x2B6AC4, 0x4
