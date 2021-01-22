@@ -333,11 +333,12 @@ void zCameraFlyStart(uint32 assetID)
         return;
     }
     
+    // weird register use
     zcam_fly = 1;
     zcam_flypaused = 0;
     zcam_flydata = info.mempos;
     zcam_flysize = info.size;
-
+    // until here
     zcam_flytime = zCamera_f_0_033;
     zcam_flyasset_current = assetID;
 
