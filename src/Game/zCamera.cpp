@@ -20,6 +20,18 @@ enum WallJumpViewState
 	WJVS_ENABLING
 };
 
+enum camera_owner_enum
+{
+	CO_BOULDER = 0x1,
+	CO_CRUISE_BUBBLE,
+	CO_BUNGEE = 0x4,
+	CO_BOSS = 0x8,
+	CO_OOB = 0x10,
+	CO_ZIPLINE = 0x20,
+	CO_TURRET = 0x40,
+	CO_REWARDANIM = 0x80
+};
+
 // extern int8 buffer[16];
 // extern int8 buffer[16];
 // extern basic_rect screen_bounds;
@@ -712,10 +724,24 @@ void zCameraSetPlayerVel(xVec3* vel)
 }
 
 // func_80052100
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableTracking__F17camera_owner_enum")
+#else
+void zCameraDisableTracking(camera_owner_enum owner)
+{
+    stop_track = stop_track | owner;
+}
+#endif
 
 // func_80052110
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraEnableTracking__F17camera_owner_enum")
+#else
+void zCameraEnableTracking(camera_owner_enum owner)
+{
+    stop_track = stop_track & ~owner;
+}
+#endif
 
 // func_80052120
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraIsTrackingDisabled__Fv")
