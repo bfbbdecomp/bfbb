@@ -377,14 +377,12 @@ void zCameraFlyStart(uint32 assetID)
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraRewardUpdate__FP7xCameraf")
 
 // func_80050E5C
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff")
 #else
 void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, float32& hgoal,
                              float32& pitch_goal, float32& lktm, float32 dt)
 {
-    float32 fVar;
-
     if (zcam_bbounce != 0)
     {
     
@@ -396,124 +394,100 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
             return;
         }
 
-        // lbl_80050EDC                          lbl_80050EF0
         dgoal = zcam_near != 0 ? zCamera_f_3_5 : GetCurrentD();
-        // lbl_80050EF4                          lbl_80050F0C
         hgoal = zcam_near != 0 ? zCamera_f_2_4 : GetCurrentH();
 
-        // lbl_80050F10
+        float32 newPitchGoal;
         if (zcam_longbounce != 0)
         {
             float32 len = xsqrt(zcam_playervel->x * zcam_playervel->x +
                             zcam_playervel->y * zcam_playervel->y +
                             zcam_playervel->z * zcam_playervel->z);
 
-            bool cond = false;
+            bool lenValid = false;
             if (zcam_playervel != NULL)
             {
                 if (len != zCamera_f_0_0)
                 {
-                    cond = true;
+                    lenValid = true;
                 }
             }
 
-            // lbl_80050F68
-            if (cond)
+            if (lenValid)
             {
-                fVar = (cam->mat.at.x * zcam_playervel->x +
+                newPitchGoal = (cam->mat.at.x * zcam_playervel->x +
                         cam->mat.at.y * zcam_playervel->y +
                         cam->mat.at.z * zcam_playervel->z) / len;
-
-                //                            lbl_80050FA8
-                fVar = zCamera_f_0_0 < fVar ? zCamera_f_0_0 : fVar;
-                // lbl_80050FAC
-                fVar = -fVar;
+                newPitchGoal = zCamera_f_0_0 < newPitchGoal ? zCamera_f_0_0 : newPitchGoal;
+                newPitchGoal = -newPitchGoal;
             }
-            // lbl_80050FB4
             else {
-                fVar = zCamera_f_0_0;
+                newPitchGoal = zCamera_f_0_0;
             }
 
-            // lbl_80050FB8
             if (zcam_near != 0)
             {
-                fVar = zCamera_f_3_141 * (zCamera_f_20_0 * fVar + zCamera_f_20_0) / zCamera_f_180_0;
+                newPitchGoal = zCamera_f_3_141 * (zCamera_f_20_0 * newPitchGoal + zCamera_f_20_0) / zCamera_f_180_0;
             }
-            // lbl_80050FE0
             else {
-                fVar = zCamera_f_0_523;
+                newPitchGoal = zCamera_f_0_523;
             }
 
-            pitch_goal = fVar;
-            return;
+            pitch_goal = newPitchGoal;
         }
-        // lbl_80050FEC
         else
         {
             if (zcam_near != 0)
             {
-                fVar = zCamera_f_0_698;
+                newPitchGoal = zCamera_f_0_698;
             }
-            // lbl_80051000
             else
             {
-                fVar = zCamera_f_0_523;
+                newPitchGoal = zCamera_f_0_523;
             }
             
-            // lbl_80051004
-            pitch_goal = fVar;
-            return;
+            pitch_goal = newPitchGoal;
         }
+        return;
     }
-    // lbl_8005100C
+
+    float32 d = GetCurrentD();
+    float32 h = GetCurrentH();
+    float32 p = GetCurrentPitch();
+
+    if (lassocam_enabled && stop_track == 0)
+    {
+        dgoal = lassocam_factor * (d - zcam_near_d) + zcam_near_d;
+        hgoal = lassocam_factor * (h - zcam_near_h) + zcam_near_h;
+        pitch_goal = lassocam_factor * (p - zcam_near_pitch) + zcam_near_pitch;
+        return;
+    }
+
+    if (pitch_s > zCamera_f_0_0)
+    {
+        dgoal = pitch_s * (zcam_below_d - d) + d;
+        hgoal = pitch_s * (zcam_below_h - h) + h;
+        pitch_goal = pitch_s * (pitch_s * (pitch_s * (zcam_below_pitch - p))) + p;
+    }
     else
     {
-        float32 d = GetCurrentD(); // f29
-        float32 h = GetCurrentH(); // f30
-        float32 p = GetCurrentPitch(); // f1
-
-        if (lassocam_enabled != false && stop_track == 0)
-        {
-            dgoal = lassocam_factor * (d - zcam_near_d) + zcam_near_d;
-            hgoal = lassocam_factor * (h - zcam_near_h) + zcam_near_h;
-            pitch_goal = lassocam_factor * (p - zcam_near_pitch) + zcam_near_pitch;
-            return;
-        }
-        // lbl_80051078
-        else
-        {
-            if (pitch_s > zCamera_f_0_0)
-            {
-                dgoal = pitch_s * (zcam_below_d - d) + d;
-                hgoal = pitch_s * (zcam_below_h - h) + h;
-                pitch_goal = pitch_s * (pitch_s * (pitch_s * (zcam_below_pitch - p))) + p;
-            }
-            // lbl_800510C0
-            else
-            {
-                dgoal = -pitch_s * (zcam_above_d - d) + d;
-                hgoal = -pitch_s * (zcam_above_h - h) + h;
-                pitch_goal = -pitch_s * (zcam_above_pitch - p) + p;
-            }
-            // lbl_800510F4
-            if (lktm > zCamera_f_0_1)
-            {
-                lktm = lktm - dt;
-                if (lktm < zCamera_f_0_1)
-                {
-                    lktm = zCamera_f_0_1;
-                }
-            }
-            // lbl_80051124
-            else
-            {
-                lktm = zCamera_f_0_1;
-            }
-
-            
-        }
+        dgoal = -pitch_s * (zcam_above_d - d) + d;
+        hgoal = -pitch_s * (zcam_above_h - h) + h;
+        pitch_goal = -pitch_s * (zcam_above_pitch - p) + p;
     }
-    // lbl_80051004
+
+    // f0 and f1 should be swapped from here
+    if (lktm > zCamera_f_0_1)
+    {
+        lktm -= dt;
+        if (lktm < zCamera_f_0_1)
+        {
+            lktm = zCamera_f_0_1;
+        }
+        return;
+    }
+
+    lktm = zCamera_f_0_1;
 }
 #endif
 
