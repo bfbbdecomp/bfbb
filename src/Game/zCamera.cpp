@@ -320,7 +320,6 @@ float32 MatrixSpeed(zFlyKey keys[])
 zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 {
     this->frame = other.frame;
-    
     for (int i = 0; i < 12; i++)
     {
         *(uint32*)&this->matrix[i] = *(uint32*)&other.matrix[i];
@@ -329,8 +328,9 @@ zFlyKey& zFlyKey::operator=(const zFlyKey& other)
     {
         *(uint32*)&this->aperture[i] = *(uint32*)&other.aperture[i];
     }
-
     this->focal = other.focal;
+
+    return *this;
 }
 #endif
 
