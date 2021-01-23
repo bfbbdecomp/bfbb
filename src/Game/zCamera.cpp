@@ -281,10 +281,6 @@ float32 TranSpeed(zFlyKey keys[])
     return zCamera_f_30_0 * xVec3Dist((xVec3*) &keys[0].matrix[9], (xVec3*) &keys[1].matrix[9]);
 }
 
-// func_8004FFDC
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "MatrixSpeed__FP7zFlyKey")
-#else
 float32 MatrixSpeed(zFlyKey keys[])
 {
     float32 dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[0], (xVec3*) &keys[1].matrix[0]));
@@ -308,15 +304,10 @@ float32 MatrixSpeed(zFlyKey keys[])
     float32 m = zCamera_f_1_0 < dot1 ? zCamera_f_1_0 : dot1;
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
-#endif
 
 // func_800500B0
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyUpdate__FP7xCameraf")
 
-// func_8005043C
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "__as__7zFlyKeyFRC7zFlyKey")
-#else
 zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 {
     this->frame = other.frame;
@@ -332,7 +323,6 @@ zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 
     return *this;
 }
-#endif
 
 // func_800504C0
 #if 1
@@ -538,25 +528,15 @@ void zCameraSetPlayerVel(xVec3* vel)
     zcam_playervel = vel;
 }
 
-// func_80052100
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableTracking__F17camera_owner_enum")
-#else
 void zCameraDisableTracking(camera_owner_enum owner)
 {
     stop_track = stop_track | owner;
 }
-#endif
 
-// func_80052110
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraEnableTracking__F17camera_owner_enum")
-#else
 void zCameraEnableTracking(camera_owner_enum owner)
 {
     stop_track = stop_track & ~owner;
 }
-#endif
 
 // func_80052120
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraIsTrackingDisabled__Fv")

@@ -176,65 +176,6 @@ lbl_8004FF84:
 /* 8004FFA0 0004CDA0  38 21 00 50 */	addi r1, r1, 0x50
 /* 8004FFA4 0004CDA4  4E 80 00 20 */	blr 
 
-MatrixSpeed__FP7zFlyKey:
-/* 8004FFDC 0004CDDC  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8004FFE0 0004CDE0  7C 08 02 A6 */	mflr r0
-/* 8004FFE4 0004CDE4  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8004FFE8 0004CDE8  DB E1 00 10 */	stfd f31, 0x10(r1)
-/* 8004FFEC 0004CDEC  F3 E1 00 18 */	psq_st f31, 24(r1), 0, qr0
-/* 8004FFF0 0004CDF0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8004FFF4 0004CDF4  7C 7F 1B 78 */	mr r31, r3
-/* 8004FFF8 0004CDF8  38 7F 00 04 */	addi r3, r31, 4
-/* 8004FFFC 0004CDFC  38 9F 00 44 */	addi r4, r31, 0x44
-/* 80050000 0004CE00  4B FF E4 F1 */	bl xVec3Dot__FPC5xVec3PC5xVec3
-/* 80050004 0004CE04  FF E0 0A 10 */	fabs f31, f1
-/* 80050008 0004CE08  38 7F 00 10 */	addi r3, r31, 0x10
-/* 8005000C 0004CE0C  38 9F 00 50 */	addi r4, r31, 0x50
-/* 80050010 0004CE10  FF E0 F8 18 */	frsp f31, f31
-/* 80050014 0004CE14  4B FF E4 DD */	bl xVec3Dot__FPC5xVec3PC5xVec3
-/* 80050018 0004CE18  FC 00 0A 10 */	fabs f0, f1
-/* 8005001C 0004CE1C  FC 00 00 18 */	frsp f0, f0
-/* 80050020 0004CE20  FC 00 F8 40 */	fcmpo cr0, f0, f31
-/* 80050024 0004CE24  40 81 00 18 */	ble lbl_8005003C
-/* 80050028 0004CE28  38 7F 00 10 */	addi r3, r31, 0x10
-/* 8005002C 0004CE2C  38 9F 00 50 */	addi r4, r31, 0x50
-/* 80050030 0004CE30  4B FF E4 C1 */	bl xVec3Dot__FPC5xVec3PC5xVec3
-/* 80050034 0004CE34  FF E0 0A 10 */	fabs f31, f1
-/* 80050038 0004CE38  FF E0 F8 18 */	frsp f31, f31
-lbl_8005003C:
-/* 8005003C 0004CE3C  38 7F 00 1C */	addi r3, r31, 0x1c
-/* 80050040 0004CE40  38 9F 00 5C */	addi r4, r31, 0x5c
-/* 80050044 0004CE44  4B FF E4 AD */	bl xVec3Dot__FPC5xVec3PC5xVec3
-/* 80050048 0004CE48  FC 00 0A 10 */	fabs f0, f1
-/* 8005004C 0004CE4C  FC 00 00 18 */	frsp f0, f0
-/* 80050050 0004CE50  FC 00 F8 40 */	fcmpo cr0, f0, f31
-/* 80050054 0004CE54  40 81 00 18 */	ble lbl_8005006C
-/* 80050058 0004CE58  38 7F 00 1C */	addi r3, r31, 0x1c
-/* 8005005C 0004CE5C  38 9F 00 5C */	addi r4, r31, 0x5c
-/* 80050060 0004CE60  4B FF E4 91 */	bl xVec3Dot__FPC5xVec3PC5xVec3
-/* 80050064 0004CE64  FF E0 0A 10 */	fabs f31, f1
-/* 80050068 0004CE68  FF E0 F8 18 */	frsp f31, f31
-lbl_8005006C:
-/* 8005006C 0004CE6C  C0 22 88 24 */	lfs f1, zCamera_f_1_0-_SDA2_BASE_(r2)
-/* 80050070 0004CE70  FC 01 F8 40 */	fcmpo cr0, f1, f31
-/* 80050074 0004CE74  40 80 00 08 */	bge lbl_8005007C
-/* 80050078 0004CE78  48 00 00 08 */	b lbl_80050080
-lbl_8005007C:
-/* 8005007C 0004CE7C  FC 20 F8 90 */	fmr f1, f31
-lbl_80050080:
-/* 80050080 0004CE80  4B FB E6 91 */	bl xacos__Ff
-/* 80050084 0004CE84  C0 42 88 3C */	lfs f2, zCamera_f_114_592-_SDA2_BASE_(r2)
-/* 80050088 0004CE88  C0 02 88 34 */	lfs f0, zCamera_f_30_0-_SDA2_BASE_(r2)
-/* 8005008C 0004CE8C  EC 22 00 72 */	fmuls f1, f2, f1
-/* 80050090 0004CE90  EC 20 00 72 */	fmuls f1, f0, f1
-/* 80050094 0004CE94  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
-/* 80050098 0004CE98  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8005009C 0004CE9C  CB E1 00 10 */	lfd f31, 0x10(r1)
-/* 800500A0 0004CEA0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800500A4 0004CEA4  7C 08 03 A6 */	mtlr r0
-/* 800500A8 0004CEA8  38 21 00 20 */	addi r1, r1, 0x20
-/* 800500AC 0004CEAC  4E 80 00 20 */	blr 
-
 zCameraFlyUpdate__FP7xCameraf:
 /* 800500B0 0004CEB0  94 21 FE 30 */	stwu r1, -0x1d0(r1)
 /* 800500B4 0004CEB4  7C 08 02 A6 */	mflr r0
@@ -472,42 +413,6 @@ lbl_80050408:
 /* 80050430 0004D230  7C 08 03 A6 */	mtlr r0
 /* 80050434 0004D234  38 21 01 D0 */	addi r1, r1, 0x1d0
 /* 80050438 0004D238  4E 80 00 20 */	blr 
-
-.global __as__7zFlyKeyFRC7zFlyKey
-__as__7zFlyKeyFRC7zFlyKey:
-/* 8005043C 0004D23C  80 04 00 00 */	lwz r0, 0(r4)
-/* 80050440 0004D240  80 A4 00 04 */	lwz r5, 4(r4)
-/* 80050444 0004D244  90 03 00 00 */	stw r0, 0(r3)
-/* 80050448 0004D248  80 04 00 08 */	lwz r0, 8(r4)
-/* 8005044C 0004D24C  90 A3 00 04 */	stw r5, 4(r3)
-/* 80050450 0004D250  80 A4 00 0C */	lwz r5, 0xc(r4)
-/* 80050454 0004D254  90 03 00 08 */	stw r0, 8(r3)
-/* 80050458 0004D258  80 04 00 10 */	lwz r0, 0x10(r4)
-/* 8005045C 0004D25C  90 A3 00 0C */	stw r5, 0xc(r3)
-/* 80050460 0004D260  80 A4 00 14 */	lwz r5, 0x14(r4)
-/* 80050464 0004D264  90 03 00 10 */	stw r0, 0x10(r3)
-/* 80050468 0004D268  80 04 00 18 */	lwz r0, 0x18(r4)
-/* 8005046C 0004D26C  90 A3 00 14 */	stw r5, 0x14(r3)
-/* 80050470 0004D270  80 A4 00 1C */	lwz r5, 0x1c(r4)
-/* 80050474 0004D274  90 03 00 18 */	stw r0, 0x18(r3)
-/* 80050478 0004D278  80 04 00 20 */	lwz r0, 0x20(r4)
-/* 8005047C 0004D27C  90 A3 00 1C */	stw r5, 0x1c(r3)
-/* 80050480 0004D280  80 A4 00 24 */	lwz r5, 0x24(r4)
-/* 80050484 0004D284  90 03 00 20 */	stw r0, 0x20(r3)
-/* 80050488 0004D288  80 04 00 28 */	lwz r0, 0x28(r4)
-/* 8005048C 0004D28C  90 A3 00 24 */	stw r5, 0x24(r3)
-/* 80050490 0004D290  80 A4 00 2C */	lwz r5, 0x2c(r4)
-/* 80050494 0004D294  90 03 00 28 */	stw r0, 0x28(r3)
-/* 80050498 0004D298  80 04 00 30 */	lwz r0, 0x30(r4)
-/* 8005049C 0004D29C  90 A3 00 2C */	stw r5, 0x2c(r3)
-/* 800504A0 0004D2A0  80 A4 00 34 */	lwz r5, 0x34(r4)
-/* 800504A4 0004D2A4  90 03 00 30 */	stw r0, 0x30(r3)
-/* 800504A8 0004D2A8  80 04 00 38 */	lwz r0, 0x38(r4)
-/* 800504AC 0004D2AC  90 A3 00 34 */	stw r5, 0x34(r3)
-/* 800504B0 0004D2B0  C0 04 00 3C */	lfs f0, 0x3c(r4)
-/* 800504B4 0004D2B4  90 03 00 38 */	stw r0, 0x38(r3)
-/* 800504B8 0004D2B8  D0 03 00 3C */	stfs f0, 0x3c(r3)
-/* 800504BC 0004D2BC  4E 80 00 20 */	blr 
 
 .global zCameraFlyStart__FUi
 zCameraFlyStart__FUi:
@@ -2456,20 +2361,6 @@ lbl_800520E8:
 /* 800520EC 0004EEEC  38 00 00 00 */	li r0, 0
 /* 800520F0 0004EEF0  90 0D 8B 94 */	stw r0, zcam_longbounce-_SDA_BASE_(r13)
 /* 800520F4 0004EEF4  4E 80 00 20 */	blr 
-
-.global zCameraDisableTracking__F17camera_owner_enum
-zCameraDisableTracking__F17camera_owner_enum:
-/* 80052100 0004EF00  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
-/* 80052104 0004EF04  7C 00 1B 78 */	or r0, r0, r3
-/* 80052108 0004EF08  90 0D 8B D4 */	stw r0, stop_track-_SDA_BASE_(r13)
-/* 8005210C 0004EF0C  4E 80 00 20 */	blr 
-
-.global zCameraEnableTracking__F17camera_owner_enum
-zCameraEnableTracking__F17camera_owner_enum:
-/* 80052110 0004EF10  80 8D 8B D4 */	lwz r4, stop_track-_SDA_BASE_(r13)
-/* 80052114 0004EF14  7C 80 18 78 */	andc r0, r4, r3
-/* 80052118 0004EF18  90 0D 8B D4 */	stw r0, stop_track-_SDA_BASE_(r13)
-/* 8005211C 0004EF1C  4E 80 00 20 */	blr 
 
 .global zCameraIsTrackingDisabled__Fv
 zCameraIsTrackingDisabled__Fv:
