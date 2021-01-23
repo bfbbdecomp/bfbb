@@ -126,6 +126,7 @@ extern float32 zCamera_f_0_1; // 0.1
 extern float32 zCamera_f_3_5; // 3.5
 extern float32 zCamera_f_2_4; // 2.4
 extern float32 zCamera_f_0_523; // 0.5235988
+extern float32 zCamera_f_0_698; // 0.6981317
 extern float32 zCamera_f_3_141; // 3.141593 ~ pi
 extern float32 zCamera_f_20_0; // 20.0
 extern float32 zCamera_f_180_0; // 180.0
@@ -382,31 +383,10 @@ void zCameraFlyStart(uint32 assetID)
 void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, float32& hgoal,
                              float32& pitch_goal, float32& lktm, float32 dt)
 {
-// // Size=768
-//     r0 = zcam_bbounce;
-//     f28 = f1; // pitch_s
-//     f31 = f2; // dt
-//     r27 = r3; // cam
-//     cmpwi r0, 0
-//     r28 = r4; // dgoal
-//     r29 = r5; // hgoal
-//     r30 = r6; // pitch_goal
-//     r31 = r7; // lktm
-//     beq lbl_8005100C
+    float32 fVar;
 
     if (zcam_bbounce != 0)
     {
-
-    // r0 = zcam_highbounce;
-    // cmpwi r0, 0
-    // beq lbl_80050EDC
-    // _esc__2_unnamed_esc__::GetCurrentD(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-    // 0(r28) = f1; // [float32]
-    // _esc__2_unnamed_esc__::GetCurrentH(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-    // 0(r29) = f1; // [float32]
-    // _esc__2_unnamed_esc__::GetCurrentPitch(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-    // 0(r30) = f1; // [float32]
-    // b lbl_end
     
         if (zcam_highbounce != 0)
         {
@@ -415,264 +395,125 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
             pitch_goal = GetCurrentPitch();
             return;
         }
-    
-// lbl_80050EDC:
-//     r0 = zcam_near;
-//     cmpwi r0, 0
-//     beq lbl_80050EF0
-//     f1 = zCamera_f_3_5; // [float32]
-//     b lbl_80050EF4
-// lbl_80050EF0:
-//     _esc__2_unnamed_esc__::GetCurrentD(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-//     0(r28) = f1; // [float32]
 
+        // lbl_80050EDC                          lbl_80050EF0
         dgoal = zcam_near != 0 ? zCamera_f_3_5 : GetCurrentD();
-
-    
-// lbl_80050EF4:
-//     r0 = zcam_near;
-//     cmpwi r0, 0
-//     beq lbl_80050F0C
-//     f1 = zCamera_f_2_4; // [float32]
-//     b lbl_80050F10
-// lbl_80050F0C:
-//     _esc__2_unnamed_esc__::GetCurrentH(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-// lbl_80050F10:
-//     0(r29) = f1; // [float32]
-
+        // lbl_80050EF4                          lbl_80050F0C
         hgoal = zcam_near != 0 ? zCamera_f_2_4 : GetCurrentH();
 
-    // r0 = zcam_longbounce;
-    // cmpwi r0, 0
-    // beq lbl_80050FEC
-
+        // lbl_80050F10
         if (zcam_longbounce != 0)
         {
-
-    // r3 = zcam_playervel;
-    // f1 = 0(r3); // [float32]
-    // f0 = 4(r3); // [float32]
-    // fmuls f1, f1, f1
-    // f2 = 8(r3); // [float32]
-    // fmuls f0, f0, f0
-    // fmuls f2, f2, f2
-    // fadds f0, f1, f0
-    // fadds f1, f2, f0 // f1 = x^2 + y^2 + z^2
-    // xsqrt(float32); // [xsqrt__Ff]
-
-        float32 len = xsqrt(zcam_playervel->x * zcam_playervel->x +
+            float32 len = xsqrt(zcam_playervel->x * zcam_playervel->x +
                             zcam_playervel->y * zcam_playervel->y +
-                            zcam_playervel->z * zcam_playervel->z)
+                            zcam_playervel->z * zcam_playervel->z);
 
-        r3 = zcam_playervel;
-        r0 = 0;
-        cmplwi r3, 0
-        beq lbl_80050F68
-
-        bool cond = false;
-
-        if (zcam_playervel != NULL)
-        {
-    
-    // f0 = zCamera_f_0_0; // [float32]
-    // fcmpu cr0, f1, f0
-    // beq lbl_80050F68
-    // r0 = 1;
-
-            if (len != zCamera_f_0_0)
+            bool cond = false;
+            if (zcam_playervel != NULL)
             {
-                cond = true;
+                if (len != zCamera_f_0_0)
+                {
+                    cond = true;
+                }
             }
-        }
 
-
-//     r0 = zcam_bbounce;
-//     f28 = f1; // pitch_s
-//     f31 = f2; // dt
-//     r27 = r3; // cam
-//     cmpwi r0, 0
-//     r28 = r4; // dgoal
-//     r29 = r5; // hgoal
-//     r30 = r6; // pitch_goal
-//     r31 = r7; // lktm
-//     beq lbl_8005100C
-
-// lbl_80050F68:
-    // clrlwi. r0, r0, 0x18
-    // beq lbl_80050FB4
-    // f2 = 0x38(r27); // cam->mat.at.y
-    // f0 = 4(r3); // zcam_playervel->y
-    // f3 = 0x34(r27); // cam->mat.at.x
-    // fmuls f0, f2, f0
-    // f2 = 0(r3); // zcam_playervel->x
-    // f5 = 0x3c(r27); // cam->mat.at.z
-    // f4 = 8(r3); // zcam_playervel->z
-    // fmadds f0, f3, f2, f0
-    // f2 = zCamera_f_0_0; // [float32]
-    // fmadds f0, f5, f4, f0
-    // fdivs f0, f0, f1
-
-        float32 fVar;
-
-        if (cond)
-        {
-            fVar = (cam->mat.at.z * zcam_playervel->z +
-                    cam->mat.at.x * zcam_playervel->x +
-                    cam->mat.at.y * zcam_playervel->y) / len;
-
-        
-        fcmpo cr0, f2, f0
-        bge lbl_80050FA8
-        b lbl_80050FAC
-
-            if (zCamera_f_0_0 < fVar)
+            // lbl_80050F68
+            if (cond)
             {
+                fVar = (cam->mat.at.x * zcam_playervel->x +
+                        cam->mat.at.y * zcam_playervel->y +
+                        cam->mat.at.z * zcam_playervel->z) / len;
 
-// lbl_80050FA8:
-//     f2 = f0;
-    
+                //                            lbl_80050FA8
+                fVar = zCamera_f_0_0 < fVar ? zCamera_f_0_0 : fVar;
+                // lbl_80050FAC
+                fVar = -fVar;
+            }
+            // lbl_80050FB4
+            else {
                 fVar = zCamera_f_0_0;
             }
-    
-// lbl_80050FAC:
-//     fneg f1, f2
-//     b lbl_80050FB8
-         fVar = -fVar;
-    
-        }
-        else {
 
-// lbl_80050FB4:
-//     f1 = zCamera_f_0_0; // [float32]
+            // lbl_80050FB8
+            if (zcam_near != 0)
+            {
+                fVar = zCamera_f_3_141 * (zCamera_f_20_0 * fVar + zCamera_f_20_0) / zCamera_f_180_0;
+            }
+            // lbl_80050FE0
+            else {
+                fVar = zCamera_f_0_523;
+            }
 
-            fVar = zCamera_f_0_0;
-        }
-
-    
-// lbl_80050FB8:
-//     r0 = zcam_near;
-//     cmpwi r0, 0
-//     beq lbl_80050FE0
-
-        if (zcam_near != 0)
-        {
-        f0 = zCamera_f_20_0; // [float32]
-        f2 = zCamera_f_3_141; // [float32]
-        fmadds f1, f0, f1, f0
-        f0 = zCamera_f_180_0; // [float32]
-        fmuls f1, f2, f1
-        fdivs f0, f1, f0
-        b lbl_80050FE4
-
-        }
-        else {
-    // lbl_80050FE0:
-    //     f0 = zCamera_f_0_523; // [float32]
-            pitch_goal = zCamera_f_0_523;
+            pitch_goal = fVar;
             return;
         }
-    
-// lbl_80050FE4:
-//     0(r30) = f0; // [float32]
-//     b lbl_end
-
-
+        // lbl_80050FEC
+        else
+        {
+            if (zcam_near != 0)
+            {
+                fVar = zCamera_f_0_698;
+            }
+            // lbl_80051000
+            else
+            {
+                fVar = zCamera_f_0_523;
+            }
+            
+            // lbl_80051004
+            pitch_goal = fVar;
+            return;
+        }
     }
-        
+    // lbl_8005100C
+    else
+    {
+        float32 d = GetCurrentD(); // f29
+        float32 h = GetCurrentH(); // f30
+        float32 p = GetCurrentPitch(); // f1
 
-lbl_80050FEC:
-    r0 = zcam_near;
-    cmpwi r0, 0
-    beq lbl_80051000
-    f0 = lbl_803CD224; // [float32]
-    b lbl_80051004
-lbl_80051000:
-    f0 = lbl_803CD220; // [float32]
-lbl_80051004:
-    0(r30) = f0; // [float32]
-    b lbl_end
+        if (lassocam_enabled != false && stop_track == 0)
+        {
+            dgoal = lassocam_factor * (d - zcam_near_d) + zcam_near_d;
+            hgoal = lassocam_factor * (h - zcam_near_h) + zcam_near_h;
+            pitch_goal = lassocam_factor * (p - zcam_near_pitch) + zcam_near_pitch;
+            return;
+        }
+        // lbl_80051078
+        else
+        {
+            if (pitch_s > zCamera_f_0_0)
+            {
+                dgoal = pitch_s * (zcam_below_d - d) + d;
+                hgoal = pitch_s * (zcam_below_h - h) + h;
+                pitch_goal = pitch_s * (pitch_s * (pitch_s * (zcam_below_pitch - p))) + p;
+            }
+            // lbl_800510C0
+            else
+            {
+                dgoal = -pitch_s * (zcam_above_d - d) + d;
+                hgoal = -pitch_s * (zcam_above_h - h) + h;
+                pitch_goal = -pitch_s * (zcam_above_pitch - p) + p;
+            }
+            // lbl_800510F4
+            if (lktm > zCamera_f_0_1)
+            {
+                lktm = lktm - dt;
+                if (lktm < zCamera_f_0_1)
+                {
+                    lktm = zCamera_f_0_1;
+                }
+            }
+            // lbl_80051124
+            else
+            {
+                lktm = zCamera_f_0_1;
+            }
 
-
+            
+        }
     }
-
-
-lbl_8005100C:
-    _esc__2_unnamed_esc__::GetCurrentD(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentD__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-    f29 = f1;
-    _esc__2_unnamed_esc__::GetCurrentH(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-    f30 = f1;
-    _esc__2_unnamed_esc__::GetCurrentPitch(_z, const , , , , , , int8, , , , , int16, int8, , , _F); // [GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv]
-    r0 = lbl_803CB4D8; // [int8]
-    cmplwi r0, 0
-    beq lbl_80051078
-    r0 = lbl_803CB4D4;
-    cmplwi r0, 0
-    bne lbl_80051078
-    f3 = zcam_near_d; // [float32]
-    f2 = lbl_803CB4DC; // [float32]
-    fsubs f0, f29, f3
-    fmadds f0, f2, f0, f3
-    0(r28) = f0; // [float32]
-    f3 = zcam_near_h; // [float32]
-    f2 = lbl_803CB4DC; // [float32]
-    fsubs f0, f30, f3
-    fmadds f0, f2, f0, f3
-    0(r29) = f0; // [float32]
-    f3 = zcam_near_pitch; // [float32]
-    f2 = lbl_803CB4DC; // [float32]
-    fsubs f0, f1, f3
-    fmadds f0, f2, f0, f3
-    0(r30) = f0; // [float32]
-    b lbl_end
-lbl_80051078:
-    f0 = zCamera_f_0_0; // [float32]
-    fcmpo cr0, f28, f0
-    ble lbl_800510C0
-    f0 = zcam_below_d; // [float32]
-    fsubs f0, f0, f29
-    fmadds f0, f28, f0, f29
-    0(r28) = f0; // [float32]
-    f0 = zcam_below_h; // [float32]
-    fsubs f0, f0, f30
-    fmadds f0, f28, f0, f30
-    0(r29) = f0; // [float32]
-    f0 = zcam_below_pitch; // [float32]
-    fsubs f0, f0, f1
-    fmuls f0, f28, f0
-    fmuls f0, f28, f0
-    fmadds f0, f28, f0, f1
-    0(r30) = f0; // [float32]
-    b lbl_800510F4
-lbl_800510C0:
-    f0 = zcam_above_d; // [float32]
-    fneg f2, f28
-    fsubs f0, f0, f29
-    fmadds f0, f2, f0, f29
-    0(r28) = f0; // [float32]
-    f0 = zcam_above_h; // [float32]
-    fsubs f0, f0, f30
-    fmadds f0, f2, f0, f30
-    0(r29) = f0; // [float32]
-    f0 = zcam_above_pitch; // [float32]
-    fsubs f0, f0, f1
-    fmadds f0, f2, f0, f1
-    0(r30) = f0; // [float32]
-lbl_800510F4:
-    f1 = 0(r31); // [float32]
-    f0 = zCamera_f_0_1; // [float32]
-    fcmpo cr0, f1, f0
-    ble lbl_80051124
-    fsubs f0, f1, f31
-    0(r31) = f0; // [float32]
-    f1 = 0(r31); // [float32]
-    f0 = zCamera_f_0_1; // [float32]
-    fcmpo cr0, f1, f0
-    bge lbl_end
-    0(r31) = f0; // [float32]
-    b lbl_end
-lbl_80051124:
-    0(r31) = f0; // [float32]
-lbl_end:
+    // lbl_80051004
 }
 #endif
 

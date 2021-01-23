@@ -38,8 +38,8 @@ zCameraReset__FP7xCamera:
 /* 8004FC58 0004CA58  C0 02 88 1C */	lfs f0, zCamera_f_0_0-_SDA2_BASE_(r2)
 /* 8004FC5C 0004CA5C  D0 0D 8B 78 */	stfs f0, zcam_overrot_tmr-_SDA_BASE_(r13)
 /* 8004FC60 0004CA60  90 0D 8B E0 */	stw r0, lbl_803CB4E0-_SDA_BASE_(r13)
-/* 8004FC64 0004CA64  98 0D 8B D8 */	stb r0, lbl_803CB4D8-_SDA_BASE_(r13)
-/* 8004FC68 0004CA68  90 0D 8B D4 */	stw r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 8004FC64 0004CA64  98 0D 8B D8 */	stb r0, lassocam_enabled-_SDA_BASE_(r13)
+/* 8004FC68 0004CA68  90 0D 8B D4 */	stw r0, stop_track-_SDA_BASE_(r13)
 /* 8004FC6C 0004CA6C  C0 02 88 20 */	lfs f0, zCamera_f_n1_0_e38-_SDA2_BASE_(r2)
 /* 8004FC70 0004CA70  D0 0D 81 3C */	stfs f0, zcam_mintgtheight-_SDA_BASE_(r13)
 /* 8004FC74 0004CA74  C0 22 88 18 */	lfs f1, zCamera_f_75_0-_SDA2_BASE_(r2)
@@ -1245,7 +1245,6 @@ lbl_80050FB8:
 /* 80050FB8 0004DDB8  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 80050FBC 0004DDBC  2C 00 00 00 */	cmpwi r0, 0
 /* 80050FC0 0004DDC0  41 82 00 20 */	beq lbl_80050FE0
-.global zCamera_f_20_0
 /* 80050FC4 0004DDC4  C0 02 88 98 */	lfs f0, zCamera_f_20_0-_SDA2_BASE_(r2)
 /* 80050FC8 0004DDC8  C0 42 88 94 */	lfs f2, zCamera_f_3_141-_SDA2_BASE_(r2)
 /* 80050FCC 0004DDCC  EC 20 00 7A */	fmadds f1, f0, f1, f0
@@ -1262,7 +1261,7 @@ lbl_80050FEC:
 /* 80050FEC 0004DDEC  80 0D 8B 7C */	lwz r0, zcam_near-_SDA_BASE_(r13)
 /* 80050FF0 0004DDF0  2C 00 00 00 */	cmpwi r0, 0
 /* 80050FF4 0004DDF4  41 82 00 0C */	beq lbl_80051000
-/* 80050FF8 0004DDF8  C0 02 88 A4 */	lfs f0, lbl_803CD224-_SDA2_BASE_(r2)
+/* 80050FF8 0004DDF8  C0 02 88 A4 */	lfs f0, zCamera_f_0_698-_SDA2_BASE_(r2)
 /* 80050FFC 0004DDFC  48 00 00 08 */	b lbl_80051004
 lbl_80051000:
 /* 80051000 0004DE00  C0 02 88 A0 */	lfs f0, zCamera_f_0_523-_SDA2_BASE_(r2)
@@ -1275,24 +1274,24 @@ lbl_8005100C:
 /* 80051014 0004DE14  4B FF ED 15 */	bl GetCurrentH__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
 /* 80051018 0004DE18  FF C0 08 90 */	fmr f30, f1
 /* 8005101C 0004DE1C  4B FF EC D9 */	bl GetCurrentPitch__21_esc__2_unnamed_esc__2_zCamera_cpp_esc__2_Fv
-/* 80051020 0004DE20  88 0D 8B D8 */	lbz r0, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 80051020 0004DE20  88 0D 8B D8 */	lbz r0, lassocam_enabled-_SDA_BASE_(r13)
 /* 80051024 0004DE24  28 00 00 00 */	cmplwi r0, 0
 /* 80051028 0004DE28  41 82 00 50 */	beq lbl_80051078
-/* 8005102C 0004DE2C  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 8005102C 0004DE2C  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80051030 0004DE30  28 00 00 00 */	cmplwi r0, 0
 /* 80051034 0004DE34  40 82 00 44 */	bne lbl_80051078
 /* 80051038 0004DE38  C0 6D 80 D0 */	lfs f3, zcam_near_d-_SDA_BASE_(r13)
-/* 8005103C 0004DE3C  C0 4D 8B DC */	lfs f2, lbl_803CB4DC-_SDA_BASE_(r13)
+/* 8005103C 0004DE3C  C0 4D 8B DC */	lfs f2, lassocam_factor-_SDA_BASE_(r13)
 /* 80051040 0004DE40  EC 1D 18 28 */	fsubs f0, f29, f3
 /* 80051044 0004DE44  EC 02 18 3A */	fmadds f0, f2, f0, f3
 /* 80051048 0004DE48  D0 1C 00 00 */	stfs f0, 0(r28)
 /* 8005104C 0004DE4C  C0 6D 80 D4 */	lfs f3, zcam_near_h-_SDA_BASE_(r13)
-/* 80051050 0004DE50  C0 4D 8B DC */	lfs f2, lbl_803CB4DC-_SDA_BASE_(r13)
+/* 80051050 0004DE50  C0 4D 8B DC */	lfs f2, lassocam_factor-_SDA_BASE_(r13)
 /* 80051054 0004DE54  EC 1E 18 28 */	fsubs f0, f30, f3
 /* 80051058 0004DE58  EC 02 18 3A */	fmadds f0, f2, f0, f3
 /* 8005105C 0004DE5C  D0 1D 00 00 */	stfs f0, 0(r29)
 /* 80051060 0004DE60  C0 6D 80 D8 */	lfs f3, zcam_near_pitch-_SDA_BASE_(r13)
-/* 80051064 0004DE64  C0 4D 8B DC */	lfs f2, lbl_803CB4DC-_SDA_BASE_(r13)
+/* 80051064 0004DE64  C0 4D 8B DC */	lfs f2, lassocam_factor-_SDA_BASE_(r13)
 /* 80051068 0004DE68  EC 01 18 28 */	fsubs f0, f1, f3
 /* 8005106C 0004DE6C  EC 02 18 3A */	fmadds f0, f2, f0, f3
 /* 80051070 0004DE70  D0 1E 00 00 */	stfs f0, 0(r30)
@@ -1521,7 +1520,7 @@ lbl_800513A4:
 /* 800513A4 0004E1A4  C0 3E 01 60 */	lfs f1, 0x160(r30)
 /* 800513A8 0004E1A8  C0 1E 01 70 */	lfs f0, 0x170(r30)
 /* 800513AC 0004E1AC  EC 21 00 72 */	fmuls f1, f1, f1
-/* 800513B0 0004E1B0  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 800513B0 0004E1B0  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 800513B4 0004E1B4  EC 00 00 32 */	fmuls f0, f0, f0
 /* 800513B8 0004E1B8  54 00 06 31 */	rlwinm. r0, r0, 0, 0x18, 0x18
 /* 800513BC 0004E1BC  EC 01 00 2A */	fadds f0, f1, f0
@@ -1576,7 +1575,7 @@ lbl_8005143C:
 /* 8005146C 0004E26C  C0 22 88 18 */	lfs f1, zCamera_f_75_0-_SDA2_BASE_(r2)
 /* 80051470 0004E270  4B FB D0 21 */	bl xCameraSetFOV__FP7xCameraf
 lbl_80051474:
-/* 80051474 0004E274  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80051474 0004E274  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80051478 0004E278  28 00 00 00 */	cmplwi r0, 0
 /* 8005147C 0004E27C  41 82 00 2C */	beq lbl_800514A8
 /* 80051480 0004E280  54 00 06 F7 */	rlwinm. r0, r0, 0, 0x1b, 0x1b
@@ -1803,15 +1802,15 @@ lbl_800517A0:
 /* 800517A0 0004E5A0  C0 0D 80 E4 */	lfs f0, zcam_far_pitch-_SDA_BASE_(r13)
 lbl_800517A4:
 /* 800517A4 0004E5A4  D0 01 00 08 */	stfs f0, 8(r1)
-/* 800517A8 0004E5A8  88 AD 8B D8 */	lbz r5, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 800517A8 0004E5A8  88 AD 8B D8 */	lbz r5, lassocam_enabled-_SDA_BASE_(r13)
 /* 800517AC 0004E5AC  28 05 00 00 */	cmplwi r5, 0
 /* 800517B0 0004E5B0  41 82 00 3C */	beq lbl_800517EC
-/* 800517B4 0004E5B4  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 800517B4 0004E5B4  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 800517B8 0004E5B8  28 00 00 00 */	cmplwi r0, 0
 /* 800517BC 0004E5BC  40 82 00 30 */	bne lbl_800517EC
 /* 800517C0 0004E5C0  C0 4D 80 D0 */	lfs f2, zcam_near_d-_SDA_BASE_(r13)
 /* 800517C4 0004E5C4  C0 01 00 10 */	lfs f0, 0x10(r1)
-/* 800517C8 0004E5C8  C0 6D 8B DC */	lfs f3, lbl_803CB4DC-_SDA_BASE_(r13)
+/* 800517C8 0004E5C8  C0 6D 8B DC */	lfs f3, lassocam_factor-_SDA_BASE_(r13)
 /* 800517CC 0004E5CC  EC 20 10 28 */	fsubs f1, f0, f2
 /* 800517D0 0004E5D0  C0 01 00 0C */	lfs f0, 0xc(r1)
 /* 800517D4 0004E5D4  EC 23 10 7A */	fmadds f1, f3, f1, f2
@@ -1862,7 +1861,7 @@ lbl_80051850:
 /* 80051878 0004E678  EC 01 00 32 */	fmuls f0, f1, f0
 /* 8005187C 0004E67C  EC 23 00 32 */	fmuls f1, f3, f0
 /* 80051880 0004E680  41 82 00 18 */	beq lbl_80051898
-/* 80051884 0004E684  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80051884 0004E684  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80051888 0004E688  28 00 00 00 */	cmplwi r0, 0
 /* 8005188C 0004E68C  40 82 00 0C */	bne lbl_80051898
 /* 80051890 0004E690  C0 02 88 C8 */	lfs f0, lbl_803CD248-_SDA2_BASE_(r2)
@@ -1923,7 +1922,7 @@ lbl_8005192C:
 /* 80051954 0004E754  EC 01 00 32 */	fmuls f0, f1, f0
 /* 80051958 0004E758  EC 23 00 32 */	fmuls f1, f3, f0
 /* 8005195C 0004E75C  41 82 00 18 */	beq lbl_80051974
-/* 80051960 0004E760  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80051960 0004E760  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80051964 0004E764  28 00 00 00 */	cmplwi r0, 0
 /* 80051968 0004E768  40 82 00 0C */	bne lbl_80051974
 /* 8005196C 0004E76C  C0 02 88 C8 */	lfs f0, lbl_803CD248-_SDA2_BASE_(r2)
@@ -2209,12 +2208,12 @@ lbl_80051D50:
 lbl_80051D60:
 /* 80051D60 0004EB60  EC 04 01 72 */	fmuls f0, f4, f5
 /* 80051D64 0004EB64  C0 2D 81 24 */	lfs f1, zcam_overrot_rate-_SDA_BASE_(r13)
-/* 80051D68 0004EB68  88 0D 8B D8 */	lbz r0, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 80051D68 0004EB68  88 0D 8B D8 */	lbz r0, lassocam_enabled-_SDA_BASE_(r13)
 /* 80051D6C 0004EB6C  EC 01 00 32 */	fmuls f0, f1, f0
 /* 80051D70 0004EB70  28 00 00 00 */	cmplwi r0, 0
 /* 80051D74 0004EB74  EC 22 00 32 */	fmuls f1, f2, f0
 /* 80051D78 0004EB78  41 82 00 18 */	beq lbl_80051D90
-/* 80051D7C 0004EB7C  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80051D7C 0004EB7C  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80051D80 0004EB80  28 00 00 00 */	cmplwi r0, 0
 /* 80051D84 0004EB84  40 82 00 0C */	bne lbl_80051D90
 /* 80051D88 0004EB88  C0 02 88 C8 */	lfs f0, lbl_803CD248-_SDA2_BASE_(r2)
@@ -2289,11 +2288,11 @@ lbl_80051E78:
 /* 80051E88 0004EC88  EC 57 00 32 */	fmuls f2, f23, f0
 lbl_80051E8C:
 /* 80051E8C 0004EC8C  4B FB 41 E5 */	bl xatan2__Fff
-/* 80051E90 0004EC90  88 0D 8B D8 */	lbz r0, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 80051E90 0004EC90  88 0D 8B D8 */	lbz r0, lassocam_enabled-_SDA_BASE_(r13)
 /* 80051E94 0004EC94  FE C0 08 90 */	fmr f22, f1
 /* 80051E98 0004EC98  28 00 00 00 */	cmplwi r0, 0
 /* 80051E9C 0004EC9C  41 82 00 38 */	beq lbl_80051ED4
-/* 80051EA0 0004ECA0  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80051EA0 0004ECA0  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80051EA4 0004ECA4  28 00 00 00 */	cmplwi r0, 0
 /* 80051EA8 0004ECA8  40 82 00 2C */	bne lbl_80051ED4
 /* 80051EAC 0004ECAC  C0 A2 88 1C */	lfs f5, zCamera_f_0_0-_SDA2_BASE_(r2)
@@ -2382,10 +2381,10 @@ lbl_80051FE8:
 /* 80051FE8 0004EDE8  FC 20 F8 90 */	fmr f1, f31
 /* 80051FEC 0004EDEC  7F C3 F3 78 */	mr r3, r30
 /* 80051FF0 0004EDF0  4B FB AC 21 */	bl xCameraUpdate__FP7xCameraf
-/* 80051FF4 0004EDF4  88 0D 8B D8 */	lbz r0, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 80051FF4 0004EDF4  88 0D 8B D8 */	lbz r0, lassocam_enabled-_SDA_BASE_(r13)
 /* 80051FF8 0004EDF8  28 00 00 00 */	cmplwi r0, 0
 /* 80051FFC 0004EDFC  41 82 00 14 */	beq lbl_80052010
-/* 80052000 0004EE00  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80052000 0004EE00  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80052004 0004EE04  28 00 00 00 */	cmplwi r0, 0
 /* 80052008 0004EE08  40 82 00 08 */	bne lbl_80052010
 /* 8005200C 0004EE0C  D3 9E 01 80 */	stfs f28, 0x180(r30)
@@ -2460,21 +2459,21 @@ lbl_800520E8:
 
 .global zCameraDisableTracking__F17camera_owner_enum
 zCameraDisableTracking__F17camera_owner_enum:
-/* 80052100 0004EF00  80 0D 8B D4 */	lwz r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80052100 0004EF00  80 0D 8B D4 */	lwz r0, stop_track-_SDA_BASE_(r13)
 /* 80052104 0004EF04  7C 00 1B 78 */	or r0, r0, r3
-/* 80052108 0004EF08  90 0D 8B D4 */	stw r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80052108 0004EF08  90 0D 8B D4 */	stw r0, stop_track-_SDA_BASE_(r13)
 /* 8005210C 0004EF0C  4E 80 00 20 */	blr 
 
 .global zCameraEnableTracking__F17camera_owner_enum
 zCameraEnableTracking__F17camera_owner_enum:
-/* 80052110 0004EF10  80 8D 8B D4 */	lwz r4, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80052110 0004EF10  80 8D 8B D4 */	lwz r4, stop_track-_SDA_BASE_(r13)
 /* 80052114 0004EF14  7C 80 18 78 */	andc r0, r4, r3
-/* 80052118 0004EF18  90 0D 8B D4 */	stw r0, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80052118 0004EF18  90 0D 8B D4 */	stw r0, stop_track-_SDA_BASE_(r13)
 /* 8005211C 0004EF1C  4E 80 00 20 */	blr 
 
 .global zCameraIsTrackingDisabled__Fv
 zCameraIsTrackingDisabled__Fv:
-/* 80052120 0004EF20  80 6D 8B D4 */	lwz r3, lbl_803CB4D4-_SDA_BASE_(r13)
+/* 80052120 0004EF20  80 6D 8B D4 */	lwz r3, stop_track-_SDA_BASE_(r13)
 /* 80052124 0004EF24  4E 80 00 20 */	blr 
 
 .global zCameraDisableInput__Fv
@@ -2492,23 +2491,23 @@ zCameraEnableInput__Fv:
 .global zCameraDisableLassoCam__Fv
 zCameraDisableLassoCam__Fv:
 /* 80052140 0004EF40  38 00 00 00 */	li r0, 0
-/* 80052144 0004EF44  98 0D 8B D8 */	stb r0, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 80052144 0004EF44  98 0D 8B D8 */	stb r0, lassocam_enabled-_SDA_BASE_(r13)
 /* 80052148 0004EF48  4E 80 00 20 */	blr 
 
 .global zCameraEnableLassoCam__Fv
 zCameraEnableLassoCam__Fv:
 /* 8005214C 0004EF4C  38 00 00 01 */	li r0, 1
-/* 80052150 0004EF50  98 0D 8B D8 */	stb r0, lbl_803CB4D8-_SDA_BASE_(r13)
+/* 80052150 0004EF50  98 0D 8B D8 */	stb r0, lassocam_enabled-_SDA_BASE_(r13)
 /* 80052154 0004EF54  4E 80 00 20 */	blr 
 
 .global zCameraSetLassoCamFactor__Ff
 zCameraSetLassoCamFactor__Ff:
-/* 80052158 0004EF58  D0 2D 8B DC */	stfs f1, lbl_803CB4DC-_SDA_BASE_(r13)
+/* 80052158 0004EF58  D0 2D 8B DC */	stfs f1, lassocam_factor-_SDA_BASE_(r13)
 /* 8005215C 0004EF5C  4E 80 00 20 */	blr 
 
 .global zCameraGetLassoCamFactor__Fv
 zCameraGetLassoCamFactor__Fv:
-/* 80052160 0004EF60  C0 2D 8B DC */	lfs f1, lbl_803CB4DC-_SDA_BASE_(r13)
+/* 80052160 0004EF60  C0 2D 8B DC */	lfs f1, lassocam_factor-_SDA_BASE_(r13)
 /* 80052164 0004EF64  4E 80 00 20 */	blr 
 
 .global zCameraGetConvers__Fv
@@ -2823,7 +2822,8 @@ stop_track:
 .global lassocam_enabled
 lassocam_enabled:
 	.skip 0x4
-lbl_803CB4DC:
+.global lassocam_factor
+lassocam_factor:
 	.skip 0x4
 .global wall_jump_enabled
 wall_jump_enabled:
@@ -2960,7 +2960,8 @@ zCamera_f_180_0:
 .global zCamera_f_0_523
 zCamera_f_0_523:
 	.incbin "baserom.dol", 0x2B6AC0, 0x4
-lbl_803CD224:
+.global zCamera_f_0_698
+zCamera_f_0_698:
 	.incbin "baserom.dol", 0x2B6AC4, 0x4
 lbl_803CD228:
 	.incbin "baserom.dol", 0x2B6AC8, 0x4
