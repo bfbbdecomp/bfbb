@@ -122,10 +122,6 @@ uint32 xUtil_crc_init()
     return 0xFFFFFFFF;
 }
 
-#ifndef NON_MATCHING
-// func_8004DFC8
-#pragma GLOBAL_ASM("asm/Core/x/xutil.s", "xUtil_crc_update__FUiPci")
-#else
 uint32 xUtil_crc_update(uint32 crc_accum, char* data, int32 datasize)
 {
     int32 i, j;
@@ -137,13 +133,12 @@ uint32 xUtil_crc_update(uint32 crc_accum, char* data, int32 datasize)
 
     for (i = 0; i < datasize; i++)
     {
-        // non-matching: incorrect registers
-        crc_accum = (crc_accum << 8) ^ g_crc32_table[((crc_accum >> 24) ^ *data++) & 0xff];
+        j = ((crc_accum >> 24) ^ *data++) & 0xff;
+        crc_accum = (crc_accum << 8) ^ g_crc32_table[j];
     }
 
     return crc_accum;
 }
-#endif
 
 int32 xUtil_yesno(float32 wt_yes)
 {
@@ -160,20 +155,16 @@ int32 xUtil_yesno(float32 wt_yes)
     return (xurand() <= wt_yes);
 }
 
-#ifndef NON_MATCHING
-// func_8004E1E4
-#pragma GLOBAL_ASM("asm/Core/x/xutil.s", "xUtil_wtadjust__FPfif")
-#else
 void xUtil_wtadjust(float32* wts, int32 cnt, float32 arbref)
 {
+    const volatile float32 ZERO = 0.0f;
+
     int32 i;
     float32 sum = 0.0f, fac;
 
     for (i = 0; i < cnt; i++)
     {
-        // non-matching: 0.0f constant loaded outside of loop
-
-        if (wts[i] < 0.0f)
+        if (wts[i] < ZERO)
         {
             wts[i] = -wts[i];
         }
@@ -188,4 +179,3 @@ void xUtil_wtadjust(float32* wts, int32 cnt, float32 arbref)
         wts[i] *= fac;
     }
 }
-#endif

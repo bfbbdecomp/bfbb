@@ -117,7 +117,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Core/x/xTimer.o                  \
     $(OBJ_DIR)/asm/Core/x/xTRC.o                    \
     $(OBJ_DIR)/src/Core/x/xTRC.o                    \
-    $(OBJ_DIR)/asm/Core/x/xutil.o                   \
     $(OBJ_DIR)/src/Core/x/xutil.o                   \
     $(OBJ_DIR)/asm/Core/x/xVec3.o                   \
     $(OBJ_DIR)/src/Core/x/xVec3.o                   \
