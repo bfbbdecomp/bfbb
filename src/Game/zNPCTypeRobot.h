@@ -60,8 +60,6 @@ struct zNPCRobot : zNPCCommon
     void InflictPain(int32 numHitPoints, int32 giveCreditToPlayer);
     void LassoNotify(en_LASSO_EVENT event);
     void SyncStunGlyph(float32 tmr_remain, float32 height);
-    void Stun(float32 stuntime);
-    int32 SetCarryState(en_NPC_CARRY_STATE stat);
     void AddStunThrow(xPsyche* psy,
                       int32 (*eval_evilpat)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_stunned)(xGoal*, void*, en_trantype*, float32, void*),
@@ -84,7 +82,8 @@ struct zNPCRobot : zNPCCommon
                         int (*)(xGoal*, void*, en_trantype*, float, void*));
     void CheckFalling();
     void DoAliveStuff(float32 dt);
-    float32 GenShadCacheRad();
+    int32 IsWounded();
+    int32 IsDead();
 
     // vTable (xNPCBasic)
 
@@ -114,14 +113,39 @@ struct zNPCRobot : zNPCCommon
     void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
     int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     void DuploOwner(zNPCCommon* duper);
+    int32 SetCarryState(en_NPC_CARRY_STATE stat);
+    void Stun(float32 stuntime);
+    float32 GenShadCacheRad();
+    xEntDrive* PRIV_GetDriverData();
+    zNPCLassoInfo* PRIV_GetLassoData();
+    int32 LassoSetup();
 
     // vTable (zNPCRobot)
-
-    virtual xEntDrive* PRIV_GetDriverData();
-    virtual zNPCLassoInfo* PRIV_GetLassoData();
-    virtual int32 LassoSetup();
     virtual int32 RoboHandleMail(NPCMsg* mail);
     virtual int32 IsDying();
+    virtual void LassoModelIndex(int32* idxgrab, int32* idxhold);
+};
+
+struct zNPCSlick : zNPCRobot
+{
+    float32 rad_shield;
+    float32 tmr_repairShield;
+    float32 tmr_invuln;
+    float32 alf_shieldCurrent;
+    float32 alf_shieldDesired;
+
+    void YouOwnSlipFX();
+    void BUpdate(xVec3* pos);
+    void RopePopsShield();
+    void ShieldUpdate(float32 dt);
+    void Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, xVec3* vec_hit);
+    void Process(xScene* xscn, float32 dt);
+    uint32 AnimPick(int32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void ParseINI();
+    void Reset();
+    void Init(xEntAsset* asset);
+    void LassoModelIndex(int32* idxgrab, int32* idxhold);
 };
 
 void ZNPC_Robot_Startup();
@@ -133,5 +157,6 @@ void ROBO_KillEffects();
 void zNPCFodBzzt_ResetDanceParty();
 void ROBO_InitEffects();
 int32 DUMY_grul_returnToIdle(xGoal*, void*, en_trantype*, float32, void*);
+int32 xEntIsEnabled(xEnt* ent);
 
 #endif
