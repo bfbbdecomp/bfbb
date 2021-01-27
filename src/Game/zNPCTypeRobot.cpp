@@ -18,6 +18,8 @@ extern int32 g_needuvincr_nightlight;
 extern int32 g_needuvincr_slickshield;
 extern int32 cnt_alerthokey__11zNPCFodBzzt;
 extern NPCSndTrax g_sndTrax_Robot[2];
+extern float32 zNPCRobot_f_0_0;
+extern float32 zNPCRobot_f_1_0;
 
 void zNPCRobot_Timestep(float32 dt);
 void zNPCSleepy_Timestep(float32 dt);
@@ -189,8 +191,69 @@ void zNPCRobot::Init(xEntAsset* asset)
     this->flags1.flg_basenpc |= 8;
 }
 
-// func_800F79AC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "Reset__9zNPCRobotFv")
+void zNPCRobot::Reset()
+{
+    zNPCGoalDead* goal;
+    int32 rc;
+    NPCConfig* conf = cfg_npc;
+    xPsyche* psy;
+
+    if (conf->dst_castShadow < zNPCRobot_f_0_0 && !(flg_move & 4))
+    {
+        conf->dst_castShadow = zNPCRobot_f_1_0;
+    }
+
+    if (conf->rad_shadowCache < zNPCRobot_f_0_0)
+    {
+        conf->rad_shadowCache = GenShadCacheRad();
+    }
+
+    zNPCCommon::Reset();
+
+    hitpoints = cfg_npc->pts_damage;
+
+    if (PRIV_GetLassoData())
+    {
+        flg_vuln |= 0x1000000;
+    }
+
+    if (xNPCBasic::SelfType() != 0x4e54523a)
+    {
+        psy = psy_instinct;
+        if ((int*)npc_duplodude)
+        {
+            goal = (zNPCGoalDead*)psy->FindGoal(0x4e47526a);
+            goal->DieQuietly();
+            psy_instinct->GoalSet(0x4e47526a, 1);
+        }
+        else
+        {
+            if (!(int*)xEntIsEnabled(this))
+            {
+                goal = (zNPCGoalDead*)psy->FindGoal(0x4e47526a);
+                goal->DieQuietly();
+                psy_instinct->GoalSet(0x4e47526a, 1);
+            }
+            else
+            {
+                psy_instinct->GoalSet(0x4e474e30, 1);
+            }
+        }
+    }
+
+    rc = arena.NeedToCycle(this);
+    if (rc == 2)
+    {
+        arena.Cycle(this, 1);
+    }
+    else
+    {
+        if (rc)
+        {
+            arena.Cycle(this, 0);
+        }
+    }
+}
 
 // func_800F7B48
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "GenShadCacheRad__9zNPCRobotFv")
@@ -310,8 +373,10 @@ void zNPCRobot::DuploOwner(zNPCCommon* duper)
 // func_800F8CA0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsDying__9zNPCRobotFv")
 
-// func_800F8D48
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsWounded__9zNPCRobotFv")
+int32 zNPCRobot::IsWounded()
+{
+    return IsDead() ? 0 : cfg_npc->pts_damage - hitpoints;
+}
 
 // func_800F8D94
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SetCarryState__9zNPCRobotF18en_NPC_CARRY_STATE")
@@ -995,8 +1060,10 @@ void UVAModelInfo::UVVelSet(float x, float y)
 // func_80102684
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "__ct__9zNPCRobotFi")
 
-// func_801026C8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "PRIV_GetLassoData__9zNPCRobotFv")
+zNPCLassoInfo* zNPCRobot::PRIV_GetLassoData()
+{
+    return &raw_lassoinfo;
+}
 
 // func_801026D0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsAlive__9zNPCRobotFv")
@@ -1004,14 +1071,22 @@ void UVAModelInfo::UVVelSet(float x, float y)
 // func_801026F8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsDead__9zNPCRobotFv")
 
-// func_80102730
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LassoModelIndex__9zNPCRobotFPiPi")
+void zNPCRobot::LassoModelIndex(int32* idxgrab, int32* idxhold)
+{
+    *idxgrab = 0xffffffff;
+    *idxhold = 0xffffffff;
+}
 
-// func_80102740
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LassoModelIndex__9zNPCSlickFPiPi")
+void zNPCSlick::LassoModelIndex(int32* idxgrab, int32* idxhold)
+{
+    *idxgrab = 2;
+    *idxhold = 3;
+}
 
-// func_80102754
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsHealthy__9zNPCRobotFv")
+int32 zNPCRobot::IsHealthy()
+{
+    return hitpoints & ~(hitpoints >> 0x1f);
+}
 
 // func_80102764
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ColChkByFlags__9zNPCRobotCFv")
@@ -1019,8 +1094,10 @@ void UVAModelInfo::UVVelSet(float x, float y)
 // func_8010276C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ColPenByFlags__9zNPCRobotCFv")
 
-// func_80102774
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "PRIV_GetDriverData__9zNPCRobotFv")
+xEntDrive* zNPCRobot::PRIV_GetDriverData()
+{
+    return &raw_drvdata;
+}
 
 // func_8010277C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LassoModelIndex__13zNPCTubeSlaveFPiPi")
@@ -1109,8 +1186,11 @@ void UVAModelInfo::UVVelSet(float x, float y)
 // func_80102948
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LassoModelIndex__10zNPCFodderFPiPi")
 
-// func_80102958
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "xEntIsEnabled__FP4xEnt")
+int32 xEntIsEnabled(xEnt* ent)
+
+{
+    return xBaseIsEnabled((xBase*)ent) & 0xff;
+}
 
 // func_8010297C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "SetSafety__7xPsycheFi")

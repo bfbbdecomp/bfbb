@@ -368,6 +368,7 @@ struct zNPCCommon : xNPCBasic
 
     zNPCCommon(int32);
 
+    int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     void AddScripting(xPsyche* psy,
                       int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
@@ -385,6 +386,7 @@ struct zNPCCommon : xNPCBasic
     // vTable (xNPCBasic)
 
     void Init(xEntAsset* asset);
+    void Reset();
     void Process(xScene* xscn, float32 dt);
     void NewTime(xScene* xscn, float32 dt);
     void Destroy();
@@ -408,7 +410,7 @@ struct zNPCCommon : xNPCBasic
     virtual int32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
     virtual int32 SetCarryState();
-    virtual void stun();
+    virtual void Stun(float32 stuntime);
     virtual void SpeakBegin();
     virtual void SpeakEnd();
     virtual void SpeakStart();
@@ -417,7 +419,9 @@ struct zNPCCommon : xNPCBasic
     virtual void GetParm(en_npcparm pid, zMovePoint** val);
     virtual void GetParmDefault(en_npcparm pid, void* val);
     virtual float32 GenShadCacheRad();
-    // Continue with 0x2935D0
+    virtual xEntDrive* PRIV_GetDriverData();
+    virtual zNPCLassoInfo* PRIV_GetLassoData();
+    virtual int32 LassoSetup();
 };
 
 struct NPCSysEvent
