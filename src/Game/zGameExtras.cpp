@@ -19,7 +19,7 @@ extern xEnt* sGalleryTitle;
 extern int32 g_currDay;
 extern int32 g_currMonth;
 extern int32 g_gameExtraFlags;
-extern volatile int32 g_flg_chEnabled;
+extern int32 g_flg_chEnabled;
 // extern int32 g_enableGameExtras;
 extern uint32 sCheatPressed[16];
 
@@ -79,7 +79,6 @@ void zGameExtras_Save(xSerial* xser)
 
 void zGameExtras_Load(xSerial* xser)
 {
-    // local variable isn't defined as an array in the dwarf data
     int32 keepers[2];
     keepers[0] = 0;
     xser->Read(keepers);
@@ -114,9 +113,9 @@ uint32 TestCheat(uint32* param_1)
 }
 #endif
 
-// a cool example of loop unrolling done by the compiler
 void AddToCheatPressed(uint32 param_1)
 {
+    // a cool example of loop unrolling
     for (int32 i = 0; i < 15; i++)
     {
         sCheatPressed[i] = sCheatPressed[i + 1];
@@ -146,12 +145,10 @@ void GEC_CheatFlagToggle(int32 bit)
 void GEC_cb_AddSpatulas()
 {
     zPlayerGlobals* pg = &globals.player;
-
-    // can only get this to match with a ternary operator
     pg->Inv_Spatula = (pg->Inv_Spatula + 10 >= 100) ? 100 : pg->Inv_Spatula + 10;
 
     uint32 aid_snd = xStrHash(zGameExtras_strings + 63); // "gspatula_sb"
-    if (aid_snd != 0)
+    if (aid_snd)
     {
         xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
                  zGameExtras_f_0);
@@ -161,9 +158,9 @@ void GEC_cb_AddSpatulas()
 void GEC_cb_BubbleBowl()
 {
     globals.player.g.PowerUp[0] = true;
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 75); // "SBG01092"
 
-    if (aid_snd != 0)
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 75); // "SBG01092"
+    if (aid_snd)
     {
         xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
                  zGameExtras_f_0);
@@ -173,9 +170,9 @@ void GEC_cb_BubbleBowl()
 void GEC_cb_CruiseBubble()
 {
     globals.player.g.PowerUp[1] = true;
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 84); // "SB_cruise_hit"
 
-    if (aid_snd != 0)
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 84); // "SB_cruise_hit"
+    if (aid_snd)
     {
         xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
                  zGameExtras_f_0);
