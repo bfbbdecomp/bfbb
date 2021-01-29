@@ -85,18 +85,18 @@ void zGameExtras_Load(xSerial* xser)
     g_flg_chEnabled |= keepers[0];
 }
 
-uint32 TestCheat(uint32* param_1)
+uint32 TestCheat(uint32* cheat)
 {
-    int32 i = 0xf;
+    int32 i = 15;
 
-    if (param_1[i] == 0)
+    if (!cheat[i])
     {
         return 0;
     }
 
     for (i; i >= 0; i--)
     {
-        if (param_1[i] != sCheatPressed[i])
+        if (cheat[i] != sCheatPressed[i])
         {
             return 0;
         }
