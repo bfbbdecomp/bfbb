@@ -132,7 +132,13 @@ void GEC_CheatFlagToggle(int32 bit)
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_dfltSound__Fv")
 
 // func_8009A058
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_AddShiny__Fv")
+#else
+void GEC_cb_AddShiny()
+{
+}
+#endif
 
 void GEC_cb_AddSpatulas()
 {
