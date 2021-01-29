@@ -65,8 +65,9 @@
 // func_80191AEC
 #pragma GLOBAL_ASM("asm/Game/zNPCFXCinematic.s", "__ct__9XCSNNoseyFv")
 
-// func_80191AFC
-#pragma GLOBAL_ASM("asm/Game/zNPCFXCinematic.s", "zNPCFXShutdown__Fv")
+void zNPCFXShutdown()
+{
+}
 
 // func_80191B00
 #pragma GLOBAL_ASM("asm/Game/zNPCFXCinematic.s", "zNPCFXCutscenePickTable__FPC12zCutsceneMgr")

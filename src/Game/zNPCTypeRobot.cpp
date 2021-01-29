@@ -367,8 +367,18 @@ void zNPCRobot::DuploOwner(zNPCCommon* duper)
     "asm/Game/zNPCTypeRobot.s",                                                                    \
     "AddSpawning__9zNPCRobotFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
-// func_800F8C2C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "LassoSetup__9zNPCRobotFv")
+int32 zNPCRobot::LassoSetup()
+{
+    int32 param1 = -1;
+    int32 param2 = -1;
+
+    LassoModelIndex(&param1, &param2);
+    if ((param1 >= 0) && (param2 >= 0))
+    {
+        LassoUseGuides(param1, param2);
+    }
+    return zNPCCommon::LassoSetup();
+}
 
 // func_800F8CA0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsDying__9zNPCRobotFv")
@@ -393,8 +403,22 @@ int32 zNPCRobot::IsWounded()
 // func_800F9158
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "CollideReview__9zNPCRobotFv")
 
-// func_800F9428
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "InflictPain__9zNPCRobotFii")
+void zNPCRobot::InflictPain(int32 numHitPoints, int32 giveCreditToPlayer)
+{
+    if (numHitPoints < 0)
+    {
+        hitpoints = 0;
+    }
+    else
+    {
+        hitpoints = hitpoints - numHitPoints;
+    }
+    hitpoints = (uint32)(hitpoints & (-hitpoints & ~hitpoints) >> 0x1f);
+    if ((hitpoints == 0) && (giveCreditToPlayer != 0))
+    {
+        zNPCCommon::GiveReward();
+    }
+}
 
 // func_800F9494
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "TurnThemHeads__9zNPCRobotFv")

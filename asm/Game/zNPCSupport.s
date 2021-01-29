@@ -18,20 +18,6 @@ NPCSupport_Startup__Fv:
 /* 8012DD88 0012AB88  38 21 00 10 */	addi r1, r1, 0x10
 /* 8012DD8C 0012AB8C  4E 80 00 20 */	blr 
 
-.global NPCSupport_Shutdown__Fv
-NPCSupport_Shutdown__Fv:
-/* 8012DD90 0012AB90  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8012DD94 0012AB94  7C 08 02 A6 */	mflr r0
-/* 8012DD98 0012AB98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8012DD9C 0012AB9C  48 05 98 FD */	bl zNPCHazard_Shutdown__Fv
-/* 8012DDA0 0012ABA0  48 05 84 D1 */	bl zNPCGlyph_Shutdown__Fv
-/* 8012DDA4 0012ABA4  48 00 01 5D */	bl NPCWidget_Shutdown__Fv
-/* 8012DDA8 0012ABA8  48 05 2F B1 */	bl NPCSupplement_Shutdown__Fv
-/* 8012DDAC 0012ABAC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8012DDB0 0012ABB0  7C 08 03 A6 */	mtlr r0
-/* 8012DDB4 0012ABB4  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012DDB8 0012ABB8  4E 80 00 20 */	blr 
-
 .global NPCSupport_ScenePrepare__Fv
 NPCSupport_ScenePrepare__Fv:
 /* 8012DDBC 0012ABBC  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -130,10 +116,6 @@ NPCWidget_Startup__Fv:
 /* 8012DEF4 0012ACF4  7C 08 03 A6 */	mtlr r0
 /* 8012DEF8 0012ACF8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8012DEFC 0012ACFC  4E 80 00 20 */	blr 
-
-.global NPCWidget_Shutdown__Fv
-NPCWidget_Shutdown__Fv:
-/* 8012DF00 0012AD00  4E 80 00 20 */	blr 
 
 .global NPCWidget_ScenePrepare__Fv
 NPCWidget_ScenePrepare__Fv:

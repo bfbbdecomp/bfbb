@@ -8,10 +8,6 @@
 zNPCGlyph_Startup__Fv:
 /* 8018626C 0018306C  4E 80 00 20 */	blr 
 
-.global zNPCGlyph_Shutdown__Fv
-zNPCGlyph_Shutdown__Fv:
-/* 80186270 00183070  4E 80 00 20 */	blr 
-
 .global zNPCGlyph_ScenePrepare__Fv
 zNPCGlyph_ScenePrepare__Fv:
 /* 80186274 00183074  94 21 FF D0 */	stwu r1, -0x30(r1)
