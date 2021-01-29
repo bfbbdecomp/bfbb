@@ -19,7 +19,7 @@ extern xEnt* sGalleryTitle;
 extern int32 g_currDay;
 extern int32 g_currMonth;
 extern int32 g_gameExtraFlags;
-extern int32 g_flg_chEnabled;
+extern volatile int32 g_flg_chEnabled;
 // extern int32 g_enableGameExtras;
 extern uint32 sCheatPressed[16];
 
@@ -63,6 +63,7 @@ void zGameExtras_NewGameReset()
     // very close to matching
     g_flg_chEnabled = 0;
     zGlobalSettings* gs = &globals.player.g;
+
     gs->ShinyValuePurple = 50;
     gs->ShinyValueBlue = 10;
     gs->ShinyValueGreen = 5;
@@ -86,21 +87,22 @@ void zGameExtras_Load(xSerial* xser)
 }
 
 // func_80099BAC
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "TestCheat__FPUi")
 #else
 // function not in dwarf files/PS2 version
 // probably checks to see if there has been a full cheat entered
 uint32 TestCheat(uint32* param_1)
 {
-    if (param_1[15] == 0)
+    int32 i = 0xf;
+    if (param_1[i] == 0)
     {
         return 0;
     }
     param_1 += 15;
-    uint32* cheatRef = sCheatPressed + 15;
+    uint32* cheatRef = sCheatPressed; // + 15;
 
-    for (int32 i = 0xf; i >= 0; i--)
+    for (i; i >= 0; i--)
     {
         if (cheatRef[i] != param_1[i])
         {
@@ -108,22 +110,7 @@ uint32 TestCheat(uint32* param_1)
         }
     }
 
-    //for (int32 i = 2; i >= 0; i++)
-    //{
-    /*
-    for (int32 j = 15; j >= 0; j--)
-    {
-        if (param_1[j] != cheatRef[j])
-        {
-            return 0;
-        }
-    }
-    //   param_1--;
-    //  cheatRef--;
-    //}
-    */
-
-    return 0;
+    return 1;
 }
 #endif
 
