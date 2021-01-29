@@ -5,8 +5,9 @@
 // func_8018626C
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_Startup__Fv")
 
-// func_80186270
-#pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_Shutdown__Fv")
+void zNPCGlyph_Shutdown()
+{
+}
 
 // func_80186274
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_ScenePrepare__Fv")

@@ -53,5 +53,6 @@ struct NPCSndQueue
 };
 
 void NPCS_SndTablePrepare(NPCSndTrax* trax);
+void NPCS_Shutdown();
 
 #endif

@@ -85,19 +85,6 @@ lbl_800EEF10:
 /* 800EEF54 000EBD54  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EEF58 000EBD58  4E 80 00 20 */	blr 
 
-.global ZNPC_Common_Shutdown__Fv
-ZNPC_Common_Shutdown__Fv:
-/* 800EEF5C 000EBD5C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EEF60 000EBD60  7C 08 02 A6 */	mflr r0
-/* 800EEF64 000EBD64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EEF68 000EBD68  48 03 5B E5 */	bl NPCS_Shutdown__Fv
-/* 800EEF6C 000EBD6C  48 03 EE 25 */	bl NPCSupport_Shutdown__Fv
-/* 800EEF70 000EBD70  48 0A 2B 8D */	bl zNPCFXShutdown__Fv
-/* 800EEF74 000EBD74  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EEF78 000EBD78  7C 08 03 A6 */	mtlr r0
-/* 800EEF7C 000EBD7C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EEF80 000EBD80  4E 80 00 20 */	blr 
-
 .global zNPCCommon_ScenePrepare__Fv
 zNPCCommon_ScenePrepare__Fv:
 /* 800EEF84 000EBD84  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -145,17 +132,6 @@ zNPCCommon_SceneReset__Fv:
 /* 800EF014 000EBE14  7C 08 03 A6 */	mtlr r0
 /* 800EF018 000EBE18  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EF01C 000EBE1C  4E 80 00 20 */	blr 
-
-.global zNPCCommon_ScenePostInit__Fv
-zNPCCommon_ScenePostInit__Fv:
-/* 800EF020 000EBE20  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EF024 000EBE24  7C 08 02 A6 */	mflr r0
-/* 800EF028 000EBE28  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EF02C 000EBE2C  48 03 ED F5 */	bl NPCSupport_ScenePostInit__Fv
-/* 800EF030 000EBE30  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EF034 000EBE34  7C 08 03 A6 */	mtlr r0
-/* 800EF038 000EBE38  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EF03C 000EBE3C  4E 80 00 20 */	blr 
 
 .global zNPCCommon_Timestep__FP6xScenef
 zNPCCommon_Timestep__FP6xScenef:
@@ -856,20 +832,6 @@ lbl_800EF9FC:
 /* 800EFA04 000EC804  7C 08 03 A6 */	mtlr r0
 /* 800EFA08 000EC808  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EFA0C 000EC80C  4E 80 00 20 */	blr 
-
-.global Destroy__10zNPCCommonFv
-Destroy__10zNPCCommonFv:
-/* 800EFA10 000EC810  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EFA14 000EC814  7C 08 02 A6 */	mflr r0
-/* 800EFA18 000EC818  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EFA1C 000EC81C  81 83 01 B8 */	lwz r12, 0x1b8(r3)
-/* 800EFA20 000EC820  81 8C 00 74 */	lwz r12, 0x74(r12)
-/* 800EFA24 000EC824  7D 89 03 A6 */	mtctr r12
-/* 800EFA28 000EC828  4E 80 04 21 */	bctrl 
-/* 800EFA2C 000EC82C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EFA30 000EC830  7C 08 03 A6 */	mtlr r0
-/* 800EFA34 000EC834  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EFA38 000EC838  4E 80 00 20 */	blr 
 
 .global Damage__10zNPCCommonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3
 Damage__10zNPCCommonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3:

@@ -34,10 +34,6 @@ lbl_80124B10:
 /* 80124B44 00121944  38 21 00 20 */	addi r1, r1, 0x20
 /* 80124B48 00121948  4E 80 00 20 */	blr 
 
-.global NPCS_Shutdown__Fv
-NPCS_Shutdown__Fv:
-/* 80124B4C 0012194C  4E 80 00 20 */	blr 
-
 .global NPCS_SndTimersUpdate__Ff
 NPCS_SndTimersUpdate__Ff:
 /* 80124B50 00121950  3C 60 80 2A */	lis r3, lbl_802982C8@ha

@@ -34,4 +34,6 @@ enum en_npchaz
     NPC_HAZ_FORCE = 0x7fffffff
 };
 
+void zNPCHazard_Shutdown();
+
 #endif

@@ -5,8 +5,9 @@
 // func_80124AE4
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_Startup__Fv")
 
-// func_80124B4C
-#pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_Shutdown__Fv")
+void NPCS_Shutdown()
+{
+}
 
 // func_80124B50
 #pragma GLOBAL_ASM("asm/Game/zNPCSndTable.s", "NPCS_SndTimersUpdate__Ff")

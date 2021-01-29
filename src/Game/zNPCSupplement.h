@@ -6,5 +6,6 @@
 #include <types.h>
 
 void NPCC_MakeASplash(const xVec3* pos, float32 radius);
+void NPCSupplement_Shutdown();
 
 #endif

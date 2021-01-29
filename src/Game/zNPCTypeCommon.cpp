@@ -2,6 +2,10 @@
 
 #include <types.h>
 
+#include "zNPCSndTable.h"
+#include "zNPCSupport.h"
+#include "zNPCFXCinematic.h"
+
 // func_800EEE4C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Create_Common__FiP10RyzMemGrowPv")
 
@@ -11,8 +15,12 @@
 // func_800EEEE4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Common_Startup__Fv")
 
-// func_800EEF5C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Common_Shutdown__Fv")
+void ZNPC_Common_Shutdown()
+{
+    NPCS_Shutdown();
+    NPCSupport_Shutdown();
+    zNPCFXShutdown();
+}
 
 // func_800EEF84
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_ScenePrepare__Fv")
@@ -23,8 +31,10 @@
 // func_800EEFF4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_SceneReset__Fv")
 
-// func_800EF020
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_ScenePostInit__Fv")
+void zNPCCommon_ScenePostInit()
+{
+    NPCSupport_ScenePostInit();
+}
 
 // func_800EF040
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_Timestep__FP6xScenef")
@@ -41,8 +51,10 @@
 // func_800EF8A4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Reset__10zNPCCommonFv")
 
-// func_800EFA10
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Destroy__10zNPCCommonFv")
+void zNPCCommon::Destroy()
+{
+    SelfDestroy();
+}
 
 // func_800EFA3C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s",                                                    \
@@ -58,8 +70,15 @@
 // func_800F0004
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Move__10zNPCCommonFP6xScenefP9xEntFrame")
 
-// func_800F00F0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Process__10zNPCCommonFP6xScenef")
+void zNPCCommon::Process(xScene* xscn, float32 dt)
+{
+    if ((flg_misc & 4) != 0)
+    {
+        ModelScaleSet(&cfg_npc->scl_model);
+    }
+    flags1.flg_upward = flags1.flg_upward & ~0x2;
+    xNPCBasic::Process(xscn, dt);
+}
 
 // func_800F0164
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "BUpdate__10zNPCCommonFP5xVec3")
