@@ -2,11 +2,15 @@
 
 #include <types.h>
 
+#include "zNPCSupport.h"
+
 // func_80180D54
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_Startup__Fv")
 
-// func_80180D58
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_Shutdown__Fv")
+void NPCSupplement_Shutdown()
+{
+    NPCWidget_Shutdown();
+}
 
 // func_80180D78
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_ScenePrepare__Fv")

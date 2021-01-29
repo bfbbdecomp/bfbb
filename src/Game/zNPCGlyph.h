@@ -40,4 +40,6 @@ struct NPCGlyph
     void Enable(int32 ison);
 };
 
+void zNPCGlyph_Shutdown();
+
 #endif

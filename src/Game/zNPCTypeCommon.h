@@ -368,6 +368,9 @@ struct zNPCCommon : xNPCBasic
 
     zNPCCommon(int32);
 
+    void ModelScaleSet(float32 x, float32 y, float32 z);
+    void ModelScaleSet(const xVec3* vec);
+    void GiveReward();
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     void AddScripting(xPsyche* psy,
                       int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
