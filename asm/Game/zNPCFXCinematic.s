@@ -847,10 +847,6 @@ __ct__9XCSNNoseyFv:
 /* 80191AF4 0018E8F4  90 03 00 00 */	stw r0, 0(r3)
 /* 80191AF8 0018E8F8  4E 80 00 20 */	blr 
 
-.global zNPCFXShutdown__Fv
-zNPCFXShutdown__Fv:
-/* 80191AFC 0018E8FC  4E 80 00 20 */	blr 
-
 zNPCFXCutscenePickTable__FPC12zCutsceneMgr:
 /* 80191B00 0018E900  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80191B04 0018E904  7C 08 02 A6 */	mflr r0

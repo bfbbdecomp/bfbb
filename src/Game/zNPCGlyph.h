@@ -41,5 +41,6 @@ struct NPCGlyph
 };
 
 void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff);
+void zNPCGlyph_Shutdown();
 
 #endif

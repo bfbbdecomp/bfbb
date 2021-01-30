@@ -85,19 +85,6 @@ lbl_800EEF10:
 /* 800EEF54 000EBD54  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EEF58 000EBD58  4E 80 00 20 */	blr 
 
-.global ZNPC_Common_Shutdown__Fv
-ZNPC_Common_Shutdown__Fv:
-/* 800EEF5C 000EBD5C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EEF60 000EBD60  7C 08 02 A6 */	mflr r0
-/* 800EEF64 000EBD64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EEF68 000EBD68  48 03 5B E5 */	bl NPCS_Shutdown__Fv
-/* 800EEF6C 000EBD6C  48 03 EE 25 */	bl NPCSupport_Shutdown__Fv
-/* 800EEF70 000EBD70  48 0A 2B 8D */	bl zNPCFXShutdown__Fv
-/* 800EEF74 000EBD74  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EEF78 000EBD78  7C 08 03 A6 */	mtlr r0
-/* 800EEF7C 000EBD7C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EEF80 000EBD80  4E 80 00 20 */	blr 
-
 .global zNPCCommon_ScenePrepare__Fv
 zNPCCommon_ScenePrepare__Fv:
 /* 800EEF84 000EBD84  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -145,17 +132,6 @@ zNPCCommon_SceneReset__Fv:
 /* 800EF014 000EBE14  7C 08 03 A6 */	mtlr r0
 /* 800EF018 000EBE18  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EF01C 000EBE1C  4E 80 00 20 */	blr 
-
-.global zNPCCommon_ScenePostInit__Fv
-zNPCCommon_ScenePostInit__Fv:
-/* 800EF020 000EBE20  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EF024 000EBE24  7C 08 02 A6 */	mflr r0
-/* 800EF028 000EBE28  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EF02C 000EBE2C  48 03 ED F5 */	bl NPCSupport_ScenePostInit__Fv
-/* 800EF030 000EBE30  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EF034 000EBE34  7C 08 03 A6 */	mtlr r0
-/* 800EF038 000EBE38  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EF03C 000EBE3C  4E 80 00 20 */	blr 
 
 .global zNPCCommon_Timestep__FP6xScenef
 zNPCCommon_Timestep__FP6xScenef:
@@ -856,20 +832,6 @@ lbl_800EF9FC:
 /* 800EFA04 000EC804  7C 08 03 A6 */	mtlr r0
 /* 800EFA08 000EC808  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EFA0C 000EC80C  4E 80 00 20 */	blr 
-
-.global Destroy__10zNPCCommonFv
-Destroy__10zNPCCommonFv:
-/* 800EFA10 000EC810  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EFA14 000EC814  7C 08 02 A6 */	mflr r0
-/* 800EFA18 000EC818  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EFA1C 000EC81C  81 83 01 B8 */	lwz r12, 0x1b8(r3)
-/* 800EFA20 000EC820  81 8C 00 74 */	lwz r12, 0x74(r12)
-/* 800EFA24 000EC824  7D 89 03 A6 */	mtctr r12
-/* 800EFA28 000EC828  4E 80 04 21 */	bctrl 
-/* 800EFA2C 000EC82C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EFA30 000EC830  7C 08 03 A6 */	mtlr r0
-/* 800EFA34 000EC834  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EFA38 000EC838  4E 80 00 20 */	blr 
 
 .global Damage__10zNPCCommonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3
 Damage__10zNPCCommonF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3:
@@ -2927,33 +2889,6 @@ lbl_800F16E8:
 /* 800F1710 000EE510  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F1714 000EE514  4E 80 00 20 */	blr 
 
-ParseProps__10zNPCCommonFv:
-/* 800F1718 000EE518  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F171C 000EE51C  7C 08 02 A6 */	mflr r0
-/* 800F1720 000EE520  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F1724 000EE524  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800F1728 000EE528  3B E0 00 3F */	li r31, 0x3f
-/* 800F172C 000EE52C  93 C1 00 08 */	stw r30, 8(r1)
-/* 800F1730 000EE530  7C 7E 1B 78 */	mr r30, r3
-lbl_800F1734:
-/* 800F1734 000EE534  2C 1F 00 3F */	cmpwi r31, 0x3f
-/* 800F1738 000EE538  41 82 00 08 */	beq lbl_800F1740
-/* 800F173C 000EE53C  48 00 00 10 */	b lbl_800F174C
-lbl_800F1740:
-/* 800F1740 000EE540  7F C3 F3 78 */	mr r3, r30
-/* 800F1744 000EE544  38 80 00 00 */	li r4, 0
-/* 800F1748 000EE548  48 00 10 F5 */	bl MvptReset__10zNPCCommonFP10zMovePoint
-lbl_800F174C:
-/* 800F174C 000EE54C  3B FF 00 01 */	addi r31, r31, 1
-/* 800F1750 000EE550  2C 1F 00 42 */	cmpwi r31, 0x42
-/* 800F1754 000EE554  41 80 FF E0 */	blt lbl_800F1734
-/* 800F1758 000EE558  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F175C 000EE55C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800F1760 000EE560  83 C1 00 08 */	lwz r30, 8(r1)
-/* 800F1764 000EE564  7C 08 03 A6 */	mtlr r0
-/* 800F1768 000EE568  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F176C 000EE56C  4E 80 00 20 */	blr 
-
 .global CollideReview__10zNPCCommonFv
 CollideReview__10zNPCCommonFv:
 /* 800F1770 000EE570  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3111,38 +3046,6 @@ lbl_800F197C:
 /* 800F1988 000EE788  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F198C 000EE78C  4E 80 00 20 */	blr 
 
-.global IsMountableType__10zNPCCommonF12en_ZBASETYPE
-IsMountableType__10zNPCCommonF12en_ZBASETYPE:
-/* 800F1990 000EE790  2C 04 00 06 */	cmpwi r4, 6
-/* 800F1994 000EE794  41 82 00 08 */	beq lbl_800F199C
-/* 800F1998 000EE798  48 00 00 0C */	b lbl_800F19A4
-lbl_800F199C:
-/* 800F199C 000EE79C  38 60 00 01 */	li r3, 1
-/* 800F19A0 000EE7A0  4E 80 00 20 */	blr 
-lbl_800F19A4:
-/* 800F19A4 000EE7A4  38 60 00 00 */	li r3, 0
-/* 800F19A8 000EE7A8  4E 80 00 20 */	blr 
-
-SelfDestroy__10zNPCCommonFv:
-/* 800F19AC 000EE7AC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F19B0 000EE7B0  7C 08 02 A6 */	mflr r0
-/* 800F19B4 000EE7B4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F19B8 000EE7B8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800F19BC 000EE7BC  7C 7F 1B 78 */	mr r31, r3
-/* 800F19C0 000EE7C0  48 01 B5 15 */	bl xBehaveMgr_GetSelf__Fv
-/* 800F19C4 000EE7C4  80 9F 02 28 */	lwz r4, 0x228(r31)
-/* 800F19C8 000EE7C8  28 04 00 00 */	cmplwi r4, 0
-/* 800F19CC 000EE7CC  41 82 00 08 */	beq lbl_800F19D4
-/* 800F19D0 000EE7D0  48 01 B6 D9 */	bl UnSubscribe__10xBehaveMgrFP7xPsyche
-lbl_800F19D4:
-/* 800F19D4 000EE7D4  38 00 00 00 */	li r0, 0
-/* 800F19D8 000EE7D8  90 1F 02 28 */	stw r0, 0x228(r31)
-/* 800F19DC 000EE7DC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F19E0 000EE7E0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800F19E4 000EE7E4  7C 08 03 A6 */	mtlr r0
-/* 800F19E8 000EE7E8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F19EC 000EE7EC  4E 80 00 20 */	blr 
-
 .global TagVerts__10zNPCCommonFv
 TagVerts__10zNPCCommonFv:
 /* 800F19F0 000EE7F0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -3241,35 +3144,6 @@ lbl_800F1B34:
 /* 800F1B50 000EE950  7C 08 03 A6 */	mtlr r0
 /* 800F1B54 000EE954  38 21 00 50 */	addi r1, r1, 0x50
 /* 800F1B58 000EE958  4E 80 00 20 */	blr 
-
-.global GetVertPos__10zNPCCommonF10en_mdlvertP5xVec3
-GetVertPos__10zNPCCommonF10en_mdlvertP5xVec3:
-/* 800F1B5C 000EE95C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F1B60 000EE960  7C 08 02 A6 */	mflr r0
-/* 800F1B64 000EE964  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F1B68 000EE968  38 00 00 01 */	li r0, 1
-/* 800F1B6C 000EE96C  7C 00 20 30 */	slw r0, r0, r4
-/* 800F1B70 000EE970  81 03 01 D8 */	lwz r8, 0x1d8(r3)
-/* 800F1B74 000EE974  80 C8 00 94 */	lwz r6, 0x94(r8)
-/* 800F1B78 000EE978  7C C0 00 39 */	and. r0, r6, r0
-/* 800F1B7C 000EE97C  40 82 00 0C */	bne lbl_800F1B88
-/* 800F1B80 000EE980  38 60 00 00 */	li r3, 0
-/* 800F1B84 000EE984  48 00 00 28 */	b lbl_800F1BAC
-lbl_800F1B88:
-/* 800F1B88 000EE988  80 E3 00 24 */	lwz r7, 0x24(r3)
-/* 800F1B8C 000EE98C  54 83 28 34 */	slwi r3, r4, 5
-/* 800F1B90 000EE990  38 83 00 98 */	addi r4, r3, 0x98
-/* 800F1B94 000EE994  7C A6 2B 78 */	mr r6, r5
-/* 800F1B98 000EE998  80 67 00 10 */	lwz r3, 0x10(r7)
-/* 800F1B9C 000EE99C  7C 88 22 14 */	add r4, r8, r4
-/* 800F1BA0 000EE9A0  80 A7 00 4C */	lwz r5, 0x4c(r7)
-/* 800F1BA4 000EE9A4  4B FD 74 A9 */	bl iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3
-/* 800F1BA8 000EE9A8  38 60 00 01 */	li r3, 1
-lbl_800F1BAC:
-/* 800F1BAC 000EE9AC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F1BB0 000EE9B0  7C 08 03 A6 */	mtlr r0
-/* 800F1BB4 000EE9B4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F1BB8 000EE9B8  4E 80 00 20 */	blr 
 
 .global IsAttackFrame__10zNPCCommonFfi
 IsAttackFrame__10zNPCCommonFfi:

@@ -37,5 +37,6 @@ enum en_npchaz
 };
 
 void zNPCCommon_Hazards_RenderAll(int32 doOpaqueStuff);
+void zNPCHazard_Shutdown();
 
 #endif

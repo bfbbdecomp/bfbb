@@ -14,5 +14,6 @@ void xScrFxFade(iColor_tag* base, iColor_tag* dest, float32 seconds, void (*call
 void xScrFxLetterboxReset();
 void xScrFXFullScreenGlareRender();
 void xScrFXGlareRender(xCamera* cam);
+void xScrFxLetterbox(int32 enable);
 
 #endif
