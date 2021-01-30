@@ -6,6 +6,7 @@
 #include "zGameExtras.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
+#include "zGame.h"
 #include "zScene.h"
 
 /*
@@ -82,17 +83,49 @@ void zGameExtras_SceneReset()
 #else
 void zGameExtras_SceneExit()
 {
-    EGGItem* egg_next;
-    EGGItem* egg;
-
-    if (g_enableGameExtras && globals.scenePreload == NULL)
-    {
-    }
 }
 #endif
 
 // func_80099890
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneUpdate__Ff")
+#else
+void zGameExtras_SceneUpdate(float32 dt)
+{
+    EGGItem* egg;
+    EGGItem* egg_next;
+
+    if (!g_enableGameExtras)
+    {
+        return;
+    }
+
+    if (globals.scenePreload)
+    {
+        return;
+    }
+
+    if (zGameIsPaused())
+    {
+        return;
+    }
+
+    egg_next = g_eggBasket;
+
+    while (egg_next->fun_check)
+    {
+        egg = egg_next++;
+
+        if (egg->enabled)
+        {
+            if (egg->funcs->fun_update)
+            {
+                egg->funcs->fun_update(dt, egg);
+            }
+        }
+    }
+}
+#endif
 
 // func_80099938
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "EGG_check_ExtrasFlags__FP7EGGItem")
