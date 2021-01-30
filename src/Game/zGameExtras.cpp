@@ -8,6 +8,16 @@
 #include "zGlobals.h"
 #include "zScene.h"
 
+/*
+A quick note about how cheats appear to work:
+
+A lot of the cheat callback functions only play sounds.
+This doesn't mean those cheats aren't doing anything though.
+
+The callback functions in this file are only run once when the cheat is entered.
+Cheats that modify gameplay are probably checked/processed elsewhere in the game engine.
+*/
+
 extern int8 zGameExtras_strings[];
 
 extern float32 zGameExtras_f_0;
@@ -129,7 +139,13 @@ void GEC_CheatFlagToggle(int32 bit)
 }
 
 // func_80099F2C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_dfltSound__Fv")
+#else
+void GEC_dfltSound()
+{
+}
+#endif
 
 void GEC_cb_AddShiny()
 {
@@ -193,7 +209,13 @@ void GEC_cb_CruiseBubble()
 }
 
 // func_8009A220
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_MonsterGallery__Fv")
+#else
+void GEC_cb_MonsterGallery()
+{
+}
+#endif
 
 void GEC_cb_UnlockArtTheatre()
 {
@@ -217,7 +239,13 @@ void GEC_cb_ChaChing()
 }
 
 // func_8009A380
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_RestoreHealth__Fv")
+#else
+void GEC_cb_RestoreHealth()
+{
+}
+#endif
 
 void GEC_cb_ExpertMode()
 {
@@ -236,7 +264,13 @@ void GEC_cb_NoPantsMode()
 }
 
 // func_8009A4B0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_CruiseControl__Fv")
+#else
+void GEC_cb_CruiseControl()
+{
+}
+#endif
 
 void GEC_cb_SwapCCLR()
 {
@@ -249,7 +283,13 @@ void GEC_cb_SwapCCUD()
 }
 
 // func_8009A5AC
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_villSound__Fv")
+#else
+void GEC_villSound()
+{
+}
+#endif
 
 void GEC_cb_BigPlank()
 {
