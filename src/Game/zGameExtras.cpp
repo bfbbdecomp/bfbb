@@ -452,17 +452,14 @@ void zGame_HackGalleryInit()
     sGalleryTitle = (xEnt*)zSceneFindObject(obj);
 }
 
-// func_8009A7D0
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGame_HackIsGallery__Fv")
-#else
 uint32 zGame_HackIsGallery()
 {
-    // probably a ternary, only 2 lines in dwarf?
-    uint32 res = (sGalleryTitle == NULL || xEntIsVisible(sGalleryTitle) == 0) ? 0 : 1;
-    return res;
+    if (sGalleryTitle && xEntIsVisible(sGalleryTitle))
+    {
+        return 1;
+    }
+    return 0;
 }
-#endif
 
 // func_8009A810
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf")

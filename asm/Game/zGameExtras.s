@@ -569,27 +569,6 @@ lbl_8009A6AC:
 /* 8009A6B4 000974B4  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009A6B8 000974B8  4E 80 00 20 */	blr 
 
-.global zGame_HackIsGallery__Fv
-zGame_HackIsGallery__Fv:
-/* 8009A7D0 000975D0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009A7D4 000975D4  7C 08 02 A6 */	mflr r0
-/* 8009A7D8 000975D8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009A7DC 000975DC  80 6D 8F A0 */	lwz r3, sGalleryTitle-_SDA_BASE_(r13)
-/* 8009A7E0 000975E0  28 03 00 00 */	cmplwi r3, 0
-/* 8009A7E4 000975E4  41 82 00 18 */	beq lbl_8009A7FC
-/* 8009A7E8 000975E8  4B F7 3E 51 */	bl xEntIsVisible__FPC4xEnt
-/* 8009A7EC 000975EC  28 03 00 00 */	cmplwi r3, 0
-/* 8009A7F0 000975F0  41 82 00 0C */	beq lbl_8009A7FC
-/* 8009A7F4 000975F4  38 60 00 01 */	li r3, 1
-/* 8009A7F8 000975F8  48 00 00 08 */	b lbl_8009A800
-lbl_8009A7FC:
-/* 8009A7FC 000975FC  38 60 00 00 */	li r3, 0
-lbl_8009A800:
-/* 8009A800 00097600  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009A804 00097604  7C 08 03 A6 */	mtlr r0
-/* 8009A808 00097608  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009A80C 0009760C  4E 80 00 20 */	blr 
-
 /* xUtil_choose<Ui>__FPCUiiPCf */
 xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf:
 /* 8009A810 00097610  94 21 FF D0 */	stwu r1, -0x30(r1)
