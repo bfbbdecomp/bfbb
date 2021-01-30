@@ -1,6 +1,9 @@
+#include <types.h>
+
+#include "zGlobals.h"
 #include "zNPCGoalVillager.h"
 
-#include <types.h>
+extern zGlobals globals;
 
 // func_801365C8
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "GOALCreate_Villager__FiP10RyzMemGrowPv")
@@ -27,8 +30,13 @@
 // func_80137074
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "ChkCheatMedic__18zNPCGoalPlayerNearFv")
 
-// func_801370E4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s", "DoCheatPanHandle__18zNPCGoalPlayerNearFv")
+void zNPCGoalPlayerNear::DoCheatPanHandle()
+{
+    if (globals.player.Inv_Shiny > 75000)
+    {
+        globals.player.Inv_Shiny -= 500;
+    }
+}
 
 // func_8013710C
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalVillager.s",                                                  \
