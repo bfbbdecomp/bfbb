@@ -32,7 +32,7 @@ extern int32 g_currMonth;
 extern int32 g_gameExtraFlags;
 extern int32 g_flg_chEnabled;
 extern int32 g_enableGameExtras;
-// extern int32 g_enableGameExtras;
+
 extern uint32 sCheatPressed[16];
 
 extern EGGItem g_eggBasket[2];
@@ -86,10 +86,6 @@ void zGameExtras_SceneExit()
 }
 #endif
 
-// func_80099890
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneUpdate__Ff")
-#else
 void zGameExtras_SceneUpdate(float32 dt)
 {
     EGGItem* egg;
@@ -100,7 +96,7 @@ void zGameExtras_SceneUpdate(float32 dt)
         return;
     }
 
-    if (globals.scenePreload)
+    if (globals.cmgr)
     {
         return;
     }
@@ -125,7 +121,6 @@ void zGameExtras_SceneUpdate(float32 dt)
         }
     }
 }
-#endif
 
 // func_80099938
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "EGG_check_ExtrasFlags__FP7EGGItem")
