@@ -19,9 +19,9 @@ It can seem daunting to read these mangled names at first, but they actually fol
 * Function name always comes first followed by two underscores: `funcname__rest`
     * `void foo()` → `foo__Fv`
 
-* Next comes any namespacing.
+* Next comes any namespacing:
     * If there is only one level of namespacing, the underscores are followed by the length of the namespace as a number, then by the namespace name. This applies for classes and namespaces:
-        * `void class::foo()` → `foo__4classFv`
+        * `void class::foo()` → `foo__5classFv`
         * `void namespace::foo()` → `foo__9namespaceFv`
 
     * If there are two or more levels of namespacing, then the `Q` (standing for "qualified") is followed by the number of namespacing levels before the individual namespaces are listed:
@@ -83,7 +83,7 @@ Somewhat confusingly, the assembly code in the `.s` files is not actually compil
 
 This means that your next step is to:
 
-1. Comment out the `#pragma GLOBAL_ASM` statement for the function you are going to translate
+1. Comment out the `#pragma GLOBAL_ASM` statement for the function you are going to translate.
 
 2. Add a C++ definition based on the unmangled function name. The order of functions in the `.cpp` file *must remain the same!* Thus you have to place the new function in the same place in the file as the original assembly variant you commented out.
 
@@ -99,7 +99,7 @@ Your next step is to figure out what the C++ code in the function is, such that 
 
 CW attempts to keep code in sections of if statements / switch statements in the order which you wrote it.
 
-That means that if you write `if (condition)`, the generated assembly code will be `branch if not condition: <address after if body>`, such that the instructions for the else block appear after the instructions for the else block in the assembly code.
+That means that if you write `if (condition)`, the generated assembly code will be `branch if not condition: <address after if body>`, such that the instructions for the else block appear after the instructions for the if block in the assembly code.
 
 Note how below, the condition is `value > 137`, but the generated assembly code does the opposite, branching *if less or equal*, to preserve the order of the If vs Else block:
 
@@ -119,7 +119,7 @@ ELSE_BODY:
 AFTER_IF:
 ```
 
-This applies to switch statements as well. CW will try to generate a prelude which decides what label to jump to, followed by a blocks corresponding to each case body, in the order which they were written in the original assembly code:
+This applies to switch statements as well. CW will try to generate a prelude which decides what label to jump to, followed by a block corresponding to each case body, in the order which they were written in the original code:
 
 ```C
     // prelude code jumping to the labels below
@@ -157,7 +157,7 @@ https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_rlwi
 
 For example:
 
-* In loops, it used used to iterate over arrays of items, by multiplying the loop index up into a stride (the difference in memory address between subsequent array entries)
+* In loops, it is used to iterate over arrays of items, by multiplying the loop index up into a stride (the difference in memory address between subsequent array entries)
 
 * It is used to mask away portions of a value and shift it down when extracting values from bitfields.
 
