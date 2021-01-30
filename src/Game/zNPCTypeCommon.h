@@ -368,10 +368,13 @@ struct zNPCCommon : xNPCBasic
 
     zNPCCommon(int32);
 
+    bool IsMountableType(en_ZBASETYPE type);
+    void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
     void ModelScaleSet(const xVec3* vec);
     void GiveReward();
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
+    int32 GetVertPos(en_mdlvert vid, xVec3* pos);
     void AddScripting(xPsyche* psy,
                       int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
