@@ -62,8 +62,7 @@ void zGameExtras_SceneInit()
     {
         EGGItem* egg = egg_next++;
 
-        int32 result = egg->fun_check(egg);
-        egg->enabled = result;
+        egg->enabled = egg->fun_check(egg);
 
         if (egg->enabled)
         {
