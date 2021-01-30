@@ -131,14 +131,26 @@ void GEC_CheatFlagToggle(int32 bit)
 // func_80099F2C
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_dfltSound__Fv")
 
-// func_8009A058
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_AddShiny__Fv")
-#else
 void GEC_cb_AddShiny()
 {
+    zPlayerGlobals* pg = &globals.player;
+
+    if (pg->Inv_Shiny <= 50000)
+    {
+        if (pg->Inv_Shiny > 49000)
+            pg->Inv_Shiny = 50000;
+        else
+            pg->Inv_Shiny += 1000;
+    }
+
+    uint32 aid_snd = xStrHash(zGameExtras_strings + 54); // SBG01019
+
+    if (aid_snd)
+    {
+        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
+                 zGameExtras_f_0);
+    }
 }
-#endif
 
 void GEC_cb_AddSpatulas()
 {
@@ -146,6 +158,7 @@ void GEC_cb_AddSpatulas()
     pg->Inv_Spatula = (pg->Inv_Spatula + 10 >= 100) ? 100 : pg->Inv_Spatula + 10;
 
     uint32 aid_snd = xStrHash(zGameExtras_strings + 63); // "gspatula_sb"
+
     if (aid_snd)
     {
         xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
@@ -158,6 +171,7 @@ void GEC_cb_BubbleBowl()
     globals.player.g.PowerUp[0] = true;
 
     uint32 aid_snd = xStrHash(zGameExtras_strings + 75); // "SBG01092"
+
     if (aid_snd)
     {
         xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
@@ -170,6 +184,7 @@ void GEC_cb_CruiseBubble()
     globals.player.g.PowerUp[1] = true;
 
     uint32 aid_snd = xStrHash(zGameExtras_strings + 84); // "SB_cruise_hit"
+
     if (aid_snd)
     {
         xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
