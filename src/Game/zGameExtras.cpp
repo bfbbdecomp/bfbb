@@ -55,27 +55,41 @@ void zGameExtras_SceneReset()
     EGGItem* egg_next;
     EGGItem* egg;
 
-    if (g_enableGameExtras)
+    if (!g_enableGameExtras)
     {
-        egg_next = g_eggBasket;
+        return;
+    }
 
-        while (egg_next->fun_check)
+    egg_next = g_eggBasket;
+
+    while (egg_next->fun_check)
+    {
+        egg = egg_next++;
+
+        if (egg->enabled)
         {
-            egg = egg_next++;
-
-            if (egg->enabled)
+            if (egg->funcs->fun_reset)
             {
-                if (egg->funcs->fun_reset)
-                {
-                    egg->funcs->fun_reset(egg);
-                }
+                egg->funcs->fun_reset(egg);
             }
         }
     }
 }
 
 // func_800997D8
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneExit__Fv")
+#else
+void zGameExtras_SceneExit()
+{
+    EGGItem* egg_next;
+    EGGItem* egg;
+
+    if (g_enableGameExtras && globals.scenePreload == NULL)
+    {
+    }
+}
+#endif
 
 // func_80099890
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneUpdate__Ff")
