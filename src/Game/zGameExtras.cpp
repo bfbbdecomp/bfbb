@@ -216,7 +216,7 @@ void zGameExtras_Load(xSerial* xser)
     g_flg_chEnabled |= keepers[0];
 }
 
-uint32 TestCheat(uint32* cheat)
+uint32 TestCheat(uint32 cheat[])
 {
     int32 i = 15;
 
