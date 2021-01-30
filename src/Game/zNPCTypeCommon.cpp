@@ -6,6 +6,8 @@
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
 
+#include "../Core/p2/iModel.h"
+
 // func_800EEE4C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Create_Common__FiP10RyzMemGrowPv")
 
@@ -118,23 +120,60 @@ void zNPCCommon::Process(xScene* xscn, float32 dt)
 // func_800F1430
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ParseINI__10zNPCCommonFv")
 
-// func_800F1718
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ParseProps__10zNPCCommonFv")
+void zNPCCommon::ParseProps()
+{
+    for (int32 i = 0x3f; i < 0x42; i++)
+    {
+        switch (i)
+        {
+        case 0x3f:
+            MvptReset(NULL);
+            break;
+        default:
+            break;
+        }
+    }
+}
 
 // func_800F1770
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "CollideReview__10zNPCCommonFv")
 
-// func_800F1990
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "IsMountableType__10zNPCCommonF12en_ZBASETYPE")
+bool zNPCCommon::IsMountableType(en_ZBASETYPE type)
+{
+    switch (type)
+    {
+    case eBaseTypePlatform:
+        return true;
+        break;
+    default:
+        return false;
+        break;
+    }
+}
 
-// func_800F19AC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SelfDestroy__10zNPCCommonFv")
+void zNPCCommon::SelfDestroy()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    if (psy_instinct != NULL)
+    {
+        bmgr->UnSubscribe(psy_instinct);
+    }
+    psy_instinct = NULL;
+}
 
 // func_800F19F0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "TagVerts__10zNPCCommonFv")
 
-// func_800F1B5C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "GetVertPos__10zNPCCommonF10en_mdlvertP5xVec3")
+int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
+{
+    NPCConfig* cfg = cfg_npc;
+    if (!(cfg->flg_vert & 1 << vid))
+    {
+        return 0;
+    }
+    iModelTagEval(model->Data, &cfg->tag_vert[vid], model->Mat, pos);
+    return 1;
+}
 
 // func_800F1BBC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "IsAttackFrame__10zNPCCommonFfi")
