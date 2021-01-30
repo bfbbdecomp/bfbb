@@ -45,6 +45,7 @@ void zGameExtras_NewGameReset();
 void zGameExtras_Save(xSerial* xser);
 void zGameExtras_Load(xSerial* xser);
 uint32 TestCheat(uint32* cheat);
+int32 EGG_check_ExtrasFlags(EGGItem* egg);
 void AddToCheatPressed(uint32 param_1);
 void GEC_CheatFlagAdd(int32 bit);
 void GEC_CheatFlagToggle(int32 bit);
