@@ -49,26 +49,18 @@ void zGameExtras_MoDay(int32* month, int32* day)
     *day = g_currDay;
 }
 
-// func_8009969C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneInit__Fv")
-#else
 void zGameExtras_SceneInit()
 {
-    EGGItem* egg;
-    EGGItem* egg_next;
-    int32 somethingIsEnabled;
-
     g_enableGameExtras = 0;
     g_currDay = iGetDay();
     g_currMonth = iGetMonth();
-    somethingIsEnabled = 0;
+    int32 somethingIsEnabled = 0;
 
-    egg_next = g_eggBasket;
+    EGGItem* egg_next = g_eggBasket;
 
     while (egg_next->fun_check)
     {
-        egg = egg_next++;
+        EGGItem* egg = egg_next++;
 
         int32 result = egg->fun_check(egg);
         egg->enabled = result;
@@ -89,7 +81,6 @@ void zGameExtras_SceneInit()
         g_enableGameExtras = 1;
     }
 }
-#endif
 
 void zGameExtras_SceneReset()
 {
