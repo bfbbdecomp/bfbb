@@ -3,6 +3,7 @@
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xCounter.h"
+#include "../Core/p2/iTime.h"
 #include "zGameExtras.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
@@ -49,23 +50,59 @@ void zGameExtras_MoDay(int32* month, int32* day)
 }
 
 // func_8009969C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneInit__Fv")
-
-void zGameExtras_SceneReset()
+#else
+void zGameExtras_SceneInit()
 {
     EGGItem* egg;
     EGGItem* egg_next;
+    int32 somethingIsEnabled;
 
-    if (!g_enableGameExtras)
-    {
-        return;
-    }
+    g_enableGameExtras = 0;
+    g_currDay = iGetDay();
+    g_currMonth = iGetMonth();
+    somethingIsEnabled = 0;
 
     egg_next = g_eggBasket;
 
     while (egg_next->fun_check)
     {
         egg = egg_next++;
+
+        int32 result = egg->fun_check(egg);
+        egg->enabled = result;
+
+        if (egg->enabled)
+        {
+            somethingIsEnabled++;
+
+            if (egg->funcs->fun_init)
+            {
+                egg->funcs->fun_init(egg);
+            }
+        }
+    }
+
+    if (somethingIsEnabled)
+    {
+        g_enableGameExtras = 1;
+    }
+}
+#endif
+
+void zGameExtras_SceneReset()
+{
+    if (!g_enableGameExtras)
+    {
+        return;
+    }
+
+    EGGItem* egg_next = g_eggBasket;
+
+    while (egg_next->fun_check)
+    {
+        EGGItem* egg = egg_next++;
 
         if (egg->enabled)
         {
@@ -79,9 +116,6 @@ void zGameExtras_SceneReset()
 
 void zGameExtras_SceneExit()
 {
-    EGGItem* egg;
-    EGGItem* egg_next;
-
     if (!g_enableGameExtras)
     {
         return;
@@ -97,11 +131,11 @@ void zGameExtras_SceneExit()
         return;
     }
 
-    egg_next = g_eggBasket;
+    EGGItem* egg_next = g_eggBasket;
 
     while (egg_next->fun_check)
     {
-        egg = egg_next++;
+        EGGItem* egg = egg_next++;
 
         if (egg->enabled)
         {
@@ -121,9 +155,6 @@ void zGameExtras_SceneExit()
 
 void zGameExtras_SceneUpdate(float32 dt)
 {
-    EGGItem* egg;
-    EGGItem* egg_next;
-
     if (!g_enableGameExtras)
     {
         return;
@@ -139,11 +170,11 @@ void zGameExtras_SceneUpdate(float32 dt)
         return;
     }
 
-    egg_next = g_eggBasket;
+    EGGItem* egg_next = g_eggBasket;
 
     while (egg_next->fun_check)
     {
-        egg = egg_next++;
+        EGGItem* egg = egg_next++;
 
         if (egg->enabled)
         {
