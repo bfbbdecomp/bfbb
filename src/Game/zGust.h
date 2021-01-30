@@ -28,6 +28,7 @@ struct zGust : xBase
 };
 
 void zGustInit();
+void zGustSetup();
 zGust* zGustGetGust(uint16 n);
 void zGustSave(zGust* ent, xSerial* s);
 void zGustLoad(zGust* ent, xSerial* s);

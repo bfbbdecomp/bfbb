@@ -3,6 +3,7 @@
 
 struct zScene;
 
+void zNPCBPatrick_AddBoundEntsToGrid(zScene*);
 void zNPCBPatrick_GameIsPaused(zScene*);
 
 #endif

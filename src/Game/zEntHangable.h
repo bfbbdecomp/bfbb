@@ -33,6 +33,7 @@ struct zEntHangable : zEnt
     int32 candle_state;
 };
 
+void zEntHangable_SetupFX();
 void zEntHangable_Init(void* ent, void* asset);
 void zEntHangable_Save(zEntHangable* ent, xSerial* s);
 void zEntHangable_Load(zEntHangable* ent, xSerial* s);

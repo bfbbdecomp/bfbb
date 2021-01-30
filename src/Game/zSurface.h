@@ -106,12 +106,13 @@ struct zSurfaceProps
 
 struct xScene;
 
+void zSurfaceRegisterMapper(uint32 assetId);
 void zSurfaceExit();
+xSurface* zSurfaceGetSurface(uint32 mat_id);
 void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);
-void zSurfaceGetName(int32 type, int8* buffer);
-void zSurfaceRegisterMapper(uint32 assetId);
-xSurface* zSurfaceGetSurface(uint32 mat_id);
+void zSurfaceSetup(xSurface* s);
 void zSurfaceUpdate(xBase* to, xScene*, float32 dt);
+void zSurfaceGetName(int32 type, int8* buffer);
 
 #endif

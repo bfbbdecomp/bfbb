@@ -30,6 +30,7 @@ struct zEGenerator : zEnt
 struct xScene;
 
 void zEGenerator_Init(void* egen, void* asset);
+void zEGenerator_Setup(zEGenerator* egen, xScene*);
 void zEGenerator_Save(zEGenerator* ent, xSerial* s);
 void zEGenerator_Load(zEGenerator* ent, xSerial* s);
 void zEGenerator_Reset(zEGenerator* egen, xScene*);

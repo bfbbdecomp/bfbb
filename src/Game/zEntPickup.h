@@ -38,6 +38,9 @@ struct zEntPickup : zEnt
 };
 
 void zEntPickupInit(void* ent, void* asset);
+void zEntPickup_Setup(zEntPickup* p);
+void zEntPickup_Setup();
+void zEntPickup_Reset(zEntPickup* ent);
 void zEntPickup_Save(zEntPickup* ent, xSerial* s);
 void zEntPickup_Load(zEntPickup* ent, xSerial* s);
 void zEntPickup_FlushGrabbed();
@@ -47,5 +50,6 @@ void zEntPickup_UpdateFlyToInterface(zEntPickup* ent, uint32 pcount, float32 dt)
 void zEntPickup_SceneEnter();
 void zEntPickup_SceneReset();
 void zEntPickup_SceneUpdate(float32 dt);
+void zEntPickup_RewardPostSetup();
 
 #endif

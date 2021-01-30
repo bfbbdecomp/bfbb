@@ -67,10 +67,12 @@ struct z_disco_floor : xBase
     int32 curr_note;
 
     static void init(void* ent, void* asset);
+    static void post_setup();
     static void destroy();
     static void render_all();
     static void effects_render_all();
 
+    void setup();
     void update(xScene&, float32 dt);
 };
 

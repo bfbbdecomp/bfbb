@@ -100,6 +100,7 @@ struct xParEmitter : xBase
 struct xScene;
 
 void xParEmitterInit(void* b, void* tasset);
+void xParEmitterSetup(xParEmitter* t);
 void xParEmitterDestroy();
 void xParEmitterUpdate(xBase* to, xScene*, float32 dt);
 

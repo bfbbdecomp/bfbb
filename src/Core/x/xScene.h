@@ -53,7 +53,7 @@ void xSceneLoad(xScene* sc, xSerial* s);
 void xSceneSetup(xScene* sc);
 void xSceneAddEnt(xScene* sc, xEnt* ent);
 xBase* xSceneResolvID(xScene* sc, uint32 id);
-char* xSceneID2Name(xScene* sc, uint32 id);
+const char* xSceneID2Name(xScene* sc, uint32 id);
 void xSceneForAllEnts(xScene* sc, xSceneEntCallback func, void* data);
 void xSceneForAllStatics(xScene* sc, xSceneEntCallback func, void* data);
 void xSceneForAllDynamics(xScene* sc, xSceneEntCallback func, void* data);

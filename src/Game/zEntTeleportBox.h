@@ -35,6 +35,8 @@ struct _zEntTeleportBox : zEnt
 };
 
 void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, ulong32);
+void zEntTeleportBox_InitAll();
+void zEntTeleportBox_Setup(_zEntTeleportBox* ent);
 void zEntTeleportBox_Save(_zEntTeleportBox* ent, xSerial* s);
 void zEntTeleportBox_Load(_zEntTeleportBox* ent, xSerial* s);
 int32 zEntTeleportBox_playerIn();

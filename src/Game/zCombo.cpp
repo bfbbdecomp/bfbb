@@ -200,9 +200,7 @@ void zCombo_HideImmediately()
 {
     if (comboHUD != NULL)
     {
-        // TODO: This is probably wrong, but generates the right code.
-        // Something is likely not correct with widget_chunk, see definition.
-        comboHUD->w.text[4] = '\0';
+        comboHUD->w.text[0] = '\0';
     }
 }
 

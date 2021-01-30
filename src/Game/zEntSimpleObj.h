@@ -21,11 +21,13 @@ struct zEntSimpleObj : zEnt
 
 struct zScene;
 
-void zEntTrackPhysics_Init(void* ent, void* asset);
-void zEntSimpleObj_Init(void* ent, void* asset);
+void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, uint32 entCount);
 void zEntSimpleObj_MgrUpdateRender(RpWorld*, float32 dt);
 void zEntSimpleObj_MgrCustomUpdate(zScene* s, float32 dt);
 void zEntSimpleObj_MgrCustomRender();
+void zEntTrackPhysics_Init(void* ent, void* asset);
+void zEntSimpleObj_Init(void* ent, void* asset);
+void zEntSimpleObj_Setup(zEntSimpleObj* ent);
 void zEntSimpleObj_Save(zEntSimpleObj* ent, xSerial* s);
 void zEntSimpleObj_Load(zEntSimpleObj* ent, xSerial* s);
 

@@ -54,6 +54,7 @@ void xFXRibbonSceneEnter();
 void xFXRibbonRender();
 void xFXAuraRender();
 void xFXSceneInit();
+void xFXSceneSetup();
 void xFXSceneReset();
 void xFXScenePrepare();
 void xFXSceneFinish();
