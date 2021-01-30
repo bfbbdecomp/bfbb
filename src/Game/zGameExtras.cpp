@@ -30,6 +30,7 @@ extern int32 g_currDay;
 extern int32 g_currMonth;
 extern int32 g_gameExtraFlags;
 extern int32 g_flg_chEnabled;
+extern int32 g_enableGameExtras;
 // extern int32 g_enableGameExtras;
 extern uint32 sCheatPressed[16];
 
@@ -48,7 +49,15 @@ void zGameExtras_MoDay(int32* month, int32* day)
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneInit__Fv")
 
 // func_80099760
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneReset__Fv")
+#else
+void zGameExtras_SceneReset()
+{
+    EGGItem* egg_next;
+    EGGItem* egg;
+}
+#endif
 
 // func_800997D8
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneExit__Fv")

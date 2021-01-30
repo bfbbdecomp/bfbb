@@ -13,13 +13,13 @@ zGameExtras_SceneInit__Fv:
 /* 800996AC 000964AC  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 800996B0 000964B0  93 C1 00 18 */	stw r30, 0x18(r1)
 /* 800996B4 000964B4  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800996B8 000964B8  90 0D 8F 80 */	stw r0, lbl_803CB880-_SDA_BASE_(r13)
+/* 800996B8 000964B8  90 0D 8F 80 */	stw r0, g_enableGameExtras-_SDA_BASE_(r13)
 /* 800996BC 000964BC  48 03 AE 8D */	bl iGetDay__Fv
 /* 800996C0 000964C0  90 6D 8F 84 */	stw r3, g_currDay-_SDA_BASE_(r13)
 /* 800996C4 000964C4  48 03 AE B1 */	bl iGetMonth__Fv
-/* 800996C8 000964C8  3C 80 80 29 */	lis r4, lbl_8028F1B0@ha
+/* 800996C8 000964C8  3C 80 80 29 */	lis r4, g_eggBasket@ha
 /* 800996CC 000964CC  90 6D 8F 88 */	stw r3, g_currMonth-_SDA_BASE_(r13)
-/* 800996D0 000964D0  38 04 F1 B0 */	addi r0, r4, lbl_8028F1B0@l
+/* 800996D0 000964D0  38 04 F1 B0 */	addi r0, r4, g_eggBasket@l
 /* 800996D4 000964D4  3B E0 00 00 */	li r31, 0
 /* 800996D8 000964D8  7C 1E 03 78 */	mr r30, r0
 /* 800996DC 000964DC  48 00 00 4C */	b lbl_80099728
@@ -49,7 +49,7 @@ lbl_80099728:
 /* 80099734 00096534  2C 1F 00 00 */	cmpwi r31, 0
 /* 80099738 00096538  41 82 00 0C */	beq lbl_80099744
 /* 8009973C 0009653C  38 00 00 01 */	li r0, 1
-/* 80099740 00096540  90 0D 8F 80 */	stw r0, lbl_803CB880-_SDA_BASE_(r13)
+/* 80099740 00096540  90 0D 8F 80 */	stw r0, g_enableGameExtras-_SDA_BASE_(r13)
 lbl_80099744:
 /* 80099744 00096544  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80099748 00096548  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -65,11 +65,11 @@ zGameExtras_SceneReset__Fv:
 /* 80099764 00096564  7C 08 02 A6 */	mflr r0
 /* 80099768 00096568  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8009976C 0009656C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80099770 00096570  80 0D 8F 80 */	lwz r0, lbl_803CB880-_SDA_BASE_(r13)
+/* 80099770 00096570  80 0D 8F 80 */	lwz r0, g_enableGameExtras-_SDA_BASE_(r13)
 /* 80099774 00096574  2C 00 00 00 */	cmpwi r0, 0
 /* 80099778 00096578  41 82 00 4C */	beq lbl_800997C4
-/* 8009977C 0009657C  3C 60 80 29 */	lis r3, lbl_8028F1B0@ha
-/* 80099780 00096580  38 03 F1 B0 */	addi r0, r3, lbl_8028F1B0@l
+/* 8009977C 0009657C  3C 60 80 29 */	lis r3, g_eggBasket@ha
+/* 80099780 00096580  38 03 F1 B0 */	addi r0, r3, g_eggBasket@l
 /* 80099784 00096584  7C 1F 03 78 */	mr r31, r0
 /* 80099788 00096588  48 00 00 30 */	b lbl_800997B8
 lbl_8009978C:
@@ -102,7 +102,7 @@ zGameExtras_SceneExit__Fv:
 /* 800997E0 000965E0  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800997E4 000965E4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800997E8 000965E8  93 C1 00 08 */	stw r30, 8(r1)
-/* 800997EC 000965EC  80 0D 8F 80 */	lwz r0, lbl_803CB880-_SDA_BASE_(r13)
+/* 800997EC 000965EC  80 0D 8F 80 */	lwz r0, g_enableGameExtras-_SDA_BASE_(r13)
 /* 800997F0 000965F0  2C 00 00 00 */	cmpwi r0, 0
 /* 800997F4 000965F4  41 82 00 84 */	beq lbl_80099878
 /* 800997F8 000965F8  3C 60 80 3C */	lis r3, globals@ha
@@ -113,9 +113,9 @@ zGameExtras_SceneExit__Fv:
 /* 8009980C 0009660C  4B FF E9 71 */	bl zGameIsPaused__Fv
 /* 80099810 00096610  2C 03 00 00 */	cmpwi r3, 0
 /* 80099814 00096614  40 82 00 64 */	bne lbl_80099878
-/* 80099818 00096618  3C 60 80 29 */	lis r3, lbl_8028F1B0@ha
+/* 80099818 00096618  3C 60 80 29 */	lis r3, g_eggBasket@ha
 /* 8009981C 0009661C  3B E0 00 00 */	li r31, 0
-/* 80099820 00096620  38 03 F1 B0 */	addi r0, r3, lbl_8028F1B0@l
+/* 80099820 00096620  38 03 F1 B0 */	addi r0, r3, g_eggBasket@l
 /* 80099824 00096624  7C 1E 03 78 */	mr r30, r0
 /* 80099828 00096628  48 00 00 34 */	b lbl_8009985C
 lbl_8009982C:
@@ -136,7 +136,7 @@ lbl_8009985C:
 /* 80099860 00096660  28 00 00 00 */	cmplwi r0, 0
 /* 80099864 00096664  40 82 FF C8 */	bne lbl_8009982C
 /* 80099868 00096668  38 00 00 00 */	li r0, 0
-/* 8009986C 0009666C  90 0D 8F 80 */	stw r0, lbl_803CB880-_SDA_BASE_(r13)
+/* 8009986C 0009666C  90 0D 8F 80 */	stw r0, g_enableGameExtras-_SDA_BASE_(r13)
 /* 80099870 00096670  90 0D 8F 84 */	stw r0, g_currDay-_SDA_BASE_(r13)
 /* 80099874 00096674  90 0D 8F 88 */	stw r0, g_currMonth-_SDA_BASE_(r13)
 lbl_80099878:
@@ -155,7 +155,7 @@ zGameExtras_SceneUpdate__Ff:
 /* 8009989C 0009669C  DB E1 00 18 */	stfd f31, 0x18(r1)
 /* 800998A0 000966A0  FF E0 08 90 */	fmr f31, f1
 /* 800998A4 000966A4  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 800998A8 000966A8  80 0D 8F 80 */	lwz r0, lbl_803CB880-_SDA_BASE_(r13)
+/* 800998A8 000966A8  80 0D 8F 80 */	lwz r0, g_enableGameExtras-_SDA_BASE_(r13)
 /* 800998AC 000966AC  2C 00 00 00 */	cmpwi r0, 0
 /* 800998B0 000966B0  41 82 00 70 */	beq lbl_80099920
 /* 800998B4 000966B4  3C 60 80 3C */	lis r3, globals@ha
@@ -166,8 +166,8 @@ zGameExtras_SceneUpdate__Ff:
 /* 800998C8 000966C8  4B FF E8 B5 */	bl zGameIsPaused__Fv
 /* 800998CC 000966CC  2C 03 00 00 */	cmpwi r3, 0
 /* 800998D0 000966D0  40 82 00 50 */	bne lbl_80099920
-/* 800998D4 000966D4  3C 60 80 29 */	lis r3, lbl_8028F1B0@ha
-/* 800998D8 000966D8  38 03 F1 B0 */	addi r0, r3, lbl_8028F1B0@l
+/* 800998D4 000966D4  3C 60 80 29 */	lis r3, g_eggBasket@ha
+/* 800998D8 000966D8  38 03 F1 B0 */	addi r0, r3, g_eggBasket@l
 /* 800998DC 000966DC  7C 1F 03 78 */	mr r31, r0
 /* 800998E0 000966E0  48 00 00 34 */	b lbl_80099914
 lbl_800998E4:
@@ -870,8 +870,11 @@ zGameExtras_strings:
 	.incbin "baserom.dol", 0x259A00, 0x118
 
 .section .data
-lbl_8028F1B0:
+
+.global g_eggBasket
+g_eggBasket:
 	.incbin "baserom.dol", 0x28C190, 0x20
+
 lbl_8028F1D0:
 	.incbin "baserom.dol", 0x28C1B0, 0x574
 lbl_8028F744:
@@ -891,7 +894,8 @@ lbl_8028F90C:
 
 .section .sbss
 
-lbl_803CB880:
+.global g_enableGameExtras
+g_enableGameExtras:
 	.skip 0x4
 
 .global g_currDay
