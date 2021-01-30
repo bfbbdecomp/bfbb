@@ -53,8 +53,8 @@ void zGameExtras_MoDay(int32* month, int32* day)
 
 void zGameExtras_SceneReset()
 {
-    EGGItem* egg_next;
     EGGItem* egg;
+    EGGItem* egg_next;
 
     if (!g_enableGameExtras)
     {
@@ -77,14 +77,47 @@ void zGameExtras_SceneReset()
     }
 }
 
-// func_800997D8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_SceneExit__Fv")
-#else
 void zGameExtras_SceneExit()
 {
+    EGGItem* egg;
+    EGGItem* egg_next;
+
+    if (!g_enableGameExtras)
+    {
+        return;
+    }
+
+    if (globals.cmgr)
+    {
+        return;
+    }
+
+    if (zGameIsPaused())
+    {
+        return;
+    }
+
+    egg_next = g_eggBasket;
+
+    while (egg_next->fun_check)
+    {
+        egg = egg_next++;
+
+        if (egg->enabled)
+        {
+            egg->enabled = 0;
+
+            if (egg->funcs->fun_done)
+            {
+                egg->funcs->fun_done(egg);
+            }
+        }
+    }
+
+    g_enableGameExtras = 0;
+    g_currDay = 0;
+    g_currMonth = 0;
 }
-#endif
 
 void zGameExtras_SceneUpdate(float32 dt)
 {
@@ -181,14 +214,14 @@ uint32 TestCheat(uint32* cheat)
     return 1;
 }
 
-void AddToCheatPressed(uint32 param_1)
+void AddToCheatPressed(uint32 button)
 {
-    // a cool example of loop unrolling
     for (int32 i = 0; i < 15; i++)
     {
         sCheatPressed[i] = sCheatPressed[i + 1];
     }
-    sCheatPressed[15] = param_1;
+
+    sCheatPressed[15] = button;
 }
 
 // func_80099D3C
