@@ -17,6 +17,10 @@ struct iSndInfo
     int32 lastStreamBuffer;
 };
 
+void iSndSuspendCD(uint32);
+void iSndInitSceneLoaded();
 uint8 iSndIsPlaying(uint32 assetID);
+void iSndWaitForDeadSounds();
+void iSndSceneExit();
 
 #endif

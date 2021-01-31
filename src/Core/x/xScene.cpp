@@ -111,7 +111,7 @@ xBase* xSceneResolvID(xScene* sc, uint32 id)
     return NULL;
 }
 
-char* xSceneID2Name(xScene* sc, uint32 id)
+const char* xSceneID2Name(xScene* sc, uint32 id)
 {
     if (sc->id2Name)
     {

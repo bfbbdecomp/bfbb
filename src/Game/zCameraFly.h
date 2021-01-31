@@ -16,7 +16,7 @@ struct zCameraFly : xBase
     CameraFly_asset* casset;
 };
 
-void zCameraFly_Init(xBase& data, xDynAsset& asset);
+void zCameraFly_Init(xBase& data, xDynAsset& asset, ulong32);
 void zCameraFly_Init(zCameraFly* data, CameraFly_asset* asset);
 void zCameraFly_Setup(zCameraFly* fly);
 void zCameraFly_Update(xBase* to, xScene* scene, float32 dt);

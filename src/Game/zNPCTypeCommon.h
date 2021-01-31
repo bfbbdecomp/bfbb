@@ -525,5 +525,6 @@ struct NPCMsg
 
 void ZNPC_Common_Startup();
 void ZNPC_Common_Shutdown();
+void zNPCCommon_EjectPhlemOnPawz();
 
 #endif

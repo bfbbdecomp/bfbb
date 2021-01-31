@@ -5,11 +5,14 @@
 
 struct st_SERIAL_CLIENTINFO
 {
+    uint32 idtag;
+    int32* membuf;
+    int32 trueoff;
+    int32 actsize;
 };
 
-class xSerial
+struct xSerial
 {
-public:
     uint32 idtag;
     int32 baseoff;
     st_SERIAL_CLIENTINFO* ctxtdata;
@@ -18,16 +21,26 @@ public:
     int32 bitidx;
     int32 bittally;
 
+    xSerial();
+    ~xSerial();
+
+    void setClient(uint32 idtag);
+
     int32 Write_b1(int32 bits);
     int32 Write(uint8 data);
     int32 Write(int16 data);
     int32 Write(int32 data);
+    int32 Write(uint32 data);
+    int32 Write(float32 data);
     int32 Read_b1(int32* bits);
     int32 Read(uint8* buf);
     int32 Read(int16* buf);
     int32 Read(int32* buf);
+    int32 Read(uint32* buf);
+    int32 Read(float32* buf);
 };
 
+void xSerialTraverse(int32 (*func)(uint32 clientID, xSerial* xser));
 void xSerialWipeMainBuffer();
 
 #endif

@@ -24,7 +24,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_80117BC8
-#pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings")
+#pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s",                                                     \
+                   "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings")
 
 // func_80117E10
 #pragma GLOBAL_ASM("asm/Core/x/xParEmitter.s", "xParEmitterCull__FP11xParEmitterP4xPar")

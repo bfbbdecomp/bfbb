@@ -2,6 +2,7 @@
 #define ZSCENE_H
 
 #include "../Core/x/xScene.h"
+#include "../Core/x/xClimate.h"
 
 #include "zPortal.h"
 #include "zEnt.h"
@@ -30,15 +31,42 @@ struct zScene : xScene
     _zEnv* zen;
 };
 
-xBase* zSceneFindObject(uint32 gameID);
-void zSceneSwitch(_zPortal* p, int32 forceSameScene);
-uint32 zSceneGetLevelIndex();
+extern _tagClimate gClimate;
+extern _zEnv* gCurEnv;
+extern uint32 gTransitionSceneID;
+extern float32 gSceneUpdateTime;
+
+void zSceneSet(xBase* b, uint32 index);
+void zSceneInitEnvironmentalSoundEffect();
 void zSceneInit(uint32 theSceneID, int32 reloadInProgress);
-void zSceneSetup();
 void zSceneExit(int32 beginReload);
-void zSceneRender();
+void zSceneUpdateSFXWidgets();
+void zSceneSwitch(_zPortal* p, int32 forceSameScene);
+void zSceneSave(zScene* ent, xSerial* s);
+void zSceneLoad(zScene* ent, xSerial* s);
+void zSceneSetup();
 void zSceneUpdate(float32 dt);
-int8* zSceneGetAreaname(uint32 theSceneID);
+void zSceneRender();
+xBase* zSceneFindObject(uint32 gameID);
+xBase* zSceneGetObject(int32 type, int32 idx);
+const char* zSceneGetName(uint32 gameID);
+const char* zSceneGetName(xBase* b);
+void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), void* data);
 void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), int32 baseType, void* data);
+void zSceneMemLvlChkCB();
+uint32 zSceneLeavingLevel();
+const char* zSceneGetLevelName(uint32 sceneID);
+uint32 zSceneGetLevelIndex();
+uint32 zSceneGetLevelIndex(uint32 sceneID);
+const char* zSceneGetLevelPrefix(uint32 index);
+const char* zSceneGetAreaname(uint32);
+uint32 zSceneCalcProgress();
+void zScene_UpdateFlyToInterface(float32 dt);
+void zSceneCardCheckStartup_set(int32 needed, int32 available, int32 files);
+void zSceneEnableVisited(zScene* s);
+void zSceneEnableScreenAdj(uint32 enable);
+void zSceneSetOldScreenAdj();
+uint32 zScene_ScreenAdjustMode();
+void zSceneSpawnRandomBubbles();
 
 #endif
