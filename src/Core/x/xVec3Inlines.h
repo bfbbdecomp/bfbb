@@ -15,6 +15,7 @@ void xVec3Init(xVec3* v, float32 _x, float32 _y, float32 _z);
 void xVec3AddTo(xVec3* o, const xVec3* v);
 void xVec3SubFrom(xVec3* o, const xVec3* v);
 void xVec3Lerp(xVec3* o, const xVec3* a, const xVec3* b, float32 t);
+void xVec3ScaleC(xVec3* o, const xVec3* v, float32 x, float32 y, float32 z);
 float32 xVec3Dist(const xVec3* a, const xVec3* b);
 
 #endif

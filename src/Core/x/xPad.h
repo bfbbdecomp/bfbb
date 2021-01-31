@@ -95,8 +95,9 @@ struct _tagxPad
 
 extern _tagxPad mPad[4];
 
-int32 xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
-int32 xPadUpdate(int32 idx, float32 time_passed);
 void xPadRumbleEnable(int32 idx, int32 enable);
+int32 xPadUpdate(int32 idx, float32 time_passed);
+void xPadDestroyRumbleChain(int32 idx);
+int32 xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
 
 #endif

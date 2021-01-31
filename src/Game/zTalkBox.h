@@ -4,6 +4,8 @@
 #include "zTextBox.h"
 #include "zNPCTypeCommon.h"
 
+#include "../Core/x/xScene.h"
+
 struct ztalkbox : xBase
 {
     struct asset_type : xDynAsset
@@ -75,6 +77,12 @@ struct ztalkbox : xBase
         const char* yesno;
     } prompt;
     zNPCCommon* npc;
+
+    static void init();
+    static void load(xBase& data, xDynAsset& asset, ulong32);
+    static void update_all(xScene& s, float32 dt);
+    static void render_all();
+    static void reset_all();
 
     void stop_talk();
 };

@@ -43,12 +43,12 @@ void zScriptReset(_zScript* script)
     script->more = TRUE;
 }
 
-void zScript_Save(_zScript* script, xSerial* s)
+void zScriptSave(_zScript* script, xSerial* s)
 {
     xBaseSave((xBase*)script, s);
 }
 
-void zScript_Load(_zScript* script, xSerial* s)
+void zScriptLoad(_zScript* script, xSerial* s)
 {
     xBaseLoad((xBase*)script, s);
 }

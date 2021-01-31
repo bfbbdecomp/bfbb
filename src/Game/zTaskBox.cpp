@@ -253,9 +253,9 @@ ztaskbox::talk_callback::talk_callback()
 {
 }
 
-void ztaskbox::load(xBase& data, xDynAsset& asset, uint64 num)
+void ztaskbox::load(xBase& data, xDynAsset& asset, ulong32 num)
 {
-    load(*(asset_type*)&data);
+    ((ztaskbox&)data).load((asset_type&)asset);
 }
 
 bool ztaskbox::exists(state_enum stage)

@@ -1,7 +1,7 @@
 #ifndef ZGAMEEXTRAS_H
 #define ZGAMEEXTRAS_H
 
-#include <types.h>
+#include "../Core/x/xserializer.h"
 
 struct EGGItem;
 

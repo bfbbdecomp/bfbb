@@ -232,6 +232,8 @@ struct zPlayerLassoInfo
 
 extern _CurrentPlayer gCurrentPlayer;
 
+void zEntPlayer_Load(xEnt*, xSerial*);
+
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
 
 uint32 WalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
@@ -256,6 +258,16 @@ uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, 
 uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 
 uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
+
+void zEntPlayerExit(xEnt*);
+void zEntPlayerPreReset();
+void zEntPlayerReset(xEnt* ent);
+void zEntPlayer_LoadSounds();
+void zEntPlayer_UnloadSounds();
+void zEntPlayer_ShadowModelEnable();
+void zEntPlayer_ShadowModelDisable();
+
+void zEntPlayer_LoadCheckPoint();
 
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);

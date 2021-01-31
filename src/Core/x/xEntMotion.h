@@ -170,5 +170,7 @@ struct xEntMotion
 
 void xEntMotionMove(xEntMotion* motion, xScene* sc, float32 dt, xEntFrame* frame);
 void xEntMotionTranslate(xEntMotion* motion, const xVec3* dpos, xMat4x3* dmat);
+void xEntMotionDebugInit(uint16 num_xems);
+void xEntMotionDebugExit();
 
 #endif

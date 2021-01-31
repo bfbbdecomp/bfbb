@@ -4233,10 +4233,6 @@ lbl_803CB9B0:
 	.skip 0x4
 lbl_803CB9B4:
 	.skip 0x4
-/* SPECULATION: link order */
-.global HACK_BASETYPE
-HACK_BASETYPE:
-	.skip 0x4
 
 .section .sdata
 .balign 8

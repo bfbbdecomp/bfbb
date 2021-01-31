@@ -1430,24 +1430,29 @@ zSurfaceGetDefault__Fv:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8025F4E8:
 	.incbin "baserom.dol", 0x25C4C8, 0xA8
 
 .section .data
+.balign 8
 lbl_80290EA8:
 	.incbin "baserom.dol", 0x28DE88, 0x60
 
 .section .bss
+.balign 8
 lbl_802F2C88:
 	.skip 0x260
 
 .section .sbss
+.balign 8
 lbl_803CB9F0:
 	.skip 0x4
 lbl_803CB9F4:
 	.skip 0x4
 
 .section .sdata
+.balign 8
 lbl_803CAC10:
 	.incbin "baserom.dol", 0x2B5CD0, 0xC
 

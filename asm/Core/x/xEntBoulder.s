@@ -114,6 +114,7 @@ lbl_8011F22C:
 /* 8011F23C 0011C03C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F240 0011C040  4E 80 00 20 */	blr 
 
+.global xEntBoulder_Init__FPvPv
 xEntBoulder_Init__FPvPv:
 /* 8011F244 0011C044  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8011F248 0011C048  7C 08 02 A6 */	mflr r0
@@ -2240,6 +2241,7 @@ lbl_801210A8:
 /* 801210B4 0011DEB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801210B8 0011DEB8  4E 80 00 20 */	blr 
 
+.global xBoulderGenerator_Init__FR5xBaseR9xDynAssetUl
 xBoulderGenerator_Init__FR5xBaseR9xDynAssetUl:
 /* 801210BC 0011DEBC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801210C0 0011DEC0  7C 08 02 A6 */	mflr r0

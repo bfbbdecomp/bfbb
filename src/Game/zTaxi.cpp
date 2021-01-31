@@ -10,7 +10,7 @@
 extern ztalkbox::answer_enum sAnswer;
 extern float32 portalTimer;
 
-void zTaxi_Init(xBase& data, xDynAsset& asset)
+void zTaxi_Init(xBase& data, xDynAsset& asset, ulong32)
 {
     zTaxi_Init((zTaxi*)&data, (taxi_asset*)&asset);
 }

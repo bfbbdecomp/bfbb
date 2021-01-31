@@ -28,6 +28,7 @@ lbl_800A8F00:
 /* 800A8F0C 000A5D0C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A8F10 000A5D10  4E 80 00 20 */	blr 
 
+.global zPlatform_Init__FPvPv
 zPlatform_Init__FPvPv:
 /* 800A8F14 000A5D14  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800A8F18 000A5D18  7C 08 02 A6 */	mflr r0

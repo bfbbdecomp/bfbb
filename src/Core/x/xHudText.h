@@ -20,6 +20,8 @@ namespace xhud
         text_widget(); // possibly temp, added so zCombo.cpp compiles
         text_widget(const text_asset&);
 
+        static void load(xBase& data, xDynAsset& asset, ulong32);
+
         void render();
         void update(float32 dt);
         uint8 is(uint32 id);

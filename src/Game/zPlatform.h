@@ -161,4 +161,10 @@ struct zPlatform : zEnt
 #define ZPLATFROM_SUBTYPE_PADDLE 12
 #define ZPLATFORM_SUBTYPE_FM 13
 
+void zPlatform_Init(void* plat, void* asset);
+void zPlatform_Setup(zPlatform* plat, xScene* sc);
+void zPlatform_Save(zPlatform* ent, xSerial* s);
+void zPlatform_Load(zPlatform* ent, xSerial* s);
+void zPlatform_Reset(zPlatform* plat, xScene* sc);
+
 #endif

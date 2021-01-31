@@ -47,6 +47,7 @@ XHUD_AnimTable_Idle__Fv:
 /* 8002FD08 0002CB08  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002FD0C 0002CB0C  4E 80 00 20 */	blr 
 
+.global load__Q24xhud12model_widgetFR5xBaseR9xDynAssetUl
 load__Q24xhud12model_widgetFR5xBaseR9xDynAssetUl:
 /* 8002FD10 0002CB10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8002FD14 0002CB14  7C 08 02 A6 */	mflr r0
