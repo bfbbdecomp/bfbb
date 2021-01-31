@@ -36,4 +36,19 @@ void zCameraTranslate(xCamera* camera, float32 x, float32 y, float32 z);
 void zCameraReset(xCamera* camera);
 void zCameraUpdate(xCamera* camera, float32 dt);
 
+uint32 zCameraIsTrackingDisabled();
+void zCameraDisableInput();
+void zCameraEnableInput();
+void zCameraDisableLassoCam();
+void zCameraEnableLassoCam();
+void zCameraSetLassoCamFactor(float32 new_factor);
+float32 zCameraGetLassoCamFactor();
+int32 zCameraGetConvers();
+void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z);
+void zCameraDisableWallJump(xCamera* cam);
+void zCameraSetReward(int32 reward);
+void zCameraMinTargetHeightSet(float32 min_height);
+void zCameraMinTargetHeightClear();
+float32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB);
+
 #endif
