@@ -633,7 +633,7 @@ void zCameraMinTargetHeightSet(float32 min_height)
 }
 
 // func_8005249C
-void zCameraMinTargetHeightClea()
+void zCameraMinTargetHeightClear()
 {
     zcam_mintgtheight = zCamera_f_n1_0_e38;
 }
