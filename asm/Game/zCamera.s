@@ -2362,50 +2362,6 @@ lbl_800520E8:
 /* 800520F0 0004EEF0  90 0D 8B 94 */	stw r0, zcam_longbounce-_SDA_BASE_(r13)
 /* 800520F4 0004EEF4  4E 80 00 20 */	blr 
 
-.global zCameraIsTrackingDisabled__Fv
-zCameraIsTrackingDisabled__Fv:
-/* 80052120 0004EF20  80 6D 8B D4 */	lwz r3, stop_track-_SDA_BASE_(r13)
-/* 80052124 0004EF24  4E 80 00 20 */	blr 
-
-.global zCameraDisableInput__Fv
-zCameraDisableInput__Fv:
-/* 80052128 0004EF28  38 00 00 00 */	li r0, 0
-/* 8005212C 0004EF2C  98 0D 81 40 */	stb r0, lbl_803CAA40-_SDA_BASE_(r13)
-/* 80052130 0004EF30  4E 80 00 20 */	blr 
-
-.global zCameraEnableInput__Fv
-zCameraEnableInput__Fv:
-/* 80052134 0004EF34  38 00 00 01 */	li r0, 1
-/* 80052138 0004EF38  98 0D 81 40 */	stb r0, lbl_803CAA40-_SDA_BASE_(r13)
-/* 8005213C 0004EF3C  4E 80 00 20 */	blr 
-
-.global zCameraDisableLassoCam__Fv
-zCameraDisableLassoCam__Fv:
-/* 80052140 0004EF40  38 00 00 00 */	li r0, 0
-/* 80052144 0004EF44  98 0D 8B D8 */	stb r0, lassocam_enabled-_SDA_BASE_(r13)
-/* 80052148 0004EF48  4E 80 00 20 */	blr 
-
-.global zCameraEnableLassoCam__Fv
-zCameraEnableLassoCam__Fv:
-/* 8005214C 0004EF4C  38 00 00 01 */	li r0, 1
-/* 80052150 0004EF50  98 0D 8B D8 */	stb r0, lassocam_enabled-_SDA_BASE_(r13)
-/* 80052154 0004EF54  4E 80 00 20 */	blr 
-
-.global zCameraSetLassoCamFactor__Ff
-zCameraSetLassoCamFactor__Ff:
-/* 80052158 0004EF58  D0 2D 8B DC */	stfs f1, lassocam_factor-_SDA_BASE_(r13)
-/* 8005215C 0004EF5C  4E 80 00 20 */	blr 
-
-.global zCameraGetLassoCamFactor__Fv
-zCameraGetLassoCamFactor__Fv:
-/* 80052160 0004EF60  C0 2D 8B DC */	lfs f1, lassocam_factor-_SDA_BASE_(r13)
-/* 80052164 0004EF64  4E 80 00 20 */	blr 
-
-.global zCameraGetConvers__Fv
-zCameraGetConvers__Fv:
-/* 80052168 0004EF68  80 6D 8B 8C */	lwz r3, zcam_convers-_SDA_BASE_(r13)
-/* 8005216C 0004EF6C  4E 80 00 20 */	blr 
-
 .global zCameraSetConvers__Fi
 zCameraSetConvers__Fi:
 /* 80052170 0004EF70  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -2536,28 +2492,6 @@ lbl_80052330:
 /* 8005233C 0004F13C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80052340 0004F140  4E 80 00 20 */	blr 
 
-.global zCameraTranslate__FP7xCamerafff
-zCameraTranslate__FP7xCamerafff:
-/* 80052344 0004F144  C0 03 00 44 */	lfs f0, 0x44(r3)
-/* 80052348 0004F148  EC 00 08 2A */	fadds f0, f0, f1
-/* 8005234C 0004F14C  D0 03 00 44 */	stfs f0, 0x44(r3)
-/* 80052350 0004F150  C0 03 00 48 */	lfs f0, 0x48(r3)
-/* 80052354 0004F154  EC 00 10 2A */	fadds f0, f0, f2
-/* 80052358 0004F158  D0 03 00 48 */	stfs f0, 0x48(r3)
-/* 8005235C 0004F15C  C0 03 00 4C */	lfs f0, 0x4c(r3)
-/* 80052360 0004F160  EC 00 18 2A */	fadds f0, f0, f3
-/* 80052364 0004F164  D0 03 00 4C */	stfs f0, 0x4c(r3)
-/* 80052368 0004F168  C0 03 01 2C */	lfs f0, 0x12c(r3)
-/* 8005236C 0004F16C  EC 00 08 2A */	fadds f0, f0, f1
-/* 80052370 0004F170  D0 03 01 2C */	stfs f0, 0x12c(r3)
-/* 80052374 0004F174  C0 03 01 30 */	lfs f0, 0x130(r3)
-/* 80052378 0004F178  EC 00 10 2A */	fadds f0, f0, f2
-/* 8005237C 0004F17C  D0 03 01 30 */	stfs f0, 0x130(r3)
-/* 80052380 0004F180  C0 03 01 34 */	lfs f0, 0x134(r3)
-/* 80052384 0004F184  EC 00 18 2A */	fadds f0, f0, f3
-/* 80052388 0004F188  D0 03 01 34 */	stfs f0, 0x134(r3)
-/* 8005238C 0004F18C  4E 80 00 20 */	blr 
-
 .global zCameraEnableWallJump__FP7xCameraRC5xVec3
 zCameraEnableWallJump__FP7xCameraRC5xVec3:
 /* 80052390 0004F190  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2605,48 +2539,6 @@ lbl_80052428:
 /* 80052430 0004F230  38 21 00 20 */	addi r1, r1, 0x20
 /* 80052434 0004F234  4E 80 00 20 */	blr 
 
-.global zCameraDisableWallJump__FP7xCamera
-zCameraDisableWallJump__FP7xCamera:
-/* 80052438 0004F238  80 0D 8B E0 */	lwz r0, lbl_803CB4E0-_SDA_BASE_(r13)
-/* 8005243C 0004F23C  2C 00 00 00 */	cmpwi r0, 0
-/* 80052440 0004F240  4D 82 00 20 */	beqlr 
-/* 80052444 0004F244  38 00 00 01 */	li r0, 1
-/* 80052448 0004F248  90 0D 8B E0 */	stw r0, lbl_803CB4E0-_SDA_BASE_(r13)
-/* 8005244C 0004F24C  4E 80 00 20 */	blr 
-
-.global zCameraSetReward__Fi
-zCameraSetReward__Fi:
-/* 80052450 0004F250  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80052454 0004F254  7C 08 02 A6 */	mflr r0
-/* 80052458 0004F258  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005245C 0004F25C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80052460 0004F260  7C 7F 1B 78 */	mr r31, r3
-/* 80052464 0004F264  4B FF FC BD */	bl zCameraIsTrackingDisabled__Fv
-/* 80052468 0004F268  28 03 00 00 */	cmplwi r3, 0
-/* 8005246C 0004F26C  41 82 00 10 */	beq lbl_8005247C
-/* 80052470 0004F270  38 00 00 00 */	li r0, 0
-/* 80052474 0004F274  90 0D 8B A0 */	stw r0, zcam_reward-_SDA_BASE_(r13)
-/* 80052478 0004F278  48 00 00 08 */	b lbl_80052480
-lbl_8005247C:
-/* 8005247C 0004F27C  93 ED 8B A0 */	stw r31, zcam_reward-_SDA_BASE_(r13)
-lbl_80052480:
-/* 80052480 0004F280  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80052484 0004F284  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80052488 0004F288  7C 08 03 A6 */	mtlr r0
-/* 8005248C 0004F28C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80052490 0004F290  4E 80 00 20 */	blr 
-
-.global zCameraMinTargetHeightSet__Ff
-zCameraMinTargetHeightSet__Ff:
-/* 80052494 0004F294  D0 2D 81 3C */	stfs f1, zcam_mintgtheight-_SDA_BASE_(r13)
-/* 80052498 0004F298  4E 80 00 20 */	blr 
-
-.global zCameraMinTargetHeightClear__Fv
-zCameraMinTargetHeightClear__Fv:
-/* 8005249C 0004F29C  C0 02 88 20 */	lfs f0, zCamera_f_n1_0_e38-_SDA2_BASE_(r2)
-/* 800524A0 0004F2A0  D0 0D 81 3C */	stfs f0, zcam_mintgtheight-_SDA_BASE_(r13)
-/* 800524A4 0004F2A4  4E 80 00 20 */	blr 
-
 .global zCamera_FlyOnly__Fv
 zCamera_FlyOnly__Fv:
 /* 800524A8 0004F2A8  3C 80 80 3C */	lis r4, globals@ha
@@ -2683,22 +2575,6 @@ lbl_80052514:
 lbl_8005251C:
 /* 8005251C 0004F31C  38 60 00 00 */	li r3, 0
 /* 80052520 0004F320  4E 80 00 20 */	blr 
-
-.global xVec3Dist2__FPC5xVec3PC5xVec3
-xVec3Dist2__FPC5xVec3PC5xVec3:
-/* 80052524 0004F324  C0 23 00 04 */	lfs f1, 4(r3)
-/* 80052528 0004F328  C0 04 00 04 */	lfs f0, 4(r4)
-/* 8005252C 0004F32C  C0 63 00 00 */	lfs f3, 0(r3)
-/* 80052530 0004F330  EC 81 00 28 */	fsubs f4, f1, f0
-/* 80052534 0004F334  C0 04 00 00 */	lfs f0, 0(r4)
-/* 80052538 0004F338  C0 43 00 08 */	lfs f2, 8(r3)
-/* 8005253C 0004F33C  EC 63 00 28 */	fsubs f3, f3, f0
-/* 80052540 0004F340  C0 24 00 08 */	lfs f1, 8(r4)
-/* 80052544 0004F344  EC 04 01 32 */	fmuls f0, f4, f4
-/* 80052548 0004F348  EC 22 08 28 */	fsubs f1, f2, f1
-/* 8005254C 0004F34C  EC 03 00 FA */	fmadds f0, f3, f3, f0
-/* 80052550 0004F350  EC 21 00 7A */	fmadds f1, f1, f1, f0
-/* 80052554 0004F354  4E 80 00 20 */	blr 
 
 .endif
 
