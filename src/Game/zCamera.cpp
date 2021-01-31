@@ -539,28 +539,52 @@ void zCameraEnableTracking(camera_owner_enum owner)
 }
 
 // func_80052120
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraIsTrackingDisabled__Fv")
+uint32 zCameraIsTrackingDisabled()
+{
+    return stop_track;
+}
 
 // func_80052128
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableInput__Fv")
+void zCameraDisableInput()
+{
+    input_enabled = 0;
+}
 
 // func_80052134
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraEnableInput__Fv")
+void zCameraEnableInput()
+{
+    input_enabled = 1;
+}
 
 // func_80052140
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableLassoCam__Fv")
+void zCameraDisableLassoCam()
+{
+    lassocam_enabled = 0;
+}
 
 // func_8005214C
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraEnableLassoCam__Fv")
+void zCameraEnableLassoCam()
+{
+    lassocam_enabled = 1;
+}
 
 // func_80052158
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetLassoCamFactor__Ff")
+void zCameraSetLassoCamFactor(float32 new_factor)
+{
+    lassocam_factor = new_factor;
+}
 
 // func_80052160
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraGetLassoCamFactor__Fv")
+float32 zCameraGetLassoCamFactor()
+{
+    return lassocam_factor;
+}
 
 // func_80052168
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraGetConvers__Fv")
+int32 zCameraGetConvers()
+{
+    return zcam_convers;
+}
 
 // func_80052170
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetConvers__Fi")
@@ -569,25 +593,59 @@ void zCameraEnableTracking(camera_owner_enum owner)
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDoTrans__FP9xCamAssetf")
 
 // func_80052344
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraTranslate__FP7xCamerafff")
+void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z)
+{
+    cam->mat.pos.x += x;
+    cam->mat.pos.y += y;
+    cam->mat.pos.z += z;
+    cam->tran_accum.x += x;
+    cam->tran_accum.y += y;
+    cam->tran_accum.z += z;
+}
 
 // func_80052390
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraEnableWallJump__FP7xCameraRC5xVec3")
 
 // func_80052438
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDisableWallJump__FP7xCamera")
+void zCameraDisableWallJump(xCamera* cam)
+{
+    if (wall_jump_enabled != WJVS_DISABLED)
+    {
+        wall_jump_enabled = WJVS_DISABLING;
+    }
+}
 
 // func_80052450
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetReward__Fi")
+void zCameraSetReward(int32 reward)
+{
+    if (zCameraIsTrackingDisabled() != 0)
+    {
+        zcam_reward = 0;
+        return;
+    }
+    zcam_reward = reward;
+}
 
 // func_80052494
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraMinTargetHeightSet__Ff")
+void zCameraMinTargetHeightSet(float32 min_height)
+{
+    zcam_mintgtheight = min_height;
+}
 
 // func_8005249C
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraMinTargetHeightClear__Fv")
+void zCameraMinTargetHeightClea()
+{
+    zcam_mintgtheight = zCamera_f_n1_0_e38;
+}
 
 // func_800524A8
 #pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCamera_FlyOnly__Fv")
 
 // func_80052524
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "xVec3Dist2__FPC5xVec3PC5xVec3")
+float32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
+{
+    float dx = vecA->x - vecB->x;
+    float dy = vecA->y - vecB->y;
+    float dz = vecA->z - vecB->z;
+    return dx * dx + dy * dy + dz * dz;
+}
