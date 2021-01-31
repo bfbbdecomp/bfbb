@@ -141,6 +141,7 @@ void zFXUpdate(float32 dt);
 
 int32 zFXGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
 
+void zFX_SpawnBubbleHit(const xVec3* pos, uint32 num);
 void zFX_SpawnBubbleWall();
 void zFX_SpawnBubbleSlam(const xVec3* pos, uint32 num, float32 rang, float32 bvel, float32 rvel);
 
