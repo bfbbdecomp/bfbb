@@ -40,6 +40,7 @@ struct zEntPickup : zEnt
 void zEntPickupInit(void* ent, void* asset);
 void zEntPickup_Setup(zEntPickup* p);
 void zEntPickup_Setup();
+void zEntPickup_GiveAllRewardsNow();
 void zEntPickup_Reset(zEntPickup* ent);
 void zEntPickup_Save(zEntPickup* ent, xSerial* s);
 void zEntPickup_Load(zEntPickup* ent, xSerial* s);

@@ -129,5 +129,8 @@ void xMat3x3ScaleC(xMat3x3* m, float32 x, float32 y, float32 z);
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
+void xMat3x3Identity(xMat3x3* matrix);
+int32 xPointInBox(const xBox* b, const xVec3* p);
+void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
 #endif

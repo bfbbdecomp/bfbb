@@ -2,7 +2,6 @@
 #define ZENTTELEPORTBOX_H
 
 #include "zEnt.h"
-
 #include "../Core/x/xDynAsset.h"
 
 struct teleport_asset : xDynAsset
@@ -35,10 +34,17 @@ struct _zEntTeleportBox : zEnt
 };
 
 void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, ulong32);
+void zEntTeleportBox_Init(_zEntTeleportBox* ent, teleport_asset* asset);
 void zEntTeleportBox_InitAll();
 void zEntTeleportBox_Setup(_zEntTeleportBox* ent);
+void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt);
 void zEntTeleportBox_Save(_zEntTeleportBox* ent, xSerial* s);
 void zEntTeleportBox_Load(_zEntTeleportBox* ent, xSerial* s);
+void zEntTeleportBox_Open(_zEntTeleportBox* ent);
+void zEntTeleportBox_Close(_zEntTeleportBox* ent);
+int32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent);
+int32 zEntTeleportBox_isClosed(_zEntTeleportBox* ent);
 int32 zEntTeleportBox_playerIn();
+int32 zEntTeleportBoxEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*);
 
 #endif
