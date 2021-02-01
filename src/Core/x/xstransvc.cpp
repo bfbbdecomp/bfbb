@@ -3,11 +3,6 @@
 #include <types.h>
 #include <string.h>
 
-void XST_unlock_all();
-int32 PKRShutdown();
-int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID);
-int32 XST_cnt_locked();
-int32 XST_nth_locked(int32 param1);
 extern int32 g_straninit;
 extern st_PACKER_ASSETTYPE* g_typeHandlers;
 extern st_STRAN_DATA g_xstdata;
@@ -17,9 +12,9 @@ extern st_PACKER_READ_FUNCS* g_pkrf;
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTStartup__FP19st_PACKER_ASSETTYPE")
 
 // func_8004B154
-int32 xSTShutdown(void)
-{       
-    g_straninit = g_straninit - 1; 
+int32 xSTShutdown()
+{
+    g_straninit = g_straninit - 1;
 
     if (g_straninit == 0)
     {
@@ -68,38 +63,36 @@ int32 xSTShutdown(void)
 #else
 void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size)
 {
-
     void* memptr;
 
-	int32 scncnt;
-	int32 i;
-	int32 sum;
-	int32 cnt;
+    int32 scncnt;
+    int32 i;
+    int32 sum;
+    int32 cnt;
     int32 temp;
 
     sum = 0;
 
     temp = XST_cnt_locked();
 
-    for(i = 0; i < temp; i++)
+    for (i = 0; i < temp; i++)
     {
         scncnt = XST_nth_locked(i);
         //cnt = (**(code**)(g_pkrf + 0x1c))(*(undefined*)(scncnt + 8),type); (Ghidra)
         //int32(*AssetCount)(st_PACKER_READ_DATA*, uint32);
         //cnt = 0;
-        cnt = g_pkrf->AssetCount((st_PACKER_READ_DATA*)(scncnt + 8), type);  
+        cnt = g_pkrf->AssetCount((st_PACKER_READ_DATA*)(scncnt + 8), type);
 
-        memptr = g_pkrf->AssetByType((st_PACKER_READ_DATA*)(scncnt + 8), type, idx - sum, size);      
+        memptr = g_pkrf->AssetByType((st_PACKER_READ_DATA*)(scncnt + 8), type, idx - sum, size);
 
-        if (sum <= idx)// && (idx < sum + cnt))
+        if (sum <= idx) // && (idx < sum + cnt))
         {
-            if(idx < sum + cnt)
+            if (idx < sum + cnt)
             {
                 break;
             }
-        }      
-        sum = sum + cnt;  
-           
+        }
+        sum = sum + cnt;
     }
 
     //memptr = (void *)(**(code **)(g_pkrf + 0x18))(*(undefined*)(scncnt + 8),type,idx - sum,size); (Ghidra)
@@ -122,7 +115,7 @@ void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size)
 // func_8004BC34
 int8* xST_xAssetID_HIPFullPath(uint32 aid)
 {
-    return xST_xAssetID_HIPFullPath(aid,0);
+    return xST_xAssetID_HIPFullPath(aid, 0);
 }
 
 // func_8004BC58
@@ -140,7 +133,7 @@ int8* xST_xAssetID_HIPFullPath(uint32 aid)
 // func_8004BE60
 void XST_reset_raw()
 {
-    memset(&g_xstdata,0,0x1144);
+    memset(&g_xstdata, 0, 0x1144);
 }
 
 // func_8004BE90

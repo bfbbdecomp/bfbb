@@ -1,8 +1,7 @@
 #include "zAssetTypes.h"
+#include "xstransvc.h"
 
 #include <types.h>
-
-extern int32 xSTShutdown();
 
 // func_8004EBEC
 #pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "zAssetStartup__Fv")
