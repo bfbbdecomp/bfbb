@@ -36,26 +36,6 @@ lbl_8004B140:
 /* 8004B14C 00047F4C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004B150 00047F50  4E 80 00 20 */	blr 
 
-.global xSTShutdown__Fv
-xSTShutdown__Fv:
-/* 8004B154 00047F54  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004B158 00047F58  7C 08 02 A6 */	mflr r0
-/* 8004B15C 00047F5C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004B160 00047F60  80 6D 8B 00 */	lwz r3, g_straninit-_SDA_BASE_(r13)
-/* 8004B164 00047F64  34 03 FF FF */	addic. r0, r3, -1
-/* 8004B168 00047F68  90 0D 8B 00 */	stw r0, g_straninit-_SDA_BASE_(r13)
-/* 8004B16C 00047F6C  40 82 00 14 */	bne lbl_8004B180
-/* 8004B170 00047F70  38 00 00 00 */	li r0, 0
-/* 8004B174 00047F74  90 0D 8B 08 */	stw r0, g_typeHandlers-_SDA_BASE_(r13)
-/* 8004B178 00047F78  48 00 0E 19 */	bl XST_unlock_all__Fv
-/* 8004B17C 00047F7C  4B FE E2 29 */	bl PKRShutdown__Fv
-lbl_8004B180:
-/* 8004B180 00047F80  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004B184 00047F84  80 6D 8B 00 */	lwz r3, g_straninit-_SDA_BASE_(r13)
-/* 8004B188 00047F88  7C 08 03 A6 */	mtlr r0
-/* 8004B18C 00047F8C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004B190 00047F90  4E 80 00 20 */	blr 
-
 .global xSTPreLoadScene__FUiPvi
 xSTPreLoadScene__FUiPvi:
 /* 8004B194 00047F94  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -835,18 +815,6 @@ lbl_8004BC1C:
 /* 8004BC2C 00048A2C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004BC30 00048A30  4E 80 00 20 */	blr 
 
-.global xST_xAssetID_HIPFullPath__FUi
-xST_xAssetID_HIPFullPath__FUi:
-/* 8004BC34 00048A34  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004BC38 00048A38  7C 08 02 A6 */	mflr r0
-/* 8004BC3C 00048A3C  38 80 00 00 */	li r4, 0
-/* 8004BC40 00048A40  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004BC44 00048A44  48 00 00 15 */	bl xST_xAssetID_HIPFullPath__FUiPUi
-/* 8004BC48 00048A48  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004BC4C 00048A4C  7C 08 03 A6 */	mtlr r0
-/* 8004BC50 00048A50  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004BC54 00048A54  4E 80 00 20 */	blr 
-
 .global xST_xAssetID_HIPFullPath__FUiPUi
 xST_xAssetID_HIPFullPath__FUiPUi:
 /* 8004BC58 00048A58  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -991,20 +959,6 @@ XST_translate_sid_path__FUiPc:
 /* 8004BE54 00048C54  7C 08 03 A6 */	mtlr r0
 /* 8004BE58 00048C58  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004BE5C 00048C5C  4E 80 00 20 */	blr 
-
-XST_reset_raw__Fv:
-/* 8004BE60 00048C60  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004BE64 00048C64  7C 08 02 A6 */	mflr r0
-/* 8004BE68 00048C68  3C 60 80 29 */	lis r3, g_xstdata@ha
-/* 8004BE6C 00048C6C  38 80 00 00 */	li r4, 0
-/* 8004BE70 00048C70  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004BE74 00048C74  38 63 90 60 */	addi r3, r3, g_xstdata@l
-/* 8004BE78 00048C78  38 A0 11 44 */	li r5, 0x1144
-/* 8004BE7C 00048C7C  4B FB 75 DD */	bl memset
-/* 8004BE80 00048C80  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004BE84 00048C84  7C 08 03 A6 */	mtlr r0
-/* 8004BE88 00048C88  38 21 00 10 */	addi r1, r1, 0x10
-/* 8004BE8C 00048C8C  4E 80 00 20 */	blr 
 
 XST_lock_next__Fv:
 /* 8004BE90 00048C90  94 21 FF F0 */	stwu r1, -0x10(r1)
