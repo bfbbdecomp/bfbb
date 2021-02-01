@@ -133,7 +133,7 @@ int8* xST_xAssetID_HIPFullPath(uint32 aid)
 // func_8004BE60
 void XST_reset_raw()
 {
-    memset(&g_xstdata, 0, 0x1144);
+    memset(&g_xstdata, 0, sizeof(st_STRAN_DATA));
 }
 
 // func_8004BE90
