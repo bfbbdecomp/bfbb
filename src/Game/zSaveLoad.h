@@ -14,9 +14,9 @@ struct zSaveLoadGame
 
 struct zSaveLoadUI
 {
-	uint32 entry;
-	uint32 nameID;
-	int8* name;
+    uint32 entry;
+    uint32 nameID;
+    int8* name;
 };
 
 extern zSaveLoadUI zSaveLoadUITable[62];
@@ -43,12 +43,11 @@ uint32 zSaveLoad_slotIsEmpty(uint32 i);
 
 int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 num, int32 game);
 int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode);
-int32 zSaveLoad_CardCheckSpace(int32 cardNumber,int32 mode);
-int32 zSaveLoad_CardCheckGames(int32 cardNumber,int32 mode);
+int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode);
+int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode);
 
 int32 zSaveLoad_CardCheckGameSlot(int32 a, int32 b, int32 c);
 int32 zSaveLoad_CardCheckSlotEmpty(int32 a, int32 b);
 int32 zSaveLoad_CardCheckSlotOverwrite(int32 a, int32 b);
-
 
 #endif
