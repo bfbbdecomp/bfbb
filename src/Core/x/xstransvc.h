@@ -17,6 +17,11 @@ int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
 int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo);
 char* xST_xAssetID_HIPFullPath(uint32 aid);
 void xSTUnLoadScene(uint32 sid, int32 flg_hiphop);
+void XST_unlock_all();
+int32 PKRShutdown();
+int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID);
+int32 XST_cnt_locked();
+int32 XST_nth_locked(int32 param1);
 
 enum en_LAYER_TYPE
 {
@@ -32,7 +37,7 @@ enum en_LAYER_TYPE
 	PKR_LTYPE_CUTSCENETOC,
 	PKR_LTYPE_JSPINFO,
 	PKR_LTYPE_NOMORE,
-    PKR_LTYPE_ALL = 0xffffffff
+	PKR_LTYPE_ALL = 0xffffffff
 };
 
 struct st_PACKER_READ_DATA

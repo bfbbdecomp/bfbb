@@ -3,12 +3,11 @@
 #include <types.h>
 #include <string.h>
 
-extern void XST_unlock_all();
-extern int32 PKRShutdown();
-extern int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID);
-extern int XST_cnt_locked();
-extern int XST_nth_locked(int param);
-
+void XST_unlock_all();
+int32 PKRShutdown();
+int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID);
+int32 XST_cnt_locked();
+int32 XST_nth_locked(int32 param1);
 extern int32 g_straninit;
 extern st_PACKER_ASSETTYPE* g_typeHandlers;
 extern st_STRAN_DATA g_xstdata;
