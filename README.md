@@ -20,6 +20,36 @@ Join us on the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) under `#decomp
 
 View our progress and answers to frequently asked questions on the [project tracking website](https://bfbbdecomp.github.io/bfbb/progress).
 
+## Project Structure
+
+    bfbb
+    ├── .github/workflows: build script for the website and CI
+    ├── .vscode: settings and tasks for VS Code
+    ├── asm: disassembled source code and linker code
+    │   ├── CodeWarrior: Metrowerks Standard Library and C/C++ Runtime
+    │   ├── Core: asm for src/Core
+    │   ├── Game: asm for src/Game
+    │   ├── ODEGdev: Debugger SDK
+    │   ├── bink: Bink SDK
+    │   ├── dolphin: Dolphin SDK
+    │   └── rwsdk: RenderWare SDK
+    ├── docs: useful decompilation guides
+    ├── dwarf: C++ definitions generated from the PS2 BFBB executable
+    ├── include: global include headers
+    │   ├── CodeWarrior: C/C++ standard library
+    │   ├── dolphin: Dolphin SDK
+    │   ├── inline: utility inline asm macros
+    │   └── rwsdk: RenderWare SDK
+    ├── src: decompiled C/C++ source code for BFBB
+    │   ├── Core: core game engine code
+    │   │   ├── p2: platform-specific code
+    │   │   └── x: game engine code
+    │   └── Game: game-specific code
+    ├── tools: helper scripts and tools
+    │   ├── inlineasm: inserts raw assembly into C++ source code
+    │   ├── mwcc_compiler: Metrowerks compiler and linker
+    └   └── symbol_ripper: converts a mangled symbol name into a C++ function
+
 ## Building
 
 ### Requirements
