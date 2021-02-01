@@ -279,31 +279,6 @@ lbl_800AD5EC:
 /* 800AD5F8 000AA3F8  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AD5FC 000AA3FC  4E 80 00 20 */	blr 
 
-.global zSendEventToThumbIcon__FUi
-zSendEventToThumbIcon__FUi:
-/* 800AD600 000AA400  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD604 000AA404  7C 08 02 A6 */	mflr r0
-/* 800AD608 000AA408  3C 80 80 26 */	lis r4, lbl_8025E9C0@ha
-/* 800AD60C 000AA40C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD610 000AA410  38 84 E9 C0 */	addi r4, r4, lbl_8025E9C0@l
-/* 800AD614 000AA414  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800AD618 000AA418  7C 7F 1B 78 */	mr r31, r3
-/* 800AD61C 000AA41C  38 64 04 44 */	addi r3, r4, 0x444
-/* 800AD620 000AA420  80 0D 8F A8 */	lwz r0, gGameMode-_SDA_BASE_(r13)
-/* 800AD624 000AA424  2C 00 00 04 */	cmpwi r0, 4
-/* 800AD628 000AA428  40 82 00 08 */	bne lbl_800AD630
-/* 800AD62C 000AA42C  38 64 04 35 */	addi r3, r4, 0x435
-lbl_800AD630:
-/* 800AD630 000AA430  4B F9 EB E5 */	bl xStrHash__FPCc
-/* 800AD634 000AA434  48 00 74 09 */	bl zSceneFindObject__FUi
-/* 800AD638 000AA438  7F E4 FB 78 */	mr r4, r31
-/* 800AD63C 000AA43C  4B F7 1F B5 */	bl zEntEvent__FP5xBaseUi
-/* 800AD640 000AA440  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD644 000AA444  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800AD648 000AA448  7C 08 03 A6 */	mtlr r0
-/* 800AD64C 000AA44C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD650 000AA450  4E 80 00 20 */	blr 
-
 .global zChangeThumbIcon__FPCc
 zChangeThumbIcon__FPCc:
 /* 800AD654 000AA454  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4045,7 +4020,8 @@ lbl_8025E8A0:
 	.incbin "baserom.dol", 0x25B880, 0x100
 lbl_8025E9A0:
 	.incbin "baserom.dol", 0x25B980, 0x20
-lbl_8025E9C0:
+.global zSaveLoad_strings
+zSaveLoad_strings:
 	.incbin "baserom.dol", 0x25B9A0, 0x5A0
 
 .section .data

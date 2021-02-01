@@ -12,6 +12,8 @@
 #include "../CodeWarrior/cstring"
 #include "../CodeWarrior/intrin.h"
 
+extern int8 zSaveLoad_strings[];
+
 extern int8 buffer[16];
 extern int8 buffer[16];
 extern basic_rect<float32> screen_bounds;
@@ -62,20 +64,16 @@ extern long32 sTimeCurrent;
 // func_800AD598
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_poll__Fi")
 
-#ifndef NON_MATCHING
 // func_800AD600
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSendEventToThumbIcon__FUi")
-#else
 void zSendEventToThumbIcon(uint32 p)
 {
-    char* iconString = "MNU3 THUMBICON";
+    char* iconString = zSaveLoad_strings + 1092; // "MNU4 THUMBICON"
     if (gGameMode == eGameMode_Load)
     {
-        iconString = "MNU4 THUMBICON";
+        iconString = zSaveLoad_strings + 1077; // "MNU3 THUMBICON"
     }
     zEntEvent(zSceneFindObject(xStrHash(iconString)), p);
 }
-#endif
 
 #ifndef NON_MATCHING
 // func_800AD654
@@ -83,16 +81,15 @@ void zSendEventToThumbIcon(uint32 p)
 #else
 void zChangeThumbIcon(const char* icon)
 {
-    char* iconString;
     float32 arr[4];
 
     memset(arr, 0, sizeof(arr));
     arr[0] = xStrHash(icon);
 
-    iconString = "MNU3 THUMBICON";
+    char* iconString = zSaveLoad_strings + 1092; // "MNU4 THUMBICON"
     if (gGameMode == eGameMode_Load)
     {
-        iconString = "MNU4 THUMBICON";
+        iconString = zSaveLoad_strings + 1077; // "MNU3 THUMBICON"
     }
     zEntEvent(zSceneFindObject(xStrHash(iconString)), 0x1f5, arr);
 }
