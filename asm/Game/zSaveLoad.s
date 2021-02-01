@@ -337,66 +337,6 @@ lbl_800AD6A0:
 /* 800AD6C0 000AA4C0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800AD6C4 000AA4C4  4E 80 00 20 */	blr 
 
-.global zSaveLoadInit__Fv
-zSaveLoadInit__Fv:
-/* 800AD6C8 000AA4C8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD6CC 000AA4CC  7C 08 02 A6 */	mflr r0
-/* 800AD6D0 000AA4D0  3C 60 80 29 */	lis r3, zSaveLoadUITable@ha
-/* 800AD6D4 000AA4D4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD6D8 000AA4D8  38 63 01 20 */	addi r3, r3, zSaveLoadUITable@l
-/* 800AD6DC 000AA4DC  48 00 00 65 */	bl zSaveLoadUITableInit__FP11zSaveLoadUI
-/* 800AD6E0 000AA4E0  3C 60 80 3C */	lis r3, zSaveLoadGameTable@ha
-/* 800AD6E4 000AA4E4  38 63 25 20 */	addi r3, r3, zSaveLoadGameTable@l
-/* 800AD6E8 000AA4E8  48 00 00 15 */	bl zSaveLoadGameTableInit__FP13zSaveLoadGame
-/* 800AD6EC 000AA4EC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD6F0 000AA4F0  7C 08 03 A6 */	mtlr r0
-/* 800AD6F4 000AA4F4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD6F8 000AA4F8  4E 80 00 20 */	blr 
-
-.global zSaveLoadGameTableInit__FP13zSaveLoadGame
-zSaveLoadGameTableInit__FP13zSaveLoadGame:
-/* 800AD6FC 000AA4FC  38 00 00 00 */	li r0, 0
-/* 800AD700 000AA500  98 03 00 00 */	stb r0, 0(r3)
-/* 800AD704 000AA504  98 03 00 40 */	stb r0, 0x40(r3)
-/* 800AD708 000AA508  90 03 00 60 */	stw r0, 0x60(r3)
-/* 800AD70C 000AA50C  90 03 00 64 */	stw r0, 0x64(r3)
-/* 800AD710 000AA510  98 03 00 68 */	stb r0, 0x68(r3)
-/* 800AD714 000AA514  98 03 00 6C */	stb r0, 0x6c(r3)
-/* 800AD718 000AA518  98 03 00 AC */	stb r0, 0xac(r3)
-/* 800AD71C 000AA51C  90 03 00 CC */	stw r0, 0xcc(r3)
-/* 800AD720 000AA520  90 03 00 D0 */	stw r0, 0xd0(r3)
-/* 800AD724 000AA524  98 03 00 D4 */	stb r0, 0xd4(r3)
-/* 800AD728 000AA528  98 03 00 D8 */	stb r0, 0xd8(r3)
-/* 800AD72C 000AA52C  98 03 01 18 */	stb r0, 0x118(r3)
-/* 800AD730 000AA530  90 03 01 38 */	stw r0, 0x138(r3)
-/* 800AD734 000AA534  90 03 01 3C */	stw r0, 0x13c(r3)
-/* 800AD738 000AA538  98 03 01 40 */	stb r0, 0x140(r3)
-/* 800AD73C 000AA53C  4E 80 00 20 */	blr 
-
-.global zSaveLoadUITableInit__FP11zSaveLoadUI
-zSaveLoadUITableInit__FP11zSaveLoadUI:
-/* 800AD740 000AA540  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD744 000AA544  7C 08 02 A6 */	mflr r0
-/* 800AD748 000AA548  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD74C 000AA54C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800AD750 000AA550  7C 7F 1B 78 */	mr r31, r3
-/* 800AD754 000AA554  93 C1 00 08 */	stw r30, 8(r1)
-/* 800AD758 000AA558  3B C0 00 00 */	li r30, 0
-lbl_800AD75C:
-/* 800AD75C 000AA55C  80 7F 00 08 */	lwz r3, 8(r31)
-/* 800AD760 000AA560  4B F9 EA B5 */	bl xStrHash__FPCc
-/* 800AD764 000AA564  3B DE 00 01 */	addi r30, r30, 1
-/* 800AD768 000AA568  90 7F 00 04 */	stw r3, 4(r31)
-/* 800AD76C 000AA56C  2C 1E 00 3D */	cmpwi r30, 0x3d
-/* 800AD770 000AA570  3B FF 00 0C */	addi r31, r31, 0xc
-/* 800AD774 000AA574  41 80 FF E8 */	blt lbl_800AD75C
-/* 800AD778 000AA578  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD77C 000AA57C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800AD780 000AA580  83 C1 00 08 */	lwz r30, 8(r1)
-/* 800AD784 000AA584  7C 08 03 A6 */	mtlr r0
-/* 800AD788 000AA588  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD78C 000AA58C  4E 80 00 20 */	blr 
-
 .global zSaveLoad_UIEvent__FiUi
 zSaveLoad_UIEvent__FiUi:
 /* 800AD790 000AA590  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -463,33 +403,6 @@ lbl_800AD844:
 /* 800AD868 000AA668  7C 08 03 A6 */	mtlr r0
 /* 800AD86C 000AA66C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800AD870 000AA670  4E 80 00 20 */	blr 
-
-.global zSaveLoadSGDone__FP17st_XSAVEGAME_DATA
-zSaveLoadSGDone__FP17st_XSAVEGAME_DATA:
-/* 800AD874 000AA674  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AD878 000AA678  7C 08 02 A6 */	mflr r0
-/* 800AD87C 000AA67C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AD880 000AA680  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800AD884 000AA684  7C 7F 1B 78 */	mr r31, r3
-/* 800AD888 000AA688  80 03 00 04 */	lwz r0, 4(r3)
-/* 800AD88C 000AA68C  2C 00 00 0A */	cmpwi r0, 0xa
-/* 800AD890 000AA690  40 82 00 14 */	bne lbl_800AD8A4
-/* 800AD894 000AA694  38 60 00 27 */	li r3, 0x27
-/* 800AD898 000AA698  38 80 00 52 */	li r4, 0x52
-/* 800AD89C 000AA69C  4B FF FE F5 */	bl zSaveLoad_UIEvent__FiUi
-/* 800AD8A0 000AA6A0  48 00 00 10 */	b lbl_800AD8B0
-lbl_800AD8A4:
-/* 800AD8A4 000AA6A4  38 60 00 28 */	li r3, 0x28
-/* 800AD8A8 000AA6A8  38 80 00 52 */	li r4, 0x52
-/* 800AD8AC 000AA6AC  4B FF FE E5 */	bl zSaveLoad_UIEvent__FiUi
-lbl_800AD8B0:
-/* 800AD8B0 000AA6B0  7F E3 FB 78 */	mr r3, r31
-/* 800AD8B4 000AA6B4  4B F8 F5 21 */	bl xSGDone__FP17st_XSAVEGAME_DATA
-/* 800AD8B8 000AA6B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AD8BC 000AA6BC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800AD8C0 000AA6C0  7C 08 03 A6 */	mtlr r0
-/* 800AD8C4 000AA6C4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AD8C8 000AA6C8  4E 80 00 20 */	blr 
 
 .global zSaveLoad_getgame__Fv
 zSaveLoad_getgame__Fv:
@@ -1856,23 +1769,6 @@ lbl_800AEA64:
 /* 800AEA74 000AB874  38 21 00 10 */	addi r1, r1, 0x10
 /* 800AEA78 000AB878  4E 80 00 20 */	blr 
 
-.global zSaveLoad_CardCheckValid__Fii
-zSaveLoad_CardCheckValid__Fii:
-/* 800AEA7C 000AB87C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AEA80 000AB880  7C 08 02 A6 */	mflr r0
-/* 800AEA84 000AB884  2C 04 00 01 */	cmpwi r4, 1
-/* 800AEA88 000AB888  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AEA8C 000AB88C  40 82 00 0C */	bne lbl_800AEA98
-/* 800AEA90 000AB890  48 00 00 B9 */	bl zSaveLoad_CardCheckGames__Fii
-/* 800AEA94 000AB894  48 00 00 08 */	b lbl_800AEA9C
-lbl_800AEA98:
-/* 800AEA98 000AB898  48 00 00 15 */	bl zSaveLoad_CardCheckSpace__Fii
-lbl_800AEA9C:
-/* 800AEA9C 000AB89C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AEAA0 000AB8A0  7C 08 03 A6 */	mtlr r0
-/* 800AEAA4 000AB8A4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AEAA8 000AB8A8  4E 80 00 20 */	blr 
-
 .global zSaveLoad_CardCheckSpace__Fii
 zSaveLoad_CardCheckSpace__Fii:
 /* 800AEAAC 000AB8AC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1968,23 +1864,6 @@ lbl_800AEBC8:
 /* 800AEBD8 000AB9D8  7C 08 03 A6 */	mtlr r0
 /* 800AEBDC 000AB9DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800AEBE0 000AB9E0  4E 80 00 20 */	blr 
-
-.global zSaveLoad_CardCheckGameSlot__Fiii
-zSaveLoad_CardCheckGameSlot__Fiii:
-/* 800AEBE4 000AB9E4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800AEBE8 000AB9E8  7C 08 02 A6 */	mflr r0
-/* 800AEBEC 000AB9EC  2C 05 00 01 */	cmpwi r5, 1
-/* 800AEBF0 000AB9F0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800AEBF4 000AB9F4  40 82 00 0C */	bne lbl_800AEC00
-/* 800AEBF8 000AB9F8  48 00 00 1D */	bl zSaveLoad_CardCheckSlotEmpty__Fii
-/* 800AEBFC 000AB9FC  48 00 00 08 */	b lbl_800AEC04
-lbl_800AEC00:
-/* 800AEC00 000ABA00  48 00 00 99 */	bl zSaveLoad_CardCheckSlotOverwrite__Fii
-lbl_800AEC04:
-/* 800AEC04 000ABA04  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800AEC08 000ABA08  7C 08 03 A6 */	mtlr r0
-/* 800AEC0C 000ABA0C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800AEC10 000ABA10  4E 80 00 20 */	blr 
 
 .global zSaveLoad_CardCheckSlotEmpty__Fii
 zSaveLoad_CardCheckSlotEmpty__Fii:
@@ -3949,15 +3828,6 @@ lbl_800B06E4:
 /* 800B071C 000AD51C  7C 08 03 A6 */	mtlr r0
 /* 800B0720 000AD520  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B0724 000AD524  4E 80 00 20 */	blr 
-
-xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi:
-/* 800B0728 000AD528  38 00 00 10 */	li r0, 0x10
-/* 800B072C 000AD52C  38 60 00 01 */	li r3, 1
-/* 800B0730 000AD530  90 05 00 00 */	stw r0, 0(r5)
-/* 800B0734 000AD534  80 05 00 00 */	lwz r0, 0(r5)
-/* 800B0738 000AD538  54 00 08 3C */	slwi r0, r0, 1
-/* 800B073C 000AD53C  90 06 00 00 */	stw r0, 0(r6)
-/* 800B0740 000AD540  4E 80 00 20 */	blr 
 
 xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT:
 /* 800B0744 000AD544  94 21 FF E0 */	stwu r1, -0x20(r1)
