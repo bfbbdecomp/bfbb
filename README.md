@@ -20,6 +20,27 @@ Join us on the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) under `#decomp
 
 View our progress and answers to frequently asked questions on the [project tracking website](https://bfbbdecomp.github.io/bfbb/progress).
 
+## Building
+
+### Requirements
+
+- [devkitPro](https://devkitpro.org/wiki/Getting_Started)
+  - During installation, only the 'GameCube Development' component is required.
+- Python3 (`pacman -S msys/python3`)
+- gcc (`pacman -S gcc`)
+- Metrowerks CodeWarrior 2.0 and 2.7 compiler and linker for Embedded PowerPC (`mwcceppc.exe` and `mwldeppc.exe`)
+  - These can be installed with CodeWarrior 2.0 and 2.7 for GameCube. Please obtain access to these tools on your own, or if you are interested in contributing, please join the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) and DM either `Seil#3565` or `mp#8248` for access.
+- A clean DOL of Battle for Bikini Bottom
+  - This is usually named `main.dol` (or something similar) and must be extracted from the GameCube disc for the game. See [this guide](https://battlepedia.org/Setting_up_Dolphin_for_modding) for instructions.
+
+### Instructions
+
+1. Copy your clean DOL of Battle for Bikini Bottom to the base working directory and rename it `baserom.dol`.
+2. Create a `2.0` and `2.7` folder in `tools/mwcc_compiler`.
+3. Copy the CW 2.0 `mwcceppc.exe` and `mwldeppc.exe` into the `2.0` folder.
+4. Copy the CW 2.7 `mwcceppc.exe` and `mwldeppc.exe` into the `2.7` folder.
+5. Run the `make` command.
+
 ## Project Structure
 
     bfbb
@@ -49,27 +70,6 @@ View our progress and answers to frequently asked questions on the [project trac
     │   ├── inlineasm: inserts raw assembly into C++ source code
     │   ├── mwcc_compiler: Metrowerks compiler and linker
     └   └── symbol_ripper: converts a mangled symbol name into a C++ function
-
-## Building
-
-### Requirements
-
-- [devkitPro](https://devkitpro.org/wiki/Getting_Started)
-  - During installation, only the 'GameCube Development' component is required.
-- Python3 (`pacman -S msys/python3`)
-- gcc (`pacman -S gcc`)
-- Metrowerks CodeWarrior 2.0 and 2.7 compiler and linker for Embedded PowerPC (`mwcceppc.exe` and `mwldeppc.exe`)
-  - These can be installed with CodeWarrior 2.0 and 2.7 for GameCube. Please obtain access to these tools on your own, or if you are interested in contributing, please join the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) and DM either `Seil#3565` or `mp#8248` for access.
-- A clean DOL of Battle for Bikini Bottom
-  - This is usually named `main.dol` (or something similar) and must be extracted from the GameCube disc for the game. See [this guide](https://battlepedia.org/Setting_up_Dolphin_for_modding) for instructions.
-
-### Instructions
-
-1. Copy your clean DOL of Battle for Bikini Bottom to the base working directory and rename it `baserom.dol`.
-2. Create a `2.0` and `2.7` folder in `tools/mwcc_compiler`.
-3. Copy the CW 2.0 `mwcceppc.exe` and `mwldeppc.exe` into the `2.0` folder.
-4. Copy the CW 2.7 `mwcceppc.exe` and `mwldeppc.exe` into the `2.7` folder.
-5. Run the `make` command.
 
 ## Contributions
 
