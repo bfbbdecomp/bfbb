@@ -1,6 +1,8 @@
 #ifndef ZNPCHAZARD_H
 #define ZNPCHAZARD_H
 
+#include <types.h>
+
 enum en_npchaz
 {
     NPC_HAZ_UNKNOWN,
@@ -33,5 +35,8 @@ enum en_npchaz
     NPC_HAZ_NOMORE,
     NPC_HAZ_FORCE = 0x7fffffff
 };
+
+void zNPCCommon_Hazards_RenderAll(int32 doOpaqueStuff);
+void zNPCHazard_Shutdown();
 
 #endif

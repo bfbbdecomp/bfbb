@@ -10,6 +10,9 @@ struct _tagActionLine
     float32 time_left;
 };
 
+void zActionLineInit();
+void zActionLineUpdate(float32 seconds);
+void zActionLineRender();
 void RenderActionLine(_tagActionLine* l);
 
 #endif

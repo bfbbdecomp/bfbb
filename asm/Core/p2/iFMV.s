@@ -958,6 +958,7 @@ mRenderMode__4iFMV:
 	.skip 0x8
 
 .section .sbss2
+.balign 8
 lbl_803D0898:
 	.skip 0x4
 lbl_803D089C:

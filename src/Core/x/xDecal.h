@@ -4,9 +4,14 @@
 #include "xFX.h"
 #include "xMath2.h"
 #include "xMath3.h"
+#include <types.h>
 
 #include <types.h>
 #include <rwcore.h>
+void xDecalInit();
+void xDecalUpdate(float32 dt);
+void xDecalDestroy();
+void xDecalRender();
 
 enum texture_mode
 {

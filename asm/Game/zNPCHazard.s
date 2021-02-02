@@ -34,10 +34,6 @@ lbl_8018765C:
 /* 80187690 00184490  38 21 00 20 */	addi r1, r1, 0x20
 /* 80187694 00184494  4E 80 00 20 */	blr 
 
-.global zNPCHazard_Shutdown__Fv
-zNPCHazard_Shutdown__Fv:
-/* 80187698 00184498  4E 80 00 20 */	blr 
-
 .global zNPCHazard_ScenePrepare__Fv
 zNPCHazard_ScenePrepare__Fv:
 /* 8018769C 0018449C  94 21 FF E0 */	stwu r1, -0x20(r1)

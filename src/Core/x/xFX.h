@@ -62,5 +62,24 @@ void xFXanimUV2PSetScale(const xVec3* scale);
 void xFXanimUVSetAngle(float32 angle);
 void xFXanimUV2PSetAngle(float32 angle);
 RpAtomic* xFXanimUVAtomicSetup(RpAtomic* atomic);
+void xFXRingRender();
+void xFXFireworksInit(const char* fireworksTrailEmitter, const char* fireworksEmitter1,
+                      const char* fireworksEmitter2, const char* fireworksSound,
+                      const char* fireworksLaunchSound);
+void xFXFireworksUpdate(float32 dt);
+void xFXStreakInit();
+void xFXStreakUpdate(float32 dt);
+void xFXStreakRender();
+void xFXShineInit();
+void xFXShineUpdate(float32 dt);
+void xFXShineRender();
+void xFXRibbonSceneEnter();
+void xFXRibbonRender();
+void xFXAuraRender();
+void xFXSceneInit();
+void xFXSceneSetup();
+void xFXSceneReset();
+void xFXScenePrepare();
+void xFXSceneFinish();
 
 #endif

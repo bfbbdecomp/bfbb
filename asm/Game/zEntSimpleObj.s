@@ -713,6 +713,7 @@ lbl_8009188C:
 /* 80091898 0008E698  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009189C 0008E69C  4E 80 00 20 */	blr 
 
+.global zEntTrackPhysics_Init__FPvPv
 zEntTrackPhysics_Init__FPvPv:
 /* 800918A0 0008E6A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800918A4 0008E6A4  7C 08 02 A6 */	mflr r0
@@ -724,6 +725,7 @@ zEntTrackPhysics_Init__FPvPv:
 /* 800918BC 0008E6BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800918C0 0008E6C0  4E 80 00 20 */	blr 
 
+.global zEntSimpleObj_Init__FPvPv
 zEntSimpleObj_Init__FPvPv:
 /* 800918C4 0008E6C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800918C8 0008E6C8  7C 08 02 A6 */	mflr r0

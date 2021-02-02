@@ -7,8 +7,9 @@
 // func_80187630
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_Startup__Fv")
 
-// func_80187698
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_Shutdown__Fv")
+void zNPCHazard_Shutdown()
+{
+}
 
 // func_8018769C
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_ScenePrepare__Fv")

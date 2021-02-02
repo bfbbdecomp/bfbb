@@ -11,6 +11,14 @@ typedef struct widget;
 
 namespace xhud
 {
+    struct color32u
+    {
+        uint8 r;
+        uint8 g;
+        uint8 b;
+        uint8 a;
+    };
+
     struct render_context
     {
         xVec3 loc;
@@ -41,45 +49,35 @@ namespace xhud
         motive_node* next;
     };
 
-    struct _class_5
-    {
-        uint8 visible;
-        uint8 enabled;
-    };
-
-    enum _enum
-    {
-        ACT_NONE,
-        ACT_SHOW,
-        ACT_HIDE,
-        MAX_ACT
-    };
-
     struct asset : xDynAsset
     {
         xVec3 loc;
         xVec3 size;
     };
 
-    struct model_asset : asset
-    {
-        uint32 model;
-
-        char* type_name();
-    };
-
     struct widget
     {
-        _class_5 flag;
+        struct
+        {
+            uint8 visible;
+            uint8 enabled;
+        } flag;
         render_context rc;
         render_context start_rc;
         asset* a;
-        _enum activity;
+        enum _enum
+        {
+            ACT_NONE,
+            ACT_SHOW,
+            ACT_HIDE,
+            MAX_ACT
+        } activity;
         motive_node* _motive_top;
         motive_node* _motive_temp;
         motive_node** _motive_temp_tail;
 
         widget(asset& a);
+        virtual void destroy();
         void setup();
         void enable();
         void update(float32 dt);
@@ -92,13 +90,6 @@ namespace xhud
         void presetup();
         void destruct();
     };
-
-    struct model_widget : widget
-    {
-        uint32 mid;
-        xModelInstance* model;
-    };
-
 }; // namespace xhud
 
 #endif

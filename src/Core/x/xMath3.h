@@ -119,6 +119,7 @@ void xQuatToMat(const xQuat* q, xMat3x3* m);
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b);
 float32 xQuatGetAngle(const xQuat* q);
 void xQuatFromMat(xQuat* q, const xMat3x3* m);
+void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, float32 t);
 void xQuatConj(xQuat* o, const xQuat* q);
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at);
 float32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
@@ -128,5 +129,8 @@ void xMat3x3ScaleC(xMat3x3* m, float32 x, float32 y, float32 z);
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
+void xMat3x3Identity(xMat3x3* matrix);
+int32 xPointInBox(const xBox* b, const xVec3* p);
+void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
 #endif

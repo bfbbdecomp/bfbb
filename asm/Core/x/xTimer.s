@@ -45,6 +45,7 @@ lbl_8004D26C:
 /* 8004D27C 0004A07C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004D280 0004A080  4E 80 00 20 */	blr 
 
+.global xTimerInit__FPvPv
 xTimerInit__FPvPv:
 /* 8004D284 0004A084  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8004D288 0004A088  7C 08 02 A6 */	mflr r0

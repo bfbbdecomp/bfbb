@@ -8,17 +8,6 @@
 NPCSupplement_Startup__Fv:
 /* 80180D54 0017DB54  4E 80 00 20 */	blr 
 
-.global NPCSupplement_Shutdown__Fv
-NPCSupplement_Shutdown__Fv:
-/* 80180D58 0017DB58  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80180D5C 0017DB5C  7C 08 02 A6 */	mflr r0
-/* 80180D60 0017DB60  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80180D64 0017DB64  4B FA D1 9D */	bl NPCWidget_Shutdown__Fv
-/* 80180D68 0017DB68  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80180D6C 0017DB6C  7C 08 03 A6 */	mtlr r0
-/* 80180D70 0017DB70  38 21 00 10 */	addi r1, r1, 0x10
-/* 80180D74 0017DB74  4E 80 00 20 */	blr 
-
 .global NPCSupplement_ScenePrepare__Fv
 NPCSupplement_ScenePrepare__Fv:
 /* 80180D78 0017DB78  94 21 FF F0 */	stwu r1, -0x10(r1)

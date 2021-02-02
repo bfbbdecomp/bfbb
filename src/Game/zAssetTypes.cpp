@@ -1,12 +1,15 @@
 #include "zAssetTypes.h"
+#include "xstransvc.h"
 
 #include <types.h>
 
 // func_8004EBEC
 #pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "zAssetStartup__Fv")
 
-// func_8004EC18
-#pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "zAssetShutdown__Fv")
+void zAssetShutdown()
+{
+    xSTShutdown();
+}
 
 // func_8004EC38
 #pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "Model_Read__FPvUiPvUiPUi")

@@ -269,6 +269,10 @@ lbl_8012DD40:
 .endif
 
 .section .sbss
+.balign 8
+.global gBusStopIsRunning
+gBusStopIsRunning:
+	.skip 0x4
 .global sBusStopUI
 sBusStopUI:
 	.skip 0x4

@@ -2,11 +2,20 @@
 
 #include <types.h>
 
+#include "zNPCHazard.h"
+#include "zNPCGlyph.h"
+#include "zNPCSupplement.h"
+
 // func_8012DD64
 #pragma GLOBAL_ASM("asm/Game/zNPCSupport.s", "NPCSupport_Startup__Fv")
 
-// func_8012DD90
-#pragma GLOBAL_ASM("asm/Game/zNPCSupport.s", "NPCSupport_Shutdown__Fv")
+void NPCSupport_Shutdown()
+{
+    zNPCHazard_Shutdown();
+    zNPCGlyph_Shutdown();
+    NPCWidget_Shutdown();
+    NPCSupplement_Shutdown();
+}
 
 // func_8012DDBC
 #pragma GLOBAL_ASM("asm/Game/zNPCSupport.s", "NPCSupport_ScenePrepare__Fv")
@@ -26,8 +35,9 @@
 // func_8012DEC8
 #pragma GLOBAL_ASM("asm/Game/zNPCSupport.s", "NPCWidget_Startup__Fv")
 
-// func_8012DF00
-#pragma GLOBAL_ASM("asm/Game/zNPCSupport.s", "NPCWidget_Shutdown__Fv")
+void NPCWidget_Shutdown()
+{
+}
 
 // func_8012DF04
 #pragma GLOBAL_ASM("asm/Game/zNPCSupport.s", "NPCWidget_ScenePrepare__Fv")

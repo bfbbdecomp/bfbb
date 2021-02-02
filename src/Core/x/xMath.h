@@ -12,6 +12,18 @@
 
 #define ALIGN(x, a) ((x) + ((a)-1) & ~((a)-1))
 
+// Override these to point to their corresponding symbols in .sdata2
+// For example:
+//     #undef PI
+//     #undef ONEEIGHTY
+//     #define PI _771_1
+//     #define ONEEIGHTY _778_0
+#define PI 3.1415927f
+#define ONEEIGHTY 180.0f
+
+#define DEG2RAD(x) ((PI) * (x) / (ONEEIGHTY))
+#define RAD2DEG(x) ((ONEEIGHTY) * (x) / (PI))
+
 struct xFuncPiece
 {
     float32 coef[5];

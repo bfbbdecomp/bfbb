@@ -41,6 +41,36 @@ View our progress and answers to frequently asked questions on the [project trac
 4. Copy the CW 2.7 `mwcceppc.exe` and `mwldeppc.exe` into the `2.7` folder.
 5. Run the `make` command.
 
+## Project Structure
+
+    bfbb
+    ├── .github/workflows: build script for the website and CI
+    ├── .vscode: settings and tasks for VS Code
+    ├── asm: disassembled source code and linker code
+    │   ├── CodeWarrior: Metrowerks Standard Library and C/C++ Runtime
+    │   ├── Core: asm for src/Core
+    │   ├── Game: asm for src/Game
+    │   ├── ODEGdev: Debugger SDK
+    │   ├── bink: Bink SDK
+    │   ├── dolphin: Dolphin SDK
+    │   └── rwsdk: RenderWare SDK
+    ├── docs: useful decompilation guides
+    ├── dwarf: C++ definitions generated from the PS2 BFBB executable
+    ├── include: global include headers
+    │   ├── CodeWarrior: C/C++ standard library
+    │   ├── dolphin: Dolphin SDK
+    │   ├── inline: utility inline asm macros
+    │   └── rwsdk: RenderWare SDK
+    ├── src: decompiled C/C++ source code for BFBB
+    │   ├── Core: core game engine code
+    │   │   ├── p2: platform-specific code
+    │   │   └── x: game engine code
+    │   └── Game: game-specific code
+    ├── tools: helper scripts and tools
+    │   ├── inlineasm: inserts raw assembly into C++ source code
+    │   ├── mwcc_compiler: Metrowerks compiler and linker
+    └   └── symbol_ripper: converts a mangled symbol name into a C++ function
+
 ## Contributions
 
 Contributions and PRs are welcome.

@@ -95,4 +95,8 @@ zLightning* zLightningAdd(_tagLightningAdd* add);
 
 void zLightningKill(zLightning* l);
 
+void zLightningInit();
+void zLightningUpdate(float32 seconds);
+void zLightningRender();
+
 #endif
