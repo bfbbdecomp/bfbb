@@ -264,29 +264,6 @@ lbl_800161CC:
 /* 80016218 00013018  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001621C 0001301C  4E 80 00 20 */	blr 
 
-.global xCutscene_LoadStart__FP9xCutscene
-xCutscene_LoadStart__FP9xCutscene:
-/* 80016220 00013020  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80016224 00013024  7C 08 02 A6 */	mflr r0
-/* 80016228 00013028  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8001622C 0001302C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80016230 00013030  7C 7F 1B 78 */	mr r31, r3
-/* 80016234 00013034  48 11 F2 C5 */	bl iCSFileOpen__FP9xCutscene
-/* 80016238 00013038  28 03 00 00 */	cmplwi r3, 0
-/* 8001623C 0001303C  40 82 00 0C */	bne lbl_80016248
-/* 80016240 00013040  38 60 00 00 */	li r3, 0
-/* 80016244 00013044  48 00 00 10 */	b lbl_80016254
-lbl_80016248:
-/* 80016248 00013048  38 00 00 01 */	li r0, 1
-/* 8001624C 0001304C  38 60 00 01 */	li r3, 1
-/* 80016250 00013050  90 1F 00 50 */	stw r0, 0x50(r31)
-lbl_80016254:
-/* 80016254 00013054  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80016258 00013058  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8001625C 0001305C  7C 08 03 A6 */	mtlr r0
-/* 80016260 00013060  38 21 00 10 */	addi r1, r1, 0x10
-/* 80016264 00013064  4E 80 00 20 */	blr 
-
 xCutsceneConvertBreak__FfP14xCutsceneBreakUii:
 /* 80016268 00013068  7C 66 1B 78 */	mr r6, r3
 /* 8001626C 0001306C  38 E0 00 00 */	li r7, 0
@@ -2108,12 +2085,6 @@ lbl_80017C6C:
 /* 80017C98 00014A98  7C 08 03 A6 */	mtlr r0
 /* 80017C9C 00014A9C  38 21 41 90 */	addi r1, r1, 0x4190
 /* 80017CA0 00014AA0  4E 80 00 20 */	blr 
-
-.global xCutscene_CurrentCutscene__Fv
-xCutscene_CurrentCutscene__Fv:
-/* 80017CA4 00014AA4  3C 60 80 38 */	lis r3, sActiveCutscene@ha
-/* 80017CA8 00014AA8  38 63 48 24 */	addi r3, r3, sActiveCutscene@l
-/* 80017CAC 00014AAC  4E 80 00 20 */	blr 
 
 .global atan__3stdFf
 atan__3stdFf:

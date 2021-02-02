@@ -4,17 +4,6 @@
 
 .section .text  # 0x800159D4 - 0x80015B3C
 
-.global xCollideFastInit__FP6xScene
-xCollideFastInit__FP6xScene:
-/* 800159D4 000127D4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800159D8 000127D8  7C 08 02 A6 */	mflr r0
-/* 800159DC 000127DC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800159E0 000127E0  48 0A D4 59 */	bl iCollideFastInit__FP6xScene
-/* 800159E4 000127E4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800159E8 000127E8  7C 08 03 A6 */	mtlr r0
-/* 800159EC 000127EC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800159F0 000127F0  4E 80 00 20 */	blr 
-
 .global xRayHitsSphereFast__FPC5xRay3PC7xSphere
 xRayHitsSphereFast__FPC5xRay3PC7xSphere:
 /* 800159F4 000127F4  94 21 FF D0 */	stwu r1, -0x30(r1)

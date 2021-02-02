@@ -11,7 +11,10 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_Render__FP4xEnt")
 
 // func_8011F244
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_Init__FPvPv")
+void xEntBoulder_Init(void* ent, void* asset)
+{
+    xEntBoulder_Init((xEntBoulder*)ent, (xEntAsset*)asset);
+}
 
 // func_8011F264
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_Init__FP11xEntBoulderP9xEntAsset")
@@ -20,14 +23,32 @@
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_ApplyForces__FP10xEntCollis")
 
 // func_8011F564
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s",                                                     \
-                   "xEntBoulder_AddInstantForce__FP11xEntBoulderP5xVec3")
+void xEntBoulder_AddInstantForce(xEntBoulder* ent, xVec3* force)
+{
+    if (ent->update != 0)
+    {
+        xVec3* frcptr = &ent->instForce;
+        xVec3AddTo(frcptr, force);
+    }
+}
 
 // func_8011F594
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_AddForce__FP11xEntBoulderP5xVec3")
+void xEntBoulder_AddForce(xEntBoulder* ent, xVec3* force)
+{
+    if (ent->update != 0)
+    {
+        xVec3* frcptr = &ent->force;
+        xVec3AddTo(frcptr, force);
+    }
+}
 
 // func_8011F5C4
-#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_BUpdate__FP4xEntP5xVec3")
+//#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_BUpdate__FP4xEntP5xVec3")
+
+void xEntBoulder_BUpdate()
+{
+    //For some reason this seems to be a completely empty function
+}
 
 // func_8011F5C8
 #pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_RealBUpdate__FP4xEntP5xVec3")

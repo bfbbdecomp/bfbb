@@ -114,17 +114,6 @@ lbl_8011F22C:
 /* 8011F23C 0011C03C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F240 0011C040  4E 80 00 20 */	blr 
 
-.global xEntBoulder_Init__FPvPv
-xEntBoulder_Init__FPvPv:
-/* 8011F244 0011C044  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8011F248 0011C048  7C 08 02 A6 */	mflr r0
-/* 8011F24C 0011C04C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011F250 0011C050  48 00 00 15 */	bl xEntBoulder_Init__FP11xEntBoulderP9xEntAsset
-/* 8011F254 0011C054  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8011F258 0011C058  7C 08 03 A6 */	mtlr r0
-/* 8011F25C 0011C05C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8011F260 0011C060  4E 80 00 20 */	blr 
-
 .global xEntBoulder_Init__FP11xEntBoulderP9xEntAsset
 xEntBoulder_Init__FP11xEntBoulderP9xEntAsset:
 /* 8011F264 0011C064  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -332,41 +321,6 @@ lbl_8011F544:
 /* 8011F558 0011C358  7C 08 03 A6 */	mtlr r0
 /* 8011F55C 0011C35C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011F560 0011C360  4E 80 00 20 */	blr 
-
-.global xEntBoulder_AddInstantForce__FP11xEntBoulderP5xVec3
-xEntBoulder_AddInstantForce__FP11xEntBoulderP5xVec3:
-/* 8011F564 0011C364  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8011F568 0011C368  7C 08 02 A6 */	mflr r0
-/* 8011F56C 0011C36C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011F570 0011C370  80 03 00 34 */	lwz r0, 0x34(r3)
-/* 8011F574 0011C374  28 00 00 00 */	cmplwi r0, 0
-/* 8011F578 0011C378  41 82 00 0C */	beq lbl_8011F584
-/* 8011F57C 0011C37C  38 63 01 C4 */	addi r3, r3, 0x1c4
-/* 8011F580 0011C380  4B EE F1 D5 */	bl xVec3AddTo__FP5xVec3PC5xVec3
-lbl_8011F584:
-/* 8011F584 0011C384  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8011F588 0011C388  7C 08 03 A6 */	mtlr r0
-/* 8011F58C 0011C38C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8011F590 0011C390  4E 80 00 20 */	blr 
-
-.global xEntBoulder_AddForce__FP11xEntBoulderP5xVec3
-xEntBoulder_AddForce__FP11xEntBoulderP5xVec3:
-/* 8011F594 0011C394  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8011F598 0011C398  7C 08 02 A6 */	mflr r0
-/* 8011F59C 0011C39C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8011F5A0 0011C3A0  80 03 00 34 */	lwz r0, 0x34(r3)
-/* 8011F5A4 0011C3A4  28 00 00 00 */	cmplwi r0, 0
-/* 8011F5A8 0011C3A8  41 82 00 0C */	beq lbl_8011F5B4
-/* 8011F5AC 0011C3AC  38 63 01 B8 */	addi r3, r3, 0x1b8
-/* 8011F5B0 0011C3B0  4B EE F1 A5 */	bl xVec3AddTo__FP5xVec3PC5xVec3
-lbl_8011F5B4:
-/* 8011F5B4 0011C3B4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8011F5B8 0011C3B8  7C 08 03 A6 */	mtlr r0
-/* 8011F5BC 0011C3BC  38 21 00 10 */	addi r1, r1, 0x10
-/* 8011F5C0 0011C3C0  4E 80 00 20 */	blr 
-
-xEntBoulder_BUpdate__FP4xEntP5xVec3:
-/* 8011F5C4 0011C3C4  4E 80 00 20 */	blr 
 
 .global xEntBoulder_RealBUpdate__FP4xEntP5xVec3
 xEntBoulder_RealBUpdate__FP4xEntP5xVec3:

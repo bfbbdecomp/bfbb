@@ -6,23 +6,17 @@
 
 /* register_emitter__20@unnamed@xDecal_cpp@FP13xDecalEmitter */
 register_emitter__20_esc__2_unnamed_esc__2_xDecal_cpp_esc__2_FP13xDecalEmitter:
-/* 8017C420 00179220  80 0D 97 B0 */	lwz r0, lbl_803CC0B0-_SDA_BASE_(r13)
+/* 8017C420 00179220  80 0D 97 B0 */	lwz r0, active_emitters_size-_SDA_BASE_(r13)
 /* 8017C424 00179224  28 00 00 20 */	cmplwi r0, 0x20
 /* 8017C428 00179228  4C 80 00 20 */	bgelr 
 /* 8017C42C 0017922C  3C 80 80 33 */	lis r4, lbl_8032B448@ha
 /* 8017C430 00179230  54 00 10 3A */	slwi r0, r0, 2
 /* 8017C434 00179234  38 84 B4 48 */	addi r4, r4, lbl_8032B448@l
 /* 8017C438 00179238  7C 64 01 2E */	stwx r3, r4, r0
-/* 8017C43C 0017923C  80 6D 97 B0 */	lwz r3, lbl_803CC0B0-_SDA_BASE_(r13)
+/* 8017C43C 0017923C  80 6D 97 B0 */	lwz r3, active_emitters_size-_SDA_BASE_(r13)
 /* 8017C440 00179240  38 03 00 01 */	addi r0, r3, 1
-/* 8017C444 00179244  90 0D 97 B0 */	stw r0, lbl_803CC0B0-_SDA_BASE_(r13)
+/* 8017C444 00179244  90 0D 97 B0 */	stw r0, active_emitters_size-_SDA_BASE_(r13)
 /* 8017C448 00179248  4E 80 00 20 */	blr 
-
-.global xDecalInit__Fv
-xDecalInit__Fv:
-/* 8017C44C 0017924C  38 00 00 00 */	li r0, 0
-/* 8017C450 00179250  90 0D 97 B0 */	stw r0, lbl_803CC0B0-_SDA_BASE_(r13)
-/* 8017C454 00179254  4E 80 00 20 */	blr 
 
 .global xDecalUpdate__Ff
 xDecalUpdate__Ff:
@@ -49,7 +43,7 @@ lbl_8017C4A0:
 /* 8017C4A0 001792A0  3B FF 00 04 */	addi r31, r31, 4
 /* 8017C4A4 001792A4  3B DE 00 01 */	addi r30, r30, 1
 lbl_8017C4A8:
-/* 8017C4A8 001792A8  80 0D 97 B0 */	lwz r0, lbl_803CC0B0-_SDA_BASE_(r13)
+/* 8017C4A8 001792A8  80 0D 97 B0 */	lwz r0, active_emitters_size-_SDA_BASE_(r13)
 /* 8017C4AC 001792AC  7C 1E 00 40 */	cmplw r30, r0
 /* 8017C4B0 001792B0  41 80 FF D4 */	blt lbl_8017C484
 /* 8017C4B4 001792B4  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -1307,7 +1301,8 @@ lbl_8032B448:
 	.skip 0x80
 
 .section .sbss
-lbl_803CC0B0:
+.global active_emitters_size
+active_emitters_size:
 	.skip 0x8
 
 .section .sdata2
