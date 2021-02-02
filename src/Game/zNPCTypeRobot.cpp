@@ -67,11 +67,11 @@ void zNPCRobot_ScenePostInit()
 
 void zNPCRobot_Timestep(float dt)
 {
-    if (g_cnt_fodbzzt != 0)
+    if (g_cnt_fodbzzt)
     {
         zNPCFodBzzt_DoTheHokeyPokey(dt);
     }
-    if (g_cnt_sleepy != 0)
+    if (g_cnt_sleepy)
     {
         zNPCSleepy_Timestep(dt);
     }
@@ -193,10 +193,7 @@ void zNPCRobot::Init(xEntAsset* asset)
 
 void zNPCRobot::Reset()
 {
-    zNPCGoalDead* goal;
-    int32 rc;
     NPCConfig* conf = cfg_npc;
-    xPsyche* psy;
 
     if (conf->dst_castShadow < zNPCRobot_f_0_0 && !(flg_move & 4))
     {
@@ -217,31 +214,34 @@ void zNPCRobot::Reset()
         flg_vuln |= 0x1000000;
     }
 
-    if (xNPCBasic::SelfType() != 0x4e54523a)
+    if (xNPCBasic::SelfType() != 'NTR:')
     {
-        psy = psy_instinct;
-        if ((int*)npc_duplodude)
+        zNPCGoalDead* goal;
+        xPsyche* psy = psy_instinct;
+
+        if (npc_duplodude)
         {
-            goal = (zNPCGoalDead*)psy->FindGoal(0x4e47526a);
+            goal = (zNPCGoalDead*)psy->FindGoal('NGRj');
             goal->DieQuietly();
-            psy_instinct->GoalSet(0x4e47526a, 1);
+            psy_instinct->GoalSet('NGRj', 1);
         }
         else
         {
-            if (!(int*)xEntIsEnabled(this))
+            if ((uint32)xEntIsEnabled(this) == 0)
             {
-                goal = (zNPCGoalDead*)psy->FindGoal(0x4e47526a);
+                goal = (zNPCGoalDead*)psy->FindGoal('NGRj');
                 goal->DieQuietly();
-                psy_instinct->GoalSet(0x4e47526a, 1);
+                psy_instinct->GoalSet('NGRj', 1);
             }
             else
             {
-                psy_instinct->GoalSet(0x4e474e30, 1);
+                psy_instinct->GoalSet('NGN0', 1);
             }
         }
     }
 
-    rc = arena.NeedToCycle(this);
+    int32 rc = arena.NeedToCycle(this);
+
     if (rc == 2)
     {
         arena.Cycle(this, 1);
@@ -327,7 +327,7 @@ void zNPCRobot::DuploOwner(zNPCCommon* duper)
 
     if (psyche)
     {
-        zNPCGoalDead* dead = (zNPCGoalDead*)psyche->FindGoal('NGRj'); // 0x4E47526A
+        zNPCGoalDead* dead = (zNPCGoalDead*)psyche->FindGoal('NGRj');
         dead->DieQuietly();
         psyche->GoalSet('NGRj', 1);
     }
