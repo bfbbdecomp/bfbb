@@ -411,10 +411,12 @@ void zNPCRobot::InflictPain(int32 numHitPoints, int32 giveCreditToPlayer)
     }
     else
     {
-        hitpoints = hitpoints - numHitPoints;
+        hitpoints -= numHitPoints;
     }
-    hitpoints = (uint32)(hitpoints & (-hitpoints & ~hitpoints) >> 0x1f);
-    if ((hitpoints == 0) && (giveCreditToPlayer != 0))
+
+    hitpoints = (hitpoints > 0) ? hitpoints : 0;
+
+    if (!hitpoints && giveCreditToPlayer)
     {
         zNPCCommon::GiveReward();
     }
