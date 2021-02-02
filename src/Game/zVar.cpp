@@ -186,7 +186,7 @@ namespace
 #endif
 
     // func_800BD380
-    int8* var_text_CurrentArea()
+    const char* var_text_CurrentArea()
     {
         return zSceneGetAreaname(globals.sceneCur->sceneID);
     }
@@ -419,7 +419,7 @@ namespace
     }
 
     // func_800BDB74
-    int8* var_text_SelectedArea()
+    const char* var_text_SelectedArea()
     {
         // Looks like this variable was actually declared in this function given
         // the context, it needs to be here to show up in the right order.

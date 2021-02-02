@@ -5,6 +5,7 @@
 #include "../Core/x/xBase.h"
 #include "../Core/x/xDynAsset.h"
 #include "zEnt.h"
+#include "zTalkBox.h"
 
 struct callback
 {
@@ -34,17 +35,6 @@ struct zTaxi : xBase
     float32 radius;
 };
 
-struct ztalkbox : xBase
-{
-    enum answer_enum
-    {
-        ANSWER_CONTINUE,
-        ANSWER_YES,
-        ANSWER_NO,
-        ANSWER_NONE
-    };
-};
-
 struct taxiCB : callback
 {
     zTaxi* taxi;
@@ -56,12 +46,15 @@ struct taxiCB : callback
     void on_stop();
 };
 
-void zTaxi_Init(xBase& data, xDynAsset& asset);
+struct xScene;
+
+void zTaxi_Init(xBase& data, xDynAsset& asset, ulong32);
 void zTaxi_Init(zTaxi* taxi, taxi_asset* asset);
 void zTaxi_Setup(zTaxi* taxi);
 void zTaxi_tb_answer(ztalkbox::answer_enum answer);
 void zTaxi_Save(zTaxi* taxi, xSerial* s);
 void zTaxi_Load(zTaxi* taxi, xSerial* s);
 int32 zTaxiEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3);
+void zTaxi_Update(xBase* to, xScene*, float32 dt);
 
 #endif

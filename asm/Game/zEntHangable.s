@@ -106,6 +106,7 @@ HangableSetup__FP12zEntHangableP9xEntAsset:
 /* 80061988 0005E788  38 21 00 40 */	addi r1, r1, 0x40
 /* 8006198C 0005E78C  4E 80 00 20 */	blr 
 
+.global zEntHangable_Init__FPvPv
 zEntHangable_Init__FPvPv:
 /* 80061990 0005E790  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80061994 0005E794  7C 08 02 A6 */	mflr r0

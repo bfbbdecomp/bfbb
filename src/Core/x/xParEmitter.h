@@ -4,9 +4,8 @@
 #include "xBase.h"
 #include "xModel.h"
 #include "xParEmitterType.h"
-
-typedef struct xParGroup;
-typedef struct xParSys;
+#include "xParGroup.h"
+#include "xParSys.h"
 
 struct xParInterp
 {
@@ -97,5 +96,12 @@ struct xParEmitter : xBase
     void* emit_volume;
     xVec3 last_attach_loc;
 };
+
+struct xScene;
+
+void xParEmitterInit(void* b, void* tasset);
+void xParEmitterSetup(xParEmitter* t);
+void xParEmitterDestroy();
+void xParEmitterUpdate(xBase* to, xScene*, float32 dt);
 
 #endif

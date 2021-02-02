@@ -181,6 +181,7 @@ lbl_8004411C:
 /* 8004411C 00040F1C  38 60 00 00 */	li r3, 0
 /* 80044120 00040F20  4E 80 00 20 */	blr 
 
+.global xSFXInit__FPvPv
 xSFXInit__FPvPv:
 /* 80044124 00040F24  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80044128 00040F28  7C 08 02 A6 */	mflr r0

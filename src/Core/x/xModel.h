@@ -9,16 +9,7 @@
 #include "xSurface.h"
 #include "xMath3.h"
 
-struct xModelInstance;
-
-struct xModelBucket
-{
-    RpAtomic* Data;
-    RpAtomic* OriginalData;
-    xModelInstance* List;
-    int32 ClipFlags;
-    uint32 PipeFlags;
-};
+struct xModelBucket;
 
 struct xModelPool
 {
@@ -85,6 +76,26 @@ struct xModelAssetParam
     uint8 String[3];
 };
 
+struct xModelPipeLookup
+{
+    RpAtomic* model;
+    uint32 PipeFlags;
+};
+
+struct xModelPipeInfo
+{
+    uint32 ModelHashID;
+    uint32 SubObjectBits;
+    uint32 PipeFlags;
+};
+
+extern int32 xModelPipeNumTables;
+extern int32 xModelPipeCount[16];
+extern xModelPipeInfo* xModelPipeData[16];
+extern int32 xModelLookupCount;
+extern xModelPipeLookup* xModelLookupList;
+extern int32 xModelInstStaticAlloc;
+
 void xModelInit();
 void xModelPoolInit(uint32 count, uint32 numMatrices);
 void xModelAnimCollStart(xModelInstance& m);
@@ -96,5 +107,6 @@ void xModelRender(xModelInstance* modelInst);
 void xModelUpdate(xModelInstance* modelInst, float32 timeDelta);
 xMat4x3* xModelGetFrame(xModelInstance* modelInst);
 void xModelEval(xModelInstance* modelInst);
+void xModel_SceneExit(RpWorld* world);
 
 #endif

@@ -2,9 +2,8 @@
 #define XPAR_H
 
 #include "xMath3.h"
-#include "xParEmitter.h"
 
-#include <types.h>
+struct xParEmitterAsset;
 
 struct xPar
 {

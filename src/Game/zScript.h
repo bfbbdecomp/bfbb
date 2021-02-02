@@ -33,10 +33,13 @@ struct _zScript : xBase
 #define ZSCRIPT_STATE_RUNNING (1)
 #define ZSCRIPT_STATE_WAITING (3)
 
+struct xScene;
+
 void zScriptInit(void* data, void* asset);
 void zScriptInit(xBase* data, xScriptAsset* asset);
 void zScriptReset(_zScript* script);
-void zScript_Save(_zScript* script, xSerial* s);
-void zScript_Load(_zScript* script, xSerial* s);
+void zScriptSave(_zScript* script, xSerial* s);
+void zScriptLoad(_zScript* script, xSerial* s);
+void zScriptUpdate(xBase* to, xScene*, float32 dt);
 
 #endif

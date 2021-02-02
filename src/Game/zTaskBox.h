@@ -71,7 +71,7 @@ struct ztaskbox : xBase
     void write(xSerial& s);
     void read(xSerial& s);
     void load(const asset_type& a);
-    void load(xBase& data, xDynAsset& asset, uint64 num);
+    static void load(xBase& data, xDynAsset& asset, ulong32 num);
     void enable();
     void disable();
     void reset();
@@ -79,7 +79,7 @@ struct ztaskbox : xBase
     void succeed();
     void fail();
     void complete();
-    void init();
+    static void init();
     bool exists(state_enum stage);
 };
 

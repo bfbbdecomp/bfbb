@@ -50,7 +50,9 @@ struct zUIMgr : xMgr
 };
 
 extern int32 bad_card_available;
+extern zUIMgr gUIMgr;
 
+void zUI_Init();
 void zUI_Init(void* ent, void* asset);
 void zUI_Init(_zUI* ent, xEntAsset* asset);
 void zUI_Save(_zUI* ent, xSerial* s);

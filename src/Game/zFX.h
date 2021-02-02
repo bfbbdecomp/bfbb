@@ -141,6 +141,7 @@ void zFXUpdate(float32 dt);
 
 int32 zFXGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
 
+void zFX_SpawnBubbleHit(const xVec3* pos, uint32 num);
 void zFX_SpawnBubbleWall();
 void zFX_SpawnBubbleSlam(const xVec3* pos, uint32 num, float32 rang, float32 bvel, float32 rvel);
 
@@ -160,4 +161,8 @@ void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* un
 void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
 
 void zFXMuscleArmWave(xVec3* pos);
+
+void zFX_SpawnBubbleMenuTrail(const xVec3* pos, uint32 num, const xVec3* pos_rnd,
+                              const xVec3* vel_rnd);
+
 #endif

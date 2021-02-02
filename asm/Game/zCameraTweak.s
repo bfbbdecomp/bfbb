@@ -411,6 +411,7 @@ zCameraTweakGlobal_GetPitch__Fv:
 /* 8017F438 0017C238  C0 2D 97 E4 */	lfs f1, lbl_803CC0E4-_SDA_BASE_(r13)
 /* 8017F43C 0017C23C  4E 80 00 20 */	blr 
 
+.global zCameraTweak_Init__FR5xBaseR9xDynAssetUl
 zCameraTweak_Init__FR5xBaseR9xDynAssetUl:
 /* 8017F440 0017C240  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017F444 0017C244  7C 08 02 A6 */	mflr r0

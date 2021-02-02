@@ -1568,6 +1568,7 @@ common_update__Q212bungee_state35_esc__2_unnamed_esc__2_zEntPlayerBungeeState_cp
 /* 801117F0 0010E5F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801117F4 0010E5F4  4E 80 00 20 */	blr 
 
+.global load__12bungee_stateFR5xBaseR9xDynAssetUl
 load__12bungee_stateFR5xBaseR9xDynAssetUl:
 /* 801117F8 0010E5F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801117FC 0010E5FC  7C 08 02 A6 */	mflr r0

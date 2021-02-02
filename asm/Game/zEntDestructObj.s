@@ -123,6 +123,7 @@ zEntDestructObj_FindFX__Fv:
 /* 80060B64 0005D964  38 21 00 10 */	addi r1, r1, 0x10
 /* 80060B68 0005D968  4E 80 00 20 */	blr 
 
+.global zEntDestructObj_Init__FPvPv
 zEntDestructObj_Init__FPvPv:
 /* 80060B6C 0005D96C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80060B70 0005D970  7C 08 02 A6 */	mflr r0
