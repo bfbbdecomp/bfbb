@@ -43,8 +43,6 @@ void xEntBoulder_AddForce(xEntBoulder* ent, xVec3* force)
 }
 
 // func_8011F5C4
-//#pragma GLOBAL_ASM("asm/Core/x/xEntBoulder.s", "xEntBoulder_BUpdate__FP4xEntP5xVec3")
-
 void xEntBoulder_BUpdate()
 {
     //For some reason this seems to be a completely empty function
