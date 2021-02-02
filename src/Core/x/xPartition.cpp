@@ -1,12 +1,14 @@
 #include "xPartition.h"
+#include "xMemMgr.h"
 
-#include <types.h>
+void xPartitionReset()
+{
+}
 
-// func_80038B98
-#pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "xPartitionReset__Fv")
-
-// func_80038B9C
-#pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "PartitionGetFreeLink__Fv")
+void PartitionGetFreeLink()
+{
+	xMemAlloc(8);
+}
 
 // func_80038BC8
 #pragma GLOBAL_ASM("asm/Core/x/xPartition.s", "PartitionSpaceReset__FP13_tagPartSpace")

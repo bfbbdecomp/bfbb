@@ -4,23 +4,6 @@
 
 .section .text  # 0x80038B98 - 0x800392A0
 
-.global xPartitionReset__Fv
-xPartitionReset__Fv:
-/* 80038B98 00035998  4E 80 00 20 */	blr 
-
-PartitionGetFreeLink__Fv:
-/* 80038B9C 0003599C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80038BA0 000359A0  7C 08 02 A6 */	mflr r0
-/* 80038BA4 000359A4  38 80 00 08 */	li r4, 8
-/* 80038BA8 000359A8  38 A0 00 00 */	li r5, 0
-/* 80038BAC 000359AC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80038BB0 000359B0  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
-/* 80038BB4 000359B4  4B FF AD 8D */	bl xMemAlloc__FUiUii
-/* 80038BB8 000359B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80038BBC 000359BC  7C 08 03 A6 */	mtlr r0
-/* 80038BC0 000359C0  38 21 00 10 */	addi r1, r1, 0x10
-/* 80038BC4 000359C4  4E 80 00 20 */	blr 
-
 PartitionSpaceReset__FP13_tagPartSpace:
 /* 80038BC8 000359C8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80038BCC 000359CC  7C 08 02 A6 */	mflr r0
