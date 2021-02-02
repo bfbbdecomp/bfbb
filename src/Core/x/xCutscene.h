@@ -91,9 +91,6 @@ struct xCutscene
     XCSNNosey* cb_nosey;
 };
 
-extern uint32 gFrameCount;
-extern xCutscene sActiveCutscene;
-
 struct xEnt;
 
 void xCutscene_Init(void* toc);

@@ -2,6 +2,9 @@
 
 #include <types.h>
 
+extern uint32 gFrameCount;
+extern xCutscene sActiveCutscene;
+
 // func_80015EA4
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Init__FPv")
 
