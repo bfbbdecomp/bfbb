@@ -120,6 +120,10 @@ struct xPsyche : RyzMemData
     PSY_BRAIN_STATUS psystat;
     xBase fakebase;
 
+    void ImmTranOn();
+    void ImmTranOff();
+    int32 ImmTranIsOn();
+    int32 HasGoal(int32 goal);
     int32 GIDOfPending();
     int32 Timestep(float32 dt, void* updCtxt);
     xGoal* FindGoal(int32 gid);
