@@ -22,7 +22,7 @@ zMovePoint* zMovePoint_GetMemPool(int32 cnt)
 {
     /*if (cnt != 0)
 	{
-		g_mvpt_list = (zMovePoint*)xMemAlloc(cnt * sizeof(zMovePoint));
+		g_mvpt_list = (zMovePoint*)xMemAllocSize(cnt * sizeof(zMovePoint));
 	}
 	else
 	{
@@ -31,7 +31,7 @@ zMovePoint* zMovePoint_GetMemPool(int32 cnt)
 	g_mvpt_cnt = cnt;
 	return g_mvpt_list;*/
 
-    g_mvpt_list = cnt ? (zMovePoint*)xMemAlloc(cnt * sizeof(zMovePoint)) : NULL;
+    g_mvpt_list = cnt ? (zMovePoint*)xMemAllocSize(cnt * sizeof(zMovePoint)) : NULL;
     g_mvpt_cnt = cnt;
     return g_mvpt_list;
 }
@@ -44,7 +44,8 @@ void zMovePointInit(zMovePoint* m, xMovePointAsset* asset)
     m->eventFunc = zMovePointEventCB;
     if (m->linkCount)
     {
-        m->link = (xLinkAsset*)(((uint32*)asset + sizeof(xMovePointAsset) / 4) + (uint32)asset->numPoints);
+        m->link = (xLinkAsset*)(((uint32*)asset + sizeof(xMovePointAsset) / 4) +
+                                (uint32)asset->numPoints);
     }
     else
     {

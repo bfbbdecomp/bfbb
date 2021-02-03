@@ -20,7 +20,7 @@ extern int32 zgoo_nused;
 
 void zGooInit(int32 nobj)
 {
-    zgoo_gps = (zGooParams*)xMemAlloc(nobj * sizeof(zGooParams));
+    zgoo_gps = (zGooParams*)xMemAllocSize(nobj * sizeof(zGooParams));
     zgoo_ngps = nobj;
 }
 

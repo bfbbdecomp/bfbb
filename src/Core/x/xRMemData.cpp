@@ -25,11 +25,11 @@ void* RyzMemGrow::operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt)
     }
     if (dogrow)
     {
-        xMemGrowAlloc(size);
+        xMemGrowAllocSize(size);
     }
     else
     {
-        xMemAlloc(size);
+        xMemAllocSize(size);
     }
     void* mem;
     memset(mem, 0, 4);
@@ -53,7 +53,7 @@ RyzMemGrow* RyzMemGrow::Init(xBase* growuser)
     this->ptr_last = NULL;
     this->user_last = NULL;
     this->amt = 0x20;
-    dat = (int8*)xMemAlloc(this->amt);
+    dat = (int8*)xMemAllocSize(this->amt);
     this->ptr = dat;
     this->user = growuser;
     this->flg_grow = 1;
