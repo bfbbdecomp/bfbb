@@ -56,6 +56,7 @@ void iSndMessWithEA(sDSPADPCM* param1);
 uint32 SampleToNybbleAddress(uint32 sample);
 void iSndInitSceneLoaded();
 uint8 iSndIsPlaying(uint32 assetID);
+uint8 iSndIsPlaying(uint32 assetID, uint32 parid);
 void iSndWaitForDeadSounds();
 void iSndSceneExit();
 void sndloadcb(tag_xFile* tag);
