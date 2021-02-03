@@ -24,7 +24,8 @@ jobs:
         with:
           python-version: 3.8
 
-      - run: |
+      - name: Build Website
+        run: |
           cd website
           python build.py
 
