@@ -532,12 +532,12 @@ void xNPCBasic::Render()
 
 void xPsyche::ImmTranOn()
 {
-    flg_psyche = flg_psyche | 1;
+    flg_psyche |= 1;
 }
 
 void xPsyche::ImmTranOff()
 {
-    flg_psyche = flg_psyche & 0xfffffffe;
+    flg_psyche &= 0xfffffffe;
 }
 
 bool xPsyche::ImmTranIsOn()
