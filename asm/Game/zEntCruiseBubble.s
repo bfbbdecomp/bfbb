@@ -1822,8 +1822,8 @@ init_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cp
 /* 80058A60 00055860  80 05 00 48 */	lwz r0, 0x48(r5)
 /* 80058A64 00055864  28 00 00 00 */	cmplwi r0, 0
 /* 80058A68 00055868  40 82 00 10 */	bne lbl_80058A78
-/* 80058A6C 0005586C  3C 80 80 21 */	lis r4, lbl_802120B0@ha
-/* 80058A70 00055870  38 04 20 B0 */	addi r0, r4, lbl_802120B0@l
+/* 80058A6C 0005586C  3C 80 80 21 */	lis r4, AtomicDefaultRenderCallBack@ha
+/* 80058A70 00055870  38 04 20 B0 */	addi r0, r4, AtomicDefaultRenderCallBack@l
 /* 80058A74 00055874  90 05 00 48 */	stw r0, 0x48(r5)
 lbl_80058A78:
 /* 80058A78 00055878  3C 80 80 29 */	lis r4, lbl_8028C2A4@ha
