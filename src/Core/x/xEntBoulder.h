@@ -74,8 +74,11 @@ struct xBoulderGenerator : xBase
 };
 
 void xEntBoulder_Init(void* ent, void* asset);
+void xEntBoulder_Init(xEntBoulder* ent, xEntAsset* asset);
 void xEntBoulder_BubbleBowl(float32 multiplier);
 void xEntBoulder_Setup(xEntBoulder* ent);
 void xBoulderGenerator_Init(xBase& data, xDynAsset& asset, ulong32);
+void xBoulderGenerator_Init(xBoulderGenerator* bg, xBoulderGeneratorAsset* asset);
+void xBoulderGenerator_Init(xBase& data, xDynAsset& asset);
 
 #endif

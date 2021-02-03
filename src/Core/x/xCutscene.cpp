@@ -2,6 +2,9 @@
 
 #include <types.h>
 
+extern uint32 gFrameCount;
+extern xCutscene sActiveCutscene;
+
 // func_80015EA4
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Init__FPv")
 
@@ -12,7 +15,20 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Destroy__FP9xCutscene")
 
 // func_80016220
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_LoadStart__FP9xCutscene")
+int32 xCutscene_LoadStart(xCutscene* csn)
+{
+    uint32 cnt;
+
+    cnt = iCSFileOpen(csn);
+
+    if (cnt <= 0)
+    {
+        return 0;
+    }
+
+    csn->Opened = 1;
+    return 1;
+}
 
 // func_80016268
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutsceneConvertBreak__FfP14xCutsceneBreakUii")
@@ -33,7 +49,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_SetCamera__FP9xCutsceneP7xCamera")
 
 // func_80016818
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi")
+#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s",                                                       \
+                   "xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi")
 
 // func_80016A30
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "JDeltaEval__FP8RpAtomicPvPvf")
@@ -45,7 +62,10 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Render__FP9xCutscenePP4xEntPiPf")
 
 // func_80017CA4
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_CurrentCutscene__Fv")
+xCutscene* xCutscene_CurrentCutscene()
+{
+    return &sActiveCutscene;
+}
 
 // func_80017CB0
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "atan__3stdFf")
@@ -60,4 +80,5 @@
 #pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "CanRenderNow__9XCSNNoseyFv")
 
 // func_80017D38
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "UpdatedAnimated__9XCSNNoseyFP8RpAtomicP11RwMatrixTagUiUi")
+#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s",                                                       \
+                   "UpdatedAnimated__9XCSNNoseyFP8RpAtomicP11RwMatrixTagUiUi")
