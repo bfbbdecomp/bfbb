@@ -7,6 +7,12 @@
 #include "zNPCFXCinematic.h"
 
 #include "../Core/p2/iModel.h"
+#include "../Core/p2/iSnd.h"
+
+#include "../Core/x/xEnt.h"
+#include "../Core/x/xMath.h"
+
+extern float32 lbl_803CE4C0;
 
 // func_800EEE4C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Create_Common__FiP10RyzMemGrowPv")
@@ -342,8 +348,10 @@ int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
 // func_800F3E5C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "LassoSyncAnims__10zNPCCommonF11en_lassanim")
 
-// func_800F3F08
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "GimmeLassInfo__10zNPCCommonFv")
+zNPCLassoInfo* zNPCCommon::GimmeLassInfo()
+{
+    return flg_vuln & 0x1000000 ? lassdata : NULL;
+}
 
 // func_800F3F24
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "LassoNotify__10zNPCCommonF14en_LASSO_EVENT")
@@ -358,8 +366,9 @@ int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
     "asm/Game/zNPCTypeCommon.s",                                                                   \
     "AddScripting__10zNPCCommonFP7xPsychePFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_i")
 
-// func_800F4244
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "AddDEVGoals__10zNPCCommonFP7xPsyche")
+void zNPCCommon::AddDEVGoals()
+{
+}
 
 // func_800F4248
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_AnimTable_Common__Fv")
@@ -379,32 +388,45 @@ int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
 // func_800F4630
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DBG_Name__10zNPCCommonFv")
 
-// func_800F4638
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DBG_AddTweakers__10zNPCCommonFv")
+void zNPCCommon::DBG_AddTweakers()
+{
+}
 
-// func_800F463C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "SelfSetup__10zNPCCommonFv")
+void zNPCCommon::SelfSetup()
+{
+}
 
-// func_800F4640
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DBG_RptDataSize__10zNPCCommonFv")
+void zNPCCommon::DBG_RptDataSize()
+{
+}
 
 // func_800F4644
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DBG_InstName__10zNPCCommonFv")
 
-// func_800F4664
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "PRIV_GetDriverData__10zNPCCommonFv")
+xEntDrive* zNPCCommon::PRIV_GetDriverData()
+{
+    return 0;
+}
 
-// func_800F466C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ModelScaleSet__10zNPCCommonFPC5xVec3")
+void zNPCCommon::ModelScaleSet(const xVec3* vec)
+{
+    ModelScaleSet(vec->x, vec->y, vec->z);
+}
 
-// func_800F4698
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "AnimGetTable__10zNPCCommonFv")
+xAnimTable* zNPCCommon::AnimGetTable()
+{
+    return model->Anim->Table;
+}
 
-// func_800F46A8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "PRIV_GetLassoData__10zNPCCommonFv")
+zNPCLassoInfo* zNPCCommon::PRIV_GetLassoData()
+{
+    return NULL;
+}
 
-// func_800F46B0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "DuploOwner__10zNPCCommonFP10zNPCCommon")
+void zNPCCommon::DuploOwner(zNPCCommon* duper)
+{
+    npc_duplodude = duper;
+}
 
 void SpeakBegin()
 {
@@ -422,8 +444,10 @@ void SpeakStop()
 {
 }
 
-// func_800F46C8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "GenShadCacheRad__10zNPCCommonFv")
+float32 zNPCCommon::GenShadCacheRad()
+{
+    return lbl_803CE4C0;
+}
 
 // func_800F46D0
 #if 0
@@ -492,8 +516,10 @@ void xNPCBasic::PostInit()
 {
 }
 
-// func_800F473C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Render__9xNPCBasicFv")
+void xNPCBasic::Render()
+{
+    xEntRender(this);
+}
 
 // func_800F475C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "__as__12zNPCSettingsFRC12zNPCSettings")
@@ -504,17 +530,25 @@ void xNPCBasic::PostInit()
 // func_800F4864
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "__as__10xBaseAssetFRC10xBaseAsset")
 
-// func_800F4888
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ImmTranOn__7xPsycheFv")
+void xPsyche::ImmTranOn()
+{
+    flg_psyche = flg_psyche | 1;
+}
 
-// func_800F4898
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ImmTranOff__7xPsycheFv")
+void xPsyche::ImmTranOff()
+{
+    flg_psyche = flg_psyche & 0xfffffffe;
+}
 
-// func_800F48A8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ImmTranIsOn__7xPsycheFv")
+bool xPsyche::ImmTranIsOn()
+{
+    return flg_psyche & 1;
+}
 
-// func_800F48B4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "HasGoal__7xPsycheFi")
+int32 xPsyche::HasGoal(int32 goal)
+{
+    return FindGoal(goal) != NULL;
+}
 
 // func_800F48E0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Next__21xListItem_esc__0_9NPCConfig_esc__1_Fv")
@@ -525,8 +559,10 @@ void xNPCBasic::PostInit()
 // func_800F48FC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "xUtil_choose_esc__0_f_esc__1___FPCfiPCf")
 
-// func_800F4A10
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "xSndIsPlaying__FUiUi")
+uint32 xSndIsPlaying(uint32 assetID, uint32 parid)
+{
+    return iSndIsPlaying(assetID, parid) & 0xff;
+}
 
 // func_800F4A34
 #pragma GLOBAL_ASM(                                                                                \

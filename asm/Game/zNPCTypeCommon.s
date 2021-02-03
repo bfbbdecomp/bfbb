@@ -5786,17 +5786,6 @@ lbl_800F3EDC:
 /* 800F3F00 000F0D00  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F3F04 000F0D04  4E 80 00 20 */	blr 
 
-.global GimmeLassInfo__10zNPCCommonFv
-GimmeLassInfo__10zNPCCommonFv:
-/* 800F3F08 000F0D08  80 03 01 C8 */	lwz r0, 0x1c8(r3)
-/* 800F3F0C 000F0D0C  54 00 01 CF */	rlwinm. r0, r0, 0, 7, 7
-/* 800F3F10 000F0D10  41 82 00 0C */	beq lbl_800F3F1C
-/* 800F3F14 000F0D14  80 63 02 4C */	lwz r3, 0x24c(r3)
-/* 800F3F18 000F0D18  4E 80 00 20 */	blr 
-lbl_800F3F1C:
-/* 800F3F1C 000F0D1C  38 60 00 00 */	li r3, 0
-/* 800F3F20 000F0D20  4E 80 00 20 */	blr 
-
 .global LassoNotify__10zNPCCommonF14en_LASSO_EVENT
 LassoNotify__10zNPCCommonF14en_LASSO_EVENT:
 /* 800F3F24 000F0D24  80 63 02 4C */	lwz r3, 0x24c(r3)
@@ -6013,11 +6002,7 @@ lbl_800F4230:
 /* 800F4238 000F1038  7C 08 03 A6 */	mtlr r0
 /* 800F423C 000F103C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F4240 000F1040  4E 80 00 20 */	blr 
-
-.global AddDEVGoals__10zNPCCommonFP7xPsyche
-AddDEVGoals__10zNPCCommonFP7xPsyche:
-/* 800F4244 000F1044  4E 80 00 20 */	blr 
-
+DBG_AddTweakers
 ZNPC_AnimTable_Common__Fv:
 /* 800F4248 000F1048  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800F424C 000F104C  7C 08 02 A6 */	mflr r0
@@ -6294,17 +6279,6 @@ DBG_Name__10zNPCCommonFv:
 /* 800F4630 000F1430  38 60 00 00 */	li r3, 0
 /* 800F4634 000F1434  4E 80 00 20 */	blr 
 
-.global DBG_AddTweakers__10zNPCCommonFv
-DBG_AddTweakers__10zNPCCommonFv:
-/* 800F4638 000F1438  4E 80 00 20 */	blr 
-
-SelfSetup__10zNPCCommonFv:
-/* 800F463C 000F143C  4E 80 00 20 */	blr 
-
-.global DBG_RptDataSize__10zNPCCommonFv
-DBG_RptDataSize__10zNPCCommonFv:
-/* 800F4640 000F1440  4E 80 00 20 */	blr 
-
 .global DBG_InstName__10zNPCCommonFv
 DBG_InstName__10zNPCCommonFv:
 /* 800F4644 000F1444  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -6316,43 +6290,8 @@ DBG_InstName__10zNPCCommonFv:
 /* 800F465C 000F145C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F4660 000F1460  4E 80 00 20 */	blr 
 
-PRIV_GetDriverData__10zNPCCommonFv:
-/* 800F4664 000F1464  38 60 00 00 */	li r3, 0
-/* 800F4668 000F1468  4E 80 00 20 */	blr 
 
-.global ModelScaleSet__10zNPCCommonFPC5xVec3
-ModelScaleSet__10zNPCCommonFPC5xVec3:
-/* 800F466C 000F146C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4670 000F1470  7C 08 02 A6 */	mflr r0
-/* 800F4674 000F1474  C0 24 00 00 */	lfs f1, 0(r4)
-/* 800F4678 000F1478  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F467C 000F147C  C0 44 00 04 */	lfs f2, 4(r4)
-/* 800F4680 000F1480  C0 64 00 08 */	lfs f3, 8(r4)
-/* 800F4684 000F1484  4B FF E6 E9 */	bl ModelScaleSet__10zNPCCommonFfff
-/* 800F4688 000F1488  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F468C 000F148C  7C 08 03 A6 */	mtlr r0
-/* 800F4690 000F1490  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4694 000F1494  4E 80 00 20 */	blr 
 
-.global AnimGetTable__10zNPCCommonFv
-AnimGetTable__10zNPCCommonFv:
-/* 800F4698 000F1498  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 800F469C 000F149C  80 63 00 0C */	lwz r3, 0xc(r3)
-/* 800F46A0 000F14A0  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 800F46A4 000F14A4  4E 80 00 20 */	blr 
-
-PRIV_GetLassoData__10zNPCCommonFv:
-/* 800F46A8 000F14A8  38 60 00 00 */	li r3, 0
-/* 800F46AC 000F14AC  4E 80 00 20 */	blr 
-
-.global DuploOwner__10zNPCCommonFP10zNPCCommon
-DuploOwner__10zNPCCommonFP10zNPCCommon:
-/* 800F46B0 000F14B0  90 83 02 2C */	stw r4, 0x22c(r3)
-/* 800F46B4 000F14B4  4E 80 00 20 */	blr 
-
-GenShadCacheRad__10zNPCCommonFv:
-/* 800F46C8 000F14C8  C0 22 9B 40 */	lfs f1, lbl_803CE4C0-_SDA2_BASE_(r2)
-/* 800F46CC 000F14CC  4E 80 00 20 */	blr 
 
 .global __ct__9xNPCBasicFi
 __ct__9xNPCBasicFi:
@@ -6376,17 +6315,6 @@ __ct__9xNPCBasicFi:
 /* 800F4714 000F1514  7C 08 03 A6 */	mtlr r0
 /* 800F4718 000F1518  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F471C 000F151C  4E 80 00 20 */	blr 
-
-.global Render__9xNPCBasicFv
-Render__9xNPCBasicFv:
-/* 800F473C 000F153C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4740 000F1540  7C 08 02 A6 */	mflr r0
-/* 800F4744 000F1544  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4748 000F1548  4B F2 4D 85 */	bl xEntRender__FP4xEnt
-/* 800F474C 000F154C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4750 000F1550  7C 08 03 A6 */	mtlr r0
-/* 800F4754 000F1554  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4758 000F1558  4E 80 00 20 */	blr 
 
 .global __as__12zNPCSettingsFRC12zNPCSettings
 __as__12zNPCSettingsFRC12zNPCSettings:
@@ -6472,39 +6400,6 @@ __as__10xBaseAssetFRC10xBaseAsset:
 /* 800F4880 000F1680  B0 03 00 06 */	sth r0, 6(r3)
 /* 800F4884 000F1684  4E 80 00 20 */	blr 
 
-.global ImmTranOn__7xPsycheFv
-ImmTranOn__7xPsycheFv:
-/* 800F4888 000F1688  80 03 00 08 */	lwz r0, 8(r3)
-/* 800F488C 000F168C  60 00 00 01 */	ori r0, r0, 1
-/* 800F4890 000F1690  90 03 00 08 */	stw r0, 8(r3)
-/* 800F4894 000F1694  4E 80 00 20 */	blr 
-
-.global ImmTranOff__7xPsycheFv
-ImmTranOff__7xPsycheFv:
-/* 800F4898 000F1698  80 03 00 08 */	lwz r0, 8(r3)
-/* 800F489C 000F169C  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
-/* 800F48A0 000F16A0  90 03 00 08 */	stw r0, 8(r3)
-/* 800F48A4 000F16A4  4E 80 00 20 */	blr 
-
-.global ImmTranIsOn__7xPsycheFv
-ImmTranIsOn__7xPsycheFv:
-/* 800F48A8 000F16A8  80 03 00 08 */	lwz r0, 8(r3)
-/* 800F48AC 000F16AC  54 03 07 FE */	clrlwi r3, r0, 0x1f
-/* 800F48B0 000F16B0  4E 80 00 20 */	blr 
-
-.global HasGoal__7xPsycheFi
-HasGoal__7xPsycheFi:
-/* 800F48B4 000F16B4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F48B8 000F16B8  7C 08 02 A6 */	mflr r0
-/* 800F48BC 000F16BC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F48C0 000F16C0  48 01 96 7D */	bl FindGoal__7xPsycheFi
-/* 800F48C4 000F16C4  7C 03 00 D0 */	neg r0, r3
-/* 800F48C8 000F16C8  7C 00 1B 78 */	or r0, r0, r3
-/* 800F48CC 000F16CC  54 03 0F FE */	srwi r3, r0, 0x1f
-/* 800F48D0 000F16D0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F48D4 000F16D4  7C 08 03 A6 */	mtlr r0
-/* 800F48D8 000F16D8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F48DC 000F16DC  4E 80 00 20 */	blr 
 
 /* Next__21xListItem<9NPCConfig>Fv */
 .global Next__21xListItem_esc__0_9NPCConfig_esc__1_Fv
@@ -6600,18 +6495,6 @@ lbl_800F49F0:
 /* 800F4A04 000F1804  7C 08 03 A6 */	mtlr r0
 /* 800F4A08 000F1808  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F4A0C 000F180C  4E 80 00 20 */	blr 
-
-.global xSndIsPlaying__FUiUi
-xSndIsPlaying__FUiUi:
-/* 800F4A10 000F1810  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800F4A14 000F1814  7C 08 02 A6 */	mflr r0
-/* 800F4A18 000F1818  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800F4A1C 000F181C  4B FD BE C1 */	bl iSndIsPlaying__FUiUi
-/* 800F4A20 000F1820  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800F4A24 000F1824  54 63 06 3E */	clrlwi r3, r3, 0x18
-/* 800F4A28 000F1828  7C 08 03 A6 */	mtlr r0
-/* 800F4A2C 000F182C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800F4A30 000F1830  4E 80 00 20 */	blr 
 
 .global SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv
 SetCallbacks__5xGoalFPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvP11en_trantypefPv_iPFP5xGoalPvfPv_iPv:
@@ -6782,5 +6665,6 @@ lbl_803CE4B0:
 	.incbin "baserom.dol", 0x2B7D50, 0x8
 lbl_803CE4B8:
 	.incbin "baserom.dol", 0x2B7D58, 0x8
+.global lbl_803CE4C0
 lbl_803CE4C0:
 	.incbin "baserom.dol", 0x2B7D60, 0x8

@@ -368,6 +368,12 @@ struct zNPCCommon : xNPCBasic
 
     zNPCCommon(int32);
 
+    uint32 LassoInit();
+    zNPCLassoInfo* GimmeLassInfo();
+    void AddDEVGoals();
+    xAnimTable* AnimGetTable();
+    void DBG_RptDataSize();
+    void DBG_AddTweakers();
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
