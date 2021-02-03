@@ -1111,7 +1111,7 @@ void zNPCSlick::LassoModelIndex(int32* idxgrab, int32* idxhold)
 
 int32 zNPCRobot::IsHealthy()
 {
-    return hitpoints & ~(hitpoints >> 0x1f);
+    return (hitpoints < 0) ? 0 : hitpoints;
 }
 
 // func_80102764
