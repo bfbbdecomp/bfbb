@@ -128,14 +128,16 @@ void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 // func_800D14E8
 void iSndUpdateSounds()
 {
-    if (soundInited)
+    if (!soundInited)
     {
-        for (int i = 0; i < 58; i++)
+        return;
+    }
+
+    for (int i = 0; i < 58; i++)
+    {
+        if (voices[i].voice != NULL)
         {
-            if (voices[i].voice != NULL)
-            {
-                iSndVolUpdate(&gSnd.voice[i + 6], &voices[i]);
-            }
+            iSndVolUpdate(&gSnd.voice[i + 6], &voices[i]);
         }
     }
 }
