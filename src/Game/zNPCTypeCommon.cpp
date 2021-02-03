@@ -10,16 +10,42 @@
 #include "../Core/p2/iModel.h"
 #include "../Core/p2/iSnd.h"
 
+#include "../Core/x/xString.h"
+#include "../Core/x/xDebug.h"
+
+extern char stringBase0[];
+extern int8* g_strz_lassanim[3];
+extern int32 g_hash_lassanim[3];
+extern volatile int32 g_skipDescent;
+extern NPCConfig* g_ncfghead;
+extern NPCSndTrax g_sndTrax_General[];
 extern float32 lbl_803CE4C0;
+extern int32 g_flg_wonder;
+extern int32 g_isConversation;
+extern float32 g_tmr_talkless;
 
 // func_800EEE4C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Create_Common__FiP10RyzMemGrowPv")
 
-// func_800EEEC0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Destroy_Common__FP12xFactoryInst")
+void ZNPC_Destroy_Common(xFactoryInst* inst)
+{
+    delete inst;
+}
 
-// func_800EEEE4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Common_Startup__Fv")
+void ZNPC_Common_Startup()
+{
+    int32 i;
+
+    for (i = 0; i < 3; i++)
+    {
+        g_hash_lassanim[i] = xStrHash(g_strz_lassanim[i]);
+    }
+
+    NPCSupport_Startup();
+    NPCS_Startup();
+    zNPCSettings_MakeDummy();
+    zNPCFXStartup();
+}
 
 void ZNPC_Common_Shutdown()
 {
@@ -28,22 +54,45 @@ void ZNPC_Common_Shutdown()
     zNPCFXShutdown();
 }
 
-// func_800EEF84
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_ScenePrepare__Fv")
+void zNPCCommon_ScenePrepare()
+{
+    NPCS_SndTimersReset();
+    NPCS_SndTablePrepare(g_sndTrax_General);
+    NPCSupport_ScenePrepare();
+    zNPCCommon_WonderReset();
+    g_skipDescent = 5;
+}
 
-// func_800EEFC0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_SceneFinish__Fv")
+void zNPCCommon_SceneFinish()
+{
+    zNPCCommon::ConfigSceneDone();
+    NPCSupport_SceneFinish();
+    xDebugRemoveTweak(stringBase0 + 0x42b);
+}
 
-// func_800EEFF4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_SceneReset__Fv")
+void zNPCCommon_SceneReset()
+{
+    NPCSupport_SceneReset();
+    zNPCPlyrSnd_Reset();
+    g_skipDescent = 5;
+}
 
 void zNPCCommon_ScenePostInit()
 {
     NPCSupport_ScenePostInit();
 }
 
-// func_800EF040
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_Timestep__FP6xScenef")
+void zNPCCommon_Timestep(float32 dt)
+{
+    NPCSupport_Timestep(dt);
+    NPCS_SndTimersUpdate(dt);
+    zNPCPlyrSnd_Update(dt);
+    g_skipDescent -= 1;
+    if (g_skipDescent < 0)
+    {
+        g_skipDescent = 0;
+    }
+}
 
 // func_800EF09C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "Init__10zNPCCommonFP9xEntAsset")
@@ -197,8 +246,10 @@ int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
 // func_800F1FEC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ISeePlayer__10zNPCCommonFv")
 
-// func_800F22B8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ConfigSceneDone__10zNPCCommonFv")
+void zNPCCommon::ConfigSceneDone()
+{
+    g_ncfghead = 0;
+}
 
 // func_800F22C4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ConfigCreate__10zNPCCommonFUi")
@@ -297,8 +348,11 @@ int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
 // func_800F3390
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "NPCC_NPCIsConversing__Fv")
 
-// func_800F3398
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "zNPCCommon_WonderReset__Fv")
+void zNPCCommon_WonderReset()
+{
+    g_isConversation = 0;
+    g_flg_wonder = 0;
+}
 
 // func_800F33A8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "WonderOfTalking__10zNPCCommonFiP5xBase")
