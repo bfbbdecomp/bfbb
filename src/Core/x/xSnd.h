@@ -93,4 +93,6 @@ void xSndPauseAll(uint32 pause_effects, uint32 pause_streams);
 void xSndPauseCategory(uint32 mask, uint32 pause);
 void xSndParentDied(uint32 pid);
 
+void xSndInternalUpdateVoicePos(xSndVoiceInfo* voiceInfo);
+
 #endif

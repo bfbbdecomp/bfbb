@@ -96,6 +96,7 @@ extern uint32 gFrameCount;
 struct xEnt;
 
 void xCutscene_Init(void* toc);
+float32 xlog(float32 f);
 xCutscene* xCutscene_CurrentCutscene();
 void xCutscene_Render(xCutscene* csn, xEnt**, int32*, float32*);
 

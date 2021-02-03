@@ -98,6 +98,12 @@ struct DVDFileInfo
     DVDCallback callback;
 };
 
+// idk what this is
+struct _AXVPB
+{
+    int32 i;
+};
+
 #define DVD_STATE_FATAL_ERROR -1
 #define DVD_STATE_END 0
 #define DVD_STATE_BUSY 1
@@ -168,6 +174,9 @@ OSTime OSGetTime();
 void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* td);
 BOOL PADInit();
 void PADControlMotor(int chan, u32 command);
+void AXQuit();
+void AXFreeVoice(_AXVPB*);
+void OSSetSoundMode(u32 mode);
 
 #ifdef __cplusplus
 }
