@@ -106,6 +106,7 @@ $(DOL): $(ELF) | tools
 	@echo " ELF2DOL "$@
 	$S$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
 	$S$(SHA1SUM) -c bfbb.sha1 || ( rm -f main.dump; $(ASMDIFF) )
+	$Scp bfbb.map main.elf obj/ # needed for diff.py
 
 clean:
 	rm -f $(DOL) $(ELF) $(MAP) baserom.dump main.dump
@@ -114,14 +115,6 @@ clean:
 
 tools:
 	$(MAKE) -C tools
-
-inspect:
-ifeq ($(WINDOWS),1)
-	$(CC) $(CFLAGS) -o inspect.s -S $(subst \,/,$(subst C:\,/c/,$(INSPECT)))
-else
-	$(CC) $(CFLAGS) -o inspect.s -S $(INSPECT)
-endif
-	python3 tools/inspect_postprocess.py inspect.s
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	@echo " LINK    "$@
