@@ -25,6 +25,8 @@ jobs:
           python-version: 3.8
 
       - name: Build Website
+        env:
+          OK_WEBHOOK: ${{ secrets.OK_WEBHOOK }}
         run: |
           cd website
           python build.py
