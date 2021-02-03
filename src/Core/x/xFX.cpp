@@ -386,8 +386,17 @@ RpMaterial* MaterialSetShininess(RpMaterial* material, void*)
     return material;
 }
 
-// func_800274E0
-#pragma GLOBAL_ASM("asm/Core/x/xFX.s", "AtomicSetShininess__FP8RpAtomicPv")
+static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
+{
+    RpGeometry* geometry = RpAtomicGetGeometry(atomic);
+
+    if (geometry)
+    {
+        RpGeometryForAllMaterials(geometry, MaterialSetShininess, data);
+    }
+
+    return atomic;
+}
 
 // func_8002752C
 #pragma GLOBAL_ASM("asm/Core/x/xFX.s", "MaterialSetEnvMap__FP10RpMaterialPv")
