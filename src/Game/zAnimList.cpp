@@ -43,9 +43,9 @@ void zAnimListInit()
 
     // << 2 is the same as multiplying by 4
     // so it's just allocating size in bytes
-    aids = (uint32*)xMemAlloc(nals * 4);
-    atbls = (xAnimTable**)xMemAlloc(nals * 4);
-    anused = (int32*)xMemAlloc(nals * 4);
+    aids = (uint32*)xMemAllocSize(nals * 4);
+    atbls = (xAnimTable**)xMemAllocSize(nals * 4);
+    anused = (int32*)xMemAllocSize(nals * 4);
 
     for (i = 0; i < nals; i++)
     {

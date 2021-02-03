@@ -419,12 +419,12 @@ void zUIMgr::Setup(zScene* s)
     m_preUpdateStart = 0;
     m_preUpdateEnd = count - 1;
     m_preUpdateMax = count;
-    m_preUpdate = (_zUI**)xMemAlloc(arraySize);
+    m_preUpdate = (_zUI**)xMemAllocSize(arraySize);
 
     m_updateStart = 0;
     m_updateEnd = count - 1;
     m_updateMax = count;
-    m_update = (_zUI**)xMemAlloc(arraySize);
+    m_update = (_zUI**)xMemAllocSize(arraySize);
 
     // non-matching: incorrect registers
 

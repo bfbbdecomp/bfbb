@@ -164,7 +164,7 @@ void xFFXShakeFree(xFFXShakeState* s)
 void xFFXRotMatchPoolInit(uint32 num)
 {
     rot_match_psize = num;
-    rot_match_pool = (xFFXRotMatchState*)xMemAlloc(num * sizeof(xFFXRotMatchState));
+    rot_match_pool = (xFFXRotMatchState*)xMemAllocSize(num * sizeof(xFFXRotMatchState));
     uint32 i = 1;
     rot_match_pool->next = NULL;
     int32 ind = sizeof(xFFXRotMatchState);
