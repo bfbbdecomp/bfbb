@@ -6,7 +6,7 @@
 
 xFactory::xFactory(int32 maxTypes)
 {
-    this->infopool = (XGOFTypeInfo*)xMemAlloc(maxTypes * sizeof(XGOFTypeInfo));
+    this->infopool = (XGOFTypeInfo*)xMemAllocSize(maxTypes * sizeof(XGOFTypeInfo));
     memset(this->infopool, 0, maxTypes * sizeof(XGOFTypeInfo));
     XOrdInit(&this->infolist, maxTypes, 0);
 }

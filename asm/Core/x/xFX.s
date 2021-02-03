@@ -1,7 +1,7 @@
 .include "macros.inc"
 
 .section .rodata   # 0x80252B90 - 0x80252D18
-
+.balign 8
 .global lbl_80252B90
 lbl_80252B90:
 	.incbin "baserom.dol", 0x24FB70, 0xC
@@ -7230,10 +7230,14 @@ lbl_8002CA94:
 .endif
 
 .section .data
+.balign 8
+defaultBFX:
+	.incbin "baserom.dol", 0x279FD8, 0x18
 lbl_8027D010:
 	.incbin "baserom.dol", 0x279FF0, 0x90
 
 .section .bss
+.balign 8
 lbl_802C7CE8:
 	.skip 0x12C
 lbl_802C7E14:
@@ -7253,6 +7257,14 @@ lbl_802C82E0:
 
 .section .sbss
 .balign 8
+/* SPECULATION: link order */
+.global gAtomicRenderCallBack
+gAtomicRenderCallBack:
+	.skip 0x4
+/* SPECULATION: link order */
+.global MainLight
+MainLight:
+	.skip 0x4
 lbl_803CB238:
 	.skip 0x4
 /* SPECULATION: link order */
@@ -7299,6 +7311,10 @@ lbl_803CB28C:
 	.skip 0x4
 
 .section .sdata
+.balign 8
+.global EnvMapShininess
+EnvMapShininess:
+	.incbin "baserom.dol", 0x2B59F8, 0x4
 lbl_803CA93C:
 	.incbin "baserom.dol", 0x2B59FC, 0x4
 /* SPECULATION: link order */

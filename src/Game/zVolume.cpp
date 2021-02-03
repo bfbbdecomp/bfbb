@@ -41,7 +41,7 @@ void zVolumeInit()
 
     if (nvols)
     {
-        vols = (zVolume*)xMemAlloc(nvols * sizeof(zVolume));
+        vols = (zVolume*)xMemAllocSize(nvols * sizeof(zVolume));
 
         for (i = 0; i < nvols; i++)
         {

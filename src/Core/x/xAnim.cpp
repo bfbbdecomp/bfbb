@@ -88,7 +88,7 @@ void xAnimInit()
 
 void xAnimTempTransitionInit(uint32 count)
 {
-    xMemPoolSetup(&sxAnimTempTranPool, xMemAlloc(count * sizeof(xAnimTransition)), 0, 0, NULL,
+    xMemPoolSetup(&sxAnimTempTranPool, xMemAllocSize(count * sizeof(xAnimTransition)), 0, 0, NULL,
                   sizeof(xAnimTransition), count, count / 2);
 }
 
@@ -223,8 +223,9 @@ xAnimEffect* xAnimStateNewEffect(xAnimState* state, uint32 flags, float32 startT
     xAnimEffect** prev;
     xAnimEffect* effect;
 
-    effect = (gxAnimUseGrowAlloc ? (xAnimEffect*)xMemGrowAlloc(userDataSize + sizeof(xAnimEffect)) :
-                                   (xAnimEffect*)xMemAlloc(userDataSize + sizeof(xAnimEffect)));
+    effect =
+        (gxAnimUseGrowAlloc ? (xAnimEffect*)xMemGrowAllocSize(userDataSize + sizeof(xAnimEffect)) :
+                              (xAnimEffect*)xMemAllocSize(userDataSize + sizeof(xAnimEffect)));
 
     effect->Flags = flags;
     effect->StartTime = startTime;
@@ -250,7 +251,7 @@ xAnimTable* xAnimTableNew(const char* name, xAnimTable** linkedList, uint32 user
 {
     xAnimTable* table;
 
-    table = (xAnimTable*)xMemAlloc(sizeof(xAnimTable));
+    table = (xAnimTable*)xMemAllocSize(sizeof(xAnimTable));
 
     if (linkedList)
     {
@@ -299,8 +300,8 @@ xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, uint32 flags
 {
     xAnimState* state;
 
-    state = (gxAnimUseGrowAlloc ? (xAnimState*)xMemGrowAlloc(sizeof(xAnimState)) :
-                                  (xAnimState*)xMemAlloc(sizeof(xAnimState)));
+    state = (gxAnimUseGrowAlloc ? (xAnimState*)xMemGrowAllocSize(sizeof(xAnimState)) :
+                                  (xAnimState*)xMemAllocSize(sizeof(xAnimState)));
 
     if (!table->StateList)
     {
@@ -394,12 +395,12 @@ xAnimState* xAnimTableAddFileID(xAnimTable* table, xAnimFile* file, uint32 state
             if (!state->MultiFile)
             {
                 state->MultiFile =
-                    (gxAnimUseGrowAlloc ?
-                         (xAnimMultiFile*)xMemGrowAlloc(subStateCount *
-                                                            sizeof(xAnimMultiFileEntry) +
-                                                        sizeof(xAnimMultiFileBase)) :
-                         (xAnimMultiFile*)xMemAlloc(subStateCount * sizeof(xAnimMultiFileEntry) +
-                                                    sizeof(xAnimMultiFileBase)));
+                    (gxAnimUseGrowAlloc ? (xAnimMultiFile*)xMemGrowAllocSize(
+                                              subStateCount * sizeof(xAnimMultiFileEntry) +
+                                              sizeof(xAnimMultiFileBase)) :
+                                          (xAnimMultiFile*)xMemAllocSize(
+                                              subStateCount * sizeof(xAnimMultiFileEntry) +
+                                              sizeof(xAnimMultiFileBase)));
 
                 state->MultiFile->Count = 0;
             }

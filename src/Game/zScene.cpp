@@ -335,7 +335,7 @@ namespace
         if (d.size)
         {
             dyn_size = s.baseCount[d.type] * d.size;
-            s.baseList[d.type] = (xBase*)xMemAlloc(dyn_size);
+            s.baseList[d.type] = (xBase*)xMemAllocSize(dyn_size);
         }
 
         type = xStrHash(d.name);
@@ -417,7 +417,7 @@ static uint32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* des
 
     if (count)
     {
-        block = (uint8*)xMemAlloc(count * offset);
+        block = (uint8*)xMemAllocSize(count * offset);
 
         s->baseList[desc->baseType] = (xBase*)block;
     }
@@ -457,7 +457,7 @@ static uint32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, 
 
     if (count)
     {
-        block = (uint8*)xMemAlloc(count * offset);
+        block = (uint8*)xMemAllocSize(count * offset);
 
         s->baseList[desc->baseType] = (xBase*)block;
     }
@@ -552,7 +552,7 @@ static uint32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, u
 
     if (count)
     {
-        entBlock = (zEnt*)xMemAlloc(count * sizeof(zEnt));
+        entBlock = (zEnt*)xMemAllocSize(count * sizeof(zEnt));
 
         s->baseList[desc->baseType] = entBlock;
 
@@ -590,7 +590,7 @@ static uint32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, u
 
     if (count)
     {
-        camBlock = (zCamMarker*)xMemAlloc(count * sizeof(zCamMarker));
+        camBlock = (zCamMarker*)xMemAllocSize(count * sizeof(zCamMarker));
         s->baseList[desc->baseType] = camBlock;
 
         for (int32 idx = 0; idx < count; idx++)
@@ -932,13 +932,13 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
     }
 
     sMemDepthJustHIPStart = xMemPushBase();
-    s = (zScene*)xMemAlloc(sizeof(zScene));
+    s = (zScene*)xMemAllocSize(sizeof(zScene));
 
     globals.sceneCur = s;
 
     xSceneInit(s, 200, 2048, 2068, 250);
 
-    s->env = (xEnv*)xMemAlloc(sizeof(xEnv));
+    s->env = (xEnv*)xMemAllocSize(sizeof(xEnv));
     s->sceneID = theSceneID;
 
     iTime time;
@@ -1018,7 +1018,7 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
     if (xModelLookupCount)
     {
         xModelLookupList =
-            (xModelPipeLookup*)xMemAlloc(xModelLookupCount * sizeof(xModelPipeLookup));
+            (xModelPipeLookup*)xMemAllocSize(xModelLookupCount * sizeof(xModelPipeLookup));
 
         xModelLookupCount = 0;
 
@@ -1085,7 +1085,7 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
 
     if (s->num_base)
     {
-        s->base = (xBase**)xMemAlloc(s->num_base * sizeof(xBase*));
+        s->base = (xBase**)xMemAllocSize(s->num_base * sizeof(xBase*));
     }
     else
     {
@@ -1127,7 +1127,7 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
         }
     }
 
-    s->update_base = (xBase**)xMemAlloc(s->num_update_base * sizeof(xBase*));
+    s->update_base = (xBase**)xMemAllocSize(s->num_update_base * sizeof(xBase*));
 
     base_idx = 0;
 
@@ -3254,7 +3254,7 @@ void zSceneRender()
 #else
 static void zSceneObjHashtableInit(int32 count)
 {
-    scobj_idbps = (IDBasePair*)xMemAlloc(count * sizeof(IDBasePair));
+    scobj_idbps = (IDBasePair*)xMemAllocSize(count * sizeof(IDBasePair));
 
     memset(scobj_idbps, 0, count * sizeof(IDBasePair));
 

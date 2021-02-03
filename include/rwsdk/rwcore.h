@@ -380,6 +380,42 @@ struct RwImage
     RwRGBA* palette;
 };
 
+#define RwImageSetStrideMacro(_image, _stride) (((_image)->stride = (_stride)), (_image))
+
+#define RwImageSetPixelsMacro(_image, _pixels) (((_image)->cpPixels = (_pixels)), (_image))
+
+#define RwImageSetPaletteMacro(_image, _palette) (((_image)->palette = (_palette)), (_image))
+
+#define RwImageGetWidthMacro(_image) ((_image)->width)
+
+#define RwImageGetHeightMacro(_image) ((_image)->height)
+
+#define RwImageGetDepthMacro(_image) ((_image)->depth)
+
+#define RwImageGetStrideMacro(_image) ((_image)->stride)
+
+#define RwImageGetPixelsMacro(_image) ((_image)->cpPixels)
+
+#define RwImageGetPaletteMacro(_image) ((_image)->palette)
+
+#define RwImageSetStride(_image, _stride) RwImageSetStrideMacro(_image, _stride)
+
+#define RwImageSetPixels(_image, _pixels) RwImageSetPixelsMacro(_image, _pixels)
+
+#define RwImageSetPalette(_image, _palette) RwImageSetPaletteMacro(_image, _palette)
+
+#define RwImageGetWidth(_image) RwImageGetWidthMacro(_image)
+
+#define RwImageGetHeight(_image) RwImageGetHeightMacro(_image)
+
+#define RwImageGetDepth(_image) RwImageGetDepthMacro(_image)
+
+#define RwImageGetStride(_image) RwImageGetStrideMacro(_image)
+
+#define RwImageGetPixels(_image) RwImageGetPixelsMacro(_image)
+
+#define RwImageGetPalette(_image) RwImageGetPaletteMacro(_image)
+
 struct RwTexDictionary
 {
     RwObject object;
