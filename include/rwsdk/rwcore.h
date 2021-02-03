@@ -5,13 +5,10 @@
 
 typedef struct _RxObjSpace3DVertex RxObjSpace3DVertex;
 
-struct RxColorUnion
+union RxColorUnion
 {
-    union
-    {
-        RwRGBA preLitColor;
-        RwRGBA color;
-    };
+    RwRGBA preLitColor;
+    RwRGBA color;
 };
 
 struct _RxObjSpace3DVertex

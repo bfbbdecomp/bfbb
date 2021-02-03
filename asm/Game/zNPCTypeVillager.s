@@ -4690,8 +4690,8 @@ lbl_80106DC8:
 /* 80106DF8 00103BF8  80 04 00 48 */	lwz r0, 0x48(r4)
 /* 80106DFC 00103BFC  28 00 00 00 */	cmplwi r0, 0
 /* 80106E00 00103C00  40 82 00 10 */	bne lbl_80106E10
-/* 80106E04 00103C04  3C 60 80 21 */	lis r3, lbl_802120B0@ha
-/* 80106E08 00103C08  38 03 20 B0 */	addi r0, r3, lbl_802120B0@l
+/* 80106E04 00103C04  3C 60 80 21 */	lis r3, AtomicDefaultRenderCallBack@ha
+/* 80106E08 00103C08  38 03 20 B0 */	addi r0, r3, AtomicDefaultRenderCallBack@l
 /* 80106E0C 00103C0C  90 04 00 48 */	stw r0, 0x48(r4)
 lbl_80106E10:
 /* 80106E10 00103C10  80 01 00 14 */	lwz r0, 0x14(r1)

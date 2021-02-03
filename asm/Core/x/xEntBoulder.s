@@ -223,8 +223,8 @@ lbl_8011F37C:
 /* 8011F3F8 0011C1F8  80 04 00 48 */	lwz r0, 0x48(r4)
 /* 8011F3FC 0011C1FC  28 00 00 00 */	cmplwi r0, 0
 /* 8011F400 0011C200  40 82 00 10 */	bne lbl_8011F410
-/* 8011F404 0011C204  3C 60 80 21 */	lis r3, lbl_802120B0@ha
-/* 8011F408 0011C208  38 03 20 B0 */	addi r0, r3, lbl_802120B0@l
+/* 8011F404 0011C204  3C 60 80 21 */	lis r3, AtomicDefaultRenderCallBack@ha
+/* 8011F408 0011C208  38 03 20 B0 */	addi r0, r3, AtomicDefaultRenderCallBack@l
 /* 8011F40C 0011C20C  90 04 00 48 */	stw r0, 0x48(r4)
 lbl_8011F410:
 /* 8011F410 0011C210  C0 02 A0 38 */	lfs f0, lbl_803CE9B8-_SDA2_BASE_(r2)

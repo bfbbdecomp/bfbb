@@ -1,7 +1,7 @@
 .include "macros.inc"
 
 .section .rodata   # 0x80252D18 - 0x80252F00
-
+.balign 8
 .global lbl_80252D18
 lbl_80252D18:
 	.incbin "baserom.dol", 0x24FCF8, 0x178

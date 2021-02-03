@@ -122,6 +122,8 @@ struct tweak_callback
     void (*convert_tweak_to_mem)(tweak_info&, void*);
 };
 
+extern uint32 gFXSurfaceFlags;
+
 void on_spawn_bubble_wall(const tweak_info& tweak);
 void zFX_SceneEnter(RpWorld* world);
 void zFX_SceneExit(RpWorld* world);

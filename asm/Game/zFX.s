@@ -272,8 +272,8 @@ lbl_80093210:
 /* 80093298 00090098  80 1E 00 48 */	lwz r0, 0x48(r30)
 /* 8009329C 0009009C  28 00 00 00 */	cmplwi r0, 0
 /* 800932A0 000900A0  40 82 00 10 */	bne lbl_800932B0
-/* 800932A4 000900A4  3C 60 80 21 */	lis r3, lbl_802120B0@ha
-/* 800932A8 000900A8  38 03 20 B0 */	addi r0, r3, lbl_802120B0@l
+/* 800932A4 000900A4  3C 60 80 21 */	lis r3, AtomicDefaultRenderCallBack@ha
+/* 800932A8 000900A8  38 03 20 B0 */	addi r0, r3, AtomicDefaultRenderCallBack@l
 /* 800932AC 000900AC  90 1E 00 48 */	stw r0, 0x48(r30)
 lbl_800932B0:
 /* 800932B0 000900B0  93 DF 00 00 */	stw r30, 0(r31)

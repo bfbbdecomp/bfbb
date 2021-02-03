@@ -15,6 +15,49 @@ struct RpMaterial
     RwInt16 pad;
 };
 
+typedef RpMaterial* (*RpMaterialCallBack)(RpMaterial* material, void* data);
+
+#define RpMaterialAddRefMacro(_material) (((_material)->refCount++), (_material))
+
+#define RpMaterialAddRefVoidMacro(_material)                                                       \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (_material)->refCount++;                                                                   \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RpMaterialSetColorMacro(_material, _color)                                                 \
+    (RwRGBAAssign(&((_material)->color), (_color)), (_material))
+
+#define RpMaterialGetColorMacro(_material) (&((_material)->color))
+
+#define RpMaterialSetSurfacePropertiesMacro(_material, _surfProps)                                 \
+    (RwSurfacePropertiesAssign(&((_material)->surfaceProps), (_surfProps)), (_material))
+
+#define RpMaterialSetSurfacePropertiesVoidMacro(_material, _surfProps)                             \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        RwSurfacePropertiesAssign(&((_material)->surfaceProps), (_surfProps));                     \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RpMaterialGetSurfacePropertiesMacro(_material) (&((_material)->surfaceProps))
+
+#define RpMaterialGetTextureMacro(_material) ((_material)->texture)
+
+#define RpMaterialAddRef(_material) RpMaterialAddRefMacro(_material)
+
+#define RpMaterialSetColor(_material, _color) RpMaterialSetColorMacro(_material, _color)
+
+#define RpMaterialGetColor(_material) RpMaterialGetColorMacro(_material)
+
+#define RpMaterialSetSurfaceProperties(_material, _surfProps)                                      \
+    RpMaterialSetSurfacePropertiesMacro(_material, _surfProps)
+
+#define RpMaterialGetSurfaceProperties(_material) RpMaterialGetSurfacePropertiesMacro(_material)
+
+#define RpMaterialGetTexture(_material) RpMaterialGetTextureMacro(_material)
+
 struct RpMaterialList
 {
     RpMaterial** materials;
@@ -268,6 +311,13 @@ typedef RpAtomic* (*RpAtomicCallBackRender)(RpAtomic* atomic);
 
 #define RpAtomicGetFlags(_atomic) RpAtomicGetFlagsMacro(_atomic)
 
+#define RpAtomicSetPipelineMacro(_atomic, _pipeline) (((_atomic)->pipeline = _pipeline), _atomic)
+
+#define RpAtomicGetPipelineMacro(_atomic, _pipeline) ((*(_pipeline) = (_atomic)->pipeline), _atomic)
+
+#define RpAtomicSetPipeline RpAtomicSetPipelineMacro
+#define RpAtomicGetPipeline RpAtomicGetPipelineMacro
+
 struct RpAtomic
 {
     RwObjectHasFrame object;
@@ -487,15 +537,6 @@ typedef RpLight* (*RpLightCallBack)(RpLight* light, void* data);
 #define RpLightSetFlags(_light, _flags) RpLightSetFlagsMacro(_light, _flags)
 
 #define RpLightGetFlags(_light) RpLightGetFlagsMacro(_light)
-
-typedef RpMaterial* (*RpMaterialCallBack)(RpMaterial* material, void* data);
-
-#define RpAtomicSetPipelineMacro(_atomic, _pipeline) (((_atomic)->pipeline = _pipeline), _atomic)
-
-#define RpAtomicGetPipelineMacro(_atomic, _pipeline) ((*(_pipeline) = (_atomic)->pipeline), _atomic)
-
-#define RpAtomicSetPipeline RpAtomicSetPipelineMacro
-#define RpAtomicGetPipeline RpAtomicGetPipelineMacro
 
 #ifdef __cplusplus
 extern "C" {
