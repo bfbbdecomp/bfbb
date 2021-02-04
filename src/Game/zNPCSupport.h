@@ -1,6 +1,8 @@
 #ifndef ZNPCSUPPORT_H
 #define ZNPCSUPPORT_H
 
+#include <types.h>
+
 void NPCWidget_Shutdown();
 void NPCSupport_Startup();
 void NPCSupport_ScenePrepare();
