@@ -170,7 +170,7 @@ void iSndUpdateSounds()
 #pragma GLOBAL_ASM("asm/Core/p2/iSnd.s", "iSndSetPitch__FUif")
 
 // func_800D2560
-void iSndStartStereo()
+void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
 {
 }
 

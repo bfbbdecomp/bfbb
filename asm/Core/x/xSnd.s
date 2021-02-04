@@ -644,112 +644,6 @@ lbl_80048980:
 /* 8004898C 0004578C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80048990 00045790  4E 80 00 20 */	blr 
 
-.global xSndUpdate__Fv
-xSndUpdate__Fv:
-/* 80048994 00045794  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80048998 00045798  7C 08 02 A6 */	mflr r0
-/* 8004899C 0004579C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800489A0 000457A0  4B FF FC F9 */	bl xSndCalculateListenerPosition__Fv
-/* 800489A4 000457A4  4B FF FB D5 */	bl xSndDelayedUpdate__Fv
-/* 800489A8 000457A8  C0 2D 8E B8 */	lfs f1, sTimeElapsed-_SDA_BASE_(r13)
-/* 800489AC 000457AC  48 00 0A 69 */	bl update_faders__Ff
-/* 800489B0 000457B0  48 08 8B C1 */	bl iSndUpdate__Fv
-/* 800489B4 000457B4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800489B8 000457B8  7C 08 03 A6 */	mtlr r0
-/* 800489BC 000457BC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800489C0 000457C0  4E 80 00 20 */	blr 
-
-.global xSndSetListenerData__F19sound_listener_typePC7xMat4x3
-xSndSetListenerData__F19sound_listener_typePC7xMat4x3:
-/* 800489C4 000457C4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800489C8 000457C8  7C 08 02 A6 */	mflr r0
-/* 800489CC 000457CC  3C A0 80 3C */	lis r5, gSnd@ha
-/* 800489D0 000457D0  54 63 30 32 */	slwi r3, r3, 6
-/* 800489D4 000457D4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800489D8 000457D8  38 05 D5 B4 */	addi r0, r5, gSnd@l
-/* 800489DC 000457DC  7C 60 1A 14 */	add r3, r0, r3
-/* 800489E0 000457E0  38 63 19 1C */	addi r3, r3, 0x191c
-/* 800489E4 000457E4  4B FC 2B 89 */	bl __as__7xMat4x3FRC7xMat4x3
-/* 800489E8 000457E8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800489EC 000457EC  7C 08 03 A6 */	mtlr r0
-/* 800489F0 000457F0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800489F4 000457F4  4E 80 00 20 */	blr 
-
-.global xSndSelectListenerMode__F24sound_listener_game_mode
-xSndSelectListenerMode__F24sound_listener_game_mode:
-/* 800489F8 000457F8  3C 80 80 3C */	lis r4, gSnd@ha
-/* 800489FC 000457FC  38 84 D5 B4 */	addi r4, r4, gSnd@l
-/* 80048A00 00045800  90 64 19 9C */	stw r3, 0x199c(r4)
-/* 80048A04 00045804  4E 80 00 20 */	blr 
-
-.global xSndExit__Fv
-xSndExit__Fv:
-/* 80048A08 00045808  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80048A0C 0004580C  7C 08 02 A6 */	mflr r0
-/* 80048A10 00045810  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80048A14 00045814  48 08 7D C5 */	bl iSndExit__Fv
-/* 80048A18 00045818  48 00 09 F1 */	bl reset_faders__Fv
-/* 80048A1C 0004581C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80048A20 00045820  7C 08 03 A6 */	mtlr r0
-/* 80048A24 00045824  38 21 00 10 */	addi r1, r1, 0x10
-/* 80048A28 00045828  4E 80 00 20 */	blr 
-
-.global xSndPlay__FUiffUiUiUi14sound_categoryf
-xSndPlay__FUiffUiUiUi14sound_categoryf:
-/* 80048A2C 0004582C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80048A30 00045830  7C 08 02 A6 */	mflr r0
-/* 80048A34 00045834  7C E9 3B 78 */	mr r9, r7
-/* 80048A38 00045838  FC A0 18 90 */	fmr f5, f3
-/* 80048A3C 0004583C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80048A40 00045840  38 E0 00 00 */	li r7, 0
-/* 80048A44 00045844  39 00 00 00 */	li r8, 0
-/* 80048A48 00045848  C0 62 87 00 */	lfs f3, lbl_803CD080-_SDA2_BASE_(r2)
-/* 80048A4C 0004584C  FC 80 18 90 */	fmr f4, f3
-/* 80048A50 00045850  48 00 00 91 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
-/* 80048A54 00045854  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80048A58 00045858  7C 08 03 A6 */	mtlr r0
-/* 80048A5C 0004585C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80048A60 00045860  4E 80 00 20 */	blr 
-
-.global xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf
-xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf:
-/* 80048A64 00045864  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80048A68 00045868  7C 08 02 A6 */	mflr r0
-/* 80048A6C 0004586C  7C E9 3B 78 */	mr r9, r7
-/* 80048A70 00045870  7C C7 33 78 */	mr r7, r6
-/* 80048A74 00045874  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80048A78 00045878  38 C0 00 00 */	li r6, 0
-/* 80048A7C 0004587C  39 00 00 00 */	li r8, 0
-/* 80048A80 00045880  48 00 00 61 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
-/* 80048A84 00045884  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80048A88 00045888  7C 08 03 A6 */	mtlr r0
-/* 80048A8C 0004588C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80048A90 00045890  4E 80 00 20 */	blr 
-
-.global xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf
-xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf:
-/* 80048A94 00045894  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80048A98 00045898  7C 08 02 A6 */	mflr r0
-/* 80048A9C 0004589C  7C E9 3B 78 */	mr r9, r7
-/* 80048AA0 000458A0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80048AA4 000458A4  54 A0 05 29 */	rlwinm. r0, r5, 0, 0x14, 0x14
-/* 80048AA8 000458A8  41 82 00 18 */	beq lbl_80048AC0
-/* 80048AAC 000458AC  7C C7 33 78 */	mr r7, r6
-/* 80048AB0 000458B0  38 C0 00 00 */	li r6, 0
-/* 80048AB4 000458B4  39 00 00 00 */	li r8, 0
-/* 80048AB8 000458B8  48 00 00 29 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
-/* 80048ABC 000458BC  48 00 00 14 */	b lbl_80048AD0
-lbl_80048AC0:
-/* 80048AC0 000458C0  7C C8 33 78 */	mr r8, r6
-/* 80048AC4 000458C4  38 C0 00 00 */	li r6, 0
-/* 80048AC8 000458C8  38 E0 00 00 */	li r7, 0
-/* 80048ACC 000458CC  48 00 00 15 */	bl xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
-lbl_80048AD0:
-/* 80048AD0 000458D0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80048AD4 000458D4  7C 08 03 A6 */	mtlr r0
-/* 80048AD8 000458D8  38 21 00 10 */	addi r1, r1, 0x10
-/* 80048ADC 000458DC  4E 80 00 20 */	blr 
-
 .global xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf
 xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf:
 /* 80048AE0 000458E0  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1201,71 +1095,6 @@ lbl_800490F4:
 /* 8004911C 00045F1C  7C 08 03 A6 */	mtlr r0
 /* 80049120 00045F20  38 21 00 70 */	addi r1, r1, 0x70
 /* 80049124 00045F24  4E 80 00 20 */	blr 
-
-.global xSndStartStereo__FUiUif
-xSndStartStereo__FUiUif:
-/* 80049128 00045F28  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8004912C 00045F2C  7C 08 02 A6 */	mflr r0
-/* 80049130 00045F30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80049134 00045F34  48 08 94 2D */	bl iSndStartStereo__FUiUif
-/* 80049138 00045F38  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004913C 00045F3C  7C 08 03 A6 */	mtlr r0
-/* 80049140 00045F40  38 21 00 10 */	addi r1, r1, 0x10
-/* 80049144 00045F44  4E 80 00 20 */	blr 
-
-.global xSndIDIsPlaying__FUi
-xSndIDIsPlaying__FUi:
-/* 80049148 00045F48  3C 80 80 3C */	lis r4, gSnd@ha
-/* 8004914C 00045F4C  38 00 00 10 */	li r0, 0x10
-/* 80049150 00045F50  38 84 D5 B4 */	addi r4, r4, gSnd@l
-/* 80049154 00045F54  38 A0 00 00 */	li r5, 0
-/* 80049158 00045F58  38 84 00 1C */	addi r4, r4, 0x1c
-/* 8004915C 00045F5C  7C 09 03 A6 */	mtctr r0
-lbl_80049160:
-/* 80049160 00045F60  80 04 00 14 */	lwz r0, 0x14(r4)
-/* 80049164 00045F64  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 80049168 00045F68  41 82 00 18 */	beq lbl_80049180
-/* 8004916C 00045F6C  80 04 00 04 */	lwz r0, 4(r4)
-/* 80049170 00045F70  7C 00 18 40 */	cmplw r0, r3
-/* 80049174 00045F74  40 82 00 0C */	bne lbl_80049180
-/* 80049178 00045F78  38 60 00 01 */	li r3, 1
-/* 8004917C 00045F7C  4E 80 00 20 */	blr 
-lbl_80049180:
-/* 80049180 00045F80  80 04 00 78 */	lwz r0, 0x78(r4)
-/* 80049184 00045F84  38 84 00 64 */	addi r4, r4, 0x64
-/* 80049188 00045F88  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 8004918C 00045F8C  41 82 00 18 */	beq lbl_800491A4
-/* 80049190 00045F90  80 04 00 04 */	lwz r0, 4(r4)
-/* 80049194 00045F94  7C 00 18 40 */	cmplw r0, r3
-/* 80049198 00045F98  40 82 00 0C */	bne lbl_800491A4
-/* 8004919C 00045F9C  38 60 00 01 */	li r3, 1
-/* 800491A0 00045FA0  4E 80 00 20 */	blr 
-lbl_800491A4:
-/* 800491A4 00045FA4  80 04 00 78 */	lwz r0, 0x78(r4)
-/* 800491A8 00045FA8  38 84 00 64 */	addi r4, r4, 0x64
-/* 800491AC 00045FAC  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 800491B0 00045FB0  41 82 00 18 */	beq lbl_800491C8
-/* 800491B4 00045FB4  80 04 00 04 */	lwz r0, 4(r4)
-/* 800491B8 00045FB8  7C 00 18 40 */	cmplw r0, r3
-/* 800491BC 00045FBC  40 82 00 0C */	bne lbl_800491C8
-/* 800491C0 00045FC0  38 60 00 01 */	li r3, 1
-/* 800491C4 00045FC4  4E 80 00 20 */	blr 
-lbl_800491C8:
-/* 800491C8 00045FC8  80 04 00 78 */	lwz r0, 0x78(r4)
-/* 800491CC 00045FCC  38 84 00 64 */	addi r4, r4, 0x64
-/* 800491D0 00045FD0  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 800491D4 00045FD4  41 82 00 18 */	beq lbl_800491EC
-/* 800491D8 00045FD8  80 04 00 04 */	lwz r0, 4(r4)
-/* 800491DC 00045FDC  7C 00 18 40 */	cmplw r0, r3
-/* 800491E0 00045FE0  40 82 00 0C */	bne lbl_800491EC
-/* 800491E4 00045FE4  38 60 00 01 */	li r3, 1
-/* 800491E8 00045FE8  4E 80 00 20 */	blr 
-lbl_800491EC:
-/* 800491EC 00045FEC  38 A5 00 03 */	addi r5, r5, 3
-/* 800491F0 00045FF0  38 84 00 64 */	addi r4, r4, 0x64
-/* 800491F4 00045FF4  42 00 FF 6C */	bdnz lbl_80049160
-/* 800491F8 00045FF8  38 60 00 00 */	li r3, 0
-/* 800491FC 00045FFC  4E 80 00 20 */	blr 
 
 .global xSndStop__FUi
 xSndStop__FUi:
@@ -1880,7 +1709,8 @@ xSndGetVol__FUi:
 .endif
 
 .section .data
-lbl_80288CA0:
+.global sDelayedSnd
+sDelayedSnd:
 	.incbin "baserom.dol", 0x285C80, 0x340
 
 .section .bss
@@ -1888,17 +1718,21 @@ lbl_802DADA0:
 	.skip 0xC00
 
 .section .sbss
-lbl_803CB3F8:
+.global sDelayedPaused
+sDelayedPaused:
 	.skip 0x4
 lbl_803CB3FC:
 	.skip 0x4
 
 .section .sdata2
-lbl_803CD078:
+.global _585
+_585:
 	.incbin "baserom.dol", 0x2B6918, 0x4
-lbl_803CD07C:
+.global _586
+_586:
 	.incbin "baserom.dol", 0x2B691C, 0x4
-lbl_803CD080:
+.global _598
+_598:
 	.incbin "baserom.dol", 0x2B6920, 0x4
 lbl_803CD084:
 	.incbin "baserom.dol", 0x2B6924, 0x4
