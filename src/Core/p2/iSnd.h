@@ -46,6 +46,7 @@ struct isound_effect
 void arq_callback(long32);
 void iSndExit();
 
+void iSndInit();
 void iSndCalcVol(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
 void iSndCalcVol3d(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo);
@@ -62,5 +63,6 @@ void iSndSceneExit();
 void sndloadcb(tag_xFile* tag);
 void iSndSetExternalCallback(uint32 (*func_ptr)());
 void iSndAXFree(_AXVPB** param1);
+void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch);
 
 #endif
