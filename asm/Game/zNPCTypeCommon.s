@@ -422,8 +422,8 @@ lbl_800EF5F8:
 /* 800EF600 000EC400  40 80 02 28 */	bge lbl_800EF828
 /* 800EF604 000EC404  48 00 02 04 */	b lbl_800EF808
 lbl_800EF608:
-/* 800EF608 000EC408  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF60C 000EC40C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF608 000EC408  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF60C 000EC40C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF610 000EC410  38 63 04 2F */	addi r3, r3, 0x42f
 /* 800EF614 000EC414  4B F5 CC 01 */	bl xStrHash__FPCc
 /* 800EF618 000EC418  38 80 00 00 */	li r4, 0
@@ -431,8 +431,8 @@ lbl_800EF608:
 /* 800EF620 000EC420  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF624 000EC424  48 00 02 0C */	b lbl_800EF830
 lbl_800EF628:
-/* 800EF628 000EC428  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF62C 000EC42C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF628 000EC428  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF62C 000EC42C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF630 000EC430  38 63 04 3F */	addi r3, r3, 0x43f
 /* 800EF634 000EC434  4B F5 CB E1 */	bl xStrHash__FPCc
 /* 800EF638 000EC438  38 80 00 00 */	li r4, 0
@@ -440,8 +440,8 @@ lbl_800EF628:
 /* 800EF640 000EC440  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF644 000EC444  48 00 01 EC */	b lbl_800EF830
 lbl_800EF648:
-/* 800EF648 000EC448  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF64C 000EC44C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF648 000EC448  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF64C 000EC44C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF650 000EC450  38 63 04 4F */	addi r3, r3, 0x44f
 /* 800EF654 000EC454  4B F5 CB C1 */	bl xStrHash__FPCc
 /* 800EF658 000EC458  38 80 00 00 */	li r4, 0
@@ -449,8 +449,8 @@ lbl_800EF648:
 /* 800EF660 000EC460  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF664 000EC464  48 00 01 CC */	b lbl_800EF830
 lbl_800EF668:
-/* 800EF668 000EC468  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF66C 000EC46C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF668 000EC468  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF66C 000EC46C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF670 000EC470  38 63 04 5F */	addi r3, r3, 0x45f
 /* 800EF674 000EC474  4B F5 CB A1 */	bl xStrHash__FPCc
 /* 800EF678 000EC478  38 80 00 00 */	li r4, 0
@@ -458,8 +458,8 @@ lbl_800EF668:
 /* 800EF680 000EC480  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF684 000EC484  48 00 01 AC */	b lbl_800EF830
 lbl_800EF688:
-/* 800EF688 000EC488  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF68C 000EC48C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF688 000EC488  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF68C 000EC48C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF690 000EC490  38 63 04 76 */	addi r3, r3, 0x476
 /* 800EF694 000EC494  4B F5 CB 81 */	bl xStrHash__FPCc
 /* 800EF698 000EC498  38 80 00 00 */	li r4, 0
@@ -467,8 +467,8 @@ lbl_800EF688:
 /* 800EF6A0 000EC4A0  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF6A4 000EC4A4  48 00 01 8C */	b lbl_800EF830
 lbl_800EF6A8:
-/* 800EF6A8 000EC4A8  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF6AC 000EC4AC  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF6A8 000EC4A8  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF6AC 000EC4AC  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF6B0 000EC4B0  38 63 04 90 */	addi r3, r3, 0x490
 /* 800EF6B4 000EC4B4  4B F5 CB 61 */	bl xStrHash__FPCc
 /* 800EF6B8 000EC4B8  38 80 00 00 */	li r4, 0
@@ -476,8 +476,8 @@ lbl_800EF6A8:
 /* 800EF6C0 000EC4C0  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF6C4 000EC4C4  48 00 01 6C */	b lbl_800EF830
 lbl_800EF6C8:
-/* 800EF6C8 000EC4C8  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF6CC 000EC4CC  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF6C8 000EC4C8  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF6CC 000EC4CC  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF6D0 000EC4D0  38 63 04 A0 */	addi r3, r3, 0x4a0
 /* 800EF6D4 000EC4D4  4B F5 CB 41 */	bl xStrHash__FPCc
 /* 800EF6D8 000EC4D8  38 80 00 00 */	li r4, 0
@@ -485,8 +485,8 @@ lbl_800EF6C8:
 /* 800EF6E0 000EC4E0  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF6E4 000EC4E4  48 00 01 4C */	b lbl_800EF830
 lbl_800EF6E8:
-/* 800EF6E8 000EC4E8  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF6EC 000EC4EC  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF6E8 000EC4E8  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF6EC 000EC4EC  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF6F0 000EC4F0  38 63 04 BA */	addi r3, r3, 0x4ba
 /* 800EF6F4 000EC4F4  4B F5 CB 21 */	bl xStrHash__FPCc
 /* 800EF6F8 000EC4F8  38 80 00 00 */	li r4, 0
@@ -494,8 +494,8 @@ lbl_800EF6E8:
 /* 800EF700 000EC500  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF704 000EC504  48 00 01 2C */	b lbl_800EF830
 lbl_800EF708:
-/* 800EF708 000EC508  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF70C 000EC50C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF708 000EC508  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF70C 000EC50C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF710 000EC510  38 63 04 D5 */	addi r3, r3, 0x4d5
 /* 800EF714 000EC514  4B F5 CB 01 */	bl xStrHash__FPCc
 /* 800EF718 000EC518  38 80 00 00 */	li r4, 0
@@ -503,8 +503,8 @@ lbl_800EF708:
 /* 800EF720 000EC520  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF724 000EC524  48 00 01 0C */	b lbl_800EF830
 lbl_800EF728:
-/* 800EF728 000EC528  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF72C 000EC52C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF728 000EC528  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF72C 000EC52C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF730 000EC530  38 63 04 E8 */	addi r3, r3, 0x4e8
 /* 800EF734 000EC534  4B F5 CA E1 */	bl xStrHash__FPCc
 /* 800EF738 000EC538  38 80 00 00 */	li r4, 0
@@ -512,8 +512,8 @@ lbl_800EF728:
 /* 800EF740 000EC540  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF744 000EC544  48 00 00 EC */	b lbl_800EF830
 lbl_800EF748:
-/* 800EF748 000EC548  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF74C 000EC54C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF748 000EC548  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF74C 000EC54C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF750 000EC550  38 63 04 FD */	addi r3, r3, 0x4fd
 /* 800EF754 000EC554  4B F5 CA C1 */	bl xStrHash__FPCc
 /* 800EF758 000EC558  38 80 00 00 */	li r4, 0
@@ -521,8 +521,8 @@ lbl_800EF748:
 /* 800EF760 000EC560  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF764 000EC564  48 00 00 CC */	b lbl_800EF830
 lbl_800EF768:
-/* 800EF768 000EC568  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF76C 000EC56C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF768 000EC568  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF76C 000EC56C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF770 000EC570  38 63 05 0F */	addi r3, r3, 0x50f
 /* 800EF774 000EC574  4B F5 CA A1 */	bl xStrHash__FPCc
 /* 800EF778 000EC578  38 80 00 00 */	li r4, 0
@@ -530,8 +530,8 @@ lbl_800EF768:
 /* 800EF780 000EC580  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF784 000EC584  48 00 00 AC */	b lbl_800EF830
 lbl_800EF788:
-/* 800EF788 000EC588  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF78C 000EC58C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF788 000EC588  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF78C 000EC58C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF790 000EC590  38 63 05 2A */	addi r3, r3, 0x52a
 /* 800EF794 000EC594  4B F5 CA 81 */	bl xStrHash__FPCc
 /* 800EF798 000EC598  38 80 00 00 */	li r4, 0
@@ -539,8 +539,8 @@ lbl_800EF788:
 /* 800EF7A0 000EC5A0  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF7A4 000EC5A4  48 00 00 8C */	b lbl_800EF830
 lbl_800EF7A8:
-/* 800EF7A8 000EC5A8  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF7AC 000EC5AC  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF7A8 000EC5A8  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF7AC 000EC5AC  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF7B0 000EC5B0  38 63 05 3F */	addi r3, r3, 0x53f
 /* 800EF7B4 000EC5B4  4B F5 CA 61 */	bl xStrHash__FPCc
 /* 800EF7B8 000EC5B8  38 80 00 00 */	li r4, 0
@@ -548,8 +548,8 @@ lbl_800EF7A8:
 /* 800EF7C0 000EC5C0  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF7C4 000EC5C4  48 00 00 6C */	b lbl_800EF830
 lbl_800EF7C8:
-/* 800EF7C8 000EC5C8  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF7CC 000EC5CC  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF7C8 000EC5C8  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF7CC 000EC5CC  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF7D0 000EC5D0  38 63 05 53 */	addi r3, r3, 0x553
 /* 800EF7D4 000EC5D4  4B F5 CA 41 */	bl xStrHash__FPCc
 /* 800EF7D8 000EC5D8  38 80 00 00 */	li r4, 0
@@ -557,8 +557,8 @@ lbl_800EF7C8:
 /* 800EF7E0 000EC5E0  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF7E4 000EC5E4  48 00 00 4C */	b lbl_800EF830
 lbl_800EF7E8:
-/* 800EF7E8 000EC5E8  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF7EC 000EC5EC  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF7E8 000EC5E8  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF7EC 000EC5EC  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF7F0 000EC5F0  38 63 05 69 */	addi r3, r3, 0x569
 /* 800EF7F4 000EC5F4  4B F5 CA 21 */	bl xStrHash__FPCc
 /* 800EF7F8 000EC5F8  38 80 00 00 */	li r4, 0
@@ -566,8 +566,8 @@ lbl_800EF7E8:
 /* 800EF800 000EC600  90 7F 02 40 */	stw r3, 0x240(r31)
 /* 800EF804 000EC604  48 00 00 2C */	b lbl_800EF830
 lbl_800EF808:
-/* 800EF808 000EC608  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800EF80C 000EC60C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800EF808 000EC608  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800EF80C 000EC60C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800EF810 000EC610  38 63 05 83 */	addi r3, r3, 0x583
 /* 800EF814 000EC614  4B F5 CA 01 */	bl xStrHash__FPCc
 /* 800EF818 000EC618  38 80 00 00 */	li r4, 0
@@ -5487,8 +5487,8 @@ lbl_800F3D44:
 /* 800F3D58 000F0B58  40 82 00 50 */	bne lbl_800F3DA8
 lbl_800F3D5C:
 /* 800F3D5C 000F0B5C  80 83 00 24 */	lwz r4, 0x24(r3)
-/* 800F3D60 000F0B60  3C 60 80 27 */	lis r3, stringBase0@ha
-/* 800F3D64 000F0B64  3B 83 8C C0 */	addi r28, r3, stringBase0@l
+/* 800F3D60 000F0B60  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
+/* 800F3D64 000F0B64  3B 83 8C C0 */	addi r28, r3, zNPCTypeCommon_strings@l
 /* 800F3D68 000F0B68  83 64 00 0C */	lwz r27, 0xc(r4)
 /* 800F3D6C 000F0B6C  48 00 00 34 */	b lbl_800F3DA0
 lbl_800F3D70:
@@ -5839,21 +5839,21 @@ AddDEVGoals__10zNPCCommonFP7xPsyche:
 ZNPC_AnimTable_Common__Fv:
 /* 800F4248 000F1048  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800F424C 000F104C  7C 08 02 A6 */	mflr r0
-/* 800F4250 000F1050  3C 60 80 27 */	lis r3, stringBase0@ha
+/* 800F4250 000F1050  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
 /* 800F4254 000F1054  38 80 00 00 */	li r4, 0
 /* 800F4258 000F1058  90 01 00 24 */	stw r0, 0x24(r1)
-/* 800F425C 000F105C  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800F425C 000F105C  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800F4260 000F1060  38 A0 00 00 */	li r5, 0
 /* 800F4264 000F1064  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 800F4268 000F1068  38 63 05 AB */	addi r3, r3, 0x5ab
 /* 800F426C 000F106C  4B F1 2A 05 */	bl xAnimTableNew__FPCcPP10xAnimTableUi
 /* 800F4270 000F1070  3C A0 80 00 */	lis r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha
-/* 800F4274 000F1074  3C 80 80 27 */	lis r4, stringBase0@ha
+/* 800F4274 000F1074  3C 80 80 27 */	lis r4, zNPCTypeCommon_strings@ha
 /* 800F4278 000F1078  38 05 6C FC */	addi r0, r5, xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l
 /* 800F427C 000F107C  7C 7F 1B 78 */	mr r31, r3
 /* 800F4280 000F1080  90 01 00 08 */	stw r0, 8(r1)
 /* 800F4284 000F1084  38 00 00 00 */	li r0, 0
-/* 800F4288 000F1088  38 84 8C C0 */	addi r4, r4, stringBase0@l
+/* 800F4288 000F1088  38 84 8C C0 */	addi r4, r4, zNPCTypeCommon_strings@l
 /* 800F428C 000F108C  38 A0 01 10 */	li r5, 0x110
 /* 800F4290 000F1090  90 01 00 0C */	stw r0, 0xc(r1)
 /* 800F4294 000F1094  38 84 05 B6 */	addi r4, r4, 0x5b6
@@ -5876,10 +5876,10 @@ ZNPC_AnimTable_Common__Fv:
 ZNPC_AnimTable_LassoGuide__Fv:
 /* 800F42D4 000F10D4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F42D8 000F10D8  7C 08 02 A6 */	mflr r0
-/* 800F42DC 000F10DC  3C 60 80 27 */	lis r3, stringBase0@ha
+/* 800F42DC 000F10DC  3C 60 80 27 */	lis r3, zNPCTypeCommon_strings@ha
 /* 800F42E0 000F10E0  38 80 00 00 */	li r4, 0
 /* 800F42E4 000F10E4  90 01 00 34 */	stw r0, 0x34(r1)
-/* 800F42E8 000F10E8  38 63 8C C0 */	addi r3, r3, stringBase0@l
+/* 800F42E8 000F10E8  38 63 8C C0 */	addi r3, r3, zNPCTypeCommon_strings@l
 /* 800F42EC 000F10EC  38 A0 00 00 */	li r5, 0
 /* 800F42F0 000F10F0  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 800F42F4 000F10F4  38 63 05 9F */	addi r3, r3, 0x59f
@@ -6360,8 +6360,8 @@ lbl_80268C74:
 	.incbin "baserom.dol", 0x265C54, 0x30
 lbl_80268CA4:
 	.incbin "baserom.dol", 0x265C84, 0x1C
-.global stringBase0
-stringBase0:
+.global zNPCTypeCommon_strings
+zNPCTypeCommon_strings:
 	.incbin "baserom.dol", 0x265CA0, 0x5C0
 
 .section .data

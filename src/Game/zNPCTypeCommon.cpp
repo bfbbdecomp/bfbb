@@ -13,7 +13,7 @@
 #include "../Core/x/xString.h"
 #include "../Core/x/xDebug.h"
 
-extern char stringBase0[];
+extern char zNPCTypeCommon_strings[];
 extern int8* g_strz_lassanim[3];
 extern int32 g_hash_lassanim[3];
 extern volatile int32 g_skipDescent;
@@ -67,7 +67,7 @@ void zNPCCommon_SceneFinish()
 {
     zNPCCommon::ConfigSceneDone();
     NPCSupport_SceneFinish();
-    xDebugRemoveTweak(stringBase0 + 0x42b);
+    xDebugRemoveTweak(zNPCTypeCommon_strings + 0x42b);
 }
 
 void zNPCCommon_SceneReset()
