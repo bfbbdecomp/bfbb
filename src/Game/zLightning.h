@@ -4,6 +4,29 @@
 #include "../Core/x/xMath3.h"
 #include "../Core/p2/iColor.h"
 
+#include "zFX.h"
+
+struct _tagLightningAdd
+{
+    uint32 type;
+    float32 setup_degrees;
+    float32 move_degrees;
+    float32 rot_radius;
+    xVec3* start;
+    xVec3* end;
+    int16 total_points;
+    int16 end_points;
+    float32 time;
+    float32 arc_height;
+    float32 thickness;
+    iColor_tag color;
+    float32 rand_radius;
+    uint32 flags;
+    float32 zeus_normal_offset;
+    float32 zeus_back_offset;
+    float32 zeus_side_offset;
+};
+
 struct _tagLightningLine
 {
     float32 unused;
@@ -64,6 +87,24 @@ struct zLightning
     float32 time_left;
     float32 time_total;
 };
+
+void lightningTweakChangeType(tweak_info& t);
+void lightningTweakStart(tweak_info& t);
+void zLightningInit();
+zLightning* FindFreeLightning();
+zLightning* zLightningAdd(_tagLightningAdd* add);
+void UpdateLightning(zLightning* l, float32 seconds);
+void zLightningUpdate(float32 seconds);
+void zLightningFunc_Render(zLightning* l);
+void zLightningShow(zLightning* l, int32 show);
+void zLightningKill(zLightning* l);
+void RenderLightning(zLightning* l);
+void zLightningRender();
+void zLightningModifyEndpoints(zLightning* l, xVec3* start, xVec3* end);
+void xDebugAddTweak(char* name, uint8* property, uint8 param_3, uint8 param_4, tweak_callback* callback, void* param_6, uint32 param_7);
+void xDebugAddFlagTweak(char* name, uint32* property, uint32 param_3, tweak_callback* callback, void* param_5, uint32 param_6);
+void xDebugAddSelectTweak(char* name, uint32* param_2, char** param_3, uint32* param_4, uint32 param_5, tweak_callback* callback, void* param_7, uint32 param_8);
+void xDebugAddTweak(char* name, int16* property, int16 param_3, int16 param_4, tweak_callback* callback, void* param_6, uint32 param_7);
 
 void zLightningInit();
 void zLightningUpdate(float32 seconds);
