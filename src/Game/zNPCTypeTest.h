@@ -19,5 +19,8 @@ struct zNPCTest : zNPCCommon
 
 void ZNPC_Test_Startup();
 void ZNPC_Test_Shutdown();
+xFactoryInst* ZNPC_Create_Test(int32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Test(xFactoryInst* inst);
+xAnimTable* ZNPC_AnimTable_Test();
 
 #endif
