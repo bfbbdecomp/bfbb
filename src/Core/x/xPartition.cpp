@@ -8,7 +8,7 @@ void xPartitionReset()
 
 _tagPartLink* PartitionGetFreeLink()
 {
-    return (_tagPartLink*)xMemAlloc(sizeof(_tagPartLink));
+    return (_tagPartLink*)xMemAllocSize(sizeof(_tagPartLink));
 }
 
 void PartitionSpaceReset(_tagPartSpace* space)
