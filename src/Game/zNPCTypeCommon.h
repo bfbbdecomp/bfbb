@@ -369,6 +369,8 @@ struct zNPCCommon : xNPCBasic
 
     zNPCCommon(int32 myType);
 
+    void VelStop();
+    static void ConfigSceneDone();
     uint32 LassoInit();
     zNPCLassoInfo* GimmeLassInfo();
     void AddDEVGoals();
@@ -540,7 +542,15 @@ struct NPCMsg
     float32 tmr_delay;
 };
 
+void zNPCCommon_ScenePrepare();
+void zNPCCommon_SceneFinish();
+void zNPCPlyrSnd_Reset();
+void zNPCPlyrSnd_Update(float32 dt);
+void zNPCCommon_SceneReset();
+void ZNPC_Destroy_Common(xFactoryInst* inst);
+void zNPCSettings_MakeDummy();
 void ZNPC_Common_Startup();
+void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();
 void zNPCCommon_EjectPhlemOnPawz();
 

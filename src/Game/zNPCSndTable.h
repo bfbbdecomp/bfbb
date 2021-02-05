@@ -52,6 +52,9 @@ struct NPCSndQueue
     float32 radius;
 };
 
+void NPCS_Startup();
+void NPCS_SndTimersReset();
+void NPCS_SndTimersUpdate(float32 dt);
 void NPCS_SndTablePrepare(NPCSndTrax* trax);
 void NPCS_Shutdown();
 
