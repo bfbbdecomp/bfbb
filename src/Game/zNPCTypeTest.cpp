@@ -1,33 +1,148 @@
 #include "zNPCTypeTest.h"
 
-#include <types.h>
+#include "../Core/x/xString.h"
+#include "../Core/x/xMath.h"
 
-// func_80135ACC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "ZNPC_Test_Startup__Fv")
+extern float32 _830_2;
+extern float32 _831_2;
+extern float32 _832_0;
+extern float32 _866_5;
+extern float32 _867_6;
 
-// func_80135B34
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "ZNPC_Test_Shutdown__Fv")
+#define ANIM_COUNT 11
 
-// func_80135B38
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "ZNPC_Create_Test__FiP10RyzMemGrowPv")
+uint32 g_hash_testanim[ANIM_COUNT] = {};
 
-// func_80135BAC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "ZNPC_Destroy_Test__FP12xFactoryInst")
+// clang-format off
+const char* g_strz_testanim[ANIM_COUNT] =
+{
+    "Unknown",
+    "Test01",
+    "Test02",
+    "Test03",
+    "Test04",
+    "Test05",
+    "Test06",
+    "Test07",
+    "Test08",
+    "Test09",
+#if 1 // needed until ZNPC_AnimTable_Test is matching
+    "Test10\0zNPCTest"
+#else
+    "Test10"
+#endif
+};
+// clang-format on
 
+void ZNPC_Test_Startup()
+{
+    for (int32 i = 0; i < ANIM_COUNT; i++)
+    {
+        g_hash_testanim[i] = xStrHash(g_strz_testanim[i]);
+    }
+}
+
+void ZNPC_Test_Shutdown()
+{
+}
+
+xFactoryInst* ZNPC_Create_Test(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCTest* inst = NULL;
+
+    switch (who)
+    {
+    case 'NTS4':
+    {
+        inst = new (who, grow) zNPCTest(who);
+        break;
+    }
+    }
+
+    return inst;
+}
+
+void ZNPC_Destroy_Test(xFactoryInst* inst)
+{
+    delete inst;
+}
+
+#ifndef NON_MATCHING
 // func_80135BD0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "ZNPC_AnimTable_Test__Fv")
+#else
+xAnimTable* ZNPC_AnimTable_Test()
+{
+    xAnimTable* table;
+    const char** names = g_strz_testanim;
 
-// func_80135D20
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "__ct__8zNPCTestFi")
+    table = xAnimTableNew(_stringBase0_84 + 78, NULL, 0);
 
-// func_80135D5C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "Reset__8zNPCTestFv")
+    for (int32 i = 1; i < ANIM_COUNT; i++)
+    {
+        xAnimTableNewState(table, names[i], 0x10, 0x1, _830_2, NULL, NULL, _831_2, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+    }
 
-// func_80135D90
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "Process__8zNPCTestFP6xScenef")
+    for (int32 i = 1; i < ANIM_COUNT; i++)
+    {
+        // non-matching: float scheduling
 
-// func_80135E64
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "SelfSetup__8zNPCTestFv")
+        if (i < ANIM_COUNT - 1)
+        {
+            xAnimTableNewTransition(table, names[i], names[i + 1], NULL, NULL, 0, 0, _831_2, _831_2,
+                                    1, 0, _832_0, NULL);
+        }
 
-// func_80135E84
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "AnimPick__8zNPCTestFi16en_NPC_GOAL_SPOTP5xGoal")
+        if (i > 1)
+        {
+            xAnimTableNewTransition(table, names[i], names[1], NULL, NULL, 0, 0, _831_2, _831_2, 1,
+                                    0, _832_0, NULL);
+        }
+    }
+
+    return table;
+}
+#endif
+
+zNPCTest::zNPCTest(int32 myType) : zNPCCommon(myType)
+{
+}
+
+void zNPCTest::Reset()
+{
+    zNPCCommon::Reset();
+
+    currentState = 0;
+}
+
+void zNPCTest::Process(xScene* xscn, float32 dt)
+{
+    transitionTimer = MAX(_866_5, transitionTimer - dt);
+
+    if (transitionTimer < _831_2)
+    {
+        transitionTimer = _867_6;
+
+        if (++currentState >= numAnimations)
+        {
+            currentState = 0;
+        }
+
+        AnimStart(g_hash_testanim[currentState + 1], 0);
+    }
+
+    zNPCCommon::Process(xscn, dt);
+}
+
+void zNPCTest::SelfSetup()
+{
+    currentState = 0;
+    numAnimations = cfg_npc->test_count;
+    transitionTimer = _867_6;
+}
+
+uint32 zNPCTest::AnimPick(int32, en_NPC_GOAL_SPOT, xGoal*)
+{
+    return g_hash_testanim[currentState + 1];
+}

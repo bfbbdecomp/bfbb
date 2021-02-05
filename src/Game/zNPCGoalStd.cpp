@@ -261,13 +261,13 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "RestoreColFlags__9xNPCBasicFv")
 
 // func_800D91D8
-uint8 xNPCBasic::ColChkFlags() const
+uint8 xNPCBasic::PhysicsFlags() const
 {
     return 0;
 }
 
 // func_800D91E0
-uint8 xNPCBasic::ColPenFlags()
+uint8 xNPCBasic::ColPenByFlags() const
 {
     return 0;
 }
@@ -279,13 +279,13 @@ uint8 xNPCBasic::ColChkByFlags() const
 }
 
 // func_800D91F0
-uint8 xNPCBasic::ColPenByFlags() const
+uint8 xNPCBasic::ColPenFlags()
 {
     return 0;
 }
 
 // func_800D91F8
-uint8 xNPCBasic::PhysicsFlags() const
+uint8 xNPCBasic::ColChkFlags() const
 {
     return 0;
 }

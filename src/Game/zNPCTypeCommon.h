@@ -9,6 +9,7 @@
 #include "../Core/x/xEnt.h"
 
 #include "zNPCSndTable.h"
+#include "zNPCSpawner.h"
 #include "zMovePoint.h"
 #include "zShrapnel.h"
 
@@ -366,7 +367,7 @@ struct zNPCCommon : xNPCBasic
     zNPCLassoInfo* lassdata;
     NPCSndQueue snd_queue[4];
 
-    zNPCCommon(int32);
+    zNPCCommon(int32 myType);
 
     uint32 LassoInit();
     zNPCLassoInfo* GimmeLassInfo();
@@ -378,6 +379,7 @@ struct zNPCCommon : xNPCBasic
     void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
     void ModelScaleSet(const xVec3* vec);
+    int32 AnimStart(uint32 animID, int32 forceRestart);
     void GiveReward();
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     int32 GetVertPos(en_mdlvert vid, xVec3* pos);
@@ -397,17 +399,22 @@ struct zNPCCommon : xNPCBasic
 
     // vTable (xNPCBasic)
 
-    void Init(xEntAsset* asset);
-    void Reset();
-    void Process(xScene* xscn, float32 dt);
-    void NewTime(xScene* xscn, float32 dt);
-    void Destroy();
+    virtual void Init(xEntAsset* asset);
+    virtual void Reset();
+    virtual void Setup();
+    virtual void Process(xScene* xscn, float32 dt);
+    virtual void BUpdate(xVec3* pos);
+    virtual void NewTime(xScene* xscn, float32 dt);
+    virtual void Move(xScene* xscn, float32 dt, xEntFrame*);
+    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+                           xBase* toParamWidget, int32* handled);
+    virtual void CollideReview();
+    virtual void Destroy();
 
     // vTable (zNPCCommon)
     virtual int32 NPCMessage(NPCMsg* mail);
     virtual void RenderExtra();
     virtual void RenderExtraPostParticles();
-    virtual void PostSetup();
     virtual void ParseINI();
     virtual void ParseLinks();
     virtual void ParseProps();
@@ -415,25 +422,29 @@ struct zNPCCommon : xNPCBasic
     virtual void SelfDestroy();
     virtual int32 IsHealthy();
     virtual int32 IsAlive();
-    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
-    virtual int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
+    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
+    virtual int32 Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     virtual void DuploOwner(zNPCCommon* duper);
-    virtual void DuploNotice();
+    virtual void DuploNotice(en_SM_NOTICES, void*);
     virtual int32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
-    virtual int32 SetCarryState();
+    virtual int32 SetCarryState(en_NPC_CARRY_STATE);
     virtual void Stun(float32 stuntime);
     virtual void SpeakBegin();
     virtual void SpeakEnd();
     virtual void SpeakStart();
     virtual void SpeakStop();
     virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
-    virtual void GetParm(en_npcparm pid, zMovePoint** val);
+    virtual void GetParm(en_npcparm pid, void* val);
     virtual void GetParmDefault(en_npcparm pid, void* val);
     virtual float32 GenShadCacheRad();
     virtual xEntDrive* PRIV_GetDriverData();
     virtual zNPCLassoInfo* PRIV_GetLassoData();
     virtual int32 LassoSetup();
+
+protected:
+    // This prevents implicit destructors from being generated in subclasses of zNPCCommon
+    ~zNPCCommon();
 };
 
 struct NPCSysEvent

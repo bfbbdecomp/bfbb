@@ -240,7 +240,7 @@ xFactory* xBehaveMgr::GetFactory()
     return this->goalFactory;
 }
 
-void zNPCCommon::PostSetup()
+void xNPCBasic::PostSetup()
 {
 }
 

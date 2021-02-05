@@ -5,7 +5,7 @@
 
 enum en_NPC_SOUND
 {
-    NPC_STYP_BOGUS = 0xfffffffe,
+    NPC_STYP_BOGUS = -2,
     NPC_STYP_LISTEND = 0,
     NPC_STYP_ENCOUNTER,
     NPC_STYP_CLANKING,
