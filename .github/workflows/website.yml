@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -17,30 +16,26 @@ jobs:
           path: bfbbdecomp
       - uses: actions/checkout@v2
         with:
-          repository: bfbbdecomp/bfbbdecomp-website
+          repository: bfbbdecomp/website
           path: website
-      
+
       - uses: actions/setup-node@v1
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
 
-      - run: |
-          pip install gitpython
-          npm install -g parcel-bundler
+      - name: Build Website
+        env:
+          OK_WEBHOOK: ${{ secrets.OK_WEBHOOK }}
+        run: |
           cd website
-          mkdir data
-          cd python
-          python progress.py
-          cd ../
-          npm install
-          npm run build-pages
+          python build.py
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
+          BRANCH: gh-pages # The branch the action should deploy to..
           FOLDER: website/dist # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
           SINGLE_COMMIT: true

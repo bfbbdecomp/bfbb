@@ -19,7 +19,7 @@ void xSurfaceInit(uint16 num_surfs)
     nsurfs = num_surfs;
     if (num_surfs != 0)
     {
-        surfs = (xSurface*)xMemAlloc(num_surfs * sizeof(xSurface));
+        surfs = (xSurface*)xMemAllocSize(num_surfs * sizeof(xSurface));
         for (int32 i = 0; i < nsurfs; i++)
         {
             surfs[i].idx = i;

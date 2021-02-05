@@ -5,7 +5,7 @@
 
 enum en_NPC_SOUND
 {
-    NPC_STYP_BOGUS = 0xfffffffe,
+    NPC_STYP_BOGUS = -2,
     NPC_STYP_LISTEND = 0,
     NPC_STYP_ENCOUNTER,
     NPC_STYP_CLANKING,
@@ -52,6 +52,9 @@ struct NPCSndQueue
     float32 radius;
 };
 
+void NPCS_Startup();
+void NPCS_SndTimersReset();
+void NPCS_SndTimersUpdate(float32 dt);
 void NPCS_SndTablePrepare(NPCSndTrax* trax);
 void NPCS_Shutdown();
 

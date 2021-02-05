@@ -106,6 +106,7 @@ $(DOL): $(ELF) | tools
 	@echo " ELF2DOL "$@
 	$S$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
 	$S$(SHA1SUM) -c bfbb.sha1 || ( rm -f main.dump; $(ASMDIFF) )
+	$Scp bfbb.map main.elf obj/ # needed for diff.py
 
 clean:
 	rm -f $(DOL) $(ELF) $(MAP) baserom.dump main.dump

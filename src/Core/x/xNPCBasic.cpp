@@ -88,13 +88,13 @@ void xNPCBasic::Init(xEntAsset* asset)
 
     if (flags1.flg_basenpc & 0x1)
     {
-        collis = (xEntCollis*)xMemAlloc(sizeof(xEntCollis));
+        collis = (xEntCollis*)xMemAllocSize(sizeof(xEntCollis));
         memset(collis, 0, sizeof(xEntCollis));
     }
 
     if ((flags1.flg_basenpc & 0x2) == 0)
     {
-        frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+        frame = (xEntFrame*)xMemAllocSize(sizeof(xEntFrame));
         memset(frame, 0, sizeof(xEntFrame));
     }
 

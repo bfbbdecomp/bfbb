@@ -352,22 +352,20 @@ uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* 
             RunSlipCheck(tran, anim, param_3));
 }
 
-#if 0
 uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.ControlOff & 0x8000)
     {
         return false;
     }
-    // not sure what this is doing, but it's almost matching.
-    // it's only using the wrong registers right now.
-    // the function is apparently 11 lines of code?
-    return in_goo & ~((-globals.player.cheat_mode | globals.player.cheat_mode) >> 0x1f);
+
+    if (globals.player.cheat_mode)
+    {
+        return false;
+    }
+
+    return in_goo;
 }
-#else
-// func_800694D0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooCheck__FP15xAnimTransitionP11xAnimSinglePv")
-#endif
 
 #if 0
 uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)

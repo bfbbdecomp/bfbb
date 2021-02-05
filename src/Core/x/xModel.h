@@ -8,6 +8,7 @@
 #include "xLightKit.h"
 #include "xSurface.h"
 #include "xMath3.h"
+#include "xMath2.h"
 
 struct xModelBucket;
 
@@ -96,6 +97,7 @@ extern int32 xModelLookupCount;
 extern xModelPipeLookup* xModelLookupList;
 extern int32 xModelInstStaticAlloc;
 
+uint32 xModelGetPipeFlags(RpAtomic* model);
 void xModelInit();
 void xModelPoolInit(uint32 count, uint32 numMatrices);
 void xModelAnimCollStart(xModelInstance& m);
@@ -104,9 +106,13 @@ xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, uint16 flags, 
                                     uint8* boneRemap);
 void xModelInstanceAttach(xModelInstance* inst, xModelInstance* parent);
 void xModelRender(xModelInstance* modelInst);
+void xModelRender2D(const xModelInstance& model, const basic_rect<float32>& r, const xVec3& from,
+                    const xVec3& to);
+void xModelSetMaterialAlpha(xModelInstance* modelInst, uint8 alpha);
 void xModelUpdate(xModelInstance* modelInst, float32 timeDelta);
 xMat4x3* xModelGetFrame(xModelInstance* modelInst);
 void xModelEval(xModelInstance* modelInst);
 void xModel_SceneExit(RpWorld* world);
+xSphere* xModelGetLocalSBound(xModelInstance* model);
 
 #endif

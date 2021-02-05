@@ -2,7 +2,7 @@
 
 ![OK](https://github.com/bfbbdecomp/bfbb/workflows/build/badge.svg)
 <a href="https://bfbbdecomp.github.io/bfbb/progress" alt="Percentage Decompiled">
-<img src="https://img.shields.io/badge/dynamic/json?color=blue&label=decompiled&query=percentage&url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json" />
+<img src="https://img.shields.io/badge/dynamic/json?color=blue&label=decompiled&query=linesPercent&url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json" />
 </a>
 <a href="https://discord.gg/Dvu2UAS">
 <img src="https://img.shields.io/discord/446321271635050506?logo=discord"

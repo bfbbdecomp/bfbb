@@ -25,8 +25,8 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     ((xGroup*)b)->asset = asset;
     if (b->linkCount)
     {
-        b->link =
-            (xLinkAsset*)((uint32*)asset + sizeof(xGroupAsset) / 4 + (uint32)((xGroup*)b)->asset->itemCount); // lwz and lhz swap here.
+        b->link = (xLinkAsset*)((uint32*)asset + sizeof(xGroupAsset) / 4 +
+                                (uint32)((xGroup*)b)->asset->itemCount); // lwz and lhz swap here.
     }
     else
     {
@@ -36,7 +36,7 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     xBase** item;
     if (numItems != 0)
     {
-        item = (xBase**)xMemAlloc(numItems << 2);
+        item = (xBase**)xMemAllocSize(numItems << 2);
     }
     else
     {
@@ -169,7 +169,8 @@ uint32 xGroup::get_any()
         return NULL;
     }
     uint32 cnt = this->last_index + 1;
-    uint32 last = (uint32)((uint32*)((uint32*)this->asset + sizeof(xGroupAsset) / 4))[this->last_index];
+    uint32 last =
+        (uint32)((uint32*)((uint32*)this->asset + sizeof(xGroupAsset) / 4))[this->last_index];
     this->last_index = cnt - (cnt / numItems) * numItems;
     return last;
 }

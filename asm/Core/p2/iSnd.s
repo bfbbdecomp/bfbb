@@ -77,14 +77,6 @@ lbl_800CFA28:
 /* 800CFA38 000CC838  38 21 00 10 */	addi r1, r1, 0x10
 /* 800CFA3C 000CC83C  4E 80 00 20 */	blr 
 
-arq_callback__FUl:
-/* 800CFA40 000CC840  88 0D 92 E8 */	lbz r0, lbl_803CBBE8-_SDA_BASE_(r13)
-/* 800CFA44 000CC844  28 00 00 00 */	cmplwi r0, 0
-/* 800CFA48 000CC848  4D 82 00 20 */	beqlr 
-/* 800CFA4C 000CC84C  38 00 00 00 */	li r0, 0
-/* 800CFA50 000CC850  90 0D 92 E0 */	stw r0, SoundFlags-_SDA_BASE_(r13)
-/* 800CFA54 000CC854  4E 80 00 20 */	blr 
-
 dump_flags__FUi:
 /* 800CFA58 000CC858  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800CFA5C 000CC85C  7C 08 02 A6 */	mflr r0
@@ -1017,27 +1009,6 @@ lbl_800D076C:
 /* 800D07D0 000CD5D0  38 21 00 60 */	addi r1, r1, 0x60
 /* 800D07D4 000CD5D4  4E 80 00 20 */	blr 
 
-.global iSndExit__Fv
-iSndExit__Fv:
-/* 800D07D8 000CD5D8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D07DC 000CD5DC  7C 08 02 A6 */	mflr r0
-/* 800D07E0 000CD5E0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D07E4 000CD5E4  38 00 00 00 */	li r0, 0
-/* 800D07E8 000CD5E8  98 0D 92 E8 */	stb r0, lbl_803CBBE8-_SDA_BASE_(r13)
-/* 800D07EC 000CD5EC  48 0E 74 E5 */	bl AXQuit
-/* 800D07F0 000CD5F0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D07F4 000CD5F4  7C 08 03 A6 */	mtlr r0
-/* 800D07F8 000CD5F8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D07FC 000CD5FC  4E 80 00 20 */	blr 
-
-.global iSndSetEnvironmentalEffect__F13isound_effect
-iSndSetEnvironmentalEffect__F13isound_effect:
-/* 800D0800 000CD600  4E 80 00 20 */	blr 
-
-.global iSndInitSceneLoaded__Fv
-iSndInitSceneLoaded__Fv:
-/* 800D0804 000CD604  4E 80 00 20 */	blr 
-
 .global iSndIsPlaying__FUi
 iSndIsPlaying__FUi:
 /* 800D0808 000CD608  28 03 00 00 */	cmplwi r3, 0
@@ -1811,37 +1782,6 @@ lbl_800D1274:
 /* 800D12D0 000CE0D0  38 21 00 50 */	addi r1, r1, 0x50
 /* 800D12D4 000CE0D4  4E 80 00 20 */	blr 
 
-iSndVolUpdate__FP13xSndVoiceInfoP5vinfo:
-/* 800D12D8 000CE0D8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D12DC 000CE0DC  7C 08 02 A6 */	mflr r0
-/* 800D12E0 000CE0E0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D12E4 000CE0E4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800D12E8 000CE0E8  7C 9F 23 78 */	mr r31, r4
-/* 800D12EC 000CE0EC  93 C1 00 08 */	stw r30, 8(r1)
-/* 800D12F0 000CE0F0  7C 7E 1B 78 */	mr r30, r3
-/* 800D12F4 000CE0F4  80 64 00 00 */	lwz r3, 0(r4)
-/* 800D12F8 000CE0F8  4B FF 5B 7D */	bl MIXUnMute
-/* 800D12FC 000CE0FC  7F C3 F3 78 */	mr r3, r30
-/* 800D1300 000CE100  4B F7 75 BD */	bl xSndInternalUpdateVoicePos__FP13xSndVoiceInfo
-/* 800D1304 000CE104  80 1E 00 14 */	lwz r0, 0x14(r30)
-/* 800D1308 000CE108  54 00 07 39 */	rlwinm. r0, r0, 0, 0x1c, 0x1c
-/* 800D130C 000CE10C  41 82 00 14 */	beq lbl_800D1320
-/* 800D1310 000CE110  7F C3 F3 78 */	mr r3, r30
-/* 800D1314 000CE114  7F E4 FB 78 */	mr r4, r31
-/* 800D1318 000CE118  4B FF FE 45 */	bl iSndCalcVol3d__FP13xSndVoiceInfoP5vinfo
-/* 800D131C 000CE11C  48 00 00 10 */	b lbl_800D132C
-lbl_800D1320:
-/* 800D1320 000CE120  7F C3 F3 78 */	mr r3, r30
-/* 800D1324 000CE124  7F E4 FB 78 */	mr r4, r31
-/* 800D1328 000CE128  4B FF FD A1 */	bl iSndCalcVol__FP13xSndVoiceInfoP5vinfo
-lbl_800D132C:
-/* 800D132C 000CE12C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D1330 000CE130  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800D1334 000CE134  83 C1 00 08 */	lwz r30, 8(r1)
-/* 800D1338 000CE138  7C 08 03 A6 */	mtlr r0
-/* 800D133C 000CE13C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D1340 000CE140  4E 80 00 20 */	blr 
-
 iSndUpdateStreams__Fv:
 /* 800D1344 000CE144  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800D1348 000CE148  7C 08 02 A6 */	mflr r0
@@ -1956,45 +1896,6 @@ lbl_800D14C8:
 /* 800D14DC 000CE2DC  7C 08 03 A6 */	mtlr r0
 /* 800D14E0 000CE2E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D14E4 000CE2E4  4E 80 00 20 */	blr 
-
-iSndUpdateSounds__Fv:
-/* 800D14E8 000CE2E8  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800D14EC 000CE2EC  7C 08 02 A6 */	mflr r0
-/* 800D14F0 000CE2F0  90 01 00 24 */	stw r0, 0x24(r1)
-/* 800D14F4 000CE2F4  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800D14F8 000CE2F8  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800D14FC 000CE2FC  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 800D1500 000CE300  88 0D 92 E8 */	lbz r0, lbl_803CBBE8-_SDA_BASE_(r13)
-/* 800D1504 000CE304  28 00 00 00 */	cmplwi r0, 0
-/* 800D1508 000CE308  41 82 00 4C */	beq lbl_800D1554
-/* 800D150C 000CE30C  3C 80 80 3D */	lis r4, voices@ha
-/* 800D1510 000CE310  3C 60 80 3C */	lis r3, gSnd@ha
-/* 800D1514 000CE314  3B C4 8A 00 */	addi r30, r4, voices@l
-/* 800D1518 000CE318  3B A0 00 00 */	li r29, 0
-/* 800D151C 000CE31C  3B E3 D5 B4 */	addi r31, r3, gSnd@l
-lbl_800D1520:
-/* 800D1520 000CE320  80 1E 00 00 */	lwz r0, 0(r30)
-/* 800D1524 000CE324  28 00 00 00 */	cmplwi r0, 0
-/* 800D1528 000CE328  41 82 00 1C */	beq lbl_800D1544
-/* 800D152C 000CE32C  38 1D 00 06 */	addi r0, r29, 6
-/* 800D1530 000CE330  7F C4 F3 78 */	mr r4, r30
-/* 800D1534 000CE334  1C 00 00 64 */	mulli r0, r0, 0x64
-/* 800D1538 000CE338  7C 7F 02 14 */	add r3, r31, r0
-/* 800D153C 000CE33C  38 63 00 1C */	addi r3, r3, 0x1c
-/* 800D1540 000CE340  4B FF FD 99 */	bl iSndVolUpdate__FP13xSndVoiceInfoP5vinfo
-lbl_800D1544:
-/* 800D1544 000CE344  3B BD 00 01 */	addi r29, r29, 1
-/* 800D1548 000CE348  3B DE 00 20 */	addi r30, r30, 0x20
-/* 800D154C 000CE34C  2C 1D 00 3A */	cmpwi r29, 0x3a
-/* 800D1550 000CE350  41 80 FF D0 */	blt lbl_800D1520
-lbl_800D1554:
-/* 800D1554 000CE354  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800D1558 000CE358  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 800D155C 000CE35C  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 800D1560 000CE360  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 800D1564 000CE364  7C 08 03 A6 */	mtlr r0
-/* 800D1568 000CE368  38 21 00 20 */	addi r1, r1, 0x20
-/* 800D156C 000CE36C  4E 80 00 20 */	blr 
 
 .global iSndUpdate__Fv
 iSndUpdate__Fv:
@@ -3096,35 +2997,6 @@ lbl_800D2548:
 /* 800D2558 000CF358  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D255C 000CF35C  4E 80 00 20 */	blr 
 
-.global iSndStartStereo__FUiUif
-iSndStartStereo__FUiUif:
-/* 800D2560 000CF360  4E 80 00 20 */	blr 
-
-.global iSndStereo__FUi
-iSndStereo__FUi:
-/* 800D2564 000CF364  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D2568 000CF368  7C 08 02 A6 */	mflr r0
-/* 800D256C 000CF36C  28 03 00 00 */	cmplwi r3, 0
-/* 800D2570 000CF370  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D2574 000CF374  40 82 00 1C */	bne lbl_800D2590
-/* 800D2578 000CF378  38 60 00 00 */	li r3, 0
-/* 800D257C 000CF37C  48 10 3D 11 */	bl OSSetSoundMode
-/* 800D2580 000CF380  3C 60 80 3C */	lis r3, gSnd@ha
-/* 800D2584 000CF384  38 00 00 00 */	li r0, 0
-/* 800D2588 000CF388  90 03 D5 B4 */	stw r0, gSnd@l(r3)
-/* 800D258C 000CF38C  48 00 00 18 */	b lbl_800D25A4
-lbl_800D2590:
-/* 800D2590 000CF390  38 60 00 01 */	li r3, 1
-/* 800D2594 000CF394  48 10 3C F9 */	bl OSSetSoundMode
-/* 800D2598 000CF398  3C 60 80 3C */	lis r3, gSnd@ha
-/* 800D259C 000CF39C  38 00 00 01 */	li r0, 1
-/* 800D25A0 000CF3A0  90 03 D5 B4 */	stw r0, gSnd@l(r3)
-lbl_800D25A4:
-/* 800D25A4 000CF3A4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D25A8 000CF3A8  7C 08 03 A6 */	mtlr r0
-/* 800D25AC 000CF3AC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D25B0 000CF3B0  4E 80 00 20 */	blr 
-
 .global iSndWaitForDeadSounds__Fv
 iSndWaitForDeadSounds__Fv:
 /* 800D25B4 000CF3B4  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -3152,10 +3024,6 @@ lbl_800D25EC:
 /* 800D2600 000CF400  7C 08 03 A6 */	mtlr r0
 /* 800D2604 000CF404  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D2608 000CF408  4E 80 00 20 */	blr 
-
-.global iSndSuspendCD__FUi
-iSndSuspendCD__FUi:
-/* 800D260C 000CF40C  4E 80 00 20 */	blr 
 
 .global iSndSceneExit__Fv
 iSndSceneExit__Fv:
@@ -3295,24 +3163,6 @@ lbl_800D27D0:
 /* 800D27DC 000CF5DC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D27E0 000CF5E0  4E 80 00 20 */	blr 
 
-iSndMessWithEA__FP9sDSPADPCM:
-/* 800D27E4 000CF5E4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D27E8 000CF5E8  7C 08 02 A6 */	mflr r0
-/* 800D27EC 000CF5EC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D27F0 000CF5F0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800D27F4 000CF5F4  7C 7F 1B 79 */	or. r31, r3, r3
-/* 800D27F8 000CF5F8  41 82 00 14 */	beq lbl_800D280C
-/* 800D27FC 000CF5FC  80 7F 00 00 */	lwz r3, 0(r31)
-/* 800D2800 000CF600  38 63 FF FF */	addi r3, r3, -1
-/* 800D2804 000CF604  48 00 00 1D */	bl SampleToNybbleAddress__FUi
-/* 800D2808 000CF608  90 7F 00 14 */	stw r3, 0x14(r31)
-lbl_800D280C:
-/* 800D280C 000CF60C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D2810 000CF610  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800D2814 000CF614  7C 08 03 A6 */	mtlr r0
-/* 800D2818 000CF618  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D281C 000CF61C  4E 80 00 20 */	blr 
-
 SampleToNybbleAddress__FUi:
 /* 800D2820 000CF620  3C 80 24 92 */	lis r4, 0x24924925@ha
 /* 800D2824 000CF624  38 04 49 25 */	addi r0, r4, 0x24924925@l
@@ -3327,11 +3177,6 @@ SampleToNybbleAddress__FUi:
 /* 800D2848 000CF648  38 63 00 02 */	addi r3, r3, 2
 /* 800D284C 000CF64C  7C 64 1A 14 */	add r3, r4, r3
 /* 800D2850 000CF650  4E 80 00 20 */	blr 
-
-sndloadcb__FP9tag_xFile:
-/* 800D2854 000CF654  38 00 00 00 */	li r0, 0
-/* 800D2858 000CF658  90 0D 92 E0 */	stw r0, SoundFlags-_SDA_BASE_(r13)
-/* 800D285C 000CF65C  4E 80 00 20 */	blr 
 
 .global iSndLoadSounds__FPv
 iSndLoadSounds__FPv:
@@ -3781,30 +3626,6 @@ lbl_800D2EA0:
 /* 800D2EB0 000CFCB0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D2EB4 000CFCB4  4E 80 00 20 */	blr 
 
-.global iSndSetExternalCallback__FPFUi_v
-iSndSetExternalCallback__FPFUi_v:
-/* 800D2EB8 000CFCB8  4E 80 00 20 */	blr 
-
-iSndMyAXFree__FPP6_AXVPB:
-/* 800D2EBC 000CFCBC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D2EC0 000CFCC0  7C 08 02 A6 */	mflr r0
-/* 800D2EC4 000CFCC4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D2EC8 000CFCC8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800D2ECC 000CFCCC  7C 7F 1B 79 */	or. r31, r3, r3
-/* 800D2ED0 000CFCD0  41 82 00 1C */	beq lbl_800D2EEC
-/* 800D2ED4 000CFCD4  80 7F 00 00 */	lwz r3, 0(r31)
-/* 800D2ED8 000CFCD8  28 03 00 00 */	cmplwi r3, 0
-/* 800D2EDC 000CFCDC  41 82 00 10 */	beq lbl_800D2EEC
-/* 800D2EE0 000CFCE0  48 0E 50 F9 */	bl AXFreeVoice
-/* 800D2EE4 000CFCE4  38 00 00 00 */	li r0, 0
-/* 800D2EE8 000CFCE8  90 1F 00 00 */	stw r0, 0(r31)
-lbl_800D2EEC:
-/* 800D2EEC 000CFCEC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D2EF0 000CFCF0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800D2EF4 000CFCF4  7C 08 03 A6 */	mtlr r0
-/* 800D2EF8 000CFCF8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D2EFC 000CFCFC  4E 80 00 20 */	blr 
-
 .global iSndSuspend__Fv
 
 iSndSuspend__Fv:
@@ -3946,7 +3767,8 @@ lbl_80312100:
 	.skip 0x40
 
 .section .sbss
-lbl_803CBBE8:
+.global soundInited
+soundInited:
 	.skip 0x4
 /* SPECULATION: link order */
 .global houston_we_have_a_problem
@@ -4002,9 +3824,11 @@ lbl_803CE188:
 .global lbl_803CE18C
 lbl_803CE18C:
 	.incbin "baserom.dol", 0x2B7A2C, 0x4
-lbl_803CE190:
+.global _1262
+_1262:
 	.incbin "baserom.dol", 0x2B7A30, 0x4
-lbl_803CE194:
+.global _1263
+_1263:
 	.incbin "baserom.dol", 0x2B7A34, 0x4
 lbl_803CE198:
 	.incbin "baserom.dol", 0x2B7A38, 0x4

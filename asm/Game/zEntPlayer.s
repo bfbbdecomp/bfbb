@@ -3353,23 +3353,6 @@ lbl_800691EC:
 /* 80069254 00066054  38 21 00 10 */	addi r1, r1, 0x10
 /* 80069258 00066058  4E 80 00 20 */	blr 
 
-GooCheck__FP15xAnimTransitionP11xAnimSinglePv:
-/* 800694D0 000662D0  3C 60 80 3C */	lis r3, globals@ha
-/* 800694D4 000662D4  38 63 05 58 */	addi r3, r3, globals@l
-/* 800694D8 000662D8  80 03 17 88 */	lwz r0, 0x1788(r3)
-/* 800694DC 000662DC  54 00 04 21 */	rlwinm. r0, r0, 0, 0x10, 0x10
-/* 800694E0 000662E0  41 82 00 0C */	beq lbl_800694EC
-/* 800694E4 000662E4  38 60 00 00 */	li r3, 0
-/* 800694E8 000662E8  4E 80 00 20 */	blr 
-lbl_800694EC:
-/* 800694EC 000662EC  80 83 1A FC */	lwz r4, 0x1afc(r3)
-/* 800694F0 000662F0  80 0D 8D A0 */	lwz r0, in_goo-_SDA_BASE_(r13)
-/* 800694F4 000662F4  7C 64 00 D0 */	neg r3, r4
-/* 800694F8 000662F8  7C 63 23 78 */	or r3, r3, r4
-/* 800694FC 000662FC  7C 63 FE 70 */	srawi r3, r3, 0x1f
-/* 80069500 00066300  7C 03 18 78 */	andc r3, r0, r3
-/* 80069504 00066304  4E 80 00 20 */	blr 
-
 GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv:
 /* 80069508 00066308  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8006950C 0006630C  7C 08 02 A6 */	mflr r0
@@ -16301,8 +16284,8 @@ lbl_800753A8:
 /* 800753D0 000721D0  80 04 00 48 */	lwz r0, 0x48(r4)
 /* 800753D4 000721D4  28 00 00 00 */	cmplwi r0, 0
 /* 800753D8 000721D8  40 82 00 10 */	bne lbl_800753E8
-/* 800753DC 000721DC  3C 60 80 21 */	lis r3, lbl_802120B0@ha
-/* 800753E0 000721E0  38 03 20 B0 */	addi r0, r3, lbl_802120B0@l
+/* 800753DC 000721DC  3C 60 80 21 */	lis r3, AtomicDefaultRenderCallBack@ha
+/* 800753E0 000721E0  38 03 20 B0 */	addi r0, r3, AtomicDefaultRenderCallBack@l
 /* 800753E4 000721E4  90 04 00 48 */	stw r0, 0x48(r4)
 lbl_800753E8:
 /* 800753E8 000721E8  A0 79 00 44 */	lhz r3, 0x44(r25)
@@ -16408,8 +16391,8 @@ lbl_80075534:
 /* 80075560 00072360  80 04 00 48 */	lwz r0, 0x48(r4)
 /* 80075564 00072364  28 00 00 00 */	cmplwi r0, 0
 /* 80075568 00072368  40 82 00 10 */	bne lbl_80075578
-/* 8007556C 0007236C  3C 60 80 21 */	lis r3, lbl_802120B0@ha
-/* 80075570 00072370  38 03 20 B0 */	addi r0, r3, lbl_802120B0@l
+/* 8007556C 0007236C  3C 60 80 21 */	lis r3, AtomicDefaultRenderCallBack@ha
+/* 80075570 00072370  38 03 20 B0 */	addi r0, r3, AtomicDefaultRenderCallBack@l
 /* 80075574 00072374  90 04 00 48 */	stw r0, 0x48(r4)
 lbl_80075578:
 /* 80075578 00072378  A0 79 00 44 */	lhz r3, 0x44(r25)
@@ -30999,10 +30982,12 @@ xMat3x3SMul__FP7xMat3x3PC7xMat3x3f:
 /* 80082BC8 0007F9C8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80082BCC 0007F9CC  4E 80 00 20 */	blr 
 
+.global SetCarryState__10zNPCCommonF18en_NPC_CARRY_STATE
 SetCarryState__10zNPCCommonF18en_NPC_CARRY_STATE:
 /* 80082BD0 0007F9D0  38 60 00 00 */	li r3, 0
 /* 80082BD4 0007F9D4  4E 80 00 20 */	blr 
 
+.global CanRope__10zNPCCommonFv
 CanRope__10zNPCCommonFv:
 /* 80082BD8 0007F9D8  80 03 01 C8 */	lwz r0, 0x1c8(r3)
 /* 80082BDC 0007F9DC  54 03 01 CE */	rlwinm r3, r0, 0, 7, 7

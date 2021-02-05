@@ -4,6 +4,7 @@ __pycache__
 tools/mwcc_compiler/*.*
 tools/elf2dol
 obj/*
+obj-expected/*
 *.asm
 *.exe
 *.dol

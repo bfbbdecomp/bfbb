@@ -68,7 +68,7 @@ namespace
         {
             if (!ent.anim_coll)
             {
-                ent.anim_coll = (xEnt::anim_coll_data*)xMemAlloc(sizeof(xEnt::anim_coll_data));
+                ent.anim_coll = (xEnt::anim_coll_data*)xMemAllocSize(sizeof(xEnt::anim_coll_data));
                 ent.anim_coll->flags = 0;
                 ent.anim_coll->verts = NULL;
             }
@@ -381,7 +381,7 @@ void xEntInitForType(xEnt* ent)
     {
         ent->pflags |= 0x1;
         ent->move = NULL;
-        ent->frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+        ent->frame = (xEntFrame*)xMemAllocSize(sizeof(xEntFrame));
 
         memset(ent->frame, 0, sizeof(xEntFrame));
 
@@ -401,7 +401,7 @@ void xEntInitForType(xEnt* ent)
     {
         ent->pflags |= 0x1;
         ent->move = NULL;
-        ent->frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+        ent->frame = (xEntFrame*)xMemAllocSize(sizeof(xEntFrame));
 
         memset(ent->frame, 0, sizeof(xEntFrame));
 
@@ -409,7 +409,7 @@ void xEntInitForType(xEnt* ent)
         ent->chkby = 0;
         ent->penby = 0;
 
-        ent->collis = (xEntCollis*)xMemAlloc(sizeof(xEntCollis));
+        ent->collis = (xEntCollis*)xMemAllocSize(sizeof(xEntCollis));
         ent->collis->chk = 0x2F;
         ent->collis->pen = 0x2E;
         ent->collis->post = 0;
@@ -418,7 +418,7 @@ void xEntInitForType(xEnt* ent)
 
     if ((ent->moreFlags & 0x20 || ent->flags & 0x2) && !ent->frame)
     {
-        ent->frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+        ent->frame = (xEntFrame*)xMemAllocSize(sizeof(xEntFrame));
 
         memset(ent->frame, 0, sizeof(xEntFrame));
     }
@@ -2001,7 +2001,7 @@ void xEntAnimateCollision(xEnt& ent, bool on)
 
         if (!ent.frame)
         {
-            ent.frame = (xEntFrame*)xMemAlloc(sizeof(xEntFrame));
+            ent.frame = (xEntFrame*)xMemAllocSize(sizeof(xEntFrame));
 
             memset(ent.frame, 0, sizeof(xEntFrame));
         }

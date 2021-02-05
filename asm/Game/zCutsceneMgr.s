@@ -371,8 +371,8 @@ lbl_80052D2C:
 /* 80052D58 0004FB58  80 04 00 48 */	lwz r0, 0x48(r4)
 /* 80052D5C 0004FB5C  28 00 00 00 */	cmplwi r0, 0
 /* 80052D60 0004FB60  40 82 00 10 */	bne lbl_80052D70
-/* 80052D64 0004FB64  3C 60 80 21 */	lis r3, lbl_802120B0@ha
-/* 80052D68 0004FB68  38 03 20 B0 */	addi r0, r3, lbl_802120B0@l
+/* 80052D64 0004FB64  3C 60 80 21 */	lis r3, AtomicDefaultRenderCallBack@ha
+/* 80052D68 0004FB68  38 03 20 B0 */	addi r0, r3, AtomicDefaultRenderCallBack@l
 /* 80052D6C 0004FB6C  90 04 00 48 */	stw r0, 0x48(r4)
 lbl_80052D70:
 /* 80052D70 0004FB70  3B DE 00 10 */	addi r30, r30, 0x10

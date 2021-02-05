@@ -22,7 +22,7 @@ void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
 
     if (asset->numPoints != 0)
     {
-        ent->nodes = (xMovePoint**)xMemAlloc(asset->numPoints * sizeof(xMovePoint*));
+        ent->nodes = (xMovePoint**)xMemAllocSize(asset->numPoints * sizeof(xMovePoint*));
     }
     else
     {

@@ -332,6 +332,18 @@ __ct__9zNPCB_SB2Fi:
 lbl_8026CBB8:
 	.incbin "baserom.dol", 0x269B98, 0x390
 
+.section .data
+.balign 8
+.global g_hash_bossanim
+g_hash_bossanim:
+	.incbin "baserom.dol", 0x296248, 0x138
+.global g_strz_bossanim
+g_strz_bossanim:
+	.incbin "baserom.dol", 0x296380, 0x138
+.global __vt__8zNPCBoss
+__vt__8zNPCBoss:
+	.incbin "baserom.dol", 0x2964B8, 0xD8
+
 .section .bss
 lbl_80324468:
 	.skip 0x170
@@ -344,6 +356,7 @@ lbl_803CBF44:
 	.skip 0x4
 
 .section .sdata2
+.balign 8
 lbl_803CED08:
 	.incbin "baserom.dol", 0x2B85A8, 0x4
 /* SPECULATION: link order */

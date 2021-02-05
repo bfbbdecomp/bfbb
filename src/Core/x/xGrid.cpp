@@ -65,7 +65,7 @@ void xGridInit(xGrid* grid, xBox* bounds, uint16 nx, uint16 nz, uint8 ingrid_id)
     }
 
     grid->maxr = xGrid_float_one_quarter * MAX(grid->csizex, grid->csizez);
-    grid->cells = (xGridBound**)xMemAlloc(nx * nz * sizeof(xGridBound*));
+    grid->cells = (xGridBound**)xMemAllocSize(nx * nz * sizeof(xGridBound*));
     memset(grid->cells, 0, sizeof(xGridBound*) * (nz * nx));
 }
 #endif

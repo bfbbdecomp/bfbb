@@ -5,8 +5,12 @@
 
 struct substr
 {
-    int8* text;
-    uint32 size;
+    const char* text;
+    ulong32 size;
+
+    static substr create(const char* text, ulong32 size);
+
+    substr& operator=(const substr&); // temp
 };
 
 // substr constructor
@@ -21,6 +25,18 @@ char* xStrTok(char* string, const char* control, char** nextoken);
 
 int32 imemcmp(void const* d1, void const* d2, ulong32 size);
 int32 icompare(const substr& s1, const substr& s2);
+
+ulong32 rskip_ws(substr& s);
+ulong32 rskip_ws(const char*& text, ulong32& size);
+bool is_ws(char c);
+const char* find_char(const substr& s, char c);
+const char* find_char(const substr& s, const substr& cs);
+const char* skip_ws(substr& s);
+const char* skip_ws(const char*& text, ulong32& size);
+ulong32 atox(const substr& s);
+ulong32 atox(const substr& s, ulong32& read_size);
+ulong32 trim_ws(substr& s);
+ulong32 trim_ws(const char*& text, ulong32& size);
 
 extern "C" {
 uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(uint32 param_1);
