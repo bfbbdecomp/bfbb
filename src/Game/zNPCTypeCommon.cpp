@@ -442,19 +442,19 @@ void zNPCCommon::DuploOwner(zNPCCommon* duper)
     npc_duplodude = duper;
 }
 
-void SpeakBegin()
+void zNPCCommon::SpeakBegin()
 {
 }
 
-void SpeakEnd()
+void zNPCCommon::SpeakEnd()
 {
 }
 
-void SpeakStart()
+void zNPCCommon::SpeakStart()
 {
 }
 
-void SpeakStop()
+void zNPCCommon::SpeakStop()
 {
 }
 
