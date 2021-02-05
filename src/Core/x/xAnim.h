@@ -169,9 +169,15 @@ xAnimTable* xAnimTableNew(const char* name, xAnimTable** linkedList, uint32 user
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, uint32 flags, uint32 userFlags,
                                float32 speed, float32* boneBlend, float32* timeSnap,
                                float32 fadeRecip, uint16* fadeOffset, void* callbackData,
-                               void (*beforeEnter)(xAnimPlay*, xAnimState*),
-                               void (*stateCallback)(xAnimState*, xAnimSingle*, void*),
-                               void (*beforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, int32));
+                               xAnimStateBeforeEnterCallback beforeEnter,
+                               xAnimStateCallback stateCallback,
+                               xAnimStateBeforeAnimMatricesCallback beforeAnimMatrices);
+xAnimTransition* xAnimTableNewTransition(xAnimTable* table, const char* source, const char* dest,
+                                         xAnimTransitionConditionalCallback conditional,
+                                         xAnimTransitionCallback callback, uint32 flags,
+                                         uint32 userFlags, float32 srcTime, float32 destTime,
+                                         uint16 priority, uint16 queuePriority, float32 blendRecip,
+                                         uint16* blendOffset);
 void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state);
 void xAnimPoolInit(xMemPool* pool, uint32 count, uint32 singles, uint32 blendFlags,
                    uint32 effectMax);

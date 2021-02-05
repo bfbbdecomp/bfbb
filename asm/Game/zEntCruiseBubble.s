@@ -10092,6 +10092,7 @@ create__5xVec3Ff:
 /* 80060020 0005CE20  38 21 00 20 */	addi r1, r1, 0x20
 /* 80060024 0005CE24  4E 80 00 20 */	blr 
 
+.global IsHealthy__10zNPCCommonFv
 IsHealthy__10zNPCCommonFv:
 /* 80060028 0005CE28  38 60 00 01 */	li r3, 1
 /* 8006002C 0005CE2C  4E 80 00 20 */	blr 

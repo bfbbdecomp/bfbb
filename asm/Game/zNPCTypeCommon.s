@@ -1250,6 +1250,7 @@ lbl_800EFFE4:
 /* 800EFFFC 000ECDFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F0000 000ECE00  4E 80 00 20 */	blr 
 
+.global Move__10zNPCCommonFP6xScenefP9xEntFrame
 Move__10zNPCCommonFP6xScenefP9xEntFrame:
 /* 800F0004 000ECE04  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F0008 000ECE08  7C 08 02 A6 */	mflr r0
@@ -3795,6 +3796,7 @@ GetParm__10zNPCCommonF10en_npcparmPP10zMovePoint:
 /* 800F2440 000EF240  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F2444 000EF244  4E 80 00 20 */	blr 
 
+.global GetParm__10zNPCCommonF10en_npcparmPv
 GetParm__10zNPCCommonF10en_npcparmPv:
 /* 800F2448 000EF248  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800F244C 000EF24C  7C 08 02 A6 */	mflr r0
@@ -3896,6 +3898,7 @@ lbl_800F25BC:
 /* 800F25C8 000EF3C8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F25CC 000EF3CC  4E 80 00 20 */	blr 
 
+.global GetParmDefault__10zNPCCommonF10en_npcparmPv
 GetParmDefault__10zNPCCommonF10en_npcparmPv:
 /* 800F25D0 000EF3D0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800F25D4 000EF3D4  7C 08 02 A6 */	mflr r0

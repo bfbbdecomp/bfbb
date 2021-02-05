@@ -1,0 +1,6 @@
+#ifndef _EXCEPTION
+#define _EXCEPTION
+
+#include <exception.h>
+
+#endif

@@ -21820,6 +21820,7 @@ XYZDstSqToPlayer__10zNPCCommonFP5xVec3:
 /* 800EC874 000E9674  38 21 00 10 */	addi r1, r1, 0x10
 /* 800EC878 000E9678  4E 80 00 20 */	blr 
 
+.global DuploNotice__10zNPCCommonF13en_SM_NOTICESPv
 DuploNotice__10zNPCCommonF13en_SM_NOTICESPv:
 /* 800EC87C 000E967C  4E 80 00 20 */	blr 
 

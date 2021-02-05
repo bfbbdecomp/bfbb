@@ -218,8 +218,21 @@ PhysicsFlags__11zNPCSubBossCFv:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8026CAA8:
 	.incbin "baserom.dol", 0x269A88, 0x110
+
+.section .data
+.balign 8
+.global g_hash_subbanim
+g_hash_subbanim:
+	.incbin "baserom.dol", 0x2960C0, 0x5C
+.global g_strz_subbanim
+g_strz_subbanim:
+	.incbin "baserom.dol", 0x29611C, 0x5C
+.global __vt__11zNPCSubBoss
+__vt__11zNPCSubBoss:
+	.incbin "baserom.dol", 0x296178, 0xD0
 
 .section .bss
 lbl_803242F8:

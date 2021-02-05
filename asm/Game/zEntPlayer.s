@@ -30982,10 +30982,12 @@ xMat3x3SMul__FP7xMat3x3PC7xMat3x3f:
 /* 80082BC8 0007F9C8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80082BCC 0007F9CC  4E 80 00 20 */	blr 
 
+.global SetCarryState__10zNPCCommonF18en_NPC_CARRY_STATE
 SetCarryState__10zNPCCommonF18en_NPC_CARRY_STATE:
 /* 80082BD0 0007F9D0  38 60 00 00 */	li r3, 0
 /* 80082BD4 0007F9D4  4E 80 00 20 */	blr 
 
+.global CanRope__10zNPCCommonFv
 CanRope__10zNPCCommonFv:
 /* 80082BD8 0007F9D8  80 03 01 C8 */	lwz r0, 0x1c8(r3)
 /* 80082BDC 0007F9DC  54 03 01 CE */	rlwinm r3, r0, 0, 7, 7

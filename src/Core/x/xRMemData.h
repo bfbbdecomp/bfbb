@@ -2,7 +2,8 @@
 #define XRMEMDATA_H
 
 #include "xBase.h"
-#include <size_t.h>
+
+#include <new>
 
 struct RyzMemGrow
 {
@@ -22,7 +23,7 @@ struct RyzMemGrow
 
 struct RyzMemData
 {
-    void* operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt);
+    void* operator new(size_t amt, int32, RyzMemGrow* growCtxt);
     void operator delete(void*);
 };
 
