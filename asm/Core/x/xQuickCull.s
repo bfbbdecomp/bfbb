@@ -69,23 +69,6 @@ lbl_8003C50C:
 /* 8003C580 00039380  D0 03 00 38 */	stfs f0, 0x38(r3)
 /* 8003C584 00039384  4E 80 00 20 */	blr 
 
-.global xQuickCullInit__FP10xQCControlPC4xBox
-xQuickCullInit__FP10xQCControlPC4xBox:
-/* 8003C588 00039388  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8003C58C 0003938C  7C 08 02 A6 */	mflr r0
-/* 8003C590 00039390  C0 24 00 0C */	lfs f1, 0xc(r4)
-/* 8003C594 00039394  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8003C598 00039398  C0 44 00 10 */	lfs f2, 0x10(r4)
-/* 8003C59C 0003939C  C0 64 00 14 */	lfs f3, 0x14(r4)
-/* 8003C5A0 000393A0  C0 84 00 00 */	lfs f4, 0(r4)
-/* 8003C5A4 000393A4  C0 A4 00 04 */	lfs f5, 4(r4)
-/* 8003C5A8 000393A8  C0 C4 00 08 */	lfs f6, 8(r4)
-/* 8003C5AC 000393AC  4B FF FE ED */	bl xQuickCullInit__FP10xQCControlffffff
-/* 8003C5B0 000393B0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8003C5B4 000393B4  7C 08 03 A6 */	mtlr r0
-/* 8003C5B8 000393B8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8003C5BC 000393BC  4E 80 00 20 */	blr 
-
 .global xQuickCullIsects__FPC7xQCDataPC7xQCData
 xQuickCullIsects__FPC7xQCDataPC7xQCData:
 /* 8003C5C0 000393C0  88 A3 00 00 */	lbz r5, 0(r3)

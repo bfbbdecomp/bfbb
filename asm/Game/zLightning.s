@@ -132,9 +132,9 @@ zLightningInit__Fv:
 /* 8009EE44 0009BC44  DB C1 00 70 */	stfd f30, 0x70(r1)
 /* 8009EE48 0009BC48  F3 C1 00 78 */	psq_st f30, 120(r1), 0, qr0
 /* 8009EE4C 0009BC4C  BE 81 00 40 */	stmw r20, 0x40(r1)
-/* 8009EE50 0009BC50  3C 80 80 2F */	lis r4, lbl_802E90C8@ha
+/* 8009EE50 0009BC50  3C 80 80 2F */	lis r4, sLightning@ha
 /* 8009EE54 0009BC54  3C 60 80 26 */	lis r3, lbl_8025CD50@ha
-/* 8009EE58 0009BC58  3B E4 90 C8 */	addi r31, r4, lbl_802E90C8@l
+/* 8009EE58 0009BC58  3B E4 90 C8 */	addi r31, r4, sLightning@l
 /* 8009EE5C 0009BC5C  38 00 00 00 */	li r0, 0
 /* 8009EE60 0009BC60  38 9F 00 00 */	addi r4, r31, 0
 /* 8009EE64 0009BC64  38 63 CD 50 */	addi r3, r3, lbl_8025CD50@l
@@ -198,7 +198,7 @@ zLightningInit__Fv:
 /* 8009EF4C 0009BD4C  28 03 00 00 */	cmplwi r3, 0
 /* 8009EF50 0009BD50  41 82 00 0C */	beq lbl_8009EF5C
 /* 8009EF54 0009BD54  80 03 00 00 */	lwz r0, 0(r3)
-/* 8009EF58 0009BD58  90 0D 8F FC */	stw r0, lbl_803CB8FC-_SDA_BASE_(r13)
+/* 8009EF58 0009BD58  90 0D 8F FC */	stw r0, sLightningRaster-_SDA_BASE_(r13)
 lbl_8009EF5C:
 /* 8009EF5C 0009BD5C  3B 9F 00 C0 */	addi r28, r31, 0xc0
 /* 8009EF60 0009BD60  3B 7F 02 00 */	addi r27, r31, 0x200
@@ -815,10 +815,10 @@ lbl_8009F1BC:
 FindFreeLightning__Fv:
 /* 8009F8D4 0009C6D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8009F8D8 0009C6D8  7C 08 02 A6 */	mflr r0
-/* 8009F8DC 0009C6DC  3C 60 80 2F */	lis r3, lbl_802E90C8@ha
+/* 8009F8DC 0009C6DC  3C 60 80 2F */	lis r3, sLightning@ha
 /* 8009F8E0 0009C6E0  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8009F8E4 0009C6E4  38 00 00 30 */	li r0, 0x30
-/* 8009F8E8 0009C6E8  38 63 90 C8 */	addi r3, r3, lbl_802E90C8@l
+/* 8009F8E8 0009C6E8  38 63 90 C8 */	addi r3, r3, sLightning@l
 /* 8009F8EC 0009C6EC  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8009F8F0 0009C6F0  3B E0 00 00 */	li r31, 0
 /* 8009F8F4 0009C6F4  7C 09 03 A6 */	mtctr r0
@@ -829,9 +829,9 @@ lbl_8009F8F8:
 /* 8009F904 0009C704  80 04 00 04 */	lwz r0, 4(r4)
 /* 8009F908 0009C708  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 8009F90C 0009C70C  40 82 00 40 */	bne lbl_8009F94C
-/* 8009F910 0009C710  3C 60 80 2F */	lis r3, lbl_802E90C8@ha
+/* 8009F910 0009C710  3C 60 80 2F */	lis r3, sLightning@ha
 /* 8009F914 0009C714  57 E0 10 3A */	slwi r0, r31, 2
-/* 8009F918 0009C718  38 63 90 C8 */	addi r3, r3, lbl_802E90C8@l
+/* 8009F918 0009C718  38 63 90 C8 */	addi r3, r3, sLightning@l
 /* 8009F91C 0009C71C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8009F920 0009C720  48 00 00 3C */	b lbl_8009F95C
 lbl_8009F924:
@@ -839,9 +839,9 @@ lbl_8009F924:
 /* 8009F928 0009C728  38 80 02 34 */	li r4, 0x234
 /* 8009F92C 0009C72C  38 A0 00 00 */	li r5, 0
 /* 8009F930 0009C730  4B F9 40 11 */	bl xMemAlloc__FUiUii
-/* 8009F934 0009C734  3C 80 80 2F */	lis r4, lbl_802E90C8@ha
+/* 8009F934 0009C734  3C 80 80 2F */	lis r4, sLightning@ha
 /* 8009F938 0009C738  57 E0 10 3A */	slwi r0, r31, 2
-/* 8009F93C 0009C73C  38 84 90 C8 */	addi r4, r4, lbl_802E90C8@l
+/* 8009F93C 0009C73C  38 84 90 C8 */	addi r4, r4, sLightning@l
 /* 8009F940 0009C740  7C 64 01 2E */	stwx r3, r4, r0
 /* 8009F944 0009C744  7C 64 00 2E */	lwzx r3, r4, r0
 /* 8009F948 0009C748  48 00 00 14 */	b lbl_8009F95C
@@ -1561,9 +1561,9 @@ zLightningUpdate__Ff:
 /* 800A035C 0009D15C  DB C1 00 40 */	stfd f30, 0x40(r1)
 /* 800A0360 0009D160  F3 C1 00 48 */	psq_st f30, 72(r1), 0, qr0
 /* 800A0364 0009D164  BE E1 00 1C */	stmw r23, 0x1c(r1)
-/* 800A0368 0009D168  3C 60 80 2F */	lis r3, lbl_802E90C8@ha
+/* 800A0368 0009D168  3C 60 80 2F */	lis r3, sLightning@ha
 /* 800A036C 0009D16C  FF C0 08 90 */	fmr f30, f1
-/* 800A0370 0009D170  3B C3 90 C8 */	addi r30, r3, lbl_802E90C8@l
+/* 800A0370 0009D170  3B C3 90 C8 */	addi r30, r3, sLightning@l
 /* 800A0374 0009D174  3A E0 00 00 */	li r23, 0
 /* 800A0378 0009D178  3B FE 00 00 */	addi r31, r30, 0
 lbl_800A037C:
@@ -1772,9 +1772,9 @@ zLightningFunc_Render__FP10zLightning:
 /* 800A0678 0009D478  F3 61 00 E8 */	psq_st f27, 232(r1), 0, qr0
 /* 800A067C 0009D47C  BD C1 00 98 */	stmw r14, 0x98(r1)
 /* 800A0680 0009D480  7C 6F 1B 78 */	mr r15, r3
-/* 800A0684 0009D484  3C 60 80 2F */	lis r3, lbl_802E90C8@ha
+/* 800A0684 0009D484  3C 60 80 2F */	lis r3, sLightning@ha
 /* 800A0688 0009D488  C0 2F 00 2C */	lfs f1, 0x2c(r15)
-/* 800A068C 0009D48C  3B C3 90 C8 */	addi r30, r3, lbl_802E90C8@l
+/* 800A068C 0009D48C  3B C3 90 C8 */	addi r30, r3, sLightning@l
 /* 800A0690 0009D490  C0 02 92 A8 */	lfs f0, lbl_803CDC28-_SDA2_BASE_(r2)
 /* 800A0694 0009D494  C3 C2 92 30 */	lfs f30, lbl_803CDBB0-_SDA2_BASE_(r2)
 /* 800A0698 0009D498  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -2956,7 +2956,7 @@ zLightningRender__Fv:
 /* 800A1800 0009E600  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800A1804 0009E604  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800A1808 0009E608  93 C1 00 08 */	stw r30, 8(r1)
-/* 800A180C 0009E60C  80 8D 8F FC */	lwz r4, lbl_803CB8FC-_SDA_BASE_(r13)
+/* 800A180C 0009E60C  80 8D 8F FC */	lwz r4, sLightningRaster-_SDA_BASE_(r13)
 /* 800A1810 0009E610  28 04 00 00 */	cmplwi r4, 0
 /* 800A1814 0009E614  41 82 00 0C */	beq lbl_800A1820
 /* 800A1818 0009E618  38 60 00 01 */	li r3, 1
@@ -2968,9 +2968,9 @@ lbl_800A1820:
 /* 800A182C 0009E62C  38 60 00 0B */	li r3, 0xb
 /* 800A1830 0009E630  38 80 00 02 */	li r4, 2
 /* 800A1834 0009E634  48 18 DF A9 */	bl RwRenderStateSet
-/* 800A1838 0009E638  3C 60 80 2F */	lis r3, lbl_802E90C8@ha
+/* 800A1838 0009E638  3C 60 80 2F */	lis r3, sLightning@ha
 /* 800A183C 0009E63C  3B C0 00 00 */	li r30, 0
-/* 800A1840 0009E640  3B E3 90 C8 */	addi r31, r3, lbl_802E90C8@l
+/* 800A1840 0009E640  3B E3 90 C8 */	addi r31, r3, sLightning@l
 lbl_800A1844:
 /* 800A1844 0009E644  80 7F 00 00 */	lwz r3, 0(r31)
 /* 800A1848 0009E648  28 03 00 00 */	cmplwi r3, 0
@@ -2991,28 +2991,6 @@ lbl_800A1864:
 /* 800A1880 0009E680  7C 08 03 A6 */	mtlr r0
 /* 800A1884 0009E684  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A1888 0009E688  4E 80 00 20 */	blr 
-
-.global zLightningShow__FP10zLightningi
-zLightningShow__FP10zLightningi:
-/* 800A188C 0009E68C  2C 04 00 00 */	cmpwi r4, 0
-/* 800A1890 0009E690  41 82 00 14 */	beq lbl_800A18A4
-/* 800A1894 0009E694  80 03 00 04 */	lwz r0, 4(r3)
-/* 800A1898 0009E698  60 00 00 40 */	ori r0, r0, 0x40
-/* 800A189C 0009E69C  90 03 00 04 */	stw r0, 4(r3)
-/* 800A18A0 0009E6A0  4E 80 00 20 */	blr 
-lbl_800A18A4:
-/* 800A18A4 0009E6A4  80 03 00 04 */	lwz r0, 4(r3)
-/* 800A18A8 0009E6A8  54 00 06 B0 */	rlwinm r0, r0, 0, 0x1a, 0x18
-/* 800A18AC 0009E6AC  90 03 00 04 */	stw r0, 4(r3)
-/* 800A18B0 0009E6B0  4E 80 00 20 */	blr 
-
-.global zLightningKill__FP10zLightning
-zLightningKill__FP10zLightning:
-/* 800A18B4 0009E6B4  80 83 00 04 */	lwz r4, 4(r3)
-/* 800A18B8 0009E6B8  38 00 FE FE */	li r0, -258
-/* 800A18BC 0009E6BC  7C 80 00 38 */	and r0, r4, r0
-/* 800A18C0 0009E6C0  90 03 00 04 */	stw r0, 4(r3)
-/* 800A18C4 0009E6C4  4E 80 00 20 */	blr 
 
 .global zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3
 zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3:
@@ -3312,22 +3290,6 @@ lbl_800A1CE4:
 /* 800A1D00 0009EB00  38 21 00 80 */	addi r1, r1, 0x80
 /* 800A1D04 0009EB04  4E 80 00 20 */	blr 
 
-.global xDebugAddTweak__FPCcPUcUcUcPC14tweak_callbackPvUi
-xDebugAddTweak__FPCcPUcUcUcPC14tweak_callbackPvUi:
-/* 800A1D08 0009EB08  4E 80 00 20 */	blr 
-
-.global xDebugAddFlagTweak__FPCcPUiUiPC14tweak_callbackPvUi
-xDebugAddFlagTweak__FPCcPUiUiPC14tweak_callbackPvUi:
-/* 800A1D0C 0009EB0C  4E 80 00 20 */	blr 
-
-.global xDebugAddSelectTweak__FPCcPUiPPCcPCUiUiPC14tweak_callbackPvUi
-xDebugAddSelectTweak__FPCcPUiPPCcPCUiUiPC14tweak_callbackPvUi:
-/* 800A1D10 0009EB10  4E 80 00 20 */	blr 
-
-.global xDebugAddTweak__FPCcPsssPC14tweak_callbackPvUi
-xDebugAddTweak__FPCcPsssPC14tweak_callbackPvUi:
-/* 800A1D14 0009EB14  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata
@@ -3335,7 +3297,8 @@ lbl_8025CD50:
 	.incbin "baserom.dol", 0x259D30, 0x4C8
 
 .section .bss
-lbl_802E90C8:
+.global sLightning
+sLightning:
 	.skip 0x5E8
 lbl_802E96B0:
 	.skip 0x28
@@ -3351,7 +3314,8 @@ lbl_802E9790:
 .section .sbss
 lbl_803CB8F8:
 	.skip 0x4
-lbl_803CB8FC:
+.global sLightningRaster
+sLightningRaster:
 	.skip 0x4
 lbl_803CB900:
 	.skip 0x4

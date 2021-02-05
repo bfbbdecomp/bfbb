@@ -2,8 +2,36 @@
 #define XPARTITION_H
 
 #include <types.h>
+#include "xMath3.h"
+
+struct _tagPartLink
+{
+    void* data;
+    _tagPartLink* next;
+};
+
+struct _tagPartSpace
+{
+    int32 total;
+    _tagPartLink head;
+};
+
+struct _tagPartition
+{
+    xVec3 min;
+    xVec3 max;
+    xVec3 space_dim;
+    int32 total_x;
+    int32 total_y;
+    int32 total_z;
+    _tagPartSpace* space;
+    _tagPartSpace global;
+};
 
 void xPartitionReset();
-void PartitionGetFreeLink();
+_tagPartLink* PartitionGetFreeLink();
+void PartitionSpaceReset(_tagPartSpace* space);
+void PartitionSpaceInsert(_tagPartSpace* space, void* data);
+int32 xPartitionGetTrueIdx(_tagPartition* part, int32 x_spaces, int32 y_spaces, int32 z_spaces);
 
 #endif
