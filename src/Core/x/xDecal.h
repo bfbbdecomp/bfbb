@@ -38,19 +38,17 @@ struct xDecalEmitter
 {
     struct config
     {
-        struct texture_data
+        uint32 flags;
+        float32 life_time;
+        uint32 blend_src;
+        uint32 blend_dst;
+        struct
         {
             xVec2 uv[2];
             uint8 rows;
             uint8 cols;
             texture_mode mode;
-        };
-
-        uint32 flags;
-        float32 life_time;
-        uint32 blend_src;
-        uint32 blend_dst;
-        texture_data texture;
+        } texture;
     };
 
     struct static_queue
@@ -62,17 +60,15 @@ struct xDecalEmitter
         unit_data* _buffer;
     };
 
-    struct tex_data
+    config cfg;
+    struct
     {
         RwTexture* asset;
         uint32 units;
         xVec2 size;
         xVec2 isize;
         int32 prev;
-    };
-
-    config cfg;
-    tex_data texture;
+    } texture;
     static_queue units;
     curve_node* curve;
     uint32 curve_size;

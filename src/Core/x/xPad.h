@@ -94,9 +94,17 @@ struct _tagxPad
 #define XPAD_BUTTON_Z 0x100000
 
 extern _tagxPad mPad[4];
+extern _tagxRumble mRumbleList[32];
+extern _tagxPad* gPlayerPad;
 
+int32 xPadInit();
+_tagxPad* xPadEnable(int32 idx);
 void xPadRumbleEnable(int32 idx, int32 enable);
 int32 xPadUpdate(int32 idx, float32 time_passed);
+void xPadNormalizeAnalog(_tagxPad& pad, int32 inner_zone, int32 outer_zone);
+void xPadKill();
+_tagxRumble* xPadGetRumbleSlot();
+void xPadDestroyRumbleChain(_tagxPad* pad);
 void xPadDestroyRumbleChain(int32 idx);
 int32 xPadAddRumble(int32 idx, _tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
 
