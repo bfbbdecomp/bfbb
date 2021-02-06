@@ -46,7 +46,8 @@ struct xBox;
 void xQuickCullInit(const xBox* box);
 void xQuickCullInit(xQCControl* ctrl, const xBox* box);
 
-void xQuickCullInit(xQCControl* ctrl, float32 xmin, float32 ymin, float32 zmin, float32 xmax, float32 ymax, float32 zmax);
+void xQuickCullInit(xQCControl* ctrl, float32 xmin, float32 ymin, float32 zmin, float32 xmax,
+                    float32 ymax, float32 zmax);
 void xQuickCullInit(xQCControl* ctrl, const xBox* box);
 int32 xQuickCullIsects(const xQCData* a, const xQCData* b);
 void xQuickCullForBound(xQCControl* ctrl, xQCData* q, const xBound* b);

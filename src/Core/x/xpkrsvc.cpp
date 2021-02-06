@@ -27,16 +27,19 @@
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_SetActive__FP19st_PACKER_READ_DATA13en_LAYER_TYPE")
 
 // func_800398AC
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_parse_TOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_parse_TOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
 
 // func_80039A18
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_LoadStep_Async__Fv")
 
 // func_80039C90
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_LayerMemReserve__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_LayerMemReserve__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
 
 // func_80039D88
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_LayerMemRelease__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_LayerMemRelease__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
 
 // func_80039E68
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_drv_guardLayer__FP19st_PACKER_LTOC_NODE")
@@ -51,7 +54,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_layerTypeNeedsXForm__F13en_LAYER_TYPE")
 
 // func_80039EFC
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_findNextLayerToLoad__FPP19st_PACKER_READ_DATAPP19st_PACKER_LTOC_NODE")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_findNextLayerToLoad__FPP19st_PACKER_READ_DATAPP19st_PACKER_LTOC_NODE")
 
 // func_80039FEC
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_updateLayerAssets__FP19st_PACKER_LTOC_NODE")
@@ -99,16 +103,19 @@
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_GetBaseSector__FP19st_PACKER_READ_DATA")
 
 // func_8003A654
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_GetAssetInfo__FP19st_PACKER_READ_DATAUiP20st_PKR_ASSET_TOCINFO")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_GetAssetInfo__FP19st_PACKER_READ_DATAUiP20st_PKR_ASSET_TOCINFO")
 
 // func_8003A720
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_GetAssetInfoByType__FP19st_PACKER_READ_DATAUiiP20st_PKR_ASSET_TOCINFO")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_GetAssetInfoByType__FP19st_PACKER_READ_DATAUiiP20st_PKR_ASSET_TOCINFO")
 
 // func_8003A824
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_PkgHasAsset__FP19st_PACKER_READ_DATAUi")
 
 // func_8003A89C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_FRIEND_assetIsGameDup__FUiPC19st_PACKER_READ_DATAiUiUiPc")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "PKR_FRIEND_assetIsGameDup__FUiPC19st_PACKER_READ_DATAiUiUiPc")
 
 // func_8003AA28
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_makepool_anode__FP19st_PACKER_READ_DATAi")
@@ -153,7 +160,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PMOD__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
 
 // func_8003B108
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc")
 
 // func_8003B3E0
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PLAT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
@@ -171,7 +179,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_AHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
 
 // func_8003BA24
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_ADBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_ATOC_NODE")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "LOD_r_ADBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_ATOC_NODE")
 
 // func_8003BB28
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LTOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
@@ -183,7 +192,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
 
 // func_8003BDE8
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LDBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
+                   "LOD_r_LDBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
 
 // func_8003BE48
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_STRM__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")

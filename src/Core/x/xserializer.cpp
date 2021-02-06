@@ -99,31 +99,44 @@
 #pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "XSER_get_client__FUi")
 
 // func_800439FC
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE")
 
 // func_80043B38
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_svinfo_ver__FPvP17st_XSAVEGAME_DATAPiPi")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSER_xsgclt_svinfo_ver__FPvP17st_XSAVEGAME_DATAPiPi")
 
 // func_80043B4C
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
 
 // func_80043B8C
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xserializer.s",                                                                    \
+    "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
 
 // func_80043BF0
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_svinfo_clt__FPvP17st_XSAVEGAME_DATAPiPi")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSER_xsgclt_svinfo_clt__FPvP17st_XSAVEGAME_DATAPiPi")
 
 // func_80043C08
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
 
 // func_80043C60
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xserializer.s",                                                                    \
+    "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
 
 // func_80043CD0
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_svinfo_fill__FPvP17st_XSAVEGAME_DATAPiPi")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSER_xsgclt_svinfo_fill__FPvP17st_XSAVEGAME_DATAPiPi")
 
 // func_80043DF8
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
+#pragma GLOBAL_ASM("asm/Core/x/xserializer.s",                                                     \
+                   "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
 
 // func_80043E4C
-#pragma GLOBAL_ASM("asm/Core/x/xserializer.s", "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xserializer.s",                                                                    \
+    "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")

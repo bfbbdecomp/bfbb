@@ -14,22 +14,22 @@
 
 enum WallJumpViewState
 {
-	WJVS_DISABLED,
-	WJVS_DISABLING,
-	WJVS_ENABLED,
-	WJVS_ENABLING
+    WJVS_DISABLED,
+    WJVS_DISABLING,
+    WJVS_ENABLED,
+    WJVS_ENABLING
 };
 
 enum camera_owner_enum
 {
-	CO_BOULDER = 0x1,
-	CO_CRUISE_BUBBLE,
-	CO_BUNGEE = 0x4,
-	CO_BOSS = 0x8,
-	CO_OOB = 0x10,
-	CO_ZIPLINE = 0x20,
-	CO_TURRET = 0x40,
-	CO_REWARDANIM = 0x80
+    CO_BOULDER = 0x1,
+    CO_CRUISE_BUBBLE,
+    CO_BUNGEE = 0x4,
+    CO_BOSS = 0x8,
+    CO_OOB = 0x10,
+    CO_ZIPLINE = 0x20,
+    CO_TURRET = 0x40,
+    CO_REWARDANIM = 0x80
 };
 
 // extern int8 buffer[16];
@@ -156,7 +156,7 @@ void zCameraReset(xCamera* cam)
     wall_jump_enabled = WJVS_DISABLED;
     lassocam_enabled = false;
     stop_track = 0;
-    zcam_mintgtheight = zCamera_f_n1_0_e38; 
+    zcam_mintgtheight = zCamera_f_n1_0_e38;
 
     xCameraSetFOV(cam, zCamera_f_75_0);
     zCameraTweakGlobal_Update(zCamera_f_0_0);
@@ -198,7 +198,6 @@ float32 _GetCurrentH()
     }
 
     return zCameraTweakGlobal_GetH();
-    
 }
 
 float32 GetCurrentD()
@@ -246,7 +245,7 @@ void zCameraConversUpdate(xCamera* cam, float32 dt)
         zcam_tmr = zCamera_f_0_0;
         return;
     }
-    
+
     // zCamera_f_1_0 should use f1 instead of f2
     if ((dt / zcam_tmr) > zCamera_f_1_0)
     {
@@ -278,26 +277,26 @@ void zCameraConversUpdate(xCamera* cam, float32 dt)
 
 float32 TranSpeed(zFlyKey keys[])
 {
-    return zCamera_f_30_0 * xVec3Dist((xVec3*) &keys[0].matrix[9], (xVec3*) &keys[1].matrix[9]);
+    return zCamera_f_30_0 * xVec3Dist((xVec3*)&keys[0].matrix[9], (xVec3*)&keys[1].matrix[9]);
 }
 
 float32 MatrixSpeed(zFlyKey keys[])
 {
-    float32 dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[0], (xVec3*) &keys[1].matrix[0]));
-    float32 dot2 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[3], (xVec3*) &keys[1].matrix[3]));
+    float32 dot1 = iabs(xVec3Dot((xVec3*)&keys[0].matrix[0], (xVec3*)&keys[1].matrix[0]));
+    float32 dot2 = iabs(xVec3Dot((xVec3*)&keys[0].matrix[3], (xVec3*)&keys[1].matrix[3]));
 
     // dot1 = max(dot1, dot2)
     if (dot2 > dot1)
     {
-        dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[3], (xVec3*) &keys[1].matrix[3]));
+        dot1 = iabs(xVec3Dot((xVec3*)&keys[0].matrix[3], (xVec3*)&keys[1].matrix[3]));
     }
 
-    dot2 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[6], (xVec3*) &keys[1].matrix[6]));
+    dot2 = iabs(xVec3Dot((xVec3*)&keys[0].matrix[6], (xVec3*)&keys[1].matrix[6]));
 
     // dot1 = max(dot1, dot2)
     if (dot2 > dot1)
     {
-        dot1 = iabs(xVec3Dot((xVec3*) &keys[0].matrix[6], (xVec3*) &keys[1].matrix[6]));
+        dot1 = iabs(xVec3Dot((xVec3*)&keys[0].matrix[6], (xVec3*)&keys[1].matrix[6]));
     }
 
     // m = max(1.0, dot1)
@@ -335,7 +334,7 @@ void zCameraFlyStart(uint32 assetID)
     {
         return;
     }
-    
+
     // weird register use
     zcam_fly = 1;
     zcam_flypaused = 0;
@@ -347,7 +346,7 @@ void zCameraFlyStart(uint32 assetID)
 
     zEntPlayerControlOff(CONTROL_OWNER_FLY_CAM);
     xScrFxLetterbox(1);
-    
+
     zcam_backupcam = globals.camera;
 
     if (zCamera_FlyOnly() == 0)
@@ -375,7 +374,6 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
 {
     if (zcam_bbounce != 0)
     {
-    
         if (zcam_highbounce != 0)
         {
             dgoal = GetCurrentD();
@@ -391,8 +389,8 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
         if (zcam_longbounce != 0)
         {
             float32 len = xsqrt(zcam_playervel->x * zcam_playervel->x +
-                            zcam_playervel->y * zcam_playervel->y +
-                            zcam_playervel->z * zcam_playervel->z);
+                                zcam_playervel->y * zcam_playervel->y +
+                                zcam_playervel->z * zcam_playervel->z);
 
             bool lenValid = false;
             if (zcam_playervel != NULL)
@@ -405,21 +403,25 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
 
             if (lenValid)
             {
-                newPitchGoal = (cam->mat.at.x * zcam_playervel->x +
-                        cam->mat.at.y * zcam_playervel->y +
-                        cam->mat.at.z * zcam_playervel->z) / len;
+                newPitchGoal =
+                    (cam->mat.at.x * zcam_playervel->x + cam->mat.at.y * zcam_playervel->y +
+                     cam->mat.at.z * zcam_playervel->z) /
+                    len;
                 newPitchGoal = zCamera_f_0_0 < newPitchGoal ? zCamera_f_0_0 : newPitchGoal;
                 newPitchGoal = -newPitchGoal;
             }
-            else {
+            else
+            {
                 newPitchGoal = zCamera_f_0_0;
             }
 
             if (zcam_near != 0)
             {
-                newPitchGoal = zCamera_f_3_141 * (zCamera_f_20_0 * newPitchGoal + zCamera_f_20_0) / zCamera_f_180_0;
+                newPitchGoal = zCamera_f_3_141 * (zCamera_f_20_0 * newPitchGoal + zCamera_f_20_0) /
+                               zCamera_f_180_0;
             }
-            else {
+            else
+            {
                 newPitchGoal = zCamera_f_0_523;
             }
 
@@ -435,7 +437,7 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
             {
                 newPitchGoal = zCamera_f_0_523;
             }
-            
+
             pitch_goal = newPitchGoal;
         }
         return;
@@ -499,7 +501,7 @@ void zCameraSetLongbounce(int32 lbounce)
     {
         zcam_lbbounce = 0;
     }
-    
+
     zcam_longbounce = lbounce;
     // li r0 happens too early
     zcam_highbounce = 0;
@@ -516,7 +518,7 @@ void zCameraSetHighbounce(int32 lbounce)
     {
         zcam_lbbounce = 0;
     }
-    
+
     zcam_highbounce = lbounce;
     // li r0 happens too early
     zcam_longbounce = 0;

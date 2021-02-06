@@ -74,7 +74,8 @@ int32 xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA* xsgdata, int32 tidx);
 int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx);
 int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode);
 int32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, int8 files[][64]);
-int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx, int32* bytesNeeded, int32* availOnDisk, int32* needFile);
+int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
+                            int32* bytesNeeded, int32* availOnDisk, int32* needFile);
 int32 xSGDone(st_XSAVEGAME_DATA* xsgdata);
 
 #endif

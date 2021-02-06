@@ -5,10 +5,10 @@
 
 struct zFlyKey
 {
-	int32 frame;
-	float32 matrix[12];
-	float32 aperture[2];
-	float32 focal;
+    int32 frame;
+    float32 matrix[12];
+    float32 aperture[2];
+    float32 focal;
 
     zFlyKey& operator=(const zFlyKey&);
 };
