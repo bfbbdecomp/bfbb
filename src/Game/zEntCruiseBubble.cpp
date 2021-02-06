@@ -1,13 +1,79 @@
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xVec3.h"
+
 #include "zEntCruiseBubble.h"
 
-#include <types.h>
+#include "../Core/x/xMath3.h"
+#include "../Core/x/xString.h"
+#include "../Core/x/xVec3.h"
 
-// func_8005720C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+namespace cruise_bubble
+{
+// basic_rect screen_bounds;
+// basic_rect default_adjust;
+// int8 buffer[16];
+// int8 buffer[16];
+// tweak_group normal_tweak;
+// tweak_group cheat_tweak;
+// tweak_group* current_tweak;
+// xBase base;
+// int8* start_anim_states[37];
+// _class_36 shared;
+// xMat4x3 start_cam_mat;
+// fixed_queue missle_record;
+// xFXRibbon wake_ribbon[2];
+// xDecalEmitter explode_decal;
+// curve_node_0 wake_ribbon_curve[2];
+// curve_node_0 cheat_wake_ribbon_curve[2];
+// curve_node_1 explode_curve[3];
+// curve_node_1 cheat_explode_curve[3];
+extern sound_config sounds[4];
+// quadrant_set qzone;
+// _class_17 hud;
+// void (*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
+// uint32 (*check_anim_aim)(xAnimTransition*, xAnimSingle*, void*);
+// zGlobals globals;
+// RpAtomic* (*AtomicDefaultRenderCallBack)(RpAtomic*);
+// RpAtomic* (*custom_bubble_render)(RpAtomic*);
+// iColor_tag g_WHITE;
+// uint32 gActiveHeap;
+// _anon0 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @20state_camera_restore;
+// _anon5 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @10state_type;
+// _anon6 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @19state_camera_survey;
+// _anon1 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @19state_camera_attach;
+// _anon9 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @18state_camera_seize;
+// _anon10 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @16state_camera_aim;
+// _anon3 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @20state_missle_explode;
+// _anon7 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @16state_missle_fly;
+// _anon2 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @19state_missle_appear;
+// _anon4 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @17state_player_wait;
+// _anon8 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @17state_player_fire;
+// _anon11 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @16state_player_aim;
+// _anon12 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @17state_player_halt;
+// RpAtomic* (*gAtomicRenderCallBack)(RpAtomic*);
+// uint32 gFXSurfaceFlags;
+// xVec3 m_UnitAxisY;
+// xGrid npcs_grid;
+// xGrid colls_oso_grid;
+// xGrid colls_grid;
+// uint8 (*hazard_check)(NPCHazard&, void*);
+// xQCControl xqc_def_ctrl;
+// void (*SweptSphereHitsCameraEnt)(xScene*, xRay3*, xQCData*, xEnt*, void*);
+// void (*cb_droplet)(zFrag*, zFragAsset*);
+// uint8 (*hazard_check)(NPCHazard&, void*);
+// uint8 (*hazard_check)(NPCHazard&, void*);
+// int32 gGridIterActive;
+
+} // namespace cruise_bubble
+
+void cruise_bubble::init_sound()
+{
+    sound_config* s;
+    sound_config* end = &sounds[4];
+    for (s = &sounds[0]; s != end; ++s)
+    {
+        s->id = (s->name == 0) ? 0 : xStrHash(s->name);
+        s->handle = 0;
+    }
+}
 
 // func_80057284
 #pragma GLOBAL_ASM(                                                                                \
