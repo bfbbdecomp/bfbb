@@ -31,4 +31,20 @@ template <class T> struct tier_queue
     uint8 blocks[256];
 };
 
+template <class T> struct static_queue
+{
+    uint32 _first;
+    uint32 _size;
+    uint32 _max_size;
+    uint32 _max_size_mask;
+    T* _buffer;
+};
+
+template <class T> struct fixed_queue
+{
+    uint32 _first;
+    uint32 _last;
+    T _buffer[32];
+};
+
 #endif
