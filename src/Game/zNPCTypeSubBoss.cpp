@@ -6,10 +6,10 @@
 
 #define ANIM_COUNT 23
 
-static uint32 g_hash_subbanim[ANIM_COUNT] = {};
+uint32 g_hash_subbanim[ANIM_COUNT] = {};
 
 // clang-format off
-static const char* g_strz_subbanim[ANIM_COUNT] =
+const char* g_strz_subbanim[ANIM_COUNT] =
 {
     "Unknown",
     "Idle01",
