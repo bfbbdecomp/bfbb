@@ -1,7 +1,9 @@
 
 #include "zEntCruiseBubble.h"
+#include "zEntPlayer.h"
 
 #include "../Core/x/xMath3.h"
+#include "../Core/x/xSnd.h"
 #include "../Core/x/xString.h"
 #include "../Core/x/xVec3.h"
 
@@ -75,10 +77,34 @@ void cruise_bubble::init_sound()
     }
 }
 
-// func_80057284
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "stop_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiUi")
+void cruise_bubble::stop_sound(int32 which, uint32 handle)
+{
+    sound_config* s = &sounds[which];
+
+    if (s->id == 0)
+    {
+        if (s->streamed == 0)
+        {
+            for (int32 i = s->first; i <= s->last; ++i)
+            {
+                zEntPlayer_SNDStop((_tagePlayerSnd)i);
+            }
+        }
+        return;
+    }
+
+    if (handle == 0)
+    {
+        handle = s->handle;
+    }
+    
+    if (handle != 0)
+    {
+        xSndStop(handle);
+    }
+
+    s->handle = 0;
+}
 
 // func_80057320
 #pragma GLOBAL_ASM(                                                                                \

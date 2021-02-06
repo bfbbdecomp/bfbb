@@ -26,6 +26,7 @@ struct sound_config
 bool active();
 void render_screen();
 void init_sound();
+void stop_sound(int32 which, uint32 handle);
 
 } // namespace cruise_bubble
 

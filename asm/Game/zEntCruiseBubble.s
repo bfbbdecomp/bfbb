@@ -4,54 +4,6 @@
 
 .section .text  # 0x8005720C - 0x800609B4
 
-/* stop_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FiUi */
-stop_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiUi:
-/* 80057284 00054084  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80057288 00054088  7C 08 02 A6 */	mflr r0
-/* 8005728C 0005408C  1C A3 00 28 */	mulli r5, r3, 0x28
-/* 80057290 00054090  3C 60 80 29 */	lis r3, sounds@ha
-/* 80057294 00054094  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80057298 00054098  38 03 C4 30 */	addi r0, r3, sounds@l
-/* 8005729C 0005409C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800572A0 000540A0  7F E0 2A 14 */	add r31, r0, r5
-/* 800572A4 000540A4  93 C1 00 08 */	stw r30, 8(r1)
-/* 800572A8 000540A8  80 1F 00 20 */	lwz r0, 0x20(r31)
-/* 800572AC 000540AC  28 00 00 00 */	cmplwi r0, 0
-/* 800572B0 000540B0  40 82 00 34 */	bne lbl_800572E4
-/* 800572B4 000540B4  88 1F 00 10 */	lbz r0, 0x10(r31)
-/* 800572B8 000540B8  28 00 00 00 */	cmplwi r0, 0
-/* 800572BC 000540BC  40 82 00 4C */	bne lbl_80057308
-/* 800572C0 000540C0  83 DF 00 18 */	lwz r30, 0x18(r31)
-/* 800572C4 000540C4  48 00 00 10 */	b lbl_800572D4
-lbl_800572C8:
-/* 800572C8 000540C8  7F C3 F3 78 */	mr r3, r30
-/* 800572CC 000540CC  48 02 9F 75 */	bl zEntPlayer_SNDStop__F14_tagePlayerSnd
-/* 800572D0 000540D0  3B DE 00 01 */	addi r30, r30, 1
-lbl_800572D4:
-/* 800572D4 000540D4  80 1F 00 1C */	lwz r0, 0x1c(r31)
-/* 800572D8 000540D8  7C 1E 00 00 */	cmpw r30, r0
-/* 800572DC 000540DC  40 81 FF EC */	ble lbl_800572C8
-/* 800572E0 000540E0  48 00 00 28 */	b lbl_80057308
-lbl_800572E4:
-/* 800572E4 000540E4  28 04 00 00 */	cmplwi r4, 0
-/* 800572E8 000540E8  40 82 00 08 */	bne lbl_800572F0
-/* 800572EC 000540EC  80 9F 00 24 */	lwz r4, 0x24(r31)
-lbl_800572F0:
-/* 800572F0 000540F0  28 04 00 00 */	cmplwi r4, 0
-/* 800572F4 000540F4  41 82 00 0C */	beq lbl_80057300
-/* 800572F8 000540F8  7C 83 23 78 */	mr r3, r4
-/* 800572FC 000540FC  4B FF 1F 05 */	bl xSndStop__FUi
-lbl_80057300:
-/* 80057300 00054100  38 00 00 00 */	li r0, 0
-/* 80057304 00054104  90 1F 00 24 */	stw r0, 0x24(r31)
-lbl_80057308:
-/* 80057308 00054108  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005730C 0005410C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80057310 00054110  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80057314 00054114  7C 08 03 A6 */	mtlr r0
-/* 80057318 00054118  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005731C 0005411C  4E 80 00 20 */	blr 
-
 /* play_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fif */
 play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif:
 /* 80057320 00054120  94 21 FF F0 */	stwu r1, -0x10(r1)
