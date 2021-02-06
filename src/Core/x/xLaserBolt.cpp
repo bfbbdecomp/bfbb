@@ -1,6 +1,7 @@
 #include "xLaserBolt.h"
 #include "xString.h"
 #include "xstransvc.h"
+#include "../p2/iParMgr.h"
 
 #include <types.h>
 

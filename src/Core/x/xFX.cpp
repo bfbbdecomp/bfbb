@@ -1,6 +1,5 @@
 #include "xFX.h"
 
-#include "containers.h"
 #include "xstransvc.h"
 
 #include "../p2/iMath.h"
@@ -656,46 +655,6 @@ static RwIm3DVertex blah_2485[4];
 // func_8002A20C
 #pragma GLOBAL_ASM("asm/Core/x/xFX.s",                                                             \
                    "xFXShineStart__FPC5xVec3ffffUiPC10iColor_tagPC10iColor_tagfi")
-
-struct xFXRibbon
-{
-    struct config
-    {
-        float32 life_time;
-        uint32 blend_src;
-        uint32 blend_dst;
-        float32 pivot;
-    };
-
-    struct joint_data
-    {
-        uint32 flags;
-        uint32 born;
-        xVec3 loc;
-        xVec3 norm;
-        float32 orient;
-        float32 scale;
-        float32 alpha;
-    };
-
-    struct curve_node
-    {
-        float32 time;
-        iColor_tag color;
-        float32 scale;
-    };
-
-    config cfg;
-    bool activated;
-    RwRaster* raster;
-    tier_queue<joint_data> joints;
-    curve_node* curve;
-    uint32 curve_size;
-    uint32 curve_index;
-    float32 ilife;
-    uint32 mtime;
-    uint32 mlife;
-};
 
 namespace
 {

@@ -1,16 +1,118 @@
 #include "zNPCTypeBoss.h"
 
-#include <types.h>
+#include "zNPCTypeBossSandy.h"
+#include "zNPCTypeBossPatrick.h"
+#include "zNPCTypeBossSB1.h"
+#include "zNPCTypeBossSB2.h"
+#include "zNPCTypeBossPlankton.h"
+
 #include "../Core/x/xString.h"
 
-extern int32 g_boss_is_in_the_house;
-extern uint32 g_hash_bossanim[78];
-extern int8* g_strz_bossanim[78];
+#define ANIM_COUNT 78
+
+uint32 g_hash_bossanim[ANIM_COUNT] = {};
+
+// clang-format off
+const char* g_strz_bossanim[ANIM_COUNT] =
+{
+    "Unknown",
+    "Idle01",
+    "Idle02",
+    "Taunt01",
+    "Run01",
+    "Walk01",
+    "Melee01",
+    "Hit01",
+    "Hit02",
+    "GetUp01",
+    "Dizzy01",
+    "ElbowDrop01",
+    "Leap01",
+    "Leap02",
+    "Leap03",
+    "Leap04",
+    "Sit01",
+    "SitShock01",
+    "CLBegin01",
+    "CLLoop01",
+    "CLEnd01",
+    "NoHeadIdle01",
+    "NoHeadWaving01",
+    "NoHeadGetUp01",
+    "NoHeadShotUp01",
+    "NoHeadShock01",
+    "NoHeadReplace01",
+    "NoHeadHit01",
+    "Freeze01",
+    "FudgeJump01",
+    "FudgeBlow01",
+    "FudgeDone01",
+    "Lick01",
+    "Spit01",
+    "Spit02",
+    "Spawn01",
+    "SpinBegin01",
+    "Spinning01",
+    "SpinStop01",
+    "DizzyFall01",
+    "DizzySit01",
+    "SmashStart",
+    "SmashLoop",
+    "SmashEnd",
+    "AttackStomp",
+    "AttackRumble",
+    "SmashHitLeft",
+    "SmashHitRight",
+    "SmackLeft01",
+    "SmackRight01",
+    "ChopLeftBegin",
+    "ChopLeftLoop",
+    "ChopLeftEnd",
+    "ChopRightBegin",
+    "ChopRightLoop",
+    "ChopRightEnd",
+    "SwipeLeftBegin",
+    "SwipeLeftLoop",
+    "SwipeLeftEnd",
+    "SwipeRightBegin",
+    "SwipeRightLoop",
+    "SwipeRightEnd",
+    "ReturnIdle01",
+    "KarateStart",
+    "KarateLoop",
+    "KarateEnd",
+    "move",
+    "stun_begin",
+    "stun_loop",
+    "stun_end",
+    "attack_beam_begin",
+    "attack_beam_loop",
+    "attack_beam_end",
+    "attack_wall_begin",
+    "attack_wall_loop",
+    "attack_wall_end",
+    "attack_missle",
+#if 1
+    "attack_bomb\0zNPCBBobbyArm\0PAREMIT_CLOUD"
+#else
+    "attack_bomb"
+#endif
+};
+// clang-format on
+
+static int32 g_boss_is_in_the_house = 0;
+static zParEmitter* g_pemit_holder = NULL;
+static xParEmitterCustomSettings g_parf_holder;
+
+extern int32 _917_0[2];
+extern float32 _920_2;
+extern float32 _921_2;
+extern float32 _922_0;
+extern float32 _947_3;
 
 void ZNPC_Boss_Startup()
 {
-    // TODO: document/replace hardcoded size
-    for (int32 i = 0; i < 78; i++)
+    for (int32 i = 0; i < ANIM_COUNT; i++)
     {
         g_hash_bossanim[i] = xStrHash(g_strz_bossanim[i]);
     }
@@ -18,69 +120,165 @@ void ZNPC_Boss_Startup()
 
 void ZNPC_Boss_Shutdown()
 {
-    return;
 }
 
 void zNPCBoss_ScenePrepare()
 {
-    g_boss_is_in_the_house = true;
+    g_boss_is_in_the_house = 1;
 }
 
 void zNPCBoss_SceneFinish()
 {
-    g_boss_is_in_the_house = false;
+    g_boss_is_in_the_house = 0;
 }
 
-// func_801361B0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ZNPC_Create_Boss__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow)
+{
+    zNPCBoss* boss;
 
-// func_80136310
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ZNPC_Destroy_Boss__FP12xFactoryInst")
+    switch (who)
+    {
+    case 'NTB0':
+    {
+        boss = new (who, grow) zNPCBSandy(who);
+        break;
+    }
+    case 'NTB1':
+    {
+        boss = new (who, grow) zNPCBPatrick(who);
+        break;
+    }
+    case 'NTB2':
+    {
+        boss = new (who, grow) zNPCB_SB1(who);
+        break;
+    }
+    case 'NTB3':
+    {
+        boss = new (who, grow) zNPCB_SB2(who);
+        break;
+    }
+    case 'NTB4':
+    {
+        boss = new (who, grow) zNPCBPlankton(who);
+        break;
+    }
+    default:
+    {
+        boss = new (who, grow) zNPCBoss(who);
+        break;
+    }
+    }
 
+    return boss;
+}
+
+void ZNPC_Destroy_Boss(xFactoryInst* inst)
+{
+    delete inst;
+}
+
+#ifndef NON_MATCHING
 // func_80136334
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ZNPC_AnimTable_BossSBobbyArm__Fv")
+#else
+xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
+{
+    // non-matching: surprisingly the floats in this function are fine
+    // r4 and r5 is swapped for some reason during the ourAnims assignment
+    xAnimTable* table;
+    int32 ourAnims[2] = { 1, 0 };
 
-// func_801363EC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "Setup__8zNPCBossFv")
+    table = xAnimTableNew("zNPCBBobbyArm", NULL, 0);
 
+    xAnimTableNewState(table, g_strz_bossanim[1], 0x10, 0, _920_2, NULL, NULL, _921_2, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, (char**)g_strz_bossanim, ourAnims, 1, _922_0);
+
+    return table;
+}
+#endif
+
+void BOSS_InitEffects();
+
+void zNPCBoss::Setup()
+{
+    zNPCCommon::Setup();
+
+    if (g_boss_is_in_the_house)
+    {
+        g_boss_is_in_the_house = 0;
+        BOSS_InitEffects();
+    }
+}
+
+#ifndef NON_MATCHING
 // func_80136424
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "BOSS_InitEffects__Fv")
+#else
+void BOSS_InitEffects()
+{
+    // non-matching: scheduling
+    g_pemit_holder = zParEmitterFind("PAREMIT_CLOUD");
+    g_parf_holder.custom_flags = 0x100;
+}
+#endif
 
-// func_80136464
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "__ct__8zNPCBossFi")
+zNPCBoss::zNPCBoss(int32 myType) : zNPCCommon(myType)
+{
+}
 
-// func_801364A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "__ct__9zNPCB_SB1Fi")
+zNPCB_SB1::zNPCB_SB1(int32 myType) : zNPCBoss(myType)
+{
+}
 
-// func_801364DC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "__ct__12zNPCBPatrickFi")
+zNPCBPatrick::zNPCBPatrick(int32 myType) : zNPCBoss(myType)
+{
+}
 
-// func_80136518
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "__ct__10zNPCBSandyFi")
+zNPCBSandy::zNPCBSandy(int32 myType) : zNPCBoss(myType)
+{
+}
 
-// func_80136554
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ColChkFlags__8zNPCBossCFv")
+uint8 zNPCBoss::ColChkFlags() const
+{
+    return XENT_COLLTYPE_NONE;
+}
 
-// func_8013655C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ColPenFlags__8zNPCBossCFv")
+uint8 zNPCBoss::ColPenFlags() const
+{
+    return XENT_COLLTYPE_NONE;
+}
 
-// func_80136564
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ColChkByFlags__8zNPCBossCFv")
+uint8 zNPCBoss::ColChkByFlags() const
+{
+    return XENT_COLLTYPE_PLYR;
+}
 
-// func_8013656C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ColPenByFlags__8zNPCBossCFv")
+uint8 zNPCBoss::ColPenByFlags() const
+{
+    return XENT_COLLTYPE_PLYR;
+}
 
-// func_80136574
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "PhysicsFlags__8zNPCBossCFv")
+uint8 zNPCBoss::PhysicsFlags() const
+{
+    return 0x3;
+}
 
-// func_8013657C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "AttackTimeLeft__8zNPCBossFv")
+float32 zNPCBoss::AttackTimeLeft()
+{
+    return _947_3;
+}
 
-// func_80136584
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "HoldUpDude__8zNPCBossFv")
+void zNPCBoss::HoldUpDude()
+{
+}
 
-// func_80136588
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ThanksImDone__8zNPCBossFv")
+void zNPCBoss::ThanksImDone()
+{
+}
 
-// func_8013658C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "__ct__9zNPCB_SB2Fi")
+zNPCB_SB2::zNPCB_SB2(int32 myType) : zNPCBoss(myType)
+{
+}
