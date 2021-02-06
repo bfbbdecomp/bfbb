@@ -14,8 +14,8 @@ struct sound_config
     float32 volume;
     float32 radius_inner;
     float32 radius_outer;
-    uint8 streamed;
-    uint8 looping;
+    uint8 streamed; // might be bool, not sure
+    uint8 looping; // might be bool, not sure
     _tagSDRumbleType rumble;
     int32 first;
     int32 last;
