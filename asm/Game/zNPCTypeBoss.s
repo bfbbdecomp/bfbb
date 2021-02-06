@@ -329,6 +329,7 @@ __ct__9zNPCB_SB2Fi:
 .endif 
 
 .section .rodata
+.balign 8
 lbl_8026CBB8:
 	.incbin "baserom.dol", 0x269B98, 0x390
 
@@ -345,10 +346,12 @@ __vt__8zNPCBoss:
 	.incbin "baserom.dol", 0x2964B8, 0xD8
 
 .section .bss
+.balign 8
 lbl_80324468:
 	.skip 0x170
 
 .section .sbss
+.balign 8
 .global g_boss_is_in_the_house
 g_boss_is_in_the_house:
 	.skip 0x4

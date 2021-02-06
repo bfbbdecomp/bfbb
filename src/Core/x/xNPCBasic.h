@@ -86,10 +86,13 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual void Save(xSerial*) const;
     virtual void Load(xSerial*);
     virtual void CollideReview();
+
+    /* These most likely return a combination of XENT_COLLTYPE_* values */
     virtual uint8 ColChkFlags() const;
-    virtual uint8 ColPenFlags();
+    virtual uint8 ColPenFlags() const;
     virtual uint8 ColChkByFlags() const;
     virtual uint8 ColPenByFlags() const;
+
     virtual uint8 PhysicsFlags() const;
     virtual void Destroy();
 };
