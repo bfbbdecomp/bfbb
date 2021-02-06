@@ -16,7 +16,7 @@ struct RyzMemGrow
     xBase* user_last;
 
     RyzMemGrow* Init(xBase* growuser);
-    RyzMemGrow* Resume();
+    RyzMemGrow* Resume(xBase*);
     void Done();
     int32 IsEnabled();
 };
