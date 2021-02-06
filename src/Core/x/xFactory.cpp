@@ -6,8 +6,9 @@
 
 xFactory::xFactory(int32 maxTypes)
 {
-    this->infopool = (XGOFTypeInfo*)xMemAllocSize(maxTypes * sizeof(XGOFTypeInfo));
-    memset(this->infopool, 0, maxTypes * sizeof(XGOFTypeInfo));
+    uint32 amt = maxTypes * sizeof(XGOFTypeInfo);
+    this->infopool = (XGOFTypeInfo*)xMemAllocSize(amt);
+    memset(this->infopool, 0, amt);
     XOrdInit(&this->infolist, maxTypes, 0);
 }
 
@@ -17,141 +18,230 @@ xFactory::~xFactory()
     XOrdDone(&this->infolist, 0);
 }
 
-#if 1
+static int32 OrdTest_infotype(const void* vkey, void* vitem);
+static int32 OrdComp_infotype(void* vkey, void* vitem);
 
-// func_8010F3A8
-#pragma GLOBAL_ASM("asm/Core/x/xFactory.s", "RegItemType__8xFactoryFP12XGOFTypeInfo")
-
-#else
-
-// WIP.
 int32 xFactory::RegItemType(XGOFTypeInfo* info)
 {
-    int32 worked = 0;
-    while (true)
+    int32 rc = 0;
+    XGOFTypeInfo* tptr = info;
+    XGOFTypeInfo* nextrec;
+
+    while (tptr->tid)
     {
-        if (info->tid == 0)
+        rc = 1;
+
+        if (!tptr->creator)
         {
-            return worked;
-        }
-        worked = 1;
-        if (info->creator == NULL)
-        {
-            return 0;
-        }
-        if (info->destroyer == NULL)
-        {
-            return 0;
-        }
-        if ((this->infolist).max <= (this->infolist).cnt)
+            rc = 0;
             break;
-        int32 item =
+        }
+
+        if (!tptr->destroyer)
+        {
+            rc = 0;
+            break;
+        }
+
+        if (infolist.cnt >= infolist.max)
+        {
+            rc = -2;
+            break;
+        }
+
+        int32 idx = XOrdLookup(&infolist, tptr, OrdTest_infotype);
+
+        if (idx >= 0)
+        {
+            rc = -1;
+            break;
+        }
+
+        nextrec = &infopool[infolist.cnt];
+        nextrec->tid = tptr->tid;
+        nextrec->creator = tptr->creator;
+        nextrec->destroyer = tptr->destroyer;
+
+        XOrdInsert(&infolist, nextrec, OrdComp_infotype);
+
+        tptr++;
     }
-    return -2;
+
+    return rc;
 }
 
-#endif
-
-#if 1
-
-// func_8010F498
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFactory.s",                                                                       \
-    "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v")
-
-#else
-
-// WIP. Use globals.
-int32 xFactory::RegItemType(int32 tid, xFactoryInst* (*create)(int32, RyzMemGrow*, void*),
-                            void (*destroy)(xFactoryInst*))
+int32 xFactory::RegItemType(int32 tid, XGOFTypeInfoCreator create, XGOFTypeInfoDestroyer destroy)
 {
-    XGOFTypeInfo tptr;
-    XGOFTypeInfo nextrec;
-    nextrec.tid = 0;
-    nextrec.creator = NULL;
-    nextrec.destroyer = NULL;
-    tptr.tid = tid;
-    tptr.creator = create;
-    tptr.destroyer = destroy;
-    return RegItemType(&tptr);
-}
+    XGOFTypeInfo typerec[2] = {};
 
-#endif
+    typerec[0].tid = tid;
+    typerec[0].creator = create;
+    typerec[0].destroyer = destroy;
+
+    return RegItemType(typerec);
+}
 
 void xFactory::GrowDataEnable(xBase* user, int32 isResume)
 {
     if (isResume)
     {
-        this->growContextData.Resume();
+        growContextData.Resume(user);
     }
     else
     {
-        this->growContextData.Init(user);
+        growContextData.Init(user);
     }
 }
 
 void xFactory::GrowDataDisable()
 {
-    this->growContextData.Done();
+    growContextData.Done();
 }
 
-// func_8010F55C
-#pragma GLOBAL_ASM("asm/Core/x/xFactory.s", "CreateItem__8xFactoryFiPvP10RyzMemGrow")
-
-// func_8010F6AC
-#pragma GLOBAL_ASM("asm/Core/x/xFactory.s", "DestroyAll__8xFactoryFv")
-
-// func_8010F6EC
-#pragma GLOBAL_ASM("asm/Core/x/xFactory.s", "DestroyItem__8xFactoryFP12xFactoryInst")
-
-#if 1
-
-// func_8010F7D4
-#pragma GLOBAL_ASM("asm/Core/x/xFactory.s", "OrdTest_infotype__FPCvPv")
-
-#else
-
-// This keeps getting duplicated for some reason. Structure is identical to the one below, get this one, you get that one.
-int32 OrdTest_infotype(void* vkey, void* vitem)
+xFactoryInst* xFactory::CreateItem(int32 typeID, void* userdata, RyzMemGrow* callerzgrow)
 {
-    if (*(int32*)vkey < *(int32*)vitem)
+    int32 idx;
+    xFactoryInst* item;
+    XGOFTypeInfo pattern = {};
+    XGOFTypeInfo* darec = NULL;
+    RyzMemGrow* grow = callerzgrow;
+
+    pattern.tid = typeID;
+
+    idx = XOrdLookup(&infolist, &pattern, OrdTest_infotype);
+
+    if (idx >= 0)
     {
-        return -1;
+        darec = (XGOFTypeInfo*)infolist.list[idx];
     }
-    else if (*(int32*)vkey > *(int32*)vitem)
+
+    if (!darec)
     {
-        return 1;
+        return NULL;
+    }
+
+    if (!darec->creator)
+    {
+        return NULL;
+    }
+
+    if (!darec->destroyer)
+    {
+        return NULL;
+    }
+
+    if (!grow && growContextData.IsEnabled())
+    {
+        grow = &growContextData;
+    }
+
+    item = darec->creator(darec->tid, grow, userdata);
+
+    if (!item)
+    {
+        return item;
+    }
+
+    item->itemType = darec->tid;
+    item->prevprod = NULL;
+    item->nextprod = NULL;
+
+    if (products)
+    {
+        item->nextprod = products;
+        products->prevprod = item;
+        products = item;
     }
     else
     {
-        return 0;
+        products = item;
+    }
+
+    return item;
+}
+
+void xFactory::DestroyAll()
+{
+    while (products)
+    {
+        DestroyItem(products);
     }
 }
 
-#endif
-
-#if 1
-
-// func_8010F800
-#pragma GLOBAL_ASM("asm/Core/x/xFactory.s", "OrdComp_infotype__FPvPv")
-
-#else
-
-// This keeps getting duplicated for some reason.
-int32 OrdComp_infotype(void* vkey, void* vitem)
+void xFactory::DestroyItem(xFactoryInst* item)
 {
-    if (*(int32*)vkey < *(int32*)vitem)
+    int32 idx;
+    XGOFTypeInfo pattern = {};
+
+    pattern.tid = item->itemType;
+
+    if (item)
     {
-        return -1;
+        if (products == item)
+        {
+            products = item->nextprod;
+
+            if (products)
+            {
+                products->prevprod = NULL;
+            }
+        }
+
+        if (item->prevprod)
+        {
+            item->prevprod->nextprod = item->nextprod;
+        }
+
+        if (item->nextprod)
+        {
+            item->nextprod->prevprod = item->prevprod;
+        }
+
+        item->prevprod = NULL;
+        item->nextprod = NULL;
+
+        idx = XOrdLookup(&infolist, &pattern, OrdTest_infotype);
+
+        ((XGOFTypeInfo*)infolist.list[idx])->destroyer(item);
     }
-    else if (*(int32*)vkey > *(int32*)vitem)
+}
+
+static int32 OrdTest_infotype(const void* vkey, void* vitem)
+{
+    int32 rc;
+
+    if (((XGOFTypeInfo*)vkey)->tid < ((XGOFTypeInfo*)vitem)->tid)
     {
-        return 1;
+        rc = -1;
+    }
+    else if (((XGOFTypeInfo*)vkey)->tid > ((XGOFTypeInfo*)vitem)->tid)
+    {
+        rc = 1;
     }
     else
     {
-        return 0;
+        rc = 0;
     }
+
+    return rc;
 }
 
-#endif
+static int32 OrdComp_infotype(void* vkey, void* vitem)
+{
+    int32 rc;
+
+    if (((XGOFTypeInfo*)vkey)->tid < ((XGOFTypeInfo*)vitem)->tid)
+    {
+        rc = -1;
+    }
+    else if (((XGOFTypeInfo*)vkey)->tid > ((XGOFTypeInfo*)vitem)->tid)
+    {
+        rc = 1;
+    }
+    else
+    {
+        rc = 0;
+    }
+
+    return rc;
+}

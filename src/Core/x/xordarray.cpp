@@ -74,7 +74,7 @@ void XOrdAppend(st_XORDEREDARRAY* array, void* elt)
 
 #else
 
-void XOrdInsert(st_XORDEREDARRAY* array, void* elt, int32 (*compare)(void*, void*))
+void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
 {
     if (array->cnt < array->max)
     {
@@ -159,7 +159,7 @@ void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, int32 index)
 
 #else
 
-int32 XOrdLookup(st_XORDEREDARRAY* array, void* key, int32 (*test)(void*, void*))
+int32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
 {
     int32 v, index, rightBound, leftBound;
     leftBound = 0;

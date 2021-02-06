@@ -203,6 +203,7 @@ lbl_8010FA98:
 .endif
 
 .section .rodata
+.balign 8
 .global lbl_8026A3F8
 lbl_8026A3F8:
 	.incbin "baserom.dol", 0x2673D8, 0x10
