@@ -1348,6 +1348,7 @@ lbl_8026D080:
 	.incbin "baserom.dol", 0x26A060, 0x10
 
 .section .bss
+.balign 8
 lbl_803245D8:
 	.skip 0x54
 lbl_8032462C:

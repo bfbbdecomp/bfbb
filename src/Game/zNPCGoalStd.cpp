@@ -279,7 +279,7 @@ uint8 xNPCBasic::ColChkByFlags() const
 }
 
 // func_800D91F0
-uint8 xNPCBasic::ColPenFlags()
+uint8 xNPCBasic::ColPenFlags() const
 {
     return 0;
 }
