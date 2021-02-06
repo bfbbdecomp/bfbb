@@ -2781,6 +2781,7 @@ IndexInStack__7xPsycheCFPC5xGoal:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8026CF48:
 	.incbin "baserom.dol", 0x269F28, 0xC
 lbl_8026CF54:
@@ -2801,6 +2802,7 @@ lbl_8026CFB0:
 	.incbin "baserom.dol", 0x269F90, 0xD0
 
 .section .data
+.balign 8
 lbl_802995B0:
 	.incbin "baserom.dol", 0x296590, 0x74
 /* SPECULATION: link order */
@@ -2849,6 +2851,7 @@ __vt__15zNPCGoalBoySwim:
 	.incbin "baserom.dol", 0x29680C, 0x34
 
 .section .sbss
+.balign 8
 lbl_803CBF48:
 	.skip 0x4
 lbl_803CBF4C:
@@ -2861,6 +2864,7 @@ lbl_803CBF4F:
 	.skip 0x1
 
 .section .sdata2
+.balign 8
 lbl_803CED20:
 	.incbin "baserom.dol", 0x2B85C0, 0x4
 lbl_803CED24:

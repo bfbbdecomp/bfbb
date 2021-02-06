@@ -1,34 +1,12 @@
 #ifndef XFX_H
 #define XFX_H
 
-#include "../p2/iColor.h"
 #include "xMath3.h"
-#include "xVec3.h"
+#include "containers.h"
+#include "../p2/iColor.h"
 
 #include <rwcore.h>
 #include <rpworld.h>
-
-struct tagiRenderInput
-{
-    uint16* m_index;
-    RxObjSpace3DVertex* m_vertex;
-    float32* m_vertexTZ;
-    uint32 m_mode;
-    int32 m_vertexType;
-    int32 m_vertexTypeSize;
-    int32 m_indexCount;
-    int32 m_vertexCount;
-    xMat4x3 m_camViewMatrix;
-    xVec4 m_camViewR;
-    xVec4 m_camViewU;
-};
-
-struct curve_node
-{
-    float32 time;
-    iColor_tag color;
-    float32 scale;
-};
 
 struct xFXRing
 {
@@ -47,6 +25,46 @@ struct xFXRing
     uint8 u_repeat;
     uint8 v_repeat;
     xFXRing** parent;
+};
+
+struct xFXRibbon
+{
+    struct config
+    {
+        float32 life_time;
+        uint32 blend_src;
+        uint32 blend_dst;
+        float32 pivot;
+    };
+
+    struct joint_data
+    {
+        uint32 flags;
+        uint32 born;
+        xVec3 loc;
+        xVec3 norm;
+        float32 orient;
+        float32 scale;
+        float32 alpha;
+    };
+
+    struct curve_node
+    {
+        float32 time;
+        iColor_tag color;
+        float32 scale;
+    };
+
+    config cfg;
+    bool activated;
+    RwRaster* raster;
+    tier_queue<joint_data> joints;
+    curve_node* curve;
+    uint32 curve_size;
+    uint32 curve_index;
+    float32 ilife;
+    uint32 mtime;
+    uint32 mlife;
 };
 
 void xFXInit();

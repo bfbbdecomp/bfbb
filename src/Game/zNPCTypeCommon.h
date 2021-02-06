@@ -552,6 +552,8 @@ void zNPCSettings_MakeDummy();
 void ZNPC_Common_Startup();
 void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();
+void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, int32* ourAnims, int32 idx_dflt,
+                                float32 blend);
 void zNPCCommon_EjectPhlemOnPawz();
 
 #endif
