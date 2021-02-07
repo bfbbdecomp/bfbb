@@ -82,8 +82,12 @@ def run():
         if args.scope and ".global " + funcToImport not in asmFileText:
             isGlobal = False
 
+        noSig = False
+        if len(pragmaArgs) > 2 and pragmaArgs[2] == "nosig":
+            noSig = True
+
         newSource = ""
-        newSource = writeCode(newSource, funcToImport, codeBytes, isGlobal)
+        newSource = writeCode(newSource, funcToImport, codeBytes, isGlobal, noSig)
         sourceText = sourceText.replace(replacePragmaText, newSource)
 
         # update our file cache to avoid re-processing
