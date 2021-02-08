@@ -2,6 +2,7 @@
 #include "zEntCruiseBubble.h"
 #include "zEntPlayer.h"
 
+#include "../Core/x/xMath.h"
 #include "../Core/x/xMath3.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xString.h"
@@ -66,6 +67,8 @@ extern sound_config sounds[4];
 
 } // namespace cruise_bubble
 
+extern float32 zEntCruiseBubble_f_0_0; // 0.0
+
 void cruise_bubble::init_sound()
 {
     sound_config* s;
@@ -107,9 +110,52 @@ void cruise_bubble::stop_sound(int32 which, uint32 handle)
 }
 
 // func_80057320
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif")
+// will match once file is complete, see comment below
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif")
+#else
+uint32 cruise_bubble::play_sound(int32 which, float32 volFactor)
+{
+    sound_config* s = &sounds[which];
+
+    if (s->id == 0)
+    {
+        int32 n = s->last - s->first + 1;
+        int32 i = n <= 1 ? s->first : s->first + (xrand() >> 13) % n;
+
+        if (s->streamed != 0)
+        {
+           zEntPlayer_SNDPlayStream((_tagePlayerStreamSnd) i);
+        }
+        else
+        {
+            zEntPlayer_SNDPlay((_tagePlayerSnd) i, zEntCruiseBubble_f_0_0);
+        }
+
+        s->handle = 0;
+    }
+    else
+    {
+        // using float literals only the TOC address doesnt match
+        // -> will match when file is complete
+        s->handle = xSndPlay(
+                (uint32) s->id,
+                s->volume * volFactor,
+                zEntCruiseBubble_f_0_0,
+                (uint32) 128,
+                (uint32) 0,
+                (uint32) 0,
+                SND_CAT_GAME,
+                zEntCruiseBubble_f_0_0);
+    }
+
+    if (s->rumble != SDR_None)
+    {
+        zRumbleStart(s->rumble);
+    }
+    return s->handle;
+}
+#endif
 
 // func_80057404
 #pragma GLOBAL_ASM(                                                                                \

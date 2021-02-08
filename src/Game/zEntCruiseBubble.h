@@ -10,7 +10,7 @@ namespace cruise_bubble
 
 struct sound_config
 {
-    int8* name;
+    int8* name; // probably char*
     float32 volume;
     float32 radius_inner;
     float32 radius_outer;
@@ -27,6 +27,7 @@ bool active();
 void render_screen();
 void init_sound();
 void stop_sound(int32 which, uint32 handle);
+uint32 play_sound(int32 which, float32 volFactor);
 
 } // namespace cruise_bubble
 
