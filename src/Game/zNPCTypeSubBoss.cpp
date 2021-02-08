@@ -67,7 +67,7 @@ void zNPCSubBoss_SceneFinish()
     g_contract_for_hire = 0;
 }
 
-xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow)
+xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow, void*)
 {
     zNPCSubBoss* boss;
 

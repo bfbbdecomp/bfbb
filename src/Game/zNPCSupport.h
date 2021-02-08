@@ -28,6 +28,12 @@ struct NPCTarget
     zNPCCommon* npc_owner;
 };
 
+struct NPCBlinker
+{
+    float32 tmr_uvcell;
+    int32 idx_uvcell;
+};
+
 void NPCWidget_Shutdown();
 void NPCSupport_Startup();
 void NPCSupport_ScenePrepare();

@@ -132,7 +132,7 @@ void zNPCBoss_SceneFinish()
     g_boss_is_in_the_house = 0;
 }
 
-xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow)
+xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow, void*)
 {
     zNPCBoss* boss;
 
