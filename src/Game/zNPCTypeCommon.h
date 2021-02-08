@@ -388,6 +388,8 @@ struct zNPCCommon : xNPCBasic
     int32 AnimStart(uint32 animID, int32 forceRestart);
     uint32 AnimCurStateID();
     void GiveReward();
+    int32 SndPlayRandom(en_NPC_SOUND sndtype);
+    int32 SndChanIsBusy(int32 flg_chan);
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     int32 GetVertPos(en_mdlvert vid, xVec3* pos);
     void AddScripting(xPsyche* psy,

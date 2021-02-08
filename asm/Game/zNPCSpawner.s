@@ -1905,6 +1905,7 @@ lbl_8026C2A4:
 	.incbin "baserom.dol", 0x269284, 0xC
 
 .section .data
+.balign 8
 lbl_80298C38:
 	.incbin "baserom.dol", 0x295C18, 0x10
 lbl_80298C48:
@@ -1915,6 +1916,7 @@ lbl_803CBEC0:
 	.skip 0x8
 
 .section .sdata2
+.balign 8
 lbl_803CEB90:
 	.incbin "baserom.dol", 0x2B8430, 0x4
 lbl_803CEB94:
