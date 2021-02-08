@@ -31,6 +31,8 @@ struct ztaskbox : xBase
 
     struct callback
     {
+        virtual void on_talk_start();
+        virtual void on_talk_stop();
     };
 
     struct talk_callback : ztalkbox::callback

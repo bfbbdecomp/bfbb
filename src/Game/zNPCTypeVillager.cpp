@@ -26,11 +26,88 @@
 // func_80102D0C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "zNPCVillager_SceneTimestep__FP6xScenef")
 
-// func_80102D2C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_Create_Villager__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Villager(int32 who, RyzMemGrow* growCtxt, void*)
+{
+    zNPCVillager* vil;
 
-// func_80102F58
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_Destroy_Villager__FP12xFactoryInst")
+    switch (who)
+    {
+    case NPC_TYPE_ID_VILLAGER:
+    {
+        vil = new (who, growCtxt) zNPCVillager(who);
+        break;
+    }
+    case NPC_TYPE_ID_FISH0:
+    case NPC_TYPE_ID_FISH1:
+    case NPC_TYPE_ID_FISH2:
+    case NPC_TYPE_ID_FISH3:
+    case NPC_TYPE_ID_FISH4:
+    case NPC_TYPE_ID_FISH5:
+    case NPC_TYPE_ID_FISH6:
+    case NPC_TYPE_ID_FISH8:
+    case NPC_TYPE_ID_FISH9:
+    case NPC_TYPE_ID_FISH10:
+    case NPC_TYPE_ID_FISH11:
+    case NPC_TYPE_ID_FISH12:
+    case NPC_TYPE_ID_FISH14:
+    case NPC_TYPE_ID_FISH15:
+    case NPC_TYPE_ID_FISH16:
+    case NPC_TYPE_ID_FISH17:
+    case NPC_TYPE_ID_FISH18:
+    case NPC_TYPE_ID_FISH19:
+    case NPC_TYPE_ID_FISH20:
+    case NPC_TYPE_ID_FISH24:
+    case NPC_TYPE_ID_FISH26:
+    case NPC_TYPE_ID_FISH27:
+    case NPC_TYPE_ID_FISH28:
+    {
+        vil = new (who, growCtxt) zNPCFish(who);
+        break;
+    }
+    case NPC_TYPE_ID_BUBBLEBUDDY:
+    {
+        vil = new (who, growCtxt) zNPCBubbleBuddy(who);
+        break;
+    }
+    case NPC_TYPE_ID_BALLOONBOY:
+    {
+        vil = new (who, growCtxt) zNPCBalloonBoy(who);
+        break;
+    }
+    case NPC_TYPE_ID_SANDYBIKINI:
+    {
+        vil = new (who, growCtxt) zNPCSandyBikini(who);
+        break;
+    }
+    case NPC_TYPE_ID_MERMANCHAIR:
+    {
+        vil = new (who, growCtxt) zNPCMerManChair(who);
+        break;
+    }
+    case NPC_TYPE_ID_NEWSFISH:
+    {
+        vil = new (who, growCtxt) zNPCNewsFish(who);
+        break;
+    }
+    case NPC_TYPE_ID_NEWSFISHTV:
+    {
+        vil = new (who, growCtxt) zNPCNewsFishTV(who);
+        break;
+    }
+    default:
+    {
+        vil = new (who, growCtxt) zNPCVillager(who);
+        break;
+    }
+    }
+
+    return vil;
+}
+
+void ZNPC_Destroy_Villager(xFactoryInst* inst)
+{
+    delete inst;
+}
 
 // func_80102F7C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_Villager__Fv")

@@ -4,6 +4,12 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCSupport.h"
 
+#define NPC_TYPE_ID_BOSSSANDY NPC_TYPE_ID('B', 0)
+#define NPC_TYPE_ID_BOSSPATRICK NPC_TYPE_ID('B', 1)
+#define NPC_TYPE_ID_BOSSSB1 NPC_TYPE_ID('B', 2)
+#define NPC_TYPE_ID_BOSSSB2 NPC_TYPE_ID('B', 3)
+#define NPC_TYPE_ID_BOSSPLANKTON NPC_TYPE_ID('B', 4)
+
 struct zNPCBoss : zNPCCommon
 {
     NPCTarget tgt_cur;
@@ -27,5 +33,7 @@ protected:
 
 void ZNPC_Boss_Startup();
 void ZNPC_Boss_Shutdown();
+xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Boss(xFactoryInst* inst);
 
 #endif

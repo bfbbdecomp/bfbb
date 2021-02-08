@@ -5,8 +5,29 @@
 #include "../Core/x/xModel.h"
 
 #include "zNPCTypeCommon.h"
+#include "zNPCSupport.h"
 #include "zNPCGlyph.h"
 #include "zNPCHazard.h"
+
+#define NPC_TYPE_ID_ROBOT NPC_TYPE_ID('S', 2)
+
+#define NPC_TYPE_ID_HAMMER1 NPC_TYPE_ID('R', 0)
+#define NPC_TYPE_ID_HAMMER2 NPC_TYPE_ID('R', 1)
+#define NPC_TYPE_ID_TARTAR NPC_TYPE_ID('R', 2)
+#define NPC_TYPE_ID_GLOVE NPC_TYPE_ID('R', 3)
+#define NPC_TYPE_ID_MONSOON NPC_TYPE_ID('R', 4)
+#define NPC_TYPE_ID_SLEEPY NPC_TYPE_ID('R', 5)
+#define NPC_TYPE_ID_ARFDOG NPC_TYPE_ID('R', 6)
+#define NPC_TYPE_ID_ARFARF NPC_TYPE_ID('R', 7)
+#define NPC_TYPE_ID_CHUCK NPC_TYPE_ID('R', 8)
+#define NPC_TYPE_ID_TUBELET NPC_TYPE_ID('R', 9)
+#define NPC_TYPE_ID_TUBESLAVE NPC_TYPE_ID('R', 10)
+#define NPC_TYPE_ID_SLICK NPC_TYPE_ID('R', 11)
+#define NPC_TYPE_ID_FODDER NPC_TYPE_ID('R', 12)
+#define NPC_TYPE_ID_FODBOMB NPC_TYPE_ID('R', 13)
+#define NPC_TYPE_ID_FODBZZT NPC_TYPE_ID('R', 14)
+#define NPC_TYPE_ID_CHOMPER NPC_TYPE_ID('R', 15)
+#define NPC_TYPE_ID_CRITTER NPC_TYPE_ID('R', 16)
 
 typedef struct zNPCRobot;
 
@@ -126,6 +147,151 @@ struct zNPCRobot : zNPCCommon
     virtual void LassoModelIndex(int32* idxgrab, int32* idxhold);
 };
 
+struct zNPCFodder : zNPCRobot
+{
+    zNPCFodder(int32 myType);
+};
+
+struct zNPCFodBomb : zNPCRobot
+{
+    NPCBlinker blinker;
+
+    zNPCFodBomb(int32 myType);
+};
+
+struct zNPCFodBzzt : zNPCRobot
+{
+    RwRGBA rgba_discoLight;
+    float32 tmr_discoLight;
+    xVec3 pos_discoLight;
+    float32 uv_discoLight[2];
+
+    zNPCFodBzzt(int32 myType);
+};
+
+struct zNPCChomper : zNPCRobot
+{
+    int32 cnt_spurt;
+    int32 cnt_skipEmit;
+
+    zNPCChomper(int32 myType);
+};
+
+struct zNPCCritter : zNPCRobot
+{
+    zNPCCritter(int32 myType);
+};
+
+struct zNPCHammer : zNPCRobot
+{
+    zNPCHammer(int32 myType);
+};
+
+struct zNPCTarTar : zNPCRobot
+{
+    zNPCTarTar(int32 myType);
+};
+
+struct zNPCGlove : zNPCRobot
+{
+    zNPCGlove(int32 myType);
+};
+
+struct zNPCMonsoon : zNPCRobot
+{
+    zNPCMonsoon(int32 myType);
+};
+
+struct zNPCSleepy : zNPCRobot
+{
+    int32 flg_sleepy;
+    NPCHazard* haz_patriot;
+    float32 tmr_nextPatriot;
+    RwRGBA rgba_coneColor;
+    float32 tmr_angry;
+    float32 tmr_emitzeez;
+    float32 cnt_grpzeez;
+
+    zNPCSleepy(int32 myType);
+};
+
+struct zNPCArfDog : zNPCRobot
+{
+    NPCBlinker blinkHead;
+    NPCBlinker blinkTail;
+
+    zNPCArfDog(int32 myType);
+};
+
+struct zNPCArfArf : zNPCRobot
+{
+    int32 flg_puppy[5];
+    zNPCArfDog* pup_kennel[5];
+
+    zNPCArfArf(int32 myType);
+};
+
+struct zNPCChuck : zNPCRobot
+{
+    xVec3 dir_attack;
+
+    zNPCChuck(int32 myType);
+};
+
+enum en_tubestat
+{
+    TUBE_STAT_UNKNOWN,
+    TUBE_STAT_DUCKLING,
+    TUBE_STAT_ATTACK,
+    TUBE_STAT_LASSO,
+    TUBE_STAT_DYING,
+    TUBE_STAT_DEAD,
+    TUBE_STAT_BORN,
+    TUBE_STAT_NOMORE,
+    TUBE_STAT_FORCE = 0x7fffffff
+};
+
+struct zNPCTubeSlave;
+
+struct TubeNotice : xPSYNote
+{
+    zNPCCommon* npc;
+
+    TubeNotice();
+
+    virtual void Notice(en_psynote note, xGoal* goal, void*);
+};
+
+struct zNPCTubelet : zNPCRobot
+{
+    en_tubestat tubestat;
+    zNPCTubeSlave* tub_paul;
+    zNPCTubeSlave* tub_mary;
+    float32 bonkSpinRate;
+    float32 tmr_restoreHealth;
+    int32 pete_attack_last;
+    TubeNotice psynote;
+
+    zNPCTubelet(int32 myType);
+};
+
+enum en_tubespot
+{
+    ROBO_TUBE_PETE,
+    ROBO_TUBE_PAUL,
+    ROBO_TUBE_MARY,
+    ROBO_TUBE_NOMORE,
+    ROBO_TUBE_FORCE = 0x7fffffff
+};
+
+struct zNPCTubeSlave : zNPCRobot
+{
+    en_tubespot tubespot;
+    zNPCTubelet* tub_pete;
+
+    zNPCTubeSlave(int32 myType);
+};
+
 struct zNPCSlick : zNPCRobot
 {
     float32 rad_shield;
@@ -133,6 +299,8 @@ struct zNPCSlick : zNPCRobot
     float32 tmr_invuln;
     float32 alf_shieldCurrent;
     float32 alf_shieldDesired;
+
+    zNPCSlick(int32 myType);
 
     void YouOwnSlipFX();
     void BUpdate(xVec3* pos);
@@ -153,6 +321,8 @@ void ZNPC_Robot_Shutdown();
 void zNPCRobot_ScenePrepare();
 void zNPCRobot_SceneFinish();
 void zNPCRobot_ScenePostInit();
+xFactoryInst* ZNPC_Create_Robot(int32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Robot(xFactoryInst* inst);
 void ROBO_KillEffects();
 void zNPCFodBzzt_ResetDanceParty();
 void ROBO_InitEffects();
