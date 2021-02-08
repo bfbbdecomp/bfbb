@@ -105,7 +105,8 @@ struct xPsyche : RyzMemData
     int32 GIDOfPending() const;
     int32 Timestep(float32 dt, void* updCtxt);
     xGoal* FindGoal(int32 gid);
-    int32 GoalSet(int32 gid, int32 param_2);
+    int32 GoalSet(int32 gid, int32 r5);
+    int32 GoalPop(int32 gid_popto, int32 r5);
     xGoal* AddGoal(int32 gid, void* createData);
     void BrainBegin();
     void BrainEnd();
