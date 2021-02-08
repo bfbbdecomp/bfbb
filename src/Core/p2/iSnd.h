@@ -61,8 +61,12 @@ uint8 iSndIsPlaying(uint32 assetID, uint32 parid);
 void iSndWaitForDeadSounds();
 void iSndSceneExit();
 void sndloadcb(tag_xFile* tag);
-void iSndSetExternalCallback(uint32 (*func_ptr)());
+void iSndSetExternalCallback(void (*func_ptr)(uint32));
 void iSndAXFree(_AXVPB** param1);
 void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch);
+void iSndStop(uint32 snd);
+void iSndSetVol(uint32 snd, float32 vol);
+void iSndSetPitch(uint32 snd, float32 pitch);
+float32 iSndGetVol(uint32 snd);
 
 #endif
