@@ -5612,6 +5612,7 @@ lbl_8016DB14:
 /* 8016DB1C 0016A91C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8016DB20 0016A920  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonIdleFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonIdleFiP10RyzMemGrowPv:
 /* 8016DB24 0016A924  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016DB28 0016A928  7C 08 02 A6 */	mflr r0
@@ -5894,6 +5895,7 @@ apply_yaw__21zNPCGoalBPlanktonIdleFf:
 /* 8016DF30 0016AD30  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016DF34 0016AD34  4E 80 00 20 */	blr 
 
+.global create__23zNPCGoalBPlanktonAttackFiP10RyzMemGrowPv
 create__23zNPCGoalBPlanktonAttackFiP10RyzMemGrowPv:
 /* 8016DF38 0016AD38  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016DF3C 0016AD3C  7C 08 02 A6 */	mflr r0
@@ -6019,6 +6021,7 @@ lbl_8016E0E0:
 /* 8016E0F0 0016AEF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8016E0F4 0016AEF4  4E 80 00 20 */	blr 
 
+.global create__23zNPCGoalBPlanktonAmbushFiP10RyzMemGrowPv
 create__23zNPCGoalBPlanktonAmbushFiP10RyzMemGrowPv:
 /* 8016E0F8 0016AEF8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016E0FC 0016AEFC  7C 08 02 A6 */	mflr r0
@@ -6178,6 +6181,7 @@ lbl_8016E320:
 /* 8016E338 0016B138  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016E33C 0016B13C  4E 80 00 20 */	blr 
 
+.global create__22zNPCGoalBPlanktonFlankFiP10RyzMemGrowPv
 create__22zNPCGoalBPlanktonFlankFiP10RyzMemGrowPv:
 /* 8016E340 0016B140  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016E344 0016B144  7C 08 02 A6 */	mflr r0
@@ -6339,6 +6343,7 @@ lbl_8016E57C:
 /* 8016E58C 0016B38C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8016E590 0016B390  4E 80 00 20 */	blr 
 
+.global create__22zNPCGoalBPlanktonEvadeFiP10RyzMemGrowPv
 create__22zNPCGoalBPlanktonEvadeFiP10RyzMemGrowPv:
 /* 8016E594 0016B394  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016E598 0016B398  7C 08 02 A6 */	mflr r0
@@ -6688,6 +6693,7 @@ world_to_ring_loc__34_esc__2_unnamed_esc__2_zNPCTypeBossPlankton_cpp_esc__2_FRC5
 /* 8016EAA4 0016B8A4  38 21 00 40 */	addi r1, r1, 0x40
 /* 8016EAA8 0016B8A8  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonHuntFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonHuntFiP10RyzMemGrowPv:
 /* 8016EAAC 0016B8AC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016EAB0 0016B8B0  7C 08 02 A6 */	mflr r0
@@ -6874,6 +6880,7 @@ lbl_8016ED3C:
 /* 8016ED50 0016BB50  38 21 00 40 */	addi r1, r1, 0x40
 /* 8016ED54 0016BB54  4E 80 00 20 */	blr 
 
+.global create__22zNPCGoalBPlanktonTauntFiP10RyzMemGrowPv
 create__22zNPCGoalBPlanktonTauntFiP10RyzMemGrowPv:
 /* 8016ED58 0016BB58  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016ED5C 0016BB5C  7C 08 02 A6 */	mflr r0
@@ -6930,6 +6937,7 @@ Process__22zNPCGoalBPlanktonTauntFP11en_trantypefPvP6xScene:
 /* 8016EE08 0016BC08  38 60 00 00 */	li r3, 0
 /* 8016EE0C 0016BC0C  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonMoveFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonMoveFiP10RyzMemGrowPv:
 /* 8016EE10 0016BC10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016EE14 0016BC14  7C 08 02 A6 */	mflr r0
@@ -6986,6 +6994,7 @@ Process__21zNPCGoalBPlanktonMoveFP11en_trantypefPvP6xScene:
 /* 8016EEC0 0016BCC0  38 60 00 00 */	li r3, 0
 /* 8016EEC4 0016BCC4  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonStunFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonStunFiP10RyzMemGrowPv:
 /* 8016EEC8 0016BCC8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016EECC 0016BCCC  7C 08 02 A6 */	mflr r0
@@ -7142,6 +7151,7 @@ lbl_8016F0DC:
 /* 8016F0F4 0016BEF4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016F0F8 0016BEF8  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonFallFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonFallFiP10RyzMemGrowPv:
 /* 8016F0FC 0016BEFC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016F100 0016BF00  7C 08 02 A6 */	mflr r0
@@ -7267,6 +7277,7 @@ lbl_8016F2A8:
 /* 8016F2B8 0016C0B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8016F2BC 0016C0BC  4E 80 00 20 */	blr 
 
+.global create__22zNPCGoalBPlanktonDizzyFiP10RyzMemGrowPv
 create__22zNPCGoalBPlanktonDizzyFiP10RyzMemGrowPv:
 /* 8016F2C0 0016C0C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016F2C4 0016C0C4  7C 08 02 A6 */	mflr r0
@@ -7416,6 +7427,7 @@ lbl_8016F4B8:
 /* 8016F4D0 0016C2D0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016F4D4 0016C2D4  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonBeamFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonBeamFiP10RyzMemGrowPv:
 /* 8016F4D8 0016C2D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016F4DC 0016C2DC  7C 08 02 A6 */	mflr r0
@@ -7753,6 +7765,7 @@ lbl_8016F974:
 /* 8016F988 0016C788  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016F98C 0016C78C  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonWallFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonWallFiP10RyzMemGrowPv:
 /* 8016F990 0016C790  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016F994 0016C794  7C 08 02 A6 */	mflr r0
@@ -7809,6 +7822,7 @@ Process__21zNPCGoalBPlanktonWallFP11en_trantypefPvP6xScene:
 /* 8016FA40 0016C840  38 60 00 00 */	li r3, 0
 /* 8016FA44 0016C844  4E 80 00 20 */	blr 
 
+.global create__23zNPCGoalBPlanktonMissleFiP10RyzMemGrowPv
 create__23zNPCGoalBPlanktonMissleFiP10RyzMemGrowPv:
 /* 8016FA48 0016C848  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016FA4C 0016C84C  7C 08 02 A6 */	mflr r0
@@ -7865,6 +7879,7 @@ Process__23zNPCGoalBPlanktonMissleFP11en_trantypefPvP6xScene:
 /* 8016FAF8 0016C8F8  38 60 00 00 */	li r3, 0
 /* 8016FAFC 0016C8FC  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBPlanktonBombFiP10RyzMemGrowPv
 create__21zNPCGoalBPlanktonBombFiP10RyzMemGrowPv:
 /* 8016FB00 0016C900  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8016FB04 0016C904  7C 08 02 A6 */	mflr r0

@@ -22095,6 +22095,7 @@ EASE__Ff:
 .endif
 
 .section .rodata
+.balign 8
 lbl_802670B0:
 	.incbin "baserom.dol", 0x264090, 0x154
 lbl_80267204:

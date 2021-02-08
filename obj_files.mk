@@ -262,7 +262,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/p2/iTime.o                  \
     $(OBJ_DIR)/src/Core/p2/iTime.o                  \
     $(OBJ_DIR)/asm/Core/p2/ngcrad3d.o               \
-    $(OBJ_DIR)/asm/Game/zNPCGoals.o                 \
     $(OBJ_DIR)/src/Game/zNPCGoals.o                 \
     $(OBJ_DIR)/src/Game/zNPCGoalCommon.o            \
     $(OBJ_DIR)/asm/Game/zNPCGoalStd.o               \

@@ -192,6 +192,7 @@ lbl_800D56E4:
 /* 800D56F0 000D24F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D56F4 000D24F4  4E 80 00 20 */	blr 
 
+.global GOALDestroy_Goal__FP12xFactoryInst
 GOALDestroy_Goal__FP12xFactoryInst:
 /* 800D56F8 000D24F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D56FC 000D24FC  7C 08 02 A6 */	mflr r0
