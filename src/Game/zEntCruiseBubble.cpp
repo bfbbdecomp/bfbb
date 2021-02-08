@@ -158,9 +158,38 @@ uint32 cruise_bubble::play_sound(int32 which, float32 volFactor)
 #endif
 
 // func_80057404
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3")
+// will match once file is complete, see comment below
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3")
+#else
+uint32 cruise_bubble::play_sound(int32 which, float32 volFactor, const xVec3* pos)
+{
+    sound_config* s = &sounds[which];
+
+    if (s->id != 0)
+    {
+        // using float literals only the TOC address doesnt match
+        // -> will match when file is complete
+        s->handle = xSndPlay3D(
+                s->id,
+                s->volume * volFactor,
+                zEntCruiseBubble_f_0_0,
+                (uint32) 128,
+                (uint32) 2048,
+                pos,
+                s->radius_inner,
+                s->radius_outer,
+                SND_CAT_GAME,
+                zEntCruiseBubble_f_0_0);
+    }
+
+    if (s->rumble != SDR_None)
+    {
+        zRumbleStart(s->rumble);
+    }
+    return s->handle;
+}
+#endif
 
 // func_80057488
 #pragma GLOBAL_ASM(                                                                                \

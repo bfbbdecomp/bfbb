@@ -28,6 +28,7 @@ void render_screen();
 void init_sound();
 void stop_sound(int32 which, uint32 handle);
 uint32 play_sound(int32 which, float32 volFactor);
+uint32 play_sound(int32 which, float32 volFactor, const xVec3* pos);
 
 } // namespace cruise_bubble
 
