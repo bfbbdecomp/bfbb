@@ -1147,9 +1147,9 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
         globals.player.Inv_PatsSock[level] += quantity;
     }
 
-    globals.player.Inv_LevelPickups[level] = globals.player.Inv_PatsSock[level];
+    globals.player.Inv_LevelPickups_CurrentLevel = globals.player.Inv_PatsSock[level];
 
-    if (quantity < 0)
+    if (0 < quantity)
     {
         zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
     }
