@@ -17,6 +17,13 @@
 #define NPC_GOAL_ID_PRAWNDAMAGE NPC_GOAL_ID('M', 11)
 #define NPC_GOAL_ID_PRAWNDEATH NPC_GOAL_ID('M', 12)
 
+struct zNPCGoalHere : zNPCGoalCommon
+{
+    zNPCGoalHere(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
 xFactoryInst* GOALCreate_SubBoss(int32 who, RyzMemGrow* grow, void*);
 
 #endif
