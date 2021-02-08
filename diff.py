@@ -395,10 +395,12 @@ def eval_line_num(expr: str) -> int:
 
 
 def run_make(target: str) -> None:
+    target = target.replace("\\", "/")
     subprocess.check_call(["make"] + makeflags + [target])
 
 
 def run_make_capture_output(target: str) -> "subprocess.CompletedProcess[bytes]":
+    target = target.replace("\\", "/")
     return subprocess.run(
         ["make"] + makeflags + [target],
         stderr=subprocess.PIPE,
