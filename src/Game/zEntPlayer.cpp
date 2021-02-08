@@ -445,31 +445,36 @@ uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-#if 0
 uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    // if this can be decompiled, it can be copied and pasted 4 more times.
-    zGameExtras_CheatFlags(); // it seems like this is a useless function call
-
-    return ((globals.player.Health == 0) &&
-            (player_dead_anim == (player_dead_anim / tran->UserFlags) * tran->UserFlags));
+    // it seems like this is a useless but necessary function call
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags == 0;
 }
-#else
-// func_80069694
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv")
-#endif
 
-// func_800696F8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated02Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 2;
+}
 
-// func_80069764
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated03Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 3;
+}
 
-// func_800697D0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated04Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 4;
+}
 
-// func_8006983C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated05Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
+}
 
 // func_800698A8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DefeatedCB__FP15xAnimTransitionP11xAnimSinglePv")
