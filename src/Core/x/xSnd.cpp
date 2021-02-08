@@ -12,6 +12,7 @@ extern float32 sTimeElapsed;
 extern float32 _585;
 extern float32 _586;
 extern float32 _598;
+extern float32 _599;
 
 #ifndef NON_MATCHING
 // func_800480B0
@@ -20,21 +21,21 @@ extern float32 _598;
 void xSndInit()
 {
     iSndInit();
-    xSndVoiceInfo* voices = gSnd.voice;
-    for (int32 i = 64; i > 0; i--)
+    xSndVoiceInfo* voice = gSnd.voice;
+    for (int32 i = 0; i < 64; i++, voice++)
     {
-        voices->flags = 0;
-        voices->lock_owner = 0;
-        voices = voices + 1;
+        voice->flags = 0;
+        voice->lock_owner = 0;
     }
 
     xSndSceneInit();
 
     //Need this to only use f0 instead of f1 for _585
-    gSnd.categoryVolFader[0] = _585;
-    gSnd.categoryVolFader[1] = _585;
-    gSnd.categoryVolFader[3] = _585;
-    gSnd.categoryVolFader[4] = _585;
+    for (int i = 0; i < 5; i++)
+    {
+        gSnd.categoryVolFader[i] = _585;
+    }
+
     gSnd.categoryVolFader[2] = _586;
 
     gSnd.stereo = 1;
@@ -44,14 +45,23 @@ void xSndInit()
 }
 #endif
 
-#if 1
 // func_80048174
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSceneInit__Fv")
-#else
 void xSndSceneInit()
 {
+    gSnd.listenerMode = SND_LISTENER_MODE_PLAYER;
+    for (uint32 i = 0; i < 2; i++)
+    {
+        gSnd.listenerMat[i].at.assign(_585, _598, _598);
+        gSnd.listenerMat[i].right.assign(_598, _585, _598);
+        gSnd.listenerMat[i].up.assign(_598, _598, _585);
+        gSnd.listenerMat[i].pos.assign(_599, _599, _599);
+    }
+    gSnd.at.assign(_585, _598, _598);
+    gSnd.right.assign(_598, _585, _598);
+    gSnd.up.assign(_598, _598, _585);
+    gSnd.pos.assign(_599, _599, _599);
+    iSndUpdate();
 }
-#endif
 
 // func_80048288
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetEnvironmentalEffect__F12sound_effect")
@@ -74,7 +84,7 @@ void xSndSceneInit()
 // func_8004845C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopAll__FUi")
 
-#if 1
+#ifndef NON_MATCHING
 // func_800484E4
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndDelayedInit__Fv")
 #else
@@ -82,7 +92,8 @@ void xSndDelayedInit()
 {
     for (int i = 0; i < 16; i++)
     {
-        sDelayedSnd[i].delay = _598;
+        //Alternates between f1 and f0
+        sDelayedSnd[i].delay = *(volatile float32*)&_598;
     }
     sDelayedPaused = 0;
 }
@@ -187,7 +198,7 @@ void xSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
 uint32 xSndIDIsPlaying(uint32 sndID)
 {
     xSndVoiceInfo* voice = gSnd.voice;
-    for (int i = 0; i != 64; i++, voice++)
+    for (int i = 0; i < 64; i++, voice++)
     {
         if (voice->flags & 1 && voice->sndID == sndID)
         {
@@ -198,22 +209,56 @@ uint32 xSndIDIsPlaying(uint32 sndID)
 }
 
 // func_80049200
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStop__FUi")
+void xSndStop(uint32 snd)
+{
+    iSndStop(snd);
+}
 
 // func_80049220
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndParentDied__FUi")
+void xSndParentDied(uint32 pid)
+{
+    xSndVoiceInfo* voice = gSnd.voice;
+    for (int32 i = 0; i < 64; i++, voice++)
+    {
+        if (voice->parentID == pid)
+        {
+            voice->flags = voice->flags & 0xffffffef;
+        }
+    }
+}
 
 // func_80049324
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopChildren__FUi")
+void xSndStopChildren(uint32 pid)
+{
+    uint32 i = 0;
+    xSndVoiceInfo* voice = gSnd.voice;
+    for (; i < 64; i++, voice++)
+    {
+        if ((voice->flags & 1) != 0 && voice->parentID == pid)
+        {
+            iSndStop(voice->sndID);
+            voice->flags = voice->flags & 0xffffffef;
+        }
+    }
+}
 
 // func_800493A8
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetVol__FUif")
+void xSndSetVol(uint32 snd, float32 vol)
+{
+    iSndSetVol(snd, vol);
+}
 
 // func_800493C8
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetPitch__FUif")
+void xSndSetPitch(uint32 snd, float32 pitch)
+{
+    iSndSetPitch(snd, pitch);
+}
 
 // func_800493E8
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetExternalCallback__FPFUi_v")
+void xSndSetExternalCallback(void (*callback)(uint32))
+{
+    iSndSetExternalCallback(callback);
+}
 
 // func_80049408
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "reset_faders__Fv")
@@ -235,14 +280,62 @@ uint32 xSndIDIsPlaying(uint32 sndID)
 // func_800497A4
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamLock__FUi14sound_categoryb")
 
+#if 1
 // func_80049910
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamReady__FUi")
+#else
+// Subtle issue with the register use in the setup of the loop
+uint8 xSndStreamReady(uint32 owner)
+{
+    for (xSndVoiceInfo* voice = gSnd.voice; voice != gSnd.voice + 6; voice++)
+    {
+        if (voice->lock_owner == owner)
+        {
+            return !(voice->flags & 1);
+        }
+    }
+    return 0;
+}
+#endif
 
+#if 1
 // func_8004995C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamUnlock__FUi")
+#else
+// Same issue as xSndStreamReady
+void xSndStreamUnlock(uint32 owner)
+{
+    xSndVoiceInfo* voice = gSnd.voice;
+    for (; voice != gSnd.voice + 6; voice++)
+    {
+        if (voice->lock_owner == owner)
+        {
+            voice->lock_owner = 0;
+            return;
+        }
+    }
+}
+#endif
 
+#if 1
 // func_8004999C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndCategoryGetsEffects__F14sound_category")
+#else
+uint32 xSndCategoryGetsEffects(sound_category category)
+{
+    if (-(1 - category >> 1) + (~category | 1))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
+#endif
 
 // func_800499C4
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndGetVol__FUi")
+float32 xSndGetVol(uint32 snd)
+{
+    return iSndGetVol(snd);
+}
