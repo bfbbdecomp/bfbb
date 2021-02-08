@@ -41,6 +41,7 @@ extern int32 player_hit_anim;
 extern uint32 player_dead_anim;
 
 extern float32 lbl_803CD5A0; // 0.0
+extern float32 lbl_803CD830; // 30.0
 extern float32 lbl_803CD638; // 10.0
 
 // This needs to be const
@@ -1117,7 +1118,7 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 }
 
 // func_80076ADC
-#if 1
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GivePatsSocksCurrentLevel__Fi")
 #else
 void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
@@ -1150,7 +1151,7 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
 
     if (quantity < 0)
     {
-        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, NULL, 0x104, NPC_TYPE_UNKNOWN);
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
     }
 }
 #endif
