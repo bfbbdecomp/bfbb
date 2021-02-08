@@ -382,6 +382,7 @@ struct zNPCCommon : xNPCBasic
     void ModelScaleSet(float32 x, float32 y, float32 z);
     void ModelScaleSet(const xVec3* vec);
     int32 AnimStart(uint32 animID, int32 forceRestart);
+    uint32 AnimCurStateID();
     void GiveReward();
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     int32 GetVertPos(en_mdlvert vid, xVec3* pos);
@@ -436,7 +437,12 @@ struct zNPCCommon : xNPCBasic
     virtual void SpeakEnd();
     virtual void SpeakStart();
     virtual void SpeakStop();
-    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+
+    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+    {
+        return 0;
+    }
+
     virtual void GetParm(en_npcparm pid, void* val);
     virtual void GetParmDefault(en_npcparm pid, void* val);
     virtual float32 GenShadCacheRad();

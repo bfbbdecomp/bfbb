@@ -242,11 +242,27 @@
 // func_800D8FE0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "__ct__12xFactoryInstFv")
 
+#if 0
 // func_800D8FF4
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "__ct__14zNPCGoalCommonFi")
+#else
+zNPCGoalCommon::zNPCGoalCommon(int32 goalID) : xGoal(goalID)
+{
+    this->flg_npcgauto |= ~0x8;
+}
+#endif
 
+#if 1
 // func_800D9040
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "__ct__5xGoalFi")
+#else
+WEAK xGoal::xGoal(int32 goalID)
+{
+    this->goalID = goalID;
+    this->flg_able = 0;
+    this->stat = GOAL_STAT_UNKNOWN;
+}
+#endif
 
 // func_800D90A0
 #pragma GLOBAL_ASM("asm/Game/zNPCGoalStd.s", "SetFlags__5xGoalFi")

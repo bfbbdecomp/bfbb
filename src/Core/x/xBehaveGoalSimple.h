@@ -7,8 +7,18 @@
 
 struct xGoalEmpty : xGoal
 {
-    const char* Name();
-    void Clear();
+    xGoalEmpty(int32 goalID) : xGoal(goalID)
+    {
+    }
+
+    virtual const char* Name()
+    {
+        return "xGoalEmpty";
+    }
+
+    virtual void Clear()
+    {
+    }
 };
 
 struct xGoalGeneric : xGoal
@@ -20,18 +30,26 @@ struct xGoalGeneric : xGoal
     int32 (*fun_sysevent)(xGoal*, void*, xBase*, xBase*, uint32, const float32*, xBase*, int32*);
     void* usrData;
 
-    xGoalGeneric(int32 goalID);
-    int32 Enter(float32 dt, void* updCtxt);
-    int32 Exit(float32 dt, void* updCtxt);
-    int32 Suspend(float32 dt, void* updCtxt);
-    int32 Resume(float32 dt, void* updCtxt);
-    int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                   xBase* toParamWidget, int32* handled);
-    const char* Name();
-    void Clear();
-};
+    xGoalGeneric(int32 goalID) : xGoal(goalID)
+    {
+    }
 
-#include <types.h>
+    virtual const char* Name()
+    {
+        return "xGoalGeneric";
+    }
+
+    virtual void Clear()
+    {
+    }
+
+    virtual int32 Enter(float32 dt, void* updCtxt);
+    virtual int32 Exit(float32 dt, void* updCtxt);
+    virtual int32 Suspend(float32 dt, void* updCtxt);
+    virtual int32 Resume(float32 dt, void* updCtxt);
+    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+                           xBase* toParamWidget, int32* handled);
+};
 
 void xGoalSimple_RegisterTypes(xFactory* fac);
 xFactoryInst* GOALCreate_Generic(int32 who, RyzMemGrow* growCtxt, void* dat);

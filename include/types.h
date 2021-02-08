@@ -41,4 +41,6 @@ typedef int32 bool32;
 #define asm
 #endif
 
+#define WEAK __declspec(weak)
+
 #endif
