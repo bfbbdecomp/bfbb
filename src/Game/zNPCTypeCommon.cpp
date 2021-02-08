@@ -24,8 +24,21 @@ extern int32 g_flg_wonder;
 extern int32 g_isConversation;
 extern float32 g_tmr_talkless;
 
-// func_800EEE4C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Create_Common__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCCommon* com = NULL;
+
+    switch (who)
+    {
+    case NPC_TYPE_ID_COMMON:
+    {
+        com = new (who, grow) zNPCCommon(who);
+        break;
+    }
+    }
+
+    return com;
+}
 
 void ZNPC_Destroy_Common(xFactoryInst* inst)
 {

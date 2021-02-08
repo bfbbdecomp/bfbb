@@ -1,15 +1,16 @@
 #include "zNPCTypeTiki.h"
 
-#include <types.h>
-
 #include "../Core/x/xString.h"
+#include "../Core/x/xutil.h"
 
-extern int8* g_strz_tikianim[2];
-extern uint32 g_hash_tikianim[2];
+#define ANIM_COUNT 2
+
+extern const char* g_strz_tikianim[ANIM_COUNT];
+extern uint32 g_hash_tikianim[ANIM_COUNT];
 
 void ZNPC_Tiki_Startup()
 {
-    for (int32 i = 0; i < 2; i++)
+    for (int32 i = 0; i < ANIM_COUNT; i++)
     {
         g_hash_tikianim[i] = xStrHash(g_strz_tikianim[i]);
     }
@@ -37,11 +38,35 @@ void ZNPC_Tiki_Shutdown()
 // func_80109F28
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "zNPCTiki_ReparentOrphans__Fv")
 
-// func_80109FEC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_Create_Tiki__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCTiki* tiki = NULL;
 
-// func_8010A088
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_Destroy_Tiki__FP12xFactoryInst")
+    switch (who)
+    {
+    case NPC_TYPE_ID_TIKIWOOD:
+    case NPC_TYPE_ID_TIKILOVEY:
+    case NPC_TYPE_ID_TIKISHHH:
+    case NPC_TYPE_ID_TIKITHUNDER:
+    case NPC_TYPE_ID_TIKISTONE:
+    {
+        tiki = new (who, grow) zNPCTiki(who);
+        break;
+    }
+    default:
+    {
+        xUtil_idtag2string(who, 0);
+        break;
+    }
+    }
+
+    return tiki;
+}
+
+void ZNPC_Destroy_Tiki(xFactoryInst* inst)
+{
+    delete inst;
+}
 
 // func_8010A0AC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_AnimTable_Tiki__Fv")

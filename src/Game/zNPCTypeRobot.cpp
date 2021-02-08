@@ -82,8 +82,107 @@ void zNPCRobot_Timestep(float dt)
     g_needuvincr_slickshield = 1;
 }
 
-// func_800F4CD8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "ZNPC_Create_Robot__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Robot(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCRobot* robo;
+
+    switch (who)
+    {
+    case NPC_TYPE_ID_ROBOT:
+    {
+        robo = new (who, grow) zNPCRobot(who);
+        break;
+    }
+    case NPC_TYPE_ID_FODDER:
+    {
+        robo = new (who, grow) zNPCFodder(who);
+        break;
+    }
+    case NPC_TYPE_ID_FODBOMB:
+    {
+        robo = new (who, grow) zNPCFodBomb(who);
+        break;
+    }
+    case NPC_TYPE_ID_FODBZZT:
+    {
+        robo = new (who, grow) zNPCFodBzzt(who);
+        break;
+    }
+    case NPC_TYPE_ID_CHOMPER:
+    {
+        robo = new (who, grow) zNPCChomper(who);
+        break;
+    }
+    case NPC_TYPE_ID_CRITTER:
+    {
+        robo = new (who, grow) zNPCCritter(who);
+        break;
+    }
+    case NPC_TYPE_ID_HAMMER1:
+    case NPC_TYPE_ID_HAMMER2:
+    {
+        robo = new (who, grow) zNPCHammer(who);
+        break;
+    }
+    case NPC_TYPE_ID_TARTAR:
+    {
+        robo = new (who, grow) zNPCTarTar(who);
+        break;
+    }
+    case NPC_TYPE_ID_GLOVE:
+    {
+        robo = new (who, grow) zNPCGlove(who);
+        break;
+    }
+    case NPC_TYPE_ID_MONSOON:
+    {
+        robo = new (who, grow) zNPCMonsoon(who);
+        break;
+    }
+    case NPC_TYPE_ID_SLEEPY:
+    {
+        robo = new (who, grow) zNPCSleepy(who);
+        break;
+    }
+    case NPC_TYPE_ID_ARFDOG:
+    {
+        robo = new (who, grow) zNPCArfDog(who);
+        break;
+    }
+    case NPC_TYPE_ID_ARFARF:
+    {
+        robo = new (who, grow) zNPCArfArf(who);
+        break;
+    }
+    case NPC_TYPE_ID_CHUCK:
+    {
+        robo = new (who, grow) zNPCChuck(who);
+        break;
+    }
+    case NPC_TYPE_ID_TUBELET:
+    {
+        robo = new (who, grow) zNPCTubelet(who);
+        break;
+    }
+    case NPC_TYPE_ID_TUBESLAVE:
+    {
+        robo = new (who, grow) zNPCTubeSlave(who);
+        break;
+    }
+    case NPC_TYPE_ID_SLICK:
+    {
+        robo = new (who, grow) zNPCSlick(who);
+        break;
+    }
+    default:
+    {
+        robo = new (who, grow) zNPCRobot(who);
+        break;
+    }
+    }
+
+    return robo;
+}
 
 void ZNPC_Destroy_Robot(xFactoryInst* inst)
 {

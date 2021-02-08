@@ -1,9 +1,13 @@
 #ifndef ZNPCTYPETIKI_H
 #define ZNPCTYPETIKI_H
 
-#include <types.h>
-
 #include "zNPCTypeCommon.h"
+
+#define NPC_TYPE_ID_TIKIWOOD NPC_TYPE_ID('T', 0)
+#define NPC_TYPE_ID_TIKILOVEY NPC_TYPE_ID('T', 1)
+#define NPC_TYPE_ID_TIKISHHH NPC_TYPE_ID('T', 2)
+#define NPC_TYPE_ID_TIKITHUNDER NPC_TYPE_ID('T', 3)
+#define NPC_TYPE_ID_TIKISTONE NPC_TYPE_ID('T', 4)
 
 struct zScene;
 
@@ -60,5 +64,7 @@ void ZNPC_Tiki_Shutdown();
 void zNPCTiki_InitStacking(zScene* zsc);
 void zNPCTiki_InitFX(zScene*);
 void zNPCTiki_ExplodeFX(zNPCTiki* tiki);
+xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Tiki(xFactoryInst* inst);
 
 #endif

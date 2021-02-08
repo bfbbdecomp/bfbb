@@ -11,11 +11,47 @@
 // func_80107808
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_Ambient_Shutdown__Fv")
 
-// func_8010780C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_Create_Ambient__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Ambient(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCAmbient* inst = NULL;
 
-// func_80107950
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_Destroy_Ambient__FP12xFactoryInst")
+    switch (who)
+    {
+    case NPC_TYPE_ID_AMBIENT:
+    {
+        inst = new (who, grow) zNPCAmbient(who);
+        break;
+    }
+    case NPC_TYPE_ID_JELLY1:
+    case NPC_TYPE_ID_JELLY2:
+    {
+        inst = new (who, grow) zNPCJelly(who);
+        break;
+    }
+    case NPC_TYPE_ID_NEPTUNE:
+    {
+        inst = new (who, grow) zNPCNeptune(who);
+        break;
+    }
+    case NPC_TYPE_ID_MIMEFISH1:
+    {
+        inst = new (who, grow) zNPCMimeFish(who);
+        break;
+    }
+    case NPC_TYPE_ID_MIMEFISH2:
+    {
+        inst = new (who, grow) zNPCMimeFish(who);
+        break;
+    }
+    }
+
+    return inst;
+}
+
+void ZNPC_Destroy_Ambient(xFactoryInst* inst)
+{
+    delete inst;
+}
 
 // func_80107974
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_AnimTable_Ambient__Fv")

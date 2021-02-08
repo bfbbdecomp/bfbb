@@ -274,7 +274,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zNPCMessenger.o             \
     $(OBJ_DIR)/asm/Game/zNPCMgr.o                   \
     $(OBJ_DIR)/src/Game/zNPCMgr.o                   \
-    $(OBJ_DIR)/asm/Game/zNPCTypes.o                 \
     $(OBJ_DIR)/src/Game/zNPCTypes.o                 \
     $(OBJ_DIR)/asm/Game/zNPCTypeCommon.o            \
     $(OBJ_DIR)/src/Game/zNPCTypeCommon.o            \
