@@ -3,6 +3,13 @@
 
 #include "zNPCGoalCommon.h"
 
+#define NPC_GOAL_ID_TIKIIDLE NPC_GOAL_ID('T', 0)
+#define NPC_GOAL_ID_TIKIPATROL NPC_GOAL_ID('T', 1)
+#define NPC_GOAL_ID_TIKIHIDE NPC_GOAL_ID('T', 2)
+#define NPC_GOAL_ID_TIKICOUNT NPC_GOAL_ID('T', 3)
+#define NPC_GOAL_ID_TIKIDYING NPC_GOAL_ID('T', 4)
+#define NPC_GOAL_ID_TIKIDEAD NPC_GOAL_ID('T', 5)
+
 struct zNPCGoalTikiIdle : zNPCGoalCommon
 {
     float32 tmr_wait;
