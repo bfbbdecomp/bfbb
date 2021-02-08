@@ -2,6 +2,7 @@
 #define ZNPCTYPEBOSSSANDY_H
 
 #include "zNPCTypeBoss.h"
+#include "zNPCGoalCommon.h"
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
 
@@ -96,6 +97,119 @@ struct zNPCBSandy : zNPCBoss
     xBinaryCamera specialBossCam;
 
     zNPCBSandy(int32 myType);
+};
+
+struct zNPCGoalBossSandyIdle : zNPCGoalCommon
+{
+    float32 timeInGoal;
+
+    zNPCGoalBossSandyIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyTaunt : zNPCGoalCommon
+{
+    float32 timeInGoal;
+
+    zNPCGoalBossSandyTaunt(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyChase : zNPCGoalCommon
+{
+    float32 timeInGoal;
+
+    zNPCGoalBossSandyChase(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyMelee : zNPCGoalCommon
+{
+    float32 timeInGoal;
+
+    zNPCGoalBossSandyMelee(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyNoHead : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 secsSincePatWasCarryingHead;
+
+    zNPCGoalBossSandyNoHead(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyElbowDrop : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 elbowFlags;
+
+    zNPCGoalBossSandyElbowDrop(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyLeap : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 startX;
+    float32 startZ;
+    float32 endX;
+    float32 endZ;
+
+    zNPCGoalBossSandyLeap(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandySit : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    float32 totalTime;
+    uint32 sitFlags;
+
+    zNPCGoalBossSandySit(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyGetUp : zNPCGoalCommon
+{
+    float32 timeInGoal;
+
+    zNPCGoalBossSandyGetUp(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyRunToRope : zNPCGoalCommon
+{
+    float32 timeInGoal;
+
+    zNPCGoalBossSandyRunToRope(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    uint32 playedAnimEarly;
+    float32 totalHoverTime;
+    xVec3 bounceStartPoint;
+
+    zNPCGoalBossSandyClothesline(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
 };
 
 void zNPCBSandy_AddBoundEntsToGrid(zScene*);
