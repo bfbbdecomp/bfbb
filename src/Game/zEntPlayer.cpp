@@ -1152,8 +1152,26 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
     }
 }
 
-// func_80076BD0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveLevelPickupCurrentLevel__Fi")
+void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
+{
+    uint32 level = zSceneGetLevelIndex();
+
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_LevelPickups[level])
+    {
+        globals.player.Inv_LevelPickups[level] = 0;
+    }
+    else
+    {
+        globals.player.Inv_LevelPickups[level] += quantity;
+    }
+
+    globals.player.Inv_LevelPickups_CurrentLevel = globals.player.Inv_LevelPickups[level];
+
+    if (quantity > 0)
+    {
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+    }
+}
 
 // func_80076C84
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CalcJumpImpulse_Smooth__Ffffff")
