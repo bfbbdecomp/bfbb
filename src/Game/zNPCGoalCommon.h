@@ -7,6 +7,8 @@
 #include "../Core/x/xNPCBasic.h"
 #include "zNPCTypeCommon.h"
 
+#define NPC_GOAL_ID(c, n) ('NG\0\0' | ((c) << 8) + ('0' + (n)))
+
 struct zNPCGoalCommon : xGoal
 {
     int32 flg_npcgauto;
