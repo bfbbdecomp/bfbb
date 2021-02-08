@@ -2,6 +2,7 @@
 #define ZNPCTYPEPRAWN_H
 
 #include "zNPCTypeSubBoss.h"
+#include "zNPCGoalCommon.h"
 #include "zDiscoFloor.h"
 #include "zNPCSpawner.h"
 #include "../Core/x/containers.h"
@@ -131,6 +132,58 @@ struct zNPCPrawn : zNPCSubBoss
     uint32 closeups_used;
 
     zNPCPrawn(int32 myType);
+};
+
+struct zNPCGoalPrawnIdle : zNPCGoalCommon
+{
+    zNPCGoalPrawnIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalPrawnBeam : zNPCGoalCommon
+{
+    enum substate_enum
+    {
+        SS_AIM,
+        SS_FIRE,
+        SS_HOLD,
+        SS_SWEEP,
+        SS_STOP,
+        MAX_SS
+    };
+
+    substate_enum substate;
+    int32 sweeps;
+    float32 sweep_dir;
+    float32 delay;
+
+    zNPCGoalPrawnBeam(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalPrawnBowl : zNPCGoalCommon
+{
+    uint8 aiming;
+
+    zNPCGoalPrawnBowl(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalPrawnDamage : zNPCGoalCommon
+{
+    zNPCGoalPrawnDamage(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalPrawnDeath : zNPCGoalCommon
+{
+    zNPCGoalPrawnDeath(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
 };
 
 #endif

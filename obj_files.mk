@@ -262,9 +262,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/p2/iTime.o                  \
     $(OBJ_DIR)/src/Core/p2/iTime.o                  \
     $(OBJ_DIR)/asm/Core/p2/ngcrad3d.o               \
-    $(OBJ_DIR)/asm/Game/zNPCGoals.o                 \
     $(OBJ_DIR)/src/Game/zNPCGoals.o                 \
-    $(OBJ_DIR)/asm/Game/zNPCGoalCommon.o            \
     $(OBJ_DIR)/src/Game/zNPCGoalCommon.o            \
     $(OBJ_DIR)/asm/Game/zNPCGoalStd.o               \
     $(OBJ_DIR)/src/Game/zNPCGoalStd.o               \
@@ -276,7 +274,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zNPCMessenger.o             \
     $(OBJ_DIR)/asm/Game/zNPCMgr.o                   \
     $(OBJ_DIR)/src/Game/zNPCMgr.o                   \
-    $(OBJ_DIR)/asm/Game/zNPCTypes.o                 \
     $(OBJ_DIR)/src/Game/zNPCTypes.o                 \
     $(OBJ_DIR)/asm/Game/zNPCTypeCommon.o            \
     $(OBJ_DIR)/src/Game/zNPCTypeCommon.o            \
@@ -290,15 +287,12 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zNPCTypeTiki.o              \
     $(OBJ_DIR)/asm/Core/x/xBehaveMgr.o              \
     $(OBJ_DIR)/src/Core/x/xBehaveMgr.o              \
-    $(OBJ_DIR)/asm/Core/x/xBehaviour.o              \
     $(OBJ_DIR)/src/Core/x/xBehaviour.o              \
-    $(OBJ_DIR)/asm/Core/x/xBehaveGoalSimple.o       \
     $(OBJ_DIR)/src/Core/x/xBehaveGoalSimple.o       \
     $(OBJ_DIR)/asm/Core/x/xSkyDome.o                \
     $(OBJ_DIR)/src/Core/x/xSkyDome.o                \
     $(OBJ_DIR)/asm/Core/x/xRMemData.o               \
     $(OBJ_DIR)/src/Core/x/xRMemData.o               \
-    $(OBJ_DIR)/asm/Core/x/xFactory.o                \
     $(OBJ_DIR)/src/Core/x/xFactory.o                \
     $(OBJ_DIR)/asm/Core/x/xNPCBasic.o               \
     $(OBJ_DIR)/src/Core/x/xNPCBasic.o               \
@@ -331,7 +325,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zGoo.o                      \
     $(OBJ_DIR)/asm/Game/zGrid.o                     \
     $(OBJ_DIR)/src/Game/zGrid.o                     \
-    $(OBJ_DIR)/asm/Game/zNPCGoalScript.o            \
     $(OBJ_DIR)/src/Game/zNPCGoalScript.o            \
     $(OBJ_DIR)/asm/Game/zNPCSndTable.o              \
     $(OBJ_DIR)/src/Game/zNPCSndTable.o              \
@@ -368,7 +361,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zNPCTypeBoss.o              \
     $(OBJ_DIR)/asm/Game/zNPCGoalVillager.o          \
     $(OBJ_DIR)/src/Game/zNPCGoalVillager.o          \
-    $(OBJ_DIR)/asm/Game/zNPCGoalSubBoss.o           \
     $(OBJ_DIR)/src/Game/zNPCGoalSubBoss.o           \
     $(OBJ_DIR)/asm/Core/x/xShadowSimple.o           \
     $(OBJ_DIR)/src/Core/x/xShadowSimple.o           \

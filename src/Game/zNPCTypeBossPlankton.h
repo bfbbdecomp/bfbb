@@ -2,11 +2,28 @@
 #define ZNPCTYPEBOSSPLANKTON_H
 
 #include "zNPCTypeBoss.h"
+#include "zNPCGoalCommon.h"
 #include "zEntDestructObj.h"
 
 #include "../Core/x/xDecal.h"
 #include "../Core/x/xLaserBolt.h"
 #include "../Core/x/xTimer.h"
+
+#define NPC_GOAL_ID_BPLANKTONIDLE NPC_GOAL_ID('B', 27)
+#define NPC_GOAL_ID_BPLANKTONATTACK NPC_GOAL_ID('B', 28)
+#define NPC_GOAL_ID_BPLANKTONAMBUSH NPC_GOAL_ID('B', 29)
+#define NPC_GOAL_ID_BPLANKTONFLANK NPC_GOAL_ID('B', 30)
+#define NPC_GOAL_ID_BPLANKTONEVADE NPC_GOAL_ID('B', 31)
+#define NPC_GOAL_ID_BPLANKTONHUNT NPC_GOAL_ID('B', 32)
+#define NPC_GOAL_ID_BPLANKTONTAUNT NPC_GOAL_ID('B', 33)
+#define NPC_GOAL_ID_BPLANKTONMOVE NPC_GOAL_ID('B', 34)
+#define NPC_GOAL_ID_BPLANKTONSTUN NPC_GOAL_ID('B', 35)
+#define NPC_GOAL_ID_BPLANKTONFALL NPC_GOAL_ID('B', 36)
+#define NPC_GOAL_ID_BPLANKTONDIZZY NPC_GOAL_ID('B', 37)
+#define NPC_GOAL_ID_BPLANKTONBEAM NPC_GOAL_ID('B', 38)
+#define NPC_GOAL_ID_BPLANKTONWALL NPC_GOAL_ID('B', 39)
+#define NPC_GOAL_ID_BPLANKTONMISSLE NPC_GOAL_ID('B', 40)
+#define NPC_GOAL_ID_BPLANKTONBOMB NPC_GOAL_ID('B', 41)
 
 struct zNPCNewsFish;
 
@@ -105,6 +122,124 @@ struct zNPCBPlankton : zNPCBoss
     uint8 played_intro;
 
     zNPCBPlankton(int32 myType);
+};
+
+struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonAttack : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonAmbush : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonFlank : zNPCGoalCommon
+{
+    float32 accel;
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonEvade : zNPCGoalCommon
+{
+    float32 evade_delay;
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
+{
+    xVec3 player_loc;
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonMove : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonStun : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonFall : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonDizzy : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
+{
+    enum substate_enum
+    {
+        SS_WARM_UP,
+        SS_FIRE,
+        SS_COOL_DOWN,
+        SS_DONE
+    };
+
+    float32 emitted;
+    substate_enum substate;
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonWall : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
+{
+    zNPCBPlankton& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 #endif

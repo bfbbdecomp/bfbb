@@ -20,11 +20,31 @@
 // func_8012524C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "zNPCDuplotron_ScenePostInit__Fv")
 
-// func_8012526C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ZNPC_Create_Duplotron__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Duplotron(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCDuplotron* npc;
 
-// func_80125304
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ZNPC_Destroy_Duplotron__FP12xFactoryInst")
+    switch (who)
+    {
+    case NPC_TYPE_ID_DUPLOTRON:
+    {
+        npc = new (who, grow) zNPCDuplotron(who);
+        break;
+    }
+    default:
+    {
+        npc = new (who, grow) zNPCDuplotron(who);
+        break;
+    }
+    }
+
+    return npc;
+}
+
+void ZNPC_Destroy_Duplotron(xFactoryInst* inst)
+{
+    delete inst;
+}
 
 // func_80125328
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ZNPC_AnimTable_Duplotron__Fv")

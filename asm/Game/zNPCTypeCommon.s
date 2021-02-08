@@ -4,42 +4,6 @@
 
 .section .text  # 0x800EEE4C - 0x800F4A6C
 
-.global ZNPC_Create_Common__FiP10RyzMemGrowPv
-ZNPC_Create_Common__FiP10RyzMemGrowPv:
-/* 800EEE4C 000EBC4C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800EEE50 000EBC50  7C 08 02 A6 */	mflr r0
-/* 800EEE54 000EBC54  3C A0 4E 54 */	lis r5, 0x4E543031@ha
-/* 800EEE58 000EBC58  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800EEE5C 000EBC5C  38 05 30 31 */	addi r0, r5, 0x4E543031@l
-/* 800EEE60 000EBC60  7C 85 23 78 */	mr r5, r4
-/* 800EEE64 000EBC64  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800EEE68 000EBC68  7C 7F 1B 78 */	mr r31, r3
-/* 800EEE6C 000EBC6C  7C 1F 00 00 */	cmpw r31, r0
-/* 800EEE70 000EBC70  38 60 00 00 */	li r3, 0
-/* 800EEE74 000EBC74  41 82 00 08 */	beq lbl_800EEE7C
-/* 800EEE78 000EBC78  48 00 00 28 */	b lbl_800EEEA0
-lbl_800EEE7C:
-/* 800EEE7C 000EBC7C  7F E4 FB 78 */	mr r4, r31
-/* 800EEE80 000EBC80  38 60 02 A0 */	li r3, 0x2a0
-/* 800EEE84 000EBC84  48 02 02 CD */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 800EEE88 000EBC88  7C 60 1B 79 */	or. r0, r3, r3
-/* 800EEE8C 000EBC8C  41 82 00 10 */	beq lbl_800EEE9C
-/* 800EEE90 000EBC90  7F E4 FB 78 */	mr r4, r31
-/* 800EEE94 000EBC94  48 00 57 61 */	bl __ct__10zNPCCommonFi
-/* 800EEE98 000EBC98  7C 60 1B 78 */	mr r0, r3
-lbl_800EEE9C:
-/* 800EEE9C 000EBC9C  7C 03 03 78 */	mr r3, r0
-lbl_800EEEA0:
-/* 800EEEA0 000EBCA0  28 03 00 00 */	cmplwi r3, 0
-/* 800EEEA4 000EBCA4  41 82 00 08 */	beq lbl_800EEEAC
-/* 800EEEA8 000EBCA8  38 63 00 D0 */	addi r3, r3, 0xd0
-lbl_800EEEAC:
-/* 800EEEAC 000EBCAC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800EEEB0 000EBCB0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800EEEB4 000EBCB4  7C 08 03 A6 */	mtlr r0
-/* 800EEEB8 000EBCB8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800EEEBC 000EBCBC  4E 80 00 20 */	blr 
-
 .global Init__10zNPCCommonFP9xEntAsset
 Init__10zNPCCommonFP9xEntAsset:
 /* 800EF09C 000EBE9C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -6353,6 +6317,7 @@ lbl_800F4A64:
 .endif
 
 .section .rodata
+.balign 8
 lbl_80268C28:
 	.incbin "baserom.dol", 0x265C08, 0x30
 lbl_80268C58:

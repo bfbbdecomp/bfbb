@@ -92,10 +92,16 @@ nofralloc
 {data}
 }}"""
 
+funcTemplateNoSig = """nofralloc
+{data}"""
 
-def writeCode(source, funcName, codeBytes, isGlobal):
+
+def writeCode(source, funcName, codeBytes, isGlobal, noSig):
     source += "\n"
-    t = funcTemplate.replace("{name}", funcName)
+    if noSig:
+        t = funcTemplateNoSig
+    else:
+        t = funcTemplate.replace("{name}", funcName)
     bs = list(map(bytesToString, codeBytes))
     t = t.replace("{data}", "\n".join(bs))
     if not isGlobal:

@@ -52,7 +52,7 @@ xFactoryInst* ZNPC_Create_Test(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case 'NTS4':
+    case NPC_TYPE_ID_TEST:
     {
         inst = new (who, grow) zNPCTest(who);
         break;

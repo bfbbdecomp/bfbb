@@ -252,7 +252,7 @@ void sndloadcb(tag_xFile* tag)
 #pragma GLOBAL_ASM("asm/Core/p2/iSnd.s", "iSndDIEDIEDIE__Fv")
 
 // func_800D2EB8
-void iSndSetExternalCallback(uint32 (*func_ptr)())
+void iSndSetExternalCallback(void (*func_ptr)(uint32))
 {
 }
 

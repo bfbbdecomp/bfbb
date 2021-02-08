@@ -192,6 +192,7 @@ lbl_800D56E4:
 /* 800D56F0 000D24F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D56F4 000D24F4  4E 80 00 20 */	blr 
 
+.global GOALDestroy_Goal__FP12xFactoryInst
 GOALDestroy_Goal__FP12xFactoryInst:
 /* 800D56F8 000D24F8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D56FC 000D24FC  7C 08 02 A6 */	mflr r0
@@ -4453,6 +4454,61 @@ lbl_800D929C:
 /* 800D92A8 000D60A8  4E 80 00 20 */	blr 
 
 .endif
+
+.section .data
+.balign 8
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalDEVHero
+__vt__15zNPCGoalDEVHero:
+	.incbin "baserom.dol", 0x28FBF0, 0x34
+/* SPECULATION: link order */
+.global __vt__19zNPCGoalDEVAnimSpin
+__vt__19zNPCGoalDEVAnimSpin:
+	.incbin "baserom.dol", 0x28FC24, 0x34
+/* SPECULATION: link order */
+.global __vt__20zNPCGoalDEVAnimCycle
+__vt__20zNPCGoalDEVAnimCycle:
+	.incbin "baserom.dol", 0x28FC58, 0x34
+/* SPECULATION: link order */
+.global __vt__13zNPCGoalLimbo
+__vt__13zNPCGoalLimbo:
+	.incbin "baserom.dol", 0x28FC8C, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalDead
+__vt__12zNPCGoalDead:
+	.incbin "baserom.dol", 0x28FCC0, 0x34
+/* SPECULATION: link order */
+.global __vt__15zNPCGoalWaiting
+__vt__15zNPCGoalWaiting:
+	.incbin "baserom.dol", 0x28FCF4, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalWander
+__vt__14zNPCGoalWander:
+	.incbin "baserom.dol", 0x28FD28, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalFidget
+__vt__14zNPCGoalFidget:
+	.incbin "baserom.dol", 0x28FD5C, 0x34
+/* SPECULATION: link order */
+.global __vt__14zNPCGoalPatrol
+__vt__14zNPCGoalPatrol:
+	.incbin "baserom.dol", 0x28FD90, 0x34
+/* SPECULATION: link order */
+.global __vt__12zNPCGoalIdle
+__vt__12zNPCGoalIdle:
+	.incbin "baserom.dol", 0x28FDC4, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalLoopAnim
+__vt__16zNPCGoalLoopAnim:
+	.incbin "baserom.dol", 0x28FDF8, 0x34
+/* SPECULATION: link order */
+.global __vt__16zNPCGoalPushAnim
+__vt__16zNPCGoalPushAnim:
+	.incbin "baserom.dol", 0x28FE2C, 0x34
+/* SPECULATION: link order */
+.global __vt__17zNPCGoalNoManLand
+__vt__17zNPCGoalNoManLand:
+	.incbin "baserom.dol", 0x28FE60, 0x38
 
 .section .sbss
 lbl_803CBC58:

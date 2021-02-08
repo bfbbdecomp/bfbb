@@ -13,6 +13,10 @@
 #include "zMovePoint.h"
 #include "zShrapnel.h"
 
+#define NPC_TYPE_ID(c, n) ('NT\0\0' | ((c) << 8) + ('0' + (n)))
+
+#define NPC_TYPE_ID_COMMON NPC_TYPE_ID('0', 1)
+
 typedef struct NPCMsg;
 
 enum en_npcparm
@@ -382,6 +386,7 @@ struct zNPCCommon : xNPCBasic
     void ModelScaleSet(float32 x, float32 y, float32 z);
     void ModelScaleSet(const xVec3* vec);
     int32 AnimStart(uint32 animID, int32 forceRestart);
+    uint32 AnimCurStateID();
     void GiveReward();
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     int32 GetVertPos(en_mdlvert vid, xVec3* pos);
@@ -436,7 +441,12 @@ struct zNPCCommon : xNPCBasic
     virtual void SpeakEnd();
     virtual void SpeakStart();
     virtual void SpeakStop();
-    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+
+    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+    {
+        return 0;
+    }
+
     virtual void GetParm(en_npcparm pid, void* val);
     virtual void GetParmDefault(en_npcparm pid, void* val);
     virtual float32 GenShadCacheRad();
@@ -542,6 +552,8 @@ struct NPCMsg
     float32 tmr_delay;
 };
 
+xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Common(xFactoryInst* inst);
 void zNPCCommon_ScenePrepare();
 void zNPCCommon_SceneFinish();
 void zNPCPlyrSnd_Reset();

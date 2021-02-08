@@ -38,6 +38,9 @@ typedef int32 bool32;
 
 #ifndef __MWERKS__
 #define __declspec(x)
+#define asm
 #endif
+
+#define WEAK __declspec(weak)
 
 #endif

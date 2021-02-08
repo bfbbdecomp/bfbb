@@ -16,11 +16,14 @@ struct xFactoryInst : RyzMemData
     ~xFactoryInst();
 };
 
+typedef xFactoryInst* (*XGOFTypeInfoCreator)(int32, RyzMemGrow*, void*);
+typedef void (*XGOFTypeInfoDestroyer)(xFactoryInst*);
+
 struct XGOFTypeInfo
 {
     int32 tid;
-    xFactoryInst* (*creator)(int32, RyzMemGrow*, void*);
-    void (*destroyer)(xFactoryInst*);
+    XGOFTypeInfoCreator creator;
+    XGOFTypeInfoDestroyer destroyer;
 };
 
 struct xFactory : RyzMemData
@@ -36,13 +39,9 @@ struct xFactory : RyzMemData
     xFactoryInst* CreateItem(int32 typeID, void* userdata, RyzMemGrow* callerzgrow);
     void GrowDataDisable();
     void GrowDataEnable(xBase* user, int32 isResume);
-    int32 RegItemType(int32 tid, xFactoryInst* (*create)(int32, RyzMemGrow*, void*),
-                      void (*destroy)(xFactoryInst*));
+    int32 RegItemType(int32 tid, XGOFTypeInfoCreator create, XGOFTypeInfoDestroyer destroy);
     int32 RegItemType(XGOFTypeInfo* info);
     ~xFactory();
 };
-
-int32 OrdTest_infotype(void* vkey, void* vitem);
-int32 OrdComp_infotype(void* vkey, void* vitem);
 
 #endif

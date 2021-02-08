@@ -1,85 +1,101 @@
 #include "zNPCGoalCommon.h"
 
-#include <types.h>
+#pragma push
+#pragma force_active off
+void hack_function_order(xGoal* g, xPSYNote* p, float32 f)
+{
+    p->Notice(PSY_NOTE_HASRESUMED, NULL, NULL);
+    g->SysEvent(NULL, NULL, 0, NULL, NULL, NULL);
+    g->Suspend(f, NULL);
+    g->Exit(f, NULL);
+    g->Resume(f, NULL);
+    g->GetID();
+    g->Enter(f, NULL);
+}
+#pragma pop
 
-#if 1
-
-// func_800D5114
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Enter__14zNPCGoalCommonFfPv")
-
-#else
-
-// WIP.
 int32 zNPCGoalCommon::Enter(float32 dt, void* updCtxt)
 {
-    int32 gid = GIDOfPending(((zNPCGoalCommon*)updCtxt)->psyche);
-    if (((zNPCGoalCommon*)updCtxt)->flg_npcgauto)
+    int32 gid = psyche->GIDOfPending();
+
+    if (((flg_npcgauto & 0x2) && gid == 0) || gid == GetID())
     {
-        int32 id = ((xGoal*)updCtxt)->GetID();
-        if (gid == 0 || id == gid)
+        DoAutoAnim(NPC_GSPOT_START, 0);
+    }
+
+    return xGoal::Enter(dt, updCtxt);
+}
+
+int32 zNPCGoalCommon::Resume(float32 dt, void* updCtxt)
+{
+    int32 gid = psyche->GIDOfPending();
+
+    if (((flg_npcgauto & 0x2) && (flg_npcgauto & 0x4) && gid == 0) || gid == GetID())
+    {
+        DoAutoAnim(NPC_GSPOT_RESUME, 0);
+    }
+
+    return xGoal::Resume(dt, updCtxt);
+}
+
+int32 zNPCGoalCommon::PreCalc(float32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
+
+    if (flg_npcgauto & 0x8)
+    {
+        if ((flg_info |= 0x8) == 0)
         {
-            ((zNPCGoalCommon*)updCtxt)->DoAutoAnim(NPC_GSPOT_START, 0);
+            uint32 curid = npc->AnimCurStateID();
+
+            if (curid != anid_played)
+            {
+                Name();
+
+                flg_info |= 0x8;
+
+                if (psyche->cb_notice && psyche->cb_notice)
+                {
+                    psyche->cb_notice->Notice(PSY_NOTE_ANIMCHANGED, this, NULL);
+                }
+            }
         }
     }
-    gid = xGoal::Enter(dt, updCtxt);
-    return gid;
+
+    return xGoal::PreCalc(dt, updCtxt);
 }
 
-#endif
-
-// func_800D51AC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Resume__14zNPCGoalCommonFfPv")
-
-// func_800D524C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "PreCalc__14zNPCGoalCommonFfPv")
-
-// func_800D5318
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi")
-
-// func_800D5388
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "DoExplicitAnim__14zNPCGoalCommonFUii")
-
-// func_800D5404
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Enter__5xGoalFfPv")
-
-// func_800D540C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "GetID__5xGoalCFv")
-
-// func_800D5414
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Resume__5xGoalFfPv")
-
-// func_800D541C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Exit__5xGoalFfPv")
-
-// func_800D5424
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Suspend__5xGoalFfPv")
-
-// func_800D542C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi")
-
-// func_800D5434
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Notice__8xPSYNoteF10en_psynoteP5xGoalPv")
-
-// func_800D5438
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalCommon.s", "Name__14zNPCGoalCommonFv")
-
-void zNPCGoalCommon::Clear()
+uint32 zNPCGoalCommon::DoAutoAnim(en_NPC_GOAL_SPOT gspot, int32 forceRestart)
 {
-    this->flg_info = 0;
-    this->xGoal::Clear();
+    uint32 anid = ((zNPCCommon*)psyche->clt_owner)->AnimPick(goalID, gspot, this);
+
+    if (anid)
+    {
+        DoExplicitAnim(anid, forceRestart);
+    }
+
+    return anid_played;
 }
 
-int32 zNPCGoalCommon::NPCMessage(NPCMsg* mail)
+uint32 zNPCGoalCommon::DoExplicitAnim(uint32 anid, int32 forceRestart)
 {
-    return 0;
-}
+    int32 rc = ((zNPCCommon*)psyche->clt_owner)->AnimStart(anid, forceRestart);
 
-uint8 zNPCGoalCommon::CollReview()
-{
-    return 0;
-}
+    if (rc)
+    {
+        anid_played = anid;
+    }
+    else
+    {
+        Name();
 
-uint32 zNPCCommon::AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
-{
-    return 0;
+        anid_played = 0;
+    }
+
+    if (flg_npcgauto & 0x8)
+    {
+        flg_info &= ~0x8;
+    }
+
+    return anid_played;
 }

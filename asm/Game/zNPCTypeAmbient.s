@@ -38,113 +38,6 @@ lbl_801077CC:
 ZNPC_Ambient_Shutdown__Fv:
 /* 80107808 00104608  4E 80 00 20 */	blr 
 
-ZNPC_Create_Ambient__FiP10RyzMemGrowPv:
-/* 8010780C 0010460C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80107810 00104610  7C 08 02 A6 */	mflr r0
-/* 80107814 00104614  3C C0 4E 54 */	lis r6, 0x4E544134@ha
-/* 80107818 00104618  7C 85 23 78 */	mr r5, r4
-/* 8010781C 0010461C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80107820 00104620  38 06 41 34 */	addi r0, r6, 0x4E544134@l
-/* 80107824 00104624  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80107828 00104628  7C 7F 1B 78 */	mr r31, r3
-/* 8010782C 0010462C  7C 1F 00 00 */	cmpw r31, r0
-/* 80107830 00104630  38 60 00 00 */	li r3, 0
-/* 80107834 00104634  41 82 00 D8 */	beq lbl_8010790C
-/* 80107838 00104638  40 80 00 24 */	bge lbl_8010785C
-/* 8010783C 0010463C  38 06 41 32 */	addi r0, r6, 0x4132
-/* 80107840 00104640  7C 1F 00 00 */	cmpw r31, r0
-/* 80107844 00104644  41 82 00 78 */	beq lbl_801078BC
-/* 80107848 00104648  40 80 00 9C */	bge lbl_801078E4
-/* 8010784C 0010464C  38 06 41 30 */	addi r0, r6, 0x4130
-/* 80107850 00104650  7C 1F 00 00 */	cmpw r31, r0
-/* 80107854 00104654  40 80 00 40 */	bge lbl_80107894
-/* 80107858 00104658  48 00 00 D8 */	b lbl_80107930
-lbl_8010785C:
-/* 8010785C 0010465C  38 06 53 30 */	addi r0, r6, 0x5330
-/* 80107860 00104660  7C 1F 00 00 */	cmpw r31, r0
-/* 80107864 00104664  41 82 00 08 */	beq lbl_8010786C
-/* 80107868 00104668  48 00 00 C8 */	b lbl_80107930
-lbl_8010786C:
-/* 8010786C 0010466C  7F E4 FB 78 */	mr r4, r31
-/* 80107870 00104670  38 60 02 A0 */	li r3, 0x2a0
-/* 80107874 00104674  48 00 78 DD */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 80107878 00104678  7C 60 1B 79 */	or. r0, r3, r3
-/* 8010787C 0010467C  41 82 00 10 */	beq lbl_8010788C
-/* 80107880 00104680  7F E4 FB 78 */	mr r4, r31
-/* 80107884 00104684  48 00 1A E5 */	bl __ct__11zNPCAmbientFi
-/* 80107888 00104688  7C 60 1B 78 */	mr r0, r3
-lbl_8010788C:
-/* 8010788C 0010468C  7C 03 03 78 */	mr r3, r0
-/* 80107890 00104690  48 00 00 A0 */	b lbl_80107930
-lbl_80107894:
-/* 80107894 00104694  7F E4 FB 78 */	mr r4, r31
-/* 80107898 00104698  38 60 02 B0 */	li r3, 0x2b0
-/* 8010789C 0010469C  48 00 78 B5 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 801078A0 001046A0  7C 60 1B 79 */	or. r0, r3, r3
-/* 801078A4 001046A4  41 82 00 10 */	beq lbl_801078B4
-/* 801078A8 001046A8  7F E4 FB 78 */	mr r4, r31
-/* 801078AC 001046AC  48 00 1A 81 */	bl __ct__9zNPCJellyFi
-/* 801078B0 001046B0  7C 60 1B 78 */	mr r0, r3
-lbl_801078B4:
-/* 801078B4 001046B4  7C 03 03 78 */	mr r3, r0
-/* 801078B8 001046B8  48 00 00 78 */	b lbl_80107930
-lbl_801078BC:
-/* 801078BC 001046BC  7F E4 FB 78 */	mr r4, r31
-/* 801078C0 001046C0  38 60 02 A0 */	li r3, 0x2a0
-/* 801078C4 001046C4  48 00 78 8D */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 801078C8 001046C8  7C 60 1B 79 */	or. r0, r3, r3
-/* 801078CC 001046CC  41 82 00 10 */	beq lbl_801078DC
-/* 801078D0 001046D0  7F E4 FB 78 */	mr r4, r31
-/* 801078D4 001046D4  48 00 1A 1D */	bl __ct__11zNPCNeptuneFi
-/* 801078D8 001046D8  7C 60 1B 78 */	mr r0, r3
-lbl_801078DC:
-/* 801078DC 001046DC  7C 03 03 78 */	mr r3, r0
-/* 801078E0 001046E0  48 00 00 50 */	b lbl_80107930
-lbl_801078E4:
-/* 801078E4 001046E4  7F E4 FB 78 */	mr r4, r31
-/* 801078E8 001046E8  38 60 02 A0 */	li r3, 0x2a0
-/* 801078EC 001046EC  48 00 78 65 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 801078F0 001046F0  7C 60 1B 79 */	or. r0, r3, r3
-/* 801078F4 001046F4  41 82 00 10 */	beq lbl_80107904
-/* 801078F8 001046F8  7F E4 FB 78 */	mr r4, r31
-/* 801078FC 001046FC  48 00 19 B9 */	bl __ct__12zNPCMimeFishFi
-/* 80107900 00104700  7C 60 1B 78 */	mr r0, r3
-lbl_80107904:
-/* 80107904 00104704  7C 03 03 78 */	mr r3, r0
-/* 80107908 00104708  48 00 00 28 */	b lbl_80107930
-lbl_8010790C:
-/* 8010790C 0010470C  7F E4 FB 78 */	mr r4, r31
-/* 80107910 00104710  38 60 02 A0 */	li r3, 0x2a0
-/* 80107914 00104714  48 00 78 3D */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 80107918 00104718  7C 60 1B 79 */	or. r0, r3, r3
-/* 8010791C 0010471C  41 82 00 10 */	beq lbl_8010792C
-/* 80107920 00104720  7F E4 FB 78 */	mr r4, r31
-/* 80107924 00104724  48 00 19 91 */	bl __ct__12zNPCMimeFishFi
-/* 80107928 00104728  7C 60 1B 78 */	mr r0, r3
-lbl_8010792C:
-/* 8010792C 0010472C  7C 03 03 78 */	mr r3, r0
-lbl_80107930:
-/* 80107930 00104730  28 03 00 00 */	cmplwi r3, 0
-/* 80107934 00104734  41 82 00 08 */	beq lbl_8010793C
-/* 80107938 00104738  38 63 00 D0 */	addi r3, r3, 0xd0
-lbl_8010793C:
-/* 8010793C 0010473C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80107940 00104740  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80107944 00104744  7C 08 03 A6 */	mtlr r0
-/* 80107948 00104748  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010794C 0010474C  4E 80 00 20 */	blr 
-
-ZNPC_Destroy_Ambient__FP12xFactoryInst:
-/* 80107950 00104750  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80107954 00104754  7C 08 02 A6 */	mflr r0
-/* 80107958 00104758  38 80 00 01 */	li r4, 1
-/* 8010795C 0010475C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80107960 00104760  4B FD 16 45 */	bl __dt__12xFactoryInstFv
-/* 80107964 00104764  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80107968 00104768  7C 08 03 A6 */	mtlr r0
-/* 8010796C 0010476C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80107970 00104770  4E 80 00 20 */	blr 
-
 ZNPC_AnimTable_Ambient__Fv:
 /* 80107974 00104774  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80107978 00104778  7C 08 02 A6 */	mflr r0
@@ -2161,6 +2054,36 @@ lbl_8026A274:
 	.incbin "baserom.dol", 0x267254, 0xC
 lbl_8026A280:
 	.incbin "baserom.dol", 0x267260, 0x88
+
+.section .data
+/* SPECULATION: link order */
+.global g_hash_ambianim
+g_hash_ambianim:
+	.incbin "baserom.dol", 0x293F40, 0x30
+/* SPECULATION: link order */
+.global g_strz_ambianim
+g_strz_ambianim:
+	.incbin "baserom.dol", 0x293F70, 0x30
+/* SPECULATION: link order */
+.global __vt__12zNPCMimeFish
+__vt__12zNPCMimeFish:
+	.incbin "baserom.dol", 0x293FA0, 0xD0
+/* SPECULATION: link order */
+.global __vt__11zNPCNeptune
+__vt__11zNPCNeptune:
+	.incbin "baserom.dol", 0x294070, 0xD0
+/* SPECULATION: link order */
+.global __vt__9zNPCJelly
+__vt__9zNPCJelly:
+	.incbin "baserom.dol", 0x294140, 0xD0
+/* SPECULATION: link order */
+.global __vt__11zNPCAmbient
+__vt__11zNPCAmbient:
+	.incbin "baserom.dol", 0x294210, 0xD0
+/* SPECULATION: link order */
+.global __vt__8zNPCTiki
+__vt__8zNPCTiki:
+	.incbin "baserom.dol", 0x2942E0, 0xD0
 
 .section .sdata2
 lbl_803CE698:
