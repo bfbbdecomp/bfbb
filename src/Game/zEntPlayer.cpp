@@ -19,6 +19,7 @@
 #include "zGoo.h"
 #include "zLasso.h"
 #include "zNPCTypeTiki.h"
+#include "zNPCMessenger.h"
 
 extern zGlobals globals;
 extern uint32 sCurrentStreamSndID;
@@ -1116,7 +1117,43 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 }
 
 // func_80076ADC
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GivePatsSocksCurrentLevel__Fi")
+#else
+void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
+{
+    uint32 level;
+    level = zSceneGetLevelIndex();
+
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock_Total)
+    {
+        globals.player.Inv_PatsSock_Total = 0;
+    }
+    else
+    {
+        globals.player.Inv_PatsSock_Total += quantity;
+    }
+
+    if (quantity < 0)
+    {
+        if ((int32)globals.player.Inv_PatsSock[level] < -quantity)
+        {
+            globals.player.Inv_PatsSock[level] = 0;
+        }
+    }
+    else
+    {
+        globals.player.Inv_PatsSock[level] += quantity;
+    }
+
+    globals.player.Inv_LevelPickups[level] = globals.player.Inv_PatsSock[level];
+
+    if (quantity < 0)
+    {
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, NULL, 0x104, NPC_TYPE_UNKNOWN);
+    }
+}
+#endif
 
 // func_80076BD0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveLevelPickupCurrentLevel__Fi")
