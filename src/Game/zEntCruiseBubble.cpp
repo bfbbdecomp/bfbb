@@ -1,6 +1,7 @@
 
 #include "zEntCruiseBubble.h"
 #include "zEntPlayer.h"
+#include "zGlobals.h"
 
 #include "../Core/x/xMath.h"
 #include "../Core/x/xMath3.h"
@@ -215,15 +216,15 @@ void cruise_bubble::set_pitch(int32 which, float32 pitch, uint32 handle)
     }
 }
 
-// func_80057524
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::show_wand()
+{
+    globals.player.sb_models[5]->Flags = globals.player.sb_models[5]->Flags | 0x0001;
+}
 
-// func_80057540
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hide_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::hide_wand()
+{
+    globals.player.sb_models[5]->Flags = globals.player.sb_models[5]->Flags & 0xfffe;
+}
 
 // func_8005755C
 #pragma GLOBAL_ASM(                                                                                \

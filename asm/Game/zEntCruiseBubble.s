@@ -109,26 +109,6 @@ lbl_80057470:
 /* 80057480 00054280  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057484 00054284  4E 80 00 20 */	blr 
 
-/* show_wand__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-show_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80057524 00054324  3C 60 80 3C */	lis r3, globals@ha
-/* 80057528 00054328  38 63 05 58 */	addi r3, r3, globals@l
-/* 8005752C 0005432C  80 63 1F 5C */	lwz r3, 0x1f5c(r3)
-/* 80057530 00054330  A0 03 00 44 */	lhz r0, 0x44(r3)
-/* 80057534 00054334  60 00 00 01 */	ori r0, r0, 1
-/* 80057538 00054338  B0 03 00 44 */	sth r0, 0x44(r3)
-/* 8005753C 0005433C  4E 80 00 20 */	blr 
-
-/* hide_wand__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-hide_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80057540 00054340  3C 60 80 3C */	lis r3, globals@ha
-/* 80057544 00054344  38 63 05 58 */	addi r3, r3, globals@l
-/* 80057548 00054348  80 63 1F 5C */	lwz r3, 0x1f5c(r3)
-/* 8005754C 0005434C  A0 03 00 44 */	lhz r0, 0x44(r3)
-/* 80057550 00054350  54 00 04 3C */	rlwinm r0, r0, 0, 0x10, 0x1e
-/* 80057554 00054354  B0 03 00 44 */	sth r0, 0x44(r3)
-/* 80057558 00054358  4E 80 00 20 */	blr 
-
 /* show_missle__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 show_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 8005755C 0005435C  3C 60 80 29 */	lis r3, lbl_8028C2A4@ha
