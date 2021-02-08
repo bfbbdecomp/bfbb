@@ -31,6 +31,13 @@
 #define NPC_GOAL_ID_BOSSPATSPIN NPC_GOAL_ID('B', 50)
 #define NPC_GOAL_ID_BOSSPATFUDGE NPC_GOAL_ID('B', 51)
 
+struct zNPCGoalExist : zNPCGoalCommon
+{
+    zNPCGoalExist(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
 xFactoryInst* GOALCreate_Boss(int32 who, RyzMemGrow* grow, void*);
 
 #endif
