@@ -1147,7 +1147,7 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
         globals.player.Inv_PatsSock[level] += quantity;
     }
 
-    globals.player.Inv_LevelPickups_CurrentLevel = globals.player.Inv_PatsSock[level];
+    globals.player.Inv_PatsSock_CurrentLevel = globals.player.Inv_PatsSock[level];
 
     if (0 < quantity)
     {
