@@ -10140,6 +10140,7 @@ lbl_8026D19C:
 	.incbin "baserom.dol", 0x26A17C, 0x684
 
 .section .data
+.balign 8
 lbl_802998C8:
 	.incbin "baserom.dol", 0x2968A8, 0x88
 lbl_80299950:

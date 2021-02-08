@@ -2,6 +2,7 @@
 #define ZNPCTYPEKINGJELLY_H
 
 #include "zNPCTypeSubBoss.h"
+#include "zNPCGoalCommon.h"
 
 struct lightning_ring
 {
@@ -124,6 +125,67 @@ struct zNPCKingJelly : zNPCSubBoss
     uint8 first_update;
 
     zNPCKingJelly(int32 myType);
+};
+
+struct zNPCGoalKJIdle : zNPCGoalCommon
+{
+    float32 attack_delay;
+
+    zNPCGoalKJIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalKJBored : zNPCGoalCommon
+{
+    zNPCGoalKJBored(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalKJSpawnKids : zNPCGoalCommon
+{
+    float32 delay;
+    int32 cycle;
+    uint8 spawned;
+    uint8 spewed;
+    int32 child_count;
+    int32 spawn_count;
+
+    zNPCGoalKJSpawnKids(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalKJTaunt : zNPCGoalCommon
+{
+    zNPCGoalKJTaunt(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalKJShockGround : zNPCGoalCommon
+{
+    float32 delay;
+    int32 strikes;
+
+    zNPCGoalKJShockGround(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalKJDamage : zNPCGoalCommon
+{
+    zNPCGoalKJDamage(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalKJDeath : zNPCGoalCommon
+{
+    zNPCGoalKJDeath(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
 };
 
 #endif
