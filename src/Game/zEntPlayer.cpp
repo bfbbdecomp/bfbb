@@ -1123,7 +1123,6 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
 #else
 void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
 {
-    //uint32 level;
     uint32 level = zSceneGetLevelIndex();
 
     if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock_Total)
@@ -1135,12 +1134,9 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
         globals.player.Inv_PatsSock_Total += quantity;
     }
 
-    if (quantity < 0)
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock[level])
     {
-        if (-quantity > (int32)globals.player.Inv_PatsSock[level])
-        {
-            globals.player.Inv_PatsSock[level] = 0;
-        }
+        globals.player.Inv_PatsSock[level] = 0;
     }
     else
     {
