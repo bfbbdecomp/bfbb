@@ -325,7 +325,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zGoo.o                      \
     $(OBJ_DIR)/asm/Game/zGrid.o                     \
     $(OBJ_DIR)/src/Game/zGrid.o                     \
-    $(OBJ_DIR)/asm/Game/zNPCGoalScript.o            \
     $(OBJ_DIR)/src/Game/zNPCGoalScript.o            \
     $(OBJ_DIR)/asm/Game/zNPCSndTable.o              \
     $(OBJ_DIR)/src/Game/zNPCSndTable.o              \
