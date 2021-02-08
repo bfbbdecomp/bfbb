@@ -109,53 +109,6 @@ lbl_80057470:
 /* 80057480 00054280  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057484 00054284  4E 80 00 20 */	blr 
 
-/* set_pitch__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FifUi */
-set_pitch__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifUi:
-/* 80057488 00054288  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8005748C 0005428C  7C 08 02 A6 */	mflr r0
-/* 80057490 00054290  1C A3 00 28 */	mulli r5, r3, 0x28
-/* 80057494 00054294  3C 60 80 29 */	lis r3, sounds@ha
-/* 80057498 00054298  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8005749C 0005429C  38 03 C4 30 */	addi r0, r3, sounds@l
-/* 800574A0 000542A0  DB E1 00 18 */	stfd f31, 0x18(r1)
-/* 800574A4 000542A4  FF E0 08 90 */	fmr f31, f1
-/* 800574A8 000542A8  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 800574AC 000542AC  7F E0 2A 14 */	add r31, r0, r5
-/* 800574B0 000542B0  93 C1 00 10 */	stw r30, 0x10(r1)
-/* 800574B4 000542B4  80 1F 00 20 */	lwz r0, 0x20(r31)
-/* 800574B8 000542B8  28 00 00 00 */	cmplwi r0, 0
-/* 800574BC 000542BC  40 82 00 2C */	bne lbl_800574E8
-/* 800574C0 000542C0  83 DF 00 18 */	lwz r30, 0x18(r31)
-/* 800574C4 000542C4  48 00 00 14 */	b lbl_800574D8
-lbl_800574C8:
-/* 800574C8 000542C8  FC 20 F8 90 */	fmr f1, f31
-/* 800574CC 000542CC  7F C3 F3 78 */	mr r3, r30
-/* 800574D0 000542D0  48 02 9D 1D */	bl zEntPlayer_SNDSetPitch__F14_tagePlayerSndf
-/* 800574D4 000542D4  3B DE 00 01 */	addi r30, r30, 1
-lbl_800574D8:
-/* 800574D8 000542D8  80 1F 00 1C */	lwz r0, 0x1c(r31)
-/* 800574DC 000542DC  7C 1E 00 00 */	cmpw r30, r0
-/* 800574E0 000542E0  40 81 FF E8 */	ble lbl_800574C8
-/* 800574E4 000542E4  48 00 00 24 */	b lbl_80057508
-lbl_800574E8:
-/* 800574E8 000542E8  28 04 00 00 */	cmplwi r4, 0
-/* 800574EC 000542EC  40 82 00 08 */	bne lbl_800574F4
-/* 800574F0 000542F0  80 9F 00 24 */	lwz r4, 0x24(r31)
-lbl_800574F4:
-/* 800574F4 000542F4  28 04 00 00 */	cmplwi r4, 0
-/* 800574F8 000542F8  41 82 00 10 */	beq lbl_80057508
-/* 800574FC 000542FC  FC 20 F8 90 */	fmr f1, f31
-/* 80057500 00054300  7C 83 23 78 */	mr r3, r4
-/* 80057504 00054304  4B FF 1E C5 */	bl xSndSetPitch__FUif
-lbl_80057508:
-/* 80057508 00054308  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8005750C 0005430C  CB E1 00 18 */	lfd f31, 0x18(r1)
-/* 80057510 00054310  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 80057514 00054314  83 C1 00 10 */	lwz r30, 0x10(r1)
-/* 80057518 00054318  7C 08 03 A6 */	mtlr r0
-/* 8005751C 0005431C  38 21 00 20 */	addi r1, r1, 0x20
-/* 80057520 00054320  4E 80 00 20 */	blr 
-
 /* show_wand__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 show_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80057524 00054324  3C 60 80 3C */	lis r3, globals@ha

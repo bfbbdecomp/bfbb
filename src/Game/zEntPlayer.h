@@ -398,9 +398,11 @@ void zEntPlayer_ShadowModelDisable();
 
 void zEntPlayer_LoadCheckPoint();
 
-void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
+void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol);
+void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch);
+void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 
 void zEntPlayerControlOff(zControlOwner owner);
 void zEntPlayerControlOn(zControlOwner owner);

@@ -191,10 +191,29 @@ uint32 cruise_bubble::play_sound(int32 which, float32 volFactor, const xVec3* po
 }
 #endif
 
-// func_80057488
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "set_pitch__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifUi")
+void cruise_bubble::set_pitch(int32 which, float32 pitch, uint32 handle)
+{
+    sound_config* s = &sounds[which];
+
+    if (s->id == 0)
+    {
+        for (int32 i = s->first; i <= s->last; ++i)
+        {
+            zEntPlayer_SNDSetPitch((_tagePlayerSnd) i, pitch);
+        }
+        return;
+    }
+    
+    if (handle == 0)
+    {
+        handle = s->handle;
+    }
+
+    if (handle != 0)
+    {
+        xSndSetPitch(handle, pitch);
+    }
+}
 
 // func_80057524
 #pragma GLOBAL_ASM(                                                                                \
