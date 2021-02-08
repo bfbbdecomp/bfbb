@@ -13,7 +13,13 @@ struct zNPCDuplotron : zNPCCommon
     int32 idx_blink;
 
     zNPCDuplotron(int32 myType);
+
+    void VFXSmokeStack(float32 dt);
+    void VFXOverheat(float32 dt, float32);
+    void VFXCycleLights(float32 dt, int32 fastpace);
 };
+
+extern uint32 g_hash_dupoanim[5];
 
 void ZNPC_Duplotron_Startup();
 void ZNPC_Duplotron_Shutdown();
