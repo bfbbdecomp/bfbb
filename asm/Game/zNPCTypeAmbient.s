@@ -2162,6 +2162,36 @@ lbl_8026A274:
 lbl_8026A280:
 	.incbin "baserom.dol", 0x267260, 0x88
 
+.section .data
+/* SPECULATION: link order */
+.global g_hash_ambianim
+g_hash_ambianim:
+	.incbin "baserom.dol", 0x293F40, 0x30
+/* SPECULATION: link order */
+.global g_strz_ambianim
+g_strz_ambianim:
+	.incbin "baserom.dol", 0x293F70, 0x30
+/* SPECULATION: link order */
+.global __vt__12zNPCMimeFish
+__vt__12zNPCMimeFish:
+	.incbin "baserom.dol", 0x293FA0, 0xD0
+/* SPECULATION: link order */
+.global __vt__11zNPCNeptune
+__vt__11zNPCNeptune:
+	.incbin "baserom.dol", 0x294070, 0xD0
+/* SPECULATION: link order */
+.global __vt__9zNPCJelly
+__vt__9zNPCJelly:
+	.incbin "baserom.dol", 0x294140, 0xD0
+/* SPECULATION: link order */
+.global __vt__11zNPCAmbient
+__vt__11zNPCAmbient:
+	.incbin "baserom.dol", 0x294210, 0xD0
+/* SPECULATION: link order */
+.global __vt__8zNPCTiki
+__vt__8zNPCTiki:
+	.incbin "baserom.dol", 0x2942E0, 0xD0
+
 .section .sdata2
 lbl_803CE698:
 	.incbin "baserom.dol", 0x2B7F38, 0x4

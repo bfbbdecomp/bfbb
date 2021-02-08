@@ -59,5 +59,6 @@ void ZNPC_Tiki_Startup();
 void ZNPC_Tiki_Shutdown();
 void zNPCTiki_InitStacking(zScene* zsc);
 void zNPCTiki_InitFX(zScene*);
+void zNPCTiki_ExplodeFX(zNPCTiki* tiki);
 
 #endif

@@ -1,88 +1,171 @@
 #include "zNPCGoalTiki.h"
+
 #include "zNPCTypeTiki.h"
+#include "zRumble.h"
 
-#include <types.h>
+#include "../Core/x/xEvent.h"
 
-// func_800ECBFC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "GOALCreate_Tiki__FiP10RyzMemGrowPv")
+extern float32 _836_0;
+extern float32 _837_3;
+extern float32 _862_2;
+extern float32 _863_1;
 
-// func_800ECD90
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Enter__16zNPCGoalTikiIdleFfPv")
-
-// func_800ECE08
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Enter__18zNPCGoalTikiPatrolFfPv")
-
-// func_800ECE84
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Enter__16zNPCGoalTikiHideFfPv")
-
-// func_800ECEB0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Exit__16zNPCGoalTikiHideFfPv")
-
-// func_800ECEE0
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Enter__17zNPCGoalTikiCountFfPv")
-
-// func_800ECF28
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Enter__17zNPCGoalTikiDyingFfPv")
-
-// func_800ECF68
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Exit__17zNPCGoalTikiDyingFfPv")
-
-// func_800ECFA8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Enter__16zNPCGoalTikiDeadFfPv")
-
-// func_800ED014
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "Exit__16zNPCGoalTikiDeadFfPv")
-
-// func_800ED060
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__16zNPCGoalTikiDeadFi")
-
-// func_800ED09C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__17zNPCGoalTikiDyingFi")
-
-// func_800ED0D8
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__17zNPCGoalTikiCountFi")
-
-// func_800ED114
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__16zNPCGoalTikiHideFi")
-
-// func_800ED150
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__18zNPCGoalTikiPatrolFi")
-
-#if 1
-
-// func_800ED18C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalTiki.s", "__ct__16zNPCGoalTikiIdleFi")
-
-#else
-
-// Need to make it so compiler likes this.
-zNPCGoalTikiIdle::zNPCGoalTikiIdle(int32 goalID) : zNPCGoalCommon(goalID)
+xFactoryInst* GOALCreate_Tiki(int32 who, RyzMemGrow* grow, void*)
 {
-    this->flg_npcgauto = -0x7fd6bfe4;
+    xGoal* goal;
+
+    switch (who)
+    {
+    case 'NGT0':
+    {
+        goal = new (who, grow) zNPCGoalTikiIdle(who);
+        break;
+    }
+    case 'NGT1':
+    {
+        goal = new (who, grow) zNPCGoalTikiPatrol(who);
+        break;
+    }
+    case 'NGT2':
+    {
+        goal = new (who, grow) zNPCGoalTikiHide(who);
+        break;
+    }
+    case 'NGT3':
+    {
+        goal = new (who, grow) zNPCGoalTikiCount(who);
+        break;
+    }
+    case 'NGT4':
+    {
+        goal = new (who, grow) zNPCGoalTikiDying(who);
+        break;
+    }
+    case 'NGT5':
+    {
+        goal = new (who, grow) zNPCGoalTikiDead(who);
+        break;
+    }
+    default:
+    {
+        goal = new (who, grow) zNPCGoalTikiIdle(who);
+        break;
+    }
+    }
+
+    return goal;
 }
 
-#endif
-
-void zNPCGoalTikiDead::Clear()
+int32 zNPCGoalTikiIdle::Enter(float32, void*)
 {
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    if (tiki->SelfType() == 'NTT3')
+    {
+        tmr_wait = _836_0;
+    }
+    else if (!tiki->nav_dest)
+    {
+        tmr_wait = _837_3;
+    }
+    else
+    {
+        tmr_wait = zMovePointGetDelay(tiki->nav_dest);
+    }
+
+    return 0;
 }
 
-void zNPCGoalTikiDying::Clear()
+int32 zNPCGoalTikiPatrol::Enter(float32, void*)
 {
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    xVec3Copy(&dest_pos, zMovePointGetPos(tiki->nav_dest));
+    xVec3Sub(&vel, &dest_pos, &tiki->v1);
+    xVec3Normalize(&vel, &vel);
+    xVec3SMulBy(&vel, tiki->cfg_npc->spd_moveMax);
+
+    return 0;
 }
 
-void zNPCGoalTikiCount::Clear()
+int32 zNPCGoalTikiHide::Enter(float32, void*)
 {
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    tiki->flg_vuln = 0;
+
+    return 0;
 }
 
-void zNPCGoalTikiHide::Clear()
+int32 zNPCGoalTikiHide::Exit(float32, void*)
 {
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    tiki->flg_vuln = 0xFFFF0001;
+
+    return 0;
 }
 
-void zNPCGoalTikiPatrol::Clear()
+int32 zNPCGoalTikiCount::Enter(float32, void*)
 {
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    tmr_count = _862_2;
+    beingCarried = 0;
+
+    tiki->t1 = _863_1;
+
+    return 0;
 }
 
-void zNPCGoalTikiIdle::Clear()
+int32 zNPCGoalTikiDying::Enter(float32, void*)
 {
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    tmr_dying = tiki->timeToLive;
+    tiki->flg_vuln = 0;
+
+    return 0;
+}
+
+int32 zNPCGoalTikiDying::Exit(float32, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    zNPCTiki_ExplodeFX(tiki);
+    zRumbleStart(SDR_Tiki, tiki);
+
+    return 0;
+}
+
+int32 zNPCGoalTikiDead::Enter(float32, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    tiki->tikiFlag &= ~0x300;
+    tiki->tikiFlag |= 0x100;
+
+    xEntHide(tiki);
+
+    tiki->chkby = XENT_COLLTYPE_NONE;
+    tiki->penby = XENT_COLLTYPE_NONE;
+
+    tiki->GiveReward();
+
+    zEntEvent(tiki->id, eEventDeath);
+
+    return 0;
+}
+
+int32 zNPCGoalTikiDead::Exit(float32, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)GetOwner();
+
+    xEntShow(tiki);
+
+    tiki->chkby = XENT_COLLTYPE_PLYR;
+    tiki->penby = XENT_COLLTYPE_PLYR;
+    tiki->flg_vuln = 0xFFFF0001;
+
+    return 0;
 }

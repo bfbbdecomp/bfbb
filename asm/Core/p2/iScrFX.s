@@ -295,62 +295,6 @@ months:
 .global dotw
 dotw:
 	.incbin "baserom.dol", 0x28FB98, 0x20
-/* SPECULATION: link order */
-.global __vt__14zNPCGoalCommon
-__vt__14zNPCGoalCommon:
-	.incbin "baserom.dol", 0x28FBB8, 0x38
-/* SPECULATION: link order */
-.global __vt__15zNPCGoalDEVHero
-__vt__15zNPCGoalDEVHero:
-	.incbin "baserom.dol", 0x28FBF0, 0x34
-/* SPECULATION: link order */
-.global __vt__19zNPCGoalDEVAnimSpin
-__vt__19zNPCGoalDEVAnimSpin:
-	.incbin "baserom.dol", 0x28FC24, 0x34
-/* SPECULATION: link order */
-.global __vt__20zNPCGoalDEVAnimCycle
-__vt__20zNPCGoalDEVAnimCycle:
-	.incbin "baserom.dol", 0x28FC58, 0x34
-/* SPECULATION: link order */
-.global __vt__13zNPCGoalLimbo
-__vt__13zNPCGoalLimbo:
-	.incbin "baserom.dol", 0x28FC8C, 0x34
-/* SPECULATION: link order */
-.global __vt__12zNPCGoalDead
-__vt__12zNPCGoalDead:
-	.incbin "baserom.dol", 0x28FCC0, 0x34
-/* SPECULATION: link order */
-.global __vt__15zNPCGoalWaiting
-__vt__15zNPCGoalWaiting:
-	.incbin "baserom.dol", 0x28FCF4, 0x34
-/* SPECULATION: link order */
-.global __vt__14zNPCGoalWander
-__vt__14zNPCGoalWander:
-	.incbin "baserom.dol", 0x28FD28, 0x34
-/* SPECULATION: link order */
-.global __vt__14zNPCGoalFidget
-__vt__14zNPCGoalFidget:
-	.incbin "baserom.dol", 0x28FD5C, 0x34
-/* SPECULATION: link order */
-.global __vt__14zNPCGoalPatrol
-__vt__14zNPCGoalPatrol:
-	.incbin "baserom.dol", 0x28FD90, 0x34
-/* SPECULATION: link order */
-.global __vt__12zNPCGoalIdle
-__vt__12zNPCGoalIdle:
-	.incbin "baserom.dol", 0x28FDC4, 0x34
-/* SPECULATION: link order */
-.global __vt__16zNPCGoalLoopAnim
-__vt__16zNPCGoalLoopAnim:
-	.incbin "baserom.dol", 0x28FDF8, 0x34
-/* SPECULATION: link order */
-.global __vt__16zNPCGoalPushAnim
-__vt__16zNPCGoalPushAnim:
-	.incbin "baserom.dol", 0x28FE2C, 0x34
-/* SPECULATION: link order */
-.global __vt__17zNPCGoalNoManLand
-__vt__17zNPCGoalNoManLand:
-	.incbin "baserom.dol", 0x28FE60, 0x38
 
 .section .sbss
 .global sMotionBlurEnabled

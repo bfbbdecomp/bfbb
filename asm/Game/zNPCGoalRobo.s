@@ -22407,30 +22407,6 @@ __vt__14zNPCGoalNotice:
 .global __vt__9HAZNotify
 __vt__9HAZNotify:
 	.incbin "baserom.dol", 0x290EEC, 0xC
-/* SPECULATION: link order */
-.global __vt__16zNPCGoalTikiDead
-__vt__16zNPCGoalTikiDead:
-	.incbin "baserom.dol", 0x290EF8, 0x34
-/* SPECULATION: link order */
-.global __vt__17zNPCGoalTikiDying
-__vt__17zNPCGoalTikiDying:
-	.incbin "baserom.dol", 0x290F2C, 0x34
-/* SPECULATION: link order */
-.global __vt__17zNPCGoalTikiCount
-__vt__17zNPCGoalTikiCount:
-	.incbin "baserom.dol", 0x290F60, 0x34
-/* SPECULATION: link order */
-.global __vt__16zNPCGoalTikiHide
-__vt__16zNPCGoalTikiHide:
-	.incbin "baserom.dol", 0x290F94, 0x34
-/* SPECULATION: link order */
-.global __vt__18zNPCGoalTikiPatrol
-__vt__18zNPCGoalTikiPatrol:
-	.incbin "baserom.dol", 0x290FC8, 0x34
-/* SPECULATION: link order */
-.global __vt__16zNPCGoalTikiIdle
-__vt__16zNPCGoalTikiIdle:
-	.incbin "baserom.dol", 0x290FFC, 0x34
 
 .section .bss
 lbl_80312178:

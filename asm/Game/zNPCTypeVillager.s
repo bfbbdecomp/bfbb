@@ -5481,46 +5481,6 @@ __vt__7HiThere:
 .global __vt__14zNPCNewsFishTV
 __vt__14zNPCNewsFishTV:
 	.incbin "baserom.dol", 0x293E70, 0xD0
-/* SPECULATION: link order */
-.global g_hash_ambianim
-g_hash_ambianim:
-	.incbin "baserom.dol", 0x293F40, 0x30
-/* SPECULATION: link order */
-.global g_strz_ambianim
-g_strz_ambianim:
-	.incbin "baserom.dol", 0x293F70, 0x30
-/* SPECULATION: link order */
-.global __vt__12zNPCMimeFish
-__vt__12zNPCMimeFish:
-	.incbin "baserom.dol", 0x293FA0, 0xD0
-/* SPECULATION: link order */
-.global __vt__11zNPCNeptune
-__vt__11zNPCNeptune:
-	.incbin "baserom.dol", 0x294070, 0xD0
-/* SPECULATION: link order */
-.global __vt__9zNPCJelly
-__vt__9zNPCJelly:
-	.incbin "baserom.dol", 0x294140, 0xD0
-/* SPECULATION: link order */
-.global __vt__11zNPCAmbient
-__vt__11zNPCAmbient:
-	.incbin "baserom.dol", 0x294210, 0xD0
-/* SPECULATION: link order */
-.global __vt__8zNPCTiki
-__vt__8zNPCTiki:
-	.incbin "baserom.dol", 0x2942E0, 0xD0
-/* SPECULATION: link order */
-.global __vt__5xGoal
-__vt__5xGoal:
-	.incbin "baserom.dol", 0x2943B0, 0x30
-/* SPECULATION: link order */
-.global __vt__12xGoalGeneric
-__vt__12xGoalGeneric:
-	.incbin "baserom.dol", 0x2943E0, 0x30
-/* SPECULATION: link order */
-.global __vt__10xGoalEmpty
-__vt__10xGoalEmpty:
-	.incbin "baserom.dol", 0x294410, 0x30
 
 .section .bss
 lbl_80313188:

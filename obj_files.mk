@@ -264,7 +264,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/p2/ngcrad3d.o               \
     $(OBJ_DIR)/asm/Game/zNPCGoals.o                 \
     $(OBJ_DIR)/src/Game/zNPCGoals.o                 \
-    $(OBJ_DIR)/asm/Game/zNPCGoalCommon.o            \
     $(OBJ_DIR)/src/Game/zNPCGoalCommon.o            \
     $(OBJ_DIR)/asm/Game/zNPCGoalStd.o               \
     $(OBJ_DIR)/src/Game/zNPCGoalStd.o               \
@@ -290,9 +289,7 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zNPCTypeTiki.o              \
     $(OBJ_DIR)/asm/Core/x/xBehaveMgr.o              \
     $(OBJ_DIR)/src/Core/x/xBehaveMgr.o              \
-    $(OBJ_DIR)/asm/Core/x/xBehaviour.o              \
     $(OBJ_DIR)/src/Core/x/xBehaviour.o              \
-    $(OBJ_DIR)/asm/Core/x/xBehaveGoalSimple.o       \
     $(OBJ_DIR)/src/Core/x/xBehaveGoalSimple.o       \
     $(OBJ_DIR)/asm/Core/x/xSkyDome.o                \
     $(OBJ_DIR)/src/Core/x/xSkyDome.o                \

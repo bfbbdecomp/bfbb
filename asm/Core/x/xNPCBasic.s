@@ -209,6 +209,7 @@ lbl_8026A3F8:
 	.incbin "baserom.dol", 0x2673D8, 0x10
 
 .section .data
+.balign 8
 .global g_colrec
 g_colrec:
 	.incbin "baserom.dol", 0x294440, 0x5B4
