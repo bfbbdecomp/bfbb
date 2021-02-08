@@ -135,5 +135,10 @@ uint32 xSndPlayInternal(uint32 id, float32 vol, float32 pitch, uint32 priority, 
                         float32 outerRadius, sound_category category, float32 delay);
 void xSndStartStereo(uint32 id1, uint32 id2, float32 pitch);
 uint32 xSndIDIsPlaying(uint32 sndID);
+void xSndStop(uint32 snd);
+void xSndParentDied(uint32 pid);
+void xSndStopChildren(uint32 pid);
+void xSndSetVol(uint32 snd, float32 vol);
+void xSndSetPitch(uint32 snd, float32 pitch);
 
 #endif
