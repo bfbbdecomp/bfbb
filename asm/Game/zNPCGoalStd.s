@@ -3326,6 +3326,7 @@ lbl_800D8340:
 /* 800D8370 000D5170  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D8374 000D5174  4E 80 00 20 */	blr 
 
+.global Exit__12zNPCGoalDeadFfPv
 Exit__12zNPCGoalDeadFfPv:
 /* 800D8378 000D5178  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800D837C 000D517C  7C 08 02 A6 */	mflr r0

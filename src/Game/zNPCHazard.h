@@ -198,9 +198,14 @@ struct NPCHazard
     zNPCCommon* npc_owner;
     NPCHazard* haz_parent;
     xShadowCache* shadowCache;
+
+    int32 ConfigHelper(en_npchaz haztype);
+    void SetNPCOwner(zNPCCommon* owner);
+    void Start(const xVec3* pos, float32 tym);
 };
 
 void zNPCCommon_Hazards_RenderAll(int32 doOpaqueStuff);
 void zNPCHazard_Shutdown();
+NPCHazard* HAZ_Acquire();
 
 #endif

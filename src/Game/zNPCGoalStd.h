@@ -20,9 +20,15 @@ struct zNPCGoalDead : zNPCGoalCommon
     int32 flg_deadinfo;
     uint8 old_moreFlags;
 
-    int32 Exit();
-    int32 Enter(float32 dt, void* updCtxt);
+    zNPCGoalDead(int32 goalID);
+
+    virtual int32 Enter(float32 dt, void* updCtxt);
+    virtual int32 Exit(float32 dt, void* updCtxt);
+
     void DieQuietly();
+
+protected:
+    ~zNPCGoalDead();
 };
 
 xFactoryInst* GOALCreate_Standard(int32 who, RyzMemGrow* grow, void*);

@@ -3189,14 +3189,6 @@ lbl_8026C170:
 .section .data
 lbl_80298B88:
 	.incbin "baserom.dol", 0x295B68, 0x48
-/* SPECULATION: link order */
-.global __vt__17zNPCGoalDuploLive
-__vt__17zNPCGoalDuploLive:
-	.incbin "baserom.dol", 0x295BB0, 0x34
-/* SPECULATION: link order */
-.global __vt__17zNPCGoalDuploDead
-__vt__17zNPCGoalDuploDead:
-	.incbin "baserom.dol", 0x295BE4, 0x34
 
 .section .bss
 lbl_803154F0:

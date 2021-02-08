@@ -10,4 +10,6 @@ float32 xasin(float32 x);
 float32 xacos(float32 x);
 float32 xexp(float32 x);
 
+float32 SQ(float32 x);
+
 #endif
