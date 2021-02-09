@@ -65,14 +65,14 @@ extern long32 sTimeCurrent;
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_poll__Fi")
 
 // func_800AD600
-void zSendEventToThumbIcon(uint32 p)
+void zSendEventToThumbIcon(uint32 toEvent)
 {
     char* iconString = zSaveLoad_strings + 1092; // "MNU4 THUMBICON"
     if (gGameMode == eGameMode_Load)
     {
         iconString = zSaveLoad_strings + 1077; // "MNU3 THUMBICON"
     }
-    zEntEvent(zSceneFindObject(xStrHash(iconString)), p);
+    zEntEvent(zSceneFindObject(xStrHash(iconString)), toEvent);
 }
 
 #ifndef NON_MATCHING
@@ -81,7 +81,7 @@ void zSendEventToThumbIcon(uint32 p)
 #else
 void zChangeThumbIcon(const char* icon)
 {
-    float32 arr[4];
+    uint32 arr[4];
 
     memset(arr, 0, sizeof(arr));
     arr[0] = xStrHash(icon);
@@ -91,7 +91,7 @@ void zChangeThumbIcon(const char* icon)
     {
         iconString = zSaveLoad_strings + 1077; // "MNU3 THUMBICON"
     }
-    zEntEvent(zSceneFindObject(xStrHash(iconString)), 0x1f5, arr);
+    zEntEvent(zSceneFindObject(xStrHash(iconString)), 0x1f5, (float32*)arr);
 }
 #endif
 
@@ -126,7 +126,10 @@ void zSaveLoadUITableInit(zSaveLoadUI* saveTable)
 }
 
 // func_800AD790
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_UIEvent__FiUi")
+void zSaveLoad_UIEvent(int32 i, uint32 toEvent)
+{
+    zEntEvent(zSceneFindObject(zSaveLoadUITable[i].nameID), toEvent);
+}
 
 #if 1
 // func_800AD7D8
@@ -169,22 +172,40 @@ void zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
 }
 
 // func_800AD8CC
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getgame__Fv")
+int32 zSaveLoad_getgame()
+{
+    return currentGame;
+}
 
 // func_800AD8D4
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getcard__Fv")
+int32 zSaveLoad_getcard()
+{
+    return currentCard;
+}
 
 // func_800AD8DC
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getMCavailable__Fv")
+int32 zSaveLoad_getMCavailable()
+{
+    return sAvailable;
+}
 
 // func_800AD8E4
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getMCneeded__Fv")
+int32 zSaveLoad_getMCneeded()
+{
+    return sNeeded;
+}
 
 // func_800AD8EC
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_getMCAccessType__Fv")
+int32 zSaveLoad_getMCAccessType()
+{
+    return sAccessType;
+}
 
 // func_800AD8F4
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadGetAutoSaveCard__Fv")
+int32 zSaveLoadGetAutoSaveCard()
+{
+    return autoSaveCard;
+}
 
 // func_800AD8FC
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "format__Fii")
@@ -199,49 +220,340 @@ int32 zSaveLoadCardCount()
 }
 
 // func_800ADB04
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPrompt__Fi")
+int32 zSaveLoad_CardPrompt(int32 cardNumber)
+{
+    int32 i = 0x15;
+    if (cardNumber == 1)
+    {
+        i = 0;
+    }
+    zSaveLoad_UIEvent(i, 1);
+
+    i = 0x15;
+    if (cardNumber == 1)
+    {
+        i = 0;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+
+    i = 0x24;
+    if (cardNumber == 1)
+    {
+        i = 0x11;
+    }
+    zSaveLoad_UIEvent(i, 0x5e);
+
+    i = 0x16;
+    if (cardNumber == 1)
+    {
+        i = 1;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+
+    i = 0x24;
+    if (cardNumber == 1)
+    {
+        i = 0x11;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+
+    if (cardNumber == 1)
+    {
+        zSaveLoad_UIEvent(0, 2);
+    }
+    return promptSel;
+}
 
 // func_800ADBD8
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptFormat__Fi")
+int32 zSaveLoad_CardPromptFormat(int32 cardNumber)
+{
+    int32 i = 0x15;
+    if (cardNumber == 1)
+    {
+        i = 0;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+
+    i = 0x16;
+    if (cardNumber == 1)
+    {
+        i = 1;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(0x32, 0x51);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+        zSaveLoad_poll(3);
+    }
+    zSaveLoad_UIEvent(0x32, 0x5f);
+    return promptSel;
+}
 
 // func_800ADC70
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptSpace__Fi")
+int32 zSaveLoad_CardPromptSpace(int32 cardNumber)
+{
+    int32 i = 0x15;
+    if (cardNumber == 1)
+    {
+        i = 0;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(0x16, 0x5f);
+    zSaveLoad_UIEvent(0x25, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+        zSaveLoad_poll(3);
+    }
+    zSaveLoad_UIEvent(0x25, 0x5f);
+    return promptSel;
+}
 
 // func_800ADCF0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptGames__Fi")
+int32 zSaveLoad_CardPromptGames(int32 cardNumber)
+{
+    int32 i = 0x15;
+    if (cardNumber == 1)
+    {
+        i = 0;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(1, 0x5f);
+    zSaveLoad_UIEvent(0x12, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+        zSaveLoad_poll(3);
+    }
+    zSaveLoad_UIEvent(0x12, 0x5f);
+    return promptSel;
+}
 
 // func_800ADD70
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptGameSlotEmpty__Fv")
+int32 zSaveLoad_CardPromptGameSlotEmpty()
+{
+    zSaveLoad_UIEvent(0, 0x5f);
+    zSaveLoad_UIEvent(0x13, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+    zSaveLoad_UIEvent(0x13, 0x5f);
+    return promptSel;
+}
 
 // func_800ADDD0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptOverwrite__Fv")
+int32 zSaveLoad_CardPromptOverwrite()
+{
+    zSaveLoad_UIEvent(0x15, 0x5f);
+    zSaveLoad_UIEvent(0x22, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+        zSaveLoad_poll(5);
+    }
+    zSaveLoad_UIEvent(0x22, 0x5f);
+    return promptSel;
+}
 
 // func_800ADE38
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPromptOverwriteDamaged__Fv")
+int32 zSaveLoad_CardPromptOverwriteDamaged()
+{
+    zSaveLoad_UIEvent(0x15, 0x5f);
+    zSaveLoad_UIEvent(0x23, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+        zSaveLoad_poll(5);
+    }
+    zSaveLoad_UIEvent(0x23, 0x5f);
+    return promptSel;
+}
 
 // func_800ADEA0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_ErrorPrompt__Fi")
+int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
+{
+    int32 i = 0x2b;
+    if (cardNumber == 1)
+    {
+        i = 0x2a;
+    }
+    zSaveLoad_UIEvent(i, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+
+    i = 0x2b;
+    if (cardNumber == 1)
+    {
+        i = 0x2a;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    return promptSel;
+}
 
 // func_800ADF18
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DamagedSaveGameErrorPrompt__Fi")
+int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
+{
+    zSaveLoad_UIEvent(0x3c, 0x5e);
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+    zSaveLoad_UIEvent(0x3c, 0x5f);
+    return promptSel;
+}
 
 // func_800ADF6C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardWrongDeviceErrorPrompt__Fi")
+int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 cardNumber)
+{
+    int i = 0x3a;
+    if (cardNumber == 1)
+    {
+        i = 0x39;
+    }
+    zSaveLoad_UIEvent(i, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+
+    i = 0x3a;
+    if (cardNumber == 1)
+    {
+        i = 0x39;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    return promptSel;
+}
 
 // func_800ADFE4
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardDamagedErrorPrompt__Fi")
+int32 zSaveLoad_CardDamagedErrorPrompt(int32 cardNumber)
+{
+    int i = 0x38;
+    if (cardNumber == 1)
+    {
+        i = 0x37;
+    }
+    zSaveLoad_UIEvent(i, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+
+    i = 0x38;
+    if (cardNumber == 1)
+    {
+        i = 0x37;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    return promptSel;
+}
 
 // func_800AE05C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveDamagedErrorPrompt__Fi")
+int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
+{
+    zSaveLoad_UIEvent(0x35, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+    zSaveLoad_UIEvent(0x35, 0x5f);
+    return promptSel;
+}
 
 // func_800AE0B0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardYankedErrorPrompt__Fi")
+int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
+{
+    zSaveLoad_UIEvent(0x36, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+    zSaveLoad_UIEvent(0x36, 0x5f);
+    return promptSel;
+}
 
 // func_800AE104
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_ErrorFormatPrompt__Fi")
+int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
+{
+    int i = 0x2e;
+    if (cardNumber == 1)
+    {
+        i = 0x2c;
+    }
+    zSaveLoad_UIEvent(i, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+
+    i = 0x2e;
+    if (cardNumber == 1)
+    {
+        i = 0x2c;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    return 6;
+}
 
 // func_800AE17C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_ErrorFormatCardYankedPrompt__Fi")
+int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
+{
+    int i = 0x2f;
+    if (cardNumber == 1)
+    {
+        i = 0x2d;
+    }
+    zSaveLoad_UIEvent(i, 0x5e);
+
+    promptSel = -1;
+    while (promptSel == -1)
+    {
+        zSaveLoad_Tick();
+    }
+
+    i = 0x2f;
+    if (cardNumber == 1)
+    {
+        i = 0x2d;
+    }
+    zSaveLoad_UIEvent(i, 0x5f);
+    return 6;
+}
 
 // func_800AE1F4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSingle__Fi")
@@ -352,7 +664,10 @@ int32 zSaveLoad_CardCheckSlotEmpty(int32 num, int32 game)
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_GameSelect__Fi")
 
 // func_800AF790
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadGetPreAutoSave__Fv")
+uint8 zSaveLoadGetPreAutoSave()
+{
+    return preAutoSaving;
+}
 
 // func_800AF798
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadPreAutoSave__Fb")
