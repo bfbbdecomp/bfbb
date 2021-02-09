@@ -19,6 +19,8 @@
 #include "zGoo.h"
 #include "zLasso.h"
 #include "zNPCTypeTiki.h"
+#include "zNPCMessenger.h"
+#include "zMusic.h"
 
 extern zGlobals globals;
 extern uint32 sCurrentStreamSndID;
@@ -40,6 +42,10 @@ extern int32 player_hit_anim;
 extern uint32 player_dead_anim;
 
 extern float32 lbl_803CD5A0; // 0.0
+extern float32 lbl_803CD5F0; // 0.1
+extern float32 lbl_803CD62C; // 0.2
+extern float32 lbl_803CD588; // 0.5
+extern float32 lbl_803CD830; // 30.0
 extern float32 lbl_803CD638; // 10.0
 
 // This needs to be const
@@ -443,31 +449,36 @@ uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-#if 0
 uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    // if this can be decompiled, it can be copied and pasted 4 more times.
-    zGameExtras_CheatFlags(); // it seems like this is a useless function call
-
-    return ((globals.player.Health == 0) &&
-            (player_dead_anim == (player_dead_anim / tran->UserFlags) * tran->UserFlags));
+    // it seems like this is a useless but necessary function call
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags == 0;
 }
-#else
-// func_80069694
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated01Check__FP15xAnimTransitionP11xAnimSinglePv")
-#endif
 
-// func_800696F8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated02Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 2;
+}
 
-// func_80069764
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated03Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 3;
+}
 
-// func_800697D0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated04Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 4;
+}
 
-// func_8006983C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Defeated05Check__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zGameExtras_CheatFlags();
+    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
+}
 
 // func_800698A8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DefeatedCB__FP15xAnimTransitionP11xAnimSinglePv")
@@ -1095,7 +1106,23 @@ void zEntPlayer_GiveHealth(int32 quantity)
 }
 
 // func_80076A20
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveSpatula__Fi")
+#else
+// functionally equivalent, typical floating point memes
+void zEntPlayer_GiveSpatula(int32)
+{
+    sSpatulaGrabbed = 1;
+
+    if (globals.player.ControlOffTimer < lbl_803CD5F0)
+    {
+        globals.player.ControlOffTimer = lbl_803CD5F0;
+    }
+
+    zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+    zMusicSetVolume(lbl_803CD588, lbl_803CD62C);
+}
+#endif
 
 void zEntPlayer_GiveShinyObject(int32 quantity)
 {
@@ -1115,11 +1142,56 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
     }
 }
 
-// func_80076ADC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GivePatsSocksCurrentLevel__Fi")
+void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
+{
+    uint32 level = zSceneGetLevelIndex();
 
-// func_80076BD0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveLevelPickupCurrentLevel__Fi")
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock_Total)
+    {
+        globals.player.Inv_PatsSock_Total = 0;
+    }
+    else
+    {
+        globals.player.Inv_PatsSock_Total += quantity;
+    }
+
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock[level])
+    {
+        globals.player.Inv_PatsSock[level] = 0;
+    }
+    else
+    {
+        globals.player.Inv_PatsSock[level] += quantity;
+    }
+
+    globals.player.Inv_PatsSock_CurrentLevel = globals.player.Inv_PatsSock[level];
+
+    if (quantity > 0)
+    {
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+    }
+}
+
+void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
+{
+    uint32 level = zSceneGetLevelIndex();
+
+    if (quantity < 0 && -quantity > (int32)globals.player.Inv_LevelPickups[level])
+    {
+        globals.player.Inv_LevelPickups[level] = 0;
+    }
+    else
+    {
+        globals.player.Inv_LevelPickups[level] += quantity;
+    }
+
+    globals.player.Inv_LevelPickups_CurrentLevel = globals.player.Inv_LevelPickups[level];
+
+    if (quantity > 0)
+    {
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+    }
+}
 
 // func_80076C84
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CalcJumpImpulse_Smooth__Ffffff")
