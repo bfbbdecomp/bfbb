@@ -2,6 +2,7 @@
 #define ZNPCTYPEBOSSPATRICK_H
 
 #include "zNPCTypeBoss.h"
+#include "zNPCGoalCommon.h"
 #include "zPlatform.h"
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
@@ -110,6 +111,119 @@ struct zNPCBPatrick : zNPCBoss
     xBinaryCamera bossCam;
 
     zNPCBPatrick(int32 myType);
+};
+
+struct zNPCGoalBossPatIdle : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+
+    zNPCGoalBossPatIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatTaunt : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+
+    zNPCGoalBossPatTaunt(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatHit : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+
+    zNPCGoalBossPatHit(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatSpit : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 timeLeftToSpit;
+
+    zNPCGoalBossPatSpit(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatRun : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    uint32 runSndID;
+
+    zNPCGoalBossPatRun(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatSmack : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 globNum;
+
+    zNPCGoalBossPatSmack(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatFreeze : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 freezeSlope;
+
+    zNPCGoalBossPatFreeze(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatSpawn : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+
+    zNPCGoalBossPatSpawn(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatSpin : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 numGlobs;
+    xVec3 vel;
+    xVec3 pole[4];
+    int32 currPole;
+    uint32 spinSndID;
+    uint32 globSndID;
+
+    zNPCGoalBossPatSpin(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+};
+
+struct zNPCGoalBossPatFudge : zNPCGoalCommon
+{
+    float32 timeInGoal;
+    uint32 stage;
+    float32 lerp;
+    float32 globNum;
+    uint32 vomitSndID;
+
+    zNPCGoalBossPatFudge(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
 };
 
 void zNPCBPatrick_AddBoundEntsToGrid(zScene*);
