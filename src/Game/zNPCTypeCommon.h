@@ -13,10 +13,6 @@
 #include "zMovePoint.h"
 #include "zShrapnel.h"
 
-#define NPC_TYPE_ID(c, n) ('NT\0\0' | ((c) << 8) + ('0' + (n)))
-
-#define NPC_TYPE_ID_COMMON NPC_TYPE_ID('0', 1)
-
 typedef struct NPCMsg;
 
 enum en_npcparm
