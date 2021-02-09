@@ -4,9 +4,6 @@
 #include "zNPCGoalCommon.h"
 #include "zNPCGoalStd.h"
 
-#define NPC_GOAL_ID_DUPLOLIVE NPC_GOAL_ID('D', 0)
-#define NPC_GOAL_ID_DUPLODEAD NPC_GOAL_ID('D', 1)
-
 enum en_dupolive
 {
     LIVESTAT_NORMAL,

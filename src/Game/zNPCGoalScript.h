@@ -3,15 +3,6 @@
 
 #include "zNPCGoalCommon.h"
 
-#define NPC_GOAL_ID_SCRIPT NPC_GOAL_ID('S', 0)
-#define NPC_GOAL_ID_SCRIPTANIM NPC_GOAL_ID('S', 1)
-#define NPC_GOAL_ID_SCRIPTATTACK NPC_GOAL_ID('S', 2)
-#define NPC_GOAL_ID_SCRIPTMOVE NPC_GOAL_ID('S', 3)
-#define NPC_GOAL_ID_SCRIPTTALK NPC_GOAL_ID('S', 4)
-#define NPC_GOAL_ID_SCRIPTFOLLOW NPC_GOAL_ID('S', 5)
-#define NPC_GOAL_ID_SCRIPTLEAD NPC_GOAL_ID('S', 6)
-#define NPC_GOAL_ID_SCRIPTWAIT NPC_GOAL_ID('S', 7)
-
 struct zNPCGoalScript : zNPCGoalCommon
 {
     int32 flg_script;
