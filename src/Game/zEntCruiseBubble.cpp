@@ -11,6 +11,7 @@
 
 namespace cruise_bubble
 {
+
 // basic_rect screen_bounds;
 // basic_rect default_adjust;
 // int8 buffer[16];
@@ -20,7 +21,59 @@ namespace cruise_bubble
 // tweak_group* current_tweak;
 // xBase base;
 // int8* start_anim_states[37];
-// _class_36 shared;
+extern struct
+{
+    int32 flags;
+    state_type* state[3];
+    state_type* states[12];
+    xVec2 last_sp;
+    xVec2 sp;
+    xVec3 hit_loc;
+    xVec3 hit_norm;
+    xModelInstance* missle_model;
+    xEnt* hits[32];
+    int32 hits_size;
+    uint32 player_health;
+    xVec3 player_motion;
+    float32 fov_default;
+    zShrapnelAsset* droplet_shrapnel;
+    float32 dialog_freq;
+    struct
+    {
+        float32 samples;
+        float32 bubbles;
+        xMat4x3 mat;
+        xQuat dir;
+    } trail;
+    struct
+    {
+        struct
+        {
+            xAnimState* aim;
+            xAnimState* fire;
+            xAnimState* idle;
+        } player;
+        struct
+        {
+            xAnimState* fire;
+            xAnimState* fly;
+        } missle;
+    } astate;
+    struct
+    {
+        struct
+        {
+            xAnimTransition* aim;
+            xAnimTransition* fire;
+            xAnimTransition* idle;
+            xAnimTransition* end;
+        } player;
+        struct
+        {
+            xAnimTransition* fly;
+        } missle;
+    } atran;
+} shared;
 // xMat4x3 start_cam_mat;
 // fixed_queue missle_record;
 // xFXRibbon wake_ribbon[2];
@@ -226,15 +279,15 @@ void cruise_bubble::hide_wand()
     globals.player.sb_models[5]->Flags = globals.player.sb_models[5]->Flags & 0xfffe;
 }
 
-// func_8005755C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::show_missle()
+{
+    shared.missle_model->Flags = shared.missle_model->Flags | 0x0003;
+}
 
-// func_80057578
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hide_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::hide_missle()
+{
+    shared.missle_model->Flags = shared.missle_model->Flags & 0xfffc;
+}
 
 // func_80057594
 #pragma GLOBAL_ASM(                                                                                \
