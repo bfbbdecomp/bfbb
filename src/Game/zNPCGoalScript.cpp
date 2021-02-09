@@ -1,5 +1,6 @@
 #include "zNPCGoalScript.h"
 
+#include "zNPCGoals.h"
 #include "zNPCGoalStd.h"
 
 #include "../Core/x/xEvent.h"
@@ -10,42 +11,42 @@ xFactoryInst* GOALCreate_Script(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_GOAL_ID_SCRIPT:
+    case NPC_GOAL_SCRIPT:
     {
         goal = new (who, grow) zNPCGoalScript(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTANIM:
+    case NPC_GOAL_SCRIPTANIM:
     {
         goal = new (who, grow) zNPCGoalScriptAnim(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTATTACK:
+    case NPC_GOAL_SCRIPTATTACK:
     {
         goal = new (who, grow) zNPCGoalScriptAttack(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTMOVE:
+    case NPC_GOAL_SCRIPTMOVE:
     {
         goal = new (who, grow) zNPCGoalScriptMove(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTTALK:
+    case NPC_GOAL_SCRIPTTALK:
     {
         goal = new (who, grow) zNPCGoalScriptTalk(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTFOLLOW:
+    case NPC_GOAL_SCRIPTFOLLOW:
     {
         goal = new (who, grow) zNPCGoalScriptFollow(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTLEAD:
+    case NPC_GOAL_SCRIPTLEAD:
     {
         goal = new (who, grow) zNPCGoalScriptLead(who);
         break;
     }
-    case NPC_GOAL_ID_SCRIPTWAIT:
+    case NPC_GOAL_SCRIPTWAIT:
     {
         goal = new (who, grow) zNPCGoalScriptWait(who);
         break;
@@ -88,12 +89,12 @@ int32 zNPCGoalScript::NPCMessage(NPCMsg* mail)
     }
     case NPC_MID_SCRIPTEND:
     {
-        psyche->GoalSet(NPC_GOAL_ID_IDLE, 0);
+        psyche->GoalSet(NPC_GOAL_IDLE, 0);
         break;
     }
     case NPC_MID_SCRIPTHALT:
     {
-        psyche->GoalPop(NPC_GOAL_ID_SCRIPT, 0);
+        psyche->GoalPop(NPC_GOAL_SCRIPT, 0);
         break;
     }
     default:
