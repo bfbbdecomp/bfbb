@@ -109,38 +109,6 @@ lbl_80057470:
 /* 80057480 00054280  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057484 00054284  4E 80 00 20 */	blr 
 
-/* capture_camera__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-capture_camera__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80057594 00054394  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80057598 00054398  7C 08 02 A6 */	mflr r0
-/* 8005759C 0005439C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800575A0 000543A0  4B FF AB 89 */	bl zCameraDisableInput__Fv
-/* 800575A4 000543A4  38 60 00 02 */	li r3, 2
-/* 800575A8 000543A8  4B FF AB 59 */	bl zCameraDisableTracking__F17camera_owner_enum
-/* 800575AC 000543AC  38 60 00 00 */	li r3, 0
-/* 800575B0 000543B0  38 80 00 01 */	li r4, 1
-/* 800575B4 000543B4  4B FB 5F DD */	bl xCameraDoCollisions__Fii
-/* 800575B8 000543B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800575BC 000543BC  7C 08 03 A6 */	mtlr r0
-/* 800575C0 000543C0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800575C4 000543C4  4E 80 00 20 */	blr 
-
-/* release_camera__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-release_camera__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 800575C8 000543C8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800575CC 000543CC  7C 08 02 A6 */	mflr r0
-/* 800575D0 000543D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800575D4 000543D4  4B FF AB 61 */	bl zCameraEnableInput__Fv
-/* 800575D8 000543D8  38 60 00 02 */	li r3, 2
-/* 800575DC 000543DC  4B FF AB 35 */	bl zCameraEnableTracking__F17camera_owner_enum
-/* 800575E0 000543E0  38 60 00 01 */	li r3, 1
-/* 800575E4 000543E4  38 80 00 01 */	li r4, 1
-/* 800575E8 000543E8  4B FB 5F A9 */	bl xCameraDoCollisions__Fii
-/* 800575EC 000543EC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800575F0 000543F0  7C 08 03 A6 */	mtlr r0
-/* 800575F4 000543F4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800575F8 000543F8  4E 80 00 20 */	blr 
-
 /* camera_taken__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 800575FC 000543FC  94 21 FF F0 */	stwu r1, -0x10(r1)

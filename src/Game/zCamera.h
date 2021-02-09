@@ -3,12 +3,32 @@
 
 #include "../Core/x/xCamera.h"
 
+enum WallJumpViewState
+{
+    WJVS_DISABLED,
+    WJVS_DISABLING,
+    WJVS_ENABLED,
+    WJVS_ENABLING
+};
+
+enum camera_owner_enum
+{
+    CO_BOULDER = 0x1,
+    CO_CRUISE_BUBBLE,
+    CO_BUNGEE = 0x4,
+    CO_BOSS = 0x8,
+    CO_OOB = 0x10,
+    CO_ZIPLINE = 0x20,
+    CO_TURRET = 0x40,
+    CO_REWARDANIM = 0x80
+};
+
 struct zFlyKey
 {
-	int32 frame;
-	float32 matrix[12];
-	float32 aperture[2];
-	float32 focal;
+    int32 frame;
+    float32 matrix[12];
+    float32 aperture[2];
+    float32 focal;
 
     zFlyKey& operator=(const zFlyKey&);
 };
@@ -36,9 +56,11 @@ void zCameraTranslate(xCamera* camera, float32 x, float32 y, float32 z);
 void zCameraReset(xCamera* camera);
 void zCameraUpdate(xCamera* camera, float32 dt);
 
-uint32 zCameraIsTrackingDisabled();
-void zCameraDisableInput();
 void zCameraEnableInput();
+void zCameraDisableInput();
+uint32 zCameraIsTrackingDisabled();
+void zCameraEnableTracking(camera_owner_enum owner);
+void zCameraDisableTracking(camera_owner_enum owner);
 void zCameraDisableLassoCam();
 void zCameraEnableLassoCam();
 void zCameraSetLassoCamFactor(float32 new_factor);

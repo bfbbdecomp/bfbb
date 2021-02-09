@@ -83,6 +83,8 @@ namespace cruise_bubble
     void hide_wand();
     void show_missle();
     void hide_missle();
+    void capture_camera();
+    void release_camera();
 
 } // namespace cruise_bubble
 

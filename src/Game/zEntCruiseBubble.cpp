@@ -1,4 +1,5 @@
 
+#include "zCamera.h"
 #include "zEntCruiseBubble.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
@@ -289,15 +290,19 @@ void cruise_bubble::hide_missle()
     shared.missle_model->Flags = shared.missle_model->Flags & 0xfffc;
 }
 
-// func_80057594
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "capture_camera__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::capture_camera()
+{
+    zCameraDisableInput();
+    zCameraDisableTracking(CO_CRUISE_BUBBLE);
+    xCameraDoCollisions(0, 1);
+}
 
-// func_800575C8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "release_camera__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::release_camera()
+{
+    zCameraEnableInput();
+    zCameraEnableTracking(CO_CRUISE_BUBBLE);
+    xCameraDoCollisions(1, 1);
+}
 
 // func_800575FC
 #pragma GLOBAL_ASM(                                                                                \
