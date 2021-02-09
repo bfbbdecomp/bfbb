@@ -45659,6 +45659,7 @@ lbl_803CD580:
 	.incbin "baserom.dol", 0x2B6E20, 0x4
 lbl_803CD584:
 	.incbin "baserom.dol", 0x2B6E24, 0x4
+.global lbl_803CD588
 lbl_803CD588:
 	.incbin "baserom.dol", 0x2B6E28, 0x4
 lbl_803CD58C:
@@ -45704,6 +45705,7 @@ lbl_803CD5E8:
 	.incbin "baserom.dol", 0x2B6E88, 0x4
 lbl_803CD5EC:
 	.incbin "baserom.dol", 0x2B6E8C, 0x4
+.global lbl_803CD5F0
 lbl_803CD5F0:
 	.incbin "baserom.dol", 0x2B6E90, 0x4
 lbl_803CD5F4:
@@ -45734,6 +45736,7 @@ lbl_803CD624:
 	.incbin "baserom.dol", 0x2B6EC4, 0x4
 lbl_803CD628:
 	.incbin "baserom.dol", 0x2B6EC8, 0x4
+.global lbl_803CD62C
 lbl_803CD62C:
 	.incbin "baserom.dol", 0x2B6ECC, 0x4
 lbl_803CD630:

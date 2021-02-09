@@ -20,6 +20,7 @@
 #include "zLasso.h"
 #include "zNPCTypeTiki.h"
 #include "zNPCMessenger.h"
+#include "zMusic.h"
 
 extern zGlobals globals;
 extern uint32 sCurrentStreamSndID;
@@ -41,6 +42,9 @@ extern int32 player_hit_anim;
 extern uint32 player_dead_anim;
 
 extern float32 lbl_803CD5A0; // 0.0
+extern float32 lbl_803CD5F0; // 0.1
+extern float32 lbl_803CD62C; // 0.2
+extern float32 lbl_803CD588; // 0.5
 extern float32 lbl_803CD830; // 30.0
 extern float32 lbl_803CD638; // 10.0
 
@@ -1102,7 +1106,21 @@ void zEntPlayer_GiveHealth(int32 quantity)
 }
 
 // func_80076A20
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveSpatula__Fi")
+#else
+void zEntPlayer_GiveSpatula(int32)
+{
+    // 20 lines
+    sSpatulaGrabbed = 1;
+    if (globals.player.ControlOffTimer < lbl_803CD5F0)
+    {
+        globals.player.ControlOffTimer = lbl_803CD5F0;
+    }
+    zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+    zMusicSetVolume(lbl_803CD588, lbl_803CD62C);
+}
+#endif
 
 void zEntPlayer_GiveShinyObject(int32 quantity)
 {
