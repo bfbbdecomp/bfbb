@@ -6,6 +6,7 @@
 extern _CurrentPlayer gPendingPlayer;
 extern float32 sTimeElapsed;
 extern uint32 gLevelChanged;
+extern uint32 startPressed;
 extern uint8 sHackSmoothedUpdate;
 extern uint32 gBusStopIsRunning;
 
