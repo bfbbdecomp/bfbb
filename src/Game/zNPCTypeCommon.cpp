@@ -3,6 +3,7 @@
 #include <types.h>
 #include <string.h>
 
+#include "zNPCTypes.h"
 #include "zNPCSndTable.h"
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
@@ -30,7 +31,7 @@ xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_TYPE_ID_COMMON:
+    case NPC_TYPE_COMMON:
     {
         com = new (who, grow) zNPCCommon(who);
         break;

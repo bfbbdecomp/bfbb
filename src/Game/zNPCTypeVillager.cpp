@@ -1,9 +1,6 @@
-#include <types.h>
-
-#include "../Core/x/xVec3.h"
-#include "../Core/x/xMath3.h"
-
 #include "zNPCTypeVillager.h"
+
+#include "zNPCTypes.h"
 
 // func_80102C2C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_Villager_Startup__Fv")
@@ -32,64 +29,64 @@ xFactoryInst* ZNPC_Create_Villager(int32 who, RyzMemGrow* growCtxt, void*)
 
     switch (who)
     {
-    case NPC_TYPE_ID_VILLAGER:
+    case NPC_TYPE_VILLAGER:
     {
         vil = new (who, growCtxt) zNPCVillager(who);
         break;
     }
-    case NPC_TYPE_ID_FISH0:
-    case NPC_TYPE_ID_FISH1:
-    case NPC_TYPE_ID_FISH2:
-    case NPC_TYPE_ID_FISH3:
-    case NPC_TYPE_ID_FISH4:
-    case NPC_TYPE_ID_FISH5:
-    case NPC_TYPE_ID_FISH6:
-    case NPC_TYPE_ID_FISH8:
-    case NPC_TYPE_ID_FISH9:
-    case NPC_TYPE_ID_FISH10:
-    case NPC_TYPE_ID_FISH11:
-    case NPC_TYPE_ID_FISH12:
-    case NPC_TYPE_ID_FISH14:
-    case NPC_TYPE_ID_FISH15:
-    case NPC_TYPE_ID_FISH16:
-    case NPC_TYPE_ID_FISH17:
-    case NPC_TYPE_ID_FISH18:
-    case NPC_TYPE_ID_FISH19:
-    case NPC_TYPE_ID_FISH20:
-    case NPC_TYPE_ID_FISH24:
-    case NPC_TYPE_ID_FISH26:
-    case NPC_TYPE_ID_FISH27:
-    case NPC_TYPE_ID_FISH28:
+    case NPC_TYPE_FISH:
+    case NPC_TYPE_FISH_MALE:
+    case NPC_TYPE_FISH_FEMALE:
+    case NPC_TYPE_FISH_ELDER:
+    case NPC_TYPE_FISH_ELDESS:
+    case NPC_TYPE_FISH_BOY:
+    case NPC_TYPE_FISH_GIRL:
+    case NPC_TYPE_GARY:
+    case NPC_TYPE_SQUIDWARD:
+    case NPC_TYPE_SQUIDWARD_MUSIC:
+    case NPC_TYPE_SQUIDWARD_BANDAID:
+    case NPC_TYPE_DUTCHMAN_NSB:
+    case NPC_TYPE_SANDYNPC:
+    case NPC_TYPE_PATNPC:
+    case NPC_TYPE_BOBNPC:
+    case NPC_TYPE_PLANKNPC:
+    case NPC_TYPE_MRKRABS:
+    case NPC_TYPE_MSPUFFS:
+    case NPC_TYPE_LARRY:
+    case NPC_TYPE_MOTORIST:
+    case NPC_TYPE_MERMAN:
+    case NPC_TYPE_BARNACLEBOY:
+    case NPC_TYPE_WORM:
     {
         vil = new (who, growCtxt) zNPCFish(who);
         break;
     }
-    case NPC_TYPE_ID_BUBBLEBUDDY:
+    case NPC_TYPE_BUBBUDDY:
     {
         vil = new (who, growCtxt) zNPCBubbleBuddy(who);
         break;
     }
-    case NPC_TYPE_ID_BALLOONBOY:
+    case NPC_TYPE_BALLOONBOY:
     {
         vil = new (who, growCtxt) zNPCBalloonBoy(who);
         break;
     }
-    case NPC_TYPE_ID_SANDYBIKINI:
+    case NPC_TYPE_SANDYBIKINI:
     {
         vil = new (who, growCtxt) zNPCSandyBikini(who);
         break;
     }
-    case NPC_TYPE_ID_MERMANCHAIR:
+    case NPC_TYPE_MERMANCHAIR:
     {
         vil = new (who, growCtxt) zNPCMerManChair(who);
         break;
     }
-    case NPC_TYPE_ID_NEWSFISH:
+    case NPC_TYPE_NEWSFISH:
     {
         vil = new (who, growCtxt) zNPCNewsFish(who);
         break;
     }
-    case NPC_TYPE_ID_NEWSFISHTV:
+    case NPC_TYPE_NEWSFISHTV:
     {
         vil = new (who, growCtxt) zNPCNewsFishTV(who);
         break;
