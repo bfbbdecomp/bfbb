@@ -1106,17 +1106,19 @@ void zEntPlayer_GiveHealth(int32 quantity)
 }
 
 // func_80076A20
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveSpatula__Fi")
 #else
+// functionally equivalent, typical floating point memes
 void zEntPlayer_GiveSpatula(int32)
 {
-    // 20 lines
     sSpatulaGrabbed = 1;
+
     if (globals.player.ControlOffTimer < lbl_803CD5F0)
     {
         globals.player.ControlOffTimer = lbl_803CD5F0;
     }
+
     zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
     zMusicSetVolume(lbl_803CD588, lbl_803CD62C);
 }
