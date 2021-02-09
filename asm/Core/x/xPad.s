@@ -4,37 +4,6 @@
 
 .section .text  # 0x80035E70 - 0x8003694C
 
-.global xPadInit__Fv
-xPadInit__Fv:
-/* 80035E70 00032C70  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80035E74 00032C74  7C 08 02 A6 */	mflr r0
-/* 80035E78 00032C78  3C 60 80 39 */	lis r3, mPad@ha
-/* 80035E7C 00032C7C  38 80 00 00 */	li r4, 0
-/* 80035E80 00032C80  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035E84 00032C84  38 63 C9 94 */	addi r3, r3, mPad@l
-/* 80035E88 00032C88  38 A0 05 20 */	li r5, 0x520
-/* 80035E8C 00032C8C  4B FC D5 CD */	bl memset
-/* 80035E90 00032C90  3C 60 80 2D */	lis r3, lbl_802C8770@ha
-/* 80035E94 00032C94  38 80 00 00 */	li r4, 0
-/* 80035E98 00032C98  38 63 87 70 */	addi r3, r3, lbl_802C8770@l
-/* 80035E9C 00032C9C  38 A0 02 00 */	li r5, 0x200
-/* 80035EA0 00032CA0  4B FC D5 B9 */	bl memset
-/* 80035EA4 00032CA4  48 09 4A 7D */	bl iPadInit__Fv
-/* 80035EA8 00032CA8  2C 03 00 00 */	cmpwi r3, 0
-/* 80035EAC 00032CAC  40 82 00 0C */	bne lbl_80035EB8
-/* 80035EB0 00032CB0  38 60 00 00 */	li r3, 0
-/* 80035EB4 00032CB4  48 00 00 14 */	b lbl_80035EC8
-lbl_80035EB8:
-/* 80035EB8 00032CB8  3C 80 80 39 */	lis r4, mPad@ha
-/* 80035EBC 00032CBC  38 60 00 01 */	li r3, 1
-/* 80035EC0 00032CC0  38 04 C9 94 */	addi r0, r4, mPad@l
-/* 80035EC4 00032CC4  90 0D 8A 0C */	stw r0, gPlayerPad-_SDA_BASE_(r13)
-lbl_80035EC8:
-/* 80035EC8 00032CC8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80035ECC 00032CCC  7C 08 03 A6 */	mtlr r0
-/* 80035ED0 00032CD0  38 21 00 10 */	addi r1, r1, 0x10
-/* 80035ED4 00032CD4  4E 80 00 20 */	blr 
-
 .global xPadEnable__Fi
 xPadEnable__Fi:
 /* 80035ED8 00032CD8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -70,41 +39,6 @@ lbl_80035F38:
 /* 80035F44 00032D44  7C 08 03 A6 */	mtlr r0
 /* 80035F48 00032D48  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035F4C 00032D4C  4E 80 00 20 */	blr 
-
-.global xPadRumbleEnable__Fii
-xPadRumbleEnable__Fii:
-/* 80035F50 00032D50  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80035F54 00032D54  7C 08 02 A6 */	mflr r0
-/* 80035F58 00032D58  1C A3 01 48 */	mulli r5, r3, 0x148
-/* 80035F5C 00032D5C  3C 60 80 39 */	lis r3, mPad@ha
-/* 80035F60 00032D60  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80035F64 00032D64  38 03 C9 94 */	addi r0, r3, mPad@l
-/* 80035F68 00032D68  7C 60 2A 14 */	add r3, r0, r5
-/* 80035F6C 00032D6C  80 03 00 3C */	lwz r0, 0x3c(r3)
-/* 80035F70 00032D70  2C 00 00 02 */	cmpwi r0, 2
-/* 80035F74 00032D74  41 82 00 08 */	beq lbl_80035F7C
-/* 80035F78 00032D78  38 80 00 00 */	li r4, 0
-lbl_80035F7C:
-/* 80035F7C 00032D7C  2C 04 00 00 */	cmpwi r4, 0
-/* 80035F80 00032D80  41 82 00 1C */	beq lbl_80035F9C
-/* 80035F84 00032D84  80 83 00 40 */	lwz r4, 0x40(r3)
-/* 80035F88 00032D88  54 80 07 7B */	rlwinm. r0, r4, 0, 0x1d, 0x1d
-/* 80035F8C 00032D8C  41 82 00 28 */	beq lbl_80035FB4
-/* 80035F90 00032D90  60 80 00 08 */	ori r0, r4, 8
-/* 80035F94 00032D94  90 03 00 40 */	stw r0, 0x40(r3)
-/* 80035F98 00032D98  48 00 00 1C */	b lbl_80035FB4
-lbl_80035F9C:
-/* 80035F9C 00032D9C  80 83 00 40 */	lwz r4, 0x40(r3)
-/* 80035FA0 00032DA0  54 80 07 39 */	rlwinm. r0, r4, 0, 0x1c, 0x1c
-/* 80035FA4 00032DA4  41 82 00 10 */	beq lbl_80035FB4
-/* 80035FA8 00032DA8  68 80 00 08 */	xori r0, r4, 8
-/* 80035FAC 00032DAC  90 03 00 40 */	stw r0, 0x40(r3)
-/* 80035FB0 00032DB0  48 00 06 71 */	bl xPadDestroyRumbleChain__FP8_tagxPad
-lbl_80035FB4:
-/* 80035FB4 00032DB4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80035FB8 00032DB8  7C 08 03 A6 */	mtlr r0
-/* 80035FBC 00032DBC  38 21 00 10 */	addi r1, r1, 0x10
-/* 80035FC0 00032DC0  4E 80 00 20 */	blr 
 
 .global xPadUpdate__Fif
 xPadUpdate__Fif:
@@ -518,37 +452,26 @@ lbl_8003655C:
 /* 80036574 00033374  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 80036578 00033378  7C 08 03 A6 */	mtlr r0
 /* 8003657C 0003337C  38 21 00 30 */	addi r1, r1, 0x30
-/* 80036580 00033380  4E 80 00 20 */	blr 
-
-.global xPadKill__Fv
-xPadKill__Fv:
-/* 80036584 00033384  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80036588 00033388  7C 08 02 A6 */	mflr r0
-/* 8003658C 0003338C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80036590 00033390  48 09 49 59 */	bl iPadKill__Fv
-/* 80036594 00033394  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80036598 00033398  7C 08 03 A6 */	mtlr r0
-/* 8003659C 0003339C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800365A0 000333A0  4E 80 00 20 */	blr 
+/* 80036580 00033380  4E 80 00 20 */	blr  
 
 .global xPadGetRumbleSlot__Fv
 xPadGetRumbleSlot__Fv:
 /* 800365A4 000333A4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800365A8 000333A8  7C 08 02 A6 */	mflr r0
-/* 800365AC 000333AC  3C 60 80 2D */	lis r3, lbl_802C8770@ha
+/* 800365AC 000333AC  3C 60 80 2D */	lis r3, mRumbleList@ha
 /* 800365B0 000333B0  38 80 00 00 */	li r4, 0
 /* 800365B4 000333B4  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800365B8 000333B8  38 00 00 20 */	li r0, 0x20
-/* 800365BC 000333BC  38 63 87 70 */	addi r3, r3, lbl_802C8770@l
+/* 800365BC 000333BC  38 63 87 70 */	addi r3, r3, mRumbleList@l
 /* 800365C0 000333C0  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 800365C4 000333C4  7C 09 03 A6 */	mtctr r0
 lbl_800365C8:
 /* 800365C8 000333C8  A8 03 00 0C */	lha r0, 0xc(r3)
 /* 800365CC 000333CC  2C 00 00 00 */	cmpwi r0, 0
 /* 800365D0 000333D0  40 82 00 2C */	bne lbl_800365FC
-/* 800365D4 000333D4  3C 60 80 2D */	lis r3, lbl_802C8770@ha
+/* 800365D4 000333D4  3C 60 80 2D */	lis r3, mRumbleList@ha
 /* 800365D8 000333D8  54 85 20 36 */	slwi r5, r4, 4
-/* 800365DC 000333DC  38 03 87 70 */	addi r0, r3, lbl_802C8770@l
+/* 800365DC 000333DC  38 03 87 70 */	addi r0, r3, mRumbleList@l
 /* 800365E0 000333E0  38 80 00 00 */	li r4, 0
 /* 800365E4 000333E4  7F E0 2A 14 */	add r31, r0, r5
 /* 800365E8 000333E8  38 A0 00 10 */	li r5, 0x10
@@ -567,50 +490,6 @@ lbl_8003660C:
 /* 80036614 00033414  7C 08 03 A6 */	mtlr r0
 /* 80036618 00033418  38 21 00 10 */	addi r1, r1, 0x10
 /* 8003661C 0003341C  4E 80 00 20 */	blr 
-
-.global xPadDestroyRumbleChain__FP8_tagxPad
-xPadDestroyRumbleChain__FP8_tagxPad:
-/* 80036620 00033420  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80036624 00033424  7C 08 02 A6 */	mflr r0
-/* 80036628 00033428  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8003662C 0003342C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80036630 00033430  93 C1 00 08 */	stw r30, 8(r1)
-/* 80036634 00033434  7C 7E 1B 78 */	mr r30, r3
-/* 80036638 00033438  48 09 48 1D */	bl iPadStopRumble__FP8_tagxPad
-/* 8003663C 0003343C  83 FE 00 4C */	lwz r31, 0x4c(r30)
-/* 80036640 00033440  48 00 00 18 */	b lbl_80036658
-lbl_80036644:
-/* 80036644 00033444  7F E3 FB 78 */	mr r3, r31
-/* 80036648 00033448  38 80 00 00 */	li r4, 0
-/* 8003664C 0003344C  38 A0 00 10 */	li r5, 0x10
-/* 80036650 00033450  4B FC CE 09 */	bl memset
-/* 80036654 00033454  83 FF 00 08 */	lwz r31, 8(r31)
-lbl_80036658:
-/* 80036658 00033458  28 1F 00 00 */	cmplwi r31, 0
-/* 8003665C 0003345C  40 82 FF E8 */	bne lbl_80036644
-/* 80036660 00033460  38 00 00 00 */	li r0, 0
-/* 80036664 00033464  90 1E 00 4C */	stw r0, 0x4c(r30)
-/* 80036668 00033468  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8003666C 0003346C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80036670 00033470  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80036674 00033474  7C 08 03 A6 */	mtlr r0
-/* 80036678 00033478  38 21 00 10 */	addi r1, r1, 0x10
-/* 8003667C 0003347C  4E 80 00 20 */	blr 
-
-.global xPadDestroyRumbleChain__Fi
-xPadDestroyRumbleChain__Fi:
-/* 80036680 00033480  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80036684 00033484  7C 08 02 A6 */	mflr r0
-/* 80036688 00033488  1C 83 01 48 */	mulli r4, r3, 0x148
-/* 8003668C 0003348C  3C 60 80 39 */	lis r3, mPad@ha
-/* 80036690 00033490  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80036694 00033494  38 03 C9 94 */	addi r0, r3, mPad@l
-/* 80036698 00033498  7C 60 22 14 */	add r3, r0, r4
-/* 8003669C 0003349C  4B FF FF 85 */	bl xPadDestroyRumbleChain__FP8_tagxPad
-/* 800366A0 000334A0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800366A4 000334A4  7C 08 03 A6 */	mtlr r0
-/* 800366A8 000334A8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800366AC 000334AC  4E 80 00 20 */	blr 
 
 .global xPadAddRumble__Fi14_tagRumbleTypefiUi
 xPadAddRumble__Fi14_tagRumbleTypefiUi:
@@ -815,7 +694,8 @@ lbl_80036944:
 .endif
 
 .section .bss
-lbl_802C8770:
+.global mRumbleList
+mRumbleList:
 	.skip 0x200
 
 .section .sdata2
