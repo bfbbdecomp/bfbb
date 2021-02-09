@@ -1,5 +1,7 @@
 #include "zNPCTypeTiki.h"
 
+#include "zNPCTypes.h"
+
 #include "../Core/x/xString.h"
 #include "../Core/x/xutil.h"
 
@@ -44,11 +46,11 @@ xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_TYPE_ID_TIKIWOOD:
-    case NPC_TYPE_ID_TIKILOVEY:
-    case NPC_TYPE_ID_TIKISHHH:
-    case NPC_TYPE_ID_TIKITHUNDER:
-    case NPC_TYPE_ID_TIKISTONE:
+    case NPC_TYPE_TIKI_WOOD:
+    case NPC_TYPE_TIKI_LOVEY:
+    case NPC_TYPE_TIKI_QUIET:
+    case NPC_TYPE_TIKI_THUNDER:
+    case NPC_TYPE_TIKI_STONE:
     {
         tiki = new (who, grow) zNPCTiki(who);
         break;

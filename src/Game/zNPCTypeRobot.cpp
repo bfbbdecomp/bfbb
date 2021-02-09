@@ -1,13 +1,12 @@
 #include "zNPCTypeRobot.h"
 
-#include <types.h>
-#include <string.h>
-
 #include "zNPCGoalRobo.h"
 #include "zNPCTypes.h"
 #include "zNPCGoalStd.h"
 
 #include "../Core/x/xFactory.h"
+
+#include <string.h>
 
 extern UVAModelInfo g_uvaShield;
 extern int32 g_cnt_fodbzzt;
@@ -88,88 +87,88 @@ xFactoryInst* ZNPC_Create_Robot(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_TYPE_ID_ROBOT:
+    case NPC_TYPE_ROBOT:
     {
         robo = new (who, grow) zNPCRobot(who);
         break;
     }
-    case NPC_TYPE_ID_FODDER:
+    case NPC_TYPE_FODDER:
     {
         robo = new (who, grow) zNPCFodder(who);
         break;
     }
-    case NPC_TYPE_ID_FODBOMB:
+    case NPC_TYPE_FODBOMB:
     {
         robo = new (who, grow) zNPCFodBomb(who);
         break;
     }
-    case NPC_TYPE_ID_FODBZZT:
+    case NPC_TYPE_FODBZZT:
     {
         robo = new (who, grow) zNPCFodBzzt(who);
         break;
     }
-    case NPC_TYPE_ID_CHOMPER:
+    case NPC_TYPE_CHOMPER:
     {
         robo = new (who, grow) zNPCChomper(who);
         break;
     }
-    case NPC_TYPE_ID_CRITTER:
+    case NPC_TYPE_CRITTER:
     {
         robo = new (who, grow) zNPCCritter(who);
         break;
     }
-    case NPC_TYPE_ID_HAMMER1:
-    case NPC_TYPE_ID_HAMMER2:
+    case NPC_TYPE_HAMMER:
+    case NPC_TYPE_HAMSPIN:
     {
         robo = new (who, grow) zNPCHammer(who);
         break;
     }
-    case NPC_TYPE_ID_TARTAR:
+    case NPC_TYPE_TARTAR:
     {
         robo = new (who, grow) zNPCTarTar(who);
         break;
     }
-    case NPC_TYPE_ID_GLOVE:
+    case NPC_TYPE_GLOVE:
     {
         robo = new (who, grow) zNPCGlove(who);
         break;
     }
-    case NPC_TYPE_ID_MONSOON:
+    case NPC_TYPE_MONSOON:
     {
         robo = new (who, grow) zNPCMonsoon(who);
         break;
     }
-    case NPC_TYPE_ID_SLEEPY:
+    case NPC_TYPE_SLEEPY:
     {
         robo = new (who, grow) zNPCSleepy(who);
         break;
     }
-    case NPC_TYPE_ID_ARFDOG:
+    case NPC_TYPE_ARFDOG:
     {
         robo = new (who, grow) zNPCArfDog(who);
         break;
     }
-    case NPC_TYPE_ID_ARFARF:
+    case NPC_TYPE_ARFARF:
     {
         robo = new (who, grow) zNPCArfArf(who);
         break;
     }
-    case NPC_TYPE_ID_CHUCK:
+    case NPC_TYPE_CHUCK:
     {
         robo = new (who, grow) zNPCChuck(who);
         break;
     }
-    case NPC_TYPE_ID_TUBELET:
+    case NPC_TYPE_TUBELET:
     {
         robo = new (who, grow) zNPCTubelet(who);
         break;
     }
-    case NPC_TYPE_ID_TUBESLAVE:
+    case NPC_TYPE_TUBESLAVE:
     {
         robo = new (who, grow) zNPCTubeSlave(who);
         break;
     }
-    case NPC_TYPE_ID_SLICK:
+    case NPC_TYPE_SLICK:
     {
         robo = new (who, grow) zNPCSlick(who);
         break;

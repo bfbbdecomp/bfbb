@@ -3,8 +3,6 @@
 
 #include "zNPCTypeCommon.h"
 
-#define NPC_TYPE_ID_TEST NPC_TYPE_ID('S', 4)
-
 struct zNPCTest : zNPCCommon
 {
     int32 numAnimations;

@@ -4,6 +4,7 @@
 #include "../Core/x/xMath3.h"
 
 #include "zNPCTypeAmbient.h"
+#include "zNPCTypes.h"
 
 // func_801077A0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_Ambient_Startup__Fv")
@@ -17,28 +18,28 @@ xFactoryInst* ZNPC_Create_Ambient(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_TYPE_ID_AMBIENT:
+    case NPC_TYPE_AMBIENT:
     {
         inst = new (who, grow) zNPCAmbient(who);
         break;
     }
-    case NPC_TYPE_ID_JELLY1:
-    case NPC_TYPE_ID_JELLY2:
+    case NPC_TYPE_JELLYPINK:
+    case NPC_TYPE_JELLYBLUE:
     {
         inst = new (who, grow) zNPCJelly(who);
         break;
     }
-    case NPC_TYPE_ID_NEPTUNE:
+    case NPC_TYPE_KINGNEPTUNE:
     {
         inst = new (who, grow) zNPCNeptune(who);
         break;
     }
-    case NPC_TYPE_ID_MIMEFISH1:
+    case NPC_TYPE_MIMEFISH:
     {
         inst = new (who, grow) zNPCMimeFish(who);
         break;
     }
-    case NPC_TYPE_ID_MIMEFISH2:
+    case NPC_TYPE_COW:
     {
         inst = new (who, grow) zNPCMimeFish(who);
         break;
