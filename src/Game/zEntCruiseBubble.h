@@ -85,6 +85,7 @@ namespace cruise_bubble
     void hide_missle();
     void capture_camera();
     void release_camera();
+    uint32 camera_taken();
 
 } // namespace cruise_bubble
 

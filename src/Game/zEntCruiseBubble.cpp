@@ -22,7 +22,8 @@ namespace cruise_bubble
 // tweak_group* current_tweak;
 // xBase base;
 // int8* start_anim_states[37];
-extern struct
+
+extern struct _class_36
 {
     int32 flags;
     state_type* state[3];
@@ -39,37 +40,37 @@ extern struct
     float32 fov_default;
     zShrapnelAsset* droplet_shrapnel;
     float32 dialog_freq;
-    struct
+    struct _class_45
     {
         float32 samples;
         float32 bubbles;
         xMat4x3 mat;
         xQuat dir;
     } trail;
-    struct
+    struct _class_6
     {
-        struct
+        struct _class_8
         {
             xAnimState* aim;
             xAnimState* fire;
             xAnimState* idle;
         } player;
-        struct
+        struct _class_16
         {
             xAnimState* fire;
             xAnimState* fly;
         } missle;
     } astate;
-    struct
+    struct _class_25
     {
-        struct
+        struct _class_28
         {
             xAnimTransition* aim;
             xAnimTransition* fire;
             xAnimTransition* idle;
             xAnimTransition* end;
         } player;
-        struct
+        struct _class_33
         {
             xAnimTransition* fly;
         } missle;
@@ -305,9 +306,17 @@ void cruise_bubble::release_camera()
 }
 
 // func_800575FC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#ifndef NONMATCHING
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+uint32 cruise_bubble::camera_taken()
+{
+    // dumb non match cause it seems the compiler doesnt assume the type of the return value correctly
+    // to me it looks like the case Ninja shifts described in https://pastebin.com/XjJpBzah
+    // i tried changing the return type to every imaginable type, asm remains the same
+    return zCameraGetConvers() != 0 || (zCameraIsTrackingDisabled() & 0xfffffffd) != 0;
+}
+#endif
 
 // func_80057644
 #pragma GLOBAL_ASM(                                                                                \
