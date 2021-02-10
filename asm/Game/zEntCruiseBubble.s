@@ -132,20 +132,6 @@ lbl_8005762C:
 /* 8005763C 0005443C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057640 00054440  4E 80 00 20 */	blr 
 
-/* camera_leave__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-camera_leave__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80057644 00054444  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80057648 00054448  7C 08 02 A6 */	mflr r0
-/* 8005764C 0005444C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80057650 00054450  4B FF AB 19 */	bl zCameraGetConvers__Fv
-/* 80057654 00054454  7C 03 00 D0 */	neg r0, r3
-/* 80057658 00054458  7C 00 1B 78 */	or r0, r0, r3
-/* 8005765C 0005445C  54 03 0F FE */	srwi r3, r0, 0x1f
-/* 80057660 00054460  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80057664 00054464  7C 08 03 A6 */	mtlr r0
-/* 80057668 00054468  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005766C 0005446C  4E 80 00 20 */	blr 
-
 /* start_damaging__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 start_damaging__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80057670 00054470  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
