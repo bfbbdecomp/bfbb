@@ -323,10 +323,10 @@ uint32 cruise_bubble::camera_leave()
     return zCameraGetConvers() != 0;
 }
 
-// func_80057670
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "start_damaging__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::start_damaging()
+{
+    shared.hits_size = 0;
+}
 
 // func_80057684
 #pragma GLOBAL_ASM(                                                                                \

@@ -87,6 +87,7 @@ namespace cruise_bubble
     void release_camera();
     uint32 camera_taken();
     uint32 camera_leave();
+    void start_damaging();
 
 } // namespace cruise_bubble
 

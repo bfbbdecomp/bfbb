@@ -132,14 +132,6 @@ lbl_8005762C:
 /* 8005763C 0005443C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057640 00054440  4E 80 00 20 */	blr 
 
-/* start_damaging__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-start_damaging__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80057670 00054470  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 80057674 00054474  38 00 00 00 */	li r0, 0
-/* 80057678 00054478  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005767C 0005447C  90 03 00 EC */	stw r0, 0xec(r3)
-/* 80057680 00054480  4E 80 00 20 */	blr 
-
 /* damage_entity__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR4xEntRC5xVec3RC5xVec3RC5xVec3fb */
 damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb:
 /* 80057684 00054484  94 21 FF 40 */	stwu r1, -0xc0(r1)
