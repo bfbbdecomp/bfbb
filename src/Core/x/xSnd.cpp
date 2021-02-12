@@ -13,6 +13,7 @@ extern float32 _585;
 extern float32 _586;
 extern float32 _598;
 extern float32 _599;
+extern xSndGlobals gSnd;
 
 #ifndef NON_MATCHING
 // func_800480B0
@@ -63,14 +64,33 @@ void xSndSceneInit()
     iSndUpdate();
 }
 
-// func_80048288
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetEnvironmentalEffect__F12sound_effect")
+void xSndSetEnvironmentalEffect(sound_effect effectType)
+{
+    switch (effectType)
+    {
+    case SND_EFFECT_NONE:
+        iSndSetEnvironmentalEffect(iSND_EFFECT_NONE);
+        break;
+    case SND_EFFECT_CAVE:
+        iSndSetEnvironmentalEffect(iSND_EFFECT_CAVE);
+        break;
+    default:
+        break;
+    }
+}
 
-// func_800482D0
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSuspend__Fv")
+void xSndSuspend()
+{
+    xSndPauseAll(1, 1);
+    sDelayedPaused = 1;
+    xSndUpdate();
+}
 
-// func_80048304
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndResume__Fv")
+void xSndResume()
+{
+    xSndPauseAll(0, 0);
+    sDelayedPaused = 0;
+}
 
 // func_80048334
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPauseAll__FUiUi")
@@ -78,8 +98,10 @@ void xSndSceneInit()
 // func_800483D0
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPauseCategory__FUiUi")
 
-// func_80048444
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndSetCategoryVol__F14sound_categoryf")
+void xSndSetCategoryVol(sound_category category, float32 vol)
+{
+    gSnd.categoryVolFader[category] = vol;
+}
 
 // func_8004845C
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopAll__FUi")
@@ -106,14 +128,90 @@ void xSndDelayedInit()
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s",                                                            \
                    "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf")
 
-// func_80048698
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndCalculateListenerPosition__Fv")
+void xSndCalculateListenerPosition()
+{
+    xMat4x3* pMat;
+
+    switch (gSnd.listenerMode)
+    {
+    case SND_LISTENER_MODE_PLAYER:
+        pMat = &gSnd.listenerMat[0];
+        gSnd.right = pMat->right;
+        gSnd.up = pMat->up;
+        gSnd.at = pMat->at;
+        gSnd.pos = gSnd.listenerMat[1].pos;
+        gSnd.pos.y += _585;
+        break;
+    case SND_LISTENER_MODE_CAMERA:
+        pMat = &gSnd.listenerMat[0];
+        gSnd.right = pMat->right;
+        gSnd.up = pMat->up;
+        gSnd.at = pMat->at;
+        gSnd.pos = gSnd.listenerMat[0].pos;
+        break;
+    default:
+        break;
+    }
+}
 
 // func_80048794
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndProcessSoundPos__FPC5xVec3P5xVec3")
 
+#ifndef NON_MATCHING
 // func_800488BC
 #pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo")
+#else
+void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
+{
+    uint32 flags = pVoice->flags;
+    xVec3* ent;
+
+    if ((flags & 1) != 0)
+    {
+        if ((flags & 8) != 0)
+        {
+            if ((flags & 0x10) != 0)
+            {
+                if (pVoice->parentPos == (xVec3*)0x0)
+                {
+                    if (pVoice->parentID == 0)
+                    {
+                        if ((flags & 8) == 0)
+                        {
+                            pVoice->actualPos = gSnd.pos;
+                        }
+                    }
+                    else
+                    {
+                        ent = pVoice->parentID & 0xfffffffc);
+                        if ((flags & 0x800) == 0)
+                        {
+                            if ((? & 1) == 0)
+                            {
+                                pVoice->flags = flags & 0xffffffef;
+                            }
+                            else
+                            {
+                                pxVar2 = (xVec3*)xEntGetPos((xEnt*)ent);
+                                xVec3Copy(pVoice->actualPos, ent);
+                            }
+                        }
+                        else
+                        {
+                            pVoice->actualPos = ent;
+                        }
+                    }
+                }
+                else
+                {
+                    pVoice->actualPos = pVoice->parentPos;
+                }
+            }
+            xSndProcessSoundPos(pVoice->actualPos, pVoice->playPos);
+        }
+    }
+}
+#endif
 
 // func_80048994
 void xSndUpdate()
