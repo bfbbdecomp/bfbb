@@ -1,6 +1,7 @@
 
 #include "zCamera.h"
 #include "zEntCruiseBubble.h"
+#include "zEntDestructObj.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 
@@ -9,6 +10,7 @@
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xString.h"
 #include "../Core/x/xVec3.h"
+#include "zNPCTypeCommon.h"
 
 namespace cruise_bubble
 {
@@ -333,10 +335,29 @@ void cruise_bubble::start_damaging()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
 
-// func_800578E8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "can_damage__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP4xEnt")
+uint8 cruise_bubble::can_damage(xEnt* ent)
+{
+    if (ent == NULL)
+    {
+        return false;
+    }
+    if ((ent->moreFlags & 0x10) == 0)
+    {
+        return false;
+    }
+    if (ent->baseType == eBaseTypeDestructObj &&
+            zEntDestructObj_isDestroyed((zEntDestructObj*) ent) != 0)
+    {
+        return false;
+    }
+    if (ent->baseType == eBaseTypeNPC &&
+            !((zNPCCommon*) ent)->IsHealthy())
+    {
+        return false;
+    }
+
+    return true;
+}
 
 // func_80057984
 #pragma GLOBAL_ASM(                                                                                \
