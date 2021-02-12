@@ -1,5 +1,6 @@
 #include "zNPCGoalTiki.h"
 
+#include "zNPCGoals.h"
 #include "zNPCTypeTiki.h"
 #include "zRumble.h"
 
@@ -16,32 +17,32 @@ xFactoryInst* GOALCreate_Tiki(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case 'NGT0':
+    case NPC_GOAL_TIKIIDLE:
     {
         goal = new (who, grow) zNPCGoalTikiIdle(who);
         break;
     }
-    case 'NGT1':
+    case NPC_GOAL_TIKIPATROL:
     {
         goal = new (who, grow) zNPCGoalTikiPatrol(who);
         break;
     }
-    case 'NGT2':
+    case NPC_GOAL_TIKIHIDE:
     {
         goal = new (who, grow) zNPCGoalTikiHide(who);
         break;
     }
-    case 'NGT3':
+    case NPC_GOAL_TIKICOUNT:
     {
         goal = new (who, grow) zNPCGoalTikiCount(who);
         break;
     }
-    case 'NGT4':
+    case NPC_GOAL_TIKIDYING:
     {
         goal = new (who, grow) zNPCGoalTikiDying(who);
         break;
     }
-    case 'NGT5':
+    case NPC_GOAL_TIKIDEAD:
     {
         goal = new (who, grow) zNPCGoalTikiDead(who);
         break;

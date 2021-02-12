@@ -39,13 +39,17 @@ struct sDSPADPCM
 };
 
 // not in dwarf data,
-struct isound_effect
+enum isound_effect
 {
+    iSND_EFFECT_NONE,
+    iSND_EFFECT_CAVE
 };
 
 void arq_callback(long32);
 void iSndExit();
 
+void iSndPause(uint32 snd, uint32 pause);
+void iSndSetEnvironmentalEffect(isound_effect);
 void iSndInit();
 void iSndCalcVol(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
 void iSndCalcVol3d(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);

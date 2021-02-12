@@ -1,9 +1,5 @@
-#include "../Core/x/xVec3.h"
-#include "../Core/x/xMath3.h"
-
 #include "zNPCTypeDuplotron.h"
-
-#include <types.h>
+#include "zNPCTypes.h"
 
 // func_801251BC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ZNPC_Duplotron_Startup__Fv")
@@ -26,7 +22,7 @@ xFactoryInst* ZNPC_Create_Duplotron(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_TYPE_ID_DUPLOTRON:
+    case NPC_TYPE_DUPLOTRON:
     {
         npc = new (who, grow) zNPCDuplotron(who);
         break;

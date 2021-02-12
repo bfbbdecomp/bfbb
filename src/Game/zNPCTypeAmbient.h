@@ -3,13 +3,6 @@
 
 #include "zNPCTypeCommon.h"
 
-#define NPC_TYPE_ID_AMBIENT NPC_TYPE_ID('S', 0)
-#define NPC_TYPE_ID_JELLY1 NPC_TYPE_ID('A', 0)
-#define NPC_TYPE_ID_JELLY2 NPC_TYPE_ID('A', 1)
-#define NPC_TYPE_ID_NEPTUNE NPC_TYPE_ID('A', 2)
-#define NPC_TYPE_ID_MIMEFISH1 NPC_TYPE_ID('A', 3)
-#define NPC_TYPE_ID_MIMEFISH2 NPC_TYPE_ID('A', 4)
-
 struct zNPCAmbient : zNPCCommon
 {
     zNPCAmbient(int32 myType);

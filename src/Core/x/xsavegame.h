@@ -67,6 +67,19 @@ struct st_XSAVEGAME_DATA
     st_ISGSESSION* isgsess;
 };
 
+struct XSGAutoData
+{
+    int32 flg_autodata;
+    int32 lastTarg;
+    int32 lastGame;
+    int32 lastPhysicalSlot;
+    st_ISGSESSION* isg_monitor;
+
+    int32 LastPhysicalSlot();
+    int32 LastGame();
+    int32 LastTarget();
+};
+
 int32 xSGGameIsEmpty(st_XSAVEGAME_DATA* xsgdata, int32 gidx);
 st_XSAVEGAME_DATA* xSGInit(en_SAVEGAME_MODE mode);
 int32 xSGTgtCount(st_XSAVEGAME_DATA* xsgdata, int32* max);
@@ -74,7 +87,32 @@ int32 xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA* xsgdata, int32 tidx);
 int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx);
 int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode);
 int32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, int8 files[][64]);
-int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx, int32* bytesNeeded, int32* availOnDisk, int32* needFile);
+int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
+                            int32* bytesNeeded, int32* availOnDisk, int32* needFile);
 int32 xSGDone(st_XSAVEGAME_DATA* xsgdata);
+int32 xSGTgtFormatTgt(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* canRecover);
+int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode);
+int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx);
+int32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, int32 tidx);
+int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
+                     int32* bytesNeeded, int32* availOnDisk, int32* needFile);
+int32 xSGWriteStrLen(const int8* str);
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
+                   int32 elesiz, int32 n);
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, uint32* data,
+                   int32 n);
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, float32* data,
+                   int32 n);
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int32* data,
+                   int32 n);
+
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, uint32* buff,
+                  int32 n);
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, float32* buff,
+                  int32 n);
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int32* buff,
+                  int32 n);
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff,
+                  int32 elesiz, int32 n);
 
 #endif

@@ -14,4 +14,12 @@ namespace iTRCDisk
     void CheckDVDAndResetState();
 }
 
+namespace ResetButton
+{
+    void EnableReset();
+    void DisableReset();
+    void SetSndKillFunction(void (*func)());
+    void CheckResetButton();
+} // namespace ResetButton
+
 #endif

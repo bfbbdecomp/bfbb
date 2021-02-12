@@ -3,8 +3,6 @@
 
 #include "zNPCTypeCommon.h"
 
-#define NPC_TYPE_ID_DUPLOTRON NPC_TYPE_ID('D', 0)
-
 struct zNPCDuplotron : zNPCCommon
 {
     float32 tmr_smokeCycle;

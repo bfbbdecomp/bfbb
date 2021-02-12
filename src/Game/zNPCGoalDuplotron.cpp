@@ -1,5 +1,6 @@
 #include "zNPCGoalDuplotron.h"
 
+#include "zNPCGoals.h"
 #include "zNPCTypeDuplotron.h"
 #include "zNPCHazard.h"
 #include "zGlobals.h"
@@ -18,12 +19,12 @@ xFactoryInst* GOALCreate_Duplotron(int32 who, RyzMemGrow* grow, void*)
 
     switch (who)
     {
-    case NPC_GOAL_ID_DUPLOLIVE:
+    case NPC_GOAL_DUPLOLIVE:
     {
         goal = new (who, grow) zNPCGoalDuploLive(who);
         break;
     }
-    case NPC_GOAL_ID_DUPLODEAD:
+    case NPC_GOAL_DUPLODEAD:
     {
         goal = new (who, grow) zNPCGoalDuploDead(who);
         break;
@@ -71,7 +72,7 @@ int32 zNPCGoalDuploLive::Process(en_trantype* trantype, float32 dt, void* updCtx
         if (SDS_Countdown(dt))
         {
             *trantype = GOAL_TRAN_SET;
-            nextgoal = NPC_GOAL_ID_DUPLODEAD;
+            nextgoal = NPC_GOAL_DUPLODEAD;
         }
 
         break;
@@ -128,7 +129,7 @@ int32 zNPCGoalDuploLive::NPCMessage(NPCMsg* mail)
     {
     case NPC_MID_DAMAGE:
     {
-        if (psyche->GIDOfPending() != NPC_GOAL_ID_DUPLODEAD)
+        if (psyche->GIDOfPending() != NPC_GOAL_DUPLODEAD)
         {
             SDS_BigRedButton();
             handled = 1;
