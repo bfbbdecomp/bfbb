@@ -331,9 +331,272 @@ void cruise_bubble::start_damaging()
 }
 
 // func_80057684
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
+#if 0
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
+#else
+void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, uint8 explosive)
+{
+    xCollis coll;
+    xSphere o;
+    xVec3 hit_dir;
+    xVec3 edir;
+
+    // Size=612
+    // r8 = shared__13cruise_bubble@ha; // [int16]
+    // r8 = r8 + shared__13cruise_bubble@l;
+    // f31 = f1; // radius
+    // r31[dir] = r5; // dir
+    // r30 = r4; // loc
+    // r29[ent] = r3; // ent
+    // r6 = hit_norm
+    // r7 = explosive
+
+    // r0 = 0xec(r8[shared]); // shared.hits_size
+    // cmpwi r0, 0x20
+    // bge lbl_800578C8_return
+
+    if (shared.hits_size < 32)
+    {
+        return;
+    }
+    
+    // rlwinm r0,r0[shared.hits_size],2,0,29
+    // add r4, r8[shared], r0
+    // 0x6c(r4) = r29[ent];
+    shared.hits[shared.hits_size] = &ent;
+
+
+    //     r4 = 0xec(r8[shared]);
+    //     r0 = r4 + 1;
+    //     0xec(r8[shared]) = r0;
+
+    shared.hits_size++;
+
+    //     r0 = 4(r29[ent]); // [int8]
+    //     cmpwi r0[ent.baseType], 0x1b[eBaseTypeDestructObj]
+    //     beq lbl_8005771C_ent.baseType_eq_eBaseTypeDestructObj
+
+    if (ent.baseType == eBaseTypeDestructObj)
+    {
+    // lbl_8005771C_ent.baseType_eq_eBaseTypeDestructObj:
+    //     r4 = 1; // [int16]
+    //     zEntDestructObj_Hit(zEntDestructObj*, uint32); // [zEntDestructObj_Hit__FP15zEntDestructObjUi]
+    //     b lbl_800578C8_return
+
+        zEntDestructObj_Hit((zEntDestructObj*) &ent, 0x10000); // [zEntDestructObj_Hit__FP15zEntDestructObjUi]
+        return;
+    }
+
+    //     bge lbl_80057704_ent.baseType_ge_eBaseTypeDestructObj
+    if (ent.baseType < eBaseTypeDestructObj)
+    {
+    //     cmpwi r0, 0x18
+    //     beq lbl_80057710_baseType_eq_eBaseTypeButton
+        if (ent.baseType == eBaseTypeButton)
+        {
+    // lbl_80057710_baseType_eq_eBaseTypeButton:
+    //     r4 = 0x10;
+    //     zEntButton_Press(_zEntButton*, uint32); // [zEntButton_Press__FP11_zEntButtonUi]
+    //     b lbl_800578C8_return
+
+            zEntButton_Press((_zEntButton*) &ent, 0x10);
+            return;
+        }
+    //     bge lbl_800578BC_return_zEntEvent()
+        if (ent.baseType < eBaseTypeButton)
+        {
+    //     cmpwi r0, 6
+    //     beq lbl_80057728_ent.baseType_eq_eBaseTypePlatform
+    //     b lbl_800578BC_return_zEntEvent()
+            if (ent.baseType == eBaseTypePlatform)
+            {
+    // lbl_80057728_ent.baseType_eq_eBaseTypePlatform:
+    //     r0 = 0x1a(r29[ent]); // [int8]
+    //     cmpwi r0, 0xc
+    //     beq lbl_80057738_ent.flags_eq_0xc
+    //     b lbl_800578BC_return_zEntEvent()
+                if (ent.subType == 0xc)
+                {
+    // lbl_80057738_ent.flags_eq_0xc:
+    //     r3[ent.atabl] = 0xd4(r29[ent]);
+    //     r0 = 0x28(r3[ent.atabl]);
+    //     rlwinm. r0, r0, 0, 0x1a, 0x1a
+    //     beq lbl_800578C8_return
+                    if ((((zPlatform*) &ent)->passet->paddle.paddleFlags & 0x20) == 0)
+                    {
+                        return;
+                    }
+
+    //     0x5c(r1) = r29[ent];
+    //     r3 = 0x28(r29[ent]);
+                    coll.mptr = ent.collModel;
+    //     cmplwi r3, 0
+    //     beq lbl_8005775C_ent.collModel_eq_NULL
+                    if (coll.mptr == NULL)
+                    {
+    // lbl_8005775C_ent.collModel_eq_NULL:
+    //     r3 = 0x24(r29[ent]);
+                        coll.mptr = ent.model;
+                    }
+    //     b lbl_80057760_else_ent.collModel_eq_NULL
+
+    // lbl_80057760_else_ent.collModel_eq_NULL:
+    //     clrlwi. r0, r7, 0x18
+    //     0x60(r1) = r3;
+    //     beq lbl_80057804_explosive_eq_0
+                    if (explosive == 0)
+                    {
+    // lbl_80057804_explosive_eq_0:
+    //     r0 = 0x201;
+    //     r4 = r6[hit_norm];
+    //     0x54(r1) = r0;
+    //     r3 = r1 + 0x68;
+    //     __as__5xVec3FRC5xVec3(?); // [__as__5xVec3FRC5xVec3]
+                        coll.flags = 0x201;
+                        coll.norm = hit_norm;
+    //     r4 = r30[loc];
+    //     r5 = r31[dir];
+    //     r3 = r1 + 0x54;
+    //     r6 = 1;
+    //     zPlatform_PaddleCollide(xCollis*, const xVec3*, const xVec3*, uint32); // [zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui]
+                        zPlatform_PaddleCollide(&coll, &loc, &dir, 1); // [zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui]
+    //     b lbl_800578C8_return
+                        return;
+                    }
+
+    //     r0 = 0x600;
+    //     r4 = r30[loc];
+    //     0x54(r1) = r0;
+                    coll.flags = 0x600;
+    //     r3 = r1 + 0x44;
+    //     __as__5xVec3FRC5xVec3(?); // [__as__5xVec3FRC5xVec3]
+                    o.center = loc;
+    //     0x50(r1) = f31; // [float32]
+                    o.r = radius;
+    //     r3 = r1 + 0x44;
+    //     r4 = r29[ent] + 0x64;
+    //     r5 = r1 + 0x54;
+    //     xSphereHitsBound(const xSphere*, const xBound*, xCollis*); // [xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis]
+                    xSphereHitsBound(&o, &ent.bound, &coll);
+    //     r0 = 0x54(r1);
+    //     clrlwi. r0, r0, 0x1f
+    //     beq lbl_800578C8_return
+                    if ((coll.flags & 0x1) == 0)
+                    {
+                        return;
+                    }
+    //     r0 = 0x21(r29[ent]); // [int8]
+    //     cmplwi r0, 5
+    //     bne lbl_800577C8_ent.collLev_eq_5
+                    if (ent.collLev == 0x5)
+                    {
+    //     r4 = 0x60(r1);
+    //     r3 = r1 + 0x44;
+    //     r5 = r1 + 0x54;
+    //     xSphereHitsModel(const xSphere*, const xModelInstance*, xCollis*); // [xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis]
+                        xSphereHitsModel(&o, coll.mptr, &coll);
+    //     r0 = 0x54(r1);
+    //     clrlwi. r0, r0, 0x1f
+    //     beq lbl_800578C8_return
+                        if ((coll.flags & 0x1) == 0)
+                        {
+                            return;
+                        }
+                        
+                    }
+
+    // lbl_800577C8_ent.collLev_eq_5:
+    //     r3 = r1 + 0x20;
+    //     r4 = r1 + 0x74;
+    //     xVec3::up_normal() const; // [up_normal__5xVec3CFv]
+                    hit_dir = edir.up_normal();
+    //     r6 = 0x20(r1);
+    //     r4 = r30[loc];
+    //     r7 = 0x24(r1);
+    //     r3 = r1 + 0x54;
+    //     r0 = 0x28(r1);
+    //     r5 = r1 + 0x38;
+    //     0x38(r1) = r6;
+    //     r6 = 1;
+    //     0x3c(r1) = r7;
+    //     0x40(r1) = r0;
+    //     zPlatform_PaddleCollide(xCollis*, const xVec3*, const xVec3*, uint32); // [zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui]
+                    zPlatform_PaddleCollide(&coll, &loc, &hit_dir, 0x1); // [zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui]
+    //     b lbl_800578C8_return
+                    return;
+                    
+                }
+            }
+        }
+    }
+    else {
+    // lbl_80057704_ent.baseType_ge_eBaseTypeDestructObj:
+    //     cmpwi r0, 0x2b
+    //     beq lbl_80057830_ent.baseType_eq_eBaseTypeNPC
+    //     b lbl_800578BC_return_zEntEvent()
+        if (ent.baseType == eBaseTypeNPC)
+        {
+    // lbl_80057830_ent.baseType_eq_eBaseTypeNPC:
+    //     clrlwi. r0, r7, 0x18
+    //     beq lbl_80057898_explosive_eq_0
+
+            if (explosive == 0)
+            {
+
+    // lbl_80057898_explosive_eq_0:
+    //     r12 = 0x1b8(r3);
+    //     r4 = base@ha; // [int16]
+    //     r5 = r4 + base@l;
+    //     r6 = r31[dir];
+    //     r12 = 0x80(r12);
+    //     r4 = 9;
+    //     mtctr r12
+    //     bctrl 
+    //     b lbl_800578C8_return
+                // (ent, int ,)
+                
+                ((zNPCCommon*) &ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &dir);
+
+                return;
+            }
+    //     xEntGetCenter(const xEnt*); // [xEntGetCenter__FPC4xEnt]
+    //     r4 = r3;
+    //     r5 = r30[loc];
+    //     r3 = r1 + 8;
+    //     __mi__5xVec3CFRC5xVec3(?); // [__mi__5xVec3CFRC5xVec3]
+            hit_dir = *xEntGetCenter(&ent) - loc;
+    //     r3 = r1 + 0x14;
+    //     r4 = r1 + 8;
+    //     xVec3::up_normal() const; // [up_normal__5xVec3CFv]
+            edir = hit_dir.up_normal();
+    //     r12 = 0x1b8(r29[ent]);
+    //     r4 = base@ha; // [int16]
+    //     r8 = 0x14(r1);
+    //     r5 = r4 + base@l;
+    //     r7 = 0x18(r1);
+    //     r3 = r29[ent];
+    //     r0 = 0x1c(r1);
+    //     r6 = r1 + 0x2c;
+    //     r12 = 0x80(r12);
+    //     r4 = 9;
+    //     0x2c(r1) = r8;
+    //     0x30(r1) = r7;
+    //     0x34(r1) = r0;
+    //     mtctr r12
+    //     bctrl 
+            ((zNPCCommon*) &ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &edir);
+    //     b lbl_800578C8_return
+        }
+    }
+    
+    // lbl_800578BC_return_zEntEvent():
+    //     r3 = r29[ent];
+    //     r4 = 0x1c7;
+    //     zEntEvent(xBase*, uint32); // [zEntEvent__FP5xBaseUi]
+    zEntEvent(&ent, 0x1c7); // [zEntEvent__FP5xBaseUi]
+    // lbl_800578C8_return:
+}
+#endif
 
 uint8 cruise_bubble::can_damage(xEnt* ent)
 {
