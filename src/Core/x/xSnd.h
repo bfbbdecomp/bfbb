@@ -119,6 +119,7 @@ void xSndParentDied(uint32 pid);
 void xSndCalculateListenerPosition();
 void xSndDelayedUpdate();
 void update_faders(float32 timeElapsed);
+void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed);
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* voiceInfo);
 void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3 matrix);
 void xSndSelectListenerMode(sound_listener_game_mode listenerGameMode);
