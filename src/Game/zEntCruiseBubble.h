@@ -1,6 +1,7 @@
 #ifndef ZENTCRUISEBUBBLE_H
 #define ZENTCRUISEBUBBLE_H
 
+#include "zShrapnel.h"
 #include <types.h>
 
 #include "zRumble.h"
@@ -88,6 +89,8 @@ namespace cruise_bubble
     uint32 camera_taken();
     uint32 camera_leave();
     void start_damaging();
+    void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
+            float32 radius, uint8 explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
 

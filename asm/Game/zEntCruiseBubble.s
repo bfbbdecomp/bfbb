@@ -262,9 +262,9 @@ lbl_80057830:
 /* 80057850 00054650  38 81 00 08 */	addi r4, r1, 8
 /* 80057854 00054654  48 00 86 3D */	bl up_normal__5xVec3CFv
 /* 80057858 00054658  81 9D 01 B8 */	lwz r12, 0x1b8(r29)
-/* 8005785C 0005465C  3C 80 80 29 */	lis r4, lbl_8028C200@ha
+/* 8005785C 0005465C  3C 80 80 29 */	lis r4, base__13cruise_bubble@ha
 /* 80057860 00054660  81 01 00 14 */	lwz r8, 0x14(r1)
-/* 80057864 00054664  38 A4 C2 00 */	addi r5, r4, lbl_8028C200@l
+/* 80057864 00054664  38 A4 C2 00 */	addi r5, r4, base__13cruise_bubble@l
 /* 80057868 00054668  80 E1 00 18 */	lwz r7, 0x18(r1)
 /* 8005786C 0005466C  7F A3 EB 78 */	mr r3, r29
 /* 80057870 00054670  80 01 00 1C */	lwz r0, 0x1c(r1)
@@ -279,8 +279,8 @@ lbl_80057830:
 /* 80057894 00054694  48 00 00 34 */	b lbl_800578C8
 lbl_80057898:
 /* 80057898 00054698  81 83 01 B8 */	lwz r12, 0x1b8(r3)
-/* 8005789C 0005469C  3C 80 80 29 */	lis r4, lbl_8028C200@ha
-/* 800578A0 000546A0  38 A4 C2 00 */	addi r5, r4, lbl_8028C200@l
+/* 8005789C 0005469C  3C 80 80 29 */	lis r4, base__13cruise_bubble@ha
+/* 800578A0 000546A0  38 A4 C2 00 */	addi r5, r4, base__13cruise_bubble@l
 /* 800578A4 000546A4  7F E6 FB 78 */	mr r6, r31
 /* 800578A8 000546A8  81 8C 00 80 */	lwz r12, 0x80(r12)
 /* 800578AC 000546AC  38 80 00 09 */	li r4, 9
@@ -10569,7 +10569,8 @@ lbl_8025533C:
 	.incbin "baserom.dol", 0x25231C, 0xA4C
 
 .section .data
-lbl_8028C200:
+.global base__13cruise_bubble
+base__13cruise_bubble:
 	.incbin "baserom.dol", 0x2891E0, 0x10
 lbl_8028C210:
 	.incbin "baserom.dol", 0x2891F0, 0x94

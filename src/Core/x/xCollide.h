@@ -86,5 +86,6 @@ bool xSphereHitsSphere(const xVec3&, float32, const xVec3&, float32);
 bool xSphereHitsVCylinder(const xVec3& sc, float32 sr, const xVec3& cc, float32 cr, float32 ch);
 bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, float32 r);
 bool xSphereHitsVCircle(const xVec3& sc, float32 sr, const xVec3& cc, float32 cr);
+uint32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
 
 #endif

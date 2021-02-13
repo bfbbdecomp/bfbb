@@ -166,5 +166,7 @@ void zPlatform_Setup(zPlatform* plat, xScene* sc);
 void zPlatform_Save(zPlatform* ent, xSerial* s);
 void zPlatform_Load(zPlatform* ent, xSerial* s);
 void zPlatform_Reset(zPlatform* plat, xScene* sc);
+uint32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
+                               uint32 worldSpaceNorm);
 
 #endif
