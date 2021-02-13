@@ -280,4 +280,6 @@ void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetPara
                      uint32 param_4);
 int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_size, int32 max_size);
 
+int32 zEntPlayer_DamageNPCKnockBack(xBase* src, uint32 damage, xVec3* npcPos);
+
 #endif
