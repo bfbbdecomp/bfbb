@@ -277,4 +277,6 @@ void zEntPlayerControlOn(zControlOwner owner);
 
 void zEntPlayer_StoreCheckPoint(xVec3* pos, float32 rot, uint32 initCamID);
 
+int32 zEntPlayer_DamageNPCKnockBack(xBase* src, uint32 damage, xVec3* npcPos);
+
 #endif
