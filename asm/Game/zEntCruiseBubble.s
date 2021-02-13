@@ -301,29 +301,6 @@ lbl_800578C8:
 /* 800578E0 000546E0  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 800578E4 000546E4  4E 80 00 20 */	blr 
 
-/* was_damaged__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FP4xEnt */
-was_damaged__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP4xEnt:
-/* 80057984 00054784  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
-/* 80057988 00054788  38 84 C2 A4 */	addi r4, r4, shared__13cruise_bubble@l
-/* 8005798C 0005478C  80 04 00 EC */	lwz r0, 0xec(r4)
-/* 80057990 00054790  38 84 00 6C */	addi r4, r4, 0x6c
-/* 80057994 00054794  54 00 10 3A */	slwi r0, r0, 2
-/* 80057998 00054798  7C A4 02 14 */	add r5, r4, r0
-/* 8005799C 0005479C  48 00 00 1C */	b lbl_800579B8
-lbl_800579A0:
-/* 800579A0 000547A0  80 04 00 00 */	lwz r0, 0(r4)
-/* 800579A4 000547A4  7C 03 00 40 */	cmplw r3, r0
-/* 800579A8 000547A8  40 82 00 0C */	bne lbl_800579B4
-/* 800579AC 000547AC  38 60 00 01 */	li r3, 1
-/* 800579B0 000547B0  4E 80 00 20 */	blr 
-lbl_800579B4:
-/* 800579B4 000547B4  38 84 00 04 */	addi r4, r4, 4
-lbl_800579B8:
-/* 800579B8 000547B8  7C 04 28 40 */	cmplw r4, r5
-/* 800579BC 000547BC  40 82 FF E4 */	bne lbl_800579A0
-/* 800579C0 000547C0  38 60 00 00 */	li r3, 0
-/* 800579C4 000547C4  4E 80 00 20 */	blr 
-
 /* notify_triggers__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR6xSceneRC7xSphereRC5xVec3 */
 notify_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xSceneRC7xSphereRC5xVec3:
 /* 800579C8 000547C8  94 21 FF D0 */	stwu r1, -0x30(r1)

@@ -89,6 +89,7 @@ namespace cruise_bubble
     uint32 camera_leave();
     void start_damaging();
     uint8 can_damage(xEnt* ent);
+    uint8 was_damaged(xEnt* ent);
 
 } // namespace cruise_bubble
 

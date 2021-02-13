@@ -29,13 +29,17 @@ extern struct _class_36
 {
     int32 flags;
     state_type* state[3];
+    // Offset: 0x10
     state_type* states[12];
+    // Offset: 0x40
     xVec2 last_sp;
     xVec2 sp;
     xVec3 hit_loc;
     xVec3 hit_norm;
     xModelInstance* missle_model;
+    // Offset: 0x6c
     xEnt* hits[32];
+    // Offset: 0xec
     int32 hits_size;
     uint32 player_health;
     xVec3 player_motion;
@@ -331,7 +335,7 @@ void cruise_bubble::start_damaging()
 }
 
 // func_80057684
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
 #else
 void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, uint8 explosive)
@@ -491,10 +495,26 @@ uint8 cruise_bubble::can_damage(xEnt* ent)
     return true;
 }
 
-// func_80057984
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "was_damaged__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP4xEnt")
+uint8 cruise_bubble::was_damaged(xEnt* ent)
+{
+    // no idea why this doesn't OK ...
+    // xEnt** i;
+    // xEnt** n = shared.hits + shared.hits_size; // unnecessary offset is added
+    // for (i = shared.hits; i != n; ++i)
+
+    // ... but this does
+    xEnt** i = shared.hits;
+    xEnt** n = i + shared.hits_size;
+    for ( ; i != n; ++i)
+    {
+        if (ent == *i)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // func_800579C8
 #pragma GLOBAL_ASM(                                                                                \
