@@ -4,85 +4,6 @@
 
 .section .text  # 0x8012A728 - 0x8012C0A8
 
-.global zNPCSpawner_Startup__Fv
-zNPCSpawner_Startup__Fv:
-/* 8012A728 00127528  4E 80 00 20 */	blr 
-
-.global zNPCSpawner_Shutdown__Fv
-zNPCSpawner_Shutdown__Fv:
-/* 8012A72C 0012752C  4E 80 00 20 */	blr 
-
-.global zNPCSpawner_ScenePrepare__Fv
-zNPCSpawner_ScenePrepare__Fv:
-/* 8012A730 00127530  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8012A734 00127534  7C 08 02 A6 */	mflr r0
-/* 8012A738 00127538  3C 60 80 2A */	lis r3, lbl_80298C38@ha
-/* 8012A73C 0012753C  38 80 00 10 */	li r4, 0x10
-/* 8012A740 00127540  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8012A744 00127544  38 63 8C 38 */	addi r3, r3, lbl_80298C38@l
-/* 8012A748 00127548  38 A0 00 00 */	li r5, 0
-/* 8012A74C 0012754C  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8012A750 00127550  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8012A754 00127554  7C 7E 1B 78 */	mr r30, r3
-/* 8012A758 00127558  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8012A75C 0012755C  4B F0 B2 A5 */	bl XOrdInit__FP16st_XORDEREDARRAYii
-/* 8012A760 00127560  3B A0 00 00 */	li r29, 0
-/* 8012A764 00127564  3F E0 53 50 */	lis r31, 0x5350574E@ha
-lbl_8012A768:
-/* 8012A768 00127568  38 9F 57 4E */	addi r4, r31, 0x5350574E@l
-/* 8012A76C 0012756C  38 60 01 C4 */	li r3, 0x1c4
-/* 8012A770 00127570  38 A0 00 00 */	li r5, 0
-/* 8012A774 00127574  4B FE 49 DD */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 8012A778 00127578  7C 60 1B 78 */	mr r0, r3
-/* 8012A77C 0012757C  7F C3 F3 78 */	mr r3, r30
-/* 8012A780 00127580  7C 04 03 78 */	mr r4, r0
-/* 8012A784 00127584  4B F0 B3 AD */	bl XOrdAppend__FP16st_XORDEREDARRAYPv
-/* 8012A788 00127588  3B BD 00 01 */	addi r29, r29, 1
-/* 8012A78C 0012758C  2C 1D 00 10 */	cmpwi r29, 0x10
-/* 8012A790 00127590  41 80 FF D8 */	blt lbl_8012A768
-/* 8012A794 00127594  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8012A798 00127598  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8012A79C 0012759C  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8012A7A0 001275A0  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8012A7A4 001275A4  7C 08 03 A6 */	mtlr r0
-/* 8012A7A8 001275A8  38 21 00 20 */	addi r1, r1, 0x20
-/* 8012A7AC 001275AC  4E 80 00 20 */	blr 
-
-.global zNPCSpawner_SceneFinish__Fv
-zNPCSpawner_SceneFinish__Fv:
-/* 8012A7B0 001275B0  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8012A7B4 001275B4  7C 08 02 A6 */	mflr r0
-/* 8012A7B8 001275B8  3C 60 80 2A */	lis r3, lbl_80298C38@ha
-/* 8012A7BC 001275BC  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8012A7C0 001275C0  38 03 8C 38 */	addi r0, r3, lbl_80298C38@l
-/* 8012A7C4 001275C4  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8012A7C8 001275C8  3B E0 00 00 */	li r31, 0
-/* 8012A7CC 001275CC  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8012A7D0 001275D0  7C 1E 03 78 */	mr r30, r0
-/* 8012A7D4 001275D4  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8012A7D8 001275D8  3B A0 00 00 */	li r29, 0
-/* 8012A7DC 001275DC  48 00 00 18 */	b lbl_8012A7F4
-lbl_8012A7E0:
-/* 8012A7E0 001275E0  80 7E 00 00 */	lwz r3, 0(r30)
-/* 8012A7E4 001275E4  7C 63 F8 2E */	lwzx r3, r3, r31
-/* 8012A7E8 001275E8  4B FE 4A 05 */	bl __dl__10RyzMemDataFPv
-/* 8012A7EC 001275EC  3B FF 00 04 */	addi r31, r31, 4
-/* 8012A7F0 001275F0  3B BD 00 01 */	addi r29, r29, 1
-lbl_8012A7F4:
-/* 8012A7F4 001275F4  80 1E 00 04 */	lwz r0, 4(r30)
-/* 8012A7F8 001275F8  7C 1D 00 00 */	cmpw r29, r0
-/* 8012A7FC 001275FC  41 80 FF E4 */	blt lbl_8012A7E0
-/* 8012A800 00127600  7F C3 F3 78 */	mr r3, r30
-/* 8012A804 00127604  38 80 00 00 */	li r4, 0
-/* 8012A808 00127608  4B F0 B2 D1 */	bl XOrdDone__FP16st_XORDEREDARRAYi
-/* 8012A80C 0012760C  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8012A810 00127610  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8012A814 00127614  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8012A818 00127618  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8012A81C 0012761C  7C 08 03 A6 */	mtlr r0
-/* 8012A820 00127620  38 21 00 20 */	addi r1, r1, 0x20
-/* 8012A824 00127624  4E 80 00 20 */	blr 
-
 .global zNPCSpawner_GetInstance__Fv
 zNPCSpawner_GetInstance__Fv:
 /* 8012A828 00127628  3C 80 80 2A */	lis r4, lbl_802A0004@ha
@@ -105,62 +26,6 @@ lbl_8012A864:
 /* 8012A864 00127664  38 A5 00 04 */	addi r5, r5, 4
 /* 8012A868 00127668  42 00 FF DC */	bdnz lbl_8012A844
 /* 8012A86C 0012766C  4E 80 00 20 */	blr 
-
-.global Subscribe__11zNPCSpawnerFP10zNPCCommon
-Subscribe__11zNPCSpawnerFP10zNPCCommon:
-/* 8012A870 00127670  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8012A874 00127674  7C 08 02 A6 */	mflr r0
-/* 8012A878 00127678  38 C0 FF FF */	li r6, -1
-/* 8012A87C 0012767C  38 A0 00 00 */	li r5, 0
-/* 8012A880 00127680  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8012A884 00127684  38 00 00 00 */	li r0, 0
-/* 8012A888 00127688  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8012A88C 0012768C  7C 7F 1B 78 */	mr r31, r3
-/* 8012A890 00127690  90 83 00 04 */	stw r4, 4(r3)
-/* 8012A894 00127694  38 7F 01 A0 */	addi r3, r31, 0x1a0
-/* 8012A898 00127698  38 80 00 10 */	li r4, 0x10
-/* 8012A89C 0012769C  C0 02 A2 10 */	lfs f0, lbl_803CEB90-_SDA2_BASE_(r2)
-/* 8012A8A0 001276A0  D0 1F 00 08 */	stfs f0, 8(r31)
-/* 8012A8A4 001276A4  90 DF 00 0C */	stw r6, 0xc(r31)
-/* 8012A8A8 001276A8  90 1F 00 14 */	stw r0, 0x14(r31)
-/* 8012A8AC 001276AC  4B F0 B1 55 */	bl XOrdInit__FP16st_XORDEREDARRAYii
-/* 8012A8B0 001276B0  38 7F 01 B0 */	addi r3, r31, 0x1b0
-/* 8012A8B4 001276B4  38 80 00 10 */	li r4, 0x10
-/* 8012A8B8 001276B8  38 A0 00 00 */	li r5, 0
-/* 8012A8BC 001276BC  4B F0 B1 45 */	bl XOrdInit__FP16st_XORDEREDARRAYii
-/* 8012A8C0 001276C0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8012A8C4 001276C4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8012A8C8 001276C8  7C 08 03 A6 */	mtlr r0
-/* 8012A8CC 001276CC  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012A8D0 001276D0  4E 80 00 20 */	blr 
-
-.global SetWaveMode__11zNPCSpawnerF15en_SM_WAVE_MODEfi
-SetWaveMode__11zNPCSpawnerF15en_SM_WAVE_MODEfi:
-/* 8012A8D4 001276D4  90 83 00 10 */	stw r4, 0x10(r3)
-/* 8012A8D8 001276D8  D0 23 00 08 */	stfs f1, 8(r3)
-/* 8012A8DC 001276DC  90 A3 00 0C */	stw r5, 0xc(r3)
-/* 8012A8E0 001276E0  4E 80 00 20 */	blr 
-
-.global AddSpawnPoint__11zNPCSpawnerFP10zMovePoint
-AddSpawnPoint__11zNPCSpawnerFP10zMovePoint:
-/* 8012A8E4 001276E4  38 00 00 10 */	li r0, 0x10
-/* 8012A8E8 001276E8  38 A0 00 00 */	li r5, 0
-/* 8012A8EC 001276EC  7C 09 03 A6 */	mtctr r0
-lbl_8012A8F0:
-/* 8012A8F0 001276F0  80 03 00 20 */	lwz r0, 0x20(r3)
-/* 8012A8F4 001276F4  28 00 00 00 */	cmplwi r0, 0
-/* 8012A8F8 001276F8  40 82 00 18 */	bne lbl_8012A910
-/* 8012A8FC 001276FC  90 83 00 20 */	stw r4, 0x20(r3)
-/* 8012A900 00127700  38 00 00 00 */	li r0, 0
-/* 8012A904 00127704  38 A0 00 01 */	li r5, 1
-/* 8012A908 00127708  90 03 00 28 */	stw r0, 0x28(r3)
-/* 8012A90C 0012770C  48 00 00 0C */	b lbl_8012A918
-lbl_8012A910:
-/* 8012A910 00127710  38 63 00 0C */	addi r3, r3, 0xc
-/* 8012A914 00127714  42 00 FF DC */	bdnz lbl_8012A8F0
-lbl_8012A918:
-/* 8012A918 00127718  7C A3 2B 78 */	mr r3, r5
-/* 8012A91C 0012771C  4E 80 00 20 */	blr 
 
 .global AddSpawnNPC__11zNPCSpawnerFP10zNPCCommon
 AddSpawnNPC__11zNPCSpawnerFP10zNPCCommon:
@@ -203,34 +68,6 @@ lbl_8012A974:
 /* 8012A9A4 001277A4  7C 08 03 A6 */	mtlr r0
 /* 8012A9A8 001277A8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8012A9AC 001277AC  4E 80 00 20 */	blr 
-
-.global Reset__11zNPCSpawnerFv
-Reset__11zNPCSpawnerFv:
-/* 8012A9B0 001277B0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8012A9B4 001277B4  7C 08 02 A6 */	mflr r0
-/* 8012A9B8 001277B8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8012A9BC 001277BC  38 00 00 00 */	li r0, 0
-/* 8012A9C0 001277C0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8012A9C4 001277C4  7C 7F 1B 78 */	mr r31, r3
-/* 8012A9C8 001277C8  90 03 00 1C */	stw r0, 0x1c(r3)
-/* 8012A9CC 001277CC  90 03 00 14 */	stw r0, 0x14(r3)
-/* 8012A9D0 001277D0  90 03 01 C0 */	stw r0, 0x1c0(r3)
-/* 8012A9D4 001277D4  80 03 00 00 */	lwz r0, 0(r3)
-/* 8012A9D8 001277D8  54 00 07 FE */	clrlwi r0, r0, 0x1f
-/* 8012A9DC 001277DC  90 03 00 00 */	stw r0, 0(r3)
-/* 8012A9E0 001277E0  80 03 00 00 */	lwz r0, 0(r3)
-/* 8012A9E4 001277E4  60 00 00 08 */	ori r0, r0, 8
-/* 8012A9E8 001277E8  90 03 00 00 */	stw r0, 0(r3)
-/* 8012A9EC 001277EC  48 00 0B 65 */	bl ClearPending__11zNPCSpawnerFv
-/* 8012A9F0 001277F0  7F E3 FB 78 */	mr r3, r31
-/* 8012A9F4 001277F4  48 00 0B 01 */	bl ClearActive__11zNPCSpawnerFv
-/* 8012A9F8 001277F8  7F E3 FB 78 */	mr r3, r31
-/* 8012A9FC 001277FC  48 00 00 19 */	bl MapPreferred__11zNPCSpawnerFv
-/* 8012AA00 00127800  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8012AA04 00127804  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8012AA08 00127808  7C 08 03 A6 */	mtlr r0
-/* 8012AA0C 0012780C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012AA10 00127810  4E 80 00 20 */	blr 
 
 .global MapPreferred__11zNPCSpawnerFv
 MapPreferred__11zNPCSpawnerFv:
@@ -1906,7 +1743,8 @@ lbl_8026C2A4:
 
 .section .data
 .balign 8
-lbl_80298C38:
+.global g_smdepot
+g_smdepot:
 	.incbin "baserom.dol", 0x295C18, 0x10
 lbl_80298C48:
 	.incbin "baserom.dol", 0x295C28, 0x20
@@ -1917,7 +1755,8 @@ lbl_803CBEC0:
 
 .section .sdata2
 .balign 8
-lbl_803CEB90:
+.global _805_Spawner
+_805_Spawner:
 	.incbin "baserom.dol", 0x2B8430, 0x4
 lbl_803CEB94:
 	.incbin "baserom.dol", 0x2B8434, 0x4

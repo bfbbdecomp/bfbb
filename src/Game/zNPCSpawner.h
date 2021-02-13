@@ -52,6 +52,11 @@ enum en_SM_NPC_STATUS
 
 struct zNPCCommon;
 
+struct SMDepot
+{
+    st_XORDEREDARRAY spawners;
+};
+
 struct SMSPStatus
 {
     zMovePoint* sp;
@@ -81,9 +86,29 @@ struct zNPCSpawner : RyzMemData
     st_XORDEREDARRAY pendlist;
     st_XORDEREDARRAY actvlist;
     int32 cnt_cleanup;
+
+    void Subscribe(zNPCCommon* owner);
+    void SetWaveMode(en_SM_WAVE_MODE mode, float32 delay, int32 lifemax);
+    int32 AddSpawnPoint(zMovePoint* sp);
+    int32 AddSpawnNPC(zNPCCommon* npc);
+    void Reset();
+    void MapPreferred();
+    void Timestep(float32 dt);
+    void UpdateDiscreet(float32 dt);
+    void UpdateContinuous(float32 dt);
+    void Notify(en_SM_NOTICES note, void* data);
+    int32 Owned(zNPCCommon* npc);
+    uint8 Receivable(en_SM_NOTICES note, void* data);
+    SMSPStatus* SelectSP(const SMNPCStatus* npcstat);
+    // NextPendingNPC.
+    void ClearActive();
+    void ClearPending();
 };
 
 void zNPCSpawner_Startup();
 void zNPCSpawner_Shutdown();
+void zNPCSpawner_ScenePrepare();
+void zNPCSpawner_SceneFinish();
+zNPCSpawner* zNPCSpawner_GetInstance();
 
 #endif

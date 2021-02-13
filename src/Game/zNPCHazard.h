@@ -22,6 +22,7 @@ struct UVAModelInfo
     void Hemorrage();
     void Clear();
     void UVVelSet(float, float);
+    int32 GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* model);
 };
 
 struct NPCHazard;
