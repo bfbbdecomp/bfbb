@@ -1,40 +1,48 @@
 #include <types.h>
+#include <string.h>
+
 #include "../Core/x/xString.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xCounter.h"
 #include "../Core/p2/iTime.h"
+
 #include "zGameExtras.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zGame.h"
 #include "zScene.h"
 
-/*
-A quick note about how cheats appear to work:
+extern char zGameExtras_strings[];
 
-A lot of the cheat callback functions only play sounds.
-This doesn't mean those cheats aren't doing anything though.
-
-The callback functions in this file are only run once when the cheat is entered.
-Cheats that modify gameplay are probably checked/processed elsewhere in the game engine.
-*/
-
-extern int8 zGameExtras_strings[];
-
-extern float32 zGameExtras_f_0;
-extern float32 zGameExtras_f_1;
+extern float32 _975; // 0.0
+extern float32 _1152; // 0.3
+extern float32 _1153; // -1.0
+extern float32 _1192; // 1.0
 
 extern zGlobals globals;
 extern xEnt* sGalleryTitle;
 
-extern int32 g_currDay;
-extern int32 g_currMonth;
-extern int32 g_gameExtraFlags;
-extern int32 g_flg_chEnabled;
-extern int32 g_enableGameExtras;
-
 extern uint32 sCheatPressed[16];
+
+static int32 g_enableGameExtras;
+static int32 g_currDay;
+static int32 g_currMonth;
+static int32 g_gameExtraFlags;
+static int32 g_flg_chEnabled;
+static float32 sCheatTimer;
+static int32 sCheatInputCount;
+static signed char init_1161; // init$1161
+static signed char init_1274; // init$1274
+static signed char init_1319; // init$1319
+static signed char init_1343; // init$1343
+static xEnt* sGalleryTitle;
+
+extern uint32 aid_sndList_1160[7];
+extern uint32 choices_1318[3];
+extern uint32 aid_sndList_1342[6];
+
+extern int32 sCheatInputCount;
 
 static EGGItemFuncs EGGEmpty = {
     NULL,
@@ -314,6 +322,26 @@ void GEC_CheatFlagToggle(int32 bit)
 #else
 void GEC_dfltSound()
 {
+    if (!init_1161)
+    {
+        aid_sndList_1160[0] = xStrHash(zGameExtras_strings + 3);
+        aid_sndList_1160[1] = xStrHash(zGameExtras_strings + 4);
+        aid_sndList_1160[2] = xStrHash(zGameExtras_strings + 5);
+        aid_sndList_1160[3] = xStrHash(zGameExtras_strings + 0xe);
+        aid_sndList_1160[4] = xStrHash(zGameExtras_strings + 0x19);
+        aid_sndList_1160[5] = xStrHash(zGameExtras_strings + 0x24);
+        aid_sndList_1160[6] = xStrHash(zGameExtras_strings + 0x2d);
+
+        // typical scheduling memes
+        init_1161 = true;
+    }
+
+    uint32 snd = xUtil_choose(aid_sndList_1160, 7, NULL);
+
+    if (snd)
+    {
+        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+    }
 }
 #endif
 
@@ -333,8 +361,7 @@ void GEC_cb_AddShiny()
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
-                 zGameExtras_f_0);
+        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
     }
 }
 
@@ -347,8 +374,7 @@ void GEC_cb_AddSpatulas()
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
-                 zGameExtras_f_0);
+        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
     }
 }
 
@@ -360,8 +386,7 @@ void GEC_cb_BubbleBowl()
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
-                 zGameExtras_f_0);
+        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
     }
 }
 
@@ -373,26 +398,43 @@ void GEC_cb_CruiseBubble()
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME,
-                 zGameExtras_f_0);
+        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
     }
 }
 
-// func_8009A220
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_MonsterGallery__Fv")
-#else
 void GEC_cb_MonsterGallery()
 {
+    int8 tempString[32];
+
+    strcpy(tempString, zGameExtras_strings + 0x62); // HB09 ROBOT COUNTER 01
+
+    int8 c = '1';
+
+    for (int32 i = 0; i < 15; i++)
+    {
+        if (c > '9')
+        {
+            tempString[19]++;
+            c = '0';
+        }
+
+        tempString[20] = c;
+        c++;
+
+        uint32 id = xStrHash(tempString);
+        _xCounter* cntr = (_xCounter*)zSceneFindObject(id);
+        cntr->count = 1;
+    }
+
+    zEntPlayer_SNDPlay(ePlayerSnd_Bus, _975);
 }
-#endif
 
 void GEC_cb_UnlockArtTheatre()
 {
     uint32 aid_theatreCounter = xStrHash(zGameExtras_strings + 120); // "HB01_FREE_MOVIE_PASS"
     _xCounter* cntr = (_xCounter*)zSceneFindObject(aid_theatreCounter);
     cntr->count = 1;
-    zEntPlayer_SNDPlay(ePlayerSnd_Taxi, zGameExtras_f_0);
+    zEntPlayer_SNDPlay(ePlayerSnd_Taxi, _975);
 }
 
 void GEC_cb_ChaChing()
@@ -405,7 +447,7 @@ void GEC_cb_ChaChing()
     gs->ShinyValueRed = 5;
 
     uint32 aid_snd = xStrHash(zGameExtras_strings + 54); // "SBG01019"
-    xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME, zGameExtras_f_0);
+    xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
 }
 
 // func_8009A380
@@ -430,7 +472,7 @@ void GEC_cb_ShrapBobMode()
 void GEC_cb_NoPantsMode()
 {
     uint32 aid_snd = xStrHash(zGameExtras_strings + 159); // "SBG01023"
-    xSndPlay(aid_snd, zGameExtras_f_1, zGameExtras_f_0, 0x80, 0, 0, SND_CAT_GAME, zGameExtras_f_0);
+    xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
 }
 
 // func_8009A4B0
@@ -439,6 +481,22 @@ void GEC_cb_NoPantsMode()
 #else
 void GEC_cb_CruiseControl()
 {
+    if (!init_1319)
+    {
+        choices_1318[0] = xStrHash(zGameExtras_strings + 0xa8);
+        choices_1318[1] = xStrHash(zGameExtras_strings + 0xb3);
+        choices_1318[2] = xStrHash(zGameExtras_strings + 0xbe);
+
+        // scheduling memes preventing match
+        init_1319 = true;
+    }
+
+    uint32 snd = xUtil_choose<uint32>(choices_1318, 3, NULL);
+
+    if (snd)
+    {
+        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+    }
 }
 #endif
 
@@ -458,6 +516,25 @@ void GEC_cb_SwapCCUD()
 #else
 void GEC_villSound()
 {
+    if (!init_1343)
+    {
+        aid_sndList_1342[0] = xStrHash(zGameExtras_strings + 0xc9);
+        aid_sndList_1342[1] = xStrHash(zGameExtras_strings + 0xd4);
+        aid_sndList_1342[2] = xStrHash(zGameExtras_strings + 0xdf);
+        aid_sndList_1342[3] = xStrHash(zGameExtras_strings + 0xe8);
+        aid_sndList_1342[4] = xStrHash(zGameExtras_strings + 0xf3);
+        aid_sndList_1342[5] = xStrHash(zGameExtras_strings + 0xfe);
+
+        // scheduling memes preventing match
+        init_1343 = true;
+    }
+
+    uint32 snd = xUtil_choose(aid_sndList_1342, 6, NULL);
+
+    if (snd)
+    {
+        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+    }
 }
 #endif
 
