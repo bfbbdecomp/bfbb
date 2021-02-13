@@ -69,8 +69,7 @@ namespace cruise_bubble
     {
         int32 fassetCount;
         uint32 shrapnelID;
-        // TODO: fix this weird function definition from dwarf data
-        // void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
+        void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
     };
 
     bool active();
