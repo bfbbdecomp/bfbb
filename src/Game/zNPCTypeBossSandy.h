@@ -97,6 +97,8 @@ struct zNPCBSandy : zNPCBoss
     xBinaryCamera specialBossCam;
 
     zNPCBSandy(int32 myType);
+
+    // VTABLE
 };
 
 struct zNPCGoalBossSandyIdle : zNPCGoalCommon

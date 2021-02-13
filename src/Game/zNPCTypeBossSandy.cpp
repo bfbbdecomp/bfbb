@@ -4,15 +4,26 @@
 #include "../Core/x/xVec3.h"
 #include "../Core/x/xMath3.h"
 
+#include "zFX.h"
 #include "zNPCTypeBossSandy.h"
 
 extern const char bossSandyStrings[];
+
 extern float32 __830; // 0.0
 extern float32 __831; // 1.0
 extern float32 __864; // 0.25
 
+extern zNPCBSandy* sSandyPtr;
+
 // func_8013D054
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_newsfish__FRC10tweak_info")
+#else
+void on_change_newsfish(const tweak_info& tweak)
+{
+    sSandyPtr->ropeSb = NULL;
+}
+#endif
 
 // func_8013D094
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_shockwave__FRC10tweak_info")

@@ -10,7 +10,7 @@ on_change_newsfish__FRC10tweak_info:
 /* 8013D05C 00139E5C  38 A0 00 00 */	li r5, 0
 /* 8013D060 00139E60  38 C0 FF FF */	li r6, -1
 /* 8013D064 00139E64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8013D068 00139E68  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D068 00139E68  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D06C 00139E6C  80 8D 96 AC */	lwz r4, lbl_803CBFAC-_SDA_BASE_(r13)
 /* 8013D070 00139E70  80 63 0D 34 */	lwz r3, 0xd34(r3)
 /* 8013D074 00139E74  81 83 01 B8 */	lwz r12, 0x1b8(r3)
@@ -26,11 +26,11 @@ on_change_shockwave__FRC10tweak_info:
 /* 8013D094 00139E94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013D098 00139E98  7C 08 02 A6 */	mflr r0
 /* 8013D09C 00139E9C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8013D0A0 00139EA0  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D0A0 00139EA0  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D0A4 00139EA4  80 03 02 C0 */	lwz r0, 0x2c0(r3)
 /* 8013D0A8 00139EA8  60 00 08 00 */	ori r0, r0, 0x800
 /* 8013D0AC 00139EAC  90 03 02 C0 */	stw r0, 0x2c0(r3)
-/* 8013D0B0 00139EB0  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D0B0 00139EB0  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D0B4 00139EB4  80 83 07 B4 */	lwz r4, 0x7b4(r3)
 /* 8013D0B8 00139EB8  80 63 00 24 */	lwz r3, 0x24(r3)
 /* 8013D0BC 00139EBC  80 A4 00 10 */	lwz r5, 0x10(r4)
@@ -38,13 +38,13 @@ on_change_shockwave__FRC10tweak_info:
 /* 8013D0C4 00139EC4  38 65 00 30 */	addi r3, r5, 0x30
 /* 8013D0C8 00139EC8  38 84 00 30 */	addi r4, r4, 0x30
 /* 8013D0CC 00139ECC  4B F1 14 11 */	bl xVec3Copy__FP5xVec3PC5xVec3
-/* 8013D0D0 00139ED0  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D0D0 00139ED0  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D0D4 00139ED4  C0 02 A4 C8 */	lfs f0, __830-_SDA2_BASE_(r2)
 /* 8013D0D8 00139ED8  80 63 07 B4 */	lwz r3, 0x7b4(r3)
 /* 8013D0DC 00139EDC  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 8013D0E0 00139EE0  D0 03 00 34 */	stfs f0, 0x34(r3)
 /* 8013D0E4 00139EE4  C0 02 A4 CC */	lfs f0, __831-_SDA2_BASE_(r2)
-/* 8013D0E8 00139EE8  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D0E8 00139EE8  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D0EC 00139EEC  D0 03 0D 3C */	stfs f0, 0xd3c(r3)
 /* 8013D0F0 00139EF0  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8013D0F4 00139EF4  7C 08 03 A6 */	mtlr r0
@@ -537,7 +537,7 @@ lbl_8013D860:
 /* 8013D87C 0013A67C  4E 80 00 20 */	blr 
 
 HeadIsCarried__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D880 0013A680  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D880 0013A680  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D884 0013A684  3C 80 80 3C */	lis r4, globals@ha
 /* 8013D888 0013A688  38 84 05 58 */	addi r4, r4, globals@l
 /* 8013D88C 0013A68C  80 84 17 B0 */	lwz r4, 0x17b0(r4)
@@ -548,7 +548,7 @@ HeadIsCarried__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8013D8A0 0013A6A0  4E 80 00 20 */	blr 
 
 HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D8A4 0013A6A4  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D8A4 0013A6A4  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D8A8 0013A6A8  3C 80 80 3C */	lis r4, globals@ha
 /* 8013D8AC 0013A6AC  38 84 05 58 */	addi r4, r4, globals@l
 /* 8013D8B0 0013A6B0  80 84 17 B0 */	lwz r4, 0x17b0(r4)
@@ -560,13 +560,13 @@ HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8013D8C8 0013A6C8  4E 80 00 20 */	blr 
 
 HeadIsShocked__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D8CC 0013A6CC  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D8CC 0013A6CC  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D8D0 0013A6D0  80 03 02 C0 */	lwz r0, 0x2c0(r3)
 /* 8013D8D4 0013A6D4  54 03 05 EE */	rlwinm r3, r0, 0, 0x17, 0x17
 /* 8013D8D8 0013A6D8  4E 80 00 20 */	blr 
 
 HeadNotShocked__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D8DC 0013A6DC  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013D8DC 0013A6DC  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D8E0 0013A6E0  80 03 02 C0 */	lwz r0, 0x2c0(r3)
 /* 8013D8E4 0013A6E4  54 00 05 EE */	rlwinm r0, r0, 0, 0x17, 0x17
 /* 8013D8E8 0013A6E8  7C 00 00 34 */	cntlzw r0, r0
@@ -821,7 +821,7 @@ Init__10zNPCBSandyFP9xEntAsset:
 /* 8013DCB4 0013AAB4  7C 7F 1B 78 */	mr r31, r3
 /* 8013DCB8 0013AAB8  3B A5 98 C8 */	addi r29, r5, lbl_802998C8@l
 /* 8013DCBC 0013AABC  4B FB 13 E1 */	bl Init__10zNPCCommonFP9xEntAsset
-/* 8013DCC0 0013AAC0  93 ED 96 94 */	stw r31, lbl_803CBF94-_SDA_BASE_(r13)
+/* 8013DCC0 0013AAC0  93 ED 96 94 */	stw r31, sSandyPtr-_SDA_BASE_(r13)
 /* 8013DCC4 0013AAC4  38 00 00 01 */	li r0, 1
 /* 8013DCC8 0013AAC8  38 80 00 34 */	li r4, 0x34
 /* 8013DCCC 0013AACC  38 A0 00 00 */	li r5, 0
@@ -4894,7 +4894,7 @@ zNPCBSandy_AddBoundEntsToGrid__FP6zScene:
 /* 80141890 0013E690  3B C0 00 00 */	li r30, 0
 /* 80141894 0013E694  9B ED 96 78 */	stb r31, lbl_803CBF78-_SDA_BASE_(r13)
 lbl_80141898:
-/* 80141898 0013E698  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 80141898 0013E698  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8014189C 0013E69C  2C 1E 00 02 */	cmpwi r30, 2
 /* 801418A0 0013E6A0  80 63 02 B4 */	lwz r3, 0x2b4(r3)
 /* 801418A4 0013E6A4  7F 83 F8 2E */	lwzx r28, r3, r31
@@ -4955,7 +4955,7 @@ lbl_80141950:
 /* 80141960 0013E760  48 00 00 0C */	b lbl_8014196C
 lbl_80141964:
 /* 80141964 0013E764  38 00 00 00 */	li r0, 0
-/* 80141968 0013E768  90 0D 96 94 */	stw r0, lbl_803CBF94-_SDA_BASE_(r13)
+/* 80141968 0013E768  90 0D 96 94 */	stw r0, sSandyPtr-_SDA_BASE_(r13)
 lbl_8014196C:
 /* 8014196C 0013E76C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80141970 0013E770  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -4971,7 +4971,7 @@ zNPCBSandy_GameIsPaused__FP6zScene:
 /* 8014198C 0013E78C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80141990 0013E790  7C 08 02 A6 */	mflr r0
 /* 80141994 0013E794  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80141998 0013E798  80 8D 96 94 */	lwz r4, lbl_803CBF94-_SDA_BASE_(r13)
+/* 80141998 0013E798  80 8D 96 94 */	lwz r4, sSandyPtr-_SDA_BASE_(r13)
 /* 8014199C 0013E79C  28 04 00 00 */	cmplwi r4, 0
 /* 801419A0 0013E7A0  41 82 00 20 */	beq lbl_801419C0
 /* 801419A4 0013E7A4  80 64 02 C0 */	lwz r3, 0x2c0(r4)
@@ -4979,7 +4979,7 @@ zNPCBSandy_GameIsPaused__FP6zScene:
 /* 801419AC 0013E7AC  41 82 00 14 */	beq lbl_801419C0
 /* 801419B0 0013E7B0  54 60 05 A8 */	rlwinm r0, r3, 0, 0x16, 0x14
 /* 801419B4 0013E7B4  90 04 02 C0 */	stw r0, 0x2c0(r4)
-/* 801419B8 0013E7B8  80 6D 96 94 */	lwz r3, lbl_803CBF94-_SDA_BASE_(r13)
+/* 801419B8 0013E7B8  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 801419BC 0013E7BC  4B FF FC AD */	bl hiddenByCutscene__10zNPCBSandyFv
 lbl_801419C0:
 /* 801419C0 0013E7C0  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -10222,7 +10222,8 @@ lbl_803CBF8C:
 	.skip 0x4
 lbl_803CBF90:
 	.skip 0x4
-lbl_803CBF94:
+.global sSandyPtr
+sSandyPtr:
 	.skip 0x4
 lbl_803CBF98:
 	.skip 0x4
