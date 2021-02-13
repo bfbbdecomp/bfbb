@@ -11,7 +11,7 @@ on_change_newsfish__FRC10tweak_info:
 /* 8013D060 00139E60  38 C0 FF FF */	li r6, -1
 /* 8013D064 00139E64  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8013D068 00139E68  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
-/* 8013D06C 00139E6C  80 8D 96 AC */	lwz r4, lbl_803CBFAC-_SDA_BASE_(r13)
+/* 8013D06C 00139E6C  80 8D 96 AC */	lwz r4, sCurrNFSound-_SDA_BASE_(r13)
 /* 8013D070 00139E70  80 63 0D 34 */	lwz r3, 0xd34(r3)
 /* 8013D074 00139E74  81 83 01 B8 */	lwz r12, 0x1b8(r3)
 /* 8013D078 00139E78  81 8C 00 A8 */	lwz r12, 0xa8(r12)
@@ -1165,7 +1165,7 @@ lbl_8013E1AC:
 /* 8013E1E0 0013AFE0  3C 60 80 27 */	lis r3, lbl_8026D0E8@ha
 /* 8013E1E4 0013AFE4  38 84 D1 9C */	addi r4, r4, bossSandyStrings@l
 /* 8013E1E8 0013AFE8  38 C0 00 00 */	li r6, 0
-/* 8013E1EC 0013AFEC  90 0D 96 AC */	stw r0, lbl_803CBFAC-_SDA_BASE_(r13)
+/* 8013E1EC 0013AFEC  90 0D 96 AC */	stw r0, sCurrNFSound-_SDA_BASE_(r13)
 /* 8013E1F0 0013AFF0  38 A3 D0 E8 */	addi r5, r3, lbl_8026D0E8@l
 /* 8013E1F4 0013AFF4  38 64 01 76 */	addi r3, r4, 0x176
 /* 8013E1F8 0013AFF8  38 00 00 00 */	li r0, 0
@@ -1235,7 +1235,7 @@ lbl_8013E1AC:
 /* 8013E2F8 0013B0F8  38 E4 D1 9C */	addi r7, r4, bossSandyStrings@l
 /* 8013E2FC 0013B0FC  38 BD 01 24 */	addi r5, r29, 0x124
 /* 8013E300 0013B100  38 C3 80 9C */	addi r6, r3, lbl_8032809C@l
-/* 8013E304 0013B104  38 8D 96 AC */	addi r4, r13, lbl_803CBFAC-_SDA_BASE_
+/* 8013E304 0013B104  38 8D 96 AC */	addi r4, r13, sCurrNFSound-_SDA_BASE_
 /* 8013E308 0013B108  38 67 01 94 */	addi r3, r7, 0x194
 /* 8013E30C 0013B10C  38 E0 00 1E */	li r7, 0x1e
 /* 8013E310 0013B110  39 00 00 00 */	li r8, 0
@@ -10235,7 +10235,9 @@ lbl_803CBFA4:
 	.skip 0x4
 lbl_803CBFA8:
 	.skip 0x4
-lbl_803CBFAC:
+
+.global sCurrNFSound
+sCurrNFSound:
 	.skip 0x4
 
 .section .sdata

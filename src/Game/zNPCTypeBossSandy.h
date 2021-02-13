@@ -2,6 +2,7 @@
 #define ZNPCTYPEBOSSSANDY_H
 
 #include "zNPCTypeBoss.h"
+#include "zNPCTypeVillager.h"
 #include "zNPCGoalCommon.h"
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
@@ -9,8 +10,6 @@
 #include "../Core/x/xEntBoulder.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xCamera.h"
-
-struct zNPCNewsFish;
 
 struct zNPCBSandy : zNPCBoss
 {

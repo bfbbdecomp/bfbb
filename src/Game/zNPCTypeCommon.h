@@ -437,7 +437,7 @@ struct zNPCCommon : xNPCBasic
     virtual void Stun(float32 stuntime);
     virtual void SpeakBegin();
     virtual void SpeakEnd();
-    virtual void SpeakStart();
+    virtual void SpeakStart(uint32 param_1, uint32 param_2, int32 param_3);
     virtual void SpeakStop();
 
     virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
