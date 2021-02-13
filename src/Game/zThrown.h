@@ -73,5 +73,7 @@ int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight);
 void checkAgainstButtons(xEnt* ent);
 xBase* zThrown_ButtonIteratorCB(xBase* b, zScene* scn, void* user);
 void xDrawSphere(xSphere* s, uint32 unk);
+int32 zThrown_KillFruit(xEnt* ent);
+void zThrown_LaunchDir(xEnt* ent, xVec3* dir);
 
 #endif

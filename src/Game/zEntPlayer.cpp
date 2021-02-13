@@ -6,21 +6,25 @@
 
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xEntBoulder.h"
+#include "../Core/x/xEvent.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xVec3.h"
 #include "../Core/x/xMemMgr.h"
 
+#include "zBase.h"
 #include "zCamera.h"
 #include "zEntPlayer.h"
 #include "zEntTeleportBox.h"
 #include "zGame.h"
 #include "zGameExtras.h"
+#include "zNPCTypeTiki.h"
 #include "zGlobals.h"
 #include "zGoo.h"
 #include "zLasso.h"
 #include "zNPCTypeTiki.h"
 #include "zNPCMessenger.h"
 #include "zMusic.h"
+#include "zThrown.h"
 
 extern zGlobals globals;
 extern uint32 sCurrentStreamSndID;
@@ -60,8 +64,33 @@ extern uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total];
 // func_80066210
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SpawnWandBubbles__FP5xVec3Ui")
 
-// func_80066430
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerKillCarry__Fv")
+void zEntPlayerKillCarry()
+{
+    if (!globals.player.carry.grabbed)
+    {
+        return;
+    }
+
+    if (!zThrown_KillFruit(globals.player.carry.grabbed))
+    {
+        if (globals.player.carry.grabbed->baseType == eBaseTypeDestructObj)
+        {
+            zEntEvent(globals.player.carry.grabbed, eEventDestroy);
+        }
+        else if (globals.player.carry.grabbed->baseType == eBaseTypeNPC &&
+                 (((xNPCBasic*)globals.player.carry.grabbed)->SelfType() & 0xffffff00) == 'NTT\0')
+        {
+            zNPCTiki* tiki = (zNPCTiki*)globals.player.carry.grabbed;
+            tiki->Damage(DMGTYP_THUNDER_TIKI_EXPLOSION, NULL, NULL);
+        }
+        else if (globals.player.carry.grabbed->baseType == eBaseTypeNPC)
+        {
+            zThrown_LaunchDir(globals.player.carry.grabbed,
+                              (xVec3*)&globals.player.ent.model->Mat->at);
+        }
+    }
+    globals.player.carry.grabbed = NULL;
+}
 
 // func_80066500
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerControlOn__F13zControlOwner")
@@ -69,11 +98,15 @@ extern uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total];
 // func_80066558
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerControlOff__F13zControlOwner")
 
-// func_800665B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "TellPlayerVillainIsNear__Ff")
+void TellPlayerVillainIsNear(float32 visnear)
+{
+    globals.player.BadGuyNearTimer = visnear;
+}
 
-// func_800665C8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SetPlayerKillsVillainTimer__Ff")
+void SetPlayerKillsVillainTimer(float32 time)
+{
+    globals.player.VictoryTimer = time;
+}
 
 // func_800665D8
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DampenControls__FPfPfff")
@@ -894,12 +927,12 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
     int32 size = zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, max_size,
                                     non_choices, non_choices);
 
-    for (int32 i = 0; i < max_size; ++i)
+    for (int32 i = 0; i < max_size; i++)
     {
         bool skip = false;
-        for (int32 j = 0; j < size; ++j)
+        for (int32 j = 0; j < size; j++)
         {
-            if (i == (int32)non_choices[j] - 1)
+            if ((int32)non_choices[j] - 1 == i)
             {
                 skip = true;
                 break;
@@ -922,18 +955,19 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
 }
 #endif
 
-// func_8006D71C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "count_talk_anims__FP10xAnimTable")
-#else
-// Slightly off instruction order in the first few lines, loop is correct
 uint32 count_talk_anims(xAnimTable* anims)
 {
-    int32 talkAnimCount = 0;
     xAnimFile* firstData = anims->StateList->Data;
-
     int8 talkAnimName[20];
-    sprintf(talkAnimName, &zEntPlayer_Strings[0x29ff], 1);
+    int32 talkAnimCount = 0;
+
+    sprintf(talkAnimName, (zEntPlayer_Strings + 0x29ff), 1);
+
+    // having this here is necessary for some reason
+    // The beginning address of the strings are stored in a register
+    // which is later added to in the loop itself
+    // Don't know if this will break when we substitute strings
+    const char* strings = zEntPlayer_Strings;
 
     for (xAnimState* state = anims->StateList; state != NULL; state = state->Next)
     {
@@ -943,20 +977,48 @@ uint32 count_talk_anims(xAnimTable* anims)
             {
                 break;
             }
-            sprintf(talkAnimName, &zEntPlayer_Strings[0x29ff], talkAnimCount + 1);
+            sprintf(talkAnimName, (strings + 0x29ff), talkAnimCount + 1);
         }
     }
 
     return talkAnimCount;
 }
-#endif
 
-// func_8006D7E4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "load_player_ini__FR15zPlayerSettingsR14xModelInstanceP16xModelAssetParamUi")
+void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
+                     uint32 params_size)
+{
+    uint32 count;
+    count = count_talk_anims(model.Anim->Table);
+    ps.talk_anims = count;
+    count = load_talk_filter(ps.talk_filter, modelass, params_size, ps.talk_anims);
+    ps.talk_filter_size = count;
+}
 
-// func_8006D84C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_player_ini__Fv")
+void load_player_ini()
+{
+    xModelAssetParam* modelass;
+    uint32 size[3];
+
+    if (globals.player.model_spongebob != NULL)
+    {
+        modelass = zEntGetModelParams(globals.player.ent.asset->modelInfoID, &size[2]);
+        load_player_ini(globals.player.sb, *globals.player.model_spongebob, modelass, size[2]);
+    }
+
+    if (globals.player.model_patrick != NULL)
+    {
+        // TODO: figure out hardcoded int
+        modelass = zEntGetModelParams(0x791025ac, &size[1]);
+        load_player_ini(globals.player.patrick, *globals.player.model_patrick, modelass, size[1]);
+    }
+
+    if (globals.player.model_sandy != NULL)
+    {
+        // TODO: figure out hardcoded int
+        modelass = zEntGetModelParams(0xc0e34b23, &size[0]);
+        load_player_ini(globals.player.sandy, *globals.player.model_sandy, modelass, size[0]);
+    }
+}
 
 // func_8006D930
 #pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Init__FP4xEntP9xEntAsset")
