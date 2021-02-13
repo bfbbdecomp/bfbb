@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+#include "zEvent.h"
+
 extern SMDepot g_smdepot;
 extern float32 _805_Spawner; // 5.0f
 
@@ -210,9 +212,14 @@ void zNPCSpawner::MapPreferred()
 // func_8012B7E4
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "IsNearbyMover__11zNPCSpawnerFP6xBoundiP7xCollis")
 
-// func_8012B980
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
-                   "SetNPCStatus__11zNPCSpawnerFP10zNPCCommon16en_SM_NPC_STATUS")
+void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
+{
+    SMNPCStatus* stat = this->StatForNPC(npc);
+    if (stat != NULL)
+    {
+        stat->status = status;
+    }
+}
 
 // func_8012B9B8
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "StatForSP__11zNPCSpawnerFP10zMovePointi")
@@ -224,11 +231,17 @@ void zNPCSpawner::MapPreferred()
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
                    "SpawnBeastie__11zNPCSpawnerFP11SMNPCStatusP10SMSPStatus")
 
-// func_8012BD0C
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ToastedBeastie__11zNPCSpawnerFP10zNPCCommon")
+SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
+{
+    SMNPCStatus* ret = this->StatForNPC(npc);
+    XOrdRemove(&this->actvlist, ret, -1);
+    zEntEvent((xBase*)this->npc_owner, eEventDuploNPCKilled);
+    return ret;
+}
 
-// func_8012BD68
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ChildHeartbeat__11zNPCSpawnerFf")
+void zNPCSpawner::ChildHeartbeat(float32 dt)
+{
+}
 
 // func_8012BD6C
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ChildCleanup__11zNPCSpawnerFf")
@@ -241,5 +254,7 @@ void zNPCSpawner::MapPreferred()
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
                    "xUtil_select_esc__0_11SMNPCStatus_esc__1___FPP11SMNPCStatusiPCf")
 
-// func_8012C0A0
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "IsOn__10zMovePointFv")
+uint8 zMovePoint::IsOn()
+{
+    return this->on;
+}

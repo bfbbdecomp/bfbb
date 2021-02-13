@@ -1191,24 +1191,6 @@ lbl_8012B958:
 /* 8012B978 00128778  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8012B97C 0012877C  4E 80 00 20 */	blr 
 
-.global SetNPCStatus__11zNPCSpawnerFP10zNPCCommon16en_SM_NPC_STATUS
-SetNPCStatus__11zNPCSpawnerFP10zNPCCommon16en_SM_NPC_STATUS:
-/* 8012B980 00128780  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8012B984 00128784  7C 08 02 A6 */	mflr r0
-/* 8012B988 00128788  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8012B98C 0012878C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8012B990 00128790  7C BF 2B 78 */	mr r31, r5
-/* 8012B994 00128794  48 00 01 49 */	bl StatForNPC__11zNPCSpawnerFP10zNPCCommon
-/* 8012B998 00128798  28 03 00 00 */	cmplwi r3, 0
-/* 8012B99C 0012879C  41 82 00 08 */	beq lbl_8012B9A4
-/* 8012B9A0 001287A0  93 E3 00 04 */	stw r31, 4(r3)
-lbl_8012B9A4:
-/* 8012B9A4 001287A4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8012B9A8 001287A8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8012B9AC 001287AC  7C 08 03 A6 */	mtlr r0
-/* 8012B9B0 001287B0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012B9B4 001287B4  4E 80 00 20 */	blr 
-
 .global StatForSP__11zNPCSpawnerFP10zMovePointi
 StatForSP__11zNPCSpawnerFP10zMovePointi:
 /* 8012B9B8 001287B8  38 00 00 02 */	li r0, 2
@@ -1452,36 +1434,6 @@ lbl_8012BC78:
 /* 8012BD04 00128B04  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012BD08 00128B08  4E 80 00 20 */	blr 
 
-.global ToastedBeastie__11zNPCSpawnerFP10zNPCCommon
-ToastedBeastie__11zNPCSpawnerFP10zNPCCommon:
-/* 8012BD0C 00128B0C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8012BD10 00128B10  7C 08 02 A6 */	mflr r0
-/* 8012BD14 00128B14  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8012BD18 00128B18  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8012BD1C 00128B1C  93 C1 00 08 */	stw r30, 8(r1)
-/* 8012BD20 00128B20  7C 7E 1B 78 */	mr r30, r3
-/* 8012BD24 00128B24  4B FF FD B9 */	bl StatForNPC__11zNPCSpawnerFP10zNPCCommon
-/* 8012BD28 00128B28  7C 60 1B 78 */	mr r0, r3
-/* 8012BD2C 00128B2C  38 7E 01 B0 */	addi r3, r30, 0x1b0
-/* 8012BD30 00128B30  7C 1F 03 78 */	mr r31, r0
-/* 8012BD34 00128B34  38 A0 FF FF */	li r5, -1
-/* 8012BD38 00128B38  7F E4 FB 78 */	mr r4, r31
-/* 8012BD3C 00128B3C  4B F0 9E D1 */	bl XOrdRemove__FP16st_XORDEREDARRAYPvi
-/* 8012BD40 00128B40  80 7E 00 04 */	lwz r3, 4(r30)
-/* 8012BD44 00128B44  38 80 01 37 */	li r4, 0x137
-/* 8012BD48 00128B48  4B EF 38 A9 */	bl zEntEvent__FP5xBaseUi
-/* 8012BD4C 00128B4C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8012BD50 00128B50  7F E3 FB 78 */	mr r3, r31
-/* 8012BD54 00128B54  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8012BD58 00128B58  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8012BD5C 00128B5C  7C 08 03 A6 */	mtlr r0
-/* 8012BD60 00128B60  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012BD64 00128B64  4E 80 00 20 */	blr 
-
-.global ChildHeartbeat__11zNPCSpawnerFf
-ChildHeartbeat__11zNPCSpawnerFf:
-/* 8012BD68 00128B68  4E 80 00 20 */	blr 
-
 .global ChildCleanup__11zNPCSpawnerFf
 ChildCleanup__11zNPCSpawnerFf:
 /* 8012BD6C 00128B6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1721,11 +1673,6 @@ lbl_8012C080:
 /* 8012C094 00128E94  7C 08 03 A6 */	mtlr r0
 /* 8012C098 00128E98  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012C09C 00128E9C  4E 80 00 20 */	blr 
-
-.global IsOn__10zMovePointFv
-IsOn__10zMovePointFv:
-/* 8012C0A0 00128EA0  88 63 00 24 */	lbz r3, 0x24(r3)
-/* 8012C0A4 00128EA4  4E 80 00 20 */	blr 
 
 .endif
 

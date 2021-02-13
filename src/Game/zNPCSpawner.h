@@ -103,6 +103,13 @@ struct zNPCSpawner : RyzMemData
     // NextPendingNPC.
     void ClearActive();
     void ClearPending();
+
+    void SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status);
+
+    SMNPCStatus* StatForNPC(zNPCCommon* npc);
+    int32 SpawnBeastie(SMNPCStatus* npcstat, SMSPStatus* spstat);
+    SMNPCStatus* ToastedBeastie(zNPCCommon* npc);
+    void ChildHeartbeat(float32 dt);
 };
 
 void zNPCSpawner_Startup();

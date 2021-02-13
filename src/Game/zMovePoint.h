@@ -10,6 +10,7 @@
 struct zMovePoint : xMovePoint
 {
     uint32 NumNodes();
+    uint8 IsOn();
 };
 
 zMovePoint* zMovePoint_GetMemPool(int32 cnt);
