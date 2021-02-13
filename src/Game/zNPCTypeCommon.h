@@ -133,6 +133,18 @@ enum en_NPC_DAMAGE_TYPE
     DMGTYP_FORCEINT = 0x7fffffff
 };
 
+enum en_npcvibe
+{
+    NPC_VIBE_SOFT,
+    NPC_VIBE_NORM,
+    NPC_VIBE_HARD,
+    NPC_VIBE_BUILD_A,
+    NPC_VIBE_BUILD_B,
+    NPC_VIBE_BUILD_C,
+    NPC_VIBE_NOMORE,
+    NPC_VIBE_FORCE = 0x7fffffff
+};
+
 struct xEntNPCAsset
 {
     int32 npcFlags;
@@ -388,6 +400,7 @@ struct zNPCCommon : xNPCBasic
     int32 SndChanIsBusy(int32 flg_chan);
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     int32 GetVertPos(en_mdlvert vid, xVec3* pos);
+    void Vibrate(en_npcvibe vibe, float32 duration);
     void AddScripting(xPsyche* psy,
                       int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
