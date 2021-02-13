@@ -215,4 +215,9 @@ struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
 void zNPCBSandy_AddBoundEntsToGrid(zScene*);
 void zNPCBSandy_GameIsPaused(zScene*);
 
+uint32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*);
+uint32 HeadIsShocked(xAnimTransition*, xAnimSingle*, void*);
+uint32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*);
+uint32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*);
+
 #endif

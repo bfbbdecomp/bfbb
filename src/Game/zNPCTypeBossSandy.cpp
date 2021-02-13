@@ -1,9 +1,15 @@
+#include <types.h>
+
+#include "../Core/x/xAnim.h"
 #include "../Core/x/xVec3.h"
 #include "../Core/x/xMath3.h"
 
 #include "zNPCTypeBossSandy.h"
 
-#include <types.h>
+extern const char bossSandyStrings[];
+extern float32 __830; // 0.0
+extern float32 __831; // 1.0
+extern float32 __864; // 0.25
 
 // func_8013D054
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_newsfish__FRC10tweak_info")
@@ -31,7 +37,40 @@
                    "HeadNotShocked__FP15xAnimTransitionP11xAnimSinglePv")
 
 // func_8013D8F4
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ZNPC_AnimTable_BossSandyHead__Fv")
+#else
+
+#define str_SandyBossHead (bossSandyStrings + 0xff)
+#define str_Idle01 (bossSandyStrings + 0x10d)
+#define str_Carried01 (bossSandyStrings + 0x114)
+#define str_Shocked01 (bossSandyStrings + 0x11e)
+
+xAnimTable* ZNPC_AnimTable_BossSandyHead()
+{
+    xAnimTable* table;
+
+    table = xAnimTableNew(str_SandyBossHead, NULL, 0);
+
+    xAnimTableNewState(table, str_Idle01, 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, str_Carried01, 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, str_Shocked01, 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+
+    xAnimTableNewTransition(table, str_Idle01, str_Carried01, HeadIsCarried, NULL, 0, 0, __830,
+                            __830, 0, 0, __864, NULL);
+    xAnimTableNewTransition(table, str_Carried01, str_Idle01, HeadNotCarried, NULL, 0, 0, __830,
+                            __830, 0, 0, __864, NULL);
+    xAnimTableNewTransition(table, str_Idle01, str_Shocked01, HeadIsShocked, NULL, 0, 0, __830,
+                            __830, 0, 0, __864, NULL);
+    xAnimTableNewTransition(table, str_Shocked01, str_Idle01, HeadNotShocked, NULL, 0, 0, __830,
+                            __830, 0, 0, __864, NULL);
+
+    return table;
+}
+#endif
 
 // func_8013DB38
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ZNPC_AnimTable_BossSandyScoreboard__Fv")
