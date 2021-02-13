@@ -98,7 +98,17 @@ struct zNPCBSandy : zNPCBoss
 
     zNPCBSandy(int32 myType);
 
-    // VTABLE
+    virtual void Init(xEntAsset* asset); // 8013dca0 entry=2
+    virtual void Setup(); // 8013e418 entry=4
+    virtual void Reset(); // 8013e830 entry=6
+    virtual void Process(xScene* xscn, float32 dt); // 8014075c entry=7
+    virtual void NewTime(xScene* xscn, float32 dt); // 801419d0 entry=9
+    virtual void Render(); // 8013f9bc entry=12
+    virtual void ParseINI(); // 8013f1ac entry=25
+    virtual void SelfSetup(); // 8013e5ec entry=28
+    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, xVec3 const*); // 8014184c entry=32
+    virtual uint32 AnimPick(int32 gid, en_NPC_GOAL_SPOT param_2,
+                            xGoal* rawgoal); // 8013f1f8 entry=44
 };
 
 struct zNPCGoalBossSandyIdle : zNPCGoalCommon

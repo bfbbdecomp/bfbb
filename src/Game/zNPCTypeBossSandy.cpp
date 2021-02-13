@@ -16,12 +16,12 @@ extern float32 __864; // 0.25
 extern zNPCBSandy* sSandyPtr;
 
 // func_8013D054
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_newsfish__FRC10tweak_info")
 #else
 void on_change_newsfish(const tweak_info& tweak)
 {
-    sSandyPtr->ropeSb = NULL;
+    uint32 anim = sSandyPtr->
 }
 #endif
 
