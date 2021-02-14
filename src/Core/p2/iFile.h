@@ -40,6 +40,8 @@ struct tag_iFile
 #endif
 #endif
 
+#define IFILE_OPEN_READ 0x1
+#define IFILE_OPEN_WRITE 0x2
 #define IFILE_OPEN_ABSPATH 0x4
 
 #define IFILE_SEEK_SET 0

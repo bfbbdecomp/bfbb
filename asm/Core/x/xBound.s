@@ -337,6 +337,7 @@ lbl_8000AC14:
 .endif
 
 .section .data
+.balign 8
 lbl_8027B380:
 	.incbin "baserom.dol", 0x278360, 0x70
 /* SPECULATION: link order */
