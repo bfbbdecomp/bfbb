@@ -20,6 +20,7 @@ struct tag_xFile
     void* user_data;
 };
 
+void xFileSetUserData(tag_xFile* file, void* userdata);
 XFILE_READSECTOR_STATUS xFileReadAsyncStatus(int32 key, int32* amtToFar);
 
 #endif
