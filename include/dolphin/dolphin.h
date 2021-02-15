@@ -179,6 +179,7 @@ void PADControlMotor(int chan, u32 command);
 void AXQuit();
 void AXFreeVoice(_AXVPB*);
 void OSSetSoundMode(u32 mode);
+int32 CARDProbeEx(int32, int32*, int32*);
 
 #ifdef __cplusplus
 }
