@@ -2,38 +2,173 @@
 
 #include <types.h>
 
-// func_8012A728
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "zNPCSpawner_Startup__Fv")
+#include "zEvent.h"
 
-// func_8012A72C
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "zNPCSpawner_Shutdown__Fv")
+extern SMDepot g_smdepot;
+extern float32 _805_Spawner; // 5.0f
 
-// func_8012A730
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "zNPCSpawner_ScenePrepare__Fv")
+void zNPCSpawner_Startup()
+{
+}
 
-// func_8012A7B0
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "zNPCSpawner_SceneFinish__Fv")
+void zNPCSpawner_Shutdown()
+{
+}
+
+void zNPCSpawner_ScenePrepare()
+{
+    SMDepot* depot = &g_smdepot;
+    XOrdInit(&depot->spawners, sizeof(g_smdepot), 0);
+    for (int32 i = 0; i < 0x10; i++)
+    {
+        zNPCSpawner* sm = (zNPCSpawner*)RyzMemData::operator new(sizeof(zNPCSpawner), 'SPWN', NULL);
+        XOrdAppend(&depot->spawners, sm);
+    }
+}
+
+void zNPCSpawner_SceneFinish()
+{
+    SMDepot* depot = &g_smdepot;
+    for (int32 i = 0; i < depot->spawners.cnt; i++)
+    {
+        RyzMemData::operator delete(depot->spawners.list[i]);
+    }
+    XOrdDone(&depot->spawners, 0);
+}
+
+#if 1
 
 // func_8012A828
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "zNPCSpawner_GetInstance__Fv")
 
-// func_8012A870
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "Subscribe__11zNPCSpawnerFP10zNPCCommon")
+#else
 
-// func_8012A8D4
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "SetWaveMode__11zNPCSpawnerF15en_SM_WAVE_MODEfi")
+// Something weird with the conditions here.
+zNPCSpawner* zNPCSpawner_GetInstance()
+{
+    SMDepot* depot = &g_smdepot;
+    zNPCSpawner* sm = (zNPCSpawner*)depot->spawners.list;
+    if (depot->spawners.cnt > 0)
+    {
+        for (int32 i = depot->spawners.cnt; i > 0; i--)
+        {
+            zNPCSpawner* sm_tmp = sm;
+            if (!(sm_tmp->flg_spawner & 1))
+            {
+                sm_tmp->flg_spawner |= 1;
+                return sm_tmp;
+            }
+            sm++;
+        }
+        return NULL;
+    }
+    else
+    {
+        return NULL;
+    }
+}
 
-// func_8012A8E4
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "AddSpawnPoint__11zNPCSpawnerFP10zMovePoint")
+#endif
+
+void zNPCSpawner::Subscribe(zNPCCommon* owner)
+{
+    this->npc_owner = owner;
+    this->tym_delay = _805_Spawner;
+    this->max_spawn = -1;
+    this->wavestat = SM_STAT_BEGIN;
+    XOrdInit(&this->pendlist, 0x10, 0);
+    XOrdInit(&this->actvlist, 0x10, 0);
+}
+
+void zNPCSpawner::SetWaveMode(en_SM_WAVE_MODE mode, float32 delay, int32 lifemax)
+{
+    this->wavemode = mode;
+    this->tym_delay = delay;
+    this->max_spawn = lifemax;
+}
+
+int32 zNPCSpawner::AddSpawnPoint(zMovePoint* sp)
+{
+    int32 ack = 0;
+    for (int32 i = 0; i < 0x10; i++)
+    {
+        SMSPStatus* sp_stat = &this->sppool[i];
+        if (sp_stat->sp == NULL)
+        {
+            sp_stat->sp = sp;
+            sp_stat->npc_prefer = NULL;
+            ack = 1;
+            break;
+        }
+    }
+    return ack;
+}
+
+#if 1
 
 // func_8012A920
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "AddSpawnNPC__11zNPCSpawnerFP10zNPCCommon")
 
-// func_8012A9B0
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "Reset__11zNPCSpawnerFv")
+#else
+
+int32 zNPCSpawner::AddSpawnNPC(zNPCCommon* npc)
+{
+    int32 ack = 0;
+    for (int32 i = 0; i < 0x10; i++)
+    {
+        SMNPCStatus* npc_stat = &this->npcpool[i];
+        if (npc_stat->npc == NULL)
+        {
+            npc_stat->npc = npc;
+            ack = 1;
+            npc_stat->status = SM_NPC_READY;
+            npc_stat->sp_prefer = NULL;
+            break;
+        }
+    }
+    // Need to figure out what it is calling here.
+    npc->DBG_Name();
+    return ack;
+}
+
+#endif
+
+void zNPCSpawner::Reset()
+{
+    this->cnt_spawn = 0;
+    this->wavestat = SM_STAT_BEGIN;
+    this->cnt_cleanup = 0;
+    this->flg_spawner &= 1;
+    this->flg_spawner |= 8;
+    this->ClearPending();
+    this->ClearActive();
+    this->MapPreferred();
+}
+
+#if 1
 
 // func_8012AA14
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "MapPreferred__11zNPCSpawnerFv")
+
+#else
+
+void zNPCSpawner::MapPreferred()
+{
+    for (int32 i = 0; i < 0x10; i++)
+    {
+        SMNPCStatus* npc_stat = &this->npcpool[i];
+        if (npc_stat->npc != NULL)
+        {
+            zMovePoint* sp = (zMovePoint*)npc_stat->npc->FirstAssigned();
+            if (sp != NULL && /*TODO*/)
+            {
+                npc_stat->sp_prefer = sp;
+            }
+        }
+    }
+}
+
+#endif
 
 // func_8012AAA8
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "Timestep__11zNPCSpawnerFf")
@@ -77,9 +212,14 @@
 // func_8012B7E4
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "IsNearbyMover__11zNPCSpawnerFP6xBoundiP7xCollis")
 
-// func_8012B980
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
-                   "SetNPCStatus__11zNPCSpawnerFP10zNPCCommon16en_SM_NPC_STATUS")
+void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
+{
+    SMNPCStatus* stat = this->StatForNPC(npc);
+    if (stat != NULL)
+    {
+        stat->status = status;
+    }
+}
 
 // func_8012B9B8
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "StatForSP__11zNPCSpawnerFP10zMovePointi")
@@ -91,11 +231,17 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
                    "SpawnBeastie__11zNPCSpawnerFP11SMNPCStatusP10SMSPStatus")
 
-// func_8012BD0C
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ToastedBeastie__11zNPCSpawnerFP10zNPCCommon")
+SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
+{
+    SMNPCStatus* ret = this->StatForNPC(npc);
+    XOrdRemove(&this->actvlist, ret, -1);
+    zEntEvent((xBase*)this->npc_owner, eEventDuploNPCKilled);
+    return ret;
+}
 
-// func_8012BD68
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ChildHeartbeat__11zNPCSpawnerFf")
+void zNPCSpawner::ChildHeartbeat(float32 dt)
+{
+}
 
 // func_8012BD6C
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "ChildCleanup__11zNPCSpawnerFf")
@@ -108,5 +254,7 @@
 #pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s",                                                       \
                    "xUtil_select_esc__0_11SMNPCStatus_esc__1___FPP11SMNPCStatusiPCf")
 
-// func_8012C0A0
-#pragma GLOBAL_ASM("asm/Game/zNPCSpawner.s", "IsOn__10zMovePointFv")
+uint8 zMovePoint::IsOn()
+{
+    return this->on;
+}

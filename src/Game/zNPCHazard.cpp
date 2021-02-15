@@ -507,8 +507,33 @@ void UVAModelInfo::Hemorrage()
 // func_8018F578
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "SetColor__12UVAModelInfoF10iColor_tag")
 
+#if 1
+
 // func_8018F610
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "GetUV__12UVAModelInfoCFRP11RwTexCoordsRiP8RpAtomic")
+
+#else
+
+// Need to figure out what is wrong with the final return statement, and the b and blr swaps.
+int32 UVAModelInfo::GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* model)
+{
+    coords = NULL;
+    numVertices = 0;
+    RpGeometry* geom = model->geometry;
+    if (geom == NULL)
+    {
+        return 0;
+    }
+    numVertices = geom->numVertices;
+    if (numVertices <= 0)
+    {
+        return 0;
+    }
+    coords = geom->texCoords[0];
+    return (-(int32)coords->u | (uint32)coords->u) >> 0x1f;
+}
+
+#endif
 
 // func_8018F668
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "CloneUV__12UVAModelInfoCFRP11RwTexCoordsRiP8RpAtomic")

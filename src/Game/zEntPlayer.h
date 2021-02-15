@@ -282,4 +282,6 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
 
 int32 zEntPlayer_DamageNPCKnockBack(xBase* src, uint32 damage, xVec3* npcPos);
 
+int32 zEntPlayer_DamageNPCKnockBack(xBase* src, uint32 damage, xVec3* npcPos);
+
 #endif
