@@ -2,7 +2,6 @@
 
 #include <types.h>
 
-#include <dolphin.h>
 #include <rwcore.h>
 
 #include "../x/xDebug.h"
@@ -14,6 +13,7 @@
 #include "iSystem.h"
 #include "iFile.h"
 #include "iTime.h"
+#include "iTRC.h"
 
 extern uint32 mem_base_alloc;
 extern uint32 add;
@@ -21,24 +21,62 @@ extern uint32 size;
 extern int32 gEmergencyMemLevel;
 extern OSHeapHandle the_heap;
 extern void* bad_val;
+extern void* MemoryFunctions[4];
+extern uint16 last_error;
+extern OSContext* last_context;
 
-// func_800D30B4
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "psGetMemoryFunctions__Fv")
+void** psGetMemoryFunctions()
+{
+    return MemoryFunctions;
+}
 
-// func_800D30C0
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "iVSync__Fv")
+void iVSync()
+{
+    VIWaitForRetrace();
+}
 
-// func_800D30E0
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "my_dsc__FUs")
+uint16 my_dsc(uint16 dsc)
+{
+    return dsc;
+}
 
 // func_800D30E4
 #pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "FloatingPointErrorHandler__FUsP9OSContextUlUl")
 
 // func_800D32BC
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "MemoryProtectionErrorHandler__FUsP9OSContextUlUl")
+//#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "MemoryProtectionErrorHandler__FUsP9OSContextUlUl")
+
+void MemoryProtectionErrorHandler(uint16 last, OSContext* ctx, uint64 unk1, uint64 unk2)
+{
+    last_error = last;
+    last_context = ctx;
+    if (ctx->fpscr)
+    {
+        null_func();
+    }
+}
+
+#if 1
 
 // func_800D32F0
 #pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "TRCInit__Fv")
+
+#else
+
+// WIP.
+void TRCInit()
+{
+    iTRCDisk::Init();
+    iTRCDisk::SetPadStopRumblingFunction(iPadStopRumble);
+    iTRCDisk::SetSndSuspendFunction(iSndSuspend);
+    iTRCDisk::SetSndResumeFunction(iSndResume);
+    iTRCDisk::SetSndKillFunction(iSndDIEDIEDIE);
+    iTRCDisk::SetMovieSuspendFunction(iFMV::Suspend);
+    iTRCDisk::SetMovieResumeFunction(iFMV::Resume);
+    ResetButton::SetSndKillFunction(iSndDIEDIEDIE);
+}
+
+#endif
 
 // func_800D3364
 #pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "iSystemInit__FUi")
