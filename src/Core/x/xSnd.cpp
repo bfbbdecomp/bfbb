@@ -125,7 +125,7 @@ void xSndUpdate()
 }
 
 // func_800489C4
-void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3 matrix)
+void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix)
 {
     /*
     * This code appears to be correct but there appears to be a possibility
@@ -135,7 +135,7 @@ void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3 matrix)
     * (Gamecube audio bug source????)
     */
     int i = (int)listenerType;
-    gSnd.listenerMat[i] = matrix;
+    gSnd.listenerMat[i] = *matrix;
 }
 
 // func_800489F8

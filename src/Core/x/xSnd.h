@@ -120,7 +120,7 @@ void xSndCalculateListenerPosition();
 void xSndDelayedUpdate();
 void update_faders(float32 timeElapsed);
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* voiceInfo);
-void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3 matrix);
+void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix);
 void xSndSelectListenerMode(sound_listener_game_mode listenerGameMode);
 void xSndExit();
 uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,

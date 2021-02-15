@@ -4,14 +4,21 @@
 
 #include "zGlobals.h"
 #include "zGameState.h"
+#include "zHud.h"
+#include "zCamera.h"
+#include "zGame.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xTRC.h"
 #include "../Core/x/xsavegame.h"
 #include "../Core/x/xString.h"
 #include "../Core/x/xEvent.h"
 #include "../Core/x/xutil.h"
+#include "../Core/x/xserializer.h"
+#include "../Core/x/xDebug.h"
+#include "../Core/x/xParMgr.h"
 #include "../CodeWarrior/cstring"
 #include "../CodeWarrior/intrin.h"
+#include "../dolphin/dolphin.h"
 
 extern int8 zSaveLoad_strings[];
 
@@ -23,8 +30,8 @@ extern uint32 saveSuccess;
 extern float32 time_elapsed_1;
 extern float32 time_last_1;
 extern float32 time_current_1;
-extern long32 t0;
-extern long32 t1;
+extern iTime t0;
+extern iTime t1;
 extern int32 currentCard;
 extern int32 currentGame;
 extern int32 promptSel;
@@ -53,11 +60,15 @@ extern _tagTRCPadInfo gTrcPad[4];
 extern int32 gGameState;
 extern uint32 gFrameCount;
 extern float32 sTimeElapsed;
-extern long32 sTimeLast;
-extern long32 sTimeCurrent;
+extern iTime sTimeLast;
+extern iTime sTimeCurrent;
 
-extern float _846;
-extern float _847;
+extern float32 _846;
+extern float32 _847;
+extern float32 _848;
+extern float32 _849;
+extern float64 _850;
+extern float64 _852;
 
 // const int8* strings = "ld gameslot group\0"
 //                       "ld memcards group\0"
@@ -192,8 +203,85 @@ void zUpdateThumbIcon()
 }
 #endif
 
+#if 1
 // func_800AD328
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_Tick__Fv")
+#else
+void zSaveLoad_Tick()
+{
+    xMat4x3* ma;
+    float32 time;
+    xMat4x3 local_48;
+    int32 local_8;
+
+    time = iTimeGet();
+    local_8 = 0x43300000;
+    time_current_1 = (_846 / (local_8 - _852)) * time;
+
+    time_elapsed_1 = time_current_1 - time_last_1;
+    if (time_elapsed_1 >= _847)
+    {
+        if (_849 < time_elapsed_1)
+        {
+            time_elapsed_1 = _848;
+        }
+    }
+    else
+    {
+        time_elapsed_1 = _848;
+    }
+
+    dontPoll = dontPoll - time_elapsed_1;
+    t0 = t1;
+    time_last_1 = time_current_1;
+    t1 = iTimeGet();
+    sTimeCurrent = iTimeGet();
+    time = iTimeDiffSec(sTimeLast, sTimeCurrent);
+    sTimeElapsed = time;
+    sTimeLast = sTimeCurrent;
+    xPadUpdate(globals.NoMusic, time_elapsed_1);
+    iTRCDisk::CheckDVDAndResetState();
+    xDrawBegin();
+    xParMgrUpdate(time_elapsed_1);
+    zSceneUpdate(time_elapsed_1);
+
+    ma = xEntGetFrame(&(xEnt)globals.player.ent);
+    local_48.right.x = ma->right.x;
+    local_48.right.y = ma->right.y;
+    local_48.right.z = ma->right.z;
+    local_48.flags = ma->flags;
+    local_48.up.x = ma->up.x;
+    local_48.up.y = ma->up.y;
+    local_48.up.z = ma->up.z;
+    local_48.pad1 = ma->pad1;
+    local_48.at.x = ma->at.x;
+    local_48.at.y = ma->at.y;
+    local_48.at.z = ma->at.z;
+    local_48.pad2 = ma->pad2;
+    local_48.pos.x = ma->pos.x;
+    local_48.pos.z = ma->pos.z;
+    local_48.pad3 = ma->pad3;
+    local_48.pos.y = ma->pos.y;
+    xSndSetListenerData(SND_LISTENER_CAMERA, &globals.camera.mat);
+    xSndSetListenerData(SND_LISTENER_PLAYER, &local_48);
+    xSndUpdate();
+    if ((gGameMode == 6) && (gGameState != 0))
+    {
+        zhud::update(sTimeElapsed);
+    }
+
+    zCameraUpdate(&globals.camera, time_elapsed_1);
+    xCameraBegin(&globals.camera, 1);
+    zUpdateThumbIcon();
+    zSceneRender();
+    xDebugUpdate();
+    xDrawEnd();
+    xCameraEnd(&globals.camera, time_elapsed_1, 1);
+    iEnvEndRenderFX(0);
+    xCameraShowRaster(&globals.camera);
+    gFrameCount = gFrameCount + 1;
+}
+#endif
 
 #if 1
 // func_800AD598
@@ -1275,10 +1363,192 @@ void zSaveLoadPreAutoSave(bool onOff)
 }
 
 // func_800AF7CC
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoadAutoSaveUpdate__Fv")
+void zSaveLoadAutoSaveUpdate()
+{
+    xBase* obj;
+    int32 out1, out2;
 
+    if (globals.autoSaveFeature == 0 || gGameMode == eGameMode_Pause)
+    {
+        return;
+    }
+    if (preAutoSaving == 0)
+    {
+        return;
+    }
+
+    int32 physicalSlot = xSGAutoSave_GetCache()->LastPhysicalSlot();
+    if (physicalSlot >= 0)
+    {
+        autoSaveCard = physicalSlot;
+        switch (CARDProbeEx(physicalSlot, &out1, &out2))
+        {
+        case 0:
+        case -1:
+            obj = zSceneFindObject(xStrHash(zSaveLoad_strings + 1186)); //"SAVING GAME ICON UI"
+            if (obj != NULL)
+            {
+                zEntEvent(obj, 3);
+            }
+            break;
+        default:
+            obj = zSceneFindObject(xStrHash(zSaveLoad_strings + 1186)); //"SAVING GAME ICON UI"
+            if (obj != NULL)
+            {
+                zEntEvent(obj, 4);
+            }
+
+            obj = zSceneFindObject(xStrHash(zSaveLoad_strings + 1206)); //"MNU4 AUTO SAVE FAILED"
+            if (obj != NULL)
+            {
+                zEntEvent(obj, 3);
+            }
+            globals.autoSaveFeature = 0;
+            zSaveLoadPreAutoSave(0);
+            break;
+        }
+    }
+}
+
+#ifndef NON_MATCHING
 // func_800AF8D4
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DoAutoSave__Fv")
+#else
+int32 zSaveLoad_DoAutoSave()
+{
+    /*
+    r24 - progress/iprocess
+    r25 - success
+    r26 - svinst
+    r27 - asstat
+    r28 - r28
+    r29 - Lastgame
+    r30 - use_tgt
+    r31 - autodata
+    */
+    int32 use_tgt;
+    int32 lastGame;
+    int32 teststat;
+    st_XSAVEGAME_DATA* svinst;
+    en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
+    XSGAutoData* autodata;
+    int32 success;
+
+    uint32 progress;
+    int32 iprocess;
+    int8 label[64];
+    const int8* area;
+
+    success = 0;
+    teststat = 1;
+    asstat = XSG_ASTAT_NOOP;
+
+    autodata = xSGAutoSave_GetCache();
+    if (autodata == NULL)
+    {
+        return -1;
+    }
+    if (!autodata->IsValid())
+    {
+        return -1;
+    }
+
+    use_tgt = CardtoTgt(autodata->LastTarget());
+    lastGame = autodata->LastGame();
+    autodata->Discard();
+    svinst = xSGInit(XSG_MODE_SAVE);
+    xSGTgtSelect(svinst, use_tgt);
+    xSGGameSet(svinst, lastGame);
+
+    if (svinst == NULL)
+    {
+        teststat = 0;
+    }
+
+    zSceneSave(globals.sceneCur, 0);
+
+    xSGAddSaveClient(svinst, 0x524f4f4d, 0, xSGT_SaveInfoCB, xSGT_SaveProcCB);
+    xSGAddSaveClient(svinst, 0x50524546, 0, xSGT_SaveInfoPrefsCB, xSGT_SaveProcPrefsCB);
+
+    xSerial_svgame_register(svinst, XSG_MODE_SAVE);
+    progress = zSceneCalcProgress();
+
+    if (globals.sceneCur->sceneID == 0x50473132)
+    {
+        area = zSceneGetLevelName(0x48423031);
+    }
+    else
+    {
+        area = zSceneGetLevelName(progress);
+    }
+
+    strncpy(label, area, 0x40);
+    if (!xSGSetup(svinst, lastGame, label, progress, 0, zSceneGetLevelIndex()))
+    {
+        teststat = 0;
+    }
+
+    if (teststat != 0)
+    {
+        iprocess = xSGProcess(svinst);
+        if (iprocess != 0)
+        {
+            asstat = xSGAsyncStatus(svinst, 1, 0, 0);
+        }
+        xSGGameIsEmpty(svinst, lastGame);
+        xSGTgtHasGameDir(svinst, use_tgt);
+        if (iprocess == 0)
+        {
+            teststat = false;
+        }
+        else
+        {
+            switch (asstat)
+            {
+            case XSG_ASTAT_INPROG:
+                //This case needed for proper codegen
+                break;
+            case XSG_ASTAT_SUCCESS:
+                success = true;
+                break;
+            case XSG_ASTAT_FAILED:
+                success = false;
+                break;
+            }
+        }
+    }
+
+    if (teststat && xSGWrapup(svinst) == 0)
+    {
+        teststat = false;
+    }
+
+    if (xSGDone(svinst) == 0)
+    {
+        teststat = false;
+    }
+
+    if ((success) && (teststat))
+    {
+        if (autodata != NULL)
+        {
+            int32 idx = xSGTgtPhysSlotIdx(svinst, use_tgt);
+            autodata->SetCache(use_tgt, lastGame, idx);
+            globals.autoSaveFeature = 1;
+        }
+        return 1;
+    }
+    else
+    {
+        if (autodata != NULL)
+        {
+            autodata->Discard();
+        }
+        globals.autoSaveFeature = 0;
+        return -1;
+    }
+}
+#endif
 
 // func_800AFB84
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveGame__Fv")
@@ -1292,8 +1562,40 @@ void zSaveLoadPreAutoSave(bool onOff)
 // func_800B023C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveLoop__Fv")
 
+#ifndef NON_MATCHING
 // func_800B0548
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DispatchCB__FUiPCf")
+#else
+void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
+{
+    switch (dispatchEvent)
+    {
+    case 0xa8:
+        promptSel = 4;
+        break;
+    case 0xaa:
+        promptSel = 3;
+        break;
+    case 0xab:
+        currentCard = (int)*toParam;
+        en_SAVEGAME_MODE mode = XSG_MODE_LOAD;
+        if (gGameMode == eGameMode_Save)
+        {
+            mode = XSG_MODE_SAVE;
+        }
+        st_XSAVEGAME_DATA* data = xSGInit(mode);
+        zSaveLoad_CardCheckSpaceSingle_doCheck(data, currentCard);
+        xSGDone(data);
+        break;
+    case 0xac:
+        currentGame = (int)*toParam;
+        break;
+    case 0xad:
+        promptSel = 3;
+        break;
+    }
+}
+#endif
 
 // func_800B061C
 int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most)
