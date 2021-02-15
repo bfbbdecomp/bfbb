@@ -24,6 +24,7 @@ struct zSaveLoadUI
 extern zSaveLoadUI zSaveLoadUITable[62];
 extern zSaveLoadGame zSaveLoadGameTable[3];
 
+void zUpdateThumbIcon();
 void zSaveLoad_Tick();
 int32 zSaveLoad_poll(int32 i);
 void zSendEventToThumbIcon(uint32 toEvent);
@@ -82,6 +83,9 @@ int32 IsValidName(int8* name);
 
 void zSaveLoad_BuildName(int8* name_txt, int32 idx);
 uint8 zSaveLoadGetPreAutoSave();
+void zSaveLoadPreAutoSave(bool onOff);
+void zSaveLoadAutoSaveUpdate();
+
 uint32 zSaveLoad_LoadLoop();
 uint32 zSaveLoad_SaveLoop();
 int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most);
