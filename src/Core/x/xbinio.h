@@ -51,6 +51,27 @@ struct st_FILELOADINFO
     int32 position;
 };
 
+struct st_FILESAVEINFO
+{
+    void (*destroy)(st_FILESAVEINFO*);
+    int32 (*writeBytes)(st_FILESAVEINFO*, char*, int32);
+    int32 (*writeMShorts)(st_FILESAVEINFO*, int16*, int32);
+    int32 (*writeMLongs)(st_FILESAVEINFO*, int32*, int32);
+    int32 (*writeMFloats)(st_FILESAVEINFO*, float32*, int32);
+    int32 (*writeMDoubles)(st_FILESAVEINFO*, float64*, int32);
+    int32 (*writeIShorts)(st_FILESAVEINFO*, int16*, int32);
+    int32 (*writeILongs)(st_FILESAVEINFO*, int32*, int32);
+    int32 (*writeIFloats)(st_FILESAVEINFO*, float32*, int32);
+    int32 (*writeIDoubles)(st_FILESAVEINFO*, float64*, int32);
+    int32 (*seekSpot)(st_FILESAVEINFO*, int32);
+    int32 length;
+    int32 position;
+    en_FIOERRCODES error;
+    uint32 lockid;
+    void* privdata;
+    void* xtradata;
+};
+
 st_FILELOADINFO* xBinioLoadCreate(const char* filename);
 
 #endif
