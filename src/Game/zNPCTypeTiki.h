@@ -47,7 +47,7 @@ struct zNPCTiki : zNPCCommon
     void Reset();
     int32 IsHealthy();
     virtual int32 IsAlive();
-    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
+    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
     virtual int32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     virtual void DuploOwner(zNPCCommon* duper);
     virtual void DuploNotice();
