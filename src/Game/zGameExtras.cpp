@@ -337,6 +337,8 @@ static uint32 aid_sndList_1160[7] = {};
 #else
 void GEC_dfltSound()
 {
+    static uint32 aid_sndList_1160[7] = {};
+
     if (!init_1161)
     {
         aid_sndList_1160[0] = xStrHash(zGameExtras_strings + 3);
@@ -497,6 +499,8 @@ static uint32 choices_1318[3] = {};
 #else
 void GEC_cb_CruiseControl()
 {
+    static uint32 choices_1318[3] = {};
+
     if (!init_1319)
     {
         choices_1318[0] = xStrHash(zGameExtras_strings + 0xa8);
@@ -533,6 +537,8 @@ static uint32 aid_sndList_1342[6] = {};
 #else
 void GEC_villSound()
 {
+    static uint32 aid_sndList_1342[6] = {};
+
     if (!init_1343)
     {
         aid_sndList_1342[0] = xStrHash(zGameExtras_strings + 0xc9);
