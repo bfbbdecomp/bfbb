@@ -23,9 +23,6 @@ extern float32 _1153; // -1.0
 extern float32 _1192; // 1.0
 
 extern zGlobals globals;
-extern xEnt* sGalleryTitle;
-
-extern uint32 sCheatPressed[16];
 
 static int32 g_enableGameExtras;
 static int32 g_currDay;
@@ -39,12 +36,6 @@ static signed char init_1274; // init$1274
 static signed char init_1319; // init$1319
 static signed char init_1343; // init$1343
 static xEnt* sGalleryTitle;
-
-extern uint32 aid_sndList_1160[7];
-extern uint32 choices_1318[3];
-extern uint32 aid_sndList_1342[6];
-
-extern int32 sCheatInputCount;
 
 static EGGItemFuncs EGGEmpty = {
     NULL,
@@ -98,7 +89,7 @@ static uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, 
 static uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
 static uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
 
-GECheat cheatList[22] = {
+static GECheat cheatList[22] = {
     { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
     { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
     { sCheatBubbleBowl, GEC_cb_BubbleBowl, 0x200, 0 },
@@ -121,6 +112,13 @@ GECheat cheatList[22] = {
     { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
     { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
 };
+
+static uint32 sCheatPressed[16] = {};
+
+// these are supposed to be defined within their functions
+static uint32 aid_sndList_1160[7] = {};
+static uint32 choices_1318[3] = {};
+static uint32 aid_sndList_1342[6] = {};
 
 int32 zGameExtras_ExtrasFlags()
 {

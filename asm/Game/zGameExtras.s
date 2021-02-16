@@ -642,7 +642,7 @@ cheatBlob:
 cheatList:
 	.incbin "baserom.dol", 0x28C724, 0x160
 */
-
+/*
 .global sCheatPressed
 sCheatPressed:
 	.incbin "baserom.dol", 0x28C884, 0x40
@@ -656,6 +656,7 @@ choices_1318:
 aid_sndList_1342:
 	.incbin "baserom.dol", 0x28C8EC, 0x1C
 
+*/
 .section .sbss
 
 /*
