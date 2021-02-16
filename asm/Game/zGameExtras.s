@@ -4,131 +4,6 @@
 
 .section .text  # 0x80099680 - 0x8009A924
 
-EGG_check_ExtrasFlags__FP7EGGItem:
-/* 80099938 00096738  80 0D 8F 88 */	lwz r0, g_currMonth-_SDA_BASE_(r13)
-/* 8009993C 0009673C  28 00 00 0C */	cmplwi r0, 0xc
-/* 80099940 00096740  41 81 01 BC */	bgt lbl_80099AFC
-/* 80099944 00096744  3C 60 80 29 */	lis r3, lbl_8028F1D0@ha
-/* 80099948 00096748  54 00 10 3A */	slwi r0, r0, 2
-/* 8009994C 0009674C  38 63 F1 D0 */	addi r3, r3, lbl_8028F1D0@l
-/* 80099950 00096750  7C 03 00 2E */	lwzx r0, r3, r0
-/* 80099954 00096754  7C 09 03 A6 */	mtctr r0
-/* 80099958 00096758  4E 80 04 20 */	bctr 
-/* 8009995C 0009675C  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099960 00096760  2C 00 00 01 */	cmpwi r0, 1
-/* 80099964 00096764  40 82 01 98 */	bne lbl_80099AFC
-/* 80099968 00096768  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 8009996C 0009676C  60 00 00 01 */	ori r0, r0, 1
-/* 80099970 00096770  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099974 00096774  48 00 01 88 */	b lbl_80099AFC
-/* 80099978 00096778  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 8009997C 0009677C  2C 00 00 02 */	cmpwi r0, 2
-/* 80099980 00096780  40 82 01 7C */	bne lbl_80099AFC
-/* 80099984 00096784  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099988 00096788  60 00 01 00 */	ori r0, r0, 0x100
-/* 8009998C 0009678C  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099990 00096790  48 00 01 6C */	b lbl_80099AFC
-/* 80099994 00096794  80 6D 8F 84 */	lwz r3, g_currDay-_SDA_BASE_(r13)
-/* 80099998 00096798  2C 03 00 0F */	cmpwi r3, 0xf
-/* 8009999C 0009679C  40 82 00 10 */	bne lbl_800999AC
-/* 800999A0 000967A0  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 800999A4 000967A4  60 00 00 08 */	ori r0, r0, 8
-/* 800999A8 000967A8  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_800999AC:
-/* 800999AC 000967AC  2C 03 00 11 */	cmpwi r3, 0x11
-/* 800999B0 000967B0  40 82 00 10 */	bne lbl_800999C0
-/* 800999B4 000967B4  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 800999B8 000967B8  60 00 00 04 */	ori r0, r0, 4
-/* 800999BC 000967BC  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_800999C0:
-/* 800999C0 000967C0  2C 03 00 12 */	cmpwi r3, 0x12
-/* 800999C4 000967C4  40 82 00 10 */	bne lbl_800999D4
-/* 800999C8 000967C8  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 800999CC 000967CC  60 00 01 00 */	ori r0, r0, 0x100
-/* 800999D0 000967D0  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_800999D4:
-/* 800999D4 000967D4  2C 03 00 15 */	cmpwi r3, 0x15
-/* 800999D8 000967D8  40 82 00 10 */	bne lbl_800999E8
-/* 800999DC 000967DC  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 800999E0 000967E0  60 00 01 00 */	ori r0, r0, 0x100
-/* 800999E4 000967E4  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_800999E8:
-/* 800999E8 000967E8  2C 03 00 16 */	cmpwi r3, 0x16
-/* 800999EC 000967EC  40 82 01 10 */	bne lbl_80099AFC
-/* 800999F0 000967F0  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 800999F4 000967F4  60 00 01 00 */	ori r0, r0, 0x100
-/* 800999F8 000967F8  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 800999FC 000967FC  48 00 01 00 */	b lbl_80099AFC
-/* 80099A00 00096800  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099A04 00096804  2C 00 00 01 */	cmpwi r0, 1
-/* 80099A08 00096808  40 82 00 F4 */	bne lbl_80099AFC
-/* 80099A0C 0009680C  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A10 00096810  60 00 00 80 */	ori r0, r0, 0x80
-/* 80099A14 00096814  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A18 00096818  48 00 00 E4 */	b lbl_80099AFC
-/* 80099A1C 0009681C  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099A20 00096820  2C 00 00 06 */	cmpwi r0, 6
-/* 80099A24 00096824  40 82 00 D8 */	bne lbl_80099AFC
-/* 80099A28 00096828  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A2C 0009682C  60 00 00 40 */	ori r0, r0, 0x40
-/* 80099A30 00096830  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A34 00096834  48 00 00 C8 */	b lbl_80099AFC
-/* 80099A38 00096838  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099A3C 0009683C  2C 00 00 04 */	cmpwi r0, 4
-/* 80099A40 00096840  40 82 00 BC */	bne lbl_80099AFC
-/* 80099A44 00096844  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A48 00096848  60 00 00 02 */	ori r0, r0, 2
-/* 80099A4C 0009684C  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A50 00096850  48 00 00 AC */	b lbl_80099AFC
-/* 80099A54 00096854  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099A58 00096858  2C 00 00 08 */	cmpwi r0, 8
-/* 80099A5C 0009685C  40 82 00 A0 */	bne lbl_80099AFC
-/* 80099A60 00096860  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A64 00096864  60 00 01 00 */	ori r0, r0, 0x100
-/* 80099A68 00096868  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A6C 0009686C  48 00 00 90 */	b lbl_80099AFC
-/* 80099A70 00096870  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099A74 00096874  2C 00 00 08 */	cmpwi r0, 8
-/* 80099A78 00096878  40 82 00 84 */	bne lbl_80099AFC
-/* 80099A7C 0009687C  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A80 00096880  60 00 00 02 */	ori r0, r0, 2
-/* 80099A84 00096884  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A88 00096888  48 00 00 74 */	b lbl_80099AFC
-/* 80099A8C 0009688C  80 6D 8F 84 */	lwz r3, g_currDay-_SDA_BASE_(r13)
-/* 80099A90 00096890  2C 03 00 05 */	cmpwi r3, 5
-/* 80099A94 00096894  40 82 00 10 */	bne lbl_80099AA4
-/* 80099A98 00096898  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099A9C 0009689C  60 00 01 00 */	ori r0, r0, 0x100
-/* 80099AA0 000968A0  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_80099AA4:
-/* 80099AA4 000968A4  2C 03 00 0E */	cmpwi r3, 0xe
-/* 80099AA8 000968A8  40 82 00 10 */	bne lbl_80099AB8
-/* 80099AAC 000968AC  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099AB0 000968B0  60 00 01 00 */	ori r0, r0, 0x100
-/* 80099AB4 000968B4  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_80099AB8:
-/* 80099AB8 000968B8  2C 03 00 16 */	cmpwi r3, 0x16
-/* 80099ABC 000968BC  40 82 00 10 */	bne lbl_80099ACC
-/* 80099AC0 000968C0  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099AC4 000968C4  60 00 01 00 */	ori r0, r0, 0x100
-/* 80099AC8 000968C8  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_80099ACC:
-/* 80099ACC 000968CC  2C 03 00 1F */	cmpwi r3, 0x1f
-/* 80099AD0 000968D0  40 82 00 2C */	bne lbl_80099AFC
-/* 80099AD4 000968D4  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099AD8 000968D8  60 00 00 20 */	ori r0, r0, 0x20
-/* 80099ADC 000968DC  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099AE0 000968E0  48 00 00 1C */	b lbl_80099AFC
-/* 80099AE4 000968E4  80 0D 8F 84 */	lwz r0, g_currDay-_SDA_BASE_(r13)
-/* 80099AE8 000968E8  2C 00 00 05 */	cmpwi r0, 5
-/* 80099AEC 000968EC  40 82 00 10 */	bne lbl_80099AFC
-/* 80099AF0 000968F0  80 0D 8F 8C */	lwz r0, g_gameExtraFlags-_SDA_BASE_(r13)
-/* 80099AF4 000968F4  60 00 01 00 */	ori r0, r0, 0x100
-/* 80099AF8 000968F8  90 0D 8F 8C */	stw r0, g_gameExtraFlags-_SDA_BASE_(r13)
-lbl_80099AFC:
-/* 80099AFC 000968FC  38 60 00 00 */	li r3, 0
-/* 80099B00 00096900  4E 80 00 20 */	blr 
-
 .global zGameExtras_NewGameReset__Fv
 zGameExtras_NewGameReset__Fv:
 /* 80099B0C 0009690C  38 00 00 00 */	li r0, 0
@@ -537,19 +412,19 @@ xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf:
 /* 8009A82C 0009762C  7C 9D 23 78 */	mr r29, r4
 /* 8009A830 00097630  93 81 00 20 */	stw r28, 0x20(r1)
 /* 8009A834 00097634  7C 7C 1B 79 */	or. r28, r3, r3
-/* 8009A838 00097638  40 82 00 0C */	bne lbl_8009A844
+/* 8009A838 00097638  40 82 00 0C */	bne list_not_null
 /* 8009A83C 0009763C  38 60 00 00 */	li r3, 0
-/* 8009A840 00097640  48 00 00 C4 */	b lbl_8009A904
-lbl_8009A844:
+/* 8009A840 00097640  48 00 00 C4 */	b return
+list_not_null:
 /* 8009A844 00097644  2C 1D 00 01 */	cmpwi r29, 1
-/* 8009A848 00097648  40 80 00 0C */	bge lbl_8009A854
+/* 8009A848 00097648  40 80 00 0C */	bge size_not_zero
 /* 8009A84C 0009764C  38 60 00 00 */	li r3, 0
-/* 8009A850 00097650  48 00 00 B4 */	b lbl_8009A904
-lbl_8009A854:
+/* 8009A850 00097650  48 00 00 B4 */	b return
+size_not_zero:
 /* 8009A854 00097654  3B E0 00 00 */	li r31, 0
 /* 8009A858 00097658  4B F9 64 31 */	bl xurand__Fv
 /* 8009A85C 0009765C  28 1E 00 00 */	cmplwi r30, 0
-/* 8009A860 00097660  40 82 00 34 */	bne lbl_8009A894
+/* 8009A860 00097660  40 82 00 34 */	bne float_list_not_null
 /* 8009A864 00097664  6F A3 80 00 */	xoris r3, r29, 0x8000
 /* 8009A868 00097668  3C 00 43 30 */	lis r0, 0x4330
 /* 8009A86C 0009766C  90 61 00 0C */	stw r3, 0xc(r1)
@@ -561,31 +436,31 @@ lbl_8009A854:
 /* 8009A884 00097684  FC 00 00 1E */	fctiwz f0, f0
 /* 8009A888 00097688  D8 01 00 10 */	stfd f0, 0x10(r1)
 /* 8009A88C 0009768C  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 8009A890 00097690  48 00 00 54 */	b lbl_8009A8E4
-lbl_8009A894:
+/* 8009A890 00097690  48 00 00 54 */	b after_loop
+float_list_not_null:
 /* 8009A894 00097694  7F C3 F3 78 */	mr r3, r30
 /* 8009A898 00097698  C0 42 90 F8 */	lfs f2, _975-_SDA2_BASE_(r2)
 /* 8009A89C 0009769C  38 80 00 00 */	li r4, 0
 /* 8009A8A0 000976A0  7F A9 03 A6 */	mtctr r29
 /* 8009A8A4 000976A4  2C 1D 00 00 */	cmpwi r29, 0
-/* 8009A8A8 000976A8  40 81 00 3C */	ble lbl_8009A8E4
-lbl_8009A8AC:
+/* 8009A8A8 000976A8  40 81 00 3C */	ble after_loop
+loop_start:
 /* 8009A8AC 000976AC  FC 60 10 90 */	fmr f3, f2
 /* 8009A8B0 000976B0  C0 03 00 00 */	lfs f0, 0(r3)
 /* 8009A8B4 000976B4  EC 42 00 2A */	fadds f2, f2, f0
 /* 8009A8B8 000976B8  FC 01 18 40 */	fcmpo cr0, f1, f3
 /* 8009A8BC 000976BC  4C 41 13 82 */	cror 2, 1, 2
-/* 8009A8C0 000976C0  40 82 00 18 */	bne lbl_8009A8D8
+/* 8009A8C0 000976C0  40 82 00 18 */	bne loop_end
 /* 8009A8C4 000976C4  FC 01 10 40 */	fcmpo cr0, f1, f2
 /* 8009A8C8 000976C8  4C 40 13 82 */	cror 2, 0, 2
-/* 8009A8CC 000976CC  40 82 00 0C */	bne lbl_8009A8D8
+/* 8009A8CC 000976CC  40 82 00 0C */	bne loop_end
 /* 8009A8D0 000976D0  7C 9F 23 78 */	mr r31, r4
-/* 8009A8D4 000976D4  48 00 00 10 */	b lbl_8009A8E4
-lbl_8009A8D8:
+/* 8009A8D4 000976D4  48 00 00 10 */	b after_loop
+loop_end:
 /* 8009A8D8 000976D8  38 63 00 04 */	addi r3, r3, 4
 /* 8009A8DC 000976DC  38 84 00 01 */	addi r4, r4, 1
-/* 8009A8E0 000976E0  42 00 FF CC */	bdnz lbl_8009A8AC
-lbl_8009A8E4:
+/* 8009A8E0 000976E0  42 00 FF CC */	bdnz loop_start
+after_loop:
 /* 8009A8E4 000976E4  7C 1F E8 00 */	cmpw r31, r29
 /* 8009A8E8 000976E8  41 80 00 08 */	blt lbl_8009A8F0
 /* 8009A8EC 000976EC  3B FD FF FF */	addi r31, r29, -1
@@ -596,7 +471,7 @@ lbl_8009A8F0:
 lbl_8009A8FC:
 /* 8009A8FC 000976FC  57 E0 10 3A */	slwi r0, r31, 2
 /* 8009A900 00097700  7C 7C 00 2E */	lwzx r3, r28, r0
-lbl_8009A904:
+return:
 /* 8009A904 00097704  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 8009A908 00097708  83 E1 00 2C */	lwz r31, 0x2c(r1)
 /* 8009A90C 0009770C  83 C1 00 28 */	lwz r30, 0x28(r1)
@@ -609,94 +484,14 @@ lbl_8009A904:
 .endif
 
 .section .rodata
+
 .global zGameExtras_strings
 zGameExtras_strings:
 	.incbin "baserom.dol", 0x259A00, 0x118
 
-.section .data
-
-/*
-.global EGGEmpty 
-EGGEmpty:
-	.incbin "baserom.dol", 0x28C180, 0x10
-
-.global g_eggBasket
-g_eggBasket:
-	.incbin "baserom.dol", 0x28C190, 0x20
-
-jumpTable:
-	.incbin "baserom.dol", 0x28C1B0, 0x34
-*/
-
-/* 8028 F204 */
-/*
-cheatBlob:
-	.incbin "baserom.dol", 0x28C1E4, 0x540
-*/
-/* 64 in hex = 40 */
-/* 8028f744 */
-/* cheat list goes here, size = 0x160 */
-
-.global cheatList
-cheatList:
-	.incbin "baserom.dol", 0x28C724, 0x160
-
-.global sCheatPressed
-sCheatPressed:
-	.incbin "baserom.dol", 0x28C884, 0x40
-.global aid_sndList_1160
-aid_sndList_1160:
-	.incbin "baserom.dol", 0x28C8C4, 0x1C
-.global choices_1318
-choices_1318:
-	.incbin "baserom.dol", 0x28C8E0, 0xC
-.global aid_sndList_1342
-aid_sndList_1342:
-	.incbin "baserom.dol", 0x28C8EC, 0x1C
-
-.section .sbss
-
-/*
-.global g_enableGameExtras
-g_enableGameExtras:
-	.skip 0x4
-
-.global g_currDay
-g_currDay:
-	.skip 0x4
-
-.global g_currMonth
-g_currMonth:
-	.skip 0x4
-
-.global g_gameExtraFlags
-g_gameExtraFlags:
-	.skip 0x4
-
-.global g_flg_chEnabled
-g_flg_chEnabled:
-	.skip 0x4
-
-sCheatTimer:
-	.skip 0x4
-.global sCheatInputCount
-sCheatInputCount:
-	.skip 0x4
-lbl_803CB89C:
-	.skip 0x1
-lbl_803CB89D:
-	.skip 0x1
-lbl_803CB89E:
-	.skip 0x1
-lbl_803CB89F:
-	.skip 0x1
-
-.global sGalleryTitle
-sGalleryTitle:
-	.skip 0x8
-*/
-
 .section .sdata
+
+.global lbl_803CAB38
 lbl_803CAB38:
 	.incbin "baserom.dol", 0x2B5BF8, 0x8
 
