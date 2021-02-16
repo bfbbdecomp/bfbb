@@ -115,11 +115,6 @@ static GECheat cheatList[22] = {
 
 static uint32 sCheatPressed[16] = {};
 
-// these are supposed to be defined within their functions
-static uint32 aid_sndList_1160[7] = {};
-static uint32 choices_1318[3] = {};
-static uint32 aid_sndList_1342[6] = {};
-
 int32 zGameExtras_ExtrasFlags()
 {
     return g_gameExtraFlags;
@@ -342,6 +337,7 @@ void GEC_CheatFlagToggle(int32 bit)
 
 // func_80099F2C
 #if 1
+static uint32 aid_sndList_1160[7] = {};
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_dfltSound__Fv")
 #else
 void GEC_dfltSound()
@@ -501,6 +497,7 @@ void GEC_cb_NoPantsMode()
 
 // func_8009A4B0
 #if 1
+static uint32 choices_1318[3] = {};
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_CruiseControl__Fv")
 #else
 void GEC_cb_CruiseControl()
@@ -536,6 +533,7 @@ void GEC_cb_SwapCCUD()
 
 // func_8009A5AC
 #if 1
+static uint32 aid_sndList_1342[6] = {};
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_villSound__Fv")
 #else
 void GEC_villSound()
