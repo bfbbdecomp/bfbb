@@ -337,17 +337,11 @@ void cruise_bubble::start_damaging()
 }
 
 // func_80057684
-#if 1
+#ifndef NONMATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
 #else
 void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, uint8 explosive)
 {
-    xCollis coll;
-    xSphere o;
-    // xVec3 hit_dir;
-    // xVec3 edir;
-
-// bge lbl_800578C8_return
     if (shared.hits_size >= 32)
     {
         return;
@@ -356,122 +350,77 @@ void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir,
     shared.hits_size++;
 
     switch (ent.baseType) {
-// 80057710_baseType_eq_eBaseTypeButton:
-        case eBaseTypeButton:
-            zEntButton_Press((_zEntButton*)&ent, 0x10);
-            break;
-// lbl_8005771C_ent.baseType_eq_eBaseTypeDestructObj:
-        case eBaseTypeDestructObj:
-            zEntDestructObj_Hit((zEntDestructObj*)&ent,
-                                0x10000);
-            break;
+    case eBaseTypeButton:
+        zEntButton_Press((_zEntButton*) &ent, 0x10);
+        return;
 
-        case eBaseTypePlatform:
-            // beq lbl_80057738_ent.flags_eq_0xc
-            // if (ent.subType != 0xc)
-            // {
-            //     return;
-            // }
+    case eBaseTypeDestructObj:
+        zEntDestructObj_Hit((zEntDestructObj*) &ent, 0x10000);
+        return;
 
-            switch (ent.subType) {
-                case 0xc:
-            
-                    // lbl_80057738_ent.flags_eq_0xc:
-                    //     beq 800578C8_return
-                    if ((((zPlatform*)&ent)->passet->paddle.paddleFlags & 0x20) == 0)
-                    {
-                        return;
-                    }
+    case eBaseTypePlatform:
+        switch (ent.subType) {
+        case 0xc:
+            if ((((zPlatform*) &ent)->passet->paddle.paddleFlags & 0x20) == 0)
+            {
+                return;
+            }
 
-                    coll.optr = &ent;
-                    coll.mptr = ent.collModel != NULL ? ent.collModel : ent.model;
+            xCollis coll;
+            coll.optr = &ent;
+            coll.mptr = ent.collModel != NULL ? ent.collModel : ent.model;
 
-                    // 80057760_else_ent.collModel_eq_NULL:
-                    //     beq 80057804_explosive_eq_0
-                    if (explosive != 0)
-                    {
-                        coll.flags = 0x600;
-                        o.center = loc;
-                        o.r = radius;
-                    xSphereHitsBound(&o, &ent.bound, &coll);
-//     beq 800578C8_return
+            if (explosive != 0)
+            {
+                coll.flags = 0x600;
+
+                xSphere o;
+                o.center = loc;
+                o.r = radius;
+                xSphereHitsBound(&o, &ent.bound, &coll);
+
+                if ((coll.flags & 0x1) == 0)
+                {
+                    return;
+                }
+
+                if (ent.collLev == 0x5)
+                {
+                    xSphereHitsModel(&o, coll.mptr, &coll);
+
                     if ((coll.flags & 0x1) == 0)
                     {
                         return;
                     }
-//     bne 800577C8_ent.collLev_eq_5
-                    if (ent.collLev == 0x5)
-                    {
-                        xSphereHitsModel(&o, coll.mptr, &coll);
-//     beq 800578C8_return
-                        if ((coll.flags & 0x1) == 0)
-                            {
-                                return;
-                            }
-                        }
-                        // 800577C8_ent.collLev_eq_5:
-                        xVec3 v2;
-                        xVec3 v1 = xVec3(v2.up_normal());
-                        zPlatform_PaddleCollide(&coll, &loc, &v1, 0x1);
-                        //     b 800578C8_return
-                        return;
+                }
 
-                    }
-                    // 80057804_explosive_eq_0:
-                    coll.flags = 0x201;
-                    coll.norm = hit_norm;
-                    zPlatform_PaddleCollide(&coll, &loc, &dir,1);
-                    //     b 800578C8_return
-
-                    return;
-            }
-            break;
-
-        case eBaseTypeNPC:
-
-            // 80057830_ent.baseType_eq_eBaseTypeNPC:
-            //     beq 80057898_explosive_eq_0
-            if (explosive != 0)
-            {
-                // hit_dir = *xEntGetCenter(&ent) - loc;
-                // edir = hit_dir.up_normal();
-                // xVec3 v = xVec3((*xEntGetCenter(&ent) - loc).up_normal());
-                xVec3 v4 = *xEntGetCenter(&ent) - loc;
-                xVec3 v3 = xVec3(v4.up_normal());
-                ((zNPCCommon*)&ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &v3);
+                xVec3 hit_dir = coll.tohit.up_normal();
+                zPlatform_PaddleCollide(&coll, &loc, &hit_dir, 0x1);
                 return;
             }
-            // 80057898_explosive_eq_0:
-            //     b 800578C8_return
-            ((zNPCCommon*)&ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &dir);
+
+            coll.flags = 0x201;
+            coll.norm = hit_norm;
+            zPlatform_PaddleCollide(&coll, &loc, &dir,1);
             return;
+        }
+        break;
+
+    case eBaseTypeNPC:
+        if (explosive)
+        {
+            // fuck this... weird scheduling
+            xVec3 edir = (*xEntGetCenter(&ent) - loc).up_normal();
+            ((zNPCCommon*) &ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &edir);
+        }
+        else {
+            // while this matches
+            ((zNPCCommon*) &ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &dir);
+        }
+        return;
     }
 
-    zEntEvent(&ent, 0x1c7); // [zEntEvent__FP5xBaseUi]
-
-    
-    
-//     if (ent.baseType < eBaseTypeDestructObj)
-//     {
-
-// //     bge 800578BC_return_zEntEvent()
-//         if (ent.baseType < eBaseTypeButton)
-//         {
-// //     beq 80057728_ent.baseType_eq_eBaseTypePlatform
-// //     b 800578BC_return_zEntEvent()
-            
-//         }
-//     }
-//     else {
-// // 80057704_ent.baseType_ge_eBaseTypeDestructObj:
-// //     beq 80057830_ent.baseType_eq_eBaseTypeNPC
-// //     b 800578BC_return_zEntEvent()
-
-// //     b 800578C8_return
-//         }
-//     }
-// 800578BC_return_zEntEvent():
-// 800578C8_return:
+    zEntEvent(&ent, 0x1c7);
 }
 #endif
 
