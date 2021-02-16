@@ -183,15 +183,17 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
 {
     switch (g_currMonth)
     {
-    case 1:
+    case JANUARY:
         if (g_currDay == 1)
             g_gameExtraFlags |= 1;
         break;
-    case 2:
+
+    case FEBRUARY:
         if (g_currDay == 2)
             g_gameExtraFlags |= 0x100;
         break;
-    case 3:
+
+    case MARCH:
         if (g_currDay == 15)
             g_gameExtraFlags |= 8;
         if (g_currDay == 17)
@@ -203,27 +205,36 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
         if (g_currDay == 22)
             g_gameExtraFlags |= 0x100;
         break;
-    case 4:
+
+    case APRIL:
         if (g_currDay == 1)
             g_gameExtraFlags |= 0x80;
         break;
-    case 6:
+
+    case MAY:
+        break;
+
+    case JUNE:
         if (g_currDay == 6)
             g_gameExtraFlags |= 0x40;
         break;
-    case 7:
+
+    case JULY:
         if (g_currDay == 4)
             g_gameExtraFlags |= 2;
         break;
-    case 8:
+
+    case AUGUST:
         if (g_currDay == 8)
             g_gameExtraFlags |= 0x100;
         break;
-    case 9:
+
+    case SEPTEMBER:
         if (g_currDay == 8)
             g_gameExtraFlags |= 2;
         break;
-    case 10:
+
+    case OCTOBER:
         if (g_currDay == 5)
             g_gameExtraFlags |= 0x100;
         if (g_currDay == 14)
@@ -233,11 +244,13 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
         if (g_currDay == 31)
             g_gameExtraFlags |= 0x20;
         break;
-    case 11:
+
+    case NOVEMBER:
         if (g_currDay == 5)
             g_gameExtraFlags |= 0x100;
         break;
-    case 12:
+
+    case DECEMBER:
         break;
     }
 
