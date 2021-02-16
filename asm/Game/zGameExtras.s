@@ -537,19 +537,19 @@ xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf:
 /* 8009A82C 0009762C  7C 9D 23 78 */	mr r29, r4
 /* 8009A830 00097630  93 81 00 20 */	stw r28, 0x20(r1)
 /* 8009A834 00097634  7C 7C 1B 79 */	or. r28, r3, r3
-/* 8009A838 00097638  40 82 00 0C */	bne lbl_8009A844
+/* 8009A838 00097638  40 82 00 0C */	bne list_not_null
 /* 8009A83C 0009763C  38 60 00 00 */	li r3, 0
-/* 8009A840 00097640  48 00 00 C4 */	b lbl_8009A904
-lbl_8009A844:
+/* 8009A840 00097640  48 00 00 C4 */	b return
+list_not_null:
 /* 8009A844 00097644  2C 1D 00 01 */	cmpwi r29, 1
-/* 8009A848 00097648  40 80 00 0C */	bge lbl_8009A854
+/* 8009A848 00097648  40 80 00 0C */	bge size_not_zero
 /* 8009A84C 0009764C  38 60 00 00 */	li r3, 0
-/* 8009A850 00097650  48 00 00 B4 */	b lbl_8009A904
-lbl_8009A854:
+/* 8009A850 00097650  48 00 00 B4 */	b return
+size_not_zero:
 /* 8009A854 00097654  3B E0 00 00 */	li r31, 0
 /* 8009A858 00097658  4B F9 64 31 */	bl xurand__Fv
 /* 8009A85C 0009765C  28 1E 00 00 */	cmplwi r30, 0
-/* 8009A860 00097660  40 82 00 34 */	bne lbl_8009A894
+/* 8009A860 00097660  40 82 00 34 */	bne float_list_not_null
 /* 8009A864 00097664  6F A3 80 00 */	xoris r3, r29, 0x8000
 /* 8009A868 00097668  3C 00 43 30 */	lis r0, 0x4330
 /* 8009A86C 0009766C  90 61 00 0C */	stw r3, 0xc(r1)
@@ -561,31 +561,31 @@ lbl_8009A854:
 /* 8009A884 00097684  FC 00 00 1E */	fctiwz f0, f0
 /* 8009A888 00097688  D8 01 00 10 */	stfd f0, 0x10(r1)
 /* 8009A88C 0009768C  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 8009A890 00097690  48 00 00 54 */	b lbl_8009A8E4
-lbl_8009A894:
+/* 8009A890 00097690  48 00 00 54 */	b after_loop
+float_list_not_null:
 /* 8009A894 00097694  7F C3 F3 78 */	mr r3, r30
 /* 8009A898 00097698  C0 42 90 F8 */	lfs f2, _975-_SDA2_BASE_(r2)
 /* 8009A89C 0009769C  38 80 00 00 */	li r4, 0
 /* 8009A8A0 000976A0  7F A9 03 A6 */	mtctr r29
 /* 8009A8A4 000976A4  2C 1D 00 00 */	cmpwi r29, 0
-/* 8009A8A8 000976A8  40 81 00 3C */	ble lbl_8009A8E4
-lbl_8009A8AC:
+/* 8009A8A8 000976A8  40 81 00 3C */	ble after_loop
+loop_start:
 /* 8009A8AC 000976AC  FC 60 10 90 */	fmr f3, f2
 /* 8009A8B0 000976B0  C0 03 00 00 */	lfs f0, 0(r3)
 /* 8009A8B4 000976B4  EC 42 00 2A */	fadds f2, f2, f0
 /* 8009A8B8 000976B8  FC 01 18 40 */	fcmpo cr0, f1, f3
 /* 8009A8BC 000976BC  4C 41 13 82 */	cror 2, 1, 2
-/* 8009A8C0 000976C0  40 82 00 18 */	bne lbl_8009A8D8
+/* 8009A8C0 000976C0  40 82 00 18 */	bne loop_end
 /* 8009A8C4 000976C4  FC 01 10 40 */	fcmpo cr0, f1, f2
 /* 8009A8C8 000976C8  4C 40 13 82 */	cror 2, 0, 2
-/* 8009A8CC 000976CC  40 82 00 0C */	bne lbl_8009A8D8
+/* 8009A8CC 000976CC  40 82 00 0C */	bne loop_end
 /* 8009A8D0 000976D0  7C 9F 23 78 */	mr r31, r4
-/* 8009A8D4 000976D4  48 00 00 10 */	b lbl_8009A8E4
-lbl_8009A8D8:
+/* 8009A8D4 000976D4  48 00 00 10 */	b after_loop
+loop_end:
 /* 8009A8D8 000976D8  38 63 00 04 */	addi r3, r3, 4
 /* 8009A8DC 000976DC  38 84 00 01 */	addi r4, r4, 1
-/* 8009A8E0 000976E0  42 00 FF CC */	bdnz lbl_8009A8AC
-lbl_8009A8E4:
+/* 8009A8E0 000976E0  42 00 FF CC */	bdnz loop_start
+after_loop:
 /* 8009A8E4 000976E4  7C 1F E8 00 */	cmpw r31, r29
 /* 8009A8E8 000976E8  41 80 00 08 */	blt lbl_8009A8F0
 /* 8009A8EC 000976EC  3B FD FF FF */	addi r31, r29, -1
@@ -596,7 +596,7 @@ lbl_8009A8F0:
 lbl_8009A8FC:
 /* 8009A8FC 000976FC  57 E0 10 3A */	slwi r0, r31, 2
 /* 8009A900 00097700  7C 7C 00 2E */	lwzx r3, r28, r0
-lbl_8009A904:
+return:
 /* 8009A904 00097704  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 8009A908 00097708  83 E1 00 2C */	lwz r31, 0x2c(r1)
 /* 8009A90C 0009770C  83 C1 00 28 */	lwz r30, 0x28(r1)
@@ -637,9 +637,11 @@ cheatBlob:
 /* 8028f744 */
 /* cheat list goes here, size = 0x160 */
 
+/*
 .global cheatList
 cheatList:
 	.incbin "baserom.dol", 0x28C724, 0x160
+*/
 
 .global sCheatPressed
 sCheatPressed:
