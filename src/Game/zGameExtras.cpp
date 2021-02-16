@@ -1,11 +1,13 @@
 #include <types.h>
 #include <string.h>
 
+#include "../Core/p2/iTime.h"
+
 #include "../Core/x/xString.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xCounter.h"
-#include "../Core/p2/iTime.h"
+#include "../Core/x/xMath.h"
 
 #include "zGameExtras.h"
 #include "zEntPlayer.h"
@@ -589,4 +591,38 @@ uint32 zGame_HackIsGallery()
 }
 
 // func_8009A810
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf")
+#else
+template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 const* float_list)
+{
+    if (list == NULL)
+    {
+        return NULL;
+    }
+
+    if (size == 0)
+    {
+        //
+        return NULL;
+    }
+
+    float32 rand = xurand();
+
+    if (float_list == NULL)
+    {
+        uint32 r3 = size ^ 0x8000;
+    }
+    // float_list_not_null
+    else
+    {
+        for (int32 i = 0; i < size; i++)
+        {
+            if (float_list[0] == _975)
+            {
+            }
+        }
+    }
+    // After Loop
+}
+#endif
