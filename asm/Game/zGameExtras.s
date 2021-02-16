@@ -616,6 +616,7 @@ zGameExtras_strings:
 
 .section .sdata
 
+.global lbl_803CAB38
 lbl_803CAB38:
 	.incbin "baserom.dol", 0x2B5BF8, 0x8
 

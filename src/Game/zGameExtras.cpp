@@ -473,6 +473,22 @@ void GEC_cb_ChaChing()
 #else
 void GEC_cb_RestoreHealth()
 {
+    // stored in .sdata, not sure where/how to declare this
+    uint32 lbl_803CAB38[2] = {};
+
+    if (!init_1274)
+    {
+        lbl_803CAB38[0] = xStrHash(&zGameExtras_strings[0x8d]);
+        lbl_803CAB38[1] = xStrHash(&zGameExtras_strings[0x96]);
+        init_1274 = 1;
+    }
+
+    uint32 snd = xUtil_choose(lbl_803CAB38, 2, NULL);
+
+    if (snd)
+    {
+        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+    }
 }
 #endif
 
