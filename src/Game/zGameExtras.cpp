@@ -184,7 +184,7 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
     switch (g_currMonth)
     {
     case JANUARY:
-        if (g_currDay == 1)
+        if (g_currDay == 1) // New Year's Day
             g_gameExtraFlags |= 1;
         break;
 
@@ -196,7 +196,7 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
     case MARCH:
         if (g_currDay == 15)
             g_gameExtraFlags |= 8;
-        if (g_currDay == 17)
+        if (g_currDay == 17) // St. Patrick's Day
             g_gameExtraFlags |= 4;
         if (g_currDay == 18)
             g_gameExtraFlags |= 0x100;
@@ -207,7 +207,7 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
         break;
 
     case APRIL:
-        if (g_currDay == 1)
+        if (g_currDay == 1) // April Fools' Day
             g_gameExtraFlags |= 0x80;
         break;
 
@@ -220,7 +220,7 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
         break;
 
     case JULY:
-        if (g_currDay == 4)
+        if (g_currDay == 4) // Independence Day
             g_gameExtraFlags |= 2;
         break;
 
@@ -241,7 +241,7 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
             g_gameExtraFlags |= 0x100;
         if (g_currDay == 22)
             g_gameExtraFlags |= 0x100;
-        if (g_currDay == 31)
+        if (g_currDay == 31) // Halloween
             g_gameExtraFlags |= 0x20;
         break;
 
