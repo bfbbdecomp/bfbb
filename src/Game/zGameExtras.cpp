@@ -179,124 +179,70 @@ void zGameExtras_SceneUpdate(float32 dt)
     }
 }
 
-// func_80099938
-#if 0
-// TODO: let the compiler generate me
-static uint32 jumpTable[] = {
-    0x80099AFC, //
-    0x8009995C, //
-    0x80099978, //
-    0x80099994, //
-    0x80099A00, //
-    0x80099AFC, //
-    0x80099A1C, //
-    0x80099A38, //
-    0x80099A54, //
-    0x80099A70, //
-    0x80099A8C, //
-    0x80099AE4, //
-    0x80099AFC //
-};
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "EGG_check_ExtrasFlags__FP7EGGItem")
-#else
 int32 EGG_check_ExtrasFlags(EGGItem*)
 {
     switch (g_currMonth)
     {
     case 1:
         if (g_currDay == 1)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 1;
-        }
+            g_gameExtraFlags |= 1;
         break;
     case 2:
         if (g_currDay == 2)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
+            g_gameExtraFlags |= 0x100;
         break;
     case 3:
-        if (g_currDay == 0xf)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 8;
-        }
-        if (g_currDay == 0x11)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 4;
-        }
-        if (g_currDay == 0x12)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
-        if (g_currDay == 0x15)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
-        if (g_currDay == 0x16)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
+        if (g_currDay == 15)
+            g_gameExtraFlags |= 8;
+        if (g_currDay == 17)
+            g_gameExtraFlags |= 4;
+        if (g_currDay == 18)
+            g_gameExtraFlags |= 0x100;
+        if (g_currDay == 21)
+            g_gameExtraFlags |= 0x100;
+        if (g_currDay == 22)
+            g_gameExtraFlags |= 0x100;
         break;
     case 4:
         if (g_currDay == 1)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x80;
-        }
+            g_gameExtraFlags |= 0x80;
         break;
     case 6:
         if (g_currDay == 6)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x40;
-        }
+            g_gameExtraFlags |= 0x40;
         break;
     case 7:
         if (g_currDay == 4)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 2;
-        }
+            g_gameExtraFlags |= 2;
         break;
     case 8:
         if (g_currDay == 8)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
+            g_gameExtraFlags |= 0x100;
         break;
     case 9:
         if (g_currDay == 8)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 2;
-        }
+            g_gameExtraFlags |= 2;
         break;
     case 10:
         if (g_currDay == 5)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
-        if (g_currDay == 0xe)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
-        if (g_currDay == 0x16)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
-        if (g_currDay == 0x1f)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x20;
-        }
+            g_gameExtraFlags |= 0x100;
+        if (g_currDay == 14)
+            g_gameExtraFlags |= 0x100;
+        if (g_currDay == 22)
+            g_gameExtraFlags |= 0x100;
+        if (g_currDay == 31)
+            g_gameExtraFlags |= 0x20;
         break;
     case 11:
         if (g_currDay == 5)
-        {
-            g_gameExtraFlags = g_gameExtraFlags | 0x100;
-        }
+            g_gameExtraFlags |= 0x100;
         break;
     case 12:
         break;
     }
+
     return 0;
 }
-#endif
 
 #define Y (1 << 18)
 #define X (1 << 17)
