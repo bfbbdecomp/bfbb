@@ -37,12 +37,7 @@ static signed char init_1319; // init$1319
 static signed char init_1343; // init$1343
 static xEnt* sGalleryTitle;
 
-static EGGItemFuncs EGGEmpty = {
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-};
+static EGGItemFuncs EGGEmpty = {};
 
 static EGGItem g_eggBasket[] = { { EGG_check_ExtrasFlags, &EGGEmpty, NULL, NULL }, {} };
 

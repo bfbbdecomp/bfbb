@@ -609,97 +609,13 @@ return:
 .endif
 
 .section .rodata
+
 .global zGameExtras_strings
 zGameExtras_strings:
 	.incbin "baserom.dol", 0x259A00, 0x118
 
-.section .data
-
-/*
-.global EGGEmpty 
-EGGEmpty:
-	.incbin "baserom.dol", 0x28C180, 0x10
-
-.global g_eggBasket
-g_eggBasket:
-	.incbin "baserom.dol", 0x28C190, 0x20
-
-jumpTable:
-	.incbin "baserom.dol", 0x28C1B0, 0x34
-*/
-
-/* 8028 F204 */
-/*
-cheatBlob:
-	.incbin "baserom.dol", 0x28C1E4, 0x540
-*/
-/* 64 in hex = 40 */
-/* 8028f744 */
-/* cheat list goes here, size = 0x160 */
-
-/*
-.global cheatList
-cheatList:
-	.incbin "baserom.dol", 0x28C724, 0x160
-*/
-/*
-.global sCheatPressed
-sCheatPressed:
-	.incbin "baserom.dol", 0x28C884, 0x40
-.global aid_sndList_1160
-aid_sndList_1160:
-	.incbin "baserom.dol", 0x28C8C4, 0x1C
-.global choices_1318
-choices_1318:
-	.incbin "baserom.dol", 0x28C8E0, 0xC
-.global aid_sndList_1342
-aid_sndList_1342:
-	.incbin "baserom.dol", 0x28C8EC, 0x1C
-
-*/
-.section .sbss
-
-/*
-.global g_enableGameExtras
-g_enableGameExtras:
-	.skip 0x4
-
-.global g_currDay
-g_currDay:
-	.skip 0x4
-
-.global g_currMonth
-g_currMonth:
-	.skip 0x4
-
-.global g_gameExtraFlags
-g_gameExtraFlags:
-	.skip 0x4
-
-.global g_flg_chEnabled
-g_flg_chEnabled:
-	.skip 0x4
-
-sCheatTimer:
-	.skip 0x4
-.global sCheatInputCount
-sCheatInputCount:
-	.skip 0x4
-lbl_803CB89C:
-	.skip 0x1
-lbl_803CB89D:
-	.skip 0x1
-lbl_803CB89E:
-	.skip 0x1
-lbl_803CB89F:
-	.skip 0x1
-
-.global sGalleryTitle
-sGalleryTitle:
-	.skip 0x8
-*/
-
 .section .sdata
+
 lbl_803CAB38:
 	.incbin "baserom.dol", 0x2B5BF8, 0x8
 
