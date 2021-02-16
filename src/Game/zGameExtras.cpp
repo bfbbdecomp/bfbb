@@ -98,43 +98,29 @@ static uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, 
 static uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
 static uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
 
-#if 0
-extern GECheat cheatList[22];
-#else
-/*
-    uint32* key_code;
-    void (*fun_cheat)();
-    int32 flg_keep;
-    int32 flg_mode;
-*/
-// clang-format off
-GECheat cheatList[22]  = {
-    // CHEATLIST
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL},
-    {NULL, NULL, NULL, NULL}
+GECheat cheatList[22] = {
+    { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
+    { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
+    { sCheatBubbleBowl, GEC_cb_BubbleBowl, 0x200, 0 },
+    { sCheatCruiseBubble, GEC_cb_CruiseBubble, 0x400, 0 },
+    { sCheatMonsterGallery, GEC_cb_MonsterGallery, 0x0, 0 },
+    { sCheatArtTheatre, GEC_cb_UnlockArtTheatre, 0x0, 0 },
+    { sCheatChaChing, GEC_cb_ChaChing, 0x2, 0 },
+    { sCheatExpertMode, GEC_cb_ExpertMode, 0x800, 0 },
+    { sCheatSwapCCLR, GEC_cb_SwapCCLR, 0x1000, 1 },
+    { sCheatSwapCCUD, GEC_cb_SwapCCUD, 0x2000, 1 },
+    { sCheatRestoreHealth, GEC_cb_RestoreHealth, 0x100, 0 },
+    { sCheatShrapBob, GEC_cb_ShrapBobMode, 0x2000000, 1 },
+    { sCheatNoPants, GEC_cb_NoPantsMode, 0x10000000, 1 },
+    { sCheatCruiseControl, GEC_cb_CruiseControl, 0x20000000, 1 },
+    { sCheatBigPlank, GEC_cb_BigPlank, 0x10000, 1 },
+    { sCheatSmallPeep, GEC_cb_SmallPeep, 0x40000, 1 },
+    { sCheatSmallCoStars, GEC_cb_SmallCostars, 0x80000, 1 },
+    { sCheatRichPeep, GEC_cb_RichPeep, 0x100000, 0 },
+    { sCheatPanHandle, GEC_cb_PanHandle, 0x200000, 0 },
+    { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
+    { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
 };
-// clang-format on
-#endif
 
 int32 zGameExtras_ExtrasFlags()
 {
