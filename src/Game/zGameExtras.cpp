@@ -41,75 +41,6 @@ static EGGItemFuncs EGGEmpty = {};
 
 static EGGItem g_eggBasket[] = { { EGG_check_ExtrasFlags, &EGGEmpty, NULL, NULL }, {} };
 
-// TODO: let the compiler generate me
-static uint32 jumpTable[] = {
-    0x80099AFC, //
-    0x8009995C, //
-    0x80099978, //
-    0x80099994, //
-    0x80099A00, //
-    0x80099AFC, //
-    0x80099A1C, //
-    0x80099A38, //
-    0x80099A54, //
-    0x80099A70, //
-    0x80099A8C, //
-    0x80099AE4, //
-    0x80099AFC //
-};
-
-#define Y (1 << 18)
-#define X (1 << 17)
-
-// 21 cheats
-static uint32 sCheatAddShiny[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, Y, Y, X, X, Y };
-static uint32 sCheatAddSpatulas[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, Y, X, X, Y, Y, X };
-static uint32 sCheatBubbleBowl[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, X, X, Y, Y };
-static uint32 sCheatCruiseBubble[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, Y, Y, X, X };
-static uint32 sCheatMonsterGallery[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, Y, X, Y, X };
-static uint32 sCheatArtTheatre[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, X, Y, X, Y };
-static uint32 sCheatChaChing[16] = { Y, X, Y, X, X, Y, X, X, X, Y, Y, Y, Y, X, X, Y };
-static uint32 sCheatExpertMode[16] = { X, X, X, Y, Y, X, X, X, Y, X, Y, Y, Y, X, Y, Y };
-static uint32 sCheatSwapCCLR[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, Y, X, X, X, X, Y, Y };
-static uint32 sCheatSwapCCUD[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, X, X, X, X, Y };
-static uint32 sCheatRestoreHealth[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, Y, X, Y, Y, Y, Y };
-static uint32 sCheatShrapBob[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, Y, X, X, X, Y };
-static uint32 sCheatNoPants[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, X, Y, X, Y, Y, X };
-static uint32 sCheatCruiseControl[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, X, Y, X, Y, Y };
-static uint32 sCheatBigPlank[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, X, X, X, X };
-static uint32 sCheatSmallPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, Y, X };
-static uint32 sCheatSmallCoStars[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, Y, Y, Y, Y };
-static uint32 sCheatRichPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, Y, X, Y };
-static uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, X, X };
-static uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
-static uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
-
-static GECheat cheatList[22] = {
-    { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
-    { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
-    { sCheatBubbleBowl, GEC_cb_BubbleBowl, 0x200, 0 },
-    { sCheatCruiseBubble, GEC_cb_CruiseBubble, 0x400, 0 },
-    { sCheatMonsterGallery, GEC_cb_MonsterGallery, 0x0, 0 },
-    { sCheatArtTheatre, GEC_cb_UnlockArtTheatre, 0x0, 0 },
-    { sCheatChaChing, GEC_cb_ChaChing, 0x2, 0 },
-    { sCheatExpertMode, GEC_cb_ExpertMode, 0x800, 0 },
-    { sCheatSwapCCLR, GEC_cb_SwapCCLR, 0x1000, 1 },
-    { sCheatSwapCCUD, GEC_cb_SwapCCUD, 0x2000, 1 },
-    { sCheatRestoreHealth, GEC_cb_RestoreHealth, 0x100, 0 },
-    { sCheatShrapBob, GEC_cb_ShrapBobMode, 0x2000000, 1 },
-    { sCheatNoPants, GEC_cb_NoPantsMode, 0x10000000, 1 },
-    { sCheatCruiseControl, GEC_cb_CruiseControl, 0x20000000, 1 },
-    { sCheatBigPlank, GEC_cb_BigPlank, 0x10000, 1 },
-    { sCheatSmallPeep, GEC_cb_SmallPeep, 0x40000, 1 },
-    { sCheatSmallCoStars, GEC_cb_SmallCostars, 0x80000, 1 },
-    { sCheatRichPeep, GEC_cb_RichPeep, 0x100000, 0 },
-    { sCheatPanHandle, GEC_cb_PanHandle, 0x200000, 0 },
-    { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
-    { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
-};
-
-static uint32 sCheatPressed[16] = {};
-
 int32 zGameExtras_ExtrasFlags()
 {
     return g_gameExtraFlags;
@@ -249,7 +180,175 @@ void zGameExtras_SceneUpdate(float32 dt)
 }
 
 // func_80099938
+#if 0
+// TODO: let the compiler generate me
+static uint32 jumpTable[] = {
+    0x80099AFC, //
+    0x8009995C, //
+    0x80099978, //
+    0x80099994, //
+    0x80099A00, //
+    0x80099AFC, //
+    0x80099A1C, //
+    0x80099A38, //
+    0x80099A54, //
+    0x80099A70, //
+    0x80099A8C, //
+    0x80099AE4, //
+    0x80099AFC //
+};
 #pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "EGG_check_ExtrasFlags__FP7EGGItem")
+#else
+int32 EGG_check_ExtrasFlags(EGGItem*)
+{
+    switch (g_currMonth)
+    {
+    case 1:
+        if (g_currDay == 1)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 1;
+        }
+        break;
+    case 2:
+        if (g_currDay == 2)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        break;
+    case 3:
+        if (g_currDay == 0xf)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 8;
+        }
+        if (g_currDay == 0x11)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 4;
+        }
+        if (g_currDay == 0x12)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        if (g_currDay == 0x15)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        if (g_currDay == 0x16)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        break;
+    case 4:
+        if (g_currDay == 1)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x80;
+        }
+        break;
+    case 6:
+        if (g_currDay == 6)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x40;
+        }
+        break;
+    case 7:
+        if (g_currDay == 4)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 2;
+        }
+        break;
+    case 8:
+        if (g_currDay == 8)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        break;
+    case 9:
+        if (g_currDay == 8)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 2;
+        }
+        break;
+    case 10:
+        if (g_currDay == 5)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        if (g_currDay == 0xe)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        if (g_currDay == 0x16)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        if (g_currDay == 0x1f)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x20;
+        }
+        break;
+    case 11:
+        if (g_currDay == 5)
+        {
+            g_gameExtraFlags = g_gameExtraFlags | 0x100;
+        }
+        break;
+    case 12:
+        break;
+    }
+    return 0;
+}
+#endif
+
+#define Y (1 << 18)
+#define X (1 << 17)
+
+// 21 cheats
+static uint32 sCheatAddShiny[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, Y, Y, X, X, Y };
+static uint32 sCheatAddSpatulas[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, Y, X, X, Y, Y, X };
+static uint32 sCheatBubbleBowl[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, X, X, Y, Y };
+static uint32 sCheatCruiseBubble[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, Y, Y, X, X };
+static uint32 sCheatMonsterGallery[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, Y, X, Y, X };
+static uint32 sCheatArtTheatre[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, X, Y, X, Y };
+static uint32 sCheatChaChing[16] = { Y, X, Y, X, X, Y, X, X, X, Y, Y, Y, Y, X, X, Y };
+static uint32 sCheatExpertMode[16] = { X, X, X, Y, Y, X, X, X, Y, X, Y, Y, Y, X, Y, Y };
+static uint32 sCheatSwapCCLR[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, Y, X, X, X, X, Y, Y };
+static uint32 sCheatSwapCCUD[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, X, X, X, X, Y };
+static uint32 sCheatRestoreHealth[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, Y, X, Y, Y, Y, Y };
+static uint32 sCheatShrapBob[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, Y, X, X, X, Y };
+static uint32 sCheatNoPants[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, X, Y, X, Y, Y, X };
+static uint32 sCheatCruiseControl[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, X, Y, X, Y, Y };
+static uint32 sCheatBigPlank[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, X, X, X, X };
+static uint32 sCheatSmallPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, Y, X };
+static uint32 sCheatSmallCoStars[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, Y, Y, Y, Y };
+static uint32 sCheatRichPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, Y, X, Y };
+static uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, X, X };
+static uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
+static uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
+
+static GECheat cheatList[22] = {
+    { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
+    { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
+    { sCheatBubbleBowl, GEC_cb_BubbleBowl, 0x200, 0 },
+    { sCheatCruiseBubble, GEC_cb_CruiseBubble, 0x400, 0 },
+    { sCheatMonsterGallery, GEC_cb_MonsterGallery, 0x0, 0 },
+    { sCheatArtTheatre, GEC_cb_UnlockArtTheatre, 0x0, 0 },
+    { sCheatChaChing, GEC_cb_ChaChing, 0x2, 0 },
+    { sCheatExpertMode, GEC_cb_ExpertMode, 0x800, 0 },
+    { sCheatSwapCCLR, GEC_cb_SwapCCLR, 0x1000, 1 },
+    { sCheatSwapCCUD, GEC_cb_SwapCCUD, 0x2000, 1 },
+    { sCheatRestoreHealth, GEC_cb_RestoreHealth, 0x100, 0 },
+    { sCheatShrapBob, GEC_cb_ShrapBobMode, 0x2000000, 1 },
+    { sCheatNoPants, GEC_cb_NoPantsMode, 0x10000000, 1 },
+    { sCheatCruiseControl, GEC_cb_CruiseControl, 0x20000000, 1 },
+    { sCheatBigPlank, GEC_cb_BigPlank, 0x10000, 1 },
+    { sCheatSmallPeep, GEC_cb_SmallPeep, 0x40000, 1 },
+    { sCheatSmallCoStars, GEC_cb_SmallCostars, 0x80000, 1 },
+    { sCheatRichPeep, GEC_cb_RichPeep, 0x100000, 0 },
+    { sCheatPanHandle, GEC_cb_PanHandle, 0x200000, 0 },
+    { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
+    { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
+};
+
+static uint32 sCheatPressed[16] = {};
 
 int32 zGameExtras_CheatFlags()
 {
