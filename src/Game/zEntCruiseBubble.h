@@ -65,13 +65,6 @@ namespace cruise_bubble
         uint32 handle;
     };
 
-    struct zShrapnelAsset
-    {
-        int32 fassetCount;
-        uint32 shrapnelID;
-        void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
-    };
-
     bool active();
     void render_screen();
     void init_sound();
