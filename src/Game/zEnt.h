@@ -5,6 +5,7 @@
 #include "../Core/x/xAnim.h"
 
 #include "zScene.h"
+#include "zEvent.h"
 
 struct zScene;
 

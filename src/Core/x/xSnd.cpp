@@ -258,16 +258,15 @@ uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 f
 }
 
 // func_80048A64
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                  xEnt* parent, float32 innerRadius, float32 outerRadius, sound_category category,
-                  float32 delay)
+uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, xEnt* parent,
+                  float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, NULL, parent, NULL, innerRadius,
                             outerRadius, category, delay);
 }
 
 // func_80048A94
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, xVec3* pos,
+uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, const xVec3* pos,
                   float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
 {
     if (flags & 0x800)
