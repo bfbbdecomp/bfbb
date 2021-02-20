@@ -9,6 +9,17 @@ struct zCutsceneMgr : xCutsceneMgr
 {
 };
 
+struct zCutsceneHack
+{
+    int8* cinname;
+    int8* modelname;
+    float32 radius;
+    uint32 tworoot;
+    uint32 noshadow;
+    uint32 alphaBits;
+    RpAtomic* (*renderCB)(RpAtomic*);
+};
+
 struct zCutSceneNames
 {
     int8 name[64];

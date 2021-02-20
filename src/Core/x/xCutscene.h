@@ -101,5 +101,6 @@ uint32 iCSFileOpen(xCutscene* csn);
 xCutscene* xCutscene_Create(uint32 id);
 int32 xCutscene_Destroy(xCutscene* csn);
 int32 xCutscene_LoadStart(xCutscene* csn);
+int32 xCutscene_Update(xCutscene* csn, float32 dt);
 
 #endif
