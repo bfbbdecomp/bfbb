@@ -98,5 +98,8 @@ float32 xlog(float32 f);
 xCutscene* xCutscene_CurrentCutscene();
 void xCutscene_Render(xCutscene* csn, xEnt**, int32*, float32*);
 uint32 iCSFileOpen(xCutscene* csn);
+xCutscene* xCutscene_Create(uint32 id);
+int32 xCutscene_Destroy(xCutscene* csn);
+int32 xCutscene_LoadStart(xCutscene* csn);
 
 #endif

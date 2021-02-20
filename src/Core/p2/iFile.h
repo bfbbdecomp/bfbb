@@ -66,5 +66,6 @@ void iFileFullPath(const char* relname, char* fullname);
 void iFileSetPath(char* path);
 uint32 iFileFind(const char* name, tag_xFile* file);
 void iFileGetInfo(tag_xFile* file, uint32* addr, uint32* length);
+void iFileAsyncService();
 
 #endif
