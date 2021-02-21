@@ -2401,19 +2401,11 @@ sTimeElapsed:
 /* SPECULATION: link order */
 .global sTimeLast
 sTimeLast:
-	.skip 0x4
-/* SPECULATION: link order */
-.global lbl_803CB7C4
-lbl_803CB7C4:
-	.skip 0x4
+	.skip 0x8
 /* SPECULATION: link order */
 .global sTimeCurrent
 sTimeCurrent:
-	.skip 0x4
-/* SPECULATION: link order */
-.global lbl_803CB7CC
-lbl_803CB7CC:
-	.skip 0x4
+	.skip 0x8
 /* SPECULATION: link order */
 .global gLevelChanged
 gLevelChanged:

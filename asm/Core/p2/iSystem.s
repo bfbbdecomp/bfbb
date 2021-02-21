@@ -4,26 +4,6 @@
 
 .section .text  # 0x800D30B4 - 0x800D44F0
 
-.global psGetMemoryFunctions__Fv
-psGetMemoryFunctions__Fv:
-/* 800D30B4 000CFEB4  3C 60 80 31 */	lis r3, lbl_80312140@ha
-/* 800D30B8 000CFEB8  38 63 21 40 */	addi r3, r3, lbl_80312140@l
-/* 800D30BC 000CFEBC  4E 80 00 20 */	blr 
-
-.global iVSync__Fv
-iVSync__Fv:
-/* 800D30C0 000CFEC0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D30C4 000CFEC4  7C 08 02 A6 */	mflr r0
-/* 800D30C8 000CFEC8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D30CC 000CFECC  48 10 88 ED */	bl VIWaitForRetrace
-/* 800D30D0 000CFED0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D30D4 000CFED4  7C 08 03 A6 */	mtlr r0
-/* 800D30D8 000CFED8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D30DC 000CFEDC  4E 80 00 20 */	blr 
-
-my_dsc__FUs:
-/* 800D30E0 000CFEE0  4E 80 00 20 */	blr 
-
 FloatingPointErrorHandler__FUsP9OSContextUlUl:
 /* 800D30E4 000CFEE4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D30E8 000CFEE8  7C 08 02 A6 */	mflr r0
@@ -157,22 +137,6 @@ lbl_800D3298:
 /* 800D32B4 000D00B4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800D32B8 000D00B8  4E 80 00 20 */	blr 
 
-MemoryProtectionErrorHandler__FUsP9OSContextUlUl:
-/* 800D32BC 000D00BC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800D32C0 000D00C0  7C 08 02 A6 */	mflr r0
-/* 800D32C4 000D00C4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800D32C8 000D00C8  B0 6D 93 14 */	sth r3, last_error-_SDA_BASE_(r13)
-/* 800D32CC 000D00CC  90 8D 93 18 */	stw r4, last_context-_SDA_BASE_(r13)
-/* 800D32D0 000D00D0  80 04 01 94 */	lwz r0, 0x194(r4)
-/* 800D32D4 000D00D4  28 00 00 00 */	cmplwi r0, 0
-/* 800D32D8 000D00D8  41 82 00 08 */	beq lbl_800D32E0
-/* 800D32DC 000D00DC  48 00 04 51 */	bl null_func__Fv
-lbl_800D32E0:
-/* 800D32E0 000D00E0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800D32E4 000D00E4  7C 08 03 A6 */	mtlr r0
-/* 800D32E8 000D00E8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800D32EC 000D00EC  4E 80 00 20 */	blr 
-
 TRCInit__Fv:
 /* 800D32F0 000D00F0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800D32F4 000D00F4  7C 08 02 A6 */	mflr r0
@@ -234,8 +198,8 @@ iSystemInit__FUi:
 /* 800D33C8 000D01C8  38 60 00 0F */	li r3, 0xf
 /* 800D33CC 000D01CC  38 84 32 BC */	addi r4, r4, MemoryProtectionErrorHandler__FUsP9OSContextUlUl@l
 /* 800D33D0 000D01D0  48 0F FC E1 */	bl OSSetErrorHandler
-/* 800D33D4 000D01D4  3C 60 80 31 */	lis r3, lbl_80312140@ha
-/* 800D33D8 000D01D8  38 63 21 40 */	addi r3, r3, lbl_80312140@l
+/* 800D33D4 000D01D4  3C 60 80 31 */	lis r3, MemoryFunctions@ha
+/* 800D33D8 000D01D8  38 63 21 40 */	addi r3, r3, MemoryFunctions@l
 /* 800D33DC 000D01DC  48 00 06 29 */	bl DolphinInitMemorySystem__FP17RwMemoryFunctions
 /* 800D33E0 000D01E0  2C 03 00 00 */	cmpwi r3, 0
 /* 800D33E4 000D01E4  40 82 00 20 */	bne lbl_800D3404
@@ -1395,7 +1359,8 @@ lbl_80266610:
 	.incbin "baserom.dol", 0x2635F0, 0x238
 
 .section .bss
-lbl_80312140:
+.global MemoryFunctions
+MemoryFunctions:
 	.skip 0x10
 
 .section .sbss

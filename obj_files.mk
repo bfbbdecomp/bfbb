@@ -11,7 +11,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/asm/Core/x/xAnim.o                   \
     $(OBJ_DIR)/src/Core/x/xAnim.o                   \
     $(OBJ_DIR)/src/Core/x/xBase.o                   \
-    $(OBJ_DIR)/asm/Core/x/xbinio.o                  \
     $(OBJ_DIR)/src/Core/x/xbinio.o                  \
     $(OBJ_DIR)/asm/Core/x/xBound.o                  \
     $(OBJ_DIR)/src/Core/x/xBound.o                  \
@@ -47,7 +46,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Core/x/xFX.o                     \
     $(OBJ_DIR)/asm/Core/x/xGroup.o                  \
     $(OBJ_DIR)/src/Core/x/xGroup.o                  \
-    $(OBJ_DIR)/asm/Core/x/xhipio.o                  \
     $(OBJ_DIR)/src/Core/x/xhipio.o                  \
     $(OBJ_DIR)/asm/Core/x/xHud.o                    \
     $(OBJ_DIR)/src/Core/x/xHud.o                    \

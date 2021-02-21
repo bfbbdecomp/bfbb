@@ -223,7 +223,7 @@ void xSndUpdate()
 }
 
 // func_800489C4
-void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3 matrix)
+void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix)
 {
     /*
     * This code appears to be correct but there appears to be a possibility
@@ -233,7 +233,7 @@ void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3 matrix)
     * (Gamecube audio bug source????)
     */
     int i = (int)listenerType;
-    gSnd.listenerMat[i] = matrix;
+    gSnd.listenerMat[i] = *matrix;
 }
 
 // func_800489F8
@@ -258,16 +258,15 @@ uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 f
 }
 
 // func_80048A64
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                  xEnt* parent, float32 innerRadius, float32 outerRadius, sound_category category,
-                  float32 delay)
+uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, xEnt* parent,
+                  float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, NULL, parent, NULL, innerRadius,
                             outerRadius, category, delay);
 }
 
 // func_80048A94
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, xVec3* pos,
+uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, const xVec3* pos,
                   float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
 {
     if (flags & 0x800)

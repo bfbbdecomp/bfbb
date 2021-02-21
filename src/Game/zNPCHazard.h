@@ -22,6 +22,7 @@ struct UVAModelInfo
     void Hemorrage();
     void Clear();
     void UVVelSet(float, float);
+    int32 GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* model);
 };
 
 struct NPCHazard;
@@ -136,6 +137,7 @@ struct HAZTarTar : HAZCollide
     float32 spd_lob;
     xVec3 pos_tgt;
     uint32 streakID;
+    uint32 pad; // This is needed to ensure the correct size!
 };
 
 struct HAZCatProd : HAZBall
@@ -199,13 +201,52 @@ struct NPCHazard
     NPCHazard* haz_parent;
     xShadowCache* shadowCache;
 
+    NPCHazard();
+    NPCHazard(en_npchaz haztype);
     int32 ConfigHelper(en_npchaz haztype);
+    void Reconfigure(en_npchaz haztype);
     void SetNPCOwner(zNPCCommon* owner);
     void Start(const xVec3* pos, float32 tym);
+    void MarkForRecycle();
+    void Kill();
+    void Cleanup();
+    void WipeIt();
+    void PosSet(const xVec3* pos);
+    void NotifyCBSet(HAZNotify* noter);
+    void SetAlpha(float32 alpha);
+    int32 ColTestSphere(const xBound* bnd_tgt, float32 rad);
+    int32 ColTestCyl(const xBound* bnd_tgt, float32 rad, float32 hyt);
+    int32 ColPlyrSphere(float32 rad);
+    int32 ColPlyrCyl(float32 rad, float32 hyt);
+    void HurtThePlayer();
+    void TypData_RotMatSet(xMat3x3* mat);
+    void TypData_RotMatApply(xMat3x3* mat);
+    void StagColGeneral(int32 who);
+    void StagColStat();
+    void StagColNPC();
+    void StagColDyn();
+    void ColResp_Default(xSweptSphere* swdata, float32 tym_inFuture);
+    void CollideResponse(xSweptSphere* swdata, float32 tym_inFuture);
+    RwV3d* At();
+    RwV3d* Right();
+    RwV3d* Up();
 };
 
-void zNPCCommon_Hazards_RenderAll(int32 doOpaqueStuff);
+void zNPCHazard_Startup();
 void zNPCHazard_Shutdown();
+void zNPCHazard_ScenePrepare();
+void zNPCHazard_SceneFinish();
+void zNPCHazard_SceneReset();
+void zNPCHazard_ScenePostInit();
+void zNPCHazard_InitEffects();
+void zNPCHazard_KillEffects();
+int32 HAZ_ord_sorttest(void* vkey, void* vitem);
+void zNPCHazard_Timestep(float32 dt);
+void zNPCCommon_Hazards_RenderAll(int32 doOpaqueStuff);
 NPCHazard* HAZ_Acquire();
+int32 HAZ_AvailablePool();
+void HAZ_Iterate(uint8 (*fp)(NPCHazard&, void*), void* context, int32 flag_filter);
+
+float32 xVec2Length2(const xVec2* v);
 
 #endif

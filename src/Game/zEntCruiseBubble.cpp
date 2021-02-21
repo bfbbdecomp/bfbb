@@ -1,93 +1,473 @@
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xVec3.h"
+
+#include "zCamera.h"
+#include "zEntButton.h"
 #include "zEntCruiseBubble.h"
+#include "zEntDestructObj.h"
+#include "zEntPlayer.h"
+#include "zGlobals.h"
 
-#include <types.h>
+#include "../Core/x/xMath.h"
+#include "../Core/x/xMath3.h"
+#include "../Core/x/xSnd.h"
+#include "../Core/x/xString.h"
+#include "../Core/x/xVec3.h"
+#include "zNPCTypeCommon.h"
+#include "zPlatform.h"
 
-// func_8005720C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+namespace cruise_bubble
+{
 
-// func_80057284
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "stop_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiUi")
+// basic_rect screen_bounds;
+// basic_rect default_adjust;
+// int8 buffer[16];
+// int8 buffer[16];
+// tweak_group normal_tweak;
+// tweak_group cheat_tweak;
+// tweak_group* current_tweak;
+extern xBase base;
+// int8* start_anim_states[37];
+
+extern struct _class_36
+{
+    int32 flags;
+    state_type* state[3];
+    // Offset: 0x10
+    state_type* states[12];
+    // Offset: 0x40
+    xVec2 last_sp;
+    xVec2 sp;
+    xVec3 hit_loc;
+    xVec3 hit_norm;
+    xModelInstance* missle_model;
+    // Offset: 0x6c
+    xEnt* hits[32];
+    // Offset: 0xec
+    int32 hits_size;
+    uint32 player_health;
+    xVec3 player_motion;
+    float32 fov_default;
+    zShrapnelAsset* droplet_shrapnel;
+    float32 dialog_freq;
+    struct _class_45
+    {
+        float32 samples;
+        float32 bubbles;
+        xMat4x3 mat;
+        xQuat dir;
+    } trail;
+    struct _class_6
+    {
+        struct _class_8
+        {
+            xAnimState* aim;
+            xAnimState* fire;
+            xAnimState* idle;
+        } player;
+        struct _class_16
+        {
+            xAnimState* fire;
+            xAnimState* fly;
+        } missle;
+    } astate;
+    struct _class_25
+    {
+        struct _class_28
+        {
+            xAnimTransition* aim;
+            xAnimTransition* fire;
+            xAnimTransition* idle;
+            xAnimTransition* end;
+        } player;
+        struct _class_33
+        {
+            xAnimTransition* fly;
+        } missle;
+    } atran;
+} shared;
+// xMat4x3 start_cam_mat;
+// fixed_queue missle_record;
+// xFXRibbon wake_ribbon[2];
+// xDecalEmitter explode_decal;
+// curve_node_0 wake_ribbon_curve[2];
+// curve_node_0 cheat_wake_ribbon_curve[2];
+// curve_node_1 explode_curve[3];
+// curve_node_1 cheat_explode_curve[3];
+extern sound_config sounds[4];
+// quadrant_set qzone;
+// _class_17 hud;
+// void (*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
+// uint32 (*check_anim_aim)(xAnimTransition*, xAnimSingle*, void*);
+// zGlobals globals;
+// RpAtomic* (*AtomicDefaultRenderCallBack)(RpAtomic*);
+// RpAtomic* (*custom_bubble_render)(RpAtomic*);
+// iColor_tag g_WHITE;
+// uint32 gActiveHeap;
+// _anon0 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @20state_camera_restore;
+// _anon5 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @10state_type;
+// _anon6 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @19state_camera_survey;
+// _anon1 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @19state_camera_attach;
+// _anon9 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @18state_camera_seize;
+// _anon10 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @16state_camera_aim;
+// _anon3 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @20state_missle_explode;
+// _anon7 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @16state_missle_fly;
+// _anon2 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @19state_missle_appear;
+// _anon4 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @17state_player_wait;
+// _anon8 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @17state_player_fire;
+// _anon11 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @16state_player_aim;
+// _anon12 __vt__Q313cruise_bubble30 @unnamed @zEntCruiseBubble_cpp @17state_player_halt;
+// RpAtomic* (*gAtomicRenderCallBack)(RpAtomic*);
+// uint32 gFXSurfaceFlags;
+// xVec3 m_UnitAxisY;
+// xGrid npcs_grid;
+// xGrid colls_oso_grid;
+// xGrid colls_grid;
+// uint8 (*hazard_check)(NPCHazard&, void*);
+// xQCControl xqc_def_ctrl;
+// void (*SweptSphereHitsCameraEnt)(xScene*, xRay3*, xQCData*, xEnt*, void*);
+// void (*cb_droplet)(zFrag*, zFragAsset*);
+// uint8 (*hazard_check)(NPCHazard&, void*);
+// uint8 (*hazard_check)(NPCHazard&, void*);
+// int32 gGridIterActive;
+
+} // namespace cruise_bubble
+
+extern float32 zEntCruiseBubble_f_0_0; // 0.0
+
+void cruise_bubble::init_sound()
+{
+    sound_config* s;
+    sound_config* end = &sounds[4];
+    for (s = &sounds[0]; s != end; ++s)
+    {
+        s->id = (s->name == 0) ? 0 : xStrHash(s->name);
+        s->handle = 0;
+    }
+}
+
+void cruise_bubble::stop_sound(int32 which, uint32 handle)
+{
+    sound_config* s = &sounds[which];
+
+    if (s->id == 0)
+    {
+        if (s->streamed == 0)
+        {
+            for (int32 i = s->first; i <= s->last; ++i)
+            {
+                zEntPlayer_SNDStop((_tagePlayerSnd)i);
+            }
+        }
+        return;
+    }
+
+    if (handle == 0)
+    {
+        handle = s->handle;
+    }
+    
+    if (handle != 0)
+    {
+        xSndStop(handle);
+    }
+
+    s->handle = 0;
+}
 
 // func_80057320
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif")
+// will match once file is complete, see comment below
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif")
+#else
+uint32 cruise_bubble::play_sound(int32 which, float32 volFactor)
+{
+    sound_config* s = &sounds[which];
+
+    if (s->id == 0)
+    {
+        int32 n = s->last - s->first + 1;
+        int32 i = n <= 1 ? s->first : s->first + (xrand() >> 13) % n;
+
+        if (s->streamed != 0)
+        {
+           zEntPlayer_SNDPlayStream((_tagePlayerStreamSnd) i);
+        }
+        else
+        {
+            zEntPlayer_SNDPlay((_tagePlayerSnd) i, zEntCruiseBubble_f_0_0);
+        }
+
+        s->handle = 0;
+    }
+    else
+    {
+        // using float literals only the TOC address doesnt match
+        // -> will match when file is complete
+        s->handle = xSndPlay(
+                (uint32) s->id,
+                s->volume * volFactor,
+                zEntCruiseBubble_f_0_0,
+                (uint32) 128,
+                (uint32) 0,
+                (uint32) 0,
+                SND_CAT_GAME,
+                zEntCruiseBubble_f_0_0);
+    }
+
+    if (s->rumble != SDR_None)
+    {
+        zRumbleStart(s->rumble);
+    }
+    return s->handle;
+}
+#endif
 
 // func_80057404
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3")
+// will match once file is complete, see comment below
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3")
+#else
+uint32 cruise_bubble::play_sound(int32 which, float32 volFactor, const xVec3* pos)
+{
+    sound_config* s = &sounds[which];
 
-// func_80057488
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "set_pitch__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifUi")
+    if (s->id != 0)
+    {
+        // using float literals only the TOC address doesnt match
+        // -> will match when file is complete
+        s->handle = xSndPlay3D(
+                s->id,
+                s->volume * volFactor,
+                zEntCruiseBubble_f_0_0,
+                (uint32) 128,
+                (uint32) 2048,
+                pos,
+                s->radius_inner,
+                s->radius_outer,
+                SND_CAT_GAME,
+                zEntCruiseBubble_f_0_0);
+    }
 
-// func_80057524
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    if (s->rumble != SDR_None)
+    {
+        zRumbleStart(s->rumble);
+    }
+    return s->handle;
+}
+#endif
 
-// func_80057540
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hide_wand__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::set_pitch(int32 which, float32 pitch, uint32 handle)
+{
+    sound_config* s = &sounds[which];
 
-// func_8005755C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    if (s->id == 0)
+    {
+        for (int32 i = s->first; i <= s->last; ++i)
+        {
+            zEntPlayer_SNDSetPitch((_tagePlayerSnd) i, pitch);
+        }
+        return;
+    }
+    
+    if (handle == 0)
+    {
+        handle = s->handle;
+    }
 
-// func_80057578
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hide_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    if (handle != 0)
+    {
+        xSndSetPitch(handle, pitch);
+    }
+}
 
-// func_80057594
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "capture_camera__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::show_wand()
+{
+    globals.player.sb_models[5]->Flags = globals.player.sb_models[5]->Flags | 0x0001;
+}
 
-// func_800575C8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "release_camera__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::hide_wand()
+{
+    globals.player.sb_models[5]->Flags = globals.player.sb_models[5]->Flags & 0xfffe;
+}
+
+void cruise_bubble::show_missle()
+{
+    shared.missle_model->Flags = shared.missle_model->Flags | 0x0003;
+}
+
+void cruise_bubble::hide_missle()
+{
+    shared.missle_model->Flags = shared.missle_model->Flags & 0xfffc;
+}
+
+void cruise_bubble::capture_camera()
+{
+    zCameraDisableInput();
+    zCameraDisableTracking(CO_CRUISE_BUBBLE);
+    xCameraDoCollisions(0, 1);
+}
+
+void cruise_bubble::release_camera()
+{
+    zCameraEnableInput();
+    zCameraEnableTracking(CO_CRUISE_BUBBLE);
+    xCameraDoCollisions(1, 1);
+}
 
 // func_800575FC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#ifndef NONMATCHING
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+uint32 cruise_bubble::camera_taken()
+{
+    // dumb non match cause it seems the compiler doesnt assume the type of the return value correctly
+    // to me it looks like the case Ninja shifts described in https://pastebin.com/XjJpBzah
+    // i tried changing the return type to every imaginable type, asm remains the same
+    return zCameraGetConvers() != 0 || (zCameraIsTrackingDisabled() & 0xfffffffd) != 0;
+}
+#endif
 
-// func_80057644
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "camera_leave__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+uint32 cruise_bubble::camera_leave()
+{
+    return zCameraGetConvers() != 0;
+}
 
-// func_80057670
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "start_damaging__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::start_damaging()
+{
+    shared.hits_size = 0;
+}
 
 // func_80057684
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
+#ifndef NONMATCHING
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
+#else
+void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, uint8 explosive)
+{
+    if (shared.hits_size >= 32)
+    {
+        return;
+    }
+    shared.hits[shared.hits_size] = &ent;
+    shared.hits_size++;
 
-// func_800578E8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "can_damage__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP4xEnt")
+    switch (ent.baseType) {
+    case eBaseTypeButton:
+        zEntButton_Press((_zEntButton*) &ent, 0x10);
+        return;
 
-// func_80057984
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "was_damaged__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP4xEnt")
+    case eBaseTypeDestructObj:
+        zEntDestructObj_Hit((zEntDestructObj*) &ent, 0x10000);
+        return;
+
+    case eBaseTypePlatform:
+        switch (ent.subType) {
+        case 0xc:
+            if ((((zPlatform*) &ent)->passet->paddle.paddleFlags & 0x20) == 0)
+            {
+                return;
+            }
+
+            xCollis coll;
+            coll.optr = &ent;
+            coll.mptr = ent.collModel != NULL ? ent.collModel : ent.model;
+
+            if (explosive != 0)
+            {
+                coll.flags = 0x600;
+
+                xSphere o;
+                o.center = loc;
+                o.r = radius;
+                xSphereHitsBound(&o, &ent.bound, &coll);
+
+                if ((coll.flags & 0x1) == 0)
+                {
+                    return;
+                }
+
+                if (ent.collLev == 0x5)
+                {
+                    xSphereHitsModel(&o, coll.mptr, &coll);
+
+                    if ((coll.flags & 0x1) == 0)
+                    {
+                        return;
+                    }
+                }
+
+                xVec3 hit_dir = coll.tohit.up_normal();
+                zPlatform_PaddleCollide(&coll, &loc, &hit_dir, 0x1);
+                return;
+            }
+
+            coll.flags = 0x201;
+            coll.norm = hit_norm;
+            zPlatform_PaddleCollide(&coll, &loc, &dir,1);
+            return;
+        }
+        break;
+
+    case eBaseTypeNPC:
+        if (explosive)
+        {
+            // fuck this... weird scheduling
+            xVec3 edir = (*xEntGetCenter(&ent) - loc).up_normal();
+            ((zNPCCommon*) &ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &edir);
+        }
+        else {
+            // while this matches
+            ((zNPCCommon*) &ent)->Damage(DMGTYP_CRUISEBUBBLE, &base, &dir);
+        }
+        return;
+    }
+
+    zEntEvent(&ent, 0x1c7);
+}
+#endif
+
+uint8 cruise_bubble::can_damage(xEnt* ent)
+{
+    if (ent == NULL)
+    {
+        return false;
+    }
+    if ((ent->moreFlags & 0x10) == 0)
+    {
+        return false;
+    }
+    if (ent->baseType == eBaseTypeDestructObj &&
+            zEntDestructObj_isDestroyed((zEntDestructObj*) ent) != 0)
+    {
+        return false;
+    }
+    if (ent->baseType == eBaseTypeNPC &&
+            !((zNPCCommon*) ent)->IsHealthy())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+uint8 cruise_bubble::was_damaged(xEnt* ent)
+{
+    // no idea why this doesn't OK ...
+    // xEnt** i;
+    // xEnt** n = shared.hits + shared.hits_size; // unnecessary offset is added
+    // for (i = shared.hits; i != n; ++i)
+
+    // ... but this does
+    xEnt** i = shared.hits;
+    xEnt** n = i + shared.hits_size;
+    for ( ; i != n; ++i)
+    {
+        if (ent == *i)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // func_800579C8
 #pragma GLOBAL_ASM(                                                                                \

@@ -1336,81 +1336,6 @@ lbl_800AF770:
 /* 800AF788 000AC588  38 21 00 30 */	addi r1, r1, 0x30
 /* 800AF78C 000AC58C  4E 80 00 20 */	blr 
 
-.global zSaveLoadAutoSaveUpdate__Fv
-zSaveLoadAutoSaveUpdate__Fv:
-/* 800AF7CC 000AC5CC  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800AF7D0 000AC5D0  7C 08 02 A6 */	mflr r0
-/* 800AF7D4 000AC5D4  3C 60 80 3C */	lis r3, globals@ha
-/* 800AF7D8 000AC5D8  90 01 00 24 */	stw r0, 0x24(r1)
-/* 800AF7DC 000AC5DC  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800AF7E0 000AC5E0  3B E3 05 58 */	addi r31, r3, globals@l
-/* 800AF7E4 000AC5E4  88 1F 06 D9 */	lbz r0, 0x6d9(r31)
-/* 800AF7E8 000AC5E8  28 00 00 00 */	cmplwi r0, 0
-/* 800AF7EC 000AC5EC  41 82 00 D4 */	beq lbl_800AF8C0
-/* 800AF7F0 000AC5F0  80 0D 8F A8 */	lwz r0, gGameMode-_SDA_BASE_(r13)
-/* 800AF7F4 000AC5F4  2C 00 00 07 */	cmpwi r0, 7
-/* 800AF7F8 000AC5F8  40 82 00 08 */	bne lbl_800AF800
-/* 800AF7FC 000AC5FC  48 00 00 C4 */	b lbl_800AF8C0
-lbl_800AF800:
-/* 800AF800 000AC600  88 0D 90 B4 */	lbz r0, lbl_803CB9B4-_SDA_BASE_(r13)
-/* 800AF804 000AC604  28 00 00 00 */	cmplwi r0, 0
-/* 800AF808 000AC608  41 82 00 B8 */	beq lbl_800AF8C0
-/* 800AF80C 000AC60C  4B F8 F9 1D */	bl xSGAutoSave_GetCache__Fv
-/* 800AF810 000AC610  48 00 12 01 */	bl LastPhysicalSlot__11XSGAutoDataFv
-/* 800AF814 000AC614  2C 03 00 00 */	cmpwi r3, 0
-/* 800AF818 000AC618  41 80 00 A8 */	blt lbl_800AF8C0
-/* 800AF81C 000AC61C  90 6D 82 F8 */	stw r3, lbl_803CABF8-_SDA_BASE_(r13)
-/* 800AF820 000AC620  38 81 00 0C */	addi r4, r1, 0xc
-/* 800AF824 000AC624  38 A1 00 08 */	addi r5, r1, 8
-/* 800AF828 000AC628  48 10 F5 3D */	bl CARDProbeEx
-/* 800AF82C 000AC62C  2C 03 00 01 */	cmpwi r3, 1
-/* 800AF830 000AC630  40 80 00 38 */	bge lbl_800AF868
-/* 800AF834 000AC634  2C 03 FF FF */	cmpwi r3, -1
-/* 800AF838 000AC638  40 80 00 08 */	bge lbl_800AF840
-/* 800AF83C 000AC63C  48 00 00 2C */	b lbl_800AF868
-lbl_800AF840:
-/* 800AF840 000AC640  3C 60 80 26 */	lis r3, lbl_8025E9C0@ha
-/* 800AF844 000AC644  38 63 E9 C0 */	addi r3, r3, lbl_8025E9C0@l
-/* 800AF848 000AC648  38 63 04 A2 */	addi r3, r3, 0x4a2
-/* 800AF84C 000AC64C  4B F9 C9 C9 */	bl xStrHash__FPCc
-/* 800AF850 000AC650  48 00 51 ED */	bl zSceneFindObject__FUi
-/* 800AF854 000AC654  28 03 00 00 */	cmplwi r3, 0
-/* 800AF858 000AC658  41 82 00 68 */	beq lbl_800AF8C0
-/* 800AF85C 000AC65C  38 80 00 03 */	li r4, 3
-/* 800AF860 000AC660  4B F6 FD 91 */	bl zEntEvent__FP5xBaseUi
-/* 800AF864 000AC664  48 00 00 5C */	b lbl_800AF8C0
-lbl_800AF868:
-/* 800AF868 000AC668  3C 60 80 26 */	lis r3, lbl_8025E9C0@ha
-/* 800AF86C 000AC66C  38 63 E9 C0 */	addi r3, r3, lbl_8025E9C0@l
-/* 800AF870 000AC670  38 63 04 A2 */	addi r3, r3, 0x4a2
-/* 800AF874 000AC674  4B F9 C9 A1 */	bl xStrHash__FPCc
-/* 800AF878 000AC678  48 00 51 C5 */	bl zSceneFindObject__FUi
-/* 800AF87C 000AC67C  28 03 00 00 */	cmplwi r3, 0
-/* 800AF880 000AC680  41 82 00 0C */	beq lbl_800AF88C
-/* 800AF884 000AC684  38 80 00 04 */	li r4, 4
-/* 800AF888 000AC688  4B F6 FD 69 */	bl zEntEvent__FP5xBaseUi
-lbl_800AF88C:
-/* 800AF88C 000AC68C  3C 60 80 26 */	lis r3, lbl_8025E9C0@ha
-/* 800AF890 000AC690  38 63 E9 C0 */	addi r3, r3, lbl_8025E9C0@l
-/* 800AF894 000AC694  38 63 04 B6 */	addi r3, r3, 0x4b6
-/* 800AF898 000AC698  4B F9 C9 7D */	bl xStrHash__FPCc
-/* 800AF89C 000AC69C  48 00 51 A1 */	bl zSceneFindObject__FUi
-/* 800AF8A0 000AC6A0  28 03 00 00 */	cmplwi r3, 0
-/* 800AF8A4 000AC6A4  41 82 00 0C */	beq lbl_800AF8B0
-/* 800AF8A8 000AC6A8  38 80 00 03 */	li r4, 3
-/* 800AF8AC 000AC6AC  4B F6 FD 45 */	bl zEntEvent__FP5xBaseUi
-lbl_800AF8B0:
-/* 800AF8B0 000AC6B0  38 00 00 00 */	li r0, 0
-/* 800AF8B4 000AC6B4  38 60 00 00 */	li r3, 0
-/* 800AF8B8 000AC6B8  98 1F 06 D9 */	stb r0, 0x6d9(r31)
-/* 800AF8BC 000AC6BC  4B FF FE DD */	bl zSaveLoadPreAutoSave__Fb
-lbl_800AF8C0:
-/* 800AF8C0 000AC6C0  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800AF8C4 000AC6C4  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 800AF8C8 000AC6C8  7C 08 03 A6 */	mtlr r0
-/* 800AF8CC 000AC6CC  38 21 00 20 */	addi r1, r1, 0x20
-/* 800AF8D0 000AC6D0  4E 80 00 20 */	blr 
-
 .global zSaveLoad_DoAutoSave__Fv
 zSaveLoad_DoAutoSave__Fv:
 /* 800AF8D4 000AC6D4  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -2482,18 +2407,10 @@ time_current_1:
 	.skip 0x8
 .global t0
 t0:
-	.skip 0x4
-/* SPECULATION: link order */
-.global lbl_803CB994
-lbl_803CB994:
-	.skip 0x4
+	.skip 0x8
 .global t1
 t1:
-	.skip 0x4
-/* SPECULATION: link order */
-.global lbl_803CB99C
-lbl_803CB99C:
-	.skip 0x4
+	.skip 0x8
 .global promptSel
 promptSel:
 	.skip 0x4

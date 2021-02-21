@@ -2,6 +2,7 @@
 #define XSERIALIZER_H
 
 #include <types.h>
+#include "../src/Core/x/xsavegame.h"
 
 struct st_SERIAL_CLIENTINFO
 {
@@ -42,5 +43,6 @@ struct xSerial
 
 void xSerialTraverse(int32 (*func)(uint32 clientID, xSerial* xser));
 void xSerialWipeMainBuffer();
+int32 xSerial_svgame_register(st_XSAVEGAME_DATA* sgctxt, en_SAVEGAME_MODE mode);
 
 #endif

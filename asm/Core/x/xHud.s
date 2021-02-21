@@ -1738,7 +1738,17 @@ xColorFromRGBA__FUcUcUcUc:
 lbl_802C8760:
 	.skip 0x10
 
+.section .data
+.balign 8
+.global __vt__Q24xhud6widget
+__vt__Q24xhud6widget:
+	.incbin "baserom.dol", 0x27A5F8, 0x28
+
 .section .sbss
+.balign 8
+.global _head_alloc__Q24xhud15block_allocator
+_head_alloc__Q24xhud15block_allocator:
+	.skip 0x4
 lbl_803CB29C:
 	.skip 0x1
 lbl_803CB29D:

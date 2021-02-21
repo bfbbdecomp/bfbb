@@ -40,6 +40,8 @@ struct tag_iFile
 #endif
 #endif
 
+#define IFILE_OPEN_READ 0x1
+#define IFILE_OPEN_WRITE 0x2
 #define IFILE_OPEN_ABSPATH 0x4
 
 #define IFILE_SEEK_SET 0
@@ -64,5 +66,6 @@ void iFileFullPath(const char* relname, char* fullname);
 void iFileSetPath(char* path);
 uint32 iFileFind(const char* name, tag_xFile* file);
 void iFileGetInfo(tag_xFile* file, uint32* addr, uint32* length);
+void iFileAsyncService();
 
 #endif

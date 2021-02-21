@@ -1,36 +1,117 @@
 #include "zNPCHazard.h"
 
 #include <types.h>
+#include <string.h>
 
+#include "zGlobals.h"
+#include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 
-// func_80187630
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_Startup__Fv")
+extern uint32 g_hash_hazanim[3];
+extern char* g_strz_hazanim[3];
+extern NPCHazard g_hazards[64];
+extern UVAModelInfo g_haz_uvAnimInfo[30];
+extern int32 g_cnt_activehaz;
+extern NPCHazard* g_haz_uvAnimQue[27];
+extern RpAtomic* g_hazard_rawModel[30];
+extern xAnimTable* g_haz_animTable[30];
+extern xVec3 g_O3;
+extern float32 _958_Hazard; // 0.0f
+extern float32 _959_Hazard; // 1.0f
+extern float32 _1041_Hazard; // -1.0f
+
+void zNPCHazard_Startup()
+{
+    for (int32 i = 0; i < 3; i++)
+    {
+        g_hash_hazanim[i] = xStrHash(g_strz_hazanim[i]);
+    }
+}
 
 void zNPCHazard_Shutdown()
 {
 }
 
+#if 1
+
 // func_8018769C
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_ScenePrepare__Fv")
+
+#else
+
+// WIP.
+void zNPCHazard_ScenePrepare()
+{
+    memset(g_hazards, 0, sizeof(g_hazards));
+    g_cnt_activehaz = 0;
+    for (int32 i = 0; i < 27; i++)
+    {
+        g_haz_uvAnimQue[i] = NULL;
+    }
+    for (int32 i = 0; i < 30; i++)
+    {
+        g_haz_uvAnimInfo[i].Clear();
+    }
+    for (int32 i = 0; i < 30; i++)
+    {
+        g_haz_animTable[i] = NULL;
+    }
+    for (int32 i = 0; i < 30; i++)
+    {
+        g_hazard_rawModel[i] = NULL;
+    }
+}
+
+#endif
 
 // func_801878B4
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_SceneFinish__Fv")
 
-// func_80187AD4
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_SceneReset__Fv")
+void zNPCHazard_SceneReset()
+{
+    for (int32 i = 0; i < 64; i++)
+    {
+        if (g_hazards[i].flg_hazard)
+        {
+            g_hazards[i].Kill();
+        }
+    }
+    g_cnt_activehaz = 0;
+}
 
-// func_80187B38
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_ScenePostInit__Fv")
+void zNPCHazard_ScenePostInit()
+{
+    zNPCHazard_InitEffects();
+}
 
 // func_80187B58
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_InitEffects__Fv")
 
-// func_80187DC0
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_KillEffects__Fv")
+void zNPCHazard_KillEffects()
+{
+}
 
-// func_80187DC4
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HAZ_ord_sorttest__FPvPv")
+int32 HAZ_ord_sorttest(void* vkey, void* vitem)
+{
+    NPCHazard* key = (NPCHazard*)vkey;
+    NPCHazard* item = (NPCHazard*)vitem;
+    if (key->typ_hazard < item->typ_hazard)
+    {
+        return -1;
+    }
+    else if (key->typ_hazard > item->typ_hazard)
+    {
+        return 1;
+    }
+    else if ((int32)vkey < (int32)vitem)
+    {
+        return -1;
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 // func_80187DFC
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCHazard_Timestep__Ff")
@@ -38,23 +119,105 @@ void zNPCHazard_Shutdown()
 // func_80187FEC
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "zNPCCommon_Hazards_RenderAll__Fi")
 
+#if 1
+
 // func_8018819C
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HAZ_Acquire__Fv")
 
-// func_8018820C
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HAZ_AvailablePool__Fv")
+#else
+
+// Close, kind of.
+NPCHazard* HAZ_Acquire()
+{
+    NPCHazard* da_haz = g_hazards;
+    for (int32 i = 0; i < 64; i++)
+    {
+        if (!(da_haz->flg_hazard & 1))
+        {
+            da_haz->WipeIt();
+            da_haz->flg_hazard = 1;
+            g_cnt_activehaz++;
+            return da_haz;
+        }
+        da_haz++;
+    }
+    return NULL;
+}
+
+#endif
+
+int32 HAZ_AvailablePool()
+{
+    return 64 - g_cnt_activehaz;
+}
 
 // func_80188218
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HAZ_Iterate__FPFR9NPCHazardPv_bPvi")
 
-// func_8018829C
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "WipeIt__9NPCHazardFv")
+void NPCHazard::WipeIt()
+{
+    this->typ_hazard = NPC_HAZ_UNKNOWN;
+    this->flg_hazard = 0;
+    xVec3Copy(&this->pos_hazard, &g_O3);
+    this->tym_lifespan = _959_Hazard;
+    this->tmr_remain = _1041_Hazard;
+    this->pam_interp = _958_Hazard;
+    this->cb_notify = NULL;
+    this->npc_owner = NULL;
+    memset(&this->custdata, 0, sizeof(this->custdata));
+}
+
+#if 1
 
 // func_80188314
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "ConfigHelper__9NPCHazardF9en_npchaz")
 
-// func_80188E90
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Reconfigure__9NPCHazardF9en_npchaz")
+#else
+
+// WIP.
+int32 NPCHazard::ConfigHelper(en_npchaz haztype)
+{
+    int32 result = 1;
+    this->typ_hazard = haztype;
+    switch (haztype)
+    {
+    case NPC_HAZ_UNKNOWN:
+        result = 0;
+        break;
+    case NPC_HAZ_EXPLODE:
+        // TODO!!!
+        break;
+    default:
+        result = 0;
+        break;
+    }
+    if (!result)
+    {
+        this->MarkForRecycle();
+    }
+    return result;
+}
+
+#endif
+
+void NPCHazard::Reconfigure(en_npchaz haztype)
+{
+    HAZNotify* noter = this->cb_notify;
+    zNPCCommon* npc_old = this->npc_owner;
+    xVec3 old_pos;
+    xVec3Copy(&old_pos, &this->pos_hazard);
+    this->Cleanup();
+    this->WipeIt();
+    this->flg_hazard = 0x21;
+    this->ConfigHelper(haztype);
+    this->PosSet(&old_pos);
+    this->NotifyCBSet(noter);
+    this->SetNPCOwner(npc_old);
+    if (this->cb_notify != NULL)
+    {
+        this->cb_notify->Notify(HAZ_NOTE_RECONFIG, this);
+    }
+}
 
 // func_80188F54
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "GetUVAInfo__9NPCHazardF11en_hazmodelff")
@@ -74,8 +237,17 @@ void zNPCHazard_Shutdown()
 // func_80189238
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Start__9NPCHazardFPC5xVec3f")
 
-// func_80189294
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "PosSet__9NPCHazardFPC5xVec3")
+void NPCHazard::PosSet(const xVec3* pos)
+{
+    if (pos != NULL)
+    {
+        xVec3Copy(&this->pos_hazard, pos);
+    }
+    if (this->mdl_hazard != NULL)
+    {
+        xVec3Copy((xVec3*)&this->mdl_hazard->Mat->pos, &this->pos_hazard);
+    }
+}
 
 // func_801892E8
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Timestep__9NPCHazardFf")
@@ -86,8 +258,15 @@ void zNPCHazard_Shutdown()
 // func_8018A328
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Cleanup__9NPCHazardFv")
 
-// func_8018A424
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "SetAlpha__9NPCHazardFf")
+void NPCHazard::SetAlpha(float32 alpha)
+{
+    if (this->mdl_hazard == NULL)
+    {
+        return;
+    }
+    this->mdl_hazard->Flags |= 0x4000;
+    this->mdl_hazard->Alpha = alpha;
+}
 
 // func_8018A448
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "ColTestSphere__9NPCHazardFPC6xBoundf")
@@ -95,23 +274,44 @@ void zNPCHazard_Shutdown()
 // func_8018A538
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "ColTestCyl__9NPCHazardFPC6xBoundff")
 
-// func_8018A61C
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "ColPlyrSphere__9NPCHazardFf")
+int32 NPCHazard::ColPlyrSphere(float32 rad)
+{
+    return this->ColTestSphere(&globals.player.ent.bound, rad);
+}
 
-// func_8018A648
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "ColPlyrCyl__9NPCHazardFff")
+int32 NPCHazard::ColPlyrCyl(float32 rad, float32 hyt)
+{
+    return this->ColTestCyl(&globals.player.ent.bound, rad, hyt);
+}
 
-// func_8018A674
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HurtThePlayer__9NPCHazardFv")
+void NPCHazard::HurtThePlayer()
+{
+    if (this->npc_owner == NULL)
+    {
+        zEntPlayer_Damage(NULL, 1);
+    }
+    else if (zEntPlayer_DamageNPCKnockBack((xBase*)this->npc_owner, 1, &this->pos_hazard))
+    {
+        this->npc_owner->Vibrate(NPC_VIBE_NORM, _1041_Hazard);
+    }
+}
 
 // func_8018A6DC
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "TypData_RotMatStore__9NPCHazardFP5xVec3")
 
-// func_8018A7A8
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "TypData_RotMatSet__9NPCHazardFP7xMat3x3")
+void NPCHazard::TypData_RotMatSet(xMat3x3* mat)
+{
+    xMat3x3* frame = (xMat3x3*)xModelGetFrame(this->mdl_hazard);
+    xMat3x3Copy(frame, mat);
+    xModelSetFrame(this->mdl_hazard, (xMat4x3*)frame);
+}
 
-// func_8018A7FC
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "TypData_RotMatApply__9NPCHazardFP7xMat3x3")
+void NPCHazard::TypData_RotMatApply(xMat3x3* mat)
+{
+    xMat3x3* frame = (xMat3x3*)xModelGetFrame(this->mdl_hazard);
+    xMat3x3Mul(frame, mat, frame);
+    xModelSetFrame(this->mdl_hazard, (xMat4x3*)frame);
+}
 
 // func_8018A854
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "OrientToDir__9NPCHazardFPC5xVec3i")
@@ -128,17 +328,25 @@ void zNPCHazard_Shutdown()
 // func_8018ACD8
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "StagColGeneral__9NPCHazardFi")
 
-// func_8018AE6C
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "StagColStat__9NPCHazardFv")
+void NPCHazard::StagColStat()
+{
+    this->StagColGeneral(1);
+}
 
-// func_8018AE90
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "StagColDyn__9NPCHazardFv")
+void NPCHazard::StagColDyn()
+{
+    this->StagColGeneral(2);
+}
 
-// func_8018AEB4
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "StagColNPC__9NPCHazardFv")
+void NPCHazard::StagColNPC()
+{
+    this->StagColGeneral(4);
+}
 
-// func_8018AED8
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "CollideResponse__9NPCHazardFP12xSweptSpheref")
+void NPCHazard::CollideResponse(xSweptSphere* swdata, float32 tym_inFuture)
+{
+    this->ColResp_Default(swdata, tym_inFuture);
+}
 
 // func_8018AEF8
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "ColResp_Default__9NPCHazardFP12xSweptSpheref")
@@ -299,8 +507,33 @@ void UVAModelInfo::Hemorrage()
 // func_8018F578
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "SetColor__12UVAModelInfoF10iColor_tag")
 
+#if 1
+
 // func_8018F610
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "GetUV__12UVAModelInfoCFRP11RwTexCoordsRiP8RpAtomic")
+
+#else
+
+// Need to figure out what is wrong with the final return statement, and the b and blr swaps.
+int32 UVAModelInfo::GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* model)
+{
+    coords = NULL;
+    numVertices = 0;
+    RpGeometry* geom = model->geometry;
+    if (geom == NULL)
+    {
+        return 0;
+    }
+    numVertices = geom->numVertices;
+    if (numVertices <= 0)
+    {
+        return 0;
+    }
+    coords = geom->texCoords[0];
+    return (-(int32)coords->u | (uint32)coords->u) >> 0x1f;
+}
+
+#endif
 
 // func_8018F668
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "CloneUV__12UVAModelInfoCFRP11RwTexCoordsRiP8RpAtomic")
@@ -308,20 +541,29 @@ void UVAModelInfo::Hemorrage()
 // func_8018F6F4
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "__sinit_zNPCHazard_cpp")
 
-// func_8018FB10
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "At__9NPCHazardCFv")
+RwV3d* NPCHazard::At()
+{
+    return &this->mdl_hazard->Mat->at;
+}
 
-// func_8018FB20
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Right__9NPCHazardCFv")
+RwV3d* NPCHazard::Right()
+{
+    return &this->mdl_hazard->Mat->right;
+}
 
-// func_8018FB2C
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "Up__9NPCHazardCFv")
+RwV3d* NPCHazard::Up()
+{
+    return &this->mdl_hazard->Mat->up;
+}
 
-// func_8018FB3C
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "__ct__9NPCHazardFv")
+NPCHazard::NPCHazard()
+{
+}
 
-// func_8018FB40
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "__ct__9NPCHazardF9en_npchaz")
+NPCHazard::NPCHazard(en_npchaz haztype)
+{
+    this->typ_hazard = haztype;
+}
 
 // func_8018FB48
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "inverse__5xVec3CFv")
@@ -335,5 +577,7 @@ void UVAModelInfo::Hemorrage()
 // func_8018FC8C
 #pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "xUtil_choose_esc__0_i_esc__1___FPCiiPCf")
 
-// func_8018FDA0
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "xVec2Length2__FPC5xVec2")
+float32 xVec2Length2(const xVec2* v)
+{
+    return xVec2Dot(v, v);
+}
