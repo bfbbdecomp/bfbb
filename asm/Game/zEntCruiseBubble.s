@@ -488,14 +488,6 @@ lbl_80057CB8:
 /* 80057CC0 00054AC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057CC4 00054AC4  4E 80 00 20 */	blr 
 
-/* stop_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-stop_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80057CC8 00054AC8  3C 60 80 29 */	lis r3, lbl_80290000@ha
-/* 80057CCC 00054ACC  84 03 C2 A4 */	lwzu r0, -0x3d5c(r3)
-/* 80057CD0 00054AD0  54 00 06 6E */	rlwinm r0, r0, 0, 0x19, 0x17
-/* 80057CD4 00054AD4  90 03 00 00 */	stw r0, lbl_80290000@l(r3)
-/* 80057CD8 00054AD8  4E 80 00 20 */	blr 
-
 /* set_state__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@11thread_enumQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@10state_enum */
 set_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11thread_enumQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_enum:
 /* 80057CDC 00054ADC  94 21 FF F0 */	stwu r1, -0x10(r1)

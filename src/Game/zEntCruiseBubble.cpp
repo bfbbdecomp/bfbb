@@ -510,10 +510,10 @@ void cruise_bubble::start_trail()
 }
 #endif
 
-// func_80057CC8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "stop_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::stop_trail()
+{
+    shared.flags = shared.flags & 0xffffff7f;
+}
 
 // func_80057CDC
 #pragma GLOBAL_ASM(                                                                                \

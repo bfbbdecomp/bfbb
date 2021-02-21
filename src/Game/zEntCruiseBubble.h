@@ -88,6 +88,7 @@ namespace cruise_bubble
     void signal_event(uint32 toEvent);
     void refresh_trail(xMat4x3& mat, xQuat& quat);
     void start_trail();
+    void stop_trail();
 
 } // namespace cruise_bubble
 
