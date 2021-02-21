@@ -10027,11 +10027,6 @@ lbl_80146540:
 /* 80146574 00143374  38 21 00 70 */	addi r1, r1, 0x70
 /* 80146578 00143378  4E 80 00 20 */	blr 
 
-.global Name__21zNPCGoalBossSandyLeapFv
-Name__21zNPCGoalBossSandyLeapFv:
-/* 801465F4 001433F4  38 60 00 00 */	li r3, 0
-/* 801465F8 001433F8  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata

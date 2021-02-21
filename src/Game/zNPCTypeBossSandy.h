@@ -239,6 +239,8 @@ struct zNPCGoalBossSandyLeap : zNPCGoalCommon
     zNPCGoalBossSandyLeap(int32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    int32 Name();
 };
 
 struct zNPCGoalBossSandySit : zNPCGoalCommon

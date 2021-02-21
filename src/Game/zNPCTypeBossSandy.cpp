@@ -412,5 +412,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
-// func_801465F4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Name__21zNPCGoalBossSandyLeapFv")
+int32 zNPCGoalBossSandyLeap::Name()
+{
+    return 0;
+}
