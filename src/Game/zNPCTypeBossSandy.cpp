@@ -16,17 +16,10 @@ extern float32 __864; // 0.25
 extern zNPCBSandy* sSandyPtr;
 extern uint32 sCurrNFSound;
 
-// func_8013D054
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_newsfish__FRC10tweak_info")
-#else
 void on_change_newsfish(const tweak_info& tweak)
 {
-    // 42 0xa8 800f46c0 zNPCCommon::SpeakStart(unsigned int, unsigned int, int)
-    // 8896: 803cbfac     4 OBJECT  LOCAL  DEFAULT   11 sCurrNFSound
     sSandyPtr->newsfish->SpeakStart(sCurrNFSound, 0, -1);
 }
-#endif
 
 // func_8013D094
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_shockwave__FRC10tweak_info")

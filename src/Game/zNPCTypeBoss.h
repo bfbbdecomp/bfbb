@@ -18,7 +18,6 @@ struct zNPCBoss : zNPCCommon
     virtual uint8 PhysicsFlags() const;
     virtual float32 AttackTimeLeft();
     virtual void HoldUpDude();
-    virtual void SpeakStart();
     virtual void ThanksImDone();
 
 protected:
