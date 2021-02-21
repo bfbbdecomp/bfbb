@@ -289,7 +289,18 @@ void zNPCBSandy_BossDamageEffect_Init()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "meleeCB__FP5xGoalPvP11en_trantypefPv")
 
 // func_8014289C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "noHeadCB__FP5xGoalPvP11en_trantypefPv")
+#else
+int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    zNPCGoalBossSandyNoHead* noHead;
+    zNPCBSandy* sandy;
+    int32 nextgoal;
+
+    return 0;
+}
+#endif
 
 // func_8014292C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "elbowDropCB__FP5xGoalPvP11en_trantypefPv")
