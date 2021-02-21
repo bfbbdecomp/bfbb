@@ -35,9 +35,10 @@ uint32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*)
     return (globals.player.carry.grabbed == sSandyPtr->headBoulder);
 }
 
-// func_8013D8A4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*)
+{
+    return !(globals.player.carry.grabbed == sSandyPtr->headBoulder);
+}
 
 // func_8013D8CC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \

@@ -536,18 +536,6 @@ lbl_8013D860:
 /* 8013D878 0013A678  38 21 00 90 */	addi r1, r1, 0x90
 /* 8013D87C 0013A67C  4E 80 00 20 */	blr 
 
-HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D8A4 0013A6A4  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
-/* 8013D8A8 0013A6A8  3C 80 80 3C */	lis r4, globals@ha
-/* 8013D8AC 0013A6AC  38 84 05 58 */	addi r4, r4, globals@l
-/* 8013D8B0 0013A6B0  80 84 17 B0 */	lwz r4, 0x17b0(r4)
-/* 8013D8B4 0013A6B4  80 03 07 C4 */	lwz r0, 0x7c4(r3)
-/* 8013D8B8 0013A6B8  7C 64 00 50 */	subf r3, r4, r0
-/* 8013D8BC 0013A6BC  7C 00 20 50 */	subf r0, r0, r4
-/* 8013D8C0 0013A6C0  7C 60 03 78 */	or r0, r3, r0
-/* 8013D8C4 0013A6C4  54 03 0F FE */	srwi r3, r0, 0x1f
-/* 8013D8C8 0013A6C8  4E 80 00 20 */	blr 
-
 HeadIsShocked__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8013D8CC 0013A6CC  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D8D0 0013A6D0  80 03 02 C0 */	lwz r0, 0x2c0(r3)
