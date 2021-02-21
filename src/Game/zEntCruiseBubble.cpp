@@ -492,9 +492,23 @@ void cruise_bubble::refresh_trail(xMat4x3& mat, xQuat& quat)
 }
 
 // func_80057C78
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#ifndef NONMATCHING
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::start_trail()
+{
+    if (shared.flags & 0x80)
+    {
+        return;
+    }
+    
+    shared.flags = shared.flags | 0x180;
+    shared.fov_default = zEntCruiseBubble_f_0_0;
+    shared.dialog_freq = zEntCruiseBubble_f_0_0;
+
+    refresh_trail(shared.trail.mat, shared.trail.dir); // [refresh_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR7xMat4x3R5xQuat]
+}
+#endif
 
 // func_80057CC8
 #pragma GLOBAL_ASM(                                                                                \
