@@ -536,20 +536,6 @@ lbl_8013D860:
 /* 8013D878 0013A678  38 21 00 90 */	addi r1, r1, 0x90
 /* 8013D87C 0013A67C  4E 80 00 20 */	blr 
 
-HeadIsShocked__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D8CC 0013A6CC  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
-/* 8013D8D0 0013A6D0  80 03 02 C0 */	lwz r0, 0x2c0(r3)
-/* 8013D8D4 0013A6D4  54 03 05 EE */	rlwinm r3, r0, 0, 0x17, 0x17
-/* 8013D8D8 0013A6D8  4E 80 00 20 */	blr 
-
-HeadNotShocked__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D8DC 0013A6DC  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
-/* 8013D8E0 0013A6E0  80 03 02 C0 */	lwz r0, 0x2c0(r3)
-/* 8013D8E4 0013A6E4  54 00 05 EE */	rlwinm r0, r0, 0, 0x17, 0x17
-/* 8013D8E8 0013A6E8  7C 00 00 34 */	cntlzw r0, r0
-/* 8013D8EC 0013A6EC  54 03 DE 3E */	rlwinm r3, r0, 0x1b, 0x18, 0x1f
-/* 8013D8F0 0013A6F0  4E 80 00 20 */	blr 
-
 ZNPC_AnimTable_BossSandyHead__Fv:
 /* 8013D8F4 0013A6F4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8013D8F8 0013A6F8  7C 08 02 A6 */	mflr r0

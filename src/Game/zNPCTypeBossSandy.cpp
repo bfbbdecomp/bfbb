@@ -40,13 +40,15 @@ uint32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*)
     return !(globals.player.carry.grabbed == sSandyPtr->headBoulder);
 }
 
-// func_8013D8CC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadIsShocked__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 HeadIsShocked(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sSandyPtr->bossFlags & 0x100;
+}
 
-// func_8013D8DC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadNotShocked__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*)
+{
+    return !(sSandyPtr->bossFlags & 0x100);
+}
 
 // func_8013D8F4
 #if 1
