@@ -109,6 +109,8 @@ extern uint32 sCurrNFSound;
 
 extern NPCSndTrax g_sndTrax_BossSandy[1];
 
+extern BossDamageEffectRecord BDErecord[4];
+
 void on_change_newsfish(const tweak_info& tweak)
 {
     sSandyPtr->newsfish->SpeakStart(sCurrNFSound, 0, -1);
@@ -216,8 +218,13 @@ void zNPCBSandy::ParseINI()
 // func_8013F36C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "SpringRender__FP15SandyLimbSpring")
 
-// func_8013F6B8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_BossDamageEffect_Init__Fv")
+void zNPCBSandy_BossDamageEffect_Init()
+{
+    for (int32 i = 0; i < 4; i++)
+    {
+        BDErecord[i].BDEminst = NULL;
+    }
+}
 
 // func_8013F6D8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \

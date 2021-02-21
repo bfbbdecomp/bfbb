@@ -2457,16 +2457,6 @@ lbl_8013F67C:
 /* 8013F6B0 0013C4B0  38 21 00 70 */	addi r1, r1, 0x70
 /* 8013F6B4 0013C4B4  4E 80 00 20 */	blr 
 
-zNPCBSandy_BossDamageEffect_Init__Fv:
-/* 8013F6B8 0013C4B8  3C 60 80 33 */	lis r3, BDErecord@ha
-/* 8013F6BC 0013C4BC  38 00 00 00 */	li r0, 0
-/* 8013F6C0 0013C4C0  38 63 81 14 */	addi r3, r3, BDErecord@l
-/* 8013F6C4 0013C4C4  90 03 01 04 */	stw r0, 0x104(r3)
-/* 8013F6C8 0013C4C8  90 03 02 0C */	stw r0, 0x20c(r3)
-/* 8013F6CC 0013C4CC  90 03 03 14 */	stw r0, 0x314(r3)
-/* 8013F6D0 0013C4D0  90 03 04 1C */	stw r0, 0x41c(r3)
-/* 8013F6D4 0013C4D4  4E 80 00 20 */	blr 
-
 zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi:
 /* 8013F6D8 0013C4D8  28 04 00 00 */	cmplwi r4, 0
 /* 8013F6DC 0013C4DC  41 82 00 D4 */	beq lbl_8013F7B0
@@ -10081,6 +10071,7 @@ sSinTable:
 	.skip 0x9C
 sNFSoundValue:
 	.skip 0x78
+.global BDErecord
 BDErecord:
 	.skip 0x424
 

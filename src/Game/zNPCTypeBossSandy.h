@@ -10,6 +10,14 @@
 #include "../Core/x/xEntBoulder.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xCamera.h"
+#include "../Core/x/xModel.h"
+
+struct BossDamageEffectRecord
+{
+    float32 save_F32[64];
+    float32 BDEtimer;
+    xModelInstance* BDEminst;
+};
 
 struct zNPCBSandy : zNPCBoss
 {
