@@ -86,6 +86,7 @@ namespace cruise_bubble
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
     void signal_event(uint32 toEvent);
+    void refresh_trail(xMat4x3& mat, xQuat& quat);
 
 } // namespace cruise_bubble
 

@@ -1297,8 +1297,8 @@ lbl_80034FE0:
 /* 80034FEC 00031DEC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80034FF0 00031DF0  4E 80 00 20 */	blr 
 
-.global xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUl
-xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUl:
+.global xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUi
+xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUi:
 /* 80034FF4 00031DF4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80034FF8 00031DF8  7C 08 02 A6 */	mflr r0
 /* 80034FFC 00031DFC  28 05 00 00 */	cmplwi r5, 0

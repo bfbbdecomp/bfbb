@@ -78,4 +78,4 @@
 #pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelGetBoneLocation__FRC14xModelInstanceUl")
 
 // func_80034FF4
-#pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUl")
+#pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUi")

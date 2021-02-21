@@ -119,5 +119,6 @@ xMat4x3* xModelGetFrame(xModelInstance* modelInst);
 void xModelEval(xModelInstance* modelInst);
 void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
+void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, uint32 index);
 
 #endif

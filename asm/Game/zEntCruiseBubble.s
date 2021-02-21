@@ -464,30 +464,6 @@ lbl_80057BCC:
 /* 80057BE8 000549E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80057BEC 000549EC  4E 80 00 20 */	blr 
 
-/* refresh_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR7xMat4x3R5xQuat */
-refresh_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR7xMat4x3R5xQuat:
-/* 80057C24 00054A24  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80057C28 00054A28  7C 08 02 A6 */	mflr r0
-/* 80057C2C 00054A2C  3C A0 80 29 */	lis r5, shared__13cruise_bubble@ha
-/* 80057C30 00054A30  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80057C34 00054A34  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80057C38 00054A38  7C 9F 23 78 */	mr r31, r4
-/* 80057C3C 00054A3C  38 85 C2 A4 */	addi r4, r5, shared__13cruise_bubble@l
-/* 80057C40 00054A40  38 A0 00 08 */	li r5, 8
-/* 80057C44 00054A44  93 C1 00 08 */	stw r30, 8(r1)
-/* 80057C48 00054A48  7C 7E 1B 78 */	mr r30, r3
-/* 80057C4C 00054A4C  80 84 00 68 */	lwz r4, 0x68(r4)
-/* 80057C50 00054A50  4B FD D3 A5 */	bl xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUl
-/* 80057C54 00054A54  7F E3 FB 78 */	mr r3, r31
-/* 80057C58 00054A58  7F C4 F3 78 */	mr r4, r30
-/* 80057C5C 00054A5C  4B FD B0 29 */	bl xQuatFromMat__FP5xQuatPC7xMat3x3
-/* 80057C60 00054A60  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80057C64 00054A64  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80057C68 00054A68  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80057C6C 00054A6C  7C 08 03 A6 */	mtlr r0
-/* 80057C70 00054A70  38 21 00 10 */	addi r1, r1, 0x10
-/* 80057C74 00054A74  4E 80 00 20 */	blr 
-
 /* start_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80057C78 00054A78  94 21 FF F0 */	stwu r1, -0x10(r1)

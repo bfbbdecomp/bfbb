@@ -8,6 +8,7 @@
 
 #include "../Core/x/xMath.h"
 #include "../Core/x/xMath3.h"
+#include "../Core/x/xModel.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xString.h"
 #include "../Core/x/xVec3.h"
@@ -484,10 +485,11 @@ void cruise_bubble::signal_event(uint32 toEvent)
     zEntEvent(&globals.player.ent, &globals.player.ent, toEvent);
 }
 
-// func_80057C24
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR7xMat4x3R5xQuat")
+void cruise_bubble::refresh_trail(xMat4x3& mat, xQuat& quat)
+{
+    xModelGetBoneMat(mat, *shared.missle_model, 8);
+    xQuatFromMat(&quat, &mat);
+}
 
 // func_80057C78
 #pragma GLOBAL_ASM(                                                                                \
