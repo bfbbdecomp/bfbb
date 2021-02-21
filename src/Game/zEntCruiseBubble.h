@@ -35,6 +35,14 @@ namespace cruise_bubble
         STATE_INVALID = 0xffffffff
     };
 
+    enum thread_enum
+    {
+        THREAD_PLAYER,
+        THREAD_MISSLE,
+        THREAD_CAMERA,
+        MAX_THREAD
+    };
+
     struct state_type
     {
         state_enum type;
@@ -89,6 +97,7 @@ namespace cruise_bubble
     void refresh_trail(xMat4x3& mat, xQuat& quat);
     void start_trail();
     void stop_trail();
+    void set_state(thread_enum thread, state_enum state);
 
 } // namespace cruise_bubble
 

@@ -516,9 +516,46 @@ void cruise_bubble::stop_trail()
 }
 
 // func_80057CDC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "set_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11thread_enumQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_enum")
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "set_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11thread_enumQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_enum")
+#else
+void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::state_enum state)
+{
+// Size=156
+//     r5 = shared__13cruise_bubble@ha; // [int16]
+//     slwi r3, r3, 2
+//     r0 = r5 + shared__13cruise_bubble@l;
+//     add r3, r0, r3
+//     0xc(r1) = r31;
+//     r31 = r3 + 4;
+//     8(r1) = r30;
+//     r30 = r4;
+//     r3 = 4(r3);
+//     cmplwi r3, 0
+//     beq lbl_80057D2C
+//     r12 = 4(r3);
+//     r12 = 0xc(r12);
+//     mtctr r12
+//     bctrl 
+//     r0 = 0;
+//     0(r31) = r0;
+// lbl_80057D2C:
+//     cmpwi r30, -1
+//     beq lbl_80057D60
+//     r3 = shared__13cruise_bubble@ha; // [int16]
+//     slwi r0, r30, 2
+//     r3 = r3 + shared__13cruise_bubble@l;
+//     add r3, r3, r0
+//     r0 = 0x10(r3);
+//     0(r31) = r0;
+//     r3 = 0(r31);
+//     r12 = 4(r3);
+//     r12 = 8(r12);
+//     mtctr r12
+//     bctrl 
+// lbl_80057D60:
+}
+#endif
 
 // func_80057D78
 #pragma GLOBAL_ASM(                                                                                \
