@@ -10027,13 +10027,6 @@ lbl_80146540:
 /* 80146574 00143374  38 21 00 70 */	addi r1, r1, 0x70
 /* 80146578 00143378  4E 80 00 20 */	blr 
 
-.global set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f
-set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f:
-/* 80146580 00143380  90 83 00 50 */	stw r4, 0x50(r3)
-/* 80146584 00143384  90 A3 00 54 */	stw r5, 0x54(r3)
-/* 80146588 00143388  D0 23 00 58 */	stfs f1, 0x58(r3)
-/* 8014658C 0014338C  4E 80 00 20 */	blr 
-
 .global Name__21zNPCGoalBossSandyLeapFv
 Name__21zNPCGoalBossSandyLeapFv:
 /* 801465F4 001433F4  38 60 00 00 */	li r3, 0

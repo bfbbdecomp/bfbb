@@ -306,19 +306,12 @@ void xBinaryCamera::add_tweaks(char const*)
 {
 }
 
-// func_80146580
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f")
-#else
 void xBinaryCamera::set_targets(xVec3 const& par_1, xVec3 const& par_2, float32 par_3)
 {
-    /*
-    0x50(r3) = r4;
-    0x54(r3) = r5;
-    0x58(r3) = f1; // [float32]
-    */
+    this->s1 = (xVec3*)(&par_1);
+    this->s2 = (xVec3*)(&par_2);
+    this->s2_radius = par_3;
 }
-#endif
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
