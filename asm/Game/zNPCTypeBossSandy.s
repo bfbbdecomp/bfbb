@@ -10167,178 +10167,264 @@ __830:
 .global __831
 __831:
 	.incbin "baserom.dol", 0x2B86EC, 0x4
-_842:
+.global __842
+__842:
 	.incbin "baserom.dol", 0x2B86F0, 0x4
+.global _843
 _843:
 	.incbin "baserom.dol", 0x2B86F4, 0x4
 .global _864
 _864:
 	.incbin "baserom.dol", 0x2B86F8, 0x4
+.global _1029
 _1029:
 	.incbin "baserom.dol", 0x2B86FC, 0x4
+.global _1030
 _1030:
 	.incbin "baserom.dol", 0x2B8700, 0x4
+.global _1031
 _1031:
 	.incbin "baserom.dol", 0x2B8704, 0x4
+.global _1032
 _1032:
 	.incbin "baserom.dol", 0x2B8708, 0x4
+.global _1033
 _1033:
 	.incbin "baserom.dol", 0x2B870C, 0x4
+.global _1034
 _1034:
 	.incbin "baserom.dol", 0x2B8710, 0x4
+.global _1035
 _1035:
 	.incbin "baserom.dol", 0x2B8714, 0x4
+.global _1036
 _1036:
 	.incbin "baserom.dol", 0x2B8718, 0x4
+.global _1037
 _1037:
 	.incbin "baserom.dol", 0x2B871C, 0x4
+.global _1039
 _1039:
 	.incbin "baserom.dol", 0x2B8720, 0x8
-_1061:
+.global _1061_1
+_1061_1:
 	.incbin "baserom.dol", 0x2B8728, 0x4
-_1062:
+.global _1062_1
+_1062_1:
 	.incbin "baserom.dol", 0x2B872C, 0x4
+.global _1063
 _1063:
 	.incbin "baserom.dol", 0x2B8730, 0x4
+.global _1064
 _1064:
 	.incbin "baserom.dol", 0x2B8734, 0x4
+.global _1065
 _1065:
 	.incbin "baserom.dol", 0x2B8738, 0x4
+.global _1066
 _1066:
 	.incbin "baserom.dol", 0x2B873C, 0x4
+.global _1067
 _1067:
 	.incbin "baserom.dol", 0x2B8740, 0x4
+.global _1068
 _1068:
 	.incbin "baserom.dol", 0x2B8744, 0x4
+.global _1069
 _1069:
 	.incbin "baserom.dol", 0x2B8748, 0x4
+.global _1070
 _1070:
 	.incbin "baserom.dol", 0x2B874C, 0x4
+.global _1071
 _1071:
 	.incbin "baserom.dol", 0x2B8750, 0x4
+.global _1072
 _1072:
 	.incbin "baserom.dol", 0x2B8754, 0x4
-_1188:
+.global _1188_1
+_1188_1:
 	.incbin "baserom.dol", 0x2B8758, 0x4
+.global _1189
 _1189:
 	.incbin "baserom.dol", 0x2B875C, 0x4
+.global _1190
 _1190:
 	.incbin "baserom.dol", 0x2B8760, 0x4
+.global _1191
 _1191:
 	.incbin "baserom.dol", 0x2B8764, 0x4
-_1192:
+.global _1192_1
+_1192_1:
 	.incbin "baserom.dol", 0x2B8768, 0x4
+.global _1193
 _1193:
 	.incbin "baserom.dol", 0x2B876C, 0x4
+.global _1194
 _1194:
 	.incbin "baserom.dol", 0x2B8770, 0x4
+.global _1195
 _1195:
 	.incbin "baserom.dol", 0x2B8774, 0x4
+.global _1196
 _1196:
 	.incbin "baserom.dol", 0x2B8778, 0x4
+.global _1209
 _1209:
 	.incbin "baserom.dol", 0x2B877C, 0x4
+.global _1378
 _1378:
 	.incbin "baserom.dol", 0x2B8780, 0x4
+.global _1379
 _1379:
 	.incbin "baserom.dol", 0x2B8784, 0x4
+.global _1380
 _1380:
 	.incbin "baserom.dol", 0x2B8788, 0x4
+.global _1381
 _1381:
 	.incbin "baserom.dol", 0x2B878C, 0x4
+.global _1462
 _1462:
 	.incbin "baserom.dol", 0x2B8790, 0x4
+.global _1463
 _1463:
 	.incbin "baserom.dol", 0x2B8794, 0x4
+.global _1464
 _1464:
 	.incbin "baserom.dol", 0x2B8798, 0x4
+.global _1465
 _1465:
 	.incbin "baserom.dol", 0x2B879C, 0x4
+.global _1466
 _1466:
 	.incbin "baserom.dol", 0x2B87A0, 0x4
+.global _1521
 _1521:
 	.incbin "baserom.dol", 0x2B87A4, 0x4
+.global _1522
 _1522:
 	.incbin "baserom.dol", 0x2B87A8, 0x4
+.global _1523
 _1523:
 	.incbin "baserom.dol", 0x2B87AC, 0x4
+.global _1524
 _1524:
 	.incbin "baserom.dol", 0x2B87B0, 0x4
+.global _1525
 _1525:
 	.incbin "baserom.dol", 0x2B87B4, 0x4
+.global _1526
 _1526:
 	.incbin "baserom.dol", 0x2B87B8, 0x4
+.global _1527
 _1527:
 	.incbin "baserom.dol", 0x2B87BC, 0x4
+.global _1528
 _1528:
 	.incbin "baserom.dol", 0x2B87C0, 0x4
+.global _1529
 _1529:
 	.incbin "baserom.dol", 0x2B87C4, 0x4
+.global _1530
 _1530:
 	.incbin "baserom.dol", 0x2B87C8, 0x4
+.global _1531
 _1531:
 	.incbin "baserom.dol", 0x2B87CC, 0x4
+.global _1666
 _1666:
 	.incbin "baserom.dol", 0x2B87D0, 0x4
+.global _1667
 _1667:
 	.incbin "baserom.dol", 0x2B87D4, 0x4
+.global _1935
 _1935:
 	.incbin "baserom.dol", 0x2B87D8, 0x4
+.global _1936
 _1936:
 	.incbin "baserom.dol", 0x2B87DC, 0x4
+.global _1937
 _1937:
 	.incbin "baserom.dol", 0x2B87E0, 0x4
+.global _1938
 _1938:
 	.incbin "baserom.dol", 0x2B87E4, 0x4
+.global _1939
 _1939:
 	.incbin "baserom.dol", 0x2B87E8, 0x4
+.global _1940
 _1940:
 	.incbin "baserom.dol", 0x2B87EC, 0x4
+.global _1941
 _1941:
 	.incbin "baserom.dol", 0x2B87F0, 0x4
+.global _1942
 _1942:
 	.incbin "baserom.dol", 0x2B87F4, 0x4
+.global _2154
 _2154:
 	.incbin "baserom.dol", 0x2B87F8, 0x4
+.global _2155
 _2155:
 	.incbin "baserom.dol", 0x2B87FC, 0x4
+.global _2156
 _2156:
 	.incbin "baserom.dol", 0x2B8800, 0x4
+.global _2173
 _2173:
 	.incbin "baserom.dol", 0x2B8804, 0x4
+.global _2236
 _2236:
 	.incbin "baserom.dol", 0x2B8808, 0x4
+.global _2237
 _2237:
 	.incbin "baserom.dol", 0x2B880C, 0x4
+.global _2264
 _2264:
 	.incbin "baserom.dol", 0x2B8810, 0x4
+.global _2265
 _2265:
 	.incbin "baserom.dol", 0x2B8814, 0x4
+.global _2376
 _2376:
 	.incbin "baserom.dol", 0x2B8818, 0x4
+.global _2377
 _2377:
 	.incbin "baserom.dol", 0x2B881C, 0x4
+.global _2517
 _2517:
 	.incbin "baserom.dol", 0x2B8820, 0x4
+.global _2518
 _2518:
 	.incbin "baserom.dol", 0x2B8824, 0x4
+.global _2519
 _2519:
 	.incbin "baserom.dol", 0x2B8828, 0x4
+.global _2520
 _2520:
 	.incbin "baserom.dol", 0x2B882C, 0x4
+.global _2525
 _2525:
 	.incbin "baserom.dol", 0x2B8830, 0x4
+.global _2582
 _2582:
 	.incbin "baserom.dol", 0x2B8834, 0x4
+.global _2633
 _2633:
 	.incbin "baserom.dol", 0x2B8838, 0x4
+.global _2741
 _2741:
 	.incbin "baserom.dol", 0x2B883C, 0x4
+.global _2742
 _2742:
 	.incbin "baserom.dol", 0x2B8840, 0x4
+.global _2818
 _2818:
 	.incbin "baserom.dol", 0x2B8844, 0x4
+.global _2903
 _2903:
 	.incbin "baserom.dol", 0x2B8848, 0x4
+.global _2904
 _2904:
 	.incbin "baserom.dol", 0x2B884C, 0x4

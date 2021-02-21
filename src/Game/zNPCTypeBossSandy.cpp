@@ -11,9 +11,95 @@
 
 extern const char bossSandyStrings[];
 
-extern float32 __830; // 0.0
-extern float32 __831; // 1.0
-extern float32 __864; // 0.25
+extern float32 __830; // 0.0   0
+extern float32 __831; // 1.0   3f800000
+extern float32 __842; // 0.20000000298023224   3e4ccccd
+extern float32 _843; // 3.3333332538604736   40555555
+extern float32 _864; // 0.25   3e800000
+extern float32 _1029; // 6.2831854820251465   40c90fdb
+extern float32 _1030; // 0.0625   3d800000
+extern float32 _1031; // 255.0   437f0000
+extern float32 _1032; // 0.5   3f000000
+extern float32 _1033; // -1.0   bf800000
+extern float32 _1034; // 20.0   41a00000
+extern float32 _1035; // 10.0   41200000
+extern float32 _1036; // 1000000000.0   4e6e6b28
+extern float32 _1037; // 2.25   40100000
+extern float32 _1039; // 176.0   43300000
+extern float32 _1061_1; // 6.0   40c00000
+extern float32 _1062_1; // 1.2999999523162842   3fa66666
+extern float32 _1063; // 2.0   40000000
+extern float32 _1064; // 3.0   40400000
+extern float32 _1065; // 8.199999809265137   41033333
+extern float32 _1066; // 4.0   40800000
+extern float32 _1067; // 4.5   40900000
+extern float32 _1068; // 0.15000000596046448   3e19999a
+extern float32 _1069; // -0.4000000059604645   becccccd
+extern float32 _1070; // 9.699999809265137   411b3333
+extern float32 _1071; // 7.0   40e00000
+extern float32 _1072; // 5.0   40a00000
+extern float32 _1188_1; // -0.30000001192092896   be99999a
+extern float32 _1189; // 1.25   3fa00000
+extern float32 _1190; // 0.035999998450279236   3d1374bc
+extern float32 _1191; // 0.10999999940395355   3de147ae
+extern float32 _1192_1; // 0.10000000149011612   3dcccccd
+extern float32 _1193; // -10.0   c1200000
+extern float32 _1194; // 6.041999816894531   40c15810
+extern float32 _1195; // 0.125   3e000000
+extern float32 _1196; // 100.0   42c80000
+extern float32 _1209; // 9.999999747378752e-06   3727c5ac
+extern float32 _1378; // 478.0   43ef0000
+extern float32 _1379; // 0.6000000238418579   3f19999a
+extern float32 _1380; // 0.8999999761581421   3f666666
+extern float32 _1381; // 1.100000023841858   3f8ccccd
+extern float32 _1462; // 9.0   41100000
+extern float32 _1463; // 0.30000001192092896   3e99999a
+extern float32 _1464; // 0.699999988079071   3f333333
+extern float32 _1465; // 3.1415927410125732   40490fdb
+extern float32 _1466; // 0.75   3f400000
+extern float32 _1521; // 0.800000011920929   3f4ccccd
+extern float32 _1522; // -0.800000011920929   bf4ccccd
+extern float32 _1523; // -2.0   c0000000
+extern float32 _1524; // 66.0   42840000
+extern float32 _1525; // -2500.0   c51c4000
+extern float32 _1526; // -1.5   bfc00000
+extern float32 _1527; // 13.0   41500000
+extern float32 _1528; // 3.5   40600000
+extern float32 _1529; // -2.5   c0200000
+extern float32 _1530; // 25.0   41c80000
+extern float32 _1531; // 15.0   41700000
+extern float32 _1666; // 0.4000000059604645   3ecccccd
+extern float32 _1667; // -3.1415927410125732   c0490fdb
+extern float32 _1935; // 60.0   42700000
+extern float32 _1936; // 0.9900000095367432   3f7d70a4
+extern float32 _1937; // 0.009999999776482582   3c23d70a
+extern float32 _1938; // 2.950000047683716   403ccccd
+extern float32 _1939; // 15.5   41780000
+extern float32 _1940; // 1.5   3fc00000
+extern float32 _1941; // 40.0   42200000
+extern float32 _1942; // 0.8100000023841858   3f4f5c29
+extern float32 _2154; // 30.0   41f00000
+extern float32 _2155; // -9.999999747378752e-06   b727c5ac
+extern float32 _2156; // 2.309999942779541   4013d70a
+extern float32 _2173; // 12.0   41400000
+extern float32 _2236; // 0.7070000171661377   3f34fdf4
+extern float32 _2237; // 2.5   40200000
+extern float32 _2264; // 1.7000000476837158   3fd9999a
+extern float32 _2265; // 0.7699999809265137   3f451eb8
+extern float32 _2376; // 0.9800000190734863   3f7ae148
+extern float32 _2377; // 0.019999999552965164   3ca3d70a
+extern float32 _2517; // 1.1549999713897705   3f93d70a
+extern float32 _2518; // 80.0   42a00000
+extern float32 _2519; // 31.0   41f80000
+extern float32 _2520; // 42.0   42280000
+extern float32 _2525; // 0.6499999761581421   3f266666
+extern float32 _2582; // -3.0   c0400000
+extern float32 _2633; // 5.25   40a80000
+extern float32 _2741; // 0.0010000000474974513   3a83126f
+extern float32 _2742; // 4.71238899230957   4096cbe4
+extern float32 _2818; // 1.75   3fe00000
+extern float32 _2903; // 0.05000000074505806   3d4ccccd
+extern float32 _2904; // -0.05000000074505806   bd4ccccd
 
 extern zGlobals globals;
 
