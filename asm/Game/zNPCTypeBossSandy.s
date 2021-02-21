@@ -4,24 +4,6 @@
 
 .section .text  # 0x8013D054 - 0x801465FC
 
-on_change_newsfish__FRC10tweak_info:
-/* 8013D054 00139E54  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8013D058 00139E58  7C 08 02 A6 */	mflr r0
-/* 8013D05C 00139E5C  38 A0 00 00 */	li r5, 0
-/* 8013D060 00139E60  38 C0 FF FF */	li r6, -1
-/* 8013D064 00139E64  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8013D068 00139E68  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
-/* 8013D06C 00139E6C  80 8D 96 AC */	lwz r4, sCurrNFSound-_SDA_BASE_(r13)
-/* 8013D070 00139E70  80 63 0D 34 */	lwz r3, 0xd34(r3)
-/* 8013D074 00139E74  81 83 01 B8 */	lwz r12, 0x1b8(r3)
-/* 8013D078 00139E78  81 8C 00 A8 */	lwz r12, 0xa8(r12)
-/* 8013D07C 00139E7C  7D 89 03 A6 */	mtctr r12
-/* 8013D080 00139E80  4E 80 04 21 */	bctrl 
-/* 8013D084 00139E84  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8013D088 00139E88  7C 08 03 A6 */	mtlr r0
-/* 8013D08C 00139E8C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8013D090 00139E90  4E 80 00 20 */	blr 
-
 on_change_shockwave__FRC10tweak_info:
 /* 8013D094 00139E94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8013D098 00139E98  7C 08 02 A6 */	mflr r0
