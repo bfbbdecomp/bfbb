@@ -536,17 +536,6 @@ lbl_8013D860:
 /* 8013D878 0013A678  38 21 00 90 */	addi r1, r1, 0x90
 /* 8013D87C 0013A67C  4E 80 00 20 */	blr 
 
-HeadIsCarried__FP15xAnimTransitionP11xAnimSinglePv:
-/* 8013D880 0013A680  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
-/* 8013D884 0013A684  3C 80 80 3C */	lis r4, globals@ha
-/* 8013D888 0013A688  38 84 05 58 */	addi r4, r4, globals@l
-/* 8013D88C 0013A68C  80 84 17 B0 */	lwz r4, 0x17b0(r4)
-/* 8013D890 0013A690  80 03 07 C4 */	lwz r0, 0x7c4(r3)
-/* 8013D894 0013A694  7C 04 00 50 */	subf r0, r4, r0
-/* 8013D898 0013A698  7C 00 00 34 */	cntlzw r0, r0
-/* 8013D89C 0013A69C  54 03 DE 3E */	rlwinm r3, r0, 0x1b, 0x18, 0x1f
-/* 8013D8A0 0013A6A0  4E 80 00 20 */	blr 
-
 HeadNotCarried__FP15xAnimTransitionP11xAnimSinglePv:
 /* 8013D8A4 0013A6A4  80 6D 96 94 */	lwz r3, sSandyPtr-_SDA_BASE_(r13)
 /* 8013D8A8 0013A6A8  3C 80 80 3C */	lis r4, globals@ha

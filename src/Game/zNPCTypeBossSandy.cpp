@@ -5,6 +5,7 @@
 #include "../Core/x/xMath3.h"
 
 #include "zFX.h"
+#include "zGlobals.h"
 #include "zNPCTypeBossSandy.h"
 
 extern const char bossSandyStrings[];
@@ -12,6 +13,8 @@ extern const char bossSandyStrings[];
 extern float32 __830; // 0.0
 extern float32 __831; // 1.0
 extern float32 __864; // 0.25
+
+extern zGlobals globals;
 
 extern zNPCBSandy* sSandyPtr;
 extern uint32 sCurrNFSound;
@@ -27,9 +30,10 @@ void on_change_newsfish(const tweak_info& tweak)
 // func_8013D100
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ZNPC_AnimTable_BossSandy__Fv")
 
-// func_8013D880
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "HeadIsCarried__FP15xAnimTransitionP11xAnimSinglePv")
+uint32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.carry.grabbed == sSandyPtr->headBoulder);
+}
 
 // func_8013D8A4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
