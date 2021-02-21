@@ -10027,10 +10027,6 @@ lbl_80146540:
 /* 80146574 00143374  38 21 00 70 */	addi r1, r1, 0x70
 /* 80146578 00143378  4E 80 00 20 */	blr 
 
-.global add_tweaks__13xBinaryCameraFPCc
-add_tweaks__13xBinaryCameraFPCc:
-/* 8014657C 0014337C  4E 80 00 20 */	blr 
-
 .global set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f
 set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f:
 /* 80146580 00143380  90 83 00 50 */	stw r4, 0x50(r3)

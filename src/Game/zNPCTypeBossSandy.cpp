@@ -2,6 +2,7 @@
 
 #include "../Core/x/xAnim.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xCamera.h"
 #include "../Core/x/xMath3.h"
 
 #include "zFX.h"
@@ -301,11 +302,23 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
                    "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene")
 
-// func_8014657C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "add_tweaks__13xBinaryCameraFPCc")
+void xBinaryCamera::add_tweaks(char const*)
+{
+}
 
 // func_80146580
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "set_targets__13xBinaryCameraFRC5xVec3RC5xVec3f")
+#else
+void xBinaryCamera::set_targets(xVec3 const& par_1, xVec3 const& par_2, float32 par_3)
+{
+    /*
+    0x50(r3) = r4;
+    0x54(r3) = r5;
+    0x58(r3) = f1; // [float32]
+    */
+}
+#endif
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
