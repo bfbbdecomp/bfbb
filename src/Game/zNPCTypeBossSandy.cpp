@@ -24,8 +24,14 @@ void on_change_newsfish(const tweak_info& tweak)
     sSandyPtr->newsfish->SpeakStart(sCurrNFSound, 0, -1);
 }
 
-// func_8013D094
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "on_change_shockwave__FRC10tweak_info")
+void on_change_shockwave(const tweak_info& tweak)
+{
+    sSandyPtr->bossFlags |= 0x800;
+    xVec3Copy((xVec3*)(&sSandyPtr->shockwaveEmitter->tasset->pos),
+              (xVec3*)(&sSandyPtr->model->Mat->pos));
+    sSandyPtr->shockwaveEmitter->tasset->pos.y = __830;
+    sSandyPtr->shockRadius = __831;
+}
 
 // func_8013D100
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ZNPC_AnimTable_BossSandy__Fv")
