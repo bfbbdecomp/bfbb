@@ -7,6 +7,7 @@
 
 #include "zFX.h"
 #include "zGlobals.h"
+#include "zNPCSndTable.h"
 #include "zNPCTypeBossSandy.h"
 
 extern const char bossSandyStrings[];
@@ -106,6 +107,8 @@ extern zGlobals globals;
 extern zNPCBSandy* sSandyPtr;
 extern uint32 sCurrNFSound;
 
+extern NPCSndTrax g_sndTrax_BossSandy[1];
+
 void on_change_newsfish(const tweak_info& tweak)
 {
     sSandyPtr->newsfish->SpeakStart(sCurrNFSound, 0, -1);
@@ -196,8 +199,15 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
 // func_8013E830
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Reset__10zNPCBSandyFv")
 
-// func_8013F1AC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "ParseINI__10zNPCBSandyFv")
+void zNPCBSandy::ParseINI()
+{
+    zNPCCommon::ParseINI();
+
+    this->cfg_npc->snd_traxShare = NULL;
+    this->cfg_npc->snd_trax = g_sndTrax_BossSandy;
+
+    NPCS_SndTablePrepare(g_sndTrax_BossSandy);
+}
 
 // func_8013F1F8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
