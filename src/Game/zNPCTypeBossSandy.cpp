@@ -114,8 +114,10 @@ void on_change_newsfish(const tweak_info& tweak)
 void on_change_shockwave(const tweak_info& tweak)
 {
     sSandyPtr->bossFlags |= 0x800;
+
     xVec3Copy((xVec3*)(&sSandyPtr->shockwaveEmitter->tasset->pos),
               (xVec3*)(&sSandyPtr->model->Mat->pos));
+
     sSandyPtr->shockwaveEmitter->tasset->pos.y = __830;
     sSandyPtr->shockRadius = __831;
 }
@@ -125,7 +127,7 @@ void on_change_shockwave(const tweak_info& tweak)
 
 uint32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*)
 {
-    return (globals.player.carry.grabbed == sSandyPtr->headBoulder);
+    return globals.player.carry.grabbed == sSandyPtr->headBoulder;
 }
 
 uint32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*)
