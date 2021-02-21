@@ -85,6 +85,7 @@ namespace cruise_bubble
             float32 radius, uint8 explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
+    void signal_event(uint32 toEvent);
 
 } // namespace cruise_bubble
 

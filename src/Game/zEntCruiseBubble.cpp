@@ -479,10 +479,10 @@ uint8 cruise_bubble::was_damaged(xEnt* ent)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "exit_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScene")
 
-// func_80057BF0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "signal_event__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FUi")
+void cruise_bubble::signal_event(uint32 toEvent)
+{
+    zEntEvent(&globals.player.ent, &globals.player.ent, toEvent);
+}
 
 // func_80057C24
 #pragma GLOBAL_ASM(                                                                                \

@@ -464,22 +464,6 @@ lbl_80057BCC:
 /* 80057BE8 000549E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80057BEC 000549EC  4E 80 00 20 */	blr 
 
-/* signal_event__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FUi */
-signal_event__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FUi:
-/* 80057BF0 000549F0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80057BF4 000549F4  7C 08 02 A6 */	mflr r0
-/* 80057BF8 000549F8  3C 80 80 3C */	lis r4, globals@ha
-/* 80057BFC 000549FC  7C 65 1B 78 */	mr r5, r3
-/* 80057C00 00054A00  38 84 05 58 */	addi r4, r4, globals@l
-/* 80057C04 00054A04  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80057C08 00054A08  38 84 06 E0 */	addi r4, r4, 0x6e0
-/* 80057C0C 00054A0C  7C 83 23 78 */	mr r3, r4
-/* 80057C10 00054A10  4B FC 7A D1 */	bl zEntEvent__FP5xBaseP5xBaseUi
-/* 80057C14 00054A14  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80057C18 00054A18  7C 08 03 A6 */	mtlr r0
-/* 80057C1C 00054A1C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80057C20 00054A20  4E 80 00 20 */	blr 
-
 /* refresh_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR7xMat4x3R5xQuat */
 refresh_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR7xMat4x3R5xQuat:
 /* 80057C24 00054A24  94 21 FF F0 */	stwu r1, -0x10(r1)
