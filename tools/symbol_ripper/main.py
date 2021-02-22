@@ -246,15 +246,6 @@ def get_byte_length(block):
 	return byte_count
 
 def rip(subsys_name, symbol):
-	if subsys_name == None:
-		if locate_symbol(Path("src/Game"), symbol):
-			subsys_name = Path("Game")
-		elif locate_symbol(Path("src/Core/p2"), symbol):
-			subsys_name = Path("Core/p2")
-		elif locate_symbol(Path("src/Core/x"), symbol):
-			subsys_name = Path("Core/x")
-		else:
-			sys.exit("I don't know what to do with %s!" % symbol)
 	subsys_srcs = Path("src") / subsys_name
 	subsys_asms = Path("asm") / subsys_name
 	file_stem = locate_symbol(subsys_srcs, symbol)
@@ -308,14 +299,14 @@ def check_is_symbol_name(name):
 		sys.exit("Error: That looks like a path, not a symbol.")
 
 def get_subsys_name(name):
-	if name[0] == "x":
-		return Path("Core/x")
-	elif name[0] == 'i':
-		return Path("Core/p2")
-	elif name[0] == "z":
+	if locate_symbol(Path("src/Game"), name):
 		return Path("Game")
+	elif locate_symbol(Path("src/Core/p2"), name):
+		return Path("Core/p2")
+	elif locate_symbol(Path("src/Core/x"), name):
+		return Path("Core/x")
 	else:
-		return None
+		sys.exit("I don't know what to do with %s!" % symbol)
 
 if len(sys.argv) < 2:
 	sys.exit("Error: No symbol name given.")
