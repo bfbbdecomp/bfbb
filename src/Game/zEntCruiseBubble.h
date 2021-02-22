@@ -49,6 +49,7 @@ namespace cruise_bubble
 
         virtual void start();
         virtual void stop();
+        virtual void null_pad();
         virtual void render();
         virtual void abort();
     };
@@ -106,6 +107,7 @@ namespace cruise_bubble
     xVec3& get_player_loc();
     void render_player();
     void refresh_controls();
+    void render_state();
 
 } // namespace cruise_bubble
 

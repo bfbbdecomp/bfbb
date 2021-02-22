@@ -589,10 +589,16 @@ void cruise_bubble::refresh_controls()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP6xScenef")
 
-// func_800582AC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::render_state()
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        if (shared.state[i] != NULL)
+        {
+            shared.state[i]->render();
+        }
+    }
+}
 
 // func_80058310
 #pragma GLOBAL_ASM(                                                                                \

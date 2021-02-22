@@ -824,36 +824,6 @@ lbl_80058288:
 /* 800582A4 000550A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800582A8 000550A8  4E 80 00 20 */	blr 
 
-/* render_state__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-render_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 800582AC 000550AC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800582B0 000550B0  7C 08 02 A6 */	mflr r0
-/* 800582B4 000550B4  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 800582B8 000550B8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800582BC 000550BC  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800582C0 000550C0  3B E3 C2 A4 */	addi r31, r3, shared__13cruise_bubble@l
-/* 800582C4 000550C4  93 C1 00 08 */	stw r30, 8(r1)
-/* 800582C8 000550C8  3B C0 00 00 */	li r30, 0
-lbl_800582CC:
-/* 800582CC 000550CC  80 7F 00 04 */	lwz r3, 4(r31)
-/* 800582D0 000550D0  28 03 00 00 */	cmplwi r3, 0
-/* 800582D4 000550D4  41 82 00 14 */	beq lbl_800582E8
-/* 800582D8 000550D8  81 83 00 04 */	lwz r12, 4(r3)
-/* 800582DC 000550DC  81 8C 00 14 */	lwz r12, 0x14(r12)
-/* 800582E0 000550E0  7D 89 03 A6 */	mtctr r12
-/* 800582E4 000550E4  4E 80 04 21 */	bctrl 
-lbl_800582E8:
-/* 800582E8 000550E8  3B DE 00 01 */	addi r30, r30, 1
-/* 800582EC 000550EC  3B FF 00 04 */	addi r31, r31, 4
-/* 800582F0 000550F0  2C 1E 00 03 */	cmpwi r30, 3
-/* 800582F4 000550F4  41 80 FF D8 */	blt lbl_800582CC
-/* 800582F8 000550F8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800582FC 000550FC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80058300 00055100  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80058304 00055104  7C 08 03 A6 */	mtlr r0
-/* 80058308 00055108  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005830C 0005510C  4E 80 00 20 */	blr 
-
 render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
 /* 80058310 00055110  4E 80 00 20 */	blr 
 
