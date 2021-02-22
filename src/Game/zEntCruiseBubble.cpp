@@ -36,6 +36,7 @@ extern struct _class_36
     state_type* states[12];
     // Offset: 0x40
     xVec2 last_sp;
+    // Offset: 0x48
     xVec2 sp;
     xVec3 hit_loc;
     xVec3 hit_norm;
@@ -577,10 +578,11 @@ void cruise_bubble::render_player()
     zEntPlayer_MinimalRender(&globals.player.ent);
 }
 
-// func_8005814C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh_controls__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::refresh_controls()
+{
+    shared.last_sp = shared.sp;
+    shared.sp = globals.pad0->analog[0].offset;
+}
 
 // func_800581A0
 #pragma GLOBAL_ASM(                                                                                \

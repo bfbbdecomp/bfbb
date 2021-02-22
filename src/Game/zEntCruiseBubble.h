@@ -105,6 +105,7 @@ namespace cruise_bubble
     void set_state(thread_enum thread, state_enum state);
     xVec3& get_player_loc();
     void render_player();
+    void refresh_controls();
 
 } // namespace cruise_bubble
 
