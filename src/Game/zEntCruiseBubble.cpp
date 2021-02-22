@@ -567,10 +567,10 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
 
-// func_80058108
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_player_loc__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+xVec3& cruise_bubble::get_player_loc()
+{
+    return *(xVec3*)&globals.player.ent.model->Mat->pos;
+}
 
 // func_80058120
 #pragma GLOBAL_ASM(                                                                                \

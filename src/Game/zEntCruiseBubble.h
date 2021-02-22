@@ -103,6 +103,7 @@ namespace cruise_bubble
     void start_trail();
     void stop_trail();
     void set_state(thread_enum thread, state_enum state);
+    xVec3& get_player_loc();
 
 } // namespace cruise_bubble
 
