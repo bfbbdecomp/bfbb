@@ -49,7 +49,7 @@ namespace cruise_bubble
 
         virtual void start();
         virtual void stop();
-        virtual void null_pad();
+        virtual void update() = 0;
         virtual void render();
         virtual void abort();
     };
