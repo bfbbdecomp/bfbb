@@ -521,39 +521,18 @@ void cruise_bubble::stop_trail()
 #else
 void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::state_enum state)
 {
-// Size=156
-//     r5 = shared__13cruise_bubble@ha; // [int16]
-//     slwi r3, r3, 2
-//     r0 = r5 + shared__13cruise_bubble@l;
-//     add r3, r0, r3
-//     0xc(r1) = r31;
-//     r31 = r3 + 4;
-//     8(r1) = r30;
-//     r30 = r4;
-//     r3 = 4(r3);
-//     cmplwi r3, 0
-//     beq lbl_80057D2C
-//     r12 = 4(r3);
-//     r12 = 0xc(r12);
-//     mtctr r12
-//     bctrl 
-//     r0 = 0;
-//     0(r31) = r0;
-// lbl_80057D2C:
-//     cmpwi r30, -1
-//     beq lbl_80057D60
-//     r3 = shared__13cruise_bubble@ha; // [int16]
-//     slwi r0, r30, 2
-//     r3 = r3 + shared__13cruise_bubble@l;
-//     add r3, r3, r0
-//     r0 = 0x10(r3);
-//     0(r31) = r0;
-//     r3 = 0(r31);
-//     r12 = 4(r3);
-//     r12 = 8(r12);
-//     mtctr r12
-//     bctrl 
-// lbl_80057D60:
+    // compiler uses lwzu here
+    if (shared.state[thread] != NULL)
+    {
+        shared.state[thread]->stop();
+        shared.state[thread] = NULL;
+    }
+
+    if (state != -1) 
+    {
+        shared.state[thread] = shared.states[state];
+        shared.state[thread]->start();
+    }
 }
 #endif
 

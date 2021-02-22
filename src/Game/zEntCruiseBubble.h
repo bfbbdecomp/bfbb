@@ -46,6 +46,11 @@ namespace cruise_bubble
     struct state_type
     {
         state_enum type;
+
+        virtual void start();
+        virtual void stop();
+        virtual void render();
+        virtual void abort();
     };
 
     struct sound_config
