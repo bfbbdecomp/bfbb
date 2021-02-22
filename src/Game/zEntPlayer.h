@@ -4,6 +4,7 @@
 #include "../Core/x/xMath3.h"
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xAnim.h"
+#include "zEnt.h"
 #include "zLasso.h"
 
 enum zControlOwner
@@ -397,6 +398,8 @@ void zEntPlayer_ShadowModelEnable();
 void zEntPlayer_ShadowModelDisable();
 
 void zEntPlayer_LoadCheckPoint();
+
+void zEntPlayer_MinimalRender(zEnt* ent);
 
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);

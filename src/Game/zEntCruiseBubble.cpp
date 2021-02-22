@@ -572,10 +572,10 @@ xVec3& cruise_bubble::get_player_loc()
     return *(xVec3*)&globals.player.ent.model->Mat->pos;
 }
 
-// func_80058120
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::render_player()
+{
+    zEntPlayer_MinimalRender(&globals.player.ent);
+}
 
 // func_8005814C
 #pragma GLOBAL_ASM(                                                                                \
