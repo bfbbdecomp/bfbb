@@ -515,26 +515,22 @@ void cruise_bubble::stop_trail()
     shared.flags = shared.flags & 0xffffff7f;
 }
 
-// func_80057CDC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "set_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11thread_enumQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_enum")
-#else
 void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::state_enum state)
 {
     // compiler uses lwzu here
-    if (shared.state[thread] != NULL)
+    state_type** st = &shared.state[thread];
+    if (*st != NULL)
     {
-        shared.state[thread]->stop();
-        shared.state[thread] = NULL;
+        (*st)->stop();
+        *st = NULL;
     }
 
-    if (state != -1) 
+    if (state != -1)
     {
-        shared.state[thread] = shared.states[state];
-        shared.state[thread]->start();
+        *st = shared.states[state];
+        (*st)->start();
     }
 }
-#endif
 
 // func_80057D78
 #pragma GLOBAL_ASM(                                                                                \
