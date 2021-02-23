@@ -108,6 +108,8 @@ namespace cruise_bubble
     void render_player();
     void refresh_controls();
     void render_state();
+    RpAtomic* custom_bubble_render(RpAtomic* atomic);
+    void init_missle_model();
 
 } // namespace cruise_bubble
 

@@ -11,6 +11,7 @@
 #include "../Core/x/xModel.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xString.h"
+#include "../Core/x/xstransvc.h"
 #include "../Core/x/xVec3.h"
 #include "zNPCTypeCommon.h"
 #include "zPlatform.h"
@@ -38,8 +39,11 @@ extern struct _class_36
     xVec2 last_sp;
     // Offset: 0x48
     xVec2 sp;
+    // Offset: 0x50
     xVec3 hit_loc;
+    // Offset: 0x5c
     xVec3 hit_norm;
+    // Offset: 0x68
     xModelInstance* missle_model;
     // Offset: 0x6c
     xEnt* hits[32];
@@ -130,6 +134,8 @@ extern sound_config sounds[4];
 // uint8 (*hazard_check)(NPCHazard&, void*);
 // uint8 (*hazard_check)(NPCHazard&, void*);
 // int32 gGridIterActive;
+
+extern const char stringBase0[]; // "Idle01\0Idle02\0Idle03\0Idle04\0Idle05\0Idle06\0Idle07\0Idle08\0Idle09\0Idle10\0Idle11\0Idle12\0Idle13\0SlipIdle01\0Inactive01\0Inactive02\0Inactive03\0Inactive04\0Inactive05\0Inactive06\0Inactive07\0Inactive08\0Inactive09\0Inactive10\0Walk01\0Run01\0Run02\0Run03\0Land01\0LandRun01\0LandHigh01\0WallLand01\0Hit01\0Hit02\0Hit03\0Hit04\0Hit05\0SB_cruise_start\0SB_cruise_hit\0SB_cruise_nav_loop\0cruise_bubble_bind.MINF\0lightning\0Wake Ribbon 0\0Player|Cruise Bubble|Wake Ribbon 0|\0Wake Ribbon 1\0Player|Cruise Bubble|Wake Ribbon 1|\0par_cruise_explode\0Cruise Bubble Explosion\0cruise_bubble_droplet_shrapnel\0.minf\0.dff\0ui_3dicon_reticle\0ui_3dicon_target_lock\0ui_3dicon_missile_frame02\0%02d:%02d\0aura2\0aim_delay\0player.halt_time\0player.aim.turn_speed\0player.aim.anim_delta\0player.fire.delay_wand\0missle.life\0missle.hit_dist\0missle.crash_angle\0missle.collide_twist\0missle.hit_tests\0missle.appear.delay_show\0missle.appear.delay_fly\0missle.appear.offset\0missle.fly.accel\0missle.fly.max_vel\0missle.fly.engine_pitch_max\0missle.fly.engine_pitch_sensitivity\0missle.fly.flash_interval\0missle.fly.turn.xdelta\0missle.fly.turn.ydelta\0missle.fly.turn.xdecay\0missle.fly.turn.ydecay\0missle.fly.turn.ybound\0missle.fly.turn.roll_frac\0missle.explode.hit_radius\0missle.explode.hit_duration\0camera.aim.dist\0camera.aim.height\0camera.aim.pitch\0camera.aim.accel\0camera.aim.max_vel\0camera.aim.stick_decel\0camera.aim.stick_accel\0camera.aim.stick_max_vel\0camera.aim.turn_speed\0camera.seize.delay\0camera.seize.blend_time\0camera.seize.fade_dist\0camera.seize.hide_dist\0camera.seize.fov\0camera.survey.duration\0camera.survey.min_duration\0camera.survey.min_dist\0camera.survey.cut_dist\0camera.survey.drift_dist\0camera.survey.drift_softness\0camera.survey.jerk_offset\0camera.survey.jerk_deflect\0camera.restore.control_delay\0material.env_alpha\0material.env_coeff\0material.fresnel_alpha\0material.fresnel_coeff\0reticle.dist_min\0reticle.dist_max\0reticle.ang_show\0reticle.ang_hide\0reticle.delay_retarget\0trail.sample_rate\0trail.bubble_rate\0trail.bubble_emit_radius\0trail.wake_emit_radius\0blast.emit\0blast.radius\0blast.vel\0blast.rand_vel\0droplet.dist_min\0droplet.dist_max\0droplet.emit_min\0droplet.emit_max\0droplet.vel_min\0droplet.vel_max\0droplet.vel_perturb\0droplet.vel_angle\0droplet.rot_vel_max\0hud.glow_size\0hud.time_fade\0hud.time_glow\0hud.wind.size\0hud.wind.du\0hud.wind.dv\0hud.reticle.size\0hud.target.size\0hud.timer.font\0hud.timer.font_width\0hud.timer.font_height\0hud.timer.x\0hud.timer.y\0hud.timer.glow_size\0dialog.freq\0dialog.decay\0dialog.min_freq\0gloss_edge\0rainbowfilm_smooth32\0cruise_bubble_aim\0cruise_bubble_fire\0cruise_bubble_idle\0cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle\0Cruise Bubble\0fire\0fly\0\0\0\0"
 
 } // namespace cruise_bubble
 
@@ -608,7 +614,7 @@ void cruise_bubble::render_state()
 // func_80058314
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "custom_bubble_render__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP8RpAtomic")
+    "custom_bubble_render__13cruise_bubbleFP8RpAtomic")
 
 // func_800584C0
 #pragma GLOBAL_ASM(                                                                                \
@@ -680,10 +686,22 @@ void cruise_bubble::render_state()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_haltFv")
 
-// func_80058A10
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::init_missle_model()
+{
+    // stringBase0 + 0x163 == "cruise_bubble_bind.MINF\0"
+    uint32 aid = xStrHash(stringBase0 + 0x163);
+    xEnt* ent = (xEnt*) xSTFindAsset(aid, NULL);
+    xModelInstance* model = zEntRecurseModelInfo(ent, NULL);
+
+    model->PipeFlags = model->PipeFlags & 0xffffffcf | 0x10;
+    model->Data->renderCallBack = &custom_bubble_render;
+    if (model->Data->renderCallBack == NULL)
+    {
+        model->Data->renderCallBack = &AtomicDefaultRenderCallBack;
+    }
+
+    shared.missle_model = model;
+}
 
 // func_80058A94
 #pragma GLOBAL_ASM(                                                                                \
