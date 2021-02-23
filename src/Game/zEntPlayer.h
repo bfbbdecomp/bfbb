@@ -400,6 +400,7 @@ void zEntPlayer_ShadowModelDisable();
 void zEntPlayer_LoadCheckPoint();
 
 void zEntPlayer_MinimalRender(zEnt* ent);
+uint8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, float32 dt, xVec3& drive_motion);
 
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);

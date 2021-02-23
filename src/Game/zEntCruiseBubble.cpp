@@ -141,6 +141,7 @@ extern const char stringBase0[]; // "Idle01\0Idle02\0Idle03\0Idle04\0Idle05\0Idl
 } // namespace cruise_bubble
 
 extern float32 zEntCruiseBubble_f_0_0; // 0.0
+extern float32 zEntCruiseBubble_f_0_25; // 0.25
 
 void cruise_bubble::init_sound()
 {
@@ -558,7 +559,7 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
 // func_80057E6C
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "kill__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fbb")
+    "kill__13cruise_bubbleFbb")
 
 // func_80057FE0
 #pragma GLOBAL_ASM(                                                                                \
@@ -571,9 +572,33 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
     "abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
 
 // func_80057FE8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
+#else
+void cruise_bubble::update_player(xScene& s, float32 dt)
+{
+    xVec3 pre_update_loc = get_player_loc();
+    xVec3 drive_motion;
+
+    bool stop = zEntPlayer_MinimalUpdate(&globals.player.ent, &s, dt, drive_motion) ||
+            globals.player.Health < shared.player_health;
+    
+    if (!stop)
+    {
+        shared.player_motion += get_player_loc() - pre_update_loc - drive_motion;
+
+        if (shared.player_motion.length2() > zEntCruiseBubble_f_0_25)
+        {
+            stop = true;
+        }
+    }
+    
+    if (stop)
+    {
+        kill(true, false);
+    }
+}
+#endif
 
 xVec3& cruise_bubble::get_player_loc()
 {
