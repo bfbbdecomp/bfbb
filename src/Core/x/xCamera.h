@@ -205,6 +205,8 @@ struct xBinaryCamera
     void start(xCamera& camera);
     void stop();
     void update(float32 dt);
+    void add_tweaks(char const*);
+    void set_targets(xVec3 const& par_1, xVec3 const& par_2, float32 par_3);
     void render_debug();
 };
 

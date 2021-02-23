@@ -518,7 +518,7 @@ void zNPCCommon::SpeakEnd()
 {
 }
 
-void zNPCCommon::SpeakStart()
+void zNPCCommon::SpeakStart(uint32 param_1, uint32 param_2, int32 param_3)
 {
 }
 
