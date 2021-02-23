@@ -110,6 +110,8 @@ namespace cruise_bubble
     void render_state();
     RpAtomic* custom_bubble_render(RpAtomic* atomic);
     void init_missle_model();
+    void reset_wake_ribbons();
+    void init_wake_ribbons();
 
 } // namespace cruise_bubble
 

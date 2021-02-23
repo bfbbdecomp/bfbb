@@ -1336,18 +1336,21 @@ __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17st
 /* 80058A0C 0005580C  4E 80 00 20 */	blr 
 
 /* reset_wake_ribbons__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+reset_wake_ribbons__13cruise_bubbleFv:
 /* 80058A94 00055894  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80058A98 00055898  7C 08 02 A6 */	mflr r0
-/* 80058A9C 0005589C  3C 60 80 2E */	lis r3, lbl_802DC638@ha
+/* 80058A9C 0005589C  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
 /* 80058AA0 000558A0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80058AA4 000558A4  38 63 C6 38 */	addi r3, r3, lbl_802DC638@l
+/* 80058AA4 000558A4  38 63 C6 38 */	addi r3, r3, wake_ribbon__13cruise_bubble@l
 /* 80058AA8 000558A8  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80058AAC 000558AC  4B FD 19 59 */	bl set_default_config__9xFXRibbonFv
 /* 80058AB0 000558B0  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 80058AB4 000558B4  3C 80 80 2E */	lis r4, lbl_802DC638@ha
+/* 80058AB4 000558B4  3C 80 80 2E */	lis r4, wake_ribbon__13cruise_bubble@ha
 /* 80058AB8 000558B8  80 03 C2 A4 */	lwz r0, shared__13cruise_bubble@l(r3)
-/* 80058ABC 000558BC  38 64 C6 38 */	addi r3, r4, lbl_802DC638@l
+/* 80058ABC 000558BC  38 64 C6 38 */	addi r3, r4, wake_ribbon__13cruise_bubble@l
 /* 80058AC0 000558C0  38 A0 00 05 */	li r5, 5
 /* 80058AC4 000558C4  38 80 00 02 */	li r4, 2
 /* 80058AC8 000558C8  54 00 05 AD */	rlwinm. r0, r0, 0, 0x16, 0x16
@@ -1358,17 +1361,17 @@ reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_c
 /* 80058ADC 000558DC  38 84 53 3C */	addi r4, r4, stringBase0__13cruise_bubble@l
 /* 80058AE0 000558E0  38 84 01 7B */	addi r4, r4, 0x17b
 /* 80058AE4 000558E4  4B FD 1F 29 */	bl set_texture__9xFXRibbonFPCc
-/* 80058AE8 000558E8  3C 80 80 2E */	lis r4, lbl_802DC638@ha
+/* 80058AE8 000558E8  3C 80 80 2E */	lis r4, wake_ribbon__13cruise_bubble@ha
 /* 80058AEC 000558EC  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
-/* 80058AF0 000558F0  38 84 C6 38 */	addi r4, r4, lbl_802DC638@l
+/* 80058AF0 000558F0  38 84 C6 38 */	addi r4, r4, wake_ribbon__13cruise_bubble@l
 /* 80058AF4 000558F4  3B E4 01 40 */	addi r31, r4, 0x140
 /* 80058AF8 000558F8  38 83 53 3C */	addi r4, r3, stringBase0__13cruise_bubble@l
 /* 80058AFC 000558FC  7F E3 FB 78 */	mr r3, r31
 /* 80058B00 00055900  38 84 01 7B */	addi r4, r4, 0x17b
 /* 80058B04 00055904  4B FD 1F 09 */	bl set_texture__9xFXRibbonFPCc
-/* 80058B08 00055908  3C 60 80 2E */	lis r3, lbl_802DC638@ha
+/* 80058B08 00055908  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
 /* 80058B0C 0005590C  3C 80 80 25 */	lis r4, lbl_8025523C@ha
-/* 80058B10 00055910  38 63 C6 38 */	addi r3, r3, lbl_802DC638@l
+/* 80058B10 00055910  38 63 C6 38 */	addi r3, r3, wake_ribbon__13cruise_bubble@l
 /* 80058B14 00055914  38 A0 00 02 */	li r5, 2
 /* 80058B18 00055918  38 84 52 3C */	addi r4, r4, lbl_8025523C@l
 /* 80058B1C 0005591C  4B FD 19 89 */	bl set_curve__9xFXRibbonFPCQ29xFXRibbon10curve_nodeUl
@@ -1378,25 +1381,25 @@ reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_c
 /* 80058B2C 0005592C  38 A0 00 02 */	li r5, 2
 /* 80058B30 00055930  4B FD 19 75 */	bl set_curve__9xFXRibbonFPCQ29xFXRibbon10curve_nodeUl
 /* 80058B34 00055934  C0 02 89 CC */	lfs f0, lbl_803CD34C-_SDA2_BASE_(r2)
-/* 80058B38 00055938  3C 60 80 2E */	lis r3, lbl_802DC638@ha
-/* 80058B3C 0005593C  D0 03 C6 38 */	stfs f0, lbl_802DC638@l(r3)
+/* 80058B38 00055938  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
+/* 80058B3C 0005593C  D0 03 C6 38 */	stfs f0, wake_ribbon__13cruise_bubble@l(r3)
 /* 80058B40 00055940  48 00 00 6C */	b lbl_80058BAC
 lbl_80058B44:
 /* 80058B44 00055944  3C 80 80 25 */	lis r4, stringBase0__13cruise_bubble@ha
 /* 80058B48 00055948  38 84 53 3C */	addi r4, r4, stringBase0__13cruise_bubble@l
 /* 80058B4C 0005594C  38 84 01 7B */	addi r4, r4, 0x17b
 /* 80058B50 00055950  4B FD 1E BD */	bl set_texture__9xFXRibbonFPCc
-/* 80058B54 00055954  3C 80 80 2E */	lis r4, lbl_802DC638@ha
+/* 80058B54 00055954  3C 80 80 2E */	lis r4, wake_ribbon__13cruise_bubble@ha
 /* 80058B58 00055958  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
-/* 80058B5C 0005595C  38 84 C6 38 */	addi r4, r4, lbl_802DC638@l
+/* 80058B5C 0005595C  38 84 C6 38 */	addi r4, r4, wake_ribbon__13cruise_bubble@l
 /* 80058B60 00055960  3B E4 01 40 */	addi r31, r4, 0x140
 /* 80058B64 00055964  38 83 53 3C */	addi r4, r3, stringBase0__13cruise_bubble@l
 /* 80058B68 00055968  7F E3 FB 78 */	mr r3, r31
 /* 80058B6C 0005596C  38 84 01 7B */	addi r4, r4, 0x17b
 /* 80058B70 00055970  4B FD 1E 9D */	bl set_texture__9xFXRibbonFPCc
-/* 80058B74 00055974  3C 60 80 2E */	lis r3, lbl_802DC638@ha
+/* 80058B74 00055974  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
 /* 80058B78 00055978  3C 80 80 25 */	lis r4, lbl_80255254@ha
-/* 80058B7C 0005597C  38 63 C6 38 */	addi r3, r3, lbl_802DC638@l
+/* 80058B7C 0005597C  38 63 C6 38 */	addi r3, r3, wake_ribbon__13cruise_bubble@l
 /* 80058B80 00055980  38 A0 00 02 */	li r5, 2
 /* 80058B84 00055984  38 84 52 54 */	addi r4, r4, lbl_80255254@l
 /* 80058B88 00055988  4B FD 19 1D */	bl set_curve__9xFXRibbonFPCQ29xFXRibbon10curve_nodeUl
@@ -1406,18 +1409,18 @@ lbl_80058B44:
 /* 80058B98 00055998  38 A0 00 02 */	li r5, 2
 /* 80058B9C 0005599C  4B FD 19 09 */	bl set_curve__9xFXRibbonFPCQ29xFXRibbon10curve_nodeUl
 /* 80058BA0 000559A0  C0 02 89 CC */	lfs f0, lbl_803CD34C-_SDA2_BASE_(r2)
-/* 80058BA4 000559A4  3C 60 80 2E */	lis r3, lbl_802DC638@ha
-/* 80058BA8 000559A8  D0 03 C6 38 */	stfs f0, lbl_802DC638@l(r3)
+/* 80058BA4 000559A4  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
+/* 80058BA8 000559A8  D0 03 C6 38 */	stfs f0, wake_ribbon__13cruise_bubble@l(r3)
 lbl_80058BAC:
-/* 80058BAC 000559AC  3C 60 80 2E */	lis r3, lbl_802DC638@ha
+/* 80058BAC 000559AC  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
 /* 80058BB0 000559B0  C0 02 89 C0 */	lfs f0, lbl_803CD340-_SDA2_BASE_(r2)
-/* 80058BB4 000559B4  38 83 C6 38 */	addi r4, r3, lbl_802DC638@l
+/* 80058BB4 000559B4  38 83 C6 38 */	addi r4, r3, wake_ribbon__13cruise_bubble@l
 /* 80058BB8 000559B8  3B E4 01 40 */	addi r31, r4, 0x140
 /* 80058BBC 000559BC  D0 04 00 0C */	stfs f0, 0xc(r4)
 /* 80058BC0 000559C0  7F E3 FB 78 */	mr r3, r31
 /* 80058BC4 000559C4  48 00 00 2D */	bl __as__Q29xFXRibbon6configFRCQ29xFXRibbon6config
-/* 80058BC8 000559C8  3C 60 80 2E */	lis r3, lbl_802DC638@ha
-/* 80058BCC 000559CC  38 63 C6 38 */	addi r3, r3, lbl_802DC638@l
+/* 80058BC8 000559C8  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
+/* 80058BCC 000559CC  38 63 C6 38 */	addi r3, r3, wake_ribbon__13cruise_bubble@l
 /* 80058BD0 000559D0  4B FD 18 75 */	bl refresh_config__9xFXRibbonFv
 /* 80058BD4 000559D4  7F E3 FB 78 */	mr r3, r31
 /* 80058BD8 000559D8  4B FD 18 6D */	bl refresh_config__9xFXRibbonFv
@@ -1438,32 +1441,6 @@ __as__Q29xFXRibbon6configFRCQ29xFXRibbon6config:
 /* 80058C08 00055A08  90 03 00 08 */	stw r0, 8(r3)
 /* 80058C0C 00055A0C  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 80058C10 00055A10  4E 80 00 20 */	blr 
-
-/* init_wake_ribbons__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-init_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80058C14 00055A14  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80058C18 00055A18  7C 08 02 A6 */	mflr r0
-/* 80058C1C 00055A1C  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
-/* 80058C20 00055A20  3C 80 80 2E */	lis r4, lbl_802DC638@ha
-/* 80058C24 00055A24  38 A3 53 3C */	addi r5, r3, stringBase0__13cruise_bubble@l
-/* 80058C28 00055A28  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80058C2C 00055A2C  38 64 C6 38 */	addi r3, r4, lbl_802DC638@l
-/* 80058C30 00055A30  38 85 01 85 */	addi r4, r5, 0x185
-/* 80058C34 00055A34  38 A5 01 93 */	addi r5, r5, 0x193
-/* 80058C38 00055A38  4B FD 17 41 */	bl init__9xFXRibbonFPCcPCc
-/* 80058C3C 00055A3C  3C 80 80 2E */	lis r4, lbl_802DC638@ha
-/* 80058C40 00055A40  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
-/* 80058C44 00055A44  38 A3 53 3C */	addi r5, r3, stringBase0__13cruise_bubble@l
-/* 80058C48 00055A48  38 64 C6 38 */	addi r3, r4, lbl_802DC638@l
-/* 80058C4C 00055A4C  38 63 01 40 */	addi r3, r3, 0x140
-/* 80058C50 00055A50  38 85 01 B7 */	addi r4, r5, 0x1b7
-/* 80058C54 00055A54  38 A5 01 C5 */	addi r5, r5, 0x1c5
-/* 80058C58 00055A58  4B FD 17 21 */	bl init__9xFXRibbonFPCcPCc
-/* 80058C5C 00055A5C  4B FF FE 39 */	bl reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 80058C60 00055A60  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80058C64 00055A64  7C 08 03 A6 */	mtlr r0
-/* 80058C68 00055A68  38 21 00 10 */	addi r1, r1, 0x10
-/* 80058C6C 00055A6C  4E 80 00 20 */	blr 
 
 /* reset_explode_decal__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 reset_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
@@ -1742,8 +1719,8 @@ lbl_80059040:
 /* 80059080 00055E80  90 01 00 88 */	stw r0, 0x88(r1)
 /* 80059084 00055E84  4B FB C3 5D */	bl __pl__5xVec3CFRC5xVec3
 /* 80059088 00055E88  C0 22 89 C0 */	lfs f1, lbl_803CD340-_SDA2_BASE_(r2)
-/* 8005908C 00055E8C  3C 60 80 2E */	lis r3, lbl_802DC638@ha
-/* 80059090 00055E90  38 63 C6 38 */	addi r3, r3, lbl_802DC638@l
+/* 8005908C 00055E8C  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
+/* 80059090 00055E90  38 63 C6 38 */	addi r3, r3, wake_ribbon__13cruise_bubble@l
 /* 80059094 00055E94  7F A5 EB 78 */	mr r5, r29
 /* 80059098 00055E98  FC 40 08 90 */	fmr f2, f1
 /* 8005909C 00055E9C  7F 46 D3 78 */	mr r6, r26
@@ -1757,8 +1734,8 @@ lbl_80059040:
 /* 800590BC 00055EBC  38 A1 00 80 */	addi r5, r1, 0x80
 /* 800590C0 00055EC0  4B FB 21 0D */	bl __mi__5xVec3CFRC5xVec3
 /* 800590C4 00055EC4  C0 22 89 C0 */	lfs f1, lbl_803CD340-_SDA2_BASE_(r2)
-/* 800590C8 00055EC8  3C 60 80 2E */	lis r3, lbl_802DC638@ha
-/* 800590CC 00055ECC  38 63 C6 38 */	addi r3, r3, lbl_802DC638@l
+/* 800590C8 00055EC8  3C 60 80 2E */	lis r3, wake_ribbon__13cruise_bubble@ha
+/* 800590CC 00055ECC  38 63 C6 38 */	addi r3, r3, wake_ribbon__13cruise_bubble@l
 /* 800590D0 00055ED0  7F 46 D3 78 */	mr r6, r26
 /* 800590D4 00055ED4  FC 40 08 90 */	fmr f2, f1
 /* 800590D8 00055ED8  38 63 01 40 */	addi r3, r3, 0x140
@@ -10440,7 +10417,8 @@ lbl_802DBDF0:
 	.skip 0x40
 lbl_802DBE30:
 	.skip 0x808
-lbl_802DC638:
+.global wake_ribbon__13cruise_bubble
+wake_ribbon__13cruise_bubble:
 	.skip 0x280
 lbl_802DC8B8:
 	.skip 0x68

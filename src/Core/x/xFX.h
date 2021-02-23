@@ -65,6 +65,8 @@ struct xFXRibbon
     float32 ilife;
     uint32 mtime;
     uint32 mlife;
+
+    void init(const int8*, const int8*);
 };
 
 void xFXInit();

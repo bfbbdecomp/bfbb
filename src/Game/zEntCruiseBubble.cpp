@@ -6,6 +6,7 @@
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 
+#include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
 #include "../Core/x/xMath3.h"
 #include "../Core/x/xModel.h"
@@ -92,7 +93,7 @@ extern struct _class_36
 } shared;
 // xMat4x3 start_cam_mat;
 // fixed_queue missle_record;
-// xFXRibbon wake_ribbon[2];
+extern xFXRibbon wake_ribbon[2];
 // xDecalEmitter explode_decal;
 // curve_node_0 wake_ribbon_curve[2];
 // curve_node_0 cheat_wake_ribbon_curve[2];
@@ -706,15 +707,22 @@ void cruise_bubble::init_missle_model()
 // func_80058A94
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "reset_wake_ribbons__13cruise_bubbleFv")
 
 // func_80058BF0
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "__as__Q29xFXRibbon6configFRCQ29xFXRibbon6config")
 
 // func_80058C14
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::init_wake_ribbons()
+{
+    // stringBase0 + 0x185 == "Wake Ribbon 0"
+    // stringBase0 + 0x193 == "Player|Cruise Bubble|Wake Ribbon 0|"
+    wake_ribbon[0].init(stringBase0 + 0x185, stringBase0 + 0x193);
+    // stringBase0 + 0x1b7 == "Wake Ribbon 1"
+    // stringBase0 + 0x1c5 == "Player|Cruise Bubble|Wake Ribbon 1|"
+    wake_ribbon[1].init(stringBase0 + 0x1b7, stringBase0 + 0x1c5);
+    cruise_bubble::reset_wake_ribbons();
+}
 
 // func_80058C70
 #pragma GLOBAL_ASM(                                                                                \
