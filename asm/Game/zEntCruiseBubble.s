@@ -1667,7 +1667,10 @@ lbl_80059040:
 /* 800590F8 00055EF8  4E 80 00 20 */	blr 
 
 /* update_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Ff */
-update_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff:
+/* changed from ... */
+/* update_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff: */
+/* ... so linker can find it */
+update_trail__13cruise_bubbleFf:
 /* 800590FC 00055EFC  94 21 FE 90 */	stwu r1, -0x170(r1)
 /* 80059100 00055F00  7C 08 02 A6 */	mflr r0
 /* 80059104 00055F04  90 01 01 74 */	stw r0, 0x174(r1)
@@ -1811,34 +1814,6 @@ lbl_800592E8:
 /* refresh_missle_model__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80059314 00056114  4E 80 00 20 */	blr 
-
-/* update_missle__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR6xScenef */
-update_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef:
-/* 80059318 00056118  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8005931C 0005611C  7C 08 02 A6 */	mflr r0
-/* 80059320 00056120  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 80059324 00056124  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80059328 00056128  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005932C 0005612C  DB E1 00 18 */	stfd f31, 0x18(r1)
-/* 80059330 00056130  FF E0 08 90 */	fmr f31, f1
-/* 80059334 00056134  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 80059338 00056138  83 E3 00 68 */	lwz r31, 0x68(r3)
-/* 8005933C 0005613C  A0 1F 00 44 */	lhz r0, 0x44(r31)
-/* 80059340 00056140  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
-/* 80059344 00056144  41 82 00 1C */	beq lbl_80059360
-/* 80059348 00056148  7F E3 FB 78 */	mr r3, r31
-/* 8005934C 0005614C  4B FD B1 81 */	bl xModelUpdate__FP14xModelInstancef
-/* 80059350 00056150  7F E3 FB 78 */	mr r3, r31
-/* 80059354 00056154  4B FD B3 5D */	bl xModelEval__FP14xModelInstance
-/* 80059358 00056158  FC 20 F8 90 */	fmr f1, f31
-/* 8005935C 0005615C  4B FF FD A1 */	bl update_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff
-lbl_80059360:
-/* 80059360 00056160  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80059364 00056164  CB E1 00 18 */	lfd f31, 0x18(r1)
-/* 80059368 00056168  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 8005936C 0005616C  7C 08 03 A6 */	mtlr r0
-/* 80059370 00056170  38 21 00 20 */	addi r1, r1, 0x20
-/* 80059374 00056174  4E 80 00 20 */	blr 
 
 /* render_missle__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 render_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:

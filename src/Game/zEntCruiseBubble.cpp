@@ -842,17 +842,24 @@ void cruise_bubble::init_wake_ribbons()
 // func_800590FC
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff")
+    "update_trail__13cruise_bubbleFf")
 
 // func_80059314
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
 
-// func_80059318
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
+void cruise_bubble::update_missle(xScene& s, float32 dt)
+{
+    xModelInstance* m = shared.missle_model;
+    if ((m->Flags & 2) == 0)
+    {
+        return;
+    }
+    xModelUpdate(m, dt);
+    xModelEval(m);
+    update_trail(dt);
+}
 
 // func_80059378
 #pragma GLOBAL_ASM(                                                                                \
