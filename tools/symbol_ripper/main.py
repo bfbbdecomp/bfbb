@@ -275,7 +275,10 @@ def rip(subsys_name, symbol):
 	cpp_path = subsys_srcs / (file_stem + ".cpp")
 	cpp_lines = getlines(cpp_path)
 	pragma_line = find_line_with_symbol(cpp_lines, symbol)
-	if not cpp_lines[pragma_line - 1].startswith("// func_"):
+	func_comment_line = pragma_line - 1
+	while cpp_lines[func_comment_line].endswith("\\\n"):
+		func_comment_line -= 1
+	if not cpp_lines[func_comment_line].startswith("// func_"):
 		sys.exit("Error: Symbol %s has already been ripped!" % symbol)
 
 	# Get the assembly lines from the .s file
@@ -293,7 +296,7 @@ def rip(subsys_name, symbol):
 	cpp_func_name = "void " + cpp_func_from_symbol(symbol)
 
 	# Output C++ code
-	cpp_lines.insert(pragma_line, "#if 0\n")
+	cpp_lines.insert(func_comment_line + 1, "#if 0\n")
 	pragma_line += 2
 	cpp_lines.insert(pragma_line, "#else\n")
 	pragma_line += 1
