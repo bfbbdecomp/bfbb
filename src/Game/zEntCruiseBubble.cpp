@@ -95,8 +95,8 @@ extern struct _class_36
 // fixed_queue missle_record;
 extern xFXRibbon wake_ribbon[2];
 // xDecalEmitter explode_decal;
-// curve_node_0 wake_ribbon_curve[2];
-// curve_node_0 cheat_wake_ribbon_curve[2];
+extern const xFXRibbon::curve_node wake_ribbon_curve[2];
+extern const xFXRibbon::curve_node cheat_wake_ribbon_curve[2];
 // curve_node_1 explode_curve[3];
 // curve_node_1 cheat_explode_curve[3];
 extern sound_config sounds[4];
@@ -141,6 +141,8 @@ extern const char stringBase0[]; // "Idle01\0Idle02\0Idle03\0Idle04\0Idle05\0Idl
 } // namespace cruise_bubble
 
 extern float32 zEntCruiseBubble_f_0_0; // 0.0
+extern float32 zEntCruiseBubble_f_1_0; // 1.0
+extern float32 zEntCruiseBubble_f_3_0; // 3.0
 extern float32 zEntCruiseBubble_f_0_25; // 0.25
 
 void cruise_bubble::init_sound()
@@ -739,7 +741,7 @@ void cruise_bubble::render_state()
 
 void cruise_bubble::init_missle_model()
 {
-    // stringBase0 + 0x163 == "cruise_bubble_bind.MINF\0"
+    // stringBase0 + 0x163 == "cruise_bubble_bind.MINF"
     uint32 aid = xStrHash(stringBase0 + 0x163);
     xEnt* ent = (xEnt*) xSTFindAsset(aid, NULL);
     xModelInstance* model = zEntRecurseModelInfo(ent, NULL);
@@ -755,9 +757,45 @@ void cruise_bubble::init_missle_model()
 }
 
 // func_80058A94
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "reset_wake_ribbons__13cruise_bubbleFv")
+#ifndef NON_MATCHING
+// funcmatch
+// `stringBase0 + 0x17b` gets cached in r31 where original asm reloads it everytime
+// change the offset in every other `stringBase0 + 0x17b`
+// and the only difference in the diff will be that new offset
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "reset_wake_ribbons__13cruise_bubbleFv")
+#else
+void cruise_bubble::reset_wake_ribbons()
+{
+    wake_ribbon[0].set_default_config();
+    wake_ribbon[0].cfg.blend_src = 5;
+    wake_ribbon[0].cfg.blend_dst = 2;
+
+    
+    if ((shared.flags & 0x200) == 0)
+    {
+        // stringBase0 + 0x17b == "lightning"
+        wake_ribbon[0].set_texture(stringBase0 + 0x17b);
+        wake_ribbon[1].set_texture(stringBase0 + 0x17b);
+        wake_ribbon[0].set_curve(&wake_ribbon_curve[0], 2);
+        wake_ribbon[1].set_curve(&wake_ribbon_curve[0], 2);
+
+        wake_ribbon[0].cfg.life_time = zEntCruiseBubble_f_3_0;
+    }
+    else {
+        wake_ribbon[0].set_texture(stringBase0 + 0x17b);
+        wake_ribbon[1].set_texture(stringBase0 + 0x17b);
+        wake_ribbon[0].set_curve(&cheat_wake_ribbon_curve[0], 2);
+        wake_ribbon[1].set_curve(&cheat_wake_ribbon_curve[0], 2);
+
+        wake_ribbon[0].cfg.life_time = zEntCruiseBubble_f_3_0;
+    }
+    wake_ribbon[0].cfg.pivot = zEntCruiseBubble_f_1_0;
+    wake_ribbon[1].cfg = wake_ribbon[0].cfg;
+    
+    wake_ribbon[0].refresh_config();
+    wake_ribbon[1].refresh_config();
+}
+#endif
 
 // func_80058BF0
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "__as__Q29xFXRibbon6configFRCQ29xFXRibbon6config")

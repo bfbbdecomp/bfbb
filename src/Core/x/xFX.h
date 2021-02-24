@@ -67,6 +67,10 @@ struct xFXRibbon
     uint32 mlife;
 
     void init(const int8*, const int8*);
+	void set_texture(const int8* name);
+	void set_curve(const curve_node* curve, ulong32 size);
+	void refresh_config();
+    void set_default_config();
 };
 
 void xFXInit();
