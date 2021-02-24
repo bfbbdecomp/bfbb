@@ -117,6 +117,7 @@ namespace cruise_bubble
     void init_wake_ribbons();
     void update_trail(float32 dt);
     void update_missle(xScene& s, float32 dt);
+    void render_missle();
 
 } // namespace cruise_bubble
 

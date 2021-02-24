@@ -861,10 +861,14 @@ void cruise_bubble::update_missle(xScene& s, float32 dt)
     update_trail(dt);
 }
 
-// func_80059378
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::render_missle()
+{
+    xModelInstance* m = shared.missle_model;
+    if ((m->Flags & 1) == 0) {
+        return;
+    }
+    xModelRender(m);
+}
 
 // func_800593B0
 #pragma GLOBAL_ASM(                                                                                \

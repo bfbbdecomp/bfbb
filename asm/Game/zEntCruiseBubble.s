@@ -1815,24 +1815,6 @@ lbl_800592E8:
 refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80059314 00056114  4E 80 00 20 */	blr 
 
-/* render_missle__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-render_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80059378 00056178  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005937C 0005617C  7C 08 02 A6 */	mflr r0
-/* 80059380 00056180  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 80059384 00056184  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80059388 00056188  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005938C 0005618C  80 63 00 68 */	lwz r3, 0x68(r3)
-/* 80059390 00056190  A0 03 00 44 */	lhz r0, 0x44(r3)
-/* 80059394 00056194  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 80059398 00056198  41 82 00 08 */	beq lbl_800593A0
-/* 8005939C 0005619C  4B FD B5 A9 */	bl xModelRender__FP14xModelInstance
-lbl_800593A0:
-/* 800593A0 000561A0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800593A4 000561A4  7C 08 03 A6 */	mtlr r0
-/* 800593A8 000561A8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800593AC 000561AC  4E 80 00 20 */	blr 
-
 /* load_model__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FUi */
 load_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FUi:
 /* 800593B0 000561B0  94 21 FF E0 */	stwu r1, -0x20(r1)
