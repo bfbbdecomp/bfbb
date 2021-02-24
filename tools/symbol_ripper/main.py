@@ -4,6 +4,24 @@ import re
 
 INCLUDE_INSTRUCTION_BYTES = False
 
+# see tools/postprocess.py for info about substitutions done in the mangled names
+substitutions = (
+    ('<',  '_esc__0_'),
+    ('>',  '_esc__1_'),
+    ('@',  '_esc__2_'),
+    ('\\', '_esc__3_'),
+    (',',  '_esc__4_'),
+    ('-',  '_esc__5_'),
+    ('$',  '_esc__6_')
+)
+
+def decodeformat(symbol):
+    for sub in substitutions:
+        symbol = symbol.replace(sub[1], sub[0])
+
+    return symbol
+
+
 def cpp_get_qualified(text):
 	if text.startswith("Q"):
 		# multiple qualified name
@@ -60,6 +78,9 @@ def cpp_get_base_type(text, unsigned):
 		return rest, ""
 
 def cpp_func_from_symbol(symbol):
+	# reverse escaping for correct parsing
+	symbol = decodeformat(symbol)
+	
 	# Special symbols start with __
 	if symbol.startswith("__"):
 		return symbol + "(?)"
