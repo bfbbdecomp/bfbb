@@ -1360,18 +1360,6 @@ lbl_80058BAC:
 /* 80058BE8 000559E8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80058BEC 000559EC  4E 80 00 20 */	blr 
 
-.global __as__Q29xFXRibbon6configFRCQ29xFXRibbon6config
-__as__Q29xFXRibbon6configFRCQ29xFXRibbon6config:
-/* 80058BF0 000559F0  C0 04 00 00 */	lfs f0, 0(r4)
-/* 80058BF4 000559F4  80 A4 00 04 */	lwz r5, 4(r4)
-/* 80058BF8 000559F8  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80058BFC 000559FC  80 04 00 08 */	lwz r0, 8(r4)
-/* 80058C00 00055A00  90 A3 00 04 */	stw r5, 4(r3)
-/* 80058C04 00055A04  C0 04 00 0C */	lfs f0, 0xc(r4)
-/* 80058C08 00055A08  90 03 00 08 */	stw r0, 8(r3)
-/* 80058C0C 00055A0C  D0 03 00 0C */	stfs f0, 0xc(r3)
-/* 80058C10 00055A10  4E 80 00 20 */	blr 
-
 /* reset_explode_decal__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 reset_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80058C70 00055A70  94 21 FF F0 */	stwu r1, -0x10(r1)

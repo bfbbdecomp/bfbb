@@ -797,8 +797,15 @@ void cruise_bubble::reset_wake_ribbons()
 }
 #endif
 
-// func_80058BF0
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "__as__Q29xFXRibbon6configFRCQ29xFXRibbon6config")
+xFXRibbon::config& xFXRibbon::config::operator=(const xFXRibbon::config& other)
+{
+    this->life_time = other.life_time;
+    this->blend_src = other.blend_src;
+    this->blend_dst = other.blend_dst;
+    this->pivot = other.pivot;
+
+    return *this;
+}
 
 // func_80058C14
 void cruise_bubble::init_wake_ribbons()

@@ -35,6 +35,8 @@ struct xFXRibbon
         uint32 blend_src;
         uint32 blend_dst;
         float32 pivot;
+
+        config& operator=(const config&);
     };
 
     struct joint_data
