@@ -49,7 +49,7 @@ namespace cruise_bubble
 
         virtual void start();
         virtual void stop();
-        virtual void update() = 0;
+        virtual state_enum update(float32 dt) = 0;
         virtual void render();
         virtual void abort();
     };
@@ -109,6 +109,7 @@ namespace cruise_bubble
     xVec3& get_player_loc();
     void render_player();
     void refresh_controls();
+    void update_state(xScene* s, float32 dt);
     void render_state();
     RpAtomic* custom_bubble_render(RpAtomic* atomic);
     void init_missle_model();

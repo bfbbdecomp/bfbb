@@ -616,10 +616,35 @@ void cruise_bubble::refresh_controls()
     shared.sp = globals.pad0->analog[0].offset;
 }
 
-// func_800581A0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP6xScenef")
+void cruise_bubble::update_state(xScene* s, float32 dt)
+{
+    for (int32 i = 0; i < 3; ++i) {
+    	state_type** state = &shared.state[i];
+        state_enum newtype;
+
+        if (*state != NULL)
+        {
+            newtype = (*state)->update(dt);
+
+            if (newtype != (*state)->type)
+            {
+                (*state)->stop();
+                *state = NULL;
+
+                if (newtype != -1)
+                {
+                    *state = shared.states[newtype];
+                    (*state)->start();
+                }
+            }
+        }
+    }
+
+    if (shared.state[0] == NULL)
+    {
+        kill(true, false);
+    }
+}
 
 void cruise_bubble::render_state()
 {
