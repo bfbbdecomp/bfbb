@@ -71,7 +71,7 @@ def cpp_get_base_type(text, unsigned):
 		return rest, "float64"
 	elif char == 'v':
 		return rest, "void"
-	elif char.isnumeric():
+	elif char == 'Q' or char.isnumeric():
 		rest, namespaces = cpp_get_qualified(text)
 		return rest, "::".join(namespaces)
 	else:
