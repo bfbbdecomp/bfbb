@@ -118,6 +118,7 @@ namespace cruise_bubble
     void update_trail(float32 dt);
     void update_missle(xScene& s, float32 dt);
     void render_missle();
+    xModelInstance* load_model(uint32);
 
 } // namespace cruise_bubble
 

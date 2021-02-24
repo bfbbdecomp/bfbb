@@ -870,10 +870,29 @@ void cruise_bubble::render_missle()
     xModelRender(m);
 }
 
-// func_800593B0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FUi")
+// return type guessed based on return type of zEntRecurseModelInfo and xModelInstanceAlloc
+xModelInstance* cruise_bubble::load_model(uint32 aid)
+{
+    xModelInstance* model;
+    uint32 size;
+
+    model = (xModelInstance*) xSTFindAsset(xStrHashCat(aid, stringBase0 + 0x233), &size);
+    if (model != NULL)
+    {
+        model = zEntRecurseModelInfo(model, NULL);
+        return model;
+    }
+
+    model = (xModelInstance*) xSTFindAsset(aid, &size);
+    if (model == NULL)
+    {
+        model = (xModelInstance*) xSTFindAsset(xStrHashCat(aid, stringBase0 + 0x239), &size);
+    }
+    if (model == NULL) {
+        return NULL;
+    }
+    return xModelInstanceAlloc((RpAtomic*) model, NULL, 0, 0, NULL);
+}
 
 // func_80059458
 #pragma GLOBAL_ASM(                                                                                \
