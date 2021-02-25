@@ -35,9 +35,23 @@ namespace cruise_bubble
         STATE_INVALID = 0xffffffff
     };
 
+    enum thread_enum
+    {
+        THREAD_PLAYER,
+        THREAD_MISSLE,
+        THREAD_CAMERA,
+        MAX_THREAD
+    };
+
     struct state_type
     {
         state_enum type;
+
+        virtual void start();
+        virtual void stop();
+        virtual state_enum update(float32 dt) = 0;
+        virtual void render();
+        virtual void abort();
     };
 
     struct sound_config
@@ -85,6 +99,26 @@ namespace cruise_bubble
             float32 radius, uint8 explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
+    void signal_event(uint32 toEvent);
+    void refresh_trail(xMat4x3& mat, xQuat& quat);
+    void start_trail();
+    void stop_trail();
+    void set_state(thread_enum thread, state_enum state);
+    void kill(bool reset_camera, bool abortive);
+    void update_player(xScene& s, float32 dt);
+    xVec3& get_player_loc();
+    void render_player();
+    void refresh_controls();
+    void update_state(xScene* s, float32 dt);
+    void render_state();
+    RpAtomic* custom_bubble_render(RpAtomic* atomic);
+    void init_missle_model();
+    void reset_wake_ribbons();
+    void init_wake_ribbons();
+    void update_trail(float32 dt);
+    void update_missle(xScene& s, float32 dt);
+    void render_missle();
+    xModelInstance* load_model(uint32);
 
 } // namespace cruise_bubble
 
