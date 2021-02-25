@@ -4,6 +4,24 @@ import re
 
 INCLUDE_INSTRUCTION_BYTES = False
 
+# see tools/postprocess.py for info about substitutions done in the mangled names
+substitutions = (
+    ('<',  '_esc__0_'),
+    ('>',  '_esc__1_'),
+    ('@',  '_esc__2_'),
+    ('\\', '_esc__3_'),
+    (',',  '_esc__4_'),
+    ('-',  '_esc__5_'),
+    ('$',  '_esc__6_')
+)
+
+def decodeformat(symbol):
+    for sub in substitutions:
+        symbol = symbol.replace(sub[1], sub[0])
+
+    return symbol
+
+
 def cpp_get_qualified(text):
 	if text.startswith("Q"):
 		# multiple qualified name
@@ -53,13 +71,16 @@ def cpp_get_base_type(text, unsigned):
 		return rest, "float64"
 	elif char == 'v':
 		return rest, "void"
-	elif char.isnumeric():
+	elif char == 'Q' or char.isnumeric():
 		rest, namespaces = cpp_get_qualified(text)
 		return rest, "::".join(namespaces)
 	else:
 		return rest, ""
 
 def cpp_func_from_symbol(symbol):
+	# reverse escaping for correct parsing
+	symbol = decodeformat(symbol)
+	
 	# Special symbols start with __
 	if symbol.startswith("__"):
 		return symbol + "(?)"
@@ -246,15 +267,6 @@ def get_byte_length(block):
 	return byte_count
 
 def rip(subsys_name, symbol):
-	if subsys_name == None:
-		if locate_symbol(Path("src/Game"), symbol):
-			subsys_name = Path("Game")
-		elif locate_symbol(Path("src/Core/p2"), symbol):
-			subsys_name = Path("Core/p2")
-		elif locate_symbol(Path("src/Core/x"), symbol):
-			subsys_name = Path("Core/x")
-		else:
-			sys.exit("I don't know what to do with %s!" % symbol)
 	subsys_srcs = Path("src") / subsys_name
 	subsys_asms = Path("asm") / subsys_name
 	file_stem = locate_symbol(subsys_srcs, symbol)
@@ -263,7 +275,10 @@ def rip(subsys_name, symbol):
 	cpp_path = subsys_srcs / (file_stem + ".cpp")
 	cpp_lines = getlines(cpp_path)
 	pragma_line = find_line_with_symbol(cpp_lines, symbol)
-	if not cpp_lines[pragma_line - 1].startswith("// func_"):
+	func_comment_line = pragma_line - 1
+	while cpp_lines[func_comment_line].endswith("\\\n"):
+		func_comment_line -= 1
+	if not cpp_lines[func_comment_line].startswith("// func_"):
 		sys.exit("Error: Symbol %s has already been ripped!" % symbol)
 
 	# Get the assembly lines from the .s file
@@ -281,7 +296,7 @@ def rip(subsys_name, symbol):
 	cpp_func_name = "void " + cpp_func_from_symbol(symbol)
 
 	# Output C++ code
-	cpp_lines.insert(pragma_line, "#if 0\n")
+	cpp_lines.insert(func_comment_line + 1, "#if 0\n")
 	pragma_line += 2
 	cpp_lines.insert(pragma_line, "#else\n")
 	pragma_line += 1
@@ -308,14 +323,14 @@ def check_is_symbol_name(name):
 		sys.exit("Error: That looks like a path, not a symbol.")
 
 def get_subsys_name(name):
-	if name[0] == "x":
-		return Path("Core/x")
-	elif name[0] == 'i':
-		return Path("Core/p2")
-	elif name[0] == "z":
+	if locate_symbol(Path("src/Game"), name):
 		return Path("Game")
+	elif locate_symbol(Path("src/Core/p2"), name):
+		return Path("Core/p2")
+	elif locate_symbol(Path("src/Core/x"), name):
+		return Path("Core/x")
 	else:
-		return None
+		sys.exit("I don't know what to do with %s!" % symbol)
 
 if len(sys.argv) < 2:
 	sys.exit("Error: No symbol name given.")
