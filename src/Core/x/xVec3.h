@@ -20,6 +20,7 @@ struct xVec3
     xVec3 operator+(const xVec3&) const;
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(float32) const;
+    xVec3& operator+=(const xVec3&);
     xVec3& operator+=(float32);
     xVec3& operator-=(const xVec3&);
     xVec3& operator-=(float32);
