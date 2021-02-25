@@ -68,6 +68,11 @@ struct xDecalEmitter
     uint32 curve_size;
     uint32 curve_index;
     float32 ilife;
+
+	void set_curve(const curve_node* curve, ulong32 size);
+	void refresh_config();
+	void set_texture(const int8* name);
+	void set_default_config();
 };
 
 void xDecalInit();

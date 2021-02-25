@@ -8,6 +8,7 @@
 #include "zGlobals.h"
 #include "zTalkBox.h"
 
+#include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
 #include "../Core/x/xMath3.h"
@@ -96,11 +97,11 @@ extern struct _class_36
 // xMat4x3 start_cam_mat;
 // fixed_queue missle_record;
 extern xFXRibbon wake_ribbon[2];
-// xDecalEmitter explode_decal;
+extern xDecalEmitter explode_decal;
 extern const xFXRibbon::curve_node wake_ribbon_curve[2];
 extern const xFXRibbon::curve_node cheat_wake_ribbon_curve[2];
-// curve_node_1 explode_curve[3];
-// curve_node_1 cheat_explode_curve[3];
+extern const xDecalEmitter::curve_node explode_curve[3];
+extern const xDecalEmitter::curve_node cheat_explode_curve[3];
 extern sound_config sounds[4];
 // quadrant_set qzone;
 // _class_17 hud;
@@ -144,6 +145,7 @@ extern const char stringBase0[]; // "Idle01\0Idle02\0Idle03\0Idle04\0Idle05\0Idl
 
 extern float32 zEntCruiseBubble_f_0_0; // 0.0
 extern float32 zEntCruiseBubble_f_1_0; // 1.0
+extern float32 zEntCruiseBubble_f_0_5; // 0.5
 extern float32 zEntCruiseBubble_f_3_0; // 3.0
 extern float32 zEntCruiseBubble_f_0_25; // 0.25
 
@@ -882,10 +884,29 @@ void cruise_bubble::init_wake_ribbons()
     cruise_bubble::reset_wake_ribbons();
 }
 
-// func_80058C70
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "reset_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::reset_explode_decal()
+{
+    explode_decal.set_default_config();
+
+    explode_decal.cfg.flags = 0x3;
+    explode_decal.cfg.blend_src = 5;
+    explode_decal.cfg.blend_dst = 2;
+
+    if ((shared.flags & 0x200) == 0)
+    {
+        explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+        explode_decal.set_curve(&explode_curve[0], 3);
+        // stringBase0 + 0x1e9 == "par_cruise_explode"
+        explode_decal.set_texture(stringBase0 + 0x1e9);
+    }
+    else
+    {
+        explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+        explode_decal.set_curve(&cheat_explode_curve[0], 3);
+        explode_decal.set_texture(stringBase0 + 0x1e9);
+    }
+    explode_decal.refresh_config();
+}
 
 // func_80058D38
 #pragma GLOBAL_ASM(                                                                                \

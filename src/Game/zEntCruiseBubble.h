@@ -118,6 +118,7 @@ namespace cruise_bubble
     void init_missle_model();
     void reset_wake_ribbons();
     void init_wake_ribbons();
+    void reset_explode_decal();
     void update_trail(float32 dt);
     void update_missle(xScene& s, float32 dt);
     void render_missle();
