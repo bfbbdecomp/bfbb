@@ -909,9 +909,29 @@ void cruise_bubble::reset_explode_decal()
 }
 
 // func_80058D38
+#ifndef NON_MATCHING
+// funcmatch
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "init_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::init_explode_decal()
+{
+    explode_decal.init(1, stringBase0 + 0x1fc);
+    explode_decal.set_default_config();
+
+    // r0 should be use here
+    explode_decal.cfg.flags = 0x3;
+    // scheduling off here
+    explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+    explode_decal.cfg.blend_src = 5;
+    explode_decal.cfg.blend_dst = 2;
+
+    explode_decal.set_curve(explode_curve, 3);
+    explode_decal.set_texture(stringBase0 + 0x1e9);
+    explode_decal.refresh_config();
+}
+#endif
 
 // func_80058DD4
 #pragma GLOBAL_ASM(                                                                                \

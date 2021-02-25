@@ -73,6 +73,7 @@ struct xDecalEmitter
 	void refresh_config();
 	void set_texture(const int8* name);
 	void set_default_config();
+	void init(int32 max_size, const int8*);
 };
 
 void xDecalInit();
