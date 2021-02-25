@@ -517,7 +517,7 @@ void cruise_bubble::start_trail()
     shared.fov_default = zEntCruiseBubble_f_0_0;
     shared.dialog_freq = zEntCruiseBubble_f_0_0;
 
-    refresh_trail(shared.trail.mat, shared.trail.dir); // [refresh_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR7xMat4x3R5xQuat]
+    refresh_trail(shared.trail.mat, shared.trail.dir);
 }
 #endif
 
@@ -528,7 +528,6 @@ void cruise_bubble::stop_trail()
 
 void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::state_enum state)
 {
-    // compiler uses lwzu here
     state_type** st = &shared.state[thread];
     if (*st != NULL)
     {
