@@ -6,6 +6,12 @@
 struct zNPCAmbient : zNPCCommon
 {
     zNPCAmbient(int32 myType);
+
+    void Init(xEntAsset* asset);
+    void Reset();
+    void Process(xScene* xscn, float32 dt);
+    void SelfSetup();
+    int32 NPCMessage(NPCMsg* mail);
 };
 
 struct zNPCJelly : zNPCAmbient
@@ -16,6 +22,8 @@ struct zNPCJelly : zNPCAmbient
     zNPCCommon* npc_daddyJelly;
 
     zNPCJelly(int32 myType);
+
+    void Init(xEntAsset* asset);
 };
 
 struct zNPCNeptune : zNPCAmbient
