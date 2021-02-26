@@ -120,6 +120,7 @@ namespace cruise_bubble
     void init_wake_ribbons();
     void reset_explode_decal();
     void init_explode_decal();
+    void init_shrapnel();
     void update_trail(float32 dt);
     void update_missle(xScene& s, float32 dt);
     void render_missle();

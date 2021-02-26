@@ -1234,25 +1234,6 @@ init_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_c
 /* 80058DCC 00055BCC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80058DD0 00055BD0  4E 80 00 20 */	blr 
 
-/* init_shrapnel__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-init_shrapnel__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80058DD4 00055BD4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80058DD8 00055BD8  7C 08 02 A6 */	mflr r0
-/* 80058DDC 00055BDC  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
-/* 80058DE0 00055BE0  38 63 53 3C */	addi r3, r3, stringBase0__13cruise_bubble@l
-/* 80058DE4 00055BE4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80058DE8 00055BE8  38 63 02 14 */	addi r3, r3, 0x214
-/* 80058DEC 00055BEC  4B FF 34 29 */	bl xStrHash__FPCc
-/* 80058DF0 00055BF0  38 80 00 00 */	li r4, 0
-/* 80058DF4 00055BF4  4B FF 29 19 */	bl xSTFindAsset__FUiPUi
-/* 80058DF8 00055BF8  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
-/* 80058DFC 00055BFC  38 84 C2 A4 */	addi r4, r4, shared__13cruise_bubble@l
-/* 80058E00 00055C00  90 64 01 04 */	stw r3, 0x104(r4)
-/* 80058E04 00055C04  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80058E08 00055C08  7C 08 03 A6 */	mtlr r0
-/* 80058E0C 00055C0C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80058E10 00055C10  4E 80 00 20 */	blr 
-
 /* add_trail_sample__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f */
 add_trail_sample__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f:
 /* 80058E14 00055C14  94 21 FE F0 */	stwu r1, -0x110(r1)

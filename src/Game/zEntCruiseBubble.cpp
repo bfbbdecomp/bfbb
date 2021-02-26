@@ -933,10 +933,10 @@ void cruise_bubble::init_explode_decal()
 }
 #endif
 
-// func_80058DD4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_shrapnel__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::init_shrapnel()
+{
+    shared.droplet_shrapnel = (zShrapnelAsset*) xSTFindAsset(xStrHash(stringBase0 + 0x214), NULL);
+}
 
 // func_80058E14
 #pragma GLOBAL_ASM(                                                                                \
