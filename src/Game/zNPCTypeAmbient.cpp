@@ -6,11 +6,23 @@
 #include "zNPCTypeAmbient.h"
 #include "zNPCTypes.h"
 
-// func_801077A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_Ambient_Startup__Fv")
+extern int8* g_strz_ambianim[12];
+extern int32 g_hash_ambianim[12];
 
-// func_80107808
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_Ambient_Shutdown__Fv")
+void ZNPC_Ambient_Startup()
+{
+    int32 i = 0;
+
+    do
+    {
+        g_hash_ambianim[i] = xStrHash(g_strz_ambianim[i]);
+        i++;
+    } while (i < 12); // using sizeof makes it not match
+}
+
+void ZNPC_Ambient_Shutdown()
+{
+}
 
 xFactoryInst* ZNPC_Create_Ambient(int32 who, RyzMemGrow* grow, void*)
 {
@@ -63,17 +75,51 @@ void ZNPC_Destroy_Ambient(xFactoryInst* inst)
 // func_80107C28
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_AnimTable_Neptune__Fv")
 
+/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCAmbient::Init(xEntAsset* asset)
+{
+    zNPCCommon::Init(asset);
+    if (cfg_npc->dst_castShadow < 0.00000000)
+    {
+        cfg_npc->dst_castShadow = 0x3f800000;
+    }
+}
+*/
+
 // func_80107F40
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Init__11zNPCAmbientFP9xEntAsset")
 
-// func_80107F88
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__11zNPCAmbientFv")
+void zNPCAmbient::Reset()
+{
+    zNPCCommon::Reset();
+    if (psy_instinct != NULL)
+    {
+        psy_instinct->GoalSet('NGN0', 1);
+    }
+}
 
-// func_80107FD0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__11zNPCAmbientFP6xScenef")
+void zNPCAmbient::Process(xScene* xscn, float32 dt)
+{
+    if (psy_instinct != NULL)
+    {
+        psy_instinct->Timestep(dt, NULL);
+    }
+    zNPCCommon::Process(xscn, dt);
+}
 
-// func_80108034
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SelfSetup__11zNPCAmbientFv")
+void zNPCAmbient::SelfSetup()
+{
+    xBehaveMgr* bmgr;
+    xPsyche* psy;
+
+    bmgr = xBehaveMgr_GetSelf();
+    psy_instinct = bmgr->Subscribe(this, 0);
+    psy = psy_instinct;
+    psy->BrainBegin();
+    psy->AddGoal('NGN0', NULL);
+    psy->BrainEnd();
+    psy->SetSafety('NGN0');
+}
 
 // func_801080A8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
@@ -81,6 +127,16 @@ void ZNPC_Destroy_Ambient(xFactoryInst* inst)
 
 // func_80108100
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "NPCMessage__11zNPCAmbientFP6NPCMsg")
+
+/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCJelly::Init(xEntAsset* asset)
+{
+    zNPCAmbient::Init(asset);
+    flg_move = flg_move | 4;
+    flg_vuln = 0xffffffff;
+    flg_vuln = flg_vuln & 0x9effffef;
+}
+*/
 
 // func_801081F4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Init__9zNPCJellyFP9xEntAsset")
