@@ -3,11 +3,19 @@
 #include "../Core/x/xVec3.h"
 #include "../Core/x/xMath3.h"
 
+#include "zGlobals.h"
+#include "zNPCGoalAmbient.h"
 #include "zNPCTypeAmbient.h"
 #include "zNPCTypes.h"
 
 extern int8* g_strz_ambianim[12];
 extern int32 g_hash_ambianim[12];
+extern NPCSndTrax g_sndTrax_Jelly[4];
+extern zGlobals globals;
+extern float32 zNPCTypeAmbientx40600000;
+extern float32 zNPCTypeAmbientx405f66f3;
+extern float32 zNPCTypeAmbientx3f400000;
+extern float32 zNPCTypeAmbientx3edf66f3;
 
 void ZNPC_Ambient_Startup()
 {
@@ -141,20 +149,85 @@ void zNPCJelly::Init(xEntAsset* asset)
 // func_801081F4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Init__9zNPCJellyFP9xEntAsset")
 
-// func_80108248
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ParseINI__9zNPCJellyFv")
+void zNPCJelly::ParseINI()
+{
+    int32 selfType;
 
-// func_80108310
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__9zNPCJellyFv")
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_trax = g_sndTrax_Jelly;
+    NPCS_SndTablePrepare(g_sndTrax_Jelly);
+    selfType = xNPCBasic::SelfType();
+    if (selfType == 'NTA1')
+    {
+        cfg_npc->spd_moveMax = zNPCTypeAmbientx40600000;
+        cfg_npc->spd_turnMax = zNPCTypeAmbientx405f66f3;
+    }
+    else if (selfType == 'NTA0')
+    {
+        if (globals.sceneCur->sceneID == 'JF04') //DAT_803c2518 is globals.sceneCur->sceneID
+        {
+            cfg_npc->spd_moveMax = zNPCTypeAmbientx40600000;
+            cfg_npc->spd_turnMax = zNPCTypeAmbientx405f66f3;
+        }
+        else
+        {
+            cfg_npc->spd_moveMax = zNPCTypeAmbientx3f400000;
+            cfg_npc->spd_turnMax = zNPCTypeAmbientx3edf66f3;
+        }
+    }
+}
 
-// func_80108374
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SelfSetup__9zNPCJellyFv")
+void zNPCJelly::Reset()
+{
+    zNPCAmbient::Reset();
+    cnt_angerLevel = 0;
+    hitpoints = cfg_npc->pts_damage;
+    if (npc_daddyJelly != NULL)
+    {
+        hitpoints = 0;
+        psy_instinct->GoalSet('NGN5', 1);
+    }
+}
 
-// func_80108450
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "JellySpawn__9zNPCJellyFPC5xVec3f")
+void zNPCJelly::SelfSetup()
+{
+    xBehaveMgr* bmgr;
+    xPsyche* psy;
 
-// func_801084C0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "JellyKill__9zNPCJellyFv")
+    bmgr = xBehaveMgr_GetSelf();
+    psy_instinct = bmgr->Subscribe(this, 0);
+    psy = psy_instinct;
+    psy->BrainBegin();
+    zNPCCommon::AddBaseline(psy, JELY_grul_getAngry, JELY_grul_getAngry, JELY_grul_getAngry,
+                            JELY_grul_getAngry, JELY_grul_getAngry);
+    psy->AddGoal('NGJ1', NULL);
+    psy->AddGoal('NGJ0', NULL);
+    psy->AddGoal('NGJ2', NULL);
+    psy->AddGoal('NGN5', NULL);
+    psy->BrainEnd();
+    psy->SetSafety('NGN0');
+}
+
+void zNPCJelly::JellySpawn(xVec3* pos_spawn, float32 tym_fall)
+{
+    xPsyche* psy;
+    zNPCGoalJellyBirth* birth;
+
+    psy = psy_instinct;
+    birth = (zNPCGoalJellyBirth*)psy->FindGoal('NGJ2');
+    birth->BirthInfoSet(pos_spawn, tym_fall);
+    psy->GoalSet('NGJ2', 0);
+}
+
+void zNPCJelly::JellyKill()
+{
+    xPsyche* psy = psy_instinct;
+    if (psy != NULL && psy->GIDInStack('NGN5') == 0)
+    {
+        hitpoints = 0;
+        psy->GoalSet('NGN5', 0);
+    }
+}
 
 // func_80108530
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AnimPick__9zNPCJellyFi16en_NPC_GOAL_SPOTP5xGoal")
