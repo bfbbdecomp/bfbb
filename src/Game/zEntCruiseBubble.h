@@ -122,6 +122,7 @@ namespace cruise_bubble
     void init_explode_decal();
     void init_shrapnel();
     void update_trail(float32 dt);
+    void refresh_missle_model();
     void update_missle(xScene& s, float32 dt);
     void render_missle();
     xModelInstance* load_model(uint32);

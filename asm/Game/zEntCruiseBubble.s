@@ -1569,10 +1569,6 @@ lbl_800592E8:
 /* 8005930C 0005610C  38 21 01 70 */	addi r1, r1, 0x170
 /* 80059310 00056110  4E 80 00 20 */	blr 
 
-/* refresh_missle_model__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 80059314 00056114  4E 80 00 20 */	blr 
-
 /* render_model_2d__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FP14xModelInstanceRC13basic_rect<f>f */
 render_model_2d__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f:
 /* 80059458 00056258  94 21 FF 70 */	stwu r1, -0x90(r1)

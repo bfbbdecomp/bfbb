@@ -948,10 +948,9 @@ void cruise_bubble::init_shrapnel()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_trail__13cruise_bubbleFf")
 
-// func_80059314
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::refresh_missle_model()
+{
+}
 
 void cruise_bubble::update_missle(xScene& s, float32 dt)
 {
