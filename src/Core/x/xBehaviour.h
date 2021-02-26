@@ -98,6 +98,7 @@ struct xPsyche : RyzMemData
     PSY_BRAIN_STATUS psystat;
     xBase fakebase;
 
+    xGoal* GIDInStack(int32 gid) const;
     void ImmTranOn();
     void ImmTranOff();
     int32 ImmTranIsOn();
