@@ -185,5 +185,10 @@ void xAnimPoolInit(xMemPool* pool, uint32 count, uint32 singles, uint32 blendFla
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
                           xModelInstance* modelInst);
 xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);
+void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const int8* source);
+xAnimState* xAnimTableGetStateID(xAnimTable* table, uint32 ID);
+void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, float32 startTime);
+void xAnimPlayUpdate(xAnimPlay* play, float32 timeDelta);
+void xAnimPlayEval(xAnimPlay* play);
 
 #endif
