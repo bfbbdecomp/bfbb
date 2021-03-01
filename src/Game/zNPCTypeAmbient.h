@@ -7,11 +7,19 @@ struct zNPCAmbient : zNPCCommon
 {
     zNPCAmbient(int32 myType);
 
+    int32 AmbiHandleMail(NPCMsg msg);
+
     void Init(xEntAsset* asset);
     void Reset();
     void Process(xScene* xscn, float32 dt);
     void SelfSetup();
     int32 NPCMessage(NPCMsg* mail);
+
+    virtual uint8 ColChkFlags() const;
+    virtual uint8 ColPenFlags() const;
+    virtual uint8 ColChkByFlags() const;
+    virtual uint8 ColPenByFlags() const;
+    virtual uint8 PhysicsFlags();
 };
 
 struct zNPCJelly : zNPCAmbient
@@ -31,16 +39,27 @@ struct zNPCJelly : zNPCAmbient
     void BUpdate();
     void ParseINI();
     void SelfSetup();
+    int32 IsAlive();
 };
 
 struct zNPCNeptune : zNPCAmbient
 {
     zNPCNeptune(int32 myType);
+
+    void SelfSetup();
+
+    uint8 ColChkFlags() const;
+    uint8 ColPenFlags() const;
+    uint8 ColChkByFlags() const;
+    uint8 ColPenByFlags() const;
 };
 
 struct zNPCMimeFish : zNPCAmbient
 {
     zNPCMimeFish(int32 myType);
+
+    void Reset();
+    void SelfSetup();
 };
 
 void ZNPC_Ambient_Startup();
