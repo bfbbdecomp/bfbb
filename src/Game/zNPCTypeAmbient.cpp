@@ -16,6 +16,7 @@ extern float32 zNPCTypeAmbientx40600000;
 extern float32 zNPCTypeAmbientx405f66f3;
 extern float32 zNPCTypeAmbientx3f400000;
 extern float32 zNPCTypeAmbientx3edf66f3;
+extern NPCSndTrax g_sndTrax_Neptune;
 
 void ZNPC_Ambient_Startup()
 {
@@ -269,11 +270,29 @@ void zNPCJelly::JellyKill()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
                    "AnimPick__11zNPCNeptuneFi16en_NPC_GOAL_SPOTP5xGoal")
 
+/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCNeptune::ParseINI()
+{
+    zNPCAmbient::ParseINI();
+    cfg_npc->snd_traxShare = NULL;
+    cfg_npc->snd_trax = &g_sndTrax_Neptune;
+    NPCS_SndTablePrepare(&g_sndTrax_Neptune);
+}
+*/
+
 // func_80108FD8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ParseINI__11zNPCNeptuneFv")
 
+#ifndef NON_MATCHING
 // func_80109024
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__11zNPCNeptuneFv")
+#else
+void zNPCNeptune::Reset()
+{
+    zNPCAmbient::Reset();
+    flags |= 0x40;
+}
+#endif
 
 // func_8010905C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__11zNPCNeptuneFP6xScenef")
@@ -285,8 +304,22 @@ void zNPCJelly::JellyKill()
 // func_8010927C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__12zNPCMimeFishFv")
 
+/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCMimeFish::Reset()
+{
+    zNPCAmbient::Reset();
+    flg_move = 1;
+}
+*/
+
 // func_801092B0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__12zNPCMimeFishFP6xScenef")
+
+/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCMimeFish::Process(xScene* xscn, float32 dt)
+{
+}
+*/
 
 // func_801092B4
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "__ct__12zNPCMimeFishFi")
@@ -300,44 +333,73 @@ void zNPCJelly::JellyKill()
 // func_80109368
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "__ct__11zNPCAmbientFi")
 
-// func_801093A4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AmbiHandleMail__11zNPCAmbientFP6NPCMsg")
+int32 zNPCAmbient::AmbiHandleMail(NPCMsg msg)
+{
+    return 0;
+}
 
-// func_801093AC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "IsAlive__9zNPCJellyFv")
+int32 zNPCJelly::IsAlive()
+{
+    return (-(uint32)hitpoints & ~(uint32)hitpoints) >> 0x1f;
+}
 
-// func_801093C0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SelfSetup__12zNPCMimeFishFv")
+void zNPCMimeFish::SelfSetup()
+{
+}
 
-// func_801093C4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColChkFlags__11zNPCAmbientCFv")
+uint8 zNPCAmbient::ColChkFlags() const
+{
+    return 0;
+}
 
-// func_801093CC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColPenFlags__11zNPCAmbientCFv")
+uint8 zNPCAmbient::ColPenFlags() const
+{
+    return 0;
+}
 
-// func_801093D4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColChkByFlags__11zNPCAmbientCFv")
+uint8 zNPCAmbient::ColChkByFlags() const
+{
+    return 0x18;
+}
 
-// func_801093DC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColPenByFlags__11zNPCAmbientCFv")
+uint8 zNPCAmbient::ColPenByFlags() const
+{
+    return 0x18;
+}
 
-// func_801093E4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "PhysicsFlags__11zNPCAmbientCFv")
+uint8 zNPCAmbient::PhysicsFlags()
+{
+    return 3;
+}
 
 // func_801093EC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SelfSetup__11zNPCNeptuneFv")
 
-// func_801093F0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColChkFlags__11zNPCNeptuneCFv")
+/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCNeptune::SelfSetup()
+{
+}
+*/
 
-// func_801093F8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColPenFlags__11zNPCNeptuneCFv")
+uint8 zNPCNeptune::ColChkFlags() const
+{
+    return 0;
+}
 
-// func_80109400
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColChkByFlags__11zNPCNeptuneCFv")
+uint8 zNPCNeptune::ColPenFlags() const
+{
+    return 0;
+}
 
-// func_80109408
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ColPenByFlags__11zNPCNeptuneCFv")
+uint8 zNPCNeptune::ColChkByFlags() const
+{
+    return 0;
+}
+
+uint8 zNPCNeptune::ColPenByFlags() const
+{
+    return 0;
+}
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
