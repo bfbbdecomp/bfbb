@@ -79,10 +79,10 @@ lbl_801096B8:
 zNPCTiki_InitFX__FP6zScene:
 /* 801096EC 001064EC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801096F0 001064F0  7C 08 02 A6 */	mflr r0
-/* 801096F4 001064F4  3C 60 80 27 */	lis r3, lbl_8026A358@ha
+/* 801096F4 001064F4  3C 60 80 27 */	lis r3, zNPCTypeTiki_stringBase0@ha
 /* 801096F8 001064F8  3C 80 80 31 */	lis r4, lbl_80313410@ha
 /* 801096FC 001064FC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80109700 00106500  38 63 A3 58 */	addi r3, r3, lbl_8026A358@l
+/* 80109700 00106500  38 63 A3 58 */	addi r3, r3, zNPCTypeTiki_stringBase0@l
 /* 80109704 00106504  38 63 00 0F */	addi r3, r3, 0xf
 /* 80109708 00106508  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8010970C 0010650C  3B E4 34 10 */	addi r31, r4, lbl_80313410@l
@@ -91,8 +91,8 @@ zNPCTiki_InitFX__FP6zScene:
 /* 80109718 00106518  80 0D 94 D8 */	lwz r0, lbl_803CBDD8-_SDA_BASE_(r13)
 /* 8010971C 0010651C  28 00 00 00 */	cmplwi r0, 0
 /* 80109720 00106520  40 82 00 18 */	bne lbl_80109738
-/* 80109724 00106524  3C 60 80 27 */	lis r3, lbl_8026A358@ha
-/* 80109728 00106528  38 63 A3 58 */	addi r3, r3, lbl_8026A358@l
+/* 80109724 00106524  3C 60 80 27 */	lis r3, zNPCTypeTiki_stringBase0@ha
+/* 80109728 00106528  38 63 A3 58 */	addi r3, r3, zNPCTypeTiki_stringBase0@l
 /* 8010972C 0010652C  38 63 00 25 */	addi r3, r3, 0x25
 /* 80109730 00106530  4B F9 F1 15 */	bl zParEmitterFind__FPCc
 /* 80109734 00106534  90 6D 94 D8 */	stw r3, lbl_803CBDD8-_SDA_BASE_(r13)
@@ -283,8 +283,8 @@ lbl_80109738:
 /* 80109A14 00106814  FC 40 08 90 */	fmr f2, f1
 /* 80109A18 00106818  38 63 00 E8 */	addi r3, r3, 0xe8
 /* 80109A1C 0010681C  4B F2 24 BD */	bl set__10xParInterpFfffUi
-/* 80109A20 00106820  3C 60 80 27 */	lis r3, lbl_8026A358@ha
-/* 80109A24 00106824  38 63 A3 58 */	addi r3, r3, lbl_8026A358@l
+/* 80109A20 00106820  3C 60 80 27 */	lis r3, zNPCTypeTiki_stringBase0@ha
+/* 80109A24 00106824  38 63 A3 58 */	addi r3, r3, zNPCTypeTiki_stringBase0@l
 /* 80109A28 00106828  38 63 00 33 */	addi r3, r3, 0x33
 /* 80109A2C 0010682C  4B F4 27 E9 */	bl xStrHash__FPCc
 /* 80109A30 00106830  38 80 00 00 */	li r4, 0
@@ -699,10 +699,10 @@ lbl_80109FD4:
 ZNPC_AnimTable_Tiki__Fv:
 /* 8010A0AC 00106EAC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8010A0B0 00106EB0  7C 08 02 A6 */	mflr r0
-/* 8010A0B4 00106EB4  3C 60 80 27 */	lis r3, lbl_8026A358@ha
+/* 8010A0B4 00106EB4  3C 60 80 27 */	lis r3, zNPCTypeTiki_stringBase0@ha
 /* 8010A0B8 00106EB8  38 80 00 00 */	li r4, 0
 /* 8010A0BC 00106EBC  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8010A0C0 00106EC0  38 63 A3 58 */	addi r3, r3, lbl_8026A358@l
+/* 8010A0C0 00106EC0  38 63 A3 58 */	addi r3, r3, zNPCTypeTiki_stringBase0@l
 /* 8010A0C4 00106EC4  38 A0 00 00 */	li r5, 0
 /* 8010A0C8 00106EC8  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8010A0CC 00106ECC  38 63 00 3A */	addi r3, r3, 0x3a
@@ -1504,8 +1504,8 @@ lbl_8010AC18:
 /* 8010AC34 00107A34  93 CD 94 D0 */	stw r30, lbl_803CBDD0-_SDA_BASE_(r13)
 /* 8010AC38 00107A38  48 00 00 18 */	b lbl_8010AC50
 lbl_8010AC3C:
-/* 8010AC3C 00107A3C  3C 60 80 27 */	lis r3, lbl_8026A358@ha
-/* 8010AC40 00107A40  38 63 A3 58 */	addi r3, r3, lbl_8026A358@l
+/* 8010AC3C 00107A3C  3C 60 80 27 */	lis r3, zNPCTypeTiki_stringBase0@ha
+/* 8010AC40 00107A40  38 63 A3 58 */	addi r3, r3, zNPCTypeTiki_stringBase0@l
 /* 8010AC44 00107A44  38 63 00 43 */	addi r3, r3, 0x43
 /* 8010AC48 00107A48  4C C6 31 82 */	crclr 6
 /* 8010AC4C 00107A4C  4B F0 D0 F1 */	bl xprintf__FPCce
@@ -3825,8 +3825,8 @@ CanRope__8zNPCTikiFv:
 AnimPick__8zNPCTikiFi16en_NPC_GOAL_SPOTP5xGoal:
 /* 8010CD90 00109B90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8010CD94 00109B94  7C 08 02 A6 */	mflr r0
-/* 8010CD98 00109B98  3C 60 80 27 */	lis r3, lbl_8026A358@ha
-/* 8010CD9C 00109B9C  38 63 A3 58 */	addi r3, r3, lbl_8026A358@l
+/* 8010CD98 00109B98  3C 60 80 27 */	lis r3, zNPCTypeTiki_stringBase0@ha
+/* 8010CD9C 00109B9C  38 63 A3 58 */	addi r3, r3, zNPCTypeTiki_stringBase0@l
 /* 8010CDA0 00109BA0  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8010CDA4 00109BA4  38 63 00 51 */	addi r3, r3, 0x51
 /* 8010CDA8 00109BA8  4B F3 F4 6D */	bl xStrHash__FPCc
@@ -3882,7 +3882,8 @@ PhysicsFlags__8zNPCTikiCFv:
 .section .rodata
 lbl_8026A308:
 	.incbin "baserom.dol", 0x2672E8, 0x50
-lbl_8026A358:
+.global zNPCTypeTiki_stringBase0
+zNPCTypeTiki_stringBase0:
 	.incbin "baserom.dol", 0x267338, 0x58
 
 .section .bss

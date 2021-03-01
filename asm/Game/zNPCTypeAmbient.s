@@ -1582,58 +1582,8 @@ __ct__11zNPCAmbientFi:
 /* 8010939C 0010619C  38 21 00 10 */	addi r1, r1, 0x10
 /* 801093A0 001061A0  4E 80 00 20 */	blr 
 
-AmbiHandleMail__11zNPCAmbientFP6NPCMsg:
-/* 801093A4 001061A4  38 60 00 00 */	li r3, 0
-/* 801093A8 001061A8  4E 80 00 20 */	blr 
-
-IsAlive__9zNPCJellyFv:
-/* 801093AC 001061AC  80 63 02 A4 */	lwz r3, 0x2a4(r3)
-/* 801093B0 001061B0  7C 03 00 D0 */	neg r0, r3
-/* 801093B4 001061B4  7C 00 18 78 */	andc r0, r0, r3
-/* 801093B8 001061B8  54 03 0F FE */	srwi r3, r0, 0x1f
-/* 801093BC 001061BC  4E 80 00 20 */	blr 
-
-SelfSetup__12zNPCMimeFishFv:
-/* 801093C0 001061C0  4E 80 00 20 */	blr 
-
-ColChkFlags__11zNPCAmbientCFv:
-/* 801093C4 001061C4  38 60 00 00 */	li r3, 0
-/* 801093C8 001061C8  4E 80 00 20 */	blr 
-
-ColPenFlags__11zNPCAmbientCFv:
-/* 801093CC 001061CC  38 60 00 00 */	li r3, 0
-/* 801093D0 001061D0  4E 80 00 20 */	blr 
-
-ColChkByFlags__11zNPCAmbientCFv:
-/* 801093D4 001061D4  38 60 00 18 */	li r3, 0x18
-/* 801093D8 001061D8  4E 80 00 20 */	blr 
-
-ColPenByFlags__11zNPCAmbientCFv:
-/* 801093DC 001061DC  38 60 00 18 */	li r3, 0x18
-/* 801093E0 001061E0  4E 80 00 20 */	blr 
-
-PhysicsFlags__11zNPCAmbientCFv:
-/* 801093E4 001061E4  38 60 00 03 */	li r3, 3
-/* 801093E8 001061E8  4E 80 00 20 */	blr 
-
 SelfSetup__11zNPCNeptuneFv:
 /* 801093EC 001061EC  4E 80 00 20 */	blr 
-
-ColChkFlags__11zNPCNeptuneCFv:
-/* 801093F0 001061F0  38 60 00 00 */	li r3, 0
-/* 801093F4 001061F4  4E 80 00 20 */	blr 
-
-ColPenFlags__11zNPCNeptuneCFv:
-/* 801093F8 001061F8  38 60 00 00 */	li r3, 0
-/* 801093FC 001061FC  4E 80 00 20 */	blr 
-
-ColChkByFlags__11zNPCNeptuneCFv:
-/* 80109400 00106200  38 60 00 00 */	li r3, 0
-/* 80109404 00106204  4E 80 00 20 */	blr 
-
-ColPenByFlags__11zNPCNeptuneCFv:
-/* 80109408 00106208  38 60 00 00 */	li r3, 0
-/* 8010940C 0010620C  4E 80 00 20 */	blr 
 
 /* xUtil_choose<i>__FPCiiPCf */
 xUtil_choose_esc__0_i_esc__1___FPCiiPCf:

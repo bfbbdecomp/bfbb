@@ -9,6 +9,9 @@
 
 extern const char* g_strz_tikianim[ANIM_COUNT];
 extern uint32 g_hash_tikianim[ANIM_COUNT];
+extern zParEmitter* cloudEmitter;
+extern xParEmitterCustomSettings thunderEmitterInfo;
+extern char zNPCTypeTiki_stringBase0[];
 
 void ZNPC_Tiki_Startup()
 {
@@ -27,6 +30,25 @@ void ZNPC_Tiki_Shutdown()
 
 // func_801096EC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "zNPCTiki_InitFX__FP6zScene")
+
+/* need to do more of this
+void zNPCTiki_InitFX(zScene* scene)
+{
+    RwTexture* tex;
+
+    cloudEmitter = zParEmitterFind("PAREMIT_THUNDER_CLOUD");
+    if (cloudEmitter == 0)
+    {
+        cloudEmitter = zParEmitterFind("PAREMIT_CLOUD");
+    }
+
+    thunderEmitterInfo.custom_flags = 0xf5e;
+    thunderEmitterInfo.vel.x = 0;
+    thunderEmitterInfo.vel.y = 0xbe99999a;
+    thunderEmitterInfo.vel.z = 0;
+    thunderEmitterInfo.vel_angle_variation = 0x4096cbe4;
+}
+*/
 
 // func_80109A7C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "zNPCTiki_ExplodeFX__FP8zNPCTiki")
@@ -72,6 +94,18 @@ void ZNPC_Destroy_Tiki(xFactoryInst* inst)
 
 // func_8010A0AC
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "ZNPC_AnimTable_Tiki__Fv")
+
+/* close
+xAnimTable* ZNPC_AnimTable_Tiki()
+{
+    xAnimTable* table;
+
+    table = xAnimTableNew(zNPCTypeTiki_stringBase0 + 0x3a, NULL, 0);
+    xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, 1, NULL, NULL, 0, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    return table;
+}
+*/
 
 // func_8010A134
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeTiki.s", "Reset__8zNPCTikiFv")

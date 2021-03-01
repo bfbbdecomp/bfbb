@@ -17,6 +17,7 @@ struct zNPCTest : zNPCCommon
     virtual uint32 AnimPick(int32, en_NPC_GOAL_SPOT, xGoal*);
 };
 
+void zNPCTiki_InitFX(zScene* scene);
 void ZNPC_Test_Startup();
 void ZNPC_Test_Shutdown();
 xFactoryInst* ZNPC_Create_Test(int32 who, RyzMemGrow* grow, void*);
