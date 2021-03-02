@@ -4,12 +4,37 @@
 
 // func_8009E02C
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResetAll__FP4xEnv")
+// void zLightResetAll__FP4xEnv(undefined4 param_1)
+// void zLightResetAll(xEnv* env)
+
+// {
+//   memset(sLight,0,0x80);
+//   sLightTotal = 0;
+//   if (sPartitionVolume == 0) {
+//     xPartitionWorld__FP13_tagPartitionP4xEnviii(sLightPart,env,10,1,10);
+//   }
+//   else {
+//     xPartitionVolume__FP13_tagPartitionP7xVolumeiii(sLightPart,sPartitionVolume,10,1,10);
+//   }
+//   xPartitionDump__FP13_tagPartitionPc(sLightPart,"Lighting");
+//   return;
+// }
 
 // func_8009E0C8
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FPvPv")
+// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FPvPv")
+void zLightInit(void* b, void* tasset)
+
+{
+  zLightInit(b, tasset);
+}
+
 
 // func_8009E0E8
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FP5xBaseP11zLightAsset")
+// void zLightInit(xBase* b, zLightAsset* tasset)
+// {
+
+// }
 
 // func_8009E2A8
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResolveLinks__Fv")
