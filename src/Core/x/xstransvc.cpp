@@ -51,7 +51,42 @@ int32 xSTShutdown()
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTAssetName__FPv")
 
 // func_8004B70C
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTFindAsset__FUiPUi")
+void* xSTFindAsset(uint32 aid, uint32* size)
+{
+    void* memloc = NULL;
+    if (aid == 0)
+    {
+        return memloc;
+    }
+
+    int32 ready;
+    int32 scncount = XST_cnt_locked();
+    for (int32 i = 0; i < scncount; i++)
+    {
+        int32 nth = XST_nth_locked(i);
+        if (g_pkrf->PkgHasAsset(*(st_PACKER_READ_DATA**)(nth + 8), aid) != 0)
+        {
+            memloc = g_pkrf->LoadAsset(*(st_PACKER_READ_DATA**)(nth + 8), aid, NULL, NULL);
+            if (g_pkrf->IsAssetReady(*(st_PACKER_READ_DATA**)(nth + 8), aid) == 0)
+            {
+                memloc = NULL;
+                if (size != NULL)
+                {
+                    *size = 0;
+                }
+            }
+            else
+            {
+                if (size != NULL)
+                {
+                    *size = g_pkrf->GetAssetSize(*(st_PACKER_READ_DATA**)(nth + 8), aid);
+                }
+            }
+            break;
+        }
+    }
+    return memloc;
+}
 
 // func_8004B818
 #pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTAssetCountByType__FUi")
