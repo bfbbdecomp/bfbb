@@ -16,16 +16,6 @@
 #include "CodeWarrior/cstring"
 #include "CodeWarrior/stdio.h"
 
-// TODO: Put this where it belongs
-struct xModelAssetInfo
-{
-    uint32 Magic;
-    uint32 NumModelInst;
-    uint32 AnimTableID;
-    uint32 CombatID;
-    uint32 BrainID;
-};
-
 extern _ShadowParams gShadowParams[5];
 extern uint32 g_hash_xentanim[5];
 extern int8* g_strz_xentanim[5];
@@ -361,37 +351,38 @@ void zEntEventAllOfType(uint32 toEvent, uint32 type)
     zEntEventAllOfType(NULL, 0, toEvent, NULL, type);
 }
 
-#if 1
+#ifndef NON_MATCHING
 // func_800554D4
 #pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntRecurseModelInfo__FPvP4xEnt")
 #else
-// WIP
+// regalloc
 xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
 {
     xModelAssetInfo* zinfo = (xModelAssetInfo*)info;
+    xModelAssetInst* zinst = (xModelAssetInst*)(zinfo + 1);
     uint32 bufsize;
     xModelInstance* tempInst[64];
 
-    uint32* aid = (uint32*)((int*)zinfo + 0x14);
     for (uint32 i = 0; i < zinfo->NumModelInst; i++)
     {
-        RpAtomic* imodel = (RpAtomic*)xSTFindAsset(*aid, &bufsize);
+        RpAtomic* imodel = (RpAtomic*)xSTFindAsset(zinst[i].ModelID, &bufsize);
         if (*(uint32*)&imodel->object.object == 0x464e494d)
         {
-            tempInst[i]->Next = zEntRecurseModelInfo(imodel, ent);
+            tempInst[i] = zEntRecurseModelInfo(imodel, ent);
             if (i != 0)
             {
-                tempInst[i]->Flags = tempInst[i]->Flags | *(uint16*)(aid + 1);
-                tempInst[i]->BoneIndex = *(uint8*)((int)aid + 7);
-                xModelInstanceAttach(tempInst[i], tempInst[(int)aid + 6]);
+                tempInst[i]->Flags |= zinst[i].Flags;
+                tempInst[i]->BoneIndex = zinst[i].Bone;
+                xModelInstanceAttach(tempInst[i], tempInst[zinst[i].Parent]);
             }
         }
         else
         {
             if (i == 0)
             {
+                // tempInst[i] (r30) gets stored in r4 here temporarily instead of being accessed directly.
                 tempInst[i]->Next = xModelInstanceAlloc(imodel, ent, 0, 0, 0);
-                tempInst[i]->Next->modelID = *aid;
+                tempInst[i]->Next->modelID = zinst[i].ModelID;
                 while (imodel = iModelFile_RWMultiAtomic(imodel), imodel != NULL)
                 {
                     xModelInstanceAttach(xModelInstanceAlloc(imodel, ent, 0x2000, 0, NULL),
@@ -400,9 +391,9 @@ xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
             }
             else
             {
-                tempInst[i] =
-                    xModelInstanceAlloc(imodel, ent, ((int)aid + 1), ((int)aid + 7), NULL);
-                xModelInstanceAttach(tempInst[i], tempInst[*(int8*)((int)aid + 6)]);
+                tempInst[i] = xModelInstanceAlloc(imodel, ent, zinst[i].Flags, zinst[i].Bone, NULL);
+                xModelInstanceAttach(tempInst[i], tempInst[zinst[i].Parent]);
+
                 while (imodel = iModelFile_RWMultiAtomic(imodel), imodel != NULL)
                 {
                     xModelInstanceAttach(xModelInstanceAlloc(imodel, ent, 0x2000, 0, NULL),
@@ -872,43 +863,26 @@ int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, const int8* tok, 
 }
 
 // func_800560EC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "zParamGetFloatList__FP16xModelAssetParamUiPciPfPf")
-#else
 int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 count, float32* def,
                          float32* result)
 {
     int8* str = zParamGetString(param, size, tok, NULL);
+    int32 act = 0;
 
     if (def != NULL)
     {
-        int32 act = 0;
-        if (count > 0)
+        for (int32 i = 0; i < count; i++)
         {
-            // if (count > 8) //&& count - 8 > 0)
-            // {
-            for (int32 i = 0; i != count; i++)
-            {
-                act += 1;
-                result[i] = def[i];
-            }
-            // }
-            if (act < count)
-            {
-                for (int32 i = act; i != count; i++)
-                {
-                    result[i] = def[i];
-                }
-            }
+            result[i] = def[i];
         }
     }
+
     if (str != NULL)
     {
-        return xStrParseFloatList(result, str, count);
+        act = xStrParseFloatList(result, str, count);
     }
-    return 0;
+    return act;
 }
-#endif
 
 // func_8005620C
 int32 zParamGetVector(xModelAssetParam* param, uint32 size, const int8* tok, xVec3 vec1,

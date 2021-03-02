@@ -82,6 +82,27 @@ struct xModelAssetParam
     uint8 String[3];
 };
 
+struct xModelAssetInfo
+{
+    uint32 Magic;
+    uint32 NumModelInst;
+    uint32 AnimTableID;
+    uint32 CombatID;
+    uint32 BrainID;
+};
+
+struct xModelAssetInst
+{
+    uint32 ModelID;
+    uint16 Flags;
+    uint8 Parent;
+    uint8 Bone;
+    float32 MatRight[3];
+    float32 MatUp[3];
+    float32 MatAt[3];
+    float32 MatPos[3];
+};
+
 struct xModelPipeLookup
 {
     RpAtomic* model;
