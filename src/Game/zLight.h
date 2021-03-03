@@ -41,8 +41,10 @@ void zLightAddLocalEnv();
 void zLightAddLocal(xEnt* ent);
 void zLightRemoveLocalEnv();
 void zLightResetAll(xEnv* env);
+void zLightReset(_zLight* param_1);
 void zLightSetVolume(zVolume* vol);
 void zLightDestroyAll();
+void zLightDestroy(_zLight* param_1);
 void zLightUpdate(xBase* to, xScene*, float32 dt);
 
 #endif
