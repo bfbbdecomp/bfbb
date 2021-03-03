@@ -479,9 +479,11 @@ lbl_802E9048:
 .global sLightTotal
 sLightTotal:
   .skip 0x4
-lbl_803CB8EC:
+.global sPartitionVolume
+sPartitionVolume:
 	.skip 0x4
-lbl_803CB8F0:
+.global gNumTemporaryLights
+gNumTemporaryLights:
 	.skip 0x8
 
 .section .sdata2
