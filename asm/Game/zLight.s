@@ -455,7 +455,8 @@ lbl_8009E7E4:
 .endif
 
 .section .rodata
-lbl_8025CD30:
+.global zLight_strings
+zLight_strings:
 	.incbin "baserom.dol", 0x259D10, 0x20
 
 .section .data

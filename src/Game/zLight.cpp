@@ -6,13 +6,10 @@
 
 #include <types.h>
 
-
 extern _zLight* sLight[32];
 extern int32 sLightTotal;
-
 extern zVolume* sPartitionVolume;
-// static zVolume* sPartitionVolume;
-
+extern char zLight_strings[];
 extern int32 gNumTemporaryLights;
 extern _zLight* gTemporaryLights[32];
 
@@ -26,21 +23,23 @@ extern _zLight* gTemporaryLights[32];
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FP5xBaseP11zLightAsset")
 
 // func_8009E2A8
-//#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResolveLinks__Fv")
 void zLightResolveLinks()
 {
-	int32 i;
-	_zLight* zl;
+    int32 i;
+    _zLight* zl;
 
-  for (i = 0; i < sLightTotal; i++) {
-    zl = sLight[i];
-    if (zl->tasset->attachID) {
-      zl->attached_to = zSceneFindObject(zl->tasset->attachID);
+    for (i = 0; i < sLightTotal; i++)
+    {
+        zl = sLight[i];
+        if (zl->tasset->attachID)
+        {
+            zl->attached_to = zSceneFindObject(zl->tasset->attachID);
+        }
+        else
+        {
+            zl->attached_to = 0;
+        }
     }
-    else {
-      zl->attached_to = 0;
-    }
-  }
 }
 
 // func_8009E330
@@ -119,44 +118,38 @@ int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* para
 
 // func_8009E5B8
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightAddLocalEnv__Fv")
-void zLightAddLocalEnv()
-{
-	int32 i;
-	_zLight* zlight;
-	iLight* light;
-}
 
 // func_8009E6AC
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightAddLocal__FP4xEnt")
 
 // func_8009E75C
-//#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightRemoveLocalEnv__Fv")
 void zLightRemoveLocalEnv()
 {
-  int i = 0;
-	const RwLLLink* link;
+    int i;
+    const RwLLLink* link;
 
-  for (i = 0; i < gNumTemporaryLights; i++) {
-    // link = gLightWorld->currentClumpLink;
-    // link = (RwLLLink*)&gLightWorld->lightList.link;
-    link = *(RwLLLink**)&gLightWorld->directionalLightList.link;
-    link->prev->next = link->next;
-    link->next->prev = link->prev;
-  }
-  gNumTemporaryLights = 0;
+    for (i = 0; i < gNumTemporaryLights; i++)
+    {
+        link = gLightWorld->directionalLightList.link.prev;
+        link->prev->next = link->next;
+        link->next->prev = link->prev;
+    }
+    gNumTemporaryLights = 0;
 }
 
 // func_8009E7A0
-//#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightSetVolume__FP7zVolume")
 void zLightSetVolume(zVolume* vol)
 {
-  if (vol == (zVolume*)0) {
-    sPartitionVolume = (zVolume*)0;
-  }
-  else {
-    uint32 lp_id = xStrHash("LIGHT_PARTITION" + '\t');
-    if (vol->id == lp_id) {
-      sPartitionVolume = vol;
+    if (vol == (zVolume*)0)
+    {
+        sPartitionVolume = (zVolume*)0;
     }
-  }
+    else
+    {
+        uint32 lp_id = xStrHash(zLight_strings + 9);
+        if (vol->id == lp_id)
+        {
+            sPartitionVolume = vol;
+        }
+    }
 }
