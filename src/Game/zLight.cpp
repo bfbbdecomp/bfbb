@@ -20,7 +20,6 @@ extern int32 sLightTotal;
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResolveLinks__Fv")
 
 // func_8009E330
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightDestroyAll__Fv")
 void zLightDestroyAll()
 {
     int32 total = sLightTotal;
@@ -33,15 +32,12 @@ void zLightDestroyAll()
 }
 
 // func_8009E3A4
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightDestroy__FP7_zLight")
 void zLightDestroy(_zLight* param_1)
 {
     iLightDestroy(&param_1->light);
 }
 
 // func_8009E3C8
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightReset__FP7_zLight")
-// in zLight.h
 void zLightReset(_zLight* param_1)
 {
     xBaseReset(param_1, param_1->tasset);
@@ -54,21 +50,18 @@ void zLightReset(_zLight* param_1)
 }
 
 // func_8009E42C
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightSave__FP7_zLightP7xSerial")
 void zLightSave(_zLight* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
 // func_8009E44C
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightLoad__FP7_zLightP7xSerial")
 void zLightLoad(_zLight* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
 
 // func_8009E46C
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* param_4, xBase* param_5)
 {
     _zLight* t = (_zLight*)to;
