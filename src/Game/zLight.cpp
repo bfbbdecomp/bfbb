@@ -140,9 +140,9 @@ void zLightRemoveLocalEnv()
 // func_8009E7A0
 void zLightSetVolume(zVolume* vol)
 {
-    if (vol == (zVolume*)0)
+    if (vol == 0)
     {
-        sPartitionVolume = (zVolume*)0;
+        sPartitionVolume = 0;
     }
     else
     {
