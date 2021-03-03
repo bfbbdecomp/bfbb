@@ -227,137 +227,6 @@ lbl_8009E304:
 /* 8009E328 0009B128  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009E32C 0009B12C  4E 80 00 20 */	blr 
 
-.global zLightDestroyAll__Fv
-zLightDestroyAll__Fv:
-/* 8009E330 0009B130  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8009E334 0009B134  7C 08 02 A6 */	mflr r0
-/* 8009E338 0009B138  3C 60 80 2F */	lis r3, lbl_802E8F88@ha
-/* 8009E33C 0009B13C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8009E340 0009B140  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8009E344 0009B144  3B E3 8F 88 */	addi r31, r3, lbl_802E8F88@l
-/* 8009E348 0009B148  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8009E34C 0009B14C  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8009E350 0009B150  3B A0 00 00 */	li r29, 0
-/* 8009E354 0009B154  83 CD 8F E8 */	lwz r30, lbl_803CB8E8-_SDA_BASE_(r13)
-/* 8009E358 0009B158  48 00 00 20 */	b lbl_8009E378
-lbl_8009E35C:
-/* 8009E35C 0009B15C  80 7F 00 00 */	lwz r3, 0(r31)
-/* 8009E360 0009B160  48 00 00 45 */	bl zLightDestroy__FP7_zLight
-/* 8009E364 0009B164  80 6D 8F E8 */	lwz r3, lbl_803CB8E8-_SDA_BASE_(r13)
-/* 8009E368 0009B168  3B FF 00 04 */	addi r31, r31, 4
-/* 8009E36C 0009B16C  3B BD 00 01 */	addi r29, r29, 1
-/* 8009E370 0009B170  38 03 FF FF */	addi r0, r3, -1
-/* 8009E374 0009B174  90 0D 8F E8 */	stw r0, lbl_803CB8E8-_SDA_BASE_(r13)
-lbl_8009E378:
-/* 8009E378 0009B178  7C 1D F0 00 */	cmpw r29, r30
-/* 8009E37C 0009B17C  41 80 FF E0 */	blt lbl_8009E35C
-/* 8009E380 0009B180  38 00 00 00 */	li r0, 0
-/* 8009E384 0009B184  90 0D 8F E8 */	stw r0, lbl_803CB8E8-_SDA_BASE_(r13)
-/* 8009E388 0009B188  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8009E38C 0009B18C  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8009E390 0009B190  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8009E394 0009B194  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8009E398 0009B198  7C 08 03 A6 */	mtlr r0
-/* 8009E39C 0009B19C  38 21 00 20 */	addi r1, r1, 0x20
-/* 8009E3A0 0009B1A0  4E 80 00 20 */	blr 
-
-.global zLightDestroy__FP7_zLight
-zLightDestroy__FP7_zLight:
-/* 8009E3A4 0009B1A4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009E3A8 0009B1A8  7C 08 02 A6 */	mflr r0
-/* 8009E3AC 0009B1AC  38 63 00 18 */	addi r3, r3, 0x18
-/* 8009E3B0 0009B1B0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009E3B4 0009B1B4  48 02 69 F5 */	bl iLightDestroy__FP6iLight
-/* 8009E3B8 0009B1B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009E3BC 0009B1BC  7C 08 03 A6 */	mtlr r0
-/* 8009E3C0 0009B1C0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009E3C4 0009B1C4  4E 80 00 20 */	blr 
-
-.global zLightReset__FP7_zLight
-zLightReset__FP7_zLight:
-/* 8009E3C8 0009B1C8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009E3CC 0009B1CC  7C 08 02 A6 */	mflr r0
-/* 8009E3D0 0009B1D0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009E3D4 0009B1D4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8009E3D8 0009B1D8  7C 7F 1B 78 */	mr r31, r3
-/* 8009E3DC 0009B1DC  80 83 00 14 */	lwz r4, 0x14(r3)
-/* 8009E3E0 0009B1E0  4B F6 B1 19 */	bl xBaseReset__FP5xBaseP10xBaseAsset
-/* 8009E3E4 0009B1E4  38 00 00 00 */	li r0, 0
-/* 8009E3E8 0009B1E8  90 1F 00 10 */	stw r0, 0x10(r31)
-/* 8009E3EC 0009B1EC  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 8009E3F0 0009B1F0  80 03 00 0C */	lwz r0, 0xc(r3)
-/* 8009E3F4 0009B1F4  54 00 06 B5 */	rlwinm. r0, r0, 0, 0x1a, 0x1a
-/* 8009E3F8 0009B1F8  41 82 00 10 */	beq lbl_8009E408
-/* 8009E3FC 0009B1FC  80 1F 00 10 */	lwz r0, 0x10(r31)
-/* 8009E400 0009B200  60 00 00 01 */	ori r0, r0, 1
-/* 8009E404 0009B204  90 1F 00 10 */	stw r0, 0x10(r31)
-lbl_8009E408:
-/* 8009E408 0009B208  80 9F 00 14 */	lwz r4, 0x14(r31)
-/* 8009E40C 0009B20C  7F E3 FB 78 */	mr r3, r31
-/* 8009E410 0009B210  88 84 00 09 */	lbz r4, 9(r4)
-/* 8009E414 0009B214  48 00 03 E5 */	bl zLightEffectSet__FP7_zLighti
-/* 8009E418 0009B218  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009E41C 0009B21C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8009E420 0009B220  7C 08 03 A6 */	mtlr r0
-/* 8009E424 0009B224  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009E428 0009B228  4E 80 00 20 */	blr 
-
-.global zLightSave__FP7_zLightP7xSerial
-zLightSave__FP7_zLightP7xSerial:
-/* 8009E42C 0009B22C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009E430 0009B230  7C 08 02 A6 */	mflr r0
-/* 8009E434 0009B234  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009E438 0009B238  4B F6 B0 15 */	bl xBaseSave__FP5xBaseP7xSerial
-/* 8009E43C 0009B23C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009E440 0009B240  7C 08 03 A6 */	mtlr r0
-/* 8009E444 0009B244  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009E448 0009B248  4E 80 00 20 */	blr 
-
-.global zLightLoad__FP7_zLightP7xSerial
-zLightLoad__FP7_zLightP7xSerial:
-/* 8009E44C 0009B24C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009E450 0009B250  7C 08 02 A6 */	mflr r0
-/* 8009E454 0009B254  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009E458 0009B258  4B F6 B0 45 */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 8009E45C 0009B25C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009E460 0009B260  7C 08 03 A6 */	mtlr r0
-/* 8009E464 0009B264  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009E468 0009B268  4E 80 00 20 */	blr 
-
-zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
-/* 8009E46C 0009B26C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009E470 0009B270  7C 08 02 A6 */	mflr r0
-/* 8009E474 0009B274  2C 05 00 26 */	cmpwi r5, 0x26
-/* 8009E478 0009B278  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009E47C 0009B27C  41 82 00 20 */	beq lbl_8009E49C
-/* 8009E480 0009B280  40 80 00 10 */	bge lbl_8009E490
-/* 8009E484 0009B284  2C 05 00 0A */	cmpwi r5, 0xa
-/* 8009E488 0009B288  41 82 00 34 */	beq lbl_8009E4BC
-/* 8009E48C 0009B28C  48 00 00 38 */	b lbl_8009E4C4
-lbl_8009E490:
-/* 8009E490 0009B290  2C 05 00 28 */	cmpwi r5, 0x28
-/* 8009E494 0009B294  40 80 00 30 */	bge lbl_8009E4C4
-/* 8009E498 0009B298  48 00 00 14 */	b lbl_8009E4AC
-lbl_8009E49C:
-/* 8009E49C 0009B29C  80 04 00 10 */	lwz r0, 0x10(r4)
-/* 8009E4A0 0009B2A0  60 00 00 01 */	ori r0, r0, 1
-/* 8009E4A4 0009B2A4  90 04 00 10 */	stw r0, 0x10(r4)
-/* 8009E4A8 0009B2A8  48 00 00 1C */	b lbl_8009E4C4
-lbl_8009E4AC:
-/* 8009E4AC 0009B2AC  80 04 00 10 */	lwz r0, 0x10(r4)
-/* 8009E4B0 0009B2B0  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
-/* 8009E4B4 0009B2B4  90 04 00 10 */	stw r0, 0x10(r4)
-/* 8009E4B8 0009B2B8  48 00 00 0C */	b lbl_8009E4C4
-lbl_8009E4BC:
-/* 8009E4BC 0009B2BC  7C 83 23 78 */	mr r3, r4
-/* 8009E4C0 0009B2C0  4B FF FF 09 */	bl zLightReset__FP7_zLight
-lbl_8009E4C4:
-/* 8009E4C4 0009B2C4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009E4C8 0009B2C8  38 60 00 01 */	li r3, 1
-/* 8009E4CC 0009B2CC  7C 08 03 A6 */	mtlr r0
-/* 8009E4D0 0009B2D0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009E4D4 0009B2D4  4E 80 00 20 */	blr 
-
 .global zLightUpdate__FP5xBaseP6xScenef
 zLightUpdate__FP5xBaseP6xScenef:
 /* 8009E4D8 0009B2D8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -598,7 +467,8 @@ lightning_type_names:
 	.incbin "baserom.dol", 0x28CB40, 0x10
 
 .section .bss
-lbl_802E8F88:
+.global sLight
+sLight:
 	.skip 0x80
 lbl_802E9008:
 	.skip 0x40
@@ -606,8 +476,9 @@ lbl_802E9048:
 	.skip 0x80
 
 .section .sbss
-lbl_803CB8E8:
-	.skip 0x4
+.global sLightTotal
+sLightTotal:
+  .skip 0x4
 lbl_803CB8EC:
 	.skip 0x4
 lbl_803CB8F0:
