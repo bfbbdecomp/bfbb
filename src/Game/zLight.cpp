@@ -10,7 +10,7 @@
 extern _zLight* sLight[32];
 extern int32 sLightTotal;
 
-// extern zVolume* sPartitionVolume;
+extern zVolume* sPartitionVolume;
 // static zVolume* sPartitionVolume;
 
 extern int32 gNumTemporaryLights;
