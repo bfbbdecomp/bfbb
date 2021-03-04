@@ -1,11 +1,17 @@
 #include "zLight.h"
 #include "zLightEffect.h"
+#include "zGlobals.h"
 #include "../rwsdk/rwplcore.h"
+#include "../Core/x/xString.h"
 
 #include <types.h>
 
 extern _zLight* sLight[32];
 extern int32 sLightTotal;
+extern zVolume* sPartitionVolume;
+extern char zLight_strings[];
+extern int32 gNumTemporaryLights;
+extern _zLight* gTemporaryLights[32];
 
 // func_8009E02C
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResetAll__FP4xEnv")
@@ -17,7 +23,24 @@ extern int32 sLightTotal;
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FP5xBaseP11zLightAsset")
 
 // func_8009E2A8
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResolveLinks__Fv")
+void zLightResolveLinks()
+{
+    int32 i;
+    _zLight* zl;
+
+    for (i = 0; i < sLightTotal; i++)
+    {
+        zl = sLight[i];
+        if (zl->tasset->attachID)
+        {
+            zl->attached_to = zSceneFindObject(zl->tasset->attachID);
+        }
+        else
+        {
+            zl->attached_to = 0;
+        }
+    }
+}
 
 // func_8009E330
 void zLightDestroyAll()
@@ -100,7 +123,33 @@ int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* para
 #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightAddLocal__FP4xEnt")
 
 // func_8009E75C
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightRemoveLocalEnv__Fv")
+void zLightRemoveLocalEnv()
+{
+    int i;
+    const RwLLLink* link;
+
+    for (i = 0; i < gNumTemporaryLights; i++)
+    {
+        link = gLightWorld->directionalLightList.link.prev;
+        link->prev->next = link->next;
+        link->next->prev = link->prev;
+    }
+    gNumTemporaryLights = 0;
+}
 
 // func_8009E7A0
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightSetVolume__FP7zVolume")
+void zLightSetVolume(zVolume* vol)
+{
+    if (vol == 0)
+    {
+        sPartitionVolume = 0;
+    }
+    else
+    {
+        uint32 lp_id = xStrHash(zLight_strings + 9);
+        if (vol->id == lp_id)
+        {
+            sPartitionVolume = vol;
+        }
+    }
+}
