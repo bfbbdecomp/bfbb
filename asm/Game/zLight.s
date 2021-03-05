@@ -48,17 +48,6 @@ lbl_8009E0A0:
 /* 8009E0C0 0009AEC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8009E0C4 0009AEC4  4E 80 00 20 */	blr 
 
-.global zLightInit__FPvPv
-zLightInit__FPvPv:
-/* 8009E0C8 0009AEC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8009E0CC 0009AECC  7C 08 02 A6 */	mflr r0
-/* 8009E0D0 0009AED0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009E0D4 0009AED4  48 00 00 15 */	bl zLightInit__FP5xBaseP11zLightAsset
-/* 8009E0D8 0009AED8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009E0DC 0009AEDC  7C 08 03 A6 */	mtlr r0
-/* 8009E0E0 0009AEE0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009E0E4 0009AEE4  4E 80 00 20 */	blr 
-
 .global zLightInit__FP5xBaseP11zLightAsset
 zLightInit__FP5xBaseP11zLightAsset:
 /* 8009E0E8 0009AEE8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -370,7 +359,8 @@ zLight_strings:
 	.incbin "baserom.dol", 0x259D10, 0x20
 
 .section .data
-lbl_8028FB50:
+.global sDefaultShadowVec
+sDefaultShadowVec:
 	.incbin "baserom.dol", 0x28CB30, 0x10
 /* SPECULATION: link order */
 .global lightning_type_names
@@ -381,9 +371,11 @@ lightning_type_names:
 .global sLight
 sLight:
 	.skip 0x80
-lbl_802E9008:
+.global sLightPart
+sLightPart:
 	.skip 0x40
-lbl_802E9048:
+.global gTemporaryLights
+gTemporaryLights:
 	.skip 0x80
 
 .section .sbss
@@ -398,5 +390,6 @@ gNumTemporaryLights:
 	.skip 0x8
 
 .section .sdata2
-lbl_803CDB58:
+.global zLight_float
+zLight_float:
 	.incbin "baserom.dol", 0x2B73F8, 0x8

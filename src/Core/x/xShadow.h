@@ -27,6 +27,7 @@ struct xShadowCache
 
 void xShadow_ListAdd(xEnt* ent);
 void xShadowSetWorld(RpWorld* world);
+void xShadowSetLight(xVec3* param1, xVec3* param2, float32 param3);
 void xShadowManager_Init(int32 numEnts);
 void xShadowManager_Reset();
 void xShadowManager_Render();
