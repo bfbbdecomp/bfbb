@@ -46,6 +46,7 @@ struct _zLight : xBase
 struct xScene;
 
 void zLightInit(void* b, void* tasset);
+void zLightInit(xBase* b, zLightAsset* tasset);
 void zLightResolveLinks();
 void zLightSave(_zLight* ent, xSerial* s);
 void zLightLoad(_zLight* ent, xSerial* s);
