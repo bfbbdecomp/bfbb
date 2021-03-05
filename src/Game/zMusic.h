@@ -2,6 +2,7 @@
 #define ZMUSIC_H
 
 #include <types.h>
+#include "../src/Core/x/xBase.h"
 
 struct zMusicSituation
 {
@@ -46,5 +47,6 @@ void zMusicUnpause(int32 kill);
 void zMusicReset();
 void zMusicInit();
 void zMusicUpdate(float32 dt);
+void zMusicNotifyEvent(const float32* toParam, xBase*);
 
 #endif

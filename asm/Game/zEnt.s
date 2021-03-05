@@ -773,6 +773,7 @@ zEnt_strings:
 	.incbin "baserom.dol", 0x252004, 0x64
 
 .section .data
+.balign 8
 lbl_8028C158:
 	.incbin "baserom.dol", 0x289138, 0x20
 /* SPECULATION: link order */

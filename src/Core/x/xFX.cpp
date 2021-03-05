@@ -63,9 +63,6 @@ void xFXInit()
     }
 }
 
-#define RING_COUNT 8
-
-extern xFXRing ringlist[RING_COUNT];
 static uint32 Im3DBufferPos = 0;
 static RwTexture* g_txtr_drawRing = NULL;
 
