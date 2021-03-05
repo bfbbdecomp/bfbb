@@ -88,6 +88,7 @@ void zSaveLoadAutoSaveUpdate();
 
 uint32 zSaveLoad_LoadLoop();
 uint32 zSaveLoad_SaveLoop();
+void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam);
 int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most);
 int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
 int32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, int32* i, int32* j);
