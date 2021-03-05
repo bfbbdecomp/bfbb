@@ -72,5 +72,6 @@ void iSndStop(uint32 snd);
 void iSndSetVol(uint32 snd, float32 vol);
 void iSndSetPitch(uint32 snd, float32 pitch);
 float32 iSndGetVol(uint32 snd);
+void iSndStereo(uint32 stereo);
 
 #endif

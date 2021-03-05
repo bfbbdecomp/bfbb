@@ -75,6 +75,10 @@ struct xFXRibbon
     void set_default_config();
 };
 
+#define RING_COUNT 8
+
+extern xFXRing ringlist[RING_COUNT];
+
 void xFXInit();
 xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params);
 void xFXRingRender();

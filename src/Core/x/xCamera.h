@@ -226,5 +226,7 @@ void xCameraMove(xCamera* cam, const xVec3& loc);
 float32 xCameraGetFOV(const xCamera* cam);
 void xCameraDoCollisions(int32 do_collis, int32 owner);
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
+void xCameraFXShake(float32 maxTime, float32 magnitude, float32 cycleMax, float32 rotate_magnitude,
+                    float32 radius, xVec3* epicenter, xVec3* player);
 
 #endif

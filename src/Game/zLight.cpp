@@ -2,9 +2,9 @@
 #include "zLightEffect.h"
 #include "zGlobals.h"
 #include "../rwsdk/rwplcore.h"
-#include "../Core/x/xString.h"
 #include "../Core/x/xShadow.h"
 #include "../Core/x/xPartition.h"
+#include "../Core/x/xString.h"
 
 #include <types.h>
 #include <string.h>

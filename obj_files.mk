@@ -130,8 +130,8 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zConditional.o              \
     $(OBJ_DIR)/asm/Game/zCutsceneMgr.o              \
     $(OBJ_DIR)/src/Game/zCutsceneMgr.o              \
-    $(OBJ_DIR)/asm/Game/zDispatcher.o               \
     $(OBJ_DIR)/src/Game/zDispatcher.o               \
+    $(OBJ_DIR)/asm/Game/zDispatcher.o               \
     $(OBJ_DIR)/asm/Game/zEGenerator.o               \
     $(OBJ_DIR)/src/Game/zEGenerator.o               \
     $(OBJ_DIR)/asm/Game/zEnt.o                      \

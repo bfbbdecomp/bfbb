@@ -279,6 +279,7 @@ struct zLedgeGrabParams
     float32 endrot;
 };
 
+// Size: 0x448
 struct zPlayerSettings
 {
     _zPlayerType pcType;
