@@ -370,7 +370,8 @@ zLight_strings:
 	.incbin "baserom.dol", 0x259D10, 0x20
 
 .section .data
-lbl_8028FB50:
+.global sDefaultShadowVec
+sDefaultShadowVec:
 	.incbin "baserom.dol", 0x28CB30, 0x10
 /* SPECULATION: link order */
 .global lightning_type_names
@@ -381,9 +382,11 @@ lightning_type_names:
 .global sLight
 sLight:
 	.skip 0x80
-lbl_802E9008:
+.global sLightPart
+sLightPart:
 	.skip 0x40
-lbl_802E9048:
+.global gTemporaryLights
+gTemporaryLights:
 	.skip 0x80
 
 .section .sbss
@@ -398,5 +401,6 @@ gNumTemporaryLights:
 	.skip 0x8
 
 .section .sdata2
-lbl_803CDB58:
+.global zLight_float
+zLight_float:
 	.incbin "baserom.dol", 0x2B73F8, 0x8
