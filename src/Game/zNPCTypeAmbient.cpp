@@ -17,6 +17,9 @@ extern float32 zNPCTypeAmbientx405f66f3;
 extern float32 zNPCTypeAmbientx3f400000;
 extern float32 zNPCTypeAmbientx3edf66f3;
 extern NPCSndTrax g_sndTrax_Neptune;
+extern char zNPCTypeAmbient_stringBase0[];
+extern float32 _882;
+extern float32 _883;
 
 void ZNPC_Ambient_Startup()
 {
@@ -74,9 +77,13 @@ void ZNPC_Destroy_Ambient(xFactoryInst* inst)
 {
     delete inst;
 }
-
-// func_80107974
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_AnimTable_Ambient__Fv")
+xAnimTable* ZNPC_AnimTable_Ambient()
+{
+    xAnimTable* table = (xAnimTable*)xAnimTableNew(zNPCTypeAmbient_stringBase0 + 0x60, NULL, 0);
+    xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, _882, NULL, NULL, _883, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    return table;
+}
 
 // func_80107A00
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_AnimTable_Jelly__Fv")

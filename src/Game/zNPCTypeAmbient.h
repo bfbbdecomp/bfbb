@@ -12,8 +12,8 @@ struct zNPCAmbient : zNPCCommon
     void Init(xEntAsset* asset);
     void Reset();
     void Process(xScene* xscn, float32 dt);
-    void SelfSetup();
     int32 NPCMessage(NPCMsg* mail);
+    void SelfSetup();
 
     virtual uint8 ColChkFlags() const;
     virtual uint8 ColPenFlags() const;

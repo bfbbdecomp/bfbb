@@ -2,26 +2,56 @@
 
 #include "zNPCTypes.h"
 
-// func_80102C2C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_Villager_Startup__Fv")
+extern int8* g_strz_folkanim[26];
+extern uint32 g_hash_folkanim[26];
+extern int8* g_strz_platanim[2];
+extern uint32 g_hash_platanim[2];
+extern zParEmitter* g_pemit_aqualeak;
+extern char zNPCTypeVillager_stringBase0[];
+extern xParEmitterCustomSettings g_parf_aqualeak;
+extern xVec3 g_O3;
 
-// func_80102CC0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_Villager_Shutdown__Fv")
+void ZNPC_Villager_Startup()
+{
+    int32 i;
 
-// func_80102CC4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "zNPCVillager_ScenePrepare__Fv")
+    for (i = 0; i < 26; i++)
+    {
+        g_hash_folkanim[i] = xStrHash(g_strz_folkanim[i]);
+    }
 
-// func_80102CC8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "zNPCVillager_SceneFinish__Fv")
+    for (i = 0; i < 2; i++)
+    {
+        g_hash_platanim[i] = xStrHash(g_strz_platanim[i]);
+    }
+}
 
-// func_80102CE8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "zNPCVillager_SceneReset__Fv")
+void ZNPC_Villager_Shutdown()
+{
+}
 
-// func_80102CEC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "zNPCVillager_ScenePostInit__Fv")
+void zNPCVillager_ScenePrepare()
+{
+}
 
-// func_80102D0C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "zNPCVillager_SceneTimestep__FP6xScenef")
+void zNPCVillager_SceneFinish()
+{
+    FOLK_KillEffects();
+}
+
+void zNPCVillager_SceneReset()
+{
+}
+
+void zNPCVillager_ScenePostInit()
+{
+    FOLK_InitEffects();
+}
+
+void zNPCVillager_SceneTimestep(float32 dt)
+{
+    zNPCBubbleBuddy_AlphaUpdate(dt);
+}
 
 xFactoryInst* ZNPC_Create_Villager(int32 who, RyzMemGrow* growCtxt, void*)
 {
@@ -106,20 +136,26 @@ void ZNPC_Destroy_Villager(xFactoryInst* inst)
     delete inst;
 }
 
-// func_80102F7C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_Villager__Fv")
+xAnimTable* ZNPC_AnimTable_Villager()
+{
+    return ZNPC_AnimTable_Villager(NULL);
+}
 
 // func_80102FA0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_Villager__FP10xAnimTable")
 
-// func_8010336C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_BalloonBoy__Fv")
+xAnimTable* ZNPC_AnimTable_BalloonBoy()
+{
+    return ZNPC_AnimTable_BalloonBoy(NULL);
+}
 
 // func_80103390
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_BalloonBoy__FP10xAnimTable")
 
-// func_80103668
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_SuperFriend__Fv")
+xAnimTable* ZNPC_AnimTable_SuperFriend()
+{
+    return ZNPC_AnimTable_SuperFriend(NULL);
+}
 
 // func_8010368C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "ZNPC_AnimTable_SuperFriend__FP10xAnimTable")
@@ -350,8 +386,19 @@ void ZNPC_Destroy_Villager(xFactoryInst* inst)
 // func_8010727C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "FOLK_InitEffects__Fv")
 
-// func_801072E4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "FOLK_KillEffects__Fv")
+/*
+void FOLK_InitEffects()
+{
+    g_pemit_aqualeak = zParEmitterFind(zNPCTypeVillager_stringBase0 + 0x4b6);
+    g_parf_aqualeak.custom_flags = 0x300; // 0x138
+    xVec3Copy((xVec3*)&g_parf_aqualeak.pos, (xVec3*)&g_O3); // 0x140
+    xVec3Copy((xVec3*)&g_parf_aqualeak.vel, (xVec3*)&g_O3); // 0x14c
+}
+*/
+
+void FOLK_KillEffects()
+{
+}
 
 // func_801072E8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeVillager.s", "__ct__14zNPCNewsFishTVFi")
