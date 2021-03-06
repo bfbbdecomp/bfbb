@@ -95,6 +95,12 @@ struct zNPCNewsFishTV : zNPCVillager
     zNPCNewsFishTV(int32 myType);
 };
 
+xAnimTable* ZNPC_AnimTable_Villager(xAnimTable* callerTable);
+void zNPCBubbleBuddy_AlphaUpdate(float32 dt);
+xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable);
+xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable);
+void FOLK_KillEffects();
+void FOLK_InitEffects();
 void ZNPC_Villager_Startup();
 void ZNPC_Villager_Shutdown();
 xFactoryInst* ZNPC_Create_Villager(int32 who, RyzMemGrow* growCtxt, void*);
