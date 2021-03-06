@@ -413,6 +413,7 @@ xClimate_f_0:
 
 lbl_803CCA74:
 	.incbin "baserom.dol", 0x2B6314, 0x4
+.global lbl_803CCA78
 lbl_803CCA78:
 	.incbin "baserom.dol", 0x2B6318, 0x4
 
