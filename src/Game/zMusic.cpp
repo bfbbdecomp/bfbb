@@ -48,18 +48,38 @@ void zMusicRefreshVolume()
 // func_800A6F50
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicInit__Fv")
-// Won't be matching until volume_reset is matching
 #else
+
+// These seem to not be referenced anywhere globally
+// const char* arr[] = { "music_00_hb_44",        "music_01_jf_44",     "music_02_bb_44",
+//                       "music_03_gl_44",        "music_04_b1_44",     "music_05_rb_44",
+//                       "music_06_bc_44",        "music_07_sm_44",     "music_08_b2_44",
+//                       "music_09_kf_44",        "music_10_gy_44",     "music_11_db_44",
+//                       "music_12_b3_44",        "music_13_mnu3_44",   "music_14_mnu4_44",
+//                       "music_15_slide_44",     "music_16_ambush_44", "music_17_subboss_44",
+//                       "music_18_skatepark_44", "music_21_Calliope1", "music_22_Calliope2",
+//                       "music_23_Calliope3" };
+
+// Functionally matches, but this was originally some kind of loop that got unrolled
+// Cannot figure out what it's supposed to be
+
 void zMusicInit()
 {
     sMusicPaused = 0;
-    sMusicPaused = 0;
-    sMusicTrack[0].snd_id = 0;
-    sMusicTrack[0].loop = 0;
-    sMusicTrack[0].situation = 0;
-    sMusicTrack[1].snd_id = 0;
-    sMusicTrack[1].loop = 0;
-    sMusicTrack[1].situation = 0;
+
+    for (int i = 0; i < sizeof(sMusicTrack) / sizeof(sMusicTrack[0]); i++)
+    {
+        sMusicTrack[i].snd_id = 0;
+        sMusicTrack[i].loop = 0;
+        sMusicTrack[i].situation = 0;
+    }
+
+    // for (int i = 0; i < 24; i++)
+    // {
+    //     sMusicSoundID[i][0] = xStrHash(arr[i]);
+    //     sMusicSoundID[i][1] = 1;
+    // }
+
     sMusicSoundID[0][0] = xStrHash("music_00_hb_44");
     sMusicSoundID[0][1] = 1;
     sMusicSoundID[0][2] = xStrHash("music_01_jf_44");
@@ -104,23 +124,13 @@ void zMusicInit()
     sMusicSoundID[1][21] = 1;
     sMusicSoundID[1][22] = xStrHash("music_23_Calliope3");
     sMusicSoundID[1][23] = 1;
-    sMusicInfo[0].elapsedTime = sMusicInfo[0].delay;
-    sMusicInfo[0].count = 0;
-    sMusicInfo[1].elapsedTime = sMusicInfo[1].delay;
-    sMusicInfo[1].count = 0;
-    sMusicInfo[2].elapsedTime = sMusicInfo[2].delay;
-    sMusicInfo[2].count = 0;
-    sMusicInfo[3].elapsedTime = sMusicInfo[3].delay;
-    sMusicInfo[3].count = 0;
-    sMusicInfo[4].elapsedTime = sMusicInfo[4].delay;
-    sMusicInfo[4].count = 0;
-    sMusicInfo[5].elapsedTime = sMusicInfo[5].delay;
-    sMusicInfo[5].count = 0;
-    sMusicInfo[6].elapsedTime = sMusicInfo[6].delay;
-    sMusicInfo[6].count = 0;
-    sMusicInfo[7].elapsedTime = sMusicInfo[7].delay;
-    sMusicInfo[7].count = 0;
-    volume_reset__Fv();
+
+    for (int i = 0; i < sizeof(sMusicInfo) / sizeof(sMusicInfo[0]); i++)
+    {
+        sMusicInfo[i].elapsedTime = sMusicInfo[i].delay;
+        sMusicInfo[i].count = 0;
+    }
+    volume_reset();
 }
 #endif
 
