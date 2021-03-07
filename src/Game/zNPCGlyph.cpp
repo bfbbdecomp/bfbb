@@ -58,13 +58,12 @@ void zNPCGlyph_ScenePostInit()
 void NPCGlyph::Reset()
 
 {
-  flg_glyph = 0;
-  pos_glyph = g_O3;
-  vel_glyph = g_O3;
-  tmr_glyph = lbl_803CF948;
+    flg_glyph = 0;
+    pos_glyph = g_O3;
+    vel_glyph = g_O3;
+    tmr_glyph = lbl_803CF948;
 }
 #endif
-
 
 // func_801868F8
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "Init__8NPCGlyphF11en_npcglyphP8RpAtomic")
