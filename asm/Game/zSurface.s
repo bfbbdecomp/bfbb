@@ -200,19 +200,6 @@ lbl_800B58A8:
 /* 800B58B0 000B26B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 800B58B4 000B26B4  4E 80 00 20 */	blr 
 
-.global zSurfaceExit__Fv
-zSurfaceExit__Fv:
-/* 800B58B8 000B26B8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B58BC 000B26BC  7C 08 02 A6 */	mflr r0
-/* 800B58C0 000B26C0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B58C4 000B26C4  4B F9 78 B9 */	bl xSurfaceExit__Fv
-/* 800B58C8 000B26C8  38 00 00 00 */	li r0, 0
-/* 800B58CC 000B26CC  90 0D 90 F4 */	stw r0, lbl_803CB9F4-_SDA_BASE_(r13)
-/* 800B58D0 000B26D0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B58D4 000B26D4  7C 08 03 A6 */	mtlr r0
-/* 800B58D8 000B26D8  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B58DC 000B26DC  4E 80 00 20 */	blr 
-
 .global zSurfaceResetSurface__FP8xSurface
 zSurfaceResetSurface__FP8xSurface:
 /* 800B58E0 000B26E0  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1448,12 +1435,14 @@ lbl_802F2C88:
 .balign 8
 lbl_803CB9F0:
 	.skip 0x4
-lbl_803CB9F4:
+.global sMapperCount
+sMapperCount:
 	.skip 0x4
 
 .section .sdata
 .balign 8
-lbl_803CAC10:
+.global sMapper
+sMapper:
 	.incbin "baserom.dol", 0x2B5CD0, 0xC
 
 .section .sdata2

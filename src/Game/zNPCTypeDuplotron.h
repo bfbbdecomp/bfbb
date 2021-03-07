@@ -23,5 +23,7 @@ void ZNPC_Duplotron_Startup();
 void ZNPC_Duplotron_Shutdown();
 xFactoryInst* ZNPC_Create_Duplotron(int32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Duplotron(xFactoryInst* inst);
+void DUPO_KillEffects();
+void DUPO_InitEffects();
 
 #endif

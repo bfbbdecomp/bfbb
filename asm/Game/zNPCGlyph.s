@@ -4,10 +4,6 @@
 
 .section .text  # 0x8018626C - 0x80187630
 
-.global zNPCGlyph_Startup__Fv
-zNPCGlyph_Startup__Fv:
-/* 8018626C 0018306C  4E 80 00 20 */	blr 
-
 .global zNPCGlyph_ScenePrepare__Fv
 zNPCGlyph_ScenePrepare__Fv:
 /* 80186274 00183074  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -125,14 +121,6 @@ lbl_801863E4:
 /* 80186404 00183204  7C 08 03 A6 */	mtlr r0
 /* 80186408 00183208  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018640C 0018320C  4E 80 00 20 */	blr 
-
-.global zNPCGlyph_SceneReset__Fv
-zNPCGlyph_SceneReset__Fv:
-/* 80186410 00183210  4E 80 00 20 */	blr 
-
-.global zNPCGlyph_ScenePostInit__Fv
-zNPCGlyph_ScenePostInit__Fv:
-/* 80186414 00183214  4E 80 00 20 */	blr 
 
 .global zNPCGlyph_Timestep__Ff
 zNPCGlyph_Timestep__Ff:
@@ -1435,9 +1423,11 @@ lbl_802733EC:
 	.incbin "baserom.dol", 0x2703CC, 0xCC
 
 .section .data
-lbl_8029B9C8:
+.global g_strz_glyphmodel
+g_strz_glyphmodel:
 	.incbin "baserom.dol", 0x2989A8, 0x28
-lbl_8029B9F0:
+.global g_cnt_activeGlyphs
+g_cnt_activeGlyphs:
 	.incbin "baserom.dol", 0x2989D0, 0x28
 lbl_8029BA18:
 	.incbin "baserom.dol", 0x2989F8, 0x28
@@ -1447,6 +1437,7 @@ lbl_8035BE30:
 	.skip 0x2908
 
 .section .sdata2
+.global lbl_803CF948
 lbl_803CF948:
 	.incbin "baserom.dol", 0x2B91E8, 0x4
 lbl_803CF94C:
