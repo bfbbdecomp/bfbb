@@ -104,6 +104,12 @@ struct zSurfaceProps
     zSurfacePropUVFX uvfx[2];
 };
 
+struct zMaterialMapAsset
+{
+	uint32 id;
+	uint32 count;
+};
+
 struct xScene;
 
 void zSurfaceRegisterMapper(uint32 assetId);

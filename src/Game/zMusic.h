@@ -36,7 +36,7 @@ struct zMusicTrackInfo
     float32 lastVol;
 };
 
-void volume_Reset();
+void volume_reset();
 void zMusicRefreshVolume();
 int32 getCurrLevelMusicEnum();
 void zMusicNotify(int32 situation);

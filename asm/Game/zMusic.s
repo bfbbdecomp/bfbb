@@ -885,7 +885,8 @@ lbl_8025E588:
 	.incbin "baserom.dol", 0x25B568, 0x170
 
 .section .data
-lbl_8028FD80:
+.global sMusicInfo
+sMusicInfo:
 	.incbin "baserom.dol", 0x28CD60, 0x160
 lbl_8028FEE0:
 	.incbin "baserom.dol", 0x28CEC0, 0x3C
@@ -893,7 +894,8 @@ lbl_8028FF1C:
 	.incbin "baserom.dol", 0x28CEFC, 0x24
 
 .section .bss
-lbl_802F2A50:
+.global sMusicSoundID
+sMusicSoundID:
 	.skip 0xC0
 .global sMusicTrack
 sMusicTrack:

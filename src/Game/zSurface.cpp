@@ -1,6 +1,10 @@
 #include "zSurface.h"
+#include "../Core/x/xstransvc.h"
 
 #include <types.h>
+
+extern int32 sMapperCount;
+extern zMaterialMapAsset* sMapper[1];
 
 // func_800B55F0
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInit__Fv")
@@ -9,10 +13,30 @@
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInitDefaultSurface__Fv")
 
 // func_800B585C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceRegisterMapper__FUi")
+#else
+// Registers off, and sMapperCount missing a lwz instruction?
+void zSurfaceRegisterMapper(uint32 assetId)
+{
+    if ((sMapperCount < 1) && (assetId != 0))
+    {
+        sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0);
+        if (sMapper[sMapperCount])
+        {
+            sMapperCount++;
+        }
+    }
+}
+#endif
 
 // func_800B58B8
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceExit__Fv")
+void zSurfaceExit()
+
+{
+    xSurfaceExit();
+    sMapperCount = 0;
+}
 
 // func_800B58E0
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceResetSurface__FP8xSurface")
