@@ -38,9 +38,13 @@ struct NPCGlyph
     void PosSet(xVec3* pos);
     void Discard();
     void Enable(int32 ison);
+    void Reset();
 };
 
 void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff);
+void zNPCGlyph_Startup();
 void zNPCGlyph_Shutdown();
+void zNPCGlyph_SceneReset();
+void zNPCGlyph_ScenePostInit();
 
 #endif
