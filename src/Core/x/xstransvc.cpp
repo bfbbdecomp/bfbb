@@ -9,20 +9,11 @@
 #include "../src/Core/p2/iFile.h"
 #include "../CodeWarrior/intrin.h"
 
-extern st_PKR_ASSET_TOCINFO lbl_80253EC8;
-extern int8 xstransvc_strings[];
-
-extern int8 lbl_8028A1A4[];
-extern int8 lbl_8028A1E4[];
-extern st_STRAN_DATA g_xstdata;
-
-extern int32 g_straninit;
-extern st_PACKER_ASSETTYPE* g_typeHandlers;
-extern st_PACKER_READ_FUNCS* g_pkrf;
-
-extern float32 _560;
-extern float32 _561;
-extern float32 _594;
+// extern st_PKR_ASSET_TOCINFO lbl_80253EC8;
+st_STRAN_DATA g_xstdata = {};
+int32 g_straninit;
+st_PACKER_READ_FUNCS* g_pkrf;
+st_PACKER_ASSETTYPE* g_typeHandlers;
 
 // func_8004B108
 int32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
@@ -51,16 +42,17 @@ int32 xSTShutdown()
 }
 
 // func_8004B194
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTPreLoadScene__FUiPvi")
-#else
+// This doesn't seem exactly how HI would have written this, but it OKs
+// TODO: Try to clean this up?
 int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
 {
-    int32 result = 0;
+    int32 result;
+    int32 i = 0;
+    st_STRAN_SCENE* sdata;
     int8* path;
     if ((flg_hiphop & 3) == 2)
     {
-        st_STRAN_SCENE* sdata = XST_lock_next();
+        sdata = XST_lock_next();
         sdata->scnid = sid;
         sdata->userdata = userdata;
         sdata->isHOP = 1;
@@ -69,29 +61,32 @@ int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
         if (path != NULL)
         {
             strcpy(sdata->fnam, path);
-            result = XST_PreLoadScene(sdata, path);
+            i = XST_PreLoadScene(sdata, path);
         }
-        if (result == 0)
+        if (i == 0)
         {
             path = XST_translate_sid(sid, ".HOP");
             if (path != NULL)
             {
                 strcpy(sdata->fnam, path);
-                result = XST_PreLoadScene(sdata, path);
+                i = XST_PreLoadScene(sdata, path);
             }
         }
-        if (result == 0)
+        if (i == 0)
         {
             XST_unlock(sdata);
-            return 0;
+            result = 0;
         }
-        return result;
+        else
+        {
+            result = i;
+        }
     }
     else
     {
-        while (result == 0)
+        do
         {
-            st_STRAN_SCENE* sdata = XST_lock_next();
+            sdata = XST_lock_next();
             sdata->scnid = sid;
             sdata->userdata = userdata;
             sdata->isHOP = 0;
@@ -102,27 +97,31 @@ int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
                 if (path != NULL)
                 {
                     strcpy(sdata->fnam, path);
-                    result = XST_PreLoadScene(sdata, path);
+                    i = XST_PreLoadScene(sdata, path);
                 }
             }
-            if (result == 0)
+            if (i == 0)
             {
                 path = XST_translate_sid(sid, ".HIP");
                 if (path != NULL)
                 {
                     strcpy(sdata->fnam, path);
-                    result = XST_PreLoadScene(sdata, path);
+                    i = XST_PreLoadScene(sdata, path);
                 }
             }
-            if (result == 0)
+            if (i == 0)
             {
                 XST_unlock(sdata);
+                result = 0;
             }
-        }
-        return result;
+            else
+            {
+                result = i;
+            }
+        } while (i == 0);
     }
+    return result;
 }
-#endif
 
 // func_8004B344
 #ifndef NON_MATCHING
@@ -201,7 +200,7 @@ void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
 // func_8004B494
 float32 xSTLoadStep(uint32)
 {
-    float32 pct = PKRLoadStep(0) != 0 ? _560 : _561;
+    float32 pct = PKRLoadStep(0) != 0 ? 0.0f : 1.00001f;
 
     iTRCDisk::CheckDVDAndResetState();
     iFileAsyncService();
@@ -236,12 +235,12 @@ int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32
         {
             if (progmon != NULL)
             {
-                progmon(userdata, _560);
+                progmon(userdata, 0.0f);
             }
             rc = g_pkrf->SetActive(sdata->spkg, PKR_LTYPE_ALL);
             if (progmon != NULL)
             {
-                progmon(userdata, _594);
+                progmon(userdata, 1.0f);
             }
         }
     }
@@ -392,12 +391,12 @@ int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 {
     int32 rc = 0;
-    st_PKR_ASSET_TOCINFO tocinfo = { 0, 0, 0, 0, 0, 0 };
+    const st_PKR_ASSET_TOCINFO tocinfo = { 0, NULL, 0, 0, 0, NULL };
     memset(ainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
 
     int32 sum = 0;
-    int32 cnt = XST_cnt_locked();
-    for (int32 i = 0; i < cnt; i++)
+    int32 found = XST_cnt_locked();
+    for (int32 i = 0; i < found; i++)
     {
         st_STRAN_SCENE* sdata = XST_nth_locked(i);
         int32 cnt = g_pkrf->AssetCount(sdata->spkg, type);
@@ -406,7 +405,11 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
             g_pkrf->GetBaseSector(sdata->spkg);
             if (g_pkrf->GetAssetInfoByType(sdata->spkg, type, idx - cnt, &tocinfo) != 0)
             {
-                *ainfo = tocinfo;
+                ainfo->aid = tocinfo.aid;
+                ainfo->sector = tocinfo.sector;
+                ainfo->plus_offset = tocinfo.plus_offset;
+                ainfo->size = tocinfo.size;
+                ainfo->mempos = tocinfo.mempos;
                 rc = 1;
                 break;
             }
@@ -487,25 +490,22 @@ int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
 // func_8004BD58
 int8* XST_translate_sid(uint32 sid, int8* extension)
 {
-    sprintf(lbl_8028A1A4, xstransvc_strings + 10, xUtil_idtag2string(sid, 0), extension);
-    return lbl_8028A1A4;
+    static int8 buffer[0x40] = {};
+    sprintf(buffer, "%s%s", xUtil_idtag2string(sid, 0), extension);
+    return buffer;
 }
 
 // func_8004BDB4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_translate_sid_path__FUiPc")
-#else
-// I think this will OK if the array data can be generated into the correct place.
-// Not completely sure what's going on though.
 int8* XST_translate_sid_path(uint32 sid, int8* extension)
 {
-    int8 pathSeparator[2] = { '/', 0 };
-    sprintf(lbl_8028A1E4, xstransvc_strings + 15, *xUtil_idtag2string(sid, 0),
-            *(xUtil_idtag2string(sid, 0) + 1), pathSeparator, xUtil_idtag2string(sid, 0),
-            extension);
-    return lbl_8028A1E4;
+    // NOTE: This buffer extends for 0x44 bytes in the rom
+    // However, I think that's most likely padding for the jumptable that occurs afterwards
+    static int8 buffer[0x40] = {};
+    int8 pathSeparator[2] = "/";
+    sprintf(buffer, "%c%c%s%s%s", *xUtil_idtag2string(sid, 0), *(xUtil_idtag2string(sid, 0) + 1),
+            pathSeparator, xUtil_idtag2string(sid, 0), extension);
+    return buffer;
 }
-#endif
 
 // func_8004BE60
 void XST_reset_raw()
@@ -549,6 +549,7 @@ void XST_unlock(st_STRAN_SCENE* sdata)
         if (g_xstdata.loadlock & 1 << sdata->lockid)
         {
             // Can't figure out how to get the andc instruction instead of two instructions
+            // Seems to only generate andc if I remove the memset call.
             g_xstdata.loadlock &= ~(1 << sdata->lockid);
             memset(sdata, 0, sizeof(st_STRAN_SCENE));
         }

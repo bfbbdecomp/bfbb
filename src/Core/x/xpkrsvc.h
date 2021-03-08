@@ -63,7 +63,7 @@ struct st_PACKER_READ_FUNCS
     int8* (*AssetName)(st_PACKER_READ_DATA*, uint32);
     uint32 (*GetBaseSector)(st_PACKER_READ_DATA*);
     int32 (*GetAssetInfo)(st_PACKER_READ_DATA*, uint32, st_PKR_ASSET_TOCINFO*);
-    int32 (*GetAssetInfoByType)(st_PACKER_READ_DATA*, uint32, int32, st_PKR_ASSET_TOCINFO*);
+    int32 (*GetAssetInfoByType)(st_PACKER_READ_DATA*, uint32, int32, const st_PKR_ASSET_TOCINFO*);
     int32 (*PkgHasAsset)(st_PACKER_READ_DATA*, uint32);
     uint32 (*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void (*PkgDisconnect)(st_PACKER_READ_DATA*);
