@@ -3,6 +3,8 @@
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xMath.h"
 #include "../Core/x/xString.h"
+#include "zGlobals.h"
+#include "zGameState.h"
 #include "zScene.h"
 #include <string.h>
 
@@ -12,10 +14,17 @@ extern uint32 sMusicPaused;
 extern int32 sMusicLastEnum[2];
 extern float32 lbl_803CDD48; //0f by default.
 extern float32 minDelay; //Value is defaulted at 0.001f.
-extern uint32 sMusicSoundID[2][24];
+extern uint32 sMusicSoundID[24][2];
 extern zMusicSituation sMusicInfo[8];
 extern float32 lbl_803CCA78;
 extern float32 lbl_803CD118;
+extern zMusicSituation* sMusicQueueData[2];
+extern float32 sMusicTimer[2];
+
+extern eGameMode gGameMode;
+extern zGlobals globals;
+
+extern char* zMusic_strings[];
 
 // func_800A6E9C
 #ifndef NON_MATCHING
@@ -46,22 +55,11 @@ void zMusicRefreshVolume()
 }
 
 // func_800A6F50
-#ifndef NON_MATCHING
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicInit__Fv")
 #else
 
-// These seem to not be referenced anywhere globally
-// const char* arr[] = { "music_00_hb_44",        "music_01_jf_44",     "music_02_bb_44",
-//                       "music_03_gl_44",        "music_04_b1_44",     "music_05_rb_44",
-//                       "music_06_bc_44",        "music_07_sm_44",     "music_08_b2_44",
-//                       "music_09_kf_44",        "music_10_gy_44",     "music_11_db_44",
-//                       "music_12_b3_44",        "music_13_mnu3_44",   "music_14_mnu4_44",
-//                       "music_15_slide_44",     "music_16_ambush_44", "music_17_subboss_44",
-//                       "music_18_skatepark_44", "music_21_Calliope1", "music_22_Calliope2",
-//                       "music_23_Calliope3" };
-
-// Functionally matches, but this was originally some kind of loop that got unrolled
-// Cannot figure out what it's supposed to be
+// Cannot figure out what the middle loop is supposed to be
 
 void zMusicInit()
 {
@@ -74,56 +72,13 @@ void zMusicInit()
         sMusicTrack[i].situation = 0;
     }
 
-    // for (int i = 0; i < 24; i++)
-    // {
-    //     sMusicSoundID[i][0] = xStrHash(arr[i]);
-    //     sMusicSoundID[i][1] = 1;
-    // }
-
-    sMusicSoundID[0][0] = xStrHash("music_00_hb_44");
-    sMusicSoundID[0][1] = 1;
-    sMusicSoundID[0][2] = xStrHash("music_01_jf_44");
-    sMusicSoundID[0][3] = 1;
-    sMusicSoundID[0][4] = xStrHash("music_02_bb_44");
-    sMusicSoundID[0][5] = 1;
-    sMusicSoundID[0][6] = xStrHash("music_03_gl_44");
-    sMusicSoundID[0][7] = 1;
-    sMusicSoundID[0][8] = xStrHash("music_04_b1_44");
-    sMusicSoundID[0][9] = 1;
-    sMusicSoundID[0][10] = xStrHash("music_05_rb_44");
-    sMusicSoundID[0][11] = 1;
-    sMusicSoundID[0][12] = xStrHash("music_06_bc_44");
-    sMusicSoundID[0][13] = 1;
-    sMusicSoundID[0][14] = xStrHash("music_07_sm_44");
-    sMusicSoundID[0][15] = 1;
-    sMusicSoundID[0][16] = xStrHash("music_08_b2_44");
-    sMusicSoundID[0][17] = 1;
-    sMusicSoundID[0][18] = xStrHash("music_09_kf_44");
-    sMusicSoundID[0][19] = 1;
-    sMusicSoundID[0][20] = xStrHash("music_10_gy_44");
-    sMusicSoundID[0][21] = 1;
-    sMusicSoundID[0][22] = xStrHash("music_11_db_44");
-    sMusicSoundID[0][23] = 1;
-    sMusicSoundID[1][0] = xStrHash("music_12_b3_44");
-    sMusicSoundID[1][1] = 1;
-    sMusicSoundID[1][2] = xStrHash("music_13_mnu3_44");
-    sMusicSoundID[1][3] = 1;
-    sMusicSoundID[1][4] = xStrHash("music_14_mnu4_44");
-    sMusicSoundID[1][5] = 1;
-    sMusicSoundID[1][6] = xStrHash("music_15_slide_44");
-    sMusicSoundID[1][7] = 1;
-    sMusicSoundID[1][8] = xStrHash("music_16_ambush_44");
-    sMusicSoundID[1][9] = 1;
-    sMusicSoundID[1][10] = xStrHash("music_17_subboss_44");
-    sMusicSoundID[1][11] = 1;
-    sMusicSoundID[1][12] = xStrHash("music_18_skatepark_44");
-    sMusicSoundID[1][13] = 1;
-    sMusicSoundID[1][18] = xStrHash("music_21_Calliope1");
-    sMusicSoundID[1][19] = 1;
-    sMusicSoundID[1][20] = xStrHash("music_22_Calliope2");
-    sMusicSoundID[1][21] = 1;
-    sMusicSoundID[1][22] = xStrHash("music_23_Calliope3");
-    sMusicSoundID[1][23] = 1;
+    for (int i = 0; i < 24; i++)
+    {
+        // uint32 arr[] = { xStrHash(zMusic_strings[i]), 1 };
+        // *sMusicSoundID[i] = *arr;
+        sMusicSoundID[i][0] = xStrHash(zMusic_strings[i]);
+        sMusicSoundID[i][1] = 1;
+    }
 
     for (int i = 0; i < sizeof(sMusicInfo) / sizeof(sMusicInfo[0]); i++)
     {
@@ -210,9 +165,125 @@ int32 getCurrLevelMusicEnum()
 
 // func_800A7414
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
+// int32 zMusicDo(int32 track)
+// {
+//     int32 snd_enum;
+//     float32 vol;
+//     float32 pitch;
+
+//     // undefined4 uVar1;
+//     // uint uVar2;
+//     // uint32 uVar3;
+//     // zMusicSituation* pzVar4;
+//     // uint uVar5;
+//     // undefined4 in_GQR0;
+//     // double dVar6;
+//     // undefined8 in_f31;
+//     // double dVar7;
+//     // undefined auStack8[8];
+
+//     dVar7 = lbl_803CDD4C;
+//     if (globals[1744] == '\0')
+//     {
+//         int32 snd_enum = xrand();
+//         snd_enum = snd_enum % 0x18;
+//         switch (sMusicQueueData[track]->situation)
+//         {
+//         case 0:
+//             uVar2 = getCurrLevelMusicEnum();
+//             break;
+//         default:
+//             snd_enum = xrand();
+//             snd_enum = snd_enum % 0x18;
+//             break;
+//         case 2:
+//             snd_enum = 1;
+//             break;
+//         case 3:
+//         case 5:
+//             snd_enum = sMusicQueueData[track]->music_enum;
+//             break;
+//         case 4:
+//             break;
+//         case 6:
+//             snd_enum = sMusicQueueData[track]->music_enum;
+//             break;
+//         case 7:
+//             snd_enum = sMusicLastEnum[0];
+//         }
+//         if (sMusicTrack[track].snd_id != 0)
+//         {
+//             xSndStop(sMusicTrack[track].snd_id);
+//             sMusicTrack[track].snd_id = 0;
+//         }
+//         sMusicTrack[track].loop = sMusicSoundID[snd_enum][1];
+//         dVar6 = (double)(float)@668;
+//         if ((snd_enum == 9) && (*globals._8128_4_ == 0x4b463034))
+//         {
+//             dVar6 = (double)@799;
+//             dVar7 = (double)(float)(dVar7 * (double)@800);
+//         }
+//         uVar5 = sMusicTrack[track].loop;
+//         uVar3 = xSndPlay(dVar7, dVar6, (double)(float)@668, sMusicSoundID[snd_enum][0], 0xff,
+//                          track << 0xb | (int)(-uVar5 | uVar5) >> 0x1f & 0x8000U | 0x10000 | 0x20000,
+//                          0, 2);
+//         sMusicTrack[track].snd_id = uVar3;
+//         if (sMusicTrack[track].snd_id == 0)
+//         {
+//             uVar1 = 0;
+//         }
+//         else
+//         {
+//             sMusicQueueData[track] = sMusicQueueData[track];
+//             sMusicTrack[track].assetID = sMusicSoundID[snd_enum][0];
+//             sMusicTrack[track].lastVol = (float32)(float)dVar7;
+//             if (sMusicQueueData[track])
+//             {
+//                 pzVar4->sndid = sMusicTrack[track].snd_id;
+//                 sMusicQueueData[track]->elapsedTime = @668;
+//                 sMusicQueueData[track]->count++;
+//                 sMusicQueueData[track] = 0;
+//             }
+//             uVar1 = 1;
+//             sMusicLastEnum[track] = snd_enum;
+//         }
+//     }
+//     else
+//     {
+//         uVar1 = 0;
+//     }
+//     return uVar1;
+// }
 
 // func_800A7640
+#if NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
+// Probably floating point memes idk
+#else
+void zMusicNotify(int32 situation)
+{
+    if (sMusicPaused)
+    {
+        return;
+    }
+    if (sMusicInfo[situation].countMax)
+    {
+        return;
+    }
+    if (sMusicInfo[situation].count >= sMusicInfo[situation].countMax)
+    {
+        return;
+    }
+    if (sMusicInfo[situation].delay > sMusicInfo[situation].elapsedTime)
+    {
+        return;
+    }
+    // zMusicSituation* s = &sMusicInfo[situation];
+    sMusicQueueData[sMusicInfo[situation].track] = &sMusicInfo[situation];
+    sMusicTimer[sMusicInfo[situation].track] = sMusicInfo[situation].punchDelay;
+    sMusicQueueData[sMusicInfo[situation].track]->game_state = gGameMode == eGameMode_Game;
+}
+#endif
 
 // func_800A76BC
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotifyEvent__FPCfP5xBase")

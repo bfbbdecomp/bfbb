@@ -1191,7 +1191,8 @@ lbl_8026C0C8:
 	.incbin "baserom.dol", 0x2690A8, 0x14
 lbl_8026C0DC:
 	.incbin "baserom.dol", 0x2690BC, 0xC
-lbl_8026C0E8:
+.global zNPCTypeDuplotron_strings
+zNPCTypeDuplotron_strings:
 	.incbin "baserom.dol", 0x2690C8, 0x88
 
 .section .data

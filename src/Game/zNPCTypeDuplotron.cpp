@@ -14,6 +14,8 @@ extern xParEmitterCustomSettings g_parf_smoky;
 extern xParEmitterCustomSettings g_parf_steam;
 extern xParEmitterCustomSettings g_parf_overheat;
 
+extern char* zNPCTypeDuplotron_strings[];
+
 // func_801251BC
 void ZNPC_Duplotron_Startup()
 {
@@ -124,9 +126,9 @@ void ZNPC_Destroy_Duplotron(xFactoryInst* inst)
 // non-matching: scheduling?
 void DUPO_InitEffects()
 {
-    g_pemit_smoky = zParEmitterFind("PAREMIT_DUPLO_SMOKE");
-    g_pemit_steam = zParEmitterFind("PAREMIT_DUPLO_STEAM");
-    g_pemit_overheat = zParEmitterFind("PAREMIT_DUPLO_OVERHEAT");
+    g_pemit_smoky = zParEmitterFind(zNPCTypeDuplotron_strings[7]); // "PAREMIT_DUPLO_SMOKE"
+    g_pemit_steam = zParEmitterFind(zNPCTypeDuplotron_strings[8]); // "PAREMIT_DUPLO_STEAM"
+    g_pemit_overheat = zParEmitterFind(zNPCTypeDuplotron_strings[9]); // "PAREMIT_DUPLO_OVERHEAT"
 
     g_parf_smoky.custom_flags = 0x100;
     g_parf_smoky.pos = g_O3;
