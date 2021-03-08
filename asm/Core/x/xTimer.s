@@ -361,6 +361,7 @@ lbl_8028A258:
 	.incbin "baserom.dol", 0x287238, 0x50
 
 .section .sdata2
+.balign 4
 .global lbl_803CD118
 lbl_803CD118:
 	.incbin "baserom.dol", 0x2B69B8, 0x8
