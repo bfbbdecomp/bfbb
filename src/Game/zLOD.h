@@ -11,10 +11,18 @@ struct zLODTable
     float32 lodDist[3];
 };
 
-struct xEnt;
+struct zLODManager
+{
+    int32 numextra;
+    zLODTable* lod;
+    xModelInstance* model;
+    float32 adjustNoRenderDist;
+};
 
 void zLOD_Setup();
 void zLOD_Update(uint32 percent_update);
 zLODTable* zLOD_Get(xEnt* ent);
+void AddToLODList(xModelInstance* model);
+xEnt* AddToLODList(xEnt* ent);
 
 #endif

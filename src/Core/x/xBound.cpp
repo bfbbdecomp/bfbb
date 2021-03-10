@@ -108,7 +108,7 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
 
 #ifndef NON_MATCHING
 // func_8000A7FC
-float32 xsqrt(float32 x);
+// float32 xsqrt(float32 x);
 #pragma GLOBAL_ASM("asm/Core/x/xBound.s", "xsqrt__Ff")
 #else
 float32 xsqrt(float32 x)

@@ -37,5 +37,6 @@ void xBoundUpdate(xBound* b);
 void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c);
 void xRayHitsBound(const xRay3* r, const xBound* b, xCollis* c);
 void xSphereHitsBound(const xSphere* o, const xBound* b, xCollis* c);
+float32 xsqrt(float32 x);
 
 #endif
