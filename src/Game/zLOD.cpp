@@ -17,7 +17,7 @@ extern float32 lbl_803CDC48;
 extern float32 lbl_803CDC4C;
 
 // func_800A1D18
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zLOD.s", "AddToLODList__FP14xModelInstance")
 #else
 // This was almost completely matching until I switched sTableList to sTableList[i]

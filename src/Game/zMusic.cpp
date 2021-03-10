@@ -74,8 +74,6 @@ void zMusicInit()
 
     for (int i = 0; i < 24; i++)
     {
-        // uint32 arr[] = { xStrHash(zMusic_strings[i]), 1 };
-        // *sMusicSoundID[i] = *arr;
         sMusicSoundID[i][0] = xStrHash(zMusic_strings[i]);
         sMusicSoundID[i][1] = 1;
     }
@@ -165,95 +163,6 @@ int32 getCurrLevelMusicEnum()
 
 // func_800A7414
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
-// int32 zMusicDo(int32 track)
-// {
-//     int32 snd_enum;
-//     float32 vol;
-//     float32 pitch;
-
-//     // undefined4 uVar1;
-//     // uint uVar2;
-//     // uint32 uVar3;
-//     // zMusicSituation* pzVar4;
-//     // uint uVar5;
-//     // undefined4 in_GQR0;
-//     // double dVar6;
-//     // undefined8 in_f31;
-//     // double dVar7;
-//     // undefined auStack8[8];
-
-//     dVar7 = lbl_803CDD4C;
-//     if (globals[1744] == '\0')
-//     {
-//         int32 snd_enum = xrand();
-//         snd_enum = snd_enum % 0x18;
-//         switch (sMusicQueueData[track]->situation)
-//         {
-//         case 0:
-//             uVar2 = getCurrLevelMusicEnum();
-//             break;
-//         default:
-//             snd_enum = xrand();
-//             snd_enum = snd_enum % 0x18;
-//             break;
-//         case 2:
-//             snd_enum = 1;
-//             break;
-//         case 3:
-//         case 5:
-//             snd_enum = sMusicQueueData[track]->music_enum;
-//             break;
-//         case 4:
-//             break;
-//         case 6:
-//             snd_enum = sMusicQueueData[track]->music_enum;
-//             break;
-//         case 7:
-//             snd_enum = sMusicLastEnum[0];
-//         }
-//         if (sMusicTrack[track].snd_id != 0)
-//         {
-//             xSndStop(sMusicTrack[track].snd_id);
-//             sMusicTrack[track].snd_id = 0;
-//         }
-//         sMusicTrack[track].loop = sMusicSoundID[snd_enum][1];
-//         dVar6 = (double)(float)@668;
-//         if ((snd_enum == 9) && (*globals._8128_4_ == 0x4b463034))
-//         {
-//             dVar6 = (double)@799;
-//             dVar7 = (double)(float)(dVar7 * (double)@800);
-//         }
-//         uVar5 = sMusicTrack[track].loop;
-//         uVar3 = xSndPlay(dVar7, dVar6, (double)(float)@668, sMusicSoundID[snd_enum][0], 0xff,
-//                          track << 0xb | (int)(-uVar5 | uVar5) >> 0x1f & 0x8000U | 0x10000 | 0x20000,
-//                          0, 2);
-//         sMusicTrack[track].snd_id = uVar3;
-//         if (sMusicTrack[track].snd_id == 0)
-//         {
-//             uVar1 = 0;
-//         }
-//         else
-//         {
-//             sMusicQueueData[track] = sMusicQueueData[track];
-//             sMusicTrack[track].assetID = sMusicSoundID[snd_enum][0];
-//             sMusicTrack[track].lastVol = (float32)(float)dVar7;
-//             if (sMusicQueueData[track])
-//             {
-//                 pzVar4->sndid = sMusicTrack[track].snd_id;
-//                 sMusicQueueData[track]->elapsedTime = @668;
-//                 sMusicQueueData[track]->count++;
-//                 sMusicQueueData[track] = 0;
-//             }
-//             uVar1 = 1;
-//             sMusicLastEnum[track] = snd_enum;
-//         }
-//     }
-//     else
-//     {
-//         uVar1 = 0;
-//     }
-//     return uVar1;
-// }
 
 // func_800A7640
 #ifndef NON_MATCHING
@@ -278,7 +187,6 @@ void zMusicNotify(int32 situation)
     {
         return;
     }
-    // zMusicSituation* s = &sMusicInfo[situation];
     sMusicQueueData[sMusicInfo[situation].track] = &sMusicInfo[situation];
     sMusicTimer[sMusicInfo[situation].track] = sMusicInfo[situation].punchDelay;
     sMusicQueueData[sMusicInfo[situation].track]->game_state = gGameMode == eGameMode_Game;
