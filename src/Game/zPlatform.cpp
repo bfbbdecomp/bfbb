@@ -3,10 +3,21 @@
 #include <types.h>
 
 // func_800A8EC8
-#pragma GLOBAL_ASM("asm/Game/zPlatform.s", "genericPlatRender__FP4xEnt")
+void genericPlatRender(xEnt* ent)
+{
+    if (!ent->model || !xEntIsVisible(ent))
+    {
+        return;
+    }
+
+    xModelRender(ent->model);
+}
 
 // func_800A8F14
-#pragma GLOBAL_ASM("asm/Game/zPlatform.s", "zPlatform_Init__FPvPv")
+void zPlatform_Init(void* plat, void* asset)
+{
+    zPlatform_Init((zPlatform*)plat, (xEntAsset*)asset);
+}
 
 // func_800A8F34
 #pragma GLOBAL_ASM("asm/Game/zPlatform.s", "zPlatform_Init__FP9zPlatformP9xEntAsset")
@@ -15,10 +26,16 @@
 #pragma GLOBAL_ASM("asm/Game/zPlatform.s", "zPlatform_Setup__FP9zPlatformP6xScene")
 
 // func_800A93CC
-#pragma GLOBAL_ASM("asm/Game/zPlatform.s", "zPlatform_Save__FP9zPlatformP7xSerial")
+void zPlatform_Save(zPlatform* ent, xSerial* s)
+{
+    zEntSave(ent, s);
+}
 
 // func_800A93EC
-#pragma GLOBAL_ASM("asm/Game/zPlatform.s", "zPlatform_Load__FP9zPlatformP7xSerial")
+void zPlatform_Load(zPlatform* ent, xSerial* s)
+{
+    zEntLoad(ent, s);
+}
 
 // func_800A940C
 #pragma GLOBAL_ASM("asm/Game/zPlatform.s", "zPlatform_Reset__FP9zPlatformP6xScene")

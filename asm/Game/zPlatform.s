@@ -4,41 +4,6 @@
 
 .section .text  # 0x800A8EC8 - 0x800AC8A0
 
-
-genericPlatRender__FP4xEnt:
-/* 800A8EC8 000A5CC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A8ECC 000A5CCC  7C 08 02 A6 */	mflr r0
-/* 800A8ED0 000A5CD0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A8ED4 000A5CD4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800A8ED8 000A5CD8  7C 7F 1B 78 */	mr r31, r3
-/* 800A8EDC 000A5CDC  80 03 00 24 */	lwz r0, 0x24(r3)
-/* 800A8EE0 000A5CE0  28 00 00 00 */	cmplwi r0, 0
-/* 800A8EE4 000A5CE4  41 82 00 1C */	beq lbl_800A8F00
-/* 800A8EE8 000A5CE8  4B F6 57 51 */	bl xEntIsVisible__FPC4xEnt
-/* 800A8EEC 000A5CEC  28 03 00 00 */	cmplwi r3, 0
-/* 800A8EF0 000A5CF0  40 82 00 08 */	bne lbl_800A8EF8
-/* 800A8EF4 000A5CF4  48 00 00 0C */	b lbl_800A8F00
-lbl_800A8EF8:
-/* 800A8EF8 000A5CF8  80 7F 00 24 */	lwz r3, 0x24(r31)
-/* 800A8EFC 000A5CFC  4B F8 BA 49 */	bl xModelRender__FP14xModelInstance
-lbl_800A8F00:
-/* 800A8F00 000A5D00  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800A8F04 000A5D04  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800A8F08 000A5D08  7C 08 03 A6 */	mtlr r0
-/* 800A8F0C 000A5D0C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800A8F10 000A5D10  4E 80 00 20 */	blr 
-
-.global zPlatform_Init__FPvPv
-zPlatform_Init__FPvPv:
-/* 800A8F14 000A5D14  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A8F18 000A5D18  7C 08 02 A6 */	mflr r0
-/* 800A8F1C 000A5D1C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A8F20 000A5D20  48 00 00 15 */	bl zPlatform_Init__FP9zPlatformP9xEntAsset
-/* 800A8F24 000A5D24  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800A8F28 000A5D28  7C 08 03 A6 */	mtlr r0
-/* 800A8F2C 000A5D2C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800A8F30 000A5D30  4E 80 00 20 */	blr 
-
 .global zPlatform_Init__FP9zPlatformP9xEntAsset
 zPlatform_Init__FP9zPlatformP9xEntAsset:
 /* 800A8F34 000A5D34  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -357,28 +322,6 @@ lbl_800A93B8:
 /* 800A93C0 000A61C0  7C 08 03 A6 */	mtlr r0
 /* 800A93C4 000A61C4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800A93C8 000A61C8  4E 80 00 20 */	blr 
-
-.global zPlatform_Save__FP9zPlatformP7xSerial
-zPlatform_Save__FP9zPlatformP7xSerial:
-/* 800A93CC 000A61CC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A93D0 000A61D0  7C 08 02 A6 */	mflr r0
-/* 800A93D4 000A61D4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A93D8 000A61D8  4B FA BE 39 */	bl zEntSave__FP4zEntP7xSerial
-/* 800A93DC 000A61DC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800A93E0 000A61E0  7C 08 03 A6 */	mtlr r0
-/* 800A93E4 000A61E4  38 21 00 10 */	addi r1, r1, 0x10
-/* 800A93E8 000A61E8  4E 80 00 20 */	blr 
-
-.global zPlatform_Load__FP9zPlatformP7xSerial
-zPlatform_Load__FP9zPlatformP7xSerial:
-/* 800A93EC 000A61EC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A93F0 000A61F0  7C 08 02 A6 */	mflr r0
-/* 800A93F4 000A61F4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A93F8 000A61F8  4B FA BE 39 */	bl zEntLoad__FP4zEntP7xSerial
-/* 800A93FC 000A61FC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800A9400 000A6200  7C 08 03 A6 */	mtlr r0
-/* 800A9404 000A6204  38 21 00 10 */	addi r1, r1, 0x10
-/* 800A9408 000A6208  4E 80 00 20 */	blr 
 
 .global zPlatform_Reset__FP9zPlatformP6xScene
 zPlatform_Reset__FP9zPlatformP6xScene:
