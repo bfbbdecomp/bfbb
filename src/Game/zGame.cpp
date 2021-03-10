@@ -1,8 +1,11 @@
 #include "zGame.h"
 #include "zGlobals.h"
 #include "zParPTank.h"
+#include "zSaveLoad.h"
+#include "zGameState.h"
 
 #include "../Core/p2/iDraw.h"
+#include "../Core/x/xTRC.h"
 
 #include <types.h>
 
@@ -14,6 +17,7 @@ extern RwCamera* sGameScreenTransCam;
 extern iTime sTimeLast;
 extern iTime sTimeCurrent;
 extern float32 sTimeElapsed;
+extern _tagTRCPadInfo gTrcPad[4];
 
 extern float32 lbl_803CDA28;
 
@@ -51,10 +55,63 @@ int32 zGameIsPaused()
 }
 
 // func_800981B0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameLoopContinue__Fv")
+#else
+int32 zGameLoopContinue()
+{
+    if (gGameMode == eGameMode_Game)
+    {
+        if (((gGameState == 1) || (gGameState == 3)) || (gGameState == 4))
+        {
+            return 1;
+        }
+    }
+    else
+    {
+        if (gGameMode == eGameMode_Save)
+        {
+            gGameWhereAmI = eGameWhere_SaveLoop;
+            zSaveLoad_SaveLoop();
+            sTimeLast = iTimeGet();
+        }
+        return 1;
+    }
+    return 0;
+}
+#endif
 
 // func_80098234
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameOkToPause__Fv")
+int32 zGameOkToPause()
+{
+    int32 uVar1 = 0;
+
+    if (globals.cmgr)
+    {
+        return 0;
+    }
+    if (zGameIsPaused())
+    {
+        return 0;
+    }
+    if ((globals.sceneCur)->sceneID == 0x50473132)
+    {
+        return 0;
+    }
+    if ((globals.player.ControlOff & 0xffff92ff))
+    {
+        return 0;
+    }
+    else
+    {
+        uVar1 = 1;
+        if (gTrcPad[0].state == 1)
+        {
+            uVar1 = 2;
+        }
+    }
+    return uVar1;
+}
 
 // func_800982D8
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGamePause__Fv")
