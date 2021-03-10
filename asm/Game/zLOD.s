@@ -702,9 +702,11 @@ lbl_802EA990:
 	.skip 0x8000
 
 .section .sbss
-lbl_803CB908:
+.global sTableCount
+sTableCount:
 	.skip 0x4
-lbl_803CB90C:
+.global sTableList
+sTableList:
 	.skip 0x4
 lbl_803CB910:
 	.skip 0x4
@@ -712,12 +714,16 @@ lbl_803CB914:
 	.skip 0x4
 
 .section .sdata2
+.global lbl_803CDC40
 lbl_803CDC40:
 	.incbin "baserom.dol", 0x2B74E0, 0x4
+.global lbl_803CDC44
 lbl_803CDC44:
 	.incbin "baserom.dol", 0x2B74E4, 0x4
+.global lbl_803CDC48
 lbl_803CDC48:
 	.incbin "baserom.dol", 0x2B74E8, 0x4
+.global lbl_803CDC4C
 lbl_803CDC4C:
 	.incbin "baserom.dol", 0x2B74EC, 0x4
 lbl_803CDC50:

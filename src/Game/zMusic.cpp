@@ -256,7 +256,7 @@ int32 getCurrLevelMusicEnum()
 // }
 
 // func_800A7640
-#if NON_MATCHING
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
 // Probably floating point memes idk
 #else
