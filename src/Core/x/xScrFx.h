@@ -17,5 +17,6 @@ int32 xScrFXGlareAdd(xVec3* pos, float32 life, float32 intensity, float32 size, 
 void xScrFXFullScreenGlareRender();
 void xScrFXGlareRender(xCamera* cam);
 void xScrFxLetterbox(int32 enable);
+void xScrFxReset();
 
 #endif
