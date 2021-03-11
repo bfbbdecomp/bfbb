@@ -1986,6 +1986,7 @@ lbl_803CF5A4:
 	.incbin "baserom.dol", 0x2B8E44, 0x4
 lbl_803CF5A8:
 	.incbin "baserom.dol", 0x2B8E48, 0x4
+.global lbl_803CF5AC
 lbl_803CF5AC:
 	.incbin "baserom.dol", 0x2B8E4C, 0x4
 lbl_803CF5B0:

@@ -46,6 +46,7 @@ struct GECheat
 int32 zGameExtras_ExtrasFlags();
 void zGameExtras_MoDay(int32* month, int32* day);
 void zGameExtras_SceneReset();
+void zGameExtras_SceneInit();
 void zGameExtras_SceneExit();
 void zGameExtras_SceneUpdate(float32 dt);
 int32 zGameExtras_CheatFlags();

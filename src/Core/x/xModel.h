@@ -138,6 +138,7 @@ void xModelSetMaterialAlpha(xModelInstance* modelInst, uint8 alpha);
 void xModelUpdate(xModelInstance* modelInst, float32 timeDelta);
 xMat4x3* xModelGetFrame(xModelInstance* modelInst);
 void xModelEval(xModelInstance* modelInst);
+void xModel_SceneEnter(RpWorld* world);
 void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
 void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, ulong32 index);

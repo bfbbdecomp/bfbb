@@ -109,5 +109,7 @@ void zGameScreenTransitionUpdate(float32 percentComplete, char* msg);
 void zGameScreenTransitionUpdate(float32 percentComplete, char* msg, uint8* rgba);
 void zGameScreenTransitionEnd();
 void zGameModeSwitch(eGameMode modeNew);
+void zGameStall();
+void zGameStats_Init();
 
 #endif

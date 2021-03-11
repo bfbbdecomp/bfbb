@@ -1762,30 +1762,6 @@ lbl_80098ED8:
 /* 80098EE0 00095CE0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80098EE4 00095CE4  4E 80 00 20 */	blr 
 
-.global zGameScreenTransitionUpdate__FfPc
-zGameScreenTransitionUpdate__FfPc:
-/* 80098EE8 00095CE8  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80098EEC 00095CEC  7C 08 02 A6 */	mflr r0
-/* 80098EF0 00095CF0  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80098EF4 00095CF4  DB E1 00 18 */	stfd f31, 0x18(r1)
-/* 80098EF8 00095CF8  FF E0 08 90 */	fmr f31, f1
-/* 80098EFC 00095CFC  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 80098F00 00095D00  7C 7F 1B 78 */	mr r31, r3
-/* 80098F04 00095D04  48 00 DC E5 */	bl zMenuIsFirstBoot__Fv
-/* 80098F08 00095D08  2C 03 00 00 */	cmpwi r3, 0
-/* 80098F0C 00095D0C  40 82 00 14 */	bne lbl_80098F20
-/* 80098F10 00095D10  FC 20 F8 90 */	fmr f1, f31
-/* 80098F14 00095D14  7F E3 FB 78 */	mr r3, r31
-/* 80098F18 00095D18  38 80 00 00 */	li r4, 0
-/* 80098F1C 00095D1C  48 00 00 1D */	bl zGameScreenTransitionUpdate__FfPcPUc
-lbl_80098F20:
-/* 80098F20 00095D20  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80098F24 00095D24  CB E1 00 18 */	lfd f31, 0x18(r1)
-/* 80098F28 00095D28  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 80098F2C 00095D2C  7C 08 03 A6 */	mtlr r0
-/* 80098F30 00095D30  38 21 00 20 */	addi r1, r1, 0x20
-/* 80098F34 00095D34  4E 80 00 20 */	blr 
-
 .global zGameScreenTransitionUpdate__FfPcPUc
 zGameScreenTransitionUpdate__FfPcPUc:
 /* 80098F38 00095D38  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -2439,6 +2415,7 @@ lbl_803CDA04:
 	.incbin "baserom.dol", 0x2B72A4, 0x4
 lbl_803CDA08:
 	.incbin "baserom.dol", 0x2B72A8, 0x8
+.global lbl_803CDA10
 lbl_803CDA10:
 	.incbin "baserom.dol", 0x2B72B0, 0x4
 lbl_803CDA14:
@@ -2474,8 +2451,10 @@ lbl_803CDA4C:
 	.incbin "baserom.dol", 0x2B72EC, 0x4
 lbl_803CDA50:
 	.incbin "baserom.dol", 0x2B72F0, 0x4
+.global lbl_803CDA54
 lbl_803CDA54:
 	.incbin "baserom.dol", 0x2B72F4, 0x4
+.global lbl_803CDA58
 lbl_803CDA58:
 	.incbin "baserom.dol", 0x2B72F8, 0x4
 lbl_803CDA5C:
