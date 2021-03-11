@@ -131,15 +131,15 @@ void DUPO_InitEffects()
     g_pemit_overheat = zParEmitterFind(zNPCTypeDuplotron_strings[9]); // "PAREMIT_DUPLO_OVERHEAT"
 
     g_parf_smoky.custom_flags = 0x100;
-    g_parf_smoky.pos = g_O3;
+    xVec3Copy(&g_parf_smoky.pos, &g_O3);
 
     g_parf_steam.custom_flags = 0x300;
-    g_parf_steam.pos = g_O3;
-    g_parf_steam.vel = g_Y3;
+    xVec3Copy(&g_parf_steam.pos, &g_O3);
+    xVec3Copy(&g_parf_steam.vel, &g_Y3);
 
     g_parf_overheat.custom_flags = 0x300;
-    g_parf_overheat.pos = g_O3;
-    g_parf_overheat.vel = g_Y3;
+    xVec3Copy(&g_parf_overheat.pos, &g_O3);
+    xVec3Copy(&g_parf_overheat.vel, &g_Y3);
 }
 #endif
 

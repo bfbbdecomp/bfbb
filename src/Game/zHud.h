@@ -9,6 +9,9 @@ namespace zhud
     void update(float32 dt);
     void show();
     void hide();
+    void init();
+    void destroy();
+    void setup();
 } // namespace zhud
 
 #endif
