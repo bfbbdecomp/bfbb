@@ -46,7 +46,7 @@ extern float32 lbl_803CDA58;
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "PickNextSoak__Fv")
 
 // func_8009771C
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameInit__FUi")
 #else
 // Scheduling, I guess
@@ -82,7 +82,7 @@ void zGameInit(uint32 theSceneID)
 #endif
 
 // func_800977FC
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameExit__Fv")
 #else
 // Scheduling, I guess
@@ -114,7 +114,7 @@ void zGameExit()
 #endif
 
 // func_800978A4
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameSetup__Fv")
 #else
 void zGameSetup()
@@ -182,7 +182,7 @@ int32 zGameIsPaused()
 }
 
 // func_800981B0
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameLoopContinue__Fv")
 #else
 int32 zGameLoopContinue()
@@ -241,7 +241,7 @@ int32 zGameOkToPause()
 }
 
 // func_800982D8
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGamePause__Fv")
 #else
 void zGamePause()
@@ -267,7 +267,7 @@ void zGamePause()
 #endif
 
 // func_80098394
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameStall__Fv")
 #else
 void zGameStall()
@@ -297,7 +297,7 @@ void zGameTakeSnapShot(RwCamera*)
 }
 
 // func_80098D7C
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameUpdateTransitionBubbles__Fv")
 #else
 // Float memes
@@ -313,7 +313,7 @@ void zGameUpdateTransitionBubbles()
 #endif
 
 // func_80098DF8
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameScreenTransitionBegin__Fv")
 #else
 // Tons of extra instructions for some reason
