@@ -3,6 +3,9 @@
 
 #include <types.h>
 
+#include "xhipio.h"
+#include "xordarray.h"
+
 struct st_PACKER_ASSETTYPE
 {
     uint32 typetag;
@@ -44,8 +47,50 @@ enum en_LAYER_TYPE
     PKR_LTYPE_ALL = 0xffffffff
 };
 
+struct st_PACKER_READ_DATA;
+struct st_PACKER_ATOC_NODE
+{
+    uint32 aid;
+    uint32 asstype;
+    int32 d_off;
+    int32 d_size;
+    int32 d_pad;
+    uint32 d_chksum;
+    int32 assalign;
+    int32 infoflag;
+    int32 loadflag;
+    int8* memloc;
+    int32 x_size;
+    int32 readcnt;
+    int32 readrem;
+    st_PACKER_ASSETTYPE* typeref;
+    st_HIPLOADDATA* ownpkg;
+    st_PACKER_READ_DATA* ownpr;
+    int8 basename[32];
+};
+
 struct st_PACKER_READ_DATA
 {
+    st_PACKER_ASSETTYPE* types;
+    void* userdata;
+    uint32 opts;
+    uint32 pkgver;
+    int32 cltver;
+    int32 subver;
+    int32 compatver;
+    st_HIPLOADDATA* pkg;
+    uint32 base_sector;
+    int32 lockid;
+    int8 packfile[128];
+    int32 asscnt;
+    int32 laycnt;
+    st_XORDEREDARRAY asstoc;
+    st_XORDEREDARRAY laytoc;
+    st_PACKER_ATOC_NODE* pool_anode;
+    int32 pool_nextaidx;
+    st_XORDEREDARRAY typelist[129];
+    long32 time_made;
+    long32 time_mod;
 };
 
 struct st_PACKER_READ_FUNCS
@@ -67,11 +112,24 @@ struct st_PACKER_READ_FUNCS
     int32 (*PkgHasAsset)(st_PACKER_READ_DATA*, uint32);
     uint32 (*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void (*PkgDisconnect)(st_PACKER_READ_DATA*);
+
+    void operator=(const st_PACKER_READ_FUNCS& other);
 };
 
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver);
 int32 PKRStartup();
-int32 PKRLoadStep(int32 i);
+int32 PKRLoadStep(int32);
+int32 PKR_LoadStep_Async();
 uint32 PKRAssetIDFromInst(void* asset_inst);
+
+st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, int8* pkgfile, uint32 opts, int32* cltver,
+                                  st_PACKER_ASSETTYPE* typelist);
+void PKR_ReadDone(st_PACKER_READ_DATA* pr);
+
+int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+void PKR_alloc_chkidx();
+
+void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int8** memtrue);
+void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp);
 
 #endif
