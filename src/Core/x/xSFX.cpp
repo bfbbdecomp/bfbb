@@ -39,7 +39,6 @@ int32 xSFXWillSendDone(xSFX* param_1)
 #endif
 
 // func_80044124
-// #pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXInit__FPvPv")
 void xSFXInit(void* t, void* asset)
 
 {
@@ -77,14 +76,12 @@ void xSFXInit(xSFX* t, xSFXAsset* asset)
 #endif
 
 // func_800441F4
-//#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXSave__FP4xSFXP7xSerial")
 void xSFXSave(xSFX* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
 // func_80044214
-//#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXLoad__FP4xSFXP7xSerial")
 void xSFXLoad(xSFX* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
