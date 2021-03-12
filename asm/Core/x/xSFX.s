@@ -4,20 +4,6 @@
 
 .section .text  # 0x80043EB8 - 0x80044778
 
-.global xSFXEnvironmentalStreamSceneExit__Fv
-xSFXEnvironmentalStreamSceneExit__Fv:
-/* 80043EB8 00040CB8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80043EBC 00040CBC  7C 08 02 A6 */	mflr r0
-/* 80043EC0 00040CC0  38 6D 80 A0 */	addi r3, r13, lbl_803CA9A0-_SDA_BASE_
-/* 80043EC4 00040CC4  38 80 00 00 */	li r4, 0
-/* 80043EC8 00040CC8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80043ECC 00040CCC  38 A0 00 04 */	li r5, 4
-/* 80043ED0 00040CD0  4B FB F5 89 */	bl memset
-/* 80043ED4 00040CD4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80043ED8 00040CD8  7C 08 03 A6 */	mtlr r0
-/* 80043EDC 00040CDC  38 21 00 10 */	addi r1, r1, 0x10
-/* 80043EE0 00040CE0  4E 80 00 20 */	blr 
-
 .global xSFXUpdateEnvironmentalStreamSounds__FP4xSFXUi
 xSFXUpdateEnvironmentalStreamSounds__FP4xSFXUi:
 /* 80043EE4 00040CE4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -181,17 +167,6 @@ lbl_8004411C:
 /* 8004411C 00040F1C  38 60 00 00 */	li r3, 0
 /* 80044120 00040F20  4E 80 00 20 */	blr 
 
-.global xSFXInit__FPvPv
-xSFXInit__FPvPv:
-/* 80044124 00040F24  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80044128 00040F28  7C 08 02 A6 */	mflr r0
-/* 8004412C 00040F2C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80044130 00040F30  48 00 00 15 */	bl xSFXInit__FP4xSFXP9xSFXAsset
-/* 80044134 00040F34  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80044138 00040F38  7C 08 03 A6 */	mtlr r0
-/* 8004413C 00040F3C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80044140 00040F40  4E 80 00 20 */	blr 
-
 .global xSFXInit__FP4xSFXP9xSFXAsset
 xSFXInit__FP4xSFXP9xSFXAsset:
 /* 80044144 00040F44  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -242,40 +217,6 @@ lbl_800441B4:
 /* 800441EC 00040FEC  38 21 00 10 */	addi r1, r1, 0x10
 /* 800441F0 00040FF0  4E 80 00 20 */	blr 
 
-.global xSFXSave__FP4xSFXP7xSerial
-xSFXSave__FP4xSFXP7xSerial:
-/* 800441F4 00040FF4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800441F8 00040FF8  7C 08 02 A6 */	mflr r0
-/* 800441FC 00040FFC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80044200 00041000  4B FC 52 4D */	bl xBaseSave__FP5xBaseP7xSerial
-/* 80044204 00041004  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80044208 00041008  7C 08 03 A6 */	mtlr r0
-/* 8004420C 0004100C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80044210 00041010  4E 80 00 20 */	blr 
-
-.global xSFXLoad__FP4xSFXP7xSerial
-xSFXLoad__FP4xSFXP7xSerial:
-/* 80044214 00041014  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80044218 00041018  7C 08 02 A6 */	mflr r0
-/* 8004421C 0004101C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80044220 00041020  4B FC 52 7D */	bl xBaseLoad__FP5xBaseP7xSerial
-/* 80044224 00041024  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80044228 00041028  7C 08 03 A6 */	mtlr r0
-/* 8004422C 0004102C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80044230 00041030  4E 80 00 20 */	blr 
-
-.global xSFXReset__FP4xSFX
-xSFXReset__FP4xSFX:
-/* 80044234 00041034  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80044238 00041038  7C 08 02 A6 */	mflr r0
-/* 8004423C 0004103C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80044240 00041040  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 80044244 00041044  4B FC 52 B5 */	bl xBaseReset__FP5xBaseP10xBaseAsset
-/* 80044248 00041048  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8004424C 0004104C  7C 08 03 A6 */	mtlr r0
-/* 80044250 00041050  38 21 00 10 */	addi r1, r1, 0x10
-/* 80044254 00041054  4E 80 00 20 */	blr 
-
 .global xSFXConvertFlags__FUi
 xSFXConvertFlags__FUi:
 /* 80044258 00041058  54 60 07 7B */	rlwinm. r0, r3, 0, 0x1d, 0x1d
@@ -283,39 +224,6 @@ xSFXConvertFlags__FUi:
 /* 80044260 00041060  4D 82 00 20 */	beqlr 
 /* 80044264 00041064  60 63 80 00 */	ori r3, r3, 0x8000
 /* 80044268 00041068  4E 80 00 20 */	blr 
-
-xSFXUpdate__FP4xSFX:
-/* 8004426C 0004106C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80044270 00041070  7C 08 02 A6 */	mflr r0
-/* 80044274 00041074  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80044278 00041078  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8004427C 0004107C  7C 7F 1B 78 */	mr r31, r3
-/* 80044280 00041080  80 63 00 10 */	lwz r3, 0x10(r3)
-/* 80044284 00041084  A0 03 00 08 */	lhz r0, 8(r3)
-/* 80044288 00041088  54 00 05 29 */	rlwinm. r0, r0, 0, 0x14, 0x14
-/* 8004428C 0004108C  41 82 00 44 */	beq lbl_800442D0
-/* 80044290 00041090  80 7F 00 14 */	lwz r3, 0x14(r31)
-/* 80044294 00041094  28 03 00 00 */	cmplwi r3, 0
-/* 80044298 00041098  41 82 00 38 */	beq lbl_800442D0
-/* 8004429C 0004109C  48 00 4E AD */	bl xSndIDIsPlaying__FUi
-/* 800442A0 000410A0  28 03 00 00 */	cmplwi r3, 0
-/* 800442A4 000410A4  40 82 00 2C */	bne lbl_800442D0
-/* 800442A8 000410A8  38 00 00 00 */	li r0, 0
-/* 800442AC 000410AC  7F E3 FB 78 */	mr r3, r31
-/* 800442B0 000410B0  90 1F 00 14 */	stw r0, 0x14(r31)
-/* 800442B4 000410B4  7F E4 FB 78 */	mr r4, r31
-/* 800442B8 000410B8  38 A0 00 BF */	li r5, 0xbf
-/* 800442BC 000410BC  80 DF 00 10 */	lwz r6, 0x10(r31)
-/* 800442C0 000410C0  A0 06 00 08 */	lhz r0, 8(r6)
-/* 800442C4 000410C4  70 00 EF FF */	andi. r0, r0, 0xefff
-/* 800442C8 000410C8  B0 06 00 08 */	sth r0, 8(r6)
-/* 800442CC 000410CC  4B FD B4 15 */	bl zEntEvent__FP5xBaseP5xBaseUi
-lbl_800442D0:
-/* 800442D0 000410D0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800442D4 000410D4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800442D8 000410D8  7C 08 03 A6 */	mtlr r0
-/* 800442DC 000410DC  38 21 00 10 */	addi r1, r1, 0x10
-/* 800442E0 000410E0  4E 80 00 20 */	blr 
 
 xSFXEventCB__FP5xBaseP5xBaseUiPCfP5xBase:
 /* 800442E4 000410E4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -608,22 +516,6 @@ lbl_80044728:
 /* 80044738 00041538  38 21 00 40 */	addi r1, r1, 0x40
 /* 8004473C 0004153C  4E 80 00 20 */	blr 
 
-xSFXStop__FP4xSFX:
-/* 80044740 00041540  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80044744 00041544  7C 08 02 A6 */	mflr r0
-/* 80044748 00041548  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8004474C 0004154C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80044750 00041550  7C 7F 1B 78 */	mr r31, r3
-/* 80044754 00041554  80 63 00 14 */	lwz r3, 0x14(r3)
-/* 80044758 00041558  48 00 4A A9 */	bl xSndStop__FUi
-/* 8004475C 0004155C  38 00 00 00 */	li r0, 0
-/* 80044760 00041560  90 1F 00 14 */	stw r0, 0x14(r31)
-/* 80044764 00041564  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80044768 00041568  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8004476C 0004156C  7C 08 03 A6 */	mtlr r0
-/* 80044770 00041570  38 21 00 10 */	addi r1, r1, 0x10
-/* 80044774 00041574  4E 80 00 20 */	blr 
-
 .endif
 
 .section .data
@@ -649,7 +541,8 @@ ShadowLight:
 	.skip 0x4
 
 .section .sdata
-lbl_803CA9A0:
+.global s_managedEnvSFX
+s_managedEnvSFX:
 	.incbin "baserom.dol", 0x2B5A60, 0x8
 /* SPECULATION: link order */
 .global ShadowStrength
