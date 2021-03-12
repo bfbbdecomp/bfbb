@@ -30,9 +30,12 @@ struct xSFX : xBase
 };
 
 void xSFXInit(void* t, void* asset);
+void xSFXInit(xSFX* t, xSFXAsset* asset);
 void xSFXSave(xSFX* ent, xSerial* s);
 void xSFXLoad(xSFX* ent, xSerial* s);
 void xSFXEnvironmentalStreamSceneExit();
 void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, uint32 numSounds);
+int32 xSFXEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam, xBase*);
+int32 xSFXWillSendDone(xSFX*);
 
 #endif
