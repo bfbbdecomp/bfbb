@@ -22,4 +22,6 @@ struct xJSPHeader
     xJSPNodeInfo* jspNodeList;
 };
 
+RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3);
+
 #endif

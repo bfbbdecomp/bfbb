@@ -421,8 +421,9 @@ sCurrVert:
 .global sAtomicStartCount
 sAtomicStartCount:
 	.skip 0x4
-
-lbl_803CBE40:
+	
+.global sAtomicStartVert
+sAtomicStartVert:
 	.skip 0x8
 /* SPECULATION: link order */
 .global iModelHack_DisablePrelight
