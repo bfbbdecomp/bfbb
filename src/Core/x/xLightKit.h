@@ -20,7 +20,7 @@ struct xLightKit
     uint32 tagID;
     uint32 groupID;
     uint32 lightCount;
-    xLightKitLight lightList[];
+    xLightKitLight* lightList;
 };
 
 xLightKit* xLightKit_Prepare(void* data);
