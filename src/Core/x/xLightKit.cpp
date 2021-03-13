@@ -34,7 +34,7 @@ xLightKit* xLightKit_Prepare(void* data)
             {
                 s = (currlight->color).green;
             }
-            if ((currlight->color).blue > s && (currlight->color).green > (currlight->color).red)
+            if ((currlight->color).blue > s)
             {
                 s = (currlight->color).blue;
             }
