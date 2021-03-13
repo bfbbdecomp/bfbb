@@ -195,78 +195,6 @@ lbl_801234AC:
 /* 801234B8 001202B8  38 21 00 60 */	addi r1, r1, 0x60
 /* 801234BC 001202BC  4E 80 00 20 */	blr 
 
-.global xLightKit_Enable__FP9xLightKitP7RpWorld
-xLightKit_Enable__FP9xLightKitP7RpWorld:
-/* 801234C0 001202C0  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 801234C4 001202C4  7C 08 02 A6 */	mflr r0
-/* 801234C8 001202C8  90 01 00 24 */	stw r0, 0x24(r1)
-/* 801234CC 001202CC  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 801234D0 001202D0  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 801234D4 001202D4  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 801234D8 001202D8  7C 9D 23 78 */	mr r29, r4
-/* 801234DC 001202DC  93 81 00 10 */	stw r28, 0x10(r1)
-/* 801234E0 001202E0  7C 7C 1B 78 */	mr r28, r3
-/* 801234E4 001202E4  80 0D 95 4C */	lwz r0, gLastLightKit-_SDA_BASE_(r13)
-/* 801234E8 001202E8  7C 1C 00 40 */	cmplw r28, r0
-/* 801234EC 001202EC  41 82 00 98 */	beq lbl_80123584
-/* 801234F0 001202F0  28 00 00 00 */	cmplwi r0, 0
-/* 801234F4 001202F4  41 82 00 3C */	beq lbl_80123530
-/* 801234F8 001202F8  3B C0 00 00 */	li r30, 0
-/* 801234FC 001202FC  3B E0 00 00 */	li r31, 0
-/* 80123500 00120300  48 00 00 20 */	b lbl_80123520
-lbl_80123504:
-/* 80123504 00120304  80 83 00 0C */	lwz r4, 0xc(r3)
-/* 80123508 00120308  38 1F 00 5C */	addi r0, r31, 0x5c
-/* 8012350C 0012030C  7F A3 EB 78 */	mr r3, r29
-/* 80123510 00120310  7C 84 00 2E */	lwzx r4, r4, r0
-/* 80123514 00120314  48 0F BD BD */	bl RpWorldRemoveLight
-/* 80123518 00120318  3B FF 00 60 */	addi r31, r31, 0x60
-/* 8012351C 0012031C  3B DE 00 01 */	addi r30, r30, 1
-lbl_80123520:
-/* 80123520 00120320  80 6D 95 4C */	lwz r3, gLastLightKit-_SDA_BASE_(r13)
-/* 80123524 00120324  80 03 00 08 */	lwz r0, 8(r3)
-/* 80123528 00120328  7C 1E 00 40 */	cmplw r30, r0
-/* 8012352C 0012032C  41 80 FF D8 */	blt lbl_80123504
-lbl_80123530:
-/* 80123530 00120330  28 1C 00 00 */	cmplwi r28, 0
-/* 80123534 00120334  93 8D 95 4C */	stw r28, gLastLightKit-_SDA_BASE_(r13)
-/* 80123538 00120338  41 82 00 44 */	beq lbl_8012357C
-/* 8012353C 0012033C  38 00 00 01 */	li r0, 1
-/* 80123540 00120340  3B C0 00 00 */	li r30, 0
-/* 80123544 00120344  90 0D 95 48 */	stw r0, iModelHack_DisablePrelight-_SDA_BASE_(r13)
-/* 80123548 00120348  7F DF F3 78 */	mr r31, r30
-/* 8012354C 0012034C  48 00 00 20 */	b lbl_8012356C
-lbl_80123550:
-/* 80123550 00120350  80 9C 00 0C */	lwz r4, 0xc(r28)
-/* 80123554 00120354  38 1F 00 5C */	addi r0, r31, 0x5c
-/* 80123558 00120358  7F A3 EB 78 */	mr r3, r29
-/* 8012355C 0012035C  7C 84 00 2E */	lwzx r4, r4, r0
-/* 80123560 00120360  48 0F BC D1 */	bl RpWorldAddLight
-/* 80123564 00120364  3B FF 00 60 */	addi r31, r31, 0x60
-/* 80123568 00120368  3B DE 00 01 */	addi r30, r30, 1
-lbl_8012356C:
-/* 8012356C 0012036C  80 1C 00 08 */	lwz r0, 8(r28)
-/* 80123570 00120370  7C 1E 00 40 */	cmplw r30, r0
-/* 80123574 00120374  41 80 FF DC */	blt lbl_80123550
-/* 80123578 00120378  48 00 00 0C */	b lbl_80123584
-lbl_8012357C:
-/* 8012357C 0012037C  38 00 00 00 */	li r0, 0
-/* 80123580 00120380  90 0D 95 48 */	stw r0, iModelHack_DisablePrelight-_SDA_BASE_(r13)
-lbl_80123584:
-/* 80123584 00120384  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80123588 00120388  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8012358C 0012038C  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80123590 00120390  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80123594 00120394  83 81 00 10 */	lwz r28, 0x10(r1)
-/* 80123598 00120398  7C 08 03 A6 */	mtlr r0
-/* 8012359C 0012039C  38 21 00 20 */	addi r1, r1, 0x20
-/* 801235A0 001203A0  4E 80 00 20 */	blr 
-
-.global xLightKit_GetCurrent__FP7RpWorld
-xLightKit_GetCurrent__FP7RpWorld:
-/* 801235A4 001203A4  80 6D 95 4C */	lwz r3, gLastLightKit-_SDA_BASE_(r13)
-/* 801235A8 001203A8  4E 80 00 20 */	blr 
-
 .global xLightKit_Destroy__FP9xLightKit
 xLightKit_Destroy__FP9xLightKit:
 /* 801235AC 001203AC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -313,7 +241,9 @@ lbl_80123624:
 .endif
 
 .section .sdata2
+.global lbl_803CEA40
 lbl_803CEA40:
 	.incbin "baserom.dol", 0x2B82E0, 0x4
+.global lbl_803CEA44
 lbl_803CEA44:
 	.incbin "baserom.dol", 0x2B82E4, 0x4

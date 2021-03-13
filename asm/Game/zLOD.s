@@ -664,7 +664,8 @@ lbl_800A267C:
 .endif
 
 .section .bss
-lbl_802EA990:
+.global sManagerList
+sManagerList:
 	.skip 0x8000
 
 .section .sbss
@@ -676,7 +677,8 @@ sTableList:
 	.skip 0x4
 lbl_803CB910:
 	.skip 0x4
-lbl_803CB914:
+.global sManagerCount
+sManagerCount:
 	.skip 0x4
 
 .section .sdata2
