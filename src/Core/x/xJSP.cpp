@@ -3,7 +3,8 @@
 #include <types.h>
 
 extern int32 sAtomicStartCount; // not exactly sure of the type
-extern RwV3d sCurrVert[]; // not sure if correct type. not sure what this is.
+extern RwV3d* sCurrVert; // not sure if correct type. not sure what this is.
+extern RwV3d* sAtomicStartVert; // I'm just going based on matt's assumption
 
 // No dwarf info
 // ghidra said return type and type of param_2 was void
@@ -40,30 +41,33 @@ RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3)
 #endif
 
 // func_80122CBC
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "AddAtomicCB__FP8RpAtomicPv")
+#else
+// ¯\_(ツ)_/¯
+RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
+{
+    // The dwarf defines this variable but it looks like it isnt used
+    // TempAtomicList** tmpList;
+    sAtomicStartCount--;
+    sAtomicStartVert[sAtomicStartCount] = *(RwV3d*)data;
+    sCurrVert = atomic->geometry->morphTarget->verts;
+    _rpMeshHeaderForAllMeshes(atomic->geometry->mesh, (RpMeshCallBack)&AddMeshCB, data);
+    return atomic;
+}
+#endif
 
 // func_80122D2C
 #if 1
 #pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "AddAtomicPrecalcedVertCB__FP8RpAtomicPv")
 #else
 // not in dwarf data
+// ¯\_(ツ)_/¯
 RpAtomic* AddAtomicPrecalcedVertCB(RpAtomic* atomic, void* data)
 {
-    sAtomicStartCount = sAtomicStartCount - 1;
-
-    // Size=60
-    /*
-    r5 = sAtomicStartCount;
-    r7 = 0(r4);
-    r5 = r5 + -1;
-    r6 = lbl_803CBE40;
-    slwi r0, r5, 2 sAtomicStartCount = r5;
-    stwx r7, r6, r0 r5 = 0x18(r3);
-    r6 = 0(r4);
-    r5 = 0x54(r5);
-    r0 = 8(r5);
-    mulli r0, r0, 0xc add r0, r6, r0 0(r4) = r0;
-    */
+    sAtomicStartCount--;
+    sAtomicStartVert[sAtomicStartCount] = *(RwV3d*)data;
+    data = &data + atomic->geometry->mesh->totalIndicesInMesh * 0xc;
 
     return atomic;
 }
