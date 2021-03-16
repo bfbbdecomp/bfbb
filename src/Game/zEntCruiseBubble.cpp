@@ -6,6 +6,7 @@
 #include "zEntDestructObj.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
+#include "zTalkBox.h"
 
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
@@ -490,7 +491,7 @@ uint8 cruise_bubble::was_damaged(xEnt* ent)
 // func_80057B30
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "exit_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScene")
+    "exit_triggers__13cruise_bubbleFR6xScene")
 
 void cruise_bubble::signal_event(uint32 toEvent)
 {
@@ -580,15 +581,55 @@ uint32 cruise_bubble::check_launch()
     return false;
 }
 
-// func_80057E6C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "kill__13cruise_bubbleFbb")
+void cruise_bubble::kill(bool reset_camera, bool abortive)
+{
+    if (abortive)
+    {
+        for (int32 i = THREAD_PLAYER; i < MAX_THREAD; ++i) {
+            if (shared.state[i] != NULL)
+            {
+                (shared.state[i])->abort();
+                shared.state[i] = NULL;
+            }
+        }
+    }
+    else {
+        for (int32 i = THREAD_PLAYER; i < MAX_THREAD; ++i) {
+            // either STATE_INVALID or BACKUP_STATE_PLAYER, both == 0x11111111
+            set_state((thread_enum) i, STATE_INVALID);
+        }
+    }
+
+    shared.flags = 0x3;
+    zCameraEnableTracking(CO_CRUISE_BUBBLE);
+    ztalkbox::permit(0xffffffff, 0);
+    if (reset_camera)
+    {
+        zCameraEnableInput();
+        xCameraSetFOV(&globals.camera, shared.fov_default);
+    }
+
+    hide_wand();
+    hide_missle();
+    hide_hud();
+    stop_trail();
+    distort_screen(zEntCruiseBubble_f_0_0);
+    xSndSelectListenerMode(SND_LISTENER_MODE_PLAYER);
+    
+    xAnimState* state = globals.player.ent.model->Anim->Single->State;
+    if (state == shared.astate.player.aim ||
+        state == shared.astate.player.fire ||
+        state == shared.astate.player.idle)
+    {
+        xAnimPlayStartTransition(globals.player.ent.model->Anim, shared.atran.player.end); // [xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition]
+    }
+    exit_triggers(*globals.sceneCur);
+}
 
 // func_80057FE0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "distort_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff")
+    "distort_screen__13cruise_bubbleFf")
 
 // func_80057FE4
 #pragma GLOBAL_ASM(                                                                                \
@@ -1009,7 +1050,7 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
 // func_8005A340
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hide_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "hide_hud__13cruise_bubbleFv")
 
 // func_8005A360
 #pragma GLOBAL_ASM(                                                                                \

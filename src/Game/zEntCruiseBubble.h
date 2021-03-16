@@ -99,6 +99,7 @@ namespace cruise_bubble
             float32 radius, uint8 explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
+    void exit_triggers(xScene& s);
     void signal_event(uint32 toEvent);
     void refresh_trail(xMat4x3& mat, xQuat& quat);
     void start_trail();
@@ -106,6 +107,7 @@ namespace cruise_bubble
     void set_state(thread_enum thread, state_enum state);
     uint32 check_launch();
     void kill(bool reset_camera, bool abortive);
+    void distort_screen(float32);
     void update_player(xScene& s, float32 dt);
     xVec3& get_player_loc();
     void render_player();
@@ -120,6 +122,7 @@ namespace cruise_bubble
     void update_missle(xScene& s, float32 dt);
     void render_missle();
     xModelInstance* load_model(uint32);
+    void hide_hud();
 
 } // namespace cruise_bubble
 
