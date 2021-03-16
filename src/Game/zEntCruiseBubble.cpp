@@ -642,7 +642,7 @@ void cruise_bubble::refresh_controls()
 
 void cruise_bubble::update_state(xScene* s, float32 dt)
 {
-    for (int32 i = 0; i < 3; ++i) {
+    for (int32 i = THREAD_PLAYER; i < MAX_THREAD; ++i) {
         state_type** state = &shared.state[i];
         state_enum newtype;
 
