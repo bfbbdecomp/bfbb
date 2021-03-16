@@ -1276,6 +1276,7 @@ zcam_fovdest:
 	.skip 0x4
 
 .section .sbss2
+.global lbl_803D0820
 lbl_803D0820:
 	.skip 0x4
 /* SPECULATION: link order */

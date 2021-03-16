@@ -6,8 +6,8 @@
 extern xLightKit* gLastLightKit;
 extern int32 iModelHack_DisablePrelight;
 
-extern float32 lbl_803CEA40;
-extern float32 lbl_803CEA44;
+extern float32 lbl_803CEA40; // 1.0
+extern float32 lbl_803CEA44; // 1.0e-5
 
 // func_80123228
 #if 1
@@ -17,6 +17,7 @@ extern float32 lbl_803CEA44;
 xLightKit* xLightKit_Prepare(void* data)
 {
     xLightKit* lkit = (xLightKit*)data;
+
     for (int i = 0; i < lkit->lightCount; i++)
     {
         xLightKitLight* currlight = &lkit->lightList[i];
@@ -25,11 +26,12 @@ xLightKit* xLightKit_Prepare(void* data)
             return (xLightKit*)data;
         }
         // The way Ghidra decomped this is kinda weird so I think I'm missing something
-        // But all it's doing is normalizing the colors back to 0-1
-        float32 s = (currlight->color).red;
+
+        // If any of the colors is greater than 1.0
         if ((currlight->color).red > lbl_803CEA40 || (currlight->color).green > lbl_803CEA40 ||
             (currlight->color).blue > lbl_803CEA40)
         {
+            float32 s = (currlight->color).red;
             if ((currlight->color).green > s)
             {
                 s = (currlight->color).green;
@@ -38,11 +40,14 @@ xLightKit* xLightKit_Prepare(void* data)
             {
                 s = (currlight->color).blue;
             }
-            // I think lbl_803CEA44 is 1.0f in this case
+
+            // Set s to 0.00001 if less than 0.00001
             if (lbl_803CEA44 > s)
             {
                 s = lbl_803CEA44;
             }
+
+            // Scale values back in range
             s = lbl_803CEA40 / s;
             (currlight->color).red = (RwReal)((currlight->color).red * s);
             (currlight->color).green = (RwReal)((currlight->color).green * s);

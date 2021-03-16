@@ -10,6 +10,8 @@
 extern xJSPHeader* sTempJSP;
 extern xJSPHeader sDummyEmptyJSP;
 
+extern const uint32* lbl_803D0820;
+
 // func_8004EBEC
 #pragma GLOBAL_ASM("asm/Game/zAssetTypes.s", "zAssetStartup__Fv")
 
@@ -34,20 +36,21 @@ void zAssetShutdown()
 // Ghidra's output here is not helpful
 void* BSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint32* outsize)
 {
+    // Not sure how this is used. defined in dwarf but not used in ghidra
     RwMemory rwmem;
     RwChunkHeaderInfo chunkHeaderInfo;
+
     RpWorld* bsp;
 
-    RwStream* stream = RwStreamOpen((RwStreamType)3, (RwStreamAccessType)1, indata);
+    RwStream* stream = RwStreamOpen(rwSTREAMMEMORY, rwSTREAMREAD, &indata);
     if (stream == 0)
     {
         xprintf("BSP_Read RwStreamOpen failed\n");
     }
-    if (RwStreamFindChunk(stream, 0xb, 0, 0) == 0)
+    if (RwStreamFindChunk(stream, 11, 0, 0) == 0)
     {
-        // damn
-        // chunk header info is austack in ghidra :/
-        RwStreamReadChunkHeaderInfo(stream, chunkHeaderInfo);
+        RwStreamReadChunkHeaderInfo(stream, &chunkHeaderInfo);
+        bsp = 0;
         *outsize = 0;
     }
     else
