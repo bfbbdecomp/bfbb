@@ -124,25 +124,10 @@ int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
 }
 
 // func_8004B344
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTQueueSceneAssets__FUii")
-#else
-// Weird optimization issue (see comment)
 int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop)
 {
     int32 result = 1;
-    // The problem here is the mask being used by the rlwinm instruction.
-    // The original uses bits 5..31 while this uses 24..31
-    // The value in r0 before rlwinm is executed is guaranteed to be either 0, 32, or 31 because:
-    //  clrlwi masks r4 to only bits 30 and 31 (flg_hiphop & 3)
-    //  subfic substracts two from that value, possible results are -2,-1,0, and 1
-    //  cntlzw will only be able to produce 0, 32, or 31 from these possible values.
-    // Therefore r0 is guaranteed to be a 6 bit value
-    // The worst case for rlwinm is if r0 contains 31. After rotating this value to the right 5 places
-    //  the upper five bits (0..4) are 1
-    // Therefore starting the mask for rlwinm at bit 5 or bit 24 will produce no difference in result.
-    // Compiling this without optimizations appears to use bit 5 to start the mask, but breaks other parts of the function.
-    st_STRAN_SCENE* sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2);
+    st_STRAN_SCENE* sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2 ? 1 : 0);
     if (sdata == NULL)
     {
         result = 0;
@@ -156,13 +141,8 @@ int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop)
     }
     return result;
 }
-#endif
 
-#ifndef NON_MATCHING
 // func_8004B3B4
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTUnLoadScene__FUii")
-#else
-// Same issue as above.
 void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
 {
     st_STRAN_SCENE* sdata;
@@ -183,7 +163,7 @@ void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
     }
     else
     {
-        sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2);
+        sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2 ? 1 : 0);
         if (sdata != NULL)
         {
             if (sdata->spkg != NULL)
@@ -195,7 +175,6 @@ void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
         XST_unlock(sdata);
     }
 }
-#endif
 
 // func_8004B494
 float32 xSTLoadStep(uint32)
@@ -207,20 +186,15 @@ float32 xSTLoadStep(uint32)
     return pct;
 }
 
-#ifndef NON_MATCHING
 // func_8004B4E8
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTDisconnect__FUii")
-#else
-// Same issue as above
 void xSTDisconnect(uint32 sid, int32 flg_hiphop)
 {
-    st_STRAN_SCENE* sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2);
+    st_STRAN_SCENE* sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2 ? 1 : 0);
     if (sdata != NULL)
     {
         g_pkrf->PkgDisconnect(sdata->spkg);
     }
 }
-#endif
 
 // func_8004B534
 int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32))
