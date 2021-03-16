@@ -1,3 +1,4 @@
+#include <string.h>
 
 #include "zCamera.h"
 #include "zEntButton.h"
@@ -28,7 +29,7 @@ namespace cruise_bubble
 // tweak_group cheat_tweak;
 // tweak_group* current_tweak;
 extern xBase base;
-// int8* start_anim_states[37];
+extern const char* start_anim_states[37]; // string array of names
 
 extern struct _class_36
 {
@@ -552,10 +553,32 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
 
-// func_80057D80
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "check_launch__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+uint32 cruise_bubble::check_launch()
+{
+    // this can surely be written better and still OK 
+    bool can_cruise_bubble = false;
+    if (!globals.player.ControlOff && !globals.player.cheat_mode &&
+        globals.player.g.PowerUp[1] && globals.player.s->pcType == ePlayer_SB &&
+        (globals.pad0->pressed & 0x100))
+    {
+        can_cruise_bubble = true;
+    }
+    if (!can_cruise_bubble)
+    {
+        return false;
+    }
+    
+    xAnimState* state = globals.player.ent.model->Anim->Single->State;
+    for (uint32 i = 0; i < 37; ++i)
+    {
+        if (stricmp(start_anim_states[i], state->Name) == 0)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // func_80057E6C
 #pragma GLOBAL_ASM(                                                                                \

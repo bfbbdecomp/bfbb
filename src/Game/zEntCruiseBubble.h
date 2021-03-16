@@ -104,6 +104,7 @@ namespace cruise_bubble
     void start_trail();
     void stop_trail();
     void set_state(thread_enum thread, state_enum state);
+    uint32 check_launch();
     void kill(bool reset_camera, bool abortive);
     void update_player(xScene& s, float32 dt);
     xVec3& get_player_loc();
