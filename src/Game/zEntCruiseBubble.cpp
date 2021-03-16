@@ -628,10 +628,10 @@ void cruise_bubble::kill(bool reset_camera, bool abortive)
     exit_triggers(*globals.sceneCur);
 }
 
-// func_80057FE0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "distort_screen__13cruise_bubbleFf")
+void cruise_bubble::distort_screen(float32)
+{
+    // emtpy
+}
 
 // func_80057FE4
 #pragma GLOBAL_ASM(                                                                                \

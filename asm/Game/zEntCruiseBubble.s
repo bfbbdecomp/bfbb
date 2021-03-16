@@ -497,13 +497,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10s
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
 /* 80057D7C 00054B7C  4E 80 00 20 */	blr 
 
-/* distort_screen__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Ff */
-/* changed from ... */
-/* distort_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff */
-/* ... so linker can find it */
-distort_screen__13cruise_bubbleFf:
-/* 80057FE0 00054DE0  4E 80 00 20 */	blr 
-
 abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
 /* 80057FE4 00054DE4  4E 80 00 20 */	blr 
 
