@@ -47,6 +47,16 @@ enum en_LAYER_TYPE
     PKR_LTYPE_ALL = 0xffffffff
 };
 
+enum en_PKR_LAYER_LOAD_DEST
+{
+    PKR_LDDEST_SKIP,
+    PKR_LDDEST_KEEPSTATIC,
+    PKR_LDDEST_KEEPMALLOC,
+    PKR_LDDEST_RWHANDOFF,
+    PKR_LDDEST_NOMORE,
+    PKR_LDDEST_FORCE = 0x7fffffff
+};
+
 struct st_PACKER_READ_DATA;
 struct st_PACKER_ATOC_NODE
 {
@@ -67,6 +77,20 @@ struct st_PACKER_ATOC_NODE
     st_HIPLOADDATA* ownpkg;
     st_PACKER_READ_DATA* ownpr;
     int8 basename[32];
+
+    int8* Name() const;
+};
+
+struct st_PACKER_LTOC_NODE
+{
+    en_LAYER_TYPE laytyp;
+    st_XORDEREDARRAY assref;
+    int32 flg_ldstat;
+    int32 danglecnt;
+    uint32 chksum;
+    int32 laysize;
+    int8* laymem;
+    int8* laytru;
 };
 
 struct st_PACKER_READ_DATA
@@ -118,18 +142,58 @@ struct st_PACKER_READ_FUNCS
 
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver);
 int32 PKRStartup();
+int32 PKRShutdown();
 int32 PKRLoadStep(int32);
-int32 PKR_LoadStep_Async();
-uint32 PKRAssetIDFromInst(void* asset_inst);
-
 st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, int8* pkgfile, uint32 opts, int32* cltver,
                                   st_PACKER_ASSETTYPE* typelist);
 void PKR_ReadDone(st_PACKER_READ_DATA* pr);
-
+int32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);
 int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
-void PKR_alloc_chkidx();
+int32 PKR_LoadStep_Async();
+int8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer);
+void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer);
+void PKR_drv_guardLayer(st_PACKER_LTOC_NODE*);
+int32 PKR_drv_guardVerify(st_PACKER_LTOC_NODE*);
+en_PKR_LAYER_LOAD_DEST PKR_layerLoadDest(en_LAYER_TYPE layer);
+int32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer);
+int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer);
+void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode);
+void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode);
+void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, int32 dumpable_layer);
+void* PKR_FindAsset(st_PACKER_READ_DATA* pr, uint32 aid);
+int32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, uint32 aid, const int8*, void*);
+uint32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, uint32 aid);
+int32 PKR_AssetCount(st_PACKER_READ_DATA* pr, uint32 type);
+void* PKR_AssetByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx, uint32* size);
+int32 PKR_IsAssetReady(st_PACKER_READ_DATA* pr, uint32 aid);
+uint32 PKR_getPackTimestamp(st_PACKER_READ_DATA* pr);
+void PKR_Disconnect(st_PACKER_READ_DATA* pr);
+uint32 PKRAssetIDFromInst(void* asset_inst);
+int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid);
+uint32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr);
 
+void* PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt);
+void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr);
+
+void PKR_oldlaynode(st_PACKER_LTOC_NODE* laytoc);
+
+int32 OrdTest_R_AssetID(const void* vkey, void* vitem);
+
+int32 LOD_r_HIPA(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+
+int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+
+int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+
+void PKR_bld_typecnt(st_PACKER_READ_DATA* pr);
+int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type);
+void PKR_alloc_chkidx();
+void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align);
 void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int8** memtrue);
 void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp);
+void PKR_push_memmark();
+void PKR_pop_memmark();
 
 #endif
