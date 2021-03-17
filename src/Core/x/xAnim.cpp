@@ -691,8 +691,6 @@ static void SingleEval(xAnimSingle* single, xVec3* tran, xQuat* quat)
 
 void xAnimPlaySetup(xAnimPlay* play, void* object, xAnimTable* table, xModelInstance* modelInst);
 
-void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition);
-
 void xAnimPlayChooseTransition(xAnimPlay* play)
 {
     uint32 i;
