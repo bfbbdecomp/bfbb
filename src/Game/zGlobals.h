@@ -102,6 +102,7 @@ struct zGlobalSettings
     float32 SlideAirDblSlowTime;
     float32 SlideVelDblBoost;
     uint8 SlideApplyPhysics;
+    // 0x9BD in globals
     uint8 PowerUp[2];
     uint8 InitialPowerUp[2];
 };

@@ -1,11 +1,15 @@
+#include <string.h>
 
 #include "zCamera.h"
 #include "zEntButton.h"
 #include "zEntCruiseBubble.h"
 #include "zEntDestructObj.h"
 #include "zEntPlayer.h"
+#include "zEntTrigger.h"
 #include "zGlobals.h"
+#include "zTalkBox.h"
 
+#include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
 #include "../Core/x/xMath3.h"
@@ -28,7 +32,7 @@ namespace cruise_bubble
 // tweak_group cheat_tweak;
 // tweak_group* current_tweak;
 extern xBase base;
-// int8* start_anim_states[37];
+extern const char* start_anim_states[37]; // string array of names
 
 extern struct _class_36
 {
@@ -94,11 +98,11 @@ extern struct _class_36
 // xMat4x3 start_cam_mat;
 // fixed_queue missle_record;
 extern xFXRibbon wake_ribbon[2];
-// xDecalEmitter explode_decal;
+extern xDecalEmitter explode_decal;
 extern const xFXRibbon::curve_node wake_ribbon_curve[2];
 extern const xFXRibbon::curve_node cheat_wake_ribbon_curve[2];
-// curve_node_1 explode_curve[3];
-// curve_node_1 cheat_explode_curve[3];
+extern const xDecalEmitter::curve_node explode_curve[3];
+extern const xDecalEmitter::curve_node cheat_explode_curve[3];
 extern sound_config sounds[4];
 // quadrant_set qzone;
 // _class_17 hud;
@@ -142,6 +146,7 @@ extern const char stringBase0[]; // "Idle01\0Idle02\0Idle03\0Idle04\0Idle05\0Idl
 
 extern float32 zEntCruiseBubble_f_0_0; // 0.0
 extern float32 zEntCruiseBubble_f_1_0; // 1.0
+extern float32 zEntCruiseBubble_f_0_5; // 0.5
 extern float32 zEntCruiseBubble_f_3_0; // 3.0
 extern float32 zEntCruiseBubble_f_0_25; // 0.25
 
@@ -481,15 +486,95 @@ uint8 cruise_bubble::was_damaged(xEnt* ent)
     return false;
 }
 
-// func_800579C8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "notify_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xSceneRC7xSphereRC5xVec3")
+void cruise_bubble::notify_triggers(xScene& s, const xSphere& o, const xVec3& dir)
+{
+    zEntTrigger** it = (zEntTrigger**)s.trigs;
+    zEntTrigger** end = it + s.num_trigs;
+    for ( ; it != end; ++it)
+    {
+        zEntTrigger& trig = **it;
 
-// func_80057B30
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "exit_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScene")
+        if (xBaseIsEnabled(&trig))
+        {
+            zEntTriggerAsset(trig);
+
+            bool want_enter = false;
+            bool want_exit = false;
+            xLinkAsset* link = trig.link;
+            xLinkAsset* end_link = link + trig.linkCount;
+            for ( ; link != end_link; ++link)
+            {
+                if (link->srcEvent == 0x201)
+                {
+                    want_enter = true;
+                }
+                else if (link->srcEvent == 0x202)
+                {
+                    want_exit = true;
+                }
+            }
+            want_enter = want_enter && (trig.entered & 0x2) == 0;
+            want_exit = want_exit && (trig.entered & 0x2) != 0;
+
+            if (want_enter || want_exit)
+            {
+                bool inside = zEntTriggerHitsSphere(trig, o, dir);
+                if (inside)
+                {
+                    trig.entered = trig.entered | 0x2;
+                }
+                else
+                {
+                    trig.entered = trig.entered & 0xfffffffd;
+                }
+
+                if (want_enter && inside) {
+                    zEntEvent(&trig, 0x201);
+                }
+                else if (want_exit && !inside) {
+                    zEntEvent(&trig, 0x202);
+                }
+            }
+        }
+    }
+}
+
+void cruise_bubble::exit_triggers(xScene& s)
+{
+	zEntTrigger** it;
+	zEntTrigger** end;
+	zEntTrigger* trig;
+	xLinkAsset* link;
+	xLinkAsset* end_link;
+
+    it = (zEntTrigger**)s.trigs;
+    end = it + s.num_trigs;
+    for ( ; it != end; ++it)
+    {
+        trig = *it;
+
+        if (xBaseIsEnabled(trig))
+        {
+            zEntTriggerAsset(*trig);
+
+            if ((trig->entered & 0x2) != 0)
+            {
+                trig->entered = trig->entered & 0xfffffffd;
+
+                link = trig->link;
+                end_link = link + trig->linkCount;
+                for ( ; link != end_link; ++link)
+                {
+                    if (link->srcEvent == 0x202)
+                    {
+                        zEntEvent(trig, 0x202);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
 
 void cruise_bubble::signal_event(uint32 toEvent)
 {
@@ -552,20 +637,82 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
 
-// func_80057D80
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "check_launch__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+uint32 cruise_bubble::check_launch()
+{
+    // this can surely be written better and still OK 
+    bool can_cruise_bubble = false;
+    if (!globals.player.ControlOff && !globals.player.cheat_mode &&
+        globals.player.g.PowerUp[1] && globals.player.s->pcType == ePlayer_SB &&
+        (globals.pad0->pressed & 0x100))
+    {
+        can_cruise_bubble = true;
+    }
+    if (!can_cruise_bubble)
+    {
+        return false;
+    }
+    
+    xAnimState* state = globals.player.ent.model->Anim->Single->State;
+    for (uint32 i = 0; i < 37; ++i)
+    {
+        if (stricmp(start_anim_states[i], state->Name) == 0)
+        {
+            return true;
+        }
+    }
 
-// func_80057E6C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "kill__13cruise_bubbleFbb")
+    return false;
+}
 
-// func_80057FE0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "distort_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff")
+void cruise_bubble::kill(bool reset_camera, bool abortive)
+{
+    if (abortive)
+    {
+        for (int32 i = THREAD_PLAYER; i < MAX_THREAD; ++i) {
+            if (shared.state[i] != NULL)
+            {
+                (shared.state[i])->abort();
+                shared.state[i] = NULL;
+            }
+        }
+    }
+    else {
+        for (int32 i = THREAD_PLAYER; i < MAX_THREAD; ++i) {
+            // either STATE_INVALID or BACKUP_STATE_PLAYER, both == 0x11111111
+            set_state((thread_enum) i, STATE_INVALID);
+        }
+    }
+
+    shared.flags = 0x3;
+    zCameraEnableTracking(CO_CRUISE_BUBBLE);
+    ztalkbox::permit(0xffffffff, 0);
+    if (reset_camera)
+    {
+        zCameraEnableInput();
+        xCameraSetFOV(&globals.camera, shared.fov_default);
+    }
+
+    hide_wand();
+    hide_missle();
+    hide_hud();
+    stop_trail();
+    distort_screen(zEntCruiseBubble_f_0_0);
+    xSndSelectListenerMode(SND_LISTENER_MODE_PLAYER);
+    
+    xAnimState* state = globals.player.ent.model->Anim->Single->State;
+    if (state == shared.astate.player.aim ||
+        state == shared.astate.player.fire ||
+        state == shared.astate.player.idle)
+    {
+        xAnimPlayStartTransition(globals.player.ent.model->Anim, shared.atran.player.end); // [xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition]
+    }
+    exit_triggers(*globals.sceneCur);
+}
+
+void cruise_bubble::distort_screen(float32)
+{
+    // emtpy
+}
 
 // func_80057FE4
 #pragma GLOBAL_ASM(                                                                                \
@@ -573,11 +720,12 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
     "abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
 
 // func_80057FE8
-#if 1
+#ifndef NONMATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
 #else
 void cruise_bubble::update_player(xScene& s, float32 dt)
 {
+    // register usage and stack scheduling differing
     xVec3 pre_update_loc = get_player_loc();
     xVec3 drive_motion;
 
@@ -619,7 +767,7 @@ void cruise_bubble::refresh_controls()
 
 void cruise_bubble::update_state(xScene* s, float32 dt)
 {
-    for (int32 i = 0; i < 3; ++i) {
+    for (int32 i = THREAD_PLAYER; i < MAX_THREAD; ++i) {
         state_type** state = &shared.state[i];
         state_enum newtype;
 
@@ -818,20 +966,59 @@ void cruise_bubble::init_wake_ribbons()
     cruise_bubble::reset_wake_ribbons();
 }
 
-// func_80058C70
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "reset_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::reset_explode_decal()
+{
+    explode_decal.set_default_config();
+
+    explode_decal.cfg.flags = 0x3;
+    explode_decal.cfg.blend_src = 5;
+    explode_decal.cfg.blend_dst = 2;
+
+    if ((shared.flags & 0x200) == 0)
+    {
+        explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+        explode_decal.set_curve(&explode_curve[0], 3);
+        // stringBase0 + 0x1e9 == "par_cruise_explode"
+        explode_decal.set_texture(stringBase0 + 0x1e9);
+    }
+    else
+    {
+        explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+        explode_decal.set_curve(&cheat_explode_curve[0], 3);
+        explode_decal.set_texture(stringBase0 + 0x1e9);
+    }
+    explode_decal.refresh_config();
+}
 
 // func_80058D38
+#ifndef NON_MATCHING
+// funcmatch
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "init_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::init_explode_decal()
+{
+    explode_decal.init(1, stringBase0 + 0x1fc);
+    explode_decal.set_default_config();
 
-// func_80058DD4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_shrapnel__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    // r0 should be use here
+    explode_decal.cfg.flags = 0x3;
+    // scheduling off here
+    explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+    explode_decal.cfg.blend_src = 5;
+    explode_decal.cfg.blend_dst = 2;
+
+    explode_decal.set_curve(explode_curve, 3);
+    explode_decal.set_texture(stringBase0 + 0x1e9);
+    explode_decal.refresh_config();
+}
+#endif
+
+void cruise_bubble::init_shrapnel()
+{
+    shared.droplet_shrapnel = (zShrapnelAsset*) xSTFindAsset(xStrHash(stringBase0 + 0x214), NULL);
+}
 
 // func_80058E14
 #pragma GLOBAL_ASM(                                                                                \
@@ -843,10 +1030,9 @@ void cruise_bubble::init_wake_ribbons()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_trail__13cruise_bubbleFf")
 
-// func_80059314
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+void cruise_bubble::refresh_missle_model()
+{
+}
 
 void cruise_bubble::update_missle(xScene& s, float32 dt)
 {
@@ -986,7 +1172,7 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
 // func_8005A340
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hide_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "hide_hud__13cruise_bubbleFv")
 
 // func_8005A360
 #pragma GLOBAL_ASM(                                                                                \
