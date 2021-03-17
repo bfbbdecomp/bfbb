@@ -5,6 +5,7 @@
 #include "zEntCruiseBubble.h"
 #include "zEntDestructObj.h"
 #include "zEntPlayer.h"
+#include "zEntTrigger.h"
 #include "zGlobals.h"
 #include "zTalkBox.h"
 
@@ -490,10 +491,38 @@ uint8 cruise_bubble::was_damaged(xEnt* ent)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "notify_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xSceneRC7xSphereRC5xVec3")
 
-// func_80057B30
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "exit_triggers__13cruise_bubbleFR6xScene")
+void cruise_bubble::exit_triggers(xScene& s)
+{
+	zEntTrigger** it;
+	zEntTrigger** end;
+	zEntTrigger* trig;
+	xLinkAsset* link;
+	xLinkAsset* end_link;
+
+    it = (zEntTrigger**)s.trigs;
+    end = it + s.num_trigs;
+    for ( ; it != end; ++it) {
+        trig = *it;
+
+        if (xBaseIsEnabled(trig)) {
+            zEntTriggerAsset(*trig);
+
+            if ((trig->entered & 0x2) != 0)
+            {
+                trig->entered = trig->entered & 0xfffffffd;
+
+                link = trig->link;
+                end_link = link + trig->linkCount;
+                for ( ; link != end_link; ++link) {
+                    if (link->srcEvent == 0x202) {
+                        zEntEvent(trig, 0x202);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
 
 void cruise_bubble::signal_event(uint32 toEvent)
 {

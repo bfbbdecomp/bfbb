@@ -407,66 +407,6 @@ lbl_80057B14:
 /* 80057B28 00054928  38 21 00 30 */	addi r1, r1, 0x30
 /* 80057B2C 0005492C  4E 80 00 20 */	blr 
 
-/* exit_triggers__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR6xScene */
-/* changed from ... */
-/* exit_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScene */
-/* ... so linker can find it */
-exit_triggers__13cruise_bubbleFR6xScene:
-/* 80057B30 00054930  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80057B34 00054934  7C 08 02 A6 */	mflr r0
-/* 80057B38 00054938  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80057B3C 0005493C  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80057B40 00054940  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 80057B44 00054944  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 80057B48 00054948  A0 03 00 08 */	lhz r0, 8(r3)
-/* 80057B4C 0005494C  83 E3 00 2C */	lwz r31, 0x2c(r3)
-/* 80057B50 00054950  54 00 10 3A */	slwi r0, r0, 2
-/* 80057B54 00054954  7F DF 02 14 */	add r30, r31, r0
-/* 80057B58 00054958  48 00 00 74 */	b lbl_80057BCC
-lbl_80057B5C:
-/* 80057B5C 0005495C  83 BF 00 00 */	lwz r29, 0(r31)
-/* 80057B60 00054960  7F A3 EB 78 */	mr r3, r29
-/* 80057B64 00054964  4B FB 19 D5 */	bl xBaseIsEnabled__FPC5xBase
-/* 80057B68 00054968  54 60 06 3F */	clrlwi. r0, r3, 0x18
-/* 80057B6C 0005496C  41 82 00 5C */	beq lbl_80057BC8
-/* 80057B70 00054970  7F A3 EB 78 */	mr r3, r29
-/* 80057B74 00054974  48 00 84 BD */	bl zEntTriggerAsset__FRC11zEntTrigger
-/* 80057B78 00054978  80 7D 01 2C */	lwz r3, 0x12c(r29)
-/* 80057B7C 0005497C  54 60 07 BD */	rlwinm. r0, r3, 0, 0x1e, 0x1e
-/* 80057B80 00054980  41 82 00 48 */	beq lbl_80057BC8
-/* 80057B84 00054984  54 60 07 FA */	rlwinm r0, r3, 0, 0x1f, 0x1d
-/* 80057B88 00054988  90 1D 01 2C */	stw r0, 0x12c(r29)
-/* 80057B8C 0005498C  88 1D 00 05 */	lbz r0, 5(r29)
-/* 80057B90 00054990  80 7D 00 08 */	lwz r3, 8(r29)
-/* 80057B94 00054994  54 00 28 34 */	slwi r0, r0, 5
-/* 80057B98 00054998  7C 83 02 14 */	add r4, r3, r0
-/* 80057B9C 0005499C  48 00 00 24 */	b lbl_80057BC0
-lbl_80057BA0:
-/* 80057BA0 000549A0  A0 03 00 00 */	lhz r0, 0(r3)
-/* 80057BA4 000549A4  28 00 02 02 */	cmplwi r0, 0x202
-/* 80057BA8 000549A8  40 82 00 14 */	bne lbl_80057BBC
-/* 80057BAC 000549AC  7F A3 EB 78 */	mr r3, r29
-/* 80057BB0 000549B0  38 80 02 02 */	li r4, 0x202
-/* 80057BB4 000549B4  4B FC 7A 3D */	bl zEntEvent__FP5xBaseUi
-/* 80057BB8 000549B8  48 00 00 10 */	b lbl_80057BC8
-lbl_80057BBC:
-/* 80057BBC 000549BC  38 63 00 20 */	addi r3, r3, 0x20
-lbl_80057BC0:
-/* 80057BC0 000549C0  7C 03 20 40 */	cmplw r3, r4
-/* 80057BC4 000549C4  40 82 FF DC */	bne lbl_80057BA0
-lbl_80057BC8:
-/* 80057BC8 000549C8  3B FF 00 04 */	addi r31, r31, 4
-lbl_80057BCC:
-/* 80057BCC 000549CC  7C 1F F0 40 */	cmplw r31, r30
-/* 80057BD0 000549D0  40 82 FF 8C */	bne lbl_80057B5C
-/* 80057BD4 000549D4  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80057BD8 000549D8  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80057BDC 000549DC  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80057BE0 000549E0  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80057BE4 000549E4  7C 08 03 A6 */	mtlr r0
-/* 80057BE8 000549E8  38 21 00 20 */	addi r1, r1, 0x20
-/* 80057BEC 000549EC  4E 80 00 20 */	blr 
-
 /* start_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 80057C78 00054A78  94 21 FF F0 */	stwu r1, -0x10(r1)
