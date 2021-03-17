@@ -99,6 +99,7 @@ namespace cruise_bubble
             float32 radius, uint8 explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
+    void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
     void exit_triggers(xScene& s);
     void signal_event(uint32 toEvent);
     void refresh_trail(xMat4x3& mat, xQuat& quat);

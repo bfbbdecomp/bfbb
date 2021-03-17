@@ -486,10 +486,58 @@ uint8 cruise_bubble::was_damaged(xEnt* ent)
     return false;
 }
 
-// func_800579C8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "notify_triggers__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xSceneRC7xSphereRC5xVec3")
+void cruise_bubble::notify_triggers(xScene& s, const xSphere& o, const xVec3& dir)
+{
+    zEntTrigger** it = (zEntTrigger**)s.trigs;
+    zEntTrigger** end = it + s.num_trigs;
+    for ( ; it != end; ++it)
+    {
+        zEntTrigger& trig = **it;
+
+        if (xBaseIsEnabled(&trig))
+        {
+            zEntTriggerAsset(trig);
+
+            bool want_enter = false;
+            bool want_exit = false;
+            xLinkAsset* link = trig.link;
+            xLinkAsset* end_link = link + trig.linkCount;
+            for ( ; link != end_link; ++link)
+            {
+                if (link->srcEvent == 0x201)
+                {
+                    want_enter = true;
+                }
+                else if (link->srcEvent == 0x202)
+                {
+                    want_exit = true;
+                }
+            }
+            want_enter = want_enter && (trig.entered & 0x2) == 0;
+            want_exit = want_exit && (trig.entered & 0x2) != 0;
+
+            if (want_enter || want_exit)
+            {
+                bool inside = zEntTriggerHitsSphere(trig, o, dir);
+                if (inside)
+                {
+                    trig.entered = trig.entered | 0x2;
+                }
+                else
+                {
+                    trig.entered = trig.entered & 0xfffffffd;
+                }
+
+                if (want_enter && inside) {
+                    zEntEvent(&trig, 0x201);
+                }
+                else if (want_exit && !inside) {
+                    zEntEvent(&trig, 0x202);
+                }
+            }
+        }
+    }
+}
 
 void cruise_bubble::exit_triggers(xScene& s)
 {
