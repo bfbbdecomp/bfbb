@@ -720,11 +720,12 @@ void cruise_bubble::distort_screen(float32)
     "abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
 
 // func_80057FE8
-#if 1
+#ifndef NONMATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
 #else
 void cruise_bubble::update_player(xScene& s, float32 dt)
 {
+    // register usage and stack scheduling differing
     xVec3 pre_update_loc = get_player_loc();
     xVec3 drive_motion;
 
