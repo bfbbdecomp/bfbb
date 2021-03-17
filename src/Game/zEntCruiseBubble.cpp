@@ -549,10 +549,12 @@ void cruise_bubble::exit_triggers(xScene& s)
 
     it = (zEntTrigger**)s.trigs;
     end = it + s.num_trigs;
-    for ( ; it != end; ++it) {
+    for ( ; it != end; ++it)
+    {
         trig = *it;
 
-        if (xBaseIsEnabled(trig)) {
+        if (xBaseIsEnabled(trig))
+        {
             zEntTriggerAsset(*trig);
 
             if ((trig->entered & 0x2) != 0)
@@ -561,8 +563,10 @@ void cruise_bubble::exit_triggers(xScene& s)
 
                 link = trig->link;
                 end_link = link + trig->linkCount;
-                for ( ; link != end_link; ++link) {
-                    if (link->srcEvent == 0x202) {
+                for ( ; link != end_link; ++link)
+                {
+                    if (link->srcEvent == 0x202)
+                    {
                         zEntEvent(trig, 0x202);
                         break;
                     }
