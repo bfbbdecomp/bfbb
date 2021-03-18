@@ -1155,10 +1155,22 @@ bool cruise_bubble::uv_animated_model::init(RpAtomic* m)
     return true;
 }
 
-// func_800597E0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "clone_uv__Q213cruise_bubble17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
+bool cruise_bubble::uv_animated_model::clone_uv(RwTexCoords*& coords, int32& size, RpAtomic* m) const
+{
+    RwTexCoords* c;
+    if (!this->get_uv(c, size, m))
+    {
+        return false;
+    }
+    
+    coords = (RwTexCoords*) xMemAlloc(gActiveHeap, size * 8, 0);
+    if (coords == NULL) {
+        return false;
+    }
+
+    memcpy(coords, c, size * 8); // [memcpy]
+    return true;
+}
 
 bool cruise_bubble::uv_animated_model::get_uv(RwTexCoords*& coords, int32& size, RpAtomic* m) const
 {

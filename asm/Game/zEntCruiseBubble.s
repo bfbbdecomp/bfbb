@@ -1602,50 +1602,6 @@ init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_
 /* 80059758 00056558  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005975C 0005655C  4E 80 00 20 */	blr 
 
-/* clone_uv__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic */
-/* changed from ... */
-/* clone_uv__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic: */
-/* ... so linker can find it */
-clone_uv__Q213cruise_bubble17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic:
-/* 800597E0 000565E0  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800597E4 000565E4  7C 08 02 A6 */	mflr r0
-/* 800597E8 000565E8  90 01 00 24 */	stw r0, 0x24(r1)
-/* 800597EC 000565EC  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800597F0 000565F0  7C BF 2B 78 */	mr r31, r5
-/* 800597F4 000565F4  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 800597F8 000565F8  7C 9E 23 78 */	mr r30, r4
-/* 800597FC 000565FC  38 81 00 08 */	addi r4, r1, 8
-/* 80059800 00056600  48 00 00 6D */	bl get_uv__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic
-/* 80059804 00056604  54 60 06 3F */	clrlwi. r0, r3, 0x18
-/* 80059808 00056608  40 82 00 0C */	bne lbl_80059814
-/* 8005980C 0005660C  38 60 00 00 */	li r3, 0
-/* 80059810 00056610  48 00 00 44 */	b lbl_80059854
-lbl_80059814:
-/* 80059814 00056614  80 1F 00 00 */	lwz r0, 0(r31)
-/* 80059818 00056618  38 A0 00 00 */	li r5, 0
-/* 8005981C 0005661C  80 6D 89 E0 */	lwz r3, gActiveHeap-_SDA_BASE_(r13)
-/* 80059820 00056620  54 04 18 38 */	slwi r4, r0, 3
-/* 80059824 00056624  4B FD A1 1D */	bl xMemAlloc__FUiUii
-/* 80059828 00056628  90 7E 00 00 */	stw r3, 0(r30)
-/* 8005982C 0005662C  80 7E 00 00 */	lwz r3, 0(r30)
-/* 80059830 00056630  28 03 00 00 */	cmplwi r3, 0
-/* 80059834 00056634  40 82 00 0C */	bne lbl_80059840
-/* 80059838 00056638  38 60 00 00 */	li r3, 0
-/* 8005983C 0005663C  48 00 00 18 */	b lbl_80059854
-lbl_80059840:
-/* 80059840 00056640  80 1F 00 00 */	lwz r0, 0(r31)
-/* 80059844 00056644  80 81 00 08 */	lwz r4, 8(r1)
-/* 80059848 00056648  54 05 18 38 */	slwi r5, r0, 3
-/* 8005984C 0005664C  4B FA 9C F5 */	bl memcpy
-/* 80059850 00056650  38 60 00 01 */	li r3, 1
-lbl_80059854:
-/* 80059854 00056654  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80059858 00056658  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8005985C 0005665C  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80059860 00056660  7C 08 03 A6 */	mtlr r0
-/* 80059864 00056664  38 21 00 20 */	addi r1, r1, 0x20
-/* 80059868 00056668  4E 80 00 20 */	blr 
-
 /* show_gizmo__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@9hud_gizmoRC13basic_rect<f>P14xModelInstance */
 show_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoRC13basic_rect_esc__0_f_esc__1_P14xModelInstance:
 /* 800598C4 000566C4  94 21 FF F0 */	stwu r1, -0x10(r1)
