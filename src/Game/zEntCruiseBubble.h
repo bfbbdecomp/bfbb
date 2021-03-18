@@ -79,6 +79,231 @@ namespace cruise_bubble
         uint32 handle;
     };
 
+    struct hud_gizmo
+    {
+        int32 flags;
+        basic_rect<float32> bound;
+        float32 alpha;
+        float32 alpha_vel;
+        float32 glow;
+        float32 glow_vel;
+        float32 opacity;
+        xVec3* target;
+        xModelInstance* model;
+    };
+
+    struct uv_animated_model
+    {
+        RpAtomic* model;
+        RwTexCoords* uv;
+        int32 uvsize;
+        xVec2 offset;
+        xVec2 offset_vel;
+
+        void init(RpAtomic*);
+    };
+
+    struct tweak_group
+    {
+        float32 aim_delay;
+        // Size: 0x10
+        struct _class_2
+        {
+            float32 halt_time;
+            struct _class_4
+            {
+                float32 turn_speed;
+                float32 anim_delta;
+            } aim;
+            struct _class_11
+            {
+                float32 delay_wand;
+            } fire;
+        } player;
+        
+        // Size: 0x5c
+        struct _class_22
+        {
+            float32 life;
+            float32 hit_dist;
+            float32 crash_angle;
+            float32 collide_twist;
+            int32 hit_tests;
+            struct _class_27
+            {
+                float32 delay_show;
+                float32 delay_fly;
+                xVec3 offset;
+            } appear;
+            struct _class_32
+            {
+                float32 accel;
+                float32 max_vel;
+                float32 engine_pitch_max;
+                float32 engine_pitch_sensitivity;
+                float32 flash_interval;
+                struct _class_38
+                {
+                    float32 xdelta;
+                    float32 ydelta;
+                    float32 xdecay;
+                    float32 ydecay;
+                    float32 ybound;
+                    float32 roll_frac;
+                } turn;
+            } fly;
+            struct _class_49
+            {
+                float32 hit_radius;
+                float32 hit_duration;
+            } explode;
+        } missle;
+
+        // Size: 0x5c
+        struct _class_10
+        {
+            struct _class_15
+            {
+                float32 dist;
+                float32 height;
+                float32 pitch;
+                float32 accel;
+                float32 max_vel;
+                float32 stick_decel;
+                float32 stick_accel;
+                float32 stick_max_vel;
+                float32 turn_speed;
+            } aim;
+            struct _class_24
+            {
+                float32 delay;
+                float32 blend_time;
+                float32 fade_dist;
+                float32 hide_dist;
+                float32 fov;
+            } seize;
+            struct _class_30
+            {
+                float32 duration;
+                float32 min_duration;
+                float32 min_dist;
+                float32 cut_dist;
+                float32 drift_dist;
+                float32 drift_softness;
+                float32 jerk_offset;
+                float32 jerk_deflect;
+            } survey;
+            struct _class_39
+            {
+                float32 control_delay;
+            } restore;
+        } camera;
+
+        // Size 0x18
+        struct _class_48
+        {
+            float32 env_alpha;
+            float32 env_coeff;
+            uint32 env_texture;
+            float32 fresnel_alpha;
+            float32 fresnel_coeff;
+            uint32 fresnel_texture;
+        } material;
+
+        // Size 0x14
+        struct _class_9
+        {
+            float32 dist_min;
+            float32 dist_max;
+            float32 ang_show;
+            float32 ang_hide;
+            float32 delay_retarget;
+        } reticle;
+
+        // Size 0x10
+        struct _class_20
+        {
+            float32 sample_rate;
+            float32 bubble_rate;
+            float32 bubble_emit_radius;
+            float32 wake_emit_radius;
+        } trail;
+        
+        // Size 0x10
+        struct _class_29
+        {
+            uint32 emit;
+            float32 radius;
+            float32 vel;
+            float32 rand_vel;
+        } blast;
+
+        // Size 0x24
+        struct _class_35
+        {
+            float32 dist_min;
+            float32 dist_max;
+            uint32 emit_min;
+            uint32 emit_max;
+            float32 vel_min;
+            float32 vel_max;
+            float32 vel_perturb;
+            float32 vel_angle;
+            float32 rot_vel_max;
+        } droplet;
+        
+        // Size 0x44
+        struct _class_43
+        {
+            float32 glow_size;
+            float32 time_fade;
+            float32 time_glow;
+            struct _class_46
+            {
+                float32 size;
+                float32 du;
+                float32 dv;
+            } swirl;
+            struct _class_5
+            {
+                float32 size;
+                float32 du;
+                float32 dv;
+            } wind;
+            struct _class_12
+            {
+                float32 size;
+            } reticle;
+            struct _class_18
+            {
+                float32 size;
+            } target;
+            struct _class_23
+            {
+                int32 font;
+                float32 font_width;
+                float32 font_height;
+                float32 x;
+                float32 y;
+                float32 glow_size;
+            } timer;
+        } hud;
+        
+        // Size 0xc
+        struct _class_34
+        {
+            float32 freq;
+            float32 decay;
+            float32 min_freq;
+        } dialog;
+
+        void* context;
+        tweak_callback cb_missle_model;
+
+        void register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize);
+    };
+
+
     bool active();
     void render_screen();
     void init_sound();
@@ -127,6 +352,7 @@ namespace cruise_bubble
     void update_missle(xScene& s, float32 dt);
     void render_missle();
     xModelInstance* load_model(uint32);
+    void init_hud();
     void hide_hud();
 
 } // namespace cruise_bubble

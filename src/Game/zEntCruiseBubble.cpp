@@ -30,7 +30,7 @@ namespace cruise_bubble
 // int8 buffer[16];
 // tweak_group normal_tweak;
 // tweak_group cheat_tweak;
-// tweak_group* current_tweak;
+extern tweak_group* current_tweak;
 extern xBase base;
 extern const char* start_anim_states[37]; // string array of names
 
@@ -105,7 +105,29 @@ extern const xDecalEmitter::curve_node explode_curve[3];
 extern const xDecalEmitter::curve_node cheat_explode_curve[3];
 extern sound_config sounds[4];
 // quadrant_set qzone;
-// _class_17 hud;
+
+extern struct _class_17
+{
+    bool hiding;
+    float32 alpha;
+    float32 alpha_vel;
+    float32 glow;
+    float32 glow_vel;
+
+    // Offset 0x14
+    struct _class_21
+    {
+        xModelInstance* reticle;
+        xModelInstance* target;
+        xModelInstance* swirl;
+        xModelInstance* wind;
+    } model;
+    hud_gizmo gizmo[33];
+    // Offset 0x654
+    uint32 gizmos_used;
+    uv_animated_model uv_swirl;
+    uv_animated_model uv_wind;
+} hud;
 // void (*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
 // uint32 (*check_anim_aim)(xAnimTransition*, xAnimSingle*, void*);
 // zGlobals globals;
@@ -541,11 +563,11 @@ void cruise_bubble::notify_triggers(xScene& s, const xSphere& o, const xVec3& di
 
 void cruise_bubble::exit_triggers(xScene& s)
 {
-	zEntTrigger** it;
-	zEntTrigger** end;
-	zEntTrigger* trig;
-	xLinkAsset* link;
-	xLinkAsset* end_link;
+    zEntTrigger** it;
+    zEntTrigger** end;
+    zEntTrigger* trig;
+    xLinkAsset* link;
+    xLinkAsset* end_link;
 
     it = (zEntTrigger**)s.trigs;
     end = it + s.num_trigs;
@@ -1090,14 +1112,37 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
     "render_glow__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff")
 
 // func_80059698
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::init_hud()
+{
+    // should use stbu here and save an addi instruction
+    // which should also fix the rest of the function by correcting offsets
+    hud.hiding = false;
+    hud.alpha = zEntCruiseBubble_f_0_0;
+    hud.alpha_vel = zEntCruiseBubble_f_0_0;
+    hud.glow = zEntCruiseBubble_f_0_0;
+    hud.gizmos_used = 0;
+
+    // stringBase0 + 0x23e == "ui_3dicon_reticle"
+    hud.model.reticle = load_model(xStrHash(stringBase0 + 0x23e));
+    // stringBase0 + 0x23e == "ui_3dicon_target_lock"
+    hud.model.target = load_model(xStrHash(stringBase0 + 0x250));
+    // stringBase0 + 0x23e == "ui_3dicon_missile_frame02"
+    hud.model.wind = load_model(xStrHash(stringBase0 + 0x266));
+
+    hud.uv_wind.init(hud.model.wind->Data);
+    hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
+}
+#endif
 
 // func_80059760
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFP8RpAtomic")
+    "init__Q213cruise_bubble17uv_animated_modelFP8RpAtomic")
 
 // func_800597E0
 #pragma GLOBAL_ASM(                                                                                \
