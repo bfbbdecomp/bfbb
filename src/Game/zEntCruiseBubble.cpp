@@ -1139,15 +1139,26 @@ void cruise_bubble::init_hud()
 }
 #endif
 
-// func_80059760
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init__Q213cruise_bubble17uv_animated_modelFP8RpAtomic")
+bool cruise_bubble::uv_animated_model::init(RpAtomic* m)
+{
+    this->model = m;
+    if (m == NULL) {
+        return false;
+    }
+
+    if (!this->clone_uv(this->uv, this->uvsize, m)) {
+        return false;
+    }
+    
+    this->offset.assign(zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    this->offset_vel.assign(zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    return true;
+}
 
 // func_800597E0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "clone_uv__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
+    "clone_uv__Q213cruise_bubble17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
 
 // func_8005986C
 #pragma GLOBAL_ASM(                                                                                \

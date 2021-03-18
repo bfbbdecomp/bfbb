@@ -100,7 +100,8 @@ namespace cruise_bubble
         xVec2 offset;
         xVec2 offset_vel;
 
-        void init(RpAtomic*);
+        bool init(RpAtomic*);
+        bool clone_uv(RwTexCoords*&, int32&, RpAtomic*) const;
     };
 
     struct tweak_group
