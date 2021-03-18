@@ -1218,9 +1218,18 @@ void cruise_bubble::update_gizmo(cruise_bubble::hud_gizmo& gizmo, float32 dt)
 }
 
 // func_800599C8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::flash_hud()
+{
+    // nice meme
+    hud.glow = zEntCruiseBubble_f_1_0;
+    hud.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
+}
+#endif
 
 // func_800599F0
 #pragma GLOBAL_ASM(                                                                                \
