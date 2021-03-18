@@ -1160,10 +1160,26 @@ bool cruise_bubble::uv_animated_model::init(RpAtomic* m)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "clone_uv__Q213cruise_bubble17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
 
-// func_8005986C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_uv__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
+bool cruise_bubble::uv_animated_model::get_uv(RwTexCoords*& coords, int32& size, RpAtomic* m) const
+{
+    coords = NULL;
+    size = 0;
+
+    RpGeometry* geo = m->geometry;
+    if (geo == 0)
+    {
+        return false;
+    }
+    
+    size = geo->numVertices;
+    if (!(size > 0))
+    {
+        return false;
+    }
+
+    coords = *geo->texCoords;
+    return coords != NULL;
+}
 
 // func_800598C4
 #pragma GLOBAL_ASM(                                                                                \
