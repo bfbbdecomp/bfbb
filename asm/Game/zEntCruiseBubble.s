@@ -1602,45 +1602,6 @@ init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_
 /* 80059758 00056558  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005975C 0005655C  4E 80 00 20 */	blr 
 
-/* show_gizmo__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@9hud_gizmoRC13basic_rect<f>P14xModelInstance */
-show_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoRC13basic_rect_esc__0_f_esc__1_P14xModelInstance:
-/* 800598C4 000566C4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800598C8 000566C8  7C 08 02 A6 */	mflr r0
-/* 800598CC 000566CC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800598D0 000566D0  38 00 00 01 */	li r0, 1
-/* 800598D4 000566D4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800598D8 000566D8  7C BF 2B 78 */	mr r31, r5
-/* 800598DC 000566DC  93 C1 00 08 */	stw r30, 8(r1)
-/* 800598E0 000566E0  7C 7E 1B 78 */	mr r30, r3
-/* 800598E4 000566E4  90 03 00 00 */	stw r0, 0(r3)
-/* 800598E8 000566E8  38 7E 00 04 */	addi r3, r30, 4
-/* 800598EC 000566EC  4B FB E7 55 */	bl __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_
-/* 800598F0 000566F0  C0 02 89 B8 */	lfs f0, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 800598F4 000566F4  38 00 00 00 */	li r0, 0
-/* 800598F8 000566F8  D0 1E 00 14 */	stfs f0, 0x14(r30)
-/* 800598FC 000566FC  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 80059900 00056700  C0 22 89 C0 */	lfs f1, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 80059904 00056704  C0 03 01 40 */	lfs f0, 0x140(r3)
-/* 80059908 00056708  EC 01 00 24 */	fdivs f0, f1, f0
-/* 8005990C 0005670C  D0 1E 00 18 */	stfs f0, 0x18(r30)
-/* 80059910 00056710  C0 02 89 C0 */	lfs f0, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 80059914 00056714  D0 1E 00 1C */	stfs f0, 0x1c(r30)
-/* 80059918 00056718  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005991C 0005671C  C0 22 89 FC */	lfs f1, lbl_803CD37C-_SDA2_BASE_(r2)
-/* 80059920 00056720  C0 03 01 44 */	lfs f0, 0x144(r3)
-/* 80059924 00056724  EC 01 00 24 */	fdivs f0, f1, f0
-/* 80059928 00056728  D0 1E 00 20 */	stfs f0, 0x20(r30)
-/* 8005992C 0005672C  C0 02 89 C0 */	lfs f0, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 80059930 00056730  D0 1E 00 24 */	stfs f0, 0x24(r30)
-/* 80059934 00056734  90 1E 00 28 */	stw r0, 0x28(r30)
-/* 80059938 00056738  93 FE 00 2C */	stw r31, 0x2c(r30)
-/* 8005993C 0005673C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80059940 00056740  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80059944 00056744  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80059948 00056748  7C 08 03 A6 */	mtlr r0
-/* 8005994C 0005674C  38 21 00 10 */	addi r1, r1, 0x10
-/* 80059950 00056750  4E 80 00 20 */	blr 
-
 /* update_gizmo__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@9hud_gizmof */
 update_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmof:
 /* 80059954 00056754  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1680,7 +1641,7 @@ flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2
 /* 800599D0 000567D0  38 83 CC 7C */	addi r4, r3, hud__13cruise_bubble@l
 /* 800599D4 000567D4  D0 04 00 0C */	stfs f0, 0xc(r4)
 /* 800599D8 000567D8  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 800599DC 000567DC  C0 22 89 FC */	lfs f1, lbl_803CD37C-_SDA2_BASE_(r2)
+/* 800599DC 000567DC  C0 22 89 FC */	lfs f1, zEntCruiseBubble_f_n1_0-_SDA2_BASE_(r2)
 /* 800599E0 000567E0  C0 03 01 44 */	lfs f0, 0x144(r3)
 /* 800599E4 000567E4  EC 01 00 24 */	fdivs f0, f1, f0
 /* 800599E8 000567E8  D0 04 00 10 */	stfs f0, 0x10(r4)
@@ -1950,7 +1911,7 @@ lbl_80059DCC:
 /* 80059DCC 00056BCC  80 04 00 24 */	lwz r0, 0x24(r4)
 /* 80059DD0 00056BD0  54 00 07 FF */	clrlwi. r0, r0, 0x1f
 /* 80059DD4 00056BD4  40 82 00 14 */	bne lbl_80059DE8
-/* 80059DD8 00056BD8  C0 22 89 FC */	lfs f1, lbl_803CD37C-_SDA2_BASE_(r2)
+/* 80059DD8 00056BD8  C0 22 89 FC */	lfs f1, zEntCruiseBubble_f_n1_0-_SDA2_BASE_(r2)
 /* 80059DDC 00056BDC  C0 03 01 40 */	lfs f0, 0x140(r3)
 /* 80059DE0 00056BE0  EC 01 00 24 */	fdivs f0, f1, f0
 /* 80059DE4 00056BE4  D0 04 00 3C */	stfs f0, 0x3c(r4)
@@ -3099,7 +3060,7 @@ lbl_8005ADF8:
 /* 8005AE18 00057C18  38 7C 00 64 */	addi r3, r28, 0x64
 /* 8005AE1C 00057C1C  38 C6 04 7A */	addi r6, r6, 0x47a
 /* 8005AE20 00057C20  C0 22 89 C0 */	lfs f1, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 8005AE24 00057C24  C0 42 89 FC */	lfs f2, lbl_803CD37C-_SDA2_BASE_(r2)
+/* 8005AE24 00057C24  C0 42 89 FC */	lfs f2, zEntCruiseBubble_f_n1_0-_SDA2_BASE_(r2)
 /* 8005AE28 00057C28  FC 60 08 90 */	fmr f3, f1
 /* 8005AE2C 00057C2C  48 00 54 85 */	bl load_param_esc__0_f_esc__4_f_esc__1___10auto_tweakFRffffP16xModelAssetParamUiPCc
 lbl_8005AE30:
@@ -5047,7 +5008,7 @@ update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005C9A4 000597A4  80 8D 81 80 */	lwz r4, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
 /* 8005C9A8 000597A8  C0 23 00 0C */	lfs f1, 0xc(r3)
 /* 8005C9AC 000597AC  C0 04 00 0C */	lfs f0, 0xc(r4)
-/* 8005C9B0 000597B0  C0 42 89 FC */	lfs f2, lbl_803CD37C-_SDA2_BASE_(r2)
+/* 8005C9B0 000597B0  C0 42 89 FC */	lfs f2, zEntCruiseBubble_f_n1_0-_SDA2_BASE_(r2)
 /* 8005C9B4 000597B4  EC 21 00 32 */	fmuls f1, f1, f0
 /* 8005C9B8 000597B8  C0 62 89 C0 */	lfs f3, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
 /* 8005C9BC 000597BC  4B FB 1F 7D */	bl range_limit_esc__0_f_esc__1___Ffff
@@ -6275,7 +6236,7 @@ lbl_8005DA98:
 /* 8005DB2C 0005A92C  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8005DB30 0005A930  40 80 00 14 */	bge lbl_8005DB44
 /* 8005DB34 0005A934  C0 3E 00 18 */	lfs f1, 0x18(r30)
-/* 8005DB38 0005A938  C0 02 89 FC */	lfs f0, lbl_803CD37C-_SDA2_BASE_(r2)
+/* 8005DB38 0005A938  C0 02 89 FC */	lfs f0, zEntCruiseBubble_f_n1_0-_SDA2_BASE_(r2)
 /* 8005DB3C 0005A93C  EC 01 00 32 */	fmuls f0, f1, f0
 /* 8005DB40 0005A940  D0 1E 00 18 */	stfs f0, 0x18(r30)
 lbl_8005DB44:
@@ -9817,7 +9778,8 @@ lbl_803CD374:
 	.incbin "baserom.dol", 0x2B6C14, 0x4
 lbl_803CD378:
 	.incbin "baserom.dol", 0x2B6C18, 0x4
-lbl_803CD37C:
+.global zEntCruiseBubble_f_n1_0
+zEntCruiseBubble_f_n1_0:
 	.incbin "baserom.dol", 0x2B6C1C, 0x4
 lbl_803CD380:
 	.incbin "baserom.dol", 0x2B6C20, 0x4

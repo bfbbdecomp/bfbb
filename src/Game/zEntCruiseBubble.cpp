@@ -171,6 +171,7 @@ extern float32 zEntCruiseBubble_f_1_0; // 1.0
 extern float32 zEntCruiseBubble_f_0_5; // 0.5
 extern float32 zEntCruiseBubble_f_3_0; // 3.0
 extern float32 zEntCruiseBubble_f_0_25; // 0.25
+extern float32 zEntCruiseBubble_f_n1_0; // -1.0
 
 void cruise_bubble::init_sound()
 {
@@ -1193,10 +1194,18 @@ bool cruise_bubble::uv_animated_model::get_uv(RwTexCoords*& coords, int32& size,
     return coords != NULL;
 }
 
-// func_800598C4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoRC13basic_rect_esc__0_f_esc__1_P14xModelInstance")
+void cruise_bubble::show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m)
+{
+    gizmo.flags = 0x1;
+    gizmo.bound = rect;
+    gizmo.alpha = zEntCruiseBubble_f_0_0;
+    gizmo.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+    gizmo.glow = zEntCruiseBubble_f_1_0;
+    gizmo.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
+    gizmo.opacity = zEntCruiseBubble_f_1_0;
+    gizmo.target = NULL;
+    gizmo.model = m;
+}
 
 // func_80059954
 #pragma GLOBAL_ASM(                                                                                \
