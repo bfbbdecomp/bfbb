@@ -356,6 +356,7 @@ namespace cruise_bubble
     xModelInstance* load_model(uint32);
     void init_hud();
     void show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m);
+    void update_gizmo(hud_gizmo& gizmo, float32 dt);
     void hide_hud();
 
 } // namespace cruise_bubble

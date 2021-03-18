@@ -1207,10 +1207,15 @@ void cruise_bubble::show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect
     gizmo.model = m;
 }
 
-// func_80059954
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmof")
+void cruise_bubble::update_gizmo(cruise_bubble::hud_gizmo& gizmo, float32 dt)
+{
+    gizmo.alpha = range_limit<float32>(gizmo.alpha_vel * dt + gizmo.alpha,
+            zEntCruiseBubble_f_0_0,
+            zEntCruiseBubble_f_1_0);
+    gizmo.glow = range_limit<float32>(gizmo.glow_vel * dt + gizmo.glow,
+            zEntCruiseBubble_f_0_0,
+            zEntCruiseBubble_f_1_0);
+}
 
 // func_800599C8
 #pragma GLOBAL_ASM(                                                                                \

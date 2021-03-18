@@ -1602,38 +1602,6 @@ init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_
 /* 80059758 00056558  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005975C 0005655C  4E 80 00 20 */	blr 
 
-/* update_gizmo__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@9hud_gizmof */
-update_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmof:
-/* 80059954 00056754  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80059958 00056758  7C 08 02 A6 */	mflr r0
-/* 8005995C 0005675C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80059960 00056760  DB E1 00 10 */	stfd f31, 0x10(r1)
-/* 80059964 00056764  F3 E1 00 18 */	psq_st f31, 24(r1), 0, qr0
-/* 80059968 00056768  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8005996C 0005676C  7C 7F 1B 78 */	mr r31, r3
-/* 80059970 00056770  FF E0 08 90 */	fmr f31, f1
-/* 80059974 00056774  C0 23 00 18 */	lfs f1, 0x18(r3)
-/* 80059978 00056778  C0 03 00 14 */	lfs f0, 0x14(r3)
-/* 8005997C 0005677C  C0 42 89 B8 */	lfs f2, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 80059980 00056780  EC 21 07 FA */	fmadds f1, f1, f31, f0
-/* 80059984 00056784  C0 62 89 C0 */	lfs f3, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 80059988 00056788  4B FB 4F B1 */	bl range_limit_esc__0_f_esc__1___Ffff
-/* 8005998C 0005678C  D0 3F 00 14 */	stfs f1, 0x14(r31)
-/* 80059990 00056790  C0 3F 00 20 */	lfs f1, 0x20(r31)
-/* 80059994 00056794  C0 1F 00 1C */	lfs f0, 0x1c(r31)
-/* 80059998 00056798  C0 42 89 B8 */	lfs f2, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005999C 0005679C  EC 21 07 FA */	fmadds f1, f1, f31, f0
-/* 800599A0 000567A0  C0 62 89 C0 */	lfs f3, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 800599A4 000567A4  4B FB 4F 95 */	bl range_limit_esc__0_f_esc__1___Ffff
-/* 800599A8 000567A8  D0 3F 00 1C */	stfs f1, 0x1c(r31)
-/* 800599AC 000567AC  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
-/* 800599B0 000567B0  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800599B4 000567B4  CB E1 00 10 */	lfd f31, 0x10(r1)
-/* 800599B8 000567B8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800599BC 000567BC  7C 08 03 A6 */	mtlr r0
-/* 800599C0 000567C0  38 21 00 20 */	addi r1, r1, 0x20
-/* 800599C4 000567C4  4E 80 00 20 */	blr 
-
 /* flash_hud__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 800599C8 000567C8  3C 60 80 2E */	lis r3, hud__13cruise_bubble@ha
