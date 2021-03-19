@@ -31,6 +31,7 @@ struct xfont
     void stop_render() const;
     void irender(const char* text, float32 x, float32 y) const;
     void irender(const char* text, ulong32 text_size, float32 x, float32 y) const;
+    void render(const char* text, float32 x, float32 y) const;
 
     xfont& operator=(const xfont& other);
 };

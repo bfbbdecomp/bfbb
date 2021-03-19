@@ -54,6 +54,21 @@ namespace cruise_bubble
         virtual void abort();
     };
 
+    struct state_missle_fly : state_type
+    {
+        float32 life;
+        float32 vel;
+        xVec3 rot;
+        xVec3 rot_vel;
+        float32 engine_pitch;
+        xVec3 last_loc;
+        float32 flash_time;
+
+        void start();
+        state_enum update(float32 dt);
+        uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
+    };
+    
     struct sound_config
     {
         // offset 0x0
@@ -282,11 +297,13 @@ namespace cruise_bubble
             } target;
             struct _class_23
             {
+                // Offset: 0x168
                 int32 font;
                 float32 font_width;
                 float32 font_height;
                 float32 x;
                 float32 y;
+                // Offset: 0x17c
                 float32 glow_size;
             } timer;
         } hud;
@@ -358,6 +375,8 @@ namespace cruise_bubble
     void show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m);
     void update_gizmo(hud_gizmo& gizmo, float32 dt);
     void flash_hud();
+    void render_timer(float32 alpha, float32 glow);
+    void lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b);
     void hide_hud();
 
 } // namespace cruise_bubble

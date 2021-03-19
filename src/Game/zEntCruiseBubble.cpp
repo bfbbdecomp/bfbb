@@ -1,3 +1,4 @@
+#include "stdio.h"
 #include <string.h>
 
 #include "zCamera.h"
@@ -9,6 +10,7 @@
 #include "zGlobals.h"
 #include "zTalkBox.h"
 
+#include "../Core/x/xColor.h"
 #include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
@@ -24,7 +26,7 @@
 namespace cruise_bubble
 {
 
-// basic_rect screen_bounds;
+extern basic_rect<float32> screen_bounds;
 // basic_rect default_adjust;
 // int8 buffer[16];
 // int8 buffer[16];
@@ -171,7 +173,12 @@ extern float32 zEntCruiseBubble_f_1_0; // 1.0
 extern float32 zEntCruiseBubble_f_0_5; // 0.5
 extern float32 zEntCruiseBubble_f_3_0; // 3.0
 extern float32 zEntCruiseBubble_f_0_25; // 0.25
+extern float32 zEntCruiseBubble_f_255_0; // 255.0
 extern float32 zEntCruiseBubble_f_n1_0; // -1.0
+extern float32 zEntCruiseBubble_f_100_0; // 100.0
+
+extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
+extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
 
 void cruise_bubble::init_sound()
 {
@@ -1232,14 +1239,49 @@ void cruise_bubble::flash_hud()
 #endif
 
 // func_800599F0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "render_timer__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fff")
+#else
+void cruise_bubble::render_timer(float32 alpha, float32 glow)
+{
+    state_missle_fly* state = (state_missle_fly*) shared.state[1];
+    if (state == NULL || state->type != STATE_MISSLE_FLY)
+    {
+        return;
+    }
+
+    float32 life = state->life;
+    char buffer[16];
+    // stringBase0 + 0x280 == "%02d:%02d"
+    sprintf(buffer, stringBase0 + 0x280,
+            (int32) life,
+            ((int32) (zEntCruiseBubble_f_100_0 * life)) - (100 * (int32) life));
+
+    float32 dsize = glow * current_tweak->hud.timer.glow_size;
+    // also zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
+    xfont font = xfont::create(current_tweak->hud.timer.font,
+            current_tweak->hud.timer.font_width + dsize,
+            current_tweak->hud.timer.font_height + dsize,
+            zEntCruiseBubble_f_0_0, g_WHITE, screen_bounds);
+    // register use for copying fields into font off, also causes a larger stack frame
+    // also the color tags are loaded too early, should be just before the call
+    lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF, zEntCruiseBubble_color_FF_14_14_FF);
+    font.color.a = (int32) (zEntCruiseBubble_f_255_0 * alpha + zEntCruiseBubble_f_0_5);
+
+    basic_rect<float32> bound = font.bounds(buffer);
+    float32 x = current_tweak->hud.timer.x - bound.x - zEntCruiseBubble_f_0_5 * bound.w;
+    float32 y = current_tweak->hud.timer.y - bound.y - zEntCruiseBubble_f_0_5 * bound.h;
+
+    font.render(buffer, x, y);
+}
+#endif
 
 // func_80059BD8
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR10iColor_tagf10iColor_tag10iColor_tag")
+    "lerp__13cruise_bubbleFR10iColor_tagf10iColor_tag10iColor_tag")
 
 // func_80059C6C
 #pragma GLOBAL_ASM(                                                                                \
