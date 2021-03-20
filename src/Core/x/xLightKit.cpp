@@ -1,4 +1,5 @@
 #include "xLightKit.h"
+#include "xMath.h"
 
 #include <types.h>
 #include <string.h>
@@ -10,7 +11,7 @@ extern float32 lbl_803CEA40; // 1.0
 extern float32 lbl_803CEA44; // 1.0e-5
 
 // func_80123228
-#if 1
+#if 0
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Prepare__FPv")
 // Basically every register is off and there are a few inconsistencies but the functionality is probably the same or similar
 #else
@@ -28,18 +29,11 @@ xLightKit* xLightKit_Prepare(void* data)
         // The way Ghidra decomped this is kinda weird so I think I'm missing something
 
         // If any of the colors is greater than 1.0
-        if ((currlight->color).red > lbl_803CEA40 || (currlight->color).green > lbl_803CEA40 ||
-            (currlight->color).blue > lbl_803CEA40)
+        if (currlight->color.red > lbl_803CEA40 || currlight->color.green > lbl_803CEA40 ||
+            currlight->color.blue > lbl_803CEA40)
         {
-            float32 s = (currlight->color).red;
-            if ((currlight->color).green > s)
-            {
-                s = (currlight->color).green;
-            }
-            if ((currlight->color).blue > s)
-            {
-                s = (currlight->color).blue;
-            }
+            float32 s =
+                MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
 
             // Set s to 0.00001 if less than 0.00001
             if (lbl_803CEA44 > s)
@@ -49,9 +43,9 @@ xLightKit* xLightKit_Prepare(void* data)
 
             // Scale values back in range
             s = lbl_803CEA40 / s;
-            (currlight->color).red = (RwReal)((currlight->color).red * s);
-            (currlight->color).green = (RwReal)((currlight->color).green * s);
-            (currlight->color).blue = (RwReal)((currlight->color).blue * s);
+            (currlight->color).red = ((currlight->color).red * s);
+            (currlight->color).green = ((currlight->color).green * s);
+            (currlight->color).blue = ((currlight->color).blue * s);
         }
         switch (currlight->type)
         {
@@ -71,7 +65,7 @@ xLightKit* xLightKit_Prepare(void* data)
             break;
         }
         RpLightSetColor(currlight->platLight, &currlight->color);
-        if (1 < currlight->type)
+        if (currlight->type >= 2)
         {
             RwFrame* frame = RwFrameCreate();
             RwMatrixTag tmpmat;
@@ -95,11 +89,11 @@ xLightKit* xLightKit_Prepare(void* data)
             RwFrameTransform(frame, &tmpmat, (RwOpCombineType)0);
             _rwObjectHasFrameSetFrame(currlight->platLight, frame);
         }
-        if (2 < currlight->type)
+        if (currlight->type >= 3)
         {
             RpLightSetRadius(currlight->platLight, currlight->radius);
         }
-        if (3 < currlight->type)
+        if (currlight->type >= 4)
         {
             RpLightSetConeAngle(currlight->platLight, currlight->angle);
         }
