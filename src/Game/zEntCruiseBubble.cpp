@@ -1278,15 +1278,27 @@ void cruise_bubble::render_timer(float32 alpha, float32 glow)
 }
 #endif
 
-// func_80059BD8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lerp__13cruise_bubbleFR10iColor_tagf10iColor_tag10iColor_tag")
+void cruise_bubble::lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b)
+{
+    lerp(c.r, t, a.r, b.r);
+    lerp(c.g, t, a.g, b.g);
+    lerp(c.b, t, a.b, b.b);
+    lerp(c.a, t, a.a, b.a);
+}
 
 // func_80059C6C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc")
+    "lerp__13cruise_bubbleFRUcfUcUc")
+#else
+void cruise_bubble::lerp(uint8& x, float32 t, uint8 a, uint8 b)
+{
+    // will match once file complete
+    // casting from int8 to float uses a float constant which cannot be extern'd
+    x = zEntCruiseBubble_f_0_5 + ((float32) a + t * ((float32) b - (float32) a));
+}
+#endif
 
 // func_80059CD8
 #pragma GLOBAL_ASM(                                                                                \

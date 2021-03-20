@@ -1742,51 +1742,11 @@ lbl_80059BB4:
 /* 80059BD0 000569D0  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80059BD4 000569D4  4E 80 00 20 */	blr 
 
-/* lerp__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR10iColor_tagf10iColor_tag10iColor_tag */
-/* changed from ... */
-/* lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR10iColor_tagf10iColor_tag10iColor_tag: */
-/* ... so linker can find it */
-lerp__13cruise_bubbleFR10iColor_tagf10iColor_tag10iColor_tag:
-/* 80059BD8 000569D8  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80059BDC 000569DC  7C 08 02 A6 */	mflr r0
-/* 80059BE0 000569E0  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80059BE4 000569E4  DB E1 00 18 */	stfd f31, 0x18(r1)
-/* 80059BE8 000569E8  FF E0 08 90 */	fmr f31, f1
-/* 80059BEC 000569EC  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 80059BF0 000569F0  7C BF 2B 78 */	mr r31, r5
-/* 80059BF4 000569F4  93 C1 00 10 */	stw r30, 0x10(r1)
-/* 80059BF8 000569F8  7C 9E 23 78 */	mr r30, r4
-/* 80059BFC 000569FC  93 A1 00 0C */	stw r29, 0xc(r1)
-/* 80059C00 00056A00  7C 7D 1B 78 */	mr r29, r3
-/* 80059C04 00056A04  88 84 00 00 */	lbz r4, 0(r4)
-/* 80059C08 00056A08  88 A5 00 00 */	lbz r5, 0(r5)
-/* 80059C0C 00056A0C  48 00 00 61 */	bl lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc
-/* 80059C10 00056A10  FC 20 F8 90 */	fmr f1, f31
-/* 80059C14 00056A14  88 9E 00 01 */	lbz r4, 1(r30)
-/* 80059C18 00056A18  88 BF 00 01 */	lbz r5, 1(r31)
-/* 80059C1C 00056A1C  38 7D 00 01 */	addi r3, r29, 1
-/* 80059C20 00056A20  48 00 00 4D */	bl lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc
-/* 80059C24 00056A24  FC 20 F8 90 */	fmr f1, f31
-/* 80059C28 00056A28  88 9E 00 02 */	lbz r4, 2(r30)
-/* 80059C2C 00056A2C  88 BF 00 02 */	lbz r5, 2(r31)
-/* 80059C30 00056A30  38 7D 00 02 */	addi r3, r29, 2
-/* 80059C34 00056A34  48 00 00 39 */	bl lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc
-/* 80059C38 00056A38  FC 20 F8 90 */	fmr f1, f31
-/* 80059C3C 00056A3C  88 9E 00 03 */	lbz r4, 3(r30)
-/* 80059C40 00056A40  88 BF 00 03 */	lbz r5, 3(r31)
-/* 80059C44 00056A44  38 7D 00 03 */	addi r3, r29, 3
-/* 80059C48 00056A48  48 00 00 25 */	bl lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc
-/* 80059C4C 00056A4C  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80059C50 00056A50  CB E1 00 18 */	lfd f31, 0x18(r1)
-/* 80059C54 00056A54  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 80059C58 00056A58  83 C1 00 10 */	lwz r30, 0x10(r1)
-/* 80059C5C 00056A5C  83 A1 00 0C */	lwz r29, 0xc(r1)
-/* 80059C60 00056A60  7C 08 03 A6 */	mtlr r0
-/* 80059C64 00056A64  38 21 00 20 */	addi r1, r1, 0x20
-/* 80059C68 00056A68  4E 80 00 20 */	blr 
-
 /* lerp__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRUcfUcUc */
-lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc:
+/* changed from ... */
+/* lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc: */
+/* ... so linker can find it */
+lerp__13cruise_bubbleFRUcfUcUc:
 /* 80059C6C 00056A6C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80059C70 00056A70  3C C0 43 30 */	lis r6, 0x4330
 /* 80059C74 00056A74  54 80 06 3E */	clrlwi r0, r4, 0x18
