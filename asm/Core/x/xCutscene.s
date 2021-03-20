@@ -2146,9 +2146,11 @@ lbl_802B8A40:
 
 .section .sbss
 .balign 8
-lbl_803CB1A8:
+.global sCutTocCount
+sCutTocCount:
 	.skip 0x4
-lbl_803CB1AC:
+.global sCutTocInfo
+sCutTocInfo:
 	.skip 0x4
 /* SPECULATION: link order */
 .global gFrameCount
@@ -2164,7 +2166,8 @@ lbl_803D0804:
 	.skip 0x4
 
 .section .sdata2
-lbl_803CCB38:
+.global _672
+_672:
 	.incbin "baserom.dol", 0x2B63D8, 0x4
 lbl_803CCB3C:
 	.incbin "baserom.dol", 0x2B63DC, 0x4

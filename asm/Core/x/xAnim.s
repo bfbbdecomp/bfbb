@@ -3056,6 +3056,7 @@ lbl_803CC9A8:
 	.incbin "baserom.dol", 0x2B6248, 0x4
 lbl_803CC9AC:
 	.incbin "baserom.dol", 0x2B624C, 0x4
+.global lbl_803CC9B0
 lbl_803CC9B0:
 	.incbin "baserom.dol", 0x2B6250, 0x4
 lbl_803CC9B4:
