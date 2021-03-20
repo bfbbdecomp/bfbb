@@ -1260,7 +1260,7 @@ void cruise_bubble::render_timer(float32 alpha, float32 glow)
             ((int32) (zEntCruiseBubble_f_100_0 * life)) - (100 * (int32) life));
 
     float32 dsize = glow * current_tweak->hud.timer.glow_size;
-    // also zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
+    // zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
     xfont font = xfont::create(current_tweak->hud.timer.font,
             current_tweak->hud.timer.font_width + dsize,
             current_tweak->hud.timer.font_height + dsize,
