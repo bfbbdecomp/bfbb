@@ -1907,7 +1907,10 @@ lbl_80059E90:
 /* 80059EB0 00056CB0  4E 80 00 20 */	blr 
 
 /* __as__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@9hud_gizmoFRCQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@9hud_gizmo */
-__as__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoFRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmo:
+/* changed from ... */
+/* __as__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoFRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmo: */
+/* ... so linker can find it */
+__as__Q213cruise_bubble9hud_gizmoFRCQ213cruise_bubble9hud_gizmo:
 /* 80059EB4 00056CB4  80 04 00 00 */	lwz r0, 0(r4)
 /* 80059EB8 00056CB8  80 A4 00 04 */	lwz r5, 4(r4)
 /* 80059EBC 00056CBC  90 03 00 00 */	stw r0, 0(r3)
@@ -1935,7 +1938,10 @@ __as__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud
 /* 80059F14 00056D14  4E 80 00 20 */	blr 
 
 /* update__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17uv_animated_modelFf */
-update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFf:
+/* changed from ... */
+/* update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFf: */
+/* ... so linker can find it */
+update__Q213cruise_bubble17uv_animated_modelFf:
 /* 80059F18 00056D18  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80059F1C 00056D1C  7C 08 02 A6 */	mflr r0
 /* 80059F20 00056D20  90 01 00 24 */	stw r0, 0x24(r1)

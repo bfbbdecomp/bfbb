@@ -105,6 +105,8 @@ namespace cruise_bubble
         float32 opacity;
         xVec3* target;
         xModelInstance* model;
+
+        hud_gizmo& operator=(const hud_gizmo&);
     };
 
     struct uv_animated_model
@@ -118,6 +120,7 @@ namespace cruise_bubble
         bool init(RpAtomic*);
         bool clone_uv(RwTexCoords*&, int32&, RpAtomic*) const;
         bool get_uv(RwTexCoords*&, int32&, RpAtomic*) const;
+        void update(float32 dt);
     };
 
     struct tweak_group
@@ -216,7 +219,7 @@ namespace cruise_bubble
             } restore;
         } camera;
 
-        // Size 0x18
+        // Size: 0x18
         struct _class_48
         {
             float32 env_alpha;
@@ -227,7 +230,7 @@ namespace cruise_bubble
             uint32 fresnel_texture;
         } material;
 
-        // Size 0x14
+        // Size: 0x14
         struct _class_9
         {
             float32 dist_min;
@@ -237,7 +240,7 @@ namespace cruise_bubble
             float32 delay_retarget;
         } reticle;
 
-        // Size 0x10
+        // Size: 0x10
         struct _class_20
         {
             float32 sample_rate;
@@ -246,7 +249,7 @@ namespace cruise_bubble
             float32 wake_emit_radius;
         } trail;
         
-        // Size 0x10
+        // Size: 0x10
         struct _class_29
         {
             uint32 emit;
@@ -255,7 +258,7 @@ namespace cruise_bubble
             float32 rand_vel;
         } blast;
 
-        // Size 0x24
+        // Size: 0x24
         struct _class_35
         {
             float32 dist_min;
@@ -269,10 +272,11 @@ namespace cruise_bubble
             float32 rot_vel_max;
         } droplet;
         
-        // Size 0x44
+        // Size: 0x44
         struct _class_43
         {
             float32 glow_size;
+            // Offset: 0x140
             float32 time_fade;
             float32 time_glow;
             struct _class_46
@@ -308,7 +312,7 @@ namespace cruise_bubble
             } timer;
         } hud;
         
-        // Size 0xc
+        // Size: 0xc
         struct _class_34
         {
             float32 freq;
@@ -378,6 +382,7 @@ namespace cruise_bubble
     void render_timer(float32 alpha, float32 glow);
     void lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b);
     void lerp(uint8& x, float32 t, uint8 a, uint8 b); 
+    void update_hud(float32 dt);
     void hide_hud();
 
 } // namespace cruise_bubble

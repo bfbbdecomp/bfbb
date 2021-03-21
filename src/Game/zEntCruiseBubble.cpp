@@ -124,10 +124,13 @@ extern struct _class_17
         xModelInstance* swirl;
         xModelInstance* wind;
     } model;
+    // Offset 0x24
     hud_gizmo gizmo[33];
     // Offset 0x654
     uint32 gizmos_used;
+    // Offset 0x658
     uv_animated_model uv_swirl;
+    // Offset 0x674
     uv_animated_model uv_wind;
 } hud;
 // void (*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
@@ -1301,19 +1304,67 @@ void cruise_bubble::lerp(uint8& x, float32 t, uint8 a, uint8 b)
 #endif
 
 // func_80059CD8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff")
+#else
+void cruise_bubble::update_hud(float32 dt)
+{
+    if (hud.gizmos_used == 0)
+    {
+        return;
+    }
+    
+    hud.alpha = range_limit<float32>(hud.alpha_vel * dt + hud.alpha, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0);
+    hud.glow = range_limit<float32>(hud.glow_vel * dt + hud.glow, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0);
+
+    float32 vel_frac = ((state_missle_fly*) shared.states[STATE_MISSLE_FLY])->vel / current_tweak->missle.fly.max_vel;
+
+    hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
+    hud.uv_wind.offset_vel *= vel_frac;
+    hud.model.wind->Alpha = vel_frac;
+    hud.uv_wind.update(dt);
+
+    for (int32 i = 1; i < hud.gizmos_used; ++i)
+    {
+        if ((hud.gizmo[i].flags & 0x1) == 0)
+        {
+            hud.gizmo[i].alpha_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_fade;
+        }
+    }
+
+    int32 i = 0;
+    while (i < hud.gizmos_used)
+    {
+        update_gizmo(hud.gizmo[i], dt);
+        if (hud.gizmo[i].alpha <= zEntCruiseBubble_f_0_0)
+        {
+            hud.gizmos_used -= 1;
+            hud.gizmo[i] = hud.gizmo[hud.gizmos_used];
+        }
+        else
+        {
+            ++i;
+        }
+    }
+
+    for (int32 i = 1; i < hud.gizmos_used; ++i)
+    {
+        hud.gizmo[i].flags = hud.gizmo[i].flags & 0xfffffffe;
+    }
+}
+#endif
 
 // func_80059EB4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__as__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoFRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmo")
+    "__as__Q213cruise_bubble9hud_gizmoFRCQ213cruise_bubble9hud_gizmo")
 
 // func_80059F18
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFf")
+    "update__Q213cruise_bubble17uv_animated_modelFf")
 
 // func_80059FA0
 #pragma GLOBAL_ASM(                                                                                \
