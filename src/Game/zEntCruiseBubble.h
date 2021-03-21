@@ -121,6 +121,7 @@ namespace cruise_bubble
         bool clone_uv(RwTexCoords*&, int32&, RpAtomic*) const;
         bool get_uv(RwTexCoords*&, int32&, RpAtomic*) const;
         void update(float32 dt);
+        void refresh();
     };
 
     struct tweak_group

@@ -1937,50 +1937,11 @@ __as__Q213cruise_bubble9hud_gizmoFRCQ213cruise_bubble9hud_gizmo:
 /* 80059F10 00056D10  90 03 00 2C */	stw r0, 0x2c(r3)
 /* 80059F14 00056D14  4E 80 00 20 */	blr 
 
-/* update__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17uv_animated_modelFf */
-/* changed from ... */
-/* update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFf: */
-/* ... so linker can find it */
-update__Q213cruise_bubble17uv_animated_modelFf:
-/* 80059F18 00056D18  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80059F1C 00056D1C  7C 08 02 A6 */	mflr r0
-/* 80059F20 00056D20  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80059F24 00056D24  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80059F28 00056D28  7C 7F 1B 78 */	mr r31, r3
-/* 80059F2C 00056D2C  C0 42 89 B8 */	lfs f2, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 80059F30 00056D30  C0 03 00 14 */	lfs f0, 0x14(r3)
-/* 80059F34 00056D34  FC 02 00 00 */	fcmpu cr0, f2, f0
-/* 80059F38 00056D38  40 82 00 10 */	bne lbl_80059F48
-/* 80059F3C 00056D3C  C0 1F 00 18 */	lfs f0, 0x18(r31)
-/* 80059F40 00056D40  FC 02 00 00 */	fcmpu cr0, f2, f0
-/* 80059F44 00056D44  41 82 00 48 */	beq lbl_80059F8C
-lbl_80059F48:
-/* 80059F48 00056D48  38 7F 00 14 */	addi r3, r31, 0x14
-/* 80059F4C 00056D4C  48 00 61 79 */	bl __ml__5xVec2CFf
-/* 80059F50 00056D50  90 81 00 0C */	stw r4, 0xc(r1)
-/* 80059F54 00056D54  38 81 00 08 */	addi r4, r1, 8
-/* 80059F58 00056D58  90 61 00 08 */	stw r3, 8(r1)
-/* 80059F5C 00056D5C  38 7F 00 0C */	addi r3, r31, 0xc
-/* 80059F60 00056D60  48 00 61 41 */	bl __apl__5xVec2FRC5xVec2
-/* 80059F64 00056D64  C0 3F 00 0C */	lfs f1, 0xc(r31)
-/* 80059F68 00056D68  C0 42 89 C0 */	lfs f2, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 80059F6C 00056D6C  4B FD 64 41 */	bl xfmod__Fff
-/* 80059F70 00056D70  D0 3F 00 0C */	stfs f1, 0xc(r31)
-/* 80059F74 00056D74  C0 3F 00 10 */	lfs f1, 0x10(r31)
-/* 80059F78 00056D78  C0 42 89 C0 */	lfs f2, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 80059F7C 00056D7C  4B FD 64 31 */	bl xfmod__Fff
-/* 80059F80 00056D80  D0 3F 00 10 */	stfs f1, 0x10(r31)
-/* 80059F84 00056D84  7F E3 FB 78 */	mr r3, r31
-/* 80059F88 00056D88  48 00 00 19 */	bl refresh__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFv
-lbl_80059F8C:
-/* 80059F8C 00056D8C  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80059F90 00056D90  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80059F94 00056D94  7C 08 03 A6 */	mtlr r0
-/* 80059F98 00056D98  38 21 00 20 */	addi r1, r1, 0x20
-/* 80059F9C 00056D9C  4E 80 00 20 */	blr 
-
 /* refresh__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17uv_animated_modelFv */
-refresh__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFv:
+/* changed from ... */
+/* refresh__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFv: */
+/* ... so linker can find it */
+refresh__Q213cruise_bubble17uv_animated_modelFv:
 /* 80059FA0 00056DA0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80059FA4 00056DA4  7C 08 02 A6 */	mflr r0
 /* 80059FA8 00056DA8  38 80 00 10 */	li r4, 0x10

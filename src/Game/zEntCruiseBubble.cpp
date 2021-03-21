@@ -14,6 +14,7 @@
 #include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
+#include "../Core/x/xMathInlines.h"
 #include "../Core/x/xMath3.h"
 #include "../Core/x/xModel.h"
 #include "../Core/x/xSnd.h"
@@ -1361,15 +1362,24 @@ void cruise_bubble::update_hud(float32 dt)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "__as__Q213cruise_bubble9hud_gizmoFRCQ213cruise_bubble9hud_gizmo")
 
-// func_80059F18
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update__Q213cruise_bubble17uv_animated_modelFf")
+void cruise_bubble::uv_animated_model::update(float32 dt)
+{
+    if (zEntCruiseBubble_f_0_0 == this->offset_vel.x && 
+            zEntCruiseBubble_f_0_0 == this->offset_vel.y)
+    {
+        return;
+    }
+
+    this->offset += this->offset_vel * dt;
+    this->offset.x = xfmod(this->offset.x, zEntCruiseBubble_f_1_0);
+    this->offset.y = xfmod(this->offset.y, zEntCruiseBubble_f_1_0);
+    this->refresh();
+}
 
 // func_80059FA0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFv")
+    "refresh__Q213cruise_bubble17uv_animated_modelFv")
 
 // func_8005A0E0
 #pragma GLOBAL_ASM(                                                                                \
