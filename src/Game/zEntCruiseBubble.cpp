@@ -1320,6 +1320,7 @@ void cruise_bubble::update_hud(float32 dt)
     hud.alpha = range_limit<float32>(hud.alpha_vel * dt + hud.alpha, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0);
     hud.glow = range_limit<float32>(hud.glow_vel * dt + hud.glow, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0);
 
+    // scheduling off
     float32 vel_frac = ((state_missle_fly*) shared.states[STATE_MISSLE_FLY])->vel / current_tweak->missle.fly.max_vel;
 
     hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
@@ -1327,6 +1328,7 @@ void cruise_bubble::update_hud(float32 dt)
     hud.model.wind->Alpha = vel_frac;
     hud.uv_wind.update(dt);
 
+    // sheduling off for i and zEntCruiseBubble_f_n1_0
     for (int32 i = 1; i < hud.gizmos_used; ++i)
     {
         if ((hud.gizmo[i].flags & 0x1) == 0)
