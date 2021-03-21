@@ -1603,7 +1603,10 @@ init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_
 /* 8005975C 0005655C  4E 80 00 20 */	blr 
 
 /* flash_hud__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+flash_hud__13cruise_bubbleFv:
 /* 800599C8 000567C8  3C 60 80 2E */	lis r3, hud__13cruise_bubble@ha
 /* 800599CC 000567CC  C0 02 89 C0 */	lfs f0, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
 /* 800599D0 000567D0  38 83 CC 7C */	addi r4, r3, hud__13cruise_bubble@l

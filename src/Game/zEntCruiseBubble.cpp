@@ -1232,7 +1232,7 @@ void cruise_bubble::update_gizmo(cruise_bubble::hud_gizmo& gizmo, float32 dt)
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "flash_hud__13cruise_bubbleFv")
 #else
 void cruise_bubble::flash_hud()
 {
@@ -1389,9 +1389,30 @@ void cruise_bubble::uv_animated_model::update(float32 dt)
     "render_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
 
 // func_8005A2AC
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "show_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::show_hud()
+{
+    // scheduling and register usage off
+    hud.gizmos_used = 1;
+	basic_rect<float32> reticle_bound;
+    reticle_bound.set_size(current_tweak->hud.reticle.size);
+    // reticle_bound gets loaded again as r3 here which shouldn't be
+    // might be a non functional match for edge cases
+    reticle_bound.center(zEntCruiseBubble_f_0_5, zEntCruiseBubble_f_0_5);
+    show_gizmo(hud.gizmo[0], reticle_bound, hud.model.reticle);
+
+    hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
+    // scheduling off for this float
+    hud.alpha = zEntCruiseBubble_f_0_0;
+    hud.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+
+    flash_hud();
+}
+#endif
 
 // func_8005A340
 #pragma GLOBAL_ASM(                                                                                \
