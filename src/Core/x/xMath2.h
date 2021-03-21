@@ -37,6 +37,9 @@ struct xVec2
 
     xVec2& operator=(const xVec2&); // temp
     xVec2& operator=(float32);
+    xVec2 operator*(float32) const;
+    xVec2& operator+=(const xVec2&);
+    xVec2& operator*=(float32);
 };
 
 float32 xVec2Dist(float32 x1, float32 y1, float32 x2, float32 y2);
