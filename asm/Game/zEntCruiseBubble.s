@@ -2255,31 +2255,6 @@ world_to_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_
 /* 8005A3F8 000571F8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005A3FC 000571FC  4E 80 00 20 */	blr 
 
-/* find_locked_target__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FPC5xVec3 */
-find_locked_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FPC5xVec3:
-/* 8005A400 00057200  3C 80 80 2E */	lis r4, hud__13cruise_bubble@ha
-/* 8005A404 00057204  38 C0 00 01 */	li r6, 1
-/* 8005A408 00057208  38 84 CC 7C */	addi r4, r4, hud__13cruise_bubble@l
-/* 8005A40C 0005720C  80 A4 06 54 */	lwz r5, 0x654(r4)
-/* 8005A410 00057210  38 84 00 30 */	addi r4, r4, 0x30
-/* 8005A414 00057214  38 05 FF FF */	addi r0, r5, -1
-/* 8005A418 00057218  7C 09 03 A6 */	mtctr r0
-/* 8005A41C 0005721C  28 05 00 01 */	cmplwi r5, 1
-/* 8005A420 00057220  40 81 00 24 */	ble lbl_8005A444
-lbl_8005A424:
-/* 8005A424 00057224  80 04 00 4C */	lwz r0, 0x4c(r4)
-/* 8005A428 00057228  7C 00 18 40 */	cmplw r0, r3
-/* 8005A42C 0005722C  40 82 00 0C */	bne lbl_8005A438
-/* 8005A430 00057230  7C C3 33 78 */	mr r3, r6
-/* 8005A434 00057234  4E 80 00 20 */	blr 
-lbl_8005A438:
-/* 8005A438 00057238  38 84 00 30 */	addi r4, r4, 0x30
-/* 8005A43C 0005723C  38 C6 00 01 */	addi r6, r6, 1
-/* 8005A440 00057240  42 00 FF E4 */	bdnz lbl_8005A424
-lbl_8005A444:
-/* 8005A444 00057244  38 60 FF FF */	li r3, -1
-/* 8005A448 00057248  4E 80 00 20 */	blr 
-
 /* lock_target__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FiPC5xVec3f */
 lock_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiPC5xVec3f:
 /* 8005A44C 0005724C  94 21 FF C0 */	stwu r1, -0x40(r1)

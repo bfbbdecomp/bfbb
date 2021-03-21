@@ -386,7 +386,7 @@ namespace cruise_bubble
     void update_hud(float32 dt);
     void show_hud();
     void hide_hud();
-
+    int32 find_locked_target(const xVec3* loc);
 } // namespace cruise_bubble
 
 #endif
