@@ -1415,9 +1415,18 @@ void cruise_bubble::show_hud()
 #endif
 
 // func_8005A340
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "hide_hud__13cruise_bubbleFv")
+#else
+void cruise_bubble::hide_hud()
+{
+    hud.gizmos_used = 0;
+    // float scheduling ...
+    hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
+}
+#endif
 
 // func_8005A360
 #pragma GLOBAL_ASM(                                                                                \
