@@ -1,3 +1,4 @@
+#include "stdio.h"
 #include <string.h>
 
 #include "zCamera.h"
@@ -9,9 +10,11 @@
 #include "zGlobals.h"
 #include "zTalkBox.h"
 
+#include "../Core/x/xColor.h"
 #include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
+#include "../Core/x/xMathInlines.h"
 #include "../Core/x/xMath3.h"
 #include "../Core/x/xModel.h"
 #include "../Core/x/xSnd.h"
@@ -24,13 +27,13 @@
 namespace cruise_bubble
 {
 
-// basic_rect screen_bounds;
+extern basic_rect<float32> screen_bounds;
 // basic_rect default_adjust;
 // int8 buffer[16];
 // int8 buffer[16];
 // tweak_group normal_tweak;
 // tweak_group cheat_tweak;
-// tweak_group* current_tweak;
+extern tweak_group* current_tweak;
 extern xBase base;
 extern const char* start_anim_states[37]; // string array of names
 
@@ -105,7 +108,32 @@ extern const xDecalEmitter::curve_node explode_curve[3];
 extern const xDecalEmitter::curve_node cheat_explode_curve[3];
 extern sound_config sounds[4];
 // quadrant_set qzone;
-// _class_17 hud;
+
+extern struct _class_17
+{
+    bool hiding;
+    float32 alpha;
+    float32 alpha_vel;
+    float32 glow;
+    float32 glow_vel;
+
+    // Offset 0x14
+    struct _class_21
+    {
+        xModelInstance* reticle;
+        xModelInstance* target;
+        xModelInstance* swirl;
+        xModelInstance* wind;
+    } model;
+    // Offset 0x24
+    hud_gizmo gizmo[33];
+    // Offset 0x654
+    uint32 gizmos_used;
+    // Offset 0x658
+    uv_animated_model uv_swirl;
+    // Offset 0x674
+    uv_animated_model uv_wind;
+} hud;
 // void (*xAnimDefaultBeforeEnter)(xAnimPlay*, xAnimState*);
 // uint32 (*check_anim_aim)(xAnimTransition*, xAnimSingle*, void*);
 // zGlobals globals;
@@ -149,6 +177,12 @@ extern float32 zEntCruiseBubble_f_1_0; // 1.0
 extern float32 zEntCruiseBubble_f_0_5; // 0.5
 extern float32 zEntCruiseBubble_f_3_0; // 3.0
 extern float32 zEntCruiseBubble_f_0_25; // 0.25
+extern float32 zEntCruiseBubble_f_255_0; // 255.0
+extern float32 zEntCruiseBubble_f_n1_0; // -1.0
+extern float32 zEntCruiseBubble_f_100_0; // 100.0
+
+extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
+extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
 
 void cruise_bubble::init_sound()
 {
@@ -541,11 +575,11 @@ void cruise_bubble::notify_triggers(xScene& s, const xSphere& o, const xVec3& di
 
 void cruise_bubble::exit_triggers(xScene& s)
 {
-	zEntTrigger** it;
-	zEntTrigger** end;
-	zEntTrigger* trig;
-	xLinkAsset* link;
-	xLinkAsset* end_link;
+    zEntTrigger** it;
+    zEntTrigger** end;
+    zEntTrigger* trig;
+    xLinkAsset* link;
+    xLinkAsset* end_link;
 
     it = (zEntTrigger**)s.trigs;
     end = it + s.num_trigs;
@@ -1090,74 +1124,264 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
     "render_glow__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff")
 
 // func_80059698
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::init_hud()
+{
+    // should use stbu here and save an addi instruction
+    // which should also fix the rest of the function by correcting offsets
+    hud.hiding = false;
+    hud.alpha = zEntCruiseBubble_f_0_0;
+    hud.alpha_vel = zEntCruiseBubble_f_0_0;
+    hud.glow = zEntCruiseBubble_f_0_0;
+    hud.gizmos_used = 0;
 
-// func_80059760
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFP8RpAtomic")
+    // stringBase0 + 0x23e == "ui_3dicon_reticle"
+    hud.model.reticle = load_model(xStrHash(stringBase0 + 0x23e));
+    // stringBase0 + 0x23e == "ui_3dicon_target_lock"
+    hud.model.target = load_model(xStrHash(stringBase0 + 0x250));
+    // stringBase0 + 0x23e == "ui_3dicon_missile_frame02"
+    hud.model.wind = load_model(xStrHash(stringBase0 + 0x266));
 
-// func_800597E0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "clone_uv__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
+    hud.uv_wind.init(hud.model.wind->Data);
+    hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
+}
+#endif
 
-// func_8005986C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_uv__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelCFRP11RwTexCoordsRiP8RpAtomic")
+bool cruise_bubble::uv_animated_model::init(RpAtomic* m)
+{
+    this->model = m;
+    if (m == NULL) {
+        return false;
+    }
 
-// func_800598C4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoRC13basic_rect_esc__0_f_esc__1_P14xModelInstance")
+    if (!this->clone_uv(this->uv, this->uvsize, m)) {
+        return false;
+    }
+    
+    this->offset.assign(zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    this->offset_vel.assign(zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    return true;
+}
 
-// func_80059954
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_gizmo__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmof")
+bool cruise_bubble::uv_animated_model::clone_uv(RwTexCoords*& coords, int32& size, RpAtomic* m) const
+{
+    RwTexCoords* c;
+    if (!this->get_uv(c, size, m))
+    {
+        return false;
+    }
+    
+    coords = (RwTexCoords*) xMemAlloc(gActiveHeap, size * 8, 0);
+    if (coords == NULL) {
+        return false;
+    }
+
+    memcpy(coords, c, size * 8); // [memcpy]
+    return true;
+}
+
+bool cruise_bubble::uv_animated_model::get_uv(RwTexCoords*& coords, int32& size, RpAtomic* m) const
+{
+    coords = NULL;
+    size = 0;
+
+    RpGeometry* geo = m->geometry;
+    if (geo == 0)
+    {
+        return false;
+    }
+    
+    size = geo->numVertices;
+    if (!(size > 0))
+    {
+        return false;
+    }
+
+    coords = *geo->texCoords;
+    return coords != NULL;
+}
+
+void cruise_bubble::show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m)
+{
+    gizmo.flags = 0x1;
+    gizmo.bound = rect;
+    gizmo.alpha = zEntCruiseBubble_f_0_0;
+    gizmo.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+    gizmo.glow = zEntCruiseBubble_f_1_0;
+    gizmo.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
+    gizmo.opacity = zEntCruiseBubble_f_1_0;
+    gizmo.target = NULL;
+    gizmo.model = m;
+}
+
+void cruise_bubble::update_gizmo(cruise_bubble::hud_gizmo& gizmo, float32 dt)
+{
+    gizmo.alpha = range_limit<float32>(gizmo.alpha_vel * dt + gizmo.alpha,
+            zEntCruiseBubble_f_0_0,
+            zEntCruiseBubble_f_1_0);
+    gizmo.glow = range_limit<float32>(gizmo.glow_vel * dt + gizmo.glow,
+            zEntCruiseBubble_f_0_0,
+            zEntCruiseBubble_f_1_0);
+}
 
 // func_800599C8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#else
+void cruise_bubble::flash_hud()
+{
+    // nice meme
+    hud.glow = zEntCruiseBubble_f_1_0;
+    hud.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
+}
+#endif
 
 // func_800599F0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "render_timer__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fff")
+#else
+void cruise_bubble::render_timer(float32 alpha, float32 glow)
+{
+    state_missle_fly* state = (state_missle_fly*) shared.state[1];
+    if (state == NULL || state->type != STATE_MISSLE_FLY)
+    {
+        return;
+    }
 
-// func_80059BD8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR10iColor_tagf10iColor_tag10iColor_tag")
+    float32 life = state->life;
+    char buffer[16];
+    // stringBase0 + 0x280 == "%02d:%02d"
+    sprintf(buffer, stringBase0 + 0x280,
+            (int32) life,
+            ((int32) (zEntCruiseBubble_f_100_0 * life)) - (100 * (int32) life));
+
+    float32 dsize = glow * current_tweak->hud.timer.glow_size;
+    // zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
+    xfont font = xfont::create(current_tweak->hud.timer.font,
+            current_tweak->hud.timer.font_width + dsize,
+            current_tweak->hud.timer.font_height + dsize,
+            zEntCruiseBubble_f_0_0, g_WHITE, screen_bounds);
+    // register use for copying fields into font off, also causes a larger stack frame
+    // also the color tags are loaded too early, should be just before the call
+    lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF, zEntCruiseBubble_color_FF_14_14_FF);
+    font.color.a = (int32) (zEntCruiseBubble_f_255_0 * alpha + zEntCruiseBubble_f_0_5);
+
+    basic_rect<float32> bound = font.bounds(buffer);
+    float32 x = current_tweak->hud.timer.x - bound.x - zEntCruiseBubble_f_0_5 * bound.w;
+    float32 y = current_tweak->hud.timer.y - bound.y - zEntCruiseBubble_f_0_5 * bound.h;
+
+    font.render(buffer, x, y);
+}
+#endif
+
+void cruise_bubble::lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b)
+{
+    lerp(c.r, t, a.r, b.r);
+    lerp(c.g, t, a.g, b.g);
+    lerp(c.b, t, a.b, b.b);
+    lerp(c.a, t, a.a, b.a);
+}
 
 // func_80059C6C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lerp__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRUcfUcUc")
+    "lerp__13cruise_bubbleFRUcfUcUc")
+#else
+void cruise_bubble::lerp(uint8& x, float32 t, uint8 a, uint8 b)
+{
+    // will match once file complete
+    // casting from int8 to float uses a float constant which cannot be extern'd
+    x = zEntCruiseBubble_f_0_5 + ((float32) a + t * ((float32) b - (float32) a));
+}
+#endif
 
 // func_80059CD8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff")
+#else
+void cruise_bubble::update_hud(float32 dt)
+{
+    if (hud.gizmos_used == 0)
+    {
+        return;
+    }
+    
+    hud.alpha = range_limit<float32>(hud.alpha_vel * dt + hud.alpha, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0);
+    hud.glow = range_limit<float32>(hud.glow_vel * dt + hud.glow, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0);
+
+    // scheduling off
+    float32 vel_frac = ((state_missle_fly*) shared.states[STATE_MISSLE_FLY])->vel / current_tweak->missle.fly.max_vel;
+
+    hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
+    hud.uv_wind.offset_vel *= vel_frac;
+    hud.model.wind->Alpha = vel_frac;
+    hud.uv_wind.update(dt);
+
+    // sheduling off for i and zEntCruiseBubble_f_n1_0
+    for (int32 i = 1; i < hud.gizmos_used; ++i)
+    {
+        if ((hud.gizmo[i].flags & 0x1) == 0)
+        {
+            hud.gizmo[i].alpha_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_fade;
+        }
+    }
+
+    int32 i = 0;
+    while (i < hud.gizmos_used)
+    {
+        update_gizmo(hud.gizmo[i], dt);
+        if (hud.gizmo[i].alpha <= zEntCruiseBubble_f_0_0)
+        {
+            hud.gizmos_used -= 1;
+            hud.gizmo[i] = hud.gizmo[hud.gizmos_used];
+        }
+        else
+        {
+            ++i;
+        }
+    }
+
+    for (int32 i = 1; i < hud.gizmos_used; ++i)
+    {
+        hud.gizmo[i].flags = hud.gizmo[i].flags & 0xfffffffe;
+    }
+}
+#endif
 
 // func_80059EB4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__as__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmoFRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_9hud_gizmo")
+    "__as__Q213cruise_bubble9hud_gizmoFRCQ213cruise_bubble9hud_gizmo")
 
-// func_80059F18
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFf")
+void cruise_bubble::uv_animated_model::update(float32 dt)
+{
+    if (zEntCruiseBubble_f_0_0 == this->offset_vel.x && 
+            zEntCruiseBubble_f_0_0 == this->offset_vel.y)
+    {
+        return;
+    }
+
+    this->offset += this->offset_vel * dt;
+    this->offset.x = xfmod(this->offset.x, zEntCruiseBubble_f_1_0);
+    this->offset.y = xfmod(this->offset.y, zEntCruiseBubble_f_1_0);
+    this->refresh();
+}
 
 // func_80059FA0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17uv_animated_modelFv")
+    "refresh__Q213cruise_bubble17uv_animated_modelFv")
 
 // func_8005A0E0
 #pragma GLOBAL_ASM(                                                                                \
