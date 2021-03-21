@@ -11,42 +11,37 @@ extern float32 lbl_803CEA40; // 1.0
 extern float32 lbl_803CEA44; // 1.0e-5
 
 // func_80123228
-#if 0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Prepare__FPv")
-// Basically every register is off and there are a few inconsistencies but the functionality is probably the same or similar
+// Will match once able to use float literals
 #else
 xLightKit* xLightKit_Prepare(void* data)
 {
     xLightKit* lkit = (xLightKit*)data;
+    lkit->lightList = (xLightKitLight*)((int*)data + 4);
+    xLightKitLight* currlight = (xLightKitLight*)((int*)data + 4);
 
-    for (int i = 0; i < lkit->lightCount; i++)
+    for (int i = 0; i < lkit->lightCount; currlight++, i++)
     {
-        xLightKitLight* currlight = &lkit->lightList[i];
         if (currlight->platLight != NULL)
         {
-            return (xLightKit*)data;
+            return lkit;
         }
-        // The way Ghidra decomped this is kinda weird so I think I'm missing something
 
-        // If any of the colors is greater than 1.0
+        float32 s;
+
+        // If any of the colors is greater than 1.0, normalize back to 0-1
         if (currlight->color.red > lbl_803CEA40 || currlight->color.green > lbl_803CEA40 ||
             currlight->color.blue > lbl_803CEA40)
         {
-            float32 s =
-                MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
-
-            // Set s to 0.00001 if less than 0.00001
-            if (lbl_803CEA44 > s)
-            {
-                s = lbl_803CEA44;
-            }
-
-            // Scale values back in range
-            s = lbl_803CEA40 / s;
-            (currlight->color).red = ((currlight->color).red * s);
-            (currlight->color).green = ((currlight->color).green * s);
-            (currlight->color).blue = ((currlight->color).blue * s);
+            s = MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
+            s = MAX(s, 0.00001f);
+            s = 1 / s;
+            currlight->color.red *= s;
+            currlight->color.green *= s;
+            currlight->color.blue *= s;
         }
+
         switch (currlight->type)
         {
         case 1:
@@ -86,7 +81,7 @@ xLightKit* xLightKit_Prepare(void* data)
             RwV3dNormalize(&tmpmat.right, &tmpmat.right);
             RwV3dNormalize(&tmpmat.up, &tmpmat.up);
             RwV3dNormalize(&tmpmat.at, &tmpmat.at);
-            RwFrameTransform(frame, &tmpmat, (RwOpCombineType)0);
+            RwFrameTransform(frame, &tmpmat, rwCOMBINEREPLACE);
             _rwObjectHasFrameSetFrame(currlight->platLight, frame);
         }
         if (currlight->type >= 3)
