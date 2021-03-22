@@ -54,6 +54,56 @@ namespace cruise_bubble
         virtual void abort();
     };
 
+    struct state_player_fire : state_type
+    {
+        uint8 wand_shown;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+    
+    struct state_camera_aim : state_type
+    {
+        float32 phi;
+        float32 phi_vel;
+        float32 height;
+        float32 height_vel;
+        float32 dist;
+        float32 dist_vel;
+        xQuat facing;
+        xQuat target;
+        float32 control_delay;
+        float32 seize_delay;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+
+    struct state_player_halt : state_type
+    {
+        uint8 first_update;
+        float32 time;
+        xVec3 last_motion;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+
+    struct state_missle_explode : state_type
+    {
+        float32 hit_time;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+
+    struct state_camera_attach : state_type
+    {
+        float32 reticle_delay;
+
+        state_enum update();
+    };
+
     struct state_missle_fly : state_type
     {
         float32 life;
@@ -67,6 +117,58 @@ namespace cruise_bubble
         void start();
         state_enum update(float32 dt);
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
+    };
+
+    struct state_missle_appear : state_type
+    {
+    };
+
+    struct state_camera_seize : state_type
+    {
+        float32 blend_time;
+        xVec3 start_loc;
+        xQuat start_dir;
+        xQuat end_dir;
+        xQuat cur_dir;
+        float32 last_s;
+        float32 fov;
+        float32 wipe_bubbles;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+
+    struct state_player_aim : state_type
+    {
+        float32 yaw;
+        float32 yaw_vel;
+        float32 turn_delay;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+
+    struct state_camera_restore : state_type
+    {
+        float32 control_delay;
+
+        void start();
+        state_enum update(float32 dt);
+    };
+
+    struct state_camera_survey : state_type
+    {
+        float32 time;
+        xVec2 start_sp;
+        float32 path_distance[127];
+
+        void start();
+        void eval_missle_path(float32 dist, xVec3& loc, float32& roll);
+        state_enum update(float32 dt);
+    };
+
+    struct state_player_wait : state_type
+    {
     };
     
     struct sound_config
