@@ -815,7 +815,7 @@ void cruise_bubble::update_state(xScene* s, float32 dt)
                 (*state)->stop();
                 *state = NULL;
 
-                if (newtype != -1)
+                if (newtype != STATE_INVALID)
                 {
                     *state = shared.states[newtype];
                     (*state)->start();
@@ -824,7 +824,7 @@ void cruise_bubble::update_state(xScene* s, float32 dt)
         }
     }
 
-    if (shared.state[0] == NULL)
+    if (shared.state[THREAD_PLAYER] == NULL)
     {
         kill(true, false);
     }
@@ -832,7 +832,7 @@ void cruise_bubble::update_state(xScene* s, float32 dt)
 
 void cruise_bubble::render_state()
 {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < MAX_THREAD; ++i)
     {
         if (shared.state[i] != NULL)
         {
@@ -1251,7 +1251,7 @@ void cruise_bubble::flash_hud()
 #else
 void cruise_bubble::render_timer(float32 alpha, float32 glow)
 {
-    state_missle_fly* state = (state_missle_fly*) shared.state[1];
+    state_missle_fly* state = (state_missle_fly*) shared.state[THREAD_MISSLE];
     if (state == NULL || state->type != STATE_MISSLE_FLY)
     {
         return;
@@ -1644,7 +1644,29 @@ bool cruise_bubble::active()
 }
 
 // func_8005C4D0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "exploding__13cruise_bubbleFv")
+#else
+void cruise_bubble::exploding()
+{
+// Size=60
+    r3 = shared__13cruise_bubble@ha; // [int16]
+    r4 = 8(r3);
+    cmplwi r4, 0
+    beq lbl_8005C4F0
+    r0 = 0(r4);
+    cmpwi r0, 6
+    beq lbl_8005C4F8
+lbl_8005C4F0:
+    f1 = zEntCruiseBubble_f_0_0; // [float32]
+    blr 
+lbl_8005C4F8:
+    r3 = current_tweak__13cruise_bubble;
+    f0 = 8(r4); // [float32]
+    f1 = 0x6c(r3); // [float32]
+    fsubs f1, f1, f0
+}
+#endif
 
 // func_8005C50C
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "get_explode_sphere__13cruise_bubbleFR5xVec3Rf")
