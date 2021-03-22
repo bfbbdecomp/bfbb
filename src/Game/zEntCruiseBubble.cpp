@@ -1487,7 +1487,7 @@ int32 cruise_bubble::find_locked_target(const xVec3* loc)
 #else
 void cruise_bubble::init()
 {
-    if ((shared.flags & 0x1) != 1)
+    if ((shared.flags & 0x1) != 0x1)
     {
         return;
     }
@@ -1518,7 +1518,7 @@ void cruise_bubble::init_debug()
 
 void cruise_bubble::reset()
 {
-    if ((shared.flags & 0x3) != 3)
+    if ((shared.flags & 0x3) != 0x3)
     {
         return;
     }
@@ -1533,7 +1533,7 @@ void cruise_bubble::reset()
 
 bool cruise_bubble::render()
 {
-    if ((shared.flags & 0x7) != 7)
+    if ((shared.flags & 0x7) != 0x7)
     {
         return false;
     }
@@ -1553,7 +1553,7 @@ void cruise_bubble::render_debug()
 
 void cruise_bubble::render_screen()
 {
-    if ((shared.flags & 0x7) != 7)
+    if ((shared.flags & 0x7) != 0x7)
     {
         return;
     }
