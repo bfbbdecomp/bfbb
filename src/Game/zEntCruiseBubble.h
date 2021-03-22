@@ -392,6 +392,8 @@ namespace cruise_bubble
     void init();
     void init_debug();
     void reset();
+    bool render();
+    void render_debug();
 } // namespace cruise_bubble
 
 #endif

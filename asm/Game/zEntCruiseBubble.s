@@ -4171,34 +4171,6 @@ lbl_8005C000:
 /* 8005C010 00058E10  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C014 00058E14  4E 80 00 20 */	blr 
 
-.global render__13cruise_bubbleFv
-render__13cruise_bubbleFv:
-/* 8005C018 00058E18  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005C01C 00058E1C  7C 08 02 A6 */	mflr r0
-/* 8005C020 00058E20  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005C024 00058E24  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005C028 00058E28  80 03 C2 A4 */	lwz r0, shared__13cruise_bubble@l(r3)
-/* 8005C02C 00058E2C  54 00 07 7E */	clrlwi r0, r0, 0x1d
-/* 8005C030 00058E30  2C 00 00 07 */	cmpwi r0, 7
-/* 8005C034 00058E34  41 82 00 0C */	beq lbl_8005C040
-/* 8005C038 00058E38  38 60 00 00 */	li r3, 0
-/* 8005C03C 00058E3C  48 00 00 18 */	b lbl_8005C054
-lbl_8005C040:
-/* 8005C040 00058E40  4B FF C2 6D */	bl render_state__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005C044 00058E44  4B FF C0 DD */	bl render_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005C048 00058E48  4B FF D3 31 */	bl render_missle__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005C04C 00058E4C  48 00 00 19 */	bl render_debug__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005C050 00058E50  38 60 00 01 */	li r3, 1
-lbl_8005C054:
-/* 8005C054 00058E54  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005C058 00058E58  7C 08 03 A6 */	mtlr r0
-/* 8005C05C 00058E5C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005C060 00058E60  4E 80 00 20 */	blr 
-
-/* render_debug__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-render_debug__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 8005C064 00058E64  4E 80 00 20 */	blr 
-
 .global render_screen__13cruise_bubbleFv
 render_screen__13cruise_bubbleFv:
 /* 8005C068 00058E68  94 21 FF F0 */	stwu r1, -0x10(r1)

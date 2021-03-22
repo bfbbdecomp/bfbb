@@ -1531,13 +1531,25 @@ void cruise_bubble::reset()
 // func_8005BF30
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update__13cruise_bubbleFP6xScenef")
 
-// func_8005C018
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "render__13cruise_bubbleFv")
+bool cruise_bubble::render()
+{
+    if ((shared.flags & 0x7) != 7)
+    {
+        return false;
+    }
 
-// func_8005C064
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_debug__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    render_state();
+    render_player();
+    render_missle();
+    render_debug();
+
+    return true;
+}
+
+void cruise_bubble::render_debug()
+{
+    // empty
+}
 
 // func_8005C068
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "render_screen__13cruise_bubbleFv")
