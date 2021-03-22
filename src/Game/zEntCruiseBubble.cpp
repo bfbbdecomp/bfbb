@@ -1676,8 +1676,23 @@ float32 cruise_bubble::state_missle_explode::get_radius() const
     return t_frac * current_tweak->missle.explode.hit_radius;
 }
 
-// func_8005C5A8
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "get_explode_hits__13cruise_bubbleFRi")
+xEnt** cruise_bubble::get_explode_hits(int32& size)
+{
+    state_missle_explode* state = (state_missle_explode*) shared.state[THREAD_MISSLE];
+    if (state == NULL || state->type != STATE_MISSLE_EXPLODE)
+    {
+        size = 0;
+        return NULL;
+    }
+    if (state->hit_time >= current_tweak->missle.explode.hit_duration)
+    {
+        size = 0;
+        return NULL;
+    }
+    
+    size = shared.hits_size;
+    return shared.hits;
+}
 
 // func_8005C610
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "add_life__13cruise_bubbleFff")

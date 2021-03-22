@@ -4385,38 +4385,6 @@ anim_table__13cruise_bubbleFv:
 /* 8005C4B8 000592B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C4BC 000592BC  4E 80 00 20 */	blr 
 
-.global get_explode_hits__13cruise_bubbleFRi
-get_explode_hits__13cruise_bubbleFRi:
-/* 8005C5A8 000593A8  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
-/* 8005C5AC 000593AC  38 A4 C2 A4 */	addi r5, r4, shared__13cruise_bubble@l
-/* 8005C5B0 000593B0  80 C5 00 08 */	lwz r6, 8(r5)
-/* 8005C5B4 000593B4  28 06 00 00 */	cmplwi r6, 0
-/* 8005C5B8 000593B8  41 82 00 10 */	beq lbl_8005C5C8
-/* 8005C5BC 000593BC  80 06 00 00 */	lwz r0, 0(r6)
-/* 8005C5C0 000593C0  2C 00 00 06 */	cmpwi r0, 6
-/* 8005C5C4 000593C4  41 82 00 14 */	beq lbl_8005C5D8
-lbl_8005C5C8:
-/* 8005C5C8 000593C8  38 00 00 00 */	li r0, 0
-/* 8005C5CC 000593CC  90 03 00 00 */	stw r0, 0(r3)
-/* 8005C5D0 000593D0  38 60 00 00 */	li r3, 0
-/* 8005C5D4 000593D4  4E 80 00 20 */	blr 
-lbl_8005C5D8:
-/* 8005C5D8 000593D8  80 8D 81 80 */	lwz r4, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005C5DC 000593DC  C0 26 00 08 */	lfs f1, 8(r6)
-/* 8005C5E0 000593E0  C0 04 00 6C */	lfs f0, 0x6c(r4)
-/* 8005C5E4 000593E4  FC 01 00 40 */	fcmpo cr0, f1, f0
-/* 8005C5E8 000593E8  4C 41 13 82 */	cror 2, 1, 2
-/* 8005C5EC 000593EC  40 82 00 14 */	bne lbl_8005C600
-/* 8005C5F0 000593F0  38 00 00 00 */	li r0, 0
-/* 8005C5F4 000593F4  90 03 00 00 */	stw r0, 0(r3)
-/* 8005C5F8 000593F8  38 60 00 00 */	li r3, 0
-/* 8005C5FC 000593FC  4E 80 00 20 */	blr 
-lbl_8005C600:
-/* 8005C600 00059400  80 05 00 EC */	lwz r0, 0xec(r5)
-/* 8005C604 00059404  90 03 00 00 */	stw r0, 0(r3)
-/* 8005C608 00059408  38 65 00 6C */	addi r3, r5, 0x6c
-/* 8005C60C 0005940C  4E 80 00 20 */	blr 
-
 .global add_life__13cruise_bubbleFff
 add_life__13cruise_bubbleFff:
 /* 8005C610 00059410  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
