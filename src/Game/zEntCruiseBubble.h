@@ -385,6 +385,7 @@ namespace cruise_bubble
     void lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b);
     void lerp(uint8& x, float32 t, uint8 a, uint8 b); 
     void update_hud(float32 dt);
+    void render_hud();
     void show_hud();
     void hide_hud();
     int32 find_locked_target(const xVec3* loc);
@@ -394,6 +395,7 @@ namespace cruise_bubble
     void reset();
     bool render();
     void render_debug();
+    void render_screen();
 } // namespace cruise_bubble
 
 #endif

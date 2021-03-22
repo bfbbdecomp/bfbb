@@ -1386,7 +1386,7 @@ void cruise_bubble::uv_animated_model::update(float32 dt)
 // func_8005A0E0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "render_hud__13cruise_bubbleFv")
 
 // func_8005A2AC
 #if 1
@@ -1551,8 +1551,14 @@ void cruise_bubble::render_debug()
     // empty
 }
 
-// func_8005C068
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "render_screen__13cruise_bubbleFv")
+void cruise_bubble::render_screen()
+{
+    if ((shared.flags & 0x7) != 7)
+    {
+        return;
+    }
+    render_hud();
+}
 
 // func_8005C09C
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s",                                                  \

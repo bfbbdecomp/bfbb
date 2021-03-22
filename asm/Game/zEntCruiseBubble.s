@@ -2040,7 +2040,10 @@ lbl_8005A0C4:
 /* 8005A0DC 00056EDC  4E 80 00 20 */	blr 
 
 /* render_hud__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-render_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* render_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+render_hud__13cruise_bubbleFv:
 /* 8005A0E0 00056EE0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005A0E4 00056EE4  7C 08 02 A6 */	mflr r0
 /* 8005A0E8 00056EE8  3C 60 80 2E */	lis r3, hud__13cruise_bubble@ha
@@ -4170,23 +4173,6 @@ lbl_8005C000:
 /* 8005C00C 00058E0C  7C 08 03 A6 */	mtlr r0
 /* 8005C010 00058E10  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C014 00058E14  4E 80 00 20 */	blr 
-
-.global render_screen__13cruise_bubbleFv
-render_screen__13cruise_bubbleFv:
-/* 8005C068 00058E68  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005C06C 00058E6C  7C 08 02 A6 */	mflr r0
-/* 8005C070 00058E70  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005C074 00058E74  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005C078 00058E78  80 03 C2 A4 */	lwz r0, shared__13cruise_bubble@l(r3)
-/* 8005C07C 00058E7C  54 00 07 7E */	clrlwi r0, r0, 0x1d
-/* 8005C080 00058E80  2C 00 00 07 */	cmpwi r0, 7
-/* 8005C084 00058E84  40 82 00 08 */	bne lbl_8005C08C
-/* 8005C088 00058E88  4B FF E0 59 */	bl render_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-lbl_8005C08C:
-/* 8005C08C 00058E8C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005C090 00058E90  7C 08 03 A6 */	mtlr r0
-/* 8005C094 00058E94  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005C098 00058E98  4E 80 00 20 */	blr 
 
 .global insert_player_animations__13cruise_bubbleFR10xAnimTable
 insert_player_animations__13cruise_bubbleFR10xAnimTable:
