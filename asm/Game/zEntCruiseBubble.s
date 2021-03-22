@@ -4385,13 +4385,6 @@ anim_table__13cruise_bubbleFv:
 /* 8005C4B8 000592B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C4BC 000592BC  4E 80 00 20 */	blr 
 
-.global active__13cruise_bubbleFv
-active__13cruise_bubbleFv:
-/* 8005C4C0 000592C0  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005C4C4 000592C4  80 03 C2 A4 */	lwz r0, shared__13cruise_bubble@l(r3)
-/* 8005C4C8 000592C8  54 03 E7 FE */	rlwinm r3, r0, 0x1c, 0x1f, 0x1f
-/* 8005C4CC 000592CC  4E 80 00 20 */	blr 
-
 .global exploding__13cruise_bubbleFv
 exploding__13cruise_bubbleFv:
 /* 8005C4D0 000592D0  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha

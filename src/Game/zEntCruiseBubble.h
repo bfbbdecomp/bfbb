@@ -328,8 +328,6 @@ namespace cruise_bubble
     };
 
 
-    bool active();
-    void render_screen();
     void init_sound();
     void stop_sound(int32 which, uint32 handle);
     uint32 play_sound(int32 which, float32 volFactor);
@@ -398,6 +396,7 @@ namespace cruise_bubble
     bool render();
     void render_debug();
     void render_screen();
+    bool active();
 } // namespace cruise_bubble
 
 #endif

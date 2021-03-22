@@ -1569,7 +1569,7 @@ bool cruise_bubble::update(xScene* s, float32 dt)
     {
         return false;
     }
-    
+
     if ((shared.flags & 0x10) == 0x0)
     {
         if (check_launch())
@@ -1638,8 +1638,10 @@ void cruise_bubble::render_screen()
 // func_8005C380
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "anim_table__13cruise_bubbleFv")
 
-// func_8005C4C0
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "active__13cruise_bubbleFv")
+bool cruise_bubble::active()
+{
+    return shared.flags & 0x10;
+}
 
 // func_8005C4D0
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "exploding__13cruise_bubbleFv")
