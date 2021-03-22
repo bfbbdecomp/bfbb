@@ -365,6 +365,7 @@ namespace cruise_bubble
     void update_state(xScene* s, float32 dt);
     void render_state();
     RpAtomic* custom_bubble_render(RpAtomic* atomic);
+    void init_states();
     void init_missle_model();
     void reset_wake_ribbons();
     void init_wake_ribbons();
@@ -387,6 +388,9 @@ namespace cruise_bubble
     void show_hud();
     void hide_hud();
     int32 find_locked_target(const xVec3* loc);
+    void load_settings();
+    void init();
+    void init_debug();
 } // namespace cruise_bubble
 
 #endif

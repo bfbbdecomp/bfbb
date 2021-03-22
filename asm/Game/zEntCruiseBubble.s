@@ -531,7 +531,10 @@ lbl_8005848C:
 /* 800584BC 000552BC  4E 80 00 20 */	blr 
 
 /* init_states__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-init_states__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* init_states__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+init_states__13cruise_bubbleFv:
 /* 800584C0 000552C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800584C4 000552C4  7C 08 02 A6 */	mflr r0
 /* 800584C8 000552C8  3C 60 80 2E */	lis r3, lbl_802DBA80@ha
@@ -1020,7 +1023,10 @@ lbl_80058BAC:
 /* 80058BEC 000559EC  4E 80 00 20 */	blr 
 
 /* init_explode_decal__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-init_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* init_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+init_explode_decal__13cruise_bubbleFv:
 /* 80058D38 00055B38  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80058D3C 00055B3C  7C 08 02 A6 */	mflr r0
 /* 80058D40 00055B40  3C A0 80 25 */	lis r5, stringBase0__13cruise_bubble@ha
@@ -1550,7 +1556,10 @@ lbl_80059610:
 /* 80059694 00056494  4E 80 00 20 */	blr 
 
 /* init_hud__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+init_hud__13cruise_bubbleFv:
 /* 80059698 00056498  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005969C 0005649C  7C 08 02 A6 */	mflr r0
 /* 800596A0 000564A0  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
@@ -2513,7 +2522,10 @@ load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005A800 00057600  4E 80 00 20 */	blr 
 
 /* load_settings__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-load_settings__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* load_settings__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+load_settings__13cruise_bubbleFv:
 /* 8005A804 00057604  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005A808 00057608  7C 08 02 A6 */	mflr r0
 /* 8005A80C 0005760C  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
@@ -4019,10 +4031,6 @@ lbl_8005BDD8:
 /* 8005BDDC 00058BDC  7C 08 03 A6 */	mtlr r0
 /* 8005BDE0 00058BE0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005BDE4 00058BE4  4E 80 00 20 */	blr 
-
-/* init_debug__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-init_debug__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 8005BDE8 00058BE8  4E 80 00 20 */	blr 
 
 .global reset__13cruise_bubbleFv
 reset__13cruise_bubbleFv:

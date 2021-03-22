@@ -853,7 +853,7 @@ void cruise_bubble::render_state()
 // func_800584C0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_states__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "init_states__13cruise_bubbleFv")
 
 // func_800586FC
 #pragma GLOBAL_ASM(                                                                                \
@@ -1029,7 +1029,7 @@ void cruise_bubble::reset_explode_decal()
 // funcmatch
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_explode_decal__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "init_explode_decal__13cruise_bubbleFv")
 #else
 void cruise_bubble::init_explode_decal()
 {
@@ -1127,7 +1127,7 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "init_hud__13cruise_bubbleFv")
 #else
 void cruise_bubble::init_hud()
 {
@@ -1469,7 +1469,7 @@ int32 cruise_bubble::find_locked_target(const xVec3* loc)
 // func_8005A804
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load_settings__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "load_settings__13cruise_bubbleFv")
 
 // func_8005A880
 #pragma GLOBAL_ASM(                                                                                \
@@ -1482,12 +1482,39 @@ int32 cruise_bubble::find_locked_target(const xVec3* loc)
     "register_tweaks__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
 
 // func_8005BD60
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "init__13cruise_bubbleFv")
+#else
+void cruise_bubble::init()
+{
+    if ((shared.flags & 0x1) != 1)
+    {
+        return;
+    }
+    
+    init_sound();
 
-// func_8005BDE8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "init_debug__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    shared.flags = shared.flags | 0x2;
+    
+    load_settings();
+    init_states();
+    init_missle_model();
+    init_wake_ribbons();
+    init_explode_decal();
+    init_shrapnel();
+    init_hud();
+    init_debug();
+
+    // scheduling off
+    shared.fov_default = xCameraGetFOV(&globals.camera);
+    shared.dialog_freq = current_tweak->dialog.freq;
+}
+#endif
+
+void cruise_bubble::init_debug()
+{
+    // empty
+}
 
 // func_8005BDEC
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "reset__13cruise_bubbleFv")

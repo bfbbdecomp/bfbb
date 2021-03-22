@@ -219,6 +219,7 @@ void xCameraUpdate(xCamera* cam, float32 dt);
 void xCameraBegin(xCamera* cam, int32);
 void xCameraEnd(xCamera* cam, float32 seconds, int32 update_scrn_fx);
 void xCameraShowRaster(xCamera* cam);
+float32 xCameraGetFOV(const xCamera* cam);
 void xCameraSetFOV(xCamera* cam, float32 fov);
 void xCameraMove(xCamera* cam, uint32 flags, float32 dgoal, float32 hgoal, float32 pgoal,
                  float32 tm, float32 tm_acc, float32 tm_dec);
