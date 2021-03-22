@@ -4385,45 +4385,11 @@ anim_table__13cruise_bubbleFv:
 /* 8005C4B8 000592B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C4BC 000592BC  4E 80 00 20 */	blr 
 
-.global get_explode_sphere__13cruise_bubbleFR5xVec3Rf
-get_explode_sphere__13cruise_bubbleFR5xVec3Rf:
-/* 8005C50C 0005930C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005C510 00059310  7C 08 02 A6 */	mflr r0
-/* 8005C514 00059314  3C A0 80 29 */	lis r5, shared__13cruise_bubble@ha
-/* 8005C518 00059318  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005C51C 0005931C  38 A5 C2 A4 */	addi r5, r5, shared__13cruise_bubble@l
-/* 8005C520 00059320  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8005C524 00059324  93 C1 00 08 */	stw r30, 8(r1)
-/* 8005C528 00059328  7C 9E 23 78 */	mr r30, r4
-/* 8005C52C 0005932C  83 E5 00 08 */	lwz r31, 8(r5)
-/* 8005C530 00059330  28 1F 00 00 */	cmplwi r31, 0
-/* 8005C534 00059334  41 82 00 40 */	beq lbl_8005C574
-/* 8005C538 00059338  80 1F 00 00 */	lwz r0, 0(r31)
-/* 8005C53C 0005933C  2C 00 00 06 */	cmpwi r0, 6
-/* 8005C540 00059340  41 82 00 08 */	beq lbl_8005C548
-/* 8005C544 00059344  48 00 00 30 */	b lbl_8005C574
-lbl_8005C548:
-/* 8005C548 00059348  80 8D 81 80 */	lwz r4, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005C54C 0005934C  C0 3F 00 08 */	lfs f1, 8(r31)
-/* 8005C550 00059350  C0 04 00 6C */	lfs f0, 0x6c(r4)
-/* 8005C554 00059354  FC 01 00 40 */	fcmpo cr0, f1, f0
-/* 8005C558 00059358  4C 41 13 82 */	cror 2, 1, 2
-/* 8005C55C 0005935C  41 82 00 18 */	beq lbl_8005C574
-/* 8005C560 00059360  38 85 00 50 */	addi r4, r5, 0x50
-/* 8005C564 00059364  4B FA ED 01 */	bl __as__5xVec3FRC5xVec3
-/* 8005C568 00059368  7F E3 FB 78 */	mr r3, r31
-/* 8005C56C 0005936C  48 00 00 21 */	bl get_radius__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeCFv
-/* 8005C570 00059370  D0 3E 00 00 */	stfs f1, 0(r30)
-lbl_8005C574:
-/* 8005C574 00059374  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005C578 00059378  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8005C57C 0005937C  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8005C580 00059380  7C 08 03 A6 */	mtlr r0
-/* 8005C584 00059384  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005C588 00059388  4E 80 00 20 */	blr 
-
 /* get_radius__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeCFv */
-get_radius__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeCFv:
+/* changed from ... */
+/* get_radius__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeCFv: */
+/* ... so linker can find it */
+get_radius__Q213cruise_bubble20state_missle_explodeCFv:
 /* 8005C58C 0005938C  80 8D 81 80 */	lwz r4, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
 /* 8005C590 00059390  C0 43 00 08 */	lfs f2, 8(r3)
 /* 8005C594 00059394  C0 24 00 6C */	lfs f1, 0x6c(r4)

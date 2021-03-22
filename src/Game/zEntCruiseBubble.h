@@ -95,6 +95,7 @@ namespace cruise_bubble
 
         void start();
         state_enum update(float32 dt);
+        float32 get_radius() const;
     };
 
     struct state_camera_attach : state_type
@@ -500,6 +501,7 @@ namespace cruise_bubble
     void render_screen();
     bool active();
     float32 exploding();
+    void get_explode_sphere(xVec3& center, float32& radius);
 } // namespace cruise_bubble
 
 #endif
