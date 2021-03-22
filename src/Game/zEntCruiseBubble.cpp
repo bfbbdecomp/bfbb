@@ -1516,8 +1516,14 @@ void cruise_bubble::init_debug()
     // empty
 }
 
-// func_8005BDEC
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "reset__13cruise_bubbleFv")
+void cruise_bubble::reset()
+{
+    if ((shared.flags & 0x3) != 3)
+    {
+        return;
+    }
+    kill(true, false);
+}
 
 // func_8005BE28
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "launch__13cruise_bubbleFv")

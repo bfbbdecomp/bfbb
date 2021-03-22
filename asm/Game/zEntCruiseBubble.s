@@ -4032,25 +4032,6 @@ lbl_8005BDD8:
 /* 8005BDE0 00058BE0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005BDE4 00058BE4  4E 80 00 20 */	blr 
 
-.global reset__13cruise_bubbleFv
-reset__13cruise_bubbleFv:
-/* 8005BDEC 00058BEC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005BDF0 00058BF0  7C 08 02 A6 */	mflr r0
-/* 8005BDF4 00058BF4  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005BDF8 00058BF8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005BDFC 00058BFC  80 03 C2 A4 */	lwz r0, shared__13cruise_bubble@l(r3)
-/* 8005BE00 00058C00  54 00 07 BE */	clrlwi r0, r0, 0x1e
-/* 8005BE04 00058C04  2C 00 00 03 */	cmpwi r0, 3
-/* 8005BE08 00058C08  40 82 00 10 */	bne lbl_8005BE18
-/* 8005BE0C 00058C0C  38 60 00 01 */	li r3, 1
-/* 8005BE10 00058C10  38 80 00 00 */	li r4, 0
-/* 8005BE14 00058C14  4B FF C0 59 */	bl kill__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fbb
-lbl_8005BE18:
-/* 8005BE18 00058C18  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005BE1C 00058C1C  7C 08 03 A6 */	mtlr r0
-/* 8005BE20 00058C20  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005BE24 00058C24  4E 80 00 20 */	blr 
-
 .global launch__13cruise_bubbleFv
 launch__13cruise_bubbleFv:
 /* 8005BE28 00058C28  94 21 FF F0 */	stwu r1, -0x10(r1)

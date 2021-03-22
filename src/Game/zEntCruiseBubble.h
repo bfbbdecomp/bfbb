@@ -391,6 +391,7 @@ namespace cruise_bubble
     void load_settings();
     void init();
     void init_debug();
+    void reset();
 } // namespace cruise_bubble
 
 #endif
