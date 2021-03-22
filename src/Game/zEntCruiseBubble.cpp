@@ -1728,11 +1728,27 @@ void cruise_bubble::add_life(float32 life, float32 max)
 }
 #endif
 
-// func_8005C674
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "set_life__13cruise_bubbleFf")
+void cruise_bubble::set_life(float32 life)
+{
+    state_missle_fly* state = (state_missle_fly*) shared.state[THREAD_MISSLE];
+    if (state == NULL || state->type != STATE_MISSLE_FLY)
+    {
+        return;
+    }
+    
+    state->life = life;
+}
 
-// func_8005C6A0
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "reset_life__13cruise_bubbleFv")
+void cruise_bubble::reset_life()
+{
+    state_missle_fly* state = (state_missle_fly*) shared.state[THREAD_MISSLE];
+    if (state == NULL || state->type != STATE_MISSLE_FLY)
+    {
+        return;
+    }
+    
+    state->life = current_tweak->missle.life;
+}
 
 // func_8005C6D4
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s",                                                  \

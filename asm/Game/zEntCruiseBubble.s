@@ -4415,38 +4415,6 @@ lbl_8005C654:
 /* 8005C66C 0005946C  D0 44 00 08 */	stfs f2, 8(r4)
 /* 8005C670 00059470  4E 80 00 20 */	blr 
 
-.global set_life__13cruise_bubbleFf
-set_life__13cruise_bubbleFf:
-/* 8005C674 00059474  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005C678 00059478  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005C67C 0005947C  80 63 00 08 */	lwz r3, 8(r3)
-/* 8005C680 00059480  28 03 00 00 */	cmplwi r3, 0
-/* 8005C684 00059484  4D 82 00 20 */	beqlr 
-/* 8005C688 00059488  80 03 00 00 */	lwz r0, 0(r3)
-/* 8005C68C 0005948C  2C 00 00 05 */	cmpwi r0, 5
-/* 8005C690 00059490  41 82 00 08 */	beq lbl_8005C698
-/* 8005C694 00059494  4E 80 00 20 */	blr 
-lbl_8005C698:
-/* 8005C698 00059498  D0 23 00 08 */	stfs f1, 8(r3)
-/* 8005C69C 0005949C  4E 80 00 20 */	blr 
-
-.global reset_life__13cruise_bubbleFv
-reset_life__13cruise_bubbleFv:
-/* 8005C6A0 000594A0  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005C6A4 000594A4  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005C6A8 000594A8  80 83 00 08 */	lwz r4, 8(r3)
-/* 8005C6AC 000594AC  28 04 00 00 */	cmplwi r4, 0
-/* 8005C6B0 000594B0  4D 82 00 20 */	beqlr 
-/* 8005C6B4 000594B4  80 04 00 00 */	lwz r0, 0(r4)
-/* 8005C6B8 000594B8  2C 00 00 05 */	cmpwi r0, 5
-/* 8005C6BC 000594BC  41 82 00 08 */	beq lbl_8005C6C4
-/* 8005C6C0 000594C0  4E 80 00 20 */	blr 
-lbl_8005C6C4:
-/* 8005C6C4 000594C4  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005C6C8 000594C8  C0 03 00 14 */	lfs f0, 0x14(r3)
-/* 8005C6CC 000594CC  D0 04 00 08 */	stfs f0, 8(r4)
-/* 8005C6D0 000594D0  4E 80 00 20 */	blr 
-
 .global event_handler__13cruise_bubbleFP5xBaseUiPCfP5xBase
 event_handler__13cruise_bubbleFP5xBaseUiPCfP5xBase:
 /* 8005C6D4 000594D4  94 21 FF F0 */	stwu r1, -0x10(r1)

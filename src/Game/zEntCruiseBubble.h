@@ -504,6 +504,8 @@ namespace cruise_bubble
     void get_explode_sphere(xVec3& center, float32& radius);
     xEnt** get_explode_hits(int32& size);
     void add_life(float32, float32);
+    void set_life(float32 life);
+    void reset_life();
 } // namespace cruise_bubble
 
 #endif
