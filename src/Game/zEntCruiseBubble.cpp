@@ -1695,7 +1695,38 @@ xEnt** cruise_bubble::get_explode_hits(int32& size)
 }
 
 // func_8005C610
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "add_life__13cruise_bubbleFff")
+#else
+// param names guessed
+void cruise_bubble::add_life(float32 life, float32 max)
+{
+    state_missle_fly* state = (state_missle_fly*) shared.state[THREAD_MISSLE];
+    if (state == NULL || state->type != STATE_MISSLE_FLY)
+    {
+        return;
+    }
+    
+    state->life += life;
+
+    if (max < zEntCruiseBubble_f_0_0)
+    {
+        max = current_tweak->missle.life;
+    }
+
+    // original asm loads zEntCruiseBubble_f_0_0 a second time here
+    if (!(max > zEntCruiseBubble_f_0_0))
+    {
+        return;
+    }
+    if (!(state->life > max))
+    {
+        return;
+    }
+
+    state->life = max;
+}
+#endif
 
 // func_8005C674
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "set_life__13cruise_bubbleFf")

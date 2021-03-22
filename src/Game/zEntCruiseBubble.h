@@ -503,6 +503,7 @@ namespace cruise_bubble
     float32 exploding();
     void get_explode_sphere(xVec3& center, float32& radius);
     xEnt** get_explode_hits(int32& size);
+    void add_life(float32, float32);
 } // namespace cruise_bubble
 
 #endif
