@@ -355,7 +355,7 @@ namespace cruise_bubble
     void start_trail();
     void stop_trail();
     void set_state(thread_enum thread, state_enum state);
-    uint32 check_launch();
+    bool check_launch();
     void kill(bool reset_camera, bool abortive);
     void distort_screen(float32);
     void update_player(xScene& s, float32 dt);
@@ -394,6 +394,7 @@ namespace cruise_bubble
     void init_debug();
     void reset();
     void launch();
+    bool update(xScene* s, float32 dt);
     bool render();
     void render_debug();
     void render_screen();

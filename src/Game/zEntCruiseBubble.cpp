@@ -672,7 +672,7 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
 
-uint32 cruise_bubble::check_launch()
+bool cruise_bubble::check_launch()
 {
     // this can surely be written better and still OK 
     bool can_cruise_bubble = false;
@@ -756,7 +756,7 @@ void cruise_bubble::distort_screen(float32)
 
 // func_80057FE8
 #ifndef NONMATCHING
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update_player__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR6xScenef")
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update_player__13cruise_bubbleFR6xScenef")
 #else
 void cruise_bubble::update_player(xScene& s, float32 dt)
 {
@@ -1309,7 +1309,7 @@ void cruise_bubble::lerp(uint8& x, float32 t, uint8 a, uint8 b)
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Ff")
+    "update_hud__13cruise_bubbleFf")
 #else
 void cruise_bubble::update_hud(float32 dt)
 {
@@ -1563,8 +1563,44 @@ void cruise_bubble::launch()
 }
 #endif
 
-// func_8005BF30
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update__13cruise_bubbleFP6xScenef")
+bool cruise_bubble::update(xScene* s, float32 dt)
+{
+    if ((shared.flags & 0x3) != 0x3)
+    {
+        return false;
+    }
+    
+    if ((shared.flags & 0x10) == 0x0)
+    {
+        if (check_launch())
+        {
+            launch();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    if(globals.player.ControlOff)
+    {
+        kill(true, false);
+        return false;
+    }
+
+    refresh_controls();
+    update_state(s, dt);
+
+    if ((shared.flags & 0x10) == 0)
+    {
+        return false;
+    }
+    
+    update_player(*s, dt);
+    update_missle(*s, dt);
+    update_hud(dt);
+    return true;
+}
 
 bool cruise_bubble::render()
 {
