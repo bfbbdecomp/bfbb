@@ -537,10 +537,10 @@ lbl_8005848C:
 init_states__13cruise_bubbleFv:
 /* 800584C0 000552C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800584C4 000552C4  7C 08 02 A6 */	mflr r0
-/* 800584C8 000552C8  3C 60 80 2E */	lis r3, lbl_802DBA80@ha
+/* 800584C8 000552C8  3C 60 80 2E */	lis r3, normal_tweak__13cruise_bubble@ha
 /* 800584CC 000552CC  90 01 00 14 */	stw r0, 0x14(r1)
 /* 800584D0 000552D0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800584D4 000552D4  3B E3 BA 80 */	addi r31, r3, lbl_802DBA80@l
+/* 800584D4 000552D4  3B E3 BA 80 */	addi r31, r3, normal_tweak__13cruise_bubble@l
 /* 800584D8 000552D8  88 0D 8C 48 */	lbz r0, lbl_803CB548-_SDA_BASE_(r13)
 /* 800584DC 000552DC  7C 00 07 75 */	extsb. r0, r0
 /* 800584E0 000552E0  40 82 00 14 */	bne lbl_800584F4
@@ -2452,9 +2452,9 @@ check_anim_aim__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_e
 load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 8005A6E0 000574E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005A6E4 000574E4  7C 08 02 A6 */	mflr r0
-/* 8005A6E8 000574E8  3C 60 80 2E */	lis r3, lbl_802DBC38@ha
+/* 8005A6E8 000574E8  3C 60 80 2E */	lis r3, cheat_tweak__13cruise_bubble@ha
 /* 8005A6EC 000574EC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005A6F0 000574F0  38 83 BC 38 */	addi r4, r3, lbl_802DBC38@l
+/* 8005A6F0 000574F0  38 83 BC 38 */	addi r4, r3, cheat_tweak__13cruise_bubble@l
 /* 8005A6F4 000574F4  3C 60 80 25 */	lis r3, stringBase0__13cruise_bubble@ha
 /* 8005A6F8 000574F8  C0 02 8A 10 */	lfs f0, lbl_803CD390-_SDA2_BASE_(r2)
 /* 8005A6FC 000574FC  38 63 53 3C */	addi r3, r3, stringBase0__13cruise_bubble@l
@@ -2489,9 +2489,9 @@ load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005A770 00057570  C0 02 8A 40 */	lfs f0, lbl_803CD3C0-_SDA2_BASE_(r2)
 /* 8005A774 00057574  D0 04 00 CC */	stfs f0, 0xcc(r4)
 /* 8005A778 00057578  4B FF 1A 9D */	bl xStrHash__FPCc
-/* 8005A77C 0005757C  3C A0 80 2E */	lis r5, lbl_802DBC38@ha
+/* 8005A77C 0005757C  3C A0 80 2E */	lis r5, cheat_tweak__13cruise_bubble@ha
 /* 8005A780 00057580  3C 80 80 25 */	lis r4, stringBase0__13cruise_bubble@ha
-/* 8005A784 00057584  38 A5 BC 38 */	addi r5, r5, lbl_802DBC38@l
+/* 8005A784 00057584  38 A5 BC 38 */	addi r5, r5, cheat_tweak__13cruise_bubble@l
 /* 8005A788 00057588  90 65 00 D4 */	stw r3, 0xd4(r5)
 /* 8005A78C 0005758C  38 64 53 3C */	addi r3, r4, stringBase0__13cruise_bubble@l
 /* 8005A790 00057590  38 63 01 E9 */	addi r3, r3, 0x1e9
@@ -2500,9 +2500,9 @@ load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005A79C 0005759C  C0 02 89 C0 */	lfs f0, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
 /* 8005A7A0 000575A0  D0 05 00 DC */	stfs f0, 0xdc(r5)
 /* 8005A7A4 000575A4  4B FF 1A 71 */	bl xStrHash__FPCc
-/* 8005A7A8 000575A8  3C A0 80 2E */	lis r5, lbl_802DBC38@ha
+/* 8005A7A8 000575A8  3C A0 80 2E */	lis r5, cheat_tweak__13cruise_bubble@ha
 /* 8005A7AC 000575AC  38 80 01 90 */	li r4, 0x190
-/* 8005A7B0 000575B0  38 A5 BC 38 */	addi r5, r5, lbl_802DBC38@l
+/* 8005A7B0 000575B0  38 A5 BC 38 */	addi r5, r5, cheat_tweak__13cruise_bubble@l
 /* 8005A7B4 000575B4  38 00 00 0F */	li r0, 0xf
 /* 8005A7B8 000575B8  90 65 00 E0 */	stw r3, 0xe0(r5)
 /* 8005A7BC 000575BC  C0 02 8A 44 */	lfs f0, lbl_803CD3C4-_SDA2_BASE_(r2)
@@ -2543,17 +2543,17 @@ load_settings__13cruise_bubbleFv:
 /* 8005A830 00057630  38 00 00 00 */	li r0, 0
 /* 8005A834 00057634  90 01 00 08 */	stw r0, 8(r1)
 lbl_8005A838:
-/* 8005A838 00057638  3C 80 80 2E */	lis r4, lbl_802DBA80@ha
+/* 8005A838 00057638  3C 80 80 2E */	lis r4, normal_tweak__13cruise_bubble@ha
 /* 8005A83C 0005763C  80 A1 00 08 */	lwz r5, 8(r1)
-/* 8005A840 00057640  38 04 BA 80 */	addi r0, r4, lbl_802DBA80@l
+/* 8005A840 00057640  38 04 BA 80 */	addi r0, r4, normal_tweak__13cruise_bubble@l
 /* 8005A844 00057644  7C 64 1B 78 */	mr r4, r3
 /* 8005A848 00057648  7C 03 03 78 */	mr r3, r0
 /* 8005A84C 0005764C  48 00 00 35 */	bl load__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi
-/* 8005A850 00057650  3C 60 80 2E */	lis r3, lbl_802DBC38@ha
-/* 8005A854 00057654  3C 80 80 2E */	lis r4, lbl_802DBA80@ha
-/* 8005A858 00057658  38 63 BC 38 */	addi r3, r3, lbl_802DBC38@l
+/* 8005A850 00057650  3C 60 80 2E */	lis r3, cheat_tweak__13cruise_bubble@ha
+/* 8005A854 00057654  3C 80 80 2E */	lis r4, normal_tweak__13cruise_bubble@ha
+/* 8005A858 00057658  38 63 BC 38 */	addi r3, r3, cheat_tweak__13cruise_bubble@l
 /* 8005A85C 0005765C  38 A0 01 B8 */	li r5, 0x1b8
-/* 8005A860 00057660  38 84 BA 80 */	addi r4, r4, lbl_802DBA80@l
+/* 8005A860 00057660  38 84 BA 80 */	addi r4, r4, normal_tweak__13cruise_bubble@l
 /* 8005A864 00057664  4B FA 8C DD */	bl memcpy
 /* 8005A868 00057668  4B FF FE 79 */	bl load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
 /* 8005A86C 0005766C  4B FF EA A9 */	bl refresh_missle_model__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
@@ -4049,17 +4049,17 @@ launch__13cruise_bubbleFv:
 /* 8005BE4C 00058C4C  54 60 00 85 */	rlwinm. r0, r3, 0, 2, 2
 /* 8005BE50 00058C50  41 82 00 28 */	beq lbl_8005BE78
 /* 8005BE54 00058C54  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
-/* 8005BE58 00058C58  3C 60 80 2E */	lis r3, lbl_802DBC38@ha
+/* 8005BE58 00058C58  3C 60 80 2E */	lis r3, cheat_tweak__13cruise_bubble@ha
 /* 8005BE5C 00058C5C  38 A4 C2 A4 */	addi r5, r4, shared__13cruise_bubble@l
 /* 8005BE60 00058C60  80 85 00 00 */	lwz r4, 0(r5)
-/* 8005BE64 00058C64  38 03 BC 38 */	addi r0, r3, lbl_802DBC38@l
+/* 8005BE64 00058C64  38 03 BC 38 */	addi r0, r3, cheat_tweak__13cruise_bubble@l
 /* 8005BE68 00058C68  60 83 02 00 */	ori r3, r4, 0x200
 /* 8005BE6C 00058C6C  90 65 00 00 */	stw r3, 0(r5)
 /* 8005BE70 00058C70  90 0D 81 80 */	stw r0, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
 /* 8005BE74 00058C74  48 00 00 10 */	b lbl_8005BE84
 lbl_8005BE78:
-/* 8005BE78 00058C78  3C 60 80 2E */	lis r3, lbl_802DBA80@ha
-/* 8005BE7C 00058C7C  38 03 BA 80 */	addi r0, r3, lbl_802DBA80@l
+/* 8005BE78 00058C78  3C 60 80 2E */	lis r3, normal_tweak__13cruise_bubble@ha
+/* 8005BE7C 00058C7C  38 03 BA 80 */	addi r0, r3, normal_tweak__13cruise_bubble@l
 /* 8005BE80 00058C80  90 0D 81 80 */	stw r0, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
 lbl_8005BE84:
 /* 8005BE84 00058C84  4B FF CC 11 */	bl reset_wake_ribbons__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
@@ -9503,9 +9503,11 @@ __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20st
 	.incbin "baserom.dol", 0x289600, 0x20
 
 .section .bss
-lbl_802DBA80:
+.global normal_tweak__13cruise_bubble
+normal_tweak__13cruise_bubble:
 	.skip 0x1B8
-lbl_802DBC38:
+.global cheat_tweak__13cruise_bubble
+cheat_tweak__13cruise_bubble:
 	.skip 0x1B8
 lbl_802DBDF0:
 	.skip 0x40

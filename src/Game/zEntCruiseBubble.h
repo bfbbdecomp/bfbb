@@ -393,6 +393,7 @@ namespace cruise_bubble
     void init();
     void init_debug();
     void reset();
+    void launch();
     bool render();
     void render_debug();
     void render_screen();

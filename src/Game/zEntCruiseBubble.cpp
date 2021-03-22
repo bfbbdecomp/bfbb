@@ -7,6 +7,7 @@
 #include "zEntDestructObj.h"
 #include "zEntPlayer.h"
 #include "zEntTrigger.h"
+#include "zGameExtras.h"
 #include "zGlobals.h"
 #include "zTalkBox.h"
 
@@ -31,8 +32,8 @@ extern basic_rect<float32> screen_bounds;
 // basic_rect default_adjust;
 // int8 buffer[16];
 // int8 buffer[16];
-// tweak_group normal_tweak;
-// tweak_group cheat_tweak;
+extern tweak_group normal_tweak;
+extern tweak_group cheat_tweak;
 extern tweak_group* current_tweak;
 extern xBase base;
 extern const char* start_anim_states[37]; // string array of names
@@ -1526,7 +1527,41 @@ void cruise_bubble::reset()
 }
 
 // func_8005BE28
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "launch__13cruise_bubbleFv")
+#else
+void cruise_bubble::launch()
+{
+    if ((shared.flags & 0x13) != 0x3)
+    {
+        return;
+    }
+    
+    if ((zGameExtras_CheatFlags() & 0x20000000) != 0)
+    {
+        // scheduling off
+        shared.flags = shared.flags | 0x200;
+        current_tweak = &cheat_tweak;
+    }
+    else
+    {
+        current_tweak = &normal_tweak;
+    }
+
+    reset_wake_ribbons();
+    reset_explode_decal();
+
+    shared.flags = shared.flags | 0x14;
+    shared.last_sp = shared.sp = globals.pad0->analog[0].offset;
+    shared.player_health = globals.player.Health;
+    // scheduling off
+    shared.player_motion = zEntCruiseBubble_f_0_0;
+    shared.fov_default = xCameraGetFOV(&globals.camera);
+    
+    ztalkbox::permit(0x0, 0xffffffff);
+    set_state(THREAD_PLAYER, BEGIN_STATE_PLAYER);
+}
+#endif
 
 // func_8005BF30
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "update__13cruise_bubbleFP6xScenef")
