@@ -4385,26 +4385,6 @@ anim_table__13cruise_bubbleFv:
 /* 8005C4B8 000592B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C4BC 000592BC  4E 80 00 20 */	blr 
 
-.global exploding__13cruise_bubbleFv
-exploding__13cruise_bubbleFv:
-/* 8005C4D0 000592D0  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005C4D4 000592D4  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005C4D8 000592D8  80 83 00 08 */	lwz r4, 8(r3)
-/* 8005C4DC 000592DC  28 04 00 00 */	cmplwi r4, 0
-/* 8005C4E0 000592E0  41 82 00 10 */	beq lbl_8005C4F0
-/* 8005C4E4 000592E4  80 04 00 00 */	lwz r0, 0(r4)
-/* 8005C4E8 000592E8  2C 00 00 06 */	cmpwi r0, 6
-/* 8005C4EC 000592EC  41 82 00 0C */	beq lbl_8005C4F8
-lbl_8005C4F0:
-/* 8005C4F0 000592F0  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005C4F4 000592F4  4E 80 00 20 */	blr 
-lbl_8005C4F8:
-/* 8005C4F8 000592F8  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005C4FC 000592FC  C0 04 00 08 */	lfs f0, 8(r4)
-/* 8005C500 00059300  C0 23 00 6C */	lfs f1, 0x6c(r3)
-/* 8005C504 00059304  EC 21 00 28 */	fsubs f1, f1, f0
-/* 8005C508 00059308  4E 80 00 20 */	blr 
-
 .global get_explode_sphere__13cruise_bubbleFR5xVec3Rf
 get_explode_sphere__13cruise_bubbleFR5xVec3Rf:
 /* 8005C50C 0005930C  94 21 FF F0 */	stwu r1, -0x10(r1)

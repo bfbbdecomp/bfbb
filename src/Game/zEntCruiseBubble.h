@@ -499,6 +499,7 @@ namespace cruise_bubble
     void render_debug();
     void render_screen();
     bool active();
+    float32 exploding();
 } // namespace cruise_bubble
 
 #endif

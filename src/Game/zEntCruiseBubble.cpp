@@ -1643,30 +1643,16 @@ bool cruise_bubble::active()
     return shared.flags & 0x10;
 }
 
-// func_8005C4D0
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "exploding__13cruise_bubbleFv")
-#else
-void cruise_bubble::exploding()
+float32 cruise_bubble::exploding()
 {
-// Size=60
-    r3 = shared__13cruise_bubble@ha; // [int16]
-    r4 = 8(r3);
-    cmplwi r4, 0
-    beq lbl_8005C4F0
-    r0 = 0(r4);
-    cmpwi r0, 6
-    beq lbl_8005C4F8
-lbl_8005C4F0:
-    f1 = zEntCruiseBubble_f_0_0; // [float32]
-    blr 
-lbl_8005C4F8:
-    r3 = current_tweak__13cruise_bubble;
-    f0 = 8(r4); // [float32]
-    f1 = 0x6c(r3); // [float32]
-    fsubs f1, f1, f0
+    state_missle_explode* state = (state_missle_explode*) shared.state[THREAD_MISSLE];
+    if (state == NULL || state->type != STATE_MISSLE_EXPLODE)
+    {
+        return zEntCruiseBubble_f_0_0;
+    }
+
+    return current_tweak->missle.explode.hit_duration - state->hit_time;
 }
-#endif
 
 // func_8005C50C
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "get_explode_sphere__13cruise_bubbleFR5xVec3Rf")
