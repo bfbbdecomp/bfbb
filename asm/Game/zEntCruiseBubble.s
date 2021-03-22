@@ -4385,19 +4385,6 @@ anim_table__13cruise_bubbleFv:
 /* 8005C4B8 000592B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005C4BC 000592BC  4E 80 00 20 */	blr 
 
-/* get_radius__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeCFv */
-/* changed from ... */
-/* get_radius__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeCFv: */
-/* ... so linker can find it */
-get_radius__Q213cruise_bubble20state_missle_explodeCFv:
-/* 8005C58C 0005938C  80 8D 81 80 */	lwz r4, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005C590 00059390  C0 43 00 08 */	lfs f2, 8(r3)
-/* 8005C594 00059394  C0 24 00 6C */	lfs f1, 0x6c(r4)
-/* 8005C598 00059398  C0 04 00 68 */	lfs f0, 0x68(r4)
-/* 8005C59C 0005939C  EC 22 08 24 */	fdivs f1, f2, f1
-/* 8005C5A0 000593A0  EC 21 00 32 */	fmuls f1, f1, f0
-/* 8005C5A4 000593A4  4E 80 00 20 */	blr 
-
 .global get_explode_hits__13cruise_bubbleFRi
 get_explode_hits__13cruise_bubbleFRi:
 /* 8005C5A8 000593A8  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha

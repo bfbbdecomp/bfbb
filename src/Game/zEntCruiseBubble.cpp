@@ -1670,10 +1670,11 @@ void cruise_bubble::get_explode_sphere(xVec3& center, float32& radius)
     radius = state->get_radius();
 }
 
-// func_8005C58C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_radius__Q213cruise_bubble20state_missle_explodeCFv")
+float32 cruise_bubble::state_missle_explode::get_radius() const
+{
+    float32 t_frac = this->hit_time / current_tweak->missle.explode.hit_duration;
+    return t_frac * current_tweak->missle.explode.hit_radius;
+}
 
 // func_8005C5A8
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "get_explode_hits__13cruise_bubbleFRi")
