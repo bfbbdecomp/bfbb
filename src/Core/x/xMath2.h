@@ -23,7 +23,9 @@ template <class T> struct basic_rect
     void set_bounds(T x1, T y1, T x2, T y2);
     void get_bounds(T& x1, T& y1, T& x2, T& y2) const;
     bool empty() const;
-
+    void set_size(T w, T h);
+    void set_size(T s);
+    void center(T x, T y);
     basic_rect& operator=(const basic_rect&); // temp
     basic_rect& operator|=(const basic_rect& other);
 };
