@@ -663,14 +663,28 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
 }
 
 // func_80057D78
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
+#else
+void cruise_bubble::state_type::start()
+{
+    // empty
+}
+#endif
 
 // func_80057D7C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
+#else
+void cruise_bubble::state_type::stop()
+{
+    // empty
+}
+#endif
 
 bool cruise_bubble::check_launch()
 {
@@ -750,9 +764,16 @@ void cruise_bubble::distort_screen(float32)
 }
 
 // func_80057FE4
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
+#else
+void cruise_bubble::state_type::abort()
+{
+    // empty
+}
+#endif
 
 // func_80057FE8
 #ifndef NONMATCHING
@@ -842,9 +863,16 @@ void cruise_bubble::render_state()
 }
 
 // func_80058310
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
+#else
+void cruise_bubble::state_type::render()
+{
+    // empty
+}
+#endif
 
 // func_80058314
 #pragma GLOBAL_ASM(                                                                                \
