@@ -41,9 +41,9 @@ extern const char* start_anim_states[37]; // string array of names
 extern struct _class_36
 {
     int32 flags;
-    state_type* state[3];
+    state_type* state[MAX_THREAD];
     // Offset: 0x10
-    state_type* states[12];
+    state_type* states[MAX_STATE];
     // Offset: 0x40
     xVec2 last_sp;
     // Offset: 0x48
@@ -655,7 +655,7 @@ void cruise_bubble::set_state(cruise_bubble::thread_enum thread, cruise_bubble::
         *st = NULL;
     }
 
-    if (state != -1)
+    if (state != STATE_INVALID)
     {
         *st = shared.states[state];
         (*st)->start();
@@ -853,7 +853,7 @@ void cruise_bubble::update_state(xScene* s, float32 dt)
 
 void cruise_bubble::render_state()
 {
-    for (int i = 0; i < MAX_THREAD; ++i)
+    for (int i = THREAD_PLAYER; i < MAX_THREAD; ++i)
     {
         if (shared.state[i] != NULL)
         {
