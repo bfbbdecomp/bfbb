@@ -47,6 +47,8 @@ namespace cruise_bubble
     {
         state_enum type;
 
+        state_type(state_enum type);
+
         virtual void start();
         virtual void stop();
         virtual state_enum update(float32 dt) = 0;

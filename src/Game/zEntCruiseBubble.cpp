@@ -889,10 +889,10 @@ void cruise_bubble::state_type::render()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restoreFv")
 
-// func_8005873C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_enum")
+cruise_bubble::state_type::state_type(cruise_bubble::state_enum type)
+{
+    this->type = type;
+}
 
 // func_80058750
 #pragma GLOBAL_ASM(                                                                                \

@@ -713,14 +713,6 @@ __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20st
 /* 80058734 00055534  38 21 00 10 */	addi r1, r1, 0x10
 /* 80058738 00055538  4E 80 00 20 */	blr 
 
-/* __ct__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@10state_typeFQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@10state_enum */
-__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_enum:
-/* 8005873C 0005553C  3C A0 80 29 */	lis r5, __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_type@ha
-/* 80058740 00055540  38 05 C6 04 */	addi r0, r5, __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_type@l
-/* 80058744 00055544  90 03 00 04 */	stw r0, 4(r3)
-/* 80058748 00055548  90 83 00 00 */	stw r4, 0(r3)
-/* 8005874C 0005554C  4E 80 00 20 */	blr 
-
 /* __ct__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyFv */
 __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv:
 /* 80058750 00055550  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -9295,8 +9287,11 @@ __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19st
 __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_survey:
 	.incbin "baserom.dol", 0x2895C8, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_type
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_type:
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_type: */
+/* ... so linker can find it */
+.global __vt__Q213cruise_bubble10state_type
+__vt__Q213cruise_bubble10state_type:
 	.incbin "baserom.dol", 0x2895E4, 0x1C
 /* SPECULATION: link order */
 .global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restore
