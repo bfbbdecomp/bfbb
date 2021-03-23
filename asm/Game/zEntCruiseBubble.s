@@ -9243,59 +9243,95 @@ shared__13cruise_bubble:
 sounds__13cruise_bubble:
 	.incbin "baserom.dol", 0x289410, 0xA0
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_halt
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_halt:
+.global __vt__Q213cruise_bubble17state_player_halt
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_halt: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble17state_player_halt:
 	.incbin "baserom.dol", 0x2894B0, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aim
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aim:
+.global __vt__Q213cruise_bubble16state_player_aim
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aim: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble16state_player_aim:
 	.incbin "baserom.dol", 0x2894CC, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fire
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fire:
+.global __vt__Q213cruise_bubble17state_player_fire
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fire: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble17state_player_fire:
 	.incbin "baserom.dol", 0x2894E8, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_wait
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_wait:
+.global __vt__Q213cruise_bubble17state_player_wait
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_wait: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble17state_player_wait:
 	.incbin "baserom.dol", 0x289504, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appear
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appear:
+.global __vt__Q213cruise_bubble19state_missle_appear
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appear: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble19state_missle_appear:
 	.incbin "baserom.dol", 0x289520, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_fly
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_fly:
+.global __vt__Q213cruise_bubble16state_missle_fly
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_fly: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble16state_missle_fly:
 	.incbin "baserom.dol", 0x28953C, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explode
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explode:
+.global __vt__Q213cruise_bubble20state_missle_explode
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explode: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble20state_missle_explode:
 	.incbin "baserom.dol", 0x289558, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aim
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aim:
+.global __vt__Q213cruise_bubble16state_camera_aim
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aim: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble16state_camera_aim:
 	.incbin "baserom.dol", 0x289574, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seize
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seize:
+.global __vt__Q213cruise_bubble18state_camera_seize
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seize: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble18state_camera_seize:
 	.incbin "baserom.dol", 0x289590, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attach
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attach:
+.global __vt__Q213cruise_bubble19state_camera_attach
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attach: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble19state_camera_attach:
 	.incbin "baserom.dol", 0x2895AC, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_survey
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_survey:
+.global __vt__Q213cruise_bubble19state_camera_survey
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_survey: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble19state_camera_survey:
 	.incbin "baserom.dol", 0x2895C8, 0x1C
 /* SPECULATION: link order */
+.global __vt__Q213cruise_bubble10state_type
 /* changed from ... */
 /* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_type: */
 /* ... so linker can find it */
-.global __vt__Q213cruise_bubble10state_type
 __vt__Q213cruise_bubble10state_type:
 	.incbin "baserom.dol", 0x2895E4, 0x1C
 /* SPECULATION: link order */
-.global __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restore
-__vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restore:
+.global __vt__Q213cruise_bubble20state_camera_restore
+/* changed from ... */
+/* __vt__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restore: */
+/* ... so linker can find it */
+__vt__Q213cruise_bubble20state_camera_restore:
 	.incbin "baserom.dol", 0x289600, 0x20
 
 .section .bss
