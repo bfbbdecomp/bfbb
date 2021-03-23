@@ -11,7 +11,7 @@ namespace cruise_bubble
     enum state_enum
     {
         BEGIN_STATE_PLAYER,
-        STATE_PLAYER_HALT,
+        STATE_PLAYER_HALT = 0x0,
         STATE_PLAYER_AIM,
         STATE_PLAYER_FIRE,
         STATE_PLAYER_WAIT,
@@ -60,6 +60,8 @@ namespace cruise_bubble
     {
         uint8 wand_shown;
 
+        state_player_fire();
+
         void start();
         state_enum update(float32 dt);
     };
@@ -77,6 +79,8 @@ namespace cruise_bubble
         float32 control_delay;
         float32 seize_delay;
 
+        state_camera_aim();
+
         void start();
         state_enum update(float32 dt);
     };
@@ -87,6 +91,8 @@ namespace cruise_bubble
         float32 time;
         xVec3 last_motion;
 
+        state_player_halt();
+
         void start();
         state_enum update(float32 dt);
     };
@@ -94,6 +100,8 @@ namespace cruise_bubble
     struct state_missle_explode : state_type
     {
         float32 hit_time;
+
+        state_missle_explode();
 
         void start();
         state_enum update(float32 dt);
@@ -103,6 +111,8 @@ namespace cruise_bubble
     struct state_camera_attach : state_type
     {
         float32 reticle_delay;
+
+        state_camera_attach();
 
         state_enum update();
     };
@@ -117,6 +127,8 @@ namespace cruise_bubble
         xVec3 last_loc;
         float32 flash_time;
 
+        state_missle_fly();
+
         void start();
         state_enum update(float32 dt);
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
@@ -124,6 +136,7 @@ namespace cruise_bubble
 
     struct state_missle_appear : state_type
     {
+        state_missle_appear();
     };
 
     struct state_camera_seize : state_type
@@ -137,6 +150,8 @@ namespace cruise_bubble
         float32 fov;
         float32 wipe_bubbles;
 
+        state_camera_seize();
+
         void start();
         state_enum update(float32 dt);
     };
@@ -147,6 +162,8 @@ namespace cruise_bubble
         float32 yaw_vel;
         float32 turn_delay;
 
+        state_player_aim();
+
         void start();
         state_enum update(float32 dt);
     };
@@ -154,6 +171,8 @@ namespace cruise_bubble
     struct state_camera_restore : state_type
     {
         float32 control_delay;
+
+        state_camera_restore();
 
         void start();
         state_enum update(float32 dt);
@@ -165,6 +184,8 @@ namespace cruise_bubble
         xVec2 start_sp;
         float32 path_distance[127];
 
+        state_camera_survey();
+
         void start();
         void eval_missle_path(float32 dist, xVec3& loc, float32& roll);
         state_enum update(float32 dt);
@@ -172,6 +193,7 @@ namespace cruise_bubble
 
     struct state_player_wait : state_type
     {
+        state_player_wait();
     };
     
     struct sound_config

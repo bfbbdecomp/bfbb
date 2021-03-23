@@ -884,70 +884,58 @@ void cruise_bubble::state_type::render()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "init_states__13cruise_bubbleFv")
 
-// func_800586FC
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restoreFv")
+cruise_bubble::state_camera_restore::state_camera_restore() : state_type(STATE_CAMERA_RESTORE)
+{
+}
 
 cruise_bubble::state_type::state_type(cruise_bubble::state_enum type)
 {
     this->type = type;
 }
 
-// func_80058750
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv")
+cruise_bubble::state_camera_survey::state_camera_survey() : state_type(STATE_CAMERA_SURVEY)
+{
+}
 
-// func_80058790
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv")
+cruise_bubble::state_camera_attach::state_camera_attach() : state_type(STATE_CAMERA_ATTACH)
+{
+}
 
-// func_800587D0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFv")
+cruise_bubble::state_camera_seize::state_camera_seize() : state_type(STATE_CAMERA_SEIZE)
+{
+}
 
-// func_80058810
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv")
+cruise_bubble::state_camera_aim::state_camera_aim() : state_type(STATE_CAMERA_AIM)
+{
+}
 
-// func_80058850
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv")
+cruise_bubble::state_missle_explode::state_missle_explode() : state_type(STATE_MISSLE_EXPLODE)
+{
+}
 
-// func_80058890
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
+cruise_bubble::state_missle_fly::state_missle_fly() : state_type(STATE_MISSLE_FLY)
+{
+}
 
-// func_800588D0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv")
+cruise_bubble::state_missle_appear::state_missle_appear() : state_type(STATE_MISSLE_APPEAR)
+{
+}
 
-// func_80058910
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_waitFv")
+cruise_bubble::state_player_wait::state_player_wait() : state_type(STATE_PLAYER_WAIT)
+{
+}
 
-// func_80058950
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFv")
+cruise_bubble::state_player_fire::state_player_fire() : state_type(STATE_PLAYER_FIRE)
+{
+}
 
-// func_80058990
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv")
+cruise_bubble::state_player_aim::state_player_aim() : state_type(STATE_PLAYER_AIM)
+{
+}
 
-// func_800589D0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_haltFv")
+cruise_bubble::state_player_halt::state_player_halt() : state_type(STATE_PLAYER_HALT)
+{
+}
 
 void cruise_bubble::init_missle_model()
 {
