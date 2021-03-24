@@ -200,8 +200,6 @@ def modify_instruction(st):
 	args = [x.strip() for x in st[(space + 1):].split(",")]
 	if instr == "fmr" or instr == "mr":
 		return "%s = %s;" % tuple(args)
-	elif instr == "addi":
-		return "%s = %s + %s;" % tuple(args)
 	elif instr == "lis":
 		return "%s = %s; // [int16]" % tuple(args)
 	elif instr == "li":
@@ -212,6 +210,15 @@ def modify_instruction(st):
 		return "%s = %s; // [int16]" % tuple(args)
 	elif instr == "lbz":
 		return "%s = %s; // [int8]" % tuple(args)
+
+	elif instr == "addi":
+		return "%s = %s + %s;" % tuple(args)
+	elif instr == "add":
+		return "%s = %s + %s;" % tuple(args)
+	elif instr == "mul":
+		return "%s = %s * %s;" % tuple(args)
+	elif instr == "muli" or instr == "mulli":
+		return "%s = %s * %s;" % tuple(args)
 
 	elif instr == "lfs":
 		return "%s = %s; // [float32]" % tuple(args)
