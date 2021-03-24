@@ -7,6 +7,7 @@
 #include "xhipio.h"
 #include "xutil.h"
 #include "xMath.h"
+#include "xMemMgr.h"
 
 extern int8 xpkrsvc_strings[];
 
@@ -18,6 +19,9 @@ extern st_HIPLOADFUNCS* g_hiprf;
 extern uint32 g_loadlock;
 extern int32 pkr_sector_size;
 extern volatile int32 g_packinit;
+extern volatile int32 g_memalloc_pair;
+extern volatile int32 g_memalloc_runtot;
+extern volatile int32 g_memalloc_runfree;
 
 // func_800392A0
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
@@ -1639,47 +1643,298 @@ int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 #endif
 
 // func_8003BDE8
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "LOD_r_LDBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
+int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode)
+{
+    int32 ivar = 0;
+    if (pr->subver > 1)
+    {
+        g_hiprf->readLongs(pkg, &ivar, 1);
+        laynode->chksum = ivar;
+    }
+    return 1;
+}
 
 // func_8003BE48
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_STRM__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'DHDR':
+            LOD_r_DHDR(pkg, pr);
+            break;
+        case 'DPAK':
+            LOD_r_DPAK(pkg, pr);
+            break;
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
 
 // func_8003BF10
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_DHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 ivar = 0;
+    g_hiprf->readLongs(pkg, &ivar, 1);
+    return 1;
+}
+#endif
 
 // func_8003BF50
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_DPAK__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    return 1;
+}
 
 // func_8003BF58
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_spew_verhist__Fv")
+void PKR_spew_verhist()
+{
+}
 
 // func_8003BF5C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_type2typeref__FUiP19st_PACKER_ASSETTYPE")
+st_PACKER_ASSETTYPE* PKR_type2typeref(uint32 asstype, st_PACKER_ASSETTYPE* types)
+{
+    st_PACKER_ASSETTYPE* da_type = NULL;
+    if (types != NULL)
+    {
+        for (st_PACKER_ASSETTYPE* tmptype = types; tmptype->typetag != 0; tmptype++)
+        {
+            if (tmptype->typetag == asstype)
+            {
+                da_type = tmptype;
+                break;
+            }
+        }
+    }
+    if (da_type == NULL)
+    {
+        xUtil_idtag2string(asstype, 0);
+    }
+    return da_type;
+}
 
 // func_8003BFC4
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_bld_typecnt__FP19st_PACKER_READ_DATA")
+#else
+// Probably func match, weird regalloc
+void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
+{
+    st_PACKER_LTOC_NODE* laynode;
+    st_PACKER_ATOC_NODE* assnode;
+    int32 j;
+    int32 i;
+    int32 typcnt[129] = {};
+    st_XORDEREDARRAY* tmplist;
+    uint32 lasttype = 0;
+    int32 lastidx = 0;
+
+    for (i = 0; i < pr->laytoc.cnt; i++)
+    {
+        laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
+        for (j = 0; j < laynode->assref.cnt; j++)
+        {
+            assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
+            if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
+            {
+                int32 idx;
+                if (lasttype != 0 && assnode->asstype == lasttype)
+                {
+                    idx = lastidx;
+                }
+                else
+                {
+                    idx = PKR_typeHdlr_idx(pr, assnode->asstype);
+                    lastidx = idx;
+                    lasttype = assnode->asstype;
+                }
+
+                if (idx < 0)
+                {
+                    xUtil_idtag2string(assnode->asstype, 0);
+                    assnode->Name();
+                    typcnt[128]++;
+                }
+                else
+                {
+                    typcnt[idx]++;
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < 129; i++)
+    {
+        if (typcnt[i] >= 1)
+        {
+            XOrdInit(&pr->typelist[i], typcnt[i] > 1 ? typcnt[i] : 2, false);
+        }
+    }
+
+    for (i = 0; i < pr->laytoc.cnt; i++)
+    {
+        st_PACKER_LTOC_NODE* laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
+        for (j = 0; j < laynode->assref.cnt; j++)
+        {
+            st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
+            if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
+            {
+                int32 idx;
+                if (lasttype != 0 && assnode->asstype == lasttype)
+                {
+                    idx = lastidx;
+                }
+                else
+                {
+                    idx = PKR_typeHdlr_idx(pr, assnode->asstype);
+                    lastidx = idx;
+                    lasttype = assnode->asstype;
+                }
+
+                st_XORDEREDARRAY* tmplist;
+                if (idx < 0)
+                {
+                    tmplist = &pr->typelist[128];
+                }
+                else
+                {
+                    tmplist = &pr->typelist[idx];
+                }
+                XOrdAppend(tmplist, assnode);
+            }
+        }
+    }
+}
+#endif
 
 // func_8003C1F8
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_typeHdlr_idx__FP19st_PACKER_READ_DATAUi")
+#else
+// Probably func match, loop is off
+int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type)
+{
+    int32 idx = -1;
+    for (int32 i = 0; pr->types[i].typetag != type; i++)
+    {
+        if (pr->types[i].typetag == type)
+        {
+            idx = i;
+            break;
+        }
+    }
+
+    return idx;
+}
+#endif
 
 // func_8003C230
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_alloc_chkidx__Fv")
+void PKR_alloc_chkidx()
+{
+}
 
 // func_8003C234
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_getmem__FUiiUii")
+void* PKR_getmem(uint32 id, int32 amount, uint32 ui, int32 align)
+{
+    return PKR_getmem(id, amount, ui, align, false, NULL);
+}
 
 // func_8003C25C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_getmem__FUiiUiiiPPc")
+void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int8** memtrue)
+{
+    if (amount == 0)
+    {
+        return NULL;
+    }
+
+    void* memptr;
+
+    if (isTemp)
+    {
+        memptr = xMemPushTemp(amount + align);
+
+        if (memtrue != NULL)
+        {
+            *memtrue = (int8*)memptr;
+        }
+
+        if (align != 0)
+        {
+            memptr = (void*)(-align & (uint32)((int32)memptr + align - 1));
+        }
+    }
+    else
+    {
+        memptr = xMemAlloc(gActiveHeap, amount, align);
+    }
+
+    if (memptr != NULL)
+    {
+        memset(memptr, 0, amount);
+    }
+
+    g_memalloc_pair++;
+    g_memalloc_runtot += amount;
+    if (g_memalloc_runtot < 0)
+    {
+        g_memalloc_runtot = amount;
+    }
+
+    if (memptr != NULL)
+    {
+        xUtil_idtag2string(id, 0);
+    }
+    else
+    {
+        xUtil_idtag2string(id, 0);
+    }
+
+    return memptr;
+}
 
 // func_8003C350
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_relmem__FUiiPvUii")
+void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp)
+{
+    g_memalloc_pair--;
+    g_memalloc_runfree += blksize;
+    if (g_memalloc_runfree < 0)
+    {
+        g_memalloc_runfree = blksize;
+    }
+
+    xUtil_idtag2string(id, 0);
+    if (memptr != NULL && blksize > 0)
+    {
+        if (isTemp)
+        {
+            xMemPopTemp(memptr);
+        }
+        else
+        {
+            xUtil_idtag2string(id, 1);
+        }
+    }
+}
 
 // func_8003C400
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_push_memmark__Fv")
+void PKR_push_memmark()
+{
+    xMemPushBase();
+}
 
 // func_8003C420
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_pop_memmark__Fv")
+void PKR_pop_memmark()
+{
+    xMemPopBase(xMemGetBase() - 1);
+}
 
 // func_8003C448
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "__sinit_xpkrsvc_cpp")
