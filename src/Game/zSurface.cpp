@@ -17,7 +17,7 @@ void zSurfaceRegisterMapper(uint32 assetId)
 {
     if ((sMapperCount < 1) && (assetId != 0))
     {
-        if ((sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0)) != 0)
+        if ((sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0)))
         { 
             sMapperCount++;
         }
