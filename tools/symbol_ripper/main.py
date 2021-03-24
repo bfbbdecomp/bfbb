@@ -344,7 +344,11 @@ def get_subsys_name(name):
 if len(sys.argv) < 2:
 	sys.exit("Error: No symbol name given.")
 
-symbol_name = sys.argv[1]
-check_is_symbol_name(symbol_name)
-subsys_name = get_subsys_name(symbol_name)
-rip(subsys_name, symbol_name)
+def main():
+	symbol_name = sys.argv[1]
+	check_is_symbol_name(symbol_name)
+	subsys_name = get_subsys_name(symbol_name)
+	rip(subsys_name, symbol_name)
+
+if __name__ == '__main__':
+	main()
