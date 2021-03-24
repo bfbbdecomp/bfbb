@@ -7,35 +7,34 @@
 #include "zEntDestructObj.h"
 
 extern uint32 sTableCount;
-extern zLODTable sTableList[];
+extern zLODTable* sTableList;
 extern uint32 sManagerCount;
 extern zLODManager sManagerList[2048];
 
-extern float32 lbl_803CDC44;
-extern float32 lbl_803CDC40;
-extern float32 lbl_803CDC48;
-extern float32 lbl_803CDC4C;
+extern float32 lbl_803CDC44; // 1.0e-4, 0.0001
+extern float32 lbl_803CDC40; // 1.0
+extern float32 lbl_803CDC48; // 4.0
+extern float32 lbl_803CDC4C; // 10.0
 
 // func_800A1D18
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zLOD.s", "AddToLODList__FP14xModelInstance")
 #else
-// This was almost completely matching until I switched sTableList to sTableList[i]
+// Float memes
 void AddToLODList(xModelInstance* model)
 {
-    // This was necessary for it to match back before I made the switch mentioned above
     for (int i = 0; i < sManagerCount; i++)
     {
         if (sManagerList[i].model == model)
         {
-            break;
+            return;
         }
     }
 
     for (int i = 0; i < sTableCount; i++)
     {
-        if ((sTableList[i].baseBucket != NULL) &&
-            ((*sTableList[i].baseBucket)->OriginalData == model->Data))
+        if (sTableList[i].baseBucket != NULL &&
+            (*sTableList[i].baseBucket)->OriginalData == model->Data)
         {
             xModelInstance* minst = model->Next;
             uint32 numextra = 0;
@@ -46,9 +45,9 @@ void AddToLODList(xModelInstance* model)
             }
             if (sManagerCount < 2048)
             {
-                float32 distscale = ((model->Mat->right).z * (model->Mat->right).z +
-                                     (model->Mat->right).x * (model->Mat->right).x +
-                                     (model->Mat->right).y * (model->Mat->right).y);
+                float32 distscale = ((model->Mat->right).x * (model->Mat->right).x +
+                                     (model->Mat->right).y * (model->Mat->right).y +
+                                     (model->Mat->right).z * (model->Mat->right).z);
                 minst = model;
                 if (distscale < lbl_803CDC44)
                 {
@@ -67,8 +66,8 @@ void AddToLODList(xModelInstance* model)
                 sManagerList[sManagerCount].adjustNoRenderDist =
                     (lbl_803CDC4C + xsqrt(sTableList[i].noRenderDist)) *
                     (lbl_803CDC4C + xsqrt(sTableList[i].noRenderDist));
-
-                break;
+                sManagerCount++;
+                return;
             }
         }
     };
@@ -108,9 +107,6 @@ xEnt* AddToLODList(xEnt* ent, xScene* scene, void* v)
 #pragma GLOBAL_ASM("asm/Game/zLOD.s", "zLOD_Update__FUi")
 
 // func_800A23A8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zLOD.s", "zLOD_Get__FP4xEnt")
-#else
 zLODTable* zLOD_Get(xEnt* ent)
 {
     if (!ent->model)
@@ -118,22 +114,18 @@ zLODTable* zLOD_Get(xEnt* ent)
         return 0;
     }
 
-    if (sTableCount != 0)
+    for (int i = 0; i < sTableCount; i++)
     {
-        for (int i = 0; i < sTableCount; i++)
+        if (sTableList[i].baseBucket != NULL)
         {
-            if (sTableList[i].baseBucket != NULL)
+            if ((*sTableList[i].baseBucket)->OriginalData == ent->model->Data)
             {
-                if ((*sTableList[i].baseBucket)->OriginalData == ent->model->Data)
-                {
-                    return &sTableList[i];
-                }
+                return &sTableList[i];
             }
         }
     }
     return 0;
 }
-#endif
 
 // func_800A2418
 #pragma GLOBAL_ASM("asm/Game/zLOD.s", "zLOD_UseCustomTable__FP4xEntP9zLODTable")

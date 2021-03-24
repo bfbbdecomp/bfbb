@@ -41,5 +41,6 @@ struct xClumpCollBSPTree
 };
 
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump);
+xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2);
 
 #endif

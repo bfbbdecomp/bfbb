@@ -1,4 +1,5 @@
 #include "xLightKit.h"
+#include "xMath.h"
 
 #include <types.h>
 #include <string.h>
@@ -6,48 +7,41 @@
 extern xLightKit* gLastLightKit;
 extern int32 iModelHack_DisablePrelight;
 
-extern float32 lbl_803CEA40;
-extern float32 lbl_803CEA44;
+#if 0
+float32 MAX_COLOR = 1.0f;
+#endif
 
 // func_80123228
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Prepare__FPv")
-// Basically every register is off and there are a few inconsistencies but the functionality is probably the same or similar
+// Will match once able to use float literals
 #else
 xLightKit* xLightKit_Prepare(void* data)
 {
     xLightKit* lkit = (xLightKit*)data;
-    for (int i = 0; i < lkit->lightCount; i++)
+    lkit->lightList = (xLightKitLight*)((int*)data + 4);
+    xLightKitLight* currlight = (xLightKitLight*)((int*)data + 4);
+
+    for (int i = 0; i < lkit->lightCount; currlight++, i++)
     {
-        xLightKitLight* currlight = &lkit->lightList[i];
         if (currlight->platLight != NULL)
         {
-            return (xLightKit*)data;
+            return lkit;
         }
-        // The way Ghidra decomped this is kinda weird so I think I'm missing something
-        // But all it's doing is normalizing the colors back to 0-1
-        float32 s = (currlight->color).red;
-        if ((currlight->color).red > lbl_803CEA40 || (currlight->color).green > lbl_803CEA40 ||
-            (currlight->color).blue > lbl_803CEA40)
+
+        // If any of the colors is greater than 1.0, normalize back to 0-1
+        if (currlight->color.red > MAX_COLOR || currlight->color.green > MAX_COLOR ||
+            currlight->color.blue > MAX_COLOR)
         {
-            if ((currlight->color).green > s)
-            {
-                s = (currlight->color).green;
-            }
-            if ((currlight->color).blue > s)
-            {
-                s = (currlight->color).blue;
-            }
-            // I think lbl_803CEA44 is 1.0f in this case
-            if (lbl_803CEA44 > s)
-            {
-                s = lbl_803CEA44;
-            }
-            s = lbl_803CEA40 / s;
-            (currlight->color).red = (RwReal)((currlight->color).red * s);
-            (currlight->color).green = (RwReal)((currlight->color).green * s);
-            (currlight->color).blue = (RwReal)((currlight->color).blue * s);
+            float32 s;
+            s = MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
+            s = MAX(s, 0.00001f);
+            s = 1.0f / s;
+            currlight->color.red *= s;
+            currlight->color.green *= s;
+            currlight->color.blue *= s;
         }
+
         switch (currlight->type)
         {
         case 1:
@@ -66,7 +60,7 @@ xLightKit* xLightKit_Prepare(void* data)
             break;
         }
         RpLightSetColor(currlight->platLight, &currlight->color);
-        if (1 < currlight->type)
+        if (currlight->type >= 2)
         {
             RwFrame* frame = RwFrameCreate();
             RwMatrixTag tmpmat;
@@ -87,14 +81,14 @@ xLightKit* xLightKit_Prepare(void* data)
             RwV3dNormalize(&tmpmat.right, &tmpmat.right);
             RwV3dNormalize(&tmpmat.up, &tmpmat.up);
             RwV3dNormalize(&tmpmat.at, &tmpmat.at);
-            RwFrameTransform(frame, &tmpmat, (RwOpCombineType)0);
+            RwFrameTransform(frame, &tmpmat, rwCOMBINEREPLACE);
             _rwObjectHasFrameSetFrame(currlight->platLight, frame);
         }
-        if (2 < currlight->type)
+        if (currlight->type >= 3)
         {
             RpLightSetRadius(currlight->platLight, currlight->radius);
         }
-        if (3 < currlight->type)
+        if (currlight->type >= 4)
         {
             RpLightSetConeAngle(currlight->platLight, currlight->angle);
         }
@@ -140,10 +134,6 @@ xLightKit* xLightKit_GetCurrent(RpWorld* world)
 }
 
 // func_801235AC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Destroy__FP9xLightKit")
-#else
-// I think this is functionally correct. All the registers are just off.
 void xLightKit_Destroy(xLightKit* lkit)
 {
     if (lkit == NULL)
@@ -151,9 +141,11 @@ void xLightKit_Destroy(xLightKit* lkit)
         return;
     }
 
-    for (int i = 0; i < lkit->lightCount; i++)
+    int i;
+    xLightKitLight* currLight = lkit->lightList;
+
+    for (i = 0; i < lkit->lightCount; currLight++, i++)
     {
-        xLightKitLight* currLight = &lkit->lightList[i];
         if (currLight->platLight != NULL)
         {
             _rwFrameSyncDirty();
@@ -168,4 +160,3 @@ void xLightKit_Destroy(xLightKit* lkit)
         }
     }
 }
-#endif
