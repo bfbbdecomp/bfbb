@@ -134,10 +134,6 @@ xLightKit* xLightKit_GetCurrent(RpWorld* world)
 }
 
 // func_801235AC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Destroy__FP9xLightKit")
-#else
-// I think this is functionally correct. All the registers are just off.
 void xLightKit_Destroy(xLightKit* lkit)
 {
     if (lkit == NULL)
@@ -145,9 +141,11 @@ void xLightKit_Destroy(xLightKit* lkit)
         return;
     }
 
-    for (int i = 0; i < lkit->lightCount; i++)
+    int i;
+    xLightKitLight* currLight = lkit->lightList;
+
+    for (i = 0; i < lkit->lightCount; currLight++, i++)
     {
-        xLightKitLight* currLight = &lkit->lightList[i];
         if (currLight->platLight != NULL)
         {
             _rwFrameSyncDirty();
@@ -162,4 +160,3 @@ void xLightKit_Destroy(xLightKit* lkit)
         }
     }
 }
-#endif
