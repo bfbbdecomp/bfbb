@@ -173,33 +173,6 @@ zSurfaceInitDefaultSurface__Fv:
 /* 800B5854 000B2654  D0 04 01 18 */	stfs f0, 0x118(r4)
 /* 800B5858 000B2658  4E 80 00 20 */	blr 
 
-.global zSurfaceRegisterMapper__FUi
-zSurfaceRegisterMapper__FUi:
-/* 800B585C 000B265C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B5860 000B2660  7C 08 02 A6 */	mflr r0
-/* 800B5864 000B2664  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B5868 000B2668  80 0D 90 F4 */	lwz r0, lbl_803CB9F4-_SDA_BASE_(r13)
-/* 800B586C 000B266C  2C 00 00 01 */	cmpwi r0, 1
-/* 800B5870 000B2670  40 80 00 38 */	bge lbl_800B58A8
-/* 800B5874 000B2674  28 03 00 00 */	cmplwi r3, 0
-/* 800B5878 000B2678  41 82 00 30 */	beq lbl_800B58A8
-/* 800B587C 000B267C  38 80 00 00 */	li r4, 0
-/* 800B5880 000B2680  4B F9 5E 8D */	bl xSTFindAsset__FUiPUi
-/* 800B5884 000B2684  80 0D 90 F4 */	lwz r0, lbl_803CB9F4-_SDA_BASE_(r13)
-/* 800B5888 000B2688  28 03 00 00 */	cmplwi r3, 0
-/* 800B588C 000B268C  38 8D 83 10 */	addi r4, r13, lbl_803CAC10-_SDA_BASE_
-/* 800B5890 000B2690  54 00 10 3A */	slwi r0, r0, 2
-/* 800B5894 000B2694  7C 64 01 2E */	stwx r3, r4, r0
-/* 800B5898 000B2698  41 82 00 10 */	beq lbl_800B58A8
-/* 800B589C 000B269C  80 6D 90 F4 */	lwz r3, lbl_803CB9F4-_SDA_BASE_(r13)
-/* 800B58A0 000B26A0  38 03 00 01 */	addi r0, r3, 1
-/* 800B58A4 000B26A4  90 0D 90 F4 */	stw r0, lbl_803CB9F4-_SDA_BASE_(r13)
-lbl_800B58A8:
-/* 800B58A8 000B26A8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B58AC 000B26AC  7C 08 03 A6 */	mtlr r0
-/* 800B58B0 000B26B0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B58B4 000B26B4  4E 80 00 20 */	blr 
-
 .global zSurfaceResetSurface__FP8xSurface
 zSurfaceResetSurface__FP8xSurface:
 /* 800B58E0 000B26E0  94 21 FF F0 */	stwu r1, -0x10(r1)

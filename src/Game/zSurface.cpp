@@ -13,10 +13,6 @@ extern zMaterialMapAsset* sMapper[1];
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInitDefaultSurface__Fv")
 
 // func_800B585C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceRegisterMapper__FUi")
-#else
-// Registers off, and sMapperCount missing a lwz instruction?
 void zSurfaceRegisterMapper(uint32 assetId)
 {
     if ((sMapperCount < 1) && (assetId != 0))
@@ -27,7 +23,6 @@ void zSurfaceRegisterMapper(uint32 assetId)
         }
     }
 }
-#endif
 
 // func_800B58B8
 void zSurfaceExit()

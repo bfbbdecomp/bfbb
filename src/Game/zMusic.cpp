@@ -197,31 +197,37 @@ int32 getCurrLevelMusicEnum()
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
 
 // func_800A7640
-#ifndef NON_MATCHING
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
 // Probably floating point memes idk
 #else
 void zMusicNotify(int32 situation)
 {
+    zMusicSituation* s;
+
     if (sMusicPaused)
     {
         return;
     }
-    if (sMusicInfo[situation].countMax)
+
+    s = &sMusicInfo[situation];
+
+    if (s->countMax == NULL)
     {
         return;
     }
-    if (sMusicInfo[situation].count >= sMusicInfo[situation].countMax)
+    if (s->count >= s->countMax)
     {
         return;
     }
-    if (sMusicInfo[situation].delay > sMusicInfo[situation].elapsedTime)
+    if (s->delay > s->elapsedTime)
     {
         return;
     }
-    sMusicQueueData[sMusicInfo[situation].track] = &sMusicInfo[situation];
-    sMusicTimer[sMusicInfo[situation].track] = sMusicInfo[situation].punchDelay;
-    sMusicQueueData[sMusicInfo[situation].track]->game_state = gGameMode == eGameMode_Game;
+
+    sMusicQueueData[s->track] = s;
+    sMusicTimer[s->track] = s->punchDelay;
+    sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
 }
 #endif
 
