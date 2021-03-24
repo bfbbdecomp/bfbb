@@ -7,8 +7,9 @@
 extern xLightKit* gLastLightKit;
 extern int32 iModelHack_DisablePrelight;
 
-extern float32 lbl_803CEA40; // 1.0
-extern float32 lbl_803CEA44; // 1.0e-5
+#if 0
+float32 MAX_COLOR = 1.0f;
+#endif
 
 // func_80123228
 #ifndef NON_MATCHING
@@ -28,15 +29,14 @@ xLightKit* xLightKit_Prepare(void* data)
             return lkit;
         }
 
-        float32 s;
-
         // If any of the colors is greater than 1.0, normalize back to 0-1
-        if (currlight->color.red > lbl_803CEA40 || currlight->color.green > lbl_803CEA40 ||
-            currlight->color.blue > lbl_803CEA40)
+        if (currlight->color.red > MAX_COLOR || currlight->color.green > MAX_COLOR ||
+            currlight->color.blue > MAX_COLOR)
         {
+            float32 s;
             s = MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
             s = MAX(s, 0.00001f);
-            s = 1 / s;
+            s = 1.0f / s;
             currlight->color.red *= s;
             currlight->color.green *= s;
             currlight->color.blue *= s;
