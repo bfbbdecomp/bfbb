@@ -55,12 +55,6 @@ void zMusicRefreshVolume()
 }
 
 // func_800A6F50
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicInit__Fv")
-#else
-
-// Cannot figure out what the middle loop is supposed to be
-
 void zMusicInit()
 {
     sMusicPaused = 0;
@@ -124,7 +118,6 @@ void zMusicInit()
     }
     volume_reset();
 }
-#endif
 
 // WIP.
 #ifndef NON_MATCHING
