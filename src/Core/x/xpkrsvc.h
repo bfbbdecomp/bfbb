@@ -76,7 +76,10 @@ struct st_PACKER_ATOC_NODE
     st_PACKER_ASSETTYPE* typeref;
     st_HIPLOADDATA* ownpkg;
     st_PACKER_READ_DATA* ownpr;
-    int8 basename[32];
+
+    // looks like this was removed in the GC version
+    // Evidence: memory allocation; Name function returns a constant
+    // int8 basename[32];
 
     int8* Name() const;
 };
@@ -172,21 +175,44 @@ void PKR_Disconnect(st_PACKER_READ_DATA* pr);
 uint32 PKRAssetIDFromInst(void* asset_inst);
 int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid);
 uint32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr);
-
-void* PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt);
+int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
+int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
+                             st_PKR_ASSET_TOCINFO* tocainfo);
+int32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, uint32 aid);
+int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, int32 oursize,
+                                uint32 ourtype, uint32 chksum, int8*);
+int32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt);
 void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr);
-
+st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, uint32 aid);
+st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, int32 refcnt);
 void PKR_oldlaynode(st_PACKER_LTOC_NODE* laytoc);
-
+int32 OrdComp_R_Asset(void* vkey, void* vitem);
 int32 OrdTest_R_AssetID(const void* vkey, void* vitem);
-
 int32 LOD_r_HIPA(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
-
+int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 plattag, int8* plat,
+                       int8* vid, int8* lang, int8* title);
+int32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
-
+int32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode);
+int32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode);
 int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
-
+int32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+int32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
+void PKR_spew_verhist();
+st_PACKER_ASSETTYPE* PKR_type2typeref(uint32 asstype, st_PACKER_ASSETTYPE* types);
 void PKR_bld_typecnt(st_PACKER_READ_DATA* pr);
 int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type);
 void PKR_alloc_chkidx();
