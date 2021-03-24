@@ -2,9 +2,12 @@
 
 #include <types.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "xhipio.h"
 #include "xutil.h"
+#include "xMath.h"
+#include "xMemMgr.h"
 
 extern int8 xpkrsvc_strings[];
 
@@ -16,6 +19,9 @@ extern st_HIPLOADFUNCS* g_hiprf;
 extern uint32 g_loadlock;
 extern int32 pkr_sector_size;
 extern volatile int32 g_packinit;
+extern volatile int32 g_memalloc_pair;
+extern volatile int32 g_memalloc_runtot;
+extern volatile int32 g_memalloc_runfree;
 
 // func_800392A0
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
@@ -930,11 +936,6 @@ uint32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr)
 }
 
 // func_8003A654
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "PKR_GetAssetInfo__FP19st_PACKER_READ_DATAUiP20st_PKR_ASSET_TOCINFO")
-#else
-// Unnecessary clrlwi instruction
 int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 {
     memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
@@ -949,137 +950,991 @@ int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO
         tocainfo->size = assnode->d_size;
         tocainfo->mempos = assnode->memloc;
     }
-    return idx >= 0;
+    return idx >= 0 ? 1 : 0;
+}
+
+// func_8003A720
+int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
+                             st_PKR_ASSET_TOCINFO* tocainfo)
+{
+    memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
+    if (idx < 0)
+    {
+        idx = 0;
+    }
+
+    int32 typeidx = PKR_typeHdlr_idx(pr, type);
+    if (typeidx < 0)
+    {
+        return 0;
+    }
+
+    st_XORDEREDARRAY* tmplist = &pr->typelist[typeidx];
+    if (idx >= tmplist->cnt)
+    {
+        return 0;
+    }
+
+    st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)tmplist->list[idx];
+    tocainfo->aid = assnode->aid;
+    tocainfo->typeref = assnode->typeref;
+    tocainfo->sector = pr->base_sector + assnode->d_off / pkr_sector_size;
+    tocainfo->plus_offset = assnode->d_off % pkr_sector_size;
+    tocainfo->size = assnode->d_size;
+    tocainfo->mempos = assnode->memloc;
+
+    return 1;
+}
+
+// func_8003A824
+int32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, uint32 aid)
+{
+    int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+    if (idx < 0)
+    {
+        return 0;
+    }
+
+    int32 rc = 1;
+    st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
+    if (assnode->loadflag & 0x100000)
+    {
+        rc = 0;
+    }
+    else if (assnode->loadflag & 0x200000)
+    {
+        rc = 0;
+    }
+    return rc;
+}
+
+// func_8003A89C
+int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, int32 oursize,
+                                uint32 ourtype, uint32 chksum, int8*)
+{
+    int32 is_dup = 0;
+    if (aid == 0x7ab6743a)
+    {
+        return 0;
+    }
+    if (aid == 0x98a3f56c)
+    {
+        return 0;
+    }
+
+    for (int i = 0; i < 16; i++)
+    {
+        if ((g_loadlock & 1 << i) == 0 || &g_readdatainst[i] == skippr)
+        {
+            continue;
+        }
+
+        int32 idx = XOrdLookup(&g_readdatainst[i].asstoc, (void*)aid, OrdTest_R_AssetID);
+        if (idx < 0)
+        {
+            continue;
+        }
+
+        st_PACKER_ATOC_NODE* tmp_ass = (st_PACKER_ATOC_NODE*)g_readdatainst[i].asstoc.list[idx];
+        if ((tmp_ass->loadflag & 0x80000) == 0 && tmp_ass->asstype != 0x534e4420 &&
+            tmp_ass->asstype != 0x534e4453)
+        {
+            continue;
+        }
+
+        tmp_ass->Name();
+        xUtil_idtag2string(tmp_ass->asstype, 0);
+
+        if (ourtype != 0 && ourtype != tmp_ass->asstype)
+        {
+            tmp_ass->Name();
+            xUtil_idtag2string(tmp_ass->asstype, 0);
+            xUtil_idtag2string(ourtype, 1);
+        }
+        if (oursize >= 0 && oursize != tmp_ass->d_size)
+        {
+            tmp_ass->Name();
+            xUtil_idtag2string(tmp_ass->asstype, 0);
+        }
+        if (chksum != 0 && chksum != tmp_ass->d_chksum)
+        {
+            tmp_ass->Name();
+            xUtil_idtag2string(tmp_ass->asstype, 0);
+        }
+        is_dup = 1;
+        break;
+    }
+
+    return is_dup;
+}
+
+// func_8003AA28
+int32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt)
+{
+    if (cnt == 0)
+    {
+        return 0;
+    }
+
+    st_PACKER_ATOC_NODE* assnode =
+        (st_PACKER_ATOC_NODE*)PKR_getmem('ANOD', cnt * sizeof(st_PACKER_ATOC_NODE), 'FAKE', 0x40);
+    if (assnode != NULL)
+    {
+        pr->pool_anode = assnode;
+        pr->pool_nextaidx = 0;
+    }
+    return assnode != NULL ? cnt * sizeof(st_PACKER_ATOC_NODE) : 0;
+}
+
+// func_8003AAAC
+void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr)
+{
+    if (pr->asscnt == 0)
+    {
+        return;
+    }
+
+    PKR_relmem('ANOD', pr->asscnt * sizeof(st_PACKER_ATOC_NODE), pr->pool_anode, 'FAKE', 0);
+    pr->pool_anode = NULL;
+    pr->pool_nextaidx = 0;
+}
+
+// func_8003AB0C
+// #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_newassnode__FP19st_PACKER_READ_DATAUi")
+st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, uint32 aid)
+{
+    int32 idx = pr->pool_nextaidx;
+    st_PACKER_ATOC_NODE* newnode = (st_PACKER_ATOC_NODE*)&pr->pool_anode[idx];
+    pr->pool_nextaidx++;
+
+    memset(newnode, 0, sizeof(st_PACKER_ATOC_NODE));
+    newnode->aid = aid;
+    return newnode;
+}
+
+// func_8003AB6C
+st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, int32 refcnt)
+{
+    st_PACKER_LTOC_NODE* newnode =
+        (st_PACKER_LTOC_NODE*)PKR_getmem('LNOD', sizeof(st_PACKER_LTOC_NODE), layer + 0x8000, 0x40);
+    memset(newnode, 0, sizeof(st_PACKER_LTOC_NODE));
+
+    newnode->laytyp = layer;
+    XOrdInit(&newnode->assref, refcnt <= 1 ? 2 : refcnt, 0);
+    return newnode;
+}
+
+// func_8003ABF8
+void PKR_oldlaynode(st_PACKER_LTOC_NODE* laynode)
+{
+    XOrdDone(&laynode->assref, 0);
+    PKR_relmem('LNOD', sizeof(st_PACKER_LTOC_NODE), laynode, laynode->laytyp + 0x8000, 0);
+}
+
+// func_8003AC50
+int32 OrdComp_R_Asset(void* vkey, void* vitem)
+{
+    int32 rc;
+    if (*(uint32*)vkey < *(uint32*)vitem)
+    {
+        rc = -1;
+    }
+    else if (*(uint32*)vkey > *(uint32*)vitem)
+    {
+        rc = 1;
+    }
+    else
+    {
+        rc = 0;
+    }
+    return rc;
+}
+
+// func_8003AC7C
+int32 OrdTest_R_AssetID(const void* vkey, void* vitem)
+{
+    int32 rc;
+    if ((uint32)vkey < *(uint32*)vitem)
+    {
+        rc = -1;
+    }
+    else if ((uint32)vkey > *(uint32*)vitem)
+    {
+        rc = 1;
+    }
+    else
+    {
+        rc = 0;
+    }
+    return rc;
+}
+
+// func_8003ACA4
+int32 LOD_r_HIPA(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    pr->pkgver = 'HIPA';
+    return 1;
+}
+
+// func_8003ACB8
+int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'PVER':
+            LOD_r_PVER(pkg, pr);
+            break;
+        case 'PFLG':
+            LOD_r_PFLG(pkg, pr);
+            break;
+        case 'PCNT':
+            LOD_r_PCNT(pkg, pr);
+            break;
+        case 'PCRT':
+            LOD_r_PCRT(pkg, pr);
+            break;
+        case 'PMOD':
+            LOD_r_PMOD(pkg, pr);
+            break;
+        case 'PLAT':
+            LOD_r_PLAT(pkg, pr);
+            break;
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
+
+// func_8003AE0C
+#ifndef NON_MATCHING
+#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PVER__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 ver = 0;
+    g_hiprf->readLongs(pkg, &ver, 1);
+    pr->subver = ver;
+
+    if (ver < 2)
+    {
+        PKR_spew_verhist();
+    }
+
+    // int32 amt = -1;
+    ver = -1;
+    g_hiprf->readLongs(pkg, &ver, 1);
+    pr->cltver = ver;
+
+    ver = -1;
+    int32 amt = g_hiprf->readLongs(pkg, &ver, 1);
+    if (amt != 1)
+    {
+        pr->compatver = 1;
+    }
+    else
+    {
+        pr->compatver = ver;
+    }
+    return 1;
 }
 #endif
 
-// func_8003A720
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "PKR_GetAssetInfoByType__FP19st_PACKER_READ_DATAUiiP20st_PKR_ASSET_TOCINFO")
-
-// func_8003A824
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_PkgHasAsset__FP19st_PACKER_READ_DATAUi")
-
-// func_8003A89C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "PKR_FRIEND_assetIsGameDup__FUiPC19st_PACKER_READ_DATAiUiUiPc")
-
-// func_8003AA28
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_makepool_anode__FP19st_PACKER_READ_DATAi")
-
-// func_8003AAAC
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_kiilpool_anode__FP19st_PACKER_READ_DATA")
-
-// func_8003AB0C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_newassnode__FP19st_PACKER_READ_DATAUi")
-
-// func_8003AB6C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_newlaynode__F13en_LAYER_TYPEi")
-
-// func_8003ABF8
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_oldlaynode__FP19st_PACKER_LTOC_NODE")
-
-// func_8003AC50
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "OrdComp_R_Asset__FPvPv")
-
-// func_8003AC7C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "OrdTest_R_AssetID__FPCvPv")
-
-// func_8003ACA4
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_HIPA__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-
-// func_8003ACB8
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PACK__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-
-// func_8003AE0C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PVER__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-
 // func_8003AEE8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PFLG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 flg = 0;
+    g_hiprf->readLongs(pkg, &flg, 1);
+    return 1;
+}
+#endif
 
 // func_8003AF28
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PCNT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 cnt = 0;
+    g_hiprf->readLongs(pkg, &cnt, 1);
+    pr->asscnt = cnt;
+    g_hiprf->readLongs(pkg, &cnt, 1);
+    pr->laycnt = cnt;
+    g_hiprf->readLongs(pkg, &cnt, 1);
+    g_hiprf->readLongs(pkg, &cnt, 1);
+    g_hiprf->readLongs(pkg, &cnt, 1);
+    return 1;
+}
 
 // func_8003B000
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PCRT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// need all of .rodata to generate for the OK
+int32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 time = 0;
+    int8 arr[256] = {};
+
+    g_hiprf->readLongs(pkg, &time, 1);
+    pr->time_made = time;
+
+    if (pr->subver > 1)
+    {
+        g_hiprf->readString(pkg, arr);
+    }
+    return 1;
+}
+#endif
 
 // func_8003B0B4
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PMOD__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 time_mod = 0;
+    g_hiprf->readLongs(pkg, &time_mod, 1);
+    pr->time_mod = time_mod;
+    return 1;
+}
 
 // func_8003B108
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
                    "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc")
+#else
+int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 plattag, int8* plat,
+                       int8* vid, int8* lang, int8* title)
+{
+    int8 fullname[128] = {};
+    sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
+
+    int32 rc = false;
+    if ((strcmp(plat, "Game Cube") == 0 || strcmp(plat, "Xbox") == 0 ||
+         strcmp(plat, "PlayStation 2") == 0))
+    {
+        rc = true;
+    }
+    if (!rc)
+    {
+        return 0;
+    }
+
+    rc = false;
+    if (strcmp(vid, "NTSC") == 0 || strcmp(vid, "PAL") == 0)
+    {
+        rc = true;
+    }
+    if (!rc)
+    {
+        return 0;
+    }
+
+    rc = false;
+    if (strcmp(lang, "US Common") == 0 || strcmp(lang, "United Kingdom") == 0 ||
+        strcmp(lang, "French") == 0 || strcmp(lang, "German"))
+    {
+        rc = true;
+    }
+    if (!rc)
+    {
+        return 0;
+    }
+
+    rc = false;
+    if (strcmp(title, "Sponge Bob") == 0 || strcmp(title, "Incredibles") == 0 ||
+        strcmp(title, "Jimmy Newtron") == 0)
+    {
+        rc = true;
+    }
+    if (!rc)
+    {
+        return 0;
+    }
+
+    rc = strcmp(plat, "Game Cube");
+    if (rc != 0)
+    {
+        return 0;
+    }
+
+    rc = strcmp(vid, "NTSC");
+    if (rc != 0)
+    {
+        return 0;
+    }
+
+    rc = strcmp(lang, "US Common");
+    if (rc != 0)
+    {
+        return 0;
+    }
+
+    rc = strcmp(title, "Sponge Bob");
+    if (rc != 0)
+    {
+        return 0;
+    }
+
+    return rc;
+}
+#endif
 
 // func_8003B3E0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PLAT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// Orderings and Regalloc
+int32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 result = 1;
+    int32 plattag = 0;
+    int8 platname[32] = {};
+    int8 vidname[32] = {};
+    int8 langname[32] = {};
+    int8 titlename[32] = {};
+
+    g_hiprf->readLongs(pkg, &plattag, 1);
+    g_hiprf->readString(pkg, platname);
+    g_hiprf->readString(pkg, vidname);
+    g_hiprf->readString(pkg, langname);
+    if (g_hiprf->readString(pkg, titlename) == 0)
+    {
+        strcpy(titlename, "<Unknown>");
+    }
+    if (ValidatePlatform(pkg, pr, plattag, platname, vidname, langname, titlename) == 0)
+    {
+        result = 0;
+    }
+    return result;
+}
+#endif
 
 // func_8003B62C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_DICT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'ATOC':
+            LOD_r_ATOC(pkg, pr);
+            XOrdSort(&pr->asstoc, OrdComp_R_Asset);
+            break;
+        case 'LTOC':
+            LOD_r_LTOC(pkg, pr);
+            break;
+        }
 
-// func_8003B704
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_ATOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
+
+// func_8003B704xCutsceneInfo
+int32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'AINF':
+            LOD_r_AINF(pkg, pr);
+            break;
+        case 'AHDR':
+            LOD_r_AHDR(pkg, pr);
+            break;
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
 
 // func_8003B7CC
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_AINF__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 ival = 0;
+    g_hiprf->readLongs(pkg, &ival, 1);
+    return 1;
+}
+#endif
 
 // func_8003B80C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_AHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 ival = 0;
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    st_PACKER_ATOC_NODE* assnode = PKR_newassnode(pr, ival);
+    assnode->ownpr = pr;
+    assnode->ownpkg = pkg;
+    XOrdAppend(&pr->asstoc, assnode);
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    assnode->asstype = ival;
+    assnode->typeref = PKR_type2typeref(assnode->asstype, pr->types);
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    assnode->d_off = ival;
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    assnode->d_size = ival;
+    assnode->readrem = ival;
+    assnode->readcnt = 0;
+    if (assnode->d_size < 1)
+    {
+        assnode->loadflag |= 0x200000;
+    }
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    assnode->d_pad = ival;
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    assnode->infoflag = ival;
+
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'ADBG':
+            LOD_r_ADBG(pkg, pr, assnode);
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+
+    int32 isdup = PKR_FRIEND_assetIsGameDup(assnode->aid, pr, assnode->d_size, assnode->asstype,
+                                            assnode->d_chksum, NULL);
+    if (isdup)
+    {
+        assnode->loadflag |= 0x100000;
+    }
+    return 1;
+}
 
 // func_8003BA24
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
                    "LOD_r_ADBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_ATOC_NODE")
+// uses reordering and uses .rodata
+#else
+int32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
+{
+    int32 ival = 0;
+    int8 tmpbuf[256] = {};
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    assnode->assalign = ival;
+
+    g_hiprf->readString(pkg, tmpbuf);
+    tmpbuf[0] = 0;
+
+    g_hiprf->readString(pkg, tmpbuf);
+
+    if (pr->subver > 1)
+    {
+        g_hiprf->readLongs(pkg, &ival, 1);
+        assnode->d_chksum = ival;
+    }
+
+    return 1;
+}
+#endif
 
 // func_8003BB28
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LTOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'LINF':
+            LOD_r_LINF(pkg, pr);
+            break;
+        case 'LHDR':
+            LOD_r_LHDR(pkg, pr);
+            break;
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
 
 // func_8003BBF0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LINF__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 ival = 0;
+    g_hiprf->readLongs(pkg, &ival, 1);
+    return 1;
+}
+#endif
 
 // func_8003BC30
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 i;
+    int32 ival = 0;
+    int32 refcnt = 0;
+
+    g_hiprf->readLongs(pkg, &ival, 1);
+    en_LAYER_TYPE laytyp = (en_LAYER_TYPE)ival;
+    g_hiprf->readLongs(pkg, &refcnt, 1);
+    st_PACKER_LTOC_NODE* laynode = PKR_newlaynode(laytyp, refcnt);
+    XOrdAppend(&pr->laytoc, laynode);
+
+    for (i = 0; i < refcnt; i++)
+    {
+        g_hiprf->readLongs(pkg, &ival, 1);
+        int32 idx = XOrdLookup(&pr->asstoc, (void*)ival, OrdTest_R_AssetID);
+        st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
+        XOrdAppend(&laynode->assref, assnode);
+
+        if (i != refcnt - 1)
+        {
+            laynode->laysize += assnode->d_size + assnode->d_pad;
+        }
+        else
+        {
+            laynode->laysize += assnode->d_size;
+        }
+    }
+
+    if (laynode->laysize > 0)
+    {
+        laynode->laysize = laynode->laysize + 0x7ff & 0xfffff800;
+    }
+
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != NULL)
+    {
+        switch (cid)
+        {
+        case 'LDBG':
+            LOD_r_LDBG(pkg, pr, laynode);
+            break;
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
+#endif
 
 // func_8003BDE8
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "LOD_r_LDBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE")
+int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode)
+{
+    int32 ivar = 0;
+    if (pr->subver > 1)
+    {
+        g_hiprf->readLongs(pkg, &ivar, 1);
+        laynode->chksum = ivar;
+    }
+    return 1;
+}
 
 // func_8003BE48
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_STRM__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    uint32 cid = g_hiprf->enter(pkg);
+    while (cid != 0)
+    {
+        switch (cid)
+        {
+        case 'DHDR':
+            LOD_r_DHDR(pkg, pr);
+            break;
+        case 'DPAK':
+            LOD_r_DPAK(pkg, pr);
+            break;
+        }
+        g_hiprf->exit(pkg);
+        cid = g_hiprf->enter(pkg);
+    }
+    return 1;
+}
 
 // func_8003BF10
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_DHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+#else
+// reordering
+int32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    int32 ivar = 0;
+    g_hiprf->readLongs(pkg, &ivar, 1);
+    return 1;
+}
+#endif
 
 // func_8003BF50
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_DPAK__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
+int32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+{
+    return 1;
+}
 
 // func_8003BF58
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_spew_verhist__Fv")
+void PKR_spew_verhist()
+{
+}
 
 // func_8003BF5C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_type2typeref__FUiP19st_PACKER_ASSETTYPE")
+st_PACKER_ASSETTYPE* PKR_type2typeref(uint32 asstype, st_PACKER_ASSETTYPE* types)
+{
+    st_PACKER_ASSETTYPE* da_type = NULL;
+    if (types != NULL)
+    {
+        for (st_PACKER_ASSETTYPE* tmptype = types; tmptype->typetag != 0; tmptype++)
+        {
+            if (tmptype->typetag == asstype)
+            {
+                da_type = tmptype;
+                break;
+            }
+        }
+    }
+    if (da_type == NULL)
+    {
+        xUtil_idtag2string(asstype, 0);
+    }
+    return da_type;
+}
 
 // func_8003BFC4
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_bld_typecnt__FP19st_PACKER_READ_DATA")
+#else
+// Probably func match, weird regalloc
+void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
+{
+    st_PACKER_LTOC_NODE* laynode;
+    st_PACKER_ATOC_NODE* assnode;
+    int32 j;
+    int32 i;
+    int32 typcnt[129] = {};
+    st_XORDEREDARRAY* tmplist;
+    uint32 lasttype = 0;
+    int32 lastidx = 0;
+
+    for (i = 0; i < pr->laytoc.cnt; i++)
+    {
+        laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
+        for (j = 0; j < laynode->assref.cnt; j++)
+        {
+            assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
+            if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
+            {
+                int32 idx;
+                if (lasttype != 0 && assnode->asstype == lasttype)
+                {
+                    idx = lastidx;
+                }
+                else
+                {
+                    idx = PKR_typeHdlr_idx(pr, assnode->asstype);
+                    lastidx = idx;
+                    lasttype = assnode->asstype;
+                }
+
+                if (idx < 0)
+                {
+                    xUtil_idtag2string(assnode->asstype, 0);
+                    assnode->Name();
+                    typcnt[128]++;
+                }
+                else
+                {
+                    typcnt[idx]++;
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < 129; i++)
+    {
+        if (typcnt[i] >= 1)
+        {
+            XOrdInit(&pr->typelist[i], typcnt[i] > 1 ? typcnt[i] : 2, false);
+        }
+    }
+
+    for (i = 0; i < pr->laytoc.cnt; i++)
+    {
+        st_PACKER_LTOC_NODE* laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
+        for (j = 0; j < laynode->assref.cnt; j++)
+        {
+            st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
+            if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
+            {
+                int32 idx;
+                if (lasttype != 0 && assnode->asstype == lasttype)
+                {
+                    idx = lastidx;
+                }
+                else
+                {
+                    idx = PKR_typeHdlr_idx(pr, assnode->asstype);
+                    lastidx = idx;
+                    lasttype = assnode->asstype;
+                }
+
+                st_XORDEREDARRAY* tmplist;
+                if (idx < 0)
+                {
+                    tmplist = &pr->typelist[128];
+                }
+                else
+                {
+                    tmplist = &pr->typelist[idx];
+                }
+                XOrdAppend(tmplist, assnode);
+            }
+        }
+    }
+}
+#endif
 
 // func_8003C1F8
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_typeHdlr_idx__FP19st_PACKER_READ_DATAUi")
+#else
+// Probably func match, loop is off
+int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type)
+{
+    int32 idx = -1;
+    for (int32 i = 0; pr->types[i].typetag != type; i++)
+    {
+        if (pr->types[i].typetag == type)
+        {
+            idx = i;
+            break;
+        }
+    }
+
+    return idx;
+}
+#endif
 
 // func_8003C230
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_alloc_chkidx__Fv")
+void PKR_alloc_chkidx()
+{
+}
 
 // func_8003C234
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_getmem__FUiiUii")
+void* PKR_getmem(uint32 id, int32 amount, uint32 ui, int32 align)
+{
+    return PKR_getmem(id, amount, ui, align, false, NULL);
+}
 
 // func_8003C25C
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_getmem__FUiiUiiiPPc")
+void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int8** memtrue)
+{
+    if (amount == 0)
+    {
+        return NULL;
+    }
+
+    void* memptr;
+
+    if (isTemp)
+    {
+        memptr = xMemPushTemp(amount + align);
+
+        if (memtrue != NULL)
+        {
+            *memtrue = (int8*)memptr;
+        }
+
+        if (align != 0)
+        {
+            memptr = (void*)(-align & (uint32)((int32)memptr + align - 1));
+        }
+    }
+    else
+    {
+        memptr = xMemAlloc(gActiveHeap, amount, align);
+    }
+
+    if (memptr != NULL)
+    {
+        memset(memptr, 0, amount);
+    }
+
+    g_memalloc_pair++;
+    g_memalloc_runtot += amount;
+    if (g_memalloc_runtot < 0)
+    {
+        g_memalloc_runtot = amount;
+    }
+
+    if (memptr != NULL)
+    {
+        xUtil_idtag2string(id, 0);
+    }
+    else
+    {
+        xUtil_idtag2string(id, 0);
+    }
+
+    return memptr;
+}
 
 // func_8003C350
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_relmem__FUiiPvUii")
+void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp)
+{
+    g_memalloc_pair--;
+    g_memalloc_runfree += blksize;
+    if (g_memalloc_runfree < 0)
+    {
+        g_memalloc_runfree = blksize;
+    }
+
+    xUtil_idtag2string(id, 0);
+    if (memptr != NULL && blksize > 0)
+    {
+        if (isTemp)
+        {
+            xMemPopTemp(memptr);
+        }
+        else
+        {
+            xUtil_idtag2string(id, 1);
+        }
+    }
+}
 
 // func_8003C400
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_push_memmark__Fv")
+void PKR_push_memmark()
+{
+    xMemPushBase();
+}
 
 // func_8003C420
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_pop_memmark__Fv")
+void PKR_pop_memmark()
+{
+    xMemPopBase(xMemGetBase() - 1);
+}
 
 // func_8003C448
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "__sinit_xpkrsvc_cpp")
