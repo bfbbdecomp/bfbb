@@ -224,6 +224,8 @@ def modify_instruction(st):
 
 	elif instr == "fadds" or instr == "fadd":
 		return "%s = %s + %s; // [float32]" % tuple(args)
+	elif instr == "fsubs" or instr == "fsub":
+		return "%s = %s - %s; // [float32]" % tuple(args)
 	elif instr == "fmuls" or instr == "fmul":
 		return "%s = %s * %s; // [float32]" % tuple(args)
 	elif instr == "fdivs" or instr == "fdiv":
