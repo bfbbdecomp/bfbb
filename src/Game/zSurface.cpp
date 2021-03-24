@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-extern int32 sMapperCount;
+extern volatile int32 sMapperCount;
 extern zMaterialMapAsset* sMapper[1];
 
 // func_800B55F0
@@ -21,9 +21,8 @@ void zSurfaceRegisterMapper(uint32 assetId)
 {
     if ((sMapperCount < 1) && (assetId != 0))
     {
-        sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0);
-        if (sMapper[sMapperCount])
-        {
+        if ((sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0)) != 0)
+        { 
             sMapperCount++;
         }
     }
