@@ -222,6 +222,15 @@ def modify_instruction(st):
 	elif instr == "stfd":
 		return "%s = %s; // [float64]" % (args[1], args[0])
 
+	elif instr == "fadds" or instr == "fadd":
+		return "%s = %s + %s; // [float32]" % tuple(args)
+	elif instr == "fmuls" or instr == "fmul":
+		return "%s = %s * %s; // [float32]" % tuple(args)
+	elif instr == "fdivs" or instr == "fdiv":
+		return "%s = %s / %s; // [float32]" % tuple(args)
+	elif instr == "fmadds" or instr == "fmadd":
+		return "%s = %s * %s + %s; // [float32]" % tuple(args)
+
 	elif instr == "stw":
 		return "%s = %s;" % (args[1], args[0])
 	elif instr == "sts":
@@ -330,7 +339,7 @@ def get_subsys_name(name):
 	elif locate_symbol(Path("src/Core/x"), name):
 		return Path("Core/x")
 	else:
-		sys.exit("I don't know what to do with %s!" % symbol)
+		sys.exit("I don't know what to do with %s!" % name)
 
 if len(sys.argv) < 2:
 	sys.exit("Error: No symbol name given.")
