@@ -13,20 +13,25 @@ extern zMaterialMapAsset* sMapper[1];
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInitDefaultSurface__Fv")
 
 // func_800B585C
+// TODO: Hacked to OK (with volatile sMapperCount and assignment in if), fix later
 void zSurfaceRegisterMapper(uint32 assetId)
 {
-    if ((sMapperCount < 1) && (assetId != 0))
+    if (sMapperCount >= 1)
     {
-        if (sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0))
-        { 
-            sMapperCount++;
-        }
+        return;
+    }
+    if (!assetId)
+    {
+        return;
+    }
+    if (sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, 0))
+    {
+        sMapperCount++;
     }
 }
 
 // func_800B58B8
 void zSurfaceExit()
-
 {
     xSurfaceExit();
     sMapperCount = 0;
