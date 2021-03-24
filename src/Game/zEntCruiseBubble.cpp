@@ -1450,11 +1450,11 @@ void cruise_bubble::hide_hud()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "world_to_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3")
 
-int32 cruise_bubble::find_locked_target(const xVec3* loc)
+int32 cruise_bubble::find_locked_target(const xVec3* target)
 {
     for (int32 i = 1; i < hud.gizmos_used; ++i)
     {
-        if (hud.gizmo[i].target == loc)
+        if (hud.gizmo[i].target == target)
         {
             return i;
         }
