@@ -24,7 +24,7 @@ extern float32 sMusicTimer[2];
 extern eGameMode gGameMode;
 extern zGlobals globals;
 
-extern char* zMusic_strings[];
+extern const char zMusic_strings[];
 
 // func_800A6E9C
 #ifndef NON_MATCHING
@@ -55,12 +55,6 @@ void zMusicRefreshVolume()
 }
 
 // func_800A6F50
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicInit__Fv")
-#else
-
-// Cannot figure out what the middle loop is supposed to be
-
 void zMusicInit()
 {
     sMusicPaused = 0;
@@ -72,11 +66,50 @@ void zMusicInit()
         sMusicTrack[i].situation = 0;
     }
 
-    for (int i = 0; i < 24; i++)
-    {
-        sMusicSoundID[i][0] = xStrHash(zMusic_strings[i]);
-        sMusicSoundID[i][1] = 1;
-    }
+    sMusicSoundID[0][0] = xStrHash(&zMusic_strings[0]);
+    sMusicSoundID[0][1] = 1;
+    sMusicSoundID[1][0] = xStrHash(&zMusic_strings[15]);
+    sMusicSoundID[1][1] = 1;
+    sMusicSoundID[2][0] = xStrHash(&zMusic_strings[30]);
+    sMusicSoundID[2][1] = 1;
+    sMusicSoundID[3][0] = xStrHash(&zMusic_strings[45]);
+    sMusicSoundID[3][1] = 1;
+    sMusicSoundID[4][0] = xStrHash(&zMusic_strings[60]);
+    sMusicSoundID[4][1] = 1;
+    sMusicSoundID[5][0] = xStrHash(&zMusic_strings[75]);
+    sMusicSoundID[5][1] = 1;
+    sMusicSoundID[6][0] = xStrHash(&zMusic_strings[90]);
+    sMusicSoundID[6][1] = 1;
+    sMusicSoundID[7][0] = xStrHash(&zMusic_strings[105]);
+    sMusicSoundID[7][1] = 1;
+    sMusicSoundID[8][0] = xStrHash(&zMusic_strings[120]);
+    sMusicSoundID[8][1] = 1;
+    sMusicSoundID[9][0] = xStrHash(&zMusic_strings[135]);
+    sMusicSoundID[9][1] = 1;
+    sMusicSoundID[10][0] = xStrHash(&zMusic_strings[150]);
+    sMusicSoundID[10][1] = 1;
+    sMusicSoundID[11][0] = xStrHash(&zMusic_strings[165]);
+    sMusicSoundID[11][1] = 1;
+    sMusicSoundID[12][0] = xStrHash(&zMusic_strings[180]);
+    sMusicSoundID[12][1] = 1;
+    sMusicSoundID[13][0] = xStrHash(&zMusic_strings[195]);
+    sMusicSoundID[13][1] = 1;
+    sMusicSoundID[14][0] = xStrHash(&zMusic_strings[212]);
+    sMusicSoundID[14][1] = 1;
+    sMusicSoundID[15][0] = xStrHash(&zMusic_strings[229]);
+    sMusicSoundID[15][1] = 1;
+    sMusicSoundID[16][0] = xStrHash(&zMusic_strings[247]);
+    sMusicSoundID[16][1] = 1;
+    sMusicSoundID[17][0] = xStrHash(&zMusic_strings[266]);
+    sMusicSoundID[17][1] = 1;
+    sMusicSoundID[18][0] = xStrHash(&zMusic_strings[286]);
+    sMusicSoundID[18][1] = 1;
+    sMusicSoundID[21][0] = xStrHash(&zMusic_strings[308]);
+    sMusicSoundID[21][1] = 1;
+    sMusicSoundID[22][0] = xStrHash(&zMusic_strings[327]);
+    sMusicSoundID[22][1] = 1;
+    sMusicSoundID[23][0] = xStrHash(&zMusic_strings[346]);
+    sMusicSoundID[23][1] = 1;
 
     for (int i = 0; i < sizeof(sMusicInfo) / sizeof(sMusicInfo[0]); i++)
     {
@@ -85,7 +118,6 @@ void zMusicInit()
     }
     volume_reset();
 }
-#endif
 
 // WIP.
 #ifndef NON_MATCHING
@@ -165,31 +197,37 @@ int32 getCurrLevelMusicEnum()
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
 
 // func_800A7640
-#ifndef NON_MATCHING
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
 // Probably floating point memes idk
 #else
 void zMusicNotify(int32 situation)
 {
+    zMusicSituation* s;
+
     if (sMusicPaused)
     {
         return;
     }
-    if (sMusicInfo[situation].countMax)
+
+    s = &sMusicInfo[situation];
+
+    if (s->countMax == NULL)
     {
         return;
     }
-    if (sMusicInfo[situation].count >= sMusicInfo[situation].countMax)
+    if (s->count >= s->countMax)
     {
         return;
     }
-    if (sMusicInfo[situation].delay > sMusicInfo[situation].elapsedTime)
+    if (s->delay > s->elapsedTime)
     {
         return;
     }
-    sMusicQueueData[sMusicInfo[situation].track] = &sMusicInfo[situation];
-    sMusicTimer[sMusicInfo[situation].track] = sMusicInfo[situation].punchDelay;
-    sMusicQueueData[sMusicInfo[situation].track]->game_state = gGameMode == eGameMode_Game;
+
+    sMusicQueueData[s->track] = s;
+    sMusicTimer[s->track] = s->punchDelay;
+    sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
 }
 #endif
 
