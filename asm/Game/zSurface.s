@@ -173,24 +173,6 @@ zSurfaceInitDefaultSurface__Fv:
 /* 800B5854 000B2654  D0 04 01 18 */	stfs f0, 0x118(r4)
 /* 800B5858 000B2658  4E 80 00 20 */	blr 
 
-.global zSurfaceResetSurface__FP8xSurface
-zSurfaceResetSurface__FP8xSurface:
-/* 800B58E0 000B26E0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B58E4 000B26E4  7C 08 02 A6 */	mflr r0
-/* 800B58E8 000B26E8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B58EC 000B26EC  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800B58F0 000B26F0  7C 7F 1B 78 */	mr r31, r3
-/* 800B58F4 000B26F4  4B F9 78 CD */	bl xSurfaceReset__FP8xSurface
-/* 800B58F8 000B26F8  80 7F 00 24 */	lwz r3, 0x24(r31)
-/* 800B58FC 000B26FC  80 63 00 00 */	lwz r3, 0(r3)
-/* 800B5900 000B2700  C0 03 00 10 */	lfs f0, 0x10(r3)
-/* 800B5904 000B2704  D0 1F 00 1C */	stfs f0, 0x1c(r31)
-/* 800B5908 000B2708  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800B590C 000B270C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5910 000B2710  7C 08 03 A6 */	mtlr r0
-/* 800B5914 000B2714  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B5918 000B2718  4E 80 00 20 */	blr 
-
 .global zSurfaceGetSurface__FUi
 zSurfaceGetSurface__FUi:
 /* 800B591C 000B271C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -253,78 +235,6 @@ lbl_800B59D0:
 /* 800B59D8 000B27D8  7C 08 03 A6 */	mtlr r0
 /* 800B59DC 000B27DC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800B59E0 000B27E0  4E 80 00 20 */	blr 
-
-.global zSurfaceGetSurface__FPC7xCollis
-zSurfaceGetSurface__FPC7xCollis:
-/* 800B59E4 000B27E4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800B59E8 000B27E8  7C 08 02 A6 */	mflr r0
-/* 800B59EC 000B27EC  38 80 00 00 */	li r4, 0
-/* 800B59F0 000B27F0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800B59F4 000B27F4  80 03 00 00 */	lwz r0, 0(r3)
-/* 800B59F8 000B27F8  54 00 07 FF */	clrlwi. r0, r0, 0x1f
-/* 800B59FC 000B27FC  41 82 00 28 */	beq lbl_800B5A24
-/* 800B5A00 000B2800  80 03 00 08 */	lwz r0, 8(r3)
-/* 800B5A04 000B2804  28 00 00 00 */	cmplwi r0, 0
-/* 800B5A08 000B2808  41 82 00 10 */	beq lbl_800B5A18
-/* 800B5A0C 000B280C  80 63 00 0C */	lwz r3, 0xc(r3)
-/* 800B5A10 000B2810  80 83 00 30 */	lwz r4, 0x30(r3)
-/* 800B5A14 000B2814  48 00 00 10 */	b lbl_800B5A24
-lbl_800B5A18:
-/* 800B5A18 000B2818  80 63 00 04 */	lwz r3, 4(r3)
-/* 800B5A1C 000B281C  4B FF FF 01 */	bl zSurfaceGetSurface__FUi
-/* 800B5A20 000B2820  7C 64 1B 78 */	mr r4, r3
-lbl_800B5A24:
-/* 800B5A24 000B2824  28 04 00 00 */	cmplwi r4, 0
-/* 800B5A28 000B2828  41 82 00 0C */	beq lbl_800B5A34
-/* 800B5A2C 000B282C  7C 83 23 78 */	mr r3, r4
-/* 800B5A30 000B2830  48 00 00 0C */	b lbl_800B5A3C
-lbl_800B5A34:
-/* 800B5A34 000B2834  3C 60 80 2F */	lis r3, lbl_802F2C88@ha
-/* 800B5A38 000B2838  38 63 2C 88 */	addi r3, r3, lbl_802F2C88@l
-lbl_800B5A3C:
-/* 800B5A3C 000B283C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800B5A40 000B2840  7C 08 03 A6 */	mtlr r0
-/* 800B5A44 000B2844  38 21 00 10 */	addi r1, r1, 0x10
-/* 800B5A48 000B2848  4E 80 00 20 */	blr 
-
-.global zSurfaceGetSlide__FPC8xSurface
-zSurfaceGetSlide__FPC8xSurface:
-/* 800B5A4C 000B284C  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 800B5A50 000B2850  28 03 00 00 */	cmplwi r3, 0
-/* 800B5A54 000B2854  41 82 00 14 */	beq lbl_800B5A68
-/* 800B5A58 000B2858  80 63 00 00 */	lwz r3, 0(r3)
-/* 800B5A5C 000B285C  88 03 00 0F */	lbz r0, 0xf(r3)
-/* 800B5A60 000B2860  54 03 07 FE */	clrlwi r3, r0, 0x1f
-/* 800B5A64 000B2864  4E 80 00 20 */	blr 
-lbl_800B5A68:
-/* 800B5A68 000B2868  38 60 00 00 */	li r3, 0
-/* 800B5A6C 000B286C  4E 80 00 20 */	blr 
-
-.global zSurfaceGetStep__FPC8xSurface
-zSurfaceGetStep__FPC8xSurface:
-/* 800B5A70 000B2870  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 800B5A74 000B2874  28 03 00 00 */	cmplwi r3, 0
-/* 800B5A78 000B2878  41 82 00 14 */	beq lbl_800B5A8C
-/* 800B5A7C 000B287C  80 63 00 00 */	lwz r3, 0(r3)
-/* 800B5A80 000B2880  88 03 00 0F */	lbz r0, 0xf(r3)
-/* 800B5A84 000B2884  54 03 07 7A */	rlwinm r3, r0, 0, 0x1d, 0x1d
-/* 800B5A88 000B2888  4E 80 00 20 */	blr 
-lbl_800B5A8C:
-/* 800B5A8C 000B288C  38 60 00 00 */	li r3, 0
-/* 800B5A90 000B2890  4E 80 00 20 */	blr 
-
-.global zSurfaceOutOfBounds__FRC8xSurface
-zSurfaceOutOfBounds__FRC8xSurface:
-/* 800B5A94 000B2894  80 63 00 24 */	lwz r3, 0x24(r3)
-/* 800B5A98 000B2898  28 03 00 00 */	cmplwi r3, 0
-/* 800B5A9C 000B289C  41 82 00 14 */	beq lbl_800B5AB0
-/* 800B5AA0 000B28A0  80 63 00 00 */	lwz r3, 0(r3)
-/* 800B5AA4 000B28A4  88 03 00 0F */	lbz r0, 0xf(r3)
-/* 800B5AA8 000B28A8  54 03 E7 FE */	rlwinm r3, r0, 0x1c, 0x1f, 0x1f
-/* 800B5AAC 000B28AC  4E 80 00 20 */	blr 
-lbl_800B5AB0:
-/* 800B5AB0 000B28B0  38 60 00 00 */	li r3, 0
-/* 800B5AB4 000B28B4  4E 80 00 20 */	blr 
 
 .global zSurfaceGetSlideStartAngle__FPC8xSurface
 zSurfaceGetSlideStartAngle__FPC8xSurface:
@@ -1401,7 +1311,8 @@ lbl_80290EA8:
 
 .section .bss
 .balign 8
-lbl_802F2C88:
+.global sDef_surf
+sDef_surf:
 	.skip 0x260
 
 .section .sbss
