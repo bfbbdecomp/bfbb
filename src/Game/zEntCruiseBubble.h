@@ -226,11 +226,12 @@ namespace cruise_bubble
         int32 flags;
         basic_rect<float32> bound;
         float32 alpha;
+        // Offset: 0x18
         float32 alpha_vel;
         float32 glow;
         float32 glow_vel;
         float32 opacity;
-        xVec3* target;
+        const xVec3* target;
         xModelInstance* model;
 
         hud_gizmo& operator=(const hud_gizmo&);
@@ -514,6 +515,7 @@ namespace cruise_bubble
     void show_hud();
     void hide_hud();
     int32 find_locked_target(const xVec3* target);
+    void lock_target(int32 index, const xVec3* target, float32 opacity);
     void load_settings();
     void init();
     void init_debug();

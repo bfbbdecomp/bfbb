@@ -1464,9 +1464,39 @@ int32 cruise_bubble::find_locked_target(const xVec3* target)
 }
 
 // func_8005A44C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "lock_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiPC5xVec3f")
+#else
+void cruise_bubble::lock_target(int32 index, const xVec3* target, float32 opacity)
+{
+    if (index <= -1 && hud.gizmos_used >= 33)
+    {
+        return;
+    }
+
+    hud_gizmo* gizmo;
+    if (index <= -1)
+    {
+        index = hud.gizmos_used;
+    	gizmo = &hud.gizmo[hud.gizmos_used++];
+        // offsets for gizmo and gizmo->bound are calculated incremental
+        // instead should be to absolute offsets from the same base
+        show_gizmo(*gizmo, gizmo->bound, hud.model.target);
+    }
+    gizmo = &hud.gizmo[index];
+    xVec3 screen_loc = world_to_screen(*target);
+
+    gizmo->bound.set_size(current_tweak->hud.target.size);
+    gizmo->bound.center(screen_loc.x, screen_loc.y);
+    gizmo->flags = 0x1;
+    gizmo->alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+    gizmo->model = hud.model.target;
+    gizmo->target = target;
+    gizmo->opacity = opacity;
+}
+#endif
 
 // func_8005A570
 #pragma GLOBAL_ASM(                                                                                \
