@@ -110,11 +110,18 @@ struct zMaterialMapAsset
 	uint32 count;
 };
 
+struct zMaterialMapEntry
+{
+    uint32 surfaceAssetID;
+    uint32 materialIndex;
+};
+
 struct xScene;
 
 void zSurfaceRegisterMapper(uint32 assetId);
 void zSurfaceExit();
 xSurface* zSurfaceGetSurface(uint32 mat_id);
+// xSurface* zSurfaceGetSurface(const xCollis* coll);
 void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);
 void zSurfaceSetup(xSurface* s);
