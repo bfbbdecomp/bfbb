@@ -1302,17 +1302,18 @@ int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 
 // func_8003B108
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
                    "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc")
 #else
+// String data
 int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 plattag, int8* plat,
                        int8* vid, int8* lang, int8* title)
 {
     int8 fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
 
-    int32 rc = false;
+    bool rc = false;
     if ((strcmp(plat, "Game Cube") == 0 || strcmp(plat, "Xbox") == 0 ||
          strcmp(plat, "PlayStation 2") == 0))
     {
@@ -1335,7 +1336,7 @@ int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 platt
 
     rc = false;
     if (strcmp(lang, "US Common") == 0 || strcmp(lang, "United Kingdom") == 0 ||
-        strcmp(lang, "French") == 0 || strcmp(lang, "German"))
+        strcmp(lang, "French") == 0 || strcmp(lang, "German") == 0)
     {
         rc = true;
     }
@@ -1355,31 +1356,30 @@ int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 platt
         return 0;
     }
 
-    rc = strcmp(plat, "Game Cube");
-    if (rc != 0)
+    rc = !(bool)(strcmp(plat, "Game Cube"));
+    if (!rc)
     {
         return 0;
     }
 
-    rc = strcmp(vid, "NTSC");
-    if (rc != 0)
+    rc = !(strcmp(vid, "NTSC"));
+    if (!rc)
     {
         return 0;
     }
 
-    rc = strcmp(lang, "US Common");
-    if (rc != 0)
+    rc = !(strcmp(lang, "US Common"));
+    if (!rc)
     {
         return 0;
     }
 
-    rc = strcmp(title, "Sponge Bob");
-    if (rc != 0)
+    rc = !(strcmp(title, "Sponge Bob"));
+    if (!rc)
     {
         return 0;
     }
-
-    return rc;
+    return 1;
 }
 #endif
 
@@ -1868,6 +1868,7 @@ void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int
 
         if (align != 0)
         {
+            // TODO: wtf is this
             memptr = (void*)(-align & (uint32)((int32)memptr + align - 1));
         }
     }
