@@ -1445,10 +1445,20 @@ void cruise_bubble::hide_hud()
 }
 #endif
 
-// func_8005A360
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "world_to_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3")
+xVec3 cruise_bubble::world_to_screen(const xVec3& loc)
+{
+    iCameraUpdatePos(globals.camera.lo_cam, &globals.camera.mat);
+
+    xVec3 world_loc;
+	xMat4x3* view_mat = (xMat4x3*) &globals.camera.lo_cam->viewMatrix;
+    xMat4x3Toworld(&world_loc, view_mat, &loc);
+    
+    xVec3 screen_loc;
+    float32 iz = zEntCruiseBubble_f_1_0 / world_loc.z;
+    screen_loc.assign(world_loc.x * iz, world_loc.y * iz, zEntCruiseBubble_f_1_0);
+    
+    return screen_loc;
+}
 
 int32 cruise_bubble::find_locked_target(const xVec3* target)
 {

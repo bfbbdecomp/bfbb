@@ -514,6 +514,7 @@ namespace cruise_bubble
     void render_hud();
     void show_hud();
     void hide_hud();
+    xVec3 world_to_screen(const xVec3& loc);
     int32 find_locked_target(const xVec3* target);
     void lock_target(int32 index, const xVec3* target, float32 opacity);
     void load_settings();

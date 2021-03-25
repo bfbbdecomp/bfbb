@@ -1,6 +1,8 @@
 #ifndef XCAMERA_H
 #define XCAMERA_H
 
+#include "iCamera.h"
+
 #include "xBase.h"
 #include "xMath3.h"
 #include "xBound.h"
