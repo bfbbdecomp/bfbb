@@ -15,13 +15,13 @@ extern st_PACKER_READ_FUNCS g_pkr_read_funcmap_original;
 extern st_PACKER_READ_FUNCS g_pkr_read_funcmap; // = g_pkr_read_funcmap_original;
 st_PACKER_READ_DATA g_readdatainst[16] = {};
 
-extern st_HIPLOADFUNCS* g_hiprf;
-extern uint32 g_loadlock;
-extern int32 pkr_sector_size;
-extern volatile int32 g_packinit;
-extern volatile int32 g_memalloc_pair;
-extern volatile int32 g_memalloc_runtot;
-extern volatile int32 g_memalloc_runfree;
+st_HIPLOADFUNCS* g_hiprf;
+uint32 g_loadlock;
+int32 pkr_sector_size;
+volatile int32 g_packinit;
+volatile int32 g_memalloc_pair;
+volatile int32 g_memalloc_runtot;
+volatile int32 g_memalloc_runfree;
 
 // func_800392A0
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
@@ -340,53 +340,36 @@ int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 
 // func_80039A18
-extern st_PACKER_READ_DATA* curpr_PKR_LoadStep_Async__Fv;
-extern signed char init_PKR_LoadStep_Async__Fv;
-extern st_PACKER_LTOC_NODE* asynlay_PKR_LoadStep_Async__Fv;
-extern signed char init2_curpr_PKR_LoadStep_Async__Fv;
 int32 PKR_LoadStep_Async()
 {
     int32 rc;
-    if (!init_PKR_LoadStep_Async__Fv)
-    {
-        curpr_PKR_LoadStep_Async__Fv = NULL;
-        init_PKR_LoadStep_Async__Fv = true;
-    }
-    if (!init2_curpr_PKR_LoadStep_Async__Fv)
-    {
-        asynlay_PKR_LoadStep_Async__Fv = NULL;
-        init2_curpr_PKR_LoadStep_Async__Fv = true;
-    }
+    static st_PACKER_READ_DATA* curpr = NULL;
+    static st_PACKER_LTOC_NODE* asynlay = NULL;
 
-    if (asynlay_PKR_LoadStep_Async__Fv == NULL)
+    if (asynlay == NULL)
     {
-        PKR_findNextLayerToLoad(&curpr_PKR_LoadStep_Async__Fv, &asynlay_PKR_LoadStep_Async__Fv);
+        PKR_findNextLayerToLoad(&curpr, &asynlay);
 
-        if (asynlay_PKR_LoadStep_Async__Fv != NULL)
+        if (asynlay != NULL)
         {
-            if (PKR_layerLoadDest(asynlay_PKR_LoadStep_Async__Fv->laytyp) != PKR_LDDEST_SKIP &&
-                asynlay_PKR_LoadStep_Async__Fv->laysize > 1 &&
-                asynlay_PKR_LoadStep_Async__Fv->assref.cnt > 0)
+            if (PKR_layerLoadDest(asynlay->laytyp) != PKR_LDDEST_SKIP && asynlay->laysize > 1 &&
+                asynlay->assref.cnt > 0)
             {
-                asynlay_PKR_LoadStep_Async__Fv->laymem = PKR_LayerMemReserve(
-                    curpr_PKR_LoadStep_Async__Fv, asynlay_PKR_LoadStep_Async__Fv);
-                PKR_drv_guardLayer(asynlay_PKR_LoadStep_Async__Fv);
-                st_PACKER_ATOC_NODE* tmpass =
-                    (st_PACKER_ATOC_NODE*)asynlay_PKR_LoadStep_Async__Fv->assref.list[0];
+                asynlay->laymem = PKR_LayerMemReserve(curpr, asynlay);
+                PKR_drv_guardLayer(asynlay);
+                st_PACKER_ATOC_NODE* tmpass = (st_PACKER_ATOC_NODE*)asynlay->assref.list[0];
                 g_hiprf->setSpot(tmpass->ownpkg, tmpass->d_off);
 
-                if (g_hiprf->readBytes(tmpass->ownpkg, asynlay_PKR_LoadStep_Async__Fv->laymem,
-                                       asynlay_PKR_LoadStep_Async__Fv->laysize))
+                if (g_hiprf->readBytes(tmpass->ownpkg, asynlay->laymem, asynlay->laysize))
                 {
-                    asynlay_PKR_LoadStep_Async__Fv->flg_ldstat |= 0x1000000;
+                    asynlay->flg_ldstat |= 0x1000000;
                 }
                 else
                 {
-                    PKR_LayerMemRelease(curpr_PKR_LoadStep_Async__Fv,
-                                        asynlay_PKR_LoadStep_Async__Fv);
-                    asynlay_PKR_LoadStep_Async__Fv->flg_ldstat &= 0xfcffffff;
-                    curpr_PKR_LoadStep_Async__Fv = NULL;
-                    asynlay_PKR_LoadStep_Async__Fv = NULL;
+                    PKR_LayerMemRelease(curpr, asynlay);
+                    asynlay->flg_ldstat &= 0xfcffffff;
+                    curpr = NULL;
+                    asynlay = NULL;
                 }
 
                 rc = 1;
@@ -394,23 +377,23 @@ int32 PKR_LoadStep_Async()
             else
             {
                 rc = 1;
-                asynlay_PKR_LoadStep_Async__Fv->flg_ldstat |= 0x2000000;
-                asynlay_PKR_LoadStep_Async__Fv = NULL;
+                asynlay->flg_ldstat |= 0x2000000;
+                asynlay = NULL;
             }
         }
         else
         {
             rc = 0;
-            curpr_PKR_LoadStep_Async__Fv = NULL;
-            asynlay_PKR_LoadStep_Async__Fv = NULL;
+            curpr = NULL;
+            asynlay = NULL;
         }
     }
     else
     {
-        int32 moretodo = g_hiprf->pollRead(curpr_PKR_LoadStep_Async__Fv->pkg);
+        int32 moretodo = g_hiprf->pollRead(curpr->pkg);
         if (moretodo == 1)
         {
-            moretodo = PKR_drv_guardVerify(asynlay_PKR_LoadStep_Async__Fv);
+            moretodo = PKR_drv_guardVerify(asynlay);
         }
 
         if (!moretodo)
@@ -419,35 +402,34 @@ int32 PKR_LoadStep_Async()
         }
         else if (moretodo == 1)
         {
-            PKR_updateLayerAssets(asynlay_PKR_LoadStep_Async__Fv);
+            PKR_updateLayerAssets(asynlay);
 
-            if (PKR_layerTypeNeedsXForm(asynlay_PKR_LoadStep_Async__Fv->laytyp))
+            if (PKR_layerTypeNeedsXForm(asynlay->laytyp))
             {
-                PKR_xformLayerAssets(asynlay_PKR_LoadStep_Async__Fv);
+                PKR_xformLayerAssets(asynlay);
             }
 
-            if (PKR_layerLoadDest(asynlay_PKR_LoadStep_Async__Fv->laytyp) == PKR_LDDEST_RWHANDOFF)
+            if (PKR_layerLoadDest(asynlay->laytyp) == PKR_LDDEST_RWHANDOFF)
             {
-                PKR_LayerMemRelease(curpr_PKR_LoadStep_Async__Fv, asynlay_PKR_LoadStep_Async__Fv);
+                PKR_LayerMemRelease(curpr, asynlay);
             }
 
             rc = 1;
-            asynlay_PKR_LoadStep_Async__Fv->flg_ldstat |= 0x2000000;
-            asynlay_PKR_LoadStep_Async__Fv = NULL;
+            asynlay->flg_ldstat |= 0x2000000;
+            asynlay = NULL;
         }
         else
         {
-            en_PKR_LAYER_LOAD_DEST loaddest =
-                PKR_layerLoadDest(asynlay_PKR_LoadStep_Async__Fv->laytyp);
-            if (asynlay_PKR_LoadStep_Async__Fv->laymem != NULL && loaddest == PKR_LDDEST_RWHANDOFF)
+            en_PKR_LAYER_LOAD_DEST loaddest = PKR_layerLoadDest(asynlay->laytyp);
+            if (asynlay->laymem != NULL && loaddest == PKR_LDDEST_RWHANDOFF)
             {
-                PKR_LayerMemRelease(curpr_PKR_LoadStep_Async__Fv, asynlay_PKR_LoadStep_Async__Fv);
+                PKR_LayerMemRelease(curpr, asynlay);
             }
 
             rc = 1;
-            asynlay_PKR_LoadStep_Async__Fv->flg_ldstat &= 0xfcffffff;
-            asynlay_PKR_LoadStep_Async__Fv = NULL;
-            curpr_PKR_LoadStep_Async__Fv = NULL;
+            asynlay->flg_ldstat &= 0xfcffffff;
+            asynlay = NULL;
+            curpr = NULL;
         }
     }
 
@@ -1816,25 +1798,24 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 #endif
 
 // func_8003C1F8
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_typeHdlr_idx__FP19st_PACKER_READ_DATAUi")
-#else
-// Probably func match, loop is off
 int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type)
 {
     int32 idx = -1;
-    for (int32 i = 0; pr->types[i].typetag != type; i++)
+    int i = 0;
+    st_PACKER_ASSETTYPE* tmptype = pr->types;
+    while (tmptype->typetag != 0)
     {
-        if (pr->types[i].typetag == type)
+        if (tmptype->typetag == type)
         {
             idx = i;
             break;
         }
+        i++;
+        tmptype++;
     }
 
     return idx;
 }
-#endif
 
 // func_8003C230
 void PKR_alloc_chkidx()
