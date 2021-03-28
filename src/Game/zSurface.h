@@ -68,6 +68,8 @@ struct zSurfAssetBase : xBaseAsset
     float32 walljump_scale_y;
     float32 damage_timer;
     float32 damage_bounce;
+
+    zSurfAssetBase& operator=(const zSurfAssetBase&); // temp
 };
 
 struct zSurfacePropTexAnim
@@ -102,12 +104,14 @@ struct zSurfaceProps
     zSurfacePropTexAnim texanim[2];
     uint32 uvfx_flags;
     zSurfacePropUVFX uvfx[2];
+
+    zSurfaceProps& operator=(const zSurfaceProps&); // temp
 };
 
 struct zMaterialMapAsset
 {
-	uint32 id;
-	uint32 count;
+    uint32 id;
+    uint32 count;
 };
 
 struct zMaterialMapEntry
@@ -127,5 +131,6 @@ void zSurfaceLoad(xSurface* ent, xSerial* s);
 void zSurfaceSetup(xSurface* s);
 void zSurfaceUpdate(xBase* to, xScene*, float32 dt);
 void zSurfaceGetName(int32 type, int8* buffer);
+xSurface& zSurfaceGetDefault();
 
 #endif
