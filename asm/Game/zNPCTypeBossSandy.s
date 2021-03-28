@@ -10067,6 +10067,7 @@ __vt__10zNPCBSandy:
 	.incbin "baserom.dol", 0x296CAC, 0xDC
 
 .section .bss
+.balign 8
 sSinTable:
 	.skip 0x9C
 sNFSoundValue:
@@ -10076,6 +10077,7 @@ BDErecord:
 	.skip 0x424
 
 .section .sbss
+.balign 8
 sOthersHaventBeenAdded:
 	.skip 0x1
 sPCWasBubbleBouncing:

@@ -29,23 +29,23 @@ struct z_disco_floor : xBase
 {
     struct tile_data
     {
-        uint8 culled;
+        bool culled;
         zEntSimpleObj* ent;
         xSphere sphere;
     };
 
     struct
     {
-        uint8 enabled;
-        uint8 forward;
-        uint8 culled;
-        uint8 glow_culled;
+        bool enabled;
+        bool forward;
+        bool culled;
+        bool glow_culled;
     } flag;
     z_disco_floor_asset* asset;
     uint8** state_masks;
     uint8* active_state_mask;
     uint8* next_state_mask;
-    int8* prefix[3];
+    const char* prefix[3];
     tile_data* tiles[3];
     uint32 tiles_size;
     uint32 min_state;
@@ -66,14 +66,31 @@ struct z_disco_floor : xBase
     float32 sound_delay;
     int32 curr_note;
 
+    static void init();
     static void init(void* ent, void* asset);
     static void post_setup();
     static void destroy();
     static void render_all();
     static void effects_render_all();
+    static int32 event_handler(xBase*, xBase* to, uint32 event, const float32* argf, xBase*);
 
+    void load(z_disco_floor_asset& asset);
     void setup();
+    void reset();
     void update(xScene&, float32 dt);
+    void set_state(ulong32 state, bool immediate);
+    void enable();
+    void disable();
+    void set_state_range(int32 min, int32 max, bool immediate);
+    void set_transition_delay(float32 s);
+    void set_state_delay(float32 s);
+    void refresh_spheres();
+    void update_pulse(float32 dt);
+    void refresh_bound();
+    void refresh_cull_dist();
+    void distance_cull();
+    void render(int32 group);
+    void effects_render(int32 group);
 };
 
 #endif

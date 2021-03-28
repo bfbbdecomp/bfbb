@@ -247,7 +247,7 @@ int32 zSurfaceGetSlickness(const xSurface* surf)
 // func_800B5C58
 float32 zSurfaceGetDamping(const xSurface* surf, float32 min_vel)
 {
-    xpow(min_vel, surf->friction);
+    return xpow(min_vel, surf->friction);
 }
 
 // func_800B5C7C
@@ -290,86 +290,81 @@ void zSurfaceSetup(xSurface* s)
 #pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
 // func_800B66B8
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetName__FiPc")
-#else
-// Functionally matching but jump table makes it not match
 void zSurfaceGetName(int32 type, int8* buffer)
 {
     *buffer = NULL;
     switch (type)
     {
     case 0:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x0)); //"DEFAULT");
+        strcpy(buffer, "DEFAULT");
         break;
     case 1:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x8)); //"TILE");
+        strcpy(buffer, "TILE");
         break;
     case 2:
-        strcpy(buffer, ((const char*)zSurface_strings + 0xd)); //"CARPET");
+        strcpy(buffer, "CARPET");
         break;
     case 3:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x14)); //"SHORTGRASS");
+        strcpy(buffer, "SHORTGRASS");
         break;
     case 4:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x1f)); //"LONGGRASS");
+        strcpy(buffer, "LONGGRASS");
         break;
     case 5:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x29)); //"GRAVEL");
+        strcpy(buffer, "GRAVEL");
         break;
     case 6:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x30)); //"DIRT");
+        strcpy(buffer, "DIRT");
         break;
     case 7:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x35)); //"MUD");
+        strcpy(buffer, "MUD");
         break;
     case 8:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x39)); //"THORNS");
+        strcpy(buffer, "THORNS");
         break;
     case 9:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x40)); //"METAL");
+        strcpy(buffer, "METAL");
         break;
     case 10:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x46)); //"SHEETMETAL");
+        strcpy(buffer, "SHEETMETAL");
         break;
     case 11:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x51)); //"CONCRETE");
+        strcpy(buffer, "CONCRETE");
         break;
     case 12:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x5a)); //"MARBLE");
+        strcpy(buffer, "MARBLE");
         break;
     case 13:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x61)); //"STONE");
+        strcpy(buffer, "STONE");
         break;
     case 14:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x67)); //"WOOD");
+        strcpy(buffer, "WOOD");
         break;
     case 15:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x6c)); //"SNOW");
+        strcpy(buffer, "SNOW");
         break;
     case 16:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x71)); //"ICE");
+        strcpy(buffer, "ICE");
         break;
     case 17:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x75)); //"SHALLOWWATER");
+        strcpy(buffer, "SHALLOWWATER");
         break;
     case 18:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x82)); //"DEEPWATER");
+        strcpy(buffer, "DEEPWATER");
         break;
     case 19:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x8c)); //"TAR");
+        strcpy(buffer, "TAR");
         break;
     case 20:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x90)); //"SPECIAL1");
+        strcpy(buffer, "SPECIAL1");
         break;
     case 21:
-        strcpy(buffer, ((const char*)zSurface_strings + 0x99)); //"DeepAcid");
+        strcpy(buffer, "DeepAcid");
         break;
     case 22:
-        strcpy(buffer, ((const char*)zSurface_strings + 0xa2)); //"NONE");
+        strcpy(buffer, "NONE");
     }
 }
-#endif
 
 // func_800B691C
 xSurface& zSurfaceGetDefault()
