@@ -2953,6 +2953,7 @@ lbl_802C8970:
 	.skip 0x18
 
 .section .sbss
+.balign 8
 lbl_803CB358:
 	.skip 0x8
 /* SPECULATION: link order */

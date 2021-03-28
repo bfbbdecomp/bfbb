@@ -1161,25 +1161,6 @@ lbl_8003C1D8:
 /* 8003C1F0 00038FF0  38 21 02 40 */	addi r1, r1, 0x240
 /* 8003C1F4 00038FF4  4E 80 00 20 */	blr 
 
-PKR_typeHdlr_idx__FP19st_PACKER_READ_DATAUi:
-/* 8003C1F8 00038FF8  80 C3 00 00 */	lwz r6, 0(r3)
-/* 8003C1FC 00038FFC  38 60 FF FF */	li r3, -1
-/* 8003C200 00039000  38 A0 00 00 */	li r5, 0
-/* 8003C204 00039004  48 00 00 1C */	b lbl_8003C220
-lbl_8003C208:
-/* 8003C208 00039008  7C 00 20 40 */	cmplw r0, r4
-/* 8003C20C 0003900C  40 82 00 0C */	bne lbl_8003C218
-/* 8003C210 00039010  7C A3 2B 78 */	mr r3, r5
-/* 8003C214 00039014  4E 80 00 20 */	blr 
-lbl_8003C218:
-/* 8003C218 00039018  38 A5 00 01 */	addi r5, r5, 1
-/* 8003C21C 0003901C  38 C6 00 28 */	addi r6, r6, 0x28
-lbl_8003C220:
-/* 8003C220 00039020  80 06 00 00 */	lwz r0, 0(r6)
-/* 8003C224 00039024  28 00 00 00 */	cmplwi r0, 0
-/* 8003C228 00039028  40 82 FF E0 */	bne lbl_8003C208
-/* 8003C22C 0003902C  4E 80 00 20 */	blr 
-
 __sinit_xpkrsvc_cpp:
 /* 8003C448 00039248  3C 80 80 28 */	lis r4, lbl_8027D8EC@ha
 /* 8003C44C 0003924C  3C 60 80 28 */	lis r3, lbl_8027D8A8@ha
@@ -1209,39 +1190,3 @@ g_pkr_read_funcmap_original:
 g_pkr_read_funcmap:
 	.incbin "baserom.dol", 0x27A8CC, 0x44
 .global g_readdatainst
-
-.section .sbss
-
-.global g_hiprf
-g_hiprf:
-	.skip 0x4
-.global g_loadlock
-g_loadlock:
-	.skip 0x4
-.global pkr_sector_size
-pkr_sector_size:
-	.skip 0x4
-.global g_packinit
-g_packinit:
-	.skip 0x4
-.global g_memalloc_pair
-g_memalloc_pair:
-	.skip 0x4
-.global g_memalloc_runtot
-g_memalloc_runtot:
-	.skip 0x4
-.global g_memalloc_runfree
-g_memalloc_runfree:
-	.skip 0x4
-.global curpr_PKR_LoadStep_Async__Fv
-curpr_PKR_LoadStep_Async__Fv:
-	.skip 0x4
-.global init_PKR_LoadStep_Async__Fv
-init_PKR_LoadStep_Async__Fv:
-	.skip 0x4
-.global asynlay_PKR_LoadStep_Async__Fv
-asynlay_PKR_LoadStep_Async__Fv:
-	.skip 0x4
-.global init2_curpr_PKR_LoadStep_Async__Fv
-init2_curpr_PKR_LoadStep_Async__Fv:
-	.skip 0x8
