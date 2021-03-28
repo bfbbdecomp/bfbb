@@ -1859,6 +1859,10 @@ lbl_802C89D4:
 	.skip 0x1C
 
 .section .sbss
+.balign 8
+.global g_xSceneCur
+g_xSceneCur:
+	.skip 0x4
 lbl_803CB364:
 	.skip 0x4
 lbl_803CB368:

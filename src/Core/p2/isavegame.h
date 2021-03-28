@@ -107,14 +107,6 @@ struct st_ISG_MEMCARD_DATA
     int32 allow_cache;
 };
 
-struct st_XSAVEGAME_READCONTEXT
-{
-};
-
-struct st_XSAVEGAME_WRITECONTEXT
-{
-};
-
 struct st_ISGSESSION
 {
     st_ISG_MEMCARD_DATA* mcdata;
@@ -128,6 +120,30 @@ struct st_ISGSESSION
     void (*chgfunc)(void*, en_CHGCODE);
 };
 
+enum en_NAMEGEN_TYPE
+{
+    ISG_NGTYP_GAMEDIR,
+    ISG_NGTYP_GAMEFILE,
+    ISG_NGTYP_CONFIG,
+    ISG_NGTYP_ICONTHUM
+};
+
+int32 iSGStartup();
+int32 iSGShutdown();
+st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), int32 monitor);
+void iSGSessionEnd(st_ISGSESSION* isgdata);
+int32 iSGTgtCount(st_ISGSESSION* isgdata, int32* max);
+int32 iSGTgtPhysSlotIdx(st_ISGSESSION* isgdata, int32 tidx);
+uint32 iSGTgtState(st_ISGSESSION* isgdata, int32 tgtidx, const int8* dpath);
+int32 iSGTgtFormat(st_ISGSESSION* isgdata, int32 tgtidx, int32 async, int32* canRecover);
+int32 iSGTgtSetActive(st_ISGSESSION* isgdata, int32 tgtidx);
+int32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, const int8* dpath,
+                     const int8* fname, int32* bytesNeeded, int32* availOnDisk, int32* needFile);
+int32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, int8* dpath,
+                            int8* fname, int32* bytesNeeded, int32* availOnDisk, int32* needFile);
+uint8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, int32 index);
+int32 iSGFileSize(st_ISGSESSION* isgdata, const int8* fname);
 int32 iSGCheckForWrongDevice();
+int32 iSGCheckForCorruptFiles(st_ISGSESSION*, int8 files[][64]);
 
 #endif
