@@ -2994,10 +2994,12 @@ __as__9xEntDriveFRC9xEntDrive:
 .endif
 
 .section .rodata
+.balign 8
 lbl_8025F590:
 	.incbin "baserom.dol", 0x25C570, 0x1B0
 
 .section .data
+.balign 8
 lbl_80290F08:
 	.incbin "baserom.dol", 0x28DEE8, 0xC
 .global zThrowableModels
