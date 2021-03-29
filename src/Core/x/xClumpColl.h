@@ -40,6 +40,25 @@ struct xClumpCollBSPTree
     xClumpCollBSPTriangle* triangles;
 };
 
+struct nodeInfo
+{
+    uint32 type;
+    uint32 index;
+};
+struct RwMeshCache
+{
+    uint32 lengthOfMeshesArray;
+    RwResEntry* meshes[1];
+};
+
+struct TempAtomicList
+{
+    RpAtomic* atomic;
+    RpGeometry* geom;
+    RpMeshHeader* meshHeader;
+    RwMeshCache* meshCache;
+};
+
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump);
 xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2);
 
