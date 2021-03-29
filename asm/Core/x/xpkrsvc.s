@@ -1183,6 +1183,7 @@ lbl_8003C468:
 .endif
 
 .section .data
+.balign 8
 .global g_pkr_read_funcmap_original
 g_pkr_read_funcmap_original:
 	.incbin "baserom.dol", 0x27A888, 0x44
