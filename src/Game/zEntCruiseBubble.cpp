@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "zRenderState.h"
 #include <string.h>
 
 #include "zCamera.h"
@@ -1133,12 +1134,12 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
 // func_80059458
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_model_2d__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f")
+    "render_model_2d__13cruise_bubbleFP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f")
 
 // func_80059584
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_glow__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff")
+    "render_glow__13cruise_bubbleFP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff")
 
 // func_80059698
 #ifndef NON_MATCHING
@@ -1263,7 +1264,7 @@ void cruise_bubble::flash_hud()
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_timer__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fff")
+    "render_timer__13cruise_bubbleFff")
 #else
 void cruise_bubble::render_timer(float32 alpha, float32 glow)
 {
@@ -1401,9 +1402,73 @@ void cruise_bubble::uv_animated_model::update(float32 dt)
     "refresh__Q213cruise_bubble17uv_animated_modelFv")
 
 // func_8005A0E0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "render_hud__13cruise_bubbleFv")
+#else
+void cruise_bubble::render_hud()
+{
+    if (hud.gizmos_used == 0)
+    {
+        return;
+    }
+
+    zRenderState(SDRS_CruiseHUD);
+
+    if (hud.model.wind->Alpha > zEntCruiseBubble_f_0_0)
+    {
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*) 5);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*) 2);
+
+        basic_rect<float32> bound;
+        bound.set_size(current_tweak->hud.wind.size, current_tweak->hud.wind.size);
+        bound.center(zEntCruiseBubble_f_0_5, zEntCruiseBubble_f_0_5);
+
+        render_model_2d(hud.model.wind, bound, hud.model.wind->Alpha);
+    }
+
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*) 5);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*) 6);
+
+    for (int32 i = 0; i < hud.gizmos_used; ++i)
+    {
+        hud_gizmo* gizmo = &hud.gizmo[i];
+        float32 alpha = hud.alpha * gizmo->alpha * gizmo->opacity;
+        if (!(alpha <= zEntCruiseBubble_f_0_0))
+        {
+            render_model_2d(gizmo->model, gizmo->bound, alpha);
+        }
+    }
+
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*) 5);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*) 2);
+
+    for (int32 i = 0; i < hud.gizmos_used; ++i)
+    {
+        hud_gizmo* gizmo = &hud.gizmo[i];
+        
+        // regalloc
+        float32 glow = hud.glow + gizmo->glow;
+        if (glow > zEntCruiseBubble_f_1_0)
+        {
+            glow = zEntCruiseBubble_f_1_0;
+        }
+        else if (glow <= zEntCruiseBubble_f_0_0)
+        {
+            continue;
+        }
+        
+        float32 alpha = hud.alpha * gizmo->alpha * gizmo->opacity;
+        if (!(alpha <= zEntCruiseBubble_f_0_0))
+        {
+            render_glow(gizmo->model, gizmo->bound, glow, alpha);
+        }
+    }
+
+    render_timer(hud.alpha, hud.glow);
+}
+#endif
 
 // func_8005A2AC
 #if 1

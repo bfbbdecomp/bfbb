@@ -1170,7 +1170,10 @@ lbl_800592E8:
 /* 80059310 00056110  4E 80 00 20 */	blr 
 
 /* render_model_2d__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FP14xModelInstanceRC13basic_rect<f>f */
-render_model_2d__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f:
+/* changed from ... */
+/* render_model_2d__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f: */
+/* ... so linker can find it */
+render_model_2d__13cruise_bubbleFP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f:
 /* 80059458 00056258  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 8005945C 0005625C  7C 08 02 A6 */	mflr r0
 /* 80059460 00056260  90 01 00 94 */	stw r0, 0x94(r1)
@@ -1250,7 +1253,10 @@ lbl_80059558:
 /* 80059580 00056380  4E 80 00 20 */	blr 
 
 /* render_glow__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FP14xModelInstanceRC13basic_rect<f>ff */
-render_glow__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff:
+/* changed from ... */
+/* render_glow__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff: */
+/* ... so linker can find it */
+render_glow__13cruise_bubbleFP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff:
 /* 80059584 00056384  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80059588 00056388  7C 08 02 A6 */	mflr r0
 /* 8005958C 0005638C  90 01 00 64 */	stw r0, 0x64(r1)
@@ -1395,7 +1401,10 @@ flash_hud__13cruise_bubbleFv:
 /* 800599EC 000567EC  4E 80 00 20 */	blr 
 
 /* render_timer__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fff */
-render_timer__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fff:
+/* changed from ... */
+/* render_timer__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fff: */
+/* ... so linker can find it */
+render_timer__13cruise_bubbleFff:
 /* 800599F0 000567F0  94 21 FF 30 */	stwu r1, -0xd0(r1)
 /* 800599F4 000567F4  7C 08 02 A6 */	mflr r0
 /* 800599F8 000567F8  90 01 00 D4 */	stw r0, 0xd4(r1)

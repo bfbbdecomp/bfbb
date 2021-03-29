@@ -503,6 +503,8 @@ namespace cruise_bubble
     void update_missle(xScene& s, float32 dt);
     void render_missle();
     xModelInstance* load_model(uint32);
+    void render_model_2d(xModelInstance* m, const basic_rect<float32>& bound, float32 alpha);
+    void render_glow(xModelInstance* m, const basic_rect<float32>& r, float32 glow, float32 alpha);
     void init_hud();
     void show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m);
     void update_gizmo(hud_gizmo& gizmo, float32 dt);
