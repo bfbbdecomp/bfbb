@@ -33,7 +33,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "xShadowReceiveShadowSetup__FP4xEnt")
 
 // func_80044E48
-#pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "xShadowReceiveShadow__FP4xEntfiP11RwMatrixTagP8RwRaster")
+#pragma GLOBAL_ASM("asm/Core/x/xShadow.s",                                                         \
+                   "xShadowReceiveShadow__FP4xEntfiP11RwMatrixTagP8RwRaster")
 
 // func_800455CC
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "xShadowRender__FP4xEntf")
@@ -57,7 +58,9 @@
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "ShadowRasterCreate__Fi")
 
 // func_80045B40
-#pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xShadow.s",                                                                        \
+    "ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv")
 
 // func_80045E08
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "ShadowRender__FP8RwCameraP8RwRasterP14RpIntersectionff")
@@ -75,7 +78,9 @@
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "ShadowCameraSetSpherePersp__FP8RwCameraP5RwV3df")
 
 // func_80046370
-#pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "shadowCacheEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xShadow.s",                                                                        \
+    "shadowCacheEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv")
 
 // func_80046710
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "shadowCacheLeafCB__FiiPv")
@@ -87,7 +92,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "xShadowVertical_FillCache__FP12xShadowCacheP5xVec3fff")
 
 // func_800472C0
-#pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "xShadowVertical_DrawCache__FP12xShadowCacheffiP11RwMatrixTagP8RwRaster")
+#pragma GLOBAL_ASM("asm/Core/x/xShadow.s",                                                         \
+                   "xShadowVertical_DrawCache__FP12xShadowCacheffiP11RwMatrixTagP8RwRaster")
 
 // func_80047600
 #pragma GLOBAL_ASM("asm/Core/x/xShadow.s", "xShadowManager_Init__Fi")

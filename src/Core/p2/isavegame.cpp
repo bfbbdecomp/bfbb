@@ -36,7 +36,8 @@
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSGTgtHaveRoom__FP13st_ISGSESSIONiiPCcPCcPiPiPi")
 
 // func_800CCDCC
-#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSGTgtHaveRoomStartup__FP13st_ISGSESSIONiiPCcPCcPiPiPi")
+#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s",                                                      \
+                   "iSGTgtHaveRoomStartup__FP13st_ISGSESSIONiiPCcPCcPiPiPi")
 
 // func_800CCF9C
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSGFileSize__FP13st_ISGSESSIONPCc")
@@ -90,7 +91,8 @@
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_mc_isGCcard__FP19st_ISG_MEMCARD_DATAPiPi")
 
 // func_800CDD34
-#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_isSpaceForFile__FP19st_ISG_MEMCARD_DATAiPCcPiPiPi")
+#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s",                                                      \
+                   "iSG_isSpaceForFile__FP19st_ISG_MEMCARD_DATAiPCcPiPiPi")
 
 // func_800CDE8C
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_mc_settgt__FP19st_ISG_MEMCARD_DATAi")
@@ -108,7 +110,8 @@
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_get_fsize__FP19st_ISG_MEMCARD_DATAPCc")
 
 // func_800CE218
-#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_get_fmoddate__FP19st_ISG_MEMCARD_DATAPCcPiPiPiPiPiPi")
+#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s",                                                      \
+                   "iSG_get_fmoddate__FP19st_ISG_MEMCARD_DATAPCcPiPiPiPiPiPi")
 
 // func_800CE38C
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_timestamp__FP8CARDStat")
@@ -153,7 +156,8 @@
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_mc_format__FP19st_ISG_MEMCARD_DATAiPi")
 
 // func_800CEAFC
-#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_mc_fopen__FP19st_ISG_MEMCARD_DATAPCci13en_ISG_IOMODEP14en_ASYNC_OPERR")
+#pragma GLOBAL_ASM("asm/Core/p2/isavegame.s",                                                      \
+                   "iSG_mc_fopen__FP19st_ISG_MEMCARD_DATAPCci13en_ISG_IOMODEP14en_ASYNC_OPERR")
 
 // func_800CECB0
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSG_mc_fclose__FP19st_ISG_MEMCARD_DATA")

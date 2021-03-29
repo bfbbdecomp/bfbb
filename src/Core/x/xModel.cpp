@@ -21,10 +21,12 @@
 #pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelInstanceFree__FP14xModelInstance")
 
 // func_80034420
-#pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelInstanceAttach__FP14xModelInstanceP14xModelInstance")
+#pragma GLOBAL_ASM("asm/Core/x/xModel.s",                                                          \
+                   "xModelInstanceAttach__FP14xModelInstanceP14xModelInstance")
 
 // func_80034458
-#pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi")
+#pragma GLOBAL_ASM("asm/Core/x/xModel.s",                                                          \
+                   "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi")
 
 // func_800344CC
 #pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelUpdate__FP14xModelInstancef")
@@ -45,7 +47,9 @@
 #pragma GLOBAL_ASM("asm/Core/x/xModel.s", "__as__11RwMatrixTagFRC11RwMatrixTag")
 
 // func_80034A20
-#pragma GLOBAL_ASM("asm/Core/x/xModel.s", "xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/x/xModel.s",                                                                         \
+    "xModelRender2D__FRC14xModelInstanceRC13basic_rect_esc__0_f_esc__1_RC5xVec3RC5xVec3")
 
 // func_80034BE4
 #pragma GLOBAL_ASM("asm/Core/x/xModel.s", "CameraCreate__Fiii")
