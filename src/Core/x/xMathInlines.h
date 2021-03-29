@@ -13,4 +13,6 @@ float32 xpow(float32 x, float32 y);
 
 float32 SQ(float32 x);
 
+void xsqrtfast(float32& out, float32 x);
+
 #endif
