@@ -3,7 +3,8 @@
 #include <types.h>
 
 // func_8002F57C
-#pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s", "add_global_tweaks__Q24xhud23_esc__2_unnamed_esc__2_xHudMeter_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s",                                                       \
+                   "add_global_tweaks__Q24xhud23_esc__2_unnamed_esc__2_xHudMeter_cpp_esc__2_Fv")
 
 // func_8002F580
 #pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s", "set_value__Q24xhud12meter_widgetFf")
@@ -30,7 +31,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s", "__ct__14sound_queue_esc__0_4_esc__1_Fv")
 
 // func_8002FB00
-#pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s", "play__14sound_queue_esc__0_4_esc__1_FUiffUiUiUi14sound_category")
+#pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s",                                                       \
+                   "play__14sound_queue_esc__0_4_esc__1_FUiffUiUiUi14sound_category")
 
 // func_8002FB54
 #pragma GLOBAL_ASM("asm/Core/x/xHudMeter.s", "push__14sound_queue_esc__0_4_esc__1_FUi")

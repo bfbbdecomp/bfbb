@@ -18,7 +18,8 @@
 #pragma GLOBAL_ASM("asm/Core/x/xSpline.s", "EvalCoef3__FP6xCoef3fUiP5xVec3")
 
 // func_8004A26C
-#pragma GLOBAL_ASM("asm/Core/x/xSpline.s", "BasisToCoef3__FP6xCoef3PA4_fP5xVec3P5xVec3P5xVec3P5xVec3")
+#pragma GLOBAL_ASM("asm/Core/x/xSpline.s",                                                         \
+                   "BasisToCoef3__FP6xCoef3PA4_fP5xVec3P5xVec3P5xVec3P5xVec3")
 
 // func_8004A320
 #pragma GLOBAL_ASM("asm/Core/x/xSpline.s", "CoefToUnity3__FP6xCoef3P6xCoef3ff")

@@ -6,10 +6,12 @@
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_Swap__FP14xUpdateCullMgrUiUi")
 
 // func_8013A650
-#pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt")
+#pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s",                                                     \
+                   "xUpdateCull_MakeActive__FP14xUpdateCullMgrP14xUpdateCullEnt")
 
 // func_8013A6CC
-#pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt")
+#pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s",                                                     \
+                   "xUpdateCull_MakeInactive__FP14xUpdateCullMgrP14xUpdateCullEnt")
 
 // func_8013A750
 #pragma GLOBAL_ASM("asm/Core/x/xUpdateCull.s", "xUpdateCull_AlwaysTrueCB__FPvPv")

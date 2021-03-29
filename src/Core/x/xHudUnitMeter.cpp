@@ -3,10 +3,12 @@
 #include <types.h>
 
 // func_8002FF80
-#pragma GLOBAL_ASM("asm/Core/x/xHudUnitMeter.s", "load__Q24xhud17unit_meter_widgetFR5xBaseR9xDynAssetUl")
+#pragma GLOBAL_ASM("asm/Core/x/xHudUnitMeter.s",                                                   \
+                   "load__Q24xhud17unit_meter_widgetFR5xBaseR9xDynAssetUl")
 
 // func_8002FFD8
-#pragma GLOBAL_ASM("asm/Core/x/xHudUnitMeter.s", "__ct__Q24xhud17unit_meter_widgetFRCQ24xhud16unit_meter_asset")
+#pragma GLOBAL_ASM("asm/Core/x/xHudUnitMeter.s",                                                   \
+                   "__ct__Q24xhud17unit_meter_widgetFRCQ24xhud16unit_meter_asset")
 
 // func_800300EC
 #pragma GLOBAL_ASM("asm/Core/x/xHudUnitMeter.s", "destruct__Q24xhud17unit_meter_widgetFv")
