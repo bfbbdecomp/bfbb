@@ -148,6 +148,26 @@ typedef struct OSCalendarTime
     int usec; // microseconds after the millisecond [0,999]
 } OSCalendarTime;
 
+typedef struct OSContext
+{
+    u32 gpr[32];
+    u32 cr;
+    u32 lr;
+    u32 ctr;
+    u32 xer;
+    f64 fpr[32];
+    u32 fpscr_pad;
+    u32 fpscr;
+    u32 srr0;
+    u32 srr1;
+    u16 mode;
+    u16 state;
+    u32 gqr[8];
+    u32 psf_pad;
+    f64 psf[32];
+
+} OSContext;
+
 extern volatile OSHeapHandle __OSCurrHeap;
 
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
@@ -179,6 +199,8 @@ void PADControlMotor(int chan, u32 command);
 void AXQuit();
 void AXFreeVoice(_AXVPB*);
 void OSSetSoundMode(u32 mode);
+int32 CARDProbeEx(int32, int32*, int32*);
+void VIWaitForRetrace();
 
 #ifdef __cplusplus
 }

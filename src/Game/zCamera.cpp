@@ -12,25 +12,6 @@
 #include "../Core/x/xScrFx.h"
 #include "../Core/x/xstransvc.h"
 
-enum WallJumpViewState
-{
-    WJVS_DISABLED,
-    WJVS_DISABLING,
-    WJVS_ENABLED,
-    WJVS_ENABLING
-};
-
-enum camera_owner_enum
-{
-    CO_BOULDER = 0x1,
-    CO_CRUISE_BUBBLE,
-    CO_BUNGEE = 0x4,
-    CO_BOSS = 0x8,
-    CO_OOB = 0x10,
-    CO_ZIPLINE = 0x20,
-    CO_TURRET = 0x40,
-    CO_REWARDANIM = 0x80
-};
 
 // extern int8 buffer[16];
 // extern int8 buffer[16];

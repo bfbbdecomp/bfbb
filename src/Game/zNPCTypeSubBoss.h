@@ -22,7 +22,7 @@ void ZNPC_SubBoss_Startup();
 void ZNPC_SubBoss_Shutdown();
 void zNPCSubBoss_ScenePrepare();
 void zNPCSubBoss_SceneFinish();
-xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow);
+xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_SubBoss(xFactoryInst* inst);
 
 #endif

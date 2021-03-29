@@ -52,5 +52,7 @@ void zEntDestructObj_Init(void* ent, void* asset);
 void zEntDestructObj_Save(zEntDestructObj* ent, xSerial* s);
 void zEntDestructObj_Load(zEntDestructObj* ent, xSerial* s);
 void zEntDestructObj_Setup(zEntDestructObj* ent);
+uint32 zEntDestructObj_isDestroyed(zEntDestructObj* ent);
+void zEntDestructObj_Hit(zEntDestructObj* ent, uint32 mask);
 
 #endif

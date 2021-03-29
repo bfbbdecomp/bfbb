@@ -20,6 +20,7 @@ struct xVec3
     xVec3 operator+(const xVec3&) const;
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(float32) const;
+    xVec3& operator+=(const xVec3&);
     xVec3& operator+=(float32);
     xVec3& operator-=(const xVec3&);
     xVec3& operator-=(float32);
@@ -29,6 +30,7 @@ struct xVec3
     xVec3& right_normalize();
     xVec3& safe_normalize(const xVec3& val);
     xVec3& up_normalize();
+    xVec3 up_normal() const;
     xVec3& assign(float32 x, float32 y, float32 z);
     float32 length() const;
     float32 length2() const;

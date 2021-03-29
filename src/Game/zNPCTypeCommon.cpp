@@ -3,6 +3,7 @@
 #include <types.h>
 #include <string.h>
 
+#include "zNPCTypes.h"
 #include "zNPCSndTable.h"
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
@@ -24,8 +25,21 @@ extern int32 g_flg_wonder;
 extern int32 g_isConversation;
 extern float32 g_tmr_talkless;
 
-// func_800EEE4C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeCommon.s", "ZNPC_Create_Common__FiP10RyzMemGrowPv")
+xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCCommon* com = NULL;
+
+    switch (who)
+    {
+    case NPC_TYPE_COMMON:
+    {
+        com = new (who, grow) zNPCCommon(who);
+        break;
+    }
+    }
+
+    return com;
+}
 
 void ZNPC_Destroy_Common(xFactoryInst* inst)
 {
@@ -504,7 +518,7 @@ void zNPCCommon::SpeakEnd()
 {
 }
 
-void zNPCCommon::SpeakStart()
+void zNPCCommon::SpeakStart(uint32 param_1, uint32 param_2, int32 param_3)
 {
 }
 

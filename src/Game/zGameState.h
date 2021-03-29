@@ -39,7 +39,7 @@ enum eGameState
     eGameState_Play,
     eGameState_LoseChance,
     eGameState_GameOver,
-    eGameState_Unk04,
+    eGameState_GameStats,
     eGameState_SceneSwitch,
     eGameState_Dead,
     eGameState_Exit,
@@ -92,15 +92,17 @@ enum eIntroState
 };
 
 extern int32 gGameState;
-
-void zGameSetOstrich(_GameOstrich o);
-_GameOstrich zGameGetOstrich();
-
-void zGameModeSwitch(eGameMode modeNew);
-void zGameStateSwitch(int32 theNewState);
-void zGameStateSwitchEvent(int32 event);
+extern eGameMode gGameMode;
+extern _GameOstrich gGameOstrich;
 
 int32 zGameStateGet();
 eGameMode zGameModeGet();
+_GameOstrich zGameGetOstrich();
+void zGameSetOstrich(_GameOstrich o);
+int32 zGameStateFindEvent(uint32* eventList, int32 eventCount, int32 targetMode, int32 targetEvent,
+                          int32* new_mode, int32* new_state);
+void zGameStateSwitchEvent(int32 event);
+void zGameStateSwitch(int32 theNewState);
+void zGameModeSwitch(eGameMode modeNew);
 
 #endif

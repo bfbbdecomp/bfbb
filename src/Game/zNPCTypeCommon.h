@@ -133,6 +133,18 @@ enum en_NPC_DAMAGE_TYPE
     DMGTYP_FORCEINT = 0x7fffffff
 };
 
+enum en_npcvibe
+{
+    NPC_VIBE_SOFT,
+    NPC_VIBE_NORM,
+    NPC_VIBE_HARD,
+    NPC_VIBE_BUILD_A,
+    NPC_VIBE_BUILD_B,
+    NPC_VIBE_BUILD_C,
+    NPC_VIBE_NOMORE,
+    NPC_VIBE_FORCE = 0x7fffffff
+};
+
 struct xEntNPCAsset
 {
     int32 npcFlags;
@@ -382,9 +394,13 @@ struct zNPCCommon : xNPCBasic
     void ModelScaleSet(float32 x, float32 y, float32 z);
     void ModelScaleSet(const xVec3* vec);
     int32 AnimStart(uint32 animID, int32 forceRestart);
+    uint32 AnimCurStateID();
     void GiveReward();
+    int32 SndPlayRandom(en_NPC_SOUND sndtype);
+    int32 SndChanIsBusy(int32 flg_chan);
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
     int32 GetVertPos(en_mdlvert vid, xVec3* pos);
+    void Vibrate(en_npcvibe vibe, float32 duration);
     void AddScripting(xPsyche* psy,
                       int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
                       int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
@@ -434,9 +450,14 @@ struct zNPCCommon : xNPCBasic
     virtual void Stun(float32 stuntime);
     virtual void SpeakBegin();
     virtual void SpeakEnd();
-    virtual void SpeakStart();
+    virtual void SpeakStart(uint32 sound, uint32 param_2, int32 param_3);
     virtual void SpeakStop();
-    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+
+    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+    {
+        return 0;
+    }
+
     virtual void GetParm(en_npcparm pid, void* val);
     virtual void GetParmDefault(en_npcparm pid, void* val);
     virtual float32 GenShadCacheRad();
@@ -542,6 +563,8 @@ struct NPCMsg
     float32 tmr_delay;
 };
 
+xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Common(xFactoryInst* inst);
 void zNPCCommon_ScenePrepare();
 void zNPCCommon_SceneFinish();
 void zNPCPlyrSnd_Reset();

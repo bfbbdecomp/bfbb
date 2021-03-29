@@ -1,9 +1,16 @@
 #include "zNPCGlyph.h"
+#include "../Core/x/xMath3.h"
 
 #include <types.h>
 
+extern char* g_strz_glyphmodel[10];
+extern int32 g_cnt_activeGlyphs[10];
+extern float32 lbl_803CF948;
+
 // func_8018626C
-#pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_Startup__Fv")
+void zNPCGlyph_Startup()
+{
+}
 
 void zNPCGlyph_Shutdown()
 {
@@ -16,10 +23,14 @@ void zNPCGlyph_Shutdown()
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_SceneFinish__Fv")
 
 // func_80186410
-#pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_SceneReset__Fv")
+void zNPCGlyph_SceneReset()
+{
+}
 
 // func_80186414
-#pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_ScenePostInit__Fv")
+void zNPCGlyph_ScenePostInit()
+{
+}
 
 // func_80186418
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "zNPCGlyph_Timestep__Ff")
@@ -40,7 +51,19 @@ void zNPCGlyph_Shutdown()
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "GLYF_Acquire__F11en_npcglyph")
 
 // func_801868A0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "Reset__8NPCGlyphFv")
+// Usual float memes
+#else
+void NPCGlyph::Reset()
+
+{
+    flg_glyph = 0;
+    pos_glyph = g_O3;
+    vel_glyph = g_O3;
+    tmr_glyph = lbl_803CF948;
+}
+#endif
 
 // func_801868F8
 #pragma GLOBAL_ASM("asm/Game/zNPCGlyph.s", "Init__8NPCGlyphF11en_npcglyphP8RpAtomic")

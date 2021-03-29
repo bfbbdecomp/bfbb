@@ -164,6 +164,8 @@ struct RwV3d
     RwReal x;
     RwReal y;
     RwReal z;
+
+    RwV3d& operator=(const RwV3d&); // temp
 };
 
 struct RwV4dTag

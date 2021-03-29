@@ -1,43 +1,108 @@
 #include "zNPCGoalScript.h"
 
-#include <types.h>
+#include "zNPCGoals.h"
+#include "zNPCGoalStd.h"
 
-// func_801245D4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "GOALCreate_Script__FiP10RyzMemGrowPv")
+#include "../Core/x/xEvent.h"
 
-// func_80124778
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "Enter__14zNPCGoalScriptFfPv")
+xFactoryInst* GOALCreate_Script(int32 who, RyzMemGrow* grow, void*)
+{
+    xGoal* goal = NULL;
 
-// func_801247DC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "Exit__14zNPCGoalScriptFfPv")
+    switch (who)
+    {
+    case NPC_GOAL_SCRIPT:
+    {
+        goal = new (who, grow) zNPCGoalScript(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTANIM:
+    {
+        goal = new (who, grow) zNPCGoalScriptAnim(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTATTACK:
+    {
+        goal = new (who, grow) zNPCGoalScriptAttack(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTMOVE:
+    {
+        goal = new (who, grow) zNPCGoalScriptMove(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTTALK:
+    {
+        goal = new (who, grow) zNPCGoalScriptTalk(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTFOLLOW:
+    {
+        goal = new (who, grow) zNPCGoalScriptFollow(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTLEAD:
+    {
+        goal = new (who, grow) zNPCGoalScriptLead(who);
+        break;
+    }
+    case NPC_GOAL_SCRIPTWAIT:
+    {
+        goal = new (who, grow) zNPCGoalScriptWait(who);
+        break;
+    }
+    }
 
-// func_801247FC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s",                                                    \
-                   "SysEvent__14zNPCGoalScriptFP5xBaseP5xBaseUiPCfP5xBasePi")
+    return goal;
+}
 
-// func_8012481C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "NPCMessage__14zNPCGoalScriptFP6NPCMsg")
+int32 zNPCGoalScript::Enter(float32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
 
-// func_801248A4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptWaitFi")
+    zEntEvent(npc, npc, eEventNPCScript_ScriptReady);
 
-// func_801248EC
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptLeadFi")
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
 
-// func_80124934
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__20zNPCGoalScriptFollowFi")
+int32 zNPCGoalScript::Exit(float32 dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
 
-// func_8012497C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptTalkFi")
+int32 zNPCGoalScript::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+                               xBase* toParamWidget, int32* handled)
+{
+    return xGoal::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
+}
 
-// func_801249C4
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptMoveFi")
+int32 zNPCGoalScript::NPCMessage(NPCMsg* mail)
+{
+    xPsyche* psyche = GetPsyche();
+    int32 handled = 1;
 
-// func_80124A0C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__20zNPCGoalScriptAttackFi")
+    switch (mail->msgid)
+    {
+    case NPC_MID_SCRIPTBEGIN:
+    {
+        break;
+    }
+    case NPC_MID_SCRIPTEND:
+    {
+        psyche->GoalSet(NPC_GOAL_IDLE, 0);
+        break;
+    }
+    case NPC_MID_SCRIPTHALT:
+    {
+        psyche->GoalPop(NPC_GOAL_SCRIPT, 0);
+        break;
+    }
+    default:
+    {
+        handled = 0;
+        break;
+    }
+    }
 
-// func_80124A54
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__18zNPCGoalScriptAnimFi")
-
-// func_80124A9C
-#pragma GLOBAL_ASM("asm/Game/zNPCGoalScript.s", "__ct__14zNPCGoalScriptFi")
+    return handled;
+}

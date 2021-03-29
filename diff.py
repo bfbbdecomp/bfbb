@@ -159,6 +159,13 @@ parser.add_argument(
     help="Stop disassembling at the first 'jr ra'. Some functions have multiple return points, so use with care!",
 )
 parser.add_argument(
+    "-r",
+    "--stop-blr",
+    dest="stop_blr",
+    action="store_true",
+    help="Stop disassembling at the first 'blr'. Some functions have multiple return points, so use with care!",
+)
+parser.add_argument(
     "-i",
     "--ignore-large-imms",
     dest="ignore_large_imms",
@@ -395,10 +402,12 @@ def eval_line_num(expr: str) -> int:
 
 
 def run_make(target: str) -> None:
+    target = target.replace("\\", "/")
     subprocess.check_call(["make"] + makeflags + [target])
 
 
 def run_make_capture_output(target: str) -> "subprocess.CompletedProcess[bytes]":
+    target = target.replace("\\", "/")
     return subprocess.run(
         ["make"] + makeflags + [target],
         stderr=subprocess.PIPE,
@@ -1091,6 +1100,8 @@ def process(lines: List[str]) -> List[Line]:
 
         if args.stop_jrra and mnemonic == "jr" and row_parts[1].strip() == "ra":
             stop_after_delay_slot = True
+        if args.stop_blr and mnemonic == "blr":
+            break
         elif stop_after_delay_slot:
             break
 

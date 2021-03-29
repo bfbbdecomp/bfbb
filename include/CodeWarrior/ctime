@@ -1,0 +1,6 @@
+#ifndef _MSL_CTIME
+#define _MSL_CTIME
+
+#include <time.h>
+
+#endif

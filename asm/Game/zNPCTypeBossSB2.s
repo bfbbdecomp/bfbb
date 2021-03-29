@@ -7758,6 +7758,7 @@ lbl_8015DCE8:
 /* 8015DCF0 0015AAF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8015DCF4 0015AAF4  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalBossSB2IntroFiP10RyzMemGrowPv
 create__20zNPCGoalBossSB2IntroFiP10RyzMemGrowPv:
 /* 8015DCF8 0015AAF8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015DCFC 0015AAFC  7C 08 02 A6 */	mflr r0
@@ -7871,6 +7872,7 @@ lbl_8015DE84:
 /* 8015DE84 0015AC84  38 60 00 00 */	li r3, 0
 /* 8015DE88 0015AC88  4E 80 00 20 */	blr 
 
+.global create__19zNPCGoalBossSB2IdleFiP10RyzMemGrowPv
 create__19zNPCGoalBossSB2IdleFiP10RyzMemGrowPv:
 /* 8015DE8C 0015AC8C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015DE90 0015AC90  7C 08 02 A6 */	mflr r0
@@ -7988,6 +7990,7 @@ lbl_8015E00C:
 /* 8015E01C 0015AE1C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8015E020 0015AE20  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalBossSB2TauntFiP10RyzMemGrowPv
 create__20zNPCGoalBossSB2TauntFiP10RyzMemGrowPv:
 /* 8015E024 0015AE24  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015E028 0015AE28  7C 08 02 A6 */	mflr r0
@@ -8097,6 +8100,7 @@ lbl_8015E188:
 /* 8015E1A0 0015AFA0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8015E1A4 0015AFA4  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalBossSB2DizzyFiP10RyzMemGrowPv
 create__20zNPCGoalBossSB2DizzyFiP10RyzMemGrowPv:
 /* 8015E1A8 0015AFA8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015E1AC 0015AFAC  7C 08 02 A6 */	mflr r0
@@ -8247,6 +8251,7 @@ lbl_8015E3AC:
 /* 8015E3B8 0015B1B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8015E3BC 0015B1BC  4E 80 00 20 */	blr 
 
+.global create__18zNPCGoalBossSB2HitFiP10RyzMemGrowPv
 create__18zNPCGoalBossSB2HitFiP10RyzMemGrowPv:
 /* 8015E3C0 0015B1C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015E3C4 0015B1C4  7C 08 02 A6 */	mflr r0
@@ -8412,6 +8417,7 @@ lbl_8015E5EC:
 /* 8015E604 0015B404  38 21 00 20 */	addi r1, r1, 0x20
 /* 8015E608 0015B408  4E 80 00 20 */	blr 
 
+.global create__19zNPCGoalBossSB2HuntFiP10RyzMemGrowPv
 create__19zNPCGoalBossSB2HuntFiP10RyzMemGrowPv:
 /* 8015E60C 0015B40C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015E610 0015B410  7C 08 02 A6 */	mflr r0
@@ -8701,6 +8707,7 @@ lbl_8015EA20:
 /* 8015EA30 0015B830  38 21 00 10 */	addi r1, r1, 0x10
 /* 8015EA34 0015B834  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalBossSB2SwipeFiP10RyzMemGrowPv
 create__20zNPCGoalBossSB2SwipeFiP10RyzMemGrowPv:
 /* 8015EA38 0015B838  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015EA3C 0015B83C  7C 08 02 A6 */	mflr r0
@@ -8968,6 +8975,7 @@ can_start__20zNPCGoalBossSB2SwipeCFv:
 /* 8015EDF8 0015BBF8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8015EDFC 0015BBFC  4E 80 00 20 */	blr 
 
+.global create__19zNPCGoalBossSB2ChopFiP10RyzMemGrowPv
 create__19zNPCGoalBossSB2ChopFiP10RyzMemGrowPv:
 /* 8015EE00 0015BC00  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015EE04 0015BC04  7C 08 02 A6 */	mflr r0
@@ -9283,6 +9291,7 @@ lbl_8015F264:
 /* 8015F27C 0015C07C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8015F280 0015C080  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalBossSB2KarateFiP10RyzMemGrowPv
 create__21zNPCGoalBossSB2KarateFiP10RyzMemGrowPv:
 /* 8015F284 0015C084  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015F288 0015C088  7C 08 02 A6 */	mflr r0
@@ -9592,6 +9601,7 @@ can_start__21zNPCGoalBossSB2KarateCFv:
 /* 8015F6CC 0015C4CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8015F6D0 0015C4D0  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalBossSB2DeathFiP10RyzMemGrowPv
 create__20zNPCGoalBossSB2DeathFiP10RyzMemGrowPv:
 /* 8015F6D4 0015C4D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8015F6D8 0015C4D8  7C 08 02 A6 */	mflr r0

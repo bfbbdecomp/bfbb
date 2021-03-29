@@ -6509,6 +6509,7 @@ render_halo__12zNPCDutchmanFv:
 /* 80178448 00175248  38 21 00 90 */	addi r1, r1, 0x90
 /* 8017844C 0017524C  4E 80 00 20 */	blr 
 
+.global create__19zNPCGoalDutchmanNilFiP10RyzMemGrowPv
 create__19zNPCGoalDutchmanNilFiP10RyzMemGrowPv:
 /* 80178450 00175250  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178454 00175254  7C 08 02 A6 */	mflr r0
@@ -6541,6 +6542,7 @@ lbl_801784A4:
 /* 801784B8 001752B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801784BC 001752BC  4E 80 00 20 */	blr 
 
+.global create__24zNPCGoalDutchmanInitiateFiP10RyzMemGrowPv
 create__24zNPCGoalDutchmanInitiateFiP10RyzMemGrowPv:
 /* 801784C0 001752C0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801784C4 001752C4  7C 08 02 A6 */	mflr r0
@@ -6753,6 +6755,7 @@ lbl_801787B0:
 /* 801787D0 001755D0  38 21 00 40 */	addi r1, r1, 0x40
 /* 801787D4 001755D4  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalDutchmanIdleFiP10RyzMemGrowPv
 create__20zNPCGoalDutchmanIdleFiP10RyzMemGrowPv:
 /* 801787D8 001755D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801787DC 001755DC  7C 08 02 A6 */	mflr r0
@@ -6865,6 +6868,7 @@ lbl_80178940:
 /* 80178960 00175760  38 21 00 30 */	addi r1, r1, 0x30
 /* 80178964 00175764  4E 80 00 20 */	blr 
 
+.global create__25zNPCGoalDutchmanDisappearFiP10RyzMemGrowPv
 create__25zNPCGoalDutchmanDisappearFiP10RyzMemGrowPv:
 /* 80178968 00175768  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017896C 0017576C  7C 08 02 A6 */	mflr r0
@@ -6964,6 +6968,7 @@ lbl_80178AB4:
 /* 80178ABC 001758BC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80178AC0 001758C0  4E 80 00 20 */	blr 
 
+.global create__24zNPCGoalDutchmanTeleportFiP10RyzMemGrowPv
 create__24zNPCGoalDutchmanTeleportFiP10RyzMemGrowPv:
 /* 80178AC4 001758C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178AC8 001758C8  7C 08 02 A6 */	mflr r0
@@ -7123,6 +7128,7 @@ lbl_80178CE8:
 /* 80178D08 00175B08  38 21 00 40 */	addi r1, r1, 0x40
 /* 80178D0C 00175B0C  4E 80 00 20 */	blr 
 
+.global create__24zNPCGoalDutchmanReappearFiP10RyzMemGrowPv
 create__24zNPCGoalDutchmanReappearFiP10RyzMemGrowPv:
 /* 80178D10 00175B10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178D14 00175B14  7C 08 02 A6 */	mflr r0
@@ -7264,6 +7270,7 @@ lbl_80178EEC:
 /* 80178F08 00175D08  38 21 00 20 */	addi r1, r1, 0x20
 /* 80178F0C 00175D0C  4E 80 00 20 */	blr 
 
+.global create__20zNPCGoalDutchmanBeamFiP10RyzMemGrowPv
 create__20zNPCGoalDutchmanBeamFiP10RyzMemGrowPv:
 /* 80178F10 00175D10  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80178F14 00175D14  7C 08 02 A6 */	mflr r0
@@ -8271,6 +8278,7 @@ lbl_80179D7C:
 /* 80179D94 00176B94  38 21 00 40 */	addi r1, r1, 0x40
 /* 80179D98 00176B98  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalDutchmanFlameFiP10RyzMemGrowPv
 create__21zNPCGoalDutchmanFlameFiP10RyzMemGrowPv:
 /* 80179D9C 00176B9C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80179DA0 00176BA0  7C 08 02 A6 */	mflr r0
@@ -8842,6 +8850,7 @@ angle_difference__30_esc__2_unnamed_esc__2_zNPCTypeDutchman_cpp_esc__2_FRC5xVec2
 /* 8017A5D0 001773D0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017A5D4 001773D4  4E 80 00 20 */	blr 
 
+.global create__25zNPCGoalDutchmanPostFlameFiP10RyzMemGrowPv
 create__25zNPCGoalDutchmanPostFlameFiP10RyzMemGrowPv:
 /* 8017A5D8 001773D8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017A5DC 001773DC  7C 08 02 A6 */	mflr r0
@@ -9062,6 +9071,7 @@ lbl_8017A8F0:
 /* 8017A904 00177704  38 21 00 50 */	addi r1, r1, 0x50
 /* 8017A908 00177708  4E 80 00 20 */	blr 
 
+.global create__22zNPCGoalDutchmanCaughtFiP10RyzMemGrowPv
 create__22zNPCGoalDutchmanCaughtFiP10RyzMemGrowPv:
 /* 8017A90C 0017770C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017A910 00177710  7C 08 02 A6 */	mflr r0
@@ -9225,6 +9235,7 @@ lbl_8017AB48:
 /* 8017AB5C 0017795C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017AB60 00177960  4E 80 00 20 */	blr 
 
+.global create__22zNPCGoalDutchmanDamageFiP10RyzMemGrowPv
 create__22zNPCGoalDutchmanDamageFiP10RyzMemGrowPv:
 /* 8017AB64 00177964  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AB68 00177968  7C 08 02 A6 */	mflr r0
@@ -9415,6 +9426,7 @@ lbl_8017AE00:
 /* 8017AE20 00177C20  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017AE24 00177C24  4E 80 00 20 */	blr 
 
+.global create__21zNPCGoalDutchmanDeathFiP10RyzMemGrowPv
 create__21zNPCGoalDutchmanDeathFiP10RyzMemGrowPv:
 /* 8017AE28 00177C28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8017AE2C 00177C2C  7C 08 02 A6 */	mflr r0

@@ -12,6 +12,7 @@ struct xCollis
         uint32 index;
         float32 r;
         float32 d;
+        void operator=(const tri_data& other);
     };
 
     uint32 flags;
@@ -73,7 +74,6 @@ struct xScene;
 
 void xCollideInit(xScene* sc);
 void xsqrtfast(float32& dst, float32 num);
-float32 xVec3Length2(const xVec3* vec);
 int32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 int32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
 uint32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);
@@ -86,5 +86,8 @@ bool xSphereHitsSphere(const xVec3&, float32, const xVec3&, float32);
 bool xSphereHitsVCylinder(const xVec3& sc, float32 sr, const xVec3& cc, float32 cr, float32 ch);
 bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, float32 r);
 bool xSphereHitsVCircle(const xVec3& sc, float32 sr, const xVec3& cc, float32 cr);
+uint32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
+
+void xVec3AddScaled(xVec3*, const xVec3*, float32);
 
 #endif

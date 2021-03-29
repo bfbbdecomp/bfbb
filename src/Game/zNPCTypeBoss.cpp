@@ -1,5 +1,6 @@
 #include "zNPCTypeBoss.h"
 
+#include "zNPCTypes.h"
 #include "zNPCTypeBossSandy.h"
 #include "zNPCTypeBossPatrick.h"
 #include "zNPCTypeBossSB1.h"
@@ -132,33 +133,33 @@ void zNPCBoss_SceneFinish()
     g_boss_is_in_the_house = 0;
 }
 
-xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow)
+xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow, void*)
 {
     zNPCBoss* boss;
 
     switch (who)
     {
-    case 'NTB0':
+    case NPC_TYPE_BOSSSANDY:
     {
         boss = new (who, grow) zNPCBSandy(who);
         break;
     }
-    case 'NTB1':
+    case NPC_TYPE_BOSSPAT:
     {
         boss = new (who, grow) zNPCBPatrick(who);
         break;
     }
-    case 'NTB2':
+    case NPC_TYPE_BOSS_SB1:
     {
         boss = new (who, grow) zNPCB_SB1(who);
         break;
     }
-    case 'NTB3':
+    case NPC_TYPE_BOSSBOBBY:
     {
         boss = new (who, grow) zNPCB_SB2(who);
         break;
     }
-    case 'NTB4':
+    case NPC_TYPE_BOSSPLANKTON:
     {
         boss = new (who, grow) zNPCBPlankton(who);
         break;

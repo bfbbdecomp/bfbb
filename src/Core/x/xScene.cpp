@@ -4,6 +4,7 @@
 #include "xCollideFast.h"
 #include "xMath.h"
 
+#include "../p2/iMath.h"
 #include "../p2/iCollide.h"
 #include "../../Game/zBase.h"
 
@@ -12,6 +13,8 @@
 #include <rpcollis.h>
 
 #include <string.h>
+
+extern float32 lbl_803CCF78;
 
 namespace
 {
@@ -267,10 +270,54 @@ cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, u
 }
 
 // func_8004066C
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "ProjectTriangle__FP5xVec3P5xVec3PfPf")
+void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* param_4)
+{
+    float fVar1;
+
+    *param_3 = param_1->x * param_2->x + param_1->y * param_2->y + param_1->z * param_2->z;
+    *param_4 = *param_3;
+    fVar1 = param_1->x * param_2[1].x + param_1->y * param_2[1].y + param_1->z * param_2[1].z;
+    if (fVar1 < *param_3)
+    {
+        *param_3 = fVar1;
+    }
+    else
+    {
+        if (fVar1 > *param_4)
+        {
+            *param_4 = fVar1;
+        }
+    }
+    fVar1 = param_1->x * param_2[2].x + param_1->y * param_2[2].y + param_1->z * param_2[2].z;
+    if (fVar1 < *param_3)
+    {
+        *param_3 = fVar1;
+        return;
+    }
+    if (fVar1 > *param_4)
+    {
+        *param_4 = fVar1;
+    }
+    return;
+}
 
 // func_80040730
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xScene.s", "ProjectBox__FP5xVec3P4xBoxPfPf")
+#else
+// Float memes 
+void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
+{
+    float32 fVar7 = lbl_803CCF78 * (param_1->x * ((param_2->upper).x + (param_2->lower).x) +
+                                    param_1->y * ((param_2->upper).y + (param_2->lower).y) +
+                                    param_1->z * ((param_2->upper).z + (param_2->lower).z));
+    float32 fVar1 = lbl_803CCF78 * (iabs(param_1->x * ((param_2->upper).x - (param_2->lower).x)) +
+                                    iabs(param_1->y * ((param_2->upper).y - (param_2->lower).y)) +
+                                    iabs(param_1->z * ((param_2->upper).z - (param_2->lower).z)));
+    *param_3 = fVar7 - fVar1;
+    *param_4 = fVar7 + fVar1;
+}
+#endif
 
 // func_800407C4
 #pragma GLOBAL_ASM("asm/Core/x/xScene.s", "Mgc_TriBoxTest__FP5xVec3P4xBox")

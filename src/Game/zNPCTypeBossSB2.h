@@ -3,6 +3,7 @@
 
 #include "zNPCTypeBoss.h"
 #include "zNPCTypeBossPlankton.h"
+#include "zNPCGoalCommon.h"
 
 struct zNPCNewsFish;
 
@@ -185,6 +186,92 @@ struct zNPCB_SB2 : zNPCBoss
     } glow_light;
 
     zNPCB_SB2(int32 myType);
+};
+
+struct zNPCGoalBossSB2Intro : zNPCGoalCommon
+{
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Idle : zNPCGoalCommon
+{
+    uint8 transitioning;
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
+{
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
+{
+    uint8 sicked;
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Hit : zNPCGoalCommon
+{
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
+{
+    uint8 following;
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
+{
+    uint8 started;
+    uint8 holding;
+    uint8 said;
+    uint32 begin_anim;
+    uint32 loop_anim;
+    uint32 end_anim;
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Chop : zNPCGoalCommon
+{
+    uint8 started;
+    uint8 targetted;
+    uint32 begin_anim;
+    uint32 loop_anim;
+    uint32 end_anim;
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Karate : zNPCGoalCommon
+{
+    uint8 emitted[3];
+    uint8 started;
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalBossSB2Death : zNPCGoalCommon
+{
+    zNPCB_SB2& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 #endif

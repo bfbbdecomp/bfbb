@@ -1,5 +1,6 @@
 #include "zNPCTypeSubBoss.h"
 
+#include "zNPCTypes.h"
 #include "zNPCTypeKingJelly.h"
 #include "zNPCTypeDutchman.h"
 #include "zNPCTypePrawn.h"
@@ -67,23 +68,23 @@ void zNPCSubBoss_SceneFinish()
     g_contract_for_hire = 0;
 }
 
-xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow)
+xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow, void*)
 {
     zNPCSubBoss* boss;
 
     switch (who)
     {
-    case 'NTH0':
+    case NPC_TYPE_KINGJELLY:
     {
         boss = new (who, grow) zNPCKingJelly(who);
         break;
     }
-    case 'NTH1':
+    case NPC_TYPE_DUTCHMAN:
     {
         boss = new (who, grow) zNPCDutchman(who);
         break;
     }
-    case 'NTH2':
+    case NPC_TYPE_PRAWN:
     {
         boss = new (who, grow) zNPCPrawn(who);
         break;

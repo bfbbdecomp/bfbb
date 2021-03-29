@@ -2,6 +2,7 @@
 #define ZNPCTYPEDUTCHMAN_H
 
 #include "zNPCTypeSubBoss.h"
+#include "zNPCGoalCommon.h"
 #include "../Core/x/containers.h"
 
 struct zNPCDutchman : zNPCSubBoss
@@ -136,6 +137,138 @@ struct zNPCDutchman : zNPCSubBoss
     RwRaster* laser_raster;
 
     zNPCDutchman(int32 myType);
+};
+
+struct zNPCGoalDutchmanNil : zNPCGoalCommon
+{
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
+{
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanIdle : zNPCGoalCommon
+{
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanDisappear : zNPCGoalCommon
+{
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanTeleport : zNPCGoalCommon
+{
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanReappear : zNPCGoalCommon
+{
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanBeam : zNPCGoalCommon
+{
+    enum substate_enum
+    {
+        SS_STOP,
+        SS_FOCUS,
+        SS_FIRE,
+        SS_UNFOCUS,
+        SS_DONE
+    };
+
+    struct beam_data
+    {
+        xVec2 origin;
+        xVec2 dir;
+        float32 dist;
+        float32 vel;
+        float32 wave_offset;
+        uint32 ribbon_flags;
+        xVec3 loc;
+        uint32 impact_sound;
+        uint32 glow_sound;
+    };
+
+    substate_enum substate;
+    int32 shots;
+    beam_data beam[2];
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanFlame : zNPCGoalCommon
+{
+    enum substate_enum
+    {
+        SS_WAIT,
+        SS_MOVE,
+        SS_STOP,
+        SS_DONE
+    };
+
+    substate_enum substate;
+    xVec2 move_dir;
+    uint8 stopped;
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanPostFlame : zNPCGoalCommon
+{
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanCaught : zNPCGoalCommon
+{
+    uint8 grabbed;
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanDamage : zNPCGoalCommon
+{
+    uint8 moving;
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+};
+
+struct zNPCGoalDutchmanDeath : zNPCGoalCommon
+{
+    enum substate_enum
+    {
+        SS_DISSOLVE,
+        SS_DISPERSE,
+        SS_WINK,
+        SS_DONE
+    };
+
+    substate_enum substate;
+    float32 emit_frac;
+    float32 min_y;
+    float32 max_y;
+    zNPCDutchman& owner;
+
+    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
 };
 
 #endif

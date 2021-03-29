@@ -191,6 +191,13 @@ struct xEnt : xBase
 // Size: 0x40
 struct xEntShadow
 {
+    enum radius_enum
+    {
+        RADIUS_CACHE,
+        RADIUS_RASTER,
+        MAX_RADIUS
+    };
+
     xVec3 pos;
     xVec3 vec;
     RpAtomic* shadowModel;
@@ -208,7 +215,7 @@ void xEntShow(xEnt* ent);
 void xEntInitShadow(xEnt& ent, xEntShadow& shadow);
 void xEntReposition(xEnt& ent, const xMat4x3& mat);
 bool xEntValidType(uint8 type);
-void xEntAnimateCollision(xEnt& ent, uint8 on);
+void xEntAnimateCollision(xEnt& ent, bool on);
 xBox* xEntGetAllEntsBox();
 void xEntSetNostepNormAngle(float32 angle);
 void xEntCollideWalls(xEnt* p, xScene* sc, float32 dt);

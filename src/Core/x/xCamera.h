@@ -205,6 +205,8 @@ struct xBinaryCamera
     void start(xCamera& camera);
     void stop();
     void update(float32 dt);
+    void add_tweaks(char const*);
+    void set_targets(xVec3 const& par_1, xVec3 const& par_2, float32 par_3);
     void render_debug();
 };
 
@@ -217,11 +219,15 @@ void xCameraUpdate(xCamera* cam, float32 dt);
 void xCameraBegin(xCamera* cam, int32);
 void xCameraEnd(xCamera* cam, float32 seconds, int32 update_scrn_fx);
 void xCameraShowRaster(xCamera* cam);
+float32 xCameraGetFOV(const xCamera* cam);
 void xCameraSetFOV(xCamera* cam, float32 fov);
 void xCameraMove(xCamera* cam, uint32 flags, float32 dgoal, float32 hgoal, float32 pgoal,
                  float32 tm, float32 tm_acc, float32 tm_dec);
 void xCameraMove(xCamera* cam, const xVec3& loc);
 float32 xCameraGetFOV(const xCamera* cam);
+void xCameraDoCollisions(int32 do_collis, int32 owner);
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
+void xCameraFXShake(float32 maxTime, float32 magnitude, float32 cycleMax, float32 rotate_magnitude,
+                    float32 radius, xVec3* epicenter, xVec3* player);
 
 #endif

@@ -2,124 +2,7 @@
 
 .if 0
 
-.section .text  # 0x801251BC - 0x801263C0
-
-.global ZNPC_Duplotron_Startup__Fv
-ZNPC_Duplotron_Startup__Fv:
-/* 801251BC 00121FBC  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 801251C0 00121FC0  7C 08 02 A6 */	mflr r0
-/* 801251C4 00121FC4  3C 80 80 2A */	lis r4, g_strz_dupoanim@ha
-/* 801251C8 00121FC8  3C 60 80 2A */	lis r3, g_hash_dupoanim@ha
-/* 801251CC 00121FCC  90 01 00 24 */	stw r0, 0x24(r1)
-/* 801251D0 00121FD0  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 801251D4 00121FD4  3B E4 8A 94 */	addi r31, r4, g_strz_dupoanim@l
-/* 801251D8 00121FD8  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 801251DC 00121FDC  3B C3 8A 80 */	addi r30, r3, g_hash_dupoanim@l
-/* 801251E0 00121FE0  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 801251E4 00121FE4  3B A0 00 00 */	li r29, 0
-lbl_801251E8:
-/* 801251E8 00121FE8  80 7F 00 00 */	lwz r3, 0(r31)
-/* 801251EC 00121FEC  4B F2 70 29 */	bl xStrHash__FPCc
-/* 801251F0 00121FF0  3B BD 00 01 */	addi r29, r29, 1
-/* 801251F4 00121FF4  90 7E 00 00 */	stw r3, 0(r30)
-/* 801251F8 00121FF8  2C 1D 00 05 */	cmpwi r29, 5
-/* 801251FC 00121FFC  3B FF 00 04 */	addi r31, r31, 4
-/* 80125200 00122000  3B DE 00 04 */	addi r30, r30, 4
-/* 80125204 00122004  41 80 FF E4 */	blt lbl_801251E8
-/* 80125208 00122008  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8012520C 0012200C  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80125210 00122010  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80125214 00122014  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80125218 00122018  7C 08 03 A6 */	mtlr r0
-/* 8012521C 0012201C  38 21 00 20 */	addi r1, r1, 0x20
-/* 80125220 00122020  4E 80 00 20 */	blr 
-
-.global ZNPC_Duplotron_Shutdown__Fv
-ZNPC_Duplotron_Shutdown__Fv:
-/* 80125224 00122024  4E 80 00 20 */	blr 
-
-.global zNPCDuplotron_ScenePrepare__Fv
-zNPCDuplotron_ScenePrepare__Fv:
-/* 80125228 00122028  4E 80 00 20 */	blr 
-
-.global zNPCDuplotron_SceneFinish__Fv
-zNPCDuplotron_SceneFinish__Fv:
-/* 8012522C 0012202C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80125230 00122030  7C 08 02 A6 */	mflr r0
-/* 80125234 00122034  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80125238 00122038  48 00 0B 51 */	bl DUPO_KillEffects__Fv
-/* 8012523C 0012203C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80125240 00122040  7C 08 03 A6 */	mtlr r0
-/* 80125244 00122044  38 21 00 10 */	addi r1, r1, 0x10
-/* 80125248 00122048  4E 80 00 20 */	blr 
-
-.global zNPCDuplotron_ScenePostInit__Fv
-zNPCDuplotron_ScenePostInit__Fv:
-/* 8012524C 0012204C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80125250 00122050  7C 08 02 A6 */	mflr r0
-/* 80125254 00122054  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80125258 00122058  48 00 0A 4D */	bl DUPO_InitEffects__Fv
-/* 8012525C 0012205C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80125260 00122060  7C 08 03 A6 */	mtlr r0
-/* 80125264 00122064  38 21 00 10 */	addi r1, r1, 0x10
-/* 80125268 00122068  4E 80 00 20 */	blr 
-
-ZNPC_Create_Duplotron__FiP10RyzMemGrowPv:
-/* 8012526C 0012206C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80125270 00122070  7C 08 02 A6 */	mflr r0
-/* 80125274 00122074  3C A0 4E 54 */	lis r5, 0x4E544430@ha
-/* 80125278 00122078  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8012527C 0012207C  38 05 44 30 */	addi r0, r5, 0x4E544430@l
-/* 80125280 00122080  7C 85 23 78 */	mr r5, r4
-/* 80125284 00122084  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80125288 00122088  7C 7F 1B 78 */	mr r31, r3
-/* 8012528C 0012208C  7C 1F 00 00 */	cmpw r31, r0
-/* 80125290 00122090  41 82 00 08 */	beq lbl_80125298
-/* 80125294 00122094  48 00 00 2C */	b lbl_801252C0
-lbl_80125298:
-/* 80125298 00122098  7F E4 FB 78 */	mr r4, r31
-/* 8012529C 0012209C  38 60 02 B0 */	li r3, 0x2b0
-/* 801252A0 001220A0  4B FE 9E B1 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 801252A4 001220A4  7C 60 1B 79 */	or. r0, r3, r3
-/* 801252A8 001220A8  41 82 00 10 */	beq lbl_801252B8
-/* 801252AC 001220AC  7F E4 FB 78 */	mr r4, r31
-/* 801252B0 001220B0  48 00 10 45 */	bl __ct__13zNPCDuplotronFi
-/* 801252B4 001220B4  7C 60 1B 78 */	mr r0, r3
-lbl_801252B8:
-/* 801252B8 001220B8  7C 03 03 78 */	mr r3, r0
-/* 801252BC 001220BC  48 00 00 28 */	b lbl_801252E4
-lbl_801252C0:
-/* 801252C0 001220C0  7F E4 FB 78 */	mr r4, r31
-/* 801252C4 001220C4  38 60 02 B0 */	li r3, 0x2b0
-/* 801252C8 001220C8  4B FE 9E 89 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
-/* 801252CC 001220CC  7C 60 1B 79 */	or. r0, r3, r3
-/* 801252D0 001220D0  41 82 00 10 */	beq lbl_801252E0
-/* 801252D4 001220D4  7F E4 FB 78 */	mr r4, r31
-/* 801252D8 001220D8  48 00 10 1D */	bl __ct__13zNPCDuplotronFi
-/* 801252DC 001220DC  7C 60 1B 78 */	mr r0, r3
-lbl_801252E0:
-/* 801252E0 001220E0  7C 03 03 78 */	mr r3, r0
-lbl_801252E4:
-/* 801252E4 001220E4  28 03 00 00 */	cmplwi r3, 0
-/* 801252E8 001220E8  41 82 00 08 */	beq lbl_801252F0
-/* 801252EC 001220EC  38 63 00 D0 */	addi r3, r3, 0xd0
-lbl_801252F0:
-/* 801252F0 001220F0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801252F4 001220F4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 801252F8 001220F8  7C 08 03 A6 */	mtlr r0
-/* 801252FC 001220FC  38 21 00 10 */	addi r1, r1, 0x10
-/* 80125300 00122100  4E 80 00 20 */	blr 
-
-ZNPC_Destroy_Duplotron__FP12xFactoryInst:
-/* 80125304 00122104  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80125308 00122108  7C 08 02 A6 */	mflr r0
-/* 8012530C 0012210C  38 80 00 01 */	li r4, 1
-/* 80125310 00122110  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80125314 00122114  4B FB 3C 91 */	bl __dt__12xFactoryInstFv
-/* 80125318 00122118  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8012531C 0012211C  7C 08 03 A6 */	mtlr r0
-/* 80125320 00122120  38 21 00 10 */	addi r1, r1, 0x10
-/* 80125324 00122124  4E 80 00 20 */	blr 
+.section .text  # 0x801251BC - 0x801263C0 
 
 ZNPC_AnimTable_Duplotron__Fv:
 /* 80125328 00122128  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1308,7 +1191,8 @@ lbl_8026C0C8:
 	.incbin "baserom.dol", 0x2690A8, 0x14
 lbl_8026C0DC:
 	.incbin "baserom.dol", 0x2690BC, 0xC
-lbl_8026C0E8:
+.global zNPCTypeDuplotron_strings
+zNPCTypeDuplotron_strings:
 	.incbin "baserom.dol", 0x2690C8, 0x88
 
 .section .data
@@ -1320,19 +1204,25 @@ __vt__13zNPCDuplotron:
 	.incbin "baserom.dol", 0x295A98, 0xD0
 
 .section .bss
-lbl_80314CB8:
+.global g_parf_smoky
+g_parf_smoky:
 	.skip 0x16C
-lbl_80314E24:
+.global g_parf_steam
+g_parf_steam:
 	.skip 0x16C
-lbl_80314F90:
+.global g_parf_overheat
+g_parf_overheat:
 	.skip 0x560
 
 .section .sbss
-lbl_803CBE68:
+.global g_pemit_smoky
+g_pemit_smoky:
 	.skip 0x4
-lbl_803CBE6C:
+.global g_pemit_steam
+g_pemit_steam:
 	.skip 0x4
-lbl_803CBE70:
+.global g_pemit_overheat
+g_pemit_overheat:
 	.skip 0x4
 /* SPECULATION: link order */
 .global rast_blinky__13zNPCDuplotron

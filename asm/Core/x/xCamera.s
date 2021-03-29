@@ -1,7 +1,7 @@
 .include "macros.inc"
 
 .section .rodata   # 0x80251F68 - 0x802520F0
-
+.balign 8
 .global lbl_80251F68
 lbl_80251F68:
 	.incbin "baserom.dol", 0x24EF48, 0x188
@@ -1897,6 +1897,24 @@ lbl_803CB180:
 	.skip 0x4
 lbl_803CB184:
 	.skip 0x4
+
+.section .sdata
+.balign 8
+.global xcam_do_collis
+xcam_do_collis:
+	.incbin "baserom.dol", 0x2B59C8, 0x4
+/* SPECULATION: link order */
+.global xcam_collis_radius
+xcam_collis_radius:
+	.incbin "baserom.dol", 0x2B59CC, 0x4
+/* SPECULATION: link order */
+.global xcam_collis_stiffness
+xcam_collis_stiffness:
+	.incbin "baserom.dol", 0x2B59D0, 0x8
+/* SPECULATION: link order */
+.global snow_life
+snow_life:
+	.incbin "baserom.dol", 0x2B59D8, 0x8
 
 .section .sdata2
 .global _764

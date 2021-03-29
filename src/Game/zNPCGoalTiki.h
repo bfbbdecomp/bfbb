@@ -3,34 +3,19 @@
 
 #include "zNPCGoalCommon.h"
 
-#include <types.h>
-
-struct zNPCGoalTikiDead : zNPCGoalCommon
+struct zNPCGoalTikiIdle : zNPCGoalCommon
 {
-    float32 tmr_resurrect;
+    float32 tmr_wait;
 
-    int32 Exit(void* dat);
-    void Clear();
-};
+    zNPCGoalTikiIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
 
-struct zNPCGoalTikiDying : zNPCGoalCommon
-{
-    float32 tmr_dying;
+    virtual void Clear()
+    {
+    }
 
-    void Clear();
-};
-
-struct zNPCGoalTikiCount : zNPCGoalCommon
-{
-    float32 tmr_count;
-    int32 beingCarried;
-
-    void Clear();
-};
-
-struct zNPCGoalTikiHide : zNPCGoalCommon
-{
-    void Clear();
+    virtual int32 Enter(float32, void*);
 };
 
 struct zNPCGoalTikiPatrol : zNPCGoalCommon
@@ -38,16 +23,77 @@ struct zNPCGoalTikiPatrol : zNPCGoalCommon
     xVec3 dest_pos;
     xVec3 vel;
 
-    int32 Enter(void* dat);
-    void Clear();
+    zNPCGoalTikiPatrol(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+
+    virtual void Clear()
+    {
+    }
+
+    virtual int32 Enter(float32, void*);
 };
 
-struct zNPCGoalTikiIdle : zNPCGoalCommon
+struct zNPCGoalTikiHide : zNPCGoalCommon
 {
-    float32 tmr_wait;
+    zNPCGoalTikiHide(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
 
-    zNPCGoalTikiIdle(int32 goalID);
-    void Clear();
+    virtual void Clear()
+    {
+    }
+
+    virtual int32 Enter(float32, void*);
+    virtual int32 Exit(float32, void*);
+};
+
+struct zNPCGoalTikiCount : zNPCGoalCommon
+{
+    float32 tmr_count;
+    int32 beingCarried;
+
+    zNPCGoalTikiCount(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+
+    virtual void Clear()
+    {
+    }
+
+    virtual int32 Enter(float32, void*);
+};
+
+struct zNPCGoalTikiDying : zNPCGoalCommon
+{
+    float32 tmr_dying;
+
+    zNPCGoalTikiDying(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+
+    virtual void Clear()
+    {
+    }
+
+    virtual int32 Enter(float32, void*);
+    virtual int32 Exit(float32, void*);
+};
+
+struct zNPCGoalTikiDead : zNPCGoalCommon
+{
+    float32 tmr_resurrect;
+
+    zNPCGoalTikiDead(int32 goalID) : zNPCGoalCommon(goalID)
+    {
+    }
+
+    virtual void Clear()
+    {
+    }
+
+    virtual int32 Enter(float32, void*);
+    virtual int32 Exit(float32, void*);
 };
 
 xFactoryInst* GOALCreate_Tiki(int32 who, RyzMemGrow* grow, void* dat);

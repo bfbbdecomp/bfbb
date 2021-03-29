@@ -9,7 +9,13 @@ struct _tagiPad
 };
 
 struct _tagxPad;
+struct _tagxRumble;
 
+int32 iPadInit();
 _tagxPad* iPadEnable(_tagxPad* pad, int16 port);
+void iPadStopRumble(_tagxPad* pad);
+void iPadStopRumble();
+void iPadStartRumble(_tagxPad* pad, _tagxRumble* rumble);
+void iPadKill();
 
 #endif

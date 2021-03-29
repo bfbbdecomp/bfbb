@@ -60,7 +60,7 @@ RyzMemGrow* RyzMemGrow::Init(xBase* growuser)
     return this;
 }
 
-RyzMemGrow* RyzMemGrow::Resume()
+RyzMemGrow* RyzMemGrow::Resume(xBase*)
 {
     this->amt = this->amt_last;
     this->ptr = this->ptr_last;

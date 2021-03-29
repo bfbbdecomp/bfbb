@@ -78,6 +78,7 @@ __as__8xSurfaceFRC8xSurface:
 .endif
 
 .section .sbss
+.balign 8
 .global surfs
 surfs:
 	.skip 0x4

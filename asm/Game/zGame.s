@@ -893,24 +893,6 @@ lbl_8009814C:
 /* 80098174 00094F74  38 21 00 90 */	addi r1, r1, 0x90
 /* 80098178 00094F78  4E 80 00 20 */	blr 
 
-.global zGameIsPaused__Fv
-zGameIsPaused__Fv:
-/* 8009817C 00094F7C  80 0D 8F A8 */	lwz r0, gGameMode-_SDA_BASE_(r13)
-/* 80098180 00094F80  2C 00 00 08 */	cmpwi r0, 8
-/* 80098184 00094F84  40 82 00 0C */	bne lbl_80098190
-/* 80098188 00094F88  38 60 00 01 */	li r3, 1
-/* 8009818C 00094F8C  4E 80 00 20 */	blr 
-lbl_80098190:
-/* 80098190 00094F90  2C 00 00 07 */	cmpwi r0, 7
-/* 80098194 00094F94  40 82 00 0C */	bne lbl_800981A0
-/* 80098198 00094F98  38 60 00 01 */	li r3, 1
-/* 8009819C 00094F9C  4E 80 00 20 */	blr 
-lbl_800981A0:
-/* 800981A0 00094FA0  20 00 00 06 */	subfic r0, r0, 6
-/* 800981A4 00094FA4  7C 00 00 34 */	cntlzw r0, r0
-/* 800981A8 00094FA8  54 03 D9 7E */	srwi r3, r0, 5
-/* 800981AC 00094FAC  4E 80 00 20 */	blr 
-
 zGameLoopContinue__Fv:
 /* 800981B0 00094FB0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800981B4 00094FB4  7C 08 02 A6 */	mflr r0
@@ -950,54 +932,6 @@ lbl_80098224:
 /* 80098228 00095028  7C 08 03 A6 */	mtlr r0
 /* 8009822C 0009502C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80098230 00095030  4E 80 00 20 */	blr 
-
-zGameOkToPause__Fv:
-/* 80098234 00095034  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80098238 00095038  7C 08 02 A6 */	mflr r0
-/* 8009823C 0009503C  3C 60 80 3C */	lis r3, globals@ha
-/* 80098240 00095040  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80098244 00095044  38 63 05 58 */	addi r3, r3, globals@l
-/* 80098248 00095048  80 03 1F BC */	lwz r0, 0x1fbc(r3)
-/* 8009824C 0009504C  28 00 00 00 */	cmplwi r0, 0
-/* 80098250 00095050  41 82 00 0C */	beq lbl_8009825C
-/* 80098254 00095054  38 60 00 00 */	li r3, 0
-/* 80098258 00095058  48 00 00 70 */	b lbl_800982C8
-lbl_8009825C:
-/* 8009825C 0009505C  4B FF FF 21 */	bl zGameIsPaused__Fv
-/* 80098260 00095060  2C 03 00 00 */	cmpwi r3, 0
-/* 80098264 00095064  41 82 00 0C */	beq lbl_80098270
-/* 80098268 00095068  38 60 00 00 */	li r3, 0
-/* 8009826C 0009506C  48 00 00 5C */	b lbl_800982C8
-lbl_80098270:
-/* 80098270 00095070  3C 60 80 3C */	lis r3, globals@ha
-/* 80098274 00095074  38 83 05 58 */	addi r4, r3, globals@l
-/* 80098278 00095078  80 64 1F C0 */	lwz r3, 0x1fc0(r4)
-/* 8009827C 0009507C  80 63 00 00 */	lwz r3, 0(r3)
-/* 80098280 00095080  3C 03 AF B9 */	addis r0, r3, 0xafb9
-/* 80098284 00095084  28 00 31 32 */	cmplwi r0, 0x3132
-/* 80098288 00095088  40 82 00 0C */	bne lbl_80098294
-/* 8009828C 0009508C  38 60 00 00 */	li r3, 0
-/* 80098290 00095090  48 00 00 38 */	b lbl_800982C8
-lbl_80098294:
-/* 80098294 00095094  80 64 17 88 */	lwz r3, 0x1788(r4)
-/* 80098298 00095098  38 00 92 FF */	li r0, -27905
-/* 8009829C 0009509C  7C 60 00 39 */	and. r0, r3, r0
-/* 800982A0 000950A0  41 82 00 0C */	beq lbl_800982AC
-/* 800982A4 000950A4  38 60 00 00 */	li r3, 0
-/* 800982A8 000950A8  48 00 00 20 */	b lbl_800982C8
-lbl_800982AC:
-/* 800982AC 000950AC  3C 80 80 3C */	lis r4, gTrcPad@ha
-/* 800982B0 000950B0  38 60 00 01 */	li r3, 1
-/* 800982B4 000950B4  38 84 EF 88 */	addi r4, r4, gTrcPad@l
-/* 800982B8 000950B8  80 04 00 08 */	lwz r0, 8(r4)
-/* 800982BC 000950BC  2C 00 00 01 */	cmpwi r0, 1
-/* 800982C0 000950C0  40 82 00 08 */	bne lbl_800982C8
-/* 800982C4 000950C4  38 60 00 02 */	li r3, 2
-lbl_800982C8:
-/* 800982C8 000950C8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800982CC 000950CC  7C 08 03 A6 */	mtlr r0
-/* 800982D0 000950D0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800982D4 000950D4  4E 80 00 20 */	blr 
 
 .global zGamePause__Fv
 zGamePause__Fv:
@@ -1728,10 +1662,6 @@ lbl_80098D60:
 /* 80098D70 00095B70  38 21 00 20 */	addi r1, r1, 0x20
 /* 80098D74 00095B74  4E 80 00 20 */	blr 
 
-.global zGameTakeSnapShot__FP8RwCamera
-zGameTakeSnapShot__FP8RwCamera:
-/* 80098D78 00095B78  4E 80 00 20 */	blr 
-
 .global zGameUpdateTransitionBubbles__Fv
 zGameUpdateTransitionBubbles__Fv:
 /* 80098D7C 00095B7C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1831,30 +1761,6 @@ lbl_80098ED8:
 /* 80098EDC 00095CDC  7C 08 03 A6 */	mtlr r0
 /* 80098EE0 00095CE0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80098EE4 00095CE4  4E 80 00 20 */	blr 
-
-.global zGameScreenTransitionUpdate__FfPc
-zGameScreenTransitionUpdate__FfPc:
-/* 80098EE8 00095CE8  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80098EEC 00095CEC  7C 08 02 A6 */	mflr r0
-/* 80098EF0 00095CF0  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80098EF4 00095CF4  DB E1 00 18 */	stfd f31, 0x18(r1)
-/* 80098EF8 00095CF8  FF E0 08 90 */	fmr f31, f1
-/* 80098EFC 00095CFC  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 80098F00 00095D00  7C 7F 1B 78 */	mr r31, r3
-/* 80098F04 00095D04  48 00 DC E5 */	bl zMenuIsFirstBoot__Fv
-/* 80098F08 00095D08  2C 03 00 00 */	cmpwi r3, 0
-/* 80098F0C 00095D0C  40 82 00 14 */	bne lbl_80098F20
-/* 80098F10 00095D10  FC 20 F8 90 */	fmr f1, f31
-/* 80098F14 00095D14  7F E3 FB 78 */	mr r3, r31
-/* 80098F18 00095D18  38 80 00 00 */	li r4, 0
-/* 80098F1C 00095D1C  48 00 00 1D */	bl zGameScreenTransitionUpdate__FfPcPUc
-lbl_80098F20:
-/* 80098F20 00095D20  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80098F24 00095D24  CB E1 00 18 */	lfd f31, 0x18(r1)
-/* 80098F28 00095D28  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 80098F2C 00095D2C  7C 08 03 A6 */	mtlr r0
-/* 80098F30 00095D30  38 21 00 20 */	addi r1, r1, 0x20
-/* 80098F34 00095D34  4E 80 00 20 */	blr 
 
 .global zGameScreenTransitionUpdate__FfPcPUc
 zGameScreenTransitionUpdate__FfPcPUc:
@@ -2118,51 +2024,6 @@ lbl_800992F0:
 /* 80099308 00096108  38 21 01 90 */	addi r1, r1, 0x190
 /* 8009930C 0009610C  4E 80 00 20 */	blr 
 
-.global zGameScreenTransitionEnd__Fv
-zGameScreenTransitionEnd__Fv:
-/* 80099310 00096110  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80099314 00096114  7C 08 02 A6 */	mflr r0
-/* 80099318 00096118  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009931C 0009611C  38 00 00 50 */	li r0, 0x50
-/* 80099320 00096120  90 0D 8F 78 */	stw r0, gGameWhereAmI-_SDA_BASE_(r13)
-/* 80099324 00096124  48 1A 3A D9 */	bl _rwFrameSyncDirty
-/* 80099328 00096128  80 6D 8F 6C */	lwz r3, lbl_803CB86C-_SDA_BASE_(r13)
-/* 8009932C 0009612C  28 03 00 00 */	cmplwi r3, 0
-/* 80099330 00096130  41 82 00 24 */	beq lbl_80099354
-/* 80099334 00096134  80 63 00 04 */	lwz r3, 4(r3)
-/* 80099338 00096138  28 03 00 00 */	cmplwi r3, 0
-/* 8009933C 0009613C  41 82 00 08 */	beq lbl_80099344
-/* 80099340 00096140  48 19 F8 85 */	bl RwFrameDestroy
-lbl_80099344:
-/* 80099344 00096144  80 6D 8F 6C */	lwz r3, lbl_803CB86C-_SDA_BASE_(r13)
-/* 80099348 00096148  48 17 E3 79 */	bl RpLightDestroy
-/* 8009934C 0009614C  38 00 00 00 */	li r0, 0
-/* 80099350 00096150  90 0D 8F 6C */	stw r0, lbl_803CB86C-_SDA_BASE_(r13)
-lbl_80099354:
-/* 80099354 00096154  80 6D 8F 68 */	lwz r3, lbl_803CB868-_SDA_BASE_(r13)
-/* 80099358 00096158  28 03 00 00 */	cmplwi r3, 0
-/* 8009935C 0009615C  41 82 00 34 */	beq lbl_80099390
-/* 80099360 00096160  80 8D 8F 64 */	lwz r4, sGameScreenTransCam-_SDA_BASE_(r13)
-/* 80099364 00096164  28 04 00 00 */	cmplwi r4, 0
-/* 80099368 00096168  41 82 00 18 */	beq lbl_80099380
-/* 8009936C 0009616C  48 18 5B DD */	bl RpWorldRemoveCamera
-/* 80099370 00096170  80 6D 8F 64 */	lwz r3, sGameScreenTransCam-_SDA_BASE_(r13)
-/* 80099374 00096174  48 02 6E 9D */	bl iCameraDestroy__FP8RwCamera
-/* 80099378 00096178  38 00 00 00 */	li r0, 0
-/* 8009937C 0009617C  90 0D 8F 64 */	stw r0, sGameScreenTransCam-_SDA_BASE_(r13)
-lbl_80099380:
-/* 80099380 00096180  80 6D 8F 68 */	lwz r3, lbl_803CB868-_SDA_BASE_(r13)
-/* 80099384 00096184  48 18 3B 9D */	bl RpWorldDestroy
-/* 80099388 00096188  38 00 00 00 */	li r0, 0
-/* 8009938C 0009618C  90 0D 8F 68 */	stw r0, lbl_803CB868-_SDA_BASE_(r13)
-lbl_80099390:
-/* 80099390 00096190  38 00 00 51 */	li r0, 0x51
-/* 80099394 00096194  90 0D 8F 78 */	stw r0, gGameWhereAmI-_SDA_BASE_(r13)
-/* 80099398 00096198  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8009939C 0009619C  7C 08 03 A6 */	mtlr r0
-/* 800993A0 000961A0  38 21 00 10 */	addi r1, r1, 0x10
-/* 800993A4 000961A4  4E 80 00 20 */	blr 
-
 .global zGameSetupPlayer__Fv
 zGameSetupPlayer__Fv:
 /* 800993A8 000961A8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2266,10 +2127,6 @@ lbl_800994D4:
 /* 80099520 00096320  38 21 00 20 */	addi r1, r1, 0x20
 /* 80099524 00096324  4E 80 00 20 */	blr 
 
-.global zGameStats_Init__Fv
-zGameStats_Init__Fv:
-/* 80099528 00096328  4E 80 00 20 */	blr 
-
 /* xUtil_select<c>__FPPciPCf */
 xUtil_select_esc__0_c_esc__1___FPPciPCf:
 /* 8009952C 0009632C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2351,28 +2208,6 @@ lbl_80099620:
 /* 80099638 00096438  38 21 00 30 */	addi r1, r1, 0x30
 /* 8009963C 0009643C  4E 80 00 20 */	blr 
 
-.global xDrawEnd__Fv
-xDrawEnd__Fv:
-/* 80099640 00096440  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80099644 00096444  7C 08 02 A6 */	mflr r0
-/* 80099648 00096448  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009964C 0009644C  48 02 98 5D */	bl iDrawEnd__Fv
-/* 80099650 00096450  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80099654 00096454  7C 08 03 A6 */	mtlr r0
-/* 80099658 00096458  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009965C 0009645C  4E 80 00 20 */	blr 
-
-.global xDrawBegin__Fv
-xDrawBegin__Fv:
-/* 80099660 00096460  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80099664 00096464  7C 08 02 A6 */	mflr r0
-/* 80099668 00096468  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8009966C 0009646C  48 02 98 39 */	bl iDrawBegin__Fv
-/* 80099670 00096470  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80099674 00096474  7C 08 03 A6 */	mtlr r0
-/* 80099678 00096478  38 21 00 10 */	addi r1, r1, 0x10
-/* 8009967C 0009647C  4E 80 00 20 */	blr 
-
 .endif
 
 .section .rodata
@@ -2401,19 +2236,11 @@ sTimeElapsed:
 /* SPECULATION: link order */
 .global sTimeLast
 sTimeLast:
-	.skip 0x4
-/* SPECULATION: link order */
-.global lbl_803CB7C4
-lbl_803CB7C4:
-	.skip 0x4
+	.skip 0x8
 /* SPECULATION: link order */
 .global sTimeCurrent
 sTimeCurrent:
-	.skip 0x4
-/* SPECULATION: link order */
-.global lbl_803CB7CC
-lbl_803CB7CC:
-	.skip 0x4
+	.skip 0x8
 /* SPECULATION: link order */
 .global gLevelChanged
 gLevelChanged:
@@ -2508,9 +2335,11 @@ lbl_803CB860:
 .global sGameScreenTransCam
 sGameScreenTransCam:
 	.skip 0x4
-lbl_803CB868:
+.global World
+World:
 	.skip 0x4
-lbl_803CB86C:
+.global DirectionalLight
+DirectionalLight:
 	.skip 0x4
 /* SPECULATION: link order */
 .global bgu1
@@ -2586,6 +2415,7 @@ lbl_803CDA04:
 	.incbin "baserom.dol", 0x2B72A4, 0x4
 lbl_803CDA08:
 	.incbin "baserom.dol", 0x2B72A8, 0x8
+.global lbl_803CDA10
 lbl_803CDA10:
 	.incbin "baserom.dol", 0x2B72B0, 0x4
 lbl_803CDA14:
@@ -2598,6 +2428,7 @@ lbl_803CDA20:
 	.incbin "baserom.dol", 0x2B72C0, 0x4
 lbl_803CDA24:
 	.incbin "baserom.dol", 0x2B72C4, 0x4
+.global lbl_803CDA28
 lbl_803CDA28:
 	.incbin "baserom.dol", 0x2B72C8, 0x4
 lbl_803CDA2C:
@@ -2620,8 +2451,10 @@ lbl_803CDA4C:
 	.incbin "baserom.dol", 0x2B72EC, 0x4
 lbl_803CDA50:
 	.incbin "baserom.dol", 0x2B72F0, 0x4
+.global lbl_803CDA54
 lbl_803CDA54:
 	.incbin "baserom.dol", 0x2B72F4, 0x4
+.global lbl_803CDA58
 lbl_803CDA58:
 	.incbin "baserom.dol", 0x2B72F8, 0x4
 lbl_803CDA5C:

@@ -82,6 +82,27 @@ struct xModelAssetParam
     uint8 String[3];
 };
 
+struct xModelAssetInfo
+{
+    uint32 Magic;
+    uint32 NumModelInst;
+    uint32 AnimTableID;
+    uint32 CombatID;
+    uint32 BrainID;
+};
+
+struct xModelAssetInst
+{
+    uint32 ModelID;
+    uint16 Flags;
+    uint8 Parent;
+    uint8 Bone;
+    float32 MatRight[3];
+    float32 MatUp[3];
+    float32 MatAt[3];
+    float32 MatPos[3];
+};
+
 struct xModelPipeLookup
 {
     RpAtomic* model;
@@ -117,7 +138,9 @@ void xModelSetMaterialAlpha(xModelInstance* modelInst, uint8 alpha);
 void xModelUpdate(xModelInstance* modelInst, float32 timeDelta);
 xMat4x3* xModelGetFrame(xModelInstance* modelInst);
 void xModelEval(xModelInstance* modelInst);
+void xModel_SceneEnter(RpWorld* world);
 void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
+void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, ulong32 index);
 
 #endif

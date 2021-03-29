@@ -35,9 +35,18 @@ struct EGGItem
     EGGData eggdata;
 };
 
+struct GECheat
+{
+    uint32* key_code;
+    void (*fun_cheat)();
+    int32 flg_keep;
+    int32 flg_mode;
+};
+
 int32 zGameExtras_ExtrasFlags();
 void zGameExtras_MoDay(int32* month, int32* day);
 void zGameExtras_SceneReset();
+void zGameExtras_SceneInit();
 void zGameExtras_SceneExit();
 void zGameExtras_SceneUpdate(float32 dt);
 int32 zGameExtras_CheatFlags();
@@ -74,5 +83,7 @@ void GEC_cb_RichPeep();
 void GEC_cb_PanHandle();
 void zGame_HackGalleryInit();
 uint32 zGame_HackIsGallery();
+
+template <class T> T xUtil_choose(T const* list, int32 size, float32 const* c);
 
 #endif

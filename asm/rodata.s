@@ -175,7 +175,10 @@ lbl_80279948:
 	.incbin "baserom.dol", 0x276928, 0xE8
 .global lbl_80279A30
 lbl_80279A30:
-	.incbin "baserom.dol", 0x276A10, 0x50
+	.incbin "baserom.dol", 0x276A10, 0x28
+.global lbl_80279A58
+lbl_80279A58:
+	.incbin "baserom.dol", 0x276A38, 0x28
 .global lbl_80279A80
 lbl_80279A80:
 	.incbin "baserom.dol", 0x276A60, 0x390
@@ -241,7 +244,10 @@ gTRKMemMap:
 	.incbin "baserom.dol", 0x2772F8, 0x10
 .global lbl_8027A328
 lbl_8027A328:
-	.incbin "baserom.dol", 0x277308, 0x50
+	.incbin "baserom.dol", 0x277308, 0x28
+.global lbl_8027A350
+lbl_8027A350:
+	.incbin "baserom.dol", 0x277330, 0x28
 .global lbl_8027A378
 lbl_8027A378:
 	.incbin "baserom.dol", 0x277358, 0x28

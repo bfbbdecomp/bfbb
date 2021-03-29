@@ -12,6 +12,15 @@ struct _tagiTRCPadInfo
 namespace iTRCDisk
 {
     void CheckDVDAndResetState();
-}
+    void Init();
+} // namespace iTRCDisk
+
+namespace ResetButton
+{
+    void EnableReset();
+    void DisableReset();
+    void SetSndKillFunction(void (*func)());
+    void CheckResetButton();
+} // namespace ResetButton
 
 #endif

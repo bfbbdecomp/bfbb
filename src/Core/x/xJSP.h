@@ -22,4 +22,7 @@ struct xJSPHeader
     xJSPNodeInfo* jspNodeList;
 };
 
+RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3);
+void xJSP_MultiStreamRead(void* data, uint32 size, xJSPHeader** jsp);
+
 #endif
