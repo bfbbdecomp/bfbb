@@ -25,10 +25,10 @@ jobs:
     - name: Extract tools
       run: tar xvzf bfbb.tar.gz
     - name: Compile
-      uses: docker://docker.io/markstreet/bfbbdecomp:latest
+      uses: docker://docker.io/bfbbdecomp/bfbb:latest
       with:
         args: make --jobs
     - name: Clang Format
-      uses: docker://docker.io/markstreet/bfbbdecomp:latest
+      uses: docker://docker.io/bfbbdecomp/bfbb:latest
       with:
         args: sh -c "clang-format -i -style=file src/**/*.cpp || echo \"::warning clang-formatter check failed\""
