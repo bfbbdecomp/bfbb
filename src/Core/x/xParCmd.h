@@ -1,7 +1,7 @@
 #ifndef XPARCMD_H
 #define XPARCMD_H
 
-#include "xMath3.h"
+#include "xParGroup.h"
 
 #define XPARCMD_TYPE_MOVE 0
 #define XPARCMD_TYPE_MOVERANDOM 1
