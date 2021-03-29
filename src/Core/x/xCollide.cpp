@@ -1,5 +1,7 @@
 #include "xCollide.h"
 #include "../src/Game/zSurface.h"
+#include "../p2/iCollide.h"
+#include "../p2/iMath3.h"
 
 #include <types.h>
 
@@ -87,10 +89,71 @@ _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xM
 #endif
 
 // func_8000F1C8
-#pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xCollideInit__FP6xScene")
+void xCollideInit(xScene* sc)
+{
+    iCollideInit(sc);
+}
 
 // func_8000F1E8
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis")
+#else
+//WIP, very wrong but it compiles at least
+// Need to figure out why it defines scale twice and why ghidra passes in wrong values to xVec3SMul
+uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
+{
+    xIsect isx;
+    float32 scale;
+    // float32 scale;
+
+    iSphereIsectSphere(b, a, &isx);
+    if (scale <= 0.0f)
+    {
+        if (scale <= 0.0f)
+        {
+            coll->flags = coll->flags | 0x10;
+        }
+        coll->dist = (float32)((float)a->r + scale);
+        if ((coll->flags & 0x1600) != 0)
+        {
+            if (0.0f == scale)
+            {
+                xVec3Copy(&coll->tohit, &g_O3);
+            }
+            else
+            {
+                xVec3SMul(&coll->norm, &coll->tohit, scale);
+            }
+        }
+        if ((coll->flags & 0x800) != 0)
+        {
+            if (0.0f == scale)
+            {
+                xVec3Copy(&coll->depen, &g_O3);
+            }
+            else
+            {
+                xVec3SMul((xVec3*)&a->center, &coll->depen, scale);
+            }
+        }
+        if ((coll->flags & 0x1200) != 0)
+        {
+            xVec3Normalize(&coll->hdng, &coll->tohit);
+        }
+        if ((coll->flags & 0x200) != 0)
+        {
+            xVec3Inv(&coll->norm, &coll->hdng);
+        }
+        coll->flags |= 1;
+        return 1;
+    }
+    else
+    {
+        coll->flags &= 0xfffffffe;
+        return 0;
+    }
+}
+#endif
 
 // func_8000F350
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis")
