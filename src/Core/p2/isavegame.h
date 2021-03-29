@@ -143,6 +143,11 @@ int32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, int
                             int8* fname, int32* bytesNeeded, int32* availOnDisk, int32* needFile);
 uint8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, int32 index);
 int32 iSGFileSize(st_ISGSESSION* isgdata, const int8* fname);
+int8* iSGFileModDate(st_ISGSESSION* isgdata, const int8* fname);
+int8* iSGFileModDate(st_ISGSESSION* isgdata, const int8* fname, int32* sec, int32* min, int32* hr,
+                     int32* mon, int32* day, int32* yr);
+en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, int32 block);
+en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, int8* errmsg);
 int32 iSGCheckForWrongDevice();
 int32 iSGCheckForCorruptFiles(st_ISGSESSION*, int8 files[][64]);
 

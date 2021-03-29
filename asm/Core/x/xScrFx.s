@@ -1440,6 +1440,15 @@ __as__18DistortionParticleFRC18DistortionParticle:
 
 .endif
 
+.section .data
+.balign 8
+.global ddir
+ddir:
+	.incbin "baserom.dol", 0x285AD8, 0xC
+.global sFullScreenGlareDir
+sFullScreenGlareDir:
+	.incbin "baserom.dol", 0x285AE4, 0xC
+
 .section .bss
 lbl_802C89F0:
 	.skip 0x1C
