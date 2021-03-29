@@ -4,51 +4,6 @@
 
 .section .text  # 0x8011D564 - 0x8011F0B8
 
-.global xClumpColl_StaticBufferInit__FPvUi
-xClumpColl_StaticBufferInit__FPvUi:
-/* 8011D564 0011A364  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8011D568 0011A368  7C 08 02 A6 */	mflr r0
-/* 8011D56C 0011A36C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8011D570 0011A370  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8011D574 0011A374  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8011D578 0011A378  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8011D57C 0011A37C  7C 7D 1B 78 */	mr r29, r3
-/* 8011D580 0011A380  80 8D 9F 7C */	lwz r4, RwEngineInstance-_SDA_BASE_(r13)
-/* 8011D584 0011A384  83 E3 00 04 */	lwz r31, 4(r3)
-/* 8011D588 0011A388  38 60 00 10 */	li r3, 0x10
-/* 8011D58C 0011A38C  81 84 01 34 */	lwz r12, 0x134(r4)
-/* 8011D590 0011A390  83 DD 00 08 */	lwz r30, 8(r29)
-/* 8011D594 0011A394  7D 89 03 A6 */	mtctr r12
-/* 8011D598 0011A398  4E 80 04 21 */	bctrl 
-/* 8011D59C 0011A39C  28 1F 00 00 */	cmplwi r31, 0
-/* 8011D5A0 0011A3A0  41 82 00 20 */	beq lbl_8011D5C0
-/* 8011D5A4 0011A3A4  38 9D 00 0C */	addi r4, r29, 0xc
-/* 8011D5A8 0011A3A8  57 E0 20 36 */	slwi r0, r31, 4
-/* 8011D5AC 0011A3AC  90 83 00 04 */	stw r4, 4(r3)
-/* 8011D5B0 0011A3B0  80 83 00 04 */	lwz r4, 4(r3)
-/* 8011D5B4 0011A3B4  7C 04 02 14 */	add r0, r4, r0
-/* 8011D5B8 0011A3B8  90 03 00 0C */	stw r0, 0xc(r3)
-/* 8011D5BC 0011A3BC  48 00 00 14 */	b lbl_8011D5D0
-lbl_8011D5C0:
-/* 8011D5C0 0011A3C0  38 80 00 00 */	li r4, 0
-/* 8011D5C4 0011A3C4  38 1D 00 0C */	addi r0, r29, 0xc
-/* 8011D5C8 0011A3C8  90 83 00 04 */	stw r4, 4(r3)
-/* 8011D5CC 0011A3CC  90 03 00 0C */	stw r0, 0xc(r3)
-lbl_8011D5D0:
-/* 8011D5D0 0011A3D0  93 E3 00 00 */	stw r31, 0(r3)
-/* 8011D5D4 0011A3D4  93 C3 00 08 */	stw r30, 8(r3)
-/* 8011D5D8 0011A3D8  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8011D5DC 0011A3DC  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8011D5E0 0011A3E0  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8011D5E4 0011A3E4  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8011D5E8 0011A3E8  7C 08 03 A6 */	mtlr r0
-/* 8011D5EC 0011A3EC  38 21 00 20 */	addi r1, r1, 0x20
-/* 8011D5F0 0011A3F0  4E 80 00 20 */	blr 
-
-.global xClumpColl_InstancePointers__FP17xClumpCollBSPTreeP7RpClump
-xClumpColl_InstancePointers__FP17xClumpCollBSPTreeP7RpClump:
-/* 8011D5F4 0011A3F4  4E 80 00 20 */	blr 
-
 .global xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv
 xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv:
 /* 8011D5F8 0011A3F8  94 21 FE D0 */	stwu r1, -0x130(r1)

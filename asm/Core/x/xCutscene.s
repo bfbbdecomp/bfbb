@@ -2141,7 +2141,8 @@ lbl_8027B418:
 	.incbin "baserom.dol", 0x2783F8, 0x10
 
 .section .bss
-lbl_802B8A40:
+.global sCutsceneFakeModel
+sCutsceneFakeModel:
 	.skip 0x360
 
 .section .sbss
@@ -2169,8 +2170,10 @@ lbl_803D0804:
 .global _672
 _672:
 	.incbin "baserom.dol", 0x2B63D8, 0x4
+.global lbl_803CCB3C
 lbl_803CCB3C:
 	.incbin "baserom.dol", 0x2B63DC, 0x4
+.global lbl_803CCB40
 lbl_803CCB40:
 	.incbin "baserom.dol", 0x2B63E0, 0x4
 lbl_803CCB44:
