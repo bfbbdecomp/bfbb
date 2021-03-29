@@ -1,9 +1,90 @@
 #include "xCollide.h"
+#include "../src/Game/zSurface.h"
 
 #include <types.h>
 
+// extern float32 lbl_803CCAA8; // 0.0
+
 // func_8000F058
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xCollideGetCollsIdx__FPC7xCollisPC5xVec3PC7xMat3x3")
+#else
+// Will match once we can use float literals for this
+_xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat)
+{
+    if (tohit->y * tohit->y > tohit->x * tohit->x + tohit->z * tohit->z)
+    {
+        if (tohit->y < 0.0f)
+        {
+            if ((coll->flags & 0x20000) == 0)
+            {
+                if (coll->optr != NULL && coll->mptr->Surf != NULL ?
+                        zSurfaceGetStandOn(coll->mptr->Surf) :
+                        1)
+                {
+                    return k_XCOLLS_IDX_FLOOR;
+                }
+            }
+        }
+        else
+        {
+            return k_XCOLLS_IDX_CEIL;
+        }
+    }
+    float32 local_x = mat->right.x * tohit->x + mat->right.z * tohit->z;
+    float32 local_z = mat->at.x * tohit->x + mat->at.z * tohit->z;
+    if (local_x > 0.0f)
+    {
+        if (local_z > 0.0f)
+        {
+            if (local_x > local_z)
+            {
+                return k_XCOLLS_IDX_LEFT;
+            }
+            else
+            {
+                return k_XCOLLS_IDX_FRONT;
+            }
+        }
+        else
+        {
+            if (local_x > -local_z)
+            {
+                return k_XCOLLS_IDX_LEFT;
+            }
+            else
+            {
+                return k_XCOLLS_IDX_REAR;
+            }
+        }
+    }
+    else
+    {
+        if (local_z > 0.0f)
+        {
+            if (local_x < -local_z)
+            {
+                return k_XCOLLS_IDX_RIGHT;
+            }
+            else
+            {
+                return k_XCOLLS_IDX_FRONT;
+            }
+        }
+        else
+        {
+            if (local_x < local_z)
+            {
+                return k_XCOLLS_IDX_RIGHT;
+            }
+            else
+            {
+                return k_XCOLLS_IDX_REAR;
+            }
+        }
+    }
+}
+#endif
 
 // func_8000F1C8
 #pragma GLOBAL_ASM("asm/Core/x/xCollide.s", "xCollideInit__FP6xScene")

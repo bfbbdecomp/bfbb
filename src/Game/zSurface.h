@@ -126,6 +126,7 @@ void zSurfaceRegisterMapper(uint32 assetId);
 void zSurfaceExit();
 xSurface* zSurfaceGetSurface(uint32 mat_id);
 // xSurface* zSurfaceGetSurface(const xCollis* coll);
+uint32 zSurfaceGetStandOn(const xSurface* surf);
 void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);
 void zSurfaceSetup(xSurface* s);

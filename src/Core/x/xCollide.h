@@ -70,6 +70,17 @@ struct xSweptSphere
     xVec3 worldPolynorm;
 };
 
+enum _xCollsIdx
+{
+    k_XCOLLS_IDX_FLOOR,
+    k_XCOLLS_IDX_CEIL,
+    k_XCOLLS_IDX_FRONT,
+    k_XCOLLS_IDX_LEFT,
+    k_XCOLLS_IDX_REAR,
+    k_XCOLLS_IDX_RIGHT,
+    k_XCOLLS_IDX_COUNT
+};
+
 struct xScene;
 
 void xCollideInit(xScene* sc);

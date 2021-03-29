@@ -7361,6 +7361,7 @@ lbl_803D07FC:
 	.skip 0x4
 
 .section .sdata2
+.global lbl_803CCAA8
 lbl_803CCAA8:
 	.incbin "baserom.dol", 0x2B6348, 0x4
 lbl_803CCAAC:
