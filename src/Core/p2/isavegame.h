@@ -148,6 +148,10 @@ int8* iSGFileModDate(st_ISGSESSION* isgdata, const int8* fname, int32* sec, int3
                      int32* mon, int32* day, int32* yr);
 en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, int32 block);
 en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, int8* errmsg);
+int32 iSGReadLeader(st_ISGSESSION* isgdata, const int8* fname, int8* databuf, int32 numbytes,
+                    int32 async);
+int32 iSGSelectGameDir(st_ISGSESSION* isgdata, const int8* dname);
+void iSGMakeTimeStamp(int8* str);
 int32 iSGCheckForWrongDevice();
 int32 iSGCheckForCorruptFiles(st_ISGSESSION*, int8 files[][64]);
 

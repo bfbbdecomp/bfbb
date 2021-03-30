@@ -2,6 +2,7 @@
 
 #include <types.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "xutil.h"
 #include "xMemMgr.h"
@@ -719,7 +720,6 @@ int32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
                    int32 elesiz, int32 n)
 {
-    st_XSAVEGAME_CLIENT* clt;
     int32 cnt;
     int32 is_ok = 1;
 
@@ -761,7 +761,8 @@ int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt,
         xsgdata->totamt += cnt;
         if (wctxt != NULL)
         {
-            *(int*)((int*)wctxt + 7) += cnt;
+            st_XSAVEGAME_CLIENT* clt = (st_XSAVEGAME_CLIENT*)wctxt;
+            clt->realamt += cnt;
         }
     }
 
@@ -791,46 +792,150 @@ int32 xSGWriteStrLen(const int8* str)
 #endif
 
 // func_8003DEF0
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci")
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
+                   int32 n)
+{
+    return xSGWriteData(xsgdata, wctxt, data, sizeof(int8), n);
+}
 
 // func_8003DF18
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii")
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int32* data,
+                   int32 n)
+{
+    return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(int32), n);
+}
 
 // func_8003DF40
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPUii")
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, uint32* data,
+                   int32 n)
+{
+    return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(uint32), n);
+}
 
 // func_8003DF68
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPfi")
+int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, float32* data,
+                   int32 n)
+{
+    return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(float32), n);
+}
 
 // func_8003DF90
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPcii")
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff,
+                  int32 elesiz, int32 n)
+{
+    int32 cnt;
+    if (elesiz == 0)
+    {
+        return 0;
+    }
+
+    cnt = n * elesiz;
+    if (cnt == 0)
+    {
+        return cnt;
+    }
+
+    st_XSAVEGAME_CLIENT* clt = (st_XSAVEGAME_CLIENT*)rctxt;
+    if (clt != NULL && cnt > clt->readremain)
+    {
+        xUtil_idtag2string(clt->idtag, 0);
+        return 0;
+    }
+
+    if (clt != NULL)
+    {
+        memcpy(buff, clt->readpos, cnt);
+    }
+    else
+    {
+        memcpy(buff, xsgdata->walkpos, cnt);
+    }
+
+    xsgdata->walkpos += cnt;
+    xsgdata->walkremain -= cnt;
+
+    if (clt != NULL)
+    {
+        clt->readpos += cnt;
+        clt->readamt += cnt;
+        clt->readremain -= cnt;
+    }
+
+    return cnt / elesiz;
+}
 
 // func_8003E090
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci")
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff, int32 n)
+{
+    return xSGReadData(xsgdata, rctxt, buff, sizeof(int8), n);
+}
 
 // func_8003E0B8
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii")
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int32* buff, int32 n)
+{
+    return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(int32), n);
+}
 
 // func_8003E0E0
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPUii")
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, uint32* buff,
+                  int32 n)
+{
+    return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(uint32), n);
+}
 
 // func_8003E108
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPfi")
+int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, float32* buff,
+                  int32 n)
+{
+    return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(float32), n);
+}
 
 // func_8003E130
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_grab_leaders__FP17st_XSAVEGAME_DATA")
+#else
+// rodata
+int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 num_found = 0;
+    int8 readbuf[116] = {};
+
+    memset(&g_leaders, 0, sizeof(g_leaders));
+
+    if (!xSG_chdir_gamedir(xsgdata))
+    {
+        return 0;
+    }
+
+    for (int32 i = 0; i < 3; i++)
+    {
+        if (!xSGGameIsEmpty(xsgdata, i))
+        {
+            int8* slotname = xSG_cm_slotname(xsgdata, i);
+            int32 rc = iSGReadLeader(xsgdata->isgsess, slotname, readbuf, sizeof(readbuf), 0);
+            if (rc != 0)
+            {
+                num_found++;
+                memcpy(&g_leaders[i], readbuf + 0x1c, sizeof(st_XSAVEGAME_LEADER));
+            }
+        }
+    }
+
+    return num_found;
+}
+#endif
 
 // func_8003E238
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_chdir_gamedir__FP17st_XSAVEGAME_DATA")
+int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 rc = 1;
+    int8* name = iSGMakeName(ISG_NGTYP_GAMEDIR, NULL, 0);
+    if (!iSGSelectGameDir(xsgdata->isgsess, name))
+    {
+        rc = 0;
+    }
+    return rc;
+}
 
 // func_8003E29C
 int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
@@ -852,29 +957,185 @@ int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 }
 
 // func_8003E308
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_areaComposeLabel__FPciPci")
+#else
+// rodata
+void xSG_areaComposeLabel(int8* label, int, int8*, int)
+{
+    int8 buf[64] = {};
+    iSGMakeTimeStamp(buf);
+    sprintf(label, "%s", buf);
+}
+#endif
 
 // func_8003E3DC
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_flipinfo__FP17st_XSAVEGAME_DATA")
+int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    int32 cltamt = 0;
+    int32 cltmax = 0;
+
+    for (int32 i = 0; i < xsgdata->stkcnt; i++)
+    {
+        st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
+        cltamt = 0;
+        cltmax = 0;
+
+        int32 rc = clt->cltinfo(clt->cltdata, xsgdata, &cltamt, &cltmax);
+        if (rc == 0)
+        {
+            xUtil_idtag2string(clt->idtag, 0);
+            result = 0;
+        }
+        else
+        {
+            clt->needamt = cltamt;
+            clt->maxamt = cltmax;
+            xsgdata->cltneed += cltamt;
+            xsgdata->cltmax += cltmax;
+            xsgdata->chdrneed += 0xc;
+        }
+
+        if (result == 0)
+        {
+            xsgdata->stage |= 0x40000000;
+            break;
+        }
+    }
+    return result;
+}
 
 // func_8003E4E8
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_prepdest__FP17st_XSAVEGAME_DATA")
+int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+
+    if (xsgdata->cltneed < 1)
+    {
+        result = 0;
+    }
+    else
+    {
+        xsgdata->memsize = xsgdata->cltmax + xsgdata->chdrneed + 0x10;
+        xsgdata->membuf = (int8*)xMemPushTemp(xsgdata->memsize);
+
+        if (xsgdata->membuf == NULL)
+        {
+            result = 0;
+        }
+        else
+        {
+            xUtil_idtag2string('XSGS', 0);
+            memset(xsgdata->membuf, 0, xsgdata->memsize);
+            xsgdata->buf_curpos = xsgdata->membuf;
+        }
+    }
+    return result;
+}
 
 // func_8003E590
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_flipproc__FP17st_XSAVEGAME_DATA")
+int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    int32 rc;
+    int8 bfill = 0xbf;
+
+    for (int32 i = 0; i < xsgdata->stkcnt; i++)
+    {
+        st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
+
+        rc = xSG_smem_cltopen(xsgdata, clt);
+        if (rc != 0)
+        {
+            rc = clt->cltproc(clt->cltdata, xsgdata, (st_XSAVEGAME_WRITECONTEXT*)clt);
+            if (rc == 0)
+            {
+                xUtil_idtag2string(clt->idtag, 0);
+                result = 0;
+            }
+
+            int32 needfill = clt->maxamt - clt->realamt;
+            xUtil_idtag2string(clt->idtag, 0);
+            while (needfill-- > 0)
+            {
+                xSGWriteData(xsgdata, NULL, &bfill, 1);
+            }
+        }
+
+        if (rc != 0 && xSG_smem_cltclose(xsgdata, clt) == 0)
+        {
+            result = 0;
+            xUtil_idtag2string(clt->idtag, 0);
+        }
+
+        if (result == 0)
+        {
+            break;
+        }
+    }
+    return result;
+}
 
 // func_8003E6A0
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_bldchksum__FP17st_XSAVEGAME_DATA")
+int32 xSG_sv_bldchksum(st_XSAVEGAME_DATA* xsgdata)
+{
+    xsgdata->chksum =
+        xUtil_crc_update(xsgdata->chksum, xsgdata->membuf + 16, xsgdata->memsize - 16);
+    return 1;
+}
 
 // func_8003E6E8
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_smem_blkopen__FP17st_XSAVEGAME_DATA")
+int32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 i = '3333';
+    int32 j = 'GDAT';
+    int32 k = 1;
+
+    xSGWriteData(xsgdata, 0, &j, 1);
+    xSGWriteData(xsgdata, 0, &k, 1);
+
+    xsgdata->buf_sizespot = xsgdata->buf_curpos;
+    xSGWriteData(xsgdata, 0, &i, 1);
+    xsgdata->buf_cksmspot = xsgdata->buf_curpos;
+    xSGWriteData(xsgdata, 0, &i, 1);
+    return 1;
+}
 
 // func_8003E790
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_smem_blkclose__FP17st_XSAVEGAME_DATA")
+int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata)
+{
+    xsgdata->upd_tally = 0;
+
+    int8* last_bufpos = xsgdata->buf_curpos;
+    xsgdata->buf_curpos = xsgdata->buf_sizespot;
+    xSGWriteData(xsgdata, NULL, &xsgdata->totamt, 1);
+    xsgdata->buf_curpos = last_bufpos;
+
+    last_bufpos = xsgdata->buf_curpos;
+    xsgdata->buf_curpos = xsgdata->buf_cksmspot;
+    xSGWriteData(xsgdata, NULL, &xsgdata->chksum, 1);
+    xsgdata->buf_curpos = last_bufpos;
+    xsgdata->upd_tally = 1;
+    return 1;
+}
 
 // func_8003E818
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSG_smem_cltopen__FP17st_XSAVEGAME_DATAP19st_XSAVEGAME_CLIENT")
+int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
+{
+    int32 i = '3333';
+    int32 j = 0;
+
+    xUtil_idtag2string(clt->idtag, 0);
+    j = clt->idtag;
+    xSGWriteData(xsgdata, 0, &j, 1);
+    clt->buf_maxpos = xsgdata->buf_curpos;
+    xSGWriteData(xsgdata, 0, &i, 1);
+    clt->buf_sizepos = xsgdata->buf_curpos;
+    xSGWriteData(xsgdata, 0, &i, 1);
+    xUtil_idtag2string(clt->idtag, 0);
+    return 1;
+}
 
 // func_8003E8D0
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \

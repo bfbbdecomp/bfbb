@@ -184,14 +184,15 @@ int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, f
 int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata);
 int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx);
-
+void xSG_areaComposeLabel(int8* label, int, int8*, int);
 int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_sv_bldchksum(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata);
-
+int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt);
+int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt);
 int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata);
 
 int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata);
