@@ -1853,6 +1853,7 @@ get_grid_index__FRC5xGridff:
 .endif
 
 .section .bss
+.balign 8
 lbl_802C8988:
 	.skip 0x4C
 lbl_802C89D4:

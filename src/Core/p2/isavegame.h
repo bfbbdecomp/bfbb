@@ -152,6 +152,15 @@ int32 iSGReadLeader(st_ISGSESSION* isgdata, const int8* fname, int8* databuf, in
                     int32 async);
 int32 iSGSelectGameDir(st_ISGSESSION* isgdata, const int8* dname);
 void iSGMakeTimeStamp(int8* str);
+int32 iSGSetupGameDir(st_ISGSESSION* isgdata, const int8* dname, int32 force_iconfix);
+int32 iSGSaveFile(st_ISGSESSION* isgdata, const int8* fname, int8* data, int32 n, int32 async,
+                  int8*);
+int32 iSGLoadFile(st_ISGSESSION* isgdata, const int8* fname, int8* databuf, int32 async);
+void iSGAutoSave_Startup();
+int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx);
+st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, void (*chg)(void*, en_CHGCODE));
+void iSGAutoSave_Disconnect(st_ISGSESSION* isg);
+int32 iSGAutoSave_Monitor(st_ISGSESSION* isg, int32 idx_target);
 int32 iSGCheckForWrongDevice();
 int32 iSGCheckForCorruptFiles(st_ISGSESSION*, int8 files[][64]);
 

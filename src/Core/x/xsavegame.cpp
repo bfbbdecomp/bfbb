@@ -13,8 +13,8 @@ extern int8 xsavegame_strings[];
 int32 g_xsginit;
 st_XSAVEGAME_DATA g_xsgdata = {};
 st_XSAVEGAME_LEADER g_leaders[3] = {};
-// st_XSG_SHORTLABEL g_msglabels[32];
-// XSGAutoData g_autodata;
+// extern st_XSG_SHORTLABEL g_msglabels[32];
+XSGAutoData g_autodata;
 
 // func_8003CC4C
 int32 xSGStartup()
@@ -1138,59 +1138,392 @@ int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
 }
 
 // func_8003E8D0
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSG_smem_cltclose__FP17st_XSAVEGAME_DATAP19st_XSAVEGAME_CLIENT")
+int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
+{
+    xUtil_idtag2string(clt->idtag, 0);
+    xsgdata->upd_tally = 0;
+    if (clt->needamt < clt->realamt)
+    {
+        xUtil_idtag2string(clt->idtag, 0);
+    }
+
+    int8* last_bufpos = xsgdata->buf_curpos;
+    xsgdata->buf_curpos = clt->buf_maxpos;
+    xSGWriteData(xsgdata, NULL, &clt->maxamt, 1);
+    xsgdata->buf_curpos = last_bufpos;
+
+    xsgdata->buf_curpos = clt->buf_sizepos;
+    xSGWriteData(xsgdata, NULL, &clt->realamt, 1);
+    xsgdata->buf_curpos = last_bufpos;
+    xsgdata->upd_tally = 1;
+
+    xUtil_idtag2string(clt->idtag, 0);
+    return 1;
+}
 
 // func_8003E998
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_commit__FP17st_XSAVEGAME_DATA")
+#else
+// rodata
+int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    int32 rc;
+    int8 browselabel[64] = {};
+
+    int8* name = iSGMakeName(ISG_NGTYP_GAMEDIR, NULL, 0);
+    if (!iSGSetupGameDir(xsgdata->isgsess, name, 1))
+    {
+        result = 0;
+    }
+    else
+    {
+        xSG_areaComposeLabel(browselabel, xsgdata->thumbIconIdx, xsgdata->label,
+                             xsgdata->gslot + 1);
+
+        if (!iSGSaveFile(xsgdata->isgsess, iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot),
+                         xsgdata->membuf, xsgdata->memsize, 1, browselabel))
+        {
+            result = 0;
+        }
+    }
+
+    return result;
+}
+#endif
 
 // func_8003EAD4
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_cb_ISGChange__FPv10en_CHGCODE")
+void xSG_cb_ISGChange(void*, en_CHGCODE what)
+{
+    XSGAutoData* asg = xSGAutoSave_GetCache();
+    switch (what)
+    {
+    case ISG_CHG_NONE:
+        break;
+    case ISG_CHG_TARGET:
+        asg->MarkInvalid();
+        break;
+    case ISG_CHG_GAMELIST:
+        asg->MarkInvalid();
+        break;
+    }
+}
 
 // func_8003EB28
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_prepload__FP17st_XSAVEGAME_DATA")
+int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    int8* name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot);
+    xsgdata->loadsize = iSGFileSize(xsgdata->isgsess, name);
+
+    if (xsgdata->loadsize < 1)
+    {
+        result = 0;
+    }
+    else
+    {
+        xsgdata->loadbuf = (int8*)xMemPushTemp(xsgdata->loadsize);
+        memset(xsgdata->loadbuf, 0, xsgdata->loadsize);
+    }
+    return result;
+}
 
 // func_8003EBB0
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_readgame__FP17st_XSAVEGAME_DATA")
+int32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    if (xsgdata->stage & 0x40000000)
+    {
+        result = 0;
+    }
+
+    int8* name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot);
+    if (!iSGLoadFile(xsgdata->isgsess, name, xsgdata->loadbuf, 1))
+    {
+        result = 0;
+    }
+
+    if (result == 0)
+    {
+        xsgdata->stage |= 0x40000000;
+    }
+
+    return result;
+}
 
 // func_8003EC40
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_readhead__FP17st_XSAVEGAME_DATA")
+int32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    int32 ival = 0;
+    bool not_ok = 0;
+
+    xsgdata->walkpos = xsgdata->loadbuf;
+    xsgdata->walkremain = xsgdata->loadsize;
+    xSGReadData(xsgdata, NULL, &ival, 1);
+
+    if (ival != 'GDAT')
+    {
+        result = 0;
+        not_ok = 1;
+    }
+
+    xSGReadData(xsgdata, NULL, &ival, 1);
+    if (ival != 1)
+    {
+        result = 0;
+        not_ok = 1;
+    }
+
+    xSGReadData(xsgdata, NULL, &ival, 1);
+    xsgdata->readsize = ival;
+
+    xSGReadData(xsgdata, NULL, &ival, 1);
+    xsgdata->file_chksum = ival;
+    if (not_ok)
+    {
+        return -1;
+    }
+    return result;
+}
 
 // func_8003ED34
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_validate__FP17st_XSAVEGAME_DATA")
+int32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+
+    xsgdata->loadsize = xsgdata->readsize;
+    xsgdata->walkpos = xsgdata->loadbuf + 0x10;
+    xsgdata->walkremain = xsgdata->loadsize - 0x10;
+    xsgdata->read_chksum =
+        xUtil_crc_update(xsgdata->read_chksum, xsgdata->walkpos, xsgdata->walkremain);
+
+    if (xsgdata->read_chksum != xsgdata->file_chksum)
+    {
+        result = -1;
+    }
+
+    return result;
+}
 
 // func_8003EDB4
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_findcltblk__FP17st_XSAVEGAME_DATA")
+int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 ival = 0;
+    uint32 tag = 0;
+    int32 maxamt = 0;
+    int32 actamt = 0;
+    st_XSAVEGAME_CLIENT* dfltclt = &xsgdata->dfltloadclt;
+
+    xsgdata->walkpos = xsgdata->loadbuf;
+    xsgdata->walkremain = xsgdata->loadsize;
+    xSGReadData(xsgdata, 0, &ival, 1);
+    xSGReadData(xsgdata, 0, &ival, 1);
+    xSGReadData(xsgdata, 0, &ival, 1);
+    xSGReadData(xsgdata, 0, &ival, 1);
+
+    while (xsgdata->walkremain > 0)
+    {
+        tag = 0;
+        int32 found = 0;
+        maxamt = 0;
+        actamt = 0;
+
+        xSGReadData(xsgdata, 0, &tag, 1);
+        xSGReadData(xsgdata, 0, &maxamt, 1);
+        xSGReadData(xsgdata, 0, &actamt, 1);
+        xUtil_idtag2string(tag, 0);
+
+        for (int32 i = 0; i < xsgdata->stkcnt; i++)
+        {
+            st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
+
+            if (clt->idtag == tag)
+            {
+                found = true;
+                clt->blokpos = xsgdata->walkpos;
+                clt->blokact = actamt;
+                clt->blokmax = maxamt;
+                clt->readpos = xsgdata->walkpos;
+                clt->readamt = 0;
+                clt->readremain = actamt;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            if (dfltclt->idtag != 0)
+            {
+                xUtil_idtag2string(tag, 0);
+                dfltclt->blokpos = xsgdata->walkpos;
+                dfltclt->blokact = actamt;
+                dfltclt->blokmax = maxamt;
+                dfltclt->readpos = xsgdata->walkpos;
+                dfltclt->readamt = 0;
+                dfltclt->readremain = actamt;
+
+                int32 rc =
+                    dfltclt->cltload(dfltclt->cltdata, xsgdata, (st_XSAVEGAME_READCONTEXT*)dfltclt,
+                                     tag, dfltclt->blokact);
+                if (rc == 0)
+                {
+                    xUtil_idtag2string(tag, 0);
+                }
+
+                rc = dfltclt->readremain;
+                if (rc > 0)
+                {
+                    xsgdata->walkpos += rc + (maxamt - actamt);
+                    xsgdata->walkremain -= dfltclt->readremain + (maxamt - actamt);
+                }
+            }
+            else
+            {
+                xUtil_idtag2string(tag, 0);
+                xsgdata->walkpos += maxamt;
+                xsgdata->walkremain -= maxamt;
+            }
+        }
+        else
+        {
+            xsgdata->walkpos += maxamt;
+            xsgdata->walkremain -= maxamt;
+        }
+    }
+    return 1;
+}
 
 // func_8003F054
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_ld_flipload__FP17st_XSAVEGAME_DATA")
+int32 xSG_ld_flipload(st_XSAVEGAME_DATA* xsgdata)
+{
+    int32 result = 1;
+    int32 rc;
+
+    for (int32 i = 0; i < xsgdata->stkcnt; i++)
+    {
+        st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
+        if (clt->cltload != NULL && clt->blokact != 0 && clt->blokpos != NULL)
+        {
+            xUtil_idtag2string(clt->idtag, 0);
+
+            rc = clt->cltload(clt->cltdata, xsgdata, (st_XSAVEGAME_READCONTEXT*)clt, clt->idtag,
+                              clt->blokact);
+            if (rc == 0)
+            {
+                xUtil_idtag2string(clt->idtag, 0);
+                result = 0;
+            }
+        }
+        else
+        {
+            xUtil_idtag2string(clt->idtag, 0);
+        }
+
+        if (result == 0)
+        {
+            break;
+        }
+    }
+
+    return result;
+}
 
 // func_8003F128
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAutoSave_GetCache__Fv")
+XSGAutoData* xSGAutoSave_GetCache()
+{
+    return &g_autodata;
+}
 
 // func_8003F134
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGAutoSave_Startup__Fv")
+void xSGAutoSave_Startup()
+{
+    XSGAutoData* asg = xSGAutoSave_GetCache();
+    asg->flg_autodata = 0;
+    asg->lastGame = -1;
+    asg->lastTarg = -1;
+    asg->lastPhysicalSlot = -1;
+    iSGAutoSave_Startup();
+}
 
 // func_8003F170
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "IsValid__11XSGAutoDataFv")
+int32 XSGAutoData::IsValid()
+{
+    if (this->flg_autodata & 1 && !XSGAutoData::HWCheckConnect(this->lastTarg))
+    {
+        this->flg_autodata &= 0x0fffffffe;
+    }
+    return this->flg_autodata & 1;
+}
 
 // func_8003F1C8
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "MarkInvalid__11XSGAutoDataFv")
+void XSGAutoData::MarkInvalid()
+{
+    this->flg_autodata &= 0xfffffffe;
+}
 
 // func_8003F1D8
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "SetCache__11XSGAutoDataFiii")
+int32 XSGAutoData::SetCache(int32 targ, int32 game, int32 physicalSlot)
+{
+    this->Discard();
+    this->isg_monitor = this->HWConnect(targ);
+    if (this->isg_monitor == NULL)
+    {
+        return 0;
+    }
+
+    this->lastTarg = targ;
+    this->lastGame = game;
+    this->lastPhysicalSlot = physicalSlot;
+    this->flg_autodata |= 1;
+    return 1;
+}
 
 // func_8003F268
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "Discard__11XSGAutoDataFv")
+void XSGAutoData::Discard()
+{
+    this->flg_autodata = 0;
+    this->lastTarg = -1;
+    this->lastGame = -1;
+    this->lastPhysicalSlot = -1;
+    if (this->isg_monitor != NULL)
+    {
+        this->HWDisconnect(this->isg_monitor);
+    }
+    this->isg_monitor = NULL;
+}
 
 // func_8003F2C0
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "HWConnect__11XSGAutoDataFi")
-
+st_ISGSESSION* XSGAutoData::HWConnect(int32 targ)
+{
+    return iSGAutoSave_Connect(targ, xSGAutoSave_GetCache(), ASG_ISG_changed);
+}
 // func_8003F300
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "HWDisconnect__11XSGAutoDataFP13st_ISGSESSION")
+void XSGAutoData::HWDisconnect(st_ISGSESSION* isgsess)
+{
+    iSGAutoSave_Disconnect(isgsess);
+}
 
 // func_8003F324
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "HWCheckConnect__11XSGAutoDataFi")
+int32 XSGAutoData::HWCheckConnect(int32 targ)
+{
+    return iSGAutoSave_Monitor(this->isg_monitor, this->lastTarg);
+}
 
 // func_8003F350
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "ASG_ISG_changed__FPv10en_CHGCODE")
+void ASG_ISG_changed(void*, en_CHGCODE what)
+{
+    XSGAutoData* asg = xSGAutoSave_GetCache();
+    switch (what)
+    {
+    case ISG_CHG_NONE:
+        break;
+    case ISG_CHG_TARGET:
+        asg->MarkInvalid();
+        break;
+    case ISG_CHG_GAMELIST:
+        asg->MarkInvalid();
+        break;
+    }
+}

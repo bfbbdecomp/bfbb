@@ -85,9 +85,12 @@ struct XSGAutoData
     st_ISGSESSION* isg_monitor;
 
     int32 IsValid();
-    void Discard();
+    void MarkInvalid();
     int32 SetCache(int32 targ, int32 game, int32 physicalSlot);
-
+    void Discard();
+    st_ISGSESSION* HWConnect(int32 targ);
+    void HWDisconnect(st_ISGSESSION* isgsess);
+    int32 HWCheckConnect(int32 targ);
     int32 LastPhysicalSlot();
     int32 LastGame();
     int32 LastTarget();
@@ -194,20 +197,15 @@ int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt);
 int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt);
 int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata);
-
+void xSG_cb_ISGChange(void*, en_CHGCODE what);
 int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata);
 int32 xSG_ld_flipload(st_XSAVEGAME_DATA* xsgdata);
-
-int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx);
-
 XSGAutoData* xSGAutoSave_GetCache();
-void xSGGameSet(st_XSAVEGAME_DATA* xsgdata, int32 gidx);
-
-void xSG_cb_ISGChange(void*, en_CHGCODE what);
 void xSGAutoSave_Startup();
+void ASG_ISG_changed(void*, en_CHGCODE what);
 
 #endif
