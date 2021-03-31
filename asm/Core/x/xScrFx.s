@@ -1,6 +1,7 @@
 .include "macros.inc"
 
 .section .rodata   # 0x80253E68 - 0x80253E88
+.balign 8
 
 .global lbl_80253E68
 lbl_80253E68:
@@ -1439,6 +1440,15 @@ __as__18DistortionParticleFRC18DistortionParticle:
 /* 80042D68 0003FB68  4E 80 00 20 */	blr 
 
 .endif
+
+.section .data
+.balign 8
+.global ddir
+ddir:
+	.incbin "baserom.dol", 0x285AD8, 0xC
+.global sFullScreenGlareDir
+sFullScreenGlareDir:
+	.incbin "baserom.dol", 0x285AE4, 0xC
 
 .section .bss
 lbl_802C89F0:
