@@ -307,7 +307,32 @@ int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 }
 
 // func_8014292C
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "elbowDropCB__FP5xGoalPvP11en_trantypefPv")
+#else
+int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    zNPCGoalBossSandyElbowDrop* edrop = (zNPCGoalBossSandyElbowDrop*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)edrop->psyche->clt_owner;
+    int32 nextgoal = 0;
+    xVec3 vecStack[4];
+
+    if (edrop->timeInGoal > _1463)
+    {
+        if (sandy->bossFlags & 0x400)
+        {
+            *trantype = GOAL_TRAN_SET;
+            return 'NGB1';
+        }
+
+        xVec3Sub(&vecStack[0], &globals.player.ent.asset->pos, &sandy->asset->pos);
+        globals.player.ent.asset = NULL;
+        nextgoal = 0x4e474233; // NGB3
+    }
+    return nextgoal;
+}
+
+#endif
 
 // func_80142AA0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "leapCB__FP5xGoalPvP11en_trantypefPv")
