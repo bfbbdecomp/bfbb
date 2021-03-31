@@ -389,6 +389,7 @@ struct zNPCCommon : xNPCBasic
     void DBG_AddTweakers();
     void DBG_RptDataSize();
     xAnimTable* AnimGetTable();
+    float32 AnimTimeRemain(xAnimState* ast);
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
