@@ -1,6 +1,7 @@
 .include "macros.inc"
 
 .section .rodata   # 0x80253E68 - 0x80253E88
+.balign 8
 
 .global lbl_80253E68
 lbl_80253E68:

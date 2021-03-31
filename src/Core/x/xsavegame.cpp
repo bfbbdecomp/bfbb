@@ -8,12 +8,9 @@
 #include "xMemMgr.h"
 #include "../p2/isavegame.h"
 
-extern int8 xsavegame_strings[];
-
 int32 g_xsginit;
 st_XSAVEGAME_DATA g_xsgdata = {};
 st_XSAVEGAME_LEADER g_leaders[3] = {};
-// extern st_XSG_SHORTLABEL g_msglabels[32];
 XSGAutoData g_autodata;
 
 // func_8003CC4C
@@ -192,10 +189,6 @@ int32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
 }
 
 // func_8003D0A4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGTgtHaveRoom__FP17st_XSAVEGAME_DATAiiiPiPiPi")
-#else
-// rodata
 int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
                      int32* bytesNeeded, int32* availOnDisk, int32* needFile)
 {
@@ -211,14 +204,8 @@ int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 
     return iSGTgtHaveRoom(xsgdata->isgsess, tidx, fsize, NULL, fname, bytesNeeded, availOnDisk,
                           needFile);
 }
-#endif
 
 // func_8003D17C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSGTgtHaveRoomStartup__FP17st_XSAVEGAME_DATAiiiPiPiPi")
-#else
-// rodata
 int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
                             int32* bytesNeeded, int32* availOnDisk, int32* needFile)
 {
@@ -234,7 +221,6 @@ int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize,
     return iSGTgtHaveRoomStartup(xsgdata->isgsess, tidx, fsize, NULL, fname, bytesNeeded,
                                  availOnDisk, needFile);
 }
-#endif
 
 // func_8003D254
 uint8 xSGCheckMemoryCard(st_XSAVEGAME_DATA* xsgdata, int32 index)
@@ -249,7 +235,10 @@ void xSGGameSet(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 }
 
 // func_8003D280
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGGameIsEmpty__FP17st_XSAVEGAME_DATAi")
+int32 xSGGameIsEmpty(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+{
+    return xSGGameSize(xsgdata, gidx) <= 0;
+}
 
 // func_8003D2B0
 int32 xSGGameSize(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
@@ -278,7 +267,72 @@ int8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
         }
         else
         {
-            strcpy(da_date, xsavegame_strings + 0x409);
+            strcpy(da_date,
+#if 1
+                   // Need these strings and can't seem get them any other way
+                   0x409 + "The Mystery Machine\0"
+                           "Mystery Machine\0"
+                           "On Edge in the Hedge!\0"
+                           "Hedges\0"
+                           "It's a Mean Greenhouse, Scooby!\0"
+                           "Greenhouse\0"
+                           "Chills & Spills on Haunted Hill!\0"
+                           "Haunted Hill\0"
+                           "Scared Stiff at Skull Cliff!\0"
+                           "Skull Cliff\0"
+                           "Misbehavin'? Cause a Cave In\0"
+                           "Caves\0"
+                           "A Tight Spot for a Grave Plot!\0"
+                           "Graves\0"
+                           "A One Way Trip to the Crypt!\0"
+                           "Crypts\0"
+                           "Gloom & Doom Down in the Tomb!\0"
+                           "Tombs\0"
+                           "Shock on the Dock!\0"
+                           "Docks\0"
+                           "Fishy Clues for Scooby-Doo?\0"
+                           "Cannery Row\0"
+                           "Fear on the Pier!\0"
+                           "Piers\0"
+                           "Coast for Some Ghosts!\0"
+                           "Shoreline\0"
+                           "Going Down Witch Way?\0"
+                           "Coastal Point\0"
+                           "Lighthouse Fright House!\0"
+                           "Lighthouse\0"
+                           "Wreck on the Deck!\0"
+                           "Danger Rocks\0"
+                           "Aghast by the Mast!\0"
+                           "Masts\0"
+                           "Shiver Your Timbers, Scooby!\0"
+                           "Shipwrecks\0"
+                           "Clamor in the Manor!\0"
+                           "Manor\0"
+                           "Mind Your Manors!\0"
+                           "Stairway\0"
+                           "All Scares Upstairs!\0"
+                           "Upstairs\0"
+                           "Don't Look Down, Scooby-Doo!\0"
+                           "Hallways\0"
+                           "Panic in the Attic!\0"
+                           "Attic\0"
+                           "A Dark and Stormy Knight!\0"
+                           "Rooftops\0"
+                           "Who's Yella' in the Cellar?\0"
+                           "Cellar\0"
+                           "Creepy Crawlies in the Hallways\0"
+                           "Catacombs\0"
+                           "Gusts Abound Underground\0"
+                           "Tunnels\0"
+                           "Little Lab of Horrors\0"
+                           "Secret Lab\0"
+                           "Mastermind Unmasked!\0"
+                           "Mastermind\0"
+                           "Cower in the Tower!\0"
+                           "Tower\0"
+                           "Monster Gallery\0"
+#endif
+                           "");
         }
     }
     return da_date;
@@ -417,7 +471,7 @@ int32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
 // func_8003D6E4
 int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata)
 {
-    return xSGSetup(xsgdata, 0, xsavegame_strings + 0x40a, -1, 0, 0);
+    return xSGSetup(xsgdata, 0, "nothing", -1, 0, 0);
 }
 
 // func_8003D724
@@ -675,17 +729,12 @@ int32 xSG_cb_leader_svinfo(void*, st_XSAVEGAME_DATA*, int32* cur_space, int32* m
 }
 
 // func_8003DBC4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSG_cb_leader_svproc__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT")
-#else
-// rodata
 int32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
                            st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
     st_XSAVEGAME_DATA* xsg = (st_XSAVEGAME_DATA*)cltdata;
     st_XSAVEGAME_LEADER leader = {};
-    int8 fundata[23] = { "--TakeMeToYourLeader--" };
+    int8 fundata[] = "--TakeMeToYourLeader--";
 
     strncpy(leader.gameLabel, xsg->label, 0x40);
     leader.gameLabel[63] = 0;
@@ -697,14 +746,8 @@ int32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
     xSGWriteData(original_xsgdata, wctxt, fundata, 0x16);
     return 1;
 }
-#endif
 
 // func_8003DCD4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s",                                                       \
-                   "xSG_cb_leader_load__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
-#else
-// rodata
 int32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
                          st_XSAVEGAME_READCONTEXT* rctxt, uint32, int32)
 {
@@ -714,7 +757,6 @@ int32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
     xSGReadData(original_xsgdata, rctxt, fundata, 0x16);
     return 1;
 }
-#endif
 
 // func_8003DDB0
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
@@ -780,16 +822,12 @@ int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt,
 }
 
 // func_8003DEC0
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSGWriteStrLen__FPCc")
-#else
-// math
 int32 xSGWriteStrLen(const int8* str)
 {
     int32 len = strlen(str);
-    return (len + 1 & 1) + len + 1;
+    len += (len + 1 & 1) + 1;
+    return len;
 }
-#endif
 
 // func_8003DEF0
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
@@ -891,10 +929,6 @@ int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, f
 }
 
 // func_8003E130
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_grab_leaders__FP17st_XSAVEGAME_DATA")
-#else
-// rodata
 int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 num_found = 0;
@@ -923,7 +957,6 @@ int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
 
     return num_found;
 }
-#endif
 
 // func_8003E238
 int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
@@ -957,17 +990,12 @@ int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 }
 
 // func_8003E308
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_areaComposeLabel__FPciPci")
-#else
-// rodata
 void xSG_areaComposeLabel(int8* label, int, int8*, int)
 {
     int8 buf[64] = {};
     iSGMakeTimeStamp(buf);
     sprintf(label, "%s", buf);
 }
-#endif
 
 // func_8003E3DC
 int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
@@ -1162,10 +1190,6 @@ int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
 }
 
 // func_8003E998
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xsavegame.s", "xSG_sv_commit__FP17st_XSAVEGAME_DATA")
-#else
-// rodata
 int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1191,7 +1215,6 @@ int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
 
     return result;
 }
-#endif
 
 // func_8003EAD4
 void xSG_cb_ISGChange(void*, en_CHGCODE what)

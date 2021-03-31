@@ -123,6 +123,12 @@ enum en_XSG_WHYFAIL
     XSG_WHYERR_NOMORE
 };
 
+struct st_XSG_SHORTLABEL
+{
+    const int8* msglong;
+    const int8* msgshort;
+};
+
 int32 xSGStartup();
 int32 xSGShutdown();
 st_XSAVEGAME_DATA* xSGInit(en_SAVEGAME_MODE mode);
