@@ -5,7 +5,10 @@
 #include "zNPCSupport.h"
 
 // func_80180D54
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_Startup__Fv")
+void NPCSupplement_Startup()
+{
+    return;
+}
 
 void NPCSupplement_Shutdown()
 {
@@ -13,19 +16,35 @@ void NPCSupplement_Shutdown()
 }
 
 // func_80180D78
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_ScenePrepare__Fv")
+void NPCSupplement_ScenePrepare()
+{
+    NPAR_ScenePrepare();
+}
 
 // func_80180D98
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_SceneFinish__Fv")
+void NPCSupplement_SceneFinish()
+{
+    NPAR_SceneFinish();
+}
 
 // func_80180DB8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_ScenePostInit__Fv")
+void NPCSupplement_ScenePostInit()
+{
+    NPAR_PartySetup(NPAR_TYP_VISSPLASH, 0, 0);
+}
 
 // func_80180DE4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_SceneReset__Fv")
+void NPCSupplement_SceneReset(void)
+{
+    NPAR_SceneReset();
+    NPCC_ShadowCacheReset();
+}
 
 // func_80180E08
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCSupplement_Timestep__Ff")
+void NPCSupplement_Timestep(float dt)
+{
+    NPAR_Timestep(dt);
+}
 
 // func_80180E28
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \

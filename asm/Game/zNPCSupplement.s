@@ -4,69 +4,6 @@
 
 .section .text  # 0x80180D54 - 0x8018626C
 
-.global NPCSupplement_Startup__Fv
-NPCSupplement_Startup__Fv:
-/* 80180D54 0017DB54  4E 80 00 20 */	blr 
-
-.global NPCSupplement_ScenePrepare__Fv
-NPCSupplement_ScenePrepare__Fv:
-/* 80180D78 0017DB78  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80180D7C 0017DB7C  7C 08 02 A6 */	mflr r0
-/* 80180D80 0017DB80  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80180D84 0017DB84  48 00 0E 3D */	bl NPAR_ScenePrepare__Fv
-/* 80180D88 0017DB88  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80180D8C 0017DB8C  7C 08 03 A6 */	mtlr r0
-/* 80180D90 0017DB90  38 21 00 10 */	addi r1, r1, 0x10
-/* 80180D94 0017DB94  4E 80 00 20 */	blr 
-
-.global NPCSupplement_SceneFinish__Fv
-NPCSupplement_SceneFinish__Fv:
-/* 80180D98 0017DB98  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80180D9C 0017DB9C  7C 08 02 A6 */	mflr r0
-/* 80180DA0 0017DBA0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80180DA4 0017DBA4  48 00 0E 6D */	bl NPAR_SceneFinish__Fv
-/* 80180DA8 0017DBA8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80180DAC 0017DBAC  7C 08 03 A6 */	mtlr r0
-/* 80180DB0 0017DBB0  38 21 00 10 */	addi r1, r1, 0x10
-/* 80180DB4 0017DBB4  4E 80 00 20 */	blr 
-
-.global NPCSupplement_ScenePostInit__Fv
-NPCSupplement_ScenePostInit__Fv:
-/* 80180DB8 0017DBB8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80180DBC 0017DBBC  7C 08 02 A6 */	mflr r0
-/* 80180DC0 0017DBC0  38 60 00 0A */	li r3, 0xa
-/* 80180DC4 0017DBC4  38 80 00 00 */	li r4, 0
-/* 80180DC8 0017DBC8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80180DCC 0017DBCC  38 A0 00 00 */	li r5, 0
-/* 80180DD0 0017DBD0  48 00 10 09 */	bl NPAR_PartySetup__F11en_nparptypPPvP12NPARXtraData
-/* 80180DD4 0017DBD4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80180DD8 0017DBD8  7C 08 03 A6 */	mtlr r0
-/* 80180DDC 0017DBDC  38 21 00 10 */	addi r1, r1, 0x10
-/* 80180DE0 0017DBE0  4E 80 00 20 */	blr 
-
-.global NPCSupplement_SceneReset__Fv
-NPCSupplement_SceneReset__Fv:
-/* 80180DE4 0017DBE4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80180DE8 0017DBE8  7C 08 02 A6 */	mflr r0
-/* 80180DEC 0017DBEC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80180DF0 0017DBF0  48 00 0E 81 */	bl NPAR_SceneReset__Fv
-/* 80180DF4 0017DBF4  48 00 4F E9 */	bl NPCC_ShadowCacheReset__Fv
-/* 80180DF8 0017DBF8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80180DFC 0017DBFC  7C 08 03 A6 */	mtlr r0
-/* 80180E00 0017DC00  38 21 00 10 */	addi r1, r1, 0x10
-/* 80180E04 0017DC04  4E 80 00 20 */	blr 
-
-.global NPCSupplement_Timestep__Ff
-NPCSupplement_Timestep__Ff:
-/* 80180E08 0017DC08  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80180E0C 0017DC0C  7C 08 02 A6 */	mflr r0
-/* 80180E10 0017DC10  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80180E14 0017DC14  48 00 0E E9 */	bl NPAR_Timestep__Ff
-/* 80180E18 0017DC18  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80180E1C 0017DC1C  7C 08 03 A6 */	mtlr r0
-/* 80180E20 0017DC20  38 21 00 10 */	addi r1, r1, 0x10
-/* 80180E24 0017DC24  4E 80 00 20 */	blr 
-
 .global NPCC_MakeLightningInfo__F9en_npclytP16_tagLightningAdd
 NPCC_MakeLightningInfo__F9en_npclytP16_tagLightningAdd:
 /* 80180E28 0017DC28  94 21 FF D0 */	stwu r1, -0x30(r1)
