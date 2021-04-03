@@ -85,60 +85,64 @@ void lightningTweakStart(tweak_info& t)
 // WIP.
 void zLightningRender()
 {
-	if (sLightningRaster != NULL)
-	{
-		RwRenderStateSet(rwRENDERSTATETEXTURERASTER, sLightningRaster);
-	}
-	RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
-	RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
-	for (int32 i = 0; i < 0x30; i++)
-	{
-		if (&sLightning[i] != NULL && sLightning[i].flags & 0x41 == 0x41)
-		{
-			RenderLightning(&sLightning[i]);
-		}
-	}
+    if (sLightningRaster != NULL)
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, sLightningRaster);
+    }
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
+    for (int32 i = 0; i < 0x30; i++)
+    {
+        if (&sLightning[i] != NULL && sLightning[i].flags & 0x41 == 0x41)
+        {
+            RenderLightning(&sLightning[i]);
+        }
+    }
 }
 
 #endif
 
 void zLightningShow(zLightning* l, int32 show)
 {
-	if (show)
-	{
-		l->flags |= 0x40;
-	}
-	else
-	{
-		l->flags &= 0xffffffbf;
-	}
+    if (show)
+    {
+        l->flags |= 0x40;
+    }
+    else
+    {
+        l->flags &= 0xffffffbf;
+    }
 }
 
 void zLightningKill(zLightning* l)
 {
-	l->flags &= 0xfffffefe;
+    l->flags &= 0xfffffefe;
 }
 
 // func_800A18C8
 #pragma GLOBAL_ASM("asm/Game/zLightning.s",                                                        \
                    "zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3")
 
-void xDebugAddTweak(char* name, uint8* property, uint8 param_3, uint8 param_4, tweak_callback* callback, void* param_6, uint32 param_7)
+void xDebugAddTweak(char* name, uint8* property, uint8 param_3, uint8 param_4,
+                    tweak_callback* callback, void* param_6, uint32 param_7)
 {
-	// Redacted. :}
+    // Redacted. :}
 }
 
-void xDebugAddFlagTweak(char* name, uint32* property, uint32 param_3, tweak_callback* callback, void* param_5, uint32 param_6)
+void xDebugAddFlagTweak(char* name, uint32* property, uint32 param_3, tweak_callback* callback,
+                        void* param_5, uint32 param_6)
 {
-	// Redacted. :}
+    // Redacted. :}
 }
 
-void xDebugAddSelectTweak(char* name, uint32* param_2, char** param_3, uint32* param_4, uint32 param_5, tweak_callback* callback, void* param_7, uint32 param_8)
+void xDebugAddSelectTweak(char* name, uint32* param_2, char** param_3, uint32* param_4,
+                          uint32 param_5, tweak_callback* callback, void* param_7, uint32 param_8)
 {
-	// Redacted. :}
+    // Redacted. :}
 }
 
-void xDebugAddTweak(char* name, int16* property, int16 param_3, int16 param_4, tweak_callback* callback, void* param_6, uint32 param_7)
+void xDebugAddTweak(char* name, int16* property, int16 param_3, int16 param_4,
+                    tweak_callback* callback, void* param_6, uint32 param_7)
 {
-	// Redacted. :}
+    // Redacted. :}
 }

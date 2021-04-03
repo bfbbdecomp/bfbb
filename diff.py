@@ -3,6 +3,7 @@
 import argparse
 import sys
 import platform
+import tempfile
 from pathlib import Path, PurePath, PureWindowsPath
 from typing import (
     Any,
@@ -159,6 +160,13 @@ parser.add_argument(
     help="Stop disassembling at the first 'jr ra'. Some functions have multiple return points, so use with care!",
 )
 parser.add_argument(
+    "-r",
+    "--stop-blr",
+    dest="stop_blr",
+    action="store_true",
+    help="Stop disassembling at the first 'blr'. Some functions have multiple return points, so use with care!",
+)
+parser.add_argument(
     "-i",
     "--ignore-large-imms",
     dest="ignore_large_imms",
@@ -196,6 +204,14 @@ parser.add_argument(
     action="store_true",
     help="Automatically update when source/object files change. "
     "Recommended in combination with -m.",
+)
+parser.add_argument(
+    "-t",
+    "--temporary",
+    dest="temp",
+    action="store_true",
+    help="Use a temporary file to store the output from make. "
+    "Requires -w."
 )
 parser.add_argument(
     "-3",
@@ -399,12 +415,12 @@ def run_make(target: str) -> None:
     subprocess.check_call(["make"] + makeflags + [target])
 
 
-def run_make_capture_output(target: str) -> "subprocess.CompletedProcess[bytes]":
+def run_make_capture_output(target: str, stdout: tempfile.TemporaryFile = None, stderr: tempfile.TemporaryFile = None) -> "subprocess.CompletedProcess[bytes]":
     target = target.replace("\\", "/")
     return subprocess.run(
         ["make"] + makeflags + [target],
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
+        stdout=stdout or subprocess.PIPE,
+        stderr=stderr or subprocess.PIPE,
     )
 
 
@@ -1093,6 +1109,8 @@ def process(lines: List[str]) -> List[Line]:
 
         if args.stop_jrra and mnemonic == "jr" and row_parts[1].strip() == "ra":
             stop_after_delay_slot = True
+        if args.stop_blr and mnemonic == "blr":
+            break
         elif stop_after_delay_slot:
             break
 
@@ -1716,14 +1734,32 @@ def main() -> None:
                 last_build = time.time()
                 if args.make:
                     display.progress("Building...")
-                    ret = run_make_capture_output(make_target)
-                    if ret.returncode != 0:
-                        display.update(
-                            ret.stderr.decode("utf-8-sig", "replace")
-                            or ret.stdout.decode("utf-8-sig", "replace"),
-                            error=True,
-                        )
-                        continue
+                    
+                    if args.temp:
+                        # Temp files for stdout and stderr
+                        stdout = tempfile.TemporaryFile()
+                        stderr = tempfile.TemporaryFile()
+                        ret = run_make_capture_output(make_target, stdout, stderr)
+                        if ret.returncode != 0:
+                            stdout.seek(0)
+                            stderr.seek(0)
+                            display.update(
+                                stderr.read().decode("utf-8-sig", "replace")
+                                or stdout.read().decode("utf-8-sig", "replace"),
+                                error=True,
+                            )
+                            continue
+                        stdout.close()
+                        stderr.close()
+                    else:
+                        ret = run_make_capture_output(make_target)
+                        if ret.returncode != 0:
+                            display.update(
+                                ret.stderr.decode("utf-8-sig", "replace")
+                                or ret.stdout.decode("utf-8-sig", "replace"),
+                                error=True,
+                            )
+                            continue
                 mydump = run_objdump(mycmd)
                 display.update(mydump, error=False)
         except KeyboardInterrupt:

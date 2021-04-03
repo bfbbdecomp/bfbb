@@ -70,11 +70,21 @@ struct xSweptSphere
     xVec3 worldPolynorm;
 };
 
+enum _xCollsIdx
+{
+    k_XCOLLS_IDX_FLOOR,
+    k_XCOLLS_IDX_CEIL,
+    k_XCOLLS_IDX_FRONT,
+    k_XCOLLS_IDX_LEFT,
+    k_XCOLLS_IDX_REAR,
+    k_XCOLLS_IDX_RIGHT,
+    k_XCOLLS_IDX_COUNT
+};
+
 struct xScene;
 
 void xCollideInit(xScene* sc);
 void xsqrtfast(float32& dst, float32 num);
-float32 xVec3Length2(const xVec3* vec);
 int32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 int32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
 uint32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);

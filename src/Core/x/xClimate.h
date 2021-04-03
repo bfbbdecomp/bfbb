@@ -8,23 +8,23 @@
 
 struct _tagRain
 {
-	int32 rain;
-	float32 strength;
-	zParEmitter* rain_emitter;
-	zParEmitter* snow_emitter;
+    int32 rain;
+    float32 strength;
+    zParEmitter* rain_emitter;
+    zParEmitter* snow_emitter;
 };
 
 struct _tagWind
 {
-	float32 strength;
-	float32 angle;
-	xVec3 dir;
+    float32 strength;
+    float32 angle;
+    xVec3 dir;
 };
 
 struct _tagClimate
 {
-	_tagRain rain;
-	_tagWind wind;
+    _tagRain rain;
+    _tagWind wind;
 };
 
 void xClimateUpdate(_tagClimate* climate, float32 seconds);

@@ -143,5 +143,6 @@ void xSndStopChildren(uint32 pid);
 void xSndSetVol(uint32 snd, float32 vol);
 void xSndSetPitch(uint32 snd, float32 pitch);
 void xSndSetCategoryVol(sound_category category, float32 vol);
+void xSndSetExternalCallback(void (*callback)(uint32));
 
 #endif

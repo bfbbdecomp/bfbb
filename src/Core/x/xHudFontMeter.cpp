@@ -3,10 +3,12 @@
 #include <types.h>
 
 // func_8002F008
-#pragma GLOBAL_ASM("asm/Core/x/xHudFontMeter.s", "load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUl")
+#pragma GLOBAL_ASM("asm/Core/x/xHudFontMeter.s",                                                   \
+                   "load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUl")
 
 // func_8002F060
-#pragma GLOBAL_ASM("asm/Core/x/xHudFontMeter.s", "__ct__Q24xhud17font_meter_widgetFRCQ24xhud16font_meter_asset")
+#pragma GLOBAL_ASM("asm/Core/x/xHudFontMeter.s",                                                   \
+                   "__ct__Q24xhud17font_meter_widgetFRCQ24xhud16font_meter_asset")
 
 // func_8002F170
 #pragma GLOBAL_ASM("asm/Core/x/xHudFontMeter.s", "destruct__Q24xhud17font_meter_widgetFv")

@@ -3365,11 +3365,13 @@ lbl_802604B8:
 	.incbin "baserom.dol", 0x25D498, 0x28
 lbl_802604E0:
 	.incbin "baserom.dol", 0x25D4C0, 0x5C40
-lbl_80266120:
+.global isavegame_strings
+isavegame_strings:
 	.incbin "baserom.dol", 0x263100, 0x4C8
 
 .section .data
-lbl_80292678:
+.global g_isgdata_MAIN
+g_isgdata_MAIN:
 	.incbin "baserom.dol", 0x28F658, 0x28C
 lbl_80292904:
 	.incbin "baserom.dol", 0x28F8E4, 0x100
@@ -3387,29 +3389,41 @@ lbl_802FE100:
 	.skip 0x14000
 
 .section .sbss
-lbl_803CBB88:
+.global g_isginit
+g_isginit:
 	.skip 0x4
-lbl_803CBB8C:
+.global g_rawicon
+g_rawicon:
 	.skip 0x4
-lbl_803CBB90:
+.global g_rawbanr
+g_rawbanr:
 	.skip 0x4
-lbl_803CBB94:
+.global g_iconsize
+g_iconsize:
 	.skip 0x4
-lbl_803CBB98:
+.global g_banrsize
+g_banrsize:
 	.skip 0x4
-lbl_803CBB9C:
+.global g_isMounted
+g_isMounted:
 	.skip 0x4
-lbl_803CBBA0:
+.global isg_rotate
+isg_rotate:
 	.skip 0x4
-lbl_803CBBA4:
+.global isg_rotate_init
+isg_rotate_init:
 	.skip 0x4
-lbl_803CBBA8:
+.global isg_ico_pal
+isg_ico_pal:
 	.skip 0x4
-lbl_803CBBAC:
+.global isg_ico_desc
+isg_ico_desc:
 	.skip 0x4
-lbl_803CBBB0:
+.global isg_i
+isg_i:
 	.skip 0x4
-lbl_803CBBB4:
+.global isg_i_init
+isg_i_init:
 	.skip 0x4
 
 .section .sbss2

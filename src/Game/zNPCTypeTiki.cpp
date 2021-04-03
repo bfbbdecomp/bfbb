@@ -14,7 +14,7 @@ extern zParEmitter* cloudEmitter;
 extern xParEmitterCustomSettings thunderEmitterInfo;
 extern char zNPCTypeTiki_stringBase0[];
 extern float32 _862;
-extern float32 _858;
+extern float32 _858_2;
 extern float32 _1084;
 extern float32 _867;
 extern NPCSndTrax g_sndTrax_TikiShared[3];
@@ -104,7 +104,7 @@ xAnimTable* ZNPC_AnimTable_Tiki()
     xAnimTable* table;
 
     table = xAnimTableNew(zNPCTypeTiki_stringBase0 + 0x3a, NULL, 0);
-    xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, _862, NULL, NULL, _858, NULL, NULL,
+    xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, _862, NULL, NULL, _858_2, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
     return table;
 }
@@ -129,7 +129,7 @@ void zNPCTiki::Reset()
         flg_vuln = 0xffff0001;
     }
 
-    timeToLive = _858;
+    timeToLive = _858_2;
     tikiFlag = 0;
     parents[0] = NULL;
     parents[1] = NULL;
@@ -143,7 +143,7 @@ void zNPCTiki::Reset()
     children[2] = NULL;
     children[3] = NULL;
     numChildren = NULL;
-    vel = _858;
+    vel = _858_2;
     nonTikiParent = NULL;
 
     switch (myNPCType)
@@ -151,7 +151,7 @@ void zNPCTiki::Reset()
     case 'NTT2':
         break;
     case 'NTT1':
-        t1 = _858;
+        t1 = _858_2;
         t2 = _1084;
         t3 = _1084;
         xVec3Copy((xVec3*)&v1, (xVec3*)&model->Mat->pos);

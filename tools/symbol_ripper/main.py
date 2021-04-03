@@ -200,8 +200,6 @@ def modify_instruction(st):
 	args = [x.strip() for x in st[(space + 1):].split(",")]
 	if instr == "fmr" or instr == "mr":
 		return "%s = %s;" % tuple(args)
-	elif instr == "addi":
-		return "%s = %s + %s;" % tuple(args)
 	elif instr == "lis":
 		return "%s = %s; // [int16]" % tuple(args)
 	elif instr == "li":
@@ -213,6 +211,15 @@ def modify_instruction(st):
 	elif instr == "lbz":
 		return "%s = %s; // [int8]" % tuple(args)
 
+	elif instr == "addi":
+		return "%s = %s + %s;" % tuple(args)
+	elif instr == "add":
+		return "%s = %s + %s;" % tuple(args)
+	elif instr == "mul":
+		return "%s = %s * %s;" % tuple(args)
+	elif instr == "muli" or instr == "mulli":
+		return "%s = %s * %s;" % tuple(args)
+
 	elif instr == "lfs":
 		return "%s = %s; // [float32]" % tuple(args)
 	elif instr == "lfd":
@@ -221,6 +228,17 @@ def modify_instruction(st):
 		return "%s = %s; // [float32]" % (args[1], args[0])
 	elif instr == "stfd":
 		return "%s = %s; // [float64]" % (args[1], args[0])
+
+	elif instr == "fadds" or instr == "fadd":
+		return "%s = %s + %s; // [float32]" % tuple(args)
+	elif instr == "fsubs" or instr == "fsub":
+		return "%s = %s - %s; // [float32]" % tuple(args)
+	elif instr == "fmuls" or instr == "fmul":
+		return "%s = %s * %s; // [float32]" % tuple(args)
+	elif instr == "fdivs" or instr == "fdiv":
+		return "%s = %s / %s; // [float32]" % tuple(args)
+	elif instr == "fmadds" or instr == "fmadd":
+		return "%s = %s * %s + %s; // [float32]" % tuple(args)
 
 	elif instr == "stw":
 		return "%s = %s;" % (args[1], args[0])
@@ -330,12 +348,16 @@ def get_subsys_name(name):
 	elif locate_symbol(Path("src/Core/x"), name):
 		return Path("Core/x")
 	else:
-		sys.exit("I don't know what to do with %s!" % symbol)
+		sys.exit("I don't know what to do with %s!" % name)
 
 if len(sys.argv) < 2:
 	sys.exit("Error: No symbol name given.")
 
-symbol_name = sys.argv[1]
-check_is_symbol_name(symbol_name)
-subsys_name = get_subsys_name(symbol_name)
-rip(subsys_name, symbol_name)
+def main():
+	symbol_name = sys.argv[1]
+	check_is_symbol_name(symbol_name)
+	subsys_name = get_subsys_name(symbol_name)
+	rip(subsys_name, symbol_name)
+
+if __name__ == '__main__':
+	main()

@@ -107,17 +107,15 @@ struct st_ISG_MEMCARD_DATA
     int32 allow_cache;
 };
 
-struct st_XSAVEGAME_READCONTEXT
-{
-};
-
-struct st_XSAVEGAME_WRITECONTEXT
-{
-};
-
+// This struct is definitely wrong
+// Size should be 0x280
 struct st_ISGSESSION
 {
-    st_ISG_MEMCARD_DATA* mcdata;
+    // This is just a pointer in the DWARF
+    // I've changed it because of iSGSessionEnd,
+    // but there might just be another field before this instead.
+    st_ISG_MEMCARD_DATA mcdata[2];
+
     int8 gameroot[64];
     int8 gamedir[64];
     en_ASYNC_OPCODE as_curop;
@@ -128,6 +126,54 @@ struct st_ISGSESSION
     void (*chgfunc)(void*, en_CHGCODE);
 };
 
+enum en_NAMEGEN_TYPE
+{
+    ISG_NGTYP_GAMEDIR,
+    ISG_NGTYP_GAMEFILE,
+    ISG_NGTYP_CONFIG,
+    ISG_NGTYP_ICONTHUM
+};
+
+int32 iSGStartup();
+int32 iSGShutdown();
+int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx);
+st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), int32 monitor);
+void iSGSessionEnd(st_ISGSESSION* isgdata);
+int32 iSGTgtCount(st_ISGSESSION* isgdata, int32* max);
+int32 iSGTgtPhysSlotIdx(st_ISGSESSION* isgdata, int32 tidx);
+uint32 iSGTgtState(st_ISGSESSION* isgdata, int32 tgtidx, const int8* dpath);
+int32 iSGTgtFormat(st_ISGSESSION* isgdata, int32 tgtidx, int32 async, int32* canRecover);
+int32 iSGTgtSetActive(st_ISGSESSION* isgdata, int32 tgtidx);
+int32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, const int8* dpath,
+                     const int8* fname, int32* bytesNeeded, int32* availOnDisk, int32* needFile);
+int32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, int32 tidx, int32 fsize, const int8* dpath,
+                            const int8* fname, int32* bytesNeeded, int32* availOnDisk,
+                            int32* needFile);
+uint8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, int32 index);
+int32 iSGFileSize(st_ISGSESSION* isgdata, const int8* fname);
+int8* iSGFileModDate(st_ISGSESSION* isgdata, const int8* fname);
+int8* iSGFileModDate(st_ISGSESSION* isgdata, const int8* fname, int32* sec, int32* min, int32* hr,
+                     int32* mon, int32* day, int32* yr);
+en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, int32 block);
+en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, int8* errmsg);
+int32 iSGReadLeader(st_ISGSESSION* isgdata, const int8* fname, int8* databuf, int32 numbytes,
+                    int32 async);
+int32 iSGSelectGameDir(st_ISGSESSION* isgdata, const int8* dname);
+void iSGMakeTimeStamp(int8* str);
+int32 iSGSetupGameDir(st_ISGSESSION* isgdata, const int8* dname, int32 force_iconfix);
+int32 iSGSaveFile(st_ISGSESSION* isgdata, const int8* fname, int8* data, int32 n, int32 async,
+                  int8*);
+int32 iSGLoadFile(st_ISGSESSION* isgdata, const int8* fname, int8* databuf, int32 async);
+void iSGAutoSave_Startup();
+st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, void (*chg)(void*, en_CHGCODE));
+void iSGAutoSave_Disconnect(st_ISGSESSION* isg);
+int32 iSGAutoSave_Monitor(st_ISGSESSION* isg, int32 idx_target);
 int32 iSGCheckForWrongDevice();
+int32 iSG_start_your_engines();
+int32 iSG_load_icondata();
+void iSG_discard_icondata();
+int32 iSG_chk_icondata();
+int32 iSG_mc_unmount(int32 slot);
+int32 iSGCheckForCorruptFiles(st_ISGSESSION*, int8 files[][64]);
 
 #endif

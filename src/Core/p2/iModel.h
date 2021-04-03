@@ -17,5 +17,6 @@ void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrixTag* mat, xVec
 void iModelSetMaterialAlpha(RpAtomic* model, uint8 alpha);
 RpAtomic* iModelFileNew(void* buffer, uint32 size);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
+void iModelUnload(RpAtomic* userdata);
 
 #endif
