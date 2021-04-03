@@ -372,6 +372,7 @@ namespace cruise_bubble
         // Size: 0x10
         struct _class_20
         {
+            // Offset: 0xf8
             float32 sample_rate;
             float32 bubble_rate;
             float32 bubble_emit_radius;
@@ -498,6 +499,7 @@ namespace cruise_bubble
     void reset_explode_decal();
     void init_explode_decal();
     void init_shrapnel();
+    void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1, const xVec3& dir1, float32 dt);
     void update_trail(float32 dt);
     void refresh_missle_model();
     void update_missle(xScene& s, float32 dt);

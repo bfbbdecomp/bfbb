@@ -835,7 +835,10 @@ init_explode_decal__13cruise_bubbleFv:
 /* 80058DD0 00055BD0  4E 80 00 20 */	blr 
 
 /* add_trail_sample__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f */
-add_trail_sample__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f:
+/* changed from ... */
+/* add_trail_sample__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f: */
+/* ... so linker can find it */
+add_trail_sample__13cruise_bubbleFRC5xVec3RC5xVec3RC5xVec3RC5xVec3f:
 /* 80058E14 00055C14  94 21 FE F0 */	stwu r1, -0x110(r1)
 /* 80058E18 00055C18  7C 08 02 A6 */	mflr r0
 /* 80058E1C 00055C1C  3C E0 80 29 */	lis r7, shared__13cruise_bubble@ha

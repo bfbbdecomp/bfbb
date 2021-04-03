@@ -61,6 +61,7 @@ extern struct _class_36
     int32 hits_size;
     uint32 player_health;
     xVec3 player_motion;
+    // Offset: 0x100
     float32 fov_default;
     zShrapnelAsset* droplet_shrapnel;
     float32 dialog_freq;
@@ -68,7 +69,9 @@ extern struct _class_36
     {
         float32 samples;
         float32 bubbles;
+        // Offset: 0x114
         xMat4x3 mat;
+        // Offset: 0x154
         xQuat dir;
     } trail;
     struct _class_6
@@ -1075,12 +1078,70 @@ void cruise_bubble::init_shrapnel()
 // func_80058E14
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "add_trail_sample__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f")
+    "add_trail_sample__13cruise_bubbleFRC5xVec3RC5xVec3RC5xVec3RC5xVec3f")
 
 // func_800590FC
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_trail__13cruise_bubbleFf")
+#else
+void cruise_bubble::update_trail(float32 dt)
+{
+    // will match once file complete
+    // casting from int32 to float uses a float constant which cannot be extern'd
+
+    if ((shared.flags & 0x80) == 0)
+    {
+        return;
+    }
+
+    shared.trail.samples += dt * current_tweak->trail.sample_rate;
+    int32 samples = (int32) shared.trail.samples;
+
+    if (samples <= 0)
+    {
+        shared.trail.samples = zEntCruiseBubble_f_0_0;
+        samples = 1;
+    }
+    else
+    {
+        // float cast
+        shared.trail.samples -= (float32) samples;
+    }
+
+    xMat4x3 end_mat;
+    xQuat end_dir;
+    refresh_trail(end_mat, end_dir);
+
+    // float cast
+    float32 ds = zEntCruiseBubble_f_1_0 / (float32) samples;
+    float32 ddt = dt * ds;
+    xVec3 dloc = (end_mat.pos - shared.trail.mat.pos) * ds;
+    int32 flip = 0;
+    float32 s = ds;
+
+    xMat4x3 mat[2];
+    mat[0] = shared.trail.mat;
+
+    for (int i = 0; i < samples; ++i) {
+        xMat4x3* mat0 = mat + flip;
+        flip = flip ^ 1;
+        xMat4x3* mat1 = mat + flip;
+
+        xQuat subdir;
+        xQuatSlerp(&subdir, &shared.trail.dir, &end_dir, s);
+        xQuatToMat(&subdir, mat1);
+        mat1->pos = mat0->pos + dloc;
+        add_trail_sample(mat0->pos, mat0->right, mat1->pos, mat1->right, ddt);
+        s += ds;
+    }
+
+    shared.trail.mat = end_mat;
+    shared.trail.dir = end_dir;
+    shared.flags = shared.flags & 0xfffffeff;
+}
+#endif
 
 void cruise_bubble::refresh_missle_model()
 {
