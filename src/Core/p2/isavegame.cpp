@@ -13,23 +13,26 @@ extern st_ISGSESSION g_isgdata_MAIN;
 extern int32 g_isginit;
 
 // func_800CC5E8
+#if 1
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSGStartup__Fv")
-// int32 iSGStartup()
-// {
-//     int32 i = g_isginit;
+#else
+int32 iSGStartup()
+{
+    int32 i = g_isginit;
 
-//     if (g_isginit != 0)
-//     {
-//         g_isginit = i;
+    if (g_isginit != 0)
+    {
+        g_isginit = i;
 
-//         return i;
-//     }
-//     g_isginit = i;
-//     // return g_isginit;
-//     iSG_start_your_engines();
-//     iSG_load_icondata();
-//     return i;
-// }
+        return i;
+    }
+    g_isginit = i;
+
+    iSG_start_your_engines();
+    iSG_load_icondata();
+    return i;
+}
+#endif
 
 // func_800CC62C
 int32 iSGShutdown()
@@ -99,7 +102,7 @@ st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE)
 #endif
 
 // func_800CC798
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Core/p2/isavegame.s", "iSGSessionEnd__FP13st_ISGSESSION")
 #else
 // Structs make no sense
