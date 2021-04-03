@@ -89,7 +89,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Core/x/xpkrsvc.o                 \
     $(OBJ_DIR)/asm/Core/x/xQuickCull.o              \
     $(OBJ_DIR)/src/Core/x/xQuickCull.o              \
-    $(OBJ_DIR)/asm/Core/x/xsavegame.o               \
     $(OBJ_DIR)/src/Core/x/xsavegame.o               \
     $(OBJ_DIR)/asm/Core/x/xScene.o                  \
     $(OBJ_DIR)/src/Core/x/xScene.o                  \
