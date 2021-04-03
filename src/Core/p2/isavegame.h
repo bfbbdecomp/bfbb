@@ -107,9 +107,15 @@ struct st_ISG_MEMCARD_DATA
     int32 allow_cache;
 };
 
+// This struct is definitely wrong
+// Size should be 0x280
 struct st_ISGSESSION
 {
-    st_ISG_MEMCARD_DATA* mcdata;
+    // This is just a pointer in the DWARF
+    // I've changed it because of iSGSessionEnd,
+    // but there might just be another field before this instead.
+    st_ISG_MEMCARD_DATA mcdata[2];
+
     int8 gameroot[64];
     int8 gamedir[64];
     en_ASYNC_OPCODE as_curop;
@@ -130,6 +136,7 @@ enum en_NAMEGEN_TYPE
 
 int32 iSGStartup();
 int32 iSGShutdown();
+int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx);
 st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), int32 monitor);
 void iSGSessionEnd(st_ISGSESSION* isgdata);
 int32 iSGTgtCount(st_ISGSESSION* isgdata, int32* max);
@@ -158,11 +165,15 @@ int32 iSGSaveFile(st_ISGSESSION* isgdata, const int8* fname, int8* data, int32 n
                   int8*);
 int32 iSGLoadFile(st_ISGSESSION* isgdata, const int8* fname, int8* databuf, int32 async);
 void iSGAutoSave_Startup();
-int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx);
 st_ISGSESSION* iSGAutoSave_Connect(int32 idx_target, void* cltdata, void (*chg)(void*, en_CHGCODE));
 void iSGAutoSave_Disconnect(st_ISGSESSION* isg);
 int32 iSGAutoSave_Monitor(st_ISGSESSION* isg, int32 idx_target);
 int32 iSGCheckForWrongDevice();
+int32 iSG_start_your_engines();
+int32 iSG_load_icondata();
+void iSG_discard_icondata();
+int32 iSG_chk_icondata();
+int32 iSG_mc_unmount(int32 slot);
 int32 iSGCheckForCorruptFiles(st_ISGSESSION*, int8 files[][64]);
 
 #endif
