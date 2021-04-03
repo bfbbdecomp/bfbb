@@ -5,6 +5,8 @@
 #include "zGlobals.h"
 
 #include "../Core/x/xFX.h"
+#include "../Core/x/xMath.h"
+#include "../Core/p2/iMath.h"
 
 #include <types.h>
 
@@ -16,6 +18,9 @@ extern int32 g_day; // day
 extern int32 g_isSpecialDay;
 
 extern StreakInfo info_950;
+
+extern float32 _907_1_0;
+extern float32 _1022_2_0;
 
 extern float32 _1558_10_0; // 10.0
 extern float32 _1559_0_2857143; // 0.2857143
@@ -239,39 +244,68 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeSpiral__FP8NPARMgmtf")
 
 // func_80182728
-//#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
+#if 1
+#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
+#else
+//WIP
 void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
 {
     int32 trun;
-    static RwRGBA colr_pinkRyanz = { 0xcc, 0x60, 0xcc, 0xff };
-    static RwRGBA colr_lavender = { 0xc6, 0x09, 0xe9, 0xff };
-    static RwRGBA colr_blue = { 0x00, 0x00, 0xff, 0xff };
-    static RwRGBA colr_green = { 0x00, 0xff, 0x00, 0xff };
-    static RwRGBA colr_orange = { 0xff, 0xa5, 0x00, 0xff };
-    static RwRGBA colr_red = { 0xff, 0x00, 0x00, 0xff };
-    static RwRGBA colr_indigo = { 0x19, 0x19, 0x70, 0xff };
-    static RwRGBA colr_julyblue = { 0x00, 0x00, 0xdd, 0xff };
-    static RwRGBA colr_julywhite = { 0xcc, 0xcc, 0xcc, 0xff };
-    static RwRGBA colr_julyred = { 0xdd, 0x00, 0x00, 0xff };
-    static RwRGBA colr_maroon = { 0x80, 0x00, 0x00, 0xff };
-    static RwRGBA colr_pimp_gold = { 0xd7, 0xdc, 0x13, 0xff };
-    static RwRGBA colr_kellygreen = { 0x0a, 0x7f, 0x03, 0xff };
-    static RwRGBA zanyArray[10];
-    static int8 init = 0;
-    static RwRGBA colr_cyan = { 0x00, 0xff, 0xff, 0xff };
-    static RwRGBA colr_khaki = { 0xf0, 0xe6, 0x8c, 0xff };
-    static RwRGBA colr_seagreen = { 0x80, 0xcc, 0x99, 0xff };
-    static RwRGBA colr_peach = { 0xf0, 0x80, 0x80, 0xff };
-    static RwRGBA colr_fuschia = { 0xbc, 0x40, 0x99, 0xff };
-    static RwRGBA colr_neon_blue = { 0x20, 0x20, 0xff, 0xff };
-    static RwRGBA colr_neon_green = { 0x20, 0xff, 0x00, 0xff };
-    static RwRGBA colr_yellow = { 0xff, 0xff, 0x00, 0xff };
-    static RwRGBA colr_neon_red = { 0xff, 0x20, 0x00, 0xff };
-    //extern RwRGBA zanyArray_1486[10];
-    // extern int colr_neon_red_1474;
-    // extern int8 init_1486;
 
-    if (init == 0)
+    // There may be a better way to define these but this seemed like the cleanest.
+    // static RwRGBA colr_pinkRyanz = { 0xcc, 0x60, 0xcc, 0xff };
+    // static RwRGBA colr_lavender = { 0xc6, 0x09, 0xe9, 0xff };
+    // static RwRGBA colr_blue = { 0x00, 0x00, 0xff, 0xff };
+    // static RwRGBA colr_green = { 0x00, 0xff, 0x00, 0xff };
+    // static RwRGBA colr_orange = { 0xff, 0xa5, 0x00, 0xff };
+    // static RwRGBA colr_red = { 0xff, 0x00, 0x00, 0xff };
+    // static RwRGBA colr_indigo = { 0x19, 0x19, 0x70, 0xff };
+    // static RwRGBA colr_julyblue = { 0x00, 0x00, 0xdd, 0xff };
+    // static RwRGBA colr_julywhite = { 0xcc, 0xcc, 0xcc, 0xff };
+    // static RwRGBA colr_julyred = { 0xdd, 0x00, 0x00, 0xff };
+    // static RwRGBA colr_maroon = { 0x80, 0x00, 0x00, 0xff };
+    // static RwRGBA colr_pimp_gold = { 0xd7, 0xdc, 0x13, 0xff };
+    // static RwRGBA colr_kellygreen = { 0x0a, 0x7f, 0x03, 0xff };
+
+    // static RwRGBA zanyArray[10];
+    // static int8 init = 0;
+    // static RwRGBA colr_cyan = { 0x00, 0xff, 0xff, 0xff };
+    // static RwRGBA colr_khaki = { 0xf0, 0xe6, 0x8c, 0xff };
+    // static RwRGBA colr_seagreen = { 0x80, 0xcc, 0x99, 0xff };
+    // static RwRGBA colr_peach = { 0xf0, 0x80, 0x80, 0xff };
+    // static RwRGBA colr_fuschia = { 0xbc, 0x40, 0x99, 0xff };
+    // static RwRGBA colr_neon_blue = { 0x20, 0x20, 0xff, 0xff };
+    // static RwRGBA colr_neon_green = { 0x20, 0xff, 0x00, 0xff };
+    // static RwRGBA colr_yellow = { 0xff, 0xff, 0x00, 0xff };
+    // static RwRGBA colr_neon_red = { 0xff, 0x20, 0x00, 0xff };
+
+    extern RwRGBA zanyArray[10];
+
+    extern int8 init_1486;
+    extern RwRGBA colr_pinkRyanz;
+    extern RwRGBA colr_lavender;
+    extern RwRGBA colr_blue;
+    extern RwRGBA colr_green;
+    extern RwRGBA colr_orange;
+    extern RwRGBA colr_red;
+    extern RwRGBA colr_indigo;
+    extern RwRGBA colr_julyblue;
+    extern RwRGBA colr_julywhite;
+    extern RwRGBA colr_julyred;
+    extern RwRGBA colr_maroon;
+    extern RwRGBA colr_pimp_gold;
+    extern RwRGBA colr_kellygreen;
+    extern RwRGBA colr_cyan;
+    extern RwRGBA colr_khaki;
+    extern RwRGBA colr_seagreen;
+    extern RwRGBA colr_peach;
+    extern RwRGBA colr_fuschia;
+    extern RwRGBA colr_neon_blue;
+    extern RwRGBA colr_neon_green;
+    extern RwRGBA colr_yellow;
+    extern RwRGBA colr_neon_red;
+
+    if (init_1486 == 0)
     {
         zanyArray[0] = colr_neon_red;
         zanyArray[1] = colr_yellow;
@@ -283,7 +317,7 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         zanyArray[7] = colr_seagreen;
         zanyArray[8] = colr_khaki;
         zanyArray[9] = colr_cyan;
-        init = 1;
+        init_1486 = 1;
     }
 
     if (g_isSpecialDay & 0x101)
@@ -396,6 +430,7 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         color = &colr_pinkRyanz;
     }
 }
+#endif
 
 // func_80182988
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
@@ -564,34 +599,62 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "xFXStreakStart__FP10StreakInfo")
 
 // func_80185FF8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "ARCH3__Ff")
+float32 ARCH3(float32 param_1)
+{
+    return _907_1_0 - BOWL3(param_1);
+}
 
 // func_80186020
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "BOWL3__Ff")
+float32 BOWL3(float32 param_1)
+{
+    return QUB((float32)_1022_2_0 * (float32)iabs(param_1 - _909_0_5));
+}
 
 // func_80186058
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "QUB__Ff")
+float32 QUB(float32 param_1)
+{
+    return param_1 * param_1 * param_1;
+}
 
 // func_80186064
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "ARCH__Ff")
+float32 ARCH(float32 param_1)
+{
+    return _907_1_0 - BOWL(param_1);
+}
 
 // func_8018608C
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "BOWL__Ff")
 
 // func_801860BC
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Done__8NPARMgmtFv")
+//#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Done__8NPARMgmtFv")
+void NPARMgmt::Done()
+{
+    Clear();
+}
 
 // func_801860DC
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Reset__8NPARMgmtFv")
+void NPARMgmt::Reset()
+{
+    cnt_active = 0;
+}
 
 // func_801860E8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "IsReady__8NPARMgmtFv")
+int32 NPARMgmt::IsReady()
+{
+    return num_max != 0 && par_buf != 0;
+}
 
 // func_80186110
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "XtraDataSet__8NPARMgmtFP12NPARXtraData")
+void NPARMgmt::XtraDataSet(NPARXtraData* param_1)
+{
+    xtra_data = param_1;
+}
 
 // func_80186118
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "UserDataSet__8NPARMgmtFPPv")
+void NPARMgmt::UserDataSet(void** param_1)
+{
+    user_data = param_1;
+}
 
 // func_80186120
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "PromoteTail__8NPARMgmtFi")

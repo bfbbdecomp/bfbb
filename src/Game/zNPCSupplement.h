@@ -82,6 +82,8 @@ struct NPARMgmt
     void Reset();
     int32 IsReady();
     void UpdateAndRender(float32 param_1);
+    void XtraDataSet(NPARXtraData* param_1);
+    void UserDataSet(void** user_data);
 };
 
 struct NPARInfo
@@ -123,5 +125,8 @@ void NPAR_Timestep(float32 dt);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
 void xFXStreakStart(en_npcstreak* styp);
 void UpdateAndRender(NPARMgmt param_1, float32 dt);
+float32 BOWL3(float32 param_1);
+float32 QUB(float32 param_1);
+float32 BOWL(float32 param_1);
 
 #endif

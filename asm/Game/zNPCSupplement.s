@@ -5523,55 +5523,6 @@ xFXStreakStart__FP10StreakInfo:
 /* 80185FF0 00182DF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80185FF4 00182DF4  4E 80 00 20 */	blr 
 
-.global ARCH3__Ff
-ARCH3__Ff:
-/* 80185FF8 00182DF8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80185FFC 00182DFC  7C 08 02 A6 */	mflr r0
-/* 80186000 00182E00  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80186004 00182E04  48 00 00 1D */	bl BOWL3__Ff
-/* 80186008 00182E08  C0 02 AE 9C */	lfs f0, lbl_803CF81C-_SDA2_BASE_(r2)
-/* 8018600C 00182E0C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80186010 00182E10  EC 20 08 28 */	fsubs f1, f0, f1
-/* 80186014 00182E14  7C 08 03 A6 */	mtlr r0
-/* 80186018 00182E18  38 21 00 10 */	addi r1, r1, 0x10
-/* 8018601C 00182E1C  4E 80 00 20 */	blr 
-
-.global BOWL3__Ff
-BOWL3__Ff:
-/* 80186020 00182E20  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80186024 00182E24  7C 08 02 A6 */	mflr r0
-/* 80186028 00182E28  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8018602C 00182E2C  C0 02 AE A4 */	lfs f0, lbl_803CF824-_SDA2_BASE_(r2)
-/* 80186030 00182E30  C0 42 AE FC */	lfs f2, lbl_803CF87C-_SDA2_BASE_(r2)
-/* 80186034 00182E34  EC 01 00 28 */	fsubs f0, f1, f0
-/* 80186038 00182E38  FC 00 02 10 */	fabs f0, f0
-/* 8018603C 00182E3C  FC 00 00 18 */	frsp f0, f0
-/* 80186040 00182E40  EC 22 00 32 */	fmuls f1, f2, f0
-/* 80186044 00182E44  48 00 00 15 */	bl QUB__Ff
-/* 80186048 00182E48  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8018604C 00182E4C  7C 08 03 A6 */	mtlr r0
-/* 80186050 00182E50  38 21 00 10 */	addi r1, r1, 0x10
-/* 80186054 00182E54  4E 80 00 20 */	blr 
-
-.global QUB__Ff
-QUB__Ff:
-/* 80186058 00182E58  EC 01 00 72 */	fmuls f0, f1, f1
-/* 8018605C 00182E5C  EC 21 00 32 */	fmuls f1, f1, f0
-/* 80186060 00182E60  4E 80 00 20 */	blr 
-
-.global ARCH__Ff
-ARCH__Ff:
-/* 80186064 00182E64  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80186068 00182E68  7C 08 02 A6 */	mflr r0
-/* 8018606C 00182E6C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80186070 00182E70  48 00 00 1D */	bl BOWL__Ff
-/* 80186074 00182E74  C0 02 AE 9C */	lfs f0, lbl_803CF81C-_SDA2_BASE_(r2)
-/* 80186078 00182E78  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8018607C 00182E7C  EC 20 08 28 */	fsubs f1, f0, f1
-/* 80186080 00182E80  7C 08 03 A6 */	mtlr r0
-/* 80186084 00182E84  38 21 00 10 */	addi r1, r1, 0x10
-/* 80186088 00182E88  4E 80 00 20 */	blr 
-
 .global BOWL__Ff
 BOWL__Ff:
 /* 8018608C 00182E8C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -5586,47 +5537,6 @@ BOWL__Ff:
 /* 801860B0 00182EB0  7C 08 03 A6 */	mtlr r0
 /* 801860B4 00182EB4  38 21 00 10 */	addi r1, r1, 0x10
 /* 801860B8 00182EB8  4E 80 00 20 */	blr 
-
-.global Done__8NPARMgmtFv
-Done__8NPARMgmtFv:
-/* 801860BC 00182EBC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801860C0 00182EC0  7C 08 02 A6 */	mflr r0
-/* 801860C4 00182EC4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801860C8 00182EC8  4B FF BE AD */	bl Clear__8NPARMgmtFv
-/* 801860CC 00182ECC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801860D0 00182ED0  7C 08 03 A6 */	mtlr r0
-/* 801860D4 00182ED4  38 21 00 10 */	addi r1, r1, 0x10
-/* 801860D8 00182ED8  4E 80 00 20 */	blr 
-
-.global Reset__8NPARMgmtFv
-Reset__8NPARMgmtFv:
-/* 801860DC 00182EDC  38 00 00 00 */	li r0, 0
-/* 801860E0 00182EE0  90 03 00 0C */	stw r0, 0xc(r3)
-/* 801860E4 00182EE4  4E 80 00 20 */	blr 
-
-.global IsReady__8NPARMgmtFv
-IsReady__8NPARMgmtFv:
-/* 801860E8 00182EE8  80 03 00 10 */	lwz r0, 0x10(r3)
-/* 801860EC 00182EEC  38 80 00 00 */	li r4, 0
-/* 801860F0 00182EF0  2C 00 00 00 */	cmpwi r0, 0
-/* 801860F4 00182EF4  41 82 00 14 */	beq lbl_80186108
-/* 801860F8 00182EF8  80 03 00 08 */	lwz r0, 8(r3)
-/* 801860FC 00182EFC  28 00 00 00 */	cmplwi r0, 0
-/* 80186100 00182F00  41 82 00 08 */	beq lbl_80186108
-/* 80186104 00182F04  38 80 00 01 */	li r4, 1
-lbl_80186108:
-/* 80186108 00182F08  54 83 06 3E */	clrlwi r3, r4, 0x18
-/* 8018610C 00182F0C  4E 80 00 20 */	blr 
-
-.global XtraDataSet__8NPARMgmtFP12NPARXtraData
-XtraDataSet__8NPARMgmtFP12NPARXtraData:
-/* 80186110 00182F10  90 83 00 18 */	stw r4, 0x18(r3)
-/* 80186114 00182F14  4E 80 00 20 */	blr 
-
-.global UserDataSet__8NPARMgmtFPPv
-UserDataSet__8NPARMgmtFPPv:
-/* 80186118 00182F18  90 83 00 1C */	stw r4, 0x1c(r3)
-/* 8018611C 00182F1C  4E 80 00 20 */	blr 
 
 .global PromoteTail__8NPARMgmtFi
 PromoteTail__8NPARMgmtFi:
@@ -5756,8 +5666,8 @@ lbl_8029B8C0:
 .global g_npar_info
 g_npar_info:
 	.incbin "baserom.dol", 0x2988C0, 0xC0
-.global zanyArray_1486
-zanyArray_1486:
+.global zanyArray
+zanyArray:
 	.incbin "baserom.dol", 0x298980, 0x28
 
 .section .bss
@@ -5804,11 +5714,13 @@ lbl_803CADC0:
 .section .sdata2
 lbl_803CF818:
 	.incbin "baserom.dol", 0x2B90B8, 0x4
-lbl_803CF81C:
+.global _907_1_0
+_907_1_0:
 	.incbin "baserom.dol", 0x2B90BC, 0x4
 lbl_803CF820:
 	.incbin "baserom.dol", 0x2B90C0, 0x4
-lbl_803CF824:
+.global _909_0_5
+_909_0_5:
 	.incbin "baserom.dol", 0x2B90C4, 0x4
 lbl_803CF828:
 	.incbin "baserom.dol", 0x2B90C8, 0x4
@@ -5854,7 +5766,8 @@ lbl_803CF874:
 	.incbin "baserom.dol", 0x2B9114, 0x4
 lbl_803CF878:
 	.incbin "baserom.dol", 0x2B9118, 0x4
-lbl_803CF87C:
+.global _1022_2_0
+_1022_2_0:
 	.incbin "baserom.dol", 0x2B911C, 0x4
 lbl_803CF880:
 	.incbin "baserom.dol", 0x2B9120, 0x8
@@ -5882,50 +5795,71 @@ lbl_803CF8B8:
 	.incbin "baserom.dol", 0x2B9158, 0x8
 lbl_803CF8C0:
 	.incbin "baserom.dol", 0x2B9160, 0x4
-lbl_803CF8C4:
+.global colr_julyred
+colr_julyred:
 	.incbin "baserom.dol", 0x2B9164, 0x4
-lbl_803CF8C8:
+.global colr_julywhite
+colr_julywhite:
 	.incbin "baserom.dol", 0x2B9168, 0x4
-lbl_803CF8CC:
+.global colr_julyblue
+colr_julyblue:
 	.incbin "baserom.dol", 0x2B916C, 0x4
-lbl_803CF8D0:
+.global colr_red
+colr_red:
 	.incbin "baserom.dol", 0x2B9170, 0x4
-lbl_803CF8D4:
+.global colr_orange
+colr_orange:
 	.incbin "baserom.dol", 0x2B9174, 0x4
-lbl_803CF8D8:
+.global colr_yellow
+colr_yellow:
 	.incbin "baserom.dol", 0x2B9178, 0x4
-lbl_803CF8DC:
+.global colr_green
+colr_green:
 	.incbin "baserom.dol", 0x2B917C, 0x4
-lbl_803CF8E0:
+.global colr_blue
+colr_blue:
 	.incbin "baserom.dol", 0x2B9180, 0x4
-lbl_803CF8E4:
+.global colr_indigo
+colr_indigo:
 	.incbin "baserom.dol", 0x2B9184, 0x4
-lbl_803CF8E8:
+.global colr_lavender
+colr_lavender:
 	.incbin "baserom.dol", 0x2B9188, 0x4
-lbl_803CF8EC:
+.global colr_kellygreen
+colr_kellygreen:
 	.incbin "baserom.dol", 0x2B918C, 0x4
-lbl_803CF8F0:
+.global colr_pinkRyanz
+colr_pinkRyanz:
 	.incbin "baserom.dol", 0x2B9190, 0x4
-lbl_803CF8F4:
+.global colr_fuschia
+colr_fuschia:
 	.incbin "baserom.dol", 0x2B9194, 0x4
-.global colr_neon_red_1474
-colr_neon_red_1474:
+.global colr_neon_red
+colr_neon_red:
 	.incbin "baserom.dol", 0x2B9198, 0x4
-lbl_803CF8FC:
+.global colr_neon_green
+colr_neon_green:
 	.incbin "baserom.dol", 0x2B919C, 0x4
-lbl_803CF900:
+.global colr_neon_blue
+colr_neon_blue:
 	.incbin "baserom.dol", 0x2B91A0, 0x4
-lbl_803CF904:
+.global colr_peach
+colr_peach:
 	.incbin "baserom.dol", 0x2B91A4, 0x4
-lbl_803CF908:
+.global colr_maroon
+colr_maroon:
 	.incbin "baserom.dol", 0x2B91A8, 0x4
-lbl_803CF90C:
+.global colr_seagreen
+colr_seagreen:
 	.incbin "baserom.dol", 0x2B91AC, 0x4
-lbl_803CF910:
+.global colr_khaki
+colr_khaki:
 	.incbin "baserom.dol", 0x2B91B0, 0x4
-lbl_803CF914:
+.global colr_cyan
+colr_cyan:
 	.incbin "baserom.dol", 0x2B91B4, 0x4
-lbl_803CF918:
+.global colr_pimp_gold
+colr_pimp_gold:
 	.incbin "baserom.dol", 0x2B91B8, 0x4
 .global _1558_10_0
 _1558_10_0:
@@ -5939,7 +5873,8 @@ _1560_0_5714286:
 .global _1561_0_125
 _1561_0_125:
 	.incbin "baserom.dol", 0x2B91C8, 0x4
-lbl_803CF92C:
+.global _1562_0_625
+_1562_0_625:
 	.incbin "baserom.dol", 0x2B91CC, 0x4
 lbl_803CF930:
 	.incbin "baserom.dol", 0x2B91D0, 0x4
