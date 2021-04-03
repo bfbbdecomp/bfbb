@@ -94,7 +94,9 @@ struct xCamAsset : xBaseAsset
 struct xCamera : xBase
 {
     RwCamera* lo_cam;
+    // Offset: 0x14
     xMat4x3 mat;
+    // Offset: 0x54
     xMat4x3 omat;
     xMat3x3 mbasis;
     xBound bound;

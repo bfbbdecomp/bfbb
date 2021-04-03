@@ -362,8 +362,10 @@ namespace cruise_bubble
         // Size: 0x14
         struct _class_9
         {
+            // Offset: 0xe4
             float32 dist_min;
             float32 dist_max;
+            // Offset: 0xec
             float32 ang_show;
             float32 ang_hide;
             float32 delay_retarget;
@@ -521,6 +523,7 @@ namespace cruise_bubble
     xVec3 world_to_screen(const xVec3& loc);
     int32 find_locked_target(const xVec3* target);
     void lock_target(int32 index, const xVec3* target, float32 opacity);
+    void check_lock_target(const xVec3* target);
     void load_settings();
     void init();
     void init_debug();

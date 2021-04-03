@@ -185,6 +185,8 @@ extern float32 zEntCruiseBubble_f_0_25; // 0.25
 extern float32 zEntCruiseBubble_f_255_0; // 255.0
 extern float32 zEntCruiseBubble_f_n1_0; // -1.0
 extern float32 zEntCruiseBubble_f_100_0; // 100.0
+extern float32 zEntCruiseBubble_f_n0_00001; // -0.00001
+extern float32 zEntCruiseBubble_f_0_00001; // 0.00001
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
@@ -1603,7 +1605,7 @@ int32 cruise_bubble::find_locked_target(const xVec3* target)
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lock_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiPC5xVec3f")
+    "lock_target__13cruise_bubbleFiPC5xVec3f")
 #else
 void cruise_bubble::lock_target(int32 index, const xVec3* target, float32 opacity)
 {
@@ -1634,10 +1636,52 @@ void cruise_bubble::lock_target(int32 index, const xVec3* target, float32 opacit
 }
 #endif
 
-// func_8005A570
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "check_lock_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FPC5xVec3")
+void cruise_bubble::check_lock_target(const xVec3* target)
+{
+    xMat4x3* mat = &globals.camera.mat;
+    xVec3 offset = *target - mat->pos;
+    float32 ang = offset.dot(mat->at);
+
+    if (ang < current_tweak->reticle.dist_min || ang > current_tweak->reticle.dist_max)
+    {
+        return;
+    }
+
+    ang = offset.length();
+    if ((ang >= zEntCruiseBubble_f_n0_00001) &&
+            (ang <= zEntCruiseBubble_f_0_00001))
+    {
+        ang = zEntCruiseBubble_f_0_0;
+    }
+    else
+    {
+        ang = xacos(offset.dot(mat->at) / ang);
+    }
+    
+    float32 max_ang = current_tweak->reticle.ang_show;
+    float32 min_ang = current_tweak->reticle.ang_hide;
+
+    if (ang >= min_ang)
+    {
+        return;
+    }
+
+    if (ang >= max_ang)
+    {
+        int32 t = find_locked_target(target);
+        if (t < 0)
+        {
+            return;
+        }
+
+        lock_target(t, target, (min_ang - ang) / (min_ang - max_ang));
+    }
+
+    else
+    {
+        lock_target(find_locked_target(target), target, zEntCruiseBubble_f_1_0);
+    }
+}
 
 // func_8005A6D8
 #pragma GLOBAL_ASM(                                                                                \
