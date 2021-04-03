@@ -307,7 +307,7 @@ int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 }
 
 // func_8014292C
-#if 1
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "elbowDropCB__FP5xGoalPvP11en_trantypefPv")
 #else
 int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
@@ -324,11 +324,15 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
             *trantype = GOAL_TRAN_SET;
             return 'NGB1';
         }
-
-        xVec3Sub(&vecStack[0], &globals.player.ent.asset->pos, &sandy->asset->pos);
-        globals.player.ent.asset = NULL;
-        nextgoal = 0x4e474233; // NGB3
     }
+
+    // sandy -> 0x24 -> 0x4c -> 0x30 = xVec3
+    // sandy->model->Mat->pos
+    xVec3Sub(&vecStack[0], (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    nextgoal = 0x4e474233; // NGB3
+
     return nextgoal;
 }
 

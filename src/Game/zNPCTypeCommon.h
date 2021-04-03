@@ -350,7 +350,7 @@ struct zNPCLassoInfo
 
 struct zNPCCommon : xNPCBasic
 {
-    xEntAsset* entass;
+    xEntAsset* entass; // 0x1BC
     xEntNPCAsset* npcass;
     zNPCSettings* npcsetass;
     int32 flg_vuln;

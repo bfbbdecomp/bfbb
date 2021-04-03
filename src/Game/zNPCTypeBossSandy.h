@@ -21,7 +21,7 @@ struct BossDamageEffectRecord
 
 struct zNPCBSandy : zNPCBoss
 {
-    xEnt** boundList;
+    xEnt** boundList; // 0x2B4
     uint32* boundFlags;
     float32* boundEmitTimer;
     uint32 bossFlags;
