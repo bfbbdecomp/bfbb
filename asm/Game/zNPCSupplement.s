@@ -1093,36 +1093,6 @@ lbl_80181F60:
 /* 80181F6C 0017ED6C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80181F70 0017ED70  4E 80 00 20 */	blr 
 
-.global Clear__8NPARMgmtFv
-Clear__8NPARMgmtFv:
-/* 80181F74 0017ED74  38 00 00 00 */	li r0, 0
-/* 80181F78 0017ED78  90 03 00 00 */	stw r0, 0(r3)
-/* 80181F7C 0017ED7C  90 03 00 04 */	stw r0, 4(r3)
-/* 80181F80 0017ED80  90 03 00 08 */	stw r0, 8(r3)
-/* 80181F84 0017ED84  90 03 00 0C */	stw r0, 0xc(r3)
-/* 80181F88 0017ED88  90 03 00 10 */	stw r0, 0x10(r3)
-/* 80181F8C 0017ED8C  90 03 00 14 */	stw r0, 0x14(r3)
-/* 80181F90 0017ED90  90 03 00 18 */	stw r0, 0x18(r3)
-/* 80181F94 0017ED94  90 03 00 1C */	stw r0, 0x1c(r3)
-/* 80181F98 0017ED98  4E 80 00 20 */	blr 
-
-.global UpdateAndRender__8NPARMgmtFf
-UpdateAndRender__8NPARMgmtFf:
-/* 80181F9C 0017ED9C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80181FA0 0017EDA0  7C 08 02 A6 */	mflr r0
-/* 80181FA4 0017EDA4  3C 80 80 2A */	lis r4, lbl_8029B8E0@ha
-/* 80181FA8 0017EDA8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80181FAC 0017EDAC  38 84 B8 E0 */	addi r4, r4, lbl_8029B8E0@l
-/* 80181FB0 0017EDB0  80 03 00 00 */	lwz r0, 0(r3)
-/* 80181FB4 0017EDB4  54 00 20 36 */	slwi r0, r0, 4
-/* 80181FB8 0017EDB8  7D 84 00 2E */	lwzx r12, r4, r0
-/* 80181FBC 0017EDBC  7D 89 03 A6 */	mtctr r12
-/* 80181FC0 0017EDC0  4E 80 04 21 */	bctrl 
-/* 80181FC4 0017EDC4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80181FC8 0017EDC8  7C 08 03 A6 */	mtlr r0
-/* 80181FCC 0017EDCC  38 21 00 10 */	addi r1, r1, 0x10
-/* 80181FD0 0017EDD0  4E 80 00 20 */	blr 
-
 .global ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3
 ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3:
 /* 80181FD4 0017EDD4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1326,55 +1296,6 @@ lbl_80182284:
 /* 801822B8 0017F0B8  7C 08 03 A6 */	mtlr r0
 /* 801822BC 0017F0BC  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801822C0 0017F0C0  4E 80 00 20 */	blr 
-
-.global NPAR_CopyNPARToPTPool__FP8NPARDataP30ptank_pool__pos_color_size_uv2
-NPAR_CopyNPARToPTPool__FP8NPARDataP30ptank_pool__pos_color_size_uv2:
-/* 801822C4 0017F0C4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801822C8 0017F0C8  7C 08 02 A6 */	mflr r0
-/* 801822CC 0017F0CC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801822D0 0017F0D0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 801822D4 0017F0D4  7C 9F 23 78 */	mr r31, r4
-/* 801822D8 0017F0D8  93 C1 00 08 */	stw r30, 8(r1)
-/* 801822DC 0017F0DC  7C 7E 1B 78 */	mr r30, r3
-/* 801822E0 0017F0E0  80 64 00 24 */	lwz r3, 0x24(r4)
-/* 801822E4 0017F0E4  7F C4 F3 78 */	mr r4, r30
-/* 801822E8 0017F0E8  4B E8 8F 7D */	bl __as__5xVec3FRC5xVec3
-/* 801822EC 0017F0EC  88 1E 00 24 */	lbz r0, 0x24(r30)
-/* 801822F0 0017F0F0  80 7F 00 28 */	lwz r3, 0x28(r31)
-/* 801822F4 0017F0F4  98 03 00 00 */	stb r0, 0(r3)
-/* 801822F8 0017F0F8  88 1E 00 25 */	lbz r0, 0x25(r30)
-/* 801822FC 0017F0FC  80 7F 00 28 */	lwz r3, 0x28(r31)
-/* 80182300 0017F100  98 03 00 01 */	stb r0, 1(r3)
-/* 80182304 0017F104  88 1E 00 26 */	lbz r0, 0x26(r30)
-/* 80182308 0017F108  80 7F 00 28 */	lwz r3, 0x28(r31)
-/* 8018230C 0017F10C  98 03 00 02 */	stb r0, 2(r3)
-/* 80182310 0017F110  88 1E 00 27 */	lbz r0, 0x27(r30)
-/* 80182314 0017F114  80 7F 00 28 */	lwz r3, 0x28(r31)
-/* 80182318 0017F118  98 03 00 03 */	stb r0, 3(r3)
-/* 8018231C 0017F11C  C0 1E 00 0C */	lfs f0, 0xc(r30)
-/* 80182320 0017F120  80 7F 00 2C */	lwz r3, 0x2c(r31)
-/* 80182324 0017F124  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80182328 0017F128  C0 1E 00 10 */	lfs f0, 0x10(r30)
-/* 8018232C 0017F12C  80 7F 00 2C */	lwz r3, 0x2c(r31)
-/* 80182330 0017F130  D0 03 00 04 */	stfs f0, 4(r3)
-/* 80182334 0017F134  C0 1E 00 14 */	lfs f0, 0x14(r30)
-/* 80182338 0017F138  80 7F 00 30 */	lwz r3, 0x30(r31)
-/* 8018233C 0017F13C  D0 03 00 00 */	stfs f0, 0(r3)
-/* 80182340 0017F140  C0 1E 00 18 */	lfs f0, 0x18(r30)
-/* 80182344 0017F144  80 7F 00 30 */	lwz r3, 0x30(r31)
-/* 80182348 0017F148  D0 03 00 04 */	stfs f0, 4(r3)
-/* 8018234C 0017F14C  C0 1E 00 1C */	lfs f0, 0x1c(r30)
-/* 80182350 0017F150  80 7F 00 30 */	lwz r3, 0x30(r31)
-/* 80182354 0017F154  D0 03 00 08 */	stfs f0, 8(r3)
-/* 80182358 0017F158  C0 1E 00 20 */	lfs f0, 0x20(r30)
-/* 8018235C 0017F15C  80 7F 00 30 */	lwz r3, 0x30(r31)
-/* 80182360 0017F160  D0 03 00 0C */	stfs f0, 0xc(r3)
-/* 80182364 0017F164  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80182368 0017F168  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8018236C 0017F16C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80182370 0017F170  7C 08 03 A6 */	mtlr r0
-/* 80182374 0017F174  38 21 00 10 */	addi r1, r1, 0x10
-/* 80182378 0017F178  4E 80 00 20 */	blr 
 
 .global ConfigPar__18NPARParmTubeSpiralCFP8NPARData11en_nparmodePC5xVec3PC5xVec3f
 ConfigPar__18NPARParmTubeSpiralCFP8NPARData11en_nparmodePC5xVec3PC5xVec3f:
@@ -5832,9 +5753,11 @@ lbl_8029B8A0:
 	.incbin "baserom.dol", 0x298880, 0x20
 lbl_8029B8C0:
 	.incbin "baserom.dol", 0x2988A0, 0x20
-lbl_8029B8E0:
+.global g_npar_info
+g_npar_info:
 	.incbin "baserom.dol", 0x2988C0, 0xC0
-lbl_8029B9A0:
+.global zanyArray_1486
+zanyArray_1486:
 	.incbin "baserom.dol", 0x298980, 0x28
 
 .section .bss
@@ -5866,7 +5789,8 @@ lbl_803CC138:
 	.skip 0x4
 lbl_803CC13C:
 	.skip 0x1
-lbl_803CC13D:
+.global init_1486
+init_1486:
 	.skip 0x3
 lbl_803CC140:
 	.skip 0x4
@@ -5902,7 +5826,8 @@ lbl_803CF840:
 	.incbin "baserom.dol", 0x2B90E0, 0x4
 lbl_803CF844:
 	.incbin "baserom.dol", 0x2B90E4, 0x4
-lbl_803CF848:
+.global _918_0_25
+_918_0_25:
 	.incbin "baserom.dol", 0x2B90E8, 0x4
 lbl_803CF84C:
 	.incbin "baserom.dol", 0x2B90EC, 0x4
@@ -5920,7 +5845,8 @@ lbl_803CF864:
 	.incbin "baserom.dol", 0x2B9104, 0x4
 lbl_803CF868:
 	.incbin "baserom.dol", 0x2B9108, 0x4
-lbl_803CF86C:
+.global _1018_0_375
+_1018_0_375:
 	.incbin "baserom.dol", 0x2B910C, 0x4
 lbl_803CF870:
 	.incbin "baserom.dol", 0x2B9110, 0x4
@@ -5982,7 +5908,8 @@ lbl_803CF8F0:
 	.incbin "baserom.dol", 0x2B9190, 0x4
 lbl_803CF8F4:
 	.incbin "baserom.dol", 0x2B9194, 0x4
-lbl_803CF8F8:
+.global colr_neon_red_1474
+colr_neon_red_1474:
 	.incbin "baserom.dol", 0x2B9198, 0x4
 lbl_803CF8FC:
 	.incbin "baserom.dol", 0x2B919C, 0x4
@@ -6000,13 +5927,17 @@ lbl_803CF914:
 	.incbin "baserom.dol", 0x2B91B4, 0x4
 lbl_803CF918:
 	.incbin "baserom.dol", 0x2B91B8, 0x4
-lbl_803CF91C:
+.global _1558_10_0
+_1558_10_0:
 	.incbin "baserom.dol", 0x2B91BC, 0x4
-lbl_803CF920:
+.global _1559_0_2857143
+_1559_0_2857143:
 	.incbin "baserom.dol", 0x2B91C0, 0x4
-lbl_803CF924:
+.global _1560_0_5714286
+_1560_0_5714286:
 	.incbin "baserom.dol", 0x2B91C4, 0x4
-lbl_803CF928:
+.global _1561_0_125
+_1561_0_125:
 	.incbin "baserom.dol", 0x2B91C8, 0x4
 lbl_803CF92C:
 	.incbin "baserom.dol", 0x2B91CC, 0x4

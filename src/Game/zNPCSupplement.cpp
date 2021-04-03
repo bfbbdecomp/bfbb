@@ -9,12 +9,22 @@
 #include <types.h>
 
 extern NPARMgmt g_npar_mgmt[12];
+extern NPARInfo g_npar_info[12];
 extern int32 g_gameExtrasFlags;
-extern int32 g_mon; //month
-extern int32 g_day; //day
+extern int32 g_mon; // month
+extern int32 g_day; // day
 extern int32 g_isSpecialDay;
 
 extern StreakInfo info_950;
+
+extern float32 _1558_10_0; // 10.0
+extern float32 _1559_0_2857143; // 0.2857143
+extern float32 _1560_0_5714286; // 0.5714286
+extern float32 _1561_0_125; // 0.125
+extern float32 _918_0_25; // 0.25
+extern float32 _1018_0_375; // 0.375
+extern float32 _909_0_5; // 0.5
+extern float32 _1562_0_625; // 0.625
 
 // func_80180D54
 void NPCSupplement_Startup()
@@ -180,10 +190,23 @@ NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Init__8NPARMgmtF11en_nparptypPPvP12NPARXtraData")
 
 // func_80181F74
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Clear__8NPARMgmtFv")
+void NPARMgmt::Clear()
+{
+    typ_npar = NPAR_TYP_UNKNOWN;
+    flg_npar = 0;
+    par_buf = 0;
+    cnt_active = 0;
+    num_max = 0;
+    txtr = 0;
+    xtra_data = 0;
+    user_data = 0;
+}
 
 // func_80181F9C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "UpdateAndRender__8NPARMgmtFf")
+void NPARMgmt::UpdateAndRender(float32 param_1)
+{
+    g_npar_info[typ_npar].fun_update(this, param_1);
+}
 
 // func_80181FD4
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
@@ -193,8 +216,20 @@ NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_OilBubble__FP8NPARMgmtf")
 
 // func_801822C4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPAR_CopyNPARToPTPool__FP8NPARDataP30ptank_pool__pos_color_size_uv2")
+void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* param_2)
+{
+    *param_2->pos = param_1->pos;
+    param_2->color->r = (param_1->color).red;
+    param_2->color->g = (param_1->color).green;
+    param_2->color->b = (param_1->color).blue;
+    param_2->color->a = (param_1->color).alpha;
+    param_2->size->x = param_1->xy_size[0];
+    param_2->size->y = param_1->xy_size[1];
+    param_2->uv->x = param_1->uv_tl[0];
+    param_2->uv->y = param_1->uv_tl[1];
+    param_2->uv[1].x = param_1->uv_br[0];
+    param_2->uv[1].y = param_1->uv_br[1];
+}
 
 // func_8018237C
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
@@ -204,7 +239,163 @@ NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeSpiral__FP8NPARMgmtf")
 
 // func_80182728
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
+//#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
+void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
+{
+    int32 trun;
+    static RwRGBA colr_pinkRyanz = { 0xcc, 0x60, 0xcc, 0xff };
+    static RwRGBA colr_lavender = { 0xc6, 0x09, 0xe9, 0xff };
+    static RwRGBA colr_blue = { 0x00, 0x00, 0xff, 0xff };
+    static RwRGBA colr_green = { 0x00, 0xff, 0x00, 0xff };
+    static RwRGBA colr_orange = { 0xff, 0xa5, 0x00, 0xff };
+    static RwRGBA colr_red = { 0xff, 0x00, 0x00, 0xff };
+    static RwRGBA colr_indigo = { 0x19, 0x19, 0x70, 0xff };
+    static RwRGBA colr_julyblue = { 0x00, 0x00, 0xdd, 0xff };
+    static RwRGBA colr_julywhite = { 0xcc, 0xcc, 0xcc, 0xff };
+    static RwRGBA colr_julyred = { 0xdd, 0x00, 0x00, 0xff };
+    static RwRGBA colr_maroon = { 0x80, 0x00, 0x00, 0xff };
+    static RwRGBA colr_pimp_gold = { 0xd7, 0xdc, 0x13, 0xff };
+    static RwRGBA colr_kellygreen = { 0x0a, 0x7f, 0x03, 0xff };
+    static RwRGBA zanyArray[10];
+    static int8 init = 0;
+    static RwRGBA colr_cyan = { 0x00, 0xff, 0xff, 0xff };
+    static RwRGBA colr_khaki = { 0xf0, 0xe6, 0x8c, 0xff };
+    static RwRGBA colr_seagreen = { 0x80, 0xcc, 0x99, 0xff };
+    static RwRGBA colr_peach = { 0xf0, 0x80, 0x80, 0xff };
+    static RwRGBA colr_fuschia = { 0xbc, 0x40, 0x99, 0xff };
+    static RwRGBA colr_neon_blue = { 0x20, 0x20, 0xff, 0xff };
+    static RwRGBA colr_neon_green = { 0x20, 0xff, 0x00, 0xff };
+    static RwRGBA colr_yellow = { 0xff, 0xff, 0x00, 0xff };
+    static RwRGBA colr_neon_red = { 0xff, 0x20, 0x00, 0xff };
+    //extern RwRGBA zanyArray_1486[10];
+    // extern int colr_neon_red_1474;
+    // extern int8 init_1486;
+
+    if (init == 0)
+    {
+        zanyArray[0] = colr_neon_red;
+        zanyArray[1] = colr_yellow;
+        zanyArray[2] = colr_neon_green;
+        zanyArray[3] = colr_neon_blue;
+        zanyArray[4] = colr_fuschia;
+        zanyArray[5] = colr_peach;
+        zanyArray[6] = colr_maroon;
+        zanyArray[7] = colr_seagreen;
+        zanyArray[8] = colr_khaki;
+        zanyArray[9] = colr_cyan;
+        init = 1;
+    }
+
+    if (g_isSpecialDay & 0x101)
+    {
+        trun = _1558_10_0 * (uint32)color;
+        if (trun < 0)
+        {
+            trun = 0;
+        }
+        if (trun > 9)
+        {
+            trun = 9;
+        }
+        color = &zanyArray[trun];
+        return;
+    }
+
+    // 4th of July
+    if (g_isSpecialDay & 2)
+    {
+        if (_1559_0_2857143 > pam)
+        {
+            color = &colr_julyred;
+            return;
+        }
+        if (_1560_0_5714286 > pam)
+        {
+            color = &colr_julywhite;
+            return;
+        }
+        color = &colr_julyblue;
+        return;
+    }
+
+    // St. Patrick's Day
+    if (g_isSpecialDay & 4)
+    {
+        color = &colr_kellygreen;
+        return;
+    }
+
+    // ????
+    if (g_isSpecialDay & 8)
+    {
+        color = &colr_pimp_gold;
+        return;
+    }
+
+    // Also 4th of July?
+    if (g_isSpecialDay & 0x10)
+    {
+        if (pam > _1561_0_125)
+        {
+            color = &colr_maroon;
+            return;
+        }
+        if (_918_0_25 > pam)
+        {
+            color = &colr_julyred;
+            return;
+        }
+        if (_1018_0_375 > pam)
+        {
+            color = &colr_julywhite;
+            return;
+        }
+
+        if (_909_0_5 > pam)
+        {
+            color = &colr_julyblue;
+            return;
+        }
+        color = &colr_indigo;
+        return;
+    }
+
+    if (g_isSpecialDay & 0x20)
+    {
+        color = &colr_orange;
+        return;
+    }
+
+    if (g_isSpecialDay & 0x40)
+    {
+        if (_918_0_25 > pam)
+        {
+            color = &colr_red;
+            return;
+        }
+        if (_1018_0_375 > pam)
+        {
+            color = &colr_orange;
+            return;
+        }
+        if (_909_0_5 > pam)
+        {
+            color = &colr_green;
+        }
+        if (_1562_0_625 > pam)
+        {
+            color = &colr_blue;
+            return;
+        }
+        color = &colr_lavender;
+        return;
+    }
+
+    if (g_isSpecialDay & 0x80)
+    {
+        color = &colr_pinkRyanz;
+    }
+}
 
 // func_80182988
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
