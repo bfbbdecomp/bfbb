@@ -924,30 +924,6 @@ lbl_80181B30:
 /* 80181BB8 0017E9B8  38 21 00 90 */	addi r1, r1, 0x90
 /* 80181BBC 0017E9BC  4E 80 00 20 */	blr 
 
-.global NPAR_ScenePrepare__Fv
-NPAR_ScenePrepare__Fv:
-/* 80181BC0 0017E9C0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80181BC4 0017E9C4  7C 08 02 A6 */	mflr r0
-/* 80181BC8 0017E9C8  3C 60 80 33 */	lis r3, lbl_8032B59C@ha
-/* 80181BCC 0017E9CC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80181BD0 0017E9D0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80181BD4 0017E9D4  3B E3 B5 9C */	addi r31, r3, lbl_8032B59C@l
-/* 80181BD8 0017E9D8  93 C1 00 08 */	stw r30, 8(r1)
-/* 80181BDC 0017E9DC  3B C0 00 00 */	li r30, 0
-lbl_80181BE0:
-/* 80181BE0 0017E9E0  7F E3 FB 78 */	mr r3, r31
-/* 80181BE4 0017E9E4  48 00 03 91 */	bl Clear__8NPARMgmtFv
-/* 80181BE8 0017E9E8  3B DE 00 01 */	addi r30, r30, 1
-/* 80181BEC 0017E9EC  3B FF 00 20 */	addi r31, r31, 0x20
-/* 80181BF0 0017E9F0  2C 1E 00 0C */	cmpwi r30, 0xc
-/* 80181BF4 0017E9F4  41 80 FF EC */	blt lbl_80181BE0
-/* 80181BF8 0017E9F8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80181BFC 0017E9FC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80181C00 0017EA00  83 C1 00 08 */	lwz r30, 8(r1)
-/* 80181C04 0017EA04  7C 08 03 A6 */	mtlr r0
-/* 80181C08 0017EA08  38 21 00 10 */	addi r1, r1, 0x10
-/* 80181C0C 0017EA0C  4E 80 00 20 */	blr 
-
 .global NPAR_SceneFinish__Fv
 NPAR_SceneFinish__Fv:
 /* 80181C10 0017EA10  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -999,23 +975,6 @@ lbl_80181C90:
 /* 80181CB4 0017EAB4  7C 08 03 A6 */	mtlr r0
 /* 80181CB8 0017EAB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 80181CBC 0017EABC  4E 80 00 20 */	blr 
-
-NPAR_CheckSpecials__Fv:
-/* 80181CC0 0017EAC0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80181CC4 0017EAC4  7C 08 02 A6 */	mflr r0
-/* 80181CC8 0017EAC8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80181CCC 0017EACC  4B F1 79 B5 */	bl zGameExtras_ExtrasFlags__Fv
-/* 80181CD0 0017EAD0  90 6D 98 28 */	stw r3, lbl_803CC128-_SDA_BASE_(r13)
-/* 80181CD4 0017EAD4  38 6D 98 30 */	addi r3, r13, lbl_803CC130-_SDA_BASE_
-/* 80181CD8 0017EAD8  38 8D 98 34 */	addi r4, r13, lbl_803CC134-_SDA_BASE_
-/* 80181CDC 0017EADC  4B F1 79 AD */	bl zGameExtras_MoDay__FPiPi
-/* 80181CE0 0017EAE0  80 0D 98 28 */	lwz r0, lbl_803CC128-_SDA_BASE_(r13)
-/* 80181CE4 0017EAE4  70 00 01 F7 */	andi. r0, r0, 0x1f7
-/* 80181CE8 0017EAE8  90 0D 98 2C */	stw r0, lbl_803CC12C-_SDA_BASE_(r13)
-/* 80181CEC 0017EAEC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80181CF0 0017EAF0  7C 08 03 A6 */	mtlr r0
-/* 80181CF4 0017EAF4  38 21 00 10 */	addi r1, r1, 0x10
-/* 80181CF8 0017EAF8  4E 80 00 20 */	blr 
 
 .global NPAR_Timestep__Ff
 NPAR_Timestep__Ff:
@@ -1079,70 +1038,6 @@ lbl_80181DA4:
 /* 80181DCC 0017EBCC  7C 08 03 A6 */	mtlr r0
 /* 80181DD0 0017EBD0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80181DD4 0017EBD4  4E 80 00 20 */	blr 
-
-.global NPAR_PartySetup__F11en_nparptypPPvP12NPARXtraData
-NPAR_PartySetup__F11en_nparptypPPvP12NPARXtraData:
-/* 80181DD8 0017EBD8  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 80181DDC 0017EBDC  7C 08 02 A6 */	mflr r0
-/* 80181DE0 0017EBE0  90 01 00 24 */	stw r0, 0x24(r1)
-/* 80181DE4 0017EBE4  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 80181DE8 0017EBE8  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 80181DEC 0017EBEC  7C BE 2B 78 */	mr r30, r5
-/* 80181DF0 0017EBF0  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 80181DF4 0017EBF4  7C 9D 23 78 */	mr r29, r4
-/* 80181DF8 0017EBF8  93 81 00 10 */	stw r28, 0x10(r1)
-/* 80181DFC 0017EBFC  7C 7C 1B 78 */	mr r28, r3
-/* 80181E00 0017EC00  3C 60 80 33 */	lis r3, lbl_8032B59C@ha
-/* 80181E04 0017EC04  57 86 28 34 */	slwi r6, r28, 5
-/* 80181E08 0017EC08  38 03 B5 9C */	addi r0, r3, lbl_8032B59C@l
-/* 80181E0C 0017EC0C  7F E0 32 14 */	add r31, r0, r6
-/* 80181E10 0017EC10  7F E3 FB 78 */	mr r3, r31
-/* 80181E14 0017EC14  48 00 42 D5 */	bl IsReady__8NPARMgmtFv
-/* 80181E18 0017EC18  2C 03 00 00 */	cmpwi r3, 0
-/* 80181E1C 0017EC1C  41 82 00 0C */	beq lbl_80181E28
-/* 80181E20 0017EC20  7F E3 FB 78 */	mr r3, r31
-/* 80181E24 0017EC24  48 00 00 1C */	b lbl_80181E40
-lbl_80181E28:
-/* 80181E28 0017EC28  7F E3 FB 78 */	mr r3, r31
-/* 80181E2C 0017EC2C  7F 84 E3 78 */	mr r4, r28
-/* 80181E30 0017EC30  7F A5 EB 78 */	mr r5, r29
-/* 80181E34 0017EC34  7F C6 F3 78 */	mr r6, r30
-/* 80181E38 0017EC38  48 00 00 79 */	bl Init__8NPARMgmtF11en_nparptypPPvP12NPARXtraData
-/* 80181E3C 0017EC3C  7F E3 FB 78 */	mr r3, r31
-lbl_80181E40:
-/* 80181E40 0017EC40  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 80181E44 0017EC44  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 80181E48 0017EC48  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 80181E4C 0017EC4C  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 80181E50 0017EC50  83 81 00 10 */	lwz r28, 0x10(r1)
-/* 80181E54 0017EC54  7C 08 03 A6 */	mtlr r0
-/* 80181E58 0017EC58  38 21 00 20 */	addi r1, r1, 0x20
-/* 80181E5C 0017EC5C  4E 80 00 20 */	blr 
-
-.global NPAR_FindParty__F11en_nparptyp
-NPAR_FindParty__F11en_nparptyp:
-/* 80181E60 0017EC60  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80181E64 0017EC64  7C 08 02 A6 */	mflr r0
-/* 80181E68 0017EC68  3C 80 80 33 */	lis r4, lbl_8032B59C@ha
-/* 80181E6C 0017EC6C  54 63 28 34 */	slwi r3, r3, 5
-/* 80181E70 0017EC70  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80181E74 0017EC74  38 04 B5 9C */	addi r0, r4, lbl_8032B59C@l
-/* 80181E78 0017EC78  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80181E7C 0017EC7C  7F E0 1A 14 */	add r31, r0, r3
-/* 80181E80 0017EC80  7F E3 FB 78 */	mr r3, r31
-/* 80181E84 0017EC84  48 00 42 65 */	bl IsReady__8NPARMgmtFv
-/* 80181E88 0017EC88  2C 03 00 00 */	cmpwi r3, 0
-/* 80181E8C 0017EC8C  41 82 00 0C */	beq lbl_80181E98
-/* 80181E90 0017EC90  7F E3 FB 78 */	mr r3, r31
-/* 80181E94 0017EC94  48 00 00 08 */	b lbl_80181E9C
-lbl_80181E98:
-/* 80181E98 0017EC98  38 60 00 00 */	li r3, 0
-lbl_80181E9C:
-/* 80181E9C 0017EC9C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80181EA0 0017ECA0  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80181EA4 0017ECA4  7C 08 03 A6 */	mtlr r0
-/* 80181EA8 0017ECA8  38 21 00 10 */	addi r1, r1, 0x10
-/* 80181EAC 0017ECAC  4E 80 00 20 */	blr 
 
 .global Init__8NPARMgmtF11en_nparptypPPvP12NPARXtraData
 Init__8NPARMgmtF11en_nparptypPPvP12NPARXtraData:
@@ -5943,9 +5838,11 @@ lbl_8029B9A0:
 	.incbin "baserom.dol", 0x298980, 0x28
 
 .section .bss
-lbl_8032B580:
+.global info_950
+info_950:
 	.skip 0x1C
-lbl_8032B59C:
+.global g_npar_mgmt
+g_npar_mgmt:
 	.skip 0x180
 lbl_8032B71C:
 	.skip 0x30700
@@ -5953,13 +5850,17 @@ lbl_8035BE1C:
 	.skip 0x14
 
 .section .sbss
-lbl_803CC128:
+.global g_gameExtrasFlags
+g_gameExtrasFlags:
 	.skip 0x4
-lbl_803CC12C:
+.global g_isSpecialDay
+g_isSpecialDay:
 	.skip 0x4
-lbl_803CC130:
+.global g_mon
+g_mon:
 	.skip 0x4
-lbl_803CC134:
+.global g_day
+g_day:
 	.skip 0x4
 lbl_803CC138:
 	.skip 0x4

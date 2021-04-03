@@ -2,6 +2,7 @@
 #define ZNPCSUPPLEMENT_H
 
 #include "../Core/x/xVec3.h"
+#include "../Core/p2/iColor.h"
 
 #include <types.h>
 #include <rwplcore.h>
@@ -23,6 +24,20 @@ enum en_nparptyp
     NPAR_TYP_FIREWORKS,
     NPAR_TYP_NOMORE,
     NPAR_TYP_FORCE = 0x7fffffff
+};
+
+enum en_npcstreak
+{
+    NPC_STRK_TARTARBLOB,
+    NPC_STRK_OILBUBBLE,
+    NPC_STRK_HAMMERSMASH_VERT,
+    NPC_STRK_HAMMERSMASH_HORZ,
+    NPC_STRK_ARFMELEE,
+    NPC_STRK_TOSSEDROBOT,
+    NPC_STRK_TOSSEDJELLY,
+    NPC_STRK_TOSSEDJELLYBLUE,
+    NPC_STRK_NOMORE,
+    NPC_STRK_FORCE = 0x7fffffff
 };
 
 struct NPARData
@@ -60,6 +75,21 @@ struct NPARMgmt
     void** user_data;
 
     void Init(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
+    void Clear();
+    void Done();
+    void Reset();
+    int32 IsReady();
+};
+
+struct StreakInfo
+{
+    float32 freq;
+    float32 alf_fade;
+    float32 alf_start;
+    uint32 idx_useTxtr;
+    iColor_tag rgba_left;
+    iColor_tag rgba_right;
+    int32 taper;
 };
 
 void NPCC_MakeASplash(const xVec3* pos, float32 radius);
@@ -70,5 +100,8 @@ NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xt
 void NPAR_SceneReset();
 void NPCC_ShadowCacheReset();
 void NPAR_Timestep(float32 dt);
+void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
+void xFXStreakStart(en_npcstreak* styp);
+void UpdateAndRender(NPARMgmt param_1, float32 dt);
 
 #endif

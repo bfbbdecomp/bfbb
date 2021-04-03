@@ -1,8 +1,20 @@
 #include "zNPCSupplement.h"
+#include "zNPCSupport.h"
+#include "zGame.h"
+#include "zGameExtras.h"
+#include "zGlobals.h"
+
+#include "../Core/x/xFX.h"
 
 #include <types.h>
 
-#include "zNPCSupport.h"
+extern NPARMgmt g_npar_mgmt[12];
+extern int32 g_gameExtrasFlags;
+extern int32 g_mon; //month
+extern int32 g_day; //day
+extern int32 g_isSpecialDay;
+
+extern StreakInfo info_950;
 
 // func_80180D54
 void NPCSupplement_Startup()
@@ -55,6 +67,12 @@ void NPCSupplement_Timestep(float dt)
 
 // func_801815F4
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_StreakCreate__F12en_npcstreak")
+// uint32 NPCC_StreakCreate(en_npcstreak styp)
+// {
+//     StreakInfo info = info_950;
+//     NPCC_MakeStreakInfo(styp, &info);
+//     xFXStreakStart(&styp);
+// }
 
 // func_80181628
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_BurstBubble__F11en_npcburstP5xVec3")
@@ -75,25 +93,88 @@ void NPCSupplement_Timestep(float dt)
     "NPCC_RenderProjTextureFaceCamera__FP8RwRasterfP5xVec3ffP12xShadowCacheiP4xEnt")
 
 // func_80181BC0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_ScenePrepare__Fv")
+void NPAR_ScenePrepare()
+{
+    for (int i = 0; i < 12; i++)
+    {
+        g_npar_mgmt[i].Clear();
+    }
+}
 
 // func_80181C10
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_SceneFinish__Fv")
+void NPAR_SceneFinish()
+{
+    for (int i = 0; i < 12; i++)
+    {
+        g_npar_mgmt[i].Done();
+    }
+    g_gameExtrasFlags = 0;
+    g_mon = 0;
+    g_day = 0;
+}
 
 // func_80181C70
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_SceneReset__Fv")
+void NPAR_SceneReset()
+{
+    for (int i = 0; i < 12; i++)
+    {
+        g_npar_mgmt[i].Reset();
+    }
+}
 
 // func_80181CC0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_CheckSpecials__Fv")
+void NPAR_CheckSpecials()
+{
+    g_gameExtrasFlags = zGameExtras_ExtrasFlags();
+    zGameExtras_MoDay(&g_mon, &g_day);
+    g_isSpecialDay = g_gameExtrasFlags & 0x1f7;
+}
 
 // func_80181CFC
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Timestep__Ff")
+// void NPAR_Timestep(float32 dt)
+// {
+//     int32 isPawzd = zGameIsPaused();
+//     int32 isCine = !(globals.cmgr && globals.cmgr);
+
+//     NPAR_CheckSpecials();
+//     for (int i = 0; i < 12; i++)
+//     {
+//         if (!isPawzd)
+//         {
+//             if (isCine || g_npar_mgmt[i].flg_npar & 2)
+//             {
+//                 UpdateAndRender(g_npar_mgmt[i], dt);
+//             }
+//         }
+//     }
+// }
 
 // func_80181DD8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_PartySetup__F11en_nparptypPPvP12NPARXtraData")
+NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
+{
+    NPARMgmt* mgmt = &g_npar_mgmt[parType];
+    int32 isReady = mgmt->IsReady();
+    if (isReady)
+    {
+        return mgmt;
+    }
+    mgmt->Init(parType, userData, xtraData);
+    return mgmt;
+}
 
 // func_80181E60
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_FindParty__F11en_nparptyp")
+NPARMgmt* NPAR_FindParty(en_nparptyp parType)
+{
+    NPARMgmt* mgmt = &g_npar_mgmt[parType];
+    int32 isReady = mgmt->IsReady();
+    if (isReady)
+    {
+        return mgmt;
+    }
+    mgmt = NULL;
+    return mgmt;
+}
 
 // func_80181EB0
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Init__8NPARMgmtF11en_nparptypPPvP12NPARXtraData")
