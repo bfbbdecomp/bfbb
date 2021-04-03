@@ -81,13 +81,16 @@ void NPCSupplement_Timestep(float dt)
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_MakeStreakInfo__F12en_npcstreakP10StreakInfo")
 
 // func_801815F4
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_StreakCreate__F12en_npcstreak")
-// uint32 NPCC_StreakCreate(en_npcstreak styp)
-// {
-//     StreakInfo info = info_950;
-//     NPCC_MakeStreakInfo(styp, &info);
-//     xFXStreakStart(&styp);
-// }
+#else
+uint32 NPCC_StreakCreate(en_npcstreak styp)
+{
+    StreakInfo info = info_950;
+    NPCC_MakeStreakInfo(styp, &info);
+    xFXStreakStart(&styp);
+}
+#endif
 
 // func_80181628
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_BurstBubble__F11en_npcburstP5xVec3")
@@ -146,24 +149,28 @@ void NPAR_CheckSpecials()
 }
 
 // func_80181CFC
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Timestep__Ff")
-// void NPAR_Timestep(float32 dt)
-// {
-//     int32 isPawzd = zGameIsPaused();
-//     int32 isCine = !(globals.cmgr && globals.cmgr);
+#else
+// WIP
+void NPAR_Timestep(float32 dt)
+{
+    int32 isPawzd = zGameIsPaused();
+    int32 isCine = !(globals.cmgr && globals.cmgr);
 
-//     NPAR_CheckSpecials();
-//     for (int i = 0; i < 12; i++)
-//     {
-//         if (!isPawzd)
-//         {
-//             if (isCine || g_npar_mgmt[i].flg_npar & 2)
-//             {
-//                 UpdateAndRender(g_npar_mgmt[i], dt);
-//             }
-//         }
-//     }
-// }
+    NPAR_CheckSpecials();
+    for (int i = 0; i < 12; i++)
+    {
+        if (!isPawzd)
+        {
+            if (isCine || g_npar_mgmt[i].flg_npar & 2)
+            {
+                UpdateAndRender(g_npar_mgmt[i], dt);
+            }
+        }
+    }
+}
+#endif
 
 // func_80181DD8
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
