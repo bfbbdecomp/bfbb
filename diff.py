@@ -3,6 +3,7 @@
 import argparse
 import sys
 import platform
+import tempfile
 from pathlib import Path, PurePath, PureWindowsPath
 from typing import (
     Any,
@@ -406,12 +407,12 @@ def run_make(target: str) -> None:
     subprocess.check_call(["make"] + makeflags + [target])
 
 
-def run_make_capture_output(target: str) -> "subprocess.CompletedProcess[bytes]":
+def run_make_capture_output(target: str, stdout: tempfile.TemporaryFile, stderr: tempfile.TemporaryFile) -> "subprocess.CompletedProcess[bytes]":
     target = target.replace("\\", "/")
     return subprocess.run(
         ["make"] + makeflags + [target],
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
+        stdout=stdout,
+        stderr=stderr,
     )
 
 
@@ -1725,14 +1726,22 @@ def main() -> None:
                 last_build = time.time()
                 if args.make:
                     display.progress("Building...")
-                    ret = run_make_capture_output(make_target)
+
+                    # Temp files for stdout and stderr
+                    stdout = tempfile.TemporaryFile()
+                    stderr = tempfile.TemporaryFile()
+                    ret = run_make_capture_output(make_target, stdout, stderr)
                     if ret.returncode != 0:
+                        stdout.seek(0)
+                        stderr.seek(0)
                         display.update(
-                            ret.stderr.decode("utf-8-sig", "replace")
-                            or ret.stdout.decode("utf-8-sig", "replace"),
+                            stderr.read().decode()
+                            or stdout.read().decode("utf-8-sig", "replace"),
                             error=True,
                         )
                         continue
+                    stdout.close()
+                    stderr.close()
                 mydump = run_objdump(mycmd)
                 display.update(mydump, error=False)
         except KeyboardInterrupt:
