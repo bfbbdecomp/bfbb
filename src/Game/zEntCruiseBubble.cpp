@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "zEnt.h"
 #include "zRenderState.h"
 #include <string.h>
 
@@ -1691,17 +1692,29 @@ uint32 cruise_bubble::check_anim_aim(xAnimTransition*, xAnimSingle*)
 // func_8005A6E0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "load_cheat_tweak__13cruise_bubbleFv")
 
-// func_8005A804
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load_settings__13cruise_bubbleFv")
+void cruise_bubble::load_settings()
+{
+    uint32 params_size;
+    // stringBase0 + 0x163 == "cruise_bubble_bind.MINF"
+    xModelAssetParam* params = zEntGetModelParams(xStrHash(stringBase0 + 0x163), &params_size);
+    
+    if (params == NULL)
+    {
+        params_size = 0;
+    }
+    
+    normal_tweak.load(params, params_size);
+    memcpy(&cheat_tweak, &normal_tweak, sizeof(tweak_group));
+    load_cheat_tweak();
+    refresh_missle_model();
+}
 
 // func_8005A880
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
+    "load__Q213cruise_bubble11tweak_groupFP16xModelAssetParamUi")
 
 // func_8005A8B0
 #pragma GLOBAL_ASM(                                                                                \
