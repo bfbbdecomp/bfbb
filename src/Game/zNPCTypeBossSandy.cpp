@@ -281,6 +281,23 @@ void zNPCBSandy::hiddenByCutscene()
     {
     case 1:
     {
+        this->hangingScoreboard->chkby &= 0xef;
+        this->hangingScoreboard->flags |= 1;
+        this->bustedScoreboard->chkby &= 0xef;
+        this->bustedScoreboard->flags &= 0xfe;
+        this->crashedScoreboard->chkby &= 0xef;
+        this->crashedScoreboard->flags &= 0xfe;
+
+        this->ropeObjectLo[4] = this->ropeSb;
+
+        xEntHide(this->ropeSbDamaged);
+        xEntShow(this->ropeSb);
+
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+
+        zLightningShow(this->wireLight[0], 0);
+        zLightningShow(this->wireLight[1], 0);
+
         break;
     }
     /*
@@ -303,6 +320,7 @@ void zNPCBSandy::hiddenByCutscene()
 
         xEntHide(this->ropeSb);
         xEntShow(this->ropeSbDamaged);
+
         zLightningShow(this->wireLight[0], 1);
         zLightningShow(this->wireLight[1], 1);
 
