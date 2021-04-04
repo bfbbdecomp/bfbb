@@ -8,6 +8,7 @@
 
 #include <types.h>
 
+#if 0
 // lbl_803CDAE0-_SDA2_BASE_(r2), -0x6ea0(r2)
 extern float32 zLasso_f_0_0;
 // lbl_803CDAE4-_SDA2_BASE_(r2), -0x6e9c(r2)
@@ -74,6 +75,7 @@ typedef struct _y {
 } STRUCT_B;
 
 STRUCT_B gEntities[0xd00]; // lbl_802E5788, -0x7fd2
+#endif
 
 // func_8009C000
 #if 1
