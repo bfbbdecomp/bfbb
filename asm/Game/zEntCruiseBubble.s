@@ -2088,10 +2088,6 @@ lbl_8005A550:
 /* 8005A568 00057368  38 21 00 40 */	addi r1, r1, 0x40
 /* 8005A56C 0005736C  4E 80 00 20 */	blr 
 
-check_anim_aim__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv:
-/* 8005A6D8 000574D8  38 60 00 00 */	li r3, 0
-/* 8005A6DC 000574DC  4E 80 00 20 */	blr 
-
 /* load_cheat_tweak__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
 load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
 /* 8005A6E0 000574E0  94 21 FF F0 */	stwu r1, -0x10(r1)

@@ -524,6 +524,7 @@ namespace cruise_bubble
     int32 find_locked_target(const xVec3* target);
     void lock_target(int32 index, const xVec3* target, float32 opacity);
     void check_lock_target(const xVec3* target);
+    uint32 check_anim_aim(xAnimTransition*, xAnimSingle*);
     void load_settings();
     void init();
     void init_debug();

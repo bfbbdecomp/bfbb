@@ -1683,10 +1683,10 @@ void cruise_bubble::check_lock_target(const xVec3* target)
     }
 }
 
-// func_8005A6D8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "check_anim_aim__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv")
+uint32 cruise_bubble::check_anim_aim(xAnimTransition*, xAnimSingle*)
+{
+    return false;
+}
 
 // func_8005A6E0
 #pragma GLOBAL_ASM(                                                                                \
