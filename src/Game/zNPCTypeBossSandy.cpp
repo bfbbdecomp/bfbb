@@ -261,7 +261,14 @@ void zNPCBSandy_BossDamageEffect_Init()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__10zNPCBSandyFP6xScenef")
 
 // func_80141668
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
+#else
+void zNPCBSandy::hiddenByCutscene()
+{
+    int32 i;
+}
+#endif
 
 void zNPCBSandy::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
 {
