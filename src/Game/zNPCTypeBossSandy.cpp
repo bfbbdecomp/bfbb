@@ -315,54 +315,59 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
     zNPCGoalBossSandyElbowDrop* edrop = (zNPCGoalBossSandyElbowDrop*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)edrop->psyche->clt_owner;
     int32 nextgoal = 0;
-    xVec3 vecStack[4];
+    xVec3 tempVector;
 
     if (edrop->timeInGoal > _1463)
     {
         if (sandy->bossFlags & 0x400)
         {
             *trantype = GOAL_TRAN_SET;
-            return 'NGB1';
+            nextgoal = 'NGB1';
         }
-    }
-
-    // sandy -> 0x24 -> 0x4c -> 0x30 = xVec3
-    // sandy->model->Mat->pos
-    xVec3Sub(&vecStack[0], (xVec3*)&globals.player.ent.model->Mat->pos,
-             (xVec3*)&sandy->model->Mat->pos);
-
-    float32 f1 = xVec3Length2(&vecStack[0]);
-
-    float32 f2 = sandy->AnimTimeRemain(NULL);
-
-    if (f2 < _2264 * dt)
-    {
-        return nextgoal;
-    }
-
-    // globals + 0x1788
-    if (globals.player.ControlOff)
-    {
-        *trantype = GOAL_TRAN_SET;
-        return 0x4e474231;
-    }
-
-    if ((sandy->bossFlags & 2) != 0)
-    {
-        sandy->bossFlags &= 0xfffffffd;
-        *trantype = GOAL_TRAN_SET;
-        return 0x4e474232;
-    }
-
-    if (f1 > _2173)
-    {
-        *trantype = GOAL_TRAN_SET;
-        return 0x4e474234;
     }
     else
     {
-        *trantype = GOAL_TRAN_SET;
-        return 0x4e474233;
+        // sandy -> 0x24 -> 0x4c -> 0x30 = xVec3
+        // sandy->model->Mat->pos
+        xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
+                 (xVec3*)&sandy->model->Mat->pos);
+
+        // sets the vector's Y to zero
+        tempVector.y = __830;
+
+        float32 f1 = xVec3Length2(&tempVector);
+        float32 f2 = sandy->AnimTimeRemain(NULL);
+
+        if (f2 < _2264 * dt)
+        {
+            return nextgoal;
+        }
+
+        // globals + 0x1788
+        if (globals.player.ControlOff)
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474231;
+        }
+
+        if ((sandy->bossFlags & 2) != 0)
+        {
+            sandy->bossFlags &= 0xfffffffd;
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474232;
+        }
+
+        // 59f4
+        if (f1 < _2173)
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474234;
+        }
+        else
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474233;
+        }
     }
 
     return nextgoal;
