@@ -104,6 +104,7 @@ struct zNPCBSandy : zNPCBoss
     xBinaryCamera specialBossCam;
 
     zNPCBSandy(int32 myType);
+    void hiddenByCutscene();
 
     /*
     Sandy Full V-Table data:

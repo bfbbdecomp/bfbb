@@ -270,8 +270,17 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_80141864
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_AddBoundEntsToGrid__FP6zScene")
 
-// func_8014198C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_GameIsPaused__FP6zScene")
+void zNPCBSandy_GameIsPaused(zScene*)
+{
+    if (sSandyPtr)
+    {
+        if (sSandyPtr->bossFlags & 0x400)
+        {
+            sSandyPtr->bossFlags &= ~0x400; // clear bit
+            sSandyPtr->hiddenByCutscene();
+        }
+    }
+}
 
 // func_801419D0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "NewTime__10zNPCBSandyFP6xScenef")
