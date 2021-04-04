@@ -339,7 +339,7 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
         }
         else if (sandy->bossFlags & 2)
         {
-            sandy->bossFlags &= 0xfffffffd;
+            sandy->bossFlags &= ~2; // clear bit 2
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB2';
         }
