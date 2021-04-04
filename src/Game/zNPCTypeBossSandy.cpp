@@ -306,10 +306,6 @@ int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
     return nextgoal;
 }
 
-// func_8014292C
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "elbowDropCB__FP5xGoalPvP11en_trantypefPv")
-#else
 int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 {
     zNPCGoalBossSandyElbowDrop* edrop = (zNPCGoalBossSandyElbowDrop*)rawgoal;
@@ -326,34 +322,27 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
         }
     }
 
-    // sandy -> 0x24 -> 0x4c -> 0x30 = xVec3
-    // sandy->model->Mat->pos
     xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
              (xVec3*)&sandy->model->Mat->pos);
 
-    // sets the vector's Y to zero
-    tempVector.y = __830;
+    tempVector.y = __830; // 0.0
 
     float32 f1 = xVec3Length2(&tempVector);
     float32 f2 = sandy->AnimTimeRemain(NULL);
 
     if (f2 < _2264 * dt)
     {
-        // globals + 0x1788
         if (globals.player.ControlOff)
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 0x4e474231;
         }
-
         else if ((sandy->bossFlags & 2) != 0)
         {
             sandy->bossFlags &= 0xfffffffd;
             *trantype = GOAL_TRAN_SET;
             nextgoal = 0x4e474232;
         }
-
-        // 59f4
         else if (f1 < _2173)
         {
             *trantype = GOAL_TRAN_SET;
@@ -368,8 +357,6 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
 
     return nextgoal;
 }
-
-#endif
 
 // func_80142AA0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "leapCB__FP5xGoalPvP11en_trantypefPv")
