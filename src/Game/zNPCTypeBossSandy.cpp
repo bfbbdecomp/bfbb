@@ -279,17 +279,50 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_80142150
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "idleCB__FP5xGoalPvP11en_trantypefPv")
 
-#if 1
-// func_80142250
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "tauntCB__FP5xGoalPvP11en_trantypefPv")
-#else
 int32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 {
-    zNPCGoalBossSandyTaunt* taunt;
-    zNPCBSandy* sandy;
+    zNPCGoalBossSandyTaunt* taunt = (zNPCGoalBossSandyTaunt*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)taunt->psyche->clt_owner;
     int32 nextgoal = 0;
+    xVec3 tempVector;
+
+    if (taunt->timeInGoal > _1463) // 0.3
+    {
+        if (sandy->bossFlags & 0x400)
+        {
+            *trantype = GOAL_TRAN_SET;
+            return 'NGB1';
+        }
+    }
+
+    xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    tempVector.y = __830; // 0.0
+
+    float32 length = xVec3Length2(&tempVector);
+
+    if (sandy->AnimTimeRemain(NULL) < _1381 * dt) // 1.1
+    {
+        if (globals.player.ControlOff)
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB1';
+        }
+        else if (length > _2173) // 12.0
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB3';
+        }
+        else
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB4';
+        }
+    }
+
+    return nextgoal;
 }
-#endif
 
 // func_8014239C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "chaseCB__FP5xGoalPvP11en_trantypefPv")
