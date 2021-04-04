@@ -8,7 +8,6 @@
 
 #include <types.h>
 
-#if 0
 // lbl_803CDAE0-_SDA2_BASE_(r2), -0x6ea0(r2)
 extern float32 zLasso_f_0_0;
 // lbl_803CDAE4-_SDA2_BASE_(r2), -0x6e9c(r2)
@@ -46,7 +45,7 @@ extern float32 zLasso_f_15_0;
 // lbl_803CDB2C-_SDA2_BASE_(r2),
 extern float32 zLasso_f_9_99999974736en6; // 9.99999974738e-06
 
-
+#if 0
 typedef void* HANDLE;
 HANDLE gLastAsset = 0; // lbl_803CB8D8-_SDA_BASE_(r13), -0x7028(r13)
 // 00 00 00 01 00 00 00 00
@@ -219,33 +218,34 @@ void zLasso_InitTimer(zLasso *lasso, float f)
 #endif
 
 // func_8009D8D4
-#if 1
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zLasso.s", "zLasso_ResetTimer__FP6zLassof")
 #else
 void zLasso_ResetTimer(zLasso *lasso, float seconds)
 {
     lasso->secsTotal = seconds;
     lasso->secsLeft = seconds;
-    lasso->stRadius = lasso->crRadius;
-    lasso->tgRadius = lasso->crRadius;
-    lasso->stSlack = lasso->crSlack;
-    lasso->tgSlack = lasso->crSlack;
+    float32 radius = lasso->crRadius;
+    lasso->stRadius = radius;
+    lasso->tgRadius = radius;
+    float32 slack = lasso->crSlack;
+    lasso->stSlack = slack;
+    lasso->tgSlack = slack;
     xVec3Copy(&lasso->stNormal, &lasso->crNormal);
     xVec3Copy(&lasso->tgNormal, &lasso->crNormal);
     xVec3Add(&lasso->stCenter, &lasso->crCenter, &lasso->anchor);
 }
 #endif
 
-// func_8009D944
+// func_809D944
 #if 1
 #pragma GLOBAL_ASM("asm/Game/zLasso.s", "fizzicalRadius__FP6zLassofP5xVec3")
 #else
 extern const float zLasso_zero_0_0; // lbl_803CDAE0-_SDA2_BASE_(r2)
-extern const float zLasso_pt75_0_75; // lbl_803CDB18-_SDA2_BASE_(r2)
 extern const float zLasso_two_2_0; // lbl_803CDAF8-_SDA2_BASE_(r2)
 void fizzicalRadius(zLasso *lasso, float f, xVec3 * /* not used */)
 {
-    lasso->crRadius -= zLasso_two_2_0 * (zLasso_pt75_0_75 - lasso->crSlack) * f;
+    lasso->crRadius -= zLasso_two_2_0 * (zLasso_f_0_75 - lasso->crSlack) * f;
     if (lasso->crRadius < zLasso_zero_0_0)
     {
         lasso->crRadius = zLasso_zero_0_0;
