@@ -262,18 +262,14 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_8014075C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__10zNPCBSandyFP6xScenef")
 
-// func_80141668
-#if 0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
-#else
 void zNPCBSandy::hiddenByCutscene()
 {
     int32 i;
 
     for (i = 0; i < 3; i++)
     {
-        this->underwear[i]->state &= 0xffffffc0;
-        zEntEvent(this->underwear[i], eEventCollision_Visible_On); // 0x55
+        this->underwear[i]->state = (this->underwear[i]->state & 0xffffffc0) | 1;
+        zEntEvent(this->underwear[i], eEventCollision_Visible_On);
         this->underwear[i]->timer = __830; // 0.0
     }
 
@@ -300,15 +296,8 @@ void zNPCBSandy::hiddenByCutscene()
 
         break;
     }
-    /*
-    xEnt* hangingScoreboard; // 0x7B8
-    xEnt* bustedScoreboard; // 0x7BC
-    xEnt* crashedScoreboard; // 0x7C0
-    */
     case 2:
     {
-        // uint8 flags; 0x18
-        // uint8 chkby; // XENT_COLLTYPE_* bitmask
         this->crashedScoreboard->chkby |= 0x10;
         this->crashedScoreboard->flags |= 1;
         this->hangingScoreboard->chkby &= 0xef;
@@ -335,7 +324,6 @@ void zNPCBSandy::hiddenByCutscene()
     }
     }
 }
-#endif
 
 void zNPCBSandy::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
 {
