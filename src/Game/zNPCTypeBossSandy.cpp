@@ -335,23 +335,23 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
         if (globals.player.ControlOff)
         {
             *trantype = GOAL_TRAN_SET;
-            nextgoal = 0x4e474231;
+            nextgoal = 'NGB1';
         }
-        else if ((sandy->bossFlags & 2) != 0)
+        else if (sandy->bossFlags & 2)
         {
             sandy->bossFlags &= 0xfffffffd;
             *trantype = GOAL_TRAN_SET;
-            nextgoal = 0x4e474232;
+            nextgoal = 'NGB2';
         }
         else if (f1 < _2173)
         {
             *trantype = GOAL_TRAN_SET;
-            nextgoal = 0x4e474234;
+            nextgoal = 'NGB4';
         }
         else
         {
             *trantype = GOAL_TRAN_SET;
-            nextgoal = 0x4e474233;
+            nextgoal = 'NGB3';
         }
     }
 
