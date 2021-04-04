@@ -327,10 +327,9 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
 
     tempVector.y = __830; // 0.0
 
-    float32 f1 = xVec3Length2(&tempVector);
-    float32 f2 = sandy->AnimTimeRemain(NULL);
+    float32 length = xVec3Length2(&tempVector);
 
-    if (f2 < _2264 * dt)
+    if (sandy->AnimTimeRemain(NULL) < _2264 * dt)
     {
         if (globals.player.ControlOff)
         {
@@ -343,7 +342,7 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB2';
         }
-        else if (f1 < _2173)
+        else if (length < _2173) // 12.0
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB4';
