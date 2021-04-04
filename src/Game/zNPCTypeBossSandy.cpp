@@ -2,9 +2,11 @@
 
 #include "../Core/x/xAnim.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEvent.h"
 #include "../Core/x/xCamera.h"
 #include "../Core/x/xMath3.h"
 
+#include "zEnt.h"
 #include "zFX.h"
 #include "zGlobals.h"
 #include "zNPCSndTable.h"
@@ -261,12 +263,19 @@ void zNPCBSandy_BossDamageEffect_Init()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__10zNPCBSandyFP6xScenef")
 
 // func_80141668
-#if 0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
 #else
 void zNPCBSandy::hiddenByCutscene()
 {
     int32 i;
+
+    for (i = 0; i < 3; i++)
+    {
+        this->underwear[i]->state &= 0xffffffc0;
+        zEntEvent(this->underwear[i], eEventCollision_Visible_On); // 0x55
+        this->underwear[i]->timer = __830; // 0.0
+    }
 }
 #endif
 

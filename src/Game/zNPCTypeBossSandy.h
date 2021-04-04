@@ -57,7 +57,7 @@ struct zNPCBSandy : zNPCBoss
     xParEmitterCustomSettings dustEddieSetting;
     zParEmitter* dustEddieEmitter;
     zParEmitter* shockwaveEmitter;
-    xEnt* hangingScoreboard;
+    xEnt* hangingScoreboard; // 0x7B8
     xEnt* bustedScoreboard;
     xEnt* crashedScoreboard;
     xEntBoulder* headBoulder;
@@ -99,7 +99,7 @@ struct zNPCBSandy : zNPCBoss
     float32 edropShockwaveTime;
     int32 firstTimeR1Csn;
     int32 firstUpdate;
-    zEntPickup* underwear[3];
+    zEntPickup* underwear[3]; // 0xD58
     xBinaryCamera bossCam;
     xBinaryCamera specialBossCam;
 
