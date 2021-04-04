@@ -296,7 +296,7 @@ int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 
     if (noHead->stage == 4 || noHead->stage == 5)
     {
-        if (sandy->AnimTimeRemain(NULL) < _2264 * dt)
+        if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
@@ -329,7 +329,7 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
 
     float32 length = xVec3Length2(&tempVector);
 
-    if (sandy->AnimTimeRemain(NULL) < _2264 * dt)
+    if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
     {
         if (globals.player.ControlOff)
         {
