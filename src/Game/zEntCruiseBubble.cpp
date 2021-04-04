@@ -1711,15 +1711,15 @@ void cruise_bubble::load_settings()
     refresh_missle_model();
 }
 
-// func_8005A880
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load__Q213cruise_bubble11tweak_groupFP16xModelAssetParamUi")
+void cruise_bubble::tweak_group::load(xModelAssetParam* params, uint32 size)
+{
+    this->register_tweaks(true, params, size, NULL);
+}
 
 // func_8005A8B0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "register_tweaks__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
+    "register_tweaks__Q213cruise_bubble11tweak_groupFbP16xModelAssetParamUiPCc")
 
 // func_8005BD60
 #ifndef NON_MATCHING

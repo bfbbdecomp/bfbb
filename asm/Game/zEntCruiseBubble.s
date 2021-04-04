@@ -2167,26 +2167,11 @@ load_cheat_tweak__13cruise_bubbleFv:
 /* 8005A7FC 000575FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005A800 00057600  4E 80 00 20 */	blr 
 
-/* load__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@11tweak_groupFP16xModelAssetParamUi */
-/* changed from ... */
-/* load__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi: */
-/* ... so linker can find it */
-load__Q213cruise_bubble11tweak_groupFP16xModelAssetParamUi:
-/* 8005A880 00057680  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005A884 00057684  7C 08 02 A6 */	mflr r0
-/* 8005A888 00057688  7C A6 2B 78 */	mr r6, r5
-/* 8005A88C 0005768C  7C 85 23 78 */	mr r5, r4
-/* 8005A890 00057690  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005A894 00057694  38 80 00 01 */	li r4, 1
-/* 8005A898 00057698  38 E0 00 00 */	li r7, 0
-/* 8005A89C 0005769C  48 00 00 15 */	bl register_tweaks__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc
-/* 8005A8A0 000576A0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005A8A4 000576A4  7C 08 03 A6 */	mtlr r0
-/* 8005A8A8 000576A8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005A8AC 000576AC  4E 80 00 20 */	blr 
-
 /* register_tweaks__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@11tweak_groupFbP16xModelAssetParamUiPCc */
-register_tweaks__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc:
+/* changed from ... */
+/* register_tweaks__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc: */
+/* ... so linker can find it */
+register_tweaks__Q213cruise_bubble11tweak_groupFbP16xModelAssetParamUiPCc:
 /* 8005A8B0 000576B0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005A8B4 000576B4  7C 08 02 A6 */	mflr r0
 /* 8005A8B8 000576B8  90 01 00 34 */	stw r0, 0x34(r1)

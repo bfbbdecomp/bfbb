@@ -456,7 +456,7 @@ namespace cruise_bubble
         void* context;
         tweak_callback cb_missle_model;
 
-        void register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize);
+        void register_tweaks(bool init, xModelAssetParam* ap, uint32 apsize, const char*);
         void load(xModelAssetParam* params, uint32 size);
     };
 
