@@ -331,7 +331,39 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
     xVec3Sub(&vecStack[0], (xVec3*)&globals.player.ent.model->Mat->pos,
              (xVec3*)&sandy->model->Mat->pos);
 
-    nextgoal = 0x4e474233; // NGB3
+    float32 f1 = xVec3Length2(&vecStack[0]);
+
+    float32 f2 = sandy->AnimTimeRemain(NULL);
+
+    if (f2 < _2264 * dt)
+    {
+        return nextgoal;
+    }
+
+    // globals + 0x1788
+    if (globals.player.ControlOff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return 0x4e474231;
+    }
+
+    if ((sandy->bossFlags & 2) != 0)
+    {
+        sandy->bossFlags &= 0xfffffffd;
+        *trantype = GOAL_TRAN_SET;
+        return 0x4e474232;
+    }
+
+    if (f1 > _2173)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return 0x4e474234;
+    }
+    else
+    {
+        *trantype = GOAL_TRAN_SET;
+        return 0x4e474233;
+    }
 
     return nextgoal;
 }
