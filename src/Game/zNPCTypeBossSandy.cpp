@@ -279,8 +279,17 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_80142150
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "idleCB__FP5xGoalPvP11en_trantypefPv")
 
+#if 1
 // func_80142250
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "tauntCB__FP5xGoalPvP11en_trantypefPv")
+#else
+int32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    zNPCGoalBossSandyTaunt* taunt;
+    zNPCBSandy* sandy;
+    int32 nextgoal = 0;
+}
+#endif
 
 // func_8014239C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "chaseCB__FP5xGoalPvP11en_trantypefPv")
