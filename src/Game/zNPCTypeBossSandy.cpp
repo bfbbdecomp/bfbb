@@ -313,7 +313,7 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
     int32 nextgoal = 0;
     xVec3 tempVector;
 
-    if (edrop->timeInGoal > _1463)
+    if (edrop->timeInGoal > _1463) // 0.3
     {
         if (sandy->bossFlags & 0x400)
         {
