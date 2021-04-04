@@ -322,49 +322,47 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
         if (sandy->bossFlags & 0x400)
         {
             *trantype = GOAL_TRAN_SET;
-            nextgoal = 'NGB1';
+            return 'NGB1';
         }
     }
-    else
+
+    // sandy -> 0x24 -> 0x4c -> 0x30 = xVec3
+    // sandy->model->Mat->pos
+    xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    // sets the vector's Y to zero
+    tempVector.y = __830;
+
+    float32 f1 = xVec3Length2(&tempVector);
+    float32 f2 = sandy->AnimTimeRemain(NULL);
+
+    if (f2 < _2264 * dt)
     {
-        // sandy -> 0x24 -> 0x4c -> 0x30 = xVec3
-        // sandy->model->Mat->pos
-        xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
-                 (xVec3*)&sandy->model->Mat->pos);
-
-        // sets the vector's Y to zero
-        tempVector.y = __830;
-
-        float32 f1 = xVec3Length2(&tempVector);
-        float32 f2 = sandy->AnimTimeRemain(NULL);
-
-        if (f2 < _2264 * dt)
+        // globals + 0x1788
+        if (globals.player.ControlOff)
         {
-            // globals + 0x1788
-            if (globals.player.ControlOff)
-            {
-                *trantype = GOAL_TRAN_SET;
-                nextgoal = 0x4e474231;
-            }
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474231;
+        }
 
-            else if ((sandy->bossFlags & 2) != 0)
-            {
-                sandy->bossFlags &= 0xfffffffd;
-                *trantype = GOAL_TRAN_SET;
-                nextgoal = 0x4e474232;
-            }
+        else if ((sandy->bossFlags & 2) != 0)
+        {
+            sandy->bossFlags &= 0xfffffffd;
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474232;
+        }
 
-            // 59f4
-            else if (f1 < _2173)
-            {
-                *trantype = GOAL_TRAN_SET;
-                nextgoal = 0x4e474234;
-            }
-            else
-            {
-                *trantype = GOAL_TRAN_SET;
-                nextgoal = 0x4e474233;
-            }
+        // 59f4
+        else if (f1 < _2173)
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474234;
+        }
+        else
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e474233;
         }
     }
 
