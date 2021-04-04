@@ -263,9 +263,13 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_80141668
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
 
-// func_8014184C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Damage__10zNPCBSandyF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+void zNPCBSandy::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
+{
+    if (damtype == DMGTYP_INSTAKILL)
+    {
+        this->bossFlags |= 0x100;
+    }
+}
 
 // func_80141864
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_AddBoundEntsToGrid__FP6zScene")

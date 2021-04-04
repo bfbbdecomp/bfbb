@@ -4755,14 +4755,6 @@ lbl_80141830:
 /* 80141844 0013E644  38 21 00 20 */	addi r1, r1, 0x20
 /* 80141848 0013E648  4E 80 00 20 */	blr 
 
-Damage__10zNPCBSandyF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3:
-/* 8014184C 0013E64C  2C 04 00 04 */	cmpwi r4, 4
-/* 80141850 0013E650  4C 82 00 20 */	bnelr 
-/* 80141854 0013E654  80 03 02 C0 */	lwz r0, 0x2c0(r3)
-/* 80141858 0013E658  60 00 01 00 */	ori r0, r0, 0x100
-/* 8014185C 0013E65C  90 03 02 C0 */	stw r0, 0x2c0(r3)
-/* 80141860 0013E660  4E 80 00 20 */	blr 
-
 .global zNPCBSandy_AddBoundEntsToGrid__FP6zScene
 zNPCBSandy_AddBoundEntsToGrid__FP6zScene:
 /* 80141864 0013E664  94 21 FF E0 */	stwu r1, -0x20(r1)
