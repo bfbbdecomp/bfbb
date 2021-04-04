@@ -27,17 +27,17 @@ struct zNPCBSandy : zNPCBoss
     uint32 bossFlags;
     xVec3 currDir;
     float32 currVel;
-    int32 hitPoints;
-    int32 round;
+    int32 hitPoints; // 0x2D4
+    int32 round; // 0x2D8
     xVec3 ringCorner[8];
     xVec3 ringEdgeCenter[8];
     xVec3 ropeNormal[8];
     xVec3 bouncePoint[8];
     xEnt* ropeObject[4][8];
-    xEnt* ropeObjectLo[8];
-    xEnt* ropeSb;
-    xEnt* ropeSbDamaged;
-    xEnt* turnbuckle[8];
+    xEnt* ropeObjectLo[8]; // 0x4DC
+    xEnt* ropeSb; // 0x4FC
+    xEnt* ropeSbDamaged; // 0x500
+    xEnt* turnbuckle[8]; // 0x504
     float32 edgeAlpha[8];
     float32 scoreboardAlpha;
     int32 fromRope;
@@ -58,9 +58,9 @@ struct zNPCBSandy : zNPCBoss
     zParEmitter* dustEddieEmitter;
     zParEmitter* shockwaveEmitter;
     xEnt* hangingScoreboard; // 0x7B8
-    xEnt* bustedScoreboard;
-    xEnt* crashedScoreboard;
-    xEntBoulder* headBoulder;
+    xEnt* bustedScoreboard; // 0x7BC
+    xEnt* crashedScoreboard; // 0x7C0
+    xEntBoulder* headBoulder; // 0x7C4
     zShrapnelAsset* scoreboardShrap;
     zShrapnelAsset* sboardSecondShrap;
     zShrapnelAsset* sboardThirdShrap;
@@ -71,7 +71,7 @@ struct zNPCBSandy : zNPCBoss
     zCutsceneMgr* round3Csn;
     float32 csnTimer;
     _tagLightningAdd sparks[6];
-    zLightning* wireLight[2];
+    zLightning* wireLight[2]; // 0x978
     xVec3 endPoints[2][4];
     xMat4x3 sparkTransform[2][2];
     float32 timeToNextBolt[2];

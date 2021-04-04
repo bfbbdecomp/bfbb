@@ -263,7 +263,7 @@ void zNPCBSandy_BossDamageEffect_Init()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__10zNPCBSandyFP6xScenef")
 
 // func_80141668
-#if 1
+#if 0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
 #else
 void zNPCBSandy::hiddenByCutscene()
@@ -275,6 +275,46 @@ void zNPCBSandy::hiddenByCutscene()
         this->underwear[i]->state &= 0xffffffc0;
         zEntEvent(this->underwear[i], eEventCollision_Visible_On); // 0x55
         this->underwear[i]->timer = __830; // 0.0
+    }
+
+    switch (this->round)
+    {
+    case 1:
+    {
+        break;
+    }
+    /*
+    xEnt* hangingScoreboard; // 0x7B8
+    xEnt* bustedScoreboard; // 0x7BC
+    xEnt* crashedScoreboard; // 0x7C0
+    */
+    case 2:
+    {
+        // uint8 flags; 0x18
+        // uint8 chkby; // XENT_COLLTYPE_* bitmask
+        this->crashedScoreboard->chkby |= 0x10;
+        this->crashedScoreboard->flags |= 1;
+        this->hangingScoreboard->chkby &= 0xef;
+        this->hangingScoreboard->flags &= 0xfe;
+        this->bustedScoreboard->chkby &= 0xef;
+        this->bustedScoreboard->flags &= 0xfe;
+
+        this->ropeObjectLo[4] = this->ropeSbDamaged;
+
+        xEntHide(this->ropeSb);
+        xEntShow(this->ropeSbDamaged);
+        zLightningShow(this->wireLight[0], 1);
+        zLightningShow(this->wireLight[1], 1);
+
+        gCurrentPlayer = eCurrentPlayerPatrick;
+
+        break;
+    }
+    case 3:
+    {
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        break;
+    }
     }
 }
 #endif
