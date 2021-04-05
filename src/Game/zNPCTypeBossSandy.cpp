@@ -264,9 +264,7 @@ void zNPCBSandy_BossDamageEffect_Init()
 
 void zNPCBSandy::hiddenByCutscene()
 {
-    int32 i;
-
-    for (i = 0; i < 3; i++)
+    for (int32 i = 0; i < 3; i++)
     {
         this->underwear[i]->state = (this->underwear[i]->state & 0xffffffc0) | 1;
         zEntEvent(this->underwear[i], eEventCollision_Visible_On);
