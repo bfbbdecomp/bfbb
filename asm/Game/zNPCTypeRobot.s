@@ -14605,18 +14605,6 @@ __ct__9zNPCRobotFi:
 /* 801026C0 000FF4C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 801026C4 000FF4C4  4E 80 00 20 */	blr 
 
-IsAlive__9zNPCRobotFv:
-/* 801026D0 000FF4D0  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801026D4 000FF4D4  7C 08 02 A6 */	mflr r0
-/* 801026D8 000FF4D8  90 01 00 14 */	stw r0, 0x14(r1)
-/* 801026DC 000FF4DC  48 00 00 1D */	bl IsDead__9zNPCRobotFv
-/* 801026E0 000FF4E0  7C 60 00 34 */	cntlzw r0, r3
-/* 801026E4 000FF4E4  54 03 DE 3E */	rlwinm r3, r0, 0x1b, 0x18, 0x1f
-/* 801026E8 000FF4E8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 801026EC 000FF4EC  7C 08 03 A6 */	mtlr r0
-/* 801026F0 000FF4F0  38 21 00 10 */	addi r1, r1, 0x10
-/* 801026F4 000FF4F4  4E 80 00 20 */	blr 
-
 .global IsDead__9zNPCRobotFv
 IsDead__9zNPCRobotFv:
 /* 801026F8 000FF4F8  94 21 FF F0 */	stwu r1, -0x10(r1)

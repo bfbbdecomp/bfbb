@@ -1190,7 +1190,10 @@ zNPCLassoInfo* zNPCRobot::PRIV_GetLassoData()
 }
 
 // func_801026D0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsAlive__9zNPCRobotFv")
+int32 zNPCRobot::IsAlive()
+{
+    return !IsDead();
+}
 
 // func_801026F8
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeRobot.s", "IsDead__9zNPCRobotFv")
