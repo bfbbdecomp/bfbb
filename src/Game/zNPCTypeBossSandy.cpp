@@ -525,7 +525,7 @@ int32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
     {
         if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
         {
-            if ((sandy->bossFlags & 2) != 0)
+            if (sandy->bossFlags & 2)
             {
                 *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB9';
