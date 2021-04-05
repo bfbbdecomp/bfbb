@@ -145,7 +145,7 @@ void NPAR_CheckSpecials()
 {
     g_gameExtrasFlags = zGameExtras_ExtrasFlags();
     zGameExtras_MoDay(&g_mon, &g_day);
-    g_isSpecialDay = g_gameExtrasFlags & 0x1f7;
+    g_isSpecialDay = g_gameExtrasFlags & 0b111110111;
 }
 
 // func_80181CFC
@@ -251,7 +251,7 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeSpiral__FP8NPARMgmtf")
 
 // func_80182728
-#ifndef NON_MATCHING
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
 #else
 // Matches, it just defines new data that won't match until that stuff can be redefined.
@@ -311,7 +311,8 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
                                     colr_peach,  colr_fuschia, colr_neon_blue, colr_neon_green,
                                     colr_yellow, colr_neon_red };
 
-    if (g_isSpecialDay & 0x101)
+    // Lots of different dates
+    if (g_isSpecialDay & 0b100000001)
     {
         int32 trun = _1558_10_0 * pam;
         if (trun < 0)
@@ -326,8 +327,8 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         return;
     }
 
-    // 4th of July
-    if (g_isSpecialDay & 2)
+    // July 4th (Independence Day)
+    if (g_isSpecialDay & 0b000000010)
     {
         if (pam < _1559_0_2857143)
         {
@@ -343,22 +344,22 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         return;
     }
 
-    // St. Patrick's Day
-    if (g_isSpecialDay & 4)
+    // March 17th (St. Patrick's Day)
+    if (g_isSpecialDay & 0b000000100)
     {
         *color = colr_kellygreen;
         return;
     }
 
-    // ????
-    if (g_isSpecialDay & 8)
+    // March 15th? I believe this is disabled by the operation in NPAR_CheckSpecials
+    if (g_isSpecialDay & 0b000001000)
     {
         *color = colr_pimp_gold;
         return;
     }
 
-    // Also 4th of July?
-    if (g_isSpecialDay & 0x10)
+    // Also 4th of July? Unused
+    if (g_isSpecialDay & 0b000010000)
     {
         if (pam < _1561_0_125)
         {
@@ -385,13 +386,15 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         return;
     }
 
-    if (g_isSpecialDay & 0x20)
+    // October 31st (Halloween)
+    if (g_isSpecialDay & 0b000100000)
     {
         *color = colr_orange;
         return;
     }
 
-    if (g_isSpecialDay & 0x40)
+    // June 6th
+    if (g_isSpecialDay & 0b001000000)
     {
         if (pam < _918_0_25)
         {
@@ -417,7 +420,8 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         return;
     }
 
-    if (g_isSpecialDay & 0x80)
+    // April 1st (April Fools)
+    if (g_isSpecialDay & 0b010000000)
     {
         *color = colr_pinkRyanz;
         return;
