@@ -6,6 +6,10 @@
 
 #include "zRumble.h"
 
+namespace auto_tweak {
+    template <class T1, class T2> void load_param(T1&, T2, T2, T2, xModelAssetParam*, uint32, const char*);
+};
+
 namespace cruise_bubble
 {
     enum state_enum
