@@ -515,16 +515,31 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
     return nextgoal;
 }
 
-// func_80142AA0
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "leapCB__FP5xGoalPvP11en_trantypefPv")
-#else
 int32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 {
-    int32 newgoal = 0;
-    return newgoal;
+    zNPCGoalBossSandyLeap* leap = (zNPCGoalBossSandyLeap*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)leap->psyche->clt_owner;
+    int32 nextgoal = 0;
+
+    if (leap->stage == 3)
+    {
+        if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+        {
+            if ((sandy->bossFlags & 2) != 0)
+            {
+                *trantype = GOAL_TRAN_SET;
+                nextgoal = 'NGB9';
+            }
+            else
+            {
+                *trantype = GOAL_TRAN_SET;
+                nextgoal = 'NGB8';
+            }
+        }
+    }
+
+    return nextgoal;
 }
-#endif
 
 // func_80142B54
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "sitCB__FP5xGoalPvP11en_trantypefPv")
