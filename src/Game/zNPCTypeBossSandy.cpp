@@ -349,8 +349,19 @@ void zNPCBSandy_GameIsPaused(zScene*)
 // func_801419D0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "NewTime__10zNPCBSandyFP6xScenef")
 
+#if 1
 // func_80142150
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "idleCB__FP5xGoalPvP11en_trantypefPv")
+#else
+
+int32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, float32, void*)
+{
+    zNPCGoalBossSandyIdle* idle = (zNPCGoalBossSandyIdle*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)idle->psyche->clt_owner;
+    int32 nextgoal = 0;
+}
+
+#endif
 
 int32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 {
