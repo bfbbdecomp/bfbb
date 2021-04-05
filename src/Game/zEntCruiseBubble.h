@@ -6,6 +6,12 @@
 
 #include "zRumble.h"
 
+// I have no idea where to put this. This is only used by
+// cruise_bubble::tweak_group::register_tweaks() so far.
+// If you are searching the project for 'auto_tweak' you are
+// probably working on one of the bosses which also seem to use this.
+// As of now I'm not sure if you should include this declaration,
+// define your own or find a good place for shared use.
 namespace auto_tweak {
     template <class T1, class T2> void load_param(T1&, T2, T2, T2, xModelAssetParam*, uint32, const char*);
 };
