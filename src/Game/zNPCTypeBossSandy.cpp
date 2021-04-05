@@ -516,7 +516,15 @@ int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void
 }
 
 // func_80142AA0
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "leapCB__FP5xGoalPvP11en_trantypefPv")
+#else
+int32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    int32 newgoal = 0;
+    return newgoal;
+}
+#endif
 
 // func_80142B54
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "sitCB__FP5xGoalPvP11en_trantypefPv")
