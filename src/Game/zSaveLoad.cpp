@@ -126,10 +126,7 @@ extern float32 _849;
 extern float64 _850;
 extern float64 _852;
 
-#ifndef NON_MATCHING
 // func_800AD20C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zUpdateThumbIcon__Fv")
-#else
 void zUpdateThumbIcon()
 {
     int32 i;
@@ -165,13 +162,12 @@ void zUpdateThumbIcon()
                 }
                 else
                 {
-                    zChangeThumbIcon(""); //zSaveLoad_strings + 1107);
+                    zChangeThumbIcon("");
                 }
             }
         }
     }
 }
-#endif
 
 #if 1
 // func_800AD328
@@ -253,10 +249,11 @@ void zSaveLoad_Tick()
 }
 #endif
 
-#if 1
+#ifndef NON_MATCHING
 // func_800AD598
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_poll__Fi")
 #else
+// Reordings/Float scheduling
 int32 zSaveLoad_poll(int32 i)
 {
     if (dontPoll < _847)
@@ -267,10 +264,7 @@ int32 zSaveLoad_poll(int32 i)
             promptSel = i;
             currentGame = 0;
         }
-        else
-        {
-            return 1;
-        }
+        return 1;
     }
     return 1;
 }
@@ -289,17 +283,14 @@ void zSendEventToThumbIcon(uint32 toEvent)
 #else
 void zChangeThumbIcon(const int8* icon)
 {
-    uint32 arr[4];
+    int32 arr[4];
 
     memset(arr, 0, sizeof(arr));
     arr[0] = xStrHash(icon);
 
-    int8* iconString = zSaveLoad_strings + 1092; // "MNU4 THUMBICON"
-    if (gGameMode == eGameMode_Load)
-    {
-        iconString = zSaveLoad_strings + 1077; // "MNU3 THUMBICON"
-    }
-    zEntEvent(zSceneFindObject(xStrHash(iconString)), 0x1f5, (float32*)arr);
+    zEntEvent(zSceneFindObject(
+                  xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON")),
+              0x1f5, (float32*)arr);
 }
 #endif
 
