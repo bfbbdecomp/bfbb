@@ -21,23 +21,23 @@
 #include "../Core/x/xParMgr.h"
 #include "../dolphin/dolphin.h"
 
-extern uint32 saveSuccess;
-extern float32 time_last_1;
-extern float32 time_current_1;
-extern iTime t0;
-extern iTime t1;
-extern int32 promptSel;
-extern int32 badCard;
-extern int32 sAvailable;
-extern int32 sNeeded;
-extern int32 sAccessType;
-extern uint8 preAutoSaving;
+uint32 saveSuccess;
+float32 time_last_1;
+float32 time_current_1;
+iTime t0;
+iTime t1;
+int32 promptSel;
+int32 badCard;
+int32 sAvailable;
+int32 sNeeded;
+int32 sAccessType;
+uint8 preAutoSaving;
 
-extern float32 time_elapsed_1;
-extern int32 currentCard;
-extern int32 currentGame;
-extern float32 dontPoll;
-extern int32 autoSaveCard;
+float32 time_elapsed_1 = 0.01f;
+int32 currentCard = -1;
+int32 currentGame = -1;
+float32 dontPoll = 1.0f;
+int32 autoSaveCard = -1;
 
 int8 currSceneStr[32] = "TEMP";
 int8 sceneRead[32] = "0000";
@@ -1469,14 +1469,7 @@ int32 zSaveLoad_CardPick(int32 mode)
 // func_800AEFA0
 bool IsValidName(int8* name)
 {
-    if (strcmp((char*)name, "\0"
-                            "Corrupt Save File\n\n\0"
-                            "%s/%c%c\0"
-                            "block\0"
-                            "blocks\0"
-                            "%d%%  %s    (%d %s)\n%s\0"
-                            "%s (%d)\0"
-                            "Empty") == 0)
+    if (strcmp((char*)name, "") == 0)
     {
         return 0;
     }
@@ -1492,13 +1485,45 @@ bool IsValidName(int8* name)
 }
 
 // func_800AF03C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "BuildIt__FPci")
+void BuildIt(int8* build_txt, int32 i)
+{
+    int8 date1[32] = {};
+    int8 date2[32];
+    int8 biggerbuf[256] = {};
+    int8 displaySizeUnit[32];
+
+    if (IsValidName(zSaveLoadGameTable[i].label) == 0)
+    {
+        strcpy(build_txt, "Corrupt Save File\n\n");
+    }
+    else
+    {
+        strncpy(date1, zSaveLoadGameTable[i].date, 5);
+        date1[2] = '/';
+        sprintf(biggerbuf, "%s/%c%c", date1, zSaveLoadGameTable[i].date[8],
+                zSaveLoadGameTable[i].date[9]);
+
+        strncpy(date2, biggerbuf, sizeof(date2));
+        date2[31] = NULL;
+
+        memset(displaySizeUnit, 0, sizeof(displaySizeUnit));
+        if (zSaveLoadGameTable[i].size == 1)
+        {
+            strcpy(displaySizeUnit, "block");
+        }
+        else
+        {
+            strcpy(displaySizeUnit, "blocks");
+        }
+
+        sprintf(biggerbuf, "%d%%  %s    (%d %s)\n%s", zSaveLoadGameTable[i].progress, date2,
+                zSaveLoadGameTable[i].size, displaySizeUnit, zSaveLoadGameTable[i].label);
+        strncpy(build_txt, biggerbuf, 0x80);
+        date1[31] = NULL;
+    }
+}
 
 // func_800AF22C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_BuildName__FPci")
-#else
-// Jumptable data
 void zSaveLoad_BuildName(int8* name_txt, int32 idx)
 {
     int8 desired[128];
@@ -1507,7 +1532,7 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
     BuildIt(desired, idx);
 
     int32 counter = 0;
-    for (int32 i; i < idx; i++)
+    for (int32 i = 0; i < idx; i++)
     {
         BuildIt(current_name, i);
         if (strcmp(zSaveLoadGameTable[i].label, zSaveLoadGameTable[idx].label) == 0 &&
@@ -1519,7 +1544,10 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
 
     if (counter > 0)
     {
-        sprintf(name_txt, "%s (%d)", desired, counter);
+        sprintf(name_txt,
+                "%s (%d)\0"
+                "Empty",
+                desired, counter);
         name_txt[0x3f] = NULL;
     }
     else
@@ -1527,10 +1555,206 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
         strcpy(name_txt, desired);
     }
 }
-#endif
 
 // func_800AF30C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_GameSelect__Fi")
+#else
+int32 zSaveLoad_GameSelect(int32 mode)
+{
+    int32 done = 0;
+    int32 i;
+    st_XSAVEGAME_DATA* svinst;
+    int32 use_tgt;
+
+    badCard = 1;
+    while (badCard != 0)
+    {
+        currentGame = -1;
+        promptSel = -1;
+        use_tgt = CardtoTgt(currentCard);
+
+        if (mode == 1)
+        {
+            zSaveLoad_UIEvent(0, 1);
+            zSaveLoad_UIEvent(0, 0x51);
+            zSaveLoad_UIEvent(0x33, 0x51);
+        }
+        else
+        {
+            zSaveLoad_UIEvent(0x34, 0x51);
+        }
+
+        for (i = 0; i < 3; i++)
+        {
+            svinst = xSGInit(XSG_MODE_LOAD);
+            xSGTgtSelect(svinst, use_tgt);
+            if (xSGGameIsEmpty(svinst, i))
+            {
+                if (mode == 1)
+                {
+                    zSaveLoad_UIEvent(i + 6, 2);
+                }
+                strcpy(zSaveLoadGameTable[i].label, "Empty");
+                strcpy(zSaveLoadGameTable[i].date, "Empty");
+                zSaveLoadGameTable[i].progress = 0;
+                zSaveLoadGameTable[i].size = 0;
+                zSaveLoadGameTable[i].thumbIconIndex = -1;
+            }
+            else
+            {
+                strcpy(zSaveLoadGameTable[i].label, xSGGameLabel(svinst, i));
+                if (strcmpi(zSaveLoadGameTable[i].label, zSceneGetLevelName('MNU3')) == 0)
+                {
+                    strcpy(zSaveLoadGameTable[i].label, zSceneGetLevelName('HB01'));
+                }
+                strcpy(zSaveLoadGameTable[i].date, xSGGameModDate(svinst, i));
+                zSaveLoadGameTable[i].progress = xSGGameProgress(svinst, i);
+                zSaveLoadGameTable[i].size = xSGGameSize(svinst, i);
+                zSaveLoadGameTable[i].size = zSaveLoadGameTable[i].size + 0x1fff & 0xffffe000;
+                zSaveLoadGameTable[i].size >>= 0xd;
+                zSaveLoadGameTable[i].size += 3;
+
+                zSendEventToThumbIcon(3);
+                zSaveLoadGameTable[i].thumbIconIndex = xSGGameThumbIndex(svinst, i);
+                if (strcmpi(zSaveLoadGameTable[i].label, ""))
+                {
+                    zSaveLoadGameTable[i].thumbIconIndex = -1;
+                }
+            }
+            xSGDone(svinst);
+        }
+
+        if (mode == 1)
+        {
+            for (int32 emptyCount = 6; emptyCount <= 8; emptyCount++)
+            {
+                if (zSaveLoad_slotIsEmpty(emptyCount - 6))
+                {
+                    zSaveLoad_UIEvent(emptyCount, 0x4f);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            zSaveLoad_UIEvent(0x15, 0x51);
+            zSaveLoad_UIEvent(0x19, 0x4f);
+        }
+        badCard = 0;
+
+        while (!done && promptSel == -1)
+        {
+            zSaveLoad_Tick();
+            zSaveLoad_poll(3);
+            if (promptSel == 4)
+            {
+                done = promptSel;
+            }
+
+            if (currentGame == -1)
+            {
+                continue;
+            }
+
+            done = zSaveLoad_CardCheck(currentCard, mode);
+            if (done != 1)
+            {
+                currentGame = -1;
+                badCard = 0;
+
+                if (done == 9)
+                {
+                    zSaveLoad_CardWrongDeviceErrorPrompt(mode);
+                    done = 9;
+                }
+                break;
+            }
+
+            done = zSaveLoad_CardCheckFormatted(currentCard, mode);
+            if (done != 1)
+            {
+                switch (done)
+                {
+                case 5:
+                    done = 0;
+                    promptSel = -1;
+                    continue;
+                case 7:
+                    zSaveLoad_CardDamagedErrorPrompt(mode);
+                    promptSel = -1;
+                    done = 7;
+                    badCard = 0;
+                    continue;
+                case 2:
+                    currentGame = -1;
+                    badCard = 0;
+                    continue;
+                default:
+                    continue;
+                }
+            }
+
+            done = zSaveLoad_CardCheckValid(currentCard, mode);
+            if (done != 1)
+            {
+                switch (done)
+                {
+                case 5:
+                case 6:
+                    done = 0;
+                    promptSel = -1;
+                    continue;
+                case 2:
+                    promptSel = -1;
+                    currentGame = -1;
+                    badCard = 0;
+                    continue;
+                default:
+                    break;
+                }
+            }
+
+            if (badCard == 0)
+            {
+                done = zSaveLoad_CardCheckGameSlot(currentCard, currentGame, mode);
+                if (done != 1)
+                {
+                    switch (done)
+                    {
+                    case -1:
+                    case 5:
+                        done = 0;
+                        promptSel = -1;
+                        break;
+                    case 2:
+                        currentGame = -1;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                done = 0;
+                currentGame = -1;
+            }
+        }
+    }
+
+    if (mode == 1)
+    {
+        zSaveLoad_UIEvent(0, 1);
+    }
+
+    int32 index = 0x15;
+    if (mode == 1)
+    {
+        index = 0;
+    }
+    zSaveLoad_UIEvent(index, 0x5f);
+    return done;
+}
+#endif
 
 // func_800AF790
 uint8 zSaveLoadGetPreAutoSave()
@@ -2048,10 +2272,6 @@ int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WR
 int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                       uint32 ui, int32 i)
 {
-#if 1
-    // temporary buffer space used in BuildIt
-    int8 tmpBuf[288] = {};
-#endif
     int8 bigbuf[32] = {};
     int32 compdiff = 0;
 
