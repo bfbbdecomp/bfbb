@@ -12,11 +12,11 @@
 struct zEntPickup : zEnt
 {
     xShadowSimpleCache simpShadow_embedded;
-    uint32 state;
+    uint32 state; // 0x16C
     zAssetPickup* p;
     void* anim;
     float32 animTime;
-    float32 timer;
+    float32 timer; // 0x17C
     float32 shake_timer;
     xVec3 shake_pos;
     int32 snackGateInfoDisplayed;
@@ -34,7 +34,7 @@ struct zEntPickup : zEnt
     xBase* dropParent;
     xEnt* useThisEntPos;
     xEntDrive drv;
-    uint16 pickupFlags;
+    uint16 pickupFlags; // 0x264
 };
 
 void zEntPickupInit(void* ent, void* asset);
