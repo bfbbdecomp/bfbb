@@ -1,7 +1,17 @@
 #include "zParCmd.h"
+#include "zScene.h"
+#include "zVolume.h"
 #include "../src/Core/x/xParCmd.h"
+#include "../src/Core/x/xString.h"
 
 #include <types.h>
+#include <string.h>
+#include <stdio.h>
+
+extern zVolume* sClipVolume[32];
+extern int32 sClipVolumeTotal;
+
+extern char* zParCmd_strings;
 
 // func_800A7CC4
 void zParCmdInit()
@@ -18,7 +28,26 @@ void zParCmdInit()
 }
 
 // func_800A7D84
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zParCmd.s", "zParCmdFindClipVolumes__Fv")
+#else
+// Functionally matching but the beq goes to the wrong line and won't compile correctly unless the if statement stays the way it is
+void zParCmdFindClipVolumes()
+{
+    char findname[64];
+
+    memset(sClipVolume, 0, sizeof(zVolume*) * 32);
+    for (sClipVolumeTotal = 0; sClipVolumeTotal < 32; sClipVolumeTotal++)
+    {
+        sprintf(findname, "PARTICLE_CLIP_%d", sClipVolumeTotal + 1);
+        zVolume* vol = (zVolume*)zSceneFindObject(xStrHash(findname));
+        if (vol != NULL)
+        {
+            sClipVolume[sClipVolumeTotal] = vol;
+        }
+    }
+}
+#endif
 
 // func_800A7E2C
 #pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf")
@@ -27,7 +56,10 @@ void zParCmdInit()
 #pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf")
 
 // func_800A7FA0
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf")
+void xParCmdPlayerCollision_Update(xParCmd* c, xParGroup* ps, float32 dt)
+{
+    return;
+}
 
 // func_800A7FA4
 #pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf")

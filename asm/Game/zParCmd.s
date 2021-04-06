@@ -161,9 +161,6 @@ lbl_800A7F78:
 /* 800A7F98 000A4D98  38 21 00 70 */	addi r1, r1, 0x70
 /* 800A7F9C 000A4D9C  4E 80 00 20 */	blr 
 
-xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf:
-/* 800A7FA0 000A4DA0  4E 80 00 20 */	blr 
-
 xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf:
 /* 800A7FA4 000A4DA4  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 800A7FA8 000A4DA8  7C 08 02 A6 */	mflr r0
@@ -763,7 +760,8 @@ lbl_8025E6F8:
 	.incbin "baserom.dol", 0x25B6D8, 0x18
 
 .section .bss
-lbl_802F2B50:
+.global sClipVolume
+sClipVolume:
 	.skip 0x80
 lbl_802F2BD0:
 	.skip 0x50
@@ -771,7 +769,8 @@ lbl_802F2C20:
 	.skip 0x50
 
 .section .sbss
-lbl_803CB968:
+.global sClipVolumeTotal
+sClipVolumeTotal:
 	.skip 0x8
 
 .section .sdata2
