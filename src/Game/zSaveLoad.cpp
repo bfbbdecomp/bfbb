@@ -10,16 +10,12 @@
 #include "zHud.h"
 #include "zCamera.h"
 #include "zGame.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xTRC.h"
-#include "../Core/x/xsavegame.h"
-#include "../Core/x/xString.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xutil.h"
-#include "../Core/x/xserializer.h"
-#include "../Core/x/xDebug.h"
 #include "../Core/x/xParMgr.h"
-#include "../dolphin/dolphin.h"
+#include "../Core/x/xCutscene.h"
+#include "../Core/x/xDebug.h"
+#include "../Core/x/xTRC.h"
+#include "../Core/x/xString.h"
+#include "../Core/x/xutil.h"
 
 uint32 saveSuccess;
 float32 time_last_1;
@@ -41,80 +37,73 @@ int32 autoSaveCard = -1;
 
 int8 currSceneStr[32] = "TEMP";
 int8 sceneRead[32] = "0000";
-zSaveLoadUI zSaveLoadUITable[62]
-#if 1
-    = { { 0, 0, "ld gameslot group" },
-        { 1, 0, "ld memcards group" },
-        { 2, 0, "ld format prompt group" },
-        { 3, 0, "ld mc missing group" },
-        { 4, 0, "mnu3 ld mc1" },
-        { 5, 0, "mnu3 ld mc2" },
-        { 6, 0, "ld gameslot 0" },
-        { 7, 0, "ld gameslot 1" },
-        { 8, 0, "ld gameslot 2" },
-        { 9, 0, "ld gameslot 3" },
-        { 10, 0, "ld gameslot 4" },
-        { 11, 0, "ld gameslot 5" },
-        { 12, 0, "ld gameslot 6" },
-        { 13, 0, "ld gameslot 7" },
-        { 14, 0, "ld format prompt" },
-        { 15, 0, "ld format yes" },
-        { 16, 0, "ld format no" },
-        { 17, 0, "ld mc missing" },
-        { 18, 0, "ld nogames" },
-        { 19, 0, "ld nogames" },
-        { 20, 0, "mnu3 start group" },
-        { 21, 0, "sv gameslot group" },
-        { 22, 0, "sv memcards group" },
-        { 23, 0, "sv mc1" },
-        { 24, 0, "sv mc2" },
-        { 25, 0, "sv gameslot 0" },
-        { 26, 0, "sv gameslot 1" },
-        { 27, 0, "sv gameslot 2" },
-        { 28, 0, "sv gameslot 3" },
-        { 29, 0, "sv gameslot 4" },
-        { 30, 0, "sv gameslot 5" },
-        { 31, 0, "sv gameslot 6" },
-        { 32, 0, "sv gameslot 7" },
-        { 33, 0, "sv format prompt" },
-        { 34, 0, "sv overwrite" },
-        { 35, 0, "sv overwrite damaged" },
-        { 36, 0, "sv mc missing" },
-        { 37, 0, "sv nospace" },
-        { 38, 0, "sv nospacegame" },
-        { 39, 0, "ld mc dontremove" },
-        { 40, 0, "sv mc dontremove" },
-        { 41, 0, "mnu4 mc dontremove" },
-        { 42, 0, "ld badload" },
-        { 43, 0, "sv badsave" },
-        { 44, 0, "mnu3 badformat" },
-        { 45, 0, "mnu3 badformatnocard" },
-        { 46, 0, "mnu4 badformat" },
-        { 47, 0, "mnu4 badformatnocard" },
-        { 48, 0, "mnu3 format confirm" },
-        { 49, 0, "mnu4 format confirm" },
-        { 50, 0, "sv format group" },
-        { 51, 0, "mnu3 disk free" },
-        { 52, 0, "mnu4 disk free" },
-        { 53, 0, "sv card damaged" },
-        { 54, 0, "sv badsavenocard" },
-        { 55, 0, "ld damaged card" },
-        { 56, 0, "sv damaged card" },
-        { 57, 0, "ld wrong device" },
-        { 58, 0, "sv wrong device" },
-        { 59, 0, "ld damaged save" },
-        { 60, 0, "ld damaged save game" },
-        { 0, 0, NULL } }
-#endif
-;
+zSaveLoadUI zSaveLoadUITable[62] = { { 0, 0, "ld gameslot group" },
+                                     { 1, 0, "ld memcards group" },
+                                     { 2, 0, "ld format prompt group" },
+                                     { 3, 0, "ld mc missing group" },
+                                     { 4, 0, "mnu3 ld mc1" },
+                                     { 5, 0, "mnu3 ld mc2" },
+                                     { 6, 0, "ld gameslot 0" },
+                                     { 7, 0, "ld gameslot 1" },
+                                     { 8, 0, "ld gameslot 2" },
+                                     { 9, 0, "ld gameslot 3" },
+                                     { 10, 0, "ld gameslot 4" },
+                                     { 11, 0, "ld gameslot 5" },
+                                     { 12, 0, "ld gameslot 6" },
+                                     { 13, 0, "ld gameslot 7" },
+                                     { 14, 0, "ld format prompt" },
+                                     { 15, 0, "ld format yes" },
+                                     { 16, 0, "ld format no" },
+                                     { 17, 0, "ld mc missing" },
+                                     { 18, 0, "ld nogames" },
+                                     { 19, 0, "ld nogames" },
+                                     { 20, 0, "mnu3 start group" },
+                                     { 21, 0, "sv gameslot group" },
+                                     { 22, 0, "sv memcards group" },
+                                     { 23, 0, "sv mc1" },
+                                     { 24, 0, "sv mc2" },
+                                     { 25, 0, "sv gameslot 0" },
+                                     { 26, 0, "sv gameslot 1" },
+                                     { 27, 0, "sv gameslot 2" },
+                                     { 28, 0, "sv gameslot 3" },
+                                     { 29, 0, "sv gameslot 4" },
+                                     { 30, 0, "sv gameslot 5" },
+                                     { 31, 0, "sv gameslot 6" },
+                                     { 32, 0, "sv gameslot 7" },
+                                     { 33, 0, "sv format prompt" },
+                                     { 34, 0, "sv overwrite" },
+                                     { 35, 0, "sv overwrite damaged" },
+                                     { 36, 0, "sv mc missing" },
+                                     { 37, 0, "sv nospace" },
+                                     { 38, 0, "sv nospacegame" },
+                                     { 39, 0, "ld mc dontremove" },
+                                     { 40, 0, "sv mc dontremove" },
+                                     { 41, 0, "mnu4 mc dontremove" },
+                                     { 42, 0, "ld badload" },
+                                     { 43, 0, "sv badsave" },
+                                     { 44, 0, "mnu3 badformat" },
+                                     { 45, 0, "mnu3 badformatnocard" },
+                                     { 46, 0, "mnu4 badformat" },
+                                     { 47, 0, "mnu4 badformatnocard" },
+                                     { 48, 0, "mnu3 format confirm" },
+                                     { 49, 0, "mnu4 format confirm" },
+                                     { 50, 0, "sv format group" },
+                                     { 51, 0, "mnu3 disk free" },
+                                     { 52, 0, "mnu4 disk free" },
+                                     { 53, 0, "sv card damaged" },
+                                     { 54, 0, "sv badsavenocard" },
+                                     { 55, 0, "ld damaged card" },
+                                     { 56, 0, "sv damaged card" },
+                                     { 57, 0, "ld wrong device" },
+                                     { 58, 0, "sv wrong device" },
+                                     { 59, 0, "ld damaged save" },
+                                     { 60, 0, "ld damaged save game" },
+                                     { 0, 0, NULL } };
 
-int8* thumbIconMap[15]
-#if 1
-    = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL", "ThumbIconB1",
-        "ThumbIconRB", "ThumbIconBC", "ThumbIconSM", "ThumbIconB2", "ThumbIconKF",
-        "ThumbIconGY", "ThumbIconDB", "ThumbIconB3", "ThumbIconHB", "ThumbIconHB" }
-#endif
-;
+int8* thumbIconMap[15] = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL",
+                           "ThumbIconB1", "ThumbIconRB", "ThumbIconBC", "ThumbIconSM",
+                           "ThumbIconB2", "ThumbIconKF", "ThumbIconGY", "ThumbIconDB",
+                           "ThumbIconB3", "ThumbIconHB", "ThumbIconHB" };
 
 //This is in .bss instead of zSaveLoad.s
 extern zSaveLoadGame zSaveLoadGameTable[3];
@@ -173,21 +162,15 @@ void zUpdateThumbIcon()
 // func_800AD328
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_Tick__Fv")
 #else
+// WIP
 void zSaveLoad_Tick()
 {
-    xMat4x3* ma;
-    float32 time;
-    xMat4x3 local_48;
-    int32 local_8;
-
-    time = iTimeGet();
-    local_8 = 0x43300000;
-    time_current_1 = (_846 / (local_8 - _852)) * time;
+    time_current_1 = (_846 / _852) * (float)iTimeGet();
 
     time_elapsed_1 = time_current_1 - time_last_1;
-    if (time_elapsed_1 >= _847)
+    if (time_elapsed_1 < _847)
     {
-        if (_849 < time_elapsed_1)
+        if (time_elapsed_1 > _849)
         {
             time_elapsed_1 = _848;
         }
@@ -202,8 +185,7 @@ void zSaveLoad_Tick()
     time_last_1 = time_current_1;
     t1 = iTimeGet();
     sTimeCurrent = iTimeGet();
-    time = iTimeDiffSec(sTimeLast, sTimeCurrent);
-    sTimeElapsed = time;
+    sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
     sTimeLast = sTimeCurrent;
     xPadUpdate(globals.NoMusic, time_elapsed_1);
     iTRCDisk::CheckDVDAndResetState();
@@ -211,27 +193,29 @@ void zSaveLoad_Tick()
     xParMgrUpdate(time_elapsed_1);
     zSceneUpdate(time_elapsed_1);
 
-    ma = xEntGetFrame(&(xEnt)globals.player.ent);
-    local_48.right.x = ma->right.x;
-    local_48.right.y = ma->right.y;
-    local_48.right.z = ma->right.z;
-    local_48.flags = ma->flags;
-    local_48.up.x = ma->up.x;
-    local_48.up.y = ma->up.y;
-    local_48.up.z = ma->up.z;
-    local_48.pad1 = ma->pad1;
-    local_48.at.x = ma->at.x;
-    local_48.at.y = ma->at.y;
-    local_48.at.z = ma->at.z;
-    local_48.pad2 = ma->pad2;
-    local_48.pos.x = ma->pos.x;
-    local_48.pos.z = ma->pos.z;
-    local_48.pad3 = ma->pad3;
-    local_48.pos.y = ma->pos.y;
+    xMat4x3 playerMat;
+    xMat4x3* ma = xEntGetFrame(&(xEnt)globals.player.ent);
+    *(uint32*)&playerMat.right.x = *(uint32*)&ma->right.x;
+    *(uint32*)&playerMat.right.y = *(uint32*)&ma->right.y;
+    *(uint32*)&playerMat.right.z = *(uint32*)&ma->right.z;
+    *(uint32*)&playerMat.flags = *(uint32*)&ma->flags;
+    *(uint32*)&playerMat.up.x = *(uint32*)&ma->up.x;
+    *(uint32*)&playerMat.up.y = *(uint32*)&ma->up.y;
+    *(uint32*)&playerMat.up.z = *(uint32*)&ma->up.z;
+    *(uint32*)&playerMat.pad1 = *(uint32*)&ma->pad1;
+    *(uint32*)&playerMat.at.x = *(uint32*)&ma->at.x;
+    *(uint32*)&playerMat.at.y = *(uint32*)&ma->at.y;
+    *(uint32*)&playerMat.at.z = *(uint32*)&ma->at.z;
+    *(uint32*)&playerMat.pad2 = *(uint32*)&ma->pad2;
+    *(uint32*)&playerMat.pos.x = *(uint32*)&ma->pos.x;
+    *(uint32*)&playerMat.pos.z = *(uint32*)&ma->pos.z;
+    *(uint32*)&playerMat.pad3 = *(uint32*)&ma->pad3;
+    *(uint32*)&playerMat.pos.y = *(uint32*)&ma->pos.y;
+
     xSndSetListenerData(SND_LISTENER_CAMERA, &globals.camera.mat);
-    xSndSetListenerData(SND_LISTENER_PLAYER, &local_48);
+    xSndSetListenerData(SND_LISTENER_PLAYER, &playerMat);
     xSndUpdate();
-    if ((gGameMode == 6) && (gGameState != 0))
+    if (gGameMode == 6 && gGameState != 0)
     {
         zhud::update(sTimeElapsed);
     }
