@@ -145,7 +145,7 @@ void NPAR_CheckSpecials()
 {
     g_gameExtrasFlags = zGameExtras_ExtrasFlags();
     zGameExtras_MoDay(&g_mon, &g_day);
-    g_isSpecialDay = g_gameExtrasFlags & 0x1f7;
+    g_isSpecialDay = g_gameExtrasFlags & 0b111110111;
 }
 
 // func_80181CFC
@@ -251,14 +251,14 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeSpiral__FP8NPARMgmtf")
 
 // func_80182728
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
 #else
-//WIP
+// Matches, it just defines new data that won't match until that stuff can be redefined.
+// It also loads a bunch of byte stuff at the end for some reason
+// For the record it also matches when using the static colors. Externing zanyArray does not work.
 void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
 {
-    int32 trun;
-
     // There may be a better way to define these but this seemed like the cleanest.
     // static RwRGBA colr_pinkRyanz = { 0xcc, 0x60, 0xcc, 0xff };
     // static RwRGBA colr_lavender = { 0xc6, 0x09, 0xe9, 0xff };
@@ -274,8 +274,6 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
     // static RwRGBA colr_pimp_gold = { 0xd7, 0xdc, 0x13, 0xff };
     // static RwRGBA colr_kellygreen = { 0x0a, 0x7f, 0x03, 0xff };
 
-    // static RwRGBA zanyArray[10];
-    // static int8 init = 0;
     // static RwRGBA colr_cyan = { 0x00, 0xff, 0xff, 0xff };
     // static RwRGBA colr_khaki = { 0xf0, 0xe6, 0x8c, 0xff };
     // static RwRGBA colr_seagreen = { 0x80, 0xcc, 0x99, 0xff };
@@ -286,9 +284,6 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
     // static RwRGBA colr_yellow = { 0xff, 0xff, 0x00, 0xff };
     // static RwRGBA colr_neon_red = { 0xff, 0x20, 0x00, 0xff };
 
-    extern RwRGBA zanyArray[10];
-
-    extern int8 init_1486;
     extern RwRGBA colr_pinkRyanz;
     extern RwRGBA colr_lavender;
     extern RwRGBA colr_blue;
@@ -312,24 +307,14 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
     extern RwRGBA colr_yellow;
     extern RwRGBA colr_neon_red;
 
-    if (init_1486 == 0)
-    {
-        zanyArray[0] = colr_neon_red;
-        zanyArray[1] = colr_yellow;
-        zanyArray[2] = colr_neon_green;
-        zanyArray[3] = colr_neon_blue;
-        zanyArray[4] = colr_fuschia;
-        zanyArray[5] = colr_peach;
-        zanyArray[6] = colr_maroon;
-        zanyArray[7] = colr_seagreen;
-        zanyArray[8] = colr_khaki;
-        zanyArray[9] = colr_cyan;
-        init_1486 = 1;
-    }
+    static RwRGBA zanyArray[10] = { colr_cyan,   colr_khaki,   colr_seagreen,  colr_maroon,
+                                    colr_peach,  colr_fuschia, colr_neon_blue, colr_neon_green,
+                                    colr_yellow, colr_neon_red };
 
-    if (g_isSpecialDay & 0x101)
+    // Lots of different dates
+    if (g_isSpecialDay & 0b100000001)
     {
-        trun = _1558_10_0 * (uint32)color;
+        int32 trun = _1558_10_0 * pam;
         if (trun < 0)
         {
             trun = 0;
@@ -338,103 +323,108 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
         {
             trun = 9;
         }
-        color = &zanyArray[trun];
+        *color = zanyArray[trun];
         return;
     }
 
-    // 4th of July
-    if (g_isSpecialDay & 2)
+    // July 4th (Independence Day)
+    if (g_isSpecialDay & 0b000000010)
     {
-        if (_1559_0_2857143 > pam)
+        if (pam < _1559_0_2857143)
         {
-            color = &colr_julyred;
+            *color = colr_julyred;
             return;
         }
-        if (_1560_0_5714286 > pam)
+        if (pam < _1560_0_5714286)
         {
-            color = &colr_julywhite;
+            *color = colr_julywhite;
             return;
         }
-        color = &colr_julyblue;
+        *color = colr_julyblue;
         return;
     }
 
-    // St. Patrick's Day
-    if (g_isSpecialDay & 4)
+    // March 17th (St. Patrick's Day)
+    if (g_isSpecialDay & 0b000000100)
     {
-        color = &colr_kellygreen;
+        *color = colr_kellygreen;
         return;
     }
 
-    // ????
-    if (g_isSpecialDay & 8)
+    // March 15th? I believe this is disabled by the operation in NPAR_CheckSpecials
+    if (g_isSpecialDay & 0b000001000)
     {
-        color = &colr_pimp_gold;
+        *color = colr_pimp_gold;
         return;
     }
 
-    // Also 4th of July?
-    if (g_isSpecialDay & 0x10)
+    // Also 4th of July? Unused
+    if (g_isSpecialDay & 0b000010000)
     {
-        if (pam > _1561_0_125)
+        if (pam < _1561_0_125)
         {
-            color = &colr_maroon;
+            *color = colr_maroon;
             return;
         }
-        if (_918_0_25 > pam)
+        if (pam < _918_0_25)
         {
-            color = &colr_julyred;
+            *color = colr_julyred;
             return;
         }
-        if (_1018_0_375 > pam)
+        if (pam < _1018_0_375)
         {
-            color = &colr_julywhite;
+            *color = colr_julywhite;
             return;
         }
 
-        if (_909_0_5 > pam)
+        if (pam < _909_0_5)
         {
-            color = &colr_julyblue;
+            *color = colr_julyblue;
             return;
         }
-        color = &colr_indigo;
+        *color = colr_indigo;
         return;
     }
 
-    if (g_isSpecialDay & 0x20)
+    // October 31st (Halloween)
+    if (g_isSpecialDay & 0b000100000)
     {
-        color = &colr_orange;
+        *color = colr_orange;
         return;
     }
 
-    if (g_isSpecialDay & 0x40)
+    // June 6th
+    if (g_isSpecialDay & 0b001000000)
     {
-        if (_918_0_25 > pam)
+        if (pam < _918_0_25)
         {
-            color = &colr_red;
+            *color = colr_red;
             return;
         }
-        if (_1018_0_375 > pam)
+        if (pam < _1018_0_375)
         {
-            color = &colr_orange;
+            *color = colr_orange;
             return;
         }
-        if (_909_0_5 > pam)
+        if (pam < _909_0_5)
         {
-            color = &colr_green;
-        }
-        if (_1562_0_625 > pam)
-        {
-            color = &colr_blue;
+            *color = colr_green;
             return;
         }
-        color = &colr_lavender;
+        if (pam < _1562_0_625)
+        {
+            *color = colr_blue;
+            return;
+        }
+        *color = colr_lavender;
         return;
     }
 
-    if (g_isSpecialDay & 0x80)
+    // April 1st (April Fools)
+    if (g_isSpecialDay & 0b010000000)
     {
-        color = &colr_pinkRyanz;
+        *color = colr_pinkRyanz;
+        return;
     }
 }
 #endif
@@ -633,7 +623,6 @@ float32 ARCH(float32 param_1)
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "BOWL__Ff")
 
 // func_801860BC
-//#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Done__8NPARMgmtFv")
 void NPARMgmt::Done()
 {
     Clear();
