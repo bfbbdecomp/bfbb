@@ -1,7 +1,10 @@
 #include "zSaveLoad.h"
 
 #include <types.h>
+#include <string.h>
+#include <stdio.h>
 
+#include "zUI.h"
 #include "zGlobals.h"
 #include "zGameState.h"
 #include "zHud.h"
@@ -16,52 +19,105 @@
 #include "../Core/x/xserializer.h"
 #include "../Core/x/xDebug.h"
 #include "../Core/x/xParMgr.h"
-#include "../CodeWarrior/cstring"
-#include "../CodeWarrior/intrin.h"
 #include "../dolphin/dolphin.h"
 
-extern int8 zSaveLoad_strings[];
-
-extern int8 buffer[16];
-extern int8 buffer[16];
-extern basic_rect<float32> screen_bounds;
-extern basic_rect<float32> default_adjust;
 extern uint32 saveSuccess;
-extern float32 time_elapsed_1;
 extern float32 time_last_1;
 extern float32 time_current_1;
 extern iTime t0;
 extern iTime t1;
-extern int32 currentCard;
-extern int32 currentGame;
 extern int32 promptSel;
 extern int32 badCard;
 extern int32 sAvailable;
 extern int32 sNeeded;
 extern int32 sAccessType;
-extern float32 dontPoll;
-extern int32 sLastCard;
-extern int32 sLastGame;
-extern int32 autoSaveCard;
-extern int8 currSceneStr[32];
-extern int8 sceneRead[32];
-extern zSaveLoadUI zSaveLoadUITable[62];
-extern int8* thumbIconMap[15];
-extern zSaveLoadGame zSaveLoadGameTable[3];
 extern uint8 preAutoSaving;
-extern int32 ps2Result;
-extern int32 ps2Formatted;
-extern int32 ps2CardType;
-extern int32 ps2FreeSpace;
-extern zGlobals globals;
-extern xSndGlobals gSnd;
-extern eGameMode gGameMode;
-extern _tagTRCPadInfo gTrcPad[4];
-extern int32 gGameState;
-extern uint32 gFrameCount;
-extern float32 sTimeElapsed;
-extern iTime sTimeLast;
-extern iTime sTimeCurrent;
+
+extern float32 time_elapsed_1;
+extern int32 currentCard;
+extern int32 currentGame;
+extern float32 dontPoll;
+extern int32 autoSaveCard;
+
+int8 currSceneStr[32] = "TEMP";
+int8 sceneRead[32] = "0000";
+zSaveLoadUI zSaveLoadUITable[62]
+#if 1
+    = { { 0, 0, "ld gameslot group" },
+        { 1, 0, "ld memcards group" },
+        { 2, 0, "ld format prompt group" },
+        { 3, 0, "ld mc missing group" },
+        { 4, 0, "mnu3 ld mc1" },
+        { 5, 0, "mnu3 ld mc2" },
+        { 6, 0, "ld gameslot 0" },
+        { 7, 0, "ld gameslot 1" },
+        { 8, 0, "ld gameslot 2" },
+        { 9, 0, "ld gameslot 3" },
+        { 10, 0, "ld gameslot 4" },
+        { 11, 0, "ld gameslot 5" },
+        { 12, 0, "ld gameslot 6" },
+        { 13, 0, "ld gameslot 7" },
+        { 14, 0, "ld format prompt" },
+        { 15, 0, "ld format yes" },
+        { 16, 0, "ld format no" },
+        { 17, 0, "ld mc missing" },
+        { 18, 0, "ld nogames" },
+        { 19, 0, "ld nogames" },
+        { 20, 0, "mnu3 start group" },
+        { 21, 0, "sv gameslot group" },
+        { 22, 0, "sv memcards group" },
+        { 23, 0, "sv mc1" },
+        { 24, 0, "sv mc2" },
+        { 25, 0, "sv gameslot 0" },
+        { 26, 0, "sv gameslot 1" },
+        { 27, 0, "sv gameslot 2" },
+        { 28, 0, "sv gameslot 3" },
+        { 29, 0, "sv gameslot 4" },
+        { 30, 0, "sv gameslot 5" },
+        { 31, 0, "sv gameslot 6" },
+        { 32, 0, "sv gameslot 7" },
+        { 33, 0, "sv format prompt" },
+        { 34, 0, "sv overwrite" },
+        { 35, 0, "sv overwrite damaged" },
+        { 36, 0, "sv mc missing" },
+        { 37, 0, "sv nospace" },
+        { 38, 0, "sv nospacegame" },
+        { 39, 0, "ld mc dontremove" },
+        { 40, 0, "sv mc dontremove" },
+        { 41, 0, "mnu4 mc dontremove" },
+        { 42, 0, "ld badload" },
+        { 43, 0, "sv badsave" },
+        { 44, 0, "mnu3 badformat" },
+        { 45, 0, "mnu3 badformatnocard" },
+        { 46, 0, "mnu4 badformat" },
+        { 47, 0, "mnu4 badformatnocard" },
+        { 48, 0, "mnu3 format confirm" },
+        { 49, 0, "mnu4 format confirm" },
+        { 50, 0, "sv format group" },
+        { 51, 0, "mnu3 disk free" },
+        { 52, 0, "mnu4 disk free" },
+        { 53, 0, "sv card damaged" },
+        { 54, 0, "sv badsavenocard" },
+        { 55, 0, "ld damaged card" },
+        { 56, 0, "sv damaged card" },
+        { 57, 0, "ld wrong device" },
+        { 58, 0, "sv wrong device" },
+        { 59, 0, "ld damaged save" },
+        { 60, 0, "ld damaged save game" },
+        { 0, 0, NULL } }
+#endif
+;
+
+int8* thumbIconMap[15]
+#if 1
+    = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL", "ThumbIconB1",
+        "ThumbIconRB", "ThumbIconBC", "ThumbIconSM", "ThumbIconB2", "ThumbIconKF",
+        "ThumbIconGY", "ThumbIconDB", "ThumbIconB3", "ThumbIconHB", "ThumbIconHB" }
+#endif
+;
+
+//This is in .bss instead of zSaveLoad.s
+extern zSaveLoadGame zSaveLoadGameTable[3];
 
 extern float32 _846;
 extern float32 _847;
@@ -70,87 +126,13 @@ extern float32 _849;
 extern float64 _850;
 extern float64 _852;
 
-// const int8* strings = "ld gameslot group\0"
-//                       "ld memcards group\0"
-//                       "ld format prompt group\0"
-//                       "ld mc missing group\0"
-//                       "mnu3 ld mc1\0"
-//                       "mnu3 ld mc2\0"
-//                       "ld gameslot 0\0"
-//                       "ld gameslot 1\0"
-//                       "ld gameslot 2\0"
-//                       "ld gameslot 3\0"
-//                       "ld gameslot 4\0"
-//                       "ld gameslot 5\0"
-//                       "ld gameslot 6\0"
-//                       "ld gameslot 7\0"
-//                       "ld format prompt\0"
-//                       "ld format yes\0"
-//                       "ld format no\0"
-//                       "ld mc missing\0"
-//                       "ld nogames\0"
-//                       "mnu3 start group\0"
-//                       "sv gameslot group\0"
-//                       "sv memcards group\0"
-//                       "sv mc1\0"
-//                       "sv mc2\0"
-//                       "sv gameslot 0\0"
-//                       "sv gameslot 1\0"
-//                       "sv gameslot 2\0"
-//                       "sv gameslot 3\0"
-//                       "sv gameslot 4\0"
-//                       "sv gameslot 5\0"
-//                       "sv gameslot 6\0"
-//                       "sv gameslot 7\0"
-//                       "sv format prompt\0"
-//                       "sv overwrite\0"
-//                       "sv overwrite damaged\0"
-//                       "sv mc missing\0"
-//                       "sv nospace\0"
-//                       "sv nospacegame\0"
-//                       "ld mc dontremove\0"
-//                       "sv mc dontremove\0"
-//                       "mnu4 mc dontremove\0"
-//                       "ld badload\0"
-//                       "sv badsave\0"
-//                       "mnu3 badformat\0"
-//                       "mnu3 badformatnocard\0"
-//                       "mnu4 badformat\0"
-//                       "mnu4 badformatnocard\0"
-//                       "mnu3 format confirm\0"
-//                       "mnu4 format confirm\0"
-//                       "sv format group\0"
-//                       "mnu3 disk free\0"
-//                       "mnu4 disk free\0"
-//                       "sv card damaged\0"
-//                       "sv badsavenocard\0"
-//                       "ld damaged card\0"
-//                       "sv damaged card\0"
-//                       "ld wrong device\0"
-//                       "sv wrong device\0"
-//                       "ld damaged save\0"
-//                       "ld damaged save game\0"
-//                       "ThumbIconHB\0"
-//                       "ThumbIconJF\0"
-//                       "ThumbIconBB\0"
-//                       "ThumbIconGL\0"
-//                       "ThumbIconB1\0"
-//                       "ThumbIconRB\0"
-//                       "ThumbIconBC\0"
-//                       "ThumbIconSM\0"
-//                       "ThumbIconB2\0"
-//                       "ThumbIconKF\0"
-//                       "ThumbIconGY\0"
-//                       "ThumbIconDB\0"
-//                       "ThumbIconB3";
-
 #ifndef NON_MATCHING
 // func_800AD20C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zUpdateThumbIcon__Fv")
 #else
 void zUpdateThumbIcon()
 {
-    zSaveLoadUI* ui;
+    int32 i;
     int32 start;
     int32 end;
     if (gGameMode == eGameMode_Load)
@@ -164,33 +146,21 @@ void zUpdateThumbIcon()
         end = 28;
     }
 
-    ui = &zSaveLoadUITable[start];
-    for (int i = start; i <= end; ui++, i++)
+    for (i = start; i <= end; i++)
     {
-        xBase* pUiObject = zSceneFindObject(ui->nameID);
-        if (pUiObject != NULL && ((int32)pUiObject[13].link & 2) != 0)
+        _zUI* gameSlot = (_zUI*)zSceneFindObject(zSaveLoadUITable[i].nameID);
+        if (gameSlot != NULL && (gameSlot->uiFlags & 2) != 0)
         {
-            const int8* iconStr;
-            if (gGameMode == eGameMode_Load)
+            uint32 id = xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON");
+            _zUI* thumbIcon = (_zUI*)zSceneFindObject(id);
+            if (thumbIcon != NULL)
             {
-                iconStr = "MNU3 THUMBICON"; //zSaveLoad_strings + 1077;
-            }
-            else
-            {
-                iconStr = "MNU4 THUMBICON"; //zSaveLoad_strings + 1092;
-            }
-
-            xBase* pUiObject2 = zSceneFindObject(xStrHash(iconStr));
-
-            if (pUiObject2 != NULL)
-            {
-                int32 tiIndex = zSaveLoadGameTable[i - start].thumbIconIndex;
-                if (tiIndex > 0 && tiIndex < 15)
+                int32 index = zSaveLoadGameTable[i - start].thumbIconIndex;
+                if (index >= 0 && index < 15)
                 {
-                    uint32 tiHash = xStrHash(thumbIconMap[tiIndex]);
-                    if (*(int*)(*(int*)&pUiObject2[13].baseType + 0x5c) != tiHash)
+                    if (thumbIcon->sasset->textureID != xStrHash(thumbIconMap[index]))
                     {
-                        zChangeThumbIcon(thumbIconMap[tiIndex]);
+                        zChangeThumbIcon(thumbIconMap[index]);
                     }
                 }
                 else
@@ -309,11 +279,7 @@ int32 zSaveLoad_poll(int32 i)
 // func_800AD600
 void zSendEventToThumbIcon(uint32 toEvent)
 {
-    char* iconString = zSaveLoad_strings + 1092; // "MNU4 THUMBICON"
-    if (gGameMode == eGameMode_Load)
-    {
-        iconString = zSaveLoad_strings + 1077; // "MNU3 THUMBICON"
-    }
+    const char* iconString = gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON";
     zEntEvent(zSceneFindObject(xStrHash(iconString)), toEvent);
 }
 
@@ -532,7 +498,7 @@ int32 CardtoTgt(int32 card)
 }
 
 // func_800ADAFC
-int32 zSaveLoadCardCount()
+int32 zSaveLoad_CardCount()
 {
     return 1;
 }
@@ -589,17 +555,17 @@ int32 zSaveLoad_CardPrompt(int32 cardNumber)
 }
 
 // func_800ADBD8
-int32 zSaveLoad_CardPromptFormat(int32 cardNumber)
+int32 zSaveLoad_CardPromptFormat(int32 mode)
 {
     int32 i = 0x15;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0;
     }
     zSaveLoad_UIEvent(i, 0x5f);
 
     i = 0x16;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 1;
     }
@@ -617,10 +583,10 @@ int32 zSaveLoad_CardPromptFormat(int32 cardNumber)
 }
 
 // func_800ADC70
-int32 zSaveLoad_CardPromptSpace(int32 cardNumber)
+int32 zSaveLoad_CardPromptSpace(int32 mode)
 {
     int32 i = 0x15;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0;
     }
@@ -639,10 +605,10 @@ int32 zSaveLoad_CardPromptSpace(int32 cardNumber)
 }
 
 // func_800ADCF0
-int32 zSaveLoad_CardPromptGames(int32 cardNumber)
+int32 zSaveLoad_CardPromptGames(int32 mode)
 {
     int32 i = 0x15;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0;
     }
@@ -746,10 +712,10 @@ int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
 }
 
 // func_800ADF6C
-int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 cardNumber)
+int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
 {
     int i = 0x3a;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0x39;
     }
@@ -762,7 +728,7 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 cardNumber)
     }
 
     i = 0x3a;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0x39;
     }
@@ -771,10 +737,10 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 cardNumber)
 }
 
 // func_800ADFE4
-int32 zSaveLoad_CardDamagedErrorPrompt(int32 cardNumber)
+int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
 {
     int i = 0x38;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0x37;
     }
@@ -787,7 +753,7 @@ int32 zSaveLoad_CardDamagedErrorPrompt(int32 cardNumber)
     }
 
     i = 0x38;
-    if (cardNumber == 1)
+    if (mode == 1)
     {
         i = 0x37;
     }
@@ -989,11 +955,11 @@ int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
         xSGTgtSelect(xsgdata, cardNumber);
         if (xSGTgtHasGameDir(xsgdata, cardNumber) == 1)
         {
-            rc = xSGTgtHaveRoom(xsgdata, cardNumber, 0xcc00, 0xffffffff, &sNeeded, &sAvailable, 0);
+            rc = xSGTgtHaveRoom(xsgdata, cardNumber, 0xcc00, -1, &sNeeded, &sAvailable, 0);
         }
         else
         {
-            rc = xSGTgtHaveRoom(xsgdata, cardNumber, 0xcc00, 0xffffffff, &sNeeded, &sAvailable, 0);
+            rc = xSGTgtHaveRoom(xsgdata, cardNumber, 0xcc00, -1, &sNeeded, &sAvailable, 0);
         }
         if (rc == 0)
         {
@@ -1058,7 +1024,7 @@ int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
         }
         else
         {
-            rc = xSGTgtHaveRoom(xsgdata, cardNumber, 0xcc00, 0xffffffff, &sNeeded, &sAvailable, 0);
+            rc = xSGTgtHaveRoom(xsgdata, cardNumber, 0xcc00, -1, &sNeeded, &sAvailable, 0);
             if (rc == 0)
             {
                 rc = 0;
@@ -1165,16 +1131,15 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
     return rc;
 }
 
-#if 1
 // func_800AE8BC
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotOverwrite_Free__Fii")
-#else
 int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
 {
-    switch (zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber))
+    int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
+    switch (i)
     {
     case -1:
-        return -1;
+        // Won't match by simply returning -1
+        return i;
     case 0:
         return 1;
     case 1:
@@ -1185,39 +1150,57 @@ int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
         return 0;
     }
 }
-#endif
 
-#if 1
 // func_800AE924
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheck__Fii")
-#else
 int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
 {
-    int32 iVar1;
-    int32 uVar2;
-
-    iVar1 = zSaveLoad_CardCheckSingle(cardNumber);
-    while (iVar1 != 2 && iVar1 != 4)
+    int32 cardResult = zSaveLoad_CardCheckSingle(cardNumber);
+    while (cardResult == 0)
     {
-        if (iVar1 != 0)
-        {
-            uVar2 = 1;
-            if (iVar1 == 9)
-            {
-                uVar2 = 9;
-            }
-            return uVar2;
-        }
         badCard = 1;
-        iVar1 = zSaveLoad_CardPrompt(mode);
-        iVar1 = zSaveLoad_CardCheckSingle(cardNumber);
+
+        cardResult = zSaveLoad_CardPrompt(mode);
+        if (cardResult == 2 || cardResult == 4)
+        {
+            return 2;
+        }
+        cardResult = zSaveLoad_CardCheckSingle(cardNumber);
     }
-    return 2;
+    return cardResult == 9 ? 9 : 1;
 }
-#endif
 
 // func_800AE9B0
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckFormatted__Fii")
+int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
+{
+    int32 result;
+    while (result = zSaveLoad_CardCheckFormattedSingle(cardNumber), result != 1)
+    {
+        badCard = 1;
+
+        result = zSaveLoad_CardCheckFormattedSingle(cardNumber);
+        if (result == -1)
+        {
+            return -1;
+        }
+
+        if (result == 7)
+        {
+            return 7;
+        }
+
+        result = zSaveLoad_CardPromptFormat(mode);
+        if (result == 2 || result == 4)
+        {
+            return 2;
+        }
+
+        sAccessType = 3;
+        int32 tmp = format(cardNumber, mode);
+        sAccessType = 2;
+        return tmp != 1 ? tmp : 11;
+    }
+    return 1;
+}
 
 // func_800AEA7C
 int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
@@ -1233,10 +1216,50 @@ int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
 }
 
 // func_800AEAAC
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSpace__Fii")
+int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
+{
+    int32 result = zSaveLoad_CardCheckSpaceSingle(cardNumber);
+    while (result != 1)
+    {
+        badCard = 1;
+
+        result = zSaveLoad_CardCheckSpaceSingle(cardNumber);
+        if (result == -1 || result == 6 || result == 5)
+        {
+            return result;
+        }
+
+        result = zSaveLoad_CardPromptSpace(mode);
+        if (result == 2 || result == 4)
+        {
+            return 2;
+        }
+    }
+    return 1;
+}
 
 // func_800AEB48
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckGames__Fii")
+int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
+{
+    int32 result = zSaveLoad_CardCheckGamesSingle(cardNumber);
+    while (result != 1)
+    {
+        badCard = 1;
+
+        result = zSaveLoad_CardCheckGamesSingle(cardNumber);
+        if (result == -1 || result == 6 || result == 5)
+        {
+            return result;
+        }
+
+        result = zSaveLoad_CardPromptGames(mode);
+        if (result == 2 || result == 4)
+        {
+            return 2;
+        }
+    }
+    return 1;
+}
 
 // func_800AEBE4
 int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode)
@@ -1251,47 +1274,43 @@ int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode
     }
 }
 
-#if 1
 // func_800AEC14
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotEmpty__Fii")
-#else
 int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
 {
-    for (int i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber); i != 2 && i != 4;
-         i = zSaveLoad_CardPromptGameSlotEmpty())
+    int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
+    while (i != 1)
     {
-        if (i == 1)
-        {
-            return 1;
-        }
         i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
         if (i == -1 || i == 6)
         {
             return i;
         }
-    }
-}
-#endif
 
-#if 1
+        i = zSaveLoad_CardPromptGameSlotEmpty();
+        if (i == 2 || i == 4)
+        {
+            return 2;
+        }
+    }
+    return 1;
+}
+
 // func_800AEC98
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotOverwrite__Fii")
 #else
+// Optimizing zSaveLoadGameTable lookup out of loop
 int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
 {
     int32 iVar1 = zSaveLoad_CardCheckSlotOverwrite_Free(cardNumber, gameNumber);
-    if (iVar1 != 1)
+    while (iVar1 != 1 || iVar1 == 10)
     {
-        if (iVar1 == -1)
+        if (iVar1 == -1 || iVar1 == 10)
         {
-            return 0xffffffff;
-        }
-        if (iVar1 == 10)
-        {
-            return 10;
+            return iVar1;
         }
 
-        if (!IsValidName(zSaveLoadGameTable[gameNumber].label))
+        if (IsValidName(zSaveLoadGameTable[gameNumber].label))
         {
             iVar1 = zSaveLoad_CardPromptOverwriteDamaged();
         }
@@ -1313,12 +1332,151 @@ int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
 #endif
 
 // func_800AED3C
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardPick__Fi")
+int32 zSaveLoad_CardPick(int32 mode)
+{
+    int32 done = 0;
+    int32 formatDone = 0x16;
+
+    currentCard = -1;
+    promptSel = -1;
+
+    if (mode == 1)
+    {
+        formatDone = 1;
+    }
+
+    zSaveLoad_UIEvent(formatDone, 0x51);
+    formatDone = 0x17;
+    if (mode == 1)
+    {
+        formatDone = 4;
+    }
+
+    zSaveLoad_UIEvent(formatDone, 0x4f);
+
+    while (!done && promptSel == -1)
+    {
+        if (currentCard != -1)
+        {
+            done = zSaveLoad_CardCheck(currentCard, mode);
+            switch (done)
+            {
+            case 2:
+                currentCard = -1;
+                promptSel = -1;
+                continue;
+            case -1:
+                done = 0;
+                promptSel = -1;
+                continue;
+            case 9:
+                zSaveLoad_CardWrongDeviceErrorPrompt(mode);
+                done = -1;
+                promptSel = -1;
+                continue;
+            }
+
+            done = zSaveLoad_CardCheckFormatted(currentCard, mode);
+            switch (done)
+            {
+            case 5:
+                done = 0;
+                if (promptSel == 3)
+                {
+                    promptSel = -1;
+                    continue;
+                }
+                if (promptSel == 4)
+                {
+                    currentCard = -1;
+                    return -1;
+                }
+                break;
+            case 6:
+                done = 0;
+                promptSel = -1;
+                continue;
+            case 7:
+                zSaveLoad_CardDamagedErrorPrompt(mode);
+                done = -1;
+                promptSel = -1;
+                continue;
+            case 2:
+            case 4:
+                currentCard = -1;
+                promptSel = -1;
+                continue;
+            case -1:
+                done = 0;
+                promptSel = -1;
+                continue;
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+
+            default:
+                break;
+            }
+
+            done = zSaveLoad_CardCheckValid(currentCard, mode);
+            switch (done)
+            {
+            case 5:
+            case 6:
+                done = 0;
+                promptSel = -1;
+                continue;
+            case 2:
+            case 4:
+                promptSel = -1;
+                currentGame = -1;
+                break;
+            case 0:
+            case 1:
+                break;
+            case -1:
+                done = 0;
+                promptSel = -1;
+                continue;
+            case 3:
+                break;
+            }
+        }
+
+        zSaveLoad_Tick();
+    }
+
+    formatDone = 0x16;
+    if (mode == 1)
+    {
+        formatDone = 1;
+    }
+
+    zSaveLoad_UIEvent(formatDone, 0x5f);
+
+    if (done == 1)
+    {
+        return done;
+    }
+    if (promptSel != -1)
+    {
+        return promptSel;
+    }
+    return done;
+}
 
 // func_800AEFA0
-int32 IsValidName(int8* name)
+bool IsValidName(int8* name)
 {
-    if (strcmp((char*)name, zSaveLoad_strings + 1107) == 0)
+    if (strcmp((char*)name, "\0"
+                            "Corrupt Save File\n\n\0"
+                            "%s/%c%c\0"
+                            "block\0"
+                            "blocks\0"
+                            "%d%%  %s    (%d %s)\n%s\0"
+                            "%s (%d)\0"
+                            "Empty") == 0)
     {
         return 0;
     }
@@ -1337,7 +1495,39 @@ int32 IsValidName(int8* name)
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "BuildIt__FPci")
 
 // func_800AF22C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_BuildName__FPci")
+#else
+// Jumptable data
+void zSaveLoad_BuildName(int8* name_txt, int32 idx)
+{
+    int8 desired[128];
+    int8 current_name[128];
+
+    BuildIt(desired, idx);
+
+    int32 counter = 0;
+    for (int32 i; i < idx; i++)
+    {
+        BuildIt(current_name, i);
+        if (strcmp(zSaveLoadGameTable[i].label, zSaveLoadGameTable[idx].label) == 0 &&
+            strcmp(current_name, "Corrupt Save File\n\n") != 0)
+        {
+            counter++;
+        }
+    }
+
+    if (counter > 0)
+    {
+        sprintf(name_txt, "%s (%d)", desired, counter);
+        name_txt[0x3f] = NULL;
+    }
+    else
+    {
+        strcpy(name_txt, desired);
+    }
+}
+#endif
 
 // func_800AF30C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_GameSelect__Fi")
@@ -1385,20 +1575,33 @@ void zSaveLoadAutoSaveUpdate()
         {
         case 0:
         case -1:
-            obj = zSceneFindObject(xStrHash(zSaveLoad_strings + 1186)); //"SAVING GAME ICON UI"
+            obj = zSceneFindObject(xStrHash("SAVING GAME ICON UI")); //"SAVING GAME ICON UI"
             if (obj != NULL)
             {
                 zEntEvent(obj, 3);
             }
             break;
         default:
-            obj = zSceneFindObject(xStrHash(zSaveLoad_strings + 1186)); //"SAVING GAME ICON UI"
+            obj = zSceneFindObject(xStrHash("SAVING GAME ICON UI")); //"SAVING GAME ICON UI"
             if (obj != NULL)
             {
                 zEntEvent(obj, 4);
             }
 
-            obj = zSceneFindObject(xStrHash(zSaveLoad_strings + 1206)); //"MNU4 AUTO SAVE FAILED"
+            obj = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED\0"
+#if 1
+                                            // TODO: Remove this once zSaveLoad_SaveLoop matches
+                                            "PAUSE OPTIONS BKG GROUP\0"
+                                            "PAUSE OPTIONS GROUP\0"
+                                            "PAUSE OPTION MGR UIF\0"
+                                            "PAUSE OPTION SAVE UIF\0"
+                                            "MNU3 START CREATE NEW GAME NO\0"
+                                            "MNU3 START CREATE NEW GAME YES\0"
+                                            "MNU3 START CREATE NEW GAME\0"
+                                            "BLUE ALPHA 1 UI\0"
+                                            "MNU4 SAVE COMPLETED"
+#endif
+                                            )); //"MNU4 AUTO SAVE FAILED"
             if (obj != NULL)
             {
                 zEntEvent(obj, 3);
@@ -1410,40 +1613,15 @@ void zSaveLoadAutoSaveUpdate()
     }
 }
 
-#ifndef NON_MATCHING
 // func_800AF8D4
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DoAutoSave__Fv")
-#else
 int32 zSaveLoad_DoAutoSave()
 {
-    /*
-    r24 - progress/iprocess
-    r25 - success
-    r26 - svinst
-    r27 - asstat
-    r28 - r28
-    r29 - Lastgame
-    r30 - use_tgt
-    r31 - autodata
-    */
-    int32 use_tgt;
-    int32 lastGame;
-    int32 teststat;
-    st_XSAVEGAME_DATA* svinst;
+    int32 success = 0;
+    int32 teststat = 1;
     en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
-    XSGAutoData* autodata;
-    int32 success;
+    st_XSAVEGAME_DATA* svinst;
 
-    uint32 progress;
-    int32 iprocess;
-    int8 label[64];
-    const int8* area;
-
-    success = 0;
-    teststat = 1;
-    asstat = XSG_ASTAT_NOOP;
-
-    autodata = xSGAutoSave_GetCache();
+    XSGAutoData* autodata = xSGAutoSave_GetCache();
     if (autodata == NULL)
     {
         return -1;
@@ -1453,8 +1631,8 @@ int32 zSaveLoad_DoAutoSave()
         return -1;
     }
 
-    use_tgt = CardtoTgt(autodata->LastTarget());
-    lastGame = autodata->LastGame();
+    int32 use_tgt = CardtoTgt(autodata->LastTarget());
+    int32 lastGame = autodata->LastGame();
     autodata->Discard();
     svinst = xSGInit(XSG_MODE_SAVE);
     xSGTgtSelect(svinst, use_tgt);
@@ -1467,22 +1645,24 @@ int32 zSaveLoad_DoAutoSave()
 
     zSceneSave(globals.sceneCur, 0);
 
-    xSGAddSaveClient(svinst, 0x524f4f4d, 0, xSGT_SaveInfoCB, xSGT_SaveProcCB);
-    xSGAddSaveClient(svinst, 0x50524546, 0, xSGT_SaveInfoPrefsCB, xSGT_SaveProcPrefsCB);
+    xSGAddSaveClient(svinst, 'ROOM', 0, xSGT_SaveInfoCB, xSGT_SaveProcCB);
+    xSGAddSaveClient(svinst, 'PREF', 0, xSGT_SaveInfoPrefsCB, xSGT_SaveProcPrefsCB);
 
     xSerial_svgame_register(svinst, XSG_MODE_SAVE);
-    progress = zSceneCalcProgress();
+    uint32 progress = zSceneCalcProgress();
 
-    if (globals.sceneCur->sceneID == 0x50473132)
+    const int8* area;
+    if (globals.sceneCur->sceneID == 'PG12')
     {
-        area = zSceneGetLevelName(0x48423031);
+        area = zSceneGetLevelName('HB01');
     }
     else
     {
-        area = zSceneGetLevelName(progress);
+        area = zSceneGetLevelName(globals.sceneCur->sceneID);
     }
 
-    strncpy(label, area, 0x40);
+    int8 label[64];
+    strncpy(label, area, sizeof(label));
     if (!xSGSetup(svinst, lastGame, label, progress, 0, zSceneGetLevelIndex()))
     {
         teststat = 0;
@@ -1490,7 +1670,7 @@ int32 zSaveLoad_DoAutoSave()
 
     if (teststat != 0)
     {
-        iprocess = xSGProcess(svinst);
+        int32 iprocess = xSGProcess(svinst);
         if (iprocess != 0)
         {
             asstat = xSGAsyncStatus(svinst, 1, 0, 0);
@@ -1506,7 +1686,6 @@ int32 zSaveLoad_DoAutoSave()
             switch (asstat)
             {
             case XSG_ASTAT_INPROG:
-                //This case needed for proper codegen
                 break;
             case XSG_ASTAT_SUCCESS:
                 success = true;
@@ -1548,7 +1727,6 @@ int32 zSaveLoad_DoAutoSave()
         return -1;
     }
 }
-#endif
 
 // func_800AFB84
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveGame__Fv")
@@ -1557,10 +1735,238 @@ int32 zSaveLoad_DoAutoSave()
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadGame__Fv")
 
 // func_800B0064
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadLoop__Fv")
+uint32 zSaveLoad_LoadLoop()
+{
+    zSaveLoadInit();
+    sAccessType = 1;
+    int32 state = 0;
+    while (state != 6)
+    {
+        switch (state)
+        {
+        case 0:
+            while (zSaveLoad_CardCount() == 0)
+            {
+                zSaveLoad_CardPrompt(1);
+            }
+            zSaveLoad_UIEvent(0x14, 0x5f);
+            state = 1;
+            break;
+        case 1:
+            switch (zSaveLoad_CardPick(1))
+            {
+            case 1:
+                state = 2;
+                break;
+            case 4:
+                state = 8;
+                break;
+            case -1:
+                state = 0;
+                break;
+            case 2:
+                break;
+            }
+            break;
+        case 2:
+            switch (zSaveLoad_GameSelect(1))
+            {
+            case 2:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 9:
+                state = 1;
+                break;
+            case 1:
+                state = 9;
+                break;
+            case -1:
+                zSaveLoad_ErrorPrompt(1);
+                state = 1;
+                break;
+            }
+            break;
+        case 3:
+            break;
+        case 8:
+            zGameModeSwitch(eGameMode_Title);
+            zGameStateSwitch(0);
+            state = 6;
+            break;
+        case 9:
+            switch (zSaveLoad_LoadGame())
+            {
+            case 1:
+                zGameModeSwitch(eGameMode_Game);
+                zGameStateSwitch(0);
+                state = 6;
+                globals.autoSaveFeature = 1;
+                break;
+            case 7:
+                zSaveLoad_DamagedSaveGameErrorPrompt(1);
+                state = 1;
+                break;
+            default:
+                zSaveLoad_ErrorPrompt(1);
+                state = 1;
+            }
+        }
+    }
+
+    zSendEventToThumbIcon(4);
+    return (uint32)sceneRead[0] << 0x18 | (uint32)sceneRead[1] << 0x10 |
+           (uint32)sceneRead[2] << 0x8 | (uint32)sceneRead[3];
+}
 
 // func_800B023C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveLoop__Fv")
+#else
+// Scheduling meme on the return
+uint32 zSaveLoad_SaveLoop()
+{
+    zSaveLoadInit();
+    int32 state = 0;
+    saveSuccess = 0;
+
+    while (state != 6)
+    {
+        switch (state)
+        {
+        case 0:
+            while (zSaveLoad_CardCount() == 0)
+            {
+                zSaveLoad_CardPrompt(0);
+            }
+            state = 1;
+            break;
+        case 1:
+            switch (zSaveLoad_CardPick(0))
+            {
+            case 1:
+                state = 2;
+                break;
+            case 4:
+                if (gGameState != 0)
+                {
+                    gGameMode = eGameMode_Pause;
+                    state = 6;
+
+                    xBase* sendTo = zSceneFindObject(xStrHash("PAUSE OPTIONS BKG GROUP"));
+                    zEntEvent(sendTo, 0x5e);
+
+                    sendTo = zSceneFindObject(xStrHash("PAUSE OPTIONS GROUP"));
+                    zEntEvent(sendTo, 0x51);
+
+                    sendTo = zSceneFindObject(xStrHash("PAUSE OPTION MGR UIF"));
+                    zEntEvent(sendTo, 0x5e);
+
+                    sendTo = zSceneFindObject(xStrHash("PAUSE OPTION SAVE UIF"));
+                    zEntEvent(sendTo, 0x5e);
+                }
+                else
+                {
+                    gGameMode = eGameMode_Title;
+                    state = 6;
+
+                    xBase* sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME NO"));
+                    zEntEvent(sendTo, 0x51);
+
+                    sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME NO"));
+                    zEntEvent(sendTo, 0x50);
+
+                    sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME YES"));
+                    zEntEvent(sendTo, 0x5e);
+
+                    sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME"));
+                    zEntEvent(sendTo, 0x51);
+
+                    sendTo = zSceneFindObject(xStrHash("BLUE ALPHA 1 UI"));
+                    zEntEvent(sendTo, 4);
+                }
+                break;
+            case 11:
+                state = 10;
+                currentGame = 0;
+                break;
+            default:
+                state = 0;
+            }
+            break;
+        case 2:
+            sAccessType = 2;
+            switch (zSaveLoad_GameSelect(0))
+            {
+            case 2:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 9:
+                state = 1;
+                break;
+            case 1:
+                state = 10;
+                break;
+            case -1:
+                zSaveLoad_ErrorPrompt(0);
+                state = 1;
+                break;
+            }
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            break;
+        case 11:
+            zGameModeSwitch(eGameMode_Game);
+            zGameStateSwitch(1);
+            state = 6;
+            break;
+        case 10:
+            int32 tmp = zSaveLoad_SaveGame();
+            if (tmp == 1)
+            {
+                zGameModeSwitch(eGameMode_Game);
+                zGameStateSwitch(1);
+                saveSuccess = 1;
+                state = 6;
+
+                xBase* sendTo = zSceneFindObject(xStrHash("MNU4 SAVE COMPLETED"));
+                zEntEvent(sendTo, 3);
+            }
+            else
+            {
+                switch (tmp)
+                {
+                case 7:
+                    zSaveLoad_SaveDamagedErrorPrompt(0);
+                    break;
+                case 8:
+                    zSaveLoad_CardYankedErrorPrompt(0);
+                    break;
+                case 10:
+                    zSaveLoad_CardPromptSpace(0);
+                    break;
+                default:
+                    zSaveLoad_ErrorPrompt(0);
+                    break;
+                }
+                state = 1;
+            }
+            break;
+        }
+    }
+
+    sAccessType = 0;
+    return saveSuccess;
+}
+#endif
 
 #ifndef NON_MATCHING
 // func_800B0548
@@ -1608,9 +2014,9 @@ int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* 
 // func_800B0670
 int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
-    if (globals.sceneCur->sceneID == 0x50473132)
+    if (globals.sceneCur->sceneID == 'PG12')
     {
-        strcpy(currSceneStr, xUtil_idtag2string(0x48423031, 0));
+        strcpy(currSceneStr, xUtil_idtag2string('HB01', 0));
     }
     else
     {
@@ -1638,28 +2044,31 @@ int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WR
     return sum + 1;
 }
 
-#if 1
 // func_800B0800
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s",                                                         \
-                   "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii")
-#else
 int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                       uint32 ui, int32 i)
 {
-    int32 currLen;
-    int8 bigbuf[32];
+#if 1
+    // temporary buffer space used in BuildIt
+    int8 tmpBuf[288] = {};
+#endif
+    int8 bigbuf[32] = {};
+    int32 compdiff = 0;
 
-    currLen = strlen(currSceneStr);
-    xSGReadData(xsgdata, rctxt, bigbuf, 1, currLen);
-    int32 readLen = strlen(bigbuf);
-    currLen = strlen(currSceneStr);
-    if (currLen == readLen)
+    xSGReadData(xsgdata, rctxt, bigbuf, 1, strlen(currSceneStr));
+    // compdiff = ;
+    // compdiff -= ;
+    if (strlen(currSceneStr) != strlen(bigbuf))
+    {
+        compdiff = 1;
+    }
+    if (compdiff == 0)
     {
         strcpy(sceneRead, bigbuf);
     }
-    return __cntlzw((uint32)(currLen != readLen)) >> 5 & 0xff;
+
+    return compdiff == 0;
 }
-#endif
 
 // func_800B08F0
 int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
@@ -1685,10 +2094,9 @@ int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCO
 // func_800B09CC
 uint32 zSaveLoad_slotIsEmpty(uint32 slot)
 {
+    // TODO: Fix this hardcoded offset once string generation is correct
     int8* label = zSaveLoadGameTable[slot].label;
-    // This seems like it should just be a boolean comparison of strcmp and 0,
-    // However, that generates an AND mask that's too small.
-    return __cntlzw(strcmp(label, zSaveLoad_strings + 0x49c)) >> 5 & 0x7ffffff;
+    return strcmp(label, "ld gameslot group" + 0x49c) == 0 ? 1 : 0;
 }
 
 // func_800B0A10
