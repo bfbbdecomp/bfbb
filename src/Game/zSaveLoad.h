@@ -33,7 +33,7 @@ void zSaveLoadUITableInit(zSaveLoadUI* saveTable);
 void zSaveLoad_UIEvent(int32 p1, uint32 p2);
 st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode);
 
-void zSaveLoadSGDone(st_XSAVEGAME_DATA* data);
+int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data);
 int32 zSaveLoad_getgame();
 int32 zSaveLoad_getcard();
 int32 zSaveLoad_getMCavailable();

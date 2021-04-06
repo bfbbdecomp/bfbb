@@ -354,7 +354,7 @@ st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
 }
 
 // func_800AD874
-void zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
+int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
 {
     if (data->mode == XSG_MODE_LOAD)
     {
@@ -364,7 +364,7 @@ void zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
     {
         zSaveLoad_UIEvent(0x28, 0x52);
     }
-    xSGDone(data);
+    return xSGDone(data);
 }
 
 // func_800AD8CC
@@ -1944,7 +1944,131 @@ int32 zSaveLoad_DoAutoSave()
 }
 
 // func_800AFB84
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveGame__Fv")
+#else
+// Reordering at beginning
+int32 zSaveLoad_SaveGame()
+{
+    int32 success = false;
+    int32 teststat = true;
+    en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
+    int32 use_tgt = CardtoTgt(currentCard);
+    int32 use_game = currentGame;
+    autoSaveCard = currentCard;
+
+    st_XSAVEGAME_DATA* xsgdata = zSaveLoadSGInit(XSG_MODE_SAVE);
+    if (xSGCheckMemoryCard(xsgdata, currentCard) == 0)
+    {
+        zSaveLoadSGDone(xsgdata);
+        return 8;
+    }
+
+    xSGTgtSelect(xsgdata, use_tgt);
+    xSGGameSet(xsgdata, use_game);
+    if (xsgdata == NULL)
+    {
+        teststat = false;
+    }
+
+    zSceneSave(globals.sceneCur, NULL);
+
+    xSGAddSaveClient(xsgdata, 'ROOM', NULL, xSGT_SaveInfoCB, xSGT_SaveProcCB);
+    xSGAddSaveClient(xsgdata, 'PREF', NULL, xSGT_SaveInfoPrefsCB, xSGT_SaveProcPrefsCB);
+
+    xSerial_svgame_register(xsgdata, XSG_MODE_SAVE);
+
+    uint32 progress = zSceneCalcProgress();
+    int8 label[64];
+    const int8* area;
+
+    if (globals.sceneCur->sceneID == 'PG12')
+    {
+        area = zSceneGetLevelName('HB01');
+    }
+    else
+    {
+        area = zSceneGetLevelName(globals.sceneCur->sceneID);
+    }
+
+    strncpy(label, area, sizeof(label));
+
+    if (!xSGSetup(xsgdata, use_game, label, progress, 0, zSceneGetLevelIndex()))
+    {
+        teststat = false;
+    }
+
+    en_XSG_WHYFAIL whyFail = XSG_WHYERR_NONE;
+    if (teststat)
+    {
+        int32 rc = xSGProcess(xsgdata);
+        if (rc)
+        {
+            asstat = xSGAsyncStatus(xsgdata, 1, &whyFail, NULL);
+        }
+
+        xSGGameIsEmpty(xsgdata, use_game);
+        xSGTgtHasGameDir(xsgdata, use_tgt);
+        if (!rc)
+        {
+            teststat = false;
+        }
+        else
+        {
+            switch (asstat)
+            {
+            case XSG_ASTAT_SUCCESS:
+                success = true;
+                break;
+            case XSG_ASTAT_FAILED:
+                success = false;
+                break;
+            case XSG_ASTAT_NOOP:
+            case XSG_ASTAT_INPROG:
+                break;
+            }
+        }
+    }
+
+    if (teststat && !xSGWrapup(xsgdata))
+    {
+        teststat = false;
+    }
+
+    if (!xSGCheckMemoryCard(xsgdata, currentCard))
+    {
+        zSaveLoadSGDone(xsgdata);
+        return 8;
+    }
+
+    if (!zSaveLoadSGDone(xsgdata))
+    {
+        teststat = false;
+    }
+
+    XSGAutoData* asg = xSGAutoSave_GetCache();
+    if (success && teststat)
+    {
+        int32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
+        asg->SetCache(use_tgt, use_game, idx);
+        globals.autoSaveFeature = 1;
+        return 1;
+    }
+    asg->Discard();
+
+    switch (whyFail)
+    {
+    case XSG_WHYERR_DAMAGE:
+    case XSG_WHYERR_OTHER:
+        return 7;
+    case XSG_WHYERR_NOCARD:
+    case XSG_WHYERR_CARDYANKED:
+        return 8;
+    default:
+        return -1;
+    }
+}
+#endif
 
 // func_800AFE6C
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadGame__Fv")
