@@ -4,57 +4,6 @@
 
 .section .text  # 0x800A7CC4 - 0x800A87EC
 
-.global zParCmdInit__Fv
-zParCmdInit__Fv:
-/* 800A7CC4 000A4AC4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A7CC8 000A4AC8  7C 08 02 A6 */	mflr r0
-/* 800A7CCC 000A4ACC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A7CD0 000A4AD0  4B F8 EE BD */	bl xParCmdInit__Fv
-/* 800A7CD4 000A4AD4  3C 80 80 0B */	lis r4, xParCmdJet_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7CD8 000A4AD8  38 60 00 04 */	li r3, 4
-/* 800A7CDC 000A4ADC  38 A4 82 98 */	addi r5, r4, xParCmdJet_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7CE0 000A4AE0  38 80 00 2C */	li r4, 0x2c
-/* 800A7CE4 000A4AE4  4B F8 F0 DD */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7CE8 000A4AE8  3C 80 80 0A */	lis r4, xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7CEC 000A4AEC  38 60 00 0E */	li r3, 0xe
-/* 800A7CF0 000A4AF0  38 A4 7F A0 */	addi r5, r4, xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7CF4 000A4AF4  38 80 00 10 */	li r4, 0x10
-/* 800A7CF8 000A4AF8  4B F8 F0 C9 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7CFC 000A4AFC  3C 80 80 0B */	lis r4, xParCmdCustom_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7D00 000A4B00  38 60 00 10 */	li r3, 0x10
-/* 800A7D04 000A4B04  38 A4 86 30 */	addi r5, r4, xParCmdCustom_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7D08 000A4B08  38 80 00 1C */	li r4, 0x1c
-/* 800A7D0C 000A4B0C  4B F8 F0 B5 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D10 000A4B10  3C 80 80 0A */	lis r4, xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7D14 000A4B14  38 60 00 1A */	li r3, 0x1a
-/* 800A7D18 000A4B18  38 A4 7E FC */	addi r5, r4, xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7D1C 000A4B1C  38 80 00 0C */	li r4, 0xc
-/* 800A7D20 000A4B20  4B F8 F0 A1 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D24 000A4B24  3C 80 80 0A */	lis r4, xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7D28 000A4B28  38 60 00 1B */	li r3, 0x1b
-/* 800A7D2C 000A4B2C  38 A4 7F A4 */	addi r5, r4, xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7D30 000A4B30  38 80 00 0C */	li r4, 0xc
-/* 800A7D34 000A4B34  4B F8 F0 8D */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D38 000A4B38  3C 80 80 0B */	lis r4, xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7D3C 000A4B3C  38 60 00 1C */	li r3, 0x1c
-/* 800A7D40 000A4B40  38 A4 81 2C */	addi r5, r4, xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7D44 000A4B44  38 80 00 10 */	li r4, 0x10
-/* 800A7D48 000A4B48  4B F8 F0 79 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D4C 000A4B4C  3C 80 80 0B */	lis r4, xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7D50 000A4B50  38 60 00 16 */	li r3, 0x16
-/* 800A7D54 000A4B54  38 A4 85 18 */	addi r5, r4, xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7D58 000A4B58  38 80 00 14 */	li r4, 0x14
-/* 800A7D5C 000A4B5C  4B F8 F0 65 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D60 000A4B60  3C 80 80 0A */	lis r4, xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf@ha
-/* 800A7D64 000A4B64  38 60 00 11 */	li r3, 0x11
-/* 800A7D68 000A4B68  38 A4 7E 2C */	addi r5, r4, xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf@l
-/* 800A7D6C 000A4B6C  38 80 00 10 */	li r4, 0x10
-/* 800A7D70 000A4B70  4B F8 F0 51 */	bl xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v
-/* 800A7D74 000A4B74  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800A7D78 000A4B78  7C 08 03 A6 */	mtlr r0
-/* 800A7D7C 000A4B7C  38 21 00 10 */	addi r1, r1, 0x10
-/* 800A7D80 000A4B80  4E 80 00 20 */	blr 
-
 .global zParCmdFindClipVolumes__Fv
 zParCmdFindClipVolumes__Fv:
 /* 800A7D84 000A4B84  94 21 FF B0 */	stwu r1, -0x50(r1)

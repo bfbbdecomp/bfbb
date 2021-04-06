@@ -251,7 +251,7 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeSpiral__FP8NPARMgmtf")
 
 // func_80182728
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
 #else
 // Matches, it just defines new data that won't match until that stuff can be redefined.
