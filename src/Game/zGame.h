@@ -100,6 +100,10 @@ enum eGameWhereAmI
     eGameWhere_SetupPlayerEnd
 };
 
+extern iTime sTimeCurrent;
+extern iTime sTimeLast;
+extern float32 sTimeElapsed;
+
 void zGameSetupPlayer();
 void xDrawBegin();
 void xDrawEnd();
