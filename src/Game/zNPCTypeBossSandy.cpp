@@ -2,9 +2,11 @@
 
 #include "../Core/x/xAnim.h"
 #include "../Core/x/xVec3.h"
+#include "../Core/x/xEvent.h"
 #include "../Core/x/xCamera.h"
 #include "../Core/x/xMath3.h"
 
+#include "zEnt.h"
 #include "zFX.h"
 #include "zGlobals.h"
 #include "zNPCSndTable.h"
@@ -260,27 +262,183 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_8014075C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Process__10zNPCBSandyFP6xScenef")
 
-// func_80141668
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "hiddenByCutscene__10zNPCBSandyFv")
+void zNPCBSandy::hiddenByCutscene()
+{
+    for (int32 i = 0; i < 3; i++)
+    {
+        this->underwear[i]->state = (this->underwear[i]->state & 0xffffffc0) | 1;
+        zEntEvent(this->underwear[i], eEventCollision_Visible_On);
+        this->underwear[i]->timer = __830; // 0.0
+    }
 
-// func_8014184C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
-                   "Damage__10zNPCBSandyF18en_NPC_DAMAGE_TYPEP5xBasePC5xVec3")
+    switch (this->round)
+    {
+    case 1:
+    {
+        this->hangingScoreboard->chkby &= 0xef;
+        this->hangingScoreboard->flags |= 1;
+        this->bustedScoreboard->chkby &= 0xef;
+        this->bustedScoreboard->flags &= 0xfe;
+        this->crashedScoreboard->chkby &= 0xef;
+        this->crashedScoreboard->flags &= 0xfe;
+
+        this->ropeObjectLo[4] = this->ropeSb;
+
+        xEntHide(this->ropeSbDamaged);
+        xEntShow(this->ropeSb);
+
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+
+        zLightningShow(this->wireLight[0], 0);
+        zLightningShow(this->wireLight[1], 0);
+
+        break;
+    }
+    case 2:
+    {
+        this->crashedScoreboard->chkby |= 0x10;
+        this->crashedScoreboard->flags |= 1;
+        this->hangingScoreboard->chkby &= 0xef;
+        this->hangingScoreboard->flags &= 0xfe;
+        this->bustedScoreboard->chkby &= 0xef;
+        this->bustedScoreboard->flags &= 0xfe;
+
+        this->ropeObjectLo[4] = this->ropeSbDamaged;
+
+        xEntHide(this->ropeSb);
+        xEntShow(this->ropeSbDamaged);
+
+        zLightningShow(this->wireLight[0], 1);
+        zLightningShow(this->wireLight[1], 1);
+
+        gCurrentPlayer = eCurrentPlayerPatrick;
+
+        break;
+    }
+    case 3:
+    {
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        break;
+    }
+    }
+}
+
+void zNPCBSandy::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
+{
+    if (damtype == DMGTYP_INSTAKILL)
+    {
+        this->bossFlags |= 0x100;
+    }
+}
 
 // func_80141864
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_AddBoundEntsToGrid__FP6zScene")
 
-// func_8014198C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "zNPCBSandy_GameIsPaused__FP6zScene")
+void zNPCBSandy_GameIsPaused(zScene*)
+{
+    if (sSandyPtr)
+    {
+        if (sSandyPtr->bossFlags & 0x400)
+        {
+            sSandyPtr->bossFlags &= ~0x400; // clear bit
+            sSandyPtr->hiddenByCutscene();
+        }
+    }
+}
 
 // func_801419D0
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "NewTime__10zNPCBSandyFP6xScenef")
 
-// func_80142150
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "idleCB__FP5xGoalPvP11en_trantypefPv")
+int32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, float32, void*)
+{
+    zNPCGoalBossSandyIdle* idle = (zNPCGoalBossSandyIdle*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)idle->psyche->clt_owner;
+    int32 nextgoal = 0;
+    xVec3 tempVector;
 
-// func_80142250
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "tauntCB__FP5xGoalPvP11en_trantypefPv")
+    if (sandy->bossFlags & 0x400)
+    {
+        return 0;
+    }
+
+    if (globals.player.ControlOff)
+    {
+        return 0;
+    }
+
+    if (sandy->hitPoints == 0)
+    {
+        return 0;
+    }
+
+    xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    tempVector.y = __830; // 0.0
+
+    float32 length = xVec3Length2(&tempVector);
+
+    if (idle->timeInGoal > _1463) // 0.3
+    {
+        if (length > _2173) // 12.0
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB3';
+        }
+        else
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB4';
+        }
+    }
+
+    return nextgoal;
+}
+
+int32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    zNPCGoalBossSandyTaunt* taunt = (zNPCGoalBossSandyTaunt*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)taunt->psyche->clt_owner;
+    int32 nextgoal = 0;
+    xVec3 tempVector;
+
+    if (taunt->timeInGoal > _1463) // 0.3
+    {
+        if (sandy->bossFlags & 0x400)
+        {
+            *trantype = GOAL_TRAN_SET;
+            return 'NGB1';
+        }
+    }
+
+    xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    tempVector.y = __830; // 0.0
+
+    float32 length = xVec3Length2(&tempVector);
+
+    if (sandy->AnimTimeRemain(NULL) < _1381 * dt) // 1.1
+    {
+        if (globals.player.ControlOff)
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB1';
+        }
+        else if (length > _2173) // 12.0
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB3';
+        }
+        else
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB4';
+        }
+    }
+
+    return nextgoal;
+}
 
 // func_8014239C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "chaseCB__FP5xGoalPvP11en_trantypefPv")
@@ -288,25 +446,100 @@ void zNPCBSandy_BossDamageEffect_Init()
 // func_80142660
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "meleeCB__FP5xGoalPvP11en_trantypefPv")
 
-// func_8014289C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "noHeadCB__FP5xGoalPvP11en_trantypefPv")
-#else
 int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 {
-    zNPCGoalBossSandyNoHead* noHead;
-    zNPCBSandy* sandy;
-    int32 nextgoal;
+    zNPCGoalBossSandyNoHead* noHead = (zNPCGoalBossSandyNoHead*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)noHead->psyche->clt_owner;
+    int32 nextgoal = 0;
 
-    return 0;
+    if (noHead->stage == 4 || noHead->stage == 5)
+    {
+        if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB1';
+        }
+    }
+
+    return nextgoal;
 }
-#endif
 
-// func_8014292C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "elbowDropCB__FP5xGoalPvP11en_trantypefPv")
+int32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    zNPCGoalBossSandyElbowDrop* edrop = (zNPCGoalBossSandyElbowDrop*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)edrop->psyche->clt_owner;
+    int32 nextgoal = 0;
+    xVec3 tempVector;
 
-// func_80142AA0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "leapCB__FP5xGoalPvP11en_trantypefPv")
+    if (edrop->timeInGoal > _1463) // 0.3
+    {
+        if (sandy->bossFlags & 0x400)
+        {
+            *trantype = GOAL_TRAN_SET;
+            return 'NGB1';
+        }
+    }
+
+    xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    tempVector.y = __830; // 0.0
+
+    float32 length = xVec3Length2(&tempVector);
+
+    if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+    {
+        if (globals.player.ControlOff)
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB1';
+        }
+        else if (sandy->bossFlags & 2)
+        {
+            sandy->bossFlags &= ~2; // clear bit 2
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB2';
+        }
+        else if (length < _2173) // 12.0
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB4';
+        }
+        else
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 'NGB3';
+        }
+    }
+
+    return nextgoal;
+}
+
+int32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
+{
+    zNPCGoalBossSandyLeap* leap = (zNPCGoalBossSandyLeap*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)leap->psyche->clt_owner;
+    int32 nextgoal = 0;
+
+    if (leap->stage == 3)
+    {
+        if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+        {
+            if (sandy->bossFlags & 2)
+            {
+                *trantype = GOAL_TRAN_SET;
+                nextgoal = 'NGB9';
+            }
+            else
+            {
+                *trantype = GOAL_TRAN_SET;
+                nextgoal = 'NGB8';
+            }
+        }
+    }
+
+    return nextgoal;
+}
 
 // func_80142B54
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "sitCB__FP5xGoalPvP11en_trantypefPv")
