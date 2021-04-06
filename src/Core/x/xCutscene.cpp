@@ -11,7 +11,6 @@
 #include <types.h>
 #include <string.h>
 
-extern uint32 gFrameCount;
 extern xCutscene sActiveCutscene;
 extern xCutsceneInfo* sCutTocInfo;
 extern uint32 sCutTocCount;
@@ -181,7 +180,6 @@ float32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, uint32 par
     }
     while (true)
     {
-        
         if (param_4 != param_2[i].Index)
         {
             break;
