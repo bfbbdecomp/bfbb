@@ -2071,7 +2071,105 @@ int32 zSaveLoad_SaveGame()
 #endif
 
 // func_800AFE6C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadGame__Fv")
+#else
+// Reordering, causing different register use at the end
+int32 zSaveLoad_LoadGame()
+{
+    int32 success = false;
+    int32 teststat = true;
+    int32 rc;
+    en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
+    int32 use_tgt = CardtoTgt(currentCard);
+    autoSaveCard = currentCard;
+
+    st_XSAVEGAME_DATA* xsgdata = zSaveLoadSGInit(XSG_MODE_LOAD);
+    xSGTgtSelect(xsgdata, use_tgt);
+    xSGGameSet(xsgdata, currentGame);
+
+    if (xsgdata == NULL)
+    {
+        teststat = false;
+    }
+
+    xSGAddLoadClient(xsgdata, 'ROOM', NULL, xSGT_LoadLoadCB);
+    xSGAddLoadClient(xsgdata, 'PREF', NULL, xSGT_LoadPrefsCB);
+    xSerial_svgame_register(xsgdata, XSG_MODE_LOAD);
+
+    if (!xSGSetup(xsgdata))
+    {
+        teststat = false;
+    }
+
+    en_XSG_WHYFAIL whyFail = XSG_WHYERR_NONE;
+    if (teststat)
+    {
+        rc = xSGProcess(xsgdata);
+        if (rc)
+        {
+            asstat = xSGAsyncStatus(xsgdata, 1, &whyFail, NULL);
+        }
+        if (!rc)
+        {
+            teststat = false;
+        }
+        else
+        {
+            switch (asstat)
+            {
+            case XSG_ASTAT_SUCCESS:
+                success = true;
+                break;
+            case XSG_ASTAT_FAILED:
+                success = false;
+                break;
+            case XSG_ASTAT_NOOP:
+            case XSG_ASTAT_INPROG:
+                break;
+            }
+        }
+    }
+
+    if (teststat)
+    {
+        rc = xSGWrapup(xsgdata);
+        if (rc < 0)
+        {
+            teststat = false;
+            whyFail = XSG_WHYERR_OTHER;
+        }
+        else if (rc == 0)
+        {
+            teststat = false;
+        }
+    }
+
+    if (!zSaveLoadSGDone(xsgdata))
+    {
+        teststat = false;
+    }
+
+    XSGAutoData* asg = xSGAutoSave_GetCache();
+    int32 use_game = currentCard;
+    if (success && teststat)
+    {
+        int32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
+        asg->SetCache(use_tgt, use_game, idx);
+        globals.autoSaveFeature = 1;
+        return 1;
+    }
+    asg->Discard();
+
+    switch (whyFail)
+    {
+    case XSG_WHYERR_OTHER:
+        return 7;
+    default:
+        return -1;
+    }
+}
+#endif
 
 // func_800B0064
 uint32 zSaveLoad_LoadLoop()
