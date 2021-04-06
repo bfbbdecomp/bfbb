@@ -340,7 +340,7 @@ int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 // func_8014340C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s", "Enter__22zNPCGoalBossSandyChaseFfPv")
 
-// func_80143468
+// func_80143468  test
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeBossSandy.s",                                                 \
                    "Process__22zNPCGoalBossSandyChaseFP11en_trantypefPvP6xScene")
 
