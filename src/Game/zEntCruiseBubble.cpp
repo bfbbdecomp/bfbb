@@ -3187,14 +3187,28 @@ void cruise_bubble::state_player_fire::update_wand(float32 dt)
 }
 
 // func_8005CD94
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_waitFv")
+#else
+void cruise_bubble::state_player_wait::start()
+{
+    cruise_bubble::hide_wand();
+}
+#endif
 
 // func_8005CDB4
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_waitFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_player_wait::update(float32)
+{
+    return STATE_PLAYER_WAIT;
+}
+#endif
 
 // func_8005CDBC
 #pragma GLOBAL_ASM(                                                                                \

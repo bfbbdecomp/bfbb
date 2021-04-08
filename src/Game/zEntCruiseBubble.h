@@ -212,6 +212,9 @@ namespace cruise_bubble
     struct state_player_wait : state_type
     {
         state_player_wait();
+
+        void start();
+        state_enum update(float32 dt);
     };
 
     struct sound_config
