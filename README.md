@@ -14,7 +14,7 @@ It builds the following DOL:
 
 main.dol: `sha1: 306526d90b48e99894c3138f5fc8f2716d9fecf6`
 
-Join us on the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) under `#decomp-discussion`
+Join us on the [BFBB Decompilation Discord](https://discord.gg/dVbGFdYU6A)
 
 ## Progress
 
