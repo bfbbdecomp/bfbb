@@ -4562,10 +4562,6 @@ lbl_8005CF5C:
 /* 8005CF78 00059D78  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005CF7C 00059D7C  4E 80 00 20 */	blr 
 
-/* update_effects__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_missle_appearFf */
-update_effects__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFf:
-/* 8005CF80 00059D80  4E 80 00 20 */	blr 
-
 start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv:
 /* 8005CF84 00059D84  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005CF88 00059D88  7C 08 02 A6 */	mflr r0

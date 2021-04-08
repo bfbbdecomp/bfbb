@@ -152,6 +152,7 @@ namespace cruise_bubble
         state_missle_appear();
 
         void move();
+        void update_effects(float32 dt);
     };
 
     struct state_camera_seize : state_type

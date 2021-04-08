@@ -3237,10 +3237,10 @@ void cruise_bubble::state_missle_appear::move()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFf")
 
-// func_8005CF80
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_effects__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFf")
+void cruise_bubble::state_missle_appear::update_effects(float32 dt)
+{
+    //empty
+}
 
 // func_8005CF84
 #pragma GLOBAL_ASM(                                                                                \
