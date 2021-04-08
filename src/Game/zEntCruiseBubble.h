@@ -74,6 +74,7 @@ namespace cruise_bubble
 
         void start();
         state_enum update(float32 dt);
+        void update_wand(float32 dt);
     };
 
     struct state_camera_aim : state_type

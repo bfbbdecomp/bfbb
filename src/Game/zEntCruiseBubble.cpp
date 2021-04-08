@@ -3122,10 +3122,10 @@ xMat4x3* cruise_bubble::get_missle_mat()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFf")
 
-// func_8005CD90
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_wand__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFf")
+void cruise_bubble::state_player_fire::update_wand(float32 dt)
+{
+    // empty
+}
 
 // func_8005CD94
 #pragma GLOBAL_ASM(                                                                                \

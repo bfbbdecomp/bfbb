@@ -4449,10 +4449,6 @@ lbl_8005CD64:
 /* 8005CD88 00059B88  38 21 00 40 */	addi r1, r1, 0x40
 /* 8005CD8C 00059B8C  4E 80 00 20 */	blr 
 
-/* update_wand__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_fireFf */
-update_wand__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFf:
-/* 8005CD90 00059B90  4E 80 00 20 */	blr 
-
 start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_waitFv:
 /* 8005CD94 00059B94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005CD98 00059B98  7C 08 02 A6 */	mflr r0
