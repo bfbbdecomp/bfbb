@@ -70,9 +70,7 @@ extern struct _class_36
     {
         float32 samples;
         float32 bubbles;
-        // Offset: 0x114
         xMat4x3 mat;
-        // Offset: 0x154
         xQuat dir;
     } trail;
     struct _class_6
@@ -85,6 +83,7 @@ extern struct _class_36
         } player;
         struct _class_16
         {
+            // Offset: 0x170
             xAnimState* fire;
             xAnimState* fly;
         } missle;
@@ -681,7 +680,7 @@ void cruise_bubble::refresh_trail(xMat4x3& mat, xQuat& quat)
 
 // func_80057C78
 #ifndef NONMATCHING
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "start_trail__13cruise_bubbleFv")
 #else
 void cruise_bubble::start_trail()
 {
@@ -3210,9 +3209,20 @@ cruise_bubble::state_enum cruise_bubble::state_player_wait::update(float32)
 #endif
 
 // func_8005CDBC
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv")
+#else
+void cruise_bubble::state_missle_appear::start()
+{
+    cruise_bubble::show_missle();
+    shared.missle_model->Flags = shared.missle_model->Flags & 0xfffe;
+    shared.missle_model->Alpha = zEntCruiseBubble_f_1_0;
+    xAnimPlaySetState(shared.missle_model->Anim->Single, shared.astate.missle.fire, zEntCruiseBubble_f_0_0);
+    this->move();
+}
+#endif
 
 void cruise_bubble::state_missle_appear::move()
 {
@@ -3228,14 +3238,41 @@ void cruise_bubble::state_missle_appear::move()
 }
 
 // func_8005CEA0
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv")
+#else
+void cruise_bubble::state_missle_appear::stop()
+{
+    hide_missle();
+}
+#endif
 
 // func_8005CEC0
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_missle_appear::update(float32 dt)
+{
+    float32 time = shared.missle_model->Anim->Single->Time + dt;
+    if (time >= current_tweak->missle.appear.delay_show)
+    {
+        shared.missle_model->Flags = shared.missle_model->Flags | 0x1;
+        start_trail();
+    }
+    move();
+
+    if (time >= current_tweak->missle.appear.delay_fly) {
+        return STATE_MISSLE_FLY;
+    }
+
+    this->update_effects(dt);
+    return STATE_MISSLE_APPEAR;
+}
+#endif
 
 void cruise_bubble::state_missle_appear::update_effects(float32 dt)
 {

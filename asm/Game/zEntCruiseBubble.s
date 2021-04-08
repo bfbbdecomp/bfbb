@@ -308,7 +308,10 @@ lbl_800578C8:
 /* 800578E4 000546E4  4E 80 00 20 */	blr 
 
 /* start_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+start_trail__13cruise_bubbleFv:
 /* 80057C78 00054A78  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057C7C 00054A7C  7C 08 02 A6 */	mflr r0
 /* 80057C80 00054A80  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha

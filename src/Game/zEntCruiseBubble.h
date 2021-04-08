@@ -151,6 +151,9 @@ namespace cruise_bubble
     {
         state_missle_appear();
 
+        void start();
+        void stop();
+        state_enum update(float32 dt);
         void move();
         void update_effects(float32 dt);
     };
