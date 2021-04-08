@@ -150,6 +150,8 @@ namespace cruise_bubble
     struct state_missle_appear : state_type
     {
         state_missle_appear();
+
+        void move();
     };
 
     struct state_camera_seize : state_type

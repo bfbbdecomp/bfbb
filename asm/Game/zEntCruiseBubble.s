@@ -4499,38 +4499,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19s
 /* 8005CE24 00059C24  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005CE28 00059C28  4E 80 00 20 */	blr 
 
-/* move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_missle_appearFv */
-move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv:
-/* 8005CE2C 00059C2C  94 21 FF D0 */	stwu r1, -0x30(r1)
-/* 8005CE30 00059C30  7C 08 02 A6 */	mflr r0
-/* 8005CE34 00059C34  90 01 00 34 */	stw r0, 0x34(r1)
-/* 8005CE38 00059C38  93 E1 00 2C */	stw r31, 0x2c(r1)
-/* 8005CE3C 00059C3C  4B FF FE 35 */	bl get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005CE40 00059C40  7C 7F 1B 78 */	mr r31, r3
-/* 8005CE44 00059C44  4B FF FA 91 */	bl get_player_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005CE48 00059C48  7C 64 1B 78 */	mr r4, r3
-/* 8005CE4C 00059C4C  7F E3 FB 78 */	mr r3, r31
-/* 8005CE50 00059C50  4B FA E7 1D */	bl __as__7xMat4x3FRC7xMat4x3
-/* 8005CE54 00059C54  7F E3 FB 78 */	mr r3, r31
-/* 8005CE58 00059C58  38 81 00 14 */	addi r4, r1, 0x14
-/* 8005CE5C 00059C5C  4B FD 4F D9 */	bl xMat3x3GetEuler__FPC7xMat3x3P5xVec3
-/* 8005CE60 00059C60  7F E3 FB 78 */	mr r3, r31
-/* 8005CE64 00059C64  38 81 00 14 */	addi r4, r1, 0x14
-/* 8005CE68 00059C68  4B FD 53 3D */	bl xMat3x3Euler__FP7xMat3x3PC5xVec3
-/* 8005CE6C 00059C6C  80 AD 81 80 */	lwz r5, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005CE70 00059C70  7F E4 FB 78 */	mr r4, r31
-/* 8005CE74 00059C74  38 61 00 08 */	addi r3, r1, 8
-/* 8005CE78 00059C78  38 A5 00 30 */	addi r5, r5, 0x30
-/* 8005CE7C 00059C7C  48 00 31 C1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
-/* 8005CE80 00059C80  38 7F 00 30 */	addi r3, r31, 0x30
-/* 8005CE84 00059C84  38 81 00 08 */	addi r4, r1, 8
-/* 8005CE88 00059C88  4B FB 85 BD */	bl __apl__5xVec3FRC5xVec3
-/* 8005CE8C 00059C8C  80 01 00 34 */	lwz r0, 0x34(r1)
-/* 8005CE90 00059C90  83 E1 00 2C */	lwz r31, 0x2c(r1)
-/* 8005CE94 00059C94  7C 08 03 A6 */	mtlr r0
-/* 8005CE98 00059C98  38 21 00 30 */	addi r1, r1, 0x30
-/* 8005CE9C 00059C9C  4E 80 00 20 */	blr 
-
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv:
 /* 8005CEA0 00059CA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005CEA4 00059CA4  7C 08 02 A6 */	mflr r0

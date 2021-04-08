@@ -3128,7 +3128,6 @@ void cruise_bubble::state_player_fire::start()
 }
 #endif
 
-
 xMat4x3* cruise_bubble::get_missle_mat()
 {
     return (xMat4x3*) shared.missle_model->Mat;
@@ -3215,10 +3214,18 @@ cruise_bubble::state_enum cruise_bubble::state_player_wait::update(float32)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv")
 
-// func_8005CE2C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv")
+void cruise_bubble::state_missle_appear::move()
+{
+    xMat4x3& mat = *get_missle_mat();
+    xVec3 euler;
+    xVec3 prod;
+
+    mat = *get_player_mat();
+    xMat3x3GetEuler(&mat, &euler);
+    xMat3x3Euler(&mat, &euler);
+    xMat3x3RMulVec(&prod, &mat, &current_tweak->missle.appear.offset);
+    mat.pos += prod;
+}
 
 // func_8005CEA0
 #pragma GLOBAL_ASM(                                                                                \
