@@ -2760,346 +2760,73 @@ void cruise_bubble::render_screen()
 }
 
 // func_8005C09C
-#if 0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s",                                                  \
                    "insert_player_animations__13cruise_bubbleFR10xAnimTable")
 #else
 void cruise_bubble::insert_player_animations(xAnimTable& table)
 {
-// Size=740
-    // r28 = r4 + shared__13cruise_bubble@l;
-    // r30_table = r3;
-    // r0 = 0x164(r28);
-    // cmplwi r0, 0
-    // bne lbl_8005C36C_return
-
+    // not matching for different reasons
+    // register scheduling
+    // register allocation, caching stringBase at reused offsets
+    // closest to a match i got was by incrementing the offsets from stringBase such that they're all unique
+    // after that its pretty clear that this is a functional match
+    
     if (shared.astate.player.aim != NULL)
     {
         return;
     }
     
-    // r5 = xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha; // [int16]
-    // r5 = r5 + xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l;
-    // r0 = 0;
-    // 8(r1) = r5;
-    // 0xc(r1) = r0;
-    // 0x10(r1) = r0;
-    // r4 = stringBase0__13cruise_bubble@ha; // [int16]
-    // r4 = r4 + stringBase0__13cruise_bubble@l;
-    // r4 = r4 + 0x9c2;
-    // r5 = 0x10;
-    // r6 = 0;
-    // r7 = 0;
-    // r8 = 0;
-    // r9 = 0;
-    // r10 = 0;
-    // f1 = zEntCruiseBubble_f_1_0; // [float32]
-    // f2 = zEntCruiseBubble_f_0_0; // [float32]
-    // xAnimTableNewState(xAnimTable*,const int8*,uint32,uint32,float32,float32*,float32*,float32,uint16*,*,xAnimPlay*,xAnimState*,,*,xAnimState*,xAnimSingle*,,*,xAnimPlay*,xQuat*,xVec3*,int32,); // [xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v]
-    
     // stringBase0 + 0x9c2 == "cruise_bubble_aim"
-    shared.astate.player.aim = xAnimTableNewState(
-            &table, // xAnimTable* table, r3
-            stringBase0 + 0x9c2, // const char* name, r4
-            0x10, // uint32 flags, r5
-            0, // uint32 userFlags, r6
-            zEntCruiseBubble_f_1_0, // float32 speed, f1
-            NULL, // float32* boneBlend, r7
-            NULL, // float32* timeSnap, r8
-            zEntCruiseBubble_f_0_0, // float32 fadeRecip, f2
-            NULL, // uint16* fadeOffset, r9
-            NULL, // void* callbackData, r10
-            xAnimDefaultBeforeEnter, // xAnimStateBeforeEnterCallback beforeEnter, 8(r1)
-            NULL, // xAnimStateCallback stateCallback, 0xc(r1)
-            NULL); // xAnimStateBeforeAnimMatricesCallback beforeAnimMatrices) 0x10(r1)
-       
-    // xAnimTableNewState(table, stringBase0[1], 0x110, 1, zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL, NULL,
-    //         xAnimDefaultBeforeEnter, NULL, NULL);
-
-    // 0x164(r28) = r3;
-
-
-    // r3 = xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha; // [int16]
-    // r0 = r3 + xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l;
-    // r3 = stringBase0__13cruise_bubble@ha; // [int16]
-    // 8(r1) = r0;
-    // r0 = 0;
-    // r4 = r3 + stringBase0__13cruise_bubble@l;
-    // r3 = r30_table;
-    // 0xc(r1) = r0;
-    // r4 = r4 + 0x9d4;
-    // r5 = 0x20;
-    // r6 = 0;
-    // 0x10(r1) = r0;
-    // r7 = 0;
-    // r8 = 0;
-    // r9 = 0;
-    // f1 = zEntCruiseBubble_f_1_0; // [float32]
-    // r10 = 0;
-    // f2 = zEntCruiseBubble_f_0_0; // [float32]
-    // xAnimTableNewState(xAnimTable*, const int8*, uint32, uint32, float32, float32*, float32*, float32, uint16*, *, xAnimPlay*, xAnimState*, , *, xAnimState*, xAnimSingle*, , *, xAnimPlay*, xQuat*, xVec3*, int32, ); // [xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v]
-
+    shared.astate.player.aim = xAnimTableNewState(&table, stringBase0 + 0x9c2, 0x10, 0,
+            zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL,
+            NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    
     // stringBase0 + 0x9d4 == "cruise_bubble_fire"
-    shared.astate.player.fire = xAnimTableNewState(
-            &table, // xAnimTable* table, r3
-            stringBase0 + 0x9d4, // const char* name, r4
-            0x20, // uint32 flags, r5
-            0, // uint32 userFlags, r6
-            zEntCruiseBubble_f_1_0, // float32 speed, f1
-            NULL, // float32* boneBlend, r7
-            NULL, // float32* timeSnap, r8
-            zEntCruiseBubble_f_0_0, // float32 fadeRecip, f2
-            NULL, // uint16* fadeOffset, r9
-            NULL, // void* callbackData, r10
-            xAnimDefaultBeforeEnter, // xAnimStateBeforeEnterCallback beforeEnter, 8(r1)
-            NULL, // xAnimStateCallback stateCallback, 0xc(r1)
-            NULL); // xAnimStateBeforeAnimMatricesCallback beforeAnimMatrices) 0x10(r1)
+    shared.astate.player.fire = xAnimTableNewState(&table, stringBase0 + 0x9d4, 0x20, 0,
+            zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL,
+            NULL, xAnimDefaultBeforeEnter, NULL, NULL);
        
-    // 0x168(r6) = r3;
-    
-    
-    // r4 = shared__13cruise_bubble@ha; // [int16]
-    // r5 = xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@ha; // [int16]
-    // r6 = r4 + shared__13cruise_bubble@l;
-    // r4 = stringBase0__13cruise_bubble@ha; // [int16]
-    // r3 = r5 + xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState@l;
-    // r4 = r4 + stringBase0__13cruise_bubble@l;
-    // r0 = 0;
-    // 8(r1) = r3;
-    // r3 = r30_table;
-    // r4 = r4 + 0x9e7;
-    // r5 = 0x10;
-    // 0xc(r1) = r0;
-    // r6 = 0;
-    // r7 = 0;
-    // r8 = 0;
-    // 0x10(r1) = r0;
-    // r9 = 0;
-    // r10 = 0;
-    // f1 = zEntCruiseBubble_f_1_0; // [float32]
-    // f2 = zEntCruiseBubble_f_0_0; // [float32]
-    // xAnimTableNewState(xAnimTable*, const int8*, uint32, uint32, float32, float32*, float32*, float32, uint16*, *, xAnimPlay*, xAnimState*, , *, xAnimState*, xAnimSingle*, , *, xAnimPlay*, xQuat*, xVec3*, int32, ); // [xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v]
-
     // stringBase0 + 0x9e7 == "cruise_bubble_idle"
-    shared.astate.player.idle = xAnimTableNewState(
-            &table, // xAnimTable* table, r3
-            stringBase0 + 0x9e7, // const char* name, r4
-            0x10, // uint32 flags, r5
-            0, // uint32 userFlags, r6
-            zEntCruiseBubble_f_1_0, // float32 speed, f1
-            NULL, // float32* boneBlend, r7
-            NULL, // float32* timeSnap, r8
-            zEntCruiseBubble_f_0_0, // float32 fadeRecip, f2
-            NULL, // uint16* fadeOffset, r9
-            NULL, // void* callbackData, r10
-            xAnimDefaultBeforeEnter, // xAnimStateBeforeEnterCallback beforeEnter, 8(r1)
-            NULL, // xAnimStateCallback stateCallback, 0xc(r1)
-            NULL); // xAnimStateBeforeAnimMatricesCallback beforeAnimMatrices) 0x10(r1)
+    shared.astate.player.idle = xAnimTableNewState(&table, stringBase0 + 0x9e7, 0x10, 0,
+            zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL,
+            NULL, xAnimDefaultBeforeEnter, NULL, NULL);
        
-    // r4 = r4 + shared__13cruise_bubble@l;
-    // 0x16c(r4) = r3;
-
-    // r3 = 0x250;
-     // [xMemPushTemp__FUi]
-    // r4 = 0;
-    // r31_start_from = r3;
     char* start_from = (char*) xMemPushTemp(0x250);
-    // r5 = 0x250;
-    memset(start_from, 0, 0x250); // [memset]
-
-//     r28 = 0;
-//     r3 = start_anim_states__13cruise_bubble@ha; // [int16]
-//     0(r31_start_from) = r28; // [int8]
-//     r27_pctr = r3 + start_anim_states__13cruise_bubble@l;
-//     r26_s = r31_start_from;
-//     r25_i = 0;
-//     r29 = 0x20; // == " "
-// lbl_8005C1F4:
-    // r4 = 0(r27_pctr);
-    // r3 = r26_s;
-    // strcat(?); // [strcat]
-    // r3 = r26_s;
-    // strlen(?); // [strlen]
-    // r26_s = r26_s + r3;
-    // r25_i = r25_i + 1;
-    // 0(r26_s) = r29; // [int8]
-    // cmplwi r25_i, 0x25
-    // r27_pctr = r27_pctr + 4;
-    // stbu r28, 1(r26_s)
-    // blt lbl_8005C1F4
-
-    
+    memset(start_from, 0, 0x250);
     char* s = start_from;
     *s = '\0';
-    for (int32 i = 0; i < 37; ++i)
+    for (uint32 i = 0; i < 37; ++i)
     {
         strcat(s, start_anim_states[i]);
         s += strlen(s);
-        *s++ = ' ';
+        *s = ' ';
+        *++s = '\0';
     }
     
-    // r0 = 0;
-    // r3 = stringBase0__13cruise_bubble@ha; // [int16]
-    // 8(r1) = r0;
-    // r5 = r3 + stringBase0__13cruise_bubble@l;
-    // r4 = check_anim_aim__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@ha; // [int16]
-    // r3 = r30_table;
-    // 0xc(r1) = r0;
-    // r6 = r4 + check_anim_aim__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv@l;
-    // r4 = r31_start_from;
-    // r5 = r5 + 0x9c2;
-    // f1 = zEntCruiseBubble_f_0_0; // [float32]
-    // r7 = 0;
-    // f3 = zEntCruiseBubble_f_0_15; // [float32]
-    // r8 = 0;
-    // f2 = f1;
-    // r9 = 0;
-    // r10 = 0;
-    // xAnimTableNewTransition(xAnimTable*, const int8*, const int8*, *, xAnimTransition*, xAnimSingle*, , uint32, *, xAnimTransition*, xAnimSingle*, , uint32, uint32, uint32, float32, float32, uint16, uint16, float32, uint16*); // [xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs]
-
     // stringBase0 + 0x9c2 == "cruise_bubble_aim"
-    shared.atran.player.aim = xAnimTableNewTransition(
-            &table, // r3    xAnimTable* 
-            start_from, // r4    const char* 
-            stringBase0 + 0x9c2, // r5    const char* 
-            (xAnimTransitionConditionalCallback) &check_anim_aim, // r6    xAnimTransitionConditionalCallback 
-            NULL, // r7    xAnimTransitionCallback 
-            0, // r8    uint32 
-            0, // r9    uint32 
-            zEntCruiseBubble_f_0_0, // f1    float32 
-            zEntCruiseBubble_f_0_0, // f2    float32 
-            0, // r10    uint16 
-            0, // 8(r1)    uint16 
-            zEntCruiseBubble_f_0_15, // f3    float32 
-            NULL); // 0xc(r1)    uint16* 
-
-
-    // deftran = xAnimTableNewTransition(table, names[i], names[0], 0, 0, 0x10, 0,
-    //                                 _839_zEnt, _839_zEnt, 1, 0, _1039_zEnt, 0);
-
-    // r5 = shared__13cruise_bubble@ha; // [int16]
-    // r4 = stringBase0__13cruise_bubble@ha; // [int16]
-    // r5 = r5 + shared__13cruise_bubble@l;
-    // r0 = 0;
-    // 0x178(r5) = r3;
-    // r5 = r4 + stringBase0__13cruise_bubble@l;
-    // r3 = r30_table;
-    // r6 = 0;
-    // 8(r1) = r0;
-    // r4 = r5 + 0x9c2;
-    // r5 = r5 + 0x9d4;
-    // r7 = 0;
-    // 0xc(r1) = r0;
-    // r8 = 0;
-    // r9 = 0;
-    // r10 = 0;
-    // f1 = zEntCruiseBubble_f_0_0; // [float32]
-    // f3 = zEntCruiseBubble_f_0_15; // [float32]
-    // f2 = f1;
-    // xAnimTableNewTransition(xAnimTable*, const int8*, const int8*, *, xAnimTransition*, xAnimSingle*, , uint32, *, xAnimTransition*, xAnimSingle*, , uint32, uint32, uint32, float32, float32, uint16, uint16, float32, uint16*); // [xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs]
-
+    shared.atran.player.aim = xAnimTableNewTransition(&table, start_from, stringBase0 + 0x9c2,
+            (xAnimTransitionConditionalCallback) &check_anim_aim, NULL, 0, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
 
     // stringBase0 + 0x9c2 == "cruise_bubble_aim"
     // stringBase0 + 0x9d4 == "cruise_bubble_fire"
-    shared.atran.player.fire = xAnimTableNewTransition(
-            &table, // r3    xAnimTable* 
-            stringBase0 + 0x9c2, // r4    const char* 
-            stringBase0 + 0x9d4, // r5    const char* 
-            NULL, // r6    xAnimTransitionConditionalCallback 
-            NULL, // r7    xAnimTransitionCallback 
-            0, // r8    uint32 
-            0, // r9    uint32 
-            zEntCruiseBubble_f_0_0, // f1    float32 
-            zEntCruiseBubble_f_0_0, // f2    float32 
-            0, // r10    uint16 
-            0, // 8(r1)    uint16 
-            zEntCruiseBubble_f_0_15, // f3    float32 
-            NULL); // 0xc(r1)    uint16* 
-
-    // r5 = shared__13cruise_bubble@ha; // [int16]
-    // r4 = stringBase0__13cruise_bubble@ha; // [int16]
-    // r5 = r5 + shared__13cruise_bubble@l;
-    // r0 = 0;
-    // 0x17c(r5) = r3;
-    // r5 = r4 + stringBase0__13cruise_bubble@l;
-    // r3 = r30_table;
-    // r6 = 0;
-    // 8(r1) = r0;
-    // r4 = r5 + 0x9d4;
-    // r5 = r5 + 0x9e7;
-    // r7 = 0;
-    // 0xc(r1) = r0;
-    // r8 = 0x10;
-    // r9 = 0;
-    // r10 = 0;
-    // f1 = zEntCruiseBubble_f_0_0; // [float32]
-    // f3 = zEntCruiseBubble_f_0_15; // [float32]
-    // f2 = f1;
-    // xAnimTableNewTransition(xAnimTable*, const int8*, const int8*, *, xAnimTransition*, xAnimSingle*, , uint32, *, xAnimTransition*, xAnimSingle*, , uint32, uint32, uint32, float32, float32, uint16, uint16, float32, uint16*); // [xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs]
+    shared.atran.player.fire = xAnimTableNewTransition(&table, stringBase0 + 0x9c2, stringBase0 + 0x9d4,
+            NULL, NULL, 0, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
 
     // stringBase0 + 0x9d4 == "cruise_bubble_fire"
-   // stringBase0 + 0x9c2 == "cruise_bubble_idle"
-    shared.atran.player.idle = xAnimTableNewTransition(
-            &table, // r3    xAnimTable* 
-            stringBase0 + 0x9d4, // r4    const char* 
-            stringBase0 + 0x9e7, // r5    const char* 
-            NULL, // r6    xAnimTransitionConditionalCallback 
-            NULL, // r7    xAnimTransitionCallback 
-            0x10, // r8    uint32 
-            0, // r9    uint32 
-            zEntCruiseBubble_f_0_0, // f1    float32 
-            zEntCruiseBubble_f_0_0, // f2    float32 
-            0, // r10    uint16 
-            0, // 8(r1)    uint16 
-            zEntCruiseBubble_f_0_15, // f3    float32 
-            NULL); // 0xc(r1)    uint16* 
-
-
-    // r5 = shared__13cruise_bubble@ha; // [int16]
-    // r0 = 0;
-    // r5 = r5 + shared__13cruise_bubble@l;
-    // r4 = stringBase0__13cruise_bubble@ha; // [int16]
-    // 0x180(r5) = r3;
-    // r5 = r4 + stringBase0__13cruise_bubble@l;
-    // r3 = r30_table;
-    // r6 = 0;
-    // 8(r1) = r0;
-    // r4 = r5 + 0x9fa;
-    // r7 = 0;
-    // r8 = 0;
-    // 0xc(r1) = r0;
-    // r9 = 0;
-    // r10 = 0;
-    // f1 = zEntCruiseBubble_f_0_0; // [float32]
-    // f3 = zEntCruiseBubble_f_0_15; // [float32]
-    // f2 = f1;
-    // xAnimTableNewTransition(xAnimTable*, const int8*, const int8*, *, xAnimTransition*, xAnimSingle*, , uint32, *, xAnimTransition*, xAnimSingle*, , uint32, uint32, uint32, float32, float32, uint16, uint16, float32, uint16*); // [xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs]
-
+    // stringBase0 + 0x9e7 == "cruise_bubble_idle"
+    shared.atran.player.idle = xAnimTableNewTransition(&table, stringBase0 + 0x9d4, stringBase0 + 0x9e7,
+            NULL, NULL, 0x10, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
 
     // stringBase0 + 0x9fa == "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle"
-   // stringBase0 + 0x0 == "Idle01"
-    shared.atran.player.end = xAnimTableNewTransition(
-            &table, // r3    xAnimTable* 
-            stringBase0 + 0x9d4, // r4    const char* 
-            stringBase0 + 0x0, // r5    const char* 
-            NULL, // r6    xAnimTransitionConditionalCallback 
-            NULL, // r7    xAnimTransitionCallback 
-            0, // r8    uint32 
-            0, // r9    uint32 
-            zEntCruiseBubble_f_0_0, // f1    float32 
-            zEntCruiseBubble_f_0_0, // f2    float32 
-            0, // r10    uint16 
-            0, // 8(r1)    uint16 
-            zEntCruiseBubble_f_0_15, // f3    float32 
-            NULL); // 0xc(r1)    uint16* 
+    // stringBase0 + 0x0 == "Idle01"
+    shared.atran.player.end = xAnimTableNewTransition(&table, stringBase0 + 0x9fa, stringBase0 + 0x0,
+            NULL, NULL, 0, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
 
-
-//     r4 = shared__13cruise_bubble@ha; // [int16]
-//     r4 = r4 + shared__13cruise_bubble@l;
-//     0x184(r4) = r3;
-//     r3 = r31_start_from;
-//     xMemPopTemp(); // [xMemPopTemp__FPv]
-// lbl_8005C36C_return:
     xMemPopTemp(start_from);
 }
 #endif

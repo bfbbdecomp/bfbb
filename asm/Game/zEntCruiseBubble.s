@@ -3813,7 +3813,7 @@ lbl_8005C1F4:
 /* 8005C248 00059048  38 A5 09 C2 */	addi r5, r5, 0x9c2
 /* 8005C24C 0005904C  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
 /* 8005C250 00059050  38 E0 00 00 */	li r7, 0
-/* 8005C254 00059054  C0 62 8A E0 */	lfs f3, lbl_803CD460-_SDA2_BASE_(r2)
+/* 8005C254 00059054  C0 62 8A E0 */	lfs f3, zEntCruiseBubble_f_0_15-_SDA2_BASE_(r2)
 /* 8005C258 00059058  39 00 00 00 */	li r8, 0
 /* 8005C25C 0005905C  FC 40 08 90 */	fmr f2, f1
 /* 8005C260 00059060  39 20 00 00 */	li r9, 0
@@ -3836,7 +3836,7 @@ lbl_8005C1F4:
 /* 8005C2A4 000590A4  39 20 00 00 */	li r9, 0
 /* 8005C2A8 000590A8  39 40 00 00 */	li r10, 0
 /* 8005C2AC 000590AC  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005C2B0 000590B0  C0 62 8A E0 */	lfs f3, lbl_803CD460-_SDA2_BASE_(r2)
+/* 8005C2B0 000590B0  C0 62 8A E0 */	lfs f3, zEntCruiseBubble_f_0_15-_SDA2_BASE_(r2)
 /* 8005C2B4 000590B4  FC 40 08 90 */	fmr f2, f1
 /* 8005C2B8 000590B8  4B FA B1 09 */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 8005C2BC 000590BC  3C A0 80 29 */	lis r5, shared__13cruise_bubble@ha
@@ -3856,7 +3856,7 @@ lbl_8005C1F4:
 /* 8005C2F4 000590F4  39 20 00 00 */	li r9, 0
 /* 8005C2F8 000590F8  39 40 00 00 */	li r10, 0
 /* 8005C2FC 000590FC  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005C300 00059100  C0 62 8A E0 */	lfs f3, lbl_803CD460-_SDA2_BASE_(r2)
+/* 8005C300 00059100  C0 62 8A E0 */	lfs f3, zEntCruiseBubble_f_0_15-_SDA2_BASE_(r2)
 /* 8005C304 00059104  FC 40 08 90 */	fmr f2, f1
 /* 8005C308 00059108  4B FA B0 B9 */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 8005C30C 0005910C  3C A0 80 29 */	lis r5, shared__13cruise_bubble@ha
@@ -3875,7 +3875,7 @@ lbl_8005C1F4:
 /* 8005C340 00059140  39 20 00 00 */	li r9, 0
 /* 8005C344 00059144  39 40 00 00 */	li r10, 0
 /* 8005C348 00059148  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005C34C 0005914C  C0 62 8A E0 */	lfs f3, lbl_803CD460-_SDA2_BASE_(r2)
+/* 8005C34C 0005914C  C0 62 8A E0 */	lfs f3, zEntCruiseBubble_f_0_15-_SDA2_BASE_(r2)
 /* 8005C350 00059150  FC 40 08 90 */	fmr f2, f1
 /* 8005C354 00059154  4B FA B0 6D */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 8005C358 00059158  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
@@ -3959,7 +3959,7 @@ anim_table__13cruise_bubbleFv:
 /* 8005C484 00059284  39 20 00 00 */	li r9, 0
 /* 8005C488 00059288  39 40 00 00 */	li r10, 0
 /* 8005C48C 0005928C  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005C490 00059290  C0 62 8A E0 */	lfs f3, lbl_803CD460-_SDA2_BASE_(r2)
+/* 8005C490 00059290  C0 62 8A E0 */	lfs f3, zEntCruiseBubble_f_0_15-_SDA2_BASE_(r2)
 /* 8005C494 00059294  FC 40 08 90 */	fmr f2, f1
 /* 8005C498 00059298  4B FA AF 29 */	bl xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs
 /* 8005C49C 0005929C  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
@@ -9200,7 +9200,8 @@ zEntCruiseBubble_f_0_78:
 .global zEntCruiseBubble_f_0_86
 zEntCruiseBubble_f_0_86:
 	.incbin "baserom.dol", 0x2B6CFC, 0x4
-lbl_803CD460:
+.global zEntCruiseBubble_f_0_15
+zEntCruiseBubble_f_0_15:
 	.incbin "baserom.dol", 0x2B6D00, 0x4
 lbl_803CD464:
 	.incbin "baserom.dol", 0x2B6D04, 0x4
