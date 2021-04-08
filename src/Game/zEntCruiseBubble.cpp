@@ -3031,10 +3031,11 @@ cruise_bubble::state_enum cruise_bubble::state_player_halt::update(float32 dt)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv")
 
-// func_8005C8D4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_player_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+
+xMat4x3* cruise_bubble::get_player_mat()
+{
+    return (xMat4x3*) globals.player.ent.model->Mat;
+}
 
 // func_8005C8E8
 #pragma GLOBAL_ASM(                                                                                \

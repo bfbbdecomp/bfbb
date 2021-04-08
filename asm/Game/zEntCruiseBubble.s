@@ -4115,14 +4115,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005C8CC 000596CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005C8D0 000596D0  4E 80 00 20 */	blr 
 
-/* get_player_mat__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-get_player_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 8005C8D4 000596D4  3C 60 80 3C */	lis r3, globals@ha
-/* 8005C8D8 000596D8  38 63 05 58 */	addi r3, r3, globals@l
-/* 8005C8DC 000596DC  80 63 07 04 */	lwz r3, 0x704(r3)
-/* 8005C8E0 000596E0  80 63 00 4C */	lwz r3, 0x4c(r3)
-/* 8005C8E4 000596E4  4E 80 00 20 */	blr 
-
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv:
 /* 8005C8E8 000596E8  3C 60 80 29 */	lis r3, lbl_80290000@ha
 /* 8005C8EC 000596EC  84 03 C2 A4 */	lwzu r0, -0x3d5c(r3)

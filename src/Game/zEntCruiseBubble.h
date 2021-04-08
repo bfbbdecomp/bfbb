@@ -557,6 +557,7 @@ namespace cruise_bubble
     void reset_life();
     // xBase* param names are guessed as they go unused and wont appear in dwarf
     bool event_handler(xBase* from, uint32 event, const float32* fparam, xBase* to);
+    xMat4x3* get_player_mat();
 } // namespace cruise_bubble
 
 #endif
