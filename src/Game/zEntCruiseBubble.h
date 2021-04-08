@@ -104,6 +104,7 @@ namespace cruise_bubble
         state_player_halt();
 
         void start();
+        void stop();
         state_enum update(float32 dt);
     };
 

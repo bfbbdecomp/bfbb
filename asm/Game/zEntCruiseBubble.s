@@ -331,7 +331,10 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10s
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
 /* 80057D7C 00054B7C  4E 80 00 20 */	blr 
 
-abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+abort__Q213cruise_bubble10state_typeFv:
 /* 80057FE4 00054DE4  4E 80 00 20 */	blr 
 
 /* update_player__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR6xScenef */
@@ -416,7 +419,10 @@ lbl_800580E8:
 /* 80058100 00054F00  38 21 00 50 */	addi r1, r1, 0x50
 /* 80058104 00054F04  4E 80 00 20 */	blr 
 
-render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+render__Q213cruise_bubble10state_typeFv:
 /* 80058310 00055110  4E 80 00 20 */	blr 
 
 /* changed from ... */
@@ -4050,7 +4056,7 @@ lbl_8005C7C8:
 /* 8005C7F4 000595F4  90 81 00 18 */	stw r4, 0x18(r1)
 /* 8005C7F8 000595F8  90 01 00 1C */	stw r0, 0x1c(r1)
 /* 8005C7FC 000595FC  4B FA E9 01 */	bl length2__5xVec3CFv
-/* 8005C800 00059600  C0 02 89 C4 */	lfs f0, lbl_803CD344-_SDA2_BASE_(r2)
+/* 8005C800 00059600  C0 02 89 C4 */	lfs f0, zEntCruiseBubble_f_0_0001-_SDA2_BASE_(r2)
 /* 8005C804 00059604  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8005C808 00059608  40 80 00 0C */	bge lbl_8005C814
 /* 8005C80C 0005960C  38 60 00 01 */	li r3, 1
@@ -6816,7 +6822,7 @@ update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc_
 /* 8005EF80 0005BD80  93 E1 00 3C */	stw r31, 0x3c(r1)
 /* 8005EF84 0005BD84  FF E0 08 90 */	fmr f31, f1
 /* 8005EF88 0005BD88  C0 22 89 C0 */	lfs f1, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 8005EF8C 0005BD8C  C0 02 89 C4 */	lfs f0, lbl_803CD344-_SDA2_BASE_(r2)
+/* 8005EF8C 0005BD8C  C0 02 89 C4 */	lfs f0, zEntCruiseBubble_f_0_0001-_SDA2_BASE_(r2)
 /* 8005EF90 0005BD90  7C 7F 1B 78 */	mr r31, r3
 /* 8005EF94 0005BD94  EC 3F 08 28 */	fsubs f1, f31, f1
 /* 8005EF98 0005BD98  FC 20 0A 10 */	fabs f1, f1
@@ -7297,7 +7303,7 @@ lbl_8005F64C:
 /* 8005F66C 0005C46C  7C 03 03 78 */	mr r3, r0
 /* 8005F670 0005C470  48 00 0E A5 */	bl __vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi
 /* 8005F674 0005C474  57 80 10 3A */	slwi r0, r28, 2
-/* 8005F678 0005C478  C0 02 89 C4 */	lfs f0, lbl_803CD344-_SDA2_BASE_(r2)
+/* 8005F678 0005C478  C0 02 89 C4 */	lfs f0, zEntCruiseBubble_f_0_0001-_SDA2_BASE_(r2)
 /* 8005F67C 0005C47C  7C 9D 02 14 */	add r4, r29, r0
 /* 8005F680 0005C480  7C 7C 1B 78 */	mr r28, r3
 /* 8005F684 0005C484  C0 44 00 10 */	lfs f2, 0x10(r4)
@@ -8961,7 +8967,8 @@ lbl_803CD33C:
 .global zEntCruiseBubble_f_1_0
 zEntCruiseBubble_f_1_0:
 	.incbin "baserom.dol", 0x2B6BE0, 0x4
-lbl_803CD344:
+.global zEntCruiseBubble_f_0_0001
+zEntCruiseBubble_f_0_0001:
 	.incbin "baserom.dol", 0x2B6BE4, 0x4
 .global zEntCruiseBubble_f_0_5
 zEntCruiseBubble_f_0_5:

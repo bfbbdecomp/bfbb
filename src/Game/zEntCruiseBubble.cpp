@@ -237,6 +237,7 @@ extern float32 zEntCruiseBubble_f_0_047; // 0.047
 extern float32 zEntCruiseBubble_f_0_78; // 0.78
 extern float32 zEntCruiseBubble_f_0_86; // 0.86
 extern float32 zEntCruiseBubble_f_0_15; // 0.15
+extern float32 zEntCruiseBubble_f_0_0001; // 0.15
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
@@ -823,7 +824,7 @@ void cruise_bubble::distort_screen(float32)
 #if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
+    "abort__Q213cruise_bubble10state_typeFv")
 #else
 void cruise_bubble::state_type::abort()
 {
@@ -922,7 +923,7 @@ void cruise_bubble::render_state()
 #if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv")
+    "render__Q213cruise_bubble10state_typeFv")
 #else
 void cruise_bubble::state_type::render()
 {
@@ -2971,19 +2972,59 @@ bool cruise_bubble::event_handler(xBase* from, uint32 event, const float32* fpar
 }
 
 // func_8005C758
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_haltFv")
+#else
+void cruise_bubble::state_player_halt::start()
+{
+    this->first_update = true;
+}
+#endif
 
 // func_8005C764
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_haltFv")
+#else
+void cruise_bubble::state_player_halt::stop()
+{
+    shared.flags = shared.flags & 0xffffffdf;
+}
+#endif
 
 // func_8005C778
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_haltFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_player_halt::update(float32 dt)
+{
+    this->time += dt;
+    
+    if (this->first_update)
+    {
+        this->first_update = false;
+        this->last_motion = shared.player_motion;
+        return STATE_PLAYER_HALT;
+    }
+
+    xVec3 dmotion = shared.player_motion - this->last_motion;
+    if (dmotion.length2() < zEntCruiseBubble_f_0_0001) {
+        return STATE_PLAYER_AIM;
+    }
+
+    if (this->time > current_tweak->player.halt_time)
+    {
+        return STATE_INVALID;
+    }
+
+    return STATE_PLAYER_HALT;
+}
+#endif
 
 // func_8005C848
 #pragma GLOBAL_ASM(                                                                                \
