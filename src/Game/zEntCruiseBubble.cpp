@@ -285,7 +285,7 @@ void cruise_bubble::stop_sound(int32 which, uint32 handle)
 // func_80057320
 // will match once file is complete, see comment below
 #if 1
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif")
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__13cruise_bubbleFif")
 #else
 uint32 cruise_bubble::play_sound(int32 which, float32 volFactor)
 {
@@ -333,7 +333,7 @@ uint32 cruise_bubble::play_sound(int32 which, float32 volFactor)
 // func_80057404
 // will match once file is complete, see comment below
 #if 1
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3")
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "play_sound__13cruise_bubbleFifPC5xVec3")
 #else
 uint32 cruise_bubble::play_sound(int32 which, float32 volFactor, const xVec3* pos)
 {
@@ -3103,9 +3103,31 @@ cruise_bubble::state_enum cruise_bubble::state_player_aim::update(float32 dt)
     "face_camera__Q213cruise_bubble16state_player_aimFf")
 
 // func_8005CBB8
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFv")
+#else
+void cruise_bubble::state_player_fire::start()
+{
+    this->wand_shown = false;
+
+    play_sound(0, zEntCruiseBubble_f_1_0, &get_missle_mat()->pos);
+    xAnimPlayStartTransition(globals.player.ent.model->Anim, shared.atran.player.fire);
+    set_state(THREAD_MISSLE, STATE_MISSLE_APPEAR);
+
+    if (xurand() <= shared.dialog_freq)
+    {
+        play_sound(3, zEntCruiseBubble_f_1_0);
+        shared.dialog_freq *= current_tweak->dialog.decay;
+
+        if (shared.dialog_freq < current_tweak->dialog.min_freq) {
+            shared.dialog_freq = current_tweak->dialog.min_freq;
+        }
+    }
+}
+#endif
+
 
 xMat4x3* cruise_bubble::get_missle_mat()
 {
@@ -3113,14 +3135,51 @@ xMat4x3* cruise_bubble::get_missle_mat()
 }
 
 // func_8005CC84
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFv")
+#else
+void cruise_bubble::state_player_fire::stop()
+{
+    cruise_bubble::hide_wand();
+}
+#endif
 
 // func_8005CCA4
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_player_fire::update(float32 dt)
+{
+    xAnimSingle* asingle = globals.player.ent.model->Anim->Single;
+    xAnimState* astate = asingle->State;
+
+    if (astate == shared.astate.player.fire)
+    {
+        float32 time = astate->Data->Duration;
+        float32 max_time = asingle->Time + dt;
+
+        if (this->wand_shown == 0 && max_time >= current_tweak->player.fire.delay_wand)
+        {
+            show_wand();
+        }
+        if (max_time >= time)
+        {
+            return STATE_PLAYER_WAIT;
+        }
+    }
+
+    if (this->wand_shown != 0)
+    {
+        this->update_wand(dt);
+    }
+
+    return  STATE_PLAYER_FIRE;
+}
+#endif
 
 void cruise_bubble::state_player_fire::update_wand(float32 dt)
 {

@@ -5,7 +5,10 @@
 .section .text  # 0x8005720C - 0x800609B4
 
 /* play_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fif */
-play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif:
+/* changed from ... */
+/* play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif: */
+/* ... so linker can find it */
+play_sound__13cruise_bubbleFif:
 /* 80057320 00054120  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057324 00054124  7C 08 02 A6 */	mflr r0
 /* 80057328 00054128  1C 83 00 28 */	mulli r4, r3, 0x28
@@ -72,7 +75,10 @@ lbl_800573E8:
 /* 80057400 00054200  4E 80 00 20 */	blr 
 
 /* play_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FifPC5xVec3 */
-play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3:
+/* changed from ... */
+/* play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3: */
+/* ... so linker can find it */
+play_sound__13cruise_bubbleFifPC5xVec3:
 /* 80057404 00054204  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057408 00054208  7C 08 02 A6 */	mflr r0
 /* 8005740C 0005420C  1C A3 00 28 */	mulli r5, r3, 0x28

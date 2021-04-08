@@ -73,6 +73,7 @@ namespace cruise_bubble
         state_player_fire();
 
         void start();
+        void stop();
         state_enum update(float32 dt);
         void update_wand(float32 dt);
     };
