@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "zEnt.h"
 #include "zRenderState.h"
+#include <cmath>
 #include <string.h>
 
 #include "zCamera.h"
@@ -3304,10 +3305,19 @@ void cruise_bubble::state_missle_appear::update_effects(float32 dt)
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
 
-// func_8005D350
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_flash__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
+void cruise_bubble::state_missle_fly::update_flash(float32 dt)
+{
+    this->flash_time += dt;
+
+    float32 tflash = current_tweak->missle.fly.flash_interval * (this->life / current_tweak->missle.life);
+    if (this->flash_time > tflash)
+    {
+        flash_hud();
+        
+        float32 floor_frac = std::floorf(this->flash_time / tflash);
+        this->flash_time = this->flash_time - (floor_frac * tflash);
+    }
+}
 
 // func_8005D3D4
 #pragma GLOBAL_ASM(                                                                                \

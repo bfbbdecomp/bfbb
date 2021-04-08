@@ -135,9 +135,12 @@ namespace cruise_bubble
         float32 life;
         float32 vel;
         xVec3 rot;
+        // Offset: 0x1c
         xVec3 rot_vel;
+        // Offset: 0x28
         float32 engine_pitch;
         xVec3 last_loc;
+        // Offset: 0x38
         float32 flash_time;
 
         state_missle_fly();
@@ -145,6 +148,7 @@ namespace cruise_bubble
         void start();
         state_enum update(float32 dt);
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
+        void update_flash(float32 dt);
     };
 
     struct state_missle_appear : state_type

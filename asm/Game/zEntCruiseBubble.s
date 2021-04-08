@@ -4825,43 +4825,6 @@ lbl_8005D334:
 /* 8005D348 0005A148  38 21 00 50 */	addi r1, r1, 0x50
 /* 8005D34C 0005A14C  4E 80 00 20 */	blr 
 
-/* update_flash__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFf */
-update_flash__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf:
-/* 8005D350 0005A150  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8005D354 0005A154  7C 08 02 A6 */	mflr r0
-/* 8005D358 0005A158  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8005D35C 0005A15C  DB E1 00 10 */	stfd f31, 0x10(r1)
-/* 8005D360 0005A160  F3 E1 00 18 */	psq_st f31, 24(r1), 0, qr0
-/* 8005D364 0005A164  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8005D368 0005A168  7C 7F 1B 78 */	mr r31, r3
-/* 8005D36C 0005A16C  C0 03 00 38 */	lfs f0, 0x38(r3)
-/* 8005D370 0005A170  EC 00 08 2A */	fadds f0, f0, f1
-/* 8005D374 0005A174  D0 03 00 38 */	stfs f0, 0x38(r3)
-/* 8005D378 0005A178  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005D37C 0005A17C  C0 3F 00 08 */	lfs f1, 8(r31)
-/* 8005D380 0005A180  C0 03 00 14 */	lfs f0, 0x14(r3)
-/* 8005D384 0005A184  C0 43 00 4C */	lfs f2, 0x4c(r3)
-/* 8005D388 0005A188  EC 21 00 24 */	fdivs f1, f1, f0
-/* 8005D38C 0005A18C  C0 1F 00 38 */	lfs f0, 0x38(r31)
-/* 8005D390 0005A190  EF E2 00 72 */	fmuls f31, f2, f1
-/* 8005D394 0005A194  FC 00 F8 40 */	fcmpo cr0, f0, f31
-/* 8005D398 0005A198  40 81 00 20 */	ble lbl_8005D3B8
-/* 8005D39C 0005A19C  4B FF C6 2D */	bl flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005D3A0 0005A1A0  C0 1F 00 38 */	lfs f0, 0x38(r31)
-/* 8005D3A4 0005A1A4  EC 20 F8 24 */	fdivs f1, f0, f31
-/* 8005D3A8 0005A1A8  4B FA 97 D1 */	bl floorf__3stdFf
-/* 8005D3AC 0005A1AC  C0 1F 00 38 */	lfs f0, 0x38(r31)
-/* 8005D3B0 0005A1B0  EC 01 07 FC */	fnmsubs f0, f1, f31, f0
-/* 8005D3B4 0005A1B4  D0 1F 00 38 */	stfs f0, 0x38(r31)
-lbl_8005D3B8:
-/* 8005D3B8 0005A1B8  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
-/* 8005D3BC 0005A1BC  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8005D3C0 0005A1C0  CB E1 00 10 */	lfd f31, 0x10(r1)
-/* 8005D3C4 0005A1C4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8005D3C8 0005A1C8  7C 08 03 A6 */	mtlr r0
-/* 8005D3CC 0005A1CC  38 21 00 20 */	addi r1, r1, 0x20
-/* 8005D3D0 0005A1D0  4E 80 00 20 */	blr 
-
 /* update_engine_sound__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFf */
 update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf:
 /* 8005D3D4 0005A1D4  94 21 FF F0 */	stwu r1, -0x10(r1)
