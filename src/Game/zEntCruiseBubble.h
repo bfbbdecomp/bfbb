@@ -555,6 +555,8 @@ namespace cruise_bubble
     void add_life(float32, float32);
     void set_life(float32 life);
     void reset_life();
+    // xBase* param names are guessed as they go unused and wont appear in dwarf
+    bool event_handler(xBase* from, uint32 event, const float32* fparam, xBase* to);
 } // namespace cruise_bubble
 
 #endif

@@ -2946,9 +2946,29 @@ void cruise_bubble::reset_life()
     state->life = current_tweak->missle.life;
 }
 
-// func_8005C6D4
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s",                                                  \
-                   "event_handler__13cruise_bubbleFP5xBaseUiPCfP5xBase")
+bool cruise_bubble::event_handler(xBase* from, uint32 event, const float32* fparam, xBase* to)
+{
+    switch (event)
+    {
+        case 0x205:
+            add_life(fparam[0], fparam[1]);
+            return true;
+
+        case 0x206:
+            set_life(fparam[0]);
+            return true;
+
+        case 0x207:
+            reset_life();
+            return true;
+
+        case 0x203:
+        case 0x204:
+            return true;
+    }
+    
+    return false;
+}
 
 // func_8005C758
 #pragma GLOBAL_ASM(                                                                                \
