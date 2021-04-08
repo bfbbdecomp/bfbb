@@ -149,6 +149,7 @@ namespace cruise_bubble
         state_enum update(float32 dt);
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
         void update_flash(float32 dt);
+        void update_engine_sound(float32 dt);
     };
 
     struct state_missle_appear : state_type
@@ -322,6 +323,7 @@ namespace cruise_bubble
                 float32 max_vel;
                 float32 engine_pitch_max;
                 float32 engine_pitch_sensitivity;
+                // Offset: 0x4c
                 float32 flash_interval;
                 struct _class_38
                 {

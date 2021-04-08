@@ -1,8 +1,9 @@
+#include <cmath>
+#include <string.h>
+
 #include "stdio.h"
 #include "zEnt.h"
 #include "zRenderState.h"
-#include <cmath>
-#include <string.h>
 
 #include "zCamera.h"
 #include "zEntButton.h"
@@ -12,8 +13,11 @@
 #include "zEntTrigger.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
+#include "zNPCTypeCommon.h"
+#include "zPlatform.h"
 #include "zTalkBox.h"
 
+#include "../Core/p2/iMath.h"
 #include "../Core/x/xColor.h"
 #include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"
@@ -25,8 +29,6 @@
 #include "../Core/x/xString.h"
 #include "../Core/x/xstransvc.h"
 #include "../Core/x/xVec3.h"
-#include "zNPCTypeCommon.h"
-#include "zPlatform.h"
 
 namespace cruise_bubble
 {
@@ -3320,9 +3322,23 @@ void cruise_bubble::state_missle_fly::update_flash(float32 dt)
 }
 
 // func_8005D3D4
+#ifdef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
+#else
+void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
+{
+    // regalloc, i can't figure this out rn
+    float32 x = iabs(shared.last_sp.x);
+    float32 y = iabs(shared.last_sp.y);
+    float32 tmp = current_tweak->missle.fly.engine_pitch_max * (x + y);
+    tmp = tmp - this->engine_pitch;
+    this->engine_pitch += current_tweak->missle.fly.engine_pitch_sensitivity * tmp;
+
+    set_pitch(2, this->engine_pitch, 0);
+}
+#endif
 
 // func_8005D448
 #pragma GLOBAL_ASM(                                                                                \
