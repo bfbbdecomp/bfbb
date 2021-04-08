@@ -4167,7 +4167,10 @@ lbl_8005C97C:
 /* 8005C994 00059794  4E 80 00 20 */	blr 
 
 /* update_animation__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aimFf */
-update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf:
+/* changed from ... */
+/* update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf: */
+/* ... so linker can find it */
+update_animation__Q213cruise_bubble16state_player_aimFf:
 /* 8005C998 00059798  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005C99C 0005979C  7C 08 02 A6 */	mflr r0
 /* 8005C9A0 000597A0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4196,7 +4199,10 @@ update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005C9FC 000597FC  4E 80 00 20 */	blr 
 
 /* apply_yaw__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aimFv */
-apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv:
+/* changed from ... */
+/* apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv: */
+/* ... so linker can find it */
+apply_yaw__Q213cruise_bubble16state_player_aimFv:
 /* 8005CA00 00059800  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005CA04 00059804  7C 08 02 A6 */	mflr r0
 /* 8005CA08 00059808  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4237,7 +4243,10 @@ apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2
 /* 8005CA94 00059894  4E 80 00 20 */	blr 
 
 /* face_camera__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aimFf */
-face_camera__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf:
+/* changed from ... */
+/* face_camera__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf: */
+/* ... so linker can find it */
+face_camera__Q213cruise_bubble16state_player_aimFf:
 /* 8005CA98 00059898  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005CA9C 0005989C  7C 08 02 A6 */	mflr r0
 /* 8005CAA0 000598A0  90 01 00 34 */	stw r0, 0x34(r1)

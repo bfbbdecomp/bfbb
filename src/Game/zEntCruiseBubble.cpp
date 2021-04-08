@@ -3027,10 +3027,24 @@ cruise_bubble::state_enum cruise_bubble::state_player_halt::update(float32 dt)
 #endif
 
 // func_8005C848
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv")
-
+#else
+void cruise_bubble::state_player_aim::start()
+{
+    shared.flags = shared.flags | 0x20;
+    
+    xVec3* player_dir = &get_player_mat()->at;
+    this->yaw = xatan2(player_dir->x, player_dir->z);
+    this->yaw_vel = zEntCruiseBubble_f_0_0;
+    this->turn_delay = zEntCruiseBubble_f_0_0;
+    
+    xAnimPlayStartTransition(globals.player.ent.model->Anim, shared.atran.player.aim);
+    set_state(THREAD_CAMERA, STATE_CAMERA_AIM);
+}
+#endif
 
 xMat4x3* cruise_bubble::get_player_mat()
 {
@@ -3038,29 +3052,55 @@ xMat4x3* cruise_bubble::get_player_mat()
 }
 
 // func_8005C8E8
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv")
+#else
+void cruise_bubble::state_player_aim::stop()
+{
+  shared.flags = shared.flags & 0xffffffdf;
+}
+#endif
 
 // func_8005C8FC
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_player_aim::update(float32 dt)
+{
+    this->turn_delay += dt;
+
+    if (this->turn_delay >= current_tweak->aim_delay) {
+        this->face_camera(dt);
+    }
+    this->apply_yaw();
+    this->update_animation(dt);
+
+    if ((globals.pad0->on & 0x100) == 0)
+    {
+        return STATE_PLAYER_FIRE;
+    }
+    return STATE_PLAYER_AIM;
+}
+#endif
 
 // func_8005C998
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf")
+    "update_animation__Q213cruise_bubble16state_player_aimFf")
 
 // func_8005CA00
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv")
+    "apply_yaw__Q213cruise_bubble16state_player_aimFv")
 
 // func_8005CA98
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "face_camera__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf")
+    "face_camera__Q213cruise_bubble16state_player_aimFf")
 
 // func_8005CBB8
 #pragma GLOBAL_ASM(                                                                                \
