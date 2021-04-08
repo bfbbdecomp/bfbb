@@ -4374,14 +4374,6 @@ lbl_8005CC5C:
 /* 8005CC68 00059A68  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005CC6C 00059A6C  4E 80 00 20 */	blr 
 
-/* get_missle_mat__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 8005CC70 00059A70  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005CC74 00059A74  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005CC78 00059A78  80 63 00 68 */	lwz r3, 0x68(r3)
-/* 8005CC7C 00059A7C  80 63 00 4C */	lwz r3, 0x4c(r3)
-/* 8005CC80 00059A80  4E 80 00 20 */	blr 
-
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFv:
 /* 8005CC84 00059A84  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005CC88 00059A88  7C 08 02 A6 */	mflr r0
