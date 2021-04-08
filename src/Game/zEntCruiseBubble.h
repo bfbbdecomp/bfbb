@@ -279,7 +279,7 @@ namespace cruise_bubble
     struct tweak_group
     {
         float32 aim_delay;
-        // Size: 0x10
+        // Size: 0x10, Offset: 0x4
         struct _class_2
         {
             float32 halt_time;
@@ -293,8 +293,8 @@ namespace cruise_bubble
                 float32 delay_wand;
             } fire;
         } player;
-
-        // Size: 0x5c
+        
+        // Size: 0x5c, Offset: 0x14
         struct _class_22
         {
             float32 life;
@@ -332,7 +332,7 @@ namespace cruise_bubble
             } explode;
         } missle;
 
-        // Size: 0x5c
+        // Size: 0x5c, Offset: 0x70
         struct _class_10
         {
             struct _class_15
@@ -372,7 +372,7 @@ namespace cruise_bubble
             } restore;
         } camera;
 
-        // Size: 0x18
+        // Size: 0x18, Offset: 0xcc
         struct _class_48
         {
             float32 env_alpha;
@@ -383,7 +383,7 @@ namespace cruise_bubble
             uint32 fresnel_texture;
         } material;
 
-        // Size: 0x14
+        // Size: 0x14, Offset: 0xe4
         struct _class_9
         {
             // Offset: 0xe4
@@ -395,7 +395,7 @@ namespace cruise_bubble
             float32 delay_retarget;
         } reticle;
 
-        // Size: 0x10
+        // Size: 0x10, Offset: 0xf8
         struct _class_20
         {
             // Offset: 0xf8
@@ -404,8 +404,8 @@ namespace cruise_bubble
             float32 bubble_emit_radius;
             float32 wake_emit_radius;
         } trail;
-
-        // Size: 0x10
+        
+        // Size: 0x10, Offset: 0x108
         struct _class_29
         {
             uint32 emit;
@@ -414,7 +414,7 @@ namespace cruise_bubble
             float32 rand_vel;
         } blast;
 
-        // Size: 0x24
+        // Size: 0x24, Offset: 0x118
         struct _class_35
         {
             float32 dist_min;
@@ -427,8 +427,8 @@ namespace cruise_bubble
             float32 vel_angle;
             float32 rot_vel_max;
         } droplet;
-
-        // Size: 0x44
+        
+        // Size: 0x44, Offset: 0x13c
         struct _class_43
         {
             float32 glow_size;
@@ -467,8 +467,8 @@ namespace cruise_bubble
                 float32 glow_size;
             } timer;
         } hud;
-
-        // Size: 0xc
+        
+        // Size: 0xc, Offset: 0x180
         struct _class_34
         {
             float32 freq;
