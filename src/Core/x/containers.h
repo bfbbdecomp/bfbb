@@ -40,11 +40,16 @@ template <class T> struct static_queue
     T* _buffer;
 };
 
-template <class T> struct fixed_queue
+template <class T, uint32 N> struct fixed_queue
 {
     uint32 _first;
     uint32 _last;
-    T _buffer[32];
+    T _buffer[N + 1];
+
+    void reset();
+    void push_front(const T& element);
+    bool full() const;
+    void pop_back();
 };
 
 #endif

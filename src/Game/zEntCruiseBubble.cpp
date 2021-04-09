@@ -107,7 +107,7 @@ extern struct _class_36
     } atran;
 } shared;
 // xMat4x3 start_cam_mat;
-// fixed_queue missle_record;
+extern fixed_queue<missle_record_data, 127> missle_record;
 extern xFXRibbon wake_ribbon[2];
 extern xDecalEmitter explode_decal;
 extern const xFXRibbon::curve_node wake_ribbon_curve[2];
@@ -240,6 +240,7 @@ extern float32 zEntCruiseBubble_f_0_78; // 0.78
 extern float32 zEntCruiseBubble_f_0_86; // 0.86
 extern float32 zEntCruiseBubble_f_0_15; // 0.15
 extern float32 zEntCruiseBubble_f_0_0001; // 0.15
+extern float32 zEntCruiseBubble_f_1_0e38; // 1.0 * 10^38
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
@@ -3283,29 +3284,126 @@ void cruise_bubble::state_missle_appear::update_effects(float32 dt)
 }
 
 // func_8005CF84
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
+#else
+void cruise_bubble::state_missle_fly::start()
+{
+    // lwzu
+    shared.flags = shared.flags | 0x8;
+    this->life = current_tweak->missle.life;
+    
+    show_missle();
+    start_trail();
+    start_damaging();
 
+    this->vel = zEntCruiseBubble_f_0_0;
+    xMat3x3GetEuler(get_missle_mat(), &this->rot);
+    this->rot_vel = zEntCruiseBubble_f_0_0;
+    this->engine_pitch = zEntCruiseBubble_f_0_0;
+    this->flash_time = zEntCruiseBubble_f_0_0;
+    this->last_loc = globals.player.ent.bound.sph.center;
+
+    missle_record.reset();
+    missle_record.push_front(missle_record_data(this->last_loc, this->rot.z));
+    missle_record.push_front(missle_record_data(get_missle_mat()->pos, this->rot.z));   
+
+    play_sound(2, zEntCruiseBubble_f_1_0, &get_missle_mat()->pos);
+    signal_event(0x203);
+}
+#endif
 
 cruise_bubble::missle_record_data::missle_record_data(const xVec3& loc, float32 roll)
     : loc(loc), roll(roll)
 { }
 
 // func_8005D0AC
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
+#else
+void cruise_bubble::state_missle_fly::stop()
+{
+    shared.flags = shared.flags & 0xfffffff7;
+    
+    hide_missle();
+    stop_trail();
+    stop_sound(2, 0);
+    signal_event(0x204);
+
+    xSphere o;
+    o.center = zEntCruiseBubble_f_1_0e38;
+    o.r =zEntCruiseBubble_f_0_0;
+    notify_triggers(*globals.sceneCur, o, xVec3::create(zEntCruiseBubble_f_0_0));
+}
+#endif
 
 // func_8005D128
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
+#else
+void cruise_bubble::state_missle_fly::abort()
+{
+    stop_sound(2, 0);
+    signal_event(0x204);
+
+    xSphere o;
+    o.center = zEntCruiseBubble_f_1_0e38;
+    o.r =zEntCruiseBubble_f_0_0;
+    notify_triggers(*globals.sceneCur, o, xVec3::create(zEntCruiseBubble_f_0_0));
+}
+#endif
 
 // func_8005D18C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_missle_fly::update(float32 dt)
+{
+    this->life -= dt;
+    if (this->life <= zEntCruiseBubble_f_0_0 || (globals.pad0->pressed & 0x100) != 0)
+    {
+        shared.hit_loc = get_missle_mat()->pos;
+        shared.hit_norm = get_missle_mat()->up;
+
+        return STATE_MISSLE_EXPLODE;
+    }
+
+    this->update_turn(dt);
+    this->update_move(dt);
+
+    if (missle_record.full())
+    {
+        missle_record.pop_back();
+    }
+
+    if (this->collide() || this->collide_hazards())
+    {
+        missle_record.push_front(missle_record_data(shared.hit_loc, this->rot.z));
+        return STATE_MISSLE_EXPLODE;
+    }
+    missle_record.push_front(missle_record_data(get_missle_mat()->pos, this->rot.z));
+
+    this->last_loc = get_missle_mat()->pos;
+    this->update_engine_sound(dt);
+    this->update_flash(dt);
+
+    xMat4x3* mat = get_missle_mat();
+    xSphere o;
+    o.center = mat->pos;
+    o.r = current_tweak->missle.hit_dist;
+    notify_triggers(*globals.sceneCur, o, mat->at);
+
+    return STATE_MISSLE_FLY;
+}
+#endif
 
 void cruise_bubble::state_missle_fly::update_flash(float32 dt)
 {
@@ -3322,7 +3420,7 @@ void cruise_bubble::state_missle_fly::update_flash(float32 dt)
 }
 
 // func_8005D3D4
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
@@ -3343,37 +3441,37 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
 // func_8005D448
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
+    "collide_hazards__Q213cruise_bubble16state_missle_flyFv")
 
 // func_8005D4C8
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv")
+    "hazard_check__Q213cruise_bubble16state_missle_flyFR9NPCHazardPv")
 
 // func_8005D56C
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
+    "collide__Q213cruise_bubble16state_missle_flyFv")
 
 // func_8005D7D4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hit_test__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt")
+    "hit_test__Q213cruise_bubble16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt")
 
 // func_8005D928
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
+    "update_move__Q213cruise_bubble16state_missle_flyFf")
 
 // func_8005D998
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
+    "update_turn__Q213cruise_bubble16state_missle_flyFf")
 
 // func_8005DB98
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "calculate_rotation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2")
+    "calculate_rotation__Q213cruise_bubble16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2")
 
 // func_8005DC2C
 #pragma GLOBAL_ASM(                                                                                \
@@ -3632,7 +3730,7 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
 // func_8005FE44
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__ct__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv")
+    "__ct__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv")
 
 // func_8005FE8C
 #pragma GLOBAL_ASM(                                                                                \
@@ -3712,7 +3810,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 // func_80060358
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data")
+    "push_front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_FRCQ213cruise_bubble18missle_record_data")
 
 // func_800603A0
 #pragma GLOBAL_ASM(                                                                                \
@@ -3722,7 +3820,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 // func_800603C4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv")
+    "front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv")
 
 // func_800603F4
 #pragma GLOBAL_ASM(                                                                                \
@@ -3732,57 +3830,57 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 // func_8006040C
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "begin__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv")
+    "begin__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv")
 
 // func_80060430
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "create_iterator__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFUl")
+    "create_iterator__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFUl")
 
 // func_80060450
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv")
+    "push_front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv")
 
 // func_80060464
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "reset__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv")
+    "reset__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv")
 
 // func_80060484
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "clear__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv")
+    "clear__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv")
 
 // func_80060494
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "pop_back__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv")
+    "pop_back__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv")
 
 // func_800604A8
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "full__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv")
+    "full__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv")
 
 // func_800604F4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "max_size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv")
+    "max_size__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv")
 
 // func_800604F4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv")
+    "size__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv")
 
 // func_80060514
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "__vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi")
+    "__vc__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fi")
 
 // func_80060534
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_at__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFi")
+    "get_at__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFi")
 
 // func_80060554
 #pragma GLOBAL_ASM(                                                                                \
@@ -3807,7 +3905,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 // func_800605DC
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "end__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv")
+    "end__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv")
 
 // func_80060600
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "MarkForRecycle__9NPCHazardFv")

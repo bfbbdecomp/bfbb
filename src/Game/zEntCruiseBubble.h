@@ -1,6 +1,7 @@
 #ifndef ZENTCRUISEBUBBLE_H
 #define ZENTCRUISEBUBBLE_H
 
+#include "zNPCHazard.h"
 #include "zShrapnel.h"
 #include <types.h>
 
@@ -146,10 +147,19 @@ namespace cruise_bubble
         state_missle_fly();
 
         void start();
+        void stop();
         state_enum update(float32 dt);
-        uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
+        void abort();
         void update_flash(float32 dt);
         void update_engine_sound(float32 dt);
+
+        uint8 collide_hazards();
+        uint8 hazard_check(NPCHazard& haz, void* context);
+        uint8 collide();
+        uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
+        void update_move(float32 dt);
+        void update_turn(float32 dt);
+        void calculate_rotation(xVec2& d1, xVec2& v1, float32 dt, const xVec2& d0, const xVec2& v0, const xVec2& a0, const xVec2& a1) const;
     };
 
     struct state_missle_appear : state_type
