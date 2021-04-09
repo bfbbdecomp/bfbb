@@ -6,6 +6,16 @@
 
 #include "zRumble.h"
 
+// I have no idea where to put this. This is only used by
+// cruise_bubble::tweak_group::register_tweaks() so far.
+// If you are searching the project for 'auto_tweak' you are
+// probably working on one of the bosses which also seem to use this.
+// As of now I'm not sure if you should include this declaration,
+// define your own or find a good place for shared use.
+namespace auto_tweak {
+    template <class T1, class T2> void load_param(T1&, T2, T2, T2, xModelAssetParam*, uint32, const char*);
+};
+
 namespace cruise_bubble
 {
     enum state_enum
@@ -226,11 +236,12 @@ namespace cruise_bubble
         int32 flags;
         basic_rect<float32> bound;
         float32 alpha;
+        // Offset: 0x18
         float32 alpha_vel;
         float32 glow;
         float32 glow_vel;
         float32 opacity;
-        xVec3* target;
+        const xVec3* target;
         xModelInstance* model;
 
         ASSIGNMENT_OPERATOR(hud_gizmo)
@@ -251,6 +262,7 @@ namespace cruise_bubble
         void refresh();
     };
 
+    // Size: 0x1b8
     struct tweak_group
     {
         float32 aim_delay;
@@ -361,8 +373,10 @@ namespace cruise_bubble
         // Size: 0x14
         struct _class_9
         {
+            // Offset: 0xe4
             float32 dist_min;
             float32 dist_max;
+            // Offset: 0xec
             float32 ang_show;
             float32 ang_hide;
             float32 delay_retarget;
@@ -371,6 +385,7 @@ namespace cruise_bubble
         // Size: 0x10
         struct _class_20
         {
+            // Offset: 0xf8
             float32 sample_rate;
             float32 bubble_rate;
             float32 bubble_emit_radius;
@@ -451,7 +466,8 @@ namespace cruise_bubble
         void* context;
         tweak_callback cb_missle_model;
 
-        void register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize);
+        void register_tweaks(bool init, xModelAssetParam* ap, uint32 apsize, const char*);
+        void load(xModelAssetParam* params, uint32 size);
     };
 
     void init_sound();
@@ -496,11 +512,14 @@ namespace cruise_bubble
     void reset_explode_decal();
     void init_explode_decal();
     void init_shrapnel();
+    void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1, const xVec3& dir1, float32 dt);
     void update_trail(float32 dt);
     void refresh_missle_model();
     void update_missle(xScene& s, float32 dt);
     void render_missle();
     xModelInstance* load_model(uint32);
+    void render_model_2d(xModelInstance* m, const basic_rect<float32>& bound, float32 alpha);
+    void render_glow(xModelInstance* m, const basic_rect<float32>& r, float32 glow, float32 alpha);
     void init_hud();
     void show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m);
     void update_gizmo(hud_gizmo& gizmo, float32 dt);
@@ -512,7 +531,12 @@ namespace cruise_bubble
     void render_hud();
     void show_hud();
     void hide_hud();
-    int32 find_locked_target(const xVec3* loc);
+    xVec3 world_to_screen(const xVec3& loc);
+    int32 find_locked_target(const xVec3* target);
+    void lock_target(int32 index, const xVec3* target, float32 opacity);
+    void check_lock_target(const xVec3* target);
+    uint32 check_anim_aim(xAnimTransition*, xAnimSingle*);
+    void load_cheat_tweak();
     void load_settings();
     void init();
     void init_debug();
@@ -522,6 +546,7 @@ namespace cruise_bubble
     bool render();
     void render_debug();
     void render_screen();
+    void insert_player_animations(xAnimTable& table);
     bool active();
     float32 exploding();
     void get_explode_sphere(xVec3& center, float32& radius);
@@ -529,6 +554,8 @@ namespace cruise_bubble
     void add_life(float32, float32);
     void set_life(float32 life);
     void reset_life();
+    // xBase* param names are guessed as they go unused and wont appear in dwarf
+    bool event_handler(xBase* from, uint32 event, const float32* fparam, xBase* to);
 } // namespace cruise_bubble
 
 #endif

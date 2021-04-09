@@ -1,4 +1,6 @@
 #include "stdio.h"
+#include "zEnt.h"
+#include "zRenderState.h"
 #include <string.h>
 
 #include "zCamera.h"
@@ -60,6 +62,7 @@ extern struct _class_36
     int32 hits_size;
     uint32 player_health;
     xVec3 player_motion;
+    // Offset: 0x100
     float32 fov_default;
     zShrapnelAsset* droplet_shrapnel;
     float32 dialog_freq;
@@ -67,7 +70,9 @@ extern struct _class_36
     {
         float32 samples;
         float32 bubbles;
+        // Offset: 0x114
         xMat4x3 mat;
+        // Offset: 0x154
         xQuat dir;
     } trail;
     struct _class_6
@@ -181,6 +186,57 @@ extern float32 zEntCruiseBubble_f_0_25; // 0.25
 extern float32 zEntCruiseBubble_f_255_0; // 255.0
 extern float32 zEntCruiseBubble_f_n1_0; // -1.0
 extern float32 zEntCruiseBubble_f_100_0; // 100.0
+extern float32 zEntCruiseBubble_f_n0_00001; // -0.00001
+extern float32 zEntCruiseBubble_f_0_00001; // 0.00001
+extern float32 zEntCruiseBubble_f_0_2; // 0.2
+extern float32 zEntCruiseBubble_f_0_05; // 0.05
+extern float32 zEntCruiseBubble_f_0_01; // 0.01
+extern float32 zEntCruiseBubble_f_1000000000_0; // 1000000000.0
+extern float32 zEntCruiseBubble_f_0_0667; // 0.0667
+extern float32 zEntCruiseBubble_f_6_0; // 6.0
+extern float32 zEntCruiseBubble_f_0_3; // 0.3
+extern float32 zEntCruiseBubble_f_30_0; // 30.0
+extern float32 zEntCruiseBubble_f_0_017; // 0.017 deg2rad
+extern float32 zEntCruiseBubble_f_60_0; // 60.0
+extern float32 zEntCruiseBubble_f_0_025; // 0.025
+extern float32 zEntCruiseBubble_f_0_1333; // 0.1333
+extern float32 zEntCruiseBubble_f_0_667; // 0.667
+extern float32 zEntCruiseBubble_f_n0_049; // -0.049
+extern float32 zEntCruiseBubble_f_1_728; // 1.728
+extern float32 zEntCruiseBubble_f_0_922; // 0.922
+extern float32 zEntCruiseBubble_f_12_0; // 12.0
+extern float32 zEntCruiseBubble_f_10_0; // 10.0
+extern float32 zEntCruiseBubble_f_0_005; // 0.005
+extern float32 zEntCruiseBubble_f_2_0; // 2.0
+extern float32 zEntCruiseBubble_f_5_0; // 5.0
+extern float32 zEntCruiseBubble_f_4_0; // 4.0
+extern float32 zEntCruiseBubble_f_0_1; // 0.1
+extern float32 zEntCruiseBubble_f_0_6; // 0.6
+extern float32 zEntCruiseBubble_f_1_5708; // 1.5708 90deg
+extern float32 zEntCruiseBubble_f_1_5; // 1.5
+extern float32 zEntCruiseBubble_f_n10_0; // -10.0
+extern float32 zEntCruiseBubble_f_n90_0; // -90.0
+extern float32 zEntCruiseBubble_f_90_0; // 90.0
+extern float32 zEntCruiseBubble_f_720_0; // 720.0
+extern float32 zEntCruiseBubble_f_360_0; // 360.0
+extern float32 zEntCruiseBubble_f_135_0; // 135.0
+extern float32 zEntCruiseBubble_f_0_001; // 0.001
+extern float32 zEntCruiseBubble_f_95_0; // 95.0
+extern float32 zEntCruiseBubble_f_180_0; // 180.0
+extern float32 zEntCruiseBubble_f_8_0; // 8.0
+extern float32 zEntCruiseBubble_f_0_99; // 0.1
+extern float32 zEntCruiseBubble_f_0_8; // 0.8
+extern float32 zEntCruiseBubble_f_0_75; // 0.75
+extern float32 zEntCruiseBubble_f_10000_0; // 10000.0
+extern float32 zEntCruiseBubble_f_22_5; // 22.5
+extern float32 zEntCruiseBubble_f_n100000_0; // -100000.0
+extern float32 zEntCruiseBubble_f_100000_0; // 100000.0
+extern float32 zEntCruiseBubble_f_n1000000000_0; // -1000000000.0
+extern float32 zEntCruiseBubble_f_0_0275; // 0.0275
+extern float32 zEntCruiseBubble_f_0_047; // 0.047
+extern float32 zEntCruiseBubble_f_0_78; // 0.78
+extern float32 zEntCruiseBubble_f_0_86; // 0.86
+extern float32 zEntCruiseBubble_f_0_15; // 0.15
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
@@ -1074,12 +1130,70 @@ void cruise_bubble::init_shrapnel()
 // func_80058E14
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "add_trail_sample__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3RC5xVec3RC5xVec3RC5xVec3f")
+    "add_trail_sample__13cruise_bubbleFRC5xVec3RC5xVec3RC5xVec3RC5xVec3f")
 
 // func_800590FC
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_trail__13cruise_bubbleFf")
+#else
+void cruise_bubble::update_trail(float32 dt)
+{
+    // will match once file complete
+    // casting from int32 to float uses a float constant which cannot be extern'd
+
+    if ((shared.flags & 0x80) == 0)
+    {
+        return;
+    }
+
+    shared.trail.samples += dt * current_tweak->trail.sample_rate;
+    int32 samples = (int32) shared.trail.samples;
+
+    if (samples <= 0)
+    {
+        shared.trail.samples = zEntCruiseBubble_f_0_0;
+        samples = 1;
+    }
+    else
+    {
+        // float cast
+        shared.trail.samples -= (float32) samples;
+    }
+
+    xMat4x3 end_mat;
+    xQuat end_dir;
+    refresh_trail(end_mat, end_dir);
+
+    // float cast
+    float32 ds = zEntCruiseBubble_f_1_0 / (float32) samples;
+    float32 ddt = dt * ds;
+    xVec3 dloc = (end_mat.pos - shared.trail.mat.pos) * ds;
+    int32 flip = 0;
+    float32 s = ds;
+
+    xMat4x3 mat[2];
+    mat[0] = shared.trail.mat;
+
+    for (int i = 0; i < samples; ++i) {
+        xMat4x3* mat0 = mat + flip;
+        flip = flip ^ 1;
+        xMat4x3* mat1 = mat + flip;
+
+        xQuat subdir;
+        xQuatSlerp(&subdir, &shared.trail.dir, &end_dir, s);
+        xQuatToMat(&subdir, mat1);
+        mat1->pos = mat0->pos + dloc;
+        add_trail_sample(mat0->pos, mat0->right, mat1->pos, mat1->right, ddt);
+        s += ds;
+    }
+
+    shared.trail.mat = end_mat;
+    shared.trail.dir = end_dir;
+    shared.flags = shared.flags & 0xfffffeff;
+}
+#endif
 
 void cruise_bubble::refresh_missle_model()
 {
@@ -1133,12 +1247,12 @@ xModelInstance* cruise_bubble::load_model(uint32 aid)
 // func_80059458
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_model_2d__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f")
+    "render_model_2d__13cruise_bubbleFP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_f")
 
 // func_80059584
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_glow__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff")
+    "render_glow__13cruise_bubbleFP14xModelInstanceRC13basic_rect_esc__0_f_esc__1_ff")
 
 // func_80059698
 #ifndef NON_MATCHING
@@ -1263,7 +1377,7 @@ void cruise_bubble::flash_hud()
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "render_timer__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fff")
+    "render_timer__13cruise_bubbleFff")
 #else
 void cruise_bubble::render_timer(float32 alpha, float32 glow)
 {
@@ -1401,9 +1515,73 @@ void cruise_bubble::uv_animated_model::update(float32 dt)
     "refresh__Q213cruise_bubble17uv_animated_modelFv")
 
 // func_8005A0E0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "render_hud__13cruise_bubbleFv")
+#else
+void cruise_bubble::render_hud()
+{
+    if (hud.gizmos_used == 0)
+    {
+        return;
+    }
+
+    zRenderState(SDRS_CruiseHUD);
+
+    if (hud.model.wind->Alpha > zEntCruiseBubble_f_0_0)
+    {
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*) 5);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*) 2);
+
+        basic_rect<float32> bound;
+        bound.set_size(current_tweak->hud.wind.size, current_tweak->hud.wind.size);
+        bound.center(zEntCruiseBubble_f_0_5, zEntCruiseBubble_f_0_5);
+
+        render_model_2d(hud.model.wind, bound, hud.model.wind->Alpha);
+    }
+
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*) 5);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*) 6);
+
+    for (int32 i = 0; i < hud.gizmos_used; ++i)
+    {
+        hud_gizmo* gizmo = &hud.gizmo[i];
+        float32 alpha = hud.alpha * gizmo->alpha * gizmo->opacity;
+        if (!(alpha <= zEntCruiseBubble_f_0_0))
+        {
+            render_model_2d(gizmo->model, gizmo->bound, alpha);
+        }
+    }
+
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*) 5);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*) 2);
+
+    for (int32 i = 0; i < hud.gizmos_used; ++i)
+    {
+        hud_gizmo* gizmo = &hud.gizmo[i];
+        
+        // regalloc
+        float32 glow = hud.glow + gizmo->glow;
+        if (glow > zEntCruiseBubble_f_1_0)
+        {
+            glow = zEntCruiseBubble_f_1_0;
+        }
+        else if (glow <= zEntCruiseBubble_f_0_0)
+        {
+            continue;
+        }
+        
+        float32 alpha = hud.alpha * gizmo->alpha * gizmo->opacity;
+        if (!(alpha <= zEntCruiseBubble_f_0_0))
+        {
+            render_glow(gizmo->model, gizmo->bound, glow, alpha);
+        }
+    }
+
+    render_timer(hud.alpha, hud.glow);
+}
+#endif
 
 // func_8005A2AC
 #if 1
@@ -1445,16 +1623,26 @@ void cruise_bubble::hide_hud()
 }
 #endif
 
-// func_8005A360
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "world_to_screen__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FRC5xVec3")
+xVec3 cruise_bubble::world_to_screen(const xVec3& loc)
+{
+    iCameraUpdatePos(globals.camera.lo_cam, &globals.camera.mat);
 
-int32 cruise_bubble::find_locked_target(const xVec3* loc)
+    xVec3 world_loc;
+	xMat4x3* view_mat = (xMat4x3*) &globals.camera.lo_cam->viewMatrix;
+    xMat4x3Toworld(&world_loc, view_mat, &loc);
+    
+    xVec3 screen_loc;
+    float32 iz = zEntCruiseBubble_f_1_0 / world_loc.z;
+    screen_loc.assign(world_loc.x * iz, world_loc.y * iz, zEntCruiseBubble_f_1_0);
+    
+    return screen_loc;
+}
+
+int32 cruise_bubble::find_locked_target(const xVec3* target)
 {
     for (int32 i = 1; i < hud.gizmos_used; ++i)
     {
-        if (hud.gizmo[i].target == loc)
+        if (hud.gizmo[i].target == target)
         {
             return i;
         }
@@ -1464,39 +1652,963 @@ int32 cruise_bubble::find_locked_target(const xVec3* loc)
 }
 
 // func_8005A44C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lock_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiPC5xVec3f")
+    "lock_target__13cruise_bubbleFiPC5xVec3f")
+#else
+void cruise_bubble::lock_target(int32 index, const xVec3* target, float32 opacity)
+{
+    if (index <= -1 && hud.gizmos_used >= 33)
+    {
+        return;
+    }
 
-// func_8005A570
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "check_lock_target__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FPC5xVec3")
+    hud_gizmo* gizmo;
+    if (index <= -1)
+    {
+        index = hud.gizmos_used;
+    	gizmo = &hud.gizmo[hud.gizmos_used++];
+        // offsets for gizmo and gizmo->bound are calculated incremental
+        // instead should be to absolute offsets from the same base
+        show_gizmo(*gizmo, gizmo->bound, hud.model.target);
+    }
+    gizmo = &hud.gizmo[index];
+    xVec3 screen_loc = world_to_screen(*target);
 
-// func_8005A6D8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "check_anim_aim__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv")
+    gizmo->bound.set_size(current_tweak->hud.target.size);
+    gizmo->bound.center(screen_loc.x, screen_loc.y);
+    gizmo->flags = 0x1;
+    gizmo->alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+    gizmo->model = hud.model.target;
+    gizmo->target = target;
+    gizmo->opacity = opacity;
+}
+#endif
+
+void cruise_bubble::check_lock_target(const xVec3* target)
+{
+    xMat4x3* mat = &globals.camera.mat;
+    xVec3 offset = *target - mat->pos;
+    float32 ang = offset.dot(mat->at);
+
+    if (ang < current_tweak->reticle.dist_min || ang > current_tweak->reticle.dist_max)
+    {
+        return;
+    }
+
+    ang = offset.length();
+    if ((ang >= zEntCruiseBubble_f_n0_00001) &&
+            (ang <= zEntCruiseBubble_f_0_00001))
+    {
+        ang = zEntCruiseBubble_f_0_0;
+    }
+    else
+    {
+        ang = xacos(offset.dot(mat->at) / ang);
+    }
+    
+    float32 max_ang = current_tweak->reticle.ang_show;
+    float32 min_ang = current_tweak->reticle.ang_hide;
+
+    if (ang >= min_ang)
+    {
+        return;
+    }
+
+    if (ang >= max_ang)
+    {
+        int32 t = find_locked_target(target);
+        if (t < 0)
+        {
+            return;
+        }
+
+        lock_target(t, target, (min_ang - ang) / (min_ang - max_ang));
+    }
+
+    else
+    {
+        lock_target(find_locked_target(target), target, zEntCruiseBubble_f_1_0);
+    }
+}
+
+uint32 cruise_bubble::check_anim_aim(xAnimTransition*, xAnimSingle*)
+{
+    return false;
+}
 
 // func_8005A6E0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load_cheat_tweak__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "load_cheat_tweak__13cruise_bubbleFv")
 
-// func_8005A804
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load_settings__13cruise_bubbleFv")
+void cruise_bubble::load_settings()
+{
+    uint32 params_size;
+    // stringBase0 + 0x163 == "cruise_bubble_bind.MINF"
+    xModelAssetParam* params = zEntGetModelParams(xStrHash(stringBase0 + 0x163), &params_size);
+    
+    if (params == NULL)
+    {
+        params_size = 0;
+    }
+    
+    normal_tweak.load(params, params_size);
+    memcpy(&cheat_tweak, &normal_tweak, sizeof(tweak_group));
+    load_cheat_tweak();
+    refresh_missle_model();
+}
 
-// func_8005A880
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "load__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFP16xModelAssetParamUi")
+void cruise_bubble::tweak_group::load(xModelAssetParam* params, uint32 size)
+{
+    this->register_tweaks(true, params, size, NULL);
+}
 
 // func_8005A8B0
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "register_tweaks__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_11tweak_groupFbP16xModelAssetParamUiPCc")
+    "register_tweaks__Q213cruise_bubble11tweak_groupFbP16xModelAssetParamUiPCc")
+#else
+void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap, uint32 apsize, const int8*)
+{
+    if (init)
+    {
+        this->aim_delay = zEntCruiseBubble_f_0_2;
+        // scheduling for loading ap and apsize is off :(
+        // stringBase0 + 0x290 == "aim_delay"
+        auto_tweak::load_param<float32, float32>(this->aim_delay,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x290);
+    }
+
+    if (init)
+    {
+        this->player.halt_time = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x29a == "player.halt_time"
+        auto_tweak::load_param<float32, float32>(this->player.halt_time,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x29a);
+    }
+    
+    if (init)
+    {
+        this->player.aim.turn_speed = zEntCruiseBubble_f_0_05;
+        // stringBase0 + 0x2ab == "player.aim.turn_speed"
+        auto_tweak::load_param<float32, float32>(this->player.aim.turn_speed,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x2ab);
+    }
+    
+    if (init)
+    {
+        this->player.aim.anim_delta = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x2c1 == "player.aim.anim_delta"
+        auto_tweak::load_param<float32, float32>(this->player.aim.anim_delta,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x2c1);
+    }
+    
+    if (init)
+    {
+        this->player.fire.delay_wand = zEntCruiseBubble_f_0_0667;
+        // stringBase0 + 0x2d7 == "player.fire.delay_wand"
+        auto_tweak::load_param<float32, float32>(this->player.fire.delay_wand,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x2d7);
+    }
+    
+    if (init)
+    {
+        this->missle.life = zEntCruiseBubble_f_6_0;
+        // stringBase0 + 0x2ee == "missle.life"
+        auto_tweak::load_param<float32, float32>(this->missle.life,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x2ee);
+    }
+    
+    if (init)
+    {
+        this->missle.hit_dist = zEntCruiseBubble_f_0_3;
+        // stringBase0 + 0x2fa == "missle.hit_dist"
+        auto_tweak::load_param<float32, float32>(this->missle.hit_dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x2fa);
+    }
+    
+    if (init)
+    {
+        this->missle.crash_angle = zEntCruiseBubble_f_30_0;
+        // stringBase0 + 0x30a == "missle.crash_angle"
+        auto_tweak::load_param<float32, float32>(this->missle.crash_angle,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_60_0,
+                ap, apsize, stringBase0 + 0x30a);
+    }
+
+    if (init)
+    {
+        this->missle.collide_twist = zEntCruiseBubble_f_0_025;
+        // stringBase0 + 0x31d == "missle.collide_twist"
+        auto_tweak::load_param<float32, float32>(this->missle.collide_twist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x31d);
+    }
+
+    if (init)
+    {
+        this->missle.hit_tests = 4;
+        // stringBase0 + 0x332 == "missle.hit_tests"
+        auto_tweak::load_param<int32, int32>(this->missle.hit_tests,
+                1, 1, 100, ap, apsize, stringBase0 + 0x332);
+    }
+    
+    if (init)
+    {
+        this->missle.appear.delay_show = zEntCruiseBubble_f_0_1333;
+        // stringBase0 + 0x343 == "missle.appear.delay_show"
+        auto_tweak::load_param<float32, float32>(this->missle.appear.delay_show,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x343);
+    }
+    
+    if (init)
+    {
+        this->missle.appear.delay_fly = zEntCruiseBubble_f_0_667;
+        // stringBase0 + 0x35c == "missle.appear.delay_fly"
+        auto_tweak::load_param<float32, float32>(this->missle.appear.delay_fly,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x35c);
+    }
+    
+    if (init)
+    {
+        this->missle.appear.offset = xVec3::create(
+                zEntCruiseBubble_f_n0_049,
+                zEntCruiseBubble_f_1_728,
+                zEntCruiseBubble_f_0_922);
+        // stringBase0 + 0x374 == "missle.appear.offset"
+        auto_tweak::load_param<xVec3, int32>(this->missle.appear.offset,
+                0, 0, 0, ap, apsize, stringBase0 + 0x374);
+    }
+
+    if (init)
+    {
+        this->missle.fly.accel = zEntCruiseBubble_f_6_0;
+        // stringBase0 + 0x389 == "missle.fly.accel"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.accel,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x389);
+    }
+
+    if (init)
+    {
+        this->missle.fly.max_vel = zEntCruiseBubble_f_12_0;
+        // stringBase0 + 0x39a == "missle.fly.max_vel"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.max_vel,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x39a);
+    }
+
+    if (init)
+    {
+        this->missle.fly.engine_pitch_max = zEntCruiseBubble_f_10_0;
+        // stringBase0 + 0x3ad == "missle.fly.engine_pitch_max"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.engine_pitch_max,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x3ad);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.engine_pitch_sensitivity = zEntCruiseBubble_f_0_005;
+        // stringBase0 + 0x3c9 == "missle.fly.engine_pitch_sensitivity"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.engine_pitch_sensitivity,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x3c9);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.flash_interval = zEntCruiseBubble_f_2_0;
+        // stringBase0 + 0x3ed == "missle.fly.flash_interval"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.flash_interval,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x3ed);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.turn.xdelta = zEntCruiseBubble_f_5_0;
+        // stringBase0 + 0x407 == "missle.fly.turn.xdelta"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.turn.xdelta,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x407);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.turn.ydelta = zEntCruiseBubble_f_4_0;
+        // stringBase0 + 0x41e == "missle.fly.turn.ydelta"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.turn.ydelta,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x41e);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.turn.xdecay = zEntCruiseBubble_f_0_99;
+        // stringBase0 + 0x435 == "missle.fly.turn.xdecay"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.turn.xdecay,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x435);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.turn.ydecay = zEntCruiseBubble_f_0_99;
+        // stringBase0 + 0x44c == "missle.fly.turn.ydecay"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.turn.ydecay,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x44c);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.turn.ybound = zEntCruiseBubble_f_0_6;
+        // stringBase0 + 0x463 == "missle.fly.turn.ybound"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.turn.ybound,
+                zEntCruiseBubble_f_1_5708, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x463);
+    }
+    
+    if (init)
+    {
+        this->missle.fly.turn.roll_frac = zEntCruiseBubble_f_0_2;
+        // stringBase0 + 0x47a == "missle.fly.turn.roll_frac"
+        auto_tweak::load_param<float32, float32>(this->missle.fly.turn.roll_frac,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_n1_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x47a);
+    }
+    
+    if (init)
+    {
+        this->missle.explode.hit_radius = zEntCruiseBubble_f_1_0;
+        // stringBase0 + 0x494 == "missle.explode.hit_radius"
+        auto_tweak::load_param<float32, float32>(this->missle.explode.hit_radius,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x494);
+    }
+    
+    if (init)
+    {
+        this->missle.explode.hit_duration = zEntCruiseBubble_f_0_25;
+        // stringBase0 + 0x4ae == "missle.explode.hit_duration"
+        auto_tweak::load_param<float32, float32>(this->missle.explode.hit_duration,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x4ae);
+    }
+
+    if (init)
+    {
+        this->camera.aim.dist = zEntCruiseBubble_f_2_0;
+        // stringBase0 + 0x4ca == "camera.aim.dist"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x4ca);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.height = zEntCruiseBubble_f_1_5;
+        // stringBase0 + 0x4da == "camera.aim.height"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.height,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_n10_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x4da);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.pitch = zEntCruiseBubble_f_0_0;
+        // stringBase0 + 0x4ec == "camera.aim.pitch"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.pitch,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_n90_0, zEntCruiseBubble_f_90_0,
+                ap, apsize, stringBase0 + 0x4ec);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.accel = zEntCruiseBubble_f_10_0;
+        // stringBase0 + 0x4fd == "camera.aim.accel"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.accel,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x4fd);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.max_vel = zEntCruiseBubble_f_5_0;
+        // stringBase0 + 0x50e == "camera.aim.max_vel"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.max_vel,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x50e);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.stick_decel = zEntCruiseBubble_f_720_0;
+        // stringBase0 + 0x521 == "camera.aim.stick_decel"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.stick_decel,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x521);
+    }
+
+    if (init)
+    {
+        this->camera.aim.stick_accel = zEntCruiseBubble_f_360_0;
+        // stringBase0 + 0x538 == "camera.aim.stick_accel"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.stick_accel,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x538);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.stick_max_vel = zEntCruiseBubble_f_135_0;
+        // stringBase0 + 0x54f == "camera.aim.stick_max_vel"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.stick_max_vel,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x54f);
+    }
+    
+    if (init)
+    {
+        this->camera.aim.turn_speed = zEntCruiseBubble_f_0_2;
+        // stringBase0 + 0x568 == "camera.aim.turn_speed"
+        auto_tweak::load_param<float32, float32>(this->camera.aim.turn_speed,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x568);
+    }
+    
+    if (init)
+    {
+        this->camera.seize.delay = zEntCruiseBubble_f_0_0;
+        // stringBase0 + 0x57e == "camera.seize.delay"
+        auto_tweak::load_param<float32, float32>(this->camera.seize.delay,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x57e);
+    }
+
+    if (init)
+    {
+        this->camera.seize.blend_time = zEntCruiseBubble_f_1_5;
+        // stringBase0 + 0x591 == "camera.seize.blend_time"
+        auto_tweak::load_param<float32, float32>(this->camera.seize.blend_time,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x591);
+    }
+
+    if (init)
+    {
+        this->camera.seize.fade_dist = zEntCruiseBubble_f_2_0;
+        // stringBase0 + 0x5a9 == "camera.seize.fade_dist"
+        auto_tweak::load_param<float32, float32>(this->camera.seize.fade_dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x5a9);
+    }
+    
+    if (init)
+    {
+        this->camera.seize.hide_dist = zEntCruiseBubble_f_1_0;
+        // stringBase0 + 0x5c0 == "camera.seize.hide_dist"
+        auto_tweak::load_param<float32, float32>(this->camera.seize.hide_dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x5c0);
+    }
+
+    if (init)
+    {
+        this->camera.seize.fov = zEntCruiseBubble_f_95_0;
+        // stringBase0 + 0x5d7 == "camera.seize.fov"
+        auto_tweak::load_param<float32, float32>(this->camera.seize.fov,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_10_0, zEntCruiseBubble_f_180_0,
+                ap, apsize, stringBase0 + 0x5d7);
+    }
+
+    if (init)
+    {
+        this->camera.survey.duration = zEntCruiseBubble_f_2_0;
+        // stringBase0 + 0x5e8 == "camera.survey.duration"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.duration,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x5e8);
+    }
+    
+    if (init)
+    {
+        this->camera.survey.min_duration = zEntCruiseBubble_f_0_25;
+        // stringBase0 + 0x5ff == "camera.survey.min_duration"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.min_duration,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x5ff);
+    }
+    
+    if (init)
+    {
+        this->camera.survey.min_dist = zEntCruiseBubble_f_10_0;
+        // stringBase0 + 0x61a == "camera.survey.min_dist"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.min_dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x61a);
+    }
+    
+    if (init)
+    {
+        this->camera.survey.cut_dist = zEntCruiseBubble_f_6_0;
+        // stringBase0 + 0x631 == "camera.survey.cut_dist"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.cut_dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x631);
+    }
+    
+    if (init)
+    {
+        this->camera.survey.drift_dist = zEntCruiseBubble_f_8_0;
+        // stringBase0 + 0x648 == "camera.survey.drift_dist"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.drift_dist,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x648);
+    }
+
+    if (init)
+    {
+        this->camera.survey.drift_softness = zEntCruiseBubble_f_0_1;
+        // stringBase0 + 0x661 == "camera.survey.drift_softness"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.drift_softness,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_5,
+                ap, apsize, stringBase0 + 0x661);
+
+    }
+
+    if (init)
+    {
+        this->camera.survey.jerk_offset = zEntCruiseBubble_f_0_8;
+        // stringBase0 + 0x67e == "camera.survey.jerk_offset"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.jerk_offset,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_2_0,
+                ap, apsize, stringBase0 + 0x67e);
+    }
+    
+    if (init)
+    {
+        this->camera.survey.jerk_deflect = zEntCruiseBubble_f_0_6;
+        // stringBase0 + 0x698 == "camera.survey.jerk_deflect"
+        auto_tweak::load_param<float32, float32>(this->camera.survey.jerk_deflect,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x698);
+    }
+
+    if (init)
+    {
+        this->camera.restore.control_delay = zEntCruiseBubble_f_0_25;
+        // stringBase0 + 0x6b3 == "camera.restore.control_delay"
+        auto_tweak::load_param<float32, float32>(this->camera.restore.control_delay,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x6b3);
+    }
+    
+    if (init)
+    {
+        this->material.env_alpha = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x6d0 == "material.env_alpha"
+        auto_tweak::load_param<float32, float32>(this->material.env_alpha,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x6d0);
+
+    }
+
+    if (init)
+    {
+        this->material.env_coeff = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x6e3 == "material.env_coeff"
+        auto_tweak::load_param<float32, float32>(this->material.env_coeff,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x6e3);
+
+    }
+
+    if (init)
+    {
+        this->material.fresnel_alpha = zEntCruiseBubble_f_0_0;
+        // stringBase0 + 0x6f6 == "material.fresnel_alpha"
+        auto_tweak::load_param<float32, float32>(this->material.fresnel_alpha,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x6f6);
+    }
+    
+    if (init)
+    {
+        this->material.fresnel_coeff = zEntCruiseBubble_f_0_75;
+        // stringBase0 + 0x70d == "material.fresnel_coeff"
+        auto_tweak::load_param<float32, float32>(this->material.fresnel_coeff,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x70d);
+    }
+    
+    if (init)
+    {
+        this->reticle.dist_min = zEntCruiseBubble_f_3_0;
+        // stringBase0 + 0x724 == "reticle.dist_min"
+        auto_tweak::load_param<float32, float32>(this->reticle.dist_min,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x724);
+    }
+
+    if (init)
+    {
+        this->reticle.dist_max = zEntCruiseBubble_f_30_0;
+        // stringBase0 + 0x735 == "reticle.dist_max"
+        auto_tweak::load_param<float32, float32>(this->reticle.dist_max,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_10000_0,
+                ap, apsize, stringBase0 + 0x735);
+    }
+    
+    if (init)
+    {
+        this->reticle.ang_show = zEntCruiseBubble_f_4_0;
+        // stringBase0 + 0x746 == "reticle.ang_show"
+        auto_tweak::load_param<float32, float32>(this->reticle.ang_show,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_90_0,
+                ap, apsize, stringBase0 + 0x746);
+    }
+    
+    if (init)
+    {
+        this->reticle.ang_hide = zEntCruiseBubble_f_22_5;
+        // stringBase0 + 0x757 == "reticle.ang_hide"
+        auto_tweak::load_param<float32, float32>(this->reticle.ang_hide,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_90_0,
+                ap, apsize, stringBase0 + 0x757);
+    }
+    
+    if (init)
+    {
+        this->reticle.delay_retarget = zEntCruiseBubble_f_0_25;
+        // stringBase0 + 0x768 == "reticle.delay_retarget"
+        auto_tweak::load_param<float32, float32>(this->reticle.delay_retarget,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_5_0,
+                ap, apsize, stringBase0 + 0x768);
+    }
+    
+    if (init)
+    {
+        this->trail.sample_rate = zEntCruiseBubble_f_60_0;
+        // stringBase0 + 0x77f == "trail.sample_rate"
+        auto_tweak::load_param<float32, float32>(this->trail.sample_rate,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10000_0,
+                ap, apsize, stringBase0 + 0x77f);
+    }
+    
+    if (init)
+    {
+        this->trail.bubble_rate = zEntCruiseBubble_f_60_0;
+        // stringBase0 + 0x791 == "trail.bubble_rate"
+        auto_tweak::load_param<float32, float32>(this->trail.bubble_rate,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10000_0,
+                ap, apsize, stringBase0 + 0x791);
+    }
+    
+    if (init)
+    {
+        this->trail.bubble_emit_radius = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x7a3 == "trail.bubble_emit_radius"
+        auto_tweak::load_param<float32, float32>(this->trail.bubble_emit_radius,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x7a3);
+    }
+    
+    if (init)
+    {
+        this->trail.wake_emit_radius = zEntCruiseBubble_f_0_1;
+        // stringBase0 + 0x7bc == "trail.wake_emit_radius"
+        auto_tweak::load_param<float32, float32>(this->trail.wake_emit_radius,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x7bc);
+    }
+    
+    if (init)
+    {
+        this->blast.emit = 300;
+        // stringBase0 + 0x7d3 == "blast.emit"
+        auto_tweak::load_param<uint32, int32>(this->blast.emit,
+                1, 0, 0x3e8, ap, apsize, stringBase0 + 0x7d3);
+    }
+    
+    if (init)
+    {
+        this->blast.radius = zEntCruiseBubble_f_0_0;
+        // stringBase0 + 0x7de == "blast.radius"
+        auto_tweak::load_param<float32, float32>(this->blast.radius,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x7de);
+    }
+    
+    if (init)
+    {
+        this->blast.vel = zEntCruiseBubble_f_5_0;
+        // stringBase0 + 0x7eb == "blast.vel"
+        auto_tweak::load_param<float32, float32>(this->blast.vel,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_n100000_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x7eb);
+    }
+    
+    if (init)
+    {
+        this->blast.rand_vel = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x7f5 == "blast.rand_vel"
+        auto_tweak::load_param<float32, float32>(this->blast.rand_vel,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_n100000_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x7f5);
+    }
+    
+    if (init)
+    {
+        this->droplet.dist_min = zEntCruiseBubble_f_1_0;
+        // stringBase0 + 0x804 == "droplet.dist_min"
+        auto_tweak::load_param<float32, float32>(this->droplet.dist_min,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x804);
+    }
+    
+    if (init)
+    {
+        this->droplet.dist_max = zEntCruiseBubble_f_2_0;
+        // stringBase0 + 0x815 == "droplet.dist_max"
+        auto_tweak::load_param<float32, float32>(this->droplet.dist_max,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x815);
+    }
+    
+    if (init)
+    {
+        this->droplet.emit_min = 10;
+        // stringBase0 + 0x826 == "droplet.emit_min"
+        auto_tweak::load_param<uint32, int32>(this->droplet.emit_min,
+                1, 0, 0x1e, ap, apsize, stringBase0 + 0x826);
+    }
+    
+    if (init)
+    {
+        this->droplet.emit_max = 20;
+        // stringBase0 + 0x837 == "droplet.emit_max"
+        auto_tweak::load_param<uint32, int32>(this->droplet.emit_max,
+                1, 0, 0x1e, ap, apsize, stringBase0 + 0x837);
+    }
+    
+    if (init)
+    {
+        this->droplet.vel_min = zEntCruiseBubble_f_2_0;
+        // stringBase0 + 0x848 == "droplet.vel_min"
+        auto_tweak::load_param<float32, float32>(this->droplet.vel_min,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x848);
+    }
+    
+    if (init)
+    {
+        this->droplet.vel_max = zEntCruiseBubble_f_6_0;
+        // stringBase0 + 0x858 == "droplet.vel_max"
+        auto_tweak::load_param<float32, float32>(this->droplet.vel_max,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x858);
+    }
+    
+    if (init)
+    {
+        this->droplet.vel_perturb = zEntCruiseBubble_f_0_25;
+        // stringBase0 + 0x868 == "droplet.vel_perturb"
+        auto_tweak::load_param<float32, float32>(this->droplet.vel_perturb,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x868);
+    }
+    
+    if (init)
+    {
+        this->droplet.vel_angle = zEntCruiseBubble_f_60_0;
+        // stringBase0 + 0x87c == "droplet.vel_angle"
+        auto_tweak::load_param<float32, float32>(this->droplet.vel_angle,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x87c);
+    }
+    
+    if (init)
+    {
+        this->droplet.rot_vel_max = zEntCruiseBubble_f_360_0;
+        // stringBase0 + 0x88e == "droplet.rot_vel_max"
+        auto_tweak::load_param<float32, float32>(this->droplet.rot_vel_max,
+                zEntCruiseBubble_f_0_017, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0,
+                ap, apsize, stringBase0 + 0x88e);
+    }
+    
+    if (init)
+    {
+        this->hud.glow_size = zEntCruiseBubble_f_0_05;
+        // stringBase0 + 0x8a2 == "hud.glow_size"
+        auto_tweak::load_param<float32, float32>(this->hud.glow_size,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x8a2);
+    }
+    
+    if (init)
+    {
+        this->hud.time_fade = zEntCruiseBubble_f_0_25;
+        // stringBase0 + 0x8b0 == "hud.time_fade"
+        auto_tweak::load_param<float32, float32>(this->hud.time_fade,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x8b0);
+    }
+    
+    if (init)
+    {
+        this->hud.time_glow = zEntCruiseBubble_f_0_5;
+        // stringBase0 + 0x8be == "hud.time_glow"
+        auto_tweak::load_param<float32, float32>(this->hud.time_glow,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x8be);
+    }
+    
+    if (init)
+    {
+        this->hud.wind.size = zEntCruiseBubble_f_0_75;
+        // stringBase0 + 0x8cc == "hud.wind.size"
+        auto_tweak::load_param<float32, float32>(this->hud.wind.size,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x8cc);
+    }
+    
+    if (init)
+    {
+        this->hud.wind.du = zEntCruiseBubble_f_0_0;
+        // stringBase0 + 0x8da == "hud.wind.du"
+        auto_tweak::load_param<float32, float32>(this->hud.wind.du,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_n1000000000_0, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x8da);
+    }
+    
+    if (init)
+    {
+        this->hud.wind.dv = zEntCruiseBubble_f_4_0;
+        // stringBase0 + 0x8e6 == "hud.wind.dv"
+        auto_tweak::load_param<float32, float32>(this->hud.wind.dv,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_n1000000000_0, zEntCruiseBubble_f_1000000000_0,
+                ap, apsize, stringBase0 + 0x8e6);
+    }
+    
+    if (init)
+    {
+        this->hud.reticle.size = zEntCruiseBubble_f_0_1;
+        // stringBase0 + 0x8f2 == "hud.reticle.size"
+        auto_tweak::load_param<float32, float32>(this->hud.reticle.size,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x8f2);
+    }
+    
+    if (init)
+    {
+        this->hud.target.size = zEntCruiseBubble_f_0_1;
+        // stringBase0 + 0x903 == "hud.target.size"
+        auto_tweak::load_param<float32, float32>(this->hud.target.size,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0,
+                ap, apsize, stringBase0 + 0x903);
+    }
+    
+    if (init)
+    {
+        this->hud.timer.font = 2;
+        // stringBase0 + 0x913 == "hud.timer.font"
+        auto_tweak::load_param<int32, int32>(this->hud.timer.font,
+                1, 0, 4, ap, apsize, stringBase0 + 0x913);
+    }
+    
+    if (init)
+    {
+        this->hud.timer.font_width = zEntCruiseBubble_f_0_0275;
+        // stringBase0 + 0x922 == "hud.timer.font_width"
+        auto_tweak::load_param<float32, float32>(this->hud.timer.font_width,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x922);
+    }
+    
+    if (init)
+    {
+        this->hud.timer.font_height = zEntCruiseBubble_f_0_047;
+        // stringBase0 + 0x937 == "hud.timer.font_height"
+        auto_tweak::load_param<float32, float32>(this->hud.timer.font_height,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x937);
+    }
+    
+    if (init)
+    {
+        this->hud.timer.x = zEntCruiseBubble_f_0_78;
+        // stringBase0 + 0x94d == "hud.timer.x"
+        auto_tweak::load_param<float32, float32>(this->hud.timer.x,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x94d);
+    }
+    
+    if (init)
+    {
+        this->hud.timer.y = zEntCruiseBubble_f_0_86;
+        // stringBase0 + 0x959 == "hud.timer.y"
+        auto_tweak::load_param<float32, float32>(this->hud.timer.y,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x959);
+    }
+    
+    if (init)
+    {
+        this->hud.timer.glow_size = zEntCruiseBubble_f_0_01;
+        // stringBase0 + 0x965 == "hud.timer.glow_size"
+        auto_tweak::load_param<float32, float32>(this->hud.timer.glow_size,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0,
+                ap, apsize, stringBase0 + 0x965);
+    }
+    
+    if (init)
+    {
+        this->dialog.freq = zEntCruiseBubble_f_1_0;
+        // stringBase0 + 0x979 == "dialog.freq"
+        auto_tweak::load_param<float32, float32>(this->dialog.freq,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x979);
+    }
+    
+    if (init)
+    {
+        this->dialog.decay = zEntCruiseBubble_f_0_75;
+        // stringBase0 + 0x985 == "dialog.decay"
+        auto_tweak::load_param<float32, float32>(this->dialog.decay,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x985);
+    }
+    
+    if (init)
+    {
+        this->dialog.min_freq = zEntCruiseBubble_f_0_1;
+        // stringBase0 + 0x992 == "dialog.min_freq"
+        auto_tweak::load_param<float32, float32>(this->dialog.min_freq,
+                zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0,
+                ap, apsize, stringBase0 + 0x992);
+    }
+    
+    if (init)
+    {
+        this->material.fresnel_texture = xStrHash(stringBase0 + 0x9a2);
+        this->material.env_texture = xStrHash(stringBase0 + 0x9ad);
+    }
+}
+#endif
 
 // func_8005BD60
 #ifndef NON_MATCHING
@@ -1648,8 +2760,76 @@ void cruise_bubble::render_screen()
 }
 
 // func_8005C09C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s",                                                  \
                    "insert_player_animations__13cruise_bubbleFR10xAnimTable")
+#else
+void cruise_bubble::insert_player_animations(xAnimTable& table)
+{
+    // not matching for different reasons
+    // register scheduling
+    // register allocation, caching stringBase at reused offsets
+    // closest to a match i got was by incrementing the offsets from stringBase such that they're all unique
+    // after that its pretty clear that this is a functional match
+    
+    if (shared.astate.player.aim != NULL)
+    {
+        return;
+    }
+    
+    // stringBase0 + 0x9c2 == "cruise_bubble_aim"
+    shared.astate.player.aim = xAnimTableNewState(&table, stringBase0 + 0x9c2, 0x10, 0,
+            zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL,
+            NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    
+    // stringBase0 + 0x9d4 == "cruise_bubble_fire"
+    shared.astate.player.fire = xAnimTableNewState(&table, stringBase0 + 0x9d4, 0x20, 0,
+            zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL,
+            NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+       
+    // stringBase0 + 0x9e7 == "cruise_bubble_idle"
+    shared.astate.player.idle = xAnimTableNewState(&table, stringBase0 + 0x9e7, 0x10, 0,
+            zEntCruiseBubble_f_1_0, NULL, NULL, zEntCruiseBubble_f_0_0, NULL,
+            NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+       
+    char* start_from = (char*) xMemPushTemp(0x250);
+    memset(start_from, 0, 0x250);
+    char* s = start_from;
+    *s = '\0';
+    for (uint32 i = 0; i < 37; ++i)
+    {
+        strcat(s, start_anim_states[i]);
+        s += strlen(s);
+        *s = ' ';
+        *++s = '\0';
+    }
+    
+    // stringBase0 + 0x9c2 == "cruise_bubble_aim"
+    shared.atran.player.aim = xAnimTableNewTransition(&table, start_from, stringBase0 + 0x9c2,
+            (xAnimTransitionConditionalCallback) &check_anim_aim, NULL, 0, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
+
+    // stringBase0 + 0x9c2 == "cruise_bubble_aim"
+    // stringBase0 + 0x9d4 == "cruise_bubble_fire"
+    shared.atran.player.fire = xAnimTableNewTransition(&table, stringBase0 + 0x9c2, stringBase0 + 0x9d4,
+            NULL, NULL, 0, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
+
+    // stringBase0 + 0x9d4 == "cruise_bubble_fire"
+    // stringBase0 + 0x9e7 == "cruise_bubble_idle"
+    shared.atran.player.idle = xAnimTableNewTransition(&table, stringBase0 + 0x9d4, stringBase0 + 0x9e7,
+            NULL, NULL, 0x10, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
+
+    // stringBase0 + 0x9fa == "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle"
+    // stringBase0 + 0x0 == "Idle01"
+    shared.atran.player.end = xAnimTableNewTransition(&table, stringBase0 + 0x9fa, stringBase0 + 0x0,
+            NULL, NULL, 0, 0,
+            zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL); 
+
+    xMemPopTemp(start_from);
+}
+#endif
 
 // func_8005C380
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "anim_table__13cruise_bubbleFv")
@@ -1766,9 +2946,29 @@ void cruise_bubble::reset_life()
     state->life = current_tweak->missle.life;
 }
 
-// func_8005C6D4
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s",                                                  \
-                   "event_handler__13cruise_bubbleFP5xBaseUiPCfP5xBase")
+bool cruise_bubble::event_handler(xBase* from, uint32 event, const float32* fparam, xBase* to)
+{
+    switch (event)
+    {
+        case 0x205:
+            add_life(fparam[0], fparam[1]);
+            return true;
+
+        case 0x206:
+            set_life(fparam[0]);
+            return true;
+
+        case 0x207:
+            reset_life();
+            return true;
+
+        case 0x203:
+        case 0x204:
+            return true;
+    }
+    
+    return false;
+}
 
 // func_8005C758
 #pragma GLOBAL_ASM(                                                                                \
