@@ -739,6 +739,8 @@ struct RwRGBA
     RwUInt8 green;
     RwUInt8 blue;
     RwUInt8 alpha;
+
+    RwRGBA& operator=(const RwRGBA&); // temp
 };
 
 #define RwRGBAAssign(_target, _source) (*(_target) = *(_source))
