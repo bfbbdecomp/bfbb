@@ -4633,17 +4633,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005D084 00059E84  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005D088 00059E88  4E 80 00 20 */	blr 
 
-/* __ct__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_dataFRC5xVec3f */
-__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFRC5xVec3f:
-/* 8005D08C 00059E8C  80 04 00 00 */	lwz r0, 0(r4)
-/* 8005D090 00059E90  80 A4 00 04 */	lwz r5, 4(r4)
-/* 8005D094 00059E94  90 03 00 00 */	stw r0, 0(r3)
-/* 8005D098 00059E98  80 04 00 08 */	lwz r0, 8(r4)
-/* 8005D09C 00059E9C  90 A3 00 04 */	stw r5, 4(r3)
-/* 8005D0A0 00059EA0  90 03 00 08 */	stw r0, 8(r3)
-/* 8005D0A4 00059EA4  D0 23 00 0C */	stfs f1, 0xc(r3)
-/* 8005D0A8 00059EA8  4E 80 00 20 */	blr 
-
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv:
 /* 8005D0AC 00059EAC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005D0B0 00059EB0  7C 08 02 A6 */	mflr r0

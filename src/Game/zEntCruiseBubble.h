@@ -493,6 +493,15 @@ namespace cruise_bubble
         void load(xModelAssetParam* params, uint32 size);
     };
 
+    struct missle_record_data
+    {
+        xVec3 loc;
+        float32 roll;
+        
+        missle_record_data(const xVec3& loc, float32 roll);
+    };
+
+
     void init_sound();
     void stop_sound(int32 which, uint32 handle);
     uint32 play_sound(int32 which, float32 volFactor);
