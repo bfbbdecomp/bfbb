@@ -118,8 +118,18 @@ namespace cruise_bubble
         state_missle_explode();
 
         void start();
+        void stop();
         state_enum update(float32 dt);
+
         float32 get_radius() const;
+        void start_effects();
+        void cb_droplet(zFrag* frag, zFragAsset* fa);
+        void perturb_direction(const xVec3&, float32, float32, float32, float32);
+        void get_next_quadrant(float32&, float32&, float32&, float32&);
+        void reset_quadrants(uint32 size, float32 ring);
+        void apply_damage(float32);
+        void apply_damage_hazards(float32);
+        uint8 hazard_check(NPCHazard& haz, void* context);
     };
 
     struct state_camera_attach : state_type

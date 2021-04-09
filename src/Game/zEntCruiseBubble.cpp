@@ -3481,42 +3481,42 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
 // func_8005DCF8
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "start_effects__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv")
+    "start_effects__Q213cruise_bubble20state_missle_explodeFv")
 
 // func_8005DE20
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "cb_droplet__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFP5zFragP10zFragAsset")
+    "cb_droplet__Q213cruise_bubble20state_missle_explodeFP5zFragP10zFragAsset")
 
 // func_8005DFBC
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "perturb_direction__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFRC5xVec3ffff")
+    "perturb_direction__Q213cruise_bubble20state_missle_explodeFRC5xVec3ffff")
 
 // func_8005E178
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_next_quadrant__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFRfRfRfRf")
+    "get_next_quadrant__Q213cruise_bubble20state_missle_explodeFRfRfRfRf")
 
 // func_8005E248
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "reset_quadrants__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFUif")
+    "reset_quadrants__Q213cruise_bubble20state_missle_explodeFUif")
 
 // func_8005E3BC
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_damage__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf")
+    "apply_damage__Q213cruise_bubble20state_missle_explodeFf")
 
 // func_8005E4A0
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_damage_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf")
+    "apply_damage_hazards__Q213cruise_bubble20state_missle_explodeFf")
 
 // func_8005E4D8
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFR9NPCHazardPv")
+    "hazard_check__Q213cruise_bubble20state_missle_explodeFR9NPCHazardPv")
 
 // func_8005E570
 #pragma GLOBAL_ASM(                                                                                \
