@@ -59,5 +59,7 @@ void zLightSetVolume(zVolume* vol);
 void zLightDestroyAll();
 void zLightDestroy(_zLight* param_1);
 void zLightUpdate(xBase* to, xScene*, float32 dt);
+int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* param_4,
+                    xBase* param_5);
 
 #endif

@@ -39,5 +39,6 @@ void xPartitionWorld(_tagPartition* part, xEnv* env, int32 x_spaces, int32 y_spa
 void xPartitionVolume(_tagPartition* part, xVolume* volume, int32 x_spaces, int32 y_spaces, int32 z_spaces);
 void xPartitionDump(_tagPartition* part, char* string);
 int32 xPartitionUpdate(_tagPartition* part, void* data, int32 old_idx, xVec3* current_pos);
+int32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos);
 
 #endif
