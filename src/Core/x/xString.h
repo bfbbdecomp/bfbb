@@ -10,7 +10,7 @@ struct substr
 
     static substr create(const char* text, ulong32 size);
 
-    substr& operator=(const substr&); // temp
+    ASSIGNMENT_OPERATOR(substr)
 };
 
 // substr constructor

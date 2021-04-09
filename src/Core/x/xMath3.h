@@ -14,7 +14,7 @@ struct xMat3x3
     xVec3 at;
     uint32 pad2;
 
-    xMat3x3& operator=(const xMat3x3&); // temp
+    ASSIGNMENT_OPERATOR(xMat3x3)
 };
 
 // Size: 0x40
@@ -23,7 +23,7 @@ struct xMat4x3 : xMat3x3
     xVec3 pos;
     uint32 pad3;
 
-    xMat4x3& operator=(const xMat4x3&); // temp
+    ASSIGNMENT_OPERATOR(xMat4x3)
 };
 
 struct xSphere
@@ -31,7 +31,7 @@ struct xSphere
     xVec3 center;
     float32 r;
 
-    xSphere& operator=(const xSphere&); // temp
+    ASSIGNMENT_OPERATOR(xSphere)
 };
 
 struct xBox
@@ -39,7 +39,7 @@ struct xBox
     xVec3 upper;
     xVec3 lower;
 
-    xBox& operator=(const xBox&); // temp
+    ASSIGNMENT_OPERATOR(xBox)
 };
 
 struct xBBox
@@ -60,7 +60,7 @@ struct xQuat
     xVec3 v;
     float32 s;
 
-    xQuat& operator=(const xQuat&); // temp
+    ASSIGNMENT_OPERATOR(xQuat)
 };
 
 struct xVec4
@@ -106,6 +106,7 @@ void xRotCopy(xRot* o, const xRot* r);
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat3x3Rot(xMat3x3* m, const xVec3* a, float32 t);
 void xMat3x3RotC(xMat3x3* m, float32 _x, float32 _y, float32 _z, float32 t);
+void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, float32 _x, float32 _y, float32 _z, float32 t);
 void xMat4x3Identity(xMat4x3* m);
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v);
