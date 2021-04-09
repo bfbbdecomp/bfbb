@@ -15,7 +15,6 @@ struct xVec3
 
     static xVec3 create(float32 x, float32 y, float32 z);
 
-    xVec3& operator=(const xVec3&); // temp
     xVec3& operator=(float32);
     xVec3 operator+(const xVec3&) const;
     xVec3 operator-(const xVec3&) const;
@@ -36,6 +35,8 @@ struct xVec3
     float32 length2() const;
     xVec3& invert();
     float32 dot(const xVec3& c) const;
+
+    ASSIGNMENT_OPERATOR(xVec3)
 };
 
 float32 xVec3Normalize(xVec3* o, const xVec3* v);

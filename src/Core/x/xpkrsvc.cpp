@@ -53,7 +53,7 @@ int32 PKRStartup()
 #endif
 
 // func_80039318
-void st_PACKER_READ_FUNCS::operator=(const st_PACKER_READ_FUNCS& other)
+st_PACKER_READ_FUNCS& st_PACKER_READ_FUNCS::operator=(const st_PACKER_READ_FUNCS& other)
 {
     this->api_ver = other.api_ver;
     this->Init = other.Init;
@@ -72,6 +72,7 @@ void st_PACKER_READ_FUNCS::operator=(const st_PACKER_READ_FUNCS& other)
     this->PkgHasAsset = other.PkgHasAsset;
     this->PkgTimeStamp = other.PkgTimeStamp;
     this->PkgDisconnect = other.PkgDisconnect;
+    return *this;
 }
 
 // func_800393A4

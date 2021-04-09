@@ -69,7 +69,7 @@ struct zSurfAssetBase : xBaseAsset
     float32 damage_timer;
     float32 damage_bounce;
 
-    zSurfAssetBase& operator=(const zSurfAssetBase&); // temp
+    ASSIGNMENT_OPERATOR(zSurfAssetBase)
 };
 
 struct zSurfacePropTexAnim
@@ -105,7 +105,7 @@ struct zSurfaceProps
     uint32 uvfx_flags;
     zSurfacePropUVFX uvfx[2];
 
-    zSurfaceProps& operator=(const zSurfaceProps&); // temp
+    ASSIGNMENT_OPERATOR(zSurfaceProps)
 };
 
 struct zMaterialMapAsset

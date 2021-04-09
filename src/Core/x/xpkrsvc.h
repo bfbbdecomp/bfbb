@@ -140,7 +140,7 @@ struct st_PACKER_READ_FUNCS
     uint32 (*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void (*PkgDisconnect)(st_PACKER_READ_DATA*);
 
-    void operator=(const st_PACKER_READ_FUNCS& other);
+    ASSIGNMENT_OPERATOR(st_PACKER_READ_FUNCS)
 };
 
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver);

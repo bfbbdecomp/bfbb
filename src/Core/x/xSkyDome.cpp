@@ -9,7 +9,7 @@ struct SkyDomeInfo
     int32 sortorder;
     int32 lockY;
 
-    SkyDomeInfo& operator=(const SkyDomeInfo&); // temp
+    ASSIGNMENT_OPERATOR(SkyDomeInfo)
 };
 
 static SkyDomeInfo sSkyList[8];

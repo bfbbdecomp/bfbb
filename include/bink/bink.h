@@ -1,8 +1,6 @@
 #ifndef __BINK_H__
 #define __BINK_H__
 
-#include <types.h>
-
 #define BINKSURFACE8P 0
 #define BINKSURFACE24 1
 #define BINKSURFACE24R 2
@@ -35,11 +33,11 @@ typedef struct RAD3DIMAGE* HRAD3DIMAGE;
 extern "C" {
 #endif
 
-extern int32 BinkDoFrame(HBINK bnk);
-extern int32 BinkCopyToBuffer(HBINK bnk, void* dest, int32 destpitch, uint32 destheight,
-                              uint32 destx, uint32 desty, uint32 flags);
-extern int32 Lock_RAD_3D_image(HRAD3DIMAGE rad_image, void* out_pixel_buffer,
-                               uint32* out_buffer_pitch);
+extern int BinkDoFrame(HBINK bnk);
+extern int BinkCopyToBuffer(HBINK bnk, void* dest, int destpitch, unsigned int destheight,
+                            unsigned int destx, unsigned int desty, unsigned int flags);
+extern int Lock_RAD_3D_image(HRAD3DIMAGE rad_image, void* out_pixel_buffer,
+                             unsigned int* out_buffer_pitch);
 extern void Unlock_RAD_3D_image(HRAD3DIMAGE rad_image);
 
 #ifdef __cplusplus
