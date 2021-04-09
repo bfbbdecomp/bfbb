@@ -65,7 +65,7 @@ namespace cruise_bubble
         void start();
         state_enum update(float32 dt);
     };
-    
+
     struct state_camera_aim : state_type
     {
         float32 phi;
@@ -195,7 +195,7 @@ namespace cruise_bubble
     {
         state_player_wait();
     };
-    
+
     struct sound_config
     {
         // offset 0x0
@@ -233,7 +233,7 @@ namespace cruise_bubble
         xVec3* target;
         xModelInstance* model;
 
-        hud_gizmo& operator=(const hud_gizmo&);
+        ASSIGNMENT_OPERATOR(hud_gizmo)
     };
 
     struct uv_animated_model
@@ -268,7 +268,7 @@ namespace cruise_bubble
                 float32 delay_wand;
             } fire;
         } player;
-        
+
         // Size: 0x5c
         struct _class_22
         {
@@ -376,7 +376,7 @@ namespace cruise_bubble
             float32 bubble_emit_radius;
             float32 wake_emit_radius;
         } trail;
-        
+
         // Size: 0x10
         struct _class_29
         {
@@ -399,7 +399,7 @@ namespace cruise_bubble
             float32 vel_angle;
             float32 rot_vel_max;
         } droplet;
-        
+
         // Size: 0x44
         struct _class_43
         {
@@ -439,7 +439,7 @@ namespace cruise_bubble
                 float32 glow_size;
             } timer;
         } hud;
-        
+
         // Size: 0xc
         struct _class_34
         {
@@ -453,7 +453,6 @@ namespace cruise_bubble
 
         void register_tweaks(uint8 init, xModelAssetParam* ap, uint32 apsize);
     };
-
 
     void init_sound();
     void stop_sound(int32 which, uint32 handle);
@@ -470,7 +469,7 @@ namespace cruise_bubble
     uint32 camera_leave();
     void start_damaging();
     void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-            float32 radius, uint8 explosive);
+                       float32 radius, uint8 explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
     void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
@@ -508,7 +507,7 @@ namespace cruise_bubble
     void flash_hud();
     void render_timer(float32 alpha, float32 glow);
     void lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b);
-    void lerp(uint8& x, float32 t, uint8 a, uint8 b); 
+    void lerp(uint8& x, float32 t, uint8 a, uint8 b);
     void update_hud(float32 dt);
     void render_hud();
     void show_hud();

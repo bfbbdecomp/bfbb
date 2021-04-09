@@ -12,7 +12,8 @@ struct xCollis
         uint32 index;
         float32 r;
         float32 d;
-        void operator=(const tri_data& other);
+
+        ASSIGNMENT_OPERATOR(tri_data)
     };
 
     uint32 flags;

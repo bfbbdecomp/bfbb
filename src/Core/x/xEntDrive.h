@@ -11,7 +11,8 @@ struct xEntDrive
         xVec3 loc;
         float32 yaw;
         xCollis* coll;
-        tri_data* operator=(const tri_data& other);
+
+        ASSIGNMENT_OPERATOR(tri_data)
     };
 
     uint32 flags;
@@ -31,7 +32,7 @@ struct xEntDrive
     xVec3 dloc;
     tri_data tri;
 
-    xEntDrive* operator=(const xEntDrive& other);
+    ASSIGNMENT_OPERATOR(xEntDrive)
 };
 
 #endif

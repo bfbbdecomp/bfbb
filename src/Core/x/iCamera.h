@@ -18,7 +18,7 @@ struct iFogParams
     RwRGBA bgcolor;
     uint8* table;
 
-    iFogParams& operator=(const iFogParams&); // temp
+    ASSIGNMENT_OPERATOR(iFogParams)
 };
 
 extern RwCamera* globalCamera;
