@@ -1,6 +1,5 @@
 #include "xCamera.h"
 
-#include "iCamera.h"
 #include "xstransvc.h"
 #include "xMath.h"
 #include "xMathInlines.h"
