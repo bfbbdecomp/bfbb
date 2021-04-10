@@ -99,11 +99,11 @@ namespace cruise_bubble
         state_enum update(float32 dt);
 
         void apply_turn() const;
-        void turn(float32);
+        void turn(float32 dt);
         void collide_inward();
         void apply_motion() const;
-        void stop(float32);
-        void move(float32);
+        void stop(float32 dt);
+        void move(float32 dt);
     };
 
     struct state_player_halt : state_type

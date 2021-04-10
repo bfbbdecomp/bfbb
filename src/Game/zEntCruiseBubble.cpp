@@ -106,7 +106,7 @@ extern struct _class_36
         } missle;
     } atran;
 } shared;
-// xMat4x3 start_cam_mat;
+extern xMat4x3 start_cam_mat;
 extern fixed_queue<missle_record_data, 127> missle_record;
 extern xFXRibbon wake_ribbon[2];
 extern xDecalEmitter explode_decal;
@@ -244,6 +244,8 @@ extern float32 zEntCruiseBubble_f_1_0e38; // 1.0 * 10^38
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
+
+extern xVec2 lbl_803D0830;
 
 void cruise_bubble::init_sound()
 {
@@ -3580,19 +3582,104 @@ cruise_bubble::state_enum cruise_bubble::state_missle_explode::update(float32 dt
 #endif
 
 // func_8005E5E0
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv")
+#else
+void cruise_bubble::state_camera_aim::start()
+{
+    capture_camera();
+    xSndSelectListenerMode(SND_LISTENER_MODE_CAMERA);
+    xCameraUpdate(&globals.camera, zEntCruiseBubble_f_0_001);
+    
+    xMat4x3* mat = &globals.camera.mat;
+    // zero var needed for zEntCruiseBubble_f_0_0 to not be loaded for every assignment
+    float32 zero = zEntCruiseBubble_f_0_0;
+    this->dist_vel = zero;
+    this->height_vel = zero;
+    this->phi_vel = zero;
+
+    xVec3& ploc = get_player_loc();
+    // pretty sure the next 5 lines were originally just 1 looking like this:
+    // xVec2 offset = {mat->pos.x - ploc.x, mat->pos.z - ploc.z};
+    // this will however call the implicit copy constructor with a generated instance 
+    // in the .sbss2 section (lbl_803D0830)
+    // writing it like this narrowed the diff down to only a few
+    // regalloc and scheduling issues
+    float32 x = mat->pos.x - ploc.x;
+    float32 y = mat->pos.z - ploc.z;
+    xVec2 offset = lbl_803D0830;
+    offset.x = x;
+    offset.y = y;
+    
+    this->phi = xatan2(offset.x, offset.y);
+    this->height = mat->pos.y - ploc.y;
+    this->dist = offset.length();
+    
+    // zero var needed for zEntCruiseBubble_f_0_0 to not be loaded for every assignment
+    zero = zEntCruiseBubble_f_0_0;
+    this->seize_delay = zero;
+    this->control_delay = zero;
+    
+    xQuatFromMat(&this->facing, mat);
+    start_cam_mat = *mat;
+    start_cam_mat.pos -= ploc;
+}
+#endif
 
 // func_8005E6E8
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv")
+#else
+void cruise_bubble::state_camera_aim::stop()
+{
+    release_camera();
+}
+#endif
 
 // func_8005E708
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_camera_aim::update(float32 dt)
+{
+    this->control_delay += dt;
+    bool control = false;
+    if ((shared.flags & 0x20) != 0 && this->control_delay >= current_tweak->aim_delay)
+    {
+        control = true;
+    }
+
+    if (control)
+    {
+        this->move(dt);
+    }
+    else
+    {
+        this->stop(dt);
+    }
+
+    this->apply_motion();
+    this->collide_inward();
+    this->turn(dt);
+    this->apply_turn();
+
+    if ((shared.flags & 0x8) != 0)
+    {
+        this->seize_delay += dt;
+        if (this->seize_delay >= current_tweak->camera.seize.delay)
+        {
+            return STATE_CAMERA_SEIZE;
+        }
+    }
+    return STATE_CAMERA_AIM;
+}
+#endif
 
 // func_8005E808
 #pragma GLOBAL_ASM(                                                                                \
