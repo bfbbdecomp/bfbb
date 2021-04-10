@@ -274,7 +274,7 @@ void zChangeThumbIcon(const int8* icon)
 
     zEntEvent(zSceneFindObject(
                   xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON")),
-              0x1f5, (float32*)arr);
+              eEventUIChangeTexture, (float32*)arr);
 }
 #endif
 
@@ -319,11 +319,11 @@ st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
 {
     if (mode == XSG_MODE_LOAD)
     {
-        zSaveLoad_UIEvent(0x27, 0x51);
+        zSaveLoad_UIEvent(0x27, eEventUIFocusOn);
     }
     else
     {
-        zSaveLoad_UIEvent(0x28, 0x51);
+        zSaveLoad_UIEvent(0x28, eEventUIFocusOn);
     }
 
     for (int32 i = 0; i < 801; i++)
@@ -342,11 +342,11 @@ int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
 {
     if (data->mode == XSG_MODE_LOAD)
     {
-        zSaveLoad_UIEvent(0x27, 0x52);
+        zSaveLoad_UIEvent(0x27, eEventUIFocusOff);
     }
     else
     {
-        zSaveLoad_UIEvent(0x28, 0x52);
+        zSaveLoad_UIEvent(0x28, eEventUIFocusOff);
     }
     return xSGDone(data);
 }
@@ -486,28 +486,28 @@ int32 zSaveLoad_CardPrompt(int32 cardNumber)
     {
         i = 0;
     }
-    zSaveLoad_UIEvent(i, 1);
+    zSaveLoad_UIEvent(i, eEventEnable);
 
     i = 0x15;
     if (cardNumber == 1)
     {
         i = 0;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
 
     i = 0x24;
     if (cardNumber == 1)
     {
         i = 0x11;
     }
-    zSaveLoad_UIEvent(i, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
 
     i = 0x16;
     if (cardNumber == 1)
     {
         i = 1;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -520,11 +520,11 @@ int32 zSaveLoad_CardPrompt(int32 cardNumber)
     {
         i = 0x11;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
 
     if (cardNumber == 1)
     {
-        zSaveLoad_UIEvent(0, 2);
+        zSaveLoad_UIEvent(0, eEventDisable);
     }
     return promptSel;
 }
@@ -537,15 +537,15 @@ int32 zSaveLoad_CardPromptFormat(int32 mode)
     {
         i = 0;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
 
     i = 0x16;
     if (mode == 1)
     {
         i = 1;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
-    zSaveLoad_UIEvent(0x32, 0x51);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x32, eEventUIFocusOn);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -553,7 +553,7 @@ int32 zSaveLoad_CardPromptFormat(int32 mode)
         zSaveLoad_Tick();
         zSaveLoad_poll(3);
     }
-    zSaveLoad_UIEvent(0x32, 0x5f);
+    zSaveLoad_UIEvent(0x32, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
@@ -565,9 +565,9 @@ int32 zSaveLoad_CardPromptSpace(int32 mode)
     {
         i = 0;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
-    zSaveLoad_UIEvent(0x16, 0x5f);
-    zSaveLoad_UIEvent(0x25, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x16, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x25, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -575,7 +575,7 @@ int32 zSaveLoad_CardPromptSpace(int32 mode)
         zSaveLoad_Tick();
         zSaveLoad_poll(3);
     }
-    zSaveLoad_UIEvent(0x25, 0x5f);
+    zSaveLoad_UIEvent(0x25, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
@@ -587,9 +587,9 @@ int32 zSaveLoad_CardPromptGames(int32 mode)
     {
         i = 0;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
-    zSaveLoad_UIEvent(1, 0x5f);
-    zSaveLoad_UIEvent(0x12, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(1, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x12, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -597,30 +597,30 @@ int32 zSaveLoad_CardPromptGames(int32 mode)
         zSaveLoad_Tick();
         zSaveLoad_poll(3);
     }
-    zSaveLoad_UIEvent(0x12, 0x5f);
+    zSaveLoad_UIEvent(0x12, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
 // func_800ADD70
 int32 zSaveLoad_CardPromptGameSlotEmpty()
 {
-    zSaveLoad_UIEvent(0, 0x5f);
-    zSaveLoad_UIEvent(0x13, 0x5e);
+    zSaveLoad_UIEvent(0, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x13, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
     {
         zSaveLoad_Tick();
     }
-    zSaveLoad_UIEvent(0x13, 0x5f);
+    zSaveLoad_UIEvent(0x13, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
 // func_800ADDD0
 int32 zSaveLoad_CardPromptOverwrite()
 {
-    zSaveLoad_UIEvent(0x15, 0x5f);
-    zSaveLoad_UIEvent(0x22, 0x5e);
+    zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x22, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -628,15 +628,15 @@ int32 zSaveLoad_CardPromptOverwrite()
         zSaveLoad_Tick();
         zSaveLoad_poll(5);
     }
-    zSaveLoad_UIEvent(0x22, 0x5f);
+    zSaveLoad_UIEvent(0x22, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
 // func_800ADE38
 int32 zSaveLoad_CardPromptOverwriteDamaged()
 {
-    zSaveLoad_UIEvent(0x15, 0x5f);
-    zSaveLoad_UIEvent(0x23, 0x5e);
+    zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(0x23, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -644,7 +644,7 @@ int32 zSaveLoad_CardPromptOverwriteDamaged()
         zSaveLoad_Tick();
         zSaveLoad_poll(5);
     }
-    zSaveLoad_UIEvent(0x23, 0x5f);
+    zSaveLoad_UIEvent(0x23, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
@@ -656,7 +656,7 @@ int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
     {
         i = 0x2a;
     }
-    zSaveLoad_UIEvent(i, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -669,20 +669,20 @@ int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
     {
         i = 0x2a;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
 // func_800ADF18
 int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
 {
-    zSaveLoad_UIEvent(0x3c, 0x5e);
+    zSaveLoad_UIEvent(0x3c, eEventUIFocusOn_Select);
     promptSel = -1;
     while (promptSel == -1)
     {
         zSaveLoad_Tick();
     }
-    zSaveLoad_UIEvent(0x3c, 0x5f);
+    zSaveLoad_UIEvent(0x3c, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
@@ -694,7 +694,7 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
     {
         i = 0x39;
     }
-    zSaveLoad_UIEvent(i, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -707,7 +707,7 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
     {
         i = 0x39;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
@@ -719,7 +719,7 @@ int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
     {
         i = 0x37;
     }
-    zSaveLoad_UIEvent(i, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -732,35 +732,35 @@ int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
     {
         i = 0x37;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
 // func_800AE05C
 int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
 {
-    zSaveLoad_UIEvent(0x35, 0x5e);
+    zSaveLoad_UIEvent(0x35, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
     {
         zSaveLoad_Tick();
     }
-    zSaveLoad_UIEvent(0x35, 0x5f);
+    zSaveLoad_UIEvent(0x35, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
 // func_800AE0B0
 int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
 {
-    zSaveLoad_UIEvent(0x36, 0x5e);
+    zSaveLoad_UIEvent(0x36, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
     {
         zSaveLoad_Tick();
     }
-    zSaveLoad_UIEvent(0x36, 0x5f);
+    zSaveLoad_UIEvent(0x36, eEventUIFocusOff_Unselect);
     return promptSel;
 }
 
@@ -772,7 +772,7 @@ int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
     {
         i = 0x2c;
     }
-    zSaveLoad_UIEvent(i, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -785,7 +785,7 @@ int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
     {
         i = 0x2c;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
     return 6;
 }
 
@@ -797,7 +797,7 @@ int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
     {
         i = 0x2d;
     }
-    zSaveLoad_UIEvent(i, 0x5e);
+    zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
 
     promptSel = -1;
     while (promptSel == -1)
@@ -810,7 +810,7 @@ int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
     {
         i = 0x2d;
     }
-    zSaveLoad_UIEvent(i, 0x5f);
+    zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
     return 6;
 }
 
@@ -1320,14 +1320,14 @@ int32 zSaveLoad_CardPick(int32 mode)
         formatDone = 1;
     }
 
-    zSaveLoad_UIEvent(formatDone, 0x51);
+    zSaveLoad_UIEvent(formatDone, eEventUIFocusOn);
     formatDone = 0x17;
     if (mode == 1)
     {
         formatDone = 4;
     }
 
-    zSaveLoad_UIEvent(formatDone, 0x4f);
+    zSaveLoad_UIEvent(formatDone, eEventUISelect);
 
     while (!done && promptSel == -1)
     {
@@ -1428,7 +1428,7 @@ int32 zSaveLoad_CardPick(int32 mode)
         formatDone = 1;
     }
 
-    zSaveLoad_UIEvent(formatDone, 0x5f);
+    zSaveLoad_UIEvent(formatDone, eEventUIFocusOff_Unselect);
 
     if (done == 1)
     {
@@ -1551,13 +1551,13 @@ int32 zSaveLoad_GameSelect(int32 mode)
 
         if (mode == 1)
         {
-            zSaveLoad_UIEvent(0, 1);
-            zSaveLoad_UIEvent(0, 0x51);
-            zSaveLoad_UIEvent(0x33, 0x51);
+            zSaveLoad_UIEvent(0, eEventEnable);
+            zSaveLoad_UIEvent(0, eEventUIFocusOn);
+            zSaveLoad_UIEvent(0x33, eEventUIFocusOn);
         }
         else
         {
-            zSaveLoad_UIEvent(0x34, 0x51);
+            zSaveLoad_UIEvent(0x34, eEventUIFocusOn);
         }
 
         for (i = 0; i < 3; i++)
@@ -1568,7 +1568,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
             {
                 if (mode == 1)
                 {
-                    zSaveLoad_UIEvent(i + 6, 2);
+                    zSaveLoad_UIEvent(i + 6, eEventDisable);
                 }
                 strcpy(zSaveLoadGameTable[i].label, "Empty");
                 strcpy(zSaveLoadGameTable[i].date, "Empty");
@@ -1606,15 +1606,15 @@ int32 zSaveLoad_GameSelect(int32 mode)
             {
                 if (zSaveLoad_slotIsEmpty(emptyCount - 6))
                 {
-                    zSaveLoad_UIEvent(emptyCount, 0x4f);
+                    zSaveLoad_UIEvent(emptyCount, eEventUISelect);
                     break;
                 }
             }
         }
         else
         {
-            zSaveLoad_UIEvent(0x15, 0x51);
-            zSaveLoad_UIEvent(0x19, 0x4f);
+            zSaveLoad_UIEvent(0x15, eEventUIFocusOn);
+            zSaveLoad_UIEvent(0x19, eEventUISelect);
         }
         badCard = 0;
 
@@ -1718,7 +1718,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
 
     if (mode == 1)
     {
-        zSaveLoad_UIEvent(0, 1);
+        zSaveLoad_UIEvent(0, eEventEnable);
     }
 
     int32 index = 0x15;
@@ -1726,7 +1726,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
     {
         index = 0;
     }
-    zSaveLoad_UIEvent(index, 0x5f);
+    zSaveLoad_UIEvent(index, eEventUIFocusOff_Unselect);
     return done;
 }
 #endif
@@ -1777,14 +1777,14 @@ void zSaveLoadAutoSaveUpdate()
             obj = zSceneFindObject(xStrHash("SAVING GAME ICON UI")); //"SAVING GAME ICON UI"
             if (obj != NULL)
             {
-                zEntEvent(obj, 3);
+                zEntEvent(obj, eEventVisible);
             }
             break;
         default:
             obj = zSceneFindObject(xStrHash("SAVING GAME ICON UI")); //"SAVING GAME ICON UI"
             if (obj != NULL)
             {
-                zEntEvent(obj, 4);
+                zEntEvent(obj, eEventInvisible);
             }
 
             obj = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED\0"
@@ -1803,7 +1803,7 @@ void zSaveLoadAutoSaveUpdate()
                                             )); //"MNU4 AUTO SAVE FAILED"
             if (obj != NULL)
             {
-                zEntEvent(obj, 3);
+                zEntEvent(obj, eEventVisible);
             }
             globals.autoSaveFeature = 0;
             zSaveLoadPreAutoSave(0);
@@ -2170,7 +2170,7 @@ uint32 zSaveLoad_LoadLoop()
             {
                 zSaveLoad_CardPrompt(1);
             }
-            zSaveLoad_UIEvent(0x14, 0x5f);
+            zSaveLoad_UIEvent(0x14, eEventUIFocusOff_Unselect);
             state = 1;
             break;
         case 1:
@@ -2236,7 +2236,7 @@ uint32 zSaveLoad_LoadLoop()
         }
     }
 
-    zSendEventToThumbIcon(4);
+    zSendEventToThumbIcon(eEventInvisible);
     return (uint32)sceneRead[0] << 0x18 | (uint32)sceneRead[1] << 0x10 |
            (uint32)sceneRead[2] << 0x8 | (uint32)sceneRead[3];
 }
@@ -2276,16 +2276,16 @@ uint32 zSaveLoad_SaveLoop()
                     state = 6;
 
                     xBase* sendTo = zSceneFindObject(xStrHash("PAUSE OPTIONS BKG GROUP"));
-                    zEntEvent(sendTo, 0x5e);
+                    zEntEvent(sendTo, eEventUIFocusOn_Select);
 
                     sendTo = zSceneFindObject(xStrHash("PAUSE OPTIONS GROUP"));
-                    zEntEvent(sendTo, 0x51);
+                    zEntEvent(sendTo, eEventUIFocusOn);
 
                     sendTo = zSceneFindObject(xStrHash("PAUSE OPTION MGR UIF"));
-                    zEntEvent(sendTo, 0x5e);
+                    zEntEvent(sendTo, eEventUIFocusOn_Select);
 
                     sendTo = zSceneFindObject(xStrHash("PAUSE OPTION SAVE UIF"));
-                    zEntEvent(sendTo, 0x5e);
+                    zEntEvent(sendTo, eEventUIFocusOn_Select);
                 }
                 else
                 {
@@ -2293,19 +2293,19 @@ uint32 zSaveLoad_SaveLoop()
                     state = 6;
 
                     xBase* sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME NO"));
-                    zEntEvent(sendTo, 0x51);
+                    zEntEvent(sendTo, eEventUIFocusOn);
 
                     sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME NO"));
-                    zEntEvent(sendTo, 0x50);
+                    zEntEvent(sendTo, eEventUIUnselect);
 
                     sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME YES"));
-                    zEntEvent(sendTo, 0x5e);
+                    zEntEvent(sendTo, eEventUIFocusOn_Select);
 
                     sendTo = zSceneFindObject(xStrHash("MNU3 START CREATE NEW GAME"));
-                    zEntEvent(sendTo, 0x51);
+                    zEntEvent(sendTo, eEventUIFocusOn);
 
                     sendTo = zSceneFindObject(xStrHash("BLUE ALPHA 1 UI"));
-                    zEntEvent(sendTo, 4);
+                    zEntEvent(sendTo, eEventInvisible);
                 }
                 break;
             case 11:
@@ -2359,7 +2359,7 @@ uint32 zSaveLoad_SaveLoop()
                 state = 6;
 
                 xBase* sendTo = zSceneFindObject(xStrHash("MNU4 SAVE COMPLETED"));
-                zEntEvent(sendTo, 3);
+                zEntEvent(sendTo, eEventVisible);
             }
             else
             {
