@@ -3729,17 +3729,17 @@ cruise_bubble::state_enum cruise_bubble::state_camera_aim::update(float32 dt)
 // func_8005EED4
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "refresh_missle_alpha__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf")
+    "refresh_missle_alpha__Q213cruise_bubble18state_camera_seizeFf")
 
 // func_8005EF6C
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf")
+    "update_turn__Q213cruise_bubble18state_camera_seizeFf")
 
 // func_8005F058
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf")
+    "update_move__Q213cruise_bubble18state_camera_seizeFf")
 
 // func_8005F100
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "xSCurve__Ff")

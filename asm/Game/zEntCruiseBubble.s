@@ -6746,7 +6746,10 @@ lbl_8005EEB8:
 /* 8005EED0 0005BCD0  4E 80 00 20 */	blr 
 
 /* refresh_missle_alpha__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seizeFf */
-refresh_missle_alpha__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf:
+/* changed from ... */
+/* refresh_missle_alpha__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf: */
+/* ... so linker can find it */
+refresh_missle_alpha__Q213cruise_bubble18state_camera_seizeFf:
 /* 8005EED4 0005BCD4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005EED8 0005BCD8  7C 08 02 A6 */	mflr r0
 /* 8005EEDC 0005BCDC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6790,7 +6793,10 @@ lbl_8005EF5C:
 /* 8005EF68 0005BD68  4E 80 00 20 */	blr 
 
 /* update_turn__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seizeFf */
-update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf:
+/* changed from ... */
+/* update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf: */
+/* ... so linker can find it */
+update_turn__Q213cruise_bubble18state_camera_seizeFf:
 /* 8005EF6C 0005BD6C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8005EF70 0005BD70  7C 08 02 A6 */	mflr r0
 /* 8005EF74 0005BD74  90 01 00 54 */	stw r0, 0x54(r1)
@@ -6854,7 +6860,10 @@ lbl_8005F03C:
 /* 8005F054 0005BE54  4E 80 00 20 */	blr 
 
 /* update_move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seizeFf */
-update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf:
+/* changed from ... */
+/* update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf: */
+/* ... so linker can find it */
+update_move__Q213cruise_bubble18state_camera_seizeFf:
 /* 8005F058 0005BE58  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8005F05C 0005BE5C  7C 08 02 A6 */	mflr r0
 /* 8005F060 0005BE60  90 01 00 64 */	stw r0, 0x64(r1)

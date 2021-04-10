@@ -205,7 +205,12 @@ namespace cruise_bubble
         state_camera_seize();
 
         void start();
+        void stop();
         state_enum update(float32 dt);
+
+        void refresh_missle_alpha(float32);
+        void update_turn(float32);
+        void update_move(float32);
     };
 
     struct state_player_aim : state_type
