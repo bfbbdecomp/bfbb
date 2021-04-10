@@ -7202,7 +7202,10 @@ lbl_8005F4E4:
 /* 8005F4F4 0005C2F4  4E 80 00 20 */	blr 
 
 /* move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyFv */
-move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv:
+/* changed from ... */
+/* move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv: */
+/* ... so linker can find it */
+move__Q213cruise_bubble19state_camera_surveyFv:
 /* 8005F4F8 0005C2F8  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8005F4FC 0005C2FC  7C 08 02 A6 */	mflr r0
 /* 8005F500 0005C300  90 01 00 64 */	stw r0, 0x64(r1)
@@ -7266,7 +7269,10 @@ move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19st
 /* 8005F5E8 0005C3E8  4E 80 00 20 */	blr 
 
 /* eval_missle_path__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFfR5xVec3Rf */
-eval_missle_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFfR5xVec3Rf:
+/* changed from ... */
+/* eval_missle_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFfR5xVec3Rf: */
+/* ... so linker can find it */
+eval_missle_path__Q213cruise_bubble19state_camera_surveyCFfR5xVec3Rf:
 /* 8005F5EC 0005C3EC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005F5F0 0005C3F0  7C 08 02 A6 */	mflr r0
 /* 8005F5F4 0005C3F4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -7347,14 +7353,20 @@ lbl_8005F6F8:
 /* 8005F710 0005C510  4E 80 00 20 */	blr 
 
 /* lerp__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFRffff */
-lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFRffff:
+/* changed from ... */
+/* lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFRffff: */
+/* ... so linker can find it */
+lerp__Q213cruise_bubble19state_camera_surveyCFRffff:
 /* 8005F714 0005C514  EC 03 10 28 */	fsubs f0, f3, f2
 /* 8005F718 0005C518  EC 01 10 3A */	fmadds f0, f1, f0, f2
 /* 8005F71C 0005C51C  D0 04 00 00 */	stfs f0, 0(r4)
 /* 8005F720 0005C520  4E 80 00 20 */	blr 
 
 /* lerp__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3 */
-lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3:
+/* changed from ... */
+/* lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3: */
+/* ... so linker can find it */
+lerp__Q213cruise_bubble19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3:
 /* 8005F724 0005C524  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005F728 0005C528  7C 08 02 A6 */	mflr r0
 /* 8005F72C 0005C52C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -7396,7 +7408,10 @@ lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19st
 /* 8005F7BC 0005C5BC  4E 80 00 20 */	blr 
 
 /* find_nearest__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFf */
-find_nearest__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFf:
+/* changed from ... */
+/* find_nearest__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFf: */
+/* ... so linker can find it */
+find_nearest__Q213cruise_bubble19state_camera_surveyCFf:
 /* 8005F7C0 0005C5C0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005F7C4 0005C5C4  7C 08 02 A6 */	mflr r0
 /* 8005F7C8 0005C5C8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -7472,7 +7487,10 @@ lbl_8005F8B4:
 /* 8005F8C0 0005C6C0  4E 80 00 20 */	blr 
 
 /* init_path__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyFv */
-init_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv:
+/* changed from ... */
+/* init_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv: */
+/* ... so linker can find it */
+init_path__Q213cruise_bubble19state_camera_surveyFv:
 /* 8005F8C4 0005C6C4  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8005F8C8 0005C6C8  7C 08 02 A6 */	mflr r0
 /* 8005F8CC 0005C6CC  90 01 00 54 */	stw r0, 0x54(r1)
@@ -7602,7 +7620,10 @@ lbl_8005FA80:
 /* 8005FA90 0005C890  4E 80 00 20 */	blr 
 
 /* control_jerked__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFv */
-control_jerked__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFv:
+/* changed from ... */
+/* control_jerked__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFv: */
+/* ... so linker can find it */
+control_jerked__Q213cruise_bubble19state_camera_surveyCFv:
 /* 8005FA94 0005C894  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8005FA98 0005C898  7C 08 02 A6 */	mflr r0
 /* 8005FA9C 0005C89C  90 01 00 44 */	stw r0, 0x44(r1)

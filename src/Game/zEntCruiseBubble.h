@@ -256,8 +256,16 @@ namespace cruise_bubble
         state_camera_survey();
 
         void start();
-        void eval_missle_path(float32 dist, xVec3& loc, float32& roll);
+        void stop();
         state_enum update(float32 dt);
+        
+        void move();
+        void eval_missle_path(float32 dist, xVec3& loc, float32& roll) const;
+        void lerp(float32& x, float32 t, float32 a, float32 b) const;
+        void lerp(xVec3& v, float32 t, const xVec3& a, const xVec3& b) const;
+        int32 find_nearest(float32) const;
+        void init_path();
+        int32 control_jerked() const;
     };
 
     struct state_player_wait : state_type
