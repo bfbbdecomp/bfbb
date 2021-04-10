@@ -265,7 +265,7 @@ namespace cruise_bubble
         void lerp(xVec3& v, float32 t, const xVec3& a, const xVec3& b) const;
         int32 find_nearest(float32) const;
         void init_path();
-        int32 control_jerked() const;
+        bool control_jerked() const;
     };
 
     struct state_player_wait : state_type
@@ -561,7 +561,7 @@ namespace cruise_bubble
     void hide_missle();
     void capture_camera();
     void release_camera();
-    uint32 camera_taken();
+    bool camera_taken();
     uint32 camera_leave();
     void start_damaging();
     void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,

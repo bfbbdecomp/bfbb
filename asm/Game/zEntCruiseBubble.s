@@ -116,7 +116,10 @@ lbl_80057470:
 /* 80057484 00054284  4E 80 00 20 */	blr 
 
 /* camera_taken__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+camera_taken__13cruise_bubbleFv:
 /* 800575FC 000543FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057600 00054400  7C 08 02 A6 */	mflr r0
 /* 80057604 00054404  90 01 00 14 */	stw r0, 0x14(r1)

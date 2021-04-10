@@ -429,9 +429,9 @@ void cruise_bubble::release_camera()
 
 // func_800575FC
 #ifndef NONMATCHING
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "camera_taken__13cruise_bubbleFv")
 #else
-uint32 cruise_bubble::camera_taken()
+bool cruise_bubble::camera_taken()
 {
     // dumb non match cause it seems the compiler doesnt assume the type of the return value correctly
     // to me it looks like the case Ninja shifts described in https://pastebin.com/XjJpBzah
@@ -3863,9 +3863,27 @@ cruise_bubble::state_enum cruise_bubble::state_camera_attach::update(float32 dt)
     "get_view_bound__Q213cruise_bubble19state_camera_attachCFR6xBound")
 
 // func_8005F480
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv")
+#else
+void cruise_bubble::state_camera_survey::start()
+{
+    if (camera_taken())
+    {
+        release_camera();
+        this->time = current_tweak->camera.survey.duration;
+        return;
+    }
+    
+    capture_camera();
+    this->time = zEntCruiseBubble_f_0_0;
+    this->init_path();
+    this->move();
+    this->start_sp = shared.sp;
+}
+#endif
 
 // func_8005F4F8
 #pragma GLOBAL_ASM(                                                                                \
@@ -3901,14 +3919,47 @@ cruise_bubble::state_enum cruise_bubble::state_camera_attach::update(float32 dt)
     "init_path__Q213cruise_bubble19state_camera_surveyFv")
 
 // func_8005F9C0
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv")
+#else
+void cruise_bubble::state_camera_survey::stop()
+{
+    release_camera();
+}
+#endif
 
 // func_8005F9E0
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_camera_survey::update(float32 dt)
+{
+    this->time += dt;
+
+    if (camera_taken())
+    {
+        return STATE_CAMERA_RESTORE;
+    }
+    
+    if (this->time >= current_tweak->camera.survey.duration)
+    {
+        return STATE_CAMERA_RESTORE;
+    }
+    
+    if (this->time >= current_tweak->camera.survey.min_duration &&
+            ((globals.pad0->pressed & 0x100) != 0 || this->control_jerked()))
+    {
+        return STATE_CAMERA_RESTORE;
+    }
+
+    this->move();
+    return STATE_CAMERA_SURVEY;
+}
+#endif
 
 // func_8005FA94
 #pragma GLOBAL_ASM(                                                                                \
