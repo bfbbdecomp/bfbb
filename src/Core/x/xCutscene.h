@@ -93,6 +93,8 @@ struct xCutscene
 
 struct xEnt;
 
+extern uint32 gFrameCount;
+
 void xCutscene_Init(void* toc);
 float32 xlog(float32 f);
 xCutscene* xCutscene_CurrentCutscene();
@@ -101,5 +103,6 @@ uint32 iCSFileOpen(xCutscene* csn);
 xCutscene* xCutscene_Create(uint32 id);
 int32 xCutscene_Destroy(xCutscene* csn);
 int32 xCutscene_LoadStart(xCutscene* csn);
+int32 xCutscene_Update(xCutscene* csn, float32 dt);
 
 #endif

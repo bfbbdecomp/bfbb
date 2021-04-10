@@ -50,5 +50,9 @@ extern int32 bad_card_needed;
 
 void zVarNewGame();
 void zVarInit(zVarEntry* table);
+uint32 zVarEntryCB_VibrationOn(void* arg);
+uint32 zVarEntryCB_SndMode(void* arg);
+uint32 zVarEntryCB_SndMusicVol(void* arg);
+uint32 zVarEntryCB_SndFXVol(void* arg);
 
 #endif

@@ -30,7 +30,7 @@ struct zFlyKey
     float32 aperture[2];
     float32 focal;
 
-    zFlyKey& operator=(const zFlyKey&);
+    ASSIGNMENT_OPERATOR(zFlyKey)
 };
 
 void zCameraReset(xCamera* cam);

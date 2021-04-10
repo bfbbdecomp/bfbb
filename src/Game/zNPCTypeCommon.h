@@ -350,7 +350,7 @@ struct zNPCLassoInfo
 
 struct zNPCCommon : xNPCBasic
 {
-    xEntAsset* entass;
+    xEntAsset* entass; // 0x1BC
     xEntNPCAsset* npcass;
     zNPCSettings* npcsetass;
     int32 flg_vuln;
@@ -389,6 +389,7 @@ struct zNPCCommon : xNPCBasic
     void DBG_AddTweakers();
     void DBG_RptDataSize();
     xAnimTable* AnimGetTable();
+    float32 AnimTimeRemain(xAnimState* ast);
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
@@ -450,7 +451,7 @@ struct zNPCCommon : xNPCBasic
     virtual void Stun(float32 stuntime);
     virtual void SpeakBegin();
     virtual void SpeakEnd();
-    virtual void SpeakStart();
+    virtual void SpeakStart(uint32 sound, uint32 param_2, int32 param_3);
     virtual void SpeakStop();
 
     virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)

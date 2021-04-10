@@ -31,8 +31,9 @@ struct xfont
     void stop_render() const;
     void irender(const char* text, float32 x, float32 y) const;
     void irender(const char* text, ulong32 text_size, float32 x, float32 y) const;
+    void render(const char* text, float32 x, float32 y) const;
 
-    xfont& operator=(const xfont& other);
+    ASSIGNMENT_OPERATOR(xfont)
 };
 
 struct xtextbox
@@ -77,7 +78,7 @@ struct xtextbox
         void intersect_flags(const jot& other);
         void reset_flags();
 
-        jot& operator=(const jot&); // temp
+        ASSIGNMENT_OPERATOR(jot)
     };
 
     struct split_tag
@@ -95,7 +96,7 @@ struct xtextbox
         void (*reset_tag)(jot&, const xtextbox&, const xtextbox&, const split_tag&);
         void* context;
 
-        tag_type& operator=(const tag_type&); // temp
+        ASSIGNMENT_OPERATOR(tag_type)
     };
 
     struct callback
@@ -170,7 +171,7 @@ struct xtextbox
     float32 yextent(float32 max, int32& size, const layout& l, int32 begin_jot,
                     int32 end_jot) const;
 
-    xtextbox& operator=(const xtextbox&); // temp
+    ASSIGNMENT_OPERATOR(xtextbox)
 };
 
 struct xtextbox::layout

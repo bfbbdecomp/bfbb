@@ -9,7 +9,10 @@ float32 xatan2(float32 y, float32 x);
 float32 xasin(float32 x);
 float32 xacos(float32 x);
 float32 xexp(float32 x);
+float32 xpow(float32 x, float32 y);
 
 float32 SQ(float32 x);
+
+void xsqrtfast(float32& out, float32 x);
 
 #endif

@@ -89,7 +89,6 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Core/x/xpkrsvc.o                 \
     $(OBJ_DIR)/asm/Core/x/xQuickCull.o              \
     $(OBJ_DIR)/src/Core/x/xQuickCull.o              \
-    $(OBJ_DIR)/asm/Core/x/xsavegame.o               \
     $(OBJ_DIR)/src/Core/x/xsavegame.o               \
     $(OBJ_DIR)/asm/Core/x/xScene.o                  \
     $(OBJ_DIR)/src/Core/x/xScene.o                  \
@@ -130,8 +129,8 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zConditional.o              \
     $(OBJ_DIR)/asm/Game/zCutsceneMgr.o              \
     $(OBJ_DIR)/src/Game/zCutsceneMgr.o              \
-    $(OBJ_DIR)/asm/Game/zDispatcher.o               \
     $(OBJ_DIR)/src/Game/zDispatcher.o               \
+    $(OBJ_DIR)/asm/Game/zDispatcher.o               \
     $(OBJ_DIR)/asm/Game/zEGenerator.o               \
     $(OBJ_DIR)/src/Game/zEGenerator.o               \
     $(OBJ_DIR)/asm/Game/zEnt.o                      \
@@ -198,8 +197,8 @@ TEXT_O_FILES :=                                     \
     $(OBJ_DIR)/src/Game/zRenderState.o              \
     $(OBJ_DIR)/asm/Game/zRumble.o                   \
     $(OBJ_DIR)/src/Game/zRumble.o                   \
-    $(OBJ_DIR)/asm/Game/zSaveLoad.o                 \
     $(OBJ_DIR)/src/Game/zSaveLoad.o                 \
+    $(OBJ_DIR)/asm/Game/zSaveLoad.o                 \
     $(OBJ_DIR)/asm/Game/zScene.o                    \
     $(OBJ_DIR)/src/Game/zScene.o                    \
     $(OBJ_DIR)/src/Game/zScript.o                   \

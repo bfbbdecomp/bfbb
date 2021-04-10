@@ -4,8 +4,8 @@
 <a href="https://bfbbdecomp.github.io/bfbb/progress" alt="Percentage Decompiled">
 <img src="https://img.shields.io/badge/dynamic/json?color=blue&label=decompiled&query=linesPercent&url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json" />
 </a>
-<a href="https://discord.gg/Dvu2UAS">
-<img src="https://img.shields.io/discord/446321271635050506?logo=discord"
+<a href="https://discord.gg/dVbGFdYU6A">
+<img src="https://img.shields.io/discord/829152115322257436?logo=discord"
             alt="chat on Discord"></a>
 
 This repo contains a WIP decompilation of SpongeBob SquarePants: Battle for Bikini Bottom (US) for Nintendo GameCube.
@@ -14,11 +14,11 @@ It builds the following DOL:
 
 main.dol: `sha1: 306526d90b48e99894c3138f5fc8f2716d9fecf6`
 
-Join us on the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) under `#decomp-discussion`
-
 ## Progress
 
 View our progress and answers to frequently asked questions on the [project tracking website](https://bfbbdecomp.github.io/bfbb/progress).
+
+Join the discussion on the [BFBB Decompilation Discord](https://discord.gg/dVbGFdYU6A).
 
 ## Building
 
@@ -29,7 +29,7 @@ View our progress and answers to frequently asked questions on the [project trac
 - Python3 (`pacman -S msys/python3`)
 - gcc (`pacman -S gcc`)
 - Metrowerks CodeWarrior 2.0 and 2.7 compiler and linker for Embedded PowerPC (`mwcceppc.exe` and `mwldeppc.exe`)
-  - These can be installed with CodeWarrior 2.0 and 2.7 for GameCube. Please obtain access to these tools on your own, or if you are interested in contributing, please join the [BFBB Modding Discord](https://discord.gg/Dvu2UAS) and DM either `Seil#3565` or `mp#8248` for access.
+  - These can be installed with CodeWarrior 2.0 and 2.7 for GameCube. Please obtain access to these tools on your own, or if you are interested in contributing, please join the [BFBB Decompilation Discord](https://discord.gg/dVbGFdYU6A) and DM either `Seil#3565` or `mp#8248` for access.
 - A clean DOL of Battle for Bikini Bottom
   - This is usually named `main.dol` (or something similar) and must be extracted from the GameCube disc for the game. See [this guide](https://battlepedia.org/Setting_up_Dolphin_for_modding) for instructions.
 
@@ -74,6 +74,8 @@ View our progress and answers to frequently asked questions on the [project trac
 ## Contributions
 
 Contributions and PRs are welcome.
+
+We recommend joining the [BFBB Decompilation Discord](https://discord.gg/dVbGFdYU6A) as most of our discussion about this project occurs there. It's also the best place to get help if you need it.
 
 ## Special Thanks
 

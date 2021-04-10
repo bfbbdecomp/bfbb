@@ -133,40 +133,6 @@ lbl_800A1EC4:
 /* 800A1EE4 0009ECE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A1EE8 0009ECE8  4E 80 00 20 */	blr 
 
-AddToLODList__FP4xEntP6xScenePv:
-/* 800A1EEC 0009ECEC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 800A1EF0 0009ECF0  7C 08 02 A6 */	mflr r0
-/* 800A1EF4 0009ECF4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 800A1EF8 0009ECF8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 800A1EFC 0009ECFC  7C 7F 1B 78 */	mr r31, r3
-/* 800A1F00 0009ED00  80 03 00 24 */	lwz r0, 0x24(r3)
-/* 800A1F04 0009ED04  28 00 00 00 */	cmplwi r0, 0
-/* 800A1F08 0009ED08  40 82 00 08 */	bne lbl_800A1F10
-/* 800A1F0C 0009ED0C  48 00 00 3C */	b lbl_800A1F48
-lbl_800A1F10:
-/* 800A1F10 0009ED10  7C 03 03 78 */	mr r3, r0
-/* 800A1F14 0009ED14  4B FF FE 05 */	bl AddToLODList__FP14xModelInstance
-/* 800A1F18 0009ED18  88 1F 00 04 */	lbz r0, 4(r31)
-/* 800A1F1C 0009ED1C  28 00 00 1B */	cmplwi r0, 0x1b
-/* 800A1F20 0009ED20  40 82 00 24 */	bne lbl_800A1F44
-/* 800A1F24 0009ED24  80 7F 00 FC */	lwz r3, 0xfc(r31)
-/* 800A1F28 0009ED28  28 03 00 00 */	cmplwi r3, 0
-/* 800A1F2C 0009ED2C  41 82 00 08 */	beq lbl_800A1F34
-/* 800A1F30 0009ED30  4B FF FD E9 */	bl AddToLODList__FP14xModelInstance
-lbl_800A1F34:
-/* 800A1F34 0009ED34  80 7F 01 00 */	lwz r3, 0x100(r31)
-/* 800A1F38 0009ED38  28 03 00 00 */	cmplwi r3, 0
-/* 800A1F3C 0009ED3C  41 82 00 08 */	beq lbl_800A1F44
-/* 800A1F40 0009ED40  4B FF FD D9 */	bl AddToLODList__FP14xModelInstance
-lbl_800A1F44:
-/* 800A1F44 0009ED44  7F E3 FB 78 */	mr r3, r31
-lbl_800A1F48:
-/* 800A1F48 0009ED48  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 800A1F4C 0009ED4C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 800A1F50 0009ED50  7C 08 03 A6 */	mtlr r0
-/* 800A1F54 0009ED54  38 21 00 10 */	addi r1, r1, 0x10
-/* 800A1F58 0009ED58  4E 80 00 20 */	blr 
-
 .global zLOD_Setup__Fv
 zLOD_Setup__Fv:
 /* 800A1F5C 0009ED5C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -478,41 +444,6 @@ lbl_800A23A0:
 /* 800A23A0 0009F1A0  42 00 FE 0C */	bdnz lbl_800A21AC
 /* 800A23A4 0009F1A4  4E 80 00 20 */	blr 
 
-.global zLOD_Get__FP4xEnt
-zLOD_Get__FP4xEnt:
-/* 800A23A8 0009F1A8  80 A3 00 24 */	lwz r5, 0x24(r3)
-/* 800A23AC 0009F1AC  28 05 00 00 */	cmplwi r5, 0
-/* 800A23B0 0009F1B0  40 82 00 0C */	bne lbl_800A23BC
-/* 800A23B4 0009F1B4  38 60 00 00 */	li r3, 0
-/* 800A23B8 0009F1B8  4E 80 00 20 */	blr 
-lbl_800A23BC:
-/* 800A23BC 0009F1BC  80 CD 90 0C */	lwz r6, lbl_803CB90C-_SDA_BASE_(r13)
-/* 800A23C0 0009F1C0  38 E0 00 00 */	li r7, 0
-/* 800A23C4 0009F1C4  80 0D 90 08 */	lwz r0, lbl_803CB908-_SDA_BASE_(r13)
-/* 800A23C8 0009F1C8  7C C4 33 78 */	mr r4, r6
-/* 800A23CC 0009F1CC  7C 09 03 A6 */	mtctr r0
-/* 800A23D0 0009F1D0  28 00 00 00 */	cmplwi r0, 0
-/* 800A23D4 0009F1D4  40 81 00 3C */	ble lbl_800A2410
-lbl_800A23D8:
-/* 800A23D8 0009F1D8  80 64 00 00 */	lwz r3, 0(r4)
-/* 800A23DC 0009F1DC  28 03 00 00 */	cmplwi r3, 0
-/* 800A23E0 0009F1E0  41 82 00 24 */	beq lbl_800A2404
-/* 800A23E4 0009F1E4  80 63 00 00 */	lwz r3, 0(r3)
-/* 800A23E8 0009F1E8  80 05 00 10 */	lwz r0, 0x10(r5)
-/* 800A23EC 0009F1EC  80 63 00 04 */	lwz r3, 4(r3)
-/* 800A23F0 0009F1F0  7C 03 00 40 */	cmplw r3, r0
-/* 800A23F4 0009F1F4  40 82 00 10 */	bne lbl_800A2404
-/* 800A23F8 0009F1F8  54 E0 28 34 */	slwi r0, r7, 5
-/* 800A23FC 0009F1FC  7C 66 02 14 */	add r3, r6, r0
-/* 800A2400 0009F200  4E 80 00 20 */	blr 
-lbl_800A2404:
-/* 800A2404 0009F204  38 84 00 20 */	addi r4, r4, 0x20
-/* 800A2408 0009F208  38 E7 00 01 */	addi r7, r7, 1
-/* 800A240C 0009F20C  42 00 FF CC */	bdnz lbl_800A23D8
-lbl_800A2410:
-/* 800A2410 0009F210  38 60 00 00 */	li r3, 0
-/* 800A2414 0009F214  4E 80 00 20 */	blr 
-
 .global zLOD_UseCustomTable__FP4xEntP9zLODTable
 zLOD_UseCustomTable__FP4xEntP9zLODTable:
 /* 800A2418 0009F218  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -698,26 +629,34 @@ lbl_800A267C:
 .endif
 
 .section .bss
-lbl_802EA990:
+.global sManagerList
+sManagerList:
 	.skip 0x8000
 
 .section .sbss
-lbl_803CB908:
+.global sTableCount
+sTableCount:
 	.skip 0x4
-lbl_803CB90C:
+.global sTableList
+sTableList:
 	.skip 0x4
 lbl_803CB910:
 	.skip 0x4
-lbl_803CB914:
+.global sManagerCount
+sManagerCount:
 	.skip 0x4
 
 .section .sdata2
+.global lbl_803CDC40
 lbl_803CDC40:
 	.incbin "baserom.dol", 0x2B74E0, 0x4
+.global lbl_803CDC44
 lbl_803CDC44:
 	.incbin "baserom.dol", 0x2B74E4, 0x4
+.global lbl_803CDC48
 lbl_803CDC48:
 	.incbin "baserom.dol", 0x2B74E8, 0x4
+.global lbl_803CDC4C
 lbl_803CDC4C:
 	.incbin "baserom.dol", 0x2B74EC, 0x4
 lbl_803CDC50:

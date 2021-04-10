@@ -11,7 +11,9 @@
 		"GAMECUBE"
 	],
 	"files.associations": {
-		"*.cp": "cpp"
+		"*.cp": "cpp",
+		"initializer_list": "cpp",
+		"type_traits": "cpp"
 	},
 	"[C_Cpp]": {
 		"editor.insertSpaces": true,

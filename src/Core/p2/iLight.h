@@ -20,8 +20,7 @@
 // Size: 0x3C
 struct iLight
 {
-
-	// 0x0
+    // 0x0
     uint32 type;
     RpLight* hw;
 
@@ -35,7 +34,6 @@ struct iLight
     //0x2C
     xVec3 dir;
     float32 coneangle;
-
 };
 
 extern RpWorld* gLightWorld;

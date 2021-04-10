@@ -35,6 +35,8 @@ struct xFXRibbon
         uint32 blend_src;
         uint32 blend_dst;
         float32 pivot;
+
+        ASSIGNMENT_OPERATOR(config)
     };
 
     struct joint_data
@@ -65,7 +67,17 @@ struct xFXRibbon
     float32 ilife;
     uint32 mtime;
     uint32 mlife;
+
+    void init(const int8*, const int8*);
+    void set_texture(const int8* name);
+    void set_curve(const curve_node* curve, ulong32 size);
+    void refresh_config();
+    void set_default_config();
 };
+
+#define RING_COUNT 8
+
+extern xFXRing ringlist[RING_COUNT];
 
 void xFXInit();
 xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params);

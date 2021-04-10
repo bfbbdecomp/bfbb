@@ -2,7 +2,11 @@
 #include "zMusic.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xMath.h"
+#include "../Core/x/xString.h"
+#include "zGlobals.h"
+#include "zGameState.h"
 #include "zScene.h"
+#include <string.h>
 
 extern zMusicTrackInfo sMusicTrack[2];
 extern zVolumeInfo volume;
@@ -10,9 +14,31 @@ extern uint32 sMusicPaused;
 extern int32 sMusicLastEnum[2];
 extern float32 lbl_803CDD48; //0f by default.
 extern float32 minDelay; //Value is defaulted at 0.001f.
+extern uint32 sMusicSoundID[24][2];
+extern zMusicSituation sMusicInfo[8];
+extern float32 lbl_803CCA78;
+extern float32 lbl_803CD118;
+extern zMusicSituation* sMusicQueueData[2];
+extern float32 sMusicTimer[2];
+
+extern eGameMode gGameMode;
+extern zGlobals globals;
+
+extern const char zMusic_strings[];
 
 // func_800A6E9C
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "volume_reset__Fv")
+// Float issue
+#else
+void volume_reset()
+{
+    volume.cur = lbl_803CCA78;
+    volume.end = lbl_803CD118;
+    volume.inc = lbl_803CCA78;
+    memset(volume.adjusted, 0, sizeof(volume.adjusted));
+}
+#endif
 
 // Reset both music tracks to their default volume.
 void zMusicRefreshVolume()
@@ -29,95 +55,181 @@ void zMusicRefreshVolume()
 }
 
 // func_800A6F50
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicInit__Fv")
+void zMusicInit()
+{
+    sMusicPaused = 0;
+
+    for (int i = 0; i < sizeof(sMusicTrack) / sizeof(sMusicTrack[0]); i++)
+    {
+        sMusicTrack[i].snd_id = 0;
+        sMusicTrack[i].loop = 0;
+        sMusicTrack[i].situation = 0;
+    }
+
+    sMusicSoundID[0][0] = xStrHash(&zMusic_strings[0]);
+    sMusicSoundID[0][1] = 1;
+    sMusicSoundID[1][0] = xStrHash(&zMusic_strings[15]);
+    sMusicSoundID[1][1] = 1;
+    sMusicSoundID[2][0] = xStrHash(&zMusic_strings[30]);
+    sMusicSoundID[2][1] = 1;
+    sMusicSoundID[3][0] = xStrHash(&zMusic_strings[45]);
+    sMusicSoundID[3][1] = 1;
+    sMusicSoundID[4][0] = xStrHash(&zMusic_strings[60]);
+    sMusicSoundID[4][1] = 1;
+    sMusicSoundID[5][0] = xStrHash(&zMusic_strings[75]);
+    sMusicSoundID[5][1] = 1;
+    sMusicSoundID[6][0] = xStrHash(&zMusic_strings[90]);
+    sMusicSoundID[6][1] = 1;
+    sMusicSoundID[7][0] = xStrHash(&zMusic_strings[105]);
+    sMusicSoundID[7][1] = 1;
+    sMusicSoundID[8][0] = xStrHash(&zMusic_strings[120]);
+    sMusicSoundID[8][1] = 1;
+    sMusicSoundID[9][0] = xStrHash(&zMusic_strings[135]);
+    sMusicSoundID[9][1] = 1;
+    sMusicSoundID[10][0] = xStrHash(&zMusic_strings[150]);
+    sMusicSoundID[10][1] = 1;
+    sMusicSoundID[11][0] = xStrHash(&zMusic_strings[165]);
+    sMusicSoundID[11][1] = 1;
+    sMusicSoundID[12][0] = xStrHash(&zMusic_strings[180]);
+    sMusicSoundID[12][1] = 1;
+    sMusicSoundID[13][0] = xStrHash(&zMusic_strings[195]);
+    sMusicSoundID[13][1] = 1;
+    sMusicSoundID[14][0] = xStrHash(&zMusic_strings[212]);
+    sMusicSoundID[14][1] = 1;
+    sMusicSoundID[15][0] = xStrHash(&zMusic_strings[229]);
+    sMusicSoundID[15][1] = 1;
+    sMusicSoundID[16][0] = xStrHash(&zMusic_strings[247]);
+    sMusicSoundID[16][1] = 1;
+    sMusicSoundID[17][0] = xStrHash(&zMusic_strings[266]);
+    sMusicSoundID[17][1] = 1;
+    sMusicSoundID[18][0] = xStrHash(&zMusic_strings[286]);
+    sMusicSoundID[18][1] = 1;
+    sMusicSoundID[21][0] = xStrHash(&zMusic_strings[308]);
+    sMusicSoundID[21][1] = 1;
+    sMusicSoundID[22][0] = xStrHash(&zMusic_strings[327]);
+    sMusicSoundID[22][1] = 1;
+    sMusicSoundID[23][0] = xStrHash(&zMusic_strings[346]);
+    sMusicSoundID[23][1] = 1;
+
+    for (int i = 0; i < sizeof(sMusicInfo) / sizeof(sMusicInfo[0]); i++)
+    {
+        sMusicInfo[i].elapsedTime = sMusicInfo[i].delay;
+        sMusicInfo[i].count = 0;
+    }
+    volume_reset();
+}
 
 // WIP.
-#if 1
-
+#ifndef NON_MATCHING
 // func_800A7314
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "getCurrLevelMusicEnum__Fv")
-
 #else
-
-// Correct, but won't work due to the switch case jump table (messes with offsets). Obviously names are temporary.
+// Correct, but won't work due to the switch case jump table (messes with offsets)
 int32 getCurrLevelMusicEnum()
 {
-    uint32 uVar1;
-    uint32 uVar2;
-    int32 uVar3;
+    int32 snd_enum;
 
-    uVar1 = zSceneGetLevelIndex();
-    switch (uVar1)
+    switch (zSceneGetLevelIndex())
     {
     case 0:
-        uVar3 = 0;
+        snd_enum = 0;
         break;
     case 1:
-        uVar3 = 1;
+        snd_enum = 1;
         break;
     case 2:
-        uVar3 = 2;
+        snd_enum = 2;
         break;
     case 3:
-        uVar3 = 3;
+        snd_enum = 3;
         break;
     case 4:
-        uVar3 = 4;
+        snd_enum = 4;
         break;
     case 5:
-        uVar3 = 5;
+        snd_enum = 5;
         break;
     case 6:
-        uVar3 = 6;
+        snd_enum = 6;
         break;
     case 7:
-        uVar3 = 0;
+        snd_enum = 0;
         break;
     case 8:
-        uVar3 = 8;
+        snd_enum = 8;
         break;
     case 9:
-        uVar3 = 9;
+        snd_enum = 9;
         break;
     case 10:
-        uVar3 = 10;
+        snd_enum = 10;
         break;
-    case 0xb:
-        uVar3 = 0xb;
+    case 11:
+        snd_enum = 11;
         break;
-    case 0xc:
-        uVar3 = 0xc;
+    case 12:
+        snd_enum = 12;
         break;
-    case 0xd:
-        uVar3 = 2;
+    case 13:
+        snd_enum = 2;
         break;
-    case 0xe:
-        uVar3 = 0xd;
+    case 14:
+        snd_enum = 13;
         break;
     default:
-        uVar2 = xrand();
-        uVar3 = uVar2 % 0x17 + 1;
-        if (0x18 <= uVar3)
+        snd_enum = (xrand() % 23) + 1;
+        if (24 <= snd_enum)
         {
-            uVar3 = uVar3 - 1;
+            snd_enum--;
         }
-        if (((uVar3 == 4) || (uVar3 == 7)) || (uVar3 == 8))
+        if (((snd_enum == 4) || (snd_enum == 7)) || (snd_enum == 8))
         {
-            uVar3 = 5;
+            snd_enum = 5;
         }
         break;
     }
 
-    return uVar3;
+    return snd_enum;
 }
-
 #endif
 
 // func_800A7414
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
 
 // func_800A7640
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
+// Probably floating point memes idk
+#else
+void zMusicNotify(int32 situation)
+{
+    zMusicSituation* s;
+
+    if (sMusicPaused)
+    {
+        return;
+    }
+
+    s = &sMusicInfo[situation];
+
+    if (s->countMax == NULL)
+    {
+        return;
+    }
+    if (s->count >= s->countMax)
+    {
+        return;
+    }
+    if (s->delay > s->elapsedTime)
+    {
+        return;
+    }
+
+    sMusicQueueData[s->track] = s;
+    sMusicTimer[s->track] = s->punchDelay;
+    sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
+}
+#endif
 
 // func_800A76BC
 #pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotifyEvent__FPCfP5xBase")

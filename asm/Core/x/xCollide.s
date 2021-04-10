@@ -121,17 +121,6 @@ lbl_8000F1B0:
 /* 8000F1C0 0000BFC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000F1C4 0000BFC4  4E 80 00 20 */	blr 
 
-.global xCollideInit__FP6xScene
-xCollideInit__FP6xScene:
-/* 8000F1C8 0000BFC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8000F1CC 0000BFCC  7C 08 02 A6 */	mflr r0
-/* 8000F1D0 0000BFD0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8000F1D4 0000BFD4  48 0B 1B 4D */	bl iCollideInit__FP6xScene
-/* 8000F1D8 0000BFD8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8000F1DC 0000BFDC  7C 08 03 A6 */	mtlr r0
-/* 8000F1E0 0000BFE0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8000F1E4 0000BFE4  4E 80 00 20 */	blr 
-
 .global xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis
 xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis:
 /* 8000F1E8 0000BFE8  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -7361,6 +7350,7 @@ lbl_803D07FC:
 	.skip 0x4
 
 .section .sdata2
+.global lbl_803CCAA8
 lbl_803CCAA8:
 	.incbin "baserom.dol", 0x2B6348, 0x4
 lbl_803CCAAC:

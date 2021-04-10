@@ -83,6 +83,7 @@ struct ztalkbox : xBase
     static void update_all(xScene& s, float32 dt);
     static void render_all();
     static void reset_all();
+    static void permit(uint32 add_flags, uint32 remove_flags);
 
     void stop_talk();
 };

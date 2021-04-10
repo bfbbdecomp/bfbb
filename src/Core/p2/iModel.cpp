@@ -36,7 +36,8 @@
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelQuatToMat__FP5xQuatP5xVec3P11RwMatrixTag")
 
 // func_800C7FC0
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag")
 
 // func_800C80EC
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelCacheAtomic__FP8RpAtomic")
@@ -51,22 +52,27 @@
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelSphereCull__FP7xSphere")
 
 // func_800C8348
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi")
 
 // func_800C85C4
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelVertCount__FP8RpAtomic")
 
 // func_800C85D0
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3")
 
 // func_800C86BC
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "SkinXform__FP5xVec3PC5xVec3P11RwMatrixTagPC11RwMatrixTagPCfPCUiUi")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "SkinXform__FP5xVec3PC5xVec3P11RwMatrixTagPC11RwMatrixTagPCfPCUiUi")
 
 // func_800C88C4
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUliPC5xVec3")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUliPC5xVec3")
 
 // func_800C89D0
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "SkinNormals__FP5xVec3PC5xVec3PC11RwMatrixTagPC11RwMatrixTagPCfPCUiUi")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "SkinNormals__FP5xVec3PC5xVec3PC11RwMatrixTagPC11RwMatrixTagPCfPCUiUi")
 
 // func_800C8C48
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelTagUserData__FP9xModelTagP8RpAtomicfffi")
@@ -84,10 +90,13 @@
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff")
 
 // func_800C904C
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3")
 
 // func_800C90E0
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3")
+#pragma GLOBAL_ASM(                                                                                \
+    "asm/Core/p2/iModel.s",                                                                        \
+    "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3")
 
 // func_800C9188
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelSetMaterialAlphaCB__FP10RpMaterialPv")
@@ -111,7 +120,8 @@
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelMaterialMulCB__FP10RpMaterialPv")
 
 // func_800C9570
-#pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "U8_COLOR_CLAMP__20_esc__2_unnamed_esc__2_iModel_cpp_esc__2_FRUcf")
+#pragma GLOBAL_ASM("asm/Core/p2/iModel.s",                                                         \
+                   "U8_COLOR_CLAMP__20_esc__2_unnamed_esc__2_iModel_cpp_esc__2_FRUcf")
 
 // func_800C95B0
 #pragma GLOBAL_ASM("asm/Core/p2/iModel.s", "iModelMaterialMul__FP8RpAtomicfff")

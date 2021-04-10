@@ -228,7 +228,7 @@ void xDrawSphere(xSphere* s, uint32 unk)
 #else
 
 // Idk what is wrong with this one.
-xEntDrive* xEntDrive::operator=(const xEntDrive& other)
+xEntDrive& xEntDrive::operator=(const xEntDrive& other)
 {
     this->flags = other.flags;
     this->otm = other.otm;
@@ -252,12 +252,12 @@ xEntDrive* xEntDrive::operator=(const xEntDrive& other)
     this->yaw = other.yaw;
     this->dloc = other.dloc;
     this->tri = other.tri;
-    return this;
+    return *this;
 }
 
 #endif
 
-xEntDrive::tri_data* xEntDrive::tri_data::operator=(const tri_data& other)
+xEntDrive::tri_data& xEntDrive::tri_data::operator=(const tri_data& other)
 {
     xCollis::tri_data::operator=(other);
     *(uint32*)&this->loc.x = *(uint32*)&other.loc.x;
@@ -265,5 +265,5 @@ xEntDrive::tri_data* xEntDrive::tri_data::operator=(const tri_data& other)
     *(uint32*)&this->loc.z = *(uint32*)&other.loc.z;
     this->yaw = other.yaw;
     this->coll = other.coll;
-    return this;
+    return *this;
 }
