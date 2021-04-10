@@ -337,10 +337,16 @@ lbl_80057CB8:
 /* 80057CC0 00054AC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057CC4 00054AC4  4E 80 00 20 */	blr 
 
-start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+start__Q213cruise_bubble10state_typeFv:
 /* 80057D78 00054B78  4E 80 00 20 */	blr 
 
-stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+stop__Q213cruise_bubble10state_typeFv:
 /* 80057D7C 00054B7C  4E 80 00 20 */	blr 
 
 /* changed from ... */
