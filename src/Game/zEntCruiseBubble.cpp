@@ -1593,7 +1593,7 @@ void cruise_bubble::render_hud()
 #if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "show_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv")
+    "show_hud__13cruise_bubbleFv")
 #else
 void cruise_bubble::show_hud()
 {
@@ -3712,19 +3712,68 @@ cruise_bubble::state_enum cruise_bubble::state_camera_aim::update(float32 dt)
     "move__Q213cruise_bubble16state_camera_aimFf")
 
 // func_8005ED1C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFv")
+#else
+void cruise_bubble::state_camera_seize::start()
+{
+    capture_camera();
+
+    this->blend_time = zEntCruiseBubble_f_0_0;
+    this->start_loc = globals.camera.mat.pos;
+    xQuatFromMat(&this->start_dir, &globals.camera.mat);
+    this->last_s = zEntCruiseBubble_f_0_0;
+    this->fov = zEntCruiseBubble_f_0_0;
+    this->wipe_bubbles = zEntCruiseBubble_f_0_0;
+
+    show_hud();
+    distort_screen(zEntCruiseBubble_f_0_0);
+}
+#endif
 
 // func_8005ED9C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFv")
+#else
+void cruise_bubble::state_camera_seize::stop()
+{
+    release_camera();
+    xCameraSetFOV(&globals.camera, shared.fov_default);
+}
+#endif
 
 // func_8005EDD4
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_camera_seize::update(float32 dt)
+{
+    this->blend_time += dt;
+    if (this->blend_time >= current_tweak->camera.seize.blend_time)
+    {
+        return STATE_CAMERA_ATTACH;
+    }
+
+    float32 time_frac = this->blend_time / current_tweak->camera.seize.blend_time;
+    float32 s = xSCurve(time_frac);
+    this->update_move(s);
+    this->update_turn(s);
+    xVec3 offset = get_missle_mat()->pos - globals.camera.mat.pos;
+    this->refresh_missle_alpha(offset.length());
+
+    float32 dist = current_tweak->camera.seize.fov - shared.fov_default;
+    xCameraSetFOV(&globals.camera, s * dist + shared.fov_default);
+    distort_screen(s);
+
+    return STATE_CAMERA_SEIZE;
+}
+#endif
 
 // func_8005EED4
 #pragma GLOBAL_ASM(                                                                                \

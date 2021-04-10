@@ -1968,7 +1968,10 @@ lbl_8005A298:
 /* 8005A2A8 000570A8  4E 80 00 20 */	blr 
 
 /* show_hud__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-show_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* show_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+show_hud__13cruise_bubbleFv:
 /* 8005A2AC 000570AC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005A2B0 000570B0  7C 08 02 A6 */	mflr r0
 /* 8005A2B4 000570B4  3C 60 80 2E */	lis r3, hud__13cruise_bubble@ha
