@@ -146,7 +146,14 @@ namespace cruise_bubble
 
         state_camera_attach();
 
+        void start();
+        void stop();
         state_enum update();
+
+        void lock_targets();
+        void lock_hazard_targets();
+        uint8 hazard_check(NPCHazard& haz, void* context);
+        void get_view_bound(xBound& bound) const;
     };
 
     struct state_missle_fly : state_type

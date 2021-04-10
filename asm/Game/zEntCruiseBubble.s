@@ -7010,7 +7010,10 @@ update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19
 /* 8005F260 0005C060  4E 80 00 20 */	blr 
 
 /* lock_targets__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attachFv */
-lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv:
+/* changed from ... */
+/* lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv: */
+/* ... so linker can find it */
+lock_targets__Q213cruise_bubble19state_camera_attachFv:
 /* 8005F264 0005C064  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8005F268 0005C068  7C 08 02 A6 */	mflr r0
 /* 8005F26C 0005C06C  90 01 00 74 */	stw r0, 0x74(r1)
@@ -7051,7 +7054,10 @@ lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005F2F8 0005C0F8  4E 80 00 20 */	blr 
 
 /* lock_hazard_targets__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attachFv */
-lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv:
+/* changed from ... */
+/* lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv: */
+/* ... so linker can find it */
+lock_hazard_targets__Q213cruise_bubble19state_camera_attachFv:
 /* 8005F2FC 0005C0FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005F300 0005C100  7C 08 02 A6 */	mflr r0
 /* 8005F304 0005C104  3C 60 80 06 */	lis r3, hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv@ha
@@ -7066,7 +7072,10 @@ lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_
 /* 8005F328 0005C128  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005F32C 0005C12C  4E 80 00 20 */	blr 
 
-hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv:
+/* changed from ... */
+/* hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv: */
+/* ... so linker can find it */
+hazard_check__Q213cruise_bubble19state_camera_attachFR9NPCHazardPv:
 /* 8005F330 0005C130  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005F334 0005C134  7C 08 02 A6 */	mflr r0
 /* 8005F338 0005C138  38 63 00 08 */	addi r3, r3, 8
@@ -7079,7 +7088,10 @@ hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005F354 0005C154  4E 80 00 20 */	blr 
 
 /* get_view_bound__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attachCFR6xBound */
-get_view_bound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachCFR6xBound:
+/* changed from ... */
+/* get_view_bound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachCFR6xBound: */
+/* ... so linker can find it */
+get_view_bound__Q213cruise_bubble19state_camera_attachCFR6xBound:
 /* 8005F358 0005C158  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 8005F35C 0005C15C  7C 08 02 A6 */	mflr r0
 /* 8005F360 0005C160  90 01 00 84 */	stw r0, 0x84(r1)

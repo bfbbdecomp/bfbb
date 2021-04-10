@@ -3811,22 +3811,22 @@ cruise_bubble::state_enum cruise_bubble::state_camera_seize::update(float32 dt)
 // func_8005F264
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv")
+    "lock_targets__Q213cruise_bubble19state_camera_attachFv")
 
 // func_8005F2FC
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv")
+    "lock_hazard_targets__Q213cruise_bubble19state_camera_attachFv")
 
 // func_8005F330
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv")
+    "hazard_check__Q213cruise_bubble19state_camera_attachFR9NPCHazardPv")
 
 // func_8005F358
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "get_view_bound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachCFR6xBound")
+    "get_view_bound__Q213cruise_bubble19state_camera_attachCFR6xBound")
 
 // func_8005F480
 #pragma GLOBAL_ASM(                                                                                \
