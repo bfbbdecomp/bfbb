@@ -244,6 +244,7 @@ namespace cruise_bubble
         state_camera_restore();
 
         void start();
+        void stop();
         state_enum update(float32 dt);
     };
 
@@ -562,7 +563,7 @@ namespace cruise_bubble
     void capture_camera();
     void release_camera();
     bool camera_taken();
-    uint32 camera_leave();
+    bool camera_leave();
     void start_damaging();
     void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
                        float32 radius, uint8 explosive);

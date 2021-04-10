@@ -440,7 +440,7 @@ bool cruise_bubble::camera_taken()
 }
 #endif
 
-uint32 cruise_bubble::camera_leave()
+bool cruise_bubble::camera_leave()
 {
     return zCameraGetConvers() != 0;
 }
@@ -3967,19 +3967,66 @@ cruise_bubble::state_enum cruise_bubble::state_camera_survey::update(float32 dt)
     "control_jerked__Q213cruise_bubble19state_camera_surveyCFv")
 
 // func_8005FB4C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restoreFv")
+#else
+void cruise_bubble::state_camera_restore::start()
+{
+    this->control_delay = zEntCruiseBubble_f_0_0;
+    hide_hud();
+
+    if (!camera_leave())
+    {
+        xVec3 loc = get_player_loc() + start_cam_mat.pos;
+        xCameraMove(&globals.camera, loc);
+        xCameraRotate(&globals.camera, start_cam_mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    }
+
+    if (camera_taken())
+    {
+        release_camera();
+    }
+    else
+    {
+        capture_camera();
+    }
+
+    xSndSelectListenerMode(SND_LISTENER_MODE_PLAYER);
+}
+#endif
 
 // func_8005FC04
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restoreFv")
+#else
+void cruise_bubble::state_camera_restore::stop()
+{
+    set_state(THREAD_PLAYER, STATE_INVALID);
+    release_camera();
+}
+#endif
 
 // func_8005FC30
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_camera_restoreFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_camera_restore::update(float32 dt)
+{
+    this->control_delay += dt;
+    if (this->control_delay >= current_tweak->camera.restore.control_delay)
+    {
+        return STATE_INVALID;
+    }
+    
+    return STATE_CAMERA_RESTORE;
+}
+#endif
 
 // func_8005FC64
 #pragma GLOBAL_ASM(                                                                                \
