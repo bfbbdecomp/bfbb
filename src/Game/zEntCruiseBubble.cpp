@@ -3474,9 +3474,33 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
     "calculate_rotation__Q213cruise_bubble16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2")
 
 // func_8005DC2C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv")
+#else
+void cruise_bubble::state_missle_explode::start()
+{
+    shared.flags = shared.flags | 0x40;
+    // scheduling for zEntCruiseBubble_f_0_0
+    this->hit_time = zEntCruiseBubble_f_0_0;
+
+    if (current_tweak->missle.explode.hit_duration <= zEntCruiseBubble_f_0_0)
+    {
+        this->apply_damage(current_tweak->missle.explode.hit_radius);
+    }
+    
+    float32 dist = (shared.hit_loc - get_player_loc()).length2();
+    // regalloc for current_tweak
+    float32 min_dist = current_tweak->camera.survey.min_dist * current_tweak->camera.survey.min_dist;
+    // scheduling for THREAD_CAMERA
+    set_state(THREAD_CAMERA, dist <= min_dist ? STATE_CAMERA_RESTORE : STATE_CAMERA_SURVEY);
+
+    
+    play_sound(1, zEntCruiseBubble_f_1_0, &get_missle_mat()->pos);
+    this->start_effects();
+}
+#endif
 
 // func_8005DCF8
 #pragma GLOBAL_ASM(                                                                                \
@@ -3524,14 +3548,36 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
     "__ct__Q413cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explode13cb_damage_entFf")
 
 // func_8005E578
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv")
+#else
+void cruise_bubble::state_missle_explode::stop()
+{
+    shared.flags = shared.flags & 0xffffffbf;
+}
+#endif
 
 // func_8005E58C
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_missle_explode::update(float32 dt)
+{
+    this->hit_time += dt;
+
+    if (this->hit_time <= current_tweak->missle.explode.hit_duration)
+    {
+        float32 t = this->hit_time / current_tweak->missle.explode.hit_duration;
+        this->apply_damage(t * current_tweak->missle.explode.hit_radius);
+    }
+    
+    return STATE_MISSLE_EXPLODE;
+}
+#endif
 
 // func_8005E5E0
 #pragma GLOBAL_ASM(                                                                                \

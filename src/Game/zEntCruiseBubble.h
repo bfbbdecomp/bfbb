@@ -127,7 +127,7 @@ namespace cruise_bubble
         void perturb_direction(const xVec3&, float32, float32, float32, float32);
         void get_next_quadrant(float32&, float32&, float32&, float32&);
         void reset_quadrants(uint32 size, float32 ring);
-        void apply_damage(float32);
+        void apply_damage(float32 radius);
         void apply_damage_hazards(float32);
         uint8 hazard_check(NPCHazard& haz, void* context);
     };
