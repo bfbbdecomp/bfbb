@@ -3794,19 +3794,53 @@ cruise_bubble::state_enum cruise_bubble::state_camera_seize::update(float32 dt)
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "xSCurve__Ff")
 
 // func_8005F138
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv")
+#else
+void cruise_bubble::state_camera_attach::start()
+{
+    capture_camera();
+    xMat4x3* mat = get_missle_mat();
+    xCameraMove(&globals.camera, mat->pos);
+    xCameraRotate(&globals.camera, *mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    xCameraSetFOV(&globals.camera, current_tweak->camera.seize.fov);
+    distort_screen(zEntCruiseBubble_f_1_0);
+}
+#endif
 
 // func_8005F1B0
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv")
+#else
+void cruise_bubble::state_camera_attach::stop()
+{
+    xCameraSetFOV(&globals.camera, shared.fov_default);
+    release_camera();
+    hide_hud();
+    distort_screen(zEntCruiseBubble_f_0_0);
+}
+#endif
 
 // func_8005F1F4
+#if 1
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFf")
+#else
+cruise_bubble::state_enum cruise_bubble::state_camera_attach::update(float32 dt)
+{
+    xMat4x3* mat = get_missle_mat();
+    xCameraMove(&globals.camera, mat->pos);
+    xCameraRotate(&globals.camera, *mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    this->lock_targets();
+
+    return STATE_CAMERA_ATTACH;
+}
+#endif
 
 // func_8005F264
 #pragma GLOBAL_ASM(                                                                                \

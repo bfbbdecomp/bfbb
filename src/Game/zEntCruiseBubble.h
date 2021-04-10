@@ -148,7 +148,7 @@ namespace cruise_bubble
 
         void start();
         void stop();
-        state_enum update();
+        state_enum update(float32 dt);
 
         void lock_targets();
         void lock_hazard_targets();
