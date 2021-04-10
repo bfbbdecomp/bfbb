@@ -3286,7 +3286,7 @@ void cruise_bubble::state_missle_appear::update_effects(float32 dt)
 }
 
 // func_8005CF84
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv")
@@ -3373,7 +3373,7 @@ cruise_bubble::state_enum cruise_bubble::state_missle_fly::update(float32 dt)
     if (this->life <= zEntCruiseBubble_f_0_0 || (globals.pad0->pressed & 0x100) != 0)
     {
         shared.hit_loc = get_missle_mat()->pos;
-        shared.hit_norm = get_missle_mat()->up;
+        shared.hit_norm = get_missle_mat()->at;
 
         return STATE_MISSLE_EXPLODE;
     }
@@ -3425,7 +3425,7 @@ void cruise_bubble::state_missle_fly::update_flash(float32 dt)
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf")
+    "update_engine_sound__Q213cruise_bubble16state_missle_flyFf")
 #else
 void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
 {
@@ -3476,7 +3476,7 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
     "calculate_rotation__Q213cruise_bubble16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2")
 
 // func_8005DC2C
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv")
@@ -3582,7 +3582,7 @@ cruise_bubble::state_enum cruise_bubble::state_missle_explode::update(float32 dt
 #endif
 
 // func_8005E5E0
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv")
@@ -3593,13 +3593,8 @@ void cruise_bubble::state_camera_aim::start()
     xSndSelectListenerMode(SND_LISTENER_MODE_CAMERA);
     xCameraUpdate(&globals.camera, zEntCruiseBubble_f_0_001);
     
+    this->phi_vel = this->height_vel = this->dist_vel = zEntCruiseBubble_f_0_0;
     xMat4x3* mat = &globals.camera.mat;
-    // zero var needed for zEntCruiseBubble_f_0_0 to not be loaded for every assignment
-    float32 zero = zEntCruiseBubble_f_0_0;
-    this->dist_vel = zero;
-    this->height_vel = zero;
-    this->phi_vel = zero;
-
     xVec3& ploc = get_player_loc();
     // pretty sure the next 5 lines were originally just 1 looking like this:
     // xVec2 offset = {mat->pos.x - ploc.x, mat->pos.z - ploc.z};
@@ -3616,11 +3611,7 @@ void cruise_bubble::state_camera_aim::start()
     this->phi = xatan2(offset.x, offset.y);
     this->height = mat->pos.y - ploc.y;
     this->dist = offset.length();
-    
-    // zero var needed for zEntCruiseBubble_f_0_0 to not be loaded for every assignment
-    zero = zEntCruiseBubble_f_0_0;
-    this->seize_delay = zero;
-    this->control_delay = zero;
+    this->control_delay = this->seize_delay = zEntCruiseBubble_f_0_0;
     
     xQuatFromMat(&this->facing, mat);
     start_cam_mat = *mat;
