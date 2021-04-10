@@ -3597,32 +3597,32 @@ cruise_bubble::state_enum cruise_bubble::state_missle_explode::update(float32 dt
 // func_8005E808
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimCFv")
+    "apply_turn__Q213cruise_bubble16state_camera_aimCFv")
 
 // func_8005E84C
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf")
+    "turn__Q213cruise_bubble16state_camera_aimFf")
 
 // func_8005E944
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide_inward__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv")
+    "collide_inward__Q213cruise_bubble16state_camera_aimFv")
 
 // func_8005EAFC
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_motion__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimCFv")
+    "apply_motion__Q213cruise_bubble16state_camera_aimCFv")
 
 // func_8005EB90
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf")
+    "stop__Q213cruise_bubble16state_camera_aimFf")
 
 // func_8005EC20
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf")
+    "move__Q213cruise_bubble16state_camera_aimFf")
 
 // func_8005ED1C
 #pragma GLOBAL_ASM(                                                                                \
