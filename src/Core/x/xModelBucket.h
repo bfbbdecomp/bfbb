@@ -12,8 +12,18 @@ struct xModelBucket
     uint32 PipeFlags;
 };
 
+struct xModelAlphaBucket
+{
+    RpAtomic* Data;
+    xModelInstance* MInst;
+    float32 AlphaFade;
+    float32 SortValue;
+    uint32 Layer;
+};
+
 void xModelBucket_RenderAlpha();
 
+int32 CmpAlphaBucket(const void* _a, const void* _b);
 void xModelBucket_PreCountReset();
 void xModelBucket_PreCountBucket(RpAtomic* data, uint32 pipeFlags, uint32 subObjects);
 void xModelBucket_PreCountAlloc(int32 maxAlphaModels);
