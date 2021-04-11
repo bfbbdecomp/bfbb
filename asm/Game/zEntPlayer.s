@@ -45012,6 +45012,7 @@ __as__13xiMat4x3UnionFRC13xiMat4x3Union:
 .endif
 
 .section .rodata
+.balign 8
 lbl_80255F00:
 	.incbin "baserom.dol", 0x252EE0, 0x58
 lbl_80255F58:
@@ -45035,7 +45036,7 @@ zEntPlayer_Strings:
 	.incbin "baserom.dol", 0x2530F8, 0x37C8
 
 .section .data
-
+.balign 8
 .global sPlayerSnd
 sPlayerSnd:
 	.incbin "baserom.dol", 0x289990, 0x468
@@ -45066,6 +45067,7 @@ sEventTable:
 	.incbin "baserom.dol", 0x28B600, 0x878
 
 .section .bss
+.balign 8
 lbl_802DE3D0:
 	.skip 0x24
 lbl_802DE3F4:
@@ -45088,6 +45090,7 @@ lbl_802DE74C:
 	.skip 0xCE4
 
 .section .sbss
+.balign 8
 lbl_803CB5A0:
 	.skip 0x4
 lbl_803CB5A4:
@@ -45375,6 +45378,7 @@ lbl_803D084C:
 	.skip 0x4
 
 .section .sdata
+.balign 8
 lbl_803CAA98:
 	.incbin "baserom.dol", 0x2B5B58, 0x4
 lbl_803CAA9C:
