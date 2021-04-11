@@ -65,7 +65,7 @@ extern float32 _1522; // -0.800000011920929   bf4ccccd
 extern float32 _1523; // -2.0   c0000000
 extern float32 _1524; // 66.0   42840000
 extern float32 _1525; // -2500.0   c51c4000
-extern float32 _1526; // -1.5   bfc00000
+extern float32 _1526_0; // -1.5   bfc00000
 extern float32 _1527; // 13.0   41500000
 extern float32 _1528; // 3.5   40600000
 extern float32 _1529; // -2.5   c0200000
