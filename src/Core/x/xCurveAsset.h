@@ -24,4 +24,6 @@ struct xCurveAsset
     float32* points;
 };
 
+float32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, float32 t);
+
 #endif
