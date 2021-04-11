@@ -127,6 +127,7 @@ float32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xMat3x3ScaleC(xMat3x3* m, float32 x, float32 y, float32 z);
+void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, float32 t);
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
