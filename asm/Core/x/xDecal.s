@@ -1306,6 +1306,7 @@ active_emitters_size:
 	.skip 0x8
 
 .section .sdata2
+.balign 8
 lbl_803CF778:
 	.incbin "baserom.dol", 0x2B9018, 0x4
 lbl_803CF77C:

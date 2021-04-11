@@ -12,6 +12,7 @@ int atoi(const char* nptr);
 double atof(const char* nptr);
 void exit(int __status);
 void qsort(void*, size_t, size_t, int (*)(const void*, const void*));
+long abs(long n);
 
 #ifdef __cplusplus
 }
