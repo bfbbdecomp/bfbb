@@ -65,8 +65,6 @@ namespace bungee_state
     };
 
     void load(xBase& data, xDynAsset& asset, ulong32);
-    bool active();
-    bool landed();
 } // namespace bungee_state
 
 #endif

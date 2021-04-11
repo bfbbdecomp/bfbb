@@ -32,7 +32,6 @@ void xModelBucket_Init();
 void xModelBucket_Deinit();
 xModelBucket** xModelBucket_GetBuckets(RpAtomic* data);
 void xModelBucket_Begin();
-void xModelBucket_Add(xModelInstance* minst);
 void xModelBucket_RenderOpaque();
 void xModelBucket_RenderAlphaBegin();
 void xModelBucket_RenderAlphaLayer(int32 maxLayer);

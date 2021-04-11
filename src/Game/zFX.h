@@ -167,7 +167,4 @@ void zFXMuscleArmWave(xVec3* pos);
 void zFX_SpawnBubbleMenuTrail(const xVec3* pos, uint32 num, const xVec3* pos_rnd,
                               const xVec3* vel_rnd);
 
-void zFXPopOn(xEnt& ent, float32 rate, float32 time);
-void zFXPopOff(xEnt& ent, float32 rate, float32 time);
-
 #endif

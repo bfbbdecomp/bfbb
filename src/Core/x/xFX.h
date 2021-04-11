@@ -102,7 +102,6 @@ uint32 xFXanimUVCreate();
 void xFXFireworksInit(const char* fireworksTrailEmitter, const char* fireworksEmitter1,
                       const char* fireworksEmitter2, const char* fireworksSound,
                       const char* fireworksLaunchSound);
-void xFXFireworksLaunch(float32 countdownTime, const xVec3* pos, float32 fuelTime);
 void xFXFireworksUpdate(float32 dt);
 void xFXStreakInit();
 void xFXStreakUpdate(float32 dt);
@@ -110,7 +109,6 @@ void xFXStreakRender();
 void xFXShineInit();
 void xFXShineUpdate(float32 dt);
 void xFXShineRender();
-RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, uint32 envmapID, float32 shininess);
 void xFXRibbonSceneEnter();
 void xFXRibbonUpdate(float32 dt);
 void xFXRibbonRender();

@@ -9,8 +9,6 @@ struct zLODTable
     float32 noRenderDist;
     xModelBucket** lodBucket[3];
     float32 lodDist[3];
-
-    ASSIGNMENT_OPERATOR(zLODTable)
 };
 
 struct zLODManager
@@ -26,6 +24,5 @@ void zLOD_Update(uint32 percent_update);
 zLODTable* zLOD_Get(xEnt* ent);
 void AddToLODList(xModelInstance* model);
 xEnt* AddToLODList(xEnt* ent);
-void zLOD_UseCustomTable(xEnt* ent, zLODTable* lod);
 
 #endif

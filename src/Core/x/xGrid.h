@@ -6,7 +6,6 @@
 #include "xMath3.h"
 
 struct xEnt;
-struct xQCData;
 
 struct xGridBound
 {
@@ -57,8 +56,6 @@ struct xGridIterator
     uint32 delfound;
 };
 
-typedef int32 (*GridEntCallback)(xEnt*, void*);
-
 extern volatile int32 gGridIterActive;
 
 void xGridBoundInit(xGridBound* gridb, void* data);
@@ -72,6 +69,5 @@ xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32, float32 posz,
 xGridBound* xGridIterFirstCell(xGridBound** head, xGridIterator& it);
 xGridBound* xGridIterNextCell(xGridIterator& it);
 void xGridIterClose(xGridIterator& it);
-void xGridCheckPosition(xGrid* grid, xVec3* pos, xQCData* qcd, GridEntCallback hitCB, void* cbdata);
 
 #endif

@@ -7,7 +7,6 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
-uint32 iModelNumBones(RpAtomic* model);
 int32 iModelCull(RpAtomic* model, RwMatrixTag* mat);
 int32 iModelSphereCull(xSphere* sphere);
 RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model);

@@ -35,8 +35,4 @@ struct xEntDrive
     ASSIGNMENT_OPERATOR(xEntDrive)
 };
 
-void xEntDriveInit(xEntDrive* drv, xEnt* driven);
-void xEntDriveMount(xEntDrive* drv, xEnt* driver, float32 mt, const xCollis* coll);
-void xEntDriveDismount(xEntDrive* drv, float32 dmt);
-
 #endif

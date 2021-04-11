@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 int sprintf(char* s, const char* format, ...);
-void printf(const char* format, ...);
 
 #ifdef __cplusplus
 }

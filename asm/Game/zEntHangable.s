@@ -1094,6 +1094,10 @@ lbl_803CB588:
 	.skip 0x4
 lbl_803CB58C:
 	.skip 0x4
+/* SPECULATION: link order */
+.global gEmitShinySparkles
+gEmitShinySparkles:
+	.skip 0x4
 
 .section .sdata2
 lbl_803CD4A0:
