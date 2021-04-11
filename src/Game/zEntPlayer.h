@@ -398,6 +398,10 @@ void zEntPlayer_UnloadSounds();
 void zEntPlayer_ShadowModelEnable();
 void zEntPlayer_ShadowModelDisable();
 
+void zEntPlayer_setBoulderMode(uint32 mode);
+void zEntPlayer_GiveSpatula(int32);
+void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity);
+
 void zEntPlayer_LoadCheckPoint();
 
 void zEntPlayer_MinimalRender(zEnt* ent);
@@ -405,6 +409,15 @@ uint8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, float32 dt, xVec3& drive_m
 
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, float32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
+
+void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
+                                    _tagePlayerStreamSnd player_snd_end, float32 delay);
+
+// Only plays sound if player's spatula count is between lower and upper
+void zEntPlayer_SNDPlayStreamRandom(uint32 lower, uint32 upper,
+                                    _tagePlayerStreamSnd player_snd_start,
+                                    _tagePlayerStreamSnd player_snd_end, float32 delay);
+
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol);
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch);
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
