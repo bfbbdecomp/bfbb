@@ -58,59 +58,6 @@ lbl_8010CEC4:
 /* 8010CECC 00109CCC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8010CED0 00109CD0  4E 80 00 20 */	blr 
 
-.global xBehaveMgr_GetSelf__Fv
-xBehaveMgr_GetSelf__Fv:
-/* 8010CED4 00109CD4  80 6D 94 E4 */	lwz r3, lbl_803CBDE4-_SDA_BASE_(r13)
-/* 8010CED8 00109CD8  4E 80 00 20 */	blr 
-
-.global xBehaveMgr_GoalFactory__Fv
-xBehaveMgr_GoalFactory__Fv:
-/* 8010CEDC 00109CDC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010CEE0 00109CE0  7C 08 02 A6 */	mflr r0
-/* 8010CEE4 00109CE4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010CEE8 00109CE8  80 6D 94 E4 */	lwz r3, lbl_803CBDE4-_SDA_BASE_(r13)
-/* 8010CEEC 00109CEC  4B FE 1E 75 */	bl GetFactory__10xBehaveMgrFv
-/* 8010CEF0 00109CF0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010CEF4 00109CF4  7C 08 03 A6 */	mtlr r0
-/* 8010CEF8 00109CF8  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010CEFC 00109CFC  4E 80 00 20 */	blr 
-
-.global xBehaveMgr_ScenePrepare__Fv
-xBehaveMgr_ScenePrepare__Fv:
-/* 8010CF00 00109D00  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010CF04 00109D04  7C 08 02 A6 */	mflr r0
-/* 8010CF08 00109D08  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010CF0C 00109D0C  80 6D 94 E4 */	lwz r3, lbl_803CBDE4-_SDA_BASE_(r13)
-/* 8010CF10 00109D10  48 00 01 E9 */	bl ScenePrepare__10xBehaveMgrFv
-/* 8010CF14 00109D14  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010CF18 00109D18  7C 08 03 A6 */	mtlr r0
-/* 8010CF1C 00109D1C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010CF20 00109D20  4E 80 00 20 */	blr 
-
-.global xBehaveMgr_SceneFinish__Fv
-xBehaveMgr_SceneFinish__Fv:
-/* 8010CF24 00109D24  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010CF28 00109D28  7C 08 02 A6 */	mflr r0
-/* 8010CF2C 00109D2C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010CF30 00109D30  80 6D 94 E4 */	lwz r3, lbl_803CBDE4-_SDA_BASE_(r13)
-/* 8010CF34 00109D34  48 00 01 C9 */	bl SceneFinish__10xBehaveMgrFv
-/* 8010CF38 00109D38  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010CF3C 00109D3C  7C 08 03 A6 */	mtlr r0
-/* 8010CF40 00109D40  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010CF44 00109D44  4E 80 00 20 */	blr 
-
-.global xBehaveMgr_SceneReset__Fv
-xBehaveMgr_SceneReset__Fv:
-/* 8010CF48 00109D48  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010CF4C 00109D4C  7C 08 02 A6 */	mflr r0
-/* 8010CF50 00109D50  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010CF54 00109D54  80 6D 94 E4 */	lwz r3, lbl_803CBDE4-_SDA_BASE_(r13)
-/* 8010CF58 00109D58  48 00 01 C9 */	bl SceneReset__10xBehaveMgrFv
-/* 8010CF5C 00109D5C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010CF60 00109D60  7C 08 03 A6 */	mtlr r0
-/* 8010CF64 00109D64  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010CF68 00109D68  4E 80 00 20 */	blr 
-
 .global Startup__10xBehaveMgrFii
 Startup__10xBehaveMgrFii:
 /* 8010CF6C 00109D6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -157,173 +104,6 @@ lbl_8010CFB8:
 /* 8010D00C 00109E0C  7C 08 03 A6 */	mtlr r0
 /* 8010D010 00109E10  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010D014 00109E14  4E 80 00 20 */	blr 
-
-.global RegBuiltIn__10xBehaveMgrFv
-RegBuiltIn__10xBehaveMgrFv:
-/* 8010D018 00109E18  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D01C 00109E1C  7C 08 02 A6 */	mflr r0
-/* 8010D020 00109E20  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D024 00109E24  80 63 00 00 */	lwz r3, 0(r3)
-/* 8010D028 00109E28  48 00 1B 6D */	bl xGoalSimple_RegisterTypes__FP8xFactory
-/* 8010D02C 00109E2C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D030 00109E30  7C 08 03 A6 */	mtlr r0
-/* 8010D034 00109E34  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D038 00109E38  4E 80 00 20 */	blr 
-
-.global Subscribe__10xBehaveMgrFP5xBasei
-Subscribe__10xBehaveMgrFP5xBasei:
-/* 8010D03C 00109E3C  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D040 00109E40  7C 08 02 A6 */	mflr r0
-/* 8010D044 00109E44  7C 65 1B 78 */	mr r5, r3
-/* 8010D048 00109E48  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D04C 00109E4C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D050 00109E50  93 C1 00 08 */	stw r30, 8(r1)
-/* 8010D054 00109E54  7C 9E 23 78 */	mr r30, r4
-/* 8010D058 00109E58  80 03 00 0C */	lwz r0, 0xc(r3)
-/* 8010D05C 00109E5C  38 65 00 08 */	addi r3, r5, 8
-/* 8010D060 00109E60  80 85 00 04 */	lwz r4, 4(r5)
-/* 8010D064 00109E64  1C 00 00 68 */	mulli r0, r0, 0x68
-/* 8010D068 00109E68  7F E4 02 14 */	add r31, r4, r0
-/* 8010D06C 00109E6C  7F E4 FB 78 */	mr r4, r31
-/* 8010D070 00109E70  4B F2 8A C1 */	bl XOrdAppend__FP16st_XORDEREDARRAYPv
-/* 8010D074 00109E74  7F E3 FB 78 */	mr r3, r31
-/* 8010D078 00109E78  48 00 02 6D */	bl FreshWipe__7xPsycheFv
-/* 8010D07C 00109E7C  7F E3 FB 78 */	mr r3, r31
-/* 8010D080 00109E80  7F C4 F3 78 */	mr r4, r30
-/* 8010D084 00109E84  38 A0 00 00 */	li r5, 0
-/* 8010D088 00109E88  48 00 02 D5 */	bl SetOwner__7xPsycheFP5xBasePv
-/* 8010D08C 00109E8C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D090 00109E90  7F E3 FB 78 */	mr r3, r31
-/* 8010D094 00109E94  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D098 00109E98  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8010D09C 00109E9C  7C 08 03 A6 */	mtlr r0
-/* 8010D0A0 00109EA0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D0A4 00109EA4  4E 80 00 20 */	blr 
-
-.global UnSubscribe__10xBehaveMgrFP7xPsyche
-UnSubscribe__10xBehaveMgrFP7xPsyche:
-/* 8010D0A8 00109EA8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D0AC 00109EAC  7C 08 02 A6 */	mflr r0
-/* 8010D0B0 00109EB0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D0B4 00109EB4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D0B8 00109EB8  7C 9F 23 78 */	mr r31, r4
-/* 8010D0BC 00109EBC  93 C1 00 08 */	stw r30, 8(r1)
-/* 8010D0C0 00109EC0  7C 7E 1B 78 */	mr r30, r3
-/* 8010D0C4 00109EC4  80 83 00 00 */	lwz r4, 0(r3)
-/* 8010D0C8 00109EC8  7F E3 FB 78 */	mr r3, r31
-/* 8010D0CC 00109ECC  48 00 02 CD */	bl KillBrain__7xPsycheFP8xFactory
-/* 8010D0D0 00109ED0  7F E4 FB 78 */	mr r4, r31
-/* 8010D0D4 00109ED4  38 7E 00 08 */	addi r3, r30, 8
-/* 8010D0D8 00109ED8  38 A0 FF FF */	li r5, -1
-/* 8010D0DC 00109EDC  4B F2 8B 31 */	bl XOrdRemove__FP16st_XORDEREDARRAYPvi
-/* 8010D0E0 00109EE0  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D0E4 00109EE4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D0E8 00109EE8  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8010D0EC 00109EEC  7C 08 03 A6 */	mtlr r0
-/* 8010D0F0 00109EF0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D0F4 00109EF4  4E 80 00 20 */	blr 
-
-.global ScenePrepare__10xBehaveMgrFv
-ScenePrepare__10xBehaveMgrFv:
-/* 8010D0F8 00109EF8  4E 80 00 20 */	blr 
-
-.global SceneFinish__10xBehaveMgrFv
-SceneFinish__10xBehaveMgrFv:
-/* 8010D0FC 00109EFC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D100 00109F00  7C 08 02 A6 */	mflr r0
-/* 8010D104 00109F04  38 63 00 08 */	addi r3, r3, 8
-/* 8010D108 00109F08  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D10C 00109F0C  4B F2 89 C1 */	bl XOrdReset__FP16st_XORDEREDARRAY
-/* 8010D110 00109F10  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D114 00109F14  7C 08 03 A6 */	mtlr r0
-/* 8010D118 00109F18  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D11C 00109F1C  4E 80 00 20 */	blr 
-
-.global SceneReset__10xBehaveMgrFv
-SceneReset__10xBehaveMgrFv:
-/* 8010D120 00109F20  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8010D124 00109F24  7C 08 02 A6 */	mflr r0
-/* 8010D128 00109F28  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8010D12C 00109F2C  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8010D130 00109F30  3B E0 00 00 */	li r31, 0
-/* 8010D134 00109F34  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8010D138 00109F38  3B C0 00 00 */	li r30, 0
-/* 8010D13C 00109F3C  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 8010D140 00109F40  7C 7D 1B 78 */	mr r29, r3
-/* 8010D144 00109F44  48 00 00 1C */	b lbl_8010D160
-lbl_8010D148:
-/* 8010D148 00109F48  80 7D 00 08 */	lwz r3, 8(r29)
-/* 8010D14C 00109F4C  38 80 00 00 */	li r4, 0
-/* 8010D150 00109F50  7C 63 F8 2E */	lwzx r3, r3, r31
-/* 8010D154 00109F54  48 00 02 DD */	bl Amnesia__7xPsycheFi
-/* 8010D158 00109F58  3B FF 00 04 */	addi r31, r31, 4
-/* 8010D15C 00109F5C  3B DE 00 01 */	addi r30, r30, 1
-lbl_8010D160:
-/* 8010D160 00109F60  80 1D 00 0C */	lwz r0, 0xc(r29)
-/* 8010D164 00109F64  7C 1E 00 00 */	cmpw r30, r0
-/* 8010D168 00109F68  41 80 FF E0 */	blt lbl_8010D148
-/* 8010D16C 00109F6C  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8010D170 00109F70  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8010D174 00109F74  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8010D178 00109F78  83 A1 00 14 */	lwz r29, 0x14(r1)
-/* 8010D17C 00109F7C  7C 08 03 A6 */	mtlr r0
-/* 8010D180 00109F80  38 21 00 20 */	addi r1, r1, 0x20
-/* 8010D184 00109F84  4E 80 00 20 */	blr 
-
-.global BrainBegin__7xPsycheFv
-BrainBegin__7xPsycheFv:
-/* 8010D188 00109F88  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D18C 00109F8C  7C 08 02 A6 */	mflr r0
-/* 8010D190 00109F90  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D194 00109F94  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D198 00109F98  7C 7F 1B 78 */	mr r31, r3
-/* 8010D19C 00109F9C  4B FF FD 41 */	bl xBehaveMgr_GoalFactory__Fv
-/* 8010D1A0 00109FA0  38 00 00 01 */	li r0, 1
-/* 8010D1A4 00109FA4  38 9F 00 58 */	addi r4, r31, 0x58
-/* 8010D1A8 00109FA8  90 1F 00 54 */	stw r0, 0x54(r31)
-/* 8010D1AC 00109FAC  38 A0 00 00 */	li r5, 0
-/* 8010D1B0 00109FB0  48 00 23 51 */	bl GrowDataEnable__8xFactoryFP5xBasei
-/* 8010D1B4 00109FB4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D1B8 00109FB8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D1BC 00109FBC  7C 08 03 A6 */	mtlr r0
-/* 8010D1C0 00109FC0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D1C4 00109FC4  4E 80 00 20 */	blr 
-
-.global BrainExtend__7xPsycheFv
-BrainExtend__7xPsycheFv:
-/* 8010D1C8 00109FC8  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D1CC 00109FCC  7C 08 02 A6 */	mflr r0
-/* 8010D1D0 00109FD0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D1D4 00109FD4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D1D8 00109FD8  7C 7F 1B 78 */	mr r31, r3
-/* 8010D1DC 00109FDC  4B FF FD 01 */	bl xBehaveMgr_GoalFactory__Fv
-/* 8010D1E0 00109FE0  38 00 00 02 */	li r0, 2
-/* 8010D1E4 00109FE4  38 9F 00 58 */	addi r4, r31, 0x58
-/* 8010D1E8 00109FE8  90 1F 00 54 */	stw r0, 0x54(r31)
-/* 8010D1EC 00109FEC  38 A0 00 01 */	li r5, 1
-/* 8010D1F0 00109FF0  48 00 23 11 */	bl GrowDataEnable__8xFactoryFP5xBasei
-/* 8010D1F4 00109FF4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D1F8 00109FF8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D1FC 00109FFC  7C 08 03 A6 */	mtlr r0
-/* 8010D200 0010A000  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D204 0010A004  4E 80 00 20 */	blr 
-
-.global BrainEnd__7xPsycheFv
-BrainEnd__7xPsycheFv:
-/* 8010D208 0010A008  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D20C 0010A00C  7C 08 02 A6 */	mflr r0
-/* 8010D210 0010A010  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D214 0010A014  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D218 0010A018  7C 7F 1B 78 */	mr r31, r3
-/* 8010D21C 0010A01C  4B FF FC C1 */	bl xBehaveMgr_GoalFactory__Fv
-/* 8010D220 0010A020  48 00 23 19 */	bl GrowDataDisable__8xFactoryFv
-/* 8010D224 0010A024  38 00 00 03 */	li r0, 3
-/* 8010D228 0010A028  90 1F 00 54 */	stw r0, 0x54(r31)
-/* 8010D22C 0010A02C  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D230 0010A030  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D234 0010A034  7C 08 03 A6 */	mtlr r0
-/* 8010D238 0010A038  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D23C 0010A03C  4E 80 00 20 */	blr 
 
 .global AddGoal__7xPsycheFiPv
 AddGoal__7xPsycheFiPv:
@@ -373,104 +153,6 @@ lbl_8010D2C4:
 /* 8010D2D8 0010A0D8  7C 08 03 A6 */	mtlr r0
 /* 8010D2DC 0010A0DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010D2E0 0010A0E0  4E 80 00 20 */	blr 
-
-.global FreshWipe__7xPsycheFv
-FreshWipe__7xPsycheFv:
-/* 8010D2E4 0010A0E4  38 80 00 00 */	li r4, 0
-/* 8010D2E8 0010A0E8  38 00 FF FF */	li r0, -1
-/* 8010D2EC 0010A0EC  90 83 00 10 */	stw r4, 0x10(r3)
-/* 8010D2F0 0010A0F0  90 83 00 14 */	stw r4, 0x14(r3)
-/* 8010D2F4 0010A0F4  90 83 00 18 */	stw r4, 0x18(r3)
-/* 8010D2F8 0010A0F8  90 83 00 1C */	stw r4, 0x1c(r3)
-/* 8010D2FC 0010A0FC  90 83 00 20 */	stw r4, 0x20(r3)
-/* 8010D300 0010A100  90 03 00 38 */	stw r0, 0x38(r3)
-/* 8010D304 0010A104  90 83 00 44 */	stw r4, 0x44(r3)
-/* 8010D308 0010A108  90 83 00 3C */	stw r4, 0x3c(r3)
-/* 8010D30C 0010A10C  90 83 00 40 */	stw r4, 0x40(r3)
-/* 8010D310 0010A110  C0 02 9E 40 */	lfs f0, lbl_803CE7C0-_SDA2_BASE_(r2)
-/* 8010D314 0010A114  D0 03 00 24 */	stfs f0, 0x24(r3)
-/* 8010D318 0010A118  C0 02 9E 40 */	lfs f0, lbl_803CE7C0-_SDA2_BASE_(r2)
-/* 8010D31C 0010A11C  D0 03 00 28 */	stfs f0, 0x28(r3)
-/* 8010D320 0010A120  C0 02 9E 40 */	lfs f0, lbl_803CE7C0-_SDA2_BASE_(r2)
-/* 8010D324 0010A124  D0 03 00 2C */	stfs f0, 0x2c(r3)
-/* 8010D328 0010A128  C0 02 9E 40 */	lfs f0, lbl_803CE7C0-_SDA2_BASE_(r2)
-/* 8010D32C 0010A12C  D0 03 00 30 */	stfs f0, 0x30(r3)
-/* 8010D330 0010A130  C0 02 9E 40 */	lfs f0, lbl_803CE7C0-_SDA2_BASE_(r2)
-/* 8010D334 0010A134  D0 03 00 34 */	stfs f0, 0x34(r3)
-/* 8010D338 0010A138  90 83 00 00 */	stw r4, 0(r3)
-/* 8010D33C 0010A13C  90 83 00 4C */	stw r4, 0x4c(r3)
-/* 8010D340 0010A140  90 83 00 48 */	stw r4, 0x48(r3)
-/* 8010D344 0010A144  90 83 00 04 */	stw r4, 4(r3)
-/* 8010D348 0010A148  90 83 00 54 */	stw r4, 0x54(r3)
-/* 8010D34C 0010A14C  80 03 00 08 */	lwz r0, 8(r3)
-/* 8010D350 0010A150  60 00 00 01 */	ori r0, r0, 1
-/* 8010D354 0010A154  90 03 00 08 */	stw r0, 8(r3)
-/* 8010D358 0010A158  4E 80 00 20 */	blr 
-
-.global SetOwner__7xPsycheFP5xBasePv
-SetOwner__7xPsycheFP5xBasePv:
-/* 8010D35C 0010A15C  90 83 00 00 */	stw r4, 0(r3)
-/* 8010D360 0010A160  28 04 00 00 */	cmplwi r4, 0
-/* 8010D364 0010A164  90 A3 00 4C */	stw r5, 0x4c(r3)
-/* 8010D368 0010A168  4D 82 00 20 */	beqlr 
-/* 8010D36C 0010A16C  80 A4 00 00 */	lwz r5, 0(r4)
-/* 8010D370 0010A170  38 00 00 00 */	li r0, 0
-/* 8010D374 0010A174  90 A3 00 58 */	stw r5, 0x58(r3)
-/* 8010D378 0010A178  88 84 00 04 */	lbz r4, 4(r4)
-/* 8010D37C 0010A17C  38 84 00 80 */	addi r4, r4, 0x80
-/* 8010D380 0010A180  98 83 00 5C */	stb r4, 0x5c(r3)
-/* 8010D384 0010A184  98 03 00 5D */	stb r0, 0x5d(r3)
-/* 8010D388 0010A188  B0 03 00 5E */	sth r0, 0x5e(r3)
-/* 8010D38C 0010A18C  90 03 00 60 */	stw r0, 0x60(r3)
-/* 8010D390 0010A190  90 03 00 64 */	stw r0, 0x64(r3)
-/* 8010D394 0010A194  4E 80 00 20 */	blr 
-
-.global KillBrain__7xPsycheFP8xFactory
-KillBrain__7xPsycheFP8xFactory:
-/* 8010D398 0010A198  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D39C 0010A19C  7C 08 02 A6 */	mflr r0
-/* 8010D3A0 0010A1A0  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D3A4 0010A1A4  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D3A8 0010A1A8  7C 7F 1B 78 */	mr r31, r3
-/* 8010D3AC 0010A1AC  48 00 00 21 */	bl Lobotomy__7xPsycheFP8xFactory
-/* 8010D3B0 0010A1B0  38 00 00 00 */	li r0, 0
-/* 8010D3B4 0010A1B4  90 1F 00 48 */	stw r0, 0x48(r31)
-/* 8010D3B8 0010A1B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D3BC 0010A1BC  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D3C0 0010A1C0  7C 08 03 A6 */	mtlr r0
-/* 8010D3C4 0010A1C4  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D3C8 0010A1C8  4E 80 00 20 */	blr 
-
-.global Lobotomy__7xPsycheFP8xFactory
-Lobotomy__7xPsycheFP8xFactory:
-/* 8010D3CC 0010A1CC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8010D3D0 0010A1D0  7C 08 02 A6 */	mflr r0
-/* 8010D3D4 0010A1D4  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8010D3D8 0010A1D8  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8010D3DC 0010A1DC  7C 9F 23 78 */	mr r31, r4
-/* 8010D3E0 0010A1E0  93 C1 00 08 */	stw r30, 8(r1)
-/* 8010D3E4 0010A1E4  7C 7E 1B 78 */	mr r30, r3
-/* 8010D3E8 0010A1E8  48 00 00 24 */	b lbl_8010D40C
-lbl_8010D3EC:
-/* 8010D3EC 0010A1EC  38 9E 00 0C */	addi r4, r30, 0xc
-/* 8010D3F0 0010A1F0  48 00 16 0D */	bl RemHead__17xListItem_esc__0_5xGoal_esc__1_FPP5xGoal
-/* 8010D3F4 0010A1F4  28 03 00 00 */	cmplwi r3, 0
-/* 8010D3F8 0010A1F8  7C 64 1B 78 */	mr r4, r3
-/* 8010D3FC 0010A1FC  41 82 00 08 */	beq lbl_8010D404
-/* 8010D400 0010A200  38 84 00 0C */	addi r4, r4, 0xc
-lbl_8010D404:
-/* 8010D404 0010A204  7F E3 FB 78 */	mr r3, r31
-/* 8010D408 0010A208  48 00 22 E5 */	bl DestroyItem__8xFactoryFP12xFactoryInst
-lbl_8010D40C:
-/* 8010D40C 0010A20C  80 7E 00 0C */	lwz r3, 0xc(r30)
-/* 8010D410 0010A210  28 03 00 00 */	cmplwi r3, 0
-/* 8010D414 0010A214  40 82 FF D8 */	bne lbl_8010D3EC
-/* 8010D418 0010A218  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8010D41C 0010A21C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8010D420 0010A220  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8010D424 0010A224  7C 08 03 A6 */	mtlr r0
-/* 8010D428 0010A228  38 21 00 10 */	addi r1, r1, 0x10
-/* 8010D42C 0010A22C  4E 80 00 20 */	blr 
 
 .global Amnesia__7xPsycheFi
 Amnesia__7xPsycheFi:
@@ -2086,13 +1768,16 @@ DBG_HistAdd__7xPsycheFi:
 .endif
 
 .section .sbss
-lbl_803CBDE0:
+.global g_modinit_xBehaveMgr
+g_modinit_xBehaveMgr:
 	.skip 0x4
-lbl_803CBDE4:
+.global g_behavmgr
+g_behavmgr:
 	.skip 0x4
 
 .section .sdata2
-lbl_803CE7C0:
+.global _750
+_750:
 	.incbin "baserom.dol", 0x2B8060, 0x4
 lbl_803CE7C4:
 	.incbin "baserom.dol", 0x2B8064, 0x4

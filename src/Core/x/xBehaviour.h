@@ -108,10 +108,16 @@ struct xPsyche : RyzMemData
     xGoal* FindGoal(int32 gid);
     int32 GoalSet(int32 gid, int32 r5);
     int32 GoalPop(int32 gid_popto, int32 r5);
-    xGoal* AddGoal(int32 gid, void* createData);
     void BrainBegin();
+    void BrainExtend();
     void BrainEnd();
+    xGoal* AddGoal(int32 gid, void* createData);
+    void FreshWipe();
+    void SetOwner(xBase*, void*);
+    void KillBrain(xFactory*);
+    void Lobotomy(xFactory*);
     void SetSafety(int32);
+    void Amnesia(int32);
 
     xBase* GetClient()
     {
