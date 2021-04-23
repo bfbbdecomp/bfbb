@@ -2,74 +2,254 @@
 
 #include <types.h>
 
+#include "xBehaveGoalSimple.h"
+#include "xutil.h"
+
+extern int32 g_modinit_xBehaveMgr;
+extern xBehaveMgr* g_behavmgr;
+
 // func_8010CE24
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_Startup__Fv")
+#else
+void xBehaveMgr_Startup()
+{
+    if (g_modinit_xBehaveMgr++ == 0)
+    {
+        g_behavmgr = new ('BMGR', NULL) xBehaveMgr();
+        g_behavmgr->Startup(0xfa, 0xfa);
+    }
+}
+#endif
 
 // func_8010CE8C
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_Shutdown__Fv")
+#else
+void xBehaveMgr_Shutdown()
+{
+    g_modinit_xBehaveMgr--;
+    if (g_modinit_xBehaveMgr == 0)
+    {
+        if (g_behavmgr != NULL)
+        {
+            delete g_behavmgr;
+        }
+        g_behavmgr = NULL;
+    }
+}
+#endif
 
 // func_8010CED4
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_GetSelf__Fv")
+xBehaveMgr* xBehaveMgr_GetSelf()
+{
+    return g_behavmgr;
+}
 
 // func_8010CEDC
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_GoalFactory__Fv")
+xFactory* xBehaveMgr_GoalFactory()
+{
+    return g_behavmgr->GetFactory();
+}
 
 // func_8010CF00
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_ScenePrepare__Fv")
+void xBehaveMgr_ScenePrepare()
+{
+    g_behavmgr->ScenePrepare();
+}
 
 // func_8010CF24
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_SceneFinish__Fv")
+void xBehaveMgr_SceneFinish()
+{
+    g_behavmgr->SceneFinish();
+}
 
 // func_8010CF48
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "xBehaveMgr_SceneReset__Fv")
+void xBehaveMgr_SceneReset()
+{
+    g_behavmgr->SceneReset();
+}
 
 // func_8010CF6C
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "Startup__10xBehaveMgrFii")
 
 // func_8010D018
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "RegBuiltIn__10xBehaveMgrFv")
+void xBehaveMgr::RegBuiltIn()
+{
+    xGoalSimple_RegisterTypes(this->goalFactory);
+}
 
 // func_8010D03C
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "Subscribe__10xBehaveMgrFP5xBasei")
+xPsyche* xBehaveMgr::Subscribe(xBase* owner, int32 i)
+{
+    xPsyche* psyche = &this->psypool[this->psylist.cnt];
+    XOrdAppend(&this->psylist, psyche);
+    psyche->FreshWipe();
+    psyche->SetOwner(owner, NULL);
+    return psyche;
+}
 
 // func_8010D0A8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "UnSubscribe__10xBehaveMgrFP7xPsyche")
+void xBehaveMgr::UnSubscribe(xPsyche* psy)
+{
+    psy->KillBrain(this->goalFactory);
+    XOrdRemove(&this->psylist, psy, -1);
+}
 
 // func_8010D0F8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "ScenePrepare__10xBehaveMgrFv")
+void xBehaveMgr::ScenePrepare()
+{
+}
 
 // func_8010D0FC
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "SceneFinish__10xBehaveMgrFv")
+void xBehaveMgr::SceneFinish()
+{
+    XOrdReset(&this->psylist);
+}
 
 // func_8010D120
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "SceneReset__10xBehaveMgrFv")
+void xBehaveMgr::SceneReset()
+{
+    for (int32 i = 0; i < this->psylist.cnt; i++)
+    {
+        xPsyche* psyche = (xPsyche*)this->psylist.list[i];
+        psyche->Amnesia(0);
+    }
+}
 
 // func_8010D188
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "BrainBegin__7xPsycheFv")
+void xPsyche::BrainBegin()
+{
+    xFactory* factory = xBehaveMgr_GoalFactory();
+    this->psystat = PSY_STAT_GROW;
+    factory->GrowDataEnable(&this->fakebase, false);
+}
 
 // func_8010D1C8
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "BrainExtend__7xPsycheFv")
+void xPsyche::BrainExtend()
+{
+    xFactory* factory = xBehaveMgr_GoalFactory();
+    this->psystat = PSY_STAT_EXTEND;
+    factory->GrowDataEnable(&this->fakebase, true);
+}
 
 // func_8010D208
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "BrainEnd__7xPsycheFv")
+void xPsyche::BrainEnd()
+{
+    xBehaveMgr_GoalFactory()->GrowDataDisable();
+    this->psystat = PSY_STAT_THINK;
+}
 
 // func_8010D240
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "AddGoal__7xPsycheFiPv")
+#else
+// Regalloc
+xGoal* xPsyche::AddGoal(int32 gid, void* createData)
+{
+    xGoal* goal = (xGoal*)xBehaveMgr_GoalFactory()->CreateItem(gid, createData, NULL);
+
+    if (goal != NULL)
+    {
+        if (this->goallist != NULL)
+        {
+            this->goallist->Insert(goal);
+        }
+        else
+        {
+            this->goallist = goal;
+        }
+        goal->SetPsyche(this);
+    }
+    else
+    {
+        xUtil_idtag2string(gid, NULL);
+    }
+    return goal;
+}
+#endif
 
 // func_8010D2E4
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "FreshWipe__7xPsycheFv")
+extern float32 _750;
+void xPsyche::FreshWipe()
+{
+    this->goalstak[0] = NULL;
+    this->goalstak[1] = NULL;
+    this->goalstak[2] = NULL;
+    this->goalstak[3] = NULL;
+    this->goalstak[4] = NULL;
+    this->staktop = -1;
+    this->gid_safegoal = 0;
+    this->pendgoal = 0;
+    this->pendtype = PEND_TRAN_NONE;
+    this->tmr_stack[0][0] = _750;
+    this->tmr_stack[0][1] = _750;
+    this->tmr_stack[0][2] = _750;
+    this->tmr_stack[0][3] = _750;
+    this->tmr_stack[0][4] = _750;
+    this->clt_owner = NULL;
+    this->userContext = NULL;
+    this->fun_remap = NULL;
+    this->cb_notice = NULL;
+    this->psystat = PSY_STAT_BLANK;
+    this->flg_psyche |= 1;
+}
 
 // func_8010D35C
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "SetOwner__7xPsycheFP5xBasePv")
+void xPsyche::SetOwner(xBase* clt_owner, void* userContext)
+{
+    this->clt_owner = clt_owner;
+    this->userContext = userContext;
+    if (clt_owner == NULL)
+    {
+        return;
+    }
+
+    this->fakebase.id = clt_owner->id;
+    this->fakebase.baseType = clt_owner->baseType + 0x80;
+    this->fakebase.linkCount = 0;
+    this->fakebase.baseFlags = 0;
+    this->fakebase.link = NULL;
+    this->fakebase.eventFunc = NULL;
+}
 
 // func_8010D398
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "KillBrain__7xPsycheFP8xFactory")
+void xPsyche::KillBrain(xFactory* factory)
+{
+    this->Lobotomy(factory);
+    this->fun_remap = NULL;
+}
 
 // func_8010D3CC
-#pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "Lobotomy__7xPsycheFP8xFactory")
+void xPsyche::Lobotomy(xFactory* factory)
+{
+    while (this->goallist != NULL)
+    {
+        xGoal* goal = this->goallist->RemHead(&this->goallist);
+        factory->DestroyItem(goal);
+    }
+}
 
 // func_8010D430
+#if 1
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "Amnesia__7xPsycheFi")
+#else
+void xPsyche::Amnesia(int32 i)
+{
+    xGoal* g = this->goallist;
+    while (g != NULL)
+    {
+        xGoal* thisg = g;
+        g = g->Next();
+        // this->goallist = this->goallist->Next();
+
+        if (i == 0 && this->GIDInStack(thisg->GetID()) != NULL)
+        {
+            continue;
+        }
+    }
+}
+#endif
 
 // func_8010D4CC
 #pragma GLOBAL_ASM("asm/Core/x/xBehaveMgr.s", "IndexInStack__7xPsycheCFi")
