@@ -5,7 +5,10 @@
 .section .text  # 0x8005720C - 0x800609B4
 
 /* play_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fif */
-play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif:
+/* changed from ... */
+/* play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fif: */
+/* ... so linker can find it */
+play_sound__13cruise_bubbleFif:
 /* 80057320 00054120  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057324 00054124  7C 08 02 A6 */	mflr r0
 /* 80057328 00054128  1C 83 00 28 */	mulli r4, r3, 0x28
@@ -72,7 +75,10 @@ lbl_800573E8:
 /* 80057400 00054200  4E 80 00 20 */	blr 
 
 /* play_sound__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FifPC5xVec3 */
-play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3:
+/* changed from ... */
+/* play_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FifPC5xVec3: */
+/* ... so linker can find it */
+play_sound__13cruise_bubbleFifPC5xVec3:
 /* 80057404 00054204  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057408 00054208  7C 08 02 A6 */	mflr r0
 /* 8005740C 0005420C  1C A3 00 28 */	mulli r5, r3, 0x28
@@ -110,7 +116,10 @@ lbl_80057470:
 /* 80057484 00054284  4E 80 00 20 */	blr 
 
 /* camera_taken__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+camera_taken__13cruise_bubbleFv:
 /* 800575FC 000543FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057600 00054400  7C 08 02 A6 */	mflr r0
 /* 80057604 00054404  90 01 00 14 */	stw r0, 0x14(r1)
@@ -302,7 +311,10 @@ lbl_800578C8:
 /* 800578E4 000546E4  4E 80 00 20 */	blr 
 
 /* start_trail__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* start_trail__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+start_trail__13cruise_bubbleFv:
 /* 80057C78 00054A78  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80057C7C 00054A7C  7C 08 02 A6 */	mflr r0
 /* 80057C80 00054A80  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
@@ -325,13 +337,22 @@ lbl_80057CB8:
 /* 80057CC0 00054AC0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057CC4 00054AC4  4E 80 00 20 */	blr 
 
-start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+start__Q213cruise_bubble10state_typeFv:
 /* 80057D78 00054B78  4E 80 00 20 */	blr 
 
-stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+stop__Q213cruise_bubble10state_typeFv:
 /* 80057D7C 00054B7C  4E 80 00 20 */	blr 
 
-abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+abort__Q213cruise_bubble10state_typeFv:
 /* 80057FE4 00054DE4  4E 80 00 20 */	blr 
 
 /* update_player__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR6xScenef */
@@ -416,7 +437,10 @@ lbl_800580E8:
 /* 80058100 00054F00  38 21 00 50 */	addi r1, r1, 0x50
 /* 80058104 00054F04  4E 80 00 20 */	blr 
 
-render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv:
+/* changed from ... */
+/* render__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_10state_typeFv: */
+/* ... so linker can find it */
+render__Q213cruise_bubble10state_typeFv:
 /* 80058310 00055110  4E 80 00 20 */	blr 
 
 /* changed from ... */
@@ -1953,7 +1977,10 @@ lbl_8005A298:
 /* 8005A2A8 000570A8  4E 80 00 20 */	blr 
 
 /* show_hud__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-show_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
+/* changed from ... */
+/* show_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv: */
+/* ... so linker can find it */
+show_hud__13cruise_bubbleFv:
 /* 8005A2AC 000570AC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005A2B0 000570B0  7C 08 02 A6 */	mflr r0
 /* 8005A2B4 000570B4  3C 60 80 2E */	lis r3, hud__13cruise_bubble@ha
@@ -4050,7 +4077,7 @@ lbl_8005C7C8:
 /* 8005C7F4 000595F4  90 81 00 18 */	stw r4, 0x18(r1)
 /* 8005C7F8 000595F8  90 01 00 1C */	stw r0, 0x1c(r1)
 /* 8005C7FC 000595FC  4B FA E9 01 */	bl length2__5xVec3CFv
-/* 8005C800 00059600  C0 02 89 C4 */	lfs f0, lbl_803CD344-_SDA2_BASE_(r2)
+/* 8005C800 00059600  C0 02 89 C4 */	lfs f0, zEntCruiseBubble_f_0_0001-_SDA2_BASE_(r2)
 /* 8005C804 00059604  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8005C808 00059608  40 80 00 0C */	bge lbl_8005C814
 /* 8005C80C 0005960C  38 60 00 01 */	li r3, 1
@@ -4109,14 +4136,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005C8CC 000596CC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005C8D0 000596D0  4E 80 00 20 */	blr 
 
-/* get_player_mat__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-get_player_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 8005C8D4 000596D4  3C 60 80 3C */	lis r3, globals@ha
-/* 8005C8D8 000596D8  38 63 05 58 */	addi r3, r3, globals@l
-/* 8005C8DC 000596DC  80 63 07 04 */	lwz r3, 0x704(r3)
-/* 8005C8E0 000596E0  80 63 00 4C */	lwz r3, 0x4c(r3)
-/* 8005C8E4 000596E4  4E 80 00 20 */	blr 
-
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv:
 /* 8005C8E8 000596E8  3C 60 80 29 */	lis r3, lbl_80290000@ha
 /* 8005C8EC 000596EC  84 03 C2 A4 */	lwzu r0, -0x3d5c(r3)
@@ -4169,7 +4188,10 @@ lbl_8005C97C:
 /* 8005C994 00059794  4E 80 00 20 */	blr 
 
 /* update_animation__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aimFf */
-update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf:
+/* changed from ... */
+/* update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf: */
+/* ... so linker can find it */
+update_animation__Q213cruise_bubble16state_player_aimFf:
 /* 8005C998 00059798  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005C99C 0005979C  7C 08 02 A6 */	mflr r0
 /* 8005C9A0 000597A0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -4198,7 +4220,10 @@ update_animation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005C9FC 000597FC  4E 80 00 20 */	blr 
 
 /* apply_yaw__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aimFv */
-apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv:
+/* changed from ... */
+/* apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFv: */
+/* ... so linker can find it */
+apply_yaw__Q213cruise_bubble16state_player_aimFv:
 /* 8005CA00 00059800  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005CA04 00059804  7C 08 02 A6 */	mflr r0
 /* 8005CA08 00059808  90 01 00 24 */	stw r0, 0x24(r1)
@@ -4239,7 +4264,10 @@ apply_yaw__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2
 /* 8005CA94 00059894  4E 80 00 20 */	blr 
 
 /* face_camera__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_player_aimFf */
-face_camera__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf:
+/* changed from ... */
+/* face_camera__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_player_aimFf: */
+/* ... so linker can find it */
+face_camera__Q213cruise_bubble16state_player_aimFf:
 /* 8005CA98 00059898  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005CA9C 0005989C  7C 08 02 A6 */	mflr r0
 /* 8005CAA0 000598A0  90 01 00 34 */	stw r0, 0x34(r1)
@@ -4367,14 +4395,6 @@ lbl_8005CC5C:
 /* 8005CC68 00059A68  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005CC6C 00059A6C  4E 80 00 20 */	blr 
 
-/* get_missle_mat__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@Fv */
-get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv:
-/* 8005CC70 00059A70  3C 60 80 29 */	lis r3, shared__13cruise_bubble@ha
-/* 8005CC74 00059A74  38 63 C2 A4 */	addi r3, r3, shared__13cruise_bubble@l
-/* 8005CC78 00059A78  80 63 00 68 */	lwz r3, 0x68(r3)
-/* 8005CC7C 00059A7C  80 63 00 4C */	lwz r3, 0x4c(r3)
-/* 8005CC80 00059A80  4E 80 00 20 */	blr 
-
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFv:
 /* 8005CC84 00059A84  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005CC88 00059A88  7C 08 02 A6 */	mflr r0
@@ -4450,10 +4470,6 @@ lbl_8005CD64:
 /* 8005CD88 00059B88  38 21 00 40 */	addi r1, r1, 0x40
 /* 8005CD8C 00059B8C  4E 80 00 20 */	blr 
 
-/* update_wand__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@17state_player_fireFf */
-update_wand__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_fireFf:
-/* 8005CD90 00059B90  4E 80 00 20 */	blr 
-
 start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_17state_player_waitFv:
 /* 8005CD94 00059B94  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005CD98 00059B98  7C 08 02 A6 */	mflr r0
@@ -4497,38 +4513,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19s
 /* 8005CE20 00059C20  7C 08 03 A6 */	mtlr r0
 /* 8005CE24 00059C24  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005CE28 00059C28  4E 80 00 20 */	blr 
-
-/* move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_missle_appearFv */
-move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv:
-/* 8005CE2C 00059C2C  94 21 FF D0 */	stwu r1, -0x30(r1)
-/* 8005CE30 00059C30  7C 08 02 A6 */	mflr r0
-/* 8005CE34 00059C34  90 01 00 34 */	stw r0, 0x34(r1)
-/* 8005CE38 00059C38  93 E1 00 2C */	stw r31, 0x2c(r1)
-/* 8005CE3C 00059C3C  4B FF FE 35 */	bl get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005CE40 00059C40  7C 7F 1B 78 */	mr r31, r3
-/* 8005CE44 00059C44  4B FF FA 91 */	bl get_player_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005CE48 00059C48  7C 64 1B 78 */	mr r4, r3
-/* 8005CE4C 00059C4C  7F E3 FB 78 */	mr r3, r31
-/* 8005CE50 00059C50  4B FA E7 1D */	bl __as__7xMat4x3FRC7xMat4x3
-/* 8005CE54 00059C54  7F E3 FB 78 */	mr r3, r31
-/* 8005CE58 00059C58  38 81 00 14 */	addi r4, r1, 0x14
-/* 8005CE5C 00059C5C  4B FD 4F D9 */	bl xMat3x3GetEuler__FPC7xMat3x3P5xVec3
-/* 8005CE60 00059C60  7F E3 FB 78 */	mr r3, r31
-/* 8005CE64 00059C64  38 81 00 14 */	addi r4, r1, 0x14
-/* 8005CE68 00059C68  4B FD 53 3D */	bl xMat3x3Euler__FP7xMat3x3PC5xVec3
-/* 8005CE6C 00059C6C  80 AD 81 80 */	lwz r5, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005CE70 00059C70  7F E4 FB 78 */	mr r4, r31
-/* 8005CE74 00059C74  38 61 00 08 */	addi r3, r1, 8
-/* 8005CE78 00059C78  38 A5 00 30 */	addi r5, r5, 0x30
-/* 8005CE7C 00059C7C  48 00 31 C1 */	bl xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
-/* 8005CE80 00059C80  38 7F 00 30 */	addi r3, r31, 0x30
-/* 8005CE84 00059C84  38 81 00 08 */	addi r4, r1, 8
-/* 8005CE88 00059C88  4B FB 85 BD */	bl __apl__5xVec3FRC5xVec3
-/* 8005CE8C 00059C8C  80 01 00 34 */	lwz r0, 0x34(r1)
-/* 8005CE90 00059C90  83 E1 00 2C */	lwz r31, 0x2c(r1)
-/* 8005CE94 00059C94  7C 08 03 A6 */	mtlr r0
-/* 8005CE98 00059C98  38 21 00 30 */	addi r1, r1, 0x30
-/* 8005CE9C 00059C9C  4E 80 00 20 */	blr 
 
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFv:
 /* 8005CEA0 00059CA0  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -4593,10 +4577,6 @@ lbl_8005CF5C:
 /* 8005CF78 00059D78  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005CF7C 00059D7C  4E 80 00 20 */	blr 
 
-/* update_effects__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_missle_appearFf */
-update_effects__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_missle_appearFf:
-/* 8005CF80 00059D80  4E 80 00 20 */	blr 
-
 start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv:
 /* 8005CF84 00059D84  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005CF88 00059D88  7C 08 02 A6 */	mflr r0
@@ -4631,16 +4611,16 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005CFFC 00059DFC  C0 02 89 B8 */	lfs f0, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
 /* 8005D000 00059E00  D0 1F 00 38 */	stfs f0, 0x38(r31)
 /* 8005D004 00059E04  4B FA E2 61 */	bl __as__5xVec3FRC5xVec3
-/* 8005D008 00059E08  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
-/* 8005D00C 00059E0C  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005D008 00059E08  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
+/* 8005D00C 00059E0C  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005D010 00059E10  48 00 34 55 */	bl reset__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
 /* 8005D014 00059E14  C0 3F 00 18 */	lfs f1, 0x18(r31)
 /* 8005D018 00059E18  38 61 00 18 */	addi r3, r1, 0x18
 /* 8005D01C 00059E1C  38 9F 00 2C */	addi r4, r31, 0x2c
 /* 8005D020 00059E20  48 00 00 6D */	bl __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFRC5xVec3f
-/* 8005D024 00059E24  3C A0 80 2E */	lis r5, lbl_802DBE30@ha
+/* 8005D024 00059E24  3C A0 80 2E */	lis r5, missle_record__13cruise_bubble@ha
 /* 8005D028 00059E28  7C 64 1B 78 */	mr r4, r3
-/* 8005D02C 00059E2C  38 65 BE 30 */	addi r3, r5, lbl_802DBE30@l
+/* 8005D02C 00059E2C  38 65 BE 30 */	addi r3, r5, missle_record__13cruise_bubble@l
 /* 8005D030 00059E30  48 00 33 29 */	bl push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data
 /* 8005D034 00059E34  4B FF FC 3D */	bl get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
 /* 8005D038 00059E38  7C 64 1B 78 */	mr r4, r3
@@ -4648,9 +4628,9 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005D040 00059E40  38 61 00 08 */	addi r3, r1, 8
 /* 8005D044 00059E44  38 84 00 30 */	addi r4, r4, 0x30
 /* 8005D048 00059E48  48 00 00 45 */	bl __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFRC5xVec3f
-/* 8005D04C 00059E4C  3C A0 80 2E */	lis r5, lbl_802DBE30@ha
+/* 8005D04C 00059E4C  3C A0 80 2E */	lis r5, missle_record__13cruise_bubble@ha
 /* 8005D050 00059E50  7C 64 1B 78 */	mr r4, r3
-/* 8005D054 00059E54  38 65 BE 30 */	addi r3, r5, lbl_802DBE30@l
+/* 8005D054 00059E54  38 65 BE 30 */	addi r3, r5, missle_record__13cruise_bubble@l
 /* 8005D058 00059E58  48 00 33 01 */	bl push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data
 /* 8005D05C 00059E5C  4B FF FC 15 */	bl get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
 /* 8005D060 00059E60  C0 22 89 C0 */	lfs f1, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
@@ -4664,17 +4644,6 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005D080 00059E80  7C 08 03 A6 */	mtlr r0
 /* 8005D084 00059E84  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005D088 00059E88  4E 80 00 20 */	blr 
-
-/* __ct__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_dataFRC5xVec3f */
-__ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFRC5xVec3f:
-/* 8005D08C 00059E8C  80 04 00 00 */	lwz r0, 0(r4)
-/* 8005D090 00059E90  80 A4 00 04 */	lwz r5, 4(r4)
-/* 8005D094 00059E94  90 03 00 00 */	stw r0, 0(r3)
-/* 8005D098 00059E98  80 04 00 08 */	lwz r0, 8(r4)
-/* 8005D09C 00059E9C  90 A3 00 04 */	stw r5, 4(r3)
-/* 8005D0A0 00059EA0  90 03 00 08 */	stw r0, 8(r3)
-/* 8005D0A4 00059EA4  D0 23 00 0C */	stfs f1, 0xc(r3)
-/* 8005D0A8 00059EA8  4E 80 00 20 */	blr 
 
 stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv:
 /* 8005D0AC 00059EAC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4691,7 +4660,7 @@ stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16st
 /* 8005D0D8 00059ED8  4B FF A1 AD */	bl stop_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiUi
 /* 8005D0DC 00059EDC  38 60 02 04 */	li r3, 0x204
 /* 8005D0E0 00059EE0  4B FF AB 11 */	bl signal_event__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FUi
-/* 8005D0E4 00059EE4  C0 22 89 BC */	lfs f1, lbl_803CD33C-_SDA2_BASE_(r2)
+/* 8005D0E4 00059EE4  C0 22 89 BC */	lfs f1, zEntCruiseBubble_f_1_0e38-_SDA2_BASE_(r2)
 /* 8005D0E8 00059EE8  38 61 00 14 */	addi r3, r1, 0x14
 /* 8005D0EC 00059EEC  4B FB F7 8D */	bl __as__5xVec3Ff
 /* 8005D0F0 00059EF0  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
@@ -4718,7 +4687,7 @@ abort__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005D13C 00059F3C  4B FF A1 49 */	bl stop_sound__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FiUi
 /* 8005D140 00059F40  38 60 02 04 */	li r3, 0x204
 /* 8005D144 00059F44  4B FF AA AD */	bl signal_event__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FUi
-/* 8005D148 00059F48  C0 22 89 BC */	lfs f1, lbl_803CD33C-_SDA2_BASE_(r2)
+/* 8005D148 00059F48  C0 22 89 BC */	lfs f1, zEntCruiseBubble_f_1_0e38-_SDA2_BASE_(r2)
 /* 8005D14C 00059F4C  38 61 00 14 */	addi r3, r1, 0x14
 /* 8005D150 00059F50  4B FB F7 29 */	bl __as__5xVec3Ff
 /* 8005D154 00059F54  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
@@ -4781,13 +4750,13 @@ lbl_8005D224:
 /* 8005D228 0005A028  FC 20 F8 90 */	fmr f1, f31
 /* 8005D22C 0005A02C  7F E3 FB 78 */	mr r3, r31
 /* 8005D230 0005A030  48 00 06 F9 */	bl update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf
-/* 8005D234 0005A034  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
-/* 8005D238 0005A038  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005D234 0005A034  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
+/* 8005D238 0005A038  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005D23C 0005A03C  48 00 32 6D */	bl full__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
 /* 8005D240 0005A040  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8005D244 0005A044  41 82 00 10 */	beq lbl_8005D254
-/* 8005D248 0005A048  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
-/* 8005D24C 0005A04C  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005D248 0005A048  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
+/* 8005D24C 0005A04C  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005D250 0005A050  48 00 32 45 */	bl pop_back__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
 lbl_8005D254:
 /* 8005D254 0005A054  7F E3 FB 78 */	mr r3, r31
@@ -4805,9 +4774,9 @@ lbl_8005D274:
 /* 8005D280 0005A080  38 61 00 18 */	addi r3, r1, 0x18
 /* 8005D284 0005A084  38 84 00 50 */	addi r4, r4, 0x50
 /* 8005D288 0005A088  4B FF FE 05 */	bl __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFRC5xVec3f
-/* 8005D28C 0005A08C  3C A0 80 2E */	lis r5, lbl_802DBE30@ha
+/* 8005D28C 0005A08C  3C A0 80 2E */	lis r5, missle_record__13cruise_bubble@ha
 /* 8005D290 0005A090  7C 64 1B 78 */	mr r4, r3
-/* 8005D294 0005A094  38 65 BE 30 */	addi r3, r5, lbl_802DBE30@l
+/* 8005D294 0005A094  38 65 BE 30 */	addi r3, r5, missle_record__13cruise_bubble@l
 /* 8005D298 0005A098  48 00 30 C1 */	bl push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data
 /* 8005D29C 0005A09C  38 60 00 06 */	li r3, 6
 /* 8005D2A0 0005A0A0  48 00 00 94 */	b lbl_8005D334
@@ -4818,9 +4787,9 @@ lbl_8005D2A4:
 /* 8005D2B0 0005A0B0  38 61 00 08 */	addi r3, r1, 8
 /* 8005D2B4 0005A0B4  38 84 00 30 */	addi r4, r4, 0x30
 /* 8005D2B8 0005A0B8  4B FF FD D5 */	bl __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFRC5xVec3f
-/* 8005D2BC 0005A0BC  3C A0 80 2E */	lis r5, lbl_802DBE30@ha
+/* 8005D2BC 0005A0BC  3C A0 80 2E */	lis r5, missle_record__13cruise_bubble@ha
 /* 8005D2C0 0005A0C0  7C 64 1B 78 */	mr r4, r3
-/* 8005D2C4 0005A0C4  38 65 BE 30 */	addi r3, r5, lbl_802DBE30@l
+/* 8005D2C4 0005A0C4  38 65 BE 30 */	addi r3, r5, missle_record__13cruise_bubble@l
 /* 8005D2C8 0005A0C8  48 00 30 91 */	bl push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data
 /* 8005D2CC 0005A0CC  4B FF F9 A5 */	bl get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
 /* 8005D2D0 0005A0D0  7C 64 1B 78 */	mr r4, r3
@@ -4857,45 +4826,11 @@ lbl_8005D334:
 /* 8005D348 0005A148  38 21 00 50 */	addi r1, r1, 0x50
 /* 8005D34C 0005A14C  4E 80 00 20 */	blr 
 
-/* update_flash__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFf */
-update_flash__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf:
-/* 8005D350 0005A150  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8005D354 0005A154  7C 08 02 A6 */	mflr r0
-/* 8005D358 0005A158  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8005D35C 0005A15C  DB E1 00 10 */	stfd f31, 0x10(r1)
-/* 8005D360 0005A160  F3 E1 00 18 */	psq_st f31, 24(r1), 0, qr0
-/* 8005D364 0005A164  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8005D368 0005A168  7C 7F 1B 78 */	mr r31, r3
-/* 8005D36C 0005A16C  C0 03 00 38 */	lfs f0, 0x38(r3)
-/* 8005D370 0005A170  EC 00 08 2A */	fadds f0, f0, f1
-/* 8005D374 0005A174  D0 03 00 38 */	stfs f0, 0x38(r3)
-/* 8005D378 0005A178  80 6D 81 80 */	lwz r3, current_tweak__13cruise_bubble-_SDA_BASE_(r13)
-/* 8005D37C 0005A17C  C0 3F 00 08 */	lfs f1, 8(r31)
-/* 8005D380 0005A180  C0 03 00 14 */	lfs f0, 0x14(r3)
-/* 8005D384 0005A184  C0 43 00 4C */	lfs f2, 0x4c(r3)
-/* 8005D388 0005A188  EC 21 00 24 */	fdivs f1, f1, f0
-/* 8005D38C 0005A18C  C0 1F 00 38 */	lfs f0, 0x38(r31)
-/* 8005D390 0005A190  EF E2 00 72 */	fmuls f31, f2, f1
-/* 8005D394 0005A194  FC 00 F8 40 */	fcmpo cr0, f0, f31
-/* 8005D398 0005A198  40 81 00 20 */	ble lbl_8005D3B8
-/* 8005D39C 0005A19C  4B FF C6 2D */	bl flash_hud__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005D3A0 0005A1A0  C0 1F 00 38 */	lfs f0, 0x38(r31)
-/* 8005D3A4 0005A1A4  EC 20 F8 24 */	fdivs f1, f0, f31
-/* 8005D3A8 0005A1A8  4B FA 97 D1 */	bl floorf__3stdFf
-/* 8005D3AC 0005A1AC  C0 1F 00 38 */	lfs f0, 0x38(r31)
-/* 8005D3B0 0005A1B0  EC 01 07 FC */	fnmsubs f0, f1, f31, f0
-/* 8005D3B4 0005A1B4  D0 1F 00 38 */	stfs f0, 0x38(r31)
-lbl_8005D3B8:
-/* 8005D3B8 0005A1B8  E3 E1 00 18 */	psq_l f31, 24(r1), 0, qr0
-/* 8005D3BC 0005A1BC  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8005D3C0 0005A1C0  CB E1 00 10 */	lfd f31, 0x10(r1)
-/* 8005D3C4 0005A1C4  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8005D3C8 0005A1C8  7C 08 03 A6 */	mtlr r0
-/* 8005D3CC 0005A1CC  38 21 00 20 */	addi r1, r1, 0x20
-/* 8005D3D0 0005A1D0  4E 80 00 20 */	blr 
-
 /* update_engine_sound__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFf */
-update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf:
+/* changed from ... */
+/* update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf: */
+/* ... so linker can find it */
+update_engine_sound__Q213cruise_bubble16state_missle_flyFf:
 /* 8005D3D4 0005A1D4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005D3D8 0005A1D8  7C 08 02 A6 */	mflr r0
 /* 8005D3DC 0005A1DC  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
@@ -4927,7 +4862,10 @@ update_engine_sound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_
 /* 8005D444 0005A244  4E 80 00 20 */	blr 
 
 /* collide_hazards__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFv */
-collide_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv:
+/* changed from ... */
+/* collide_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv: */
+/* ... so linker can find it */
+collide_hazards__Q213cruise_bubble16state_missle_flyFv:
 /* 8005D448 0005A248  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005D44C 0005A24C  7C 08 02 A6 */	mflr r0
 /* 8005D450 0005A250  3C 60 80 06 */	lis r3, hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv@ha
@@ -4964,7 +4902,10 @@ lbl_8005D4B8:
 /* 8005D4C0 0005A2C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005D4C4 0005A2C4  4E 80 00 20 */	blr 
 
-hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv:
+/* changed from ... */
+/* hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv: */
+/* ... so linker can find it */
+hazard_check__Q213cruise_bubble16state_missle_flyFR9NPCHazardPv:
 /* 8005D4C8 0005A2C8  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8005D4CC 0005A2CC  7C 08 02 A6 */	mflr r0
 /* 8005D4D0 0005A2D0  90 01 00 44 */	stw r0, 0x44(r1)
@@ -5010,7 +4951,10 @@ lbl_8005D54C:
 /* 8005D568 0005A368  4E 80 00 20 */	blr 
 
 /* collide__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFv */
-collide__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv:
+/* changed from ... */
+/* collide__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv: */
+/* ... so linker can find it */
+collide__Q213cruise_bubble16state_missle_flyFv:
 /* 8005D56C 0005A36C  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8005D570 0005A370  7C 08 02 A6 */	mflr r0
 /* 8005D574 0005A374  90 01 00 74 */	stw r0, 0x74(r1)
@@ -5176,7 +5120,10 @@ lbl_8005D7B8:
 /* 8005D7D0 0005A5D0  4E 80 00 20 */	blr 
 
 /* hit_test__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt */
-hit_test__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt:
+/* changed from ... */
+/* hit_test__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt: */
+/* ... so linker can find it */
+hit_test__Q213cruise_bubble16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt:
 /* 8005D7D4 0005A5D4  94 21 FE 60 */	stwu r1, -0x1a0(r1)
 /* 8005D7D8 0005A5D8  7C 08 02 A6 */	mflr r0
 /* 8005D7DC 0005A5DC  3D 00 80 3C */	lis r8, globals@ha
@@ -5266,7 +5213,10 @@ lbl_8005D914:
 /* 8005D924 0005A724  4E 80 00 20 */	blr 
 
 /* update_move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFf */
-update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf:
+/* changed from ... */
+/* update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf: */
+/* ... so linker can find it */
+update_move__Q213cruise_bubble16state_missle_flyFf:
 /* 8005D928 0005A728  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005D92C 0005A72C  7C 08 02 A6 */	mflr r0
 /* 8005D930 0005A730  7C 65 1B 78 */	mr r5, r3
@@ -5297,7 +5247,10 @@ update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc_
 /* 8005D994 0005A794  4E 80 00 20 */	blr 
 
 /* update_turn__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFf */
-update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf:
+/* changed from ... */
+/* update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFf: */
+/* ... so linker can find it */
+update_turn__Q213cruise_bubble16state_missle_flyFf:
 /* 8005D998 0005A798  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 8005D99C 0005A79C  7C 08 02 A6 */	mflr r0
 /* 8005D9A0 0005A7A0  90 01 00 A4 */	stw r0, 0xa4(r1)
@@ -5431,7 +5384,10 @@ lbl_8005DB44:
 /* 8005DB94 0005A994  4E 80 00 20 */	blr 
 
 /* calculate_rotation__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2 */
-calculate_rotation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2:
+/* changed from ... */
+/* calculate_rotation__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2: */
+/* ... so linker can find it */
+calculate_rotation__Q213cruise_bubble16state_missle_flyCFR5xVec2R5xVec2fRC5xVec2RC5xVec2RC5xVec2RC5xVec2:
 /* 8005DB98 0005A998  C0 08 00 00 */	lfs f0, 0(r8)
 /* 8005DB9C 0005A99C  C1 69 00 00 */	lfs f11, 0(r9)
 /* 8005DBA0 0005A9A0  C0 A7 00 00 */	lfs f5, 0(r7)
@@ -5527,7 +5483,10 @@ lbl_8005DCC4:
 /* 8005DCF4 0005AAF4  4E 80 00 20 */	blr 
 
 /* start_effects__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeFv */
-start_effects__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv:
+/* changed from ... */
+/* start_effects__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFv: */
+/* ... so linker can find it */
+start_effects__Q213cruise_bubble20state_missle_explodeFv:
 /* 8005DCF8 0005AAF8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005DCFC 0005AAFC  7C 08 02 A6 */	mflr r0
 /* 8005DD00 0005AB00  90 01 00 34 */	stw r0, 0x34(r1)
@@ -5608,7 +5567,10 @@ lbl_8005DE0C:
 /* 8005DE18 0005AC18  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005DE1C 0005AC1C  4E 80 00 20 */	blr 
 
-cb_droplet__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFP5zFragP10zFragAsset:
+/* changed from ... */
+/* cb_droplet__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFP5zFragP10zFragAsset: */
+/* ... so linker can find it */
+cb_droplet__Q213cruise_bubble20state_missle_explodeFP5zFragP10zFragAsset:
 /* 8005DE20 0005AC20  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8005DE24 0005AC24  7C 08 02 A6 */	mflr r0
 /* 8005DE28 0005AC28  90 01 00 74 */	stw r0, 0x74(r1)
@@ -5714,7 +5676,10 @@ cb_droplet__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__
 /* 8005DFB8 0005ADB8  4E 80 00 20 */	blr 
 
 /* perturb_direction__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeFRC5xVec3ffff */
-perturb_direction__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFRC5xVec3ffff:
+/* changed from ... */
+/* perturb_direction__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFRC5xVec3ffff: */
+/* ... so linker can find it */
+perturb_direction__Q213cruise_bubble20state_missle_explodeFRC5xVec3ffff:
 /* 8005DFBC 0005ADBC  94 21 FF 40 */	stwu r1, -0xc0(r1)
 /* 8005DFC0 0005ADC0  7C 08 02 A6 */	mflr r0
 /* 8005DFC4 0005ADC4  90 01 00 C4 */	stw r0, 0xc4(r1)
@@ -5830,7 +5795,10 @@ lbl_8005E0CC:
 /* 8005E174 0005AF74  4E 80 00 20 */	blr 
 
 /* get_next_quadrant__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeFRfRfRfRf */
-get_next_quadrant__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFRfRfRfRf:
+/* changed from ... */
+/* get_next_quadrant__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFRfRfRfRf: */
+/* ... so linker can find it */
+get_next_quadrant__Q213cruise_bubble20state_missle_explodeFRfRfRfRf:
 /* 8005E178 0005AF78  3C E0 80 2E */	lis r7, lbl_802DC920@ha
 /* 8005E17C 0005AF7C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005E180 0005AF80  39 27 C9 20 */	addi r9, r7, lbl_802DC920@l
@@ -5887,7 +5855,10 @@ lbl_8005E1A8:
 /* 8005E244 0005B044  4E 80 00 20 */	blr 
 
 /* reset_quadrants__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeFUif */
-reset_quadrants__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFUif:
+/* changed from ... */
+/* reset_quadrants__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFUif: */
+/* ... so linker can find it */
+reset_quadrants__Q213cruise_bubble20state_missle_explodeFUif:
 /* 8005E248 0005B048  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8005E24C 0005B04C  7C 08 02 A6 */	mflr r0
 /* 8005E250 0005B050  90 01 00 44 */	stw r0, 0x44(r1)
@@ -5989,7 +5960,10 @@ lbl_8005E38C:
 /* 8005E3B8 0005B1B8  4E 80 00 20 */	blr 
 
 /* apply_damage__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeFf */
-apply_damage__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf:
+/* changed from ... */
+/* apply_damage__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf: */
+/* ... so linker can find it */
+apply_damage__Q213cruise_bubble20state_missle_explodeFf:
 /* 8005E3BC 0005B1BC  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 8005E3C0 0005B1C0  7C 08 02 A6 */	mflr r0
 /* 8005E3C4 0005B1C4  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
@@ -6049,7 +6023,10 @@ apply_damage__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005E49C 0005B29C  4E 80 00 20 */	blr 
 
 /* apply_damage_hazards__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@20state_missle_explodeFf */
-apply_damage_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf:
+/* changed from ... */
+/* apply_damage_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFf: */
+/* ... so linker can find it */
+apply_damage_hazards__Q213cruise_bubble20state_missle_explodeFf:
 /* 8005E4A0 0005B2A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005E4A4 0005B2A4  7C 08 02 A6 */	mflr r0
 /* 8005E4A8 0005B2A8  3C 60 80 06 */	lis r3, hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFR9NPCHazardPv@ha
@@ -6065,7 +6042,10 @@ apply_damage_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble
 /* 8005E4D0 0005B2D0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005E4D4 0005B2D4  4E 80 00 20 */	blr 
 
-hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFR9NPCHazardPv:
+/* changed from ... */
+/* hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20state_missle_explodeFR9NPCHazardPv: */
+/* ... so linker can find it */
+hazard_check__Q213cruise_bubble20state_missle_explodeFR9NPCHazardPv:
 /* 8005E4D8 0005B2D8  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8005E4DC 0005B2DC  7C 08 02 A6 */	mflr r0
 /* 8005E4E0 0005B2E0  90 01 00 44 */	stw r0, 0x44(r1)
@@ -6193,13 +6173,13 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16s
 /* 8005E69C 0005B49C  D0 1D 00 44 */	stfs f0, 0x44(r29)
 /* 8005E6A0 0005B4A0  D0 1D 00 40 */	stfs f0, 0x40(r29)
 /* 8005E6A4 0005B4A4  4B FD 45 E1 */	bl xQuatFromMat__FP5xQuatPC7xMat3x3
-/* 8005E6A8 0005B4A8  3C 60 80 2E */	lis r3, lbl_802DBDF0@ha
+/* 8005E6A8 0005B4A8  3C 60 80 2E */	lis r3, start_cam_mat__13cruise_bubble@ha
 /* 8005E6AC 0005B4AC  7F E4 FB 78 */	mr r4, r31
-/* 8005E6B0 0005B4B0  38 63 BD F0 */	addi r3, r3, lbl_802DBDF0@l
+/* 8005E6B0 0005B4B0  38 63 BD F0 */	addi r3, r3, start_cam_mat__13cruise_bubble@l
 /* 8005E6B4 0005B4B4  4B FA CE B9 */	bl __as__7xMat4x3FRC7xMat4x3
-/* 8005E6B8 0005B4B8  3C 60 80 2E */	lis r3, lbl_802DBDF0@ha
+/* 8005E6B8 0005B4B8  3C 60 80 2E */	lis r3, start_cam_mat__13cruise_bubble@ha
 /* 8005E6BC 0005B4BC  7F C4 F3 78 */	mr r4, r30
-/* 8005E6C0 0005B4C0  38 63 BD F0 */	addi r3, r3, lbl_802DBDF0@l
+/* 8005E6C0 0005B4C0  38 63 BD F0 */	addi r3, r3, start_cam_mat__13cruise_bubble@l
 /* 8005E6C4 0005B4C4  38 63 00 30 */	addi r3, r3, 0x30
 /* 8005E6C8 0005B4C8  4B FA CB 69 */	bl __ami__5xVec3FRC5xVec3
 /* 8005E6CC 0005B4CC  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -6292,7 +6272,10 @@ lbl_8005E7EC:
 /* 8005E804 0005B604  4E 80 00 20 */	blr 
 
 /* apply_turn__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aimCFv */
-apply_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimCFv:
+/* changed from ... */
+/* apply_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimCFv: */
+/* ... so linker can find it */
+apply_turn__Q213cruise_bubble16state_camera_aimCFv:
 /* 8005E808 0005B608  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8005E80C 0005B60C  7C 08 02 A6 */	mflr r0
 /* 8005E810 0005B610  38 63 00 20 */	addi r3, r3, 0x20
@@ -6312,7 +6295,10 @@ apply_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__
 /* 8005E848 0005B648  4E 80 00 20 */	blr 
 
 /* turn__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aimFf */
-turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf:
+/* changed from ... */
+/* turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf: */
+/* ... so linker can find it */
+turn__Q213cruise_bubble16state_camera_aimFf:
 /* 8005E84C 0005B64C  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 8005E850 0005B650  7C 08 02 A6 */	mflr r0
 /* 8005E854 0005B654  90 01 00 84 */	stw r0, 0x84(r1)
@@ -6379,7 +6365,10 @@ lbl_8005E928:
 /* 8005E940 0005B740  4E 80 00 20 */	blr 
 
 /* collide_inward__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aimFv */
-collide_inward__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv:
+/* changed from ... */
+/* collide_inward__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFv: */
+/* ... so linker can find it */
+collide_inward__Q213cruise_bubble16state_camera_aimFv:
 /* 8005E944 0005B744  94 21 FE 70 */	stwu r1, -0x190(r1)
 /* 8005E948 0005B748  7C 08 02 A6 */	mflr r0
 /* 8005E94C 0005B74C  3C 60 80 3C */	lis r3, globals@ha
@@ -6498,7 +6487,10 @@ lbl_8005EAE0:
 /* 8005EAF8 0005B8F8  4E 80 00 20 */	blr 
 
 /* apply_motion__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aimCFv */
-apply_motion__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimCFv:
+/* changed from ... */
+/* apply_motion__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimCFv: */
+/* ... so linker can find it */
+apply_motion__Q213cruise_bubble16state_camera_aimCFv:
 /* 8005EAFC 0005B8FC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005EB00 0005B900  7C 08 02 A6 */	mflr r0
 /* 8005EB04 0005B904  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6538,7 +6530,10 @@ apply_motion__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005EB8C 0005B98C  4E 80 00 20 */	blr 
 
 /* stop__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aimFf */
-stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf:
+/* changed from ... */
+/* stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf: */
+/* ... so linker can find it */
+stop__Q213cruise_bubble16state_camera_aimFf:
 /* 8005EB90 0005B990  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005EB94 0005B994  7C 08 02 A6 */	mflr r0
 /* 8005EB98 0005B998  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6577,7 +6572,10 @@ stop__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16st
 /* 8005EC1C 0005BA1C  4E 80 00 20 */	blr 
 
 /* move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_camera_aimFf */
-move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf:
+/* changed from ... */
+/* move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_camera_aimFf: */
+/* ... so linker can find it */
+move__Q213cruise_bubble16state_camera_aimFf:
 /* 8005EC20 0005BA20  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005EC24 0005BA24  7C 08 02 A6 */	mflr r0
 /* 8005EC28 0005BA28  90 01 00 24 */	stw r0, 0x24(r1)
@@ -6763,7 +6761,10 @@ lbl_8005EEB8:
 /* 8005EED0 0005BCD0  4E 80 00 20 */	blr 
 
 /* refresh_missle_alpha__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seizeFf */
-refresh_missle_alpha__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf:
+/* changed from ... */
+/* refresh_missle_alpha__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf: */
+/* ... so linker can find it */
+refresh_missle_alpha__Q213cruise_bubble18state_camera_seizeFf:
 /* 8005EED4 0005BCD4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005EED8 0005BCD8  7C 08 02 A6 */	mflr r0
 /* 8005EEDC 0005BCDC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -6807,7 +6808,10 @@ lbl_8005EF5C:
 /* 8005EF68 0005BD68  4E 80 00 20 */	blr 
 
 /* update_turn__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seizeFf */
-update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf:
+/* changed from ... */
+/* update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf: */
+/* ... so linker can find it */
+update_turn__Q213cruise_bubble18state_camera_seizeFf:
 /* 8005EF6C 0005BD6C  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8005EF70 0005BD70  7C 08 02 A6 */	mflr r0
 /* 8005EF74 0005BD74  90 01 00 54 */	stw r0, 0x54(r1)
@@ -6816,7 +6820,7 @@ update_turn__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc_
 /* 8005EF80 0005BD80  93 E1 00 3C */	stw r31, 0x3c(r1)
 /* 8005EF84 0005BD84  FF E0 08 90 */	fmr f31, f1
 /* 8005EF88 0005BD88  C0 22 89 C0 */	lfs f1, zEntCruiseBubble_f_1_0-_SDA2_BASE_(r2)
-/* 8005EF8C 0005BD8C  C0 02 89 C4 */	lfs f0, lbl_803CD344-_SDA2_BASE_(r2)
+/* 8005EF8C 0005BD8C  C0 02 89 C4 */	lfs f0, zEntCruiseBubble_f_0_0001-_SDA2_BASE_(r2)
 /* 8005EF90 0005BD90  7C 7F 1B 78 */	mr r31, r3
 /* 8005EF94 0005BD94  EC 3F 08 28 */	fsubs f1, f31, f1
 /* 8005EF98 0005BD98  FC 20 0A 10 */	fabs f1, f1
@@ -6871,7 +6875,10 @@ lbl_8005F03C:
 /* 8005F054 0005BE54  4E 80 00 20 */	blr 
 
 /* update_move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18state_camera_seizeFf */
-update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf:
+/* changed from ... */
+/* update_move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18state_camera_seizeFf: */
+/* ... so linker can find it */
+update_move__Q213cruise_bubble18state_camera_seizeFf:
 /* 8005F058 0005BE58  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8005F05C 0005BE5C  7C 08 02 A6 */	mflr r0
 /* 8005F060 0005BE60  90 01 00 64 */	stw r0, 0x64(r1)
@@ -7015,7 +7022,10 @@ update__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19
 /* 8005F260 0005C060  4E 80 00 20 */	blr 
 
 /* lock_targets__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attachFv */
-lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv:
+/* changed from ... */
+/* lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv: */
+/* ... so linker can find it */
+lock_targets__Q213cruise_bubble19state_camera_attachFv:
 /* 8005F264 0005C064  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 8005F268 0005C068  7C 08 02 A6 */	mflr r0
 /* 8005F26C 0005C06C  90 01 00 74 */	stw r0, 0x74(r1)
@@ -7056,7 +7066,10 @@ lock_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005F2F8 0005C0F8  4E 80 00 20 */	blr 
 
 /* lock_hazard_targets__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attachFv */
-lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv:
+/* changed from ... */
+/* lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFv: */
+/* ... so linker can find it */
+lock_hazard_targets__Q213cruise_bubble19state_camera_attachFv:
 /* 8005F2FC 0005C0FC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005F300 0005C100  7C 08 02 A6 */	mflr r0
 /* 8005F304 0005C104  3C 60 80 06 */	lis r3, hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv@ha
@@ -7071,7 +7084,10 @@ lock_hazard_targets__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_
 /* 8005F328 0005C128  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005F32C 0005C12C  4E 80 00 20 */	blr 
 
-hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv:
+/* changed from ... */
+/* hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachFR9NPCHazardPv: */
+/* ... so linker can find it */
+hazard_check__Q213cruise_bubble19state_camera_attachFR9NPCHazardPv:
 /* 8005F330 0005C130  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005F334 0005C134  7C 08 02 A6 */	mflr r0
 /* 8005F338 0005C138  38 63 00 08 */	addi r3, r3, 8
@@ -7084,7 +7100,10 @@ hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005F354 0005C154  4E 80 00 20 */	blr 
 
 /* get_view_bound__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_attachCFR6xBound */
-get_view_bound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachCFR6xBound:
+/* changed from ... */
+/* get_view_bound__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_attachCFR6xBound: */
+/* ... so linker can find it */
+get_view_bound__Q213cruise_bubble19state_camera_attachCFR6xBound:
 /* 8005F358 0005C158  94 21 FF 80 */	stwu r1, -0x80(r1)
 /* 8005F35C 0005C15C  7C 08 02 A6 */	mflr r0
 /* 8005F360 0005C160  90 01 00 84 */	stw r0, 0x84(r1)
@@ -7195,7 +7214,10 @@ lbl_8005F4E4:
 /* 8005F4F4 0005C2F4  4E 80 00 20 */	blr 
 
 /* move__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyFv */
-move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv:
+/* changed from ... */
+/* move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv: */
+/* ... so linker can find it */
+move__Q213cruise_bubble19state_camera_surveyFv:
 /* 8005F4F8 0005C2F8  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8005F4FC 0005C2FC  7C 08 02 A6 */	mflr r0
 /* 8005F500 0005C300  90 01 00 64 */	stw r0, 0x64(r1)
@@ -7259,7 +7281,10 @@ move__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19st
 /* 8005F5E8 0005C3E8  4E 80 00 20 */	blr 
 
 /* eval_missle_path__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFfR5xVec3Rf */
-eval_missle_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFfR5xVec3Rf:
+/* changed from ... */
+/* eval_missle_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFfR5xVec3Rf: */
+/* ... so linker can find it */
+eval_missle_path__Q213cruise_bubble19state_camera_surveyCFfR5xVec3Rf:
 /* 8005F5EC 0005C3EC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005F5F0 0005C3F0  7C 08 02 A6 */	mflr r0
 /* 8005F5F4 0005C3F4  90 01 00 34 */	stw r0, 0x34(r1)
@@ -7276,28 +7301,28 @@ eval_missle_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp
 /* 8005F620 0005C420  3B 9C 00 01 */	addi r28, r28, 1
 /* 8005F624 0005C424  48 00 00 28 */	b lbl_8005F64C
 lbl_8005F628:
-/* 8005F628 0005C428  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
-/* 8005F62C 0005C42C  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005F628 0005C428  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
+/* 8005F62C 0005C42C  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005F630 0005C430  48 00 0E CD */	bl size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
 /* 8005F634 0005C434  7C 1C 18 00 */	cmpw r28, r3
 /* 8005F638 0005C438  41 80 00 14 */	blt lbl_8005F64C
-/* 8005F63C 0005C43C  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
-/* 8005F640 0005C440  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005F63C 0005C43C  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
+/* 8005F640 0005C440  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005F644 0005C444  48 00 0E B9 */	bl size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
 /* 8005F648 0005C448  3B 83 FF FF */	addi r28, r3, -1
 lbl_8005F64C:
-/* 8005F64C 0005C44C  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
+/* 8005F64C 0005C44C  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
 /* 8005F650 0005C450  38 9C FF FF */	addi r4, r28, -1
-/* 8005F654 0005C454  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005F654 0005C454  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005F658 0005C458  48 00 0E BD */	bl __vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi
-/* 8005F65C 0005C45C  3C 80 80 2E */	lis r4, lbl_802DBE30@ha
+/* 8005F65C 0005C45C  3C 80 80 2E */	lis r4, missle_record__13cruise_bubble@ha
 /* 8005F660 0005C460  7C 7B 1B 78 */	mr r27, r3
-/* 8005F664 0005C464  38 04 BE 30 */	addi r0, r4, lbl_802DBE30@l
+/* 8005F664 0005C464  38 04 BE 30 */	addi r0, r4, missle_record__13cruise_bubble@l
 /* 8005F668 0005C468  7F 84 E3 78 */	mr r4, r28
 /* 8005F66C 0005C46C  7C 03 03 78 */	mr r3, r0
 /* 8005F670 0005C470  48 00 0E A5 */	bl __vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi
 /* 8005F674 0005C474  57 80 10 3A */	slwi r0, r28, 2
-/* 8005F678 0005C478  C0 02 89 C4 */	lfs f0, lbl_803CD344-_SDA2_BASE_(r2)
+/* 8005F678 0005C478  C0 02 89 C4 */	lfs f0, zEntCruiseBubble_f_0_0001-_SDA2_BASE_(r2)
 /* 8005F67C 0005C47C  7C 9D 02 14 */	add r4, r29, r0
 /* 8005F680 0005C480  7C 7C 1B 78 */	mr r28, r3
 /* 8005F684 0005C484  C0 44 00 10 */	lfs f2, 0x10(r4)
@@ -7340,14 +7365,20 @@ lbl_8005F6F8:
 /* 8005F710 0005C510  4E 80 00 20 */	blr 
 
 /* lerp__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFRffff */
-lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFRffff:
+/* changed from ... */
+/* lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFRffff: */
+/* ... so linker can find it */
+lerp__Q213cruise_bubble19state_camera_surveyCFRffff:
 /* 8005F714 0005C514  EC 03 10 28 */	fsubs f0, f3, f2
 /* 8005F718 0005C518  EC 01 10 3A */	fmadds f0, f1, f0, f2
 /* 8005F71C 0005C51C  D0 04 00 00 */	stfs f0, 0(r4)
 /* 8005F720 0005C520  4E 80 00 20 */	blr 
 
 /* lerp__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3 */
-lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3:
+/* changed from ... */
+/* lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3: */
+/* ... so linker can find it */
+lerp__Q213cruise_bubble19state_camera_surveyCFR5xVec3fRC5xVec3RC5xVec3:
 /* 8005F724 0005C524  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8005F728 0005C528  7C 08 02 A6 */	mflr r0
 /* 8005F72C 0005C52C  90 01 00 34 */	stw r0, 0x34(r1)
@@ -7389,7 +7420,10 @@ lerp__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19st
 /* 8005F7BC 0005C5BC  4E 80 00 20 */	blr 
 
 /* find_nearest__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFf */
-find_nearest__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFf:
+/* changed from ... */
+/* find_nearest__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFf: */
+/* ... so linker can find it */
+find_nearest__Q213cruise_bubble19state_camera_surveyCFf:
 /* 8005F7C0 0005C5C0  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8005F7C4 0005C5C4  7C 08 02 A6 */	mflr r0
 /* 8005F7C8 0005C5C8  90 01 00 24 */	stw r0, 0x24(r1)
@@ -7397,9 +7431,9 @@ find_nearest__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc
 /* 8005F7D0 0005C5D0  F3 E1 00 18 */	psq_st f31, 24(r1), 0, qr0
 /* 8005F7D4 0005C5D4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 8005F7D8 0005C5D8  93 C1 00 08 */	stw r30, 8(r1)
-/* 8005F7DC 0005C5DC  3C 80 80 2E */	lis r4, lbl_802DBE30@ha
+/* 8005F7DC 0005C5DC  3C 80 80 2E */	lis r4, missle_record__13cruise_bubble@ha
 /* 8005F7E0 0005C5E0  FF E0 08 90 */	fmr f31, f1
-/* 8005F7E4 0005C5E4  38 04 BE 30 */	addi r0, r4, lbl_802DBE30@l
+/* 8005F7E4 0005C5E4  38 04 BE 30 */	addi r0, r4, missle_record__13cruise_bubble@l
 /* 8005F7E8 0005C5E8  7C 7E 1B 78 */	mr r30, r3
 /* 8005F7EC 0005C5EC  7C 03 03 78 */	mr r3, r0
 /* 8005F7F0 0005C5F0  3B E0 00 00 */	li r31, 0
@@ -7465,7 +7499,10 @@ lbl_8005F8B4:
 /* 8005F8C0 0005C6C0  4E 80 00 20 */	blr 
 
 /* init_path__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyFv */
-init_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv:
+/* changed from ... */
+/* init_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyFv: */
+/* ... so linker can find it */
+init_path__Q213cruise_bubble19state_camera_surveyFv:
 /* 8005F8C4 0005C6C4  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8005F8C8 0005C6C8  7C 08 02 A6 */	mflr r0
 /* 8005F8CC 0005C6CC  90 01 00 54 */	stw r0, 0x54(r1)
@@ -7473,15 +7510,15 @@ init_path__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2
 /* 8005F8D4 0005C6D4  F3 E1 00 48 */	psq_st f31, 72(r1), 0, qr0
 /* 8005F8D8 0005C6D8  93 E1 00 3C */	stw r31, 0x3c(r1)
 /* 8005F8DC 0005C6DC  93 C1 00 38 */	stw r30, 0x38(r1)
-/* 8005F8E0 0005C6E0  3C 80 80 2E */	lis r4, lbl_802DBE30@ha
+/* 8005F8E0 0005C6E0  3C 80 80 2E */	lis r4, missle_record__13cruise_bubble@ha
 /* 8005F8E4 0005C6E4  C3 E2 89 B8 */	lfs f31, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
-/* 8005F8E8 0005C6E8  38 04 BE 30 */	addi r0, r4, lbl_802DBE30@l
+/* 8005F8E8 0005C6E8  38 04 BE 30 */	addi r0, r4, missle_record__13cruise_bubble@l
 /* 8005F8EC 0005C6EC  7C 7E 1B 78 */	mr r30, r3
 /* 8005F8F0 0005C6F0  7C 03 03 78 */	mr r3, r0
 /* 8005F8F4 0005C6F4  48 00 0B 19 */	bl begin__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
-/* 8005F8F8 0005C6F8  3C A0 80 2E */	lis r5, lbl_802DBE30@ha
+/* 8005F8F8 0005C6F8  3C A0 80 2E */	lis r5, missle_record__13cruise_bubble@ha
 /* 8005F8FC 0005C6FC  90 81 00 14 */	stw r4, 0x14(r1)
-/* 8005F900 0005C700  38 05 BE 30 */	addi r0, r5, lbl_802DBE30@l
+/* 8005F900 0005C700  38 05 BE 30 */	addi r0, r5, missle_record__13cruise_bubble@l
 /* 8005F904 0005C704  90 61 00 10 */	stw r3, 0x10(r1)
 /* 8005F908 0005C708  7C 03 03 78 */	mr r3, r0
 /* 8005F90C 0005C70C  48 00 0C D1 */	bl end__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
@@ -7595,7 +7632,10 @@ lbl_8005FA80:
 /* 8005FA90 0005C890  4E 80 00 20 */	blr 
 
 /* control_jerked__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@19state_camera_surveyCFv */
-control_jerked__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFv:
+/* changed from ... */
+/* control_jerked__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_19state_camera_surveyCFv: */
+/* ... so linker can find it */
+control_jerked__Q213cruise_bubble19state_camera_surveyCFv:
 /* 8005FA94 0005C894  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8005FA98 0005C898  7C 08 02 A6 */	mflr r0
 /* 8005FA9C 0005C89C  90 01 00 44 */	stw r0, 0x44(r1)
@@ -7655,9 +7695,9 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20s
 /* 8005FB68 0005C968  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8005FB6C 0005C96C  40 82 00 68 */	bne lbl_8005FBD4
 /* 8005FB70 0005C970  4B FF 85 99 */	bl get_player_loc__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005FB74 0005C974  3C A0 80 2E */	lis r5, lbl_802DBDF0@ha
+/* 8005FB74 0005C974  3C A0 80 2E */	lis r5, start_cam_mat__13cruise_bubble@ha
 /* 8005FB78 0005C978  7C 64 1B 78 */	mr r4, r3
-/* 8005FB7C 0005C97C  38 A5 BD F0 */	addi r5, r5, lbl_802DBDF0@l
+/* 8005FB7C 0005C97C  38 A5 BD F0 */	addi r5, r5, start_cam_mat__13cruise_bubble@l
 /* 8005FB80 0005C980  38 61 00 08 */	addi r3, r1, 8
 /* 8005FB84 0005C984  38 A5 00 30 */	addi r5, r5, 0x30
 /* 8005FB88 0005C988  4B FB 58 59 */	bl __pl__5xVec3CFRC5xVec3
@@ -7673,11 +7713,11 @@ start__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_20s
 /* 8005FBB0 0005C9B0  4B FA DB 69 */	bl xCameraMove__FP7xCameraRC5xVec3
 /* 8005FBB4 0005C9B4  C0 22 89 B8 */	lfs f1, zEntCruiseBubble_f_0_0-_SDA2_BASE_(r2)
 /* 8005FBB8 0005C9B8  3C 60 80 3C */	lis r3, globals@ha
-/* 8005FBBC 0005C9BC  3C 80 80 2E */	lis r4, lbl_802DBDF0@ha
+/* 8005FBBC 0005C9BC  3C 80 80 2E */	lis r4, start_cam_mat__13cruise_bubble@ha
 /* 8005FBC0 0005C9C0  FC 40 08 90 */	fmr f2, f1
 /* 8005FBC4 0005C9C4  38 63 05 58 */	addi r3, r3, globals@l
 /* 8005FBC8 0005C9C8  FC 60 08 90 */	fmr f3, f1
-/* 8005FBCC 0005C9CC  38 84 BD F0 */	addi r4, r4, lbl_802DBDF0@l
+/* 8005FBCC 0005C9CC  38 84 BD F0 */	addi r4, r4, start_cam_mat__13cruise_bubble@l
 /* 8005FBD0 0005C9D0  4B FA DF 45 */	bl xCameraRotate__FP7xCameraRC7xMat3x3fff
 lbl_8005FBD4:
 /* 8005FBD4 0005C9D4  4B FF 7A 29 */	bl camera_taken__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
@@ -7852,9 +7892,9 @@ lbl_8005FE08:
 __sinit_zEntCruiseBubble_cpp:
 /* 8005FE1C 0005CC1C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005FE20 0005CC20  7C 08 02 A6 */	mflr r0
-/* 8005FE24 0005CC24  3C 60 80 2E */	lis r3, lbl_802DBE30@ha
+/* 8005FE24 0005CC24  3C 60 80 2E */	lis r3, missle_record__13cruise_bubble@ha
 /* 8005FE28 0005CC28  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005FE2C 0005CC2C  38 63 BE 30 */	addi r3, r3, lbl_802DBE30@l
+/* 8005FE2C 0005CC2C  38 63 BE 30 */	addi r3, r3, missle_record__13cruise_bubble@l
 /* 8005FE30 0005CC30  48 00 00 15 */	bl __ct__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
 /* 8005FE34 0005CC34  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 8005FE38 0005CC38  7C 08 03 A6 */	mtlr r0
@@ -7862,8 +7902,11 @@ __sinit_zEntCruiseBubble_cpp:
 /* 8005FE40 0005CC40  4E 80 00 20 */	blr 
 
 /* __ct__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fv */
-.global __ct__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
-__ct__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv:
+.global __ct__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
+/* changed from ... */
+/* __ct__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv: */
+/* ... so linker can find it */
+__ct__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
 /* 8005FE44 0005CC44  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8005FE48 0005CC48  7C 08 02 A6 */	mflr r0
 /* 8005FE4C 0005CC4C  3C 80 80 06 */	lis r4, __ct__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_dataFv@ha
@@ -8228,8 +8271,11 @@ lbl_80060320:
 /* 80060354 0005D154  4E 80 00 20 */	blr 
 
 /* push_front__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>FRCQ313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data */
-.global push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data
-push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data:
+.global push_front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_FRCQ213cruise_bubble18missle_record_data:
+/* changed from ... */
+/* push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_FRCQ313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data: */
+/* ... so linker can find it */
+push_front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_FRCQ213cruise_bubble18missle_record_data:
 /* 80060358 0005D158  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8006035C 0005D15C  7C 08 02 A6 */	mflr r0
 /* 80060360 0005D160  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8262,8 +8308,11 @@ __as__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18mi
 /* 800603C0 0005D1C0  4E 80 00 20 */	blr 
 
 /* front__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fv */
-.global front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
-front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv:
+.global front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
+/* changed from ... */
+/* front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv: */
+/* ... so linker can find it */
+front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
 /* 800603C4 0005D1C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800603C8 0005D1C8  7C 08 02 A6 */	mflr r0
 /* 800603CC 0005D1CC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8288,8 +8337,11 @@ __ml__Q286fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruis
 /* 80060408 0005D208  4E 80 00 20 */	blr 
 
 /* begin__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFv */
-.global begin__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
-begin__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv:
+.global begin__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
+/* changed from ... */
+/* begin__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv: */
+/* ... so linker can find it */
+begin__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
 /* 8006040C 0005D20C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80060410 0005D210  7C 08 02 A6 */	mflr r0
 /* 80060414 0005D214  80 83 00 00 */	lwz r4, 0(r3)
@@ -8301,8 +8353,11 @@ begin__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruise
 /* 8006042C 0005D22C  4E 80 00 20 */	blr 
 
 /* create_iterator__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFUl */
-.global create_iterator__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFUl
-create_iterator__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFUl:
+.global create_iterator__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFUl:
+/* changed from ... */
+/* create_iterator__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFUl: */
+/* ... so linker can find it */
+create_iterator__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFUl:
 /* 80060430 0005D230  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80060434 0005D234  7C 60 1B 78 */	mr r0, r3
 /* 80060438 0005D238  7C 83 23 78 */	mr r3, r4
@@ -8313,8 +8368,11 @@ create_iterator__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_
 /* 8006044C 0005D24C  4E 80 00 20 */	blr 
 
 /* push_front__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fv */
-.global push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
-push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv:
+.global push_front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
+/* changed from ... */
+/* push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv: */
+/* ... so linker can find it */
+push_front__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
 /* 80060450 0005D250  80 83 00 00 */	lwz r4, 0(r3)
 /* 80060454 0005D254  38 04 00 7F */	addi r0, r4, 0x7f
 /* 80060458 0005D258  54 00 06 7E */	clrlwi r0, r0, 0x19
@@ -8322,8 +8380,11 @@ push_front__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntC
 /* 80060460 0005D260  4E 80 00 20 */	blr 
 
 /* reset__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fv */
-.global reset__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
-reset__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv:
+.global reset__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
+/* changed from ... */
+/* reset__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv: */
+/* ... so linker can find it */
+reset__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
 /* 80060464 0005D264  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80060468 0005D268  7C 08 02 A6 */	mflr r0
 /* 8006046C 0005D26C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8334,16 +8395,22 @@ reset__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruise
 /* 80060480 0005D280  4E 80 00 20 */	blr 
 
 /* clear__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fv */
-.global clear__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
-clear__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv:
+.global clear__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
+/* changed from ... */
+/* clear__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv: */
+/* ... so linker can find it */
+clear__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
 /* 80060484 0005D284  38 00 00 00 */	li r0, 0
 /* 80060488 0005D288  90 03 00 04 */	stw r0, 4(r3)
 /* 8006048C 0005D28C  90 03 00 00 */	stw r0, 0(r3)
 /* 80060490 0005D290  4E 80 00 20 */	blr 
 
 /* pop_back__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fv */
-.global pop_back__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv
-pop_back__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv:
+.global pop_back__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
+/* changed from ... */
+/* pop_back__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fv: */
+/* ... so linker can find it */
+pop_back__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fv:
 /* 80060494 0005D294  80 83 00 04 */	lwz r4, 4(r3)
 /* 80060498 0005D298  38 04 00 7F */	addi r0, r4, 0x7f
 /* 8006049C 0005D29C  54 00 06 7E */	clrlwi r0, r0, 0x19
@@ -8351,8 +8418,11 @@ pop_back__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCru
 /* 800604A4 0005D2A4  4E 80 00 20 */	blr 
 
 /* full__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFv */
-.global full__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
-full__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv:
+.global full__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
+/* changed from ... */
+/* full__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv: */
+/* ... so linker can find it */
+full__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
 /* 800604A8 0005D2A8  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800604AC 0005D2AC  7C 08 02 A6 */	mflr r0
 /* 800604B0 0005D2B0  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8374,14 +8444,20 @@ full__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseB
 /* 800604F0 0005D2F0  4E 80 00 20 */	blr 
 
 /* max_size__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFv */
-.global max_size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
-max_size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv:
+.global max_size__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
+/* changed from ... */
+/* max_size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv: */
+/* ... so linker can find it */
+max_size__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
 /* 800604F4 0005D2F4  38 60 00 7F */	li r3, 0x7f
 /* 800604F8 0005D2F8  4E 80 00 20 */	blr 
 
 /* size__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFv */
-.global size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
-size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv:
+.global size__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
+/* changed from ... */
+/* size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv: */
+/* ... so linker can find it */
+size__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
 /* 800604FC 0005D2FC  80 83 00 04 */	lwz r4, 4(r3)
 /* 80060500 0005D300  80 63 00 00 */	lwz r3, 0(r3)
 /* 80060504 0005D304  38 04 00 80 */	addi r0, r4, 0x80
@@ -8390,8 +8466,11 @@ size__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseB
 /* 80060510 0005D310  4E 80 00 20 */	blr 
 
 /* __vc__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>Fi */
-.global __vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi
-__vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi:
+.global __vc__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fi:
+/* changed from ... */
+/* __vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_Fi: */
+/* ... so linker can find it */
+__vc__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_Fi:
 /* 80060514 0005D314  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80060518 0005D318  7C 08 02 A6 */	mflr r0
 /* 8006051C 0005D31C  90 01 00 14 */	stw r0, 0x14(r1)
@@ -8402,8 +8481,11 @@ __vc__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseB
 /* 80060530 0005D330  4E 80 00 20 */	blr 
 
 /* get_at__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFi */
-.global get_at__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFi
-get_at__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFi:
+.global get_at__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFi:
+/* changed from ... */
+/* get_at__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFi: */
+/* ... so linker can find it */
+get_at__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFi:
 /* 80060534 0005D334  80 03 00 00 */	lwz r0, 0(r3)
 /* 80060538 0005D338  7C 65 1B 78 */	mr r5, r3
 /* 8006053C 0005D33C  7C 60 22 14 */	add r3, r0, r4
@@ -8464,8 +8546,11 @@ __rf__Q286fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruis
 /* 800605D8 0005D3D8  4E 80 00 20 */	blr 
 
 /* end__86fixed_queue<Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@18missle_record_data,127>CFv */
-.global end__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv
-end__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv:
+.global end__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
+/* changed from ... */
+/* end__86fixed_queue_esc__0_Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_18missle_record_data_esc__4_127_esc__1_CFv: */
+/* ... so linker can find it */
+end__54fixed_queue_esc__0_Q213cruise_bubble18missle_record_data_esc__4_127_esc__1_CFv:
 /* 800605DC 0005D3DC  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 800605E0 0005D3E0  7C 08 02 A6 */	mflr r0
 /* 800605E4 0005D3E4  80 83 00 04 */	lwz r4, 4(r3)
@@ -8893,9 +8978,11 @@ normal_tweak__13cruise_bubble:
 .global cheat_tweak__13cruise_bubble
 cheat_tweak__13cruise_bubble:
 	.skip 0x1B8
-lbl_802DBDF0:
+.global start_cam_mat__13cruise_bubble
+start_cam_mat__13cruise_bubble:
 	.skip 0x40
-lbl_802DBE30:
+.global missle_record__13cruise_bubble
+missle_record__13cruise_bubble:
 	.skip 0x808
 .global wake_ribbon__13cruise_bubble
 wake_ribbon__13cruise_bubble:
@@ -8940,6 +9027,7 @@ lbl_803CB566:
 	.skip 0x2
 
 .section .sbss2
+.global lbl_803D0830
 lbl_803D0830:
 	.skip 0x4
 /* SPECULATION: link order */
@@ -8956,12 +9044,14 @@ current_tweak__13cruise_bubble:
 .global zEntCruiseBubble_f_0_0
 zEntCruiseBubble_f_0_0:
 	.incbin "baserom.dol", 0x2B6BD8, 0x4
-lbl_803CD33C:
+.global zEntCruiseBubble_f_1_0e38
+zEntCruiseBubble_f_1_0e38:
 	.incbin "baserom.dol", 0x2B6BDC, 0x4
 .global zEntCruiseBubble_f_1_0
 zEntCruiseBubble_f_1_0:
 	.incbin "baserom.dol", 0x2B6BE0, 0x4
-lbl_803CD344:
+.global zEntCruiseBubble_f_0_0001
+zEntCruiseBubble_f_0_0001:
 	.incbin "baserom.dol", 0x2B6BE4, 0x4
 .global zEntCruiseBubble_f_0_5
 zEntCruiseBubble_f_0_5:

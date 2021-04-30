@@ -51,6 +51,8 @@ void xAccelStop(float32& x, float32& v, float32 a, float32 dt);
 float32 xFuncPiece_Eval(xFuncPiece* func, float32 param, xFuncPiece** iterator);
 void xFuncPiece_EndPoints(xFuncPiece* func, float32 pi, float32 pf, float32 fi, float32 ff);
 void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, float32 newZero);
+float32 xSCurve(float32 t, float32 softness);
+float32 xSCurve(float32 t);
 
 float32 xrmod(float32 ang);
 
