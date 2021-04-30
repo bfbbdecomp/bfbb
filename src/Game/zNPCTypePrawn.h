@@ -60,7 +60,7 @@ struct aqua_beam
     {
         RpAtomic* model_data;
         float32 emit_time;
-        fixed_queue<ring_segment> queue;
+        fixed_queue<ring_segment, 31> queue;
     } ring;
     struct
     {

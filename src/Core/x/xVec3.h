@@ -14,6 +14,7 @@ struct xVec3
     static xVec3 m_UnitAxisY;
 
     static xVec3 create(float32 x, float32 y, float32 z);
+    static xVec3 create(float32 f);
 
     xVec3& operator=(float32);
     xVec3 operator+(const xVec3&) const;

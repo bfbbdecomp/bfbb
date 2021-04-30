@@ -38,6 +38,7 @@ struct xVec2
     float32 y;
 
     xVec2& assign(float32 x, float32 y);
+    float32 length() const;
 
     xVec2& operator=(float32);
     xVec2 operator*(float32) const;

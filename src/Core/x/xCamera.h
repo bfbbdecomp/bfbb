@@ -228,6 +228,7 @@ void xCameraSetFOV(xCamera* cam, float32 fov);
 void xCameraMove(xCamera* cam, uint32 flags, float32 dgoal, float32 hgoal, float32 pgoal,
                  float32 tm, float32 tm_acc, float32 tm_dec);
 void xCameraMove(xCamera* cam, const xVec3& loc);
+void xCameraRotate(xCamera* cam, const xMat3x3& m, float32 time, float32 accel, float32 decl);
 float32 xCameraGetFOV(const xCamera* cam);
 void xCameraDoCollisions(int32 do_collis, int32 owner);
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
