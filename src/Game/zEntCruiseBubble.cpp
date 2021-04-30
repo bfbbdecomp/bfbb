@@ -3093,9 +3093,20 @@ cruise_bubble::state_enum cruise_bubble::state_player_aim::update(float32 dt)
 #endif
 
 // func_8005C998
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_animation__Q213cruise_bubble16state_player_aimFf")
+#else
+void cruise_bubble::state_player_aim::update_animation(float32 dt)
+{
+    float32 r = range_limit<float32>(
+            this->yaw_vel * current_tweak->player.aim.anim_delta,
+            zEntCruiseBubble_f_n1_0, zEntCruiseBubble_f_1_0);
+    xAnimSingle* s = globals.player.ent.model->Anim->Single;
+    s->BilinearLerp[0] = zEntCruiseBubble_f_0_5 * ((zEntCruiseBubble_f_1_0 + s->BilinearLerp[0]) + r);
+}
+#endif
 
 // func_8005CA00
 #pragma GLOBAL_ASM(                                                                                \
@@ -3294,7 +3305,8 @@ void cruise_bubble::state_missle_appear::update_effects(float32 dt)
 void cruise_bubble::state_missle_fly::start()
 {
     // lwzu
-    shared.flags = shared.flags | 0x8;
+    // & to match function size
+    shared.flags = (shared.flags | 0x8) & 0x4;
     this->life = current_tweak->missle.life;
     
     show_missle();
