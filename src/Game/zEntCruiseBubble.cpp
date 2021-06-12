@@ -241,6 +241,9 @@ extern float32 zEntCruiseBubble_f_0_86; // 0.86
 extern float32 zEntCruiseBubble_f_0_15; // 0.15
 extern float32 zEntCruiseBubble_f_0_0001; // 0.15
 extern float32 zEntCruiseBubble_f_1_0e38; // 1.0 * 10^38
+extern float32 zEntCruiseBubble_f_3_1415; // 3.1415 ~ PI
+extern float32 zEntCruiseBubble_f_6_2832; // 6.2832 ~ 2PI
+extern float32 zEntCruiseBubble_f_n3_1415; // -3.1415 ~ -PI
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
@@ -3117,9 +3120,50 @@ void cruise_bubble::state_player_aim::apply_yaw()
 }
 
 // func_8005CA98
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "face_camera__Q213cruise_bubble16state_player_aimFf")
+#else
+void cruise_bubble::state_player_aim::face_camera(float32 dt)
+{
+    // float regalloc off
+    // replace with float literals for match
+    xMat4x3* mat = &globals.camera.mat;
+
+    float32 new_yaw;
+    if (mat->at.x >= zEntCruiseBubble_f_n0_00001 &&
+            mat->at.x <= zEntCruiseBubble_f_0_00001 &&
+            mat->at.z >= zEntCruiseBubble_f_n0_00001 &&
+            mat->at.z <= zEntCruiseBubble_f_0_00001)
+    {
+        new_yaw = this->yaw;
+    }
+    else
+    {
+        new_yaw = xatan2(mat->at.x, mat->at.z);
+    }
+
+    float32 diff = new_yaw - this->yaw;
+    if (diff > zEntCruiseBubble_f_3_1415)
+    {   
+        diff -= zEntCruiseBubble_f_6_2832;
+    }
+    else if (diff < zEntCruiseBubble_f_n3_1415)
+    {
+        diff += zEntCruiseBubble_f_6_2832;
+    }
+    float32 tspeed = current_tweak->player.aim.turn_speed * xexp(dt);
+    if (tspeed > zEntCruiseBubble_f_1_0)
+    {
+        tspeed = zEntCruiseBubble_f_1_0;
+    }
+    tspeed = diff * tspeed;
+    this->yaw_vel = tspeed / dt;
+    this->yaw = this->yaw + tspeed;
+    this->yaw = xrmod(this->yaw);
+}
+#endif
 
 // func_8005CBB8
 #if 1
