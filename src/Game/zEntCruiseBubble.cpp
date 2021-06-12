@@ -3108,48 +3108,13 @@ void cruise_bubble::state_player_aim::update_animation(float32 dt)
 }
 #endif
 
-// func_8005CA00
-#ifndef NONMATCHING_WIP
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_yaw__Q213cruise_bubble16state_player_aimFv")
-#else
 void cruise_bubble::state_player_aim::apply_yaw()
 {
-// Size=152
-    // cruise_bubble::get_player_mat(); // [get_player_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv]
-    // f1 = 8(r30_this); // [float32]
-    // r31 = r3;
-    // icos(float32); // [icos__Ff]
-    // f31 = f1;
-    // f1 = 8(r30_this); // [float32]
-    // isin(float32); // [isin__Ff]
-    // f3 = f31;
-    // f2 = zEntCruiseBubble_f_0_0; // [float32]
-    // r3 = r31 + 0x20;
-    // xVec3::assign(float32, float32, float32); // [assign__5xVec3Ffff]
-
     xMat4x3* m = get_player_mat();
     m->at.assign(isin(this->yaw), zEntCruiseBubble_f_0_0, icos(this->yaw));
-    
-    // f0 = 0x20(r31); // [float32]
-    // r3 = r31;
-    // f1 = 0x28(r31); // [float32]
-    // fneg f3, f0
-    // f2 = zEntCruiseBubble_f_0_0; // [float32]
-    // xVec3::assign(float32, float32, float32); // [assign__5xVec3Ffff]
-
-    m->right.assign(m->at.z, zEntCruiseBubble_f_0_0, -m->at.z);
-    
-    // f1 = zEntCruiseBubble_f_0_0; // [float32]
-    // r3 = r31 + 0x10;
-    // f2 = zEntCruiseBubble_f_1_0; // [float32]
-    // f3 = f1;
-    // xVec3::assign(float32, float32, float32); // [assign__5xVec3Ffff]
-
+    m->right.assign(m->at.z, zEntCruiseBubble_f_0_0, -m->at.x);
     m->up.assign(zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0);
 }
-#endif
 
 // func_8005CA98
 #pragma GLOBAL_ASM(                                                                                \
