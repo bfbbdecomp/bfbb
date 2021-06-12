@@ -4817,47 +4817,6 @@ update_engine_sound__Q213cruise_bubble16state_missle_flyFf:
 /* 8005D440 0005A240  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005D444 0005A244  4E 80 00 20 */	blr 
 
-/* collide_hazards__Q313cruise_bubble30@unnamed@zEntCruiseBubble_cpp@16state_missle_flyFv */
-/* changed from ... */
-/* collide_hazards__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFv: */
-/* ... so linker can find it */
-collide_hazards__Q213cruise_bubble16state_missle_flyFv:
-/* 8005D448 0005A248  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8005D44C 0005A24C  7C 08 02 A6 */	mflr r0
-/* 8005D450 0005A250  3C 60 80 06 */	lis r3, hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv@ha
-/* 8005D454 0005A254  3C A0 00 01 */	lis r5, 0x0000A000@ha
-/* 8005D458 0005A258  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8005D45C 0005A25C  38 00 00 00 */	li r0, 0
-/* 8005D460 0005A260  38 63 D4 C8 */	addi r3, r3, hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv@l
-/* 8005D464 0005A264  38 81 00 08 */	addi r4, r1, 8
-/* 8005D468 0005A268  90 01 00 08 */	stw r0, 8(r1)
-/* 8005D46C 0005A26C  38 A5 A0 00 */	addi r5, r5, 0x0000A000@l
-/* 8005D470 0005A270  48 12 AD A9 */	bl HAZ_Iterate__FPFR9NPCHazardPv_bPvi
-/* 8005D474 0005A274  80 61 00 08 */	lwz r3, 8(r1)
-/* 8005D478 0005A278  28 03 00 00 */	cmplwi r3, 0
-/* 8005D47C 0005A27C  40 82 00 0C */	bne lbl_8005D488
-/* 8005D480 0005A280  38 60 00 00 */	li r3, 0
-/* 8005D484 0005A284  48 00 00 34 */	b lbl_8005D4B8
-lbl_8005D488:
-/* 8005D488 0005A288  80 03 00 04 */	lwz r0, 4(r3)
-/* 8005D48C 0005A28C  54 00 02 95 */	rlwinm. r0, r0, 0, 0xa, 0xa
-/* 8005D490 0005A290  41 82 00 08 */	beq lbl_8005D498
-/* 8005D494 0005A294  48 00 31 6D */	bl MarkForRecycle__9NPCHazardFv
-lbl_8005D498:
-/* 8005D498 0005A298  4B FF F7 D9 */	bl get_missle_mat__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_Fv
-/* 8005D49C 0005A29C  3C 80 80 29 */	lis r4, shared__13cruise_bubble@ha
-/* 8005D4A0 0005A2A0  7C 65 1B 78 */	mr r5, r3
-/* 8005D4A4 0005A2A4  38 64 C2 A4 */	addi r3, r4, shared__13cruise_bubble@l
-/* 8005D4A8 0005A2A8  38 63 00 50 */	addi r3, r3, 0x50
-/* 8005D4AC 0005A2AC  38 85 00 30 */	addi r4, r5, 0x30
-/* 8005D4B0 0005A2B0  4B FA DD B5 */	bl __as__5xVec3FRC5xVec3
-/* 8005D4B4 0005A2B4  38 60 00 01 */	li r3, 1
-lbl_8005D4B8:
-/* 8005D4B8 0005A2B8  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8005D4BC 0005A2BC  7C 08 03 A6 */	mtlr r0
-/* 8005D4C0 0005A2C0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8005D4C4 0005A2C4  4E 80 00 20 */	blr 
-
 /* changed from ... */
 /* hazard_check__Q313cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_16state_missle_flyFR9NPCHazardPv: */
 /* ... so linker can find it */

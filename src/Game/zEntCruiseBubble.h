@@ -179,7 +179,7 @@ namespace cruise_bubble
         void update_engine_sound(float32 dt);
 
         uint8 collide_hazards();
-        uint8 hazard_check(NPCHazard& haz, void* context);
+        static uint8 hazard_check(NPCHazard& haz, void* context);
         uint8 collide();
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
         void update_move(float32 dt);

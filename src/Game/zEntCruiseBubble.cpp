@@ -1,3 +1,4 @@
+#include "zNPCHazard.h"
 #include <cmath>
 #include <string.h>
 
@@ -3499,11 +3500,24 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
 }
 #endif
 
-// func_8005D448
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide_hazards__Q213cruise_bubble16state_missle_flyFv")
-
+uint8 cruise_bubble::state_missle_fly::collide_hazards()
+{
+    NPCHazard* c[2];
+    c[0] = NULL;
+    HAZ_Iterate(&cruise_bubble::state_missle_fly::hazard_check, c, 0xa000);
+    
+    if (c[0] == NULL) {
+        return false;
+    }
+    
+    if ((c[0]->flg_hazard & 0x200000) != 0)
+    {
+        c[0]->MarkForRecycle();
+    }
+    shared.hit_loc = get_missle_mat()->pos;
+    return true;
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 // func_8005D4C8
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
