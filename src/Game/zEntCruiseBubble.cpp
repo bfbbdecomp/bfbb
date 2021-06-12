@@ -3519,9 +3519,27 @@ uint8 cruise_bubble::state_missle_fly::collide_hazards()
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 // func_8005D4C8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "hazard_check__Q213cruise_bubble16state_missle_flyFR9NPCHazardPv")
+#else
+uint8 cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* context)
+{
+    // get_missle_mat()->pos uses one more instruction for no apparent reason
+    xVec3 vvar = haz.pos_hazard - get_missle_mat()->pos;
+    float32 fvar = current_tweak->missle.hit_dist + haz.custdata.typical.rad_cur;
+
+    // scheduling for implicit copy ctor off
+    if (vvar.length2() < fvar * fvar)
+    {
+        ((NPCHazard**) context)[0] = &haz;
+        return false;
+    }
+
+    return true;
+}
+#endif
 
 // func_8005D56C
 #pragma GLOBAL_ASM(                                                                                \

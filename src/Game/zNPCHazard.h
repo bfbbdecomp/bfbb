@@ -168,9 +168,11 @@ struct NPCHazard
     en_npchaz typ_hazard;
     int32 flg_hazard;
     xVec3 pos_hazard;
+    // Offset: 0x14
     xModelInstance* mdl_hazard;
     UVAModelInfo* uva_uvanim;
     float32 tym_lifespan;
+    // Offset: 0x20
     float32 tmr_remain;
     float32 pam_interp;
     union
@@ -184,6 +186,7 @@ struct NPCHazard
         int32 cnt_nextemit;
         int32 flg_casthurt;
     };
+    // Offset: 0x30
     union
     {
         HAZTypical typical;
