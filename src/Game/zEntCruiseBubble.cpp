@@ -245,6 +245,7 @@ extern float32 zEntCruiseBubble_f_1_0e38; // 1.0 * 10^38
 extern float32 zEntCruiseBubble_f_3_1415; // 3.1415 ~ PI
 extern float32 zEntCruiseBubble_f_6_2832; // 6.2832 ~ 2PI
 extern float32 zEntCruiseBubble_f_n3_1415; // -3.1415 ~ -PI
+extern float32 zEntCruiseBubble_f_0_000001; // 0.000001
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
@@ -456,9 +457,9 @@ void cruise_bubble::start_damaging()
 
 // func_80057684
 #ifndef NONMATCHING
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__13cruise_bubbleFR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
 #else
-void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, uint8 explosive)
+void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, bool explosive)
 {
     if (shared.hits_size >= 32)
     {
@@ -3541,10 +3542,71 @@ uint8 cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* contex
 }
 #endif
 
-// func_8005D56C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide__Q213cruise_bubble16state_missle_flyFv")
+uint8 cruise_bubble::state_missle_fly::collide()
+{
+    xVec3* hit_norm = &shared.hit_norm;
+    xVec3* hit_loc = &shared.hit_loc;
+    xEnt* hit_ent;
+    xVec3 hit_depen;
+    int32 i = 0;
+
+    do
+    {
+        if (!this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent))
+        {
+            return false;
+        }
+
+        if (can_damage(hit_ent))
+        {
+            damage_entity(*hit_ent, *hit_loc, get_missle_mat()->at, *hit_norm, zEntCruiseBubble_f_0_0, false);
+            return true;
+        }
+
+        xMat4x3* mat = get_missle_mat();
+        float32 ang = xasin(mat->at.dot(*hit_norm));
+        if (ang < -current_tweak->missle.crash_angle)
+        {
+            return true;
+        }
+        
+        mat->pos += hit_depen;
+        xVec3 diff = mat->pos - this->last_loc;
+        float32 len = diff.length2();
+        if (len < zEntCruiseBubble_f_0_001)
+        {
+            return false;
+        }
+        
+        len = xsqrt(len);
+        xVec3 diff_normalized = diff * (zEntCruiseBubble_f_1_0 / len);
+        float32 sin = -xasin(diff_normalized.y);    
+        if (float32(iabs(sin)) > zEntCruiseBubble_f_1_5708 * current_tweak->missle.fly.turn.ybound)
+        {
+            return true;
+        }
+        
+        float32 tan = xatan2(diff_normalized.x, diff_normalized.z);
+        float32 mod = xrmod(zEntCruiseBubble_f_3_1415 + (tan - this->rot.x)) - zEntCruiseBubble_f_3_1415;
+        this->rot.x += mod * current_tweak->missle.collide_twist;
+        this->rot.y += (sin - this->rot.y) * current_tweak->missle.collide_twist;
+        xMat3x3Euler(mat, &this->rot);
+        
+        if (hit_depen.length2() < zEntCruiseBubble_f_0_000001)
+        {
+            return false;
+        }
+    }
+    while (++i < current_tweak->missle.hit_tests);
+
+    float32 dist = zEntCruiseBubble_f_0_1 * current_tweak->missle.hit_dist;
+    if (hit_depen.length2() < dist * dist)
+    {
+        return false;
+    }
+    
+    return this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent);
+}
 
 // func_8005D7D4
 #pragma GLOBAL_ASM(                                                                                \
