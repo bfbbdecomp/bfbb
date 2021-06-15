@@ -46,28 +46,38 @@ struct xParabola
     float32 maxTime;
 };
 
+// Size: 0x144
 struct xSweptSphere
 {
     xVec3 start;
     xVec3 end;
     float32 radius;
     float32 dist;
+    // Offset: 0x20
     xiMat4x3Union basis;
     xiMat4x3Union invbasis;
+    // Offset: 0xa0
     xBox box;
+    // Offset: 0xb8
     xQCData qcd;
+    // Offset: 0xd8
     float32 boxsize;
     float32 curdist;
+    // Offset: 0xe0
     xVec3 contact;
     xVec3 polynorm;
     uint32 oid;
     void* optr;
+    // Offset: 0x100
     xModelInstance* mptr;
     int32 hitIt;
     xVec3 worldPos;
     xVec3 worldContact;
+    // Offset: 0x120
     xVec3 worldNormal;
+    // Offset: 0x12c
     xVec3 worldTangent;
+    // Offset: 0x138
     xVec3 worldPolynorm;
 };
 
@@ -88,6 +98,9 @@ void xCollideInit(xScene* sc);
 void xsqrtfast(float32& dst, float32 num);
 int32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 int32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
+int32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, uint8 collType);
+void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, float32 radius);
+void xSweptSphereGetResults(xSweptSphere* sws);
 uint32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);
 uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll);
 uint32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll);

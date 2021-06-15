@@ -250,6 +250,8 @@ extern float32 zEntCruiseBubble_f_0_000001; // 0.000001
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
 
+extern xVec3 zEntCruiseBubble_xVec3_0_0_0; // {0.0, 0.0, 0.0}
+
 extern xVec2 lbl_803D0830;
 
 void cruise_bubble::init_sound()
@@ -3609,9 +3611,38 @@ uint8 cruise_bubble::state_missle_fly::collide()
 }
 
 // func_8005D7D4
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "hit_test__Q213cruise_bubble16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt")
+#else
+uint8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const
+{
+    xScene* s = globals.sceneCur;
+    xVec3* loc = &get_missle_mat()->pos;
+    xSweptSphere ss;
+    xSweptSpherePrepare(&ss, (xVec3*) &this->last_loc, loc, current_tweak->missle.hit_dist);
+    ss.optr = NULL;
+    if (!xSweptSphereToScene(&ss, s, NULL, 0x10))
+    {
+        return false;
+    }
+
+    xSweptSphereGetResults(&ss);
+    // scheduling off
+    xVec3 overshoot = zEntCruiseBubble_xVec3_0_0_0;
+    overshoot.x = loc->x - ss.worldPos.x;
+    overshoot.y = loc->y - ss.worldPos.y;
+    overshoot.z = loc->z - ss.worldPos.z;
+    // till here
+    hit_loc = ss.worldPos + ss.worldTangent * overshoot.dot(ss.worldTangent);
+    hit_depen = hit_loc - *loc;
+    hit_norm = ss.worldNormal;
+    hit_ent = (xEnt*) ss.optr;
+
+    return true;
+}
+#endif
 
 // func_8005D928
 #pragma GLOBAL_ASM(                                                                                \

@@ -34,6 +34,7 @@ struct xSphere
     ASSIGNMENT_OPERATOR(xSphere)
 };
 
+// Size: 0x18
 struct xBox
 {
     xVec3 upper;

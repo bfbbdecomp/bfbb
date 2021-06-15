@@ -8604,7 +8604,10 @@ explode_curve__13cruise_bubble:
 	.incbin "baserom.dol", 0x25224C, 0x24
 .global cheat_explode_curve__13cruise_bubble
 cheat_explode_curve__13cruise_bubble:
-	.incbin "baserom.dol", 0x252270, 0x30
+	.incbin "baserom.dol", 0x252270, 0x24
+.global zEntCruiseBubble_xVec3_0_0_0
+zEntCruiseBubble_xVec3_0_0_0:
+	.incbin "baserom.dol", 0x252294, 0xC
 lbl_802552C0:
 	.incbin "baserom.dol", 0x2522A0, 0xC
 lbl_802552CC:
