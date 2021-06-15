@@ -3645,9 +3645,20 @@ uint8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm,
 #endif
 
 // func_8005D928
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_move__Q213cruise_bubble16state_missle_flyFf")
+#else
+void cruise_bubble::state_missle_fly::update_move(float32 dt)
+{
+    float32 move = zEntCruiseBubble_f_0_0;
+    xAccelMove(move, this->vel, current_tweak->missle.fly.accel, dt, current_tweak->missle.fly.max_vel);
+    
+    xMat4x3* mat = get_missle_mat();
+    mat->pos += mat->at * move;
+}
+#endif
 
 // func_8005D998
 #pragma GLOBAL_ASM(                                                                                \
