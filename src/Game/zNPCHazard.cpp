@@ -152,7 +152,7 @@ int32 HAZ_AvailablePool()
 }
 
 // func_80188218
-#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HAZ_Iterate__FPFR9NPCHazardPv_UcPvi")
+#pragma GLOBAL_ASM("asm/Game/zNPCHazard.s", "HAZ_Iterate__FPFR9NPCHazardPv_bPvi")
 
 void NPCHazard::WipeIt()
 {

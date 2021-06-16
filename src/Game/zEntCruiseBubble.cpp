@@ -3527,7 +3527,7 @@ uint8 cruise_bubble::state_missle_fly::collide_hazards()
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "hazard_check__Q213cruise_bubble16state_missle_flyFR9NPCHazardPv")
 #else
-uint8 cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* context)
+bool cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* context)
 {
     // get_missle_mat()->pos uses one more instruction for no apparent reason
     xVec3 vvar = haz.pos_hazard - get_missle_mat()->pos;

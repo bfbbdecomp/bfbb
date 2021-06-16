@@ -755,11 +755,8 @@ lbl_801881F8:
 /* 80188204 00185004  38 21 00 10 */	addi r1, r1, 0x10
 /* 80188208 00185008  4E 80 00 20 */	blr 
 
-/* changed from ... */
-/* HAZ_Iterate__FPFR9NPCHazardPv_bPvi */
-/* ... so linker can find it */
-.global HAZ_Iterate__FPFR9NPCHazardPv_UcPvi
-HAZ_Iterate__FPFR9NPCHazardPv_UcPvi:
+.global HAZ_Iterate__FPFR9NPCHazardPv_bPvi
+HAZ_Iterate__FPFR9NPCHazardPv_bPvi:
 /* 80188218 00185018  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8018821C 0018501C  7C 08 02 A6 */	mflr r0
 /* 80188220 00185020  3C C0 80 36 */	lis r6, g_hazards@ha

@@ -248,7 +248,7 @@ void zNPCHazard_Timestep(float32 dt);
 void zNPCCommon_Hazards_RenderAll(int32 doOpaqueStuff);
 NPCHazard* HAZ_Acquire();
 int32 HAZ_AvailablePool();
-void HAZ_Iterate(uint8 (*fp)(NPCHazard&, void*), void* context, int32 flag_filter);
+void HAZ_Iterate(bool (*fp)(NPCHazard&, void*), void* context, int32 flag_filter);
 
 float32 xVec2Length2(const xVec2* v);
 
