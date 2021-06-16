@@ -141,11 +141,7 @@ lbl_8005762C:
 /* 8005763C 0005443C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80057640 00054440  4E 80 00 20 */	blr 
 
-/* damage_entity__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@FR4xEntRC5xVec3RC5xVec3RC5xVec3fb */
-/* changed from ... */
-/* damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb: */
-/* ... so linker can find it */
-damage_entity__13cruise_bubbleFR4xEntRC5xVec3RC5xVec3RC5xVec3fb:
+damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb:
 /* 80057684 00054484  94 21 FF 40 */	stwu r1, -0xc0(r1)
 /* 80057688 00054488  7C 08 02 A6 */	mflr r0
 /* 8005768C 0005448C  3D 00 80 29 */	lis r8, shared__13cruise_bubble@ha

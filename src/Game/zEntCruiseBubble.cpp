@@ -457,11 +457,17 @@ void cruise_bubble::start_damaging()
     shared.hits_size = 0;
 }
 
+namespace cruise_bubble
+{
+namespace
+{
+
 // func_80057684
 #ifndef NONMATCHING
-#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__13cruise_bubbleFR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
+void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, bool explosive);
+#pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
 #else
-void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, bool explosive)
+void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, bool explosive)
 {
     if (shared.hits_size >= 32)
     {
@@ -544,6 +550,9 @@ void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir,
     zEntEvent(&ent, 0x1c7);
 }
 #endif
+
+}
+}
 
 uint8 cruise_bubble::can_damage(xEnt* ent)
 {

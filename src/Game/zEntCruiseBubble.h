@@ -565,8 +565,8 @@ namespace cruise_bubble
     bool camera_taken();
     bool camera_leave();
     void start_damaging();
-    void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-                       float32 radius, bool explosive);
+    // void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
+    //                    float32 radius, bool explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
     void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
