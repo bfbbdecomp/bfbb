@@ -179,7 +179,7 @@ namespace cruise_bubble
         void update_engine_sound(float32 dt);
 
         uint8 collide_hazards();
-        uint8 hazard_check(NPCHazard& haz, void* context);
+        static bool hazard_check(NPCHazard& haz, void* context);
         uint8 collide();
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
         void update_move(float32 dt);
@@ -565,8 +565,8 @@ namespace cruise_bubble
     bool camera_taken();
     bool camera_leave();
     void start_damaging();
-    void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-                       float32 radius, uint8 explosive);
+    // void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
+    //                    float32 radius, bool explosive);
     uint8 can_damage(xEnt* ent);
     uint8 was_damaged(xEnt* ent);
     void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
