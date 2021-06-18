@@ -1,3 +1,4 @@
+#include "zNPCHazard.h"
 #include <cmath>
 #include <string.h>
 
@@ -241,9 +242,15 @@ extern float32 zEntCruiseBubble_f_0_86; // 0.86
 extern float32 zEntCruiseBubble_f_0_15; // 0.15
 extern float32 zEntCruiseBubble_f_0_0001; // 0.15
 extern float32 zEntCruiseBubble_f_1_0e38; // 1.0 * 10^38
+extern float32 zEntCruiseBubble_f_3_1415; // 3.1415 ~ PI
+extern float32 zEntCruiseBubble_f_6_2832; // 6.2832 ~ 2PI
+extern float32 zEntCruiseBubble_f_n3_1415; // -3.1415 ~ -PI
+extern float32 zEntCruiseBubble_f_0_000001; // 0.000001
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
+
+extern xVec3 zEntCruiseBubble_xVec3_0_0_0; // {0.0, 0.0, 0.0}
 
 extern xVec2 lbl_803D0830;
 
@@ -450,11 +457,17 @@ void cruise_bubble::start_damaging()
     shared.hits_size = 0;
 }
 
+namespace cruise_bubble
+{
+namespace
+{
+
 // func_80057684
 #ifndef NONMATCHING
+void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, bool explosive);
 #pragma GLOBAL_ASM("asm/Game/zEntCruiseBubble.s", "damage_entity__Q213cruise_bubble30_esc__2_unnamed_esc__2_zEntCruiseBubble_cpp_esc__2_FR4xEntRC5xVec3RC5xVec3RC5xVec3fb")
 #else
-void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, uint8 explosive)
+void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm, float32 radius, bool explosive)
 {
     if (shared.hits_size >= 32)
     {
@@ -537,6 +550,9 @@ void cruise_bubble::damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir,
     zEntEvent(&ent, 0x1c7);
 }
 #endif
+
+}
+}
 
 uint8 cruise_bubble::can_damage(xEnt* ent)
 {
@@ -3108,15 +3124,59 @@ void cruise_bubble::state_player_aim::update_animation(float32 dt)
 }
 #endif
 
-// func_8005CA00
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "apply_yaw__Q213cruise_bubble16state_player_aimFv")
+void cruise_bubble::state_player_aim::apply_yaw()
+{
+    xMat4x3* m = get_player_mat();
+    m->at.assign(isin(this->yaw), zEntCruiseBubble_f_0_0, icos(this->yaw));
+    m->right.assign(m->at.z, zEntCruiseBubble_f_0_0, -m->at.x);
+    m->up.assign(zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0);
+}
 
 // func_8005CA98
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "face_camera__Q213cruise_bubble16state_player_aimFf")
+#else
+void cruise_bubble::state_player_aim::face_camera(float32 dt)
+{
+    // float regalloc off
+    // replace with float literals for match
+    xMat4x3* mat = &globals.camera.mat;
+
+    float32 new_yaw;
+    if (mat->at.x >= zEntCruiseBubble_f_n0_00001 &&
+            mat->at.x <= zEntCruiseBubble_f_0_00001 &&
+            mat->at.z >= zEntCruiseBubble_f_n0_00001 &&
+            mat->at.z <= zEntCruiseBubble_f_0_00001)
+    {
+        new_yaw = this->yaw;
+    }
+    else
+    {
+        new_yaw = xatan2(mat->at.x, mat->at.z);
+    }
+
+    float32 diff = new_yaw - this->yaw;
+    if (diff > zEntCruiseBubble_f_3_1415)
+    {   
+        diff -= zEntCruiseBubble_f_6_2832;
+    }
+    else if (diff < zEntCruiseBubble_f_n3_1415)
+    {
+        diff += zEntCruiseBubble_f_6_2832;
+    }
+    float32 tspeed = current_tweak->player.aim.turn_speed * xexp(dt);
+    if (tspeed > zEntCruiseBubble_f_1_0)
+    {
+        tspeed = zEntCruiseBubble_f_1_0;
+    }
+    tspeed = diff * tspeed;
+    this->yaw_vel = tspeed / dt;
+    this->yaw = this->yaw + tspeed;
+    this->yaw = xrmod(this->yaw);
+}
+#endif
 
 // func_8005CBB8
 #if 1
@@ -3452,30 +3512,162 @@ void cruise_bubble::state_missle_fly::update_engine_sound(float32 dt)
 }
 #endif
 
-// func_8005D448
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide_hazards__Q213cruise_bubble16state_missle_flyFv")
-
+uint8 cruise_bubble::state_missle_fly::collide_hazards()
+{
+    NPCHazard* c[2];
+    c[0] = NULL;
+    HAZ_Iterate(&cruise_bubble::state_missle_fly::hazard_check, c, 0xa000);
+    
+    if (c[0] == NULL) {
+        return false;
+    }
+    
+    if ((c[0]->flg_hazard & 0x200000) != 0)
+    {
+        c[0]->MarkForRecycle();
+    }
+    shared.hit_loc = get_missle_mat()->pos;
+    return true;
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 // func_8005D4C8
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "hazard_check__Q213cruise_bubble16state_missle_flyFR9NPCHazardPv")
+#else
+bool cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* context)
+{
+    // get_missle_mat()->pos uses one more instruction for no apparent reason
+    xVec3 vvar = haz.pos_hazard - get_missle_mat()->pos;
+    float32 fvar = current_tweak->missle.hit_dist + haz.custdata.typical.rad_cur;
 
-// func_8005D56C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntCruiseBubble.s",                                                                 \
-    "collide__Q213cruise_bubble16state_missle_flyFv")
+    // scheduling for implicit copy ctor off
+    if (vvar.length2() < fvar * fvar)
+    {
+        ((NPCHazard**) context)[0] = &haz;
+        return false;
+    }
+
+    return true;
+}
+#endif
+
+uint8 cruise_bubble::state_missle_fly::collide()
+{
+    xVec3* hit_norm = &shared.hit_norm;
+    xVec3* hit_loc = &shared.hit_loc;
+    xEnt* hit_ent;
+    xVec3 hit_depen;
+    int32 i = 0;
+
+    do
+    {
+        if (!this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent))
+        {
+            return false;
+        }
+
+        if (can_damage(hit_ent))
+        {
+            damage_entity(*hit_ent, *hit_loc, get_missle_mat()->at, *hit_norm, zEntCruiseBubble_f_0_0, false);
+            return true;
+        }
+
+        xMat4x3* mat = get_missle_mat();
+        float32 ang = xasin(mat->at.dot(*hit_norm));
+        if (ang < -current_tweak->missle.crash_angle)
+        {
+            return true;
+        }
+        
+        mat->pos += hit_depen;
+        xVec3 diff = mat->pos - this->last_loc;
+        float32 len = diff.length2();
+        if (len < zEntCruiseBubble_f_0_001)
+        {
+            return false;
+        }
+        
+        len = xsqrt(len);
+        xVec3 diff_normalized = diff * (zEntCruiseBubble_f_1_0 / len);
+        float32 sin = -xasin(diff_normalized.y);    
+        if (float32(iabs(sin)) > zEntCruiseBubble_f_1_5708 * current_tweak->missle.fly.turn.ybound)
+        {
+            return true;
+        }
+        
+        float32 tan = xatan2(diff_normalized.x, diff_normalized.z);
+        float32 mod = xrmod(zEntCruiseBubble_f_3_1415 + (tan - this->rot.x)) - zEntCruiseBubble_f_3_1415;
+        this->rot.x += mod * current_tweak->missle.collide_twist;
+        this->rot.y += (sin - this->rot.y) * current_tweak->missle.collide_twist;
+        xMat3x3Euler(mat, &this->rot);
+        
+        if (hit_depen.length2() < zEntCruiseBubble_f_0_000001)
+        {
+            return false;
+        }
+    }
+    while (++i < current_tweak->missle.hit_tests);
+
+    float32 dist = zEntCruiseBubble_f_0_1 * current_tweak->missle.hit_dist;
+    if (hit_depen.length2() < dist * dist)
+    {
+        return false;
+    }
+    
+    return this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent);
+}
 
 // func_8005D7D4
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "hit_test__Q213cruise_bubble16state_missle_flyCFR5xVec3R5xVec3R5xVec3RP4xEnt")
+#else
+uint8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const
+{
+    xScene* s = globals.sceneCur;
+    xVec3* loc = &get_missle_mat()->pos;
+    xSweptSphere ss;
+    xSweptSpherePrepare(&ss, (xVec3*) &this->last_loc, loc, current_tweak->missle.hit_dist);
+    ss.optr = NULL;
+    if (!xSweptSphereToScene(&ss, s, NULL, 0x10))
+    {
+        return false;
+    }
+
+    xSweptSphereGetResults(&ss);
+    // scheduling off
+    xVec3 overshoot = zEntCruiseBubble_xVec3_0_0_0;
+    overshoot.x = loc->x - ss.worldPos.x;
+    overshoot.y = loc->y - ss.worldPos.y;
+    overshoot.z = loc->z - ss.worldPos.z;
+    // till here
+    hit_loc = ss.worldPos + ss.worldTangent * overshoot.dot(ss.worldTangent);
+    hit_depen = hit_loc - *loc;
+    hit_norm = ss.worldNormal;
+    hit_ent = (xEnt*) ss.optr;
+
+    return true;
+}
+#endif
 
 // func_8005D928
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM(                                                                                \
     "asm/Game/zEntCruiseBubble.s",                                                                 \
     "update_move__Q213cruise_bubble16state_missle_flyFf")
+#else
+void cruise_bubble::state_missle_fly::update_move(float32 dt)
+{
+    float32 move = zEntCruiseBubble_f_0_0;
+    xAccelMove(move, this->vel, current_tweak->missle.fly.accel, dt, current_tweak->missle.fly.max_vel);
+    
+    xMat4x3* mat = get_missle_mat();
+    mat->pos += mat->at * move;
+}
+#endif
 
 // func_8005D998
 #pragma GLOBAL_ASM(                                                                                \
