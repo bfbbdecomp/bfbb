@@ -31,7 +31,7 @@ void zParCmdInit()
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/Game/zParCmd.s", "zParCmdFindClipVolumes__Fv")
 #else
-// Functionally matching but the beq goes to the wrong line and won't compile correctly unless the if statement stays the way it is
+// Functionally matching but fails to load sClipVolumeTotal an extra time.
 void zParCmdFindClipVolumes()
 {
     char findname[64];
@@ -41,10 +41,11 @@ void zParCmdFindClipVolumes()
     {
         sprintf(findname, "PARTICLE_CLIP_%d", sClipVolumeTotal + 1);
         zVolume* vol = (zVolume*)zSceneFindObject(xStrHash(findname));
-        if (vol != NULL)
+        if (vol == NULL)
         {
-            sClipVolume[sClipVolumeTotal] = vol;
+            return;
         }
+        sClipVolume[sClipVolumeTotal] = vol;
     }
 }
 #endif
