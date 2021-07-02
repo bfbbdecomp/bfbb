@@ -9,6 +9,7 @@
 #include "../Core/p2/iMath.h"
 
 #include <types.h>
+#include <rwplcore.h>
 
 extern NPARMgmt g_npar_mgmt[12];
 extern NPARInfo g_npar_info[12];

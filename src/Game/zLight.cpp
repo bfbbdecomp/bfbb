@@ -5,6 +5,7 @@
 #include "../Core/x/xShadow.h"
 #include "../Core/x/xPartition.h"
 #include "../Core/x/xString.h"
+#include "../Core/x/xPartition.h"
 
 #include <types.h>
 #include <string.h>
@@ -43,14 +44,77 @@ void zLightResetAll(xEnv* env)
 #endif
 
 // func_8009E0C8
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FPvPv")
 void zLightInit(void* b, void* tasset)
 {
     zLightInit((xBase*)b, (zLightAsset*)tasset);
 }
 
 // func_8009E0E8
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FP5xBaseP11zLightAsset")
+void zLightInit(xBase* b, zLightAsset* tasset)
+{
+    _zLight* t = (_zLight*)b;
+
+    xBaseInit(b, tasset);
+    t->eventFunc = zLightEventCB;
+    t->tasset = tasset;
+    if (b->linkCount != 0)
+    {
+        b->link = (xLinkAsset*)(t->tasset + 1);
+    }
+    else
+    {
+        b->link = 0;
+    }
+    uint32 itype = 1;
+    switch (tasset->lightType)
+    {
+    case 0:
+        itype = 1;
+        break;
+    case 1:
+        itype = 2;
+        break;
+    case 2:
+        itype = 1;
+        break;
+    case 3:
+        itype = 1;
+        break;
+    default:
+        break;
+    }
+    b = (_zLight*)iLightCreate(&t->light, itype);
+    if (b != NULL)
+    {
+        sLight[sLightTotal++] = t;
+        t->light.sph.center.x = tasset->lightSphere.center.x;
+        t->light.sph.center.y = tasset->lightSphere.center.y;
+        t->light.sph.center.z = tasset->lightSphere.center.z;
+        t->light.sph.r = tasset->lightSphere.r;
+        t->light.color.r = tasset->lightColor[0];
+        t->light.color.g = tasset->lightColor[1];
+        t->light.color.b = tasset->lightColor[2];
+        t->light.color.a = tasset->lightColor[3];
+        t->light.coneangle = tasset->lightConeAngle;
+        t->light.radius_sq = t->light.sph.r * t->light.sph.r;
+        iLightModify(&t->light, 31);
+        t->flags = 0;
+        if ((t->tasset->lightFlags & 32) != NULL)
+        {
+            t->flags = t->flags | 1;
+        }
+        if (t->tasset->lightEffect != NULL)
+        {
+            t->reg = (float32*)xMemAlloc(gActiveHeap, 32, 0);
+            zLightEffectSet(t, t->tasset->lightEffect);
+        }
+        else
+        {
+            t->reg = 0;
+        }
+        t->true_idx = xPartitionInsert(&sLightPart, t, &(t->light).sph.center);
+    }
+}
 
 // func_8009E2A8
 void zLightResolveLinks()
