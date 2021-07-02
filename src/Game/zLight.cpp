@@ -44,14 +44,12 @@ void zLightResetAll(xEnv* env)
 #endif
 
 // func_8009E0C8
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FPvPv")
 void zLightInit(void* b, void* tasset)
 {
     zLightInit((xBase*)b, (zLightAsset*)tasset);
 }
 
 // func_8009E0E8
-// #pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightInit__FP5xBaseP11zLightAsset")
 void zLightInit(xBase* b, zLightAsset* tasset)
 {
     _zLight* t = (_zLight*)b;
@@ -89,16 +87,16 @@ void zLightInit(xBase* b, zLightAsset* tasset)
     if (b != NULL)
     {
         sLight[sLightTotal++] = t;
-        (t->light).sph.center.x = (tasset->lightSphere).center.x;
-        (t->light).sph.center.y = (tasset->lightSphere).center.y;
-        (t->light).sph.center.z = (tasset->lightSphere).center.z;
-        (t->light).sph.r = (tasset->lightSphere).r;
-        (t->light).color.r = tasset->lightColor[0];
-        (t->light).color.g = tasset->lightColor[1];
-        (t->light).color.b = tasset->lightColor[2];
-        (t->light).color.a = tasset->lightColor[3];
-        (t->light).coneangle = tasset->lightConeAngle;
-        (t->light).radius_sq = (t->light).sph.r * (t->light).sph.r;
+        t->light.sph.center.x = tasset->lightSphere.center.x;
+        t->light.sph.center.y = tasset->lightSphere.center.y;
+        t->light.sph.center.z = tasset->lightSphere.center.z;
+        t->light.sph.r = tasset->lightSphere.r;
+        t->light.color.r = tasset->lightColor[0];
+        t->light.color.g = tasset->lightColor[1];
+        t->light.color.b = tasset->lightColor[2];
+        t->light.color.a = tasset->lightColor[3];
+        t->light.coneangle = tasset->lightConeAngle;
+        t->light.radius_sq = t->light.sph.r * t->light.sph.r;
         iLightModify(&t->light, 31);
         t->flags = 0;
         if ((t->tasset->lightFlags & 32) != NULL)
