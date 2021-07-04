@@ -101,7 +101,23 @@ void ZNPC_Destroy_Duplotron(xFactoryInst* inst)
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "Process__13zNPCDuplotronFP6xScenef")
 
 // func_801258DC
+#if 1
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "SelfSetup__13zNPCDuplotronFv")
+#else
+// 100% match that needs the full vtable to be filled out
+// because it induces vtable generation
+void zNPCDuplotron::SelfSetup()
+{
+    psy_instinct = xBehaveMgr_GetSelf()->Subscribe(this, 0);
+    xPsyche* psy = psy_instinct;
+    psy->BrainBegin();
+    psy->AddGoal(0x4E474430, NULL);
+    psy->AddGoal(0x4E474431, NULL);
+    psy->AddGoal(0x4E474E37, NULL);
+    psy->BrainEnd();
+    psy->SetSafety(0x4E474430);
+}
+#endif
 
 // func_80125978
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s",                                                 \
@@ -144,7 +160,9 @@ void DUPO_InitEffects()
 #endif
 
 // func_80125D88
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "DUPO_KillEffects__Fv")
+void DUPO_KillEffects()
+{
+}
 
 // func_80125D8C
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "VFXSmokeStack__13zNPCDuplotronFf")
@@ -156,25 +174,45 @@ void DUPO_InitEffects()
 #pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "VFXCycleLights__13zNPCDuplotronFfi")
 
 // func_801262F4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "__ct__13zNPCDuplotronFi")
+zNPCDuplotron::zNPCDuplotron(int32 myType) 
+    : zNPCCommon(myType)
+{
+}
 
 // func_80126330
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "Move__13zNPCDuplotronFP6xScenefP9xEntFrame")
+void zNPCDuplotron::Move(xScene*, float32, xEntFrame*)
+{
+}
 
 // func_80126334
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ColChkFlags__13zNPCDuplotronCFv")
+uint8 zNPCDuplotron::ColChkFlags() const
+{
+    return 0;
+}
 
 // func_8012633C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ColPenFlags__13zNPCDuplotronCFv")
+uint8 zNPCDuplotron::ColPenFlags() const
+{
+    return 0;
+}
 
 // func_80126344
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ColChkByFlags__13zNPCDuplotronCFv")
+uint8 zNPCDuplotron::ColChkByFlags() const
+{
+    return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
+}
 
 // func_8012634C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "ColPenByFlags__13zNPCDuplotronCFv")
+uint8 zNPCDuplotron::ColPenByFlags() const
+{
+    return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
+}
 
 // func_80126354
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeDuplotron.s", "PhysicsFlags__13zNPCDuplotronCFv")
+uint8 zNPCDuplotron::PhysicsFlags() const
+{
+    return 0;
+}
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
