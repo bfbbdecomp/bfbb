@@ -754,10 +754,6 @@ DUPO_InitEffects__Fv:
 /* 80125D80 00122B80  38 21 00 10 */	addi r1, r1, 0x10
 /* 80125D84 00122B84  4E 80 00 20 */	blr 
 
-.global DUPO_KillEffects__Fv
-DUPO_KillEffects__Fv:
-/* 80125D88 00122B88  4E 80 00 20 */	blr 
-
 .global VFXSmokeStack__13zNPCDuplotronFf
 VFXSmokeStack__13zNPCDuplotronFf:
 /* 80125D8C 00122B8C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1142,47 +1138,6 @@ lbl_801262C8:
 /* 801262E8 001230E8  7C 08 03 A6 */	mtlr r0
 /* 801262EC 001230EC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801262F0 001230F0  4E 80 00 20 */	blr 
-
-.global __ct__13zNPCDuplotronFi
-__ct__13zNPCDuplotronFi:
-/* 801262F4 001230F4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 801262F8 001230F8  7C 08 02 A6 */	mflr r0
-/* 801262FC 001230FC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80126300 00123100  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 80126304 00123104  7C 7F 1B 78 */	mr r31, r3
-/* 80126308 00123108  4B FC E2 ED */	bl __ct__10zNPCCommonFi
-/* 8012630C 0012310C  3C 80 80 2A */	lis r4, __vt__13zNPCDuplotron@ha
-/* 80126310 00123110  7F E3 FB 78 */	mr r3, r31
-/* 80126314 00123114  38 04 8A B8 */	addi r0, r4, __vt__13zNPCDuplotron@l
-/* 80126318 00123118  90 1F 01 B8 */	stw r0, 0x1b8(r31)
-/* 8012631C 0012311C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 80126320 00123120  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80126324 00123124  7C 08 03 A6 */	mtlr r0
-/* 80126328 00123128  38 21 00 10 */	addi r1, r1, 0x10
-/* 8012632C 0012312C  4E 80 00 20 */	blr 
-
-Move__13zNPCDuplotronFP6xScenefP9xEntFrame:
-/* 80126330 00123130  4E 80 00 20 */	blr 
-
-ColChkFlags__13zNPCDuplotronCFv:
-/* 80126334 00123134  38 60 00 00 */	li r3, 0
-/* 80126338 00123138  4E 80 00 20 */	blr 
-
-ColPenFlags__13zNPCDuplotronCFv:
-/* 8012633C 0012313C  38 60 00 00 */	li r3, 0
-/* 80126340 00123140  4E 80 00 20 */	blr 
-
-ColChkByFlags__13zNPCDuplotronCFv:
-/* 80126344 00123144  38 60 00 18 */	li r3, 0x18
-/* 80126348 00123148  4E 80 00 20 */	blr 
-
-ColPenByFlags__13zNPCDuplotronCFv:
-/* 8012634C 0012314C  38 60 00 18 */	li r3, 0x18
-/* 80126350 00123150  4E 80 00 20 */	blr 
-
-PhysicsFlags__13zNPCDuplotronCFv:
-/* 80126354 00123154  38 60 00 00 */	li r3, 0
-/* 80126358 00123158  4E 80 00 20 */	blr 
 
 .endif
 

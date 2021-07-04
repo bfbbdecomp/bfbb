@@ -12,9 +12,21 @@ struct zNPCDuplotron : zNPCCommon
 
     zNPCDuplotron(int32 myType);
 
+    void SelfSetup();
+
     void VFXSmokeStack(float32 dt);
     void VFXOverheat(float32 dt, float32);
     void VFXCycleLights(float32 dt, int32 fastpace);
+
+    // zNPCTypeCommon overrides
+    void Move(xScene*, float32 dt, xEntFrame*);
+
+    // xNPCBasic overrides
+    uint8 ColChkFlags() const;
+    uint8 ColPenFlags() const;
+    uint8 ColChkByFlags() const;
+    uint8 ColPenByFlags() const;
+    uint8 PhysicsFlags() const;
 };
 
 extern uint32 g_hash_dupoanim[5];
