@@ -31,7 +31,7 @@ Join the discussion on the [BFBB Decompilation Discord](https://discord.gg/dVbGF
 - Metrowerks CodeWarrior 2.0 and 2.7 compiler and linker for Embedded PowerPC (`mwcceppc.exe` and `mwldeppc.exe`)
   - These can be installed with CodeWarrior 2.0 and 2.7 for GameCube. Please obtain access to these tools on your own, or if you are interested in contributing, please join the [BFBB Decompilation Discord](https://discord.gg/dVbGFdYU6A) and DM either `Seil#3565` or `mp#8248` for access.
 - A clean DOL of Battle for Bikini Bottom
-  - This is usually named `main.dol` (or something similar) and must be extracted from the GameCube disc for the game. See [this guide](https://battlepedia.org/Setting_up_Dolphin_for_modding) for instructions.
+  - This is usually named `main.dol` (or something similar) and must be extracted from the GameCube disc for the game. See [this guide](https://heavyironmodding.org/wiki/Setting_up_Dolphin_for_modding) for instructions.
 
 ### Instructions
 
