@@ -861,14 +861,6 @@ xmath_exited:
 .global rndseed
 rndseed:
 	.skip 0x8
-/* SPECULATION: link order */
-.global gActiveHeap
-gActiveHeap:
-	.skip 0x4
-/* SPECULATION: link order */
-.global sMemBaseNotifyFunc
-sMemBaseNotifyFunc:
-	.skip 0x4
 
 .section .sdata2
 lbl_803CCE08:
