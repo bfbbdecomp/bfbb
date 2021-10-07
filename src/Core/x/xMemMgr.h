@@ -98,8 +98,8 @@ int32 xMemPushBase(uint32 heapID);
 int32 xMemPushBase();
 int32 xMemPopBase(uint32 heapID, int32 depth);
 int32 xMemPopBase(int32 depth);
-int32 xMemGetBase(uint32 heapID)
-void xMemRegisterBaseNotifyFunc(void (*func)())
+int32 xMemGetBase(uint32 heapID);
+void xMemRegisterBaseNotifyFunc(void (*func)());
 int32 xMemGetBase();
 void xMemPoolAddElements(xMemPool* pool, void* buffer, uint32 count);
 void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags,
