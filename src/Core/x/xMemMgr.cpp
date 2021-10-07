@@ -2,59 +2,14 @@
 
 #include <types.h>
 #include <string.h>
+#include <rwplcore.h>
 
 #include "../p2/iSystem.h"
 #include "../p2/iMemMgr.h"
 
-// Size: 0x10
-struct xHeapState_tag
-{
-    uint32 curr;
-    uint16 blk_ct;
-    uint16 pad;
-    uint32 used;
-    uint32 wasted;
-};
-
-struct xMemBlock_tag
-{
-    uint32 addr;
-    uint32 size;
-    int32 align;
-};
-
-struct xMemBlkInfo_tag
-{
-    xMemBlock_tag* header;
-    uint32 pre;
-    uint32 block;
-    uint32 post;
-    uint32 curr;
-    uint32 waste;
-    uint32 total;
-};
-
-struct xMemHeap_tag
-{
-    uint32 flags;
-    uint32 hard_base;
-    uint32 size;
-    int16 opp_heap[2];
-
-    // Offset: 0x10
-    xHeapState_tag state[12];
-
-    // Offset: 0xD0
-    uint16 state_idx;
-    uint16 max_blks;
-    xMemBlock_tag* blk;
-    xMemBlock_tag* lastblk;
-};
-
 extern xMemInfo_tag gMemInfo;
 extern xMemHeap_tag gxHeap[3];
-
-void xMemInitHeap(xMemHeap_tag* heap, uint32 base, uint32 size, uint32 flags);
+extern void (*sMemBaseNotifyFunc)();
 
 // func_80033554
 void xMemDebug_SoakLog(const int8*)
@@ -231,46 +186,244 @@ void* xMemGrowAlloc(uint32 heapID, uint32 size)
 #endif
 
 // func_80033940
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemAlloc__FUiUii")
+//#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemAlloc__FUiUii")
+void* xMemAlloc(uint32 heapID, uint32 size, int32 align)
+{
+    // This variable not in DWARF
+    int32 true_align;
+
+    xMemHeap_tag* heap;
+    xMemBlock_tag* hdr;
+    xHeapState_tag* sp;
+
+    heap = &gxHeap[heapID];
+    sp = &heap->state[heap->state_idx];
+
+    true_align = 1 << (heap->flags >> 9 & 0x1f);
+    if (align > true_align)
+    {
+        true_align = align;
+    }
+
+    if (size == 0)
+    {
+        return (void*)0xDEADBEEF;
+    }
+
+    xMemBlkInfo_tag info;
+    uint32 total = xMemGetBlockInfo(heap, size, true_align, &info);
+    hdr = info.header;
+
+    if (sp->used + total > heap->size)
+    {
+        return NULL;
+    }
+
+    sp->curr = info.curr;
+    sp->blk_ct += 1;
+    if (heap->flags & 0x10000)
+    {
+        return NULL;
+    }
+
+    hdr->addr = info.block;
+    hdr->size = size;
+    hdr->align = true_align;
+    sp->used += total;
+    sp->wasted += info.waste;
+
+    memset((void*)hdr->addr, 0, size);
+    heap->lastblk = hdr;
+    return (void*)hdr->addr;
+}
 
 // func_80033A58
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPushTemp__FUi")
+void* xMemPushTemp(uint32 size)
+{
+    return RwMalloc(size);
+}
 
 // func_80033A84
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopTemp__FPv")
+void xMemPopTemp(void* memory)
+{
+    RwFree(memory);
+}
 
 // func_80033AB0
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPushBase__FUi")
+int32 xMemPushBase(uint32 heapID)
+{
+    xMemHeap_tag* heap = &gxHeap[heapID];
 
-// func_80033B24
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "__as__14xHeapState_tagFRC14xHeapState_tag")
+    heap->state_idx += 1;
+    xHeapState_tag* sp = &heap->state[heap->state_idx];
+    *sp = *(sp - 1);
+
+    if (sMemBaseNotifyFunc != NULL)
+    {
+        sMemBaseNotifyFunc();
+    }
+    return heap->state_idx - 1;
+}
 
 // func_80033B50
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPushBase__Fv")
+int32 xMemPushBase()
+{
+    return xMemPushBase(gActiveHeap);
+}
 
 // func_80033B74
+#ifndef NON_MATCHING
+// Load/Store swap of sMemBaseNotifyFunc and state_idx
 #pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopBase__FUii")
+#else
+int32 xMemPopBase(uint32 heapID, int32 depth)
+{
+    xMemHeap_tag* heap = &gxHeap[heapID];
+    if (depth < 0)
+    {
+        depth = heap->state_idx + depth;
+    }
+
+    heap->state_idx = depth;
+    if (sMemBaseNotifyFunc != NULL)
+    {
+        sMemBaseNotifyFunc();
+    }
+
+    return heap->state_idx;
+}
+#endif
 
 // func_80033BD4
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopBase__Fi")
+int32 xMemPopBase(int32 depth)
+{
+    return xMemPopBase(gActiveHeap, depth);
+}
 
 // func_80033BFC
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGetBase__FUi")
+int32 xMemGetBase(uint32 heapID)
+{
+    return gxHeap[heapID].state_idx;
+}
 
 // func_80033C14
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemRegisterBaseNotifyFunc__FPFv_v")
+void xMemRegisterBaseNotifyFunc(void (*func)())
+{
+    sMemBaseNotifyFunc = func;
+}
 
 // func_80033C1C
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGetBase__Fv")
+int32 xMemGetBase()
+{
+    return xMemGetBase(gActiveHeap);
+}
 
 // func_80033C40
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolAddElements__FP8xMemPoolPvUi")
+void xMemPoolAddElements(xMemPool* pool, void* buffer, uint32 count)
+{
+    int32 i;
+    void* curr;
+    void (*initCB)(xMemPool*, void*);
+    uint32 next;
+    uint32 size;
+
+    initCB = pool->InitCB;
+    next = pool->NextOffset;
+    size = pool->Size;
+
+    curr = buffer;
+    for (i = 0; i < (int32)count - 1; i++)
+    {
+        *(void**)((uint32)curr + next) = (void*)((uint32)curr + size);
+        if (initCB != NULL)
+        {
+            initCB(pool, curr);
+        }
+        curr = (void*)((uint32)curr + size);
+    }
+
+    *(void**)((uint32)curr + next) = pool->FreeList;
+    if (initCB != NULL)
+    {
+        initCB(pool, curr);
+    }
+    pool->FreeList = buffer;
+    pool->Total += count;
+}
 
 // func_80033CE8
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi")
+
+void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags,
+                   xMemPoolInitCB initCB, uint32 size, uint32 count, uint32 numRealloc)
+{
+    pool->FreeList = NULL;
+    pool->NextOffset = nextOffset;
+    pool->Flags = flags;
+    pool->UsedList = NULL;
+    pool->InitCB = initCB;
+    pool->Buffer = buffer;
+    pool->Size = size;
+    pool->NumRealloc = numRealloc;
+    pool->Total = 0;
+    xMemPoolAddElements(pool, buffer, count);
+}
 
 // func_80033D34
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolAlloc__FP8xMemPool")
+void* xMemPoolAlloc(xMemPool* pool)
+{
+    void* retval = pool->FreeList;
+    uint32 next = pool->NextOffset;
+    uint32 flags = pool->Flags;
+
+    if (retval == NULL)
+    {
+        xMemPoolAddElements(pool, xMemAlloc(gActiveHeap, pool->NumRealloc * pool->Size, 0),
+                            pool->NumRealloc);
+        retval = pool->FreeList;
+    }
+
+    pool->FreeList = *(void**)((uint32)retval + next);
+    if (flags & 1)
+    {
+        *(void**)((uint32)retval + next) = pool->UsedList;
+        pool->UsedList = retval;
+    }
+
+    return retval;
+}
 
 // func_80033DD0
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPoolFree__FP8xMemPoolPv")
+void xMemPoolFree(xMemPool* pool, void* data)
+{
+    void** prev;
+    void* freeList;
+    uint32 next;
+    void* curr;
+
+    if (data == NULL)
+    {
+        return;
+    }
+
+    freeList = pool->FreeList;
+    next = pool->NextOffset;
+    if (pool->Flags & 1)
+    {
+        prev = &pool->UsedList;
+        curr = pool->UsedList;
+
+        while (curr != NULL && curr != data)
+        {
+            prev = (void**)((uint32)curr + next);
+            curr = *prev;
+        }
+
+        if (curr != NULL)
+        {
+            *prev = *(void**)((uint32)curr + next);
+        }
+    }
+
+    *(void**)((uint32)data + next) = freeList;
+    pool->FreeList = data;
+}
