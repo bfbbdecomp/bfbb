@@ -463,4 +463,5 @@ iEnvGetBBox__FP4iEnv:
 
 .section .sdata2
 lbl_803CCF58:
-	.incbin "baserom.dol", 0x2B67F8, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

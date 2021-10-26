@@ -1780,28 +1780,29 @@ lbl_800BC36C:
 .section .sdata2
 .global _787_2
 _787_2:
-	.incbin "baserom.dol", 0x2B7810, 0x4
+	.4byte 0x00000000
 .global _950_3
 _950_3:
-	.incbin "baserom.dol", 0x2B7814, 0x4
+	.4byte 0x3F800000
 .global _1187_0
 _1187_0:
-	.incbin "baserom.dol", 0x2B7818, 0x4
+	.4byte 0x3D4CCCCD
 .global _1188
 _1188:
-	.incbin "baserom.dol", 0x2B781C, 0x4
+	.4byte 0x40000000
 .global _1302_0
 _1302_0:
-	.incbin "baserom.dol", 0x2B7820, 0x4
+	.4byte 0x44200000
 .global _1303
 _1303:
-	.incbin "baserom.dol", 0x2B7824, 0x4
+	.4byte 0x43F00000
 .global _1304
 _1304:
-	.incbin "baserom.dol", 0x2B7828, 0x4
+	.4byte 0x3727C5AC
 .global _1305
 _1305:
-	.incbin "baserom.dol", 0x2B782C, 0x4
+	.4byte 0xB727C5AC
 .global _1307
 _1307:
-	.incbin "baserom.dol", 0x2B7830, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

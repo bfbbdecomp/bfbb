@@ -4,13 +4,20 @@
 
 .global m_Null__5xVec3
 m_Null__5xVec3:
-	.incbin "baserom.dol", 0x2512C0, 0xC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 .global m_UnitAxisX__5xVec3
 m_UnitAxisX__5xVec3:
-	.incbin "baserom.dol", 0x2512CC, 0xC
+	.4byte 0x3F800000
+	.4byte 0x00000000
+	.4byte 0x00000000
 .global m_UnitAxisY__5xVec3
 m_UnitAxisY__5xVec3:
-	.incbin "baserom.dol", 0x2512D8, 0x10
+	.4byte 0x00000000
+	.4byte 0x3F800000
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .if 0
 
@@ -156,10 +163,11 @@ lbl_8004E4C0:
 .section .sdata2
 .global lbl_803CD158
 lbl_803CD158:
-	.incbin "baserom.dol", 0x2B69F8, 0x4
+	.4byte 0x3F800000
 .global lbl_803CD15C
 lbl_803CD15C:
-	.incbin "baserom.dol", 0x2B69FC, 0x4
+	.4byte 0x3727C5AC
 .global lbl_803CD160
 lbl_803CD160:
-	.incbin "baserom.dol", 0x2B6A00, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000

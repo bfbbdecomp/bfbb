@@ -286,15 +286,66 @@ lbl_800CF894:
 .section .data
 .global sMBD
 sMBD:
-	.incbin "baserom.dol", 0x28FAE0, 0x88
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global months
 months:
-	.incbin "baserom.dol", 0x28FB68, 0x30
+	.4byte 0x802667A5
+	.4byte 0x802667AE
+	.4byte 0x802667B8
+	.4byte 0x802667BF
+	.4byte 0x802667C6
+	.4byte 0x802667CB
+	.4byte 0x802667D1
+	.4byte 0x802667D7
+	.4byte 0x802667DF
+	.4byte 0x802667EA
+	.4byte 0x802667F3
+	.4byte 0x802667FD
 /* SPECULATION: link order */
 .global dotw
 dotw:
-	.incbin "baserom.dol", 0x28FB98, 0x20
+	.4byte 0x80266807
+	.4byte 0x8026680F
+	.4byte 0x80266817
+	.4byte 0x80266820
+	.4byte 0x8026682B
+	.4byte 0x80266835
+	.4byte 0x8026683D
+	.4byte 0x00000000
 
 .section .sbss
 .global sMotionBlurEnabled
@@ -342,21 +393,22 @@ fc:
 .section .sdata2
 .global lbl_803CE168
 lbl_803CE168:
-	.incbin "baserom.dol", 0x2B7A08, 0x4
+	.4byte 0x00000000
 lbl_803CE16C:
-	.incbin "baserom.dol", 0x2B7A0C, 0x4
+	.4byte 0x00000001
 /* SPECULATION: link order */
 .global lbl_803CE170
 lbl_803CE170:
-	.incbin "baserom.dol", 0x2B7A10, 0x4
+	.4byte 0x00020003
 .global lbl_803CE174
 lbl_803CE174:
-	.incbin "baserom.dol", 0x2B7A14, 0x4
+	.4byte 0x3F800000
 .global lbl_803CE178
 lbl_803CE178:
-	.incbin "baserom.dol", 0x2B7A18, 0x4
+	.4byte 0x3F000000
 .global lbl_803CE17C
 lbl_803CE17C:
-	.incbin "baserom.dol", 0x2B7A1C, 0x4
+	.4byte 0x437E0000
 lbl_803CE180:
-	.incbin "baserom.dol", 0x2B7A20, 0x8
+	.4byte 0xFFFFFF00
+	.4byte 0x00000000

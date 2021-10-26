@@ -529,36 +529,37 @@ lbl_80054BE4:
 .section .rodata
 .global zEGeneratorStringBase
 zEGeneratorStringBase:
-	.incbin "baserom.dol", 0x251FF0, 0x8
+	.4byte 0x004F6E00
+	.4byte 0x00000000
 
 .section .sdata2
 .global lbl_803CD290
 lbl_803CD290:
-	.incbin "baserom.dol", 0x2B6B30, 0x4
+	.4byte 0x3F800000
 .global lbl_803CD294
 lbl_803CD294:
-	.incbin "baserom.dol", 0x2B6B34, 0x4
+	.4byte 0x00000000
 lbl_803CD298:
-	.incbin "baserom.dol", 0x2B6B38, 0x4
+	.4byte 0x40000000
 lbl_803CD29C:
-	.incbin "baserom.dol", 0x2B6B3C, 0x4
+	.4byte 0x3E99999A
 lbl_803CD2A0:
-	.incbin "baserom.dol", 0x2B6B40, 0x4
+	.4byte 0xBE4CCCCD
 lbl_803CD2A4:
-	.incbin "baserom.dol", 0x2B6B44, 0x4
+	.4byte 0x3E4CCCCD
 lbl_803CD2A8:
-	.incbin "baserom.dol", 0x2B6B48, 0x4
+	.4byte 0x3DCCCCCD
 lbl_803CD2AC:
-	.incbin "baserom.dol", 0x2B6B4C, 0x4
+	.4byte 0x41700000
 lbl_803CD2B0:
-	.incbin "baserom.dol", 0x2B6B50, 0x4
+	.4byte 0x43340000
 lbl_803CD2B4:
-	.incbin "baserom.dol", 0x2B6B54, 0x4
+	.4byte 0x43B40000
 lbl_803CD2B8:
-	.incbin "baserom.dol", 0x2B6B58, 0x4
+	.4byte 0x41A00000
 lbl_803CD2BC:
-	.incbin "baserom.dol", 0x2B6B5C, 0x4
+	.4byte 0x42B40000
 lbl_803CD2C0:
-	.incbin "baserom.dol", 0x2B6B60, 0x4
+	.4byte 0x3E800000
 lbl_803CD2C4:
-	.incbin "baserom.dol", 0x2B6B64, 0x4
+	.4byte 0x41200000

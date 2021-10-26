@@ -4,10 +4,350 @@
 
 .global lbl_80252280
 lbl_80252280:
-	.incbin "baserom.dol", 0x24F260, 0xC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 .global lbl_8025228C
 lbl_8025228C:
-	.incbin "baserom.dol", 0x24F26C, 0x54C
+	.4byte 0x4442475F
+	.4byte 0x58454E54
+	.4byte 0x4D4F5449
+	.4byte 0x4F4E0065
+	.4byte 0x7874656E
+	.4byte 0x642F7265
+	.4byte 0x74726163
+	.4byte 0x74006F72
+	.4byte 0x62697461
+	.4byte 0x6C007370
+	.4byte 0x6C696E65
+	.4byte 0x006D6F76
+	.4byte 0x65706F69
+	.4byte 0x6E74006D
+	.4byte 0x65636861
+	.4byte 0x6E69736D
+	.4byte 0x0070656E
+	.4byte 0x64756C75
+	.4byte 0x6D003F3F
+	.4byte 0x3F3F0074
+	.4byte 0x7970653A
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x2025730A
+	.4byte 0x0073746F
+	.4byte 0x70706564
+	.4byte 0x3A202020
+	.4byte 0x20202020
+	.4byte 0x20202025
+	.4byte 0x730A006E
+	.4byte 0x756C6C00
+	.4byte 0x6F776E65
+	.4byte 0x723A2020
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x20202573
+	.4byte 0x0A00743A
+	.4byte 0x2020252E
+	.4byte 0x33662020
+	.4byte 0x20643A20
+	.4byte 0x252E3366
+	.4byte 0x20202074
+	.4byte 0x6D723A20
+	.4byte 0x252E3366
+	.4byte 0x0A00613A
+	.4byte 0x20202020
+	.4byte 0x2020203C
+	.4byte 0x252E3366
+	.4byte 0x20252E33
+	.4byte 0x6620252E
+	.4byte 0x33663E0A
+	.4byte 0x00623A20
+	.4byte 0x20202020
+	.4byte 0x20203C25
+	.4byte 0x2E336620
+	.4byte 0x252E3366
+	.4byte 0x20252E33
+	.4byte 0x663E0A00
+	.4byte 0x622D613A
+	.4byte 0x20202020
+	.4byte 0x203C252E
+	.4byte 0x33662025
+	.4byte 0x2E336620
+	.4byte 0x252E3366
+	.4byte 0x3E0A0065
+	.4byte 0x78745F74
+	.4byte 0x6D3A2020
+	.4byte 0x252E3366
+	.4byte 0x0A007265
+	.4byte 0x745F746D
+	.4byte 0x3A202025
+	.4byte 0x2E33660A
+	.4byte 0x00776169
+	.4byte 0x745F6574
+	.4byte 0x3A20252E
+	.4byte 0x33660A00
+	.4byte 0x77616974
+	.4byte 0x5F72743A
+	.4byte 0x20252E33
+	.4byte 0x660A0070
+	.4byte 0x6572696F
+	.4byte 0x643A2020
+	.4byte 0x252E3366
+	.4byte 0x0A00633A
+	.4byte 0x2020203C
+	.4byte 0x252E3366
+	.4byte 0x20252E33
+	.4byte 0x6620252E
+	.4byte 0x33663E0A
+	.4byte 0x00613A20
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x623A2020
+	.4byte 0x20252E33
+	.4byte 0x660A0070
+	.4byte 0x3A202020
+	.4byte 0x252E3366
+	.4byte 0x0A00773A
+	.4byte 0x20202025
+	.4byte 0x2E33660A
+	.4byte 0x00007372
+	.4byte 0x632D6D70
+	.4byte 0x3A202020
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x25730A00
+	.4byte 0x64657374
+	.4byte 0x2D6D703A
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x20202573
+	.4byte 0x0A006469
+	.4byte 0x73743A20
+	.4byte 0x20252E33
+	.4byte 0x660A0073
+	.4byte 0x70656564
+	.4byte 0x3A20252E
+	.4byte 0x33660A00
+	.4byte 0x736C6964
+	.4byte 0x6500726F
+	.4byte 0x7400736C
+	.4byte 0x6964655F
+	.4byte 0x726F7400
+	.4byte 0x736C6964
+	.4byte 0x655F7468
+	.4byte 0x656E5F72
+	.4byte 0x6F740072
+	.4byte 0x6F745F74
+	.4byte 0x68656E5F
+	.4byte 0x736C6964
+	.4byte 0x65007265
+	.4byte 0x7475726E
+	.4byte 0x733A2020
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x25730020
+	.4byte 0x20207265
+	.4byte 0x745F6465
+	.4byte 0x6C61793A
+	.4byte 0x20252E33
+	.4byte 0x66000A00
+	.4byte 0x636F6E74
+	.4byte 0x696E756F
+	.4byte 0x75733A20
+	.4byte 0x20202020
+	.4byte 0x20202573
+	.4byte 0x00202020
+	.4byte 0x656E645F
+	.4byte 0x64656C61
+	.4byte 0x793A2025
+	.4byte 0x2E336600
+	.4byte 0x736C6964
+	.4byte 0x696E6720
+	.4byte 0x2B20726F
+	.4byte 0x74617469
+	.4byte 0x6E672066
+	.4byte 0x6F727468
+	.4byte 0x00736C69
+	.4byte 0x64696E67
+	.4byte 0x20666F72
+	.4byte 0x74680072
+	.4byte 0x6F746174
+	.4byte 0x696E6720
+	.4byte 0x666F7274
+	.4byte 0x68007761
+	.4byte 0x6974696E
+	.4byte 0x6720746F
+	.4byte 0x20726574
+	.4byte 0x75726E00
+	.4byte 0x736C6964
+	.4byte 0x696E6720
+	.4byte 0x2B20726F
+	.4byte 0x74617469
+	.4byte 0x6E672062
+	.4byte 0x61636B00
+	.4byte 0x736C6964
+	.4byte 0x696E6720
+	.4byte 0x6261636B
+	.4byte 0x00726F74
+	.4byte 0x6174696E
+	.4byte 0x67206261
+	.4byte 0x636B0077
+	.4byte 0x61697469
+	.4byte 0x6E672074
+	.4byte 0x6F206265
+	.4byte 0x67696E20
+	.4byte 0x61676169
+	.4byte 0x6E00646F
+	.4byte 0x6E650075
+	.4byte 0x6E646F6E
+	.4byte 0x65007374
+	.4byte 0x6174653A
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x25730A00
+	.4byte 0x58005900
+	.4byte 0x5A00736C
+	.4byte 0x6964655F
+	.4byte 0x61786973
+	.4byte 0x3A202020
+	.4byte 0x25730020
+	.4byte 0x20202020
+	.4byte 0x2020736C
+	.4byte 0x6964655F
+	.4byte 0x64697374
+	.4byte 0x3A202020
+	.4byte 0x252E3366
+	.4byte 0x0A00736C
+	.4byte 0x6964655F
+	.4byte 0x746D3A20
+	.4byte 0x20202020
+	.4byte 0x252E3366
+	.4byte 0x00202020
+	.4byte 0x736C6964
+	.4byte 0x655F7370
+	.4byte 0x6565643A
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x736C6964
+	.4byte 0x655F6163
+	.4byte 0x635F746D
+	.4byte 0x3A20252E
+	.4byte 0x33660020
+	.4byte 0x2020736C
+	.4byte 0x6964655F
+	.4byte 0x6465635F
+	.4byte 0x746D3A20
+	.4byte 0x252E3366
+	.4byte 0x0A00736C
+	.4byte 0x6964655F
+	.4byte 0x62645F74
+	.4byte 0x6D3A2020
+	.4byte 0x252E3366
+	.4byte 0x00202020
+	.4byte 0x736C6964
+	.4byte 0x655F6664
+	.4byte 0x5F746D3A
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x73746172
+	.4byte 0x745F706F
+	.4byte 0x733A2020
+	.4byte 0x3C252E33
+	.4byte 0x6620252E
+	.4byte 0x33662025
+	.4byte 0x2E33663E
+	.4byte 0x0A00656E
+	.4byte 0x645F706F
+	.4byte 0x733A2020
+	.4byte 0x20203C25
+	.4byte 0x2E336620
+	.4byte 0x252E3366
+	.4byte 0x20252E33
+	.4byte 0x663E0A00
+	.4byte 0x6469723A
+	.4byte 0x20202020
+	.4byte 0x20202020
+	.4byte 0x3C252E33
+	.4byte 0x6620252E
+	.4byte 0x33662025
+	.4byte 0x2E33663E
+	.4byte 0x0A00726F
+	.4byte 0x745F6178
+	.4byte 0x69733A20
+	.4byte 0x20202573
+	.4byte 0x00202020
+	.4byte 0x20202020
+	.4byte 0x726F745F
+	.4byte 0x64697374
+	.4byte 0x3A202020
+	.4byte 0x252E3366
+	.4byte 0x0A00726F
+	.4byte 0x745F746D
+	.4byte 0x3A202020
+	.4byte 0x2020252E
+	.4byte 0x33660020
+	.4byte 0x2020726F
+	.4byte 0x745F7370
+	.4byte 0x6565643A
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x726F745F
+	.4byte 0x6163635F
+	.4byte 0x746D3A20
+	.4byte 0x252E3366
+	.4byte 0x00202020
+	.4byte 0x726F745F
+	.4byte 0x6465635F
+	.4byte 0x746D3A20
+	.4byte 0x252E3366
+	.4byte 0x0A00726F
+	.4byte 0x745F6264
+	.4byte 0x5F746D3A
+	.4byte 0x2020252E
+	.4byte 0x33660020
+	.4byte 0x2020726F
+	.4byte 0x745F6664
+	.4byte 0x5F746D3A
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x61726F74
+	.4byte 0x3A202020
+	.4byte 0x20202020
+	.4byte 0x252E3366
+	.4byte 0x0A006272
+	.4byte 0x6F743A20
+	.4byte 0x20202020
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x746F703A
+	.4byte 0x20202020
+	.4byte 0x3C252E33
+	.4byte 0x6620252E
+	.4byte 0x33662025
+	.4byte 0x2E33663E
+	.4byte 0x0A006C65
+	.4byte 0x6E677468
+	.4byte 0x3A20252E
+	.4byte 0x33660A00
+	.4byte 0x70657269
+	.4byte 0x6F643A20
+	.4byte 0x252E3366
+	.4byte 0x0A007068
+	.4byte 0x6173653A
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x72616E67
+	.4byte 0x653A2020
+	.4byte 0x252E3366
+	.4byte 0x0A00773A
+	.4byte 0x20202020
+	.4byte 0x2020252E
+	.4byte 0x33660A00
+	.4byte 0x74727565
+	.4byte 0x20006661
+	.4byte 0x6C736500
+	.4byte 0x00000000
 
 .if 0
 
@@ -3103,7 +3443,14 @@ xDrawSetColor__F10iColor_tag:
 
 .section .data
 lbl_8027B570:
-	.incbin "baserom.dol", 0x278550, 0x20
+	.4byte 0x8001E978
+	.4byte 0x8001E9A8
+	.4byte 0x8001E9B8
+	.4byte 0x8001E9C8
+	.4byte 0x8001E9F8
+	.4byte 0x8001EA08
+	.4byte 0x8001EA18
+	.4byte 0x8001EA28
 
 .section .sbss
 .balign 8
@@ -3120,30 +3467,31 @@ gCurXEnv:
 
 .section .sdata
 lbl_803CA928:
-	.incbin "baserom.dol", 0x2B59E8, 0x8
+	.4byte 0xFFFF0000
+	.4byte 0x00000000
 
 .section .sdata2
 lbl_803CCC18:
-	.incbin "baserom.dol", 0x2B64B8, 0x4
+	.4byte 0x00000000
 lbl_803CCC1C:
-	.incbin "baserom.dol", 0x2B64BC, 0x4
+	.4byte 0x3F800000
 lbl_803CCC20:
-	.incbin "baserom.dol", 0x2B64C0, 0x4
+	.4byte 0x3727C5AC
 lbl_803CCC24:
-	.incbin "baserom.dol", 0x2B64C4, 0x4
+	.4byte 0x40C90FDB
 lbl_803CCC28:
-	.incbin "baserom.dol", 0x2B64C8, 0x4
+	.4byte 0x3F000000
 lbl_803CCC2C:
-	.incbin "baserom.dol", 0x2B64CC, 0x4
+	.4byte 0x40490FDB
 lbl_803CCC30:
-	.incbin "baserom.dol", 0x2B64D0, 0x4
+	.4byte 0x43340000
 lbl_803CCC34:
-	.incbin "baserom.dol", 0x2B64D4, 0x4
+	.4byte 0x40000000
 lbl_803CCC38:
-	.incbin "baserom.dol", 0x2B64D8, 0x4
+	.4byte 0xC0000000
 lbl_803CCC3C:
-	.incbin "baserom.dol", 0x2B64DC, 0x4
+	.4byte 0x358637BD
 lbl_803CCC40:
-	.incbin "baserom.dol", 0x2B64E0, 0x4
+	.4byte 0x3C23D70A
 lbl_803CCC44:
-	.incbin "baserom.dol", 0x2B64E4, 0x4
+	.4byte 0x3DCCCCCD

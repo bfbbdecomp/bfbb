@@ -259,4 +259,5 @@ rot_match_alist:
 
 .section .sdata2
 lbl_803CCC48:
-	.incbin "baserom.dol", 0x2B64E8, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000

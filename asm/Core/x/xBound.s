@@ -339,28 +339,64 @@ lbl_8000AC14:
 .section .data
 .balign 8
 lbl_8027B380:
-	.incbin "baserom.dol", 0x278360, 0x70
+	.4byte 0x8000A93C
+	.4byte 0x8000A97C
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A968
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
+	.4byte 0x8000A950
+	.4byte 0x8000A990
+	.4byte 0x8000A9A4
+	.4byte 0x8000A9A4
 /* SPECULATION: link order */
 .global sCameraFXTable
 sCameraFXTable:
-	.incbin "baserom.dol", 0x2783D0, 0x28
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x8000CE30
+	.4byte 0x00000000
+	.4byte 0x00000002
+	.4byte 0x8000D074
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sdata2
 .global _571
 _571:
-	.incbin "baserom.dol", 0x2B6258, 0x4
+	.4byte 0x3F000000
 .global _640
 _640:
-	.incbin "baserom.dol", 0x2B625C, 0x4
+	.4byte 0x40400000
 .global _641
 _641:
-	.incbin "baserom.dol", 0x2B6260, 0x4
+	.4byte 0x00000000
 .global _642
 _642:
-	.incbin "baserom.dol", 0x2B6264, 0x4
+	.4byte 0x3F800000
 .global _643
 _643:
-	.incbin "baserom.dol", 0x2B6268, 0x4
+	.4byte 0x47C35000
 .global _644
 _644:
-	.incbin "baserom.dol", 0x2B626C, 0x4
+	.4byte 0x3727C5AC

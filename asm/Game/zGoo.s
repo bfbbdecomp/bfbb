@@ -69,7 +69,7 @@ zgoo_nused:
 .section .sdata2
 .global _742_2
 _742_2:
-	.incbin "baserom.dol", 0x2B82E8, 0x4
+	.4byte 0x00000000
 .global _780_1
 _780_1:
-	.incbin "baserom.dol", 0x2B82EC, 0x4
+	.4byte 0x3E800000

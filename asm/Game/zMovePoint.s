@@ -42,7 +42,7 @@ g_mvpt_cnt:
 .section .sdata2
 .global lbl_803CDD40
 lbl_803CDD40:
-	.incbin "baserom.dol", 0x2B75E0, 0x4
+	.4byte 0x3727C5AC
 .global lbl_803CDD44
 lbl_803CDD44:
-	.incbin "baserom.dol", 0x2B75E4, 0x4
+	.4byte 0xBF800000

@@ -329,6 +329,8 @@ xMorphSeqDuration__FP13xMorphSeqFile:
 
 .section .sdata2
 lbl_803CCEC0:
-	.incbin "baserom.dol", 0x2B6760, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_803CCEC8:
-	.incbin "baserom.dol", 0x2B6768, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

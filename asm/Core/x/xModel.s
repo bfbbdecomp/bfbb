@@ -1360,16 +1360,19 @@ gParDead:
 
 .section .sdata2
 lbl_803CCE98:
-	.incbin "baserom.dol", 0x2B6738, 0x4
+	.4byte 0x00000000
 lbl_803CCE9C:
-	.incbin "baserom.dol", 0x2B673C, 0x4
+	.4byte 0x3F800000
 lbl_803CCEA0:
-	.incbin "baserom.dol", 0x2B6740, 0x4
+	.4byte 0x437F0000
 lbl_803CCEA4:
-	.incbin "baserom.dol", 0x2B6744, 0x4
+	.4byte 0x7E876ABD
 lbl_803CCEA8:
-	.incbin "baserom.dol", 0x2B6748, 0x8
+	.4byte 0x7E967699
+	.4byte 0x00000000
 lbl_803CCEB0:
-	.incbin "baserom.dol", 0x2B6750, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 lbl_803CCEB8:
-	.incbin "baserom.dol", 0x2B6758, 0x8
+	.4byte 0x40000000
+	.4byte 0x00000000

@@ -200,7 +200,7 @@ lbl_801234AC:
 .section .sdata2
 .global lbl_803CEA40
 lbl_803CEA40:
-	.incbin "baserom.dol", 0x2B82E0, 0x4
+	.4byte 0x3F800000
 .global lbl_803CEA44
 lbl_803CEA44:
-	.incbin "baserom.dol", 0x2B82E4, 0x4
+	.4byte 0x3727C5AC

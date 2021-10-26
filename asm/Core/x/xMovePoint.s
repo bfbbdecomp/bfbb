@@ -268,22 +268,23 @@ lbl_800359D4:
 /* = 0.333...f */
 .global xMovePoint_float_onethird
 xMovePoint_float_onethird:
-	.incbin "baserom.dol", 0x2B6770, 0x4
+	.4byte 0x3EAAAAAB
 
 /* = 0.666...f */
 .global xMovePoint_float_twothirds
 xMovePoint_float_twothirds:
-	.incbin "baserom.dol", 0x2B6774, 0x4
+	.4byte 0x3F2AAAAB
 
 /* = 0.0f */
 .global xMovePoint_float_0
 xMovePoint_float_0:
-	.incbin "baserom.dol", 0x2B6778, 0x4
+	.4byte 0x00000000
 
 /* = 0.35f */
 .global xMovePoint_float_0p35
 xMovePoint_float_0p35:
-	.incbin "baserom.dol", 0x2B677C, 0x4
+	.4byte 0x3F800000
 
 lbl_803CCEE0:
-	.incbin "baserom.dol", 0x2B6780, 0x8
+	.4byte 0x3727C5AC
+	.4byte 0x00000000

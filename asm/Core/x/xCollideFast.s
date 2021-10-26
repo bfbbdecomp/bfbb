@@ -102,62 +102,62 @@ lbl_80015B28:
 
 .section .sdata2
 lbl_803CCAF8:
-	.incbin "baserom.dol", 0x2B6398, 0x4
+	.4byte 0x00000000
 lbl_803CCAFC:
-	.incbin "baserom.dol", 0x2B639C, 0x4
+	.4byte 0x40000000
 /* SPECULATION: link order */
 .global g_RED
 g_RED:
-	.incbin "baserom.dol", 0x2B63A0, 0x4
+	.4byte 0xFF0000FF
 /* SPECULATION: link order */
 .global g_GREEN
 g_GREEN:
-	.incbin "baserom.dol", 0x2B63A4, 0x4
+	.4byte 0x00FF00FF
 /* SPECULATION: link order */
 .global g_BLUE
 g_BLUE:
-	.incbin "baserom.dol", 0x2B63A8, 0x4
+	.4byte 0x0000FFFF
 /* SPECULATION: link order */
 .global g_CYAN
 g_CYAN:
-	.incbin "baserom.dol", 0x2B63AC, 0x4
+	.4byte 0x00FFFFFF
 /* SPECULATION: link order */
 .global g_YELLOW
 g_YELLOW:
-	.incbin "baserom.dol", 0x2B63B0, 0x4
+	.4byte 0xFFFF00FF
 /* SPECULATION: link order */
 .global g_WHITE
 g_WHITE:
-	.incbin "baserom.dol", 0x2B63B4, 0x4
+	.4byte 0xFFFFFFFF
 /* SPECULATION: link order */
 .global g_GRAY50
 g_GRAY50:
-	.incbin "baserom.dol", 0x2B63B8, 0x4
+	.4byte 0x808080FF
 /* SPECULATION: link order */
 .global g_NEON_RED
 g_NEON_RED:
-	.incbin "baserom.dol", 0x2B63BC, 0x4
+	.4byte 0xFF2000FF
 /* SPECULATION: link order */
 .global g_NEON_GREEN
 g_NEON_GREEN:
-	.incbin "baserom.dol", 0x2B63C0, 0x4
+	.4byte 0x20FF00FF
 /* SPECULATION: link order */
 .global g_NEON_BLUE
 g_NEON_BLUE:
-	.incbin "baserom.dol", 0x2B63C4, 0x4
+	.4byte 0x2020FFFF
 /* SPECULATION: link order */
 .global g_PIMP_GOLD
 g_PIMP_GOLD:
-	.incbin "baserom.dol", 0x2B63C8, 0x4
+	.4byte 0xD7DC13FF
 /* SPECULATION: link order */
 .global g_ORANGE
 g_ORANGE:
-	.incbin "baserom.dol", 0x2B63CC, 0x4
+	.4byte 0xFFA500FF
 /* SPECULATION: link order */
 .global g_LAVENDER
 g_LAVENDER:
-	.incbin "baserom.dol", 0x2B63D0, 0x4
+	.4byte 0xC869E5FF
 /* SPECULATION: link order */
 .global g_PINK
 g_PINK:
-	.incbin "baserom.dol", 0x2B63D4, 0x4
+	.4byte 0xFF80FFFF

@@ -1000,4 +1000,15 @@ lbl_8004D04C:
 .section .data
 .balign 8
 lbl_8028A228:
-	.incbin "baserom.dol", 0x287208, 0x30
+	.4byte 0x8004D04C
+	.4byte 0x8004CAB0
+	.4byte 0x8004CAEC
+	.4byte 0x8004CB38
+	.4byte 0x8004CB90
+	.4byte 0x8004CBF4
+	.4byte 0x8004CC64
+	.4byte 0x8004CCE0
+	.4byte 0x8004CD68
+	.4byte 0x8004CDFC
+	.4byte 0x8004CE9C
+	.4byte 0x8004CF48

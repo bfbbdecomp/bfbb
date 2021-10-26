@@ -1244,28 +1244,51 @@ lbl_800B0608:
 
 .section .data
 lbl_802904CC:
-	.incbin "baserom.dol", 0x28D4AC, 0x2C
+	.4byte 0x800B0458
+	.4byte 0x800B0520
+	.4byte 0x800B0450
+	.4byte 0x800B0448
+	.4byte 0x800B0520
+	.4byte 0x800B0448
+	.4byte 0x800B0448
+	.4byte 0x800B0448
+	.4byte 0x800B0448
+	.4byte 0x800B0520
+	.4byte 0x800B0448
 lbl_802904F8:
-	.incbin "baserom.dol", 0x28D4D8, 0x30
+	.4byte 0x800B0280
+	.4byte 0x800B02A0
+	.4byte 0x800B0414
+	.4byte 0x800B0520
+	.4byte 0x800B0520
+	.4byte 0x800B0520
+	.4byte 0x800B0520
+	.4byte 0x800B0520
+	.4byte 0x800B0520
+	.4byte 0x800B0520
+	.4byte 0x800B0480
+	.4byte 0x800B0468
 
 
 
 .section .sdata2
 .global _846
 _846:
-	.incbin "baserom.dol", 0x2B7708, 0x4
+	.4byte 0x3F800000
 .global _847
 _847:
-	.incbin "baserom.dol", 0x2B770C, 0x4
+	.4byte 0x00000000
 .global _848
 _848:
-	.incbin "baserom.dol", 0x2B7710, 0x4
+	.4byte 0x3C888889
 .global _849
 _849:
-	.incbin "baserom.dol", 0x2B7714, 0x4
+	.4byte 0x3DCCCCCD
 .global _850
 _850:
-	.incbin "baserom.dol", 0x2B7718, 0x8
+	.4byte 0x3F19999A
+	.4byte 0x00000000
 .global _852
 _852:
-	.incbin "baserom.dol", 0x2B7720, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

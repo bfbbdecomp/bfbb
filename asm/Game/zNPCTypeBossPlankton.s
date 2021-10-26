@@ -8621,99 +8621,1330 @@ lbl_80170444:
 
 .section .rodata
 lbl_80270FA8:
-	.incbin "baserom.dol", 0x26DF88, 0x164
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_8027110C:
-	.incbin "baserom.dol", 0x26E0EC, 0x1DC
+	.4byte 0x00000000
+	.4byte 0x80271464
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x80271472
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x8027147B
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x8027148C
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x8027149A
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x802714A9
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x802714B5
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000001
+	.4byte 0x802714C3
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x802714D0
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x802714DA
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x802714EA
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x802714F9
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x80271502
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x8027150C
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x80271515
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000002
+	.4byte 0x80271524
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x80271531
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000003
+	.4byte 0x8027153F
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000003
+	.4byte 0x8027154D
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000003
+	.4byte 0x80271561
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000004
+	.4byte 0x80271574
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000004
+	.4byte 0x80271583
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000004
+	.4byte 0x80271591
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000004
+	.4byte 0x802715A0
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000004
+	.4byte 0x802715A8
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000005
+	.4byte 0x802715B2
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000005
+	.4byte 0x802715C2
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000005
+	.4byte 0x802715CF
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000005
+	.4byte 0x802715D9
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_802712E8:
-	.incbin "baserom.dol", 0x26E2C8, 0x18
+	.4byte 0x00000000
+	.4byte 0xFFFFFFFF
+	.4byte 0x00000000
+	.4byte 0x3F800000
+	.4byte 0xFFFFFF00
+	.4byte 0x3F800000
 lbl_80271300:
-	.incbin "baserom.dol", 0x26E2E0, 0x94
+	.4byte 0x00000000
+	.4byte 0xFFFFFFFF
+	.4byte 0x00000000
+	.4byte 0x3F000000
+	.4byte 0xFF00FFFF
+	.4byte 0x40800000
+	.4byte 0x3F800000
+	.4byte 0xFF000000
+	.4byte 0x40C00000
+	.4byte 0x00000019
+	.4byte 0x00000043
+	.4byte 0x00000038
+	.4byte 0x00000039
+	.4byte 0x0000001A
+	.4byte 0x0000002A
+	.4byte 0x00000033
+	.4byte 0x0000002A
+	.4byte 0x0000002B
+	.4byte 0x00000034
+	.4byte 0x00000035
+	.4byte 0x00000041
+	.4byte 0x0000003E
+	.4byte 0x0000001B
+	.4byte 0x0000001C
+	.4byte 0x0000001D
+	.4byte 0x0000001B
+	.4byte 0x0000001C
+	.4byte 0x0000001D
+	.4byte 0x00000036
+	.4byte 0x00000037
+	.4byte 0x0000003A
+	.4byte 0x0000001E
+	.4byte 0x0000001F
+	.4byte 0x00000020
+	.4byte 0x00000021
+	.4byte 0x00000022
+	.4byte 0x00000023
 lbl_80271394:
-	.incbin "baserom.dol", 0x26E374, 0x40
+	.4byte 0x803CF480
+	.4byte 0x00000002
+	.4byte 0x80271324
+	.4byte 0x00000004
+	.4byte 0x80271334
+	.4byte 0x00000003
+	.4byte 0x80271340
+	.4byte 0x00000006
+	.4byte 0x80271358
+	.4byte 0x00000003
+	.4byte 0x80271364
+	.4byte 0x00000006
+	.4byte 0x803CF488
+	.4byte 0x00000001
+	.4byte 0x8027137C
+	.4byte 0x00000006
 lbl_802713D4:
-	.incbin "baserom.dol", 0x26E3B4, 0xC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_802713E0:
-	.incbin "baserom.dol", 0x26E3C0, 0x60
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_80271440:
-	.incbin "baserom.dol", 0x26E420, 0x24
+	.4byte 0xBF800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_80271464:
-	.incbin "baserom.dol", 0x26E444, 0x9C4
+	.4byte 0x5253425F
+	.4byte 0x666F6F74
+	.4byte 0x5F6C6F6F
+	.4byte 0x70006661
+	.4byte 0x6E5F6C6F
+	.4byte 0x6F700052
+	.4byte 0x6F636B65
+	.4byte 0x745F6275
+	.4byte 0x726E5F6C
+	.4byte 0x6F6F7000
+	.4byte 0x52505F77
+	.4byte 0x68697272
+	.4byte 0x5F6C6F6F
+	.4byte 0x70005250
+	.4byte 0x5F776869
+	.4byte 0x7272325F
+	.4byte 0x6C6F6F70
+	.4byte 0x00476C6F
+	.4byte 0x76655F68
+	.4byte 0x6F766572
+	.4byte 0x00476C6F
+	.4byte 0x76655F70
+	.4byte 0x75727375
+	.4byte 0x69740050
+	.4byte 0x7261776E
+	.4byte 0x5F46465F
+	.4byte 0x68697400
+	.4byte 0x50726177
+	.4byte 0x6E5F6869
+	.4byte 0x7400446F
+	.4byte 0x6F725F6D
+	.4byte 0x6574616C
+	.4byte 0x5F736875
+	.4byte 0x74004768
+	.4byte 0x6F737470
+	.4byte 0x6C61745F
+	.4byte 0x66616C6C
+	.4byte 0x0053545F
+	.4byte 0x64656174
+	.4byte 0x68005250
+	.4byte 0x5F427772
+	.4byte 0x727A7400
+	.4byte 0x52505F63
+	.4byte 0x68756E6B
+	.4byte 0x00623230
+	.4byte 0x315F7270
+	.4byte 0x5F657868
+	.4byte 0x616C6500
+	.4byte 0x52505F6C
+	.4byte 0x61736572
+	.4byte 0x5F616C74
+	.4byte 0x0052505F
+	.4byte 0x6C617365
+	.4byte 0x725F6C6F
+	.4byte 0x6F700045
+	.4byte 0x6C656341
+	.4byte 0x72635F61
+	.4byte 0x6C745F62
+	.4byte 0x004C6173
+	.4byte 0x65725F6C
+	.4byte 0x72675F66
+	.4byte 0x6972655F
+	.4byte 0x6C6F6F70
+	.4byte 0x004C6173
+	.4byte 0x65725F73
+	.4byte 0x6D5F6669
+	.4byte 0x72655F6C
+	.4byte 0x6F6F7000
+	.4byte 0x52425F73
+	.4byte 0x74616C61
+	.4byte 0x63745F62
+	.4byte 0x726B0056
+	.4byte 0x6F6C6361
+	.4byte 0x6E6F5F62
+	.4byte 0x6C617374
+	.4byte 0x0052505F
+	.4byte 0x6C617365
+	.4byte 0x725F7468
+	.4byte 0x756E6B00
+	.4byte 0x52505F70
+	.4byte 0x66667400
+	.4byte 0x52505F74
+	.4byte 0x68776173
+	.4byte 0x68005250
+	.4byte 0x5F636861
+	.4byte 0x7267655F
+	.4byte 0x77686972
+	.4byte 0x72004231
+	.4byte 0x30315F53
+	.4byte 0x435F6A75
+	.4byte 0x6D70004B
+	.4byte 0x4A5F4368
+	.4byte 0x61726765
+	.4byte 0x004C6173
+	.4byte 0x65725F6D
+	.4byte 0x65645F70
+	.4byte 0x77727570
+	.4byte 0x31007A4E
+	.4byte 0x50434250
+	.4byte 0x6C616E6B
+	.4byte 0x746F6E00
+	.4byte 0x4E50435F
+	.4byte 0x4E455753
+	.4byte 0x43415354
+	.4byte 0x45520074
+	.4byte 0x75726E5F
+	.4byte 0x61636365
+	.4byte 0x6C007475
+	.4byte 0x726E5F6D
+	.4byte 0x61785F76
+	.4byte 0x656C0067
+	.4byte 0x726F756E
+	.4byte 0x645F7900
+	.4byte 0x67726F75
+	.4byte 0x6E645F72
+	.4byte 0x61646975
+	.4byte 0x73006869
+	.4byte 0x745F7665
+	.4byte 0x6C006869
+	.4byte 0x745F6D61
+	.4byte 0x785F6469
+	.4byte 0x73740069
+	.4byte 0x646C655F
+	.4byte 0x74696D65
+	.4byte 0x006D696E
+	.4byte 0x5F617265
+	.4byte 0x6E615F64
+	.4byte 0x69737400
+	.4byte 0x68656C70
+	.4byte 0x2E667573
+	.4byte 0x655F6469
+	.4byte 0x73740068
+	.4byte 0x656C702E
+	.4byte 0x66757365
+	.4byte 0x5F64656C
+	.4byte 0x61790066
+	.4byte 0x6F6C6C6F
+	.4byte 0x772E6D69
+	.4byte 0x6E5F616E
+	.4byte 0x6700666F
+	.4byte 0x6C6C6F77
+	.4byte 0x2E6D6178
+	.4byte 0x5F616E67
+	.4byte 0x00666F6C
+	.4byte 0x6C6F772E
+	.4byte 0x6D696E5F
+	.4byte 0x64656C61
+	.4byte 0x7900666F
+	.4byte 0x6C6C6F77
+	.4byte 0x2E6D6178
+	.4byte 0x5F64656C
+	.4byte 0x6179006D
+	.4byte 0x6F64655F
+	.4byte 0x62756464
+	.4byte 0x792E6163
+	.4byte 0x63656C00
+	.4byte 0x6D6F6465
+	.4byte 0x5F627564
+	.4byte 0x64792E6D
+	.4byte 0x61785F76
+	.4byte 0x656C006D
+	.4byte 0x6F64655F
+	.4byte 0x62756464
+	.4byte 0x792E7374
+	.4byte 0x756E5F64
+	.4byte 0x75726174
+	.4byte 0x696F6E00
+	.4byte 0x6D6F6465
+	.4byte 0x5F627564
+	.4byte 0x64792E6F
+	.4byte 0x62737472
+	.4byte 0x7563745F
+	.4byte 0x616E676C
+	.4byte 0x65006D6F
+	.4byte 0x64655F68
+	.4byte 0x61726173
+	.4byte 0x732E6163
+	.4byte 0x63656C00
+	.4byte 0x6D6F6465
+	.4byte 0x5F686172
+	.4byte 0x6173732E
+	.4byte 0x6D61785F
+	.4byte 0x76656C00
+	.4byte 0x6D6F6465
+	.4byte 0x5F686172
+	.4byte 0x6173732E
+	.4byte 0x7374756E
+	.4byte 0x5F647572
+	.4byte 0x6174696F
+	.4byte 0x6E006875
+	.4byte 0x6E742E68
+	.4byte 0x65696768
+	.4byte 0x74006875
+	.4byte 0x6E742E72
+	.4byte 0x61646975
+	.4byte 0x73006875
+	.4byte 0x6E742E62
+	.4byte 0x65616D5F
+	.4byte 0x696E7465
+	.4byte 0x7276616C
+	.4byte 0x0068756E
+	.4byte 0x742E6265
+	.4byte 0x616D5F64
+	.4byte 0x75726174
+	.4byte 0x696F6E00
+	.4byte 0x68756E74
+	.4byte 0x2E626561
+	.4byte 0x6D5F6469
+	.4byte 0x73740062
+	.4byte 0x65616D2E
+	.4byte 0x72617465
+	.4byte 0x00626561
+	.4byte 0x6D2E7469
+	.4byte 0x6D655F77
+	.4byte 0x61726D5F
+	.4byte 0x75700062
+	.4byte 0x65616D2E
+	.4byte 0x74696D65
+	.4byte 0x5F666972
+	.4byte 0x65006265
+	.4byte 0x616D2E67
+	.4byte 0x756E5F74
+	.4byte 0x696C745F
+	.4byte 0x6D696E00
+	.4byte 0x6265616D
+	.4byte 0x2E67756E
+	.4byte 0x5F74696C
+	.4byte 0x745F6D61
+	.4byte 0x78006265
+	.4byte 0x616D2E6D
+	.4byte 0x61785F64
+	.4byte 0x69737400
+	.4byte 0x6265616D
+	.4byte 0x2E656D69
+	.4byte 0x745F6469
+	.4byte 0x73740062
+	.4byte 0x65616D2E
+	.4byte 0x66782E72
+	.4byte 0x61646975
+	.4byte 0x73006265
+	.4byte 0x616D2E66
+	.4byte 0x782E6C65
+	.4byte 0x6E677468
+	.4byte 0x00626561
+	.4byte 0x6D2E6678
+	.4byte 0x2E76656C
+	.4byte 0x00626561
+	.4byte 0x6D2E6678
+	.4byte 0x2E666164
+	.4byte 0x655F6469
+	.4byte 0x73740062
+	.4byte 0x65616D2E
+	.4byte 0x66782E6B
+	.4byte 0x696C6C5F
+	.4byte 0x64697374
+	.4byte 0x00626561
+	.4byte 0x6D2E6678
+	.4byte 0x2E736166
+	.4byte 0x655F6469
+	.4byte 0x73740062
+	.4byte 0x65616D2E
+	.4byte 0x66782E68
+	.4byte 0x69745F72
+	.4byte 0x61646975
+	.4byte 0x73006265
+	.4byte 0x616D2E66
+	.4byte 0x782E7261
+	.4byte 0x6E645F61
+	.4byte 0x6E670062
+	.4byte 0x65616D2E
+	.4byte 0x66782E73
+	.4byte 0x6361725F
+	.4byte 0x6C696665
+	.4byte 0x00626561
+	.4byte 0x6D2E6678
+	.4byte 0x2E626F6C
+	.4byte 0x745F7576
+	.4byte 0x5B305D2E
+	.4byte 0x78006265
+	.4byte 0x616D2E66
+	.4byte 0x782E626F
+	.4byte 0x6C745F75
+	.4byte 0x765B305D
+	.4byte 0x2E790062
+	.4byte 0x65616D2E
+	.4byte 0x66782E62
+	.4byte 0x6F6C745F
+	.4byte 0x75765B31
+	.4byte 0x5D2E7800
+	.4byte 0x6265616D
+	.4byte 0x2E66782E
+	.4byte 0x626F6C74
+	.4byte 0x5F75765B
+	.4byte 0x315D2E79
+	.4byte 0x00626561
+	.4byte 0x6D2E6678
+	.4byte 0x2E686974
+	.4byte 0x5F696E74
+	.4byte 0x65727661
+	.4byte 0x6C006265
+	.4byte 0x616D2E66
+	.4byte 0x782E6461
+	.4byte 0x6D616765
+	.4byte 0x00686172
+	.4byte 0x6173732E
+	.4byte 0x73616665
+	.4byte 0x74795F64
+	.4byte 0x69737400
+	.4byte 0x68617261
+	.4byte 0x73732E73
+	.4byte 0x61666574
+	.4byte 0x795F6865
+	.4byte 0x69676874
+	.4byte 0x00686172
+	.4byte 0x6173732E
+	.4byte 0x61747461
+	.4byte 0x636B5F64
+	.4byte 0x69737400
+	.4byte 0x68617261
+	.4byte 0x73732E61
+	.4byte 0x74746163
+	.4byte 0x6B5F6865
+	.4byte 0x69676874
+	.4byte 0x00686172
+	.4byte 0x6173732E
+	.4byte 0x7374756E
+	.4byte 0x5F74696D
+	.4byte 0x6500666C
+	.4byte 0x616E6B2E
+	.4byte 0x64757261
+	.4byte 0x74696F6E
+	.4byte 0x00666C61
+	.4byte 0x6E6B2E61
+	.4byte 0x6363656C
+	.4byte 0x00666C61
+	.4byte 0x6E6B2E6D
+	.4byte 0x61785F76
+	.4byte 0x656C0066
+	.4byte 0x616C6C2E
+	.4byte 0x61636365
+	.4byte 0x6C006661
+	.4byte 0x6C6C2E6D
+	.4byte 0x61785F76
+	.4byte 0x656C0066
+	.4byte 0x616C6C2E
+	.4byte 0x64697374
+	.4byte 0x00657661
+	.4byte 0x64652E64
+	.4byte 0x75726174
+	.4byte 0x696F6E00
+	.4byte 0x65766164
+	.4byte 0x652E6D6F
+	.4byte 0x76655F64
+	.4byte 0x656C6179
+	.4byte 0x5F6D696E
+	.4byte 0x00657661
+	.4byte 0x64652E6D
+	.4byte 0x6F76655F
+	.4byte 0x64656C61
+	.4byte 0x795F6D61
+	.4byte 0x78006576
+	.4byte 0x6164652E
+	.4byte 0x61636365
+	.4byte 0x6C006576
+	.4byte 0x6164652E
+	.4byte 0x6D61785F
+	.4byte 0x76656C00
+	.4byte 0x6172656E
+	.4byte 0x612E6365
+	.4byte 0x6E746572
+	.4byte 0x00617265
+	.4byte 0x6E612E61
+	.4byte 0x74746163
+	.4byte 0x6B2E7261
+	.4byte 0x64697573
+	.4byte 0x00617265
+	.4byte 0x6E612E61
+	.4byte 0x74746163
+	.4byte 0x6B2E6865
+	.4byte 0x69676874
+	.4byte 0x00617265
+	.4byte 0x6E612E73
+	.4byte 0x61666574
+	.4byte 0x792E7261
+	.4byte 0x64697573
+	.4byte 0x00617265
+	.4byte 0x6E612E73
+	.4byte 0x61666574
+	.4byte 0x792E6865
+	.4byte 0x69676874
+	.4byte 0x00736F75
+	.4byte 0x6E645B53
+	.4byte 0x4F554E44
+	.4byte 0x5F484F56
+	.4byte 0x45525D2E
+	.4byte 0x766F6C75
+	.4byte 0x6D650073
+	.4byte 0x6F756E64
+	.4byte 0x5B534F55
+	.4byte 0x4E445F48
+	.4byte 0x4F564552
+	.4byte 0x5D2E7261
+	.4byte 0x6E67655F
+	.4byte 0x696E6E65
+	.4byte 0x7200736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F484F
+	.4byte 0x5645525D
+	.4byte 0x2E72616E
+	.4byte 0x67655F6F
+	.4byte 0x75746572
+	.4byte 0x00736F75
+	.4byte 0x6E645B53
+	.4byte 0x4F554E44
+	.4byte 0x5F484F56
+	.4byte 0x45525D2E
+	.4byte 0x64656C61
+	.4byte 0x7900736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F484F
+	.4byte 0x5645525D
+	.4byte 0x2E666164
+	.4byte 0x655F7469
+	.4byte 0x6D650073
+	.4byte 0x6F756E64
+	.4byte 0x5B534F55
+	.4byte 0x4E445F48
+	.4byte 0x49545D2E
+	.4byte 0x766F6C75
+	.4byte 0x6D650073
+	.4byte 0x6F756E64
+	.4byte 0x5B534F55
+	.4byte 0x4E445F48
+	.4byte 0x49545D2E
+	.4byte 0x72616E67
+	.4byte 0x655F696E
+	.4byte 0x6E657200
+	.4byte 0x736F756E
+	.4byte 0x645B534F
+	.4byte 0x554E445F
+	.4byte 0x4849545D
+	.4byte 0x2E72616E
+	.4byte 0x67655F6F
+	.4byte 0x75746572
+	.4byte 0x00736F75
+	.4byte 0x6E645B53
+	.4byte 0x4F554E44
+	.4byte 0x5F484954
+	.4byte 0x5D2E6465
+	.4byte 0x6C617900
+	.4byte 0x736F756E
+	.4byte 0x645B534F
+	.4byte 0x554E445F
+	.4byte 0x424F4C54
+	.4byte 0x5F464952
+	.4byte 0x455D2E76
+	.4byte 0x6F6C756D
+	.4byte 0x6500736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F424F
+	.4byte 0x4C545F46
+	.4byte 0x4952455D
+	.4byte 0x2E72616E
+	.4byte 0x67655F69
+	.4byte 0x6E6E6572
+	.4byte 0x00736F75
+	.4byte 0x6E645B53
+	.4byte 0x4F554E44
+	.4byte 0x5F424F4C
+	.4byte 0x545F4649
+	.4byte 0x52455D2E
+	.4byte 0x72616E67
+	.4byte 0x655F6F75
+	.4byte 0x74657200
+	.4byte 0x736F756E
+	.4byte 0x645B534F
+	.4byte 0x554E445F
+	.4byte 0x424F4C54
+	.4byte 0x5F464952
+	.4byte 0x455D2E64
+	.4byte 0x656C6179
+	.4byte 0x00736F75
+	.4byte 0x6E645B53
+	.4byte 0x4F554E44
+	.4byte 0x5F424F4C
+	.4byte 0x545F464C
+	.4byte 0x595D2E76
+	.4byte 0x6F6C756D
+	.4byte 0x6500736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F424F
+	.4byte 0x4C545F46
+	.4byte 0x4C595D2E
+	.4byte 0x72616E67
+	.4byte 0x655F696E
+	.4byte 0x6E657200
+	.4byte 0x736F756E
+	.4byte 0x645B534F
+	.4byte 0x554E445F
+	.4byte 0x424F4C54
+	.4byte 0x5F464C59
+	.4byte 0x5D2E7261
+	.4byte 0x6E67655F
+	.4byte 0x6F757465
+	.4byte 0x7200736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F424F
+	.4byte 0x4C545F46
+	.4byte 0x4C595D2E
+	.4byte 0x64656C61
+	.4byte 0x7900736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F424F
+	.4byte 0x4C545F46
+	.4byte 0x4C595D2E
+	.4byte 0x66616465
+	.4byte 0x5F74696D
+	.4byte 0x6500736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F424F
+	.4byte 0x4C545F48
+	.4byte 0x49545D2E
+	.4byte 0x766F6C75
+	.4byte 0x6D650073
+	.4byte 0x6F756E64
+	.4byte 0x5B534F55
+	.4byte 0x4E445F42
+	.4byte 0x4F4C545F
+	.4byte 0x4849545D
+	.4byte 0x2E72616E
+	.4byte 0x67655F69
+	.4byte 0x6E6E6572
+	.4byte 0x00736F75
+	.4byte 0x6E645B53
+	.4byte 0x4F554E44
+	.4byte 0x5F424F4C
+	.4byte 0x545F4849
+	.4byte 0x545D2E72
+	.4byte 0x616E6765
+	.4byte 0x5F6F7574
+	.4byte 0x65720073
+	.4byte 0x6F756E64
+	.4byte 0x5B534F55
+	.4byte 0x4E445F42
+	.4byte 0x4F4C545F
+	.4byte 0x4849545D
+	.4byte 0x2E64656C
+	.4byte 0x61790073
+	.4byte 0x6F756E64
+	.4byte 0x5B534F55
+	.4byte 0x4E445F43
+	.4byte 0x48415247
+	.4byte 0x455D2E76
+	.4byte 0x6F6C756D
+	.4byte 0x6500736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F4348
+	.4byte 0x41524745
+	.4byte 0x5D2E7261
+	.4byte 0x6E67655F
+	.4byte 0x696E6E65
+	.4byte 0x7200736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F4348
+	.4byte 0x41524745
+	.4byte 0x5D2E7261
+	.4byte 0x6E67655F
+	.4byte 0x6F757465
+	.4byte 0x7200736F
+	.4byte 0x756E645B
+	.4byte 0x534F554E
+	.4byte 0x445F4348
+	.4byte 0x41524745
+	.4byte 0x5D2E6465
+	.4byte 0x6C617900
+	.4byte 0x506C616E
+	.4byte 0x6B746F6E
+	.4byte 0x27732042
+	.4byte 0x65616D00
+	.4byte 0x706C616E
+	.4byte 0x6B746F6E
+	.4byte 0x5F6C6173
+	.4byte 0x65725F62
+	.4byte 0x6F6C7400
+	.4byte 0x506C616E
+	.4byte 0x6B746F6E
+	.4byte 0x27732042
+	.4byte 0x65616D20
+	.4byte 0x52696E67
+	.4byte 0x73006275
+	.4byte 0x62626C65
+	.4byte 0x00506C61
+	.4byte 0x6E6B746F
+	.4byte 0x6E277320
+	.4byte 0x4265616D
+	.4byte 0x20476C6F
+	.4byte 0x77006678
+	.4byte 0x5F666972
+	.4byte 0x65776F72
+	.4byte 0x6B005041
+	.4byte 0x52454D49
+	.4byte 0x545F4250
+	.4byte 0x4C414E4B
+	.4byte 0x5F535041
+	.4byte 0x524B5300
+	.4byte 0x50415245
+	.4byte 0x4D49545F
+	.4byte 0x42504C41
+	.4byte 0x4E4B5F50
+	.4byte 0x4C41534D
+	.4byte 0x41005041
+	.4byte 0x52454D49
+	.4byte 0x545F4250
+	.4byte 0x4C414E4B
+	.4byte 0x5F434841
+	.4byte 0x52474500
 
 .section .data
 lbl_8029AF30:
-	.incbin "baserom.dol", 0x297F10, 0xC0
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000002
+	.4byte 0x00000001
+	.4byte 0x40400000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_8029AFF0:
-	.incbin "baserom.dol", 0x297FD0, 0x34
+	.4byte 0x8016B868
+	.4byte 0x8016B834
+	.4byte 0x8016B834
+	.4byte 0x8016B834
+	.4byte 0x8016B868
+	.4byte 0x8016B868
+	.4byte 0x8016B834
+	.4byte 0x8016B868
+	.4byte 0x8016B834
+	.4byte 0x8016B834
+	.4byte 0x8016B834
+	.4byte 0x8016B868
+	.4byte 0x8016B834
 lbl_8029B024:
-	.incbin "baserom.dol", 0x298004, 0x3C
+	.4byte 0x8016B8AC
+	.4byte 0x8016B8AC
+	.4byte 0x8016B8AC
+	.4byte 0x8016B8AC
+	.4byte 0x8016B8AC
+	.4byte 0x8016B8AC
+	.4byte 0x8016B8B4
+	.4byte 0x8016B8BC
+	.4byte 0x8016B8C4
+	.4byte 0x8016B8C4
+	.4byte 0x8016B8C4
+	.4byte 0x8016B8CC
+	.4byte 0x8016B8D4
+	.4byte 0x8016B8DC
+	.4byte 0x8016B8E4
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonBomb
 __vt__21zNPCGoalBPlanktonBomb:
-	.incbin "baserom.dol", 0x298040, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016FB70
+	.4byte 0x8016FB90
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016FBB0
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__23zNPCGoalBPlanktonMissle
 __vt__23zNPCGoalBPlanktonMissle:
-	.incbin "baserom.dol", 0x298074, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016FAB8
+	.4byte 0x8016FAD8
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016FAF8
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonWall
 __vt__21zNPCGoalBPlanktonWall:
-	.incbin "baserom.dol", 0x2980A8, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016FA00
+	.4byte 0x8016FA20
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016FA40
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonBeam
 __vt__21zNPCGoalBPlanktonBeam:
-	.incbin "baserom.dol", 0x2980DC, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016F548
+	.4byte 0x8016F5F8
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016F66C
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__22zNPCGoalBPlanktonDizzy
 __vt__22zNPCGoalBPlanktonDizzy:
-	.incbin "baserom.dol", 0x298110, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016F330
+	.4byte 0x8016F3A8
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016F3D4
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonFall
 __vt__21zNPCGoalBPlanktonFall:
-	.incbin "baserom.dol", 0x298144, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016F16C
+	.4byte 0x8016F1FC
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016F228
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonStun
 __vt__21zNPCGoalBPlanktonStun:
-	.incbin "baserom.dol", 0x298178, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016EF38
+	.4byte 0x8016EFB0
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016F014
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonMove
 __vt__21zNPCGoalBPlanktonMove:
-	.incbin "baserom.dol", 0x2981AC, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016EE80
+	.4byte 0x8016EEA0
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016EEC0
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__22zNPCGoalBPlanktonTaunt
 __vt__22zNPCGoalBPlanktonTaunt:
-	.incbin "baserom.dol", 0x2981E0, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016EDC8
+	.4byte 0x8016EDE8
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016EE08
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonHunt
 __vt__21zNPCGoalBPlanktonHunt:
-	.incbin "baserom.dol", 0x298214, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016EB1C
+	.4byte 0x8016EBB0
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016EC08
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__22zNPCGoalBPlanktonEvade
 __vt__22zNPCGoalBPlanktonEvade:
-	.incbin "baserom.dol", 0x298248, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016E604
+	.4byte 0x8016E708
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016E774
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__22zNPCGoalBPlanktonFlank
 __vt__22zNPCGoalBPlanktonFlank:
-	.incbin "baserom.dol", 0x29827C, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016E3B0
+	.4byte 0x8016E4A8
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016E508
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__23zNPCGoalBPlanktonAmbush
 __vt__23zNPCGoalBPlanktonAmbush:
-	.incbin "baserom.dol", 0x2982B0, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016E168
+	.4byte 0x8016E228
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016E248
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__23zNPCGoalBPlanktonAttack
 __vt__23zNPCGoalBPlanktonAttack:
-	.incbin "baserom.dol", 0x2982E4, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016DFA8
+	.4byte 0x8016E040
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016E060
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__21zNPCGoalBPlanktonIdle
 __vt__21zNPCGoalBPlanktonIdle:
-	.incbin "baserom.dol", 0x298318, 0x34
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x800D5440
+	.4byte 0x8016DB94
+	.4byte 0x8016DC38
+	.4byte 0x800D5424
+	.4byte 0x800D51AC
+	.4byte 0x800D524C
+	.4byte 0x8010EB04
+	.4byte 0x8016DC90
+	.4byte 0x800D542C
+	.4byte 0x800D5468
+	.4byte 0x800D5470
 /* SPECULATION: link order */
 .global __vt__13zNPCBPlankton
 __vt__13zNPCBPlankton:
-	.incbin "baserom.dol", 0x29834C, 0xDC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x801698C4
+	.4byte 0x800F4738
+	.4byte 0x80169944
+	.4byte 0x80169990
+	.4byte 0x801699CC
+	.4byte 0x80169B64
+	.4byte 0x800F0164
+	.4byte 0x800F0348
+	.4byte 0x800F0004
+	.4byte 0x80169D3C
+	.4byte 0x80169D64
+	.4byte 0x800B51F4
+	.4byte 0x800B51F8
+	.4byte 0x800F1770
+	.4byte 0x80170234
+	.4byte 0x8017023C
+	.4byte 0x80170244
+	.4byte 0x8017024C
+	.4byte 0x80170254
+	.4byte 0x80169B44
+	.4byte 0x800EFD30
+	.4byte 0x800EED6C
+	.4byte 0x80169D98
+	.4byte 0x80169DF0
+	.4byte 0x8016B570
+	.4byte 0x800F1718
+	.4byte 0x8016B744
+	.4byte 0x800F19AC
+	.4byte 0x80060028
+	.4byte 0x8017025C
+	.4byte 0x8016B7E8
+	.4byte 0x800EFC34
+	.4byte 0x800F46B0
+	.4byte 0x800EC87C
+	.4byte 0x80082BD8
+	.4byte 0x800F3F24
+	.4byte 0x80082BD0
+	.4byte 0x800EE2C8
+	.4byte 0x800F46B8
+	.4byte 0x800F46BC
+	.4byte 0x800F46C0
+	.4byte 0x800F46C4
+	.4byte 0x8016B884
+	.4byte 0x800F2448
+	.4byte 0x800F25D0
+	.4byte 0x800F46C8
+	.4byte 0x800F4664
+	.4byte 0x800F46A8
+	.4byte 0x800F3B68
+	.4byte 0x8013657C
+	.4byte 0x80136584
+	.4byte 0x80136588
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global __vt__6taxiCB
 __vt__6taxiCB:
-	.incbin "baserom.dol", 0x298428, 0x18
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x80172634
+	.4byte 0x80172638
+	.4byte 0x80172660
+	.4byte 0x8017263C
 
 .section .bss
 lbl_80329F48:
@@ -8813,112 +10044,114 @@ lbl_803D09A4:
 
 .section .sdata2
 lbl_803CF48C:
-	.incbin "baserom.dol", 0x2B8D2C, 0x4
+	.4byte 0x3F800000
 lbl_803CF490:
-	.incbin "baserom.dol", 0x2B8D30, 0x4
+	.4byte 0x00000000
 lbl_803CF494:
-	.incbin "baserom.dol", 0x2B8D34, 0x4
+	.4byte 0x3E4CCCCD
 lbl_803CF498:
-	.incbin "baserom.dol", 0x2B8D38, 0x4
+	.4byte 0x3DCCCCCD
 lbl_803CF49C:
-	.incbin "baserom.dol", 0x2B8D3C, 0x4
+	.4byte 0x3F000000
 lbl_803CF4A0:
-	.incbin "baserom.dol", 0x2B8D40, 0x4
+	.4byte 0x40400000
 lbl_803CF4A4:
-	.incbin "baserom.dol", 0x2B8D44, 0x4
+	.4byte 0x47C35000
 lbl_803CF4A8:
-	.incbin "baserom.dol", 0x2B8D48, 0x4
+	.4byte 0x3727C5AC
 lbl_803CF4AC:
-	.incbin "baserom.dol", 0x2B8D4C, 0x4
+	.4byte 0x44070000
 lbl_803CF4B0:
-	.incbin "baserom.dol", 0x2B8D50, 0x4
+	.4byte 0x3C8EFA35
 lbl_803CF4B4:
-	.incbin "baserom.dol", 0x2B8D54, 0x4
+	.4byte 0x3C23D70A
 lbl_803CF4B8:
-	.incbin "baserom.dol", 0x2B8D58, 0x4
+	.4byte 0x4E6E6B28
 lbl_803CF4BC:
-	.incbin "baserom.dol", 0x2B8D5C, 0x4
+	.4byte 0x43340000
 lbl_803CF4C0:
-	.incbin "baserom.dol", 0x2B8D60, 0x4
+	.4byte 0xBFB0A3D7
 lbl_803CF4C4:
-	.incbin "baserom.dol", 0x2B8D64, 0x4
+	.4byte 0xCE6E6B28
 lbl_803CF4C8:
-	.incbin "baserom.dol", 0x2B8D68, 0x4
+	.4byte 0x41400000
 lbl_803CF4CC:
-	.incbin "baserom.dol", 0x2B8D6C, 0x4
+	.4byte 0x40A00000
 lbl_803CF4D0:
-	.incbin "baserom.dol", 0x2B8D70, 0x4
+	.4byte 0x41200000
 lbl_803CF4D4:
-	.incbin "baserom.dol", 0x2B8D74, 0x4
+	.4byte 0x42C80000
 lbl_803CF4D8:
-	.incbin "baserom.dol", 0x2B8D78, 0x4
+	.4byte 0x41000000
 lbl_803CF4DC:
-	.incbin "baserom.dol", 0x2B8D7C, 0x4
+	.4byte 0x41700000
 lbl_803CF4E0:
-	.incbin "baserom.dol", 0x2B8D80, 0x4
+	.4byte 0x41F00000
 lbl_803CF4E4:
-	.incbin "baserom.dol", 0x2B8D84, 0x4
+	.4byte 0x40000000
 lbl_803CF4E8:
-	.incbin "baserom.dol", 0x2B8D88, 0x4
+	.4byte 0x41A00000
 lbl_803CF4EC:
-	.incbin "baserom.dol", 0x2B8D8C, 0x4
+	.4byte 0x42340000
 lbl_803CF4F0:
-	.incbin "baserom.dol", 0x2B8D90, 0x4
+	.4byte 0x42B40000
 lbl_803CF4F4:
-	.incbin "baserom.dol", 0x2B8D94, 0x4
+	.4byte 0xC1200000
 lbl_803CF4F8:
-	.incbin "baserom.dol", 0x2B8D98, 0x4
+	.4byte 0x40F00000
 lbl_803CF4FC:
-	.incbin "baserom.dol", 0x2B8D9C, 0x4
+	.4byte 0x40C00000
 lbl_803CF500:
-	.incbin "baserom.dol", 0x2B8DA0, 0x4
+	.4byte 0xC2A00000
 lbl_803CF504:
-	.incbin "baserom.dol", 0x2B8DA4, 0x4
+	.4byte 0xC3340000
 lbl_803CF508:
-	.incbin "baserom.dol", 0x2B8DA8, 0x4
+	.4byte 0x41C80000
 lbl_803CF50C:
-	.incbin "baserom.dol", 0x2B8DAC, 0x4
+	.4byte 0x3F333333
 lbl_803CF510:
-	.incbin "baserom.dol", 0x2B8DB0, 0x4
+	.4byte 0x43B40000
 lbl_803CF514:
-	.incbin "baserom.dol", 0x2B8DB4, 0x4
+	.4byte 0xC0800000
 lbl_803CF518:
-	.incbin "baserom.dol", 0x2B8DB8, 0x4
+	.4byte 0xC2C80000
 lbl_803CF51C:
-	.incbin "baserom.dol", 0x2B8DBC, 0x4
+	.4byte 0x40800000
 lbl_803CF520:
-	.incbin "baserom.dol", 0x2B8DC0, 0x4
+	.4byte 0x42480000
 lbl_803CF524:
-	.incbin "baserom.dol", 0x2B8DC4, 0x4
+	.4byte 0x3FC00000
 lbl_803CF528:
-	.incbin "baserom.dol", 0x2B8DC8, 0x4
+	.4byte 0x41600000
 lbl_803CF52C:
-	.incbin "baserom.dol", 0x2B8DCC, 0x4
+	.4byte 0x41300000
 lbl_803CF530:
-	.incbin "baserom.dol", 0x2B8DD0, 0x4
+	.4byte 0x40490FDB
 lbl_803CF534:
-	.incbin "baserom.dol", 0x2B8DD4, 0x4
+	.4byte 0xB727C5AC
 lbl_803CF538:
-	.incbin "baserom.dol", 0x2B8DD8, 0x4
+	.4byte 0x40C90FDB
 lbl_803CF53C:
-	.incbin "baserom.dol", 0x2B8DDC, 0x4
+	.4byte 0xC0490FDB
 lbl_803CF540:
-	.incbin "baserom.dol", 0x2B8DE0, 0x4
+	.4byte 0x3A83126F
 lbl_803CF544:
-	.incbin "baserom.dol", 0x2B8DE4, 0x4
+	.4byte 0x3E800000
 lbl_803CF548:
-	.incbin "baserom.dol", 0x2B8DE8, 0x4
+	.4byte 0xBF800000
 lbl_803CF54C:
-	.incbin "baserom.dol", 0x2B8DEC, 0x4
+	.4byte 0x7E967699
 lbl_803CF550:
-	.incbin "baserom.dol", 0x2B8DF0, 0x4
+	.4byte 0x3F490FDB
 lbl_803CF554:
-	.incbin "baserom.dol", 0x2B8DF4, 0x4
+	.4byte 0x3FC90FDB
 lbl_803CF558:
-	.incbin "baserom.dol", 0x2B8DF8, 0x8
+	.4byte 0x38D1B717
+	.4byte 0x00000000
 lbl_803CF560:
-	.incbin "baserom.dol", 0x2B8E00, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000
 /* SPECULATION: link order */
 .global gPTankDisable
 gPTankDisable:
-	.incbin "baserom.dol", 0x2B8E08, 0x4
+	.4byte 0x00000000

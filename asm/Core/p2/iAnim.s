@@ -534,43 +534,113 @@ __as__6RtQuatFRC6RtQuat:
 .balign 8
 .global giAnimScratch
 giAnimScratch:
-	.incbin "baserom.dol", 0x2B5CF0, 0x8
+	.4byte 0x802F8A80
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global sCameraNearClip
 sCameraNearClip:
-	.incbin "baserom.dol", 0x2B5CF8, 0x4
+	.4byte 0x3D4CCCCD
 /* SPECULATION: link order */
 .global sCameraFarClip
 sCameraFarClip:
-	.incbin "baserom.dol", 0x2B5CFC, 0x4
+	.4byte 0x43C80000
 
 .section .rodata
 /* this apparently goes to iAnimSKB but putting it there breaks the linking order */
 .global lbl_80260004
 lbl_80260004:
-	.incbin "baserom.dol", 0x25cfe4, 0x104
+	.4byte 0x46582056
+	.4byte 0x6F6C756D
+	.4byte 0x65004D65
+	.4byte 0x6D6F7279
+	.4byte 0x20436172
+	.4byte 0x64204176
+	.4byte 0x61696C61
+	.4byte 0x626C6500
+	.4byte 0x56696272
+	.4byte 0x6174696F
+	.4byte 0x6E206973
+	.4byte 0x206F6E00
+	.4byte 0x4C657474
+	.4byte 0x6572206F
+	.4byte 0x66207363
+	.4byte 0x656E6500
+	.4byte 0x526F6F6D
+	.4byte 0x00437572
+	.4byte 0x72656E74
+	.4byte 0x204C6576
+	.4byte 0x656C2043
+	.4byte 0x6F6C6C65
+	.4byte 0x63746162
+	.4byte 0x6C650050
+	.4byte 0x61742773
+	.4byte 0x20536F63
+	.4byte 0x6B730054
+	.4byte 0x6F74616C
+	.4byte 0x20506174
+	.4byte 0x27732053
+	.4byte 0x6F636B73
+	.4byte 0x00536869
+	.4byte 0x6E79204F
+	.4byte 0x626A6563
+	.4byte 0x74730047
+	.4byte 0x6F6C6465
+	.4byte 0x6E205370
+	.4byte 0x6174756C
+	.4byte 0x61730043
+	.4byte 0x75727265
+	.4byte 0x6E742044
+	.4byte 0x61746500
+	.4byte 0x43757272
+	.4byte 0x656E7420
+	.4byte 0x486F7572
+	.4byte 0x00437572
+	.4byte 0x72656E74
+	.4byte 0x204D696E
+	.4byte 0x75746500
+	.4byte 0x436F756E
+	.4byte 0x74657220
+	.4byte 0x56616C75
+	.4byte 0x65004973
+	.4byte 0x20456E61
+	.4byte 0x626C6564
+	.4byte 0x2028303D
+	.4byte 0x4E6F2C20
+	.4byte 0x313D5965
+	.4byte 0x73290049
+	.4byte 0x73205669
+	.4byte 0x7369626C
+	.4byte 0x65202830
+	.4byte 0x3D4E6F2C
+	.4byte 0x20313D59
+	.4byte 0x65732900
 .global lbl_80260108
 lbl_80260108:
-	.incbin "baserom.dol", 0x25d0e8, 0x10
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F800000
 
 .section .sdata2
 lbl_803CDFC0:
-	.incbin "baserom.dol", 0x2B7860, 0x4
+	.4byte 0x00000000
 lbl_803CDFC4:
-	.incbin "baserom.dol", 0x2B7864, 0x4
+	.4byte 0x3F800000
 lbl_803CDFC8:
-	.incbin "baserom.dol", 0x2B7868, 0x4
+	.4byte 0xBE2AAAAB
 lbl_803CDFCC:
-	.incbin "baserom.dol", 0x2B786C, 0x4
+	.4byte 0x3C088889
 lbl_803CDFD0:
-	.incbin "baserom.dol", 0x2B7870, 0x4
+	.4byte 0xB9500D01
 lbl_803CDFD4:
-	.incbin "baserom.dol", 0x2B7874, 0x4
+	.4byte 0x3638EF1B
 lbl_803CDFD8:
-	.incbin "baserom.dol", 0x2B7878, 0x4
+	.4byte 0xB2D72F34
 lbl_803CDFDC:
-	.incbin "baserom.dol", 0x2B787C, 0x4
+	.4byte 0x2F2EC9D3
 lbl_803CDFE0:
-	.incbin "baserom.dol", 0x2B7880, 0x8
+	.4byte 0x3A800000
+	.4byte 0x00000000
 lbl_803CDFE8:
-	.incbin "baserom.dol", 0x2B7888, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

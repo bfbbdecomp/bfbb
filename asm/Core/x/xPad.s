@@ -700,12 +700,13 @@ mRumbleList:
 
 .section .sdata2
 lbl_803CCEF8:
-	.incbin "baserom.dol", 0x2B6798, 0x4
+	.4byte 0x00000000
 lbl_803CCEFC:
-	.incbin "baserom.dol", 0x2B679C, 0x4
+	.4byte 0x3EB33333
 lbl_803CCF00:
-	.incbin "baserom.dol", 0x2B67A0, 0x4
+	.4byte 0x3F800000
 lbl_803CCF04:
-	.incbin "baserom.dol", 0x2B67A4, 0x4
+	.4byte 0xBF800000
 lbl_803CCF08:
-	.incbin "baserom.dol", 0x2B67A8, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

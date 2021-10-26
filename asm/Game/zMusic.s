@@ -639,16 +639,216 @@ zMusicSetVolume__Fff:
 .section .rodata
 .global zMusic_strings
 zMusic_strings:
-	.incbin "baserom.dol", 0x25B568, 0x170
+	.4byte 0x6D757369
+	.4byte 0x635F3030
+	.4byte 0x5F68625F
+	.4byte 0x3434006D
+	.4byte 0x75736963
+	.4byte 0x5F30315F
+	.4byte 0x6A665F34
+	.4byte 0x34006D75
+	.4byte 0x7369635F
+	.4byte 0x30325F62
+	.4byte 0x625F3434
+	.4byte 0x006D7573
+	.4byte 0x69635F30
+	.4byte 0x335F676C
+	.4byte 0x5F343400
+	.4byte 0x6D757369
+	.4byte 0x635F3034
+	.4byte 0x5F62315F
+	.4byte 0x3434006D
+	.4byte 0x75736963
+	.4byte 0x5F30355F
+	.4byte 0x72625F34
+	.4byte 0x34006D75
+	.4byte 0x7369635F
+	.4byte 0x30365F62
+	.4byte 0x635F3434
+	.4byte 0x006D7573
+	.4byte 0x69635F30
+	.4byte 0x375F736D
+	.4byte 0x5F343400
+	.4byte 0x6D757369
+	.4byte 0x635F3038
+	.4byte 0x5F62325F
+	.4byte 0x3434006D
+	.4byte 0x75736963
+	.4byte 0x5F30395F
+	.4byte 0x6B665F34
+	.4byte 0x34006D75
+	.4byte 0x7369635F
+	.4byte 0x31305F67
+	.4byte 0x795F3434
+	.4byte 0x006D7573
+	.4byte 0x69635F31
+	.4byte 0x315F6462
+	.4byte 0x5F343400
+	.4byte 0x6D757369
+	.4byte 0x635F3132
+	.4byte 0x5F62335F
+	.4byte 0x3434006D
+	.4byte 0x75736963
+	.4byte 0x5F31335F
+	.4byte 0x6D6E7533
+	.4byte 0x5F343400
+	.4byte 0x6D757369
+	.4byte 0x635F3134
+	.4byte 0x5F6D6E75
+	.4byte 0x345F3434
+	.4byte 0x006D7573
+	.4byte 0x69635F31
+	.4byte 0x355F736C
+	.4byte 0x6964655F
+	.4byte 0x3434006D
+	.4byte 0x75736963
+	.4byte 0x5F31365F
+	.4byte 0x616D6275
+	.4byte 0x73685F34
+	.4byte 0x34006D75
+	.4byte 0x7369635F
+	.4byte 0x31375F73
+	.4byte 0x7562626F
+	.4byte 0x73735F34
+	.4byte 0x34006D75
+	.4byte 0x7369635F
+	.4byte 0x31385F73
+	.4byte 0x6B617465
+	.4byte 0x7061726B
+	.4byte 0x5F343400
+	.4byte 0x6D757369
+	.4byte 0x635F3231
+	.4byte 0x5F43616C
+	.4byte 0x6C696F70
+	.4byte 0x6531006D
+	.4byte 0x75736963
+	.4byte 0x5F32325F
+	.4byte 0x43616C6C
+	.4byte 0x696F7065
+	.4byte 0x32006D75
+	.4byte 0x7369635F
+	.4byte 0x32335F43
+	.4byte 0x616C6C69
+	.4byte 0x6F706533
+	.4byte 0x00000000
 
 .section .data
 .global sMusicInfo
 sMusicInfo:
-	.incbin "baserom.dol", 0x28CD60, 0x160
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000002
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x40000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000004
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000005
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000006
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000007
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_8028FEE0:
-	.incbin "baserom.dol", 0x28CEC0, 0x3C
+	.4byte 0x800A7344
+	.4byte 0x800A734C
+	.4byte 0x800A7354
+	.4byte 0x800A735C
+	.4byte 0x800A7364
+	.4byte 0x800A736C
+	.4byte 0x800A7374
+	.4byte 0x800A737C
+	.4byte 0x800A7384
+	.4byte 0x800A738C
+	.4byte 0x800A7394
+	.4byte 0x800A739C
+	.4byte 0x800A73A4
+	.4byte 0x800A73AC
+	.4byte 0x800A73B4
 lbl_8028FF1C:
-	.incbin "baserom.dol", 0x28CEFC, 0x24
+	.4byte 0x800A74AC
+	.4byte 0x800A74C8
+	.4byte 0x800A74C0
+	.4byte 0x800A749C
+	.4byte 0x800A74E4
+	.4byte 0x800A749C
+	.4byte 0x800A74A4
+	.4byte 0x800A74B8
+	.4byte 0x00000000
 
 .section .bss
 .global sMusicSoundID
@@ -671,26 +871,29 @@ lbl_803CB95C:
 .section .sdata
 .global sMusicLastEnum
 sMusicLastEnum:
-	.incbin "baserom.dol", 0x2B5C90, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000
 .global sMusicTimer
 sMusicTimer:
-	.incbin "baserom.dol", 0x2B5C98, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sdata2
 .global lbl_803CDD48
 lbl_803CDD48:
-	.incbin "baserom.dol", 0x2B75E8, 0x4
+	.4byte 0x00000000
 .global lbl_803CDD4C
 lbl_803CDD4C:
-	.incbin "baserom.dol", 0x2B75EC, 0x4
+	.4byte 0x3F800000
 lbl_803CDD50:
-	.incbin "baserom.dol", 0x2B75F0, 0x4
+	.4byte 0xC1400000
 lbl_803CDD54:
-	.incbin "baserom.dol", 0x2B75F4, 0x4
+	.4byte 0x3F333333
 lbl_803CDD58:
-	.incbin "baserom.dol", 0x2B75F8, 0x4
+	.4byte 0xB727C5AC
 lbl_803CDD5C:
-	.incbin "baserom.dol", 0x2B75FC, 0x4
+	.4byte 0x3727C5AC
 .global minDelay
 minDelay:
-	.incbin "baserom.dol", 0x2B7600, 0x8
+	.4byte 0x3A83126F
+	.4byte 0x00000000

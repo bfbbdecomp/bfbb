@@ -147,7 +147,7 @@ lbl_80038854:
 .section .sdata2
 .global _708
 _708:
-	.incbin "baserom.dol", 0x2B67F0, 0x4
+	.4byte 0x00000000
 .global _709
 _709:
-	.incbin "baserom.dol", 0x2B67F4, 0x4
+	.4byte 0x437F0000

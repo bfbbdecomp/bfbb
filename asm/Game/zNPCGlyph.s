@@ -1412,25 +1412,119 @@ __ct__8NPCGlyphF11en_npcglyph:
 
 .section .rodata
 lbl_80273398:
-	.incbin "baserom.dol", 0x270378, 0xC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_802733A4:
-	.incbin "baserom.dol", 0x270384, 0xC
+	.4byte 0x3F800000
+	.4byte 0x3F800000
+	.4byte 0x3F800000
 lbl_802733B0:
-	.incbin "baserom.dol", 0x270390, 0x30
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_802733E0:
-	.incbin "baserom.dol", 0x2703C0, 0xC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_802733EC:
-	.incbin "baserom.dol", 0x2703CC, 0xCC
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x756E6B6E
+	.4byte 0x6F776E00
+	.4byte 0x7368696E
+	.4byte 0x795F6F62
+	.4byte 0x6A5F7075
+	.4byte 0x72706C65
+	.4byte 0x2E646666
+	.4byte 0x00736869
+	.4byte 0x6E795F6F
+	.4byte 0x626A5F62
+	.4byte 0x6C75652E
+	.4byte 0x64666600
+	.4byte 0x7368696E
+	.4byte 0x795F6F62
+	.4byte 0x6A5F6772
+	.4byte 0x65656E2E
+	.4byte 0x64666600
+	.4byte 0x7368696E
+	.4byte 0x795F6F62
+	.4byte 0x6A5F7965
+	.4byte 0x6C6C6F77
+	.4byte 0x2E646666
+	.4byte 0x00736869
+	.4byte 0x6E795F6F
+	.4byte 0x626A5F6F
+	.4byte 0x72616E67
+	.4byte 0x652E6466
+	.4byte 0x66006678
+	.4byte 0x5F676C79
+	.4byte 0x70685F74
+	.4byte 0x616C6B00
+	.4byte 0x66785F67
+	.4byte 0x6C797068
+	.4byte 0x5F74616C
+	.4byte 0x6B6F7468
+	.4byte 0x65720066
+	.4byte 0x785F676C
+	.4byte 0x7970685F
+	.4byte 0x66726965
+	.4byte 0x6E640066
+	.4byte 0x785F676C
+	.4byte 0x7970685F
+	.4byte 0x64617A65
+	.4byte 0x2E646666
+	.4byte 0x0025732E
+	.4byte 0x4D494E46
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .data
 .global g_strz_glyphmodel
 g_strz_glyphmodel:
-	.incbin "baserom.dol", 0x2989A8, 0x28
+	.4byte 0x802733F8
+	.4byte 0x80273400
+	.4byte 0x80273415
+	.4byte 0x80273428
+	.4byte 0x8027343C
+	.4byte 0x80273451
+	.4byte 0x80273466
+	.4byte 0x80273474
+	.4byte 0x80273487
+	.4byte 0x80273497
 .global g_cnt_activeGlyphs
 g_cnt_activeGlyphs:
-	.incbin "baserom.dol", 0x2989D0, 0x28
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_8029BA18:
-	.incbin "baserom.dol", 0x2989F8, 0x28
+	.4byte 0x80186680
+	.4byte 0x801865F4
+	.4byte 0x80186604
+	.4byte 0x80186614
+	.4byte 0x80186624
+	.4byte 0x80186634
+	.4byte 0x80186644
+	.4byte 0x80186654
+	.4byte 0x80186664
+	.4byte 0x80186674
 
 .section .bss
 lbl_8035BE30:
@@ -1439,18 +1533,18 @@ lbl_8035BE30:
 .section .sdata2
 .global lbl_803CF948
 lbl_803CF948:
-	.incbin "baserom.dol", 0x2B91E8, 0x4
+	.4byte 0x00000000
 lbl_803CF94C:
-	.incbin "baserom.dol", 0x2B91EC, 0x4
+	.4byte 0xBF800000
 lbl_803CF950:
-	.incbin "baserom.dol", 0x2B91F0, 0x4
+	.4byte 0x3F800000
 lbl_803CF954:
-	.incbin "baserom.dol", 0x2B91F4, 0x4
+	.4byte 0x3FF33333
 lbl_803CF958:
-	.incbin "baserom.dol", 0x2B91F8, 0x4
+	.4byte 0x40000000
 lbl_803CF95C:
-	.incbin "baserom.dol", 0x2B91FC, 0x4
+	.4byte 0x42340000
 lbl_803CF960:
-	.incbin "baserom.dol", 0x2B9200, 0x4
+	.4byte 0x40600000
 lbl_803CF964:
-	.incbin "baserom.dol", 0x2B9204, 0x4
+	.4byte 0x3DCCCCCD

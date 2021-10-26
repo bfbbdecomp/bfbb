@@ -3760,7 +3760,16 @@ lbl_800D30A4:
 
 .section .rodata
 lbl_802665E8:
-	.incbin "baserom.dol", 0x2635C8, 0x28
+	.4byte 0x73747265
+	.4byte 0x616D696E
+	.4byte 0x67206368
+	.4byte 0x616E6E65
+	.4byte 0x6C202564
+	.4byte 0x0A006D6E
+	.4byte 0x75352E68
+	.4byte 0x69700073
+	.4byte 0x7073622E
+	.4byte 0x68697000
 
 .section .bss
 lbl_80312100:
@@ -3819,38 +3828,42 @@ gEmergencyMemLevel:
 
 .section .sdata2
 lbl_803CE188:
-	.incbin "baserom.dol", 0x2B7A28, 0x4
+	.4byte 0x2D303158
 /* SPECULATION: link order */
 .global lbl_803CE18C
 lbl_803CE18C:
-	.incbin "baserom.dol", 0x2B7A2C, 0x4
+	.4byte 0x00000000
 .global _1262
 _1262:
-	.incbin "baserom.dol", 0x2B7A30, 0x4
+	.4byte 0x422DB852
 .global _1263
 _1263:
-	.incbin "baserom.dol", 0x2B7A34, 0x4
+	.4byte 0x1E3CE508
 lbl_803CE198:
-	.incbin "baserom.dol", 0x2B7A38, 0x4
+	.4byte 0x00000000
 lbl_803CE19C:
-	.incbin "baserom.dol", 0x2B7A3C, 0x4
+	.4byte 0x3F800000
 lbl_803CE1A0:
-	.incbin "baserom.dol", 0x2B7A40, 0x4
+	.4byte 0x42800000
 lbl_803CE1A4:
-	.incbin "baserom.dol", 0x2B7A44, 0x4
+	.4byte 0x40000000
 lbl_803CE1A8:
-	.incbin "baserom.dol", 0x2B7A48, 0x4
+	.4byte 0x41400000
 lbl_803CE1AC:
-	.incbin "baserom.dol", 0x2B7A4C, 0x4
+	.4byte 0x46FA0000
 lbl_803CE1B0:
-	.incbin "baserom.dol", 0x2B7A50, 0x8
+	.4byte 0x47800000
+	.4byte 0x00000000
 lbl_803CE1B8:
-	.incbin "baserom.dol", 0x2B7A58, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 lbl_803CE1C0:
-	.incbin "baserom.dol", 0x2B7A60, 0x8
+	.4byte 0x447A0000
+	.4byte 0x00000000
 lbl_803CE1C8:
-	.incbin "baserom.dol", 0x2B7A68, 0x8
+	.4byte 0x40F00000
+	.4byte 0x00000000
 lbl_803CE1D0:
-	.incbin "baserom.dol", 0x2B7A70, 0x4
+	.4byte 0x3803126F
 lbl_803CE1D4:
-	.incbin "baserom.dol", 0x2B7A74, 0x4
+	.4byte 0x3F000000

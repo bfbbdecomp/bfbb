@@ -1239,82 +1239,83 @@ lbl_8012D5DC:
 .section .sdata2
 .global _777_1
 _777_1:
-	.incbin "baserom.dol", 0x2B8458, 0x4
+	.4byte 0x40490FDB
 .global _778_0
 _778_0:
-	.incbin "baserom.dol", 0x2B845C, 0x4
+	.4byte 0x43340000
 .global _779_2
 _779_2:
-	.incbin "baserom.dol", 0x2B8460, 0x4
+	.4byte 0x00000000
 .global _780_2
 _780_2:
-	.incbin "baserom.dol", 0x2B8464, 0x4
+	.4byte 0x3F800000
 .global _853_3
 _853_3:
-	.incbin "baserom.dol", 0x2B8468, 0x4
+	.4byte 0x4138F5C3
 .global _858_3
 _858_3:
-	.incbin "baserom.dol", 0x2B846C, 0x4
+	.4byte 0x3F451EB8
 .global _860_3
 _860_3:
-	.incbin "baserom.dol", 0x2B8470, 0x4
+	.4byte 0x3E800000
 .global _888_0
 _888_0:
-	.incbin "baserom.dol", 0x2B8474, 0x4
+	.4byte 0x3F99999A
 .global _943
 _943:
-	.incbin "baserom.dol", 0x2B8478, 0x4
+	.4byte 0x3E4CCCCD
 .global _944_0
 _944_0:
-	.incbin "baserom.dol", 0x2B847C, 0x4
+	.4byte 0x3DCCCCCD
 .global _945_2
 _945_2:
-	.incbin "baserom.dol", 0x2B8480, 0x4
+	.4byte 0x3ECCCCCD
 .global _946_3
 _946_3:
-	.incbin "baserom.dol", 0x2B8484, 0x4
+	.4byte 0x3F000000
 .global _947_2
 _947_2:
-	.incbin "baserom.dol", 0x2B8488, 0x4
+	.4byte 0x3F666666
 .global _970_1
 _970_1:
-	.incbin "baserom.dol", 0x2B848C, 0x4
+	.4byte 0xBF800000
 .global _971_0
 _971_0:
-	.incbin "baserom.dol", 0x2B8490, 0x4
+	.4byte 0x3E9C28F6
 .global _972_0
 _972_0:
-	.incbin "baserom.dol", 0x2B8494, 0x4
+	.4byte 0xBE9C28F6
 .global _973_0
 _973_0:
-	.incbin "baserom.dol", 0x2B8498, 0x4
+	.4byte 0xBE800000
 .global _974_0
 _974_0:
-	.incbin "baserom.dol", 0x2B849C, 0x4
+	.4byte 0xBDCCCCCD
 .global _975_1
 _975_1:
-	.incbin "baserom.dol", 0x2B84A0, 0x4
+	.4byte 0x40200000
 .global _976_2
 _976_2:
-	.incbin "baserom.dol", 0x2B84A4, 0x4
+	.4byte 0x3CE56042
 .global _977_2
 _977_2:
-	.incbin "baserom.dol", 0x2B84A8, 0x4
+	.4byte 0xBE23D70A
 .global _978_2
 _978_2:
-	.incbin "baserom.dol", 0x2B84AC, 0x4
+	.4byte 0x3F1C28F6
 .global _979
 _979:
-	.incbin "baserom.dol", 0x2B84B0, 0x4
+	.4byte 0xBF1C28F6
 .global _980
 _980:
-	.incbin "baserom.dol", 0x2B84B4, 0x4
+	.4byte 0xBF000000
 .global _1051_2
 _1051_2:
-	.incbin "baserom.dol", 0x2B84B8, 0x4
+	.4byte 0x41700000
 .global _1052_1
 _1052_1:
-	.incbin "baserom.dol", 0x2B84BC, 0x4
+	.4byte 0x402CCCCD
 .global _1054_3
 _1054_3:
-	.incbin "baserom.dol", 0x2B84C0, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

@@ -428,7 +428,18 @@ lbl_800A6BD8:
 .section .rodata
 .global zMenu_strings
 zMenu_strings:
-	.incbin "baserom.dol", 0x25B538, 0x30
+	.4byte 0x4D4E5533
+	.4byte 0x20505245
+	.4byte 0x53532053
+	.4byte 0x54415254
+	.4byte 0x20303220
+	.4byte 0x55494600
+	.4byte 0x4D4E5533
+	.4byte 0x20535441
+	.4byte 0x5254204E
+	.4byte 0x45574741
+	.4byte 0x4D452055
+	.4byte 0x49460000
 
 .section .bss
 .global corruptFiles
@@ -463,42 +474,45 @@ ClearColorInitializer:
 .section .sdata
 .global sFirstBoot
 sFirstBoot:
-	.incbin "baserom.dol", 0x2B5C80, 0x4
+	.4byte 0x00000001
 .global time_elapsed
 time_elapsed:
-	.incbin "baserom.dol", 0x2B5C84, 0x4
+	.4byte 0x3C23D70A
 .global holdTmr
 holdTmr:
-	.incbin "baserom.dol", 0x2B5C88, 0x8
+	.4byte 0x41200000
+	.4byte 0x00000000
 
 .section .sdata2
 .global zMenu_float_48p264
 zMenu_float_48p264:
-	.incbin "baserom.dol", 0x2B75B0, 0x4
+	.4byte 0x42410E56
 .global zMenu_float_minus_one
 zMenu_float_minus_one:
-	.incbin "baserom.dol", 0x2B75B4, 0x4
+	.4byte 0xBF800000
 .global BlackColorInitializer
 BlackColorInitializer:
-	.incbin "baserom.dol", 0x2B75B8, 0x4
+	.4byte 0x000000FF
 .global zMenu_float_one
 zMenu_float_one:
-	.incbin "baserom.dol", 0x2B75BC, 0x4
+	.4byte 0x3F800000
 .global zMenu_float_one_over_sixty
 zMenu_float_one_over_sixty:
-	.incbin "baserom.dol", 0x2B75C0, 0x4
+	.4byte 0x3C888889
 .global zMenu_float_zero
 zMenu_float_zero:
-	.incbin "baserom.dol", 0x2B75C4, 0x4
+	.4byte 0x00000000
 .global zMenu_float_two
 zMenu_float_two:
-	.incbin "baserom.dol", 0x2B75C8, 0x4
+	.4byte 0x40000000
 .global zMenu_float_ten
 zMenu_float_ten:
-	.incbin "baserom.dol", 0x2B75CC, 0x4
+	.4byte 0x41200000
 .global zMenu_float_0p1
 zMenu_float_0p1:
-	.incbin "baserom.dol", 0x2B75D0, 0x8
+	.4byte 0x3DCCCCCD
+	.4byte 0x00000000
 .global zMenu_float_itof_value
 zMenu_float_itof_value:
-	.incbin "baserom.dol", 0x2B75D8, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

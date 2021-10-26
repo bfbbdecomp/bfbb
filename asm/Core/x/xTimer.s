@@ -358,14 +358,36 @@ lbl_8004D690:
 
 .section .data
 lbl_8028A258:
-	.incbin "baserom.dol", 0x287238, 0x50
+	.4byte 0xBC345600
+	.4byte 0xBC345609
+	.4byte 0xBC345683
+	.4byte 0xBC34568C
+	.4byte 0xBC345706
+	.4byte 0xBC34570F
+	.4byte 0xBC345789
+	.4byte 0xBC345792
+	.4byte 0xBC34580C
+	.4byte 0xBC345815
+	.4byte 0xBC34588F
+	.4byte 0xBC345898
+	.4byte 0xBC345912
+	.4byte 0xBC34591B
+	.4byte 0xBC345995
+	.4byte 0xBC34599E
+	.4byte 0xBC345A18
+	.4byte 0xBC345A21
+	.4byte 0xBC345A9B
+	.4byte 0xBC345AA4
 
 .section .sdata2
 .balign 4
 .global lbl_803CD118
 lbl_803CD118:
-	.incbin "baserom.dol", 0x2B69B8, 0x8
+	.4byte 0x447A0000
+	.4byte 0x00000000
 lbl_803CD120:
-	.incbin "baserom.dol", 0x2B69C0, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000
 lbl_803CD128:
-	.incbin "baserom.dol", 0x2B69C8, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000

@@ -487,28 +487,99 @@ return:
 
 .global zGameExtras_strings
 zGameExtras_strings:
-	.incbin "baserom.dol", 0x259A00, 0x118
+	.4byte 0x48423031
+	.4byte 0x00534247
+	.4byte 0x30313033
+	.4byte 0x30005342
+	.4byte 0x47303130
+	.4byte 0x31375F61
+	.4byte 0x00534247
+	.4byte 0x30313031
+	.4byte 0x375F6200
+	.4byte 0x53424730
+	.4byte 0x31303138
+	.4byte 0x00534247
+	.4byte 0x30313031
+	.4byte 0x36005342
+	.4byte 0x47303130
+	.4byte 0x31390067
+	.4byte 0x73706174
+	.4byte 0x756C615F
+	.4byte 0x73620053
+	.4byte 0x42473031
+	.4byte 0x30393200
+	.4byte 0x53425F63
+	.4byte 0x72756973
+	.4byte 0x655F6869
+	.4byte 0x74004842
+	.4byte 0x30392052
+	.4byte 0x4F424F54
+	.4byte 0x20434F55
+	.4byte 0x4E544552
+	.4byte 0x20303100
+	.4byte 0x48423031
+	.4byte 0x5F465245
+	.4byte 0x455F4D4F
+	.4byte 0x5649455F
+	.4byte 0x50415353
+	.4byte 0x00534247
+	.4byte 0x30313032
+	.4byte 0x31005342
+	.4byte 0x47303130
+	.4byte 0x32320053
+	.4byte 0x42473031
+	.4byte 0x30323300
+	.4byte 0x53424730
+	.4byte 0x31303630
+	.4byte 0x5F630053
+	.4byte 0x42473031
+	.4byte 0x3035385F
+	.4byte 0x62005342
+	.4byte 0x47303130
+	.4byte 0x35345F62
+	.4byte 0x00534247
+	.4byte 0x30313036
+	.4byte 0x365F6300
+	.4byte 0x53424730
+	.4byte 0x31303636
+	.4byte 0x5F610053
+	.4byte 0x42473031
+	.4byte 0x30363700
+	.4byte 0x53424730
+	.4byte 0x31303638
+	.4byte 0x5F610053
+	.4byte 0x42473031
+	.4byte 0x3036385F
+	.4byte 0x64005342
+	.4byte 0x47303130
+	.4byte 0x3639004B
+	.4byte 0x494F534B
+	.4byte 0x2053454C
+	.4byte 0x45435420
+	.4byte 0x55494600
 
 .section .sdata
 
 .global lbl_803CAB38
 lbl_803CAB38:
-	.incbin "baserom.dol", 0x2B5BF8, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sdata2
 
 .global _975
 _975:
-	.incbin "baserom.dol", 0x2B7318, 0x4
+	.4byte 0x00000000
 .global _1152
 _1152:
-	.incbin "baserom.dol", 0x2B731C, 0x4
+	.4byte 0x3E99999A
 .global _1153
 _1153:
-	.incbin "baserom.dol", 0x2B7320, 0x4
+	.4byte 0xBF800000
 .global _1192
 _1192:
-	.incbin "baserom.dol", 0x2B7324, 0x4
+	.4byte 0x3F800000
 
 lbl_803CDA88:
-	.incbin "baserom.dol", 0x2B7328, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

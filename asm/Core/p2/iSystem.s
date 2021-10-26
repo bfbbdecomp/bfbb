@@ -1356,7 +1356,148 @@ DolphinInstallFileSystem__Fv:
 
 .section .rodata
 lbl_80266610:
-	.incbin "baserom.dol", 0x2635F0, 0x238
+	.4byte 0x4C657665
+	.4byte 0x6C202564
+	.4byte 0x2C205761
+	.4byte 0x726E696E
+	.4byte 0x67202430
+	.4byte 0x33643A20
+	.4byte 0x25730A00
+	.4byte 0x4650453A
+	.4byte 0x20496E76
+	.4byte 0x616C6964
+	.4byte 0x206F7065
+	.4byte 0x72617469
+	.4byte 0x6F6E3A20
+	.4byte 0x00534E61
+	.4byte 0x4E0A0049
+	.4byte 0x6E66696E
+	.4byte 0x69747920
+	.4byte 0x2D20496E
+	.4byte 0x66696E69
+	.4byte 0x74790A00
+	.4byte 0x496E6669
+	.4byte 0x6E697479
+	.4byte 0x202F2049
+	.4byte 0x6E66696E
+	.4byte 0x6974790A
+	.4byte 0x0030202F
+	.4byte 0x20300A00
+	.4byte 0x496E6669
+	.4byte 0x6E697479
+	.4byte 0x202A2030
+	.4byte 0x0A00496E
+	.4byte 0x76616C69
+	.4byte 0x6420636F
+	.4byte 0x6D706172
+	.4byte 0x650A0053
+	.4byte 0x6F667477
+	.4byte 0x61726520
+	.4byte 0x72657175
+	.4byte 0x6573740A
+	.4byte 0x00496E76
+	.4byte 0x616C6964
+	.4byte 0x20737175
+	.4byte 0x61726520
+	.4byte 0x726F6F74
+	.4byte 0x0A00496E
+	.4byte 0x76616C69
+	.4byte 0x6420696E
+	.4byte 0x74656765
+	.4byte 0x7220636F
+	.4byte 0x6E766572
+	.4byte 0x740A0046
+	.4byte 0x50453A20
+	.4byte 0x4F766572
+	.4byte 0x666C6F77
+	.4byte 0x0A004650
+	.4byte 0x453A2055
+	.4byte 0x6E646572
+	.4byte 0x666C6F77
+	.4byte 0x0A004650
+	.4byte 0x453A205A
+	.4byte 0x65726F20
+	.4byte 0x64697669
+	.4byte 0x73696F6E
+	.4byte 0x0A004650
+	.4byte 0x453A2049
+	.4byte 0x6E657861
+	.4byte 0x63742072
+	.4byte 0x6573756C
+	.4byte 0x740A0069
+	.4byte 0x53797374
+	.4byte 0x656D2E63
+	.4byte 0x70700055
+	.4byte 0x6E61626C
+	.4byte 0x6520746F
+	.4byte 0x20696E69
+	.4byte 0x7469616C
+	.4byte 0x697A6520
+	.4byte 0x6D656D6F
+	.4byte 0x72792073
+	.4byte 0x79737465
+	.4byte 0x6D2E0A00
+	.4byte 0x28576974
+	.4byte 0x68206170
+	.4byte 0x6F6C6F67
+	.4byte 0x69657320
+	.4byte 0x746F204A
+	.4byte 0x696D204D
+	.4byte 0x6F727269
+	.4byte 0x736F6E29
+	.4byte 0x20546869
+	.4byte 0x73207468
+	.4byte 0x6520656E
+	.4byte 0x642C206D
+	.4byte 0x79206F6E
+	.4byte 0x6C792066
+	.4byte 0x7269656E
+	.4byte 0x642C2054
+	.4byte 0x68652045
+	.4byte 0x6E642E00
+	.4byte 0x25732E72
+	.4byte 0x77330072
+	.4byte 0x004A616E
+	.4byte 0x75617279
+	.4byte 0x20004665
+	.4byte 0x62727561
+	.4byte 0x72792000
+	.4byte 0x4D617263
+	.4byte 0x68200041
+	.4byte 0x7072696C
+	.4byte 0x20004D61
+	.4byte 0x7920004A
+	.4byte 0x756E6520
+	.4byte 0x004A756C
+	.4byte 0x79200041
+	.4byte 0x75677573
+	.4byte 0x74200053
+	.4byte 0x65707465
+	.4byte 0x6D626572
+	.4byte 0x20004F63
+	.4byte 0x746F6265
+	.4byte 0x7220004E
+	.4byte 0x6F76656D
+	.4byte 0x62657220
+	.4byte 0x00446563
+	.4byte 0x656D6265
+	.4byte 0x72200053
+	.4byte 0x756E6461
+	.4byte 0x7920004D
+	.4byte 0x6F6E6461
+	.4byte 0x79200054
+	.4byte 0x75657364
+	.4byte 0x61792000
+	.4byte 0x5765646E
+	.4byte 0x65736461
+	.4byte 0x79200054
+	.4byte 0x68757273
+	.4byte 0x64617920
+	.4byte 0x00467269
+	.4byte 0x64617920
+	.4byte 0x00536174
+	.4byte 0x75726461
+	.4byte 0x79200000
 
 .section .bss
 .global MemoryFunctions
@@ -1383,8 +1524,10 @@ lbl_803CBC44:
 
 .section .sdata
 lbl_803CAC58:
-	.incbin "baserom.dol", 0x2B5D18, 0x8
+	.4byte 0x00000430
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global g_ang_yankDir
 g_ang_yankDir:
-	.incbin "baserom.dol", 0x2B5D20, 0x8
+	.4byte 0x3F860A92
+	.4byte 0x00000000

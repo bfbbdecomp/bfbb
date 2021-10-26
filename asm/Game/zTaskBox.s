@@ -495,7 +495,12 @@ on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum:
 .balign 8
 .global __vt__Q28ztaskbox13talk_callback
 __vt__Q28ztaskbox13talk_callback:
-	.incbin "baserom.dol", 0x295F80, 0x18
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8011D554
+	.4byte 0x8013524C
+	.4byte 0x80135270
+	.4byte 0x8013529C
 
 .section .bss
 .balign 8

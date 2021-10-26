@@ -2058,43 +2058,43 @@ _2509_0:
 .section .sdata2
 .global _1250
 _1250:
-	.incbin "baserom.dol", 0x2B7728, 0x4
+	.4byte 0x0F0F0F00
 .global _1373
 _1373:
-	.incbin "baserom.dol", 0x2B772C, 0x4
+	.4byte 0x40000000
 .global _1374
 _1374:
-	.incbin "baserom.dol", 0x2B7730, 0x4
+	.4byte 0x3F800000
 .global _1375
 _1375:
-	.incbin "baserom.dol", 0x2B7734, 0x4
+	.4byte 0x42C80000
 .global _1493
 _1493:
-	.incbin "baserom.dol", 0x2B7738, 0x4
+	.4byte 0x447A0000
 .global _1494
 _1494:
-	.incbin "baserom.dol", 0x2B773C, 0x4
+	.4byte 0x40490FDB
 .global _1495
 _1495:
-	.incbin "baserom.dol", 0x2B7740, 0x4
+	.4byte 0x43340000
 .global _1496_0
 _1496_0:
-	.incbin "baserom.dol", 0x2B7744, 0x4
+	.4byte 0x00000000
 .global _2013
 _2013:
-	.incbin "baserom.dol", 0x2B7748, 0x4
+	.4byte 0x000000FF
 .global _2094
 _2094:
-	.incbin "baserom.dol", 0x2B774C, 0x4
+	.4byte 0xC2480000
 .global _2095_0
 _2095_0:
-	.incbin "baserom.dol", 0x2B7750, 0x4
+	.4byte 0x3DA3D70A
 .global _2096_0
 _2096_0:
-	.incbin "baserom.dol", 0x2B7754, 0x4
+	.4byte 0x45992000
 .global _2097_0
 _2097_0:
-	.incbin "baserom.dol", 0x2B7758, 0x4
+	.4byte 0x41200000
 .global _2242
 _2242:
-	.incbin "baserom.dol", 0x2B775C, 0x4
+	.4byte 0x40A00000
