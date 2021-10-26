@@ -100,16 +100,16 @@ lbl_80135CF8:
 .balign 8
 .global _830_2
 _830_2:
-	.incbin "baserom.dol", 0x2B8590, 0x4
+	.4byte 0x3F800000
 .global _831_2
 _831_2:
-	.incbin "baserom.dol", 0x2B8594, 0x4
+	.4byte 0x00000000
 .global _832_0
 _832_0:
-	.incbin "baserom.dol", 0x2B8598, 0x4
+	.4byte 0x3E19999A
 .global _866_5
 _866_5:
-	.incbin "baserom.dol", 0x2B859C, 0x4
+	.4byte 0xBF800000
 .global _867_6
 _867_6:
-	.incbin "baserom.dol", 0x2B85A0, 0x4
+	.4byte 0x40A00000

@@ -545,12 +545,13 @@ xQuickCullForEverything__FP7xQCData:
 
 .section .sdata2
 lbl_803CCF60:
-	.incbin "baserom.dol", 0x2B6800, 0x4
+	.4byte 0x00000000
 lbl_803CCF64:
-	.incbin "baserom.dol", 0x2B6804, 0x4
+	.4byte 0x3F800000
 lbl_803CCF68:
-	.incbin "baserom.dol", 0x2B6808, 0x4
+	.4byte 0x42FE0000
 lbl_803CCF6C:
-	.incbin "baserom.dol", 0x2B680C, 0x4
+	.4byte 0x3F000000
 lbl_803CCF70:
-	.incbin "baserom.dol", 0x2B6810, 0x8
+	.4byte 0x3D4CCCCD
+	.4byte 0x00000000

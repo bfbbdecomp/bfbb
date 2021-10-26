@@ -1345,7 +1345,10 @@ xQuickCullForLine__FP7xQCDataPC6xLine3:
 
 .section .rodata
 lbl_8026D080:
-	.incbin "baserom.dol", 0x26A060, 0x10
+	.4byte 0x73686164
+	.4byte 0x6F775F72
+	.4byte 0x6F756E64
+	.4byte 0x00000000
 
 .section .bss
 .balign 8
@@ -1366,24 +1369,25 @@ lbl_803CBF58:
 
 .section .sdata2
 lbl_803CED78:
-	.incbin "baserom.dol", 0x2B8618, 0x4
+	.4byte 0x3DB27EB0
 lbl_803CED7C:
-	.incbin "baserom.dol", 0x2B861C, 0x4
+	.4byte 0x3E800000
 lbl_803CED80:
-	.incbin "baserom.dol", 0x2B8620, 0x4
+	.4byte 0x00000000
 lbl_803CED84:
-	.incbin "baserom.dol", 0x2B8624, 0x4
+	.4byte 0x3F800000
 lbl_803CED88:
-	.incbin "baserom.dol", 0x2B8628, 0x4
+	.4byte 0x7E967699
 lbl_803CED8C:
-	.incbin "baserom.dol", 0x2B862C, 0x4
+	.4byte 0x3DCCCCCD
 lbl_803CED90:
-	.incbin "baserom.dol", 0x2B8630, 0x4
+	.4byte 0x3CA3D70A
 lbl_803CED94:
-	.incbin "baserom.dol", 0x2B8634, 0x4
+	.4byte 0x41200000
 lbl_803CED98:
-	.incbin "baserom.dol", 0x2B8638, 0x4
+	.4byte 0x3727C5AC
 lbl_803CED9C:
-	.incbin "baserom.dol", 0x2B863C, 0x4
+	.4byte 0xB727C5AC
 lbl_803CEDA0:
-	.incbin "baserom.dol", 0x2B8640, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

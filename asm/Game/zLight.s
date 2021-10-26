@@ -229,16 +229,29 @@ lbl_8009E738:
 .section .rodata
 .global zLight_strings
 zLight_strings:
-	.incbin "baserom.dol", 0x259D10, 0x20
+	.4byte 0x4C696768
+	.4byte 0x74696E67
+	.4byte 0x004C4947
+	.4byte 0x48545F50
+	.4byte 0x41525449
+	.4byte 0x54494F4E
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .data
 .global sDefaultShadowVec
 sDefaultShadowVec:
-	.incbin "baserom.dol", 0x28CB30, 0x10
+	.4byte 0x00000000
+	.4byte 0x3F800000
+	.4byte 0x00000000
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global lightning_type_names
 lightning_type_names:
-	.incbin "baserom.dol", 0x28CB40, 0x10
+	.4byte 0x8025CD50
+	.4byte 0x8025CD55
+	.4byte 0x8025CD5E
+	.4byte 0x8025CD63
 
 .section .bss
 .global sLight
@@ -265,4 +278,5 @@ gNumTemporaryLights:
 .section .sdata2
 .global zLight_float
 zLight_float:
-	.incbin "baserom.dol", 0x2B73F8, 0x8
+	.4byte 0x3F800000
+	.4byte 0x00000000

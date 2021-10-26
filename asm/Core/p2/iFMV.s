@@ -966,38 +966,42 @@ lbl_803D089C:
 
 .section .sdata
 lbl_803CAC40:
-	.incbin "baserom.dol", 0x2B5D00, 0x4
+	.4byte 0x3F800000
 lbl_803CAC44:
-	.incbin "baserom.dol", 0x2B5D04, 0x4
+	.4byte 0x3F800000
 /* SPECULATION: link order */
 .global mFirstFrame__4iFMV
 mFirstFrame__4iFMV:
-	.incbin "baserom.dol", 0x2B5D08, 0x8
+	.4byte 0x01000000
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global bad_val
 bad_val:
-	.incbin "baserom.dol", 0x2B5D10, 0x4
+	.4byte 0x81ABCAA0
 /* SPECULATION: link order */
 .global test_alloc_val
 test_alloc_val:
-	.incbin "baserom.dol", 0x2B5D14, 0x4
+	.4byte 0x0000210A
 
 .section .sdata2
 lbl_803CE080:
-	.incbin "baserom.dol", 0x2B7920, 0x4
+	.4byte 0x00000000
 lbl_803CE084:
-	.incbin "baserom.dol", 0x2B7924, 0x4
+	.4byte 0x3F800000
 lbl_803CE088:
-	.incbin "baserom.dol", 0x2B7928, 0x4
+	.4byte 0x43F00000
 lbl_803CE08C:
-	.incbin "baserom.dol", 0x2B792C, 0x4
+	.4byte 0x44200000
 lbl_803CE090:
-	.incbin "baserom.dol", 0x2B7930, 0x8
+	.4byte 0x461C4000
+	.4byte 0x00000000
 lbl_803CE098:
-	.incbin "baserom.dol", 0x2B7938, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 lbl_803CE0A0:
-	.incbin "baserom.dol", 0x2B7940, 0x4
+	.4byte 0x47000000
 lbl_803CE0A4:
-	.incbin "baserom.dol", 0x2B7944, 0x4
+	.4byte 0xC2C80000
 lbl_803CE0A8:
-	.incbin "baserom.dol", 0x2B7948, 0x8
+	.4byte 0xFFFFFFFF
+	.4byte 0x00000000

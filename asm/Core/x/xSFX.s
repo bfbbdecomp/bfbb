@@ -520,15 +520,38 @@ lbl_80044728:
 
 .section .data
 lbl_80288C38:
-	.incbin "baserom.dol", 0x285C18, 0x48
+	.4byte 0x80044324
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x800443CC
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044408
+	.4byte 0x80044404
+	.4byte 0x80044330
+	.4byte 0x80044408
+	.4byte 0x8004435C
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global ShadowLightColor
 ShadowLightColor:
-	.incbin "baserom.dol", 0x285C60, 0x10
+	.4byte 0x3F800000
+	.4byte 0x3F800000
+	.4byte 0x3F800000
+	.4byte 0x3F800000
 /* SPECULATION: link order */
 .global gCamPos
 gCamPos:
-	.incbin "baserom.dol", 0x285C70, 0x10
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sbss
 lbl_803CB3A8:
@@ -543,22 +566,25 @@ ShadowLight:
 .section .sdata
 .global s_managedEnvSFX
 s_managedEnvSFX:
-	.incbin "baserom.dol", 0x2B5A60, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global ShadowStrength
 ShadowStrength:
-	.incbin "baserom.dol", 0x2B5A68, 0x4
+	.4byte 0x3E99999A
 /* SPECULATION: link order */
 .global rscale
 rscale:
-	.incbin "baserom.dol", 0x2B5A6C, 0x4
+	.4byte 0x3F800000
 
 .section .sdata2
 lbl_803CCFE8:
-	.incbin "baserom.dol", 0x2B6888, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 lbl_803CCFF0:
-	.incbin "baserom.dol", 0x2B6890, 0x4
+	.4byte 0x3F451EB8
 lbl_803CCFF4:
-	.incbin "baserom.dol", 0x2B6894, 0x4
+	.4byte 0x42C80000
 lbl_803CCFF8:
-	.incbin "baserom.dol", 0x2B6898, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000

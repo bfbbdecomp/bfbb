@@ -994,11 +994,35 @@ reset__10ptank_poolFv:
 
 .section .rodata
 lbl_8026AFD8:
-	.incbin "baserom.dol", 0x267FB8, 0x30
+	.4byte 0x00000001
+	.4byte 0x00000002
+	.4byte 0x00000003
+	.4byte 0x00000004
+	.4byte 0x00000005
+	.4byte 0x00000006
+	.4byte 0x00000007
+	.4byte 0x00000008
+	.4byte 0x00000009
+	.4byte 0x0000000A
+	.4byte 0x0000000B
+	.4byte 0x00000000
 
 .section .data
 lbl_80297CE0:
-	.incbin "baserom.dol", 0x294CC0, 0x38
+	.4byte 0x00000000
+	.4byte 0x80116C88
+	.4byte 0x00000001
+	.4byte 0x800CBD34
+	.4byte 0x00000002
+	.4byte 0x800CC554
+	.4byte 0x00000003
+	.4byte 0x800CC148
+	.4byte 0x00000004
+	.4byte 0x800CC14C
+	.4byte 0x00000005
+	.4byte 0x800CC0A4
+	.4byte 0x00000006
+	.4byte 0x800CBEEC
 
 .section .bss
 .balign 8
@@ -1009,12 +1033,15 @@ lbl_8031421C:
 
 .section .sdata2
 lbl_803CE8A8:
-	.incbin "baserom.dol", 0x2B8148, 0x4
+	.4byte 0x3F000000
 lbl_803CE8AC:
-	.incbin "baserom.dol", 0x2B814C, 0x4
+	.4byte 0x00000000
 lbl_803CE8B0:
-	.incbin "baserom.dol", 0x2B8150, 0x8
+	.4byte 0x3F800000
+	.4byte 0x00000000
 lbl_803CE8B8:
-	.incbin "baserom.dol", 0x2B8158, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 lbl_803CE8C0:
-	.incbin "baserom.dol", 0x2B8160, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

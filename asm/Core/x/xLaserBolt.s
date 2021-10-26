@@ -1803,26 +1803,30 @@ full__13xDecalEmitterCFv:
 
 .section .rodata
 lbl_80272C40:
-	.incbin "baserom.dol", 0x26FC20, 0x10
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sdata2
 lbl_803CF7A0:
-	.incbin "baserom.dol", 0x2B9040, 0x4
+	.4byte 0x3C888889
 .global lbl_803CF7A4
 lbl_803CF7A4:
-	.incbin "baserom.dol", 0x2B9044, 0x4
+	.4byte 0x00000000
 .global lbl_803CF7A8
 lbl_803CF7A8:
-	.incbin "baserom.dol", 0x2B9048, 0x4
+	.4byte 0x437F0000
 lbl_803CF7AC:
-	.incbin "baserom.dol", 0x2B904C, 0x4
+	.4byte 0x3F000000
 lbl_803CF7B0:
-	.incbin "baserom.dol", 0x2B9050, 0x4
+	.4byte 0xB727C5AC
 lbl_803CF7B4:
-	.incbin "baserom.dol", 0x2B9054, 0x4
+	.4byte 0x3727C5AC
 lbl_803CF7B8:
-	.incbin "baserom.dol", 0x2B9058, 0x4
+	.4byte 0x3F800000
 lbl_803CF7BC:
-	.incbin "baserom.dol", 0x2B905C, 0x4
+	.4byte 0x437F8000
 lbl_803CF7C0:
-	.incbin "baserom.dol", 0x2B9060, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

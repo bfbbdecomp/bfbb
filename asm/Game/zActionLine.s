@@ -4,7 +4,10 @@
 
 .global zActionLineStrings
 zActionLineStrings:
-	.incbin "baserom.dol", 0x2512E8, 0x10
+	.4byte 0x41435449
+	.4byte 0x4F4E4C49
+	.4byte 0x4E455300
+	.4byte 0x00000000
 
 .if 0
 
@@ -148,8 +151,8 @@ sActionLineRaster:
 
 .global zActionLine_f_0
 zActionLine_f_0:
-	.incbin "baserom.dol", 0x2B6A08, 0x4
+	.4byte 0x00000000
 
 .global zActionLine_f_1
 zActionLine_f_1:
-	.incbin "baserom.dol", 0x2B6A0C, 0x4
+	.4byte 0x3F800000

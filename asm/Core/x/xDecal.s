@@ -1308,16 +1308,19 @@ active_emitters_size:
 .section .sdata2
 .balign 8
 lbl_803CF778:
-	.incbin "baserom.dol", 0x2B9018, 0x4
+	.4byte 0x3F800000
 lbl_803CF77C:
-	.incbin "baserom.dol", 0x2B901C, 0x4
+	.4byte 0x00000000
 lbl_803CF780:
-	.incbin "baserom.dol", 0x2B9020, 0x4
+	.4byte 0x3A83126F
 lbl_803CF784:
-	.incbin "baserom.dol", 0x2B9024, 0x4
+	.4byte 0x3F7D70A4
 lbl_803CF788:
-	.incbin "baserom.dol", 0x2B9028, 0x8
+	.4byte 0x3C23D70A
+	.4byte 0x00000000
 lbl_803CF790:
-	.incbin "baserom.dol", 0x2B9030, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 lbl_803CF798:
-	.incbin "baserom.dol", 0x2B9038, 0x8
+	.4byte 0x3F000000
+	.4byte 0x00000000

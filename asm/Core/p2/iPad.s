@@ -370,18 +370,31 @@ iPadStopRumble__Fv:
 
 .section .data
 lbl_80292620:
-	.incbin "baserom.dol", 0x28F600, 0x30
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sdata2
 lbl_803CE118:
-	.incbin "baserom.dol", 0x2B79B8, 0x4
+	.4byte 0x42200000
 lbl_803CE11C:
-	.incbin "baserom.dol", 0x2B79BC, 0x4
+	.4byte 0xC2200000
 lbl_803CE120:
-	.incbin "baserom.dol", 0x2B79C0, 0x4
+	.4byte 0x404CCCCD
 lbl_803CE124:
-	.incbin "baserom.dol", 0x2B79C4, 0x4
+	.4byte 0x42FE0000
 lbl_803CE128:
-	.incbin "baserom.dol", 0x2B79C8, 0x8
+	.4byte 0xC2FE0000
+	.4byte 0x00000000
 lbl_803CE130:
-	.incbin "baserom.dol", 0x2B79D0, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

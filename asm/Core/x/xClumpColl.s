@@ -1842,12 +1842,13 @@ lbl_8011F0A0:
 
 .section .sdata2
 lbl_803CE990:
-	.incbin "baserom.dol", 0x2B8230, 0x4
+	.4byte 0xB22BCC77
 lbl_803CE994:
-	.incbin "baserom.dol", 0x2B8234, 0x4
+	.4byte 0x322BCC77
 lbl_803CE998:
-	.incbin "baserom.dol", 0x2B8238, 0x4
+	.4byte 0x3727C5AC
 lbl_803CE99C:
-	.incbin "baserom.dol", 0x2B823C, 0x4
+	.4byte 0x00000000
 lbl_803CE9A0:
-	.incbin "baserom.dol", 0x2B8240, 0x8
+	.4byte 0x3F800000
+	.4byte 0x00000000

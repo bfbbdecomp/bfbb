@@ -649,15 +649,16 @@ sManagerCount:
 .section .sdata2
 .global lbl_803CDC40
 lbl_803CDC40:
-	.incbin "baserom.dol", 0x2B74E0, 0x4
+	.4byte 0x3F800000
 .global lbl_803CDC44
 lbl_803CDC44:
-	.incbin "baserom.dol", 0x2B74E4, 0x4
+	.4byte 0x38D1B717
 .global lbl_803CDC48
 lbl_803CDC48:
-	.incbin "baserom.dol", 0x2B74E8, 0x4
+	.4byte 0x40800000
 .global lbl_803CDC4C
 lbl_803CDC4C:
-	.incbin "baserom.dol", 0x2B74EC, 0x4
+	.4byte 0x41200000
 lbl_803CDC50:
-	.incbin "baserom.dol", 0x2B74F0, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000

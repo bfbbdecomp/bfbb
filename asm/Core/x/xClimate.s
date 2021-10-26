@@ -4,10 +4,14 @@
 
 .global lbl_802520F0
 lbl_802520F0:
-	.incbin "baserom.dol", 0x24F0D0, 0xC
+	.4byte 0x00000000
+	.4byte 0xC0000000
+	.4byte 0x00000000
 .global lbl_802520FC
 lbl_802520FC:
-	.incbin "baserom.dol", 0x24F0DC, 0xC
+	.4byte 0x3DCCCCCD
+	.4byte 0x3DCCCCCD
+	.4byte 0x3DCCCCCD
 
 .if 0
 
@@ -403,39 +407,40 @@ sClimate:
 
 .section .sdata2
 lbl_803CCA68:
-	.incbin "baserom.dol", 0x2B6308, 0x4
+	.4byte 0x40490FDB
 lbl_803CCA6C:
-	.incbin "baserom.dol", 0x2B630C, 0x4
+	.4byte 0x43340000
 
 .global xClimate_f_0
 xClimate_f_0:
-	.incbin "baserom.dol", 0x2B6310, 0x4
+	.4byte 0x00000000
 
 lbl_803CCA74:
-	.incbin "baserom.dol", 0x2B6314, 0x4
+	.4byte 0x3F800000
 .global lbl_803CCA78
 lbl_803CCA78:
-	.incbin "baserom.dol", 0x2B6318, 0x4
+	.4byte 0x3F000000
 
 .global xClimate_f_10_0
 xClimate_f_10_0:
-	.incbin "baserom.dol", 0x2B631C, 0x4
+	.4byte 0x41200000
 
 lbl_803CCA80:
-	.incbin "baserom.dol", 0x2B6320, 0x4
+	.4byte 0x41C80000
 lbl_803CCA84:
-	.incbin "baserom.dol", 0x2B6324, 0x4
+	.4byte 0x41480000
 lbl_803CCA88:
-	.incbin "baserom.dol", 0x2B6328, 0x4
+	.4byte 0x41000000
 lbl_803CCA8C:
-	.incbin "baserom.dol", 0x2B632C, 0x4
+	.4byte 0x42340000
 lbl_803CCA90:
-	.incbin "baserom.dol", 0x2B6330, 0x4
+	.4byte 0x41B40000
 lbl_803CCA94:
-	.incbin "baserom.dol", 0x2B6334, 0x4
+	.4byte 0x43FD2000
 lbl_803CCA98:
-	.incbin "baserom.dol", 0x2B6338, 0x4
+	.4byte 0x40800000
 lbl_803CCA9C:
-	.incbin "baserom.dol", 0x2B633C, 0x4
+	.4byte 0x3DCCCCCD
 lbl_803CCAA0:
-	.incbin "baserom.dol", 0x2B6340, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

@@ -4,7 +4,10 @@
 
 .global lbl_80252FB8
 lbl_80252FB8:
-	.incbin "baserom.dol", 0x24FF98, 0x10
+	.4byte 0x0A0D005D
+	.4byte 0x003D0023
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .if 0
 

@@ -342,10 +342,10 @@ lbl_800A8DD8:
 
 .section .sdata2
 lbl_803CDDA0:
-	.incbin "baserom.dol", 0x2B7640, 0x4
+	.4byte 0x00000000
 lbl_803CDDA4:
-	.incbin "baserom.dol", 0x2B7644, 0x4
+	.4byte 0x3F800000
 lbl_803CDDA8:
-	.incbin "baserom.dol", 0x2B7648, 0x4
+	.4byte 0x40C90FDB
 lbl_803CDDAC:
-	.incbin "baserom.dol", 0x2B764C, 0x4
+	.4byte 0x3F000000

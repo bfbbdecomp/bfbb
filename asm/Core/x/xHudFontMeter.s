@@ -4,10 +4,22 @@
 
 .global lbl_80252F00
 lbl_80252F00:
-	.incbin "baserom.dol", 0x24FEE0, 0x10
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F800000
+	.4byte 0x3F800000
 .global lbl_80252F10
 lbl_80252F10:
-	.incbin "baserom.dol", 0x24FEF0, 0x28
+	.4byte 0x6875643A
+	.4byte 0x6D657465
+	.4byte 0x723A666F
+	.4byte 0x6E740025
+	.4byte 0x64002564
+	.4byte 0x2F256400
+	.4byte 0x2564206F
+	.4byte 0x66202564
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .if 0
 
@@ -407,23 +419,62 @@ render__5xfontCFPCcff:
 
 .section .data
 lbl_8027D640:
-	.incbin "baserom.dol", 0x27A620, 0xC
+	.4byte 0x80252F1F
+	.4byte 0x80252F22
+	.4byte 0x80252F28
 /* SPECULATION: link order */
 .global __vt__Q24xhud17font_meter_widget
 __vt__Q24xhud17font_meter_widget:
-	.incbin "baserom.dol", 0x27A62C, 0x2C
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8002F190
+	.4byte 0x8002F1B0
+	.4byte 0x8002F1F0
+	.4byte 0x8002EFAC
+	.4byte 0x8002EE9C
+	.4byte 0x8002F258
+	.4byte 0x8002F444
+	.4byte 0x8002EF88
+	.4byte 0x00000000
 /* SPECULATION: link order */
 .global __vt__Q24xhud12meter_widget
 __vt__Q24xhud12meter_widget:
-	.incbin "baserom.dol", 0x27A658, 0x28
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8002EFA8
+	.4byte 0x8002F800
+	.4byte 0x8002F840
+	.4byte 0x8002EFAC
+	.4byte 0x8002EE9C
+	.4byte 0x8002FC68
+	.4byte 0x8002EEBC
+	.4byte 0x8002EF88
 /* SPECULATION: link order */
 .global __vt__Q24xhud12model_widget
 __vt__Q24xhud12model_widget:
-	.incbin "baserom.dol", 0x27A680, 0x28
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8002FDEC
+	.4byte 0x8002FE0C
+	.4byte 0x8002FE4C
+	.4byte 0x8002EFAC
+	.4byte 0x8002EE9C
+	.4byte 0x8002FEB4
+	.4byte 0x8002FF30
+	.4byte 0x8002EF88
 /* SPECULATION: link order */
 .global __vt__Q24xhud17unit_meter_widget
 __vt__Q24xhud17unit_meter_widget:
-	.incbin "baserom.dol", 0x27A6A8, 0x28
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8003010C
+	.4byte 0x8003012C
+	.4byte 0x8003016C
+	.4byte 0x8002EFAC
+	.4byte 0x800301D4
+	.4byte 0x800301F4
+	.4byte 0x800303F0
+	.4byte 0x8002EF88
 
 .section .sbss
 lbl_803CB2A8:
@@ -433,10 +484,12 @@ lbl_803CB2AC:
 
 .section .sdata2
 lbl_803CCD88:
-	.incbin "baserom.dol", 0x2B6628, 0x4
+	.4byte 0x3F000000
 lbl_803CCD8C:
-	.incbin "baserom.dol", 0x2B662C, 0x4
+	.4byte 0x437F0000
 lbl_803CCD90:
-	.incbin "baserom.dol", 0x2B6630, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000
 lbl_803CCD98:
-	.incbin "baserom.dol", 0x2B6638, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

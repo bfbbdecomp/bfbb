@@ -3,10 +3,11 @@
 .section .sdata2
 .global _835_1
 _835_1:
-	.incbin "baserom.dol", 0x2B8580, 0x4
+	.4byte 0x3F666666
 .global _836_1
 _836_1:
-	.incbin "baserom.dol", 0x2B8584, 0x4
+	.4byte 0xC7C34F80
 .global _837_4
 _837_4:
-	.incbin "baserom.dol", 0x2B8588, 0x8
+	.4byte 0x00000000
+	.4byte 0x00000000

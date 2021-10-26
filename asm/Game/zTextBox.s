@@ -133,16 +133,17 @@ render_bk_tex_scale__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox:
 .section .sdata2
 .global _720_1
 _720_1:
-	.incbin "baserom.dol", 0x2B8568, 0x4
+	.4byte 0x3F800000
 .global _721_1
 _721_1:
-	.incbin "baserom.dol", 0x2B856C, 0x4
+	.4byte 0x44200000
 .global _722_0
 _722_0:
-	.incbin "baserom.dol", 0x2B8570, 0x4
+	.4byte 0x43F00000
 .global _723_0
 _723_0:
-	.incbin "baserom.dol", 0x2B8574, 0x4
+	.4byte 0x00000000
 .global _761_1
 _761_1:
-	.incbin "baserom.dol", 0x2B8578, 0x8
+	.4byte 0x3F000000
+	.4byte 0x00000000

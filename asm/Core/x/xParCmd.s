@@ -528,39 +528,40 @@ lbl_80038360:
 .section .sdata2
 .global _658_0
 _658_0:
-	.incbin "baserom.dol", 0x2B67B8, 0x4
+	.4byte 0xBF800000
 .global _691
 _691:
-	.incbin "baserom.dol", 0x2B67BC, 0x4
+	.4byte 0x00000000
 .global _760
 _760:
-	.incbin "baserom.dol", 0x2B67C0, 0x4
+	.4byte 0x40000000
 .global _772
 _772:
-	.incbin "baserom.dol", 0x2B67C4, 0x4
+	.4byte 0x3F000000
 .global _812
 _812:
-	.incbin "baserom.dol", 0x2B67C8, 0x4
+	.4byte 0x3F800000
 .global _830_1
 _830_1:
-	.incbin "baserom.dol", 0x2B67CC, 0x4
+	.4byte 0x437F0000
 .global _831_0
 _831_0:
-	.incbin "baserom.dol", 0x2B67D0, 0x4
+	.4byte 0x43B40000
 .global _857_0
 _857_0:
-	.incbin "baserom.dol", 0x2B67D4, 0x4
+	.4byte 0x40490FDB
 .global _858
 _858:
-	.incbin "baserom.dol", 0x2B67D8, 0x4
+	.4byte 0x43340000
 .global _1075
 _1075:
-	.incbin "baserom.dol", 0x2B67DC, 0x4
+	.4byte 0x40400000
 .global _1076
 _1076:
-	.incbin "baserom.dol", 0x2B67E0, 0x4
+	.4byte 0x3EAAAAAB
 .global _1077
 _1077:
-	.incbin "baserom.dol", 0x2B67E4, 0x4
+	.4byte 0x3F2AAAAB
 lbl_803CCF48:
-	.incbin "baserom.dol", 0x2B67E8, 0x8
+	.4byte 0x3727C5AC
+	.4byte 0x00000000

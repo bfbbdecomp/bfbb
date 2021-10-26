@@ -2364,16 +2364,17 @@ collide_rwtime_secs:
 
 .section .sdata2
 lbl_803CE060:
-	.incbin "baserom.dol", 0x2B7900, 0x4
+	.4byte 0x00000000
 lbl_803CE064:
-	.incbin "baserom.dol", 0x2B7904, 0x4
+	.4byte 0x3F800000
 lbl_803CE068:
-	.incbin "baserom.dol", 0x2B7908, 0x4
+	.4byte 0x3727C5AC
 lbl_803CE06C:
-	.incbin "baserom.dol", 0x2B790C, 0x4
+	.4byte 0x7E967699
 lbl_803CE070:
-	.incbin "baserom.dol", 0x2B7910, 0x4
+	.4byte 0x3A83126F
 lbl_803CE074:
-	.incbin "baserom.dol", 0x2B7914, 0x4
+	.4byte 0x3F3504F3
 lbl_803CE078:
-	.incbin "baserom.dol", 0x2B7918, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

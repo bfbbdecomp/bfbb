@@ -932,10 +932,10 @@ __as__5xVec3Ff:
 
 .section .sdata2
 lbl_803CCC08:
-	.incbin "baserom.dol", 0x2B64A8, 0x4
+	.4byte 0x00000000
 lbl_803CCC0C:
-	.incbin "baserom.dol", 0x2B64AC, 0x4
+	.4byte 0x3F800000
 lbl_803CCC10:
-	.incbin "baserom.dol", 0x2B64B0, 0x4
+	.4byte 0x3727C5AC
 lbl_803CCC14:
-	.incbin "baserom.dol", 0x2B64B4, 0x4
+	.4byte 0x3DCCCCCD

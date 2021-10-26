@@ -399,31 +399,33 @@ sMainGameCamera:
 .section .sdata2
 .global _640_0
 _640_0:
-	.incbin "baserom.dol", 0x2B78D0, 0x4
+	.4byte 0x3F800000
 .global _706_0
 _706_0:
-	.incbin "baserom.dol", 0x2B78D4, 0x4
+	.4byte 0x40490FDB
 .global _707_1
 _707_1:
-	.incbin "baserom.dol", 0x2B78D8, 0x4
+	.4byte 0x3F000000
 .global _708_3
 _708_3:
-	.incbin "baserom.dol", 0x2B78DC, 0x4
+	.4byte 0x43340000
 .global _709_1
 _709_1:
-	.incbin "baserom.dol", 0x2B78E0, 0x4
+	.4byte 0x3F400000
 .global _741_3
 _741_3:
-	.incbin "baserom.dol", 0x2B78E4, 0x4
+	.4byte 0x3D4CCCCD
 .global _742_1
 _742_1:
-	.incbin "baserom.dol", 0x2B78E8, 0x4
+	.4byte 0x00000000
 .global _743_1
 _743_1:
-	.incbin "baserom.dol", 0x2B78EC, 0x4
+	.4byte 0x43C80000
 .global _769_1
 _769_1:
-	.incbin "baserom.dol", 0x2B78F0, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 .global _826_0
 _826_0:
-	.incbin "baserom.dol", 0x2B78F8, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000

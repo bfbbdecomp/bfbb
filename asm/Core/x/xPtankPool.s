@@ -755,7 +755,20 @@ lbl_80180018:
 
 .section .data
 lbl_8029B830:
-	.incbin "baserom.dol", 0x298810, 0x38
+	.4byte 0x00000004
+	.4byte 0x0000008A
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000018
+	.4byte 0x00000087
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .sbss
 lbl_803CC0E8:
@@ -811,12 +824,13 @@ mMovieResumeFunction__8iTRCDisk:
 
 .section .sdata2
 lbl_803CF7E8:
-	.incbin "baserom.dol", 0x2B9088, 0x4
+	.4byte 0x3F800000
 lbl_803CF7EC:
-	.incbin "baserom.dol", 0x2B908C, 0x4
+	.4byte 0x00000000
 lbl_803CF7F0:
-	.incbin "baserom.dol", 0x2B9090, 0x4
+	.4byte 0x3F000000
 lbl_803CF7F4:
-	.incbin "baserom.dol", 0x2B9094, 0x4
+	.4byte 0x3E800000
 lbl_803CF7F8:
-	.incbin "baserom.dol", 0x2B9098, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000

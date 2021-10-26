@@ -1941,61 +1941,65 @@ lbl_803D0814:
 .section .sdata2
 .global _744_0
 _744_0:
-	.incbin "baserom.dol", 0x2B64F8, 0x8
+	.4byte 0x3F000000
+	.4byte 0x00000000
 lbl_803CCC60:
-	.incbin "baserom.dol", 0x2B6500, 0x8
+	.4byte 0x43300000
+	.4byte 0x80000000
 lbl_803CCC68:
-	.incbin "baserom.dol", 0x2B6508, 0x8
+	.4byte 0x43300000
+	.4byte 0x00000000
 .global _762
 _762:
-	.incbin "baserom.dol", 0x2B6510, 0x4
+	.4byte 0x00000000
 .global _763
 _763:
-	.incbin "baserom.dol", 0x2B6514, 0x4
+	.4byte 0x3F800000
 .global _903
 _903:
-	.incbin "baserom.dol", 0x2B6518, 0x4
+	.4byte 0x44200000
 .global _904
 _904:
-	.incbin "baserom.dol", 0x2B651C, 0x4
+	.4byte 0x43F00000
 .global _1027
 _1027:
-	.incbin "baserom.dol", 0x2B6520, 0x4
+	.4byte 0x7E967699
 .global text_delims
 text_delims:
-	.incbin "baserom.dol", 0x2B6524, 0x8
+	.4byte 0x802529F2
+	.4byte 0x0000000B
 .global _1615
 _1615:
-	.incbin "baserom.dol", 0x2B652C, 0x4
+	.4byte 0x80252A62
 /* SPECULATION: link order */
 .global lbl_803CCC90
 lbl_803CCC90:
-	.incbin "baserom.dol", 0x2B6530, 0x4
+	.4byte 0x00000006
 .global _1616
 _1616:
-	.incbin "baserom.dol", 0x2B6534, 0x4
+	.4byte 0x80252A69
 /* SPECULATION: link order */
 .global lbl_803CCC98
 lbl_803CCC98:
-	.incbin "baserom.dol", 0x2B6538, 0x4
+	.4byte 0x00000003
 .global _1642
 _1642:
-	.incbin "baserom.dol", 0x2B653C, 0x4
+	.4byte 0x802C7BA8
 /* SPECULATION: link order */
 .global lbl_803CCCA0
 lbl_803CCCA0:
-	.incbin "baserom.dol", 0x2B6540, 0x4
+	.4byte 0x00000000
 .global _2167
 _2167:
-	.incbin "baserom.dol", 0x2B6544, 0x4
+	.4byte 0x437F0000
 lbl_803CCCA8:
-	.incbin "baserom.dol", 0x2B6548, 0x4
+	.4byte 0x3B808081
 .global _2418
 _2418:
-	.incbin "baserom.dol", 0x2B654C, 0x4
+	.4byte 0xBF800000
 .global _2808
 _2808:
-	.incbin "baserom.dol", 0x2B6550, 0x4
+	.4byte 0x3F8020C5
 .global _2835
 _2835:
-	.incbin "baserom.dol", 0x2B6554, 0x4
+	.4byte 0x3C8EFA35

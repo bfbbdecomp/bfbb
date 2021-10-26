@@ -327,28 +327,29 @@ lbl_800C61CC:
 .section .sdata2
 .global _555_1
 _555_1:
-	.incbin "baserom.dol", 0x2B7958, 0x4
+	.4byte 0x3F000000
 .global _557_1
 _557_1:
-	.incbin "baserom.dol", 0x2B795C, 0x4
+	.4byte 0x00000000
 .global _558_3
 _558_3:
-	.incbin "baserom.dol", 0x2B7960, 0x4
+	.4byte 0x3F800000
 .global _560_2
 _560_2:
-	.incbin "baserom.dol", 0x2B7964, 0x4
+	.4byte 0x3727C5AC
 .global _607
 _607:
-	.incbin "baserom.dol", 0x2B7968, 0x4
+	.4byte 0x40000000
 .global _608_0
 _608_0:
-	.incbin "baserom.dol", 0x2B796C, 0x4
+	.4byte 0xBF800000
 .global _1060
 _1060:
-	.incbin "baserom.dol", 0x2B7970, 0x4
+	.4byte 0xFE967699
 .global _1061
 _1061:
-	.incbin "baserom.dol", 0x2B7974, 0x4
+	.4byte 0x7E967699
 .global _1062
 _1062:
-	.incbin "baserom.dol", 0x2B7978, 0x8
+	.4byte 0xBF000000
+	.4byte 0x00000000

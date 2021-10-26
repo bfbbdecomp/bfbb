@@ -757,7 +757,12 @@ lbl_800A87D0:
 
 .section .rodata
 lbl_8025E6F8:
-	.incbin "baserom.dol", 0x25B6D8, 0x18
+	.4byte 0x50415254
+	.4byte 0x49434C45
+	.4byte 0x5F434C49
+	.4byte 0x505F2564
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 .section .bss
 .global sClipVolume
@@ -775,30 +780,30 @@ sClipVolumeTotal:
 
 .section .sdata2
 lbl_803CDD68:
-	.incbin "baserom.dol", 0x2B7608, 0x4
+	.4byte 0xBF800000
 lbl_803CDD6C:
-	.incbin "baserom.dol", 0x2B760C, 0x4
+	.4byte 0x3F800000
 lbl_803CDD70:
-	.incbin "baserom.dol", 0x2B7610, 0x4
+	.4byte 0x3E800000
 lbl_803CDD74:
-	.incbin "baserom.dol", 0x2B7614, 0x4
+	.4byte 0x40000000
 lbl_803CDD78:
-	.incbin "baserom.dol", 0x2B7618, 0x4
+	.4byte 0x3EFAE148
 lbl_803CDD7C:
-	.incbin "baserom.dol", 0x2B761C, 0x4
+	.4byte 0x3DCCCCCD
 lbl_803CDD80:
-	.incbin "baserom.dol", 0x2B7620, 0x4
+	.4byte 0x3F000000
 lbl_803CDD84:
-	.incbin "baserom.dol", 0x2B7624, 0x4
+	.4byte 0x00000000
 lbl_803CDD88:
-	.incbin "baserom.dol", 0x2B7628, 0x4
+	.4byte 0x40800000
 lbl_803CDD8C:
-	.incbin "baserom.dol", 0x2B762C, 0x4
+	.4byte 0x3C23D70A
 lbl_803CDD90:
-	.incbin "baserom.dol", 0x2B7630, 0x4
+	.4byte 0x41800000
 lbl_803CDD94:
-	.incbin "baserom.dol", 0x2B7634, 0x4
+	.4byte 0x3A83126F
 lbl_803CDD98:
-	.incbin "baserom.dol", 0x2B7638, 0x4
+	.4byte 0x41200000
 lbl_803CDD9C:
-	.incbin "baserom.dol", 0x2B763C, 0x4
+	.4byte 0x3F7AE148

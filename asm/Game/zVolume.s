@@ -372,4 +372,5 @@ globalCamera:
 .section .sdata2
 .global lbl_803CDFB8
 lbl_803CDFB8:
-	.incbin "baserom.dol", 0x2B7858, 0x8
+	.4byte 0x3F800000
+	.4byte 0x00000000

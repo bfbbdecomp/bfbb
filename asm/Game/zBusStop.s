@@ -280,19 +280,19 @@ sBusStopUI:
 .section .sdata2
 .global zBusStop_float_minusone
 zBusStop_float_minusone:
-	.incbin "baserom.dol", 0x2B84C8, 0x4
+	.4byte 0xBF800000
 .global zBusStop_float_6p25
 zBusStop_float_6p25:
-	.incbin "baserom.dol", 0x2B84CC, 0x4
+	.4byte 0x40C80000
 .global zBusStop_float_zero
 zBusStop_float_zero:
-	.incbin "baserom.dol", 0x2B84D0, 0x4
+	.4byte 0x00000000
 .global zBusStop_float_0p1
 zBusStop_float_0p1:
-	.incbin "baserom.dol", 0x2B84D4, 0x4
+	.4byte 0x3DCCCCCD
 .global zBusStop_float_0p5
 zBusStop_float_0p5:
-	.incbin "baserom.dol", 0x2B84D8, 0x4
+	.4byte 0x3F000000
 .global zBusStop_float_two
 zBusStop_float_two:
-	.incbin "baserom.dol", 0x2B84DC, 0x4
+	.4byte 0x40000000

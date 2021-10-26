@@ -190,7 +190,7 @@ __as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_:
 .section .sdata2
 .global _781
 _781:
-	.incbin "baserom.dol", 0x2B6440, 0x4
+	.4byte 0x3B088889
 .global _783
 _783:
-	.incbin "baserom.dol", 0x2B6444, 0x4
+	.4byte 0x3ACCCCCD

@@ -77,7 +77,7 @@ lbl_80036A24:
 .section .sdata2
 .global lbl_803CCF10
 lbl_803CCF10:
-	.incbin "baserom.dol", 0x2B67B0, 0x4
+	.4byte 0x00000000
 .global lbl_803CCF14
 lbl_803CCF14:
-	.incbin "baserom.dol", 0x2B67B4, 0x4
+	.4byte 0x437F0000

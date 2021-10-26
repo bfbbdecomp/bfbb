@@ -4,7 +4,16 @@
 
 .global lbl_80252F68
 lbl_80252F68:
-	.incbin "baserom.dol", 0x24FF48, 0x28
+	.4byte 0x58485544
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F49
+	.4byte 0x646C6500
+	.4byte 0x49646C65
+	.4byte 0x30310068
+	.4byte 0x75643A6D
+	.4byte 0x6F64656C
+	.4byte 0x00000000
 
 .if 0
 
@@ -244,9 +253,10 @@ lbl_803CB2BC:
 .section .sdata2
 .global lbl_803CCDE0
 lbl_803CCDE0:
-	.incbin "baserom.dol", 0x2B6680, 0x4
+	.4byte 0x3F800000
 .global lbl_803CCDE4
 lbl_803CCDE4:
-	.incbin "baserom.dol", 0x2B6684, 0x4
+	.4byte 0x00000000
 lbl_803CCDE8:
-	.incbin "baserom.dol", 0x2B6688, 0x8
+	.4byte 0x3B008081
+	.4byte 0x00000000

@@ -77,20 +77,20 @@ BOSS_InitEffects__Fv:
 .balign 8
 .global _917_0
 _917_0:
-	.incbin "baserom.dol", 0x2B85A8, 0x4
+	.4byte 0x00000001
 /* SPECULATION: link order */
 .global lbl_803CED0C
 lbl_803CED0C:
-	.incbin "baserom.dol", 0x2B85AC, 0x4
+	.4byte 0x00000000
 .global _920_2
 _920_2:
-	.incbin "baserom.dol", 0x2B85B0, 0x4
+	.4byte 0x3F800000
 .global _921_2
 _921_2:
-	.incbin "baserom.dol", 0x2B85B4, 0x4
+	.4byte 0x00000000
 .global _922_0
 _922_0:
-	.incbin "baserom.dol", 0x2B85B8, 0x4
+	.4byte 0x3E4CCCCD
 .global _947_3
 _947_3:
-	.incbin "baserom.dol", 0x2B85BC, 0x4
+	.4byte 0x7E967699
