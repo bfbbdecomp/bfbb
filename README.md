@@ -76,22 +76,3 @@ Join the discussion on the [BFBB Decompilation Discord](https://discord.gg/dVbGF
 Contributions and PRs are welcome.
 
 We recommend joining the [BFBB Decompilation Discord](https://discord.gg/dVbGFdYU6A) as most of our discussion about this project occurs there. It's also the best place to get help if you need it.
-
-## Special Thanks
-
-**[@Seil](https://github.com/pslehisl)** -
-Starting the project, working on tools, decompilation, support, etc. (too many things to list).
-
-**[@mattbruv](https://github.com/mattbruv)** -
-Creating the [project tracking website](https://bfbbdecomp.github.io/bfbb/), [inlineasm](tools/inlineasm/README.md), decompilation.
-
-**[@DarkRTA](https://github.com/DarkRTA)** -
-Exporting datatypes for Ghidra, creating the formatting rules, splitting data files, improving the build process, decompilation.
-
-**[@stravant](https://github.com/stravant)** -
-writing [documentation](https://github.com/bfbbdecomp/bfbb/blob/master/docs/WalkthroughAndTips.md), decompilation.
-
-**[@mkst](https://github.com/mkst)** ([conker](https://github.com/mkst/conker)) -
-Continuous Integration.
-
-And to [everyone else](https://github.com/bfbbdecomp/bfbb/graphs/contributors) who has contributed to the project in any way.
