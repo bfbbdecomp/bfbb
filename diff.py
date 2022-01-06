@@ -214,6 +214,14 @@ parser.add_argument(
     "Requires -w."
 )
 parser.add_argument(
+    "-d",
+    "--docker",
+    dest="makecmd",
+    action="store_const",
+    const="build.sh",
+    help="Run docker build script instead of make directly"
+)
+parser.add_argument(
     "-3",
     "--threeway=prev",
     dest="threeway",
@@ -412,13 +420,13 @@ def eval_line_num(expr: str) -> int:
 
 def run_make(target: str) -> None:
     target = target.replace("\\", "/")
-    subprocess.check_call(["make"] + makeflags + [target])
+    subprocess.check_call([args.makecmd or "make"] + makeflags + [target])
 
 
 def run_make_capture_output(target: str, stdout: tempfile.TemporaryFile = None, stderr: tempfile.TemporaryFile = None) -> "subprocess.CompletedProcess[bytes]":
     target = target.replace("\\", "/")
     return subprocess.run(
-        ["make"] + makeflags + [target],
+        [args.makecmd or "make"] + makeflags + [target],
         stdout=stdout or subprocess.PIPE,
         stderr=stderr or subprocess.PIPE,
     )
