@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run -w /bfbbdecomp/repo -v $(pwd):/bfbbdecomp/repo bfbbdecomp/bfbb make $@
+docker run -w /bfbbdecomp -v $(pwd):/bfbbdecomp -u $UID bfbbdecomp/bfbb make $@
