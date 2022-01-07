@@ -41,6 +41,14 @@ Join the discussion on the [BFBB Decompilation Discord](https://discord.gg/dVbGF
 4. Copy the CW 2.7 `mwcceppc.exe` and `mwldeppc.exe` into the `2.7` folder.
 5. Run the `make` command.
 
+### With Docker
+
+`build.sh` is a small script to execute `make` inside of a docker container to alleviate build environment issues surrounding Wine versions and devkitPro installation. To build with Docker
+
+- Obtain the CodeWarrior compilers and `main.dol` file as before.
+- `docker pull docker.io/bfbbdecomp/bfbb:latest` to get the container.
+- Running `build.sh` will run `make` within the container and pass any given arguments along to it.
+
 ## Project Structure
 
     bfbb
