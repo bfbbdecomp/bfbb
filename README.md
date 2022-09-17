@@ -41,6 +41,11 @@ Join the discussion on the [BFBB Decompilation Discord](https://discord.gg/dVbGF
 4. Copy the CW 2.7 `mwcceppc.exe` and `mwldeppc.exe` into the `2.7` folder.
 5. Run the `make` command.
 
+### Instructions using Docker
+
+1. Build the Docker image: `docker build . -t bfbb`
+2. Compile BFBB: `docker run -v $(pwd):/bfbbdecomp bfbb make --jobs`
+
 ## Project Structure
 
     bfbb
