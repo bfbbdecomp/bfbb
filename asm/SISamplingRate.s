@@ -1,0 +1,148 @@
+.include "macros.inc"
+.file "SISamplingRate.c"
+
+# 0x801DAE64 - 0x801DAF6C
+.text
+.balign 4
+
+.fn SISetSamplingRate, global
+/* 801DAE64 001D7F44  7C 08 02 A6 */	mflr r0
+/* 801DAE68 001D7F48  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801DAE6C 001D7F4C  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 801DAE70 001D7F50  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 801DAE74 001D7F54  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 801DAE78 001D7F58  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 801DAE7C 001D7F5C  3B A3 00 00 */	addi r29, r3, 0x0
+/* 801DAE80 001D7F60  28 1D 00 0B */	cmplwi r29, 0xb
+/* 801DAE84 001D7F64  3C 60 80 2B */	lis r3, ...data.0@ha
+/* 801DAE88 001D7F68  3B E3 66 A0 */	addi r31, r3, ...data.0@l
+/* 801DAE8C 001D7F6C  40 81 00 08 */	ble .L_801DAE94
+/* 801DAE90 001D7F70  3B A0 00 0B */	li r29, 0xb
+.L_801DAE94:
+/* 801DAE94 001D7F74  4B FF 94 7D */	bl OSDisableInterrupts
+/* 801DAE98 001D7F78  93 AD 9D 18 */	stw r29, SamplingRate@sda21(r13)
+/* 801DAE9C 001D7F7C  7C 7E 1B 78 */	mr r30, r3
+/* 801DAEA0 001D7F80  48 00 1B F9 */	bl VIGetTvFormat
+/* 801DAEA4 001D7F84  2C 03 00 02 */	cmpwi r3, 0x2
+/* 801DAEA8 001D7F88  41 82 00 24 */	beq .L_801DAECC
+/* 801DAEAC 001D7F8C  40 80 00 14 */	bge .L_801DAEC0
+/* 801DAEB0 001D7F90  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801DAEB4 001D7F94  41 82 00 18 */	beq .L_801DAECC
+/* 801DAEB8 001D7F98  40 80 00 1C */	bge .L_801DAED4
+/* 801DAEBC 001D7F9C  48 00 00 20 */	b .L_801DAEDC
+.L_801DAEC0:
+/* 801DAEC0 001D7FA0  2C 03 00 05 */	cmpwi r3, 0x5
+/* 801DAEC4 001D7FA4  41 82 00 08 */	beq .L_801DAECC
+/* 801DAEC8 001D7FA8  48 00 00 14 */	b .L_801DAEDC
+.L_801DAECC:
+/* 801DAECC 001D7FAC  7F E4 FB 78 */	mr r4, r31
+/* 801DAED0 001D7FB0  48 00 00 20 */	b .L_801DAEF0
+.L_801DAED4:
+/* 801DAED4 001D7FB4  38 9F 00 30 */	addi r4, r31, 0x30
+/* 801DAED8 001D7FB8  48 00 00 18 */	b .L_801DAEF0
+.L_801DAEDC:
+/* 801DAEDC 001D7FBC  38 7F 00 60 */	addi r3, r31, 0x60
+/* 801DAEE0 001D7FC0  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801DAEE4 001D7FC4  4B FF 80 21 */	bl OSReport
+/* 801DAEE8 001D7FC8  3B A0 00 00 */	li r29, 0x0
+/* 801DAEEC 001D7FCC  38 9F 00 00 */	addi r4, r31, 0x0
+.L_801DAEF0:
+/* 801DAEF0 001D7FD0  3C 60 CC 00 */	lis r3, 0xcc00
+/* 801DAEF4 001D7FD4  A0 03 20 6C */	lhz r0, 0x206c(r3)
+/* 801DAEF8 001D7FD8  54 00 07 FF */	clrlwi. r0, r0, 31
+/* 801DAEFC 001D7FDC  41 82 00 0C */	beq .L_801DAF08
+/* 801DAF00 001D7FE0  38 A0 00 02 */	li r5, 0x2
+/* 801DAF04 001D7FE4  48 00 00 08 */	b .L_801DAF0C
+.L_801DAF08:
+/* 801DAF08 001D7FE8  38 A0 00 01 */	li r5, 0x1
+.L_801DAF0C:
+/* 801DAF0C 001D7FEC  57 A3 10 3A */	slwi r3, r29, 2
+/* 801DAF10 001D7FF0  7C 04 1A 2E */	lhzx r0, r4, r3
+/* 801DAF14 001D7FF4  7C 64 1A 14 */	add r3, r4, r3
+/* 801DAF18 001D7FF8  88 83 00 02 */	lbz r4, 0x2(r3)
+/* 801DAF1C 001D7FFC  7C 65 01 D6 */	mullw r3, r5, r0
+/* 801DAF20 001D8000  4B FF F4 A9 */	bl SISetXY
+/* 801DAF24 001D8004  7F C3 F3 78 */	mr r3, r30
+/* 801DAF28 001D8008  4B FF 94 11 */	bl OSRestoreInterrupts
+/* 801DAF2C 001D800C  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801DAF30 001D8010  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 801DAF34 001D8014  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 801DAF38 001D8018  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 801DAF3C 001D801C  38 21 00 20 */	addi r1, r1, 0x20
+/* 801DAF40 001D8020  7C 08 03 A6 */	mtlr r0
+/* 801DAF44 001D8024  4E 80 00 20 */	blr
+.endfn SISetSamplingRate
+
+.fn SIRefreshSamplingRate, global
+/* 801DAF48 001D8028  7C 08 02 A6 */	mflr r0
+/* 801DAF4C 001D802C  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801DAF50 001D8030  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801DAF54 001D8034  80 6D 9D 18 */	lwz r3, SamplingRate@sda21(r13)
+/* 801DAF58 001D8038  4B FF FF 0D */	bl SISetSamplingRate
+/* 801DAF5C 001D803C  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801DAF60 001D8040  38 21 00 08 */	addi r1, r1, 0x8
+/* 801DAF64 001D8044  7C 08 03 A6 */	mtlr r0
+/* 801DAF68 001D8048  4E 80 00 20 */	blr
+.endfn SIRefreshSamplingRate
+
+# 0x802B66A0 - 0x802B6738
+.data
+.balign 8
+.sym ...data.0, local
+
+.obj XYNTSC, local
+	.4byte 0x00F60200
+	.4byte 0x000F1200
+	.4byte 0x001E0900
+	.4byte 0x002C0600
+	.4byte 0x00340500
+	.4byte 0x00410400
+	.4byte 0x00570300
+	.4byte 0x00570300
+	.4byte 0x00570300
+	.4byte 0x00830200
+	.4byte 0x00830200
+	.4byte 0x00830200
+.endobj XYNTSC
+
+.obj XYPAL, local
+	.4byte 0x01280200
+	.4byte 0x000F1500
+	.4byte 0x001D0B00
+	.4byte 0x002D0700
+	.4byte 0x00340600
+	.4byte 0x003F0500
+	.4byte 0x004E0400
+	.4byte 0x00680300
+	.4byte 0x00680300
+	.4byte 0x00680300
+	.4byte 0x00680300
+	.4byte 0x009C0200
+.endobj XYPAL
+
+.obj "@16", local
+	.4byte 0x53495365
+	.4byte 0x7453616D
+	.4byte 0x706C696E
+	.4byte 0x67526174
+	.4byte 0x653A2075
+	.4byte 0x6E6B6E6F
+	.4byte 0x776E2054
+	.4byte 0x5620666F
+	.4byte 0x726D6174
+	.4byte 0x2E205573
+	.4byte 0x65206465
+	.4byte 0x6661756C
+	.byte 0x74, 0x2E, 0x00
+.endobj "@16"
+	.4byte 0x00000000
+	.byte 0x00
+
+# 0x803CC618 - 0x803CC620
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj SamplingRate, local
+	.skip 0x4
+.endobj SamplingRate
+	.skip 0x4

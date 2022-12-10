@@ -1,0 +1,533 @@
+.include "macros.inc"
+.file "OSCache.c"
+
+# 0x801D2318 - 0x801D2750
+.text
+.balign 4
+
+.fn DCEnable, global
+/* 801D2318 001CF3F8  7C 00 04 AC */	sync
+/* 801D231C 001CF3FC  7C 70 FA A6 */	mfspr r3, HID0
+/* 801D2320 001CF400  60 63 40 00 */	ori r3, r3, 0x4000
+/* 801D2324 001CF404  7C 70 FB A6 */	mtspr HID0, r3
+/* 801D2328 001CF408  4E 80 00 20 */	blr
+.endfn DCEnable
+
+.fn DCInvalidateRange, global
+/* 801D232C 001CF40C  28 04 00 00 */	cmplwi r4, 0x0
+/* 801D2330 001CF410  4C 81 00 20 */	blelr
+/* 801D2334 001CF414  54 65 06 FE */	clrlwi r5, r3, 27
+/* 801D2338 001CF418  7C 84 2A 14 */	add r4, r4, r5
+/* 801D233C 001CF41C  38 84 00 1F */	addi r4, r4, 0x1f
+/* 801D2340 001CF420  54 84 D9 7E */	srwi r4, r4, 5
+/* 801D2344 001CF424  7C 89 03 A6 */	mtctr r4
+.L_801D2348:
+/* 801D2348 001CF428  7C 00 1B AC */	dcbi r0, r3
+/* 801D234C 001CF42C  38 63 00 20 */	addi r3, r3, 0x20
+/* 801D2350 001CF430  42 00 FF F8 */	bdnz .L_801D2348
+/* 801D2354 001CF434  4E 80 00 20 */	blr
+.endfn DCInvalidateRange
+
+.fn DCFlushRange, global
+/* 801D2358 001CF438  28 04 00 00 */	cmplwi r4, 0x0
+/* 801D235C 001CF43C  4C 81 00 20 */	blelr
+/* 801D2360 001CF440  54 65 06 FE */	clrlwi r5, r3, 27
+/* 801D2364 001CF444  7C 84 2A 14 */	add r4, r4, r5
+/* 801D2368 001CF448  38 84 00 1F */	addi r4, r4, 0x1f
+/* 801D236C 001CF44C  54 84 D9 7E */	srwi r4, r4, 5
+/* 801D2370 001CF450  7C 89 03 A6 */	mtctr r4
+.L_801D2374:
+/* 801D2374 001CF454  7C 00 18 AC */	dcbf r0, r3
+/* 801D2378 001CF458  38 63 00 20 */	addi r3, r3, 0x20
+/* 801D237C 001CF45C  42 00 FF F8 */	bdnz .L_801D2374
+/* 801D2380 001CF460  44 00 00 02 */	sc
+/* 801D2384 001CF464  4E 80 00 20 */	blr
+.endfn DCFlushRange
+
+.fn DCStoreRange, global
+/* 801D2388 001CF468  28 04 00 00 */	cmplwi r4, 0x0
+/* 801D238C 001CF46C  4C 81 00 20 */	blelr
+/* 801D2390 001CF470  54 65 06 FE */	clrlwi r5, r3, 27
+/* 801D2394 001CF474  7C 84 2A 14 */	add r4, r4, r5
+/* 801D2398 001CF478  38 84 00 1F */	addi r4, r4, 0x1f
+/* 801D239C 001CF47C  54 84 D9 7E */	srwi r4, r4, 5
+/* 801D23A0 001CF480  7C 89 03 A6 */	mtctr r4
+.L_801D23A4:
+/* 801D23A4 001CF484  7C 00 18 6C */	dcbst r0, r3
+/* 801D23A8 001CF488  38 63 00 20 */	addi r3, r3, 0x20
+/* 801D23AC 001CF48C  42 00 FF F8 */	bdnz .L_801D23A4
+/* 801D23B0 001CF490  44 00 00 02 */	sc
+/* 801D23B4 001CF494  4E 80 00 20 */	blr
+.endfn DCStoreRange
+
+.fn DCFlushRangeNoSync, global
+/* 801D23B8 001CF498  28 04 00 00 */	cmplwi r4, 0x0
+/* 801D23BC 001CF49C  4C 81 00 20 */	blelr
+/* 801D23C0 001CF4A0  54 65 06 FE */	clrlwi r5, r3, 27
+/* 801D23C4 001CF4A4  7C 84 2A 14 */	add r4, r4, r5
+/* 801D23C8 001CF4A8  38 84 00 1F */	addi r4, r4, 0x1f
+/* 801D23CC 001CF4AC  54 84 D9 7E */	srwi r4, r4, 5
+/* 801D23D0 001CF4B0  7C 89 03 A6 */	mtctr r4
+.L_801D23D4:
+/* 801D23D4 001CF4B4  7C 00 18 AC */	dcbf r0, r3
+/* 801D23D8 001CF4B8  38 63 00 20 */	addi r3, r3, 0x20
+/* 801D23DC 001CF4BC  42 00 FF F8 */	bdnz .L_801D23D4
+/* 801D23E0 001CF4C0  4E 80 00 20 */	blr
+.endfn DCFlushRangeNoSync
+
+.fn ICInvalidateRange, global
+/* 801D23E4 001CF4C4  28 04 00 00 */	cmplwi r4, 0x0
+/* 801D23E8 001CF4C8  4C 81 00 20 */	blelr
+/* 801D23EC 001CF4CC  54 65 06 FE */	clrlwi r5, r3, 27
+/* 801D23F0 001CF4D0  7C 84 2A 14 */	add r4, r4, r5
+/* 801D23F4 001CF4D4  38 84 00 1F */	addi r4, r4, 0x1f
+/* 801D23F8 001CF4D8  54 84 D9 7E */	srwi r4, r4, 5
+/* 801D23FC 001CF4DC  7C 89 03 A6 */	mtctr r4
+.L_801D2400:
+/* 801D2400 001CF4E0  7C 00 1F AC */	icbi r0, r3
+/* 801D2404 001CF4E4  38 63 00 20 */	addi r3, r3, 0x20
+/* 801D2408 001CF4E8  42 00 FF F8 */	bdnz .L_801D2400
+/* 801D240C 001CF4EC  7C 00 04 AC */	sync
+/* 801D2410 001CF4F0  4C 00 01 2C */	isync
+/* 801D2414 001CF4F4  4E 80 00 20 */	blr
+.endfn ICInvalidateRange
+
+.fn ICFlashInvalidate, global
+/* 801D2418 001CF4F8  7C 70 FA A6 */	mfspr r3, HID0
+/* 801D241C 001CF4FC  60 63 08 00 */	ori r3, r3, 0x800
+/* 801D2420 001CF500  7C 70 FB A6 */	mtspr HID0, r3
+/* 801D2424 001CF504  4E 80 00 20 */	blr
+.endfn ICFlashInvalidate
+
+.fn ICEnable, global
+/* 801D2428 001CF508  4C 00 01 2C */	isync
+/* 801D242C 001CF50C  7C 70 FA A6 */	mfspr r3, HID0
+/* 801D2430 001CF510  60 63 80 00 */	ori r3, r3, 0x8000
+/* 801D2434 001CF514  7C 70 FB A6 */	mtspr HID0, r3
+/* 801D2438 001CF518  4E 80 00 20 */	blr
+.endfn ICEnable
+
+.fn LCDisable, global
+/* 801D243C 001CF51C  3C 60 E0 00 */	lis r3, 0xe000
+/* 801D2440 001CF520  38 80 02 00 */	li r4, 0x200
+/* 801D2444 001CF524  7C 89 03 A6 */	mtctr r4
+.L_801D2448:
+/* 801D2448 001CF528  7C 00 1B AC */	dcbi r0, r3
+/* 801D244C 001CF52C  38 63 00 20 */	addi r3, r3, 0x20
+/* 801D2450 001CF530  42 00 FF F8 */	bdnz .L_801D2448
+/* 801D2454 001CF534  7C 98 E2 A6 */	mfspr r4, HID2
+/* 801D2458 001CF538  54 84 01 04 */	rlwinm r4, r4, 0, 4, 2
+/* 801D245C 001CF53C  7C 98 E3 A6 */	mtspr HID2, r4
+/* 801D2460 001CF540  4E 80 00 20 */	blr
+.endfn LCDisable
+
+.fn L2GlobalInvalidate, global
+/* 801D2464 001CF544  7C 08 02 A6 */	mflr r0
+/* 801D2468 001CF548  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801D246C 001CF54C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801D2470 001CF550  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801D2474 001CF554  7C 00 04 AC */	sync
+/* 801D2478 001CF558  4B FE 88 19 */	bl PPCMfl2cr
+/* 801D247C 001CF55C  54 63 00 7E */	clrlwi r3, r3, 1
+/* 801D2480 001CF560  4B FE 88 19 */	bl PPCMtl2cr
+/* 801D2484 001CF564  7C 00 04 AC */	sync
+/* 801D2488 001CF568  4B FE 88 09 */	bl PPCMfl2cr
+/* 801D248C 001CF56C  64 63 00 20 */	oris r3, r3, 0x20
+/* 801D2490 001CF570  4B FE 88 09 */	bl PPCMtl2cr
+/* 801D2494 001CF574  48 00 00 04 */	b .L_801D2498
+.L_801D2498:
+/* 801D2498 001CF578  48 00 00 04 */	b .L_801D249C
+.L_801D249C:
+/* 801D249C 001CF57C  4B FE 87 F5 */	bl PPCMfl2cr
+/* 801D24A0 001CF580  54 60 07 FE */	clrlwi r0, r3, 31
+/* 801D24A4 001CF584  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D24A8 001CF588  40 82 FF F4 */	bne .L_801D249C
+/* 801D24AC 001CF58C  4B FE 87 E5 */	bl PPCMfl2cr
+/* 801D24B0 001CF590  54 63 02 D2 */	rlwinm r3, r3, 0, 11, 9
+/* 801D24B4 001CF594  4B FE 87 E5 */	bl PPCMtl2cr
+/* 801D24B8 001CF598  48 00 00 04 */	b .L_801D24BC
+.L_801D24BC:
+/* 801D24BC 001CF59C  3C 60 80 2B */	lis r3, "@63"@ha
+/* 801D24C0 001CF5A0  3B E3 52 58 */	addi r31, r3, "@63"@l
+/* 801D24C4 001CF5A4  48 00 00 04 */	b .L_801D24C8
+.L_801D24C8:
+/* 801D24C8 001CF5A8  48 00 00 10 */	b .L_801D24D8
+.L_801D24CC:
+/* 801D24CC 001CF5AC  7F E3 FB 78 */	mr r3, r31
+/* 801D24D0 001CF5B0  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D24D4 001CF5B4  4B FE F8 B9 */	bl DBPrintf
+.L_801D24D8:
+/* 801D24D8 001CF5B8  4B FE 87 B9 */	bl PPCMfl2cr
+/* 801D24DC 001CF5BC  54 60 07 FE */	clrlwi r0, r3, 31
+/* 801D24E0 001CF5C0  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D24E4 001CF5C4  40 82 FF E8 */	bne .L_801D24CC
+/* 801D24E8 001CF5C8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801D24EC 001CF5CC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801D24F0 001CF5D0  38 21 00 10 */	addi r1, r1, 0x10
+/* 801D24F4 001CF5D4  7C 08 03 A6 */	mtlr r0
+/* 801D24F8 001CF5D8  4E 80 00 20 */	blr
+.endfn L2GlobalInvalidate
+
+.fn DMAErrorHandler, global
+/* 801D24FC 001CF5DC  7C 08 02 A6 */	mflr r0
+/* 801D2500 001CF5E0  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801D2504 001CF5E4  94 21 FF 80 */	stwu r1, -0x80(r1)
+/* 801D2508 001CF5E8  93 E1 00 7C */	stw r31, 0x7c(r1)
+/* 801D250C 001CF5EC  93 C1 00 78 */	stw r30, 0x78(r1)
+/* 801D2510 001CF5F0  93 A1 00 74 */	stw r29, 0x74(r1)
+/* 801D2514 001CF5F4  40 86 00 24 */	bne cr1, .L_801D2538
+/* 801D2518 001CF5F8  D8 21 00 28 */	stfd f1, 0x28(r1)
+/* 801D251C 001CF5FC  D8 41 00 30 */	stfd f2, 0x30(r1)
+/* 801D2520 001CF600  D8 61 00 38 */	stfd f3, 0x38(r1)
+/* 801D2524 001CF604  D8 81 00 40 */	stfd f4, 0x40(r1)
+/* 801D2528 001CF608  D8 A1 00 48 */	stfd f5, 0x48(r1)
+/* 801D252C 001CF60C  D8 C1 00 50 */	stfd f6, 0x50(r1)
+/* 801D2530 001CF610  D8 E1 00 58 */	stfd f7, 0x58(r1)
+/* 801D2534 001CF614  D9 01 00 60 */	stfd f8, 0x60(r1)
+.L_801D2538:
+/* 801D2538 001CF618  90 61 00 08 */	stw r3, 0x8(r1)
+/* 801D253C 001CF61C  90 81 00 0C */	stw r4, 0xc(r1)
+/* 801D2540 001CF620  90 A1 00 10 */	stw r5, 0x10(r1)
+/* 801D2544 001CF624  90 C1 00 14 */	stw r6, 0x14(r1)
+/* 801D2548 001CF628  90 E1 00 18 */	stw r7, 0x18(r1)
+/* 801D254C 001CF62C  91 01 00 1C */	stw r8, 0x1c(r1)
+/* 801D2550 001CF630  91 21 00 20 */	stw r9, 0x20(r1)
+/* 801D2554 001CF634  91 41 00 24 */	stw r10, 0x24(r1)
+/* 801D2558 001CF638  7C 9D 23 78 */	mr r29, r4
+/* 801D255C 001CF63C  3C 60 80 2B */	lis r3, ...data.0@ha
+/* 801D2560 001CF640  3B E3 52 58 */	addi r31, r3, ...data.0@l
+/* 801D2564 001CF644  4B FE 87 D9 */	bl PPCMfhid2
+/* 801D2568 001CF648  7C 7E 1B 78 */	mr r30, r3
+/* 801D256C 001CF64C  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2570 001CF650  38 7F 00 2C */	addi r3, r31, 0x2c
+/* 801D2574 001CF654  48 00 09 91 */	bl OSReport
+/* 801D2578 001CF658  80 BD 01 9C */	lwz r5, 0x19c(r29)
+/* 801D257C 001CF65C  7F C4 F3 78 */	mr r4, r30
+/* 801D2580 001CF660  38 7F 00 44 */	addi r3, r31, 0x44
+/* 801D2584 001CF664  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2588 001CF668  48 00 09 7D */	bl OSReport
+/* 801D258C 001CF66C  57 C0 02 16 */	rlwinm r0, r30, 0, 8, 11
+/* 801D2590 001CF670  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D2594 001CF674  41 82 00 14 */	beq .L_801D25A8
+/* 801D2598 001CF678  80 1D 01 9C */	lwz r0, 0x19c(r29)
+/* 801D259C 001CF67C  54 00 02 94 */	rlwinm r0, r0, 0, 10, 10
+/* 801D25A0 001CF680  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D25A4 001CF684  40 82 00 1C */	bne .L_801D25C0
+.L_801D25A8:
+/* 801D25A8 001CF688  38 7F 00 60 */	addi r3, r31, 0x60
+/* 801D25AC 001CF68C  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D25B0 001CF690  48 00 09 55 */	bl OSReport
+/* 801D25B4 001CF694  7F A3 EB 78 */	mr r3, r29
+/* 801D25B8 001CF698  48 00 05 D9 */	bl OSDumpContext
+/* 801D25BC 001CF69C  4B FE 86 F5 */	bl PPCHalt
+.L_801D25C0:
+/* 801D25C0 001CF6A0  38 7F 00 90 */	addi r3, r31, 0x90
+/* 801D25C4 001CF6A4  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D25C8 001CF6A8  48 00 09 3D */	bl OSReport
+/* 801D25CC 001CF6AC  38 7F 00 CC */	addi r3, r31, 0xcc
+/* 801D25D0 001CF6B0  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D25D4 001CF6B4  48 00 09 31 */	bl OSReport
+/* 801D25D8 001CF6B8  57 C0 02 10 */	rlwinm r0, r30, 0, 8, 8
+/* 801D25DC 001CF6BC  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D25E0 001CF6C0  41 82 00 10 */	beq .L_801D25F0
+/* 801D25E4 001CF6C4  38 7F 01 04 */	addi r3, r31, 0x104
+/* 801D25E8 001CF6C8  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D25EC 001CF6CC  48 00 09 19 */	bl OSReport
+.L_801D25F0:
+/* 801D25F0 001CF6D0  57 C0 02 52 */	rlwinm r0, r30, 0, 9, 9
+/* 801D25F4 001CF6D4  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D25F8 001CF6D8  41 82 00 10 */	beq .L_801D2608
+/* 801D25FC 001CF6DC  38 7F 01 44 */	addi r3, r31, 0x144
+/* 801D2600 001CF6E0  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2604 001CF6E4  48 00 09 01 */	bl OSReport
+.L_801D2608:
+/* 801D2608 001CF6E8  57 C0 02 94 */	rlwinm r0, r30, 0, 10, 10
+/* 801D260C 001CF6EC  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D2610 001CF6F0  41 82 00 10 */	beq .L_801D2620
+/* 801D2614 001CF6F4  38 7F 01 70 */	addi r3, r31, 0x170
+/* 801D2618 001CF6F8  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D261C 001CF6FC  48 00 08 E9 */	bl OSReport
+.L_801D2620:
+/* 801D2620 001CF700  57 C0 02 D6 */	rlwinm r0, r30, 0, 11, 11
+/* 801D2624 001CF704  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D2628 001CF708  41 82 00 10 */	beq .L_801D2638
+/* 801D262C 001CF70C  38 7F 01 90 */	addi r3, r31, 0x190
+/* 801D2630 001CF710  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2634 001CF714  48 00 08 D1 */	bl OSReport
+.L_801D2638:
+/* 801D2638 001CF718  7F C3 F3 78 */	mr r3, r30
+/* 801D263C 001CF71C  4B FE 87 09 */	bl PPCMthid2
+/* 801D2640 001CF720  80 01 00 84 */	lwz r0, 0x84(r1)
+/* 801D2644 001CF724  83 E1 00 7C */	lwz r31, 0x7c(r1)
+/* 801D2648 001CF728  83 C1 00 78 */	lwz r30, 0x78(r1)
+/* 801D264C 001CF72C  83 A1 00 74 */	lwz r29, 0x74(r1)
+/* 801D2650 001CF730  38 21 00 80 */	addi r1, r1, 0x80
+/* 801D2654 001CF734  7C 08 03 A6 */	mtlr r0
+/* 801D2658 001CF738  4E 80 00 20 */	blr
+.endfn DMAErrorHandler
+.L_801D265C:
+
+.fn __OSCacheInit, global
+/* 801D265C 001CF73C  7C 08 02 A6 */	mflr r0
+/* 801D2660 001CF740  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801D2664 001CF744  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801D2668 001CF748  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801D266C 001CF74C  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 801D2670 001CF750  3C 60 80 2B */	lis r3, ...data.0@ha
+/* 801D2674 001CF754  3B E3 52 58 */	addi r31, r3, ...data.0@l
+/* 801D2678 001CF758  4B FE 86 09 */	bl PPCMfhid0
+/* 801D267C 001CF75C  54 60 04 20 */	rlwinm r0, r3, 0, 16, 16
+/* 801D2680 001CF760  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D2684 001CF764  40 82 00 14 */	bne .L_801D2698
+/* 801D2688 001CF768  4B FF FD A1 */	bl ICEnable
+/* 801D268C 001CF76C  38 7F 01 AC */	addi r3, r31, 0x1ac
+/* 801D2690 001CF770  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2694 001CF774  4B FE F6 F9 */	bl DBPrintf
+.L_801D2698:
+/* 801D2698 001CF778  4B FE 85 E9 */	bl PPCMfhid0
+/* 801D269C 001CF77C  54 60 04 62 */	rlwinm r0, r3, 0, 17, 17
+/* 801D26A0 001CF780  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D26A4 001CF784  40 82 00 14 */	bne .L_801D26B8
+/* 801D26A8 001CF788  4B FF FC 71 */	bl DCEnable
+/* 801D26AC 001CF78C  38 7F 01 C8 */	addi r3, r31, 0x1c8
+/* 801D26B0 001CF790  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D26B4 001CF794  4B FE F6 D9 */	bl DBPrintf
+.L_801D26B8:
+/* 801D26B8 001CF798  4B FE 85 D9 */	bl PPCMfl2cr
+/* 801D26BC 001CF79C  54 60 00 00 */	clrrwi r0, r3, 31
+/* 801D26C0 001CF7A0  28 00 00 00 */	cmplwi r0, 0x0
+/* 801D26C4 001CF7A4  40 82 00 58 */	bne .L_801D271C
+/* 801D26C8 001CF7A8  4B FE 85 A9 */	bl PPCMfmsr
+/* 801D26CC 001CF7AC  7C 7E 1B 78 */	mr r30, r3
+/* 801D26D0 001CF7B0  7C 00 04 AC */	sync
+/* 801D26D4 001CF7B4  38 60 00 30 */	li r3, 0x30
+/* 801D26D8 001CF7B8  4B FE 85 A1 */	bl PPCMtmsr
+/* 801D26DC 001CF7BC  7C 00 04 AC */	sync
+/* 801D26E0 001CF7C0  7C 00 04 AC */	sync
+/* 801D26E4 001CF7C4  4B FE 85 AD */	bl PPCMfl2cr
+/* 801D26E8 001CF7C8  54 63 00 7E */	clrlwi r3, r3, 1
+/* 801D26EC 001CF7CC  4B FE 85 AD */	bl PPCMtl2cr
+/* 801D26F0 001CF7D0  7C 00 04 AC */	sync
+/* 801D26F4 001CF7D4  4B FF FD 71 */	bl L2GlobalInvalidate
+/* 801D26F8 001CF7D8  7F C3 F3 78 */	mr r3, r30
+/* 801D26FC 001CF7DC  4B FE 85 7D */	bl PPCMtmsr
+/* 801D2700 001CF7E0  4B FE 85 91 */	bl PPCMfl2cr
+/* 801D2704 001CF7E4  64 60 80 00 */	oris r0, r3, 0x8000
+/* 801D2708 001CF7E8  54 03 02 D2 */	rlwinm r3, r0, 0, 11, 9
+/* 801D270C 001CF7EC  4B FE 85 8D */	bl PPCMtl2cr
+/* 801D2710 001CF7F0  38 7F 01 E4 */	addi r3, r31, 0x1e4
+/* 801D2714 001CF7F4  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2718 001CF7F8  4B FE F6 75 */	bl DBPrintf
+.L_801D271C:
+/* 801D271C 001CF7FC  3C 60 80 1D */	lis r3, DMAErrorHandler@ha
+/* 801D2720 001CF800  38 83 24 FC */	addi r4, r3, DMAErrorHandler@l
+/* 801D2724 001CF804  38 60 00 01 */	li r3, 0x1
+/* 801D2728 001CF808  48 00 09 89 */	bl OSSetErrorHandler
+/* 801D272C 001CF80C  38 7F 01 FC */	addi r3, r31, 0x1fc
+/* 801D2730 001CF810  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801D2734 001CF814  4B FE F6 59 */	bl DBPrintf
+/* 801D2738 001CF818  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801D273C 001CF81C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801D2740 001CF820  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 801D2744 001CF824  38 21 00 10 */	addi r1, r1, 0x10
+/* 801D2748 001CF828  7C 08 03 A6 */	mtlr r0
+/* 801D274C 001CF82C  4E 80 00 20 */	blr
+.endfn __OSCacheInit
+
+# 0x802B5258 - 0x802B5488
+.data
+.balign 8
+.sym ...data.0, local
+
+.obj "@63", local
+	.4byte 0x3E3E3E20
+	.4byte 0x4C322049
+	.4byte 0x4E56414C
+	.4byte 0x49444154
+	.4byte 0x45203A20
+	.4byte 0x53484F55
+	.4byte 0x4C44204E
+	.4byte 0x45564552
+	.4byte 0x20484150
+	.4byte 0x50454E0A
+	.byte 0x00
+.endobj "@63"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@84", local
+	.4byte 0x4D616368
+	.4byte 0x696E6520
+	.4byte 0x63686563
+	.4byte 0x6B207265
+	.4byte 0x63656976
+	.4byte 0x65640A00
+.endobj "@84"
+
+.obj "@85", local
+	.4byte 0x48494432
+	.4byte 0x203D2030
+	.4byte 0x78257820
+	.4byte 0x20205352
+	.4byte 0x5231203D
+	.4byte 0x20307825
+	.byte 0x78, 0x0A, 0x00
+.endobj "@85"
+	.byte 0x00
+
+.obj "@86", local
+	.4byte 0x4D616368
+	.4byte 0x696E6520
+	.4byte 0x63686563
+	.4byte 0x6B207761
+	.4byte 0x73206E6F
+	.4byte 0x7420444D
+	.4byte 0x412F6C6F
+	.4byte 0x636B6564
+	.4byte 0x20636163
+	.4byte 0x68652072
+	.4byte 0x656C6174
+	.4byte 0x65640A00
+.endobj "@86"
+
+.obj "@87", local
+	.4byte 0x444D4145
+	.4byte 0x72726F72
+	.4byte 0x48616E64
+	.4byte 0x6C657228
+	.4byte 0x293A2041
+	.4byte 0x6E206572
+	.4byte 0x726F7220
+	.4byte 0x6F636375
+	.4byte 0x72726564
+	.4byte 0x20776869
+	.4byte 0x6C652070
+	.4byte 0x726F6365
+	.4byte 0x7373696E
+	.4byte 0x6720444D
+	.4byte 0x412E0A00
+.endobj "@87"
+
+.obj "@88", local
+	.4byte 0x54686520
+	.4byte 0x666F6C6C
+	.4byte 0x6F77696E
+	.4byte 0x67206572
+	.4byte 0x726F7273
+	.4byte 0x20686176
+	.4byte 0x65206265
+	.4byte 0x656E2064
+	.4byte 0x65746563
+	.4byte 0x74656420
+	.4byte 0x616E6420
+	.4byte 0x636C6561
+	.4byte 0x72656420
+	.byte 0x3A, 0x0A, 0x00
+.endobj "@88"
+	.byte 0x00
+
+.obj "@89", local
+	.4byte 0x092D2052
+	.4byte 0x65717565
+	.4byte 0x73746564
+	.4byte 0x2061206C
+	.4byte 0x6F636B65
+	.4byte 0x64206361
+	.4byte 0x63686520
+	.4byte 0x74616720
+	.4byte 0x74686174
+	.4byte 0x20776173
+	.4byte 0x20616C72
+	.4byte 0x65616479
+	.4byte 0x20696E20
+	.4byte 0x74686520
+	.4byte 0x63616368
+	.byte 0x65, 0x0A, 0x00
+.endobj "@89"
+	.byte 0x00
+
+.obj "@90", local
+	.4byte 0x092D2044
+	.4byte 0x4D412061
+	.4byte 0x7474656D
+	.4byte 0x70746564
+	.4byte 0x20746F20
+	.4byte 0x61636365
+	.4byte 0x7373206E
+	.4byte 0x6F726D61
+	.4byte 0x6C206361
+	.4byte 0x6368650A
+	.byte 0x00
+.endobj "@90"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@91", local
+	.4byte 0x092D2044
+	.4byte 0x4D41206D
+	.4byte 0x69737365
+	.4byte 0x6420696E
+	.4byte 0x20646174
+	.4byte 0x61206361
+	.4byte 0x6368650A
+	.byte 0x00
+.endobj "@91"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@92", local
+	.4byte 0x092D2044
+	.4byte 0x4D412071
+	.4byte 0x75657565
+	.4byte 0x206F7665
+	.4byte 0x72666C6F
+	.4byte 0x7765640A
+	.byte 0x00
+.endobj "@92"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@104", local
+	.4byte 0x4C312069
+	.4byte 0x2D636163
+	.4byte 0x68657320
+	.4byte 0x696E6974
+	.4byte 0x69616C69
+	.4byte 0x7A65640A
+	.byte 0x00
+.endobj "@104"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@105", local
+	.4byte 0x4C312064
+	.4byte 0x2D636163
+	.4byte 0x68657320
+	.4byte 0x696E6974
+	.4byte 0x69616C69
+	.4byte 0x7A65640A
+	.byte 0x00
+.endobj "@105"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@106", local
+	.4byte 0x4C322063
+	.4byte 0x61636865
+	.4byte 0x20696E69
+	.4byte 0x7469616C
+	.4byte 0x697A6564
+	.2byte 0x0A00
+.endobj "@106"
+	.2byte 0x0000
+
+.obj "@107", local
+	.4byte 0x4C6F636B
+	.4byte 0x65642063
+	.4byte 0x61636865
+	.4byte 0x206D6163
+	.4byte 0x68696E65
+	.4byte 0x20636865
+	.4byte 0x636B2068
+	.4byte 0x616E646C
+	.4byte 0x65722069
+	.4byte 0x6E737461
+	.4byte 0x6C6C6564
+	.2byte 0x0A00
+.endobj "@107"
+	.4byte 0x00000000
+	.2byte 0x0000

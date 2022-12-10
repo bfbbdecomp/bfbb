@@ -1,0 +1,76 @@
+.include "macros.inc"
+.file "uart_console_io.c"
+
+# 0x801E90B0 - 0x801E917C
+.text
+.balign 4
+
+.fn __close_console, global
+/* 801E90B0 001E6190  38 60 00 00 */	li r3, 0x0
+/* 801E90B4 001E6194  4E 80 00 20 */	blr
+.endfn __close_console
+
+.fn __write_console, weak
+/* 801E90B8 001E6198  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 801E90BC 001E619C  7C 08 02 A6 */	mflr r0
+/* 801E90C0 001E61A0  90 01 00 24 */	stw r0, 0x24(r1)
+/* 801E90C4 001E61A4  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 801E90C8 001E61A8  7C DF 33 78 */	mr r31, r6
+/* 801E90CC 001E61AC  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 801E90D0 001E61B0  7C BE 2B 78 */	mr r30, r5
+/* 801E90D4 001E61B4  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 801E90D8 001E61B8  7C 9D 23 78 */	mr r29, r4
+/* 801E90DC 001E61BC  93 81 00 10 */	stw r28, 0x10(r1)
+/* 801E90E0 001E61C0  7C 7C 1B 78 */	mr r28, r3
+/* 801E90E4 001E61C4  38 60 00 00 */	li r3, 0x0
+/* 801E90E8 001E61C8  80 0D 9D A0 */	lwz r0, initialized$16@sda21(r13)
+/* 801E90EC 001E61CC  2C 00 00 00 */	cmpwi r0, 0x0
+/* 801E90F0 001E61D0  40 82 00 20 */	bne .L_801E9110
+/* 801E90F4 001E61D4  3C 60 00 01 */	lis r3, 0x1
+/* 801E90F8 001E61D8  38 63 E1 00 */	addi r3, r3, -0x1f00
+/* 801E90FC 001E61DC  4B FD FE 61 */	bl InitializeUART
+/* 801E9100 001E61E0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801E9104 001E61E4  40 82 00 0C */	bne .L_801E9110
+/* 801E9108 001E61E8  38 00 00 01 */	li r0, 0x1
+/* 801E910C 001E61EC  90 0D 9D A0 */	stw r0, initialized$16@sda21(r13)
+.L_801E9110:
+/* 801E9110 001E61F0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801E9114 001E61F4  41 82 00 0C */	beq .L_801E9120
+/* 801E9118 001E61F8  38 60 00 01 */	li r3, 0x1
+/* 801E911C 001E61FC  48 00 00 40 */	b .L_801E915C
+.L_801E9120:
+/* 801E9120 001E6200  80 9E 00 00 */	lwz r4, 0x0(r30)
+/* 801E9124 001E6204  7F A3 EB 78 */	mr r3, r29
+/* 801E9128 001E6208  4B FD FE A5 */	bl WriteUARTN
+/* 801E912C 001E620C  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801E9130 001E6210  41 82 00 14 */	beq .L_801E9144
+/* 801E9134 001E6214  38 00 00 00 */	li r0, 0x0
+/* 801E9138 001E6218  38 60 00 01 */	li r3, 0x1
+/* 801E913C 001E621C  90 1E 00 00 */	stw r0, 0x0(r30)
+/* 801E9140 001E6220  48 00 00 1C */	b .L_801E915C
+.L_801E9144:
+/* 801E9144 001E6224  7F 83 E3 78 */	mr r3, r28
+/* 801E9148 001E6228  7F A4 EB 78 */	mr r4, r29
+/* 801E914C 001E622C  7F C5 F3 78 */	mr r5, r30
+/* 801E9150 001E6230  7F E6 FB 78 */	mr r6, r31
+/* 801E9154 001E6234  48 00 D4 C5 */	bl __TRK_write_console
+/* 801E9158 001E6238  38 60 00 00 */	li r3, 0x0
+.L_801E915C:
+/* 801E915C 001E623C  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801E9160 001E6240  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 801E9164 001E6244  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 801E9168 001E6248  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 801E916C 001E624C  83 81 00 10 */	lwz r28, 0x10(r1)
+/* 801E9170 001E6250  7C 08 03 A6 */	mtlr r0
+/* 801E9174 001E6254  38 21 00 20 */	addi r1, r1, 0x20
+/* 801E9178 001E6258  4E 80 00 20 */	blr
+.endfn __write_console
+
+# 0x803CC6A0 - 0x803CC6A8
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj initialized$16, local
+	.skip 0x4
+.endobj initialized$16
+	.skip 0x4

@@ -1,0 +1,137 @@
+.include "macros.inc"
+.file "skinmatrixblend.c"
+
+# 0x8020EDB0 - 0x8020EFAC
+.text
+.balign 4
+
+.fn _rpSkinMatrixBlendUpdateASM, global
+/* 8020EDB0 0020BE90  94 21 FF 68 */	stwu r1, -0x98(r1)
+/* 8020EDB4 0020BE94  D9 C1 00 08 */	stfd f14, 0x8(r1)
+/* 8020EDB8 0020BE98  D9 E1 00 10 */	stfd f15, 0x10(r1)
+/* 8020EDBC 0020BE9C  DA 01 00 18 */	stfd f16, 0x18(r1)
+/* 8020EDC0 0020BEA0  DA 21 00 20 */	stfd f17, 0x20(r1)
+/* 8020EDC4 0020BEA4  DA 41 00 28 */	stfd f18, 0x28(r1)
+/* 8020EDC8 0020BEA8  DA 61 00 30 */	stfd f19, 0x30(r1)
+/* 8020EDCC 0020BEAC  DA 81 00 38 */	stfd f20, 0x38(r1)
+/* 8020EDD0 0020BEB0  DA A1 00 40 */	stfd f21, 0x40(r1)
+/* 8020EDD4 0020BEB4  DA C1 00 48 */	stfd f22, 0x48(r1)
+/* 8020EDD8 0020BEB8  DA E1 00 50 */	stfd f23, 0x50(r1)
+/* 8020EDDC 0020BEBC  DB 01 00 58 */	stfd f24, 0x58(r1)
+/* 8020EDE0 0020BEC0  DB 21 00 60 */	stfd f25, 0x60(r1)
+/* 8020EDE4 0020BEC4  DB 41 00 68 */	stfd f26, 0x68(r1)
+/* 8020EDE8 0020BEC8  DB 61 00 70 */	stfd f27, 0x70(r1)
+/* 8020EDEC 0020BECC  DB 81 00 78 */	stfd f28, 0x78(r1)
+/* 8020EDF0 0020BED0  DB A1 00 80 */	stfd f29, 0x80(r1)
+/* 8020EDF4 0020BED4  DB C1 00 88 */	stfd f30, 0x88(r1)
+/* 8020EDF8 0020BED8  DB E1 00 90 */	stfd f31, 0x90(r1)
+/* 8020EDFC 0020BEDC  7D 09 03 A6 */	mtctr r8
+/* 8020EE00 0020BEE0  E0 06 00 00 */	psq_l f0, 0x0(r6), 0, qr0
+/* 8020EE04 0020BEE4  E0 26 80 08 */	psq_l f1, 0x8(r6), 1, qr0
+/* 8020EE08 0020BEE8  E0 46 00 10 */	psq_l f2, 0x10(r6), 0, qr0
+/* 8020EE0C 0020BEEC  E0 66 80 18 */	psq_l f3, 0x18(r6), 1, qr0
+/* 8020EE10 0020BEF0  E0 86 00 20 */	psq_l f4, 0x20(r6), 0, qr0
+/* 8020EE14 0020BEF4  E0 A6 80 28 */	psq_l f5, 0x28(r6), 1, qr0
+/* 8020EE18 0020BEF8  E0 C6 00 30 */	psq_l f6, 0x30(r6), 0, qr0
+/* 8020EE1C 0020BEFC  E0 E6 80 38 */	psq_l f7, 0x38(r6), 1, qr0
+/* 8020EE20 0020BF00  38 E7 FF FF */	addi r7, r7, -0x1
+.L_8020EE24:
+/* 8020EE24 0020BF04  8D 67 00 01 */	lbzu r11, 0x1(r7)
+/* 8020EE28 0020BF08  55 6B 30 3E */	rotlwi r11, r11, 6
+/* 8020EE2C 0020BF0C  7D 85 5A 14 */	add r12, r5, r11
+/* 8020EE30 0020BF10  E1 0C 00 00 */	psq_l f8, 0x0(r12), 0, qr0
+/* 8020EE34 0020BF14  E1 4C 00 10 */	psq_l f10, 0x10(r12), 0, qr0
+/* 8020EE38 0020BF18  13 00 02 18 */	ps_muls0 f24, f0, f8
+/* 8020EE3C 0020BF1C  E1 2C 80 08 */	psq_l f9, 0x8(r12), 1, qr0
+/* 8020EE40 0020BF20  13 21 02 18 */	ps_muls0 f25, f1, f8
+/* 8020EE44 0020BF24  E1 6C 80 18 */	psq_l f11, 0x18(r12), 1, qr0
+/* 8020EE48 0020BF28  13 40 02 98 */	ps_muls0 f26, f0, f10
+/* 8020EE4C 0020BF2C  E1 8C 00 20 */	psq_l f12, 0x20(r12), 0, qr0
+/* 8020EE50 0020BF30  13 61 02 98 */	ps_muls0 f27, f1, f10
+/* 8020EE54 0020BF34  E1 AC 80 28 */	psq_l f13, 0x28(r12), 1, qr0
+/* 8020EE58 0020BF38  13 02 C2 1E */	ps_madds1 f24, f2, f8, f24
+/* 8020EE5C 0020BF3C  E1 CC 00 30 */	psq_l f14, 0x30(r12), 0, qr0
+/* 8020EE60 0020BF40  13 23 CA 1E */	ps_madds1 f25, f3, f8, f25
+/* 8020EE64 0020BF44  E1 EC 80 38 */	psq_l f15, 0x38(r12), 1, qr0
+/* 8020EE68 0020BF48  13 42 D2 9E */	ps_madds1 f26, f2, f10, f26
+/* 8020EE6C 0020BF4C  13 63 DA 9E */	ps_madds1 f27, f3, f10, f27
+/* 8020EE70 0020BF50  13 04 C2 5C */	ps_madds0 f24, f4, f9, f24
+/* 8020EE74 0020BF54  13 25 CA 5C */	ps_madds0 f25, f5, f9, f25
+/* 8020EE78 0020BF58  13 44 D2 DC */	ps_madds0 f26, f4, f11, f26
+/* 8020EE7C 0020BF5C  7D 84 5A 14 */	add r12, r4, r11
+/* 8020EE80 0020BF60  E2 0C 00 00 */	psq_l f16, 0x0(r12), 0, qr0
+/* 8020EE84 0020BF64  13 65 DA DC */	ps_madds0 f27, f5, f11, f27
+/* 8020EE88 0020BF68  E2 2C 80 08 */	psq_l f17, 0x8(r12), 1, qr0
+/* 8020EE8C 0020BF6C  13 80 03 18 */	ps_muls0 f28, f0, f12
+/* 8020EE90 0020BF70  E2 4C 00 10 */	psq_l f18, 0x10(r12), 0, qr0
+/* 8020EE94 0020BF74  13 A1 03 18 */	ps_muls0 f29, f1, f12
+/* 8020EE98 0020BF78  E2 6C 80 18 */	psq_l f19, 0x18(r12), 1, qr0
+/* 8020EE9C 0020BF7C  13 C0 33 9C */	ps_madds0 f30, f0, f14, f6
+/* 8020EEA0 0020BF80  E2 8C 00 20 */	psq_l f20, 0x20(r12), 0, qr0
+/* 8020EEA4 0020BF84  13 E1 3B 9C */	ps_madds0 f31, f1, f14, f7
+/* 8020EEA8 0020BF88  E2 AC 80 28 */	psq_l f21, 0x28(r12), 1, qr0
+/* 8020EEAC 0020BF8C  13 82 E3 1E */	ps_madds1 f28, f2, f12, f28
+/* 8020EEB0 0020BF90  E2 CC 00 30 */	psq_l f22, 0x30(r12), 0, qr0
+/* 8020EEB4 0020BF94  13 A3 EB 1E */	ps_madds1 f29, f3, f12, f29
+/* 8020EEB8 0020BF98  E2 EC 80 38 */	psq_l f23, 0x38(r12), 1, qr0
+/* 8020EEBC 0020BF9C  13 C2 F3 9E */	ps_madds1 f30, f2, f14, f30
+/* 8020EEC0 0020BFA0  13 E3 FB 9E */	ps_madds1 f31, f3, f14, f31
+/* 8020EEC4 0020BFA4  13 84 E3 5C */	ps_madds0 f28, f4, f13, f28
+/* 8020EEC8 0020BFA8  13 A5 EB 5C */	ps_madds0 f29, f5, f13, f29
+/* 8020EECC 0020BFAC  13 C4 F3 DC */	ps_madds0 f30, f4, f15, f30
+/* 8020EED0 0020BFB0  13 E5 FB DC */	ps_madds0 f31, f5, f15, f31
+/* 8020EED4 0020BFB4  11 18 04 18 */	ps_muls0 f8, f24, f16
+/* 8020EED8 0020BFB8  11 39 04 18 */	ps_muls0 f9, f25, f16
+/* 8020EEDC 0020BFBC  11 58 04 98 */	ps_muls0 f10, f24, f18
+/* 8020EEE0 0020BFC0  11 79 04 98 */	ps_muls0 f11, f25, f18
+/* 8020EEE4 0020BFC4  11 1A 44 1E */	ps_madds1 f8, f26, f16, f8
+/* 8020EEE8 0020BFC8  11 3B 4C 1E */	ps_madds1 f9, f27, f16, f9
+/* 8020EEEC 0020BFCC  11 5A 54 9E */	ps_madds1 f10, f26, f18, f10
+/* 8020EEF0 0020BFD0  11 7B 5C 9E */	ps_madds1 f11, f27, f18, f11
+/* 8020EEF4 0020BFD4  11 1C 44 5C */	ps_madds0 f8, f28, f17, f8
+/* 8020EEF8 0020BFD8  11 3D 4C 5C */	ps_madds0 f9, f29, f17, f9
+/* 8020EEFC 0020BFDC  11 5C 54 DC */	ps_madds0 f10, f28, f19, f10
+/* 8020EF00 0020BFE0  7D 83 5A 14 */	add r12, r3, r11
+/* 8020EF04 0020BFE4  F1 0C 00 00 */	psq_st f8, 0x0(r12), 0, qr0
+/* 8020EF08 0020BFE8  11 7D 5C DC */	ps_madds0 f11, f29, f19, f11
+/* 8020EF0C 0020BFEC  F1 2C 80 08 */	psq_st f9, 0x8(r12), 1, qr0
+/* 8020EF10 0020BFF0  11 98 05 18 */	ps_muls0 f12, f24, f20
+/* 8020EF14 0020BFF4  F1 4C 00 10 */	psq_st f10, 0x10(r12), 0, qr0
+/* 8020EF18 0020BFF8  11 B9 05 18 */	ps_muls0 f13, f25, f20
+/* 8020EF1C 0020BFFC  F1 6C 80 18 */	psq_st f11, 0x18(r12), 1, qr0
+/* 8020EF20 0020C000  11 D8 F5 9C */	ps_madds0 f14, f24, f22, f30
+/* 8020EF24 0020C004  11 F9 FD 9C */	ps_madds0 f15, f25, f22, f31
+/* 8020EF28 0020C008  11 9A 65 1E */	ps_madds1 f12, f26, f20, f12
+/* 8020EF2C 0020C00C  11 BB 6D 1E */	ps_madds1 f13, f27, f20, f13
+/* 8020EF30 0020C010  11 DA 75 9E */	ps_madds1 f14, f26, f22, f14
+/* 8020EF34 0020C014  11 FB 7D 9E */	ps_madds1 f15, f27, f22, f15
+/* 8020EF38 0020C018  11 9C 65 5C */	ps_madds0 f12, f28, f21, f12
+/* 8020EF3C 0020C01C  11 BD 6D 5C */	ps_madds0 f13, f29, f21, f13
+/* 8020EF40 0020C020  11 DC 75 DC */	ps_madds0 f14, f28, f23, f14
+/* 8020EF44 0020C024  11 FD 7D DC */	ps_madds0 f15, f29, f23, f15
+/* 8020EF48 0020C028  F1 8C 00 20 */	psq_st f12, 0x20(r12), 0, qr0
+/* 8020EF4C 0020C02C  F1 AC 80 28 */	psq_st f13, 0x28(r12), 1, qr0
+/* 8020EF50 0020C030  F1 CC 00 30 */	psq_st f14, 0x30(r12), 0, qr0
+/* 8020EF54 0020C034  F1 EC 80 38 */	psq_st f15, 0x38(r12), 1, qr0
+/* 8020EF58 0020C038  42 00 FE CC */	bdnz .L_8020EE24
+/* 8020EF5C 0020C03C  C9 C1 00 08 */	lfd f14, 0x8(r1)
+/* 8020EF60 0020C040  C9 E1 00 10 */	lfd f15, 0x10(r1)
+/* 8020EF64 0020C044  CA 01 00 18 */	lfd f16, 0x18(r1)
+/* 8020EF68 0020C048  CA 21 00 20 */	lfd f17, 0x20(r1)
+/* 8020EF6C 0020C04C  CA 41 00 28 */	lfd f18, 0x28(r1)
+/* 8020EF70 0020C050  CA 61 00 30 */	lfd f19, 0x30(r1)
+/* 8020EF74 0020C054  CA 81 00 38 */	lfd f20, 0x38(r1)
+/* 8020EF78 0020C058  CA A1 00 40 */	lfd f21, 0x40(r1)
+/* 8020EF7C 0020C05C  CA C1 00 48 */	lfd f22, 0x48(r1)
+/* 8020EF80 0020C060  CA E1 00 50 */	lfd f23, 0x50(r1)
+/* 8020EF84 0020C064  CB 01 00 58 */	lfd f24, 0x58(r1)
+/* 8020EF88 0020C068  CB 21 00 60 */	lfd f25, 0x60(r1)
+/* 8020EF8C 0020C06C  CB 41 00 68 */	lfd f26, 0x68(r1)
+/* 8020EF90 0020C070  CB 61 00 70 */	lfd f27, 0x70(r1)
+/* 8020EF94 0020C074  CB 81 00 78 */	lfd f28, 0x78(r1)
+/* 8020EF98 0020C078  CB A1 00 80 */	lfd f29, 0x80(r1)
+/* 8020EF9C 0020C07C  CB C1 00 88 */	lfd f30, 0x88(r1)
+/* 8020EFA0 0020C080  CB E1 00 90 */	lfd f31, 0x90(r1)
+/* 8020EFA4 0020C084  38 21 00 98 */	addi r1, r1, 0x98
+/* 8020EFA8 0020C088  4E 80 00 20 */	blr
+.endfn _rpSkinMatrixBlendUpdateASM

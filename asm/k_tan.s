@@ -1,0 +1,222 @@
+.include "macros.inc"
+.file "k_tan.c"
+
+# 0x801EBE20 - 0x801EC034
+.text
+.balign 4
+
+.fn __kernel_tan, global
+/* 801EBE20 001E8F00  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 801EBE24 001E8F04  DB E1 00 30 */	stfd f31, 0x30(r1)
+/* 801EBE28 001E8F08  F3 E1 00 38 */	psq_st f31, 0x38(r1), 0, qr0
+/* 801EBE2C 001E8F0C  D8 21 00 08 */	stfd f1, 0x8(r1)
+/* 801EBE30 001E8F10  3C 00 3E 30 */	lis r0, 0x3e30
+/* 801EBE34 001E8F14  80 E1 00 08 */	lwz r7, 0x8(r1)
+/* 801EBE38 001E8F18  54 E6 00 7E */	clrlwi r6, r7, 1
+/* 801EBE3C 001E8F1C  7C 06 00 00 */	cmpw r6, r0
+/* 801EBE40 001E8F20  40 80 00 54 */	bge .L_801EBE94
+/* 801EBE44 001E8F24  FC 00 08 1E */	fctiwz f0, f1
+/* 801EBE48 001E8F28  D8 01 00 20 */	stfd f0, 0x20(r1)
+/* 801EBE4C 001E8F2C  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801EBE50 001E8F30  2C 00 00 00 */	cmpwi r0, 0x0
+/* 801EBE54 001E8F34  40 82 00 40 */	bne .L_801EBE94
+/* 801EBE58 001E8F38  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801EBE5C 001E8F3C  38 83 00 01 */	addi r4, r3, 0x1
+/* 801EBE60 001E8F40  7C C0 03 78 */	or r0, r6, r0
+/* 801EBE64 001E8F44  7C 80 03 79 */	or. r0, r4, r0
+/* 801EBE68 001E8F48  40 82 00 14 */	bne .L_801EBE7C
+/* 801EBE6C 001E8F4C  FC 20 0A 10 */	fabs f1, f1
+/* 801EBE70 001E8F50  C8 02 B9 00 */	lfd f0, "@95"@sda21(r2)
+/* 801EBE74 001E8F54  FC 20 08 24 */	fdiv f1, f0, f1
+/* 801EBE78 001E8F58  48 00 01 AC */	b .L_801EC024
+.L_801EBE7C:
+/* 801EBE7C 001E8F5C  2C 03 00 01 */	cmpwi r3, 0x1
+/* 801EBE80 001E8F60  40 82 00 08 */	bne .L_801EBE88
+/* 801EBE84 001E8F64  48 00 01 A0 */	b .L_801EC024
+.L_801EBE88:
+/* 801EBE88 001E8F68  C8 02 B9 08 */	lfd f0, "@96"@sda21(r2)
+/* 801EBE8C 001E8F6C  FC 20 08 24 */	fdiv f1, f0, f1
+/* 801EBE90 001E8F70  48 00 01 94 */	b .L_801EC024
+.L_801EBE94:
+/* 801EBE94 001E8F74  3C 80 3F E6 */	lis r4, 0x3fe6
+/* 801EBE98 001E8F78  38 04 94 28 */	addi r0, r4, -0x6bd8
+/* 801EBE9C 001E8F7C  7C 06 00 00 */	cmpw r6, r0
+/* 801EBEA0 001E8F80  41 80 00 40 */	blt .L_801EBEE0
+/* 801EBEA4 001E8F84  2C 07 00 00 */	cmpwi r7, 0x0
+/* 801EBEA8 001E8F88  40 80 00 14 */	bge .L_801EBEBC
+/* 801EBEAC 001E8F8C  C8 01 00 08 */	lfd f0, 0x8(r1)
+/* 801EBEB0 001E8F90  FC 40 10 50 */	fneg f2, f2
+/* 801EBEB4 001E8F94  FC 00 00 50 */	fneg f0, f0
+/* 801EBEB8 001E8F98  D8 01 00 08 */	stfd f0, 0x8(r1)
+.L_801EBEBC:
+/* 801EBEBC 001E8F9C  C8 02 B9 18 */	lfd f0, "@98"@sda21(r2)
+/* 801EBEC0 001E8FA0  C8 62 B9 10 */	lfd f3, "@97"@sda21(r2)
+/* 801EBEC4 001E8FA4  C8 21 00 08 */	lfd f1, 0x8(r1)
+/* 801EBEC8 001E8FA8  FC 00 10 28 */	fsub f0, f0, f2
+/* 801EBECC 001E8FAC  C8 42 B9 20 */	lfd f2, "@99"@sda21(r2)
+/* 801EBED0 001E8FB0  FC 23 08 28 */	fsub f1, f3, f1
+/* 801EBED4 001E8FB4  FC 01 00 2A */	fadd f0, f1, f0
+/* 801EBED8 001E8FB8  D8 21 00 18 */	stfd f1, 0x18(r1)
+/* 801EBEDC 001E8FBC  D8 01 00 08 */	stfd f0, 0x8(r1)
+.L_801EBEE0:
+/* 801EBEE0 001E8FC0  C8 01 00 08 */	lfd f0, 0x8(r1)
+/* 801EBEE4 001E8FC4  3C 80 80 28 */	lis r4, T@ha
+/* 801EBEE8 001E8FC8  38 A4 A0 90 */	addi r5, r4, T@l
+/* 801EBEEC 001E8FCC  3C 80 3F E6 */	lis r4, 0x3fe6
+/* 801EBEF0 001E8FD0  FD A0 00 32 */	fmul f13, f0, f0
+/* 801EBEF4 001E8FD4  38 04 94 28 */	addi r0, r4, -0x6bd8
+/* 801EBEF8 001E8FD8  C8 A5 00 60 */	lfd f5, 0x60(r5)
+/* 801EBEFC 001E8FDC  7C 06 00 00 */	cmpw r6, r0
+/* 801EBF00 001E8FE0  C8 85 00 50 */	lfd f4, 0x50(r5)
+/* 801EBF04 001E8FE4  C9 25 00 58 */	lfd f9, 0x58(r5)
+/* 801EBF08 001E8FE8  FF ED 03 72 */	fmul f31, f13, f13
+/* 801EBF0C 001E8FEC  C9 05 00 48 */	lfd f8, 0x48(r5)
+/* 801EBF10 001E8FF0  C8 65 00 40 */	lfd f3, 0x40(r5)
+/* 801EBF14 001E8FF4  C9 65 00 38 */	lfd f11, 0x38(r5)
+/* 801EBF18 001E8FF8  FC 2D 00 32 */	fmul f1, f13, f0
+/* 801EBF1C 001E8FFC  C8 C5 00 30 */	lfd f6, 0x30(r5)
+/* 801EBF20 001E9000  FC FF 21 7A */	fmadd f7, f31, f5, f4
+/* 801EBF24 001E9004  C9 45 00 28 */	lfd f10, 0x28(r5)
+/* 801EBF28 001E9008  C8 A5 00 20 */	lfd f5, 0x20(r5)
+/* 801EBF2C 001E900C  FD 9F 42 7A */	fmadd f12, f31, f9, f8
+/* 801EBF30 001E9010  C9 25 00 18 */	lfd f9, 0x18(r5)
+/* 801EBF34 001E9014  C8 85 00 10 */	lfd f4, 0x10(r5)
+/* 801EBF38 001E9018  FC FF 19 FA */	fmadd f7, f31, f7, f3
+/* 801EBF3C 001E901C  C9 05 00 08 */	lfd f8, 0x8(r5)
+/* 801EBF40 001E9020  C8 65 00 00 */	lfd f3, 0x0(r5)
+/* 801EBF44 001E9024  FD 7F 5B 3A */	fmadd f11, f31, f12, f11
+/* 801EBF48 001E9028  D9 A1 00 18 */	stfd f13, 0x18(r1)
+/* 801EBF4C 001E902C  FC DF 31 FA */	fmadd f6, f31, f7, f6
+/* 801EBF50 001E9030  FC FF 52 FA */	fmadd f7, f31, f11, f10
+/* 801EBF54 001E9034  FC BF 29 BA */	fmadd f5, f31, f6, f5
+/* 801EBF58 001E9038  FC DF 49 FA */	fmadd f6, f31, f7, f9
+/* 801EBF5C 001E903C  FC 9F 21 7A */	fmadd f4, f31, f5, f4
+/* 801EBF60 001E9040  FC BF 41 BA */	fmadd f5, f31, f6, f8
+/* 801EBF64 001E9044  FC 8D 01 32 */	fmul f4, f13, f4
+/* 801EBF68 001E9048  FC 85 20 2A */	fadd f4, f5, f4
+/* 801EBF6C 001E904C  FC 81 11 3A */	fmadd f4, f1, f4, f2
+/* 801EBF70 001E9050  FC CD 11 3A */	fmadd f6, f13, f4, f2
+/* 801EBF74 001E9054  FC C3 30 7A */	fmadd f6, f3, f1, f6
+/* 801EBF78 001E9058  FC 20 30 2A */	fadd f1, f0, f6
+/* 801EBF7C 001E905C  41 80 00 60 */	blt .L_801EBFDC
+/* 801EBF80 001E9060  3C 80 43 30 */	lis r4, 0x4330
+/* 801EBF84 001E9064  6C 60 80 00 */	xoris r0, r3, 0x8000
+/* 801EBF88 001E9068  90 01 00 24 */	stw r0, 0x24(r1)
+/* 801EBF8C 001E906C  54 E0 17 BC */	rlwinm r0, r7, 2, 30, 30
+/* 801EBF90 001E9070  20 00 00 01 */	subfic r0, r0, 0x1
+/* 801EBF94 001E9074  C8 A2 B9 30 */	lfd f5, "@102"@sda21(r2)
+/* 801EBF98 001E9078  90 81 00 20 */	stw r4, 0x20(r1)
+/* 801EBF9C 001E907C  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 801EBFA0 001E9080  FC 41 00 72 */	fmul f2, f1, f1
+/* 801EBFA4 001E9084  C8 62 B9 28 */	lfd f3, "@100"@sda21(r2)
+/* 801EBFA8 001E9088  C8 81 00 20 */	lfd f4, 0x20(r1)
+/* 801EBFAC 001E908C  90 01 00 2C */	stw r0, 0x2c(r1)
+/* 801EBFB0 001E9090  FC E4 28 28 */	fsub f7, f4, f5
+/* 801EBFB4 001E9094  90 81 00 28 */	stw r4, 0x28(r1)
+/* 801EBFB8 001E9098  FC 21 38 2A */	fadd f1, f1, f7
+/* 801EBFBC 001E909C  C8 81 00 28 */	lfd f4, 0x28(r1)
+/* 801EBFC0 001E90A0  FC 84 28 28 */	fsub f4, f4, f5
+/* 801EBFC4 001E90A4  FC 22 08 24 */	fdiv f1, f2, f1
+/* 801EBFC8 001E90A8  FC 21 30 28 */	fsub f1, f1, f6
+/* 801EBFCC 001E90AC  FC 00 08 28 */	fsub f0, f0, f1
+/* 801EBFD0 001E90B0  FC 03 38 3C */	fnmsub f0, f3, f0, f7
+/* 801EBFD4 001E90B4  FC 24 00 32 */	fmul f1, f4, f0
+/* 801EBFD8 001E90B8  48 00 00 4C */	b .L_801EC024
+.L_801EBFDC:
+/* 801EBFDC 001E90BC  2C 03 00 01 */	cmpwi r3, 0x1
+/* 801EBFE0 001E90C0  40 82 00 08 */	bne .L_801EBFE8
+/* 801EBFE4 001E90C4  48 00 00 40 */	b .L_801EC024
+.L_801EBFE8:
+/* 801EBFE8 001E90C8  C8 42 B9 08 */	lfd f2, "@96"@sda21(r2)
+/* 801EBFEC 001E90CC  38 00 00 00 */	li r0, 0x0
+/* 801EBFF0 001E90D0  D8 21 00 18 */	stfd f1, 0x18(r1)
+/* 801EBFF4 001E90D4  FC 82 08 24 */	fdiv f4, f2, f1
+/* 801EBFF8 001E90D8  C8 22 B9 00 */	lfd f1, "@95"@sda21(r2)
+/* 801EBFFC 001E90DC  90 01 00 1C */	stw r0, 0x1c(r1)
+/* 801EC000 001E90E0  C8 41 00 18 */	lfd f2, 0x18(r1)
+/* 801EC004 001E90E4  D8 81 00 10 */	stfd f4, 0x10(r1)
+/* 801EC008 001E90E8  FC 02 00 28 */	fsub f0, f2, f0
+/* 801EC00C 001E90EC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801EC010 001E90F0  FC 06 00 28 */	fsub f0, f6, f0
+/* 801EC014 001E90F4  C8 61 00 10 */	lfd f3, 0x10(r1)
+/* 801EC018 001E90F8  FC 23 08 BA */	fmadd f1, f3, f2, f1
+/* 801EC01C 001E90FC  FC 03 08 3A */	fmadd f0, f3, f0, f1
+/* 801EC020 001E9100  FC 24 18 3A */	fmadd f1, f4, f0, f3
+.L_801EC024:
+/* 801EC024 001E9104  E3 E1 00 38 */	psq_l f31, 0x38(r1), 0, qr0
+/* 801EC028 001E9108  CB E1 00 30 */	lfd f31, 0x30(r1)
+/* 801EC02C 001E910C  38 21 00 40 */	addi r1, r1, 0x40
+/* 801EC030 001E9110  4E 80 00 20 */	blr
+.endfn __kernel_tan
+
+# 0x8027A090 - 0x8027A0F8
+.rodata
+.balign 8
+
+.obj T, local
+	.4byte 0x3FD55555
+	.4byte 0x55555563
+	.4byte 0x3FC11111
+	.4byte 0x1110FE7A
+	.4byte 0x3FABA1BA
+	.4byte 0x1BB341FE
+	.4byte 0x3F9664F4
+	.4byte 0x8406D637
+	.4byte 0x3F8226E3
+	.4byte 0xE96E8493
+	.4byte 0x3F6D6D22
+	.4byte 0xC9560328
+	.4byte 0x3F57DBC8
+	.4byte 0xFEE08315
+	.4byte 0x3F4344D8
+	.4byte 0xF2F26501
+	.4byte 0x3F3026F7
+	.4byte 0x1A8D1068
+	.4byte 0x3F147E88
+	.4byte 0xA03792A6
+	.4byte 0x3F12B80F
+	.4byte 0x32F0A7E9
+	.4byte 0xBEF375CB
+	.4byte 0xDB605373
+	.4byte 0x3EFB2A70
+	.4byte 0x74BF7AD4
+.endobj T
+
+# 0x803D0280 - 0x803D02B8
+.section .sdata2, "a"
+.balign 8
+
+.obj "@95", local
+	.4byte 0x3FF00000
+	.4byte 0x00000000
+.endobj "@95"
+
+.obj "@96", local
+	.4byte 0xBFF00000
+	.4byte 0x00000000
+.endobj "@96"
+
+.obj "@97", local
+	.4byte 0x3FE921FB
+	.4byte 0x54442D18
+.endobj "@97"
+
+.obj "@98", local
+	.4byte 0x3C81A626
+	.4byte 0x33145C07
+.endobj "@98"
+
+.obj "@99", local
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj "@99"
+
+.obj "@100", local
+	.4byte 0x40000000
+	.4byte 0x00000000
+.endobj "@100"
+
+.obj "@102", local
+	.4byte 0x43300000
+	.4byte 0x80000000
+.endobj "@102"

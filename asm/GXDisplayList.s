@@ -1,0 +1,39 @@
+.include "macros.inc"
+.file "GXDisplayList.c"
+
+# 0x801CFB20 - 0x801CFB90
+.text
+.balign 4
+
+.fn GXCallDisplayList, global
+/* 801CFB20 001CCC00  7C 08 02 A6 */	mflr r0
+/* 801CFB24 001CCC04  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CFB28 001CCC08  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801CFB2C 001CCC0C  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801CFB30 001CCC10  3B E4 00 00 */	addi r31, r4, 0x0
+/* 801CFB34 001CCC14  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 801CFB38 001CCC18  3B C3 00 00 */	addi r30, r3, 0x0
+/* 801CFB3C 001CCC1C  80 A2 B2 F8 */	lwz r5, __GXData@sda21(r2)
+/* 801CFB40 001CCC20  80 05 05 AC */	lwz r0, 0x5ac(r5)
+/* 801CFB44 001CCC24  28 00 00 00 */	cmplwi r0, 0x0
+/* 801CFB48 001CCC28  41 82 00 08 */	beq .L_801CFB50
+/* 801CFB4C 001CCC2C  4B FF C6 4D */	bl __GXSetDirtyState
+.L_801CFB50:
+/* 801CFB50 001CCC30  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CFB54 001CCC34  80 03 00 00 */	lwz r0, 0x0(r3)
+/* 801CFB58 001CCC38  28 00 00 00 */	cmplwi r0, 0x0
+/* 801CFB5C 001CCC3C  40 82 00 08 */	bne .L_801CFB64
+/* 801CFB60 001CCC40  4B FF C7 89 */	bl __GXSendFlushPrim
+.L_801CFB64:
+/* 801CFB64 001CCC44  38 00 00 40 */	li r0, 0x40
+/* 801CFB68 001CCC48  3C 60 CC 01 */	lis r3, 0xcc01
+/* 801CFB6C 001CCC4C  98 03 80 00 */	stb r0, -0x8000(r3)
+/* 801CFB70 001CCC50  93 C3 80 00 */	stw r30, -0x8000(r3)
+/* 801CFB74 001CCC54  93 E3 80 00 */	stw r31, -0x8000(r3)
+/* 801CFB78 001CCC58  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 801CFB7C 001CCC5C  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 801CFB80 001CCC60  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 801CFB84 001CCC64  38 21 00 18 */	addi r1, r1, 0x18
+/* 801CFB88 001CCC68  7C 08 03 A6 */	mtlr r0
+/* 801CFB8C 001CCC6C  4E 80 00 20 */	blr
+.endfn GXCallDisplayList

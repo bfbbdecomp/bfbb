@@ -1,0 +1,452 @@
+.include "macros.inc"
+.file "zPendulum.cpp"
+
+# 0x800A8868 - 0x800A8DF0
+.text
+.balign 4
+
+# zPendulum_Init(void*, void*)
+.fn zPendulum_Init__FPvPv, global
+/* 800A8868 000A5948  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A886C 000A594C  7C 08 02 A6 */	mflr r0
+/* 800A8870 000A5950  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8874 000A5954  48 00 00 15 */	bl zPendulum_Init__FP10_zPendulumP9xEntAsset
+/* 800A8878 000A5958  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A887C 000A595C  7C 08 03 A6 */	mtlr r0
+/* 800A8880 000A5960  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8884 000A5964  4E 80 00 20 */	blr
+.endfn zPendulum_Init__FPvPv
+
+# zPendulum_Init(_zPendulum*, xEntAsset*)
+.fn zPendulum_Init__FP10_zPendulumP9xEntAsset, global
+/* 800A8888 000A5968  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A888C 000A596C  7C 08 02 A6 */	mflr r0
+/* 800A8890 000A5970  3C A0 50 45 */	lis r5, 0x5045
+/* 800A8894 000A5974  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8898 000A5978  38 A5 4E 44 */	addi r5, r5, 0x4e44
+/* 800A889C 000A597C  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800A88A0 000A5980  7C 9F 23 78 */	mr r31, r4
+/* 800A88A4 000A5984  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 800A88A8 000A5988  7C 7E 1B 78 */	mr r30, r3
+/* 800A88AC 000A598C  4B FA C3 51 */	bl zEntInit__FP4zEntP9xEntAssetUi
+/* 800A88B0 000A5990  88 1E 00 05 */	lbz r0, 0x5(r30)
+/* 800A88B4 000A5994  3B FF 00 54 */	addi r31, r31, 0x54
+/* 800A88B8 000A5998  28 00 00 00 */	cmplwi r0, 0x0
+/* 800A88BC 000A599C  41 82 00 10 */	beq .L_800A88CC
+/* 800A88C0 000A59A0  38 1F 00 30 */	addi r0, r31, 0x30
+/* 800A88C4 000A59A4  90 1E 00 08 */	stw r0, 0x8(r30)
+/* 800A88C8 000A59A8  48 00 00 0C */	b .L_800A88D4
+.L_800A88CC:
+/* 800A88CC 000A59AC  38 00 00 00 */	li r0, 0x0
+/* 800A88D0 000A59B0  90 1E 00 08 */	stw r0, 0x8(r30)
+.L_800A88D4:
+/* 800A88D4 000A59B4  3C 80 80 0B */	lis r4, zPendulum_Update__FP10_zPendulumP6xScenef@ha
+/* 800A88D8 000A59B8  3C 60 80 0B */	lis r3, zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame@ha
+/* 800A88DC 000A59BC  38 04 8A B8 */	addi r0, r4, zPendulum_Update__FP10_zPendulumP6xScenef@l
+/* 800A88E0 000A59C0  3C 80 80 0B */	lis r4, zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 800A88E4 000A59C4  90 1E 00 34 */	stw r0, 0x34(r30)
+/* 800A88E8 000A59C8  38 03 8B 54 */	addi r0, r3, zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame@l
+/* 800A88EC 000A59CC  3C 60 80 0B */	lis r3, zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3@ha
+/* 800A88F0 000A59D0  38 84 8B CC */	addi r4, r4, zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 800A88F4 000A59D4  90 1E 00 40 */	stw r0, 0x40(r30)
+/* 800A88F8 000A59D8  38 03 8B 78 */	addi r0, r3, zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3@l
+/* 800A88FC 000A59DC  7F C3 F3 78 */	mr r3, r30
+/* 800A8900 000A59E0  90 9E 00 0C */	stw r4, 0xc(r30)
+/* 800A8904 000A59E4  90 1E 00 B0 */	stw r0, 0xb0(r30)
+/* 800A8908 000A59E8  4B FA C9 49 */	bl zEntReset__FP4zEnt
+/* 800A890C 000A59EC  7F C4 F3 78 */	mr r4, r30
+/* 800A8910 000A59F0  7F E5 FB 78 */	mr r5, r31
+/* 800A8914 000A59F4  38 7E 00 D4 */	addi r3, r30, 0xd4
+/* 800A8918 000A59F8  4B F7 3F 71 */	bl xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset
+/* 800A891C 000A59FC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8920 000A5A00  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800A8924 000A5A04  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 800A8928 000A5A08  7C 08 03 A6 */	mtlr r0
+/* 800A892C 000A5A0C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8930 000A5A10  4E 80 00 20 */	blr
+.endfn zPendulum_Init__FP10_zPendulumP9xEntAsset
+
+# zPendulum_Save(_zPendulum*, xSerial*)
+.fn zPendulum_Save__FP10_zPendulumP7xSerial, global
+/* 800A8934 000A5A14  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A8938 000A5A18  7C 08 02 A6 */	mflr r0
+/* 800A893C 000A5A1C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8940 000A5A20  4B FA C8 D1 */	bl zEntSave__FP4zEntP7xSerial
+/* 800A8944 000A5A24  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8948 000A5A28  7C 08 03 A6 */	mtlr r0
+/* 800A894C 000A5A2C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8950 000A5A30  4E 80 00 20 */	blr
+.endfn zPendulum_Save__FP10_zPendulumP7xSerial
+
+# zPendulum_Load(_zPendulum*, xSerial*)
+.fn zPendulum_Load__FP10_zPendulumP7xSerial, global
+/* 800A8954 000A5A34  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A8958 000A5A38  7C 08 02 A6 */	mflr r0
+/* 800A895C 000A5A3C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8960 000A5A40  4B FA C8 D1 */	bl zEntLoad__FP4zEntP7xSerial
+/* 800A8964 000A5A44  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8968 000A5A48  7C 08 03 A6 */	mtlr r0
+/* 800A896C 000A5A4C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8970 000A5A50  4E 80 00 20 */	blr
+.endfn zPendulum_Load__FP10_zPendulumP7xSerial
+
+# zPendulum_Setup(_zPendulum*, xScene*)
+.fn zPendulum_Setup__FP10_zPendulumP6xScene, global
+/* 800A8974 000A5A54  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A8978 000A5A58  7C 08 02 A6 */	mflr r0
+/* 800A897C 000A5A5C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8980 000A5A60  4B FA C6 E5 */	bl zEntSetup__FP4zEnt
+/* 800A8984 000A5A64  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8988 000A5A68  7C 08 03 A6 */	mtlr r0
+/* 800A898C 000A5A6C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8990 000A5A70  4E 80 00 20 */	blr
+.endfn zPendulum_Setup__FP10_zPendulumP6xScene
+
+# zPendulum_Reset(_zPendulum*, xScene*)
+.fn zPendulum_Reset__FP10_zPendulumP6xScene, global
+/* 800A8994 000A5A74  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A8998 000A5A78  7C 08 02 A6 */	mflr r0
+/* 800A899C 000A5A7C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A89A0 000A5A80  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800A89A4 000A5A84  7C 9F 23 78 */	mr r31, r4
+/* 800A89A8 000A5A88  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 800A89AC 000A5A8C  7C 7E 1B 78 */	mr r30, r3
+/* 800A89B0 000A5A90  4B FA C8 A1 */	bl zEntReset__FP4zEnt
+/* 800A89B4 000A5A94  80 BE 00 10 */	lwz r5, 0x10(r30)
+/* 800A89B8 000A5A98  7F C4 F3 78 */	mr r4, r30
+/* 800A89BC 000A5A9C  38 7E 00 D4 */	addi r3, r30, 0xd4
+/* 800A89C0 000A5AA0  38 A5 00 54 */	addi r5, r5, 0x54
+/* 800A89C4 000A5AA4  4B F7 3E C5 */	bl xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset
+/* 800A89C8 000A5AA8  7F E4 FB 78 */	mr r4, r31
+/* 800A89CC 000A5AAC  38 7E 00 D4 */	addi r3, r30, 0xd4
+/* 800A89D0 000A5AB0  4B F7 40 FD */	bl xEntMotionReset__FP10xEntMotionP6xScene
+/* 800A89D4 000A5AB4  80 7E 00 D4 */	lwz r3, 0xd4(r30)
+/* 800A89D8 000A5AB8  C0 02 94 20 */	lfs f0, "@692"@sda21(r2)
+/* 800A89DC 000A5ABC  D0 1E 01 40 */	stfs f0, 0x140(r30)
+/* 800A89E0 000A5AC0  C0 23 00 14 */	lfs f1, 0x14(r3)
+/* 800A89E4 000A5AC4  C0 02 94 28 */	lfs f0, "@694"@sda21(r2)
+/* 800A89E8 000A5AC8  C0 42 94 24 */	lfs f2, "@693"@sda21(r2)
+/* 800A89EC 000A5ACC  EC 01 00 24 */	fdivs f0, f1, f0
+/* 800A89F0 000A5AD0  EC 02 00 28 */	fsubs f0, f2, f0
+/* 800A89F4 000A5AD4  D0 1E 01 44 */	stfs f0, 0x144(r30)
+/* 800A89F8 000A5AD8  C0 23 00 14 */	lfs f1, 0x14(r3)
+/* 800A89FC 000A5ADC  C0 02 94 28 */	lfs f0, "@694"@sda21(r2)
+/* 800A8A00 000A5AE0  C0 42 94 2C */	lfs f2, "@695"@sda21(r2)
+/* 800A8A04 000A5AE4  EC 01 00 24 */	fdivs f0, f1, f0
+/* 800A8A08 000A5AE8  EC 02 00 28 */	fsubs f0, f2, f0
+/* 800A8A0C 000A5AEC  D0 1E 01 48 */	stfs f0, 0x148(r30)
+/* 800A8A10 000A5AF0  C0 3E 01 44 */	lfs f1, 0x144(r30)
+/* 800A8A14 000A5AF4  C0 02 94 20 */	lfs f0, "@692"@sda21(r2)
+/* 800A8A18 000A5AF8  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8A1C 000A5AFC  4C 40 13 82 */	cror eq, lt, eq
+/* 800A8A20 000A5B00  40 82 00 10 */	bne .L_800A8A30
+/* 800A8A24 000A5B04  C0 02 94 24 */	lfs f0, "@693"@sda21(r2)
+/* 800A8A28 000A5B08  EC 01 00 2A */	fadds f0, f1, f0
+/* 800A8A2C 000A5B0C  D0 1E 01 44 */	stfs f0, 0x144(r30)
+.L_800A8A30:
+/* 800A8A30 000A5B10  C0 3E 01 44 */	lfs f1, 0x144(r30)
+/* 800A8A34 000A5B14  C0 02 94 24 */	lfs f0, "@693"@sda21(r2)
+/* 800A8A38 000A5B18  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8A3C 000A5B1C  40 81 00 0C */	ble .L_800A8A48
+/* 800A8A40 000A5B20  EC 01 00 28 */	fsubs f0, f1, f0
+/* 800A8A44 000A5B24  D0 1E 01 44 */	stfs f0, 0x144(r30)
+.L_800A8A48:
+/* 800A8A48 000A5B28  C0 3E 01 48 */	lfs f1, 0x148(r30)
+/* 800A8A4C 000A5B2C  C0 02 94 20 */	lfs f0, "@692"@sda21(r2)
+/* 800A8A50 000A5B30  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8A54 000A5B34  4C 40 13 82 */	cror eq, lt, eq
+/* 800A8A58 000A5B38  40 82 00 10 */	bne .L_800A8A68
+/* 800A8A5C 000A5B3C  C0 02 94 24 */	lfs f0, "@693"@sda21(r2)
+/* 800A8A60 000A5B40  EC 01 00 2A */	fadds f0, f1, f0
+/* 800A8A64 000A5B44  D0 1E 01 48 */	stfs f0, 0x148(r30)
+.L_800A8A68:
+/* 800A8A68 000A5B48  C0 3E 01 48 */	lfs f1, 0x148(r30)
+/* 800A8A6C 000A5B4C  C0 02 94 24 */	lfs f0, "@693"@sda21(r2)
+/* 800A8A70 000A5B50  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8A74 000A5B54  40 81 00 0C */	ble .L_800A8A80
+/* 800A8A78 000A5B58  EC 01 00 28 */	fsubs f0, f1, f0
+/* 800A8A7C 000A5B5C  D0 1E 01 48 */	stfs f0, 0x148(r30)
+.L_800A8A80:
+/* 800A8A80 000A5B60  C0 3E 01 44 */	lfs f1, 0x144(r30)
+/* 800A8A84 000A5B64  C0 03 00 10 */	lfs f0, 0x10(r3)
+/* 800A8A88 000A5B68  EC 01 00 32 */	fmuls f0, f1, f0
+/* 800A8A8C 000A5B6C  D0 1E 01 44 */	stfs f0, 0x144(r30)
+/* 800A8A90 000A5B70  C0 3E 01 48 */	lfs f1, 0x148(r30)
+/* 800A8A94 000A5B74  C0 03 00 10 */	lfs f0, 0x10(r3)
+/* 800A8A98 000A5B78  EC 01 00 32 */	fmuls f0, f1, f0
+/* 800A8A9C 000A5B7C  D0 1E 01 48 */	stfs f0, 0x148(r30)
+/* 800A8AA0 000A5B80  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800A8AA4 000A5B84  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 800A8AA8 000A5B88  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8AAC 000A5B8C  7C 08 03 A6 */	mtlr r0
+/* 800A8AB0 000A5B90  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8AB4 000A5B94  4E 80 00 20 */	blr
+.endfn zPendulum_Reset__FP10_zPendulumP6xScene
+
+# zPendulum_Update(_zPendulum*, xScene*, float)
+.fn zPendulum_Update__FP10_zPendulumP6xScenef, global
+/* 800A8AB8 000A5B98  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A8ABC 000A5B9C  7C 08 02 A6 */	mflr r0
+/* 800A8AC0 000A5BA0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8AC4 000A5BA4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800A8AC8 000A5BA8  7C 7F 1B 78 */	mr r31, r3
+/* 800A8ACC 000A5BAC  4B F7 0B 31 */	bl xEntUpdate__FP4xEntP6xScenef
+/* 800A8AD0 000A5BB0  C0 5F 00 DC */	lfs f2, 0xdc(r31)
+/* 800A8AD4 000A5BB4  C0 3F 01 40 */	lfs f1, 0x140(r31)
+/* 800A8AD8 000A5BB8  80 7F 00 D4 */	lwz r3, 0xd4(r31)
+/* 800A8ADC 000A5BBC  FC 02 08 40 */	fcmpo cr0, f2, f1
+/* 800A8AE0 000A5BC0  40 80 00 0C */	bge .L_800A8AEC
+/* 800A8AE4 000A5BC4  C0 03 00 10 */	lfs f0, 0x10(r3)
+/* 800A8AE8 000A5BC8  EC 42 00 2A */	fadds f2, f2, f0
+.L_800A8AEC:
+/* 800A8AEC 000A5BCC  C0 1F 01 44 */	lfs f0, 0x144(r31)
+/* 800A8AF0 000A5BD0  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8AF4 000A5BD4  4C 40 13 82 */	cror eq, lt, eq
+/* 800A8AF8 000A5BD8  40 82 00 1C */	bne .L_800A8B14
+/* 800A8AFC 000A5BDC  FC 02 00 40 */	fcmpo cr0, f2, f0
+/* 800A8B00 000A5BE0  40 81 00 14 */	ble .L_800A8B14
+/* 800A8B04 000A5BE4  7F E3 FB 78 */	mr r3, r31
+/* 800A8B08 000A5BE8  38 80 00 E4 */	li r4, 0xe4
+/* 800A8B0C 000A5BEC  4B F7 6A E5 */	bl zEntEvent__FP5xBaseUi
+/* 800A8B10 000A5BF0  48 00 00 28 */	b .L_800A8B38
+.L_800A8B14:
+/* 800A8B14 000A5BF4  C0 1F 01 48 */	lfs f0, 0x148(r31)
+/* 800A8B18 000A5BF8  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8B1C 000A5BFC  4C 40 13 82 */	cror eq, lt, eq
+/* 800A8B20 000A5C00  40 82 00 18 */	bne .L_800A8B38
+/* 800A8B24 000A5C04  FC 02 00 40 */	fcmpo cr0, f2, f0
+/* 800A8B28 000A5C08  40 81 00 10 */	ble .L_800A8B38
+/* 800A8B2C 000A5C0C  7F E3 FB 78 */	mr r3, r31
+/* 800A8B30 000A5C10  38 80 00 E4 */	li r4, 0xe4
+/* 800A8B34 000A5C14  4B F7 6A BD */	bl zEntEvent__FP5xBaseUi
+.L_800A8B38:
+/* 800A8B38 000A5C18  C0 1F 00 DC */	lfs f0, 0xdc(r31)
+/* 800A8B3C 000A5C1C  D0 1F 01 40 */	stfs f0, 0x140(r31)
+/* 800A8B40 000A5C20  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8B44 000A5C24  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800A8B48 000A5C28  7C 08 03 A6 */	mtlr r0
+/* 800A8B4C 000A5C2C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8B50 000A5C30  4E 80 00 20 */	blr
+.endfn zPendulum_Update__FP10_zPendulumP6xScenef
+
+# zPendulum_Move(_zPendulum*, xScene*, float, xEntFrame*)
+.fn zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame, global
+/* 800A8B54 000A5C34  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800A8B58 000A5C38  7C 08 02 A6 */	mflr r0
+/* 800A8B5C 000A5C3C  38 63 00 D4 */	addi r3, r3, 0xd4
+/* 800A8B60 000A5C40  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800A8B64 000A5C44  4B F7 43 3D */	bl xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame
+/* 800A8B68 000A5C48  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800A8B6C 000A5C4C  7C 08 03 A6 */	mtlr r0
+/* 800A8B70 000A5C50  38 21 00 10 */	addi r1, r1, 0x10
+/* 800A8B74 000A5C54  4E 80 00 20 */	blr
+.endfn zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame
+
+# zPendulumTranslate(xEnt*, xVec3*, xMat4x3*)
+.fn zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3, local
+/* 800A8B78 000A5C58  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800A8B7C 000A5C5C  7C 08 02 A6 */	mflr r0
+/* 800A8B80 000A5C60  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800A8B84 000A5C64  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800A8B88 000A5C68  7C BF 2B 78 */	mr r31, r5
+/* 800A8B8C 000A5C6C  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800A8B90 000A5C70  7C 9E 23 78 */	mr r30, r4
+/* 800A8B94 000A5C74  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 800A8B98 000A5C78  7C 7D 1B 78 */	mr r29, r3
+/* 800A8B9C 000A5C7C  4B F7 0D 39 */	bl xEntDefaultTranslate__FP4xEntP5xVec3P7xMat4x3
+/* 800A8BA0 000A5C80  7F C4 F3 78 */	mr r4, r30
+/* 800A8BA4 000A5C84  7F E5 FB 78 */	mr r5, r31
+/* 800A8BA8 000A5C88  38 7D 00 D4 */	addi r3, r29, 0xd4
+/* 800A8BAC 000A5C8C  4B F7 55 F1 */	bl xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3
+/* 800A8BB0 000A5C90  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800A8BB4 000A5C94  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800A8BB8 000A5C98  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800A8BBC 000A5C9C  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800A8BC0 000A5CA0  7C 08 03 A6 */	mtlr r0
+/* 800A8BC4 000A5CA4  38 21 00 20 */	addi r1, r1, 0x20
+/* 800A8BC8 000A5CA8  4E 80 00 20 */	blr
+.endfn zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3
+
+# zPendulumEventCB(xBase*, xBase*, unsigned int, const float*, xBase*)
+.fn zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase, global
+/* 800A8BCC 000A5CAC  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800A8BD0 000A5CB0  7C 08 02 A6 */	mflr r0
+/* 800A8BD4 000A5CB4  2C 05 00 56 */	cmpwi r5, 0x56
+/* 800A8BD8 000A5CB8  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800A8BDC 000A5CBC  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800A8BE0 000A5CC0  7C 9F 23 78 */	mr r31, r4
+/* 800A8BE4 000A5CC4  41 82 01 30 */	beq .L_800A8D14
+/* 800A8BE8 000A5CC8  40 80 00 58 */	bge .L_800A8C40
+/* 800A8BEC 000A5CCC  2C 05 00 12 */	cmpwi r5, 0x12
+/* 800A8BF0 000A5CD0  41 82 00 AC */	beq .L_800A8C9C
+/* 800A8BF4 000A5CD4  40 80 00 28 */	bge .L_800A8C1C
+/* 800A8BF8 000A5CD8  2C 05 00 04 */	cmpwi r5, 0x4
+/* 800A8BFC 000A5CDC  41 82 00 DC */	beq .L_800A8CD8
+/* 800A8C00 000A5CE0  40 80 00 10 */	bge .L_800A8C10
+/* 800A8C04 000A5CE4  2C 05 00 03 */	cmpwi r5, 0x3
+/* 800A8C08 000A5CE8  40 80 00 C4 */	bge .L_800A8CCC
+/* 800A8C0C 000A5CEC  48 00 01 CC */	b .L_800A8DD8
+.L_800A8C10:
+/* 800A8C10 000A5CF0  2C 05 00 0A */	cmpwi r5, 0xa
+/* 800A8C14 000A5CF4  41 82 00 A0 */	beq .L_800A8CB4
+/* 800A8C18 000A5CF8  48 00 01 C0 */	b .L_800A8DD8
+.L_800A8C1C:
+/* 800A8C1C 000A5CFC  2C 05 00 53 */	cmpwi r5, 0x53
+/* 800A8C20 000A5D00  41 82 00 CC */	beq .L_800A8CEC
+/* 800A8C24 000A5D04  40 80 00 10 */	bge .L_800A8C34
+/* 800A8C28 000A5D08  2C 05 00 14 */	cmpwi r5, 0x14
+/* 800A8C2C 000A5D0C  40 80 01 AC */	bge .L_800A8DD8
+/* 800A8C30 000A5D10  48 00 00 78 */	b .L_800A8CA8
+.L_800A8C34:
+/* 800A8C34 000A5D14  2C 05 00 55 */	cmpwi r5, 0x55
+/* 800A8C38 000A5D18  40 80 00 AC */	bge .L_800A8CE4
+/* 800A8C3C 000A5D1C  48 00 00 E0 */	b .L_800A8D1C
+.L_800A8C40:
+/* 800A8C40 000A5D20  2C 05 01 F7 */	cmpwi r5, 0x1f7
+/* 800A8C44 000A5D24  41 82 00 88 */	beq .L_800A8CCC
+/* 800A8C48 000A5D28  40 80 00 30 */	bge .L_800A8C78
+/* 800A8C4C 000A5D2C  2C 05 01 79 */	cmpwi r5, 0x179
+/* 800A8C50 000A5D30  41 82 01 04 */	beq .L_800A8D54
+/* 800A8C54 000A5D34  40 80 00 18 */	bge .L_800A8C6C
+/* 800A8C58 000A5D38  2C 05 00 CB */	cmpwi r5, 0xcb
+/* 800A8C5C 000A5D3C  40 80 01 7C */	bge .L_800A8DD8
+/* 800A8C60 000A5D40  2C 05 00 C3 */	cmpwi r5, 0xc3
+/* 800A8C64 000A5D44  40 80 00 DC */	bge .L_800A8D40
+/* 800A8C68 000A5D48  48 00 01 70 */	b .L_800A8DD8
+.L_800A8C6C:
+/* 800A8C6C 000A5D4C  2C 05 01 D5 */	cmpwi r5, 0x1d5
+/* 800A8C70 000A5D50  41 82 01 3C */	beq .L_800A8DAC
+/* 800A8C74 000A5D54  48 00 01 64 */	b .L_800A8DD8
+.L_800A8C78:
+/* 800A8C78 000A5D58  2C 05 02 08 */	cmpwi r5, 0x208
+/* 800A8C7C 000A5D5C  41 82 00 B8 */	beq .L_800A8D34
+/* 800A8C80 000A5D60  40 80 00 10 */	bge .L_800A8C90
+/* 800A8C84 000A5D64  2C 05 01 F9 */	cmpwi r5, 0x1f9
+/* 800A8C88 000A5D68  40 80 01 50 */	bge .L_800A8DD8
+/* 800A8C8C 000A5D6C  48 00 00 4C */	b .L_800A8CD8
+.L_800A8C90:
+/* 800A8C90 000A5D70  2C 05 02 0A */	cmpwi r5, 0x20a
+/* 800A8C94 000A5D74  40 80 01 44 */	bge .L_800A8DD8
+/* 800A8C98 000A5D78  48 00 00 90 */	b .L_800A8D28
+.L_800A8C9C:
+/* 800A8C9C 000A5D7C  38 7F 00 D4 */	addi r3, r31, 0xd4
+/* 800A8CA0 000A5D80  4B F7 67 39 */	bl xEntMotionRun__FP10xEntMotion
+/* 800A8CA4 000A5D84  48 00 01 34 */	b .L_800A8DD8
+.L_800A8CA8:
+/* 800A8CA8 000A5D88  38 7F 00 D4 */	addi r3, r31, 0xd4
+/* 800A8CAC 000A5D8C  4B F7 67 1D */	bl xEntMotionStop__FP10xEntMotion
+/* 800A8CB0 000A5D90  48 00 01 28 */	b .L_800A8DD8
+.L_800A8CB4:
+/* 800A8CB4 000A5D94  3C 80 80 3C */	lis r4, globals@ha
+/* 800A8CB8 000A5D98  7F E3 FB 78 */	mr r3, r31
+/* 800A8CBC 000A5D9C  38 84 05 58 */	addi r4, r4, globals@l
+/* 800A8CC0 000A5DA0  80 84 1F C0 */	lwz r4, 0x1fc0(r4)
+/* 800A8CC4 000A5DA4  4B FF FC D1 */	bl zPendulum_Reset__FP10_zPendulumP6xScene
+/* 800A8CC8 000A5DA8  48 00 01 10 */	b .L_800A8DD8
+.L_800A8CCC:
+/* 800A8CCC 000A5DAC  7F E3 FB 78 */	mr r3, r31
+/* 800A8CD0 000A5DB0  4B F7 2B 29 */	bl xEntShow__FP4xEnt
+/* 800A8CD4 000A5DB4  48 00 01 04 */	b .L_800A8DD8
+.L_800A8CD8:
+/* 800A8CD8 000A5DB8  7F E3 FB 78 */	mr r3, r31
+/* 800A8CDC 000A5DBC  4B F7 2B 0D */	bl xEntHide__FP4xEnt
+/* 800A8CE0 000A5DC0  48 00 00 F8 */	b .L_800A8DD8
+.L_800A8CE4:
+/* 800A8CE4 000A5DC4  7F E3 FB 78 */	mr r3, r31
+/* 800A8CE8 000A5DC8  4B F7 2B 11 */	bl xEntShow__FP4xEnt
+.L_800A8CEC:
+/* 800A8CEC 000A5DCC  38 00 00 18 */	li r0, 0x18
+/* 800A8CF0 000A5DD0  7F E3 FB 78 */	mr r3, r31
+/* 800A8CF4 000A5DD4  98 1F 00 22 */	stb r0, 0x22(r31)
+/* 800A8CF8 000A5DD8  80 9F 00 24 */	lwz r4, 0x24(r31)
+/* 800A8CFC 000A5DDC  81 9F 00 3C */	lwz r12, 0x3c(r31)
+/* 800A8D00 000A5DE0  80 84 00 4C */	lwz r4, 0x4c(r4)
+/* 800A8D04 000A5DE4  38 84 00 30 */	addi r4, r4, 0x30
+/* 800A8D08 000A5DE8  7D 89 03 A6 */	mtctr r12
+/* 800A8D0C 000A5DEC  4E 80 04 21 */	bctrl
+/* 800A8D10 000A5DF0  48 00 00 C8 */	b .L_800A8DD8
+.L_800A8D14:
+/* 800A8D14 000A5DF4  7F E3 FB 78 */	mr r3, r31
+/* 800A8D18 000A5DF8  4B F7 2A D1 */	bl xEntHide__FP4xEnt
+.L_800A8D1C:
+/* 800A8D1C 000A5DFC  38 00 00 00 */	li r0, 0x0
+/* 800A8D20 000A5E00  98 1F 00 22 */	stb r0, 0x22(r31)
+/* 800A8D24 000A5E04  48 00 00 B4 */	b .L_800A8DD8
+.L_800A8D28:
+/* 800A8D28 000A5E08  7F E3 FB 78 */	mr r3, r31
+/* 800A8D2C 000A5E0C  48 06 DB 9D */	bl zCollGeom_CamEnable__FP4xEnt
+/* 800A8D30 000A5E10  48 00 00 A8 */	b .L_800A8DD8
+.L_800A8D34:
+/* 800A8D34 000A5E14  7F E3 FB 78 */	mr r3, r31
+/* 800A8D38 000A5E18  48 06 DB A9 */	bl zCollGeom_CamDisable__FP4xEnt
+/* 800A8D3C 000A5E1C  48 00 00 9C */	b .L_800A8DD8
+.L_800A8D40:
+/* 800A8D40 000A5E20  7F E3 FB 78 */	mr r3, r31
+/* 800A8D44 000A5E24  7C A4 2B 78 */	mr r4, r5
+/* 800A8D48 000A5E28  7C C5 33 78 */	mr r5, r6
+/* 800A8D4C 000A5E2C  4B FA C9 C1 */	bl zEntAnimEvent__FP4zEntUiPCf
+/* 800A8D50 000A5E30  48 00 00 88 */	b .L_800A8DD8
+.L_800A8D54:
+/* 800A8D54 000A5E34  3C 60 80 3C */	lis r3, globals@ha
+/* 800A8D58 000A5E38  38 63 05 58 */	addi r3, r3, globals@l
+/* 800A8D5C 000A5E3C  80 63 06 30 */	lwz r3, 0x630(r3)
+/* 800A8D60 000A5E40  28 03 00 00 */	cmplwi r3, 0x0
+/* 800A8D64 000A5E44  41 82 00 74 */	beq .L_800A8DD8
+/* 800A8D68 000A5E48  C0 26 00 00 */	lfs f1, 0x0(r6)
+/* 800A8D6C 000A5E4C  C0 02 94 20 */	lfs f0, "@692"@sda21(r2)
+/* 800A8D70 000A5E50  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800A8D74 000A5E54  4C 40 13 82 */	cror eq, lt, eq
+/* 800A8D78 000A5E58  40 82 00 18 */	bne .L_800A8D90
+/* 800A8D7C 000A5E5C  3C A0 80 14 */	lis r5, xUpdateCull_AlwaysTrueCB__FPvPv@ha
+/* 800A8D80 000A5E60  38 C0 00 00 */	li r6, 0x0
+/* 800A8D84 000A5E64  38 A5 A7 50 */	addi r5, r5, xUpdateCull_AlwaysTrueCB__FPvPv@l
+/* 800A8D88 000A5E68  48 09 21 21 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
+/* 800A8D8C 000A5E6C  48 00 00 4C */	b .L_800A8DD8
+.L_800A8D90:
+/* 800A8D90 000A5E70  EC 01 00 72 */	fmuls f0, f1, f1
+/* 800A8D94 000A5E74  3C A0 80 14 */	lis r5, xUpdateCull_DistanceSquaredCB__FPvPv@ha
+/* 800A8D98 000A5E78  38 A5 A7 58 */	addi r5, r5, xUpdateCull_DistanceSquaredCB__FPvPv@l
+/* 800A8D9C 000A5E7C  D0 01 00 08 */	stfs f0, 0x8(r1)
+/* 800A8DA0 000A5E80  80 C1 00 08 */	lwz r6, 0x8(r1)
+/* 800A8DA4 000A5E84  48 09 21 05 */	bl xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv
+/* 800A8DA8 000A5E88  48 00 00 30 */	b .L_800A8DD8
+.L_800A8DAC:
+/* 800A8DAC 000A5E8C  28 07 00 00 */	cmplwi r7, 0x0
+/* 800A8DB0 000A5E90  41 82 00 28 */	beq .L_800A8DD8
+/* 800A8DB4 000A5E94  81 87 00 08 */	lwz r12, 0x8(r7)
+/* 800A8DB8 000A5E98  28 0C 00 00 */	cmplwi r12, 0x0
+/* 800A8DBC 000A5E9C  41 82 00 1C */	beq .L_800A8DD8
+/* 800A8DC0 000A5EA0  7C E3 3B 78 */	mr r3, r7
+/* 800A8DC4 000A5EA4  80 9F 00 24 */	lwz r4, 0x24(r31)
+/* 800A8DC8 000A5EA8  38 A0 00 00 */	li r5, 0x0
+/* 800A8DCC 000A5EAC  38 C0 00 00 */	li r6, 0x0
+/* 800A8DD0 000A5EB0  7D 89 03 A6 */	mtctr r12
+/* 800A8DD4 000A5EB4  4E 80 04 21 */	bctrl
+.L_800A8DD8:
+/* 800A8DD8 000A5EB8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800A8DDC 000A5EBC  38 60 00 01 */	li r3, 0x1
+/* 800A8DE0 000A5EC0  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800A8DE4 000A5EC4  7C 08 03 A6 */	mtlr r0
+/* 800A8DE8 000A5EC8  38 21 00 20 */	addi r1, r1, 0x20
+/* 800A8DEC 000A5ECC  4E 80 00 20 */	blr
+.endfn zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase
+
+# 0x803CDDA0 - 0x803CDDB0
+.section .sdata2, "a"
+.balign 8
+
+.obj "@692", local
+	.4byte 0x00000000
+.endobj "@692"
+
+.obj "@693", local
+	.4byte 0x3F800000
+.endobj "@693"
+
+.obj "@694", local
+	.4byte 0x40C90FDB
+.endobj "@694"
+
+.obj "@695", local
+	.4byte 0x3F000000
+.endobj "@695"

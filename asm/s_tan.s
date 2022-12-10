@@ -1,0 +1,51 @@
+.include "macros.inc"
+.file "s_tan.c"
+
+# 0x801EC9F8 - 0x801ECA70
+.text
+.balign 4
+
+.fn tan, global
+/* 801EC9F8 001E9AD8  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 801EC9FC 001E9ADC  7C 08 02 A6 */	mflr r0
+/* 801ECA00 001E9AE0  3C 60 3F E9 */	lis r3, 0x3fe9
+/* 801ECA04 001E9AE4  D8 21 00 08 */	stfd f1, 0x8(r1)
+/* 801ECA08 001E9AE8  90 01 00 24 */	stw r0, 0x24(r1)
+/* 801ECA0C 001E9AEC  38 03 21 FB */	addi r0, r3, 0x21fb
+/* 801ECA10 001E9AF0  80 61 00 08 */	lwz r3, 0x8(r1)
+/* 801ECA14 001E9AF4  54 63 00 7E */	clrlwi r3, r3, 1
+/* 801ECA18 001E9AF8  7C 03 00 00 */	cmpw r3, r0
+/* 801ECA1C 001E9AFC  41 81 00 14 */	bgt .L_801ECA30
+/* 801ECA20 001E9B00  C8 42 B9 C0 */	lfd f2, "@59"@sda21(r2)
+/* 801ECA24 001E9B04  38 60 00 01 */	li r3, 0x1
+/* 801ECA28 001E9B08  4B FF F3 F9 */	bl __kernel_tan
+/* 801ECA2C 001E9B0C  48 00 00 34 */	b .L_801ECA60
+.L_801ECA30:
+/* 801ECA30 001E9B10  3C 00 7F F0 */	lis r0, 0x7ff0
+/* 801ECA34 001E9B14  7C 03 00 00 */	cmpw r3, r0
+/* 801ECA38 001E9B18  41 80 00 0C */	blt .L_801ECA44
+/* 801ECA3C 001E9B1C  FC 21 08 28 */	fsub f1, f1, f1
+/* 801ECA40 001E9B20  48 00 00 20 */	b .L_801ECA60
+.L_801ECA44:
+/* 801ECA44 001E9B24  38 61 00 10 */	addi r3, r1, 0x10
+/* 801ECA48 001E9B28  4B FF E0 51 */	bl __ieee754_rem_pio2
+/* 801ECA4C 001E9B2C  54 60 0F BC */	clrlslwi r0, r3, 31, 1
+/* 801ECA50 001E9B30  C8 21 00 10 */	lfd f1, 0x10(r1)
+/* 801ECA54 001E9B34  C8 41 00 18 */	lfd f2, 0x18(r1)
+/* 801ECA58 001E9B38  20 60 00 01 */	subfic r3, r0, 0x1
+/* 801ECA5C 001E9B3C  4B FF F3 C5 */	bl __kernel_tan
+.L_801ECA60:
+/* 801ECA60 001E9B40  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801ECA64 001E9B44  7C 08 03 A6 */	mtlr r0
+/* 801ECA68 001E9B48  38 21 00 20 */	addi r1, r1, 0x20
+/* 801ECA6C 001E9B4C  4E 80 00 20 */	blr
+.endfn tan
+
+# 0x803D0340 - 0x803D0348
+.section .sdata2, "a"
+.balign 8
+
+.obj "@59", local
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj "@59"

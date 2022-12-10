@@ -1,0 +1,3229 @@
+.include "macros.inc"
+.file "zNPCMgr.cpp"
+
+# 0x800EE2CC - 0x800EED18
+.text
+.balign 4
+
+# zNPCMgrSelf()
+.fn zNPCMgrSelf__Fv, global
+/* 800EE2CC 000EB3AC  80 6D 93 C4 */	lwz r3, g_npcmgr@sda21(r13)
+/* 800EE2D0 000EB3B0  4E 80 00 20 */	blr
+.endfn zNPCMgrSelf__Fv
+
+# zNPCMgr_GetNPCList()
+.fn zNPCMgr_GetNPCList__Fv, global
+/* 800EE2D4 000EB3B4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE2D8 000EB3B8  7C 08 02 A6 */	mflr r0
+/* 800EE2DC 000EB3BC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE2E0 000EB3C0  4B FF FF ED */	bl zNPCMgrSelf__Fv
+/* 800EE2E4 000EB3C4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE2E8 000EB3C8  7C 08 03 A6 */	mtlr r0
+/* 800EE2EC 000EB3CC  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE2F0 000EB3D0  4E 80 00 20 */	blr
+.endfn zNPCMgr_GetNPCList__Fv
+
+# zNPCMgr_Startup()
+.fn zNPCMgr_Startup__Fv, global
+/* 800EE2F4 000EB3D4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE2F8 000EB3D8  7C 08 02 A6 */	mflr r0
+/* 800EE2FC 000EB3DC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE300 000EB3E0  80 6D 93 C0 */	lwz r3, g_modinit@sda21(r13)
+/* 800EE304 000EB3E4  38 03 00 01 */	addi r0, r3, 0x1
+/* 800EE308 000EB3E8  2C 03 00 00 */	cmpwi r3, 0x0
+/* 800EE30C 000EB3EC  90 0D 93 C0 */	stw r0, g_modinit@sda21(r13)
+/* 800EE310 000EB3F0  40 82 00 38 */	bne .L_800EE348
+/* 800EE314 000EB3F4  48 01 EB 11 */	bl xBehaveMgr_Startup__Fv
+/* 800EE318 000EB3F8  3C 80 4E 50 */	lis r4, 0x4e50
+/* 800EE31C 000EB3FC  38 60 00 28 */	li r3, 0x28
+/* 800EE320 000EB400  38 84 43 4D */	addi r4, r4, 0x434d
+/* 800EE324 000EB404  38 A0 00 00 */	li r5, 0x0
+/* 800EE328 000EB408  48 02 0E 29 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 800EE32C 000EB40C  7C 60 1B 79 */	mr. r0, r3
+/* 800EE330 000EB410  41 82 00 0C */	beq .L_800EE33C
+/* 800EE334 000EB414  48 00 09 E5 */	bl __ct__7zNPCMgrFv
+/* 800EE338 000EB418  7C 60 1B 78 */	mr r0, r3
+.L_800EE33C:
+/* 800EE33C 000EB41C  90 0D 93 C4 */	stw r0, g_npcmgr@sda21(r13)
+/* 800EE340 000EB420  7C 03 03 78 */	mr r3, r0
+/* 800EE344 000EB424  48 00 01 F9 */	bl Startup__7zNPCMgrFv
+.L_800EE348:
+/* 800EE348 000EB428  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE34C 000EB42C  7C 08 03 A6 */	mtlr r0
+/* 800EE350 000EB430  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE354 000EB434  4E 80 00 20 */	blr
+.endfn zNPCMgr_Startup__Fv
+
+# zNPCMgr_Shutdown()
+.fn zNPCMgr_Shutdown__Fv, global
+/* 800EE358 000EB438  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE35C 000EB43C  7C 08 02 A6 */	mflr r0
+/* 800EE360 000EB440  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE364 000EB444  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EE368 000EB448  80 6D 93 C0 */	lwz r3, g_modinit@sda21(r13)
+/* 800EE36C 000EB44C  34 03 FF FF */	addic. r0, r3, -0x1
+/* 800EE370 000EB450  90 0D 93 C0 */	stw r0, g_modinit@sda21(r13)
+/* 800EE374 000EB454  40 82 00 30 */	bne .L_800EE3A4
+/* 800EE378 000EB458  4B FF FF 55 */	bl zNPCMgrSelf__Fv
+/* 800EE37C 000EB45C  7C 7F 1B 79 */	mr. r31, r3
+/* 800EE380 000EB460  41 82 00 1C */	beq .L_800EE39C
+/* 800EE384 000EB464  48 00 02 45 */	bl Shutdown__7zNPCMgrFv
+/* 800EE388 000EB468  7F E3 FB 78 */	mr r3, r31
+/* 800EE38C 000EB46C  38 80 00 01 */	li r4, 0x1
+/* 800EE390 000EB470  48 00 09 8D */	bl __dt__7zNPCMgrFv
+/* 800EE394 000EB474  38 00 00 00 */	li r0, 0x0
+/* 800EE398 000EB478  90 0D 93 C4 */	stw r0, g_npcmgr@sda21(r13)
+.L_800EE39C:
+/* 800EE39C 000EB47C  4B FF FF BD */	bl zNPCMgr_Shutdown__Fv
+/* 800EE3A0 000EB480  48 01 EA ED */	bl xBehaveMgr_Shutdown__Fv
+.L_800EE3A4:
+/* 800EE3A4 000EB484  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE3A8 000EB488  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EE3AC 000EB48C  7C 08 03 A6 */	mtlr r0
+/* 800EE3B0 000EB490  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE3B4 000EB494  4E 80 00 20 */	blr
+.endfn zNPCMgr_Shutdown__Fv
+
+# zNPCMgr_scenePrepare(int)
+.fn zNPCMgr_scenePrepare__Fi, global
+/* 800EE3B8 000EB498  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE3BC 000EB49C  7C 08 02 A6 */	mflr r0
+/* 800EE3C0 000EB4A0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE3C4 000EB4A4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EE3C8 000EB4A8  7C 7F 1B 78 */	mr r31, r3
+/* 800EE3CC 000EB4AC  4B FF FF 01 */	bl zNPCMgrSelf__Fv
+/* 800EE3D0 000EB4B0  7F E4 FB 78 */	mr r4, r31
+/* 800EE3D4 000EB4B4  48 00 02 45 */	bl ScenePrepare__7zNPCMgrFi
+/* 800EE3D8 000EB4B8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE3DC 000EB4BC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EE3E0 000EB4C0  7C 08 03 A6 */	mtlr r0
+/* 800EE3E4 000EB4C4  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE3E8 000EB4C8  4E 80 00 20 */	blr
+.endfn zNPCMgr_scenePrepare__Fi
+
+# zNPCMgr_sceneFinish()
+.fn zNPCMgr_sceneFinish__Fv, global
+/* 800EE3EC 000EB4CC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE3F0 000EB4D0  7C 08 02 A6 */	mflr r0
+/* 800EE3F4 000EB4D4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE3F8 000EB4D8  4B FF FE D5 */	bl zNPCMgrSelf__Fv
+/* 800EE3FC 000EB4DC  48 00 02 6D */	bl SceneFinish__7zNPCMgrFv
+/* 800EE400 000EB4E0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE404 000EB4E4  7C 08 03 A6 */	mtlr r0
+/* 800EE408 000EB4E8  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE40C 000EB4EC  4E 80 00 20 */	blr
+.endfn zNPCMgr_sceneFinish__Fv
+
+# zNPCMgr_sceneReset()
+.fn zNPCMgr_sceneReset__Fv, global
+/* 800EE410 000EB4F0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE414 000EB4F4  7C 08 02 A6 */	mflr r0
+/* 800EE418 000EB4F8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE41C 000EB4FC  4B FF FE B1 */	bl zNPCMgrSelf__Fv
+/* 800EE420 000EB500  48 00 02 F1 */	bl SceneReset__7zNPCMgrFv
+/* 800EE424 000EB504  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE428 000EB508  7C 08 03 A6 */	mtlr r0
+/* 800EE42C 000EB50C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE430 000EB510  4E 80 00 20 */	blr
+.endfn zNPCMgr_sceneReset__Fv
+
+# zNPCMgr_scenePostInit()
+.fn zNPCMgr_scenePostInit__Fv, global
+/* 800EE434 000EB514  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE438 000EB518  7C 08 02 A6 */	mflr r0
+/* 800EE43C 000EB51C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE440 000EB520  4B FF FE 8D */	bl zNPCMgrSelf__Fv
+/* 800EE444 000EB524  48 00 03 21 */	bl ScenePostInit__7zNPCMgrFv
+/* 800EE448 000EB528  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE44C 000EB52C  7C 08 03 A6 */	mtlr r0
+/* 800EE450 000EB530  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE454 000EB534  4E 80 00 20 */	blr
+.endfn zNPCMgr_scenePostInit__Fv
+
+# zNPCMgr_scenePostSetup()
+.fn zNPCMgr_scenePostSetup__Fv, global
+/* 800EE458 000EB538  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE45C 000EB53C  7C 08 02 A6 */	mflr r0
+/* 800EE460 000EB540  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE464 000EB544  4B FF FE 69 */	bl zNPCMgrSelf__Fv
+/* 800EE468 000EB548  48 00 03 29 */	bl ScenePostSetup__7zNPCMgrFv
+/* 800EE46C 000EB54C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE470 000EB550  7C 08 03 A6 */	mtlr r0
+/* 800EE474 000EB554  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE478 000EB558  4E 80 00 20 */	blr
+.endfn zNPCMgr_scenePostSetup__Fv
+
+# zNPCMgr_sceneTimestep(xScene*, float)
+.fn zNPCMgr_sceneTimestep__FP6xScenef, global
+/* 800EE47C 000EB55C  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EE480 000EB560  7C 08 02 A6 */	mflr r0
+/* 800EE484 000EB564  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EE488 000EB568  DB E1 00 18 */	stfd f31, 0x18(r1)
+/* 800EE48C 000EB56C  FF E0 08 90 */	fmr f31, f1
+/* 800EE490 000EB570  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800EE494 000EB574  7C 7F 1B 78 */	mr r31, r3
+/* 800EE498 000EB578  4B FF FE 35 */	bl zNPCMgrSelf__Fv
+/* 800EE49C 000EB57C  FC 20 F8 90 */	fmr f1, f31
+/* 800EE4A0 000EB580  7F E4 FB 78 */	mr r4, r31
+/* 800EE4A4 000EB584  48 00 06 65 */	bl SceneTimestep__7zNPCMgrFP6xScenef
+/* 800EE4A8 000EB588  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EE4AC 000EB58C  CB E1 00 18 */	lfd f31, 0x18(r1)
+/* 800EE4B0 000EB590  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800EE4B4 000EB594  7C 08 03 A6 */	mtlr r0
+/* 800EE4B8 000EB598  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EE4BC 000EB59C  4E 80 00 20 */	blr
+.endfn zNPCMgr_sceneTimestep__FP6xScenef
+
+# zNPCMgr_scenePostRender()
+.fn zNPCMgr_scenePostRender__Fv, global
+/* 800EE4C0 000EB5A0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE4C4 000EB5A4  7C 08 02 A6 */	mflr r0
+/* 800EE4C8 000EB5A8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE4CC 000EB5AC  4B FF FE 01 */	bl zNPCMgrSelf__Fv
+/* 800EE4D0 000EB5B0  48 00 03 31 */	bl ScenePostRender__7zNPCMgrFv
+/* 800EE4D4 000EB5B4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE4D8 000EB5B8  7C 08 03 A6 */	mtlr r0
+/* 800EE4DC 000EB5BC  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE4E0 000EB5C0  4E 80 00 20 */	blr
+.endfn zNPCMgr_scenePostRender__Fv
+
+# zNPCMgr_scenePostParticleRender()
+.fn zNPCMgr_scenePostParticleRender__Fv, global
+/* 800EE4E4 000EB5C4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE4E8 000EB5C8  7C 08 02 A6 */	mflr r0
+/* 800EE4EC 000EB5CC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE4F0 000EB5D0  4B FF FD DD */	bl zNPCMgrSelf__Fv
+/* 800EE4F4 000EB5D4  48 00 03 E1 */	bl ScenePostParticleRender__7zNPCMgrFv
+/* 800EE4F8 000EB5D8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE4FC 000EB5DC  7C 08 03 A6 */	mtlr r0
+/* 800EE500 000EB5E0  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE504 000EB5E4  4E 80 00 20 */	blr
+.endfn zNPCMgr_scenePostParticleRender__Fv
+
+# zNPCMgr_createNPCInst(int, xEntAsset*)
+.fn zNPCMgr_createNPCInst__FiP9xEntAsset, global
+/* 800EE508 000EB5E8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE50C 000EB5EC  7C 08 02 A6 */	mflr r0
+/* 800EE510 000EB5F0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE514 000EB5F4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EE518 000EB5F8  7C 9F 23 78 */	mr r31, r4
+/* 800EE51C 000EB5FC  4B FF FD B1 */	bl zNPCMgrSelf__Fv
+/* 800EE520 000EB600  7F E4 FB 78 */	mr r4, r31
+/* 800EE524 000EB604  48 00 04 85 */	bl CreateNPC__7zNPCMgrFP9xEntAsset
+/* 800EE528 000EB608  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE52C 000EB60C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EE530 000EB610  7C 08 03 A6 */	mtlr r0
+/* 800EE534 000EB614  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE538 000EB618  4E 80 00 20 */	blr
+.endfn zNPCMgr_createNPCInst__FiP9xEntAsset
+
+# zNPCMgr::Startup()
+.fn Startup__7zNPCMgrFv, global
+/* 800EE53C 000EB61C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE540 000EB620  7C 08 02 A6 */	mflr r0
+/* 800EE544 000EB624  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE548 000EB628  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EE54C 000EB62C  7C 7F 1B 78 */	mr r31, r3
+/* 800EE550 000EB630  48 00 06 5D */	bl PrepTypeTable__7zNPCMgrFv
+/* 800EE554 000EB634  3C 60 4E 50 */	lis r3, 0x4e50
+/* 800EE558 000EB638  38 00 00 AB */	li r0, 0xab
+/* 800EE55C 000EB63C  38 83 43 4D */	addi r4, r3, 0x434d
+/* 800EE560 000EB640  38 A0 00 00 */	li r5, 0x0
+/* 800EE564 000EB644  90 9F 00 18 */	stw r4, 0x18(r31)
+/* 800EE568 000EB648  38 60 00 34 */	li r3, 0x34
+/* 800EE56C 000EB64C  98 1F 00 1C */	stb r0, 0x1c(r31)
+/* 800EE570 000EB650  48 02 0B E1 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 800EE574 000EB654  7C 60 1B 79 */	mr. r0, r3
+/* 800EE578 000EB658  41 82 00 10 */	beq .L_800EE588
+/* 800EE57C 000EB65C  38 80 00 60 */	li r4, 0x60
+/* 800EE580 000EB660  48 02 0D 51 */	bl __ct__8xFactoryFi
+/* 800EE584 000EB664  7C 60 1B 78 */	mr r0, r3
+.L_800EE588:
+/* 800EE588 000EB668  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 800EE58C 000EB66C  4B FF EC 55 */	bl zNPCMsg_Startup__Fv
+/* 800EE590 000EB670  48 03 C1 99 */	bl zNPCSpawner_Startup__Fv
+/* 800EE594 000EB674  48 00 07 E1 */	bl zNPCTypes_StartupTypes__Fv
+/* 800EE598 000EB678  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 800EE59C 000EB67C  48 00 08 59 */	bl zNPCTypes_RegisterTypes__FP8xFactory
+/* 800EE5A0 000EB680  48 01 E9 35 */	bl xBehaveMgr_GetSelf__Fv
+/* 800EE5A4 000EB684  90 7F 00 14 */	stw r3, 0x14(r31)
+/* 800EE5A8 000EB688  80 7F 00 14 */	lwz r3, 0x14(r31)
+/* 800EE5AC 000EB68C  48 00 07 B5 */	bl GetFactory__10xBehaveMgrFv
+/* 800EE5B0 000EB690  4B FE 6B 0D */	bl zNPCGoals_RegisterTypes__FP8xFactory
+/* 800EE5B4 000EB694  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE5B8 000EB698  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EE5BC 000EB69C  7C 08 03 A6 */	mtlr r0
+/* 800EE5C0 000EB6A0  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE5C4 000EB6A4  4E 80 00 20 */	blr
+.endfn Startup__7zNPCMgrFv
+
+# zNPCMgr::Shutdown()
+.fn Shutdown__7zNPCMgrFv, global
+/* 800EE5C8 000EB6A8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE5CC 000EB6AC  7C 08 02 A6 */	mflr r0
+/* 800EE5D0 000EB6B0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE5D4 000EB6B4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EE5D8 000EB6B8  7C 7F 1B 78 */	mr r31, r3
+/* 800EE5DC 000EB6BC  80 63 00 10 */	lwz r3, 0x10(r3)
+/* 800EE5E0 000EB6C0  28 03 00 00 */	cmplwi r3, 0x0
+/* 800EE5E4 000EB6C4  41 82 00 0C */	beq .L_800EE5F0
+/* 800EE5E8 000EB6C8  38 80 00 01 */	li r4, 0x1
+/* 800EE5EC 000EB6CC  48 02 0D 5D */	bl __dt__8xFactoryFv
+.L_800EE5F0:
+/* 800EE5F0 000EB6D0  38 00 00 00 */	li r0, 0x0
+/* 800EE5F4 000EB6D4  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 800EE5F8 000EB6D8  48 00 07 BD */	bl zNPCTypes_ShutdownTypes__Fv
+/* 800EE5FC 000EB6DC  48 03 C1 31 */	bl zNPCSpawner_Shutdown__Fv
+/* 800EE600 000EB6E0  4B FF EC 21 */	bl zNPCMsg_Shutdown__Fv
+/* 800EE604 000EB6E4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE608 000EB6E8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EE60C 000EB6EC  7C 08 03 A6 */	mtlr r0
+/* 800EE610 000EB6F0  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE614 000EB6F4  4E 80 00 20 */	blr
+.endfn Shutdown__7zNPCMgrFv
+
+# zNPCMgr::ScenePrepare(int)
+.fn ScenePrepare__7zNPCMgrFi, global
+/* 800EE618 000EB6F8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE61C 000EB6FC  7C 08 02 A6 */	mflr r0
+/* 800EE620 000EB700  38 A0 00 00 */	li r5, 0x0
+/* 800EE624 000EB704  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE628 000EB708  4B F4 73 D9 */	bl XOrdInit__FP16st_XORDEREDARRAYii
+/* 800EE62C 000EB70C  48 01 E8 D5 */	bl xBehaveMgr_ScenePrepare__Fv
+/* 800EE630 000EB710  4B FF EB F5 */	bl zNPCMsg_ScenePrepare__Fv
+/* 800EE634 000EB714  48 03 C0 FD */	bl zNPCSpawner_ScenePrepare__Fv
+/* 800EE638 000EB718  48 00 09 4D */	bl zNPCCommon_ScenePrepare__Fv
+/* 800EE63C 000EB71C  48 01 46 89 */	bl zNPCVillager_ScenePrepare__Fv
+/* 800EE640 000EB720  48 00 65 85 */	bl zNPCRobot_ScenePrepare__Fv
+/* 800EE644 000EB724  48 03 6B E5 */	bl zNPCDuplotron_ScenePrepare__Fv
+/* 800EE648 000EB728  48 04 78 C5 */	bl zNPCSubBoss_ScenePrepare__Fv
+/* 800EE64C 000EB72C  48 04 7B 4D */	bl zNPCBoss_ScenePrepare__Fv
+/* 800EE650 000EB730  38 00 00 01 */	li r0, 0x1
+/* 800EE654 000EB734  90 0D 93 C8 */	stw r0, g_firstFrameUpdateAllNPC@sda21(r13)
+/* 800EE658 000EB738  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE65C 000EB73C  7C 08 03 A6 */	mtlr r0
+/* 800EE660 000EB740  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE664 000EB744  4E 80 00 20 */	blr
+.endfn ScenePrepare__7zNPCMgrFi
+
+# zNPCMgr::SceneFinish()
+.fn SceneFinish__7zNPCMgrFv, global
+/* 800EE668 000EB748  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EE66C 000EB74C  7C 08 02 A6 */	mflr r0
+/* 800EE670 000EB750  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EE674 000EB754  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800EE678 000EB758  3B E0 00 00 */	li r31, 0x0
+/* 800EE67C 000EB75C  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800EE680 000EB760  3B C0 00 00 */	li r30, 0x0
+/* 800EE684 000EB764  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 800EE688 000EB768  7C 7D 1B 78 */	mr r29, r3
+/* 800EE68C 000EB76C  48 00 00 24 */	b .L_800EE6B0
+.L_800EE690:
+/* 800EE690 000EB770  80 7D 00 00 */	lwz r3, 0x0(r29)
+/* 800EE694 000EB774  7C 63 F8 2E */	lwzx r3, r3, r31
+/* 800EE698 000EB778  81 83 01 B8 */	lwz r12, 0x1b8(r3)
+/* 800EE69C 000EB77C  81 8C 00 54 */	lwz r12, 0x54(r12)
+/* 800EE6A0 000EB780  7D 89 03 A6 */	mtctr r12
+/* 800EE6A4 000EB784  4E 80 04 21 */	bctrl
+/* 800EE6A8 000EB788  3B FF 00 04 */	addi r31, r31, 0x4
+/* 800EE6AC 000EB78C  3B DE 00 01 */	addi r30, r30, 0x1
+.L_800EE6B0:
+/* 800EE6B0 000EB790  80 1D 00 04 */	lwz r0, 0x4(r29)
+/* 800EE6B4 000EB794  7C 1E 00 00 */	cmpw r30, r0
+/* 800EE6B8 000EB798  41 80 FF D8 */	blt .L_800EE690
+/* 800EE6BC 000EB79C  7F A3 EB 78 */	mr r3, r29
+/* 800EE6C0 000EB7A0  38 80 00 00 */	li r4, 0x0
+/* 800EE6C4 000EB7A4  4B F4 74 15 */	bl XOrdDone__FP16st_XORDEREDARRAYi
+/* 800EE6C8 000EB7A8  80 7D 00 10 */	lwz r3, 0x10(r29)
+/* 800EE6CC 000EB7AC  48 02 0F E1 */	bl DestroyAll__8xFactoryFv
+/* 800EE6D0 000EB7B0  48 04 7A D5 */	bl zNPCBoss_SceneFinish__Fv
+/* 800EE6D4 000EB7B4  48 04 78 45 */	bl zNPCSubBoss_SceneFinish__Fv
+/* 800EE6D8 000EB7B8  48 03 6B 55 */	bl zNPCDuplotron_SceneFinish__Fv
+/* 800EE6DC 000EB7BC  48 00 65 2D */	bl zNPCRobot_SceneFinish__Fv
+/* 800EE6E0 000EB7C0  48 01 45 E9 */	bl zNPCVillager_SceneFinish__Fv
+/* 800EE6E4 000EB7C4  48 00 08 DD */	bl zNPCCommon_SceneFinish__Fv
+/* 800EE6E8 000EB7C8  48 03 C0 C9 */	bl zNPCSpawner_SceneFinish__Fv
+/* 800EE6EC 000EB7CC  4B FF EB 3D */	bl zNPCMsg_SceneFinish__Fv
+/* 800EE6F0 000EB7D0  48 01 E8 35 */	bl xBehaveMgr_SceneFinish__Fv
+/* 800EE6F4 000EB7D4  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EE6F8 000EB7D8  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800EE6FC 000EB7DC  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800EE700 000EB7E0  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800EE704 000EB7E4  7C 08 03 A6 */	mtlr r0
+/* 800EE708 000EB7E8  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EE70C 000EB7EC  4E 80 00 20 */	blr
+.endfn SceneFinish__7zNPCMgrFv
+
+# zNPCMgr::SceneReset()
+.fn SceneReset__7zNPCMgrFv, global
+/* 800EE710 000EB7F0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE714 000EB7F4  7C 08 02 A6 */	mflr r0
+/* 800EE718 000EB7F8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE71C 000EB7FC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EE720 000EB800  7C 7F 1B 78 */	mr r31, r3
+/* 800EE724 000EB804  48 00 08 D1 */	bl zNPCCommon_SceneReset__Fv
+/* 800EE728 000EB808  48 00 65 0D */	bl zNPCRobot_SceneReset__Fv
+/* 800EE72C 000EB80C  48 01 45 BD */	bl zNPCVillager_SceneReset__Fv
+/* 800EE730 000EB810  4B FF EB 19 */	bl zNPCMsg_SceneReset__Fv
+/* 800EE734 000EB814  48 01 E8 15 */	bl xBehaveMgr_SceneReset__Fv
+/* 800EE738 000EB818  3C 60 80 3C */	lis r3, globals@ha
+/* 800EE73C 000EB81C  C0 22 9A A8 */	lfs f1, "@883"@sda21(r2)
+/* 800EE740 000EB820  38 83 05 58 */	addi r4, r3, globals@l
+/* 800EE744 000EB824  7F E3 FB 78 */	mr r3, r31
+/* 800EE748 000EB828  80 84 1F C0 */	lwz r4, 0x1fc0(r4)
+/* 800EE74C 000EB82C  48 00 03 29 */	bl BackdoorUpdateAllNPCsOnce__7zNPCMgrFP6xScenef
+/* 800EE750 000EB830  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE754 000EB834  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EE758 000EB838  7C 08 03 A6 */	mtlr r0
+/* 800EE75C 000EB83C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE760 000EB840  4E 80 00 20 */	blr
+.endfn SceneReset__7zNPCMgrFv
+
+# zNPCMgr::ScenePostInit()
+.fn ScenePostInit__7zNPCMgrFv, global
+/* 800EE764 000EB844  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EE768 000EB848  7C 08 02 A6 */	mflr r0
+/* 800EE76C 000EB84C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EE770 000EB850  48 00 08 B1 */	bl zNPCCommon_ScenePostInit__Fv
+/* 800EE774 000EB854  48 00 64 E1 */	bl zNPCRobot_ScenePostInit__Fv
+/* 800EE778 000EB858  48 01 45 75 */	bl zNPCVillager_ScenePostInit__Fv
+/* 800EE77C 000EB85C  48 03 6A D1 */	bl zNPCDuplotron_ScenePostInit__Fv
+/* 800EE780 000EB860  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EE784 000EB864  7C 08 03 A6 */	mtlr r0
+/* 800EE788 000EB868  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EE78C 000EB86C  4E 80 00 20 */	blr
+.endfn ScenePostInit__7zNPCMgrFv
+
+# zNPCMgr::ScenePostSetup()
+.fn ScenePostSetup__7zNPCMgrFv, global
+/* 800EE790 000EB870  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EE794 000EB874  7C 08 02 A6 */	mflr r0
+/* 800EE798 000EB878  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EE79C 000EB87C  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800EE7A0 000EB880  3B E0 00 00 */	li r31, 0x0
+/* 800EE7A4 000EB884  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800EE7A8 000EB888  3B C0 00 00 */	li r30, 0x0
+/* 800EE7AC 000EB88C  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 800EE7B0 000EB890  7C 7D 1B 78 */	mr r29, r3
+/* 800EE7B4 000EB894  48 00 00 24 */	b .L_800EE7D8
+.L_800EE7B8:
+/* 800EE7B8 000EB898  80 7D 00 00 */	lwz r3, 0x0(r29)
+/* 800EE7BC 000EB89C  7C 63 F8 2E */	lwzx r3, r3, r31
+/* 800EE7C0 000EB8A0  81 83 01 B8 */	lwz r12, 0x1b8(r3)
+/* 800EE7C4 000EB8A4  81 8C 00 14 */	lwz r12, 0x14(r12)
+/* 800EE7C8 000EB8A8  7D 89 03 A6 */	mtctr r12
+/* 800EE7CC 000EB8AC  4E 80 04 21 */	bctrl
+/* 800EE7D0 000EB8B0  3B FF 00 04 */	addi r31, r31, 0x4
+/* 800EE7D4 000EB8B4  3B DE 00 01 */	addi r30, r30, 0x1
+.L_800EE7D8:
+/* 800EE7D8 000EB8B8  80 1D 00 04 */	lwz r0, 0x4(r29)
+/* 800EE7DC 000EB8BC  7C 1E 00 00 */	cmpw r30, r0
+/* 800EE7E0 000EB8C0  41 80 FF D8 */	blt .L_800EE7B8
+/* 800EE7E4 000EB8C4  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EE7E8 000EB8C8  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800EE7EC 000EB8CC  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800EE7F0 000EB8D0  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800EE7F4 000EB8D4  7C 08 03 A6 */	mtlr r0
+/* 800EE7F8 000EB8D8  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EE7FC 000EB8DC  4E 80 00 20 */	blr
+.endfn ScenePostSetup__7zNPCMgrFv
+
+# zNPCMgr::ScenePostRender()
+.fn ScenePostRender__7zNPCMgrFv, global
+/* 800EE800 000EB8E0  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EE804 000EB8E4  7C 08 02 A6 */	mflr r0
+/* 800EE808 000EB8E8  3C 80 80 3C */	lis r4, globals@ha
+/* 800EE80C 000EB8EC  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EE810 000EB8F0  BF 61 00 0C */	stmw r27, 0xc(r1)
+/* 800EE814 000EB8F4  3B E4 05 58 */	addi r31, r4, globals@l
+/* 800EE818 000EB8F8  7C 7B 1B 78 */	mr r27, r3
+/* 800EE81C 000EB8FC  80 7F 07 10 */	lwz r3, 0x710(r31)
+/* 800EE820 000EB900  80 9F 06 58 */	lwz r4, 0x658(r31)
+/* 800EE824 000EB904  48 03 4C 9D */	bl xLightKit_Enable__FP9xLightKitP7RpWorld
+/* 800EE828 000EB908  4B FB E1 CD */	bl zRenderStateCurrent__Fv
+/* 800EE82C 000EB90C  7C 60 1B 78 */	mr r0, r3
+/* 800EE830 000EB910  38 60 00 0E */	li r3, 0xe
+/* 800EE834 000EB914  7C 1D 03 78 */	mr r29, r0
+/* 800EE838 000EB918  4B FB E1 C5 */	bl zRenderState__F14_SDRenderState
+/* 800EE83C 000EB91C  3B 80 00 00 */	li r28, 0x0
+/* 800EE840 000EB920  3B C0 00 00 */	li r30, 0x0
+/* 800EE844 000EB924  48 00 00 5C */	b .L_800EE8A0
+.L_800EE848:
+/* 800EE848 000EB928  80 7B 00 00 */	lwz r3, 0x0(r27)
+/* 800EE84C 000EB92C  7C 63 F0 2E */	lwzx r3, r3, r30
+/* 800EE850 000EB930  80 83 02 34 */	lwz r4, 0x234(r3)
+/* 800EE854 000EB934  54 80 07 FF */	clrlwi. r0, r4, 31
+/* 800EE858 000EB938  41 82 00 40 */	beq .L_800EE898
+/* 800EE85C 000EB93C  54 80 00 3C */	clrrwi r0, r4, 1
+/* 800EE860 000EB940  90 03 02 34 */	stw r0, 0x234(r3)
+/* 800EE864 000EB944  A0 03 00 06 */	lhz r0, 0x6(r3)
+/* 800EE868 000EB948  54 00 06 73 */	rlwinm. r0, r0, 0, 25, 25
+/* 800EE86C 000EB94C  40 82 00 2C */	bne .L_800EE898
+/* 800EE870 000EB950  80 83 00 24 */	lwz r4, 0x24(r3)
+/* 800EE874 000EB954  28 04 00 00 */	cmplwi r4, 0x0
+/* 800EE878 000EB958  41 82 00 10 */	beq .L_800EE888
+/* 800EE87C 000EB95C  A0 04 00 44 */	lhz r0, 0x44(r4)
+/* 800EE880 000EB960  54 00 05 6B */	rlwinm. r0, r0, 0, 21, 21
+/* 800EE884 000EB964  40 82 00 14 */	bne .L_800EE898
+.L_800EE888:
+/* 800EE888 000EB968  81 83 01 B8 */	lwz r12, 0x1b8(r3)
+/* 800EE88C 000EB96C  81 8C 00 5C */	lwz r12, 0x5c(r12)
+/* 800EE890 000EB970  7D 89 03 A6 */	mtctr r12
+/* 800EE894 000EB974  4E 80 04 21 */	bctrl
+.L_800EE898:
+/* 800EE898 000EB978  3B DE 00 04 */	addi r30, r30, 0x4
+/* 800EE89C 000EB97C  3B 9C 00 01 */	addi r28, r28, 0x1
+.L_800EE8A0:
+/* 800EE8A0 000EB980  80 1B 00 04 */	lwz r0, 0x4(r27)
+/* 800EE8A4 000EB984  7C 1C 00 00 */	cmpw r28, r0
+/* 800EE8A8 000EB988  41 80 FF A0 */	blt .L_800EE848
+/* 800EE8AC 000EB98C  80 9F 06 58 */	lwz r4, 0x658(r31)
+/* 800EE8B0 000EB990  38 60 00 00 */	li r3, 0x0
+/* 800EE8B4 000EB994  48 03 4C 0D */	bl xLightKit_Enable__FP9xLightKitP7RpWorld
+/* 800EE8B8 000EB998  7F A3 EB 78 */	mr r3, r29
+/* 800EE8BC 000EB99C  4B FB E1 41 */	bl zRenderState__F14_SDRenderState
+/* 800EE8C0 000EB9A0  BB 61 00 0C */	lmw r27, 0xc(r1)
+/* 800EE8C4 000EB9A4  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EE8C8 000EB9A8  7C 08 03 A6 */	mtlr r0
+/* 800EE8CC 000EB9AC  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EE8D0 000EB9B0  4E 80 00 20 */	blr
+.endfn ScenePostRender__7zNPCMgrFv
+
+# zNPCMgr::ScenePostParticleRender()
+.fn ScenePostParticleRender__7zNPCMgrFv, global
+/* 800EE8D4 000EB9B4  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EE8D8 000EB9B8  7C 08 02 A6 */	mflr r0
+/* 800EE8DC 000EB9BC  3C 80 80 3C */	lis r4, globals@ha
+/* 800EE8E0 000EB9C0  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EE8E4 000EB9C4  BF 61 00 0C */	stmw r27, 0xc(r1)
+/* 800EE8E8 000EB9C8  3B E4 05 58 */	addi r31, r4, globals@l
+/* 800EE8EC 000EB9CC  7C 7B 1B 78 */	mr r27, r3
+/* 800EE8F0 000EB9D0  80 7F 07 10 */	lwz r3, 0x710(r31)
+/* 800EE8F4 000EB9D4  80 9F 06 58 */	lwz r4, 0x658(r31)
+/* 800EE8F8 000EB9D8  48 03 4B C9 */	bl xLightKit_Enable__FP9xLightKitP7RpWorld
+/* 800EE8FC 000EB9DC  4B FB E0 F9 */	bl zRenderStateCurrent__Fv
+/* 800EE900 000EB9E0  7C 60 1B 78 */	mr r0, r3
+/* 800EE904 000EB9E4  38 60 00 0E */	li r3, 0xe
+/* 800EE908 000EB9E8  7C 1D 03 78 */	mr r29, r0
+/* 800EE90C 000EB9EC  4B FB E0 F1 */	bl zRenderState__F14_SDRenderState
+/* 800EE910 000EB9F0  3B 80 00 00 */	li r28, 0x0
+/* 800EE914 000EB9F4  3B C0 00 00 */	li r30, 0x0
+/* 800EE918 000EB9F8  48 00 00 5C */	b .L_800EE974
+.L_800EE91C:
+/* 800EE91C 000EB9FC  80 7B 00 00 */	lwz r3, 0x0(r27)
+/* 800EE920 000EBA00  7C 63 F0 2E */	lwzx r3, r3, r30
+/* 800EE924 000EBA04  80 83 02 34 */	lwz r4, 0x234(r3)
+/* 800EE928 000EBA08  54 80 07 BD */	rlwinm. r0, r4, 0, 30, 30
+/* 800EE92C 000EBA0C  41 82 00 40 */	beq .L_800EE96C
+/* 800EE930 000EBA10  54 80 07 FA */	rlwinm r0, r4, 0, 31, 29
+/* 800EE934 000EBA14  90 03 02 34 */	stw r0, 0x234(r3)
+/* 800EE938 000EBA18  A0 03 00 06 */	lhz r0, 0x6(r3)
+/* 800EE93C 000EBA1C  54 00 06 73 */	rlwinm. r0, r0, 0, 25, 25
+/* 800EE940 000EBA20  40 82 00 2C */	bne .L_800EE96C
+/* 800EE944 000EBA24  80 83 00 24 */	lwz r4, 0x24(r3)
+/* 800EE948 000EBA28  28 04 00 00 */	cmplwi r4, 0x0
+/* 800EE94C 000EBA2C  41 82 00 10 */	beq .L_800EE95C
+/* 800EE950 000EBA30  A0 04 00 44 */	lhz r0, 0x44(r4)
+/* 800EE954 000EBA34  54 00 05 6B */	rlwinm. r0, r0, 0, 21, 21
+/* 800EE958 000EBA38  40 82 00 14 */	bne .L_800EE96C
+.L_800EE95C:
+/* 800EE95C 000EBA3C  81 83 01 B8 */	lwz r12, 0x1b8(r3)
+/* 800EE960 000EBA40  81 8C 00 60 */	lwz r12, 0x60(r12)
+/* 800EE964 000EBA44  7D 89 03 A6 */	mtctr r12
+/* 800EE968 000EBA48  4E 80 04 21 */	bctrl
+.L_800EE96C:
+/* 800EE96C 000EBA4C  3B DE 00 04 */	addi r30, r30, 0x4
+/* 800EE970 000EBA50  3B 9C 00 01 */	addi r28, r28, 0x1
+.L_800EE974:
+/* 800EE974 000EBA54  80 1B 00 04 */	lwz r0, 0x4(r27)
+/* 800EE978 000EBA58  7C 1C 00 00 */	cmpw r28, r0
+/* 800EE97C 000EBA5C  41 80 FF A0 */	blt .L_800EE91C
+/* 800EE980 000EBA60  80 9F 06 58 */	lwz r4, 0x658(r31)
+/* 800EE984 000EBA64  38 60 00 00 */	li r3, 0x0
+/* 800EE988 000EBA68  48 03 4B 39 */	bl xLightKit_Enable__FP9xLightKitP7RpWorld
+/* 800EE98C 000EBA6C  7F A3 EB 78 */	mr r3, r29
+/* 800EE990 000EBA70  4B FB E0 6D */	bl zRenderState__F14_SDRenderState
+/* 800EE994 000EBA74  BB 61 00 0C */	lmw r27, 0xc(r1)
+/* 800EE998 000EBA78  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EE99C 000EBA7C  7C 08 03 A6 */	mtlr r0
+/* 800EE9A0 000EBA80  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EE9A4 000EBA84  4E 80 00 20 */	blr
+.endfn ScenePostParticleRender__7zNPCMgrFv
+
+# zNPCMgr::CreateNPC(xEntAsset*)
+.fn CreateNPC__7zNPCMgrFP9xEntAsset, global
+/* 800EE9A8 000EBA88  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EE9AC 000EBA8C  7C 08 02 A6 */	mflr r0
+/* 800EE9B0 000EBA90  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EE9B4 000EBA94  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800EE9B8 000EBA98  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800EE9BC 000EBA9C  7C 9E 23 78 */	mr r30, r4
+/* 800EE9C0 000EBAA0  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 800EE9C4 000EBAA4  7C 7D 1B 78 */	mr r29, r3
+/* 800EE9C8 000EBAA8  80 64 00 4C */	lwz r3, 0x4c(r4)
+/* 800EE9CC 000EBAAC  38 81 00 08 */	addi r4, r1, 0x8
+/* 800EE9D0 000EBAB0  4B F5 CD 3D */	bl xSTFindAsset__FUiPUi
+/* 800EE9D4 000EBAB4  80 83 00 10 */	lwz r4, 0x10(r3)
+/* 800EE9D8 000EBAB8  7F A3 EB 78 */	mr r3, r29
+/* 800EE9DC 000EBABC  80 BE 00 58 */	lwz r5, 0x58(r30)
+/* 800EE9E0 000EBAC0  48 00 02 4D */	bl NPCTypeForModel__7zNPCMgrFUiUi
+/* 800EE9E4 000EBAC4  7C 60 1B 78 */	mr r0, r3
+/* 800EE9E8 000EBAC8  80 7D 00 10 */	lwz r3, 0x10(r29)
+/* 800EE9EC 000EBACC  7C 04 03 78 */	mr r4, r0
+/* 800EE9F0 000EBAD0  38 A0 00 00 */	li r5, 0x0
+/* 800EE9F4 000EBAD4  38 C0 00 00 */	li r6, 0x0
+/* 800EE9F8 000EBAD8  48 02 0B 65 */	bl CreateItem__8xFactoryFiPvP10RyzMemGrow
+/* 800EE9FC 000EBADC  7C 7F 1B 79 */	mr. r31, r3
+/* 800EEA00 000EBAE0  41 82 00 08 */	beq .L_800EEA08
+/* 800EEA04 000EBAE4  3B FF FF 30 */	addi r31, r31, -0xd0
+.L_800EEA08:
+/* 800EEA08 000EBAE8  81 9F 01 B8 */	lwz r12, 0x1b8(r31)
+/* 800EEA0C 000EBAEC  7F E3 FB 78 */	mr r3, r31
+/* 800EEA10 000EBAF0  7F C4 F3 78 */	mr r4, r30
+/* 800EEA14 000EBAF4  81 8C 00 08 */	lwz r12, 0x8(r12)
+/* 800EEA18 000EBAF8  7D 89 03 A6 */	mtctr r12
+/* 800EEA1C 000EBAFC  4E 80 04 21 */	bctrl
+/* 800EEA20 000EBB00  7F A3 EB 78 */	mr r3, r29
+/* 800EEA24 000EBB04  7F E4 FB 78 */	mr r4, r31
+/* 800EEA28 000EBB08  4B F4 71 09 */	bl XOrdAppend__FP16st_XORDEREDARRAYPv
+/* 800EEA2C 000EBB0C  80 7D 00 04 */	lwz r3, 0x4(r29)
+/* 800EEA30 000EBB10  80 1D 00 08 */	lwz r0, 0x8(r29)
+/* 800EEA34 000EBB14  7C 03 00 00 */	cmpw r3, r0
+/* 800EEA38 000EBB18  40 82 00 14 */	bne .L_800EEA4C
+/* 800EEA3C 000EBB1C  3C 80 80 0F */	lis r4, zNPCMgr_OrdComp_npcid__FPvPv@ha
+/* 800EEA40 000EBB20  7F A3 EB 78 */	mr r3, r29
+/* 800EEA44 000EBB24  38 84 EC EC */	addi r4, r4, zNPCMgr_OrdComp_npcid__FPvPv@l
+/* 800EEA48 000EBB28  4B F4 73 45 */	bl XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i
+.L_800EEA4C:
+/* 800EEA4C 000EBB2C  7F A3 EB 78 */	mr r3, r29
+/* 800EEA50 000EBB30  48 00 03 09 */	bl DBG_Reset__7zNPCMgrFv
+/* 800EEA54 000EBB34  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EEA58 000EBB38  7F E3 FB 78 */	mr r3, r31
+/* 800EEA5C 000EBB3C  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800EEA60 000EBB40  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800EEA64 000EBB44  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800EEA68 000EBB48  7C 08 03 A6 */	mtlr r0
+/* 800EEA6C 000EBB4C  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EEA70 000EBB50  4E 80 00 20 */	blr
+.endfn CreateNPC__7zNPCMgrFP9xEntAsset
+
+# zNPCMgr::BackdoorUpdateAllNPCsOnce(xScene*, float)
+.fn BackdoorUpdateAllNPCsOnce__7zNPCMgrFP6xScenef, global
+/* 800EEA74 000EBB54  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EEA78 000EBB58  7C 08 02 A6 */	mflr r0
+/* 800EEA7C 000EBB5C  3C A0 80 3C */	lis r5, globals@ha
+/* 800EEA80 000EBB60  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EEA84 000EBB64  BF 41 00 08 */	stmw r26, 0x8(r1)
+/* 800EEA88 000EBB68  7C 7A 1B 78 */	mr r26, r3
+/* 800EEA8C 000EBB6C  7C 9B 23 78 */	mr r27, r4
+/* 800EEA90 000EBB70  3B A0 00 00 */	li r29, 0x0
+/* 800EEA94 000EBB74  3B E5 05 58 */	addi r31, r5, globals@l
+/* 800EEA98 000EBB78  3B C0 00 00 */	li r30, 0x0
+/* 800EEA9C 000EBB7C  48 00 00 4C */	b .L_800EEAE8
+.L_800EEAA0:
+/* 800EEAA0 000EBB80  80 9A 00 00 */	lwz r4, 0x0(r26)
+/* 800EEAA4 000EBB84  80 7F 1F C0 */	lwz r3, 0x1fc0(r31)
+/* 800EEAA8 000EBB88  7F 84 F0 2E */	lwzx r28, r4, r30
+/* 800EEAAC 000EBB8C  80 9C 00 00 */	lwz r4, 0x0(r28)
+/* 800EEAB0 000EBB90  4B F5 0B 75 */	bl xSceneID2Name__FP6xSceneUi
+/* 800EEAB4 000EBB94  A0 1C 00 06 */	lhz r0, 0x6(r28)
+/* 800EEAB8 000EBB98  54 00 06 73 */	rlwinm. r0, r0, 0, 25, 25
+/* 800EEABC 000EBB9C  41 82 00 24 */	beq .L_800EEAE0
+/* 800EEAC0 000EBBA0  81 9C 00 34 */	lwz r12, 0x34(r28)
+/* 800EEAC4 000EBBA4  28 0C 00 00 */	cmplwi r12, 0x0
+/* 800EEAC8 000EBBA8  41 82 00 18 */	beq .L_800EEAE0
+/* 800EEACC 000EBBAC  7F 83 E3 78 */	mr r3, r28
+/* 800EEAD0 000EBBB0  7F 64 DB 78 */	mr r4, r27
+/* 800EEAD4 000EBBB4  C0 22 9A A8 */	lfs f1, "@883"@sda21(r2)
+/* 800EEAD8 000EBBB8  7D 89 03 A6 */	mtctr r12
+/* 800EEADC 000EBBBC  4E 80 04 21 */	bctrl
+.L_800EEAE0:
+/* 800EEAE0 000EBBC0  3B DE 00 04 */	addi r30, r30, 0x4
+/* 800EEAE4 000EBBC4  3B BD 00 01 */	addi r29, r29, 0x1
+.L_800EEAE8:
+/* 800EEAE8 000EBBC8  80 1A 00 04 */	lwz r0, 0x4(r26)
+/* 800EEAEC 000EBBCC  7C 1D 00 00 */	cmpw r29, r0
+/* 800EEAF0 000EBBD0  41 80 FF B0 */	blt .L_800EEAA0
+/* 800EEAF4 000EBBD4  BB 41 00 08 */	lmw r26, 0x8(r1)
+/* 800EEAF8 000EBBD8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EEAFC 000EBBDC  7C 08 03 A6 */	mtlr r0
+/* 800EEB00 000EBBE0  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EEB04 000EBBE4  4E 80 00 20 */	blr
+.endfn BackdoorUpdateAllNPCsOnce__7zNPCMgrFP6xScenef
+
+# zNPCMgr::SceneTimestep(xScene*, float)
+.fn SceneTimestep__7zNPCMgrFP6xScenef, global
+/* 800EEB08 000EBBE8  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EEB0C 000EBBEC  7C 08 02 A6 */	mflr r0
+/* 800EEB10 000EBBF0  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800EEB14 000EBBF4  DB E1 00 18 */	stfd f31, 0x18(r1)
+/* 800EEB18 000EBBF8  FF E0 08 90 */	fmr f31, f1
+/* 800EEB1C 000EBBFC  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800EEB20 000EBC00  7C 9F 23 78 */	mr r31, r4
+/* 800EEB24 000EBC04  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 800EEB28 000EBC08  7C 7E 1B 78 */	mr r30, r3
+/* 800EEB2C 000EBC0C  48 00 02 31 */	bl DBG_PerfTrack__7zNPCMgrFv
+/* 800EEB30 000EBC10  80 0D 93 C8 */	lwz r0, g_firstFrameUpdateAllNPC@sda21(r13)
+/* 800EEB34 000EBC14  2C 00 00 00 */	cmpwi r0, 0x0
+/* 800EEB38 000EBC18  41 82 00 1C */	beq .L_800EEB54
+/* 800EEB3C 000EBC1C  FC 20 F8 90 */	fmr f1, f31
+/* 800EEB40 000EBC20  7F C3 F3 78 */	mr r3, r30
+/* 800EEB44 000EBC24  7F E4 FB 78 */	mr r4, r31
+/* 800EEB48 000EBC28  4B FF FF 2D */	bl BackdoorUpdateAllNPCsOnce__7zNPCMgrFP6xScenef
+/* 800EEB4C 000EBC2C  38 00 00 00 */	li r0, 0x0
+/* 800EEB50 000EBC30  90 0D 93 C8 */	stw r0, g_firstFrameUpdateAllNPC@sda21(r13)
+.L_800EEB54:
+/* 800EEB54 000EBC34  FC 20 F8 90 */	fmr f1, f31
+/* 800EEB58 000EBC38  7F E3 FB 78 */	mr r3, r31
+/* 800EEB5C 000EBC3C  4B FF E7 25 */	bl zNPCMsg_Timestep__FP6xScenef
+/* 800EEB60 000EBC40  FC 20 F8 90 */	fmr f1, f31
+/* 800EEB64 000EBC44  7F E3 FB 78 */	mr r3, r31
+/* 800EEB68 000EBC48  48 01 B3 5D */	bl zNPCTiki_Timestep__FP6xScenef
+/* 800EEB6C 000EBC4C  FC 20 F8 90 */	fmr f1, f31
+/* 800EEB70 000EBC50  7F E3 FB 78 */	mr r3, r31
+/* 800EEB74 000EBC54  48 00 04 CD */	bl zNPCCommon_Timestep__FP6xScenef
+/* 800EEB78 000EBC58  FC 20 F8 90 */	fmr f1, f31
+/* 800EEB7C 000EBC5C  7F E3 FB 78 */	mr r3, r31
+/* 800EEB80 000EBC60  48 00 60 F9 */	bl zNPCRobot_Timestep__FP6xScenef
+/* 800EEB84 000EBC64  FC 20 F8 90 */	fmr f1, f31
+/* 800EEB88 000EBC68  7F E3 FB 78 */	mr r3, r31
+/* 800EEB8C 000EBC6C  48 01 41 81 */	bl zNPCVillager_SceneTimestep__FP6xScenef
+/* 800EEB90 000EBC70  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EEB94 000EBC74  CB E1 00 18 */	lfd f31, 0x18(r1)
+/* 800EEB98 000EBC78  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800EEB9C 000EBC7C  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 800EEBA0 000EBC80  7C 08 03 A6 */	mtlr r0
+/* 800EEBA4 000EBC84  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EEBA8 000EBC88  4E 80 00 20 */	blr
+.endfn SceneTimestep__7zNPCMgrFP6xScenef
+
+# zNPCMgr::PrepTypeTable()
+.fn PrepTypeTable__7zNPCMgrFv, global
+/* 800EEBAC 000EBC8C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EEBB0 000EBC90  7C 08 02 A6 */	mflr r0
+/* 800EEBB4 000EBC94  3C 60 80 29 */	lis r3, g_tbltype@ha
+/* 800EEBB8 000EBC98  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EEBBC 000EBC9C  38 03 43 74 */	addi r0, r3, g_tbltype@l
+/* 800EEBC0 000EBCA0  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EEBC4 000EBCA4  7C 1F 03 78 */	mr r31, r0
+/* 800EEBC8 000EBCA8  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 800EEBCC 000EBCAC  48 00 00 14 */	b .L_800EEBE0
+.L_800EEBD0:
+/* 800EEBD0 000EBCB0  80 7F 00 04 */	lwz r3, 0x4(r31)
+/* 800EEBD4 000EBCB4  4B F5 D6 41 */	bl xStrHash__FPCc
+/* 800EEBD8 000EBCB8  90 7F 00 08 */	stw r3, 0x8(r31)
+/* 800EEBDC 000EBCBC  3B FF 00 0C */	addi r31, r31, 0xc
+.L_800EEBE0:
+/* 800EEBE0 000EBCC0  80 1F 00 00 */	lwz r0, 0x0(r31)
+/* 800EEBE4 000EBCC4  2C 00 00 00 */	cmpwi r0, 0x0
+/* 800EEBE8 000EBCC8  40 82 FF E8 */	bne .L_800EEBD0
+/* 800EEBEC 000EBCCC  3C 60 80 29 */	lis r3, g_brainTable@ha
+/* 800EEBF0 000EBCD0  3B C0 00 00 */	li r30, 0x0
+/* 800EEBF4 000EBCD4  3B E3 40 80 */	addi r31, r3, g_brainTable@l
+.L_800EEBF8:
+/* 800EEBF8 000EBCD8  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 800EEBFC 000EBCDC  4B F5 D6 19 */	bl xStrHash__FPCc
+/* 800EEC00 000EBCE0  3B DE 00 01 */	addi r30, r30, 0x1
+/* 800EEC04 000EBCE4  90 7F 00 08 */	stw r3, 0x8(r31)
+/* 800EEC08 000EBCE8  2C 1E 00 3F */	cmpwi r30, 0x3f
+/* 800EEC0C 000EBCEC  3B FF 00 0C */	addi r31, r31, 0xc
+/* 800EEC10 000EBCF0  41 80 FF E8 */	blt .L_800EEBF8
+/* 800EEC14 000EBCF4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EEC18 000EBCF8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EEC1C 000EBCFC  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 800EEC20 000EBD00  7C 08 03 A6 */	mtlr r0
+/* 800EEC24 000EBD04  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EEC28 000EBD08  4E 80 00 20 */	blr
+.endfn PrepTypeTable__7zNPCMgrFv
+
+# zNPCMgr::NPCTypeForModel(unsigned int, unsigned int)
+.fn NPCTypeForModel__7zNPCMgrFUiUi, global
+/* 800EEC2C 000EBD0C  28 04 00 00 */	cmplwi r4, 0x0
+/* 800EEC30 000EBD10  41 82 00 48 */	beq .L_800EEC78
+/* 800EEC34 000EBD14  3C 60 80 29 */	lis r3, g_brainTable@ha
+/* 800EEC38 000EBD18  38 00 00 3F */	li r0, 0x3f
+/* 800EEC3C 000EBD1C  38 63 40 80 */	addi r3, r3, g_brainTable@l
+/* 800EEC40 000EBD20  38 C0 00 00 */	li r6, 0x0
+/* 800EEC44 000EBD24  7C 09 03 A6 */	mtctr r0
+.L_800EEC48:
+/* 800EEC48 000EBD28  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 800EEC4C 000EBD2C  7C 04 00 40 */	cmplw r4, r0
+/* 800EEC50 000EBD30  40 82 00 1C */	bne .L_800EEC6C
+/* 800EEC54 000EBD34  1C 06 00 0C */	mulli r0, r6, 0xc
+/* 800EEC58 000EBD38  3C 60 80 29 */	lis r3, g_brainTable@ha
+/* 800EEC5C 000EBD3C  38 63 40 80 */	addi r3, r3, g_brainTable@l
+/* 800EEC60 000EBD40  7C 63 02 14 */	add r3, r3, r0
+/* 800EEC64 000EBD44  80 63 00 04 */	lwz r3, 0x4(r3)
+/* 800EEC68 000EBD48  4E 80 00 20 */	blr
+.L_800EEC6C:
+/* 800EEC6C 000EBD4C  38 63 00 0C */	addi r3, r3, 0xc
+/* 800EEC70 000EBD50  38 C6 00 01 */	addi r6, r6, 0x1
+/* 800EEC74 000EBD54  42 00 FF D4 */	bdnz .L_800EEC48
+.L_800EEC78:
+/* 800EEC78 000EBD58  3C 80 80 29 */	lis r4, g_tbltype@ha
+/* 800EEC7C 000EBD5C  38 60 00 00 */	li r3, 0x0
+/* 800EEC80 000EBD60  38 04 43 74 */	addi r0, r4, g_tbltype@l
+/* 800EEC84 000EBD64  7C 04 03 78 */	mr r4, r0
+/* 800EEC88 000EBD68  48 00 00 1C */	b .L_800EECA4
+.L_800EEC8C:
+/* 800EEC8C 000EBD6C  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 800EEC90 000EBD70  7C 00 28 40 */	cmplw r0, r5
+/* 800EEC94 000EBD74  40 82 00 0C */	bne .L_800EECA0
+/* 800EEC98 000EBD78  80 64 00 00 */	lwz r3, 0x0(r4)
+/* 800EEC9C 000EBD7C  48 00 00 14 */	b .L_800EECB0
+.L_800EECA0:
+/* 800EECA0 000EBD80  38 84 00 0C */	addi r4, r4, 0xc
+.L_800EECA4:
+/* 800EECA4 000EBD84  80 04 00 00 */	lwz r0, 0x0(r4)
+/* 800EECA8 000EBD88  2C 00 00 00 */	cmpwi r0, 0x0
+/* 800EECAC 000EBD8C  40 82 FF E0 */	bne .L_800EEC8C
+.L_800EECB0:
+/* 800EECB0 000EBD90  2C 03 00 00 */	cmpwi r3, 0x0
+/* 800EECB4 000EBD94  4C 82 00 20 */	bnelr
+/* 800EECB8 000EBD98  3C 60 4E 54 */	lis r3, 0x4e54
+/* 800EECBC 000EBD9C  38 63 30 31 */	addi r3, r3, 0x3031
+/* 800EECC0 000EBDA0  4E 80 00 20 */	blr
+.endfn NPCTypeForModel__7zNPCMgrFUiUi
+
+# zNPCMgr_OrdTest_npcid(const void*, void*)
+.fn zNPCMgr_OrdTest_npcid__FPCvPv, global
+/* 800EECC4 000EBDA4  80 04 00 00 */	lwz r0, 0x0(r4)
+/* 800EECC8 000EBDA8  7C 03 00 40 */	cmplw r3, r0
+/* 800EECCC 000EBDAC  40 80 00 0C */	bge .L_800EECD8
+/* 800EECD0 000EBDB0  38 60 FF FF */	li r3, -0x1
+/* 800EECD4 000EBDB4  4E 80 00 20 */	blr
+.L_800EECD8:
+/* 800EECD8 000EBDB8  40 81 00 0C */	ble .L_800EECE4
+/* 800EECDC 000EBDBC  38 60 00 01 */	li r3, 0x1
+/* 800EECE0 000EBDC0  4E 80 00 20 */	blr
+.L_800EECE4:
+/* 800EECE4 000EBDC4  38 60 00 00 */	li r3, 0x0
+/* 800EECE8 000EBDC8  4E 80 00 20 */	blr
+.endfn zNPCMgr_OrdTest_npcid__FPCvPv
+
+# zNPCMgr_OrdComp_npcid(void*, void*)
+.fn zNPCMgr_OrdComp_npcid__FPvPv, global
+/* 800EECEC 000EBDCC  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 800EECF0 000EBDD0  80 04 00 00 */	lwz r0, 0x0(r4)
+/* 800EECF4 000EBDD4  7C 03 00 40 */	cmplw r3, r0
+/* 800EECF8 000EBDD8  40 80 00 0C */	bge .L_800EED04
+/* 800EECFC 000EBDDC  38 60 FF FF */	li r3, -0x1
+/* 800EED00 000EBDE0  4E 80 00 20 */	blr
+.L_800EED04:
+/* 800EED04 000EBDE4  40 81 00 0C */	ble .L_800EED10
+/* 800EED08 000EBDE8  38 60 00 01 */	li r3, 0x1
+/* 800EED0C 000EBDEC  4E 80 00 20 */	blr
+.L_800EED10:
+/* 800EED10 000EBDF0  38 60 00 00 */	li r3, 0x0
+/* 800EED14 000EBDF4  4E 80 00 20 */	blr
+.endfn zNPCMgr_OrdComp_npcid__FPvPv
+
+# 0x800EED18 - 0x800EED60
+.section .text, "ax", unique, 1
+.balign 4
+
+# zNPCMgr::zNPCMgr()
+.fn __ct__7zNPCMgrFv, weak
+/* 800EED18 000EBDF8  4E 80 00 20 */	blr
+.endfn __ct__7zNPCMgrFv
+
+# zNPCMgr::~zNPCMgr()
+.fn __dt__7zNPCMgrFv, weak
+/* 800EED1C 000EBDFC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800EED20 000EBE00  7C 08 02 A6 */	mflr r0
+/* 800EED24 000EBE04  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800EED28 000EBE08  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800EED2C 000EBE0C  7C 7F 1B 79 */	mr. r31, r3
+/* 800EED30 000EBE10  41 82 00 10 */	beq .L_800EED40
+/* 800EED34 000EBE14  7C 80 07 35 */	extsh. r0, r4
+/* 800EED38 000EBE18  40 81 00 08 */	ble .L_800EED40
+/* 800EED3C 000EBE1C  48 02 04 B1 */	bl __dl__10RyzMemDataFPv
+.L_800EED40:
+/* 800EED40 000EBE20  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800EED44 000EBE24  7F E3 FB 78 */	mr r3, r31
+/* 800EED48 000EBE28  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800EED4C 000EBE2C  7C 08 03 A6 */	mtlr r0
+/* 800EED50 000EBE30  38 21 00 10 */	addi r1, r1, 0x10
+/* 800EED54 000EBE34  4E 80 00 20 */	blr
+.endfn __dt__7zNPCMgrFv
+
+# zNPCMgr::DBG_Reset()
+.fn DBG_Reset__7zNPCMgrFv, weak
+/* 800EED58 000EBE38  4E 80 00 20 */	blr
+.endfn DBG_Reset__7zNPCMgrFv
+
+# zNPCMgr::DBG_PerfTrack()
+.fn DBG_PerfTrack__7zNPCMgrFv, weak
+/* 800EED5C 000EBE3C  4E 80 00 20 */	blr
+.endfn DBG_PerfTrack__7zNPCMgrFv
+
+# 0x800EED60 - 0x800EED68
+.section .text, "ax", unique, 2
+.balign 4
+
+# xBehaveMgr::GetFactory()
+.fn GetFactory__10xBehaveMgrFv, weak
+/* 800EED60 000EBE40  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 800EED64 000EBE44  4E 80 00 20 */	blr
+.endfn GetFactory__10xBehaveMgrFv
+
+# 0x800EED68 - 0x800EED6C
+.section .text, "ax", unique, 3
+.balign 4
+
+# xNPCBasic::PostSetup()
+.fn PostSetup__9xNPCBasicFv, weak
+/* 800EED68 000EBE48  4E 80 00 20 */	blr
+.endfn PostSetup__9xNPCBasicFv
+
+# 0x800EED6C - 0x800EED74
+.section .text, "ax", unique, 4
+.balign 4
+
+# zNPCCommon::RenderExtra()
+.fn RenderExtra__10zNPCCommonFv, weak
+/* 800EED6C 000EBE4C  4E 80 00 20 */	blr
+.endfn RenderExtra__10zNPCCommonFv
+
+# zNPCCommon::RenderExtraPostParticles()
+.fn RenderExtraPostParticles__10zNPCCommonFv, weak
+/* 800EED70 000EBE50  4E 80 00 20 */	blr
+.endfn RenderExtraPostParticles__10zNPCCommonFv
+
+# 0x802673D8 - 0x802688D0
+.rodata
+.balign 8
+
+.obj "@stringBase0", local
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F554E4B
+	.4byte 0x4E4F574E
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F4241
+	.4byte 0x53494300
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F434F4D
+	.4byte 0x4D4F4E00
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F414D42
+	.4byte 0x49454E54
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F5649
+	.4byte 0x4C4C4147
+	.4byte 0x4552004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x524F424F
+	.4byte 0x54004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F42
+	.4byte 0x4F535300
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F544553
+	.4byte 0x54004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F42
+	.4byte 0x41444755
+	.4byte 0x59004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F4A
+	.4byte 0x454C4C59
+	.4byte 0x50494E4B
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F4A45
+	.4byte 0x4C4C5942
+	.4byte 0x4C554500
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F4B494E
+	.4byte 0x474E4550
+	.4byte 0x54554E45
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F5449
+	.4byte 0x4B495F57
+	.4byte 0x4F4F4400
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F54494B
+	.4byte 0x495F4C4F
+	.4byte 0x56455900
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F54494B
+	.4byte 0x495F5155
+	.4byte 0x49455400
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F54494B
+	.4byte 0x495F5448
+	.4byte 0x554E4445
+	.4byte 0x52004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F54
+	.4byte 0x494B495F
+	.4byte 0x53544F4E
+	.4byte 0x45004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F46
+	.4byte 0x49534800
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F42414C
+	.4byte 0x4C4F4F4E
+	.4byte 0x424F5900
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F474152
+	.4byte 0x59004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F53
+	.4byte 0x51554944
+	.4byte 0x57415244
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F5341
+	.4byte 0x4E445942
+	.4byte 0x494B494E
+	.4byte 0x49004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F53
+	.4byte 0x414E4459
+	.4byte 0x4E504300
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F504154
+	.4byte 0x4E504300
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F424F42
+	.4byte 0x4E504300
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F504C41
+	.4byte 0x4E4B4E50
+	.4byte 0x43004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F4D
+	.4byte 0x524B5241
+	.4byte 0x4253004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x4D535055
+	.4byte 0x46465300
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F425542
+	.4byte 0x42554444
+	.4byte 0x59004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F4E
+	.4byte 0x45575346
+	.4byte 0x49534800
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F4D4F54
+	.4byte 0x4F524953
+	.4byte 0x54004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F4D
+	.4byte 0x45524D41
+	.4byte 0x4E434841
+	.4byte 0x4952004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x4D45524D
+	.4byte 0x414E004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x574F524D
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F4841
+	.4byte 0x4D4D4552
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F4841
+	.4byte 0x4D535049
+	.4byte 0x4E004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F54
+	.4byte 0x41525441
+	.4byte 0x52004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F47
+	.4byte 0x4C4F5645
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F4D4F
+	.4byte 0x4E534F4F
+	.4byte 0x4E004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F53
+	.4byte 0x4C454550
+	.4byte 0x59004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F41
+	.4byte 0x5246444F
+	.4byte 0x47004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F41
+	.4byte 0x52464152
+	.4byte 0x46004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F43
+	.4byte 0x4855434B
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F5455
+	.4byte 0x42454C45
+	.4byte 0x54004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F54
+	.4byte 0x55424553
+	.4byte 0x4C415645
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F534C
+	.4byte 0x49434B00
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F464F44
+	.4byte 0x44455200
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F464F44
+	.4byte 0x424F4D42
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F4348
+	.4byte 0x4F4D5045
+	.4byte 0x52004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F46
+	.4byte 0x4F44425A
+	.4byte 0x5A54004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x43524954
+	.4byte 0x54455200
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F445550
+	.4byte 0x4C4F5452
+	.4byte 0x4F4E004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x4B494E47
+	.4byte 0x4A454C4C
+	.4byte 0x59004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F44
+	.4byte 0x55544348
+	.4byte 0x4D414E00
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F505241
+	.4byte 0x574E004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x424F5353
+	.4byte 0x53414E44
+	.4byte 0x59004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F42
+	.4byte 0x4F535350
+	.4byte 0x4154004E
+	.4byte 0x50435F54
+	.4byte 0x5950455F
+	.4byte 0x424F5353
+	.4byte 0x5F534231
+	.4byte 0x004E5043
+	.4byte 0x5F545950
+	.4byte 0x455F424F
+	.4byte 0x5353424F
+	.4byte 0x42425900
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F424F53
+	.4byte 0x53504C41
+	.4byte 0x4E4B544F
+	.4byte 0x4E004E50
+	.4byte 0x435F5459
+	.4byte 0x50455F42
+	.4byte 0x41444755
+	.4byte 0x594D4544
+	.4byte 0x49554D00
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F4E4F4D
+	.4byte 0x4F524500
+	.4byte 0x4E50435F
+	.4byte 0x54595045
+	.4byte 0x5F464F52
+	.4byte 0x43450072
+	.4byte 0x6F626F74
+	.4byte 0x5F30615F
+	.4byte 0x666F6464
+	.4byte 0x65725F62
+	.4byte 0x696E6400
+	.4byte 0x726F626F
+	.4byte 0x745F3061
+	.4byte 0x5F626F6D
+	.4byte 0x625F6269
+	.4byte 0x6E640072
+	.4byte 0x6F626F74
+	.4byte 0x5F30615F
+	.4byte 0x63686F6D
+	.4byte 0x7065725F
+	.4byte 0x62696E64
+	.4byte 0x00726F62
+	.4byte 0x6F745F30
+	.4byte 0x615F627A
+	.4byte 0x7A745F62
+	.4byte 0x696E6400
+	.4byte 0x68616D5F
+	.4byte 0x62696E64
+	.4byte 0x0068616D
+	.4byte 0x7370696E
+	.4byte 0x5F62696E
+	.4byte 0x6400726F
+	.4byte 0x626F745F
+	.4byte 0x7461725F
+	.4byte 0x62696E64
+	.4byte 0x00675F6C
+	.4byte 0x6F76655F
+	.4byte 0x62696E64
+	.4byte 0x00726F62
+	.4byte 0x6F745F34
+	.4byte 0x615F6D6F
+	.4byte 0x6E736F6F
+	.4byte 0x6E5F6269
+	.4byte 0x6E640072
+	.4byte 0x6F626F74
+	.4byte 0x5F736C65
+	.4byte 0x6570792D
+	.4byte 0x74696D65
+	.4byte 0x5F62696E
+	.4byte 0x6400726F
+	.4byte 0x626F745F
+	.4byte 0x6172665F
+	.4byte 0x646F675F
+	.4byte 0x62696E64
+	.4byte 0x00726F62
+	.4byte 0x6F745F61
+	.4byte 0x72665F62
+	.4byte 0x696E6400
+	.4byte 0x726F626F
+	.4byte 0x745F6368
+	.4byte 0x75636B5F
+	.4byte 0x62696E64
+	.4byte 0x00747562
+	.4byte 0x656C6574
+	.4byte 0x5F62696E
+	.4byte 0x64007475
+	.4byte 0x62656C65
+	.4byte 0x745F736C
+	.4byte 0x6176655F
+	.4byte 0x62696E64
+	.4byte 0x00726F62
+	.4byte 0x6F745F39
+	.4byte 0x615F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F61
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F625F
+	.4byte 0x62696E64
+	.4byte 0x00637269
+	.4byte 0x74746572
+	.4byte 0x5F635F62
+	.4byte 0x696E6400
+	.4byte 0x63726974
+	.4byte 0x7465725F
+	.4byte 0x645F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F65
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F665F
+	.4byte 0x62696E64
+	.4byte 0x00637269
+	.4byte 0x74746572
+	.4byte 0x5F675F62
+	.4byte 0x696E6400
+	.4byte 0x63726974
+	.4byte 0x7465725F
+	.4byte 0x685F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F69
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F6A5F
+	.4byte 0x62696E64
+	.4byte 0x00637269
+	.4byte 0x74746572
+	.4byte 0x5F6B5F62
+	.4byte 0x696E6400
+	.4byte 0x63726974
+	.4byte 0x7465725F
+	.4byte 0x6C5F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F6D
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F6E5F
+	.4byte 0x62696E64
+	.4byte 0x00637269
+	.4byte 0x74746572
+	.4byte 0x5F6F5F62
+	.4byte 0x696E6400
+	.4byte 0x63726974
+	.4byte 0x7465725F
+	.4byte 0x705F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F71
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F725F
+	.4byte 0x62696E64
+	.4byte 0x00637269
+	.4byte 0x74746572
+	.4byte 0x5F735F62
+	.4byte 0x696E6400
+	.4byte 0x63726974
+	.4byte 0x7465725F
+	.4byte 0x745F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F75
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F765F
+	.4byte 0x62696E64
+	.4byte 0x00637269
+	.4byte 0x74746572
+	.4byte 0x5F775F62
+	.4byte 0x696E6400
+	.4byte 0x63726974
+	.4byte 0x7465725F
+	.4byte 0x785F6269
+	.4byte 0x6E640063
+	.4byte 0x72697474
+	.4byte 0x65725F79
+	.4byte 0x5F62696E
+	.4byte 0x64006372
+	.4byte 0x69747465
+	.4byte 0x725F7A5F
+	.4byte 0x62696E64
+	.4byte 0x00647570
+	.4byte 0x6C696361
+	.4byte 0x746F7472
+	.4byte 0x6F6E3130
+	.4byte 0x30305F62
+	.4byte 0x696E6400
+	.4byte 0x64757463
+	.4byte 0x686D616E
+	.4byte 0x5F62696E
+	.4byte 0x64006B69
+	.4byte 0x6E675F6A
+	.4byte 0x656C6C79
+	.4byte 0x5F62696E
+	.4byte 0x64007072
+	.4byte 0x61776E5F
+	.4byte 0x62696E64
+	.4byte 0x00626F73
+	.4byte 0x735F7361
+	.4byte 0x5F62696E
+	.4byte 0x6400626F
+	.4byte 0x73735F70
+	.4byte 0x61747269
+	.4byte 0x636B5F62
+	.4byte 0x696E6400
+	.4byte 0x626F7373
+	.4byte 0x5F73625F
+	.4byte 0x6D757363
+	.4byte 0x6C655F62
+	.4byte 0x696E6400
+	.4byte 0x626F7373
+	.4byte 0x5F73625F
+	.4byte 0x626F6479
+	.4byte 0x5F62696E
+	.4byte 0x6400706C
+	.4byte 0x616E6B74
+	.4byte 0x6F6E5F62
+	.4byte 0x6F73735F
+	.4byte 0x62696E64
+	.4byte 0x0074696B
+	.4byte 0x695F776F
+	.4byte 0x6F64656E
+	.4byte 0x5F62696E
+	.4byte 0x64007469
+	.4byte 0x6B695F6C
+	.4byte 0x6F766579
+	.4byte 0x5F646F76
+	.4byte 0x65795F62
+	.4byte 0x696E6400
+	.4byte 0x74696B69
+	.4byte 0x5F736868
+	.4byte 0x68685F62
+	.4byte 0x696E6400
+	.4byte 0x74696B69
+	.4byte 0x5F746875
+	.4byte 0x6E646572
+	.4byte 0x5F62696E
+	.4byte 0x64007469
+	.4byte 0x6B695F73
+	.4byte 0x746F6E65
+	.4byte 0x5F62696E
+	.4byte 0x64006A65
+	.4byte 0x6C6C7966
+	.4byte 0x6973685F
+	.4byte 0x70696E6B
+	.4byte 0x5F62696E
+	.4byte 0x64006A65
+	.4byte 0x6C6C7966
+	.4byte 0x6973685F
+	.4byte 0x626C7565
+	.4byte 0x5F62696E
+	.4byte 0x64006B69
+	.4byte 0x6E675F6E
+	.4byte 0x65707475
+	.4byte 0x6E655F62
+	.4byte 0x696E6400
+	.4byte 0x6D696D65
+	.4byte 0x5F666973
+	.4byte 0x685F6269
+	.4byte 0x6E640063
+	.4byte 0x6F775F62
+	.4byte 0x696E6400
+	.4byte 0x73717569
+	.4byte 0x64776172
+	.4byte 0x645F6269
+	.4byte 0x6E645F30
+	.4byte 0x31007371
+	.4byte 0x75696477
+	.4byte 0x6172645F
+	.4byte 0x6D757369
+	.4byte 0x635F6269
+	.4byte 0x6E645F30
+	.4byte 0x31007371
+	.4byte 0x75696477
+	.4byte 0x6172645F
+	.4byte 0x62616E64
+	.4byte 0x6169645F
+	.4byte 0x62696E64
+	.4byte 0x5F303100
+	.4byte 0x64757463
+	.4byte 0x686D616E
+	.4byte 0x5F6E6F74
+	.4byte 0x73756262
+	.4byte 0x6F73735F
+	.4byte 0x62696E64
+	.4byte 0x006D725F
+	.4byte 0x6B726162
+	.4byte 0x735F6269
+	.4byte 0x6E64006D
+	.4byte 0x73707566
+	.4byte 0x66735F62
+	.4byte 0x696E6400
+	.4byte 0x67617279
+	.4byte 0x5F62696E
+	.4byte 0x64006275
+	.4byte 0x62626C65
+	.4byte 0x5F627564
+	.4byte 0x64795F62
+	.4byte 0x696E6400
+	.4byte 0x73616E64
+	.4byte 0x795F6269
+	.4byte 0x6B696E69
+	.4byte 0x5F62696E
+	.4byte 0x64007361
+	.4byte 0x6E64795F
+	.4byte 0x6E70635F
+	.4byte 0x62696E64
+	.4byte 0x00706174
+	.4byte 0x7269636B
+	.4byte 0x5F6E7063
+	.4byte 0x5F62696E
+	.4byte 0x64007370
+	.4byte 0x6F6E6765
+	.4byte 0x626F625F
+	.4byte 0x6E70635F
+	.4byte 0x62696E64
+	.4byte 0x00706C61
+	.4byte 0x6E6B746F
+	.4byte 0x6E5F6E70
+	.4byte 0x635F6269
+	.4byte 0x6E640070
+	.4byte 0x6C616E6B
+	.4byte 0x746F6E5F
+	.4byte 0x62696E64
+	.4byte 0x006D6F74
+	.4byte 0x6F726973
+	.4byte 0x745F6269
+	.4byte 0x6E640077
+	.4byte 0x6F726D5F
+	.4byte 0x62696E64
+	.4byte 0x006D6572
+	.4byte 0x6D616964
+	.4byte 0x5F6D616E
+	.4byte 0x5F62696E
+	.4byte 0x64006D65
+	.4byte 0x726D6169
+	.4byte 0x645F6D61
+	.4byte 0x6E5F6368
+	.4byte 0x6169725F
+	.4byte 0x62696E64
+	.4byte 0x00626172
+	.4byte 0x6E61636C
+	.4byte 0x655F626F
+	.4byte 0x795F6269
+	.4byte 0x6E64006E
+	.4byte 0x65777363
+	.4byte 0x61737465
+	.4byte 0x725F6269
+	.4byte 0x6E64006E
+	.4byte 0x65777363
+	.4byte 0x61737465
+	.4byte 0x725F7476
+	.4byte 0x5F62696E
+	.4byte 0x64006C61
+	.4byte 0x7272795F
+	.4byte 0x6C6F6273
+	.4byte 0x7465725F
+	.4byte 0x62696E64
+	.4byte 0x006F6C64
+	.4byte 0x66697368
+	.4byte 0x5F415F62
+	.4byte 0x696E6400
+	.4byte 0x6F6C6466
+	.4byte 0x6973685F
+	.4byte 0x425F6269
+	.4byte 0x6E64006F
+	.4byte 0x6C646669
+	.4byte 0x73685F43
+	.4byte 0x5F62696E
+	.4byte 0x64006669
+	.4byte 0x73685F61
+	.4byte 0x5F62696E
+	.4byte 0x64006669
+	.4byte 0x73685F61
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F615F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F61
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F615F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F615F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F615F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F615F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x615F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F61
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F615F
+	.4byte 0x72625F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F61
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x615F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F615F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x615F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F61
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F625F
+	.4byte 0x62696E64
+	.4byte 0x00666973
+	.4byte 0x685F625F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x625F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F625F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x625F6265
+	.4byte 0x6163685F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x625F6265
+	.4byte 0x6163685F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x625F6265
+	.4byte 0x6163685F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x625F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F62
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F625F
+	.4byte 0x63616D70
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F625F72
+	.4byte 0x625F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F625F
+	.4byte 0x72625F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F62
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x625F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F62
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F625F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F635F62
+	.4byte 0x696E6400
+	.4byte 0x66697368
+	.4byte 0x5F635F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F63
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F635F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F63
+	.4byte 0x5F626561
+	.4byte 0x63685F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F63
+	.4byte 0x5F626561
+	.4byte 0x63685F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F63
+	.4byte 0x5F626561
+	.4byte 0x63685F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F63
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F635F
+	.4byte 0x63616D70
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F635F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x635F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F635F72
+	.4byte 0x625F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F635F
+	.4byte 0x72625F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F63
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F635F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F635F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x645F6269
+	.4byte 0x6E640066
+	.4byte 0x6973685F
+	.4byte 0x645F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F645F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x645F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F645F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F645F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F645F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F645F
+	.4byte 0x63616D70
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F645F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x645F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F64
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x645F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F645F72
+	.4byte 0x625F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F645F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F645F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x645F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F64
+	.4byte 0x5F62616C
+	.4byte 0x6C6F6F6E
+	.4byte 0x5F6B6964
+	.4byte 0x5F62696E
+	.4byte 0x64006669
+	.4byte 0x73685F65
+	.4byte 0x5F62696E
+	.4byte 0x64006669
+	.4byte 0x73685F65
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F655F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F65
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F655F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F655F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F655F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F655F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x655F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F65
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F655F
+	.4byte 0x72625F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F65
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x655F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F655F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x655F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F65
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F665F
+	.4byte 0x62696E64
+	.4byte 0x00666973
+	.4byte 0x685F665F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x665F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F665F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x665F6265
+	.4byte 0x6163685F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x665F6265
+	.4byte 0x6163685F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x665F6265
+	.4byte 0x6163685F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x665F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F66
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F665F
+	.4byte 0x63616D70
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F665F72
+	.4byte 0x625F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F665F
+	.4byte 0x72625F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F66
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x665F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F66
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F665F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F675F62
+	.4byte 0x696E6400
+	.4byte 0x66697368
+	.4byte 0x5F675F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F67
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F675F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F67
+	.4byte 0x5F626561
+	.4byte 0x63685F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F67
+	.4byte 0x5F626561
+	.4byte 0x63685F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F67
+	.4byte 0x5F626561
+	.4byte 0x63685F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F67
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F675F
+	.4byte 0x63616D70
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F675F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x675F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F675F72
+	.4byte 0x625F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F675F
+	.4byte 0x72625F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F67
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F675F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F675F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x685F6269
+	.4byte 0x6E640066
+	.4byte 0x6973685F
+	.4byte 0x685F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x685F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x62656163
+.L_802685A0:
+	.4byte 0x685F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x72616E67
+	.4byte 0x65725F62
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F68
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x685F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F685F72
+	.4byte 0x625F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x72623032
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F685F72
+	.4byte 0x6230325F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x685F7262
+	.4byte 0x30325F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F68
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F685F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30330066
+	.4byte 0x6973685F
+	.4byte 0x695F6269
+	.4byte 0x6E640066
+	.4byte 0x6973685F
+	.4byte 0x695F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F695F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x695F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F695F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643031
+	.4byte 0x00666973
+	.4byte 0x685F695F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643032
+	.4byte 0x00666973
+	.4byte 0x685F695F
+	.4byte 0x62656163
+	.4byte 0x685F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F695F
+	.4byte 0x63616D70
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F695F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x695F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F69
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x695F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F695F72
+	.4byte 0x625F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F695F
+	.4byte 0x736E6F77
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F695F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x695F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x33006669
+	.4byte 0x73685F6A
+	.4byte 0x5F62696E
+	.4byte 0x64006669
+	.4byte 0x73685F6A
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F6A5F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F6A
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F6A5F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303100
+	.4byte 0x66697368
+	.4byte 0x5F6A5F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303200
+	.4byte 0x66697368
+	.4byte 0x5F6A5F62
+	.4byte 0x65616368
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F6A5F63
+	.4byte 0x616D705F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x6A5F6361
+	.4byte 0x6D705F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F6A
+	.4byte 0x5F63616D
+	.4byte 0x705F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F6A5F
+	.4byte 0x72625F62
+.L_80268858:
+	.4byte 0x696E6430
+	.4byte 0x31006669
+	.4byte 0x73685F6A
+	.4byte 0x5F72625F
+	.4byte 0x62696E64
+	.4byte 0x30320066
+	.4byte 0x6973685F
+	.4byte 0x6A5F7262
+	.4byte 0x5F62696E
+	.4byte 0x64303300
+	.4byte 0x66697368
+	.4byte 0x5F6A5F73
+	.4byte 0x6E6F775F
+	.4byte 0x62696E64
+	.4byte 0x30310066
+	.4byte 0x6973685F
+	.4byte 0x6A5F736E
+	.4byte 0x6F775F62
+	.4byte 0x696E6430
+	.4byte 0x32006669
+	.4byte 0x73685F6A
+	.4byte 0x5F736E6F
+	.4byte 0x775F6269
+	.4byte 0x6E643033
+	.4byte 0x00666973
+	.4byte 0x685F685F
+	.4byte 0x66726965
+	.4byte 0x645F6269
+	.byte 0x6E, 0x64, 0x00
+.endobj "@stringBase0"
+	.4byte 0x00000000
+	.byte 0x00
+
+# 0x80294080 - 0x80294F30
+.data
+.balign 8
+
+.obj g_brainTable, global
+	.4byte "@stringBase0"
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x11
+	.4byte 0x4E543030
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x20
+	.4byte 0x4E543031
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x30
+	.4byte 0x4E545330
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x41
+	.4byte 0x4E545331
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x53
+	.4byte 0x4E545332
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x62
+	.4byte 0x4E545333
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x70
+	.4byte 0x4E545334
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x7E
+	.4byte 0x4E545335
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x8E
+	.4byte 0x4E544130
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0xA1
+	.4byte 0x4E544131
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0xB4
+	.4byte 0x4E544132
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0xC9
+	.4byte 0x4E545430
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0xDC
+	.4byte 0x4E545431
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0xF0
+	.4byte 0x4E545432
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x104
+	.4byte 0x4E545433
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x11A
+	.4byte 0x4E545434
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x12E
+	.4byte 0x4E544630
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x13C
+	.4byte 0x4E544637
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x150
+	.4byte 0x4E544638
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x15E
+	.4byte 0x4E544639
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x171
+	.4byte 0x4E54463D
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x186
+	.4byte 0x4E54463E
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x198
+	.4byte 0x4E54463F
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x1A8
+	.4byte 0x4E544640
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x1B8
+	.4byte 0x4E544641
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x1CA
+	.4byte 0x4E544642
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x1DB
+	.4byte 0x4E544643
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x1EC
+	.4byte 0x4E544645
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x1FE
+	.4byte 0x4E544646
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x210
+	.4byte 0x4E544648
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x222
+	.4byte 0x4E544649
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x237
+	.4byte 0x4E54464A
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x247
+	.4byte 0x4E54464C
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x255
+	.4byte 0x4E545230
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x265
+	.4byte 0x4E545231
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x276
+	.4byte 0x4E545232
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x286
+	.4byte 0x4E545233
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x295
+	.4byte 0x4E545234
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x2A6
+	.4byte 0x4E545235
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x2B6
+	.4byte 0x4E545236
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x2C6
+	.4byte 0x4E545237
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x2D6
+	.4byte 0x4E545238
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x2E5
+	.4byte 0x4E545239
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x2F6
+	.4byte 0x4E54523A
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x309
+	.4byte 0x4E54523B
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x318
+	.4byte 0x4E54523C
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x328
+	.4byte 0x4E54523D
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x339
+	.4byte 0x4E54523F
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x34A
+	.4byte 0x4E54523E
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x35B
+	.4byte 0x4E545240
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x36C
+	.4byte 0x4E544430
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x37F
+	.4byte 0x4E544830
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x392
+	.4byte 0x4E544831
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x3A4
+	.4byte 0x4E544832
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x3B3
+	.4byte 0x4E544230
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x3C6
+	.4byte 0x4E544231
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x3D7
+	.4byte 0x4E544232
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x3E9
+	.4byte 0x4E544233
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x3FC
+	.4byte 0x4E544234
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x412
+	.4byte 0x4E424730
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x428
+	.4byte 0x4E424731
+	.4byte 0x00000000
+	.4byte "@stringBase0"+0x438
+	.4byte 0x7FFFFFFF
+	.4byte 0x00000000
+.endobj g_brainTable
+
+.obj g_tbltype, local
+	.4byte 0x4E54523C
+	.4byte "@stringBase0"+0x447
+	.4byte 0x00000000
+	.4byte 0x4E54523D
+	.4byte "@stringBase0"+0x45C
+	.4byte 0x00000000
+	.4byte 0x4E54523F
+	.4byte "@stringBase0"+0x46F
+	.4byte 0x00000000
+	.4byte 0x4E54523E
+	.4byte "@stringBase0"+0x485
+	.4byte 0x00000000
+	.4byte 0x4E545230
+	.4byte "@stringBase0"+0x498
+	.4byte 0x00000000
+	.4byte 0x4E545231
+	.4byte "@stringBase0"+0x4A1
+	.4byte 0x00000000
+	.4byte 0x4E545232
+	.4byte "@stringBase0"+0x4AE
+	.4byte 0x00000000
+	.4byte 0x4E545233
+	.4byte "@stringBase0"+0x4BD
+	.4byte 0x00000000
+	.4byte 0x4E545234
+	.4byte "@stringBase0"+0x4C9
+	.4byte 0x00000000
+	.4byte 0x4E545235
+	.4byte "@stringBase0"+0x4DF
+	.4byte 0x00000000
+	.4byte 0x4E545236
+	.4byte "@stringBase0"+0x4F6
+	.4byte 0x00000000
+	.4byte 0x4E545237
+	.4byte "@stringBase0"+0x509
+	.4byte 0x00000000
+	.4byte 0x4E545238
+	.4byte "@stringBase0"+0x518
+	.4byte 0x00000000
+	.4byte 0x4E545239
+	.4byte "@stringBase0"+0x529
+	.4byte 0x00000000
+	.4byte 0x4E54523A
+	.4byte "@stringBase0"+0x536
+	.4byte 0x00000000
+	.4byte 0x4E54523B
+	.4byte "@stringBase0"+0x549
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x557
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x566
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x575
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x584
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x593
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5A2
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5B1
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5C0
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5CF
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5DE
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5ED
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x5FC
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x60B
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x61A
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x629
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x638
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x647
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x656
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x665
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x674
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x683
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x692
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x6A1
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x6B0
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x6BF
+	.4byte 0x00000000
+	.4byte 0x4E545240
+	.4byte "@stringBase0"+0x6CE
+	.4byte 0x00000000
+	.4byte 0x4E544430
+	.4byte "@stringBase0"+0x6DD
+	.4byte 0x00000000
+	.4byte 0x4E544831
+	.4byte "@stringBase0"+0x6F4
+	.4byte 0x00000000
+	.4byte 0x4E544830
+	.4byte "@stringBase0"+0x702
+	.4byte 0x00000000
+	.4byte 0x4E544832
+	.4byte "@stringBase0"+0x712
+	.4byte 0x00000000
+	.4byte 0x4E544230
+	.4byte "@stringBase0"+0x71D
+	.4byte 0x00000000
+	.4byte 0x4E544231
+	.4byte "@stringBase0"+0x72A
+	.4byte 0x00000000
+	.4byte 0x4E544232
+	.4byte "@stringBase0"+0x73C
+	.4byte 0x00000000
+	.4byte 0x4E544233
+	.4byte "@stringBase0"+0x750
+	.4byte 0x00000000
+	.4byte 0x4E544234
+	.4byte "@stringBase0"+0x762
+	.4byte 0x00000000
+	.4byte 0x4E545430
+	.4byte "@stringBase0"+0x775
+	.4byte 0x00000000
+	.4byte 0x4E545431
+	.4byte "@stringBase0"+0x786
+	.4byte 0x00000000
+	.4byte 0x4E545432
+	.4byte "@stringBase0"+0x79C
+	.4byte 0x00000000
+	.4byte 0x4E545433
+	.4byte "@stringBase0"+0x7AC
+	.4byte 0x00000000
+	.4byte 0x4E545434
+	.4byte "@stringBase0"+0x7BE
+	.4byte 0x00000000
+	.4byte 0x4E544130
+	.4byte "@stringBase0"+0x7CE
+	.4byte 0x00000000
+	.4byte 0x4E544131
+	.4byte "@stringBase0"+0x7E2
+	.4byte 0x00000000
+	.4byte 0x4E544132
+	.4byte "@stringBase0"+0x7F6
+	.4byte 0x00000000
+	.4byte 0x4E544133
+	.4byte "@stringBase0"+0x808
+	.4byte 0x00000000
+	.4byte 0x4E544134
+	.4byte "@stringBase0"+0x817
+	.4byte 0x00000000
+	.4byte 0x4E544639
+	.4byte "@stringBase0"+0x820
+	.4byte 0x00000000
+	.4byte 0x4E54463A
+	.4byte "@stringBase0"+0x832
+	.4byte 0x00000000
+	.4byte 0x4E54463B
+	.4byte "@stringBase0"+0x84A
+	.4byte 0x00000000
+	.4byte 0x4E54463C
+	.4byte "@stringBase0"+0x864
+	.4byte 0x00000000
+	.4byte 0x4E544642
+	.4byte "@stringBase0"+0x87D
+	.4byte 0x00000000
+	.4byte 0x4E544643
+	.4byte "@stringBase0"+0x88B
+	.4byte 0x00000000
+	.4byte 0x4E544638
+	.4byte "@stringBase0"+0x898
+	.4byte 0x00000000
+	.4byte 0x4E544645
+	.4byte "@stringBase0"+0x8A2
+	.4byte 0x00000000
+	.4byte 0x4E54463D
+	.4byte "@stringBase0"+0x8B4
+	.4byte 0x00000000
+	.4byte 0x4E54463E
+	.4byte "@stringBase0"+0x8C6
+	.4byte 0x00000000
+	.4byte 0x4E54463F
+	.4byte "@stringBase0"+0x8D5
+	.4byte 0x00000000
+	.4byte 0x4E544640
+	.4byte "@stringBase0"+0x8E6
+	.4byte 0x00000000
+	.4byte 0x4E544641
+	.4byte "@stringBase0"+0x8F9
+	.4byte 0x00000000
+	.4byte 0x4E544641
+	.4byte "@stringBase0"+0x90B
+	.4byte 0x00000000
+	.4byte 0x4E544648
+	.4byte "@stringBase0"+0x919
+	.4byte 0x00000000
+	.4byte 0x4E54464C
+	.4byte "@stringBase0"+0x927
+	.4byte 0x00000000
+	.4byte 0x4E54464A
+	.4byte "@stringBase0"+0x931
+	.4byte 0x00000000
+	.4byte 0x4E544649
+	.4byte "@stringBase0"+0x942
+	.4byte 0x00000000
+	.4byte 0x4E54464B
+	.4byte "@stringBase0"+0x959
+	.4byte 0x00000000
+	.4byte 0x4E544646
+	.4byte "@stringBase0"+0x96B
+	.4byte 0x00000000
+	.4byte 0x4E544647
+	.4byte "@stringBase0"+0x97B
+	.4byte 0x00000000
+	.4byte 0x4E544644
+	.4byte "@stringBase0"+0x98E
+	.4byte 0x00000000
+	.4byte 0x4E544633
+	.4byte "@stringBase0"+0x9A1
+	.4byte 0x00000000
+	.4byte 0x4E544633
+	.4byte "@stringBase0"+0x9B0
+	.4byte 0x00000000
+	.4byte 0x4E544634
+	.4byte "@stringBase0"+0x9BF
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x9CE
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x9DA
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x9E8
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x9F6
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA04
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA18
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA2C
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA40
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA53
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA66
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA79
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA8A
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xA9B
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xAAC
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xABF
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xAD2
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xAE5
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xAF1
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xAFF
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB0D
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB1B
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB2F
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB43
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB57
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB6A
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB7D
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xB90
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xBA1
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xBB2
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xBC3
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xBD6
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xBE9
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xBFC
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC08
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC16
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC24
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC32
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC46
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC5A
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC6E
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC81
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xC94
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xCA7
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xCB8
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xCC9
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xCDA
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xCED
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xD00
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD13
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD1F
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD2D
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD3B
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD49
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD5D
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD71
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD85
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xD98
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xDAB
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xDBE
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xDCF
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xDE0
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xDF1
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xE04
+	.4byte 0x00000000
+	.4byte 0x4E544635
+	.4byte "@stringBase0"+0xE17
+	.4byte 0x00000000
+	.4byte 0x4E544637
+	.4byte "@stringBase0"+0xE2A
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xE42
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xE4E
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xE5C
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xE6A
+.L_80294AB4:
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xE78
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xE8C
+.L_80294ACC:
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xEA0
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xEB4
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xEC7
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xEDA
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xEED
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xEFE
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xF0F
+	.4byte 0x00000000
+	.4byte 0x4E544632
+.L_80294B28:
+	.4byte "@stringBase0"+0xF20
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0xF33
+	.4byte 0x00000000
+	.4byte 0x4E544632
+.L_80294B40:
+	.4byte "@stringBase0"+0xF46
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xF59
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xF65
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xF73
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xF81
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xF8F
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xFA3
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xFB7
+	.4byte 0x00000000
+.L_80294B9C:
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xFCB
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xFDE
+	.4byte 0x00000000
+.L_80294BB4:
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0xFF1
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1004
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1015
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1026
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1037
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x104A
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x105D
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x1070
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x107C
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x108A
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x1098
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x10A6
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x10BA
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x10CE
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x10E2
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x10F5
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x1108
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x111B
+	.4byte 0x00000000
+.L_80294C8C:
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x112C
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x113D
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x114E
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x1161
+	.4byte 0x00000000
+	.4byte 0x4E544632
+	.4byte "@stringBase0"+0x1174
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1187
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1193
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x11A1
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x11AF
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x11BD
+.L_80294D00:
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x11D1
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x11E5
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x11F9
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x120E
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x121F
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1230
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1241
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1254
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1267
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x127A
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x128D
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12A0
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12B3
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12BF
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12CD
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12DB
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12E9
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x12FD
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1311
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1325
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1338
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x134B
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x135E
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x136F
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1380
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1391
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x13A4
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x13B7
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x13CA
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x13D6
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x13E4
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x13F2
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1400
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1414
+	.4byte 0x00000000
+	.4byte 0x4E544631
+.L_80294EA0:
+	.4byte "@stringBase0"+0x1428
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x143C
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x144F
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1462
+	.4byte 0x00000000
+	.4byte 0x4E544631
+.L_80294ED0:
+	.4byte "@stringBase0"+0x1475
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1486
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x1497
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x14A8
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x14BB
+	.4byte 0x00000000
+	.4byte 0x4E544631
+	.4byte "@stringBase0"+0x14CE
+	.4byte 0x00000000
+	.4byte 0x4E544630
+	.4byte "@stringBase0"+0x14E1
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj g_tbltype
+	.4byte 0x00000000
+
+# 0x803CBCC0 - 0x803CBCD0
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj g_modinit, local
+	.skip 0x4
+.endobj g_modinit
+
+.obj g_npcmgr, local
+	.skip 0x4
+.endobj g_npcmgr
+
+.obj g_firstFrameUpdateAllNPC, local
+	.skip 0x4
+.endobj g_firstFrameUpdateAllNPC
+	.skip 0x4
+
+# 0x803CE428 - 0x803CE430
+.section .sdata2, "a"
+.balign 8
+
+.obj "@883", local
+	.4byte 0x3C888889
+.endobj "@883"
+	.4byte 0x00000000

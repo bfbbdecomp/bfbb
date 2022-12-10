@@ -1,0 +1,262 @@
+.include "macros.inc"
+.file "C:\\Devel\\Projects\\bink\\ngcyuy2.c"
+
+# 0x801AC988 - 0x801ACB6C
+.text
+.balign 4
+.sym gcc2_compiled., local
+
+.fn VarBitsCopy, global
+/* 801AC988 001A9A68  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801AC98C 001A9A6C  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801AC990 001A9A70  28 05 00 07 */	cmplwi r5, 0x7
+/* 801AC994 001A9A74  40 81 00 E0 */	ble .L_801ACA74
+/* 801AC998 001A9A78  3D 20 80 27 */	lis r9, VarBitsLens@ha
+/* 801AC99C 001A9A7C  3B E0 00 20 */	li r31, 0x20
+/* 801AC9A0 001A9A80  39 89 53 00 */	addi r12, r9, VarBitsLens@l
+.L_801AC9A4:
+/* 801AC9A4 001A9A84  80 E4 00 0C */	lwz r7, 0xc(r4)
+/* 801AC9A8 001A9A88  28 07 00 07 */	cmplwi r7, 0x7
+/* 801AC9AC 001A9A8C  40 81 00 20 */	ble .L_801AC9CC
+/* 801AC9B0 001A9A90  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801AC9B4 001A9A94  39 27 FF F8 */	addi r9, r7, -0x8
+/* 801AC9B8 001A9A98  91 24 00 0C */	stw r9, 0xc(r4)
+/* 801AC9BC 001A9A9C  54 0B C2 3E */	srwi r11, r0, 8
+/* 801AC9C0 001A9AA0  54 06 06 3E */	clrlwi r6, r0, 24
+/* 801AC9C4 001A9AA4  91 64 00 08 */	stw r11, 0x8(r4)
+/* 801AC9C8 001A9AA8  48 00 00 38 */	b .L_801ACA00
+.L_801AC9CC:
+/* 801AC9CC 001A9AAC  81 24 00 00 */	lwz r9, 0x0(r4)
+/* 801AC9D0 001A9AB0  21 67 00 08 */	subfic r11, r7, 0x8
+/* 801AC9D4 001A9AB4  81 04 00 08 */	lwz r8, 0x8(r4)
+/* 801AC9D8 001A9AB8  39 47 00 18 */	addi r10, r7, 0x18
+/* 801AC9DC 001A9ABC  80 09 00 00 */	lwz r0, 0x0(r9)
+/* 801AC9E0 001A9AC0  39 29 00 04 */	addi r9, r9, 0x4
+/* 801AC9E4 001A9AC4  91 44 00 0C */	stw r10, 0xc(r4)
+/* 801AC9E8 001A9AC8  7C 0B 5C 30 */	srw r11, r0, r11
+/* 801AC9EC 001A9ACC  91 24 00 00 */	stw r9, 0x0(r4)
+/* 801AC9F0 001A9AD0  7C 00 38 30 */	slw r0, r0, r7
+/* 801AC9F4 001A9AD4  91 64 00 08 */	stw r11, 0x8(r4)
+/* 801AC9F8 001A9AD8  7D 08 03 78 */	or r8, r8, r0
+/* 801AC9FC 001A9ADC  55 06 06 3E */	clrlwi r6, r8, 24
+.L_801ACA00:
+/* 801ACA00 001A9AE0  7C 0C F8 2E */	lwzx r0, r12, r31
+/* 801ACA04 001A9AE4  81 23 00 0C */	lwz r9, 0xc(r3)
+/* 801ACA08 001A9AE8  81 63 00 08 */	lwz r11, 0x8(r3)
+/* 801ACA0C 001A9AEC  7C C8 00 38 */	and r8, r6, r0
+/* 801ACA10 001A9AF0  7D 00 48 30 */	slw r0, r8, r9
+/* 801ACA14 001A9AF4  39 29 00 08 */	addi r9, r9, 0x8
+/* 801ACA18 001A9AF8  7D 6B 03 78 */	or r11, r11, r0
+/* 801ACA1C 001A9AFC  28 09 00 1F */	cmplwi r9, 0x1f
+/* 801ACA20 001A9B00  91 63 00 08 */	stw r11, 0x8(r3)
+/* 801ACA24 001A9B04  91 23 00 0C */	stw r9, 0xc(r3)
+/* 801ACA28 001A9B08  40 81 00 40 */	ble .L_801ACA68
+/* 801ACA2C 001A9B0C  81 23 00 00 */	lwz r9, 0x0(r3)
+/* 801ACA30 001A9B10  91 69 00 00 */	stw r11, 0x0(r9)
+/* 801ACA34 001A9B14  81 63 00 00 */	lwz r11, 0x0(r3)
+/* 801ACA38 001A9B18  81 23 00 0C */	lwz r9, 0xc(r3)
+/* 801ACA3C 001A9B1C  39 6B 00 04 */	addi r11, r11, 0x4
+/* 801ACA40 001A9B20  39 29 FF E0 */	addi r9, r9, -0x20
+/* 801ACA44 001A9B24  91 63 00 00 */	stw r11, 0x0(r3)
+/* 801ACA48 001A9B28  91 23 00 0C */	stw r9, 0xc(r3)
+/* 801ACA4C 001A9B2C  2C 09 00 00 */	cmpwi r9, 0x0
+/* 801ACA50 001A9B30  41 82 00 14 */	beq .L_801ACA64
+/* 801ACA54 001A9B34  20 09 00 08 */	subfic r0, r9, 0x8
+/* 801ACA58 001A9B38  7D 00 04 30 */	srw r0, r8, r0
+/* 801ACA5C 001A9B3C  90 03 00 08 */	stw r0, 0x8(r3)
+/* 801ACA60 001A9B40  48 00 00 08 */	b .L_801ACA68
+.L_801ACA64:
+/* 801ACA64 001A9B44  91 23 00 08 */	stw r9, 0x8(r3)
+.L_801ACA68:
+/* 801ACA68 001A9B48  38 A5 FF F8 */	addi r5, r5, -0x8
+/* 801ACA6C 001A9B4C  28 05 00 07 */	cmplwi r5, 0x7
+/* 801ACA70 001A9B50  41 81 FF 34 */	bgt .L_801AC9A4
+.L_801ACA74:
+/* 801ACA74 001A9B54  2C 05 00 00 */	cmpwi r5, 0x0
+/* 801ACA78 001A9B58  41 82 00 E8 */	beq .L_801ACB60
+/* 801ACA7C 001A9B5C  81 84 00 0C */	lwz r12, 0xc(r4)
+/* 801ACA80 001A9B60  7C 0C 28 40 */	cmplw r12, r5
+/* 801ACA84 001A9B64  41 80 00 2C */	blt .L_801ACAB0
+/* 801ACA88 001A9B68  81 04 00 08 */	lwz r8, 0x8(r4)
+/* 801ACA8C 001A9B6C  21 25 00 20 */	subfic r9, r5, 0x20
+/* 801ACA90 001A9B70  38 00 FF FF */	li r0, -0x1
+/* 801ACA94 001A9B74  7D 65 60 50 */	subf r11, r5, r12
+/* 801ACA98 001A9B78  7C 00 4C 30 */	srw r0, r0, r9
+/* 801ACA9C 001A9B7C  7D 0A 2C 30 */	srw r10, r8, r5
+/* 801ACAA0 001A9B80  91 64 00 0C */	stw r11, 0xc(r4)
+/* 801ACAA4 001A9B84  7D 06 00 38 */	and r6, r8, r0
+/* 801ACAA8 001A9B88  91 44 00 08 */	stw r10, 0x8(r4)
+/* 801ACAAC 001A9B8C  48 00 00 48 */	b .L_801ACAF4
+.L_801ACAB0:
+/* 801ACAB0 001A9B90  81 64 00 00 */	lwz r11, 0x0(r4)
+/* 801ACAB4 001A9B94  7D 4C 28 50 */	subf r10, r12, r5
+/* 801ACAB8 001A9B98  81 04 00 08 */	lwz r8, 0x8(r4)
+/* 801ACABC 001A9B9C  38 E5 FF E0 */	addi r7, r5, -0x20
+/* 801ACAC0 001A9BA0  81 2B 00 00 */	lwz r9, 0x0(r11)
+/* 801ACAC4 001A9BA4  20 C5 00 20 */	subfic r6, r5, 0x20
+/* 801ACAC8 001A9BA8  7C E7 60 50 */	subf r7, r7, r12
+/* 801ACACC 001A9BAC  39 6B 00 04 */	addi r11, r11, 0x4
+/* 801ACAD0 001A9BB0  7D 2A 54 30 */	srw r10, r9, r10
+/* 801ACAD4 001A9BB4  38 00 FF FF */	li r0, -0x1
+/* 801ACAD8 001A9BB8  7D 29 60 30 */	slw r9, r9, r12
+/* 801ACADC 001A9BBC  7C 00 34 30 */	srw r0, r0, r6
+/* 801ACAE0 001A9BC0  7D 08 4B 78 */	or r8, r8, r9
+/* 801ACAE4 001A9BC4  91 64 00 00 */	stw r11, 0x0(r4)
+/* 801ACAE8 001A9BC8  91 44 00 08 */	stw r10, 0x8(r4)
+/* 801ACAEC 001A9BCC  7D 06 00 38 */	and r6, r8, r0
+/* 801ACAF0 001A9BD0  90 E4 00 0C */	stw r7, 0xc(r4)
+.L_801ACAF4:
+/* 801ACAF4 001A9BD4  3D 20 80 27 */	lis r9, VarBitsLens@ha
+/* 801ACAF8 001A9BD8  54 AB 10 3A */	slwi r11, r5, 2
+/* 801ACAFC 001A9BDC  39 29 53 00 */	addi r9, r9, VarBitsLens@l
+/* 801ACB00 001A9BE0  80 03 00 0C */	lwz r0, 0xc(r3)
+/* 801ACB04 001A9BE4  7D 49 58 2E */	lwzx r10, r9, r11
+/* 801ACB08 001A9BE8  7D 20 2A 14 */	add r9, r0, r5
+/* 801ACB0C 001A9BEC  81 03 00 08 */	lwz r8, 0x8(r3)
+/* 801ACB10 001A9BF0  7C C7 50 38 */	and r7, r6, r10
+/* 801ACB14 001A9BF4  28 09 00 1F */	cmplwi r9, 0x1f
+/* 801ACB18 001A9BF8  7C E0 00 30 */	slw r0, r7, r0
+/* 801ACB1C 001A9BFC  91 23 00 0C */	stw r9, 0xc(r3)
+/* 801ACB20 001A9C00  7D 08 03 78 */	or r8, r8, r0
+/* 801ACB24 001A9C04  91 03 00 08 */	stw r8, 0x8(r3)
+/* 801ACB28 001A9C08  40 81 00 38 */	ble .L_801ACB60
+/* 801ACB2C 001A9C0C  81 23 00 00 */	lwz r9, 0x0(r3)
+/* 801ACB30 001A9C10  91 09 00 00 */	stw r8, 0x0(r9)
+/* 801ACB34 001A9C14  81 63 00 00 */	lwz r11, 0x0(r3)
+/* 801ACB38 001A9C18  81 23 00 0C */	lwz r9, 0xc(r3)
+/* 801ACB3C 001A9C1C  39 6B 00 04 */	addi r11, r11, 0x4
+/* 801ACB40 001A9C20  38 09 FF E0 */	addi r0, r9, -0x20
+/* 801ACB44 001A9C24  91 63 00 00 */	stw r11, 0x0(r3)
+/* 801ACB48 001A9C28  90 03 00 0C */	stw r0, 0xc(r3)
+/* 801ACB4C 001A9C2C  2C 00 00 00 */	cmpwi r0, 0x0
+/* 801ACB50 001A9C30  41 82 00 0C */	beq .L_801ACB5C
+/* 801ACB54 001A9C34  7C 00 28 50 */	subf r0, r0, r5
+/* 801ACB58 001A9C38  7C E0 04 30 */	srw r0, r7, r0
+.L_801ACB5C:
+/* 801ACB5C 001A9C3C  90 03 00 08 */	stw r0, 0x8(r3)
+.L_801ACB60:
+/* 801ACB60 001A9C40  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801ACB64 001A9C44  38 21 00 10 */	addi r1, r1, 0x10
+/* 801ACB68 001A9C48  4E 80 00 20 */	blr
+.endfn VarBitsCopy
+
+# 0x80275300 - 0x80275480
+.rodata
+.balign 4
+
+.obj VarBitsLens, global
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0x00000003
+	.4byte 0x00000007
+	.4byte 0x0000000F
+	.4byte 0x0000001F
+	.4byte 0x0000003F
+	.4byte 0x0000007F
+	.4byte 0x000000FF
+	.4byte 0x000001FF
+	.4byte 0x000003FF
+	.4byte 0x000007FF
+	.4byte 0x00000FFF
+	.4byte 0x00001FFF
+	.4byte 0x00003FFF
+	.4byte 0x00007FFF
+	.4byte 0x0000FFFF
+	.4byte 0x0001FFFF
+	.4byte 0x0003FFFF
+	.4byte 0x0007FFFF
+	.4byte 0x000FFFFF
+	.4byte 0x001FFFFF
+	.4byte 0x003FFFFF
+	.4byte 0x007FFFFF
+	.4byte 0x00FFFFFF
+	.4byte 0x01FFFFFF
+	.4byte 0x03FFFFFF
+	.4byte 0x07FFFFFF
+	.4byte 0x0FFFFFFF
+	.4byte 0x1FFFFFFF
+	.4byte 0x3FFFFFFF
+	.4byte 0x7FFFFFFF
+	.4byte 0xFFFFFFFF
+.endobj VarBitsLens
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+
+.obj _bitlevels, global
+	.4byte 0x00010202
+	.4byte 0x03030303
+	.4byte 0x04040404
+	.4byte 0x04040404
+	.4byte 0x05050505
+	.4byte 0x05050505
+	.4byte 0x05050505
+	.4byte 0x05050505
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x06060606
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.4byte 0x07070707
+	.byte 0x08
+.endobj _bitlevels
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.byte 0x00, 0x00, 0x00
+
+# 0x803CFC30 - 0x803CFC40
+.section .sdata2, "a"
+.balign 4
+
+.obj VarBitsLensalign, global
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj VarBitsLensalign
+
+.obj _bitlevelsalign, global
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj _bitlevelsalign

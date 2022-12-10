@@ -1,0 +1,439 @@
+.include "macros.inc"
+.file "GXTransform.c"
+
+# 0x801CFB90 - 0x801D0124
+.text
+.balign 4
+
+.fn GXSetProjection, global
+/* 801CFB90 001CCC70  80 A2 B2 F8 */	lwz r5, __GXData@sda21(r2)
+/* 801CFB94 001CCC74  2C 04 00 01 */	cmpwi r4, 0x1
+/* 801CFB98 001CCC78  90 85 04 D8 */	stw r4, 0x4d8(r5)
+/* 801CFB9C 001CCC7C  C0 03 00 00 */	lfs f0, 0x0(r3)
+/* 801CFBA0 001CCC80  D0 05 04 DC */	stfs f0, 0x4dc(r5)
+/* 801CFBA4 001CCC84  C0 03 00 14 */	lfs f0, 0x14(r3)
+/* 801CFBA8 001CCC88  D0 05 04 E4 */	stfs f0, 0x4e4(r5)
+/* 801CFBAC 001CCC8C  C0 03 00 28 */	lfs f0, 0x28(r3)
+/* 801CFBB0 001CCC90  D0 05 04 EC */	stfs f0, 0x4ec(r5)
+/* 801CFBB4 001CCC94  C0 03 00 2C */	lfs f0, 0x2c(r3)
+/* 801CFBB8 001CCC98  D0 05 04 F0 */	stfs f0, 0x4f0(r5)
+/* 801CFBBC 001CCC9C  40 82 00 18 */	bne .L_801CFBD4
+/* 801CFBC0 001CCCA0  C0 03 00 0C */	lfs f0, 0xc(r3)
+/* 801CFBC4 001CCCA4  D0 05 04 E0 */	stfs f0, 0x4e0(r5)
+/* 801CFBC8 001CCCA8  C0 03 00 1C */	lfs f0, 0x1c(r3)
+/* 801CFBCC 001CCCAC  D0 05 04 E8 */	stfs f0, 0x4e8(r5)
+/* 801CFBD0 001CCCB0  48 00 00 14 */	b .L_801CFBE4
+.L_801CFBD4:
+/* 801CFBD4 001CCCB4  C0 03 00 08 */	lfs f0, 0x8(r3)
+/* 801CFBD8 001CCCB8  D0 05 04 E0 */	stfs f0, 0x4e0(r5)
+/* 801CFBDC 001CCCBC  C0 03 00 18 */	lfs f0, 0x18(r3)
+/* 801CFBE0 001CCCC0  D0 05 04 E8 */	stfs f0, 0x4e8(r5)
+.L_801CFBE4:
+/* 801CFBE4 001CCCC4  3C A0 CC 01 */	lis r5, 0xcc01
+/* 801CFBE8 001CCCC8  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CFBEC 001CCCCC  38 00 00 10 */	li r0, 0x10
+/* 801CFBF0 001CCCD0  3C 60 00 06 */	lis r3, 0x6
+/* 801CFBF4 001CCCD4  98 05 80 00 */	stb r0, -0x8000(r5)
+/* 801CFBF8 001CCCD8  38 03 10 20 */	addi r0, r3, 0x1020
+/* 801CFBFC 001CCCDC  90 05 80 00 */	stw r0, -0x8000(r5)
+/* 801CFC00 001CCCE0  38 C5 80 00 */	addi r6, r5, -0x8000
+/* 801CFC04 001CCCE4  38 64 04 DC */	addi r3, r4, 0x4dc
+/* 801CFC08 001CCCE8  E0 43 00 00 */	psq_l f2, 0x0(r3), 0, qr0
+/* 801CFC0C 001CCCEC  E0 23 00 08 */	psq_l f1, 0x8(r3), 0, qr0
+/* 801CFC10 001CCCF0  E0 03 00 10 */	psq_l f0, 0x10(r3), 0, qr0
+/* 801CFC14 001CCCF4  F0 46 00 00 */	psq_st f2, 0x0(r6), 0, qr0
+/* 801CFC18 001CCCF8  F0 26 00 00 */	psq_st f1, 0x0(r6), 0, qr0
+/* 801CFC1C 001CCCFC  F0 06 00 00 */	psq_st f0, 0x0(r6), 0, qr0
+/* 801CFC20 001CCD00  80 64 04 D8 */	lwz r3, 0x4d8(r4)
+/* 801CFC24 001CCD04  38 00 00 01 */	li r0, 0x1
+/* 801CFC28 001CCD08  90 65 80 00 */	stw r3, -0x8000(r5)
+/* 801CFC2C 001CCD0C  B0 04 00 02 */	sth r0, 0x2(r4)
+/* 801CFC30 001CCD10  4E 80 00 20 */	blr
+.endfn GXSetProjection
+
+.fn GXSetProjectionv, global
+/* 801CFC34 001CCD14  C0 22 B3 D8 */	lfs f1, "@26"@sda21(r2)
+/* 801CFC38 001CCD18  C0 03 00 00 */	lfs f0, 0x0(r3)
+/* 801CFC3C 001CCD1C  FC 01 00 00 */	fcmpu cr0, f1, f0
+/* 801CFC40 001CCD20  40 82 00 0C */	bne .L_801CFC4C
+/* 801CFC44 001CCD24  38 00 00 00 */	li r0, 0x0
+/* 801CFC48 001CCD28  48 00 00 08 */	b .L_801CFC50
+.L_801CFC4C:
+/* 801CFC4C 001CCD2C  38 00 00 01 */	li r0, 0x1
+.L_801CFC50:
+/* 801CFC50 001CCD30  80 A2 B2 F8 */	lwz r5, __GXData@sda21(r2)
+/* 801CFC54 001CCD34  38 63 00 04 */	addi r3, r3, 0x4
+/* 801CFC58 001CCD38  90 05 04 D8 */	stw r0, 0x4d8(r5)
+/* 801CFC5C 001CCD3C  38 C5 04 DC */	addi r6, r5, 0x4dc
+/* 801CFC60 001CCD40  E0 43 00 00 */	psq_l f2, 0x0(r3), 0, qr0
+/* 801CFC64 001CCD44  E0 23 00 08 */	psq_l f1, 0x8(r3), 0, qr0
+/* 801CFC68 001CCD48  E0 03 00 10 */	psq_l f0, 0x10(r3), 0, qr0
+/* 801CFC6C 001CCD4C  F0 46 00 00 */	psq_st f2, 0x0(r6), 0, qr0
+/* 801CFC70 001CCD50  F0 26 00 08 */	psq_st f1, 0x8(r6), 0, qr0
+/* 801CFC74 001CCD54  F0 06 00 10 */	psq_st f0, 0x10(r6), 0, qr0
+/* 801CFC78 001CCD58  3C 80 CC 01 */	lis r4, 0xcc01
+/* 801CFC7C 001CCD5C  38 00 00 10 */	li r0, 0x10
+/* 801CFC80 001CCD60  3C 60 00 06 */	lis r3, 0x6
+/* 801CFC84 001CCD64  98 04 80 00 */	stb r0, -0x8000(r4)
+/* 801CFC88 001CCD68  38 03 10 20 */	addi r0, r3, 0x1020
+/* 801CFC8C 001CCD6C  90 04 80 00 */	stw r0, -0x8000(r4)
+/* 801CFC90 001CCD70  38 64 80 00 */	addi r3, r4, -0x8000
+/* 801CFC94 001CCD74  E0 46 00 00 */	psq_l f2, 0x0(r6), 0, qr0
+/* 801CFC98 001CCD78  E0 26 00 08 */	psq_l f1, 0x8(r6), 0, qr0
+/* 801CFC9C 001CCD7C  E0 06 00 10 */	psq_l f0, 0x10(r6), 0, qr0
+/* 801CFCA0 001CCD80  F0 43 00 00 */	psq_st f2, 0x0(r3), 0, qr0
+/* 801CFCA4 001CCD84  F0 23 00 00 */	psq_st f1, 0x0(r3), 0, qr0
+/* 801CFCA8 001CCD88  F0 03 00 00 */	psq_st f0, 0x0(r3), 0, qr0
+/* 801CFCAC 001CCD8C  80 65 04 D8 */	lwz r3, 0x4d8(r5)
+/* 801CFCB0 001CCD90  38 00 00 01 */	li r0, 0x1
+/* 801CFCB4 001CCD94  90 64 80 00 */	stw r3, -0x8000(r4)
+/* 801CFCB8 001CCD98  B0 05 00 02 */	sth r0, 0x2(r5)
+/* 801CFCBC 001CCD9C  4E 80 00 20 */	blr
+.endfn GXSetProjectionv
+
+.fn GXGetProjectionv, global
+/* 801CFCC0 001CCDA0  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CFCC4 001CCDA4  80 04 04 D8 */	lwz r0, 0x4d8(r4)
+/* 801CFCC8 001CCDA8  28 00 00 00 */	cmplwi r0, 0x0
+/* 801CFCCC 001CCDAC  41 82 00 0C */	beq .L_801CFCD8
+/* 801CFCD0 001CCDB0  C0 02 B3 DC */	lfs f0, "@27"@sda21(r2)
+/* 801CFCD4 001CCDB4  48 00 00 08 */	b .L_801CFCDC
+.L_801CFCD8:
+/* 801CFCD8 001CCDB8  C0 02 B3 D8 */	lfs f0, "@26"@sda21(r2)
+.L_801CFCDC:
+/* 801CFCDC 001CCDBC  D0 03 00 00 */	stfs f0, 0x0(r3)
+/* 801CFCE0 001CCDC0  38 83 00 04 */	addi r4, r3, 0x4
+/* 801CFCE4 001CCDC4  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CFCE8 001CCDC8  38 63 04 DC */	addi r3, r3, 0x4dc
+/* 801CFCEC 001CCDCC  E0 43 00 00 */	psq_l f2, 0x0(r3), 0, qr0
+/* 801CFCF0 001CCDD0  E0 23 00 08 */	psq_l f1, 0x8(r3), 0, qr0
+/* 801CFCF4 001CCDD4  E0 03 00 10 */	psq_l f0, 0x10(r3), 0, qr0
+/* 801CFCF8 001CCDD8  F0 44 00 00 */	psq_st f2, 0x0(r4), 0, qr0
+/* 801CFCFC 001CCDDC  F0 24 00 08 */	psq_st f1, 0x8(r4), 0, qr0
+/* 801CFD00 001CCDE0  F0 04 00 10 */	psq_st f0, 0x10(r4), 0, qr0
+/* 801CFD04 001CCDE4  4E 80 00 20 */	blr
+.endfn GXGetProjectionv
+
+.fn GXLoadPosMtxImm, global
+/* 801CFD08 001CCDE8  3C A0 CC 01 */	lis r5, 0xcc01
+/* 801CFD0C 001CCDEC  38 00 00 10 */	li r0, 0x10
+/* 801CFD10 001CCDF0  54 84 10 3A */	slwi r4, r4, 2
+/* 801CFD14 001CCDF4  98 05 80 00 */	stb r0, -0x8000(r5)
+/* 801CFD18 001CCDF8  64 80 00 0B */	oris r0, r4, 0xb
+/* 801CFD1C 001CCDFC  90 05 80 00 */	stw r0, -0x8000(r5)
+/* 801CFD20 001CCE00  38 85 80 00 */	addi r4, r5, -0x8000
+/* 801CFD24 001CCE04  E0 A3 00 00 */	psq_l f5, 0x0(r3), 0, qr0
+/* 801CFD28 001CCE08  E0 83 00 08 */	psq_l f4, 0x8(r3), 0, qr0
+/* 801CFD2C 001CCE0C  E0 63 00 10 */	psq_l f3, 0x10(r3), 0, qr0
+/* 801CFD30 001CCE10  E0 43 00 18 */	psq_l f2, 0x18(r3), 0, qr0
+/* 801CFD34 001CCE14  E0 23 00 20 */	psq_l f1, 0x20(r3), 0, qr0
+/* 801CFD38 001CCE18  E0 03 00 28 */	psq_l f0, 0x28(r3), 0, qr0
+/* 801CFD3C 001CCE1C  F0 A4 00 00 */	psq_st f5, 0x0(r4), 0, qr0
+/* 801CFD40 001CCE20  F0 84 00 00 */	psq_st f4, 0x0(r4), 0, qr0
+/* 801CFD44 001CCE24  F0 64 00 00 */	psq_st f3, 0x0(r4), 0, qr0
+/* 801CFD48 001CCE28  F0 44 00 00 */	psq_st f2, 0x0(r4), 0, qr0
+/* 801CFD4C 001CCE2C  F0 24 00 00 */	psq_st f1, 0x0(r4), 0, qr0
+/* 801CFD50 001CCE30  F0 04 00 00 */	psq_st f0, 0x0(r4), 0, qr0
+/* 801CFD54 001CCE34  4E 80 00 20 */	blr
+.endfn GXLoadPosMtxImm
+
+.fn GXLoadNrmMtxImm, global
+/* 801CFD58 001CCE38  1C A4 00 03 */	mulli r5, r4, 0x3
+/* 801CFD5C 001CCE3C  3C 80 CC 01 */	lis r4, 0xcc01
+/* 801CFD60 001CCE40  38 00 00 10 */	li r0, 0x10
+/* 801CFD64 001CCE44  38 A5 04 00 */	addi r5, r5, 0x400
+/* 801CFD68 001CCE48  98 04 80 00 */	stb r0, -0x8000(r4)
+/* 801CFD6C 001CCE4C  64 A0 00 08 */	oris r0, r5, 0x8
+/* 801CFD70 001CCE50  94 04 80 00 */	stwu r0, -0x8000(r4)
+/* 801CFD74 001CCE54  E0 A3 00 00 */	psq_l f5, 0x0(r3), 0, qr0
+/* 801CFD78 001CCE58  C0 83 00 08 */	lfs f4, 0x8(r3)
+/* 801CFD7C 001CCE5C  E0 63 00 10 */	psq_l f3, 0x10(r3), 0, qr0
+/* 801CFD80 001CCE60  C0 43 00 18 */	lfs f2, 0x18(r3)
+/* 801CFD84 001CCE64  E0 23 00 20 */	psq_l f1, 0x20(r3), 0, qr0
+/* 801CFD88 001CCE68  C0 03 00 28 */	lfs f0, 0x28(r3)
+/* 801CFD8C 001CCE6C  F0 A4 00 00 */	psq_st f5, 0x0(r4), 0, qr0
+/* 801CFD90 001CCE70  D0 84 00 00 */	stfs f4, 0x0(r4)
+/* 801CFD94 001CCE74  F0 64 00 00 */	psq_st f3, 0x0(r4), 0, qr0
+/* 801CFD98 001CCE78  D0 44 00 00 */	stfs f2, 0x0(r4)
+/* 801CFD9C 001CCE7C  F0 24 00 00 */	psq_st f1, 0x0(r4), 0, qr0
+/* 801CFDA0 001CCE80  D0 04 00 00 */	stfs f0, 0x0(r4)
+/* 801CFDA4 001CCE84  4E 80 00 20 */	blr
+.endfn GXLoadNrmMtxImm
+
+.fn GXSetCurrentMtx, global
+/* 801CFDA8 001CCE88  7C 08 02 A6 */	mflr r0
+/* 801CFDAC 001CCE8C  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CFDB0 001CCE90  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801CFDB4 001CCE94  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CFDB8 001CCE98  80 04 00 80 */	lwz r0, 0x80(r4)
+/* 801CFDBC 001CCE9C  50 60 06 BE */	rlwimi r0, r3, 0, 26, 31
+/* 801CFDC0 001CCEA0  38 60 00 00 */	li r3, 0x0
+/* 801CFDC4 001CCEA4  90 04 00 80 */	stw r0, 0x80(r4)
+/* 801CFDC8 001CCEA8  48 00 02 D9 */	bl __GXSetMatrixIndex
+/* 801CFDCC 001CCEAC  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801CFDD0 001CCEB0  38 21 00 08 */	addi r1, r1, 0x8
+/* 801CFDD4 001CCEB4  7C 08 03 A6 */	mtlr r0
+/* 801CFDD8 001CCEB8  4E 80 00 20 */	blr
+.endfn GXSetCurrentMtx
+
+.fn GXLoadTexMtxImm, global
+/* 801CFDDC 001CCEBC  28 04 00 40 */	cmplwi r4, 0x40
+/* 801CFDE0 001CCEC0  41 80 00 14 */	blt .L_801CFDF4
+/* 801CFDE4 001CCEC4  38 04 FF C0 */	addi r0, r4, -0x40
+/* 801CFDE8 001CCEC8  54 04 10 3A */	slwi r4, r0, 2
+/* 801CFDEC 001CCECC  38 E4 05 00 */	addi r7, r4, 0x500
+/* 801CFDF0 001CCED0  48 00 00 08 */	b .L_801CFDF8
+.L_801CFDF4:
+/* 801CFDF4 001CCED4  54 87 10 3A */	slwi r7, r4, 2
+.L_801CFDF8:
+/* 801CFDF8 001CCED8  2C 05 00 01 */	cmpwi r5, 0x1
+/* 801CFDFC 001CCEDC  40 82 00 0C */	bne .L_801CFE08
+/* 801CFE00 001CCEE0  38 80 00 08 */	li r4, 0x8
+/* 801CFE04 001CCEE4  48 00 00 08 */	b .L_801CFE0C
+.L_801CFE08:
+/* 801CFE08 001CCEE8  38 80 00 0C */	li r4, 0xc
+.L_801CFE0C:
+/* 801CFE0C 001CCEEC  38 04 FF FF */	addi r0, r4, -0x1
+/* 801CFE10 001CCEF0  54 06 80 1E */	slwi r6, r0, 16
+/* 801CFE14 001CCEF4  38 00 00 10 */	li r0, 0x10
+/* 801CFE18 001CCEF8  3C 80 CC 01 */	lis r4, 0xcc01
+/* 801CFE1C 001CCEFC  98 04 80 00 */	stb r0, -0x8000(r4)
+/* 801CFE20 001CCF00  7C E0 33 78 */	or r0, r7, r6
+/* 801CFE24 001CCF04  2C 05 00 00 */	cmpwi r5, 0x0
+/* 801CFE28 001CCF08  90 04 80 00 */	stw r0, -0x8000(r4)
+/* 801CFE2C 001CCF0C  40 82 00 3C */	bne .L_801CFE68
+/* 801CFE30 001CCF10  38 84 80 00 */	addi r4, r4, -0x8000
+/* 801CFE34 001CCF14  E0 A3 00 00 */	psq_l f5, 0x0(r3), 0, qr0
+/* 801CFE38 001CCF18  E0 83 00 08 */	psq_l f4, 0x8(r3), 0, qr0
+/* 801CFE3C 001CCF1C  E0 63 00 10 */	psq_l f3, 0x10(r3), 0, qr0
+/* 801CFE40 001CCF20  E0 43 00 18 */	psq_l f2, 0x18(r3), 0, qr0
+/* 801CFE44 001CCF24  E0 23 00 20 */	psq_l f1, 0x20(r3), 0, qr0
+/* 801CFE48 001CCF28  E0 03 00 28 */	psq_l f0, 0x28(r3), 0, qr0
+/* 801CFE4C 001CCF2C  F0 A4 00 00 */	psq_st f5, 0x0(r4), 0, qr0
+/* 801CFE50 001CCF30  F0 84 00 00 */	psq_st f4, 0x0(r4), 0, qr0
+/* 801CFE54 001CCF34  F0 64 00 00 */	psq_st f3, 0x0(r4), 0, qr0
+/* 801CFE58 001CCF38  F0 44 00 00 */	psq_st f2, 0x0(r4), 0, qr0
+/* 801CFE5C 001CCF3C  F0 24 00 00 */	psq_st f1, 0x0(r4), 0, qr0
+/* 801CFE60 001CCF40  F0 04 00 00 */	psq_st f0, 0x0(r4), 0, qr0
+/* 801CFE64 001CCF44  4E 80 00 20 */	blr
+.L_801CFE68:
+/* 801CFE68 001CCF48  38 84 80 00 */	addi r4, r4, -0x8000
+/* 801CFE6C 001CCF4C  E0 63 00 00 */	psq_l f3, 0x0(r3), 0, qr0
+/* 801CFE70 001CCF50  E0 43 00 08 */	psq_l f2, 0x8(r3), 0, qr0
+/* 801CFE74 001CCF54  E0 23 00 10 */	psq_l f1, 0x10(r3), 0, qr0
+/* 801CFE78 001CCF58  E0 03 00 18 */	psq_l f0, 0x18(r3), 0, qr0
+/* 801CFE7C 001CCF5C  F0 64 00 00 */	psq_st f3, 0x0(r4), 0, qr0
+/* 801CFE80 001CCF60  F0 44 00 00 */	psq_st f2, 0x0(r4), 0, qr0
+/* 801CFE84 001CCF64  F0 24 00 00 */	psq_st f1, 0x0(r4), 0, qr0
+/* 801CFE88 001CCF68  F0 04 00 00 */	psq_st f0, 0x0(r4), 0, qr0
+/* 801CFE8C 001CCF6C  4E 80 00 20 */	blr
+.endfn GXLoadTexMtxImm
+
+.fn __GXSetViewport, global
+/* 801CFE90 001CCF70  80 C2 B2 F8 */	lwz r6, __GXData@sda21(r2)
+/* 801CFE94 001CCF74  3C 60 00 05 */	lis r3, 0x5
+/* 801CFE98 001CCF78  C0 22 B3 E0 */	lfs f1, "@28"@sda21(r2)
+/* 801CFE9C 001CCF7C  38 A0 00 10 */	li r5, 0x10
+/* 801CFEA0 001CCF80  C0 66 05 00 */	lfs f3, 0x500(r6)
+/* 801CFEA4 001CCF84  C0 46 04 FC */	lfs f2, 0x4fc(r6)
+/* 801CFEA8 001CCF88  3C 80 CC 01 */	lis r4, 0xcc01
+/* 801CFEAC 001CCF8C  FC 00 18 50 */	fneg f0, f3
+/* 801CFEB0 001CCF90  C0 A6 04 F4 */	lfs f5, 0x4f4(r6)
+/* 801CFEB4 001CCF94  EC E2 00 72 */	fmuls f7, f2, f1
+/* 801CFEB8 001CCF98  C0 86 04 F8 */	lfs f4, 0x4f8(r6)
+/* 801CFEBC 001CCF9C  38 03 10 1A */	addi r0, r3, 0x101a
+/* 801CFEC0 001CCFA0  EC 63 00 72 */	fmuls f3, f3, f1
+/* 801CFEC4 001CCFA4  C0 46 05 08 */	lfs f2, 0x508(r6)
+/* 801CFEC8 001CCFA8  C0 C6 05 10 */	lfs f6, 0x510(r6)
+/* 801CFECC 001CCFAC  ED 00 00 72 */	fmuls f8, f0, f1
+/* 801CFED0 001CCFB0  C0 26 05 04 */	lfs f1, 0x504(r6)
+/* 801CFED4 001CCFB4  C0 06 05 0C */	lfs f0, 0x50c(r6)
+/* 801CFED8 001CCFB8  ED 22 01 B2 */	fmuls f9, f2, f6
+/* 801CFEDC 001CCFBC  EC 21 01 B2 */	fmuls f1, f1, f6
+/* 801CFEE0 001CCFC0  C0 C2 B3 E4 */	lfs f6, "@201"@sda21(r2)
+/* 801CFEE4 001CCFC4  98 A4 80 00 */	stb r5, -0x8000(r4)
+/* 801CFEE8 001CCFC8  EC A5 38 2A */	fadds f5, f5, f7
+/* 801CFEEC 001CCFCC  90 04 80 00 */	stw r0, -0x8000(r4)
+/* 801CFEF0 001CCFD0  EC 44 18 2A */	fadds f2, f4, f3
+/* 801CFEF4 001CCFD4  D0 E4 80 00 */	stfs f7, -0x8000(r4)
+/* 801CFEF8 001CCFD8  EC 29 08 28 */	fsubs f1, f9, f1
+/* 801CFEFC 001CCFDC  EC 66 28 2A */	fadds f3, f6, f5
+/* 801CFF00 001CCFE0  D1 04 80 00 */	stfs f8, -0x8000(r4)
+/* 801CFF04 001CCFE4  EC 46 10 2A */	fadds f2, f6, f2
+/* 801CFF08 001CCFE8  D0 24 80 00 */	stfs f1, -0x8000(r4)
+/* 801CFF0C 001CCFEC  EC 09 00 2A */	fadds f0, f9, f0
+/* 801CFF10 001CCFF0  D0 64 80 00 */	stfs f3, -0x8000(r4)
+/* 801CFF14 001CCFF4  D0 44 80 00 */	stfs f2, -0x8000(r4)
+/* 801CFF18 001CCFF8  D0 04 80 00 */	stfs f0, -0x8000(r4)
+/* 801CFF1C 001CCFFC  4E 80 00 20 */	blr
+.endfn __GXSetViewport
+
+.fn GXSetViewportJitter, global
+/* 801CFF20 001CD000  7C 08 02 A6 */	mflr r0
+/* 801CFF24 001CD004  28 03 00 00 */	cmplwi r3, 0x0
+/* 801CFF28 001CD008  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CFF2C 001CD00C  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801CFF30 001CD010  40 82 00 0C */	bne .L_801CFF3C
+/* 801CFF34 001CD014  C0 02 B3 E0 */	lfs f0, "@28"@sda21(r2)
+/* 801CFF38 001CD018  EC 42 00 28 */	fsubs f2, f2, f0
+.L_801CFF3C:
+/* 801CFF3C 001CD01C  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CFF40 001CD020  D0 23 04 F4 */	stfs f1, 0x4f4(r3)
+/* 801CFF44 001CD024  D0 43 04 F8 */	stfs f2, 0x4f8(r3)
+/* 801CFF48 001CD028  D0 63 04 FC */	stfs f3, 0x4fc(r3)
+/* 801CFF4C 001CD02C  D0 83 05 00 */	stfs f4, 0x500(r3)
+/* 801CFF50 001CD030  D0 A3 05 04 */	stfs f5, 0x504(r3)
+/* 801CFF54 001CD034  D0 C3 05 08 */	stfs f6, 0x508(r3)
+/* 801CFF58 001CD038  4B FF FF 39 */	bl __GXSetViewport
+/* 801CFF5C 001CD03C  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CFF60 001CD040  38 00 00 01 */	li r0, 0x1
+/* 801CFF64 001CD044  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CFF68 001CD048  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801CFF6C 001CD04C  38 21 00 08 */	addi r1, r1, 0x8
+/* 801CFF70 001CD050  7C 08 03 A6 */	mtlr r0
+/* 801CFF74 001CD054  4E 80 00 20 */	blr
+.endfn GXSetViewportJitter
+
+.fn GXSetViewport, global
+/* 801CFF78 001CD058  7C 08 02 A6 */	mflr r0
+/* 801CFF7C 001CD05C  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CFF80 001CD060  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801CFF84 001CD064  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CFF88 001CD068  D0 23 04 F4 */	stfs f1, 0x4f4(r3)
+/* 801CFF8C 001CD06C  D0 43 04 F8 */	stfs f2, 0x4f8(r3)
+/* 801CFF90 001CD070  D0 63 04 FC */	stfs f3, 0x4fc(r3)
+/* 801CFF94 001CD074  D0 83 05 00 */	stfs f4, 0x500(r3)
+/* 801CFF98 001CD078  D0 A3 05 04 */	stfs f5, 0x504(r3)
+/* 801CFF9C 001CD07C  D0 C3 05 08 */	stfs f6, 0x508(r3)
+/* 801CFFA0 001CD080  4B FF FE F1 */	bl __GXSetViewport
+/* 801CFFA4 001CD084  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CFFA8 001CD088  38 00 00 01 */	li r0, 0x1
+/* 801CFFAC 001CD08C  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CFFB0 001CD090  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801CFFB4 001CD094  38 21 00 08 */	addi r1, r1, 0x8
+/* 801CFFB8 001CD098  7C 08 03 A6 */	mtlr r0
+/* 801CFFBC 001CD09C  4E 80 00 20 */	blr
+.endfn GXSetViewport
+
+.fn GXSetScissor, global
+/* 801CFFC0 001CD0A0  80 E2 B2 F8 */	lwz r7, __GXData@sda21(r2)
+/* 801CFFC4 001CD0A4  38 84 01 56 */	addi r4, r4, 0x156
+/* 801CFFC8 001CD0A8  38 C6 FF FF */	addi r6, r6, -0x1
+/* 801CFFCC 001CD0AC  80 07 00 F8 */	lwz r0, 0xf8(r7)
+/* 801CFFD0 001CD0B0  50 80 05 7E */	rlwimi r0, r4, 0, 21, 31
+/* 801CFFD4 001CD0B4  38 63 01 56 */	addi r3, r3, 0x156
+/* 801CFFD8 001CD0B8  90 07 00 F8 */	stw r0, 0xf8(r7)
+/* 801CFFDC 001CD0BC  39 05 FF FF */	addi r8, r5, -0x1
+/* 801CFFE0 001CD0C0  7C C4 32 14 */	add r6, r4, r6
+/* 801CFFE4 001CD0C4  80 07 00 F8 */	lwz r0, 0xf8(r7)
+/* 801CFFE8 001CD0C8  50 60 62 66 */	rlwimi r0, r3, 12, 9, 19
+/* 801CFFEC 001CD0CC  7D 03 42 14 */	add r8, r3, r8
+/* 801CFFF0 001CD0D0  90 07 00 F8 */	stw r0, 0xf8(r7)
+/* 801CFFF4 001CD0D4  38 A0 00 61 */	li r5, 0x61
+/* 801CFFF8 001CD0D8  3C 80 CC 01 */	lis r4, 0xcc01
+/* 801CFFFC 001CD0DC  80 67 00 FC */	lwz r3, 0xfc(r7)
+/* 801D0000 001CD0E0  50 C3 05 7E */	rlwimi r3, r6, 0, 21, 31
+/* 801D0004 001CD0E4  38 00 00 00 */	li r0, 0x0
+/* 801D0008 001CD0E8  90 67 00 FC */	stw r3, 0xfc(r7)
+/* 801D000C 001CD0EC  80 67 00 FC */	lwz r3, 0xfc(r7)
+/* 801D0010 001CD0F0  51 03 62 66 */	rlwimi r3, r8, 12, 9, 19
+/* 801D0014 001CD0F4  90 67 00 FC */	stw r3, 0xfc(r7)
+/* 801D0018 001CD0F8  98 A4 80 00 */	stb r5, -0x8000(r4)
+/* 801D001C 001CD0FC  80 67 00 F8 */	lwz r3, 0xf8(r7)
+/* 801D0020 001CD100  90 64 80 00 */	stw r3, -0x8000(r4)
+/* 801D0024 001CD104  98 A4 80 00 */	stb r5, -0x8000(r4)
+/* 801D0028 001CD108  80 67 00 FC */	lwz r3, 0xfc(r7)
+/* 801D002C 001CD10C  90 64 80 00 */	stw r3, -0x8000(r4)
+/* 801D0030 001CD110  B0 07 00 02 */	sth r0, 0x2(r7)
+/* 801D0034 001CD114  4E 80 00 20 */	blr
+.endfn GXSetScissor
+
+.fn GXSetScissorBoxOffset, global
+/* 801D0038 001CD118  38 A3 01 56 */	addi r5, r3, 0x156
+/* 801D003C 001CD11C  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801D0040 001CD120  38 04 01 56 */	addi r0, r4, 0x156
+/* 801D0044 001CD124  38 80 00 00 */	li r4, 0x0
+/* 801D0048 001CD128  50 A4 FD BE */	rlwimi r4, r5, 31, 22, 31
+/* 801D004C 001CD12C  38 A4 00 00 */	addi r5, r4, 0x0
+/* 801D0050 001CD130  50 05 4B 2A */	rlwimi r5, r0, 9, 12, 21
+/* 801D0054 001CD134  38 00 00 61 */	li r0, 0x61
+/* 801D0058 001CD138  3C 80 CC 01 */	lis r4, 0xcc01
+/* 801D005C 001CD13C  98 04 80 00 */	stb r0, -0x8000(r4)
+/* 801D0060 001CD140  38 00 00 59 */	li r0, 0x59
+/* 801D0064 001CD144  50 05 C0 0E */	rlwimi r5, r0, 24, 0, 7
+/* 801D0068 001CD148  90 A4 80 00 */	stw r5, -0x8000(r4)
+/* 801D006C 001CD14C  38 00 00 00 */	li r0, 0x0
+/* 801D0070 001CD150  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801D0074 001CD154  4E 80 00 20 */	blr
+.endfn GXSetScissorBoxOffset
+
+.fn GXSetClipMode, global
+/* 801D0078 001CD158  38 00 00 10 */	li r0, 0x10
+/* 801D007C 001CD15C  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801D0080 001CD160  3C C0 CC 01 */	lis r6, 0xcc01
+/* 801D0084 001CD164  98 06 80 00 */	stb r0, -0x8000(r6)
+/* 801D0088 001CD168  38 A0 10 05 */	li r5, 0x1005
+/* 801D008C 001CD16C  38 00 00 01 */	li r0, 0x1
+/* 801D0090 001CD170  90 A6 80 00 */	stw r5, -0x8000(r6)
+/* 801D0094 001CD174  90 66 80 00 */	stw r3, -0x8000(r6)
+/* 801D0098 001CD178  B0 04 00 02 */	sth r0, 0x2(r4)
+/* 801D009C 001CD17C  4E 80 00 20 */	blr
+.endfn GXSetClipMode
+
+.fn __GXSetMatrixIndex, global
+/* 801D00A0 001CD180  2C 03 00 05 */	cmpwi r3, 0x5
+/* 801D00A4 001CD184  40 80 00 3C */	bge .L_801D00E0
+/* 801D00A8 001CD188  38 00 00 08 */	li r0, 0x8
+/* 801D00AC 001CD18C  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801D00B0 001CD190  3C A0 CC 01 */	lis r5, 0xcc01
+/* 801D00B4 001CD194  98 05 80 00 */	stb r0, -0x8000(r5)
+/* 801D00B8 001CD198  38 00 00 30 */	li r0, 0x30
+/* 801D00BC 001CD19C  38 60 00 10 */	li r3, 0x10
+/* 801D00C0 001CD1A0  98 05 80 00 */	stb r0, -0x8000(r5)
+/* 801D00C4 001CD1A4  38 00 10 18 */	li r0, 0x1018
+/* 801D00C8 001CD1A8  80 84 00 80 */	lwz r4, 0x80(r4)
+/* 801D00CC 001CD1AC  90 85 80 00 */	stw r4, -0x8000(r5)
+/* 801D00D0 001CD1B0  98 65 80 00 */	stb r3, -0x8000(r5)
+/* 801D00D4 001CD1B4  90 05 80 00 */	stw r0, -0x8000(r5)
+/* 801D00D8 001CD1B8  90 85 80 00 */	stw r4, -0x8000(r5)
+/* 801D00DC 001CD1BC  48 00 00 38 */	b .L_801D0114
+.L_801D00E0:
+/* 801D00E0 001CD1C0  38 00 00 08 */	li r0, 0x8
+/* 801D00E4 001CD1C4  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801D00E8 001CD1C8  3C A0 CC 01 */	lis r5, 0xcc01
+/* 801D00EC 001CD1CC  98 05 80 00 */	stb r0, -0x8000(r5)
+/* 801D00F0 001CD1D0  38 00 00 40 */	li r0, 0x40
+/* 801D00F4 001CD1D4  38 60 00 10 */	li r3, 0x10
+/* 801D00F8 001CD1D8  98 05 80 00 */	stb r0, -0x8000(r5)
+/* 801D00FC 001CD1DC  38 00 10 19 */	li r0, 0x1019
+/* 801D0100 001CD1E0  80 84 00 84 */	lwz r4, 0x84(r4)
+/* 801D0104 001CD1E4  90 85 80 00 */	stw r4, -0x8000(r5)
+/* 801D0108 001CD1E8  98 65 80 00 */	stb r3, -0x8000(r5)
+/* 801D010C 001CD1EC  90 05 80 00 */	stw r0, -0x8000(r5)
+/* 801D0110 001CD1F0  90 85 80 00 */	stw r4, -0x8000(r5)
+.L_801D0114:
+/* 801D0114 001CD1F4  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801D0118 001CD1F8  38 00 00 01 */	li r0, 0x1
+/* 801D011C 001CD1FC  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801D0120 001CD200  4E 80 00 20 */	blr
+.endfn __GXSetMatrixIndex
+
+# 0x803CFD58 - 0x803CFD68
+.section .sdata2, "a"
+.balign 8
+
+.obj "@26", local
+	.4byte 0x00000000
+.endobj "@26"
+
+.obj "@27", local
+	.4byte 0x3F800000
+.endobj "@27"
+
+.obj "@28", local
+	.4byte 0x3F000000
+.endobj "@28"
+
+.obj "@201", local
+	.4byte 0x43AB0000
+.endobj "@201"

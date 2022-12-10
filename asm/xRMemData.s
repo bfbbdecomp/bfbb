@@ -1,0 +1,136 @@
+.include "macros.inc"
+.file "xRMemData.cpp"
+
+# 0x8010F150 - 0x8010F2C4
+.text
+.balign 4
+
+# RyzMemData::operator new(unsigned long, int, RyzMemGrow*)
+.fn __nw__10RyzMemDataFUliP10RyzMemGrow, global
+/* 8010F150 0010C230  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8010F154 0010C234  7C 08 02 A6 */	mflr r0
+/* 8010F158 0010C238  28 05 00 00 */	cmplwi r5, 0x0
+/* 8010F15C 0010C23C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8010F160 0010C240  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8010F164 0010C244  3B E0 00 01 */	li r31, 0x1
+/* 8010F168 0010C248  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 8010F16C 0010C24C  7C 7E 1B 78 */	mr r30, r3
+/* 8010F170 0010C250  40 82 00 0C */	bne .L_8010F17C
+/* 8010F174 0010C254  3B E0 00 00 */	li r31, 0x0
+/* 8010F178 0010C258  48 00 00 18 */	b .L_8010F190
+.L_8010F17C:
+/* 8010F17C 0010C25C  7C A3 2B 78 */	mr r3, r5
+/* 8010F180 0010C260  48 00 01 45 */	bl IsEnabled__10RyzMemGrowFv
+/* 8010F184 0010C264  2C 03 00 00 */	cmpwi r3, 0x0
+/* 8010F188 0010C268  40 82 00 08 */	bne .L_8010F190
+/* 8010F18C 0010C26C  3B E0 00 00 */	li r31, 0x0
+.L_8010F190:
+/* 8010F190 0010C270  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 8010F194 0010C274  41 82 00 18 */	beq .L_8010F1AC
+/* 8010F198 0010C278  80 6D 89 E0 */	lwz r3, gActiveHeap@sda21(r13)
+/* 8010F19C 0010C27C  7F C4 F3 78 */	mr r4, r30
+/* 8010F1A0 0010C280  4B F2 46 C5 */	bl xMemGrowAlloc__FUiUi
+/* 8010F1A4 0010C284  7C 7F 1B 78 */	mr r31, r3
+/* 8010F1A8 0010C288  48 00 00 18 */	b .L_8010F1C0
+.L_8010F1AC:
+/* 8010F1AC 0010C28C  80 6D 89 E0 */	lwz r3, gActiveHeap@sda21(r13)
+/* 8010F1B0 0010C290  7F C4 F3 78 */	mr r4, r30
+/* 8010F1B4 0010C294  38 A0 00 00 */	li r5, 0x0
+/* 8010F1B8 0010C298  4B F2 47 89 */	bl xMemAlloc__FUiUii
+/* 8010F1BC 0010C29C  7C 7F 1B 78 */	mr r31, r3
+.L_8010F1C0:
+/* 8010F1C0 0010C2A0  7F E3 FB 78 */	mr r3, r31
+/* 8010F1C4 0010C2A4  38 80 00 00 */	li r4, 0x0
+/* 8010F1C8 0010C2A8  38 A0 00 04 */	li r5, 0x4
+/* 8010F1CC 0010C2AC  4B EF 42 8D */	bl memset
+/* 8010F1D0 0010C2B0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8010F1D4 0010C2B4  7F E3 FB 78 */	mr r3, r31
+/* 8010F1D8 0010C2B8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 8010F1DC 0010C2BC  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 8010F1E0 0010C2C0  7C 08 03 A6 */	mtlr r0
+/* 8010F1E4 0010C2C4  38 21 00 10 */	addi r1, r1, 0x10
+/* 8010F1E8 0010C2C8  4E 80 00 20 */	blr
+.endfn __nw__10RyzMemDataFUliP10RyzMemGrow
+
+# RyzMemData::operator delete(void*)
+.fn __dl__10RyzMemDataFPv, global
+/* 8010F1EC 0010C2CC  4E 80 00 20 */	blr
+.endfn __dl__10RyzMemDataFPv
+
+# RyzMemGrow::Init(xBase*)
+.fn Init__10RyzMemGrowFP5xBase, global
+/* 8010F1F0 0010C2D0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8010F1F4 0010C2D4  7C 08 02 A6 */	mflr r0
+/* 8010F1F8 0010C2D8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8010F1FC 0010C2DC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8010F200 0010C2E0  7C 9F 23 78 */	mr r31, r4
+/* 8010F204 0010C2E4  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 8010F208 0010C2E8  7C 7E 1B 78 */	mr r30, r3
+/* 8010F20C 0010C2EC  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 8010F210 0010C2F0  28 00 00 00 */	cmplwi r0, 0x0
+/* 8010F214 0010C2F4  41 82 00 08 */	beq .L_8010F21C
+/* 8010F218 0010C2F8  48 00 00 40 */	b .L_8010F258
+.L_8010F21C:
+/* 8010F21C 0010C2FC  38 60 00 00 */	li r3, 0x0
+/* 8010F220 0010C300  38 00 00 20 */	li r0, 0x20
+/* 8010F224 0010C304  90 7E 00 10 */	stw r3, 0x10(r30)
+/* 8010F228 0010C308  38 A0 00 00 */	li r5, 0x0
+/* 8010F22C 0010C30C  90 7E 00 14 */	stw r3, 0x14(r30)
+/* 8010F230 0010C310  90 7E 00 18 */	stw r3, 0x18(r30)
+/* 8010F234 0010C314  90 1E 00 04 */	stw r0, 0x4(r30)
+/* 8010F238 0010C318  80 6D 89 E0 */	lwz r3, gActiveHeap@sda21(r13)
+/* 8010F23C 0010C31C  80 9E 00 04 */	lwz r4, 0x4(r30)
+/* 8010F240 0010C320  4B F2 47 01 */	bl xMemAlloc__FUiUii
+/* 8010F244 0010C324  90 7E 00 08 */	stw r3, 0x8(r30)
+/* 8010F248 0010C328  38 00 00 01 */	li r0, 0x1
+/* 8010F24C 0010C32C  7F C3 F3 78 */	mr r3, r30
+/* 8010F250 0010C330  93 FE 00 0C */	stw r31, 0xc(r30)
+/* 8010F254 0010C334  90 1E 00 00 */	stw r0, 0x0(r30)
+.L_8010F258:
+/* 8010F258 0010C338  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8010F25C 0010C33C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 8010F260 0010C340  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 8010F264 0010C344  7C 08 03 A6 */	mtlr r0
+/* 8010F268 0010C348  38 21 00 10 */	addi r1, r1, 0x10
+/* 8010F26C 0010C34C  4E 80 00 20 */	blr
+.endfn Init__10RyzMemGrowFP5xBase
+
+# RyzMemGrow::Resume(xBase*)
+.fn Resume__10RyzMemGrowFP5xBase, global
+/* 8010F270 0010C350  80 83 00 10 */	lwz r4, 0x10(r3)
+/* 8010F274 0010C354  38 00 00 03 */	li r0, 0x3
+/* 8010F278 0010C358  90 83 00 04 */	stw r4, 0x4(r3)
+/* 8010F27C 0010C35C  80 83 00 14 */	lwz r4, 0x14(r3)
+/* 8010F280 0010C360  90 83 00 08 */	stw r4, 0x8(r3)
+/* 8010F284 0010C364  80 83 00 18 */	lwz r4, 0x18(r3)
+/* 8010F288 0010C368  90 83 00 0C */	stw r4, 0xc(r3)
+/* 8010F28C 0010C36C  90 03 00 00 */	stw r0, 0x0(r3)
+/* 8010F290 0010C370  4E 80 00 20 */	blr
+.endfn Resume__10RyzMemGrowFP5xBase
+
+# RyzMemGrow::Done()
+.fn Done__10RyzMemGrowFv, global
+/* 8010F294 0010C374  80 83 00 04 */	lwz r4, 0x4(r3)
+/* 8010F298 0010C378  38 00 00 00 */	li r0, 0x0
+/* 8010F29C 0010C37C  90 83 00 10 */	stw r4, 0x10(r3)
+/* 8010F2A0 0010C380  80 83 00 08 */	lwz r4, 0x8(r3)
+/* 8010F2A4 0010C384  90 83 00 14 */	stw r4, 0x14(r3)
+/* 8010F2A8 0010C388  80 83 00 0C */	lwz r4, 0xc(r3)
+/* 8010F2AC 0010C38C  90 83 00 18 */	stw r4, 0x18(r3)
+/* 8010F2B0 0010C390  90 03 00 04 */	stw r0, 0x4(r3)
+/* 8010F2B4 0010C394  90 03 00 08 */	stw r0, 0x8(r3)
+/* 8010F2B8 0010C398  90 03 00 0C */	stw r0, 0xc(r3)
+/* 8010F2BC 0010C39C  90 03 00 00 */	stw r0, 0x0(r3)
+/* 8010F2C0 0010C3A0  4E 80 00 20 */	blr
+.endfn Done__10RyzMemGrowFv
+
+# 0x8010F2C4 - 0x8010F2D0
+.section .text, "ax", unique, 1
+.balign 4
+
+# RyzMemGrow::IsEnabled()
+.fn IsEnabled__10RyzMemGrowFv, weak
+/* 8010F2C4 0010C3A4  80 03 00 00 */	lwz r0, 0x0(r3)
+/* 8010F2C8 0010C3A8  54 03 07 FE */	clrlwi r3, r0, 31
+/* 8010F2CC 0010C3AC  4E 80 00 20 */	blr
+.endfn IsEnabled__10RyzMemGrowFv

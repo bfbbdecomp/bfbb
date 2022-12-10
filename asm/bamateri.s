@@ -1,0 +1,817 @@
+.include "macros.inc"
+.file "bamateri.c"
+
+# 0x80217918 - 0x8021834C
+.text
+.balign 4
+
+.fn _rpReadMaterialRights, global
+/* 80217918 002149F8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8021791C 002149FC  7C 08 02 A6 */	mflr r0
+/* 80217920 00214A00  38 A0 00 04 */	li r5, 0x4
+/* 80217924 00214A04  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217928 00214A08  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8021792C 00214A0C  7C 9F 23 78 */	mr r31, r4
+/* 80217930 00214A10  38 8D 9E C4 */	addi r4, r13, lastSeenRightsPluginId@sda21
+/* 80217934 00214A14  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80217938 00214A18  7C 7E 1B 78 */	mr r30, r3
+/* 8021793C 00214A1C  48 01 79 61 */	bl RwStreamReadInt32
+/* 80217940 00214A20  28 03 00 00 */	cmplwi r3, 0x0
+/* 80217944 00214A24  40 82 00 0C */	bne .L_80217950
+/* 80217948 00214A28  38 60 00 00 */	li r3, 0x0
+/* 8021794C 00214A2C  48 00 00 30 */	b .L_8021797C
+.L_80217950:
+/* 80217950 00214A30  2C 1F 00 08 */	cmpwi r31, 0x8
+/* 80217954 00214A34  40 82 00 24 */	bne .L_80217978
+/* 80217958 00214A38  7F C3 F3 78 */	mr r3, r30
+/* 8021795C 00214A3C  38 8D 9E C0 */	addi r4, r13, lastSeenExtraData@sda21
+/* 80217960 00214A40  38 A0 00 04 */	li r5, 0x4
+/* 80217964 00214A44  48 01 79 39 */	bl RwStreamReadInt32
+/* 80217968 00214A48  28 03 00 00 */	cmplwi r3, 0x0
+/* 8021796C 00214A4C  40 82 00 0C */	bne .L_80217978
+/* 80217970 00214A50  38 60 00 00 */	li r3, 0x0
+/* 80217974 00214A54  48 00 00 08 */	b .L_8021797C
+.L_80217978:
+/* 80217978 00214A58  7F C3 F3 78 */	mr r3, r30
+.L_8021797C:
+/* 8021797C 00214A5C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217980 00214A60  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80217984 00214A64  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80217988 00214A68  7C 08 03 A6 */	mtlr r0
+/* 8021798C 00214A6C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217990 00214A70  4E 80 00 20 */	blr
+.endfn _rpReadMaterialRights
+
+.fn _rpWriteMaterialRights, global
+/* 80217994 00214A74  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217998 00214A78  7C 08 02 A6 */	mflr r0
+/* 8021799C 00214A7C  80 85 00 08 */	lwz r4, 0x8(r5)
+/* 802179A0 00214A80  90 01 00 14 */	stw r0, 0x14(r1)
+/* 802179A4 00214A84  38 84 00 2C */	addi r4, r4, 0x2c
+/* 802179A8 00214A88  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 802179AC 00214A8C  7C BF 2B 78 */	mr r31, r5
+/* 802179B0 00214A90  38 A0 00 04 */	li r5, 0x4
+/* 802179B4 00214A94  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 802179B8 00214A98  7C 7E 1B 78 */	mr r30, r3
+/* 802179BC 00214A9C  48 01 76 F5 */	bl RwStreamWriteInt32
+/* 802179C0 00214AA0  28 03 00 00 */	cmplwi r3, 0x0
+/* 802179C4 00214AA4  40 82 00 0C */	bne .L_802179D0
+/* 802179C8 00214AA8  38 60 00 00 */	li r3, 0x0
+/* 802179CC 00214AAC  48 00 00 2C */	b .L_802179F8
+.L_802179D0:
+/* 802179D0 00214AB0  80 9F 00 08 */	lwz r4, 0x8(r31)
+/* 802179D4 00214AB4  7F C3 F3 78 */	mr r3, r30
+/* 802179D8 00214AB8  38 A0 00 04 */	li r5, 0x4
+/* 802179DC 00214ABC  38 84 00 30 */	addi r4, r4, 0x30
+/* 802179E0 00214AC0  48 01 76 D1 */	bl RwStreamWriteInt32
+/* 802179E4 00214AC4  28 03 00 00 */	cmplwi r3, 0x0
+/* 802179E8 00214AC8  41 82 00 0C */	beq .L_802179F4
+/* 802179EC 00214ACC  7F C3 F3 78 */	mr r3, r30
+/* 802179F0 00214AD0  48 00 00 08 */	b .L_802179F8
+.L_802179F4:
+/* 802179F4 00214AD4  38 60 00 00 */	li r3, 0x0
+.L_802179F8:
+/* 802179F8 00214AD8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 802179FC 00214ADC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80217A00 00214AE0  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80217A04 00214AE4  7C 08 03 A6 */	mtlr r0
+/* 80217A08 00214AE8  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217A0C 00214AEC  4E 80 00 20 */	blr
+.endfn _rpWriteMaterialRights
+
+.fn _rpSizeMaterialRights, global
+/* 80217A10 00214AF0  80 63 00 08 */	lwz r3, 0x8(r3)
+/* 80217A14 00214AF4  28 03 00 00 */	cmplwi r3, 0x0
+/* 80217A18 00214AF8  41 82 00 18 */	beq .L_80217A30
+/* 80217A1C 00214AFC  80 03 00 2C */	lwz r0, 0x2c(r3)
+/* 80217A20 00214B00  28 00 00 00 */	cmplwi r0, 0x0
+/* 80217A24 00214B04  41 82 00 0C */	beq .L_80217A30
+/* 80217A28 00214B08  38 60 00 08 */	li r3, 0x8
+/* 80217A2C 00214B0C  4E 80 00 20 */	blr
+.L_80217A30:
+/* 80217A30 00214B10  38 60 00 00 */	li r3, 0x0
+/* 80217A34 00214B14  4E 80 00 20 */	blr
+.endfn _rpSizeMaterialRights
+
+.fn _rpMaterialSetDefaultSurfaceProperties, global
+/* 80217A38 00214B18  28 03 00 00 */	cmplwi r3, 0x0
+/* 80217A3C 00214B1C  40 82 00 1C */	bne .L_80217A58
+/* 80217A40 00214B20  C0 02 BB B8 */	lfs f0, "@309"@sda21(r2)
+/* 80217A44 00214B24  3C 60 80 2B */	lis r3, defaultSurfaceProperties@ha
+/* 80217A48 00214B28  D4 03 77 A8 */	stfsu f0, defaultSurfaceProperties@l(r3)
+/* 80217A4C 00214B2C  D0 03 00 08 */	stfs f0, 0x8(r3)
+/* 80217A50 00214B30  D0 03 00 04 */	stfs f0, 0x4(r3)
+/* 80217A54 00214B34  4E 80 00 20 */	blr
+.L_80217A58:
+/* 80217A58 00214B38  3C 80 80 2B */	lis r4, defaultSurfaceProperties@ha
+/* 80217A5C 00214B3C  80 A3 00 00 */	lwz r5, 0x0(r3)
+/* 80217A60 00214B40  38 C4 77 A8 */	addi r6, r4, defaultSurfaceProperties@l
+/* 80217A64 00214B44  80 83 00 04 */	lwz r4, 0x4(r3)
+/* 80217A68 00214B48  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 80217A6C 00214B4C  90 A6 00 00 */	stw r5, 0x0(r6)
+/* 80217A70 00214B50  90 86 00 04 */	stw r4, 0x4(r6)
+/* 80217A74 00214B54  90 06 00 08 */	stw r0, 0x8(r6)
+/* 80217A78 00214B58  4E 80 00 20 */	blr
+.endfn _rpMaterialSetDefaultSurfaceProperties
+
+.fn _rpMaterialOpen, global
+/* 80217A7C 00214B5C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217A80 00214B60  7C 08 02 A6 */	mflr r0
+/* 80217A84 00214B64  3C A0 80 38 */	lis r5, _rpMaterialFreeList@ha
+/* 80217A88 00214B68  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217A8C 00214B6C  38 E5 36 F0 */	addi r7, r5, _rpMaterialFreeList@l
+/* 80217A90 00214B70  38 A0 00 04 */	li r5, 0x4
+/* 80217A94 00214B74  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80217A98 00214B78  7C 7F 1B 78 */	mr r31, r3
+/* 80217A9C 00214B7C  90 8D 9E C8 */	stw r4, materialModule@sda21(r13)
+/* 80217AA0 00214B80  3C 80 80 2B */	lis r4, materialTKList@ha
+/* 80217AA4 00214B84  38 64 77 90 */	addi r3, r4, materialTKList@l
+/* 80217AA8 00214B88  80 8D 87 58 */	lwz r4, _rpMaterialFreeListBlockSize@sda21(r13)
+/* 80217AAC 00214B8C  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80217AB0 00214B90  80 CD 87 5C */	lwz r6, _rpMaterialFreeListPreallocBlocks@sda21(r13)
+/* 80217AB4 00214B94  48 01 98 55 */	bl RwFreeListCreateAndPreallocateSpace
+/* 80217AB8 00214B98  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80217ABC 00214B9C  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217AC0 00214BA0  7C 64 01 2E */	stwx r3, r4, r0
+/* 80217AC4 00214BA4  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80217AC8 00214BA8  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217ACC 00214BAC  7C 03 00 2E */	lwzx r0, r3, r0
+/* 80217AD0 00214BB0  28 00 00 00 */	cmplwi r0, 0x0
+/* 80217AD4 00214BB4  40 82 00 0C */	bne .L_80217AE0
+/* 80217AD8 00214BB8  38 60 00 00 */	li r3, 0x0
+/* 80217ADC 00214BBC  48 00 00 18 */	b .L_80217AF4
+.L_80217AE0:
+/* 80217AE0 00214BC0  38 AD 9E C8 */	addi r5, r13, materialModule@sda21
+/* 80217AE4 00214BC4  7F E3 FB 78 */	mr r3, r31
+/* 80217AE8 00214BC8  80 85 00 04 */	lwz r4, 0x4(r5)
+/* 80217AEC 00214BCC  38 04 00 01 */	addi r0, r4, 0x1
+/* 80217AF0 00214BD0  90 05 00 04 */	stw r0, 0x4(r5)
+.L_80217AF4:
+/* 80217AF4 00214BD4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217AF8 00214BD8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80217AFC 00214BDC  7C 08 03 A6 */	mtlr r0
+/* 80217B00 00214BE0  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217B04 00214BE4  4E 80 00 20 */	blr
+.endfn _rpMaterialOpen
+
+.fn _rpMaterialClose, global
+/* 80217B08 00214BE8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217B0C 00214BEC  7C 08 02 A6 */	mflr r0
+/* 80217B10 00214BF0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217B14 00214BF4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80217B18 00214BF8  7C 7F 1B 78 */	mr r31, r3
+/* 80217B1C 00214BFC  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80217B20 00214C00  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217B24 00214C04  7C 64 00 2E */	lwzx r3, r4, r0
+/* 80217B28 00214C08  28 03 00 00 */	cmplwi r3, 0x0
+/* 80217B2C 00214C0C  41 82 00 18 */	beq .L_80217B44
+/* 80217B30 00214C10  48 01 98 B1 */	bl RwFreeListDestroy
+/* 80217B34 00214C14  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80217B38 00214C18  38 80 00 00 */	li r4, 0x0
+/* 80217B3C 00214C1C  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217B40 00214C20  7C 83 01 2E */	stwx r4, r3, r0
+.L_80217B44:
+/* 80217B44 00214C24  38 AD 9E C8 */	addi r5, r13, materialModule@sda21
+/* 80217B48 00214C28  7F E3 FB 78 */	mr r3, r31
+/* 80217B4C 00214C2C  80 85 00 04 */	lwz r4, 0x4(r5)
+/* 80217B50 00214C30  38 04 FF FF */	addi r0, r4, -0x1
+/* 80217B54 00214C34  90 05 00 04 */	stw r0, 0x4(r5)
+/* 80217B58 00214C38  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80217B5C 00214C3C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217B60 00214C40  7C 08 03 A6 */	mtlr r0
+/* 80217B64 00214C44  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217B68 00214C48  4E 80 00 20 */	blr
+.endfn _rpMaterialClose
+
+.fn RpMaterialCreate, global
+/* 80217B6C 00214C4C  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 80217B70 00214C50  7C 08 02 A6 */	mflr r0
+/* 80217B74 00214C54  90 01 00 24 */	stw r0, 0x24(r1)
+/* 80217B78 00214C58  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 80217B7C 00214C5C  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80217B80 00214C60  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217B84 00214C64  81 83 01 44 */	lwz r12, 0x144(r3)
+/* 80217B88 00214C68  7C 63 00 2E */	lwzx r3, r3, r0
+/* 80217B8C 00214C6C  7D 89 03 A6 */	mtctr r12
+/* 80217B90 00214C70  4E 80 04 21 */	bctrl
+/* 80217B94 00214C74  7C 7F 1B 79 */	mr. r31, r3
+/* 80217B98 00214C78  40 82 00 0C */	bne .L_80217BA4
+/* 80217B9C 00214C7C  38 60 00 00 */	li r3, 0x0
+/* 80217BA0 00214C80  48 00 00 68 */	b .L_80217C08
+.L_80217BA4:
+/* 80217BA4 00214C84  38 A0 00 FF */	li r5, 0xff
+/* 80217BA8 00214C88  38 E0 00 01 */	li r7, 0x1
+/* 80217BAC 00214C8C  98 A1 00 08 */	stb r5, 0x8(r1)
+/* 80217BB0 00214C90  3C 80 80 2B */	lis r4, defaultSurfaceProperties@ha
+/* 80217BB4 00214C94  38 C4 77 A8 */	addi r6, r4, defaultSurfaceProperties@l
+/* 80217BB8 00214C98  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80217BBC 00214C9C  98 A1 00 09 */	stb r5, 0x9(r1)
+/* 80217BC0 00214CA0  38 00 00 00 */	li r0, 0x0
+/* 80217BC4 00214CA4  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80217BC8 00214CA8  7F E4 FB 78 */	mr r4, r31
+/* 80217BCC 00214CAC  98 A1 00 0A */	stb r5, 0xa(r1)
+/* 80217BD0 00214CB0  98 A1 00 0B */	stb r5, 0xb(r1)
+/* 80217BD4 00214CB4  B0 FF 00 18 */	sth r7, 0x18(r31)
+/* 80217BD8 00214CB8  80 A1 00 08 */	lwz r5, 0x8(r1)
+/* 80217BDC 00214CBC  90 BF 00 04 */	stw r5, 0x4(r31)
+/* 80217BE0 00214CC0  90 1F 00 00 */	stw r0, 0x0(r31)
+/* 80217BE4 00214CC4  90 1F 00 08 */	stw r0, 0x8(r31)
+/* 80217BE8 00214CC8  80 A6 00 00 */	lwz r5, 0x0(r6)
+/* 80217BEC 00214CCC  80 06 00 04 */	lwz r0, 0x4(r6)
+/* 80217BF0 00214CD0  90 BF 00 0C */	stw r5, 0xc(r31)
+/* 80217BF4 00214CD4  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 80217BF8 00214CD8  80 06 00 08 */	lwz r0, 0x8(r6)
+/* 80217BFC 00214CDC  90 1F 00 14 */	stw r0, 0x14(r31)
+/* 80217C00 00214CE0  48 01 BD 25 */	bl _rwPluginRegistryInitObject
+/* 80217C04 00214CE4  7F E3 FB 78 */	mr r3, r31
+.L_80217C08:
+/* 80217C08 00214CE8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 80217C0C 00214CEC  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 80217C10 00214CF0  7C 08 03 A6 */	mtlr r0
+/* 80217C14 00214CF4  38 21 00 20 */	addi r1, r1, 0x20
+/* 80217C18 00214CF8  4E 80 00 20 */	blr
+.endfn RpMaterialCreate
+
+.fn RpMaterialDestroy, global
+/* 80217C1C 00214CFC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217C20 00214D00  7C 08 02 A6 */	mflr r0
+/* 80217C24 00214D04  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217C28 00214D08  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80217C2C 00214D0C  7C 7F 1B 78 */	mr r31, r3
+/* 80217C30 00214D10  A8 63 00 18 */	lha r3, 0x18(r3)
+/* 80217C34 00214D14  2C 03 00 01 */	cmpwi r3, 0x1
+/* 80217C38 00214D18  40 82 00 40 */	bne .L_80217C78
+/* 80217C3C 00214D1C  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80217C40 00214D20  7F E4 FB 78 */	mr r4, r31
+/* 80217C44 00214D24  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80217C48 00214D28  48 01 BD 85 */	bl _rwPluginRegistryDeInitObject
+/* 80217C4C 00214D2C  7F E3 FB 78 */	mr r3, r31
+/* 80217C50 00214D30  38 80 00 00 */	li r4, 0x0
+/* 80217C54 00214D34  48 00 00 45 */	bl RpMaterialSetTexture
+/* 80217C58 00214D38  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80217C5C 00214D3C  7F E4 FB 78 */	mr r4, r31
+/* 80217C60 00214D40  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217C64 00214D44  81 83 01 48 */	lwz r12, 0x148(r3)
+/* 80217C68 00214D48  7C 63 00 2E */	lwzx r3, r3, r0
+/* 80217C6C 00214D4C  7D 89 03 A6 */	mtctr r12
+/* 80217C70 00214D50  4E 80 04 21 */	bctrl
+/* 80217C74 00214D54  48 00 00 0C */	b .L_80217C80
+.L_80217C78:
+/* 80217C78 00214D58  38 03 FF FF */	addi r0, r3, -0x1
+/* 80217C7C 00214D5C  B0 1F 00 18 */	sth r0, 0x18(r31)
+.L_80217C80:
+/* 80217C80 00214D60  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217C84 00214D64  38 60 00 01 */	li r3, 0x1
+/* 80217C88 00214D68  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80217C8C 00214D6C  7C 08 03 A6 */	mtlr r0
+/* 80217C90 00214D70  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217C94 00214D74  4E 80 00 20 */	blr
+.endfn RpMaterialDestroy
+
+.fn RpMaterialSetTexture, global
+/* 80217C98 00214D78  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217C9C 00214D7C  7C 08 02 A6 */	mflr r0
+/* 80217CA0 00214D80  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217CA4 00214D84  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80217CA8 00214D88  7C 9F 23 79 */	mr. r31, r4
+/* 80217CAC 00214D8C  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80217CB0 00214D90  7C 7E 1B 78 */	mr r30, r3
+/* 80217CB4 00214D94  41 82 00 10 */	beq .L_80217CC4
+/* 80217CB8 00214D98  80 7F 00 54 */	lwz r3, 0x54(r31)
+/* 80217CBC 00214D9C  38 03 00 01 */	addi r0, r3, 0x1
+/* 80217CC0 00214DA0  90 1F 00 54 */	stw r0, 0x54(r31)
+.L_80217CC4:
+/* 80217CC4 00214DA4  80 7E 00 00 */	lwz r3, 0x0(r30)
+/* 80217CC8 00214DA8  28 03 00 00 */	cmplwi r3, 0x0
+/* 80217CCC 00214DAC  41 82 00 08 */	beq .L_80217CD4
+/* 80217CD0 00214DB0  48 02 6A E5 */	bl RwTextureDestroy
+.L_80217CD4:
+/* 80217CD4 00214DB4  93 FE 00 00 */	stw r31, 0x0(r30)
+/* 80217CD8 00214DB8  7F C3 F3 78 */	mr r3, r30
+/* 80217CDC 00214DBC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217CE0 00214DC0  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80217CE4 00214DC4  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80217CE8 00214DC8  7C 08 03 A6 */	mtlr r0
+/* 80217CEC 00214DCC  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217CF0 00214DD0  4E 80 00 20 */	blr
+.endfn RpMaterialSetTexture
+
+.fn RpMaterialRegisterPlugin, global
+/* 80217CF4 00214DD4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217CF8 00214DD8  7C 08 02 A6 */	mflr r0
+/* 80217CFC 00214DDC  7C E8 3B 78 */	mr r8, r7
+/* 80217D00 00214DE0  7C C7 33 78 */	mr r7, r6
+/* 80217D04 00214DE4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217D08 00214DE8  7C 80 23 78 */	mr r0, r4
+/* 80217D0C 00214DEC  7C A6 2B 78 */	mr r6, r5
+/* 80217D10 00214DF0  3D 20 80 2B */	lis r9, materialTKList@ha
+/* 80217D14 00214DF4  7C 64 1B 78 */	mr r4, r3
+/* 80217D18 00214DF8  7C 05 03 78 */	mr r5, r0
+/* 80217D1C 00214DFC  38 69 77 90 */	addi r3, r9, materialTKList@l
+/* 80217D20 00214E00  48 01 B9 39 */	bl _rwPluginRegistryAddPlugin
+/* 80217D24 00214E04  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217D28 00214E08  7C 08 03 A6 */	mtlr r0
+/* 80217D2C 00214E0C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217D30 00214E10  4E 80 00 20 */	blr
+.endfn RpMaterialRegisterPlugin
+
+.fn RpMaterialRegisterPluginStream, global
+/* 80217D34 00214E14  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80217D38 00214E18  7C 08 02 A6 */	mflr r0
+/* 80217D3C 00214E1C  7C C7 33 78 */	mr r7, r6
+/* 80217D40 00214E20  7C A6 2B 78 */	mr r6, r5
+/* 80217D44 00214E24  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80217D48 00214E28  3D 00 80 2B */	lis r8, materialTKList@ha
+/* 80217D4C 00214E2C  7C 60 1B 78 */	mr r0, r3
+/* 80217D50 00214E30  7C 85 23 78 */	mr r5, r4
+/* 80217D54 00214E34  38 68 77 90 */	addi r3, r8, materialTKList@l
+/* 80217D58 00214E38  7C 04 03 78 */	mr r4, r0
+/* 80217D5C 00214E3C  48 01 B1 1D */	bl _rwPluginRegistryAddPluginStream
+/* 80217D60 00214E40  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217D64 00214E44  7C 08 03 A6 */	mtlr r0
+/* 80217D68 00214E48  38 21 00 10 */	addi r1, r1, 0x10
+/* 80217D6C 00214E4C  4E 80 00 20 */	blr
+.endfn RpMaterialRegisterPluginStream
+
+.fn RpMaterialStreamRead, global
+/* 80217D70 00214E50  94 21 FF B0 */	stwu r1, -0x50(r1)
+/* 80217D74 00214E54  7C 08 02 A6 */	mflr r0
+/* 80217D78 00214E58  38 80 00 01 */	li r4, 0x1
+/* 80217D7C 00214E5C  90 01 00 54 */	stw r0, 0x54(r1)
+/* 80217D80 00214E60  38 A1 00 14 */	addi r5, r1, 0x14
+/* 80217D84 00214E64  38 C1 00 10 */	addi r6, r1, 0x10
+/* 80217D88 00214E68  93 E1 00 4C */	stw r31, 0x4c(r1)
+/* 80217D8C 00214E6C  93 C1 00 48 */	stw r30, 0x48(r1)
+/* 80217D90 00214E70  7C 7E 1B 78 */	mr r30, r3
+/* 80217D94 00214E74  48 01 6E 21 */	bl RwStreamFindChunk
+/* 80217D98 00214E78  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80217D9C 00214E7C  40 82 00 0C */	bne .L_80217DA8
+/* 80217DA0 00214E80  38 60 00 00 */	li r3, 0x0
+/* 80217DA4 00214E84  48 00 03 A4 */	b .L_80218148
+.L_80217DA8:
+/* 80217DA8 00214E88  3C 60 00 03 */	lis r3, 0x3
+/* 80217DAC 00214E8C  80 81 00 10 */	lwz r4, 0x10(r1)
+/* 80217DB0 00214E90  38 03 10 00 */	addi r0, r3, 0x1000
+/* 80217DB4 00214E94  7C 04 00 40 */	cmplw r4, r0
+/* 80217DB8 00214E98  41 80 03 68 */	blt .L_80218120
+/* 80217DBC 00214E9C  38 03 50 00 */	addi r0, r3, 0x5000
+/* 80217DC0 00214EA0  7C 04 00 40 */	cmplw r4, r0
+/* 80217DC4 00214EA4  41 81 03 5C */	bgt .L_80218120
+/* 80217DC8 00214EA8  38 61 00 28 */	addi r3, r1, 0x28
+/* 80217DCC 00214EAC  38 80 00 00 */	li r4, 0x0
+/* 80217DD0 00214EB0  38 A0 00 1C */	li r5, 0x1c
+/* 80217DD4 00214EB4  4B DE B6 85 */	bl memset
+/* 80217DD8 00214EB8  80 A1 00 14 */	lwz r5, 0x14(r1)
+/* 80217DDC 00214EBC  7F C3 F3 78 */	mr r3, r30
+/* 80217DE0 00214EC0  38 81 00 28 */	addi r4, r1, 0x28
+/* 80217DE4 00214EC4  48 01 A7 91 */	bl RwStreamRead
+/* 80217DE8 00214EC8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80217DEC 00214ECC  7C 00 18 40 */	cmplw r0, r3
+/* 80217DF0 00214ED0  41 82 00 0C */	beq .L_80217DFC
+/* 80217DF4 00214ED4  38 60 00 00 */	li r3, 0x0
+/* 80217DF8 00214ED8  48 00 03 50 */	b .L_80218148
+.L_80217DFC:
+/* 80217DFC 00214EDC  80 01 00 2C */	lwz r0, 0x2c(r1)
+/* 80217E00 00214EE0  38 61 00 28 */	addi r3, r1, 0x28
+/* 80217E04 00214EE4  38 80 00 1C */	li r4, 0x1c
+/* 80217E08 00214EE8  90 01 00 0C */	stw r0, 0xc(r1)
+/* 80217E0C 00214EEC  48 01 70 A1 */	bl RwMemNative32
+/* 80217E10 00214EF0  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 80217E14 00214EF4  90 01 00 2C */	stw r0, 0x2c(r1)
+/* 80217E18 00214EF8  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80217E1C 00214EFC  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217E20 00214F00  81 83 01 44 */	lwz r12, 0x144(r3)
+/* 80217E24 00214F04  7C 63 00 2E */	lwzx r3, r3, r0
+/* 80217E28 00214F08  7D 89 03 A6 */	mtctr r12
+/* 80217E2C 00214F0C  4E 80 04 21 */	bctrl
+/* 80217E30 00214F10  7C 7F 1B 79 */	mr. r31, r3
+/* 80217E34 00214F14  40 82 00 0C */	bne .L_80217E40
+/* 80217E38 00214F18  3B E0 00 00 */	li r31, 0x0
+/* 80217E3C 00214F1C  48 00 00 64 */	b .L_80217EA0
+.L_80217E40:
+/* 80217E40 00214F20  38 A0 00 FF */	li r5, 0xff
+/* 80217E44 00214F24  38 E0 00 01 */	li r7, 0x1
+/* 80217E48 00214F28  98 A1 00 08 */	stb r5, 0x8(r1)
+/* 80217E4C 00214F2C  3C 80 80 2B */	lis r4, defaultSurfaceProperties@ha
+/* 80217E50 00214F30  38 C4 77 A8 */	addi r6, r4, defaultSurfaceProperties@l
+/* 80217E54 00214F34  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80217E58 00214F38  98 A1 00 09 */	stb r5, 0x9(r1)
+/* 80217E5C 00214F3C  38 00 00 00 */	li r0, 0x0
+/* 80217E60 00214F40  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80217E64 00214F44  7F E4 FB 78 */	mr r4, r31
+/* 80217E68 00214F48  98 A1 00 0A */	stb r5, 0xa(r1)
+/* 80217E6C 00214F4C  98 A1 00 0B */	stb r5, 0xb(r1)
+/* 80217E70 00214F50  B0 FF 00 18 */	sth r7, 0x18(r31)
+/* 80217E74 00214F54  80 A1 00 08 */	lwz r5, 0x8(r1)
+/* 80217E78 00214F58  90 BF 00 04 */	stw r5, 0x4(r31)
+/* 80217E7C 00214F5C  90 1F 00 00 */	stw r0, 0x0(r31)
+/* 80217E80 00214F60  90 1F 00 08 */	stw r0, 0x8(r31)
+/* 80217E84 00214F64  80 A6 00 00 */	lwz r5, 0x0(r6)
+/* 80217E88 00214F68  80 06 00 04 */	lwz r0, 0x4(r6)
+/* 80217E8C 00214F6C  90 BF 00 0C */	stw r5, 0xc(r31)
+/* 80217E90 00214F70  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 80217E94 00214F74  80 06 00 08 */	lwz r0, 0x8(r6)
+/* 80217E98 00214F78  90 1F 00 14 */	stw r0, 0x14(r31)
+/* 80217E9C 00214F7C  48 01 BA 89 */	bl _rwPluginRegistryInitObject
+.L_80217EA0:
+/* 80217EA0 00214F80  28 1F 00 00 */	cmplwi r31, 0x0
+/* 80217EA4 00214F84  40 82 00 0C */	bne .L_80217EB0
+/* 80217EA8 00214F88  38 60 00 00 */	li r3, 0x0
+/* 80217EAC 00214F8C  48 00 02 9C */	b .L_80218148
+.L_80217EB0:
+/* 80217EB0 00214F90  80 61 00 2C */	lwz r3, 0x2c(r1)
+/* 80217EB4 00214F94  38 01 00 28 */	addi r0, r1, 0x28
+/* 80217EB8 00214F98  38 81 00 38 */	addi r4, r1, 0x38
+/* 80217EBC 00214F9C  90 7F 00 04 */	stw r3, 0x4(r31)
+/* 80217EC0 00214FA0  7C 00 20 50 */	subf r0, r0, r4
+/* 80217EC4 00214FA4  80 61 00 14 */	lwz r3, 0x14(r1)
+/* 80217EC8 00214FA8  7C 03 00 40 */	cmplw r3, r0
+/* 80217ECC 00214FAC  41 81 00 3C */	bgt .L_80217F08
+/* 80217ED0 00214FB0  3C 60 00 03 */	lis r3, 0x3
+/* 80217ED4 00214FB4  80 81 00 10 */	lwz r4, 0x10(r1)
+/* 80217ED8 00214FB8  38 03 10 00 */	addi r0, r3, 0x1000
+/* 80217EDC 00214FBC  7C 04 00 40 */	cmplw r4, r0
+/* 80217EE0 00214FC0  40 80 00 28 */	bge .L_80217F08
+/* 80217EE4 00214FC4  3C 60 80 2B */	lis r3, defaultSurfaceProperties@ha
+/* 80217EE8 00214FC8  38 83 77 A8 */	addi r4, r3, defaultSurfaceProperties@l
+/* 80217EEC 00214FCC  80 64 00 00 */	lwz r3, 0x0(r4)
+/* 80217EF0 00214FD0  80 04 00 04 */	lwz r0, 0x4(r4)
+/* 80217EF4 00214FD4  90 7F 00 0C */	stw r3, 0xc(r31)
+/* 80217EF8 00214FD8  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 80217EFC 00214FDC  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 80217F00 00214FE0  90 1F 00 14 */	stw r0, 0x14(r31)
+/* 80217F04 00214FE4  48 00 00 1C */	b .L_80217F20
+.L_80217F08:
+/* 80217F08 00214FE8  80 61 00 38 */	lwz r3, 0x38(r1)
+/* 80217F0C 00214FEC  80 01 00 3C */	lwz r0, 0x3c(r1)
+/* 80217F10 00214FF0  90 7F 00 0C */	stw r3, 0xc(r31)
+/* 80217F14 00214FF4  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 80217F18 00214FF8  80 01 00 40 */	lwz r0, 0x40(r1)
+/* 80217F1C 00214FFC  90 1F 00 14 */	stw r0, 0x14(r31)
+.L_80217F20:
+/* 80217F20 00215000  38 00 00 00 */	li r0, 0x0
+/* 80217F24 00215004  90 1F 00 00 */	stw r0, 0x0(r31)
+/* 80217F28 00215008  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 80217F2C 0021500C  2C 00 00 00 */	cmpwi r0, 0x0
+/* 80217F30 00215010  41 82 01 3C */	beq .L_8021806C
+/* 80217F34 00215014  7F C3 F3 78 */	mr r3, r30
+/* 80217F38 00215018  38 C1 00 10 */	addi r6, r1, 0x10
+/* 80217F3C 0021501C  38 80 00 06 */	li r4, 0x6
+/* 80217F40 00215020  38 A0 00 00 */	li r5, 0x0
+/* 80217F44 00215024  48 01 6C 71 */	bl RwStreamFindChunk
+/* 80217F48 00215028  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80217F4C 0021502C  40 82 00 68 */	bne .L_80217FB4
+/* 80217F50 00215030  A8 7F 00 18 */	lha r3, 0x18(r31)
+/* 80217F54 00215034  2C 03 00 01 */	cmpwi r3, 0x1
+/* 80217F58 00215038  40 82 00 4C */	bne .L_80217FA4
+/* 80217F5C 0021503C  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80217F60 00215040  7F E4 FB 78 */	mr r4, r31
+/* 80217F64 00215044  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80217F68 00215048  48 01 BA 65 */	bl _rwPluginRegistryDeInitObject
+/* 80217F6C 0021504C  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 80217F70 00215050  28 03 00 00 */	cmplwi r3, 0x0
+/* 80217F74 00215054  41 82 00 08 */	beq .L_80217F7C
+/* 80217F78 00215058  48 02 68 3D */	bl RwTextureDestroy
+.L_80217F7C:
+/* 80217F7C 0021505C  38 00 00 00 */	li r0, 0x0
+/* 80217F80 00215060  7F E4 FB 78 */	mr r4, r31
+/* 80217F84 00215064  90 1F 00 00 */	stw r0, 0x0(r31)
+/* 80217F88 00215068  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80217F8C 0021506C  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80217F90 00215070  81 83 01 48 */	lwz r12, 0x148(r3)
+/* 80217F94 00215074  7C 63 00 2E */	lwzx r3, r3, r0
+/* 80217F98 00215078  7D 89 03 A6 */	mtctr r12
+/* 80217F9C 0021507C  4E 80 04 21 */	bctrl
+/* 80217FA0 00215080  48 00 00 0C */	b .L_80217FAC
+.L_80217FA4:
+/* 80217FA4 00215084  38 03 FF FF */	addi r0, r3, -0x1
+/* 80217FA8 00215088  B0 1F 00 18 */	sth r0, 0x18(r31)
+.L_80217FAC:
+/* 80217FAC 0021508C  38 60 00 00 */	li r3, 0x0
+/* 80217FB0 00215090  48 00 01 98 */	b .L_80218148
+.L_80217FB4:
+/* 80217FB4 00215094  3C 60 00 03 */	lis r3, 0x3
+/* 80217FB8 00215098  80 81 00 10 */	lwz r4, 0x10(r1)
+/* 80217FBC 0021509C  38 03 10 00 */	addi r0, r3, 0x1000
+/* 80217FC0 002150A0  7C 04 00 40 */	cmplw r4, r0
+/* 80217FC4 002150A4  41 80 00 20 */	blt .L_80217FE4
+/* 80217FC8 002150A8  38 03 50 00 */	addi r0, r3, 0x5000
+/* 80217FCC 002150AC  7C 04 00 40 */	cmplw r4, r0
+/* 80217FD0 002150B0  41 81 00 14 */	bgt .L_80217FE4
+/* 80217FD4 002150B4  7F C3 F3 78 */	mr r3, r30
+/* 80217FD8 002150B8  48 01 D7 65 */	bl RwTextureStreamRead
+/* 80217FDC 002150BC  90 7F 00 00 */	stw r3, 0x0(r31)
+/* 80217FE0 002150C0  48 00 00 8C */	b .L_8021806C
+.L_80217FE4:
+/* 80217FE4 002150C4  A8 7F 00 18 */	lha r3, 0x18(r31)
+/* 80217FE8 002150C8  2C 03 00 01 */	cmpwi r3, 0x1
+/* 80217FEC 002150CC  40 82 00 4C */	bne .L_80218038
+/* 80217FF0 002150D0  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80217FF4 002150D4  7F E4 FB 78 */	mr r4, r31
+/* 80217FF8 002150D8  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80217FFC 002150DC  48 01 B9 D1 */	bl _rwPluginRegistryDeInitObject
+/* 80218000 002150E0  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 80218004 002150E4  28 03 00 00 */	cmplwi r3, 0x0
+/* 80218008 002150E8  41 82 00 08 */	beq .L_80218010
+/* 8021800C 002150EC  48 02 67 A9 */	bl RwTextureDestroy
+.L_80218010:
+/* 80218010 002150F0  38 00 00 00 */	li r0, 0x0
+/* 80218014 002150F4  7F E4 FB 78 */	mr r4, r31
+/* 80218018 002150F8  90 1F 00 00 */	stw r0, 0x0(r31)
+/* 8021801C 002150FC  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80218020 00215100  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 80218024 00215104  81 83 01 48 */	lwz r12, 0x148(r3)
+/* 80218028 00215108  7C 63 00 2E */	lwzx r3, r3, r0
+/* 8021802C 0021510C  7D 89 03 A6 */	mtctr r12
+/* 80218030 00215110  4E 80 04 21 */	bctrl
+/* 80218034 00215114  48 00 00 0C */	b .L_80218040
+.L_80218038:
+/* 80218038 00215118  38 03 FF FF */	addi r0, r3, -0x1
+/* 8021803C 0021511C  B0 1F 00 18 */	sth r0, 0x18(r31)
+.L_80218040:
+/* 80218040 00215120  38 00 00 02 */	li r0, 0x2
+/* 80218044 00215124  3C 60 80 00 */	lis r3, 0x8000
+/* 80218048 00215128  90 01 00 20 */	stw r0, 0x20(r1)
+/* 8021804C 0021512C  38 63 00 04 */	addi r3, r3, 0x4
+/* 80218050 00215130  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80218054 00215134  48 01 75 E1 */	bl _rwerror
+/* 80218058 00215138  90 61 00 24 */	stw r3, 0x24(r1)
+/* 8021805C 0021513C  38 61 00 20 */	addi r3, r1, 0x20
+/* 80218060 00215140  48 01 75 31 */	bl RwErrorSet
+/* 80218064 00215144  38 60 00 00 */	li r3, 0x0
+/* 80218068 00215148  48 00 00 E0 */	b .L_80218148
+.L_8021806C:
+/* 8021806C 0021514C  38 00 00 00 */	li r0, 0x0
+/* 80218070 00215150  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80218074 00215154  90 0D 9E C4 */	stw r0, lastSeenRightsPluginId@sda21(r13)
+/* 80218078 00215158  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 8021807C 0021515C  7F C4 F3 78 */	mr r4, r30
+/* 80218080 00215160  7F E5 FB 78 */	mr r5, r31
+/* 80218084 00215164  90 0D 9E C0 */	stw r0, lastSeenExtraData@sda21(r13)
+/* 80218088 00215168  48 01 AE AD */	bl _rwPluginRegistryReadDataChunks
+/* 8021808C 0021516C  28 03 00 00 */	cmplwi r3, 0x0
+/* 80218090 00215170  40 82 00 68 */	bne .L_802180F8
+/* 80218094 00215174  A8 7F 00 18 */	lha r3, 0x18(r31)
+/* 80218098 00215178  2C 03 00 01 */	cmpwi r3, 0x1
+/* 8021809C 0021517C  40 82 00 4C */	bne .L_802180E8
+/* 802180A0 00215180  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 802180A4 00215184  7F E4 FB 78 */	mr r4, r31
+/* 802180A8 00215188  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 802180AC 0021518C  48 01 B9 21 */	bl _rwPluginRegistryDeInitObject
+/* 802180B0 00215190  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 802180B4 00215194  28 03 00 00 */	cmplwi r3, 0x0
+/* 802180B8 00215198  41 82 00 08 */	beq .L_802180C0
+/* 802180BC 0021519C  48 02 66 F9 */	bl RwTextureDestroy
+.L_802180C0:
+/* 802180C0 002151A0  38 00 00 00 */	li r0, 0x0
+/* 802180C4 002151A4  7F E4 FB 78 */	mr r4, r31
+/* 802180C8 002151A8  90 1F 00 00 */	stw r0, 0x0(r31)
+/* 802180CC 002151AC  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 802180D0 002151B0  80 0D 9E C8 */	lwz r0, materialModule@sda21(r13)
+/* 802180D4 002151B4  81 83 01 48 */	lwz r12, 0x148(r3)
+/* 802180D8 002151B8  7C 63 00 2E */	lwzx r3, r3, r0
+/* 802180DC 002151BC  7D 89 03 A6 */	mtctr r12
+/* 802180E0 002151C0  4E 80 04 21 */	bctrl
+/* 802180E4 002151C4  48 00 00 0C */	b .L_802180F0
+.L_802180E8:
+/* 802180E8 002151C8  38 03 FF FF */	addi r0, r3, -0x1
+/* 802180EC 002151CC  B0 1F 00 18 */	sth r0, 0x18(r31)
+.L_802180F0:
+/* 802180F0 002151D0  38 60 00 00 */	li r3, 0x0
+/* 802180F4 002151D4  48 00 00 54 */	b .L_80218148
+.L_802180F8:
+/* 802180F8 002151D8  80 8D 9E C4 */	lwz r4, lastSeenRightsPluginId@sda21(r13)
+/* 802180FC 002151DC  28 04 00 00 */	cmplwi r4, 0x0
+/* 80218100 002151E0  41 82 00 18 */	beq .L_80218118
+/* 80218104 002151E4  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80218108 002151E8  80 CD 9E C0 */	lwz r6, lastSeenExtraData@sda21(r13)
+/* 8021810C 002151EC  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80218110 002151F0  7F E5 FB 78 */	mr r5, r31
+/* 80218114 002151F4  48 01 AF E5 */	bl _rwPluginRegistryInvokeRights
+.L_80218118:
+/* 80218118 002151F8  7F E3 FB 78 */	mr r3, r31
+/* 8021811C 002151FC  48 00 00 2C */	b .L_80218148
+.L_80218120:
+/* 80218120 00215200  38 00 00 02 */	li r0, 0x2
+/* 80218124 00215204  3C 60 80 00 */	lis r3, 0x8000
+/* 80218128 00215208  90 01 00 18 */	stw r0, 0x18(r1)
+/* 8021812C 0021520C  38 63 00 04 */	addi r3, r3, 0x4
+/* 80218130 00215210  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80218134 00215214  48 01 75 01 */	bl _rwerror
+/* 80218138 00215218  90 61 00 1C */	stw r3, 0x1c(r1)
+/* 8021813C 0021521C  38 61 00 18 */	addi r3, r1, 0x18
+/* 80218140 00215220  48 01 74 51 */	bl RwErrorSet
+/* 80218144 00215224  38 60 00 00 */	li r3, 0x0
+.L_80218148:
+/* 80218148 00215228  80 01 00 54 */	lwz r0, 0x54(r1)
+/* 8021814C 0021522C  83 E1 00 4C */	lwz r31, 0x4c(r1)
+/* 80218150 00215230  83 C1 00 48 */	lwz r30, 0x48(r1)
+/* 80218154 00215234  7C 08 03 A6 */	mtlr r0
+/* 80218158 00215238  38 21 00 50 */	addi r1, r1, 0x50
+/* 8021815C 0021523C  4E 80 00 20 */	blr
+.endfn RpMaterialStreamRead
+
+.fn RpMaterialStreamGetSize, global
+/* 80218160 00215240  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80218164 00215244  7C 08 02 A6 */	mflr r0
+/* 80218168 00215248  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8021816C 0021524C  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80218170 00215250  3B E0 00 28 */	li r31, 0x28
+/* 80218174 00215254  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80218178 00215258  7C 7E 1B 78 */	mr r30, r3
+/* 8021817C 0021525C  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80218180 00215260  28 03 00 00 */	cmplwi r3, 0x0
+/* 80218184 00215264  41 82 00 0C */	beq .L_80218190
+/* 80218188 00215268  48 01 D2 5D */	bl RwTextureStreamGetSize
+/* 8021818C 0021526C  3B E3 00 34 */	addi r31, r3, 0x34
+.L_80218190:
+/* 80218190 00215270  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80218194 00215274  7F C4 F3 78 */	mr r4, r30
+/* 80218198 00215278  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 8021819C 0021527C  48 01 AF E9 */	bl _rwPluginRegistryGetSize
+/* 802181A0 00215280  7F E3 FA 14 */	add r31, r3, r31
+/* 802181A4 00215284  3B FF 00 0C */	addi r31, r31, 0xc
+/* 802181A8 00215288  7F E3 FB 78 */	mr r3, r31
+/* 802181AC 0021528C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 802181B0 00215290  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 802181B4 00215294  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 802181B8 00215298  7C 08 03 A6 */	mtlr r0
+/* 802181BC 0021529C  38 21 00 10 */	addi r1, r1, 0x10
+/* 802181C0 002152A0  4E 80 00 20 */	blr
+.endfn RpMaterialStreamGetSize
+
+.fn RpMaterialStreamWrite, global
+/* 802181C4 002152A4  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 802181C8 002152A8  7C 08 02 A6 */	mflr r0
+/* 802181CC 002152AC  90 01 00 44 */	stw r0, 0x44(r1)
+/* 802181D0 002152B0  93 E1 00 3C */	stw r31, 0x3c(r1)
+/* 802181D4 002152B4  7C 9F 23 78 */	mr r31, r4
+/* 802181D8 002152B8  93 C1 00 38 */	stw r30, 0x38(r1)
+/* 802181DC 002152BC  7C 7E 1B 78 */	mr r30, r3
+/* 802181E0 002152C0  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 802181E4 002152C4  93 A1 00 34 */	stw r29, 0x34(r1)
+/* 802181E8 002152C8  3B A0 00 28 */	li r29, 0x28
+/* 802181EC 002152CC  28 03 00 00 */	cmplwi r3, 0x0
+/* 802181F0 002152D0  41 82 00 0C */	beq .L_802181FC
+/* 802181F4 002152D4  48 01 D1 F1 */	bl RwTextureStreamGetSize
+/* 802181F8 002152D8  3B A3 00 34 */	addi r29, r3, 0x34
+.L_802181FC:
+/* 802181FC 002152DC  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 80218200 002152E0  7F C4 F3 78 */	mr r4, r30
+/* 80218204 002152E4  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80218208 002152E8  48 01 AF 7D */	bl _rwPluginRegistryGetSize
+/* 8021820C 002152EC  7F A3 EA 14 */	add r29, r3, r29
+/* 80218210 002152F0  3C A0 00 03 */	lis r5, 0x3
+/* 80218214 002152F4  3C 80 00 01 */	lis r4, 0x1
+/* 80218218 002152F8  7F E3 FB 78 */	mr r3, r31
+/* 8021821C 002152FC  38 E4 FF FF */	addi r7, r4, -0x1
+/* 80218220 00215300  3B BD 00 0C */	addi r29, r29, 0xc
+/* 80218224 00215304  38 C5 50 00 */	addi r6, r5, 0x5000
+/* 80218228 00215308  38 80 00 07 */	li r4, 0x7
+/* 8021822C 0021530C  7F A5 EB 78 */	mr r5, r29
+/* 80218230 00215310  48 01 69 25 */	bl _rwStreamWriteVersionedChunkHeader
+/* 80218234 00215314  28 03 00 00 */	cmplwi r3, 0x0
+/* 80218238 00215318  40 82 00 0C */	bne .L_80218244
+/* 8021823C 0021531C  38 60 00 00 */	li r3, 0x0
+/* 80218240 00215320  48 00 00 F0 */	b .L_80218330
+.L_80218244:
+/* 80218244 00215324  3C C0 00 03 */	lis r6, 0x3
+/* 80218248 00215328  3C A0 00 01 */	lis r5, 0x1
+/* 8021824C 0021532C  7F E3 FB 78 */	mr r3, r31
+/* 80218250 00215330  38 80 00 01 */	li r4, 0x1
+/* 80218254 00215334  38 C6 50 00 */	addi r6, r6, 0x5000
+/* 80218258 00215338  38 E5 FF FF */	addi r7, r5, -0x1
+/* 8021825C 0021533C  38 A0 00 1C */	li r5, 0x1c
+/* 80218260 00215340  48 01 68 F5 */	bl _rwStreamWriteVersionedChunkHeader
+/* 80218264 00215344  28 03 00 00 */	cmplwi r3, 0x0
+/* 80218268 00215348  40 82 00 0C */	bne .L_80218274
+/* 8021826C 0021534C  38 60 00 00 */	li r3, 0x0
+/* 80218270 00215350  48 00 00 C0 */	b .L_80218330
+.L_80218274:
+/* 80218274 00215354  80 1E 00 00 */	lwz r0, 0x0(r30)
+/* 80218278 00215358  38 60 00 00 */	li r3, 0x0
+/* 8021827C 0021535C  90 61 00 08 */	stw r3, 0x8(r1)
+/* 80218280 00215360  28 00 00 00 */	cmplwi r0, 0x0
+/* 80218284 00215364  41 82 00 10 */	beq .L_80218294
+/* 80218288 00215368  38 00 00 01 */	li r0, 0x1
+/* 8021828C 0021536C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80218290 00215370  48 00 00 08 */	b .L_80218298
+.L_80218294:
+/* 80218294 00215374  90 61 00 14 */	stw r3, 0x14(r1)
+.L_80218298:
+/* 80218298 00215378  80 DE 00 0C */	lwz r6, 0xc(r30)
+/* 8021829C 0021537C  38 61 00 08 */	addi r3, r1, 0x8
+/* 802182A0 00215380  80 BE 00 10 */	lwz r5, 0x10(r30)
+/* 802182A4 00215384  38 80 00 1C */	li r4, 0x1c
+/* 802182A8 00215388  80 1E 00 14 */	lwz r0, 0x14(r30)
+/* 802182AC 0021538C  90 C1 00 18 */	stw r6, 0x18(r1)
+/* 802182B0 00215390  90 A1 00 1C */	stw r5, 0x1c(r1)
+/* 802182B4 00215394  90 01 00 20 */	stw r0, 0x20(r1)
+/* 802182B8 00215398  48 01 6A F9 */	bl RwMemLittleEndian32
+/* 802182BC 0021539C  80 1E 00 04 */	lwz r0, 0x4(r30)
+/* 802182C0 002153A0  7F E3 FB 78 */	mr r3, r31
+/* 802182C4 002153A4  38 81 00 08 */	addi r4, r1, 0x8
+/* 802182C8 002153A8  38 A0 00 1C */	li r5, 0x1c
+/* 802182CC 002153AC  90 01 00 0C */	stw r0, 0xc(r1)
+/* 802182D0 002153B0  48 01 A4 41 */	bl RwStreamWrite
+/* 802182D4 002153B4  28 03 00 00 */	cmplwi r3, 0x0
+/* 802182D8 002153B8  40 82 00 0C */	bne .L_802182E4
+/* 802182DC 002153BC  38 60 00 00 */	li r3, 0x0
+/* 802182E0 002153C0  48 00 00 50 */	b .L_80218330
+.L_802182E4:
+/* 802182E4 002153C4  80 7E 00 00 */	lwz r3, 0x0(r30)
+/* 802182E8 002153C8  28 03 00 00 */	cmplwi r3, 0x0
+/* 802182EC 002153CC  41 82 00 1C */	beq .L_80218308
+/* 802182F0 002153D0  7F E4 FB 78 */	mr r4, r31
+/* 802182F4 002153D4  48 01 D1 91 */	bl RwTextureStreamWrite
+/* 802182F8 002153D8  28 03 00 00 */	cmplwi r3, 0x0
+/* 802182FC 002153DC  40 82 00 0C */	bne .L_80218308
+/* 80218300 002153E0  38 60 00 00 */	li r3, 0x0
+/* 80218304 002153E4  48 00 00 2C */	b .L_80218330
+.L_80218308:
+/* 80218308 002153E8  3C 60 80 2B */	lis r3, materialTKList@ha
+/* 8021830C 002153EC  7F E4 FB 78 */	mr r4, r31
+/* 80218310 002153F0  38 63 77 90 */	addi r3, r3, materialTKList@l
+/* 80218314 002153F4  7F C5 F3 78 */	mr r5, r30
+/* 80218318 002153F8  48 01 AE F1 */	bl _rwPluginRegistryWriteDataChunks
+/* 8021831C 002153FC  28 03 00 00 */	cmplwi r3, 0x0
+/* 80218320 00215400  40 82 00 0C */	bne .L_8021832C
+/* 80218324 00215404  38 60 00 00 */	li r3, 0x0
+/* 80218328 00215408  48 00 00 08 */	b .L_80218330
+.L_8021832C:
+/* 8021832C 0021540C  7F C3 F3 78 */	mr r3, r30
+.L_80218330:
+/* 80218330 00215410  80 01 00 44 */	lwz r0, 0x44(r1)
+/* 80218334 00215414  83 E1 00 3C */	lwz r31, 0x3c(r1)
+/* 80218338 00215418  83 C1 00 38 */	lwz r30, 0x38(r1)
+/* 8021833C 0021541C  83 A1 00 34 */	lwz r29, 0x34(r1)
+/* 80218340 00215420  7C 08 03 A6 */	mtlr r0
+/* 80218344 00215424  38 21 00 40 */	addi r1, r1, 0x40
+/* 80218348 00215428  4E 80 00 20 */	blr
+.endfn RpMaterialStreamWrite
+
+# 0x802B7790 - 0x802B77B8
+.data
+.balign 8
+
+.obj materialTKList, local
+	.4byte 0x0000001C
+	.4byte 0x0000001C
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj materialTKList
+
+.obj defaultSurfaceProperties, local
+	.4byte 0x3F800000
+	.4byte 0x3F800000
+	.4byte 0x3F800000
+.endobj defaultSurfaceProperties
+	.4byte 0x00000000
+
+# 0x803836F0 - 0x80383718
+.bss
+.balign 8
+
+.obj _rpMaterialFreeList, local
+	.skip 0x24
+.endobj _rpMaterialFreeList
+	.skip 0x4
+
+# 0x803CB058 - 0x803CB060
+.section .sdata, "wa"
+.balign 8
+
+.obj _rpMaterialFreeListBlockSize, local
+	.4byte 0x00000100
+.endobj _rpMaterialFreeListBlockSize
+
+.obj _rpMaterialFreeListPreallocBlocks, local
+	.4byte 0x00000001
+.endobj _rpMaterialFreeListPreallocBlocks
+
+# 0x803CC7C0 - 0x803CC7D0
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj lastSeenExtraData, local
+	.skip 0x4
+.endobj lastSeenExtraData
+
+.obj lastSeenRightsPluginId, local
+	.skip 0x4
+.endobj lastSeenRightsPluginId
+
+.obj materialModule, local
+	.skip 0x8
+.endobj materialModule
+
+# 0x803D0538 - 0x803D0540
+.section .sdata2, "a"
+.balign 8
+
+.obj "@309", local
+	.4byte 0x3F800000
+.endobj "@309"
+	.4byte 0x00000000

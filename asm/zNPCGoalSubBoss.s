@@ -1,0 +1,489 @@
+.include "macros.inc"
+.file "zNPCGoalSubBoss.cpp"
+
+# 0x80138CA0 - 0x80138F0C
+.text
+.balign 4
+
+# GOALCreate_SubBoss(int, RyzMemGrow*, void*)
+.fn GOALCreate_SubBoss__FiP10RyzMemGrowPv, global
+/* 80138CA0 00135D80  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80138CA4 00135D84  7C 08 02 A6 */	mflr r0
+/* 80138CA8 00135D88  7C 85 23 78 */	mr r5, r4
+/* 80138CAC 00135D8C  38 C0 00 00 */	li r6, 0x0
+/* 80138CB0 00135D90  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80138CB4 00135D94  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80138CB8 00135D98  7C 7F 1B 78 */	mr r31, r3
+/* 80138CBC 00135D9C  3C 9F B1 B9 */	addis r4, r31, 0xb1b9
+/* 80138CC0 00135DA0  38 84 B2 D0 */	addi r4, r4, -0x4d30
+/* 80138CC4 00135DA4  28 04 00 0C */	cmplwi r4, 0xc
+/* 80138CC8 00135DA8  41 81 02 20 */	bgt .L_80138EE8
+/* 80138CCC 00135DAC  3C 60 80 2A */	lis r3, "@863"@ha
+/* 80138CD0 00135DB0  54 84 10 3A */	slwi r4, r4, 2
+/* 80138CD4 00135DB4  38 63 98 60 */	addi r3, r3, "@863"@l
+/* 80138CD8 00135DB8  7C 03 20 2E */	lwzx r0, r3, r4
+/* 80138CDC 00135DBC  7C 09 03 A6 */	mtctr r0
+/* 80138CE0 00135DC0  4E 80 04 20 */	bctr
+.L_80138CE4:
+/* 80138CE4 00135DC4  7F E4 FB 78 */	mr r4, r31
+/* 80138CE8 00135DC8  38 60 00 4C */	li r3, 0x4c
+/* 80138CEC 00135DCC  4B FD 64 65 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138CF0 00135DD0  7C 60 1B 79 */	mr. r0, r3
+/* 80138CF4 00135DD4  41 82 00 10 */	beq .L_80138D04
+/* 80138CF8 00135DD8  7F E4 FB 78 */	mr r4, r31
+/* 80138CFC 00135DDC  48 00 04 E1 */	bl __ct__12zNPCGoalHereFi
+/* 80138D00 00135DE0  7C 60 1B 78 */	mr r0, r3
+.L_80138D04:
+/* 80138D04 00135DE4  7C 06 03 78 */	mr r6, r0
+/* 80138D08 00135DE8  48 00 01 E0 */	b .L_80138EE8
+.L_80138D0C:
+/* 80138D0C 00135DEC  7F E4 FB 78 */	mr r4, r31
+/* 80138D10 00135DF0  38 60 00 50 */	li r3, 0x50
+/* 80138D14 00135DF4  4B FD 64 3D */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138D18 00135DF8  7C 60 1B 79 */	mr. r0, r3
+/* 80138D1C 00135DFC  41 82 00 10 */	beq .L_80138D2C
+/* 80138D20 00135E00  7F E4 FB 78 */	mr r4, r31
+/* 80138D24 00135E04  48 00 04 7D */	bl __ct__14zNPCGoalKJIdleFi
+/* 80138D28 00135E08  7C 60 1B 78 */	mr r0, r3
+.L_80138D2C:
+/* 80138D2C 00135E0C  7C 06 03 78 */	mr r6, r0
+/* 80138D30 00135E10  48 00 01 B8 */	b .L_80138EE8
+.L_80138D34:
+/* 80138D34 00135E14  7F E4 FB 78 */	mr r4, r31
+/* 80138D38 00135E18  38 60 00 4C */	li r3, 0x4c
+/* 80138D3C 00135E1C  4B FD 64 15 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138D40 00135E20  7C 60 1B 79 */	mr. r0, r3
+/* 80138D44 00135E24  41 82 00 10 */	beq .L_80138D54
+/* 80138D48 00135E28  7F E4 FB 78 */	mr r4, r31
+/* 80138D4C 00135E2C  48 00 04 19 */	bl __ct__15zNPCGoalKJBoredFi
+/* 80138D50 00135E30  7C 60 1B 78 */	mr r0, r3
+.L_80138D54:
+/* 80138D54 00135E34  7C 06 03 78 */	mr r6, r0
+/* 80138D58 00135E38  48 00 01 90 */	b .L_80138EE8
+.L_80138D5C:
+/* 80138D5C 00135E3C  7F E4 FB 78 */	mr r4, r31
+/* 80138D60 00135E40  38 60 00 60 */	li r3, 0x60
+/* 80138D64 00135E44  4B FD 63 ED */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138D68 00135E48  7C 60 1B 79 */	mr. r0, r3
+/* 80138D6C 00135E4C  41 82 00 10 */	beq .L_80138D7C
+/* 80138D70 00135E50  7F E4 FB 78 */	mr r4, r31
+/* 80138D74 00135E54  48 00 03 B5 */	bl __ct__19zNPCGoalKJSpawnKidsFi
+/* 80138D78 00135E58  7C 60 1B 78 */	mr r0, r3
+.L_80138D7C:
+/* 80138D7C 00135E5C  7C 06 03 78 */	mr r6, r0
+/* 80138D80 00135E60  48 00 01 68 */	b .L_80138EE8
+.L_80138D84:
+/* 80138D84 00135E64  7F E4 FB 78 */	mr r4, r31
+/* 80138D88 00135E68  38 60 00 4C */	li r3, 0x4c
+/* 80138D8C 00135E6C  4B FD 63 C5 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138D90 00135E70  7C 60 1B 79 */	mr. r0, r3
+/* 80138D94 00135E74  41 82 00 10 */	beq .L_80138DA4
+/* 80138D98 00135E78  7F E4 FB 78 */	mr r4, r31
+/* 80138D9C 00135E7C  48 00 03 51 */	bl __ct__15zNPCGoalKJTauntFi
+/* 80138DA0 00135E80  7C 60 1B 78 */	mr r0, r3
+.L_80138DA4:
+/* 80138DA4 00135E84  7C 06 03 78 */	mr r6, r0
+/* 80138DA8 00135E88  48 00 01 40 */	b .L_80138EE8
+.L_80138DAC:
+/* 80138DAC 00135E8C  7F E4 FB 78 */	mr r4, r31
+/* 80138DB0 00135E90  38 60 00 54 */	li r3, 0x54
+/* 80138DB4 00135E94  4B FD 63 9D */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138DB8 00135E98  7C 60 1B 79 */	mr. r0, r3
+/* 80138DBC 00135E9C  41 82 00 10 */	beq .L_80138DCC
+/* 80138DC0 00135EA0  7F E4 FB 78 */	mr r4, r31
+/* 80138DC4 00135EA4  48 00 02 ED */	bl __ct__21zNPCGoalKJShockGroundFi
+/* 80138DC8 00135EA8  7C 60 1B 78 */	mr r0, r3
+.L_80138DCC:
+/* 80138DCC 00135EAC  7C 06 03 78 */	mr r6, r0
+/* 80138DD0 00135EB0  48 00 01 18 */	b .L_80138EE8
+.L_80138DD4:
+/* 80138DD4 00135EB4  7F E4 FB 78 */	mr r4, r31
+/* 80138DD8 00135EB8  38 60 00 4C */	li r3, 0x4c
+/* 80138DDC 00135EBC  4B FD 63 75 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138DE0 00135EC0  7C 60 1B 79 */	mr. r0, r3
+/* 80138DE4 00135EC4  41 82 00 10 */	beq .L_80138DF4
+/* 80138DE8 00135EC8  7F E4 FB 78 */	mr r4, r31
+/* 80138DEC 00135ECC  48 00 02 89 */	bl __ct__16zNPCGoalKJDamageFi
+/* 80138DF0 00135ED0  7C 60 1B 78 */	mr r0, r3
+.L_80138DF4:
+/* 80138DF4 00135ED4  7C 06 03 78 */	mr r6, r0
+/* 80138DF8 00135ED8  48 00 00 F0 */	b .L_80138EE8
+.L_80138DFC:
+/* 80138DFC 00135EDC  7F E4 FB 78 */	mr r4, r31
+/* 80138E00 00135EE0  38 60 00 4C */	li r3, 0x4c
+/* 80138E04 00135EE4  4B FD 63 4D */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138E08 00135EE8  7C 60 1B 79 */	mr. r0, r3
+/* 80138E0C 00135EEC  41 82 00 10 */	beq .L_80138E1C
+/* 80138E10 00135EF0  7F E4 FB 78 */	mr r4, r31
+/* 80138E14 00135EF4  48 00 02 25 */	bl __ct__15zNPCGoalKJDeathFi
+/* 80138E18 00135EF8  7C 60 1B 78 */	mr r0, r3
+.L_80138E1C:
+/* 80138E1C 00135EFC  7C 06 03 78 */	mr r6, r0
+/* 80138E20 00135F00  48 00 00 C8 */	b .L_80138EE8
+.L_80138E24:
+/* 80138E24 00135F04  7F E4 FB 78 */	mr r4, r31
+/* 80138E28 00135F08  38 60 00 4C */	li r3, 0x4c
+/* 80138E2C 00135F0C  4B FD 63 25 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138E30 00135F10  7C 60 1B 79 */	mr. r0, r3
+/* 80138E34 00135F14  41 82 00 10 */	beq .L_80138E44
+/* 80138E38 00135F18  7F E4 FB 78 */	mr r4, r31
+/* 80138E3C 00135F1C  48 00 01 C1 */	bl __ct__17zNPCGoalPrawnIdleFi
+/* 80138E40 00135F20  7C 60 1B 78 */	mr r0, r3
+.L_80138E44:
+/* 80138E44 00135F24  7C 06 03 78 */	mr r6, r0
+/* 80138E48 00135F28  48 00 00 A0 */	b .L_80138EE8
+.L_80138E4C:
+/* 80138E4C 00135F2C  7F E4 FB 78 */	mr r4, r31
+/* 80138E50 00135F30  38 60 00 5C */	li r3, 0x5c
+/* 80138E54 00135F34  4B FD 62 FD */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138E58 00135F38  7C 60 1B 79 */	mr. r0, r3
+/* 80138E5C 00135F3C  41 82 00 10 */	beq .L_80138E6C
+/* 80138E60 00135F40  7F E4 FB 78 */	mr r4, r31
+/* 80138E64 00135F44  48 00 01 5D */	bl __ct__17zNPCGoalPrawnBeamFi
+/* 80138E68 00135F48  7C 60 1B 78 */	mr r0, r3
+.L_80138E6C:
+/* 80138E6C 00135F4C  7C 06 03 78 */	mr r6, r0
+/* 80138E70 00135F50  48 00 00 78 */	b .L_80138EE8
+.L_80138E74:
+/* 80138E74 00135F54  7F E4 FB 78 */	mr r4, r31
+/* 80138E78 00135F58  38 60 00 50 */	li r3, 0x50
+/* 80138E7C 00135F5C  4B FD 62 D5 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138E80 00135F60  7C 60 1B 79 */	mr. r0, r3
+/* 80138E84 00135F64  41 82 00 10 */	beq .L_80138E94
+/* 80138E88 00135F68  7F E4 FB 78 */	mr r4, r31
+/* 80138E8C 00135F6C  48 00 00 F9 */	bl __ct__17zNPCGoalPrawnBowlFi
+/* 80138E90 00135F70  7C 60 1B 78 */	mr r0, r3
+.L_80138E94:
+/* 80138E94 00135F74  7C 06 03 78 */	mr r6, r0
+/* 80138E98 00135F78  48 00 00 50 */	b .L_80138EE8
+.L_80138E9C:
+/* 80138E9C 00135F7C  7F E4 FB 78 */	mr r4, r31
+/* 80138EA0 00135F80  38 60 00 4C */	li r3, 0x4c
+/* 80138EA4 00135F84  4B FD 62 AD */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138EA8 00135F88  7C 60 1B 79 */	mr. r0, r3
+/* 80138EAC 00135F8C  41 82 00 10 */	beq .L_80138EBC
+/* 80138EB0 00135F90  7F E4 FB 78 */	mr r4, r31
+/* 80138EB4 00135F94  48 00 00 95 */	bl __ct__19zNPCGoalPrawnDamageFi
+/* 80138EB8 00135F98  7C 60 1B 78 */	mr r0, r3
+.L_80138EBC:
+/* 80138EBC 00135F9C  7C 06 03 78 */	mr r6, r0
+/* 80138EC0 00135FA0  48 00 00 28 */	b .L_80138EE8
+.L_80138EC4:
+/* 80138EC4 00135FA4  7F E4 FB 78 */	mr r4, r31
+/* 80138EC8 00135FA8  38 60 00 4C */	li r3, 0x4c
+/* 80138ECC 00135FAC  4B FD 62 85 */	bl __nw__10RyzMemDataFUliP10RyzMemGrow
+/* 80138ED0 00135FB0  7C 60 1B 79 */	mr. r0, r3
+/* 80138ED4 00135FB4  41 82 00 10 */	beq .L_80138EE4
+/* 80138ED8 00135FB8  7F E4 FB 78 */	mr r4, r31
+/* 80138EDC 00135FBC  48 00 00 31 */	bl __ct__18zNPCGoalPrawnDeathFi
+/* 80138EE0 00135FC0  7C 60 1B 78 */	mr r0, r3
+.L_80138EE4:
+/* 80138EE4 00135FC4  7C 06 03 78 */	mr r6, r0
+.L_80138EE8:
+/* 80138EE8 00135FC8  28 06 00 00 */	cmplwi r6, 0x0
+/* 80138EEC 00135FCC  7C C3 33 78 */	mr r3, r6
+/* 80138EF0 00135FD0  41 82 00 08 */	beq .L_80138EF8
+/* 80138EF4 00135FD4  38 66 00 0C */	addi r3, r6, 0xc
+.L_80138EF8:
+/* 80138EF8 00135FD8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80138EFC 00135FDC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80138F00 00135FE0  7C 08 03 A6 */	mtlr r0
+/* 80138F04 00135FE4  38 21 00 10 */	addi r1, r1, 0x10
+/* 80138F08 00135FE8  4E 80 00 20 */	blr
+.endfn GOALCreate_SubBoss__FiP10RyzMemGrowPv
+
+# 0x80138F0C - 0x80139038
+.section .text, "ax", unique, 1
+.balign 4
+
+# zNPCGoalPrawnDeath::zNPCGoalPrawnDeath(int)
+.fn __ct__18zNPCGoalPrawnDeathFi, weak
+/* 80138F0C 00135FEC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80138F10 00135FF0  7C 08 02 A6 */	mflr r0
+/* 80138F14 00135FF4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80138F18 00135FF8  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80138F1C 00135FFC  7C 7F 1B 78 */	mr r31, r3
+/* 80138F20 00136000  4B FA 00 D5 */	bl __ct__14zNPCGoalCommonFi
+/* 80138F24 00136004  3C 80 80 2A */	lis r4, __vt__18zNPCGoalPrawnDeath@ha
+/* 80138F28 00136008  7F E3 FB 78 */	mr r3, r31
+/* 80138F2C 0013600C  38 04 A2 BC */	addi r0, r4, __vt__18zNPCGoalPrawnDeath@l
+/* 80138F30 00136010  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80138F34 00136014  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80138F38 00136018  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80138F3C 0013601C  7C 08 03 A6 */	mtlr r0
+/* 80138F40 00136020  38 21 00 10 */	addi r1, r1, 0x10
+/* 80138F44 00136024  4E 80 00 20 */	blr
+.endfn __ct__18zNPCGoalPrawnDeathFi
+
+# zNPCGoalPrawnDamage::zNPCGoalPrawnDamage(int)
+.fn __ct__19zNPCGoalPrawnDamageFi, weak
+/* 80138F48 00136028  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80138F4C 0013602C  7C 08 02 A6 */	mflr r0
+/* 80138F50 00136030  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80138F54 00136034  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80138F58 00136038  7C 7F 1B 78 */	mr r31, r3
+/* 80138F5C 0013603C  4B FA 00 99 */	bl __ct__14zNPCGoalCommonFi
+/* 80138F60 00136040  3C 80 80 2A */	lis r4, __vt__19zNPCGoalPrawnDamage@ha
+/* 80138F64 00136044  7F E3 FB 78 */	mr r3, r31
+/* 80138F68 00136048  38 04 A2 F0 */	addi r0, r4, __vt__19zNPCGoalPrawnDamage@l
+/* 80138F6C 0013604C  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80138F70 00136050  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80138F74 00136054  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80138F78 00136058  7C 08 03 A6 */	mtlr r0
+/* 80138F7C 0013605C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80138F80 00136060  4E 80 00 20 */	blr
+.endfn __ct__19zNPCGoalPrawnDamageFi
+
+# zNPCGoalPrawnBowl::zNPCGoalPrawnBowl(int)
+.fn __ct__17zNPCGoalPrawnBowlFi, weak
+/* 80138F84 00136064  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80138F88 00136068  7C 08 02 A6 */	mflr r0
+/* 80138F8C 0013606C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80138F90 00136070  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80138F94 00136074  7C 7F 1B 78 */	mr r31, r3
+/* 80138F98 00136078  4B FA 00 5D */	bl __ct__14zNPCGoalCommonFi
+/* 80138F9C 0013607C  3C 80 80 2A */	lis r4, __vt__17zNPCGoalPrawnBowl@ha
+/* 80138FA0 00136080  7F E3 FB 78 */	mr r3, r31
+/* 80138FA4 00136084  38 04 A3 24 */	addi r0, r4, __vt__17zNPCGoalPrawnBowl@l
+/* 80138FA8 00136088  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80138FAC 0013608C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80138FB0 00136090  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80138FB4 00136094  7C 08 03 A6 */	mtlr r0
+/* 80138FB8 00136098  38 21 00 10 */	addi r1, r1, 0x10
+/* 80138FBC 0013609C  4E 80 00 20 */	blr
+.endfn __ct__17zNPCGoalPrawnBowlFi
+
+# zNPCGoalPrawnBeam::zNPCGoalPrawnBeam(int)
+.fn __ct__17zNPCGoalPrawnBeamFi, weak
+/* 80138FC0 001360A0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80138FC4 001360A4  7C 08 02 A6 */	mflr r0
+/* 80138FC8 001360A8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80138FCC 001360AC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80138FD0 001360B0  7C 7F 1B 78 */	mr r31, r3
+/* 80138FD4 001360B4  4B FA 00 21 */	bl __ct__14zNPCGoalCommonFi
+/* 80138FD8 001360B8  3C 80 80 2A */	lis r4, __vt__17zNPCGoalPrawnBeam@ha
+/* 80138FDC 001360BC  7F E3 FB 78 */	mr r3, r31
+/* 80138FE0 001360C0  38 04 A3 58 */	addi r0, r4, __vt__17zNPCGoalPrawnBeam@l
+/* 80138FE4 001360C4  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80138FE8 001360C8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80138FEC 001360CC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80138FF0 001360D0  7C 08 03 A6 */	mtlr r0
+/* 80138FF4 001360D4  38 21 00 10 */	addi r1, r1, 0x10
+/* 80138FF8 001360D8  4E 80 00 20 */	blr
+.endfn __ct__17zNPCGoalPrawnBeamFi
+
+# zNPCGoalPrawnIdle::zNPCGoalPrawnIdle(int)
+.fn __ct__17zNPCGoalPrawnIdleFi, weak
+/* 80138FFC 001360DC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80139000 001360E0  7C 08 02 A6 */	mflr r0
+/* 80139004 001360E4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80139008 001360E8  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8013900C 001360EC  7C 7F 1B 78 */	mr r31, r3
+/* 80139010 001360F0  4B F9 FF E5 */	bl __ct__14zNPCGoalCommonFi
+/* 80139014 001360F4  3C 80 80 2A */	lis r4, __vt__17zNPCGoalPrawnIdle@ha
+/* 80139018 001360F8  7F E3 FB 78 */	mr r3, r31
+/* 8013901C 001360FC  38 04 A3 8C */	addi r0, r4, __vt__17zNPCGoalPrawnIdle@l
+/* 80139020 00136100  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80139024 00136104  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80139028 00136108  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8013902C 0013610C  7C 08 03 A6 */	mtlr r0
+/* 80139030 00136110  38 21 00 10 */	addi r1, r1, 0x10
+/* 80139034 00136114  4E 80 00 20 */	blr
+.endfn __ct__17zNPCGoalPrawnIdleFi
+
+# 0x80139038 - 0x801391DC
+.section .text, "ax", unique, 2
+.balign 4
+
+# zNPCGoalKJDeath::zNPCGoalKJDeath(int)
+.fn __ct__15zNPCGoalKJDeathFi, weak
+/* 80139038 00136118  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8013903C 0013611C  7C 08 02 A6 */	mflr r0
+/* 80139040 00136120  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80139044 00136124  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80139048 00136128  7C 7F 1B 78 */	mr r31, r3
+/* 8013904C 0013612C  4B F9 FF A9 */	bl __ct__14zNPCGoalCommonFi
+/* 80139050 00136130  3C 80 80 2A */	lis r4, __vt__15zNPCGoalKJDeath@ha
+/* 80139054 00136134  7F E3 FB 78 */	mr r3, r31
+/* 80139058 00136138  38 04 9E FC */	addi r0, r4, __vt__15zNPCGoalKJDeath@l
+/* 8013905C 0013613C  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80139060 00136140  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80139064 00136144  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80139068 00136148  7C 08 03 A6 */	mtlr r0
+/* 8013906C 0013614C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80139070 00136150  4E 80 00 20 */	blr
+.endfn __ct__15zNPCGoalKJDeathFi
+
+# zNPCGoalKJDamage::zNPCGoalKJDamage(int)
+.fn __ct__16zNPCGoalKJDamageFi, weak
+/* 80139074 00136154  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80139078 00136158  7C 08 02 A6 */	mflr r0
+/* 8013907C 0013615C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80139080 00136160  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80139084 00136164  7C 7F 1B 78 */	mr r31, r3
+/* 80139088 00136168  4B F9 FF 6D */	bl __ct__14zNPCGoalCommonFi
+/* 8013908C 0013616C  3C 80 80 2A */	lis r4, __vt__16zNPCGoalKJDamage@ha
+/* 80139090 00136170  7F E3 FB 78 */	mr r3, r31
+/* 80139094 00136174  38 04 9F 30 */	addi r0, r4, __vt__16zNPCGoalKJDamage@l
+/* 80139098 00136178  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 8013909C 0013617C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801390A0 00136180  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801390A4 00136184  7C 08 03 A6 */	mtlr r0
+/* 801390A8 00136188  38 21 00 10 */	addi r1, r1, 0x10
+/* 801390AC 0013618C  4E 80 00 20 */	blr
+.endfn __ct__16zNPCGoalKJDamageFi
+
+# zNPCGoalKJShockGround::zNPCGoalKJShockGround(int)
+.fn __ct__21zNPCGoalKJShockGroundFi, weak
+/* 801390B0 00136190  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801390B4 00136194  7C 08 02 A6 */	mflr r0
+/* 801390B8 00136198  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801390BC 0013619C  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801390C0 001361A0  7C 7F 1B 78 */	mr r31, r3
+/* 801390C4 001361A4  4B F9 FF 31 */	bl __ct__14zNPCGoalCommonFi
+/* 801390C8 001361A8  3C 80 80 2A */	lis r4, __vt__21zNPCGoalKJShockGround@ha
+/* 801390CC 001361AC  7F E3 FB 78 */	mr r3, r31
+/* 801390D0 001361B0  38 04 9F 64 */	addi r0, r4, __vt__21zNPCGoalKJShockGround@l
+/* 801390D4 001361B4  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 801390D8 001361B8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801390DC 001361BC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801390E0 001361C0  7C 08 03 A6 */	mtlr r0
+/* 801390E4 001361C4  38 21 00 10 */	addi r1, r1, 0x10
+/* 801390E8 001361C8  4E 80 00 20 */	blr
+.endfn __ct__21zNPCGoalKJShockGroundFi
+
+# zNPCGoalKJTaunt::zNPCGoalKJTaunt(int)
+.fn __ct__15zNPCGoalKJTauntFi, weak
+/* 801390EC 001361CC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801390F0 001361D0  7C 08 02 A6 */	mflr r0
+/* 801390F4 001361D4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801390F8 001361D8  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801390FC 001361DC  7C 7F 1B 78 */	mr r31, r3
+/* 80139100 001361E0  4B F9 FE F5 */	bl __ct__14zNPCGoalCommonFi
+/* 80139104 001361E4  3C 80 80 2A */	lis r4, __vt__15zNPCGoalKJTaunt@ha
+/* 80139108 001361E8  7F E3 FB 78 */	mr r3, r31
+/* 8013910C 001361EC  38 04 9F 98 */	addi r0, r4, __vt__15zNPCGoalKJTaunt@l
+/* 80139110 001361F0  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80139114 001361F4  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80139118 001361F8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8013911C 001361FC  7C 08 03 A6 */	mtlr r0
+/* 80139120 00136200  38 21 00 10 */	addi r1, r1, 0x10
+/* 80139124 00136204  4E 80 00 20 */	blr
+.endfn __ct__15zNPCGoalKJTauntFi
+
+# zNPCGoalKJSpawnKids::zNPCGoalKJSpawnKids(int)
+.fn __ct__19zNPCGoalKJSpawnKidsFi, weak
+/* 80139128 00136208  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8013912C 0013620C  7C 08 02 A6 */	mflr r0
+/* 80139130 00136210  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80139134 00136214  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80139138 00136218  7C 7F 1B 78 */	mr r31, r3
+/* 8013913C 0013621C  4B F9 FE B9 */	bl __ct__14zNPCGoalCommonFi
+/* 80139140 00136220  3C 80 80 2A */	lis r4, __vt__19zNPCGoalKJSpawnKids@ha
+/* 80139144 00136224  7F E3 FB 78 */	mr r3, r31
+/* 80139148 00136228  38 04 9F CC */	addi r0, r4, __vt__19zNPCGoalKJSpawnKids@l
+/* 8013914C 0013622C  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80139150 00136230  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80139154 00136234  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80139158 00136238  7C 08 03 A6 */	mtlr r0
+/* 8013915C 0013623C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80139160 00136240  4E 80 00 20 */	blr
+.endfn __ct__19zNPCGoalKJSpawnKidsFi
+
+# zNPCGoalKJBored::zNPCGoalKJBored(int)
+.fn __ct__15zNPCGoalKJBoredFi, weak
+/* 80139164 00136244  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80139168 00136248  7C 08 02 A6 */	mflr r0
+/* 8013916C 0013624C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80139170 00136250  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80139174 00136254  7C 7F 1B 78 */	mr r31, r3
+/* 80139178 00136258  4B F9 FE 7D */	bl __ct__14zNPCGoalCommonFi
+/* 8013917C 0013625C  3C 80 80 2A */	lis r4, __vt__15zNPCGoalKJBored@ha
+/* 80139180 00136260  7F E3 FB 78 */	mr r3, r31
+/* 80139184 00136264  38 04 A0 00 */	addi r0, r4, __vt__15zNPCGoalKJBored@l
+/* 80139188 00136268  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 8013918C 0013626C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80139190 00136270  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80139194 00136274  7C 08 03 A6 */	mtlr r0
+/* 80139198 00136278  38 21 00 10 */	addi r1, r1, 0x10
+/* 8013919C 0013627C  4E 80 00 20 */	blr
+.endfn __ct__15zNPCGoalKJBoredFi
+
+# zNPCGoalKJIdle::zNPCGoalKJIdle(int)
+.fn __ct__14zNPCGoalKJIdleFi, weak
+/* 801391A0 00136280  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801391A4 00136284  7C 08 02 A6 */	mflr r0
+/* 801391A8 00136288  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801391AC 0013628C  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801391B0 00136290  7C 7F 1B 78 */	mr r31, r3
+/* 801391B4 00136294  4B F9 FE 41 */	bl __ct__14zNPCGoalCommonFi
+/* 801391B8 00136298  3C 80 80 2A */	lis r4, __vt__14zNPCGoalKJIdle@ha
+/* 801391BC 0013629C  7F E3 FB 78 */	mr r3, r31
+/* 801391C0 001362A0  38 04 A0 34 */	addi r0, r4, __vt__14zNPCGoalKJIdle@l
+/* 801391C4 001362A4  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 801391C8 001362A8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801391CC 001362AC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801391D0 001362B0  7C 08 03 A6 */	mtlr r0
+/* 801391D4 001362B4  38 21 00 10 */	addi r1, r1, 0x10
+/* 801391D8 001362B8  4E 80 00 20 */	blr
+.endfn __ct__14zNPCGoalKJIdleFi
+
+# 0x801391DC - 0x80139218
+.section .text, "ax", unique, 3
+.balign 4
+
+# zNPCGoalHere::zNPCGoalHere(int)
+.fn __ct__12zNPCGoalHereFi, weak
+/* 801391DC 001362BC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801391E0 001362C0  7C 08 02 A6 */	mflr r0
+/* 801391E4 001362C4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801391E8 001362C8  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801391EC 001362CC  7C 7F 1B 78 */	mr r31, r3
+/* 801391F0 001362D0  4B F9 FE 05 */	bl __ct__14zNPCGoalCommonFi
+/* 801391F4 001362D4  3C 80 80 2A */	lis r4, __vt__12zNPCGoalHere@ha
+/* 801391F8 001362D8  7F E3 FB 78 */	mr r3, r31
+/* 801391FC 001362DC  38 04 98 94 */	addi r0, r4, __vt__12zNPCGoalHere@l
+/* 80139200 001362E0  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 80139204 001362E4  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80139208 001362E8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8013920C 001362EC  7C 08 03 A6 */	mtlr r0
+/* 80139210 001362F0  38 21 00 10 */	addi r1, r1, 0x10
+/* 80139214 001362F4  4E 80 00 20 */	blr
+.endfn __ct__12zNPCGoalHereFi
+
+# 0x80299860 - 0x802998C8
+.data
+.balign 8
+
+.obj "@863", local
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138CE4
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138D0C
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138D34
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138D5C
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138D84
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138DAC
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138DD4
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138DFC
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138E24
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138E4C
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138E74
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138E9C
+	.rel GOALCreate_SubBoss__FiP10RyzMemGrowPv, .L_80138EC4
+.endobj "@863"
+
+# zNPCGoalHere::__vtable
+.obj __vt__12zNPCGoalHere, weak
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte Clear__14zNPCGoalCommonFv
+	.4byte Enter__14zNPCGoalCommonFfPv
+	.4byte Exit__5xGoalFfPv
+	.4byte Suspend__5xGoalFfPv
+	.4byte Resume__14zNPCGoalCommonFfPv
+	.4byte PreCalc__14zNPCGoalCommonFfPv
+	.4byte EvalRules__5xGoalFP11en_trantypefPv
+	.4byte Process__5xGoalFP11en_trantypefPvP6xScene
+	.4byte SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi
+	.4byte NPCMessage__14zNPCGoalCommonFP6NPCMsg
+	.4byte CollReview__14zNPCGoalCommonFPv
+.endobj __vt__12zNPCGoalHere

@@ -1,0 +1,483 @@
+.include "macros.inc"
+.file "iPad.cpp"
+
+# 0x800CA920 - 0x800CAEEC
+.text
+.balign 4
+
+# iPadInit()
+.fn iPadInit__Fv, global
+/* 800CA920 000C7A00  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800CA924 000C7A04  7C 08 02 A6 */	mflr r0
+/* 800CA928 000C7A08  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800CA92C 000C7A0C  48 10 DD DD */	bl PADInit
+/* 800CA930 000C7A10  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800CA934 000C7A14  38 60 00 01 */	li r3, 0x1
+/* 800CA938 000C7A18  7C 08 03 A6 */	mtlr r0
+/* 800CA93C 000C7A1C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800CA940 000C7A20  4E 80 00 20 */	blr
+.endfn iPadInit__Fv
+
+# iPadEnable(_tagxPad*, short)
+.fn iPadEnable__FP8_tagxPads, global
+/* 800CA944 000C7A24  B0 83 00 54 */	sth r4, 0x54(r3)
+/* 800CA948 000C7A28  38 00 00 00 */	li r0, 0x0
+/* 800CA94C 000C7A2C  3C 80 80 3C */	lis r4, gTrcPad@ha
+/* 800CA950 000C7A30  38 A0 00 02 */	li r5, 0x2
+/* 800CA954 000C7A34  B0 03 00 56 */	sth r0, 0x56(r3)
+/* 800CA958 000C7A38  38 84 EF 88 */	addi r4, r4, gTrcPad@l
+/* 800CA95C 000C7A3C  90 A3 00 3C */	stw r5, 0x3c(r3)
+/* 800CA960 000C7A40  A8 03 00 54 */	lha r0, 0x54(r3)
+/* 800CA964 000C7A44  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CA968 000C7A48  7C 84 02 14 */	add r4, r4, r0
+/* 800CA96C 000C7A4C  90 A4 00 08 */	stw r5, 0x8(r4)
+/* 800CA970 000C7A50  80 03 00 40 */	lwz r0, 0x40(r3)
+/* 800CA974 000C7A54  60 00 00 03 */	ori r0, r0, 0x3
+/* 800CA978 000C7A58  90 03 00 40 */	stw r0, 0x40(r3)
+/* 800CA97C 000C7A5C  80 03 00 40 */	lwz r0, 0x40(r3)
+/* 800CA980 000C7A60  60 00 00 04 */	ori r0, r0, 0x4
+/* 800CA984 000C7A64  90 03 00 40 */	stw r0, 0x40(r3)
+/* 800CA988 000C7A68  4E 80 00 20 */	blr
+.endfn iPadEnable__FP8_tagxPads
+
+# iPadConvStick(float)
+.fn iPadConvStick__Ff, local
+/* 800CA98C 000C7A6C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800CA990 000C7A70  C0 02 97 98 */	lfs f0, "@677"@sda21(r2)
+/* 800CA994 000C7A74  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800CA998 000C7A78  40 81 00 0C */	ble .L_800CA9A4
+/* 800CA99C 000C7A7C  FC 20 00 90 */	fmr f1, f0
+/* 800CA9A0 000C7A80  48 00 00 14 */	b .L_800CA9B4
+.L_800CA9A4:
+/* 800CA9A4 000C7A84  C0 02 97 9C */	lfs f0, "@678"@sda21(r2)
+/* 800CA9A8 000C7A88  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800CA9AC 000C7A8C  40 80 00 08 */	bge .L_800CA9B4
+/* 800CA9B0 000C7A90  FC 20 00 90 */	fmr f1, f0
+.L_800CA9B4:
+/* 800CA9B4 000C7A94  C0 42 97 A0 */	lfs f2, "@679"@sda21(r2)
+/* 800CA9B8 000C7A98  C0 02 97 A4 */	lfs f0, "@680"@sda21(r2)
+/* 800CA9BC 000C7A9C  EC 22 00 72 */	fmuls f1, f2, f1
+/* 800CA9C0 000C7AA0  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800CA9C4 000C7AA4  40 81 00 0C */	ble .L_800CA9D0
+/* 800CA9C8 000C7AA8  FC 20 00 90 */	fmr f1, f0
+/* 800CA9CC 000C7AAC  48 00 00 14 */	b .L_800CA9E0
+.L_800CA9D0:
+/* 800CA9D0 000C7AB0  C0 02 97 A8 */	lfs f0, "@681"@sda21(r2)
+/* 800CA9D4 000C7AB4  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800CA9D8 000C7AB8  40 80 00 08 */	bge .L_800CA9E0
+/* 800CA9DC 000C7ABC  FC 20 00 90 */	fmr f1, f0
+.L_800CA9E0:
+/* 800CA9E0 000C7AC0  FC 00 08 1E */	fctiwz f0, f1
+/* 800CA9E4 000C7AC4  D8 01 00 08 */	stfd f0, 0x8(r1)
+/* 800CA9E8 000C7AC8  80 61 00 0C */	lwz r3, 0xc(r1)
+/* 800CA9EC 000C7ACC  38 21 00 10 */	addi r1, r1, 0x10
+/* 800CA9F0 000C7AD0  4E 80 00 20 */	blr
+.endfn iPadConvStick__Ff
+
+# iPadUpdate(_tagxPad*, unsigned int*)
+.fn iPadUpdate__FP8_tagxPadPUi, global
+/* 800CA9F4 000C7AD4  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 800CA9F8 000C7AD8  7C 08 02 A6 */	mflr r0
+/* 800CA9FC 000C7ADC  90 01 00 44 */	stw r0, 0x44(r1)
+/* 800CAA00 000C7AE0  93 E1 00 3C */	stw r31, 0x3c(r1)
+/* 800CAA04 000C7AE4  93 C1 00 38 */	stw r30, 0x38(r1)
+/* 800CAA08 000C7AE8  7C 9E 23 78 */	mr r30, r4
+/* 800CAA0C 000C7AEC  93 A1 00 34 */	stw r29, 0x34(r1)
+/* 800CAA10 000C7AF0  7C 7D 1B 78 */	mr r29, r3
+/* 800CAA14 000C7AF4  A8 03 00 54 */	lha r0, 0x54(r3)
+/* 800CAA18 000C7AF8  2C 00 00 00 */	cmpwi r0, 0x0
+/* 800CAA1C 000C7AFC  40 82 00 1C */	bne .L_800CAA38
+/* 800CAA20 000C7B00  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CAA24 000C7B04  38 63 26 20 */	addi r3, r3, sPadData@l
+/* 800CAA28 000C7B08  48 10 DE F9 */	bl PADRead
+/* 800CAA2C 000C7B0C  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CAA30 000C7B10  38 63 26 20 */	addi r3, r3, sPadData@l
+/* 800CAA34 000C7B14  48 10 D1 5D */	bl PADClamp
+.L_800CAA38:
+/* 800CAA38 000C7B18  A8 7D 00 54 */	lha r3, 0x54(r29)
+/* 800CAA3C 000C7B1C  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAA40 000C7B20  38 A4 26 20 */	addi r5, r4, sPadData@l
+/* 800CAA44 000C7B24  1C C3 00 0C */	mulli r6, r3, 0xc
+/* 800CAA48 000C7B28  7C 85 32 14 */	add r4, r5, r6
+/* 800CAA4C 000C7B2C  88 04 00 0A */	lbz r0, 0xa(r4)
+/* 800CAA50 000C7B30  7C 00 07 74 */	extsb r0, r0
+/* 800CAA54 000C7B34  2C 00 FF FF */	cmpwi r0, -0x1
+/* 800CAA58 000C7B38  41 82 00 20 */	beq .L_800CAA78
+/* 800CAA5C 000C7B3C  40 80 00 10 */	bge .L_800CAA6C
+/* 800CAA60 000C7B40  2C 00 FF FD */	cmpwi r0, -0x3
+/* 800CAA64 000C7B44  40 80 00 30 */	bge .L_800CAA94
+/* 800CAA68 000C7B48  48 00 00 34 */	b .L_800CAA9C
+.L_800CAA6C:
+/* 800CAA6C 000C7B4C  2C 00 00 01 */	cmpwi r0, 0x1
+/* 800CAA70 000C7B50  40 80 00 2C */	bge .L_800CAA9C
+/* 800CAA74 000C7B54  48 00 00 30 */	b .L_800CAAA4
+.L_800CAA78:
+/* 800CAA78 000C7B58  38 80 00 01 */	li r4, 0x1
+/* 800CAA7C 000C7B5C  4B F8 2E 89 */	bl xTRCPad__Fi12_tagTRCState
+/* 800CAA80 000C7B60  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAA84 000C7B64  3C 60 80 00 */	lis r3, 0x8000
+/* 800CAA88 000C7B68  7C 63 04 30 */	srw r3, r3, r0
+/* 800CAA8C 000C7B6C  48 10 DA 79 */	bl PADReset
+/* 800CAA90 000C7B70  48 00 00 0C */	b .L_800CAA9C
+.L_800CAA94:
+/* 800CAA94 000C7B74  38 60 00 00 */	li r3, 0x0
+/* 800CAA98 000C7B78  48 00 03 84 */	b .L_800CAE1C
+.L_800CAA9C:
+/* 800CAA9C 000C7B7C  38 60 00 00 */	li r3, 0x0
+/* 800CAAA0 000C7B80  48 00 03 7C */	b .L_800CAE1C
+.L_800CAAA4:
+/* 800CAAA4 000C7B84  7C 65 32 2E */	lhzx r3, r5, r6
+/* 800CAAA8 000C7B88  38 80 00 01 */	li r4, 0x1
+/* 800CAAAC 000C7B8C  38 A0 00 80 */	li r5, 0x80
+/* 800CAAB0 000C7B90  48 00 03 89 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAAB4 000C7B94  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAAB8 000C7B98  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAABC 000C7B9C  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CAAC0 000C7BA0  7C 7F 1B 78 */	mr r31, r3
+/* 800CAAC4 000C7BA4  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAAC8 000C7BA8  38 80 00 02 */	li r4, 0x2
+/* 800CAACC 000C7BAC  38 A0 00 20 */	li r5, 0x20
+/* 800CAAD0 000C7BB0  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CAAD4 000C7BB4  48 00 03 65 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAAD8 000C7BB8  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAADC 000C7BBC  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAAE0 000C7BC0  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CAAE4 000C7BC4  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAAE8 000C7BC8  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAAEC 000C7BCC  38 80 00 04 */	li r4, 0x4
+/* 800CAAF0 000C7BD0  38 A0 00 40 */	li r5, 0x40
+/* 800CAAF4 000C7BD4  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CAAF8 000C7BD8  48 00 03 41 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAAFC 000C7BDC  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAB00 000C7BE0  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAB04 000C7BE4  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CAB08 000C7BE8  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAB0C 000C7BEC  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAB10 000C7BF0  38 80 00 08 */	li r4, 0x8
+/* 800CAB14 000C7BF4  38 A0 00 10 */	li r5, 0x10
+/* 800CAB18 000C7BF8  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CAB1C 000C7BFC  48 00 03 1D */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAB20 000C7C00  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAB24 000C7C04  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAB28 000C7C08  38 84 26 20 */	addi r4, r4, sPadData@l
+/* 800CAB2C 000C7C0C  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAB30 000C7C10  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAB34 000C7C14  7C 64 02 2E */	lhzx r3, r4, r0
+/* 800CAB38 000C7C18  54 60 06 F7 */	rlwinm. r0, r3, 0, 27, 27
+/* 800CAB3C 000C7C1C  41 82 00 80 */	beq .L_800CABBC
+/* 800CAB40 000C7C20  38 80 00 20 */	li r4, 0x20
+/* 800CAB44 000C7C24  38 A0 20 00 */	li r5, 0x2000
+/* 800CAB48 000C7C28  48 00 02 F1 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAB4C 000C7C2C  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAB50 000C7C30  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAB54 000C7C34  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CAB58 000C7C38  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAB5C 000C7C3C  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAB60 000C7C40  38 80 00 40 */	li r4, 0x40
+/* 800CAB64 000C7C44  38 A0 02 00 */	li r5, 0x200
+/* 800CAB68 000C7C48  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CAB6C 000C7C4C  48 00 02 CD */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAB70 000C7C50  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAB74 000C7C54  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAB78 000C7C58  38 84 26 20 */	addi r4, r4, sPadData@l
+/* 800CAB7C 000C7C5C  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAB80 000C7C60  1C A0 00 0C */	mulli r5, r0, 0xc
+/* 800CAB84 000C7C64  7C 64 2A 14 */	add r3, r4, r5
+/* 800CAB88 000C7C68  88 03 00 06 */	lbz r0, 0x6(r3)
+/* 800CAB8C 000C7C6C  28 00 00 18 */	cmplwi r0, 0x18
+/* 800CAB90 000C7C70  41 80 00 08 */	blt .L_800CAB98
+/* 800CAB94 000C7C74  63 FF 02 00 */	ori r31, r31, 0x200
+.L_800CAB98:
+/* 800CAB98 000C7C78  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CAB9C 000C7C7C  38 03 26 20 */	addi r0, r3, sPadData@l
+/* 800CABA0 000C7C80  7C 60 2A 14 */	add r3, r0, r5
+/* 800CABA4 000C7C84  88 03 00 07 */	lbz r0, 0x7(r3)
+/* 800CABA8 000C7C88  28 00 00 18 */	cmplwi r0, 0x18
+/* 800CABAC 000C7C8C  41 80 00 08 */	blt .L_800CABB4
+/* 800CABB0 000C7C90  63 FF 20 00 */	ori r31, r31, 0x2000
+.L_800CABB4:
+/* 800CABB4 000C7C94  67 FF 00 10 */	oris r31, r31, 0x10
+/* 800CABB8 000C7C98  48 00 00 78 */	b .L_800CAC30
+.L_800CABBC:
+/* 800CABBC 000C7C9C  38 80 00 20 */	li r4, 0x20
+/* 800CABC0 000C7CA0  38 A0 10 00 */	li r5, 0x1000
+/* 800CABC4 000C7CA4  48 00 02 75 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CABC8 000C7CA8  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CABCC 000C7CAC  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CABD0 000C7CB0  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CABD4 000C7CB4  7F FF 1B 78 */	or r31, r31, r3
+/* 800CABD8 000C7CB8  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CABDC 000C7CBC  38 80 00 40 */	li r4, 0x40
+/* 800CABE0 000C7CC0  38 A0 01 00 */	li r5, 0x100
+/* 800CABE4 000C7CC4  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CABE8 000C7CC8  48 00 02 51 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CABEC 000C7CCC  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CABF0 000C7CD0  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CABF4 000C7CD4  38 84 26 20 */	addi r4, r4, sPadData@l
+/* 800CABF8 000C7CD8  7F FF 1B 78 */	or r31, r31, r3
+/* 800CABFC 000C7CDC  1C A0 00 0C */	mulli r5, r0, 0xc
+/* 800CAC00 000C7CE0  7C 64 2A 14 */	add r3, r4, r5
+/* 800CAC04 000C7CE4  88 03 00 06 */	lbz r0, 0x6(r3)
+/* 800CAC08 000C7CE8  28 00 00 18 */	cmplwi r0, 0x18
+/* 800CAC0C 000C7CEC  41 80 00 08 */	blt .L_800CAC14
+/* 800CAC10 000C7CF0  63 FF 01 00 */	ori r31, r31, 0x100
+.L_800CAC14:
+/* 800CAC14 000C7CF4  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CAC18 000C7CF8  38 03 26 20 */	addi r0, r3, sPadData@l
+/* 800CAC1C 000C7CFC  7C 60 2A 14 */	add r3, r0, r5
+/* 800CAC20 000C7D00  88 03 00 07 */	lbz r0, 0x7(r3)
+/* 800CAC24 000C7D04  28 00 00 18 */	cmplwi r0, 0x18
+/* 800CAC28 000C7D08  41 80 00 08 */	blt .L_800CAC30
+/* 800CAC2C 000C7D0C  63 FF 10 00 */	ori r31, r31, 0x1000
+.L_800CAC30:
+/* 800CAC30 000C7D10  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAC34 000C7D14  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CAC38 000C7D18  38 63 26 20 */	addi r3, r3, sPadData@l
+/* 800CAC3C 000C7D1C  38 80 01 00 */	li r4, 0x100
+/* 800CAC40 000C7D20  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAC44 000C7D24  3C A0 00 01 */	lis r5, 0x1
+/* 800CAC48 000C7D28  7C 63 02 2E */	lhzx r3, r3, r0
+/* 800CAC4C 000C7D2C  48 00 01 ED */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAC50 000C7D30  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAC54 000C7D34  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAC58 000C7D38  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CAC5C 000C7D3C  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAC60 000C7D40  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAC64 000C7D44  38 80 02 00 */	li r4, 0x200
+/* 800CAC68 000C7D48  3C A0 00 08 */	lis r5, 0x8
+/* 800CAC6C 000C7D4C  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CAC70 000C7D50  48 00 01 C9 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAC74 000C7D54  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAC78 000C7D58  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAC7C 000C7D5C  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CAC80 000C7D60  7F FF 1B 78 */	or r31, r31, r3
+/* 800CAC84 000C7D64  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CAC88 000C7D68  38 80 08 00 */	li r4, 0x800
+/* 800CAC8C 000C7D6C  3C A0 00 04 */	lis r5, 0x4
+/* 800CAC90 000C7D70  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CAC94 000C7D74  48 00 01 A5 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CAC98 000C7D78  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CAC9C 000C7D7C  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CACA0 000C7D80  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CACA4 000C7D84  7F FF 1B 78 */	or r31, r31, r3
+/* 800CACA8 000C7D88  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CACAC 000C7D8C  38 80 04 00 */	li r4, 0x400
+/* 800CACB0 000C7D90  3C A0 00 02 */	lis r5, 0x2
+/* 800CACB4 000C7D94  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CACB8 000C7D98  48 00 01 81 */	bl iPadConvFromGCN__FUiUiUi
+/* 800CACBC 000C7D9C  A8 1D 00 54 */	lha r0, 0x54(r29)
+/* 800CACC0 000C7DA0  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CACC4 000C7DA4  38 C4 26 20 */	addi r6, r4, sPadData@l
+/* 800CACC8 000C7DA8  7F FF 1B 78 */	or r31, r31, r3
+/* 800CACCC 000C7DAC  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 800CACD0 000C7DB0  38 80 10 00 */	li r4, 0x1000
+/* 800CACD4 000C7DB4  38 A0 00 01 */	li r5, 0x1
+/* 800CACD8 000C7DB8  7C 66 02 2E */	lhzx r3, r6, r0
+/* 800CACDC 000C7DBC  48 00 01 5D */	bl iPadConvFromGCN__FUiUiUi
+/* 800CACE0 000C7DC0  7F FF 1B 78 */	or r31, r31, r3
+/* 800CACE4 000C7DC4  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CACE8 000C7DC8  93 FE 00 00 */	stw r31, 0x0(r30)
+/* 800CACEC 000C7DCC  3C 00 43 30 */	lis r0, 0x4330
+/* 800CACF0 000C7DD0  38 83 26 20 */	addi r4, r3, sPadData@l
+/* 800CACF4 000C7DD4  A8 7D 00 54 */	lha r3, 0x54(r29)
+/* 800CACF8 000C7DD8  90 01 00 08 */	stw r0, 0x8(r1)
+/* 800CACFC 000C7DDC  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 800CAD00 000C7DE0  C8 22 97 B0 */	lfd f1, "@719"@sda21(r2)
+/* 800CAD04 000C7DE4  7C 64 02 14 */	add r3, r4, r0
+/* 800CAD08 000C7DE8  88 03 00 02 */	lbz r0, 0x2(r3)
+/* 800CAD0C 000C7DEC  7C 00 07 74 */	extsb r0, r0
+/* 800CAD10 000C7DF0  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 800CAD14 000C7DF4  90 01 00 0C */	stw r0, 0xc(r1)
+/* 800CAD18 000C7DF8  C8 01 00 08 */	lfd f0, 0x8(r1)
+/* 800CAD1C 000C7DFC  EC 20 08 28 */	fsubs f1, f0, f1
+/* 800CAD20 000C7E00  4B FF FC 6D */	bl iPadConvStick__Ff
+/* 800CAD24 000C7E04  98 7D 00 38 */	stb r3, 0x38(r29)
+/* 800CAD28 000C7E08  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CAD2C 000C7E0C  3C 00 43 30 */	lis r0, 0x4330
+/* 800CAD30 000C7E10  A8 7D 00 54 */	lha r3, 0x54(r29)
+/* 800CAD34 000C7E14  38 84 26 20 */	addi r4, r4, sPadData@l
+/* 800CAD38 000C7E18  90 01 00 10 */	stw r0, 0x10(r1)
+/* 800CAD3C 000C7E1C  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 800CAD40 000C7E20  C8 22 97 B0 */	lfd f1, "@719"@sda21(r2)
+/* 800CAD44 000C7E24  7C 64 02 14 */	add r3, r4, r0
+/* 800CAD48 000C7E28  88 03 00 03 */	lbz r0, 0x3(r3)
+/* 800CAD4C 000C7E2C  7C 00 07 74 */	extsb r0, r0
+/* 800CAD50 000C7E30  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 800CAD54 000C7E34  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800CAD58 000C7E38  C8 01 00 10 */	lfd f0, 0x10(r1)
+/* 800CAD5C 000C7E3C  EC 20 08 28 */	fsubs f1, f0, f1
+/* 800CAD60 000C7E40  4B FF FC 2D */	bl iPadConvStick__Ff
+/* 800CAD64 000C7E44  7C 03 00 D0 */	neg r0, r3
+/* 800CAD68 000C7E48  3C 60 80 29 */	lis r3, sPadData@ha
+/* 800CAD6C 000C7E4C  98 1D 00 39 */	stb r0, 0x39(r29)
+/* 800CAD70 000C7E50  38 83 26 20 */	addi r4, r3, sPadData@l
+/* 800CAD74 000C7E54  3C 00 43 30 */	lis r0, 0x4330
+/* 800CAD78 000C7E58  A8 7D 00 54 */	lha r3, 0x54(r29)
+/* 800CAD7C 000C7E5C  90 01 00 18 */	stw r0, 0x18(r1)
+/* 800CAD80 000C7E60  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 800CAD84 000C7E64  C8 22 97 B0 */	lfd f1, "@719"@sda21(r2)
+/* 800CAD88 000C7E68  7C 64 02 14 */	add r3, r4, r0
+/* 800CAD8C 000C7E6C  88 03 00 04 */	lbz r0, 0x4(r3)
+/* 800CAD90 000C7E70  7C 00 07 74 */	extsb r0, r0
+/* 800CAD94 000C7E74  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 800CAD98 000C7E78  90 01 00 1C */	stw r0, 0x1c(r1)
+/* 800CAD9C 000C7E7C  C8 01 00 18 */	lfd f0, 0x18(r1)
+/* 800CADA0 000C7E80  EC 20 08 28 */	fsubs f1, f0, f1
+/* 800CADA4 000C7E84  4B FF FB E9 */	bl iPadConvStick__Ff
+/* 800CADA8 000C7E88  98 7D 00 3A */	stb r3, 0x3a(r29)
+/* 800CADAC 000C7E8C  3C 80 80 29 */	lis r4, sPadData@ha
+/* 800CADB0 000C7E90  3C 00 43 30 */	lis r0, 0x4330
+/* 800CADB4 000C7E94  A8 7D 00 54 */	lha r3, 0x54(r29)
+/* 800CADB8 000C7E98  38 84 26 20 */	addi r4, r4, sPadData@l
+/* 800CADBC 000C7E9C  90 01 00 20 */	stw r0, 0x20(r1)
+/* 800CADC0 000C7EA0  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 800CADC4 000C7EA4  C8 22 97 B0 */	lfd f1, "@719"@sda21(r2)
+/* 800CADC8 000C7EA8  7C 64 02 14 */	add r3, r4, r0
+/* 800CADCC 000C7EAC  88 03 00 05 */	lbz r0, 0x5(r3)
+/* 800CADD0 000C7EB0  7C 00 07 74 */	extsb r0, r0
+/* 800CADD4 000C7EB4  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 800CADD8 000C7EB8  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800CADDC 000C7EBC  C8 01 00 20 */	lfd f0, 0x20(r1)
+/* 800CADE0 000C7EC0  EC 20 08 28 */	fsubs f1, f0, f1
+/* 800CADE4 000C7EC4  4B FF FB A9 */	bl iPadConvStick__Ff
+/* 800CADE8 000C7EC8  7C 03 00 D0 */	neg r0, r3
+/* 800CADEC 000C7ECC  3C 60 80 3C */	lis r3, gTrcPad@ha
+/* 800CADF0 000C7ED0  98 1D 00 3B */	stb r0, 0x3b(r29)
+/* 800CADF4 000C7ED4  38 83 EF 88 */	addi r4, r3, gTrcPad@l
+/* 800CADF8 000C7ED8  A8 7D 00 54 */	lha r3, 0x54(r29)
+/* 800CADFC 000C7EDC  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 800CAE00 000C7EE0  7C 84 02 14 */	add r4, r4, r0
+/* 800CAE04 000C7EE4  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 800CAE08 000C7EE8  2C 00 00 02 */	cmpwi r0, 0x2
+/* 800CAE0C 000C7EEC  41 82 00 0C */	beq .L_800CAE18
+/* 800CAE10 000C7EF0  38 80 00 02 */	li r4, 0x2
+/* 800CAE14 000C7EF4  4B F8 2A F1 */	bl xTRCPad__Fi12_tagTRCState
+.L_800CAE18:
+/* 800CAE18 000C7EF8  38 60 00 01 */	li r3, 0x1
+.L_800CAE1C:
+/* 800CAE1C 000C7EFC  80 01 00 44 */	lwz r0, 0x44(r1)
+/* 800CAE20 000C7F00  83 E1 00 3C */	lwz r31, 0x3c(r1)
+/* 800CAE24 000C7F04  83 C1 00 38 */	lwz r30, 0x38(r1)
+/* 800CAE28 000C7F08  83 A1 00 34 */	lwz r29, 0x34(r1)
+/* 800CAE2C 000C7F0C  7C 08 03 A6 */	mtlr r0
+/* 800CAE30 000C7F10  38 21 00 40 */	addi r1, r1, 0x40
+/* 800CAE34 000C7F14  4E 80 00 20 */	blr
+.endfn iPadUpdate__FP8_tagxPadPUi
+
+# iPadConvFromGCN(unsigned int, unsigned int, unsigned int)
+.fn iPadConvFromGCN__FUiUiUi, local
+/* 800CAE38 000C7F18  7C 63 20 38 */	and r3, r3, r4
+/* 800CAE3C 000C7F1C  7C 03 00 D0 */	neg r0, r3
+/* 800CAE40 000C7F20  7C 00 1B 78 */	or r0, r0, r3
+/* 800CAE44 000C7F24  7C 00 FE 70 */	srawi r0, r0, 31
+/* 800CAE48 000C7F28  7C A3 00 38 */	and r3, r5, r0
+/* 800CAE4C 000C7F2C  4E 80 00 20 */	blr
+.endfn iPadConvFromGCN__FUiUiUi
+
+# iPadRumbleFx(_tagxPad*, _tagxRumble*, float)
+.fn iPadRumbleFx__FP8_tagxPadP11_tagxRumblef, global
+/* 800CAE50 000C7F30  4E 80 00 20 */	blr
+.endfn iPadRumbleFx__FP8_tagxPadP11_tagxRumblef
+
+# iPadStopRumble(_tagxPad*)
+.fn iPadStopRumble__FP8_tagxPad, global
+/* 800CAE54 000C7F34  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800CAE58 000C7F38  7C 08 02 A6 */	mflr r0
+/* 800CAE5C 000C7F3C  38 80 00 00 */	li r4, 0x0
+/* 800CAE60 000C7F40  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800CAE64 000C7F44  A8 63 00 54 */	lha r3, 0x54(r3)
+/* 800CAE68 000C7F48  48 10 DE 65 */	bl PADControlMotor
+/* 800CAE6C 000C7F4C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800CAE70 000C7F50  7C 08 03 A6 */	mtlr r0
+/* 800CAE74 000C7F54  38 21 00 10 */	addi r1, r1, 0x10
+/* 800CAE78 000C7F58  4E 80 00 20 */	blr
+.endfn iPadStopRumble__FP8_tagxPad
+
+# iPadStopRumble()
+.fn iPadStopRumble__Fv, global
+/* 800CAE7C 000C7F5C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800CAE80 000C7F60  7C 08 02 A6 */	mflr r0
+/* 800CAE84 000C7F64  3C 80 80 3C */	lis r4, globals@ha
+/* 800CAE88 000C7F68  3C 60 80 39 */	lis r3, mPad@ha
+/* 800CAE8C 000C7F6C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800CAE90 000C7F70  38 A4 05 58 */	addi r5, r4, globals@l
+/* 800CAE94 000C7F74  38 03 C9 94 */	addi r0, r3, mPad@l
+/* 800CAE98 000C7F78  38 80 00 00 */	li r4, 0x0
+/* 800CAE9C 000C7F7C  88 A5 06 D1 */	lbz r5, 0x6d1(r5)
+/* 800CAEA0 000C7F80  1C 65 01 48 */	mulli r3, r5, 0x148
+/* 800CAEA4 000C7F84  7C 60 1A 14 */	add r3, r0, r3
+/* 800CAEA8 000C7F88  A8 63 00 54 */	lha r3, 0x54(r3)
+/* 800CAEAC 000C7F8C  48 10 DE 21 */	bl PADControlMotor
+/* 800CAEB0 000C7F90  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800CAEB4 000C7F94  7C 08 03 A6 */	mtlr r0
+/* 800CAEB8 000C7F98  38 21 00 10 */	addi r1, r1, 0x10
+/* 800CAEBC 000C7F9C  4E 80 00 20 */	blr
+.endfn iPadStopRumble__Fv
+
+# iPadStartRumble(_tagxPad*, _tagxRumble*)
+.fn iPadStartRumble__FP8_tagxPadP11_tagxRumble, global
+/* 800CAEC0 000C7FA0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800CAEC4 000C7FA4  7C 08 02 A6 */	mflr r0
+/* 800CAEC8 000C7FA8  38 80 00 01 */	li r4, 0x1
+/* 800CAECC 000C7FAC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800CAED0 000C7FB0  A8 63 00 54 */	lha r3, 0x54(r3)
+/* 800CAED4 000C7FB4  48 10 DD F9 */	bl PADControlMotor
+/* 800CAED8 000C7FB8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800CAEDC 000C7FBC  7C 08 03 A6 */	mtlr r0
+/* 800CAEE0 000C7FC0  38 21 00 10 */	addi r1, r1, 0x10
+/* 800CAEE4 000C7FC4  4E 80 00 20 */	blr
+.endfn iPadStartRumble__FP8_tagxPadP11_tagxRumble
+
+# iPadKill()
+.fn iPadKill__Fv, global
+/* 800CAEE8 000C7FC8  4E 80 00 20 */	blr
+.endfn iPadKill__Fv
+
+# 0x80292620 - 0x80292650
+.data
+.balign 8
+
+.obj sPadData, local
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj sPadData
+
+# 0x803CE118 - 0x803CE138
+.section .sdata2, "a"
+.balign 8
+
+.obj "@677", local
+	.4byte 0x42200000
+.endobj "@677"
+
+.obj "@678", local
+	.4byte 0xC2200000
+.endobj "@678"
+
+.obj "@679", local
+	.4byte 0x404CCCCD
+.endobj "@679"
+
+.obj "@680", local
+	.4byte 0x42FE0000
+.endobj "@680"
+
+.obj "@681", local
+	.4byte 0xC2FE0000
+.endobj "@681"
+	.4byte 0x00000000
+
+.obj "@719", local
+	.4byte 0x43300000
+	.4byte 0x80000000
+.endobj "@719"

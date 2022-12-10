@@ -1,0 +1,338 @@
+.include "macros.inc"
+.file "ansi_files.c"
+
+# 0x801DE534 - 0x801DE844
+.text
+.balign 4
+
+.fn __flush_line_buffered_output_files, global
+/* 801DE534 001DB614  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801DE538 001DB618  7C 08 02 A6 */	mflr r0
+/* 801DE53C 001DB61C  3C 60 80 2B */	lis r3, __files@ha
+/* 801DE540 001DB620  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801DE544 001DB624  38 03 6B 08 */	addi r0, r3, __files@l
+/* 801DE548 001DB628  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801DE54C 001DB62C  3B E0 00 00 */	li r31, 0x0
+/* 801DE550 001DB630  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 801DE554 001DB634  7C 1E 03 78 */	mr r30, r0
+/* 801DE558 001DB638  48 00 00 44 */	b .L_801DE59C
+.L_801DE55C:
+/* 801DE55C 001DB63C  A0 1E 00 04 */	lhz r0, 0x4(r30)
+/* 801DE560 001DB640  54 00 D7 7F */	extrwi. r0, r0, 3, 23
+/* 801DE564 001DB644  41 82 00 34 */	beq .L_801DE598
+/* 801DE568 001DB648  88 1E 00 04 */	lbz r0, 0x4(r30)
+/* 801DE56C 001DB64C  54 00 FF FF */	extrwi. r0, r0, 1, 30
+/* 801DE570 001DB650  41 82 00 28 */	beq .L_801DE598
+/* 801DE574 001DB654  88 1E 00 08 */	lbz r0, 0x8(r30)
+/* 801DE578 001DB658  54 00 DF 7E */	extrwi r0, r0, 3, 24
+/* 801DE57C 001DB65C  28 00 00 01 */	cmplwi r0, 0x1
+/* 801DE580 001DB660  40 82 00 18 */	bne .L_801DE598
+/* 801DE584 001DB664  7F C3 F3 78 */	mr r3, r30
+/* 801DE588 001DB668  48 00 4B DD */	bl fflush
+/* 801DE58C 001DB66C  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801DE590 001DB670  41 82 00 08 */	beq .L_801DE598
+/* 801DE594 001DB674  3B E0 FF FF */	li r31, -0x1
+.L_801DE598:
+/* 801DE598 001DB678  83 DE 00 4C */	lwz r30, 0x4c(r30)
+.L_801DE59C:
+/* 801DE59C 001DB67C  28 1E 00 00 */	cmplwi r30, 0x0
+/* 801DE5A0 001DB680  40 82 FF BC */	bne .L_801DE55C
+/* 801DE5A4 001DB684  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801DE5A8 001DB688  7F E3 FB 78 */	mr r3, r31
+/* 801DE5AC 001DB68C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801DE5B0 001DB690  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 801DE5B4 001DB694  7C 08 03 A6 */	mtlr r0
+/* 801DE5B8 001DB698  38 21 00 10 */	addi r1, r1, 0x10
+/* 801DE5BC 001DB69C  4E 80 00 20 */	blr
+.endfn __flush_line_buffered_output_files
+
+.fn __flush_all, global
+/* 801DE5C0 001DB6A0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801DE5C4 001DB6A4  7C 08 02 A6 */	mflr r0
+/* 801DE5C8 001DB6A8  3C 60 80 2B */	lis r3, __files@ha
+/* 801DE5CC 001DB6AC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801DE5D0 001DB6B0  38 03 6B 08 */	addi r0, r3, __files@l
+/* 801DE5D4 001DB6B4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801DE5D8 001DB6B8  3B E0 00 00 */	li r31, 0x0
+/* 801DE5DC 001DB6BC  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 801DE5E0 001DB6C0  7C 1E 03 78 */	mr r30, r0
+/* 801DE5E4 001DB6C4  48 00 00 28 */	b .L_801DE60C
+.L_801DE5E8:
+/* 801DE5E8 001DB6C8  A0 1E 00 04 */	lhz r0, 0x4(r30)
+/* 801DE5EC 001DB6CC  54 00 D7 7F */	extrwi. r0, r0, 3, 23
+/* 801DE5F0 001DB6D0  41 82 00 18 */	beq .L_801DE608
+/* 801DE5F4 001DB6D4  7F C3 F3 78 */	mr r3, r30
+/* 801DE5F8 001DB6D8  48 00 4B 6D */	bl fflush
+/* 801DE5FC 001DB6DC  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801DE600 001DB6E0  41 82 00 08 */	beq .L_801DE608
+/* 801DE604 001DB6E4  3B E0 FF FF */	li r31, -0x1
+.L_801DE608:
+/* 801DE608 001DB6E8  83 DE 00 4C */	lwz r30, 0x4c(r30)
+.L_801DE60C:
+/* 801DE60C 001DB6EC  28 1E 00 00 */	cmplwi r30, 0x0
+/* 801DE610 001DB6F0  40 82 FF D8 */	bne .L_801DE5E8
+/* 801DE614 001DB6F4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801DE618 001DB6F8  7F E3 FB 78 */	mr r3, r31
+/* 801DE61C 001DB6FC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801DE620 001DB700  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 801DE624 001DB704  7C 08 03 A6 */	mtlr r0
+/* 801DE628 001DB708  38 21 00 10 */	addi r1, r1, 0x10
+/* 801DE62C 001DB70C  4E 80 00 20 */	blr
+.endfn __flush_all
+
+.fn __close_all, global
+/* 801DE630 001DB710  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801DE634 001DB714  7C 08 02 A6 */	mflr r0
+/* 801DE638 001DB718  3C 80 80 2B */	lis r4, __files@ha
+/* 801DE63C 001DB71C  38 60 00 02 */	li r3, 0x2
+/* 801DE640 001DB720  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801DE644 001DB724  38 04 6B 08 */	addi r0, r4, __files@l
+/* 801DE648 001DB728  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801DE64C 001DB72C  7C 1F 03 78 */	mr r31, r0
+/* 801DE650 001DB730  48 00 3F B1 */	bl __begin_critical_region
+/* 801DE654 001DB734  48 00 00 60 */	b .L_801DE6B4
+.L_801DE658:
+/* 801DE658 001DB738  A0 1F 00 04 */	lhz r0, 0x4(r31)
+/* 801DE65C 001DB73C  54 00 D7 7F */	extrwi. r0, r0, 3, 23
+/* 801DE660 001DB740  41 82 00 0C */	beq .L_801DE66C
+/* 801DE664 001DB744  7F E3 FB 78 */	mr r3, r31
+/* 801DE668 001DB748  48 00 4C 35 */	bl fclose
+.L_801DE66C:
+/* 801DE66C 001DB74C  7F E3 FB 78 */	mr r3, r31
+/* 801DE670 001DB750  83 FF 00 4C */	lwz r31, 0x4c(r31)
+/* 801DE674 001DB754  88 03 00 0C */	lbz r0, 0xc(r3)
+/* 801DE678 001DB758  28 00 00 00 */	cmplwi r0, 0x0
+/* 801DE67C 001DB75C  41 82 00 0C */	beq .L_801DE688
+/* 801DE680 001DB760  4B EF 51 15 */	bl free
+/* 801DE684 001DB764  48 00 00 30 */	b .L_801DE6B4
+.L_801DE688:
+/* 801DE688 001DB768  A0 03 00 04 */	lhz r0, 0x4(r3)
+/* 801DE68C 001DB76C  38 80 00 03 */	li r4, 0x3
+/* 801DE690 001DB770  50 80 35 F2 */	rlwimi r0, r4, 6, 23, 25
+/* 801DE694 001DB774  28 1F 00 00 */	cmplwi r31, 0x0
+/* 801DE698 001DB778  B0 03 00 04 */	sth r0, 0x4(r3)
+/* 801DE69C 001DB77C  41 82 00 18 */	beq .L_801DE6B4
+/* 801DE6A0 001DB780  88 1F 00 0C */	lbz r0, 0xc(r31)
+/* 801DE6A4 001DB784  28 00 00 00 */	cmplwi r0, 0x0
+/* 801DE6A8 001DB788  41 82 00 0C */	beq .L_801DE6B4
+/* 801DE6AC 001DB78C  38 00 00 00 */	li r0, 0x0
+/* 801DE6B0 001DB790  90 03 00 4C */	stw r0, 0x4c(r3)
+.L_801DE6B4:
+/* 801DE6B4 001DB794  28 1F 00 00 */	cmplwi r31, 0x0
+/* 801DE6B8 001DB798  40 82 FF A0 */	bne .L_801DE658
+/* 801DE6BC 001DB79C  38 60 00 02 */	li r3, 0x2
+/* 801DE6C0 001DB7A0  48 00 3F 3D */	bl __end_critical_region
+/* 801DE6C4 001DB7A4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801DE6C8 001DB7A8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801DE6CC 001DB7AC  7C 08 03 A6 */	mtlr r0
+/* 801DE6D0 001DB7B0  38 21 00 10 */	addi r1, r1, 0x10
+/* 801DE6D4 001DB7B4  4E 80 00 20 */	blr
+.endfn __close_all
+
+.fn __init_file, global
+/* 801DE6D8 001DB7B8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801DE6DC 001DB7BC  7C 08 02 A6 */	mflr r0
+/* 801DE6E0 001DB7C0  38 E0 00 00 */	li r7, 0x0
+/* 801DE6E4 001DB7C4  28 06 00 00 */	cmplwi r6, 0x0
+/* 801DE6E8 001DB7C8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801DE6EC 001DB7CC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801DE6F0 001DB7D0  7C 7F 1B 78 */	mr r31, r3
+/* 801DE6F4 001DB7D4  90 E3 00 00 */	stw r7, 0x0(r3)
+/* 801DE6F8 001DB7D8  80 04 00 00 */	lwz r0, 0x0(r4)
+/* 801DE6FC 001DB7DC  90 03 00 04 */	stw r0, 0x4(r3)
+/* 801DE700 001DB7E0  88 03 00 08 */	lbz r0, 0x8(r3)
+/* 801DE704 001DB7E4  50 E0 2E 34 */	rlwimi r0, r7, 5, 24, 26
+/* 801DE708 001DB7E8  98 03 00 08 */	stb r0, 0x8(r3)
+/* 801DE70C 001DB7EC  88 03 00 08 */	lbz r0, 0x8(r3)
+/* 801DE710 001DB7F0  50 E0 26 F6 */	rlwimi r0, r7, 4, 27, 27
+/* 801DE714 001DB7F4  98 03 00 08 */	stb r0, 0x8(r3)
+/* 801DE718 001DB7F8  98 E3 00 09 */	stb r7, 0x9(r3)
+/* 801DE71C 001DB7FC  98 E3 00 0A */	stb r7, 0xa(r3)
+/* 801DE720 001DB800  90 E3 00 18 */	stw r7, 0x18(r3)
+/* 801DE724 001DB804  41 82 00 14 */	beq .L_801DE738
+/* 801DE728 001DB808  7C A4 2B 78 */	mr r4, r5
+/* 801DE72C 001DB80C  38 A0 00 02 */	li r5, 0x2
+/* 801DE730 001DB810  48 00 37 01 */	bl setvbuf
+/* 801DE734 001DB814  48 00 00 14 */	b .L_801DE748
+.L_801DE738:
+/* 801DE738 001DB818  38 80 00 00 */	li r4, 0x0
+/* 801DE73C 001DB81C  38 A0 00 00 */	li r5, 0x0
+/* 801DE740 001DB820  38 C0 00 00 */	li r6, 0x0
+/* 801DE744 001DB824  48 00 36 ED */	bl setvbuf
+.L_801DE748:
+/* 801DE748 001DB828  80 7F 00 1C */	lwz r3, 0x1c(r31)
+/* 801DE74C 001DB82C  38 00 00 00 */	li r0, 0x0
+/* 801DE750 001DB830  90 7F 00 24 */	stw r3, 0x24(r31)
+/* 801DE754 001DB834  90 1F 00 28 */	stw r0, 0x28(r31)
+/* 801DE758 001DB838  A0 1F 00 04 */	lhz r0, 0x4(r31)
+/* 801DE75C 001DB83C  54 00 D7 7E */	extrwi r0, r0, 3, 23
+/* 801DE760 001DB840  28 00 00 01 */	cmplwi r0, 0x1
+/* 801DE764 001DB844  40 82 00 34 */	bne .L_801DE798
+/* 801DE768 001DB848  3C 80 80 1F */	lis r4, __position_file@ha
+/* 801DE76C 001DB84C  3C 60 80 1F */	lis r3, __read_file@ha
+/* 801DE770 001DB850  38 04 61 F4 */	addi r0, r4, __position_file@l
+/* 801DE774 001DB854  3C 80 80 1F */	lis r4, __write_file@ha
+/* 801DE778 001DB858  90 1F 00 38 */	stw r0, 0x38(r31)
+/* 801DE77C 001DB85C  38 03 65 64 */	addi r0, r3, __read_file@l
+/* 801DE780 001DB860  3C 60 80 1F */	lis r3, __close_file@ha
+/* 801DE784 001DB864  38 84 64 B0 */	addi r4, r4, __write_file@l
+/* 801DE788 001DB868  90 1F 00 3C */	stw r0, 0x3c(r31)
+/* 801DE78C 001DB86C  38 03 62 D0 */	addi r0, r3, __close_file@l
+/* 801DE790 001DB870  90 9F 00 40 */	stw r4, 0x40(r31)
+/* 801DE794 001DB874  90 1F 00 44 */	stw r0, 0x44(r31)
+.L_801DE798:
+/* 801DE798 001DB878  38 00 00 00 */	li r0, 0x0
+/* 801DE79C 001DB87C  90 1F 00 48 */	stw r0, 0x48(r31)
+/* 801DE7A0 001DB880  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801DE7A4 001DB884  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801DE7A8 001DB888  7C 08 03 A6 */	mtlr r0
+/* 801DE7AC 001DB88C  38 21 00 10 */	addi r1, r1, 0x10
+/* 801DE7B0 001DB890  4E 80 00 20 */	blr
+.endfn __init_file
+
+.fn __find_unopened_file, global
+/* 801DE7B4 001DB894  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801DE7B8 001DB898  7C 08 02 A6 */	mflr r0
+/* 801DE7BC 001DB89C  3C 60 80 2B */	lis r3, __files@ha
+/* 801DE7C0 001DB8A0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801DE7C4 001DB8A4  38 63 6B 08 */	addi r3, r3, __files@l
+/* 801DE7C8 001DB8A8  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801DE7CC 001DB8AC  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 801DE7D0 001DB8B0  80 63 00 EC */	lwz r3, 0xec(r3)
+/* 801DE7D4 001DB8B4  48 00 00 1C */	b .L_801DE7F0
+.L_801DE7D8:
+/* 801DE7D8 001DB8B8  A0 03 00 04 */	lhz r0, 0x4(r3)
+/* 801DE7DC 001DB8BC  54 00 D7 7F */	extrwi. r0, r0, 3, 23
+/* 801DE7E0 001DB8C0  40 82 00 08 */	bne .L_801DE7E8
+/* 801DE7E4 001DB8C4  48 00 00 48 */	b .L_801DE82C
+.L_801DE7E8:
+/* 801DE7E8 001DB8C8  7C 7E 1B 78 */	mr r30, r3
+/* 801DE7EC 001DB8CC  80 63 00 4C */	lwz r3, 0x4c(r3)
+.L_801DE7F0:
+/* 801DE7F0 001DB8D0  28 03 00 00 */	cmplwi r3, 0x0
+/* 801DE7F4 001DB8D4  40 82 FF E4 */	bne .L_801DE7D8
+/* 801DE7F8 001DB8D8  38 60 00 50 */	li r3, 0x50
+/* 801DE7FC 001DB8DC  4B EF 4F 4D */	bl malloc
+/* 801DE800 001DB8E0  7C 7F 1B 79 */	mr. r31, r3
+/* 801DE804 001DB8E4  41 82 00 24 */	beq .L_801DE828
+/* 801DE808 001DB8E8  38 80 00 00 */	li r4, 0x0
+/* 801DE80C 001DB8EC  38 A0 00 50 */	li r5, 0x50
+/* 801DE810 001DB8F0  4B E2 4C 49 */	bl memset
+/* 801DE814 001DB8F4  38 00 00 01 */	li r0, 0x1
+/* 801DE818 001DB8F8  7F E3 FB 78 */	mr r3, r31
+/* 801DE81C 001DB8FC  98 1F 00 0C */	stb r0, 0xc(r31)
+/* 801DE820 001DB900  93 FE 00 4C */	stw r31, 0x4c(r30)
+/* 801DE824 001DB904  48 00 00 08 */	b .L_801DE82C
+.L_801DE828:
+/* 801DE828 001DB908  38 60 00 00 */	li r3, 0x0
+.L_801DE82C:
+/* 801DE82C 001DB90C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801DE830 001DB910  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801DE834 001DB914  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 801DE838 001DB918  7C 08 03 A6 */	mtlr r0
+/* 801DE83C 001DB91C  38 21 00 10 */	addi r1, r1, 0x10
+/* 801DE840 001DB920  4E 80 00 20 */	blr
+.endfn __find_unopened_file
+
+# 0x802B6B08 - 0x802B6C48
+.data
+.balign 8
+
+.obj __files, global
+	.4byte 0x00000000
+	.4byte 0x0A800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte stdin_buff
+	.4byte 0x00000100
+	.4byte stdin_buff
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte __read_console
+	.4byte __write_console
+	.4byte __close_console
+	.4byte 0x00000000
+	.4byte __files+0x50
+	.4byte 0x00000001
+	.4byte 0x12800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte stdout_buff
+	.4byte 0x00000100
+	.4byte stdout_buff
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte __read_console
+	.4byte __write_console
+	.4byte __close_console
+	.4byte 0x00000000
+	.4byte __files+0xA0
+	.4byte 0x00000002
+	.4byte 0x10800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte stderr_buff
+	.4byte 0x00000100
+	.4byte stderr_buff
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte __read_console
+	.4byte __write_console
+	.4byte __close_console
+	.4byte 0x00000000
+	.4byte __files+0xF0
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj __files
+
+# 0x8037EFA0 - 0x8037F2A0
+.bss
+.balign 8
+
+.obj stderr_buff, local
+	.skip 0x100
+.endobj stderr_buff
+
+.obj stdout_buff, local
+	.skip 0x100
+.endobj stdout_buff
+
+.obj stdin_buff, local
+	.skip 0x100
+.endobj stdin_buff
