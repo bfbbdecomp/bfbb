@@ -123,8 +123,6 @@ $(DOL): $(ELF) | $(DTK)
 	@echo " ELF2DOL "$@
 	$(QUIET) $(DTK) elf2dol $< $@
 	$(QUIET) $(DTK) shasum -c bfbb.sha1
-# || ( rm -f main.dump; $(ASMDIFF) )
-	$(QUIET) cp bfbb.map main.elf obj/ # needed for diff.py
 
 clean:
 	rm -f $(DOL) $(ELF) $(MAP) baserom.dump main.dump
