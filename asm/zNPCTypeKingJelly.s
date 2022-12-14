@@ -10972,7 +10972,7 @@
 	.4byte 0x00000000
 
 # 0x80328538 - 0x803294D0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zNPCTypeKingJelly_cpp@::tweak

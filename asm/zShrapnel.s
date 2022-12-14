@@ -3328,7 +3328,7 @@
 .endobj sShrapnelTable
 
 # 0x803154F0 - 0x8031A670
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj tmpMat, local

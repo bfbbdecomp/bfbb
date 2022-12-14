@@ -2196,7 +2196,7 @@
 .endobj "@stringBase0"
 
 # 0x802FD698 - 0x802FDB38
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gLastAtomicList, local

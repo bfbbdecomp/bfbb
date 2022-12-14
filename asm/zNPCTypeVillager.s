@@ -6875,7 +6875,7 @@
 .endobj __vt__14zNPCNewsFishTV
 
 # 0x80313188 - 0x80313410
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_parf_aqualeak, local

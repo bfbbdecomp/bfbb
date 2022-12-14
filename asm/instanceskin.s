@@ -2153,7 +2153,7 @@
 .endfn _rwDlGeometrySkinInstanceFast
 
 # 0x80383660 - 0x80383680
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj VtxDesc, local

@@ -534,7 +534,7 @@
 .endfn iFileGetInfo__FP9tag_xFilePUiPUi
 
 # 0x802FAE60 - 0x802FBE80
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj tbuffer, local

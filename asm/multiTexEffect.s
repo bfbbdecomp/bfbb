@@ -798,7 +798,7 @@
 .endfn RpMTEffectAddRef
 
 # 0x80383558 - 0x80383610
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj EffectRegEntries, local

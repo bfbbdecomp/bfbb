@@ -220,7 +220,7 @@
 	.4byte 0x00000000
 
 # 0x802DB9A0 - 0x802DBA50
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sActionLine, local

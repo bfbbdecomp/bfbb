@@ -2513,7 +2513,7 @@
 	.byte 0x00, 0x00, 0x00
 
 # 0x80327D30 - 0x80328000
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zDiscoFloor_cpp@::glow_light

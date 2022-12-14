@@ -434,7 +434,7 @@
 	.4byte 0x00000000
 
 # 0x80381260 - 0x80383488
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gWritePos, local

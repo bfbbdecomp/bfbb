@@ -2226,7 +2226,7 @@
 	.4byte 0x00000000
 
 # 0x802B8A40 - 0x802B8DA0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sCutsceneFakeModel, local

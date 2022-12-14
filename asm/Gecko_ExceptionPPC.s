@@ -1769,7 +1769,7 @@
 .endobj __vt__Q23std13bad_exception
 
 # 0x8037F2B8 - 0x8037F2C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj fragmentinfo, local

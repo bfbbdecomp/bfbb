@@ -1926,7 +1926,7 @@
 .endobj ResetFunctionInfo
 
 # 0x8037EAD0 - 0x8037EB20
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj Type, local

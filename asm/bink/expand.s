@@ -122,7 +122,7 @@
 .endfn popmalloc
 
 # 0x80363C88 - 0x80363D88
-.bss
+.section .bss, "wa", @nobits
 .balign 4
 
 .sym ptrs, local

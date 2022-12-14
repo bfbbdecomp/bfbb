@@ -8510,7 +8510,7 @@
 	.4byte 0x00000000
 
 # 0x80362B88 - 0x80362C88
-.bss
+.section .bss, "wa", @nobits
 .balign 4
 
 .sym binkerr, local

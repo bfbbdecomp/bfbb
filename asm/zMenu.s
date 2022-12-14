@@ -893,7 +893,7 @@
 	.byte 0x00
 
 # 0x802F2990 - 0x802F2A50
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj corruptFiles, local

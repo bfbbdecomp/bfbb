@@ -3003,7 +3003,7 @@
 .endobj "@1548"
 
 # 0x802DBA70 - 0x802DBA80
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zCamera_cpp@::wall_jump_view

@@ -1979,7 +1979,7 @@
 	.byte 0x00
 
 # 0x8032A4A0 - 0x8032A568
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sPTank, local

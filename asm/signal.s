@@ -64,7 +64,7 @@
 .endfn raise
 
 # 0x8037F2A0 - 0x8037F2B8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj signal_funcs, global

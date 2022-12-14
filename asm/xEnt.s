@@ -4569,7 +4569,7 @@
 	.4byte 0x00000000
 
 # 0x802B8DA0 - 0x802B8DB8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj all_ents_box, local

@@ -3587,7 +3587,7 @@
 	.4byte 0x00000000
 
 # 0x8031A670 - 0x8031B320
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_npc_widgets, local

@@ -419,7 +419,7 @@
 .endobj rasterTKList
 
 # 0x80383F70 - 0x80383F98
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwRasterFreeList, local

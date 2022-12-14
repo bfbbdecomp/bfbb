@@ -736,7 +736,7 @@
 	.4byte 0x00000000
 
 # 0x8037E010 - 0x8037E060
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 .sym ...bss.0, local
 

@@ -2796,7 +2796,7 @@
 .endfn RpMatFXGetGameCubePipeline
 
 # 0x803834B8 - 0x803834C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj FXStateCache, local

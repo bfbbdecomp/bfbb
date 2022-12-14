@@ -12292,7 +12292,7 @@
 	.4byte 0x00000000
 
 # 0x80362B10 - 0x80362B68
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj nozey_npc_cinematics$1033, local

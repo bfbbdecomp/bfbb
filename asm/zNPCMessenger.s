@@ -1292,7 +1292,7 @@
 .endobj g_postoffice
 
 # 0x803121C8 - 0x80312298
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj msg$822, local

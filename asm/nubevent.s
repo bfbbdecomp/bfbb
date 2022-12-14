@@ -164,7 +164,7 @@
 .endfn TRKInitializeEventQueue
 
 # 0x8037F2C8 - 0x8037F2F0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gTRKEventQueue, global

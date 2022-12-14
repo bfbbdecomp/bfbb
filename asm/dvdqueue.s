@@ -156,7 +156,7 @@
 .endfn __DVDDequeueWaitingQueue
 
 # 0x8037D838 - 0x8037D858
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj WaitingQueue, local

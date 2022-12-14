@@ -754,7 +754,7 @@
 .endobj __vt__Q28ztaskbox13talk_callback
 
 # 0x803242E8 - 0x803242F8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj tcb$774, local

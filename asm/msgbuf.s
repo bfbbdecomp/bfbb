@@ -909,7 +909,7 @@
 	.byte 0x00, 0x00, 0x00
 
 # 0x8037F2F8 - 0x80380CA8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gTRKMsgBufs, global

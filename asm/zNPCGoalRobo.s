@@ -24424,7 +24424,7 @@
 .endobj __vt__9HAZNotify
 
 # 0x80312178 - 0x803121C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj colrec$4320, local

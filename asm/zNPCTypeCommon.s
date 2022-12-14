@@ -7939,7 +7939,7 @@
 	.4byte 0x00000000
 
 # 0x80312298 - 0x80312390
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj msg$1064, local

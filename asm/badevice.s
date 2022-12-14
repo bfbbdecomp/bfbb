@@ -833,7 +833,7 @@
 .endobj engineTKList
 
 # 0x80383DA8 - 0x80383F00
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj staticGlobals, local

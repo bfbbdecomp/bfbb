@@ -213,7 +213,7 @@
 .endobj "@44"
 
 # 0x8037D858 - 0x8037D8C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj bb2Buf, local

@@ -12449,7 +12449,7 @@
 	.4byte 0x00000000
 
 # 0x802DBA80 - 0x802DD310
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # cruise_bubble::@unnamed@zEntCruiseBubble_cpp@::normal_tweak

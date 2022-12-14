@@ -10390,7 +10390,7 @@
 	.4byte 0x00000000
 
 # 0x80329F48 - 0x8032A4A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zNPCTypeBossPlankton_cpp@::sound_asset_names

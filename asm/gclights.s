@@ -446,7 +446,7 @@
 .endfn _rpDlLightPluginAttach
 
 # 0x803837A0 - 0x803839A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _RwGCLightObjs, local

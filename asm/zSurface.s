@@ -1564,7 +1564,7 @@
 	.4byte 0x00000000
 
 # 0x802F2C88 - 0x802F2EE8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sDef_surf, local

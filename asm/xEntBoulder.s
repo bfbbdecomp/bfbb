@@ -3297,7 +3297,7 @@
 .endobj "@1566"
 
 # 0x80314698 - 0x80314C50
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sBoulderCollis, local

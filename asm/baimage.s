@@ -2243,7 +2243,7 @@
 .endobj imageTKList
 
 # 0x80383F28 - 0x80383F70
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwImageFreeList, local

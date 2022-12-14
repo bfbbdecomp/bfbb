@@ -341,7 +341,7 @@
 .endfn __AXProcessAux
 
 # 0x80363EA0 - 0x80366BA0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __AXBufferAuxA, local

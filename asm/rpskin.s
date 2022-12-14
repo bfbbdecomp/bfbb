@@ -1331,7 +1331,7 @@
 .endfn RpSkinAtomicSetType
 
 # 0x80383638 - 0x80383660
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpSkinFreeList, local

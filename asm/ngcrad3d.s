@@ -484,7 +484,7 @@
 .endfn GXSetTexCoordGen
 
 # 0x80312150 - 0x80312178
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj D3D_surface_type, local

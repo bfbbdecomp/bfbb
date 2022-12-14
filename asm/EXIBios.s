@@ -1990,7 +1990,7 @@
 	.2byte 0x0000
 
 # 0x8037D8C8 - 0x8037D988
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj Ecb, local

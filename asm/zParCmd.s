@@ -842,7 +842,7 @@
 	.byte 0x00, 0x00, 0x00
 
 # 0x802F2B50 - 0x802F2C70
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sClipVolume, local

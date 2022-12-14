@@ -781,7 +781,7 @@
 .endfn RpMaterialGetMultiTexture
 
 # 0x803834C8 - 0x80383558
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj RegEntries, global

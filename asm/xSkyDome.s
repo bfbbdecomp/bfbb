@@ -196,7 +196,7 @@
 .endfn xSkyDome_Render__Fv
 
 # 0x80313728 - 0x80313788
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sSkyList, local

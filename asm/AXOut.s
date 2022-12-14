@@ -554,7 +554,7 @@
 .endfn AXRegisterCallback
 
 # 0x803671A0 - 0x8036BC40
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __AXOutBuffer, local

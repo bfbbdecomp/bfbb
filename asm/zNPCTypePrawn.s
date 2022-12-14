@@ -7167,7 +7167,7 @@
 	.4byte 0x00000000
 
 # 0x803294D0 - 0x803299D8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zNPCTypePrawn_cpp@::sound_asset_names

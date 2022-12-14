@@ -2272,7 +2272,7 @@
 	.byte 0x00
 
 # 0x802E5788 - 0x802E8F88
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sGuideList, local

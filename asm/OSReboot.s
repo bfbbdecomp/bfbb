@@ -253,7 +253,7 @@
 .endfn __OSReboot
 
 # 0x8037E060 - 0x8037E080
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj Header, local

@@ -2184,7 +2184,7 @@
 	.2byte 0x0000
 
 # 0x802FBE98 - 0x802FD698
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __MIXChannel, local

@@ -2933,7 +2933,7 @@
 .endobj "@928"
 
 # 0x80383610 - 0x80383638
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpMatFXMaterialDataFreeList, local

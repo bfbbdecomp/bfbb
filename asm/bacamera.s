@@ -1765,7 +1765,7 @@
 	.2byte 0x0000
 
 # 0x80383D80 - 0x80383DA8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwCameraFreeList, local

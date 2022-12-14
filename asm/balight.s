@@ -582,7 +582,7 @@
 .endobj lightTKList
 
 # 0x803836C8 - 0x803836F0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpLightFreeList, local

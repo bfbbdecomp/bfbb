@@ -27,7 +27,7 @@
 .endfn TRK_main
 
 # 0x80381258 - 0x80381260
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj TRK_mainError, local

@@ -1262,7 +1262,7 @@
 	.4byte 0x00000000
 
 # 0x802F2A50 - 0x802F2B50
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sMusicSoundID, local

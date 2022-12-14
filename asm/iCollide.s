@@ -2385,7 +2385,7 @@
 .endfn xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 
 # 0x802FAE20 - 0x802FAE60
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj cbray, local

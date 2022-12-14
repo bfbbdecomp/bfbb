@@ -1509,7 +1509,7 @@
 .endobj sFullScreenGlareDir
 
 # 0x802C89F0 - 0x802C8B00
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj mFade, local

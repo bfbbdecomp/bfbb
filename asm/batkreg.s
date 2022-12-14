@@ -467,7 +467,7 @@
 .endfn _rwPluginRegistryDeInitObject
 
 # 0x80383D58 - 0x80383D80
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj toolkitRegEntriesSpace, local

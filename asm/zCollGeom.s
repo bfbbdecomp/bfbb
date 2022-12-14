@@ -263,7 +263,7 @@
 .endfn zCollGeom_CamDisable__FP4xEnt
 
 # 0x803141F8 - 0x80314210
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sTableCount, local

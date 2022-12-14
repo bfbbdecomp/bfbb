@@ -4017,7 +4017,7 @@
 .endobj "@stringBase0"
 
 # 0x80312100 - 0x80312140
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj str$701, local

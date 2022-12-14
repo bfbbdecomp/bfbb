@@ -1359,7 +1359,7 @@
 	.4byte 0x00000000
 
 # 0x8036BC80 - 0x8037D480
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __AXPB, local

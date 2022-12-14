@@ -1631,7 +1631,7 @@
 .endobj fix_pool_sizes
 
 # 0x8037EF68 - 0x8037EFA0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj protopool$192, local

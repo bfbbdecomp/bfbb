@@ -2266,7 +2266,7 @@
 .endobj zVarEntryTable
 
 # 0x802F8640 - 0x802F8A80
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj buffer$775, local

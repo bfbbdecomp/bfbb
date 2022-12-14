@@ -1022,7 +1022,7 @@
 .endfn __DVDLowSetWAType
 
 # 0x8037D6C0 - 0x8037D7A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj CommandList, local

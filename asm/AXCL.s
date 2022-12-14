@@ -484,7 +484,7 @@
 .endfn __AXClQuit
 
 # 0x80366BA0 - 0x803671A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __AXCommandList, local

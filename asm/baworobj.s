@@ -2002,7 +2002,7 @@
 .endfn RpWorldRemoveLight
 
 # 0x80383740 - 0x80383788
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpTieFreeList, local

@@ -878,7 +878,7 @@
 .endobj __vt__8zNPCBoss
 
 # 0x80324468 - 0x803245D8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_parf_holder, local

@@ -270,7 +270,7 @@
 	.4byte 0x00000000
 
 # 0x80381250 - 0x80381258
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj lc_base, local

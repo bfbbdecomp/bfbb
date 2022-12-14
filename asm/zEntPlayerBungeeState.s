@@ -8096,7 +8096,7 @@
 	.4byte 0x00000000
 
 # 0x80313788 - 0x803141F8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # bungee_state::@unnamed@zEntPlayerBungeeState_cpp@::fixed

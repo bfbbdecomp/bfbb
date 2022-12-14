@@ -3686,7 +3686,7 @@
 .endobj lightning_type_names
 
 # 0x802E90C8 - 0x802EA990
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sLightning, local

@@ -3648,7 +3648,7 @@
 	.4byte 0x00000000
 
 # 0x802F2EE8 - 0x802F6368
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj zThrownList, local

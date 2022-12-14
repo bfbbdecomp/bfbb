@@ -1659,7 +1659,7 @@
 .endobj worldTKList
 
 # 0x80383718 - 0x80383740
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpWorldListFreeList, local

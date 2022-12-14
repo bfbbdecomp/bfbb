@@ -1160,7 +1160,7 @@
 .endfn OSClearStack
 
 # 0x8037E0D8 - 0x8037EAD0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj RunQueue, local

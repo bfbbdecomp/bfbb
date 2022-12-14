@@ -2399,7 +2399,7 @@
 .endobj texDictTKList
 
 # 0x80383F98 - 0x80383FE0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwTextureFreeList, local

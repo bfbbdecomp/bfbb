@@ -2048,7 +2048,7 @@
 .endobj gTRKStepStatus
 
 # 0x80380CD0 - 0x80381250
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj TRK_saved_exceptionID, local

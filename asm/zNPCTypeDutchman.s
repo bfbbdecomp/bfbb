@@ -12466,7 +12466,7 @@
 .endobj __vt__12zNPCDutchman
 
 # 0x8032A578 - 0x8032B448
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zNPCTypeDutchman_cpp@::tweak

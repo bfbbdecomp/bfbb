@@ -1764,7 +1764,7 @@
 	.byte 0x00, 0x00, 0x00
 
 # 0x8037EB20 - 0x8037ED20
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj Packet, local

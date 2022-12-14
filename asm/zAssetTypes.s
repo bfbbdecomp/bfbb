@@ -2462,7 +2462,7 @@
 .endobj tableFuncList
 
 # 0x802DBA50 - 0x802DBA70
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sDummyEmptyJSP, local

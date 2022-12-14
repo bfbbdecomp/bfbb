@@ -362,7 +362,7 @@
 .endfn AXAcquireVoice
 
 # 0x80363D88 - 0x80363EA0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __AXStackHead, local

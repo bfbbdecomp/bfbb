@@ -1612,7 +1612,7 @@
 .endobj "@896"
 
 # 0x8035BE30 - 0x8035E738
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_glyphs_talk, local

@@ -754,7 +754,7 @@
 .endfn RpHAnimFrameGetHierarchy
 
 # 0x80383490 - 0x803834B8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpHAnimHierarchyFreeList, local

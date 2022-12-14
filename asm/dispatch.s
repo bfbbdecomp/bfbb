@@ -93,7 +93,7 @@
 	.4byte 0x00000000
 
 # 0x80380CC0 - 0x80380CC8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gTRKDispatchTableSize, global

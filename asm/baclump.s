@@ -3513,7 +3513,7 @@
 .endobj clumpTKList
 
 # 0x80383680 - 0x803836C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpAtomicFreeList, local

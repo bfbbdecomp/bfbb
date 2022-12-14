@@ -146,7 +146,7 @@
 .endfn RtAnimInterpolatorDestroy
 
 # 0x803839E0 - 0x80383CE0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj RtAnimInterpolatorInfoBlock, global

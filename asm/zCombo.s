@@ -839,7 +839,7 @@
 .endobj "@925"
 
 # 0x80362B68 - 0x80362B88
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sUnderCamPos, local

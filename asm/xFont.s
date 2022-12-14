@@ -9852,7 +9852,7 @@
 .endobj "format_tags_buffer__19@unnamed@xFont_cpp@"
 
 # 0x802B8DB8 - 0x802C7CE8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@xFont_cpp@::active_fonts

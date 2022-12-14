@@ -55,7 +55,7 @@
 .endfn _rxPacketDestroy
 
 # 0x803844F0 - 0x80384508
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rxExecCtxGlobal, global

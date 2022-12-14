@@ -6354,7 +6354,7 @@
 .endobj scale
 
 # 0x802F2C70 - 0x802F2C88
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sOldPosPlayer, local

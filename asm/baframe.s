@@ -995,7 +995,7 @@
 .endobj frameTKList
 
 # 0x80383F00 - 0x80383F28
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj frameFreeList$52, local

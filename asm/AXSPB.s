@@ -363,7 +363,7 @@
 .endfn __AXDepopVoice
 
 # 0x8036BC40 - 0x8036BC80
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __AXStudio, local

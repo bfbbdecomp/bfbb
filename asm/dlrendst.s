@@ -1001,7 +1001,7 @@
 .endobj "@664"
 
 # 0x80384498 - 0x803844F0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _RwDlStateCache, global

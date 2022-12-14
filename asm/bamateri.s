@@ -771,7 +771,7 @@
 	.4byte 0x00000000
 
 # 0x803836F0 - 0x80383718
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rpMaterialFreeList, local

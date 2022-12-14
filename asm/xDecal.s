@@ -1342,7 +1342,7 @@
 .endfn lock_block__25ptank_pool__color_mat_uv2Fv
 
 # 0x8032B448 - 0x8032B4C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@xDecal_cpp@::active_emitters

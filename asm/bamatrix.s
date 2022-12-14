@@ -1695,7 +1695,7 @@
 	.byte 0x00, 0x00, 0x00
 
 # 0x80383CE0 - 0x80383D08
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwMatrixFreeList, local

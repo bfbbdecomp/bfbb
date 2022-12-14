@@ -52580,7 +52580,7 @@
 .endobj bbspeed$10045
 
 # 0x802DE3D0 - 0x802DF430
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sHackStuckDir, local

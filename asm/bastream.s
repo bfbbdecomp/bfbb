@@ -728,7 +728,7 @@
 .endfn RwStreamOpen
 
 # 0x80383D30 - 0x80383D58
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwStreamFreeList, local

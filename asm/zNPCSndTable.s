@@ -750,7 +750,7 @@
 .endobj g_strz_sndgroup
 
 # 0x80314C50 - 0x80314CB8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_hash_sndgroup, local

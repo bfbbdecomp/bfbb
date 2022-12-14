@@ -1618,7 +1618,7 @@
 	.4byte 0x00000000
 
 # 0x802FDB38 - 0x802FE100
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gColorTable, local

@@ -2446,7 +2446,7 @@
 .endobj "@736"
 
 # 0x8037ED20 - 0x8037EE68
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj regs, local

@@ -710,7 +710,7 @@
 	.4byte 0x00000000
 
 # 0x802E8F88 - 0x802E90C8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sLight, local

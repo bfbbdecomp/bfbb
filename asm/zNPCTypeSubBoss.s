@@ -439,7 +439,7 @@
 	.4byte 0x00000000
 
 # 0x803242F8 - 0x80324468
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_parf_holder, local

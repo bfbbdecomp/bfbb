@@ -1064,7 +1064,7 @@
 .endobj sParSysInfo
 
 # 0x80314210 - 0x80314228
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj par_offset_right, local

@@ -2033,7 +2033,7 @@
 	.4byte 0x00000000
 
 # 0x80312140 - 0x80312150
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj MemoryFunctions, local

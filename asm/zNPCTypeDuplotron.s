@@ -1534,7 +1534,7 @@
 	.4byte 0x00000000
 
 # 0x80314CB8 - 0x803154F0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_parf_smoky, local

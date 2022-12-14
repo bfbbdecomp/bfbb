@@ -514,7 +514,7 @@
 .endobj __vt__6taxiCB
 
 # 0x8032A568 - 0x8032A578
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj tCB1$780, local

@@ -10615,7 +10615,7 @@
 .endobj "@2020"
 
 # 0x8035E738 - 0x80362B10
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_hazards, local

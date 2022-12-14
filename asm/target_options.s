@@ -19,7 +19,7 @@
 .endfn SetUseSerialIO
 
 # 0x80383488 - 0x80383490
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj bUseSerialIO, local

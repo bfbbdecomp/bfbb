@@ -1390,7 +1390,7 @@
 .endfn _rwDlWorldSectorInstanceFast
 
 # 0x803839C0 - 0x803839E0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj VtxDesc, local

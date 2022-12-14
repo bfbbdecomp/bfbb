@@ -121,7 +121,7 @@
 .endfn abort
 
 # 0x8037EE68 - 0x8037EF68
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj __atexit_funcs, global

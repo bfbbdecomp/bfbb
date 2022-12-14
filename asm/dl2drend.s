@@ -1560,7 +1560,7 @@
 .endobj posMatrix$277
 
 # 0x803843E0 - 0x80384400
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rwDlProjectionMatrix, local

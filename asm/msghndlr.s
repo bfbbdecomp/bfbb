@@ -2983,7 +2983,7 @@
 .endobj "@975"
 
 # 0x80380CC8 - 0x80380CD0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj IsTRKConnected, local

@@ -584,7 +584,7 @@
 .endobj "@581"
 
 # 0x802F8A80 - 0x802FAE20
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj scratchBuffer, local

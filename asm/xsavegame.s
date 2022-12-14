@@ -5747,7 +5747,7 @@
 	.4byte 0x00000000
 
 # 0x802C8970 - 0x802C8988
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_autodata, local

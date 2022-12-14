@@ -3872,7 +3872,7 @@
 	.4byte 0x00000000
 
 # 0x80314530 - 0x80314698
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # oob_state::@unnamed@zEntPlayerOOBState_cpp@::fixed

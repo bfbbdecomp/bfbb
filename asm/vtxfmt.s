@@ -410,7 +410,7 @@
 .endfn RpGameCubeGeometrySetVtxFmt
 
 # 0x80383788 - 0x803837A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _RpDlVtxFmtDefault, local

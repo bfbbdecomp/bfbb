@@ -1367,7 +1367,7 @@
 .endfn _rwDlGeometryInstanceFast
 
 # 0x803839A0 - 0x803839C0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj VtxDesc, local

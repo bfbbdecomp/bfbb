@@ -2744,7 +2744,7 @@
 .endfn xMat3x3RMulVec__FP5xVec3PC7xMat3x3PC5xVec3
 
 # 0x802C8988 - 0x802C89F0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sNearestBound, local

@@ -836,7 +836,7 @@
 .endfn normalize_analog__Fiiiiii
 
 # 0x802C8770 - 0x802C8970
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj mRumbleList, local

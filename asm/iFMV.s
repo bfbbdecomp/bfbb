@@ -993,7 +993,7 @@
 .endfn xDrawLine2D_LocaliFMVVersion__Fffff
 
 # 0x802FBE80 - 0x802FBE98
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj Bink_surface_type, local

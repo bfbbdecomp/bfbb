@@ -2145,7 +2145,7 @@
 .endobj sDelayedSnd
 
 # 0x802DADA0 - 0x802DB9A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@xSnd_cpp@::faders

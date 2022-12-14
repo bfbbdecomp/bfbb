@@ -493,7 +493,7 @@
 .endfn _rxPipelineDestroy
 
 # 0x80384508 - 0x803CA8E8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _rxPipesFreeList, local

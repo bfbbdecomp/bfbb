@@ -95,7 +95,7 @@
 	.2byte 0x0000
 
 # 0x802DF430 - 0x802DF490
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sSurfaceSoundIDStep, local

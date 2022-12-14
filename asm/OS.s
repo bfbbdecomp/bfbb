@@ -1014,7 +1014,7 @@
 	.byte 0x00
 
 # 0x8037DFC0 - 0x8037E010
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj DriveInfo, local

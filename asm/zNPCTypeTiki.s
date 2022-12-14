@@ -4167,7 +4167,7 @@
 	.4byte 0x00000000
 
 # 0x80313410 - 0x80313728
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj loveyEmitterInfo, local

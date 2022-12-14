@@ -3940,7 +3940,7 @@
 	.4byte 0x00000000
 
 # 0x802F6368 - 0x802F8640
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj Vertex, local

@@ -3248,7 +3248,7 @@
 .endobj "@1011"
 
 # 0x8037D7A0 - 0x8037D838
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj BB2, local

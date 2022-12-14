@@ -6566,7 +6566,7 @@
 .endobj zanyArray$1485
 
 # 0x8032B580 - 0x8035BE30
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj info$950, local

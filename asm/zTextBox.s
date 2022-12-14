@@ -918,7 +918,7 @@
 .endobj "new_tags__22@unnamed@zTextBox_cpp@"
 
 # 0x80324258 - 0x803242E8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj vert$701, local

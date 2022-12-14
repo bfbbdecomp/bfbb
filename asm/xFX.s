@@ -7535,7 +7535,7 @@
 .endobj "@1933"
 
 # 0x802C7CE8 - 0x802C8760
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@xFX_cpp@::alpha_count0

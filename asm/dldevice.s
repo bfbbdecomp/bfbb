@@ -2030,7 +2030,7 @@
 	.4byte 0x00000000
 
 # 0x80384400 - 0x80384498
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _RwGCFrameQueue, local

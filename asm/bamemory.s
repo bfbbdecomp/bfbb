@@ -819,7 +819,7 @@
 .endfn _rwMemoryClose
 
 # 0x80383D08 - 0x80383D30
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj _masterFreeList, local

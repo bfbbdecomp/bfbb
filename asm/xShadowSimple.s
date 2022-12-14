@@ -1411,7 +1411,7 @@
 	.byte 0x00, 0x00, 0x00
 
 # 0x803245D8 - 0x80327D30
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sCollQueue, local

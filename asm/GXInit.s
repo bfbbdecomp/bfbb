@@ -1492,7 +1492,7 @@
 	.4byte 0x00000000
 
 # 0x8037D988 - 0x8037DFC0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj FifoObj, local

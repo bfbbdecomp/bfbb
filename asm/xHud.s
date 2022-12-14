@@ -2015,7 +2015,7 @@
 .endobj __vt__Q24xhud6widget
 
 # 0x802C8760 - 0x802C8770
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj ba$784, local

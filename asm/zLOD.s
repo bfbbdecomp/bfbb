@@ -705,7 +705,7 @@
 .endfn zLOD_UseCustomTable__FP4xEntP9zLODTable
 
 # 0x802EA990 - 0x802F2990
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sManagerList, local

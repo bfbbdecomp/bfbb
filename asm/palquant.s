@@ -2778,7 +2778,7 @@
 .endfn _rwPalQuantTerm
 
 # 0x80383FE0 - 0x803843E0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj splice, local

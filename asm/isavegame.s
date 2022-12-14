@@ -10298,7 +10298,7 @@
 .endobj "@2177"
 
 # 0x802FE100 - 0x80312100
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj cardwork, local

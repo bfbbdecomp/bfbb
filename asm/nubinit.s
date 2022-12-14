@@ -138,7 +138,7 @@
 	.byte 0x00
 
 # 0x8037F2F0 - 0x8037F2F8
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gTRKBigEndian, global

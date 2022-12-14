@@ -1514,7 +1514,7 @@
 	.4byte 0x00000000
 
 # 0x8037D480 - 0x8037D6C0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 .sym ...bss.0, local
 

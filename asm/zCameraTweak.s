@@ -556,7 +556,7 @@
 .endfn zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase
 
 # 0x8032B4C8 - 0x8032B580
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sCamTweakList, local

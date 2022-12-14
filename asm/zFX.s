@@ -5651,7 +5651,7 @@
 .endobj "entrail_types__17@unnamed@zFX_cpp@"
 
 # 0x802DF490 - 0x802E5710
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zFX_cpp@::poppers

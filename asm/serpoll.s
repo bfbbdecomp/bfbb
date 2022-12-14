@@ -289,7 +289,7 @@
 .endfn TRKTestForPacket
 
 # 0x80380CA8 - 0x80380CC0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj gTRKInputPendingPtr, global

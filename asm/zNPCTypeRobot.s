@@ -18428,7 +18428,7 @@
 	.4byte 0x00000000
 
 # 0x80312390 - 0x80313188
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj g_uvaShield, local

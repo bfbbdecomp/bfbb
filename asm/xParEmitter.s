@@ -1480,7 +1480,7 @@
 .endobj "@1136"
 
 # 0x80314228 - 0x803144F0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj sSaveEmmiterSettings, local

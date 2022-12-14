@@ -18888,7 +18888,7 @@
 .endobj blitsyuy2
 
 # 0x80362C88 - 0x80363C88
-.bss
+.section .bss, "wa", @nobits
 .balign 4
 
 .sym origYUVTables, local

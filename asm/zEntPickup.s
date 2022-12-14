@@ -4458,7 +4458,7 @@
 	.4byte 0x00000000
 
 # 0x802DD310 - 0x802DE3D0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj rewardPickups, local

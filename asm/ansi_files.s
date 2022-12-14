@@ -322,7 +322,7 @@
 .endobj __files
 
 # 0x8037EFA0 - 0x8037F2A0
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj stderr_buff, local

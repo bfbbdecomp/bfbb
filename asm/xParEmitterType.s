@@ -2428,7 +2428,7 @@
 .endobj "@1050"
 
 # 0x803144F0 - 0x80314530
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 .obj buffer_mat$943, local

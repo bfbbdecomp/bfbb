@@ -4597,7 +4597,7 @@
 .endobj "__vt__Q222@unnamed@zTalkBox_cpp@15stop_state_type"
 
 # 0x8031B320 - 0x80324258
-.bss
+.section .bss, "wa", @nobits
 .balign 8
 
 # @unnamed@zTalkBox_cpp@::shared
