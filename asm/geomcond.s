@@ -949,7 +949,6 @@
 	.rel VertexDataCreateRemapped, .L_80222B14
 	.rel VertexDataCreateRemapped, .L_80222B1C
 	.rel VertexDataCreateRemapped, .L_80222B24
-.L_802B78EC:
 	.rel VertexDataCreateRemapped, .L_80222B2C
 	.rel VertexDataCreateRemapped, .L_80222B34
 .endobj "@486"

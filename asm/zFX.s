@@ -5326,7 +5326,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3F000000
-.L_8025BBB4:
 	.4byte 0x40800000
 	.4byte 0x3FC90FDB
 	.4byte 0xBFC90FDB
@@ -5342,7 +5341,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3F400000
-.L_8025BBF0:
 	.4byte 0x40A00000
 	.4byte 0x3FC90FDB
 	.4byte 0xBFC90FDB
@@ -5352,14 +5350,12 @@
 	.4byte 0x00200201
 	.4byte 0x00000000
 	.4byte 0x741B0566
-.L_8025BC14:
 	.4byte 0x40000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3F800000
-.L_8025BC2C:
 	.4byte 0x40C00000
 	.4byte 0x3FC90FDB
 	.4byte 0xBFC90FDB
@@ -5378,7 +5374,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8025BC68:
 	.4byte 0x40A00000
 	.4byte 0x3FC90FDB
 	.4byte 0xBFC90FDB
@@ -5415,7 +5410,6 @@
 	.4byte 0x00000000
 	.4byte 0x3DCCCCCD
 	.4byte 0x00000000
-.L_8025BCE0:
 	.4byte 0x40400000
 	.4byte 0x3FC90FDB
 	.4byte 0xBFC90FDB
@@ -5423,7 +5417,6 @@
 	.4byte 0xBF19999A
 	.4byte 0xB4B42D7F
 	.4byte 0x00100201
-.L_8025BCFC:
 	.4byte 0x00000000
 	.4byte 0x741B0566
 	.4byte 0x3F000000
@@ -5444,19 +5437,16 @@
 
 .obj sMuscleArmRing, local
 	.4byte 0x741B0566
-.L_8025BD40:
 	.4byte 0x40400000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8025BD58:
 	.4byte 0x42B40000
 	.4byte 0x3FC90FDB
 	.4byte 0x00000000
 	.4byte 0x3F19999A
-.L_8025BD68:
 	.4byte 0x41F00000
 	.4byte 0xFFFFFFA0
 	.4byte 0x00300101
@@ -5465,17 +5455,13 @@
 
 .obj defaultGooTimes, local
 	.4byte 0x3727C5AC
-.L_8025BD7C:
 	.4byte 0x40000000
-.L_8025BD80:
 	.4byte 0x41700000
-.L_8025BD84:
 	.4byte 0x40000000
 .endobj defaultGooTimes
 
 .obj defaultGooWarbc, local
 	.4byte 0x3E800000
-.L_8025BD8C:
 	.4byte 0x40000000
 	.4byte 0x3E800000
 	.4byte 0x3F99999A
@@ -5548,14 +5534,17 @@
 	.4byte 0x525F5445
 	.4byte 0x5854424F
 	.4byte 0x58002530
-	.4byte 0x32640068
-	.4byte 0x6F766572
-	.4byte 0x696E675F
-	.4byte 0x706C6174
-	.4byte 0x666F726D
-	.4byte 0x5F776865
-	.4byte 0x656C5F62
-	.4byte 0x696E6400
+	.byte 0x32, 0x64, 0x00
+.L_8025BE37:
+	.4byte 0x686F7665
+	.4byte 0x72696E67
+	.4byte 0x5F706C61
+	.4byte 0x74666F72
+	.4byte 0x6D5F7768
+	.4byte 0x65656C5F
+	.4byte 0x62696E64
+	.byte 0x00
+.L_8025BE54:
 	.4byte 0x706C6174
 	.4byte 0x5F737570
 	.4byte 0x706F7274
@@ -5592,9 +5581,7 @@
 
 .obj bubblehit_vel_rnd, global
 	.4byte 0x40C00000
-.L_8028F018:
 	.4byte 0x40C00000
-.L_8028F01C:
 	.4byte 0x40C00000
 .endobj bubblehit_vel_rnd
 
@@ -5612,11 +5599,9 @@
 
 # @unnamed@zFX_cpp@::entrail_types
 .obj "entrail_types__17@unnamed@zFX_cpp@", local
-	.4byte "@stringBase0"+0x33
+	.rel "@stringBase0", .L_8025BE37
 	.4byte 0x00000000
-.L_8028F040:
 	.4byte 0x428C0000
-.L_8028F044:
 	.4byte 0x41C80000
 	.4byte 0x00000000
 	.4byte 0x3F000000
@@ -5630,11 +5615,9 @@
 	.4byte 0x3FC00000
 	.4byte 0x00000000
 	.4byte 0x3FC00000
-	.4byte "@stringBase0"+0x50
+	.rel "@stringBase0", .L_8025BE54
 	.4byte 0x00000000
-.L_8028F080:
 	.4byte 0x428C0000
-.L_8028F084:
 	.4byte 0x41C80000
 	.4byte 0x00000000
 	.4byte 0xC0000000

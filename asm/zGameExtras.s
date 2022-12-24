@@ -1475,7 +1475,6 @@
 	.4byte 0x756C615F
 	.4byte 0x73620053
 	.4byte 0x42473031
-.L_8025CA70:
 	.4byte 0x30393200
 	.4byte 0x53425F63
 	.4byte 0x72756973
@@ -1488,7 +1487,6 @@
 	.4byte 0x20303100
 	.4byte 0x48423031
 	.4byte 0x5F465245
-.L_8025CAA0:
 	.4byte 0x455F4D4F
 	.4byte 0x5649455F
 	.4byte 0x50415353
@@ -1561,7 +1559,6 @@
 	.rel EGG_check_ExtrasFlags__FP7EGGItem, .L_80099A1C
 	.rel EGG_check_ExtrasFlags__FP7EGGItem, .L_80099A38
 	.rel EGG_check_ExtrasFlags__FP7EGGItem, .L_80099A54
-.L_8028F1F4:
 	.rel EGG_check_ExtrasFlags__FP7EGGItem, .L_80099A70
 	.rel EGG_check_ExtrasFlags__FP7EGGItem, .L_80099A8C
 	.rel EGG_check_ExtrasFlags__FP7EGGItem, .L_80099AE4
@@ -1888,7 +1885,6 @@
 	.4byte 0x00040000
 	.4byte 0x00040000
 	.4byte 0x00040000
-.L_8028F640:
 	.4byte 0x00040000
 .endobj sCheatSmallCoStars
 
@@ -2026,13 +2022,11 @@
 	.4byte 0x20000000
 	.4byte 0x00000001
 	.4byte sCheatBigPlank
-.L_8028F828:
 	.4byte GEC_cb_BigPlank__Fv
 	.4byte 0x00010000
 	.4byte 0x00000001
 	.4byte sCheatSmallPeep
 	.4byte GEC_cb_SmallPeep__Fv
-.L_8028F83C:
 	.4byte 0x00040000
 	.4byte 0x00000001
 	.4byte sCheatSmallCoStars

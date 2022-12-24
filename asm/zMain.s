@@ -4,7 +4,6 @@
 # 0x800A26A0 - 0x800A5FFC
 .text
 .balign 4
-.L_800A26A0:
 
 .fn main, global
 /* 800A26A0 0009F780  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -3851,7 +3850,6 @@
 	.4byte 0x726E6174
 	.4byte 0x696F6E61
 	.4byte 0x6C20496E
-.L_8025D268:
 	.4byte 0x632E2041
 	.4byte 0x6C6C2072
 	.4byte 0x69676874
@@ -3884,11 +3882,9 @@
 	.4byte 0x61726B73
 	.4byte 0x206F6620
 	.4byte 0x56696163
-.L_8025D2E8:
 	.4byte 0x6F6D2049
 	.4byte 0x6E746572
 	.4byte 0x6E617469
-.L_8025D2F4:
 	.4byte 0x6F6E616C
 	.4byte 0x20496E63
 	.4byte 0x2E204372
@@ -3959,7 +3955,6 @@
 	.4byte 0x61726B73
 	.4byte 0x206F6620
 	.4byte 0x54485120
-.L_8025D40C:
 	.4byte 0x496E632E
 	.4byte 0x20416C6C
 	.4byte 0x20726967
@@ -4044,7 +4039,6 @@
 	.4byte 0x5368696E
 	.4byte 0x7956616C
 	.4byte 0x75655965
-.L_8025D54C:
 	.4byte 0x6C6C6F77
 	.4byte 0x00672E53
 	.4byte 0x68696E79
@@ -4095,7 +4089,6 @@
 	.4byte 0x626F3800
 	.4byte 0x672E5368
 	.4byte 0x696E7956
-.L_8025D614:
 	.4byte 0x616C7565
 	.4byte 0x436F6D62
 	.4byte 0x6F390067
@@ -4146,7 +4139,6 @@
 	.4byte 0x6844656C
 	.4byte 0x61790067
 	.4byte 0x2E424261
-.L_8025D6DC:
 	.4byte 0x73684356
 	.4byte 0x54696D65
 	.4byte 0x00672E42
@@ -4164,12 +4156,10 @@
 	.4byte 0x42537069
 	.4byte 0x6E4D6178
 	.4byte 0x4672616D
-.L_8025D720:
 	.4byte 0x6500672E
 	.4byte 0x42537069
 	.4byte 0x6E526164
 	.4byte 0x69757300
-.L_8025D730:
 	.4byte 0x672E5361
 	.4byte 0x6E64794D
 	.4byte 0x656C6565
@@ -4177,9 +4167,7 @@
 	.4byte 0x72616D65
 	.4byte 0x00672E53
 	.4byte 0x616E6479
-.L_8025D74C:
 	.4byte 0x4D656C65
-.L_8025D750:
 	.4byte 0x654D6178
 	.4byte 0x4672616D
 	.4byte 0x6500672E
@@ -4188,10 +4176,8 @@
 	.4byte 0x65655261
 	.4byte 0x64697573
 	.4byte 0x00672E44
-.L_8025D770:
 	.4byte 0x616D6167
 	.4byte 0x6554696D
-.L_8025D778:
 	.4byte 0x65486974
 	.4byte 0x00672E44
 	.4byte 0x616D6167
@@ -4209,7 +4195,6 @@
 	.4byte 0x6F636B00
 	.4byte 0x672E4461
 	.4byte 0x6D616765
-.L_8025D7BC:
 	.4byte 0x47697665
 	.4byte 0x4865616C
 	.4byte 0x74684B6E
@@ -4221,7 +4206,6 @@
 	.4byte 0x44656C61
 	.4byte 0x7900672E
 	.4byte 0x42756262
-.L_8025D7E8:
 	.4byte 0x6C65426F
 	.4byte 0x776C4C61
 	.4byte 0x756E6368
@@ -4233,7 +4217,6 @@
 	.4byte 0x4C61756E
 	.4byte 0x6368506F
 	.4byte 0x73557000
-.L_8025D814:
 	.4byte 0x672E4275
 	.4byte 0x62626C65
 	.4byte 0x426F776C
@@ -4245,7 +4228,6 @@
 	.4byte 0x426F776C
 	.4byte 0x4C61756E
 	.4byte 0x63685665
-.L_8025D840:
 	.4byte 0x6C4C6566
 	.4byte 0x7400672E
 	.4byte 0x42756262
@@ -4257,7 +4239,6 @@
 	.4byte 0x42756262
 	.4byte 0x6C65426F
 	.4byte 0x776C4C61
-.L_8025D86C:
 	.4byte 0x756E6368
 	.4byte 0x56656C41
 	.4byte 0x7400672E
@@ -4269,7 +4250,6 @@
 	.4byte 0x72656173
 	.4byte 0x6500672E
 	.4byte 0x42756262
-.L_8025D898:
 	.4byte 0x6C65426F
 	.4byte 0x776C4D69
 	.4byte 0x6E537065
@@ -4281,7 +4261,6 @@
 	.4byte 0x636F7665
 	.4byte 0x7254696D
 	.4byte 0x6500672E
-.L_8025D8C4:
 	.4byte 0x536C6964
 	.4byte 0x65416363
 	.4byte 0x656C5665
@@ -4293,7 +4272,6 @@
 	.4byte 0x4D617800
 	.4byte 0x672E536C
 	.4byte 0x69646541
-.L_8025D8F0:
 	.4byte 0x6363656C
 	.4byte 0x53746172
 	.4byte 0x7400672E
@@ -4305,7 +4283,6 @@
 	.4byte 0x65416363
 	.4byte 0x656C506C
 	.4byte 0x61796572
-.L_8025D91C:
 	.4byte 0x46776400
 	.4byte 0x672E536C
 	.4byte 0x69646541
@@ -4317,7 +4294,6 @@
 	.4byte 0x64654163
 	.4byte 0x63656C50
 	.4byte 0x6C617965
-.L_8025D948:
 	.4byte 0x72536964
 	.4byte 0x6500672E
 	.4byte 0x536C6964
@@ -4329,7 +4305,6 @@
 	.4byte 0x56656C4D
 	.4byte 0x6178456E
 	.4byte 0x6400672E
-.L_8025D974:
 	.4byte 0x536C6964
 	.4byte 0x6556656C
 	.4byte 0x4D617849
@@ -4341,7 +4316,6 @@
 	.4byte 0x496E6341
 	.4byte 0x6363656C
 	.4byte 0x00672E53
-.L_8025D9A0:
 	.4byte 0x6C696465
 	.4byte 0x41697248
 	.4byte 0x6F6C6454
@@ -4353,7 +4327,6 @@
 	.4byte 0x6D650067
 	.4byte 0x2E536C69
 	.4byte 0x64654169
-.L_8025D9CC:
 	.4byte 0x7244626C
 	.4byte 0x486F6C64
 	.4byte 0x54696D65
@@ -4365,7 +4338,6 @@
 	.4byte 0x6D650067
 	.4byte 0x2E536C69
 	.4byte 0x64655665
-.L_8025D9F8:
 	.4byte 0x6C44626C
 	.4byte 0x426F6F73
 	.4byte 0x7400672E
@@ -4377,7 +4349,6 @@
 	.4byte 0x6F6E6765
 	.4byte 0x62616C6C
 	.4byte 0x00672E43
-.L_8025DA24:
 	.4byte 0x68656174
 	.4byte 0x506C6179
 	.4byte 0x65725377
@@ -4576,7 +4547,6 @@
 	.4byte 0x7272792E
 	.4byte 0x6D617848
 	.4byte 0x65696768
-.L_8025DD3C:
 	.4byte 0x74006361
 	.4byte 0x7272792E
 	.4byte 0x6D617843
@@ -4786,7 +4756,6 @@
 	.4byte 0x68656C6D
 	.4byte 0x65740053
 	.4byte 0x422E6D6F
-.L_8025E080:
 	.4byte 0x64656C5F
 	.4byte 0x696E6465
 	.4byte 0x782E6275
@@ -4887,7 +4856,6 @@
 	.4byte 0x7072696E
 	.4byte 0x67007061
 	.4byte 0x74726963
-.L_8025E210:
 	.4byte 0x6B2E5761
 	.4byte 0x6C6C0070
 	.4byte 0x61747269
@@ -4923,7 +4891,6 @@
 	.4byte 0x73616E64
 	.4byte 0x792E466C
 	.4byte 0x6F617453
-.L_8025E29C:
 	.4byte 0x70656564
 	.4byte 0x0073616E
 	.4byte 0x64792E42
@@ -5016,7 +4983,6 @@
 	.4byte 0x63006F6F
 	.4byte 0x6F6F6F6F
 	.4byte 0x6F6F007B
-.L_8025E40C:
 	.4byte 0x693A7465
 	.4byte 0x78745F6D
 	.4byte 0x656D5F63
@@ -5135,9 +5101,7 @@
 
 .obj fbuf$915, local
 	.4byte 0x3F19999A
-.L_8028FBB4:
 	.4byte 0x40400000
-.L_8028FBB8:
 	.4byte 0x40E00000
 	.4byte 0x3DCCCCCD
 	.4byte 0x3F000000
@@ -5153,14 +5117,12 @@
 .obj fbuf$917, local
 	.4byte 0x40400000
 	.4byte 0x3F000000
-.L_8028FBDC:
 	.4byte 0x40200000
 .endobj fbuf$917
 
 .obj fbuf$918, local
 	.4byte 0x40400000
 	.4byte 0x3F000000
-.L_8028FBE8:
 	.4byte 0x40200000
 .endobj fbuf$918
 
@@ -5201,9 +5163,7 @@
 
 .obj fbuf$924, local
 	.4byte 0x3F19999A
-.L_8028FC40:
 	.4byte 0x40400000
-.L_8028FC44:
 	.4byte 0x40E00000
 	.4byte 0x3DCCCCCD
 	.4byte 0x3F000000
@@ -5219,14 +5179,12 @@
 .obj fbuf$926, local
 	.4byte 0x40400000
 	.4byte 0x3F000000
-.L_8028FC68:
 	.4byte 0x40200000
 .endobj fbuf$926
 
 .obj fbuf$927, local
 	.4byte 0x40400000
 	.4byte 0x3F000000
-.L_8028FC74:
 	.4byte 0x40200000
 .endobj fbuf$927
 
@@ -5267,9 +5225,7 @@
 
 .obj fbuf$933, local
 	.4byte 0x3F19999A
-.L_8028FCCC:
 	.4byte 0x40400000
-.L_8028FCD0:
 	.4byte 0x40E00000
 	.4byte 0x3DCCCCCD
 	.4byte 0x3F000000
@@ -5285,14 +5241,12 @@
 .obj fbuf$935, local
 	.4byte 0x40400000
 	.4byte 0x3F000000
-.L_8028FCF4:
 	.4byte 0x40200000
 .endobj fbuf$935
 
 .obj fbuf$936, local
 	.4byte 0x40400000
 	.4byte 0x3F000000
-.L_8028FD00:
 	.4byte 0x40200000
 .endobj fbuf$936
 

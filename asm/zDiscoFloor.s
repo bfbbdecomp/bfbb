@@ -2469,40 +2469,31 @@
 # @unnamed@zDiscoFloor_cpp@::close_encounters
 .obj "close_encounters__25@unnamed@zDiscoFloor_cpp@", local
 	.4byte 0x40000000
-.L_8026D094:
 	.4byte 0x40800000
-.L_8026D098:
 	.4byte 0x00000000
 	.4byte 0xC1400000
-.L_8026D0A0:
 	.4byte 0xC0A00000
 .endobj "close_encounters__25@unnamed@zDiscoFloor_cpp@"
 
 # @unnamed@zDiscoFloor_cpp@::blues_scale
 .obj "blues_scale__25@unnamed@zDiscoFloor_cpp@", local
 	.4byte 0xC1400000
-.L_8026D0A8:
 	.4byte 0xC1000000
 	.4byte 0xC0A00000
-.L_8026D0B0:
 	.4byte 0x00000000
-.L_8026D0B4:
 	.4byte 0x40000000
-.L_8026D0B8:
 	.4byte 0x40800000
 .endobj "blues_scale__25@unnamed@zDiscoFloor_cpp@"
 
 .obj "@1283", local
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8026D0C4:
 	.4byte 0x00000000
 .endobj "@1283"
 
 .obj "@stringBase0", local
 	.4byte 0x25302A64
 	.4byte 0x00446973
-.L_8026D0D0:
 	.4byte 0x636F5F36
 	.4byte 0x5F416C74
 	.4byte 0x00446973

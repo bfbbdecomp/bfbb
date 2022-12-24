@@ -791,7 +791,6 @@
 	.4byte 0x6F6F7000
 	.4byte 0x62656163
 	.4byte 0x685F6368
-.L_8026B9C0:
 	.4byte 0x6169725F
 	.4byte 0x79656C6C
 	.4byte 0x6F770064
@@ -813,7 +812,6 @@
 	.4byte 0x71756172
 	.4byte 0x7465725F
 	.4byte 0x6E6F7465
-.L_8026BA14:
 	.4byte 0x5F6F6E00
 	.4byte 0x65696768
 	.4byte 0x74685F6E

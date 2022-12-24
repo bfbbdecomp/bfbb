@@ -1415,12 +1415,17 @@
 .obj "@stringBase0", local
 	.4byte 0x556E6B6E
 	.4byte 0x6F776E00
+.L_8026C0F0:
 	.4byte 0x49646C65
-	.4byte 0x30310053
-	.4byte 0x7061776E
-	.4byte 0x30310053
-	.4byte 0x68697665
-	.4byte 0x72303100
+	.byte 0x30, 0x31, 0x00
+.L_8026C0F7:
+	.4byte 0x53706177
+	.4byte 0x6E303100
+.L_8026C0FF:
+	.4byte 0x53686976
+	.4byte 0x65723031
+	.byte 0x00
+.L_8026C108:
 	.4byte 0x48757274
 	.4byte 0x3031007A
 	.4byte 0x4E504344
@@ -1464,10 +1469,10 @@
 
 .obj g_strz_dupoanim, global
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
-	.4byte "@stringBase0"+0xF
-	.4byte "@stringBase0"+0x17
-	.4byte "@stringBase0"+0x20
+	.rel "@stringBase0", .L_8026C0F0
+	.rel "@stringBase0", .L_8026C0F7
+	.rel "@stringBase0", .L_8026C0FF
+	.rel "@stringBase0", .L_8026C108
 .endobj g_strz_dupoanim
 
 .obj idx_smoke$1150, local

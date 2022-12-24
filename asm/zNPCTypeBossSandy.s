@@ -10330,7 +10330,6 @@
 .obj newsfish_cb, local
 	.4byte on_change_newsfish__FRC10tweak_info
 	.4byte 0x00000000
-.L_8026D0F0:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -10345,50 +10344,38 @@
 	.4byte on_change_shockwave__FRC10tweak_info
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8026D11C:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8026D134:
 	.4byte 0x00000000
 .endobj shockwave_cb
 
 .obj "@835", local
 	.4byte 0x00000001
-.L_8026D13C:
 	.4byte 0x00000002
 	.4byte 0x00000003
 	.4byte 0x00000004
 	.4byte 0x00000005
 	.4byte 0x00000006
-.L_8026D150:
 	.4byte 0x0000000B
 	.4byte 0x0000000C
-.L_8026D158:
 	.4byte 0x0000000D
 	.4byte 0x0000000E
-.L_8026D160:
 	.4byte 0x0000000F
 	.4byte 0x00000010
-.L_8026D168:
 	.4byte 0x00000011
 	.4byte 0x00000009
-.L_8026D170:
 	.4byte 0x00000012
 	.4byte 0x00000013
-.L_8026D178:
 	.4byte 0x00000014
 	.4byte 0x00000015
-.L_8026D180:
 	.4byte 0x00000016
 	.4byte 0x00000017
-.L_8026D188:
 	.4byte 0x00000018
 	.4byte 0x00000019
-.L_8026D190:
 	.4byte 0x0000001A
 	.4byte 0x0000001B
 	.4byte 0x00000000
@@ -10418,49 +10405,72 @@
 .L_8026D1D4:
 	.4byte 0x46414231
 	.4byte 0x30313300
+.L_8026D1DC:
 	.4byte 0x46414231
 	.4byte 0x30313400
+.L_8026D1E4:
 	.4byte 0x46414231
 	.4byte 0x30313500
+.L_8026D1EC:
 	.4byte 0x46414231
 	.4byte 0x30313600
+.L_8026D1F4:
 	.4byte 0x46414231
 	.4byte 0x30313700
+.L_8026D1FC:
 	.4byte 0x46414231
 	.4byte 0x30313800
+.L_8026D204:
 	.4byte 0x46414231
 	.4byte 0x30313900
+.L_8026D20C:
 	.4byte 0x46414231
 	.4byte 0x30323000
+.L_8026D214:
 	.4byte 0x46414231
 	.4byte 0x30323100
+.L_8026D21C:
 	.4byte 0x46414231
 	.4byte 0x30323200
+.L_8026D224:
 	.4byte 0x46414231
 	.4byte 0x30323300
+.L_8026D22C:
 	.4byte 0x46414231
 	.4byte 0x30323400
+.L_8026D234:
 	.4byte 0x46414231
 	.4byte 0x30323500
+.L_8026D23C:
 	.4byte 0x46414231
 	.4byte 0x30323600
+.L_8026D244:
 	.4byte 0x46414231
 	.4byte 0x30323700
+.L_8026D24C:
 	.4byte 0x46414231
 	.4byte 0x30323800
+.L_8026D254:
 	.4byte 0x46414231
 	.4byte 0x30323900
+.L_8026D25C:
 	.4byte 0x46414231
 	.4byte 0x30333000
+.L_8026D264:
 	.4byte 0x46414231
 	.4byte 0x30333100
+.L_8026D26C:
 	.4byte 0x46414231
 	.4byte 0x30333200
+.L_8026D274:
 	.4byte 0x46414231
 	.4byte 0x3034315F
-	.4byte 0x61004641
-	.4byte 0x42313034
-	.4byte 0x315F6200
+	.2byte 0x6100
+.L_8026D27E:
+	.4byte 0x46414231
+	.4byte 0x3034315F
+	.2byte 0x6200
+.L_8026D288:
 	.4byte 0x46414231
 	.4byte 0x30363500
 	.4byte 0x7A4E5043
@@ -10532,7 +10542,6 @@
 	.4byte 0x7C7A4E50
 	.4byte 0x43425361
 	.4byte 0x6E64797C
-.L_8026D3A4:
 	.4byte 0x53686F63
 	.4byte 0x6B776176
 	.4byte 0x657C4D61
@@ -10925,28 +10934,28 @@
 	.rel "@stringBase0", .L_8026D1C4
 	.rel "@stringBase0", .L_8026D1CC
 	.rel "@stringBase0", .L_8026D1D4
-	.4byte "@stringBase0"+0x40
-	.4byte "@stringBase0"+0x48
-	.4byte "@stringBase0"+0x50
-	.4byte "@stringBase0"+0x58
-	.4byte "@stringBase0"+0x60
-	.4byte "@stringBase0"+0x68
-	.4byte "@stringBase0"+0x70
-	.4byte "@stringBase0"+0x78
-	.4byte "@stringBase0"+0x80
-	.4byte "@stringBase0"+0x88
-	.4byte "@stringBase0"+0x90
-	.4byte "@stringBase0"+0x98
-	.4byte "@stringBase0"+0xA0
-	.4byte "@stringBase0"+0xA8
-	.4byte "@stringBase0"+0xB0
-	.4byte "@stringBase0"+0xB8
-	.4byte "@stringBase0"+0xC0
-	.4byte "@stringBase0"+0xC8
-	.4byte "@stringBase0"+0xD0
-	.4byte "@stringBase0"+0xD8
-	.4byte "@stringBase0"+0xE2
-	.4byte "@stringBase0"+0xEC
+	.rel "@stringBase0", .L_8026D1DC
+	.rel "@stringBase0", .L_8026D1E4
+	.rel "@stringBase0", .L_8026D1EC
+	.rel "@stringBase0", .L_8026D1F4
+	.rel "@stringBase0", .L_8026D1FC
+	.rel "@stringBase0", .L_8026D204
+	.rel "@stringBase0", .L_8026D20C
+	.rel "@stringBase0", .L_8026D214
+	.rel "@stringBase0", .L_8026D21C
+	.rel "@stringBase0", .L_8026D224
+	.rel "@stringBase0", .L_8026D22C
+	.rel "@stringBase0", .L_8026D234
+	.rel "@stringBase0", .L_8026D23C
+	.rel "@stringBase0", .L_8026D244
+	.rel "@stringBase0", .L_8026D24C
+	.rel "@stringBase0", .L_8026D254
+	.rel "@stringBase0", .L_8026D25C
+	.rel "@stringBase0", .L_8026D264
+	.rel "@stringBase0", .L_8026D26C
+	.rel "@stringBase0", .L_8026D274
+	.rel "@stringBase0", .L_8026D27E
+	.rel "@stringBase0", .L_8026D288
 .endobj sNFSoundLabel
 
 .obj "@1281", local
@@ -11124,7 +11133,6 @@
 	.4byte Enter__22zNPCGoalBossSandyTauntFfPv
 	.4byte Exit__5xGoalFfPv
 	.4byte Suspend__5xGoalFfPv
-.L_80299C7C:
 	.4byte Resume__14zNPCGoalCommonFfPv
 	.4byte PreCalc__14zNPCGoalCommonFfPv
 	.4byte EvalRules__5xGoalFP11en_trantypefPv

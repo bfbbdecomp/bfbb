@@ -188,7 +188,6 @@
 	.4byte 0x9998EBC4
 	.4byte 0x3FC24924
 	.4byte 0x920083FF
-.L_8027A150:
 	.4byte 0xBFBC71C6
 	.4byte 0xFE231671
 	.4byte 0x3FB745CD

@@ -1404,7 +1404,6 @@
 .obj "@stringBase0", local
 	.4byte 0x73686164
 	.4byte 0x6F775F72
-.L_8026D088:
 	.4byte 0x6F756E64
 	.byte 0x00
 .endobj "@stringBase0"

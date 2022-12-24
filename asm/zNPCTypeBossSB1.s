@@ -2328,7 +2328,6 @@
 	.4byte 0x40022D0E
 	.4byte 0x413A76C9
 	.4byte 0x40858106
-.L_8029A4BC:
 	.4byte 0x4001999A
 	.4byte 0xC1381CAC
 	.4byte 0x4090BC6A
@@ -2402,7 +2401,6 @@
 	.4byte Exit__5xGoalFfPv
 	.4byte Suspend__5xGoalFfPv
 	.4byte Resume__14zNPCGoalCommonFfPv
-.L_8029A5A4:
 	.4byte PreCalc__14zNPCGoalCommonFfPv
 	.4byte EvalRules__5xGoalFP11en_trantypefPv
 	.4byte Process__20zNPCGoalBossSB1StompFP11en_trantypefPvP6xScene

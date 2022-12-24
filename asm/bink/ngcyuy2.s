@@ -142,7 +142,7 @@
 
 # 0x80275300 - 0x80275480
 .rodata
-.balign 4
+.balign 8
 
 .obj VarBitsLens, global
 	.4byte 0x00000000
@@ -249,7 +249,7 @@
 
 # 0x803CFC30 - 0x803CFC40
 .section .sdata2, "a"
-.balign 4
+.balign 8
 
 .obj VarBitsLensalign, global
 	.4byte 0x00000000

@@ -304,37 +304,65 @@
 
 .obj "@stringBase0", local
 	.4byte 0x73746F70
-	.4byte 0x30007374
-	.4byte 0x6F703100
+	.2byte 0x3000
+.L_8025431E:
 	.4byte 0x73746F70
-	.4byte 0x32007374
-	.4byte 0x6F703300
+	.2byte 0x3100
+.L_80254324:
 	.4byte 0x73746F70
-	.4byte 0x34007374
-	.4byte 0x6F703500
+	.2byte 0x3200
+.L_8025432A:
 	.4byte 0x73746F70
-	.4byte 0x36007374
-	.4byte 0x6F703700
+	.2byte 0x3300
+.L_80254330:
 	.4byte 0x73746F70
-	.4byte 0x38007374
-	.4byte 0x6F703900
+	.2byte 0x3400
+.L_80254336:
+	.4byte 0x73746F70
+	.2byte 0x3500
+.L_8025433C:
+	.4byte 0x73746F70
+	.2byte 0x3600
+.L_80254342:
+	.4byte 0x73746F70
+	.2byte 0x3700
+.L_80254348:
+	.4byte 0x73746F70
+	.2byte 0x3800
+.L_8025434E:
+	.4byte 0x73746F70
+	.2byte 0x3900
+.L_80254354:
 	.4byte 0x6C6F6F70
-	.4byte 0x30006C6F
-	.4byte 0x6F703100
+	.2byte 0x3000
+.L_8025435A:
 	.4byte 0x6C6F6F70
-	.4byte 0x32006C6F
-	.4byte 0x6F703300
+	.2byte 0x3100
+.L_80254360:
 	.4byte 0x6C6F6F70
-	.4byte 0x34006C6F
-	.4byte 0x6F703500
+	.2byte 0x3200
+.L_80254366:
 	.4byte 0x6C6F6F70
-	.4byte 0x36006C6F
-	.4byte 0x6F703700
+	.2byte 0x3300
+.L_8025436C:
 	.4byte 0x6C6F6F70
-	.4byte 0x38006C6F
-	.4byte 0x6F703900
-	.4byte 0x0069646C
-	.2byte 0x6500
+	.2byte 0x3400
+.L_80254372:
+	.4byte 0x6C6F6F70
+	.2byte 0x3500
+.L_80254378:
+	.4byte 0x6C6F6F70
+	.2byte 0x3600
+.L_8025437E:
+	.4byte 0x6C6F6F70
+	.2byte 0x3700
+.L_80254384:
+	.4byte 0x6C6F6F70
+	.2byte 0x3800
+.L_8025438A:
+	.4byte 0x6C6F6F70
+	.4byte 0x39000069
+	.4byte 0x646C6500
 .endobj "@stringBase0"
 	.2byte 0x0000
 
@@ -344,25 +372,25 @@
 
 .obj astnames, local
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x6
-	.4byte "@stringBase0"+0xC
-	.4byte "@stringBase0"+0x12
-	.4byte "@stringBase0"+0x18
-	.4byte "@stringBase0"+0x1E
-	.4byte "@stringBase0"+0x24
-	.4byte "@stringBase0"+0x2A
-	.4byte "@stringBase0"+0x30
-	.4byte "@stringBase0"+0x36
-	.4byte "@stringBase0"+0x3C
-	.4byte "@stringBase0"+0x42
-	.4byte "@stringBase0"+0x48
-	.4byte "@stringBase0"+0x4E
-	.4byte "@stringBase0"+0x54
-	.4byte "@stringBase0"+0x5A
-	.4byte "@stringBase0"+0x60
-	.4byte "@stringBase0"+0x66
-	.4byte "@stringBase0"+0x6C
-	.4byte "@stringBase0"+0x72
+	.rel "@stringBase0", .L_8025431E
+	.rel "@stringBase0", .L_80254324
+	.rel "@stringBase0", .L_8025432A
+	.rel "@stringBase0", .L_80254330
+	.rel "@stringBase0", .L_80254336
+	.rel "@stringBase0", .L_8025433C
+	.rel "@stringBase0", .L_80254342
+	.rel "@stringBase0", .L_80254348
+	.rel "@stringBase0", .L_8025434E
+	.rel "@stringBase0", .L_80254354
+	.rel "@stringBase0", .L_8025435A
+	.rel "@stringBase0", .L_80254360
+	.rel "@stringBase0", .L_80254366
+	.rel "@stringBase0", .L_8025436C
+	.rel "@stringBase0", .L_80254372
+	.rel "@stringBase0", .L_80254378
+	.rel "@stringBase0", .L_8025437E
+	.rel "@stringBase0", .L_80254384
+	.rel "@stringBase0", .L_8025438A
 .endobj astnames
 
 # 0x803CB440 - 0x803CB450

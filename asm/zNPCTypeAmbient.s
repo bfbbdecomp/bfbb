@@ -2332,37 +2332,52 @@
 .obj "@stringBase0", local
 	.4byte 0x556E6B6E
 	.4byte 0x6F776E00
+.L_8026A288:
 	.4byte 0x49646C65
-	.4byte 0x30310049
-	.4byte 0x646C6530
-	.4byte 0x32004964
-	.4byte 0x6C653033
-	.4byte 0x00466964
-	.4byte 0x67657430
-	.4byte 0x31004669
-	.4byte 0x64676574
-	.4byte 0x30320046
-	.4byte 0x69646765
-	.4byte 0x74303300
+	.byte 0x30, 0x31, 0x00
+.L_8026A28F:
+	.4byte 0x49646C65
+	.byte 0x30, 0x32, 0x00
+.L_8026A296:
+	.4byte 0x49646C65
+	.byte 0x30, 0x33, 0x00
+.L_8026A29D:
+	.4byte 0x46696467
+	.4byte 0x65743031
+	.byte 0x00
+.L_8026A2A6:
+	.4byte 0x46696467
+	.4byte 0x65743032
+	.byte 0x00
+.L_8026A2AF:
+	.4byte 0x46696467
+	.4byte 0x65743033
+	.byte 0x00
+.L_8026A2B8:
 	.4byte 0x4D6F7665
-	.4byte 0x30310042
-	.4byte 0x756D7065
-	.4byte 0x64303100
+	.byte 0x30, 0x31, 0x00
+.L_8026A2BF:
+	.4byte 0x42756D70
+	.4byte 0x65643031
+	.byte 0x00
+.L_8026A2C8:
 	.4byte 0x44616E63
 	.4byte 0x65303100
+.L_8026A2D0:
 	.4byte 0x50726179
-	.4byte 0x30310041
-	.4byte 0x74746163
-	.4byte 0x6B303100
-	.4byte 0x7A4E5043
-	.4byte 0x416D6269
-	.4byte 0x656E7400
-	.4byte 0x7A4E5043
-	.4byte 0x4A656C6C
-	.4byte 0x79007A4E
-	.4byte 0x50434E65
-	.4byte 0x7074756E
-	.2byte 0x6500
+	.byte 0x30, 0x31, 0x00
+.L_8026A2D7:
+	.4byte 0x41747461
+	.4byte 0x636B3031
+	.4byte 0x007A4E50
+	.4byte 0x43416D62
+	.4byte 0x69656E74
+	.4byte 0x007A4E50
+	.4byte 0x434A656C
+	.4byte 0x6C79007A
+	.4byte 0x4E50434E
+	.4byte 0x65707475
+	.byte 0x6E, 0x65, 0x00
 .endobj "@stringBase0"
 	.4byte 0x00000000
 	.2byte 0x0000
@@ -2388,17 +2403,17 @@
 
 .obj g_strz_ambianim, global
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
-	.4byte "@stringBase0"+0xF
-	.4byte "@stringBase0"+0x16
-	.4byte "@stringBase0"+0x1D
-	.4byte "@stringBase0"+0x26
-	.4byte "@stringBase0"+0x2F
-	.4byte "@stringBase0"+0x38
-	.4byte "@stringBase0"+0x3F
-	.4byte "@stringBase0"+0x48
-	.4byte "@stringBase0"+0x50
-	.4byte "@stringBase0"+0x57
+	.rel "@stringBase0", .L_8026A288
+	.rel "@stringBase0", .L_8026A28F
+	.rel "@stringBase0", .L_8026A296
+	.rel "@stringBase0", .L_8026A29D
+	.rel "@stringBase0", .L_8026A2A6
+	.rel "@stringBase0", .L_8026A2AF
+	.rel "@stringBase0", .L_8026A2B8
+	.rel "@stringBase0", .L_8026A2BF
+	.rel "@stringBase0", .L_8026A2C8
+	.rel "@stringBase0", .L_8026A2D0
+	.rel "@stringBase0", .L_8026A2D7
 .endobj g_strz_ambianim
 
 # zNPCMimeFish::__vtable
@@ -2535,14 +2550,12 @@
 	.4byte ColPenFlags__11zNPCAmbientCFv
 	.4byte ColChkByFlags__11zNPCAmbientCFv
 	.4byte ColPenByFlags__11zNPCAmbientCFv
-.L_802971B0:
 	.4byte PhysicsFlags__11zNPCAmbientCFv
 	.4byte Destroy__10zNPCCommonFv
 	.4byte NPCMessage__11zNPCAmbientFP6NPCMsg
 	.4byte RenderExtra__10zNPCCommonFv
 	.4byte RenderExtraPostParticles__10zNPCCommonFv
 	.4byte ParseINI__9zNPCJellyFv
-.L_802971C8:
 	.4byte ParseLinks__10zNPCCommonFv
 	.4byte ParseProps__10zNPCCommonFv
 	.4byte SelfSetup__9zNPCJellyFv

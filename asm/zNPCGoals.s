@@ -51,7 +51,6 @@
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E474E34
 	.4byte GOALCreate_Standard__FiP10RyzMemGrowPv
-.L_80266880:
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E474E35
 	.4byte GOALCreate_Standard__FiP10RyzMemGrowPv
@@ -196,7 +195,6 @@
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E47525A
 	.4byte GOALCreate_Robotic__FiP10RyzMemGrowPv
-.L_80266AC0:
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E47525B
 	.4byte GOALCreate_Robotic__FiP10RyzMemGrowPv
@@ -557,10 +555,8 @@
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E474254
 	.4byte create__21zNPCGoalBPlanktonFallFiP10RyzMemGrowPv
-.L_80267060:
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E474255
-.L_80267068:
 	.4byte create__22zNPCGoalBPlanktonDizzyFiP10RyzMemGrowPv
 	.4byte GOALDestroy_Goal__FP12xFactoryInst
 	.4byte 0x4E474256

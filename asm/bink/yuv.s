@@ -930,43 +930,35 @@
 
 # 0x80274E00 - 0x80274E60
 .rodata
-.balign 4
-.L_80274E00:
+.balign 8
 	.4byte 0x43300000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_80274E10:
 	.4byte 0x43300000
 	.4byte 0x80000000
-.L_80274E18:
 	.4byte 0x43300000
 	.4byte 0x80000000
 	.4byte 0x3F29FBE7
 	.4byte 0x3DCCCCCD
-.L_80274E28:
 	.4byte 0x40240000
 	.4byte 0x00000000
-.L_80274E30:
 	.4byte 0x43300000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.L_80274E48:
 	.4byte 0x40080000
 	.4byte 0x00000000
-.L_80274E50:
 	.4byte 0x41E00000
 	.4byte 0x00000000
-.L_80274E58:
 	.4byte 0x40000000
 	.4byte 0x00000000
 
 # 0x802B0240 - 0x802B0380
 .data
-.balign 4
+.balign 8
 
 .obj rlelens, local
 	.4byte 0x02030405

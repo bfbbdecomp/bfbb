@@ -856,7 +856,6 @@
 .obj "@271", local
 	.4byte 0x44564453
 	.4byte 0x65656B28
-.L_802B4404:
 	.4byte 0x293A206F
 	.4byte 0x66667365
 	.4byte 0x74206973

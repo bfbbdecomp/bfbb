@@ -263,7 +263,6 @@
 
 .obj Zero, local
 	.4byte 0x00000000
-.L_80279E7C:
 	.4byte 0x00000000
 	.4byte 0x80000000
 	.4byte 0x00000000

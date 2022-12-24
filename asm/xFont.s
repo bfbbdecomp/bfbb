@@ -8030,115 +8030,189 @@
 .obj "@stringBase0", local
 	.4byte 0x666F6E74
 	.4byte 0x5F736200
+.L_802529DC:
 	.4byte 0x666F6E74
 	.4byte 0x315F7362
-	.4byte 0x00666F6E
-	.4byte 0x745F6E75
-	.4byte 0x6D626572
-	.4byte 0x73002009
-	.4byte 0x0A7B7D3D
-	.4byte 0x2A2B3A3B
-	.4byte 0x2C007E00
-	.4byte 0x72657365
-	.4byte 0x74003078
-	.4byte 0x00726F74
-	.4byte 0x00737263
-	.4byte 0x00647374
-	.4byte 0x006F6666
-	.4byte 0x00736361
-	.4byte 0x6C650066
-	.4byte 0x6F6E7400
-	.4byte 0x73637265
-	.4byte 0x656E0073
-	.4byte 0x697A6500
+	.byte 0x00
+.L_802529E5:
 	.4byte 0x666F6E74
-	.4byte 0x5F776964
-	.4byte 0x74680066
-	.4byte 0x6F6E745F
-	.4byte 0x68656967
-	.4byte 0x68740073
-	.4byte 0x63726565
-	.4byte 0x6E5F7769
+	.4byte 0x5F6E756D
+	.4byte 0x62657273
+	.byte 0x00
+.L_802529F2:
+	.4byte 0x20090A7B
+	.4byte 0x7D3D2A2B
+	.4byte 0x3A3B2C00
+	.4byte 0x7E007265
+	.4byte 0x73657400
+	.4byte 0x30780072
+	.4byte 0x6F740073
+	.4byte 0x72630064
+	.4byte 0x7374006F
+	.4byte 0x66660073
+	.4byte 0x63616C65
+	.byte 0x00
+.L_80252A1F:
+	.4byte 0x666F6E74
+	.4byte 0x00736372
+	.4byte 0x65656E00
+	.4byte 0x73697A65
+	.4byte 0x00666F6E
+	.4byte 0x745F7769
 	.4byte 0x64746800
+	.4byte 0x666F6E74
+	.4byte 0x5F686569
+	.4byte 0x67687400
 	.4byte 0x73637265
-	.4byte 0x656E5F68
-	.4byte 0x65696768
-	.4byte 0x74003D3A
-	.4byte 0x2B2A3B7D
-	.4byte 0x002C3B7D
-	.4byte 0x00776F72
-	.4byte 0x64006368
-	.4byte 0x6172006E
-	.4byte 0x6F6E6500
-	.4byte 0x6C656674
-	.4byte 0x0063656E
-	.4byte 0x74657200
-	.4byte 0x72696768
-	.4byte 0x7400746F
-	.4byte 0x7000626F
-	.4byte 0x74746F6D
-	.4byte 0x0025643A
+	.4byte 0x656E5F77
+	.4byte 0x69647468
+	.4byte 0x00736372
+	.4byte 0x65656E5F
+	.4byte 0x68656967
+	.byte 0x68, 0x74, 0x00
+.L_80252A62:
+	.4byte 0x3D3A2B2A
+	.byte 0x3B, 0x7D, 0x00
+.L_80252A69:
+	.4byte 0x2C3B7D00
+	.4byte 0x776F7264
+	.4byte 0x00636861
+	.4byte 0x72006E6F
+	.4byte 0x6E65006C
+	.4byte 0x65667400
+	.4byte 0x63656E74
+	.4byte 0x65720072
+	.4byte 0x69676874
+	.4byte 0x00746F70
+	.4byte 0x00626F74
+	.4byte 0x746F6D00
+	.4byte 0x25643A25
+	.4byte 0x30326400
 	.4byte 0x25303264
-	.4byte 0x00253032
-	.4byte 0x6400252E
-	.4byte 0x2A730000
-	.4byte 0x6100616C
-	.4byte 0x6C00616C
-	.4byte 0x70686100
-	.4byte 0x6200626C
-	.4byte 0x75650063
-	.4byte 0x00636F6C
-	.4byte 0x6F720066
-	.4byte 0x00670067
-	.4byte 0x7265656E
-	.4byte 0x00680068
-	.4byte 0x65696768
-	.4byte 0x74006900
-	.4byte 0x69680069
-	.4byte 0x6E736572
-	.4byte 0x74006C65
-	.4byte 0x66745F69
-	.4byte 0x6E64656E
-	.4byte 0x74006C69
-	.4byte 0x006D6F64
-	.4byte 0x656C006E
-	.4byte 0x006E6577
-	.4byte 0x6C696E65
-	.4byte 0x00706167
-	.4byte 0x655F6272
-	.4byte 0x65616B00
-	.4byte 0x70620070
-	.4byte 0x6F700072
-	.4byte 0x00726564
-	.4byte 0x00726900
+	.4byte 0x00252E2A
+	.2byte 0x7300
+.L_80252AAB:
+	.byte 0x00
+.L_80252AAC:
+	.2byte 0x6100
+.L_80252AAE:
+	.4byte 0x616C6C00
+.L_80252AB2:
+	.4byte 0x616C7068
+	.2byte 0x6100
+.L_80252AB8:
+	.2byte 0x6200
+.L_80252ABA:
+	.4byte 0x626C7565
+	.byte 0x00
+.L_80252ABF:
+	.2byte 0x6300
+.L_80252AC1:
+	.4byte 0x636F6C6F
+	.2byte 0x7200
+.L_80252AC7:
+	.2byte 0x6600
+.L_80252AC9:
+	.2byte 0x6700
+.L_80252ACB:
+	.4byte 0x67726565
+	.2byte 0x6E00
+.L_80252AD1:
+	.2byte 0x6800
+.L_80252AD3:
+	.4byte 0x68656967
+	.byte 0x68, 0x74, 0x00
+.L_80252ADA:
+	.2byte 0x6900
+.L_80252ADC:
+	.byte 0x69, 0x68, 0x00
+.L_80252ADF:
+	.4byte 0x696E7365
+	.byte 0x72, 0x74, 0x00
+.L_80252AE6:
+	.4byte 0x6C656674
+	.4byte 0x5F696E64
+	.4byte 0x656E7400
+.L_80252AF2:
+	.byte 0x6C, 0x69, 0x00
+.L_80252AF5:
+	.4byte 0x6D6F6465
+	.2byte 0x6C00
+.L_80252AFB:
+	.2byte 0x6E00
+.L_80252AFD:
+	.4byte 0x6E65776C
+	.4byte 0x696E6500
+.L_80252B05:
+	.4byte 0x70616765
+	.4byte 0x5F627265
+	.byte 0x61, 0x6B, 0x00
+.L_80252B10:
+	.byte 0x70, 0x62, 0x00
+.L_80252B13:
+	.4byte 0x706F7000
+.L_80252B17:
+	.2byte 0x7200
+.L_80252B19:
+	.4byte 0x72656400
+.L_80252B1D:
+	.byte 0x72, 0x69, 0x00
+.L_80252B20:
 	.4byte 0x72696768
 	.4byte 0x745F696E
 	.4byte 0x64656E74
-	.4byte 0x00740074
-	.4byte 0x61620074
-	.4byte 0x61625F73
-	.4byte 0x746F7000
+	.byte 0x00
+.L_80252B2D:
+	.2byte 0x7400
+.L_80252B2F:
+	.4byte 0x74616200
+.L_80252B33:
+	.4byte 0x7461625F
+	.4byte 0x73746F70
+	.byte 0x00
+.L_80252B3C:
 	.4byte 0x74657800
+.L_80252B40:
 	.4byte 0x74696D65
-	.4byte 0x72007473
-	.4byte 0x00770077
-	.4byte 0x62007769
-	.4byte 0x64746800
+	.2byte 0x7200
+.L_80252B46:
+	.byte 0x74, 0x73, 0x00
+.L_80252B49:
+	.2byte 0x7700
+.L_80252B4B:
+	.byte 0x77, 0x62, 0x00
+.L_80252B4E:
+	.4byte 0x77696474
+	.2byte 0x6800
+.L_80252B54:
 	.4byte 0x776F7264
 	.4byte 0x5F627265
-	.4byte 0x616B0077
-	.4byte 0x72617000
-	.4byte 0x786A0078
-	.4byte 0x6A757374
-	.4byte 0x69667900
-	.4byte 0x78730078
-	.4byte 0x73706163
-	.4byte 0x6500796A
-	.4byte 0x00796A75
-	.4byte 0x73746966
-	.4byte 0x79007973
-	.4byte 0x00797370
-	.4byte 0x61636500
+	.byte 0x61, 0x6B, 0x00
+.L_80252B5F:
+	.4byte 0x77726170
+	.byte 0x00
+.L_80252B64:
+	.byte 0x78, 0x6A, 0x00
+.L_80252B67:
+	.4byte 0x786A7573
+	.4byte 0x74696679
+	.byte 0x00
+.L_80252B70:
+	.byte 0x78, 0x73, 0x00
+.L_80252B73:
+	.4byte 0x78737061
+	.byte 0x63, 0x65, 0x00
+.L_80252B7A:
+	.byte 0x79, 0x6A, 0x00
+.L_80252B7D:
+	.4byte 0x796A7573
+	.4byte 0x74696679
+	.byte 0x00
+.L_80252B86:
+	.byte 0x79, 0x73, 0x00
+.L_80252B89:
+	.4byte 0x79737061
+	.byte 0x63, 0x65, 0x00
 .endobj "@stringBase0"
 
 # 0x8027B590 - 0x8027CFF8
@@ -8148,8 +8222,8 @@
 # @unnamed@xFont_cpp@::default_font_texture
 .obj "default_font_texture__19@unnamed@xFont_cpp@", local
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
-	.4byte "@stringBase0"+0x11
+	.rel "@stringBase0", .L_802529DC
+	.rel "@stringBase0", .L_802529E5
 .endobj "default_font_texture__19@unnamed@xFont_cpp@"
 
 # @unnamed@xFont_cpp@::default_font_assets
@@ -8569,242 +8643,242 @@
 
 # @unnamed@xFont_cpp@::format_tags_buffer
 .obj "format_tags_buffer__19@unnamed@xFont_cpp@", local
-	.4byte "@stringBase0"+0xD7
+	.rel "@stringBase0", .L_80252AAB
 	.4byte 0x00000000
 	.4byte "parse_tag_open_curly__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xD8
+	.rel "@stringBase0", .L_80252AAC
 	.4byte 0x00000001
 	.4byte "parse_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xDA
+	.rel "@stringBase0", .L_80252AAE
 	.4byte 0x00000003
 	.4byte 0x00000000
 	.4byte "reset_tag_all__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xDE
+	.rel "@stringBase0", .L_80252AB2
 	.4byte 0x00000005
 	.4byte "parse_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xE4
+	.rel "@stringBase0", .L_80252AB8
 	.4byte 0x00000001
 	.4byte "parse_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xE6
+	.rel "@stringBase0", .L_80252ABA
 	.4byte 0x00000004
 	.4byte "parse_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xEB
+	.rel "@stringBase0", .L_80252ABF
 	.4byte 0x00000001
 	.4byte "parse_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xED
+	.rel "@stringBase0", .L_80252AC1
 	.4byte 0x00000005
 	.4byte "parse_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xF3
+	.rel "@stringBase0", .L_80252AC7
 	.4byte 0x00000001
 	.4byte "parse_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x4B
+	.rel "@stringBase0", .L_80252A1F
 	.4byte 0x00000004
 	.4byte "parse_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xF5
+	.rel "@stringBase0", .L_80252AC9
 	.4byte 0x00000001
 	.4byte "parse_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xF7
+	.rel "@stringBase0", .L_80252ACB
 	.4byte 0x00000005
 	.4byte "parse_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xFD
+	.rel "@stringBase0", .L_80252AD1
 	.4byte 0x00000001
 	.4byte "parse_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xFF
+	.rel "@stringBase0", .L_80252AD3
 	.4byte 0x00000006
 	.4byte "parse_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x106
+	.rel "@stringBase0", .L_80252ADA
 	.4byte 0x00000001
 	.4byte "parse_tag_insert__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x108
+	.rel "@stringBase0", .L_80252ADC
 	.4byte 0x00000002
 	.4byte "parse_tag_insert_hash__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x10B
+	.rel "@stringBase0", .L_80252ADF
 	.4byte 0x00000006
 	.4byte "parse_tag_insert__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x112
+	.rel "@stringBase0", .L_80252AE6
 	.4byte 0x0000000B
 	.4byte "parse_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x11E
+	.rel "@stringBase0", .L_80252AF2
 	.4byte 0x00000002
 	.4byte "parse_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x121
+	.rel "@stringBase0", .L_80252AF5
 	.4byte 0x00000005
 	.4byte "parse_tag_model__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_model__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x127
+	.rel "@stringBase0", .L_80252AFB
 	.4byte 0x00000001
 	.4byte "parse_tag_newline__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x129
+	.rel "@stringBase0", .L_80252AFD
 	.4byte 0x00000007
 	.4byte "parse_tag_newline__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x131
+	.rel "@stringBase0", .L_80252B05
 	.4byte 0x0000000A
 	.4byte "parse_tag_page_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x13C
+	.rel "@stringBase0", .L_80252B10
 	.4byte 0x00000002
 	.4byte "parse_tag_page_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x13F
+	.rel "@stringBase0", .L_80252B13
 	.4byte 0x00000003
 	.4byte "parse_tag_pop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x143
+	.rel "@stringBase0", .L_80252B17
 	.4byte 0x00000001
 	.4byte "parse_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x145
+	.rel "@stringBase0", .L_80252B19
 	.4byte 0x00000003
 	.4byte "parse_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x149
+	.rel "@stringBase0", .L_80252B1D
 	.4byte 0x00000002
 	.4byte "parse_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x14C
+	.rel "@stringBase0", .L_80252B20
 	.4byte 0x0000000C
 	.4byte "parse_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x159
+	.rel "@stringBase0", .L_80252B2D
 	.4byte 0x00000001
 	.4byte "parse_tag_tab__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x15B
+	.rel "@stringBase0", .L_80252B2F
 	.4byte 0x00000003
 	.4byte "parse_tag_tab__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x15F
+	.rel "@stringBase0", .L_80252B33
 	.4byte 0x00000008
 	.4byte "parse_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x168
+	.rel "@stringBase0", .L_80252B3C
 	.4byte 0x00000003
 	.4byte "parse_tag_tex__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_tex__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x16C
+	.rel "@stringBase0", .L_80252B40
 	.4byte 0x00000005
 	.4byte "parse_tag_timer__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x172
+	.rel "@stringBase0", .L_80252B46
 	.4byte 0x00000002
 	.4byte "parse_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x175
+	.rel "@stringBase0", .L_80252B49
 	.4byte 0x00000001
 	.4byte "parse_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x177
+	.rel "@stringBase0", .L_80252B4B
 	.4byte 0x00000002
 	.4byte "parse_tag_word_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x17A
+	.rel "@stringBase0", .L_80252B4E
 	.4byte 0x00000005
 	.4byte "parse_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x180
+	.rel "@stringBase0", .L_80252B54
 	.4byte 0x0000000A
 	.4byte "parse_tag_word_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x18B
+	.rel "@stringBase0", .L_80252B5F
 	.4byte 0x00000004
 	.4byte "parse_tag_wrap__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_wrap__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x190
+	.rel "@stringBase0", .L_80252B64
 	.4byte 0x00000002
 	.4byte "parse_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x193
+	.rel "@stringBase0", .L_80252B67
 	.4byte 0x00000008
 	.4byte "parse_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x19C
+	.rel "@stringBase0", .L_80252B70
 	.4byte 0x00000002
 	.4byte "parse_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x19F
+	.rel "@stringBase0", .L_80252B73
 	.4byte 0x00000006
 	.4byte "parse_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1A6
+	.rel "@stringBase0", .L_80252B7A
 	.4byte 0x00000002
 	.4byte "parse_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1A9
+	.rel "@stringBase0", .L_80252B7D
 	.4byte 0x00000008
 	.4byte "parse_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1B2
+	.rel "@stringBase0", .L_80252B86
 	.4byte 0x00000002
 	.4byte "parse_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1B5
+	.rel "@stringBase0", .L_80252B89
 	.4byte 0x00000006
 	.4byte "parse_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
@@ -9857,78 +9931,12 @@
 
 # @unnamed@xFont_cpp@::active_fonts
 .obj "active_fonts__19@unnamed@xFont_cpp@", local
-	.skip 0xC5C
-.L_802B9A14:
-	.skip 0xE70
-.L_802BA884:
-	.skip 0x3D4
-.L_802BAC58:
-	.skip 0x1D8
-.L_802BAE30:
-	.skip 0x28
-.L_802BAE58:
-	.skip 0x4
-.L_802BAE5C:
-	.skip 0x4
-.L_802BAE60:
-	.skip 0x4
-.L_802BAE64:
-	.skip 0x4B8
-.L_802BB31C:
-	.skip 0x44
-.L_802BB360:
-	.skip 0x30C
-.L_802BB66C:
-	.skip 0x2C
-.L_802BB698:
-	.skip 0xDC
-.L_802BB774:
-	.skip 0x68
-.L_802BB7DC:
-	.skip 0x18
-.L_802BB7F4:
-	.skip 0xB0
-.L_802BB8A4:
-	.skip 0xE0
-.L_802BB984:
-	.skip 0x20C
-.L_802BBB90:
-	.skip 0x1C4
-.L_802BBD54:
-	.skip 0x24
-.L_802BBD78:
-	.skip 0x4F4
-.L_802BC26C:
-	.skip 0x7F4
-.L_802BCA60:
-	.skip 0x758
-.L_802BD1B8:
-	.skip 0x78
-.L_802BD230:
-	.skip 0x60
-.L_802BD290:
-	.skip 0x3D8
-.L_802BD668:
-	.skip 0x10C
-.L_802BD774:
-	.skip 0x164
-.L_802BD8D8:
-	.skip 0x190
-.L_802BDA68:
-	.skip 0x238
-.L_802BDCA0:
-	.skip 0x2BC
-.L_802BDF5C:
-	.skip 0x21C
+	.skip 0x53C0
 .endobj "active_fonts__19@unnamed@xFont_cpp@"
 
 # @unnamed@xFont_cpp@::vert_buffer
 .obj "vert_buffer__19@unnamed@xFont_cpp@", local
-	.skip 0x344
-.L_802BE4BC:
-	.skip 0x2B8
-.L_802BE774:
-	.skip 0x544
+	.skip 0xB40
 .endobj "vert_buffer__19@unnamed@xFont_cpp@"
 
 # @unnamed@xFont_cpp@::model_cache
@@ -9954,9 +9962,7 @@
 
 # @unnamed@xFont_cpp@::tl_cache
 .obj "tl_cache__19@unnamed@xFont_cpp@", local
-	.skip 0x596C
-.L_802C470C:
-	.skip 0x339C
+	.skip 0x8D08
 .endobj "tl_cache__19@unnamed@xFont_cpp@"
 
 .obj arg_buffer$1611, local
@@ -10061,17 +10067,17 @@
 
 # @unnamed@xFont_cpp@::text_delims
 .obj "text_delims__19@unnamed@xFont_cpp@", local
-	.4byte "@stringBase0"+0x1E
+	.rel "@stringBase0", .L_802529F2
 	.4byte 0x0000000B
 .endobj "text_delims__19@unnamed@xFont_cpp@"
 
 .obj "@1615", local
-	.4byte "@stringBase0"+0x8E
+	.rel "@stringBase0", .L_80252A62
 	.4byte 0x00000006
 .endobj "@1615"
 
 .obj "@1616", local
-	.4byte "@stringBase0"+0x95
+	.rel "@stringBase0", .L_80252A69
 	.4byte 0x00000003
 .endobj "@1616"
 

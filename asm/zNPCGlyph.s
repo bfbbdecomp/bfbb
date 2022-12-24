@@ -1518,52 +1518,63 @@
 .obj "@stringBase0", local
 	.4byte 0x756E6B6E
 	.4byte 0x6F776E00
+.L_80273400:
 	.4byte 0x7368696E
 	.4byte 0x795F6F62
 	.4byte 0x6A5F7075
 	.4byte 0x72706C65
 	.4byte 0x2E646666
-	.4byte 0x00736869
-	.4byte 0x6E795F6F
-	.4byte 0x626A5F62
-	.4byte 0x6C75652E
-	.4byte 0x64666600
+	.byte 0x00
+.L_80273415:
+	.4byte 0x7368696E
+	.4byte 0x795F6F62
+	.4byte 0x6A5F626C
+	.4byte 0x75652E64
+	.byte 0x66, 0x66, 0x00
+.L_80273428:
 	.4byte 0x7368696E
 	.4byte 0x795F6F62
 	.4byte 0x6A5F6772
 	.4byte 0x65656E2E
 	.4byte 0x64666600
+.L_8027343C:
 	.4byte 0x7368696E
 	.4byte 0x795F6F62
 	.4byte 0x6A5F7965
 	.4byte 0x6C6C6F77
 	.4byte 0x2E646666
-	.4byte 0x00736869
-	.4byte 0x6E795F6F
-	.4byte 0x626A5F6F
-	.4byte 0x72616E67
-	.4byte 0x652E6466
-	.4byte 0x66006678
-	.4byte 0x5F676C79
-	.4byte 0x70685F74
-	.4byte 0x616C6B00
+	.byte 0x00
+.L_80273451:
+	.4byte 0x7368696E
+	.4byte 0x795F6F62
+	.4byte 0x6A5F6F72
+	.4byte 0x616E6765
+	.4byte 0x2E646666
+	.byte 0x00
+.L_80273466:
+	.4byte 0x66785F67
+	.4byte 0x6C797068
+	.4byte 0x5F74616C
+	.2byte 0x6B00
 .L_80273474:
 	.4byte 0x66785F67
 	.4byte 0x6C797068
 	.4byte 0x5F74616C
 	.4byte 0x6B6F7468
-	.4byte 0x65720066
-	.4byte 0x785F676C
-	.4byte 0x7970685F
-	.4byte 0x66726965
-	.4byte 0x6E640066
-	.4byte 0x785F676C
-	.4byte 0x7970685F
-	.4byte 0x64617A65
-	.4byte 0x2E646666
-	.4byte 0x0025732E
-	.4byte 0x4D494E46
-	.byte 0x00
+	.byte 0x65, 0x72, 0x00
+.L_80273487:
+	.4byte 0x66785F67
+	.4byte 0x6C797068
+	.4byte 0x5F667269
+	.4byte 0x656E6400
+.L_80273497:
+	.4byte 0x66785F67
+	.4byte 0x6C797068
+	.4byte 0x5F64617A
+	.4byte 0x652E6466
+	.4byte 0x66002573
+	.4byte 0x2E4D494E
+	.2byte 0x4600
 .endobj "@stringBase0"
 	.4byte 0x00000000
 	.byte 0x00, 0x00, 0x00
@@ -1574,15 +1585,15 @@
 
 .obj g_strz_glyphmodel, local
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
-	.4byte "@stringBase0"+0x1D
-	.4byte "@stringBase0"+0x30
-	.4byte "@stringBase0"+0x44
-	.4byte "@stringBase0"+0x59
-	.4byte "@stringBase0"+0x6E
+	.rel "@stringBase0", .L_80273400
+	.rel "@stringBase0", .L_80273415
+	.rel "@stringBase0", .L_80273428
+	.rel "@stringBase0", .L_8027343C
+	.rel "@stringBase0", .L_80273451
+	.rel "@stringBase0", .L_80273466
 	.rel "@stringBase0", .L_80273474
-	.4byte "@stringBase0"+0x8F
-	.4byte "@stringBase0"+0x9F
+	.rel "@stringBase0", .L_80273487
+	.rel "@stringBase0", .L_80273497
 .endobj g_strz_glyphmodel
 
 .obj g_cnt_activeGlyphs, local

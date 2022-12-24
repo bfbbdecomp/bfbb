@@ -4064,7 +4064,6 @@
 .obj pow_10$417, local
 	.4byte 0x40240000
 	.4byte 0x00000000
-.L_802B6C50:
 	.4byte 0x40590000
 	.4byte 0x00000000
 	.4byte 0x408F4000

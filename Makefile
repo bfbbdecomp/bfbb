@@ -92,7 +92,7 @@ INCLUDES := -ir src -ir include -Iinclude -Iinclude/inline -Iinclude/bink \
   -Iinclude/dolphin -Iinclude/CodeWarrior -Iinclude/rwsdk \
   $(foreach dir,$(SRC_DIRS),-I$(dir))
 
-ASFLAGS := -mgekko -I include --strip-local-absolute
+ASFLAGS := -mgekko -I include --strip-local-absolute -gdwarf-2
 ifeq ($(VERBOSE),0)
   ASFLAGS += -W
 endif
@@ -142,7 +142,8 @@ endif
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	@echo " LINK    "$@
-	$(QUIET) $(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) $(O_FILES) 1>&2
+	$(QUIET) $(DTK) ar create obj/lib.a $(O_FILES)
+	$(QUIET) $(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) obj/lib.a 1>&2
 
 $(OBJ_DIR)/%.o: %.s | $(DTK)
 	@echo " AS      "$<

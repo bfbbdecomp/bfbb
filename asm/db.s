@@ -4,7 +4,6 @@
 # 0x801C1CF0 - 0x801C1DDC
 .text
 .balign 4
-.L_801C1CF0:
 
 .fn DBInit, global
 /* 801C1CF0 001BEDD0  3C 80 80 00 */	lis r4, 0x8000

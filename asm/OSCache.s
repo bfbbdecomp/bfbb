@@ -265,7 +265,6 @@
 /* 801D2654 001CF734  7C 08 03 A6 */	mtlr r0
 /* 801D2658 001CF738  4E 80 00 20 */	blr
 .endfn DMAErrorHandler
-.L_801D265C:
 
 .fn __OSCacheInit, global
 /* 801D265C 001CF73C  7C 08 02 A6 */	mflr r0

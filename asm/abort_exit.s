@@ -4,7 +4,6 @@
 # 0x801DCD7C - 0x801DCF08
 .text
 .balign 4
-.L_801DCD7C:
 
 .fn exit, global
 /* 801DCD7C 001D9E5C  94 21 FF F0 */	stwu r1, -0x10(r1)

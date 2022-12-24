@@ -1875,16 +1875,22 @@
 	.4byte 0x73746F70
 	.4byte 0x25640043
 	.4byte 0x6865636B
-	.4byte 0x31004964
-	.4byte 0x6C653031
-	.4byte 0x00416E69
-	.4byte 0x6D303200
+	.2byte 0x3100
+.L_80255062:
+	.4byte 0x49646C65
+	.byte 0x30, 0x31, 0x00
+.L_80255069:
 	.4byte 0x416E696D
-	.4byte 0x30330041
-	.4byte 0x6E696D30
-	.4byte 0x3400416E
-	.4byte 0x696D3035
-	.byte 0x00
+	.byte 0x30, 0x32, 0x00
+.L_80255070:
+	.4byte 0x416E696D
+	.byte 0x30, 0x33, 0x00
+.L_80255077:
+	.4byte 0x416E696D
+	.byte 0x30, 0x34, 0x00
+.L_8025507E:
+	.4byte 0x416E696D
+	.byte 0x30, 0x35, 0x00
 .endobj "@stringBase0"
 	.byte 0x00, 0x00, 0x00
 
@@ -1912,11 +1918,11 @@
 .endobj g_hash_xentanim
 
 .obj g_strz_xentanim, global
-	.4byte "@stringBase0"+0x3E
-	.4byte "@stringBase0"+0x45
-	.4byte "@stringBase0"+0x4C
-	.4byte "@stringBase0"+0x53
-	.4byte "@stringBase0"+0x5A
+	.rel "@stringBase0", .L_80255062
+	.rel "@stringBase0", .L_80255069
+	.rel "@stringBase0", .L_80255070
+	.rel "@stringBase0", .L_80255077
+	.rel "@stringBase0", .L_8025507E
 .endobj g_strz_xentanim
 
 .obj "@1125", local
@@ -1933,7 +1939,6 @@
 .obj gShadowParams, global
 	.4byte 0x4E545230
 	.4byte 0x3EA8F5C3
-.L_8028C1C8:
 	.4byte 0x40000000
 	.4byte 0x4E545233
 	.4byte 0x00000000
@@ -1946,7 +1951,6 @@
 	.4byte 0x3F800000
 	.4byte 0x4E544230
 	.4byte 0x3F800000
-.L_8028C1F8:
 	.4byte 0x40000000
 .endobj gShadowParams
 	.4byte 0x00000000

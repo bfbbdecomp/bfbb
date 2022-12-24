@@ -690,17 +690,7 @@
 .endobj file_queue
 
 .obj gRenderArr, global
-	.skip 0x23D4
-.L_803C5A34:
-	.skip 0x17BC
-.L_803C71F0:
-	.skip 0x4D4
-.L_803C76C4:
-	.skip 0xF8
-.L_803C77BC:
-	.skip 0x2C0
-.L_803C7A7C:
-	.skip 0xE64
+	.skip 0x5280
 .endobj gRenderArr
 
 .obj gRenderBuffer, global
@@ -720,17 +710,7 @@
 .endobj streams
 
 .obj sinfo_array, global
-	.skip 0x744
-.L_803C9ECC:
-	.skip 0x21C
-.L_803CA0E8:
-	.skip 0x174
-.L_803CA25C:
-	.skip 0xB0
-.L_803CA30C:
-	.skip 0x1A0
-.L_803CA4AC:
-	.skip 0x2C
+	.skip 0xD50
 .endobj sinfo_array
 
 .obj snd, global

@@ -2460,7 +2460,6 @@
 	.rel _rwDlImage8GetFromRaster, .L_80243B8C
 	.rel _rwDlImage8GetFromRaster, .L_80243B8C
 	.rel _rwDlImage8GetFromRaster, .L_80243B8C
-.L_802B7F48:
 	.rel _rwDlImage8GetFromRaster, .L_80243B8C
 	.rel _rwDlImage8GetFromRaster, .L_80243B8C
 	.rel _rwDlImage8GetFromRaster, .L_80243B8C

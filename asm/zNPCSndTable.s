@@ -614,7 +614,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8026BBB4:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -631,56 +630,92 @@
 .obj "@stringBase0", local
 	.4byte 0x4C697374
 	.4byte 0x456E6400
+.L_8026BBE8:
 	.4byte 0x456E636F
 	.4byte 0x756E7465
-	.4byte 0x7200436C
-	.4byte 0x616E6B69
-	.4byte 0x6E670045
-	.4byte 0x78636C61
-	.4byte 0x696D004F
-	.4byte 0x75636800
+	.2byte 0x7200
+.L_8026BBF2:
+	.4byte 0x436C616E
+	.4byte 0x6B696E67
+	.byte 0x00
+.L_8026BBFB:
+	.4byte 0x4578636C
+	.4byte 0x61696D00
+.L_8026BC03:
+	.4byte 0x4F756368
+	.byte 0x00
+.L_8026BC08:
 	.4byte 0x43686565
 	.4byte 0x72696E67
-	.4byte 0x00526573
-	.4byte 0x7061776E
-	.4byte 0x00416C65
-	.4byte 0x72740044
-	.4byte 0x697A7A79
-	.4byte 0x0044616E
-	.4byte 0x6365004C
-	.4byte 0x61756768
-	.4byte 0x00417474
-	.4byte 0x61636B00
+	.byte 0x00
+.L_8026BC11:
+	.4byte 0x52657370
+	.4byte 0x61776E00
+.L_8026BC19:
+	.4byte 0x416C6572
+	.2byte 0x7400
+.L_8026BC1F:
+	.4byte 0x44697A7A
+	.2byte 0x7900
+.L_8026BC25:
+	.4byte 0x44616E63
+	.2byte 0x6500
+.L_8026BC2B:
+	.4byte 0x4C617567
+	.2byte 0x6800
+.L_8026BC31:
+	.4byte 0x41747461
+	.byte 0x63, 0x6B, 0x00
+.L_8026BC38:
 	.4byte 0x50756E63
-	.4byte 0x68005765
-	.4byte 0x704C6175
-	.4byte 0x6E636800
+	.2byte 0x6800
+.L_8026BC3E:
+	.4byte 0x5765704C
+	.4byte 0x61756E63
+	.2byte 0x6800
+.L_8026BC48:
 	.4byte 0x4C696768
 	.4byte 0x746E696E
-	.4byte 0x67005761
-	.4byte 0x726E4261
-	.4byte 0x6E670044
-	.4byte 0x65617468
-	.4byte 0x00446561
-	.4byte 0x74684A65
-	.4byte 0x6C6C7900
+	.2byte 0x6700
+.L_8026BC52:
+	.4byte 0x5761726E
+	.4byte 0x42616E67
+	.byte 0x00
+.L_8026BC5B:
+	.4byte 0x44656174
+	.2byte 0x6800
+.L_8026BC61:
+	.4byte 0x44656174
+	.4byte 0x684A656C
+	.byte 0x6C, 0x79, 0x00
+.L_8026BC6C:
 	.4byte 0x426F6E6B
-	.4byte 0x65640055
-	.4byte 0x6E626F6E
-	.4byte 0x6B656400
+	.byte 0x65, 0x64, 0x00
+.L_8026BC73:
+	.4byte 0x556E626F
+	.4byte 0x6E6B6564
+	.byte 0x00
+.L_8026BC7C:
 	.4byte 0x54696B69
 	.4byte 0x53746163
-	.4byte 0x6B005469
-	.4byte 0x6B694578
-	.4byte 0x706C6F64
-	.4byte 0x65005469
-	.4byte 0x6B695468
-	.4byte 0x756E6465
-	.4byte 0x72005853
-	.4byte 0x66785461
-	.4byte 0x6C6B004F
-	.4byte 0x6E654C69
-	.4byte 0x6E657200
+	.2byte 0x6B00
+.L_8026BC86:
+	.4byte 0x54696B69
+	.4byte 0x4578706C
+	.4byte 0x6F646500
+.L_8026BC92:
+	.4byte 0x54696B69
+	.4byte 0x5468756E
+	.4byte 0x64657200
+.L_8026BC9E:
+	.4byte 0x58536678
+	.4byte 0x54616C6B
+	.byte 0x00
+.L_8026BCA7:
+	.4byte 0x4F6E654C
+	.4byte 0x696E6572
+	.byte 0x00
+.L_8026BCB0:
 	.4byte 0x4F6E654C
 	.4byte 0x696E6572
 	.4byte 0x546F6F00
@@ -722,31 +757,31 @@
 
 .obj g_strz_sndgroup, local
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
-	.4byte "@stringBase0"+0x12
-	.4byte "@stringBase0"+0x1B
-	.4byte "@stringBase0"+0x23
-	.4byte "@stringBase0"+0x28
-	.4byte "@stringBase0"+0x31
-	.4byte "@stringBase0"+0x39
-	.4byte "@stringBase0"+0x3F
-	.4byte "@stringBase0"+0x45
-	.4byte "@stringBase0"+0x4B
-	.4byte "@stringBase0"+0x51
-	.4byte "@stringBase0"+0x58
-	.4byte "@stringBase0"+0x5E
-	.4byte "@stringBase0"+0x68
-	.4byte "@stringBase0"+0x72
-	.4byte "@stringBase0"+0x7B
-	.4byte "@stringBase0"+0x81
-	.4byte "@stringBase0"+0x8C
-	.4byte "@stringBase0"+0x93
-	.4byte "@stringBase0"+0x9C
-	.4byte "@stringBase0"+0xA6
-	.4byte "@stringBase0"+0xB2
-	.4byte "@stringBase0"+0xBE
-	.4byte "@stringBase0"+0xC7
-	.4byte "@stringBase0"+0xD0
+	.rel "@stringBase0", .L_8026BBE8
+	.rel "@stringBase0", .L_8026BBF2
+	.rel "@stringBase0", .L_8026BBFB
+	.rel "@stringBase0", .L_8026BC03
+	.rel "@stringBase0", .L_8026BC08
+	.rel "@stringBase0", .L_8026BC11
+	.rel "@stringBase0", .L_8026BC19
+	.rel "@stringBase0", .L_8026BC1F
+	.rel "@stringBase0", .L_8026BC25
+	.rel "@stringBase0", .L_8026BC2B
+	.rel "@stringBase0", .L_8026BC31
+	.rel "@stringBase0", .L_8026BC38
+	.rel "@stringBase0", .L_8026BC3E
+	.rel "@stringBase0", .L_8026BC48
+	.rel "@stringBase0", .L_8026BC52
+	.rel "@stringBase0", .L_8026BC5B
+	.rel "@stringBase0", .L_8026BC61
+	.rel "@stringBase0", .L_8026BC6C
+	.rel "@stringBase0", .L_8026BC73
+	.rel "@stringBase0", .L_8026BC7C
+	.rel "@stringBase0", .L_8026BC86
+	.rel "@stringBase0", .L_8026BC92
+	.rel "@stringBase0", .L_8026BC9E
+	.rel "@stringBase0", .L_8026BCA7
+	.rel "@stringBase0", .L_8026BCB0
 .endobj g_strz_sndgroup
 
 # 0x80314C50 - 0x80314CB8
@@ -787,6 +822,5 @@
 
 .obj "@859", local
 	.4byte 0x43300000
-.L_803CEA94:
 	.4byte 0x80000000
 .endobj "@859"

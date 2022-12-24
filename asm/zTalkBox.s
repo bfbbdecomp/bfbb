@@ -4365,33 +4365,30 @@
 .obj positive$938, local
 	.4byte "@stringBase0"
 	.4byte 0x00000003
-	.4byte "@stringBase0"+0x4
+	.rel "@stringBase0", .L_8026C924
 	.4byte 0x00000001
-	.4byte "@stringBase0"+0x6
+	.rel "@stringBase0", .L_8026C926
 	.4byte 0x00000001
-	.4byte "@stringBase0"+0x8
+	.rel "@stringBase0", .L_8026C928
 	.4byte 0x00000004
-	.4byte "@stringBase0"+0xD
-.L_8026C894:
+	.rel "@stringBase0", .L_8026C92D
 	.4byte 0x00000001
-	.4byte "@stringBase0"+0xF
+	.rel "@stringBase0", .L_8026C92F
 	.4byte 0x00000002
 .endobj positive$938
 
 .obj negative$940, local
-	.4byte "@stringBase0"+0x12
+	.rel "@stringBase0", .L_8026C932
 	.4byte 0x00000003
-	.4byte "@stringBase0"+0x15
+	.rel "@stringBase0", .L_8026C935
 	.4byte 0x00000001
-.L_8026C8B0:
-	.4byte "@stringBase0"+0x17
+	.rel "@stringBase0", .L_8026C937
 	.4byte 0x00000001
-	.4byte "@stringBase0"+0x19
+	.rel "@stringBase0", .L_8026C939
 	.4byte 0x00000005
-.L_8026C8C0:
-	.4byte "@stringBase0"+0x1F
+	.rel "@stringBase0", .L_8026C93F
 	.4byte 0x00000001
-	.4byte "@stringBase0"+0x21
+	.rel "@stringBase0", .L_8026C941
 	.4byte 0x00000003
 .endobj negative$940
 
@@ -4420,80 +4417,102 @@
 
 .obj "@stringBase0", local
 	.4byte 0x79657300
-	.4byte 0x79003100
+.L_8026C924:
+	.2byte 0x7900
+.L_8026C926:
+	.2byte 0x3100
+.L_8026C928:
 	.4byte 0x74727565
-	.4byte 0x0074006F
-	.4byte 0x6E006E6F
-	.4byte 0x006E0030
-	.4byte 0x0066616C
-	.4byte 0x73650066
-	.4byte 0x006F6666
-	.4byte 0x00776169
-	.4byte 0x74007072
-.L_8026C94C:
-	.4byte 0x6F6D7074
-	.4byte 0x00796573
-	.4byte 0x6E6F0073
-	.4byte 0x6F756E64
-	.4byte 0x00657665
-.L_8026C960:
-	.4byte 0x6E74006E
-	.4byte 0x65656400
-	.4byte 0x766F6C75
-	.4byte 0x6D650061
-	.4byte 0x6374696F
-	.4byte 0x6E006164
-	.4byte 0x64007265
-	.4byte 0x6D6F7665
-	.4byte 0x00737065
-	.4byte 0x616B6572
-	.4byte 0x00706300
-	.4byte 0x6E6F6E65
-.L_8026C990:
-	.4byte 0x00616E69
-	.4byte 0x6D00706F
-	.4byte 0x696E7465
-	.4byte 0x72006C6F
-	.4byte 0x63617469
+	.byte 0x00
+.L_8026C92D:
+	.2byte 0x7400
+.L_8026C92F:
+	.byte 0x6F, 0x6E, 0x00
+.L_8026C932:
+	.byte 0x6E, 0x6F, 0x00
+.L_8026C935:
+	.2byte 0x6E00
+.L_8026C937:
+	.2byte 0x3000
+.L_8026C939:
+	.4byte 0x66616C73
+	.2byte 0x6500
+.L_8026C93F:
+	.2byte 0x6600
+.L_8026C941:
+	.4byte 0x6F666600
+.L_8026C945:
+	.4byte 0x77616974
+	.4byte 0x0070726F
+	.4byte 0x6D707400
+	.4byte 0x7965736E
+	.2byte 0x6F00
+.L_8026C957:
+	.4byte 0x736F756E
+	.4byte 0x64006576
+	.4byte 0x656E7400
+	.4byte 0x6E656564
+	.4byte 0x00766F6C
+	.4byte 0x756D6500
+	.4byte 0x61637469
 	.4byte 0x6F6E0061
-	.4byte 0x6C6C6F77
-	.4byte 0x5F717569
-	.4byte 0x74006171
-	.4byte 0x00617574
-.L_8026C9B8:
-	.4byte 0x6F5F7761
-	.4byte 0x69740070
-	.4byte 0x61757365
-	.4byte 0x00736967
-	.4byte 0x6E616C00
+	.4byte 0x64640072
+	.4byte 0x656D6F76
+	.4byte 0x65007370
+	.4byte 0x65616B65
+	.4byte 0x72007063
+	.4byte 0x006E6F6E
+	.4byte 0x6500616E
+	.4byte 0x696D0070
+	.4byte 0x6F696E74
+	.4byte 0x6572006C
+	.4byte 0x6F636174
+	.4byte 0x696F6E00
+.L_8026C9A7:
+	.4byte 0x616C6C6F
+	.4byte 0x775F7175
+	.byte 0x69, 0x74, 0x00
+.L_8026C9B2:
+	.byte 0x61, 0x71, 0x00
+.L_8026C9B5:
+	.4byte 0x6175746F
+	.4byte 0x5F776169
+	.2byte 0x7400
+.L_8026C9BF:
+	.4byte 0x70617573
+	.2byte 0x6500
+.L_8026C9C5:
+	.4byte 0x7369676E
+	.byte 0x61, 0x6C, 0x00
+.L_8026C9CC:
 	.4byte 0x74656C65
 	.4byte 0x706F7274
-	.4byte 0x00747261
-	.4byte 0x70005465
+	.byte 0x00
+.L_8026C9D5:
+	.4byte 0x74726170
+	.4byte 0x0054656D
+	.4byte 0x707C5461
+	.4byte 0x6C6B204D
+	.4byte 0x75736963
+	.4byte 0x20466164
+	.4byte 0x65005465
 	.4byte 0x6D707C54
 	.4byte 0x616C6B20
 	.4byte 0x4D757369
 	.4byte 0x63204661
-	.4byte 0x64650054
-	.4byte 0x656D707C
-	.4byte 0x54616C6B
-	.4byte 0x204D7573
-.L_8026C9FC:
-	.4byte 0x69632046
-	.4byte 0x61646520
-	.4byte 0x44656C61
-	.4byte 0x79007461
-	.4byte 0x6C6B5F62
-	.4byte 0x6F782E76
+	.4byte 0x64652044
+	.4byte 0x656C6179
+	.4byte 0x0074616C
+	.4byte 0x6B5F626F
+	.4byte 0x782E766F
+	.4byte 0x6C756D65
+	.4byte 0x0054616C
+	.4byte 0x6B20426F
+	.4byte 0x787C0147
+	.4byte 0x6C6F6261
+	.4byte 0x6C737C76
 	.4byte 0x6F6C756D
-	.4byte 0x65005461
-	.4byte 0x6C6B2042
-	.4byte 0x6F787C01
-	.4byte 0x476C6F62
-	.4byte 0x616C737C
-	.4byte 0x766F6C75
-.L_8026CA30:
-	.byte 0x6D, 0x65, 0x00
+	.2byte 0x6500
 .endobj "@stringBase0"
 	.4byte 0x00000000
 	.byte 0x00
@@ -4504,47 +4523,47 @@
 
 # @unnamed@zTalkBox_cpp@::new_tags
 .obj "new_tags__22@unnamed@zTalkBox_cpp@", local
-	.4byte "@stringBase0"+0x87
+	.rel "@stringBase0", .L_8026C9A7
 	.4byte 0x0000000A
 	.4byte "parse_tag_allow_quit__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_allow_quit__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "trigger_allow_quit__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0x92
+	.rel "@stringBase0", .L_8026C9B2
 	.4byte 0x00000002
 	.4byte "parse_tag_allow_quit__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_allow_quit__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "trigger_allow_quit__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0x95
+	.rel "@stringBase0", .L_8026C9B5
 	.4byte 0x00000009
 	.4byte "parse_tag_auto_wait__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_auto_wait__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "trigger_auto_wait__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0x9F
+	.rel "@stringBase0", .L_8026C9BF
 	.4byte 0x00000005
 	.4byte "parse_tag_pause__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_pause__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "trigger_pause__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0xA5
+	.rel "@stringBase0", .L_8026C9C5
 	.4byte 0x00000006
 	.4byte "parse_tag_signal__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte "trigger_signal__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0x37
+	.rel "@stringBase0", .L_8026C957
 	.4byte 0x00000005
 	.4byte "parse_tag_sound__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_sound__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "trigger_sound__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0xAC
+	.rel "@stringBase0", .L_8026C9CC
 	.4byte 0x00000008
 	.4byte "parse_tag_teleport__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
 	.4byte "trigger_teleport__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0xB5
+	.rel "@stringBase0", .L_8026C9D5
 	.4byte 0x00000004
 	.4byte "parse_tag_trap__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "reset_tag_trap__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte "trigger_trap__22@unnamed@zTalkBox_cpp@FRCQ28xtextbox3jot"
-	.4byte "@stringBase0"+0x25
+	.rel "@stringBase0", .L_8026C945
 	.4byte 0x00000004
 	.4byte "parse_tag_wait__22@unnamed@zTalkBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000

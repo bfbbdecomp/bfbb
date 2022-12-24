@@ -123,19 +123,17 @@
 
 # 0x80363C88 - 0x80363D88
 .section .bss, "wa", @nobits
-.balign 4
-
+.balign 8
 .sym ptrs, local
 	.skip 0x80
 .endsym ptrs
-
 .sym amt, local
 	.skip 0x80
 .endsym amt
 
 # 0x803CAE30 - 0x803CAE48
 .section .sdata, "wa"
-.balign 4
+.balign 8
 
 .obj pushtot, local
 	.4byte 0x00000000

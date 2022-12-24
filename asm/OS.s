@@ -4,7 +4,6 @@
 # 0x801D0B3C - 0x801D1628
 .text
 .balign 4
-.L_801D0B3C:
 
 .fn __OSFPRInit, global
 /* 801D0B3C 001CDC1C  7C 60 00 A6 */	mfmsr r3
@@ -200,7 +199,6 @@
 .L_801D0DEC:
 /* 801D0DEC 001CDECC  4E 80 00 20 */	blr
 .endfn InquiryCallback
-.L_801D0DF0:
 
 .fn OSInit, global
 /* 801D0DF0 001CDED0  7C 08 02 A6 */	mflr r0
@@ -762,7 +760,6 @@
 /* 801D158C 001CE66C  94 21 FF F8 */	stwu r1, -0x8(r1)
 /* 801D1590 001CE670  48 00 1D 38 */	b __OSUnhandledException
 .endfn OSDefaultExceptionHandler
-.L_801D1594:
 
 .fn __OSPSInit, global
 /* 801D1594 001CE674  7C 08 02 A6 */	mflr r0

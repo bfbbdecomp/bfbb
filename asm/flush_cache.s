@@ -4,7 +4,6 @@
 # 0x801F3AF0 - 0x801F3B28
 .text
 .balign 4
-.L_801F3AF0:
 
 .fn TRK_flush_cache, global
 /* 801F3AF0 001F0BD0  3C A0 FF FF */	lis r5, 0xffff

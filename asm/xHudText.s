@@ -398,7 +398,6 @@
 	.4byte is__Q24xhud11text_widgetCFUi
 	.4byte init__Q24xhud6widgetFv
 	.4byte setup__Q24xhud11text_widgetFv
-.L_802A1B7C:
 	.4byte update__Q24xhud11text_widgetFf
 	.4byte render__Q24xhud11text_widgetFv
 	.4byte dispatch__Q24xhud6widgetFP5xBaseUiPCfP5xBase

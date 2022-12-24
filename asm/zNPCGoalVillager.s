@@ -2920,7 +2920,6 @@
 
 .obj "@1343", local
 	.4byte 0x00000000
-.L_8026CF90:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .endobj "@1343"
@@ -2928,13 +2927,11 @@
 .obj "@1363", local
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8026CFA0:
 	.4byte 0x00000000
 .endobj "@1363"
 
 .obj shinies$1396, local
 	.4byte 0x00000004
-.L_8026CFA8:
 	.4byte 0x00000002
 	.4byte 0x00000001
 .endobj shinies$1396
@@ -2942,79 +2939,54 @@
 .obj "@stringBase0", local
 	.4byte 0x4C617373
 	.4byte 0x6F537769
-.L_8026CFB8:
 	.4byte 0x6E670053
 	.4byte 0x6C697049
-.L_8026CFC0:
 	.4byte 0x646C6530
 	.4byte 0x31004C43
-.L_8026CFC8:
 	.4byte 0x6F707465
 	.4byte 0x72303100
-.L_8026CFD0:
 	.4byte 0x4C436F70
 	.4byte 0x74657248
-.L_8026CFD8:
 	.4byte 0x65616455
 	.4byte 0x70303100
-.L_8026CFE0:
 	.4byte 0x5461696C
 	.4byte 0x536C6964
-.L_8026CFE8:
 	.4byte 0x65303100
 	.4byte 0x5461696C
-.L_8026CFF0:
 	.4byte 0x536C6964
 	.4byte 0x654A756D
-.L_8026CFF8:
 	.4byte 0x70537461
 	.4byte 0x72743031
-.L_8026D000:
 	.4byte 0x00546169
 	.4byte 0x6C536C69
-.L_8026D008:
 	.4byte 0x64654A75
 	.4byte 0x6D704170
-.L_8026D010:
 	.4byte 0x65783031
 	.4byte 0x00546169
-.L_8026D018:
 	.4byte 0x6C536C69
 	.4byte 0x64654661
-.L_8026D020:
 	.4byte 0x6C6C3031
 	.4byte 0x00546169
-.L_8026D028:
 	.4byte 0x6C536C69
 	.4byte 0x64654C61
-.L_8026D030:
 	.4byte 0x6E643031
 	.4byte 0x00546169
-.L_8026D038:
 	.4byte 0x6C536C69
 	.4byte 0x6465444A
-.L_8026D040:
 	.4byte 0x756D7041
 	.4byte 0x70657830
-.L_8026D048:
 	.4byte 0x3100444A
 	.4byte 0x756D7053
-.L_8026D050:
 	.4byte 0x74617274
 	.4byte 0x30310044
-.L_8026D058:
 	.4byte 0x4A756D70
 	.4byte 0x41706578
-.L_8026D060:
 	.4byte 0x30310042
 	.4byte 0x426F756E
-.L_8026D068:
 	.4byte 0x63655374
 	.4byte 0x72696B65
-.L_8026D070:
 	.4byte 0x30310053
 	.4byte 0x74756E4C
-.L_8026D078:
 	.4byte 0x616E6400
 .endobj "@stringBase0"
 	.4byte 0x00000000
@@ -3112,7 +3084,6 @@
 	.4byte EvalRules__5xGoalFP11en_trantypefPv
 	.4byte Process__15zNPCGoalBoyRideFP11en_trantypefPvP6xScene
 	.4byte SysEvent__5xGoalFP5xBaseP5xBaseUiPCfP5xBasePi
-.L_802996B8:
 	.4byte NPCMessage__15zNPCGoalBoyRideFP6NPCMsg
 	.4byte CollReview__14zNPCGoalCommonFPv
 .endobj __vt__15zNPCGoalBoyRide

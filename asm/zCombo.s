@@ -511,50 +511,71 @@
 .obj "@stringBase0", local
 	.4byte 0x494E5445
 	.4byte 0x4E54494F
-.L_80274A08:
 	.4byte 0x4E414C4C
 	.4byte 0x5920424C
 	.4byte 0x414E4B20
 	.4byte 0x54585400
+.L_80274A18:
 	.4byte 0x434F4D42
 	.4byte 0x4F5F3031
 	.4byte 0x5F545854
-	.4byte 0x00434F4D
-	.4byte 0x424F5F30
-	.4byte 0x325F5458
-	.4byte 0x5400434F
-	.4byte 0x4D424F5F
-	.4byte 0x30335F54
-	.4byte 0x58540043
-	.4byte 0x4F4D424F
-	.4byte 0x5F30345F
-	.4byte 0x54585400
+	.byte 0x00
+.L_80274A25:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3032
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A32:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3033
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A3F:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3034
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A4C:
 	.4byte 0x434F4D42
 	.4byte 0x4F5F3035
 	.4byte 0x5F545854
-	.4byte 0x00434F4D
-	.4byte 0x424F5F30
-	.4byte 0x365F5458
-	.4byte 0x5400434F
-	.4byte 0x4D424F5F
-	.4byte 0x30375F54
-	.4byte 0x58540043
-	.4byte 0x4F4D424F
-	.4byte 0x5F30385F
-	.4byte 0x54585400
+	.byte 0x00
+.L_80274A59:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3036
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A66:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3037
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A73:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3038
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A80:
 	.4byte 0x434F4D42
 	.4byte 0x4F5F3039
 	.4byte 0x5F545854
-	.4byte 0x00434F4D
-	.4byte 0x424F5F31
-	.4byte 0x305F5458
-	.4byte 0x5400434F
-	.4byte 0x4D424F5F
-	.4byte 0x31315F54
-	.4byte 0x58540043
-	.4byte 0x4F4D424F
-	.4byte 0x5F31325F
-	.4byte 0x54585400
+	.byte 0x00
+.L_80274A8D:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3130
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274A9A:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3131
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274AA7:
+	.4byte 0x434F4D42
+	.4byte 0x4F5F3132
+	.4byte 0x5F545854
+	.byte 0x00
+.L_80274AB4:
 	.4byte 0x434F4D42
 	.4byte 0x4F5F3133
 	.4byte 0x5F545854
@@ -562,7 +583,6 @@
 	.4byte 0x5F544558
 	.4byte 0x545F434F
 	.4byte 0x4D424F4D
-.L_80274AD0:
 	.4byte 0x45535341
 	.4byte 0x47450054
 	.4byte 0x45585442
@@ -626,7 +646,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000002
-	.4byte "@stringBase0"+0x18
+	.rel "@stringBase0", .L_80274A18
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -640,7 +660,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000003
-	.4byte "@stringBase0"+0x25
+	.rel "@stringBase0", .L_80274A25
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -654,7 +674,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000003
-	.4byte "@stringBase0"+0x25
+	.rel "@stringBase0", .L_80274A25
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -668,7 +688,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000005
-	.4byte "@stringBase0"+0x32
+	.rel "@stringBase0", .L_80274A32
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -682,7 +702,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0000000A
-	.4byte "@stringBase0"+0x3F
+	.rel "@stringBase0", .L_80274A3F
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -694,10 +714,9 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_802A1D0C:
 	.4byte 0x00000000
 	.4byte 0x0000000F
-	.4byte "@stringBase0"+0x4C
+	.rel "@stringBase0", .L_80274A4C
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -711,7 +730,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000014
-	.4byte "@stringBase0"+0x59
+	.rel "@stringBase0", .L_80274A59
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -725,7 +744,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000019
-	.4byte "@stringBase0"+0x66
+	.rel "@stringBase0", .L_80274A66
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -739,7 +758,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0000001E
-	.4byte "@stringBase0"+0x73
+	.rel "@stringBase0", .L_80274A73
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -753,7 +772,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000028
-	.4byte "@stringBase0"+0x80
+	.rel "@stringBase0", .L_80274A80
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -767,7 +786,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000032
-	.4byte "@stringBase0"+0x8D
+	.rel "@stringBase0", .L_80274A8D
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -781,7 +800,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0000003C
-	.4byte "@stringBase0"+0x9A
+	.rel "@stringBase0", .L_80274A9A
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -795,7 +814,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0000004B
-	.4byte "@stringBase0"+0xA7
+	.rel "@stringBase0", .L_80274AA7
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -809,7 +828,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000064
-	.4byte "@stringBase0"+0xB4
+	.rel "@stringBase0", .L_80274AB4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000

@@ -430,7 +430,6 @@
 	.4byte Clear__14zNPCGoalCommonFv
 	.4byte Enter__14zNPCGoalScriptFfPv
 	.4byte Exit__14zNPCGoalScriptFfPv
-.L_8029813C:
 	.4byte Suspend__5xGoalFfPv
 	.4byte Resume__14zNPCGoalCommonFfPv
 	.4byte PreCalc__14zNPCGoalCommonFfPv

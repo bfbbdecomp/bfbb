@@ -28,7 +28,7 @@
 /* 801ECE68 001E9F48  4E 80 00 20 */	blr
 .endfn __destroy_global_chain
 
-# 0x80251D48 - 0x80251D50
+# 0x80251D48 - 0x80251D4C
 .section .dtors, "a"
 .balign 4
 

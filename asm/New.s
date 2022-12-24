@@ -2,7 +2,7 @@
 .file "New.cp"
 
 # 0x800056E0 - 0x80005730
-.section extab, "wa"
+.section extab, "a"
 .balign 4
 
 .obj "@157", local
@@ -32,7 +32,7 @@
 .endobj "@182"
 
 # 0x80005800 - 0x80005818
-.section extabindex, "wa"
+.section extabindex, "a"
 .balign 4
 
 .obj "@158", local

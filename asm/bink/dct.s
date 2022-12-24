@@ -3730,7 +3730,7 @@
 
 # 0x802794E0 - 0x80279920
 .rodata
-.balign 4
+.balign 8
 
 .obj zigzag, global
 	.4byte 0x00010809
@@ -3756,7 +3756,6 @@
 	.4byte 0x20283038
 	.4byte 0x39312921
 	.4byte 0x19110901
-.L_80279530:
 	.4byte 0x020A121A
 	.4byte 0x222A323A
 	.4byte 0x3B332B23
@@ -3784,7 +3783,6 @@
 	.4byte 0x24252627
 	.4byte 0x2F2E2D2C
 	.4byte 0x34353637
-.L_8027959C:
 	.4byte 0x3F3E3D3C
 	.4byte 0x1911121A
 	.4byte 0x1B130B03
@@ -3813,7 +3811,6 @@
 	.4byte 0x3C343D35
 	.4byte 0x3E363F37
 	.4byte 0x2F272E26
-.L_8027960C:
 	.4byte 0x2D252C24
 	.4byte 0x1C141D15
 	.4byte 0x1E161F17
@@ -3927,7 +3924,6 @@
 	.4byte 0x3E363F37
 	.4byte 0x2F272E26
 	.4byte 0x2D252C24
-.L_802797D0:
 	.4byte 0x1F171E16
 	.4byte 0x1D151C14
 	.4byte 0x0C040D05
@@ -3936,7 +3932,6 @@
 	.4byte 0x191A1B13
 	.4byte 0x0B030201
 	.4byte 0x0911120A
-.L_802797F0:
 	.4byte 0x040C141C
 	.4byte 0x1D1E1F17
 	.4byte 0x0F070605
@@ -3968,7 +3963,6 @@
 	.4byte 0x18100800
 	.4byte 0x0102030B
 	.4byte 0x131B1A19
-.L_8027986C:
 	.4byte 0x110A0912
 	.4byte 0x1C140C04
 	.4byte 0x0506070F
@@ -3977,7 +3971,6 @@
 	.4byte 0x3C342C24
 	.4byte 0x2526272F
 	.4byte 0x373F3E3D
-.L_8027988C:
 	.4byte 0x352E2D36
 	.4byte 0x38302820
 	.4byte 0x2122232B
@@ -4019,7 +4012,7 @@
 
 # 0x803CFC60 - 0x803CFC70
 .section .sdata2, "a"
-.balign 4
+.balign 8
 
 .obj zigzagalign, global
 	.4byte 0x00000000

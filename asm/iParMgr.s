@@ -1645,7 +1645,6 @@
 .obj gColorTableInit, local
 	.skip 0x4
 .endobj gColorTableInit
-.L_803CBB84:
 	.skip 0x4
 
 # 0x803CE138 - 0x803CE168

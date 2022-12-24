@@ -3271,34 +3271,38 @@
 	.4byte 0x5F6F626A
 	.4byte 0x5F736872
 	.4byte 0x61706E65
-	.4byte 0x6C006262
-	.4byte 0x30335F66
-	.4byte 0x6C6F6F72
-	.4byte 0x5F736872
-	.4byte 0x61706E65
-	.4byte 0x6C006262
-	.4byte 0x30335F66
-	.4byte 0x6C6F6F72
-	.4byte 0x5F636869
-	.4byte 0x6C645F73
+	.2byte 0x6C00
+.L_8026C186:
+	.4byte 0x62623033
+	.4byte 0x5F666C6F
+	.4byte 0x6F725F73
 	.4byte 0x68726170
 	.4byte 0x6E656C00
+.L_8026C19A:
+	.4byte 0x62623033
+	.4byte 0x5F666C6F
+	.4byte 0x6F725F63
+	.4byte 0x68696C64
+	.4byte 0x5F736872
+	.4byte 0x61706E65
+	.2byte 0x6C00
+.L_8026C1B4:
 	.4byte 0x616C6C72
 	.4byte 0x6F626F74
 	.4byte 0x735F7368
 	.4byte 0x7261706E
-	.4byte 0x656C0073
-	.4byte 0x706F6E67
-	.4byte 0x65626F62
-	.4byte 0x5F736872
-	.4byte 0x61706E65
-.L_8026C1D8:
-	.4byte 0x6C006672
-	.4byte 0x61675F67
-	.4byte 0x656E6572
-	.4byte 0x69635F77
-	.4byte 0x72656E63
-	.2byte 0x6800
+	.byte 0x65, 0x6C, 0x00
+.L_8026C1C7:
+	.4byte 0x73706F6E
+	.4byte 0x6765626F
+	.4byte 0x625F7368
+	.4byte 0x7261706E
+	.4byte 0x656C0066
+	.4byte 0x7261675F
+	.4byte 0x67656E65
+	.4byte 0x7269635F
+	.4byte 0x7772656E
+	.byte 0x63, 0x68, 0x00
 .endobj "@stringBase0"
 	.2byte 0x0000
 
@@ -3310,16 +3314,16 @@
 	.4byte "@stringBase0"
 	.4byte zShrapnel_DestructObjInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x16
+	.rel "@stringBase0", .L_8026C186
 	.4byte zShrapnel_BB03FloorInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x2A
+	.rel "@stringBase0", .L_8026C19A
 	.4byte zShrapnel_BB03FloorChildInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x44
+	.rel "@stringBase0", .L_8026C1B4
 	.4byte zShrapnel_GlobalRobotInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x57
+	.rel "@stringBase0", .L_8026C1C7
 	.4byte zShrapnel_SpongebobInit__FP14zShrapnelAssetP14xModelInstanceP5xVec3PFP5zFragP10zFragAsset_v
 	.4byte 0x00000000
 	.4byte 0x00000000

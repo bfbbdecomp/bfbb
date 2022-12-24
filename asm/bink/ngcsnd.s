@@ -4699,7 +4699,7 @@
 
 # 0x80274D80 - 0x80274E00
 .rodata
-.balign 4
+.balign 8
 	.4byte 0x4572726F
 	.4byte 0x72206F70
 	.4byte 0x656E696E
@@ -4728,10 +4728,8 @@
 	.4byte 0x656D6F72
 	.4byte 0x792E0000
 	.4byte 0x00000000
-.L_80274DF0:
 	.4byte 0x43300000
 	.4byte 0x00000000
-.L_80274DF8:
 	.4byte 0x41E00000
 	.4byte 0x00000000
 
@@ -4959,7 +4957,6 @@
 	.4byte 0x47E8F3C3
 	.4byte 0xABE2775E
 	.4byte 0x2BA37FB4
-.L_802A2294:
 	.4byte 0xC7611209
 	.4byte 0x5B0DE51C
 	.4byte 0x5399BCB5
@@ -4992,7 +4989,6 @@
 	.4byte 0x750DC21D
 	.4byte 0x202163AF
 	.4byte 0xFA423236
-.L_802A2314:
 	.4byte 0xD54F73FA
 	.4byte 0x1965558F
 	.4byte 0x54DB76F7
@@ -5224,7 +5220,6 @@
 	.4byte 0xC0BF6E66
 	.4byte 0x41484280
 	.4byte 0x1F4ECDEE
-.L_802A26B0:
 	.4byte 0x5D3D8B69
 	.4byte 0xAC17D8B6
 	.4byte 0x40C61470
@@ -5435,7 +5430,6 @@
 	.4byte 0xD9CDC384
 	.4byte 0x99016819
 	.4byte 0x09191700
-.L_802A29F8:
 	.4byte 0x0040057C
 	.4byte 0xFBD7F7EF
 	.4byte 0xDFBFDBAB
@@ -5549,7 +5543,6 @@
 	.4byte 0xA33851F9
 	.4byte 0xAC30C71C
 	.4byte 0x2CD17966
-.L_802A2BBC:
 	.4byte 0x12708A36
 	.4byte 0x74C836AD
 	.4byte 0x5C4DB71D
@@ -5698,14 +5691,12 @@
 	.4byte 0x254CF17D
 	.4byte 0xC5A74EDD
 	.4byte 0xD3C3F430
-.L_802A2E0C:
 	.4byte 0xD3D33D3D
 	.4byte 0x8CB9E25A
 	.4byte 0xB5B0B71B
 	.4byte 0xC6FBC4DB
 	.4byte 0x770CA34E
 	.4byte 0x9D952773
-.L_802A2E24:
 	.4byte 0x53600000
 	.4byte 0x0015F0FF
 	.4byte 0xB2EA35F6
@@ -5729,14 +5720,12 @@
 	.4byte 0xBED06BE6
 	.4byte 0x2099D6B3
 	.4byte 0x54008A09
-.L_802A2E80:
 	.4byte 0x11811F67
 	.4byte 0x633E4786
 	.4byte 0xACEA1227
 	.4byte 0xA92E6E0F
 	.4byte 0x4198C033
 	.4byte 0xCE729F26
-.L_802A2E98:
 	.4byte 0xAF861B37
 	.4byte 0x304F0AF3
 	.4byte 0x29501550
@@ -5760,14 +5749,12 @@
 	.4byte 0xE1065719
 	.4byte 0x939F1BB3
 	.4byte 0x2CB7CD20
-.L_802A2EF4:
 	.4byte 0xB00FDFDE
 	.4byte 0xAD083500
 	.4byte 0x7CD846DF
 	.4byte 0x18487772
 	.4byte 0x50393C1C
 	.4byte 0x0914628A
-.L_802A2F0C:
 	.4byte 0x30A5605C
 	.4byte 0x3BD36EAD
 	.4byte 0x7F7A7996
@@ -5942,7 +5929,6 @@
 	.4byte 0x3162AB8A
 	.4byte 0x9E5234F7
 	.4byte 0xEECAAFCA
-.L_802A31C4:
 	.4byte 0x96737911
 	.4byte 0xDB581F80
 	.4byte 0x01D11138
@@ -6038,7 +6024,6 @@
 	.4byte 0x229663FF
 	.4byte 0x0000A820
 	.4byte 0x900001FA
-.L_802A3340:
 	.4byte 0x29477B75
 	.4byte 0xF9517327
 	.4byte 0xDD351C3A
@@ -6071,7 +6056,6 @@
 	.4byte 0xB6A3021F
 	.4byte 0x9004C819
 	.4byte 0x5759CD9E
-.L_802A33C0:
 	.4byte 0xCDF5B422
 	.4byte 0x63B7D543
 	.4byte 0x67954E9B
@@ -6179,7 +6163,6 @@
 	.4byte 0x3D7FA78E
 	.4byte 0x3E5D5F6A
 	.4byte 0xCEF223D1
-.L_802A356C:
 	.4byte 0x5FA1AA6A
 	.4byte 0xE5E1C3D7
 	.4byte 0x6AC5FA75
@@ -6197,13 +6180,11 @@
 	.4byte 0x94BB3DF9
 	.4byte 0xDD8B8369
 	.4byte 0x2E4F1F8B
-.L_802A35B0:
 	.4byte 0x370381C9
 	.4byte 0x33197A62
 	.4byte 0xDE489D42
 	.4byte 0x23DACFE1
 	.4byte 0x983FC200
-.L_802A35C4:
 	.4byte 0x001CF492
 	.4byte 0x70D24220
 	.4byte 0x323F5006
@@ -6228,7 +6209,6 @@
 	.4byte 0x409C40D8
 	.4byte 0x2F22423F
 	.4byte 0x1A1F1F49
-.L_802A3624:
 	.4byte 0x608D4441
 	.4byte 0x8CEC6237
 	.4byte 0xDA22F451
@@ -6258,7 +6238,6 @@
 	.4byte 0xAE9DDE16
 	.4byte 0x868B7C4F
 	.4byte 0xA1D0D27D
-.L_802A3698:
 	.4byte 0x2D7A7C45
 	.4byte 0xCCBA7EBC
 	.4byte 0x9C2A7D8F
@@ -6278,7 +6257,6 @@
 	.4byte 0x3B59FC36
 	.4byte 0x61B299D9
 	.4byte 0x0D2945B3
-.L_802A36E4:
 	.4byte 0x21BB5729
 	.4byte 0x99F60A81
 	.4byte 0xD9A662AF
@@ -6289,7 +6267,6 @@
 	.4byte 0x87C64062
 	.4byte 0xDE797402
 	.4byte 0x00506102
-.L_802A370C:
 	.4byte 0x0000E829
 	.4byte 0xC05E5038
 	.4byte 0x21E71BB5
@@ -6309,7 +6286,6 @@
 	.4byte 0x730EFFD5
 	.4byte 0x34ADE771
 	.4byte 0xF2CB563B
-.L_802A3758:
 	.4byte 0x6BED88D8
 	.4byte 0x5A59849E
 	.4byte 0xB262A8F4
@@ -6339,7 +6315,6 @@
 	.4byte 0x748EF758
 	.4byte 0x4D0202BD
 	.4byte 0x6FC7A101
-.L_802A37CC:
 	.4byte 0x0000A830
 	.4byte 0x0100009E
 	.4byte 0xFD23FC06
@@ -6555,9 +6530,7 @@
 	.4byte 0xB90BBF6F
 	.4byte 0xA956F4E1
 	.4byte 0x83091300
-.L_802A3B28:
 	.4byte 0x803D0076
-.L_802A3B2C:
 	.4byte 0x6067165A
 	.4byte 0x62A678F1
 	.4byte 0x9C59DE45
@@ -6574,7 +6547,6 @@
 	.4byte 0xFE3A1171
 	.4byte 0xB4B29FC3
 	.4byte 0x9999669A
-.L_802A3B6C:
 	.4byte 0xE66BDE9D
 	.4byte 0x234BAAAE
 	.4byte 0xE99AAEA9
@@ -6613,9 +6585,7 @@
 	.4byte 0x9A60AF2D
 	.4byte 0x52A3BA55
 	.4byte 0x31FD916B
-.L_802A3C04:
 	.4byte 0x0BA53D66
-.L_802A3C08:
 	.4byte 0x7F18B3EB
 	.4byte 0xB563553F
 	.4byte 0x5959AE5D
@@ -6830,7 +6800,6 @@
 	.4byte 0xD2BF3E5F
 	.4byte 0xBB711EDD
 	.4byte 0x95DD7E9E
-.L_802A3F60:
 	.4byte 0xD34476CA
 	.4byte 0x236BB5A8
 	.4byte 0xCC2FA890
@@ -6877,7 +6846,6 @@
 	.4byte 0x7C3B01BA
 	.4byte 0xF3DB35E9
 	.4byte 0x0400B401
-.L_802A4018:
 	.4byte 0x80FE9E33
 	.4byte 0xEEC8111B
 	.4byte 0x6AFBF350
@@ -6903,12 +6871,10 @@
 	.4byte 0x1AEBFE57
 	.4byte 0x1AF2E738
 	.4byte 0x153E22C9
-.L_802A407C:
 	.4byte 0xC77B47CE
 	.4byte 0xA3399EA3
 	.4byte 0x26BA6F91
 	.4byte 0x55F233A0
-.L_802A408C:
 	.4byte 0x01CA1B24
 	.4byte 0x7B0380D4
 	.4byte 0x3D9424F9
@@ -7218,7 +7184,6 @@
 	.4byte 0xDC930716
 	.4byte 0x57AABA06
 	.4byte 0x5CC53D80
-.L_802A4560:
 	.4byte 0xBB3F2B4B
 	.4byte 0xE003925A
 	.4byte 0x136E672B
@@ -7248,7 +7213,6 @@
 	.4byte 0xC8380EE0
 	.4byte 0x6EE02D4A
 	.4byte 0xFE5A05BF
-.L_802A45D4:
 	.4byte 0x7BA8C02F
 	.4byte 0x700F81A7
 	.4byte 0x810C4701
@@ -7303,7 +7267,6 @@
 	.4byte 0xC71CCEB6
 	.4byte 0x9DC7B9D4
 	.4byte 0xD1532DC7
-.L_802A46AC:
 	.4byte 0x1CA5E358
 	.4byte 0xD535DAD6
 	.4byte 0xDDD6B8A6
@@ -7425,7 +7388,6 @@
 	.4byte 0x2F3DC503
 	.4byte 0x196F818F
 	.4byte 0x8FBE3768
-.L_802A4890:
 	.4byte 0x0734ECBB
 	.4byte 0xBA946BB4
 	.4byte 0x903D3905
@@ -7588,7 +7550,6 @@
 	.4byte 0xEBBDE061
 	.4byte 0x5555A0AA
 	.4byte 0x2A505555
-.L_802A4B18:
 	.4byte 0xA3AA2A50
 	.4byte 0x555585AA
 	.4byte 0x5675AAAA
@@ -7745,7 +7706,6 @@
 	.4byte 0xF9B4AA5A
 	.4byte 0x7481EEDD
 	.4byte 0x00A06755
-.L_802A4D88:
 	.4byte 0x8D76532B
 	.4byte 0xDEBA5975
 	.4byte 0x70D7667C
@@ -8036,7 +7996,6 @@
 	.4byte 0xC6BCE70B
 	.4byte 0x55CBAFB3
 	.4byte 0x9235B932
-.L_802A5210:
 	.4byte 0xDD63AADA
 	.4byte 0x3A7BA934
 	.4byte 0x7DB4A45E
@@ -8076,7 +8035,6 @@
 	.4byte 0xCB589251
 	.4byte 0xA723750E
 	.4byte 0x65D29A7E
-.L_802A52AC:
 	.4byte 0xD679CEF5
 	.4byte 0x68B4657D
 	.4byte 0x75CF2E6D
@@ -8345,7 +8303,6 @@
 	.4byte 0x443403F0
 	.4byte 0x9CE02457
 	.4byte 0x061F4E5C
-.L_802A56DC:
 	.4byte 0x2760919C
 	.4byte 0x6EE8E81D
 	.4byte 0x34351C9C
@@ -8511,15 +8468,14 @@
 
 # 0x80362B88 - 0x80362C88
 .section .bss, "wa", @nobits
-.balign 4
-
+.balign 8
 .sym binkerr, local
 	.skip 0x100
 .endsym binkerr
 
 # 0x803CADF0 - 0x803CAE18
 .section .sdata, "wa"
-.balign 4
+.balign 8
 
 .obj sysopen, local
 	.4byte 0x00000000
@@ -8563,6 +8519,6 @@
 
 # 0x803CC1F0 - 0x803CC1F4
 .section .sbss, "wa", @nobits
-.balign 4
+.balign 8
 .sym ForceRateDiv, local
 	.skip 0x4

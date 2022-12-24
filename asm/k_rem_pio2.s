@@ -1027,7 +1027,6 @@
 
 .obj PIo2, local
 	.4byte 0x3FF921FB
-.L_8027A054:
 	.4byte 0x40000000
 	.4byte 0x3E74442D
 	.4byte 0x00000000
@@ -1038,7 +1037,6 @@
 	.4byte 0x39F01B83
 	.4byte 0x80000000
 	.4byte 0x387A2520
-.L_8027A07C:
 	.4byte 0x40000000
 	.4byte 0x36E38222
 	.4byte 0x80000000

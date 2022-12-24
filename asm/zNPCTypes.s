@@ -267,7 +267,6 @@
 	.4byte ZNPC_Create_SubBoss__FiP10RyzMemGrowPv
 	.4byte ZNPC_Destroy_SubBoss__FP12xFactoryInst
 	.4byte 0x4E544830
-.L_80268BC8:
 	.4byte ZNPC_Create_SubBoss__FiP10RyzMemGrowPv
 	.4byte ZNPC_Destroy_SubBoss__FP12xFactoryInst
 	.4byte 0x4E544832

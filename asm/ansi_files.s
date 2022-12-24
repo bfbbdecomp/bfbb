@@ -258,7 +258,8 @@
 	.4byte __write_console
 	.4byte __close_console
 	.4byte 0x00000000
-	.4byte __files+0x50
+	.rel __files, .L_802B6B58
+.L_802B6B58:
 	.4byte 0x00000001
 	.4byte 0x12800000
 	.4byte 0x00000000
@@ -278,7 +279,8 @@
 	.4byte __write_console
 	.4byte __close_console
 	.4byte 0x00000000
-	.4byte __files+0xA0
+	.rel __files, .L_802B6BA8
+.L_802B6BA8:
 	.4byte 0x00000002
 	.4byte 0x10800000
 	.4byte 0x00000000
@@ -298,7 +300,8 @@
 	.4byte __write_console
 	.4byte __close_console
 	.4byte 0x00000000
-	.4byte __files+0xF0
+	.rel __files, .L_802B6BF8
+.L_802B6BF8:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000

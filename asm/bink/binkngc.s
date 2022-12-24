@@ -1534,17 +1534,15 @@
 
 # 0x80274D50 - 0x80274D80
 .rodata
-.balign 4
+.balign 8
 	.4byte 0x3F800000
 	.4byte 0x3E99999A
 	.4byte 0x477FFF00
 	.4byte 0x00000000
-.L_80274D60:
 	.4byte 0x43300000
 	.4byte 0x00000000
 	.4byte 0x46FA0000
 	.4byte 0x00000000
-.L_80274D70:
 	.4byte 0x43300000
 	.4byte 0x80000000
 	.4byte 0x37800000

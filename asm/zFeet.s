@@ -73,7 +73,6 @@
 
 .obj "@stringBase0", local
 	.4byte 0x534E4446
-.L_8025B9DC:
 	.4byte 0x585F5354
 	.4byte 0x45505F00
 	.4byte 0x50415245

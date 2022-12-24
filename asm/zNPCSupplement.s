@@ -6126,7 +6126,6 @@
 	.4byte 0x3F99999A
 	.4byte 0xFFFFFFA0
 	.4byte 0x00000000
-.L_80272EEC:
 	.4byte 0x40000000
 	.4byte 0x00000000
 	.4byte 0x3DCCCCCD
@@ -6141,7 +6140,6 @@
 	.4byte 0x3F4CCCCD
 	.4byte 0xFFFFFFA0
 	.4byte 0x00000000
-.L_80272F24:
 	.4byte 0x40400000
 	.4byte 0x00000000
 	.4byte 0x3D4CCCCD
@@ -6180,15 +6178,12 @@
 	.4byte 0x00000000
 	.4byte 0x3E800000
 	.4byte 0x3E800000
-.L_80272FA4:
 	.4byte 0x00040255
 	.4byte 0x3F800000
 	.4byte 0xFFFFFFFF
-.L_80272FB0:
 	.4byte 0x3DCCCCCD
 	.4byte 0x3E19999A
 	.4byte 0x00000000
-.L_80272FBC:
 	.4byte 0xC0600000
 	.4byte 0x00000000
 	.4byte 0x3E800000
@@ -6239,7 +6234,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3ECCCCCD
-.L_80273054:
 	.4byte 0x8888FFFF
 	.4byte 0x3E4CCCCD
 	.4byte 0x3F4CCCCD
@@ -6300,7 +6294,6 @@
 	.4byte 0x3F000000
 	.4byte 0x40066666
 	.4byte 0x00000000
-.L_8027312C:
 	.4byte 0x41200000
 	.4byte 0x00000000
 	.4byte 0x3F800000
@@ -6331,19 +6324,16 @@
 	.4byte 0x3D4CCCCD
 	.4byte 0x3E4CCCCD
 	.4byte 0x00000000
-.L_802731A4:
 	.4byte 0x40400000
 	.4byte 0x00000000
 	.4byte 0x3F800000
 	.4byte 0x3F800000
-.L_802731B4:
 	.4byte 0x0001015A
 	.4byte 0x3FC00000
 	.4byte 0xC8FFFF80
 	.4byte 0x3E99999A
 	.4byte 0x3F333333
 	.4byte 0x00000000
-.L_802731CC:
 	.4byte 0x41A00000
 	.4byte 0x00000000
 	.4byte 0x3F800000
@@ -6357,17 +6347,14 @@
 	.4byte 0x3D4CCCCD
 	.4byte 0x3F19999A
 	.4byte 0x00000000
-.L_802731F4:
 	.4byte 0x40A00000
 	.4byte 0x00000000
 	.4byte 0x64000000
 	.4byte 0x3F000000
-.L_80273204:
 	.4byte 0x65840080
 	.4byte 0x3D75C28F
 	.4byte 0x3E4CCCCD
 	.4byte 0x00000000
-.L_80273214:
 	.4byte 0x41F00000
 	.4byte 0x00000000
 	.4byte 0x3C000000
@@ -6376,7 +6363,6 @@
 	.4byte 0x3D4CCCCD
 	.4byte 0x3FB33333
 	.4byte 0x00000000
-.L_80273234:
 	.4byte 0x41200000
 	.4byte 0x00000000
 	.4byte 0x55000000
@@ -6384,7 +6370,6 @@
 
 .obj g_parm_fahrwerkz, local
 	.4byte 0x3E800000
-.L_80273244:
 	.4byte 0xF0F040FF
 	.4byte 0x3DCCCCCD
 	.4byte 0x3DCCCCCD
@@ -6430,45 +6415,59 @@
 	.4byte 0x66785F6F
 	.4byte 0x696C5F62
 	.4byte 0x7562626C
-	.4byte 0x65006678
-	.4byte 0x5F747562
-	.4byte 0x656C6574
-	.4byte 0x5F666C61
-	.4byte 0x6D650066
-	.4byte 0x785F7475
-	.4byte 0x62656C65
-	.4byte 0x745F636F
-	.4byte 0x6E666574
-	.4byte 0x74695F73
-	.4byte 0x65700066
-	.4byte 0x785F676C
-	.4byte 0x6F76655F
-	.4byte 0x64757374
-	.4byte 0x0066785F
-	.4byte 0x6D6F6E73
-	.4byte 0x6F6F6E5F
-	.4byte 0x7261696E
-	.4byte 0x0066785F
-	.4byte 0x736C6565
-	.4byte 0x70795F7A
-	.4byte 0x65657A00
+	.2byte 0x6500
+.L_802732EE:
+	.4byte 0x66785F74
+	.4byte 0x7562656C
+	.4byte 0x65745F66
+	.4byte 0x6C616D65
+	.byte 0x00
+.L_802732FF:
+	.4byte 0x66785F74
+	.4byte 0x7562656C
+	.4byte 0x65745F63
+	.4byte 0x6F6E6665
+	.4byte 0x7474695F
+	.4byte 0x73657000
+.L_80273317:
+	.4byte 0x66785F67
+	.4byte 0x6C6F7665
+	.4byte 0x5F647573
+	.2byte 0x7400
+.L_80273325:
+	.4byte 0x66785F6D
+	.4byte 0x6F6E736F
+	.4byte 0x6F6E5F72
+	.4byte 0x61696E00
+.L_80273335:
+	.4byte 0x66785F73
+	.4byte 0x6C656570
+	.4byte 0x795F7A65
+	.byte 0x65, 0x7A, 0x00
+.L_80273344:
 	.4byte 0x66785F63
 	.4byte 0x6875636B
 	.4byte 0x5F647269
 	.4byte 0x7064726F
-	.4byte 0x70006678
-	.4byte 0x5F746172
-	.4byte 0x7461725F
-	.4byte 0x67756E6B
-	.4byte 0x0066785F
-	.4byte 0x63686F6D
-	.4byte 0x7065725F
-	.4byte 0x62726561
-	.4byte 0x74680066
-	.4byte 0x785F7669
-	.4byte 0x7373706C
-	.4byte 0x6173685F
-	.4byte 0x73657000
+	.2byte 0x7000
+.L_80273356:
+	.4byte 0x66785F74
+	.4byte 0x61727461
+	.4byte 0x725F6775
+	.byte 0x6E, 0x6B, 0x00
+.L_80273365:
+	.4byte 0x66785F63
+	.4byte 0x686F6D70
+	.4byte 0x65725F62
+	.4byte 0x72656174
+	.2byte 0x6800
+.L_80273377:
+	.4byte 0x66785F76
+	.4byte 0x69737370
+	.4byte 0x6C617368
+	.4byte 0x5F736570
+	.byte 0x00
+.L_80273388:
 	.4byte 0x66785F66
 	.4byte 0x69726577
 	.4byte 0x6F726B00
@@ -6512,43 +6511,43 @@
 	.4byte 0x00000002
 	.4byte NPAR_Upd_TubeSpiral__FP8NPARMgmtf
 	.4byte 0x00000100
-	.4byte "@stringBase0"+0xE
+	.rel "@stringBase0", .L_802732EE
 	.4byte 0x00000002
 	.4byte NPAR_Upd_TubeConfetti__FP8NPARMgmtf
 	.4byte 0x00000040
-	.4byte "@stringBase0"+0x1F
+	.rel "@stringBase0", .L_802732FF
 	.4byte 0x00000002
 	.4byte NPAR_Upd_GloveDust__FP8NPARMgmtf
 	.4byte 0x00000040
-	.4byte "@stringBase0"+0x37
+	.rel "@stringBase0", .L_80273317
 	.4byte 0x00000002
 	.4byte NPAR_Upd_MonsoonRain__FP8NPARMgmtf
 	.4byte 0x00000040
-	.4byte "@stringBase0"+0x45
+	.rel "@stringBase0", .L_80273325
 	.4byte 0x00000002
 	.4byte NPAR_Upd_SleepyZeez__FP8NPARMgmtf
 	.4byte 0x00000020
-	.4byte "@stringBase0"+0x55
+	.rel "@stringBase0", .L_80273335
 	.4byte 0x00000002
 	.4byte NPAR_Upd_ChuckSplash__FP8NPARMgmtf
 	.4byte 0x00000080
-	.4byte "@stringBase0"+0x64
+	.rel "@stringBase0", .L_80273344
 	.4byte 0x00000002
 	.4byte NPAR_Upd_TarTarGunk__FP8NPARMgmtf
 	.4byte 0x00000100
-	.4byte "@stringBase0"+0x76
+	.rel "@stringBase0", .L_80273356
 	.4byte 0x00000002
 	.4byte NPAR_Upd_DogBreath__FP8NPARMgmtf
 	.4byte 0x00000040
-	.4byte "@stringBase0"+0x85
+	.rel "@stringBase0", .L_80273365
 	.4byte 0x00000002
 	.4byte NPAR_Upd_VisSplash__FP8NPARMgmtf
 	.4byte 0x00000020
-	.4byte "@stringBase0"+0x97
+	.rel "@stringBase0", .L_80273377
 	.4byte 0x00000002
 	.4byte NPAR_Upd_Fireworks__FP8NPARMgmtf
 	.4byte 0x00000080
-	.4byte "@stringBase0"+0xA8
+	.rel "@stringBase0", .L_80273388
 	.4byte 0x00000000
 .endobj g_npar_info
 

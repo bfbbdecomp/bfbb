@@ -309,29 +309,39 @@
 
 .obj "@stringBase0", local
 	.4byte 0x556E6B6E
-.L_8026CA54:
 	.4byte 0x6F776E00
+.L_8026CA58:
 	.4byte 0x54657374
-	.4byte 0x30310054
-	.4byte 0x65737430
-	.4byte 0x32005465
-	.4byte 0x73743033
-	.4byte 0x00546573
-	.4byte 0x74303400
+	.byte 0x30, 0x31, 0x00
+.L_8026CA5F:
 	.4byte 0x54657374
-	.4byte 0x30350054
-	.4byte 0x65737430
-	.4byte 0x36005465
-	.4byte 0x73743037
-	.4byte 0x00546573
-	.4byte 0x74303800
+	.byte 0x30, 0x32, 0x00
+.L_8026CA66:
 	.4byte 0x54657374
-	.4byte 0x30390054
-.L_8026CA98:
-	.4byte 0x65737431
-	.4byte 0x30007A4E
-	.4byte 0x50435465
-	.byte 0x73, 0x74, 0x00
+	.byte 0x30, 0x33, 0x00
+.L_8026CA6D:
+	.4byte 0x54657374
+	.byte 0x30, 0x34, 0x00
+.L_8026CA74:
+	.4byte 0x54657374
+	.byte 0x30, 0x35, 0x00
+.L_8026CA7B:
+	.4byte 0x54657374
+	.byte 0x30, 0x36, 0x00
+.L_8026CA82:
+	.4byte 0x54657374
+	.byte 0x30, 0x37, 0x00
+.L_8026CA89:
+	.4byte 0x54657374
+	.byte 0x30, 0x38, 0x00
+.L_8026CA90:
+	.4byte 0x54657374
+	.byte 0x30, 0x39, 0x00
+.L_8026CA97:
+	.4byte 0x54657374
+	.4byte 0x3130007A
+	.4byte 0x4E504354
+	.4byte 0x65737400
 .endobj "@stringBase0"
 	.byte 0x00
 
@@ -355,16 +365,16 @@
 
 .obj g_strz_testanim, global
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
-	.4byte "@stringBase0"+0xF
-	.4byte "@stringBase0"+0x16
-	.4byte "@stringBase0"+0x1D
-	.4byte "@stringBase0"+0x24
-	.4byte "@stringBase0"+0x2B
-	.4byte "@stringBase0"+0x32
-	.4byte "@stringBase0"+0x39
-	.4byte "@stringBase0"+0x40
-	.4byte "@stringBase0"+0x47
+	.rel "@stringBase0", .L_8026CA58
+	.rel "@stringBase0", .L_8026CA5F
+	.rel "@stringBase0", .L_8026CA66
+	.rel "@stringBase0", .L_8026CA6D
+	.rel "@stringBase0", .L_8026CA74
+	.rel "@stringBase0", .L_8026CA7B
+	.rel "@stringBase0", .L_8026CA82
+	.rel "@stringBase0", .L_8026CA89
+	.rel "@stringBase0", .L_8026CA90
+	.rel "@stringBase0", .L_8026CA97
 .endobj g_strz_testanim
 
 # zNPCTest::__vtable
@@ -372,7 +382,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte Init__10zNPCCommonFP9xEntAsset
-.L_8029901C:
 	.4byte PostInit__9xNPCBasicFv
 	.4byte Setup__10zNPCCommonFv
 	.4byte PostSetup__9xNPCBasicFv
@@ -385,7 +394,6 @@
 	.4byte Render__9xNPCBasicFv
 	.4byte Save__9xNPCBasicCFP7xSerial
 	.4byte Load__9xNPCBasicFP7xSerial
-.L_8029904C:
 	.4byte CollideReview__10zNPCCommonFv
 	.4byte ColChkFlags__9xNPCBasicCFv
 	.4byte ColPenFlags__9xNPCBasicCFv

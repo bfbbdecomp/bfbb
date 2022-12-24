@@ -22845,7 +22845,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8026718C:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -22974,7 +22973,6 @@
 
 .obj vel_disperse$4391, local
 	.4byte 0x40400000
-.L_802672C0:
 	.4byte 0x40200000
 	.4byte 0xC0000000
 .endobj vel_disperse$4391
@@ -23064,14 +23062,12 @@
 	.4byte 0x3F000000
 	.4byte 0x3EC00000
 	.4byte 0x3E800000
-.L_80267394:
 	.4byte 0x41480000
 	.4byte 0x00000000
 .endobj "@5411"
 
 .obj "@5416", local
 	.4byte 0x00000000
-.L_802673A0:
 	.4byte 0x40200000
 	.4byte 0x00000000
 .endobj "@5416"

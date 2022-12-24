@@ -2,7 +2,7 @@
 .file "Gecko_ExceptionPPC.cp"
 
 # 0x80005770 - 0x800057E4
-.section extab, "wa"
+.section extab, "a"
 .balign 4
 
 .obj "@348", local
@@ -57,8 +57,8 @@
 	.4byte 0x00000000
 .endobj "@883"
 
-# 0x80005860 - 0x800058D4
-.section extabindex, "wa"
+# 0x80005860 - 0x800058B4
+.section extabindex, "a"
 .balign 4
 
 .obj "@349", local
@@ -102,19 +102,6 @@
 	.4byte 0x00000204
 	.4byte "@883"
 .endobj "@884"
-
-/* Linker generated
-.obj _eti_init_info, global
-	.4byte 0x80005800
-	.4byte 0x800058B4
-	.4byte 0x801ECE9C
-	.4byte 0x00002110
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.endobj _eti_init_info
-*/
 
 # 0x801EDBE8 - 0x801EF020
 .text
@@ -1747,7 +1734,6 @@
 	.rel ExPPC_NextAction__FP14ActionIterator, .L_801EED08
 	.rel ExPPC_NextAction__FP14ActionIterator, .L_801EED14
 	.rel ExPPC_NextAction__FP14ActionIterator, .L_801EED20
-.L_802B753C:
 	.rel ExPPC_NextAction__FP14ActionIterator, .L_801EED38
 	.rel ExPPC_NextAction__FP14ActionIterator, .L_801EED5C
 	.rel ExPPC_NextAction__FP14ActionIterator, .L_801EED44

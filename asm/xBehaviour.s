@@ -112,7 +112,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_802973DC:
 	.4byte Enter__5xGoalFfPv
 	.4byte Exit__5xGoalFfPv
 	.4byte Suspend__5xGoalFfPv

@@ -1565,7 +1565,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8025FA9C:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -1593,13 +1592,11 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8025FAF0:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8025FB04:
 	.4byte 0x00000000
 .endobj "@622"
 
@@ -1620,13 +1617,11 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3F800000
-.L_8025FB3C:
 	.4byte 0x3F800000
 .endobj screen_bounds
 
 .obj default_adjust, local
 	.4byte 0x00000000
-.L_8025FB44:
 	.4byte 0x00000000
 	.4byte 0x3F800000
 	.4byte 0x3F800000
@@ -1748,42 +1743,54 @@
 	.4byte 0x00257320
 	.4byte 0x25730045
 	.4byte 0x6D707479
-	.4byte 0x00416363
-	.4byte 0x65737369
-	.4byte 0x6E67004C
-	.4byte 0x6F616469
-	.4byte 0x6E672064
-	.4byte 0x61746100
+	.byte 0x00
+.L_8025FCED:
+	.4byte 0x41636365
+	.4byte 0x7373696E
+	.2byte 0x6700
+.L_8025FCF7:
+	.4byte 0x4C6F6164
+	.4byte 0x696E6720
+	.4byte 0x64617461
+	.byte 0x00
+.L_8025FD04:
 	.4byte 0x53617669
 	.4byte 0x6E672064
 	.4byte 0x61746100
+.L_8025FD10:
 	.4byte 0x466F726D
 	.4byte 0x61747469
 	.4byte 0x6E67206D
 	.4byte 0x656D6F72
 	.4byte 0x79206361
-	.4byte 0x7264007B
-	.4byte 0x693A7465
-	.4byte 0x78745F70
-	.4byte 0x6C617965
-	.4byte 0x725F6865
-	.4byte 0x7D007B69
-	.4byte 0x3A746578
-	.4byte 0x745F706C
-	.4byte 0x61796572
-	.4byte 0x5F736865
-	.4byte 0x7D007B69
-	.4byte 0x3A746578
-	.4byte 0x745F7370
-	.4byte 0x6F6E6765
-	.4byte 0x626F625F
-	.4byte 0x6E616D65
-	.4byte 0x7D007B69
-	.4byte 0x3A746578
-	.4byte 0x745F7061
-	.4byte 0x74726963
-	.4byte 0x6B5F6E61
+	.byte 0x72, 0x64, 0x00
+.L_8025FD27:
+	.4byte 0x7B693A74
+	.4byte 0x6578745F
+	.4byte 0x706C6179
+	.4byte 0x65725F68
+	.byte 0x65, 0x7D, 0x00
+.L_8025FD3A:
+	.4byte 0x7B693A74
+	.4byte 0x6578745F
+	.4byte 0x706C6179
+	.4byte 0x65725F73
+	.4byte 0x68657D00
+.L_8025FD4E:
+	.4byte 0x7B693A74
+	.4byte 0x6578745F
+	.4byte 0x73706F6E
+	.4byte 0x6765626F
+	.4byte 0x625F6E61
 	.4byte 0x6D657D00
+.L_8025FD66:
+	.4byte 0x7B693A74
+	.4byte 0x6578745F
+	.4byte 0x70617472
+	.4byte 0x69636B5F
+	.4byte 0x6E616D65
+	.2byte 0x7D00
+.L_8025FD7C:
 	.4byte 0x7B693A74
 	.4byte 0x6578745F
 	.4byte 0x73616E64
@@ -1812,207 +1819,284 @@
 	.4byte 0x7B693A4C
 	.4byte 0x44204D43
 	.4byte 0x32205458
-	.4byte 0x547D0041
-	.4byte 0x63746976
-	.4byte 0x65506164
-	.4byte 0x00426164
-	.4byte 0x43617264
-	.4byte 0x00426164
-	.4byte 0x43617264
-	.4byte 0x41766169
-	.4byte 0x6C61626C
-	.4byte 0x65004261
-	.4byte 0x64436172
-	.4byte 0x644E6565
-	.4byte 0x64656400
+	.byte 0x54, 0x7D, 0x00
+.L_8025FDEF:
+	.4byte 0x41637469
+	.4byte 0x76655061
+	.2byte 0x6400
+.L_8025FDF9:
+	.4byte 0x42616443
+	.4byte 0x61726400
+.L_8025FE01:
+	.4byte 0x42616443
+	.4byte 0x61726441
+	.4byte 0x7661696C
+	.4byte 0x61626C65
+	.byte 0x00
+.L_8025FE12:
+	.4byte 0x42616443
+	.4byte 0x6172644E
+	.4byte 0x65656465
+	.2byte 0x6400
+.L_8025FE20:
 	.4byte 0x436F7272
 	.4byte 0x75707446
 	.4byte 0x696C654E
 	.4byte 0x616D6500
+.L_8025FE30:
 	.4byte 0x43757272
 	.4byte 0x656E7441
 	.4byte 0x72656100
+.L_8025FE3C:
 	.4byte 0x43757272
 	.4byte 0x656E7444
 	.4byte 0x61746500
+.L_8025FE48:
 	.4byte 0x43757272
 	.4byte 0x656E744C
 	.4byte 0x6576656C
 	.4byte 0x436F6C6C
 	.4byte 0x65637461
 	.4byte 0x626C6500
+.L_8025FE60:
 	.4byte 0x43757272
 	.4byte 0x656E744C
 	.4byte 0x6576656C
 	.4byte 0x50617473
 	.4byte 0x536F636B
-	.4byte 0x73004375
-	.4byte 0x7272656E
-	.4byte 0x74536365
-	.4byte 0x6E650043
-	.4byte 0x75727265
-	.4byte 0x6E745469
-	.4byte 0x6D650047
-	.4byte 0x616D6553
-	.4byte 0x6C6F7430
-	.4byte 0x0047616D
-	.4byte 0x65536C6F
-	.4byte 0x74310047
-	.4byte 0x616D6553
-	.4byte 0x6C6F7432
-	.4byte 0x0047616D
-	.4byte 0x65536C6F
-	.4byte 0x74330047
-	.4byte 0x616D6553
-	.4byte 0x6C6F7434
-	.4byte 0x0047616D
-	.4byte 0x65536C6F
-	.4byte 0x74350047
-	.4byte 0x616D6553
-	.4byte 0x6C6F7436
-	.4byte 0x0047616D
-	.4byte 0x65536C6F
-	.4byte 0x7437004D
-	.4byte 0x43416363
-	.4byte 0x65737354
-	.4byte 0x79706500
+	.2byte 0x7300
+.L_8025FE76:
+	.4byte 0x43757272
+	.4byte 0x656E7453
+	.4byte 0x63656E65
+	.byte 0x00
+.L_8025FE83:
+	.4byte 0x43757272
+	.4byte 0x656E7454
+	.4byte 0x696D6500
+.L_8025FE8F:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3000
+.L_8025FE99:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3100
+.L_8025FEA3:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3200
+.L_8025FEAD:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3300
+.L_8025FEB7:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3400
+.L_8025FEC1:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3500
+.L_8025FECB:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3600
+.L_8025FED5:
+	.4byte 0x47616D65
+	.4byte 0x536C6F74
+	.2byte 0x3700
+.L_8025FEDF:
+	.4byte 0x4D434163
+	.4byte 0x63657373
+	.4byte 0x54797065
+	.byte 0x00
+.L_8025FEEC:
 	.4byte 0x4D434175
 	.4byte 0x746F5361
 	.4byte 0x76654361
-	.4byte 0x7264004D
-	.4byte 0x434E616D
-	.4byte 0x65004D43
-	.4byte 0x5053324D
-	.4byte 0x61785370
-	.4byte 0x61636500
+	.byte 0x72, 0x64, 0x00
+.L_8025FEFB:
+	.4byte 0x4D434E61
+	.byte 0x6D, 0x65, 0x00
+.L_8025FF02:
+	.4byte 0x4D435053
+	.4byte 0x324D6178
+	.4byte 0x53706163
+	.2byte 0x6500
+.L_8025FF10:
 	.4byte 0x4D435053
 	.4byte 0x324D696E
 	.4byte 0x53706163
-	.4byte 0x65004D43
-	.4byte 0x53656C65
-	.4byte 0x63746564
-	.4byte 0x43617264
-	.4byte 0x004D4353
-	.4byte 0x656C6563
-	.4byte 0x74656447
-	.4byte 0x616D6500
+	.2byte 0x6500
+.L_8025FF1E:
+	.4byte 0x4D435365
+	.4byte 0x6C656374
+	.4byte 0x65644361
+	.byte 0x72, 0x64, 0x00
+.L_8025FF2D:
+	.4byte 0x4D435365
+	.4byte 0x6C656374
+	.4byte 0x65644761
+	.byte 0x6D, 0x65, 0x00
+.L_8025FF3C:
 	.4byte 0x506C6179
 	.4byte 0x65724865
 	.4byte 0x53686500
+.L_8025FF48:
 	.4byte 0x506C6179
 	.4byte 0x65724E61
-	.4byte 0x6D650050
-	.4byte 0x6C617965
-	.4byte 0x72506F73
-	.4byte 0x6974696F
-	.4byte 0x6E005365
-	.4byte 0x6C656374
-	.4byte 0x65644172
-	.4byte 0x65610053
-	.4byte 0x68696E79
-	.4byte 0x436F756E
-	.4byte 0x74005368
-	.4byte 0x696E7943
-	.4byte 0x6F756E74
-.L_8025FF84:
-	.4byte 0x54657874
-	.4byte 0x00536F75
-	.4byte 0x6E644658
-	.4byte 0x566F6C75
-	.4byte 0x6D650053
-	.4byte 0x6F756E64
-	.4byte 0x4D757369
-	.4byte 0x63566F6C
-	.4byte 0x756D6500
+	.byte 0x6D, 0x65, 0x00
+.L_8025FF53:
+	.4byte 0x506C6179
+	.4byte 0x6572506F
+	.4byte 0x73697469
+	.byte 0x6F, 0x6E, 0x00
+.L_8025FF62:
+	.4byte 0x53656C65
+	.4byte 0x63746564
+	.4byte 0x41726561
+	.byte 0x00
+.L_8025FF6F:
+	.4byte 0x5368696E
+	.4byte 0x79436F75
+	.byte 0x6E, 0x74, 0x00
+.L_8025FF7A:
+	.4byte 0x5368696E
+	.4byte 0x79436F75
+	.4byte 0x6E745465
+	.byte 0x78, 0x74, 0x00
+.L_8025FF89:
+	.4byte 0x536F756E
+	.4byte 0x64465856
+	.4byte 0x6F6C756D
+	.2byte 0x6500
+.L_8025FF97:
+	.4byte 0x536F756E
+	.4byte 0x644D7573
+	.4byte 0x6963566F
+	.4byte 0x6C756D65
+	.byte 0x00
+.L_8025FFA8:
 	.4byte 0x53706163
 	.4byte 0x65417661
 	.4byte 0x696C6162
-	.4byte 0x6C650053
-	.4byte 0x70616365
-	.4byte 0x41766169
-	.4byte 0x6C61626C
-	.4byte 0x65537472
-	.4byte 0x696E6700
+	.byte 0x6C, 0x65, 0x00
+.L_8025FFB7:
+	.4byte 0x53706163
+	.4byte 0x65417661
+	.4byte 0x696C6162
+	.4byte 0x6C655374
+	.4byte 0x72696E67
+	.byte 0x00
+.L_8025FFCC:
 	.4byte 0x53706163
 	.4byte 0x654E6565
 	.4byte 0x64656400
+.L_8025FFD8:
 	.4byte 0x546F7461
 	.4byte 0x6C506174
 	.4byte 0x73536F63
-	.4byte 0x6B730076
-	.4byte 0x61720053
-	.4byte 0x6F756E64
-	.4byte 0x206D6F64
-	.4byte 0x65004D75
-	.4byte 0x73696320
+	.byte 0x6B, 0x73, 0x00
+.L_8025FFE7:
+	.4byte 0x76617200
+.L_8025FFEB:
+	.4byte 0x536F756E
+	.4byte 0x64206D6F
+	.byte 0x64, 0x65, 0x00
+.L_8025FFF6:
+	.4byte 0x4D757369
+	.4byte 0x6320566F
+	.4byte 0x6C756D65
+	.byte 0x00
+.L_80260003:
+	.4byte 0x53465820
 	.4byte 0x566F6C75
-	.4byte 0x6D650053
-	.4byte 0x46582056
-	.4byte 0x6F6C756D
-	.4byte 0x65004D65
-	.4byte 0x6D6F7279
-	.4byte 0x20436172
-	.4byte 0x64204176
-	.4byte 0x61696C61
-	.4byte 0x626C6500
+	.byte 0x6D, 0x65, 0x00
+.L_8026000E:
+	.4byte 0x4D656D6F
+	.4byte 0x72792043
+	.4byte 0x61726420
+	.4byte 0x41766169
+	.4byte 0x6C61626C
+	.2byte 0x6500
+.L_80260024:
 	.4byte 0x56696272
 	.4byte 0x6174696F
 	.4byte 0x6E206973
 	.4byte 0x206F6E00
+.L_80260034:
 	.4byte 0x4C657474
 	.4byte 0x6572206F
 	.4byte 0x66207363
 	.4byte 0x656E6500
+.L_80260044:
 	.4byte 0x526F6F6D
-	.4byte 0x00437572
-	.4byte 0x72656E74
-	.4byte 0x204C6576
-	.4byte 0x656C2043
-	.4byte 0x6F6C6C65
-	.4byte 0x63746162
-	.4byte 0x6C650050
-	.4byte 0x61742773
-	.4byte 0x20536F63
-	.4byte 0x6B730054
-	.4byte 0x6F74616C
-	.4byte 0x20506174
-	.4byte 0x27732053
-	.4byte 0x6F636B73
-	.4byte 0x00536869
-	.4byte 0x6E79204F
-	.4byte 0x626A6563
-	.4byte 0x74730047
-	.4byte 0x6F6C6465
-	.4byte 0x6E205370
-	.4byte 0x6174756C
-	.4byte 0x61730043
-	.4byte 0x75727265
-.L_802600A4:
-	.4byte 0x6E742044
-	.4byte 0x61746500
+	.byte 0x00
+.L_80260049:
+	.4byte 0x43757272
+	.4byte 0x656E7420
+	.4byte 0x4C657665
+	.4byte 0x6C20436F
+	.4byte 0x6C6C6563
+	.4byte 0x7461626C
+	.2byte 0x6500
+.L_80260063:
+	.4byte 0x50617427
+	.4byte 0x7320536F
+	.4byte 0x636B7300
+.L_8026006F:
+	.4byte 0x546F7461
+	.4byte 0x6C205061
+	.4byte 0x74277320
+	.4byte 0x536F636B
+	.2byte 0x7300
+.L_80260081:
+	.4byte 0x5368696E
+	.4byte 0x79204F62
+	.4byte 0x6A656374
+	.2byte 0x7300
+.L_8026008F:
+	.4byte 0x476F6C64
+	.4byte 0x656E2053
+	.4byte 0x70617475
+	.4byte 0x6C617300
+.L_8026009F:
+	.4byte 0x43757272
+	.4byte 0x656E7420
+	.4byte 0x44617465
+	.byte 0x00
+.L_802600AC:
 	.4byte 0x43757272
 	.4byte 0x656E7420
 	.4byte 0x486F7572
-	.4byte 0x00437572
-	.4byte 0x72656E74
-	.4byte 0x204D696E
-	.4byte 0x75746500
+	.byte 0x00
+.L_802600B9:
+	.4byte 0x43757272
+	.4byte 0x656E7420
+	.4byte 0x4D696E75
+	.byte 0x74, 0x65, 0x00
+.L_802600C8:
 	.4byte 0x436F756E
 	.4byte 0x74657220
 	.4byte 0x56616C75
-	.4byte 0x65004973
-	.4byte 0x20456E61
-	.4byte 0x626C6564
-	.4byte 0x2028303D
-	.4byte 0x4E6F2C20
-	.4byte 0x313D5965
-	.4byte 0x73290049
-	.4byte 0x73205669
-	.4byte 0x7369626C
-	.4byte 0x65202830
-	.4byte 0x3D4E6F2C
-	.4byte 0x20313D59
-	.4byte 0x65732900
+	.2byte 0x6500
+.L_802600D6:
+	.4byte 0x49732045
+	.4byte 0x6E61626C
+	.4byte 0x65642028
+	.4byte 0x303D4E6F
+	.4byte 0x2C20313D
+	.4byte 0x59657329
+	.byte 0x00
+.L_802600EF:
+	.4byte 0x49732056
+	.4byte 0x69736962
+	.4byte 0x6C652028
+	.4byte 0x303D4E6F
+	.4byte 0x2C20313D
+	.4byte 0x59657329
+	.byte 0x00
 .endobj "@stringBase0"
 
 # 0x802916E0 - 0x80291A60
@@ -2020,22 +2104,22 @@
 .balign 8
 
 .obj state_text$908, local
-	.4byte "@stringBase0"+0x3D
-	.4byte "@stringBase0"+0x47
-	.4byte "@stringBase0"+0x54
-	.4byte "@stringBase0"+0x60
+	.rel "@stringBase0", .L_8025FCED
+	.rel "@stringBase0", .L_8025FCF7
+	.rel "@stringBase0", .L_8025FD04
+	.rel "@stringBase0", .L_8025FD10
 .endobj state_text$908
 
 .obj text$938, local
-	.4byte "@stringBase0"+0x77
-	.4byte "@stringBase0"+0x77
-	.4byte "@stringBase0"+0x8A
+	.rel "@stringBase0", .L_8025FD27
+	.rel "@stringBase0", .L_8025FD27
+	.rel "@stringBase0", .L_8025FD3A
 .endobj text$938
 
 .obj text$943, local
-	.4byte "@stringBase0"+0x9E
-	.4byte "@stringBase0"+0xB6
-	.4byte "@stringBase0"+0xCC
+	.rel "@stringBase0", .L_8025FD4E
+	.rel "@stringBase0", .L_8025FD66
+	.rel "@stringBase0", .L_8025FD7C
 .endobj text$943
 
 .obj buffer$965, local
@@ -2059,127 +2143,127 @@
 
 # @unnamed@zVar_cpp@::vars
 .obj "vars__18@unnamed@zVar_cpp@", local
-	.4byte "@stringBase0"+0x13F
+	.rel "@stringBase0", .L_8025FDEF
 	.4byte 0x00000009
 	.4byte "var_text_ActivePad__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x149
+	.rel "@stringBase0", .L_8025FDF9
 	.4byte 0x00000007
 	.4byte "var_text_BadCard__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x151
+	.rel "@stringBase0", .L_8025FE01
 	.4byte 0x00000010
 	.4byte "var_text_BadCardAvailable__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x162
+	.rel "@stringBase0", .L_8025FE12
 	.4byte 0x0000000D
 	.4byte "var_text_BadCardNeeded__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x170
+	.rel "@stringBase0", .L_8025FE20
 	.4byte 0x0000000F
 	.4byte "var_text_CorruptFileName__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x180
+	.rel "@stringBase0", .L_8025FE30
 	.4byte 0x0000000B
 	.4byte "var_text_CurrentArea__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x18C
+	.rel "@stringBase0", .L_8025FE3C
 	.4byte 0x0000000B
 	.4byte "var_text_CurrentDate__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x198
+	.rel "@stringBase0", .L_8025FE48
 	.4byte 0x00000017
 	.4byte "var_text_CurrentLevelCollectable__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1B0
+	.rel "@stringBase0", .L_8025FE60
 	.4byte 0x00000015
 	.4byte "var_text_CurrentLevelPatsSocks__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1C6
+	.rel "@stringBase0", .L_8025FE76
 	.4byte 0x0000000C
 	.4byte "var_text_CurrentScene__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1D3
+	.rel "@stringBase0", .L_8025FE83
 	.4byte 0x0000000B
 	.4byte "var_text_CurrentTime__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1DF
+	.rel "@stringBase0", .L_8025FE8F
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot0__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1E9
+	.rel "@stringBase0", .L_8025FE99
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot1__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1F3
+	.rel "@stringBase0", .L_8025FEA3
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot2__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x1FD
+	.rel "@stringBase0", .L_8025FEAD
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot3__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x207
+	.rel "@stringBase0", .L_8025FEB7
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot4__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x211
+	.rel "@stringBase0", .L_8025FEC1
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot5__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x21B
+	.rel "@stringBase0", .L_8025FECB
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot6__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x225
+	.rel "@stringBase0", .L_8025FED5
 	.4byte 0x00000009
 	.4byte "var_text_GameSlot7__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x22F
+	.rel "@stringBase0", .L_8025FEDF
 	.4byte 0x0000000C
 	.4byte "var_text_MCAccessType__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x23C
+	.rel "@stringBase0", .L_8025FEEC
 	.4byte 0x0000000E
 	.4byte "var_text_MCAutoSaveCard__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x24B
+	.rel "@stringBase0", .L_8025FEFB
 	.4byte 0x00000006
 	.4byte "var_text_MCName__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x252
+	.rel "@stringBase0", .L_8025FF02
 	.4byte 0x0000000D
 	.4byte "var_text_MCPS2MaxSpace__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x260
+	.rel "@stringBase0", .L_8025FF10
 	.4byte 0x0000000D
 	.4byte "var_text_MCPS2MinSpace__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x26E
+	.rel "@stringBase0", .L_8025FF1E
 	.4byte 0x0000000E
 	.4byte "var_text_MCSelectedCard__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x27D
+	.rel "@stringBase0", .L_8025FF2D
 	.4byte 0x0000000E
 	.4byte "var_text_MCSelectedGame__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x28C
+	.rel "@stringBase0", .L_8025FF3C
 	.4byte 0x0000000B
 	.4byte "var_text_PlayerHeShe__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x298
+	.rel "@stringBase0", .L_8025FF48
 	.4byte 0x0000000A
 	.4byte "var_text_PlayerName__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2A3
+	.rel "@stringBase0", .L_8025FF53
 	.4byte 0x0000000E
 	.4byte "var_text_PlayerPosition__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2B2
+	.rel "@stringBase0", .L_8025FF62
 	.4byte 0x0000000C
 	.4byte "var_text_SelectedArea__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2BF
+	.rel "@stringBase0", .L_8025FF6F
 	.4byte 0x0000000A
 	.4byte "var_text_ShinyCount__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2CA
+	.rel "@stringBase0", .L_8025FF7A
 	.4byte 0x0000000E
 	.4byte "var_text_ShinyCountText__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2D9
+	.rel "@stringBase0", .L_8025FF89
 	.4byte 0x0000000D
 	.4byte "var_text_SoundFXVolume__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2E7
+	.rel "@stringBase0", .L_8025FF97
 	.4byte 0x00000010
 	.4byte "var_text_SoundMusicVolume__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x2F8
+	.rel "@stringBase0", .L_8025FFA8
 	.4byte 0x0000000E
 	.4byte "var_text_SpaceAvailable__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x307
+	.rel "@stringBase0", .L_8025FFB7
 	.4byte 0x00000014
 	.4byte "var_text_SpaceAvailableString__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x31C
+	.rel "@stringBase0", .L_8025FFCC
 	.4byte 0x0000000B
 	.4byte "var_text_SpaceNeeded__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x31C
+	.rel "@stringBase0", .L_8025FFCC
 	.4byte 0x0000000B
 	.4byte "var_text_SpaceNeeded__18@unnamed@zVar_cpp@Fv"
-	.4byte "@stringBase0"+0x328
+	.rel "@stringBase0", .L_8025FFD8
 	.4byte 0x0000000E
 	.4byte "var_text_TotalPatsSocks__18@unnamed@zVar_cpp@Fv"
 .endobj "vars__18@unnamed@zVar_cpp@"
 
 .obj var_tag$1042, local
-	.4byte "@stringBase0"+0x337
+	.rel "@stringBase0", .L_8025FFE7
 	.4byte 0x00000003
 	.4byte "parse_tag_var__18@unnamed@zVar_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag"
 	.4byte 0x00000000
@@ -2189,75 +2273,75 @@
 .obj zVarEntryTable, global
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x33B
+	.rel "@stringBase0", .L_8025FFEB
 	.4byte zVarEntryCB_SndMode__FPv
 	.4byte 0x00000001
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x346
+	.rel "@stringBase0", .L_8025FFF6
 	.4byte zVarEntryCB_SndMusicVol__FPv
 	.4byte 0x00000002
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x353
+	.rel "@stringBase0", .L_80260003
 	.4byte zVarEntryCB_SndFXVol__FPv
 	.4byte 0x00000003
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x35E
+	.rel "@stringBase0", .L_8026000E
 	.4byte zVarEntryCB_MCAvailable__FPv
 	.4byte 0x00000004
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x374
+	.rel "@stringBase0", .L_80260024
 	.4byte zVarEntryCB_VibrationOn__FPv
 	.4byte 0x00000005
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x384
+	.rel "@stringBase0", .L_80260034
 	.4byte zVarEntryCB_CurrentSceneLetter__FPv
 	.4byte 0x00000006
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x394
+	.rel "@stringBase0", .L_80260044
 	.4byte zVarEntryCB_CurrentRoom__FPv
 	.4byte 0x00000007
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x399
+	.rel "@stringBase0", .L_80260049
 	.4byte zVarEntryCB_CurrentLevelPickup__FPv
 	.4byte 0x00000008
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x3B3
+	.rel "@stringBase0", .L_80260063
 	.4byte zVarEntryCB_CurrentLevelPSocks__FPv
 	.4byte 0x00000009
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x3BF
+	.rel "@stringBase0", .L_8026006F
 	.4byte zVarEntryCB_TotalPSocks__FPv
 	.4byte 0x0000000A
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x3D1
+	.rel "@stringBase0", .L_80260081
 	.4byte zVarEntryCB_Shinies__FPv
 	.4byte 0x0000000B
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x3DF
+	.rel "@stringBase0", .L_8026008F
 	.4byte zVarEntryCB_Spatulas__FPv
 	.4byte 0x0000000C
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x3EF
+	.rel "@stringBase0", .L_8026009F
 	.4byte zVarEntryCB_Date__FPv
 	.4byte 0x0000000D
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x3FC
+	.rel "@stringBase0", .L_802600AC
 	.4byte zVarEntryCB_Hour__FPv
 	.4byte 0x0000000E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x409
+	.rel "@stringBase0", .L_802600B9
 	.4byte zVarEntryCB_Minute__FPv
 	.4byte 0x0000000F
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x418
+	.rel "@stringBase0", .L_802600C8
 	.4byte zVarEntryCB_CounterValue__FPv
 	.4byte 0x00000010
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x426
+	.rel "@stringBase0", .L_802600D6
 	.4byte zVarEntryCB_IsEnabled__FPv
 	.4byte 0x00000011
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x43F
+	.rel "@stringBase0", .L_802600EF
 	.4byte zVarEntryCB_IsVisible__FPv
 	.4byte 0x00000000
 	.4byte 0x00000000

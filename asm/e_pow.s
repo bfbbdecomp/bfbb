@@ -630,7 +630,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x3FE2B803
-.L_80279EA4:
 	.4byte 0x40000000
 .endobj dp_h
 
@@ -687,7 +686,6 @@
 
 .obj "@357", local
 	.4byte 0x3E54AE0B
-.L_803D009C:
 	.4byte 0xF85DDF44
 .endobj "@357"
 

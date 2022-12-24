@@ -625,10 +625,8 @@
 .obj __constants, local
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8027A1B8:
 	.4byte 0x41F00000
 	.4byte 0x00000000
-.L_8027A1C0:
 	.4byte 0x41E00000
 	.4byte 0x00000000
 .endobj __constants

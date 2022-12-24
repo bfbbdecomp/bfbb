@@ -37,7 +37,6 @@
 # 0x801F3B28 - 0x801F3BE0
 .text
 .balign 4
-.L_801F3B28:
 
 .fn TRK_fill_mem, local
 /* 801F3B28 001F0C08  28 05 00 20 */	cmplwi r5, 0x20

@@ -237,7 +237,6 @@
 # 0x801D79C8 - 0x801D79CC
 .text
 .balign 4
-.L_801D79C8:
 
 .fn InitMetroTRK_BBA, weak
 /* 801D79C8 001D4AA8  4E 80 00 20 */	blr

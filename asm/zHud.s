@@ -760,96 +760,116 @@
 	.4byte 0x4D455445
 	.4byte 0x525F5348
 	.4byte 0x494E5900
+.L_8025CBB4:
 	.4byte 0x4855445F
 	.4byte 0x494E545F
 	.4byte 0x4D455445
 	.4byte 0x525F5350
 	.4byte 0x4154554C
-	.4byte 0x41004855
-	.4byte 0x445F4D4F
-	.4byte 0x44454C5F
-	.4byte 0x5348494E
-	.4byte 0x59004855
-	.4byte 0x445F4D4F
-	.4byte 0x44454C5F
-	.4byte 0x53504154
-	.4byte 0x554C4100
+	.2byte 0x4100
+.L_8025CBCA:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F5348
+	.4byte 0x494E5900
+.L_8025CBDA:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F5350
+	.4byte 0x4154554C
+	.2byte 0x4100
+.L_8025CBEC:
 	.4byte 0x4855445F
 	.4byte 0x554E4954
 	.4byte 0x5F4D4554
 	.4byte 0x45525F48
 	.4byte 0x45414C54
-	.4byte 0x48004855
-	.4byte 0x445F494E
-	.4byte 0x545F4D45
-	.4byte 0x5445525F
-	.4byte 0x50415453
-	.4byte 0x534F434B
-	.4byte 0x00485544
-	.4byte 0x5F4D4F44
-	.4byte 0x454C5F50
-	.4byte 0x41545353
-	.4byte 0x4F434B00
+	.2byte 0x4800
+.L_8025CC02:
+	.4byte 0x4855445F
+	.4byte 0x494E545F
+	.4byte 0x4D455445
+	.4byte 0x525F5041
+	.4byte 0x5453534F
+	.byte 0x43, 0x4B, 0x00
+.L_8025CC19:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F5041
+	.4byte 0x5453534F
+	.byte 0x43, 0x4B, 0x00
+.L_8025CC2C:
 	.4byte 0x4855445F
 	.4byte 0x494E545F
 	.4byte 0x4D455445
 	.4byte 0x525F5350
 	.4byte 0x45434941
-	.4byte 0x4C004855
-	.4byte 0x445F4D4F
-	.4byte 0x44454C5F
-.L_8025CC4C:
-	.4byte 0x53504543
-	.4byte 0x49414C00
+	.2byte 0x4C00
+.L_8025CC42:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F5350
+	.4byte 0x45434941
+	.2byte 0x4C00
+.L_8025CC54:
 	.4byte 0x4855445F
 	.4byte 0x4D4F4445
 	.4byte 0x4C5F4A46
 	.4byte 0x5F414E54
 	.4byte 0x49544F44
-	.4byte 0x45004855
-	.4byte 0x445F4D4F
-	.4byte 0x44454C5F
-	.4byte 0x42425F53
-	.4byte 0x54454552
-	.4byte 0x494E4757
-	.4byte 0x4845454C
-	.4byte 0x00485544
-	.4byte 0x5F4D4F44
-	.4byte 0x454C5F47
-	.4byte 0x4C5F4241
-	.4byte 0x4C4C4F4F
-	.4byte 0x4E004855
-	.4byte 0x445F4D4F
-	.4byte 0x44454C5F
-	.4byte 0x52425F41
-	.4byte 0x52545049
-	.4byte 0x45434553
-	.4byte 0x00485544
-	.4byte 0x5F4D4F44
-	.4byte 0x454C5F42
-	.4byte 0x435F5345
-	.4byte 0x43555249
-	.4byte 0x54594255
-	.4byte 0x54544F4E
-	.4byte 0x53004855
-	.4byte 0x445F4D4F
-	.4byte 0x44454C5F
-	.4byte 0x4B465F4C
-	.4byte 0x49474854
-	.4byte 0x43525953
-	.4byte 0x54414C53
-	.4byte 0x00485544
-	.4byte 0x5F4D4F44
-	.4byte 0x454C5F47
-	.4byte 0x595F4341
-	.4byte 0x4E4E4F4E
-	.4byte 0x53006875
-	.4byte 0x64006875
-	.4byte 0x643A6D65
-	.4byte 0x74657200
-	.4byte 0x6875643A
-	.4byte 0x6D6F6465
-	.2byte 0x6C00
+	.2byte 0x4500
+.L_8025CC6A:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F4242
+	.4byte 0x5F535445
+	.4byte 0x4552494E
+	.4byte 0x47574845
+	.byte 0x45, 0x4C, 0x00
+.L_8025CC85:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F474C
+	.4byte 0x5F42414C
+	.4byte 0x4C4F4F4E
+	.byte 0x00
+.L_8025CC9A:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F5242
+	.4byte 0x5F415254
+	.4byte 0x50494543
+	.byte 0x45, 0x53, 0x00
+.L_8025CCB1:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F4243
+	.4byte 0x5F534543
+	.4byte 0x55524954
+	.4byte 0x59425554
+	.4byte 0x544F4E53
+	.byte 0x00
+.L_8025CCCE:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F4B46
+	.4byte 0x5F4C4947
+	.4byte 0x48544352
+	.4byte 0x59535441
+	.byte 0x4C, 0x53, 0x00
+.L_8025CCE9:
+	.4byte 0x4855445F
+	.4byte 0x4D4F4445
+	.4byte 0x4C5F4759
+	.4byte 0x5F43414E
+	.4byte 0x4E4F4E53
+	.4byte 0x00687564
+	.4byte 0x00687564
+	.4byte 0x3A6D6574
+	.4byte 0x65720068
+	.4byte 0x75643A6D
+	.4byte 0x6F64656C
+	.byte 0x00
 .endobj "@stringBase0"
 	.2byte 0x0000
 
@@ -860,39 +880,39 @@
 # zhud::@unnamed@zHud_cpp@::widget_resources
 .obj "widget_resources__Q24zhud18@unnamed@zHud_cpp@", local
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x14
-	.4byte "@stringBase0"+0x2A
-	.4byte "@stringBase0"+0x3A
-	.4byte "@stringBase0"+0x4C
-	.4byte "@stringBase0"+0x62
-	.4byte "@stringBase0"+0x79
-	.4byte "@stringBase0"+0x8C
-	.4byte "@stringBase0"+0xA2
+	.rel "@stringBase0", .L_8025CBB4
+	.rel "@stringBase0", .L_8025CBCA
+	.rel "@stringBase0", .L_8025CBDA
+	.rel "@stringBase0", .L_8025CBEC
+	.rel "@stringBase0", .L_8025CC02
+	.rel "@stringBase0", .L_8025CC19
+	.rel "@stringBase0", .L_8025CC2C
+	.rel "@stringBase0", .L_8025CC42
 .endobj "widget_resources__Q24zhud18@unnamed@zHud_cpp@"
 
 # zhud::@unnamed@zHud_cpp@::level_specials
 .obj "level_specials__Q24zhud18@unnamed@zHud_cpp@", local
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xB4
+	.rel "@stringBase0", .L_8025CC54
 	.4byte 0x00000001
-	.4byte "@stringBase0"+0xCA
+	.rel "@stringBase0", .L_8025CC6A
 	.4byte 0x0000000B
-	.4byte "@stringBase0"+0xE5
+	.rel "@stringBase0", .L_8025CC85
 	.4byte 0x00000005
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xFA
+	.rel "@stringBase0", .L_8025CC9A
 	.4byte 0x00000006
-	.4byte "@stringBase0"+0x111
+	.rel "@stringBase0", .L_8025CCB1
 	.4byte 0x00000004
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x12E
+	.rel "@stringBase0", .L_8025CCCE
 	.4byte 0x00000006
-	.4byte "@stringBase0"+0x149
+	.rel "@stringBase0", .L_8025CCE9
 	.4byte 0x00000004
 	.4byte 0x00000000
 	.4byte 0x00000000

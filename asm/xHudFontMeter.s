@@ -432,9 +432,13 @@
 	.4byte 0x6875643A
 	.4byte 0x6D657465
 	.4byte 0x723A666F
-	.4byte 0x6E740025
-	.4byte 0x64002564
-	.4byte 0x2F256400
+	.byte 0x6E, 0x74, 0x00
+.L_80252F1F:
+	.byte 0x25, 0x64, 0x00
+.L_80252F22:
+	.4byte 0x25642F25
+	.2byte 0x6400
+.L_80252F28:
 	.4byte 0x2564206F
 	.4byte 0x66202564
 	.byte 0x00
@@ -447,9 +451,9 @@
 .balign 8
 
 .obj format_text$709, local
-	.4byte "@stringBase0"+0xF
-	.4byte "@stringBase0"+0x12
-	.4byte "@stringBase0"+0x18
+	.rel "@stringBase0", .L_80252F1F
+	.rel "@stringBase0", .L_80252F22
+	.rel "@stringBase0", .L_80252F28
 .endobj format_text$709
 
 # xhud::font_meter_widget::__vtable

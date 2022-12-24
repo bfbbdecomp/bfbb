@@ -2,11 +2,10 @@
 .file "NMWException.cp"
 
 # 0x80005730 - 0x80005770
-.section extab, "wa"
+.section extab, "a"
 .balign 4
 
 .obj "@231", local
-.hidden "@231"
 	.4byte 0x20080000
 	.4byte 0x00000060
 	.4byte 0x00000010
@@ -16,76 +15,65 @@
 .endobj "@231"
 
 .obj "@239", local
-.hidden "@239"
 	.4byte 0x18080000
 	.4byte 0x00000000
 .endobj "@239"
 
 .obj "@346", local
-.hidden "@346"
 	.4byte 0x00080000
 	.4byte 0x00000000
 .endobj "@346"
 
 .obj "@350", local
-.hidden "@350"
 	.4byte 0x00080000
 	.4byte 0x00000000
 .endobj "@350"
 
 .obj "@355", local
-.hidden "@355"
 	.4byte 0x00080000
 	.4byte 0x00000000
 .endobj "@355"
 
 .obj "@358", local
-.hidden "@358"
 	.4byte 0x00080000
 	.4byte 0x00000000
 .endobj "@358"
 
 # 0x80005818 - 0x80005860
-.section extabindex, "wa"
+.section extabindex, "a"
 .balign 4
 
 .obj "@232", local
-.hidden "@232"
 	.4byte __construct_array
 	.4byte 0x000000F8
 	.4byte "@231"
 .endobj "@232"
 
 .obj "@240", local
-.hidden "@240"
 	.4byte __dt__26__partial_array_destructorFv
 	.4byte 0x000000B8
 	.4byte "@239"
 .endobj "@240"
 
 .obj "@347", local
-.hidden "@347"
 	.4byte unexpected__3stdFv
 	.4byte 0x00000028
 	.4byte "@346"
 .endobj "@347"
 
 .obj "@351", local
-.hidden "@351"
 	.4byte terminate__3stdFv
 	.4byte 0x00000028
 	.4byte "@350"
 .endobj "@351"
 
 .obj "@356", local
-.hidden "@356"
 	.4byte duhandler__3stdFv
 	.4byte 0x00000028
 	.4byte "@355"
 .endobj "@356"
 
 .obj "@359", local
-.hidden "@359"
 	.4byte dthandler__3stdFv
 	.4byte 0x00000020
 	.4byte "@358"

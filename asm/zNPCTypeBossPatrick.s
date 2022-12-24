@@ -9497,7 +9497,6 @@
 	.4byte 0x00000009
 	.4byte 0x0000001C
 	.4byte 0x0000001D
-.L_80270818:
 	.4byte 0x0000001E
 	.4byte 0x0000001F
 	.4byte 0x00000020
@@ -9508,7 +9507,6 @@
 	.4byte 0x00000025
 	.4byte 0x00000026
 	.4byte 0x0000000A
-.L_80270840:
 	.4byte 0x00000027
 	.4byte 0x00000028
 	.4byte 0x00000000
@@ -9530,7 +9528,6 @@
 .obj recenter_cb, local
 	.4byte on_change_recenter__FRC10tweak_info
 	.4byte 0x00000000
-.L_8027087C:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -9544,79 +9541,118 @@
 .obj "@stringBase0", local
 	.4byte 0x46414231
 	.4byte 0x30333600
+.L_802708A4:
 	.4byte 0x46414231
 	.4byte 0x30343200
+.L_802708AC:
 	.4byte 0x46414231
 	.4byte 0x30343600
+.L_802708B4:
 	.4byte 0x46414231
 	.4byte 0x30343700
+.L_802708BC:
 	.4byte 0x46414231
 	.4byte 0x30343900
+.L_802708C4:
 	.4byte 0x46414231
 	.4byte 0x30353000
+.L_802708CC:
 	.4byte 0x46414231
 	.4byte 0x30333400
+.L_802708D4:
 	.4byte 0x46414231
 	.4byte 0x30333500
+.L_802708DC:
 	.4byte 0x46414231
 	.4byte 0x30343000
+.L_802708E4:
 	.4byte 0x46414231
 	.4byte 0x30353300
+.L_802708EC:
 	.4byte 0x46414231
 	.4byte 0x30353500
+.L_802708F4:
 	.4byte 0x46414231
 	.4byte 0x30353600
+.L_802708FC:
 	.4byte 0x46414231
 	.4byte 0x30333300
+.L_80270904:
 	.4byte 0x46414231
 	.4byte 0x30333700
+.L_8027090C:
 	.4byte 0x46414231
 	.4byte 0x30353200
+.L_80270914:
 	.4byte 0x46414231
 	.4byte 0x3033395F
-	.4byte 0x61004641
-	.4byte 0x42313033
-	.4byte 0x395F6200
+	.2byte 0x6100
+.L_8027091E:
 	.4byte 0x46414231
 	.4byte 0x3033395F
-	.4byte 0x63004641
-	.4byte 0x42313034
-	.4byte 0x315F6100
+	.2byte 0x6200
+.L_80270928:
+	.4byte 0x46414231
+	.4byte 0x3033395F
+	.2byte 0x6300
+.L_80270932:
 	.4byte 0x46414231
 	.4byte 0x3034315F
-	.4byte 0x62004641
-	.4byte 0x42313033
-	.4byte 0x38004641
-	.4byte 0x42313035
-	.4byte 0x31004641
-	.4byte 0x42313035
-	.4byte 0x34004641
-	.4byte 0x42313030
-	.4byte 0x36004641
-	.4byte 0x42313030
-	.4byte 0x37004641
-	.4byte 0x42313030
-	.4byte 0x38004641
-	.4byte 0x42313030
-	.4byte 0x39004641
-	.4byte 0x42313031
-	.4byte 0x32004641
-	.4byte 0x42313031
-	.4byte 0x33004641
-	.4byte 0x42313031
-	.4byte 0x34004641
-	.4byte 0x42313031
-	.4byte 0x36004641
-	.4byte 0x42313032
-	.4byte 0x38004641
-	.4byte 0x42313036
-	.4byte 0x34004641
-	.4byte 0x42313036
-	.4byte 0x35004641
-	.4byte 0x42313036
-	.4byte 0x37004641
-	.4byte 0x42313038
-	.4byte 0x315F6100
+	.2byte 0x6100
+.L_8027093C:
+	.4byte 0x46414231
+	.4byte 0x3034315F
+	.2byte 0x6200
+.L_80270946:
+	.4byte 0x46414231
+	.4byte 0x30333800
+.L_8027094E:
+	.4byte 0x46414231
+	.4byte 0x30353100
+.L_80270956:
+	.4byte 0x46414231
+	.4byte 0x30353400
+.L_8027095E:
+	.4byte 0x46414231
+	.4byte 0x30303600
+.L_80270966:
+	.4byte 0x46414231
+	.4byte 0x30303700
+.L_8027096E:
+	.4byte 0x46414231
+	.4byte 0x30303800
+.L_80270976:
+	.4byte 0x46414231
+	.4byte 0x30303900
+.L_8027097E:
+	.4byte 0x46414231
+	.4byte 0x30313200
+.L_80270986:
+	.4byte 0x46414231
+	.4byte 0x30313300
+.L_8027098E:
+	.4byte 0x46414231
+	.4byte 0x30313400
+.L_80270996:
+	.4byte 0x46414231
+	.4byte 0x30313600
+.L_8027099E:
+	.4byte 0x46414231
+	.4byte 0x30323800
+.L_802709A6:
+	.4byte 0x46414231
+	.4byte 0x30363400
+.L_802709AE:
+	.4byte 0x46414231
+	.4byte 0x30363500
+.L_802709B6:
+	.4byte 0x46414231
+	.4byte 0x30363700
+.L_802709BE:
+	.4byte 0x46414231
+	.4byte 0x3038315F
+	.2byte 0x6100
+.L_802709C8:
 	.4byte 0x46414231
 	.4byte 0x3038315F
 	.4byte 0x62007A4E
@@ -9697,7 +9733,6 @@
 	.4byte 0x5F524F55
 	.4byte 0x4E443300
 	.4byte 0x53414645
-.L_80270B08:
 	.4byte 0x47524F55
 	.4byte 0x4E445F50
 	.4byte 0x4F525441
@@ -9708,7 +9743,6 @@
 	.4byte 0x54004655
 	.4byte 0x4447455F
 	.4byte 0x504F5300
-.L_80270B30:
 	.4byte 0x524F424F
 	.4byte 0x545F4348
 	.4byte 0x55434B5F
@@ -9761,7 +9795,6 @@
 	.4byte 0x616D7C00
 	.4byte 0x4E50437C
 	.4byte 0x7A4E5043
-.L_80270C00:
 	.4byte 0x42506174
 	.4byte 0x7269636B
 	.4byte 0x7C426F73
@@ -9844,7 +9877,6 @@
 	.4byte 0x315F7270
 	.4byte 0x5F667265
 	.4byte 0x657A6500
-.L_80270D48:
 	.4byte 0x62323031
 	.4byte 0x5F72705F
 	.4byte 0x7370696E
@@ -9932,7 +9964,6 @@
 	.4byte 0x74006232
 	.4byte 0x30315F72
 	.4byte 0x705F7370
-.L_80270EA4:
 	.4byte 0x6974616C
 	.4byte 0x74006232
 	.4byte 0x30315F72
@@ -10051,77 +10082,77 @@
 .obj sNFComment, local
 	.4byte "@stringBase0"
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x8
+	.rel "@stringBase0", .L_802708A4
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x10
+	.rel "@stringBase0", .L_802708AC
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x18
+	.rel "@stringBase0", .L_802708B4
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x20
+	.rel "@stringBase0", .L_802708BC
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x28
+	.rel "@stringBase0", .L_802708C4
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x30
+	.rel "@stringBase0", .L_802708CC
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x38
+	.rel "@stringBase0", .L_802708D4
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x40
+	.rel "@stringBase0", .L_802708DC
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x48
+	.rel "@stringBase0", .L_802708E4
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x50
+	.rel "@stringBase0", .L_802708EC
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x58
+	.rel "@stringBase0", .L_802708F4
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x60
+	.rel "@stringBase0", .L_802708FC
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x68
+	.rel "@stringBase0", .L_80270904
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x70
+	.rel "@stringBase0", .L_8027090C
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x78
+	.rel "@stringBase0", .L_80270914
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x82
+	.rel "@stringBase0", .L_8027091E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x8C
+	.rel "@stringBase0", .L_80270928
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x96
+	.rel "@stringBase0", .L_80270932
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xA0
+	.rel "@stringBase0", .L_8027093C
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xAA
+	.rel "@stringBase0", .L_80270946
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xB2
+	.rel "@stringBase0", .L_8027094E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xBA
+	.rel "@stringBase0", .L_80270956
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xC2
+	.rel "@stringBase0", .L_8027095E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xCA
+	.rel "@stringBase0", .L_80270966
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xD2
+	.rel "@stringBase0", .L_8027096E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xDA
+	.rel "@stringBase0", .L_80270976
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xE2
+	.rel "@stringBase0", .L_8027097E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xEA
+	.rel "@stringBase0", .L_80270986
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xF2
+	.rel "@stringBase0", .L_8027098E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xFA
+	.rel "@stringBase0", .L_80270996
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x102
+	.rel "@stringBase0", .L_8027099E
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x10A
+	.rel "@stringBase0", .L_802709A6
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x112
+	.rel "@stringBase0", .L_802709AE
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x11A
+	.rel "@stringBase0", .L_802709B6
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x122
+	.rel "@stringBase0", .L_802709BE
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x12C
+	.rel "@stringBase0", .L_802709C8
 	.4byte 0x00000000
 .endobj sNFComment
 
@@ -10202,7 +10233,6 @@
 # zNPCGoalBossPatFreeze::__vtable
 .obj __vt__21zNPCGoalBossPatFreeze, global
 	.4byte 0x00000000
-.L_8029ACEC:
 	.4byte 0x00000000
 	.4byte Clear__14zNPCGoalCommonFv
 	.4byte Enter__21zNPCGoalBossPatFreezeFfPv
@@ -10240,11 +10270,9 @@
 	.4byte 0x00000000
 	.4byte Clear__14zNPCGoalCommonFv
 	.4byte Enter__18zNPCGoalBossPatRunFfPv
-.L_8029AD60:
 	.4byte Exit__18zNPCGoalBossPatRunFfPv
 	.4byte Suspend__5xGoalFfPv
 	.4byte Resume__14zNPCGoalCommonFfPv
-.L_8029AD6C:
 	.4byte PreCalc__14zNPCGoalCommonFfPv
 	.4byte EvalRules__5xGoalFP11en_trantypefPv
 	.4byte Process__18zNPCGoalBossPatRunFP11en_trantypefPvP6xScene
@@ -10279,7 +10307,6 @@
 	.4byte Exit__18zNPCGoalBossPatHitFfPv
 	.4byte Suspend__5xGoalFfPv
 	.4byte Resume__14zNPCGoalCommonFfPv
-.L_8029ADD4:
 	.4byte PreCalc__14zNPCGoalCommonFfPv
 	.4byte EvalRules__5xGoalFP11en_trantypefPv
 	.4byte Process__18zNPCGoalBossPatHitFP11en_trantypefPvP6xScene
@@ -10350,7 +10377,6 @@
 	.4byte RenderExtra__12zNPCBPatrickFv
 	.4byte RenderExtraPostParticles__10zNPCCommonFv
 	.4byte ParseINI__10zNPCCommonFv
-.L_8029AEBC:
 	.4byte ParseLinks__10zNPCCommonFv
 	.4byte ParseProps__10zNPCCommonFv
 	.4byte SelfSetup__12zNPCBPatrickFv
@@ -10371,7 +10397,6 @@
 	.4byte SpeakStop__10zNPCCommonFv
 	.4byte AnimPick__12zNPCBPatrickFi16en_NPC_GOAL_SPOTP5xGoal
 	.4byte GetParm__10zNPCCommonF10en_npcparmPv
-.L_8029AF0C:
 	.4byte GetParmDefault__10zNPCCommonF10en_npcparmPv
 	.4byte GenShadCacheRad__10zNPCCommonFv
 	.4byte PRIV_GetDriverData__10zNPCCommonFv

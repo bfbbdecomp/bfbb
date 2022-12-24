@@ -1,7 +1,7 @@
 .include "macros.inc"
 .file "dolphin_trk.c"
 
-# 0x80005518 - 0x800056E0
+# 0x80005518 - 0x8000563C
 .section .init, "ax"
 .balign 4
 .sym gTRKInterruptVectorTableEnd, global
@@ -88,57 +88,6 @@
 /* 80005634 00002714  38 21 00 20 */	addi r1, r1, 0x20
 /* 80005638 00002718  4E 80 00 20 */	blr
 .endfn __TRK_reset
-
-/* Linker generated
-.obj _rom_copy_info, global
-	.4byte 0x80003100
-	.4byte 0x80003100
-	.4byte 0x000025E0
-	.4byte 0x800056E0
-	.4byte 0x800056E0
-	.4byte 0x00000104
-	.4byte 0x80005800
-	.4byte 0x80005800
-	.4byte 0x000000D4
-	.4byte 0x800058E0
-	.4byte 0x800058E0
-	.4byte 0x0024C414
-	.4byte 0x80251D00
-	.4byte 0x80251D00
-	.4byte 0x00000028
-	.4byte 0x80251D40
-	.4byte 0x80251D40
-	.4byte 0x00000010
-	.4byte 0x80251D80
-	.4byte 0x80251D80
-	.4byte 0x00028830
-	.4byte 0x8027A5C0
-	.4byte 0x8027A5C0
-	.4byte 0x0003E420
-	.4byte 0x803CA900
-	.4byte 0x803CA900
-	.4byte 0x00000850
-	.4byte 0x803CC980
-	.4byte 0x803CC980
-	.4byte 0x00003E5C
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.endobj _rom_copy_info
-*/
-
-/* Linker generated
-.obj _bss_init_info, global
-	.4byte 0x802B89E0
-	.4byte 0x00111F08
-	.4byte 0x803CB160
-	.4byte 0x0000180C
-	.4byte 0x803D07E0
-	.4byte 0x00000270
-	.4byte 0x00000000
-	.4byte 0x00000000
-.endobj _bss_init_info
-*/
 
 # 0x801F5780 - 0x801F58D8
 .text
@@ -266,7 +215,6 @@
 	.4byte 0x00001400
 	.4byte 0x00001700
 .endobj TRK_ISR_OFFSETS
-.L_802B7694:
 	.4byte 0x00000000
 
 # 0x80381250 - 0x80381258

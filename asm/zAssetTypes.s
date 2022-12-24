@@ -1260,218 +1260,273 @@
 	.4byte 0x52656164
 	.4byte 0x20666169
 	.4byte 0x6C65640A
-	.4byte 0x00626561
-	.4byte 0x63685F74
-	.4byte 0x6F77656C
-	.4byte 0x00776F6F
-	.4byte 0x645F626F
-	.4byte 0x6172645F
-	.4byte 0x4E61696C
-	.4byte 0x735F7369
-	.4byte 0x6E676C65
-	.4byte 0x56320077
-	.4byte 0x6F6F645F
-	.4byte 0x626F6172
-	.4byte 0x645F4E61
-	.4byte 0x696C735F
-	.4byte 0x73696E67
-	.4byte 0x6C655633
-	.4byte 0x00676C61
-	.4byte 0x73735F62
-	.4byte 0x726F6B65
-	.4byte 0x6E006772
-	.4byte 0x6F756E64
-	.4byte 0x5F706174
-	.4byte 0x685F616C
-	.4byte 0x70686100
+	.byte 0x00
+.L_802543E5:
+	.4byte 0x62656163
+	.4byte 0x685F746F
+	.4byte 0x77656C00
+.L_802543F1:
+	.4byte 0x776F6F64
+	.4byte 0x5F626F61
+	.4byte 0x72645F4E
+	.4byte 0x61696C73
+	.4byte 0x5F73696E
+	.4byte 0x676C6556
+	.2byte 0x3200
+.L_8025440B:
+	.4byte 0x776F6F64
+	.4byte 0x5F626F61
+	.4byte 0x72645F4E
+	.4byte 0x61696C73
+	.4byte 0x5F73696E
+	.4byte 0x676C6556
+	.2byte 0x3300
+.L_80254425:
+	.4byte 0x676C6173
+	.4byte 0x735F6272
+	.4byte 0x6F6B656E
+	.byte 0x00
+.L_80254432:
+	.4byte 0x67726F75
+	.4byte 0x6E645F70
+	.4byte 0x6174685F
+	.4byte 0x616C7068
+	.2byte 0x6100
+.L_80254444:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F54
 	.4byte 0x65737400
+.L_80254458:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F44
 	.4byte 0x75746368
 	.4byte 0x6D616E00
+.L_80254470:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F44
 	.4byte 0x75706C6F
 	.4byte 0x74726F6E
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x436F6D6D
-	.4byte 0x6F6E005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F426F
-	.4byte 0x7373506C
-	.4byte 0x616E6B74
-	.4byte 0x6F6E005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F426F
-	.4byte 0x73735361
-	.4byte 0x6E647900
+	.byte 0x00
+.L_80254489:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F43
+	.4byte 0x6F6D6D6F
+	.2byte 0x6E00
+.L_8025449F:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F42
+	.4byte 0x6F737350
+	.4byte 0x6C616E6B
+	.4byte 0x746F6E00
+.L_802544BB:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F42
+	.4byte 0x6F737353
+	.4byte 0x616E6479
+	.byte 0x00
+.L_802544D4:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F53
 	.4byte 0x6C656570
 	.4byte 0x7954696D
-	.4byte 0x65005A4E
-	.4byte 0x50435F41
-	.4byte 0x6E696D54
-	.4byte 0x61626C65
-	.4byte 0x5F426F73
-	.4byte 0x7353616E
-	.4byte 0x64794865
-	.4byte 0x6164005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F4861
-	.4byte 0x6D6D6572
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x54545361
-	.4byte 0x75636500
+	.2byte 0x6500
+.L_802544EE:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F42
+	.4byte 0x6F737353
+	.4byte 0x616E6479
+	.4byte 0x48656164
+	.byte 0x00
+.L_8025450B:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F48
+	.4byte 0x616D6D65
+	.2byte 0x7200
+.L_80254521:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F54
+	.4byte 0x54536175
+	.byte 0x63, 0x65, 0x00
+.L_80254538:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F4B
 	.4byte 0x696E674A
 	.4byte 0x656C6C79
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x536C6963
-	.4byte 0x6B005A4E
-	.4byte 0x50435F41
-	.4byte 0x6E696D54
-	.4byte 0x61626C65
-	.4byte 0x5F546172
-	.4byte 0x54617200
+	.byte 0x00
+.L_80254551:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F53
+	.4byte 0x6C69636B
+	.byte 0x00
+.L_80254566:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F54
+	.4byte 0x61725461
+	.2byte 0x7200
+.L_8025457C:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F56
 	.4byte 0x696C6C61
 	.4byte 0x67657200
+.L_80254594:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F42
 	.4byte 0x616C6C6F
 	.4byte 0x6F6E426F
-	.4byte 0x79005A4E
-	.4byte 0x50435F41
-	.4byte 0x6E696D54
-	.4byte 0x61626C65
-	.4byte 0x5F466F64
-	.4byte 0x64657200
+	.2byte 0x7900
+.L_802545AE:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F46
+	.4byte 0x6F646465
+	.2byte 0x7200
+.L_802545C4:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F50
 	.4byte 0x7261776E
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x4E657074
-	.4byte 0x756E6500
+	.byte 0x00
+.L_802545D9:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F4E
+	.4byte 0x65707475
+	.byte 0x6E, 0x65, 0x00
+.L_802545F0:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F42
 	.4byte 0x6F737353
-	.4byte 0x4231005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F426F
-	.4byte 0x73735342
-	.4byte 0x6F626279
-	.4byte 0x41726D00
+	.byte 0x42, 0x31, 0x00
+.L_80254607:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F42
+	.4byte 0x6F737353
+	.4byte 0x426F6262
+	.4byte 0x7941726D
+	.byte 0x00
+.L_80254624:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F4D
 	.4byte 0x6F6E736F
-	.4byte 0x6F6E005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F4172
-	.4byte 0x66446F67
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x41726641
-	.4byte 0x7266005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F426F
-	.4byte 0x73735342
-	.4byte 0x32005A4E
-	.4byte 0x50435F41
-	.4byte 0x6E696D54
-	.4byte 0x61626C65
-	.4byte 0x5F54696B
-	.4byte 0x69005A4E
-	.4byte 0x50435F41
-	.4byte 0x6E696D54
-	.4byte 0x61626C65
-	.4byte 0x5F547562
-	.4byte 0x656C6574
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x416D6269
-	.4byte 0x656E7400
+	.byte 0x6F, 0x6E, 0x00
+.L_8025463B:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F41
+	.4byte 0x7266446F
+	.2byte 0x6700
+.L_80254651:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F41
+	.4byte 0x72664172
+	.2byte 0x6600
+.L_80254667:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F42
+	.4byte 0x6F737353
+	.byte 0x42, 0x32, 0x00
+.L_8025467E:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F54
+	.4byte 0x696B6900
+.L_80254692:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F54
+	.4byte 0x7562656C
+	.byte 0x65, 0x74, 0x00
+.L_802546A9:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F41
+	.4byte 0x6D626965
+	.byte 0x6E, 0x74, 0x00
+.L_802546C0:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F47
 	.4byte 0x4C6F7665
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x4C617373
-	.4byte 0x6F477569
-	.4byte 0x6465005A
-	.4byte 0x4E50435F
-	.4byte 0x416E696D
-	.4byte 0x5461626C
-	.4byte 0x655F4368
-	.4byte 0x75636B00
+	.byte 0x00
+.L_802546D5:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F4C
+	.4byte 0x6173736F
+	.4byte 0x47756964
+	.2byte 0x6500
+.L_802546EF:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F43
+	.4byte 0x6875636B
+	.byte 0x00
+.L_80254704:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
 	.4byte 0x6C655F4A
 	.4byte 0x656C6C79
-	.4byte 0x005A4E50
-	.4byte 0x435F416E
-	.4byte 0x696D5461
-	.4byte 0x626C655F
-	.4byte 0x53757065
-	.4byte 0x72467269
-	.4byte 0x656E6400
+	.byte 0x00
+.L_80254719:
+	.4byte 0x5A4E5043
+	.4byte 0x5F416E69
+	.4byte 0x6D546162
+	.4byte 0x6C655F53
+	.4byte 0x75706572
+	.4byte 0x46726965
+	.byte 0x6E, 0x64, 0x00
+.L_80254734:
 	.4byte 0x5A4E5043
 	.4byte 0x5F416E69
 	.4byte 0x6D546162
@@ -2291,121 +2346,119 @@
 
 .obj hackRadiusTable, local
 	.4byte 0xFA77E6FA
-.L_8028B43C:
 	.4byte 0x41A00000
 	.4byte 0x5BD0EDAC
 	.4byte 0x447A0000
 	.4byte 0xED21A1C6
-.L_8028B44C:
 	.4byte 0x42480000
 .endobj hackRadiusTable
 
 .obj jsp_shadow_hack_textures, local
-	.4byte "@stringBase0"+0x41
-	.4byte "@stringBase0"+0x4D
-	.4byte "@stringBase0"+0x67
-	.4byte "@stringBase0"+0x81
-	.4byte "@stringBase0"+0x8E
+	.rel "@stringBase0", .L_802543E5
+	.rel "@stringBase0", .L_802543F1
+	.rel "@stringBase0", .L_8025440B
+	.rel "@stringBase0", .L_80254425
+	.rel "@stringBase0", .L_80254432
 .endobj jsp_shadow_hack_textures
 
 .obj animTable, global
-	.4byte "@stringBase0"+0xA0
+	.rel "@stringBase0", .L_80254444
 	.4byte ZNPC_AnimTable_Test__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xB4
+	.rel "@stringBase0", .L_80254458
 	.4byte ZNPC_AnimTable_Dutchman__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xCC
+	.rel "@stringBase0", .L_80254470
 	.4byte ZNPC_AnimTable_Duplotron__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xE5
+	.rel "@stringBase0", .L_80254489
 	.4byte ZNPC_AnimTable_Common__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xFB
+	.rel "@stringBase0", .L_8025449F
 	.4byte ZNPC_AnimTable_BossPlankton__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x117
+	.rel "@stringBase0", .L_802544BB
 	.4byte ZNPC_AnimTable_BossSandy__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x130
+	.rel "@stringBase0", .L_802544D4
 	.4byte ZNPC_AnimTable_SleepyTime__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x14A
+	.rel "@stringBase0", .L_802544EE
 	.4byte ZNPC_AnimTable_BossSandyHead__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x167
+	.rel "@stringBase0", .L_8025450B
 	.4byte ZNPC_AnimTable_Hammer__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x17D
+	.rel "@stringBase0", .L_80254521
 	.4byte ZNPC_AnimTable_TTSauce__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x194
+	.rel "@stringBase0", .L_80254538
 	.4byte ZNPC_AnimTable_KingJelly__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1AD
+	.rel "@stringBase0", .L_80254551
 	.4byte ZNPC_AnimTable_Slick__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1C2
+	.rel "@stringBase0", .L_80254566
 	.4byte ZNPC_AnimTable_TarTar__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1D8
+	.rel "@stringBase0", .L_8025457C
 	.4byte ZNPC_AnimTable_Villager__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x1F0
+	.rel "@stringBase0", .L_80254594
 	.4byte ZNPC_AnimTable_BalloonBoy__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x20A
+	.rel "@stringBase0", .L_802545AE
 	.4byte ZNPC_AnimTable_Fodder__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x220
+	.rel "@stringBase0", .L_802545C4
 	.4byte ZNPC_AnimTable_Prawn__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x235
+	.rel "@stringBase0", .L_802545D9
 	.4byte ZNPC_AnimTable_Neptune__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x24C
+	.rel "@stringBase0", .L_802545F0
 	.4byte ZNPC_AnimTable_BossSB1__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x263
+	.rel "@stringBase0", .L_80254607
 	.4byte ZNPC_AnimTable_BossSBobbyArm__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x280
+	.rel "@stringBase0", .L_80254624
 	.4byte ZNPC_AnimTable_Monsoon__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x297
+	.rel "@stringBase0", .L_8025463B
 	.4byte ZNPC_AnimTable_ArfDog__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x2AD
+	.rel "@stringBase0", .L_80254651
 	.4byte ZNPC_AnimTable_ArfArf__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x2C3
+	.rel "@stringBase0", .L_80254667
 	.4byte ZNPC_AnimTable_BossSB2__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x2DA
+	.rel "@stringBase0", .L_8025467E
 	.4byte ZNPC_AnimTable_Tiki__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x2EE
+	.rel "@stringBase0", .L_80254692
 	.4byte ZNPC_AnimTable_Tubelet__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x305
+	.rel "@stringBase0", .L_802546A9
 	.4byte ZNPC_AnimTable_Ambient__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x31C
+	.rel "@stringBase0", .L_802546C0
 	.4byte ZNPC_AnimTable_GLove__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x331
+	.rel "@stringBase0", .L_802546D5
 	.4byte ZNPC_AnimTable_LassoGuide__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x34B
+	.rel "@stringBase0", .L_802546EF
 	.4byte ZNPC_AnimTable_Chuck__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x360
+	.rel "@stringBase0", .L_80254704
 	.4byte ZNPC_AnimTable_Jelly__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x375
+	.rel "@stringBase0", .L_80254719
 	.4byte ZNPC_AnimTable_SuperFriend__Fv
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x390
+	.rel "@stringBase0", .L_80254734
 	.4byte ZNPC_AnimTable_BossPatrick__Fv
 	.4byte 0x00000000
 .endobj animTable

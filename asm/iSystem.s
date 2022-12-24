@@ -1958,47 +1958,74 @@
 	.4byte 0x6E642E00
 	.4byte 0x25732E72
 	.4byte 0x77330072
-	.4byte 0x004A616E
+	.byte 0x00
+.L_802667A5:
+	.4byte 0x4A616E75
+	.4byte 0x61727920
+	.byte 0x00
+.L_802667AE:
+	.4byte 0x46656272
 	.4byte 0x75617279
-	.4byte 0x20004665
-	.4byte 0x62727561
-	.4byte 0x72792000
+	.2byte 0x2000
+.L_802667B8:
 	.4byte 0x4D617263
-	.4byte 0x68200041
-	.4byte 0x7072696C
-	.4byte 0x20004D61
-	.4byte 0x7920004A
-	.4byte 0x756E6520
-	.4byte 0x004A756C
-	.4byte 0x79200041
-	.4byte 0x75677573
-	.4byte 0x74200053
-	.4byte 0x65707465
-	.4byte 0x6D626572
-	.4byte 0x20004F63
-	.4byte 0x746F6265
-	.4byte 0x7220004E
-	.4byte 0x6F76656D
-	.4byte 0x62657220
-	.4byte 0x00446563
+	.byte 0x68, 0x20, 0x00
+.L_802667BF:
+	.4byte 0x41707269
+	.byte 0x6C, 0x20, 0x00
+.L_802667C6:
+	.4byte 0x4D617920
+	.byte 0x00
+.L_802667CB:
+	.4byte 0x4A756E65
+	.2byte 0x2000
+.L_802667D1:
+	.4byte 0x4A756C79
+	.2byte 0x2000
+.L_802667D7:
+	.4byte 0x41756775
+	.4byte 0x73742000
+.L_802667DF:
+	.4byte 0x53657074
 	.4byte 0x656D6265
-	.4byte 0x72200053
-	.4byte 0x756E6461
-	.4byte 0x7920004D
-	.4byte 0x6F6E6461
-	.4byte 0x79200054
-	.4byte 0x75657364
+	.byte 0x72, 0x20, 0x00
+.L_802667EA:
+	.4byte 0x4F63746F
+	.4byte 0x62657220
+	.byte 0x00
+.L_802667F3:
+	.4byte 0x4E6F7665
+	.4byte 0x6D626572
+	.2byte 0x2000
+.L_802667FD:
+	.4byte 0x44656365
+	.4byte 0x6D626572
+	.2byte 0x2000
+.L_80266807:
+	.4byte 0x53756E64
 	.4byte 0x61792000
+.L_8026680F:
+	.4byte 0x4D6F6E64
+	.4byte 0x61792000
+.L_80266817:
+	.4byte 0x54756573
+	.4byte 0x64617920
+	.byte 0x00
+.L_80266820:
 	.4byte 0x5765646E
 	.4byte 0x65736461
-	.4byte 0x79200054
-	.4byte 0x68757273
-	.4byte 0x64617920
-	.4byte 0x00467269
-	.4byte 0x64617920
-	.4byte 0x00536174
-	.4byte 0x75726461
 	.byte 0x79, 0x20, 0x00
+.L_8026682B:
+	.4byte 0x54687572
+	.4byte 0x73646179
+	.2byte 0x2000
+.L_80266835:
+	.4byte 0x46726964
+	.4byte 0x61792000
+.L_8026683D:
+	.4byte 0x53617475
+	.4byte 0x72646179
+	.2byte 0x2000
 .endobj "@stringBase0"
 	.byte 0x00
 
@@ -2007,28 +2034,28 @@
 .balign 8
 
 .obj months, global
-	.4byte "@stringBase0"+0x195
-	.4byte "@stringBase0"+0x19E
-	.4byte "@stringBase0"+0x1A8
-	.4byte "@stringBase0"+0x1AF
-	.4byte "@stringBase0"+0x1B6
-	.4byte "@stringBase0"+0x1BB
-	.4byte "@stringBase0"+0x1C1
-	.4byte "@stringBase0"+0x1C7
-	.4byte "@stringBase0"+0x1CF
-	.4byte "@stringBase0"+0x1DA
-	.4byte "@stringBase0"+0x1E3
-	.4byte "@stringBase0"+0x1ED
+	.rel "@stringBase0", .L_802667A5
+	.rel "@stringBase0", .L_802667AE
+	.rel "@stringBase0", .L_802667B8
+	.rel "@stringBase0", .L_802667BF
+	.rel "@stringBase0", .L_802667C6
+	.rel "@stringBase0", .L_802667CB
+	.rel "@stringBase0", .L_802667D1
+	.rel "@stringBase0", .L_802667D7
+	.rel "@stringBase0", .L_802667DF
+	.rel "@stringBase0", .L_802667EA
+	.rel "@stringBase0", .L_802667F3
+	.rel "@stringBase0", .L_802667FD
 .endobj months
 
 .obj dotw, global
-	.4byte "@stringBase0"+0x1F7
-	.4byte "@stringBase0"+0x1FF
-	.4byte "@stringBase0"+0x207
-	.4byte "@stringBase0"+0x210
-	.4byte "@stringBase0"+0x21B
-	.4byte "@stringBase0"+0x225
-	.4byte "@stringBase0"+0x22D
+	.rel "@stringBase0", .L_80266807
+	.rel "@stringBase0", .L_8026680F
+	.rel "@stringBase0", .L_80266817
+	.rel "@stringBase0", .L_80266820
+	.rel "@stringBase0", .L_8026682B
+	.rel "@stringBase0", .L_80266835
+	.rel "@stringBase0", .L_8026683D
 .endobj dotw
 	.4byte 0x00000000
 

@@ -3286,7 +3286,6 @@
 	.rel xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase, .L_80121928
 	.rel xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase, .L_80121928
 	.rel xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase, .L_80121928
-.L_80298024:
 	.rel xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase, .L_80121928
 	.rel xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase, .L_80121928
 	.rel xBoulderGenerator_EventCB__FP5xBaseP5xBaseUiPCfP5xBase, .L_801216D4

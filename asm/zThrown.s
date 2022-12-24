@@ -3271,110 +3271,142 @@
 	.4byte 0x5F5F6465
 	.4byte 0x6661756C
 	.4byte 0x745F5F00
+.L_8025F59C:
 	.4byte 0x74696B69
 	.4byte 0x5F776F6F
 	.4byte 0x64656E00
+.L_8025F5A8:
 	.4byte 0x7265616C
 	.4byte 0x6C796269
 	.4byte 0x67726F63
-	.4byte 0x6B006233
-	.4byte 0x5F726F6F
-	.4byte 0x665F6368
-	.4byte 0x756E6B5F
-	.4byte 0x736D5F61
-	.4byte 0x0062335F
-	.4byte 0x726F6F66
-	.4byte 0x5F636875
-	.4byte 0x6E6B5F73
-	.4byte 0x6D5F6200
+	.2byte 0x6B00
+.L_8025F5B6:
 	.4byte 0x62335F72
 	.4byte 0x6F6F665F
 	.4byte 0x6368756E
 	.4byte 0x6B5F736D
-	.4byte 0x5F630062
-	.4byte 0x335F726F
-	.4byte 0x6F665F63
-	.4byte 0x68756E6B
-	.4byte 0x5F736D5F
-	.4byte 0x64006233
-	.4byte 0x5F726F6F
-	.4byte 0x665F6368
-	.4byte 0x756E6B5F
-	.4byte 0x736D5F65
-	.4byte 0x0062335F
-	.4byte 0x726F6F66
-	.4byte 0x5F636875
-	.4byte 0x6E6B5F73
-	.4byte 0x6D5F6600
+	.byte 0x5F, 0x61, 0x00
+.L_8025F5C9:
+	.4byte 0x62335F72
+	.4byte 0x6F6F665F
+	.4byte 0x6368756E
+	.4byte 0x6B5F736D
+	.byte 0x5F, 0x62, 0x00
+.L_8025F5DC:
+	.4byte 0x62335F72
+	.4byte 0x6F6F665F
+	.4byte 0x6368756E
+	.4byte 0x6B5F736D
+	.byte 0x5F, 0x63, 0x00
+.L_8025F5EF:
+	.4byte 0x62335F72
+	.4byte 0x6F6F665F
+	.4byte 0x6368756E
+	.4byte 0x6B5F736D
+	.byte 0x5F, 0x64, 0x00
+.L_8025F602:
+	.4byte 0x62335F72
+	.4byte 0x6F6F665F
+	.4byte 0x6368756E
+	.4byte 0x6B5F736D
+	.byte 0x5F, 0x65, 0x00
+.L_8025F615:
+	.4byte 0x62335F72
+	.4byte 0x6F6F665F
+	.4byte 0x6368756E
+	.4byte 0x6B5F736D
+	.byte 0x5F, 0x66, 0x00
+.L_8025F628:
 	.4byte 0x74696B69
 	.4byte 0x5F776F6F
 	.4byte 0x64656E5F
 	.4byte 0x62696E64
-	.4byte 0x0074696B
-	.4byte 0x695F7468
-	.4byte 0x756E6465
-	.4byte 0x725F6269
-	.4byte 0x6E640074
-	.4byte 0x696B695F
-	.4byte 0x73746F6E
-	.4byte 0x655F6269
-	.4byte 0x6E640066
-	.4byte 0x72756974
-	.4byte 0x5F667265
-	.4byte 0x657A7900
+	.byte 0x00
+.L_8025F639:
+	.4byte 0x74696B69
+	.4byte 0x5F746875
+	.4byte 0x6E646572
+	.4byte 0x5F62696E
+	.2byte 0x6400
+.L_8025F64B:
+	.4byte 0x74696B69
+	.4byte 0x5F73746F
+	.4byte 0x6E655F62
+	.4byte 0x696E6400
+.L_8025F65B:
+	.4byte 0x66727569
+	.4byte 0x745F6672
+	.4byte 0x65657A79
+	.byte 0x00
+.L_8025F668:
 	.4byte 0x66727569
 	.4byte 0x745F6672
 	.4byte 0x65657A79
 	.4byte 0x5F736872
 	.4byte 0x61706E65
-	.4byte 0x6C006672
-	.4byte 0x7569745F
-	.4byte 0x66726565
-	.4byte 0x7A795F62
-	.4byte 0x696E6400
+	.2byte 0x6C00
+.L_8025F67E:
+	.4byte 0x66727569
+	.4byte 0x745F6672
+	.4byte 0x65657A79
+	.4byte 0x5F62696E
+	.2byte 0x6400
+.L_8025F690:
 	.4byte 0x66727569
 	.4byte 0x745F676C
 	.4byte 0x6F775F62
 	.4byte 0x6C756500
+.L_8025F6A0:
 	.4byte 0x66727569
 	.4byte 0x745F676C
 	.4byte 0x6F775F67
 	.4byte 0x7265656E
-	.4byte 0x00667275
-	.4byte 0x69745F67
-	.4byte 0x6C6F775F
-	.4byte 0x6F72616E
-	.4byte 0x67650066
-	.4byte 0x72756974
-	.4byte 0x5F676C6F
-	.4byte 0x775F7265
-	.4byte 0x64006672
-	.4byte 0x7569745F
-	.4byte 0x676C6F77
-	.4byte 0x5F79656C
-	.4byte 0x6C6F7700
+	.byte 0x00
+.L_8025F6B1:
+	.4byte 0x66727569
+	.4byte 0x745F676C
+	.4byte 0x6F775F6F
+	.4byte 0x72616E67
+	.2byte 0x6500
+.L_8025F6C3:
+	.4byte 0x66727569
+	.4byte 0x745F676C
+	.4byte 0x6F775F72
+	.byte 0x65, 0x64, 0x00
+.L_8025F6D2:
+	.4byte 0x66727569
+	.4byte 0x745F676C
+	.4byte 0x6F775F79
+	.4byte 0x656C6C6F
+	.2byte 0x7700
+.L_8025F6E4:
 	.4byte 0x66727569
 	.4byte 0x745F7468
 	.4byte 0x726F7700
+.L_8025F6F0:
 	.4byte 0x66727569
 	.4byte 0x745F7468
 	.4byte 0x726F775F
 	.4byte 0x73687261
 	.4byte 0x706E656C
-	.4byte 0x00667275
-	.4byte 0x69745F74
-	.4byte 0x68726F77
+	.byte 0x00
+.L_8025F705:
+	.4byte 0x66727569
+	.4byte 0x745F7468
+	.4byte 0x726F775F
+	.4byte 0x62696E64
+	.byte 0x00
+.L_8025F716:
+	.4byte 0x626F7373
+	.4byte 0x5F73615F
+	.4byte 0x68656164
 	.4byte 0x5F62696E
-	.4byte 0x6400626F
-	.4byte 0x73735F73
-	.4byte 0x615F6865
-	.4byte 0x61645F62
-	.4byte 0x696E6400
-	.4byte 0x2E4D494E
-	.4byte 0x46005466
-	.4byte 0x72756974
-	.4byte 0x5F6C616E
-	.byte 0x64, 0x34, 0x00
+	.4byte 0x64002E4D
+	.4byte 0x494E4600
+	.4byte 0x54667275
+	.4byte 0x69745F6C
+	.4byte 0x616E6434
+	.byte 0x00
 .endobj "@stringBase0"
 	.4byte 0x00000000
 	.byte 0x00
@@ -3385,7 +3417,6 @@
 
 .obj l_normal, local
 	.4byte 0x41200000
-.L_80290F0C:
 	.4byte 0x41700000
 	.4byte 0x3E4CCCCD
 .endobj l_normal
@@ -3401,7 +3432,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xC
+	.rel "@stringBase0", .L_8025F59C
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3411,7 +3442,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x18
+	.rel "@stringBase0", .L_8025F5A8
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3421,7 +3452,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x26
+	.rel "@stringBase0", .L_8025F5B6
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3431,7 +3462,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x39
+	.rel "@stringBase0", .L_8025F5C9
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3441,7 +3472,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x4C
+	.rel "@stringBase0", .L_8025F5DC
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3451,7 +3482,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x5F
+	.rel "@stringBase0", .L_8025F5EF
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3461,7 +3492,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x72
+	.rel "@stringBase0", .L_8025F602
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3471,7 +3502,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x85
+	.rel "@stringBase0", .L_8025F615
 	.4byte zThrownCollide_DestructObj__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3481,7 +3512,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x98
+	.rel "@stringBase0", .L_8025F628
 	.4byte zThrownCollide_Tiki__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3491,7 +3522,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xA9
+	.rel "@stringBase0", .L_8025F639
 	.4byte zThrownCollide_Tiki__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3501,7 +3532,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xBB
+	.rel "@stringBase0", .L_8025F64B
 	.4byte zThrownCollide_StoneTiki__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3511,27 +3542,27 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xCB
+	.rel "@stringBase0", .L_8025F65B
 	.4byte zThrownCollide_ThrowFreeze__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xD8
+	.rel "@stringBase0", .L_8025F668
 	.4byte 0x3F451EB8
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xEE
+	.rel "@stringBase0", .L_8025F67E
 	.4byte zThrownCollide_ThrowFreeze__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xD8
+	.rel "@stringBase0", .L_8025F668
 	.4byte 0x3F451EB8
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x100
+	.rel "@stringBase0", .L_8025F690
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
@@ -3541,7 +3572,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x110
+	.rel "@stringBase0", .L_8025F6A0
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
@@ -3551,7 +3582,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x121
+	.rel "@stringBase0", .L_8025F6B1
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
@@ -3561,7 +3592,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x133
+	.rel "@stringBase0", .L_8025F6C3
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
@@ -3571,7 +3602,7 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x142
+	.rel "@stringBase0", .L_8025F6D2
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
@@ -3581,27 +3612,27 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x154
+	.rel "@stringBase0", .L_8025F6E4
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
 	.4byte 0x202020FF
-	.4byte "@stringBase0"+0x160
+	.rel "@stringBase0", .L_8025F6F0
 	.4byte 0x3F6B851F
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x175
+	.rel "@stringBase0", .L_8025F705
 	.4byte zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_fruit
 	.4byte l_normal
 	.4byte 0x202020FF
-	.4byte "@stringBase0"+0x160
+	.rel "@stringBase0", .L_8025F6F0
 	.4byte 0x3F6B851F
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x186
+	.rel "@stringBase0", .L_8025F716
 	.4byte zThrownCollide_BSandyHead__FP13zThrownStructP10xEntCollisPfPf
 	.4byte c_normal
 	.4byte l_normal
@@ -3628,12 +3659,10 @@
 	.4byte 0x3F800000
 	.4byte 0x404CCCCD
 	.4byte 0x3E99999A
-.L_802912BC:
 	.4byte 0x40400000
 	.4byte 0x3F800000
 	.4byte 0x400CCCCD
 	.4byte 0x3E99999A
-.L_802912CC:
 	.4byte 0x40000000
 	.4byte 0x3F800000
 	.4byte 0x3F99999A

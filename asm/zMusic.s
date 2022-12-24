@@ -1174,7 +1174,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8028FE14:
 	.4byte 0x40000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -1191,7 +1190,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000004
-.L_8028FE54:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -1199,7 +1197,6 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.L_8028FE70:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -1234,7 +1231,6 @@
 	.rel getCurrLevelMusicEnum__Fv, .L_800A7344
 	.rel getCurrLevelMusicEnum__Fv, .L_800A734C
 	.rel getCurrLevelMusicEnum__Fv, .L_800A7354
-.L_8028FEEC:
 	.rel getCurrLevelMusicEnum__Fv, .L_800A735C
 	.rel getCurrLevelMusicEnum__Fv, .L_800A7364
 	.rel getCurrLevelMusicEnum__Fv, .L_800A736C

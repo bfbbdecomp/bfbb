@@ -3782,7 +3782,7 @@
 
 # 0x80274E60 - 0x80275300
 .rodata
-.balign 4
+.balign 8
 
 .obj huff4decode00, local
 	.4byte 0x40414243
@@ -3965,7 +3965,6 @@
 	.4byte 0x20222169
 	.4byte 0x20222155
 	.4byte 0x2022216D
-.L_802750A0:
 	.4byte 0x20222154
 	.4byte 0x2022216B
 	.4byte 0x20222167
@@ -4030,7 +4029,6 @@
 	.4byte 0x10321079
 	.4byte 0x10311033
 	.4byte 0x10321065
-.L_80275188:
 	.4byte 0x10311033
 	.4byte 0x1032107D
 	.4byte 0x10311033
@@ -4147,7 +4145,7 @@
 
 # 0x802B0380 - 0x802B03C0
 .data
-.balign 4
+.balign 8
 
 .obj huff4decodes, local
 	.4byte huff4decode00
@@ -4170,7 +4168,7 @@
 
 # 0x803CFC18 - 0x803CFC30
 .section .sdata2, "a"
-.balign 4
+.balign 8
 
 .obj huff4decode00align, local
 	.4byte 0x00000000

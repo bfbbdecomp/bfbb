@@ -37,7 +37,6 @@
 # 0x801D79CC - 0x801D7A60
 .text
 .balign 4
-.L_801D79CC:
 
 .fn __init_user, global
 /* 801D79CC 001D4AAC  7C 08 02 A6 */	mflr r0

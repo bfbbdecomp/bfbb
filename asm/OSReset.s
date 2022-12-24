@@ -108,7 +108,6 @@
 /* 801D536C 001D244C  7C 08 03 A6 */	mtlr r0
 /* 801D5370 001D2450  4E 80 00 20 */	blr
 .endfn __OSDoHotReset
-.L_801D5374:
 
 .fn OSResetSystem, global
 /* 801D5374 001D2454  7C 08 02 A6 */	mflr r0

@@ -4083,6 +4083,7 @@
 .obj "@stringBase0", local
 	.4byte 0x556E6B6E
 	.4byte 0x6F776E00
+.L_8026A360:
 	.4byte 0x49646C65
 	.4byte 0x30310050
 	.4byte 0x4152454D
@@ -4194,7 +4195,7 @@
 
 .obj g_strz_tikianim, global
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x8
+	.rel "@stringBase0", .L_8026A360
 .endobj g_strz_tikianim
 
 .obj whichTikiToAnimate, local

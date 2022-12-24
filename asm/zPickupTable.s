@@ -76,58 +76,84 @@
 	.4byte 0x50757270
 	.4byte 0x6C655368
 	.4byte 0x696E7900
+.L_8025E71C:
 	.4byte 0x426C7565
 	.4byte 0x5368696E
-	.4byte 0x79004772
-	.4byte 0x65656E53
+	.2byte 0x7900
+.L_8025E726:
+	.4byte 0x47726565
+	.4byte 0x6E536869
+	.byte 0x6E, 0x79, 0x00
+.L_8025E731:
+	.4byte 0x59656C6C
+	.4byte 0x6F775368
+	.4byte 0x696E7900
+.L_8025E73D:
+	.4byte 0x52656453
 	.4byte 0x68696E79
-	.4byte 0x0059656C
-	.4byte 0x6C6F7753
-	.4byte 0x68696E79
-	.4byte 0x00526564
-	.4byte 0x5368696E
-	.4byte 0x7900476F
-	.4byte 0x6C64656E
-	.4byte 0x53706174
-	.4byte 0x756C6100
+	.byte 0x00
+.L_8025E746:
+	.4byte 0x476F6C64
+	.4byte 0x656E5370
+	.4byte 0x6174756C
+	.2byte 0x6100
+.L_8025E754:
 	.4byte 0x556E6465
 	.4byte 0x72776561
-	.4byte 0x7200476F
-	.4byte 0x6C64656E
-	.4byte 0x556E6465
-	.4byte 0x72776561
-	.4byte 0x72005061
-	.4byte 0x7473536F
-	.4byte 0x636B0042
-	.4byte 0x75735469
-	.4byte 0x636B6574
-	.4byte 0x00537461
-	.4byte 0x6C6C4B65
-	.4byte 0x79005375
-	.4byte 0x6E646165
-	.4byte 0x0053706F
-	.4byte 0x6E676542
-	.4byte 0x616C6C00
+	.2byte 0x7200
+.L_8025E75E:
+	.4byte 0x476F6C64
+	.4byte 0x656E556E
+	.4byte 0x64657277
+	.4byte 0x65617200
+.L_8025E76E:
+	.4byte 0x50617473
+	.4byte 0x536F636B
+	.byte 0x00
+.L_8025E777:
+	.4byte 0x42757354
+	.4byte 0x69636B65
+	.2byte 0x7400
+.L_8025E781:
+	.4byte 0x5374616C
+	.4byte 0x6C4B6579
+	.byte 0x00
+.L_8025E78A:
+	.4byte 0x53756E64
+	.byte 0x61, 0x65, 0x00
+.L_8025E791:
+	.4byte 0x53706F6E
+	.4byte 0x67654261
+	.byte 0x6C, 0x6C, 0x00
+.L_8025E79C:
 	.4byte 0x4A46416E
 	.4byte 0x7469646F
-	.4byte 0x74650042
-	.4byte 0x42537465
-	.4byte 0x6572696E
-	.4byte 0x67576865
-	.4byte 0x656C0047
-	.4byte 0x4C42616C
-	.4byte 0x6C6F6F6E
-	.4byte 0x00524241
-	.4byte 0x72745069
-	.4byte 0x65636573
-	.4byte 0x00424353
-	.4byte 0x65637572
-	.4byte 0x69747900
+	.byte 0x74, 0x65, 0x00
+.L_8025E7A7:
+	.4byte 0x42425374
+	.4byte 0x65657269
+	.4byte 0x6E675768
+	.4byte 0x65656C00
+.L_8025E7B7:
+	.4byte 0x474C4261
+	.4byte 0x6C6C6F6F
+	.2byte 0x6E00
+.L_8025E7C1:
+	.4byte 0x52424172
+	.4byte 0x74506965
+	.4byte 0x63657300
+.L_8025E7CD:
+	.4byte 0x42435365
+	.4byte 0x63757269
+	.byte 0x74, 0x79, 0x00
+.L_8025E7D8:
 	.4byte 0x4B464372
 	.4byte 0x79737461
-	.4byte 0x6C004759
-	.4byte 0x43616E6E
-	.4byte 0x6F6E7300
+	.2byte 0x6C00
+.L_8025E7E2:
+	.4byte 0x47594361
+	.4byte 0x6E6E6F6E
+	.2byte 0x7300
 .endobj "@stringBase0"
 	.4byte 0x00000000
 
@@ -139,61 +165,61 @@
 	.4byte "@stringBase0"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0xC
+	.rel "@stringBase0", .L_8025E71C
 	.4byte 0x00000000
 	.4byte 0x00010000
-	.4byte "@stringBase0"+0x16
+	.rel "@stringBase0", .L_8025E726
 	.4byte 0x00000000
 	.4byte 0x00020000
-	.4byte "@stringBase0"+0x21
+	.rel "@stringBase0", .L_8025E731
 	.4byte 0x00000000
 	.4byte 0x00030000
-	.4byte "@stringBase0"+0x2D
+	.rel "@stringBase0", .L_8025E73D
 	.4byte 0x00000000
 	.4byte 0x00040000
-	.4byte "@stringBase0"+0x36
+	.rel "@stringBase0", .L_8025E746
 	.4byte 0x00000000
 	.4byte 0x01000000
-	.4byte "@stringBase0"+0x44
+	.rel "@stringBase0", .L_8025E754
 	.4byte 0x00000000
 	.4byte 0x01010000
-	.4byte "@stringBase0"+0x4E
+	.rel "@stringBase0", .L_8025E75E
 	.4byte 0x00000000
 	.4byte 0x01020000
-	.4byte "@stringBase0"+0x5E
+	.rel "@stringBase0", .L_8025E76E
 	.4byte 0x00000000
 	.4byte 0x01060000
-	.4byte "@stringBase0"+0x67
+	.rel "@stringBase0", .L_8025E777
 	.4byte 0x00000000
 	.4byte 0x01030000
-	.4byte "@stringBase0"+0x71
+	.rel "@stringBase0", .L_8025E781
 	.4byte 0x00000000
 	.4byte 0x01040000
-	.4byte "@stringBase0"+0x7A
+	.rel "@stringBase0", .L_8025E78A
 	.4byte 0x00000000
 	.4byte 0x01050000
-	.4byte "@stringBase0"+0x81
+	.rel "@stringBase0", .L_8025E791
 	.4byte 0x00000000
 	.4byte 0x01070000
-	.4byte "@stringBase0"+0x8C
+	.rel "@stringBase0", .L_8025E79C
 	.4byte 0x00000000
 	.4byte 0x01080000
-	.4byte "@stringBase0"+0x97
+	.rel "@stringBase0", .L_8025E7A7
 	.4byte 0x00000000
 	.4byte 0x01090000
-	.4byte "@stringBase0"+0xA7
+	.rel "@stringBase0", .L_8025E7B7
 	.4byte 0x00000000
 	.4byte 0x010A0000
-	.4byte "@stringBase0"+0xB1
+	.rel "@stringBase0", .L_8025E7C1
 	.4byte 0x00000000
 	.4byte 0x010B0000
-	.4byte "@stringBase0"+0xBD
+	.rel "@stringBase0", .L_8025E7CD
 	.4byte 0x00000000
 	.4byte 0x010C0000
-	.4byte "@stringBase0"+0xC8
+	.rel "@stringBase0", .L_8025E7D8
 	.4byte 0x00000000
 	.4byte 0x010D0000
-	.4byte "@stringBase0"+0xD2
+	.rel "@stringBase0", .L_8025E7E2
 	.4byte 0x00000000
 	.4byte 0x010E0000
 .endobj ptranstbl

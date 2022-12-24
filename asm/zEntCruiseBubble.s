@@ -11343,7 +11343,6 @@
 	.4byte 0x3F000000
 	.4byte 0x3F800000
 	.4byte 0x00000000
-.L_80255268:
 	.4byte 0x40000000
 .endobj "cheat_wake_ribbon_curve__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@"
 
@@ -11357,7 +11356,6 @@
 	.4byte 0x40233333
 	.4byte 0x3F800000
 	.4byte 0xFFFFFF00
-.L_8025528C:
 	.4byte 0x40A00000
 .endobj "explode_curve__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@"
 
@@ -11371,7 +11369,6 @@
 	.4byte 0x40633333
 	.4byte 0x3F800000
 	.4byte 0xFFFFFF00
-.L_802552B0:
 	.4byte 0x40E00000
 .endobj "cheat_explode_curve__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@"
 
@@ -11438,89 +11435,140 @@
 
 .obj "@stringBase0", local
 	.4byte 0x49646C65
-	.4byte 0x30310049
-	.4byte 0x646C6530
-	.4byte 0x32004964
-	.4byte 0x6C653033
-	.4byte 0x0049646C
-	.4byte 0x65303400
+	.byte 0x30, 0x31, 0x00
+.L_80255343:
 	.4byte 0x49646C65
-	.4byte 0x30350049
-	.4byte 0x646C6530
-	.4byte 0x36004964
-	.4byte 0x6C653037
-	.4byte 0x0049646C
-	.4byte 0x65303800
+	.byte 0x30, 0x32, 0x00
+.L_8025534A:
 	.4byte 0x49646C65
-	.4byte 0x30390049
-	.4byte 0x646C6531
-	.4byte 0x30004964
-	.4byte 0x6C653131
-	.4byte 0x0049646C
-	.4byte 0x65313200
+	.byte 0x30, 0x33, 0x00
+.L_80255351:
 	.4byte 0x49646C65
-	.4byte 0x31330053
-	.4byte 0x6C697049
-	.4byte 0x646C6530
-	.4byte 0x3100496E
-	.4byte 0x61637469
-	.4byte 0x76653031
-	.4byte 0x00496E61
-	.4byte 0x63746976
-	.4byte 0x65303200
+	.byte 0x30, 0x34, 0x00
+.L_80255358:
+	.4byte 0x49646C65
+	.byte 0x30, 0x35, 0x00
+.L_8025535F:
+	.4byte 0x49646C65
+	.byte 0x30, 0x36, 0x00
+.L_80255366:
+	.4byte 0x49646C65
+	.byte 0x30, 0x37, 0x00
+.L_8025536D:
+	.4byte 0x49646C65
+	.byte 0x30, 0x38, 0x00
+.L_80255374:
+	.4byte 0x49646C65
+	.byte 0x30, 0x39, 0x00
+.L_8025537B:
+	.4byte 0x49646C65
+	.byte 0x31, 0x30, 0x00
+.L_80255382:
+	.4byte 0x49646C65
+	.byte 0x31, 0x31, 0x00
+.L_80255389:
+	.4byte 0x49646C65
+	.byte 0x31, 0x32, 0x00
+.L_80255390:
+	.4byte 0x49646C65
+	.byte 0x31, 0x33, 0x00
+.L_80255397:
+	.4byte 0x536C6970
+	.4byte 0x49646C65
+	.byte 0x30, 0x31, 0x00
+.L_802553A2:
 	.4byte 0x496E6163
 	.4byte 0x74697665
-	.4byte 0x30330049
-	.4byte 0x6E616374
-	.4byte 0x69766530
-	.4byte 0x3400496E
-	.4byte 0x61637469
-	.4byte 0x76653035
-	.4byte 0x00496E61
-	.4byte 0x63746976
-	.4byte 0x65303600
+	.byte 0x30, 0x31, 0x00
+.L_802553AD:
 	.4byte 0x496E6163
 	.4byte 0x74697665
-	.4byte 0x30370049
-	.4byte 0x6E616374
-	.4byte 0x69766530
-	.4byte 0x3800496E
-	.4byte 0x61637469
-	.4byte 0x76653039
-	.4byte 0x00496E61
-	.4byte 0x63746976
-	.4byte 0x65313000
+	.byte 0x30, 0x32, 0x00
+.L_802553B8:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x33, 0x00
+.L_802553C3:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x34, 0x00
+.L_802553CE:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x35, 0x00
+.L_802553D9:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x36, 0x00
+.L_802553E4:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x37, 0x00
+.L_802553EF:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x38, 0x00
+.L_802553FA:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x30, 0x39, 0x00
+.L_80255405:
+	.4byte 0x496E6163
+	.4byte 0x74697665
+	.byte 0x31, 0x30, 0x00
+.L_80255410:
 	.4byte 0x57616C6B
-	.4byte 0x30310052
-	.4byte 0x756E3031
-	.4byte 0x0052756E
-	.4byte 0x30320052
-	.4byte 0x756E3033
-	.4byte 0x004C616E
-	.4byte 0x64303100
+	.byte 0x30, 0x31, 0x00
+.L_80255417:
+	.4byte 0x52756E30
+	.2byte 0x3100
+.L_8025541D:
+	.4byte 0x52756E30
+	.2byte 0x3200
+.L_80255423:
+	.4byte 0x52756E30
+	.2byte 0x3300
+.L_80255429:
+	.4byte 0x4C616E64
+	.byte 0x30, 0x31, 0x00
+.L_80255430:
 	.4byte 0x4C616E64
 	.4byte 0x52756E30
-	.4byte 0x31004C61
-	.4byte 0x6E644869
-	.4byte 0x67683031
-	.4byte 0x0057616C
-	.4byte 0x6C4C616E
-	.4byte 0x64303100
+	.2byte 0x3100
+.L_8025543A:
+	.4byte 0x4C616E64
+	.4byte 0x48696768
+	.byte 0x30, 0x31, 0x00
+.L_80255445:
+	.4byte 0x57616C6C
+	.4byte 0x4C616E64
+	.byte 0x30, 0x31, 0x00
+.L_80255450:
 	.4byte 0x48697430
-	.4byte 0x31004869
-	.4byte 0x74303200
+	.2byte 0x3100
+.L_80255456:
 	.4byte 0x48697430
-	.4byte 0x33004869
-	.4byte 0x74303400
+	.2byte 0x3200
+.L_8025545C:
 	.4byte 0x48697430
-	.4byte 0x35005342
-	.4byte 0x5F637275
-	.4byte 0x6973655F
-	.4byte 0x73746172
-	.4byte 0x74005342
-	.4byte 0x5F637275
-	.4byte 0x6973655F
-	.4byte 0x68697400
+	.2byte 0x3300
+.L_80255462:
+	.4byte 0x48697430
+	.2byte 0x3400
+.L_80255468:
+	.4byte 0x48697430
+	.2byte 0x3500
+.L_8025546E:
+	.4byte 0x53425F63
+	.4byte 0x72756973
+	.4byte 0x655F7374
+	.4byte 0x61727400
+.L_8025547E:
+	.4byte 0x53425F63
+	.4byte 0x72756973
+	.4byte 0x655F6869
+	.2byte 0x7400
+.L_8025548C:
 	.4byte 0x53425F63
 	.4byte 0x72756973
 	.4byte 0x655F6E61
@@ -12114,42 +12162,42 @@
 # cruise_bubble::@unnamed@zEntCruiseBubble_cpp@::start_anim_states
 .obj "start_anim_states__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@", local
 	.4byte "@stringBase0"
-	.4byte "@stringBase0"+0x7
-	.4byte "@stringBase0"+0xE
-	.4byte "@stringBase0"+0x15
-	.4byte "@stringBase0"+0x1C
-	.4byte "@stringBase0"+0x23
-	.4byte "@stringBase0"+0x2A
-	.4byte "@stringBase0"+0x31
-	.4byte "@stringBase0"+0x38
-	.4byte "@stringBase0"+0x3F
-	.4byte "@stringBase0"+0x46
-	.4byte "@stringBase0"+0x4D
-	.4byte "@stringBase0"+0x54
-	.4byte "@stringBase0"+0x5B
-	.4byte "@stringBase0"+0x66
-	.4byte "@stringBase0"+0x71
-	.4byte "@stringBase0"+0x7C
-	.4byte "@stringBase0"+0x87
-	.4byte "@stringBase0"+0x92
-	.4byte "@stringBase0"+0x9D
-	.4byte "@stringBase0"+0xA8
-	.4byte "@stringBase0"+0xB3
-	.4byte "@stringBase0"+0xBE
-	.4byte "@stringBase0"+0xC9
-	.4byte "@stringBase0"+0xD4
-	.4byte "@stringBase0"+0xDB
-	.4byte "@stringBase0"+0xE1
-	.4byte "@stringBase0"+0xE7
-	.4byte "@stringBase0"+0xED
-	.4byte "@stringBase0"+0xF4
-	.4byte "@stringBase0"+0xFE
-	.4byte "@stringBase0"+0x109
-	.4byte "@stringBase0"+0x114
-	.4byte "@stringBase0"+0x11A
-	.4byte "@stringBase0"+0x120
-	.4byte "@stringBase0"+0x126
-	.4byte "@stringBase0"+0x12C
+	.rel "@stringBase0", .L_80255343
+	.rel "@stringBase0", .L_8025534A
+	.rel "@stringBase0", .L_80255351
+	.rel "@stringBase0", .L_80255358
+	.rel "@stringBase0", .L_8025535F
+	.rel "@stringBase0", .L_80255366
+	.rel "@stringBase0", .L_8025536D
+	.rel "@stringBase0", .L_80255374
+	.rel "@stringBase0", .L_8025537B
+	.rel "@stringBase0", .L_80255382
+	.rel "@stringBase0", .L_80255389
+	.rel "@stringBase0", .L_80255390
+	.rel "@stringBase0", .L_80255397
+	.rel "@stringBase0", .L_802553A2
+	.rel "@stringBase0", .L_802553AD
+	.rel "@stringBase0", .L_802553B8
+	.rel "@stringBase0", .L_802553C3
+	.rel "@stringBase0", .L_802553CE
+	.rel "@stringBase0", .L_802553D9
+	.rel "@stringBase0", .L_802553E4
+	.rel "@stringBase0", .L_802553EF
+	.rel "@stringBase0", .L_802553FA
+	.rel "@stringBase0", .L_80255405
+	.rel "@stringBase0", .L_80255410
+	.rel "@stringBase0", .L_80255417
+	.rel "@stringBase0", .L_8025541D
+	.rel "@stringBase0", .L_80255423
+	.rel "@stringBase0", .L_80255429
+	.rel "@stringBase0", .L_80255430
+	.rel "@stringBase0", .L_8025543A
+	.rel "@stringBase0", .L_80255445
+	.rel "@stringBase0", .L_80255450
+	.rel "@stringBase0", .L_80255456
+	.rel "@stringBase0", .L_8025545C
+	.rel "@stringBase0", .L_80255462
+	.rel "@stringBase0", .L_80255468
 .endobj "start_anim_states__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@"
 
 # cruise_bubble::@unnamed@zEntCruiseBubble_cpp@::shared
@@ -12257,11 +12305,9 @@
 
 # cruise_bubble::@unnamed@zEntCruiseBubble_cpp@::sounds
 .obj "sounds__Q213cruise_bubble30@unnamed@zEntCruiseBubble_cpp@", local
-	.4byte "@stringBase0"+0x132
+	.rel "@stringBase0", .L_8025546E
 	.4byte 0x3F800000
-.L_8028C438:
 	.4byte 0x40A00000
-.L_8028C43C:
 	.4byte 0x41A00000
 	.4byte 0x00000000
 	.4byte 0x0000000E
@@ -12269,11 +12315,9 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x142
+	.rel "@stringBase0", .L_8025547E
 	.4byte 0x3F800000
-.L_8028C460:
 	.4byte 0x41700000
-.L_8028C464:
 	.4byte 0x42700000
 	.4byte 0x00000000
 	.4byte 0x0000000F
@@ -12281,10 +12325,9 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte "@stringBase0"+0x150
+	.rel "@stringBase0", .L_8025548C
 	.4byte 0x3F800000
 	.4byte 0x00000000
-.L_8028C48C:
 	.4byte 0x41200000
 	.4byte 0x00010000
 	.4byte 0x00000000
