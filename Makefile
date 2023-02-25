@@ -25,14 +25,14 @@ endif
 OBJ_DIR := obj
 
 SRC_DIRS := src             \
-            src/Core/p2     \
+            src/Core/gc     \
             src/Core/x      \
             src/Game
 
 ASM_DIRS := asm             \
             asm/bink        \
             asm/CodeWarrior \
-            asm/Core/p2     \
+            asm/Core/gc     \
             asm/Core/x      \
             asm/dolphin     \
             asm/Game        \
