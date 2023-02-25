@@ -5,7 +5,6 @@ tools/mwcc_compiler/*
 !tools/mwcc_compiler/README.md
 tools/dtk
 obj/*
-obj-expected/*
 *.asm
 *.exe
 *.dol
@@ -22,8 +21,6 @@ obj-expected/*
 *.o
 *.cp
 .vscode
-.pragma
-inspect.s
 
 # Allow
 !tools/mwcc_compiler/README.md
