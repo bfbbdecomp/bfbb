@@ -27,7 +27,7 @@ jobs:
     - name: Compile
       uses: docker://docker.io/bfbbdecomp/bfbb:latest
       with:
-        args: make --jobs
+        args: GENERATE_MAP=1 make --jobs
     - name: Clang Format
       uses: docker://docker.io/bfbbdecomp/bfbb:latest
       with:

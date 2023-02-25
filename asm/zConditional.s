@@ -1,0 +1,252 @@
+.include "macros.inc"
+.file "zConditional.cpp"
+
+# 0x80052558 - 0x80052874
+.text
+.balign 4
+
+# zConditionalInit(void*, void*)
+.fn zConditionalInit__FPvPv, global
+/* 80052558 0004F638  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8005255C 0004F63C  7C 08 02 A6 */	mflr r0
+/* 80052560 0004F640  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80052564 0004F644  48 00 00 21 */	bl zConditionalInit__FP5xBaseP10zCondAsset
+/* 80052568 0004F648  3C 60 80 29 */	lis r3, zVarEntryTable@ha
+/* 8005256C 0004F64C  38 63 19 30 */	addi r3, r3, zVarEntryTable@l
+/* 80052570 0004F650  48 06 BB 19 */	bl zVarInit__FP9zVarEntry
+/* 80052574 0004F654  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80052578 0004F658  7C 08 03 A6 */	mtlr r0
+/* 8005257C 0004F65C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80052580 0004F660  4E 80 00 20 */	blr
+.endfn zConditionalInit__FPvPv
+
+# zConditionalInit(xBase*, zCondAsset*)
+.fn zConditionalInit__FP5xBaseP10zCondAsset, global
+/* 80052584 0004F664  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80052588 0004F668  7C 08 02 A6 */	mflr r0
+/* 8005258C 0004F66C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80052590 0004F670  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80052594 0004F674  7C 9F 23 78 */	mr r31, r4
+/* 80052598 0004F678  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 8005259C 0004F67C  7C 7E 1B 78 */	mr r30, r3
+/* 800525A0 0004F680  4B FB 6E 61 */	bl xBaseInit__FP5xBaseP10xBaseAsset
+/* 800525A4 0004F684  3C 60 80 05 */	lis r3, zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 800525A8 0004F688  38 03 27 EC */	addi r0, r3, zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 800525AC 0004F68C  90 1E 00 0C */	stw r0, 0xc(r30)
+/* 800525B0 0004F690  93 FE 00 10 */	stw r31, 0x10(r30)
+/* 800525B4 0004F694  88 1E 00 05 */	lbz r0, 0x5(r30)
+/* 800525B8 0004F698  28 00 00 00 */	cmplwi r0, 0x0
+/* 800525BC 0004F69C  41 82 00 14 */	beq .L_800525D0
+/* 800525C0 0004F6A0  80 7E 00 10 */	lwz r3, 0x10(r30)
+/* 800525C4 0004F6A4  38 03 00 18 */	addi r0, r3, 0x18
+/* 800525C8 0004F6A8  90 1E 00 08 */	stw r0, 0x8(r30)
+/* 800525CC 0004F6AC  48 00 00 0C */	b .L_800525D8
+.L_800525D0:
+/* 800525D0 0004F6B0  38 00 00 00 */	li r0, 0x0
+/* 800525D4 0004F6B4  90 1E 00 08 */	stw r0, 0x8(r30)
+.L_800525D8:
+/* 800525D8 0004F6B8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800525DC 0004F6BC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800525E0 0004F6C0  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 800525E4 0004F6C4  7C 08 03 A6 */	mtlr r0
+/* 800525E8 0004F6C8  38 21 00 10 */	addi r1, r1, 0x10
+/* 800525EC 0004F6CC  4E 80 00 20 */	blr
+.endfn zConditionalInit__FP5xBaseP10zCondAsset
+
+# zConditionalReset(_zConditional*)
+.fn zConditionalReset__FP13_zConditional, global
+/* 800525F0 0004F6D0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800525F4 0004F6D4  7C 08 02 A6 */	mflr r0
+/* 800525F8 0004F6D8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800525FC 0004F6DC  80 83 00 10 */	lwz r4, 0x10(r3)
+/* 80052600 0004F6E0  4B FB 6E F9 */	bl xBaseReset__FP5xBaseP10xBaseAsset
+/* 80052604 0004F6E4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80052608 0004F6E8  7C 08 03 A6 */	mtlr r0
+/* 8005260C 0004F6EC  38 21 00 10 */	addi r1, r1, 0x10
+/* 80052610 0004F6F0  4E 80 00 20 */	blr
+.endfn zConditionalReset__FP13_zConditional
+
+# zConditionalSave(_zConditional*, xSerial*)
+.fn zConditionalSave__FP13_zConditionalP7xSerial, global
+/* 80052614 0004F6F4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80052618 0004F6F8  7C 08 02 A6 */	mflr r0
+/* 8005261C 0004F6FC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80052620 0004F700  4B FB 6E 2D */	bl xBaseSave__FP5xBaseP7xSerial
+/* 80052624 0004F704  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80052628 0004F708  7C 08 03 A6 */	mtlr r0
+/* 8005262C 0004F70C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80052630 0004F710  4E 80 00 20 */	blr
+.endfn zConditionalSave__FP13_zConditionalP7xSerial
+
+# zConditionalLoad(_zConditional*, xSerial*)
+.fn zConditionalLoad__FP13_zConditionalP7xSerial, global
+/* 80052634 0004F714  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80052638 0004F718  7C 08 02 A6 */	mflr r0
+/* 8005263C 0004F71C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80052640 0004F720  4B FB 6E 5D */	bl xBaseLoad__FP5xBaseP7xSerial
+/* 80052644 0004F724  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80052648 0004F728  7C 08 03 A6 */	mtlr r0
+/* 8005264C 0004F72C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80052650 0004F730  4E 80 00 20 */	blr
+.endfn zConditionalLoad__FP13_zConditionalP7xSerial
+
+# zConditional_Evaluate(_zConditional*)
+.fn zConditional_Evaluate__FP13_zConditional, global
+/* 80052654 0004F734  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 80052658 0004F738  7C 08 02 A6 */	mflr r0
+/* 8005265C 0004F73C  3C 80 80 29 */	lis r4, zVarEntryTable@ha
+/* 80052660 0004F740  38 A0 00 00 */	li r5, 0x0
+/* 80052664 0004F744  90 01 00 24 */	stw r0, 0x24(r1)
+/* 80052668 0004F748  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 8005266C 0004F74C  3B E4 19 30 */	addi r31, r4, zVarEntryTable@l
+/* 80052670 0004F750  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 80052674 0004F754  3B C0 00 00 */	li r30, 0x0
+/* 80052678 0004F758  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 8005267C 0004F75C  3B A0 00 00 */	li r29, 0x0
+/* 80052680 0004F760  93 81 00 10 */	stw r28, 0x10(r1)
+/* 80052684 0004F764  7C 7C 1B 78 */	mr r28, r3
+.L_80052688:
+/* 80052688 0004F768  80 9C 00 10 */	lwz r4, 0x10(r28)
+/* 8005268C 0004F76C  80 1F 00 04 */	lwz r0, 0x4(r31)
+/* 80052690 0004F770  80 64 00 0C */	lwz r3, 0xc(r4)
+/* 80052694 0004F774  7C 03 00 40 */	cmplw r3, r0
+/* 80052698 0004F778  40 82 00 30 */	bne .L_800526C8
+/* 8005269C 0004F77C  38 1D FF F1 */	addi r0, r29, -0xf
+/* 800526A0 0004F780  7F FE FB 78 */	mr r30, r31
+/* 800526A4 0004F784  28 00 00 01 */	cmplwi r0, 0x1
+/* 800526A8 0004F788  40 81 00 0C */	ble .L_800526B4
+/* 800526AC 0004F78C  2C 1D 00 11 */	cmpwi r29, 0x11
+/* 800526B0 0004F790  40 82 00 18 */	bne .L_800526C8
+.L_800526B4:
+/* 800526B4 0004F794  80 64 00 14 */	lwz r3, 0x14(r4)
+/* 800526B8 0004F798  28 03 00 00 */	cmplwi r3, 0x0
+/* 800526BC 0004F79C  41 82 00 0C */	beq .L_800526C8
+/* 800526C0 0004F7A0  48 06 23 7D */	bl zSceneFindObject__FUi
+/* 800526C4 0004F7A4  7C 65 1B 78 */	mr r5, r3
+.L_800526C8:
+/* 800526C8 0004F7A8  3B BD 00 01 */	addi r29, r29, 0x1
+/* 800526CC 0004F7AC  3B FF 00 10 */	addi r31, r31, 0x10
+/* 800526D0 0004F7B0  2C 1D 00 12 */	cmpwi r29, 0x12
+/* 800526D4 0004F7B4  41 80 FF B4 */	blt .L_80052688
+/* 800526D8 0004F7B8  28 1E 00 00 */	cmplwi r30, 0x0
+/* 800526DC 0004F7BC  40 82 00 0C */	bne .L_800526E8
+/* 800526E0 0004F7C0  38 60 00 00 */	li r3, 0x0
+/* 800526E4 0004F7C4  48 00 00 E8 */	b .L_800527CC
+.L_800526E8:
+/* 800526E8 0004F7C8  81 9E 00 0C */	lwz r12, 0xc(r30)
+/* 800526EC 0004F7CC  7C A3 2B 78 */	mr r3, r5
+/* 800526F0 0004F7D0  7D 89 03 A6 */	mtctr r12
+/* 800526F4 0004F7D4  4E 80 04 21 */	bctrl
+/* 800526F8 0004F7D8  80 9C 00 10 */	lwz r4, 0x10(r28)
+/* 800526FC 0004F7DC  80 04 00 10 */	lwz r0, 0x10(r4)
+/* 80052700 0004F7E0  2C 00 00 03 */	cmpwi r0, 0x3
+/* 80052704 0004F7E4  41 82 00 74 */	beq .L_80052778
+/* 80052708 0004F7E8  40 80 00 1C */	bge .L_80052724
+/* 8005270C 0004F7EC  2C 00 00 01 */	cmpwi r0, 0x1
+/* 80052710 0004F7F0  41 82 00 38 */	beq .L_80052748
+/* 80052714 0004F7F4  40 80 00 4C */	bge .L_80052760
+/* 80052718 0004F7F8  2C 00 00 00 */	cmpwi r0, 0x0
+/* 8005271C 0004F7FC  40 80 00 18 */	bge .L_80052734
+/* 80052720 0004F800  48 00 00 A8 */	b .L_800527C8
+.L_80052724:
+/* 80052724 0004F804  2C 00 00 05 */	cmpwi r0, 0x5
+/* 80052728 0004F808  41 82 00 88 */	beq .L_800527B0
+/* 8005272C 0004F80C  40 80 00 9C */	bge .L_800527C8
+/* 80052730 0004F810  48 00 00 64 */	b .L_80052794
+.L_80052734:
+/* 80052734 0004F814  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 80052738 0004F818  7C 03 00 50 */	subf r0, r3, r0
+/* 8005273C 0004F81C  7C 00 00 34 */	cntlzw r0, r0
+/* 80052740 0004F820  54 03 D9 7E */	srwi r3, r0, 5
+/* 80052744 0004F824  48 00 00 88 */	b .L_800527CC
+.L_80052748:
+/* 80052748 0004F828  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 8005274C 0004F82C  7C 60 02 78 */	xor r0, r3, r0
+/* 80052750 0004F830  7C 00 00 34 */	cntlzw r0, r0
+/* 80052754 0004F834  7C 60 00 30 */	slw r0, r3, r0
+/* 80052758 0004F838  54 03 0F FE */	srwi r3, r0, 31
+/* 8005275C 0004F83C  48 00 00 70 */	b .L_800527CC
+.L_80052760:
+/* 80052760 0004F840  80 84 00 08 */	lwz r4, 0x8(r4)
+/* 80052764 0004F844  7C 80 1A 78 */	xor r0, r4, r3
+/* 80052768 0004F848  7C 00 00 34 */	cntlzw r0, r0
+/* 8005276C 0004F84C  7C 80 00 30 */	slw r0, r4, r0
+/* 80052770 0004F850  54 03 0F FE */	srwi r3, r0, 31
+/* 80052774 0004F854  48 00 00 58 */	b .L_800527CC
+.L_80052778:
+/* 80052778 0004F858  80 84 00 08 */	lwz r4, 0x8(r4)
+/* 8005277C 0004F85C  7C 04 18 50 */	subf r0, r4, r3
+/* 80052780 0004F860  7C 63 23 38 */	orc r3, r3, r4
+/* 80052784 0004F864  54 00 F8 7E */	srwi r0, r0, 1
+/* 80052788 0004F868  7C 00 18 50 */	subf r0, r0, r3
+/* 8005278C 0004F86C  54 03 0F FE */	srwi r3, r0, 31
+/* 80052790 0004F870  48 00 00 3C */	b .L_800527CC
+.L_80052794:
+/* 80052794 0004F874  80 84 00 08 */	lwz r4, 0x8(r4)
+/* 80052798 0004F878  7C 03 20 50 */	subf r0, r3, r4
+/* 8005279C 0004F87C  7C 83 1B 38 */	orc r3, r4, r3
+/* 800527A0 0004F880  54 00 F8 7E */	srwi r0, r0, 1
+/* 800527A4 0004F884  7C 00 18 50 */	subf r0, r0, r3
+/* 800527A8 0004F888  54 03 0F FE */	srwi r3, r0, 31
+/* 800527AC 0004F88C  48 00 00 20 */	b .L_800527CC
+.L_800527B0:
+/* 800527B0 0004F890  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 800527B4 0004F894  7C 83 00 50 */	subf r4, r3, r0
+/* 800527B8 0004F898  7C 00 18 50 */	subf r0, r0, r3
+/* 800527BC 0004F89C  7C 80 03 78 */	or r0, r4, r0
+/* 800527C0 0004F8A0  54 03 0F FE */	srwi r3, r0, 31
+/* 800527C4 0004F8A4  48 00 00 08 */	b .L_800527CC
+.L_800527C8:
+/* 800527C8 0004F8A8  38 60 00 00 */	li r3, 0x0
+.L_800527CC:
+/* 800527CC 0004F8AC  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800527D0 0004F8B0  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800527D4 0004F8B4  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800527D8 0004F8B8  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800527DC 0004F8BC  83 81 00 10 */	lwz r28, 0x10(r1)
+/* 800527E0 0004F8C0  7C 08 03 A6 */	mtlr r0
+/* 800527E4 0004F8C4  38 21 00 20 */	addi r1, r1, 0x20
+/* 800527E8 0004F8C8  4E 80 00 20 */	blr
+.endfn zConditional_Evaluate__FP13_zConditional
+
+# zConditionalEventCB(xBase*, xBase*, unsigned int, const float*, xBase*)
+.fn zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase, global
+/* 800527EC 0004F8CC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800527F0 0004F8D0  7C 08 02 A6 */	mflr r0
+/* 800527F4 0004F8D4  2C 05 00 3C */	cmpwi r5, 0x3c
+/* 800527F8 0004F8D8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800527FC 0004F8DC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80052800 0004F8E0  7C 9F 23 78 */	mr r31, r4
+/* 80052804 0004F8E4  41 82 00 18 */	beq .L_8005281C
+/* 80052808 0004F8E8  40 80 00 54 */	bge .L_8005285C
+/* 8005280C 0004F8EC  2C 05 00 0A */	cmpwi r5, 0xa
+/* 80052810 0004F8F0  41 82 00 44 */	beq .L_80052854
+/* 80052814 0004F8F4  48 00 00 48 */	b .L_8005285C
+/* 80052818 0004F8F8  48 00 00 44 */	b .L_8005285C
+.L_8005281C:
+/* 8005281C 0004F8FC  7F E3 FB 78 */	mr r3, r31
+/* 80052820 0004F900  4B FF FE 35 */	bl zConditional_Evaluate__FP13_zConditional
+/* 80052824 0004F904  28 03 00 00 */	cmplwi r3, 0x0
+/* 80052828 0004F908  41 82 00 18 */	beq .L_80052840
+/* 8005282C 0004F90C  7F E3 FB 78 */	mr r3, r31
+/* 80052830 0004F910  7F E4 FB 78 */	mr r4, r31
+/* 80052834 0004F914  38 A0 00 3D */	li r5, 0x3d
+/* 80052838 0004F918  4B FC CE A9 */	bl zEntEvent__FP5xBaseP5xBaseUi
+/* 8005283C 0004F91C  48 00 00 20 */	b .L_8005285C
+.L_80052840:
+/* 80052840 0004F920  7F E3 FB 78 */	mr r3, r31
+/* 80052844 0004F924  7F E4 FB 78 */	mr r4, r31
+/* 80052848 0004F928  38 A0 00 3E */	li r5, 0x3e
+/* 8005284C 0004F92C  4B FC CE 95 */	bl zEntEvent__FP5xBaseP5xBaseUi
+/* 80052850 0004F930  48 00 00 0C */	b .L_8005285C
+.L_80052854:
+/* 80052854 0004F934  7F E3 FB 78 */	mr r3, r31
+/* 80052858 0004F938  4B FF FD 99 */	bl zConditionalReset__FP13_zConditional
+.L_8005285C:
+/* 8005285C 0004F93C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80052860 0004F940  38 60 00 01 */	li r3, 0x1
+/* 80052864 0004F944  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80052868 0004F948  7C 08 03 A6 */	mtlr r0
+/* 8005286C 0004F94C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80052870 0004F950  4E 80 00 20 */	blr
+.endfn zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase

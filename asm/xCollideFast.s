@@ -1,0 +1,126 @@
+.include "macros.inc"
+.file "xCollideFast.cpp"
+
+# 0x800159D4 - 0x80015B3C
+.text
+.balign 4
+
+# xCollideFastInit(xScene*)
+.fn xCollideFastInit__FP6xScene, global
+/* 800159D4 00012AB4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800159D8 00012AB8  7C 08 02 A6 */	mflr r0
+/* 800159DC 00012ABC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800159E0 00012AC0  48 0A D4 59 */	bl iCollideFastInit__FP6xScene
+/* 800159E4 00012AC4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800159E8 00012AC8  7C 08 03 A6 */	mtlr r0
+/* 800159EC 00012ACC  38 21 00 10 */	addi r1, r1, 0x10
+/* 800159F0 00012AD0  4E 80 00 20 */	blr
+.endfn xCollideFastInit__FP6xScene
+
+# xRayHitsSphereFast(const xRay3*, const xSphere*)
+.fn xRayHitsSphereFast__FPC5xRay3PC7xSphere, global
+/* 800159F4 00012AD4  94 21 FF D0 */	stwu r1, -0x30(r1)
+/* 800159F8 00012AD8  7C 08 02 A6 */	mflr r0
+/* 800159FC 00012ADC  90 01 00 34 */	stw r0, 0x34(r1)
+/* 80015A00 00012AE0  DB E1 00 20 */	stfd f31, 0x20(r1)
+/* 80015A04 00012AE4  F3 E1 00 28 */	psq_st f31, 0x28(r1), 0, qr0
+/* 80015A08 00012AE8  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 80015A0C 00012AEC  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 80015A10 00012AF0  7C 7E 1B 78 */	mr r30, r3
+/* 80015A14 00012AF4  7C 9F 23 78 */	mr r31, r4
+/* 80015A18 00012AF8  7F C4 F3 78 */	mr r4, r30
+/* 80015A1C 00012AFC  38 61 00 08 */	addi r3, r1, 0x8
+/* 80015A20 00012B00  7F E5 FB 78 */	mr r5, r31
+/* 80015A24 00012B04  4B FF 8C 6D */	bl xVec3Sub__FP5xVec3PC5xVec3PC5xVec3
+/* 80015A28 00012B08  38 61 00 08 */	addi r3, r1, 0x8
+/* 80015A2C 00012B0C  7C 64 1B 78 */	mr r4, r3
+/* 80015A30 00012B10  48 03 8A C1 */	bl xVec3Dot__FPC5xVec3PC5xVec3
+/* 80015A34 00012B14  C0 7F 00 0C */	lfs f3, 0xc(r31)
+/* 80015A38 00012B18  C0 02 81 78 */	lfs f0, "@567"@sda21(r2)
+/* 80015A3C 00012B1C  EC 43 00 F2 */	fmuls f2, f3, f3
+/* 80015A40 00012B20  EF E1 10 28 */	fsubs f31, f1, f2
+/* 80015A44 00012B24  FC 1F 00 40 */	fcmpo cr0, f31, f0
+/* 80015A48 00012B28  4C 40 13 82 */	cror eq, lt, eq
+/* 80015A4C 00012B2C  40 82 00 0C */	bne .L_80015A58
+/* 80015A50 00012B30  38 60 00 01 */	li r3, 0x1
+/* 80015A54 00012B34  48 00 00 68 */	b .L_80015ABC
+.L_80015A58:
+/* 80015A58 00012B38  80 1E 00 20 */	lwz r0, 0x20(r30)
+/* 80015A5C 00012B3C  54 00 05 29 */	rlwinm. r0, r0, 0, 20, 20
+/* 80015A60 00012B40  41 82 00 24 */	beq .L_80015A84
+/* 80015A64 00012B44  C0 3E 00 1C */	lfs f1, 0x1c(r30)
+/* 80015A68 00012B48  C0 02 81 7C */	lfs f0, "@568"@sda21(r2)
+/* 80015A6C 00012B4C  EC 00 08 FA */	fmadds f0, f0, f3, f1
+/* 80015A70 00012B50  EC 01 00 32 */	fmuls f0, f1, f0
+/* 80015A74 00012B54  FC 1F 00 40 */	fcmpo cr0, f31, f0
+/* 80015A78 00012B58  40 81 00 0C */	ble .L_80015A84
+/* 80015A7C 00012B5C  38 60 00 00 */	li r3, 0x0
+/* 80015A80 00012B60  48 00 00 3C */	b .L_80015ABC
+.L_80015A84:
+/* 80015A84 00012B64  38 61 00 08 */	addi r3, r1, 0x8
+/* 80015A88 00012B68  38 9E 00 0C */	addi r4, r30, 0xc
+/* 80015A8C 00012B6C  48 03 8A 65 */	bl xVec3Dot__FPC5xVec3PC5xVec3
+/* 80015A90 00012B70  C0 02 81 78 */	lfs f0, "@567"@sda21(r2)
+/* 80015A94 00012B74  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 80015A98 00012B78  4C 41 13 82 */	cror eq, gt, eq
+/* 80015A9C 00012B7C  40 82 00 0C */	bne .L_80015AA8
+/* 80015AA0 00012B80  38 60 00 00 */	li r3, 0x0
+/* 80015AA4 00012B84  48 00 00 18 */	b .L_80015ABC
+.L_80015AA8:
+/* 80015AA8 00012B88  EC 01 00 72 */	fmuls f0, f1, f1
+/* 80015AAC 00012B8C  FC 00 F8 40 */	fcmpo cr0, f0, f31
+/* 80015AB0 00012B90  4C 41 13 82 */	cror eq, gt, eq
+/* 80015AB4 00012B94  7C 00 00 26 */	mfcr r0
+/* 80015AB8 00012B98  54 03 1F FE */	extrwi r3, r0, 1, 2
+.L_80015ABC:
+/* 80015ABC 00012B9C  E3 E1 00 28 */	psq_l f31, 0x28(r1), 0, qr0
+/* 80015AC0 00012BA0  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 80015AC4 00012BA4  CB E1 00 20 */	lfd f31, 0x20(r1)
+/* 80015AC8 00012BA8  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 80015ACC 00012BAC  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 80015AD0 00012BB0  7C 08 03 A6 */	mtlr r0
+/* 80015AD4 00012BB4  38 21 00 30 */	addi r1, r1, 0x30
+/* 80015AD8 00012BB8  4E 80 00 20 */	blr
+.endfn xRayHitsSphereFast__FPC5xRay3PC7xSphere
+
+# xRayHitsBoxFast(const xRay3*, const xBox*)
+.fn xRayHitsBoxFast__FPC5xRay3PC4xBox, global
+/* 80015ADC 00012BBC  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 80015AE0 00012BC0  7C 08 02 A6 */	mflr r0
+/* 80015AE4 00012BC4  90 01 00 44 */	stw r0, 0x44(r1)
+/* 80015AE8 00012BC8  7C 60 1B 78 */	mr r0, r3
+/* 80015AEC 00012BCC  7C 83 23 78 */	mr r3, r4
+/* 80015AF0 00012BD0  38 A1 00 08 */	addi r5, r1, 0x8
+/* 80015AF4 00012BD4  7C 04 03 78 */	mr r4, r0
+/* 80015AF8 00012BD8  48 0B 02 81 */	bl iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect
+/* 80015AFC 00012BDC  C0 01 00 0C */	lfs f0, 0xc(r1)
+/* 80015B00 00012BE0  38 00 00 00 */	li r0, 0x0
+/* 80015B04 00012BE4  C0 22 81 78 */	lfs f1, "@567"@sda21(r2)
+/* 80015B08 00012BE8  FC 00 08 40 */	fcmpo cr0, f0, f1
+/* 80015B0C 00012BEC  4C 40 13 82 */	cror eq, lt, eq
+/* 80015B10 00012BF0  41 82 00 14 */	beq .L_80015B24
+/* 80015B14 00012BF4  C0 01 00 10 */	lfs f0, 0x10(r1)
+/* 80015B18 00012BF8  FC 00 08 40 */	fcmpo cr0, f0, f1
+/* 80015B1C 00012BFC  4C 40 13 82 */	cror eq, lt, eq
+/* 80015B20 00012C00  40 82 00 08 */	bne .L_80015B28
+.L_80015B24:
+/* 80015B24 00012C04  38 00 00 01 */	li r0, 0x1
+.L_80015B28:
+/* 80015B28 00012C08  54 03 06 3E */	clrlwi r3, r0, 24
+/* 80015B2C 00012C0C  80 01 00 44 */	lwz r0, 0x44(r1)
+/* 80015B30 00012C10  7C 08 03 A6 */	mtlr r0
+/* 80015B34 00012C14  38 21 00 40 */	addi r1, r1, 0x40
+/* 80015B38 00012C18  4E 80 00 20 */	blr
+.endfn xRayHitsBoxFast__FPC5xRay3PC4xBox
+
+# 0x803CCAF8 - 0x803CCB00
+.section .sdata2, "a"
+.balign 8
+
+.obj "@567", local
+	.4byte 0x00000000
+.endobj "@567"
+
+.obj "@568", local
+	.4byte 0x40000000
+.endobj "@568"

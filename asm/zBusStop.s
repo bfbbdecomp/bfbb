@@ -1,0 +1,414 @@
+.include "macros.inc"
+.file "zBusStop.cpp"
+
+# 0x8012D888 - 0x8012DD64
+.text
+.balign 4
+
+# zBusStop_Init(xBase&, xDynAsset&, unsigned long)
+.fn zBusStop_Init__FR5xBaseR9xDynAssetUl, global
+/* 8012D888 0012A968  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8012D88C 0012A96C  7C 08 02 A6 */	mflr r0
+/* 8012D890 0012A970  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8012D894 0012A974  48 00 00 15 */	bl zBusStop_Init__FP8zBusStopP13busstop_asset
+/* 8012D898 0012A978  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8012D89C 0012A97C  7C 08 03 A6 */	mtlr r0
+/* 8012D8A0 0012A980  38 21 00 10 */	addi r1, r1, 0x10
+/* 8012D8A4 0012A984  4E 80 00 20 */	blr
+.endfn zBusStop_Init__FR5xBaseR9xDynAssetUl
+
+# zBusStop_Init(zBusStop*, busstop_asset*)
+.fn zBusStop_Init__FP8zBusStopP13busstop_asset, global
+/* 8012D8A8 0012A988  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 8012D8AC 0012A98C  7C 08 02 A6 */	mflr r0
+/* 8012D8B0 0012A990  90 01 00 24 */	stw r0, 0x24(r1)
+/* 8012D8B4 0012A994  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 8012D8B8 0012A998  7C 9F 23 78 */	mr r31, r4
+/* 8012D8BC 0012A99C  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 8012D8C0 0012A9A0  7C 7E 1B 78 */	mr r30, r3
+/* 8012D8C4 0012A9A4  4B ED BB 3D */	bl xBaseInit__FP5xBaseP10xBaseAsset
+/* 8012D8C8 0012A9A8  3C 60 80 13 */	lis r3, zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 8012D8CC 0012A9AC  93 FE 00 10 */	stw r31, 0x10(r30)
+/* 8012D8D0 0012A9B0  38 03 DD 5C */	addi r0, r3, zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 8012D8D4 0012A9B4  90 1E 00 0C */	stw r0, 0xc(r30)
+/* 8012D8D8 0012A9B8  88 1E 00 05 */	lbz r0, 0x5(r30)
+/* 8012D8DC 0012A9BC  28 00 00 00 */	cmplwi r0, 0x0
+/* 8012D8E0 0012A9C0  41 82 00 10 */	beq .L_8012D8F0
+/* 8012D8E4 0012A9C4  38 1F 00 24 */	addi r0, r31, 0x24
+/* 8012D8E8 0012A9C8  90 1E 00 08 */	stw r0, 0x8(r30)
+/* 8012D8EC 0012A9CC  48 00 00 0C */	b .L_8012D8F8
+.L_8012D8F0:
+/* 8012D8F0 0012A9D0  38 00 00 00 */	li r0, 0x0
+/* 8012D8F4 0012A9D4  90 1E 00 08 */	stw r0, 0x8(r30)
+.L_8012D8F8:
+/* 8012D8F8 0012A9D8  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012D8FC 0012A9DC  38 81 00 08 */	addi r4, r1, 0x8
+/* 8012D900 0012A9E0  4B F1 DE 0D */	bl xSTFindAsset__FUiPUi
+/* 8012D904 0012A9E4  28 03 00 00 */	cmplwi r3, 0x0
+/* 8012D908 0012A9E8  41 82 00 28 */	beq .L_8012D930
+/* 8012D90C 0012A9EC  80 01 00 08 */	lwz r0, 0x8(r1)
+/* 8012D910 0012A9F0  28 00 00 0C */	cmplwi r0, 0xc
+/* 8012D914 0012A9F4  40 82 00 1C */	bne .L_8012D930
+/* 8012D918 0012A9F8  7C 64 1B 78 */	mr r4, r3
+/* 8012D91C 0012A9FC  38 7E 00 18 */	addi r3, r30, 0x18
+/* 8012D920 0012AA00  4B F2 0B BD */	bl xVec3Copy__FP5xVec3PC5xVec3
+/* 8012D924 0012AA04  38 00 00 00 */	li r0, 0x0
+/* 8012D928 0012AA08  90 1E 00 28 */	stw r0, 0x28(r30)
+/* 8012D92C 0012AA0C  90 1E 00 24 */	stw r0, 0x24(r30)
+.L_8012D930:
+/* 8012D930 0012AA10  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 8012D934 0012AA14  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 8012D938 0012AA18  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 8012D93C 0012AA1C  7C 08 03 A6 */	mtlr r0
+/* 8012D940 0012AA20  38 21 00 20 */	addi r1, r1, 0x20
+/* 8012D944 0012AA24  4E 80 00 20 */	blr
+.endfn zBusStop_Init__FP8zBusStopP13busstop_asset
+
+# zBusStop_Setup(zBusStop*)
+.fn zBusStop_Setup__FP8zBusStop, global
+/* 8012D948 0012AA28  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8012D94C 0012AA2C  7C 08 02 A6 */	mflr r0
+/* 8012D950 0012AA30  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8012D954 0012AA34  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8012D958 0012AA38  7C 7F 1B 78 */	mr r31, r3
+/* 8012D95C 0012AA3C  80 63 00 10 */	lwz r3, 0x10(r3)
+/* 8012D960 0012AA40  80 63 00 18 */	lwz r3, 0x18(r3)
+/* 8012D964 0012AA44  4B F8 70 D9 */	bl zSceneFindObject__FUi
+/* 8012D968 0012AA48  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012D96C 0012AA4C  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 8012D970 0012AA50  4B F8 70 CD */	bl zSceneFindObject__FUi
+/* 8012D974 0012AA54  90 7F 00 14 */	stw r3, 0x14(r31)
+/* 8012D978 0012AA58  3C 60 80 27 */	lis r3, "@stringBase0"@ha
+/* 8012D97C 0012AA5C  38 63 C4 00 */	addi r3, r3, "@stringBase0"@l
+/* 8012D980 0012AA60  C0 02 A2 A8 */	lfs f0, "@806"@sda21(r2)
+/* 8012D984 0012AA64  D0 1F 00 2C */	stfs f0, 0x2c(r31)
+/* 8012D988 0012AA68  4B F1 E8 8D */	bl xStrHash__FPCc
+/* 8012D98C 0012AA6C  4B F8 70 B1 */	bl zSceneFindObject__FUi
+/* 8012D990 0012AA70  90 6D 95 DC */	stw r3, sBusStopUI@sda21(r13)
+/* 8012D994 0012AA74  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8012D998 0012AA78  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 8012D99C 0012AA7C  7C 08 03 A6 */	mtlr r0
+/* 8012D9A0 0012AA80  38 21 00 10 */	addi r1, r1, 0x10
+/* 8012D9A4 0012AA84  4E 80 00 20 */	blr
+.endfn zBusStop_Setup__FP8zBusStop
+
+# zBusStop_Update(xBase*, xScene*, float)
+.fn zBusStop_Update__FP5xBaseP6xScenef, global
+/* 8012D9A8 0012AA88  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 8012D9AC 0012AA8C  7C 08 02 A6 */	mflr r0
+/* 8012D9B0 0012AA90  90 01 00 24 */	stw r0, 0x24(r1)
+/* 8012D9B4 0012AA94  DB E1 00 10 */	stfd f31, 0x10(r1)
+/* 8012D9B8 0012AA98  F3 E1 00 18 */	psq_st f31, 0x18(r1), 0, qr0
+/* 8012D9BC 0012AA9C  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8012D9C0 0012AAA0  3C 80 80 3C */	lis r4, globals@ha
+/* 8012D9C4 0012AAA4  7C 7F 1B 78 */	mr r31, r3
+/* 8012D9C8 0012AAA8  38 64 05 58 */	addi r3, r4, globals@l
+/* 8012D9CC 0012AAAC  FF E0 08 90 */	fmr f31, f1
+/* 8012D9D0 0012AAB0  C0 5F 00 1C */	lfs f2, 0x1c(r31)
+/* 8012D9D4 0012AAB4  C0 63 07 6C */	lfs f3, 0x76c(r3)
+/* 8012D9D8 0012AAB8  C0 83 07 68 */	lfs f4, 0x768(r3)
+/* 8012D9DC 0012AABC  EC A3 10 28 */	fsubs f5, f3, f2
+/* 8012D9E0 0012AAC0  C0 3F 00 18 */	lfs f1, 0x18(r31)
+/* 8012D9E4 0012AAC4  C0 63 07 70 */	lfs f3, 0x770(r3)
+/* 8012D9E8 0012AAC8  EC 84 08 28 */	fsubs f4, f4, f1
+/* 8012D9EC 0012AACC  C0 5F 00 20 */	lfs f2, 0x20(r31)
+/* 8012D9F0 0012AAD0  EC 25 01 72 */	fmuls f1, f5, f5
+/* 8012D9F4 0012AAD4  EC 43 10 28 */	fsubs f2, f3, f2
+/* 8012D9F8 0012AAD8  C0 02 A2 AC */	lfs f0, "@863"@sda21(r2)
+/* 8012D9FC 0012AADC  EC 24 09 3A */	fmadds f1, f4, f4, f1
+/* 8012DA00 0012AAE0  EC 22 08 BA */	fmadds f1, f2, f2, f1
+/* 8012DA04 0012AAE4  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 8012DA08 0012AAE8  40 80 00 1C */	bge .L_8012DA24
+/* 8012DA0C 0012AAEC  80 1F 00 24 */	lwz r0, 0x24(r31)
+/* 8012DA10 0012AAF0  28 00 00 00 */	cmplwi r0, 0x0
+/* 8012DA14 0012AAF4  40 82 00 18 */	bne .L_8012DA2C
+/* 8012DA18 0012AAF8  38 00 00 01 */	li r0, 0x1
+/* 8012DA1C 0012AAFC  90 1F 00 24 */	stw r0, 0x24(r31)
+/* 8012DA20 0012AB00  48 00 00 0C */	b .L_8012DA2C
+.L_8012DA24:
+/* 8012DA24 0012AB04  38 00 00 00 */	li r0, 0x0
+/* 8012DA28 0012AB08  90 1F 00 24 */	stw r0, 0x24(r31)
+.L_8012DA2C:
+/* 8012DA2C 0012AB0C  80 1F 00 24 */	lwz r0, 0x24(r31)
+/* 8012DA30 0012AB10  2C 00 00 02 */	cmpwi r0, 0x2
+/* 8012DA34 0012AB14  41 82 00 B4 */	beq .L_8012DAE8
+/* 8012DA38 0012AB18  40 80 00 14 */	bge .L_8012DA4C
+/* 8012DA3C 0012AB1C  2C 00 00 00 */	cmpwi r0, 0x0
+/* 8012DA40 0012AB20  41 82 01 38 */	beq .L_8012DB78
+/* 8012DA44 0012AB24  40 80 00 14 */	bge .L_8012DA58
+/* 8012DA48 0012AB28  48 00 01 30 */	b .L_8012DB78
+.L_8012DA4C:
+/* 8012DA4C 0012AB2C  2C 00 00 04 */	cmpwi r0, 0x4
+/* 8012DA50 0012AB30  40 80 01 28 */	bge .L_8012DB78
+/* 8012DA54 0012AB34  48 00 00 C4 */	b .L_8012DB18
+.L_8012DA58:
+/* 8012DA58 0012AB38  3C 60 80 3C */	lis r3, globals@ha
+/* 8012DA5C 0012AB3C  38 63 05 58 */	addi r3, r3, globals@l
+/* 8012DA60 0012AB40  80 03 16 D4 */	lwz r0, 0x16d4(r3)
+/* 8012DA64 0012AB44  2C 00 00 00 */	cmpwi r0, 0x0
+/* 8012DA68 0012AB48  40 82 00 3C */	bne .L_8012DAA4
+/* 8012DA6C 0012AB4C  4B F2 EA 55 */	bl active__13cruise_bubbleFv
+/* 8012DA70 0012AB50  54 60 06 3F */	clrlwi. r0, r3, 24
+/* 8012DA74 0012AB54  40 82 00 30 */	bne .L_8012DAA4
+/* 8012DA78 0012AB58  3C 60 80 3C */	lis r3, globals@ha
+/* 8012DA7C 0012AB5C  38 63 05 58 */	addi r3, r3, globals@l
+/* 8012DA80 0012AB60  80 63 03 1C */	lwz r3, 0x31c(r3)
+/* 8012DA84 0012AB64  80 03 00 30 */	lwz r0, 0x30(r3)
+/* 8012DA88 0012AB68  54 00 04 E7 */	rlwinm. r0, r0, 0, 19, 19
+/* 8012DA8C 0012AB6C  41 82 00 18 */	beq .L_8012DAA4
+/* 8012DA90 0012AB70  38 00 00 02 */	li r0, 0x2
+/* 8012DA94 0012AB74  38 60 00 24 */	li r3, 0x24
+/* 8012DA98 0012AB78  90 1F 00 24 */	stw r0, 0x24(r31)
+/* 8012DA9C 0012AB7C  C0 22 A2 B0 */	lfs f1, "@864"@sda21(r2)
+/* 8012DAA0 0012AB80  4B F5 2C F1 */	bl zEntPlayer_SNDPlay__F14_tagePlayerSndf
+.L_8012DAA4:
+/* 8012DAA4 0012AB84  4B F2 EA 1D */	bl active__13cruise_bubbleFv
+/* 8012DAA8 0012AB88  54 60 06 3F */	clrlwi. r0, r3, 24
+/* 8012DAAC 0012AB8C  41 82 00 18 */	beq .L_8012DAC4
+/* 8012DAB0 0012AB90  3C 60 80 27 */	lis r3, "@stringBase0"@ha
+/* 8012DAB4 0012AB94  38 80 00 04 */	li r4, 0x4
+/* 8012DAB8 0012AB98  38 63 C4 00 */	addi r3, r3, "@stringBase0"@l
+/* 8012DABC 0012AB9C  4B EF 1A 69 */	bl zEntEvent__FPcUi
+/* 8012DAC0 0012ABA0  48 00 00 B8 */	b .L_8012DB78
+.L_8012DAC4:
+/* 8012DAC4 0012ABA4  80 6D 95 DC */	lwz r3, sBusStopUI@sda21(r13)
+/* 8012DAC8 0012ABA8  4B EE 0B 71 */	bl xEntIsVisible__FPC4xEnt
+/* 8012DACC 0012ABAC  28 03 00 00 */	cmplwi r3, 0x0
+/* 8012DAD0 0012ABB0  40 82 00 A8 */	bne .L_8012DB78
+/* 8012DAD4 0012ABB4  3C 60 80 27 */	lis r3, "@stringBase0"@ha
+/* 8012DAD8 0012ABB8  38 80 00 03 */	li r4, 0x3
+/* 8012DADC 0012ABBC  38 63 C4 00 */	addi r3, r3, "@stringBase0"@l
+/* 8012DAE0 0012ABC0  4B EF 1A 45 */	bl zEntEvent__FPcUi
+/* 8012DAE4 0012ABC4  48 00 00 94 */	b .L_8012DB78
+.L_8012DAE8:
+/* 8012DAE8 0012ABC8  3C 60 80 3C */	lis r3, globals@ha
+/* 8012DAEC 0012ABCC  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DAF0 0012ABD0  38 83 05 58 */	addi r4, r3, globals@l
+/* 8012DAF4 0012ABD4  80 64 07 28 */	lwz r3, 0x728(r4)
+/* 8012DAF8 0012ABD8  D0 03 00 D4 */	stfs f0, 0xd4(r3)
+/* 8012DAFC 0012ABDC  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DB00 0012ABE0  80 64 07 28 */	lwz r3, 0x728(r4)
+/* 8012DB04 0012ABE4  D0 03 00 D8 */	stfs f0, 0xd8(r3)
+/* 8012DB08 0012ABE8  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DB0C 0012ABEC  80 64 07 28 */	lwz r3, 0x728(r4)
+/* 8012DB10 0012ABF0  D0 03 00 DC */	stfs f0, 0xdc(r3)
+/* 8012DB14 0012ABF4  48 00 00 64 */	b .L_8012DB78
+.L_8012DB18:
+/* 8012DB18 0012ABF8  80 7F 00 14 */	lwz r3, 0x14(r31)
+/* 8012DB1C 0012ABFC  C0 22 A2 B4 */	lfs f1, "@865"@sda21(r2)
+/* 8012DB20 0012AC00  80 63 00 24 */	lwz r3, 0x24(r3)
+/* 8012DB24 0012AC04  80 63 00 0C */	lwz r3, 0xc(r3)
+/* 8012DB28 0012AC08  80 63 00 08 */	lwz r3, 0x8(r3)
+/* 8012DB2C 0012AC0C  C0 03 00 08 */	lfs f0, 0x8(r3)
+/* 8012DB30 0012AC10  FC 00 08 40 */	fcmpo cr0, f0, f1
+/* 8012DB34 0012AC14  41 80 00 10 */	blt .L_8012DB44
+/* 8012DB38 0012AC18  C0 03 00 20 */	lfs f0, 0x20(r3)
+/* 8012DB3C 0012AC1C  FC 00 08 40 */	fcmpo cr0, f0, f1
+/* 8012DB40 0012AC20  40 80 00 0C */	bge .L_8012DB4C
+.L_8012DB44:
+/* 8012DB44 0012AC24  38 00 00 01 */	li r0, 0x1
+/* 8012DB48 0012AC28  90 1F 00 24 */	stw r0, 0x24(r31)
+.L_8012DB4C:
+/* 8012DB4C 0012AC2C  3C 60 80 3C */	lis r3, globals@ha
+/* 8012DB50 0012AC30  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DB54 0012AC34  38 83 05 58 */	addi r4, r3, globals@l
+/* 8012DB58 0012AC38  80 64 07 28 */	lwz r3, 0x728(r4)
+/* 8012DB5C 0012AC3C  D0 03 00 D4 */	stfs f0, 0xd4(r3)
+/* 8012DB60 0012AC40  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DB64 0012AC44  80 64 07 28 */	lwz r3, 0x728(r4)
+/* 8012DB68 0012AC48  D0 03 00 D8 */	stfs f0, 0xd8(r3)
+/* 8012DB6C 0012AC4C  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DB70 0012AC50  80 64 07 28 */	lwz r3, 0x728(r4)
+/* 8012DB74 0012AC54  D0 03 00 DC */	stfs f0, 0xdc(r3)
+.L_8012DB78:
+/* 8012DB78 0012AC58  80 1F 00 28 */	lwz r0, 0x28(r31)
+/* 8012DB7C 0012AC5C  80 7F 00 24 */	lwz r3, 0x24(r31)
+/* 8012DB80 0012AC60  7C 00 18 40 */	cmplw r0, r3
+/* 8012DB84 0012AC64  41 82 01 64 */	beq .L_8012DCE8
+/* 8012DB88 0012AC68  2C 03 00 02 */	cmpwi r3, 0x2
+/* 8012DB8C 0012AC6C  41 82 00 7C */	beq .L_8012DC08
+/* 8012DB90 0012AC70  40 80 00 14 */	bge .L_8012DBA4
+/* 8012DB94 0012AC74  2C 03 00 00 */	cmpwi r3, 0x0
+/* 8012DB98 0012AC78  41 82 00 18 */	beq .L_8012DBB0
+/* 8012DB9C 0012AC7C  40 80 00 28 */	bge .L_8012DBC4
+/* 8012DBA0 0012AC80  48 00 01 48 */	b .L_8012DCE8
+.L_8012DBA4:
+/* 8012DBA4 0012AC84  2C 03 00 04 */	cmpwi r3, 0x4
+/* 8012DBA8 0012AC88  40 80 01 40 */	bge .L_8012DCE8
+/* 8012DBAC 0012AC8C  48 00 00 EC */	b .L_8012DC98
+.L_8012DBB0:
+/* 8012DBB0 0012AC90  3C 60 80 27 */	lis r3, "@stringBase0"@ha
+/* 8012DBB4 0012AC94  38 80 00 5F */	li r4, 0x5f
+/* 8012DBB8 0012AC98  38 63 C4 00 */	addi r3, r3, "@stringBase0"@l
+/* 8012DBBC 0012AC9C  4B EF 19 69 */	bl zEntEvent__FPcUi
+/* 8012DBC0 0012ACA0  48 00 01 28 */	b .L_8012DCE8
+.L_8012DBC4:
+/* 8012DBC4 0012ACA4  3C 60 80 27 */	lis r3, "@stringBase0"@ha
+/* 8012DBC8 0012ACA8  38 80 00 5E */	li r4, 0x5e
+/* 8012DBCC 0012ACAC  38 63 C4 00 */	addi r3, r3, "@stringBase0"@l
+/* 8012DBD0 0012ACB0  4B EF 19 55 */	bl zEntEvent__FPcUi
+/* 8012DBD4 0012ACB4  38 60 00 40 */	li r3, 0x40
+/* 8012DBD8 0012ACB8  4B F3 89 29 */	bl zEntPlayerControlOn__F13zControlOwner
+/* 8012DBDC 0012ACBC  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DBE0 0012ACC0  38 80 01 50 */	li r4, 0x150
+/* 8012DBE4 0012ACC4  80 63 00 18 */	lwz r3, 0x18(r3)
+/* 8012DBE8 0012ACC8  4B EF 19 7D */	bl zEntEvent__FUiUi
+/* 8012DBEC 0012ACCC  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DBF0 0012ACD0  38 80 00 04 */	li r4, 0x4
+/* 8012DBF4 0012ACD4  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 8012DBF8 0012ACD8  4B EF 19 6D */	bl zEntEvent__FUiUi
+/* 8012DBFC 0012ACDC  38 00 00 00 */	li r0, 0x0
+/* 8012DC00 0012ACE0  90 0D 95 D8 */	stw r0, gBusStopIsRunning@sda21(r13)
+/* 8012DC04 0012ACE4  48 00 00 E4 */	b .L_8012DCE8
+.L_8012DC08:
+/* 8012DC08 0012ACE8  3C 60 80 27 */	lis r3, "@stringBase0"@ha
+/* 8012DC0C 0012ACEC  38 80 00 5F */	li r4, 0x5f
+/* 8012DC10 0012ACF0  38 63 C4 00 */	addi r3, r3, "@stringBase0"@l
+/* 8012DC14 0012ACF4  4B EF 19 11 */	bl zEntEvent__FPcUi
+/* 8012DC18 0012ACF8  38 60 00 40 */	li r3, 0x40
+/* 8012DC1C 0012ACFC  4B F3 89 3D */	bl zEntPlayerControlOff__F13zControlOwner
+/* 8012DC20 0012AD00  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DC24 0012AD04  38 80 01 4F */	li r4, 0x14f
+/* 8012DC28 0012AD08  80 63 00 18 */	lwz r3, 0x18(r3)
+/* 8012DC2C 0012AD0C  4B EF 19 39 */	bl zEntEvent__FUiUi
+/* 8012DC30 0012AD10  C0 42 A2 B0 */	lfs f2, "@864"@sda21(r2)
+/* 8012DC34 0012AD14  38 80 01 51 */	li r4, 0x151
+/* 8012DC38 0012AD18  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DC3C 0012AD1C  FC 60 10 90 */	fmr f3, f2
+/* 8012DC40 0012AD20  C0 22 A2 B8 */	lfs f1, "@866"@sda21(r2)
+/* 8012DC44 0012AD24  FC 80 10 90 */	fmr f4, f2
+/* 8012DC48 0012AD28  80 63 00 18 */	lwz r3, 0x18(r3)
+/* 8012DC4C 0012AD2C  4B EF 19 55 */	bl zEntEvent__FUiUiffff
+/* 8012DC50 0012AD30  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DC54 0012AD34  38 80 00 03 */	li r4, 0x3
+/* 8012DC58 0012AD38  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 8012DC5C 0012AD3C  4B EF 19 09 */	bl zEntEvent__FUiUi
+/* 8012DC60 0012AD40  C0 42 A2 B0 */	lfs f2, "@864"@sda21(r2)
+/* 8012DC64 0012AD44  38 80 00 C3 */	li r4, 0xc3
+/* 8012DC68 0012AD48  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DC6C 0012AD4C  FC 60 10 90 */	fmr f3, f2
+/* 8012DC70 0012AD50  C0 22 A2 BC */	lfs f1, "@867"@sda21(r2)
+/* 8012DC74 0012AD54  FC 80 10 90 */	fmr f4, f2
+/* 8012DC78 0012AD58  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 8012DC7C 0012AD5C  4B EF 19 25 */	bl zEntEvent__FUiUiffff
+/* 8012DC80 0012AD60  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DC84 0012AD64  38 00 00 01 */	li r0, 0x1
+/* 8012DC88 0012AD68  C0 03 00 20 */	lfs f0, 0x20(r3)
+/* 8012DC8C 0012AD6C  D0 1F 00 2C */	stfs f0, 0x2c(r31)
+/* 8012DC90 0012AD70  90 0D 95 D8 */	stw r0, gBusStopIsRunning@sda21(r13)
+/* 8012DC94 0012AD74  48 00 00 54 */	b .L_8012DCE8
+.L_8012DC98:
+/* 8012DC98 0012AD78  80 0D 8D 60 */	lwz r0, gCurrentPlayer@sda21(r13)
+/* 8012DC9C 0012AD7C  2C 00 00 00 */	cmpwi r0, 0x0
+/* 8012DCA0 0012AD80  41 82 00 10 */	beq .L_8012DCB0
+/* 8012DCA4 0012AD84  38 00 00 00 */	li r0, 0x0
+/* 8012DCA8 0012AD88  90 0D 8D 60 */	stw r0, gCurrentPlayer@sda21(r13)
+/* 8012DCAC 0012AD8C  48 00 00 30 */	b .L_8012DCDC
+.L_8012DCB0:
+/* 8012DCB0 0012AD90  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 8012DCB4 0012AD94  80 03 00 14 */	lwz r0, 0x14(r3)
+/* 8012DCB8 0012AD98  28 00 00 00 */	cmplwi r0, 0x0
+/* 8012DCBC 0012AD9C  40 82 00 10 */	bne .L_8012DCCC
+/* 8012DCC0 0012ADA0  38 00 00 01 */	li r0, 0x1
+/* 8012DCC4 0012ADA4  90 0D 8D 60 */	stw r0, gCurrentPlayer@sda21(r13)
+/* 8012DCC8 0012ADA8  48 00 00 14 */	b .L_8012DCDC
+.L_8012DCCC:
+/* 8012DCCC 0012ADAC  28 00 00 01 */	cmplwi r0, 0x1
+/* 8012DCD0 0012ADB0  40 82 00 0C */	bne .L_8012DCDC
+/* 8012DCD4 0012ADB4  38 00 00 02 */	li r0, 0x2
+/* 8012DCD8 0012ADB8  90 0D 8D 60 */	stw r0, gCurrentPlayer@sda21(r13)
+.L_8012DCDC:
+/* 8012DCDC 0012ADBC  7F E3 FB 78 */	mr r3, r31
+/* 8012DCE0 0012ADC0  38 80 01 77 */	li r4, 0x177
+/* 8012DCE4 0012ADC4  4B EF 19 0D */	bl zEntEvent__FP5xBaseUi
+.L_8012DCE8:
+/* 8012DCE8 0012ADC8  80 1F 00 24 */	lwz r0, 0x24(r31)
+/* 8012DCEC 0012ADCC  90 1F 00 28 */	stw r0, 0x28(r31)
+/* 8012DCF0 0012ADD0  C0 22 A2 B0 */	lfs f1, "@864"@sda21(r2)
+/* 8012DCF4 0012ADD4  C0 1F 00 2C */	lfs f0, 0x2c(r31)
+/* 8012DCF8 0012ADD8  FC 01 00 00 */	fcmpu cr0, f1, f0
+/* 8012DCFC 0012ADDC  40 82 00 18 */	bne .L_8012DD14
+/* 8012DD00 0012ADE0  80 1F 00 24 */	lwz r0, 0x24(r31)
+/* 8012DD04 0012ADE4  28 00 00 02 */	cmplwi r0, 0x2
+/* 8012DD08 0012ADE8  40 82 00 0C */	bne .L_8012DD14
+/* 8012DD0C 0012ADEC  38 00 00 03 */	li r0, 0x3
+/* 8012DD10 0012ADF0  90 1F 00 24 */	stw r0, 0x24(r31)
+.L_8012DD14:
+/* 8012DD14 0012ADF4  C0 3F 00 2C */	lfs f1, 0x2c(r31)
+/* 8012DD18 0012ADF8  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DD1C 0012ADFC  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 8012DD20 0012AE00  40 81 00 20 */	ble .L_8012DD40
+/* 8012DD24 0012AE04  EC 01 F8 28 */	fsubs f0, f1, f31
+/* 8012DD28 0012AE08  D0 1F 00 2C */	stfs f0, 0x2c(r31)
+/* 8012DD2C 0012AE0C  C0 3F 00 2C */	lfs f1, 0x2c(r31)
+/* 8012DD30 0012AE10  C0 02 A2 B0 */	lfs f0, "@864"@sda21(r2)
+/* 8012DD34 0012AE14  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 8012DD38 0012AE18  40 80 00 08 */	bge .L_8012DD40
+/* 8012DD3C 0012AE1C  D0 1F 00 2C */	stfs f0, 0x2c(r31)
+.L_8012DD40:
+/* 8012DD40 0012AE20  E3 E1 00 18 */	psq_l f31, 0x18(r1), 0, qr0
+/* 8012DD44 0012AE24  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 8012DD48 0012AE28  CB E1 00 10 */	lfd f31, 0x10(r1)
+/* 8012DD4C 0012AE2C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 8012DD50 0012AE30  7C 08 03 A6 */	mtlr r0
+/* 8012DD54 0012AE34  38 21 00 20 */	addi r1, r1, 0x20
+/* 8012DD58 0012AE38  4E 80 00 20 */	blr
+.endfn zBusStop_Update__FP5xBaseP6xScenef
+
+# zBusStopEventCB(xBase*, xBase*, unsigned int, const float*, xBase*)
+.fn zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase, global
+/* 8012DD5C 0012AE3C  38 60 00 01 */	li r3, 0x1
+/* 8012DD60 0012AE40  4E 80 00 20 */	blr
+.endfn zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase
+
+# 0x8026C400 - 0x8026C410
+.rodata
+.balign 8
+
+.obj "@stringBase0", local
+	.4byte 0x6D6E7534
+	.4byte 0x20627573
+	.4byte 0x73746F70
+	.byte 0x00
+.endobj "@stringBase0"
+	.byte 0x00, 0x00, 0x00
+
+# 0x803CBED8 - 0x803CBEE0
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj gBusStopIsRunning, global
+	.skip 0x4
+.endobj gBusStopIsRunning
+
+.obj sBusStopUI, local
+	.skip 0x4
+.endobj sBusStopUI
+
+# 0x803CEC28 - 0x803CEC40
+.section .sdata2, "a"
+.balign 8
+
+.obj "@806", local
+	.4byte 0xBF800000
+.endobj "@806"
+
+.obj "@863", local
+	.4byte 0x40C80000
+.endobj "@863"
+
+.obj "@864", local
+	.4byte 0x00000000
+.endobj "@864"
+
+.obj "@865", local
+	.4byte 0x3DCCCCCD
+.endobj "@865"
+
+.obj "@866", local
+	.4byte 0x3F000000
+.endobj "@866"
+
+.obj "@867", local
+	.4byte 0x40000000
+.endobj "@867"

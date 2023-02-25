@@ -1,0 +1,625 @@
+.include "macros.inc"
+.file "GXFifo.c"
+
+# 0x801CA560 - 0x801CAD5C
+.text
+.balign 4
+
+.fn GXCPInterruptHandler, local
+/* 801CA560 001C7640  7C 08 02 A6 */	mflr r0
+/* 801CA564 001C7644  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CA568 001C7648  94 21 FD 20 */	stwu r1, -0x2e0(r1)
+/* 801CA56C 001C764C  93 E1 02 DC */	stw r31, 0x2dc(r1)
+/* 801CA570 001C7650  7C 9F 23 78 */	mr r31, r4
+/* 801CA574 001C7654  80 AD 9B A4 */	lwz r5, __cpReg@sda21(r13)
+/* 801CA578 001C7658  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CA57C 001C765C  A0 05 00 00 */	lhz r0, 0x0(r5)
+/* 801CA580 001C7660  90 03 00 0C */	stw r0, 0xc(r3)
+/* 801CA584 001C7664  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 801CA588 001C7668  54 00 EF FF */	extrwi. r0, r0, 1, 28
+/* 801CA58C 001C766C  41 82 00 38 */	beq .L_801CA5C4
+/* 801CA590 001C7670  80 03 00 0C */	lwz r0, 0xc(r3)
+/* 801CA594 001C7674  54 00 FF FF */	extrwi. r0, r0, 1, 30
+/* 801CA598 001C7678  41 82 00 2C */	beq .L_801CA5C4
+/* 801CA59C 001C767C  80 6D 9B D0 */	lwz r3, __GXCurrentThread@sda21(r13)
+/* 801CA5A0 001C7680  48 00 C9 19 */	bl OSResumeThread
+/* 801CA5A4 001C7684  38 00 00 00 */	li r0, 0x0
+/* 801CA5A8 001C7688  90 0D 9B D8 */	stw r0, GXOverflowSuspendInProgress@sda21(r13)
+/* 801CA5AC 001C768C  38 60 00 01 */	li r3, 0x1
+/* 801CA5B0 001C7690  38 80 00 01 */	li r4, 0x1
+/* 801CA5B4 001C7694  48 00 07 1D */	bl __GXWriteFifoIntReset
+/* 801CA5B8 001C7698  38 60 00 01 */	li r3, 0x1
+/* 801CA5BC 001C769C  38 80 00 00 */	li r4, 0x0
+/* 801CA5C0 001C76A0  48 00 06 E1 */	bl __GXWriteFifoIntEnable
+.L_801CA5C4:
+/* 801CA5C4 001C76A4  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CA5C8 001C76A8  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 801CA5CC 001C76AC  54 00 F7 FF */	extrwi. r0, r0, 1, 29
+/* 801CA5D0 001C76B0  41 82 00 44 */	beq .L_801CA614
+/* 801CA5D4 001C76B4  80 03 00 0C */	lwz r0, 0xc(r3)
+/* 801CA5D8 001C76B8  54 00 07 FF */	clrlwi. r0, r0, 31
+/* 801CA5DC 001C76BC  41 82 00 38 */	beq .L_801CA614
+/* 801CA5E0 001C76C0  80 AD 9B E0 */	lwz r5, __GXOverflowCount@sda21(r13)
+/* 801CA5E4 001C76C4  38 60 00 00 */	li r3, 0x0
+/* 801CA5E8 001C76C8  38 80 00 01 */	li r4, 0x1
+/* 801CA5EC 001C76CC  38 05 00 01 */	addi r0, r5, 0x1
+/* 801CA5F0 001C76D0  90 0D 9B E0 */	stw r0, __GXOverflowCount@sda21(r13)
+/* 801CA5F4 001C76D4  48 00 06 AD */	bl __GXWriteFifoIntEnable
+/* 801CA5F8 001C76D8  38 60 00 01 */	li r3, 0x1
+/* 801CA5FC 001C76DC  38 80 00 00 */	li r4, 0x0
+/* 801CA600 001C76E0  48 00 06 D1 */	bl __GXWriteFifoIntReset
+/* 801CA604 001C76E4  38 00 00 01 */	li r0, 0x1
+/* 801CA608 001C76E8  80 6D 9B D0 */	lwz r3, __GXCurrentThread@sda21(r13)
+/* 801CA60C 001C76EC  90 0D 9B D8 */	stw r0, GXOverflowSuspendInProgress@sda21(r13)
+/* 801CA610 001C76F0  48 00 CB 31 */	bl OSSuspendThread
+.L_801CA614:
+/* 801CA614 001C76F4  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CA618 001C76F8  80 83 00 08 */	lwz r4, 0x8(r3)
+/* 801CA61C 001C76FC  54 80 DF FF */	extrwi. r0, r4, 1, 26
+/* 801CA620 001C7700  41 82 00 60 */	beq .L_801CA680
+/* 801CA624 001C7704  80 03 00 0C */	lwz r0, 0xc(r3)
+/* 801CA628 001C7708  54 00 E7 FF */	extrwi. r0, r0, 1, 27
+/* 801CA62C 001C770C  41 82 00 54 */	beq .L_801CA680
+/* 801CA630 001C7710  38 00 00 00 */	li r0, 0x0
+/* 801CA634 001C7714  50 04 2E B4 */	rlwimi r4, r0, 5, 26, 26
+/* 801CA638 001C7718  90 83 00 08 */	stw r4, 0x8(r3)
+/* 801CA63C 001C771C  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 801CA640 001C7720  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA644 001C7724  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CA648 001C7728  80 0D 9B DC */	lwz r0, BreakPointCB@sda21(r13)
+/* 801CA64C 001C772C  28 00 00 00 */	cmplwi r0, 0x0
+/* 801CA650 001C7730  41 82 00 30 */	beq .L_801CA680
+/* 801CA654 001C7734  38 61 00 10 */	addi r3, r1, 0x10
+/* 801CA658 001C7738  48 00 85 15 */	bl OSClearContext
+/* 801CA65C 001C773C  38 61 00 10 */	addi r3, r1, 0x10
+/* 801CA660 001C7740  48 00 83 45 */	bl OSSetCurrentContext
+/* 801CA664 001C7744  81 8D 9B DC */	lwz r12, BreakPointCB@sda21(r13)
+/* 801CA668 001C7748  7D 88 03 A6 */	mtlr r12
+/* 801CA66C 001C774C  4E 80 00 21 */	blrl
+/* 801CA670 001C7750  38 61 00 10 */	addi r3, r1, 0x10
+/* 801CA674 001C7754  48 00 84 F9 */	bl OSClearContext
+/* 801CA678 001C7758  7F E3 FB 78 */	mr r3, r31
+/* 801CA67C 001C775C  48 00 83 29 */	bl OSSetCurrentContext
+.L_801CA680:
+/* 801CA680 001C7760  80 01 02 E4 */	lwz r0, 0x2e4(r1)
+/* 801CA684 001C7764  83 E1 02 DC */	lwz r31, 0x2dc(r1)
+/* 801CA688 001C7768  38 21 02 E0 */	addi r1, r1, 0x2e0
+/* 801CA68C 001C776C  7C 08 03 A6 */	mtlr r0
+/* 801CA690 001C7770  4E 80 00 20 */	blr
+.endfn GXCPInterruptHandler
+
+.fn GXInitFifoBase, global
+/* 801CA694 001C7774  7C 08 02 A6 */	mflr r0
+/* 801CA698 001C7778  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CA69C 001C777C  38 05 FF FC */	addi r0, r5, -0x4
+/* 801CA6A0 001C7780  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 801CA6A4 001C7784  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 801CA6A8 001C7788  3B E4 00 00 */	addi r31, r4, 0x0
+/* 801CA6AC 001C778C  7C 1F 02 14 */	add r0, r31, r0
+/* 801CA6B0 001C7790  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 801CA6B4 001C7794  3B C3 00 00 */	addi r30, r3, 0x0
+/* 801CA6B8 001C7798  38 85 C0 00 */	addi r4, r5, -0x4000
+/* 801CA6BC 001C779C  93 E3 00 00 */	stw r31, 0x0(r3)
+/* 801CA6C0 001C77A0  90 03 00 04 */	stw r0, 0x4(r3)
+/* 801CA6C4 001C77A4  38 00 00 00 */	li r0, 0x0
+/* 801CA6C8 001C77A8  90 A3 00 08 */	stw r5, 0x8(r3)
+/* 801CA6CC 001C77AC  54 A5 F8 74 */	rlwinm r5, r5, 31, 1, 26
+/* 801CA6D0 001C77B0  90 1E 00 1C */	stw r0, 0x1c(r30)
+/* 801CA6D4 001C77B4  48 00 00 9D */	bl GXInitFifoLimits
+/* 801CA6D8 001C77B8  38 7E 00 00 */	addi r3, r30, 0x0
+/* 801CA6DC 001C77BC  38 9F 00 00 */	addi r4, r31, 0x0
+/* 801CA6E0 001C77C0  38 BF 00 00 */	addi r5, r31, 0x0
+/* 801CA6E4 001C77C4  48 00 00 1D */	bl GXInitFifoPtrs
+/* 801CA6E8 001C77C8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801CA6EC 001C77CC  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 801CA6F0 001C77D0  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 801CA6F4 001C77D4  38 21 00 20 */	addi r1, r1, 0x20
+/* 801CA6F8 001C77D8  7C 08 03 A6 */	mtlr r0
+/* 801CA6FC 001C77DC  4E 80 00 20 */	blr
+.endfn GXInitFifoBase
+
+.fn GXInitFifoPtrs, global
+/* 801CA700 001C77E0  7C 08 02 A6 */	mflr r0
+/* 801CA704 001C77E4  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CA708 001C77E8  94 21 FF D8 */	stwu r1, -0x28(r1)
+/* 801CA70C 001C77EC  93 E1 00 24 */	stw r31, 0x24(r1)
+/* 801CA710 001C77F0  3B E5 00 00 */	addi r31, r5, 0x0
+/* 801CA714 001C77F4  93 C1 00 20 */	stw r30, 0x20(r1)
+/* 801CA718 001C77F8  3B C4 00 00 */	addi r30, r4, 0x0
+/* 801CA71C 001C77FC  93 A1 00 1C */	stw r29, 0x1c(r1)
+/* 801CA720 001C7800  3B A3 00 00 */	addi r29, r3, 0x0
+/* 801CA724 001C7804  48 00 9B ED */	bl OSDisableInterrupts
+/* 801CA728 001C7808  93 DD 00 14 */	stw r30, 0x14(r29)
+/* 801CA72C 001C780C  7C 1E F8 50 */	subf r0, r30, r31
+/* 801CA730 001C7810  93 FD 00 18 */	stw r31, 0x18(r29)
+/* 801CA734 001C7814  90 1D 00 1C */	stw r0, 0x1c(r29)
+/* 801CA738 001C7818  80 9D 00 1C */	lwz r4, 0x1c(r29)
+/* 801CA73C 001C781C  2C 04 00 00 */	cmpwi r4, 0x0
+/* 801CA740 001C7820  40 80 00 10 */	bge .L_801CA750
+/* 801CA744 001C7824  80 1D 00 08 */	lwz r0, 0x8(r29)
+/* 801CA748 001C7828  7C 04 02 14 */	add r0, r4, r0
+/* 801CA74C 001C782C  90 1D 00 1C */	stw r0, 0x1c(r29)
+.L_801CA750:
+/* 801CA750 001C7830  48 00 9B E9 */	bl OSRestoreInterrupts
+/* 801CA754 001C7834  80 01 00 2C */	lwz r0, 0x2c(r1)
+/* 801CA758 001C7838  83 E1 00 24 */	lwz r31, 0x24(r1)
+/* 801CA75C 001C783C  83 C1 00 20 */	lwz r30, 0x20(r1)
+/* 801CA760 001C7840  83 A1 00 1C */	lwz r29, 0x1c(r1)
+/* 801CA764 001C7844  38 21 00 28 */	addi r1, r1, 0x28
+/* 801CA768 001C7848  7C 08 03 A6 */	mtlr r0
+/* 801CA76C 001C784C  4E 80 00 20 */	blr
+.endfn GXInitFifoPtrs
+
+.fn GXInitFifoLimits, global
+/* 801CA770 001C7850  90 83 00 0C */	stw r4, 0xc(r3)
+/* 801CA774 001C7854  90 A3 00 10 */	stw r5, 0x10(r3)
+/* 801CA778 001C7858  4E 80 00 20 */	blr
+.endfn GXInitFifoLimits
+
+.fn GXSetCPUFifo, global
+/* 801CA77C 001C785C  7C 08 02 A6 */	mflr r0
+/* 801CA780 001C7860  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CA784 001C7864  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801CA788 001C7868  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801CA78C 001C786C  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 801CA790 001C7870  7C 7E 1B 78 */	mr r30, r3
+/* 801CA794 001C7874  48 00 9B 7D */	bl OSDisableInterrupts
+/* 801CA798 001C7878  80 0D 9B CC */	lwz r0, GPFifo@sda21(r13)
+/* 801CA79C 001C787C  3B E3 00 00 */	addi r31, r3, 0x0
+/* 801CA7A0 001C7880  93 CD 9B C8 */	stw r30, CPUFifo@sda21(r13)
+/* 801CA7A4 001C7884  7C 1E 00 40 */	cmplw r30, r0
+/* 801CA7A8 001C7888  40 82 00 70 */	bne .L_801CA818
+/* 801CA7AC 001C788C  80 1E 00 00 */	lwz r0, 0x0(r30)
+/* 801CA7B0 001C7890  39 00 00 00 */	li r8, 0x0
+/* 801CA7B4 001C7894  80 6D 9B A0 */	lwz r3, __piReg@sda21(r13)
+/* 801CA7B8 001C7898  38 C0 00 00 */	li r6, 0x0
+/* 801CA7BC 001C789C  54 00 00 BE */	clrlwi r0, r0, 2
+/* 801CA7C0 001C78A0  90 03 00 0C */	stw r0, 0xc(r3)
+/* 801CA7C4 001C78A4  38 00 00 01 */	li r0, 0x1
+/* 801CA7C8 001C78A8  38 60 00 01 */	li r3, 0x1
+/* 801CA7CC 001C78AC  80 FE 00 04 */	lwz r7, 0x4(r30)
+/* 801CA7D0 001C78B0  38 80 00 01 */	li r4, 0x1
+/* 801CA7D4 001C78B4  80 AD 9B A0 */	lwz r5, __piReg@sda21(r13)
+/* 801CA7D8 001C78B8  54 E7 00 BE */	clrlwi r7, r7, 2
+/* 801CA7DC 001C78BC  90 E5 00 10 */	stw r7, 0x10(r5)
+/* 801CA7E0 001C78C0  80 FE 00 18 */	lwz r7, 0x18(r30)
+/* 801CA7E4 001C78C4  80 AD 9B A0 */	lwz r5, __piReg@sda21(r13)
+/* 801CA7E8 001C78C8  50 E8 01 B4 */	rlwimi r8, r7, 0, 6, 26
+/* 801CA7EC 001C78CC  38 E8 00 00 */	addi r7, r8, 0x0
+/* 801CA7F0 001C78D0  50 C7 D1 4A */	rlwimi r7, r6, 26, 5, 5
+/* 801CA7F4 001C78D4  90 E5 00 14 */	stw r7, 0x14(r5)
+/* 801CA7F8 001C78D8  98 0D 9B D4 */	stb r0, CPGPLinked@sda21(r13)
+/* 801CA7FC 001C78DC  48 00 04 D5 */	bl __GXWriteFifoIntReset
+/* 801CA800 001C78E0  38 60 00 01 */	li r3, 0x1
+/* 801CA804 001C78E4  38 80 00 00 */	li r4, 0x0
+/* 801CA808 001C78E8  48 00 04 99 */	bl __GXWriteFifoIntEnable
+/* 801CA80C 001C78EC  38 60 00 01 */	li r3, 0x1
+/* 801CA810 001C78F0  48 00 04 5D */	bl __GXFifoLink
+/* 801CA814 001C78F4  48 00 00 6C */	b .L_801CA880
+.L_801CA818:
+/* 801CA818 001C78F8  88 0D 9B D4 */	lbz r0, CPGPLinked@sda21(r13)
+/* 801CA81C 001C78FC  28 00 00 00 */	cmplwi r0, 0x0
+/* 801CA820 001C7900  41 82 00 14 */	beq .L_801CA834
+/* 801CA824 001C7904  38 60 00 00 */	li r3, 0x0
+/* 801CA828 001C7908  48 00 04 45 */	bl __GXFifoLink
+/* 801CA82C 001C790C  38 00 00 00 */	li r0, 0x0
+/* 801CA830 001C7910  98 0D 9B D4 */	stb r0, CPGPLinked@sda21(r13)
+.L_801CA834:
+/* 801CA834 001C7914  38 60 00 00 */	li r3, 0x0
+/* 801CA838 001C7918  38 80 00 00 */	li r4, 0x0
+/* 801CA83C 001C791C  48 00 04 65 */	bl __GXWriteFifoIntEnable
+/* 801CA840 001C7920  80 9E 00 00 */	lwz r4, 0x0(r30)
+/* 801CA844 001C7924  38 A0 00 00 */	li r5, 0x0
+/* 801CA848 001C7928  80 6D 9B A0 */	lwz r3, __piReg@sda21(r13)
+/* 801CA84C 001C792C  38 00 00 00 */	li r0, 0x0
+/* 801CA850 001C7930  54 84 00 BE */	clrlwi r4, r4, 2
+/* 801CA854 001C7934  90 83 00 0C */	stw r4, 0xc(r3)
+/* 801CA858 001C7938  80 9E 00 04 */	lwz r4, 0x4(r30)
+/* 801CA85C 001C793C  80 6D 9B A0 */	lwz r3, __piReg@sda21(r13)
+/* 801CA860 001C7940  54 84 00 BE */	clrlwi r4, r4, 2
+/* 801CA864 001C7944  90 83 00 10 */	stw r4, 0x10(r3)
+/* 801CA868 001C7948  80 9E 00 18 */	lwz r4, 0x18(r30)
+/* 801CA86C 001C794C  80 6D 9B A0 */	lwz r3, __piReg@sda21(r13)
+/* 801CA870 001C7950  50 85 01 B4 */	rlwimi r5, r4, 0, 6, 26
+/* 801CA874 001C7954  38 85 00 00 */	addi r4, r5, 0x0
+/* 801CA878 001C7958  50 04 D1 4A */	rlwimi r4, r0, 26, 5, 5
+/* 801CA87C 001C795C  90 83 00 14 */	stw r4, 0x14(r3)
+.L_801CA880:
+/* 801CA880 001C7960  4B FF 04 29 */	bl PPCSync
+/* 801CA884 001C7964  7F E3 FB 78 */	mr r3, r31
+/* 801CA888 001C7968  48 00 9A B1 */	bl OSRestoreInterrupts
+/* 801CA88C 001C796C  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 801CA890 001C7970  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 801CA894 001C7974  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 801CA898 001C7978  38 21 00 18 */	addi r1, r1, 0x18
+/* 801CA89C 001C797C  7C 08 03 A6 */	mtlr r0
+/* 801CA8A0 001C7980  4E 80 00 20 */	blr
+.endfn GXSetCPUFifo
+
+.fn GXSetGPFifo, global
+/* 801CA8A4 001C7984  7C 08 02 A6 */	mflr r0
+/* 801CA8A8 001C7988  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CA8AC 001C798C  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801CA8B0 001C7990  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801CA8B4 001C7994  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 801CA8B8 001C7998  7C 7E 1B 78 */	mr r30, r3
+/* 801CA8BC 001C799C  48 00 9A 55 */	bl OSDisableInterrupts
+/* 801CA8C0 001C79A0  7C 7F 1B 78 */	mr r31, r3
+/* 801CA8C4 001C79A4  48 00 03 85 */	bl __GXFifoReadDisable
+/* 801CA8C8 001C79A8  38 60 00 00 */	li r3, 0x0
+/* 801CA8CC 001C79AC  38 80 00 00 */	li r4, 0x0
+/* 801CA8D0 001C79B0  48 00 03 D1 */	bl __GXWriteFifoIntEnable
+/* 801CA8D4 001C79B4  93 CD 9B CC */	stw r30, GPFifo@sda21(r13)
+/* 801CA8D8 001C79B8  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA8DC 001C79BC  80 1E 00 00 */	lwz r0, 0x0(r30)
+/* 801CA8E0 001C79C0  B0 03 00 20 */	sth r0, 0x20(r3)
+/* 801CA8E4 001C79C4  80 1E 00 04 */	lwz r0, 0x4(r30)
+/* 801CA8E8 001C79C8  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA8EC 001C79CC  B0 03 00 24 */	sth r0, 0x24(r3)
+/* 801CA8F0 001C79D0  80 1E 00 1C */	lwz r0, 0x1c(r30)
+/* 801CA8F4 001C79D4  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA8F8 001C79D8  B0 03 00 30 */	sth r0, 0x30(r3)
+/* 801CA8FC 001C79DC  80 1E 00 18 */	lwz r0, 0x18(r30)
+/* 801CA900 001C79E0  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA904 001C79E4  B0 03 00 34 */	sth r0, 0x34(r3)
+/* 801CA908 001C79E8  80 1E 00 14 */	lwz r0, 0x14(r30)
+/* 801CA90C 001C79EC  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA910 001C79F0  B0 03 00 38 */	sth r0, 0x38(r3)
+/* 801CA914 001C79F4  80 1E 00 0C */	lwz r0, 0xc(r30)
+/* 801CA918 001C79F8  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA91C 001C79FC  B0 03 00 28 */	sth r0, 0x28(r3)
+/* 801CA920 001C7A00  80 1E 00 10 */	lwz r0, 0x10(r30)
+/* 801CA924 001C7A04  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA928 001C7A08  B0 03 00 2C */	sth r0, 0x2c(r3)
+/* 801CA92C 001C7A0C  80 1E 00 00 */	lwz r0, 0x0(r30)
+/* 801CA930 001C7A10  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA934 001C7A14  54 00 84 BE */	extrwi r0, r0, 14, 2
+/* 801CA938 001C7A18  B0 03 00 22 */	sth r0, 0x22(r3)
+/* 801CA93C 001C7A1C  80 1E 00 04 */	lwz r0, 0x4(r30)
+/* 801CA940 001C7A20  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA944 001C7A24  54 00 84 BE */	extrwi r0, r0, 14, 2
+/* 801CA948 001C7A28  B0 03 00 26 */	sth r0, 0x26(r3)
+/* 801CA94C 001C7A2C  80 1E 00 1C */	lwz r0, 0x1c(r30)
+/* 801CA950 001C7A30  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA954 001C7A34  7C 00 86 70 */	srawi r0, r0, 16
+/* 801CA958 001C7A38  B0 03 00 32 */	sth r0, 0x32(r3)
+/* 801CA95C 001C7A3C  80 1E 00 18 */	lwz r0, 0x18(r30)
+/* 801CA960 001C7A40  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA964 001C7A44  54 00 84 BE */	extrwi r0, r0, 14, 2
+/* 801CA968 001C7A48  B0 03 00 36 */	sth r0, 0x36(r3)
+/* 801CA96C 001C7A4C  80 1E 00 14 */	lwz r0, 0x14(r30)
+/* 801CA970 001C7A50  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA974 001C7A54  54 00 84 BE */	extrwi r0, r0, 14, 2
+/* 801CA978 001C7A58  B0 03 00 3A */	sth r0, 0x3a(r3)
+/* 801CA97C 001C7A5C  80 1E 00 0C */	lwz r0, 0xc(r30)
+/* 801CA980 001C7A60  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA984 001C7A64  54 00 84 3E */	srwi r0, r0, 16
+/* 801CA988 001C7A68  B0 03 00 2A */	sth r0, 0x2a(r3)
+/* 801CA98C 001C7A6C  80 1E 00 10 */	lwz r0, 0x10(r30)
+/* 801CA990 001C7A70  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CA994 001C7A74  54 00 84 3E */	srwi r0, r0, 16
+/* 801CA998 001C7A78  B0 03 00 2E */	sth r0, 0x2e(r3)
+/* 801CA99C 001C7A7C  4B FF 03 0D */	bl PPCSync
+/* 801CA9A0 001C7A80  80 6D 9B C8 */	lwz r3, CPUFifo@sda21(r13)
+/* 801CA9A4 001C7A84  80 0D 9B CC */	lwz r0, GPFifo@sda21(r13)
+/* 801CA9A8 001C7A88  7C 03 00 40 */	cmplw r3, r0
+/* 801CA9AC 001C7A8C  40 82 00 24 */	bne .L_801CA9D0
+/* 801CA9B0 001C7A90  38 00 00 01 */	li r0, 0x1
+/* 801CA9B4 001C7A94  98 0D 9B D4 */	stb r0, CPGPLinked@sda21(r13)
+/* 801CA9B8 001C7A98  38 60 00 01 */	li r3, 0x1
+/* 801CA9BC 001C7A9C  38 80 00 00 */	li r4, 0x0
+/* 801CA9C0 001C7AA0  48 00 02 E1 */	bl __GXWriteFifoIntEnable
+/* 801CA9C4 001C7AA4  38 60 00 01 */	li r3, 0x1
+/* 801CA9C8 001C7AA8  48 00 02 A5 */	bl __GXFifoLink
+/* 801CA9CC 001C7AAC  48 00 00 20 */	b .L_801CA9EC
+.L_801CA9D0:
+/* 801CA9D0 001C7AB0  38 00 00 00 */	li r0, 0x0
+/* 801CA9D4 001C7AB4  98 0D 9B D4 */	stb r0, CPGPLinked@sda21(r13)
+/* 801CA9D8 001C7AB8  38 60 00 00 */	li r3, 0x0
+/* 801CA9DC 001C7ABC  38 80 00 00 */	li r4, 0x0
+/* 801CA9E0 001C7AC0  48 00 02 C1 */	bl __GXWriteFifoIntEnable
+/* 801CA9E4 001C7AC4  38 60 00 00 */	li r3, 0x0
+/* 801CA9E8 001C7AC8  48 00 02 85 */	bl __GXFifoLink
+.L_801CA9EC:
+/* 801CA9EC 001C7ACC  38 60 00 01 */	li r3, 0x1
+/* 801CA9F0 001C7AD0  38 80 00 01 */	li r4, 0x1
+/* 801CA9F4 001C7AD4  48 00 02 DD */	bl __GXWriteFifoIntReset
+/* 801CA9F8 001C7AD8  48 00 02 2D */	bl __GXFifoReadEnable
+/* 801CA9FC 001C7ADC  7F E3 FB 78 */	mr r3, r31
+/* 801CAA00 001C7AE0  48 00 99 39 */	bl OSRestoreInterrupts
+/* 801CAA04 001C7AE4  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 801CAA08 001C7AE8  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 801CAA0C 001C7AEC  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 801CAA10 001C7AF0  38 21 00 18 */	addi r1, r1, 0x18
+/* 801CAA14 001C7AF4  7C 08 03 A6 */	mtlr r0
+/* 801CAA18 001C7AF8  4E 80 00 20 */	blr
+.endfn GXSetGPFifo
+
+.fn GXGetFifoPtrs, global
+/* 801CAA1C 001C7AFC  80 0D 9B C8 */	lwz r0, CPUFifo@sda21(r13)
+/* 801CAA20 001C7B00  7C 03 00 40 */	cmplw r3, r0
+/* 801CAA24 001C7B04  40 82 00 18 */	bne .L_801CAA3C
+/* 801CAA28 001C7B08  80 CD 9B A0 */	lwz r6, __piReg@sda21(r13)
+/* 801CAA2C 001C7B0C  80 06 00 14 */	lwz r0, 0x14(r6)
+/* 801CAA30 001C7B10  54 06 01 88 */	rlwinm r6, r0, 0, 6, 4
+/* 801CAA34 001C7B14  3C 06 80 00 */	addis r0, r6, 0x8000
+/* 801CAA38 001C7B18  90 03 00 18 */	stw r0, 0x18(r3)
+.L_801CAA3C:
+/* 801CAA3C 001C7B1C  80 0D 9B CC */	lwz r0, GPFifo@sda21(r13)
+/* 801CAA40 001C7B20  7C 03 00 40 */	cmplw r3, r0
+/* 801CAA44 001C7B24  40 82 00 34 */	bne .L_801CAA78
+/* 801CAA48 001C7B28  80 ED 9B A4 */	lwz r7, __cpReg@sda21(r13)
+/* 801CAA4C 001C7B2C  A0 C7 00 3A */	lhz r6, 0x3a(r7)
+/* 801CAA50 001C7B30  A0 E7 00 38 */	lhz r7, 0x38(r7)
+/* 801CAA54 001C7B34  50 C7 80 1E */	rlwimi r7, r6, 16, 0, 15
+/* 801CAA58 001C7B38  3C 07 80 00 */	addis r0, r7, 0x8000
+/* 801CAA5C 001C7B3C  90 03 00 14 */	stw r0, 0x14(r3)
+/* 801CAA60 001C7B40  80 ED 9B A4 */	lwz r7, __cpReg@sda21(r13)
+/* 801CAA64 001C7B44  A0 C7 00 32 */	lhz r6, 0x32(r7)
+/* 801CAA68 001C7B48  A0 07 00 30 */	lhz r0, 0x30(r7)
+/* 801CAA6C 001C7B4C  50 C0 80 1E */	rlwimi r0, r6, 16, 0, 15
+/* 801CAA70 001C7B50  90 03 00 1C */	stw r0, 0x1c(r3)
+/* 801CAA74 001C7B54  48 00 00 2C */	b .L_801CAAA0
+.L_801CAA78:
+/* 801CAA78 001C7B58  80 C3 00 14 */	lwz r6, 0x14(r3)
+/* 801CAA7C 001C7B5C  80 03 00 18 */	lwz r0, 0x18(r3)
+/* 801CAA80 001C7B60  7C 06 00 50 */	subf r0, r6, r0
+/* 801CAA84 001C7B64  90 03 00 1C */	stw r0, 0x1c(r3)
+/* 801CAA88 001C7B68  80 C3 00 1C */	lwz r6, 0x1c(r3)
+/* 801CAA8C 001C7B6C  2C 06 00 00 */	cmpwi r6, 0x0
+/* 801CAA90 001C7B70  40 80 00 10 */	bge .L_801CAAA0
+/* 801CAA94 001C7B74  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 801CAA98 001C7B78  7C 06 02 14 */	add r0, r6, r0
+/* 801CAA9C 001C7B7C  90 03 00 1C */	stw r0, 0x1c(r3)
+.L_801CAAA0:
+/* 801CAAA0 001C7B80  80 03 00 14 */	lwz r0, 0x14(r3)
+/* 801CAAA4 001C7B84  90 04 00 00 */	stw r0, 0x0(r4)
+/* 801CAAA8 001C7B88  80 03 00 18 */	lwz r0, 0x18(r3)
+/* 801CAAAC 001C7B8C  90 05 00 00 */	stw r0, 0x0(r5)
+/* 801CAAB0 001C7B90  4E 80 00 20 */	blr
+.endfn GXGetFifoPtrs
+
+.fn GXSetBreakPtCallback, global
+/* 801CAAB4 001C7B94  7C 08 02 A6 */	mflr r0
+/* 801CAAB8 001C7B98  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CAABC 001C7B9C  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801CAAC0 001C7BA0  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801CAAC4 001C7BA4  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 801CAAC8 001C7BA8  7C 7E 1B 78 */	mr r30, r3
+/* 801CAACC 001C7BAC  83 ED 9B DC */	lwz r31, BreakPointCB@sda21(r13)
+/* 801CAAD0 001C7BB0  48 00 98 41 */	bl OSDisableInterrupts
+/* 801CAAD4 001C7BB4  93 CD 9B DC */	stw r30, BreakPointCB@sda21(r13)
+/* 801CAAD8 001C7BB8  48 00 98 61 */	bl OSRestoreInterrupts
+/* 801CAADC 001C7BBC  7F E3 FB 78 */	mr r3, r31
+/* 801CAAE0 001C7BC0  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 801CAAE4 001C7BC4  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 801CAAE8 001C7BC8  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 801CAAEC 001C7BCC  38 21 00 18 */	addi r1, r1, 0x18
+/* 801CAAF0 001C7BD0  7C 08 03 A6 */	mtlr r0
+/* 801CAAF4 001C7BD4  4E 80 00 20 */	blr
+.endfn GXSetBreakPtCallback
+
+.fn GXEnableBreakPt, global
+/* 801CAAF8 001C7BD8  7C 08 02 A6 */	mflr r0
+/* 801CAAFC 001C7BDC  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CAB00 001C7BE0  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801CAB04 001C7BE4  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801CAB08 001C7BE8  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 801CAB0C 001C7BEC  7C 7E 1B 78 */	mr r30, r3
+/* 801CAB10 001C7BF0  48 00 98 01 */	bl OSDisableInterrupts
+/* 801CAB14 001C7BF4  7C 7F 1B 78 */	mr r31, r3
+/* 801CAB18 001C7BF8  48 00 01 31 */	bl __GXFifoReadDisable
+/* 801CAB1C 001C7BFC  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CAB20 001C7C00  57 C0 84 BE */	extrwi r0, r30, 14, 2
+/* 801CAB24 001C7C04  B3 C3 00 3C */	sth r30, 0x3c(r3)
+/* 801CAB28 001C7C08  38 60 00 01 */	li r3, 0x1
+/* 801CAB2C 001C7C0C  80 8D 9B A4 */	lwz r4, __cpReg@sda21(r13)
+/* 801CAB30 001C7C10  B0 04 00 3E */	sth r0, 0x3e(r4)
+/* 801CAB34 001C7C14  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CAB38 001C7C18  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CAB3C 001C7C1C  50 60 0F BC */	rlwimi r0, r3, 1, 30, 30
+/* 801CAB40 001C7C20  90 04 00 08 */	stw r0, 0x8(r4)
+/* 801CAB44 001C7C24  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CAB48 001C7C28  50 60 2E B4 */	rlwimi r0, r3, 5, 26, 26
+/* 801CAB4C 001C7C2C  90 04 00 08 */	stw r0, 0x8(r4)
+/* 801CAB50 001C7C30  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CAB54 001C7C34  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CAB58 001C7C38  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CAB5C 001C7C3C  93 CD 9B E4 */	stw r30, __GXCurrentBP@sda21(r13)
+/* 801CAB60 001C7C40  48 00 00 C5 */	bl __GXFifoReadEnable
+/* 801CAB64 001C7C44  7F E3 FB 78 */	mr r3, r31
+/* 801CAB68 001C7C48  48 00 97 D1 */	bl OSRestoreInterrupts
+/* 801CAB6C 001C7C4C  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 801CAB70 001C7C50  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 801CAB74 001C7C54  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 801CAB78 001C7C58  38 21 00 18 */	addi r1, r1, 0x18
+/* 801CAB7C 001C7C5C  7C 08 03 A6 */	mtlr r0
+/* 801CAB80 001C7C60  4E 80 00 20 */	blr
+.endfn GXEnableBreakPt
+
+.fn GXDisableBreakPt, global
+/* 801CAB84 001C7C64  7C 08 02 A6 */	mflr r0
+/* 801CAB88 001C7C68  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CAB8C 001C7C6C  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801CAB90 001C7C70  48 00 97 81 */	bl OSDisableInterrupts
+/* 801CAB94 001C7C74  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CAB98 001C7C78  38 A0 00 00 */	li r5, 0x0
+/* 801CAB9C 001C7C7C  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CABA0 001C7C80  50 A0 0F BC */	rlwimi r0, r5, 1, 30, 30
+/* 801CABA4 001C7C84  90 04 00 08 */	stw r0, 0x8(r4)
+/* 801CABA8 001C7C88  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CABAC 001C7C8C  50 A0 2E B4 */	rlwimi r0, r5, 5, 26, 26
+/* 801CABB0 001C7C90  90 04 00 08 */	stw r0, 0x8(r4)
+/* 801CABB4 001C7C94  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CABB8 001C7C98  80 8D 9B A4 */	lwz r4, __cpReg@sda21(r13)
+/* 801CABBC 001C7C9C  B0 04 00 02 */	sth r0, 0x2(r4)
+/* 801CABC0 001C7CA0  90 AD 9B E4 */	stw r5, __GXCurrentBP@sda21(r13)
+/* 801CABC4 001C7CA4  48 00 97 75 */	bl OSRestoreInterrupts
+/* 801CABC8 001C7CA8  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801CABCC 001C7CAC  38 21 00 08 */	addi r1, r1, 0x8
+/* 801CABD0 001C7CB0  7C 08 03 A6 */	mtlr r0
+/* 801CABD4 001C7CB4  4E 80 00 20 */	blr
+.endfn GXDisableBreakPt
+
+.fn __GXFifoInit, global
+/* 801CABD8 001C7CB8  7C 08 02 A6 */	mflr r0
+/* 801CABDC 001C7CBC  3C 60 80 1D */	lis r3, GXCPInterruptHandler@ha
+/* 801CABE0 001C7CC0  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CABE4 001C7CC4  38 83 A5 60 */	addi r4, r3, GXCPInterruptHandler@l
+/* 801CABE8 001C7CC8  38 60 00 11 */	li r3, 0x11
+/* 801CABEC 001C7CCC  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801CABF0 001C7CD0  48 00 97 6D */	bl __OSSetInterruptHandler
+/* 801CABF4 001C7CD4  38 60 40 00 */	li r3, 0x4000
+/* 801CABF8 001C7CD8  48 00 9B 69 */	bl __OSUnmaskInterrupts
+/* 801CABFC 001C7CDC  48 00 BB 7D */	bl OSGetCurrentThread
+/* 801CAC00 001C7CE0  38 00 00 00 */	li r0, 0x0
+/* 801CAC04 001C7CE4  90 6D 9B D0 */	stw r3, __GXCurrentThread@sda21(r13)
+/* 801CAC08 001C7CE8  90 0D 9B D8 */	stw r0, GXOverflowSuspendInProgress@sda21(r13)
+/* 801CAC0C 001C7CEC  90 0D 9B C8 */	stw r0, CPUFifo@sda21(r13)
+/* 801CAC10 001C7CF0  90 0D 9B CC */	stw r0, GPFifo@sda21(r13)
+/* 801CAC14 001C7CF4  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801CAC18 001C7CF8  38 21 00 08 */	addi r1, r1, 0x8
+/* 801CAC1C 001C7CFC  7C 08 03 A6 */	mtlr r0
+/* 801CAC20 001C7D00  4E 80 00 20 */	blr
+.endfn __GXFifoInit
+
+.fn __GXFifoReadEnable, local
+/* 801CAC24 001C7D04  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CAC28 001C7D08  38 00 00 01 */	li r0, 0x1
+/* 801CAC2C 001C7D0C  80 64 00 08 */	lwz r3, 0x8(r4)
+/* 801CAC30 001C7D10  50 03 07 FE */	rlwimi r3, r0, 0, 31, 31
+/* 801CAC34 001C7D14  90 64 00 08 */	stw r3, 0x8(r4)
+/* 801CAC38 001C7D18  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CAC3C 001C7D1C  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CAC40 001C7D20  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CAC44 001C7D24  4E 80 00 20 */	blr
+.endfn __GXFifoReadEnable
+
+.fn __GXFifoReadDisable, local
+/* 801CAC48 001C7D28  80 82 B2 F8 */	lwz r4, __GXData@sda21(r2)
+/* 801CAC4C 001C7D2C  38 00 00 00 */	li r0, 0x0
+/* 801CAC50 001C7D30  80 64 00 08 */	lwz r3, 0x8(r4)
+/* 801CAC54 001C7D34  50 03 07 FE */	rlwimi r3, r0, 0, 31, 31
+/* 801CAC58 001C7D38  90 64 00 08 */	stw r3, 0x8(r4)
+/* 801CAC5C 001C7D3C  80 04 00 08 */	lwz r0, 0x8(r4)
+/* 801CAC60 001C7D40  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CAC64 001C7D44  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CAC68 001C7D48  4E 80 00 20 */	blr
+.endfn __GXFifoReadDisable
+
+.fn __GXFifoLink, local
+/* 801CAC6C 001C7D4C  54 60 06 3F */	clrlwi. r0, r3, 24
+/* 801CAC70 001C7D50  41 82 00 0C */	beq .L_801CAC7C
+/* 801CAC74 001C7D54  38 80 00 01 */	li r4, 0x1
+/* 801CAC78 001C7D58  48 00 00 08 */	b .L_801CAC80
+.L_801CAC7C:
+/* 801CAC7C 001C7D5C  38 80 00 00 */	li r4, 0x0
+.L_801CAC80:
+/* 801CAC80 001C7D60  80 62 B2 F8 */	lwz r3, __GXData@sda21(r2)
+/* 801CAC84 001C7D64  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 801CAC88 001C7D68  50 80 26 F6 */	rlwimi r0, r4, 4, 27, 27
+/* 801CAC8C 001C7D6C  90 03 00 08 */	stw r0, 0x8(r3)
+/* 801CAC90 001C7D70  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 801CAC94 001C7D74  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CAC98 001C7D78  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CAC9C 001C7D7C  4E 80 00 20 */	blr
+.endfn __GXFifoLink
+
+.fn __GXWriteFifoIntEnable, local
+/* 801CACA0 001C7D80  80 A2 B2 F8 */	lwz r5, __GXData@sda21(r2)
+/* 801CACA4 001C7D84  54 80 06 3E */	clrlwi r0, r4, 24
+/* 801CACA8 001C7D88  80 85 00 08 */	lwz r4, 0x8(r5)
+/* 801CACAC 001C7D8C  50 64 17 7A */	rlwimi r4, r3, 2, 29, 29
+/* 801CACB0 001C7D90  90 85 00 08 */	stw r4, 0x8(r5)
+/* 801CACB4 001C7D94  80 65 00 08 */	lwz r3, 0x8(r5)
+/* 801CACB8 001C7D98  50 03 1F 38 */	rlwimi r3, r0, 3, 28, 28
+/* 801CACBC 001C7D9C  90 65 00 08 */	stw r3, 0x8(r5)
+/* 801CACC0 001C7DA0  80 05 00 08 */	lwz r0, 0x8(r5)
+/* 801CACC4 001C7DA4  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CACC8 001C7DA8  B0 03 00 02 */	sth r0, 0x2(r3)
+/* 801CACCC 001C7DAC  4E 80 00 20 */	blr
+.endfn __GXWriteFifoIntEnable
+
+.fn __GXWriteFifoIntReset, local
+/* 801CACD0 001C7DB0  80 A2 B2 F8 */	lwz r5, __GXData@sda21(r2)
+/* 801CACD4 001C7DB4  54 80 06 3E */	clrlwi r0, r4, 24
+/* 801CACD8 001C7DB8  80 85 00 10 */	lwz r4, 0x10(r5)
+/* 801CACDC 001C7DBC  50 64 07 FE */	rlwimi r4, r3, 0, 31, 31
+/* 801CACE0 001C7DC0  90 85 00 10 */	stw r4, 0x10(r5)
+/* 801CACE4 001C7DC4  80 65 00 10 */	lwz r3, 0x10(r5)
+/* 801CACE8 001C7DC8  50 03 0F BC */	rlwimi r3, r0, 1, 30, 30
+/* 801CACEC 001C7DCC  90 65 00 10 */	stw r3, 0x10(r5)
+/* 801CACF0 001C7DD0  80 05 00 10 */	lwz r0, 0x10(r5)
+/* 801CACF4 001C7DD4  80 6D 9B A4 */	lwz r3, __cpReg@sda21(r13)
+/* 801CACF8 001C7DD8  B0 03 00 04 */	sth r0, 0x4(r3)
+/* 801CACFC 001C7DDC  4E 80 00 20 */	blr
+.endfn __GXWriteFifoIntReset
+
+.fn GXSetCurrentGXThread, global
+/* 801CAD00 001C7DE0  7C 08 02 A6 */	mflr r0
+/* 801CAD04 001C7DE4  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801CAD08 001C7DE8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801CAD0C 001C7DEC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801CAD10 001C7DF0  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 801CAD14 001C7DF4  48 00 95 FD */	bl OSDisableInterrupts
+/* 801CAD18 001C7DF8  83 CD 9B D0 */	lwz r30, __GXCurrentThread@sda21(r13)
+/* 801CAD1C 001C7DFC  7C 7F 1B 78 */	mr r31, r3
+/* 801CAD20 001C7E00  48 00 BA 59 */	bl OSGetCurrentThread
+/* 801CAD24 001C7E04  90 6D 9B D0 */	stw r3, __GXCurrentThread@sda21(r13)
+/* 801CAD28 001C7E08  7F E3 FB 78 */	mr r3, r31
+/* 801CAD2C 001C7E0C  48 00 96 0D */	bl OSRestoreInterrupts
+/* 801CAD30 001C7E10  7F C3 F3 78 */	mr r3, r30
+/* 801CAD34 001C7E14  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801CAD38 001C7E18  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801CAD3C 001C7E1C  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 801CAD40 001C7E20  38 21 00 10 */	addi r1, r1, 0x10
+/* 801CAD44 001C7E24  7C 08 03 A6 */	mtlr r0
+/* 801CAD48 001C7E28  4E 80 00 20 */	blr
+.endfn GXSetCurrentGXThread
+
+.fn GXGetCPUFifo, global
+/* 801CAD4C 001C7E2C  80 6D 9B C8 */	lwz r3, CPUFifo@sda21(r13)
+/* 801CAD50 001C7E30  4E 80 00 20 */	blr
+.endfn GXGetCPUFifo
+
+.fn GXGetGPFifo, global
+/* 801CAD54 001C7E34  80 6D 9B CC */	lwz r3, GPFifo@sda21(r13)
+/* 801CAD58 001C7E38  4E 80 00 20 */	blr
+.endfn GXGetGPFifo
+
+# 0x803CC4C8 - 0x803CC4E8
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj CPUFifo, local
+	.skip 0x4
+.endobj CPUFifo
+
+.obj GPFifo, local
+	.skip 0x4
+.endobj GPFifo
+
+.obj __GXCurrentThread, local
+	.skip 0x4
+.endobj __GXCurrentThread
+
+.obj CPGPLinked, local
+	.skip 0x1
+.endobj CPGPLinked
+	.skip 0x3
+
+.obj GXOverflowSuspendInProgress, local
+	.skip 0x4
+.endobj GXOverflowSuspendInProgress
+
+.obj BreakPointCB, local
+	.skip 0x4
+.endobj BreakPointCB
+
+.obj __GXOverflowCount, local
+	.skip 0x4
+.endobj __GXOverflowCount
+
+.obj __GXCurrentBP, global
+	.skip 0x4
+.endobj __GXCurrentBP

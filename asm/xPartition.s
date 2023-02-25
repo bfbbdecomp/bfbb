@@ -1,0 +1,555 @@
+.include "macros.inc"
+.file "xPartition.cpp"
+
+# 0x80038B98 - 0x80039270
+.text
+.balign 4
+
+# xPartitionReset()
+.fn xPartitionReset__Fv, global
+/* 80038B98 00035C78  4E 80 00 20 */	blr
+.endfn xPartitionReset__Fv
+
+# PartitionGetFreeLink()
+.fn PartitionGetFreeLink__Fv, local
+/* 80038B9C 00035C7C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80038BA0 00035C80  7C 08 02 A6 */	mflr r0
+/* 80038BA4 00035C84  38 80 00 08 */	li r4, 0x8
+/* 80038BA8 00035C88  38 A0 00 00 */	li r5, 0x0
+/* 80038BAC 00035C8C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80038BB0 00035C90  80 6D 89 E0 */	lwz r3, gActiveHeap@sda21(r13)
+/* 80038BB4 00035C94  4B FF AD 8D */	bl xMemAlloc__FUiUii
+/* 80038BB8 00035C98  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80038BBC 00035C9C  7C 08 03 A6 */	mtlr r0
+/* 80038BC0 00035CA0  38 21 00 10 */	addi r1, r1, 0x10
+/* 80038BC4 00035CA4  4E 80 00 20 */	blr
+.endfn PartitionGetFreeLink__Fv
+
+# PartitionSpaceReset(_tagPartSpace*)
+.fn PartitionSpaceReset__FP13_tagPartSpace, local
+/* 80038BC8 00035CA8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80038BCC 00035CAC  7C 08 02 A6 */	mflr r0
+/* 80038BD0 00035CB0  38 80 00 00 */	li r4, 0x0
+/* 80038BD4 00035CB4  38 A0 00 0C */	li r5, 0xc
+/* 80038BD8 00035CB8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80038BDC 00035CBC  4B FC A8 7D */	bl memset
+/* 80038BE0 00035CC0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80038BE4 00035CC4  7C 08 03 A6 */	mtlr r0
+/* 80038BE8 00035CC8  38 21 00 10 */	addi r1, r1, 0x10
+/* 80038BEC 00035CCC  4E 80 00 20 */	blr
+.endfn PartitionSpaceReset__FP13_tagPartSpace
+
+# PartitionSpaceInsert(_tagPartSpace*, void*)
+.fn PartitionSpaceInsert__FP13_tagPartSpacePv, local
+/* 80038BF0 00035CD0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80038BF4 00035CD4  7C 08 02 A6 */	mflr r0
+/* 80038BF8 00035CD8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80038BFC 00035CDC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80038C00 00035CE0  3B E3 00 04 */	addi r31, r3, 0x4
+/* 80038C04 00035CE4  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80038C08 00035CE8  7C 9E 23 78 */	mr r30, r4
+/* 80038C0C 00035CEC  80 A3 00 00 */	lwz r5, 0x0(r3)
+/* 80038C10 00035CF0  38 05 00 01 */	addi r0, r5, 0x1
+/* 80038C14 00035CF4  90 03 00 00 */	stw r0, 0x0(r3)
+/* 80038C18 00035CF8  48 00 00 08 */	b .L_80038C20
+.L_80038C1C:
+/* 80038C1C 00035CFC  7C 1F 03 78 */	mr r31, r0
+.L_80038C20:
+/* 80038C20 00035D00  80 1F 00 04 */	lwz r0, 0x4(r31)
+/* 80038C24 00035D04  28 00 00 00 */	cmplwi r0, 0x0
+/* 80038C28 00035D08  40 82 FF F4 */	bne .L_80038C1C
+/* 80038C2C 00035D0C  4B FF FF 71 */	bl PartitionGetFreeLink__Fv
+/* 80038C30 00035D10  90 7F 00 04 */	stw r3, 0x4(r31)
+/* 80038C34 00035D14  38 00 00 00 */	li r0, 0x0
+/* 80038C38 00035D18  80 7F 00 04 */	lwz r3, 0x4(r31)
+/* 80038C3C 00035D1C  93 C3 00 00 */	stw r30, 0x0(r3)
+/* 80038C40 00035D20  80 7F 00 04 */	lwz r3, 0x4(r31)
+/* 80038C44 00035D24  90 03 00 04 */	stw r0, 0x4(r3)
+/* 80038C48 00035D28  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80038C4C 00035D2C  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80038C50 00035D30  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80038C54 00035D34  7C 08 03 A6 */	mtlr r0
+/* 80038C58 00035D38  38 21 00 10 */	addi r1, r1, 0x10
+/* 80038C5C 00035D3C  4E 80 00 20 */	blr
+.endfn PartitionSpaceInsert__FP13_tagPartSpacePv
+
+# xPartitionGetTrueIdx(_tagPartition*, int, int, int)
+.fn xPartitionGetTrueIdx__FP13_tagPartitioniii, global
+/* 80038C60 00035D40  80 E3 00 24 */	lwz r7, 0x24(r3)
+/* 80038C64 00035D44  80 63 00 2C */	lwz r3, 0x2c(r3)
+/* 80038C68 00035D48  7C 07 31 D6 */	mullw r0, r7, r6
+/* 80038C6C 00035D4C  7C 67 19 D6 */	mullw r3, r7, r3
+/* 80038C70 00035D50  7C 65 19 D6 */	mullw r3, r5, r3
+/* 80038C74 00035D54  7C 63 02 14 */	add r3, r3, r0
+/* 80038C78 00035D58  7C 63 22 14 */	add r3, r3, r4
+/* 80038C7C 00035D5C  4E 80 00 20 */	blr
+.endfn xPartitionGetTrueIdx__FP13_tagPartitioniii
+
+# xPartitionVolume(_tagPartition*, xVolume*, int, int, int)
+.fn xPartitionVolume__FP13_tagPartitionP7xVolumeiii, global
+/* 80038C80 00035D60  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 80038C84 00035D64  7C 08 02 A6 */	mflr r0
+/* 80038C88 00035D68  90 01 00 44 */	stw r0, 0x44(r1)
+/* 80038C8C 00035D6C  BF 21 00 24 */	stmw r25, 0x24(r1)
+/* 80038C90 00035D70  7C 99 23 78 */	mr r25, r4
+/* 80038C94 00035D74  7C BD 2B 78 */	mr r29, r5
+/* 80038C98 00035D78  7C 7C 1B 78 */	mr r28, r3
+/* 80038C9C 00035D7C  7C DE 33 78 */	mr r30, r6
+/* 80038CA0 00035D80  7C FF 3B 78 */	mr r31, r7
+/* 80038CA4 00035D84  38 80 00 00 */	li r4, 0x0
+/* 80038CA8 00035D88  38 A0 00 40 */	li r5, 0x40
+/* 80038CAC 00035D8C  4B FC A7 AD */	bl memset
+/* 80038CB0 00035D90  7F 23 CB 78 */	mr r3, r25
+/* 80038CB4 00035D94  48 0D FD 45 */	bl GetBound__7xVolumeFv
+/* 80038CB8 00035D98  3B 63 00 30 */	addi r27, r3, 0x30
+/* 80038CBC 00035D9C  7F 83 E3 78 */	mr r3, r28
+/* 80038CC0 00035DA0  38 9B 00 0C */	addi r4, r27, 0xc
+/* 80038CC4 00035DA4  4B FD 25 A1 */	bl __as__5xVec3FRC5xVec3
+/* 80038CC8 00035DA8  7F 64 DB 78 */	mr r4, r27
+/* 80038CCC 00035DAC  38 7C 00 0C */	addi r3, r28, 0xc
+/* 80038CD0 00035DB0  4B FD 25 95 */	bl __as__5xVec3FRC5xVec3
+/* 80038CD4 00035DB4  C0 3C 00 0C */	lfs f1, 0xc(r28)
+/* 80038CD8 00035DB8  3C 00 43 30 */	lis r0, 0x4330
+/* 80038CDC 00035DBC  C0 1C 00 00 */	lfs f0, 0x0(r28)
+/* 80038CE0 00035DC0  38 A0 00 00 */	li r5, 0x0
+/* 80038CE4 00035DC4  C0 7C 00 10 */	lfs f3, 0x10(r28)
+/* 80038CE8 00035DC8  C0 5C 00 04 */	lfs f2, 0x4(r28)
+/* 80038CEC 00035DCC  EC 81 00 28 */	fsubs f4, f1, f0
+/* 80038CF0 00035DD0  C0 3C 00 14 */	lfs f1, 0x14(r28)
+/* 80038CF4 00035DD4  C0 1C 00 08 */	lfs f0, 0x8(r28)
+/* 80038CF8 00035DD8  EC 43 10 28 */	fsubs f2, f3, f2
+/* 80038CFC 00035DDC  90 01 00 08 */	stw r0, 0x8(r1)
+/* 80038D00 00035DE0  EC 61 00 28 */	fsubs f3, f1, f0
+/* 80038D04 00035DE4  93 BC 00 24 */	stw r29, 0x24(r28)
+/* 80038D08 00035DE8  93 DC 00 28 */	stw r30, 0x28(r28)
+/* 80038D0C 00035DEC  93 FC 00 2C */	stw r31, 0x2c(r28)
+/* 80038D10 00035DF0  80 7C 00 24 */	lwz r3, 0x24(r28)
+/* 80038D14 00035DF4  C8 22 85 D8 */	lfd f1, "@560"@sda21(r2)
+/* 80038D18 00035DF8  6C 63 80 00 */	xoris r3, r3, 0x8000
+/* 80038D1C 00035DFC  90 01 00 10 */	stw r0, 0x10(r1)
+/* 80038D20 00035E00  90 61 00 0C */	stw r3, 0xc(r1)
+/* 80038D24 00035E04  C8 01 00 08 */	lfd f0, 0x8(r1)
+/* 80038D28 00035E08  90 01 00 18 */	stw r0, 0x18(r1)
+/* 80038D2C 00035E0C  EC 00 08 28 */	fsubs f0, f0, f1
+/* 80038D30 00035E10  EC 04 00 24 */	fdivs f0, f4, f0
+/* 80038D34 00035E14  D0 1C 00 18 */	stfs f0, 0x18(r28)
+/* 80038D38 00035E18  80 1C 00 28 */	lwz r0, 0x28(r28)
+/* 80038D3C 00035E1C  C8 22 85 D8 */	lfd f1, "@560"@sda21(r2)
+/* 80038D40 00035E20  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 80038D44 00035E24  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80038D48 00035E28  C8 01 00 10 */	lfd f0, 0x10(r1)
+/* 80038D4C 00035E2C  EC 00 08 28 */	fsubs f0, f0, f1
+/* 80038D50 00035E30  EC 02 00 24 */	fdivs f0, f2, f0
+/* 80038D54 00035E34  D0 1C 00 1C */	stfs f0, 0x1c(r28)
+/* 80038D58 00035E38  80 1C 00 2C */	lwz r0, 0x2c(r28)
+/* 80038D5C 00035E3C  C8 22 85 D8 */	lfd f1, "@560"@sda21(r2)
+/* 80038D60 00035E40  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 80038D64 00035E44  90 01 00 1C */	stw r0, 0x1c(r1)
+/* 80038D68 00035E48  C8 01 00 18 */	lfd f0, 0x18(r1)
+/* 80038D6C 00035E4C  EC 00 08 28 */	fsubs f0, f0, f1
+/* 80038D70 00035E50  EC 03 00 24 */	fdivs f0, f3, f0
+/* 80038D74 00035E54  D0 1C 00 20 */	stfs f0, 0x20(r28)
+/* 80038D78 00035E58  80 1C 00 24 */	lwz r0, 0x24(r28)
+/* 80038D7C 00035E5C  80 9C 00 28 */	lwz r4, 0x28(r28)
+/* 80038D80 00035E60  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 80038D84 00035E64  80 DC 00 2C */	lwz r6, 0x2c(r28)
+/* 80038D88 00035E68  80 6D 89 E0 */	lwz r3, gActiveHeap@sda21(r13)
+/* 80038D8C 00035E6C  7C 04 01 D6 */	mullw r0, r4, r0
+/* 80038D90 00035E70  7C 86 01 D6 */	mullw r4, r6, r0
+/* 80038D94 00035E74  4B FF AB AD */	bl xMemAlloc__FUiUii
+/* 80038D98 00035E78  90 7C 00 30 */	stw r3, 0x30(r28)
+/* 80038D9C 00035E7C  3B 60 00 00 */	li r27, 0x0
+/* 80038DA0 00035E80  48 00 00 54 */	b .L_80038DF4
+.L_80038DA4:
+/* 80038DA4 00035E84  3B 40 00 00 */	li r26, 0x0
+/* 80038DA8 00035E88  48 00 00 40 */	b .L_80038DE8
+.L_80038DAC:
+/* 80038DAC 00035E8C  3B 20 00 00 */	li r25, 0x0
+/* 80038DB0 00035E90  48 00 00 2C */	b .L_80038DDC
+.L_80038DB4:
+/* 80038DB4 00035E94  7F 83 E3 78 */	mr r3, r28
+/* 80038DB8 00035E98  7F 24 CB 78 */	mr r4, r25
+/* 80038DBC 00035E9C  7F 45 D3 78 */	mr r5, r26
+/* 80038DC0 00035EA0  7F 66 DB 78 */	mr r6, r27
+/* 80038DC4 00035EA4  4B FF FE 9D */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
+/* 80038DC8 00035EA8  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 80038DCC 00035EAC  80 7C 00 30 */	lwz r3, 0x30(r28)
+/* 80038DD0 00035EB0  7C 63 02 14 */	add r3, r3, r0
+/* 80038DD4 00035EB4  4B FF FD F5 */	bl PartitionSpaceReset__FP13_tagPartSpace
+/* 80038DD8 00035EB8  3B 39 00 01 */	addi r25, r25, 0x1
+.L_80038DDC:
+/* 80038DDC 00035EBC  7C 19 E8 00 */	cmpw r25, r29
+/* 80038DE0 00035EC0  41 80 FF D4 */	blt .L_80038DB4
+/* 80038DE4 00035EC4  3B 5A 00 01 */	addi r26, r26, 0x1
+.L_80038DE8:
+/* 80038DE8 00035EC8  7C 1A F0 00 */	cmpw r26, r30
+/* 80038DEC 00035ECC  41 80 FF C0 */	blt .L_80038DAC
+/* 80038DF0 00035ED0  3B 7B 00 01 */	addi r27, r27, 0x1
+.L_80038DF4:
+/* 80038DF4 00035ED4  7C 1B F8 00 */	cmpw r27, r31
+/* 80038DF8 00035ED8  41 80 FF AC */	blt .L_80038DA4
+/* 80038DFC 00035EDC  38 7C 00 34 */	addi r3, r28, 0x34
+/* 80038E00 00035EE0  4B FF FD C9 */	bl PartitionSpaceReset__FP13_tagPartSpace
+/* 80038E04 00035EE4  BB 21 00 24 */	lmw r25, 0x24(r1)
+/* 80038E08 00035EE8  80 01 00 44 */	lwz r0, 0x44(r1)
+/* 80038E0C 00035EEC  7C 08 03 A6 */	mtlr r0
+/* 80038E10 00035EF0  38 21 00 40 */	addi r1, r1, 0x40
+/* 80038E14 00035EF4  4E 80 00 20 */	blr
+.endfn xPartitionVolume__FP13_tagPartitionP7xVolumeiii
+
+# xPartitionWorld(_tagPartition*, xEnv*, int, int, int)
+.fn xPartitionWorld__FP13_tagPartitionP4xEnviii, global
+/* 80038E18 00035EF8  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 80038E1C 00035EFC  7C 08 02 A6 */	mflr r0
+/* 80038E20 00035F00  90 01 00 44 */	stw r0, 0x44(r1)
+/* 80038E24 00035F04  BF 21 00 24 */	stmw r25, 0x24(r1)
+/* 80038E28 00035F08  7C 99 23 78 */	mr r25, r4
+/* 80038E2C 00035F0C  7C BD 2B 78 */	mr r29, r5
+/* 80038E30 00035F10  7C 7C 1B 78 */	mr r28, r3
+/* 80038E34 00035F14  7C DE 33 78 */	mr r30, r6
+/* 80038E38 00035F18  7C FF 3B 78 */	mr r31, r7
+/* 80038E3C 00035F1C  38 80 00 00 */	li r4, 0x0
+/* 80038E40 00035F20  38 A0 00 40 */	li r5, 0x40
+/* 80038E44 00035F24  4B FC A6 15 */	bl memset
+/* 80038E48 00035F28  7F 23 CB 78 */	mr r3, r25
+/* 80038E4C 00035F2C  48 00 04 25 */	bl xEnvGetBBox__FP4xEnv
+/* 80038E50 00035F30  7C 60 1B 78 */	mr r0, r3
+/* 80038E54 00035F34  7F 83 E3 78 */	mr r3, r28
+/* 80038E58 00035F38  7C 1B 03 78 */	mr r27, r0
+/* 80038E5C 00035F3C  38 9B 00 0C */	addi r4, r27, 0xc
+/* 80038E60 00035F40  4B FD 24 05 */	bl __as__5xVec3FRC5xVec3
+/* 80038E64 00035F44  7F 64 DB 78 */	mr r4, r27
+/* 80038E68 00035F48  38 7C 00 0C */	addi r3, r28, 0xc
+/* 80038E6C 00035F4C  4B FD 23 F9 */	bl __as__5xVec3FRC5xVec3
+/* 80038E70 00035F50  C0 3C 00 0C */	lfs f1, 0xc(r28)
+/* 80038E74 00035F54  3C 00 43 30 */	lis r0, 0x4330
+/* 80038E78 00035F58  C0 1C 00 00 */	lfs f0, 0x0(r28)
+/* 80038E7C 00035F5C  38 A0 00 00 */	li r5, 0x0
+/* 80038E80 00035F60  C0 7C 00 10 */	lfs f3, 0x10(r28)
+/* 80038E84 00035F64  C0 5C 00 04 */	lfs f2, 0x4(r28)
+/* 80038E88 00035F68  EC 81 00 28 */	fsubs f4, f1, f0
+/* 80038E8C 00035F6C  C0 3C 00 14 */	lfs f1, 0x14(r28)
+/* 80038E90 00035F70  C0 1C 00 08 */	lfs f0, 0x8(r28)
+/* 80038E94 00035F74  EC 43 10 28 */	fsubs f2, f3, f2
+/* 80038E98 00035F78  90 01 00 08 */	stw r0, 0x8(r1)
+/* 80038E9C 00035F7C  EC 61 00 28 */	fsubs f3, f1, f0
+/* 80038EA0 00035F80  93 BC 00 24 */	stw r29, 0x24(r28)
+/* 80038EA4 00035F84  93 DC 00 28 */	stw r30, 0x28(r28)
+/* 80038EA8 00035F88  93 FC 00 2C */	stw r31, 0x2c(r28)
+/* 80038EAC 00035F8C  80 7C 00 24 */	lwz r3, 0x24(r28)
+/* 80038EB0 00035F90  C8 22 85 D8 */	lfd f1, "@560"@sda21(r2)
+/* 80038EB4 00035F94  6C 63 80 00 */	xoris r3, r3, 0x8000
+/* 80038EB8 00035F98  90 01 00 10 */	stw r0, 0x10(r1)
+/* 80038EBC 00035F9C  90 61 00 0C */	stw r3, 0xc(r1)
+/* 80038EC0 00035FA0  C8 01 00 08 */	lfd f0, 0x8(r1)
+/* 80038EC4 00035FA4  90 01 00 18 */	stw r0, 0x18(r1)
+/* 80038EC8 00035FA8  EC 00 08 28 */	fsubs f0, f0, f1
+/* 80038ECC 00035FAC  EC 04 00 24 */	fdivs f0, f4, f0
+/* 80038ED0 00035FB0  D0 1C 00 18 */	stfs f0, 0x18(r28)
+/* 80038ED4 00035FB4  80 1C 00 28 */	lwz r0, 0x28(r28)
+/* 80038ED8 00035FB8  C8 22 85 D8 */	lfd f1, "@560"@sda21(r2)
+/* 80038EDC 00035FBC  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 80038EE0 00035FC0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80038EE4 00035FC4  C8 01 00 10 */	lfd f0, 0x10(r1)
+/* 80038EE8 00035FC8  EC 00 08 28 */	fsubs f0, f0, f1
+/* 80038EEC 00035FCC  EC 02 00 24 */	fdivs f0, f2, f0
+/* 80038EF0 00035FD0  D0 1C 00 1C */	stfs f0, 0x1c(r28)
+/* 80038EF4 00035FD4  80 1C 00 2C */	lwz r0, 0x2c(r28)
+/* 80038EF8 00035FD8  C8 22 85 D8 */	lfd f1, "@560"@sda21(r2)
+/* 80038EFC 00035FDC  6C 00 80 00 */	xoris r0, r0, 0x8000
+/* 80038F00 00035FE0  90 01 00 1C */	stw r0, 0x1c(r1)
+/* 80038F04 00035FE4  C8 01 00 18 */	lfd f0, 0x18(r1)
+/* 80038F08 00035FE8  EC 00 08 28 */	fsubs f0, f0, f1
+/* 80038F0C 00035FEC  EC 03 00 24 */	fdivs f0, f3, f0
+/* 80038F10 00035FF0  D0 1C 00 20 */	stfs f0, 0x20(r28)
+/* 80038F14 00035FF4  80 1C 00 24 */	lwz r0, 0x24(r28)
+/* 80038F18 00035FF8  80 9C 00 28 */	lwz r4, 0x28(r28)
+/* 80038F1C 00035FFC  1C 00 00 0C */	mulli r0, r0, 0xc
+/* 80038F20 00036000  80 DC 00 2C */	lwz r6, 0x2c(r28)
+/* 80038F24 00036004  80 6D 89 E0 */	lwz r3, gActiveHeap@sda21(r13)
+/* 80038F28 00036008  7C 04 01 D6 */	mullw r0, r4, r0
+/* 80038F2C 0003600C  7C 86 01 D6 */	mullw r4, r6, r0
+/* 80038F30 00036010  4B FF AA 11 */	bl xMemAlloc__FUiUii
+/* 80038F34 00036014  90 7C 00 30 */	stw r3, 0x30(r28)
+/* 80038F38 00036018  3B 60 00 00 */	li r27, 0x0
+/* 80038F3C 0003601C  48 00 00 54 */	b .L_80038F90
+.L_80038F40:
+/* 80038F40 00036020  3B 40 00 00 */	li r26, 0x0
+/* 80038F44 00036024  48 00 00 40 */	b .L_80038F84
+.L_80038F48:
+/* 80038F48 00036028  3B 20 00 00 */	li r25, 0x0
+/* 80038F4C 0003602C  48 00 00 2C */	b .L_80038F78
+.L_80038F50:
+/* 80038F50 00036030  7F 83 E3 78 */	mr r3, r28
+/* 80038F54 00036034  7F 24 CB 78 */	mr r4, r25
+/* 80038F58 00036038  7F 45 D3 78 */	mr r5, r26
+/* 80038F5C 0003603C  7F 66 DB 78 */	mr r6, r27
+/* 80038F60 00036040  4B FF FD 01 */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
+/* 80038F64 00036044  1C 03 00 0C */	mulli r0, r3, 0xc
+/* 80038F68 00036048  80 7C 00 30 */	lwz r3, 0x30(r28)
+/* 80038F6C 0003604C  7C 63 02 14 */	add r3, r3, r0
+/* 80038F70 00036050  4B FF FC 59 */	bl PartitionSpaceReset__FP13_tagPartSpace
+/* 80038F74 00036054  3B 39 00 01 */	addi r25, r25, 0x1
+.L_80038F78:
+/* 80038F78 00036058  7C 19 E8 00 */	cmpw r25, r29
+/* 80038F7C 0003605C  41 80 FF D4 */	blt .L_80038F50
+/* 80038F80 00036060  3B 5A 00 01 */	addi r26, r26, 0x1
+.L_80038F84:
+/* 80038F84 00036064  7C 1A F0 00 */	cmpw r26, r30
+/* 80038F88 00036068  41 80 FF C0 */	blt .L_80038F48
+/* 80038F8C 0003606C  3B 7B 00 01 */	addi r27, r27, 0x1
+.L_80038F90:
+/* 80038F90 00036070  7C 1B F8 00 */	cmpw r27, r31
+/* 80038F94 00036074  41 80 FF AC */	blt .L_80038F40
+/* 80038F98 00036078  38 7C 00 34 */	addi r3, r28, 0x34
+/* 80038F9C 0003607C  4B FF FC 2D */	bl PartitionSpaceReset__FP13_tagPartSpace
+/* 80038FA0 00036080  BB 21 00 24 */	lmw r25, 0x24(r1)
+/* 80038FA4 00036084  80 01 00 44 */	lwz r0, 0x44(r1)
+/* 80038FA8 00036088  7C 08 03 A6 */	mtlr r0
+/* 80038FAC 0003608C  38 21 00 40 */	addi r1, r1, 0x40
+/* 80038FB0 00036090  4E 80 00 20 */	blr
+.endfn xPartitionWorld__FP13_tagPartitionP4xEnviii
+
+# xPartitionInsert(_tagPartition*, void*, xVec3*)
+.fn xPartitionInsert__FP13_tagPartitionPvP5xVec3, global
+/* 80038FB4 00036094  94 21 FF D0 */	stwu r1, -0x30(r1)
+/* 80038FB8 00036098  7C 08 02 A6 */	mflr r0
+/* 80038FBC 0003609C  90 01 00 34 */	stw r0, 0x34(r1)
+/* 80038FC0 000360A0  93 E1 00 2C */	stw r31, 0x2c(r1)
+/* 80038FC4 000360A4  7C 7F 1B 78 */	mr r31, r3
+/* 80038FC8 000360A8  93 C1 00 28 */	stw r30, 0x28(r1)
+/* 80038FCC 000360AC  7C 9E 23 78 */	mr r30, r4
+/* 80038FD0 000360B0  C0 25 00 00 */	lfs f1, 0x0(r5)
+/* 80038FD4 000360B4  C0 83 00 00 */	lfs f4, 0x0(r3)
+/* 80038FD8 000360B8  FC 01 20 40 */	fcmpo cr0, f1, f4
+/* 80038FDC 000360BC  41 80 00 48 */	blt .L_80039024
+/* 80038FE0 000360C0  C0 1F 00 0C */	lfs f0, 0xc(r31)
+/* 80038FE4 000360C4  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 80038FE8 000360C8  41 81 00 3C */	bgt .L_80039024
+/* 80038FEC 000360CC  C0 45 00 04 */	lfs f2, 0x4(r5)
+/* 80038FF0 000360D0  C0 7F 00 04 */	lfs f3, 0x4(r31)
+/* 80038FF4 000360D4  FC 02 18 40 */	fcmpo cr0, f2, f3
+/* 80038FF8 000360D8  41 80 00 2C */	blt .L_80039024
+/* 80038FFC 000360DC  C0 1F 00 10 */	lfs f0, 0x10(r31)
+/* 80039000 000360E0  FC 02 00 40 */	fcmpo cr0, f2, f0
+/* 80039004 000360E4  41 81 00 20 */	bgt .L_80039024
+/* 80039008 000360E8  C0 C5 00 08 */	lfs f6, 0x8(r5)
+/* 8003900C 000360EC  C0 FF 00 08 */	lfs f7, 0x8(r31)
+/* 80039010 000360F0  FC 06 38 40 */	fcmpo cr0, f6, f7
+/* 80039014 000360F4  41 80 00 10 */	blt .L_80039024
+/* 80039018 000360F8  C0 1F 00 14 */	lfs f0, 0x14(r31)
+/* 8003901C 000360FC  FC 06 00 40 */	fcmpo cr0, f6, f0
+/* 80039020 00036100  40 81 00 18 */	ble .L_80039038
+.L_80039024:
+/* 80039024 00036104  7F C4 F3 78 */	mr r4, r30
+/* 80039028 00036108  38 7F 00 34 */	addi r3, r31, 0x34
+/* 8003902C 0003610C  4B FF FB C5 */	bl PartitionSpaceInsert__FP13_tagPartSpacePv
+/* 80039030 00036110  38 60 FF FF */	li r3, -0x1
+/* 80039034 00036114  48 00 00 6C */	b .L_800390A0
+.L_80039038:
+/* 80039038 00036118  EC A1 20 28 */	fsubs f5, f1, f4
+/* 8003903C 0003611C  C0 9F 00 18 */	lfs f4, 0x18(r31)
+/* 80039040 00036120  EC 62 18 28 */	fsubs f3, f2, f3
+/* 80039044 00036124  C0 5F 00 1C */	lfs f2, 0x1c(r31)
+/* 80039048 00036128  EC 26 38 28 */	fsubs f1, f6, f7
+/* 8003904C 0003612C  C0 1F 00 20 */	lfs f0, 0x20(r31)
+/* 80039050 00036130  EC 85 20 24 */	fdivs f4, f5, f4
+/* 80039054 00036134  EC 43 10 24 */	fdivs f2, f3, f2
+/* 80039058 00036138  EC 01 00 24 */	fdivs f0, f1, f0
+/* 8003905C 0003613C  FC 60 20 1E */	fctiwz f3, f4
+/* 80039060 00036140  FC 20 10 1E */	fctiwz f1, f2
+/* 80039064 00036144  FC 00 00 1E */	fctiwz f0, f0
+/* 80039068 00036148  D8 61 00 08 */	stfd f3, 0x8(r1)
+/* 8003906C 0003614C  D8 21 00 10 */	stfd f1, 0x10(r1)
+/* 80039070 00036150  80 81 00 0C */	lwz r4, 0xc(r1)
+/* 80039074 00036154  D8 01 00 18 */	stfd f0, 0x18(r1)
+/* 80039078 00036158  80 A1 00 14 */	lwz r5, 0x14(r1)
+/* 8003907C 0003615C  80 C1 00 1C */	lwz r6, 0x1c(r1)
+/* 80039080 00036160  4B FF FB E1 */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
+/* 80039084 00036164  80 BF 00 30 */	lwz r5, 0x30(r31)
+/* 80039088 00036168  7C 7F 1B 78 */	mr r31, r3
+/* 8003908C 0003616C  1C 1F 00 0C */	mulli r0, r31, 0xc
+/* 80039090 00036170  7F C4 F3 78 */	mr r4, r30
+/* 80039094 00036174  7C 65 02 14 */	add r3, r5, r0
+/* 80039098 00036178  4B FF FB 59 */	bl PartitionSpaceInsert__FP13_tagPartSpacePv
+/* 8003909C 0003617C  7F E3 FB 78 */	mr r3, r31
+.L_800390A0:
+/* 800390A0 00036180  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 800390A4 00036184  83 E1 00 2C */	lwz r31, 0x2c(r1)
+/* 800390A8 00036188  83 C1 00 28 */	lwz r30, 0x28(r1)
+/* 800390AC 0003618C  7C 08 03 A6 */	mtlr r0
+/* 800390B0 00036190  38 21 00 30 */	addi r1, r1, 0x30
+/* 800390B4 00036194  4E 80 00 20 */	blr
+.endfn xPartitionInsert__FP13_tagPartitionPvP5xVec3
+
+# xPartitionUpdate(_tagPartition*, void*, int, xVec3*)
+.fn xPartitionUpdate__FP13_tagPartitionPviP5xVec3, global
+/* 800390B8 00036198  94 21 FF D0 */	stwu r1, -0x30(r1)
+/* 800390BC 0003619C  7C 08 02 A6 */	mflr r0
+/* 800390C0 000361A0  90 01 00 34 */	stw r0, 0x34(r1)
+/* 800390C4 000361A4  93 E1 00 2C */	stw r31, 0x2c(r1)
+/* 800390C8 000361A8  93 C1 00 28 */	stw r30, 0x28(r1)
+/* 800390CC 000361AC  7C BE 2B 78 */	mr r30, r5
+/* 800390D0 000361B0  93 A1 00 24 */	stw r29, 0x24(r1)
+/* 800390D4 000361B4  7C 9D 23 78 */	mr r29, r4
+/* 800390D8 000361B8  93 81 00 20 */	stw r28, 0x20(r1)
+/* 800390DC 000361BC  7C 7C 1B 78 */	mr r28, r3
+/* 800390E0 000361C0  C0 26 00 00 */	lfs f1, 0x0(r6)
+/* 800390E4 000361C4  C0 83 00 00 */	lfs f4, 0x0(r3)
+/* 800390E8 000361C8  FC 01 20 40 */	fcmpo cr0, f1, f4
+/* 800390EC 000361CC  41 80 00 48 */	blt .L_80039134
+/* 800390F0 000361D0  C0 1C 00 0C */	lfs f0, 0xc(r28)
+/* 800390F4 000361D4  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800390F8 000361D8  41 81 00 3C */	bgt .L_80039134
+/* 800390FC 000361DC  C0 46 00 04 */	lfs f2, 0x4(r6)
+/* 80039100 000361E0  C0 7C 00 04 */	lfs f3, 0x4(r28)
+/* 80039104 000361E4  FC 02 18 40 */	fcmpo cr0, f2, f3
+/* 80039108 000361E8  41 80 00 2C */	blt .L_80039134
+/* 8003910C 000361EC  C0 1C 00 10 */	lfs f0, 0x10(r28)
+/* 80039110 000361F0  FC 02 00 40 */	fcmpo cr0, f2, f0
+/* 80039114 000361F4  41 81 00 20 */	bgt .L_80039134
+/* 80039118 000361F8  C0 C6 00 08 */	lfs f6, 0x8(r6)
+/* 8003911C 000361FC  C0 FC 00 08 */	lfs f7, 0x8(r28)
+/* 80039120 00036200  FC 06 38 40 */	fcmpo cr0, f6, f7
+/* 80039124 00036204  41 80 00 10 */	blt .L_80039134
+/* 80039128 00036208  C0 1C 00 14 */	lfs f0, 0x14(r28)
+/* 8003912C 0003620C  FC 06 00 40 */	fcmpo cr0, f6, f0
+/* 80039130 00036210  40 81 00 0C */	ble .L_8003913C
+.L_80039134:
+/* 80039134 00036214  3B E0 FF FF */	li r31, -0x1
+/* 80039138 00036218  48 00 00 54 */	b .L_8003918C
+.L_8003913C:
+/* 8003913C 0003621C  EC A1 20 28 */	fsubs f5, f1, f4
+/* 80039140 00036220  C0 9C 00 18 */	lfs f4, 0x18(r28)
+/* 80039144 00036224  EC 62 18 28 */	fsubs f3, f2, f3
+/* 80039148 00036228  C0 5C 00 1C */	lfs f2, 0x1c(r28)
+/* 8003914C 0003622C  EC 26 38 28 */	fsubs f1, f6, f7
+/* 80039150 00036230  C0 1C 00 20 */	lfs f0, 0x20(r28)
+/* 80039154 00036234  EC 85 20 24 */	fdivs f4, f5, f4
+/* 80039158 00036238  EC 43 10 24 */	fdivs f2, f3, f2
+/* 8003915C 0003623C  EC 01 00 24 */	fdivs f0, f1, f0
+/* 80039160 00036240  FC 60 20 1E */	fctiwz f3, f4
+/* 80039164 00036244  FC 20 10 1E */	fctiwz f1, f2
+/* 80039168 00036248  FC 00 00 1E */	fctiwz f0, f0
+/* 8003916C 0003624C  D8 61 00 08 */	stfd f3, 0x8(r1)
+/* 80039170 00036250  D8 21 00 10 */	stfd f1, 0x10(r1)
+/* 80039174 00036254  80 81 00 0C */	lwz r4, 0xc(r1)
+/* 80039178 00036258  D8 01 00 18 */	stfd f0, 0x18(r1)
+/* 8003917C 0003625C  80 A1 00 14 */	lwz r5, 0x14(r1)
+/* 80039180 00036260  80 C1 00 1C */	lwz r6, 0x1c(r1)
+/* 80039184 00036264  4B FF FA DD */	bl xPartitionGetTrueIdx__FP13_tagPartitioniii
+/* 80039188 00036268  7C 7F 1B 78 */	mr r31, r3
+.L_8003918C:
+/* 8003918C 0003626C  7C 1E F8 00 */	cmpw r30, r31
+/* 80039190 00036270  40 82 00 0C */	bne .L_8003919C
+/* 80039194 00036274  7F E3 FB 78 */	mr r3, r31
+/* 80039198 00036278  48 00 00 48 */	b .L_800391E0
+.L_8003919C:
+/* 8003919C 0003627C  2C 1E FF FF */	cmpwi r30, -0x1
+/* 800391A0 00036280  40 82 00 0C */	bne .L_800391AC
+/* 800391A4 00036284  38 7C 00 34 */	addi r3, r28, 0x34
+/* 800391A8 00036288  48 00 00 10 */	b .L_800391B8
+.L_800391AC:
+/* 800391AC 0003628C  1C 1E 00 0C */	mulli r0, r30, 0xc
+/* 800391B0 00036290  80 7C 00 30 */	lwz r3, 0x30(r28)
+/* 800391B4 00036294  7C 63 02 14 */	add r3, r3, r0
+.L_800391B8:
+/* 800391B8 00036298  2C 1F FF FF */	cmpwi r31, -0x1
+/* 800391BC 0003629C  40 82 00 0C */	bne .L_800391C8
+/* 800391C0 000362A0  38 9C 00 34 */	addi r4, r28, 0x34
+/* 800391C4 000362A4  48 00 00 10 */	b .L_800391D4
+.L_800391C8:
+/* 800391C8 000362A8  1C 1F 00 0C */	mulli r0, r31, 0xc
+/* 800391CC 000362AC  80 9C 00 30 */	lwz r4, 0x30(r28)
+/* 800391D0 000362B0  7C 84 02 14 */	add r4, r4, r0
+.L_800391D4:
+/* 800391D4 000362B4  7F A5 EB 78 */	mr r5, r29
+/* 800391D8 000362B8  48 00 00 29 */	bl xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi
+/* 800391DC 000362BC  7F E3 FB 78 */	mr r3, r31
+.L_800391E0:
+/* 800391E0 000362C0  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 800391E4 000362C4  83 E1 00 2C */	lwz r31, 0x2c(r1)
+/* 800391E8 000362C8  83 C1 00 28 */	lwz r30, 0x28(r1)
+/* 800391EC 000362CC  83 A1 00 24 */	lwz r29, 0x24(r1)
+/* 800391F0 000362D0  83 81 00 20 */	lwz r28, 0x20(r1)
+/* 800391F4 000362D4  7C 08 03 A6 */	mtlr r0
+/* 800391F8 000362D8  38 21 00 30 */	addi r1, r1, 0x30
+/* 800391FC 000362DC  4E 80 00 20 */	blr
+.endfn xPartitionUpdate__FP13_tagPartitionPviP5xVec3
+
+# xPartitionSpaceMove(_tagPartSpace*, _tagPartSpace*, unsigned int)
+.fn xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi, global
+/* 80039200 000362E0  38 C4 00 04 */	addi r6, r4, 0x4
+/* 80039204 000362E4  48 00 00 08 */	b .L_8003920C
+.L_80039208:
+/* 80039208 000362E8  7C 06 03 78 */	mr r6, r0
+.L_8003920C:
+/* 8003920C 000362EC  80 06 00 04 */	lwz r0, 0x4(r6)
+/* 80039210 000362F0  28 00 00 00 */	cmplwi r0, 0x0
+/* 80039214 000362F4  40 82 FF F4 */	bne .L_80039208
+/* 80039218 000362F8  38 E3 00 04 */	addi r7, r3, 0x4
+/* 8003921C 000362FC  7C E8 3B 78 */	mr r8, r7
+/* 80039220 00036300  48 00 00 0C */	b .L_8003922C
+.L_80039224:
+/* 80039224 00036304  7C E8 3B 78 */	mr r8, r7
+/* 80039228 00036308  80 E7 00 04 */	lwz r7, 0x4(r7)
+.L_8003922C:
+/* 8003922C 0003630C  80 07 00 00 */	lwz r0, 0x0(r7)
+/* 80039230 00036310  7C 00 28 40 */	cmplw r0, r5
+/* 80039234 00036314  40 82 FF F0 */	bne .L_80039224
+/* 80039238 00036318  80 A7 00 04 */	lwz r5, 0x4(r7)
+/* 8003923C 0003631C  38 00 00 00 */	li r0, 0x0
+/* 80039240 00036320  90 A8 00 04 */	stw r5, 0x4(r8)
+/* 80039244 00036324  90 E6 00 04 */	stw r7, 0x4(r6)
+/* 80039248 00036328  80 A6 00 04 */	lwz r5, 0x4(r6)
+/* 8003924C 0003632C  90 05 00 04 */	stw r0, 0x4(r5)
+/* 80039250 00036330  80 A3 00 00 */	lwz r5, 0x0(r3)
+/* 80039254 00036334  38 05 FF FF */	addi r0, r5, -0x1
+/* 80039258 00036338  90 03 00 00 */	stw r0, 0x0(r3)
+/* 8003925C 0003633C  80 64 00 00 */	lwz r3, 0x0(r4)
+/* 80039260 00036340  38 03 00 01 */	addi r0, r3, 0x1
+/* 80039264 00036344  90 04 00 00 */	stw r0, 0x0(r4)
+/* 80039268 00036348  4E 80 00 20 */	blr
+.endfn xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi
+
+# xPartitionDump(_tagPartition*, char*)
+.fn xPartitionDump__FP13_tagPartitionPc, global
+/* 8003926C 0003634C  4E 80 00 20 */	blr
+.endfn xPartitionDump__FP13_tagPartitionPc
+
+# 0x80039270 - 0x80039294
+.section .text, "ax", unique, 1
+.balign 4
+
+# xEnvGetBBox(xEnv*)
+.fn xEnvGetBBox__FP4xEnv, weak
+/* 80039270 00036350  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80039274 00036354  7C 08 02 A6 */	mflr r0
+/* 80039278 00036358  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8003927C 0003635C  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80039280 00036360  48 00 00 15 */	bl iEnvGetBBox__FP4iEnv
+/* 80039284 00036364  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80039288 00036368  7C 08 03 A6 */	mtlr r0
+/* 8003928C 0003636C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80039290 00036370  4E 80 00 20 */	blr
+.endfn xEnvGetBBox__FP4xEnv
+
+# 0x80039294 - 0x800392A0
+.section .text, "ax", unique, 2
+.balign 4
+
+# iEnvGetBBox(iEnv*)
+.fn iEnvGetBBox__FP4iEnv, weak
+/* 80039294 00036374  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80039298 00036378  38 63 00 50 */	addi r3, r3, 0x50
+/* 8003929C 0003637C  4E 80 00 20 */	blr
+.endfn iEnvGetBBox__FP4iEnv
+
+# 0x803CCF58 - 0x803CCF60
+.section .sdata2, "a"
+.balign 8
+
+.obj "@560", local
+	.4byte 0x43300000
+	.4byte 0x80000000
+.endobj "@560"

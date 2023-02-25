@@ -1,0 +1,227 @@
+.include "macros.inc"
+.file "gcpipe.c"
+
+# 0x8021F4A4 - 0x8021F754
+.text
+.balign 4
+
+.fn _rxGCResEntryWaitDone, global
+/* 8021F4A4 0021C584  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8021F4A8 0021C588  7C 08 02 A6 */	mflr r0
+/* 8021F4AC 0021C58C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8021F4B0 0021C590  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8021F4B4 0021C594  7C 7F 1B 78 */	mr r31, r3
+/* 8021F4B8 0021C598  A0 0D 88 30 */	lhz r0, _RwDlTokenCurrent@sda21(r13)
+/* 8021F4BC 0021C59C  A0 63 00 18 */	lhz r3, 0x18(r3)
+/* 8021F4C0 0021C5A0  7C 03 00 40 */	cmplw r3, r0
+/* 8021F4C4 0021C5A4  40 82 00 44 */	bne .L_8021F508
+/* 8021F4C8 0021C5A8  A0 6D 88 30 */	lhz r3, _RwDlTokenCurrent@sda21(r13)
+/* 8021F4CC 0021C5AC  4B FA C8 41 */	bl GXSetDrawSync
+/* 8021F4D0 0021C5B0  A0 AD 88 30 */	lhz r5, _RwDlTokenCurrent@sda21(r13)
+/* 8021F4D4 0021C5B4  3C 80 92 49 */	lis r4, 0x9249
+/* 8021F4D8 0021C5B8  38 04 24 93 */	addi r0, r4, 0x2493
+/* 8021F4DC 0021C5BC  3C 60 00 01 */	lis r3, 0x1
+/* 8021F4E0 0021C5C0  38 A5 00 01 */	addi r5, r5, 0x1
+/* 8021F4E4 0021C5C4  7C 80 28 96 */	mulhw r4, r0, r5
+/* 8021F4E8 0021C5C8  38 03 E0 00 */	addi r0, r3, -0x2000
+/* 8021F4EC 0021C5CC  7C 64 2A 14 */	add r3, r4, r5
+/* 8021F4F0 0021C5D0  7C 63 7E 70 */	srawi r3, r3, 15
+/* 8021F4F4 0021C5D4  54 64 0F FE */	srwi r4, r3, 31
+/* 8021F4F8 0021C5D8  7C 63 22 14 */	add r3, r3, r4
+/* 8021F4FC 0021C5DC  7C 03 01 D6 */	mullw r0, r3, r0
+/* 8021F500 0021C5E0  7C 00 28 50 */	subf r0, r0, r5
+/* 8021F504 0021C5E4  B0 0D 88 30 */	sth r0, _RwDlTokenCurrent@sda21(r13)
+.L_8021F508:
+/* 8021F508 0021C5E8  A0 7F 00 18 */	lhz r3, 0x18(r31)
+/* 8021F50C 0021C5EC  48 02 C6 C9 */	bl _rwDlTokenQueryDone
+/* 8021F510 0021C5F0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 8021F514 0021C5F4  41 82 FF F4 */	beq .L_8021F508
+/* 8021F518 0021C5F8  4B FA C2 CD */	bl GXInvalidateVtxCache
+/* 8021F51C 0021C5FC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8021F520 0021C600  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 8021F524 0021C604  7C 08 03 A6 */	mtlr r0
+/* 8021F528 0021C608  38 21 00 10 */	addi r1, r1, 0x10
+/* 8021F52C 0021C60C  4E 80 00 20 */	blr
+.endfn _rxGCResEntryWaitDone
+
+.fn _rxGCDefaultRenderCallback, global
+/* 8021F530 0021C610  94 21 FF D0 */	stwu r1, -0x30(r1)
+/* 8021F534 0021C614  7C 08 02 A6 */	mflr r0
+/* 8021F538 0021C618  90 01 00 34 */	stw r0, 0x34(r1)
+/* 8021F53C 0021C61C  39 61 00 30 */	addi r11, r1, 0x30
+/* 8021F540 0021C620  4B FC DF BD */	bl _savegpr_25
+/* 8021F544 0021C624  80 A4 00 00 */	lwz r5, 0x0(r4)
+/* 8021F548 0021C628  7C 7D 1B 78 */	mr r29, r3
+/* 8021F54C 0021C62C  A0 0D 88 30 */	lhz r0, _RwDlTokenCurrent@sda21(r13)
+/* 8021F550 0021C630  7C 9E 23 78 */	mr r30, r4
+/* 8021F554 0021C634  80 65 00 20 */	lwz r3, 0x20(r5)
+/* 8021F558 0021C638  3B 85 00 18 */	addi r28, r5, 0x18
+/* 8021F55C 0021C63C  B0 05 00 18 */	sth r0, 0x18(r5)
+/* 8021F560 0021C640  38 03 FF FF */	addi r0, r3, -0x1
+/* 8021F564 0021C644  54 03 18 38 */	slwi r3, r0, 3
+/* 8021F568 0021C648  88 1D 00 00 */	lbz r0, 0x0(r29)
+/* 8021F56C 0021C64C  7F FC 1A 14 */	add r31, r28, r3
+/* 8021F570 0021C650  3B FF 00 14 */	addi r31, r31, 0x14
+/* 8021F574 0021C654  28 00 00 01 */	cmplwi r0, 0x1
+/* 8021F578 0021C658  40 82 00 28 */	bne .L_8021F5A0
+/* 8021F57C 0021C65C  80 7D 00 04 */	lwz r3, 0x4(r29)
+/* 8021F580 0021C660  48 01 9A B1 */	bl RwFrameGetLTM
+/* 8021F584 0021C664  80 BD 00 18 */	lwz r5, 0x18(r29)
+/* 8021F588 0021C668  7C 7B 1B 78 */	mr r27, r3
+/* 8021F58C 0021C66C  80 0D 9F 00 */	lwz r0, _rpDlGeomVtxFmtOffset@sda21(r13)
+/* 8021F590 0021C670  7F C4 F3 78 */	mr r4, r30
+/* 8021F594 0021C674  7C 65 00 2E */	lwzx r3, r5, r0
+/* 8021F598 0021C678  48 00 01 BD */	bl _rwDlVtxFmtSetup
+/* 8021F59C 0021C67C  48 00 00 1C */	b .L_8021F5B8
+.L_8021F5A0:
+/* 8021F5A0 0021C680  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 8021F5A4 0021C684  3B 60 00 00 */	li r27, 0x0
+/* 8021F5A8 0021C688  80 0D 9F 04 */	lwz r0, _rpDlWorldVtxFmtOffset@sda21(r13)
+/* 8021F5AC 0021C68C  80 63 00 04 */	lwz r3, 0x4(r3)
+/* 8021F5B0 0021C690  7C 63 00 2E */	lwzx r3, r3, r0
+/* 8021F5B4 0021C694  48 00 01 A1 */	bl _rwDlVtxFmtSetup
+.L_8021F5B8:
+/* 8021F5B8 0021C698  80 1E 00 08 */	lwz r0, 0x8(r30)
+/* 8021F5BC 0021C69C  54 00 06 F7 */	rlwinm. r0, r0, 0, 27, 27
+/* 8021F5C0 0021C6A0  41 82 00 14 */	beq .L_8021F5D4
+/* 8021F5C4 0021C6A4  7F 63 DB 78 */	mr r3, r27
+/* 8021F5C8 0021C6A8  38 80 00 01 */	li r4, 0x1
+/* 8021F5CC 0021C6AC  48 02 70 B9 */	bl _rwDlTransformSetup
+/* 8021F5D0 0021C6B0  48 00 00 10 */	b .L_8021F5E0
+.L_8021F5D4:
+/* 8021F5D4 0021C6B4  7F 63 DB 78 */	mr r3, r27
+/* 8021F5D8 0021C6B8  38 80 00 00 */	li r4, 0x0
+/* 8021F5DC 0021C6BC  48 02 70 A9 */	bl _rwDlTransformSetup
+.L_8021F5E0:
+/* 8021F5E0 0021C6C0  80 1C 00 04 */	lwz r0, 0x4(r28)
+/* 8021F5E4 0021C6C4  80 7E 00 08 */	lwz r3, 0x8(r30)
+/* 8021F5E8 0021C6C8  80 9E 00 20 */	lwz r4, 0x20(r30)
+/* 8021F5EC 0021C6CC  54 06 07 FE */	clrlwi r6, r0, 31
+/* 8021F5F0 0021C6D0  80 BE 00 1C */	lwz r5, 0x1c(r30)
+/* 8021F5F4 0021C6D4  48 00 2A 25 */	bl _rwDlObjectRenderSetup
+/* 8021F5F8 0021C6D8  80 1E 00 08 */	lwz r0, 0x8(r30)
+/* 8021F5FC 0021C6DC  7C 7A 1B 78 */	mr r26, r3
+/* 8021F600 0021C6E0  80 9E 00 04 */	lwz r4, 0x4(r30)
+/* 8021F604 0021C6E4  70 00 00 84 */	andi. r0, r0, 0x84
+/* 8021F608 0021C6E8  A3 84 00 04 */	lhz r28, 0x4(r4)
+/* 8021F60C 0021C6EC  3B 64 00 10 */	addi r27, r4, 0x10
+/* 8021F610 0021C6F0  41 82 00 D0 */	beq .L_8021F6E0
+/* 8021F614 0021C6F4  48 00 00 80 */	b .L_8021F694
+.L_8021F618:
+/* 8021F618 0021C6F8  80 7B 00 08 */	lwz r3, 0x8(r27)
+/* 8021F61C 0021C6FC  38 80 00 00 */	li r4, 0x0
+/* 8021F620 0021C700  83 23 00 00 */	lwz r25, 0x0(r3)
+/* 8021F624 0021C704  7F 23 CB 78 */	mr r3, r25
+/* 8021F628 0021C708  48 02 BA CD */	bl _rwDlTextureSet
+/* 8021F62C 0021C70C  28 19 00 00 */	cmplwi r25, 0x0
+/* 8021F630 0021C710  41 82 00 2C */	beq .L_8021F65C
+/* 8021F634 0021C714  80 99 00 00 */	lwz r4, 0x0(r25)
+/* 8021F638 0021C718  28 04 00 00 */	cmplwi r4, 0x0
+/* 8021F63C 0021C71C  41 82 00 20 */	beq .L_8021F65C
+/* 8021F640 0021C720  80 6D A0 20 */	lwz r3, _RwGameCubeRasterExtOffset@sda21(r13)
+/* 8021F644 0021C724  80 84 00 00 */	lwz r4, 0x0(r4)
+/* 8021F648 0021C728  38 03 00 14 */	addi r0, r3, 0x14
+/* 8021F64C 0021C72C  7C 04 00 2E */	lwzx r0, r4, r0
+/* 8021F650 0021C730  54 00 07 FE */	clrlwi r0, r0, 31
+/* 8021F654 0021C734  68 03 00 01 */	xori r3, r0, 0x1
+/* 8021F658 0021C738  48 02 96 A5 */	bl _rwDlRenderStateSetZCompLoc
+.L_8021F65C:
+/* 8021F65C 0021C73C  28 1A 00 00 */	cmplwi r26, 0x0
+/* 8021F660 0021C740  41 82 00 20 */	beq .L_8021F680
+/* 8021F664 0021C744  80 BB 00 08 */	lwz r5, 0x8(r27)
+/* 8021F668 0021C748  7F 4C D3 78 */	mr r12, r26
+/* 8021F66C 0021C74C  38 7E 00 0C */	addi r3, r30, 0xc
+/* 8021F670 0021C750  38 85 00 04 */	addi r4, r5, 0x4
+/* 8021F674 0021C754  C0 25 00 0C */	lfs f1, 0xc(r5)
+/* 8021F678 0021C758  7D 89 03 A6 */	mtctr r12
+/* 8021F67C 0021C75C  4E 80 04 21 */	bctrl
+.L_8021F680:
+/* 8021F680 0021C760  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 8021F684 0021C764  80 9F 00 04 */	lwz r4, 0x4(r31)
+/* 8021F688 0021C768  4B FB 04 99 */	bl GXCallDisplayList
+/* 8021F68C 0021C76C  3B FF 00 08 */	addi r31, r31, 0x8
+/* 8021F690 0021C770  3B 7B 00 0C */	addi r27, r27, 0xc
+.L_8021F694:
+/* 8021F694 0021C774  28 1C 00 00 */	cmplwi r28, 0x0
+/* 8021F698 0021C778  3B 9C FF FF */	addi r28, r28, -0x1
+/* 8021F69C 0021C77C  40 82 FF 7C */	bne .L_8021F618
+/* 8021F6A0 0021C780  48 00 00 4C */	b .L_8021F6EC
+/* 8021F6A4 0021C784  48 00 00 3C */	b .L_8021F6E0
+.L_8021F6A8:
+/* 8021F6A8 0021C788  28 1A 00 00 */	cmplwi r26, 0x0
+/* 8021F6AC 0021C78C  41 82 00 20 */	beq .L_8021F6CC
+/* 8021F6B0 0021C790  80 BB 00 08 */	lwz r5, 0x8(r27)
+/* 8021F6B4 0021C794  7F 4C D3 78 */	mr r12, r26
+/* 8021F6B8 0021C798  38 7E 00 0C */	addi r3, r30, 0xc
+/* 8021F6BC 0021C79C  38 85 00 04 */	addi r4, r5, 0x4
+/* 8021F6C0 0021C7A0  C0 25 00 0C */	lfs f1, 0xc(r5)
+/* 8021F6C4 0021C7A4  7D 89 03 A6 */	mtctr r12
+/* 8021F6C8 0021C7A8  4E 80 04 21 */	bctrl
+.L_8021F6CC:
+/* 8021F6CC 0021C7AC  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 8021F6D0 0021C7B0  80 9F 00 04 */	lwz r4, 0x4(r31)
+/* 8021F6D4 0021C7B4  4B FB 04 4D */	bl GXCallDisplayList
+/* 8021F6D8 0021C7B8  3B FF 00 08 */	addi r31, r31, 0x8
+/* 8021F6DC 0021C7BC  3B 7B 00 0C */	addi r27, r27, 0xc
+.L_8021F6E0:
+/* 8021F6E0 0021C7C0  28 1C 00 00 */	cmplwi r28, 0x0
+/* 8021F6E4 0021C7C4  3B 9C FF FF */	addi r28, r28, -0x1
+/* 8021F6E8 0021C7C8  40 82 FF C0 */	bne .L_8021F6A8
+.L_8021F6EC:
+/* 8021F6EC 0021C7CC  7F A3 EB 78 */	mr r3, r29
+/* 8021F6F0 0021C7D0  39 61 00 30 */	addi r11, r1, 0x30
+/* 8021F6F4 0021C7D4  4B FC DE 55 */	bl _restgpr_25
+/* 8021F6F8 0021C7D8  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 8021F6FC 0021C7DC  7C 08 03 A6 */	mtlr r0
+/* 8021F700 0021C7E0  38 21 00 30 */	addi r1, r1, 0x30
+/* 8021F704 0021C7E4  4E 80 00 20 */	blr
+.endfn _rxGCDefaultRenderCallback
+
+.fn _rxGameCubeAllInOneSetInstanceCallBack, global
+/* 8021F708 0021C7E8  80 63 00 14 */	lwz r3, 0x14(r3)
+/* 8021F70C 0021C7EC  90 83 00 00 */	stw r4, 0x0(r3)
+/* 8021F710 0021C7F0  4E 80 00 20 */	blr
+.endfn _rxGameCubeAllInOneSetInstanceCallBack
+
+.fn _rxGameCubeAllInOneGetInstanceCallBack, global
+/* 8021F714 0021C7F4  80 63 00 14 */	lwz r3, 0x14(r3)
+/* 8021F718 0021C7F8  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 8021F71C 0021C7FC  4E 80 00 20 */	blr
+.endfn _rxGameCubeAllInOneGetInstanceCallBack
+
+.fn _rxGameCubeAllInOneSetReinstanceCallBack, global
+/* 8021F720 0021C800  80 63 00 14 */	lwz r3, 0x14(r3)
+/* 8021F724 0021C804  90 83 00 04 */	stw r4, 0x4(r3)
+/* 8021F728 0021C808  4E 80 00 20 */	blr
+.endfn _rxGameCubeAllInOneSetReinstanceCallBack
+
+.fn _rxGameCubeAllInOneGetReinstanceCallBack, global
+/* 8021F72C 0021C80C  80 63 00 14 */	lwz r3, 0x14(r3)
+/* 8021F730 0021C810  80 63 00 04 */	lwz r3, 0x4(r3)
+/* 8021F734 0021C814  4E 80 00 20 */	blr
+.endfn _rxGameCubeAllInOneGetReinstanceCallBack
+
+.fn RxGameCubeAllInOneSetRenderCallBack, global
+/* 8021F738 0021C818  80 63 00 14 */	lwz r3, 0x14(r3)
+/* 8021F73C 0021C81C  90 83 00 0C */	stw r4, 0xc(r3)
+/* 8021F740 0021C820  4E 80 00 20 */	blr
+.endfn RxGameCubeAllInOneSetRenderCallBack
+
+.fn RxGameCubePreInstanceSetOptimize, global
+/* 8021F744 0021C824  90 6D 87 78 */	stw r3, _RwDlPreInstanceOptimize@sda21(r13)
+/* 8021F748 0021C828  4E 80 00 20 */	blr
+.endfn RxGameCubePreInstanceSetOptimize
+
+.fn RxGameCubePreInstanceGetOptimize, global
+/* 8021F74C 0021C82C  80 6D 87 78 */	lwz r3, _RwDlPreInstanceOptimize@sda21(r13)
+/* 8021F750 0021C830  4E 80 00 20 */	blr
+.endfn RxGameCubePreInstanceGetOptimize
+
+# 0x803CB078 - 0x803CB080
+.section .sdata, "wa"
+.balign 8
+
+.obj _RwDlPreInstanceOptimize, global
+	.4byte 0x00000001
+.endobj _RwDlPreInstanceOptimize
+	.4byte 0x00000000

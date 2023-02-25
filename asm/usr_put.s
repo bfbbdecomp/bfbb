@@ -1,0 +1,50 @@
+.include "macros.inc"
+.file "usr_put.c"
+
+# 0x801F07B8 - 0x801F0844
+.text
+.balign 4
+
+.fn usr_put_initialize, global
+/* 801F07B8 001ED898  4E 80 00 20 */	blr
+.endfn usr_put_initialize
+
+.fn usr_puts_serial, global
+/* 801F07BC 001ED89C  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 801F07C0 001ED8A0  7C 08 02 A6 */	mflr r0
+/* 801F07C4 001ED8A4  90 01 00 24 */	stw r0, 0x24(r1)
+/* 801F07C8 001ED8A8  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 801F07CC 001ED8AC  3B E0 00 00 */	li r31, 0x0
+/* 801F07D0 001ED8B0  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 801F07D4 001ED8B4  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 801F07D8 001ED8B8  7C 7D 1B 78 */	mr r29, r3
+/* 801F07DC 001ED8BC  38 60 00 00 */	li r3, 0x0
+/* 801F07E0 001ED8C0  48 00 00 30 */	b .L_801F0810
+.L_801F07E4:
+/* 801F07E4 001ED8C4  48 00 29 4D */	bl GetTRKConnected
+/* 801F07E8 001ED8C8  9B C1 00 08 */	stb r30, 0x8(r1)
+/* 801F07EC 001ED8CC  7C 7E 1B 78 */	mr r30, r3
+/* 801F07F0 001ED8D0  38 60 00 00 */	li r3, 0x0
+/* 801F07F4 001ED8D4  9B E1 00 09 */	stb r31, 0x9(r1)
+/* 801F07F8 001ED8D8  48 00 29 2D */	bl SetTRKConnected
+/* 801F07FC 001ED8DC  38 61 00 08 */	addi r3, r1, 0x8
+/* 801F0800 001ED8E0  4B FE 27 05 */	bl OSReport
+/* 801F0804 001ED8E4  7F C3 F3 78 */	mr r3, r30
+/* 801F0808 001ED8E8  48 00 29 1D */	bl SetTRKConnected
+/* 801F080C 001ED8EC  38 60 00 00 */	li r3, 0x0
+.L_801F0810:
+/* 801F0810 001ED8F0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801F0814 001ED8F4  40 82 00 14 */	bne .L_801F0828
+/* 801F0818 001ED8F8  88 1D 00 00 */	lbz r0, 0x0(r29)
+/* 801F081C 001ED8FC  3B BD 00 01 */	addi r29, r29, 0x1
+/* 801F0820 001ED900  7C 1E 07 75 */	extsb. r30, r0
+/* 801F0824 001ED904  40 82 FF C0 */	bne .L_801F07E4
+.L_801F0828:
+/* 801F0828 001ED908  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801F082C 001ED90C  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 801F0830 001ED910  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 801F0834 001ED914  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 801F0838 001ED918  7C 08 03 A6 */	mtlr r0
+/* 801F083C 001ED91C  38 21 00 20 */	addi r1, r1, 0x20
+/* 801F0840 001ED920  4E 80 00 20 */	blr
+.endfn usr_puts_serial

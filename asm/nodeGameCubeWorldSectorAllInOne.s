@@ -1,0 +1,337 @@
+.include "macros.inc"
+.file "nodeGameCubeWorldSectorAllInOne.c"
+
+# 0x802207E8 - 0x80220BC8
+.text
+.balign 4
+
+.fn _rxGCWorldSectorDefaultLightingCallback, local
+/* 802207E8 0021D8C8  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 802207EC 0021D8CC  7C 08 02 A6 */	mflr r0
+/* 802207F0 0021D8D0  90 01 00 24 */	stw r0, 0x24(r1)
+/* 802207F4 0021D8D4  38 00 00 00 */	li r0, 0x0
+/* 802207F8 0021D8D8  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 802207FC 0021D8DC  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 80220800 0021D8E0  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 80220804 0021D8E4  7C 9D 23 78 */	mr r29, r4
+/* 80220808 0021D8E8  93 81 00 10 */	stw r28, 0x10(r1)
+/* 8022080C 0021D8EC  7C 7C 1B 78 */	mr r28, r3
+/* 80220810 0021D8F0  90 04 00 20 */	stw r0, 0x20(r4)
+/* 80220814 0021D8F4  C0 02 BB E0 */	lfs f0, "@294"@sda21(r2)
+/* 80220818 0021D8F8  D0 04 00 0C */	stfs f0, 0xc(r4)
+/* 8022081C 0021D8FC  C0 02 BB E0 */	lfs f0, "@294"@sda21(r2)
+/* 80220820 0021D900  D0 04 00 10 */	stfs f0, 0x10(r4)
+/* 80220824 0021D904  C0 02 BB E0 */	lfs f0, "@294"@sda21(r2)
+/* 80220828 0021D908  D0 04 00 14 */	stfs f0, 0x14(r4)
+/* 8022082C 0021D90C  C0 02 BB E4 */	lfs f0, "@295"@sda21(r2)
+/* 80220830 0021D910  D0 04 00 18 */	stfs f0, 0x18(r4)
+/* 80220834 0021D914  90 04 00 1C */	stw r0, 0x1c(r4)
+/* 80220838 0021D918  90 04 00 24 */	stw r0, 0x24(r4)
+/* 8022083C 0021D91C  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80220840 0021D920  80 63 00 04 */	lwz r3, 0x4(r3)
+/* 80220844 0021D924  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 80220848 0021D928  54 00 06 B5 */	rlwinm. r0, r0, 0, 26, 26
+/* 8022084C 0021D92C  41 82 00 54 */	beq .L_802208A0
+/* 80220850 0021D930  38 60 00 02 */	li r3, 0x2
+/* 80220854 0021D934  48 00 03 75 */	bl _rwGCLightsGlobalEnable
+/* 80220858 0021D938  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 8022085C 0021D93C  3B DC 00 48 */	addi r30, r28, 0x48
+/* 80220860 0021D940  A0 64 00 0A */	lhz r3, 0xa(r4)
+/* 80220864 0021D944  38 03 00 01 */	addi r0, r3, 0x1
+/* 80220868 0021D948  B0 04 00 0A */	sth r0, 0xa(r4)
+/* 8022086C 0021D94C  83 FC 00 48 */	lwz r31, 0x48(r28)
+/* 80220870 0021D950  48 00 00 28 */	b .L_80220898
+.L_80220874:
+/* 80220874 0021D954  80 7F 00 08 */	lwz r3, 0x8(r31)
+/* 80220878 0021D958  28 03 00 00 */	cmplwi r3, 0x0
+/* 8022087C 0021D95C  41 82 00 18 */	beq .L_80220894
+/* 80220880 0021D960  88 03 00 02 */	lbz r0, 0x2(r3)
+/* 80220884 0021D964  54 00 07 BD */	rlwinm. r0, r0, 0, 30, 30
+/* 80220888 0021D968  41 82 00 0C */	beq .L_80220894
+/* 8022088C 0021D96C  7F A4 EB 78 */	mr r4, r29
+/* 80220890 0021D970  48 00 05 59 */	bl _rwGCLightsLocalEnable
+.L_80220894:
+/* 80220894 0021D974  83 FF 00 00 */	lwz r31, 0x0(r31)
+.L_80220898:
+/* 80220898 0021D978  7C 1F F0 40 */	cmplw r31, r30
+/* 8022089C 0021D97C  40 82 FF D8 */	bne .L_80220874
+.L_802208A0:
+/* 802208A0 0021D980  80 1D 00 1C */	lwz r0, 0x1c(r29)
+/* 802208A4 0021D984  2C 00 00 00 */	cmpwi r0, 0x0
+/* 802208A8 0021D988  41 82 00 40 */	beq .L_802208E8
+/* 802208AC 0021D98C  C0 3D 00 0C */	lfs f1, 0xc(r29)
+/* 802208B0 0021D990  C0 02 BB E4 */	lfs f0, "@295"@sda21(r2)
+/* 802208B4 0021D994  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 802208B8 0021D998  40 81 00 08 */	ble .L_802208C0
+/* 802208BC 0021D99C  D0 1D 00 0C */	stfs f0, 0xc(r29)
+.L_802208C0:
+/* 802208C0 0021D9A0  C0 3D 00 10 */	lfs f1, 0x10(r29)
+/* 802208C4 0021D9A4  C0 02 BB E4 */	lfs f0, "@295"@sda21(r2)
+/* 802208C8 0021D9A8  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 802208CC 0021D9AC  40 81 00 08 */	ble .L_802208D4
+/* 802208D0 0021D9B0  D0 1D 00 10 */	stfs f0, 0x10(r29)
+.L_802208D4:
+/* 802208D4 0021D9B4  C0 3D 00 14 */	lfs f1, 0x14(r29)
+/* 802208D8 0021D9B8  C0 02 BB E4 */	lfs f0, "@295"@sda21(r2)
+/* 802208DC 0021D9BC  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 802208E0 0021D9C0  40 81 00 08 */	ble .L_802208E8
+/* 802208E4 0021D9C4  D0 1D 00 14 */	stfs f0, 0x14(r29)
+.L_802208E8:
+/* 802208E8 0021D9C8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 802208EC 0021D9CC  7F 83 E3 78 */	mr r3, r28
+/* 802208F0 0021D9D0  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 802208F4 0021D9D4  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 802208F8 0021D9D8  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 802208FC 0021D9DC  83 81 00 10 */	lwz r28, 0x10(r1)
+/* 80220900 0021D9E0  7C 08 03 A6 */	mtlr r0
+/* 80220904 0021D9E4  38 21 00 20 */	addi r1, r1, 0x20
+/* 80220908 0021D9E8  4E 80 00 20 */	blr
+.endfn _rxGCWorldSectorDefaultLightingCallback
+
+.fn _rxGCWorldSectorDefaultInstanceCallback, local
+/* 8022090C 0021D9EC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80220910 0021D9F0  7C 08 02 A6 */	mflr r0
+/* 80220914 0021D9F4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80220918 0021D9F8  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8022091C 0021D9FC  7C 9F 23 78 */	mr r31, r4
+/* 80220920 0021DA00  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80220924 0021DA04  7C 7E 1B 78 */	mr r30, r3
+/* 80220928 0021DA08  7F C4 F3 78 */	mr r4, r30
+/* 8022092C 0021DA0C  80 AD 9F 7C */	lwz r5, RwEngineInstance@sda21(r13)
+/* 80220930 0021DA10  80 65 00 04 */	lwz r3, 0x4(r5)
+/* 80220934 0021DA14  80 03 00 08 */	lwz r0, 0x8(r3)
+/* 80220938 0021DA18  54 00 01 8D */	rlwinm. r0, r0, 0, 6, 6
+/* 8022093C 0021DA1C  41 82 00 38 */	beq .L_80220974
+/* 80220940 0021DA20  80 0D 87 78 */	lwz r0, _RwDlPreInstanceOptimize@sda21(r13)
+/* 80220944 0021DA24  2C 00 00 01 */	cmpwi r0, 0x1
+/* 80220948 0021DA28  40 82 00 18 */	bne .L_80220960
+/* 8022094C 0021DA2C  7C 85 23 78 */	mr r5, r4
+/* 80220950 0021DA30  38 C4 00 34 */	addi r6, r4, 0x34
+/* 80220954 0021DA34  48 00 8B 9D */	bl _rwDlWorldSectorInstanceOptimized
+/* 80220958 0021DA38  90 7F 00 00 */	stw r3, 0x0(r31)
+/* 8022095C 0021DA3C  48 00 00 28 */	b .L_80220984
+.L_80220960:
+/* 80220960 0021DA40  7C 85 23 78 */	mr r5, r4
+/* 80220964 0021DA44  38 C4 00 34 */	addi r6, r4, 0x34
+/* 80220968 0021DA48  48 00 94 B1 */	bl _rwDlWorldSectorInstanceFast
+/* 8022096C 0021DA4C  90 7F 00 00 */	stw r3, 0x0(r31)
+/* 80220970 0021DA50  48 00 00 14 */	b .L_80220984
+.L_80220974:
+/* 80220974 0021DA54  7C 85 23 78 */	mr r5, r4
+/* 80220978 0021DA58  38 C4 00 34 */	addi r6, r4, 0x34
+/* 8022097C 0021DA5C  48 00 94 9D */	bl _rwDlWorldSectorInstanceFast
+/* 80220980 0021DA60  90 7F 00 00 */	stw r3, 0x0(r31)
+.L_80220984:
+/* 80220984 0021DA64  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80220988 0021DA68  7F C3 F3 78 */	mr r3, r30
+/* 8022098C 0021DA6C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80220990 0021DA70  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80220994 0021DA74  7C 08 03 A6 */	mtlr r0
+/* 80220998 0021DA78  38 21 00 10 */	addi r1, r1, 0x10
+/* 8022099C 0021DA7C  4E 80 00 20 */	blr
+.endfn _rxGCWorldSectorDefaultInstanceCallback
+
+.fn _rxGCWorldSectorAllInOneNode, local
+/* 802209A0 0021DA80  94 21 FF C0 */	stwu r1, -0x40(r1)
+/* 802209A4 0021DA84  7C 08 02 A6 */	mflr r0
+/* 802209A8 0021DA88  90 01 00 44 */	stw r0, 0x44(r1)
+/* 802209AC 0021DA8C  93 E1 00 3C */	stw r31, 0x3c(r1)
+/* 802209B0 0021DA90  83 E4 00 00 */	lwz r31, 0x0(r4)
+/* 802209B4 0021DA94  93 C1 00 38 */	stw r30, 0x38(r1)
+/* 802209B8 0021DA98  83 C3 00 14 */	lwz r30, 0x14(r3)
+/* 802209BC 0021DA9C  93 C1 00 30 */	stw r30, 0x30(r1)
+/* 802209C0 0021DAA0  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 802209C4 0021DAA4  80 63 00 04 */	lwz r3, 0x4(r3)
+/* 802209C8 0021DAA8  80 83 00 08 */	lwz r4, 0x8(r3)
+/* 802209CC 0021DAAC  54 80 01 CF */	rlwinm. r0, r4, 0, 7, 7
+/* 802209D0 0021DAB0  40 82 01 2C */	bne .L_80220AFC
+/* 802209D4 0021DAB4  A0 1F 00 8A */	lhz r0, 0x8a(r31)
+/* 802209D8 0021DAB8  28 00 00 00 */	cmplwi r0, 0x0
+/* 802209DC 0021DABC  40 82 00 0C */	bne .L_802209E8
+/* 802209E0 0021DAC0  38 60 00 01 */	li r3, 0x1
+/* 802209E4 0021DAC4  48 00 01 88 */	b .L_80220B6C
+.L_802209E8:
+/* 802209E8 0021DAC8  80 BF 00 80 */	lwz r5, 0x80(r31)
+/* 802209EC 0021DACC  A0 05 00 04 */	lhz r0, 0x4(r5)
+/* 802209F0 0021DAD0  28 00 00 00 */	cmplwi r0, 0x0
+/* 802209F4 0021DAD4  40 82 00 0C */	bne .L_80220A00
+/* 802209F8 0021DAD8  38 60 00 01 */	li r3, 0x1
+/* 802209FC 0021DADC  48 00 01 70 */	b .L_80220B6C
+.L_80220A00:
+/* 80220A00 0021DAE0  80 7F 00 34 */	lwz r3, 0x34(r31)
+/* 80220A04 0021DAE4  28 03 00 00 */	cmplwi r3, 0x0
+/* 80220A08 0021DAE8  90 61 00 08 */	stw r3, 0x8(r1)
+/* 80220A0C 0021DAEC  90 A1 00 0C */	stw r5, 0xc(r1)
+/* 80220A10 0021DAF0  90 81 00 10 */	stw r4, 0x10(r1)
+/* 80220A14 0021DAF4  41 82 00 20 */	beq .L_80220A34
+/* 80220A18 0021DAF8  A0 83 00 1A */	lhz r4, 0x1a(r3)
+/* 80220A1C 0021DAFC  A0 05 00 06 */	lhz r0, 0x6(r5)
+/* 80220A20 0021DB00  7C 04 00 40 */	cmplw r4, r0
+/* 80220A24 0021DB04  41 82 00 10 */	beq .L_80220A34
+/* 80220A28 0021DB08  48 01 13 F5 */	bl RwResourcesFreeResEntry
+/* 80220A2C 0021DB0C  38 00 00 00 */	li r0, 0x0
+/* 80220A30 0021DB10  90 01 00 08 */	stw r0, 0x8(r1)
+.L_80220A34:
+/* 80220A34 0021DB14  80 61 00 08 */	lwz r3, 0x8(r1)
+/* 80220A38 0021DB18  28 03 00 00 */	cmplwi r3, 0x0
+/* 80220A3C 0021DB1C  41 82 00 94 */	beq .L_80220AD0
+/* 80220A40 0021DB20  80 03 00 00 */	lwz r0, 0x0(r3)
+/* 80220A44 0021DB24  28 00 00 00 */	cmplwi r0, 0x0
+/* 80220A48 0021DB28  41 82 00 C8 */	beq .L_80220B10
+/* 80220A4C 0021DB2C  80 63 00 04 */	lwz r3, 0x4(r3)
+/* 80220A50 0021DB30  90 03 00 00 */	stw r0, 0x0(r3)
+/* 80220A54 0021DB34  80 61 00 08 */	lwz r3, 0x8(r1)
+/* 80220A58 0021DB38  80 03 00 04 */	lwz r0, 0x4(r3)
+/* 80220A5C 0021DB3C  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80220A60 0021DB40  90 03 00 04 */	stw r0, 0x4(r3)
+/* 80220A64 0021DB44  80 6D 9F 48 */	lwz r3, resourcesModule@sda21(r13)
+/* 80220A68 0021DB48  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80220A6C 0021DB4C  38 03 00 24 */	addi r0, r3, 0x24
+/* 80220A70 0021DB50  80 61 00 08 */	lwz r3, 0x8(r1)
+/* 80220A74 0021DB54  7C 84 00 2E */	lwzx r4, r4, r0
+/* 80220A78 0021DB58  80 04 00 00 */	lwz r0, 0x0(r4)
+/* 80220A7C 0021DB5C  90 03 00 00 */	stw r0, 0x0(r3)
+/* 80220A80 0021DB60  80 6D 9F 48 */	lwz r3, resourcesModule@sda21(r13)
+/* 80220A84 0021DB64  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80220A88 0021DB68  38 03 00 24 */	addi r0, r3, 0x24
+/* 80220A8C 0021DB6C  80 61 00 08 */	lwz r3, 0x8(r1)
+/* 80220A90 0021DB70  7C 04 00 2E */	lwzx r0, r4, r0
+/* 80220A94 0021DB74  90 03 00 04 */	stw r0, 0x4(r3)
+/* 80220A98 0021DB78  80 6D 9F 48 */	lwz r3, resourcesModule@sda21(r13)
+/* 80220A9C 0021DB7C  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80220AA0 0021DB80  38 03 00 24 */	addi r0, r3, 0x24
+/* 80220AA4 0021DB84  80 A1 00 08 */	lwz r5, 0x8(r1)
+/* 80220AA8 0021DB88  7C 64 00 2E */	lwzx r3, r4, r0
+/* 80220AAC 0021DB8C  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80220AB0 0021DB90  90 A3 00 04 */	stw r5, 0x4(r3)
+/* 80220AB4 0021DB94  80 6D 9F 48 */	lwz r3, resourcesModule@sda21(r13)
+/* 80220AB8 0021DB98  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80220ABC 0021DB9C  38 03 00 24 */	addi r0, r3, 0x24
+/* 80220AC0 0021DBA0  80 A1 00 08 */	lwz r5, 0x8(r1)
+/* 80220AC4 0021DBA4  7C 64 00 2E */	lwzx r3, r4, r0
+/* 80220AC8 0021DBA8  90 A3 00 00 */	stw r5, 0x0(r3)
+/* 80220ACC 0021DBAC  48 00 00 44 */	b .L_80220B10
+.L_80220AD0:
+/* 80220AD0 0021DBB0  81 9E 00 00 */	lwz r12, 0x0(r30)
+/* 80220AD4 0021DBB4  28 0C 00 00 */	cmplwi r12, 0x0
+/* 80220AD8 0021DBB8  41 82 00 38 */	beq .L_80220B10
+/* 80220ADC 0021DBBC  7F E3 FB 78 */	mr r3, r31
+/* 80220AE0 0021DBC0  38 81 00 08 */	addi r4, r1, 0x8
+/* 80220AE4 0021DBC4  7D 89 03 A6 */	mtctr r12
+/* 80220AE8 0021DBC8  4E 80 04 21 */	bctrl
+/* 80220AEC 0021DBCC  7C 03 F8 40 */	cmplw r3, r31
+/* 80220AF0 0021DBD0  41 82 00 20 */	beq .L_80220B10
+/* 80220AF4 0021DBD4  38 60 00 00 */	li r3, 0x0
+/* 80220AF8 0021DBD8  48 00 00 74 */	b .L_80220B6C
+.L_80220AFC:
+/* 80220AFC 0021DBDC  80 1F 00 34 */	lwz r0, 0x34(r31)
+/* 80220B00 0021DBE0  90 01 00 08 */	stw r0, 0x8(r1)
+/* 80220B04 0021DBE4  80 1F 00 80 */	lwz r0, 0x80(r31)
+/* 80220B08 0021DBE8  90 01 00 0C */	stw r0, 0xc(r1)
+/* 80220B0C 0021DBEC  90 81 00 10 */	stw r4, 0x10(r1)
+.L_80220B10:
+/* 80220B10 0021DBF0  81 9E 00 08 */	lwz r12, 0x8(r30)
+/* 80220B14 0021DBF4  28 0C 00 00 */	cmplwi r12, 0x0
+/* 80220B18 0021DBF8  41 82 00 24 */	beq .L_80220B3C
+/* 80220B1C 0021DBFC  7F E3 FB 78 */	mr r3, r31
+/* 80220B20 0021DC00  38 81 00 08 */	addi r4, r1, 0x8
+/* 80220B24 0021DC04  7D 89 03 A6 */	mtctr r12
+/* 80220B28 0021DC08  4E 80 04 21 */	bctrl
+/* 80220B2C 0021DC0C  7C 03 F8 40 */	cmplw r3, r31
+/* 80220B30 0021DC10  41 82 00 0C */	beq .L_80220B3C
+/* 80220B34 0021DC14  38 60 00 00 */	li r3, 0x0
+/* 80220B38 0021DC18  48 00 00 34 */	b .L_80220B6C
+.L_80220B3C:
+/* 80220B3C 0021DC1C  81 9E 00 0C */	lwz r12, 0xc(r30)
+/* 80220B40 0021DC20  28 0C 00 00 */	cmplwi r12, 0x0
+/* 80220B44 0021DC24  41 82 00 24 */	beq .L_80220B68
+/* 80220B48 0021DC28  7F E3 FB 78 */	mr r3, r31
+/* 80220B4C 0021DC2C  38 81 00 08 */	addi r4, r1, 0x8
+/* 80220B50 0021DC30  7D 89 03 A6 */	mtctr r12
+/* 80220B54 0021DC34  4E 80 04 21 */	bctrl
+/* 80220B58 0021DC38  7C 03 F8 40 */	cmplw r3, r31
+/* 80220B5C 0021DC3C  41 82 00 0C */	beq .L_80220B68
+/* 80220B60 0021DC40  38 60 00 00 */	li r3, 0x0
+/* 80220B64 0021DC44  48 00 00 08 */	b .L_80220B6C
+.L_80220B68:
+/* 80220B68 0021DC48  38 60 00 01 */	li r3, 0x1
+.L_80220B6C:
+/* 80220B6C 0021DC4C  80 01 00 44 */	lwz r0, 0x44(r1)
+/* 80220B70 0021DC50  83 E1 00 3C */	lwz r31, 0x3c(r1)
+/* 80220B74 0021DC54  83 C1 00 38 */	lwz r30, 0x38(r1)
+/* 80220B78 0021DC58  7C 08 03 A6 */	mtlr r0
+/* 80220B7C 0021DC5C  38 21 00 40 */	addi r1, r1, 0x40
+/* 80220B80 0021DC60  4E 80 00 20 */	blr
+.endfn _rxGCWorldSectorAllInOneNode
+
+.fn _rxGCWorldSectorAllInOnePipelineInit, local
+/* 80220B84 0021DC64  80 A3 00 14 */	lwz r5, 0x14(r3)
+/* 80220B88 0021DC68  3C 60 80 22 */	lis r3, _rxGCWorldSectorDefaultInstanceCallback@ha
+/* 80220B8C 0021DC6C  38 03 09 0C */	addi r0, r3, _rxGCWorldSectorDefaultInstanceCallback@l
+/* 80220B90 0021DC70  3C 80 80 22 */	lis r4, _rxGCWorldSectorDefaultLightingCallback@ha
+/* 80220B94 0021DC74  90 05 00 00 */	stw r0, 0x0(r5)
+/* 80220B98 0021DC78  38 00 00 00 */	li r0, 0x0
+/* 80220B9C 0021DC7C  3C 60 80 22 */	lis r3, _rxGCDefaultRenderCallback@ha
+/* 80220BA0 0021DC80  38 84 07 E8 */	addi r4, r4, _rxGCWorldSectorDefaultLightingCallback@l
+/* 80220BA4 0021DC84  90 05 00 04 */	stw r0, 0x4(r5)
+/* 80220BA8 0021DC88  38 03 F5 30 */	addi r0, r3, _rxGCDefaultRenderCallback@l
+/* 80220BAC 0021DC8C  38 60 00 01 */	li r3, 0x1
+/* 80220BB0 0021DC90  90 85 00 08 */	stw r4, 0x8(r5)
+/* 80220BB4 0021DC94  90 05 00 0C */	stw r0, 0xc(r5)
+/* 80220BB8 0021DC98  4E 80 00 20 */	blr
+.endfn _rxGCWorldSectorAllInOnePipelineInit
+
+.fn RxNodeDefinitionGetGameCubeWorldSectorAllInOne, global
+/* 80220BBC 0021DC9C  3C 60 80 2B */	lis r3, nodeGameCubeWorldSectorAllInOneCSL$357@ha
+/* 80220BC0 0021DCA0  38 63 78 84 */	addi r3, r3, nodeGameCubeWorldSectorAllInOneCSL$357@l
+/* 80220BC4 0021DCA4  4E 80 00 20 */	blr
+.endfn RxNodeDefinitionGetGameCubeWorldSectorAllInOne
+
+# 0x802B7860 - 0x802B78C8
+.data
+.balign 8
+
+.obj "@358", local
+	.4byte 0x47616D65
+	.4byte 0x72437562
+	.4byte 0x65576F72
+	.4byte 0x6C645365
+	.4byte 0x63746F72
+	.4byte 0x416C6C49
+	.4byte 0x6E4F6E65
+	.4byte 0x2E63736C
+	.byte 0x00
+.endobj "@358"
+	.byte 0x00, 0x00, 0x00
+
+.obj nodeGameCubeWorldSectorAllInOneCSL$357, local
+	.4byte "@358"
+	.4byte _rxGCWorldSectorAllInOneNode
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte _rxGCWorldSectorAllInOnePipelineInit
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000010
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj nodeGameCubeWorldSectorAllInOneCSL$357
+	.4byte 0x00000000
+
+# 0x803D0560 - 0x803D0568
+.section .sdata2, "a"
+.balign 8
+
+.obj "@294", local
+	.4byte 0x00000000
+.endobj "@294"
+
+.obj "@295", local
+	.4byte 0x3F800000
+.endobj "@295"

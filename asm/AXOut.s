@@ -1,0 +1,626 @@
+.include "macros.inc"
+.file "AXOut.c"
+
+# 0x801B8D70 - 0x801B9540
+.text
+.balign 4
+
+.fn __AXOutNewFrame, global
+/* 801B8D70 001B5E50  7C 08 02 A6 */	mflr r0
+/* 801B8D74 001B5E54  3C 80 80 36 */	lis r4, ...bss.0@ha
+/* 801B8D78 001B5E58  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B8D7C 001B5E5C  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801B8D80 001B5E60  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801B8D84 001B5E64  3B E4 71 A0 */	addi r31, r4, ...bss.0@l
+/* 801B8D88 001B5E68  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 801B8D8C 001B5E6C  3B C3 00 00 */	addi r30, r3, 0x0
+/* 801B8D90 001B5E70  48 01 E7 BD */	bl OSGetTime
+/* 801B8D94 001B5E74  90 9F 4A 54 */	stw r4, 0x4a54(r31)
+/* 801B8D98 001B5E78  90 7F 4A 50 */	stw r3, 0x4a50(r31)
+/* 801B8D9C 001B5E7C  7F C3 F3 78 */	mr r3, r30
+/* 801B8DA0 001B5E80  48 00 13 BD */	bl __AXSyncPBs
+/* 801B8DA4 001B5E84  48 00 07 A9 */	bl __AXPrintStudio
+/* 801B8DA8 001B5E88  4B FF F8 B5 */	bl __AXGetCommandListAddress
+/* 801B8DAC 001B5E8C  3C 80 BA BE */	lis r4, 0xbabe
+/* 801B8DB0 001B5E90  3B C3 00 00 */	addi r30, r3, 0x0
+/* 801B8DB4 001B5E94  38 64 01 80 */	addi r3, r4, 0x180
+/* 801B8DB8 001B5E98  48 00 90 5D */	bl DSPSendMailToDSP
+.L_801B8DBC:
+/* 801B8DBC 001B5E9C  48 00 90 21 */	bl DSPCheckMailToDSP
+/* 801B8DC0 001B5EA0  28 03 00 00 */	cmplwi r3, 0x0
+/* 801B8DC4 001B5EA4  40 82 FF F8 */	bne .L_801B8DBC
+/* 801B8DC8 001B5EA8  7F C3 F3 78 */	mr r3, r30
+/* 801B8DCC 001B5EAC  48 00 90 49 */	bl DSPSendMailToDSP
+.L_801B8DD0:
+/* 801B8DD0 001B5EB0  48 00 90 0D */	bl DSPCheckMailToDSP
+/* 801B8DD4 001B5EB4  28 03 00 00 */	cmplwi r3, 0x0
+/* 801B8DD8 001B5EB8  40 82 FF F8 */	bne .L_801B8DD0
+/* 801B8DDC 001B5EBC  4B FF EF 41 */	bl __AXServiceCallbackStack
+/* 801B8DE0 001B5EC0  48 01 E7 6D */	bl OSGetTime
+/* 801B8DE4 001B5EC4  90 9F 4A 5C */	stw r4, 0x4a5c(r31)
+/* 801B8DE8 001B5EC8  90 7F 4A 58 */	stw r3, 0x4a58(r31)
+/* 801B8DEC 001B5ECC  4B FF F6 2D */	bl __AXProcessAux
+/* 801B8DF0 001B5ED0  48 01 E7 5D */	bl OSGetTime
+/* 801B8DF4 001B5ED4  90 9F 4A 64 */	stw r4, 0x4a64(r31)
+/* 801B8DF8 001B5ED8  90 7F 4A 60 */	stw r3, 0x4a60(r31)
+/* 801B8DFC 001B5EDC  48 01 E7 51 */	bl OSGetTime
+/* 801B8E00 001B5EE0  90 9F 4A 6C */	stw r4, 0x4a6c(r31)
+/* 801B8E04 001B5EE4  90 7F 4A 68 */	stw r3, 0x4a68(r31)
+/* 801B8E08 001B5EE8  81 8D 9A 20 */	lwz r12, __AXUserFrameCallback@sda21(r13)
+/* 801B8E0C 001B5EEC  28 0C 00 00 */	cmplwi r12, 0x0
+/* 801B8E10 001B5EF0  41 82 00 0C */	beq .L_801B8E1C
+/* 801B8E14 001B5EF4  7D 88 03 A6 */	mtlr r12
+/* 801B8E18 001B5EF8  4E 80 00 21 */	blrl
+.L_801B8E1C:
+/* 801B8E1C 001B5EFC  48 01 E7 31 */	bl OSGetTime
+/* 801B8E20 001B5F00  90 9F 4A 74 */	stw r4, 0x4a74(r31)
+/* 801B8E24 001B5F04  90 7F 4A 70 */	stw r3, 0x4a70(r31)
+/* 801B8E28 001B5F08  38 7F 07 80 */	addi r3, r31, 0x780
+/* 801B8E2C 001B5F0C  80 0D 9A 08 */	lwz r0, __AXOutFrame@sda21(r13)
+/* 801B8E30 001B5F10  1C 00 02 80 */	mulli r0, r0, 0x280
+/* 801B8E34 001B5F14  7C 9F 02 14 */	add r4, r31, r0
+/* 801B8E38 001B5F18  4B FF F8 61 */	bl __AXNextFrame
+/* 801B8E3C 001B5F1C  80 6D 9A 08 */	lwz r3, __AXOutFrame@sda21(r13)
+/* 801B8E40 001B5F20  80 0D 9A 38 */	lwz r0, __AXOutputBufferMode@sda21(r13)
+/* 801B8E44 001B5F24  38 63 00 01 */	addi r3, r3, 0x1
+/* 801B8E48 001B5F28  28 00 00 01 */	cmplwi r0, 0x1
+/* 801B8E4C 001B5F2C  90 6D 9A 08 */	stw r3, __AXOutFrame@sda21(r13)
+/* 801B8E50 001B5F30  40 82 00 28 */	bne .L_801B8E78
+/* 801B8E54 001B5F34  3C 60 AA AB */	lis r3, 0xaaab
+/* 801B8E58 001B5F38  80 8D 9A 08 */	lwz r4, __AXOutFrame@sda21(r13)
+/* 801B8E5C 001B5F3C  38 03 AA AB */	addi r0, r3, -0x5555
+/* 801B8E60 001B5F40  7C 00 20 16 */	mulhwu r0, r0, r4
+/* 801B8E64 001B5F44  54 00 F8 7E */	srwi r0, r0, 1
+/* 801B8E68 001B5F48  1C 00 00 03 */	mulli r0, r0, 0x3
+/* 801B8E6C 001B5F4C  7C 00 20 50 */	subf r0, r0, r4
+/* 801B8E70 001B5F50  90 0D 9A 08 */	stw r0, __AXOutFrame@sda21(r13)
+/* 801B8E74 001B5F54  48 00 00 24 */	b .L_801B8E98
+.L_801B8E78:
+/* 801B8E78 001B5F58  80 0D 9A 08 */	lwz r0, __AXOutFrame@sda21(r13)
+/* 801B8E7C 001B5F5C  38 80 02 80 */	li r4, 0x280
+/* 801B8E80 001B5F60  54 00 07 FE */	clrlwi r0, r0, 31
+/* 801B8E84 001B5F64  90 0D 9A 08 */	stw r0, __AXOutFrame@sda21(r13)
+/* 801B8E88 001B5F68  80 0D 9A 08 */	lwz r0, __AXOutFrame@sda21(r13)
+/* 801B8E8C 001B5F6C  1C 00 02 80 */	mulli r0, r0, 0x280
+/* 801B8E90 001B5F70  7C 7F 02 14 */	add r3, r31, r0
+/* 801B8E94 001B5F74  4B FF C5 01 */	bl AIInitDMA
+.L_801B8E98:
+/* 801B8E98 001B5F78  48 01 E6 B5 */	bl OSGetTime
+/* 801B8E9C 001B5F7C  90 9F 4A 7C */	stw r4, 0x4a7c(r31)
+/* 801B8EA0 001B5F80  90 7F 4A 78 */	stw r3, 0x4a78(r31)
+/* 801B8EA4 001B5F84  48 00 0B 65 */	bl __AXGetNumVoices
+/* 801B8EA8 001B5F88  90 7F 4A 80 */	stw r3, 0x4a80(r31)
+/* 801B8EAC 001B5F8C  48 00 1D 7D */	bl __AXGetCurrentProfile
+/* 801B8EB0 001B5F90  28 03 00 00 */	cmplwi r3, 0x0
+/* 801B8EB4 001B5F94  41 82 00 5C */	beq .L_801B8F10
+/* 801B8EB8 001B5F98  38 00 00 07 */	li r0, 0x7
+/* 801B8EBC 001B5F9C  7C 09 03 A6 */	mtctr r0
+/* 801B8EC0 001B5FA0  38 9F 4A 50 */	addi r4, r31, 0x4a50
+.L_801B8EC4:
+/* 801B8EC4 001B5FA4  88 04 00 00 */	lbz r0, 0x0(r4)
+/* 801B8EC8 001B5FA8  98 03 00 00 */	stb r0, 0x0(r3)
+/* 801B8ECC 001B5FAC  88 04 00 01 */	lbz r0, 0x1(r4)
+/* 801B8ED0 001B5FB0  98 03 00 01 */	stb r0, 0x1(r3)
+/* 801B8ED4 001B5FB4  88 04 00 02 */	lbz r0, 0x2(r4)
+/* 801B8ED8 001B5FB8  98 03 00 02 */	stb r0, 0x2(r3)
+/* 801B8EDC 001B5FBC  88 04 00 03 */	lbz r0, 0x3(r4)
+/* 801B8EE0 001B5FC0  98 03 00 03 */	stb r0, 0x3(r3)
+/* 801B8EE4 001B5FC4  88 04 00 04 */	lbz r0, 0x4(r4)
+/* 801B8EE8 001B5FC8  98 03 00 04 */	stb r0, 0x4(r3)
+/* 801B8EEC 001B5FCC  88 04 00 05 */	lbz r0, 0x5(r4)
+/* 801B8EF0 001B5FD0  98 03 00 05 */	stb r0, 0x5(r3)
+/* 801B8EF4 001B5FD4  88 04 00 06 */	lbz r0, 0x6(r4)
+/* 801B8EF8 001B5FD8  98 03 00 06 */	stb r0, 0x6(r3)
+/* 801B8EFC 001B5FDC  88 04 00 07 */	lbz r0, 0x7(r4)
+/* 801B8F00 001B5FE0  38 84 00 08 */	addi r4, r4, 0x8
+/* 801B8F04 001B5FE4  98 03 00 07 */	stb r0, 0x7(r3)
+/* 801B8F08 001B5FE8  38 63 00 08 */	addi r3, r3, 0x8
+/* 801B8F0C 001B5FEC  42 00 FF B8 */	bdnz .L_801B8EC4
+.L_801B8F10:
+/* 801B8F10 001B5FF0  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 801B8F14 001B5FF4  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 801B8F18 001B5FF8  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 801B8F1C 001B5FFC  38 21 00 18 */	addi r1, r1, 0x18
+/* 801B8F20 001B6000  7C 08 03 A6 */	mtlr r0
+/* 801B8F24 001B6004  4E 80 00 20 */	blr
+.endfn __AXOutNewFrame
+
+.fn __AXOutAiCallback, global
+/* 801B8F28 001B6008  7C 08 02 A6 */	mflr r0
+/* 801B8F2C 001B600C  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B8F30 001B6010  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801B8F34 001B6014  80 0D 9A 10 */	lwz r0, __AXOutDspReady@sda21(r13)
+/* 801B8F38 001B6018  28 00 00 00 */	cmplwi r0, 0x0
+/* 801B8F3C 001B601C  40 82 00 10 */	bne .L_801B8F4C
+/* 801B8F40 001B6020  48 01 E6 0D */	bl OSGetTime
+/* 801B8F44 001B6024  90 8D 9A 1C */	stw r4, __AXOsTime+0x4@sda21(r13)
+/* 801B8F48 001B6028  90 6D 9A 18 */	stw r3, __AXOsTime@sda21(r13)
+.L_801B8F4C:
+/* 801B8F4C 001B602C  80 0D 9A 10 */	lwz r0, __AXOutDspReady@sda21(r13)
+/* 801B8F50 001B6030  28 00 00 01 */	cmplwi r0, 0x1
+/* 801B8F54 001B6034  40 82 00 18 */	bne .L_801B8F6C
+/* 801B8F58 001B6038  38 00 00 00 */	li r0, 0x0
+/* 801B8F5C 001B603C  90 0D 9A 10 */	stw r0, __AXOutDspReady@sda21(r13)
+/* 801B8F60 001B6040  38 60 00 00 */	li r3, 0x0
+/* 801B8F64 001B6044  4B FF FE 0D */	bl __AXOutNewFrame
+/* 801B8F68 001B6048  48 00 00 18 */	b .L_801B8F80
+.L_801B8F6C:
+/* 801B8F6C 001B604C  38 00 00 02 */	li r0, 0x2
+/* 801B8F70 001B6050  3C 60 80 37 */	lis r3, __AXDSPTask@ha
+/* 801B8F74 001B6054  90 0D 9A 10 */	stw r0, __AXOutDspReady@sda21(r13)
+/* 801B8F78 001B6058  38 63 BB A0 */	addi r3, r3, __AXDSPTask@l
+/* 801B8F7C 001B605C  48 00 90 29 */	bl DSPAssertTask
+.L_801B8F80:
+/* 801B8F80 001B6060  80 0D 9A 38 */	lwz r0, __AXOutputBufferMode@sda21(r13)
+/* 801B8F84 001B6064  28 00 00 01 */	cmplwi r0, 0x1
+/* 801B8F88 001B6068  40 82 00 4C */	bne .L_801B8FD4
+/* 801B8F8C 001B606C  80 8D 9A 0C */	lwz r4, __AXAiDmaFrame@sda21(r13)
+/* 801B8F90 001B6070  3C 60 80 36 */	lis r3, __AXOutBuffer@ha
+/* 801B8F94 001B6074  38 03 71 A0 */	addi r0, r3, __AXOutBuffer@l
+/* 801B8F98 001B6078  1C 64 02 80 */	mulli r3, r4, 0x280
+/* 801B8F9C 001B607C  7C 60 1A 14 */	add r3, r0, r3
+/* 801B8FA0 001B6080  38 80 02 80 */	li r4, 0x280
+/* 801B8FA4 001B6084  4B FF C3 F1 */	bl AIInitDMA
+/* 801B8FA8 001B6088  80 8D 9A 0C */	lwz r4, __AXAiDmaFrame@sda21(r13)
+/* 801B8FAC 001B608C  3C 60 AA AB */	lis r3, 0xaaab
+/* 801B8FB0 001B6090  38 03 AA AB */	addi r0, r3, -0x5555
+/* 801B8FB4 001B6094  38 64 00 01 */	addi r3, r4, 0x1
+/* 801B8FB8 001B6098  90 6D 9A 0C */	stw r3, __AXAiDmaFrame@sda21(r13)
+/* 801B8FBC 001B609C  80 6D 9A 0C */	lwz r3, __AXAiDmaFrame@sda21(r13)
+/* 801B8FC0 001B60A0  7C 00 18 16 */	mulhwu r0, r0, r3
+/* 801B8FC4 001B60A4  54 00 F8 7E */	srwi r0, r0, 1
+/* 801B8FC8 001B60A8  1C 00 00 03 */	mulli r0, r0, 0x3
+/* 801B8FCC 001B60AC  7C 00 18 50 */	subf r0, r0, r3
+/* 801B8FD0 001B60B0  90 0D 9A 0C */	stw r0, __AXAiDmaFrame@sda21(r13)
+.L_801B8FD4:
+/* 801B8FD4 001B60B4  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801B8FD8 001B60B8  38 21 00 08 */	addi r1, r1, 0x8
+/* 801B8FDC 001B60BC  7C 08 03 A6 */	mtlr r0
+/* 801B8FE0 001B60C0  4E 80 00 20 */	blr
+.endfn __AXOutAiCallback
+
+.fn __AXDSPInitCallback, local
+/* 801B8FE4 001B60C4  38 00 00 01 */	li r0, 0x1
+/* 801B8FE8 001B60C8  90 0D 9A 24 */	stw r0, __AXDSPInitFlag@sda21(r13)
+/* 801B8FEC 001B60CC  4E 80 00 20 */	blr
+.endfn __AXDSPInitCallback
+
+.fn __AXDSPResumeCallback, local
+/* 801B8FF0 001B60D0  7C 08 02 A6 */	mflr r0
+/* 801B8FF4 001B60D4  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B8FF8 001B60D8  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801B8FFC 001B60DC  80 0D 9A 10 */	lwz r0, __AXOutDspReady@sda21(r13)
+/* 801B9000 001B60E0  28 00 00 02 */	cmplwi r0, 0x2
+/* 801B9004 001B60E4  40 82 00 2C */	bne .L_801B9030
+/* 801B9008 001B60E8  38 00 00 00 */	li r0, 0x0
+/* 801B900C 001B60EC  90 0D 9A 10 */	stw r0, __AXOutDspReady@sda21(r13)
+/* 801B9010 001B60F0  48 01 E5 3D */	bl OSGetTime
+/* 801B9014 001B60F4  80 AD 9A 18 */	lwz r5, __AXOsTime@sda21(r13)
+/* 801B9018 001B60F8  80 0D 9A 1C */	lwz r0, __AXOsTime+0x4@sda21(r13)
+/* 801B901C 001B60FC  7C 00 20 10 */	subfc r0, r0, r4
+/* 801B9020 001B6100  54 00 F0 BE */	srwi r0, r0, 2
+/* 801B9024 001B6104  7C 03 03 78 */	mr r3, r0
+/* 801B9028 001B6108  4B FF FD 49 */	bl __AXOutNewFrame
+/* 801B902C 001B610C  48 00 00 0C */	b .L_801B9038
+.L_801B9030:
+/* 801B9030 001B6110  38 00 00 01 */	li r0, 0x1
+/* 801B9034 001B6114  90 0D 9A 10 */	stw r0, __AXOutDspReady@sda21(r13)
+.L_801B9038:
+/* 801B9038 001B6118  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801B903C 001B611C  38 21 00 08 */	addi r1, r1, 0x8
+/* 801B9040 001B6120  7C 08 03 A6 */	mtlr r0
+/* 801B9044 001B6124  4E 80 00 20 */	blr
+.endfn __AXDSPResumeCallback
+
+.fn __AXDSPDoneCallback, local
+/* 801B9048 001B6128  7C 08 02 A6 */	mflr r0
+/* 801B904C 001B612C  38 6D 9A 30 */	addi r3, r13, __AXOutThreadQueue@sda21
+/* 801B9050 001B6130  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B9054 001B6134  38 00 00 01 */	li r0, 0x1
+/* 801B9058 001B6138  94 21 FF F8 */	stwu r1, -0x8(r1)
+/* 801B905C 001B613C  90 0D 9A 28 */	stw r0, __AXDSPDoneFlag@sda21(r13)
+/* 801B9060 001B6140  48 01 E3 3D */	bl OSWakeupThread
+/* 801B9064 001B6144  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801B9068 001B6148  38 21 00 08 */	addi r1, r1, 0x8
+/* 801B906C 001B614C  7C 08 03 A6 */	mtlr r0
+/* 801B9070 001B6150  4E 80 00 20 */	blr
+.endfn __AXDSPDoneCallback
+
+.fn __AXOutInitDSP, global
+/* 801B9074 001B6154  7C 08 02 A6 */	mflr r0
+/* 801B9078 001B6158  3C A0 80 1C */	lis r5, __AXDSPInitCallback@ha
+/* 801B907C 001B615C  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B9080 001B6160  3C 60 80 2B */	lis r3, axDspSlave@ha
+/* 801B9084 001B6164  38 03 20 00 */	addi r0, r3, axDspSlave@l
+/* 801B9088 001B6168  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801B908C 001B616C  3C 80 80 36 */	lis r4, ...bss.0@ha
+/* 801B9090 001B6170  39 20 00 00 */	li r9, 0x0
+/* 801B9094 001B6174  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801B9098 001B6178  3B E4 71 A0 */	addi r31, r4, ...bss.0@l
+/* 801B909C 001B617C  3C 80 80 1C */	lis r4, __AXDSPResumeCallback@ha
+/* 801B90A0 001B6180  90 1F 4A 0C */	stw r0, 0x4a0c(r31)
+/* 801B90A4 001B6184  39 1F 0A 00 */	addi r8, r31, 0xa00
+/* 801B90A8 001B6188  38 E0 00 10 */	li r7, 0x10
+/* 801B90AC 001B618C  A0 0D 85 68 */	lhz r0, axDspSlaveLength@sda21(r13)
+/* 801B90B0 001B6190  38 C0 00 30 */	li r6, 0x30
+/* 801B90B4 001B6194  38 A5 8F E4 */	addi r5, r5, __AXDSPInitCallback@l
+/* 801B90B8 001B6198  90 1F 4A 10 */	stw r0, 0x4a10(r31)
+/* 801B90BC 001B619C  38 00 20 00 */	li r0, 0x2000
+/* 801B90C0 001B61A0  38 84 8F F0 */	addi r4, r4, __AXDSPResumeCallback@l
+/* 801B90C4 001B61A4  91 3F 4A 14 */	stw r9, 0x4a14(r31)
+/* 801B90C8 001B61A8  3C 60 80 1C */	lis r3, __AXDSPDoneCallback@ha
+/* 801B90CC 001B61AC  91 1F 4A 18 */	stw r8, 0x4a18(r31)
+/* 801B90D0 001B61B0  90 1F 4A 1C */	stw r0, 0x4a1c(r31)
+/* 801B90D4 001B61B4  38 03 90 48 */	addi r0, r3, __AXDSPDoneCallback@l
+/* 801B90D8 001B61B8  38 6D 9A 30 */	addi r3, r13, __AXOutThreadQueue@sda21
+/* 801B90DC 001B61BC  91 3F 4A 20 */	stw r9, 0x4a20(r31)
+/* 801B90E0 001B61C0  B0 FF 4A 24 */	sth r7, 0x4a24(r31)
+/* 801B90E4 001B61C4  B0 DF 4A 26 */	sth r6, 0x4a26(r31)
+/* 801B90E8 001B61C8  90 BF 4A 28 */	stw r5, 0x4a28(r31)
+/* 801B90EC 001B61CC  90 9F 4A 2C */	stw r4, 0x4a2c(r31)
+/* 801B90F0 001B61D0  90 1F 4A 30 */	stw r0, 0x4a30(r31)
+/* 801B90F4 001B61D4  91 3F 4A 34 */	stw r9, 0x4a34(r31)
+/* 801B90F8 001B61D8  91 3F 4A 04 */	stw r9, 0x4a04(r31)
+/* 801B90FC 001B61DC  91 2D 9A 24 */	stw r9, __AXDSPInitFlag@sda21(r13)
+/* 801B9100 001B61E0  91 2D 9A 28 */	stw r9, __AXDSPDoneFlag@sda21(r13)
+/* 801B9104 001B61E4  48 01 D6 65 */	bl OSInitThreadQueue
+/* 801B9108 001B61E8  48 00 8D E5 */	bl DSPCheckInit
+/* 801B910C 001B61EC  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801B9110 001B61F0  40 82 00 08 */	bne .L_801B9118
+/* 801B9114 001B61F4  48 00 8D 15 */	bl DSPInit
+.L_801B9118:
+/* 801B9118 001B61F8  38 7F 4A 00 */	addi r3, r31, 0x4a00
+/* 801B911C 001B61FC  48 00 8D D9 */	bl DSPAddTask
+.L_801B9120:
+/* 801B9120 001B6200  80 0D 9A 24 */	lwz r0, __AXDSPInitFlag@sda21(r13)
+/* 801B9124 001B6204  2C 00 00 00 */	cmpwi r0, 0x0
+/* 801B9128 001B6208  41 82 FF F8 */	beq .L_801B9120
+/* 801B912C 001B620C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801B9130 001B6210  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801B9134 001B6214  38 21 00 10 */	addi r1, r1, 0x10
+/* 801B9138 001B6218  7C 08 03 A6 */	mtlr r0
+/* 801B913C 001B621C  4E 80 00 20 */	blr
+.endfn __AXOutInitDSP
+
+.fn __AXOutInit, global
+/* 801B9140 001B6220  7C 08 02 A6 */	mflr r0
+/* 801B9144 001B6224  38 80 00 00 */	li r4, 0x0
+/* 801B9148 001B6228  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B914C 001B622C  38 00 00 06 */	li r0, 0x6
+/* 801B9150 001B6230  7C 09 03 A6 */	mtctr r0
+/* 801B9154 001B6234  94 21 FF D8 */	stwu r1, -0x28(r1)
+/* 801B9158 001B6238  93 E1 00 24 */	stw r31, 0x24(r1)
+/* 801B915C 001B623C  90 8D 9A 08 */	stw r4, __AXOutFrame@sda21(r13)
+/* 801B9160 001B6240  90 8D 9A 0C */	stw r4, __AXAiDmaFrame@sda21(r13)
+/* 801B9164 001B6244  90 6D 9A 38 */	stw r3, __AXOutputBufferMode@sda21(r13)
+/* 801B9168 001B6248  3C 60 80 36 */	lis r3, ...bss.0@ha
+/* 801B916C 001B624C  3B E3 71 A0 */	addi r31, r3, ...bss.0@l
+/* 801B9170 001B6250  90 8D 9A 2C */	stw r4, __AXDebugSteppingMode@sda21(r13)
+/* 801B9174 001B6254  38 7F 00 00 */	addi r3, r31, 0x0
+.L_801B9178:
+/* 801B9178 001B6258  90 83 00 00 */	stw r4, 0x0(r3)
+/* 801B917C 001B625C  90 83 00 04 */	stw r4, 0x4(r3)
+/* 801B9180 001B6260  90 83 00 08 */	stw r4, 0x8(r3)
+/* 801B9184 001B6264  90 83 00 0C */	stw r4, 0xc(r3)
+/* 801B9188 001B6268  90 83 00 10 */	stw r4, 0x10(r3)
+/* 801B918C 001B626C  90 83 00 14 */	stw r4, 0x14(r3)
+/* 801B9190 001B6270  90 83 00 18 */	stw r4, 0x18(r3)
+/* 801B9194 001B6274  90 83 00 1C */	stw r4, 0x1c(r3)
+/* 801B9198 001B6278  90 83 00 20 */	stw r4, 0x20(r3)
+/* 801B919C 001B627C  90 83 00 24 */	stw r4, 0x24(r3)
+/* 801B91A0 001B6280  90 83 00 28 */	stw r4, 0x28(r3)
+/* 801B91A4 001B6284  90 83 00 2C */	stw r4, 0x2c(r3)
+/* 801B91A8 001B6288  90 83 00 30 */	stw r4, 0x30(r3)
+/* 801B91AC 001B628C  90 83 00 34 */	stw r4, 0x34(r3)
+/* 801B91B0 001B6290  90 83 00 38 */	stw r4, 0x38(r3)
+/* 801B91B4 001B6294  90 83 00 3C */	stw r4, 0x3c(r3)
+/* 801B91B8 001B6298  90 83 00 40 */	stw r4, 0x40(r3)
+/* 801B91BC 001B629C  90 83 00 44 */	stw r4, 0x44(r3)
+/* 801B91C0 001B62A0  90 83 00 48 */	stw r4, 0x48(r3)
+/* 801B91C4 001B62A4  90 83 00 4C */	stw r4, 0x4c(r3)
+/* 801B91C8 001B62A8  90 83 00 50 */	stw r4, 0x50(r3)
+/* 801B91CC 001B62AC  90 83 00 54 */	stw r4, 0x54(r3)
+/* 801B91D0 001B62B0  90 83 00 58 */	stw r4, 0x58(r3)
+/* 801B91D4 001B62B4  90 83 00 5C */	stw r4, 0x5c(r3)
+/* 801B91D8 001B62B8  90 83 00 60 */	stw r4, 0x60(r3)
+/* 801B91DC 001B62BC  90 83 00 64 */	stw r4, 0x64(r3)
+/* 801B91E0 001B62C0  90 83 00 68 */	stw r4, 0x68(r3)
+/* 801B91E4 001B62C4  90 83 00 6C */	stw r4, 0x6c(r3)
+/* 801B91E8 001B62C8  90 83 00 70 */	stw r4, 0x70(r3)
+/* 801B91EC 001B62CC  90 83 00 74 */	stw r4, 0x74(r3)
+/* 801B91F0 001B62D0  90 83 00 78 */	stw r4, 0x78(r3)
+/* 801B91F4 001B62D4  90 83 00 7C */	stw r4, 0x7c(r3)
+/* 801B91F8 001B62D8  90 83 00 80 */	stw r4, 0x80(r3)
+/* 801B91FC 001B62DC  90 83 00 84 */	stw r4, 0x84(r3)
+/* 801B9200 001B62E0  90 83 00 88 */	stw r4, 0x88(r3)
+/* 801B9204 001B62E4  90 83 00 8C */	stw r4, 0x8c(r3)
+/* 801B9208 001B62E8  90 83 00 90 */	stw r4, 0x90(r3)
+/* 801B920C 001B62EC  90 83 00 94 */	stw r4, 0x94(r3)
+/* 801B9210 001B62F0  90 83 00 98 */	stw r4, 0x98(r3)
+/* 801B9214 001B62F4  90 83 00 9C */	stw r4, 0x9c(r3)
+/* 801B9218 001B62F8  90 83 00 A0 */	stw r4, 0xa0(r3)
+/* 801B921C 001B62FC  90 83 00 A4 */	stw r4, 0xa4(r3)
+/* 801B9220 001B6300  90 83 00 A8 */	stw r4, 0xa8(r3)
+/* 801B9224 001B6304  90 83 00 AC */	stw r4, 0xac(r3)
+/* 801B9228 001B6308  90 83 00 B0 */	stw r4, 0xb0(r3)
+/* 801B922C 001B630C  90 83 00 B4 */	stw r4, 0xb4(r3)
+/* 801B9230 001B6310  90 83 00 B8 */	stw r4, 0xb8(r3)
+/* 801B9234 001B6314  90 83 00 BC */	stw r4, 0xbc(r3)
+/* 801B9238 001B6318  90 83 00 C0 */	stw r4, 0xc0(r3)
+/* 801B923C 001B631C  90 83 00 C4 */	stw r4, 0xc4(r3)
+/* 801B9240 001B6320  90 83 00 C8 */	stw r4, 0xc8(r3)
+/* 801B9244 001B6324  90 83 00 CC */	stw r4, 0xcc(r3)
+/* 801B9248 001B6328  90 83 00 D0 */	stw r4, 0xd0(r3)
+/* 801B924C 001B632C  90 83 00 D4 */	stw r4, 0xd4(r3)
+/* 801B9250 001B6330  90 83 00 D8 */	stw r4, 0xd8(r3)
+/* 801B9254 001B6334  90 83 00 DC */	stw r4, 0xdc(r3)
+/* 801B9258 001B6338  90 83 00 E0 */	stw r4, 0xe0(r3)
+/* 801B925C 001B633C  90 83 00 E4 */	stw r4, 0xe4(r3)
+/* 801B9260 001B6340  90 83 00 E8 */	stw r4, 0xe8(r3)
+/* 801B9264 001B6344  90 83 00 EC */	stw r4, 0xec(r3)
+/* 801B9268 001B6348  90 83 00 F0 */	stw r4, 0xf0(r3)
+/* 801B926C 001B634C  90 83 00 F4 */	stw r4, 0xf4(r3)
+/* 801B9270 001B6350  90 83 00 F8 */	stw r4, 0xf8(r3)
+/* 801B9274 001B6354  90 83 00 FC */	stw r4, 0xfc(r3)
+/* 801B9278 001B6358  90 83 01 00 */	stw r4, 0x100(r3)
+/* 801B927C 001B635C  90 83 01 04 */	stw r4, 0x104(r3)
+/* 801B9280 001B6360  90 83 01 08 */	stw r4, 0x108(r3)
+/* 801B9284 001B6364  90 83 01 0C */	stw r4, 0x10c(r3)
+/* 801B9288 001B6368  90 83 01 10 */	stw r4, 0x110(r3)
+/* 801B928C 001B636C  90 83 01 14 */	stw r4, 0x114(r3)
+/* 801B9290 001B6370  90 83 01 18 */	stw r4, 0x118(r3)
+/* 801B9294 001B6374  90 83 01 1C */	stw r4, 0x11c(r3)
+/* 801B9298 001B6378  90 83 01 20 */	stw r4, 0x120(r3)
+/* 801B929C 001B637C  90 83 01 24 */	stw r4, 0x124(r3)
+/* 801B92A0 001B6380  90 83 01 28 */	stw r4, 0x128(r3)
+/* 801B92A4 001B6384  90 83 01 2C */	stw r4, 0x12c(r3)
+/* 801B92A8 001B6388  90 83 01 30 */	stw r4, 0x130(r3)
+/* 801B92AC 001B638C  90 83 01 34 */	stw r4, 0x134(r3)
+/* 801B92B0 001B6390  90 83 01 38 */	stw r4, 0x138(r3)
+/* 801B92B4 001B6394  90 83 01 3C */	stw r4, 0x13c(r3)
+/* 801B92B8 001B6398  38 63 01 40 */	addi r3, r3, 0x140
+/* 801B92BC 001B639C  42 00 FE BC */	bdnz .L_801B9178
+/* 801B92C0 001B63A0  38 7F 00 00 */	addi r3, r31, 0x0
+/* 801B92C4 001B63A4  38 80 07 80 */	li r4, 0x780
+/* 801B92C8 001B63A8  48 01 90 91 */	bl DCFlushRange
+/* 801B92CC 001B63AC  38 00 00 02 */	li r0, 0x2
+/* 801B92D0 001B63B0  7C 09 03 A6 */	mtctr r0
+/* 801B92D4 001B63B4  38 7F 07 80 */	addi r3, r31, 0x780
+/* 801B92D8 001B63B8  38 00 00 00 */	li r0, 0x0
+.L_801B92DC:
+/* 801B92DC 001B63BC  90 03 00 00 */	stw r0, 0x0(r3)
+/* 801B92E0 001B63C0  90 03 00 04 */	stw r0, 0x4(r3)
+/* 801B92E4 001B63C4  90 03 00 08 */	stw r0, 0x8(r3)
+/* 801B92E8 001B63C8  90 03 00 0C */	stw r0, 0xc(r3)
+/* 801B92EC 001B63CC  90 03 00 10 */	stw r0, 0x10(r3)
+/* 801B92F0 001B63D0  90 03 00 14 */	stw r0, 0x14(r3)
+/* 801B92F4 001B63D4  90 03 00 18 */	stw r0, 0x18(r3)
+/* 801B92F8 001B63D8  90 03 00 1C */	stw r0, 0x1c(r3)
+/* 801B92FC 001B63DC  90 03 00 20 */	stw r0, 0x20(r3)
+/* 801B9300 001B63E0  90 03 00 24 */	stw r0, 0x24(r3)
+/* 801B9304 001B63E4  90 03 00 28 */	stw r0, 0x28(r3)
+/* 801B9308 001B63E8  90 03 00 2C */	stw r0, 0x2c(r3)
+/* 801B930C 001B63EC  90 03 00 30 */	stw r0, 0x30(r3)
+/* 801B9310 001B63F0  90 03 00 34 */	stw r0, 0x34(r3)
+/* 801B9314 001B63F4  90 03 00 38 */	stw r0, 0x38(r3)
+/* 801B9318 001B63F8  90 03 00 3C */	stw r0, 0x3c(r3)
+/* 801B931C 001B63FC  90 03 00 40 */	stw r0, 0x40(r3)
+/* 801B9320 001B6400  90 03 00 44 */	stw r0, 0x44(r3)
+/* 801B9324 001B6404  90 03 00 48 */	stw r0, 0x48(r3)
+/* 801B9328 001B6408  90 03 00 4C */	stw r0, 0x4c(r3)
+/* 801B932C 001B640C  90 03 00 50 */	stw r0, 0x50(r3)
+/* 801B9330 001B6410  90 03 00 54 */	stw r0, 0x54(r3)
+/* 801B9334 001B6414  90 03 00 58 */	stw r0, 0x58(r3)
+/* 801B9338 001B6418  90 03 00 5C */	stw r0, 0x5c(r3)
+/* 801B933C 001B641C  90 03 00 60 */	stw r0, 0x60(r3)
+/* 801B9340 001B6420  90 03 00 64 */	stw r0, 0x64(r3)
+/* 801B9344 001B6424  90 03 00 68 */	stw r0, 0x68(r3)
+/* 801B9348 001B6428  90 03 00 6C */	stw r0, 0x6c(r3)
+/* 801B934C 001B642C  90 03 00 70 */	stw r0, 0x70(r3)
+/* 801B9350 001B6430  90 03 00 74 */	stw r0, 0x74(r3)
+/* 801B9354 001B6434  90 03 00 78 */	stw r0, 0x78(r3)
+/* 801B9358 001B6438  90 03 00 7C */	stw r0, 0x7c(r3)
+/* 801B935C 001B643C  90 03 00 80 */	stw r0, 0x80(r3)
+/* 801B9360 001B6440  90 03 00 84 */	stw r0, 0x84(r3)
+/* 801B9364 001B6444  90 03 00 88 */	stw r0, 0x88(r3)
+/* 801B9368 001B6448  90 03 00 8C */	stw r0, 0x8c(r3)
+/* 801B936C 001B644C  90 03 00 90 */	stw r0, 0x90(r3)
+/* 801B9370 001B6450  90 03 00 94 */	stw r0, 0x94(r3)
+/* 801B9374 001B6454  90 03 00 98 */	stw r0, 0x98(r3)
+/* 801B9378 001B6458  90 03 00 9C */	stw r0, 0x9c(r3)
+/* 801B937C 001B645C  90 03 00 A0 */	stw r0, 0xa0(r3)
+/* 801B9380 001B6460  90 03 00 A4 */	stw r0, 0xa4(r3)
+/* 801B9384 001B6464  90 03 00 A8 */	stw r0, 0xa8(r3)
+/* 801B9388 001B6468  90 03 00 AC */	stw r0, 0xac(r3)
+/* 801B938C 001B646C  90 03 00 B0 */	stw r0, 0xb0(r3)
+/* 801B9390 001B6470  90 03 00 B4 */	stw r0, 0xb4(r3)
+/* 801B9394 001B6474  90 03 00 B8 */	stw r0, 0xb8(r3)
+/* 801B9398 001B6478  90 03 00 BC */	stw r0, 0xbc(r3)
+/* 801B939C 001B647C  90 03 00 C0 */	stw r0, 0xc0(r3)
+/* 801B93A0 001B6480  90 03 00 C4 */	stw r0, 0xc4(r3)
+/* 801B93A4 001B6484  90 03 00 C8 */	stw r0, 0xc8(r3)
+/* 801B93A8 001B6488  90 03 00 CC */	stw r0, 0xcc(r3)
+/* 801B93AC 001B648C  90 03 00 D0 */	stw r0, 0xd0(r3)
+/* 801B93B0 001B6490  90 03 00 D4 */	stw r0, 0xd4(r3)
+/* 801B93B4 001B6494  90 03 00 D8 */	stw r0, 0xd8(r3)
+/* 801B93B8 001B6498  90 03 00 DC */	stw r0, 0xdc(r3)
+/* 801B93BC 001B649C  90 03 00 E0 */	stw r0, 0xe0(r3)
+/* 801B93C0 001B64A0  90 03 00 E4 */	stw r0, 0xe4(r3)
+/* 801B93C4 001B64A4  90 03 00 E8 */	stw r0, 0xe8(r3)
+/* 801B93C8 001B64A8  90 03 00 EC */	stw r0, 0xec(r3)
+/* 801B93CC 001B64AC  90 03 00 F0 */	stw r0, 0xf0(r3)
+/* 801B93D0 001B64B0  90 03 00 F4 */	stw r0, 0xf4(r3)
+/* 801B93D4 001B64B4  90 03 00 F8 */	stw r0, 0xf8(r3)
+/* 801B93D8 001B64B8  90 03 00 FC */	stw r0, 0xfc(r3)
+/* 801B93DC 001B64BC  90 03 01 00 */	stw r0, 0x100(r3)
+/* 801B93E0 001B64C0  90 03 01 04 */	stw r0, 0x104(r3)
+/* 801B93E4 001B64C4  90 03 01 08 */	stw r0, 0x108(r3)
+/* 801B93E8 001B64C8  90 03 01 0C */	stw r0, 0x10c(r3)
+/* 801B93EC 001B64CC  90 03 01 10 */	stw r0, 0x110(r3)
+/* 801B93F0 001B64D0  90 03 01 14 */	stw r0, 0x114(r3)
+/* 801B93F4 001B64D4  90 03 01 18 */	stw r0, 0x118(r3)
+/* 801B93F8 001B64D8  90 03 01 1C */	stw r0, 0x11c(r3)
+/* 801B93FC 001B64DC  90 03 01 20 */	stw r0, 0x120(r3)
+/* 801B9400 001B64E0  90 03 01 24 */	stw r0, 0x124(r3)
+/* 801B9404 001B64E4  90 03 01 28 */	stw r0, 0x128(r3)
+/* 801B9408 001B64E8  90 03 01 2C */	stw r0, 0x12c(r3)
+/* 801B940C 001B64EC  90 03 01 30 */	stw r0, 0x130(r3)
+/* 801B9410 001B64F0  90 03 01 34 */	stw r0, 0x134(r3)
+/* 801B9414 001B64F4  90 03 01 38 */	stw r0, 0x138(r3)
+/* 801B9418 001B64F8  90 03 01 3C */	stw r0, 0x13c(r3)
+/* 801B941C 001B64FC  38 63 01 40 */	addi r3, r3, 0x140
+/* 801B9420 001B6500  42 00 FE BC */	bdnz .L_801B92DC
+/* 801B9424 001B6504  38 7F 07 80 */	addi r3, r31, 0x780
+/* 801B9428 001B6508  38 80 02 80 */	li r4, 0x280
+/* 801B942C 001B650C  48 01 8F 2D */	bl DCFlushRange
+/* 801B9430 001B6510  4B FF FC 45 */	bl __AXOutInitDSP
+/* 801B9434 001B6514  3C 60 80 1C */	lis r3, __AXOutAiCallback@ha
+/* 801B9438 001B6518  38 63 8F 28 */	addi r3, r3, __AXOutAiCallback@l
+/* 801B943C 001B651C  4B FF BF 15 */	bl AIRegisterDMACallback
+/* 801B9440 001B6520  80 0D 9A 38 */	lwz r0, __AXOutputBufferMode@sda21(r13)
+/* 801B9444 001B6524  28 00 00 01 */	cmplwi r0, 0x1
+/* 801B9448 001B6528  40 82 00 14 */	bne .L_801B945C
+/* 801B944C 001B652C  38 7F 07 80 */	addi r3, r31, 0x780
+/* 801B9450 001B6530  38 9F 05 00 */	addi r4, r31, 0x500
+/* 801B9454 001B6534  4B FF F2 45 */	bl __AXNextFrame
+/* 801B9458 001B6538  48 00 00 10 */	b .L_801B9468
+.L_801B945C:
+/* 801B945C 001B653C  38 7F 07 80 */	addi r3, r31, 0x780
+/* 801B9460 001B6540  38 9F 02 80 */	addi r4, r31, 0x280
+/* 801B9464 001B6544  4B FF F2 35 */	bl __AXNextFrame
+.L_801B9468:
+/* 801B9468 001B6548  80 0D 9A 38 */	lwz r0, __AXOutputBufferMode@sda21(r13)
+/* 801B946C 001B654C  38 80 00 01 */	li r4, 0x1
+/* 801B9470 001B6550  38 60 00 00 */	li r3, 0x0
+/* 801B9474 001B6554  90 8D 9A 10 */	stw r4, __AXOutDspReady@sda21(r13)
+/* 801B9478 001B6558  28 00 00 01 */	cmplwi r0, 0x1
+/* 801B947C 001B655C  90 6D 9A 20 */	stw r3, __AXUserFrameCallback@sda21(r13)
+/* 801B9480 001B6560  40 82 00 34 */	bne .L_801B94B4
+/* 801B9484 001B6564  80 0D 9A 0C */	lwz r0, __AXAiDmaFrame@sda21(r13)
+/* 801B9488 001B6568  38 80 02 80 */	li r4, 0x280
+/* 801B948C 001B656C  1C 00 02 80 */	mulli r0, r0, 0x280
+/* 801B9490 001B6570  7C 7F 02 14 */	add r3, r31, r0
+/* 801B9494 001B6574  4B FF BF 01 */	bl AIInitDMA
+/* 801B9498 001B6578  80 6D 9A 0C */	lwz r3, __AXAiDmaFrame@sda21(r13)
+/* 801B949C 001B657C  38 03 00 01 */	addi r0, r3, 0x1
+/* 801B94A0 001B6580  90 0D 9A 0C */	stw r0, __AXAiDmaFrame@sda21(r13)
+/* 801B94A4 001B6584  80 0D 9A 0C */	lwz r0, __AXAiDmaFrame@sda21(r13)
+/* 801B94A8 001B6588  54 00 07 FE */	clrlwi r0, r0, 31
+/* 801B94AC 001B658C  90 0D 9A 0C */	stw r0, __AXAiDmaFrame@sda21(r13)
+/* 801B94B0 001B6590  48 00 00 18 */	b .L_801B94C8
+.L_801B94B4:
+/* 801B94B4 001B6594  80 0D 9A 08 */	lwz r0, __AXOutFrame@sda21(r13)
+/* 801B94B8 001B6598  38 80 02 80 */	li r4, 0x280
+/* 801B94BC 001B659C  1C 00 02 80 */	mulli r0, r0, 0x280
+/* 801B94C0 001B65A0  7C 7F 02 14 */	add r3, r31, r0
+/* 801B94C4 001B65A4  4B FF BE D1 */	bl AIInitDMA
+.L_801B94C8:
+/* 801B94C8 001B65A8  4B FF BF 55 */	bl AIStartDMA
+/* 801B94CC 001B65AC  80 01 00 2C */	lwz r0, 0x2c(r1)
+/* 801B94D0 001B65B0  83 E1 00 24 */	lwz r31, 0x24(r1)
+/* 801B94D4 001B65B4  38 21 00 28 */	addi r1, r1, 0x28
+/* 801B94D8 001B65B8  7C 08 03 A6 */	mtlr r0
+/* 801B94DC 001B65BC  4E 80 00 20 */	blr
+.endfn __AXOutInit
+
+.fn __AXOutQuit, global
+/* 801B94E0 001B65C0  7C 08 02 A6 */	mflr r0
+/* 801B94E4 001B65C4  90 01 00 04 */	stw r0, 0x4(r1)
+/* 801B94E8 001B65C8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801B94EC 001B65CC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801B94F0 001B65D0  48 01 AE 21 */	bl OSDisableInterrupts
+/* 801B94F4 001B65D4  38 00 00 00 */	li r0, 0x0
+/* 801B94F8 001B65D8  3C 80 80 37 */	lis r4, __AXDSPTask@ha
+/* 801B94FC 001B65DC  90 0D 9A 20 */	stw r0, __AXUserFrameCallback@sda21(r13)
+/* 801B9500 001B65E0  38 04 BB A0 */	addi r0, r4, __AXDSPTask@l
+/* 801B9504 001B65E4  3B E3 00 00 */	addi r31, r3, 0x0
+/* 801B9508 001B65E8  7C 03 03 78 */	mr r3, r0
+/* 801B950C 001B65EC  48 00 8A 59 */	bl DSPCancelTask
+/* 801B9510 001B65F0  38 6D 9A 30 */	addi r3, r13, __AXOutThreadQueue@sda21
+/* 801B9514 001B65F4  48 01 DD 9D */	bl OSSleepThread
+/* 801B9518 001B65F8  4B FF BF 1D */	bl AIStopDMA
+/* 801B951C 001B65FC  7F E3 FB 78 */	mr r3, r31
+/* 801B9520 001B6600  48 01 AE 19 */	bl OSRestoreInterrupts
+/* 801B9524 001B6604  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801B9528 001B6608  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801B952C 001B660C  38 21 00 10 */	addi r1, r1, 0x10
+/* 801B9530 001B6610  7C 08 03 A6 */	mtlr r0
+/* 801B9534 001B6614  4E 80 00 20 */	blr
+.endfn __AXOutQuit
+
+.fn AXRegisterCallback, global
+/* 801B9538 001B6618  90 6D 9A 20 */	stw r3, __AXUserFrameCallback@sda21(r13)
+/* 801B953C 001B661C  4E 80 00 20 */	blr
+.endfn AXRegisterCallback
+
+# 0x803671A0 - 0x8036BC40
+.section .bss, "wa", @nobits
+.balign 8
+
+.obj __AXOutBuffer, local
+.sym ...bss.0, local
+	.skip 0x780
+.endobj __AXOutBuffer
+
+.obj __AXOutSBuffer, local
+	.skip 0x280
+.endobj __AXOutSBuffer
+
+.obj __AXDramImage, local
+	.skip 0x4000
+.endobj __AXDramImage
+
+.obj __AXDSPTask, local
+	.skip 0x50
+.endobj __AXDSPTask
+
+.obj __AXLocalProfile, global
+	.skip 0x38
+.endobj __AXLocalProfile
+	.skip 0x18
+
+# 0x803CC308 - 0x803CC340
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj __AXOutFrame, local
+	.skip 0x4
+.endobj __AXOutFrame
+
+.obj __AXAiDmaFrame, local
+	.skip 0x4
+.endobj __AXAiDmaFrame
+
+.obj __AXOutDspReady, local
+	.skip 0x4
+.endobj __AXOutDspReady
+	.skip 0x4
+
+.obj __AXOsTime, local
+	.skip 0x8
+.endobj __AXOsTime
+
+.obj __AXUserFrameCallback, local
+	.skip 0x4
+.endobj __AXUserFrameCallback
+
+.obj __AXDSPInitFlag, local
+	.skip 0x4
+.endobj __AXDSPInitFlag
+
+.obj __AXDSPDoneFlag, local
+	.skip 0x4
+.endobj __AXDSPDoneFlag
+
+.obj __AXDebugSteppingMode, local
+	.skip 0x4
+.endobj __AXDebugSteppingMode
+
+.obj __AXOutThreadQueue, local
+	.skip 0x8
+.endobj __AXOutThreadQueue
+
+.obj __AXOutputBufferMode, local
+	.skip 0x4
+.endobj __AXOutputBufferMode
+	.skip 0x4

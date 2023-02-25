@@ -1,0 +1,853 @@
+.include "macros.inc"
+.file "badevice.c"
+
+# 0x80237CE0 - 0x80238860
+.text
+.balign 4
+
+.fn MallocWrapper, local
+/* 80237CE0 00234DC0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80237CE4 00234DC4  7C 08 02 A6 */	mflr r0
+/* 80237CE8 00234DC8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80237CEC 00234DCC  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80237CF0 00234DD0  80 63 00 00 */	lwz r3, 0x0(r3)
+/* 80237CF4 00234DD4  81 84 01 34 */	lwz r12, 0x134(r4)
+/* 80237CF8 00234DD8  7D 89 03 A6 */	mtctr r12
+/* 80237CFC 00234DDC  4E 80 04 21 */	bctrl
+/* 80237D00 00234DE0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80237D04 00234DE4  7C 08 03 A6 */	mtlr r0
+/* 80237D08 00234DE8  38 21 00 10 */	addi r1, r1, 0x10
+/* 80237D0C 00234DEC  4E 80 00 20 */	blr
+.endfn MallocWrapper
+
+.fn FreeWrapper, local
+/* 80237D10 00234DF0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80237D14 00234DF4  7C 08 02 A6 */	mflr r0
+/* 80237D18 00234DF8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80237D1C 00234DFC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80237D20 00234E00  7C 7F 1B 78 */	mr r31, r3
+/* 80237D24 00234E04  7C 83 23 78 */	mr r3, r4
+/* 80237D28 00234E08  80 AD 9F 7C */	lwz r5, RwEngineInstance@sda21(r13)
+/* 80237D2C 00234E0C  81 85 01 38 */	lwz r12, 0x138(r5)
+/* 80237D30 00234E10  7D 89 03 A6 */	mtctr r12
+/* 80237D34 00234E14  4E 80 04 21 */	bctrl
+/* 80237D38 00234E18  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80237D3C 00234E1C  7F E3 FB 78 */	mr r3, r31
+/* 80237D40 00234E20  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80237D44 00234E24  7C 08 03 A6 */	mtlr r0
+/* 80237D48 00234E28  38 21 00 10 */	addi r1, r1, 0x10
+/* 80237D4C 00234E2C  4E 80 00 20 */	blr
+.endfn FreeWrapper
+
+.fn _rwGetNumEngineInstances, global
+/* 80237D50 00234E30  80 6D 9F 78 */	lwz r3, engineInstancesOpened@sda21(r13)
+/* 80237D54 00234E34  4E 80 00 20 */	blr
+.endfn _rwGetNumEngineInstances
+
+.fn RwEngineGetVersion, global
+/* 80237D58 00234E38  3C 60 00 03 */	lis r3, 0x3
+/* 80237D5C 00234E3C  38 63 50 00 */	addi r3, r3, 0x5000
+/* 80237D60 00234E40  4E 80 00 20 */	blr
+.endfn RwEngineGetVersion
+
+.fn RwEngineRegisterPlugin, global
+/* 80237D64 00234E44  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80237D68 00234E48  7C 08 02 A6 */	mflr r0
+/* 80237D6C 00234E4C  7C C7 33 78 */	mr r7, r6
+/* 80237D70 00234E50  7C A6 2B 78 */	mr r6, r5
+/* 80237D74 00234E54  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80237D78 00234E58  3D 00 80 2B */	lis r8, engineTKList@ha
+/* 80237D7C 00234E5C  7C 60 1B 78 */	mr r0, r3
+/* 80237D80 00234E60  7C 85 23 78 */	mr r5, r4
+/* 80237D84 00234E64  38 68 7D 08 */	addi r3, r8, engineTKList@l
+/* 80237D88 00234E68  39 00 00 00 */	li r8, 0x0
+/* 80237D8C 00234E6C  7C 04 03 78 */	mr r4, r0
+/* 80237D90 00234E70  4B FF B8 C9 */	bl _rwPluginRegistryAddPlugin
+/* 80237D94 00234E74  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80237D98 00234E78  7C 08 03 A6 */	mtlr r0
+/* 80237D9C 00234E7C  38 21 00 10 */	addi r1, r1, 0x10
+/* 80237DA0 00234E80  4E 80 00 20 */	blr
+.endfn RwEngineRegisterPlugin
+
+.fn RwEngineGetPluginOffset, global
+/* 80237DA4 00234E84  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80237DA8 00234E88  7C 08 02 A6 */	mflr r0
+/* 80237DAC 00234E8C  3C A0 80 2B */	lis r5, engineTKList@ha
+/* 80237DB0 00234E90  7C 64 1B 78 */	mr r4, r3
+/* 80237DB4 00234E94  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80237DB8 00234E98  38 65 7D 08 */	addi r3, r5, engineTKList@l
+/* 80237DBC 00234E9C  4B FF B8 6D */	bl _rwPluginRegistryGetPluginOffset
+/* 80237DC0 00234EA0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80237DC4 00234EA4  7C 08 03 A6 */	mtlr r0
+/* 80237DC8 00234EA8  38 21 00 10 */	addi r1, r1, 0x10
+/* 80237DCC 00234EAC  4E 80 00 20 */	blr
+.endfn RwEngineGetPluginOffset
+
+.fn RwEngineGetVideoModeInfo, global
+/* 80237DD0 00234EB0  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 80237DD4 00234EB4  7C 08 02 A6 */	mflr r0
+/* 80237DD8 00234EB8  7C 86 23 78 */	mr r6, r4
+/* 80237DDC 00234EBC  90 01 00 24 */	stw r0, 0x24(r1)
+/* 80237DE0 00234EC0  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 80237DE4 00234EC4  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 80237DE8 00234EC8  7C 7E 1B 78 */	mr r30, r3
+/* 80237DEC 00234ECC  38 60 00 06 */	li r3, 0x6
+/* 80237DF0 00234ED0  80 AD 9F 7C */	lwz r5, RwEngineInstance@sda21(r13)
+/* 80237DF4 00234ED4  7F C4 F3 78 */	mr r4, r30
+/* 80237DF8 00234ED8  81 85 00 14 */	lwz r12, 0x14(r5)
+/* 80237DFC 00234EDC  38 A0 00 00 */	li r5, 0x0
+/* 80237E00 00234EE0  7D 89 03 A6 */	mtctr r12
+/* 80237E04 00234EE4  4E 80 04 21 */	bctrl
+/* 80237E08 00234EE8  7C 7F 1B 79 */	mr. r31, r3
+/* 80237E0C 00234EEC  40 82 00 28 */	bne .L_80237E34
+/* 80237E10 00234EF0  38 00 00 01 */	li r0, 0x1
+/* 80237E14 00234EF4  38 60 00 18 */	li r3, 0x18
+/* 80237E18 00234EF8  90 01 00 08 */	stw r0, 0x8(r1)
+/* 80237E1C 00234EFC  38 80 00 06 */	li r4, 0x6
+/* 80237E20 00234F00  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80237E24 00234F04  4B FF 78 11 */	bl _rwerror
+/* 80237E28 00234F08  90 61 00 0C */	stw r3, 0xc(r1)
+/* 80237E2C 00234F0C  38 61 00 08 */	addi r3, r1, 0x8
+/* 80237E30 00234F10  4B FF 77 61 */	bl RwErrorSet
+.L_80237E34:
+/* 80237E34 00234F14  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 80237E38 00234F18  40 82 00 08 */	bne .L_80237E40
+/* 80237E3C 00234F1C  3B C0 00 00 */	li r30, 0x0
+.L_80237E40:
+/* 80237E40 00234F20  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 80237E44 00234F24  7F C3 F3 78 */	mr r3, r30
+/* 80237E48 00234F28  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 80237E4C 00234F2C  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 80237E50 00234F30  7C 08 03 A6 */	mtlr r0
+/* 80237E54 00234F34  38 21 00 20 */	addi r1, r1, 0x20
+/* 80237E58 00234F38  4E 80 00 20 */	blr
+.endfn RwEngineGetVideoModeInfo
+
+.fn RwEngineGetCurrentVideoMode, global
+/* 80237E5C 00234F3C  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 80237E60 00234F40  7C 08 02 A6 */	mflr r0
+/* 80237E64 00234F44  38 60 00 0A */	li r3, 0xa
+/* 80237E68 00234F48  38 A0 00 00 */	li r5, 0x0
+/* 80237E6C 00234F4C  90 01 00 24 */	stw r0, 0x24(r1)
+/* 80237E70 00234F50  38 81 00 08 */	addi r4, r1, 0x8
+/* 80237E74 00234F54  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 80237E78 00234F58  80 CD 9F 7C */	lwz r6, RwEngineInstance@sda21(r13)
+/* 80237E7C 00234F5C  81 86 00 14 */	lwz r12, 0x14(r6)
+/* 80237E80 00234F60  38 C0 00 00 */	li r6, 0x0
+/* 80237E84 00234F64  7D 89 03 A6 */	mtctr r12
+/* 80237E88 00234F68  4E 80 04 21 */	bctrl
+/* 80237E8C 00234F6C  7C 7F 1B 79 */	mr. r31, r3
+/* 80237E90 00234F70  40 82 00 28 */	bne .L_80237EB8
+/* 80237E94 00234F74  38 00 00 01 */	li r0, 0x1
+/* 80237E98 00234F78  38 60 00 18 */	li r3, 0x18
+/* 80237E9C 00234F7C  90 01 00 0C */	stw r0, 0xc(r1)
+/* 80237EA0 00234F80  38 80 00 0A */	li r4, 0xa
+/* 80237EA4 00234F84  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80237EA8 00234F88  4B FF 77 8D */	bl _rwerror
+/* 80237EAC 00234F8C  90 61 00 10 */	stw r3, 0x10(r1)
+/* 80237EB0 00234F90  38 61 00 0C */	addi r3, r1, 0xc
+/* 80237EB4 00234F94  4B FF 76 DD */	bl RwErrorSet
+.L_80237EB8:
+/* 80237EB8 00234F98  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 80237EBC 00234F9C  41 82 00 0C */	beq .L_80237EC8
+/* 80237EC0 00234FA0  80 61 00 08 */	lwz r3, 0x8(r1)
+/* 80237EC4 00234FA4  48 00 00 08 */	b .L_80237ECC
+.L_80237EC8:
+/* 80237EC8 00234FA8  38 60 FF FF */	li r3, -0x1
+.L_80237ECC:
+/* 80237ECC 00234FAC  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 80237ED0 00234FB0  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 80237ED4 00234FB4  7C 08 03 A6 */	mtlr r0
+/* 80237ED8 00234FB8  38 21 00 20 */	addi r1, r1, 0x20
+/* 80237EDC 00234FBC  4E 80 00 20 */	blr
+.endfn RwEngineGetCurrentVideoMode
+
+.fn RwEngineStop, global
+/* 80237EE0 00234FC0  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 80237EE4 00234FC4  7C 08 02 A6 */	mflr r0
+/* 80237EE8 00234FC8  38 60 00 12 */	li r3, 0x12
+/* 80237EEC 00234FCC  38 80 00 00 */	li r4, 0x0
+/* 80237EF0 00234FD0  90 01 00 24 */	stw r0, 0x24(r1)
+/* 80237EF4 00234FD4  38 A0 00 00 */	li r5, 0x0
+/* 80237EF8 00234FD8  38 C0 00 00 */	li r6, 0x0
+/* 80237EFC 00234FDC  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 80237F00 00234FE0  83 ED 9F 7C */	lwz r31, RwEngineInstance@sda21(r13)
+/* 80237F04 00234FE4  81 9F 00 14 */	lwz r12, 0x14(r31)
+/* 80237F08 00234FE8  7D 89 03 A6 */	mtctr r12
+/* 80237F0C 00234FEC  4E 80 04 21 */	bctrl
+/* 80237F10 00234FF0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80237F14 00234FF4  40 82 00 08 */	bne .L_80237F1C
+/* 80237F18 00234FF8  38 60 00 01 */	li r3, 0x1
+.L_80237F1C:
+/* 80237F1C 00234FFC  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80237F20 00235000  40 82 00 28 */	bne .L_80237F48
+/* 80237F24 00235004  38 00 00 01 */	li r0, 0x1
+/* 80237F28 00235008  38 60 00 18 */	li r3, 0x18
+/* 80237F2C 0023500C  90 01 00 10 */	stw r0, 0x10(r1)
+/* 80237F30 00235010  38 80 00 12 */	li r4, 0x12
+/* 80237F34 00235014  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80237F38 00235018  4B FF 76 FD */	bl _rwerror
+/* 80237F3C 0023501C  90 61 00 14 */	stw r3, 0x14(r1)
+/* 80237F40 00235020  38 61 00 10 */	addi r3, r1, 0x10
+/* 80237F44 00235024  4B FF 76 4D */	bl RwErrorSet
+.L_80237F48:
+/* 80237F48 00235028  3C 60 80 2B */	lis r3, engineTKList@ha
+/* 80237F4C 0023502C  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80237F50 00235030  38 63 7D 08 */	addi r3, r3, engineTKList@l
+/* 80237F54 00235034  4B FF BA 79 */	bl _rwPluginRegistryDeInitObject
+/* 80237F58 00235038  81 9F 00 14 */	lwz r12, 0x14(r31)
+/* 80237F5C 0023503C  38 60 00 03 */	li r3, 0x3
+/* 80237F60 00235040  38 80 00 00 */	li r4, 0x0
+/* 80237F64 00235044  38 A0 00 00 */	li r5, 0x0
+/* 80237F68 00235048  38 C0 00 00 */	li r6, 0x0
+/* 80237F6C 0023504C  7D 89 03 A6 */	mtctr r12
+/* 80237F70 00235050  4E 80 04 21 */	bctrl
+/* 80237F74 00235054  7C 7F 1B 79 */	mr. r31, r3
+/* 80237F78 00235058  40 82 00 28 */	bne .L_80237FA0
+/* 80237F7C 0023505C  38 00 00 01 */	li r0, 0x1
+/* 80237F80 00235060  38 60 00 18 */	li r3, 0x18
+/* 80237F84 00235064  90 01 00 08 */	stw r0, 0x8(r1)
+/* 80237F88 00235068  38 80 00 03 */	li r4, 0x3
+/* 80237F8C 0023506C  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80237F90 00235070  4B FF 76 A5 */	bl _rwerror
+/* 80237F94 00235074  90 61 00 0C */	stw r3, 0xc(r1)
+/* 80237F98 00235078  38 61 00 08 */	addi r3, r1, 0x8
+/* 80237F9C 0023507C  4B FF 75 F5 */	bl RwErrorSet
+.L_80237FA0:
+/* 80237FA0 00235080  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 80237FA4 00235084  41 82 00 10 */	beq .L_80237FB4
+/* 80237FA8 00235088  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80237FAC 0023508C  38 00 00 02 */	li r0, 0x2
+/* 80237FB0 00235090  90 03 01 50 */	stw r0, 0x150(r3)
+.L_80237FB4:
+/* 80237FB4 00235094  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 80237FB8 00235098  7F E3 FB 78 */	mr r3, r31
+/* 80237FBC 0023509C  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 80237FC0 002350A0  7C 08 03 A6 */	mtlr r0
+/* 80237FC4 002350A4  38 21 00 20 */	addi r1, r1, 0x20
+/* 80237FC8 002350A8  4E 80 00 20 */	blr
+.endfn RwEngineStop
+
+.fn RwEngineStart, global
+/* 80237FCC 002350AC  94 21 FF D0 */	stwu r1, -0x30(r1)
+/* 80237FD0 002350B0  7C 08 02 A6 */	mflr r0
+/* 80237FD4 002350B4  38 60 00 02 */	li r3, 0x2
+/* 80237FD8 002350B8  38 80 00 00 */	li r4, 0x0
+/* 80237FDC 002350BC  90 01 00 34 */	stw r0, 0x34(r1)
+/* 80237FE0 002350C0  38 A0 00 00 */	li r5, 0x0
+/* 80237FE4 002350C4  38 C0 00 00 */	li r6, 0x0
+/* 80237FE8 002350C8  93 E1 00 2C */	stw r31, 0x2c(r1)
+/* 80237FEC 002350CC  93 C1 00 28 */	stw r30, 0x28(r1)
+/* 80237FF0 002350D0  83 CD 9F 7C */	lwz r30, RwEngineInstance@sda21(r13)
+/* 80237FF4 002350D4  81 9E 00 14 */	lwz r12, 0x14(r30)
+/* 80237FF8 002350D8  7D 89 03 A6 */	mtctr r12
+/* 80237FFC 002350DC  4E 80 04 21 */	bctrl
+/* 80238000 002350E0  7C 7F 1B 79 */	mr. r31, r3
+/* 80238004 002350E4  40 82 00 28 */	bne .L_8023802C
+/* 80238008 002350E8  38 00 00 01 */	li r0, 0x1
+/* 8023800C 002350EC  38 60 00 18 */	li r3, 0x18
+/* 80238010 002350F0  90 01 00 18 */	stw r0, 0x18(r1)
+/* 80238014 002350F4  38 80 00 02 */	li r4, 0x2
+/* 80238018 002350F8  4C C6 31 82 */	crclr 4*cr1+eq
+/* 8023801C 002350FC  4B FF 76 19 */	bl _rwerror
+/* 80238020 00235100  90 61 00 1C */	stw r3, 0x1c(r1)
+/* 80238024 00235104  38 61 00 18 */	addi r3, r1, 0x18
+/* 80238028 00235108  4B FF 75 69 */	bl RwErrorSet
+.L_8023802C:
+/* 8023802C 0023510C  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 80238030 00235110  41 82 00 D8 */	beq .L_80238108
+/* 80238034 00235114  3C 60 80 2B */	lis r3, engineTKList@ha
+/* 80238038 00235118  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 8023803C 0023511C  38 63 7D 08 */	addi r3, r3, engineTKList@l
+/* 80238040 00235120  4B FF B8 E5 */	bl _rwPluginRegistryInitObject
+/* 80238044 00235124  28 03 00 00 */	cmplwi r3, 0x0
+/* 80238048 00235128  41 82 00 78 */	beq .L_802380C0
+/* 8023804C 0023512C  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80238050 00235130  C0 23 00 10 */	lfs f1, 0x10(r3)
+/* 80238054 00235134  48 00 33 2D */	bl RwImageSetGamma
+/* 80238058 00235138  81 9E 00 14 */	lwz r12, 0x14(r30)
+/* 8023805C 0023513C  38 60 00 11 */	li r3, 0x11
+/* 80238060 00235140  38 80 00 00 */	li r4, 0x0
+/* 80238064 00235144  38 A0 00 00 */	li r5, 0x0
+/* 80238068 00235148  38 C0 00 00 */	li r6, 0x0
+/* 8023806C 0023514C  7D 89 03 A6 */	mtctr r12
+/* 80238070 00235150  4E 80 04 21 */	bctrl
+/* 80238074 00235154  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80238078 00235158  40 82 00 08 */	bne .L_80238080
+/* 8023807C 0023515C  38 60 00 01 */	li r3, 0x1
+.L_80238080:
+/* 80238080 00235160  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80238084 00235164  40 82 00 28 */	bne .L_802380AC
+/* 80238088 00235168  38 00 00 01 */	li r0, 0x1
+/* 8023808C 0023516C  38 60 00 18 */	li r3, 0x18
+/* 80238090 00235170  90 01 00 10 */	stw r0, 0x10(r1)
+/* 80238094 00235174  38 80 00 11 */	li r4, 0x11
+/* 80238098 00235178  4C C6 31 82 */	crclr 4*cr1+eq
+/* 8023809C 0023517C  4B FF 75 99 */	bl _rwerror
+/* 802380A0 00235180  90 61 00 14 */	stw r3, 0x14(r1)
+/* 802380A4 00235184  38 61 00 10 */	addi r3, r1, 0x10
+/* 802380A8 00235188  4B FF 74 E9 */	bl RwErrorSet
+.L_802380AC:
+/* 802380AC 0023518C  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 802380B0 00235190  38 00 00 03 */	li r0, 0x3
+/* 802380B4 00235194  38 60 00 01 */	li r3, 0x1
+/* 802380B8 00235198  90 04 01 50 */	stw r0, 0x150(r4)
+/* 802380BC 0023519C  48 00 00 50 */	b .L_8023810C
+.L_802380C0:
+/* 802380C0 002351A0  81 9E 00 14 */	lwz r12, 0x14(r30)
+/* 802380C4 002351A4  38 60 00 03 */	li r3, 0x3
+/* 802380C8 002351A8  38 80 00 00 */	li r4, 0x0
+/* 802380CC 002351AC  38 A0 00 00 */	li r5, 0x0
+/* 802380D0 002351B0  38 C0 00 00 */	li r6, 0x0
+/* 802380D4 002351B4  7D 89 03 A6 */	mtctr r12
+/* 802380D8 002351B8  4E 80 04 21 */	bctrl
+/* 802380DC 002351BC  2C 03 00 00 */	cmpwi r3, 0x0
+/* 802380E0 002351C0  40 82 00 28 */	bne .L_80238108
+/* 802380E4 002351C4  38 00 00 01 */	li r0, 0x1
+/* 802380E8 002351C8  38 60 00 18 */	li r3, 0x18
+/* 802380EC 002351CC  90 01 00 08 */	stw r0, 0x8(r1)
+/* 802380F0 002351D0  38 80 00 03 */	li r4, 0x3
+/* 802380F4 002351D4  4C C6 31 82 */	crclr 4*cr1+eq
+/* 802380F8 002351D8  4B FF 75 3D */	bl _rwerror
+/* 802380FC 002351DC  90 61 00 0C */	stw r3, 0xc(r1)
+/* 80238100 002351E0  38 61 00 08 */	addi r3, r1, 0x8
+/* 80238104 002351E4  4B FF 74 8D */	bl RwErrorSet
+.L_80238108:
+/* 80238108 002351E8  38 60 00 00 */	li r3, 0x0
+.L_8023810C:
+/* 8023810C 002351EC  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 80238110 002351F0  83 E1 00 2C */	lwz r31, 0x2c(r1)
+/* 80238114 002351F4  83 C1 00 28 */	lwz r30, 0x28(r1)
+/* 80238118 002351F8  7C 08 03 A6 */	mtlr r0
+/* 8023811C 002351FC  38 21 00 30 */	addi r1, r1, 0x30
+/* 80238120 00235200  4E 80 00 20 */	blr
+.endfn RwEngineStart
+
+.fn RwEngineClose, global
+/* 80238124 00235204  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 80238128 00235208  7C 08 02 A6 */	mflr r0
+/* 8023812C 0023520C  38 60 00 01 */	li r3, 0x1
+/* 80238130 00235210  38 80 00 00 */	li r4, 0x0
+/* 80238134 00235214  90 01 00 24 */	stw r0, 0x24(r1)
+/* 80238138 00235218  38 A0 00 00 */	li r5, 0x0
+/* 8023813C 0023521C  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 80238140 00235220  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 80238144 00235224  80 CD 9F 7C */	lwz r6, RwEngineInstance@sda21(r13)
+/* 80238148 00235228  81 86 00 14 */	lwz r12, 0x14(r6)
+/* 8023814C 0023522C  38 C0 00 00 */	li r6, 0x0
+/* 80238150 00235230  7D 89 03 A6 */	mtctr r12
+/* 80238154 00235234  4E 80 04 21 */	bctrl
+/* 80238158 00235238  7C 7F 1B 79 */	mr. r31, r3
+/* 8023815C 0023523C  40 82 00 28 */	bne .L_80238184
+/* 80238160 00235240  38 00 00 01 */	li r0, 0x1
+/* 80238164 00235244  38 60 00 18 */	li r3, 0x18
+/* 80238168 00235248  90 01 00 08 */	stw r0, 0x8(r1)
+/* 8023816C 0023524C  38 80 00 01 */	li r4, 0x1
+/* 80238170 00235250  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80238174 00235254  4B FF 74 C1 */	bl _rwerror
+/* 80238178 00235258  90 61 00 0C */	stw r3, 0xc(r1)
+/* 8023817C 0023525C  38 61 00 08 */	addi r3, r1, 0x8
+/* 80238180 00235260  4B FF 74 11 */	bl RwErrorSet
+.L_80238184:
+/* 80238184 00235264  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 80238188 00235268  41 82 00 50 */	beq .L_802381D8
+/* 8023818C 0023526C  83 CD 9F 7C */	lwz r30, RwEngineInstance@sda21(r13)
+/* 80238190 00235270  3C 60 80 38 */	lis r3, staticGlobals@ha
+/* 80238194 00235274  38 03 3D A8 */	addi r0, r3, staticGlobals@l
+/* 80238198 00235278  38 A0 01 58 */	li r5, 0x158
+/* 8023819C 0023527C  90 0D 9F 7C */	stw r0, RwEngineInstance@sda21(r13)
+/* 802381A0 00235280  7F C4 F3 78 */	mr r4, r30
+/* 802381A4 00235284  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 802381A8 00235288  4B DC B3 99 */	bl memcpy
+/* 802381AC 0023528C  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 802381B0 00235290  7F C3 F3 78 */	mr r3, r30
+/* 802381B4 00235294  81 84 01 38 */	lwz r12, 0x138(r4)
+/* 802381B8 00235298  7D 89 03 A6 */	mtctr r12
+/* 802381BC 0023529C  4E 80 04 21 */	bctrl
+/* 802381C0 002352A0  80 6D 9F 78 */	lwz r3, engineInstancesOpened@sda21(r13)
+/* 802381C4 002352A4  38 00 00 01 */	li r0, 0x1
+/* 802381C8 002352A8  38 63 FF FF */	addi r3, r3, -0x1
+/* 802381CC 002352AC  90 6D 9F 78 */	stw r3, engineInstancesOpened@sda21(r13)
+/* 802381D0 002352B0  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 802381D4 002352B4  90 03 01 50 */	stw r0, 0x150(r3)
+.L_802381D8:
+/* 802381D8 002352B8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 802381DC 002352BC  7F E3 FB 78 */	mr r3, r31
+/* 802381E0 002352C0  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 802381E4 002352C4  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 802381E8 002352C8  7C 08 03 A6 */	mtlr r0
+/* 802381EC 002352CC  38 21 00 20 */	addi r1, r1, 0x20
+/* 802381F0 002352D0  4E 80 00 20 */	blr
+.endfn RwEngineClose
+
+.fn RwEngineOpen, global
+/* 802381F4 002352D4  94 21 FF B0 */	stwu r1, -0x50(r1)
+/* 802381F8 002352D8  7C 08 02 A6 */	mflr r0
+/* 802381FC 002352DC  90 01 00 54 */	stw r0, 0x54(r1)
+/* 80238200 002352E0  93 E1 00 4C */	stw r31, 0x4c(r1)
+/* 80238204 002352E4  7C 7F 1B 78 */	mr r31, r3
+/* 80238208 002352E8  93 C1 00 48 */	stw r30, 0x48(r1)
+/* 8023820C 002352EC  93 A1 00 44 */	stw r29, 0x44(r1)
+/* 80238210 002352F0  80 0D 9F 7C */	lwz r0, RwEngineInstance@sda21(r13)
+/* 80238214 002352F4  28 00 00 00 */	cmplwi r0, 0x0
+/* 80238218 002352F8  40 82 00 10 */	bne .L_80238228
+/* 8023821C 002352FC  3C 60 80 38 */	lis r3, staticGlobals@ha
+/* 80238220 00235300  38 03 3D A8 */	addi r0, r3, staticGlobals@l
+/* 80238224 00235304  90 0D 9F 7C */	stw r0, RwEngineInstance@sda21(r13)
+.L_80238228:
+/* 80238228 00235308  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 8023822C 0023530C  80 03 01 50 */	lwz r0, 0x150(r3)
+/* 80238230 00235310  20 00 00 01 */	subfic r0, r0, 0x1
+/* 80238234 00235314  7C 00 00 34 */	cntlzw r0, r0
+/* 80238238 00235318  54 1D D9 7F */	srwi. r29, r0, 5
+/* 8023823C 0023531C  41 82 02 14 */	beq .L_80238450
+/* 80238240 00235320  7C 1F 00 D0 */	neg r0, r31
+/* 80238244 00235324  7C 00 FB 78 */	or r0, r0, r31
+/* 80238248 00235328  54 1D 0F FF */	srwi. r29, r0, 31
+/* 8023824C 0023532C  41 82 01 DC */	beq .L_80238428
+/* 80238250 00235330  48 00 E4 29 */	bl _rwDeviceGetHandle
+/* 80238254 00235334  7C 7E 1B 78 */	mr r30, r3
+/* 80238258 00235338  7C 1E 00 D0 */	neg r0, r30
+/* 8023825C 0023533C  7C 00 F3 78 */	or r0, r0, r30
+/* 80238260 00235340  54 1D 0F FF */	srwi. r29, r0, 31
+/* 80238264 00235344  41 82 02 10 */	beq .L_80238474
+/* 80238268 00235348  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 8023826C 0023534C  3C 80 80 2B */	lis r4, engineTKList@ha
+/* 80238270 00235350  81 83 01 34 */	lwz r12, 0x134(r3)
+/* 80238274 00235354  80 64 7D 08 */	lwz r3, engineTKList@l(r4)
+/* 80238278 00235358  7D 89 03 A6 */	mtctr r12
+/* 8023827C 0023535C  4E 80 04 21 */	bctrl
+/* 80238280 00235360  90 6D 9F 7C */	stw r3, RwEngineInstance@sda21(r13)
+/* 80238284 00235364  83 AD 9F 7C */	lwz r29, RwEngineInstance@sda21(r13)
+/* 80238288 00235368  28 1D 00 00 */	cmplwi r29, 0x0
+/* 8023828C 0023536C  41 82 01 4C */	beq .L_802383D8
+/* 80238290 00235370  3C 80 80 38 */	lis r4, staticGlobals@ha
+/* 80238294 00235374  7F A3 EB 78 */	mr r3, r29
+/* 80238298 00235378  38 84 3D A8 */	addi r4, r4, staticGlobals@l
+/* 8023829C 0023537C  38 A0 01 58 */	li r5, 0x158
+/* 802382A0 00235380  4B DC B2 A1 */	bl memcpy
+/* 802382A4 00235384  80 AD 9F 7C */	lwz r5, RwEngineInstance@sda21(r13)
+/* 802382A8 00235388  38 60 00 04 */	li r3, 0x4
+/* 802382AC 0023538C  81 9E 00 04 */	lwz r12, 0x4(r30)
+/* 802382B0 00235390  38 C0 00 00 */	li r6, 0x0
+/* 802382B4 00235394  38 85 00 10 */	addi r4, r5, 0x10
+/* 802382B8 00235398  38 A5 01 34 */	addi r5, r5, 0x134
+/* 802382BC 0023539C  7D 89 03 A6 */	mtctr r12
+/* 802382C0 002353A0  4E 80 04 21 */	bctrl
+/* 802382C4 002353A4  2C 03 00 00 */	cmpwi r3, 0x0
+/* 802382C8 002353A8  40 82 00 28 */	bne .L_802382F0
+/* 802382CC 002353AC  38 00 00 01 */	li r0, 0x1
+/* 802382D0 002353B0  38 60 00 18 */	li r3, 0x18
+/* 802382D4 002353B4  90 01 00 18 */	stw r0, 0x18(r1)
+/* 802382D8 002353B8  38 80 00 04 */	li r4, 0x4
+/* 802382DC 002353BC  4C C6 31 82 */	crclr 4*cr1+eq
+/* 802382E0 002353C0  4B FF 73 55 */	bl _rwerror
+/* 802382E4 002353C4  90 61 00 1C */	stw r3, 0x1c(r1)
+/* 802382E8 002353C8  38 61 00 18 */	addi r3, r1, 0x18
+/* 802382EC 002353CC  4B FF 72 A5 */	bl RwErrorSet
+.L_802382F0:
+/* 802382F0 002353D0  81 9E 00 04 */	lwz r12, 0x4(r30)
+/* 802382F4 002353D4  7F E5 FB 78 */	mr r5, r31
+/* 802382F8 002353D8  38 60 00 00 */	li r3, 0x0
+/* 802382FC 002353DC  38 80 00 00 */	li r4, 0x0
+/* 80238300 002353E0  38 C0 00 00 */	li r6, 0x0
+/* 80238304 002353E4  7D 89 03 A6 */	mtctr r12
+/* 80238308 002353E8  4E 80 04 21 */	bctrl
+/* 8023830C 002353EC  7C 7F 1B 79 */	mr. r31, r3
+/* 80238310 002353F0  40 82 00 28 */	bne .L_80238338
+/* 80238314 002353F4  38 00 00 01 */	li r0, 0x1
+/* 80238318 002353F8  38 60 00 18 */	li r3, 0x18
+/* 8023831C 002353FC  90 01 00 10 */	stw r0, 0x10(r1)
+/* 80238320 00235400  38 80 00 00 */	li r4, 0x0
+/* 80238324 00235404  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80238328 00235408  4B FF 73 0D */	bl _rwerror
+/* 8023832C 0023540C  90 61 00 14 */	stw r3, 0x14(r1)
+/* 80238330 00235410  38 61 00 10 */	addi r3, r1, 0x10
+/* 80238334 00235414  4B FF 72 5D */	bl RwErrorSet
+.L_80238338:
+/* 80238338 00235418  2C 1F 00 00 */	cmpwi r31, 0x0
+/* 8023833C 0023541C  41 82 00 64 */	beq .L_802383A0
+/* 80238340 00235420  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80238344 00235424  38 60 00 0B */	li r3, 0xb
+/* 80238348 00235428  81 9E 00 04 */	lwz r12, 0x4(r30)
+/* 8023834C 0023542C  38 A0 00 00 */	li r5, 0x0
+/* 80238350 00235430  38 84 00 48 */	addi r4, r4, 0x48
+/* 80238354 00235434  38 C0 00 1D */	li r6, 0x1d
+/* 80238358 00235438  7D 89 03 A6 */	mtctr r12
+/* 8023835C 0023543C  4E 80 04 21 */	bctrl
+/* 80238360 00235440  2C 03 00 00 */	cmpwi r3, 0x0
+/* 80238364 00235444  40 82 00 28 */	bne .L_8023838C
+/* 80238368 00235448  38 00 00 01 */	li r0, 0x1
+/* 8023836C 0023544C  38 60 00 18 */	li r3, 0x18
+/* 80238370 00235450  90 01 00 08 */	stw r0, 0x8(r1)
+/* 80238374 00235454  38 80 00 0B */	li r4, 0xb
+/* 80238378 00235458  4C C6 31 82 */	crclr 4*cr1+eq
+/* 8023837C 0023545C  4B FF 72 B9 */	bl _rwerror
+/* 80238380 00235460  90 61 00 0C */	stw r3, 0xc(r1)
+/* 80238384 00235464  38 61 00 08 */	addi r3, r1, 0x8
+/* 80238388 00235468  4B FF 72 09 */	bl RwErrorSet
+.L_8023838C:
+/* 8023838C 0023546C  80 6D 9F 78 */	lwz r3, engineInstancesOpened@sda21(r13)
+/* 80238390 00235470  38 80 00 01 */	li r4, 0x1
+/* 80238394 00235474  38 03 00 01 */	addi r0, r3, 0x1
+/* 80238398 00235478  90 0D 9F 78 */	stw r0, engineInstancesOpened@sda21(r13)
+/* 8023839C 0023547C  48 00 00 70 */	b .L_8023840C
+.L_802383A0:
+/* 802383A0 00235480  3C 60 80 38 */	lis r3, staticGlobals@ha
+/* 802383A4 00235484  7F A4 EB 78 */	mr r4, r29
+/* 802383A8 00235488  38 03 3D A8 */	addi r0, r3, staticGlobals@l
+/* 802383AC 0023548C  38 A0 01 58 */	li r5, 0x158
+/* 802383B0 00235490  90 0D 9F 7C */	stw r0, RwEngineInstance@sda21(r13)
+/* 802383B4 00235494  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 802383B8 00235498  4B DC B1 89 */	bl memcpy
+/* 802383BC 0023549C  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 802383C0 002354A0  7F A3 EB 78 */	mr r3, r29
+/* 802383C4 002354A4  81 84 01 38 */	lwz r12, 0x138(r4)
+/* 802383C8 002354A8  7D 89 03 A6 */	mtctr r12
+/* 802383CC 002354AC  4E 80 04 21 */	bctrl
+/* 802383D0 002354B0  38 80 00 00 */	li r4, 0x0
+/* 802383D4 002354B4  48 00 00 38 */	b .L_8023840C
+.L_802383D8:
+/* 802383D8 002354B8  3C 60 80 2B */	lis r3, engineTKList@ha
+/* 802383DC 002354BC  38 00 00 01 */	li r0, 0x1
+/* 802383E0 002354C0  38 83 7D 08 */	addi r4, r3, engineTKList@l
+/* 802383E4 002354C4  3C 60 80 00 */	lis r3, 0x8000
+/* 802383E8 002354C8  90 01 00 20 */	stw r0, 0x20(r1)
+/* 802383EC 002354CC  38 63 00 13 */	addi r3, r3, 0x13
+/* 802383F0 002354D0  80 84 00 00 */	lwz r4, 0x0(r4)
+/* 802383F4 002354D4  4C C6 31 82 */	crclr 4*cr1+eq
+/* 802383F8 002354D8  4B FF 72 3D */	bl _rwerror
+/* 802383FC 002354DC  90 61 00 24 */	stw r3, 0x24(r1)
+/* 80238400 002354E0  38 61 00 20 */	addi r3, r1, 0x20
+/* 80238404 002354E4  4B FF 71 8D */	bl RwErrorSet
+/* 80238408 002354E8  38 80 00 00 */	li r4, 0x0
+.L_8023840C:
+/* 8023840C 002354EC  2C 04 00 00 */	cmpwi r4, 0x0
+/* 80238410 002354F0  7C 9D 23 78 */	mr r29, r4
+/* 80238414 002354F4  41 82 00 60 */	beq .L_80238474
+/* 80238418 002354F8  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 8023841C 002354FC  38 00 00 02 */	li r0, 0x2
+/* 80238420 00235500  90 03 01 50 */	stw r0, 0x150(r3)
+/* 80238424 00235504  48 00 00 50 */	b .L_80238474
+.L_80238428:
+/* 80238428 00235508  38 00 00 01 */	li r0, 0x1
+/* 8023842C 0023550C  3C 60 80 00 */	lis r3, 0x8000
+/* 80238430 00235510  90 01 00 30 */	stw r0, 0x30(r1)
+/* 80238434 00235514  38 63 00 16 */	addi r3, r3, 0x16
+/* 80238438 00235518  4C C6 31 82 */	crclr 4*cr1+eq
+/* 8023843C 0023551C  4B FF 71 F9 */	bl _rwerror
+/* 80238440 00235520  90 61 00 34 */	stw r3, 0x34(r1)
+/* 80238444 00235524  38 61 00 30 */	addi r3, r1, 0x30
+/* 80238448 00235528  4B FF 71 49 */	bl RwErrorSet
+/* 8023844C 0023552C  48 00 00 28 */	b .L_80238474
+.L_80238450:
+/* 80238450 00235530  38 00 00 01 */	li r0, 0x1
+/* 80238454 00235534  3C 60 80 00 */	lis r3, 0x8000
+/* 80238458 00235538  90 01 00 28 */	stw r0, 0x28(r1)
+/* 8023845C 0023553C  38 63 00 01 */	addi r3, r3, 0x1
+/* 80238460 00235540  4C C6 31 82 */	crclr 4*cr1+eq
+/* 80238464 00235544  4B FF 71 D1 */	bl _rwerror
+/* 80238468 00235548  90 61 00 2C */	stw r3, 0x2c(r1)
+/* 8023846C 0023554C  38 61 00 28 */	addi r3, r1, 0x28
+/* 80238470 00235550  4B FF 71 21 */	bl RwErrorSet
+.L_80238474:
+/* 80238474 00235554  80 01 00 54 */	lwz r0, 0x54(r1)
+/* 80238478 00235558  7F A3 EB 78 */	mr r3, r29
+/* 8023847C 0023555C  83 E1 00 4C */	lwz r31, 0x4c(r1)
+/* 80238480 00235560  83 C1 00 48 */	lwz r30, 0x48(r1)
+/* 80238484 00235564  83 A1 00 44 */	lwz r29, 0x44(r1)
+/* 80238488 00235568  7C 08 03 A6 */	mtlr r0
+/* 8023848C 0023556C  38 21 00 50 */	addi r1, r1, 0x50
+/* 80238490 00235570  4E 80 00 20 */	blr
+.endfn RwEngineOpen
+
+.fn RwEngineTerm, global
+/* 80238494 00235574  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80238498 00235578  7C 08 02 A6 */	mflr r0
+/* 8023849C 0023557C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 802384A0 00235580  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 802384A4 00235584  80 0D 9F 78 */	lwz r0, engineInstancesOpened@sda21(r13)
+/* 802384A8 00235588  7C 00 00 34 */	cntlzw r0, r0
+/* 802384AC 0023558C  54 1F D9 7F */	srwi. r31, r0, 5
+/* 802384B0 00235590  41 82 00 1C */	beq .L_802384CC
+/* 802384B4 00235594  4B FF B0 35 */	bl _rwPluginRegistryClose
+/* 802384B8 00235598  4B FF 73 09 */	bl _rwFileSystemClose
+/* 802384BC 0023559C  4B FF 95 E9 */	bl _rwMemoryClose
+/* 802384C0 002355A0  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 802384C4 002355A4  38 00 00 00 */	li r0, 0x0
+/* 802384C8 002355A8  90 03 01 50 */	stw r0, 0x150(r3)
+.L_802384CC:
+/* 802384CC 002355AC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 802384D0 002355B0  7F E3 FB 78 */	mr r3, r31
+/* 802384D4 002355B4  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 802384D8 002355B8  7C 08 03 A6 */	mtlr r0
+/* 802384DC 002355BC  38 21 00 10 */	addi r1, r1, 0x10
+/* 802384E0 002355C0  4E 80 00 20 */	blr
+.endfn RwEngineTerm
+
+.fn RwEngineInit, global
+/* 802384E4 002355C4  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 802384E8 002355C8  7C 08 02 A6 */	mflr r0
+/* 802384EC 002355CC  90 01 00 24 */	stw r0, 0x24(r1)
+/* 802384F0 002355D0  54 80 07 FF */	clrlwi. r0, r4, 31
+/* 802384F4 002355D4  3C 80 80 38 */	lis r4, staticGlobals@ha
+/* 802384F8 002355D8  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 802384FC 002355DC  38 84 3D A8 */	addi r4, r4, staticGlobals@l
+/* 80238500 002355E0  7C 7F 1B 78 */	mr r31, r3
+/* 80238504 002355E4  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 80238508 002355E8  3B C0 00 00 */	li r30, 0x0
+/* 8023850C 002355EC  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 80238510 002355F0  7C BD 2B 78 */	mr r29, r5
+/* 80238514 002355F4  90 8D 9F 7C */	stw r4, RwEngineInstance@sda21(r13)
+/* 80238518 002355F8  41 82 00 30 */	beq .L_80238548
+/* 8023851C 002355FC  3C 60 80 23 */	lis r3, MallocWrapper@ha
+/* 80238520 00235600  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80238524 00235604  38 03 7C E0 */	addi r0, r3, MallocWrapper@l
+/* 80238528 00235608  3C 60 80 23 */	lis r3, FreeWrapper@ha
+/* 8023852C 0023560C  90 04 01 44 */	stw r0, 0x144(r4)
+/* 80238530 00235610  38 03 7D 10 */	addi r0, r3, FreeWrapper@l
+/* 80238534 00235614  38 60 00 00 */	li r3, 0x0
+/* 80238538 00235618  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 8023853C 0023561C  90 04 01 48 */	stw r0, 0x148(r4)
+/* 80238540 00235620  4B FF 8C 01 */	bl _rwFreeListEnable
+/* 80238544 00235624  48 00 00 2C */	b .L_80238570
+.L_80238548:
+/* 80238548 00235628  3C 60 80 23 */	lis r3, _rwFreeListAllocReal@ha
+/* 8023854C 0023562C  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80238550 00235630  38 03 14 B4 */	addi r0, r3, _rwFreeListAllocReal@l
+/* 80238554 00235634  3C 60 80 23 */	lis r3, _rwFreeListFreeReal@ha
+/* 80238558 00235638  90 04 01 44 */	stw r0, 0x144(r4)
+/* 8023855C 0023563C  38 03 16 64 */	addi r0, r3, _rwFreeListFreeReal@l
+/* 80238560 00235640  38 60 00 01 */	li r3, 0x1
+/* 80238564 00235644  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80238568 00235648  90 04 01 48 */	stw r0, 0x148(r4)
+/* 8023856C 0023564C  4B FF 8B D5 */	bl _rwFreeListEnable
+.L_80238570:
+/* 80238570 00235650  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 80238574 00235654  93 A3 01 54 */	stw r29, 0x154(r3)
+/* 80238578 00235658  80 6D 9F 7C */	lwz r3, RwEngineInstance@sda21(r13)
+/* 8023857C 0023565C  80 03 01 50 */	lwz r0, 0x150(r3)
+/* 80238580 00235660  2C 00 00 00 */	cmpwi r0, 0x0
+/* 80238584 00235664  40 82 02 BC */	bne .L_80238840
+/* 80238588 00235668  4B FF C0 CD */	bl _rwStringOpen
+/* 8023858C 0023566C  7C 7E 1B 79 */	mr. r30, r3
+/* 80238590 00235670  41 82 02 B0 */	beq .L_80238840
+/* 80238594 00235674  7F E3 FB 78 */	mr r3, r31
+/* 80238598 00235678  4B FF 93 F5 */	bl _rwMemoryOpen
+/* 8023859C 0023567C  7C 7E 1B 79 */	mr. r30, r3
+/* 802385A0 00235680  41 82 02 9C */	beq .L_8023883C
+/* 802385A4 00235684  4B FF 71 65 */	bl _rwFileSystemOpen
+/* 802385A8 00235688  7C 7E 1B 79 */	mr. r30, r3
+/* 802385AC 0023568C  41 82 02 8C */	beq .L_80238838
+/* 802385B0 00235690  4B FF AE 79 */	bl _rwPluginRegistryOpen
+/* 802385B4 00235694  7C 7E 1B 79 */	mr. r30, r3
+/* 802385B8 00235698  41 82 02 7C */	beq .L_80238834
+/* 802385BC 0023569C  3C 60 80 2B */	lis r3, engineTKList@ha
+/* 802385C0 002356A0  3C C0 80 23 */	lis r6, _rwErrorOpen@ha
+/* 802385C4 002356A4  3C A0 80 23 */	lis r5, _rwErrorClose@ha
+/* 802385C8 002356A8  38 80 00 08 */	li r4, 0x8
+/* 802385CC 002356AC  38 E5 F5 7C */	addi r7, r5, _rwErrorClose@l
+/* 802385D0 002356B0  38 63 7D 08 */	addi r3, r3, engineTKList@l
+/* 802385D4 002356B4  38 C6 F5 40 */	addi r6, r6, _rwErrorOpen@l
+/* 802385D8 002356B8  38 A0 04 0F */	li r5, 0x40f
+/* 802385DC 002356BC  39 00 00 00 */	li r8, 0x0
+/* 802385E0 002356C0  4B FF B0 79 */	bl _rwPluginRegistryAddPlugin
+/* 802385E4 002356C4  3C 80 80 23 */	lis r4, _rwVectorClose@ha
+/* 802385E8 002356C8  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 802385EC 002356CC  7C 7F 1B 78 */	mr r31, r3
+/* 802385F0 002356D0  3C A0 80 23 */	lis r5, _rwVectorOpen@ha
+/* 802385F4 002356D4  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 802385F8 002356D8  38 E4 3E 2C */	addi r7, r4, _rwVectorClose@l
+/* 802385FC 002356DC  38 C5 3E D0 */	addi r6, r5, _rwVectorOpen@l
+/* 80238600 002356E0  38 80 00 10 */	li r4, 0x10
+/* 80238604 002356E4  38 A0 04 01 */	li r5, 0x401
+/* 80238608 002356E8  39 00 00 00 */	li r8, 0x0
+/* 8023860C 002356EC  4B FF B0 4D */	bl _rwPluginRegistryAddPlugin
+/* 80238610 002356F0  3C 80 80 23 */	lis r4, _rwColorClose@ha
+/* 80238614 002356F4  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 80238618 002356F8  7F FF 1B 78 */	or r31, r31, r3
+/* 8023861C 002356FC  3C A0 80 23 */	lis r5, _rwColorOpen@ha
+/* 80238620 00235700  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 80238624 00235704  38 E4 F5 2C */	addi r7, r4, _rwColorClose@l
+/* 80238628 00235708  38 C5 F5 18 */	addi r6, r5, _rwColorOpen@l
+/* 8023862C 0023570C  38 80 00 00 */	li r4, 0x0
+/* 80238630 00235710  38 A0 04 0D */	li r5, 0x40d
+/* 80238634 00235714  39 00 00 00 */	li r8, 0x0
+/* 80238638 00235718  4B FF B0 21 */	bl _rwPluginRegistryAddPlugin
+/* 8023863C 0023571C  3C 80 80 23 */	lis r4, _rwMatrixClose@ha
+/* 80238640 00235720  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 80238644 00235724  7F FF 1B 78 */	or r31, r31, r3
+/* 80238648 00235728  3C A0 80 23 */	lis r5, _rwMatrixOpen@ha
+/* 8023864C 0023572C  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 80238650 00235730  38 E4 00 14 */	addi r7, r4, _rwMatrixClose@l
+/* 80238654 00235734  38 C5 00 78 */	addi r6, r5, _rwMatrixOpen@l
+/* 80238658 00235738  38 80 00 18 */	li r4, 0x18
+/* 8023865C 0023573C  38 A0 04 02 */	li r5, 0x402
+/* 80238660 00235740  39 00 00 00 */	li r8, 0x0
+/* 80238664 00235744  4B FF AF F5 */	bl _rwPluginRegistryAddPlugin
+/* 80238668 00235748  3C 80 80 24 */	lis r4, _rwFrameClose@ha
+/* 8023866C 0023574C  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 80238670 00235750  7F FF 1B 78 */	or r31, r31, r3
+/* 80238674 00235754  3C A0 80 24 */	lis r5, _rwFrameOpen@ha
+/* 80238678 00235758  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 8023867C 0023575C  38 E4 89 00 */	addi r7, r4, _rwFrameClose@l
+/* 80238680 00235760  38 C5 88 60 */	addi r6, r5, _rwFrameOpen@l
+/* 80238684 00235764  38 80 00 04 */	li r4, 0x4
+/* 80238688 00235768  38 A0 04 03 */	li r5, 0x403
+/* 8023868C 0023576C  39 00 00 00 */	li r8, 0x0
+/* 80238690 00235770  4B FF AF C9 */	bl _rwPluginRegistryAddPlugin
+/* 80238694 00235774  3C 80 80 23 */	lis r4, _rwStreamModuleClose@ha
+/* 80238698 00235778  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 8023869C 0023577C  7F FF 1B 78 */	or r31, r31, r3
+/* 802386A0 00235780  3C A0 80 23 */	lis r5, _rwStreamModuleOpen@ha
+/* 802386A4 00235784  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 802386A8 00235788  38 E4 25 20 */	addi r7, r4, _rwStreamModuleClose@l
+/* 802386AC 0023578C  38 C5 24 9C */	addi r6, r5, _rwStreamModuleOpen@l
+/* 802386B0 00235790  38 80 00 04 */	li r4, 0x4
+/* 802386B4 00235794  38 A0 04 04 */	li r5, 0x404
+/* 802386B8 00235798  39 00 00 00 */	li r8, 0x0
+/* 802386BC 0023579C  4B FF AF 9D */	bl _rwPluginRegistryAddPlugin
+/* 802386C0 002357A0  3C 80 80 23 */	lis r4, _rwCameraClose@ha
+/* 802386C4 002357A4  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 802386C8 002357A8  7F FF 1B 78 */	or r31, r31, r3
+/* 802386CC 002357AC  3C A0 80 23 */	lis r5, _rwCameraOpen@ha
+/* 802386D0 002357B0  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 802386D4 002357B4  38 E4 74 98 */	addi r7, r4, _rwCameraClose@l
+/* 802386D8 002357B8  38 C5 74 FC */	addi r6, r5, _rwCameraOpen@l
+/* 802386DC 002357BC  38 80 00 04 */	li r4, 0x4
+/* 802386E0 002357C0  38 A0 04 05 */	li r5, 0x405
+/* 802386E4 002357C4  39 00 00 00 */	li r8, 0x0
+/* 802386E8 002357C8  4B FF AF 71 */	bl _rwPluginRegistryAddPlugin
+/* 802386EC 002357CC  3C 80 80 24 */	lis r4, _rwImageClose@ha
+/* 802386F0 002357D0  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 802386F4 002357D4  7F FF 1B 78 */	or r31, r31, r3
+/* 802386F8 002357D8  3C A0 80 24 */	lis r5, _rwImageOpen@ha
+/* 802386FC 002357DC  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 80238700 002357E0  38 E4 98 14 */	addi r7, r4, _rwImageClose@l
+/* 80238704 002357E4  38 C5 95 94 */	addi r6, r5, _rwImageOpen@l
+/* 80238708 002357E8  38 80 02 20 */	li r4, 0x220
+/* 8023870C 002357EC  38 A0 04 06 */	li r5, 0x406
+/* 80238710 002357F0  39 00 00 00 */	li r8, 0x0
+/* 80238714 002357F4  4B FF AF 45 */	bl _rwPluginRegistryAddPlugin
+/* 80238718 002357F8  3C 80 80 24 */	lis r4, _rwRasterClose@ha
+/* 8023871C 002357FC  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 80238720 00235800  7F FF 1B 78 */	or r31, r31, r3
+/* 80238724 00235804  3C A0 80 24 */	lis r5, _rwRasterOpen@ha
+/* 80238728 00235808  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 8023872C 0023580C  38 E4 BA 20 */	addi r7, r4, _rwRasterClose@l
+/* 80238730 00235810  38 C5 BA 8C */	addi r6, r5, _rwRasterOpen@l
+/* 80238734 00235814  38 80 00 64 */	li r4, 0x64
+/* 80238738 00235818  38 A0 04 07 */	li r5, 0x407
+/* 8023873C 0023581C  39 00 00 00 */	li r8, 0x0
+/* 80238740 00235820  4B FF AF 19 */	bl _rwPluginRegistryAddPlugin
+/* 80238744 00235824  3C 80 80 24 */	lis r4, _rwTextureClose@ha
+/* 80238748 00235828  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 8023874C 0023582C  7F FF 1B 78 */	or r31, r31, r3
+/* 80238750 00235830  3C A0 80 24 */	lis r5, _rwTextureOpen@ha
+/* 80238754 00235834  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 80238758 00235838  38 E4 ED 44 */	addi r7, r4, _rwTextureClose@l
+/* 8023875C 0023583C  38 C5 EF 20 */	addi r6, r5, _rwTextureOpen@l
+/* 80238760 00235840  38 80 00 34 */	li r4, 0x34
+/* 80238764 00235844  38 A0 04 08 */	li r5, 0x408
+/* 80238768 00235848  39 00 00 00 */	li r8, 0x0
+/* 8023876C 0023584C  4B FF AE ED */	bl _rwPluginRegistryAddPlugin
+/* 80238770 00235850  3C 80 80 25 */	lis r4, _rwRenderPipelineClose@ha
+/* 80238774 00235854  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 80238778 00235858  7F FF 1B 78 */	or r31, r31, r3
+/* 8023877C 0023585C  3C A0 80 25 */	lis r5, _rwRenderPipelineOpen@ha
+/* 80238780 00235860  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 80238784 00235864  38 E4 C5 64 */	addi r7, r4, _rwRenderPipelineClose@l
+/* 80238788 00235868  38 C5 C5 20 */	addi r6, r5, _rwRenderPipelineOpen@l
+/* 8023878C 0023586C  38 80 00 60 */	li r4, 0x60
+/* 80238790 00235870  38 A0 04 09 */	li r5, 0x409
+/* 80238794 00235874  39 00 00 00 */	li r8, 0x0
+/* 80238798 00235878  4B FF AE C1 */	bl _rwPluginRegistryAddPlugin
+/* 8023879C 0023587C  7F FF 1B 78 */	or r31, r31, r3
+/* 802387A0 00235880  48 01 3D F5 */	bl _rwPipeAttach
+/* 802387A4 00235884  3C 80 80 25 */	lis r4, _rwIm3DClose@ha
+/* 802387A8 00235888  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 802387AC 0023588C  7F FF 1B 78 */	or r31, r31, r3
+/* 802387B0 00235890  3C A0 80 25 */	lis r5, _rwIm3DOpen@ha
+/* 802387B4 00235894  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 802387B8 00235898  38 E4 C3 DC */	addi r7, r4, _rwIm3DClose@l
+/* 802387BC 0023589C  38 C5 C4 40 */	addi r6, r5, _rwIm3DOpen@l
+/* 802387C0 002358A0  38 80 00 74 */	li r4, 0x74
+/* 802387C4 002358A4  38 A0 04 0A */	li r5, 0x40a
+/* 802387C8 002358A8  39 00 00 00 */	li r8, 0x0
+/* 802387CC 002358AC  4B FF AE 8D */	bl _rwPluginRegistryAddPlugin
+/* 802387D0 002358B0  3C 80 80 23 */	lis r4, _rwResourcesClose@ha
+/* 802387D4 002358B4  3C C0 80 2B */	lis r6, engineTKList@ha
+/* 802387D8 002358B8  7F FF 1B 78 */	or r31, r31, r3
+/* 802387DC 002358BC  3C A0 80 23 */	lis r5, _rwResourcesOpen@ha
+/* 802387E0 002358C0  38 66 7D 08 */	addi r3, r6, engineTKList@l
+/* 802387E4 002358C4  38 E4 1D 98 */	addi r7, r4, _rwResourcesClose@l
+/* 802387E8 002358C8  38 C5 1C 48 */	addi r6, r5, _rwResourcesOpen@l
+/* 802387EC 002358CC  38 80 00 28 */	li r4, 0x28
+/* 802387F0 002358D0  38 A0 04 0B */	li r5, 0x40b
+/* 802387F4 002358D4  39 00 00 00 */	li r8, 0x0
+/* 802387F8 002358D8  4B FF AE 61 */	bl _rwPluginRegistryAddPlugin
+/* 802387FC 002358DC  7F FF 1B 78 */	or r31, r31, r3
+/* 80238800 002358E0  57 E0 0F FE */	srwi r0, r31, 31
+/* 80238804 002358E4  68 00 00 01 */	xori r0, r0, 0x1
+/* 80238808 002358E8  2C 00 00 00 */	cmpwi r0, 0x0
+/* 8023880C 002358EC  7C 1E 03 78 */	mr r30, r0
+/* 80238810 002358F0  41 82 00 20 */	beq .L_80238830
+/* 80238814 002358F4  48 00 CC 41 */	bl _rwDeviceRegisterPlugin
+/* 80238818 002358F8  7C 7E 1B 79 */	mr. r30, r3
+/* 8023881C 002358FC  41 82 00 14 */	beq .L_80238830
+/* 80238820 00235900  80 8D 9F 7C */	lwz r4, RwEngineInstance@sda21(r13)
+/* 80238824 00235904  38 00 00 01 */	li r0, 0x1
+/* 80238828 00235908  90 04 01 50 */	stw r0, 0x150(r4)
+/* 8023882C 0023590C  48 00 00 18 */	b .L_80238844
+.L_80238830:
+/* 80238830 00235910  4B FF AC B9 */	bl _rwPluginRegistryClose
+.L_80238834:
+/* 80238834 00235914  4B FF 6F 8D */	bl _rwFileSystemClose
+.L_80238838:
+/* 80238838 00235918  4B FF 92 6D */	bl _rwMemoryClose
+.L_8023883C:
+/* 8023883C 0023591C  4B FF BF 59 */	bl _rwStringClose
+.L_80238840:
+/* 80238840 00235920  7F C3 F3 78 */	mr r3, r30
+.L_80238844:
+/* 80238844 00235924  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 80238848 00235928  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 8023884C 0023592C  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 80238850 00235930  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 80238854 00235934  7C 08 03 A6 */	mtlr r0
+/* 80238858 00235938  38 21 00 20 */	addi r1, r1, 0x20
+/* 8023885C 0023593C  4E 80 00 20 */	blr
+.endfn RwEngineInit
+
+# 0x802B7D08 - 0x802B7D20
+.data
+.balign 8
+
+.obj engineTKList, local
+	.4byte 0x00000158
+	.4byte 0x00000158
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj engineTKList
+
+# 0x80383DA8 - 0x80383F00
+.section .bss, "wa", @nobits
+.balign 8
+
+.obj staticGlobals, local
+	.skip 0x158
+.endobj staticGlobals
+
+# 0x803CC878 - 0x803CC880
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj engineInstancesOpened, local
+	.skip 0x4
+.endobj engineInstancesOpened
+
+.obj RwEngineInstance, global
+	.skip 0x4
+.endobj RwEngineInstance

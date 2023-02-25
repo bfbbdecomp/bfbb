@@ -1,8 +1,9 @@
 # Ignore
 __pycache__
 *.pyc
-tools/mwcc_compiler/*.*
-tools/elf2dol
+tools/mwcc_compiler/*
+!tools/mwcc_compiler/README.md
+tools/dtk
 obj/*
 obj-expected/*
 *.asm

@@ -1,0 +1,294 @@
+.include "macros.inc"
+.file "xCounter.cpp"
+
+# 0x80015B3C - 0x80015EA0
+.text
+.balign 4
+
+# @unnamed@xCounter_cpp@::add_tweaks(_xCounter&)
+.fn "add_tweaks__22@unnamed@xCounter_cpp@FR9_xCounter", local
+/* 80015B3C 00012C1C  4E 80 00 20 */	blr
+.endfn "add_tweaks__22@unnamed@xCounter_cpp@FR9_xCounter"
+
+# xCounterInit()
+.fn xCounterInit__Fv, global
+/* 80015B40 00012C20  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015B44 00012C24  7C 08 02 A6 */	mflr r0
+/* 80015B48 00012C28  3C 60 80 25 */	lis r3, "@stringBase0"@ha
+/* 80015B4C 00012C2C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015B50 00012C30  38 63 21 40 */	addi r3, r3, "@stringBase0"@l
+/* 80015B54 00012C34  48 00 03 4D */	bl xDebugRemoveTweak__FPCc
+/* 80015B58 00012C38  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015B5C 00012C3C  7C 08 03 A6 */	mtlr r0
+/* 80015B60 00012C40  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015B64 00012C44  4E 80 00 20 */	blr
+.endfn xCounterInit__Fv
+
+# xCounterInit(void*, void*)
+.fn xCounterInit__FPvPv, global
+/* 80015B68 00012C48  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015B6C 00012C4C  7C 08 02 A6 */	mflr r0
+/* 80015B70 00012C50  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015B74 00012C54  48 00 00 15 */	bl xCounterInit__FP5xBaseP13xCounterAsset
+/* 80015B78 00012C58  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015B7C 00012C5C  7C 08 03 A6 */	mtlr r0
+/* 80015B80 00012C60  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015B84 00012C64  4E 80 00 20 */	blr
+.endfn xCounterInit__FPvPv
+
+# xCounterInit(xBase*, xCounterAsset*)
+.fn xCounterInit__FP5xBaseP13xCounterAsset, global
+/* 80015B88 00012C68  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015B8C 00012C6C  7C 08 02 A6 */	mflr r0
+/* 80015B90 00012C70  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015B94 00012C74  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80015B98 00012C78  7C 7F 1B 78 */	mr r31, r3
+/* 80015B9C 00012C7C  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80015BA0 00012C80  7C 9E 23 78 */	mr r30, r4
+/* 80015BA4 00012C84  4B FF 38 5D */	bl xBaseInit__FP5xBaseP10xBaseAsset
+/* 80015BA8 00012C88  3C 60 80 01 */	lis r3, xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase@ha
+/* 80015BAC 00012C8C  38 03 5D 18 */	addi r0, r3, xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase@l
+/* 80015BB0 00012C90  90 1F 00 0C */	stw r0, 0xc(r31)
+/* 80015BB4 00012C94  93 DF 00 10 */	stw r30, 0x10(r31)
+/* 80015BB8 00012C98  88 1F 00 05 */	lbz r0, 0x5(r31)
+/* 80015BBC 00012C9C  28 00 00 00 */	cmplwi r0, 0x0
+/* 80015BC0 00012CA0  41 82 00 14 */	beq .L_80015BD4
+/* 80015BC4 00012CA4  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 80015BC8 00012CA8  38 03 00 0C */	addi r0, r3, 0xc
+/* 80015BCC 00012CAC  90 1F 00 08 */	stw r0, 0x8(r31)
+/* 80015BD0 00012CB0  48 00 00 0C */	b .L_80015BDC
+.L_80015BD4:
+/* 80015BD4 00012CB4  38 00 00 00 */	li r0, 0x0
+/* 80015BD8 00012CB8  90 1F 00 08 */	stw r0, 0x8(r31)
+.L_80015BDC:
+/* 80015BDC 00012CBC  38 80 00 00 */	li r4, 0x0
+/* 80015BE0 00012CC0  7F E3 FB 78 */	mr r3, r31
+/* 80015BE4 00012CC4  98 9F 00 16 */	stb r4, 0x16(r31)
+/* 80015BE8 00012CC8  A8 1E 00 08 */	lha r0, 0x8(r30)
+/* 80015BEC 00012CCC  B0 1F 00 14 */	sth r0, 0x14(r31)
+/* 80015BF0 00012CD0  98 9F 00 17 */	stb r4, 0x17(r31)
+/* 80015BF4 00012CD4  4B FF FF 49 */	bl "add_tweaks__22@unnamed@xCounter_cpp@FR9_xCounter"
+/* 80015BF8 00012CD8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015BFC 00012CDC  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80015C00 00012CE0  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80015C04 00012CE4  7C 08 03 A6 */	mtlr r0
+/* 80015C08 00012CE8  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015C0C 00012CEC  4E 80 00 20 */	blr
+.endfn xCounterInit__FP5xBaseP13xCounterAsset
+
+# xCounterReset(xBase*)
+.fn xCounterReset__FP5xBase, global
+/* 80015C10 00012CF0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015C14 00012CF4  7C 08 02 A6 */	mflr r0
+/* 80015C18 00012CF8  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015C1C 00012CFC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80015C20 00012D00  7C 7F 1B 78 */	mr r31, r3
+/* 80015C24 00012D04  80 83 00 10 */	lwz r4, 0x10(r3)
+/* 80015C28 00012D08  4B FF 37 D9 */	bl xBaseInit__FP5xBaseP10xBaseAsset
+/* 80015C2C 00012D0C  88 1F 00 05 */	lbz r0, 0x5(r31)
+/* 80015C30 00012D10  28 00 00 00 */	cmplwi r0, 0x0
+/* 80015C34 00012D14  41 82 00 14 */	beq .L_80015C48
+/* 80015C38 00012D18  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 80015C3C 00012D1C  38 03 00 0C */	addi r0, r3, 0xc
+/* 80015C40 00012D20  90 1F 00 08 */	stw r0, 0x8(r31)
+/* 80015C44 00012D24  48 00 00 0C */	b .L_80015C50
+.L_80015C48:
+/* 80015C48 00012D28  38 00 00 00 */	li r0, 0x0
+/* 80015C4C 00012D2C  90 1F 00 08 */	stw r0, 0x8(r31)
+.L_80015C50:
+/* 80015C50 00012D30  80 7F 00 10 */	lwz r3, 0x10(r31)
+/* 80015C54 00012D34  38 00 00 00 */	li r0, 0x0
+/* 80015C58 00012D38  A8 63 00 08 */	lha r3, 0x8(r3)
+/* 80015C5C 00012D3C  B0 7F 00 14 */	sth r3, 0x14(r31)
+/* 80015C60 00012D40  98 1F 00 16 */	stb r0, 0x16(r31)
+/* 80015C64 00012D44  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80015C68 00012D48  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015C6C 00012D4C  7C 08 03 A6 */	mtlr r0
+/* 80015C70 00012D50  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015C74 00012D54  4E 80 00 20 */	blr
+.endfn xCounterReset__FP5xBase
+
+# xCounterSave(_xCounter*, xSerial*)
+.fn xCounterSave__FP9_xCounterP7xSerial, global
+/* 80015C78 00012D58  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015C7C 00012D5C  7C 08 02 A6 */	mflr r0
+/* 80015C80 00012D60  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015C84 00012D64  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80015C88 00012D68  7C 9F 23 78 */	mr r31, r4
+/* 80015C8C 00012D6C  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80015C90 00012D70  7C 7E 1B 78 */	mr r30, r3
+/* 80015C94 00012D74  4B FF 37 B9 */	bl xBaseSave__FP5xBaseP7xSerial
+/* 80015C98 00012D78  88 9E 00 16 */	lbz r4, 0x16(r30)
+/* 80015C9C 00012D7C  7F E3 FB 78 */	mr r3, r31
+/* 80015CA0 00012D80  48 02 D3 CD */	bl Write__7xSerialFUc
+/* 80015CA4 00012D84  A8 9E 00 14 */	lha r4, 0x14(r30)
+/* 80015CA8 00012D88  7F E3 FB 78 */	mr r3, r31
+/* 80015CAC 00012D8C  48 02 D3 F1 */	bl Write__7xSerialFs
+/* 80015CB0 00012D90  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015CB4 00012D94  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80015CB8 00012D98  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80015CBC 00012D9C  7C 08 03 A6 */	mtlr r0
+/* 80015CC0 00012DA0  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015CC4 00012DA4  4E 80 00 20 */	blr
+.endfn xCounterSave__FP9_xCounterP7xSerial
+
+# xCounterLoad(_xCounter*, xSerial*)
+.fn xCounterLoad__FP9_xCounterP7xSerial, global
+/* 80015CC8 00012DA8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015CCC 00012DAC  7C 08 02 A6 */	mflr r0
+/* 80015CD0 00012DB0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015CD4 00012DB4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 80015CD8 00012DB8  7C 9F 23 78 */	mr r31, r4
+/* 80015CDC 00012DBC  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 80015CE0 00012DC0  7C 7E 1B 78 */	mr r30, r3
+/* 80015CE4 00012DC4  4B FF 37 B9 */	bl xBaseLoad__FP5xBaseP7xSerial
+/* 80015CE8 00012DC8  7F E3 FB 78 */	mr r3, r31
+/* 80015CEC 00012DCC  38 9E 00 16 */	addi r4, r30, 0x16
+/* 80015CF0 00012DD0  48 02 D6 0D */	bl Read__7xSerialFPUc
+/* 80015CF4 00012DD4  7F E3 FB 78 */	mr r3, r31
+/* 80015CF8 00012DD8  38 9E 00 14 */	addi r4, r30, 0x14
+/* 80015CFC 00012DDC  48 02 D6 29 */	bl Read__7xSerialFPs
+/* 80015D00 00012DE0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015D04 00012DE4  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 80015D08 00012DE8  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 80015D0C 00012DEC  7C 08 03 A6 */	mtlr r0
+/* 80015D10 00012DF0  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015D14 00012DF4  4E 80 00 20 */	blr
+.endfn xCounterLoad__FP9_xCounterP7xSerial
+
+# xCounterEventCB(xBase*, xBase*, unsigned int, const float*, xBase*)
+.fn xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase, global
+/* 80015D18 00012DF8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 80015D1C 00012DFC  7C 08 02 A6 */	mflr r0
+/* 80015D20 00012E00  2C 05 00 0C */	cmpwi r5, 0xc
+/* 80015D24 00012E04  7C 83 23 78 */	mr r3, r4
+/* 80015D28 00012E08  90 01 00 14 */	stw r0, 0x14(r1)
+/* 80015D2C 00012E0C  41 82 00 24 */	beq .L_80015D50
+/* 80015D30 00012E10  40 80 00 14 */	bge .L_80015D44
+/* 80015D34 00012E14  2C 05 00 0A */	cmpwi r5, 0xa
+/* 80015D38 00012E18  41 82 00 D0 */	beq .L_80015E08
+/* 80015D3C 00012E1C  40 80 00 80 */	bge .L_80015DBC
+/* 80015D40 00012E20  48 00 01 0C */	b .L_80015E4C
+.L_80015D44:
+/* 80015D44 00012E24  2C 05 00 14 */	cmpwi r5, 0x14
+/* 80015D48 00012E28  41 82 00 D8 */	beq .L_80015E20
+/* 80015D4C 00012E2C  48 00 01 00 */	b .L_80015E4C
+.L_80015D50:
+/* 80015D50 00012E30  88 03 00 16 */	lbz r0, 0x16(r3)
+/* 80015D54 00012E34  28 00 00 01 */	cmplwi r0, 0x1
+/* 80015D58 00012E38  41 82 01 34 */	beq .L_80015E8C
+/* 80015D5C 00012E3C  88 03 00 17 */	lbz r0, 0x17(r3)
+/* 80015D60 00012E40  54 00 07 FF */	clrlwi. r0, r0, 31
+/* 80015D64 00012E44  41 82 00 10 */	beq .L_80015D74
+/* 80015D68 00012E48  A8 03 00 14 */	lha r0, 0x14(r3)
+/* 80015D6C 00012E4C  2C 00 00 02 */	cmpwi r0, 0x2
+/* 80015D70 00012E50  41 82 01 1C */	beq .L_80015E8C
+.L_80015D74:
+/* 80015D74 00012E54  A8 83 00 14 */	lha r4, 0x14(r3)
+/* 80015D78 00012E58  38 04 FF FF */	addi r0, r4, -0x1
+/* 80015D7C 00012E5C  B0 03 00 14 */	sth r0, 0x14(r3)
+/* 80015D80 00012E60  A8 A3 00 14 */	lha r5, 0x14(r3)
+/* 80015D84 00012E64  7C A0 07 35 */	extsh. r0, r5
+/* 80015D88 00012E68  40 82 00 14 */	bne .L_80015D9C
+/* 80015D8C 00012E6C  7C 64 1B 78 */	mr r4, r3
+/* 80015D90 00012E70  38 A0 00 14 */	li r5, 0x14
+/* 80015D94 00012E74  48 00 99 4D */	bl zEntEvent__FP5xBaseP5xBaseUi
+/* 80015D98 00012E78  48 00 00 F4 */	b .L_80015E8C
+.L_80015D9C:
+/* 80015D9C 00012E7C  7C A0 07 35 */	extsh. r0, r5
+/* 80015DA0 00012E80  40 81 00 EC */	ble .L_80015E8C
+/* 80015DA4 00012E84  2C 05 00 14 */	cmpwi r5, 0x14
+/* 80015DA8 00012E88  41 81 00 E4 */	bgt .L_80015E8C
+/* 80015DAC 00012E8C  7C 64 1B 78 */	mr r4, r3
+/* 80015DB0 00012E90  38 A5 01 91 */	addi r5, r5, 0x191
+/* 80015DB4 00012E94  48 00 99 2D */	bl zEntEvent__FP5xBaseP5xBaseUi
+/* 80015DB8 00012E98  48 00 00 D4 */	b .L_80015E8C
+.L_80015DBC:
+/* 80015DBC 00012E9C  88 03 00 16 */	lbz r0, 0x16(r3)
+/* 80015DC0 00012EA0  28 00 00 01 */	cmplwi r0, 0x1
+/* 80015DC4 00012EA4  41 82 00 C8 */	beq .L_80015E8C
+/* 80015DC8 00012EA8  A8 A3 00 14 */	lha r5, 0x14(r3)
+/* 80015DCC 00012EAC  38 05 00 01 */	addi r0, r5, 0x1
+/* 80015DD0 00012EB0  B0 03 00 14 */	sth r0, 0x14(r3)
+/* 80015DD4 00012EB4  A8 A3 00 14 */	lha r5, 0x14(r3)
+/* 80015DD8 00012EB8  7C A0 07 35 */	extsh. r0, r5
+/* 80015DDC 00012EBC  40 82 00 10 */	bne .L_80015DEC
+/* 80015DE0 00012EC0  38 A0 00 14 */	li r5, 0x14
+/* 80015DE4 00012EC4  48 00 98 FD */	bl zEntEvent__FP5xBaseP5xBaseUi
+/* 80015DE8 00012EC8  48 00 00 A4 */	b .L_80015E8C
+.L_80015DEC:
+/* 80015DEC 00012ECC  7C A0 07 35 */	extsh. r0, r5
+/* 80015DF0 00012ED0  40 81 00 9C */	ble .L_80015E8C
+/* 80015DF4 00012ED4  2C 05 00 14 */	cmpwi r5, 0x14
+/* 80015DF8 00012ED8  41 81 00 94 */	bgt .L_80015E8C
+/* 80015DFC 00012EDC  38 A5 01 91 */	addi r5, r5, 0x191
+/* 80015E00 00012EE0  48 00 98 E1 */	bl zEntEvent__FP5xBaseP5xBaseUi
+/* 80015E04 00012EE4  48 00 00 88 */	b .L_80015E8C
+.L_80015E08:
+/* 80015E08 00012EE8  38 00 00 00 */	li r0, 0x0
+/* 80015E0C 00012EEC  98 03 00 16 */	stb r0, 0x16(r3)
+/* 80015E10 00012EF0  80 83 00 10 */	lwz r4, 0x10(r3)
+/* 80015E14 00012EF4  A8 04 00 08 */	lha r0, 0x8(r4)
+/* 80015E18 00012EF8  B0 03 00 14 */	sth r0, 0x14(r3)
+/* 80015E1C 00012EFC  48 00 00 70 */	b .L_80015E8C
+.L_80015E20:
+/* 80015E20 00012F00  88 03 00 17 */	lbz r0, 0x17(r3)
+/* 80015E24 00012F04  54 00 07 FF */	clrlwi. r0, r0, 31
+/* 80015E28 00012F08  41 82 00 10 */	beq .L_80015E38
+/* 80015E2C 00012F0C  A8 03 00 14 */	lha r0, 0x14(r3)
+/* 80015E30 00012F10  2C 00 00 02 */	cmpwi r0, 0x2
+/* 80015E34 00012F14  41 82 00 58 */	beq .L_80015E8C
+.L_80015E38:
+/* 80015E38 00012F18  38 80 00 00 */	li r4, 0x0
+/* 80015E3C 00012F1C  38 00 00 01 */	li r0, 0x1
+/* 80015E40 00012F20  B0 83 00 14 */	sth r4, 0x14(r3)
+/* 80015E44 00012F24  98 03 00 16 */	stb r0, 0x16(r3)
+/* 80015E48 00012F28  48 00 00 44 */	b .L_80015E8C
+.L_80015E4C:
+/* 80015E4C 00012F2C  88 03 00 16 */	lbz r0, 0x16(r3)
+/* 80015E50 00012F30  28 00 00 01 */	cmplwi r0, 0x1
+/* 80015E54 00012F34  41 82 00 38 */	beq .L_80015E8C
+/* 80015E58 00012F38  28 05 01 92 */	cmplwi r5, 0x192
+/* 80015E5C 00012F3C  41 80 00 30 */	blt .L_80015E8C
+/* 80015E60 00012F40  28 05 01 A5 */	cmplwi r5, 0x1a5
+/* 80015E64 00012F44  41 81 00 28 */	bgt .L_80015E8C
+/* 80015E68 00012F48  88 03 00 17 */	lbz r0, 0x17(r3)
+/* 80015E6C 00012F4C  38 85 FE 6F */	addi r4, r5, -0x191
+/* 80015E70 00012F50  7C 84 07 34 */	extsh r4, r4
+/* 80015E74 00012F54  54 00 07 FF */	clrlwi. r0, r0, 31
+/* 80015E78 00012F58  41 82 00 10 */	beq .L_80015E88
+/* 80015E7C 00012F5C  A8 03 00 14 */	lha r0, 0x14(r3)
+/* 80015E80 00012F60  2C 00 00 02 */	cmpwi r0, 0x2
+/* 80015E84 00012F64  41 82 00 08 */	beq .L_80015E8C
+.L_80015E88:
+/* 80015E88 00012F68  B0 83 00 14 */	sth r4, 0x14(r3)
+.L_80015E8C:
+/* 80015E8C 00012F6C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 80015E90 00012F70  38 60 00 01 */	li r3, 0x1
+/* 80015E94 00012F74  7C 08 03 A6 */	mtlr r0
+/* 80015E98 00012F78  38 21 00 10 */	addi r1, r1, 0x10
+/* 80015E9C 00012F7C  4E 80 00 20 */	blr
+.endfn xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase
+
+# 0x80015EA0 - 0x80015EA4
+.section .text, "ax", unique, 1
+.balign 4
+
+# xDebugRemoveTweak(const char*)
+.fn xDebugRemoveTweak__FPCc, weak
+/* 80015EA0 00012F80  4E 80 00 20 */	blr
+.endfn xDebugRemoveTweak__FPCc
+
+# 0x80252140 - 0x80252158
+.rodata
+.balign 8
+
+.obj "@stringBase0", local
+	.4byte 0x57696467
+	.4byte 0x6574737C
+	.4byte 0x436F756E
+	.4byte 0x74657273
+	.byte 0x00
+.endobj "@stringBase0"
+	.4byte 0x00000000
+	.byte 0x00, 0x00, 0x00

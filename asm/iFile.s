@@ -1,0 +1,563 @@
+.include "macros.inc"
+.file "iFile.cpp"
+
+# 0x800C3300 - 0x800C3998
+.text
+.balign 4
+
+# iFileInit()
+.fn iFileInit__Fv, global
+/* 800C3300 000C03E0  3C 60 80 30 */	lis r3, tbuffer@ha
+/* 800C3304 000C03E4  38 63 AE 60 */	addi r3, r3, tbuffer@l
+/* 800C3308 000C03E8  38 03 00 1F */	addi r0, r3, 0x1f
+/* 800C330C 000C03EC  54 00 00 34 */	clrrwi r0, r0, 5
+/* 800C3310 000C03F0  90 0D 91 C0 */	stw r0, buffer32@sda21(r13)
+/* 800C3314 000C03F4  4E 80 00 20 */	blr
+.endfn iFileInit__Fv
+
+# iFileExit()
+.fn iFileExit__Fv, global
+/* 800C3318 000C03F8  4E 80 00 20 */	blr
+.endfn iFileExit__Fv
+
+# iFileLoad(char*, unsigned int*, unsigned int*)
+.fn iFileLoad__FPcPUiPUi, global
+/* 800C331C 000C03FC  94 21 FE 50 */	stwu r1, -0x1b0(r1)
+/* 800C3320 000C0400  7C 08 02 A6 */	mflr r0
+/* 800C3324 000C0404  90 01 01 B4 */	stw r0, 0x1b4(r1)
+/* 800C3328 000C0408  93 E1 01 AC */	stw r31, 0x1ac(r1)
+/* 800C332C 000C040C  7C 7F 1B 78 */	mr r31, r3
+/* 800C3330 000C0410  93 C1 01 A8 */	stw r30, 0x1a8(r1)
+/* 800C3334 000C0414  7C BE 2B 78 */	mr r30, r5
+/* 800C3338 000C0418  93 A1 01 A4 */	stw r29, 0x1a4(r1)
+/* 800C333C 000C041C  7C 9D 23 78 */	mr r29, r4
+/* 800C3340 000C0420  38 81 00 08 */	addi r4, r1, 0x8
+/* 800C3344 000C0424  48 00 05 D9 */	bl iFileFullPath__FPCcPc
+/* 800C3348 000C0428  7F E3 FB 78 */	mr r3, r31
+/* 800C334C 000C042C  38 A1 00 88 */	addi r5, r1, 0x88
+/* 800C3350 000C0430  38 80 00 04 */	li r4, 0x4
+/* 800C3354 000C0434  48 00 00 79 */	bl iFileOpen__FPCciP9tag_xFile
+/* 800C3358 000C0438  38 61 00 88 */	addi r3, r1, 0x88
+/* 800C335C 000C043C  48 00 05 95 */	bl iFileGetSize__FP9tag_xFile
+/* 800C3360 000C0440  28 1D 00 00 */	cmplwi r29, 0x0
+/* 800C3364 000C0444  7C 7F 1B 78 */	mr r31, r3
+/* 800C3368 000C0448  40 82 00 18 */	bne .L_800C3380
+/* 800C336C 000C044C  38 1F 00 1F */	addi r0, r31, 0x1f
+/* 800C3370 000C0450  80 6D 86 40 */	lwz r3, __OSCurrHeap@sda21(r13)
+/* 800C3374 000C0454  54 04 00 34 */	clrrwi r4, r0, 5
+/* 800C3378 000C0458  48 10 EA 89 */	bl OSAllocFromHeap
+/* 800C337C 000C045C  7C 7D 1B 78 */	mr r29, r3
+.L_800C3380:
+/* 800C3380 000C0460  38 1F 00 1F */	addi r0, r31, 0x1f
+/* 800C3384 000C0464  7F A4 EB 78 */	mr r4, r29
+/* 800C3388 000C0468  54 1F 00 34 */	clrrwi r31, r0, 5
+/* 800C338C 000C046C  38 61 00 88 */	addi r3, r1, 0x88
+/* 800C3390 000C0470  7F E5 FB 78 */	mr r5, r31
+/* 800C3394 000C0474  48 00 01 95 */	bl iFileRead__FP9tag_xFilePvUi
+/* 800C3398 000C0478  28 1E 00 00 */	cmplwi r30, 0x0
+/* 800C339C 000C047C  41 82 00 08 */	beq .L_800C33A4
+/* 800C33A0 000C0480  93 FE 00 00 */	stw r31, 0x0(r30)
+.L_800C33A4:
+/* 800C33A4 000C0484  38 61 00 88 */	addi r3, r1, 0x88
+/* 800C33A8 000C0488  48 00 04 F5 */	bl iFileClose__FP9tag_xFile
+/* 800C33AC 000C048C  80 01 01 B4 */	lwz r0, 0x1b4(r1)
+/* 800C33B0 000C0490  7F A3 EB 78 */	mr r3, r29
+/* 800C33B4 000C0494  83 E1 01 AC */	lwz r31, 0x1ac(r1)
+/* 800C33B8 000C0498  83 C1 01 A8 */	lwz r30, 0x1a8(r1)
+/* 800C33BC 000C049C  83 A1 01 A4 */	lwz r29, 0x1a4(r1)
+/* 800C33C0 000C04A0  7C 08 03 A6 */	mtlr r0
+/* 800C33C4 000C04A4  38 21 01 B0 */	addi r1, r1, 0x1b0
+/* 800C33C8 000C04A8  4E 80 00 20 */	blr
+.endfn iFileLoad__FPcPUiPUi
+
+# iFileOpen(const char*, int, tag_xFile*)
+.fn iFileOpen__FPCciP9tag_xFile, global
+/* 800C33CC 000C04AC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C33D0 000C04B0  7C 08 02 A6 */	mflr r0
+/* 800C33D4 000C04B4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C33D8 000C04B8  54 80 07 7B */	rlwinm. r0, r4, 0, 29, 29
+/* 800C33DC 000C04BC  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800C33E0 000C04C0  7C BF 2B 78 */	mr r31, r5
+/* 800C33E4 000C04C4  41 82 00 14 */	beq .L_800C33F8
+/* 800C33E8 000C04C8  7C 64 1B 78 */	mr r4, r3
+/* 800C33EC 000C04CC  38 7F 00 24 */	addi r3, r31, 0x24
+/* 800C33F0 000C04D0  48 12 43 11 */	bl strcpy
+/* 800C33F4 000C04D4  48 00 00 0C */	b .L_800C3400
+.L_800C33F8:
+/* 800C33F8 000C04D8  38 9F 00 24 */	addi r4, r31, 0x24
+/* 800C33FC 000C04DC  48 00 05 21 */	bl iFileFullPath__FPCcPc
+.L_800C3400:
+/* 800C3400 000C04E0  38 7F 00 24 */	addi r3, r31, 0x24
+/* 800C3404 000C04E4  48 10 03 B9 */	bl DVDConvertPathToEntrynum
+/* 800C3408 000C04E8  90 7F 00 A4 */	stw r3, 0xa4(r31)
+/* 800C340C 000C04EC  80 7F 00 A4 */	lwz r3, 0xa4(r31)
+/* 800C3410 000C04F0  2C 03 FF FF */	cmpwi r3, -0x1
+/* 800C3414 000C04F4  40 82 00 0C */	bne .L_800C3420
+/* 800C3418 000C04F8  38 60 00 01 */	li r3, 0x1
+/* 800C341C 000C04FC  48 00 00 48 */	b .L_800C3464
+.L_800C3420:
+/* 800C3420 000C0500  38 9F 00 A8 */	addi r4, r31, 0xa8
+/* 800C3424 000C0504  48 10 06 8D */	bl DVDFastOpen
+/* 800C3428 000C0508  2C 03 00 00 */	cmpwi r3, 0x0
+/* 800C342C 000C050C  40 82 00 14 */	bne .L_800C3440
+/* 800C3430 000C0510  38 00 FF FF */	li r0, -0x1
+/* 800C3434 000C0514  38 60 00 01 */	li r3, 0x1
+/* 800C3438 000C0518  90 1F 00 A4 */	stw r0, 0xa4(r31)
+/* 800C343C 000C051C  48 00 00 28 */	b .L_800C3464
+.L_800C3440:
+/* 800C3440 000C0520  38 60 00 00 */	li r3, 0x0
+/* 800C3444 000C0524  38 00 00 01 */	li r0, 0x1
+/* 800C3448 000C0528  90 7F 00 E4 */	stw r3, 0xe4(r31)
+/* 800C344C 000C052C  7F E3 FB 78 */	mr r3, r31
+/* 800C3450 000C0530  38 80 00 00 */	li r4, 0x0
+/* 800C3454 000C0534  38 A0 00 00 */	li r5, 0x0
+/* 800C3458 000C0538  90 1F 00 20 */	stw r0, 0x20(r31)
+/* 800C345C 000C053C  48 00 00 1D */	bl iFileSeek__FP9tag_xFileii
+/* 800C3460 000C0540  38 60 00 00 */	li r3, 0x0
+.L_800C3464:
+/* 800C3464 000C0544  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C3468 000C0548  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800C346C 000C054C  7C 08 03 A6 */	mtlr r0
+/* 800C3470 000C0550  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C3474 000C0554  4E 80 00 20 */	blr
+.endfn iFileOpen__FPCciP9tag_xFile
+
+# iFileSeek(tag_xFile*, int, int)
+.fn iFileSeek__FP9tag_xFileii, global
+/* 800C3478 000C0558  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C347C 000C055C  7C 08 02 A6 */	mflr r0
+/* 800C3480 000C0560  2C 05 00 01 */	cmpwi r5, 0x1
+/* 800C3484 000C0564  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C3488 000C0568  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800C348C 000C056C  7C 9F 23 78 */	mr r31, r4
+/* 800C3490 000C0570  93 C1 00 08 */	stw r30, 0x8(r1)
+/* 800C3494 000C0574  7C 7E 1B 78 */	mr r30, r3
+/* 800C3498 000C0578  41 82 00 28 */	beq .L_800C34C0
+/* 800C349C 000C057C  40 80 00 10 */	bge .L_800C34AC
+/* 800C34A0 000C0580  2C 05 00 00 */	cmpwi r5, 0x0
+/* 800C34A4 000C0584  40 80 00 14 */	bge .L_800C34B8
+/* 800C34A8 000C0588  48 00 00 50 */	b .L_800C34F8
+.L_800C34AC:
+/* 800C34AC 000C058C  2C 05 00 03 */	cmpwi r5, 0x3
+/* 800C34B0 000C0590  40 80 00 48 */	bge .L_800C34F8
+/* 800C34B4 000C0594  48 00 00 30 */	b .L_800C34E4
+.L_800C34B8:
+/* 800C34B8 000C0598  7F E0 FB 78 */	mr r0, r31
+/* 800C34BC 000C059C  48 00 00 40 */	b .L_800C34FC
+.L_800C34C0:
+/* 800C34C0 000C05A0  38 7E 00 A8 */	addi r3, r30, 0xa8
+/* 800C34C4 000C05A4  48 10 2D 6D */	bl DVDGetCommandBlockStatus
+/* 800C34C8 000C05A8  2C 03 00 01 */	cmpwi r3, 0x1
+/* 800C34CC 000C05AC  40 82 00 0C */	bne .L_800C34D8
+/* 800C34D0 000C05B0  38 60 FF FF */	li r3, -0x1
+/* 800C34D4 000C05B4  48 00 00 30 */	b .L_800C3504
+.L_800C34D8:
+/* 800C34D8 000C05B8  80 1E 01 0C */	lwz r0, 0x10c(r30)
+/* 800C34DC 000C05BC  7C 1F 02 14 */	add r0, r31, r0
+/* 800C34E0 000C05C0  48 00 00 1C */	b .L_800C34FC
+.L_800C34E4:
+/* 800C34E4 000C05C4  80 1E 00 DC */	lwz r0, 0xdc(r30)
+/* 800C34E8 000C05C8  7C 1F 00 51 */	subf. r0, r31, r0
+/* 800C34EC 000C05CC  40 80 00 10 */	bge .L_800C34FC
+/* 800C34F0 000C05D0  38 00 00 00 */	li r0, 0x0
+/* 800C34F4 000C05D4  48 00 00 08 */	b .L_800C34FC
+.L_800C34F8:
+/* 800C34F8 000C05D8  7F E0 FB 78 */	mr r0, r31
+.L_800C34FC:
+/* 800C34FC 000C05DC  90 1E 01 0C */	stw r0, 0x10c(r30)
+/* 800C3500 000C05E0  80 7E 01 0C */	lwz r3, 0x10c(r30)
+.L_800C3504:
+/* 800C3504 000C05E4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C3508 000C05E8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800C350C 000C05EC  83 C1 00 08 */	lwz r30, 0x8(r1)
+/* 800C3510 000C05F0  7C 08 03 A6 */	mtlr r0
+/* 800C3514 000C05F4  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C3518 000C05F8  4E 80 00 20 */	blr
+.endfn iFileSeek__FP9tag_xFileii
+
+# ifilereadCB(tag_xFile*)
+.fn ifilereadCB__FP9tag_xFile, local
+/* 800C351C 000C05FC  38 00 00 00 */	li r0, 0x0
+/* 800C3520 000C0600  90 0D 91 C4 */	stw r0, iFileSyncAsyncReadActive@sda21(r13)
+/* 800C3524 000C0604  4E 80 00 20 */	blr
+.endfn ifilereadCB__FP9tag_xFile
+
+# iFileRead(tag_xFile*, void*, unsigned int)
+.fn iFileRead__FP9tag_xFilePvUi, global
+/* 800C3528 000C0608  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800C352C 000C060C  7C 08 02 A6 */	mflr r0
+/* 800C3530 000C0610  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800C3534 000C0614  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800C3538 000C0618  7C BF 2B 78 */	mr r31, r5
+/* 800C353C 000C061C  38 A0 00 00 */	li r5, 0x0
+/* 800C3540 000C0620  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800C3544 000C0624  7C 9E 23 78 */	mr r30, r4
+/* 800C3548 000C0628  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 800C354C 000C062C  7C 7D 1B 78 */	mr r29, r3
+/* 800C3550 000C0630  80 83 01 0C */	lwz r4, 0x10c(r3)
+/* 800C3554 000C0634  4B FF FF 25 */	bl iFileSeek__FP9tag_xFileii
+/* 800C3558 000C0638  38 00 00 01 */	li r0, 0x1
+/* 800C355C 000C063C  3C 60 80 0C */	lis r3, ifilereadCB__FP9tag_xFile@ha
+/* 800C3560 000C0640  90 0D 91 C4 */	stw r0, iFileSyncAsyncReadActive@sda21(r13)
+/* 800C3564 000C0644  38 C3 35 1C */	addi r6, r3, ifilereadCB__FP9tag_xFile@l
+/* 800C3568 000C0648  7F A3 EB 78 */	mr r3, r29
+/* 800C356C 000C064C  7F C4 F3 78 */	mr r4, r30
+/* 800C3570 000C0650  7F E5 FB 78 */	mr r5, r31
+/* 800C3574 000C0654  38 E0 00 00 */	li r7, 0x0
+/* 800C3578 000C0658  48 00 01 C1 */	bl iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi
+/* 800C357C 000C065C  48 00 00 08 */	b .L_800C3584
+.L_800C3580:
+/* 800C3580 000C0660  48 0B D7 0D */	bl CheckDVDAndResetState__8iTRCDiskFv
+.L_800C3584:
+/* 800C3584 000C0664  80 0D 91 C4 */	lwz r0, iFileSyncAsyncReadActive@sda21(r13)
+/* 800C3588 000C0668  28 00 00 00 */	cmplwi r0, 0x0
+/* 800C358C 000C066C  40 82 FF F4 */	bne .L_800C3580
+/* 800C3590 000C0670  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800C3594 000C0674  7F E3 FB 78 */	mr r3, r31
+/* 800C3598 000C0678  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800C359C 000C067C  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800C35A0 000C0680  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800C35A4 000C0684  7C 08 03 A6 */	mtlr r0
+/* 800C35A8 000C0688  38 21 00 20 */	addi r1, r1, 0x20
+/* 800C35AC 000C068C  4E 80 00 20 */	blr
+.endfn iFileRead__FP9tag_xFilePvUi
+
+# async_cb(long, DVDFileInfo*)
+.fn async_cb__FlP11DVDFileInfo, local
+/* 800C35B0 000C0690  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C35B4 000C0694  7C 08 02 A6 */	mflr r0
+/* 800C35B8 000C0698  2C 03 FF FE */	cmpwi r3, -0x2
+/* 800C35BC 000C069C  38 E0 FF FF */	li r7, -0x1
+/* 800C35C0 000C06A0  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C35C4 000C06A4  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800C35C8 000C06A8  80 04 00 2C */	lwz r0, 0x2c(r4)
+/* 800C35CC 000C06AC  3C 80 80 3C */	lis r4, file_queue@ha
+/* 800C35D0 000C06B0  1C A0 00 1C */	mulli r5, r0, 0x1c
+/* 800C35D4 000C06B4  38 04 35 F0 */	addi r0, r4, file_queue@l
+/* 800C35D8 000C06B8  7F E0 2A 14 */	add r31, r0, r5
+/* 800C35DC 000C06BC  41 82 00 28 */	beq .L_800C3604
+/* 800C35E0 000C06C0  40 80 00 10 */	bge .L_800C35F0
+/* 800C35E4 000C06C4  2C 03 FF FD */	cmpwi r3, -0x3
+/* 800C35E8 000C06C8  40 80 00 28 */	bge .L_800C3610
+/* 800C35EC 000C06CC  48 00 00 18 */	b .L_800C3604
+.L_800C35F0:
+/* 800C35F0 000C06D0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 800C35F4 000C06D4  40 80 00 10 */	bge .L_800C3604
+/* 800C35F8 000C06D8  38 60 00 0C */	li r3, 0xc
+/* 800C35FC 000C06DC  4B F8 A3 0D */	bl xTRCDisk__F12_tagTRCState
+/* 800C3600 000C06E0  48 00 01 24 */	b .L_800C3724
+.L_800C3604:
+/* 800C3604 000C06E4  2C 03 00 00 */	cmpwi r3, 0x0
+/* 800C3608 000C06E8  41 80 00 08 */	blt .L_800C3610
+/* 800C360C 000C06EC  7C 67 1B 78 */	mr r7, r3
+.L_800C3610:
+/* 800C3610 000C06F0  2C 07 00 00 */	cmpwi r7, 0x0
+/* 800C3614 000C06F4  40 80 00 28 */	bge .L_800C363C
+/* 800C3618 000C06F8  38 00 00 03 */	li r0, 0x3
+/* 800C361C 000C06FC  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 800C3620 000C0700  81 9F 00 14 */	lwz r12, 0x14(r31)
+/* 800C3624 000C0704  28 0C 00 00 */	cmplwi r12, 0x0
+/* 800C3628 000C0708  41 82 00 FC */	beq .L_800C3724
+/* 800C362C 000C070C  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 800C3630 000C0710  7D 89 03 A6 */	mtctr r12
+/* 800C3634 000C0714  4E 80 04 21 */	bctrl
+/* 800C3638 000C0718  48 00 00 EC */	b .L_800C3724
+.L_800C363C:
+/* 800C363C 000C071C  80 BF 00 0C */	lwz r5, 0xc(r31)
+/* 800C3640 000C0720  80 1F 00 08 */	lwz r0, 0x8(r31)
+/* 800C3644 000C0724  7C 87 2A 14 */	add r4, r7, r5
+/* 800C3648 000C0728  7C 04 00 40 */	cmplw r4, r0
+/* 800C364C 000C072C  40 80 00 20 */	bge .L_800C366C
+/* 800C3650 000C0730  80 DF 00 00 */	lwz r6, 0x0(r31)
+/* 800C3654 000C0734  80 66 01 0C */	lwz r3, 0x10c(r6)
+/* 800C3658 000C0738  80 06 00 DC */	lwz r0, 0xdc(r6)
+/* 800C365C 000C073C  7C 65 1A 14 */	add r3, r5, r3
+/* 800C3660 000C0740  7C 67 1A 14 */	add r3, r7, r3
+/* 800C3664 000C0744  7C 03 00 40 */	cmplw r3, r0
+/* 800C3668 000C0748  41 80 00 3C */	blt .L_800C36A4
+.L_800C366C:
+/* 800C366C 000C074C  38 00 00 02 */	li r0, 0x2
+/* 800C3670 000C0750  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 800C3674 000C0754  80 1F 00 08 */	lwz r0, 0x8(r31)
+/* 800C3678 000C0758  90 1F 00 0C */	stw r0, 0xc(r31)
+/* 800C367C 000C075C  81 9F 00 14 */	lwz r12, 0x14(r31)
+/* 800C3680 000C0760  28 0C 00 00 */	cmplwi r12, 0x0
+/* 800C3684 000C0764  41 82 00 10 */	beq .L_800C3694
+/* 800C3688 000C0768  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 800C368C 000C076C  7D 89 03 A6 */	mtctr r12
+/* 800C3690 000C0770  4E 80 04 21 */	bctrl
+.L_800C3694:
+/* 800C3694 000C0774  80 7F 00 00 */	lwz r3, 0x0(r31)
+/* 800C3698 000C0778  38 00 FF FF */	li r0, -0x1
+/* 800C369C 000C077C  90 03 00 E8 */	stw r0, 0xe8(r3)
+/* 800C36A0 000C0780  48 00 00 84 */	b .L_800C3724
+.L_800C36A4:
+/* 800C36A4 000C0784  90 9F 00 0C */	stw r4, 0xc(r31)
+/* 800C36A8 000C0788  38 00 00 01 */	li r0, 0x1
+/* 800C36AC 000C078C  90 1F 00 10 */	stw r0, 0x10(r31)
+/* 800C36B0 000C0790  80 DF 00 0C */	lwz r6, 0xc(r31)
+/* 800C36B4 000C0794  80 1F 00 08 */	lwz r0, 0x8(r31)
+/* 800C36B8 000C0798  7C 66 00 50 */	subf r3, r6, r0
+/* 800C36BC 000C079C  28 03 80 00 */	cmplwi r3, 0x8000
+/* 800C36C0 000C07A0  40 80 00 10 */	bge .L_800C36D0
+/* 800C36C4 000C07A4  38 A3 00 03 */	addi r5, r3, 0x3
+/* 800C36C8 000C07A8  54 A5 00 3A */	clrrwi r5, r5, 2
+/* 800C36CC 000C07AC  48 00 00 0C */	b .L_800C36D8
+.L_800C36D0:
+/* 800C36D0 000C07B0  3C 60 00 01 */	lis r3, 0x1
+/* 800C36D4 000C07B4  38 A3 80 00 */	addi r5, r3, -0x8000
+.L_800C36D8:
+/* 800C36D8 000C07B8  81 1F 00 00 */	lwz r8, 0x0(r31)
+/* 800C36DC 000C07BC  81 28 01 0C */	lwz r9, 0x10c(r8)
+/* 800C36E0 000C07C0  80 68 00 DC */	lwz r3, 0xdc(r8)
+/* 800C36E4 000C07C4  7C 06 4A 14 */	add r0, r6, r9
+/* 800C36E8 000C07C8  7C 05 02 14 */	add r0, r5, r0
+/* 800C36EC 000C07CC  7C 00 18 40 */	cmplw r0, r3
+/* 800C36F0 000C07D0  40 81 00 14 */	ble .L_800C3704
+/* 800C36F4 000C07D4  7C A9 18 50 */	subf r5, r9, r3
+/* 800C36F8 000C07D8  7C A6 28 50 */	subf r5, r6, r5
+/* 800C36FC 000C07DC  38 A5 00 1F */	addi r5, r5, 0x1f
+/* 800C3700 000C07E0  54 A5 00 34 */	clrrwi r5, r5, 5
+.L_800C3704:
+/* 800C3704 000C07E4  80 9F 00 04 */	lwz r4, 0x4(r31)
+/* 800C3708 000C07E8  3C 60 80 0C */	lis r3, async_cb__FlP11DVDFileInfo@ha
+/* 800C370C 000C07EC  38 E3 35 B0 */	addi r7, r3, async_cb__FlP11DVDFileInfo@l
+/* 800C3710 000C07F0  7C 84 32 14 */	add r4, r4, r6
+/* 800C3714 000C07F4  38 68 00 A8 */	addi r3, r8, 0xa8
+/* 800C3718 000C07F8  7C C9 32 14 */	add r6, r9, r6
+/* 800C371C 000C07FC  39 00 00 02 */	li r8, 0x2
+/* 800C3720 000C0800  48 10 07 15 */	bl DVDReadAsyncPrio
+.L_800C3724:
+/* 800C3724 000C0804  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C3728 000C0808  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800C372C 000C080C  7C 08 03 A6 */	mtlr r0
+/* 800C3730 000C0810  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C3734 000C0814  4E 80 00 20 */	blr
+.endfn async_cb__FlP11DVDFileInfo
+
+# iFileReadAsync(tag_xFile*, void*, unsigned int, void (*)(tag_xFile*), int)
+.fn iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi, global
+/* 800C3738 000C0818  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800C373C 000C081C  7C 08 02 A6 */	mflr r0
+/* 800C3740 000C0820  90 01 00 24 */	stw r0, 0x24(r1)
+/* 800C3744 000C0824  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800C3748 000C0828  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800C374C 000C082C  7C 7E 1B 78 */	mr r30, r3
+/* 800C3750 000C0830  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 800C3754 000C0834  93 81 00 10 */	stw r28, 0x10(r1)
+/* 800C3758 000C0838  88 0D 91 CC */	lbz r0, init$504@sda21(r13)
+/* 800C375C 000C083C  7C 00 07 75 */	extsb. r0, r0
+/* 800C3760 000C0840  40 82 00 10 */	bne .L_800C3770
+/* 800C3764 000C0844  38 00 00 01 */	li r0, 0x1
+/* 800C3768 000C0848  90 0D 91 C8 */	stw r0, fopcount$503@sda21(r13)
+/* 800C376C 000C084C  98 0D 91 CC */	stb r0, init$504@sda21(r13)
+.L_800C3770:
+/* 800C3770 000C0850  3C 60 80 3C */	lis r3, file_queue@ha
+/* 800C3774 000C0854  38 00 00 04 */	li r0, 0x4
+/* 800C3778 000C0858  38 63 35 F0 */	addi r3, r3, file_queue@l
+/* 800C377C 000C085C  3B E0 00 00 */	li r31, 0x0
+/* 800C3780 000C0860  7C 09 03 A6 */	mtctr r0
+.L_800C3784:
+/* 800C3784 000C0864  80 03 00 10 */	lwz r0, 0x10(r3)
+/* 800C3788 000C0868  2C 00 00 04 */	cmpwi r0, 0x4
+/* 800C378C 000C086C  41 82 00 94 */	beq .L_800C3820
+/* 800C3790 000C0870  2C 00 00 01 */	cmpwi r0, 0x1
+/* 800C3794 000C0874  41 82 00 8C */	beq .L_800C3820
+/* 800C3798 000C0878  81 0D 91 C8 */	lwz r8, fopcount$503@sda21(r13)
+/* 800C379C 000C087C  3C E0 80 3C */	lis r7, file_queue@ha
+/* 800C37A0 000C0880  1D 3F 00 1C */	mulli r9, r31, 0x1c
+/* 800C37A4 000C0884  38 60 00 00 */	li r3, 0x0
+/* 800C37A8 000C0888  38 08 00 01 */	addi r0, r8, 0x1
+/* 800C37AC 000C088C  90 0D 91 C8 */	stw r0, fopcount$503@sda21(r13)
+/* 800C37B0 000C0890  38 E7 35 F0 */	addi r7, r7, file_queue@l
+/* 800C37B4 000C0894  55 1C 10 3A */	slwi r28, r8, 2
+/* 800C37B8 000C0898  7F C7 49 2E */	stwx r30, r7, r9
+/* 800C37BC 000C089C  7C E7 4A 14 */	add r7, r7, r9
+/* 800C37C0 000C08A0  38 00 00 04 */	li r0, 0x4
+/* 800C37C4 000C08A4  28 05 00 20 */	cmplwi r5, 0x20
+/* 800C37C8 000C08A8  90 87 00 04 */	stw r4, 0x4(r7)
+/* 800C37CC 000C08AC  7F BC FA 14 */	add r29, r28, r31
+/* 800C37D0 000C08B0  39 00 00 20 */	li r8, 0x20
+/* 800C37D4 000C08B4  90 A7 00 08 */	stw r5, 0x8(r7)
+/* 800C37D8 000C08B8  90 67 00 0C */	stw r3, 0xc(r7)
+/* 800C37DC 000C08BC  90 07 00 10 */	stw r0, 0x10(r7)
+/* 800C37E0 000C08C0  90 C7 00 14 */	stw r6, 0x14(r7)
+/* 800C37E4 000C08C4  93 A7 00 18 */	stw r29, 0x18(r7)
+/* 800C37E8 000C08C8  40 80 00 0C */	bge .L_800C37F4
+/* 800C37EC 000C08CC  39 05 00 03 */	addi r8, r5, 0x3
+/* 800C37F0 000C08D0  55 08 00 3A */	clrrwi r8, r8, 2
+.L_800C37F4:
+/* 800C37F4 000C08D4  93 FE 00 D4 */	stw r31, 0xd4(r30)
+/* 800C37F8 000C08D8  3C 60 80 0C */	lis r3, async_cb__FlP11DVDFileInfo@ha
+/* 800C37FC 000C08DC  38 E3 35 B0 */	addi r7, r3, async_cb__FlP11DVDFileInfo@l
+/* 800C3800 000C08E0  7D 05 43 78 */	mr r5, r8
+/* 800C3804 000C08E4  80 DE 01 0C */	lwz r6, 0x10c(r30)
+/* 800C3808 000C08E8  38 7E 00 A8 */	addi r3, r30, 0xa8
+/* 800C380C 000C08EC  39 00 00 02 */	li r8, 0x2
+/* 800C3810 000C08F0  48 10 06 25 */	bl DVDReadAsyncPrio
+/* 800C3814 000C08F4  93 BE 00 E8 */	stw r29, 0xe8(r30)
+/* 800C3818 000C08F8  7C 7C FA 14 */	add r3, r28, r31
+/* 800C381C 000C08FC  48 00 00 14 */	b .L_800C3830
+.L_800C3820:
+/* 800C3820 000C0900  38 63 00 1C */	addi r3, r3, 0x1c
+/* 800C3824 000C0904  3B FF 00 01 */	addi r31, r31, 0x1
+/* 800C3828 000C0908  42 00 FF 5C */	bdnz .L_800C3784
+/* 800C382C 000C090C  38 60 FF FF */	li r3, -0x1
+.L_800C3830:
+/* 800C3830 000C0910  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800C3834 000C0914  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800C3838 000C0918  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800C383C 000C091C  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 800C3840 000C0920  83 81 00 10 */	lwz r28, 0x10(r1)
+/* 800C3844 000C0924  7C 08 03 A6 */	mtlr r0
+/* 800C3848 000C0928  38 21 00 20 */	addi r1, r1, 0x20
+/* 800C384C 000C092C  4E 80 00 20 */	blr
+.endfn iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi
+
+# iFileReadAsyncStatus(int, int*)
+.fn iFileReadAsyncStatus__FiPi, global
+/* 800C3850 000C0930  54 60 07 BE */	clrlwi r0, r3, 30
+/* 800C3854 000C0934  3C A0 80 3C */	lis r5, file_queue@ha
+/* 800C3858 000C0938  1C C0 00 1C */	mulli r6, r0, 0x1c
+/* 800C385C 000C093C  38 05 35 F0 */	addi r0, r5, file_queue@l
+/* 800C3860 000C0940  7C A0 32 14 */	add r5, r0, r6
+/* 800C3864 000C0944  80 05 00 18 */	lwz r0, 0x18(r5)
+/* 800C3868 000C0948  7C 03 00 40 */	cmplw r3, r0
+/* 800C386C 000C094C  41 82 00 0C */	beq .L_800C3878
+/* 800C3870 000C0950  38 60 00 05 */	li r3, 0x5
+/* 800C3874 000C0954  4E 80 00 20 */	blr
+.L_800C3878:
+/* 800C3878 000C0958  28 04 00 00 */	cmplwi r4, 0x0
+/* 800C387C 000C095C  41 82 00 0C */	beq .L_800C3888
+/* 800C3880 000C0960  80 05 00 0C */	lwz r0, 0xc(r5)
+/* 800C3884 000C0964  90 04 00 00 */	stw r0, 0x0(r4)
+.L_800C3888:
+/* 800C3888 000C0968  3C 60 80 3C */	lis r3, file_queue@ha
+/* 800C388C 000C096C  38 03 35 F0 */	addi r0, r3, file_queue@l
+/* 800C3890 000C0970  7C 60 32 14 */	add r3, r0, r6
+/* 800C3894 000C0974  80 63 00 10 */	lwz r3, 0x10(r3)
+/* 800C3898 000C0978  4E 80 00 20 */	blr
+.endfn iFileReadAsyncStatus__FiPi
+
+# iFileClose(tag_xFile*)
+.fn iFileClose__FP9tag_xFile, global
+/* 800C389C 000C097C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C38A0 000C0980  7C 08 02 A6 */	mflr r0
+/* 800C38A4 000C0984  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C38A8 000C0988  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800C38AC 000C098C  7C 7F 1B 78 */	mr r31, r3
+/* 800C38B0 000C0990  38 7F 00 A8 */	addi r3, r31, 0xa8
+/* 800C38B4 000C0994  48 10 03 39 */	bl DVDClose
+/* 800C38B8 000C0998  38 7F 00 A8 */	addi r3, r31, 0xa8
+/* 800C38BC 000C099C  48 10 03 31 */	bl DVDClose
+/* 800C38C0 000C09A0  2C 03 00 00 */	cmpwi r3, 0x0
+/* 800C38C4 000C09A4  40 82 00 0C */	bne .L_800C38D0
+/* 800C38C8 000C09A8  38 60 00 01 */	li r3, 0x1
+/* 800C38CC 000C09AC  48 00 00 10 */	b .L_800C38DC
+.L_800C38D0:
+/* 800C38D0 000C09B0  38 00 00 00 */	li r0, 0x0
+/* 800C38D4 000C09B4  38 60 00 00 */	li r3, 0x0
+/* 800C38D8 000C09B8  90 1F 00 20 */	stw r0, 0x20(r31)
+.L_800C38DC:
+/* 800C38DC 000C09BC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C38E0 000C09C0  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800C38E4 000C09C4  7C 08 03 A6 */	mtlr r0
+/* 800C38E8 000C09C8  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C38EC 000C09CC  4E 80 00 20 */	blr
+.endfn iFileClose__FP9tag_xFile
+
+# iFileGetSize(tag_xFile*)
+.fn iFileGetSize__FP9tag_xFile, global
+/* 800C38F0 000C09D0  80 63 00 DC */	lwz r3, 0xdc(r3)
+/* 800C38F4 000C09D4  4E 80 00 20 */	blr
+.endfn iFileGetSize__FP9tag_xFile
+
+# iFileReadStop()
+.fn iFileReadStop__Fv, global
+/* 800C38F8 000C09D8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C38FC 000C09DC  7C 08 02 A6 */	mflr r0
+/* 800C3900 000C09E0  38 60 00 00 */	li r3, 0x0
+/* 800C3904 000C09E4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C3908 000C09E8  48 10 2D CD */	bl DVDCancelAllAsync
+/* 800C390C 000C09EC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C3910 000C09F0  7C 08 03 A6 */	mtlr r0
+/* 800C3914 000C09F4  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C3918 000C09F8  4E 80 00 20 */	blr
+.endfn iFileReadStop__Fv
+
+# iFileFullPath(const char*, char*)
+.fn iFileFullPath__FPCcPc, global
+/* 800C391C 000C09FC  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C3920 000C0A00  7C 08 02 A6 */	mflr r0
+/* 800C3924 000C0A04  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C3928 000C0A08  7C 60 1B 78 */	mr r0, r3
+/* 800C392C 000C0A0C  7C 83 23 78 */	mr r3, r4
+/* 800C3930 000C0A10  7C 04 03 78 */	mr r4, r0
+/* 800C3934 000C0A14  48 12 3D CD */	bl strcpy
+/* 800C3938 000C0A18  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C393C 000C0A1C  7C 08 03 A6 */	mtlr r0
+/* 800C3940 000C0A20  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C3944 000C0A24  4E 80 00 20 */	blr
+.endfn iFileFullPath__FPCcPc
+
+# iFileSetPath(char*)
+.fn iFileSetPath__FPc, global
+/* 800C3948 000C0A28  4E 80 00 20 */	blr
+.endfn iFileSetPath__FPc
+
+# iFileFind(const char*, tag_xFile*)
+.fn iFileFind__FPCcP9tag_xFile, global
+/* 800C394C 000C0A2C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800C3950 000C0A30  7C 08 02 A6 */	mflr r0
+/* 800C3954 000C0A34  7C 85 23 78 */	mr r5, r4
+/* 800C3958 000C0A38  38 80 00 00 */	li r4, 0x0
+/* 800C395C 000C0A3C  90 01 00 14 */	stw r0, 0x14(r1)
+/* 800C3960 000C0A40  4B FF FA 6D */	bl iFileOpen__FPCciP9tag_xFile
+/* 800C3964 000C0A44  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800C3968 000C0A48  7C 08 03 A6 */	mtlr r0
+/* 800C396C 000C0A4C  38 21 00 10 */	addi r1, r1, 0x10
+/* 800C3970 000C0A50  4E 80 00 20 */	blr
+.endfn iFileFind__FPCcP9tag_xFile
+
+# iFileGetInfo(tag_xFile*, unsigned int*, unsigned int*)
+.fn iFileGetInfo__FP9tag_xFilePUiPUi, global
+/* 800C3974 000C0A54  28 04 00 00 */	cmplwi r4, 0x0
+/* 800C3978 000C0A58  41 82 00 0C */	beq .L_800C3984
+/* 800C397C 000C0A5C  80 03 00 D8 */	lwz r0, 0xd8(r3)
+/* 800C3980 000C0A60  90 04 00 00 */	stw r0, 0x0(r4)
+.L_800C3984:
+/* 800C3984 000C0A64  28 05 00 00 */	cmplwi r5, 0x0
+/* 800C3988 000C0A68  4D 82 00 20 */	beqlr
+/* 800C398C 000C0A6C  80 03 00 DC */	lwz r0, 0xdc(r3)
+/* 800C3990 000C0A70  90 05 00 00 */	stw r0, 0x0(r5)
+/* 800C3994 000C0A74  4E 80 00 20 */	blr
+.endfn iFileGetInfo__FP9tag_xFilePUiPUi
+
+# 0x802FAE60 - 0x802FBE80
+.section .bss, "wa", @nobits
+.balign 8
+
+.obj tbuffer, local
+	.skip 0x1020
+.endobj tbuffer
+
+# 0x803CBAC0 - 0x803CBAD0
+.section .sbss, "wa", @nobits
+.balign 8
+
+.obj buffer32, local
+	.skip 0x4
+.endobj buffer32
+
+.obj iFileSyncAsyncReadActive, global
+	.skip 0x4
+.endobj iFileSyncAsyncReadActive
+
+.obj fopcount$503, local
+	.skip 0x4
+.endobj fopcount$503
+
+.obj init$504, local
+	.skip 0x1
+.endobj init$504
+	.skip 0x3

@@ -1,0 +1,465 @@
+.include "macros.inc"
+.file "dolphin_trk_glue.c"
+
+# 0x801F5C94 - 0x801F61A4
+.text
+.balign 4
+
+.fn TRKLoadContext, global
+/* 801F5C94 001F2D74  80 03 00 00 */	lwz r0, 0x0(r3)
+/* 801F5C98 001F2D78  80 23 00 04 */	lwz r1, 0x4(r3)
+/* 801F5C9C 001F2D7C  80 43 00 08 */	lwz r2, 0x8(r3)
+/* 801F5CA0 001F2D80  A0 A3 01 A2 */	lhz r5, 0x1a2(r3)
+/* 801F5CA4 001F2D84  54 A6 07 BD */	rlwinm. r6, r5, 0, 30, 30
+/* 801F5CA8 001F2D88  41 82 00 14 */	beq .L_801F5CBC
+/* 801F5CAC 001F2D8C  54 A5 07 FA */	rlwinm r5, r5, 0, 31, 29
+/* 801F5CB0 001F2D90  B0 A3 01 A2 */	sth r5, 0x1a2(r3)
+/* 801F5CB4 001F2D94  B8 A3 00 14 */	lmw r5, 0x14(r3)
+/* 801F5CB8 001F2D98  48 00 00 08 */	b .L_801F5CC0
+.L_801F5CBC:
+/* 801F5CBC 001F2D9C  B9 A3 00 34 */	lmw r13, 0x34(r3)
+.L_801F5CC0:
+/* 801F5CC0 001F2DA0  7C 7F 1B 78 */	mr r31, r3
+/* 801F5CC4 001F2DA4  7C 83 23 78 */	mr r3, r4
+/* 801F5CC8 001F2DA8  80 9F 00 80 */	lwz r4, 0x80(r31)
+/* 801F5CCC 001F2DAC  7C 8F F1 20 */	mtcrf 255, r4
+/* 801F5CD0 001F2DB0  80 9F 00 84 */	lwz r4, 0x84(r31)
+/* 801F5CD4 001F2DB4  7C 88 03 A6 */	mtlr r4
+/* 801F5CD8 001F2DB8  80 9F 00 88 */	lwz r4, 0x88(r31)
+/* 801F5CDC 001F2DBC  7C 89 03 A6 */	mtctr r4
+/* 801F5CE0 001F2DC0  80 9F 00 8C */	lwz r4, 0x8c(r31)
+/* 801F5CE4 001F2DC4  7C 81 03 A6 */	mtxer r4
+/* 801F5CE8 001F2DC8  7C 80 00 A6 */	mfmsr r4
+/* 801F5CEC 001F2DCC  54 84 04 5E */	rlwinm r4, r4, 0, 17, 15
+/* 801F5CF0 001F2DD0  54 84 07 FA */	rlwinm r4, r4, 0, 31, 29
+/* 801F5CF4 001F2DD4  7C 80 01 24 */	mtmsr r4
+/* 801F5CF8 001F2DD8  7C 51 43 A6 */	mtsprg 1, r2
+/* 801F5CFC 001F2DDC  80 9F 00 0C */	lwz r4, 0xc(r31)
+/* 801F5D00 001F2DE0  7C 92 43 A6 */	mtsprg 2, r4
+/* 801F5D04 001F2DE4  80 9F 00 10 */	lwz r4, 0x10(r31)
+/* 801F5D08 001F2DE8  7C 93 43 A6 */	mtsprg 3, r4
+/* 801F5D0C 001F2DEC  80 5F 01 98 */	lwz r2, 0x198(r31)
+/* 801F5D10 001F2DF0  80 9F 01 9C */	lwz r4, 0x19c(r31)
+/* 801F5D14 001F2DF4  83 FF 00 7C */	lwz r31, 0x7c(r31)
+/* 801F5D18 001F2DF8  4B FF DF 14 */	b TRKInterruptHandler
+.endfn TRKLoadContext
+
+.fn TRKUARTInterruptHandler, global
+/* 801F5D1C 001F2DFC  4E 80 00 20 */	blr
+.endfn TRKUARTInterruptHandler
+
+.fn InitializeProgramEndTrap, global
+/* 801F5D20 001F2E00  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F5D24 001F2E04  7C 08 02 A6 */	mflr r0
+/* 801F5D28 001F2E08  3C 80 80 1C */	lis r4, PPCHalt@ha
+/* 801F5D2C 001F2E0C  3C 60 80 28 */	lis r3, EndofProgramInstruction$111@ha
+/* 801F5D30 001F2E10  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F5D34 001F2E14  38 A0 00 04 */	li r5, 0x4
+/* 801F5D38 001F2E18  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801F5D3C 001F2E1C  3B E4 AC B0 */	addi r31, r4, PPCHalt@l
+/* 801F5D40 001F2E20  38 83 A3 A0 */	addi r4, r3, EndofProgramInstruction$111@l
+/* 801F5D44 001F2E24  38 7F 00 04 */	addi r3, r31, 0x4
+/* 801F5D48 001F2E28  4B E0 D8 79 */	bl TRK_memcpy
+/* 801F5D4C 001F2E2C  38 7F 00 04 */	addi r3, r31, 0x4
+/* 801F5D50 001F2E30  38 80 00 04 */	li r4, 0x4
+/* 801F5D54 001F2E34  4B FD C6 91 */	bl ICInvalidateRange
+/* 801F5D58 001F2E38  38 7F 00 04 */	addi r3, r31, 0x4
+/* 801F5D5C 001F2E3C  38 80 00 04 */	li r4, 0x4
+/* 801F5D60 001F2E40  4B FD C5 F9 */	bl DCFlushRange
+/* 801F5D64 001F2E44  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F5D68 001F2E48  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801F5D6C 001F2E4C  7C 08 03 A6 */	mtlr r0
+/* 801F5D70 001F2E50  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F5D74 001F2E54  4E 80 00 20 */	blr
+.endfn InitializeProgramEndTrap
+
+.fn TRK_board_display, global
+/* 801F5D78 001F2E58  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F5D7C 001F2E5C  7C 08 02 A6 */	mflr r0
+/* 801F5D80 001F2E60  3C A0 80 28 */	lis r5, "@114"@ha
+/* 801F5D84 001F2E64  7C 64 1B 78 */	mr r4, r3
+/* 801F5D88 001F2E68  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F5D8C 001F2E6C  38 65 A3 A4 */	addi r3, r5, "@114"@l
+/* 801F5D90 001F2E70  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801F5D94 001F2E74  4B FD D1 71 */	bl OSReport
+/* 801F5D98 001F2E78  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F5D9C 001F2E7C  7C 08 03 A6 */	mtlr r0
+/* 801F5DA0 001F2E80  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F5DA4 001F2E84  4E 80 00 20 */	blr
+.endfn TRK_board_display
+
+.fn UnreserveEXI2Port, global
+/* 801F5DA8 001F2E88  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F5DAC 001F2E8C  7C 08 02 A6 */	mflr r0
+/* 801F5DB0 001F2E90  3C 60 80 2B */	lis r3, gDBCommTable@ha
+/* 801F5DB4 001F2E94  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F5DB8 001F2E98  38 63 76 98 */	addi r3, r3, gDBCommTable@l
+/* 801F5DBC 001F2E9C  81 83 00 18 */	lwz r12, 0x18(r3)
+/* 801F5DC0 001F2EA0  7D 89 03 A6 */	mtctr r12
+/* 801F5DC4 001F2EA4  4E 80 04 21 */	bctrl
+/* 801F5DC8 001F2EA8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F5DCC 001F2EAC  7C 08 03 A6 */	mtlr r0
+/* 801F5DD0 001F2EB0  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F5DD4 001F2EB4  4E 80 00 20 */	blr
+.endfn UnreserveEXI2Port
+
+.fn ReserveEXI2Port, global
+/* 801F5DD8 001F2EB8  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F5DDC 001F2EBC  7C 08 02 A6 */	mflr r0
+/* 801F5DE0 001F2EC0  3C 60 80 2B */	lis r3, gDBCommTable@ha
+/* 801F5DE4 001F2EC4  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F5DE8 001F2EC8  38 63 76 98 */	addi r3, r3, gDBCommTable@l
+/* 801F5DEC 001F2ECC  81 83 00 14 */	lwz r12, 0x14(r3)
+/* 801F5DF0 001F2ED0  7D 89 03 A6 */	mtctr r12
+/* 801F5DF4 001F2ED4  4E 80 04 21 */	bctrl
+/* 801F5DF8 001F2ED8  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F5DFC 001F2EDC  7C 08 03 A6 */	mtlr r0
+/* 801F5E00 001F2EE0  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F5E04 001F2EE4  4E 80 00 20 */	blr
+.endfn ReserveEXI2Port
+
+.fn TRKReadUARTPoll, global
+/* 801F5E08 001F2EE8  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 801F5E0C 001F2EEC  7C 08 02 A6 */	mflr r0
+/* 801F5E10 001F2EF0  3C 80 80 38 */	lis r4, ...bss.0@ha
+/* 801F5E14 001F2EF4  90 01 00 24 */	stw r0, 0x24(r1)
+/* 801F5E18 001F2EF8  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 801F5E1C 001F2EFC  7C 7F 1B 78 */	mr r31, r3
+/* 801F5E20 001F2F00  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 801F5E24 001F2F04  3B C4 12 60 */	addi r30, r4, ...bss.0@l
+/* 801F5E28 001F2F08  93 A1 00 14 */	stw r29, 0x14(r1)
+/* 801F5E2C 001F2F0C  3B A0 00 04 */	li r29, 0x4
+/* 801F5E30 001F2F10  80 7E 00 04 */	lwz r3, 0x4(r30)
+/* 801F5E34 001F2F14  80 1E 00 08 */	lwz r0, 0x8(r30)
+/* 801F5E38 001F2F18  7C 03 00 00 */	cmpw r3, r0
+/* 801F5E3C 001F2F1C  41 80 00 74 */	blt .L_801F5EB0
+/* 801F5E40 001F2F20  3C 60 80 2B */	lis r3, gDBCommTable@ha
+/* 801F5E44 001F2F24  38 00 00 00 */	li r0, 0x0
+/* 801F5E48 001F2F28  38 63 76 98 */	addi r3, r3, gDBCommTable@l
+/* 801F5E4C 001F2F2C  90 1E 00 04 */	stw r0, 0x4(r30)
+/* 801F5E50 001F2F30  81 83 00 08 */	lwz r12, 0x8(r3)
+/* 801F5E54 001F2F34  7D 89 03 A6 */	mtctr r12
+/* 801F5E58 001F2F38  4E 80 04 21 */	bctrl
+/* 801F5E5C 001F2F3C  2C 03 00 00 */	cmpwi r3, 0x0
+/* 801F5E60 001F2F40  90 7E 00 08 */	stw r3, 0x8(r30)
+/* 801F5E64 001F2F44  40 81 00 4C */	ble .L_801F5EB0
+/* 801F5E68 001F2F48  2C 03 11 0A */	cmpwi r3, 0x110a
+/* 801F5E6C 001F2F4C  40 81 00 0C */	ble .L_801F5E78
+/* 801F5E70 001F2F50  38 00 11 0A */	li r0, 0x110a
+/* 801F5E74 001F2F54  90 1E 00 08 */	stw r0, 0x8(r30)
+.L_801F5E78:
+/* 801F5E78 001F2F58  3C 80 80 2B */	lis r4, gDBCommTable@ha
+/* 801F5E7C 001F2F5C  38 7E 00 10 */	addi r3, r30, 0x10
+/* 801F5E80 001F2F60  38 A4 76 98 */	addi r5, r4, gDBCommTable@l
+/* 801F5E84 001F2F64  80 9E 00 08 */	lwz r4, 0x8(r30)
+/* 801F5E88 001F2F68  81 85 00 0C */	lwz r12, 0xc(r5)
+/* 801F5E8C 001F2F6C  7D 89 03 A6 */	mtctr r12
+/* 801F5E90 001F2F70  4E 80 04 21 */	bctrl
+/* 801F5E94 001F2F74  7C 03 00 D0 */	neg r0, r3
+/* 801F5E98 001F2F78  7C 00 1B 78 */	or r0, r0, r3
+/* 801F5E9C 001F2F7C  7C 00 FE 71 */	srawi. r0, r0, 31
+/* 801F5EA0 001F2F80  7C 1D 03 78 */	mr r29, r0
+/* 801F5EA4 001F2F84  41 82 00 0C */	beq .L_801F5EB0
+/* 801F5EA8 001F2F88  38 00 00 00 */	li r0, 0x0
+/* 801F5EAC 001F2F8C  90 1E 00 08 */	stw r0, 0x8(r30)
+.L_801F5EB0:
+/* 801F5EB0 001F2F90  80 9E 00 04 */	lwz r4, 0x4(r30)
+/* 801F5EB4 001F2F94  80 1E 00 08 */	lwz r0, 0x8(r30)
+/* 801F5EB8 001F2F98  7C 04 00 00 */	cmpw r4, r0
+/* 801F5EBC 001F2F9C  40 80 00 1C */	bge .L_801F5ED8
+/* 801F5EC0 001F2FA0  38 04 00 01 */	addi r0, r4, 0x1
+/* 801F5EC4 001F2FA4  38 7E 00 10 */	addi r3, r30, 0x10
+/* 801F5EC8 001F2FA8  90 1E 00 04 */	stw r0, 0x4(r30)
+/* 801F5ECC 001F2FAC  3B A0 00 00 */	li r29, 0x0
+/* 801F5ED0 001F2FB0  7C 03 20 AE */	lbzx r0, r3, r4
+/* 801F5ED4 001F2FB4  98 1F 00 00 */	stb r0, 0x0(r31)
+.L_801F5ED8:
+/* 801F5ED8 001F2FB8  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 801F5EDC 001F2FBC  7F A3 EB 78 */	mr r3, r29
+/* 801F5EE0 001F2FC0  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 801F5EE4 001F2FC4  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 801F5EE8 001F2FC8  83 A1 00 14 */	lwz r29, 0x14(r1)
+/* 801F5EEC 001F2FCC  7C 08 03 A6 */	mtlr r0
+/* 801F5EF0 001F2FD0  38 21 00 20 */	addi r1, r1, 0x20
+/* 801F5EF4 001F2FD4  4E 80 00 20 */	blr
+.endfn TRKReadUARTPoll
+
+.fn WriteUART1, global
+/* 801F5EF8 001F2FD8  3C A0 80 38 */	lis r5, gWritePos@ha
+/* 801F5EFC 001F2FDC  3C 80 80 38 */	lis r4, gWriteBuf@ha
+/* 801F5F00 001F2FE0  38 C5 12 60 */	addi r6, r5, gWritePos@l
+/* 801F5F04 001F2FE4  80 A6 00 00 */	lwz r5, 0x0(r6)
+/* 801F5F08 001F2FE8  38 84 23 7C */	addi r4, r4, gWriteBuf@l
+/* 801F5F0C 001F2FEC  38 05 00 01 */	addi r0, r5, 0x1
+/* 801F5F10 001F2FF0  7C 64 29 AE */	stbx r3, r4, r5
+/* 801F5F14 001F2FF4  38 60 00 00 */	li r3, 0x0
+/* 801F5F18 001F2FF8  90 06 00 00 */	stw r0, 0x0(r6)
+/* 801F5F1C 001F2FFC  4E 80 00 20 */	blr
+.endfn WriteUART1
+
+.fn WriteUARTFlush, global
+/* 801F5F20 001F3000  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F5F24 001F3004  7C 08 02 A6 */	mflr r0
+/* 801F5F28 001F3008  3C 60 80 38 */	lis r3, gWritePos@ha
+/* 801F5F2C 001F300C  3C A0 80 38 */	lis r5, gWriteBuf@ha
+/* 801F5F30 001F3010  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F5F34 001F3014  38 83 12 60 */	addi r4, r3, gWritePos@l
+/* 801F5F38 001F3018  38 05 23 7C */	addi r0, r5, gWriteBuf@l
+/* 801F5F3C 001F301C  38 60 00 00 */	li r3, 0x0
+/* 801F5F40 001F3020  80 84 00 00 */	lwz r4, 0x0(r4)
+/* 801F5F44 001F3024  38 E0 00 00 */	li r7, 0x0
+/* 801F5F48 001F3028  2C 04 08 00 */	cmpwi r4, 0x800
+/* 801F5F4C 001F302C  7D 00 22 14 */	add r8, r0, r4
+/* 801F5F50 001F3030  20 C4 08 00 */	subfic r6, r4, 0x800
+/* 801F5F54 001F3034  40 80 00 58 */	bge .L_801F5FAC
+/* 801F5F58 001F3038  54 C5 E8 FF */	srwi. r5, r6, 3
+/* 801F5F5C 001F303C  7C C0 33 78 */	mr r0, r6
+/* 801F5F60 001F3040  7C A9 03 A6 */	mtctr r5
+/* 801F5F64 001F3044  41 82 00 34 */	beq .L_801F5F98
+.L_801F5F68:
+/* 801F5F68 001F3048  98 E8 00 00 */	stb r7, 0x0(r8)
+/* 801F5F6C 001F304C  98 E8 00 01 */	stb r7, 0x1(r8)
+/* 801F5F70 001F3050  98 E8 00 02 */	stb r7, 0x2(r8)
+/* 801F5F74 001F3054  98 E8 00 03 */	stb r7, 0x3(r8)
+/* 801F5F78 001F3058  98 E8 00 04 */	stb r7, 0x4(r8)
+/* 801F5F7C 001F305C  98 E8 00 05 */	stb r7, 0x5(r8)
+/* 801F5F80 001F3060  98 E8 00 06 */	stb r7, 0x6(r8)
+/* 801F5F84 001F3064  98 E8 00 07 */	stb r7, 0x7(r8)
+/* 801F5F88 001F3068  39 08 00 08 */	addi r8, r8, 0x8
+/* 801F5F8C 001F306C  42 00 FF DC */	bdnz .L_801F5F68
+/* 801F5F90 001F3070  70 C6 00 07 */	andi. r6, r6, 0x7
+/* 801F5F94 001F3074  41 82 00 14 */	beq .L_801F5FA8
+.L_801F5F98:
+/* 801F5F98 001F3078  7C C9 03 A6 */	mtctr r6
+.L_801F5F9C:
+/* 801F5F9C 001F307C  98 E8 00 00 */	stb r7, 0x0(r8)
+/* 801F5FA0 001F3080  39 08 00 01 */	addi r8, r8, 0x1
+/* 801F5FA4 001F3084  42 00 FF F8 */	bdnz .L_801F5F9C
+.L_801F5FA8:
+/* 801F5FA8 001F3088  7C 84 02 14 */	add r4, r4, r0
+.L_801F5FAC:
+/* 801F5FAC 001F308C  3C A0 80 38 */	lis r5, gWritePos@ha
+/* 801F5FB0 001F3090  2C 04 00 00 */	cmpwi r4, 0x0
+/* 801F5FB4 001F3094  90 85 12 60 */	stw r4, gWritePos@l(r5)
+/* 801F5FB8 001F3098  41 82 00 38 */	beq .L_801F5FF0
+/* 801F5FBC 001F309C  3C 60 80 2B */	lis r3, gDBCommTable@ha
+/* 801F5FC0 001F30A0  3C A0 80 38 */	lis r5, gWriteBuf@ha
+/* 801F5FC4 001F30A4  38 63 76 98 */	addi r3, r3, gDBCommTable@l
+/* 801F5FC8 001F30A8  81 83 00 10 */	lwz r12, 0x10(r3)
+/* 801F5FCC 001F30AC  38 65 23 7C */	addi r3, r5, gWriteBuf@l
+/* 801F5FD0 001F30B0  7D 89 03 A6 */	mtctr r12
+/* 801F5FD4 001F30B4  4E 80 04 21 */	bctrl
+/* 801F5FD8 001F30B8  7C A3 00 D0 */	neg r5, r3
+/* 801F5FDC 001F30BC  3C 80 80 38 */	lis r4, gWritePos@ha
+/* 801F5FE0 001F30C0  38 00 00 00 */	li r0, 0x0
+/* 801F5FE4 001F30C4  7C A3 1B 78 */	or r3, r5, r3
+/* 801F5FE8 001F30C8  90 04 12 60 */	stw r0, gWritePos@l(r4)
+/* 801F5FEC 001F30CC  7C 63 FE 70 */	srawi r3, r3, 31
+.L_801F5FF0:
+/* 801F5FF0 001F30D0  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F5FF4 001F30D4  7C 08 03 A6 */	mtlr r0
+/* 801F5FF8 001F30D8  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F5FFC 001F30DC  4E 80 00 20 */	blr
+.endfn WriteUARTFlush
+
+.fn EnableEXI2Interrupts, global
+/* 801F6000 001F30E0  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F6004 001F30E4  7C 08 02 A6 */	mflr r0
+/* 801F6008 001F30E8  3C 60 80 2B */	lis r3, gDBCommTable@ha
+/* 801F600C 001F30EC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F6010 001F30F0  38 63 76 98 */	addi r3, r3, gDBCommTable@l
+/* 801F6014 001F30F4  81 83 00 04 */	lwz r12, 0x4(r3)
+/* 801F6018 001F30F8  7D 89 03 A6 */	mtctr r12
+/* 801F601C 001F30FC  4E 80 04 21 */	bctrl
+/* 801F6020 001F3100  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F6024 001F3104  7C 08 03 A6 */	mtlr r0
+/* 801F6028 001F3108  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F602C 001F310C  4E 80 00 20 */	blr
+.endfn EnableEXI2Interrupts
+
+.fn TRKInitializeIntDrivenUART, global
+/* 801F6030 001F3110  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F6034 001F3114  7C 08 02 A6 */	mflr r0
+/* 801F6038 001F3118  3C 80 80 1F */	lis r4, TRKEXICallBack@ha
+/* 801F603C 001F311C  3C 60 80 2B */	lis r3, gDBCommTable@ha
+/* 801F6040 001F3120  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F6044 001F3124  38 84 61 6C */	addi r4, r4, TRKEXICallBack@l
+/* 801F6048 001F3128  81 83 76 98 */	lwz r12, gDBCommTable@l(r3)
+/* 801F604C 001F312C  7C C3 33 78 */	mr r3, r6
+/* 801F6050 001F3130  7D 89 03 A6 */	mtctr r12
+/* 801F6054 001F3134  4E 80 04 21 */	bctrl
+/* 801F6058 001F3138  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F605C 001F313C  38 60 00 00 */	li r3, 0x0
+/* 801F6060 001F3140  7C 08 03 A6 */	mtlr r0
+/* 801F6064 001F3144  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F6068 001F3148  4E 80 00 20 */	blr
+.endfn TRKInitializeIntDrivenUART
+
+.fn InitMetroTRKCommTable, global
+/* 801F606C 001F314C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F6070 001F3150  7C 08 02 A6 */	mflr r0
+/* 801F6074 001F3154  2C 03 00 01 */	cmpwi r3, 0x1
+/* 801F6078 001F3158  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F607C 001F315C  40 82 00 74 */	bne .L_801F60F0
+/* 801F6080 001F3160  3C 60 80 28 */	lis r3, "@154"@ha
+/* 801F6084 001F3164  38 63 A3 A8 */	addi r3, r3, "@154"@l
+/* 801F6088 001F3168  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801F608C 001F316C  4B FD CE 79 */	bl OSReport
+/* 801F6090 001F3170  4B FD AA A5 */	bl Hu_IsStub
+/* 801F6094 001F3174  3D 60 80 1F */	lis r11, DBInitComm@ha
+/* 801F6098 001F3178  3D 20 80 1F */	lis r9, DBInitInterrupts@ha
+/* 801F609C 001F317C  39 6B 6B 74 */	addi r11, r11, DBInitComm@l
+/* 801F60A0 001F3180  3D 40 80 2B */	lis r10, gDBCommTable@ha
+/* 801F60A4 001F3184  3D 00 80 1F */	lis r8, DBQueryData@ha
+/* 801F60A8 001F3188  3C E0 80 1F */	lis r7, DBRead@ha
+/* 801F60AC 001F318C  3C C0 80 1F */	lis r6, DBWrite@ha
+/* 801F60B0 001F3190  3C A0 80 1F */	lis r5, DBOpen@ha
+/* 801F60B4 001F3194  3C 80 80 1F */	lis r4, DBClose@ha
+/* 801F60B8 001F3198  95 6A 76 98 */	stwu r11, gDBCommTable@l(r10)
+/* 801F60BC 001F319C  39 29 6B 20 */	addi r9, r9, DBInitInterrupts@l
+/* 801F60C0 001F31A0  39 08 6A 84 */	addi r8, r8, DBQueryData@l
+/* 801F60C4 001F31A4  38 E7 69 F8 */	addi r7, r7, DBRead@l
+/* 801F60C8 001F31A8  38 C6 67 98 */	addi r6, r6, DBWrite@l
+/* 801F60CC 001F31AC  38 A5 67 94 */	addi r5, r5, DBOpen@l
+/* 801F60D0 001F31B0  38 04 67 90 */	addi r0, r4, DBClose@l
+/* 801F60D4 001F31B4  91 2A 00 04 */	stw r9, 0x4(r10)
+/* 801F60D8 001F31B8  91 0A 00 08 */	stw r8, 0x8(r10)
+/* 801F60DC 001F31BC  90 EA 00 0C */	stw r7, 0xc(r10)
+/* 801F60E0 001F31C0  90 CA 00 10 */	stw r6, 0x10(r10)
+/* 801F60E4 001F31C4  90 AA 00 14 */	stw r5, 0x14(r10)
+/* 801F60E8 001F31C8  90 0A 00 18 */	stw r0, 0x18(r10)
+/* 801F60EC 001F31CC  48 00 00 70 */	b .L_801F615C
+.L_801F60F0:
+/* 801F60F0 001F31D0  3C 60 80 28 */	lis r3, "@155"@ha
+/* 801F60F4 001F31D4  38 63 A3 CC */	addi r3, r3, "@155"@l
+/* 801F60F8 001F31D8  4C C6 31 82 */	crclr 4*cr1+eq
+/* 801F60FC 001F31DC  4B FD CE 09 */	bl OSReport
+/* 801F6100 001F31E0  4B FB FB 5D */	bl AMC_IsStub
+/* 801F6104 001F31E4  3D 60 80 1B */	lis r11, EXI2_Init@ha
+/* 801F6108 001F31E8  3D 20 80 1B */	lis r9, EXI2_EnableInterrupts@ha
+/* 801F610C 001F31EC  39 6B 5C 34 */	addi r11, r11, EXI2_Init@l
+/* 801F6110 001F31F0  3D 40 80 2B */	lis r10, gDBCommTable@ha
+/* 801F6114 001F31F4  3D 00 80 1B */	lis r8, EXI2_Poll@ha
+/* 801F6118 001F31F8  3C E0 80 1B */	lis r7, EXI2_ReadN@ha
+/* 801F611C 001F31FC  3C C0 80 1B */	lis r6, EXI2_WriteN@ha
+/* 801F6120 001F3200  3C A0 80 1B */	lis r5, EXI2_Reserve@ha
+/* 801F6124 001F3204  3C 80 80 1B */	lis r4, EXI2_Unreserve@ha
+/* 801F6128 001F3208  95 6A 76 98 */	stwu r11, gDBCommTable@l(r10)
+/* 801F612C 001F320C  39 29 5C 38 */	addi r9, r9, EXI2_EnableInterrupts@l
+/* 801F6130 001F3210  39 08 5C 3C */	addi r8, r8, EXI2_Poll@l
+/* 801F6134 001F3214  38 E7 5C 44 */	addi r7, r7, EXI2_ReadN@l
+/* 801F6138 001F3218  38 C6 5C 4C */	addi r6, r6, EXI2_WriteN@l
+/* 801F613C 001F321C  38 A5 5C 54 */	addi r5, r5, EXI2_Reserve@l
+/* 801F6140 001F3220  38 04 5C 58 */	addi r0, r4, EXI2_Unreserve@l
+/* 801F6144 001F3224  91 2A 00 04 */	stw r9, 0x4(r10)
+/* 801F6148 001F3228  91 0A 00 08 */	stw r8, 0x8(r10)
+/* 801F614C 001F322C  90 EA 00 0C */	stw r7, 0xc(r10)
+/* 801F6150 001F3230  90 CA 00 10 */	stw r6, 0x10(r10)
+/* 801F6154 001F3234  90 AA 00 14 */	stw r5, 0x14(r10)
+/* 801F6158 001F3238  90 0A 00 18 */	stw r0, 0x18(r10)
+.L_801F615C:
+/* 801F615C 001F323C  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F6160 001F3240  7C 08 03 A6 */	mtlr r0
+/* 801F6164 001F3244  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F6168 001F3248  4E 80 00 20 */	blr
+.endfn InitMetroTRKCommTable
+
+.fn TRKEXICallBack, global
+/* 801F616C 001F324C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801F6170 001F3250  7C 08 02 A6 */	mflr r0
+/* 801F6174 001F3254  90 01 00 14 */	stw r0, 0x14(r1)
+/* 801F6178 001F3258  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801F617C 001F325C  7C 9F 23 78 */	mr r31, r4
+/* 801F6180 001F3260  4B FE 06 45 */	bl OSEnableScheduler
+/* 801F6184 001F3264  7F E3 FB 78 */	mr r3, r31
+/* 801F6188 001F3268  38 80 05 00 */	li r4, 0x500
+/* 801F618C 001F326C  4B FF FB 09 */	bl TRKLoadContext
+/* 801F6190 001F3270  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801F6194 001F3274  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801F6198 001F3278  7C 08 03 A6 */	mtlr r0
+/* 801F619C 001F327C  38 21 00 10 */	addi r1, r1, 0x10
+/* 801F61A0 001F3280  4E 80 00 20 */	blr
+.endfn TRKEXICallBack
+
+# 0x8027A3A0 - 0x8027A3F0
+.rodata
+.balign 8
+
+.obj EndofProgramInstruction$111, local
+	.4byte 0x00454E44
+.endobj EndofProgramInstruction$111
+
+.obj "@114", local
+	.4byte 0x25730A00
+.endobj "@114"
+
+.obj "@154", local
+	.4byte 0x4D657472
+	.4byte 0x6F54524B
+	.4byte 0x203A2053
+	.4byte 0x65742074
+	.4byte 0x6F204744
+	.4byte 0x45562068
+	.4byte 0x61726477
+	.4byte 0x6172650A
+	.byte 0x00
+.endobj "@154"
+	.byte 0x00, 0x00, 0x00
+
+.obj "@155", local
+	.4byte 0x4D657472
+	.4byte 0x6F54524B
+	.4byte 0x203A2053
+	.4byte 0x65742074
+	.4byte 0x6F20414D
+	.4byte 0x43204444
+	.4byte 0x48206861
+	.4byte 0x72647761
+	.4byte 0x72650A00
+.endobj "@155"
+
+# 0x802B7698 - 0x802B76B8
+.data
+.balign 8
+
+.obj gDBCommTable, global
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj gDBCommTable
+	.4byte 0x00000000
+
+# 0x80381260 - 0x80383488
+.section .bss, "wa", @nobits
+.balign 8
+
+.obj gWritePos, local
+.sym ...bss.0, local
+	.skip 0x4
+.endobj gWritePos
+
+.obj gReadPos, local
+	.skip 0x4
+.endobj gReadPos
+
+.obj gReadCount, local
+	.skip 0x4
+.endobj gReadCount
+
+.obj _MetroTRK_Has_Framing, global
+	.skip 0x4
+.endobj _MetroTRK_Has_Framing
+
+.obj gReadBuf, local
+	.skip 0x110A
+.endobj gReadBuf
+	.skip 0x2
+
+.obj gWriteBuf, local
+	.skip 0x110A
+.endobj gWriteBuf
+	.skip 0x2
