@@ -25,14 +25,14 @@ endif
 OBJ_DIR := obj
 
 SRC_DIRS := src             \
-            src/Core/p2     \
+            src/Core/gc     \
             src/Core/x      \
             src/Game
 
 ASM_DIRS := asm             \
             asm/bink        \
             asm/CodeWarrior \
-            asm/Core/p2     \
+            asm/Core/gc     \
             asm/Core/x      \
             asm/dolphin     \
             asm/Game        \
@@ -52,10 +52,6 @@ MAP     := bfbb.map
 
 include obj_files.mk
 
-# O_FILES := $(INIT_O_FILES) $(EXTAB_O_FILES) $(EXTABINDEX_O_FILES) $(TEXT_O_FILES) \
-#            $(CTORS_O_FILES) $(DTORS_O_FILES) $(RODATA_O_FILES) $(DATA_O_FILES)    \
-#            $(BSS_O_FILES) $(SDATA_O_FILES) $(SBSS_O_FILES) $(SDATA2_O_FILES) 	  \
-# 		   $(SBSS2_O_FILES)
 O_FILES := $(NEW_FILES)
 
 #-------------------------------------------------------------------------------
@@ -84,8 +80,6 @@ OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy
 CC      := $(WINE) tools/mwcc_compiler/2.0/mwcceppc.exe
 LD      := $(WINE) tools/mwcc_compiler/2.0/mwldeppc.exe
 PPROC   := python3 tools/postprocess.py
-GLBLASM := python3 tools/inlineasm/globalasm.py
-ASMDIFF := ./asmdiff.sh
 
 # Options
 INCLUDES := -ir src -ir include -Iinclude -Iinclude/inline -Iinclude/bink \
@@ -126,19 +120,11 @@ $(DOL): $(ELF) | $(DTK)
 
 clean:
 	rm -f $(DOL) $(ELF) $(MAP) baserom.dump main.dump
-	rm -rf .pragma obj
+	rm -rf obj
 
 $(DTK): tools/dtk_version
 	@echo "DOWNLOAD "$@
 	$(QUIET) $(PYTHON) tools/download_dtk.py $< $@
-
-inspect:
-ifeq ($(WINDOWS),1)
-	$(CC) $(CFLAGS) -o inspect.s -S $(subst \,/,$(subst C:\,/c/,$(INSPECT)))
-else
-	$(CC) $(CFLAGS) -o inspect.s -S $(INSPECT)
-endif
-	$(PYTHON) tools/inspect_postprocess.py inspect.s
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	@echo " LINK    "$@
@@ -159,6 +145,5 @@ $(OBJ_DIR)/%.o: %.c
 $(OBJ_DIR)/%.o: %.cpp
 	@echo " CXX     "$<
 	$(QUIET) mkdir -p $(dir $@)
-	$(QUIET) $(GLBLASM) -s $< $(OBJ_DIR)/$*.cpp 1>&2
 	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $(OBJ_DIR)/$*.cpp 1>&2
 	$(QUIET) $(PPROC) $(PPROCFLAGS) $@
