@@ -126,7 +126,7 @@ $(DOL): $(ELF) | $(DTK)
 
 clean:
 	rm -f $(DOL) $(ELF) $(MAP) baserom.dump main.dump
-	rm -rf .pragma obj
+	rm -rf obj
 
 $(DTK): tools/dtk_version
 	@echo "DOWNLOAD "$@
