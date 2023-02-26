@@ -172,7 +172,7 @@ NEW_FILES    :=                                       \
     $(OBJ_DIR)/asm/Core/gc/iSnd.o                     \
     $(OBJ_DIR)/asm/Core/gc/iSystem.o                  \
     $(OBJ_DIR)/asm/Core/gc/iTime.o                    \
-    $(OBJ_DIR)/asm/Core/gc/ngcrad3d.o                 \
+    $(OBJ_DIR)/asm/bink/ngcrad3d.o                    \
     $(OBJ_DIR)/asm/Game/zNPCGoals.o                   \
     $(OBJ_DIR)/asm/Game/zNPCGoalCommon.o              \
     $(OBJ_DIR)/asm/Game/zNPCGoalStd.o                 \
