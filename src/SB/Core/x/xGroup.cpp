@@ -1,7 +1,7 @@
 #include "xGroup.h"
 
-#include "../Core/x/xMemMgr.h"
-#include "zScene.h"
+#include "xMemMgr.h"
+#include "../../Game/zScene.h"
 
 #include <types.h>
 

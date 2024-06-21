@@ -5,7 +5,7 @@
 #include "xVec3.h"
 #include "xMath3.h"
 #include "../gc/iSnd.h"
-#include "../src/Core/x/xEnt.h"
+#include "xEnt.h"
 
 enum sound_category
 {

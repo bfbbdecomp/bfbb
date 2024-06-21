@@ -2,7 +2,7 @@
 #define XCM_H
 
 #include <types.h>
-#include "../src/Core/x/xBase.h"
+#include "xBase.h"
 
 struct xCreditsData
 {

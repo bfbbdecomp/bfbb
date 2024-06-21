@@ -1,5 +1,5 @@
 #include "xCollide.h"
-#include "../src/Game/zSurface.h"
+#include "../../Game/zSurface.h"
 #include "../gc/iCollide.h"
 #include "../gc/iMath3.h"
 

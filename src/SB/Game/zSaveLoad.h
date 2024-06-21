@@ -2,7 +2,7 @@
 #define ZSAVELOAD_H
 
 #include <types.h>
-#include "../src/Core/x/xsavegame.h"
+#include "../Core/x/xsavegame.h"
 struct st_XSAVEGAME_DATA;
 
 struct zSaveLoadGame

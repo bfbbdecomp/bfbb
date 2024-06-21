@@ -2,8 +2,8 @@
 
 #include <types.h>
 
-#include "../src/Core/gc/iSnd.h"
-#include "../src/Core/x/xVec3.h"
+#include "../gc/iSnd.h"
+#include "xVec3.h"
 
 extern _xSndDelayed sDelayedSnd[16];
 extern uint32 sDelayedPaused;

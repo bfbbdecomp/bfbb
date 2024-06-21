@@ -3,10 +3,10 @@
 #include <types.h>
 #include <string.h>
 #include <stdio.h>
-#include "../src/Core/x/xString.h"
-#include "../src/Core/x/xutil.h"
-#include "../src/Core/gc/iTRC.h"
-#include "../src/Core/gc/iFile.h"
+#include "xString.h"
+#include "xutil.h"
+#include "../gc/iTRC.h"
+#include "../gc/iFile.h"
 #include "../CodeWarrior/intrin.h"
 
 // extern st_PKR_ASSET_TOCINFO lbl_80253EC8;

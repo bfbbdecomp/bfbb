@@ -3,10 +3,10 @@
 #include <types.h>
 
 #include "dolphin/dolphin.h"
-#include "../src/Core/gc/iMix.h"
-#include "../src/Core/x/xCutscene.h"
-#include "../src/Core/x/xSnd.h"
-#include "../src/Core/x/xMath.h"
+#include "iMix.h"
+#include "..//x/xCutscene.h"
+#include "..//x/xSnd.h"
+#include "..//x/xMath.h"
 
 extern vinfo voices[58];
 extern int8 soundInited;

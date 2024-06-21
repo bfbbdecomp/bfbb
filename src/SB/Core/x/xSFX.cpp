@@ -1,7 +1,7 @@
 #include "xSFX.h"
 
-#include "../src/Core/x/xSnd.h"
-#include "../src/Core/x/xEvent.h"
+#include "xSnd.h"
+#include "xEvent.h"
 
 #include <string.h>
 #include <types.h>

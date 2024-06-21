@@ -215,6 +215,13 @@ cflags_bfbb = [
     "-use_lmw_stmw on",
     '-pragma "cpp_extensions on"',
     "-inline off",
+    "-gccinc",
+    "-i include/bink",
+    "-i include/CodeWarrior",
+    "-i include/dolphin",
+    "-i include/inline",
+    "-i include/rwsdk",
+    "-DGAMECUBE",
 ]
 
 config.linker_version = "GC/2.0"
