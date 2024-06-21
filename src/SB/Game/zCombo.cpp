@@ -2,10 +2,10 @@
 
 #include <types.h>
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xHudText.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xTextAsset.h"
+#include "xBase.h"
+#include "xHudText.h"
+#include "xstransvc.h"
+#include "xTextAsset.h"
 #include "zGlobals.h"
 #include "zTextBox.h"
 

@@ -10,11 +10,11 @@
 #include "zHud.h"
 #include "zFMV.h"
 #include "zSaveLoad.h"
-#include "../Core/x/xMemMgr.h"
-#include "../Core/x/xScrFx.h"
-#include "../Core/x/xCM.h"
-#include "../Core/x/xFX.h"
-#include "../Core/x/xMath.h"
+#include "xMemMgr.h"
+#include "xScrFx.h"
+#include "xCM.h"
+#include "xFX.h"
+#include "xMath.h"
 #include "CodeWarrior/string.h"
 
 extern st_ZDISPATCH_CONTEXT lbl_80254E00;

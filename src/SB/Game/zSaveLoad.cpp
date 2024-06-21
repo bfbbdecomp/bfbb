@@ -10,12 +10,12 @@
 #include "zHud.h"
 #include "zCamera.h"
 #include "zGame.h"
-#include "../Core/x/xParMgr.h"
-#include "../Core/x/xCutscene.h"
-#include "../Core/x/xDebug.h"
-#include "../Core/x/xTRC.h"
-#include "../Core/x/xString.h"
-#include "../Core/x/xutil.h"
+#include "xParMgr.h"
+#include "xCutscene.h"
+#include "xDebug.h"
+#include "xTRC.h"
+#include "xString.h"
+#include "xutil.h"
 
 uint32 saveSuccess;
 float32 time_last_1;

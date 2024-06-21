@@ -1,8 +1,8 @@
 #ifndef ILIGHT_H
 #define ILIGHT_H
 
-#include "../x/xFColor.h"
-#include "../x/xMath3.h"
+#include "xFColor.h"
+#include "xMath3.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

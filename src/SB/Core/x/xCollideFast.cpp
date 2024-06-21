@@ -1,5 +1,5 @@
 #include "xCollideFast.h"
-#include "../gc/iCollideFast.h"
+#include "iCollideFast.h"
 
 #include <types.h>
 

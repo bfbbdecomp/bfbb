@@ -4,7 +4,7 @@
 #include "zTextBox.h"
 #include "zNPCTypeCommon.h"
 
-#include "../Core/x/xScene.h"
+#include "xScene.h"
 
 struct ztalkbox : xBase
 {

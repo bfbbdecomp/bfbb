@@ -4,7 +4,7 @@
 
 #include "zVar.h"
 #include "zScene.h"
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 int32 zConditionalEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
 

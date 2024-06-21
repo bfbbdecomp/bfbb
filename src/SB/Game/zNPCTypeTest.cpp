@@ -2,8 +2,8 @@
 
 #include "zNPCTypes.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xMath.h"
+#include "xString.h"
+#include "xMath.h"
 
 extern float32 _830_2;
 extern float32 _831_2;

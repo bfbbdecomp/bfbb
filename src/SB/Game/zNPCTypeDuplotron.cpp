@@ -1,8 +1,8 @@
 #include "zNPCTypeDuplotron.h"
 #include "zNPCTypes.h"
-#include "../Core/x/xMath3.h"
+#include "xMath3.h"
 
-#include "../Core/x/xstransvc.h"
+#include "xstransvc.h"
 
 extern uint32 g_hash_dupoanim[5];
 extern char* g_strz_dupoanim[5];

@@ -5,7 +5,7 @@
 #include "zNPCSupport.h"
 #include "zTaskBox.h"
 #include "zPlatform.h"
-#include "../Core/x/xShadow.h"
+#include "xShadow.h"
 
 struct HiThere : ztaskbox::callback
 {

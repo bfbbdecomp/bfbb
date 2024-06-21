@@ -4,8 +4,8 @@
 #include <string.h>
 
 // Weird... why does x depend on z here?
-#include "../../Game/zEnt.h"
-#include "../../Game/zGrid.h"
+#include "zEnt.h"
+#include "zGrid.h"
 
 #include "xMath.h"
 #include "xModel.h"
@@ -13,8 +13,8 @@
 #include "xCamera.h"
 #include "xDraw.h"
 
-#include "../gc/iColor.h"
-#include "../gc/iCollide.h"
+#include "iColor.h"
+#include "iCollide.h"
 
 extern float xNPCBasic_float_0;
 extern float xNPCBasic_float_1;

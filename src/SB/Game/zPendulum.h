@@ -1,7 +1,7 @@
 #ifndef ZPENDULUM_H
 #define ZPENDULUM_H
 
-#include "../Core/x/xEntMotion.h"
+#include "xEntMotion.h"
 
 #include "zEnt.h"
 

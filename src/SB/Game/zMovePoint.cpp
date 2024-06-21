@@ -1,7 +1,7 @@
 #include "zMovePoint.h"
 #include "zNPCSupplement.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 #include <types.h>
 

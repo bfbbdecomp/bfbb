@@ -1,9 +1,9 @@
 #ifndef ZGLOBALS_H
 #define ZGLOBALS_H
 
-#include "../Core/x/xGlobals.h"
-#include "../Core/x/xShadowSimple.h"
-#include "../Core/x/xEntDrive.h"
+#include "xGlobals.h"
+#include "xShadowSimple.h"
+#include "xEntDrive.h"
 
 #include "zEnt.h"
 #include "zEntPlayer.h"

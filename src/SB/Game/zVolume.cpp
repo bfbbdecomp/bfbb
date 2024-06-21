@@ -1,9 +1,9 @@
 #include "zVolume.h"
 
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xMemMgr.h"
-#include "../Core/gc/iMath.h"
-#include "../Core/x/xEvent.h"
+#include "xstransvc.h"
+#include "xMemMgr.h"
+#include "iMath.h"
+#include "xEvent.h"
 
 struct PreCalcOcclude
 {

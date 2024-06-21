@@ -1,8 +1,8 @@
 #include "zParCmd.h"
 #include "zScene.h"
 #include "zVolume.h"
-#include "../Core/x/xParCmd.h"
-#include "../Core/x/xString.h"
+#include "xParCmd.h"
+#include "xString.h"
 
 #include <types.h>
 #include <string.h>

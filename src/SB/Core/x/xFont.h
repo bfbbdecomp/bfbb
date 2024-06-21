@@ -2,7 +2,7 @@
 #define XFONT_H
 
 #include "xMath2.h"
-#include "../gc/iColor.h"
+#include "iColor.h"
 #include "xString.h"
 
 #include <rwcore.h>

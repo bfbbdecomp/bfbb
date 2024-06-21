@@ -4,9 +4,9 @@
 
 #include "dolphin/dolphin.h"
 #include "iMix.h"
-#include "..//x/xCutscene.h"
-#include "..//x/xSnd.h"
-#include "..//x/xMath.h"
+#include "xCutscene.h"
+#include "xSnd.h"
+#include "xMath.h"
 
 extern vinfo voices[58];
 extern int8 soundInited;

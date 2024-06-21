@@ -4,7 +4,7 @@
 #include "xString.h"
 #include "xstransvc.h"
 
-#include "../../Game/zScene.h"
+#include "zScene.h"
 
 void zEntEvent(char* to, uint32 toEvent)
 {

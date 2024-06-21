@@ -5,7 +5,7 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
-#include "../Core/x/xJSP.h"
+#include "xJSP.h"
 
 struct RwMemory
 {

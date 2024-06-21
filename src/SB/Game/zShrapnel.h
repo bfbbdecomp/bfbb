@@ -1,10 +1,10 @@
 #ifndef ZSHRAPNEL_H
 #define ZSHRAPNEL_H
 
-#include "../Core/x/xModel.h"
-#include "../Core/x/xParEmitter.h"
-#include "../Core/x/xCurveAsset.h"
-#include "../Core/x/xCollide.h"
+#include "xModel.h"
+#include "xParEmitter.h"
+#include "xCurveAsset.h"
+#include "xCollide.h"
 
 #include "zParEmitter.h"
 #include "zLightning.h"

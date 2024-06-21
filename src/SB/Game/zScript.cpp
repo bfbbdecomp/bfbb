@@ -1,6 +1,6 @@
-#include "../Core/x/xBase.h"
+#include "xBase.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 #include "zScript.h"
 #include "zScene.h"

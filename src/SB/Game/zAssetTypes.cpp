@@ -1,7 +1,7 @@
 #include "zAssetTypes.h"
 
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xDebug.h"
+#include "xstransvc.h"
+#include "xDebug.h"
 
 #include <types.h>
 #include <rwcore.h>

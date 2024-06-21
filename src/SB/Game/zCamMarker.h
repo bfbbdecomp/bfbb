@@ -3,9 +3,9 @@
 
 #include <types.h>
 #include "zCamera.h"
-#include "../Core/x/xBase.h"
-#include "../Core/x/xCamera.h"
-#include "../Core/x/xEvent.h"
+#include "xBase.h"
+#include "xCamera.h"
+#include "xEvent.h"
 
 struct zCamMarker : xBase
 {

@@ -7,7 +7,7 @@
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
 
-#include "../Core/x/xCamera.h"
+#include "xCamera.h"
 
 struct zNPCNewsFish;
 

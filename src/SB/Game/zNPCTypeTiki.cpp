@@ -2,9 +2,9 @@
 
 #include "zNPCTypes.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xutil.h"
-#include "../Core/x/xMath.h"
+#include "xString.h"
+#include "xutil.h"
+#include "xMath.h"
 
 #define ANIM_COUNT 2
 

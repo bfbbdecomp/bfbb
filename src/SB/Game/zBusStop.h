@@ -1,9 +1,9 @@
 #ifndef ZBUSSTOP_H
 #define ZBUSSTOP_H
 
-#include "../Core/x/xVec3.h"
-#include "../Core/x/xBase.h"
-#include "../Core/x/xDynAsset.h"
+#include "xVec3.h"
+#include "xBase.h"
+#include "xDynAsset.h"
 
 #include "zEnt.h"
 

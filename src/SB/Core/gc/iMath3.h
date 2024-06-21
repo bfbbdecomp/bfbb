@@ -1,9 +1,9 @@
 #ifndef IMATH3_H
 #define IMATH3_H
 
-#include "../x/xMath3.h"
-#include "../x/xIsect.h"
-#include "../x/xRay3.h"
+#include "xMath3.h"
+#include "xIsect.h"
+#include "xRay3.h"
 
 #include <rwcore.h>
 

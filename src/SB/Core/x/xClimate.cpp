@@ -4,7 +4,7 @@
 #include "xClimate.h"
 #include "xMath3.h"
 #include "xString.h"
-#include "../../Game/zParEmitter.h"
+#include "zParEmitter.h"
 
 // TODO: figure out where to put this
 extern "C" {

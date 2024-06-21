@@ -1,4 +1,4 @@
-#include "../Core/x/xPad.h"
+#include "xPad.h"
 
 #include "zRumble.h"
 #include "zGlobals.h"

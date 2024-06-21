@@ -1,7 +1,7 @@
 #ifndef ZLOD_H
 #define ZLOD_H
 
-#include "../Core/x/xModelBucket.h"
+#include "xModelBucket.h"
 
 struct zLODTable
 {

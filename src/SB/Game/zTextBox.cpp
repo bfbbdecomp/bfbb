@@ -2,9 +2,9 @@
 
 #include "zBase.h"
 
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xTextAsset.h"
+#include "xEvent.h"
+#include "xstransvc.h"
+#include "xTextAsset.h"
 
 #include <string.h>
 

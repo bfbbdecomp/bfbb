@@ -1,7 +1,7 @@
 #ifndef ZCOLLGEOM_H
 #define ZCOLLGEOM_H
 
-#include "../Core/x/xEnt.h"
+#include "xEnt.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

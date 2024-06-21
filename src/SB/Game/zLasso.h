@@ -1,8 +1,8 @@
 #ifndef ZLASSO_H
 #define ZLASSO_H
 
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xModel.h"
+#include "xMath3.h"
+#include "xModel.h"
 
 struct zLasso
 {

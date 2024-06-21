@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-#include "../Core/x/xNPCBasic.h"
+#include "xNPCBasic.h"
 
 
 

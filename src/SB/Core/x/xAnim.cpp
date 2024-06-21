@@ -1,6 +1,6 @@
 #include "xAnim.h"
 
-#include "../gc/iAnim.h"
+#include "iAnim.h"
 #include "xMemMgr.h"
 #include "xMath.h"
 #include "xString.h"

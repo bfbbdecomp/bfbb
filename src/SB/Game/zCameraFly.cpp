@@ -1,8 +1,8 @@
 #include <types.h>
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xScene.h"
+#include "xBase.h"
+#include "xEvent.h"
+#include "xScene.h"
 
 #include "zBase.h"
 #include "zCameraFly.h"

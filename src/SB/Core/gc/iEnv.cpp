@@ -2,8 +2,8 @@
 
 #include "iModel.h"
 
-#include "../x/iCamera.h"
-#include "../x/xMemMgr.h"
+#include "iCamera.h"
+#include "xMemMgr.h"
 
 static int32 sBeginDrawFX;
 static RpWorld* sPipeWorld;

@@ -1,7 +1,7 @@
 #ifndef ZCAMERATWEAK_H
 #define ZCAMERATWEAK_H
 
-#include "../Core/x/xDynAsset.h"
+#include "xDynAsset.h"
 
 struct CameraTweak_asset : xDynAsset
 {

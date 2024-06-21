@@ -4,8 +4,8 @@
 #include <string.h>
 #include <rwplcore.h>
 
-#include "../gc/iSystem.h"
-#include "../gc/iMemMgr.h"
+#include "iSystem.h"
+#include "iMemMgr.h"
 
 extern xMemInfo_tag gMemInfo;
 extern xMemHeap_tag gxHeap[3];

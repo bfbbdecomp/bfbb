@@ -6,12 +6,12 @@
 #include "zEntSimpleObj.h"
 #include "zLOD.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xDebug.h"
-#include "../Core/x/xMath.h"
+#include "xString.h"
+#include "xDebug.h"
+#include "xMath.h"
 
-#include "../Core/gc/iModel.h"
-#include "../Core/gc/iMath.h"
+#include "iModel.h"
+#include "iMath.h"
 
 #include <string.h>
 #include <stdio.h>

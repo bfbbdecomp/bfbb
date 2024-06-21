@@ -3,9 +3,9 @@
 
 #include "zVolume.h"
 
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xEnv.h"
-#include "../Core/gc/iLight.h"
+#include "xEnt.h"
+#include "xEnv.h"
+#include "iLight.h"
 
 // Size: 0x38
 struct zLightAsset : xBaseAsset

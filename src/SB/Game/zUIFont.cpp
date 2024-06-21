@@ -2,14 +2,14 @@
 
 #include "zSaveLoad.h"
 
-#include "../Core/x/xTextAsset.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xMath2.h"
-#include "../Core/x/xString.h"
-#include "../Core/x/xFont.h"
-#include "../Core/x/xTRC.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xColor.h"
+#include "xTextAsset.h"
+#include "xstransvc.h"
+#include "xMath2.h"
+#include "xString.h"
+#include "xFont.h"
+#include "xTRC.h"
+#include "xEvent.h"
+#include "xColor.h"
 
 static const basic_rect<float32> _855_0 = { 0, 0, 0, 0 }; // remove when decomping zUIFont_Render
 

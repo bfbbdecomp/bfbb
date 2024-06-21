@@ -2,8 +2,8 @@
 #define ZSCRIPT_H
 
 #include <types.h>
-#include "../Core/x/xBase.h"
-#include "../Core/x/xDynAsset.h"
+#include "xBase.h"
+#include "xDynAsset.h"
 
 struct xScriptEventAsset
 {

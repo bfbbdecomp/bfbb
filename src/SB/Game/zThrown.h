@@ -2,7 +2,7 @@
 #define ZTHROWN_H
 
 #include <types.h>
-#include "../Core/x/xEntDrive.h"
+#include "xEntDrive.h"
 #include "zShrapnel.h"
 
 struct zScene;

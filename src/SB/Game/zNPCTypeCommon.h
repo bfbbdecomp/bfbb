@@ -1,12 +1,12 @@
 #ifndef ZNPCTYPECOMMON_H
 #define ZNPCTYPECOMMON_H
 
-#include "../Core/x/xNPCBasic.h"
-#include "../Core/x/xDynAsset.h"
-#include "../Core/x/xListItem.h"
-#include "../Core/x/xEntDrive.h"
-#include "../Core/x/xBehaveMgr.h"
-#include "../Core/x/xEnt.h"
+#include "xNPCBasic.h"
+#include "xDynAsset.h"
+#include "xListItem.h"
+#include "xEntDrive.h"
+#include "xBehaveMgr.h"
+#include "xEnt.h"
 
 #include "zNPCSndTable.h"
 #include "zNPCSpawner.h"

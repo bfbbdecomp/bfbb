@@ -1,6 +1,6 @@
 #include "iFMV.h"
 
-#include "../x/xPar.h"
+#include "xPar.h"
 
 #include <types.h>
 #include <dolphin.h>

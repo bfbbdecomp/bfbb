@@ -4,7 +4,7 @@
 #include "zNPCTypeTiki.h"
 #include "zRumble.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 extern float32 _836_0;
 extern float32 _837_3;

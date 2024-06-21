@@ -1,7 +1,7 @@
 #ifndef ZENTPLAYEROOBSTATE_H
 #define ZENTPLAYEROOBSTATE_H
 
-#include "../Core/x/xserializer.h"
+#include "xserializer.h"
 
 extern bool oob_player_teleported;
 

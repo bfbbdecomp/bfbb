@@ -4,13 +4,13 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../Core/gc/iTime.h"
+#include "iTime.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xFont.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xsavegame.h"
-#include "../Core/x/xutil.h"
+#include "xString.h"
+#include "xFont.h"
+#include "xSnd.h"
+#include "xsavegame.h"
+#include "xutil.h"
 
 #include "zEntPlayer.h"
 #include "zGlobals.h"

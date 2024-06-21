@@ -1,10 +1,10 @@
 #include <types.h>
 
-#include "../Core/x/xAnim.h"
-#include "../Core/x/xVec3.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xCamera.h"
-#include "../Core/x/xMath3.h"
+#include "xAnim.h"
+#include "xVec3.h"
+#include "xEvent.h"
+#include "xCamera.h"
+#include "xMath3.h"
 
 #include "zEnt.h"
 #include "zFX.h"

@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-#include "../Core/x/xString.h"
+#include "xString.h"
 
 struct zVarEntry
 {

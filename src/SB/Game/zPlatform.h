@@ -2,8 +2,8 @@
 #define ZPLATFORM_H
 
 #include "zEnt.h"
-#include "../Core/x/xEntMotion.h"
-#include "../Core/x/xEntDrive.h"
+#include "xEntMotion.h"
+#include "xEntDrive.h"
 
 struct xPlatformERData
 {

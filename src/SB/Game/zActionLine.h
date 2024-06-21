@@ -1,7 +1,7 @@
 #ifndef ZACTIONLINE_H
 #define ZACTIONLINE_H
 
-#include "../Core/x/xVec3.h"
+#include "xVec3.h"
 
 struct _tagActionLine
 {

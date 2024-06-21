@@ -1,10 +1,10 @@
 #ifndef ZNPCSUPPLEMENT_H
 #define ZNPCSUPPLEMENT_H
 
-#include "../Core/x/xVec3.h"
-#include "../Core/x/xMAth2.h"
-#include "../Core/x/xPtankPool.h"
-#include "../Core/gc/iColor.h"
+#include "xVec3.h"
+#include "xMAth2.h"
+#include "xPtankPool.h"
+#include "iColor.h"
 
 #include <types.h>
 #include <rwplcore.h>

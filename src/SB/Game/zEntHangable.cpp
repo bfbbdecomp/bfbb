@@ -1,5 +1,5 @@
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xVec3.h"
+#include "xMath3.h"
+#include "xVec3.h"
 #include "zEntHangable.h"
 
 #include <types.h>

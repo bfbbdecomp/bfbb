@@ -1,7 +1,7 @@
 #ifndef ZCAMERA_H
 #define ZCAMERA_H
 
-#include "../Core/x/xCamera.h"
+#include "xCamera.h"
 
 enum WallJumpViewState
 {

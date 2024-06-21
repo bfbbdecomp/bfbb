@@ -3,8 +3,8 @@
 
 #include "zMovePoint.h"
 
-#include "../Core/x/xRMemData.h"
-#include "../Core/x/xordarray.h"
+#include "xRMemData.h"
+#include "xordarray.h"
 
 enum en_SM_NOTICES
 {

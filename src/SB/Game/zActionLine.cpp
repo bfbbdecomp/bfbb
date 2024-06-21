@@ -1,8 +1,8 @@
 #include <types.h>
 #include <rwcore.h>
 
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xString.h"
+#include "xstransvc.h"
+#include "xString.h"
 
 #include "zActionLine.h"
 

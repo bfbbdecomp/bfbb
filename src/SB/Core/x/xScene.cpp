@@ -4,9 +4,9 @@
 #include "xCollideFast.h"
 #include "xMath.h"
 
-#include "../gc/iMath.h"
-#include "../gc/iCollide.h"
-#include "../../Game/zBase.h"
+#include "iMath.h"
+#include "iCollide.h"
+#include "zBase.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

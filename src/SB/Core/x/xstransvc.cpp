@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include "xString.h"
 #include "xutil.h"
-#include "../gc/iTRC.h"
-#include "../gc/iFile.h"
+#include "iTRC.h"
+#include "iFile.h"
 #include "../CodeWarrior/intrin.h"
 
 // extern st_PKR_ASSET_TOCINFO lbl_80253EC8;

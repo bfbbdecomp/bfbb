@@ -3,8 +3,8 @@
 
 #include "zEntSimpleObj.h"
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xMath3.h"
+#include "xBase.h"
+#include "xMath3.h"
 
 struct z_disco_floor_asset : xBaseAsset
 {

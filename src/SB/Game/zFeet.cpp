@@ -1,9 +1,9 @@
 #include <types.h>
 #include <rwcore.h>
 #include <CodeWarrior/string.h>
-#include "../Core/x/xBase.h"
-#include "../Core/x/xString.h"
-#include "../Core/x/xstransvc.h"
+#include "xBase.h"
+#include "xString.h"
+#include "xstransvc.h"
 #include "zFeet.h"
 #include "zScene.h"
 #include "zSurface.h"

@@ -1,9 +1,9 @@
 #ifndef ZTEXTBOX_H
 #define ZTEXTBOX_H
 
-#include "../Core/x/xDynAsset.h"
-#include "../Core/x/xFont.h"
-#include "../Core/x/xScene.h"
+#include "xDynAsset.h"
+#include "xFont.h"
+#include "xScene.h"
 
 #include <rwcore.h>
 

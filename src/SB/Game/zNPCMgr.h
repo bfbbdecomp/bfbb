@@ -1,8 +1,8 @@
 #ifndef ZNPCMGR_H
 #define ZNPCMGR_H
 
-#include "../Core/x/xFactory.h"
-#include "../Core/x/xBehaveMgr.h"
+#include "xFactory.h"
+#include "xBehaveMgr.h"
 
 #include <types.h>
 

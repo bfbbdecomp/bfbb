@@ -1,7 +1,7 @@
 #include "iAnim.h"
 
 #include "iAnimSKB.h"
-#include "../x/xMath.h"
+#include "xMath.h"
 
 #include <rwcore.h>
 #include <rtslerp.h>

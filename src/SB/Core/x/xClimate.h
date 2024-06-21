@@ -4,7 +4,7 @@
 #include <types.h>
 #include "xVec3.h"
 #include "xEnv.h"
-#include "../../Game/zParEmitter.h"
+#include "zParEmitter.h"
 
 struct _tagRain
 {

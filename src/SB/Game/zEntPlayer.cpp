@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../Core/gc/iSnd.h"
+#include "iSnd.h"
 
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xEntBoulder.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xVec3.h"
-#include "../Core/x/xMemMgr.h"
+#include "xEnt.h"
+#include "xEntBoulder.h"
+#include "xEvent.h"
+#include "xSnd.h"
+#include "xVec3.h"
+#include "xMemMgr.h"
 
 #include "zBase.h"
 #include "zCamera.h"

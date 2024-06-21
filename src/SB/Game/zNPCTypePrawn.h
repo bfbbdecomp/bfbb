@@ -5,7 +5,7 @@
 #include "zNPCGoalCommon.h"
 #include "zDiscoFloor.h"
 #include "zNPCSpawner.h"
-#include "../Core/x/containers.h"
+#include "containers.h"
 
 struct aqua_beam
 {

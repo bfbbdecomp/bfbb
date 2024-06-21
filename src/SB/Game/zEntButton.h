@@ -3,7 +3,7 @@
 
 #include "zEnt.h"
 
-#include "../Core/x/xEntMotion.h"
+#include "xEntMotion.h"
 
 struct zEntButtonAsset
 {

@@ -1,7 +1,7 @@
 #ifndef IENV_H
 #define IENV_H
 
-#include "../x/xJSP.h"
+#include "xJSP.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

@@ -2,7 +2,7 @@
 #define ZENTTELEPORTBOX_H
 
 #include "zEnt.h"
-#include "../Core/x/xDynAsset.h"
+#include "xDynAsset.h"
 
 struct teleport_asset : xDynAsset
 {

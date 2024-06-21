@@ -6,11 +6,11 @@
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zMusic.h"
-#include "../Core/gc/iMath.h"
-#include "../Core/x/xMathInlines.h"
-#include "../Core/x/xVec3Inlines.h"
-#include "../Core/x/xScrFx.h"
-#include "../Core/x/xstransvc.h"
+#include "iMath.h"
+#include "xMathInlines.h"
+#include "xVec3Inlines.h"
+#include "xScrFx.h"
+#include "xstransvc.h"
 
 
 // extern int8 buffer[16];

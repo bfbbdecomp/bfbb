@@ -1,7 +1,7 @@
 #include "xSkyDome.h"
 
 #include "xEvent.h"
-#include "../gc/iModel.h"
+#include "iModel.h"
 
 struct SkyDomeInfo
 {

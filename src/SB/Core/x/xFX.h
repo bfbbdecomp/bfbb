@@ -3,7 +3,7 @@
 
 #include "xMath3.h"
 #include "containers.h"
-#include "../gc/iColor.h"
+#include "iColor.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

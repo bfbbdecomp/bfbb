@@ -1,8 +1,8 @@
 #include "iCutscene.h"
 
-#include "../x/xpkrsvc.h"
-#include "../x/xstransvc.h"
-#include "../x/xMath.h"
+#include "xpkrsvc.h"
+#include "xstransvc.h"
+#include "xMath.h"
 
 #include "iModel.h"
 

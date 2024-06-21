@@ -1,8 +1,8 @@
 #ifndef ZENTPLAYERBUNGEESTATE_H
 #define ZENTPLAYERBUNGEESTATE_H
 
-#include "../Core/x/xDynAsset.h"
-#include "../Core/x/xEnt.h"
+#include "xDynAsset.h"
+#include "xEnt.h"
 
 namespace bungee_state
 {

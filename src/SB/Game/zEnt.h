@@ -1,14 +1,14 @@
 #ifndef ZENT_H
 #define ZENT_H
 
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xAnim.h"
+#include "xEnt.h"
+#include "xAnim.h"
 
 #include "zScene.h"
 #include "zEvent.h"
 
 //For inline/weak functions
-#include "../Core/x/xSnd.h"
+#include "xSnd.h"
 
 struct zScene;
 

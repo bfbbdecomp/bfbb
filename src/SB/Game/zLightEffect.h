@@ -1,8 +1,8 @@
 #ifndef ZLIGHTEFFECT_H
 #define ZLIGHTEFFECT_H
 
-#include "../Core/gc/iLight.h"
-#include "../Core/x/xBase.h"
+#include "iLight.h"
+#include "xBase.h"
 #include "zLight.h"
 
 #include <types.h>

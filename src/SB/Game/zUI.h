@@ -3,8 +3,8 @@
 
 #include "zEnt.h"
 
-#include "../Core/x/xMgr.h"
-#include "../Core/x/xIni.h"
+#include "xMgr.h"
+#include "xIni.h"
 
 struct zUIAsset : xEntAsset
 {

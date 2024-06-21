@@ -5,10 +5,10 @@
 #include "zNPCHazard.h"
 #include "zGlobals.h"
 
-#include "../Core/x/xMath.h"
-#include "../Core/x/xMathInlines.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xScrFx.h"
+#include "xMath.h"
+#include "xMathInlines.h"
+#include "xEvent.h"
+#include "xScrFx.h"
 
 extern float32 _816_0; // 20.0f
 extern float32 _840_3; // 0.0f

@@ -12,13 +12,13 @@
 #include "zCombo.h"
 #include "zLOD.h"
 
-#include "../Core/gc/iDraw.h"
-#include "../Core/x/xTRC.h"
-#include "../Core/x/xFont.h"
-#include "../Core/x/xMath.h"
-#include "../Core/x/xModel.h"
-#include "../Core/x/xScrFx.h"
-#include "../Core/x/xSkyDome.h"
+#include "iDraw.h"
+#include "xTRC.h"
+#include "xFont.h"
+#include "xMath.h"
+#include "xModel.h"
+#include "xScrFx.h"
+#include "xSkyDome.h"
 
 #include <types.h>
 

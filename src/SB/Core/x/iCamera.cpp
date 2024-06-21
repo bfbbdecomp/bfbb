@@ -2,10 +2,10 @@
 
 #include "xShadow.h"
 
-#include "../gc/iScrFX.h"
-#include "../gc/iMath.h"
+#include "iScrFX.h"
+#include "iMath.h"
 
-#include "../../Game/zGlobals.h"
+#include "zGlobals.h"
 
 #include <string.h>
 

@@ -5,9 +5,9 @@
 #include "zNPCGoalCommon.h"
 #include "zEntDestructObj.h"
 
-#include "../Core/x/xDecal.h"
-#include "../Core/x/xLaserBolt.h"
-#include "../Core/x/xTimer.h"
+#include "xDecal.h"
+#include "xLaserBolt.h"
+#include "xTimer.h"
 
 struct zNPCNewsFish;
 

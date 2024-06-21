@@ -1,8 +1,8 @@
 #ifndef IMODEL_H
 #define IMODEL_H
 
-#include "../x/xMath3.h"
-#include "../x/xModel.h"
+#include "xMath3.h"
+#include "xModel.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

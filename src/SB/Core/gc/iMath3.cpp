@@ -1,8 +1,8 @@
 #include "iMath3.h"
 
-#include "../x/xMath.h"
-#include "../x/xMath2.h"
-#include "../x/xMathInlines.h"
+#include "xMath.h"
+#include "xMath2.h"
+#include "xMathInlines.h"
 
 #include <string.h>
 

@@ -1,5 +1,5 @@
-#include "../Core/x/xBase.h"
-#include "../Core/x/xEvent.h"
+#include "xBase.h"
+#include "xEvent.h"
 
 #include "zPortal.h"
 #include "zGlobals.h"

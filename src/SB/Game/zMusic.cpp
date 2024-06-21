@@ -1,8 +1,8 @@
 #include <types.h>
 #include "zMusic.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xMath.h"
-#include "../Core/x/xString.h"
+#include "xSnd.h"
+#include "xMath.h"
+#include "xString.h"
 #include "zGlobals.h"
 #include "zGameState.h"
 #include "zScene.h"

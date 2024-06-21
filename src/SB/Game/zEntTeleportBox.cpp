@@ -7,11 +7,11 @@
 #include "zEntPickup.h"
 #include "zFX.h"
 
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xMath.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xString.h"
-#include "../Core/gc/iScrFX.h"
+#include "xEvent.h"
+#include "xMath.h"
+#include "xSnd.h"
+#include "xString.h"
+#include "iScrFX.h"
 
 #define STATUS_OPEN 0
 #define STATUS_CLOSED 1

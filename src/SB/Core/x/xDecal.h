@@ -4,7 +4,7 @@
 #include "xMath2.h"
 #include "xMath3.h"
 #include "containers.h"
-#include "../gc/iColor.h"
+#include "iColor.h"
 
 #include <types.h>
 #include <rwcore.h>

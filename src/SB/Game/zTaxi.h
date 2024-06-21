@@ -2,8 +2,8 @@
 #define ZTAXI_H
 
 #include <types.h>
-#include "../Core/x/xBase.h"
-#include "../Core/x/xDynAsset.h"
+#include "xBase.h"
+#include "xDynAsset.h"
 #include "zEnt.h"
 #include "zTalkBox.h"
 

@@ -1,9 +1,9 @@
 #ifndef ZENTPLAYER_H
 #define ZENTPLAYER_H
 
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xAnim.h"
+#include "xMath3.h"
+#include "xEnt.h"
+#include "xAnim.h"
 #include "zEnt.h"
 #include "zLasso.h"
 

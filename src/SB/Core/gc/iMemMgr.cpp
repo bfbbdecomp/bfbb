@@ -1,6 +1,6 @@
 #include "iMemMgr.h"
 #include "iSystem.h"
-#include "../x/xMemMgr.h"
+#include "xMemMgr.h"
 
 #include <types.h>
 #include <stdlib.h>

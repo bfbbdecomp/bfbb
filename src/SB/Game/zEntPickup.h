@@ -5,10 +5,10 @@
 #include "zPickupTable.h"
 #include "zParEmitter.h"
 
-#include "../Core/x/xEntDrive.h"
-#include "../Core/x/xPar.h"
-#include "../Core/x/xShadowSimple.h"
-#include "../Core/gc/iColor.h"
+#include "xEntDrive.h"
+#include "xPar.h"
+#include "xShadowSimple.h"
+#include "iColor.h"
 
 struct zEntPickup : zEnt
 {

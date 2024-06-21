@@ -5,8 +5,8 @@
 #include "xModelBucket.h"
 #include "xSnd.h"
 
-#include "../gc/iCutscene.h"
-#include "../gc/iModel.h"
+#include "iCutscene.h"
+#include "iModel.h"
 
 #include <types.h>
 #include <string.h>

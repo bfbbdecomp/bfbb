@@ -2,7 +2,7 @@
 #include "zCollGeom.h"
 #include "zGlobals.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 #include <types.h>
 

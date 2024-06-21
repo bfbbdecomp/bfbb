@@ -2,7 +2,7 @@
 #define ZMUSIC_H
 
 #include <types.h>
-#include "../Core/x/xBase.h"
+#include "xBase.h"
 
 struct zMusicSituation
 {

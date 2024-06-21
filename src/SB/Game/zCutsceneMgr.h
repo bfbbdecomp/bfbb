@@ -1,7 +1,7 @@
 #ifndef ZCUTSCENEMGR_H
 #define ZCUTSCENEMGR_H
 
-#include "../Core/x/xCutsceneMgr.h"
+#include "xCutsceneMgr.h"
 #include "rpworld.h"
 
 struct xScene;

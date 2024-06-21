@@ -1,10 +1,10 @@
 #ifndef ZNPCGOALCOMMON_H
 #define ZNPCGOALCOMMON_H
 
-#include "../Core/x/xBehaveMgr.h"
-#include "../Core/x/xDynAsset.h"
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xNPCBasic.h"
+#include "xBehaveMgr.h"
+#include "xDynAsset.h"
+#include "xEnt.h"
+#include "xNPCBasic.h"
 #include "zNPCTypeCommon.h"
 
 struct zNPCGoalCommon : xGoal

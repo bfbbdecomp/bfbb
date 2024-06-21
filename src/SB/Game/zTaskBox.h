@@ -1,8 +1,8 @@
 #ifndef ZTASKBOX_H
 #define ZTASKBOX_H
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xDynAsset.h"
+#include "xBase.h"
+#include "xDynAsset.h"
 
 #include "zNPCTypeCommon.h"
 #include "zTalkBox.h"

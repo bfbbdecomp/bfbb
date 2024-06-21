@@ -4,7 +4,7 @@
 #include "zNPCTypeBoss.h"
 #include "zNPCGoalCommon.h"
 
-#include "../Core/x/xFX.h"
+#include "xFX.h"
 
 struct zNPCB_SB1 : zNPCBoss
 {

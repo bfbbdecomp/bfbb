@@ -7,7 +7,7 @@
 #include "zNPCTypeBossSB2.h"
 #include "zNPCTypeBossPlankton.h"
 
-#include "../Core/x/xString.h"
+#include "xString.h"
 
 #define ANIM_COUNT 78
 

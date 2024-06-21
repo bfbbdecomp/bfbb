@@ -1,7 +1,7 @@
 #ifndef ZPORTAL_H
 #define ZPORTAL_H
 
-#include "../Core/x/xBase.h"
+#include "xBase.h"
 
 struct xPortalAsset : xBaseAsset
 {

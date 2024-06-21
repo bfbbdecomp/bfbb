@@ -7,10 +7,10 @@
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
 
-#include "../Core/x/xEntBoulder.h"
-#include "../Core/x/xFX.h"
-#include "../Core/x/xCamera.h"
-#include "../Core/x/xModel.h"
+#include "xEntBoulder.h"
+#include "xFX.h"
+#include "xCamera.h"
+#include "xModel.h"
 
 struct BossDamageEffectRecord
 {

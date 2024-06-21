@@ -4,11 +4,11 @@
 #include "zSurface.h"
 #include "zLight.h"
 
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xGroup.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xClimate.h"
-#include "../Core/gc/iLight.h"
+#include "xstransvc.h"
+#include "xGroup.h"
+#include "xEvent.h"
+#include "xClimate.h"
+#include "iLight.h"
 
 void zEnvInit(void* env, void* easset)
 {

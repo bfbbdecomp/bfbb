@@ -1,7 +1,7 @@
 #include <types.h>
 #include <CodeWarrior/stdio.h>
-#include "../Core/gc/iFMV.h"
-#include "../Core/x/xSnd.h"
+#include "iFMV.h"
+#include "xSnd.h"
 #include "zFMV.h"
 #include "zGameState.h"
 

@@ -2,9 +2,9 @@
 
 #include "iTRC.h"
 
-#include "../x/xFile.h"
-#include "../x/xMath.h"
-#include "../x/xTRC.h"
+#include "xFile.h"
+#include "xMath.h"
+#include "xTRC.h"
 
 #include <string.h>
 

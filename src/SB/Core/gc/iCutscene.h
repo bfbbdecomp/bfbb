@@ -1,8 +1,8 @@
 #ifndef ICUTSCENE_H
 #define ICUTSCENE_H
 
-#include "../x/xCutscene.h"
-#include "../x/xSnd.h"
+#include "xCutscene.h"
+#include "xSnd.h"
 
 void iCSSoundSetup(xCutscene* csn);
 void* iCSSoundGetData(xSndVoiceInfo* vp, uint32* size);

@@ -7,14 +7,14 @@
 #include "zGame.h"
 #include "zGameState.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xTRC.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xCounter.h"
-#include "../Core/x/xGroup.h"
-#include "../Core/x/xDebug.h"
+#include "xString.h"
+#include "xstransvc.h"
+#include "xTRC.h"
+#include "xEvent.h"
+#include "xSnd.h"
+#include "xCounter.h"
+#include "xGroup.h"
+#include "xDebug.h"
 
 #include <stdlib.h>
 #include <string.h>

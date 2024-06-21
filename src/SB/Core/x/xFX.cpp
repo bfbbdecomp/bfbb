@@ -2,11 +2,11 @@
 
 #include "xstransvc.h"
 
-#include "../gc/iMath.h"
-#include "../../Game/zParEmitter.h"
-#include "../../Game/zSurface.h"
-#include "../../Game/zFX.h"
-#include "../../Game/zGlobals.h"
+#include "iMath.h"
+#include "zParEmitter.h"
+#include "zSurface.h"
+#include "zFX.h"
+#include "zGlobals.h"
 
 #include <string.h>
 #include <rpmatfx.h>

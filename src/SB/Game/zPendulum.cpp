@@ -1,6 +1,6 @@
 #include "zPendulum.h"
 
-#include "../Core/x/xEnt.h"
+#include "xEnt.h"
 
 #include <types.h>
 

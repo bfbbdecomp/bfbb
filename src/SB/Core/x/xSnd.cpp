@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-#include "../gc/iSnd.h"
+#include "iSnd.h"
 #include "xVec3.h"
 
 extern _xSndDelayed sDelayedSnd[16];

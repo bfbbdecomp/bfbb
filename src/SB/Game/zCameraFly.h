@@ -2,9 +2,9 @@
 #define ZCAMERAFLY_H
 
 #include <types.h>
-#include "../Core/x/xBase.h"
-#include "../Core/x/xDynAsset.h"
-#include "../Core/x/xScene.h"
+#include "xBase.h"
+#include "xDynAsset.h"
+#include "xScene.h"
 
 struct CameraFly_asset : xDynAsset
 {

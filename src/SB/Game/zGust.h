@@ -1,8 +1,8 @@
 #ifndef ZGUST_H
 #define ZGUST_H
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xMath3.h"
+#include "xBase.h"
+#include "xMath3.h"
 
 #include "zVolume.h"
 

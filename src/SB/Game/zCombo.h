@@ -2,8 +2,8 @@
 #define ZCOMBO_H
 
 #include <types.h>
-#include "../Core/x/xFont.h"
-#include "../Core/x/xHud.h"
+#include "xFont.h"
+#include "xHud.h"
 
 void zCombo_Setup();
 void zCombo_Add(int);

@@ -3,8 +3,8 @@
 
 #include <types.h>
 
-#include "../gc/iTime.h"
-#include "../gc/isavegame.h"
+#include "iTime.h"
+#include "isavegame.h"
 
 struct st_XSAVEGAME_READCONTEXT
 {

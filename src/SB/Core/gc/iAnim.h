@@ -1,7 +1,7 @@
 #ifndef IANIM_H
 #define IANIM_H
 
-#include "../x/xMath3.h"
+#include "xMath3.h"
 
 extern uint8* giAnimScratch;
 

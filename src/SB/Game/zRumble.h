@@ -2,8 +2,8 @@
 #define ZRUMBLE_H
 
 #include <types.h>
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xPad.h"
+#include "xEnt.h"
+#include "xPad.h"
 
 enum _tagSDRumbleType
 {

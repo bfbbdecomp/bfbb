@@ -4,11 +4,11 @@
 
 #include <rwcore.h>
 
-#include "../x/xDebug.h"
-#include "../x/xMath.h"
-#include "../x/xSnd.h"
-#include "../x/xPad.h"
-#include "../x/xMemMgr.h"
+#include "xDebug.h"
+#include "xMath.h"
+#include "xSnd.h"
+#include "xPad.h"
+#include "xMemMgr.h"
 
 #include "iSystem.h"
 #include "iFile.h"

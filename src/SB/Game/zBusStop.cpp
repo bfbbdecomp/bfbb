@@ -1,9 +1,9 @@
 #include <types.h>
 
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xString.h"
-#include "../Core/x/xEnt.h"
+#include "xstransvc.h"
+#include "xEvent.h"
+#include "xString.h"
+#include "xEnt.h"
 
 #include "zBusStop.h"
 #include "zGame.h"

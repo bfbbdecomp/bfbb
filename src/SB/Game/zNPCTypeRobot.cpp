@@ -4,7 +4,7 @@
 #include "zNPCTypes.h"
 #include "zNPCGoalStd.h"
 
-#include "../Core/x/xFactory.h"
+#include "xFactory.h"
 
 #include <string.h>
 

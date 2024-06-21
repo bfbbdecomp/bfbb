@@ -1,8 +1,8 @@
 #ifndef ZENV_H
 #define ZENV_H
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xEnv.h"
+#include "xBase.h"
+#include "xEnv.h"
 
 struct _zEnv : xBase
 {

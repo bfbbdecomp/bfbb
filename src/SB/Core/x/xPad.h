@@ -3,7 +3,7 @@
 
 #include "xRumble.h"
 #include "xMath2.h"
-#include "../gc/iPad.h"
+#include "iPad.h"
 
 enum _tagPadState
 {

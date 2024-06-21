@@ -2,7 +2,7 @@
 #define ZPAREMITTER_H
 
 #include <types.h>
-#include "../Core/x/xParEmitter.h"
+#include "xParEmitter.h"
 
 struct zParEmitter : xParEmitter
 {

@@ -2,7 +2,7 @@
 
 #include "rwsdk/rwplcore.h"
 
-#include "../Core/x/iCamera.h"
+#include "iCamera.h"
 
 #include <types.h>
 

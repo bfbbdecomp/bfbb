@@ -1,7 +1,7 @@
 #ifndef IANIMSKB_H
 #define IANIMSKB_H
 
-#include "../x/xMath3.h"
+#include "xMath3.h"
 
 struct iAnimSKBHeader
 {

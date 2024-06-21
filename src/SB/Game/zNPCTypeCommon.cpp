@@ -8,11 +8,11 @@
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
 
-#include "../Core/gc/iModel.h"
-#include "../Core/gc/iSnd.h"
+#include "iModel.h"
+#include "iSnd.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xDebug.h"
+#include "xString.h"
+#include "xDebug.h"
 
 extern char zNPCTypeCommon_strings[];
 extern int8* g_strz_lassanim[3];

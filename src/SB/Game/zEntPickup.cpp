@@ -9,11 +9,11 @@
 #include "zFX.h"
 #include "zUI.h"
 
-#include "../Core/x/xMath.h"
-#include "../Core/x/xFX.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/gc/iAnim.h"
-#include "../Core/gc/iModel.h"
+#include "xMath.h"
+#include "xFX.h"
+#include "xstransvc.h"
+#include "iAnim.h"
+#include "iModel.h"
 
 #include <string.h>
 #include <stdio.h>

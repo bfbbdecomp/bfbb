@@ -1,7 +1,7 @@
 #ifndef XFILE_H
 #define XFILE_H
 
-#include "../gc/iFile.h"
+#include "iFile.h"
 
 enum XFILE_READSECTOR_STATUS
 {

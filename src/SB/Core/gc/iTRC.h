@@ -1,7 +1,7 @@
 #ifndef ITRC_H
 #define ITRC_H
 
-#include "../x/xPad.h"
+#include "xPad.h"
 
 struct _tagiTRCPadInfo
 {

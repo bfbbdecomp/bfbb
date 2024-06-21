@@ -1,8 +1,8 @@
 #ifndef ZLIGHTNING_H
 #define ZLIGHTNING_H
 
-#include "../Core/x/xMath3.h"
-#include "../Core/gc/iColor.h"
+#include "xMath3.h"
+#include "iColor.h"
 
 #include "zFX.h"
 

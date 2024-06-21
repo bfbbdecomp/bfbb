@@ -2,7 +2,7 @@
 
 #include "zFX.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 extern float32 _742_2;
 extern float32 _780_1;

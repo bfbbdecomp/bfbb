@@ -1,7 +1,7 @@
 #include "zPickupTable.h"
 
 #include "zGlobals.h"
-#include "../Core/x/xString.h"
+#include "xString.h"
 
 struct PickupTranslEntry
 {

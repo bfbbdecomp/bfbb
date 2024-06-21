@@ -1,5 +1,5 @@
 #include "zNPCGlyph.h"
-#include "../Core/x/xMath3.h"
+#include "xMath3.h"
 
 #include <types.h>
 

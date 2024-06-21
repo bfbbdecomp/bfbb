@@ -1,8 +1,8 @@
 #include "zSurface.h"
 #include "zScene.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xCollide.h"
-#include "../Core/x/xMathInlines.h"
+#include "xstransvc.h"
+#include "xCollide.h"
+#include "xMathInlines.h"
 
 #include <types.h>
 #include <string.h>

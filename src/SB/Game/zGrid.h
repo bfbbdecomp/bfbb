@@ -3,8 +3,8 @@
 
 #include "zScene.h"
 
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xGrid.h"
+#include "xEnt.h"
+#include "xGrid.h"
 
 extern xGrid colls_grid;
 extern xGrid colls_oso_grid;

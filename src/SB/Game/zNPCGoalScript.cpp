@@ -3,7 +3,7 @@
 #include "zNPCGoals.h"
 #include "zNPCGoalStd.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 xFactoryInst* GOALCreate_Script(int32 who, RyzMemGrow* grow, void*)
 {

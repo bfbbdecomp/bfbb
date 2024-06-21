@@ -1,9 +1,9 @@
 #ifndef ZSURFACE_H
 #define ZSURFACE_H
 
-#include "../Core/x/xBase.h"
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xSurface.h"
+#include "xBase.h"
+#include "xMath3.h"
+#include "xSurface.h"
 
 struct zSurfMatFX
 {

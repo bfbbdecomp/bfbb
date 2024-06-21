@@ -1,8 +1,8 @@
 #ifndef ZFX_H
 #define ZFX_H
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xEnt.h"
+#include "xString.h"
+#include "xEnt.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

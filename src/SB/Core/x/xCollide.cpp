@@ -1,7 +1,7 @@
 #include "xCollide.h"
-#include "../../Game/zSurface.h"
-#include "../gc/iCollide.h"
-#include "../gc/iMath3.h"
+#include "zSurface.h"
+#include "iCollide.h"
+#include "iMath3.h"
 
 #include <types.h>
 

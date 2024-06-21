@@ -3,7 +3,7 @@
 
 #include "zNPCTypeSubBoss.h"
 #include "zNPCGoalCommon.h"
-#include "../Core/x/containers.h"
+#include "containers.h"
 
 struct zNPCDutchman : zNPCSubBoss
 {

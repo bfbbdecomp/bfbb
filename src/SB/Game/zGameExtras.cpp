@@ -1,13 +1,13 @@
 #include <types.h>
 #include <string.h>
 
-#include "../Core/gc/iTime.h"
+#include "iTime.h"
 
-#include "../Core/x/xString.h"
-#include "../Core/x/xSnd.h"
-#include "../Core/x/xEnt.h"
-#include "../Core/x/xCounter.h"
-#include "../Core/x/xMath.h"
+#include "xString.h"
+#include "xSnd.h"
+#include "xEnt.h"
+#include "xCounter.h"
+#include "xMath.h"
 
 #include "zGameExtras.h"
 #include "zEntPlayer.h"

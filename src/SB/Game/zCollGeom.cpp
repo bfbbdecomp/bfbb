@@ -2,8 +2,8 @@
 
 #include "zBase.h"
 
-#include "../Core/gc/iModel.h"
-#include "../Core/x/xstransvc.h"
+#include "iModel.h"
+#include "xstransvc.h"
 
 static volatile uint32 sNumTables;
 static uint32 sTableCount[3];

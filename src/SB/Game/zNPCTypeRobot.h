@@ -1,8 +1,8 @@
 #ifndef ZNPCTYPEROBOT_H
 #define ZNPCTYPEROBOT_H
 
-#include "../Core/x/xPad.h"
-#include "../Core/x/xModel.h"
+#include "xPad.h"
+#include "xModel.h"
 
 #include "zNPCTypeCommon.h"
 #include "zNPCSupport.h"

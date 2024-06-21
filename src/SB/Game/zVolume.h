@@ -1,7 +1,7 @@
 #ifndef ZVOLUME_H
 #define ZVOLUME_H
 
-#include "../Core/x/xVolume.h"
+#include "xVolume.h"
 
 struct zVolume : xVolume
 {

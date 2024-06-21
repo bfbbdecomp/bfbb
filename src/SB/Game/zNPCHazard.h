@@ -3,9 +3,9 @@
 
 #include "zLightning.h"
 
-#include "../Core/x/xMath3.h"
-#include "../Core/x/xCollide.h"
-#include "../Core/x/xShadow.h"
+#include "xMath3.h"
+#include "xCollide.h"
+#include "xShadow.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

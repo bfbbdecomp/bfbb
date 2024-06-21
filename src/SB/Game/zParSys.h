@@ -1,7 +1,7 @@
 #ifndef ZPARSYS_H
 #define ZPARSYS_H
 
-#include "../Core/x/xParSys.h"
+#include "xParSys.h"
 
 struct zParSys : xParSys
 {

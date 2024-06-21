@@ -1,7 +1,7 @@
 #include "zTaskBox.h"
 
-#include "../Core/x/xEvent.h"
-#include "../Core/x/xstransvc.h"
+#include "xEvent.h"
+#include "xstransvc.h"
 
 #include "zBase.h"
 #include "zScene.h"

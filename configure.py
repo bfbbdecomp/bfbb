@@ -221,6 +221,9 @@ cflags_bfbb = [
     "-i include/dolphin",
     "-i include/inline",
     "-i include/rwsdk",
+    "-i src/SB/Core/gc",
+    "-i src/SB/Core/x",
+    "-i src/SB/Game",
     "-DGAMECUBE",
 ]
 

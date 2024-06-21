@@ -1,8 +1,8 @@
 #include <types.h>
 
-#include "../Core/x/xAnim.h"
-#include "../Core/x/xstransvc.h"
-#include "../Core/x/xMemMgr.h"
+#include "xAnim.h"
+#include "xstransvc.h"
+#include "xMemMgr.h"
 
 #include "zAnimList.h"
 

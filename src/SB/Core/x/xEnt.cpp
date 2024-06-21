@@ -9,18 +9,18 @@
 #include "xMathInlines.h"
 #include "xMath.h"
 
-#include "../../Game/zBase.h"
-#include "../../Game/zPlatform.h"
-#include "../../Game/zEntDestructObj.h"
-#include "../../Game/zCollGeom.h"
-#include "../../Game/zSurface.h"
-#include "../../Game/zLight.h"
-#include "../../Game/zGrid.h"
+#include "zBase.h"
+#include "zPlatform.h"
+#include "zEntDestructObj.h"
+#include "zCollGeom.h"
+#include "zSurface.h"
+#include "zLight.h"
+#include "zGrid.h"
 
-#include "../gc/iMath3.h"
-#include "../gc/iCollide.h"
-#include "../gc/iModel.h"
-#include "../gc/iMath.h"
+#include "iMath3.h"
+#include "iCollide.h"
+#include "iModel.h"
+#include "iMath.h"
 
 #include <string.h>
 

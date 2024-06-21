@@ -8,8 +8,8 @@
 #include "xTextAsset.h"
 #include "xModelBucket.h"
 
-#include "../gc/iTime.h"
-#include "../../Game/zScene.h"
+#include "iTime.h"
+#include "zScene.h"
 
 #include <string.h>
 #include <stdio.h>

@@ -1,7 +1,7 @@
 #ifndef ZDISPATCHER_H
 #define ZDISPATCHER_H
 
-#include "../Core/x/xBase.h"
+#include "xBase.h"
 
 struct st_ZDISPATCH_DATA : xBase
 {

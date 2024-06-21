@@ -1,8 +1,8 @@
 #ifndef ZSCENE_H
 #define ZSCENE_H
 
-#include "../Core/x/xScene.h"
-#include "../Core/x/xClimate.h"
+#include "xScene.h"
+#include "xClimate.h"
 
 #include "zPortal.h"
 #include "zEnt.h"

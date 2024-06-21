@@ -1,6 +1,6 @@
 #include "zEntTrigger.h"
 
-#include "../Core/x/xEvent.h"
+#include "xEvent.h"
 
 extern float32 _670;
 extern float32 _671_0;
