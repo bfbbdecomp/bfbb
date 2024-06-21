@@ -10,23 +10,24 @@ void xGroupInit(void* b, void* asset)
     xGroupInit((xBase*)b, (xGroupAsset*)asset);
 }
 
-#if 0
-// There is an instruction swap that seems to be throwing everything off.
 void xGroupInit(xBase* b, xGroupAsset* asset)
 {
+    xGroup* t = (xGroup*)b;
+
     xBaseInit(b, (xBaseAsset*)asset);
     b->eventFunc = xGroupEventCB;
-    ((xGroup*)b)->asset = asset;
+    t->asset = asset;
     if (b->linkCount)
     {
-        b->link = (xLinkAsset*)((uint32*)asset + sizeof(xGroupAsset) / 4 +
-                                (uint32)((xGroup*)b)->asset->itemCount); // lwz and lhz swap here.
+        // Seek to then end of the xGroupAsset header and then seek to the end of the subsequent array of IDs
+        b->link = (xLinkAsset*)((uint8*)(t->asset) + sizeof(xGroupAsset)
+                                + asset->itemCount * sizeof(uint32));
     }
     else
     {
         b->link = NULL;
     }
-    uint32 numItems = xGroupGetCount((xGroup*)b);
+    uint32 numItems = xGroupGetCount(t);
     xBase** item;
     if (numItems != 0)
     {
@@ -36,12 +37,10 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     {
         item = NULL;
     }
-    ((xGroup*)b)->item = item;
-    ((xGroup*)b)->last_index = 0;
-    ((xGroup*)b)->flg_group = 0;
+    t->item = item;
+    t->last_index = 0;
+    t->flg_group = 0;
 }
-
-#endif
 
 void xGroupSetup(xGroup* g)
 {
