@@ -5,11 +5,11 @@
 
 #include <types.h>
 
-extern float32 lbl_803CCC50; // 0.0f.
-
+// NON_MATCHING:
+// function parameter loading order is swapped
 void xFogClearFog()
 {
-    iCameraSetFogParams(0, lbl_803CCC50);
+    iCameraSetFogParams(NULL, 0.0f);
 }
 
 void xFogInit(void* b, void* tasset)
@@ -70,7 +70,7 @@ int32 xFogEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam
         iCameraSetFogParams(&fog, fromFog->transitionTime);
         break;
     case eEventOff:
-        iCameraSetFogParams(NULL, lbl_803CCC50);
+        iCameraSetFogParams(NULL, 0.0f);
         break;
     case eEventReset:
         xFogReset((_xFog*)from);
