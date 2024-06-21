@@ -15,11 +15,11 @@ void zTaxi_Init(xBase& data, xDynAsset& asset, ulong32)
     zTaxi_Init((zTaxi*)&data, (taxi_asset*)&asset);
 }
 
-// func_80172054
-#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Init__FP5zTaxiP10taxi_asset")
 
-// func_80172128
-#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "__ct__6taxiCBFv")
+
+
+
+
 
 void zTaxi_Setup(zTaxi* taxi)
 {
@@ -36,8 +36,8 @@ void zTaxi_Setup(zTaxi* taxi)
     taxi->baseFlags |= (uint16)2;
 }
 
-// func_801721E4
-#pragma GLOBAL_ASM("asm/Game/zTaxi.s", "zTaxi_Update__FP5xBaseP6xScenef")
+
+
 
 void zTaxi_tb_answer(ztalkbox::answer_enum answer)
 {

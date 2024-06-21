@@ -38,21 +38,12 @@ void iScrFxEnd()
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDZERO);
 }
 
-// func_800CF43C
-#pragma GLOBAL_ASM("asm/Core/p2/iScrFX.s", "iScrFxDrawBox__FffffUcUcUcUc")
-
 void iCameraMotionBlurActivate(uint32 activate)
 {
     sMotionBlurEnabled = activate;
 }
 
-#if 1
-
-// func_800CF54C
-#pragma GLOBAL_ASM("asm/Core/p2/iScrFX.s", "iCameraSetBlurriness__Ff")
-
-#else
-
+#if 0
 // The instructions regarding the setting of sMotionBlurEnabled and sMBD.motionBlurAlpha are in the wrong order.
 void iCameraSetBlurriness(float32 amount)
 {
@@ -73,13 +64,7 @@ void iCameraSetBlurriness(float32 amount)
 
 #endif
 
-#if 1
-
-// func_800CF5AC
-#pragma GLOBAL_ASM("asm/Core/p2/iScrFX.s", "iScrFxCameraCreated__FP8RwCamera")
-
-#else
-
+#if 0
 // Instructions in the wrong order.
 void iScrFxCameraCreated(RwCamera* pCamera)
 {
@@ -109,9 +94,6 @@ void iScrFxPostCameraEnd(RwCamera* pCamera)
     GCMB_SiphonFrameBuffer(pCamera);
 }
 
-// func_800CF66C
-#pragma GLOBAL_ASM("asm/Core/p2/iScrFX.s", "iCameraOverlayRender__FP8RwCameraP8RwRaster6RwRGBA")
-
 RwRaster* FBMBlur_DebugIntervention(RwCamera* camera, RwRaster* ras)
 {
     return ras;
@@ -122,13 +104,7 @@ int32 iScrFxMotionBlurOpen(RwCamera* camera)
     return 0;
 }
 
-#if 1
-
-// func_800CF800
-#pragma GLOBAL_ASM("asm/Core/p2/iScrFX.s", "iScrFxCameraDestroyed__FP8RwCamera")
-
-#else
-
+#if 0
 // Something strange going one here.
 int32 iScrFxCameraDestroyed(RwCamera* pCamera)
 {
@@ -144,13 +120,7 @@ int32 iScrFxCameraDestroyed(RwCamera* pCamera)
 
 #endif
 
-#if 1
-
-// func_800CF854
-#pragma GLOBAL_ASM("asm/Core/p2/iScrFX.s", "iScrFxMotionBlurRender__FP8RwCameraUi")
-
-#else
-
+#if 0
 // WIP.
 void iScrFxMotionBlurRender(RwCamera* camera, uint32 col)
 {

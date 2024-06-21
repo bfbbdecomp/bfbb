@@ -61,8 +61,8 @@ extern const int8 zEntPlayer_Strings[];
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
 extern uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total];
 
-// func_80066210
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SpawnWandBubbles__FP5xVec3Ui")
+
+
 
 void zEntPlayerKillCarry()
 {
@@ -92,11 +92,11 @@ void zEntPlayerKillCarry()
     globals.player.carry.grabbed = NULL;
 }
 
-// func_80066500
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerControlOn__F13zControlOwner")
 
-// func_80066558
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerControlOff__F13zControlOwner")
+
+
+
+
 
 void TellPlayerVillainIsNear(float32 visnear)
 {
@@ -108,180 +108,180 @@ void SetPlayerKillsVillainTimer(float32 time)
     globals.player.VictoryTimer = time;
 }
 
-// func_800665D8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DampenControls__FPfPfff")
 
-// func_800667A0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CalcAnimSpeed__FP4xEntfPf")
 
-// func_800667EC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LeanUpdate__Fff")
 
-// func_80066864
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "TurnToFace__FP4xEntPC5xVec3ff")
 
-// func_8006697C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerArrive__FP4xEntP5xBase")
 
-// func_800669EC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerAbsControl__FP4xEntfff")
 
-// func_80067F40
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "InvReset__Fv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void HealthReset()
 {
     globals.player.Health = globals.player.MaxHealth;
 }
 
-// func_80068068
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunAnyCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800680E8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068180
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunStoicCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068218
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunScaredCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800682B0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006833C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "RunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006838C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "RunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068410
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068490
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WalkStoicCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068528
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WalkVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800685B4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WalkScaredCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006864C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IdleCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006869C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IdleStoicCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068704
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IdleVictoryCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068760
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IdleScaredCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800687C8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IdleSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068818
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "AnyMoveCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068834
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "AnyStopCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006884C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SlipRunCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068878
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "NoSlipCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800688A0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "IdleCB__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_800688D0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "InactiveCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068918
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "InactiveCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068934
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "InactiveFinishedCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068950
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068968
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandTrackCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006899C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandNoTrackCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_800689D0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandHighCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068A00
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandRunCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068A30
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandWalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068A60
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandFastCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068A90
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LandNoTrackWalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068AD0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LandSlipIdleCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068B10
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandSlipRunCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068B50
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LandNoTrackFastCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068B90
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LandNoTrackSlipRunCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068BDC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LandNoTrackSlipIdleCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068C28
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LandCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068C5C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LandSlipRunCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068C9C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SandyLandCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068CB4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleSpinCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068D30
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleSpinCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068D78
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBashCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068E0C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBashCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068E94
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBashStrikeCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068E9C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBashStrikeCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068EB8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBashToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+                   
+
+
+
+
+
+
+                   
+
+
+
+                   
+
+
+
+                   
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -293,8 +293,8 @@ uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3
     return (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000));
 }
 
-// func_80068F24
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBounceCB__FP15xAnimTransitionP11xAnimSinglePv")
+
+
 
 uint32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -307,15 +307,15 @@ uint32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_
     return (globals.player.JumpState == 0 || globals.player.JumpState == 1);
 }
 
-// func_80068FE8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceStrikeCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80069054
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BBounceToJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006905C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BBounceToJumpCB__FP15xAnimTransitionP11xAnimSinglePv")
+
+
+
+                   
+
+
+
 
 uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -333,8 +333,8 @@ uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             globals.player.g.PowerUp[0]);
 }
 
-// func_80069168
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BbowlCB__FP15xAnimTransitionP11xAnimSinglePv")
+
+
 
 uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -418,8 +418,8 @@ uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 #else
-// func_80069508
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GooDeathCB__FP15xAnimTransitionP11xAnimSinglePv")
+
+
 #endif
 
 uint32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -513,8 +513,8 @@ uint32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
 }
 
-// func_800698A8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DefeatedCB__FP15xAnimTransitionP11xAnimSinglePv")
+
+
 
 uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*)
 {
@@ -531,12 +531,12 @@ int32 zEntPlayer_InBossBattle()
     );
 }
 
-// func_800699F0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SpatulaGrabCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80069BBC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "SpatulaGrabStopCB__FP15xAnimTransitionP11xAnimSinglePv")
+
+
+
+
+                   
 
 uint32 LCopterCheck(xAnimTransition*, xAnimSingle*)
 {
@@ -544,32 +544,25 @@ uint32 LCopterCheck(xAnimTransition*, xAnimSingle*)
             (globals.pad0->pressed & 0x10000));
 }
 
-// func_80069CF0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LCopterCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80069DD8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "StopLCopterCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80069E28
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DoWallJumpCheck__Fv")
 
-// func_80069FF0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "WallJumpLaunchCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A054
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "WallJumpLaunchCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A098
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "WallJumpCallback__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A20C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "WallJumpFlightLandCheck__FP15xAnimTransitionP11xAnimSinglePv")
-#else
-#endif
+
+
+
+
+
+                   
+
+
+
+                   
+
+
+
 
 uint32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -577,9 +570,9 @@ uint32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void
     return 0;
 }
 
-// func_8006A238
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "WallJumpLandFlightCheck__FP15xAnimTransitionP11xAnimSinglePv")
+
+
+                   
 
 uint32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -593,23 +586,20 @@ uint32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             (globals.pad0->pressed & 0x10000));
 }
 
-// func_8006905C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "JumpCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A344
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "JumpApexCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068EDC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BounceCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_80068F24
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BounceCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A4A4
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BounceStopLCopterCB__FP15xAnimTransitionP11xAnimSinglePv")
-#else
+
+
+
+
+
+
+
+
+
+#if 0
 // surprisingly doesn't match at all even though it appears to be simple
 uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -622,280 +612,280 @@ uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param
 }
 #endif
 
-// func_8006A4FC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DblJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A58C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "DblJumpCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A708
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "TongueDblJumpCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A770
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "TongueDblSpinCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A788
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "FallCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A864
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BoulderRollMoveCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A890
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BoulderRollIdleCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A8C0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BoulderRollCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A8E8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "BoulderRollWindupCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006A92C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BoulderRollCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006ACA4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BoulderRollDoneCheck__Fv")
 
-// func_8006AD00
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BoulderRollDoneCB__Fv")
 
-// func_8006AEE8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SlideTrackCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006AEFC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SlideTrackCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006AF94
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "NoslideTrackCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006AFA4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "NoslideTrackCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006AFD4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "TrackFallCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B004
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "TrackFallCB__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006B024
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "TrackPrefallJumpCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B080
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LedgeGrabCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B0A4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LedgeGrabCB__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006B158
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LedgeFinishCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B1A4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PatrickGrabCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B1B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "PatrickGrabFailed__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B1CC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PatrickGrabKill__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B1E4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PatrickGrabThrow__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B22C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "PatrickAttackCheck__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006B2A0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PatrickStunCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B2D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PatrickMeleeCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B310
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PatrickGrabCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B5E8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntPlayer.s",                                                                       \
-    "TalkCheck__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B604
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntPlayer.s",                                                                       \
-    "TalkDoneCheck__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B624
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "speak_update__24_esc__2_unnamed_esc__2_zEntPlayer_cpp_esc__2_Ff")
 
-// func_8006B6CC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerSpeakStart__FUiUii")
 
-// func_8006B78C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerSpeakStop__Fv")
 
-// func_8006B7B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GetPatrickTarget__FP4xEnt")
 
-// func_8006BC90
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "PatrickGrabThrowCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006BD40
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_LassoNotify__F14en_LASSO_EVENT")
 
-// func_8006BDA8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "MeleeCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006BE20
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoStartCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006BE94
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
 uint32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*)
 {
     return !sLassoInfo->target;
 }
 
-// func_8006BEA8
+
 uint32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-// func_8006BEB8
+
 uint32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*)
 {
     return 0;
 }
 
-// func_8006BEC0
+
 uint32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-// func_8006BED0
+
 uint32 LassoReyankCheck(xAnimTransition*, xAnimSingle*)
 {
     return 0;
 }
 
-// func_8006BED8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoFailIdleSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006BF24
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoFailIdleCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006BF70
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoFailWalkCheck__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006BFBC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoFailRunCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C008
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoFailRunOutOfWorldCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C054
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoFailRunSlipCheck__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006C0A0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "JumpMeleeCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006B2D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "MeleeCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C184
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoStartCB__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006C2CC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoThrowCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C3E4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoFlyCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C570
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoDestroyCB__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006C684
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoYankCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C6F0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "MeleeStopCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C734
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "SpatulaMeleeStopCB__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006C78C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoStopCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C83C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingGroundedBeginCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C8AC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingBeginCheck__FP15xAnimTransitionP11xAnimSinglePv")
+                   
 
-// func_8006C8E0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingReleaseCheck__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006C940
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingBeginCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CA5C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingGroundedBeginCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CAC8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoSwingTossCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CBB0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "LassoSwingCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CC14
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingGroundedCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CC68
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "LassoSwingReleaseCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CD08
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "StunBubbleTrail__FP11xAnimSingle")
 
-// func_8006CDAC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBashContrails__FP11xAnimSingle")
 
-// func_8006CE70
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BubbleBounceContrails__FP11xAnimSingle")
 
-// func_8006CF04
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "StunStartFallCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CF14
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "StunRadiusCB__FP15xAnimTransitionP11xAnimSinglePv")
 
-// func_8006CFF0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "MeleeAttackBoundCollide__FP4xEntP6zSceneP6xBound")
 
-// func_8006D0A4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CheckObjectAgainstMeleeBound__FP4xEntPv")
 
-// func_8006D5CC
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+                   
+
+
+
+                   
+
+
+
+                   
+
+
+
+                   
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 bool zEntPlayer_IsSneaking()
 {
     if (gCurrentPlayer != eCurrentPlayerSpongeBob)
@@ -914,10 +904,8 @@ bool zEntPlayer_IsSneaking()
     }
 }
 
-// func_8006D628
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "load_talk_filter__FPUcP16xModelAssetParamUii")
-#else
+
+#if 0
 // The cmpw instruction used in `if ((int32)non_choices[j] - 1 == i)` has its
 // operands in the wrong order.
 int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_size, int32 max_size)
@@ -1020,103 +1008,103 @@ void load_player_ini()
     }
 }
 
-// func_8006D930
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Init__FP4xEntP9xEntAsset")
 
-// func_8006E670
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_RestoreSounds__Fv")
+
+
+
+
 
 void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 {
     return;
 }
 
-// func_8006E698
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_StreakFX__FP4xEntf")
 
-// func_8006EBBC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SpringboardFX__FP4xEntf")
 
-// func_8006EDA4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "getPadDefl__FP13_tagPadAnalogP5xVec2")
 
-// func_8006F080
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "BoulderVEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
-// func_8006F0B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_BoulderVehicleRender__FP4zEnt")
 
-// func_8006F0DC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "zEntPlayer_BoulderVehicleMove__FP4xEntP6xScenefP9xEntFrame")
 
-// func_8006F0E8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_BoulderVehicleUpdate__FP4xEntP6xScenef")
 
-// func_8006F7A4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_PredictionUpdate__FP4xEntf")
 
-// func_8006F97C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_PredictPos__FP5xVec3ffi")
 
-// func_8006FA64
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerKnockToSafety__FP4xEnt")
 
-// func_8006FC50
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_FindGrabEnt__FP4xEntP6zScenePi")
 
-// func_8006FEAC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Update__FP4xEntP6xScenef")
 
-// func_800745B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_CheckCritterContact__FP4xEntf")
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
 {
     globals.player.carry.patLauncher = patLauncher;
 }
 
-// func_80074954
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_ShadowModelEnable__Fv")
 
-// func_80074A24
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_ShadowModelDisable__Fv")
 
-// func_80074AF4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_BubbleBowlLaneRender__FP4zEnt")
 
-// func_80074CB4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_ReticleRender__FP4zEnt")
 
-// func_80074EF0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "get_reticle_bound__FR5xVec3Rf")
 
-// func_80075120
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerUpdateModelSB__Fv")
 
-// func_800755E8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerUpdateModel__Fv")
 
-// func_80075620
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerEmitTongueBubbles__Fv")
 
-// func_80075698
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerEmitSlideBubbles__Fv")
 
-// func_80075710
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerCheckHelmetPop__Fv")
 
-// func_800757AC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerCheckShoePop__Fv")
 
-// func_80075878
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Render__FP4zEnt")
 
-// func_80075EC8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Move__FP4xEntP6xScenefP9xEntFrame")
 
-// func_80076204
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_setBoulderMode__FUi")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
 {
@@ -1137,17 +1125,17 @@ int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
     return true;
 }
 
-// func_800762A8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_DamageNPCKnockBack__FP5xBaseUiP5xVec3")
 
-// func_800763B0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_DamageKnockIntoAir__Ff")
 
-// func_80076430
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_Damage__FP5xBaseUi")
 
-// func_8007685C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_MoveInfo__Fv")
+
+
+
+
+
+
+
+
 
 void zEntPlayer_GiveHealth(int32 quantity)
 {
@@ -1167,11 +1155,9 @@ void zEntPlayer_GiveHealth(int32 quantity)
     }
 }
 
-// func_80076A20
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_GiveSpatula__Fi")
-#else
-// functionally equivalent, typical floating point memes
+
+#if 0
+
 void zEntPlayer_GiveSpatula(int32)
 {
     sSpatulaGrabbed = 1;
@@ -1255,181 +1241,181 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
     }
 }
 
-// func_80076C84
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CalcJumpImpulse_Smooth__Ffffff")
 
-// func_80076F2C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CalcJumpImpulse__FP10zJumpParamPC15zPlayerSettings")
 
-// func_80076F8C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerJumpStart__FP4xEntP10zJumpParam")
 
-// func_80077030
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerJumpAddDriver__FP4xEnt")
 
-// func_8007705C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerJumpLand__FP4xEnt")
 
-// func_80077168
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerJumpUpdate__FP4xEntP6xScenef")
 
-// func_8007771C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerEGenUpdate__FP4xEntP6xScenef")
 
-// func_80077810
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerVelUpdate__FP4xEntP6xScenef")
 
-// func_80077D54
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "nearestTrackCB__FP14RpIntersectionP19RpCollisionTrianglefPv")
 
-// func_80078084
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "det3x3top1__Fffffff")
 
-// func_800780A0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SlideTrackUpdate__FP4xEnt")
 
-// func_8007860C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerTSlideUpdate__FP4xEntP6xScenef")
 
-// func_800788C0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerFloorUpdate__FP4xEntP6xScenef")
 
-// func_80079404
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerDepenQuery__FP4xEntP4xEntP6xScenefP7xCollis")
 
-// func_800794A8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerBoundUpdate__FP4xEntP5xVec3")
 
-// func_8007950C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerSurfDamageUpdate__FP4xEntP6xScenef")
 
-// func_8007977C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerMountHackUpdate__Ff")
 
-// func_800797D4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerMountHackTakeAction__FP4xEntUi")
 
-// func_80079818
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerDriveUpdate__FP4xEntP6xScenef")
 
-// func_80079E84
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerExit__FP4xEnt")
 
-// func_80079EA4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "PlayerHitAnimInit__FP14xModelInstanceP15xAnimTransitionPUi")
 
-// func_80079FB4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_ObjIDIsTrack__FUi")
 
-// func_8007A0D0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerPreReset__Fv")
 
-// func_8007A120
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerReset__FP4xEnt")
 
-// func_8007A8EC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollisBuildFromDepen__FP7xCollis")
 
-// func_8007A960
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollCheckOneEnt__FP4xEntP6xScenePv")
 
-// func_8007AE04
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CollidePyramidBoxTop__FP7xCollisP4xBoxfP7xSphere")
+                   
 
-// func_8007B24C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollCheckOneVillain__FP4xEntP6xScenePv")
 
-// func_8007B5E0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollisTranslate__FP7xCollisfff")
 
-// func_8007B6F0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollsAllTranslate__FP7xCollisfff")
 
-// func_8007B794
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollsWallsTranslate__FP7xCollisfff")
 
-// func_8007B838
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollsWallsTranslate__FP7xCollisPC5xVec3")
 
-// func_8007B864
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollsSidesTranslate__FP7xCollisfff")
 
-// func_8007B904
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollCheckEnv__FP4xEntP6xScene")
 
-// func_8007B984
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "ComputeFudge__Fff")
 
-// func_8007B9DC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CalcCombinedDepen__FRfRffffff")
 
-// func_8007BC3C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollsSelectDepen__FP4xEntP6xScenef")
 
-// func_8007C388
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerCollide__FP4xEntP6xScenef")
 
-// func_8007C55C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerCollTrigger__FP4xEntP6xScene")
 
-// func_8007C96C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "GetPosVec__FP5xBase")
 
-// func_8007C9B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
-// func_8007D3F8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerSwingUpdate__FP4xEntfff")
 
-// func_8007D8EC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerTeeterCheck__FP4xEntP6xScenef")
 
-// func_8007DAA8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerRotMatchUpdateEnt__FP4xEntP6xScenefPv")
 
-// func_8007DDE8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_StoreCheckPoint__FP5xVec3fUi")
 
-// func_8007DE48
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_LoadCheckPoint__Fv")
 
-// func_8007DFC0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "_SetupRumble__F14_tagePlayerSnd14_tagRumbleTypef")
 
-// func_8007DFE0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDInit__Fv")
 
-// func_80080790
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlay__F14_tagePlayerSndf")
 
-// func_80080878
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd")
 
-// func_8008089C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSndUi")
 
-// func_80080968
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDPlayDelayed__Ff")
 
-// func_80080A38
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "zEntPlayer_SNDPlayStream__FUiUi20_tagePlayerStreamSndUi")
 
-// func_80080A7C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntPlayer.s",                                                                       \
-    "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf")
 
-// func_80080AC0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zEntPlayer.s",                                                                       \
-    "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf")
 
-// func_80080EF4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "zEntPlayer_SNDPlayRandom__F14_tagePlayerSnd14_tagePlayerSndf")
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+                   
 
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
 {
@@ -1447,68 +1433,68 @@ void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
     }
 }
 
-// func_80081240
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDStop__F14_tagePlayerSnd")
 
-// func_800812E4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_SNDStopStream__Fv")
+
+
+
+
 
 void zEntPlayer_SNDNotifyPlaying(uint32 id)
 {
     sCurrentStreamSndID = id;
 }
 
-// func_80081320
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerBeginCollideNoBupdate__FP4xEntP6xScenef")
 
-// func_80081468
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerCollsDetect__FP4xEntP6xScenef")
 
-// func_80081528
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerHackFixBbashMiss__FP14xModelInstance")
 
-// func_80081668
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s",                                                        \
-                   "PlayerLedgeInit__FP16zLedgeGrabParamsP14xModelInstance")
 
-// func_80081880
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "PlayerLedgeUpdate__FP4xEntP6xScenef")
 
-// func_800820E4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "__as__10xEntCollisFRC10xEntCollis")
 
-// func_80082174
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_UpdateVelocityBlur__Fv")
 
-// func_8008226C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "dampen_velocity__FR5xVec3RC5xVec3f")
 
-// func_800823A4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "player_sound_hop_load__FUii")
 
-// func_800824C4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_LoadSounds__Fv")
 
-// func_80082568
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_UnloadSounds__Fv")
 
-// func_80082648
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "dont_move__FP4xEntP6xScenefP9xEntFrame")
+                   
 
-// func_80082674
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_MinimalUpdate__FP4xEntP6xScenefR5xVec3")
 
-// func_800829A4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_MinimalRender__FP4zEnt")
 
-// func_80082AB8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayerDyingInGoo__Fv")
 
-// func_80082ACC
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "__sinit_zEntPlayer_cpp")
 
-// func_80082AD8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "xVec3ScaleC__FP5xVec3PC5xVec3fff")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
@@ -1521,66 +1507,66 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
-// func_80082B64
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "xMat3x3SMul__FP7xMat3x3PC7xMat3x3f")
 
-// func_80082BD0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "SetCarryState__10zNPCCommonF18en_NPC_CARRY_STATE")
 
-// func_80082BD8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "CanRope__10zNPCCommonFv")
 
-// func_80082BE4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "XZDstSqToPlayer__10zNPCCommonFP5xVec3Pf")
 
-// func_80082C48
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "XZDstSqToPos__10zNPCCommonFPC5xVec3P5xVec3Pf")
 
-// func_80082C8C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "XZVecToPos__10zNPCCommonFP5xVec3PC5xVec3Pf")
 
-// func_80082CF8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "Pos__10zNPCCommonFv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 uint8 xSndIsPlaying(uint32 assetID)
 {
     return (uint8)iSndIsPlaying(assetID);
 }
 
-// func_80082D2C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "xSndIsPlayingByHandle__FUi")
 
-// func_80082D4C
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zSandy_AnimTable__Fv")
 
-// func_800864B8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zPatrick_AnimTable__Fv")
 
-// func_80088FD8
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_AnimTable__Fv")
 
-// func_8008ECE4
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zSpongeBobTongue_AnimTable__Fv")
 
-// func_8008EF38
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_BoulderVehicleAnimTable__Fv")
 
-// func_8008F0A0
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "zEntPlayer_TreeDomeSBAnimTable__Fv")
 
-// func_80090B98
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "__as__12xSweptSphereFRC12xSweptSphere")
 
-// func_80090D70
-#pragma GLOBAL_ASM("asm/Game/zEntPlayer.s", "__as__13xiMat4x3UnionFRC13xiMat4x3Union")
 
-// func_80090DF4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int32 zNPCTiki::IsHealthy()
 {
     return flg_vuln != 0;
 }
 
-// func_80090E08
+
 void zCameraTranslate(xCamera* cam, xVec3* pos)
 {
     zCameraTranslate(cam, pos->x, pos->y, pos->z);
@@ -1608,7 +1594,7 @@ xVec3* NPCC_upDir(xEnt* ent)
     return (xVec3*)&ent->model->Mat->up;
 }
 
-// func_80090E60
+
 int32 zGooIs(xEnt* ent)
 {
     float32 temp;

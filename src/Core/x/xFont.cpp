@@ -291,10 +291,6 @@ namespace
 
 #if 1
     basic_rect<float32> get_tex_bounds(const font_data& fd, uint8 c);
-// func_80020334
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "get_tex_bounds__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRCQ219_esc__2_unnamed_esc__2_xFont_cpp_esc__2_9font_dataUc")
 #else
     basic_rect<float32> get_tex_bounds(const font_data& fd, uint8 c)
     {
@@ -304,10 +300,6 @@ namespace
 
 #if 1
     basic_rect<float32> get_bounds(const font_data& fd, uint8 c);
-// func_80020500
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "get_bounds__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRCQ219_esc__2_unnamed_esc__2_xFont_cpp_esc__2_9font_dataUc")
 #else
     basic_rect<float32> get_bounds(const font_data& fd, uint8 c)
     {
@@ -317,10 +309,6 @@ namespace
 
 #if 1
     bool init_font_data(font_data& fd);
-// func_800205D0
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "init_font_data__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRQ219_esc__2_unnamed_esc__2_xFont_cpp_esc__2_9font_data")
 #else
     bool init_font_data(font_data& fd)
     {
@@ -419,9 +407,6 @@ namespace
 
 #ifndef NON_MATCHING
     void init_model_cache();
-// func_80020C50
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s",                                                           \
-                   "init_model_cache__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_Fv")
 #else
     void init_model_cache()
     {
@@ -462,9 +447,6 @@ namespace
     static signed char init_968;
 
     xModelInstance* load_model(uint32 id);
-// func_80020DD0
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s",                                                           \
-                   "load_model__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FUi")
 #else
     xModelInstance* load_model(uint32 id)
     {
@@ -598,10 +580,7 @@ void xfont::restore_render_state()
     RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)oldrs.filter);
 }
 
-#ifndef NON_MATCHING
-// func_800212A4
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "bounds__5xfontCFc")
-#else
+#ifdef NON_MATCHING
 basic_rect<float32> xfont::bounds(char c) const
 {
     font_data& fd = active_fonts[id];
@@ -731,10 +710,7 @@ void xfont::irender(const char* text, float32 x, float32 y) const
 
 static const basic_rect<float32> _1107 = {};
 
-#ifndef NON_MATCHING
-// func_800216A0
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "irender__5xfontCFPCcUlff")
-#else
+#ifdef NON_MATCHING
 void xfont::irender(const char* text, ulong32 text_size, float32 x, float32 y) const
 {
     if (!text)
@@ -775,10 +751,6 @@ namespace
 {
 #ifndef NON_MATCHING
     ulong32 parse_split_tag(xtextbox::split_tag& ti);
-// func_800217D8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "parse_split_tag__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRQ28xtextbox9split_tag")
 #else
     ulong32 parse_split_tag(xtextbox::split_tag& ti)
     {
@@ -1274,8 +1246,8 @@ namespace
 } // namespace
 
 #if 1
-// func_80022630
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "temp_layout__8xtextboxCFb")
+
+
 #else
 xtextbox::layout& xtextbox::temp_layout(bool cache) const
 {
@@ -1347,8 +1319,8 @@ xtextbox::callback xtextbox::text_cb = { xtextbox::text_render, NULL, NULL };
 static substr arg_buffer_1611[32];
 static xtextbox::tag_entry entry_buffer_1612[16];
 
-// func_80022908
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "read_tag__8xtextboxFRC6substr")
+
+
 #else
 xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 {
@@ -1445,11 +1417,7 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80022B24
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s",                                                           \
-                   "find_entry__8xtextboxFRCQ28xtextbox14tag_entry_listRC6substr")
-#else
+#ifdef NON_MATCHING
 xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr& name)
 {
     // non-matching: el.size and el.entries are not cached at the beginning
@@ -1468,10 +1436,7 @@ xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80022B94
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "read_list__8xtextboxFRCQ28xtextbox9tag_entryPfUl")
-#else
+#ifdef NON_MATCHING
 ulong32 xtextbox::read_list(const tag_entry& e, float32* v, ulong32 vsize)
 {
     ulong32 total = e.args_size;
@@ -1492,10 +1457,7 @@ ulong32 xtextbox::read_list(const tag_entry& e, float32* v, ulong32 vsize)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80022C14
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "read_list__8xtextboxFRCQ28xtextbox9tag_entryPiUl")
-#else
+#ifdef NON_MATCHING
 ulong32 xtextbox::read_list(const tag_entry& e, int32* v, ulong32 vsize)
 {
     ulong32 total = e.args_size;
@@ -1553,10 +1515,7 @@ void xtextbox::layout::clear()
     tb = xtextbox::create();
 }
 
-#ifndef NON_MATCHING
-// func_80022DE0
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "trim_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line")
-#else
+#ifdef NON_MATCHING
 void xtextbox::layout::trim_line(jot_line& line)
 {
     // non-matching: mtctr and bdnz not generated
@@ -2043,10 +2002,7 @@ void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jo
 // this is different than the one in xMath.h
 #define min(a, b) ((a) >= (b) ? (b) : (a))
 
-#ifndef NON_MATCHING
-// func_800239E8
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "yextent__Q28xtextbox6layoutCFfRiii")
-#else
+#ifdef NON_MATCHING
 float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int32 end_jot) const
 {
     size = 0;
@@ -2181,10 +2137,6 @@ namespace
 #if 1
     void parse_tag_alpha(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                          const xtextbox::split_tag& ti);
-// func_80023C6C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "parse_tag_alpha__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
 #else
     void parse_tag_alpha(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                          const xtextbox::split_tag& ti)
@@ -2216,10 +2168,6 @@ namespace
 #if 1
     void parse_tag_red(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                        const xtextbox::split_tag& ti);
-// func_80023DE4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "parse_tag_red__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
 #else
     void parse_tag_red(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                        const xtextbox::split_tag& ti)
@@ -2250,10 +2198,6 @@ namespace
 #if 1
     void parse_tag_green(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                          const xtextbox::split_tag& ti);
-// func_80023F5C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "parse_tag_green__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
 #else
     void parse_tag_green(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                          const xtextbox::split_tag& ti)
@@ -2285,10 +2229,6 @@ namespace
 #if 1
     void parse_tag_blue(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                         const xtextbox::split_tag& ti);
-// func_800240D4
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xFont.s",                                                                          \
-    "parse_tag_blue__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag")
 #else
     void parse_tag_blue(xtextbox::jot& a, const xtextbox& tb, const xtextbox&,
                         const xtextbox::split_tag& ti)
@@ -3278,11 +3218,7 @@ xVec2& xVec2::operator=(const xVec2& other) // temp
 
 namespace
 {
-#if 1
-// func_8002580C
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s",                                                           \
-                   "get_texture_size__19_esc__2_unnamed_esc__2_xFont_cpp_esc__2_FR8RwRaster")
-#else
+#if 0
     xVec2 get_texture_size(RwRaster& raster)
     {
         // todo: uses int-to-float conversion
@@ -3555,11 +3491,7 @@ namespace
                        float32 rcz);
 } // namespace
 
-#ifndef NON_MATCHING
-// func_80025D90
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s",                                                           \
-                   "render_fill_rect__FRC13basic_rect_esc__0_f_esc__1_10iColor_tag")
-#else
+#ifdef NON_MATCHING
 void render_fill_rect(const basic_rect<float32>& bounds, iColor_tag color)
 {
     if (!bounds.empty())
@@ -3853,10 +3785,7 @@ ulong32 xtextbox::layout::jots_size() const
     return _jots_size;
 }
 
-#ifndef NON_MATCHING
-// func_800265BC
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "create__8xtextboxFv")
-#else
+#ifdef NON_MATCHING
 xtextbox xtextbox::create()
 {
     // non-matching: floats
@@ -3864,10 +3793,7 @@ xtextbox xtextbox::create()
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80026614
-#pragma GLOBAL_ASM("asm/Core/x/xFont.s", "create__5xfontFv")
-#else
+#ifdef NON_MATCHING
 xfont xfont::create()
 {
     // non-matching: floats

@@ -15,7 +15,7 @@ int32 g_straninit;
 st_PACKER_READ_FUNCS* g_pkrf;
 st_PACKER_ASSETTYPE* g_typeHandlers;
 
-// func_8004B108
+
 int32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
 {
     if (g_straninit++ == 0)
@@ -28,7 +28,7 @@ int32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
     return g_straninit;
 }
 
-// func_8004B154
+
 int32 xSTShutdown()
 {
     g_straninit--;
@@ -41,7 +41,7 @@ int32 xSTShutdown()
     return g_straninit;
 }
 
-// func_8004B194
+
 // This doesn't seem exactly how HI would have written this, but it OKs
 // TODO: Try to clean this up?
 int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
@@ -123,7 +123,7 @@ int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
     return result;
 }
 
-// func_8004B344
+
 int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop)
 {
     int32 result = 1;
@@ -142,7 +142,7 @@ int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop)
     return result;
 }
 
-// func_8004B3B4
+
 void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
 {
     st_STRAN_SCENE* sdata;
@@ -176,7 +176,7 @@ void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
     }
 }
 
-// func_8004B494
+
 float32 xSTLoadStep(uint32)
 {
     float32 pct = PKRLoadStep(0) != 0 ? 0.0f : 1.00001f;
@@ -186,7 +186,7 @@ float32 xSTLoadStep(uint32)
     return pct;
 }
 
-// func_8004B4E8
+
 void xSTDisconnect(uint32 sid, int32 flg_hiphop)
 {
     st_STRAN_SCENE* sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2 ? 1 : 0);
@@ -196,7 +196,7 @@ void xSTDisconnect(uint32 sid, int32 flg_hiphop)
     }
 }
 
-// func_8004B534
+
 int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32))
 {
     st_STRAN_SCENE* sdata;
@@ -222,7 +222,7 @@ int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32
     return rc;
 }
 
-// func_8004B5E0
+
 int8* xSTAssetName(uint32 aid)
 {
     int8* aname = NULL;
@@ -244,7 +244,7 @@ int8* xSTAssetName(uint32 aid)
     return aname;
 }
 
-// func_8004B674
+
 int8* xSTAssetName(void* raw_HIP_asset)
 {
     int8* aname = NULL;
@@ -263,7 +263,7 @@ int8* xSTAssetName(void* raw_HIP_asset)
     return aname;
 }
 
-// func_8004B70C
+
 void* xSTFindAsset(uint32 aid, uint32* size)
 {
     void* memloc = NULL;
@@ -301,7 +301,7 @@ void* xSTFindAsset(uint32 aid, uint32* size)
     return memloc;
 }
 
-// func_8004B818
+
 int32 xSTAssetCountByType(uint32 type)
 {
     int32 sum = 0;
@@ -314,7 +314,7 @@ int32 xSTAssetCountByType(uint32 type)
     return sum;
 }
 
-// func_8004B8A0
+
 void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size)
 {
     void* memptr = NULL;
@@ -336,7 +336,7 @@ void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size)
     return memptr;
 }
 
-// func_8004B95C
+
 int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 {
     int32 rc = 0;
@@ -357,10 +357,8 @@ int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
     return rc;
 }
 
-// func_8004BA18
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO")
-#else
+
+#if 0
 // WIP
 int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 {
@@ -394,7 +392,7 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 }
 #endif
 
-// func_8004BB64
+
 int32 xSTGetAssetInfoInHxP(uint32 aid, st_PKR_ASSET_TOCINFO* ainfo, uint32 j)
 {
     int32 rc = 0;
@@ -415,13 +413,13 @@ int32 xSTGetAssetInfoInHxP(uint32 aid, st_PKR_ASSET_TOCINFO* ainfo, uint32 j)
     return rc;
 }
 
-// func_8004BC34
+
 int8* xST_xAssetID_HIPFullPath(uint32 aid)
 {
     return xST_xAssetID_HIPFullPath(aid, 0);
 }
 
-// func_8004BC58
+
 int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID)
 {
     int8* id = NULL;
@@ -443,10 +441,8 @@ int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID)
     return id;
 }
 
-// func_8004BCEC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_PreLoadScene__FP14st_STRAN_SCENEPCc")
-#else
+
+#ifdef NON_MATCHING
 // register crap
 int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
 {
@@ -461,7 +457,7 @@ int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
 }
 #endif
 
-// func_8004BD58
+
 int8* XST_translate_sid(uint32 sid, int8* extension)
 {
     static int8 buffer[0x40] = {};
@@ -469,7 +465,7 @@ int8* XST_translate_sid(uint32 sid, int8* extension)
     return buffer;
 }
 
-// func_8004BDB4
+
 int8* XST_translate_sid_path(uint32 sid, int8* extension)
 {
     // NOTE: This buffer extends for 0x44 bytes in the rom
@@ -481,13 +477,13 @@ int8* XST_translate_sid_path(uint32 sid, int8* extension)
     return buffer;
 }
 
-// func_8004BE60
+
 void XST_reset_raw()
 {
     memset(&g_xstdata, 0, sizeof(st_STRAN_DATA));
 }
 
-// func_8004BE90
+
 st_STRAN_SCENE* XST_lock_next()
 {
     st_STRAN_SCENE* sdata = NULL;
@@ -512,10 +508,8 @@ st_STRAN_SCENE* XST_lock_next()
     return sdata;
 }
 
-// func_8004BF38
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xstransvc.s", "XST_unlock__FP14st_STRAN_SCENE")
-#else
+
+#ifdef NON_MATCHING
 void XST_unlock(st_STRAN_SCENE* sdata)
 {
     if (sdata != NULL)
@@ -531,7 +525,7 @@ void XST_unlock(st_STRAN_SCENE* sdata)
 }
 #endif
 
-// func_8004BF90
+
 void XST_unlock_all()
 {
     if (g_xstdata.loadlock)
@@ -546,13 +540,13 @@ void XST_unlock_all()
     }
 }
 
-// func_8004C008
+
 st_STRAN_SCENE* XST_get_rawinst(int32 index)
 {
     return &g_xstdata.hipscn[index];
 }
 
-// func_8004C01C
+
 int32 XST_cnt_locked()
 {
     int32 sum = 0;
@@ -566,7 +560,7 @@ int32 XST_cnt_locked()
     return sum;
 }
 
-// func_8004C0E4
+
 st_STRAN_SCENE* XST_nth_locked(int32 index)
 {
     st_STRAN_SCENE* sdata = NULL;
@@ -587,7 +581,7 @@ st_STRAN_SCENE* XST_nth_locked(int32 index)
     return sdata;
 }
 
-// func_8004C144
+
 st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
 {
     st_STRAN_SCENE* da_sdata = NULL;
@@ -607,7 +601,7 @@ st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
     return da_sdata;
 }
 
-// func_8004C210
+
 void iFileAsyncService()
 {
 }

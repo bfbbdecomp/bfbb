@@ -78,10 +78,7 @@ uint32 zCollGeom_EntSetup(xEnt* ent)
     return 0;
 }
 
-#ifndef NON_MATCHING
-// func_8011676C
-#pragma GLOBAL_ASM("asm/Game/zCollGeom.s", "zCollGeom_Init__Fv")
-#else
+#ifdef NON_MATCHING
 void zCollGeom_Init()
 {
     sNumTables = xSTAssetCountByType('COLL');

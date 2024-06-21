@@ -9,13 +9,7 @@ extern xPar* gParDead;
 extern float32 lbl_803CCF10; // 0.0f
 extern float32 lbl_803CCF14; // 255f
 
-#if 1
-
-// func_8003694C
-#pragma GLOBAL_ASM("asm/Core/x/xPar.s", "xParMemInit__Fv")
-
-#else
-
+#if 0
 // For some reason, it does not recompare gParDead and assumes the first comparison is valid for all.
 void xParMemInit()
 {

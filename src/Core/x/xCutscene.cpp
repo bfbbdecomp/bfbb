@@ -22,10 +22,8 @@ extern float32 _672; // 1.0
 extern float32 lbl_803CCB3C; // 0.0
 extern float32 lbl_803CCB40; // 0.033333335
 
-// func_80015EA4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Init__FPv")
-#else
+
+#ifdef NON_MATCHING
 // Non-matching: scheduling
 void xCutscene_Init(void* toc)
 {
@@ -56,10 +54,8 @@ void xCutscene_Init(void* toc)
 }
 #endif
 
-// func_80015F9C
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Create__FUi")
-#else
+
+#if 0
 // Damn RwEngineInstance ruining this (as well as the members being accessed incorrectly by Ghidra)
 xCutscene* xCutscene_Create(uint32 id)
 {
@@ -102,10 +98,8 @@ xCutscene* xCutscene_Create(uint32 id)
 }
 #endif
 
-// func_800160E0
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Destroy__FP9xCutscene")
-#else
+
+#if 0
 // WIP
 int32 xCutscene_Destroy(xCutscene* csn)
 {
@@ -150,7 +144,7 @@ int32 xCutscene_Destroy(xCutscene* csn)
 }
 #endif
 
-// func_80016220
+
 int32 xCutscene_LoadStart(xCutscene* csn)
 {
     uint32 cnt;
@@ -166,10 +160,8 @@ int32 xCutscene_LoadStart(xCutscene* csn)
     return 1;
 }
 
-// func_80016268
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutsceneConvertBreak__FfP14xCutsceneBreakUii")
-#else
+
+#if 0
 // WIP
 float32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, uint32 param_3, int param_4)
 {
@@ -203,52 +195,35 @@ float32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, uint32 par
 }
 #endif
 
-// func_800162C8
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Update__FP9xCutscenef")
 
-// func_800164C8
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_SetSpeed__FP9xCutscenef")
 
-// func_80016590
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xlog__Ff")
 
-// func_800165B0
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "logf__3stdFf")
 
-// func_800165D4
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_SetCamera__FP9xCutsceneP7xCamera")
 
-// func_80016818
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s",                                                       \
-                   "xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi")
 
-// func_80016A30
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "JDeltaEval__FP8RpAtomicPvPvf")
 
-// func_800172A8
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "CutsceneShadowRender__FP19CutsceneShadowModel")
 
-// func_80017318
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xCutscene_Render__FP9xCutscenePP4xEntPiPf")
 
-// func_80017CA4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 xCutscene* xCutscene_CurrentCutscene()
 {
     return &sActiveCutscene;
 }
-
-// func_80017CB0
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "atan__3stdFf")
-
-// func_80017CD0
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "atanf__3stdFf")
-
-// func_80017CF4
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "xVec3Lerp__FP5xVec3PC5xVec3PC5xVec3f")
-
-// func_80017D34
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s", "CanRenderNow__9XCSNNoseyFv")
-
-// func_80017D38
-#pragma GLOBAL_ASM("asm/Core/x/xCutscene.s",                                                       \
-                   "UpdatedAnimated__9XCSNNoseyFP8RpAtomicP11RwMatrixTagUiUi")

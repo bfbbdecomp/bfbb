@@ -326,10 +326,7 @@ int32 zUIFontEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toPa
     return rval;
 }
 
-#ifndef NON_MATCHING
-// func_800BCC98
-#pragma GLOBAL_ASM("asm/Game/zUIFont.s", "zUIFont_Render__FP4xEnt")
-#else
+#ifdef NON_MATCHING
 void zUIFont_Render(xEnt* e)
 {
     zUIFont* ent = (zUIFont*)e;

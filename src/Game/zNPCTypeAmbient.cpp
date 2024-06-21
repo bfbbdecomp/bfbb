@@ -85,11 +85,11 @@ xAnimTable* ZNPC_AnimTable_Ambient()
     return table;
 }
 
-// func_80107A00
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_AnimTable_Jelly__Fv")
 
-// func_80107C28
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ZNPC_AnimTable_Neptune__Fv")
+
+
+
+
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCAmbient::Init(xEntAsset* asset)
@@ -102,8 +102,8 @@ void zNPCAmbient::Init(xEntAsset* asset)
 }
 */
 
-// func_80107F40
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Init__11zNPCAmbientFP9xEntAsset")
+
+
 
 void zNPCAmbient::Reset()
 {
@@ -137,12 +137,12 @@ void zNPCAmbient::SelfSetup()
     psy->SetSafety('NGN0');
 }
 
-// func_801080A8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
-                   "AnimPick__11zNPCAmbientFi16en_NPC_GOAL_SPOTP5xGoal")
 
-// func_80108100
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "NPCMessage__11zNPCAmbientFP6NPCMsg")
+
+                   
+
+
+
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCJelly::Init(xEntAsset* asset)
@@ -154,8 +154,8 @@ void zNPCJelly::Init(xEntAsset* asset)
 }
 */
 
-// func_801081F4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Init__9zNPCJellyFP9xEntAsset")
+
+
 
 void zNPCJelly::ParseINI()
 {
@@ -237,45 +237,45 @@ void zNPCJelly::JellyKill()
     }
 }
 
-// func_80108530
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AnimPick__9zNPCJellyFi16en_NPC_GOAL_SPOTP5xGoal")
 
-// func_8010862C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "BUpdate__9zNPCJellyFP5xVec3")
 
-// func_801086E0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__9zNPCJellyFP6xScenef")
 
-// func_801087A0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "AmbiHandleMail__9zNPCJellyFP6NPCMsg")
 
-// func_801088C4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "PlayWithAlpha__9zNPCJellyFf")
 
-// func_8010898C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SetAlpha__9zNPCJellyFf")
 
-// func_801089B4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "PlayWithAnimSpd__9zNPCJellyFv")
 
-// func_80108A30
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "PumpFaster__9zNPCJellyFv")
 
-// func_80108ADC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "JellyBoneWorldPos__9zNPCJellyCFP5xVec3i")
 
-// func_80108BD4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "PlayWithLightnin__9zNPCJellyFv")
 
-// func_80108C90
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "JELY_grul_getAngry__FP5xGoalPvP11en_trantypefPv")
 
-// func_80108E54
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ActLikeOctopus__9zNPCJellyFv")
 
-// func_80108F04
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
-                   "AnimPick__11zNPCNeptuneFi16en_NPC_GOAL_SPOTP5xGoal")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCNeptune::ParseINI()
@@ -287,13 +287,10 @@ void zNPCNeptune::ParseINI()
 }
 */
 
-// func_80108FD8
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "ParseINI__11zNPCNeptuneFv")
 
-#ifndef NON_MATCHING
-// func_80109024
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__11zNPCNeptuneFv")
-#else
+
+
+#ifdef NON_MATCHING
 void zNPCNeptune::Reset()
 {
     zNPCAmbient::Reset();
@@ -301,15 +298,15 @@ void zNPCNeptune::Reset()
 }
 #endif
 
-// func_8010905C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__11zNPCNeptuneFP6xScenef")
 
-// func_80109224
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s",                                                   \
-                   "AnimPick__12zNPCMimeFishFi16en_NPC_GOAL_SPOTP5xGoal")
 
-// func_8010927C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Reset__12zNPCMimeFishFv")
+
+
+
+                   
+
+
+
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCMimeFish::Reset()
@@ -319,8 +316,8 @@ void zNPCMimeFish::Reset()
 }
 */
 
-// func_801092B0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "Process__12zNPCMimeFishFP6xScenef")
+
+
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCMimeFish::Process(xScene* xscn, float32 dt)
@@ -328,17 +325,17 @@ void zNPCMimeFish::Process(xScene* xscn, float32 dt)
 }
 */
 
-// func_801092B4
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "__ct__12zNPCMimeFishFi")
 
-// func_801092F0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "__ct__11zNPCNeptuneFi")
 
-// func_8010932C
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "__ct__9zNPCJellyFi")
 
-// func_80109368
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "__ct__11zNPCAmbientFi")
+
+
+
+
+
+
+
+
 
 int32 zNPCAmbient::AmbiHandleMail(NPCMsg msg)
 {
@@ -379,8 +376,8 @@ uint8 zNPCAmbient::PhysicsFlags()
     return 3;
 }
 
-// func_801093EC
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "SelfSetup__11zNPCNeptuneFv")
+
+
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCNeptune::SelfSetup()
@@ -418,6 +415,3 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->y = y;
     o->z = z;
 }
-
-// func_80109474
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeAmbient.s", "xUtil_choose_esc__0_i_esc__1___FPCiiPCf")

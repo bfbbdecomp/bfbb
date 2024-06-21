@@ -227,10 +227,7 @@ void iCameraUpdatePos(RwCamera* cam, xMat4x3* pos)
     RwFrameUpdateObjects(f);
 }
 
-#ifndef NON_MATCHING
-// func_800C058C
-#pragma GLOBAL_ASM("asm/Core/x/iCamera.s", "iCameraSetFOV__FP8RwCameraf")
-#else
+#ifdef NON_MATCHING
 void iCameraSetFOV(RwCamera* cam, float32 fov)
 {
     RwV2d vw;
@@ -274,10 +271,7 @@ void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix)
     view_matrix->pos.z = rw_view->pos.z;
 }
 
-#ifndef NON_MATCHING
-// func_800C06D0
-#pragma GLOBAL_ASM("asm/Core/x/iCamera.s", "iCameraSetNearFarClip__Fff")
-#else
+#ifdef NON_MATCHING
 void iCameraSetNearFarClip(float32 nearPlane, float32 farPlane)
 {
     if (nearPlane <= *(const float32*)&_742_1)
@@ -298,10 +292,7 @@ void iCameraSetNearFarClip(float32 nearPlane, float32 farPlane)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800C0704
-#pragma GLOBAL_ASM("asm/Core/x/iCamera.s", "iCameraSetFogParams__FP10iFogParamsf")
-#else
+#ifdef NON_MATCHING
 void iCameraSetFogParams(iFogParams* fp, float32 time)
 {
     if (!fp || fp->type == rwFOGTYPENAFOGTYPE)
@@ -338,8 +329,8 @@ iFogParams& iFogParams::operator=(const iFogParams& other) // temp
     return *this;
 }
 
-// func_800C0868
-#pragma GLOBAL_ASM("asm/Core/x/iCamera.s", "iCameraUpdateFog__FP8RwCamerax")
+
+
 
 void iCameraSetFogRenderStates()
 {

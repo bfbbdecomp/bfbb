@@ -32,7 +32,7 @@ extern float32 _1018_0_375; // 0.375
 extern float32 _909_0_5; // 0.5
 extern float32 _1562_0_625; // 0.625
 
-// func_80180D54
+
 void NPCSupplement_Startup()
 {
     return;
@@ -43,48 +43,46 @@ void NPCSupplement_Shutdown()
     NPCWidget_Shutdown();
 }
 
-// func_80180D78
+
 void NPCSupplement_ScenePrepare()
 {
     NPAR_ScenePrepare();
 }
 
-// func_80180D98
+
 void NPCSupplement_SceneFinish()
 {
     NPAR_SceneFinish();
 }
 
-// func_80180DB8
+
 void NPCSupplement_ScenePostInit()
 {
     NPAR_PartySetup(NPAR_TYP_VISSPLASH, 0, 0);
 }
 
-// func_80180DE4
+
 void NPCSupplement_SceneReset(void)
 {
     NPAR_SceneReset();
     NPCC_ShadowCacheReset();
 }
 
-// func_80180E08
+
 void NPCSupplement_Timestep(float dt)
 {
     NPAR_Timestep(dt);
 }
 
-// func_80180E28
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPCC_MakeLightningInfo__F9en_npclytP16_tagLightningAdd")
 
-// func_801813B4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_MakeStreakInfo__F12en_npcstreakP10StreakInfo")
 
-// func_801815F4
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_StreakCreate__F12en_npcstreak")
-#else
+                   
+
+
+
+
+
+#if 0
 uint32 NPCC_StreakCreate(en_npcstreak styp)
 {
     StreakInfo info = info_950;
@@ -93,25 +91,25 @@ uint32 NPCC_StreakCreate(en_npcstreak styp)
 }
 #endif
 
-// func_80181628
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_BurstBubble__F11en_npcburstP5xVec3")
 
-// func_801817F8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_MakeASplash__FPC5xVec3f")
 
-// func_8018190C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_Slick_MakePlayerSlip__FP10zNPCCommon")
 
-// func_80181968
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPCC_RenderProjTexture__FP8RwRasterfP7xMat4x3ffP12xShadowCacheiP4xEnt")
 
-// func_80181A64
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zNPCSupplement.s",                                                                   \
-    "NPCC_RenderProjTextureFaceCamera__FP8RwRasterfP5xVec3ffP12xShadowCacheiP4xEnt")
 
-// func_80181BC0
+
+
+
+
+
+
+                   
+
+
+
+    
+    
+
+
 void NPAR_ScenePrepare()
 {
     for (int i = 0; i < 12; i++)
@@ -120,7 +118,7 @@ void NPAR_ScenePrepare()
     }
 }
 
-// func_80181C10
+
 void NPAR_SceneFinish()
 {
     for (int i = 0; i < 12; i++)
@@ -132,7 +130,7 @@ void NPAR_SceneFinish()
     g_day = 0;
 }
 
-// func_80181C70
+
 void NPAR_SceneReset()
 {
     for (int i = 0; i < 12; i++)
@@ -141,7 +139,7 @@ void NPAR_SceneReset()
     }
 }
 
-// func_80181CC0
+
 void NPAR_CheckSpecials()
 {
     g_gameExtrasFlags = zGameExtras_ExtrasFlags();
@@ -149,10 +147,8 @@ void NPAR_CheckSpecials()
     g_isSpecialDay = g_gameExtrasFlags & 0b111110111;
 }
 
-// func_80181CFC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Timestep__Ff")
-#else
+
+#if 0
 // WIP
 void NPAR_Timestep(float32 dt)
 {
@@ -173,7 +169,7 @@ void NPAR_Timestep(float32 dt)
 }
 #endif
 
-// func_80181DD8
+
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
 {
     NPARMgmt* mgmt = &g_npar_mgmt[parType];
@@ -186,7 +182,7 @@ NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xt
     return mgmt;
 }
 
-// func_80181E60
+
 NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 {
     NPARMgmt* mgmt = &g_npar_mgmt[parType];
@@ -199,10 +195,10 @@ NPARMgmt* NPAR_FindParty(en_nparptyp parType)
     return mgmt;
 }
 
-// func_80181EB0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Init__8NPARMgmtF11en_nparptypPPvP12NPARXtraData")
 
-// func_80181F74
+
+
+
 void NPARMgmt::Clear()
 {
     typ_npar = NPAR_TYP_UNKNOWN;
@@ -215,20 +211,20 @@ void NPARMgmt::Clear()
     user_data = 0;
 }
 
-// func_80181F9C
+
 void NPARMgmt::UpdateAndRender(float32 param_1)
 {
     g_npar_info[typ_npar].fun_update(this, param_1);
 }
 
-// func_80181FD4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80182094
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_OilBubble__FP8NPARMgmtf")
 
-// func_801822C4
+                   
+
+
+
+
+
 void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* param_2)
 {
     *param_2->pos = param_1->pos;
@@ -244,17 +240,15 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
     param_2->uv[1].y = param_1->uv_br[1];
 }
 
-// func_8018237C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__18NPARParmTubeSpiralCFP8NPARData11en_nparmodePC5xVec3PC5xVec3f")
 
-// func_80182434
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeSpiral__FP8NPARMgmtf")
 
-// func_80182728
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_TubeSpiralMagic__FP6RwRGBAif")
-#else
+                   
+
+
+
+
+
+#ifdef NON_MATCHING
 // Matches, it just defines new data that won't match until that stuff can be redefined.
 // It also loads a bunch of byte stuff at the end for some reason
 // For the record it also matches when using the static colors. Externing zanyArray does not work.
@@ -430,234 +424,225 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
 }
 #endif
 
-// func_80182988
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__20NPARParmTubeConfettiCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80182C0C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TubeConfetti__FP8NPARMgmtf")
 
-// func_801830A0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__17NPARParmGloveDustCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
+                   
 
-// func_8018314C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_GloveDust__FP8NPARMgmtf")
 
-// func_8018333C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_MonsoonRain__FP8NPARMgmtf")
 
-// func_8018352C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__18NPARParmSleepyZeezCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_8018371C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_SleepyZeez__FP8NPARMgmtf")
 
-// func_80183BB0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__19NPARParmChuckSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80183D40
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_ChuckSplash__FP8NPARMgmtf")
+                   
 
-// func_80184058
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__17NPARParmVisSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80184118
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_VisSplash__FP8NPARMgmtf")
 
-// func_80184430
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__18NPARParmTarTarGunkCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80184620
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_TarTarGunk__FP8NPARMgmtf")
 
-// func_80184AB4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__17NPARParmDogBreathCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80184B60
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_DogBreath__FP8NPARMgmtf")
 
-// func_80184EA4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "ConfigPar__17NPARParmFahrwerkzCFP8NPARData11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80185094
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_Upd_Fireworks__FP8NPARMgmtf")
 
-// func_80185528
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitOilShieldPop__FPC5xVec3")
+                   
 
-// func_80185554
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitOilTrailz__FPC5xVec3")
 
-// func_80185580
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitOilVapors__FPC5xVec3")
 
-// func_801855AC
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitOilSplash__FPC5xVec3PC5xVec3")
 
-// func_801855D8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPAR_EmitOilBubble__F11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80185658
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTubeSpiral__FPC5xVec3PC5xVec3f")
 
-// func_801856E0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTubeSpiralCin__FPC5xVec3PC5xVec3f")
+                   
 
-// func_80185768
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTubeConfetti__FPC5xVec3PC5xVec3")
 
-// func_801857D4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTubeSparklies__FPC5xVec3PC5xVec3")
 
-// func_80185844
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitGloveDust__FPC5xVec3PC5xVec3")
 
-// func_801858B0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitSleepyZeez__FPC5xVec3PC5xVec3")
 
-// func_8018591C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitH2ODrips__FPC5xVec3PC5xVec3")
 
-// func_80185948
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitH2ODrops__FPC5xVec3PC5xVec3")
+                   
 
-// func_80185974
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitH2OSpray__FPC5xVec3PC5xVec3")
 
-// func_801859A0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitH2OTrail__FPC5xVec3")
 
-// func_801859D0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitDroplets__F11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80185A50
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTarTarNozzle__FPC5xVec3PC5xVec3")
 
-// func_80185A7C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTarTarTrail__FPC5xVec3PC5xVec3")
 
-// func_80185AA8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTarTarSplash__FPC5xVec3PC5xVec3")
+                   
 
-// func_80185AD4
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTarTarSpoil__FPC5xVec3PC5xVec3")
 
-// func_80185B00
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitTarTarSmoke__FPC5xVec3PC5xVec3")
 
-// func_80185B2C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPAR_EmitTarTarGunk__F11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80185BAC
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitDoggyWisps__FPC5xVec3PC5xVec3")
 
-// func_80185BD8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitDoggyAttack__FPC5xVec3PC5xVec3")
 
-// func_80185C04
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPAR_EmitDoggyBreath__F11en_nparmodePC5xVec3PC5xVec3")
+                   
 
-// func_80185C84
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitVSSpray__FPC5xVec3PC5xVec3")
 
-// func_80185CB0
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPAR_EmitVisSplash__F11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80185D30
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPAR_EmitFWExhaust__FPC5xVec3PC5xVec3")
 
-// func_80185D5C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s",                                                    \
-                   "NPAR_EmitFireworks__F11en_nparmodePC5xVec3PC5xVec3")
 
-// func_80185DDC
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_ShadowCacheReset__Fv")
 
-// func_80185E28
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_ShadowCacheReserve__Fv")
+                   
 
-// func_80185E9C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NPCC_ShadowCacheRelease__FP12xShadowCache")
 
-// func_80185F68
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "Defaults__10StreakInfoFv")
 
-// func_80185FB8
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "xFXStreakStart__FP10StreakInfo")
 
-// func_80185FF8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 float32 ARCH3(float32 param_1)
 {
     return _907_1_0 - BOWL3(param_1);
 }
 
-// func_80186020
+
 float32 BOWL3(float32 param_1)
 {
     return QUB((float32)_1022_2_0 * (float32)iabs(param_1 - _909_0_5));
 }
 
-// func_80186058
+
 float32 QUB(float32 param_1)
 {
     return param_1 * param_1 * param_1;
 }
 
-// func_80186064
+
 float32 ARCH(float32 param_1)
 {
     return _907_1_0 - BOWL(param_1);
 }
 
-// func_8018608C
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "BOWL__Ff")
 
-// func_801860BC
+
+
+
 void NPARMgmt::Done()
 {
     Clear();
 }
 
-// func_801860DC
+
 void NPARMgmt::Reset()
 {
     cnt_active = 0;
 }
 
-// func_801860E8
+
 int32 NPARMgmt::IsReady()
 {
     return num_max != 0 && par_buf != 0;
 }
 
-// func_80186110
+
 void NPARMgmt::XtraDataSet(NPARXtraData* param_1)
 {
     xtra_data = param_1;
 }
 
-// func_80186118
+
 void NPARMgmt::UserDataSet(void** param_1)
 {
     user_data = param_1;
 }
-
-// func_80186120
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "PromoteTail__8NPARMgmtFi")
-
-// func_80186164
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "__as__8NPARDataFRC8NPARData")
-
-// func_80186208
-#pragma GLOBAL_ASM("asm/Game/zNPCSupplement.s", "NextAvail__8NPARMgmtFv")

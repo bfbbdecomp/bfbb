@@ -8,19 +8,17 @@
 
 extern xSFX* s_managedEnvSFX[1];
 
-// func_80043EB8
+
 void xSFXEnvironmentalStreamSceneExit(void)
 {
     memset(&s_managedEnvSFX, 0, 4);
 }
 
-// func_80043EE4
-#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXUpdateEnvironmentalStreamSounds__FP4xSFXUi")
 
-// func_800440E4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXWillSendDone__FP4xSFX")
-#else
+
+
+
+#ifdef NON_MATCHING
 int32 xSFXWillSendDone(xSFX* param_1)
 {
     if (param_1->linkCount != 0)
@@ -38,17 +36,15 @@ int32 xSFXWillSendDone(xSFX* param_1)
 }
 #endif
 
-// func_80044124
+
 void xSFXInit(void* t, void* asset)
 
 {
     xSFXInit((xSFX*)t, (xSFXAsset*)asset);
 }
 
-// func_80044144
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXInit__FP4xSFXP9xSFXAsset")
-#else
+
+#ifdef NON_MATCHING
 void xSFXInit(xSFX* t, xSFXAsset* asset)
 {
     xBaseInit(t, asset);
@@ -75,35 +71,33 @@ void xSFXInit(xSFX* t, xSFXAsset* asset)
 }
 #endif
 
-// func_800441F4
+
 void xSFXSave(xSFX* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-// func_80044214
+
 void xSFXLoad(xSFX* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
 
-// func_80044234
+
 void xSFXReset(xSFX* param_1)
 {
     xBaseReset(param_1, param_1->asset);
 }
 
-// func_80044258
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXConvertFlags__FUi")
-#else
+
+#if 0
 uint32 xSFXConvertFlags(uint32 param_1)
 {
     return param_1 & 4 ? 0 : 0x800;
 }
 #endif
 
-// func_8004426C
+
 void xSFXUpdate(xSFX* param_1)
 {
     if ((param_1->asset->flagsSFX & 0x800) && (param_1->sndID) &&
@@ -115,13 +109,13 @@ void xSFXUpdate(xSFX* param_1)
     }
 }
 
-// func_800442E4
-#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
-// func_80044424
-#pragma GLOBAL_ASM("asm/Core/x/xSFX.s", "xSFXPlay__FP4xSFX")
 
-// func_80044740
+
+
+
+
+
 void xSFXStop(xSFX* param_1)
 {
     xSndStop(param_1->sndID);

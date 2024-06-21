@@ -314,10 +314,8 @@ int32 zGameExtras_CheatFlags()
     return g_flg_chEnabled;
 }
 
-// func_80099B0C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameExtras_NewGameReset__Fv")
-#else if
+
+#if 0
 void zGameExtras_NewGameReset()
 {
     // very close to matching
@@ -375,8 +373,8 @@ void AddToCheatPressed(uint32 button)
     sCheatPressed[15] = button;
 }
 
-// func_80099D3C
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "zGameCheats__Ff")
+
+
 
 void GEC_CheatFlagAdd(int32 bit)
 {
@@ -388,10 +386,9 @@ void GEC_CheatFlagToggle(int32 bit)
     g_flg_chEnabled ^= bit;
 }
 
-// func_80099F2C
+
 #if 1
 static uint32 aid_sndList_1160[7] = {};
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_dfltSound__Fv")
 #else
 void GEC_dfltSound()
 {
@@ -525,10 +522,8 @@ void GEC_cb_ChaChing()
     xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
 }
 
-// func_8009A380
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_RestoreHealth__Fv")
-#else
+
+#if 0
 void GEC_cb_RestoreHealth()
 {
     // stored in .sdata, not sure where/how to declare this
@@ -566,10 +561,9 @@ void GEC_cb_NoPantsMode()
     xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
 }
 
-// func_8009A4B0
+
 #if 1
 static uint32 choices_1318[3] = {};
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_cb_CruiseControl__Fv")
 #else
 void GEC_cb_CruiseControl()
 {
@@ -604,10 +598,9 @@ void GEC_cb_SwapCCUD()
     GEC_dfltSound();
 }
 
-// func_8009A5AC
+
 #if 1
 static uint32 aid_sndList_1342[6] = {};
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "GEC_villSound__Fv")
 #else
 void GEC_villSound()
 {
@@ -685,10 +678,8 @@ uint32 zGame_HackIsGallery()
     return 0;
 }
 
-// func_8009A810
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zGameExtras.s", "xUtil_choose_esc__0_Ui_esc__1___FPCUiiPCf")
-#else
+
+#if 0
 template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 const* float_list)
 {
     if (list == NULL)

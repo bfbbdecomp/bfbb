@@ -112,10 +112,8 @@ extern float32 zCamera_f_3_141; // 3.141593 ~ pi
 extern float32 zCamera_f_20_0; // 20.0
 extern float32 zCamera_f_180_0; // 180.0
 
-// func_8004FBFC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraReset__FP7xCamera")
-#else
+
+#if 0
 void zCameraReset(xCamera* cam)
 {
     // classic multiple float assign non match
@@ -209,10 +207,8 @@ float32 EaseInOut(float32 param)
     return param * (param * (zCamera_f_2_0 - zCamera_f_1_5 * param) + zCamera_f_0_5);
 }
 
-// func_8004FE2C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraConversUpdate__FP7xCameraf")
-#else
+
+#if 0
 void zCameraConversUpdate(xCamera* cam, float32 dt)
 {
     if (zcam_dest == NULL)
@@ -285,8 +281,8 @@ float32 MatrixSpeed(zFlyKey keys[])
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
 
-// func_800500B0
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyUpdate__FP7xCameraf")
+
+
 
 zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 {
@@ -304,10 +300,8 @@ zFlyKey& zFlyKey::operator=(const zFlyKey& other)
     return *this;
 }
 
-// func_800504C0
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyStart__FUi")
-#else
+
+#if 0
 void zCameraFlyStart(uint32 assetID)
 {
     st_PKR_ASSET_TOCINFO info;
@@ -337,19 +331,17 @@ void zCameraFlyStart(uint32 assetID)
 }
 #endif
 
-// func_80050560
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "__as__7xCameraFRC7xCamera")
 
-// func_80050904
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFlyRestoreBackup__FP7xCamera")
 
-// func_80050BB4
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraRewardUpdate__FP7xCameraf")
 
-// func_80050E5C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff")
-#else
+
+
+
+
+
+
+
+#if 0
 void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, float32& hgoal,
                              float32& pitch_goal, float32& lktm, float32 dt)
 {
@@ -464,18 +456,16 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
 }
 #endif
 
-// func_8005115C
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraUpdate__FP7xCameraf")
+
+
 
 void zCameraSetBbounce(int32 bbouncing)
 {
     zcam_bbounce = bbouncing;
 }
 
-// func_80052098
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetLongbounce__Fi")
-#else
+
+#if 0
 void zCameraSetLongbounce(int32 lbounce)
 {
     if (zcam_highbounce != 0 || zcam_longbounce != lbounce)
@@ -489,10 +479,8 @@ void zCameraSetLongbounce(int32 lbounce)
 }
 #endif
 
-// func_800520C8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetHighbounce__Fi")
-#else
+
+#if 0
 void zCameraSetHighbounce(int32 lbounce)
 {
     if (zcam_longbounce != 0 || zcam_highbounce != lbounce)
@@ -521,61 +509,61 @@ void zCameraEnableTracking(camera_owner_enum owner)
     stop_track = stop_track & ~owner;
 }
 
-// func_80052120
+
 uint32 zCameraIsTrackingDisabled()
 {
     return stop_track;
 }
 
-// func_80052128
+
 void zCameraDisableInput()
 {
     input_enabled = 0;
 }
 
-// func_80052134
+
 void zCameraEnableInput()
 {
     input_enabled = 1;
 }
 
-// func_80052140
+
 void zCameraDisableLassoCam()
 {
     lassocam_enabled = 0;
 }
 
-// func_8005214C
+
 void zCameraEnableLassoCam()
 {
     lassocam_enabled = 1;
 }
 
-// func_80052158
+
 void zCameraSetLassoCamFactor(float32 new_factor)
 {
     lassocam_factor = new_factor;
 }
 
-// func_80052160
+
 float32 zCameraGetLassoCamFactor()
 {
     return lassocam_factor;
 }
 
-// func_80052168
+
 int32 zCameraGetConvers()
 {
     return zcam_convers;
 }
 
-// func_80052170
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraSetConvers__Fi")
 
-// func_8005224C
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraDoTrans__FP9xCamAssetf")
 
-// func_80052344
+
+
+
+
+
 void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z)
 {
     cam->mat.pos.x += x;
@@ -586,10 +574,10 @@ void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z)
     cam->tran_accum.z += z;
 }
 
-// func_80052390
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCameraEnableWallJump__FP7xCameraRC5xVec3")
 
-// func_80052438
+
+
+
 void zCameraDisableWallJump(xCamera* cam)
 {
     if (wall_jump_enabled != WJVS_DISABLED)
@@ -598,7 +586,7 @@ void zCameraDisableWallJump(xCamera* cam)
     }
 }
 
-// func_80052450
+
 void zCameraSetReward(int32 reward)
 {
     if (zCameraIsTrackingDisabled() != 0)
@@ -609,22 +597,22 @@ void zCameraSetReward(int32 reward)
     zcam_reward = reward;
 }
 
-// func_80052494
+
 void zCameraMinTargetHeightSet(float32 min_height)
 {
     zcam_mintgtheight = min_height;
 }
 
-// func_8005249C
+
 void zCameraMinTargetHeightClear()
 {
     zcam_mintgtheight = zCamera_f_n1_0_e38;
 }
 
-// func_800524A8
-#pragma GLOBAL_ASM("asm/Game/zCamera.s", "zCamera_FlyOnly__Fv")
 
-// func_80052524
+
+
+
 float32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
 {
     float dx = vecA->x - vecB->x;

@@ -6,13 +6,7 @@
 extern float32 lbl_803CCEE8; // 0.95f
 extern float32 lbl_803CCEF0; // 176f
 
-#if 1
-
-// func_80035A00
-#pragma GLOBAL_ASM("asm/Core/x/xordarray.s", "XOrdInit__FP16st_XORDEREDARRAYii")
-
-#else
-
+#if 0
 // Can't figure out how to match the bottom part due to the weird float stuff going on.
 void XOrdInit(st_XORDEREDARRAY* array, int32 size, int32 tempAlloc)
 {
@@ -67,12 +61,7 @@ void XOrdAppend(st_XORDEREDARRAY* array, void* elt)
     array->list[array->cnt++] = elt;
 }
 
-#if 1
-
-// func_80035B58
-#pragma GLOBAL_ASM("asm/Core/x/xordarray.s", "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i")
-
-#else
+#if 0
 
 void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
 {
@@ -100,13 +89,7 @@ void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
 
 #endif
 
-#if 1
-
-// func_80035C0C
-#pragma GLOBAL_ASM("asm/Core/x/xordarray.s", "XOrdRemove__FP16st_XORDEREDARRAYPvi")
-
-#else
-
+#if 0
 // WIP. The comparisons are probably wrong.
 void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, int32 index)
 {
@@ -152,13 +135,7 @@ void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, int32 index)
 
 #endif
 
-#if 1
-
-// func_80035CF4
-#pragma GLOBAL_ASM("asm/Core/x/xordarray.s", "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i")
-
-#else
-
+#if 0
 int32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
 {
     int32 v, index, rightBound, leftBound;
@@ -186,13 +163,7 @@ int32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test
 
 #endif
 
-#if 1
-
-// func_80035D8C
-#pragma GLOBAL_ASM("asm/Core/x/xordarray.s", "XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i")
-
-#else
-
+#if 0
 void XOrdSort(st_XORDEREDARRAY* array, int32 (*test)(void*, void*))
 {
     void** list = array->list;

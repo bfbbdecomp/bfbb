@@ -24,10 +24,7 @@ void xSkyDome_Setup()
     sSkyCount = 0;
 }
 
-#ifndef NON_MATCHING
-// func_8010EEE8
-#pragma GLOBAL_ASM("asm/Core/x/xSkyDome.s", "xSkyDome_AddEntity__FP4xEntii")
-#else
+#ifdef NON_MATCHING
 void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
 {
     int32 i, j;

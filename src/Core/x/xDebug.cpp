@@ -41,17 +41,10 @@ void xtextbox::render(bool cache) const
     render(temp_layout(cache), 0, -1);
 }
 
-// func_80017DE4
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \
-                   "create__8xtextboxFRC5xfontRC13basic_rect_esc__0_f_esc__1_Uiffff")
 
-#if 1
 
-// func_80017EA8
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "__as__5xfontFRC5xfont")
 
-#else
-
+#if 0
 // WIP.
 xfont& xfont::operator=(const xfont& other)
 {
@@ -82,12 +75,11 @@ xfont& xfont::operator=(const xfont& other)
 
 #endif
 
-// func_80017EF4
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \
-                   "create__5xfontFUifff10iColor_tagRC13basic_rect_esc__0_f_esc__1_")
 
-// func_80017F98
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "__as__10iColor_tagFRC10iColor_tag")
+
+
+
+
 
 float32 NSCREENY(float32 scale)
 {
@@ -98,13 +90,3 @@ float32 NSCREENX(float32 scale)
 {
     return _783 * scale;
 }
-
-// func_80017FD4
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "contract__13basic_rect_esc__0_f_esc__1_Fffff")
-
-// func_80018004
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s", "expand__13basic_rect_esc__0_f_esc__1_Fffff")
-
-// func_80018040
-#pragma GLOBAL_ASM("asm/Core/x/xDebug.s",                                                          \
-                   "__as__13basic_rect_esc__0_f_esc__1_FRC13basic_rect_esc__0_f_esc__1_")

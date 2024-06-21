@@ -11,14 +11,7 @@
 
 extern ztaskbox* shared;
 
-#if 1
-
-// func_8013499C
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "load__8ztaskboxFRCQ28ztaskbox10asset_type")
-
-#else
-
-// WIP.
+#if 0
 void ztaskbox::load(const ztaskbox::asset_type& a)
 {
     xBaseInit((xBase*)this, &(xBaseAsset)a);
@@ -63,13 +56,7 @@ void ztaskbox::write(xSerial& s)
     s.Write((uint8)this->state);
 }
 
-#if 1
-
-// func_80134AC8
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "start_talk__8ztaskboxFP10zNPCCommon")
-
-#else
-
+#if 0
 // WIP.
 void ztaskbox::start_talk(zNPCCommon* npc)
 {
@@ -169,13 +156,7 @@ void ztaskbox::initiate()
     }
 }
 
-#if 1
-
-// func_80134D50
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "succeed__8ztaskboxFv")
-
-#else
-
+#if 0
 // Need to figure out how to set up the comparisons.
 void ztaskbox::succeed()
 {
@@ -188,13 +169,7 @@ void ztaskbox::succeed()
 
 #endif
 
-#if 1
-
-// func_80134D90
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "fail__8ztaskboxFv")
-
-#else
-
+#if 0
 // Need to figure out how to set up the comparisons. The setup should be identical to the succeed function.
 void ztaskbox::fail()
 {
@@ -207,13 +182,7 @@ void ztaskbox::fail()
 
 #endif
 
-#if 1
-
-// func_80134DD0
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "complete__8ztaskboxFv")
-
-#else
-
+#if 0
 // Why does the compiler add a random compare at the end????
 void ztaskbox::complete()
 {
@@ -233,13 +202,7 @@ void ztaskbox::set_callback(callback* cb)
     this->cb = cb;
 }
 
-#if 1
-
-// func_80134E40
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "init__8ztaskboxFv")
-
-#else
-
+#if 0
 // WIP.
 void ztaskbox::init()
 {
@@ -264,16 +227,10 @@ bool ztaskbox::exists(state_enum stage)
     return state != STATE_BEGIN && xSTFindAsset(state, NULL);
 }
 
-// func_80134F44
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "set_state__8ztaskboxFQ28ztaskbox10state_enum")
 
-#if 1
 
-// func_80135014
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_talk_start__8ztaskboxFv")
 
-#else
-
+#if 0
 void ztaskbox::on_talk_start()
 {
     if (this->cb != NULL)
@@ -284,22 +241,16 @@ void ztaskbox::on_talk_start()
 
 #endif
 
-// func_8013504C
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_talk_stop__8ztaskboxFQ28ztalkbox11answer_enum")
 
-// func_80135124
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "get_text__8ztaskboxFUi")
 
-// func_801351A4
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase")
 
-#if 1
 
-// func_8013524C
-#pragma GLOBAL_ASM("asm/Game/zTaskBox.s", "on_start__Q28ztaskbox13talk_callbackFv")
 
-#else
 
+
+
+
+#if 0
 // This one just doesn't feel like working.
 void ztaskbox::talk_callback::on_start()
 {

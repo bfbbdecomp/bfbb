@@ -16,8 +16,8 @@ extern float32 xClimate_f_0;
 extern float32 xClimate_f_10_0;
 extern _tagClimate* sClimate;
 
-// func_8000E96C
-#pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateVecFromAngle__FfP5xVec3")
+
+
 
 void xClimateInit(_tagClimate* climate)
 {
@@ -30,8 +30,8 @@ void xClimateInit(_tagClimate* climate)
     climate->rain.snow_emitter->emit_flags &= 0xfe;
 }
 
-// func_8000EA70
-#pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "xClimateInitAsset__FP11_tagClimateP9xEnvAsset")
+
+
 
 void xClimateSetSnow(float32 stre)
 {
@@ -45,10 +45,8 @@ void xClimateSetRain(float32 stre)
     sClimate->rain.strength = stre;
 }
 
-// func_8000EB80
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "GetPosBigDogWhattupFool__FP5xVec3")
-#else
+
+#if 0
 void GetPosBigDogWhattupFool(xVec3* vec)
 {
     vec->x = xClimate_f_10_0 * xglobals.camera.mat.at.x + xglobals.camera.mat.pos.x;
@@ -57,8 +55,8 @@ void GetPosBigDogWhattupFool(xVec3* vec)
 }
 #endif
 
-// func_8000EBC4
-#pragma GLOBAL_ASM("asm/Core/x/xClimate.s", "UpdateRain__FP11_tagClimatef")
+
+
 
 void UpdateWind(_tagClimate* climate, float32 seconds)
 {

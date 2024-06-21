@@ -94,10 +94,7 @@ int32 zGooIs(xEnt* obj, float32& depth, uint32 playerCheck)
     return ret;
 }
 
-#ifndef NON_MATCHING
-// func_801238EC
-#pragma GLOBAL_ASM("asm/Game/zGoo.s", "zGooCollsBegin__Fv")
-#else
+#ifdef NON_MATCHING
 void zGooCollsBegin()
 {
     int32 i;

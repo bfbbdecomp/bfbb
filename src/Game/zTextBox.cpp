@@ -47,12 +47,7 @@ namespace
         render_fill_rect(e.tb.font.clip, convert(a.backdrop.color));
     }
 
-#ifndef NON_MATCHING
-// func_80133E7C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zTextBox.s",                                                                         \
-    "render_bk_tex_scale__22_esc__2_unnamed_esc__2_zTextBox_cpp_esc__2_FRC8ztextbox")
-#else
+#ifdef NON_MATCHING
     void render_bk_tex_scale(const ztextbox& e)
     {
         // non-matching: float instruction order

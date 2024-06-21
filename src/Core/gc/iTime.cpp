@@ -39,13 +39,7 @@ int32 iGetMonth()
     return td.mon + 1;
 }
 
-#if 1
-
-// func_800D45A4
-#pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetCurrFormattedDate__FPc")
-
-#else
-
+#if 0
 // Template for future use.
 char* iGetCurrFormattedDate(char* input)
 {
@@ -53,13 +47,7 @@ char* iGetCurrFormattedDate(char* input)
 
 #endif
 
-#if 1
-
-// func_800D475C
-#pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iGetCurrFormattedTime__FPc")
-
-#else
-
+#if 0
 // WIP.
 char* iGetCurrFormattedTime(char* input)
 {
@@ -104,13 +92,7 @@ iTime iTimeGet()
     return OSGetTime() - sStartupTime;
 }
 
-#if 1
-
-// func_800D4980
-#pragma GLOBAL_ASM("asm/Core/p2/iTime.s", "iTimeDiffSec__Fx")
-
-#else
-
+#if 0
 // I can't seem to figure out the float operations going on here. It looks the setup is fairly right though?
 float32 iTimeDiffSec(iTime time)
 {

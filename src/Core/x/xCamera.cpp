@@ -233,9 +233,7 @@ xMat3x3& xMat3x3::operator=(const xMat3x3& other) // temp
 }
 
 #ifndef NON_MATCHING
-// func_8000B62C
 static void xCam_buildbasis(xCamera* cam);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCam_buildbasis__FP7xCamera")
 #else
 static void xCam_buildbasis(xCamera* cam)
 {
@@ -381,9 +379,7 @@ static void xCam_worldtocyl(float32& d, float32& h, float32& p, const xMat4x3* t
 }
 
 #ifndef NON_MATCHING
-// func_8000B9F0
 static void xCam_CorrectD(xCamera* r3, float32 f1, float32 f2, float32 f3);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCam_CorrectD__FP7xCamerafff")
 #else
 static void xCam_CorrectD(xCamera* r3, float32 f1, float32 f2, float32 f3)
 {
@@ -448,9 +444,7 @@ static void xCam_DampP(xCamera* r3, float32 f1, float32 f2)
 }
 
 #ifndef NON_MATCHING
-// func_8000BAF0
 static void xCam_CorrectYaw(xCamera* r3, float32 f1, float32 f2, float32 f3);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCam_CorrectYaw__FP7xCamerafff")
 #else
 static void xCam_CorrectYaw(xCamera* r3, float32 f1, float32 f2, float32 f3)
 {
@@ -470,9 +464,7 @@ static void xCam_CorrectYaw(xCamera* r3, float32 f1, float32 f2, float32 f3)
 #endif
 
 #ifndef NON_MATCHING
-// func_8000BB34
 static void xCam_CorrectPitch(xCamera* r3, float32 f1, float32 f2, float32 f3);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCam_CorrectPitch__FP7xCamerafff")
 #else
 static void xCam_CorrectPitch(xCamera* r3, float32 f1, float32 f2, float32 f3)
 {
@@ -492,9 +484,7 @@ static void xCam_CorrectPitch(xCamera* r3, float32 f1, float32 f2, float32 f3)
 #endif
 
 #ifndef NON_MATCHING
-// func_8000BB78
 static void xCam_CorrectRoll(xCamera* r3, float32 f1, float32 f2, float32 f3);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCam_CorrectRoll__FP7xCamerafff")
 #else
 static void xCam_CorrectRoll(xCamera* r3, float32 f1, float32 f2, float32 f3)
 {
@@ -614,9 +604,7 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
 }
 
 #ifndef NON_MATCHING
-// func_8000BE28
 static void _xCameraUpdate(xCamera* cam, float32 dt);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "_xCameraUpdate__FP7xCameraf")
 #else
 static void _xCameraUpdate(xCamera* cam, float32 dt)
 {
@@ -625,9 +613,7 @@ static void _xCameraUpdate(xCamera* cam, float32 dt)
 #endif
 
 #ifndef NON_MATCHING
-// func_8000BE28
 void xCameraUpdate(xCamera* cam, float32 dt);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCameraUpdate__FP7xCameraf")
 #else
 void xCameraUpdate(xCamera* cam, float32 dt)
 {
@@ -686,9 +672,7 @@ static void xCameraFXInit()
 }
 
 #ifndef NON_MATCHING
-// func_8000CDE8
 cameraFX* xCameraFXAlloc();
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCameraFXAlloc__Fv")
 #else
 cameraFX* xCameraFXAlloc()
 {
@@ -716,9 +700,7 @@ cameraFX* xCameraFXAlloc()
 #endif
 
 #ifndef NON_MATCHING
-// func_8000CE30
 void xCameraFXZoomUpdate(cameraFX* f, float32 dt, const xMat4x3*, xMat4x3* m);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCameraFXZoomUpdate__FP8cameraFXfPC7xMat4x3P7xMat4x3")
 #else
 void xCameraFXZoomUpdate(cameraFX* f, float32 dt, const xMat4x3*, xMat4x3* m)
 {
@@ -863,9 +845,7 @@ void xCameraFXShakeUpdate(cameraFX* f, float32 dt, const xMat4x3*, xMat4x3* m)
 }
 
 #ifndef NON_MATCHING
-// func_8000D29C
 void xCameraFXUpdate(xCamera* cam, float32 dt);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "xCameraFXUpdate__FP7xCameraf")
 #else
 void xCameraFXUpdate(xCamera* cam, float32 dt)
 {
@@ -938,8 +918,8 @@ void xCameraSetScene(xCamera* cam, xScene* sc)
     iCameraAssignEnv(cam->lo_cam, sc->env->geom);
 }
 
-// func_8000D4A0
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "__as__6xBoundFRC6xBound")
+
+
 
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat)
 {
@@ -1211,10 +1191,8 @@ float std::asinf(float x)
 #endif
 
 #ifndef NON_MATCHING
-// func_8000DDBC
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, float32 f1, const xVec3& r6,
                             float32 f2);
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "bound_sphere_xz__FR5xVec3R5xVec3RC5xVec3fRC5xVec3f")
 #else
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, float32 f1, const xVec3& r6,
                             float32 f2)
@@ -1259,10 +1237,7 @@ void xBinaryCamera::stop()
     this->camera = NULL;
 }
 
-#ifndef NON_MATCHING
-// func_8000DF04
-#pragma GLOBAL_ASM("asm/Core/x/xCamera.s", "update__13xBinaryCameraFf")
-#else
+#ifdef NON_MATCHING
 void xBinaryCamera::update(float32 dt)
 {
     // lol nope

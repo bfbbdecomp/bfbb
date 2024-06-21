@@ -46,14 +46,14 @@ uint32 xStrHashCat(uint32 prefix, const int8* str)
     return hash;
 }
 
-// func_8004C2D0
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStrTok__FPcPCcPPc")
 
-// func_8004C434
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStrTokBuffer__FPCcPCcPv")
 
-// func_8004C5AC
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStricmp__FPCcPCc")
+
+
+
+
+
+
 
 char* xStrupr(char* string)
 {
@@ -69,11 +69,11 @@ char* xStrupr(char* string)
     return string;
 }
 
-// func_8004C6E8
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "xStrParseFloatList__FPfPCci")
 
-// func_8004C88C
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "imemcmp__FPCvPCvUl")
+
+
+
+
 
 // @unnamed@xString_cpp@::tolower(char)
 extern "C" {
@@ -125,12 +125,3 @@ int32 icompare(const substr& s1, const substr& s2)
     return result;
 }
 */
-
-// func_8004C934
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "icompare__FRC6substrRC6substr")
-
-// func_8004C9B8
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "atox__FRC6substrRUl")
-
-// func_8004CA68
-#pragma GLOBAL_ASM("asm/Core/x/xString.s", "find_char__FRC6substrRC6substr")

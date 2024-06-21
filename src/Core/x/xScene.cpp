@@ -168,10 +168,10 @@ void xSceneForAllNPCs(xScene* sc, xSceneEntCallback func, void* data)
     }
 }
 
-// func_8003F890
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xScene.s",                                                                         \
-    "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv")
+
+
+    
+    
 
 void xRayHitsTikiLandableEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
 {
@@ -255,21 +255,21 @@ void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
     }
 }
 
-// func_80040284
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis")
 
-// func_800403A4
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "xRayHitsScene__FP6xSceneP5xRay3P7xCollis")
 
-// func_800404C4
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc")
+
+
+
+
+
+
 
 cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType)
     : ray(ray), coll(coll), chkby(chkby), collType(collType)
 {
 }
 
-// func_8004066C
+
 void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* param_4)
 {
     float fVar1;
@@ -301,10 +301,8 @@ void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* para
     return;
 }
 
-// func_80040730
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "ProjectBox__FP5xVec3P4xBoxPfPf")
-#else
+
+#ifdef NON_MATCHING
 // Float memes 
 void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 {
@@ -319,18 +317,18 @@ void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 }
 #endif
 
-// func_800407C4
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "Mgc_TriBoxTest__FP5xVec3P4xBox")
+
+
 
 static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle,
                                            float32, void* data);
-// func_80040A7C
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s",                                                          \
-                   "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv")
 
-// func_80040EB4
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s",                                                          \
-                   "boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv")
+
+                   
+
+
+
+                   
 
 static RpCollisionTriangle* sectorNearestFloorCB(RpIntersection* intersection, RpWorldSector*,
                                                  RpCollisionTriangle* collTriangle,
@@ -339,11 +337,11 @@ static RpCollisionTriangle* sectorNearestFloorCB(RpIntersection* intersection, R
     return nearestFloorCB(intersection, collTriangle, distance, data);
 }
 
-// func_80040FBC
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "gridNearestFloorCB__FP4xEntPv")
 
-// func_800410CC
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc")
+
+
+
+
 
 bool cb_ray_hits_ent::operator()(xEnt& ent, xGridBound& gridb)
 {
@@ -397,21 +395,21 @@ bool cb_ray_hits_ent::operator()(xEnt& ent, xGridBound& gridb)
     return true;
 }
 
-// func_80041428
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "__as__10grid_indexFRC10grid_index")
+
+
 
 void xEntEnable(xEnt* ent)
 {
     xBaseEnable(ent);
 }
 
-// func_8004145C
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xScene.s",                                                                         \
-    "xGridCheckBound_esc__0_Q220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent_esc__1___FR5xGridRC6xBoundRC7xQCDataQ220_esc__2_unnamed_esc__2_xScene_cpp_esc__2_15cb_ray_hits_ent")
 
-// func_80041614
-#pragma GLOBAL_ASM("asm/Core/x/xScene.s", "get_grid_index__FRC5xGridff")
+
+    
+    
+
+
+
 
 template <> uint16 range_limit<uint16>(uint16 v, uint16 minv, uint16 maxv)
 {

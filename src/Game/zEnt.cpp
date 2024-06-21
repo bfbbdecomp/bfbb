@@ -36,7 +36,7 @@ extern float32 _1268_zEnt;
 extern float32 _1269_zEnt;
 extern float32 _1270_zEnt;
 
-// func_80054BFC
+
 void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type)
 {
     xEntInit(ent, asset);
@@ -217,17 +217,15 @@ void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type)
     xEntInitForType(ent);
 }
 
-// func_80055064
+
 void zEntSetup(zEnt* ent)
 {
     xEntSetup(ent);
     checkpoint_collision_hack(ent);
 }
 
-// func_80055098
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "checkpoint_collision_hack__FP4zEnt")
-#else
+
+#ifdef NON_MATCHING
 // This can't OK right now because it has static locals that are in zDispatcher.s
 void checkpoint_collision_hack(zEnt* ent)
 {
@@ -268,19 +266,19 @@ void checkpoint_collision_hack(zEnt* ent)
 }
 #endif
 
-// func_80055210
+
 void zEntSave(zEnt* ent, xSerial* s)
 {
     xEntSave(ent, s);
 }
 
-// func_80055230
+
 void zEntLoad(zEnt* ent, xSerial* s)
 {
     xEntLoad(ent, s);
 }
 
-// func_80055250
+
 void zEntReset(zEnt* ent)
 {
     xEntReset(ent);
@@ -309,13 +307,13 @@ void zEntReset(zEnt* ent)
     checkpoint_collision_hack(ent);
 }
 
-// func_80055360
+
 void zEntUpdate(zEnt* ent, zScene* scene, float32 elapsedSec)
 {
     xEntUpdate(ent, scene, elapsedSec);
 }
 
-// func_80055380
+
 void zEntEventAll(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam)
 {
     zScene* s = globals.sceneCur;
@@ -325,7 +323,7 @@ void zEntEventAll(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toPara
     }
 }
 
-// func_80055404
+
 void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam,
                         uint32 type)
 {
@@ -345,16 +343,13 @@ void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* 
     }
 }
 
-// func_800554A0
+
 void zEntEventAllOfType(uint32 toEvent, uint32 type)
 {
     zEntEventAllOfType(NULL, 0, toEvent, NULL, type);
 }
 
-#ifndef NON_MATCHING
-// func_800554D4
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntRecurseModelInfo__FPvP4xEnt")
-#else
+#ifdef NON_MATCHING
 // regalloc
 xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
 {
@@ -411,7 +406,7 @@ xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
 }
 #endif
 
-// func_80055698
+
 void zEntParseModelInfo(xEnt* ent, uint32 assetID)
 {
     uint32 bufsize[4];
@@ -427,10 +422,7 @@ void zEntParseModelInfo(xEnt* ent, uint32 assetID)
     }
 }
 
-#ifndef NON_MATCHING
-// func_8005570C
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntAnimEvent__FP4zEntUiPCf")
-#else
+#ifdef NON_MATCHING
 // This function suffers from a couple floating point memes
 // Additionally it has a jumptable that needs to be generated in the correct place.
 void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
@@ -592,10 +584,7 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80055A98
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "xEnt_AnimTable_AutoEventSmall__Fv")
-#else
+#ifdef NON_MATCHING
 // Thank you floating point memes. Very cool.
 xAnimTable* xEnt_AnimTable_AutoEventSmall()
 {
@@ -641,10 +630,7 @@ xAnimTable* xEnt_AnimTable_AutoEventSmall()
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80055C34
-#pragma GLOBAL_ASM("asm/Game/zEnt.s", "zEntAnimEvent_AutoAnim__FP4zEntUiPCf")
-#else
+#ifdef NON_MATCHING
 // This function needs the floats to be replaced with literals
 // and the jumptable to be generated in the right spot.
 void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animParam)
@@ -779,7 +765,7 @@ void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animPara
 }
 #endif
 
-// func_80055EF4
+
 xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
 {
     uint32 bufsize;
@@ -802,7 +788,7 @@ xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
     return NULL;
 }
 
-// func_80055F7C
+
 int8* zParamGetString(xModelAssetParam* param, uint32 size, int8* tok, int8* def)
 {
     uint32 hash = xStrHash(tok);
@@ -821,13 +807,13 @@ int8* zParamGetString(xModelAssetParam* param, uint32 size, int8* tok, int8* def
     return def;
 }
 
-// func_80056004
+
 int32 zParamGetInt(xModelAssetParam* param, uint32 size, const int8* tok, int32 def)
 {
     return zParamGetInt(param, size, (int8*)tok, def);
 }
 
-// func_80056024
+
 int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def)
 {
     int8* str = zParamGetString(param, size, tok, NULL);
@@ -838,13 +824,13 @@ int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def)
     return def;
 }
 
-// func_80056068
+
 float32 zParamGetFloat(xModelAssetParam* param, uint32 size, const int8* tok, float32 def)
 {
     return zParamGetFloat(param, size, (int8*)tok, def);
 }
 
-// func_80056088
+
 float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 def)
 {
     int8* str = zParamGetString(param, size, tok, NULL);
@@ -855,14 +841,14 @@ float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 
     return def;
 }
 
-// func_800560CC
+
 int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, const int8* tok, int32 count,
                          float32* def, float32* result)
 {
     return zParamGetFloatList(param, size, (int8*)tok, count, def, result);
 }
 
-// func_800560EC
+
 int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 count, float32* def,
                          float32* result)
 {
@@ -884,14 +870,14 @@ int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 
     return act;
 }
 
-// func_8005620C
+
 int32 zParamGetVector(xModelAssetParam* param, uint32 size, const int8* tok, xVec3 vec1,
                       xVec3* vec2)
 {
     return zParamGetVector(param, size, (int8*)tok, vec1, vec2);
 }
 
-// func_80056248
+
 int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 vec1, xVec3* vec2)
 {
     int8* str = zParamGetString(param, size, tok, NULL);
@@ -924,7 +910,7 @@ int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 vec
     return list;
 }
 
-// func_80056310
+
 void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::radius_enum rtype)
 {
     *center = *xBoundCenter(&ent->bound);
@@ -974,26 +960,26 @@ void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::
     }
 }
 
-// func_80056480
+
 void xModelAnimCollStop(xModelInstance& m)
 {
     m.Flags = m.Flags & 0xe7ff;
 }
 
-// func_80056490
+
 xMat4x3* xEntGetFrame(const xEnt* ent)
 {
     return xModelGetFrame(ent->model);
 }
 
-// func_800564B4
+
 void xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
                 const xVec3* pos, float32 radius, sound_category category, float32 delay)
 {
     xSndPlay3D(id, vol, pitch, priority, flags, pos, radius * _1039_zEnt, radius, category, delay);
 }
 
-// func_800564E4
+
 int32 xNPCBasic::SelfType() const
 {
     return myNPCType;

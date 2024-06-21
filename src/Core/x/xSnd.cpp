@@ -15,10 +15,7 @@ extern float32 _598;
 extern float32 _599;
 extern xSndGlobals gSnd;
 
-#ifndef NON_MATCHING
-// func_800480B0
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndInit__Fv")
-#else
+#ifdef NON_MATCHING
 void xSndInit()
 {
     iSndInit();
@@ -46,7 +43,7 @@ void xSndInit()
 }
 #endif
 
-// func_80048174
+
 void xSndSceneInit()
 {
     gSnd.listenerMode = SND_LISTENER_MODE_PLAYER;
@@ -92,24 +89,21 @@ void xSndResume()
     sDelayedPaused = 0;
 }
 
-// func_80048334
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPauseAll__FUiUi")
 
-// func_800483D0
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPauseCategory__FUiUi")
+
+
+
+
 
 void xSndSetCategoryVol(sound_category category, float32 vol)
 {
     gSnd.categoryVolFader[category] = vol;
 }
 
-// func_8004845C
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopAll__FUi")
 
-#ifndef NON_MATCHING
-// func_800484E4
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndDelayedInit__Fv")
-#else
+
+
+#ifdef NON_MATCHING
 void xSndDelayedInit()
 {
     for (int i = 0; i < 16; i++)
@@ -121,12 +115,12 @@ void xSndDelayedInit()
 }
 #endif
 
-// func_80048578
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndDelayedUpdate__Fv")
 
-// func_80048634
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s",                                                            \
-                   "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf")
+
+
+
+
+                   
 
 void xSndCalculateListenerPosition()
 {
@@ -154,13 +148,10 @@ void xSndCalculateListenerPosition()
     }
 }
 
-// func_80048794
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndProcessSoundPos__FPC5xVec3P5xVec3")
 
-#ifndef NON_MATCHING
-// func_800488BC
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo")
-#else
+
+
+#ifdef NON_MATCHING
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 {
     uint32 flags = pVoice->flags;
@@ -213,7 +204,7 @@ void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 }
 #endif
 
-// func_80048994
+
 void xSndUpdate()
 {
     xSndCalculateListenerPosition();
@@ -222,7 +213,7 @@ void xSndUpdate()
     iSndUpdate();
 }
 
-// func_800489C4
+
 void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix)
 {
     /*
@@ -236,20 +227,20 @@ void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix
     gSnd.listenerMat[i] = *matrix;
 }
 
-// func_800489F8
+
 void xSndSelectListenerMode(sound_listener_game_mode listenerGameMode)
 {
     gSnd.listenerMode = listenerGameMode;
 }
 
-// func_80048A08
+
 void xSndExit()
 {
     iSndExit();
     reset_faders();
 }
 
-// func_80048A2C
+
 uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
                 uint32 parentID, sound_category category, float32 delay)
 {
@@ -257,7 +248,7 @@ uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 f
                             category, delay);
 }
 
-// func_80048A64
+
 uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, xEnt* parent,
                   float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
 {
@@ -265,7 +256,7 @@ uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32
                             outerRadius, category, delay);
 }
 
-// func_80048A94
+
 uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, const xVec3* pos,
                   float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
 {
@@ -281,17 +272,17 @@ uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32
     }
 }
 
-// func_80048AE0
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s",                                                            \
-                   "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf")
 
-// func_80049128
+
+                   
+
+
 void xSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
 {
     iSndStartStereo(id1, id2, pitch);
 }
 
-// func_80049148
+
 uint32 xSndIDIsPlaying(uint32 sndID)
 {
     xSndVoiceInfo* voice = gSnd.voice;
@@ -305,13 +296,13 @@ uint32 xSndIDIsPlaying(uint32 sndID)
     return 0;
 }
 
-// func_80049200
+
 void xSndStop(uint32 snd)
 {
     iSndStop(snd);
 }
 
-// func_80049220
+
 void xSndParentDied(uint32 pid)
 {
     xSndVoiceInfo* voice = gSnd.voice;
@@ -324,7 +315,7 @@ void xSndParentDied(uint32 pid)
     }
 }
 
-// func_80049324
+
 void xSndStopChildren(uint32 pid)
 {
     uint32 i = 0;
@@ -339,48 +330,45 @@ void xSndStopChildren(uint32 pid)
     }
 }
 
-// func_800493A8
+
 void xSndSetVol(uint32 snd, float32 vol)
 {
     iSndSetVol(snd, vol);
 }
 
-// func_800493C8
+
 void xSndSetPitch(uint32 snd, float32 pitch)
 {
     iSndSetPitch(snd, pitch);
 }
 
-// func_800493E8
+
 void xSndSetExternalCallback(void (*callback)(uint32))
 {
     iSndSetExternalCallback(callback);
 }
 
-// func_80049408
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "reset_faders__Fv")
 
-// func_80049414
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "update_faders__Ff")
 
-// func_80049538
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xSnd.s",                                                                           \
-    "__as__Q218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_dataFRCQ218_esc__2_unnamed_esc__2_xSnd_cpp_esc__2_9fade_data")
 
-// func_8004956C
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff")
 
-// func_80049644
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStopFade__FUif")
 
-// func_800497A4
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamLock__FUi14sound_categoryb")
 
-#if 1
-// func_80049910
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamReady__FUi")
-#else
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+#if 0
 // Subtle issue with the register use in the setup of the loop
 uint8 xSndStreamReady(uint32 owner)
 {
@@ -395,10 +383,7 @@ uint8 xSndStreamReady(uint32 owner)
 }
 #endif
 
-#if 1
-// func_8004995C
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndStreamUnlock__FUi")
-#else
+#if 0
 // Same issue as xSndStreamReady
 void xSndStreamUnlock(uint32 owner)
 {
@@ -414,10 +399,7 @@ void xSndStreamUnlock(uint32 owner)
 }
 #endif
 
-#if 1
-// func_8004999C
-#pragma GLOBAL_ASM("asm/Core/x/xSnd.s", "xSndCategoryGetsEffects__F14sound_category")
-#else
+#if 0
 uint32 xSndCategoryGetsEffects(sound_category category)
 {
     if (-(1 - category >> 1) + (~category | 1))
@@ -431,7 +413,7 @@ uint32 xSndCategoryGetsEffects(sound_category category)
 }
 #endif
 
-// func_800499C4
+
 float32 xSndGetVol(uint32 snd)
 {
     return iSndGetVol(snd);

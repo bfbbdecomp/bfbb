@@ -13,7 +13,7 @@ extern int32 sClipVolumeTotal;
 
 extern char* zParCmd_strings;
 
-// func_800A7CC4
+
 void zParCmdInit()
 {
     xParCmdInit();
@@ -27,11 +27,9 @@ void zParCmdInit()
     xParCmdRegister(0x11, 0x10, xParCmdKillDistance_Update);
 }
 
-// func_800A7D84
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "zParCmdFindClipVolumes__Fv")
-#else
-// Functionally matching but fails to load sClipVolumeTotal an extra time.
+
+#ifdef NON_MATCHING
+
 void zParCmdFindClipVolumes()
 {
     char findname[64];
@@ -50,32 +48,14 @@ void zParCmdFindClipVolumes()
 }
 #endif
 
-// func_800A7E2C
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf")
 
-// func_800A7EFC
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf")
 
-// func_800A7FA0
+
+
+
+
+
 void xParCmdPlayerCollision_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
     return;
 }
-
-// func_800A7FA4
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf")
-
-// func_800A812C
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf")
-
-// func_800A8298
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdJet_Update__FP7xParCmdP9xParGroupf")
-
-// func_800A8408
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdCustom_Grass_Update__FP7xParCmdP9xParGroupf")
-
-// func_800A8518
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf")
-
-// func_800A8630
-#pragma GLOBAL_ASM("asm/Game/zParCmd.s", "xParCmdCustom_Update__FP7xParCmdP9xParGroupf")

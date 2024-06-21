@@ -4,13 +4,7 @@
 #include <types.h>
 #include <string.h>
 
-#if 1
-
-// func_8010F150
-#pragma GLOBAL_ASM("asm/Core/x/xRMemData.s", "__nw__10RyzMemDataFUliP10RyzMemGrow")
-
-#else
-
+#if 0
 // So close to matching. There seems to be extra ors and I do not know why they show up.
 void* RyzMemGrow::operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt)
 {

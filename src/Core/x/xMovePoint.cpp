@@ -8,7 +8,7 @@
 
 float32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
 
-// func_80035494
+
 void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
 {
     xBaseInit(ent, asset);
@@ -30,19 +30,19 @@ void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
     }
 }
 
-// func_8003551C
+
 void xMovePointSave(xMovePoint* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-// func_8003553C
+
 void xMovePointLoad(xMovePoint* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
 
-// func_8003555C
+
 void xMovePointReset(xMovePoint* m)
 {
     xBaseReset(m, m->asset);
@@ -51,7 +51,7 @@ void xMovePointReset(xMovePoint* m)
     m->delay = m->asset->delay;
 }
 
-// func_800355A4
+
 void xMovePointSetup(xMovePoint* m, xScene* sc)
 {
     m->node_wt_sum = 0;
@@ -65,10 +65,10 @@ void xMovePointSetup(xMovePoint* m, xScene* sc)
     }
 }
 
-// func_80035640
-#pragma GLOBAL_ASM("asm/Core/x/xMovePoint.s", "xMovePointSplineSetup__FP10xMovePoint")
 
-// func_800357A0
+
+
+
 void xMovePointSplineDestroy(xMovePoint* m)
 {
     if (m->spl != NULL)
@@ -77,11 +77,8 @@ void xMovePointSplineDestroy(xMovePoint* m)
     }
 }
 
-// func_800357B8
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xMovePoint.s",                                                      \
-                   "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3")
-#else
+
+#if 0
 // If you uncomment the numPoints variable then this function is a perfect match
 // minus ordering. In the original assembly some variable fetches are lifted to
 // places earlier in the assembly listing than what this comiles to for some
@@ -151,11 +148,8 @@ float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xV
 }
 #endif
 
-// func_800358E4
+
 xVec3* xMovePointGetPos(xMovePoint* m)
 {
     return m->pos;
 }
-
-// func_800358EC
-#pragma GLOBAL_ASM("asm/Core/x/xMovePoint.s", "xVec3Hdng__FP5xVec3PC5xVec3PC5xVec3")

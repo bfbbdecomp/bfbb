@@ -31,11 +31,7 @@ uint32 iAnimBoneCount(void* RawData)
     return 0;
 }
 
-#ifndef NON_MATCHING
-// func_800BEA58
-#pragma GLOBAL_ASM("asm/Core/p2/iAnim.s",                                                          \
-                   "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat")
-#else
+#ifdef NON_MATCHING
 void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset,
                 float32* BoneTable, uint32 BoneCount, xVec3* Tran1, xQuat* Quat1, xVec3* Tran2,
                 xQuat* Quat2, xVec3* TranDest, xQuat* QuatDest)
@@ -208,6 +204,7 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
 
                 Quat1++;
 
+
                 if (Quat2)
                 {
                     q2++;
@@ -235,7 +232,3 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
     }
 }
 #endif
-
-// Called in iAnimBlend()
-// func_800BF19C
-#pragma GLOBAL_ASM("asm/Core/p2/iAnim.s", "__as__6RtQuatFRC6RtQuat")

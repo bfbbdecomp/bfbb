@@ -23,13 +23,13 @@ extern float32 lbl_803CDED8; // 1.0 // @701
 
 extern const char* zSurface_strings[];
 
-// func_800B55F0
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInit__Fv")
 
-// func_800B5800
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceInitDefaultSurface__Fv")
 
-// func_800B585C
+
+
+
+
+
 // TODO: Hacked to OK (with volatile sMapperCount and assignment in if), fix later
 void zSurfaceRegisterMapper(uint32 assetId)
 {
@@ -47,24 +47,22 @@ void zSurfaceRegisterMapper(uint32 assetId)
     }
 }
 
-// func_800B58B8
+
 void zSurfaceExit()
 {
     xSurfaceExit();
     sMapperCount = 0;
 }
 
-// func_800B58E0
+
 void zSurfaceResetSurface(xSurface* surf)
 {
     xSurfaceReset();
     surf->friction = ((zSurfaceProps*)(surf->moprops))->asset->friction;
 }
 
-// func_800B591C
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSurface__FUi")
-#else
+
+#if 0
 xSurface* zSurfaceGetSurface(uint32 mat_id)
 {
     int32 map;
@@ -99,7 +97,7 @@ xSurface* zSurfaceGetSurface(uint32 mat_id)
 }
 #endif
 
-// func_800B59E4
+
 xSurface* zSurfaceGetSurface(const xCollis* coll)
 {
     xSurface* surf = NULL;
@@ -123,7 +121,7 @@ xSurface* zSurfaceGetSurface(const xCollis* coll)
     return surf;
 }
 
-// func_800B5A4C
+
 uint32 zSurfaceGetSlide(const xSurface* surf)
 {
     if (surf->moprops)
@@ -133,7 +131,7 @@ uint32 zSurfaceGetSlide(const xSurface* surf)
     return 0;
 }
 
-// func_800B5A70
+
 uint32 zSurfaceGetStep(const xSurface* surf)
 {
     if (surf->moprops)
@@ -143,7 +141,7 @@ uint32 zSurfaceGetStep(const xSurface* surf)
     return 0;
 }
 
-// func_800B5A94
+
 uint8 zSurfaceOutOfBounds(const xSurface& s)
 {
     if (s.moprops)
@@ -153,10 +151,8 @@ uint8 zSurfaceOutOfBounds(const xSurface& s)
     return 0;
 }
 
-// func_800B5AB8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSlideStartAngle__FPC8xSurface")
-#else
+
+#if 0
 // Float issues
 float32 zSurfaceGetSlideStartAngle(const xSurface* surf)
 {
@@ -169,10 +165,10 @@ float32 zSurfaceGetSlideStartAngle(const xSurface* surf)
 }
 #endif
 
-// func_800B5B08
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceGetSlideStopAngle__FPC8xSurface")
 
-// func_800B5B58
+
+
+
 uint32 zSurfaceGetMatchOrient(const xSurface* surf)
 {
     if (surf->moprops)
@@ -182,7 +178,7 @@ uint32 zSurfaceGetMatchOrient(const xSurface* surf)
     return 0;
 }
 
-// func_800B5B7C
+
 int32 zSurfaceGetDamageType(const xSurface* surf)
 {
     if (surf->moprops)
@@ -192,7 +188,7 @@ int32 zSurfaceGetDamageType(const xSurface* surf)
     return 0;
 }
 
-// func_800B5B9C
+
 uint32 zSurfaceGetDamagePassthrough(const xSurface* surf)
 {
     if (surf->moprops)
@@ -202,7 +198,7 @@ uint32 zSurfaceGetDamagePassthrough(const xSurface* surf)
     return 0;
 }
 
-// func_800B5BC0
+
 uint32 zSurfaceGetSticky(const xSurface* surf)
 {
     if (surf->moprops)
@@ -212,7 +208,7 @@ uint32 zSurfaceGetSticky(const xSurface* surf)
     return 0;
 }
 
-// func_800B5BE0
+
 uint32 zSurfaceGetStandOn(const xSurface* surf)
 {
     if (surf->moprops)
@@ -222,13 +218,13 @@ uint32 zSurfaceGetStandOn(const xSurface* surf)
     return 1;
 }
 
-// func_800B5C0C
+
 float32 zSurfaceGetFriction(const xSurface* surf)
 {
     return surf->friction;
 }
 
-// func_800B5C14
+
 float32 zSurfaceGetOutOfBoundsDelay(xSurface& s)
 {
     if (s.moprops)
@@ -238,31 +234,31 @@ float32 zSurfaceGetOutOfBoundsDelay(xSurface& s)
     return lbl_803CDEDC;
 }
 
-// func_800B5C34
+
 int32 zSurfaceGetSlickness(const xSurface* surf)
 {
     return (int)(lbl_803CDED8 / surf->friction);
 }
 
-// func_800B5C58
+
 float32 zSurfaceGetDamping(const xSurface* surf, float32 min_vel)
 {
     return xpow(min_vel, surf->friction);
 }
 
-// func_800B5C7C
+
 void zSurfaceSave(xSurface* ent, xSerial* s)
 {
     xSurfaceSave(ent, s);
 }
 
-// func_800B5C9C
+
 void zSurfaceLoad(xSurface* ent, xSerial* s)
 {
     xSurfaceLoad(ent, s);
 }
 
-// func_800B5CBC
+
 void zSurfaceSetup(xSurface* s)
 {
     zSurfaceProps* pp = (zSurfaceProps*)s->moprops;
@@ -283,13 +279,13 @@ void zSurfaceSetup(xSurface* s)
     }
 }
 
-// func_800B5D30
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceUpdate__FP5xBaseP6xScenef")
 
-// func_800B63E8
-#pragma GLOBAL_ASM("asm/Game/zSurface.s", "zSurfaceEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
 
-// func_800B66B8
+
+
+
+
+
 void zSurfaceGetName(int32 type, int8* buffer)
 {
     *buffer = NULL;
@@ -366,7 +362,7 @@ void zSurfaceGetName(int32 type, int8* buffer)
     }
 }
 
-// func_800B691C
+
 xSurface& zSurfaceGetDefault()
 {
     return sDef_surf;

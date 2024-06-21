@@ -27,10 +27,7 @@ static void zVolumeInit(zVolume* vol, xVolumeAsset* asset)
     vol->eventFunc = zVolumeEventCB;
 }
 
-#ifndef NONMATCHING
-// func_800BE4A8
-#pragma GLOBAL_ASM("asm/Game/zVolume.s", "zVolumeInit__Fv")
-#else
+#ifdef NON_MATCHING
 void zVolumeInit()
 {
     uint16 i;
@@ -72,10 +69,7 @@ zVolume* zVolumeGetVolume(uint16 n)
     return &vols[n];
 }
 
-#ifndef NONMATCHING
-// func_800BE5CC
-#pragma GLOBAL_ASM("asm/Game/zVolume.s", "zVolume_OccludePrecalc__FP5xVec3")
-#else
+#ifdef NON_MATCHING
 void zVolume_OccludePrecalc(xVec3* camPos)
 {
     int32 i;
@@ -195,10 +189,7 @@ void zVolume_OccludePrecalc(xVec3* camPos)
 }
 #endif
 
-#ifndef NONMATCHING
-// func_800BE8E8
-#pragma GLOBAL_ASM("asm/Game/zVolume.s", "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
-#else
+#ifdef NON_MATCHING
 int32 zVolumeEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
 {
     zVolume* vol = (zVolume*)to;

@@ -49,20 +49,14 @@ uint32 xrand()
     return rndseed;
 }
 
-#ifndef NONMATCHING
-// func_80030C88
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xurand__Fv")
-#else
+#ifdef NON_MATCHING
 float32 xurand()
 {
     return xrand() * 2.3283064e-10f;
 }
 #endif
 
-#ifndef NONMATCHING
-// func_80030CC8
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathSolveQuadratic__FfffPfPf")
-#else
+#ifdef NON_MATCHING
 uint32 xMathSolveQuadratic(float32 a, float32 b, float32 c, float32* x1, float32* x2)
 {
     float32 d;
@@ -115,8 +109,8 @@ uint32 xMathSolveQuadratic(float32 a, float32 b, float32 c, float32* x1, float32
 }
 #endif
 
-// func_80030DF4
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xMathSolveCubic__FffffPfPfPf")
+
+
 
 float32 xAngleClamp(float32 a)
 {
@@ -166,13 +160,10 @@ float32 xDangleClamp(float32 a)
     return b;
 }
 
-// func_80031154
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMove__FRfRfffff")
 
-#ifndef NONMATCHING
-// func_8003142C
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMoveTime__Fffff")
-#else
+
+
+#ifdef NON_MATCHING
 float32 xAccelMoveTime(float32 dx, float32 a, float32, float32 maxv)
 {
     //float32 time;
@@ -188,18 +179,3 @@ float32 xAccelMoveTime(float32 dx, float32 a, float32, float32 maxv)
     return lbl_803CCE14 * f1;
 }
 #endif
-
-// func_80031490
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelMove__FRfRffff")
-
-// func_8003157C
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xAccelStop__FRfRfff")
-
-// func_80031680
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece")
-
-// func_80031768
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xFuncPiece_EndPoints__FP10xFuncPieceffff")
-
-// func_800317BC
-#pragma GLOBAL_ASM("asm/Core/x/xMath.s", "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef")

@@ -10,13 +10,7 @@ extern int32 g_mvpt_cnt;
 extern float32 lbl_803CDD40;
 extern float32 lbl_803CDD44;
 
-#if 1
-
-// func_800A6BF8
-#pragma GLOBAL_ASM("asm/Game/zMovePoint.s", "zMovePoint_GetMemPool__Fi")
-
-#else
-
+#if 0
 // Random load word at the end of the function for some reason.
 zMovePoint* zMovePoint_GetMemPool(int32 cnt)
 {

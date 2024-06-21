@@ -45,12 +45,10 @@ void NPC_entwrap_bupdate(xEnt*, xVec3*);
 void NPC_entwrap_move(xEnt*, xScene*, float32, xEntFrame*);
 void NPC_entwrap_render(xEnt*);
 
-// func_8010F82C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "Init__9xNPCBasicFP9xEntAsset")
-#else
+
+#ifdef NON_MATCHING
 // The order of the function pointer assignment instructions at the end of the
-// function is slightly incorrect.
+
 void xNPCBasic::Init(xEntAsset* asset)
 {
     if (xNPCBasic_float_0 == asset->scale.x)
@@ -112,9 +110,9 @@ void xNPCBasic::Init(xEntAsset* asset)
 }
 #endif
 
-// func_8010FA28
+
 #ifndef NOT_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xNPCBasic.s", "Reset__9xNPCBasicFv")
+
 #else
 // Register assignment in the floating point instructions is slightly wrong.
 void xNPCBasic::Reset()
@@ -145,7 +143,7 @@ void xNPCBasic::Reset()
 }
 #endif
 
-// func_8010FAF4
+
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
@@ -170,7 +168,7 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
     }
 }
 
-// func_8010FBE0
+
 void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
 {
     if (dt < xNPCBasic_float_1eminus5)
@@ -198,7 +196,7 @@ void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
     npc->colFreq = MIN(npc->colFreq, nf);
 }
 
-// func_8010FC98
+
 void xNPCBasic::Process(xScene* xscn, float32 dt)
 {
     xEnt* thisEnt = this;
@@ -297,7 +295,7 @@ void xNPCBasic::Process(xScene* xscn, float32 dt)
     }
 }
 
-// func_8010FF9C
+
 void xNPCBasic::CollideReview()
 {
     if (DBG_IsNormLog(eNPCDCAT_Eight, 2))
@@ -307,13 +305,13 @@ void xNPCBasic::CollideReview()
     }
 }
 
-// func_8010FFF0
+
 void xNPCBasic::NewTime(xScene*, float32)
 {
     flags1.flg_basenpc &= ~0x4;
 }
 
-// func_80110000
+
 void NPC_entwrap_setup(xEnt* ent)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
@@ -321,7 +319,7 @@ void NPC_entwrap_setup(xEnt* ent)
     npc->Setup();
 }
 
-// func_80110048
+
 void NPC_entwrap_reset(xEnt* ent)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
@@ -329,7 +327,7 @@ void NPC_entwrap_reset(xEnt* ent)
     npc->Reset();
 }
 
-// func_80110090
+
 void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
 {
     float32 dt = dt_caller;
@@ -362,19 +360,19 @@ void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
     npc->NewTime(scn, dt);
 }
 
-// func_801101B4
+
 void NPC_entwrap_bupdate(xEnt* ent, xVec3* pos)
 {
     ((xNPCBasic*)ent)->BUpdate(pos);
 }
 
-// func_801101E0
+
 void NPC_entwrap_move(xEnt* ent, xScene* scn, float32 dt, xEntFrame* frame)
 {
     ((xNPCBasic*)ent)->Move(scn, dt, frame);
 }
 
-// func_8011020C
+
 int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
                         xBase* toParamWidget)
 {
@@ -382,23 +380,23 @@ int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* t
     return ((xNPCBasic*)to)->SysEvent(from, to, toEvent, toParam, toParamWidget, &handled);
 }
 
-// func_80110264
+
 void NPC_entwrap_render(xEnt* ent)
 {
     ((xNPCBasic*)ent)->Render();
 }
 
-// func_80110290
+
 void xNPCBasic::DBG_PStatClear()
 {
 }
 
-// func_80110294
+
 void xNPCBasic::DBG_HaltOnMe(uint32, int8*)
 {
 }
 
-// func_80110298
+
 void xNPCBasic::BUpdate(xVec3* v)
 {
     xEntDefaultBoundUpdate(this, v);

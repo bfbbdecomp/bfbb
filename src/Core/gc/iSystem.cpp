@@ -40,11 +40,11 @@ uint16 my_dsc(uint16 dsc)
     return dsc;
 }
 
-// func_800D30E4
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "FloatingPointErrorHandler__FUsP9OSContextUlUl")
 
-// func_800D32BC
-//#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "MemoryProtectionErrorHandler__FUsP9OSContextUlUl")
+
+
+
+//
 
 void MemoryProtectionErrorHandler(uint16 last, OSContext* ctx, uint64 unk1, uint64 unk2)
 {
@@ -56,13 +56,7 @@ void MemoryProtectionErrorHandler(uint16 last, OSContext* ctx, uint64 unk1, uint
     }
 }
 
-#if 1
-
-// func_800D32F0
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "TRCInit__Fv")
-
-#else
-
+#if 0
 // WIP.
 void TRCInit()
 {
@@ -78,8 +72,8 @@ void TRCInit()
 
 #endif
 
-// func_800D3364
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "iSystemInit__FUi")
+
+
 
 /*
 void iSystemExit()
@@ -95,14 +89,14 @@ void iSystemExit()
 }
 */
 
-// func_800D344C
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "iSystemExit__Fv")
 
-// func_800D34A4
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "RWAttachPlugins__Fv")
 
-// func_800D3544
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "RenderWareInit__Fv")
+
+
+
+
+
+
 
 int32 RenderWareExit()
 {
@@ -111,8 +105,8 @@ int32 RenderWareExit()
     return RwEngineTerm();
 }
 
-// func_800D3664
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "TextureRead__FPCcPCc")
+
+
 
 void null_func()
 {
@@ -179,63 +173,3 @@ void _rwDolphinHeapFree(void* __ptr)
         }
     }
 }
-
-// func_800D3840
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "_rwDolphinHeapAlloc__FUl")
-
-// func_800D3910
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "_rwDolphinHeapCalloc__FUlUl")
-
-// func_800D3960
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "_rwDolphinHeapRealloc__FPvUl")
-
-// func_800D3A04
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "DolphinInitMemorySystem__FP17RwMemoryFunctions")
-
-// func_800D3A3C
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlAccessToMode__FPCc")
-
-// func_800D3B9C
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFopen__FPCcPCc")
-
-// func_800D3CC8
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFclose__FPv")
-
-// func_800D3D48
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFexist__FPCc")
-
-// func_800D3DB8
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFread__FPvUlUlPv")
-
-// func_800D3FDC
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFwrite__FPCvUlUlPv")
-
-// func_800D3FE4
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFseek__FPvli")
-
-// func_800D4188
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFgets__FPciPv")
-
-// func_800D428C
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFputs__FPCcPv")
-
-// func_800D4294
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFeof__FPv")
-
-// func_800D42B4
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFflush__FPv")
-
-// func_800D42BC
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "dlFtell__FPv")
-
-// func_800D42C4
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "_rwDolphinFSOpen__FPvii")
-
-// func_800D43EC
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "__as__15RwFileFunctionsFRC15RwFileFunctions")
-
-// func_800D4448
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "_rwDolphinFSClose__FPvii")
-
-// func_800D44AC
-#pragma GLOBAL_ASM("asm/Core/p2/iSystem.s", "DolphinInstallFileSystem__Fv")

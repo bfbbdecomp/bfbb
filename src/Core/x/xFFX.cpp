@@ -10,8 +10,8 @@ extern uint32 rot_match_psize;
 extern xFFXRotMatchState* rot_match_pool;
 extern xFFXRotMatchState* rot_match_alist;
 
-// func_8001F8BC
-#pragma GLOBAL_ASM("asm/Core/x/xFFX.s", "xFFXPoolInit__FUi")
+
+
 
 // Structure same as the bottom function, get that one, you get this one.
 //void xFFXPoolInit(uint32 num_ffx);
@@ -72,13 +72,7 @@ int16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, float32, void*), void
     return effectID;
 }
 
-#if 1
-
-// func_8001FA28
-#pragma GLOBAL_ASM("asm/Core/x/xFFX.s", "xFFXRemoveEffectByFData__FP4xEntPv")
-
-#else
-
+#if 0
 // WIP.
 uint32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
 {
@@ -126,11 +120,11 @@ void xFFXApply(xEnt* ent, xScene* sc, float32 dt)
     }
 }
 
-// func_8001FB5C
-#pragma GLOBAL_ASM("asm/Core/x/xFFX.s", "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv")
 
-// func_8001FC54
-#pragma GLOBAL_ASM("asm/Core/x/xFFX.s", "xFFXShakePoolInit__FUi")
+
+
+
+
 
 // The structure of this is identical to the pool init below. Figure out that one, you get this one as well.
 //void xFFXShakePoolInit(uint32 num);
@@ -153,13 +147,7 @@ void xFFXShakeFree(xFFXShakeState* s)
     shake_alist = s;
 }
 
-#if 1
-
-// func_8001FD10
-#pragma GLOBAL_ASM("asm/Core/x/xFFX.s", "xFFXRotMatchPoolInit__FUi")
-
-#else
-
+#if 0
 // Some instructions are in the wrong order.
 void xFFXRotMatchPoolInit(uint32 num)
 {

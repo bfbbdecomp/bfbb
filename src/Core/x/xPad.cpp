@@ -16,13 +16,7 @@ int32 xPadInit()
     return 1;
 }
 
-#if 1
-
-// func_80035ED8
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadEnable__Fi")
-
-#else
-
+#if 0
 // WIP.
 _tagxPad* xPadEnable(int32 idx)
 {
@@ -60,24 +54,18 @@ void xPadRumbleEnable(int32 idx, int32 enable)
     }
 }
 
-// func_80035FC4
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadUpdate__Fif")
 
-// func_80036478
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadNormalizeAnalog__FR8_tagxPadii")
+
+
+
+
 
 void xPadKill()
 {
     iPadKill();
 }
 
-#if 1
-
-// func_800365A4
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadGetRumbleSlot__Fv")
-
-#else
-
+#if 0
 // WIP.
 _tagxRumble* xPadGetRumbleSlot()
 {
@@ -112,18 +100,3 @@ void xPadDestroyRumbleChain(int32 idx)
 {
     xPadDestroyRumbleChain(mPad + idx);
 }
-
-// func_800366B0
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadAddRumble__Fi14_tagRumbleTypefiUi")
-
-// func_800367AC
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "xPadAnalogIsDigital__Fii")
-
-// func_80036834
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "__adv__5xVec2Ff")
-
-// func_80036858
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "length__5xVec2CFv")
-
-// func_8003687C
-#pragma GLOBAL_ASM("asm/Core/x/xPad.s", "normalize_analog__Fiiiiii")

@@ -15,13 +15,7 @@ void zEGenerator_Init(void* egen, void* asset)
     zEGenerator_Init((zEGenerator*)egen, (xEntAsset*)asset);
 }
 
-#if 1
-
-// func_80054220
-#pragma GLOBAL_ASM("asm/Game/zEGenerator.s", "zEGenerator_Init__FP11zEGeneratorP9xEntAsset")
-
-#else
-
+#if 0
 // I can't figure out the 2nd parameter for the find asset function call.
 void zEGenerator_Init(zEGenerator* egen, xEntAsset* asset)
 {
@@ -117,21 +111,15 @@ void zEGenerator_Move(zEGenerator* egen, xScene* sc, float32 dt)
 {
 }
 
-// func_8005452C
-#pragma GLOBAL_ASM("asm/Game/zEGenerator.s", "zEGenerator_Update__FP11zEGeneratorP6xScenef")
+
+
 
 void zEGenerator_Render(zEGenerator* egen)
 {
     xEntRender((xEnt*)egen);
 }
 
-#if 1
-
-// func_80054660
-#pragma GLOBAL_ASM("asm/Game/zEGenerator.s", "zEGenerator_TurnOn__FP11zEGenerator")
-
-#else
-
+#if 0
 // WIP.
 void zEGenerator_TurnOn(zEGenerator* egen)
 {
@@ -193,13 +181,7 @@ void zEGenerator_ToggleOn(zEGenerator* egen)
     }
 }
 
-#if 1
-
-// func_80054A48
-#pragma GLOBAL_ASM("asm/Game/zEGenerator.s", "zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
-
-#else
-
+#if 0
 // Need to figure out how to call the link function. Everything else should be in order as long as the case labels are correct.
 int32 zEGeneratorEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
                          xBase* toParamWidget)

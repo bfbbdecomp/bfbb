@@ -488,10 +488,7 @@ static uint32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, float32
             ClipPlane(-r5->z, r4->z - r3->z, t_in, t_out));
 }
 
-#ifndef NON_MATCHING
-// func_800C5D78
-#pragma GLOBAL_ASM("asm/Core/p2/iMath3.s", "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect")
-#else
+#ifdef NON_MATCHING
 void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 {
     xVec3 var_14, var_20;
@@ -574,10 +571,7 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800C5F44
-#pragma GLOBAL_ASM("asm/Core/p2/iMath3.s", "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect")
-#else
+#ifdef NON_MATCHING
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     uint32 xcode, ycode, zcode;

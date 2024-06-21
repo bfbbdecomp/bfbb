@@ -407,10 +407,7 @@ void zUIMgr::Update(zScene* s, float32 dt)
     debug_update(*s, dt);
 }
 
-#ifndef NON_MATCHING
-// func_800B98AC
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "Setup__6zUIMgrFP6zScene")
-#else
+#ifdef NON_MATCHING
 void zUIMgr::Setup(zScene* s)
 {
     const uint32 count = s->baseCount[eBaseTypeUI];
@@ -696,10 +693,7 @@ void zUI_Load(_zUI* ent, xSerial* s)
     zEntLoad(ent, s);
 }
 
-#ifndef NON_MATCHING
-// func_800B9FF8
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_Reset__FP4_zUI")
-#else
+#ifdef NON_MATCHING
 void zUI_Reset(_zUI* ent)
 {
     zEntReset(ent);
@@ -716,10 +710,7 @@ void zUI_Reset(_zUI* ent)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800BA054
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_PreUpdate__FP4_zUIP6xScenef")
-#else
+#ifdef NON_MATCHING
 void zUI_PreUpdate(_zUI* ent, xScene*, float32)
 {
     _zUI* ui = ent;
@@ -991,10 +982,7 @@ int32 iRenderQSort_Face(const void* arg1, const void* arg2)
     return 0;
 }
 
-#ifndef NON_MATCHING
-// func_800BA6B0
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUIRenderAll__Fv")
-#else
+#ifdef NON_MATCHING
 void zUIRenderAll()
 {
     // non-matching: floats are epic
@@ -1054,8 +1042,8 @@ void zUIRenderAll()
 }
 #endif
 
-// func_800BA814
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_Render__FP4xEnt")
+
+
 
 int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*)
 {
@@ -1184,10 +1172,7 @@ int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBas
 
 // This function only matches when using string literals for some reason.
 // Need to wait until all strings are decompiled.
-#ifndef NON_MATCHING
-// func_800BB000
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_ParseINI__FP8xIniFile")
-#else
+#ifdef NON_MATCHING
 void zUI_ParseINI(xIniFile* ini)
 {
     char itemName[16];
@@ -1332,8 +1317,6 @@ void zUI_ScenePortalSetToCurrentLevel(zScene* zsc)
 
 #ifndef NON_MATCHING
 static void init_patsocks(zScene* zsc);
-// func_800BB460
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "init_patsocks__FP6zScene")
 #else
 static void init_patsocks(zScene* zsc)
 {
@@ -1347,10 +1330,7 @@ static void init_patsocks(zScene* zsc)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800BB4DC
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_ScenePortalInit__FP6zScene")
-#else
+#ifdef NON_MATCHING
 void zUI_ScenePortalInit(zScene* zsc)
 {
     uint32 i, j;
@@ -1745,8 +1725,6 @@ static void enable_ui(_zUI* ui)
 
 #ifndef NON_MATCHING
 static void refresh_patsocks(uint32 world);
-// func_800BBF44
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "refresh_patsocks__FUi")
 #else
 static void refresh_patsocks(uint32 world)
 {
@@ -1824,10 +1802,7 @@ void zUI_PortalToKrabs(uint32 taskNum)
     passet->assetMarkerID = xStrHash(tempString);
 }
 
-#ifndef NON_MATCHING
-// func_800BC0D8
-#pragma GLOBAL_ASM("asm/Game/zUI.s", "zUI_ScenePortalUpdate__Fv")
-#else
+#ifdef NON_MATCHING
 void zUI_ScenePortalUpdate()
 {
     for (uint32 i = 0; i < WORLD_COUNT; i++)

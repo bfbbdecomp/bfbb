@@ -36,13 +36,7 @@ void zLightOn(_zLight* zl, int32 on)
     }
 }
 
-#if 1
-
-// func_8009E870
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "leGetRandom__Fv")
-
-#else
-
+#if 0
 // WIP.
 float32 leGetRandom()
 {
@@ -74,13 +68,7 @@ void zLightEffectInitFlicker(_zLight* zlight)
     zLightOn(zlight, true);
 }
 
-#if 1
-
-// func_8009E8F4
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "EffectFlicker__FP7_zLightfff")
-
-#else
-
+#if 0
 // WIP.
 void EffectFlicker(_zLight* zlight, float32 seconds, float32 min, float32 rnd)
 {
@@ -157,13 +145,7 @@ void zLightEffectInitCauldron(_zLight* zlight)
     zLightOn(zlight, true);
 }
 
-#if 1
-
-// func_8009EB50
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "leBlendToCol__Ffff")
-
-#else
-
+#if 0
 // Need to figure out proper conditional checks.
 float32 leBlendToCol(float32 f1, float32 f2, float32 f3)
 {
@@ -182,13 +164,7 @@ float32 leBlendToCol(float32 f1, float32 f2, float32 f3)
 
 #endif
 
-#if 1
-
-// func_8009EB84
-#pragma GLOBAL_ASM("asm/Game/zLightEffect.s", "zLightEffectCauldron__FP7_zLightf")
-
-#else
-
+#if 0
 // WIP.
 void zLightEffectCauldron(_zLight* zlight, float32 seconds)
 {

@@ -27,13 +27,13 @@ extern float32 gSkipTimeCutscene;
 
 extern float32 _897;
 
-// func_80052874
+
 void zCutsceneMgrInit(void* b, void* tasset)
 {
     zCutsceneMgrInit((xBase*)b, (xCutsceneMgrAsset*)tasset);
 }
 
-// func_80052894
+
 void zCutsceneMgrInit(xBase* b, xCutsceneMgrAsset* tasset)
 {
     zCutsceneMgr* mgr = (zCutsceneMgr*)b;
@@ -52,7 +52,7 @@ void zCutsceneMgrInit(xBase* b, xCutsceneMgrAsset* tasset)
     ents_hidden = 0;
 }
 
-// func_8005290C
+
 void zCutsceneMgrReset(zCutsceneMgr* mgr)
 {
     xBaseReset(mgr, mgr->tasset);
@@ -65,7 +65,7 @@ void zCutsceneMgrReset(zCutsceneMgr* mgr)
     ents_hidden = 0;
 }
 
-// func_80052968
+
 void zCutsceneMgrSave(zCutsceneMgr*, xSerial* s)
 {
     for (uint32 i = 0; i < 14; i++)
@@ -81,7 +81,7 @@ void zCutsceneMgrSave(zCutsceneMgr*, xSerial* s)
     }
 }
 
-// func_800529E4
+
 void zCutsceneMgrLoad(zCutsceneMgr*, xSerial* s)
 {
     for (uint32 i = 0; i < 14; i++)
@@ -90,7 +90,7 @@ void zCutsceneMgrLoad(zCutsceneMgr*, xSerial* s)
     }
 }
 
-// func_80052A44
+
 RpAtomic* HackBoundCB(RpAtomic* atomic, void* data)
 {
     atomic->worldBoundingSphere.radius = *(RwReal*)data;
@@ -100,7 +100,7 @@ RpAtomic* HackBoundCB(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-// func_80052A74
+
 RpMaterial* HackAlphaSetMaterialAlphaCB(RpMaterial* material, void* data)
 {
     RwRGBA color = material->color;
@@ -109,7 +109,7 @@ RpMaterial* HackAlphaSetMaterialAlphaCB(RpMaterial* material, void* data)
     return material;
 }
 
-// func_80052ADC
+
 RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data)
 {
     RpGeometry* pGeom = atomic->geometry;
@@ -121,7 +121,7 @@ RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-// func_80052B3C
+
 void zCutSceneNamesTable_clearAll()
 {
     for (int i = 0; i < 14; i++)
@@ -130,10 +130,7 @@ void zCutSceneNamesTable_clearAll()
     }
 }
 
-#ifndef NON_MATCHING
-// func_80052B84
-#pragma GLOBAL_ASM("asm/Game/zCutsceneMgr.s", "zCutsceneMgrPlayStart__FP12zCutsceneMgr")
-#else
+#ifdef NON_MATCHING
 void zCutsceneMgrPlayStart(zCutsceneMgr* t)
 {
     gCutsceneSkipOK = 1;
@@ -199,7 +196,7 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
 }
 #endif
 
-// func_80052DB0
+
 int32 zCutsceneMgrEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
 {
     zCutsceneMgr* t = (zCutsceneMgr*)to;
@@ -238,10 +235,7 @@ int32 zCutsceneMgrEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBa
     return 1;
 }
 
-#ifndef NON_MATCHING
-// func_80052EB4
-#pragma GLOBAL_ASM("asm/Game/zCutsceneMgr.s", "zCutsceneMgrFinishLoad__FP5xBase")
-#else
+#ifdef NON_MATCHING
 void zCutsceneMgrFinishLoad(xBase* to)
 {
     zCutsceneMgr* t = (zCutsceneMgr*)to;
@@ -266,10 +260,7 @@ void zCutsceneMgrFinishLoad(xBase* to)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_80052F58
-#pragma GLOBAL_ASM("asm/Game/zCutsceneMgr.s", "zCutsceneMgrFinishExit__FP5xBase")
-#else
+#ifdef NON_MATCHING
 void zCutsceneMgrFinishExit(xBase* to)
 {
     zCutsceneMgr* t;
@@ -300,7 +291,7 @@ void zCutsceneMgrFinishExit(xBase* to)
 }
 #endif
 
-// func_8005302C
+
 void zCutsceneMgrKillFX(zCutsceneMgr* t)
 {
     xCutsceneMgrAsset* a = t->tasset;
@@ -318,7 +309,7 @@ void zCutsceneMgrKillFX(zCutsceneMgr* t)
     }
 }
 
-// func_80053094
+
 void zCutsceneMgrUpdateFX(zCutsceneMgr* t, float32)
 {
     xCutsceneMgrAsset* a = t->tasset;
@@ -350,7 +341,7 @@ void zCutsceneMgrUpdateFX(zCutsceneMgr* t, float32)
     }
 }
 
-// func_80053150
+
 void zCutsceneMgrUpdate(xBase* to, xScene* sc, float32 dt)
 {
     zCutsceneMgr* t = (zCutsceneMgr*)to;
@@ -445,7 +436,7 @@ void zCutsceneMgrUpdate(xBase* to, xScene* sc, float32 dt)
     check_hide_entities();
 }
 
-// func_80053438
+
 void check_hide_entities()
 {
     bool mgrNotNull = globals.cmgr;

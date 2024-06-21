@@ -16,10 +16,8 @@ extern float32 lbl_803CDC40; // 1.0
 extern float32 lbl_803CDC48; // 4.0
 extern float32 lbl_803CDC4C; // 10.0
 
-// func_800A1D18
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zLOD.s", "AddToLODList__FP14xModelInstance")
-#else
+
+#ifdef NON_MATCHING
 // Float memes
 void AddToLODList(xModelInstance* model)
 {
@@ -74,7 +72,7 @@ void AddToLODList(xModelInstance* model)
 }
 #endif
 
-// func_800A1EEC
+
 xEnt* AddToLODList(xEnt* ent, xScene* scene, void* v)
 {
     if (!ent->model)
@@ -100,13 +98,13 @@ xEnt* AddToLODList(xEnt* ent, xScene* scene, void* v)
     return ent;
 }
 
-// func_800A1F5C
-#pragma GLOBAL_ASM("asm/Game/zLOD.s", "zLOD_Setup__Fv")
 
-// func_800A2164
-#pragma GLOBAL_ASM("asm/Game/zLOD.s", "zLOD_Update__FUi")
 
-// func_800A23A8
+
+
+
+
+
 zLODTable* zLOD_Get(xEnt* ent)
 {
     if (!ent->model)
@@ -126,6 +124,3 @@ zLODTable* zLOD_Get(xEnt* ent)
     }
     return 0;
 }
-
-// func_800A2418
-#pragma GLOBAL_ASM("asm/Game/zLOD.s", "zLOD_UseCustomTable__FP4xEntP9zLODTable")

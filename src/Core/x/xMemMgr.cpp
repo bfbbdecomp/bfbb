@@ -11,15 +11,13 @@ extern xMemInfo_tag gMemInfo;
 extern xMemHeap_tag gxHeap[3];
 extern void (*sMemBaseNotifyFunc)();
 
-// func_80033554
+
 void xMemDebug_SoakLog(const int8*)
 {
 }
 
-// func_80033558
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemInit__Fv")
-#else
+
+#ifdef NON_MATCHING
 // The instructions putting 0/1/2 into registers happen in the wrong order.
 void xMemInit()
 {
@@ -37,13 +35,13 @@ void xMemInit()
 }
 #endif
 
-// func_8003361C
+
 void xMemExit()
 {
     iMemExit();
 }
 
-// func_8003363C
+
 void xMemInitHeap(xMemHeap_tag* heap, uint32 base, uint32 size, uint32 flags)
 {
     uint32 old_base = base;
@@ -83,11 +81,8 @@ void xMemInitHeap(xMemHeap_tag* heap, uint32 base, uint32 size, uint32 flags)
     heap->opp_heap[1] = -1;
 }
 
-// func_80033734
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s",                                                         \
-                   "xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag")
-#else
+
+#if 0
 // Not particularly close. This function is a nightmare, it has so many
 // variables to untangle.
 void xMemGetBlockInfo(xMemHeap_tag* heap, uint32 size, int32 align, xMemBlkInfo_tag* info)
@@ -141,10 +136,8 @@ void xMemGetBlockInfo(xMemHeap_tag* heap, uint32 size, int32 align, xMemBlkInfo_
 }
 #endif
 
-// func_80033864
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemGrowAlloc__FUiUi")
-#else
+
+#if 0
 // Not particularly close. Not 100% confident that I understand what's going on,
 // in particular the bit that goes:
 // (heap->lastblk->size + size) - heap->lastblk->size;
@@ -185,8 +178,8 @@ void* xMemGrowAlloc(uint32 heapID, uint32 size)
 }
 #endif
 
-// func_80033940
-//#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemAlloc__FUiUii")
+
+//
 void* xMemAlloc(uint32 heapID, uint32 size, int32 align)
 {
     // This variable not in DWARF
@@ -237,19 +230,19 @@ void* xMemAlloc(uint32 heapID, uint32 size, int32 align)
     return (void*)hdr->addr;
 }
 
-// func_80033A58
+
 void* xMemPushTemp(uint32 size)
 {
     return RwMalloc(size);
 }
 
-// func_80033A84
+
 void xMemPopTemp(void* memory)
 {
     RwFree(memory);
 }
 
-// func_80033AB0
+
 int32 xMemPushBase(uint32 heapID)
 {
     xMemHeap_tag* heap = &gxHeap[heapID];
@@ -265,17 +258,15 @@ int32 xMemPushBase(uint32 heapID)
     return heap->state_idx - 1;
 }
 
-// func_80033B50
+
 int32 xMemPushBase()
 {
     return xMemPushBase(gActiveHeap);
 }
 
-// func_80033B74
-#ifndef NON_MATCHING
+
+#ifdef NON_MATCHING
 // Load/Store swap of sMemBaseNotifyFunc and state_idx
-#pragma GLOBAL_ASM("asm/Core/x/xMemMgr.s", "xMemPopBase__FUii")
-#else
 int32 xMemPopBase(uint32 heapID, int32 depth)
 {
     xMemHeap_tag* heap = &gxHeap[heapID];
@@ -294,31 +285,31 @@ int32 xMemPopBase(uint32 heapID, int32 depth)
 }
 #endif
 
-// func_80033BD4
+
 int32 xMemPopBase(int32 depth)
 {
     return xMemPopBase(gActiveHeap, depth);
 }
 
-// func_80033BFC
+
 int32 xMemGetBase(uint32 heapID)
 {
     return gxHeap[heapID].state_idx;
 }
 
-// func_80033C14
+
 void xMemRegisterBaseNotifyFunc(void (*func)())
 {
     sMemBaseNotifyFunc = func;
 }
 
-// func_80033C1C
+
 int32 xMemGetBase()
 {
     return xMemGetBase(gActiveHeap);
 }
 
-// func_80033C40
+
 void xMemPoolAddElements(xMemPool* pool, void* buffer, uint32 count)
 {
     int32 i;
@@ -351,7 +342,7 @@ void xMemPoolAddElements(xMemPool* pool, void* buffer, uint32 count)
     pool->Total += count;
 }
 
-// func_80033CE8
+
 
 void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags,
                    xMemPoolInitCB initCB, uint32 size, uint32 count, uint32 numRealloc)
@@ -368,7 +359,7 @@ void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags
     xMemPoolAddElements(pool, buffer, count);
 }
 
-// func_80033D34
+
 void* xMemPoolAlloc(xMemPool* pool)
 {
     void* retval = pool->FreeList;
@@ -392,7 +383,7 @@ void* xMemPoolAlloc(xMemPool* pool)
     return retval;
 }
 
-// func_80033DD0
+
 void xMemPoolFree(xMemPool* pool, void* data)
 {
     void** prev;

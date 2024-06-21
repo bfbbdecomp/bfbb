@@ -21,11 +21,9 @@ extern float32 zLight_float;
 extern xVec3 sDefaultShadowVec;
 extern void (*sEffectFuncs[18])(_zLight*, float32);
 
-// func_8009E02C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightResetAll__FP4xEnv")
-#else
-// Functionally matching but in wrong order
+
+#ifdef NON_MATCHING
+
 void zLightResetAll(xEnv* env)
 {
     memset(sLight, 0, sizeof(sLight));
@@ -43,13 +41,13 @@ void zLightResetAll(xEnv* env)
 }
 #endif
 
-// func_8009E0C8
+
 void zLightInit(void* b, void* tasset)
 {
     zLightInit((xBase*)b, (zLightAsset*)tasset);
 }
 
-// func_8009E0E8
+
 void zLightInit(xBase* b, zLightAsset* tasset)
 {
     _zLight* t = (_zLight*)b;
@@ -116,7 +114,7 @@ void zLightInit(xBase* b, zLightAsset* tasset)
     }
 }
 
-// func_8009E2A8
+
 void zLightResolveLinks()
 {
     int32 i;
@@ -136,7 +134,7 @@ void zLightResolveLinks()
     }
 }
 
-// func_8009E330
+
 void zLightDestroyAll()
 {
     int32 total = sLightTotal;
@@ -148,13 +146,13 @@ void zLightDestroyAll()
     sLightTotal = 0;
 }
 
-// func_8009E3A4
+
 void zLightDestroy(_zLight* param_1)
 {
     iLightDestroy(&param_1->light);
 }
 
-// func_8009E3C8
+
 void zLightReset(_zLight* param_1)
 {
     xBaseReset(param_1, param_1->tasset);
@@ -166,19 +164,19 @@ void zLightReset(_zLight* param_1)
     zLightEffectSet(param_1, param_1->tasset->lightEffect);
 }
 
-// func_8009E42C
+
 void zLightSave(_zLight* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-// func_8009E44C
+
 void zLightLoad(_zLight* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
 
-// func_8009E46C
+
 int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* param_4, xBase* param_5)
 {
     _zLight* t = (_zLight*)to;
@@ -207,10 +205,8 @@ int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* para
     return 1;
 }
 
-// func_8009E4D8
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightUpdate__FP5xBaseP6xScenef")
-#else
+
+#ifdef NON_MATCHING
 // Float issue
 void zLightUpdate(xBase* to, xScene* param_2, float32 dt)
 {
@@ -231,10 +227,8 @@ void zLightUpdate(xBase* to, xScene* param_2, float32 dt)
 }
 #endif
 
-// func_8009E5B8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightAddLocalEnv__Fv")
-#else
+
+#if 0
 // Something is wrong with gNumTemporaryLights
 void zLightAddLocalEnv()
 {
@@ -257,10 +251,8 @@ void zLightAddLocalEnv()
 }
 #endif
 
-// func_8009E6AC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zLight.s", "zLightAddLocal__FP4xEnt")
-#else
+
+#ifdef NON_MATCHING
 // Float issue
 void zLightAddLocal(xEnt* ent)
 {
@@ -277,7 +269,7 @@ void zLightAddLocal(xEnt* ent)
 }
 #endif
 
-// func_8009E75C
+
 void zLightRemoveLocalEnv()
 {
     int i;
@@ -292,7 +284,7 @@ void zLightRemoveLocalEnv()
     gNumTemporaryLights = 0;
 }
 
-// func_8009E7A0
+
 void zLightSetVolume(zVolume* vol)
 {
     if (!vol)

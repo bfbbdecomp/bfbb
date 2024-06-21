@@ -6,13 +6,7 @@
 extern xSurface* surfs;
 extern uint16 nsurfs;
 
-#if 1
-
-// func_8004D054
-#pragma GLOBAL_ASM("asm/Core/x/xSurface.s", "xSurfaceInit__FUs")
-
-#else
-
+#if 0
 // The for loop is off.
 void xSurfaceInit(uint16 num_surfs)
 {
@@ -33,13 +27,7 @@ void xSurfaceInit(uint16 num_surfs)
 
 #endif
 
-#if 1
-
-// func_8004D0CC
-#pragma GLOBAL_ASM("asm/Core/x/xSurface.s", "__as__8xSurfaceFRC8xSurface")
-
-#else
-
+#if 0
 // Close to being finished.
 void xSurface::operator=(const xSurface& ent)
 {

@@ -134,10 +134,7 @@ void xParGroupKillAllParticles(xParGroup* ps)
 
 #define clamp(x, a, b) (((x) < (a)) ? (a) : (((x) > (b)) ? (b) : (x)))
 
-#ifndef NON_MATCHING
-// func_800386A8
-#pragma GLOBAL_ASM("asm/Core/x/xParGroup.s", "xParGroupAnimate__FP9xParGroupf")
-#else
+#ifdef NON_MATCHING
 void xParGroupAnimate(xParGroup* ps, float32 dt)
 {
     xPar* i = ps->m_root;

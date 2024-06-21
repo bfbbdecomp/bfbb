@@ -117,10 +117,7 @@ void zNPCSubBoss::Setup()
     }
 }
 
-#ifndef NON_MATCHING
-// func_80136088
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeSubBoss.s", "SUBB_InitEffects__Fv")
-#else
+#ifdef NON_MATCHING
 void SUBB_InitEffects()
 {
     // non-matching: scheduling

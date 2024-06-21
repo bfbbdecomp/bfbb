@@ -43,7 +43,7 @@ extern float32 zCombo_float32_3; // probably comboTimer
 extern xBase* sHideText[5];
 extern xBase* sHideUIF[1];
 
-// func_8019590C
+
 void fillCombo(zComboReward* reward)
 {
     int32 rewardLeft = reward->reward;
@@ -81,10 +81,8 @@ void fillCombo(zComboReward* reward)
     reward->rewardNum = j;
 }
 
-// func_80195A00
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCombo.s", "zCombo_Setup__Fv")
-#else
+
+#if 0
 // Can't get the floating point instructions to go in the right order
 // the zCombo_float32_3 = zCombo_float_minusone always gets lifted to the
 // start regardless of what order the code is in, despite it remaining
@@ -164,10 +162,8 @@ void zCombo_Setup()
 }
 #endif
 
-// func_80195C10
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zCombo.s", "zCombo_Add__Fi")
-#else
+
+#if 0
 /* Can't figure out how to get the assignments to happen in the right order */
 void zCombo_Add(int32 points)
 {
@@ -189,13 +185,13 @@ void zCombo_Add(int32 points)
 }
 #endif
 
-// func_80195C6C
+
 void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
 {
     w.hide();
 }
 
-// func_80195C8C
+
 void zCombo_HideImmediately()
 {
     if (comboHUD != NULL)
@@ -204,10 +200,10 @@ void zCombo_HideImmediately()
     }
 }
 
-// func_80195CA4
-#pragma GLOBAL_ASM("asm/Game/zCombo.s", "zCombo_Update__Ff")
 
-// func_80195FDC
+
+
+
 bool ztextbox::visible()
 {
     return this->flag.visible;

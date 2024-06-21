@@ -8,7 +8,7 @@
 
 int32 zConditionalEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
 
-// func_80052558
+
 void zConditionalInit(void* b, void* asset)
 {
     zConditionalInit((xBase*)b, (zCondAsset*)asset);
@@ -20,7 +20,7 @@ struct UnknownTypeInheritingBase : xBase
     int8* unknownPtr;
 };
 
-// func_80052584
+
 void zConditionalInit(xBase* b, zCondAsset* asset)
 {
     xBaseInit(b, asset);
@@ -41,25 +41,25 @@ void zConditionalInit(xBase* b, zCondAsset* asset)
     }
 }
 
-// func_800525F0
+
 void zConditionalReset(_zConditional* ent)
 {
     xBaseReset(ent, ent->asset);
 }
 
-// func_80052614
+
 void zConditionalSave(_zConditional* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-// func_80052634
+
 void zConditionalLoad(_zConditional* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
 
-// func_80052654
+
 bool zConditional_Evaluate(_zConditional* c)
 {
     zVarEntry* v = NULL;
@@ -109,10 +109,8 @@ bool zConditional_Evaluate(_zConditional* c)
     }
 }
 
-// func_800527EC
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zConditional.s", "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
-#else
+
+#if 0
 // This doesn't work because it's missing a single branch instruction
 // The original assembly has a redundant branch instruction:
 //   /* 80052814 0004F614  48 00 00 48 */ b lbl_8005285C

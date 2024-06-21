@@ -13,10 +13,8 @@ extern _tagActionLine* sActionLine[8];
 extern RwRaster* sActionLineRaster;
 extern const int8 zActionLineStrings[];
 
-// func_8004E510
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zActionLine.s", "zActionLineInit__Fv")
-#else
+
+#if 0
 void zActionLineInit()
 {
     for (int32 i = 0; i < 8; i++)
@@ -55,10 +53,8 @@ void zActionLineUpdate(float32 seconds)
     }
 }
 
-// func_8004E628
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zActionLine.s", "RenderActionLine__FP14_tagActionLine")
-#else
+
+#if 0
 void RenderActionLine(_tagActionLine* l)
 {
     static RxObjSpace3DVertex sStripVert[4];

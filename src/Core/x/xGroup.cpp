@@ -10,13 +10,7 @@ void xGroupInit(void* b, void* asset)
     xGroupInit((xBase*)b, (xGroupAsset*)asset);
 }
 
-#if 1
-
-// func_8002CAC0
-#pragma GLOBAL_ASM("asm/Core/x/xGroup.s", "xGroupInit__FP5xBaseP11xGroupAsset")
-
-#else
-
+#if 0
 // There is an instruction swap that seems to be throwing everything off.
 void xGroupInit(xBase* b, xGroupAsset* asset)
 {
@@ -83,13 +77,7 @@ void xGroupReset(xGroup* ent)
     ent->last_index = 0;
 }
 
-#if 1
-
-// func_8002CC78
-#pragma GLOBAL_ASM("asm/Core/x/xGroup.s", "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase")
-
-#else
-
+#if 0
 // WIP.
 int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
                     xBase* toParamWidget)
@@ -153,13 +141,7 @@ uint32 xGroupGetItem(xGroup* g, uint32 index)
     return (uint32)((uint32*)(g->asset + 1))[index];
 }
 
-#if 1
-
-// func_8002CF2C
-#pragma GLOBAL_ASM("asm/Core/x/xGroup.s", "get_any__6xGroupFv")
-
-#else
-
+#if 0
 // Some weird register swapping going on here.
 uint32 xGroup::get_any()
 {

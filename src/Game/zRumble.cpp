@@ -20,13 +20,7 @@ extern float32 lbl_803CDE5C; // 0.09f
 extern float32 lbl_803CDE60; // 0.0f
 extern float32 lbl_803CDE64; // 1.0f
 
-#if 1
-
-// func_800ACDE0
-#pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt")
-
-#else
-
+#if 0
 // Another one that should work, but messes with jump tables. 800acdf0 and 800ace18 are the only ones in the function that don't work.
 void zRumbleStart(int32 pad_id, _tagSDRumbleType rumble_type, xEnt* ent)
 {
@@ -111,13 +105,7 @@ void zRumbleStart(_tagSDRumbleType rumble_type, xEnt* ent)
     zRumbleStart(globals.currentActivePad, rumble_type, ent);
 }
 
-#if 1
-
-// func_800AD0B8
-#pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStartDistance__Fiff14_tagRumbleTypef")
-
-#else
-
+#if 0
 // Can't seem to figure out the proper condition branching.
 void zRumbleStartDistance(int32 pad_id, float32 real_dist, float32 max_dist, _tagRumbleType type,
                           float32 maxTime)
@@ -136,13 +124,7 @@ void zRumbleStartDistance(int32 pad_id, float32 real_dist, float32 max_dist, _ta
 
 #endif
 
-#if 1
-
-// func_800AD11C
-#pragma GLOBAL_ASM("asm/Game/zRumble.s", "zRumbleStartEntDistance__FP4xEntf14_tagRumbleTypef")
-
-#else
-
+#if 0
 // Template for future use.
 void zRumbleStartEntDistance(xEnt* ent, float32 dist, _tagRumbleType type, float32 maxTime)
 {

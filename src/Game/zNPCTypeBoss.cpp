@@ -179,10 +179,7 @@ void ZNPC_Destroy_Boss(xFactoryInst* inst)
     delete inst;
 }
 
-#ifndef NON_MATCHING
-// func_80136334
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "ZNPC_AnimTable_BossSBobbyArm__Fv")
-#else
+#ifdef NON_MATCHING
 xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 {
     // non-matching: surprisingly the floats in this function are fine
@@ -214,10 +211,7 @@ void zNPCBoss::Setup()
     }
 }
 
-#ifndef NON_MATCHING
-// func_80136424
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeBoss.s", "BOSS_InitEffects__Fv")
-#else
+#ifdef NON_MATCHING
 void BOSS_InitEffects()
 {
     // non-matching: scheduling

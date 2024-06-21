@@ -26,11 +26,8 @@ extern zGlobals globals;
 
 extern const char zMusic_strings[];
 
-// func_800A6E9C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "volume_reset__Fv")
-// Float issue
-#else
+
+#ifdef NON_MATCHING
 void volume_reset()
 {
     volume.cur = lbl_803CCA78;
@@ -54,7 +51,7 @@ void zMusicRefreshVolume()
     }
 }
 
-// func_800A6F50
+
 void zMusicInit()
 {
     sMusicPaused = 0;
@@ -120,10 +117,7 @@ void zMusicInit()
 }
 
 // WIP.
-#ifndef NON_MATCHING
-// func_800A7314
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "getCurrLevelMusicEnum__Fv")
-#else
+#ifdef NON_MATCHING
 // Correct, but won't work due to the switch case jump table (messes with offsets)
 int32 getCurrLevelMusicEnum()
 {
@@ -193,14 +187,12 @@ int32 getCurrLevelMusicEnum()
 }
 #endif
 
-// func_800A7414
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicDo__Fi")
 
-// func_800A7640
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotify__Fi")
+
+
+
+#if 0
 // Probably floating point memes idk
-#else
 void zMusicNotify(int32 situation)
 {
     zMusicSituation* s;
@@ -231,14 +223,14 @@ void zMusicNotify(int32 situation)
 }
 #endif
 
-// func_800A76BC
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicNotifyEvent__FPCfP5xBase")
 
-// func_800A77B4
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicUpdate__Ff")
 
-// func_800A7924
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "volume_update__Ff")
+
+
+
+
+
+
 
 // Stop all tracks and set them to null.
 void zMusicKill()
@@ -274,13 +266,7 @@ void zMusicPause()
 }
 
 // WIP.
-#if 1
-
-// func_800A7B7C
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicUnpause__Fi")
-
-#else
-
+#if 0
 // Only thing that doesn't compile correctly is the function call to xSndPlay, in which a bunch of stuff is in the wrong order it looks like.
 void zMusicUnpause(int32 kill)
 {
@@ -314,13 +300,7 @@ void zMusicUnpause(int32 kill)
 #endif
 
 // WIP.
-#if 1
-
-// func_800A7C60
-#pragma GLOBAL_ASM("asm/Game/zMusic.s", "zMusicSetVolume__Fff")
-
-#else
-
+#if 0
 // Not sure what's wrong with this one. Doesn't match in the slightest.
 void zMusicSetVolume(float32 vol, float32 delay)
 {

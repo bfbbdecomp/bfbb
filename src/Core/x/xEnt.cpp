@@ -185,9 +185,7 @@ void xEntAddHittableFlag(xEnt* ent)
 }
 
 #ifndef NON_MATCHING
-// func_8001830C
 void hack_receive_shadow(xEnt* ent);
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "hack_receive_shadow__FP4xEnt")
 #else
 static void hack_receive_shadow(xEnt* ent)
 {
@@ -234,9 +232,7 @@ static void hack_receive_shadow(xEnt* ent)
 #endif
 
 #ifndef NON_MATCHING
-// func_8001853C
 void xEntAddShadowRecFlag(xEnt* ent);
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntAddShadowRecFlag__FP4xEnt")
 #else
 static void xEntAddShadowRecFlag(xEnt* ent)
 {
@@ -306,10 +302,7 @@ static void xEntAddShadowRecFlag(xEnt* ent)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800185B0
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntInit__FP4xEntP9xEntAsset")
-#else
+#ifdef NON_MATCHING
 void xEntInit(xEnt* ent, xEntAsset* asset)
 {
     xBaseInit(ent, asset);
@@ -356,10 +349,7 @@ void xEntInit(xEnt* ent, xEntAsset* asset)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800186D0
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntInitForType__FP4xEnt")
-#else
+#ifdef NON_MATCHING
 void xEntInitForType(xEnt* ent)
 {
     ent->update = xEntUpdate;
@@ -711,10 +701,7 @@ void xEntLoad(xEnt* ent, xSerial* s)
     }
 }
 
-#ifndef NON_MATCHING
-// func_80018F50
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntReset__FP4xEnt")
-#else
+#ifdef NON_MATCHING
 void xEntReset(xEnt* ent)
 {
     xMat4x3 frame;
@@ -931,10 +918,7 @@ void xEntRestorePipeline(xSurface*, RpAtomic* model)
     }
 }
 
-#ifndef NON_MATCHING
-// func_800194CC
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntRender__FP4xEnt")
-#else
+#ifdef NON_MATCHING
 void xEntRender(xEnt* ent)
 {
     int32 shadowOutside;
@@ -1306,10 +1290,7 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt)
     xEntAddToPos(ent, &dposvel);
 }
 
-#ifndef NON_MATCHING
-// func_80019E88
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollide__FP4xEntP6xScenef")
-#else
+#ifdef NON_MATCHING
 void xEntCollide(xEnt* ent, xScene* sc, float32 dt)
 {
     if (ent->model)
@@ -1442,10 +1423,7 @@ void xEntCollCheckEnv(xEnt* p, xScene* sc)
 }
 
 #ifndef NON_MATCHING
-// func_8001A2E0
 void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*), xGrid* grid);
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s",                                                            \
-                   "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid")
 #else
 static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*),
                                  xGrid* grid)
@@ -1578,10 +1556,7 @@ void xEntCollCheckNPCs(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*
     p->collis->npc_eidx = p->collis->idx;
 }
 
-#ifndef NON_MATCHING
-// func_8001A70C
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv")
-#else
+#ifdef NON_MATCHING
 xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 {
     xent_entent = 1;
@@ -2014,10 +1989,7 @@ void xEntAnimateCollision(xEnt& ent, bool on)
     }
 }
 
-#ifndef NON_MATCHING
-// func_8001B3BC
-#pragma GLOBAL_ASM("asm/Core/x/xEnt.s", "xEntValidType__FUc")
-#else
+#ifdef NON_MATCHING
 bool xEntValidType(uint8 type)
 {
     // I have no idea how to match this lol

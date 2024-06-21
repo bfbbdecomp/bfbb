@@ -68,13 +68,13 @@ extern int8 menu_fmv_played;
 extern iColor_tag BlackColorInitializer;
 extern iColor_tag ClearColorInitializer;
 
-// func_800A6000
+
 int32 zMenuRunning()
 {
     return sInMenu;
 }
 
-// func_800A6008
+
 void zMenuInit(uint32 theSceneID)
 {
     sInMenu = 1;
@@ -88,7 +88,7 @@ void zMenuInit(uint32 theSceneID)
     zMusicInit();
 }
 
-// func_800A608C
+
 void zMenuExit()
 {
     zMusicKill();
@@ -98,7 +98,7 @@ void zMenuExit()
     sInMenu = 0;
 }
 
-// func_800A60D0
+
 void zMenuSetup()
 {
     globals.player.MaxHealth = 3;
@@ -117,10 +117,8 @@ void zMenuSetup()
     zEntEvent(&globals.player.ent, 8);
 }
 
-// func_800A6180
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuLoop__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Floating point code uses different register allocation / order, but I think
 // that the function has the correct behavior.
 void zMenuLoop()
@@ -318,19 +316,19 @@ void zMenuLoop()
 }
 #endif
 
-// func_800A6748
+
 uint32 zMenuIsPaused()
 {
     return 0;
 }
 
-// func_800A6750
+
 uint32 zMenuLoopContinue()
 {
     return gGameMode != eGameMode_Game;
 }
 
-// func_800A6768
+
 uint32 zMenuUpdateMode()
 {
     uint32 retVal = 0;
@@ -360,7 +358,7 @@ uint32 zMenuUpdateMode()
     return retVal;
 }
 
-// func_800A6828
+
 uint32 zMenuGetCorruptFiles(int8 name[][64])
 {
     for (int i = 0; i < corruptFileCount; ++i)
@@ -370,7 +368,7 @@ uint32 zMenuGetCorruptFiles(int8 name[][64])
     return corruptFileCount;
 }
 
-// func_800A6894
+
 bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* neededFiles)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_SAVE);
@@ -510,16 +508,14 @@ bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* needed
     return !rc;
 }
 
-// func_800A6B98
+
 int32 zMenuGetBadCard()
 {
     return card + 1;
 }
 
-// func_800A6BA4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zMenu.s", "zMenuFMVPlay__FPcUifbb")
-#else
+
+#ifdef NON_MATCHING
 // Floating point assignments are out of order.
 void zMenuFMVPlay(int8* filename, uint32 buttons, float32 time, bool skippable, bool lockController)
 {
@@ -533,13 +529,13 @@ void zMenuFMVPlay(int8* filename, uint32 buttons, float32 time, bool skippable, 
 }
 #endif
 
-// func_800A6BE8
+
 int32 zMenuIsFirstBoot()
 {
     return sFirstBoot;
 }
 
-// func_800A6BF0
+
 void zMenuFirstBootSet(int32 value)
 {
     sFirstBoot = value;

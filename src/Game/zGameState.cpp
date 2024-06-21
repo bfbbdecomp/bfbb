@@ -251,10 +251,7 @@ void zGameStateSwitch(int32 theNewState)
     }
 }
 
-#ifndef NON_MATCHING
-// func_8009AC18
-#pragma GLOBAL_ASM("asm/Game/zGameState.s", "zGameModeSwitch__F9eGameMode")
-#else
+#ifdef NON_MATCHING
 void zGameModeSwitch(eGameMode modeNew)
 {
     eGameMode modeOld = gGameMode;

@@ -56,9 +56,6 @@ namespace
 
 #ifndef NON_MATCHING
     void create_glow_light();
-// func_8013AF64
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
-                   "create_glow_light__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_Fv")
 #else
     void create_glow_light()
     {
@@ -166,14 +163,14 @@ namespace
     }
 
     uint32 get_tile(const uint8*, ulong32);
-// func_8013B1C4
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
-                   "get_tile__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPCUcUl")
+
+
+                   
 
     void set_tile(uint8*, ulong32, uint32);
-// func_8013B260
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s",                                                       \
-                   "set_tile__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FPUcUlUi")
+
+
+                   
 
     void translate_mask(uint8* r3, const uint8* r4, ulong32 r5)
     {
@@ -235,17 +232,9 @@ extern float32 blues_scale[6];
 
 namespace
 {
-// func_8013B424
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zDiscoFloor.s",                                                                      \
-    "set_object_state__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FRC13z_disco_floorUli")
 
 #ifndef NON_MATCHING
     void play_sound(z_disco_floor& df);
-// func_8013B564
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Game/zDiscoFloor.s",                                                                      \
-    "play_sound__25_esc__2_unnamed_esc__2_zDiscoFloor_cpp_esc__2_FR13z_disco_floor")
 #else
     void play_sound(z_disco_floor& df)
     {
@@ -419,11 +408,11 @@ namespace
     }
 } // namespace
 
-// func_8013BA08
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "__as__14zSurfAssetBaseFRC14zSurfAssetBase")
 
-// func_8013BB70
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "__as__13zSurfacePropsFRC13zSurfaceProps")
+
+
+
+
 
 namespace
 {
@@ -650,10 +639,7 @@ void z_disco_floor::init(void* ent, void* asset)
     ((z_disco_floor*)ent)->load(*(z_disco_floor_asset*)asset);
 }
 
-#ifndef NON_MATCHING
-// func_8013C02C
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "load__13z_disco_floorFR19z_disco_floor_asset")
-#else
+#ifdef NON_MATCHING
 void z_disco_floor::load(z_disco_floor_asset& asset)
 {
     xBaseInit(this, &asset);
@@ -709,10 +695,7 @@ namespace
     void add_tweaks(z_disco_floor&);
 }
 
-#ifndef NON_MATCHING
-// func_8013BDD4
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "setup__13z_disco_floorFv")
-#else
+#ifdef NON_MATCHING
 void z_disco_floor::setup()
 {
     current_disco_floor = id;
@@ -964,10 +947,7 @@ void z_disco_floor::refresh_spheres()
     }
 }
 
-#ifndef NON_MATCHING
-// func_8013C814
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "update_pulse__13z_disco_floorFf")
-#else
+#ifdef NON_MATCHING
 void z_disco_floor::update_pulse(float32 dt)
 {
     pulse_time += _1174_0 * dt;
@@ -988,8 +968,8 @@ void z_disco_floor::update_pulse(float32 dt)
 }
 #endif
 
-// func_8013C8C0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "refresh_bound__13z_disco_floorFv")
+
+
 
 void z_disco_floor::refresh_cull_dist()
 {
@@ -1069,10 +1049,7 @@ void z_disco_floor::render(int32 group)
     }
 }
 
-#ifndef NON_MATCHING
-// func_8013CDA0
-#pragma GLOBAL_ASM("asm/Game/zDiscoFloor.s", "effects_render__13z_disco_floorFi")
-#else
+#ifdef NON_MATCHING
 void z_disco_floor::effects_render(int32 group)
 {
     float32 glow = pulse_glow[group];

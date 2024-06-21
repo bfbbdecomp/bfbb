@@ -42,17 +42,17 @@ extern float64 _1199;
 extern uint8 menu_fmv_played;
 extern int8 zEventLogBuf[256][20];
 
-// func_800534E4
+
 void zDispatcher_Startup()
 {
 }
 
-// func_800534E8
+
 void zDispatcher_Shutdown()
 {
 }
 
-// func_800534EC
+
 void zDispatcher_scenePrepare()
 {
     st_ZDISPATCH_DEPOT* depot = &g_zdsp_depot;
@@ -62,7 +62,7 @@ void zDispatcher_scenePrepare()
     }
 }
 
-// func_8005352C
+
 void zDispatcher_sceneFinish()
 {
     st_ZDISPATCH_DEPOT* depot = &g_zdsp_depot;
@@ -74,10 +74,8 @@ void zDispatcher_sceneFinish()
     }
 }
 
-// func_80053568
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcher_memPool__Fi")
-#else
+
+#ifdef NON_MATCHING
 // Compiler is optimizng the size calcuation and moving parameters for memset differently.
 st_ZDISPATCH_DATA* zDispatcher_memPool(int32 cnt)
 {
@@ -98,37 +96,37 @@ st_ZDISPATCH_DATA* zDispatcher_memPool(int32 cnt)
 }
 #endif
 
-// func_800535E0
+
 st_ZDISPATCH_DATA* zDispatcher_getInst(st_ZDISPATCH_DATA* pool, int32 idx)
 {
     return &pool[idx];
 }
 
-// func_800535EC
+
 void zDispatcher_Init(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
 {
     ZDSP_instInit(dspdata, bass);
 }
 
-// func_8005360C
+
 void zDispatcher_InitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     ZDSP_instInitDep(dspdata, scene);
 }
 
-// func_8005362C
+
 void zDispatcher_Save(st_ZDISPATCH_DATA* dspdata, xSerial* s)
 {
     xBaseSave(dspdata, s);
 }
 
-// func_8005364C
+
 void zDispatcher_Load(st_ZDISPATCH_DATA* dspdata, xSerial* s)
 {
     xBaseLoad(dspdata, s);
 }
 
-// func_8005366C
+
 void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
 {
     xBaseInit(dspdata, bass);
@@ -146,13 +144,13 @@ void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
     xSceneID2Name(globals.sceneCur, dspdata->id);
 }
 
-// func_800536F4
+
 void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     xSceneID2Name(globals.sceneCur, dspdata->id);
 }
 
-// func_80053724
+
 void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     xBaseAsset* ass = dspdata->rawass;
@@ -162,18 +160,18 @@ void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
     ZDSP_instInitDep(dspdata, scene);
 }
 
-// func_80053794
+
 void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata)
 {
 }
 
-// func_80053798
+
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd)
 {
     ZDSP_injectCmd(dspdata, cmd, NULL, NULL, NULL);
 }
 
-// func_800537C4
+
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, int32 i)
 {
     int32 arr[2];
@@ -181,7 +179,7 @@ void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, int32 i
     ZDSP_injectCmd(dspdata, cmd, (void*)arr, NULL, NULL);
 }
 
-// func_800537F4
+
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* indata, void* inxtra,
                     void* result)
 {
@@ -193,7 +191,7 @@ void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* i
     ZDSP_doCommand(dspdata, &ctx);
 }
 
-// func_80053850
+
 int32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
 {
     int32 iv;
@@ -365,7 +363,7 @@ int32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
     return 1;
 }
 
-// func_80053B2C
+
 void zDispatcherStoreOptions()
 {
     oldVibrationOption = globals.option_vibration;
@@ -374,10 +372,7 @@ void zDispatcherStoreOptions()
     oldSFXVolume = zVarEntryCB_SndFXVol(NULL);
 }
 
-#ifndef NON_MATCHING
-// func_80053B7C
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "zDispatcherRestoreOptions__Fv")
-#else
+#ifdef NON_MATCHING
 // This is actually stupid. Loading parameter before assignment.
 void zDispatcherRestoreOptions()
 {
@@ -389,10 +384,8 @@ void zDispatcherRestoreOptions()
 }
 #endif
 
-// func_80053BD4
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase")
-#else
+
+#if 0
 // WIP
 // This switch is a mess, good luck.
 int32 ZDSP_elcb_event(xBase*, xBase* xb, uint32 toEvent, const float32* toParam,
@@ -552,10 +545,7 @@ int32 ZDSP_elcb_event(xBase*, xBase* xb, uint32 toEvent, const float32* toParam,
 }
 #endif
 
-#if 1
-// func_800540D4
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "WRAP_xsnd_setMusicVolume__Fi")
-#else
+#if 0
 void WRAP_xsnd_setMusicVolume(int32 i)
 {
     float f1 = _1181 * i;
@@ -574,10 +564,7 @@ void WRAP_xsnd_setMusicVolume(int32 i)
 }
 #endif
 
-// func_80054158
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zDispatcher.s", "WRAP_xsnd_setSFXVolume__Fi")
-#else
+#if 0
 void WRAP_xsnd_setSFXVolume(int32 i)
 {
     float32 fcmp = _1181 * i; // - _1199;

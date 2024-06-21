@@ -106,11 +106,7 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
     }
 }
 
-#ifndef NON_MATCHING
-// func_8000A7FC
-// float32 xsqrt(float32 x);
-#pragma GLOBAL_ASM("asm/Core/x/xBound.s", "xsqrt__Ff")
-#else
+#ifdef NON_MATCHING
 float32 xsqrt(float32 x)
 {
     const float32 half = _571;
@@ -141,9 +137,7 @@ uint32 xBoundSphereHitsOBB(const xSphere* s, const xBox* b, const xMat4x3* m, xC
 }
 
 #ifndef NON_MATCHING
-// func_8000A8C8
 void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c);
-#pragma GLOBAL_ASM("asm/Core/x/xBound.s", "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis")
 #else
 void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c)
 {
@@ -193,8 +187,6 @@ void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c)
 
 #ifndef NON_MATCHING
 static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, xIsect* isect);
-// func_8000A9C0
-#pragma GLOBAL_ASM("asm/Core/x/xBound.s", "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect")
 #else
 static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, xIsect* isect)
 {

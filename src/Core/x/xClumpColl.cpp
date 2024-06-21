@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-// func_8011D564
+
 xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2)
 {
     uint32* header; // unused
@@ -26,7 +26,7 @@ xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2)
     return tree;
 }
 
-// func_8011D5F4
+
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
 {
     int32 i;
@@ -40,12 +40,7 @@ void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
     RpMesh* mesh;
 }
 
-// func_8011D5F8
-#if 1
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xClumpColl.s",                                                                     \
-    "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv")
-#else
+#if 0
 //WIP
 xClumpCollBSPTree*
 xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
@@ -99,30 +94,3 @@ xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
     return 0;
 }
 #endif
-
-// func_8011D748
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xClumpColl.s",                                                                     \
-    "xClumpColl_ForAllLineLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLineP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv")
-
-// func_8011DFB8
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xClumpColl.s",                                                                     \
-    "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv")
-
-// func_8011E844
-#pragma GLOBAL_ASM("asm/Core/x/xClumpColl.s",                                                      \
-                   "LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv")
-
-// func_8011EC00
-#pragma GLOBAL_ASM("asm/Core/x/xClumpColl.s",                                                      \
-                   "LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv")
-
-// func_8011ECF8
-#pragma GLOBAL_ASM("asm/Core/x/xClumpColl.s",                                                      \
-                   "LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv")
-
-// func_8011EE78
-#pragma GLOBAL_ASM(                                                                                \
-    "asm/Core/x/xClumpColl.s",                                                                     \
-    "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv")

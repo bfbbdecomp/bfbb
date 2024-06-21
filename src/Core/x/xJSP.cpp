@@ -21,10 +21,8 @@ RpAtomic* CountAtomicCB(RpAtomic* atomic, uint32* param_2)
     return atomic;
 }
 
-// func_80122C2C
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "AddMeshCB__FP6RpMeshP12RpMeshHeaderPv")
-#else
+
+#if 0
 RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3)
 {
     uint32 i = 0;
@@ -45,10 +43,8 @@ RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3)
 }
 #endif
 
-// func_80122CBC
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "AddAtomicCB__FP8RpAtomicPv")
-#else
+
+#if 0
 // ¯\_(ツ)_/¯
 RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
 {
@@ -62,10 +58,8 @@ RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
 }
 #endif
 
-// func_80122D2C
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "AddAtomicPrecalcedVertCB__FP8RpAtomicPv")
-#else
+
+#if 0
 // not in dwarf data
 // ¯\_(ツ)_/¯
 RpAtomic* AddAtomicPrecalcedVertCB(RpAtomic* atomic, void* data)
@@ -86,9 +80,3 @@ RpAtomic* ListAtomicCB(RpAtomic* atomic, void* data)
     *(int32*)data += 4;
     return atomic;
 }
-
-// func_80122D80
-#pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "xJSP_MultiStreamRead__FPvUiPP10xJSPHeader")
-
-// func_80123148
-#pragma GLOBAL_ASM("asm/Core/x/xJSP.s", "xJSP_Destroy__FP10xJSPHeader")

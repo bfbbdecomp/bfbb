@@ -15,13 +15,7 @@ extern uint32 HeapSize;
 extern uint32 mem_top_alloc;
 extern uint32 mem_base_alloc;
 
-#if 1
-
-// func_800C6360
-#pragma GLOBAL_ASM("asm/Core/p2/iMemMgr.s", "iMemInit__Fv")
-
-#else
-
+#if 0
 // Starts going wrong after the if and else statement, everything else before looks fine.
 void iMemInit()
 {
@@ -54,7 +48,6 @@ void iMemInit()
     mem_top_alloc = gMemInfo.DRAM.addr + HeapSize;
     mem_base_alloc = gMemInfo.DRAM.addr;
 }
-
 #endif
 
 void iMemExit()

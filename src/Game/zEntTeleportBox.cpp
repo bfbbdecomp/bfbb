@@ -156,8 +156,6 @@ static uint32 CtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
 
 #ifndef NON_MATCHING
 static uint32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object);
-// func_8012C230
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "CtoOCB__FP15xAnimTransitionP11xAnimSinglePv")
 #else
 static uint32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 {
@@ -242,9 +240,9 @@ void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, ulong32)
 }
 
 void zEntTeleportBox_Init(_zEntTeleportBox* ent, teleport_asset* asset);
-// func_8012C3EC
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s",                                                   \
-                   "zEntTeleportBox_Init__FP16_zEntTeleportBoxP14teleport_asset")
+
+
+                   
 
 void zEntTeleportBox_InitAll()
 {
@@ -252,13 +250,11 @@ void zEntTeleportBox_InitAll()
 }
 
 void zEntTeleportBox_Setup(_zEntTeleportBox* ent);
-// func_8012CDE0
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Setup__FP16_zEntTeleportBox")
+
+
 
 #if 1 // wip
 void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt);
-// func_8012CFF8
-#pragma GLOBAL_ASM("asm/Game/zEntTeleportBox.s", "zEntTeleportBox_Update__FP4xEntP6xScenef")
 #else
 void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt)
 {

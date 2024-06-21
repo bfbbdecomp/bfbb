@@ -10,13 +10,7 @@ extern float32 lbl_803CD158; // 1.0f
 extern float32 lbl_803CD15C; // 1.0 * 10^-5f
 extern float32 lbl_803CD160; // 0.0f
 
-#if 1
-
-// func_8004E2F0
-#pragma GLOBAL_ASM("asm/Core/x/xVec3.s", "xVec3Normalize__FP5xVec3PC5xVec3")
-
-#else
-
+#if 0
 // Works except for register swapping.
 float32 xVec3Normalize(xVec3* o, const xVec3* v)
 {
@@ -54,13 +48,7 @@ float32 xVec3Normalize(xVec3* o, const xVec3* v)
 
 #endif
 
-#if 1
-
-// func_8004E3DC
-#pragma GLOBAL_ASM("asm/Core/x/xVec3.s", "xVec3NormalizeFast__FP5xVec3PC5xVec3")
-
-#else
-
+#if 0
 // Works except for register swapping.
 float32 xVec3NormalizeFast(xVec3* o, const xVec3* v)
 {

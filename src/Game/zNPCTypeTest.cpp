@@ -69,10 +69,7 @@ void ZNPC_Destroy_Test(xFactoryInst* inst)
     delete inst;
 }
 
-#ifndef NON_MATCHING
-// func_80135BD0
-#pragma GLOBAL_ASM("asm/Game/zNPCTypeTest.s", "ZNPC_AnimTable_Test__Fv")
-#else
+#ifdef NON_MATCHING
 xAnimTable* ZNPC_AnimTable_Test()
 {
     xAnimTable* table;

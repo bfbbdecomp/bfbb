@@ -203,8 +203,7 @@ extern float32 _2192; // 1.0e10f
 
 #ifndef NON_MATCHING
 static void PickupFallPhysics(zEntPickup* ent, xScene* sc, float32 dt);
-// func_800627CC
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "PickupFallPhysics__FP10zEntPickupP6xScenef")
+
 #else
 static void PickupFallPhysics(zEntPickup* ent, xScene* sc, float32 dt)
 {
@@ -1112,8 +1111,8 @@ void zEntPickup_GiveAllRewardsNow()
     memset(sRewards, 0, sizeof(sRewards));
 }
 
-// func_80063C9C
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_Update__FP10zEntPickupP6xScenef")
+
+
 
 void zEntPickup_Reset(zEntPickup* ent)
 {
@@ -1336,8 +1335,8 @@ zPickupAuraInfo zPickupAuraTable[] =
 
 static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, float32 dt);
 // Uses int-to-float conversion
-// func_800649D4
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef")
+
+
 
 static void set_alpha_blend(xModelInstance* model)
 {
@@ -1370,10 +1369,7 @@ void zEntPickup_Render(zEntPickup* plist, uint32 pcount)
     }
 }
 
-#ifndef NON_MATCHING
-// func_8006509C
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_RenderOne__FP4xEnt")
-#else
+#ifdef NON_MATCHING
 void zEntPickup_RenderOne(xEnt* ent)
 {
     if (ent->baseType != eBaseTypePickup)
@@ -1432,12 +1428,12 @@ void zEntPickup_RenderOne(xEnt* ent)
 }
 #endif
 
-// func_800651CC
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_RenderList__FP10zEntPickupUi")
+
+
 
 // Uses int-to-float conversion
-// func_8006541C
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif")
+
+
 
 static uint32 rewardRequest(uint32 shinyType, xVec3* ppos, xVec3 pos)
 {
@@ -1479,10 +1475,7 @@ void zEntPickup_SceneEnter()
     zEntPickup_SceneReset();
 }
 
-#ifndef NON_MATCHING
-// func_80065AF0
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SceneReset__Fv")
-#else
+#ifdef NON_MATCHING
 void zEntPickup_SceneReset()
 {
     // non-matching: scheduling
@@ -1492,10 +1485,7 @@ void zEntPickup_SceneReset()
 }
 #endif
 
-#if 1
-// func_80065B08
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "zEntPickup_SceneUpdate__Ff")
-#else
+#if 0
 void zEntPickup_SceneUpdate(float32 dt)
 {
     // wip
@@ -1617,8 +1607,6 @@ void zEntPickup_SceneUpdate(float32 dt)
 
 #ifndef NON_MATCHING
 static void spawnNRewards(uint32* pickups, uint32 num, xVec3* ppos, xVec3 pos);
-// func_80065E84
-#pragma GLOBAL_ASM("asm/Game/zEntPickup.s", "spawnNRewards__FPUiUiP5xVec35xVec3")
 #else
 static void spawnNRewards(uint32* pickups, uint32 num, xVec3* ppos, xVec3 pos)
 {

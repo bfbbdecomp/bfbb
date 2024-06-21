@@ -11,19 +11,19 @@ volatile _SDRenderState sRS;
 // For things to line up right this has to be present.
 int32 padding;
 
-// func_800AC9E8
+
 void zRenderStateInit()
 {
     sRS = SDRS_Unknown;
 }
 
-// func_800AC9F4
+
 _SDRenderState zRenderStateCurrent()
 {
     return sRS;
 }
 
-// func_800AC9FC
+
 void zRenderState(_SDRenderState newState)
 {
     if (newState == sRS)

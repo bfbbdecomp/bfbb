@@ -115,7 +115,7 @@ extern float32 _849;
 extern float64 _850;
 extern float64 _852;
 
-// func_800AD20C
+
 void zUpdateThumbIcon()
 {
     int32 i;
@@ -158,11 +158,7 @@ void zUpdateThumbIcon()
     }
 }
 
-#if 1
-// func_800AD328
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_Tick__Fv")
-#else
-// WIP
+#if 0
 void zSaveLoad_Tick()
 {
     time_current_1 = (_846 / _852) * (float)iTimeGet();
@@ -233,10 +229,7 @@ void zSaveLoad_Tick()
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800AD598
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_poll__Fi")
-#else
+#ifdef NON_MATCHING
 // Reordings/Float scheduling
 int32 zSaveLoad_poll(int32 i)
 {
@@ -254,17 +247,14 @@ int32 zSaveLoad_poll(int32 i)
 }
 #endif
 
-// func_800AD600
+
 void zSendEventToThumbIcon(uint32 toEvent)
 {
     const char* iconString = gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON";
     zEntEvent(zSceneFindObject(xStrHash(iconString)), toEvent);
 }
 
-#ifndef NON_MATCHING
-// func_800AD654
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zChangeThumbIcon__FPCc")
-#else
+#ifdef NON_MATCHING
 void zChangeThumbIcon(const int8* icon)
 {
     int32 arr[4];
@@ -278,14 +268,14 @@ void zChangeThumbIcon(const int8* icon)
 }
 #endif
 
-// func_800AD6C8
+
 void zSaveLoadInit()
 {
     zSaveLoadUITableInit(zSaveLoadUITable);
     zSaveLoadGameTableInit(zSaveLoadGameTable);
 }
 
-// func_800AD6FC
+
 void zSaveLoadGameTableInit(zSaveLoadGame* saveTable)
 {
     for (int32 i = 0; i < 3; i++)
@@ -298,7 +288,7 @@ void zSaveLoadGameTableInit(zSaveLoadGame* saveTable)
     }
 }
 
-// func_800AD740
+
 void zSaveLoadUITableInit(zSaveLoadUI* saveTable)
 {
     //Doesn't match the zSaveLoadUITable size for some reason
@@ -308,13 +298,13 @@ void zSaveLoadUITableInit(zSaveLoadUI* saveTable)
     }
 }
 
-// func_800AD790
+
 void zSaveLoad_UIEvent(int32 i, uint32 toEvent)
 {
     zEntEvent(zSceneFindObject(zSaveLoadUITable[i].nameID), toEvent);
 }
 
-// func_800AD7D8
+
 st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
 {
     if (mode == XSG_MODE_LOAD)
@@ -337,7 +327,7 @@ st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
     return xSGInit(mode);
 }
 
-// func_800AD874
+
 int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
 {
     if (data->mode == XSG_MODE_LOAD)
@@ -351,43 +341,43 @@ int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
     return xSGDone(data);
 }
 
-// func_800AD8CC
+
 int32 zSaveLoad_getgame()
 {
     return currentGame;
 }
 
-// func_800AD8D4
+
 int32 zSaveLoad_getcard()
 {
     return currentCard;
 }
 
-// func_800AD8DC
+
 int32 zSaveLoad_getMCavailable()
 {
     return sAvailable;
 }
 
-// func_800AD8E4
+
 int32 zSaveLoad_getMCneeded()
 {
     return sNeeded;
 }
 
-// func_800AD8EC
+
 int32 zSaveLoad_getMCAccessType()
 {
     return sAccessType;
 }
 
-// func_800AD8F4
+
 int32 zSaveLoadGetAutoSaveCard()
 {
     return autoSaveCard;
 }
 
-// func_800AD8FC
+
 int32 format(int32 num, int32 mode)
 {
     st_XSAVEGAME_DATA* data = zSaveLoadSGInit(XSG_MODE_LOAD);
@@ -450,7 +440,7 @@ int32 format(int32 num, int32 mode)
     return rc;
 }
 
-// func_800ADA64
+
 int32 CardtoTgt(int32 card)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
@@ -472,13 +462,13 @@ int32 CardtoTgt(int32 card)
     return -1;
 }
 
-// func_800ADAFC
+
 int32 zSaveLoad_CardCount()
 {
     return 1;
 }
 
-// func_800ADB04
+
 int32 zSaveLoad_CardPrompt(int32 cardNumber)
 {
     int32 i = 0x15;
@@ -529,7 +519,7 @@ int32 zSaveLoad_CardPrompt(int32 cardNumber)
     return promptSel;
 }
 
-// func_800ADBD8
+
 int32 zSaveLoad_CardPromptFormat(int32 mode)
 {
     int32 i = 0x15;
@@ -557,7 +547,7 @@ int32 zSaveLoad_CardPromptFormat(int32 mode)
     return promptSel;
 }
 
-// func_800ADC70
+
 int32 zSaveLoad_CardPromptSpace(int32 mode)
 {
     int32 i = 0x15;
@@ -579,7 +569,7 @@ int32 zSaveLoad_CardPromptSpace(int32 mode)
     return promptSel;
 }
 
-// func_800ADCF0
+
 int32 zSaveLoad_CardPromptGames(int32 mode)
 {
     int32 i = 0x15;
@@ -601,7 +591,7 @@ int32 zSaveLoad_CardPromptGames(int32 mode)
     return promptSel;
 }
 
-// func_800ADD70
+
 int32 zSaveLoad_CardPromptGameSlotEmpty()
 {
     zSaveLoad_UIEvent(0, eEventUIFocusOff_Unselect);
@@ -616,7 +606,7 @@ int32 zSaveLoad_CardPromptGameSlotEmpty()
     return promptSel;
 }
 
-// func_800ADDD0
+
 int32 zSaveLoad_CardPromptOverwrite()
 {
     zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
@@ -632,7 +622,7 @@ int32 zSaveLoad_CardPromptOverwrite()
     return promptSel;
 }
 
-// func_800ADE38
+
 int32 zSaveLoad_CardPromptOverwriteDamaged()
 {
     zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
@@ -648,7 +638,7 @@ int32 zSaveLoad_CardPromptOverwriteDamaged()
     return promptSel;
 }
 
-// func_800ADEA0
+
 int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
 {
     int32 i = 0x2b;
@@ -673,7 +663,7 @@ int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-// func_800ADF18
+
 int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
 {
     zSaveLoad_UIEvent(0x3c, eEventUIFocusOn_Select);
@@ -686,7 +676,7 @@ int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-// func_800ADF6C
+
 int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
 {
     int i = 0x3a;
@@ -711,7 +701,7 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
     return promptSel;
 }
 
-// func_800ADFE4
+
 int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
 {
     int i = 0x38;
@@ -736,7 +726,7 @@ int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
     return promptSel;
 }
 
-// func_800AE05C
+
 int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
 {
     zSaveLoad_UIEvent(0x35, eEventUIFocusOn_Select);
@@ -750,7 +740,7 @@ int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-// func_800AE0B0
+
 int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
 {
     zSaveLoad_UIEvent(0x36, eEventUIFocusOn_Select);
@@ -764,7 +754,7 @@ int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-// func_800AE104
+
 int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
 {
     int i = 0x2e;
@@ -789,7 +779,7 @@ int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
     return 6;
 }
 
-// func_800AE17C
+
 int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
 {
     int i = 0x2f;
@@ -814,7 +804,7 @@ int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
     return 6;
 }
 
-// func_800AE1F4
+
 int32 zSaveLoad_CardCheckSingle(int32 cardNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
@@ -858,7 +848,7 @@ int32 zSaveLoad_CardCheckSingle(int32 cardNumber)
     return -1;
 }
 
-// func_800AE300
+
 int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
 {
     int32 rc;
@@ -915,7 +905,7 @@ int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
     return rc;
 }
 
-// func_800AE43C
+
 int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber)
 {
     int rc;
@@ -944,7 +934,7 @@ int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
     return rc;
 }
 
-// func_800AE500
+
 int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_SAVE);
@@ -981,7 +971,7 @@ int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
     return rc;
 }
 
-// func_800AE5D0
+
 int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber)
 {
     int rc;
@@ -1009,7 +999,7 @@ int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
     return rc;
 }
 
-// func_800AE674
+
 int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
@@ -1045,7 +1035,7 @@ int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
     return rc;
 }
 
-// func_800AE744
+
 int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber,
                                                    int32 gameNumber)
 {
@@ -1071,7 +1061,7 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, i
     return rc;
 }
 
-// func_800AE7CC
+
 int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
@@ -1106,7 +1096,7 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
     return rc;
 }
 
-// func_800AE8BC
+
 int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
 {
     int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
@@ -1126,7 +1116,7 @@ int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
     }
 }
 
-// func_800AE924
+
 int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
 {
     int32 cardResult = zSaveLoad_CardCheckSingle(cardNumber);
@@ -1144,7 +1134,7 @@ int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
     return cardResult == 9 ? 9 : 1;
 }
 
-// func_800AE9B0
+
 int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
 {
     int32 result;
@@ -1177,7 +1167,7 @@ int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
     return 1;
 }
 
-// func_800AEA7C
+
 int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
 {
     if (mode == 1)
@@ -1190,7 +1180,7 @@ int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
     }
 }
 
-// func_800AEAAC
+
 int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
 {
     int32 result = zSaveLoad_CardCheckSpaceSingle(cardNumber);
@@ -1213,7 +1203,7 @@ int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
     return 1;
 }
 
-// func_800AEB48
+
 int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
 {
     int32 result = zSaveLoad_CardCheckGamesSingle(cardNumber);
@@ -1236,7 +1226,7 @@ int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
     return 1;
 }
 
-// func_800AEBE4
+
 int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode)
 {
     if (mode == 1)
@@ -1249,7 +1239,7 @@ int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode
     }
 }
 
-// func_800AEC14
+
 int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
 {
     int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
@@ -1270,10 +1260,8 @@ int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
     return 1;
 }
 
-// func_800AEC98
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_CardCheckSlotOverwrite__Fii")
-#else
+
+#ifdef NON_MATCHING
 // Optimizing zSaveLoadGameTable lookup out of loop
 int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
 {
@@ -1306,7 +1294,7 @@ int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
 }
 #endif
 
-// func_800AED3C
+
 int32 zSaveLoad_CardPick(int32 mode)
 {
     int32 done = 0;
@@ -1441,7 +1429,7 @@ int32 zSaveLoad_CardPick(int32 mode)
     return done;
 }
 
-// func_800AEFA0
+
 bool IsValidName(int8* name)
 {
     if (strcmp((char*)name, "") == 0)
@@ -1459,7 +1447,7 @@ bool IsValidName(int8* name)
     return 1;
 }
 
-// func_800AF03C
+
 void BuildIt(int8* build_txt, int32 i)
 {
     int8 date1[32] = {};
@@ -1498,7 +1486,7 @@ void BuildIt(int8* build_txt, int32 i)
     }
 }
 
-// func_800AF22C
+
 void zSaveLoad_BuildName(int8* name_txt, int32 idx)
 {
     int8 desired[128];
@@ -1531,10 +1519,8 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
     }
 }
 
-// func_800AF30C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_GameSelect__Fi")
-#else
+
+#ifdef NON_MATCHING
 int32 zSaveLoad_GameSelect(int32 mode)
 {
     int32 done = 0;
@@ -1731,13 +1717,13 @@ int32 zSaveLoad_GameSelect(int32 mode)
 }
 #endif
 
-// func_800AF790
+
 uint8 zSaveLoadGetPreAutoSave()
 {
     return preAutoSaving;
 }
 
-// func_800AF798
+
 void zSaveLoadPreAutoSave(bool onOff)
 {
     preAutoSaving = onOff;
@@ -1751,7 +1737,7 @@ void zSaveLoadPreAutoSave(bool onOff)
     }
 }
 
-// func_800AF7CC
+
 void zSaveLoadAutoSaveUpdate()
 {
     xBase* obj;
@@ -1788,8 +1774,7 @@ void zSaveLoadAutoSaveUpdate()
             }
 
             obj = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED\0"
-#if 1
-                                            // TODO: Remove this once zSaveLoad_SaveLoop matches
+#if 1 // TODO: Remove this once zSaveLoad_SaveLoop matches
                                             "PAUSE OPTIONS BKG GROUP\0"
                                             "PAUSE OPTIONS GROUP\0"
                                             "PAUSE OPTION MGR UIF\0"
@@ -1812,7 +1797,7 @@ void zSaveLoadAutoSaveUpdate()
     }
 }
 
-// func_800AF8D4
+
 int32 zSaveLoad_DoAutoSave()
 {
     int32 success = 0;
@@ -1927,10 +1912,8 @@ int32 zSaveLoad_DoAutoSave()
     }
 }
 
-// func_800AFB84
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveGame__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Reordering at beginning
 int32 zSaveLoad_SaveGame()
 {
@@ -2054,10 +2037,8 @@ int32 zSaveLoad_SaveGame()
 }
 #endif
 
-// func_800AFE6C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_LoadGame__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Reordering, causing different register use at the end
 int32 zSaveLoad_LoadGame()
 {
@@ -2155,7 +2136,7 @@ int32 zSaveLoad_LoadGame()
 }
 #endif
 
-// func_800B0064
+
 uint32 zSaveLoad_LoadLoop()
 {
     zSaveLoadInit();
@@ -2241,10 +2222,8 @@ uint32 zSaveLoad_LoadLoop()
            (uint32)sceneRead[2] << 0x8 | (uint32)sceneRead[3];
 }
 
-// func_800B023C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_SaveLoop__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Scheduling meme on the return
 uint32 zSaveLoad_SaveLoop()
 {
@@ -2389,10 +2368,7 @@ uint32 zSaveLoad_SaveLoop()
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800B0548
-#pragma GLOBAL_ASM("asm/Game/zSaveLoad.s", "zSaveLoad_DispatchCB__FUiPCf")
-#else
+#ifdef NON_MATCHING
 void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
 {
     switch (dispatchEvent)
@@ -2424,7 +2400,7 @@ void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
 }
 #endif
 
-// func_800B061C
+
 int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most)
 {
     *need = xSGWriteStrLen(currSceneStr);
@@ -2432,7 +2408,7 @@ int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* 
     return 1;
 }
 
-// func_800B0670
+
 int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
     if (globals.sceneCur->sceneID == 'PG12')
@@ -2446,7 +2422,7 @@ int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECO
     return xSGWriteData(xsgdata, wctxt, currSceneStr, 1, strlen(currSceneStr)) + 1;
 }
 
-// func_800B0728
+
 int32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, int32* i, int32* j)
 {
     *i = 16;
@@ -2454,7 +2430,7 @@ int32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, int32* i, int32* j
     return 1;
 }
 
-// func_800B0744
+
 int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
     int sum = 0;
@@ -2465,7 +2441,7 @@ int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WR
     return sum + 1;
 }
 
-// func_800B0800
+
 int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                       uint32 ui, int32 i)
 {
@@ -2487,7 +2463,7 @@ int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCON
     return compdiff == 0;
 }
 
-// func_800B08F0
+
 int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                        uint32 ui, int32 i)
 {
@@ -2508,7 +2484,7 @@ int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCO
     return 1;
 }
 
-// func_800B09CC
+
 uint32 zSaveLoad_slotIsEmpty(uint32 slot)
 {
     // TODO: Fix this hardcoded offset once string generation is correct
@@ -2516,19 +2492,19 @@ uint32 zSaveLoad_slotIsEmpty(uint32 slot)
     return strcmp(label, "ld gameslot group" + 0x49c) == 0 ? 1 : 0;
 }
 
-// func_800B0A10
+
 int32 XSGAutoData::LastPhysicalSlot()
 {
     return this->lastPhysicalSlot;
 }
 
-// func_800B0A18
+
 int32 XSGAutoData::LastGame()
 {
     return this->lastGame;
 }
 
-// func_800B0A20
+
 int32 XSGAutoData::LastTarget()
 {
     return this->lastTarg;

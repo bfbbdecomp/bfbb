@@ -13,7 +13,7 @@ st_XSAVEGAME_DATA g_xsgdata = {};
 st_XSAVEGAME_LEADER g_leaders[3] = {};
 XSGAutoData g_autodata;
 
-// func_8003CC4C
+
 int32 xSGStartup()
 {
     if (g_xsginit++ == 0)
@@ -26,7 +26,7 @@ int32 xSGStartup()
     return g_xsginit;
 }
 
-// func_8003CCA0
+
 int32 xSGShutdown()
 {
     g_xsginit--;
@@ -38,7 +38,7 @@ int32 xSGShutdown()
     return g_xsginit;
 }
 
-// func_8003CCD8
+
 st_XSAVEGAME_DATA* xSGInit(en_SAVEGAME_MODE mode)
 {
     st_XSAVEGAME_DATA* xsgdata = &g_xsgdata;
@@ -68,7 +68,7 @@ st_XSAVEGAME_DATA* xSGInit(en_SAVEGAME_MODE mode)
     return xsgdata;
 }
 
-// func_8003CDD4
+
 int32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -117,25 +117,25 @@ int32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003CEF8
+
 int32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, int8 files[][64])
 {
     return iSGCheckForCorruptFiles(xsgdata->isgsess, files);
 }
 
-// func_8003CF1C
+
 int32 xSGTgtCount(st_XSAVEGAME_DATA* xsgdata, int32* max)
 {
     return iSGTgtCount(xsgdata->isgsess, max);
 }
 
-// func_8003CF40
+
 int32 xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
 {
     return iSGTgtPhysSlotIdx(xsgdata->isgsess, tidx);
 }
 
-// func_8003CF64
+
 int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode)
 {
     int32 result = 0;
@@ -160,13 +160,13 @@ int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode)
     return rc;
 }
 
-// func_8003CFDC
+
 int32 xSGTgtFormatTgt(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* canRecover)
 {
     return iSGTgtFormat(xsgdata->isgsess, tidx, 0, canRecover);
 }
 
-// func_8003D008
+
 int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
 {
     int32 result = iSGTgtSetActive(xsgdata->isgsess, tidx);
@@ -177,7 +177,7 @@ int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
     return result;
 }
 
-// func_8003D064
+
 int32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
 {
     int32 rc = iSGTgtSetActive(xsgdata->isgsess, tidx);
@@ -188,7 +188,7 @@ int32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
     return rc;
 }
 
-// func_8003D0A4
+
 int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
                      int32* bytesNeeded, int32* availOnDisk, int32* needFile)
 {
@@ -205,7 +205,7 @@ int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 
                           needFile);
 }
 
-// func_8003D17C
+
 int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
                             int32* bytesNeeded, int32* availOnDisk, int32* needFile)
 {
@@ -222,25 +222,25 @@ int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize,
                                  availOnDisk, needFile);
 }
 
-// func_8003D254
+
 uint8 xSGCheckMemoryCard(st_XSAVEGAME_DATA* xsgdata, int32 index)
 {
     return iSGCheckMemoryCard(xsgdata->isgsess, index);
 }
 
-// func_8003D278
+
 void xSGGameSet(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     xsgdata->gslot = gidx;
 }
 
-// func_8003D280
+
 int32 xSGGameIsEmpty(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     return xSGGameSize(xsgdata, gidx) <= 0;
 }
 
-// func_8003D2B0
+
 int32 xSGGameSize(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     int32 size = 0;
@@ -252,7 +252,7 @@ int32 xSGGameSize(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return size;
 }
 
-// func_8003D320
+
 int8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     static int8 da_date[32] = {};
@@ -268,8 +268,7 @@ int8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
         else
         {
             strcpy(da_date,
-#if 1
-                   // Need these strings and can't seem get them any other way
+#if 1 // Need these strings and can't seem get them any other way
                    0x409 + "The Mystery Machine\0"
                            "Mystery Machine\0"
                            "On Edge in the Hedge!\0"
@@ -338,7 +337,7 @@ int8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return da_date;
 }
 
-// func_8003D3C4
+
 int8* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     int8* da_name = NULL;
@@ -349,7 +348,7 @@ int8* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return da_name;
 }
 
-// func_8003D420
+
 int32 xSGGameThumbIndex(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     int32 idx_thum = -1;
@@ -361,7 +360,7 @@ int32 xSGGameThumbIndex(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return idx_thum;
 }
 
-// func_8003D478
+
 int32 xSGGameProgress(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     int32 progress = -1;
@@ -373,7 +372,7 @@ int32 xSGGameProgress(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return progress;
 }
 
-// func_8003D4D0
+
 int32 xSGAddSaveClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
                        int32 (*infofunc)(void*, st_XSAVEGAME_DATA*, int32*, int32*),
                        int32 (*procfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_WRITECONTEXT*))
@@ -411,7 +410,7 @@ int32 xSGAddSaveClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
     return result;
 }
 
-// func_8003D5A4
+
 int32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
                        int32 (*loadfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_READCONTEXT*,
                                          uint32, int32))
@@ -468,13 +467,13 @@ int32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
     return result;
 }
 
-// func_8003D6E4
+
 int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata)
 {
     return xSGSetup(xsgdata, 0, "nothing", -1, 0, 0);
 }
 
-// func_8003D724
+
 int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, int32 gidx, int8* label, int32 progress, iTime playtime,
                int32 thumbIconIdx)
 {
@@ -521,7 +520,7 @@ int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, int32 gidx, int8* label, int32 progre
     return result;
 }
 
-// func_8003D82C
+
 int32 xSGProcess(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -579,7 +578,7 @@ int32 xSGProcess(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003D96C
+
 int32 xSGWrapup(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -663,7 +662,7 @@ int32 xSGWrapup(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003DAB4
+
 en_XSGASYNC_STATUS xSGAsyncStatus(st_XSAVEGAME_DATA* xsgdata, int32 block, en_XSG_WHYFAIL* whyFail,
                                   int8* errmsg)
 {
@@ -720,7 +719,7 @@ en_XSGASYNC_STATUS xSGAsyncStatus(st_XSAVEGAME_DATA* xsgdata, int32 block, en_XS
     return xstat;
 }
 
-// func_8003DBB0
+
 int32 xSG_cb_leader_svinfo(void*, st_XSAVEGAME_DATA*, int32* cur_space, int32* max_fullgame)
 {
     *cur_space = 0x100;
@@ -728,7 +727,7 @@ int32 xSG_cb_leader_svinfo(void*, st_XSAVEGAME_DATA*, int32* cur_space, int32* m
     return 1;
 }
 
-// func_8003DBC4
+
 int32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
                            st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
@@ -747,7 +746,7 @@ int32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
     return 1;
 }
 
-// func_8003DCD4
+
 int32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
                          st_XSAVEGAME_READCONTEXT* rctxt, uint32, int32)
 {
@@ -758,7 +757,7 @@ int32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
     return 1;
 }
 
-// func_8003DDB0
+
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
                    int32 elesiz, int32 n)
 {
@@ -821,7 +820,7 @@ int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt,
     return cnt;
 }
 
-// func_8003DEC0
+
 int32 xSGWriteStrLen(const int8* str)
 {
     int32 len = strlen(str);
@@ -829,35 +828,35 @@ int32 xSGWriteStrLen(const int8* str)
     return len;
 }
 
-// func_8003DEF0
+
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
                    int32 n)
 {
     return xSGWriteData(xsgdata, wctxt, data, sizeof(int8), n);
 }
 
-// func_8003DF18
+
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int32* data,
                    int32 n)
 {
     return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(int32), n);
 }
 
-// func_8003DF40
+
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, uint32* data,
                    int32 n)
 {
     return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(uint32), n);
 }
 
-// func_8003DF68
+
 int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, float32* data,
                    int32 n)
 {
     return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(float32), n);
 }
 
-// func_8003DF90
+
 int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff,
                   int32 elesiz, int32 n)
 {
@@ -902,33 +901,33 @@ int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, i
     return cnt / elesiz;
 }
 
-// func_8003E090
+
 int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff, int32 n)
 {
     return xSGReadData(xsgdata, rctxt, buff, sizeof(int8), n);
 }
 
-// func_8003E0B8
+
 int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int32* buff, int32 n)
 {
     return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(int32), n);
 }
 
-// func_8003E0E0
+
 int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, uint32* buff,
                   int32 n)
 {
     return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(uint32), n);
 }
 
-// func_8003E108
+
 int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, float32* buff,
                   int32 n)
 {
     return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(float32), n);
 }
 
-// func_8003E130
+
 int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 num_found = 0;
@@ -958,7 +957,7 @@ int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
     return num_found;
 }
 
-// func_8003E238
+
 int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 rc = 1;
@@ -970,7 +969,7 @@ int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
     return rc;
 }
 
-// func_8003E29C
+
 int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
 {
     static int8 slotname[32] = {};
@@ -989,7 +988,7 @@ int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return slotname;
 }
 
-// func_8003E308
+
 void xSG_areaComposeLabel(int8* label, int, int8*, int)
 {
     int8 buf[64] = {};
@@ -997,7 +996,7 @@ void xSG_areaComposeLabel(int8* label, int, int8*, int)
     sprintf(label, "%s", buf);
 }
 
-// func_8003E3DC
+
 int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1034,7 +1033,7 @@ int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003E4E8
+
 int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1062,7 +1061,7 @@ int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003E590
+
 int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1105,7 +1104,7 @@ int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003E6A0
+
 int32 xSG_sv_bldchksum(st_XSAVEGAME_DATA* xsgdata)
 {
     xsgdata->chksum =
@@ -1113,7 +1112,7 @@ int32 xSG_sv_bldchksum(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-// func_8003E6E8
+
 int32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 i = '3333';
@@ -1130,7 +1129,7 @@ int32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-// func_8003E790
+
 int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata)
 {
     xsgdata->upd_tally = 0;
@@ -1148,7 +1147,7 @@ int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-// func_8003E818
+
 int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
 {
     int32 i = '3333';
@@ -1165,7 +1164,7 @@ int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
     return 1;
 }
 
-// func_8003E8D0
+
 int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
 {
     xUtil_idtag2string(clt->idtag, 0);
@@ -1189,7 +1188,7 @@ int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
     return 1;
 }
 
-// func_8003E998
+
 int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1216,7 +1215,7 @@ int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003EAD4
+
 void xSG_cb_ISGChange(void*, en_CHGCODE what)
 {
     XSGAutoData* asg = xSGAutoSave_GetCache();
@@ -1233,7 +1232,7 @@ void xSG_cb_ISGChange(void*, en_CHGCODE what)
     }
 }
 
-// func_8003EB28
+
 int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1252,7 +1251,7 @@ int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003EBB0
+
 int32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1275,7 +1274,7 @@ int32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003EC40
+
 int32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1311,7 +1310,7 @@ int32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003ED34
+
 int32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1330,7 +1329,7 @@ int32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003EDB4
+
 int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 ival = 0;
@@ -1418,7 +1417,7 @@ int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-// func_8003F054
+
 int32 xSG_ld_flipload(st_XSAVEGAME_DATA* xsgdata)
 {
     int32 result = 1;
@@ -1453,13 +1452,13 @@ int32 xSG_ld_flipload(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-// func_8003F128
+
 XSGAutoData* xSGAutoSave_GetCache()
 {
     return &g_autodata;
 }
 
-// func_8003F134
+
 void xSGAutoSave_Startup()
 {
     XSGAutoData* asg = xSGAutoSave_GetCache();
@@ -1470,7 +1469,7 @@ void xSGAutoSave_Startup()
     iSGAutoSave_Startup();
 }
 
-// func_8003F170
+
 int32 XSGAutoData::IsValid()
 {
     if (this->flg_autodata & 1 && !XSGAutoData::HWCheckConnect(this->lastTarg))
@@ -1480,13 +1479,13 @@ int32 XSGAutoData::IsValid()
     return this->flg_autodata & 1;
 }
 
-// func_8003F1C8
+
 void XSGAutoData::MarkInvalid()
 {
     this->flg_autodata &= 0xfffffffe;
 }
 
-// func_8003F1D8
+
 int32 XSGAutoData::SetCache(int32 targ, int32 game, int32 physicalSlot)
 {
     this->Discard();
@@ -1503,7 +1502,7 @@ int32 XSGAutoData::SetCache(int32 targ, int32 game, int32 physicalSlot)
     return 1;
 }
 
-// func_8003F268
+
 void XSGAutoData::Discard()
 {
     this->flg_autodata = 0;
@@ -1517,24 +1516,24 @@ void XSGAutoData::Discard()
     this->isg_monitor = NULL;
 }
 
-// func_8003F2C0
+
 st_ISGSESSION* XSGAutoData::HWConnect(int32 targ)
 {
     return iSGAutoSave_Connect(targ, xSGAutoSave_GetCache(), ASG_ISG_changed);
 }
-// func_8003F300
+
 void XSGAutoData::HWDisconnect(st_ISGSESSION* isgsess)
 {
     iSGAutoSave_Disconnect(isgsess);
 }
 
-// func_8003F324
+
 int32 XSGAutoData::HWCheckConnect(int32 targ)
 {
     return iSGAutoSave_Monitor(this->isg_monitor, this->lastTarg);
 }
 
-// func_8003F350
+
 void ASG_ISG_changed(void*, en_CHGCODE what)
 {
     XSGAutoData* asg = xSGAutoSave_GetCache();

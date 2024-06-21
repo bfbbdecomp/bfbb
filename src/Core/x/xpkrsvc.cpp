@@ -23,7 +23,7 @@ volatile int32 g_memalloc_pair;
 volatile int32 g_memalloc_runtot;
 volatile int32 g_memalloc_runfree;
 
-// func_800392A0
+
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
 {
     switch (apiver)
@@ -35,10 +35,7 @@ st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
     }
 }
 
-// func_800392C0
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKRStartup__Fv")
-#else
+#ifdef NON_MATCHING
 // Small reordering
 int32 PKRStartup()
 {
@@ -52,7 +49,7 @@ int32 PKRStartup()
 }
 #endif
 
-// func_80039318
+
 st_PACKER_READ_FUNCS& st_PACKER_READ_FUNCS::operator=(const st_PACKER_READ_FUNCS& other)
 {
     this->api_ver = other.api_ver;
@@ -75,20 +72,20 @@ st_PACKER_READ_FUNCS& st_PACKER_READ_FUNCS::operator=(const st_PACKER_READ_FUNCS
     return *this;
 }
 
-// func_800393A4
+
 int32 PKRShutdown()
 {
     g_packinit--;
     return g_packinit;
 }
 
-// func_800393B8
+
 int32 PKRLoadStep(int32)
 {
     return PKR_LoadStep_Async();
 }
 
-// func_800393D8
+
 st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, int8* pkgfile, uint32 opts, int32* cltver,
                                   st_PACKER_ASSETTYPE* typelist)
 {
@@ -157,7 +154,7 @@ st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, int8* pkgfile, uint32 opts, in
     return pr;
 }
 
-// func_800395CC
+
 void PKR_ReadDone(st_PACKER_READ_DATA* pr)
 {
     int32 i;
@@ -226,10 +223,8 @@ void PKR_ReadDone(st_PACKER_READ_DATA* pr)
     g_loadlock &= ~(1 << lockid);
 }
 
-// func_8003978C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_SetActive__FP19st_PACKER_READ_DATA13en_LAYER_TYPE")
-#else
+
+#ifdef NON_MATCHING
 // Incorrect (but equivalent) logic for comparing the loadflag
 int32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
@@ -285,7 +280,7 @@ int32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 }
 #endif
 
-// func_800398AC
+
 int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     int32 done = 0;
@@ -340,7 +335,7 @@ int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return done;
 }
 
-// func_80039A18
+
 int32 PKR_LoadStep_Async()
 {
     int32 rc;
@@ -437,7 +432,7 @@ int32 PKR_LoadStep_Async()
     return rc;
 }
 
-// func_80039C90
+
 int8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
     int8* mem = NULL;
@@ -466,7 +461,7 @@ int8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
     return mem;
 }
 
-// func_80039D88
+
 void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
     switch (PKR_layerLoadDest(layer->laytyp))
@@ -489,18 +484,18 @@ void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
     }
 }
 
-// func_80039E68
+
 void PKR_drv_guardLayer(st_PACKER_LTOC_NODE*)
 {
 }
 
-// func_80039E6C
+
 int32 PKR_drv_guardVerify(st_PACKER_LTOC_NODE*)
 {
     return 1;
 }
 
-// func_80039E74
+
 en_PKR_LAYER_LOAD_DEST PKR_layerLoadDest(en_LAYER_TYPE layer)
 {
     switch (layer)
@@ -525,7 +520,7 @@ en_PKR_LAYER_LOAD_DEST PKR_layerLoadDest(en_LAYER_TYPE layer)
     }
 }
 
-// func_80039EBC
+
 int32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
 {
     switch (layer)
@@ -549,11 +544,8 @@ int32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
     }
 }
 
-// func_80039EFC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "PKR_findNextLayerToLoad__FPP19st_PACKER_READ_DATAPP19st_PACKER_LTOC_NODE")
-#else
+
+#ifdef NON_MATCHING
 //Regalloc
 int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer)
 {
@@ -608,10 +600,8 @@ int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_
 }
 #endif
 
-// func_80039FEC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_updateLayerAssets__FP19st_PACKER_LTOC_NODE")
-#else
+
+#ifdef NON_MATCHING
 //Regalloc
 void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
@@ -651,7 +641,7 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 }
 #endif
 
-// func_8003A0DC
+
 void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
     int32 i;
@@ -678,8 +668,8 @@ void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode)
     }
 }
 
-// func_8003A180
-// #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_xform_asset__FP19st_PACKER_ATOC_NODEi")
+
+// 
 void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, int32 dumpable_layer)
 {
     if (!(assnode->infoflag & 4))
@@ -737,7 +727,7 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, int32 dumpable_layer)
     }
 }
 
-// func_8003A2D4
+
 void* PKR_FindAsset(st_PACKER_READ_DATA* pr, uint32 aid)
 {
     st_PACKER_ATOC_NODE* assnode = NULL;
@@ -760,19 +750,19 @@ void* PKR_FindAsset(st_PACKER_READ_DATA* pr, uint32 aid)
     return NULL;
 }
 
-// func_8003A354
+
 int32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
     return 0;
 }
 
-// func_8003A35C
+
 void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, uint32 aid, const int8*, void*)
 {
     return PKR_FindAsset(pr, aid);
 }
 
-// func_8003A37C
+
 uint32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, uint32 aid)
 {
     st_PACKER_ATOC_NODE* assnode = NULL;
@@ -794,7 +784,7 @@ uint32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, uint32 aid)
     return 0;
 }
 
-// func_8003A3F8
+
 int32 PKR_AssetCount(st_PACKER_READ_DATA* pr, uint32 type)
 {
     int32 count = 0;
@@ -814,7 +804,7 @@ int32 PKR_AssetCount(st_PACKER_READ_DATA* pr, uint32 type)
     return count;
 }
 
-// func_8003A458
+
 void* PKR_AssetByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx, uint32* size)
 {
     if (size != NULL)
@@ -847,8 +837,8 @@ void* PKR_AssetByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx, uint32* s
     return assnode->memloc;
 }
 
-// func_8003A508
-// #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_IsAssetReady__FP19st_PACKER_READ_DATAUi")
+
+// 
 int32 PKR_IsAssetReady(st_PACKER_READ_DATA* pr, uint32 aid)
 {
     int32 ready = false;
@@ -869,13 +859,13 @@ int32 PKR_IsAssetReady(st_PACKER_READ_DATA* pr, uint32 aid)
     return ready;
 }
 
-// func_8003A57C
+
 uint32 PKR_getPackTimestamp(st_PACKER_READ_DATA* pr)
 {
     return pr->time_made;
 }
 
-// func_8003A584
+
 void PKR_Disconnect(st_PACKER_READ_DATA* pr)
 {
     if (pr->pkg != NULL)
@@ -885,13 +875,13 @@ void PKR_Disconnect(st_PACKER_READ_DATA* pr)
     }
 }
 
-// func_8003A5D0
+
 uint32 PKRAssetIDFromInst(void* inst)
 {
     return ((st_PACKER_ATOC_NODE*)inst)->aid;
 }
 
-// func_8003A5D8
+
 int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid)
 {
     int8* name = NULL;
@@ -912,13 +902,13 @@ int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid)
     return name;
 }
 
-// func_8003A64C
+
 uint32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr)
 {
     return pr->base_sector;
 }
 
-// func_8003A654
+
 int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 {
     memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
@@ -936,7 +926,7 @@ int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO
     return idx >= 0 ? 1 : 0;
 }
 
-// func_8003A720
+
 int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
                              st_PKR_ASSET_TOCINFO* tocainfo)
 {
@@ -969,7 +959,7 @@ int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
     return 1;
 }
 
-// func_8003A824
+
 int32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, uint32 aid)
 {
     int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
@@ -991,7 +981,7 @@ int32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, uint32 aid)
     return rc;
 }
 
-// func_8003A89C
+
 int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, int32 oursize,
                                 uint32 ourtype, uint32 chksum, int8*)
 {
@@ -1051,7 +1041,7 @@ int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, i
     return is_dup;
 }
 
-// func_8003AA28
+
 int32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt)
 {
     if (cnt == 0)
@@ -1069,7 +1059,7 @@ int32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt)
     return assnode != NULL ? cnt * sizeof(st_PACKER_ATOC_NODE) : 0;
 }
 
-// func_8003AAAC
+
 void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr)
 {
     if (pr->asscnt == 0)
@@ -1082,8 +1072,8 @@ void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr)
     pr->pool_nextaidx = 0;
 }
 
-// func_8003AB0C
-// #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_newassnode__FP19st_PACKER_READ_DATAUi")
+
+// 
 st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, uint32 aid)
 {
     int32 idx = pr->pool_nextaidx;
@@ -1095,7 +1085,7 @@ st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, uint32 aid)
     return newnode;
 }
 
-// func_8003AB6C
+
 st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, int32 refcnt)
 {
     st_PACKER_LTOC_NODE* newnode =
@@ -1107,14 +1097,14 @@ st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, int32 refcnt)
     return newnode;
 }
 
-// func_8003ABF8
+
 void PKR_oldlaynode(st_PACKER_LTOC_NODE* laynode)
 {
     XOrdDone(&laynode->assref, 0);
     PKR_relmem('LNOD', sizeof(st_PACKER_LTOC_NODE), laynode, laynode->laytyp + 0x8000, 0);
 }
 
-// func_8003AC50
+
 int32 OrdComp_R_Asset(void* vkey, void* vitem)
 {
     int32 rc;
@@ -1133,7 +1123,7 @@ int32 OrdComp_R_Asset(void* vkey, void* vitem)
     return rc;
 }
 
-// func_8003AC7C
+
 int32 OrdTest_R_AssetID(const void* vkey, void* vitem)
 {
     int32 rc;
@@ -1152,14 +1142,14 @@ int32 OrdTest_R_AssetID(const void* vkey, void* vitem)
     return rc;
 }
 
-// func_8003ACA4
+
 int32 LOD_r_HIPA(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     pr->pkgver = 'HIPA';
     return 1;
 }
 
-// func_8003ACB8
+
 int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     uint32 cid = g_hiprf->enter(pkg);
@@ -1192,10 +1182,8 @@ int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003AE0C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PVER__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // reordering
 int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1227,10 +1215,8 @@ int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003AEE8
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PFLG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // reordering
 int32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1240,7 +1226,7 @@ int32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003AF28
+
 int32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     int32 cnt = 0;
@@ -1254,10 +1240,8 @@ int32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003B000
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PCRT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // need all of .rodata to generate for the OK
 int32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1275,7 +1259,7 @@ int32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003B0B4
+
 int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     int32 time_mod = 0;
@@ -1284,11 +1268,8 @@ int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003B108
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc")
-#else
+
+#ifdef NON_MATCHING
 // String data
 int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 plattag, int8* plat,
                        int8* vid, int8* lang, int8* title)
@@ -1366,10 +1347,8 @@ int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 platt
 }
 #endif
 
-// func_8003B3E0
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_PLAT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // Orderings and Regalloc
 int32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1396,7 +1375,7 @@ int32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003B62C
+
 int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     uint32 cid = g_hiprf->enter(pkg);
@@ -1419,7 +1398,7 @@ int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003B704xCutsceneInfo
+
 int32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     uint32 cid = g_hiprf->enter(pkg);
@@ -1440,10 +1419,8 @@ int32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003B7CC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_AINF__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // reordering
 int32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1453,7 +1430,7 @@ int32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003B80C
+
 int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     int32 ival = 0;
@@ -1507,12 +1484,9 @@ int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003BA24
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s",                                                         \
-                   "LOD_r_ADBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_ATOC_NODE")
+
+#ifdef NON_MATCHING
 // uses reordering and uses .rodata
-#else
 int32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
 {
     int32 ival = 0;
@@ -1536,7 +1510,7 @@ int32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NO
 }
 #endif
 
-// func_8003BB28
+
 int32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     uint32 cid = g_hiprf->enter(pkg);
@@ -1557,10 +1531,8 @@ int32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003BBF0
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LINF__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // reordering
 int32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1570,10 +1542,8 @@ int32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003BC30
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_LHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // reordering
 int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1625,7 +1595,7 @@ int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003BDE8
+
 int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode)
 {
     int32 ivar = 0;
@@ -1637,7 +1607,7 @@ int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NO
     return 1;
 }
 
-// func_8003BE48
+
 int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     uint32 cid = g_hiprf->enter(pkg);
@@ -1658,10 +1628,8 @@ int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-// func_8003BF10
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "LOD_r_DHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA")
-#else
+
+#ifdef NON_MATCHING
 // reordering
 int32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1671,18 +1639,18 @@ int32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003BF50
+
 int32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     return 1;
 }
 
-// func_8003BF58
+
 void PKR_spew_verhist()
 {
 }
 
-// func_8003BF5C
+
 st_PACKER_ASSETTYPE* PKR_type2typeref(uint32 asstype, st_PACKER_ASSETTYPE* types)
 {
     st_PACKER_ASSETTYPE* da_type = NULL;
@@ -1704,10 +1672,8 @@ st_PACKER_ASSETTYPE* PKR_type2typeref(uint32 asstype, st_PACKER_ASSETTYPE* types
     return da_type;
 }
 
-// func_8003BFC4
-#if 1
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKR_bld_typecnt__FP19st_PACKER_READ_DATA")
-#else
+
+#if 0
 // Probably func match, weird regalloc
 void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 {
@@ -1798,7 +1764,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 }
 #endif
 
-// func_8003C1F8
+
 int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type)
 {
     int32 idx = -1;
@@ -1818,18 +1784,18 @@ int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type)
     return idx;
 }
 
-// func_8003C230
+
 void PKR_alloc_chkidx()
 {
 }
 
-// func_8003C234
+
 void* PKR_getmem(uint32 id, int32 amount, uint32 ui, int32 align)
 {
     return PKR_getmem(id, amount, ui, align, false, NULL);
 }
 
-// func_8003C25C
+
 void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int8** memtrue)
 {
     if (amount == 0)
@@ -1883,7 +1849,7 @@ void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int
     return memptr;
 }
 
-// func_8003C350
+
 void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp)
 {
     g_memalloc_pair--;
@@ -1907,22 +1873,22 @@ void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp)
     }
 }
 
-// func_8003C400
+
 void PKR_push_memmark()
 {
     xMemPushBase();
 }
 
-// func_8003C420
+
 void PKR_pop_memmark()
 {
     xMemPopBase(xMemGetBase() - 1);
 }
 
-// func_8003C448
-#pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "__sinit_xpkrsvc_cpp")
 
-// func_8003C488
+
+
+
 int8* st_PACKER_ATOC_NODE::Name() const
 {
     return xpkrsvc_strings + 82;

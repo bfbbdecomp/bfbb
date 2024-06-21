@@ -10,7 +10,7 @@ extern float xGrid_float_0p001;
 extern float xGrid_float_one;
 extern float xGrid_float_one_quarter;
 
-// func_80121E0C
+
 void xGridBoundInit(xGridBound* bound, void* data)
 {
     bound->data = data;
@@ -23,10 +23,8 @@ void xGridBoundInit(xGridBound* bound, void* data)
     bound->gpad = 0xea;
 }
 
-// func_80121E40
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridInit__FP5xGridPC4xBoxUsUsUc")
-#else
+
+#ifdef NON_MATCHING
 // Usual floating point problems, floating point loads get pulled to the start.
 // Also, there's something funny going on with the malloc + memset at the end,
 // I think they may not have used the obvious pattern for it, since changing
@@ -70,14 +68,14 @@ void xGridInit(xGrid* grid, xBox* bounds, uint16 nx, uint16 nz, uint8 ingrid_id)
 }
 #endif
 
-// func_80121FE8
+
 void xGridKill(xGrid* grid)
 {
     xGridEmpty(grid);
     grid->cells = NULL;
 }
 
-// func_8012201C
+
 void xGridEmpty(xGrid* grid)
 {
     for (int32 x = 0; x < grid->nx; ++x)
@@ -106,7 +104,7 @@ void xGridEmpty(xGrid* grid)
     grid->other = NULL;
 }
 
-// func_801220E0
+
 bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
 {
     if (bound->head)
@@ -130,16 +128,16 @@ bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
     return true;
 }
 
-// func_80122160
+
 void xGridAdd(xGrid* grid, xGridBound* bound, int32 x, int32 z)
 {
     xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
 }
 
-// func_8012219C
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridAdd__FP5xGridP4xEnt")
 
-// func_801224D4
+
+
+
 int32 xGridRemove(xGridBound* bound)
 {
     if (bound->head)
@@ -171,7 +169,7 @@ int32 xGridRemove(xGridBound* bound)
     return 1;
 }
 
-// func_80122554
+
 void xGridUpdate(xGrid* grid, xEnt* ent)
 {
     int32 dx;
@@ -187,7 +185,7 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
     }
 }
 
-// func_801225D8
+
 xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
 {
     const xBound* bound = &ent->bound;
@@ -213,10 +211,8 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
     return &grid->cells[grz * grid->nx] + grx;
 }
 
-// func_80122694
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridGetCell__FP5xGridfffRiRi")
-#else
+
+#ifdef NON_MATCHING
 void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int32& grz)
 {
     float32 pgridx = (x - grid->minx) * grid->inv_csizex;
@@ -227,17 +223,10 @@ void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int3
 }
 #endif
 
-// func_801227B0
+
 xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx,
                                int32& grz, xGridIterator& iter)
 {
     xGridGetCell(grid, posx, posy, posz, grx, grz);
     return xGridIterFirstCell(grid, grx, grz, iter);
 }
-
-// func_80122814
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s", "xGridEntIsTooBig__FP5xGridPC4xEnt")
-
-// func_8012296C
-#pragma GLOBAL_ASM("asm/Core/x/xGrid.s",                                                           \
-                   "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv")

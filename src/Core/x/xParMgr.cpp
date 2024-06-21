@@ -27,12 +27,7 @@ void xParMgrKillAllParticles()
 {
 }
 
-#if 1
-
-// func_80038B1C
-#pragma GLOBAL_ASM("asm/Core/x/xParMgr.s", "xParMgrUpdate__Ff")
-
-#else
+#if 0
 // If statement and statement above are wrong.
 void xParMgrUpdate(float32 elapsedTime)
 {

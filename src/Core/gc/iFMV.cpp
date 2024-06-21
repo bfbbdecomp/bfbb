@@ -18,13 +18,7 @@ void iFMVfree(void* mem)
     RwFree(mem);
 }
 
-#if 1
-
-// func_800C39F0
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "iFMVPlay__FPcUifbb")
-
-#else
-
+#ifdef NON_MATCHING
 // For some reason, the check for frame_num is always optimized to true.
 uint32 iFMVPlay(char* filename, uint32 buttons, float32 time, bool skippable, bool lockController)
 {
@@ -54,13 +48,7 @@ static void Setup_surface_array()
     Bink_surface_type[4] = BINKSURFACEYUY2;
 }
 
-#if 1
-
-// func_800C3A9C
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "Decompress_frame__FP4BINKP10RAD3DIMAGEl")
-
-#else
-
+#if 0
 // WIP.
 void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, int64 flags)
 {
@@ -75,51 +63,20 @@ void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, int64 flags)
 
 #endif
 
-// func_800C3B54
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "DrawFrame__Fffff")
-
-// func_800C3E7C
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "GXSetTexCoordGen")
-
-// func_800C3EA4
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "Show_frame__Fv")
-
 void arammalloc(size_t size)
 {
     ARAlloc(size);
 }
 
-#if 1
-
-// func_800C3FB0
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "aramfree__FPv")
-
-#else
-
+#ifdef NON_MATCHING
 // Something weird is going on here...
 void aramfree(void* mem)
 {
     ARFree(mem);
 }
-
 #endif
 
-// func_800C3FD4
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "PlayFMV__FPcUlf")
-
-// func_800C434C
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "InitDisplay__4iFMVFP16_GXRenderModeObj")
-
-// func_800C4514
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "InitGX__4iFMVFv")
-
-#if 1
-
-// func_800C4638
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "InitVI__4iFMVFv")
-
-#else
-
+#if 0
 // WIP.
 void iFMV::InitVI()
 {
@@ -142,6 +99,3 @@ void iFMV::Suspend()
 void iFMV::Resume()
 {
 }
-
-// func_800C468C
-#pragma GLOBAL_ASM("asm/Core/p2/iFMV.s", "xDrawLine2D_LocaliFMVVersion__Fffff")

@@ -11,11 +11,9 @@ extern int32 iModelHack_DisablePrelight;
 float32 MAX_COLOR = 1.0f;
 #endif
 
-// func_80123228
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Core/x/xLightKit.s", "xLightKit_Prepare__FPv")
+
+#ifdef NON_MATCHING
 // Will match once able to use float literals
-#else
 xLightKit* xLightKit_Prepare(void* data)
 {
     xLightKit* lkit = (xLightKit*)data;
@@ -98,7 +96,7 @@ xLightKit* xLightKit_Prepare(void* data)
 }
 #endif
 
-// func_801234C0
+
 void xLightKit_Enable(xLightKit* lkit, RpWorld* world)
 {
     if (lkit != gLastLightKit)
@@ -127,13 +125,13 @@ void xLightKit_Enable(xLightKit* lkit, RpWorld* world)
     }
 }
 
-// func_801235A4
+
 xLightKit* xLightKit_GetCurrent(RpWorld* world)
 {
     return gLastLightKit;
 }
 
-// func_801235AC
+
 void xLightKit_Destroy(xLightKit* lkit)
 {
     if (lkit == NULL)

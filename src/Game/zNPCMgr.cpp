@@ -19,13 +19,7 @@ st_XORDEREDARRAY* zNPCMgr_GetNPCList()
     return &zNPCMgrSelf()->npclist;
 }
 
-#if 1
-
-// func_800EE2F4
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Startup__Fv")
-
-#else
-
+#if 0
 // Can't find the new operator declaration for some reason?
 void zNPCMgr_Startup()
 {
@@ -40,13 +34,7 @@ void zNPCMgr_Startup()
 
 #endif
 
-#if 1
-
-// func_800EE358
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_Shutdown__Fv")
-
-#else
-
+#if 0
 // Doesn't set r4 to 1 before calling the delete operator...
 void zNPCMgr_Shutdown()
 {
@@ -112,8 +100,8 @@ xEnt* zNPCMgr_createNPCInst(int32, xEntAsset* assdat)
     return zNPCMgrSelf()->CreateNPC(assdat);
 }
 
-// func_800EE53C
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "Startup__7zNPCMgrFv")
+
+
 
 void zNPCMgr::Shutdown()
 {
@@ -127,13 +115,7 @@ void zNPCMgr::Shutdown()
     zNPCMsg_Shutdown();
 }
 
-#if 1
-
-// func_800EE618
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePrepare__7zNPCMgrFi")
-
-#else
-
+#if 0
 // Need to define all the functions.
 void zNPCMgr::ScenePrepare(int32 npccnt)
 {
@@ -152,49 +134,43 @@ void zNPCMgr::ScenePrepare(int32 npccnt)
 
 #endif
 
-// func_800EE668
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneFinish__7zNPCMgrFv")
 
-// func_800EE710
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneReset__7zNPCMgrFv")
 
-// func_800EE764
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostInit__7zNPCMgrFv")
 
-// func_800EE790
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostSetup__7zNPCMgrFv")
 
-// func_800EE800
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostRender__7zNPCMgrFv")
 
-// func_800EE8D4
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "ScenePostParticleRender__7zNPCMgrFv")
 
-// func_800EE9A8
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "CreateNPC__7zNPCMgrFP9xEntAsset")
 
-// func_800EEA74
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "BackdoorUpdateAllNPCsOnce__7zNPCMgrFP6xScenef")
 
-// func_800EEB08
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "SceneTimestep__7zNPCMgrFP6xScenef")
 
-// func_800EEBAC
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "PrepTypeTable__7zNPCMgrFv")
 
-// func_800EEC2C
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "NPCTypeForModel__7zNPCMgrFUiUi")
 
-// func_800EECC4
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_OrdTest_npcid__FPCvPv")
 
-#if 1
 
-// func_800EECEC
-#pragma GLOBAL_ASM("asm/Game/zNPCMgr.s", "zNPCMgr_OrdComp_npcid__FPvPv")
 
-#else
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
 // Yeah good luck getting it to spit out an li instead of doing a shift.
 int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {

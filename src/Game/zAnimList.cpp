@@ -16,10 +16,8 @@ uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
     return 1;
 }
 
-// func_8004E7E8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zAnimList.s", "zAnimListInit__Fv")
-#else
+
+#if 0
 void zAnimListInit()
 {
     int32 i;

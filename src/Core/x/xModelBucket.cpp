@@ -57,16 +57,10 @@ void xModelBucket_PreCountReset()
     sAlphaList = NULL;
 }
 
-// func_8012643C
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_PreCountBucket__FP8RpAtomicUiUi")
 
-#if 1
 
-// func_8012652C
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_PreCountAlloc__Fi")
 
-#else
-
+#if 0
 // Idk.
 void xModelBucket_PreCountAlloc(int32 maxAlphaModels)
 {
@@ -89,11 +83,11 @@ void xModelBucket_PreCountAlloc(int32 maxAlphaModels)
 
 #endif
 
-// func_801265E0
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "FullAtomicDupe__FP8RpAtomiciPP8RpAtomic")
 
-// func_801267B8
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_InsertBucket__FP8RpAtomicUiUi")
+
+
+
+
 
 void xModelBucket_Init()
 {
@@ -107,8 +101,8 @@ void xModelBucket_Init()
     }
 }
 
-// func_80126A44
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_GetBuckets__FP8RpAtomic")
+
+
 
 void xModelBucket_Begin()
 {
@@ -119,19 +113,13 @@ void xModelBucket_Begin()
     xModelBucketEnabled = 1;
 }
 
-// func_80126AD4
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_Add__FP14xModelInstance")
 
-// func_80126D40
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderOpaque__Fv")
 
-#if 1
 
-// func_80126EA4
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderAlphaBegin__Fv")
 
-#else
 
+
+#if 0
 // Scheduling!
 void xModelBucket_RenderAlphaBegin()
 {
@@ -144,12 +132,3 @@ void xModelBucket_RenderAlphaBegin()
 }
 
 #endif
-
-// func_80126EEC
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderAlphaLayer__Fi")
-
-// func_80127264
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_RenderAlphaEnd__Fv")
-
-// func_80127270
-#pragma GLOBAL_ASM("asm/Core/x/xModelBucket.s", "xModelBucket_Deinit__Fv")

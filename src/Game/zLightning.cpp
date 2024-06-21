@@ -10,13 +10,7 @@ extern RwRaster* sLightningRaster;
 extern xVec3 sTweakStart;
 extern xVec3 sTweakEnd;
 
-#if 1
-
-// func_8009EC78
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "lightningTweakChangeType__FRC10tweak_info")
-
-#else
-
+#if 0
 // WIP.
 void lightningTweakChangeType(tweak_info& t)
 {
@@ -34,13 +28,7 @@ void lightningTweakChangeType(tweak_info& t)
 
 #endif
 
-#if 1
-
-// func_8009EDB0
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "lightningTweakStart__FRC10tweak_info")
-
-#else
-
+#if 0
 // Structure is off?
 void lightningTweakStart(tweak_info& t)
 {
@@ -54,34 +42,28 @@ void lightningTweakStart(tweak_info& t)
 
 #endif
 
-// func_8009EE30
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningInit__Fv")
 
-// func_8009F8D4
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "FindFreeLightning__Fv")
 
-// func_8009F970
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningAdd__FP16_tagLightningAdd")
 
-// func_8009FE68
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "UpdateLightning__FP10zLightningf")
 
-// func_800A0348
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningUpdate__Ff")
 
-// func_800A0648
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningFunc_Render__FP10zLightning")
 
-// func_800A0C74
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "RenderLightning__FP10zLightning")
 
-#if 1
 
-// func_800A17F8
-#pragma GLOBAL_ASM("asm/Game/zLightning.s", "zLightningRender__Fv")
 
-#else
 
+
+
+
+
+
+
+
+
+
+
+
+#if 0
 // WIP.
 void zLightningRender()
 {
@@ -119,9 +101,9 @@ void zLightningKill(zLightning* l)
     l->flags &= 0xfffffefe;
 }
 
-// func_800A18C8
-#pragma GLOBAL_ASM("asm/Game/zLightning.s",                                                        \
-                   "zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3")
+
+
+                   
 
 void xDebugAddTweak(char* name, uint8* property, uint8 param_3, uint8 param_4,
                     tweak_callback* callback, void* param_6, uint32 param_7)

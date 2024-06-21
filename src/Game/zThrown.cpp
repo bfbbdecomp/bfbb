@@ -16,8 +16,8 @@ extern uint32 sThrowButtonMask;
 extern float32 _842; // 0.5f
 extern float32 _844; // 0.0f
 
-// func_800B6928
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_Setup__FP6zScene")
+
+
 
 void zThrown_AddTempFrame(zThrownStruct* thrown)
 {
@@ -30,11 +30,11 @@ void zThrown_AddTempFrame(zThrownStruct* thrown)
     }
 }
 
-// func_800B6B40
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zFruit_ColorFade__FP13zThrownStruct")
 
-// func_800B6BD0
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zFruit_Update__FP4xEntP6xScenef")
+
+
+
+
 
 void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
 {
@@ -52,34 +52,28 @@ void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
     sDebugDepth--;
 }
 
-// func_800B6FC0
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_Update__FP4xEntP6xScenef")
 
-// func_800B7E88
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "__as__5xBBoxFRC5xBBox")
 
-// func_800B7ED4
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_Reset__Fv")
 
-// func_800B7F7C
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_LaunchVel__FP4xEntP5xVec3")
 
-// func_800B8124
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_LaunchDir__FP4xEntP5xVec3")
 
-// func_800B81D4
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_LaunchPos__FP4xEntP5xVec3P5xVec3")
 
-// func_800B83C8
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_LaunchStack__FP4xEntP4xEnt")
 
-#if 1
 
-// func_800B8530
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_PatrickLauncher__FP4xEntP4xEnt")
 
-#else
 
+
+
+
+
+
+
+
+
+
+
+
+#if 0
 // WIP.
 void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
 {
@@ -94,22 +88,22 @@ void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
 
 #endif
 
-// func_800B8584
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_AddFruit__FP4xEnt")
 
-// func_800B8734
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_Remove__FP4xEnt")
 
-// func_800B88E4
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_KillFruit__FP4xEnt")
 
-// func_800B895C
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_CauseDamage__FP13zThrownStructP10xEntCollis")
 
-// func_800B8B88
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_ThrowFruit__FP13zThrownStructP10xEntCollisPfPf")
+
+
+
+
+
+
+
+                   
+
+
+
+                   
 
 void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, float* bounce,
                                 float* friction)
@@ -148,17 +142,11 @@ void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, float32* bou
     zEntEvent(thrown->ent, eEventDestroy);
 }
 
-// func_800B90A4
-#pragma GLOBAL_ASM("asm/Game/zThrown.s",                                                           \
-                   "zThrownCollide_StoneTiki__FP13zThrownStructP10xEntCollisPfPf")
 
-#if 1
 
-// func_800B9204
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_IsFruit__FP4xEntPf")
+                   
 
-#else
-
+#if 0
 // WIP.
 int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
 {
@@ -181,16 +169,10 @@ int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
 
 #endif
 
-// func_800B927C
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_IsStacked__FP4xEnt")
 
-#if 1
 
-// func_800B92CC
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "checkAgainstButtons__FP4xEnt")
 
-#else
-
+#if 0
 // Random OR added in.
 void checkAgainstButtons(xEnt* ent)
 {
@@ -207,26 +189,20 @@ void checkAgainstButtons(xEnt* ent)
 
 #endif
 
-// func_800B9318
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "zThrown_ButtonIteratorCB__FP5xBaseP6zScenePv")
+
+
 
 void xDrawSphere(xSphere* s, uint32 unk)
 {
 }
 
-// func_800B9378
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "__as__13zThrownStructFRC13zThrownStruct")
 
-// func_800B9450
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "__as__9xEntFrameFRC9xEntFrame")
 
-#if 1
 
-// func_800B9560
-#pragma GLOBAL_ASM("asm/Game/zThrown.s", "__as__9xEntDriveFRC9xEntDrive")
 
-#else
 
+
+#if 0
 // Idk what is wrong with this one.
 xEntDrive& xEntDrive::operator=(const xEntDrive& other)
 {

@@ -270,8 +270,7 @@ namespace
         { "hud:text", eBaseTypeHUD_text, sizeof(xBase) + sizeof(xhud::text_widget), false, xhud::text_widget::load },
         { "game_object:bungee_hook", eBaseTypeBungeeHook, sizeof(bungee_state::hook_type), false, bungee_state::load },
         { "game_object:Flythrough", eBaseTypeCameraFly, sizeof(zCameraFly), false, zCameraFly_Init },
-#if 1
-        // include the rest of the strings here until their parent functions are decomped
+#if 1 // include the rest of the strings here until their parent functions are decomped
         { "game_object:Camera_Tweak\0"
           "... scene preload ...\n\0"
           "... scene loading ...\n\0"
@@ -745,8 +744,6 @@ static void PipeAddStuffCB(RpAtomic* data, uint32 pipeFlags, uint32)
 #ifndef NON_MATCHING
 static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, uint32 pipeFlags,
                                                  uint32 subObjects));
-// func_800B1564
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "PipeForAllSceneModels__FPFP8RpAtomicUiUi_v")
 #else
 static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, uint32 pipeFlags,
                                                  uint32 subObjects))
@@ -865,10 +862,7 @@ static uint32 BaseTypeNeedsUpdate(uint8 baseType)
 
 void add_scene_tweaks();
 
-#ifndef NON_MATCHING
-// func_800B1828
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneInit__FUii")
-#else
+#ifdef NON_MATCHING
 void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
 {
     float32 pdone;
@@ -1187,10 +1181,7 @@ void add_scene_tweaks()
 {
 }
 
-#ifndef NON_MATCHING
-// func_800B2068
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneExit__Fi")
-#else
+#ifdef NON_MATCHING
 void zSceneExit(int32 beginReload)
 {
     zScene* s = globals.sceneCur;
@@ -1305,8 +1296,6 @@ void zSceneUpdateSFXWidgets()
 
 #ifndef NON_MATCHING
 static void HackSwapIt(char* buf, int32 size);
-// func_800B22FC
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "HackSwapIt__FPci")
 #else
 static void HackSwapIt(char* buf, int32 size)
 {
@@ -1326,10 +1315,7 @@ static void HackSwapIt(char* buf, int32 size)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800B23F8
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneSwitch__FP8_zPortali")
-#else
+#ifdef NON_MATCHING
 void zSceneSwitch(_zPortal* p, int32 forceSameScene)
 {
     globals.sceneCur->pendingPortal = p;
@@ -2125,10 +2111,7 @@ static uint32 _2098_0[] =
 };
 // clang-format on
 
-#ifndef NON_MATCHING
-// func_800B3200
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneSetup__Fv")
-#else
+#ifdef NON_MATCHING
 void zSceneSetup()
 {
     zScene* s = globals.sceneCur;
@@ -3248,10 +3231,7 @@ void zSceneRender()
     zSceneRenderPostFX();
 }
 
-#ifndef NON_MATCHING
-// func_800B4900
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneObjHashtableInit__Fi")
-#else
+#ifdef NON_MATCHING
 static void zSceneObjHashtableInit(int32 count)
 {
     scobj_idbps = (IDBasePair*)xMemAllocSize(count * sizeof(IDBasePair));
@@ -3263,10 +3243,7 @@ static void zSceneObjHashtableInit(int32 count)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800B4958
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneObjHashtableExit__Fv")
-#else
+#ifdef NON_MATCHING
 static void zSceneObjHashtableExit()
 {
     scobj_idbps = NULL;
@@ -3440,10 +3417,7 @@ void zSceneMemLvlChkCB()
 {
 }
 
-#ifndef NON_MATCHING
-// func_800B4CB4
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneLeavingLevel__Fv")
-#else
+#ifdef NON_MATCHING
 uint32 zSceneLeavingLevel()
 {
     // non-matching: instruction order
@@ -3561,10 +3535,7 @@ void zSceneEnableScreenAdj(uint32 enable)
     enableScreenAdj = enable;
 }
 
-#ifndef NON_MATCHING
-// func_800B501C
-#pragma GLOBAL_ASM("asm/Game/zScene.s", "zSceneSetOldScreenAdj__Fv")
-#else
+#ifdef NON_MATCHING
 void zSceneSetOldScreenAdj()
 {
     oldOffsetx = offsetx;
@@ -3642,12 +3613,12 @@ void xModelBucket_RenderAlpha()
     xModelBucket_RenderAlphaEnd();
 }
 
-// func_800B51F4
+
 void xNPCBasic::Save(xSerial*) const
 {
 }
 
-// func_800B51F8
+
 void xNPCBasic::Load(xSerial*)
 {
 }

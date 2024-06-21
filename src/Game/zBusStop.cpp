@@ -64,10 +64,8 @@ void zBusStop_Setup(zBusStop* bstop)
     sBusStopUI = (xEnt*)zSceneFindObject(xStrHash("mnu4 busstop"));
 }
 
-// func_8012D9A8
-#if 1
-#pragma GLOBAL_ASM("asm/Game/zBusStop.s", "zBusStop_Update__FP5xBaseP6xScenef")
-#else
+
+#if 0
 // This function is so close, it's off by a single floating point register
 // assignment right at the end of the function :(
 // The registers in `if (bstop->switchTimer < zBusStop_float_zero)` are

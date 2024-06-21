@@ -48,10 +48,7 @@ static void iEnvSetBSP(iEnv* env, int32 envDataType, RpWorld* bsp)
     }
 }
 
-#ifndef NON_MATCHING
-// func_800C2F50
-#pragma GLOBAL_ASM("asm/Core/p2/iEnv.s", "iEnvLoad__FP4iEnvPCvUii")
-#else
+#ifdef NON_MATCHING
 void iEnvLoad(iEnv* env, const void* data, uint32, int32 dataType)
 {
     RpWorld* bsp = (RpWorld*)data;

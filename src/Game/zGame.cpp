@@ -39,13 +39,11 @@ extern float32 lbl_803CF5AC; // A
 extern float32 lbl_803CDA54;
 extern float32 lbl_803CDA58;
 
-// func_800974A8
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "PickNextSoak__Fv")
 
-// func_8009771C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameInit__FUi")
-#else
+
+
+
+#ifdef NON_MATCHING
 // Scheduling, I guess
 void zGameInit(uint32 theSceneID)
 {
@@ -78,10 +76,8 @@ void zGameInit(uint32 theSceneID)
 }
 #endif
 
-// func_800977FC
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameExit__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Scheduling, I guess
 void zGameExit()
 {
@@ -110,10 +106,8 @@ void zGameExit()
 }
 #endif
 
-// func_800978A4
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameSetup__Fv")
-#else
+
+#ifdef NON_MATCHING
 void zGameSetup()
 {
     gGameWhereAmI = eGameWhere_SetupScene;
@@ -157,10 +151,10 @@ void zGameSetup()
 }
 #endif
 
-// func_80097A20
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameLoop__Fv")
 
-// func_8009817C
+
+
+
 int32 zGameIsPaused()
 {
     if (gGameMode == 8)
@@ -178,10 +172,8 @@ int32 zGameIsPaused()
     return 0;
 }
 
-// func_800981B0
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameLoopContinue__Fv")
-#else
+
+#ifdef NON_MATCHING
 int32 zGameLoopContinue()
 {
     if (gGameMode == eGameMode_Game)
@@ -205,7 +197,7 @@ int32 zGameLoopContinue()
 }
 #endif
 
-// func_80098234
+
 int32 zGameOkToPause()
 {
     int32 uVar1 = 0;
@@ -237,10 +229,8 @@ int32 zGameOkToPause()
     return uVar1;
 }
 
-// func_800982D8
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGamePause__Fv")
-#else
+
+#ifdef NON_MATCHING
 void zGamePause()
 {
     if (!zGameIsPaused())
@@ -263,10 +253,8 @@ void zGamePause()
 }
 #endif
 
-// func_80098394
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameStall__Fv")
-#else
+
+#ifdef NON_MATCHING
 void zGameStall()
 {
     if (!zGameIsPaused())
@@ -279,24 +267,22 @@ void zGameStall()
 }
 #endif
 
-// func_800983F4
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGame_HackDrawCard__FffffP8RwRaster")
 
-// func_80098560
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGame_HackPostPortalAutoSaveDraw__Fv")
 
-// func_80098880
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameUpdateMode__Fv")
 
-// func_80098D78
+
+
+
+
+
+
+
 void zGameTakeSnapShot(RwCamera*)
 {
 }
 
-// func_80098D7C
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameUpdateTransitionBubbles__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Float memes
 void zGameUpdateTransitionBubbles()
 {
@@ -309,10 +295,8 @@ void zGameUpdateTransitionBubbles()
 }
 #endif
 
-// func_80098DF8
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameScreenTransitionBegin__Fv")
-#else
+
+#ifdef NON_MATCHING
 // Tons of extra instructions for some reason
 void zGameScreenTransitionBegin()
 {
@@ -340,8 +324,8 @@ void zGameScreenTransitionBegin()
 }
 #endif
 
-// func_80098EE8
-//#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameScreenTransitionUpdate__FfPc")
+
+//
 void zGameScreenTransitionUpdate(float32 percentComplete, char* msg)
 {
     if (!zMenuIsFirstBoot())
@@ -350,10 +334,10 @@ void zGameScreenTransitionUpdate(float32 percentComplete, char* msg)
     }
 }
 
-// func_80098F38
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameScreenTransitionUpdate__FfPcPUc")
 
-// func_80099310
+
+
+
 void zGameScreenTransitionEnd()
 {
     RwFrame* frame;
@@ -383,24 +367,24 @@ void zGameScreenTransitionEnd()
     gGameWhereAmI = eGameWhere_TransitionEnded;
 }
 
-// func_800993A8
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "zGameSetupPlayer__Fv")
 
-// func_80099528
+
+
+
 void zGameStats_Init()
 {
 }
 
-// func_8009952C
-#pragma GLOBAL_ASM("asm/Game/zGame.s", "xUtil_select_esc__0_c_esc__1___FPPciPCf")
 
-// func_80099640
+
+
+
 void xDrawEnd()
 {
     iDrawEnd();
 }
 
-// func_80099660
+
 void xDrawBegin()
 {
     iDrawBegin();

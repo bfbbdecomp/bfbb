@@ -352,10 +352,7 @@ void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-#ifndef NON_MATCHING
-// func_800375BC
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdApplyWind_Update__FP7xParCmdP9xParGroupf")
-#else
+#ifdef NON_MATCHING
 void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
     xPar* p = ps->m_root;
@@ -407,10 +404,7 @@ void xParCmdVelocityApply_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-#ifndef NON_MATCHING
-// func_800377C8
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf")
-#else
+#ifdef NON_MATCHING
 void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
     xPar* p = ps->m_root;
@@ -745,10 +739,7 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-#ifndef NON_MATCHING
-// func_80037DEC
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmd_SizeInOut_Update__FP7xParCmdP9xParGroupf")
-#else
+#ifdef NON_MATCHING
 void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
     xPar* p;
@@ -797,20 +788,14 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
 }
 #endif
 
-#if 1
-// func_80037F38
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmd_AlphaInOut_Update__FP7xParCmdP9xParGroupf")
-#else
+#if 0
 void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
     // todo: this is very similar to xParCmd_SizeInOut_Update
 }
 #endif
 
-#if 1
-// func_800380CC
-#pragma GLOBAL_ASM("asm/Core/x/xParCmd.s", "xParCmd_Shaper_Update__FP7xParCmdP9xParGroupf")
-#else
+#if 0
 void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {
     // todo: part of this is very similar to xParCmd_SizeInOut_Update

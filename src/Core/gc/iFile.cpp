@@ -170,8 +170,6 @@ uint32 iFileRead(tag_xFile* file, void* buf, uint32 size)
 
 #ifndef NON_MATCHING
 static void async_cb(s32 result, DVDFileInfo* fileInfo);
-// func_800C35B0
-#pragma GLOBAL_ASM("asm/Core/p2/iFile.s", "async_cb__FlP11DVDFileInfo")
 #else
 static void async_cb(s32 result, DVDFileInfo* fileInfo)
 {
@@ -240,10 +238,7 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
 }
 #endif
 
-#ifndef NON_MATCHING
-// func_800C3738
-#pragma GLOBAL_ASM("asm/Core/p2/iFile.s", "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi")
-#else
+#ifdef NON_MATCHING
 int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(tag_xFile*),
                      int32 priority)
 {
@@ -287,10 +282,7 @@ int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(
 }
 #endif
 
-#ifndef NONMATCHING
-// func_800C3850
-#pragma GLOBAL_ASM("asm/Core/p2/iFile.s", "iFileReadAsyncStatus__FiPi")
-#else
+#ifdef NON_MATCHING
 IFILE_READSECTOR_STATUS iFileReadAsyncStatus(int32 key, int32* amtToFar)
 {
     int32 k = key & 0x3;
