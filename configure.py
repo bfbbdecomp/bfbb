@@ -205,6 +205,18 @@ cflags_rel = [
     "-sdata2 0",
 ]
 
+# Game-specific flags
+cflags_bfbb = [
+    *cflags_base,
+    "-schedule on",
+    "-opt level=4,peephole,speed",
+    "-char unsigned",
+    "-str reuse,pool,readonly",
+    "-use_lmw_stmw on",
+    '-pragma "cpp_extensions on"',
+    "-inline off",
+]
+
 config.linker_version = "GC/2.0"
 
 
@@ -251,7 +263,7 @@ config.libs = [
     {
         "lib": "SB",
         "mw_version": config.linker_version,
-        "cflags": cflags_base,
+        "cflags": cflags_bfbb,
         "host": True,
         "objects": [
             Object(NonMatching, "SB/Core/x/xAnim.cpp"),
