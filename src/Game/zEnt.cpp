@@ -10,7 +10,7 @@
 #include "../Core/x/xString.h"
 #include "../Core/x/xMath.h"
 #include "../Core/x/xutil.h"
-#include "../Core/p2/iModel.h"
+#include "../Core/gc/iModel.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xCollide.h"
 #include "CodeWarrior/cstring"

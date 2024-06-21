@@ -3,10 +3,10 @@
 #include <rwplcore.h>
 #include <string.h>
 
-#include "../Core/p2/iSystem.h"
-#include "../Core/p2/iTRC.h"
-#include "../Core/p2/iColor.h"
-#include "../Core/p2/iTime.h"
+#include "../Core/gc/iSystem.h"
+#include "../Core/gc/iTRC.h"
+#include "../Core/gc/iColor.h"
+#include "../Core/gc/iTime.h"
 #include "../Core/x/xMath.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xSkyDome.h"

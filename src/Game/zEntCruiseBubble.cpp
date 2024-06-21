@@ -18,7 +18,7 @@
 #include "zPlatform.h"
 #include "zTalkBox.h"
 
-#include "../Core/p2/iMath.h"
+#include "../Core/gc/iMath.h"
 #include "../Core/x/xColor.h"
 #include "../Core/x/xDecal.h"
 #include "../Core/x/xFX.h"

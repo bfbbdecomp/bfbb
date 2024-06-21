@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../Core/p2/iSnd.h"
+#include "../Core/gc/iSnd.h"
 
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xEntBoulder.h"

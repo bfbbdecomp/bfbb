@@ -2,7 +2,7 @@
 #define XSCRFX_H
 
 #include "xCamera.h"
-#include "../p2/iColor.h"
+#include "../gc/iColor.h"
 
 #include <rwcore.h>
 

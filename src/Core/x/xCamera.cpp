@@ -7,7 +7,7 @@
 #include "xCollideFast.h"
 #include "xScrFx.h"
 
-#include "../p2/iMath.h"
+#include "../gc/iMath.h"
 
 #include <cmath>
 #include <cstring>

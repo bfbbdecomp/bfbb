@@ -1,7 +1,7 @@
 #ifndef XDRAW_H
 #define XDRAW_H
 
-#include "../p2/iColor.h"
+#include "../gc/iColor.h"
 #include "xMath3.h"
 
 void xDrawSetColor(iColor_tag);

@@ -12,7 +12,7 @@
 #include "zCombo.h"
 #include "zLOD.h"
 
-#include "../Core/p2/iDraw.h"
+#include "../Core/gc/iDraw.h"
 #include "../Core/x/xTRC.h"
 #include "../Core/x/xFont.h"
 #include "../Core/x/xMath.h"

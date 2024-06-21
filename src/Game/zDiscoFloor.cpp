@@ -10,8 +10,8 @@
 #include "../Core/x/xDebug.h"
 #include "../Core/x/xMath.h"
 
-#include "../Core/p2/iModel.h"
-#include "../Core/p2/iMath.h"
+#include "../Core/gc/iModel.h"
+#include "../Core/gc/iMath.h"
 
 #include <string.h>
 #include <stdio.h>

@@ -5,7 +5,7 @@
 
 #include "../Core/x/xEnt.h"
 #include "../Core/x/xEnv.h"
-#include "../Core/p2/iLight.h"
+#include "../Core/gc/iLight.h"
 
 // Size: 0x38
 struct zLightAsset : xBaseAsset

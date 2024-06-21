@@ -4,8 +4,8 @@
 #include "xCollideFast.h"
 #include "xMath.h"
 
-#include "../p2/iMath.h"
-#include "../p2/iCollide.h"
+#include "../gc/iMath.h"
+#include "../gc/iCollide.h"
 #include "../../Game/zBase.h"
 
 #include <rwcore.h>

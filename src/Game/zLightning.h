@@ -2,7 +2,7 @@
 #define ZLIGHTNING_H
 
 #include "../Core/x/xMath3.h"
-#include "../Core/p2/iColor.h"
+#include "../Core/gc/iColor.h"
 
 #include "zFX.h"
 

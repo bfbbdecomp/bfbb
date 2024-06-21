@@ -12,10 +12,10 @@
 #include "../src/Core/x/xserializer.h"
 #include "../src/Core/x/xSnd.h"
 #include "../src/Core/x/xString.h"
-#include "../src/Core/p2/iFile.h"
-#include "../src/Core/p2/iTRC.h"
-#include "../src/Core/p2/iCutscene.h"
-#include "../src/Core/p2/iSystem.h"
+#include "../src/Core/gc/iFile.h"
+#include "../src/Core/gc/iTRC.h"
+#include "../src/Core/gc/iCutscene.h"
+#include "../src/Core/gc/iSystem.h"
 
 extern zCutsceneHack cutsceneHackTable[58];
 extern zCutSceneNames zCutSceneNamesTable[14];

@@ -1,6 +1,6 @@
 #include <types.h>
 #include <CodeWarrior/stdio.h>
-#include "../Core/p2/iFMV.h"
+#include "../Core/gc/iFMV.h"
 #include "../Core/x/xSnd.h"
 #include "zFMV.h"
 #include "zGameState.h"

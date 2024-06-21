@@ -13,8 +13,8 @@
 #include "xCamera.h"
 #include "xDraw.h"
 
-#include "../p2/iColor.h"
-#include "../p2/iCollide.h"
+#include "../gc/iColor.h"
+#include "../gc/iCollide.h"
 
 extern float xNPCBasic_float_0;
 extern float xNPCBasic_float_1;

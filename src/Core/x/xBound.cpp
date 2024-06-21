@@ -4,7 +4,7 @@
 #include "xMathInlines.h"
 #include "xDraw.h"
 
-#include "../p2/iMath.h"
+#include "../gc/iMath.h"
 
 #include <intrin.h>
 

@@ -5,8 +5,8 @@
 #include <types.h>
 
 #include "xMath3.h"
-#include "../p2/iEnv.h"
-#include "../p2/iTime.h"
+#include "../gc/iEnv.h"
+#include "../gc/iTime.h"
 
 struct iFogParams
 {

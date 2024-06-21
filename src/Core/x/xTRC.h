@@ -1,7 +1,7 @@
 #ifndef XTRC_H
 #define XTRC_H
 
-#include "../p2/iTRC.h"
+#include "../gc/iTRC.h"
 
 enum _tagTRCState
 {

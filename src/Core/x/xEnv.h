@@ -1,7 +1,7 @@
 #ifndef XENV_H
 #define XENV_H
 
-#include "../p2/iEnv.h"
+#include "../gc/iEnv.h"
 #include "xLightKit.h"
 #include "xBase.h"
 

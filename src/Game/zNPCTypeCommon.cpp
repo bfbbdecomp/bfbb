@@ -8,8 +8,8 @@
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
 
-#include "../Core/p2/iModel.h"
-#include "../Core/p2/iSnd.h"
+#include "../Core/gc/iModel.h"
+#include "../Core/gc/iSnd.h"
 
 #include "../Core/x/xString.h"
 #include "../Core/x/xDebug.h"

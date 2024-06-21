@@ -6,7 +6,7 @@
 
 #include "../Core/x/xFX.h"
 #include "../Core/x/xMath.h"
-#include "../Core/p2/iMath.h"
+#include "../Core/gc/iMath.h"
 
 #include <types.h>
 #include <rwplcore.h>

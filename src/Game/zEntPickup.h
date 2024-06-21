@@ -8,7 +8,7 @@
 #include "../Core/x/xEntDrive.h"
 #include "../Core/x/xPar.h"
 #include "../Core/x/xShadowSimple.h"
-#include "../Core/p2/iColor.h"
+#include "../Core/gc/iColor.h"
 
 struct zEntPickup : zEnt
 {

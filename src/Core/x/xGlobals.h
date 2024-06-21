@@ -5,7 +5,7 @@
 #include "xPad.h"
 #include "xUpdateCull.h"
 #include "iCamera.h"
-#include "../p2/iTime.h"
+#include "../gc/iTime.h"
 
 #include <rwcore.h>
 #include <rpworld.h>

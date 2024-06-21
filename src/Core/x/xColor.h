@@ -1,7 +1,7 @@
 #ifndef XCOLOR_H
 #define XCOLOR_H
 
-#include "../p2/iColor.h"
+#include "../gc/iColor.h"
 
 extern iColor_tag g_RED;
 extern iColor_tag g_GREEN;

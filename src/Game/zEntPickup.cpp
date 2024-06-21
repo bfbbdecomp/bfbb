@@ -12,8 +12,8 @@
 #include "../Core/x/xMath.h"
 #include "../Core/x/xFX.h"
 #include "../Core/x/xstransvc.h"
-#include "../Core/p2/iAnim.h"
-#include "../Core/p2/iModel.h"
+#include "../Core/gc/iAnim.h"
+#include "../Core/gc/iModel.h"
 
 #include <string.h>
 #include <stdio.h>

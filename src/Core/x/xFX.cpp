@@ -2,7 +2,7 @@
 
 #include "xstransvc.h"
 
-#include "../p2/iMath.h"
+#include "../gc/iMath.h"
 #include "../../Game/zParEmitter.h"
 #include "../../Game/zSurface.h"
 #include "../../Game/zFX.h"

@@ -8,7 +8,7 @@
 #include "../Core/x/xGroup.h"
 #include "../Core/x/xEvent.h"
 #include "../Core/x/xClimate.h"
-#include "../Core/p2/iLight.h"
+#include "../Core/gc/iLight.h"
 
 void zEnvInit(void* env, void* easset)
 {

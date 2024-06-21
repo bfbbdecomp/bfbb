@@ -6,7 +6,7 @@
 
 #include "xutil.h"
 #include "xMemMgr.h"
-#include "../p2/isavegame.h"
+#include "../gc/isavegame.h"
 
 int32 g_xsginit;
 st_XSAVEGAME_DATA g_xsgdata = {};

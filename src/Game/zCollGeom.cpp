@@ -2,7 +2,7 @@
 
 #include "zBase.h"
 
-#include "../Core/p2/iModel.h"
+#include "../Core/gc/iModel.h"
 #include "../Core/x/xstransvc.h"
 
 static volatile uint32 sNumTables;

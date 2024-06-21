@@ -1,7 +1,7 @@
 #include <types.h>
 #include <string.h>
 
-#include "../Core/p2/iTime.h"
+#include "../Core/gc/iTime.h"
 
 #include "../Core/x/xString.h"
 #include "../Core/x/xSnd.h"

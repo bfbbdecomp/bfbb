@@ -6,7 +6,7 @@
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zMusic.h"
-#include "../Core/p2/iMath.h"
+#include "../Core/gc/iMath.h"
 #include "../Core/x/xMathInlines.h"
 #include "../Core/x/xVec3Inlines.h"
 #include "../Core/x/xScrFx.h"

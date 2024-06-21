@@ -3,7 +3,7 @@
 
 #include "xModel.h"
 #include "xQuickCull.h"
-#include "../p2/iMath3.h"
+#include "../gc/iMath3.h"
 
 struct xCollis
 {

@@ -2,8 +2,8 @@
 
 #include "xShadow.h"
 
-#include "../p2/iScrFX.h"
-#include "../p2/iMath.h"
+#include "../gc/iScrFX.h"
+#include "../gc/iMath.h"
 
 #include "../../Game/zGlobals.h"
 

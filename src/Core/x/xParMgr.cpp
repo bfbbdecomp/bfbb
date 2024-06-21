@@ -1,4 +1,4 @@
-#include "../p2/iParMgr.h"
+#include "../gc/iParMgr.h"
 
 #include "xPar.h"
 #include "xParMgr.h"

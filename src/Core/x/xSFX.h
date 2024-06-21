@@ -4,7 +4,7 @@
 #include "xBase.h"
 #include "xMath3.h"
 
-#include "../p2/iColor.h"
+#include "../gc/iColor.h"
 
 struct xSFXAsset : xBaseAsset
 {

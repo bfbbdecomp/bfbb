@@ -3,7 +3,7 @@
 #include <types.h>
 
 #include "dolphin/dolphin.h"
-#include "../src/Core/p2/iMix.h"
+#include "../src/Core/gc/iMix.h"
 #include "../src/Core/x/xCutscene.h"
 #include "../src/Core/x/xSnd.h"
 #include "../src/Core/x/xMath.h"

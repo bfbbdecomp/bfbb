@@ -1,7 +1,7 @@
 #include "xVec3.h"
 #include "xCollide.h"
 #include "xMathInlines.h"
-#include "../p2/iMath.h"
+#include "../gc/iMath.h"
 
 #include <types.h>
 #include <fastmath.h>

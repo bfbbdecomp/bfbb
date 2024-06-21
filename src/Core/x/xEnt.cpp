@@ -17,10 +17,10 @@
 #include "../../Game/zLight.h"
 #include "../../Game/zGrid.h"
 
-#include "../p2/iMath3.h"
-#include "../p2/iCollide.h"
-#include "../p2/iModel.h"
-#include "../p2/iMath.h"
+#include "../gc/iMath3.h"
+#include "../gc/iCollide.h"
+#include "../gc/iModel.h"
+#include "../gc/iMath.h"
 
 #include <string.h>
 

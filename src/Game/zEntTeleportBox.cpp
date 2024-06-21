@@ -11,7 +11,7 @@
 #include "../Core/x/xMath.h"
 #include "../Core/x/xSnd.h"
 #include "../Core/x/xString.h"
-#include "../Core/p2/iScrFX.h"
+#include "../Core/gc/iScrFX.h"
 
 #define STATUS_OPEN 0
 #define STATUS_CLOSED 1
