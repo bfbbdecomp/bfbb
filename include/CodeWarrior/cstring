@@ -1,0 +1,6 @@
+#ifndef _MSL_CSTRING_H
+#define _MSL_CSTRING_H
+
+#include <string.h>
+
+#endif
