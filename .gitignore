@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__
+.idea
+.vscode
+.ninja_*
+.mypy_cache
+*.exe
+build
+build.ninja
+objdiff.json
+orig/*/*
+!orig/*/.gitkeep
+/*.txt
+ctx.c
