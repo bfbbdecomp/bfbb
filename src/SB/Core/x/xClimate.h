@@ -3,8 +3,9 @@
 
 #include <types.h>
 #include "xVec3.h"
-#include "xEnv.h"
-#include "zParEmitter.h"
+
+struct xEnvAsset;
+struct zParEmitter;
 
 struct _tagRain
 {
