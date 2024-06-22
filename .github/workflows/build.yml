@@ -8,14 +8,14 @@ jobs:
   build:
     # This is a *private* build container.
     # See docs/github_actions.md for more information.
-    container: ghcr.io/my/game-build:main
+    container: ghcr.io/bfbbdecomp/bfbb-build:main
 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         # Add game versions here
-        version: [GAMEID]
+        version: [GQPE78]
 
     steps:
     # Checkout the repository (shallow clone)
@@ -47,7 +47,7 @@ jobs:
       continue-on-error: true
       env:
         # Replace with your project slug
-        PROGRESS_SLUG: prime
+        PROGRESS_SLUG: bfbb
         # Set the API key in your repository secrets
         PROGRESS_API_KEY: ${{ secrets.PROGRESS_API_KEY }}
       run: |

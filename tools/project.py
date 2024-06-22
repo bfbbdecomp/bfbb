@@ -96,7 +96,7 @@ class ProjectConfig:
         )
 
         # Progress output and progress.json config
-        self.progress_all: bool = True  # Include combined "all" category
+        self.progress_all: bool = False  # Include combined "all" category
         self.progress_modules: bool = True  # Include combined "modules" category
         self.progress_each_module: bool = (
             True  # Include individual modules, disable for large numbers of modules
