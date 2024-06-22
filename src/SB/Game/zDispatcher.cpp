@@ -15,7 +15,7 @@
 #include "xCM.h"
 #include "xFX.h"
 #include "xMath.h"
-#include "CodeWarrior/string.h"
+#include "string.h"
 
 extern st_ZDISPATCH_CONTEXT lbl_80254E00;
 extern int8 lbl_80254E10[512];

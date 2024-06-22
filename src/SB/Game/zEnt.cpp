@@ -13,8 +13,8 @@
 #include "iModel.h"
 #include "xSnd.h"
 #include "xCollide.h"
-#include "CodeWarrior/cstring"
-#include "CodeWarrior/stdio.h"
+#include <cstring>
+#include <stdio.h>
 
 extern _ShadowParams gShadowParams[5];
 extern uint32 g_hash_xentanim[5];
