@@ -7,7 +7,6 @@
 #include "xutil.h"
 #include "iTRC.h"
 #include "iFile.h"
-#include "../CodeWarrior/intrin.h"
 
 // extern st_PKR_ASSET_TOCINFO lbl_80253EC8;
 st_STRAN_DATA g_xstdata = {};

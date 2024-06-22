@@ -1,5 +1,5 @@
-#ifndef _MSL_INTRIN_H
-#define _MSL_INTRIN_H
+#ifndef _INTRIN_H
+#define _INTRIN_H
 
 #ifndef __MWERKS__
 
