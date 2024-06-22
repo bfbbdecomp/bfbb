@@ -36,7 +36,7 @@ jobs:
     # Build the project
     - name: Build
       run: |
-        python configure.py --wrapper wine --map --version ${{ matrix.version }} \
+        python configure.py --map --version ${{ matrix.version }} \
             --binutils /binutils --compilers /compilers
         ninja all_source build/${{ matrix.version }}/progress.json
 
