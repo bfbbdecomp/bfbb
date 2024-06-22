@@ -6,8 +6,6 @@
 
 #include "iMath.h"
 
-#include <intrin.h>
-
 extern float32 _571;
 extern float32 _640;
 extern float32 _641;

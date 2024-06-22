@@ -1,6 +1,6 @@
 #include <types.h>
 #include <rwcore.h>
-#include <CodeWarrior/string.h>
+#include <string.h>
 #include "xBase.h"
 #include "xString.h"
 #include "xstransvc.h"

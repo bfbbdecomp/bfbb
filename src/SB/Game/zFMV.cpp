@@ -1,5 +1,5 @@
 #include <types.h>
-#include <CodeWarrior/stdio.h>
+#include <stdio.h>
 #include "iFMV.h"
 #include "xSnd.h"
 #include "zFMV.h"
