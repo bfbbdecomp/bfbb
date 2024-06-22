@@ -1,5 +1,6 @@
 #include "xGroup.h"
 
+#include "xMath.h"
 #include "xMemMgr.h"
 #include "zScene.h"
 
@@ -76,45 +77,104 @@ void xGroupReset(xGroup* ent)
     ent->last_index = 0;
 }
 
-#if 0
-// WIP.
 int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
                     xBase* toParamWidget)
 {
+    xGroup* g = (xGroup*)from;
     switch (toEvent)
     {
     case eEventReset:
-        xGroupReset((xGroup*)from);
+        xGroupReset(g);
         break;
     case eEventDisableGroupContents:
-        toEvent = eEventDistable;
+        toEvent = eEventDisable;
         break;
     }
-    uint32 ind = 0xffffffff;
-    uint16 groupFlags = ((xGroup*)from)->asset->groupFlags;
-    uint32 cnt;
-    if (groupFlags & 1)
+    int32 index = -1;
+    if (g->asset->groupFlags & 1)
     {
-        ind = xrand();
-        cnt = (uint32)((xGroup*)from)->asset->itemCount;
-        ind -= (ind / cnt) * cnt;
+        uint32 rand = xrand();
+        index = rand % g->asset->itemCount;
     }
-    else
+    else if (g->asset->groupFlags & 2)
     {
-        if (groupFlags & 2)
-        {
-            ind = ((xGroup*)from)->last_index;
-            cnt = (uint32)((xGroup*)from)->asset->itemCount;
-            ((xGroup*)from)->last_index = (ind + 1) - ((ind + 1) / cnt) * cnt;
-        }
+        index = g->last_index;
+        g->last_index = (g->last_index+1) % g->asset->itemCount;
     }
-    // Something here.
+
     switch (toEvent)
     {
-    }
-}
+        case eEventFastVisible:
+            for(int32 i = 0; i < g->asset->itemCount; i++)
+            {
+                if(!(index == -1 || index == i))
+                {
+                    continue;
+                }
+                
+                xBase* b = g->item[i];
+                if(!b)
+                {
+                    continue;
+                }
 
-#endif
+                if(b->baseFlags & 0x20)
+                {
+                    xEntShow((xEnt*)b);
+                }
+                else
+                {
+                    zEntEvent(b, toEvent, toParam, toParamWidget);
+                }
+            }
+            return 1;
+        case eEventFastInvisible:
+            for(int32 i = 0; i < g->asset->itemCount; i++)
+            {
+                if(!(index == -1 || index == i))
+                {
+                    continue;
+                }
+                
+                xBase* b = g->item[i];
+                if(!b)
+                {
+                    continue;
+                }
+                
+                if(b->baseFlags & 0x20)
+                {
+                    xEntHide((xEnt*)b);
+                }
+                else
+                {
+                    zEntEvent(b, toEvent, toParam, toParamWidget);
+                }
+            }
+            return 1;
+        default:
+            for(int32 i = 0; i < g->asset->itemCount; i++)
+            {
+                if(!(index == -1 || index == i))
+                {
+                    continue;
+                }
+                
+                xBase* b = g->item[i];
+                if(!b)
+                {
+                    continue;
+                }
+                
+                zEntEvent(b, toEvent, toParam, toParamWidget);
+            }
+            return 1;
+    }
+
+    // Note (Square): This is unreachable. No idea what the default return was meant to bel
+    // but presumably it's different from the good path.
+    return 0;
+}
 
 uint32 xGroupGetCount(xGroup* g)
 {
@@ -140,8 +200,6 @@ uint32 xGroupGetItem(xGroup* g, uint32 index)
     return (uint32)((uint32*)(g->asset + 1))[index];
 }
 
-#if 0
-// Some weird register swapping going on here.
 uint32 xGroup::get_any()
 {
     uint16 numItems = this->asset->itemCount;
@@ -149,11 +207,9 @@ uint32 xGroup::get_any()
     {
         return NULL;
     }
+    
+    uint32 last = ((uint32*)((uint8*)this->asset + sizeof(xGroupAsset)))[this->last_index];
     uint32 cnt = this->last_index + 1;
-    uint32 last =
-        (uint32)((uint32*)((uint32*)this->asset + sizeof(xGroupAsset) / 4))[this->last_index];
-    this->last_index = cnt - (cnt / numItems) * numItems;
+    this->last_index = cnt % numItems;
     return last;
 }
-
-#endif
