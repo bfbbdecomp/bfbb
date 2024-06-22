@@ -228,7 +228,7 @@ cflags_bfbb = [
     "-DGAMECUBE",
 ]
 
-config.linker_version = "GC/1.3.2"
+config.linker_version = "GC/2.0"
 
 
 # Helper function for Dolphin libraries
