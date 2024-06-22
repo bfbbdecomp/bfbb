@@ -227,8 +227,8 @@ struct NPCConfig : xListItem<NPCConfig>
     xVec3 animFrameRange[9];
     int32 cnt_esteem[5];
     float32 rad_sound;
-    NPCSndTrax* snd_trax;
-    NPCSndTrax* snd_traxShare;
+    NPCSndTrax *snd_trax;
+    NPCSndTrax *snd_traxShare;
     int32 test_count;
     uint8 talk_filter[4];
     uint8 talk_filter_size;
@@ -341,42 +341,42 @@ enum en_NPC_MSG_DATA
 struct zNPCLassoInfo
 {
     en_LASSO_STATUS stage;
-    xEnt* lassoee;
-    xAnimState* holdGuideAnim;
-    xModelInstance* holdGuideModel;
-    xAnimState* grabGuideAnim;
-    xModelInstance* grabGuideModel;
+    xEnt *lassoee;
+    xAnimState *holdGuideAnim;
+    xModelInstance *holdGuideModel;
+    xAnimState *grabGuideAnim;
+    xModelInstance *grabGuideModel;
 };
 
 struct zNPCCommon : xNPCBasic
 {
-    xEntAsset* entass; // 0x1BC
-    xEntNPCAsset* npcass;
-    zNPCSettings* npcsetass;
+    xEntAsset *entass; // 0x1BC
+    xEntNPCAsset *npcass;
+    zNPCSettings *npcsetass;
     int32 flg_vuln;
     int32 flg_move;
     int32 flg_misc;
     int32 flg_able;
-    NPCConfig* cfg_npc;
+    NPCConfig *cfg_npc;
     zNPCSettings npcset;
-    zMovePoint* nav_past;
-    zMovePoint* nav_curr;
-    zMovePoint* nav_dest;
-    zMovePoint* nav_lead;
-    xSpline3* spl_mvptspline;
+    zMovePoint *nav_past;
+    zMovePoint *nav_curr;
+    zMovePoint *nav_dest;
+    zMovePoint *nav_lead;
+    xSpline3 *spl_mvptspline;
     float32 len_mvptspline;
     float32 dst_curspline;
-    xEntDrive* drv_data;
-    xPsyche* psy_instinct;
-    zNPCCommon* npc_duplodude;
+    xEntDrive *drv_data;
+    xPsyche *psy_instinct;
+    zNPCCommon *npc_duplodude;
     float32 spd_throttle;
     int32 flg_xtrarend;
     float32 tmr_fidget;
     float32 tmr_invuln;
-    zShrapnelAsset* explosion;
-    xModelAssetParam* parmdata;
+    zShrapnelAsset *explosion;
+    xModelAssetParam *parmdata;
     uint32 pdatsize;
-    zNPCLassoInfo* lassdata;
+    zNPCLassoInfo *lassdata;
     NPCSndQueue snd_queue[4];
 
     zNPCCommon(int32 myType);
@@ -384,54 +384,54 @@ struct zNPCCommon : xNPCBasic
     void VelStop();
     static void ConfigSceneDone();
     uint32 LassoInit();
-    zNPCLassoInfo* GimmeLassInfo();
+    zNPCLassoInfo *GimmeLassInfo();
     void AddDEVGoals();
     void DBG_AddTweakers();
     void DBG_RptDataSize();
-    xAnimTable* AnimGetTable();
-    float32 AnimTimeRemain(xAnimState* ast);
+    xAnimTable *AnimGetTable();
+    float32 AnimTimeRemain(xAnimState *ast);
     bool IsMountableType(en_ZBASETYPE type);
-    void MvptReset(zMovePoint* nav_goto);
+    void MvptReset(zMovePoint *nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
-    void ModelScaleSet(const xVec3* vec);
+    void ModelScaleSet(const xVec3 *vec);
     int32 AnimStart(uint32 animID, int32 forceRestart);
     uint32 AnimCurStateID();
     void GiveReward();
     int32 SndPlayRandom(en_NPC_SOUND sndtype);
     int32 SndChanIsBusy(int32 flg_chan);
     int32 LassoUseGuides(int32 idx_grabmdl, int32 idx_holdmdl);
-    int32 GetVertPos(en_mdlvert vid, xVec3* pos);
+    int32 GetVertPos(en_mdlvert vid, xVec3 *pos);
     void Vibrate(en_npcvibe vibe, float32 duration);
-    void AddScripting(xPsyche* psy,
-                      int32 (*eval_script)(xGoal*, void*, en_trantype*, float32, void*),
-                      int32 (*eval_playanim)(xGoal*, void*, en_trantype*, float32, void*),
-                      int32 (*eval_attack)(xGoal*, void*, en_trantype*, float32, void*),
-                      int32 (*eval_move)(xGoal*, void*, en_trantype*, float32, void*),
-                      int32 (*eval_follow)(xGoal*, void*, en_trantype*, float32, void*),
-                      int32 (*eval_lead)(xGoal*, void*, en_trantype*, float32, void*),
-                      int32 (*eval_wait)(xGoal*, void*, en_trantype*, float32, void*));
-    void AddBaseline(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
-                     int (*)(xGoal*, void*, en_trantype*, float, void*),
-                     int (*)(xGoal*, void*, en_trantype*, float, void*),
-                     int (*)(xGoal*, void*, en_trantype*, float, void*),
-                     int (*)(xGoal*, void*, en_trantype*, float, void*));
+    void AddScripting(xPsyche *psy,
+                      int32 (*eval_script)(xGoal *, void *, en_trantype *, float32, void *),
+                      int32 (*eval_playanim)(xGoal *, void *, en_trantype *, float32, void *),
+                      int32 (*eval_attack)(xGoal *, void *, en_trantype *, float32, void *),
+                      int32 (*eval_move)(xGoal *, void *, en_trantype *, float32, void *),
+                      int32 (*eval_follow)(xGoal *, void *, en_trantype *, float32, void *),
+                      int32 (*eval_lead)(xGoal *, void *, en_trantype *, float32, void *),
+                      int32 (*eval_wait)(xGoal *, void *, en_trantype *, float32, void *));
+    void AddBaseline(xPsyche *, int (*)(xGoal *, void *, en_trantype *, float, void *),
+                     int (*)(xGoal *, void *, en_trantype *, float, void *),
+                     int (*)(xGoal *, void *, en_trantype *, float, void *),
+                     int (*)(xGoal *, void *, en_trantype *, float, void *),
+                     int (*)(xGoal *, void *, en_trantype *, float, void *));
 
     // vTable (xNPCBasic)
 
-    virtual void Init(xEntAsset* asset);
+    virtual void Init(xEntAsset *asset);
     virtual void Reset();
     virtual void Setup();
-    virtual void Process(xScene* xscn, float32 dt);
-    virtual void BUpdate(xVec3* pos);
-    virtual void NewTime(xScene* xscn, float32 dt);
-    virtual void Move(xScene* xscn, float32 dt, xEntFrame*);
-    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                           xBase* toParamWidget, int32* handled);
+    virtual void Process(xScene *xscn, float32 dt);
+    virtual void BUpdate(xVec3 *pos);
+    virtual void NewTime(xScene *xscn, float32 dt);
+    virtual void Move(xScene *xscn, float32 dt, xEntFrame *);
+    virtual int32 SysEvent(xBase *from, xBase *to, uint32 toEvent, const float32 *toParam,
+                           xBase *toParamWidget, int32 *handled);
     virtual void CollideReview();
     virtual void Destroy();
 
     // vTable (zNPCCommon)
-    virtual int32 NPCMessage(NPCMsg* mail);
+    virtual int32 NPCMessage(NPCMsg *mail);
     virtual void RenderExtra();
     virtual void RenderExtraPostParticles();
     virtual void ParseINI();
@@ -441,10 +441,10 @@ struct zNPCCommon : xNPCBasic
     virtual void SelfDestroy();
     virtual int32 IsHealthy();
     virtual int32 IsAlive();
-    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
-    virtual int32 Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
-    virtual void DuploOwner(zNPCCommon* duper);
-    virtual void DuploNotice(en_SM_NOTICES, void*);
+    virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase *who, const xVec3 *vec_hit);
+    virtual int32 Respawn(const xVec3 *pos, zMovePoint *mvptFirst, zMovePoint *mvptSpawnRef);
+    virtual void DuploOwner(zNPCCommon *duper);
+    virtual void DuploNotice(en_SM_NOTICES, void *);
     virtual int32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
     virtual int32 SetCarryState(en_NPC_CARRY_STATE);
@@ -454,16 +454,16 @@ struct zNPCCommon : xNPCBasic
     virtual void SpeakStart(uint32 sound, uint32 param_2, int32 param_3);
     virtual void SpeakStop();
 
-    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+    virtual uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal *goal)
     {
         return 0;
     }
 
-    virtual void GetParm(en_npcparm pid, void* val);
-    virtual void GetParmDefault(en_npcparm pid, void* val);
+    virtual void GetParm(en_npcparm pid, void *val);
+    virtual void GetParmDefault(en_npcparm pid, void *val);
     virtual float32 GenShadCacheRad();
-    virtual xEntDrive* PRIV_GetDriverData();
-    virtual zNPCLassoInfo* PRIV_GetLassoData();
+    virtual xEntDrive *PRIV_GetDriverData();
+    virtual zNPCLassoInfo *PRIV_GetLassoData();
     virtual int32 LassoSetup();
 
 protected:
@@ -475,11 +475,11 @@ struct NPCSysEvent
 {
     int32 doLinkEvents;
     int32 handled;
-    xBase* from;
-    xBase* to;
+    xBase *from;
+    xBase *to;
     uint32 toEvent;
     float32 toParam[4];
-    xBase* toParamWidget;
+    xBase *toParamWidget;
 };
 
 struct NPCBlastInfo
@@ -498,21 +498,21 @@ struct NPCChatInfo
 struct NPCSpawnInfo
 {
     xVec3 pos_spawn;
-    zMovePoint* nav_firstMovepoint;
-    zMovePoint* nav_spawnReference;
+    zMovePoint *nav_firstMovepoint;
+    zMovePoint *nav_spawnReference;
     int32 spawnSuccess;
 };
 
 struct NPCTargetInfo
 {
-    xBase* bas_tgt;
+    xBase *bas_tgt;
     xVec3 pos_tgt;
 };
 
 struct NPCDamageInfo
 {
     en_NPC_DAMAGE_TYPE dmg_type;
-    xBase* dmg_from;
+    xBase *dmg_from;
     xVec3 vec_dmghit;
 };
 
@@ -530,13 +530,13 @@ struct NPCScriptInfo
 
 struct NPCMountInfo
 {
-    xEnt* ent_toMount;
-    xCollis* col_forMount;
+    xEnt *ent_toMount;
+    xCollis *col_forMount;
 };
 
 struct NPCAreaInfo
 {
-    zNPCCommon* npc_origin;
+    zNPCCommon *npc_origin;
     xVec3 pos_origin;
 };
 
@@ -559,24 +559,24 @@ struct NPCMsg
         NPCMountInfo mountdata;
         NPCAreaInfo areadata;
     };
-    void* attached;
-    NPCMsg* next;
+    void *attached;
+    NPCMsg *next;
     float32 tmr_delay;
 };
 
-xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*);
-void ZNPC_Destroy_Common(xFactoryInst* inst);
+xFactoryInst *ZNPC_Create_Common(int32 who, RyzMemGrow *grow, void *);
+void ZNPC_Destroy_Common(xFactoryInst *inst);
 void zNPCCommon_ScenePrepare();
 void zNPCCommon_SceneFinish();
 void zNPCPlyrSnd_Reset();
 void zNPCPlyrSnd_Update(float32 dt);
 void zNPCCommon_SceneReset();
-void ZNPC_Destroy_Common(xFactoryInst* inst);
+void ZNPC_Destroy_Common(xFactoryInst *inst);
 void zNPCSettings_MakeDummy();
 void ZNPC_Common_Startup();
 void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();
-void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, int32* ourAnims, int32 idx_dflt,
+void NPCC_BuildStandardAnimTran(xAnimTable *table, char **namelist, int32 *ourAnims, int32 idx_dflt,
                                 float32 blend);
 void zNPCCommon_EjectPhlemOnPawz();
 
