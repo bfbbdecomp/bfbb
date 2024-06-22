@@ -295,10 +295,10 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xEnv.cpp"),
             Object(NonMatching, "SB/Core/x/xEvent.cpp"), # breaks build
             Object(NonMatching, "SB/Core/x/xFFX.cpp"),
-            Object(NonMatching, "SB/Core/x/xFog.cpp"),
+            Object(Equivalent, "SB/Core/x/xFog.cpp"),
             Object(NonMatching, "SB/Core/x/xFont.cpp"),
             Object(NonMatching, "SB/Core/x/xFX.cpp"),
-            Object(NonMatching, "SB/Core/x/xGroup.cpp"),
+            Object(Matching, "SB/Core/x/xGroup.cpp"),
             Object(Matching, "SB/Core/x/xhipio.cpp"),
             Object(NonMatching, "SB/Core/x/xHud.cpp"),
             Object(NonMatching, "SB/Core/x/xHudFontMeter.cpp"),
