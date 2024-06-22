@@ -8,9 +8,9 @@
 
 #define ANIM_COUNT 2
 
-extern const char* g_strz_tikianim[ANIM_COUNT];
+extern const char *g_strz_tikianim[ANIM_COUNT];
 extern uint32 g_hash_tikianim[ANIM_COUNT];
-extern zParEmitter* cloudEmitter;
+extern zParEmitter *cloudEmitter;
 extern xParEmitterCustomSettings thunderEmitterInfo;
 extern char zNPCTypeTiki_stringBase0[];
 extern float32 _862;
@@ -32,12 +32,6 @@ void ZNPC_Tiki_Shutdown()
 {
 }
 
-
-
-
-
-
-
 /* need to do more of this
 void zNPCTiki_InitFX(zScene* scene)
 {
@@ -57,21 +51,9 @@ void zNPCTiki_InitFX(zScene* scene)
 }
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst *ZNPC_Create_Tiki(int32 who, RyzMemGrow *grow, void *)
 {
-    zNPCTiki* tiki = NULL;
+    zNPCTiki *tiki = NULL;
 
     switch (who)
     {
@@ -94,14 +76,14 @@ xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
     return tiki;
 }
 
-void ZNPC_Destroy_Tiki(xFactoryInst* inst)
+void ZNPC_Destroy_Tiki(xFactoryInst *inst)
 {
     delete inst;
 }
 
-xAnimTable* ZNPC_AnimTable_Tiki()
+xAnimTable *ZNPC_AnimTable_Tiki()
 {
-    xAnimTable* table;
+    xAnimTable *table;
 
     table = xAnimTableNew(zNPCTypeTiki_stringBase0 + 0x3a, NULL, 0);
     xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, _862, NULL, NULL, _858_2, NULL, NULL,
@@ -109,14 +91,18 @@ xAnimTable* ZNPC_AnimTable_Tiki()
     return table;
 }
 
+void zNPCTiki::Damage(en_NPC_DAMAGE_TYPE damtype, xBase *who, const xVec3 *vec_hit)
+{
+}
+
 void zNPCTiki::Reset()
 {
     zNPCCommon::Reset();
 
-    xVec3Add((xVec3*)&bound.sph.r, (xVec3*)&origLocalBound.sph.r, (xVec3*)&model->Mat->pos);
-    xVec3Add((xVec3*)&bound.box.box.lower, (xVec3*)&origLocalBound.box.box.lower,
-             (xVec3*)&model->Mat->pos);
-    xVec3Add((xVec3*)&bound.pad[3], (xVec3*)&origLocalBound.pad[3], (xVec3*)&model->Mat->pos);
+    xVec3Add((xVec3 *)&bound.sph.r, (xVec3 *)&origLocalBound.sph.r, (xVec3 *)&model->Mat->pos);
+    xVec3Add((xVec3 *)&bound.box.box.lower, (xVec3 *)&origLocalBound.box.box.lower,
+             (xVec3 *)&model->Mat->pos);
+    xVec3Add((xVec3 *)&bound.pad[3], (xVec3 *)&origLocalBound.pad[3], (xVec3 *)&model->Mat->pos);
 
     xNPCBasic::RestoreColFlags();
 
@@ -154,7 +140,7 @@ void zNPCTiki::Reset()
         t1 = _858_2;
         t2 = _1084;
         t3 = _1084;
-        xVec3Copy((xVec3*)&v1, (xVec3*)&model->Mat->pos);
+        xVec3Copy((xVec3 *)&v1, (xVec3 *)&model->Mat->pos);
         break;
     case 0x4e545433:
         t1 = xurand();
@@ -175,95 +161,22 @@ void zNPCTiki::Setup()
 {
     zNPCCommon::Setup();
 
-    xVec3Copy((xVec3*)&lastAt, (xVec3*)&model->Mat->at);
+    xVec3Copy((xVec3 *)&lastAt, (xVec3 *)&model->Mat->at);
 }
-
-
-
-
-
-
-                   
-
-
-
-
-
-
 
 void zNPCTiki::ParseINI()
 {
     zNPCCommon::ParseINI();
     cfg_npc->snd_traxShare = g_sndTrax_TikiShared;
-    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiShared);
+    NPCS_SndTablePrepare((NPCSndTrax *)&g_sndTrax_TikiShared);
     switch (xNPCBasic::SelfType())
     {
     case 'NTT3':
         cfg_npc->snd_trax = g_sndTrax_TikiThunder;
-        NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiThunder);
+        NPCS_SndTablePrepare((NPCSndTrax *)&g_sndTrax_TikiThunder);
         break;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 int32 zNPCTiki::CanRope()
 {
@@ -275,11 +188,11 @@ void AnimPick()
     xStrHash(zNPCTypeTiki_stringBase0 + 0x51);
 }
 
-void zNPCTiki::Move(xScene* xscn, float32 dt, xEntFrame*)
+void zNPCTiki::Move(xScene *xscn, float32 dt, xEntFrame *)
 {
 }
 
-void zNPCTiki::BUpdate(xVec3* pos)
+void zNPCTiki::BUpdate(xVec3 *pos)
 {
     xEntDefaultBoundUpdate(this, pos);
 }
