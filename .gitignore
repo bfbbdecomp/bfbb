@@ -1,7 +1,6 @@
 .DS_Store
 __pycache__
 .idea
-.vscode
 .ninja_*
 .mypy_cache
 *.exe
