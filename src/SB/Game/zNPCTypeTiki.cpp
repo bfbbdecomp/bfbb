@@ -71,8 +71,8 @@ void zNPCTiki_InitStacking(zScene* zsc)
             {
                 float32 dh = tiki->landHt - tiki->bound.box.box.lower.y;
                 tiki->bound.box.box.lower.y += dh;
-                tiki->bound.cyl.h += dh;
-                tiki->bound.sph.center.y += dh;
+                tiki->bound.box.box.upper.y += dh;
+                tiki->bound.box.center.y += dh;
                 tiki->model->Mat->pos.y += dh;
             }
             tiki->tikiFlag &= ~0x1;
