@@ -8,9 +8,9 @@
 
 #define ANIM_COUNT 2
 
-extern const char *g_strz_tikianim[ANIM_COUNT];
+extern const char* g_strz_tikianim[ANIM_COUNT];
 extern uint32 g_hash_tikianim[ANIM_COUNT];
-extern zParEmitter *cloudEmitter;
+extern zParEmitter* cloudEmitter;
 extern xParEmitterCustomSettings thunderEmitterInfo;
 extern char zNPCTypeTiki_stringBase0[];
 extern float32 _862;
@@ -51,9 +51,40 @@ void zNPCTiki_InitFX(zScene* scene)
 }
 */
 
-xFactoryInst *ZNPC_Create_Tiki(int32 who, RyzMemGrow *grow, void *)
+void test(int32 a)
 {
-    zNPCTiki *tiki = NULL;
+}
+
+extern uint32 orphanList;
+
+void zNPCTiki_InitStacking(zScene* zsc)
+{
+    for (int32 i = 0; i < zsc->num_npcs; i++)
+    {
+        xNPCBasic* npc = (xNPCBasic*)zsc->npcs[i];
+
+        if ((npc->SelfType() & 0xffffff00) == 'NTT\0')
+        {
+            zNPCTiki* tiki = (zNPCTiki*)npc;
+
+            if (npc->SelfType() != 'NTT1' && (tiki->FindParents(zsc), tiki->numParents == 0))
+            {
+                float32 dh = tiki->landHt - tiki->bound.box.box.lower.y;
+                tiki->bound.box.box.lower.y += dh;
+                tiki->bound.cyl.h += dh;
+                tiki->bound.sph.center.y += dh;
+                tiki->model->Mat->pos.y += dh;
+            }
+            tiki->tikiFlag &= ~0x1;
+        }
+    }
+
+    orphanList = 0;
+}
+
+xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
+{
+    zNPCTiki* tiki = NULL;
 
     switch (who)
     {
@@ -76,14 +107,14 @@ xFactoryInst *ZNPC_Create_Tiki(int32 who, RyzMemGrow *grow, void *)
     return tiki;
 }
 
-void ZNPC_Destroy_Tiki(xFactoryInst *inst)
+void ZNPC_Destroy_Tiki(xFactoryInst* inst)
 {
     delete inst;
 }
 
-xAnimTable *ZNPC_AnimTable_Tiki()
+xAnimTable* ZNPC_AnimTable_Tiki()
 {
-    xAnimTable *table;
+    xAnimTable* table;
 
     table = xAnimTableNew(zNPCTypeTiki_stringBase0 + 0x3a, NULL, 0);
     xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, _862, NULL, NULL, _858_2, NULL, NULL,
@@ -91,9 +122,12 @@ xAnimTable *ZNPC_AnimTable_Tiki()
     return table;
 }
 
-void zNPCTiki::Damage(en_NPC_DAMAGE_TYPE damtype, xBase *who, const xVec3 *vec_hit)
+void zNPCTiki::Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit)
 {
-    if (((xNPCBasic::SelfType() != 'NTT4') || (damtype == DMGTYP_CRUISEBUBBLE) || (damtype - DMGTYP_THUNDER_TIKI_EXPLOSION <= (uint32)1) || (damtype - DMGTYP_INSTAKILL <= (uint32)1)) && this->flg_vuln != 0)
+    if (((xNPCBasic::SelfType() != 'NTT4') || (damtype == DMGTYP_CRUISEBUBBLE) ||
+         (damtype - DMGTYP_THUNDER_TIKI_EXPLOSION <= (uint32)1) ||
+         (damtype - DMGTYP_INSTAKILL <= (uint32)1)) &&
+        this->flg_vuln != 0)
     {
         this->psy_instinct->GoalSet('NGT4', 0);
         this->flg_vuln = 0;
@@ -104,10 +138,10 @@ void zNPCTiki::Reset()
 {
     zNPCCommon::Reset();
 
-    xVec3Add((xVec3 *)&bound.sph.r, (xVec3 *)&origLocalBound.sph.r, (xVec3 *)&model->Mat->pos);
-    xVec3Add((xVec3 *)&bound.box.box.lower, (xVec3 *)&origLocalBound.box.box.lower,
-             (xVec3 *)&model->Mat->pos);
-    xVec3Add((xVec3 *)&bound.pad[3], (xVec3 *)&origLocalBound.pad[3], (xVec3 *)&model->Mat->pos);
+    xVec3Add((xVec3*)&bound.sph.r, (xVec3*)&origLocalBound.sph.r, (xVec3*)&model->Mat->pos);
+    xVec3Add((xVec3*)&bound.box.box.lower, (xVec3*)&origLocalBound.box.box.lower,
+             (xVec3*)&model->Mat->pos);
+    xVec3Add((xVec3*)&bound.pad[3], (xVec3*)&origLocalBound.pad[3], (xVec3*)&model->Mat->pos);
 
     xNPCBasic::RestoreColFlags();
 
@@ -145,7 +179,7 @@ void zNPCTiki::Reset()
         t1 = _858_2;
         t2 = _1084;
         t3 = _1084;
-        xVec3Copy((xVec3 *)&v1, (xVec3 *)&model->Mat->pos);
+        xVec3Copy((xVec3*)&v1, (xVec3*)&model->Mat->pos);
         break;
     case 0x4e545433:
         t1 = xurand();
@@ -166,19 +200,19 @@ void zNPCTiki::Setup()
 {
     zNPCCommon::Setup();
 
-    xVec3Copy((xVec3 *)&lastAt, (xVec3 *)&model->Mat->at);
+    xVec3Copy((xVec3*)&lastAt, (xVec3*)&model->Mat->at);
 }
 
 void zNPCTiki::ParseINI()
 {
     zNPCCommon::ParseINI();
     cfg_npc->snd_traxShare = g_sndTrax_TikiShared;
-    NPCS_SndTablePrepare((NPCSndTrax *)&g_sndTrax_TikiShared);
+    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiShared);
     switch (xNPCBasic::SelfType())
     {
     case 'NTT3':
         cfg_npc->snd_trax = g_sndTrax_TikiThunder;
-        NPCS_SndTablePrepare((NPCSndTrax *)&g_sndTrax_TikiThunder);
+        NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiThunder);
         break;
     }
 }
@@ -193,11 +227,11 @@ void AnimPick()
     xStrHash(zNPCTypeTiki_stringBase0 + 0x51);
 }
 
-void zNPCTiki::Move(xScene *xscn, float32 dt, xEntFrame *)
+void zNPCTiki::Move(xScene* xscn, float32 dt, xEntFrame*)
 {
 }
 
-void zNPCTiki::BUpdate(xVec3 *pos)
+void zNPCTiki::BUpdate(xVec3* pos)
 {
     xEntDefaultBoundUpdate(this, pos);
 }
