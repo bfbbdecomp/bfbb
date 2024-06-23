@@ -15,6 +15,7 @@ struct xParInterp
     float32 oofreq;
 };
 
+// Size 0x138
 struct xParEmitterPropsAsset : xBaseAsset
 {
     uint32 parSysID;
@@ -35,6 +36,7 @@ struct xParEmitterPropsAsset : xBaseAsset
     float32 emit_limit_reset_time;
 };
 
+// Size 0x16c
 struct xParEmitterCustomSettings : xParEmitterPropsAsset
 {
     uint32 custom_flags;
@@ -103,5 +105,6 @@ void xParEmitterInit(void* b, void* tasset);
 void xParEmitterSetup(xParEmitter* t);
 void xParEmitterDestroy();
 void xParEmitterUpdate(xBase* to, xScene*, float32 dt);
+xPar* xParEmitterEmitCustom(xParEmitter* p, float dt, xParEmitterCustomSettings* info);
 
 #endif

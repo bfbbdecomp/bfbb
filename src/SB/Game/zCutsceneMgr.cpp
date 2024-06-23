@@ -7,6 +7,7 @@
 #include "zEntPlayer.h"
 #include "zMusic.h"
 #include "zNPCFXCinematic.h"
+#include "zParEmitter.h"
 #include "xEvent.h"
 #include "xCutscene.h"
 #include "xserializer.h"
