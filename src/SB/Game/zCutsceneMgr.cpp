@@ -27,12 +27,10 @@ extern float32 gSkipTimeCutscene;
 
 extern float32 _897;
 
-
 void zCutsceneMgrInit(void* b, void* tasset)
 {
     zCutsceneMgrInit((xBase*)b, (xCutsceneMgrAsset*)tasset);
 }
-
 
 void zCutsceneMgrInit(xBase* b, xCutsceneMgrAsset* tasset)
 {
@@ -52,7 +50,6 @@ void zCutsceneMgrInit(xBase* b, xCutsceneMgrAsset* tasset)
     ents_hidden = 0;
 }
 
-
 void zCutsceneMgrReset(zCutsceneMgr* mgr)
 {
     xBaseReset(mgr, mgr->tasset);
@@ -64,7 +61,6 @@ void zCutsceneMgrReset(zCutsceneMgr* mgr)
     zEntPlayerControlOn(CONTROL_OWNER_CUTSCENE);
     ents_hidden = 0;
 }
-
 
 void zCutsceneMgrSave(zCutsceneMgr*, xSerial* s)
 {
@@ -81,7 +77,6 @@ void zCutsceneMgrSave(zCutsceneMgr*, xSerial* s)
     }
 }
 
-
 void zCutsceneMgrLoad(zCutsceneMgr*, xSerial* s)
 {
     for (uint32 i = 0; i < 14; i++)
@@ -89,7 +84,6 @@ void zCutsceneMgrLoad(zCutsceneMgr*, xSerial* s)
         s->Read_b1(&zCutSceneNamesTable[i].played);
     }
 }
-
 
 RpAtomic* HackBoundCB(RpAtomic* atomic, void* data)
 {
@@ -100,7 +94,6 @@ RpAtomic* HackBoundCB(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-
 RpMaterial* HackAlphaSetMaterialAlphaCB(RpMaterial* material, void* data)
 {
     RwRGBA color = material->color;
@@ -108,7 +101,6 @@ RpMaterial* HackAlphaSetMaterialAlphaCB(RpMaterial* material, void* data)
     material->color = color;
     return material;
 }
-
 
 RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data)
 {
@@ -120,7 +112,6 @@ RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data)
     s_atomicNumber++;
     return atomic;
 }
-
 
 void zCutSceneNamesTable_clearAll()
 {
@@ -195,7 +186,6 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
     }
 }
 #endif
-
 
 int32 zCutsceneMgrEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
 {
@@ -291,7 +281,6 @@ void zCutsceneMgrFinishExit(xBase* to)
 }
 #endif
 
-
 void zCutsceneMgrKillFX(zCutsceneMgr* t)
 {
     xCutsceneMgrAsset* a = t->tasset;
@@ -308,7 +297,6 @@ void zCutsceneMgrKillFX(zCutsceneMgr* t)
         }
     }
 }
-
 
 void zCutsceneMgrUpdateFX(zCutsceneMgr* t, float32)
 {
@@ -340,7 +328,6 @@ void zCutsceneMgrUpdateFX(zCutsceneMgr* t, float32)
         }
     }
 }
-
 
 void zCutsceneMgrUpdate(xBase* to, xScene* sc, float32 dt)
 {
@@ -435,7 +422,6 @@ void zCutsceneMgrUpdate(xBase* to, xScene* sc, float32 dt)
     }
     check_hide_entities();
 }
-
 
 void check_hide_entities()
 {

@@ -11,7 +11,6 @@ extern int32 iModelHack_DisablePrelight;
 float32 MAX_COLOR = 1.0f;
 #endif
 
-
 #ifdef NON_MATCHING
 // Will match once able to use float literals
 xLightKit* xLightKit_Prepare(void* data)
@@ -96,7 +95,6 @@ xLightKit* xLightKit_Prepare(void* data)
 }
 #endif
 
-
 void xLightKit_Enable(xLightKit* lkit, RpWorld* world)
 {
     if (lkit != gLastLightKit)
@@ -125,12 +123,10 @@ void xLightKit_Enable(xLightKit* lkit, RpWorld* world)
     }
 }
 
-
 xLightKit* xLightKit_GetCurrent(RpWorld* world)
 {
     return gLastLightKit;
 }
-
 
 void xLightKit_Destroy(xLightKit* lkit)
 {

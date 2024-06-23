@@ -241,17 +241,12 @@ void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, ulong32)
 
 void zEntTeleportBox_Init(_zEntTeleportBox* ent, teleport_asset* asset);
 
-
-                   
-
 void zEntTeleportBox_InitAll()
 {
     sPlayerIn = 0;
 }
 
 void zEntTeleportBox_Setup(_zEntTeleportBox* ent);
-
-
 
 #if 1 // wip
 void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt);

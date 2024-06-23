@@ -21,8 +21,8 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     if (b->linkCount)
     {
         // Seek to then end of the xGroupAsset header and then seek to the end of the subsequent array of IDs
-        b->link = (xLinkAsset*)((uint8*)(t->asset) + sizeof(xGroupAsset)
-                                + asset->itemCount * sizeof(uint32));
+        b->link = (xLinkAsset*)((uint8*)(t->asset) + sizeof(xGroupAsset) +
+                                asset->itemCount * sizeof(uint32));
     }
     else
     {
@@ -99,76 +99,76 @@ int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toPar
     else if (g->asset->groupFlags & 2)
     {
         index = g->last_index;
-        g->last_index = (g->last_index+1) % g->asset->itemCount;
+        g->last_index = (g->last_index + 1) % g->asset->itemCount;
     }
 
     switch (toEvent)
     {
-        case eEventFastVisible:
-            for(int32 i = 0; i < g->asset->itemCount; i++)
+    case eEventFastVisible:
+        for (int32 i = 0; i < g->asset->itemCount; i++)
+        {
+            if (!(index == -1 || index == i))
             {
-                if(!(index == -1 || index == i))
-                {
-                    continue;
-                }
-                
-                xBase* b = g->item[i];
-                if(!b)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                if(b->baseFlags & 0x20)
-                {
-                    xEntShow((xEnt*)b);
-                }
-                else
-                {
-                    zEntEvent(b, toEvent, toParam, toParamWidget);
-                }
-            }
-            return 1;
-        case eEventFastInvisible:
-            for(int32 i = 0; i < g->asset->itemCount; i++)
+            xBase* b = g->item[i];
+            if (!b)
             {
-                if(!(index == -1 || index == i))
-                {
-                    continue;
-                }
-                
-                xBase* b = g->item[i];
-                if(!b)
-                {
-                    continue;
-                }
-                
-                if(b->baseFlags & 0x20)
-                {
-                    xEntHide((xEnt*)b);
-                }
-                else
-                {
-                    zEntEvent(b, toEvent, toParam, toParamWidget);
-                }
+                continue;
             }
-            return 1;
-        default:
-            for(int32 i = 0; i < g->asset->itemCount; i++)
+
+            if (b->baseFlags & 0x20)
             {
-                if(!(index == -1 || index == i))
-                {
-                    continue;
-                }
-                
-                xBase* b = g->item[i];
-                if(!b)
-                {
-                    continue;
-                }
-                
+                xEntShow((xEnt*)b);
+            }
+            else
+            {
                 zEntEvent(b, toEvent, toParam, toParamWidget);
             }
-            return 1;
+        }
+        return 1;
+    case eEventFastInvisible:
+        for (int32 i = 0; i < g->asset->itemCount; i++)
+        {
+            if (!(index == -1 || index == i))
+            {
+                continue;
+            }
+
+            xBase* b = g->item[i];
+            if (!b)
+            {
+                continue;
+            }
+
+            if (b->baseFlags & 0x20)
+            {
+                xEntHide((xEnt*)b);
+            }
+            else
+            {
+                zEntEvent(b, toEvent, toParam, toParamWidget);
+            }
+        }
+        return 1;
+    default:
+        for (int32 i = 0; i < g->asset->itemCount; i++)
+        {
+            if (!(index == -1 || index == i))
+            {
+                continue;
+            }
+
+            xBase* b = g->item[i];
+            if (!b)
+            {
+                continue;
+            }
+
+            zEntEvent(b, toEvent, toParam, toParamWidget);
+        }
+        return 1;
     }
 
     // Note (Square): This is unreachable. No idea what the default return was meant to bel
@@ -207,7 +207,7 @@ uint32 xGroup::get_any()
     {
         return NULL;
     }
-    
+
     uint32 last = ((uint32*)((uint8*)this->asset + sizeof(xGroupAsset)))[this->last_index];
     uint32 cnt = this->last_index + 1;
     this->last_index = cnt % numItems;

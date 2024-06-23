@@ -1247,7 +1247,6 @@ namespace
 
 #if 1
 
-
 #else
 xtextbox::layout& xtextbox::temp_layout(bool cache) const
 {
@@ -1318,8 +1317,6 @@ xtextbox::callback xtextbox::text_cb = { xtextbox::text_render, NULL, NULL };
 #ifndef NON_MATCHING
 static substr arg_buffer_1611[32];
 static xtextbox::tag_entry entry_buffer_1612[16];
-
-
 
 #else
 xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)

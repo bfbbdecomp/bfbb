@@ -45,7 +45,6 @@ void NPC_entwrap_bupdate(xEnt*, xVec3*);
 void NPC_entwrap_move(xEnt*, xScene*, float32, xEntFrame*);
 void NPC_entwrap_render(xEnt*);
 
-
 #ifdef NON_MATCHING
 // The order of the function pointer assignment instructions at the end of the
 
@@ -110,7 +109,6 @@ void xNPCBasic::Init(xEntAsset* asset)
 }
 #endif
 
-
 #ifndef NOT_MATCHING
 
 #else
@@ -143,7 +141,6 @@ void xNPCBasic::Reset()
 }
 #endif
 
-
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
@@ -167,7 +164,6 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
         xBoundDraw(&npc->bound);
     }
 }
-
 
 void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
 {
@@ -195,7 +191,6 @@ void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
     int32 nf = xNPCBasic_float_thirty * (radius / d);
     npc->colFreq = MIN(npc->colFreq, nf);
 }
-
 
 void xNPCBasic::Process(xScene* xscn, float32 dt)
 {
@@ -295,7 +290,6 @@ void xNPCBasic::Process(xScene* xscn, float32 dt)
     }
 }
 
-
 void xNPCBasic::CollideReview()
 {
     if (DBG_IsNormLog(eNPCDCAT_Eight, 2))
@@ -305,12 +299,10 @@ void xNPCBasic::CollideReview()
     }
 }
 
-
 void xNPCBasic::NewTime(xScene*, float32)
 {
     flags1.flg_basenpc &= ~0x4;
 }
-
 
 void NPC_entwrap_setup(xEnt* ent)
 {
@@ -319,14 +311,12 @@ void NPC_entwrap_setup(xEnt* ent)
     npc->Setup();
 }
 
-
 void NPC_entwrap_reset(xEnt* ent)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
     npc->DBG_HaltOnMe(0, NULL);
     npc->Reset();
 }
-
 
 void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
 {
@@ -360,18 +350,15 @@ void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
     npc->NewTime(scn, dt);
 }
 
-
 void NPC_entwrap_bupdate(xEnt* ent, xVec3* pos)
 {
     ((xNPCBasic*)ent)->BUpdate(pos);
 }
 
-
 void NPC_entwrap_move(xEnt* ent, xScene* scn, float32 dt, xEntFrame* frame)
 {
     ((xNPCBasic*)ent)->Move(scn, dt, frame);
 }
-
 
 int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
                         xBase* toParamWidget)
@@ -380,22 +367,18 @@ int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* t
     return ((xNPCBasic*)to)->SysEvent(from, to, toEvent, toParam, toParamWidget, &handled);
 }
 
-
 void NPC_entwrap_render(xEnt* ent)
 {
     ((xNPCBasic*)ent)->Render();
 }
 
-
 void xNPCBasic::DBG_PStatClear()
 {
 }
 
-
 void xNPCBasic::DBG_HaltOnMe(uint32, int8*)
 {
 }
-
 
 void xNPCBasic::BUpdate(xVec3* v)
 {

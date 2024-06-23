@@ -23,13 +23,6 @@ extern float32 lbl_803CDED8; // 1.0 // @701
 
 extern const char* zSurface_strings[];
 
-
-
-
-
-
-
-
 // TODO: Hacked to OK (with volatile sMapperCount and assignment in if), fix later
 void zSurfaceRegisterMapper(uint32 assetId)
 {
@@ -47,20 +40,17 @@ void zSurfaceRegisterMapper(uint32 assetId)
     }
 }
 
-
 void zSurfaceExit()
 {
     xSurfaceExit();
     sMapperCount = 0;
 }
 
-
 void zSurfaceResetSurface(xSurface* surf)
 {
     xSurfaceReset();
     surf->friction = ((zSurfaceProps*)(surf->moprops))->asset->friction;
 }
-
 
 #if 0
 xSurface* zSurfaceGetSurface(uint32 mat_id)
@@ -97,7 +87,6 @@ xSurface* zSurfaceGetSurface(uint32 mat_id)
 }
 #endif
 
-
 xSurface* zSurfaceGetSurface(const xCollis* coll)
 {
     xSurface* surf = NULL;
@@ -121,7 +110,6 @@ xSurface* zSurfaceGetSurface(const xCollis* coll)
     return surf;
 }
 
-
 uint32 zSurfaceGetSlide(const xSurface* surf)
 {
     if (surf->moprops)
@@ -130,7 +118,6 @@ uint32 zSurfaceGetSlide(const xSurface* surf)
     }
     return 0;
 }
-
 
 uint32 zSurfaceGetStep(const xSurface* surf)
 {
@@ -141,7 +128,6 @@ uint32 zSurfaceGetStep(const xSurface* surf)
     return 0;
 }
 
-
 uint8 zSurfaceOutOfBounds(const xSurface& s)
 {
     if (s.moprops)
@@ -150,7 +136,6 @@ uint8 zSurfaceOutOfBounds(const xSurface& s)
     }
     return 0;
 }
-
 
 #if 0
 // Float issues
@@ -165,10 +150,6 @@ float32 zSurfaceGetSlideStartAngle(const xSurface* surf)
 }
 #endif
 
-
-
-
-
 uint32 zSurfaceGetMatchOrient(const xSurface* surf)
 {
     if (surf->moprops)
@@ -177,7 +158,6 @@ uint32 zSurfaceGetMatchOrient(const xSurface* surf)
     }
     return 0;
 }
-
 
 int32 zSurfaceGetDamageType(const xSurface* surf)
 {
@@ -188,7 +168,6 @@ int32 zSurfaceGetDamageType(const xSurface* surf)
     return 0;
 }
 
-
 uint32 zSurfaceGetDamagePassthrough(const xSurface* surf)
 {
     if (surf->moprops)
@@ -197,7 +176,6 @@ uint32 zSurfaceGetDamagePassthrough(const xSurface* surf)
     }
     return 0;
 }
-
 
 uint32 zSurfaceGetSticky(const xSurface* surf)
 {
@@ -208,7 +186,6 @@ uint32 zSurfaceGetSticky(const xSurface* surf)
     return 0;
 }
 
-
 uint32 zSurfaceGetStandOn(const xSurface* surf)
 {
     if (surf->moprops)
@@ -218,12 +195,10 @@ uint32 zSurfaceGetStandOn(const xSurface* surf)
     return 1;
 }
 
-
 float32 zSurfaceGetFriction(const xSurface* surf)
 {
     return surf->friction;
 }
-
 
 float32 zSurfaceGetOutOfBoundsDelay(xSurface& s)
 {
@@ -234,30 +209,25 @@ float32 zSurfaceGetOutOfBoundsDelay(xSurface& s)
     return lbl_803CDEDC;
 }
 
-
 int32 zSurfaceGetSlickness(const xSurface* surf)
 {
     return (int)(lbl_803CDED8 / surf->friction);
 }
-
 
 float32 zSurfaceGetDamping(const xSurface* surf, float32 min_vel)
 {
     return xpow(min_vel, surf->friction);
 }
 
-
 void zSurfaceSave(xSurface* ent, xSerial* s)
 {
     xSurfaceSave(ent, s);
 }
 
-
 void zSurfaceLoad(xSurface* ent, xSerial* s)
 {
     xSurfaceLoad(ent, s);
 }
-
 
 void zSurfaceSetup(xSurface* s)
 {
@@ -278,13 +248,6 @@ void zSurfaceSetup(xSurface* s)
         }
     }
 }
-
-
-
-
-
-
-
 
 void zSurfaceGetName(int32 type, int8* buffer)
 {
@@ -361,7 +324,6 @@ void zSurfaceGetName(int32 type, int8* buffer)
         strcpy(buffer, "NONE");
     }
 }
-
 
 xSurface& zSurfaceGetDefault()
 {

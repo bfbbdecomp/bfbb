@@ -9,9 +9,6 @@ extern tagiRenderInput gRenderBuffer;
 extern float32 lbl_803CF7A4; // 0.0f
 extern float32 lbl_803CF7A8; // 255f
 
-
-
-
 void xLaserBoltEmitter::set_texture(char* name)
 {
     set_texture(xStrHash(name));
@@ -39,9 +36,6 @@ void xLaserBoltEmitter::set_texture(RwRaster* raster)
     this->bolt_raster = raster;
 }
 
-
-
-
 void xLaserBoltEmitter::refresh_config()
 {
     float32 alpha;
@@ -56,15 +50,6 @@ void xLaserBoltEmitter::refresh_config()
     this->ialpha = alpha;
 }
 
-
-
-
-
-
-
-
-
-
 #if 0
 
 // WIP.
@@ -75,23 +60,11 @@ void xLaserBoltEmitter::attach_effects(fx_when_enum when, effect_data* fx, size_
 
 #endif
 
-
-
-
-
-
-
-
-
-
 RxObjSpace3DVertex* xLaserBoltEmitter::get_vert_buffer(int32& dat)
 {
     dat = (uint32)0x1e0;
     return gRenderBuffer.m_vertex;
 }
-
-
-
 
 #if 0
 
@@ -103,129 +76,3 @@ void xLaserBoltEmitter::reset_fx(fx_when_enum when)
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-    
-    
-
-
-
-                   
-
-
-
-    
-    
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-    
-    

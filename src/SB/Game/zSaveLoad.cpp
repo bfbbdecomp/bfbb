@@ -115,7 +115,6 @@ extern float32 _849;
 extern float64 _850;
 extern float64 _852;
 
-
 void zUpdateThumbIcon()
 {
     int32 i;
@@ -247,7 +246,6 @@ int32 zSaveLoad_poll(int32 i)
 }
 #endif
 
-
 void zSendEventToThumbIcon(uint32 toEvent)
 {
     const char* iconString = gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON";
@@ -268,13 +266,11 @@ void zChangeThumbIcon(const int8* icon)
 }
 #endif
 
-
 void zSaveLoadInit()
 {
     zSaveLoadUITableInit(zSaveLoadUITable);
     zSaveLoadGameTableInit(zSaveLoadGameTable);
 }
-
 
 void zSaveLoadGameTableInit(zSaveLoadGame* saveTable)
 {
@@ -288,7 +284,6 @@ void zSaveLoadGameTableInit(zSaveLoadGame* saveTable)
     }
 }
 
-
 void zSaveLoadUITableInit(zSaveLoadUI* saveTable)
 {
     //Doesn't match the zSaveLoadUITable size for some reason
@@ -298,12 +293,10 @@ void zSaveLoadUITableInit(zSaveLoadUI* saveTable)
     }
 }
 
-
 void zSaveLoad_UIEvent(int32 i, uint32 toEvent)
 {
     zEntEvent(zSceneFindObject(zSaveLoadUITable[i].nameID), toEvent);
 }
-
 
 st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
 {
@@ -327,7 +320,6 @@ st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
     return xSGInit(mode);
 }
 
-
 int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
 {
     if (data->mode == XSG_MODE_LOAD)
@@ -341,42 +333,35 @@ int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
     return xSGDone(data);
 }
 
-
 int32 zSaveLoad_getgame()
 {
     return currentGame;
 }
-
 
 int32 zSaveLoad_getcard()
 {
     return currentCard;
 }
 
-
 int32 zSaveLoad_getMCavailable()
 {
     return sAvailable;
 }
-
 
 int32 zSaveLoad_getMCneeded()
 {
     return sNeeded;
 }
 
-
 int32 zSaveLoad_getMCAccessType()
 {
     return sAccessType;
 }
 
-
 int32 zSaveLoadGetAutoSaveCard()
 {
     return autoSaveCard;
 }
-
 
 int32 format(int32 num, int32 mode)
 {
@@ -440,7 +425,6 @@ int32 format(int32 num, int32 mode)
     return rc;
 }
 
-
 int32 CardtoTgt(int32 card)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
@@ -462,12 +446,10 @@ int32 CardtoTgt(int32 card)
     return -1;
 }
 
-
 int32 zSaveLoad_CardCount()
 {
     return 1;
 }
-
 
 int32 zSaveLoad_CardPrompt(int32 cardNumber)
 {
@@ -519,7 +501,6 @@ int32 zSaveLoad_CardPrompt(int32 cardNumber)
     return promptSel;
 }
 
-
 int32 zSaveLoad_CardPromptFormat(int32 mode)
 {
     int32 i = 0x15;
@@ -547,7 +528,6 @@ int32 zSaveLoad_CardPromptFormat(int32 mode)
     return promptSel;
 }
 
-
 int32 zSaveLoad_CardPromptSpace(int32 mode)
 {
     int32 i = 0x15;
@@ -568,7 +548,6 @@ int32 zSaveLoad_CardPromptSpace(int32 mode)
     zSaveLoad_UIEvent(0x25, eEventUIFocusOff_Unselect);
     return promptSel;
 }
-
 
 int32 zSaveLoad_CardPromptGames(int32 mode)
 {
@@ -591,7 +570,6 @@ int32 zSaveLoad_CardPromptGames(int32 mode)
     return promptSel;
 }
 
-
 int32 zSaveLoad_CardPromptGameSlotEmpty()
 {
     zSaveLoad_UIEvent(0, eEventUIFocusOff_Unselect);
@@ -605,7 +583,6 @@ int32 zSaveLoad_CardPromptGameSlotEmpty()
     zSaveLoad_UIEvent(0x13, eEventUIFocusOff_Unselect);
     return promptSel;
 }
-
 
 int32 zSaveLoad_CardPromptOverwrite()
 {
@@ -622,7 +599,6 @@ int32 zSaveLoad_CardPromptOverwrite()
     return promptSel;
 }
 
-
 int32 zSaveLoad_CardPromptOverwriteDamaged()
 {
     zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
@@ -637,7 +613,6 @@ int32 zSaveLoad_CardPromptOverwriteDamaged()
     zSaveLoad_UIEvent(0x23, eEventUIFocusOff_Unselect);
     return promptSel;
 }
-
 
 int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
 {
@@ -663,7 +638,6 @@ int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-
 int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
 {
     zSaveLoad_UIEvent(0x3c, eEventUIFocusOn_Select);
@@ -675,7 +649,6 @@ int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
     zSaveLoad_UIEvent(0x3c, eEventUIFocusOff_Unselect);
     return promptSel;
 }
-
 
 int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
 {
@@ -701,7 +674,6 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
     return promptSel;
 }
 
-
 int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
 {
     int i = 0x38;
@@ -726,7 +698,6 @@ int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
     return promptSel;
 }
 
-
 int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
 {
     zSaveLoad_UIEvent(0x35, eEventUIFocusOn_Select);
@@ -740,7 +711,6 @@ int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-
 int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
 {
     zSaveLoad_UIEvent(0x36, eEventUIFocusOn_Select);
@@ -753,7 +723,6 @@ int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
     zSaveLoad_UIEvent(0x36, eEventUIFocusOff_Unselect);
     return promptSel;
 }
-
 
 int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
 {
@@ -779,7 +748,6 @@ int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
     return 6;
 }
 
-
 int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
 {
     int i = 0x2f;
@@ -803,7 +771,6 @@ int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
     return 6;
 }
-
 
 int32 zSaveLoad_CardCheckSingle(int32 cardNumber)
 {
@@ -847,7 +814,6 @@ int32 zSaveLoad_CardCheckSingle(int32 cardNumber)
     }
     return -1;
 }
-
 
 int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
 {
@@ -905,7 +871,6 @@ int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
     return rc;
 }
 
-
 int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber)
 {
     int rc;
@@ -933,7 +898,6 @@ int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
     }
     return rc;
 }
-
 
 int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
 {
@@ -971,7 +935,6 @@ int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
     return rc;
 }
 
-
 int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber)
 {
     int rc;
@@ -998,7 +961,6 @@ int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
     }
     return rc;
 }
-
 
 int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
 {
@@ -1035,7 +997,6 @@ int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
     return rc;
 }
 
-
 int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber,
                                                    int32 gameNumber)
 {
@@ -1060,7 +1021,6 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, i
     }
     return rc;
 }
-
 
 int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
 {
@@ -1096,7 +1056,6 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
     return rc;
 }
 
-
 int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
 {
     int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
@@ -1116,7 +1075,6 @@ int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
     }
 }
 
-
 int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
 {
     int32 cardResult = zSaveLoad_CardCheckSingle(cardNumber);
@@ -1133,7 +1091,6 @@ int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
     }
     return cardResult == 9 ? 9 : 1;
 }
-
 
 int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
 {
@@ -1167,7 +1124,6 @@ int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
     return 1;
 }
 
-
 int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
 {
     if (mode == 1)
@@ -1179,7 +1135,6 @@ int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
         return zSaveLoad_CardCheckSpace(cardNumber, mode);
     }
 }
-
 
 int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
 {
@@ -1203,7 +1158,6 @@ int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
     return 1;
 }
 
-
 int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
 {
     int32 result = zSaveLoad_CardCheckGamesSingle(cardNumber);
@@ -1226,7 +1180,6 @@ int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
     return 1;
 }
 
-
 int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode)
 {
     if (mode == 1)
@@ -1238,7 +1191,6 @@ int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode
         return zSaveLoad_CardCheckSlotOverwrite(cardNumber, gameNumber);
     }
 }
-
 
 int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
 {
@@ -1259,7 +1211,6 @@ int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
     }
     return 1;
 }
-
 
 #ifdef NON_MATCHING
 // Optimizing zSaveLoadGameTable lookup out of loop
@@ -1293,7 +1244,6 @@ int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
     return 1;
 }
 #endif
-
 
 int32 zSaveLoad_CardPick(int32 mode)
 {
@@ -1429,7 +1379,6 @@ int32 zSaveLoad_CardPick(int32 mode)
     return done;
 }
 
-
 bool IsValidName(int8* name)
 {
     if (strcmp((char*)name, "") == 0)
@@ -1446,7 +1395,6 @@ bool IsValidName(int8* name)
     }
     return 1;
 }
-
 
 void BuildIt(int8* build_txt, int32 i)
 {
@@ -1486,7 +1434,6 @@ void BuildIt(int8* build_txt, int32 i)
     }
 }
 
-
 void zSaveLoad_BuildName(int8* name_txt, int32 idx)
 {
     int8 desired[128];
@@ -1518,7 +1465,6 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
         strcpy(name_txt, desired);
     }
 }
-
 
 #ifdef NON_MATCHING
 int32 zSaveLoad_GameSelect(int32 mode)
@@ -1717,12 +1663,10 @@ int32 zSaveLoad_GameSelect(int32 mode)
 }
 #endif
 
-
 uint8 zSaveLoadGetPreAutoSave()
 {
     return preAutoSaving;
 }
-
 
 void zSaveLoadPreAutoSave(bool onOff)
 {
@@ -1736,7 +1680,6 @@ void zSaveLoadPreAutoSave(bool onOff)
         ResetButton::EnableReset();
     }
 }
-
 
 void zSaveLoadAutoSaveUpdate()
 {
@@ -1796,7 +1739,6 @@ void zSaveLoadAutoSaveUpdate()
         }
     }
 }
-
 
 int32 zSaveLoad_DoAutoSave()
 {
@@ -1911,7 +1853,6 @@ int32 zSaveLoad_DoAutoSave()
         return -1;
     }
 }
-
 
 #ifdef NON_MATCHING
 // Reordering at beginning
@@ -2037,7 +1978,6 @@ int32 zSaveLoad_SaveGame()
 }
 #endif
 
-
 #ifdef NON_MATCHING
 // Reordering, causing different register use at the end
 int32 zSaveLoad_LoadGame()
@@ -2136,7 +2076,6 @@ int32 zSaveLoad_LoadGame()
 }
 #endif
 
-
 uint32 zSaveLoad_LoadLoop()
 {
     zSaveLoadInit();
@@ -2221,7 +2160,6 @@ uint32 zSaveLoad_LoadLoop()
     return (uint32)sceneRead[0] << 0x18 | (uint32)sceneRead[1] << 0x10 |
            (uint32)sceneRead[2] << 0x8 | (uint32)sceneRead[3];
 }
-
 
 #ifdef NON_MATCHING
 // Scheduling meme on the return
@@ -2400,14 +2338,12 @@ void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
 }
 #endif
 
-
 int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most)
 {
     *need = xSGWriteStrLen(currSceneStr);
     *most = *need << 1;
     return 1;
 }
-
 
 int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
@@ -2422,14 +2358,12 @@ int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECO
     return xSGWriteData(xsgdata, wctxt, currSceneStr, 1, strlen(currSceneStr)) + 1;
 }
 
-
 int32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, int32* i, int32* j)
 {
     *i = 16;
     *j = *i * 2;
     return 1;
 }
-
 
 int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
@@ -2440,7 +2374,6 @@ int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WR
     sum += xSGWriteData(xsgdata, wctxt, &globals.option_vibration, 1);
     return sum + 1;
 }
-
 
 int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                       uint32 ui, int32 i)
@@ -2463,7 +2396,6 @@ int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCON
     return compdiff == 0;
 }
 
-
 int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                        uint32 ui, int32 i)
 {
@@ -2484,7 +2416,6 @@ int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCO
     return 1;
 }
 
-
 uint32 zSaveLoad_slotIsEmpty(uint32 slot)
 {
     // TODO: Fix this hardcoded offset once string generation is correct
@@ -2492,18 +2423,15 @@ uint32 zSaveLoad_slotIsEmpty(uint32 slot)
     return strcmp(label, "ld gameslot group" + 0x49c) == 0 ? 1 : 0;
 }
 
-
 int32 XSGAutoData::LastPhysicalSlot()
 {
     return this->lastPhysicalSlot;
 }
 
-
 int32 XSGAutoData::LastGame()
 {
     return this->lastGame;
 }
-
 
 int32 XSGAutoData::LastTarget()
 {

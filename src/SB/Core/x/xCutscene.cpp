@@ -22,7 +22,6 @@ extern float32 _672; // 1.0
 extern float32 lbl_803CCB3C; // 0.0
 extern float32 lbl_803CCB40; // 0.033333335
 
-
 #ifdef NON_MATCHING
 // Non-matching: scheduling
 void xCutscene_Init(void* toc)
@@ -53,7 +52,6 @@ void xCutscene_Init(void* toc)
     }
 }
 #endif
-
 
 #if 0
 // Damn RwEngineInstance ruining this (as well as the members being accessed incorrectly by Ghidra)
@@ -97,7 +95,6 @@ xCutscene* xCutscene_Create(uint32 id)
     return &sActiveCutscene;
 }
 #endif
-
 
 #if 0
 // WIP
@@ -144,7 +141,6 @@ int32 xCutscene_Destroy(xCutscene* csn)
 }
 #endif
 
-
 int32 xCutscene_LoadStart(xCutscene* csn)
 {
     uint32 cnt;
@@ -159,7 +155,6 @@ int32 xCutscene_LoadStart(xCutscene* csn)
     csn->Opened = 1;
     return 1;
 }
-
 
 #if 0
 // WIP
@@ -194,34 +189,6 @@ float32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, uint32 par
     return param_2[i].Time - lbl_803CCB40;
 }
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 xCutscene* xCutscene_CurrentCutscene()
 {

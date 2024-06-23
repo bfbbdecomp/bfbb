@@ -1111,9 +1111,6 @@ void zEntPickup_GiveAllRewardsNow()
     memset(sRewards, 0, sizeof(sRewards));
 }
 
-
-
-
 void zEntPickup_Reset(zEntPickup* ent)
 {
     zEntReset(ent);
@@ -1336,8 +1333,6 @@ zPickupAuraInfo zPickupAuraTable[] =
 static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, float32 dt);
 // Uses int-to-float conversion
 
-
-
 static void set_alpha_blend(xModelInstance* model)
 {
     model->PipeFlags &= ~0xFF0C;
@@ -1428,12 +1423,7 @@ void zEntPickup_RenderOne(xEnt* ent)
 }
 #endif
 
-
-
-
 // Uses int-to-float conversion
-
-
 
 static uint32 rewardRequest(uint32 shinyType, xVec3* ppos, xVec3 pos)
 {

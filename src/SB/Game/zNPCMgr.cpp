@@ -100,9 +100,6 @@ xEnt* zNPCMgr_createNPCInst(int32, xEntAsset* assdat)
     return zNPCMgrSelf()->CreateNPC(assdat);
 }
 
-
-
-
 void zNPCMgr::Shutdown()
 {
     if (this->npcFactory != NULL)
@@ -133,42 +130,6 @@ void zNPCMgr::ScenePrepare(int32 npccnt)
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #if 0
 // Yeah good luck getting it to spit out an li instead of doing a shift.

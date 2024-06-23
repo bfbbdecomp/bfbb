@@ -35,8 +35,10 @@ _tagPartLink* PartitionGetFreeLink();
 void PartitionSpaceReset(_tagPartSpace* space);
 void PartitionSpaceInsert(_tagPartSpace* space, void* data);
 int32 xPartitionGetTrueIdx(_tagPartition* part, int32 x_spaces, int32 y_spaces, int32 z_spaces);
-void xPartitionWorld(_tagPartition* part, xEnv* env, int32 x_spaces, int32 y_spaces, int32 z_spaces);
-void xPartitionVolume(_tagPartition* part, xVolume* volume, int32 x_spaces, int32 y_spaces, int32 z_spaces);
+void xPartitionWorld(_tagPartition* part, xEnv* env, int32 x_spaces, int32 y_spaces,
+                     int32 z_spaces);
+void xPartitionVolume(_tagPartition* part, xVolume* volume, int32 x_spaces, int32 y_spaces,
+                      int32 z_spaces);
 void xPartitionDump(_tagPartition* part, char* string);
 int32 xPartitionUpdate(_tagPartition* part, void* data, int32 old_idx, xVec3* current_pos);
 int32 xPartitionInsert(_tagPartition* part, void* insert_data, xVec3* insert_pos);

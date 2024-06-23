@@ -108,36 +108,10 @@ void zNPCCommon_Timestep(float32 dt)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 void zNPCCommon::Destroy()
 {
     SelfDestroy();
 }
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
 
 void zNPCCommon::Process(xScene* xscn, float32 dt)
 {
@@ -148,44 +122,6 @@ void zNPCCommon::Process(xScene* xscn, float32 dt)
     flags1.flg_upward = flags1.flg_upward & ~0x2;
     xNPCBasic::Process(xscn, dt);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void zNPCCommon::ParseProps()
 {
@@ -201,9 +137,6 @@ void zNPCCommon::ParseProps()
         }
     }
 }
-
-
-
 
 bool zNPCCommon::IsMountableType(en_ZBASETYPE type)
 {
@@ -228,9 +161,6 @@ void zNPCCommon::SelfDestroy()
     psy_instinct = NULL;
 }
 
-
-
-
 int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
 {
     NPCConfig* cfg = cfg_npc;
@@ -242,161 +172,16 @@ int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
     return 1;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void zNPCCommon::ConfigSceneDone()
 {
     g_ncfghead = 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void zNPCCommon_WonderReset()
 {
     g_isConversation = 0;
     g_flg_wonder = 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 uint32 zNPCCommon::LassoInit()
 {
@@ -414,74 +199,26 @@ uint32 zNPCCommon::LassoInit()
     return 0;
 }
 
-
-
-
-
-
-
-
-
-                   
-
-
-
-
 zNPCLassoInfo* zNPCCommon::GimmeLassInfo()
 {
     return flg_vuln & 0x1000000 ? lassdata : NULL;
 }
 
-
-
-
-
-    
-    
-
-
-
-    
-    
-
 void zNPCCommon::AddDEVGoals()
 {
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void zNPCCommon::DBG_AddTweakers()
 {
 }
 
-
 void zNPCCommon::SelfSetup()
 {
 }
 
-
 void zNPCCommon::DBG_RptDataSize()
 {
 }
-
-
-
 
 xEntDrive* zNPCCommon::PRIV_GetDriverData()
 {
@@ -492,18 +229,15 @@ void zNPCCommon::ModelScaleSet(const xVec3* vec)
     ModelScaleSet(vec->x, vec->y, vec->z);
 }
 
-
 xAnimTable* zNPCCommon::AnimGetTable()
 {
     return model->Anim->Table;
 }
 
-
 zNPCLassoInfo* zNPCCommon::PRIV_GetLassoData()
 {
     return NULL;
 }
-
 
 void zNPCCommon::DuploOwner(zNPCCommon* duper)
 {
@@ -530,7 +264,6 @@ float32 zNPCCommon::GenShadCacheRad()
 {
     return lbl_803CE4C0;
 }
-
 
 #if 0
 
@@ -566,16 +299,13 @@ xNPCBasic::xNPCBasic(int32 value)
 }
 #endif
 
-
 void xNPCBasic::Setup()
 {
 }
 
-
 void xNPCBasic::Move(xScene* xscn, float32 dt, xEntFrame* frm)
 {
 }
-
 
 int32 xNPCBasic::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
                           xBase* toParamWidget, int32* handled)
@@ -583,16 +313,13 @@ int32 xNPCBasic::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32*
     return 1;
 }
 
-
 void xNPCBasic::DBG_PStatOn(en_npcperf stat)
 {
 }
 
-
 void xNPCBasic::DBG_PStatCont(en_npcperf stat)
 {
 }
-
 
 void xNPCBasic::PostInit()
 {
@@ -602,15 +329,6 @@ void xNPCBasic::Render()
 {
     xEntRender(this);
 }
-
-
-
-
-
-
-
-
-
 
 void xPsyche::ImmTranOn()
 {
@@ -632,25 +350,7 @@ int32 xPsyche::HasGoal(int32 goal)
     return FindGoal(goal) != NULL;
 }
 
-
-
-
-
-
-
-
-
-
 uint32 xSndIsPlaying(uint32 assetID, uint32 parid)
 {
     return iSndIsPlaying(assetID, parid) & 0xff;
 }
-
-
-
-    
-    
-
-
-
-                   

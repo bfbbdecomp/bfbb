@@ -164,13 +164,7 @@ namespace
 
     uint32 get_tile(const uint8*, ulong32);
 
-
-                   
-
     void set_tile(uint8*, ulong32, uint32);
-
-
-                   
 
     void translate_mask(uint8* r3, const uint8* r4, ulong32 r5)
     {
@@ -407,12 +401,6 @@ namespace
         return surf;
     }
 } // namespace
-
-
-
-
-
-
 
 namespace
 {
@@ -967,9 +955,6 @@ void z_disco_floor::update_pulse(float32 dt)
     pulse_glow[2] += glow_fade;
 }
 #endif
-
-
-
 
 void z_disco_floor::refresh_cull_dist()
 {

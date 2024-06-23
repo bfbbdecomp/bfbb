@@ -42,16 +42,13 @@ extern float64 _1199;
 extern uint8 menu_fmv_played;
 extern int8 zEventLogBuf[256][20];
 
-
 void zDispatcher_Startup()
 {
 }
 
-
 void zDispatcher_Shutdown()
 {
 }
-
 
 void zDispatcher_scenePrepare()
 {
@@ -61,7 +58,6 @@ void zDispatcher_scenePrepare()
         memset(depot, 0, sizeof(st_ZDISPATCH_DEPOT));
     }
 }
-
 
 void zDispatcher_sceneFinish()
 {
@@ -73,7 +69,6 @@ void zDispatcher_sceneFinish()
         memset(depot, 0, sizeof(st_ZDISPATCH_DEPOT));
     }
 }
-
 
 #ifdef NON_MATCHING
 // Compiler is optimizng the size calcuation and moving parameters for memset differently.
@@ -96,36 +91,30 @@ st_ZDISPATCH_DATA* zDispatcher_memPool(int32 cnt)
 }
 #endif
 
-
 st_ZDISPATCH_DATA* zDispatcher_getInst(st_ZDISPATCH_DATA* pool, int32 idx)
 {
     return &pool[idx];
 }
-
 
 void zDispatcher_Init(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
 {
     ZDSP_instInit(dspdata, bass);
 }
 
-
 void zDispatcher_InitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     ZDSP_instInitDep(dspdata, scene);
 }
-
 
 void zDispatcher_Save(st_ZDISPATCH_DATA* dspdata, xSerial* s)
 {
     xBaseSave(dspdata, s);
 }
 
-
 void zDispatcher_Load(st_ZDISPATCH_DATA* dspdata, xSerial* s)
 {
     xBaseLoad(dspdata, s);
 }
-
 
 void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
 {
@@ -144,12 +133,10 @@ void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
     xSceneID2Name(globals.sceneCur, dspdata->id);
 }
 
-
 void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     xSceneID2Name(globals.sceneCur, dspdata->id);
 }
-
 
 void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
@@ -160,17 +147,14 @@ void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
     ZDSP_instInitDep(dspdata, scene);
 }
 
-
 void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata)
 {
 }
-
 
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd)
 {
     ZDSP_injectCmd(dspdata, cmd, NULL, NULL, NULL);
 }
-
 
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, int32 i)
 {
@@ -178,7 +162,6 @@ void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, int32 i
     arr[0] = i;
     ZDSP_injectCmd(dspdata, cmd, (void*)arr, NULL, NULL);
 }
-
 
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* indata, void* inxtra,
                     void* result)
@@ -190,7 +173,6 @@ void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* i
     ctx.result = result;
     ZDSP_doCommand(dspdata, &ctx);
 }
-
 
 int32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
 {
@@ -363,7 +345,6 @@ int32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
     return 1;
 }
 
-
 void zDispatcherStoreOptions()
 {
     oldVibrationOption = globals.option_vibration;
@@ -383,7 +364,6 @@ void zDispatcherRestoreOptions()
     WRAP_xsnd_setSFXVolume(oldSFXVolume);
 }
 #endif
-
 
 #if 0
 // WIP

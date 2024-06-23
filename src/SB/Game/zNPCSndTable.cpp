@@ -2,34 +2,6 @@
 
 #include <types.h>
 
-
-
-
 void NPCS_Shutdown()
 {
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   

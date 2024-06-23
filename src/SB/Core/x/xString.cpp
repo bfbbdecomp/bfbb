@@ -46,15 +46,6 @@ uint32 xStrHashCat(uint32 prefix, const int8* str)
     return hash;
 }
 
-
-
-
-
-
-
-
-
-
 char* xStrupr(char* string)
 {
     char* p = string;
@@ -68,12 +59,6 @@ char* xStrupr(char* string)
 
     return string;
 }
-
-
-
-
-
-
 
 // @unnamed@xString_cpp@::tolower(char)
 extern "C" {

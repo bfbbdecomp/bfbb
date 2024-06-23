@@ -21,7 +21,6 @@ extern float32 zLight_float;
 extern xVec3 sDefaultShadowVec;
 extern void (*sEffectFuncs[18])(_zLight*, float32);
 
-
 #ifdef NON_MATCHING
 
 void zLightResetAll(xEnv* env)
@@ -41,12 +40,10 @@ void zLightResetAll(xEnv* env)
 }
 #endif
 
-
 void zLightInit(void* b, void* tasset)
 {
     zLightInit((xBase*)b, (zLightAsset*)tasset);
 }
-
 
 void zLightInit(xBase* b, zLightAsset* tasset)
 {
@@ -114,7 +111,6 @@ void zLightInit(xBase* b, zLightAsset* tasset)
     }
 }
 
-
 void zLightResolveLinks()
 {
     int32 i;
@@ -134,7 +130,6 @@ void zLightResolveLinks()
     }
 }
 
-
 void zLightDestroyAll()
 {
     int32 total = sLightTotal;
@@ -146,12 +141,10 @@ void zLightDestroyAll()
     sLightTotal = 0;
 }
 
-
 void zLightDestroy(_zLight* param_1)
 {
     iLightDestroy(&param_1->light);
 }
-
 
 void zLightReset(_zLight* param_1)
 {
@@ -164,18 +157,15 @@ void zLightReset(_zLight* param_1)
     zLightEffectSet(param_1, param_1->tasset->lightEffect);
 }
 
-
 void zLightSave(_zLight* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-
 void zLightLoad(_zLight* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
-
 
 int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* param_4, xBase* param_5)
 {
@@ -205,7 +195,6 @@ int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* para
     return 1;
 }
 
-
 #ifdef NON_MATCHING
 // Float issue
 void zLightUpdate(xBase* to, xScene* param_2, float32 dt)
@@ -226,7 +215,6 @@ void zLightUpdate(xBase* to, xScene* param_2, float32 dt)
     }
 }
 #endif
-
 
 #if 0
 // Something is wrong with gNumTemporaryLights
@@ -251,7 +239,6 @@ void zLightAddLocalEnv()
 }
 #endif
 
-
 #ifdef NON_MATCHING
 // Float issue
 void zLightAddLocal(xEnt* ent)
@@ -269,7 +256,6 @@ void zLightAddLocal(xEnt* ent)
 }
 #endif
 
-
 void zLightRemoveLocalEnv()
 {
     int i;
@@ -283,7 +269,6 @@ void zLightRemoveLocalEnv()
     }
     gNumTemporaryLights = 0;
 }
-
 
 void zLightSetVolume(zVolume* vol)
 {

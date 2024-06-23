@@ -227,9 +227,6 @@ bool ztaskbox::exists(state_enum stage)
     return state != STATE_BEGIN && xSTFindAsset(state, NULL);
 }
 
-
-
-
 #if 0
 void ztaskbox::on_talk_start()
 {
@@ -240,15 +237,6 @@ void ztaskbox::on_talk_start()
 }
 
 #endif
-
-
-
-
-
-
-
-
-
 
 #if 0
 // This one just doesn't feel like working.

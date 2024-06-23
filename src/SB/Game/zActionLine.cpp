@@ -13,7 +13,6 @@ extern _tagActionLine* sActionLine[8];
 extern RwRaster* sActionLineRaster;
 extern const int8 zActionLineStrings[];
 
-
 #if 0
 void zActionLineInit()
 {
@@ -52,7 +51,6 @@ void zActionLineUpdate(float32 seconds)
         }
     }
 }
-
 
 #if 0
 void RenderActionLine(_tagActionLine* l)

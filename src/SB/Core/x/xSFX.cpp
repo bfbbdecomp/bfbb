@@ -8,15 +8,10 @@
 
 extern xSFX* s_managedEnvSFX[1];
 
-
 void xSFXEnvironmentalStreamSceneExit(void)
 {
     memset(&s_managedEnvSFX, 0, 4);
 }
-
-
-
-
 
 #ifdef NON_MATCHING
 int32 xSFXWillSendDone(xSFX* param_1)
@@ -36,13 +31,11 @@ int32 xSFXWillSendDone(xSFX* param_1)
 }
 #endif
 
-
 void xSFXInit(void* t, void* asset)
 
 {
     xSFXInit((xSFX*)t, (xSFXAsset*)asset);
 }
-
 
 #ifdef NON_MATCHING
 void xSFXInit(xSFX* t, xSFXAsset* asset)
@@ -71,24 +64,20 @@ void xSFXInit(xSFX* t, xSFXAsset* asset)
 }
 #endif
 
-
 void xSFXSave(xSFX* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
-
 
 void xSFXLoad(xSFX* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
 
-
 void xSFXReset(xSFX* param_1)
 {
     xBaseReset(param_1, param_1->asset);
 }
-
 
 #if 0
 uint32 xSFXConvertFlags(uint32 param_1)
@@ -96,7 +85,6 @@ uint32 xSFXConvertFlags(uint32 param_1)
     return param_1 & 4 ? 0 : 0x800;
 }
 #endif
-
 
 void xSFXUpdate(xSFX* param_1)
 {
@@ -108,13 +96,6 @@ void xSFXUpdate(xSFX* param_1)
         zEntEvent(param_1, param_1, 0xbf);
     }
 }
-
-
-
-
-
-
-
 
 void xSFXStop(xSFX* param_1)
 {

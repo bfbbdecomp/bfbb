@@ -68,12 +68,10 @@ extern int8 menu_fmv_played;
 extern iColor_tag BlackColorInitializer;
 extern iColor_tag ClearColorInitializer;
 
-
 int32 zMenuRunning()
 {
     return sInMenu;
 }
-
 
 void zMenuInit(uint32 theSceneID)
 {
@@ -88,7 +86,6 @@ void zMenuInit(uint32 theSceneID)
     zMusicInit();
 }
 
-
 void zMenuExit()
 {
     zMusicKill();
@@ -97,7 +94,6 @@ void zMenuExit()
     zSceneExit(0);
     sInMenu = 0;
 }
-
 
 void zMenuSetup()
 {
@@ -116,7 +112,6 @@ void zMenuSetup()
     }
     zEntEvent(&globals.player.ent, 8);
 }
-
 
 #ifdef NON_MATCHING
 // Floating point code uses different register allocation / order, but I think
@@ -316,18 +311,15 @@ void zMenuLoop()
 }
 #endif
 
-
 uint32 zMenuIsPaused()
 {
     return 0;
 }
 
-
 uint32 zMenuLoopContinue()
 {
     return gGameMode != eGameMode_Game;
 }
-
 
 uint32 zMenuUpdateMode()
 {
@@ -358,7 +350,6 @@ uint32 zMenuUpdateMode()
     return retVal;
 }
 
-
 uint32 zMenuGetCorruptFiles(int8 name[][64])
 {
     for (int i = 0; i < corruptFileCount; ++i)
@@ -367,7 +358,6 @@ uint32 zMenuGetCorruptFiles(int8 name[][64])
     }
     return corruptFileCount;
 }
-
 
 bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* neededFiles)
 {
@@ -508,12 +498,10 @@ bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* needed
     return !rc;
 }
 
-
 int32 zMenuGetBadCard()
 {
     return card + 1;
 }
-
 
 #ifdef NON_MATCHING
 // Floating point assignments are out of order.
@@ -529,12 +517,10 @@ void zMenuFMVPlay(int8* filename, uint32 buttons, float32 time, bool skippable, 
 }
 #endif
 
-
 int32 zMenuIsFirstBoot()
 {
     return sFirstBoot;
 }
-
 
 void zMenuFirstBootSet(int32 value)
 {

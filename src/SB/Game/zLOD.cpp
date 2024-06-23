@@ -16,7 +16,6 @@ extern float32 lbl_803CDC40; // 1.0
 extern float32 lbl_803CDC48; // 4.0
 extern float32 lbl_803CDC4C; // 10.0
 
-
 #ifdef NON_MATCHING
 // Float memes
 void AddToLODList(xModelInstance* model)
@@ -72,7 +71,6 @@ void AddToLODList(xModelInstance* model)
 }
 #endif
 
-
 xEnt* AddToLODList(xEnt* ent, xScene* scene, void* v)
 {
     if (!ent->model)
@@ -97,13 +95,6 @@ xEnt* AddToLODList(xEnt* ent, xScene* scene, void* v)
 
     return ent;
 }
-
-
-
-
-
-
-
 
 zLODTable* zLOD_Get(xEnt* ent)
 {

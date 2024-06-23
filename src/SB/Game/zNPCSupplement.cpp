@@ -32,7 +32,6 @@ extern float32 _1018_0_375; // 0.375
 extern float32 _909_0_5; // 0.5
 extern float32 _1562_0_625; // 0.625
 
-
 void NPCSupplement_Startup()
 {
     return;
@@ -43,24 +42,20 @@ void NPCSupplement_Shutdown()
     NPCWidget_Shutdown();
 }
 
-
 void NPCSupplement_ScenePrepare()
 {
     NPAR_ScenePrepare();
 }
-
 
 void NPCSupplement_SceneFinish()
 {
     NPAR_SceneFinish();
 }
 
-
 void NPCSupplement_ScenePostInit()
 {
     NPAR_PartySetup(NPAR_TYP_VISSPLASH, 0, 0);
 }
-
 
 void NPCSupplement_SceneReset(void)
 {
@@ -68,19 +63,10 @@ void NPCSupplement_SceneReset(void)
     NPCC_ShadowCacheReset();
 }
 
-
 void NPCSupplement_Timestep(float dt)
 {
     NPAR_Timestep(dt);
 }
-
-
-
-                   
-
-
-
-
 
 #if 0
 uint32 NPCC_StreakCreate(en_npcstreak styp)
@@ -91,25 +77,6 @@ uint32 NPCC_StreakCreate(en_npcstreak styp)
 }
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-    
-    
-
-
 void NPAR_ScenePrepare()
 {
     for (int i = 0; i < 12; i++)
@@ -117,7 +84,6 @@ void NPAR_ScenePrepare()
         g_npar_mgmt[i].Clear();
     }
 }
-
 
 void NPAR_SceneFinish()
 {
@@ -130,7 +96,6 @@ void NPAR_SceneFinish()
     g_day = 0;
 }
 
-
 void NPAR_SceneReset()
 {
     for (int i = 0; i < 12; i++)
@@ -139,14 +104,12 @@ void NPAR_SceneReset()
     }
 }
 
-
 void NPAR_CheckSpecials()
 {
     g_gameExtrasFlags = zGameExtras_ExtrasFlags();
     zGameExtras_MoDay(&g_mon, &g_day);
     g_isSpecialDay = g_gameExtrasFlags & 0b111110111;
 }
-
 
 #if 0
 // WIP
@@ -169,7 +132,6 @@ void NPAR_Timestep(float32 dt)
 }
 #endif
 
-
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
 {
     NPARMgmt* mgmt = &g_npar_mgmt[parType];
@@ -181,7 +143,6 @@ NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xt
     mgmt->Init(parType, userData, xtraData);
     return mgmt;
 }
-
 
 NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 {
@@ -195,10 +156,6 @@ NPARMgmt* NPAR_FindParty(en_nparptyp parType)
     return mgmt;
 }
 
-
-
-
-
 void NPARMgmt::Clear()
 {
     typ_npar = NPAR_TYP_UNKNOWN;
@@ -211,19 +168,10 @@ void NPARMgmt::Clear()
     user_data = 0;
 }
 
-
 void NPARMgmt::UpdateAndRender(float32 param_1)
 {
     g_npar_info[typ_npar].fun_update(this, param_1);
 }
-
-
-
-                   
-
-
-
-
 
 void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* param_2)
 {
@@ -239,14 +187,6 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
     param_2->uv[1].x = param_1->uv_br[0];
     param_2->uv[1].y = param_1->uv_br[1];
 }
-
-
-
-                   
-
-
-
-
 
 #ifdef NON_MATCHING
 // Matches, it just defines new data that won't match until that stuff can be redefined.
@@ -424,223 +364,45 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
 }
 #endif
 
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 float32 ARCH3(float32 param_1)
 {
     return _907_1_0 - BOWL3(param_1);
 }
-
 
 float32 BOWL3(float32 param_1)
 {
     return QUB((float32)_1022_2_0 * (float32)iabs(param_1 - _909_0_5));
 }
 
-
 float32 QUB(float32 param_1)
 {
     return param_1 * param_1 * param_1;
 }
-
 
 float32 ARCH(float32 param_1)
 {
     return _907_1_0 - BOWL(param_1);
 }
 
-
-
-
-
 void NPARMgmt::Done()
 {
     Clear();
 }
-
 
 void NPARMgmt::Reset()
 {
     cnt_active = 0;
 }
 
-
 int32 NPARMgmt::IsReady()
 {
     return num_max != 0 && par_buf != 0;
 }
 
-
 void NPARMgmt::XtraDataSet(NPARXtraData* param_1)
 {
     xtra_data = param_1;
 }
-
 
 void NPARMgmt::UserDataSet(void** param_1)
 {

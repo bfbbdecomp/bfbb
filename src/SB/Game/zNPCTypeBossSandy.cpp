@@ -129,9 +129,6 @@ void on_change_shockwave(const tweak_info& tweak)
     sSandyPtr->shockRadius = __831;
 }
 
-
-
-
 uint32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*)
 {
     return globals.player.carry.grabbed == sSandyPtr->headBoulder;
@@ -151,7 +148,6 @@ uint32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*)
 {
     return !(sSandyPtr->bossFlags & 0x100);
 }
-
 
 #if 0
 #define str_SandyBossHead (bossSandyStrings + 0xff)
@@ -185,21 +181,6 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
 }
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void zNPCBSandy::ParseINI()
 {
     zNPCCommon::ParseINI();
@@ -210,13 +191,6 @@ void zNPCBSandy::ParseINI()
     NPCS_SndTablePrepare(g_sndTrax_BossSandy);
 }
 
-
-
-                   
-
-
-
-
 void zNPCBSandy_BossDamageEffect_Init()
 {
     for (int32 i = 0; i < 4; i++)
@@ -224,40 +198,6 @@ void zNPCBSandy_BossDamageEffect_Init()
         BDErecord[i].BDEminst = NULL;
     }
 }
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void zNPCBSandy::hiddenByCutscene()
 {
@@ -328,9 +268,6 @@ void zNPCBSandy::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
     }
 }
 
-
-
-
 void zNPCBSandy_GameIsPaused(zScene*)
 {
     if (sSandyPtr)
@@ -342,9 +279,6 @@ void zNPCBSandy_GameIsPaused(zScene*)
         }
     }
 }
-
-
-
 
 int32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, float32, void*)
 {
@@ -436,12 +370,6 @@ int32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 
     return nextgoal;
 }
-
-
-
-
-
-
 
 int32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 {
@@ -537,116 +465,6 @@ int32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, float32 dt, void*)
 
     return nextgoal;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
 
 void xBinaryCamera::add_tweaks(char const*)
 {

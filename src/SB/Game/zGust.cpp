@@ -2,48 +2,6 @@
 
 #include <types.h>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if 0
 // WIP.
 void zGustUpdateFX(float32 seconds)

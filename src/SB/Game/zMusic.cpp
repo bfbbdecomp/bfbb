@@ -26,7 +26,6 @@ extern zGlobals globals;
 
 extern const char zMusic_strings[];
 
-
 #ifdef NON_MATCHING
 void volume_reset()
 {
@@ -50,7 +49,6 @@ void zMusicRefreshVolume()
         }
     }
 }
-
 
 void zMusicInit()
 {
@@ -187,10 +185,6 @@ int32 getCurrLevelMusicEnum()
 }
 #endif
 
-
-
-
-
 #if 0
 // Probably floating point memes idk
 void zMusicNotify(int32 situation)
@@ -222,15 +216,6 @@ void zMusicNotify(int32 situation)
     sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
 }
 #endif
-
-
-
-
-
-
-
-
-
 
 // Stop all tracks and set them to null.
 void zMusicKill()

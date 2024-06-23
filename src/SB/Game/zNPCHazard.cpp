@@ -58,9 +58,6 @@ void zNPCHazard_ScenePrepare()
 
 #endif
 
-
-
-
 void zNPCHazard_SceneReset()
 {
     for (int32 i = 0; i < 64; i++)
@@ -77,9 +74,6 @@ void zNPCHazard_ScenePostInit()
 {
     zNPCHazard_InitEffects();
 }
-
-
-
 
 void zNPCHazard_KillEffects()
 {
@@ -107,12 +101,6 @@ int32 HAZ_ord_sorttest(void* vkey, void* vitem)
     }
 }
 
-
-
-
-
-
-
 #if 0
 // Close, kind of.
 NPCHazard* HAZ_Acquire()
@@ -138,9 +126,6 @@ int32 HAZ_AvailablePool()
 {
     return 64 - g_cnt_activehaz;
 }
-
-
-
 
 void NPCHazard::WipeIt()
 {
@@ -201,24 +186,6 @@ void NPCHazard::Reconfigure(en_npchaz haztype)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void NPCHazard::PosSet(const xVec3* pos)
 {
     if (pos != NULL)
@@ -231,15 +198,6 @@ void NPCHazard::PosSet(const xVec3* pos)
     }
 }
 
-
-
-
-
-
-
-
-
-
 void NPCHazard::SetAlpha(float32 alpha)
 {
     if (this->mdl_hazard == NULL)
@@ -249,12 +207,6 @@ void NPCHazard::SetAlpha(float32 alpha)
     this->mdl_hazard->Flags |= 0x4000;
     this->mdl_hazard->Alpha = alpha;
 }
-
-
-
-
-
-
 
 int32 NPCHazard::ColPlyrSphere(float32 rad)
 {
@@ -278,9 +230,6 @@ void NPCHazard::HurtThePlayer()
     }
 }
 
-
-
-
 void NPCHazard::TypData_RotMatSet(xMat3x3* mat)
 {
     xMat3x3* frame = (xMat3x3*)xModelGetFrame(this->mdl_hazard);
@@ -294,21 +243,6 @@ void NPCHazard::TypData_RotMatApply(xMat3x3* mat)
     xMat3x3Mul(frame, mat, frame);
     xModelSetFrame(this->mdl_hazard, (xMat4x3*)frame);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void NPCHazard::StagColStat()
 {
@@ -330,164 +264,11 @@ void NPCHazard::CollideResponse(xSweptSphere* swdata, float32 tym_inFuture)
     this->ColResp_Default(swdata, tym_inFuture);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void UVAModelInfo::Hemorrage()
 {
     model = 0;
     uv = 0;
 }
-
-
-
-
-
-
-
-
-
 
 #if 0
 // Need to figure out what is wrong with the final return statement, and the b and blr swaps.
@@ -510,12 +291,6 @@ int32 UVAModelInfo::GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* mo
 }
 
 #endif
-
-
-
-
-
-
 
 RwV3d* NPCHazard::At()
 {
@@ -540,18 +315,6 @@ NPCHazard::NPCHazard(en_npchaz haztype)
 {
     this->typ_hazard = haztype;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 float32 xVec2Length2(const xVec2* v)
 {

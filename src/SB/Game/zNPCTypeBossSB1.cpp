@@ -6,10 +6,6 @@
 
 extern zEnt* sSB1_armTgtHit;
 
-
-
-
-
 void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, float32 param_3)
 {
     if (ent->frame != NULL)
@@ -22,19 +18,16 @@ void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, float32 param_3)
     }
 }
 
-
 void SB1Dummy_BoundFunc(xEnt* ent, xVec3* param_2)
 {
     xBoundUpdate(&ent->bound);
     zGridUpdateEnt(ent);
 }
 
-
 void SB1Dummy_RenderFunc(xEnt* ent)
 {
     xDrawSphere(&(ent->bound).sph, 0xc0006);
 }
-
 
 int32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, uint32 toEvent, const float32* param_f,
                             xBase* param_x)
@@ -45,98 +38,3 @@ int32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, uint32 toEvent, const float3
     }
     return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   

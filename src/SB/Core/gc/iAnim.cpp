@@ -204,7 +204,6 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
 
                 Quat1++;
 
-
                 if (Quat2)
                 {
                     q2++;

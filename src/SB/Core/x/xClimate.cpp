@@ -16,9 +16,6 @@ extern float32 xClimate_f_0;
 extern float32 xClimate_f_10_0;
 extern _tagClimate* sClimate;
 
-
-
-
 void xClimateInit(_tagClimate* climate)
 {
     climate->rain.strength = xClimate_f_0;
@@ -29,9 +26,6 @@ void xClimateInit(_tagClimate* climate)
     climate->rain.snow_emitter = zParEmitterFind(xStrHash("PAREMIT_SNOW"));
     climate->rain.snow_emitter->emit_flags &= 0xfe;
 }
-
-
-
 
 void xClimateSetSnow(float32 stre)
 {
@@ -45,7 +39,6 @@ void xClimateSetRain(float32 stre)
     sClimate->rain.strength = stre;
 }
 
-
 #if 0
 void GetPosBigDogWhattupFool(xVec3* vec)
 {
@@ -54,9 +47,6 @@ void GetPosBigDogWhattupFool(xVec3* vec)
     vec->z = xClimate_f_10_0 * xglobals.camera.mat.at.z + xglobals.camera.mat.pos.z;
 }
 #endif
-
-
-
 
 void UpdateWind(_tagClimate* climate, float32 seconds)
 {

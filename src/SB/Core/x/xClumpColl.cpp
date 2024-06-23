@@ -2,7 +2,6 @@
 
 #include <types.h>
 
-
 xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2)
 {
     uint32* header; // unused
@@ -25,7 +24,6 @@ xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2)
     tree->numTriangles = numTriangles;
     return tree;
 }
-
 
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
 {

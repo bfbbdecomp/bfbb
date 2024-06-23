@@ -16,7 +16,6 @@ extern xParEmitterCustomSettings g_parf_overheat;
 
 extern char* zNPCTypeDuplotron_strings[];
 
-
 void ZNPC_Duplotron_Startup()
 {
     for (int i = 0; i < 5; i++)
@@ -25,22 +24,18 @@ void ZNPC_Duplotron_Startup()
     }
 }
 
-
 void ZNPC_Duplotron_Shutdown()
 {
 }
-
 
 void ZNPC_Duplotron_ScenePrepare()
 {
 }
 
-
 void zNPCDuplotron_SceneFinish()
 {
     DUPO_KillEffects();
 }
-
 
 void zNPCDuplotron_ScenePostInit()
 {
@@ -73,34 +68,6 @@ void ZNPC_Destroy_Duplotron(xFactoryInst* inst)
     delete inst;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if 0
 // 100% match that needs the full vtable to be filled out
 // because it induces vtable generation
@@ -116,23 +83,6 @@ void zNPCDuplotron::SelfSetup()
     psy->SetSafety(0x4E474430);
 }
 #endif
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #if 0
 // non-matching: scheduling?
@@ -155,55 +105,37 @@ void DUPO_InitEffects()
 }
 #endif
 
-
 void DUPO_KillEffects()
 {
 }
 
-
-
-
-
-
-
-
-
-
-
-zNPCDuplotron::zNPCDuplotron(int32 myType) 
-    : zNPCCommon(myType)
+zNPCDuplotron::zNPCDuplotron(int32 myType) : zNPCCommon(myType)
 {
 }
-
 
 void zNPCDuplotron::Move(xScene*, float32, xEntFrame*)
 {
 }
-
 
 uint8 zNPCDuplotron::ColChkFlags() const
 {
     return 0;
 }
 
-
 uint8 zNPCDuplotron::ColPenFlags() const
 {
     return 0;
 }
-
 
 uint8 zNPCDuplotron::ColChkByFlags() const
 {
     return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
 }
 
-
 uint8 zNPCDuplotron::ColPenByFlags() const
 {
     return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
 }
-
 
 uint8 zNPCDuplotron::PhysicsFlags() const
 {

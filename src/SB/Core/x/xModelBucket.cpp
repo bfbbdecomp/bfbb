@@ -57,9 +57,6 @@ void xModelBucket_PreCountReset()
     sAlphaList = NULL;
 }
 
-
-
-
 #if 0
 // Idk.
 void xModelBucket_PreCountAlloc(int32 maxAlphaModels)
@@ -83,12 +80,6 @@ void xModelBucket_PreCountAlloc(int32 maxAlphaModels)
 
 #endif
 
-
-
-
-
-
-
 void xModelBucket_Init()
 {
     if (sBucketDummyCamera != NULL)
@@ -101,9 +92,6 @@ void xModelBucket_Init()
     }
 }
 
-
-
-
 void xModelBucket_Begin()
 {
     for (int32 i = 0; i < sBucketCount; i++)
@@ -112,12 +100,6 @@ void xModelBucket_Begin()
     }
     xModelBucketEnabled = 1;
 }
-
-
-
-
-
-
 
 #if 0
 // Scheduling!

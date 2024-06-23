@@ -63,7 +63,6 @@ static bool _xCharIn(char ch, const char* str)
 
 // _xCheckAnimNameInner(const char*,const char*,int,char*,int*,int*)
 
-
 bool _xCheckAnimNameInner(const char* name, const char* pattern, int32 patternSize, int8* extra,
                           int32* nameOut, int32* extraOut);
 
@@ -104,9 +103,6 @@ float std::atan2f(float y, float x)
     return (float)atan2((double)y, (double)x);
 }
 #endif
-
-
-
 
 float CalcRecipBlendMax(uint16*);
 
@@ -186,9 +182,6 @@ static void TransitionTimeInit(xAnimSingle* single, xAnimTransition* tran)
 }
 #endif
 
-
-
-
 xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, uint32 flags,
                                 xAnimFile** linkedList, uint32 numX, uint32 numY);
 
@@ -196,12 +189,6 @@ xAnimFile* xAnimFileNew(void* rawData, const char* name, uint32 flags, xAnimFile
 {
     return xAnimFileNewBilinear(&rawData, name, flags, linkedList, 1, 1);
 }
-
-
-
-
-
-
 
 void xAnimFileEval(xAnimFile* data, float32 time, float32* bilinear, uint32 flags, xVec3* tran,
                    xQuat* quat, float32*);
@@ -607,18 +594,13 @@ static void EffectSingleRun(xAnimSingle* single)
     single->Effect = effect;
 }
 
-
-
-
 void EffectSingleLoop(xAnimSingle* single);
 
 // EffectSingleStop(xAnimSingle*)
 
-
 void EffectSingleStop(xAnimSingle* single);
 
 // StopUpdate(xAnimSingle*)
-
 
 static void LoopUpdate(xAnimSingle* single)
 {
@@ -634,12 +616,6 @@ static void LoopUpdate(xAnimSingle* single)
         single->Time = time - duration;
     }
 }
-
-
-
-
-
-
 
 void SingleUpdate(xAnimSingle* single, float32 timeDelta);
 
@@ -713,9 +689,6 @@ void xAnimPlayChooseTransition(xAnimPlay* play)
     }
 }
 
-
-
-
 void xAnimPlayUpdate(xAnimPlay* play, float32 timeDelta)
 {
     uint32 i;
@@ -733,9 +706,6 @@ void xAnimPlayUpdate(xAnimPlay* play, float32 timeDelta)
         }
     }
 }
-
-
-
 
 void xAnimPoolCB(xMemPool* pool, void* data)
 {
@@ -799,9 +769,6 @@ void xAnimPoolCB(xMemPool* pool, void* data)
 
     clone->Pool = pool;
 }
-
-
-
 
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
                           xModelInstance* modelInst)

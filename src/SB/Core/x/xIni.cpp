@@ -3,21 +3,6 @@
 #include <types.h>
 #include <stdlib.h>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def)
 {
     int32 index = xIniGetIndex(ini, tok);

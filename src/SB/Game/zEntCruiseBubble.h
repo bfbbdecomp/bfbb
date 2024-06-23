@@ -1,4 +1,5 @@
 #ifndef ZENTCRUISEBUBBLE_H
+
 #define ZENTCRUISEBUBBLE_H
 
 #include "zNPCHazard.h"
@@ -13,8 +14,10 @@
 // probably working on one of the bosses which also seem to use this.
 // As of now I'm not sure if you should include this declaration,
 // define your own or find a good place for shared use.
-namespace auto_tweak {
-    template <class T1, class T2> void load_param(T1&, T2, T2, T2, xModelAssetParam*, uint32, const char*);
+namespace auto_tweak
+{
+    template <class T1, class T2>
+    void load_param(T1&, T2, T2, T2, xModelAssetParam*, uint32, const char*);
 };
 
 namespace cruise_bubble
@@ -184,7 +187,8 @@ namespace cruise_bubble
         uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
         void update_move(float32 dt);
         void update_turn(float32 dt);
-        void calculate_rotation(xVec2& d1, xVec2& v1, float32 dt, const xVec2& d0, const xVec2& v0, const xVec2& a0, const xVec2& a1) const;
+        void calculate_rotation(xVec2& d1, xVec2& v1, float32 dt, const xVec2& d0, const xVec2& v0,
+                                const xVec2& a0, const xVec2& a1) const;
     };
 
     struct state_missle_appear : state_type
@@ -259,7 +263,7 @@ namespace cruise_bubble
         void start();
         void stop();
         state_enum update(float32 dt);
-        
+
         void move();
         void eval_missle_path(float32 dist, xVec3& loc, float32& roll) const;
         void lerp(float32& x, float32 t, float32 a, float32 b) const;
@@ -351,7 +355,7 @@ namespace cruise_bubble
                 float32 delay_wand;
             } fire;
         } player;
-        
+
         // Size: 0x5c, Offset: 0x14
         struct _class_22
         {
@@ -463,7 +467,7 @@ namespace cruise_bubble
             float32 bubble_emit_radius;
             float32 wake_emit_radius;
         } trail;
-        
+
         // Size: 0x10, Offset: 0x108
         struct _class_29
         {
@@ -486,7 +490,7 @@ namespace cruise_bubble
             float32 vel_angle;
             float32 rot_vel_max;
         } droplet;
-        
+
         // Size: 0x44, Offset: 0x13c
         struct _class_43
         {
@@ -526,7 +530,7 @@ namespace cruise_bubble
                 float32 glow_size;
             } timer;
         } hud;
-        
+
         // Size: 0xc, Offset: 0x180
         struct _class_34
         {
@@ -546,10 +550,9 @@ namespace cruise_bubble
     {
         xVec3 loc;
         float32 roll;
-        
+
         missle_record_data(const xVec3& loc, float32 roll);
     };
-
 
     void init_sound();
     void stop_sound(int32 which, uint32 handle);
@@ -593,7 +596,8 @@ namespace cruise_bubble
     void reset_explode_decal();
     void init_explode_decal();
     void init_shrapnel();
-    void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1, const xVec3& dir1, float32 dt);
+    void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1,
+                          const xVec3& dir1, float32 dt);
     void update_trail(float32 dt);
     void refresh_missle_model();
     void update_missle(xScene& s, float32 dt);

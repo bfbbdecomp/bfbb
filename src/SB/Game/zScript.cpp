@@ -15,7 +15,6 @@ void zScriptInit(void* data, void* asset)
     zScriptInit((xBase*)data, (xScriptAsset*)asset);
 }
 
-
 void zScriptInit(xBase* b, xScriptAsset* tasset)
 {
     _zScript* script = (_zScript*)b;
@@ -53,7 +52,6 @@ void zScriptLoad(_zScript* script, xSerial* s)
     xBaseLoad((xBase*)script, s);
 }
 
-
 int32 zScriptEventCB(xBase* to, xBase* from, uint32 event, const float32*, xBase*)
 {
     _zScript* fromScript = (_zScript*)from;
@@ -89,7 +87,6 @@ int32 zScriptEventCB(xBase* to, xBase* from, uint32 event, const float32*, xBase
     return eEventEnable;
 }
 
-
 void zScriptExecuteEvents(_zScript* script, float32 start, float32 end)
 {
     script->more = 0;
@@ -115,7 +112,6 @@ void zScriptExecuteEvents(_zScript* script, float32 start, float32 end)
         }
     }
 }
-
 
 void zScriptUpdate(xBase* obj, xScene* scene, float32 dt)
 {
