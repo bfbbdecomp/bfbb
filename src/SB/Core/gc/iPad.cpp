@@ -10,7 +10,6 @@ int32 iPadInit()
     return 1;
 }
 
-
 #if 0
 _tagxPad* iPadEnable(_tagxPad* pad, int16 port)
 {

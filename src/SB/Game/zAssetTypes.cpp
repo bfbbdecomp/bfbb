@@ -10,23 +10,10 @@
 extern xJSPHeader* sTempJSP;
 extern xJSPHeader sDummyEmptyJSP;
 
-
-
-
 void zAssetShutdown()
 {
     xSTShutdown();
 }
-
-
-
-
-
-
-
-
-
-
 
 #if 0
 // Ghidra's output here is not helpful
@@ -62,19 +49,6 @@ void* BSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint3
 }
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 void* JSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint32* outsize)
 {
     xJSPHeader* retjsp = &sDummyEmptyJSP;
@@ -89,29 +63,3 @@ void* JSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint3
     jsp_shadow_hack(retjsp);
     return retjsp;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   

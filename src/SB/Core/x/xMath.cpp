@@ -109,9 +109,6 @@ uint32 xMathSolveQuadratic(float32 a, float32 b, float32 c, float32* x1, float32
 }
 #endif
 
-
-
-
 float32 xAngleClamp(float32 a)
 {
     float32 b;
@@ -159,9 +156,6 @@ float32 xDangleClamp(float32 a)
 
     return b;
 }
-
-
-
 
 #ifdef NON_MATCHING
 float32 xAccelMoveTime(float32 dx, float32 a, float32, float32 maxv)

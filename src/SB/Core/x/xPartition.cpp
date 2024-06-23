@@ -39,19 +39,3 @@ int32 xPartitionGetTrueIdx(_tagPartition* part, int32 x_spaces, int32 y_spaces, 
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   

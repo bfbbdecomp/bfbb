@@ -36,7 +36,6 @@ extern float32 _1268_zEnt;
 extern float32 _1269_zEnt;
 extern float32 _1270_zEnt;
 
-
 void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type)
 {
     xEntInit(ent, asset);
@@ -217,13 +216,11 @@ void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type)
     xEntInitForType(ent);
 }
 
-
 void zEntSetup(zEnt* ent)
 {
     xEntSetup(ent);
     checkpoint_collision_hack(ent);
 }
-
 
 #ifdef NON_MATCHING
 // This can't OK right now because it has static locals that are in zDispatcher.s
@@ -266,18 +263,15 @@ void checkpoint_collision_hack(zEnt* ent)
 }
 #endif
 
-
 void zEntSave(zEnt* ent, xSerial* s)
 {
     xEntSave(ent, s);
 }
 
-
 void zEntLoad(zEnt* ent, xSerial* s)
 {
     xEntLoad(ent, s);
 }
-
 
 void zEntReset(zEnt* ent)
 {
@@ -307,12 +301,10 @@ void zEntReset(zEnt* ent)
     checkpoint_collision_hack(ent);
 }
 
-
 void zEntUpdate(zEnt* ent, zScene* scene, float32 elapsedSec)
 {
     xEntUpdate(ent, scene, elapsedSec);
 }
-
 
 void zEntEventAll(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam)
 {
@@ -322,7 +314,6 @@ void zEntEventAll(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toPara
         zEntEvent(from, fromEvent, s->base[i], toEvent, toParam, NULL, 0);
     }
 }
-
 
 void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam,
                         uint32 type)
@@ -342,7 +333,6 @@ void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* 
         }
     }
 }
-
 
 void zEntEventAllOfType(uint32 toEvent, uint32 type)
 {
@@ -405,7 +395,6 @@ xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
     return tempInst[0];
 }
 #endif
-
 
 void zEntParseModelInfo(xEnt* ent, uint32 assetID)
 {
@@ -765,7 +754,6 @@ void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animPara
 }
 #endif
 
-
 xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
 {
     uint32 bufsize;
@@ -788,7 +776,6 @@ xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
     return NULL;
 }
 
-
 int8* zParamGetString(xModelAssetParam* param, uint32 size, int8* tok, int8* def)
 {
     uint32 hash = xStrHash(tok);
@@ -807,12 +794,10 @@ int8* zParamGetString(xModelAssetParam* param, uint32 size, int8* tok, int8* def
     return def;
 }
 
-
 int32 zParamGetInt(xModelAssetParam* param, uint32 size, const int8* tok, int32 def)
 {
     return zParamGetInt(param, size, (int8*)tok, def);
 }
-
 
 int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def)
 {
@@ -824,12 +809,10 @@ int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def)
     return def;
 }
 
-
 float32 zParamGetFloat(xModelAssetParam* param, uint32 size, const int8* tok, float32 def)
 {
     return zParamGetFloat(param, size, (int8*)tok, def);
 }
-
 
 float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 def)
 {
@@ -841,13 +824,11 @@ float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 
     return def;
 }
 
-
 int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, const int8* tok, int32 count,
                          float32* def, float32* result)
 {
     return zParamGetFloatList(param, size, (int8*)tok, count, def, result);
 }
-
 
 int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 count, float32* def,
                          float32* result)
@@ -870,13 +851,11 @@ int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 
     return act;
 }
 
-
 int32 zParamGetVector(xModelAssetParam* param, uint32 size, const int8* tok, xVec3 vec1,
                       xVec3* vec2)
 {
     return zParamGetVector(param, size, (int8*)tok, vec1, vec2);
 }
-
 
 int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 vec1, xVec3* vec2)
 {
@@ -909,7 +888,6 @@ int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 vec
     }
     return list;
 }
-
 
 void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::radius_enum rtype)
 {
@@ -960,25 +938,21 @@ void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::
     }
 }
 
-
 void xModelAnimCollStop(xModelInstance& m)
 {
     m.Flags = m.Flags & 0xe7ff;
 }
-
 
 xMat4x3* xEntGetFrame(const xEnt* ent)
 {
     return xModelGetFrame(ent->model);
 }
 
-
 void xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
                 const xVec3* pos, float32 radius, sound_category category, float32 delay)
 {
     xSndPlay3D(id, vol, pitch, priority, flags, pos, radius * _1039_zEnt, radius, category, delay);
 }
-
 
 int32 xNPCBasic::SelfType() const
 {

@@ -16,9 +16,6 @@ extern uint32 sThrowButtonMask;
 extern float32 _842; // 0.5f
 extern float32 _844; // 0.0f
 
-
-
-
 void zThrown_AddTempFrame(zThrownStruct* thrown)
 {
     xEnt* ent = thrown->ent;
@@ -29,12 +26,6 @@ void zThrown_AddTempFrame(zThrownStruct* thrown)
         ent->frame->mat = *(xMat4x3*)ent->model->Mat;
     }
 }
-
-
-
-
-
-
 
 void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
 {
@@ -52,27 +43,6 @@ void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
     sDebugDepth--;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if 0
 // WIP.
 void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
@@ -87,23 +57,6 @@ void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   
 
 void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, float* bounce,
                                 float* friction)
@@ -142,10 +95,6 @@ void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, float32* bou
     zEntEvent(thrown->ent, eEventDestroy);
 }
 
-
-
-                   
-
 #if 0
 // WIP.
 int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
@@ -169,9 +118,6 @@ int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
 
 #endif
 
-
-
-
 #if 0
 // Random OR added in.
 void checkAgainstButtons(xEnt* ent)
@@ -189,18 +135,9 @@ void checkAgainstButtons(xEnt* ent)
 
 #endif
 
-
-
-
 void xDrawSphere(xSphere* s, uint32 unk)
 {
 }
-
-
-
-
-
-
 
 #if 0
 // Idk what is wrong with this one.

@@ -21,7 +21,6 @@ RpAtomic* CountAtomicCB(RpAtomic* atomic, uint32* param_2)
     return atomic;
 }
 
-
 #if 0
 RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3)
 {
@@ -43,7 +42,6 @@ RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3)
 }
 #endif
 
-
 #if 0
 // ¯\_(ツ)_/¯
 RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
@@ -57,7 +55,6 @@ RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
     return atomic;
 }
 #endif
-
 
 #if 0
 // not in dwarf data

@@ -14,7 +14,6 @@ int32 g_straninit;
 st_PACKER_READ_FUNCS* g_pkrf;
 st_PACKER_ASSETTYPE* g_typeHandlers;
 
-
 int32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
 {
     if (g_straninit++ == 0)
@@ -27,7 +26,6 @@ int32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
     return g_straninit;
 }
 
-
 int32 xSTShutdown()
 {
     g_straninit--;
@@ -39,7 +37,6 @@ int32 xSTShutdown()
     }
     return g_straninit;
 }
-
 
 // This doesn't seem exactly how HI would have written this, but it OKs
 // TODO: Try to clean this up?
@@ -122,7 +119,6 @@ int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop)
     return result;
 }
 
-
 int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop)
 {
     int32 result = 1;
@@ -140,7 +136,6 @@ int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop)
     }
     return result;
 }
-
 
 void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
 {
@@ -175,7 +170,6 @@ void xSTUnLoadScene(uint32 sid, int32 flg_hiphop)
     }
 }
 
-
 float32 xSTLoadStep(uint32)
 {
     float32 pct = PKRLoadStep(0) != 0 ? 0.0f : 1.00001f;
@@ -185,7 +179,6 @@ float32 xSTLoadStep(uint32)
     return pct;
 }
 
-
 void xSTDisconnect(uint32 sid, int32 flg_hiphop)
 {
     st_STRAN_SCENE* sdata = XST_find_bySID(sid, (flg_hiphop & 3) == 2 ? 1 : 0);
@@ -194,7 +187,6 @@ void xSTDisconnect(uint32 sid, int32 flg_hiphop)
         g_pkrf->PkgDisconnect(sdata->spkg);
     }
 }
-
 
 int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32))
 {
@@ -221,7 +213,6 @@ int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32
     return rc;
 }
 
-
 int8* xSTAssetName(uint32 aid)
 {
     int8* aname = NULL;
@@ -243,7 +234,6 @@ int8* xSTAssetName(uint32 aid)
     return aname;
 }
 
-
 int8* xSTAssetName(void* raw_HIP_asset)
 {
     int8* aname = NULL;
@@ -261,7 +251,6 @@ int8* xSTAssetName(void* raw_HIP_asset)
 
     return aname;
 }
-
 
 void* xSTFindAsset(uint32 aid, uint32* size)
 {
@@ -300,7 +289,6 @@ void* xSTFindAsset(uint32 aid, uint32* size)
     return memloc;
 }
 
-
 int32 xSTAssetCountByType(uint32 type)
 {
     int32 sum = 0;
@@ -312,7 +300,6 @@ int32 xSTAssetCountByType(uint32 type)
     }
     return sum;
 }
-
 
 void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size)
 {
@@ -335,7 +322,6 @@ void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size)
     return memptr;
 }
 
-
 int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 {
     int32 rc = 0;
@@ -355,7 +341,6 @@ int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
     }
     return rc;
 }
-
 
 #if 0
 // WIP
@@ -391,7 +376,6 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 }
 #endif
 
-
 int32 xSTGetAssetInfoInHxP(uint32 aid, st_PKR_ASSET_TOCINFO* ainfo, uint32 j)
 {
     int32 rc = 0;
@@ -412,12 +396,10 @@ int32 xSTGetAssetInfoInHxP(uint32 aid, st_PKR_ASSET_TOCINFO* ainfo, uint32 j)
     return rc;
 }
 
-
 int8* xST_xAssetID_HIPFullPath(uint32 aid)
 {
     return xST_xAssetID_HIPFullPath(aid, 0);
 }
-
 
 int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID)
 {
@@ -440,7 +422,6 @@ int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID)
     return id;
 }
 
-
 #ifdef NON_MATCHING
 // register crap
 int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
@@ -456,14 +437,12 @@ int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
 }
 #endif
 
-
 int8* XST_translate_sid(uint32 sid, int8* extension)
 {
     static int8 buffer[0x40] = {};
     sprintf(buffer, "%s%s", xUtil_idtag2string(sid, 0), extension);
     return buffer;
 }
-
 
 int8* XST_translate_sid_path(uint32 sid, int8* extension)
 {
@@ -476,12 +455,10 @@ int8* XST_translate_sid_path(uint32 sid, int8* extension)
     return buffer;
 }
 
-
 void XST_reset_raw()
 {
     memset(&g_xstdata, 0, sizeof(st_STRAN_DATA));
 }
-
 
 st_STRAN_SCENE* XST_lock_next()
 {
@@ -507,7 +484,6 @@ st_STRAN_SCENE* XST_lock_next()
     return sdata;
 }
 
-
 #ifdef NON_MATCHING
 void XST_unlock(st_STRAN_SCENE* sdata)
 {
@@ -524,7 +500,6 @@ void XST_unlock(st_STRAN_SCENE* sdata)
 }
 #endif
 
-
 void XST_unlock_all()
 {
     if (g_xstdata.loadlock)
@@ -539,12 +514,10 @@ void XST_unlock_all()
     }
 }
 
-
 st_STRAN_SCENE* XST_get_rawinst(int32 index)
 {
     return &g_xstdata.hipscn[index];
 }
-
 
 int32 XST_cnt_locked()
 {
@@ -558,7 +531,6 @@ int32 XST_cnt_locked()
     }
     return sum;
 }
-
 
 st_STRAN_SCENE* XST_nth_locked(int32 index)
 {
@@ -580,7 +552,6 @@ st_STRAN_SCENE* XST_nth_locked(int32 index)
     return sdata;
 }
 
-
 st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
 {
     st_STRAN_SCENE* da_sdata = NULL;
@@ -599,7 +570,6 @@ st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
     }
     return da_sdata;
 }
-
 
 void iFileAsyncService()
 {

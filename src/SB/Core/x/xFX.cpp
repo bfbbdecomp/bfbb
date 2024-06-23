@@ -79,7 +79,6 @@ static void DrawRingSceneExit()
 #if 1
 static void DrawRing(xFXRing* m);
 
-
 #else
 static void DrawRing(xFXRing* m)
 {
@@ -383,12 +382,6 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-
-
-
-
-
-
 struct xFXBubbleParams
 {
     uint32 pass1 : 1;
@@ -419,27 +412,9 @@ static xFXBubbleParams defaultBFX = {
 static uint32 bfx_curr = 0;
 static xFXBubbleParams* BFX = &defaultBFX;
 
-
-
-
 static uint32 sFresnelMap = 0;
 static uint32 sEnvMap = 0;
 static int32 sTweaked = 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 static RxPipeline* xFXanimUVPipeline = NULL;
 float32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
@@ -452,36 +427,6 @@ float32 xFXanimUV2PTrans[2] = { 0.0f, 0.0f };
 float32 xFXanimUV2PScale[2] = { 1.0f, 1.0f };
 RwTexture* xFXanimUV2PTexture = NULL;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 namespace
 {
 #define ALPHA_COUNT 300
@@ -489,18 +434,6 @@ namespace
     uint8 alpha_count0[ALPHA_COUNT];
     uint8 alpha_count1[ALPHA_COUNT];
 } // namespace
-
-
-
-
-
-
-
-
-
-
-
-
 
 // clip_triangle jumptable
 static uint32 _1933[] = { 0x80028610, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
@@ -510,48 +443,9 @@ static uint32 _1933[] = { 0x80028610, 0x80028640, 0x80028640, 0x80028640, 0x8002
                           0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028620, 0x80028640,
                           0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028610 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static const uint8 segments_1637[43] = { 0, 1, 3, 0, 1, 2, 4, 0, 3, 4, 3, 0, 0, 0, 0,
                                          0, 1, 2, 4, 0, 2, 1, 2, 0, 4, 2, 1, 0, 0, 0,
                                          0, 0, 3, 4, 3, 0, 4, 2, 1, 0, 3, 1, 0 };
-
-
-
 
 struct _tagFirework
 {
@@ -571,48 +465,9 @@ static zParEmitter* sFirework2Emit = NULL;
 static uint32 sFireworkSoundID = 0;
 static uint32 sFireworkLaunchSoundID = 0;
 
-
-
-
-
-
-
-
-
-
 static RwIm3DVertex sStripVert_2188[4];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static RwIm3DVertex blah_2485[4];
-
-
-
-
-
-
 
 namespace
 {
@@ -622,90 +477,6 @@ namespace
     uint32 active_ribbons_size = 0;
     bool ribbons_dirty = false;
 } // namespace
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 struct _xFXAuraAngle
 {
@@ -731,186 +502,6 @@ static float32 sAuraPulseAng[2];
 static _xFXAuraAngle sAuraAngle[2];
 static RwTexture* gAuraTex = NULL;
 static _xFXAura sAura[AURA_COUNT];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 __declspec(section ".rodata") static const char _stringBase0_7[] = "bubble buddy\0"
                                                                    "bubble missile\0"

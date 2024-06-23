@@ -6,9 +6,6 @@
 #include "zNPCGlyph.h"
 #include "zNPCSupplement.h"
 
-
-
-
 void NPCSupport_Shutdown()
 {
     zNPCHazard_Shutdown();
@@ -16,24 +13,6 @@ void NPCSupport_Shutdown()
     NPCWidget_Shutdown();
     NPCSupplement_Shutdown();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void NPCWidget_Shutdown()
 {

@@ -43,7 +43,6 @@ extern float32 zCombo_float32_3; // probably comboTimer
 extern xBase* sHideText[5];
 extern xBase* sHideUIF[1];
 
-
 void fillCombo(zComboReward* reward)
 {
     int32 rewardLeft = reward->reward;
@@ -80,7 +79,6 @@ void fillCombo(zComboReward* reward)
 
     reward->rewardNum = j;
 }
-
 
 #if 0
 // Can't get the floating point instructions to go in the right order
@@ -162,7 +160,6 @@ void zCombo_Setup()
 }
 #endif
 
-
 #if 0
 /* Can't figure out how to get the assignments to happen in the right order */
 void zCombo_Add(int32 points)
@@ -185,12 +182,10 @@ void zCombo_Add(int32 points)
 }
 #endif
 
-
 void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
 {
     w.hide();
 }
-
 
 void zCombo_HideImmediately()
 {
@@ -199,10 +194,6 @@ void zCombo_HideImmediately()
         comboHUD->w.text[0] = '\0';
     }
 }
-
-
-
-
 
 bool ztextbox::visible()
 {

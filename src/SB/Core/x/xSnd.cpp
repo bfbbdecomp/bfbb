@@ -43,7 +43,6 @@ void xSndInit()
 }
 #endif
 
-
 void xSndSceneInit()
 {
     gSnd.listenerMode = SND_LISTENER_MODE_PLAYER;
@@ -89,19 +88,10 @@ void xSndResume()
     sDelayedPaused = 0;
 }
 
-
-
-
-
-
-
 void xSndSetCategoryVol(sound_category category, float32 vol)
 {
     gSnd.categoryVolFader[category] = vol;
 }
-
-
-
 
 #ifdef NON_MATCHING
 void xSndDelayedInit()
@@ -114,13 +104,6 @@ void xSndDelayedInit()
     sDelayedPaused = 0;
 }
 #endif
-
-
-
-
-
-
-                   
 
 void xSndCalculateListenerPosition()
 {
@@ -147,9 +130,6 @@ void xSndCalculateListenerPosition()
         break;
     }
 }
-
-
-
 
 #ifdef NON_MATCHING
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
@@ -204,7 +184,6 @@ void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 }
 #endif
 
-
 void xSndUpdate()
 {
     xSndCalculateListenerPosition();
@@ -212,7 +191,6 @@ void xSndUpdate()
     update_faders(sTimeElapsed);
     iSndUpdate();
 }
-
 
 void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix)
 {
@@ -227,19 +205,16 @@ void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix
     gSnd.listenerMat[i] = *matrix;
 }
 
-
 void xSndSelectListenerMode(sound_listener_game_mode listenerGameMode)
 {
     gSnd.listenerMode = listenerGameMode;
 }
-
 
 void xSndExit()
 {
     iSndExit();
     reset_faders();
 }
-
 
 uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
                 uint32 parentID, sound_category category, float32 delay)
@@ -248,17 +223,17 @@ uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 f
                             category, delay);
 }
 
-
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, xEnt* parent,
-                  float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
+uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
+                  xEnt* parent, float32 innerRadius, float32 outerRadius, sound_category category,
+                  float32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, NULL, parent, NULL, innerRadius,
                             outerRadius, category, delay);
 }
 
-
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags, const xVec3* pos,
-                  float32 innerRadius, float32 outerRadius, sound_category category, float32 delay)
+uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
+                  const xVec3* pos, float32 innerRadius, float32 outerRadius,
+                  sound_category category, float32 delay)
 {
     if (flags & 0x800)
     {
@@ -272,16 +247,10 @@ uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32
     }
 }
 
-
-
-                   
-
-
 void xSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
 {
     iSndStartStereo(id1, id2, pitch);
 }
-
 
 uint32 xSndIDIsPlaying(uint32 sndID)
 {
@@ -296,12 +265,10 @@ uint32 xSndIDIsPlaying(uint32 sndID)
     return 0;
 }
 
-
 void xSndStop(uint32 snd)
 {
     iSndStop(snd);
 }
-
 
 void xSndParentDied(uint32 pid)
 {
@@ -314,7 +281,6 @@ void xSndParentDied(uint32 pid)
         }
     }
 }
-
 
 void xSndStopChildren(uint32 pid)
 {
@@ -330,43 +296,20 @@ void xSndStopChildren(uint32 pid)
     }
 }
 
-
 void xSndSetVol(uint32 snd, float32 vol)
 {
     iSndSetVol(snd, vol);
 }
-
 
 void xSndSetPitch(uint32 snd, float32 pitch)
 {
     iSndSetPitch(snd, pitch);
 }
 
-
 void xSndSetExternalCallback(void (*callback)(uint32))
 {
     iSndSetExternalCallback(callback);
 }
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
 
 #if 0
 // Subtle issue with the register use in the setup of the loop
@@ -412,7 +355,6 @@ uint32 xSndCategoryGetsEffects(sound_category category)
     }
 }
 #endif
-
 
 float32 xSndGetVol(uint32 snd)
 {

@@ -12,7 +12,6 @@
 #include "xScrFx.h"
 #include "xstransvc.h"
 
-
 // extern int8 buffer[16];
 // extern int8 buffer[16];
 // extern basic_rect screen_bounds;
@@ -112,7 +111,6 @@ extern float32 zCamera_f_3_141; // 3.141593 ~ pi
 extern float32 zCamera_f_20_0; // 20.0
 extern float32 zCamera_f_180_0; // 180.0
 
-
 #if 0
 void zCameraReset(xCamera* cam)
 {
@@ -207,7 +205,6 @@ float32 EaseInOut(float32 param)
     return param * (param * (zCamera_f_2_0 - zCamera_f_1_5 * param) + zCamera_f_0_5);
 }
 
-
 #if 0
 void zCameraConversUpdate(xCamera* cam, float32 dt)
 {
@@ -281,9 +278,6 @@ float32 MatrixSpeed(zFlyKey keys[])
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
 
-
-
-
 zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 {
     this->frame = other.frame;
@@ -299,7 +293,6 @@ zFlyKey& zFlyKey::operator=(const zFlyKey& other)
 
     return *this;
 }
-
 
 #if 0
 void zCameraFlyStart(uint32 assetID)
@@ -330,16 +323,6 @@ void zCameraFlyStart(uint32 assetID)
     }
 }
 #endif
-
-
-
-
-
-
-
-
-
-
 
 #if 0
 void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, float32& hgoal,
@@ -456,14 +439,10 @@ void zCameraFreeLookSetGoals(xCamera* cam, float32 pitch_s, float32& dgoal, floa
 }
 #endif
 
-
-
-
 void zCameraSetBbounce(int32 bbouncing)
 {
     zcam_bbounce = bbouncing;
 }
-
 
 #if 0
 void zCameraSetLongbounce(int32 lbounce)
@@ -478,7 +457,6 @@ void zCameraSetLongbounce(int32 lbounce)
     zcam_highbounce = 0;
 }
 #endif
-
 
 #if 0
 void zCameraSetHighbounce(int32 lbounce)
@@ -509,60 +487,45 @@ void zCameraEnableTracking(camera_owner_enum owner)
     stop_track = stop_track & ~owner;
 }
 
-
 uint32 zCameraIsTrackingDisabled()
 {
     return stop_track;
 }
-
 
 void zCameraDisableInput()
 {
     input_enabled = 0;
 }
 
-
 void zCameraEnableInput()
 {
     input_enabled = 1;
 }
-
 
 void zCameraDisableLassoCam()
 {
     lassocam_enabled = 0;
 }
 
-
 void zCameraEnableLassoCam()
 {
     lassocam_enabled = 1;
 }
-
 
 void zCameraSetLassoCamFactor(float32 new_factor)
 {
     lassocam_factor = new_factor;
 }
 
-
 float32 zCameraGetLassoCamFactor()
 {
     return lassocam_factor;
 }
 
-
 int32 zCameraGetConvers()
 {
     return zcam_convers;
 }
-
-
-
-
-
-
-
 
 void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z)
 {
@@ -574,10 +537,6 @@ void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z)
     cam->tran_accum.z += z;
 }
 
-
-
-
-
 void zCameraDisableWallJump(xCamera* cam)
 {
     if (wall_jump_enabled != WJVS_DISABLED)
@@ -585,7 +544,6 @@ void zCameraDisableWallJump(xCamera* cam)
         wall_jump_enabled = WJVS_DISABLING;
     }
 }
-
 
 void zCameraSetReward(int32 reward)
 {
@@ -597,21 +555,15 @@ void zCameraSetReward(int32 reward)
     zcam_reward = reward;
 }
 
-
 void zCameraMinTargetHeightSet(float32 min_height)
 {
     zcam_mintgtheight = min_height;
 }
 
-
 void zCameraMinTargetHeightClear()
 {
     zcam_mintgtheight = zCamera_f_n1_0_e38;
 }
-
-
-
-
 
 float32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
 {

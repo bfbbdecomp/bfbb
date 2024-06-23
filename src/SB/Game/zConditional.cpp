@@ -8,7 +8,6 @@
 
 int32 zConditionalEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
 
-
 void zConditionalInit(void* b, void* asset)
 {
     zConditionalInit((xBase*)b, (zCondAsset*)asset);
@@ -19,7 +18,6 @@ struct UnknownTypeInheritingBase : xBase
 {
     int8* unknownPtr;
 };
-
 
 void zConditionalInit(xBase* b, zCondAsset* asset)
 {
@@ -41,24 +39,20 @@ void zConditionalInit(xBase* b, zCondAsset* asset)
     }
 }
 
-
 void zConditionalReset(_zConditional* ent)
 {
     xBaseReset(ent, ent->asset);
 }
-
 
 void zConditionalSave(_zConditional* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-
 void zConditionalLoad(_zConditional* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
-
 
 bool zConditional_Evaluate(_zConditional* c)
 {
@@ -108,7 +102,6 @@ bool zConditional_Evaluate(_zConditional* c)
         return 0;
     }
 }
-
 
 #if 0
 // This doesn't work because it's missing a single branch instruction

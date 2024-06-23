@@ -8,7 +8,6 @@
 extern int32 g_modinit_xBehaveMgr;
 extern xBehaveMgr* g_behavmgr;
 
-
 #ifdef NON_MATCHING
 void xBehaveMgr_Startup()
 {
@@ -19,7 +18,6 @@ void xBehaveMgr_Startup()
     }
 }
 #endif
-
 
 #if 0
 void xBehaveMgr_Shutdown()
@@ -36,45 +34,35 @@ void xBehaveMgr_Shutdown()
 }
 #endif
 
-
 xBehaveMgr* xBehaveMgr_GetSelf()
 {
     return g_behavmgr;
 }
-
 
 xFactory* xBehaveMgr_GoalFactory()
 {
     return g_behavmgr->GetFactory();
 }
 
-
 void xBehaveMgr_ScenePrepare()
 {
     g_behavmgr->ScenePrepare();
 }
-
 
 void xBehaveMgr_SceneFinish()
 {
     g_behavmgr->SceneFinish();
 }
 
-
 void xBehaveMgr_SceneReset()
 {
     g_behavmgr->SceneReset();
 }
 
-
-
-
-
 void xBehaveMgr::RegBuiltIn()
 {
     xGoalSimple_RegisterTypes(this->goalFactory);
 }
-
 
 xPsyche* xBehaveMgr::Subscribe(xBase* owner, int32 i)
 {
@@ -85,24 +73,20 @@ xPsyche* xBehaveMgr::Subscribe(xBase* owner, int32 i)
     return psyche;
 }
 
-
 void xBehaveMgr::UnSubscribe(xPsyche* psy)
 {
     psy->KillBrain(this->goalFactory);
     XOrdRemove(&this->psylist, psy, -1);
 }
 
-
 void xBehaveMgr::ScenePrepare()
 {
 }
-
 
 void xBehaveMgr::SceneFinish()
 {
     XOrdReset(&this->psylist);
 }
-
 
 void xBehaveMgr::SceneReset()
 {
@@ -113,14 +97,12 @@ void xBehaveMgr::SceneReset()
     }
 }
 
-
 void xPsyche::BrainBegin()
 {
     xFactory* factory = xBehaveMgr_GoalFactory();
     this->psystat = PSY_STAT_GROW;
     factory->GrowDataEnable(&this->fakebase, false);
 }
-
 
 void xPsyche::BrainExtend()
 {
@@ -129,13 +111,11 @@ void xPsyche::BrainExtend()
     factory->GrowDataEnable(&this->fakebase, true);
 }
 
-
 void xPsyche::BrainEnd()
 {
     xBehaveMgr_GoalFactory()->GrowDataDisable();
     this->psystat = PSY_STAT_THINK;
 }
-
 
 #ifdef NON_MATCHING
 // Regalloc
@@ -163,7 +143,6 @@ xGoal* xPsyche::AddGoal(int32 gid, void* createData)
 }
 #endif
 
-
 extern float32 _750;
 void xPsyche::FreshWipe()
 {
@@ -189,7 +168,6 @@ void xPsyche::FreshWipe()
     this->flg_psyche |= 1;
 }
 
-
 void xPsyche::SetOwner(xBase* clt_owner, void* userContext)
 {
     this->clt_owner = clt_owner;
@@ -207,13 +185,11 @@ void xPsyche::SetOwner(xBase* clt_owner, void* userContext)
     this->fakebase.eventFunc = NULL;
 }
 
-
 void xPsyche::KillBrain(xFactory* factory)
 {
     this->Lobotomy(factory);
     this->fun_remap = NULL;
 }
-
 
 void xPsyche::Lobotomy(xFactory* factory)
 {
@@ -223,7 +199,6 @@ void xPsyche::Lobotomy(xFactory* factory)
         factory->DestroyItem(goal);
     }
 }
-
 
 #if 0
 void xPsyche::Amnesia(int32 i)

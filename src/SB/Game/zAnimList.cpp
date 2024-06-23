@@ -16,7 +16,6 @@ uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
     return 1;
 }
 
-
 #if 0
 void zAnimListInit()
 {

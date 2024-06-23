@@ -41,9 +41,6 @@ void xtextbox::render(bool cache) const
     render(temp_layout(cache), 0, -1);
 }
 
-
-
-
 #if 0
 // WIP.
 xfont& xfont::operator=(const xfont& other)
@@ -74,12 +71,6 @@ xfont& xfont::operator=(const xfont& other)
 }
 
 #endif
-
-
-
-
-
-
 
 float32 NSCREENY(float32 scale)
 {

@@ -329,9 +329,6 @@ iFogParams& iFogParams::operator=(const iFogParams& other) // temp
     return *this;
 }
 
-
-
-
 void iCameraSetFogRenderStates()
 {
     RwCamera* pCamera;

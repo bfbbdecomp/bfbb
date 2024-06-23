@@ -15,7 +15,6 @@ extern float32 _1262;
 extern float32 _1263;
 extern volatile int32 fc;
 
-
 void arq_callback(long32)
 {
     if (!soundInited)
@@ -25,28 +24,11 @@ void arq_callback(long32)
     SoundFlags = 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void iSndExit()
 {
     soundInited = 0;
     AXQuit();
 }
-
 
 //not sure where this type is from.
 void iSndSetEnvironmentalEffect(isound_effect)
@@ -54,28 +36,9 @@ void iSndSetEnvironmentalEffect(isound_effect)
     return;
 }
 
-
 void iSndInitSceneLoaded()
 {
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #ifdef NON_MATCHING
 uint32 iVolFromX(float32 param1)
@@ -95,13 +58,6 @@ uint32 iVolFromX(float32 param1)
 }
 #endif
 
-
-
-
-
-
-
-
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 {
     MIXUnMute(vinfo->voice);
@@ -115,10 +71,6 @@ void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
         iSndCalcVol(info, vinfo);
     }
 }
-
-
-
-
 
 void iSndUpdateSounds()
 {
@@ -136,38 +88,9 @@ void iSndUpdateSounds()
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
 {
 }
-
 
 void iSndStereo(uint32 i)
 {
@@ -199,15 +122,10 @@ void iSndWaitForDeadSounds()
 }
 #endif
 
-
-// 
+//
 void iSndSuspendCD(uint32)
 {
 }
-
-
-
-
 
 void iSndMessWithEA(sDSPADPCM* param1) //sDSPADPCM*
 {
@@ -227,23 +145,14 @@ uint32 SampleToNybbleAddress(uint32 sample)
 }
 #endif
 
-
 void sndloadcb(tag_xFile* tag)
 {
     SoundFlags = 0;
 }
 
-
-
-
-
-
-
-
 void iSndSetExternalCallback(void (*func_ptr)(uint32))
 {
 }
-
 
 void iSndMyAXFree(_AXVPB** param1)
 {

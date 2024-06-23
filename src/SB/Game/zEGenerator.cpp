@@ -111,9 +111,6 @@ void zEGenerator_Move(zEGenerator* egen, xScene* sc, float32 dt)
 {
 }
 
-
-
-
 void zEGenerator_Render(zEGenerator* egen)
 {
     xEntRender((xEnt*)egen);

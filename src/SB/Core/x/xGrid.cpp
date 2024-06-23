@@ -10,7 +10,6 @@ extern float xGrid_float_0p001;
 extern float xGrid_float_one;
 extern float xGrid_float_one_quarter;
 
-
 void xGridBoundInit(xGridBound* bound, void* data)
 {
     bound->data = data;
@@ -22,7 +21,6 @@ void xGridBoundInit(xGridBound* bound, void* data)
     bound->next = 0;
     bound->gpad = 0xea;
 }
-
 
 #ifdef NON_MATCHING
 // Usual floating point problems, floating point loads get pulled to the start.
@@ -68,13 +66,11 @@ void xGridInit(xGrid* grid, xBox* bounds, uint16 nx, uint16 nz, uint8 ingrid_id)
 }
 #endif
 
-
 void xGridKill(xGrid* grid)
 {
     xGridEmpty(grid);
     grid->cells = NULL;
 }
-
 
 void xGridEmpty(xGrid* grid)
 {
@@ -104,7 +100,6 @@ void xGridEmpty(xGrid* grid)
     grid->other = NULL;
 }
 
-
 bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
 {
     if (bound->head)
@@ -128,15 +123,10 @@ bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
     return true;
 }
 
-
 void xGridAdd(xGrid* grid, xGridBound* bound, int32 x, int32 z)
 {
     xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
 }
-
-
-
-
 
 int32 xGridRemove(xGridBound* bound)
 {
@@ -169,7 +159,6 @@ int32 xGridRemove(xGridBound* bound)
     return 1;
 }
 
-
 void xGridUpdate(xGrid* grid, xEnt* ent)
 {
     int32 dx;
@@ -184,7 +173,6 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
         }
     }
 }
-
 
 xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
 {
@@ -211,7 +199,6 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
     return &grid->cells[grz * grid->nx] + grx;
 }
 
-
 #ifdef NON_MATCHING
 void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int32& grz)
 {
@@ -222,7 +209,6 @@ void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int3
     grz = MIN(float32((grid->nz - 1) ^ 0x8000), MAX(0, pgridx));
 }
 #endif
-
 
 xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx,
                                int32& grz, xGridIterator& iter)

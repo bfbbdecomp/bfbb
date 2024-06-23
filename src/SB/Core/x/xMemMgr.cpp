@@ -11,11 +11,9 @@ extern xMemInfo_tag gMemInfo;
 extern xMemHeap_tag gxHeap[3];
 extern void (*sMemBaseNotifyFunc)();
 
-
 void xMemDebug_SoakLog(const int8*)
 {
 }
-
 
 #ifdef NON_MATCHING
 // The instructions putting 0/1/2 into registers happen in the wrong order.
@@ -35,12 +33,10 @@ void xMemInit()
 }
 #endif
 
-
 void xMemExit()
 {
     iMemExit();
 }
-
 
 void xMemInitHeap(xMemHeap_tag* heap, uint32 base, uint32 size, uint32 flags)
 {
@@ -80,7 +76,6 @@ void xMemInitHeap(xMemHeap_tag* heap, uint32 base, uint32 size, uint32 flags)
     heap->opp_heap[0] = -1;
     heap->opp_heap[1] = -1;
 }
-
 
 #if 0
 // Not particularly close. This function is a nightmare, it has so many
@@ -136,7 +131,6 @@ void xMemGetBlockInfo(xMemHeap_tag* heap, uint32 size, int32 align, xMemBlkInfo_
 }
 #endif
 
-
 #if 0
 // Not particularly close. Not 100% confident that I understand what's going on,
 // in particular the bit that goes:
@@ -177,7 +171,6 @@ void* xMemGrowAlloc(uint32 heapID, uint32 size)
     }
 }
 #endif
-
 
 //
 void* xMemAlloc(uint32 heapID, uint32 size, int32 align)
@@ -230,18 +223,15 @@ void* xMemAlloc(uint32 heapID, uint32 size, int32 align)
     return (void*)hdr->addr;
 }
 
-
 void* xMemPushTemp(uint32 size)
 {
     return RwMalloc(size);
 }
 
-
 void xMemPopTemp(void* memory)
 {
     RwFree(memory);
 }
-
 
 int32 xMemPushBase(uint32 heapID)
 {
@@ -258,12 +248,10 @@ int32 xMemPushBase(uint32 heapID)
     return heap->state_idx - 1;
 }
 
-
 int32 xMemPushBase()
 {
     return xMemPushBase(gActiveHeap);
 }
-
 
 #ifdef NON_MATCHING
 // Load/Store swap of sMemBaseNotifyFunc and state_idx
@@ -285,30 +273,25 @@ int32 xMemPopBase(uint32 heapID, int32 depth)
 }
 #endif
 
-
 int32 xMemPopBase(int32 depth)
 {
     return xMemPopBase(gActiveHeap, depth);
 }
-
 
 int32 xMemGetBase(uint32 heapID)
 {
     return gxHeap[heapID].state_idx;
 }
 
-
 void xMemRegisterBaseNotifyFunc(void (*func)())
 {
     sMemBaseNotifyFunc = func;
 }
 
-
 int32 xMemGetBase()
 {
     return xMemGetBase(gActiveHeap);
 }
-
 
 void xMemPoolAddElements(xMemPool* pool, void* buffer, uint32 count)
 {
@@ -342,8 +325,6 @@ void xMemPoolAddElements(xMemPool* pool, void* buffer, uint32 count)
     pool->Total += count;
 }
 
-
-
 void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags,
                    xMemPoolInitCB initCB, uint32 size, uint32 count, uint32 numRealloc)
 {
@@ -358,7 +339,6 @@ void xMemPoolSetup(xMemPool* pool, void* buffer, uint32 nextOffset, uint32 flags
     pool->Total = 0;
     xMemPoolAddElements(pool, buffer, count);
 }
-
 
 void* xMemPoolAlloc(xMemPool* pool)
 {
@@ -382,7 +362,6 @@ void* xMemPoolAlloc(xMemPool* pool)
 
     return retval;
 }
-
 
 void xMemPoolFree(xMemPool* pool, void* data)
 {

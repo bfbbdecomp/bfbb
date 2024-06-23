@@ -54,12 +54,6 @@ void xPadRumbleEnable(int32 idx, int32 enable)
     }
 }
 
-
-
-
-
-
-
 void xPadKill()
 {
     iPadKill();

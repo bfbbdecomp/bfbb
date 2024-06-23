@@ -152,48 +152,6 @@ void zNPCSpawner::MapPreferred()
 
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
 {
     SMNPCStatus* stat = this->StatForNPC(npc);
@@ -202,16 +160,6 @@ void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
         stat->status = status;
     }
 }
-
-
-
-
-
-
-
-
-
-                   
 
 SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
 {
@@ -224,17 +172,6 @@ SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
 void zNPCSpawner::ChildHeartbeat(float32 dt)
 {
 }
-
-
-
-
-
-
-                   
-
-
-
-                   
 
 uint8 zMovePoint::IsOn()
 {

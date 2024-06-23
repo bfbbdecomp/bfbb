@@ -3613,11 +3613,9 @@ void xModelBucket_RenderAlpha()
     xModelBucket_RenderAlphaEnd();
 }
 
-
 void xNPCBasic::Save(xSerial*) const
 {
 }
-
 
 void xNPCBasic::Load(xSerial*)
 {

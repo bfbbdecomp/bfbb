@@ -14,8 +14,8 @@ _tagClimate* sClimate;
 
 float snow_life = 3.0f;
 
-const xVec3 snow_vel = {0.0f, -2.0f, 0.0f};
-const xVec3 snow_dvel = {0.1f, 0.1f, 0.1f};
+const xVec3 snow_vel = { 0.0f, -2.0f, 0.0f };
+const xVec3 snow_dvel = { 0.1f, 0.1f, 0.1f };
 
 void xClimateVecFromAngle(float32 angleDegrees, xVec3* vec)
 {
@@ -46,20 +46,20 @@ void xClimateInitAsset(_tagClimate* climate, xEnvAsset* asset)
     sClimate = climate;
     climate->wind.strength = 0.0f;
     xClimateVecFromAngle(climate->wind.angle, &climate->wind.dir);
-    
-    if(asset->climateFlags == 0)
+
+    if (asset->climateFlags == 0)
     {
         climate->wind.strength = 0.0f;
         climate->rain.strength = 0.0f;
         return;
     }
-    if(asset->climateFlags & 1)
+    if (asset->climateFlags & 1)
     {
         climate->rain.rain = 1.0f;
         climate->rain.strength = 0.5f * (asset->climateStrengthMax - asset->climateStrengthMin);
         climate->rain.strength += asset->climateStrengthMin;
     }
-    else if(asset->climateFlags & 2)
+    else if (asset->climateFlags & 2)
     {
         climate->rain.rain = 0.0f;
         climate->rain.strength = 0.5f * (asset->climateStrengthMax - asset->climateStrengthMin);
@@ -102,10 +102,10 @@ void UpdateRain(_tagClimate* climate, float seconds)
     memset(&info, 0, sizeof(xParEmitterCustomSettings));
     info.custom_flags = 0x100;
 
-    if(r->rain != 0)
+    if (r->rain != 0)
     {
         int32 total_rain_drops = 25.0f * r->strength;
-        for(int32 i = 0; i < total_rain_drops; i++)
+        for (int32 i = 0; i < total_rain_drops; i++)
         {
             GetPosBigDogWhattupFool(&info.pos);
             info.pos.x += 25.0f * xurand() - 12.5f;
@@ -114,15 +114,15 @@ void UpdateRain(_tagClimate* climate, float seconds)
             xParEmitterEmitCustom(r->rain_emitter, seconds, &info);
         }
         return;
-    }    
+    }
 
     xVec3 fool;
     int32 total_snow_flakes = 25.0f * r->strength;
     info.custom_flags |= 0x202;
     GetPosBigDogWhattupFool(&fool);
-    if(gPTankDisable)
+    if (gPTankDisable)
     {
-        for(int32 i = 0; i < total_snow_flakes; i++)
+        for (int32 i = 0; i < total_snow_flakes; i++)
         {
             info.pos = fool;
             info.pos.x += 45.0f * xurand() - 22.5f;
@@ -137,7 +137,6 @@ void UpdateRain(_tagClimate* climate, float seconds)
             info.vel.y = snow_dvel.y * xurand() + snow_vel.y;
             info.vel.z = snow_dvel.z * xurand() + snow_vel.z;
 
-
             info.life.val[0] = snow_life * perc + snow_life;
             xParEmitterEmitCustom(r->snow_emitter, seconds, &info);
         }
@@ -145,14 +144,13 @@ void UpdateRain(_tagClimate* climate, float seconds)
     }
 
     int32 num = (float32)total_snow_flakes * 0.1f;
-    if(num > 0)
+    if (num > 0)
     {
         xVec3* pos = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
-        xVec3* vel = pos+num;
-        if(pos != NULL)
+        xVec3* vel = pos + num;
+        if (pos != NULL)
         {
-
-            for(int32 i = 0; i < num; i++)
+            for (int32 i = 0; i < num; i++)
             {
                 *pos = fool;
                 pos->x += 45.0f * xurand() - 22.5f;

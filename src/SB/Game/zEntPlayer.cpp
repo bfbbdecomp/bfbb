@@ -61,9 +61,6 @@ extern const int8 zEntPlayer_Strings[];
 extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
 extern uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total];
 
-
-
-
 void zEntPlayerKillCarry()
 {
     if (!globals.player.carry.grabbed)
@@ -92,12 +89,6 @@ void zEntPlayerKillCarry()
     globals.player.carry.grabbed = NULL;
 }
 
-
-
-
-
-
-
 void TellPlayerVillainIsNear(float32 visnear)
 {
     globals.player.BadGuyNearTimer = visnear;
@@ -108,180 +99,10 @@ void SetPlayerKillsVillainTimer(float32 time)
     globals.player.VictoryTimer = time;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void HealthReset()
 {
     globals.player.Health = globals.player.MaxHealth;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -293,9 +114,6 @@ uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3
     return (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000));
 }
 
-
-
-
 uint32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.ent.frame->vel.y = -globals.player.g.BBounceSpeed;
@@ -306,16 +124,6 @@ uint32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_
 {
     return (globals.player.JumpState == 0 || globals.player.JumpState == 1);
 }
-
-
-
-
-
-
-                   
-
-
-
 
 uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -332,9 +140,6 @@ uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return (!globals.player.ControlOff && ((globals.pad0->pressed & 0x20000)) &&
             globals.player.g.PowerUp[0]);
 }
-
-
-
 
 uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -418,7 +223,6 @@ uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 #else
-
 
 #endif
 
@@ -513,9 +317,6 @@ uint32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
 }
 
-
-
-
 uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*)
 {
     // much different than PS2 version of this function
@@ -531,48 +332,17 @@ int32 zEntPlayer_InBossBattle()
     );
 }
 
-
-
-
-
-
-                   
-
 uint32 LCopterCheck(xAnimTransition*, xAnimSingle*)
 {
     return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
 }
 
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-
 uint32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_LAND;
     return 0;
 }
-
-
-
-                   
 
 uint32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -585,19 +355,6 @@ uint32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return (globals.player.CanJump && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #if 0
 // surprisingly doesn't match at all even though it appears to be simple
@@ -612,279 +369,30 @@ uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param
 }
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-    
-    
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
 uint32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*)
 {
     return !sLassoInfo->target;
 }
-
 
 uint32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-
 uint32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*)
 {
     return 0;
 }
-
 
 uint32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-
 uint32 LassoReyankCheck(xAnimTransition*, xAnimSingle*)
 {
     return 0;
 }
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 bool zEntPlayer_IsSneaking()
 {
@@ -903,7 +411,6 @@ bool zEntPlayer_IsSneaking()
         return false;
     }
 }
-
 
 #if 0
 // The cmpw instruction used in `if ((int32)non_choices[j] - 1 == i)` has its
@@ -1008,103 +515,15 @@ void load_player_ini()
     }
 }
 
-
-
-
-
-
-
 void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 {
     return;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
 {
     globals.player.carry.patLauncher = patLauncher;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
 {
@@ -1125,18 +544,6 @@ int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
     return true;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 void zEntPlayer_GiveHealth(int32 quantity)
 {
     if (quantity < 0 && -quantity > (int32)globals.player.Health)
@@ -1154,7 +561,6 @@ void zEntPlayer_GiveHealth(int32 quantity)
         globals.player.Health = maxHealth;
     }
 }
-
 
 #if 0
 
@@ -1241,182 +647,6 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-    
-    
-
-
-
-    
-    
-
-
-
-                   
-
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
 {
     if (sPlayerSnd[gCurrentPlayer][player_snd])
@@ -1433,68 +663,10 @@ void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
     }
 }
 
-
-
-
-
-
-
 void zEntPlayer_SNDNotifyPlaying(uint32 id)
 {
     sCurrentStreamSndID = id;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
@@ -1507,65 +679,15 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 uint8 xSndIsPlaying(uint32 assetID)
 {
     return (uint8)iSndIsPlaying(assetID);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int32 zNPCTiki::IsHealthy()
 {
     return flg_vuln != 0;
 }
-
 
 void zCameraTranslate(xCamera* cam, xVec3* pos)
 {
@@ -1593,7 +715,6 @@ xVec3* NPCC_upDir(xEnt* ent)
     // TODO: see note in previous function
     return (xVec3*)&ent->model->Mat->up;
 }
-
 
 int32 zGooIs(xEnt* ent)
 {

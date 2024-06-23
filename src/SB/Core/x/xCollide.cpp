@@ -7,7 +7,6 @@
 
 // extern float32 lbl_803CCAA8; // 0.0
 
-
 #ifdef NON_MATCHING
 // Will match once we can use float literals for this
 _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat)
@@ -86,12 +85,10 @@ _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xM
 }
 #endif
 
-
 void xCollideInit(xScene* sc)
 {
     iCollideInit(sc);
 }
-
 
 #if 0
 //WIP, very wrong but it compiles at least

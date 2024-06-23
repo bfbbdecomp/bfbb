@@ -1042,9 +1042,6 @@ void zUIRenderAll()
 }
 #endif
 
-
-
-
 int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*)
 {
     _zUI* s = (_zUI*)to;

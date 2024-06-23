@@ -3,7 +3,6 @@
 
 #include <types.h>
 
-
 void xCollideFastInit(xScene* sc)
 {
     iCollideFastInit(sc);

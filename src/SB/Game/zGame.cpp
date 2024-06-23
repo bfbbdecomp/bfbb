@@ -39,10 +39,6 @@ extern float32 lbl_803CF5AC; // A
 extern float32 lbl_803CDA54;
 extern float32 lbl_803CDA58;
 
-
-
-
-
 #ifdef NON_MATCHING
 // Scheduling, I guess
 void zGameInit(uint32 theSceneID)
@@ -76,7 +72,6 @@ void zGameInit(uint32 theSceneID)
 }
 #endif
 
-
 #ifdef NON_MATCHING
 // Scheduling, I guess
 void zGameExit()
@@ -105,7 +100,6 @@ void zGameExit()
     gGameWhereAmI = eGameWhere_ExitEnd;
 }
 #endif
-
 
 #ifdef NON_MATCHING
 void zGameSetup()
@@ -151,10 +145,6 @@ void zGameSetup()
 }
 #endif
 
-
-
-
-
 int32 zGameIsPaused()
 {
     if (gGameMode == 8)
@@ -171,7 +161,6 @@ int32 zGameIsPaused()
     }
     return 0;
 }
-
 
 #ifdef NON_MATCHING
 int32 zGameLoopContinue()
@@ -196,7 +185,6 @@ int32 zGameLoopContinue()
     return 0;
 }
 #endif
-
 
 int32 zGameOkToPause()
 {
@@ -229,7 +217,6 @@ int32 zGameOkToPause()
     return uVar1;
 }
 
-
 #ifdef NON_MATCHING
 void zGamePause()
 {
@@ -253,7 +240,6 @@ void zGamePause()
 }
 #endif
 
-
 #ifdef NON_MATCHING
 void zGameStall()
 {
@@ -267,20 +253,9 @@ void zGameStall()
 }
 #endif
 
-
-
-
-
-
-
-
-
-
-
 void zGameTakeSnapShot(RwCamera*)
 {
 }
-
 
 #ifdef NON_MATCHING
 // Float memes
@@ -294,7 +269,6 @@ void zGameUpdateTransitionBubbles()
     zParPTankRender();
 }
 #endif
-
 
 #ifdef NON_MATCHING
 // Tons of extra instructions for some reason
@@ -324,7 +298,6 @@ void zGameScreenTransitionBegin()
 }
 #endif
 
-
 //
 void zGameScreenTransitionUpdate(float32 percentComplete, char* msg)
 {
@@ -333,10 +306,6 @@ void zGameScreenTransitionUpdate(float32 percentComplete, char* msg)
         zGameScreenTransitionUpdate(percentComplete, msg, 0);
     }
 }
-
-
-
-
 
 void zGameScreenTransitionEnd()
 {
@@ -367,23 +336,14 @@ void zGameScreenTransitionEnd()
     gGameWhereAmI = eGameWhere_TransitionEnded;
 }
 
-
-
-
-
 void zGameStats_Init()
 {
 }
-
-
-
-
 
 void xDrawEnd()
 {
     iDrawEnd();
 }
-
 
 void xDrawBegin()
 {

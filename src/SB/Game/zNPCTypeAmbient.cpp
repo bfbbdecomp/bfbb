@@ -85,12 +85,6 @@ xAnimTable* ZNPC_AnimTable_Ambient()
     return table;
 }
 
-
-
-
-
-
-
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCAmbient::Init(xEntAsset* asset)
 {
@@ -101,9 +95,6 @@ void zNPCAmbient::Init(xEntAsset* asset)
     }
 }
 */
-
-
-
 
 void zNPCAmbient::Reset()
 {
@@ -137,13 +128,6 @@ void zNPCAmbient::SelfSetup()
     psy->SetSafety('NGN0');
 }
 
-
-
-                   
-
-
-
-
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCJelly::Init(xEntAsset* asset)
 {
@@ -153,9 +137,6 @@ void zNPCJelly::Init(xEntAsset* asset)
     flg_vuln = flg_vuln & 0x9effffef;
 }
 */
-
-
-
 
 void zNPCJelly::ParseINI()
 {
@@ -237,46 +218,6 @@ void zNPCJelly::JellyKill()
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   
-
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCNeptune::ParseINI()
 {
@@ -287,9 +228,6 @@ void zNPCNeptune::ParseINI()
 }
 */
 
-
-
-
 #ifdef NON_MATCHING
 void zNPCNeptune::Reset()
 {
@@ -297,16 +235,6 @@ void zNPCNeptune::Reset()
     flags |= 0x40;
 }
 #endif
-
-
-
-
-
-
-                   
-
-
-
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCMimeFish::Reset()
@@ -316,26 +244,11 @@ void zNPCMimeFish::Reset()
 }
 */
 
-
-
-
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCMimeFish::Process(xScene* xscn, float32 dt)
 {
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
 
 int32 zNPCAmbient::AmbiHandleMail(NPCMsg msg)
 {
@@ -375,9 +288,6 @@ uint8 zNPCAmbient::PhysicsFlags()
 {
     return 3;
 }
-
-
-
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCNeptune::SelfSetup()

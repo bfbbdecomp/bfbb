@@ -13,7 +13,6 @@ extern int32 sClipVolumeTotal;
 
 extern char* zParCmd_strings;
 
-
 void zParCmdInit()
 {
     xParCmdInit();
@@ -26,7 +25,6 @@ void zParCmdInit()
     xParCmdRegister(0x16, 0x14, xParCmdApplyCamMat_Update);
     xParCmdRegister(0x11, 0x10, xParCmdKillDistance_Update);
 }
-
 
 #ifdef NON_MATCHING
 
@@ -47,13 +45,6 @@ void zParCmdFindClipVolumes()
     }
 }
 #endif
-
-
-
-
-
-
-
 
 void xParCmdPlayerCollision_Update(xParCmd* c, xParGroup* ps, float32 dt)
 {

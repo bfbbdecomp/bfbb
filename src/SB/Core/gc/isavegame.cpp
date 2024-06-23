@@ -12,7 +12,6 @@ extern st_ISGSESSION g_isgdata_MAIN;
 
 extern int32 g_isginit;
 
-
 #if 0
 int32 iSGStartup()
 {
@@ -32,13 +31,11 @@ int32 iSGStartup()
 }
 #endif
 
-
 int32 iSGShutdown()
 {
     iSG_discard_icondata();
     return 1;
 }
-
 
 #if 0
 // WIP
@@ -79,7 +76,6 @@ int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx)
 }
 #endif
 
-
 #if 0
 // Struct definition is screwed up.
 st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), int32 monitor)
@@ -94,7 +90,6 @@ st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE)
     return &g_isgdata_MAIN;
 }
 #endif
-
 
 #if 0
 // Structs make no sense

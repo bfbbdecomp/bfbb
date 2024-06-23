@@ -51,37 +51,6 @@ void zNPCTiki_InitFX(zScene* scene)
 }
 */
 
-void test(int32 a)
-{
-}
-
-extern uint32 orphanList;
-
-void zNPCTiki_InitStacking(zScene* zsc)
-{
-    for (int32 i = 0; i < zsc->num_npcs; i++)
-    {
-        xNPCBasic* npc = (xNPCBasic*)zsc->npcs[i];
-
-        if ((npc->SelfType() & 0xffffff00) == 'NTT\0')
-        {
-            zNPCTiki* tiki = (zNPCTiki*)npc;
-
-            if (npc->SelfType() != 'NTT1' && (tiki->FindParents(zsc), tiki->numParents == 0))
-            {
-                float32 dh = tiki->landHt - tiki->bound.box.box.lower.y;
-                tiki->bound.box.box.lower.y += dh;
-                tiki->bound.box.box.upper.y += dh;
-                tiki->bound.box.center.y += dh;
-                tiki->model->Mat->pos.y += dh;
-            }
-            tiki->tikiFlag &= ~0x1;
-        }
-    }
-
-    orphanList = 0;
-}
-
 xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
 {
     zNPCTiki* tiki = NULL;

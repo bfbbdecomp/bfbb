@@ -168,11 +168,6 @@ void xSceneForAllNPCs(xScene* sc, xSceneEntCallback func, void* data)
     }
 }
 
-
-
-    
-    
-
 void xRayHitsTikiLandableEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
 {
     xCollis* coll = (xCollis*)colldata;
@@ -255,20 +250,10 @@ void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
     }
 }
 
-
-
-
-
-
-
-
-
-
 cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType)
     : ray(ray), coll(coll), chkby(chkby), collType(collType)
 {
 }
-
 
 void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* param_4)
 {
@@ -301,9 +286,8 @@ void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* para
     return;
 }
 
-
 #ifdef NON_MATCHING
-// Float memes 
+// Float memes
 void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 {
     float32 fVar7 = lbl_803CCF78 * (param_1->x * ((param_2->upper).x + (param_2->lower).x) +
@@ -317,18 +301,8 @@ void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 }
 #endif
 
-
-
-
 static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle,
                                            float32, void* data);
-
-
-                   
-
-
-
-                   
 
 static RpCollisionTriangle* sectorNearestFloorCB(RpIntersection* intersection, RpWorldSector*,
                                                  RpCollisionTriangle* collTriangle,
@@ -336,12 +310,6 @@ static RpCollisionTriangle* sectorNearestFloorCB(RpIntersection* intersection, R
 {
     return nearestFloorCB(intersection, collTriangle, distance, data);
 }
-
-
-
-
-
-
 
 bool cb_ray_hits_ent::operator()(xEnt& ent, xGridBound& gridb)
 {
@@ -395,21 +363,10 @@ bool cb_ray_hits_ent::operator()(xEnt& ent, xGridBound& gridb)
     return true;
 }
 
-
-
-
 void xEntEnable(xEnt* ent)
 {
     xBaseEnable(ent);
 }
-
-
-
-    
-    
-
-
-
 
 template <> uint16 range_limit<uint16>(uint16 v, uint16 minv, uint16 maxv)
 {

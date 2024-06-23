@@ -46,12 +46,6 @@ void zPendulum_Setup(_zPendulum* pend, xScene* sc)
     zEntSetup((zEnt*)pend);
 }
 
-
-
-
-
-
-
 void zPendulum_Move(_zPendulum* pend, xScene* sc, float32 dt, xEntFrame* frame)
 {
     xEntMotionMove(&pend->motion, sc, dt, frame);

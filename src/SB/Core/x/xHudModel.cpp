@@ -19,30 +19,6 @@ xAnimTable* XHUD_AnimTable_Idle()
 
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if 0
 // Works except for the string label offset.
 char* xhud::model_asset::type_name()

@@ -15,12 +15,6 @@ void zTaxi_Init(xBase& data, xDynAsset& asset, ulong32)
     zTaxi_Init((zTaxi*)&data, (taxi_asset*)&asset);
 }
 
-
-
-
-
-
-
 void zTaxi_Setup(zTaxi* taxi)
 {
     // Load assets.
@@ -35,9 +29,6 @@ void zTaxi_Setup(zTaxi* taxi)
     taxi->portalTimer = portalTimer;
     taxi->baseFlags |= (uint16)2;
 }
-
-
-
 
 void zTaxi_tb_answer(ztalkbox::answer_enum answer)
 {

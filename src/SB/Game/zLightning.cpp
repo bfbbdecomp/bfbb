@@ -42,27 +42,6 @@ void lightningTweakStart(tweak_info& t)
 
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if 0
 // WIP.
 void zLightningRender()
@@ -100,10 +79,6 @@ void zLightningKill(zLightning* l)
 {
     l->flags &= 0xfffffefe;
 }
-
-
-
-                   
 
 void xDebugAddTweak(char* name, uint8* property, uint8 param_3, uint8 param_4,
                     tweak_callback* callback, void* param_6, uint32 param_7)

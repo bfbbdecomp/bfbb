@@ -10,9 +10,6 @@ extern uint32 rot_match_psize;
 extern xFFXRotMatchState* rot_match_pool;
 extern xFFXRotMatchState* rot_match_alist;
 
-
-
-
 // Structure same as the bottom function, get that one, you get this one.
 //void xFFXPoolInit(uint32 num_ffx);
 
@@ -119,12 +116,6 @@ void xFFXApply(xEnt* ent, xScene* sc, float32 dt)
         xFFXApplyOne((xFFX*)ent->ffx, ent, sc, dt);
     }
 }
-
-
-
-
-
-
 
 // The structure of this is identical to the pool init below. Figure out that one, you get this one as well.
 //void xFFXShakePoolInit(uint32 num);

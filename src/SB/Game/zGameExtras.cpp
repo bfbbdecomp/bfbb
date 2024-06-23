@@ -218,7 +218,7 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
         if (g_currDay == 6)
             g_gameExtraFlags |= 0b001000000;
         break;
- 
+
     case JULY:
         if (g_currDay == 4) // Independence Day
             g_gameExtraFlags |= 0b000000010;
@@ -314,7 +314,6 @@ int32 zGameExtras_CheatFlags()
     return g_flg_chEnabled;
 }
 
-
 #if 0
 void zGameExtras_NewGameReset()
 {
@@ -373,9 +372,6 @@ void AddToCheatPressed(uint32 button)
     sCheatPressed[15] = button;
 }
 
-
-
-
 void GEC_CheatFlagAdd(int32 bit)
 {
     g_flg_chEnabled |= bit;
@@ -385,7 +381,6 @@ void GEC_CheatFlagToggle(int32 bit)
 {
     g_flg_chEnabled ^= bit;
 }
-
 
 #if 1
 static uint32 aid_sndList_1160[7] = {};
@@ -522,7 +517,6 @@ void GEC_cb_ChaChing()
     xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
 }
 
-
 #if 0
 void GEC_cb_RestoreHealth()
 {
@@ -561,7 +555,6 @@ void GEC_cb_NoPantsMode()
     xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
 }
 
-
 #if 1
 static uint32 choices_1318[3] = {};
 #else
@@ -597,7 +590,6 @@ void GEC_cb_SwapCCUD()
 {
     GEC_dfltSound();
 }
-
 
 #if 1
 static uint32 aid_sndList_1342[6] = {};
@@ -677,7 +669,6 @@ uint32 zGame_HackIsGallery()
     }
     return 0;
 }
-
 
 #if 0
 template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 const* float_list)

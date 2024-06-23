@@ -918,9 +918,6 @@ void xCameraSetScene(xCamera* cam, xScene* sc)
     iCameraAssignEnv(cam->lo_cam, sc->env->geom);
 }
 
-
-
-
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat)
 {
     cam->tgt_mat = mat;

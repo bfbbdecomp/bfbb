@@ -40,10 +40,6 @@ uint16 my_dsc(uint16 dsc)
     return dsc;
 }
 
-
-
-
-
 //
 
 void MemoryProtectionErrorHandler(uint16 last, OSContext* ctx, uint64 unk1, uint64 unk2)
@@ -72,9 +68,6 @@ void TRCInit()
 
 #endif
 
-
-
-
 /*
 void iSystemExit()
 {
@@ -89,24 +82,12 @@ void iSystemExit()
 }
 */
 
-
-
-
-
-
-
-
-
-
 int32 RenderWareExit()
 {
     RwEngineStop();
     RwEngineClose();
     return RwEngineTerm();
 }
-
-
-
 
 void null_func()
 {

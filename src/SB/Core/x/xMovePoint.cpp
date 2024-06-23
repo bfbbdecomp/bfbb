@@ -8,7 +8,6 @@
 
 float32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
 
-
 void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
 {
     xBaseInit(ent, asset);
@@ -30,18 +29,15 @@ void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
     }
 }
 
-
 void xMovePointSave(xMovePoint* ent, xSerial* s)
 {
     xBaseSave(ent, s);
 }
 
-
 void xMovePointLoad(xMovePoint* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
 }
-
 
 void xMovePointReset(xMovePoint* m)
 {
@@ -50,7 +46,6 @@ void xMovePointReset(xMovePoint* m)
     m->on = m->asset->on;
     m->delay = m->asset->delay;
 }
-
 
 void xMovePointSetup(xMovePoint* m, xScene* sc)
 {
@@ -65,10 +60,6 @@ void xMovePointSetup(xMovePoint* m, xScene* sc)
     }
 }
 
-
-
-
-
 void xMovePointSplineDestroy(xMovePoint* m)
 {
     if (m->spl != NULL)
@@ -76,7 +67,6 @@ void xMovePointSplineDestroy(xMovePoint* m)
         m->spl = NULL;
     }
 }
-
 
 #if 0
 // If you uncomment the numPoints variable then this function is a perfect match
@@ -147,7 +137,6 @@ float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xV
     }
 }
 #endif
-
 
 xVec3* xMovePointGetPos(xMovePoint* m)
 {
