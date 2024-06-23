@@ -6,14 +6,10 @@
 
 #include "zActionLine.h"
 
-extern float32 zActionLine_f_0; // 0.0
-extern float32 zActionLine_f_1; // 1.0
+_tagActionLine* sActionLine[8];
+RwRaster* sActionLineRaster;
 
-extern _tagActionLine* sActionLine[8];
-extern RwRaster* sActionLineRaster;
-extern const int8 zActionLineStrings[];
-
-#if 0
+// Equivalent. Compiler doesn't generate the stwu instruction unless we remove `sActionLineRaster = NULL`, but we need it.
 void zActionLineInit()
 {
     for (int32 i = 0; i < 8; i++)
@@ -21,18 +17,16 @@ void zActionLineInit()
         sActionLine[i] = NULL;
     }
 
-    uint32 hash = xStrHash(zActionLineStrings);
-    RwTexture* tex = (RwTexture*)xSTFindAsset(hash, 0);
-
     sActionLineRaster = NULL;
+    RwTexture* tex = (RwTexture*)xSTFindAsset(xStrHash("ACTIONLINES"), 0);
 
     if (tex != NULL)
     {
         sActionLineRaster = tex->raster;
     }
 }
-#endif
 
+// Equivalent. Compiler is optimizing out the reduntant float load.
 void zActionLineUpdate(float32 seconds)
 {
     for (int32 i = 0; i < 8; i++)
@@ -43,7 +37,7 @@ void zActionLineUpdate(float32 seconds)
         {
             line->time_left -= seconds;
 
-            if (line->time_left <= zActionLine_f_0)
+            if (line->time_left <= 0.0f)
             {
                 // clear the first bit
                 line->flags &= ~1;
@@ -84,8 +78,8 @@ void RenderActionLine(_tagActionLine* l)
         _col->green = 0xff;
         _col->alpha = 0x80;
 
-        vert->u = zActionLine_f_0;
-        vert->v = zActionLine_f_1;
+        vert->u = 0.0f;
+        vert->v = 1.0f;
     }
 
     if (RwIm3DTransform(sStripVert, 4, NULL, 0x19))
