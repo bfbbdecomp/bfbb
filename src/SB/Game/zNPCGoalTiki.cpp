@@ -5,6 +5,7 @@
 #include "zRumble.h"
 
 #include "xEvent.h"
+#include "zNPCTypes.h"
 
 extern float32 _836_0;
 extern float32 _837_3;
@@ -61,7 +62,7 @@ int32 zNPCGoalTikiIdle::Enter(float32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
-    if (tiki->SelfType() == 'NTT3')
+    if (tiki->SelfType() == NPC_TYPE_TIKI_THUNDER)
     {
         tmr_wait = _836_0;
     }

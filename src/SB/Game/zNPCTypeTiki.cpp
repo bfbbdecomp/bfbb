@@ -5,6 +5,7 @@
 #include "xString.h"
 #include "xutil.h"
 #include "xMath.h"
+#include "zNPCGoals.h"
 
 #define ANIM_COUNT 2
 
@@ -93,12 +94,12 @@ xAnimTable* ZNPC_AnimTable_Tiki()
 
 void zNPCTiki::Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit)
 {
-    if (((xNPCBasic::SelfType() != 'NTT4') || (damtype == DMGTYP_CRUISEBUBBLE) ||
+    if (((xNPCBasic::SelfType() != NPC_TYPE_TIKI_STONE) || (damtype == DMGTYP_CRUISEBUBBLE) ||
          (damtype - DMGTYP_THUNDER_TIKI_EXPLOSION <= (uint32)1) ||
          (damtype - DMGTYP_INSTAKILL <= (uint32)1)) &&
         this->flg_vuln != 0)
     {
-        this->psy_instinct->GoalSet('NGT4', 0);
+        this->psy_instinct->GoalSet(NPC_GOAL_TIKIDYING, 0);
         this->flg_vuln = 0;
     }
 }
@@ -114,7 +115,7 @@ void zNPCTiki::Reset()
 
     xNPCBasic::RestoreColFlags();
 
-    if (myNPCType == 'NTT4')
+    if (myNPCType == NPC_TYPE_TIKI_STONE)
     {
         flg_vuln = 1;
     }
@@ -142,15 +143,15 @@ void zNPCTiki::Reset()
 
     switch (myNPCType)
     {
-    case 'NTT2':
+    case NPC_TYPE_TIKI_QUIET:
         break;
-    case 'NTT1':
+    case NPC_TYPE_TIKI_LOVEY:
         t1 = _858_2;
         t2 = _1084;
         t3 = _1084;
         xVec3Copy((xVec3*)&v1, (xVec3*)&model->Mat->pos);
         break;
-    case 0x4e545433:
+    case NPC_TYPE_TIKI_THUNDER:
         t1 = xurand();
         t2 = _867;
         t3 = _867;
@@ -159,7 +160,7 @@ void zNPCTiki::Reset()
         break;
     }
 
-    psy_instinct->GoalSet('NGT0', 1);
+    psy_instinct->GoalSet(NPC_GOAL_TIKIIDLE, 1);
     model->RedMultiplier = _862;
     model->BlueMultiplier = _862;
     model->GreenMultiplier = _862;
@@ -179,7 +180,7 @@ void zNPCTiki::ParseINI()
     NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiShared);
     switch (xNPCBasic::SelfType())
     {
-    case 'NTT3':
+    case NPC_TYPE_TIKI_THUNDER:
         cfg_npc->snd_trax = g_sndTrax_TikiThunder;
         NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiThunder);
         break;
