@@ -355,7 +355,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zEntSimpleObj.cpp"),
             Object(NonMatching, "SB/Game/zEntTrigger.cpp"),
             Object(Matching, "SB/Game/zEnv.cpp"),
-            Object(NonMatching, "SB/Game/zEvent.cpp"),
+            Object(Matching, "SB/Game/zEvent.cpp"),
             Object(Matching, "SB/Game/zFeet.cpp"),
             Object(Matching, "SB/Game/zFMV.cpp"),
             Object(NonMatching, "SB/Game/zFX.cpp"),
