@@ -21,6 +21,9 @@ struct zSaveLoadUI
     int8* name;
 };
 
+
+zSaveLoadGame zSaveLoadGameTable[3];
+
 void zUpdateThumbIcon();
 void zSaveLoad_Tick();
 int32 zSaveLoad_poll(int32 i);

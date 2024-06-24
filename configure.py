@@ -208,6 +208,7 @@ cflags_rel = [
 # Game-specific flags
 cflags_bfbb = [
     *cflags_base,
+    "-common on",
     "-schedule on",
     "-opt level=4,peephole,speed",
     "-char unsigned",
@@ -381,7 +382,7 @@ config.libs = [
             Object(Matching, "SB/Game/zPortal.cpp"),
             Object(NonMatching, "SB/Game/zRenderState.cpp"),
             Object(NonMatching, "SB/Game/zRumble.cpp"),
-            Object(NonMatching, "SB/Game/zSaveLoad.cpp"),
+            Object(Equivalent, "SB/Game/zSaveLoad.cpp"),
             Object(NonMatching, "SB/Game/zScene.cpp"),
             Object(Matching, "SB/Game/zScript.cpp"),
             Object(NonMatching, "SB/Game/zSurface.cpp"),

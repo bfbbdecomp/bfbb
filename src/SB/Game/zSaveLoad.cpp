@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "iSystem.h"
+
 #include "zUI.h"
 #include "zGlobals.h"
 #include "zGameState.h"
@@ -18,8 +20,9 @@
 #include "xutil.h"
 
 uint32 saveSuccess;
-float32 time_last_1;
-float32 time_current_1;
+float32 time_last;
+float32 time_current;
+float32 time_elapsed = 0.01f;
 iTime t0;
 iTime t1;
 int32 promptSel;
@@ -29,7 +32,6 @@ int32 sNeeded;
 int32 sAccessType;
 uint8 preAutoSaving;
 
-float32 time_elapsed_1 = 0.01f;
 int32 currentCard = -1;
 int32 currentGame = -1;
 float32 dontPoll = 1.0f;
@@ -105,16 +107,6 @@ int8* thumbIconMap[15] = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIc
                            "ThumbIconB2", "ThumbIconKF", "ThumbIconGY", "ThumbIconDB",
                            "ThumbIconB3", "ThumbIconHB", "ThumbIconHB" };
 
-//This is in .bss instead of zSaveLoad.s
-extern zSaveLoadGame zSaveLoadGameTable[3];
-
-extern float32 _846;
-extern float32 _847;
-extern float32 _848;
-extern float32 _849;
-extern float64 _850;
-extern float64 _852;
-
 void zUpdateThumbIcon()
 {
     int32 i;
@@ -157,39 +149,36 @@ void zUpdateThumbIcon()
     }
 }
 
-#if 0
 void zSaveLoad_Tick()
 {
-    time_current_1 = (_846 / _852) * (float)iTimeGet();
+    time_current = (1.0f / (GET_BUS_FREQUENCY() / 4)) * (float)iTimeGet();
 
-    time_elapsed_1 = time_current_1 - time_last_1;
-    if (time_elapsed_1 < _847)
+    time_elapsed = time_current - time_last;
+    if (time_elapsed < 0.0f)
     {
-        if (time_elapsed_1 > _849)
-        {
-            time_elapsed_1 = _848;
-        }
+        time_elapsed = 1.0f / 60.f;
     }
-    else
+    else if (time_elapsed > 0.1f)
     {
-        time_elapsed_1 = _848;
+        time_elapsed = 1.0f / 60.f;
     }
 
-    dontPoll = dontPoll - time_elapsed_1;
+    dontPoll = dontPoll - time_elapsed;
     t0 = t1;
-    time_last_1 = time_current_1;
+    time_last = time_current;
     t1 = iTimeGet();
     sTimeCurrent = iTimeGet();
     sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
     sTimeLast = sTimeCurrent;
-    xPadUpdate(globals.NoMusic, time_elapsed_1);
+    xPadUpdate(globals.currentActivePad, time_elapsed);
     iTRCDisk::CheckDVDAndResetState();
     xDrawBegin();
-    xParMgrUpdate(time_elapsed_1);
-    zSceneUpdate(time_elapsed_1);
+    xParMgrUpdate(time_elapsed);
+    zSceneUpdate(time_elapsed);
 
     xMat4x3 playerMat;
     xMat4x3* ma = xEntGetFrame(&(xEnt)globals.player.ent);
+    // This feels like a normal assignment but that calls the assignment operator function.
     *(uint32*)&playerMat.right.x = *(uint32*)&ma->right.x;
     *(uint32*)&playerMat.right.y = *(uint32*)&ma->right.y;
     *(uint32*)&playerMat.right.z = *(uint32*)&ma->right.z;
@@ -206,6 +195,7 @@ void zSaveLoad_Tick()
     *(uint32*)&playerMat.pos.z = *(uint32*)&ma->pos.z;
     *(uint32*)&playerMat.pad3 = *(uint32*)&ma->pad3;
     *(uint32*)&playerMat.pos.y = *(uint32*)&ma->pos.y;
+    playerMat.pos.y += 0.6f;
 
     xSndSetListenerData(SND_LISTENER_CAMERA, &globals.camera.mat);
     xSndSetListenerData(SND_LISTENER_PLAYER, &playerMat);
@@ -215,26 +205,24 @@ void zSaveLoad_Tick()
         zhud::update(sTimeElapsed);
     }
 
-    zCameraUpdate(&globals.camera, time_elapsed_1);
+    zCameraUpdate(&globals.camera, time_elapsed);
     xCameraBegin(&globals.camera, 1);
     zUpdateThumbIcon();
     zSceneRender();
     xDebugUpdate();
     xDrawEnd();
-    xCameraEnd(&globals.camera, time_elapsed_1, 1);
+    xCameraEnd(&globals.camera, time_elapsed, 1);
     iEnvEndRenderFX(0);
     xCameraShowRaster(&globals.camera);
     gFrameCount = gFrameCount + 1;
 }
-#endif
 
-#ifdef NON_MATCHING
 // Reordings/Float scheduling
 int32 zSaveLoad_poll(int32 i)
 {
-    if (dontPoll < _847)
+    if (dontPoll < 0.0f)
     {
-        dontPoll = _846;
+        dontPoll = 1.0f;
         if (!zSaveLoad_CardCheckSingle(currentCard))
         {
             promptSel = i;
@@ -244,7 +232,6 @@ int32 zSaveLoad_poll(int32 i)
     }
     return 1;
 }
-#endif
 
 void zSendEventToThumbIcon(uint32 toEvent)
 {
@@ -252,7 +239,6 @@ void zSendEventToThumbIcon(uint32 toEvent)
     zEntEvent(zSceneFindObject(xStrHash(iconString)), toEvent);
 }
 
-#ifdef NON_MATCHING
 void zChangeThumbIcon(const int8* icon)
 {
     int32 arr[4];
@@ -264,7 +250,6 @@ void zChangeThumbIcon(const int8* icon)
                   xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON")),
               eEventUIChangeTexture, (float32*)arr);
 }
-#endif
 
 void zSaveLoadInit()
 {
@@ -1212,38 +1197,43 @@ int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// Optimizing zSaveLoadGameTable lookup out of loop
 int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
 {
+    // TODO: Figure out what this number means.
     int32 iVar1 = zSaveLoad_CardCheckSlotOverwrite_Free(cardNumber, gameNumber);
-    while (iVar1 != 1 || iVar1 == 10)
+    // NOTE (Square): I'm not sure that this is supposed to be a loop. It doesn't make
+    // sense to just break at the end and the condition feels like it should be an early return
+    // but this matches and I don't know how else to generate the `b` instruction at 0x18
+    while(iVar1 != 1 || iVar1 == 10)
     {
         if (iVar1 == -1 || iVar1 == 10)
         {
             return iVar1;
         }
-
+        
         if (IsValidName(zSaveLoadGameTable[gameNumber].label))
-        {
-            iVar1 = zSaveLoad_CardPromptOverwriteDamaged();
-        }
-        else
         {
             iVar1 = zSaveLoad_CardPromptOverwrite();
         }
-        if (iVar1 == 5)
+        else
+        {
+            iVar1 = zSaveLoad_CardPromptOverwriteDamaged();
+        }
+
+        if(iVar1 == 5)
         {
             return iVar1;
         }
-        if ((iVar1 == 2) || (iVar1 == 4))
+
+        if(iVar1 == 2 || iVar1 == 4)
         {
             return 2;
         }
+        break;
     }
+
     return 1;
 }
-#endif
 
 int32 zSaveLoad_CardPick(int32 mode)
 {
@@ -1454,10 +1444,7 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
 
     if (counter > 0)
     {
-        sprintf(name_txt,
-                "%s (%d)\0"
-                "Empty",
-                desired, counter);
+        sprintf(name_txt, "%s (%d)", desired, counter);
         name_txt[0x3f] = NULL;
     }
     else
@@ -1466,7 +1453,6 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
     }
 }
 
-#ifdef NON_MATCHING
 int32 zSaveLoad_GameSelect(int32 mode)
 {
     int32 done = 0;
@@ -1524,7 +1510,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
 
                 zSendEventToThumbIcon(3);
                 zSaveLoadGameTable[i].thumbIconIndex = xSGGameThumbIndex(svinst, i);
-                if (strcmpi(zSaveLoadGameTable[i].label, ""))
+                if (strcmpi(zSaveLoadGameTable[i].label, "") == 0)
                 {
                     zSaveLoadGameTable[i].thumbIconIndex = -1;
                 }
@@ -1536,7 +1522,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
         {
             for (int32 emptyCount = 6; emptyCount <= 8; emptyCount++)
             {
-                if (zSaveLoad_slotIsEmpty(emptyCount - 6))
+                if (zSaveLoad_slotIsEmpty(emptyCount - 6) == 0)
                 {
                     zSaveLoad_UIEvent(emptyCount, eEventUISelect);
                     break;
@@ -1661,7 +1647,6 @@ int32 zSaveLoad_GameSelect(int32 mode)
     zSaveLoad_UIEvent(index, eEventUIFocusOff_Unselect);
     return done;
 }
-#endif
 
 uint8 zSaveLoadGetPreAutoSave()
 {
@@ -1716,19 +1701,7 @@ void zSaveLoadAutoSaveUpdate()
                 zEntEvent(obj, eEventInvisible);
             }
 
-            obj = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED\0"
-#if 1 // TODO: Remove this once zSaveLoad_SaveLoop matches
-                                            "PAUSE OPTIONS BKG GROUP\0"
-                                            "PAUSE OPTIONS GROUP\0"
-                                            "PAUSE OPTION MGR UIF\0"
-                                            "PAUSE OPTION SAVE UIF\0"
-                                            "MNU3 START CREATE NEW GAME NO\0"
-                                            "MNU3 START CREATE NEW GAME YES\0"
-                                            "MNU3 START CREATE NEW GAME\0"
-                                            "BLUE ALPHA 1 UI\0"
-                                            "MNU4 SAVE COMPLETED"
-#endif
-                                            )); //"MNU4 AUTO SAVE FAILED"
+            obj = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED")); //"MNU4 AUTO SAVE FAILED"
             if (obj != NULL)
             {
                 zEntEvent(obj, eEventVisible);
@@ -1854,7 +1827,6 @@ int32 zSaveLoad_DoAutoSave()
     }
 }
 
-#ifdef NON_MATCHING
 // Reordering at beginning
 int32 zSaveLoad_SaveGame()
 {
@@ -1976,9 +1948,7 @@ int32 zSaveLoad_SaveGame()
         return -1;
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 // Reordering, causing different register use at the end
 int32 zSaveLoad_LoadGame()
 {
@@ -2074,7 +2044,6 @@ int32 zSaveLoad_LoadGame()
         return -1;
     }
 }
-#endif
 
 uint32 zSaveLoad_LoadLoop()
 {
@@ -2161,7 +2130,6 @@ uint32 zSaveLoad_LoadLoop()
            (uint32)sceneRead[2] << 0x8 | (uint32)sceneRead[3];
 }
 
-#ifdef NON_MATCHING
 // Scheduling meme on the return
 uint32 zSaveLoad_SaveLoop()
 {
@@ -2304,9 +2272,7 @@ uint32 zSaveLoad_SaveLoop()
     sAccessType = 0;
     return saveSuccess;
 }
-#endif
 
-#ifdef NON_MATCHING
 void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
 {
     switch (dispatchEvent)
@@ -2336,7 +2302,6 @@ void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
         break;
     }
 }
-#endif
 
 int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most)
 {
@@ -2382,8 +2347,6 @@ int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCON
     int32 compdiff = 0;
 
     xSGReadData(xsgdata, rctxt, bigbuf, 1, strlen(currSceneStr));
-    // compdiff = ;
-    // compdiff -= ;
     if (strlen(currSceneStr) != strlen(bigbuf))
     {
         compdiff = 1;
