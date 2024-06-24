@@ -9,7 +9,7 @@
 #include "zSurface.h"
 
 // TODO: replace hardcoded constant
-uint32 sSurfaceSoundIDStep[23];
+static uint32 sSurfaceSoundIDStep[23];
 xBase* paremit_sd_pawprint;
 xBase* paremit_vil_footprint;
 RwRaster* sSkidMarkRaster;

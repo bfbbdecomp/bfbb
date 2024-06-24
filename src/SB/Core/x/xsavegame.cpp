@@ -11,7 +11,7 @@
 int32 g_xsginit;
 st_XSAVEGAME_DATA g_xsgdata = {};
 st_XSAVEGAME_LEADER g_leaders[3] = {};
-XSGAutoData g_autodata;
+static XSGAutoData g_autodata;
 
 int32 xSGStartup()
 {
