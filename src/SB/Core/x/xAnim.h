@@ -186,6 +186,7 @@ xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
                           xModelInstance* modelInst);
 xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);
 void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const int8* source);
+void xAnimTableAddFile(xAnimTable* table, xAnimFile* file, const char* states);
 xAnimState* xAnimTableGetStateID(xAnimTable* table, uint32 ID);
 void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, float32 startTime);
 void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition);
