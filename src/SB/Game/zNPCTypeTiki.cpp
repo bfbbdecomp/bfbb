@@ -6,6 +6,7 @@
 #include "xutil.h"
 #include "xMath.h"
 #include "zNPCGoals.h"
+#include "zNPCGoalTiki.h"
 
 #define ANIM_COUNT 2
 
@@ -185,6 +186,27 @@ void zNPCTiki::ParseINI()
         NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_TikiThunder);
         break;
     }
+}
+
+void test(int32)
+{
+}
+
+// very close, but there are some float order issues
+int32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, float dt, void*)
+{
+    int32 nextgoal = 0;
+    zNPCGoalTikiDying* goal = (zNPCGoalTikiDying*)rawgoal->GetOwner();
+
+    goal->tmr_dying = (-1 > goal->tmr_dying - dt) ? -1 : goal->tmr_dying - dt;
+
+    if (goal->tmr_dying < 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_TIKIDEAD;
+    }
+
+    return nextgoal;
 }
 
 int32 zNPCTiki::CanRope()
