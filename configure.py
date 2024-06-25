@@ -485,7 +485,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeBossPatrick.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBossPlankton.cpp"),
             Object(NonMatching, "SB/Game/zParPTank.cpp"),
-            Object(NonMatching, "SB/Game/zTaxi.cpp"),
+            Object(Equivalent, "SB/Game/zTaxi.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeDutchman.cpp"),
             Object(Matching, "SB/Game/zCameraFly.cpp"),
             Object(Matching, "SB/Core/x/xCurveAsset.cpp"),
