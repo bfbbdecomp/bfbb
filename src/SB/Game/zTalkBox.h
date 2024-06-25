@@ -48,7 +48,8 @@ struct ztalkbox : xBase
     {
         ANSWER_CONTINUE,
         ANSWER_YES,
-        ANSWER_NO
+        ANSWER_NO,
+        ANSWER_3,
     };
 
     struct callback
@@ -85,7 +86,10 @@ struct ztalkbox : xBase
     static void reset_all();
     static void permit(uint32 add_flags, uint32 remove_flags);
 
+    void start_talk(uint32 textID, callback*, zNPCCommon*); // FIXME: params not verified
     void stop_talk();
+
+    void set_text(uint32 textID);
 };
 
 #endif
