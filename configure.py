@@ -380,7 +380,7 @@ config.libs = [
             Object(Matching, "SB/Game/zPickupTable.cpp"),
             Object(NonMatching, "SB/Game/zPlatform.cpp"),
             Object(Matching, "SB/Game/zPortal.cpp"),
-            Object(NonMatching, "SB/Game/zRenderState.cpp"),
+            Object(Matching, "SB/Game/zRenderState.cpp"),
             Object(NonMatching, "SB/Game/zRumble.cpp"),
             Object(Equivalent, "SB/Game/zSaveLoad.cpp"),
             Object(NonMatching, "SB/Game/zScene.cpp"),

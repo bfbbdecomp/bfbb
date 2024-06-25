@@ -8,9 +8,6 @@
 
 volatile _SDRenderState sRS;
 
-// For things to line up right this has to be present.
-int32 padding;
-
 void zRenderStateInit()
 {
     sRS = SDRS_Unknown;
