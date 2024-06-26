@@ -1,10 +1,11 @@
 #ifndef ZNPCSUPPLEMENT_H
 #define ZNPCSUPPLEMENT_H
 
-#include "xVec3.h"
+#include "iColor.h"
+
 #include "xMAth2.h"
 #include "xPtankPool.h"
-#include "iColor.h"
+#include "xVec3.h"
 
 #include <types.h>
 #include <rwplcore.h>
@@ -92,15 +93,6 @@ struct NPARInfo
     int32 num_maxParticles;
     int8* nam_texture;
     int32 flg_npar;
-};
-
-struct ptank_pool__pos_color_size_uv2 : ptank_pool
-{
-    xVec3* pos;
-    iColor_tag* color;
-    xVec2* size;
-    xVec2* uv;
-    int32 stride;
 };
 
 struct StreakInfo
