@@ -333,7 +333,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xSpline.cpp"),
             Object(NonMatching, "SB/Core/x/xstransvc.cpp"),
             Object(NonMatching, "SB/Core/x/xString.cpp"),
-            Object(NonMatching, "SB/Core/x/xSurface.cpp"),
+            Object(Matching, "SB/Core/x/xSurface.cpp"),
             Object(NonMatching, "SB/Core/x/xTimer.cpp"),
             Object(NonMatching, "SB/Core/x/xTRC.cpp"),
             Object(Matching, "SB/Core/x/xutil.cpp"),

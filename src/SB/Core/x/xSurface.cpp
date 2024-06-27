@@ -3,18 +3,16 @@
 
 #include <types.h>
 
-extern xSurface* surfs;
-extern uint16 nsurfs;
+xSurface* surfs;
+uint16 nsurfs;
 
-#if 0
-// The for loop is off.
 void xSurfaceInit(uint16 num_surfs)
 {
     nsurfs = num_surfs;
     if (num_surfs != 0)
     {
         surfs = (xSurface*)xMemAllocSize(num_surfs * sizeof(xSurface));
-        for (int32 i = 0; i < nsurfs; i++)
+        for (uint16 i = 0; i < nsurfs; i++)
         {
             surfs[i].idx = i;
         }
@@ -25,11 +23,11 @@ void xSurfaceInit(uint16 num_surfs)
     }
 }
 
-#endif
+extern "C" {
+extern void __copy(void* dst, const void* src, uint32 n);
+}
 
-#if 0
-// Close to being finished.
-void xSurface::operator=(const xSurface& ent)
+xSurface& xSurface::operator=(const xSurface& ent)
 {
     xBase::operator=(ent);
     this->idx = ent.idx;
@@ -37,20 +35,10 @@ void xSurface::operator=(const xSurface& ent)
     this->ent = ent.ent;
     this->friction = ent.friction;
     this->state = ent.state;
-    this->pad = ent.pad; // Make this call __copy();
+    // FIXME: Is this auto-inserted by the compiler?
+    __copy(&pad, &ent.pad, 3);
     this->moprops = ent.moprops;
-}
-
-#endif
-
-void xSurface::operator=(const xBase& ent)
-{
-    this->id = ent.id;
-    this->baseType = ent.baseType;
-    this->linkCount = ent.linkCount;
-    this->baseFlags = ent.baseFlags;
-    this->link = ent.link;
-    this->eventFunc = ent.eventFunc;
+    return *this;
 }
 
 void xSurfaceExit()
@@ -67,7 +55,7 @@ void xSurfaceLoad(xSurface* ent, xSerial* s)
     xBaseLoad((xBase*)ent, s);
 }
 
-void xSurfaceReset()
+void xSurfaceReset(xSurface* ent)
 {
 }
 

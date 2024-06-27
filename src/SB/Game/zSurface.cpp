@@ -48,7 +48,7 @@ void zSurfaceExit()
 
 void zSurfaceResetSurface(xSurface* surf)
 {
-    xSurfaceReset();
+    xSurfaceReset(surf);
     surf->friction = ((zSurfaceProps*)(surf->moprops))->asset->friction;
 }
 
