@@ -39,6 +39,8 @@ struct ptank_pool
     RpAtomic* ptank;
     _class hide;
 
+    int8 valid() const;
+    void reset();
     void flush();
     void grab_block(ptank_group_type type);
 };
@@ -51,6 +53,9 @@ struct ptank_pool__pos_color_size_uv2 : public ptank_pool
     xVec2* size;
     xVec2* uv;
     int32 stride;
+
+    void next();
+    void flush();
 };
 
 void xPTankPoolSceneEnter();

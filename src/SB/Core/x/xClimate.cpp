@@ -12,8 +12,7 @@
 
 _tagClimate* sClimate;
 
-float snow_life = 3.0f;
-
+const float snow_life = 3.0f;
 const xVec3 snow_vel = { 0.0f, -2.0f, 0.0f };
 const xVec3 snow_dvel = { 0.1f, 0.1f, 0.1f };
 

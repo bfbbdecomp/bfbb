@@ -28,6 +28,6 @@ void zParPTankExit();
 void zParPTankRender();
 void zParPTankUpdate(float32 dt);
 
-uint32 gPTankDisable = 0;
+extern const uint32 gPTankDisable;
 
 #endif

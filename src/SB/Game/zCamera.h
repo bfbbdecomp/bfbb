@@ -71,6 +71,5 @@ void zCameraDisableWallJump(xCamera* cam);
 void zCameraSetReward(int32 reward);
 void zCameraMinTargetHeightSet(float32 min_height);
 void zCameraMinTargetHeightClear();
-float32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB);
 
 #endif
