@@ -20,8 +20,7 @@ struct xSurface : xBase
     uint8 pad[3];
     void* moprops;
 
-    void operator=(const xSurface& ent);
-    void operator=(const xBase& ent);
+    xSurface& operator=(const xSurface& ent);
 };
 
 #define XSURFACE_TYPE_1 1
@@ -31,7 +30,7 @@ void xSurfaceInit(uint16 num_surfs);
 void xSurfaceExit();
 void xSurfaceSave(xSurface* ent, xSerial* s);
 void xSurfaceLoad(xSurface* ent, xSerial* s);
-void xSurfaceReset();
+void xSurfaceReset(xSurface* ent);
 uint16 xSurfaceGetNumSurfaces();
 xSurface* xSurfaceGetByIdx(uint16 n);
 
