@@ -6,6 +6,10 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
+struct iColor_tag;
+struct xVec2;
+struct xVec3;
+
 enum ptank_group_type
 {
     PGT_COLOR_MAT_UV2,
@@ -35,8 +39,23 @@ struct ptank_pool
     RpAtomic* ptank;
     _class hide;
 
+    int8 valid() const;
+    void reset();
     void flush();
     void grab_block(ptank_group_type type);
+};
+
+// total size: 0x38
+struct ptank_pool__pos_color_size_uv2 : public ptank_pool
+{
+    xVec3* pos;
+    iColor_tag* color;
+    xVec2* size;
+    xVec2* uv;
+    int32 stride;
+
+    void next();
+    void flush();
 };
 
 void xPTankPoolSceneEnter();

@@ -105,6 +105,8 @@ void xParEmitterInit(void* b, void* tasset);
 void xParEmitterSetup(xParEmitter* t);
 void xParEmitterDestroy();
 void xParEmitterUpdate(xBase* to, xScene*, float32 dt);
-xPar* xParEmitterEmitCustom(xParEmitter* p, float dt, xParEmitterCustomSettings* info);
+xPar* xParEmitterEmitCustom(xParEmitter* p, float32 dt, xParEmitterCustomSettings* info);
+float32 xParInterpCompute(int32 interp_mode, xParInterp* r, float32 time, int32 time_has_elapsed,
+                          float32 last_val);
 
 #endif

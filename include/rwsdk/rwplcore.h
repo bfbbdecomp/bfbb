@@ -637,6 +637,8 @@ struct RwPluginRegEntry
     RwPluginRegistry* parentRegistry;
 };
 
+#define RWPLUGINOFFSET(_type, _base, _offset) ((_type*)((RwUInt8*)(_base) + (_offset)))
+
 enum RwOpCombineType
 {
     rwCOMBINEREPLACE = 0,
@@ -686,14 +688,51 @@ struct RwMatrixTag
 
 typedef struct RwMatrixTag RwMatrix;
 
+#if (!defined(RwMatrixCopyMacro))
 #define RwMatrixCopyMacro(_target, _source) (*(_target) = *(_source))
+#endif /* (!defined(RwMatrixCopyMacro)) */
 
+#if (!defined(RwMatrixSetIdentityMacro))
+#define RwMatrixSetIdentityMacro(m)                                                                \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (m)->right.x = (m)->up.y = (m)->at.z = (RwReal)((1.0));                                    \
+        (m)->right.y = (m)->right.z = (m)->up.x = (RwReal)((0.0));                                 \
+        (m)->up.z = (m)->at.x = (m)->at.y = (RwReal)((0.0));                                       \
+        (m)->pos.x = (m)->pos.y = (m)->pos.z = (RwReal)((0.0));                                    \
+        rwMatrixSetFlags((m), rwMatrixGetFlags(m) |                                                \
+                                  (rwMATRIXINTERNALIDENTITY | rwMATRIXTYPEORTHONORMAL));           \
+    }                                                                                              \
+    MACRO_STOP
+#endif /* (!defined(RwMatrixSetIdentityMacro)) */
+
+typedef void (*rwMatrixMultFn)(RwMatrix* dstMat, const RwMatrix* matA, const RwMatrix* matB);
+
+typedef struct RwMatrixTolerance RwMatrixTolerance;
+
+#ifndef RWADOXYGENEXTERNAL
+/**
+ * \ingroup rwmatrix
+ * \struct RwMatrixTolerance
+ * Holds tolerances for matrix optimizations with \ref RwMatrixOptimize
+ */
+#endif /* RWADOXYGENEXTERNAL */
 struct RwMatrixTolerance
 {
     RwReal Normal;
+    /**< Tolerance within which matrix is deemed to be normal   */
     RwReal Orthogonal;
+    /**< Tolerance within which matrix is deemed to be orthogonal */
     RwReal Identity;
+    /**< Tolerance within which matrix is deemed to be identity */
 };
+
+#define rwMatrixSetFlags(m, flagsbit) ((m)->flags = (flagsbit))
+#define rwMatrixGetFlags(m) ((m)->flags)
+#define rwMatrixTestFlags(m, flagsbit) ((m)->flags & (RwInt32)(flagsbit))
+
+#define RwMatrixCopy(dst, src) RwMatrixCopyMacro(dst, src)
+#define RwMatrixSetIdentity(m) RwMatrixSetIdentityMacro(m)
 
 #define RwMatrixGetRight(m) (&(m)->right)
 #define RwMatrixGetUp(m) (&(m)->up)

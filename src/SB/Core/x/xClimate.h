@@ -7,6 +7,8 @@
 struct xEnvAsset;
 struct zParEmitter;
 
+extern const float snow_life;
+
 struct _tagRain
 {
     int32 rain;

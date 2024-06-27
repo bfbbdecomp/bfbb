@@ -17,6 +17,7 @@ void xVec3SubFrom(xVec3* o, const xVec3* v);
 void xVec3Lerp(xVec3* o, const xVec3* a, const xVec3* b, float32 t);
 void xVec3ScaleC(xVec3* o, const xVec3* v, float32 x, float32 y, float32 z);
 float32 xVec3Dist(const xVec3* a, const xVec3* b);
+float32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB);
 float32 xVec3Length2(const xVec3* vec);
 float32 xVec3LengthFast(float32 x, float32 y, float32 z);
 void xVec3AddScaled(xVec3* o, const xVec3* v, float32 s);

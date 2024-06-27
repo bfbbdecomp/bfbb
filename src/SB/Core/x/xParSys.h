@@ -7,6 +7,8 @@
 
 #include <rwcore.h>
 
+struct xScene;
+
 struct xParSysAsset : xBaseAsset
 {
     uint32 type;
@@ -32,8 +34,6 @@ struct xParSys : xBase
     uint8 visible;
     RwTexture* txtr_particle;
 };
-
-struct xScene;
 
 void xParSysInit(void* b, void* tasset);
 void xParSysSetup(xParSys* t);

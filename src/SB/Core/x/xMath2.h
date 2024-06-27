@@ -37,6 +37,10 @@ struct xVec2
     float32 x;
     float32 y;
 
+    xVec2& assign(float32 xy)
+    {
+        return assign(xy,xy);
+    }
     xVec2& assign(float32 x, float32 y);
     float32 length() const;
 
