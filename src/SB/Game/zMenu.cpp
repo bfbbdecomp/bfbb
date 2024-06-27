@@ -1,72 +1,49 @@
 #include "zMenu.h"
 
-#include <rwplcore.h>
 #include <string.h>
 
-#include "iSystem.h"
-#include "iTRC.h"
 #include "iColor.h"
+#include "iSystem.h"
 #include "iTime.h"
+#include "iTRC.h"
+
+#include "xCutscene.h"
+#include "xDebug.h"
+#include "xEvent.h"
 #include "xMath.h"
+#include "xPad.h"
+#include "xsavegame.h"
+#include "xScrFx.h"
+#include "xSFX.h"
 #include "xSnd.h"
 #include "xSkyDome.h"
-#include "xEvent.h"
-#include "xSFX.h"
-#include "xTRC.h"
-#include "xPad.h"
-#include "xDebug.h"
-#include "xCutscene.h"
 #include "xString.h"
-#include "xsavegame.h"
+#include "xTRC.h"
 
 #include "zCamera.h"
+#include "zFMV.h"
+#include "zGame.h"
+#include "zGameExtras.h"
+#include "zGameState.h"
 #include "zGlobals.h"
 #include "zMusic.h"
-#include "zGame.h"
-#include "zGameState.h"
-#include "zGameExtras.h"
-#include "zFMV.h"
 #include "zSaveLoad.h"
 
-// Internal global vars
-extern float32 zMenu_float_48p264;
-extern float32 zMenu_float_minus_one;
-extern float32 zMenu_float_itof_value;
-extern float32 zMenu_float_one;
-extern float32 zMenu_float_one_over_sixty;
-extern float32 zMenu_float_zero;
-extern float32 zMenu_float_two;
-extern float32 zMenu_float_ten;
-extern float32 zMenu_float_0p1;
-extern int8 zMenu_strings[];
-
-// Global vars not owned by this translation unit
-// TODO: Not sure the best header file to declare these two extern in
-extern eGameMode gGameMode;
-extern _zEnv* gCurEnv;
-
-// Global vars owned by this translation unit
-extern float32 sAttractMode_timer;
-extern int32 sInMenu;
-extern int32 sFirstBoot;
-extern int8 corruptFiles[3][64];
-extern int32 corruptFileCount;
+static int32 sFirstBoot = 1;
 
 // TODO: This probably wasn't volatile in the original code, but we have 100%
 // matching code for all of the functions which use it with it marked as
 // volatile, so leave it that way for now.
-extern volatile int32 card;
+static volatile int32 card;
+static int32 sInMenu;
+static int32 corruptFileCount;
+static int8 corruptFiles[3][64];
 
-extern float32 time_last;
-extern float32 holdTmr;
-extern float32 time_elapsed;
-extern float32 time_current;
-extern int8 menu_fmv_played;
-
-// TODO: These aren't actually globals vars, they're the ctor data
-// for initializing the structs.
-extern iColor_tag BlackColorInitializer;
-extern iColor_tag ClearColorInitializer;
+static volatile float32 time_elapsed = 1.0f / 100.0f;
+static volatile float32 holdTmr = 10.0f;
+static volatile float32 time_last;
+static volatile float32 time_current;
+static volatile float32 sAttractMode_timer;
 
 int32 zMenuRunning()
 {
@@ -99,27 +76,27 @@ void zMenuSetup()
 {
     globals.player.MaxHealth = 3;
     zSceneSetup();
-    sAttractMode_timer = zMenu_float_48p264;
+    sAttractMode_timer = 48.264f;
     zGameSetupPlayer();
     zEnvStartingCamera(gCurEnv);
-    xCameraUpdate(&globals.camera, zMenu_float_minus_one);
+    xCameraUpdate(&globals.camera, -1.0f);
     xSkyDome_Setup();
-    zEntEventAll(NULL, 0, 0x57, NULL);
-    zEntEventAll(NULL, 0, 0x59, NULL);
+    zEntEventAll(NULL, 0, eEventSceneBegin, NULL);
+    zEntEventAll(NULL, 0, eEventRoomBegin, NULL);
     if (globals.updateMgr)
     {
-        xUpdateCull_Update(globals.updateMgr, 0x64);
+        xUpdateCull_Update(globals.updateMgr, eEventDispatcher_PadVibrateOn);
     }
     zEntEvent(&globals.player.ent, 8);
 }
 
-#ifdef NON_MATCHING
-// Floating point code uses different register allocation / order, but I think
-// that the function has the correct behavior.
-void zMenuLoop()
-{
-    uint32 s;
+void zMenuFirstBootSet(int32 value);
 
+// Equivalent
+// Scheduling is a mess. Some float constants are being pushed onto the stack
+uint32 zMenuLoop()
+{
+    int32 s = 0;
     if (sFirstBoot)
     {
         zGameModeSwitch(eGameMode_Intro);
@@ -133,23 +110,20 @@ void zMenuLoop()
         zMusicNotify(0);
     }
 
-    time_last =
-        zMenu_float_one / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - zMenu_float_one_over_sixty;
+    time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
 
     zGameExtras_NewGameReset();
 
     iColor_tag black = { 0, 0, 0, 255 }; //BlackColorInitializer;
     iColor_tag clear = { 0 }; //ClearColorInitializer;
-    xScrFxFade(&black, &clear, zMenu_float_zero, NULL, 1);
-
+    xScrFxFade(&black, &clear, 0.0f, NULL, 1);
     int32 ostrich_delay = 0xa;
+
+    time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
+
     int32 draw_black;
-    int32 ss = (int32)&globals.camera.id;
 
-    time_last =
-        zMenu_float_one / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - zMenu_float_one_over_sixty;
-
-    while (zMenuLoopContinue())
+    do
     {
         draw_black = 0;
         if (zGameModeGet() == eGameMode_Intro)
@@ -159,52 +133,52 @@ void zMenuLoop()
             case 0:
                 draw_black = 1;
                 zGameStateSwitch(3);
-                xScrFxFade(&clear, &black, zMenu_float_zero, NULL, 1);
+                xScrFxFade(&clear, &black, 0.0f, NULL, 1);
                 break;
             case 3:
                 draw_black = 1;
-                zFMVPlay(zFMVFileGetName(eFMVFile_LogoNick), 1, zMenu_float_two, 1, 0);
-                zFMVPlay(zFMVFileGetName(eFMVFile_LogoTHQ), 1, zMenu_float_two, 1, 0);
-                zFMVPlay(zFMVFileGetName(eFMVFile_LogoRW), 1, zMenu_float_two, 1, 0);
-                holdTmr = zMenu_float_ten;
+                zFMVPlay(zFMVFileGetName(eFMVFile_LogoNick), 1, 2.0f, 1, 0);
+                zFMVPlay(zFMVFileGetName(eFMVFile_LogoTHQ), 1, 2.0f, 1, 0);
+                zFMVPlay(zFMVFileGetName(eFMVFile_LogoRW), 1, 2.0f, 1, 0);
+                holdTmr = 10.0f;
                 zGameModeSwitch(eGameMode_Title);
                 zGameStateSwitch(1);
-                xScrFxFade(&black, &clear, zMenu_float_0p1, NULL, 1);
+                xScrFxFade(&black, &clear, 0.1f, NULL, 1);
 
-                time_last = zMenu_float_one / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() -
-                            zMenu_float_one_over_sixty;
+                time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
                 break;
             }
         }
 
-        time_current = zMenu_float_one / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet();
+        time_current = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet();
         time_elapsed = time_current - time_last;
-        if (menu_fmv_played && time_elapsed > zMenu_float_one_over_sixty)
+
+        if (menu_fmv_played && time_elapsed > 1.0f / 60.f)
         {
-            time_last = time_current - zMenu_float_one_over_sixty;
-            time_elapsed = zMenu_float_one_over_sixty;
+            time_last = time_current - 1.0f / 60.f;
+            time_elapsed = 1.0f / 60.f;
         }
 
         menu_fmv_played = 0;
-        if (time_elapsed < zMenu_float_zero)
+        if (time_elapsed < 0.0f)
         {
-            time_elapsed = zMenu_float_one_over_sixty;
+            time_elapsed = 1.0f / 60.f;
         }
 
         if (zGameModeGet() == eGameMode_Title)
         {
-            sAttractMode_timer = sAttractMode_timer - time_elapsed;
-            if (sAttractMode_timer < zMenu_float_zero)
+            sAttractMode_timer -= time_elapsed;
+            if (sAttractMode_timer < 0.0f)
             {
-                xEnt* title1 = (xEnt*)zSceneFindObject(xStrHash(zMenu_strings));
-                xEnt* title2 = (xEnt*)zSceneFindObject(xStrHash(zMenu_strings + 0x18));
+                xEnt* title1 = (xEnt*)zSceneFindObject(xStrHash("MNU3 PRESS START 02 UIF"));
+                xEnt* title2 = (xEnt*)zSceneFindObject(xStrHash("MNU3 START NEWGAME UIF"));
                 if ((title1 && xEntIsVisible(title1)) || (title2 && xEntIsVisible(title2)))
                 {
                     zGameStateSwitch(1);
                 }
                 else
                 {
-                    sAttractMode_timer = zMenu_float_48p264;
+                    sAttractMode_timer = 48.264;
                 }
             }
 
@@ -216,11 +190,11 @@ void zMenuLoop()
                 }
                 else
                 {
-                    zMenuFMVPlay(zFMVFileGetName(eFMVFile_Demo1), -1, zMenu_float_0p1, true,
-                                 globals.firstStartPressed);
+                    zMenuFMVPlay(zFMVFileGetName(eFMVFile_Demo1), -1, 0.1f, true,
+                                 *(bool*)&globals.firstStartPressed);
                 }
                 zGameStateSwitch(0);
-                sAttractMode_timer = zMenu_float_48p264;
+                sAttractMode_timer = 48.264f;
             }
             else
             {
@@ -229,7 +203,7 @@ void zMenuLoop()
 
             if (mPad[globals.currentActivePad].pressed)
             {
-                sAttractMode_timer = zMenu_float_48p264;
+                sAttractMode_timer = 48.264f;
             }
         }
 
@@ -244,7 +218,7 @@ void zMenuLoop()
         }
 
         xDrawBegin();
-        uint32 wasPaused = zMenuIsPaused();
+        int32 wasPaused = zMenuIsPaused();
         zSceneUpdate(time_elapsed);
 
         if (wasPaused == 0)
@@ -271,18 +245,22 @@ void zMenuLoop()
         xDrawEnd();
         xCameraEnd(&globals.camera, time_elapsed, 1);
         xCameraShowRaster(&globals.camera);
-        zMenuUpdateMode();
 
-        s = ss;
+        s = zMenuUpdateMode();
+
         if (globals.sceneCur->pendingPortal)
         {
-            int8* src = (int8*)&globals.sceneCur->pendingPortal->passet->sceneID;
-            int8* tgt = (int8*)&s;
+            // NOTE (Square): The original compiler emitted a seemingly redundant clrlwi r0,r5,24
+            // instruction before storing src[0] in tgt[3]. This is confusing because the
+            // upper 24 bits should already be zero. There may be a different way of doing
+            // this byte swap.
+            char* src = (char*)&globals.sceneCur->pendingPortal->passet->sceneID;
+            char* tgt = (char*)&s;
             tgt[0] = src[3];
             tgt[1] = src[2];
             tgt[2] = src[1];
             tgt[3] = src[0];
-            if (src[0] < 0x30 || src[0] > 0x39)
+            if (src[0] < '0' || src[0] > '9')
             {
                 memcpy(tgt, src, sizeof(uint32));
             }
@@ -305,18 +283,18 @@ void zMenuLoop()
                 xTRCPad(gTrcPad[0].id, TRC_PadMissing);
             }
         }
-    }
+    } while (zMenuLoopContinue() != 0);
 
     zGameExtras_NewGameReset();
+    return s;
 }
-#endif
 
 uint32 zMenuIsPaused()
 {
     return 0;
 }
 
-uint32 zMenuLoopContinue()
+int32 zMenuLoopContinue()
 {
     return gGameMode != eGameMode_Game;
 }
@@ -328,16 +306,13 @@ uint32 zMenuUpdateMode()
     {
         float32 elapsed1 = float(iTimeGet()) - time_last;
         retVal = zSaveLoad_LoadLoop();
-        if (retVal + 0xcfd00000 == 0x3030)
+        if (retVal == '0000')
         {
             retVal = 0;
         }
-        else
+        else if (retVal == 'MNU3')
         {
-            if (retVal + 0xb2b20000 == 0x5533)
-            {
-                retVal = 0x48423030;
-            }
+            retVal = 'HB00';
         }
         time_last = elapsed1 + float(iTimeGet());
     }
@@ -345,7 +320,7 @@ uint32 zMenuUpdateMode()
     {
         zSaveLoad_SaveLoop();
         globals.autoSaveFeature = 1;
-        retVal = 0x48423030;
+        retVal = 'HB00';
     }
     return retVal;
 }
@@ -503,19 +478,17 @@ int32 zMenuGetBadCard()
     return card + 1;
 }
 
-#ifdef NON_MATCHING
 // Floating point assignments are out of order.
 void zMenuFMVPlay(int8* filename, uint32 buttons, float32 time, bool skippable, bool lockController)
 {
     if (filename)
     {
         zFMVPlay(filename, buttons, time, skippable, lockController);
-        time_last = float(iTimeGet());
+        time_last = (float)iTimeGet();
         time_current = time_last;
-        sAttractMode_timer = zMenu_float_48p264;
+        sAttractMode_timer = 48.264f;
     }
 }
-#endif
 
 int32 zMenuIsFirstBoot()
 {
