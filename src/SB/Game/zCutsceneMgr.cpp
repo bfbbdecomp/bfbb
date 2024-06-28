@@ -18,15 +18,51 @@
 #include "iCutscene.h"
 #include "iSystem.h"
 
-extern zCutsceneHack cutsceneHackTable[58];
-extern zCutSceneNames zCutSceneNamesTable[14];
-extern int32 gCutsceneSkipOK;
-extern int32 donpcfx;
-extern uint8 ents_hidden;
-extern int32 s_atomicNumber;
-extern float32 gSkipTimeCutscene;
+static zCutsceneHack cutsceneHackTable[58] = {
+    { NULL, NULL, 0, 1, 0, 0, NULL },      { NULL, NULL, 0, 1, 0, 0, NULL },
+    { NULL, NULL, 0, 1, 0, 0, NULL },      { NULL, NULL, 0, 1, 0, 0, NULL },
+    { NULL, NULL, 0, 0, 0, 1, NULL },      { NULL, NULL, 0, 0, 0, 1, NULL },
+    { NULL, NULL, 0, 0, 0, 1, NULL },      { NULL, NULL, 0, 0, 0, 1, NULL },
+    { NULL, NULL, 0, 0, 0, 1, NULL },      { NULL, NULL, 0, 0, 0, 1, NULL },
+    { NULL, NULL, 0, 0, 0, 1, NULL },      { NULL, NULL, 0, 0, 0, 1, NULL },
+    { NULL, NULL, 0, 0, 0, 1, NULL },      { NULL, NULL, 0, 0, 0, 1, NULL },
+    { NULL, NULL, 0, 0, 0, 1, NULL },      { NULL, NULL, 0, 0, 0, 1, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 400.0f, 0, 1, 0, NULL },
+    { NULL, NULL, 400.0f, 0, 1, 0, NULL }, { NULL, NULL, 400.0f, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 50.0f, 0, 1, 0, NULL },  { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 100.0f, 0, 1, 0, NULL },
+    { NULL, NULL, 100.0f, 0, 1, 0, NULL }, { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+    { NULL, NULL, 0, 0, 1, 0, NULL },      { NULL, NULL, 0, 0, 1, 0, NULL },
+};
 
-extern float32 _897;
+static zCutSceneNames zCutSceneNamesTable[14] = {
+    { "cin_1", 0, 1 },        { "cin_2", 0, 1 },         { "cin_3", 0, 1 },
+    { "cin_4", 0, 1 },        { "cin_5", 0, 1 },         { "cin_6", 0, 1 },
+    { "cin_7", 0, 1 },        { "cin_8", 0, 1 },         { "cin_9", 0, 1 },
+    { "cin_10", 0, 1 },       { "cin_11", 0, 0 },        { "cin_mm_post_death", 0, 0 },
+    { "cin_mm_scare", 0, 1 }, { "cin_sh_barrel", 0, 1 },
+
+};
+static int32 gCutsceneSkipOK;
+static int32 donpcfx;
+static uint8 ents_hidden;
+static int32 s_atomicNumber;
+extern float32 gSkipTimeCutscene;
 
 void zCutsceneMgrInit(void* b, void* tasset)
 {
@@ -153,7 +189,7 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
                 continue;
             }
 
-            if (cutsceneHackTable[i].radius != _897)
+            if (cutsceneHackTable[i].radius != 0.0f)
             {
                 RpClumpForAllAtomics((RpClump*)*((int*)(t->csn->Data[j].DataPtr) + 0xf),
                                      HackBoundCB, &cutsceneHackTable[i].radius);
@@ -266,7 +302,7 @@ void zCutsceneMgrFinishExit(xBase* to)
     }
     if (donpcfx != 0)
     {
-        zNPCFXCutsceneDone(globals.sceneCur, _897, t);
+        zNPCFXCutsceneDone(globals.sceneCur, 0.0f, t);
     }
     donpcfx = 0;
     if (xCutscene_Destroy(t->csn) == 0)
@@ -369,11 +405,11 @@ void zCutsceneMgrUpdate(xBase* to, xScene* sc, float32 dt)
                     zEntEvent(to, to, 0x13);
                 }
 
-                t->csn->PlaybackSpeed = _897;
+                t->csn->PlaybackSpeed = 0.0f;
                 zEntEvent(&globals.player.ent, 9);
                 zEntEvent(&globals.player.ent, 3);
                 zEntEvent(to, to, 0xbf);
-                iCameraSetNearFarClip(_897, _897);
+                iCameraSetNearFarClip(0.0f, 0.0f);
 
                 if ((globals.sceneCur->pendingPortal))
                 {
