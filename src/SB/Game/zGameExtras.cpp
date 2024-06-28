@@ -15,15 +15,6 @@
 #include "zGame.h"
 #include "zScene.h"
 
-extern char zGameExtras_strings[];
-
-extern float32 _975; // 0.0
-extern float32 _1152; // 0.3
-extern float32 _1153; // -1.0
-extern float32 _1192; // 1.0
-
-extern zGlobals globals;
-
 static int32 g_enableGameExtras;
 static int32 g_currDay;
 static int32 g_currMonth;
@@ -31,11 +22,6 @@ static int32 g_gameExtraFlags;
 static int32 g_flg_chEnabled;
 static float32 sCheatTimer;
 static int32 sCheatInputCount;
-static signed char init_1161; // init$1161
-static signed char init_1274; // init$1274
-static signed char init_1319; // init$1319
-static signed char init_1343; // init$1343
-static xEnt* sGalleryTitle;
 
 static EGGItemFuncs EGGEmpty = {};
 
@@ -261,28 +247,30 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
 #define X (1 << 17)
 
 // 21 cheats
-static uint32 sCheatAddShiny[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, Y, Y, X, X, Y };
-static uint32 sCheatAddSpatulas[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, Y, X, X, Y, Y, X };
-static uint32 sCheatBubbleBowl[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, X, X, Y, Y };
-static uint32 sCheatCruiseBubble[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, Y, Y, X, X };
-static uint32 sCheatMonsterGallery[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, Y, X, Y, X };
-static uint32 sCheatArtTheatre[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, X, Y, X, Y };
-static uint32 sCheatChaChing[16] = { Y, X, Y, X, X, Y, X, X, X, Y, Y, Y, Y, X, X, Y };
-static uint32 sCheatExpertMode[16] = { X, X, X, Y, Y, X, X, X, Y, X, Y, Y, Y, X, Y, Y };
-static uint32 sCheatSwapCCLR[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, Y, X, X, X, X, Y, Y };
-static uint32 sCheatSwapCCUD[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, X, X, X, X, Y };
-static uint32 sCheatRestoreHealth[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, Y, X, Y, Y, Y, Y };
-static uint32 sCheatShrapBob[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, Y, X, X, X, Y };
-static uint32 sCheatNoPants[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, X, Y, X, Y, Y, X };
-static uint32 sCheatCruiseControl[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, X, Y, X, Y, Y };
-static uint32 sCheatBigPlank[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, X, X, X, X };
-static uint32 sCheatSmallPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, Y, X };
-static uint32 sCheatSmallCoStars[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, Y, Y, Y, Y };
-static uint32 sCheatRichPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, Y, X, Y };
-static uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, X, X };
-static uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
-static uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
+// These symbols weren't actually defined as static. They are global in the object file.
+uint32 sCheatAddShiny[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, Y, Y, X, X, Y };
+uint32 sCheatAddSpatulas[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, Y, X, X, Y, Y, X };
+uint32 sCheatBubbleBowl[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, X, X, Y, Y };
+uint32 sCheatCruiseBubble[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, Y, Y, X, X };
+uint32 sCheatMonsterGallery[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, Y, X, Y, X };
+uint32 sCheatArtTheatre[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, X, Y, X, Y };
+uint32 sCheatChaChing[16] = { Y, X, Y, X, X, Y, X, X, X, Y, Y, Y, Y, X, X, Y };
+uint32 sCheatExpertMode[16] = { X, X, X, Y, Y, X, X, X, Y, X, Y, Y, Y, X, Y, Y };
+uint32 sCheatSwapCCLR[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, Y, X, X, X, X, Y, Y };
+uint32 sCheatSwapCCUD[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, X, X, X, X, Y };
+uint32 sCheatRestoreHealth[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, Y, X, Y, Y, Y, Y };
+uint32 sCheatShrapBob[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, Y, X, X, X, Y };
+uint32 sCheatNoPants[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, X, Y, X, Y, Y, X };
+uint32 sCheatCruiseControl[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, X, Y, X, Y, Y };
+uint32 sCheatBigPlank[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, X, X, X, X };
+uint32 sCheatSmallPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, Y, X };
+uint32 sCheatSmallCoStars[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, Y, Y, Y, Y };
+uint32 sCheatRichPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, Y, X, Y };
+uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, X, X };
+uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
+uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
 
+// zGameCheats assumes this list will contain an empty entry at the end (null key_code pointer)
 static GECheat cheatList[22] = {
     { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
     { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
@@ -305,16 +293,16 @@ static GECheat cheatList[22] = {
     { sCheatPanHandle, GEC_cb_PanHandle, 0x200000, 0 },
     { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
     { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
+    {}
 };
 
-static uint32 sCheatPressed[16] = {};
+uint32 sCheatPressed[16] = {};
 
 int32 zGameExtras_CheatFlags()
 {
     return g_flg_chEnabled;
 }
 
-#if 0
 void zGameExtras_NewGameReset()
 {
     // very close to matching
@@ -327,7 +315,6 @@ void zGameExtras_NewGameReset()
     gs->ShinyValueYellow = 2;
     gs->ShinyValueRed = 1;
 }
-#endif
 
 void zGameExtras_Save(xSerial* xser)
 {
@@ -342,7 +329,7 @@ void zGameExtras_Load(xSerial* xser)
     g_flg_chEnabled |= keepers[0];
 }
 
-uint32 TestCheat(uint32 cheat[])
+int32 TestCheat(uint32 cheat[])
 {
     int32 i = 15;
 
@@ -372,6 +359,89 @@ void AddToCheatPressed(uint32 button)
     sCheatPressed[15] = button;
 }
 
+void zGameCheats(float dt)
+{
+    switch (zGameModeGet() != eGameMode_Pause)
+    {
+        return;
+    }
+
+    int32 startover = false;
+    if ((globals.pad0->pressed & 0xfff9eeff) || (globals.pad0->on & 0xfff9eeff))
+    {
+        startover = true;
+    }
+    else if ((globals.pad0->on & 0x1100) != 0x1100)
+    {
+        startover = true;
+    }
+    else if ((globals.pad0->pressed & 0x60000) == 0)
+    {
+        sCheatTimer -= dt;
+        if (!(sCheatTimer <= 0.0f))
+        {
+            return;
+        }
+        startover = true;
+        // For some reason there's a double branch here where the first just jumps past the second one.
+    }
+
+    if (!startover)
+    {
+        if (sCheatInputCount > 32)
+        {
+            startover = true;
+        }
+        sCheatInputCount++;
+    }
+
+    if (startover)
+    {
+        sCheatTimer = 0.3f;
+        sCheatInputCount = 0;
+        memset(&sCheatPressed, 0, sizeof(sCheatPressed));
+        return;
+    }
+
+    AddToCheatPressed(globals.pad0->pressed & 0x60000);
+
+    int32 match = 0;
+    sCheatTimer = 0.3f;
+    GECheat* rec_next = cheatList;
+    while (rec_next->key_code != NULL)
+    {
+        GECheat* rec_curr = rec_next;
+        rec_next++;
+
+        if (!TestCheat(rec_curr->key_code))
+        {
+            continue;
+        }
+
+        match++;
+
+        if (rec_curr->flg_mode & 1)
+        {
+            GEC_CheatFlagToggle(rec_curr->flg_keep);
+        }
+        else
+        {
+            GEC_CheatFlagAdd(rec_curr->flg_keep);
+        }
+
+        if (rec_curr->fun_cheat)
+        {
+            rec_curr->fun_cheat();
+        }
+    }
+
+    if (match)
+    {
+        sCheatTimer = -1.0f;
+        memset(&sCheatPressed, 0, sizeof(sCheatPressed));
+    }
+}
+
 void GEC_CheatFlagAdd(int32 bit)
 {
     g_flg_chEnabled |= bit;
@@ -382,35 +452,40 @@ void GEC_CheatFlagToggle(int32 bit)
     g_flg_chEnabled ^= bit;
 }
 
-#if 1
-static uint32 aid_sndList_1160[7] = {};
-#else
 void GEC_dfltSound()
 {
-    static uint32 aid_sndList_1160[7] = {};
+    static uint32 aid_sndList[7] = {};
+    static signed char init;
 
-    if (!init_1161)
+    if (!init)
     {
-        aid_sndList_1160[0] = xStrHash(zGameExtras_strings + 3);
-        aid_sndList_1160[1] = xStrHash(zGameExtras_strings + 4);
-        aid_sndList_1160[2] = xStrHash(zGameExtras_strings + 5);
-        aid_sndList_1160[3] = xStrHash(zGameExtras_strings + 0xe);
-        aid_sndList_1160[4] = xStrHash(zGameExtras_strings + 0x19);
-        aid_sndList_1160[5] = xStrHash(zGameExtras_strings + 0x24);
-        aid_sndList_1160[6] = xStrHash(zGameExtras_strings + 0x2d);
+        // Fun hack.
+        // FIXME: See if we can figure out why HB01 is in the string table here.
+        aid_sndList[0] = xStrHash("HB01\0"
+                                  "SBG01030" +
+                                  5);
+        aid_sndList[1] = xStrHash("HB01\0"
+                                  "SBG01030" +
+                                  5);
+        aid_sndList[2] = xStrHash("HB01\0"
+                                  "SBG01030" +
+                                  5);
+        aid_sndList[3] = xStrHash("SBG01017_a");
+        aid_sndList[4] = xStrHash("SBG01017_b");
+        aid_sndList[5] = xStrHash("SBG01018");
+        aid_sndList[6] = xStrHash("SBG01016");
 
         // typical scheduling memes
-        init_1161 = true;
+        init = 1;
     }
 
-    uint32 snd = xUtil_choose(aid_sndList_1160, 7, NULL);
+    uint32 snd = xUtil_choose(aid_sndList, 7, NULL);
 
     if (snd)
     {
-        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
-#endif
 
 void GEC_cb_AddShiny()
 {
@@ -424,11 +499,11 @@ void GEC_cb_AddShiny()
             pg->Inv_Shiny += 1000;
     }
 
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 54); // SBG01019
+    uint32 aid_snd = xStrHash("SBG01019");
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
 
@@ -437,11 +512,11 @@ void GEC_cb_AddSpatulas()
     zPlayerGlobals* pg = &globals.player;
     pg->Inv_Spatula = (pg->Inv_Spatula + 10 >= 100) ? 100 : pg->Inv_Spatula + 10;
 
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 63); // "gspatula_sb"
+    uint32 aid_snd = xStrHash("gspatula_sb");
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
 
@@ -449,11 +524,11 @@ void GEC_cb_BubbleBowl()
 {
     globals.player.g.PowerUp[0] = true;
 
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 75); // "SBG01092"
+    uint32 aid_snd = xStrHash("SBG01092");
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
 
@@ -461,11 +536,11 @@ void GEC_cb_CruiseBubble()
 {
     globals.player.g.PowerUp[1] = true;
 
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 84); // "SB_cruise_hit"
+    uint32 aid_snd = xStrHash("SB_cruise_hit");
 
     if (aid_snd)
     {
-        xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
 
@@ -473,7 +548,7 @@ void GEC_cb_MonsterGallery()
 {
     int8 tempString[32];
 
-    strcpy(tempString, zGameExtras_strings + 0x62); // HB09 ROBOT COUNTER 01
+    strcpy(tempString, "HB09 ROBOT COUNTER 01");
 
     int8 c = '1';
 
@@ -493,15 +568,15 @@ void GEC_cb_MonsterGallery()
         cntr->count = 1;
     }
 
-    zEntPlayer_SNDPlay(ePlayerSnd_Bus, _975);
+    zEntPlayer_SNDPlay(ePlayerSnd_Bus, 0.0f);
 }
 
 void GEC_cb_UnlockArtTheatre()
 {
-    uint32 aid_theatreCounter = xStrHash(zGameExtras_strings + 120); // "HB01_FREE_MOVIE_PASS"
+    uint32 aid_theatreCounter = xStrHash("HB01_FREE_MOVIE_PASS");
     _xCounter* cntr = (_xCounter*)zSceneFindObject(aid_theatreCounter);
     cntr->count = 1;
-    zEntPlayer_SNDPlay(ePlayerSnd_Taxi, _975);
+    zEntPlayer_SNDPlay(ePlayerSnd_Taxi, 0.0f);
 }
 
 void GEC_cb_ChaChing()
@@ -513,31 +588,30 @@ void GEC_cb_ChaChing()
     gs->ShinyValueYellow = 10;
     gs->ShinyValueRed = 5;
 
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 54); // "SBG01019"
-    xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+    uint32 aid_snd = xStrHash("SBG01019");
+    xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
 }
 
-#if 0
 void GEC_cb_RestoreHealth()
 {
-    // stored in .sdata, not sure where/how to declare this
-    uint32 lbl_803CAB38[2] = {};
+    static uint32 choices[2] = {};
+    static signed char init;
 
-    if (!init_1274)
+    globals.player.Health = globals.player.MaxHealth;
+    if (!init)
     {
-        lbl_803CAB38[0] = xStrHash(&zGameExtras_strings[0x8d]);
-        lbl_803CAB38[1] = xStrHash(&zGameExtras_strings[0x96]);
-        init_1274 = 1;
+        choices[0] = xStrHash("SBG01021");
+        choices[1] = xStrHash("SBG01022");
+        init = 1;
     }
 
-    uint32 snd = xUtil_choose(lbl_803CAB38, 2, NULL);
+    uint32 snd = xUtil_choose(choices, 2, NULL);
 
     if (snd)
     {
-        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
-#endif
 
 void GEC_cb_ExpertMode()
 {
@@ -551,35 +625,32 @@ void GEC_cb_ShrapBobMode()
 
 void GEC_cb_NoPantsMode()
 {
-    uint32 aid_snd = xStrHash(zGameExtras_strings + 159); // "SBG01023"
-    xSndPlay(aid_snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+    uint32 aid_snd = xStrHash("SBG01023");
+    xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
 }
 
-#if 1
-static uint32 choices_1318[3] = {};
-#else
 void GEC_cb_CruiseControl()
 {
-    static uint32 choices_1318[3] = {};
+    static uint32 choices[3] = {};
+    static signed char init;
 
-    if (!init_1319)
+    if (!init)
     {
-        choices_1318[0] = xStrHash(zGameExtras_strings + 0xa8);
-        choices_1318[1] = xStrHash(zGameExtras_strings + 0xb3);
-        choices_1318[2] = xStrHash(zGameExtras_strings + 0xbe);
+        choices[0] = xStrHash("SBG01060_c");
+        choices[1] = xStrHash("SBG01058_b");
+        choices[2] = xStrHash("SBG01054_b");
 
         // scheduling memes preventing match
-        init_1319 = true;
+        init = true;
     }
 
-    uint32 snd = xUtil_choose<uint32>(choices_1318, 3, NULL);
+    uint32 snd = xUtil_choose<uint32>(choices, 3, NULL);
 
     if (snd)
     {
-        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
-#endif
 
 void GEC_cb_SwapCCLR()
 {
@@ -591,34 +662,31 @@ void GEC_cb_SwapCCUD()
     GEC_dfltSound();
 }
 
-#if 1
-static uint32 aid_sndList_1342[6] = {};
-#else
 void GEC_villSound()
 {
-    static uint32 aid_sndList_1342[6] = {};
+    static uint32 aid_sndList[6] = {};
+    static signed char init;
 
-    if (!init_1343)
+    if (!init)
     {
-        aid_sndList_1342[0] = xStrHash(zGameExtras_strings + 0xc9);
-        aid_sndList_1342[1] = xStrHash(zGameExtras_strings + 0xd4);
-        aid_sndList_1342[2] = xStrHash(zGameExtras_strings + 0xdf);
-        aid_sndList_1342[3] = xStrHash(zGameExtras_strings + 0xe8);
-        aid_sndList_1342[4] = xStrHash(zGameExtras_strings + 0xf3);
-        aid_sndList_1342[5] = xStrHash(zGameExtras_strings + 0xfe);
+        aid_sndList[0] = xStrHash("SBG01066_c");
+        aid_sndList[1] = xStrHash("SBG01066_a");
+        aid_sndList[2] = xStrHash("SBG01067");
+        aid_sndList[3] = xStrHash("SBG01068_a");
+        aid_sndList[4] = xStrHash("SBG01068_d");
+        aid_sndList[5] = xStrHash("SBG01069");
 
         // scheduling memes preventing match
-        init_1343 = true;
+        init = true;
     }
 
-    uint32 snd = xUtil_choose(aid_sndList_1342, 6, NULL);
+    uint32 snd = xUtil_choose(aid_sndList, 6, NULL);
 
     if (snd)
     {
-        xSndPlay(snd, _1192, _975, 0x80, 0, 0, SND_CAT_GAME, _975);
+        xSndPlay(snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
     }
 }
-#endif
 
 void GEC_cb_BigPlank()
 {
@@ -655,9 +723,11 @@ void GEC_cb_PanHandle()
     GEC_villSound();
 }
 
+static xEnt* sGalleryTitle;
+
 void zGame_HackGalleryInit()
 {
-    uint32 obj = xStrHash(zGameExtras_strings + 263); // "KIOSK SELECT UIF"
+    uint32 obj = xStrHash("KIOSK SELECT UIF");
     sGalleryTitle = (xEnt*)zSceneFindObject(obj);
 }
 
@@ -670,7 +740,6 @@ uint32 zGame_HackIsGallery()
     return 0;
 }
 
-#if 0
 template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 const* float_list)
 {
     if (list == NULL)
@@ -678,28 +747,41 @@ template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 
         return NULL;
     }
 
-    if (size == 0)
+    if (size < 1)
     {
-        //
         return NULL;
     }
 
+    int32 idx = 0;
     float32 rand = xurand();
 
     if (float_list == NULL)
     {
-        uint32 r3 = size ^ 0x8000;
+        idx = rand * size;
     }
-    // float_list_not_null
     else
     {
-        for (int32 i = 0; i < size; i++)
+        const float32* float_it = float_list;
+        float32 total = 0.0f;
+        for (int32 i = 0; i < size; float_it++, i++)
         {
-            if (float_list[0] == _975)
+            float prev_total = total;
+            total += *float_it;
+            if (rand >= prev_total && rand <= total)
             {
+                idx = i;
+                break;
             }
         }
     }
-    // After Loop
+
+    if (idx >= size)
+    {
+        idx = size - 1;
+    }
+    if (idx < 0)
+    {
+        idx = 0;
+    }
+    return list[idx];
 }
-#endif
