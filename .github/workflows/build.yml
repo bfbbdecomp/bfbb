@@ -107,6 +107,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: website/dist # The folder the action should deploy.
+          folder: dist # The folder the action should deploy.
           clean: true
           single-commit: true
