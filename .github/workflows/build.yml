@@ -18,46 +18,85 @@ jobs:
         version: [GQPE78]
 
     steps:
-    # Checkout the repository (shallow clone)
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        submodules: recursive
+      # Checkout the repository (shallow clone)
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
 
-    # Set Git config
-    - name: Git config
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Checkout Website
+        if: github.ref == 'refs/heads/main'
+        uses: actions/checkout@v4
+        with:
+          repository: bfbbdecomp/website
+          path: website
 
-    # Copy the original files to the workspace
-    - name: Prepare
-      run: cp -R /orig .
+      # Set Git config
+      - name: Git config
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-    # Build the project
-    - name: Build
-      run: |
-        python configure.py --wrapper wibo --map --version ${{ matrix.version }} \
-            --binutils /binutils --compilers /compilers
-        ninja all_source build/${{ matrix.version }}/progress.json
+      # Copy the original files to the workspace
+      - name: Prepare
+        run: cp -R /orig .
 
-    # Upload progress if we're on the main branch
-    - name: Upload progress
-      # If you're using a different branch, change this to match
-      if: github.ref == 'refs/heads/main'
-      continue-on-error: true
-      env:
-        # Replace with your project slug
-        PROGRESS_SLUG: bfbb
-        # Set the API key in your repository secrets
-        PROGRESS_API_KEY: ${{ secrets.PROGRESS_API_KEY }}
-      run: |
-        python tools/upload_progress.py -b https://progress.decomp.club/ \
-          -p $PROGRESS_SLUG -v ${{ matrix.version }} \
-          build/${{ matrix.version }}/progress.json
+      - name: Download objdiff CLI
+        if: github.ref == 'refs/heads/main'
+        run: |
+          python tools/download_tool.py --tag v2.0.0-alpha.5 objdiff-cli objdiff-cli
 
-    # Upload map files
-    - name: Upload map
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.version }}_maps
-        path: build/${{ matrix.version }}/**/*.MAP
+      # Build the project
+      - name: Build
+        run: |
+          python configure.py --wrapper wibo --map --version ${{ matrix.version }} \
+              --binutils /binutils --compilers /compilers
+          ninja all_source build/${{ matrix.version }}/progress.json
+
+      # Upload progress if we're on the main branch
+      - name: Upload progress
+        # If you're using a different branch, change this to match
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          # Replace with your project slug
+          PROGRESS_SLUG: bfbb
+          # Set the API key in your repository secrets
+          PROGRESS_API_KEY: ${{ secrets.PROGRESS_API_KEY }}
+        run: |
+          python tools/upload_progress.py -b https://progress.decomp.club/ \
+            -p $PROGRESS_SLUG -v ${{ matrix.version }} \
+            build/${{ matrix.version }}/progress.json
+
+      # Upload map files
+      - name: Upload map
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.version }}_maps
+          path: build/${{ matrix.version }}/**/*.MAP
+
+      - name: Generate Progress Report
+        if: github.ref == 'refs/heads/main'
+        run: |
+          ./objdiff-cli report generate -o website/progress.json
+
+      - name: Parse Progress
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd website
+          python progress.py progress.json json/
+
+      - name: Build Website
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd website
+          npm install
+          npm run build
+
+      - name: Deploy Website
+        if: github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: website/dist # The folder the action should deploy.
+          clean: true
+          single-commit: true
