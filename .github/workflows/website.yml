@@ -14,9 +14,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.x.x"
       - name: Checkout website code
         uses: actions/checkout@v4
         with:
@@ -26,8 +23,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: progress.json
+          name: progress
           path: ./website
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x.x"
 
       - name: Build Website
         run: |
