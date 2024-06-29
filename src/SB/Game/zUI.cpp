@@ -7,14 +7,18 @@
 #include "zGame.h"
 #include "zGameState.h"
 
-#include "xString.h"
-#include "xstransvc.h"
-#include "xTRC.h"
-#include "xEvent.h"
-#include "xSnd.h"
 #include "xCounter.h"
-#include "xGroup.h"
 #include "xDebug.h"
+#include "xEvent.h"
+#include "xGroup.h"
+#include "xMath2.h"
+#include "xScrFx.h"
+#include "xSnd.h"
+#include "xstransvc.h"
+#include "xString.h"
+#include "xTRC.h"
+
+#include "iMath.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -113,9 +117,6 @@ extern _zUI* sSorted[768];
 static RwIm2DVertex Vertex[4];
 static RwImVertexIndex Index[6] = { 0, 1, 2, 0, 2, 3 };
 
-static xVec3 from_1259 = { 0.0f, 0.0f, -1.0f }; // todo: move to zUI_Render
-static xVec3 to_1260 = { 0.0f, 0.0f, 0.0f }; // todo: move to zUI_Render
-
 static uint32 cKeyUIid1off;
 static uint32 cKeyUIid2off;
 static uint32 cKeyUIid3off;
@@ -134,205 +135,6 @@ static uint32 patsock_prev_count = -1;
 extern zUIMgr gUIMgr;
 
 static float32 ushift;
-
-// clang-format off
-
-/**************************    PAUSE MENU   *********************************
- * This array defines the angle and character that the player will start with
- * for each "task" in the game.
- * 
- * Each entry has the following format:
- * 
- *   ang, player
- * 
- * ang - the starting angle in degrees
- * player - the starting character, can be one of the following values:
- *   eCurrentPlayerSpongeBob (SpongeBob)
- *   eCurrentPlayerPatrick   (Patrick)
- *   eCurrentPlayerSandy     (Sandy)
- */
-static menuWorldInfo sWorldInfo[] =
-{
-    // Bikini Bottom
-    322, eCurrentPlayerSpongeBob, // On Top of the Pineapple
-    322, eCurrentPlayerSpongeBob, // On Top of Shady Shoals
-    322, eCurrentPlayerSpongeBob, // On Top of the Chum Bucket
-    200, eCurrentPlayerSpongeBob, // SpongeBob's Closet
-    45,  eCurrentPlayerSpongeBob, // Annoy Squidward
-    315, eCurrentPlayerSpongeBob, // Ambush at the Tree Dome
-    190, eCurrentPlayerSpongeBob, // Infestation at the Krusty Krab
-    270, eCurrentPlayerSpongeBob, // A Wall Jump in the Bucket
-
-    // Jellyfish Fields
-    180, eCurrentPlayerSpongeBob, // Top of the Hill
-    55,  eCurrentPlayerSpongeBob, // Cowa-Bungee!
-    210, eCurrentPlayerPatrick,   // Spelunking
-    180, eCurrentPlayerSpongeBob, // Patrick's Dilemma
-    180, eCurrentPlayerPatrick,   // Navigate the Canyons and Mesas
-    50,  eCurrentPlayerPatrick,   // Drain the Lake
-    345, eCurrentPlayerSpongeBob, // Slide Leap
-    105, eCurrentPlayerSpongeBob, // Defeat King Jellyfish
-
-    // Downtown Bikini Bottom
-    90,  eCurrentPlayerSpongeBob, // End of the Road
-    180, eCurrentPlayerSandy,     // Learn Sandy's Moves
-    338, eCurrentPlayerSpongeBob, // Tikis Go Boom
-    180, eCurrentPlayerSandy,     // Across the Rooftops
-    180, eCurrentPlayerSandy,     // Swingin' Sandy
-    180, eCurrentPlayerSpongeBob, // Ambush in the Lighthouse
-    180, eCurrentPlayerSpongeBob, // Extreme Bungee
-    270, eCurrentPlayerSpongeBob, // Come Back with the Cruise Bubble
-
-    // Goo Lagoon
-    225, eCurrentPlayerSpongeBob, // King of the Castle
-    300, eCurrentPlayerSpongeBob, // Connect the Towers
-    260, eCurrentPlayerSpongeBob, // Save the Children
-    225, eCurrentPlayerPatrick,   // Over the Moat
-    270, eCurrentPlayerSpongeBob, // Through the Sea Caves
-    1,   eCurrentPlayerPatrick,   // Clean Out the Bumper Boats
-    335, eCurrentPlayerPatrick,   // Slip and Slide Under the Pier
-    350, eCurrentPlayerSpongeBob, // Tower Bungee
-
-    // Poseidome
-    -1000000000, eCurrentPlayerSpongeBob, // Rumble at the Poseidome
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-
-    // Rock Bottom
-    90,  eCurrentPlayerSpongeBob, // Get to the Museum
-    90,  eCurrentPlayerSpongeBob, // Slip Sliding Away
-    90,  eCurrentPlayerSpongeBob, // Return the Museum's Art
-    345, eCurrentPlayerSandy,     // Swingalong Spatula
-    180, eCurrentPlayerSpongeBob, // Plundering Robots in the Museum
-    280, eCurrentPlayerSpongeBob, // Across the Trench of Darkness
-    1,   eCurrentPlayerSandy,     // Lasers are Fun and Good for You
-    305, eCurrentPlayerSandy,     // How in Tarnation Do You Get There?
-
-    // Mermalair
-    90,  eCurrentPlayerSpongeBob, // Top of the Entrance Area
-    225, eCurrentPlayerSpongeBob, // Top of the Computer Area
-    30,  eCurrentPlayerSpongeBob, // Shut Down the Security System
-    210, eCurrentPlayerPatrick,   // The Funnel Machines
-    180, eCurrentPlayerPatrick,   // The Spinning Towers of Power
-    45,  eCurrentPlayerSpongeBob, // Top of the Security Tunnel
-    45,  eCurrentPlayerSpongeBob, // Complete the Rolling Ball Room
-    -1000000000, eCurrentPlayerSpongeBob, // Defeat Prawn
-
-    // Sand Mountain
-    270, eCurrentPlayerSpongeBob, // Frosty Bungee
-    270, eCurrentPlayerSandy,     // Top of the Lodge
-    120, eCurrentPlayerSpongeBob, // Defeat Robots on Guppy Mound
-    120, eCurrentPlayerSpongeBob, // Beat Mrs. Puff's Time
-    130, eCurrentPlayerSpongeBob, // Defeat Robots on Flounder Hill
-    130, eCurrentPlayerSpongeBob, // Beat Bubble Buddy's Time
-    180, eCurrentPlayerSpongeBob, // Defeat Robots on Sand Mountain
-    180, eCurrentPlayerSpongeBob, // Beat Larry's Time
-
-    // Industrial Park
-    -1000000000, eCurrentPlayerSpongeBob, // Robo-Patrick Ahoy!
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-
-    // Kelp Forest
-    1,   eCurrentPlayerSpongeBob, // Through the Woods
-    90,  eCurrentPlayerSpongeBob, // Find all the Lost Campers
-    180, eCurrentPlayerPatrick,   // Tiki Roundup
-    138, eCurrentPlayerPatrick,   // Down in the Swamp
-    160, eCurrentPlayerSpongeBob, // Through the Kelp Caves
-    160, eCurrentPlayerSpongeBob, // Power Crystal Crisis
-    200, eCurrentPlayerSpongeBob, // Kelp Vine Slide
-    200, eCurrentPlayerSpongeBob, // Beat Mermaid Man's Time
-
-    // Flying Dutchman's Graveyard
-    225, eCurrentPlayerSpongeBob, // Top of the Entrance Area
-    50,  eCurrentPlayerSpongeBob, // A Path through the Goo
-    180, eCurrentPlayerSpongeBob, // Goo Tanker Ahoy!
-    225, eCurrentPlayerSpongeBob, // Top of the Stack of Ships
-    60,  eCurrentPlayerSpongeBob, // Shipwreck Bungee
-    250, eCurrentPlayerSpongeBob, // Destroy the Robot Ship
-    250, eCurrentPlayerSpongeBob, // Get Aloft There, Matey!
-    130, eCurrentPlayerSandy,     // Defeat the Flying Dutchman
-
-    // SpongeBob's Dream
-    315, eCurrentPlayerSpongeBob, // Across the Dreamscape
-    315, eCurrentPlayerSpongeBob, // Follow the Bouncing Ball
-    180, eCurrentPlayerSandy,     // Slidin' Texas Style
-    70,  eCurrentPlayerSandy,     // Swingers Ahoy
-    135, eCurrentPlayerSpongeBob, // Music is in the Ear of the Beholder
-    180, eCurrentPlayerSpongeBob, // Krabby Patty Platforms
-    1,   eCurrentPlayerSpongeBob, // Super Bounce
-    90,  eCurrentPlayerSpongeBob, // Here You Go
-
-    // Chum Bucket Lab
-    -1000000000, eCurrentPlayerSpongeBob, // Kah - Rah - Tae!
-    -1000000000, eCurrentPlayerSpongeBob, // The Small Shall Rule... or Not
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-    -1000000000, eCurrentPlayerSpongeBob,
-
-    // Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
-
-    // Mr. Krabs
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 3,000 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 3,500 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 4,000 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 4,500 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 5,000 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 5,500 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 6,500 Shiny Objects
-    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 7,500 Shiny Objects
-};
-// clang-format on
-
-#define WORLD_COUNT (sizeof(sWorldInfo) / sizeof(sWorldInfo[0]))
-
-#define WORLD_HB 0 // Bikini Bottom
-#define WORLD_JF 1 // Jellyfish Fields
-#define WORLD_BB 2 // Downtown Bikini Bottom
-#define WORLD_GL 3 // Goo Lagoon
-#define WORLD_B1 4 // Poseidome
-#define WORLD_RB 5 // Rock Bottom
-#define WORLD_BC 6 // Mermalair
-#define WORLD_SM 7 // Sand Mountain
-#define WORLD_B2 8 // Industrial Park
-#define WORLD_KF 9 // Kelp Forest
-#define WORLD_GY 10 // Flying Dutchman's Graveyard
-#define WORLD_DB 11 // SpongeBob's Dream
-#define WORLD_B3 12 // Chum Bucket Lab
-#define WORLD_PAT 13 // Patrick
-#define WORLD_KRABS 14 // Mr. Krabs
-
-static menuWorld sWorld[WORLD_COUNT];
-
-_zUI* sTakeTaxi;
-_zUI* sNoneTaskDesc;
-_zUI* sCurrTaskDesc;
-uint32 sCurrWorld;
-uint32 sCurrTask;
-_zUI* sPauseManager;
-_zUI* sConfirmation;
-xGroup* sTaxiConfirmGrp;
 
 namespace
 {
@@ -407,7 +209,6 @@ void zUIMgr::Update(zScene* s, float32 dt)
     debug_update(*s, dt);
 }
 
-#ifdef NON_MATCHING
 void zUIMgr::Setup(zScene* s)
 {
     const uint32 count = s->baseCount[eBaseTypeUI];
@@ -433,7 +234,6 @@ void zUIMgr::Setup(zScene* s)
         ui++;
     }
 }
-#endif
 
 void zUIMgr::Touch(_zUI* ui)
 {
@@ -693,7 +493,6 @@ void zUI_Load(_zUI* ent, xSerial* s)
     zEntLoad(ent, s);
 }
 
-#ifdef NON_MATCHING
 void zUI_Reset(_zUI* ent)
 {
     zEntReset(ent);
@@ -708,9 +507,7 @@ void zUI_Reset(_zUI* ent)
 
     // non-matching: epilogue
 }
-#endif
 
-#ifdef NON_MATCHING
 void zUI_PreUpdate(_zUI* ent, xScene*, float32)
 {
     _zUI* ui = ent;
@@ -855,7 +652,6 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
         }
     }
 }
-#endif
 
 void zUI_Update(_zUI* ent, xScene*, float32 dt)
 {
@@ -982,7 +778,6 @@ int32 iRenderQSort_Face(const void* arg1, const void* arg2)
     return 0;
 }
 
-#ifdef NON_MATCHING
 void zUIRenderAll()
 {
     // non-matching: floats are epic
@@ -1040,7 +835,167 @@ void zUIRenderAll()
 
     debug_render();
 }
-#endif
+
+void zUI_Render(xEnt* ent)
+{
+    static xVec3 from = { 0.0f, 0.0f, -1.0f };
+    static xVec3 to = { 0.0f, 0.0f, 0.0f };
+
+    _zUI* ui = (_zUI*)ent;
+    if (xScrFxIsLetterbox())
+    {
+        if (ent->id == cKeyUIid1off || ent->id == cKeyUIid2off || ent->id == cKeyUIid3off ||
+            ent->id == cKeyUIid4off || ent->id == cKeyUIid1on || ent->id == cKeyUIid2on ||
+            ent->id == cKeyUIid3on || ent->id == cKeyUIid4on)
+        {
+            return;
+        }
+    }
+
+    if (ui->uiFlags & 4)
+    {
+        if (xEntIsVisible(ent))
+        {
+            if (ui->sasset->textureID)
+            {
+                RwTexture* texture = (RwTexture*)xSTFindAsset(ui->sasset->textureID, 0);
+
+                if (texture != NULL && texture->raster != NULL)
+                {
+                    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, texture->raster);
+                }
+
+                RwRaster* raster = texture->raster;
+                uint8 r = 0xFF;
+                uint8 g = 0xFF;
+                uint8 b = 0xFF;
+                uint8 a = 0xFF;
+                RwCamera* camera;
+                float32 w = 640.0f;
+                float32 h = 480.0f;
+
+                float32 u1 = ui->sasset->uva[0];
+                float32 v1 = ui->sasset->uva[1];
+                float32 u2 = ui->sasset->uvb[0];
+                float32 v2 = ui->sasset->uvb[1];
+                float32 u3 = ui->sasset->uvc[0];
+                float32 v3 = ui->sasset->uvc[1];
+                float32 u4 = ui->sasset->uvd[0];
+                float32 v4 = ui->sasset->uvd[1];
+                float32 x1 = w * ui->sasset->pos.x / w;
+                float32 y1 = h * ui->sasset->pos.y / h;
+                float32 x2 = w * (ui->sasset->pos.x + ui->sasset->dim[0]) / w;
+                float32 y2 = h * (ui->sasset->pos.y + ui->sasset->dim[1]) / h;
+
+                float32 z = RwIm2DGetNearScreenZ();
+                float32 cz = z;
+
+                if ((float)iabs(z) <= 0.0000001f)
+                {
+                    cz = z >= 0.0f ? 0.0000001f : -0.0000001f;
+                }
+
+                RwIm2DVertexSetIntRGBA(&Vertex[0], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[1], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[2], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[3], 0xFF, 0xFF, 0xFF, 0xFF);
+
+                RwIm2DVertexSetScreenX(&Vertex[0], x1);
+                RwIm2DVertexSetScreenY(&Vertex[0], y1);
+                RwIm2DVertexSetScreenZ(&Vertex[0], cz);
+                RwIm2DVertexSetU(&Vertex[0], u1, 0);
+                RwIm2DVertexSetV(&Vertex[0], v1, 0);
+
+                RwIm2DVertexSetScreenX(&Vertex[1], x1);
+                RwIm2DVertexSetScreenY(&Vertex[1], y2);
+                RwIm2DVertexSetScreenZ(&Vertex[1], cz);
+                RwIm2DVertexSetU(&Vertex[1], u4, 0);
+                RwIm2DVertexSetV(&Vertex[1], v4, 0);
+
+                RwIm2DVertexSetScreenX(&Vertex[2], x2);
+                RwIm2DVertexSetScreenY(&Vertex[2], y2);
+                RwIm2DVertexSetScreenZ(&Vertex[2], cz);
+                RwIm2DVertexSetU(&Vertex[2], u3, 0);
+                RwIm2DVertexSetV(&Vertex[2], v3, 0);
+
+                RwIm2DVertexSetScreenX(&Vertex[3], x2);
+                RwIm2DVertexSetScreenY(&Vertex[3], y1);
+                RwIm2DVertexSetScreenZ(&Vertex[3], cz);
+                RwIm2DVertexSetU(&Vertex[3], u2, 0);
+                RwIm2DVertexSetV(&Vertex[3], v2, 0);
+
+                // For some reason this is done twice.
+                RwIm2DVertexSetIntRGBA(&Vertex[0], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[1], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[2], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[3], 0xFF, 0xFF, 0xFF, 0xFF);
+
+                zRenderState(SDRS_Default);
+                RwRenderStateSet(rwRENDERSTATEFOGENABLE, 0);
+                RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+                RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+                RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
+                RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)rwSHADEMODEFLAT);
+                RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+                RwIm2DRenderIndexedPrimitive(rwPRIMTYPETRILIST, Vertex, 4, Index, 6);
+            }
+            else
+            {
+                if (ui->model != NULL)
+                {
+                    float32 cooz;
+                    // zUIAsset & a;
+                    basic_rect<float32> r;
+                    r.x = ui->sasset->pos.x / 640.0f;
+                    r.y = ui->sasset->pos.y / 480.0f;
+                    r.w = ui->sasset->dim[0] / 640.0f;
+                    r.h = ui->sasset->dim[1] / 480.0f;
+
+                    if (r.w <= 0.0f || r.h <= 0.0f)
+                    {
+                        return;
+                    }
+                    
+                    int32 srcblend = rwBLENDSRCALPHA;
+                    if (XMODELINSTANCE_GET_SRCBLEND(ent->model))
+                    {
+                        srcblend = XMODELINSTANCE_GET_SRCBLEND(ent->model);
+                    }
+                    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)srcblend);
+
+                    int32 destblend = rwBLENDINVSRCALPHA;
+                    if (XMODELINSTANCE_GET_DSTBLEND(ent->model))
+                    {
+                        destblend = XMODELINSTANCE_GET_DSTBLEND(ent->model);
+                    }
+                    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)destblend);
+
+                    if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
+                    {
+                        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+                        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+                    }
+
+                    xEntSetupPipeline(ent->model);
+
+                    ent->model->Scale.assign(1.0f, 1.0f, 1.0f);
+                    xModelRender2D(*ent->model, r, from, to);
+                    xEntRestorePipeline(ent->model);
+
+                    if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
+                    {
+                        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
+                        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        xEntRender(ent);
+    }
+}
 
 int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*)
 {
@@ -1167,9 +1122,207 @@ int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBas
     return 1;
 }
 
+// clang-format off
+
+/**************************    PAUSE MENU   *********************************
+ * This array defines the angle and character that the player will start with
+ * for each "task" in the game.
+ * 
+ * Each entry has the following format:
+ * 
+ *   ang, player
+ * 
+ * ang - the starting angle in degrees
+ * player - the starting character, can be one of the following values:
+ *   eCurrentPlayerSpongeBob (SpongeBob)
+ *   eCurrentPlayerPatrick   (Patrick)
+ *   eCurrentPlayerSandy     (Sandy)
+ */
+static menuWorldInfo sWorldInfo[] =
+{
+    // Bikini Bottom
+    322, eCurrentPlayerSpongeBob, // On Top of the Pineapple
+    322, eCurrentPlayerSpongeBob, // On Top of Shady Shoals
+    322, eCurrentPlayerSpongeBob, // On Top of the Chum Bucket
+    200, eCurrentPlayerSpongeBob, // SpongeBob's Closet
+    45,  eCurrentPlayerSpongeBob, // Annoy Squidward
+    315, eCurrentPlayerSpongeBob, // Ambush at the Tree Dome
+    190, eCurrentPlayerSpongeBob, // Infestation at the Krusty Krab
+    270, eCurrentPlayerSpongeBob, // A Wall Jump in the Bucket
+
+    // Jellyfish Fields
+    180, eCurrentPlayerSpongeBob, // Top of the Hill
+    55,  eCurrentPlayerSpongeBob, // Cowa-Bungee!
+    210, eCurrentPlayerPatrick,   // Spelunking
+    180, eCurrentPlayerSpongeBob, // Patrick's Dilemma
+    180, eCurrentPlayerPatrick,   // Navigate the Canyons and Mesas
+    50,  eCurrentPlayerPatrick,   // Drain the Lake
+    345, eCurrentPlayerSpongeBob, // Slide Leap
+    105, eCurrentPlayerSpongeBob, // Defeat King Jellyfish
+
+    // Downtown Bikini Bottom
+    90,  eCurrentPlayerSpongeBob, // End of the Road
+    180, eCurrentPlayerSandy,     // Learn Sandy's Moves
+    338, eCurrentPlayerSpongeBob, // Tikis Go Boom
+    180, eCurrentPlayerSandy,     // Across the Rooftops
+    180, eCurrentPlayerSandy,     // Swingin' Sandy
+    180, eCurrentPlayerSpongeBob, // Ambush in the Lighthouse
+    180, eCurrentPlayerSpongeBob, // Extreme Bungee
+    270, eCurrentPlayerSpongeBob, // Come Back with the Cruise Bubble
+
+    // Goo Lagoon
+    225, eCurrentPlayerSpongeBob, // King of the Castle
+    300, eCurrentPlayerSpongeBob, // Connect the Towers
+    260, eCurrentPlayerSpongeBob, // Save the Children
+    225, eCurrentPlayerPatrick,   // Over the Moat
+    270, eCurrentPlayerSpongeBob, // Through the Sea Caves
+    1,   eCurrentPlayerPatrick,   // Clean Out the Bumper Boats
+    335, eCurrentPlayerPatrick,   // Slip and Slide Under the Pier
+    350, eCurrentPlayerSpongeBob, // Tower Bungee
+
+    // Poseidome
+    -1000000000, eCurrentPlayerSpongeBob, // Rumble at the Poseidome
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+
+    // Rock Bottom
+    90,  eCurrentPlayerSpongeBob, // Get to the Museum
+    90,  eCurrentPlayerSpongeBob, // Slip Sliding Away
+    90,  eCurrentPlayerSpongeBob, // Return the Museum's Art
+    345, eCurrentPlayerSandy,     // Swingalong Spatula
+    180, eCurrentPlayerSpongeBob, // Plundering Robots in the Museum
+    280, eCurrentPlayerSpongeBob, // Across the Trench of Darkness
+    1,   eCurrentPlayerSandy,     // Lasers are Fun and Good for You
+    305, eCurrentPlayerSandy,     // How in Tarnation Do You Get There?
+
+    // Mermalair
+    90,  eCurrentPlayerSpongeBob, // Top of the Entrance Area
+    225, eCurrentPlayerSpongeBob, // Top of the Computer Area
+    30,  eCurrentPlayerSpongeBob, // Shut Down the Security System
+    210, eCurrentPlayerPatrick,   // The Funnel Machines
+    180, eCurrentPlayerPatrick,   // The Spinning Towers of Power
+    45,  eCurrentPlayerSpongeBob, // Top of the Security Tunnel
+    45,  eCurrentPlayerSpongeBob, // Complete the Rolling Ball Room
+    -1000000000, eCurrentPlayerSpongeBob, // Defeat Prawn
+
+    // Sand Mountain
+    270, eCurrentPlayerSpongeBob, // Frosty Bungee
+    270, eCurrentPlayerSandy,     // Top of the Lodge
+    120, eCurrentPlayerSpongeBob, // Defeat Robots on Guppy Mound
+    120, eCurrentPlayerSpongeBob, // Beat Mrs. Puff's Time
+    130, eCurrentPlayerSpongeBob, // Defeat Robots on Flounder Hill
+    130, eCurrentPlayerSpongeBob, // Beat Bubble Buddy's Time
+    180, eCurrentPlayerSpongeBob, // Defeat Robots on Sand Mountain
+    180, eCurrentPlayerSpongeBob, // Beat Larry's Time
+
+    // Industrial Park
+    -1000000000, eCurrentPlayerSpongeBob, // Robo-Patrick Ahoy!
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+
+    // Kelp Forest
+    1,   eCurrentPlayerSpongeBob, // Through the Woods
+    90,  eCurrentPlayerSpongeBob, // Find all the Lost Campers
+    180, eCurrentPlayerPatrick,   // Tiki Roundup
+    138, eCurrentPlayerPatrick,   // Down in the Swamp
+    160, eCurrentPlayerSpongeBob, // Through the Kelp Caves
+    160, eCurrentPlayerSpongeBob, // Power Crystal Crisis
+    200, eCurrentPlayerSpongeBob, // Kelp Vine Slide
+    200, eCurrentPlayerSpongeBob, // Beat Mermaid Man's Time
+
+    // Flying Dutchman's Graveyard
+    225, eCurrentPlayerSpongeBob, // Top of the Entrance Area
+    50,  eCurrentPlayerSpongeBob, // A Path through the Goo
+    180, eCurrentPlayerSpongeBob, // Goo Tanker Ahoy!
+    225, eCurrentPlayerSpongeBob, // Top of the Stack of Ships
+    60,  eCurrentPlayerSpongeBob, // Shipwreck Bungee
+    250, eCurrentPlayerSpongeBob, // Destroy the Robot Ship
+    250, eCurrentPlayerSpongeBob, // Get Aloft There, Matey!
+    130, eCurrentPlayerSandy,     // Defeat the Flying Dutchman
+
+    // SpongeBob's Dream
+    315, eCurrentPlayerSpongeBob, // Across the Dreamscape
+    315, eCurrentPlayerSpongeBob, // Follow the Bouncing Ball
+    180, eCurrentPlayerSandy,     // Slidin' Texas Style
+    70,  eCurrentPlayerSandy,     // Swingers Ahoy
+    135, eCurrentPlayerSpongeBob, // Music is in the Ear of the Beholder
+    180, eCurrentPlayerSpongeBob, // Krabby Patty Platforms
+    1,   eCurrentPlayerSpongeBob, // Super Bounce
+    90,  eCurrentPlayerSpongeBob, // Here You Go
+
+    // Chum Bucket Lab
+    -1000000000, eCurrentPlayerSpongeBob, // Kah - Rah - Tae!
+    -1000000000, eCurrentPlayerSpongeBob, // The Small Shall Rule... or Not
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+    -1000000000, eCurrentPlayerSpongeBob,
+
+    // Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+    180, eCurrentPlayerSpongeBob, // Return 10 Socks to Patrick
+
+    // Mr. Krabs
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 3,000 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 3,500 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 4,000 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 4,500 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 5,000 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 5,500 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 6,500 Shiny Objects
+    150, eCurrentPlayerSpongeBob, // Pay Mr. Krabs 7,500 Shiny Objects
+};
+// clang-format on
+
+#define WORLD_COUNT (sizeof(sWorldInfo) / sizeof(sWorldInfo[0]))
+
+#define WORLD_HB 0 // Bikini Bottom
+#define WORLD_JF 1 // Jellyfish Fields
+#define WORLD_BB 2 // Downtown Bikini Bottom
+#define WORLD_GL 3 // Goo Lagoon
+#define WORLD_B1 4 // Poseidome
+#define WORLD_RB 5 // Rock Bottom
+#define WORLD_BC 6 // Mermalair
+#define WORLD_SM 7 // Sand Mountain
+#define WORLD_B2 8 // Industrial Park
+#define WORLD_KF 9 // Kelp Forest
+#define WORLD_GY 10 // Flying Dutchman's Graveyard
+#define WORLD_DB 11 // SpongeBob's Dream
+#define WORLD_B3 12 // Chum Bucket Lab
+#define WORLD_PAT 13 // Patrick
+#define WORLD_KRABS 14 // Mr. Krabs
+
+static menuWorld sWorld[WORLD_COUNT];
+
+_zUI* sTakeTaxi;
+_zUI* sNoneTaskDesc;
+_zUI* sCurrTaskDesc;
+uint32 sCurrWorld;
+uint32 sCurrTask;
+_zUI* sPauseManager;
+_zUI* sConfirmation;
+xGroup* sTaxiConfirmGrp;
+
 // This function only matches when using string literals for some reason.
 // Need to wait until all strings are decompiled.
-#ifdef NON_MATCHING
 void zUI_ParseINI(xIniFile* ini)
 {
     char itemName[16];
@@ -1227,7 +1380,6 @@ void zUI_ParseINI(xIniFile* ini)
         }
     }
 }
-#endif
 
 static _zUI* findUI(zScene* s, uint32 id)
 {
@@ -1312,9 +1464,6 @@ void zUI_ScenePortalSetToCurrentLevel(zScene* zsc)
     sCurrTask = 0;
 }
 
-#ifndef NON_MATCHING
-static void init_patsocks(zScene* zsc);
-#else
 static void init_patsocks(zScene* zsc)
 {
     patsock_ui = findUI(zsc, xStrHash(_stringBase0_54 + 199));
@@ -1325,9 +1474,7 @@ static void init_patsocks(zScene* zsc)
     patsock_prev_world = -1;
     patsock_prev_count = -1;
 }
-#endif
 
-#ifdef NON_MATCHING
 void zUI_ScenePortalInit(zScene* zsc)
 {
     uint32 i, j;
@@ -1664,7 +1811,6 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     zUI_ScenePortalSetToCurrentLevel(zsc);
 }
-#endif
 
 static void hideWorld()
 {
@@ -1720,9 +1866,6 @@ static void enable_ui(_zUI* ui)
     }
 }
 
-#ifndef NON_MATCHING
-static void refresh_patsocks(uint32 world);
-#else
 static void refresh_patsocks(uint32 world)
 {
     uint32 count = globals.player.Inv_PatsSock[world];
@@ -1766,7 +1909,6 @@ static void refresh_patsocks(uint32 world)
         }
     }
 }
-#endif
 
 void zUI_PortalToKrabs(uint32 taskNum)
 {
@@ -1799,7 +1941,6 @@ void zUI_PortalToKrabs(uint32 taskNum)
     passet->assetMarkerID = xStrHash(tempString);
 }
 
-#ifdef NON_MATCHING
 void zUI_ScenePortalUpdate()
 {
     for (uint32 i = 0; i < WORLD_COUNT; i++)
@@ -1880,7 +2021,6 @@ void zUI_ScenePortalUpdate()
 
     xprintf(_stringBase0_54 + 559);
 }
-#endif
 
 void zUI_ScenePortalSave(xSerial* s)
 {

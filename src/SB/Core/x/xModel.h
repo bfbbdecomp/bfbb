@@ -63,6 +63,11 @@ struct xModelInstance
     } anim_coll;
 };
 
+// NOTE (Square): Theses are based on the access pattern found in zUI_Render.
+// I doubt they wrote this out by hand every time, but I'm just guessing on the macro here.
+#define XMODELINSTANCE_GET_SRCBLEND(inst) (((inst)->PipeFlags >> 0x8) & 0xf)
+#define XMODELINSTANCE_GET_DSTBLEND(inst) (((inst)->PipeFlags >> 0xc) & 0xf)
+
 struct xModelTag
 {
     xVec3 v;
