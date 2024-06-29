@@ -1,0 +1,43 @@
+name: Update Progress Website
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x.x"
+      - name: Checkout website code
+        uses: actions/checkout@v4
+        with:
+          repository: bfbbdecomp/website
+          path: website
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: progress.json
+          path: ./website
+
+      - name: Build Website
+        run: |
+          cd website
+          python build.py
+
+      - name: Deploy Website
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: website/dist # The folder the action should deploy.
+          clean: true
+          single-commit: true

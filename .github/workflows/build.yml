@@ -25,13 +25,6 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Checkout Website
-        if: github.ref == 'refs/heads/main'
-        uses: actions/checkout@v4
-        with:
-          repository: bfbbdecomp/website
-          path: website
-
       # Set Git config
       - name: Git config
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
@@ -77,26 +70,11 @@ jobs:
       - name: Generate Progress Report
         if: github.ref == 'refs/heads/main'
         run: |
-          ./objdiff-cli report generate -o website/progress.json
+          ./objdiff-cli report generate -o progress.json
 
-      - name: Parse Progress
+      - name: Save Artifact
         if: github.ref == 'refs/heads/main'
-        run: |
-          cd website
-          python progress.py progress.json json/
-
-      - name: Build Website
-        if: github.ref == 'refs/heads/main'
-        run: |
-          cd website
-          npm install
-          npm run build
-
-      - name: Deploy Website
-        if: github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: actions/upload-artifact@v4
         with:
-          branch: gh-pages
-          folder: website/dist # The folder the action should deploy.
-          clean: true
-          single-commit: true
+          name: progress.json
+          path: progress.json
