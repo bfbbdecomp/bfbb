@@ -243,8 +243,11 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
     return 0;
 }
 
-#define Y (1 << 18)
-#define X (1 << 17)
+// These defines make the cheat inputs easier to read
+#define Y XPAD_BUTTON_SQUARE
+#define X XPAD_BUTTON_O
+#define L1 XPAD_BUTTON_L1
+#define R1 XPAD_BUTTON_R1
 
 // 21 cheats
 // These symbols weren't actually defined as static. They are global in the object file.
@@ -271,30 +274,28 @@ uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
 uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
 
 // zGameCheats assumes this list will contain an empty entry at the end (null key_code pointer)
-static GECheat cheatList[22] = {
-    { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
-    { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
-    { sCheatBubbleBowl, GEC_cb_BubbleBowl, 0x200, 0 },
-    { sCheatCruiseBubble, GEC_cb_CruiseBubble, 0x400, 0 },
-    { sCheatMonsterGallery, GEC_cb_MonsterGallery, 0x0, 0 },
-    { sCheatArtTheatre, GEC_cb_UnlockArtTheatre, 0x0, 0 },
-    { sCheatChaChing, GEC_cb_ChaChing, 0x2, 0 },
-    { sCheatExpertMode, GEC_cb_ExpertMode, 0x800, 0 },
-    { sCheatSwapCCLR, GEC_cb_SwapCCLR, 0x1000, 1 },
-    { sCheatSwapCCUD, GEC_cb_SwapCCUD, 0x2000, 1 },
-    { sCheatRestoreHealth, GEC_cb_RestoreHealth, 0x100, 0 },
-    { sCheatShrapBob, GEC_cb_ShrapBobMode, 0x2000000, 1 },
-    { sCheatNoPants, GEC_cb_NoPantsMode, 0x10000000, 1 },
-    { sCheatCruiseControl, GEC_cb_CruiseControl, 0x20000000, 1 },
-    { sCheatBigPlank, GEC_cb_BigPlank, 0x10000, 1 },
-    { sCheatSmallPeep, GEC_cb_SmallPeep, 0x40000, 1 },
-    { sCheatSmallCoStars, GEC_cb_SmallCostars, 0x80000, 1 },
-    { sCheatRichPeep, GEC_cb_RichPeep, 0x100000, 0 },
-    { sCheatPanHandle, GEC_cb_PanHandle, 0x200000, 0 },
-    { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
-    { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
-    {}
-};
+static GECheat cheatList[] = { { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
+                               { sCheatAddSpatulas, GEC_cb_AddSpatulas, 0x1, 0 },
+                               { sCheatBubbleBowl, GEC_cb_BubbleBowl, 0x200, 0 },
+                               { sCheatCruiseBubble, GEC_cb_CruiseBubble, 0x400, 0 },
+                               { sCheatMonsterGallery, GEC_cb_MonsterGallery, 0x0, 0 },
+                               { sCheatArtTheatre, GEC_cb_UnlockArtTheatre, 0x0, 0 },
+                               { sCheatChaChing, GEC_cb_ChaChing, 0x2, 0 },
+                               { sCheatExpertMode, GEC_cb_ExpertMode, 0x800, 0 },
+                               { sCheatSwapCCLR, GEC_cb_SwapCCLR, 0x1000, 1 },
+                               { sCheatSwapCCUD, GEC_cb_SwapCCUD, 0x2000, 1 },
+                               { sCheatRestoreHealth, GEC_cb_RestoreHealth, 0x100, 0 },
+                               { sCheatShrapBob, GEC_cb_ShrapBobMode, 0x2000000, 1 },
+                               { sCheatNoPants, GEC_cb_NoPantsMode, 0x10000000, 1 },
+                               { sCheatCruiseControl, GEC_cb_CruiseControl, 0x20000000, 1 },
+                               { sCheatBigPlank, GEC_cb_BigPlank, 0x10000, 1 },
+                               { sCheatSmallPeep, GEC_cb_SmallPeep, 0x40000, 1 },
+                               { sCheatSmallCoStars, GEC_cb_SmallCostars, 0x80000, 1 },
+                               { sCheatRichPeep, GEC_cb_RichPeep, 0x100000, 0 },
+                               { sCheatPanHandle, GEC_cb_PanHandle, 0x200000, 0 },
+                               { sCheatMedics, GEC_cb_Medics, 0x20100, 0 },
+                               { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
+                               {} };
 
 uint32 sCheatPressed[16] = {};
 
@@ -361,21 +362,21 @@ void AddToCheatPressed(uint32 button)
 
 void zGameCheats(float dt)
 {
-    switch (zGameModeGet() != eGameMode_Pause)
+    if (zGameModeGet() != eGameMode_Pause)
     {
         return;
     }
 
     int32 startover = false;
-    if ((globals.pad0->pressed & 0xfff9eeff) || (globals.pad0->on & 0xfff9eeff))
+    if ((globals.pad0->pressed & ~(L1 | R1 | X | Y)) || (globals.pad0->on & ~(L1 | R1 | X | Y)))
     {
         startover = true;
     }
-    else if ((globals.pad0->on & 0x1100) != 0x1100)
+    else if ((globals.pad0->on & (L1 | R1)) != (L1 | R1))
     {
         startover = true;
     }
-    else if ((globals.pad0->pressed & 0x60000) == 0)
+    else if ((globals.pad0->pressed & (X | Y)) == 0)
     {
         sCheatTimer -= dt;
         if (!(sCheatTimer <= 0.0f))
