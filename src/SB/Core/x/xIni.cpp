@@ -30,79 +30,83 @@ char* TrimWhitespace(char* string)
     return string;
 }
 
-// Nonmatching: not finished yet
-xIniFile* xIniParse(char* a0, int32 sizemaybe)
+xIniFile* xIniParse(char* buf, int32 len)
 {
-    int32 carriage_returns = 1;
-    int32 iVar11 = 0;
-    int32 iVar12 = -1;
-    int32 newlines = 0;
-    for (int32 i = 0; i < sizemaybe; i++)
+    int32 i;
+    int32 ccr = 1;
+    int32 clf = 1;
+    int32 copen = 0;
+    int32 lastCRLF = -1;
+    for (i = 0; i < len; i++)
     {
-        switch (a0[i])
+        switch (buf[i])
         {
-        case '\r':
-            carriage_returns++;
-            iVar11 = i;
-            break;
         case '\n':
-            newlines++;
-            iVar11 = i;
+            lastCRLF = i;
+            clf++;
+            break;
+        case '\r':
+            lastCRLF = i;
+            ccr++;
             break;
         case '[':
-            iVar12++;
+            copen++;
             break;
         }
     }
 
-    if (newlines > carriage_returns)
+    if (clf > ccr)
     {
-        carriage_returns = newlines;
+        ccr = clf;
     }
 
-    xIniFile* ini = (xIniFile*)RwMalloc(sizeof(xIniFile) + (carriage_returns * sizeof(xIniValue)) +
-                                        (iVar12 * sizeof(xIniSection)) + (sizemaybe - iVar11));
+    int32 sectionAlloc = copen;
+    int32 valueAlloc = ccr;
+
+    xIniFile* ini = (xIniFile*)RwMalloc(sizeof(xIniFile) + (valueAlloc * sizeof(xIniValue)) +
+                                        (sectionAlloc * sizeof(xIniSection)) + (len - lastCRLF));
     ini->mem = NULL;
     ini->NumValues = 0;
     ini->NumSections = 0;
     ini->Values = (xIniValue*)(ini + 1);
-    ini->Sections = (xIniSection*)(&ini->Values[carriage_returns]);
-    char* dest = (char*)(&ini->Sections[iVar12]);
-    uint32 n = sizemaybe - (iVar11 + 1);
-    strncpy(dest, a0 + iVar11 + 1, n);
-    dest[n] = 0;
-    if (iVar11 >= 0)
+    ini->Sections = (xIniSection*)(ini->Values + valueAlloc);
+
+    char* lastLine = (char*)(ini->Sections + sectionAlloc);
+    strncpy(lastLine, buf + (lastCRLF + 1), len - (lastCRLF + 1));
+    lastLine[len - (lastCRLF + 1)] = '\0';
+
+    if (lastCRLF >= 0)
     {
-        a0[iVar11] = '\0';
+        buf[lastCRLF] = '\0';
     }
     else
     {
-        *a0 = '\0';
+        buf[0] = '\0';
     }
 
-    char* apcStack_28[1];
-    char* pcVar4; // = xStrTok(a0, "\n\r", apcStack_28);
-    if (xStrTok(a0, "\n\r", apcStack_28) == NULL)
+    char* ltoken;
+    char* line = xStrTok(buf, "\n\r", &ltoken);
+    if (line == NULL)
     {
-        pcVar4 = xStrTok(dest, "\n\r", apcStack_28);
-        dest = NULL;
+        line = xStrTok(lastLine, "\n\r", &ltoken);
+        lastLine = NULL;
     }
 
-    while (pcVar4 != NULL)
+    while (line != NULL)
     {
-        char* trimmed = TrimWhitespace(pcVar4);
-        if (*trimmed != '#' && *trimmed != '\0')
+        line = TrimWhitespace(line);
+        if (*line != '#' && *line != '\0')
         {
-            if (*trimmed == '[')
+            if (*line == '[')
             {
-                char* idek = std::strstr(trimmed, "]");
-                if (idek != NULL)
+                char* c = std::strstr(line, "]");
+                if (c != NULL)
                 {
-                    *idek = '\0';
-                    char* nowhitespace = TrimWhitespace(&trimmed[1]);
-                    if (*nowhitespace != '\0')
+                    *c = '\0';
+                    c = TrimWhitespace(line + 1);
+                    if (*c != '\0')
                     {
-                        ini->Sections[ini->NumSections].sec = nowhitespace;
+                        ini->Sections[ini->NumSections].sec = c;
                         ini->Sections[ini->NumSections].first = ini->NumValues;
                         ini->Sections[ini->NumSections].count = 0;
                         ini->NumSections++;
@@ -111,52 +115,42 @@ xIniFile* xIniParse(char* a0, int32 sizemaybe)
             }
             else
             {
-                char* pcVar5 = std::strstr(trimmed, "=");
-                if (pcVar5 != NULL)
+                char* c = std::strstr(line, "=");
+                if (c != NULL)
                 {
-                    *pcVar5 = '\0';
-                    char* piVar6 = TrimWhitespace(pcVar4); // trimmed?
-                    if (*piVar6 != '\0')
+                    *c = '\0';
+                    char* tok = TrimWhitespace(line);
+                    if (*tok != '\0')
                     {
-                        char* meme = pcVar5 + 1;
-                        char* meme2 = std::strstr(meme, "#");
-                        if (meme2 != NULL)
+                        line = c + 1;
+                        c = std::strstr(line, "#");
+                        if (c != NULL)
                         {
-                            *meme2 = '\0';
+                            *c = '\0';
                         }
-                        char* piVar7 = TrimWhitespace(meme);
-                        ini->Values[ini->NumValues].tok = piVar6;
-                        ini->Values[ini->NumValues].val = piVar7;
+                        char* val = TrimWhitespace(line);
+                        ini->Values[ini->NumValues].tok = tok;
+                        ini->Values[ini->NumValues].val = val;
                         ini->NumValues++;
-                        int32 sections = ini->NumSections;
-                        if (sections != 0)
+                        if (ini->NumSections != 0)
                         {
-                            ini->Sections[sections - 1].count++;
+                            ini->Sections[ini->NumSections - 1].count++;
                         }
                     }
                 }
             }
         }
 
-        // pcVar4 = xStrTok(NULL, "\n\r", apcStack_28);
-        if (xStrTok(NULL, "\n\r", apcStack_28) == NULL && dest != NULL)
+        line = xStrTok(NULL, "\n\r", &ltoken);
+        if (line == NULL && lastLine != NULL)
         {
-            xStrTok(dest, "\n\r", apcStack_28);
-            dest = NULL;
+            line = xStrTok(lastLine, "\n\r", &ltoken);
+            lastLine = NULL;
         }
     }
 
     return ini;
 }
-
-// FIXME(tgsm): This probably shouldn't be here.
-namespace std
-{
-    char* strstr(char* haystack, const char* needle)
-    {
-        return ::strstr(haystack, needle);
-    }
-} // namespace std
 
 void xIniDestroy(xIniFile* ini)
 {
