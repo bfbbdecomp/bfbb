@@ -3,4 +3,9 @@
 
 #include <string.h>
 
+namespace std
+{
+    char* strstr(char* haystack, const char* needle);
+}
+
 #endif
