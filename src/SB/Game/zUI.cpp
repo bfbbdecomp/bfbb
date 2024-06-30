@@ -60,69 +60,25 @@ struct menuWorldInfo
     menuTaskInfo taskInfo[TASK_COUNT];
 };
 
-static const basic_rect<float32> _1261_0 = { 0, 0, 0, 0 };
-
-static const char _stringBase0_54[] = ".minf\0"
-                                      ".dff\0"
-                                      "idle\0"
-                                      "KEY OFF 1 UI\0"
-                                      "KEY OFF 2 UI\0"
-                                      "KEY OFF 3 UI\0"
-                                      "KEY OFF 4 UI\0"
-                                      "KEY ON 1 UI\0"
-                                      "KEY ON 2 UI\0"
-                                      "KEY ON 3 UI\0"
-                                      "KEY ON 4 UI\0"
-                                      "MNU3 PRESS START UIF\0"
-                                      "MNU3 PRESS START 02 UIF\0"
-                                      "MNU4 CONTROL MUSIC GC/XB UIF\0"
-                                      "Menu00\0"
-                                      " \0"
-                                      "UI_LEVEL_PATSOCK\0"
-                                      "UIF_LEVEL_PATSOCK\0"
-                                      "00_SPAT_MARKER_00\0"
-                                      "STARTCAM\0"
-                                      "00_TASK_COUNTER_00\0"
-                                      "LEVEL ON UI 00\0"
-                                      "TASK NONE UI 00\0"
-                                      "TASK UI 00\0"
-                                      "TASK GOLDEN UI 00\0"
-                                      "TASK GLOW UI 00\0"
-                                      "TASK GLOW UI BOSS 00\0"
-                                      "TASK GLOW UI SMALLBOSS 00\0"
-                                      "PAUSE TASK UIF 0000\0"
-                                      "PAUSE TAKE BUS UIF\0"
-                                      "PAUSE TASK NONE UIF\0"
-                                      "PAUSE MGR UIF\0"
-                                      "TAXI CONFIRM UIF\0"
-                                      "TAXI CONFIRM GROUP\0"
-                                      "%d/%d\0"
-                                      "KS_SPAT_MARKER_01\0"
-                                      "All tasks had NULL UIs\0"
-                                      "All worlds had NULL UIs";
-
 static uint32 sSortedCount = 0;
-extern _zUI* sSorted[768];
 
 static RwIm2DVertex Vertex[4];
 static RwImVertexIndex Index[6] = { 0, 1, 2, 0, 2, 3 };
 
-static uint32 cKeyUIid1off;
-static uint32 cKeyUIid2off;
-static uint32 cKeyUIid3off;
-static uint32 cKeyUIid4off;
-static uint32 cKeyUIid1on;
-static uint32 cKeyUIid2on;
-static uint32 cKeyUIid3on;
-static uint32 cKeyUIid4on;
+static uint32 cKeyUIid1off = xStrHash("KEY OFF 1 UI");
+static uint32 cKeyUIid2off = xStrHash("KEY OFF 2 UI");
+static uint32 cKeyUIid3off = xStrHash("KEY OFF 3 UI");
+static uint32 cKeyUIid4off = xStrHash("KEY OFF 4 UI");
+static uint32 cKeyUIid1on = xStrHash("KEY ON 1 UI");
+static uint32 cKeyUIid2on = xStrHash("KEY ON 2 UI");
+static uint32 cKeyUIid3on = xStrHash("KEY ON 3 UI");
+static uint32 cKeyUIid4on = xStrHash("KEY ON 4 UI");
 
 static char patsock_text_buffer[] = "##/##";
 static _zUI* patsock_ui;
 static zUIFont* patsock_uif;
 static uint32 patsock_prev_world = -1;
 static uint32 patsock_prev_count = -1;
-
-extern zUIMgr gUIMgr;
 
 static float32 ushift;
 
@@ -347,7 +303,7 @@ namespace
         uint32 size;
         void* data;
 
-        data = xSTFindAsset(xStrHashCat(id, _stringBase0_54), &size);
+        data = xSTFindAsset(xStrHashCat(id, ".minf"), &size);
 
         if (data)
         {
@@ -358,7 +314,7 @@ namespace
 
         if (!data)
         {
-            data = xSTFindAsset(xStrHashCat(id, _stringBase0_54 + 6), &size);
+            data = xSTFindAsset(xStrHashCat(id, ".dff"), &size);
         }
 
         if (!data)
@@ -387,7 +343,7 @@ namespace
 
                     xAnimPoolAlloc(&globals.sceneCur->mempool, &ui, ui.atbl, ui.model);
 
-                    xAnimState* ast = xAnimTableGetState(ui.atbl, _stringBase0_54 + 11);
+                    xAnimState* ast = xAnimTableGetState(ui.atbl, "idle");
 
                     if (ast)
                     {
@@ -463,14 +419,14 @@ void zUI_Init(_zUI* ent, xEntAsset* asset)
         }
     }
 
-    cKeyUIid1off = xStrHash(_stringBase0_54 + 16);
-    cKeyUIid2off = xStrHash(_stringBase0_54 + 29);
-    cKeyUIid3off = xStrHash(_stringBase0_54 + 42);
-    cKeyUIid4off = xStrHash(_stringBase0_54 + 55);
-    cKeyUIid1on = xStrHash(_stringBase0_54 + 68);
-    cKeyUIid2on = xStrHash(_stringBase0_54 + 80);
-    cKeyUIid3on = xStrHash(_stringBase0_54 + 92);
-    cKeyUIid4on = xStrHash(_stringBase0_54 + 104);
+    cKeyUIid1off = xStrHash("KEY OFF 1 UI");
+    cKeyUIid2off = xStrHash("KEY OFF 2 UI");
+    cKeyUIid3off = xStrHash("KEY OFF 3 UI");
+    cKeyUIid4off = xStrHash("KEY OFF 4 UI");
+    cKeyUIid1on = xStrHash("KEY ON 1 UI");
+    cKeyUIid2on = xStrHash("KEY ON 2 UI");
+    cKeyUIid3on = xStrHash("KEY ON 3 UI");
+    cKeyUIid4on = xStrHash("KEY ON 4 UI");
 }
 
 void zUI_Save(_zUI* ent, xSerial* s)
@@ -502,6 +458,7 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
 {
     _zUI* ui = ent;
 
+    ent->uiFlags = 0;
     for (int32 i = 0; i < 1; i++)
     {
         if (globals.firstStartPressed)
@@ -621,8 +578,8 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
                     xTRCReset();
                 }
             }
-            else if (pad->pressed & 0x1 && (ui->asset->id == xStrHash(_stringBase0_54 + 116) ||
-                                            ui->asset->id == xStrHash(_stringBase0_54 + 137)))
+            else if (pad->pressed & 0x1 && (ui->asset->id == xStrHash("MNU3 PRESS START UIF") ||
+                                            ui->asset->id == xStrHash("MNU3 PRESS START 02 UIF")))
             {
                 globals.currentActivePad = i;
 
@@ -792,7 +749,7 @@ void zUIRenderAll()
 
     bool rendering_models = false;
 
-    for (int32 i = 0; i < sSortedCount; i++)
+    for (int32 i = 0; i < (int32)sSortedCount; i++)
     {
         if (xEntIsVisible(sSorted[i]))
         {
@@ -931,7 +888,7 @@ void zUI_Render(xEnt* ent)
             else if (ui->model != NULL)
             {
                 // zUIAsset & a;
-                basic_rect<float32> r;
+                basic_rect<float32> r = {};
                 r.x = ui->sasset->pos.x / 640.0f;
                 r.y = ui->sasset->pos.y / 480.0f;
                 r.w = ui->sasset->dim[0] / 640.0f;
@@ -1000,7 +957,7 @@ int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBas
     }
     case eEventUISelect:
     {
-        if (s->id == xStrHash(_stringBase0_54 + 161))
+        if (s->id == xStrHash("MNU4 CONTROL MUSIC GC/XB UIF"))
         {
             xSndPauseCategory(SND_CAT_UI, 0);
         }
@@ -1018,7 +975,7 @@ int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBas
             s->uiFlags ^= 0x2;
         }
 
-        if (s->id == xStrHash(_stringBase0_54 + 161))
+        if (s->id == xStrHash("MNU4 CONTROL MUSIC GC/XB UIF"))
         {
             xSndPauseCategory(SND_CAT_UI, 1);
         }
@@ -1444,8 +1401,8 @@ void zUI_ScenePortalSetToCurrentLevel(zScene* zsc)
 
 static void init_patsocks(zScene* zsc)
 {
-    patsock_ui = findUI(zsc, xStrHash(_stringBase0_54 + 199));
-    patsock_uif = findUIFont(zsc, xStrHash(_stringBase0_54 + 216));
+    patsock_ui = findUI(zsc, xStrHash("UI_LEVEL_PATSOCK"));
+    patsock_uif = findUIFont(zsc, xStrHash("UIF_LEVEL_PATSOCK"));
 
     // non-matching: instruction order and registers
     patsock_text_buffer[0] = '\0';
@@ -1487,7 +1444,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     for (i = 0; i < WORLD_COUNT; i++)
     {
-        strcpy(tempString, _stringBase0_54 + 234);
+        strcpy(tempString, "00_SPAT_MARKER_00");
 
         tempString[0] = sWorld[i].worldPrefix[0];
         tempString[1] = sWorld[i].worldPrefix[1];
@@ -1510,7 +1467,7 @@ void zUI_ScenePortalInit(zScene* zsc)
             }
             else
             {
-                sWorld[i].task[j].portalAsset.assetCameraID = xStrHash(_stringBase0_54 + 252);
+                sWorld[i].task[j].portalAsset.assetCameraID = xStrHash("STARTCAM");
                 sWorld[i].task[j].portalAsset.assetMarkerID = xStrHash(tempString);
                 sWorld[i].task[j].portalAsset.ang = sWorldInfo[i].taskInfo[j].ang;
 
@@ -1535,7 +1492,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     for (i = 0; i < WORLD_COUNT; i++)
     {
-        strcpy(tempString, _stringBase0_54 + 261);
+        strcpy(tempString, "00_TASK_COUNTER_00");
 
         tempString[0] = sWorld[i].worldPrefix[0];
         tempString[1] = sWorld[i].worldPrefix[1];
@@ -1560,7 +1517,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 280);
+    strcpy(tempString, "LEVEL ON UI 00");
 
     c = '1';
 
@@ -1580,7 +1537,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         sWorld[i].uiSelected = findUI(zsc, id);
     }
 
-    strcpy(tempString, _stringBase0_54 + 295);
+    strcpy(tempString, "TASK NONE UI 00");
 
     c = '1';
 
@@ -1605,7 +1562,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 311);
+    strcpy(tempString, "TASK UI 00");
 
     c = '1';
 
@@ -1630,7 +1587,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 322);
+    strcpy(tempString, "TASK GOLDEN UI 00");
 
     c = '1';
 
@@ -1655,7 +1612,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 340);
+    strcpy(tempString, "TASK GLOW UI 00");
 
     c = '1';
 
@@ -1683,7 +1640,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 356);
+    strcpy(tempString, "TASK GLOW UI BOSS 00");
 
     c = '1';
 
@@ -1711,7 +1668,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 377);
+    strcpy(tempString, "TASK GLOW UI SMALLBOSS 00");
 
     c = '1';
 
@@ -1739,7 +1696,7 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    strcpy(tempString, _stringBase0_54 + 403);
+    strcpy(tempString, "PAUSE TASK UIF 0000");
 
     c = '1';
 
@@ -1771,20 +1728,20 @@ void zUI_ScenePortalInit(zScene* zsc)
         }
     }
 
-    id = xStrHash(_stringBase0_54 + 423);
+    id = xStrHash("PAUSE TAKE BUS UIF");
     sTakeTaxi = findUIFont(zsc, id);
 
-    id = xStrHash(_stringBase0_54 + 442);
+    id = xStrHash("PAUSE TASK NONE UIF");
     sNoneTaskDesc = findUIFont(zsc, id);
 
-    id = xStrHash(_stringBase0_54 + 462);
+    id = xStrHash("PAUSE MGR UIF");
     sPauseManager = findUIFont(zsc, id);
     sPauseManager->eventFunc = zUIPortalEventCB;
 
-    id = xStrHash(_stringBase0_54 + 476);
+    id = xStrHash("TAXI CONFIRM UIF");
     sConfirmation = findUIFont(zsc, id);
 
-    id = xStrHash(_stringBase0_54 + 493);
+    id = xStrHash("TAXI CONFIRM GROUP");
     sTaxiConfirmGrp = (xGroup*)zSceneFindObject(id);
 
     zUI_ScenePortalSetToCurrentLevel(zsc);
@@ -1875,7 +1832,7 @@ static void refresh_patsocks(uint32 world)
                 max = 99;
             }
 
-            sprintf(patsock_text_buffer, _stringBase0_54 + 512, count, max);
+            sprintf(patsock_text_buffer, "%d/%d", count, max);
 
             enable_ui(patsock_ui);
             enable_ui(patsock_uif);
@@ -1895,7 +1852,7 @@ void zUI_PortalToKrabs(uint32 taskNum)
     int32 c2 = sWorld[WORLD_B2].task[0].counter->count;
     char tempString[32];
 
-    strcpy(tempString, _stringBase0_54 + 518);
+    strcpy(tempString, "KS_SPAT_MARKER_01");
 
     if (c1 != 2 && c2 != 2)
     {
@@ -1969,7 +1926,9 @@ void zUI_ScenePortalUpdate()
 
                     if (select->uiButton & XPAD_BUTTON_X && xEntIsVisible(sConfirmation) &&
                         sWorld[i].task[j].portal.passet &&
-                        (sWorld[i].uiSelected->idx > 0 || globals.player.g.CheatAlwaysPortal))
+                        // compiler is treating idx as a signed int for some reason
+                        (*(int16*)&sWorld[i].uiSelected->idx > 0 ||
+                         globals.player.g.CheatAlwaysPortal))
                     {
                         if (i == WORLD_KRABS)
                         {
@@ -1983,7 +1942,8 @@ void zUI_ScenePortalUpdate()
                     }
                     else if (select->uiButton & XPAD_BUTTON_X && !xEntIsVisible(sConfirmation) &&
                              sWorld[i].task[j].portal.passet &&
-                             (sWorld[i].uiSelected->idx > 0 || globals.player.g.CheatAlwaysPortal))
+                             (*(int16*)&sWorld[i].uiSelected->idx > 0 ||
+                              globals.player.g.CheatAlwaysPortal))
                     {
                         zEntEvent(sTaxiConfirmGrp, eEventUIFocusOn);
                     }
@@ -1992,12 +1952,12 @@ void zUI_ScenePortalUpdate()
                 }
             }
 
-            xprintf(_stringBase0_54 + 536);
+            xprintf("All tasks had NULL UIs");
             return;
         }
     }
 
-    xprintf(_stringBase0_54 + 559);
+    xprintf("All worlds had NULL UIs");
 }
 
 void zUI_ScenePortalSave(xSerial* s)
@@ -2020,20 +1980,6 @@ void zUI_ScenePortalLoad(xSerial* s)
             s->Read(&sWorld[i].task[j].counter->count);
         }
     }
-}
-
-extern "C" {
-static void __sinit_zUI_cpp()
-{
-    cKeyUIid1off = xStrHash(_stringBase0_54 + 16);
-    cKeyUIid2off = xStrHash(_stringBase0_54 + 29);
-    cKeyUIid3off = xStrHash(_stringBase0_54 + 42);
-    cKeyUIid4off = xStrHash(_stringBase0_54 + 55);
-    cKeyUIid1on = xStrHash(_stringBase0_54 + 68);
-    cKeyUIid2on = xStrHash(_stringBase0_54 + 80);
-    cKeyUIid3on = xStrHash(_stringBase0_54 + 92);
-    cKeyUIid4on = xStrHash(_stringBase0_54 + 104);
-}
 }
 
 void xMat3x3Scale(xMat3x3* m, const xVec3* s)
