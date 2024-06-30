@@ -3,4 +3,12 @@
 
 #include <string.h>
 
+namespace std
+{
+    inline static char* strstr(char* haystack, const char* needle)
+    {
+        return ::strstr(haystack, needle);
+    }
+} // namespace std
+
 #endif

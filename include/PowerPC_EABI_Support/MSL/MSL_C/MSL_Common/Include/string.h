@@ -16,6 +16,7 @@ char* strcat(char* dest, const char* source);
 int strcmp(const char* a, const char* b);
 int stricmp(const char* a, const char* b);
 int strcmpi(const char* a, const char* b);
+char* strstr(const char* haystack, const char* needle);
 int atoi(const char* s);
 
 #ifdef __cplusplus

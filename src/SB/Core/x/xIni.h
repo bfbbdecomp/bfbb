@@ -27,7 +27,11 @@ struct xIniFile
     int8 pathname[256];
 };
 
+xIniFile* xIniParse(char* buf, int32 len);
+void xIniDestroy(xIniFile* ini);
 int32 xIniGetIndex(xIniFile* ini, int8* tok);
+int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def);
+float32 xIniGetFloat(xIniFile* ini, int8* tok, float32 def);
 int8* xIniGetString(xIniFile* ini, int8* tok, int8* def);
 
 #endif
