@@ -60,16 +60,6 @@ struct menuWorldInfo
     menuTaskInfo taskInfo[TASK_COUNT];
 };
 
-extern float32 _787_2;
-extern float32 _950_3;
-extern float32 _1187_0;
-extern float32 _1188;
-extern float32 _1302_0;
-extern float32 _1303;
-extern float32 _1304;
-extern float32 _1305;
-extern float64 _1307;
-
 static const basic_rect<float32> _1261_0 = { 0, 0, 0, 0 };
 
 static const char _stringBase0_54[] = ".minf\0"
@@ -147,7 +137,7 @@ namespace
             xMat3x3 pmat, smat;
 
             ui.bound.mat = (xMat4x3*)ui.model->Mat;
-            ui.bound.mat->pos = _787_2;
+            ui.bound.mat->pos = 0.0f;
 
             sasset = ui.sasset;
             mat = (xMat3x3*)ui.model->Mat;
@@ -404,8 +394,8 @@ namespace
                         xAnimSingle* single = ui.model->Anim->Single;
 
                         single->State = ast;
-                        single->Time = _787_2;
-                        single->CurrentSpeed = _950_3;
+                        single->Time = 0.0f;
+                        single->CurrentSpeed = 1.0f;
                     }
                 }
             }
@@ -782,11 +772,11 @@ void zUIRenderAll()
 {
     // non-matching: floats are epic
 
-    ushift += _1187_0;
+    ushift += 0.05f;
 
-    if (ushift >= _1188)
+    if (ushift >= 2.0f)
     {
-        ushift -= _1188;
+        ushift -= 2.0f;
     }
 
     if (!sSortedCount)
@@ -870,7 +860,6 @@ void zUI_Render(xEnt* ent)
                 uint8 g = 0xFF;
                 uint8 b = 0xFF;
                 uint8 a = 0xFF;
-                RwCamera* camera;
                 float32 w = 640.0f;
                 float32 h = 480.0f;
 
@@ -890,9 +879,9 @@ void zUI_Render(xEnt* ent)
                 float32 z = RwIm2DGetNearScreenZ();
                 float32 cz = z;
 
-                if ((float)iabs(z) <= 0.0000001f)
+                if ((float)iabs(z) <= 0.00001f)
                 {
-                    cz = z >= 0.0f ? 0.0000001f : -0.0000001f;
+                    cz = z >= 0.0f ? 0.00001f : -0.00001f;
                 }
 
                 RwIm2DVertexSetIntRGBA(&Vertex[0], 0xFF, 0xFF, 0xFF, 0xFF);
@@ -939,54 +928,43 @@ void zUI_Render(xEnt* ent)
                 RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
                 RwIm2DRenderIndexedPrimitive(rwPRIMTYPETRILIST, Vertex, 4, Index, 6);
             }
-            else
+            else if (ui->model != NULL)
             {
-                if (ui->model != NULL)
+                // zUIAsset & a;
+                basic_rect<float32> r;
+                r.x = ui->sasset->pos.x / 640.0f;
+                r.y = ui->sasset->pos.y / 480.0f;
+                r.w = ui->sasset->dim[0] / 640.0f;
+                r.h = ui->sasset->dim[1] / 480.0f;
+
+                if (r.w <= 0.0f || r.h <= 0.0f)
                 {
-                    float32 cooz;
-                    // zUIAsset & a;
-                    basic_rect<float32> r;
-                    r.x = ui->sasset->pos.x / 640.0f;
-                    r.y = ui->sasset->pos.y / 480.0f;
-                    r.w = ui->sasset->dim[0] / 640.0f;
-                    r.h = ui->sasset->dim[1] / 480.0f;
+                    return;
+                }
 
-                    if (r.w <= 0.0f || r.h <= 0.0f)
-                    {
-                        return;
-                    }
-                    
-                    int32 srcblend = rwBLENDSRCALPHA;
-                    if (XMODELINSTANCE_GET_SRCBLEND(ent->model))
-                    {
-                        srcblend = XMODELINSTANCE_GET_SRCBLEND(ent->model);
-                    }
-                    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)srcblend);
+                uint32 srcblend = XMODELINSTANCE_GET_SRCBLEND(ent->model);
+                uint32 destblend = XMODELINSTANCE_GET_DSTBLEND(ent->model);
+                RwRenderStateSet(rwRENDERSTATESRCBLEND,
+                                 (void*)(srcblend ? srcblend : rwBLENDSRCALPHA));
+                RwRenderStateSet(rwRENDERSTATEDESTBLEND,
+                                 (void*)(destblend ? destblend : rwBLENDINVSRCALPHA));
 
-                    int32 destblend = rwBLENDINVSRCALPHA;
-                    if (XMODELINSTANCE_GET_DSTBLEND(ent->model))
-                    {
-                        destblend = XMODELINSTANCE_GET_DSTBLEND(ent->model);
-                    }
-                    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)destblend);
+                if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
+                {
+                    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+                    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+                }
 
-                    if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
-                    {
-                        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
-                        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
-                    }
+                xEntSetupPipeline(ent->model);
 
-                    xEntSetupPipeline(ent->model);
+                ent->model->Scale.assign(1.0f, 1.0f, 1.0f);
+                xModelRender2D(*ent->model, r, from, to);
+                xEntRestorePipeline(ent->model);
 
-                    ent->model->Scale.assign(1.0f, 1.0f, 1.0f);
-                    xModelRender2D(*ent->model, r, from, to);
-                    xEntRestorePipeline(ent->model);
-
-                    if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
-                    {
-                        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
-                        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
-                    }
+                if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
+                {
+                    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
+                    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
                 }
             }
         }
