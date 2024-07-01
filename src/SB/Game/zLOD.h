@@ -9,8 +9,6 @@ struct zLODTable
     float32 noRenderDist;
     xModelBucket** lodBucket[3];
     float32 lodDist[3];
-
-    ASSIGNMENT_OPERATOR(zLODTable)
 };
 
 struct zLODManager

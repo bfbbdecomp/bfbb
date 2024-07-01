@@ -318,8 +318,6 @@ namespace cruise_bubble
         float32 opacity;
         const xVec3* target;
         xModelInstance* model;
-
-        ASSIGNMENT_OPERATOR(hud_gizmo)
     };
 
     struct uv_animated_model

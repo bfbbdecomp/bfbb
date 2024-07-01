@@ -17,8 +17,6 @@ struct iFogParams
     RwRGBA fogcolor;
     RwRGBA bgcolor;
     uint8* table;
-
-    ASSIGNMENT_OPERATOR(iFogParams)
 };
 
 extern RwCamera* globalCamera;

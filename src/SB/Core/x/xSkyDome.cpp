@@ -8,8 +8,6 @@ struct SkyDomeInfo
     xEnt* ent;
     int32 sortorder;
     int32 lockY;
-
-    ASSIGNMENT_OPERATOR(SkyDomeInfo)
 };
 
 static SkyDomeInfo sSkyList[8];

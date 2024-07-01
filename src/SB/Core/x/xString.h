@@ -9,8 +9,6 @@ struct substr
     ulong32 size;
 
     static substr create(const char* text, ulong32 size);
-
-    ASSIGNMENT_OPERATOR(substr)
 };
 
 // substr constructor
