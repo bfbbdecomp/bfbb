@@ -458,13 +458,11 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
 {
     _zUI* ui = ent;
 
-    ent->uiFlags = 0;
-    for (int32 i = 0; i < 1; i++)
+    ent->uiButton = 0;
+    // The original code compares firstStartPressed to 0 and then immediately compares i to 1 instead.
+    // Not sure how this could have been written to make the globals check useless like that.
+    for (int32 i = 0; i < 1 /* globals.firstStartPressed */; i++)
     {
-        if (globals.firstStartPressed)
-        {
-        }
-
         _tagxPad* pad;
 
         switch (i)
@@ -484,7 +482,6 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
             pad = globals.pad2;
             break;
         }
-        case 3:
         default:
         {
             pad = globals.pad3;
@@ -492,7 +489,7 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
         }
         }
 
-        if (pad && pad->pressed && ui->uiFlags & 0x4 && (ui->uiFlags & 0x2 || ui->uiFlags & 0x1))
+        if (pad && pad->pressed && ui->uiFlags & 0x8 && (ui->uiFlags & 0x2 || ui->uiFlags & 0x1))
         {
             if (gTrcPad[0].state == TRC_PadInserted)
             {
@@ -1412,13 +1409,6 @@ static void init_patsocks(zScene* zsc)
 
 void zUI_ScenePortalInit(zScene* zsc)
 {
-    uint32 i, j;
-    char c, c2;
-    char tempString[32];
-    uint32 uiID;
-    _zUI* ui;
-    uint32 id;
-
     init_patsocks(zsc);
 
     if (zsc->baseCount[eBaseTypeUI] == 0)
@@ -1442,7 +1432,14 @@ void zUI_ScenePortalInit(zScene* zsc)
     sWorld[WORLD_PAT].numTasks = 8;
     sWorld[WORLD_KRABS].numTasks = 8;
 
-    for (i = 0; i < WORLD_COUNT; i++)
+    uint32 i, j;
+    char c, c2;
+    char tempString[32];
+    uint32 uiID;
+    _zUI* ui;
+    uint32 id;
+
+    for (uint32 i = 0; i < WORLD_COUNT; i++)
     {
         strcpy(tempString, "00_SPAT_MARKER_00");
 
@@ -1451,7 +1448,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         c = '1';
 
-        for (j = 0; j < sWorld[i].numTasks; i++)
+        for (uint32 j = 0; j < sWorld[i].numTasks; i++)
         {
             if (c > '9')
             {
@@ -1880,81 +1877,85 @@ void zUI_ScenePortalUpdate()
 {
     for (uint32 i = 0; i < WORLD_COUNT; i++)
     {
-        if (sWorld[i].uiSelected && xEntIsVisible(sWorld[i].uiSelected))
+        if (!sWorld[i].uiSelected)
         {
-            refresh_patsocks(i);
-            hideWorld();
-            showWorld(i);
+            continue;
+        }
+        if (!xEntIsVisible(sWorld[i].uiSelected))
+        {
+            continue;
+        }
 
-            sCurrWorld = i;
+        refresh_patsocks(i);
+        hideWorld();
+        showWorld(i);
 
-            for (uint32 j = 0; j < sWorld[i].numTasks; j++)
+        sCurrWorld = i;
+
+        for (uint32 j = 0; j < sWorld[i].numTasks; j++)
+        {
+            _zUI* select = sWorld[i].task[j].uiSelected;
+
+            if (select && xEntIsVisible(select))
             {
-                _zUI* select = sWorld[i].task[j].uiSelected;
+                sCurrTask = j;
 
-                if (select && xEntIsVisible(select))
+                if (sCurrTaskDesc)
                 {
-                    sCurrTask = j;
+                    xEntHide(sCurrTaskDesc);
+                }
 
+                sCurrTaskDesc = sWorld[i].task[j].uiTaskDesc;
+
+                if (sCurrTaskDesc)
+                {
+                    xEntShow(sCurrTaskDesc);
+                }
+
+                if (sWorld[i].task[j].counter->count != 0 || globals.player.g.CheatAlwaysPortal)
+                {
+                    xEntHide(sNoneTaskDesc);
+                    xEntShow(sTakeTaxi);
+                }
+                else
+                {
                     if (sCurrTaskDesc)
                     {
                         xEntHide(sCurrTaskDesc);
                     }
 
-                    sCurrTaskDesc = sWorld[i].task[j].uiTaskDesc;
-
-                    if (sCurrTaskDesc)
-                    {
-                        xEntShow(sCurrTaskDesc);
-                    }
-
-                    if (sWorld[i].task[j].counter->count != 0 || globals.player.g.CheatAlwaysPortal)
-                    {
-                        xEntHide(sNoneTaskDesc);
-                        xEntShow(sTakeTaxi);
-                    }
-                    else
-                    {
-                        if (sCurrTaskDesc)
-                        {
-                            xEntHide(sCurrTaskDesc);
-                        }
-
-                        xEntShow(sNoneTaskDesc);
-                        xEntHide(sTakeTaxi);
-                    }
-
-                    if (select->uiButton & XPAD_BUTTON_X && xEntIsVisible(sConfirmation) &&
-                        sWorld[i].task[j].portal.passet &&
-                        // compiler is treating idx as a signed int for some reason
-                        (*(int16*)&sWorld[i].uiSelected->idx > 0 ||
-                         globals.player.g.CheatAlwaysPortal))
-                    {
-                        if (i == WORLD_KRABS)
-                        {
-                            zUI_PortalToKrabs(j);
-                        }
-
-                        zSceneSwitch(&sWorld[i].task[j].portal, 1);
-                        zGameStateSwitchEvent(eEventDispatcher_SetGameState_SceneSwitch);
-
-                        gPendingPlayer = sWorldInfo[i].taskInfo[j].player;
-                    }
-                    else if (select->uiButton & XPAD_BUTTON_X && !xEntIsVisible(sConfirmation) &&
-                             sWorld[i].task[j].portal.passet &&
-                             (*(int16*)&sWorld[i].uiSelected->idx > 0 ||
-                              globals.player.g.CheatAlwaysPortal))
-                    {
-                        zEntEvent(sTaxiConfirmGrp, eEventUIFocusOn);
-                    }
-
-                    return;
+                    xEntShow(sNoneTaskDesc);
+                    xEntHide(sTakeTaxi);
                 }
-            }
 
-            xprintf("All tasks had NULL UIs");
-            return;
+                if (select->uiButton & XPAD_BUTTON_X && xEntIsVisible(sConfirmation) &&
+                    sWorld[i].task[j].portal.passet &&
+                    (sWorld[i].task[j].counter->count > 0 || globals.player.g.CheatAlwaysPortal))
+                {
+                    if (i == WORLD_KRABS)
+                    {
+                        zUI_PortalToKrabs(j);
+                    }
+
+                    zSceneSwitch(&sWorld[i].task[j].portal, 1);
+                    zGameStateSwitchEvent(eEventDispatcher_SetGameState_SceneSwitch);
+
+                    gPendingPlayer = sWorldInfo[i].taskInfo[j].player;
+                }
+                else if (select->uiButton & XPAD_BUTTON_X && !xEntIsVisible(sConfirmation) &&
+                         sWorld[i].task[j].portal.passet &&
+                         (sWorld[i].task[j].counter->count > 0 ||
+                          globals.player.g.CheatAlwaysPortal))
+                {
+                    zEntEvent(sTaxiConfirmGrp, eEventUIFocusOn);
+                }
+
+                return;
+            }
         }
+
+        xprintf("All tasks had NULL UIs");
+        return;
     }
 
     xprintf("All worlds had NULL UIs");
