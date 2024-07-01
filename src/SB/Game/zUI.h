@@ -24,8 +24,6 @@ struct _zUI : zEnt
     uint32 uiButton;
     uint16 preUpdateIndex;
     uint16 updateIndex;
-
-    _zUI();
 };
 
 struct zUIMgr : xMgr

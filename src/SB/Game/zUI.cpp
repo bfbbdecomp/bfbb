@@ -454,14 +454,25 @@ void zUI_Reset(_zUI* ent)
     // non-matching: epilogue
 }
 
+// This appears to be a function that was totally inlined into zUI_PreUpdate
+// The name is totally made up
+inline int32 zUI_PreUpdateCondition()
+{
+    if (globals.firstStartPressed)
+    {
+        return 1;
+    }
+
+    return 1;
+}
+
 void zUI_PreUpdate(_zUI* ent, xScene*, float32)
 {
     _zUI* ui = ent;
 
     ent->uiButton = 0;
-    // The original code compares firstStartPressed to 0 and then immediately compares i to 1 instead.
-    // Not sure how this could have been written to make the globals check useless like that.
-    for (int32 i = 0; i < 1 /* globals.firstStartPressed */; i++)
+    // This matches perfectly with inlining enabled
+    for (int32 i = 0; i < zUI_PreUpdateCondition(); i++)
     {
         _tagxPad* pad;
 
@@ -798,7 +809,7 @@ void zUI_Render(xEnt* ent)
 
     if (ui->uiFlags & 4)
     {
-        if (xEntIsVisible(ent))
+        if (xEntIsVisible(ui))
         {
             if (ui->sasset->textureID)
             {
@@ -896,26 +907,26 @@ void zUI_Render(xEnt* ent)
                     return;
                 }
 
-                uint32 srcblend = XMODELINSTANCE_GET_SRCBLEND(ent->model);
-                uint32 destblend = XMODELINSTANCE_GET_DSTBLEND(ent->model);
+                uint32 srcblend = XMODELINSTANCE_GET_SRCBLEND(ui->model);
+                uint32 destblend = XMODELINSTANCE_GET_DSTBLEND(ui->model);
                 RwRenderStateSet(rwRENDERSTATESRCBLEND,
                                  (void*)(srcblend ? srcblend : rwBLENDSRCALPHA));
                 RwRenderStateSet(rwRENDERSTATEDESTBLEND,
                                  (void*)(destblend ? destblend : rwBLENDINVSRCALPHA));
 
-                if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
+                if ((ui->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
                 {
                     RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
                     RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
                 }
 
-                xEntSetupPipeline(ent->model);
+                xEntSetupPipeline(ui->model);
 
-                ent->model->Scale.assign(1.0f, 1.0f, 1.0f);
-                xModelRender2D(*ent->model, r, from, to);
-                xEntRestorePipeline(ent->model);
+                ui->model->Scale.assign(1.0f, 1.0f, 1.0f);
+                xModelRender2D(*ui->model, r, from, to);
+                xEntRestorePipeline(ui->model);
 
-                if ((ent->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
+                if ((ui->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
                 {
                     RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
                     RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
@@ -925,7 +936,7 @@ void zUI_Render(xEnt* ent)
     }
     else
     {
-        xEntRender(ent);
+        xEntRender(ui);
     }
 }
 
@@ -1439,7 +1450,7 @@ void zUI_ScenePortalInit(zScene* zsc)
     _zUI* ui;
     uint32 id;
 
-    for (uint32 i = 0; i < WORLD_COUNT; i++)
+    for (i = 0; i < WORLD_COUNT; i++)
     {
         strcpy(tempString, "00_SPAT_MARKER_00");
 
@@ -1448,7 +1459,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         c = '1';
 
-        for (uint32 j = 0; j < sWorld[i].numTasks; i++)
+        for (j = 0; j < sWorld[i].numTasks; i++)
         {
             if (c > '9')
             {
@@ -1461,29 +1472,28 @@ void zUI_ScenePortalInit(zScene* zsc)
             if (sWorld[i].task[j].levelSuffix[0] == '0' && sWorld[i].task[j].levelSuffix[1] == '0')
             {
                 sWorld[i].task[j].portal.passet = NULL;
+                continue;
+            }
+
+            sWorld[i].task[j].portalAsset.assetCameraID = xStrHash("STARTCAM");
+            sWorld[i].task[j].portalAsset.assetMarkerID = xStrHash(tempString);
+            sWorld[i].task[j].portalAsset.ang = sWorldInfo[i].taskInfo[j].ang;
+
+            if (i == WORLD_PAT || i == WORLD_KRABS)
+            {
+                sWorld[i].task[j].portalAsset.sceneID = (sWorld[i].task[j].levelSuffix[1] << 24) |
+                                                        (sWorld[i].task[j].levelSuffix[0] << 16) |
+                                                        'BH';
             }
             else
             {
-                sWorld[i].task[j].portalAsset.assetCameraID = xStrHash("STARTCAM");
-                sWorld[i].task[j].portalAsset.assetMarkerID = xStrHash(tempString);
-                sWorld[i].task[j].portalAsset.ang = sWorldInfo[i].taskInfo[j].ang;
-
-                if (i == WORLD_PAT || i == WORLD_KRABS)
-                {
-                    sWorld[i].task[j].portalAsset.sceneID =
-                        (sWorld[i].task[j].levelSuffix[1] << 24) |
-                        (sWorld[i].task[j].levelSuffix[0] << 16) | 'BH';
-                }
-                else
-                {
-                    sWorld[i].task[j].portalAsset.sceneID =
-                        (sWorld[i].task[j].levelSuffix[1] << 24) |
-                        (sWorld[i].task[j].levelSuffix[0] << 16) | (sWorld[i].worldPrefix[1] << 8) |
-                        sWorld[i].worldPrefix[0];
-                }
-
-                sWorld[i].task[j].portal.passet = &sWorld[i].task[j].portalAsset;
+                sWorld[i].task[j].portalAsset.sceneID = (sWorld[i].task[j].levelSuffix[1] << 24) |
+                                                        (sWorld[i].task[j].levelSuffix[0] << 16) |
+                                                        (sWorld[i].worldPrefix[1] << 8) |
+                                                        sWorld[i].worldPrefix[0];
             }
+
+            sWorld[i].task[j].portal.passet = &sWorld[i].task[j].portalAsset;
         }
     }
 
@@ -1641,7 +1651,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT; j++)
+    for (j = 0; j < TASK_COUNT_BOSS; j++)
     {
         if (c > '9')
         {
@@ -1669,7 +1679,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT; j++)
+    for (j = 0; j < TASK_COUNT_SMALLBOSS; j++)
     {
         if (c > '9')
         {
@@ -1708,16 +1718,17 @@ void zUI_ScenePortalInit(zScene* zsc)
         tempString[16] = c;
         c++;
 
+        c2 = '1';
         for (j = 0; j < sWorld[i].numTasks; j++)
         {
-            if (c > '9')
+            if (c2 > '9')
             {
-                c = '0';
+                c2 = '0';
                 tempString[17]++;
             }
 
-            tempString[18] = c;
-            c++;
+            tempString[18] = c2;
+            c2++;
 
             id = xStrHash(tempString);
 
@@ -1983,7 +1994,7 @@ void zUI_ScenePortalLoad(xSerial* s)
     }
 }
 
-void xMat3x3Scale(xMat3x3* m, const xVec3* s)
+WEAK void xMat3x3Scale(xMat3x3* m, const xVec3* s)
 {
     xMat3x3ScaleC(m, s->x, s->y, s->z);
 }
