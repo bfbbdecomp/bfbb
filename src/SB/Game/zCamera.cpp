@@ -278,22 +278,6 @@ float32 MatrixSpeed(zFlyKey keys[])
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
 
-zFlyKey& zFlyKey::operator=(const zFlyKey& other)
-{
-    this->frame = other.frame;
-    for (int i = 0; i < 12; i++)
-    {
-        *(uint32*)&this->matrix[i] = *(uint32*)&other.matrix[i];
-    }
-    for (int i = 0; i < 2; i++)
-    {
-        *(uint32*)&this->aperture[i] = *(uint32*)&other.aperture[i];
-    }
-    this->focal = other.focal;
-
-    return *this;
-}
-
 #if 0
 void zCameraFlyStart(uint32 assetID)
 {

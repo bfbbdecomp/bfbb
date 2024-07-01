@@ -61,18 +61,6 @@ void xBoundGetBox(xBox& box, const xBound& bound)
     }
 }
 
-xBox& xBox::operator=(const xBox& other) // temp
-{
-    *(uint32*)&this->upper.x = *(uint32*)&other.upper.x;
-    *(uint32*)&this->upper.y = *(uint32*)&other.upper.y;
-    *(uint32*)&this->upper.z = *(uint32*)&other.upper.z;
-    *(uint32*)&this->lower.x = *(uint32*)&other.lower.x;
-    *(uint32*)&this->lower.y = *(uint32*)&other.lower.y;
-    *(uint32*)&this->lower.z = *(uint32*)&other.lower.z;
-
-    return *this;
-}
-
 void xBoundGetSphere(xSphere& o, const xBound& bound)
 {
     switch (bound.type)
@@ -511,25 +499,6 @@ xVec3& xVec3::operator-=(const xVec3& v)
     this->x -= v.x;
     this->y -= v.y;
     this->z -= v.z;
-
-    return *this;
-}
-
-xVec3& xVec3::operator=(const xVec3& other) // temp
-{
-    this->x = other.x;
-    this->y = other.y;
-    this->z = other.z;
-
-    return *this;
-}
-
-xSphere& xSphere::operator=(const xSphere& other) // temp
-{
-    *(uint32*)&this->center.x = *(uint32*)&other.center.x;
-    *(uint32*)&this->center.y = *(uint32*)&other.center.y;
-    *(uint32*)&this->center.z = *(uint32*)&other.center.z;
-    this->r = other.r;
 
     return *this;
 }

@@ -8,8 +8,6 @@ struct SkyDomeInfo
     xEnt* ent;
     int32 sortorder;
     int32 lockY;
-
-    ASSIGNMENT_OPERATOR(SkyDomeInfo)
 };
 
 static SkyDomeInfo sSkyList[8];
@@ -66,15 +64,6 @@ void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
     zEntEvent(ent, eEventCameraCollideOff);
 }
 #endif
-
-SkyDomeInfo& SkyDomeInfo::operator=(const SkyDomeInfo& other) // temp
-{
-    this->ent = other.ent;
-    this->sortorder = other.sortorder;
-    this->lockY = other.lockY;
-
-    return *this;
-}
 
 void xSkyDome_Render()
 {

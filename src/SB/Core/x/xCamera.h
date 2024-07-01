@@ -171,8 +171,6 @@ struct xCamera : xBase
     float32 roll_ccv;
     float32 roll_csv;
     xVec4 frustplane[12];
-
-    ASSIGNMENT_OPERATOR(xCamera)
 };
 
 struct xBinaryCamera

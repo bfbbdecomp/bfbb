@@ -41,37 +41,6 @@ void xtextbox::render(bool cache) const
     render(temp_layout(cache), 0, -1);
 }
 
-#if 0
-// WIP.
-xfont& xfont::operator=(const xfont& other)
-{
-    iColor_tag tmpColor;
-    float32 tmp;
-    float32 tmp2;
-
-    tmp = other.width;
-    this->id = other.id;
-    tmp2 = other.height;
-    this->width = tmp;
-    tmp = other.space;
-    this->height = tmp2;
-    tmpColor = other.color;
-    this->space = tmp;
-    tmp2 = other.clip.x;
-    this->color = tmpColor;
-    tmp = other.clip.y;
-    this->clip.x = tmp2;
-    tmp2 = other.clip.w;
-    this->clip.y = tmp;
-    tmp = other.clip.h;
-    this->clip.w = tmp2;
-    this->clip.h = tmp;
-
-    return *this;
-}
-
-#endif
-
 float32 NSCREENY(float32 scale)
 {
     return _781 * scale;

@@ -55,30 +55,6 @@ namespace
         float32 life;
         float32 u;
         float32 pad[3];
-
-        snow_particle_data& operator=(const snow_particle_data& rhs)
-        {
-            // NOTE (Square): Pretty sure these are supposed to just be struct copies (loc = rhs.loc)
-            // but the compiler is calling the assignment function instead
-            // I think this whole function is supposed to be compiler generated actually.
-
-            *(uint32*)&loc.x = *(uint32*)&rhs.loc.x;
-            *(uint32*)&loc.y = *(uint32*)&rhs.loc.y;
-            *(uint32*)&loc.z = *(uint32*)&rhs.loc.z;
-            size = rhs.size;
-
-            *(uint32*)&vel.x = *(uint32*)&rhs.vel.x;
-            *(uint32*)&vel.y = *(uint32*)&rhs.vel.y;
-            *(uint32*)&vel.z = *(uint32*)&rhs.vel.z;
-            life = rhs.life;
-
-            u = rhs.u;
-            *(uint32*)&pad[0] = *(uint32*)&rhs.pad[0];
-            *(uint32*)&pad[1] = *(uint32*)&rhs.pad[1];
-            *(uint32*)&pad[2] = *(uint32*)&rhs.pad[2];
-
-            return *this;
-        }
     };
 
     static ptank_pool__pos_color_size_uv2 snow_pool;

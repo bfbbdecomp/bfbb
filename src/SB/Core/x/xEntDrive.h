@@ -11,8 +11,6 @@ struct xEntDrive
         xVec3 loc;
         float32 yaw;
         xCollis* coll;
-
-        ASSIGNMENT_OPERATOR(tri_data)
     };
 
     uint32 flags;
@@ -31,8 +29,6 @@ struct xEntDrive
     float32 yaw;
     xVec3 dloc;
     tri_data tri;
-
-    ASSIGNMENT_OPERATOR(xEntDrive)
 };
 
 void xEntDriveInit(xEntDrive* drv, xEnt* driven);

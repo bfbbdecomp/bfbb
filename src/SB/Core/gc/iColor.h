@@ -9,8 +9,6 @@ struct iColor_tag
     uint8 g;
     uint8 b;
     uint8 a;
-
-    ASSIGNMENT_OPERATOR(iColor_tag)
 };
 
 #endif

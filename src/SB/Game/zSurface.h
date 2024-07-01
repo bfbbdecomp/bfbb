@@ -68,8 +68,6 @@ struct zSurfAssetBase : xBaseAsset
     float32 walljump_scale_y;
     float32 damage_timer;
     float32 damage_bounce;
-
-    ASSIGNMENT_OPERATOR(zSurfAssetBase)
 };
 
 struct zSurfacePropTexAnim
@@ -104,8 +102,6 @@ struct zSurfaceProps
     zSurfacePropTexAnim texanim[2];
     uint32 uvfx_flags;
     zSurfacePropUVFX uvfx[2];
-
-    ASSIGNMENT_OPERATOR(zSurfaceProps)
 };
 
 struct zMaterialMapAsset

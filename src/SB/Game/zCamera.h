@@ -29,8 +29,6 @@ struct zFlyKey
     float32 matrix[12];
     float32 aperture[2];
     float32 focal;
-
-    ASSIGNMENT_OPERATOR(zFlyKey)
 };
 
 void zCameraReset(xCamera* cam);

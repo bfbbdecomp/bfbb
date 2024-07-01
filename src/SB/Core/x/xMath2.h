@@ -28,8 +28,6 @@ template <class T> struct basic_rect
     void center(T x, T y);
 
     basic_rect& operator|=(const basic_rect& other);
-
-    ASSIGNMENT_OPERATOR(basic_rect)
 };
 
 struct xVec2
@@ -48,8 +46,6 @@ struct xVec2
     xVec2 operator*(float32) const;
     xVec2& operator+=(const xVec2&);
     xVec2& operator*=(float32);
-
-    ASSIGNMENT_OPERATOR(xVec2)
 };
 
 float32 xVec2Dist(float32 x1, float32 y1, float32 x2, float32 y2);

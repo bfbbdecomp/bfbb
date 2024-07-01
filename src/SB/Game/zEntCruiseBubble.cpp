@@ -1034,16 +1034,6 @@ void cruise_bubble::reset_wake_ribbons()
 }
 #endif
 
-xFXRibbon::config& xFXRibbon::config::operator=(const xFXRibbon::config& other)
-{
-    this->life_time = other.life_time;
-    this->blend_src = other.blend_src;
-    this->blend_dst = other.blend_dst;
-    this->pivot = other.pivot;
-
-    return *this;
-}
-
 void cruise_bubble::init_wake_ribbons()
 {
     // stringBase0 + 0x185 == "Wake Ribbon 0"

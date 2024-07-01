@@ -139,8 +139,6 @@ struct st_PACKER_READ_FUNCS
     int32 (*PkgHasAsset)(st_PACKER_READ_DATA*, uint32);
     uint32 (*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void (*PkgDisconnect)(st_PACKER_READ_DATA*);
-
-    ASSIGNMENT_OPERATOR(st_PACKER_READ_FUNCS)
 };
 
 st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver);

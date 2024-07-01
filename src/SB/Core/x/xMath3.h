@@ -13,8 +13,6 @@ struct xMat3x3
     uint32 pad1;
     xVec3 at;
     uint32 pad2;
-
-    ASSIGNMENT_OPERATOR(xMat3x3)
 };
 
 // Size: 0x40
@@ -22,16 +20,12 @@ struct xMat4x3 : xMat3x3
 {
     xVec3 pos;
     uint32 pad3;
-
-    ASSIGNMENT_OPERATOR(xMat4x3)
 };
 
 struct xSphere
 {
     xVec3 center;
     float32 r;
-
-    ASSIGNMENT_OPERATOR(xSphere)
 };
 
 // Size: 0x18
@@ -39,8 +33,6 @@ struct xBox
 {
     xVec3 upper;
     xVec3 lower;
-
-    ASSIGNMENT_OPERATOR(xBox)
 };
 
 struct xBBox
@@ -60,8 +52,6 @@ struct xQuat
 {
     xVec3 v;
     float32 s;
-
-    ASSIGNMENT_OPERATOR(xQuat)
 };
 
 struct xVec4

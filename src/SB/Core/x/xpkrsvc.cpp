@@ -48,28 +48,6 @@ int32 PKRStartup()
 }
 #endif
 
-st_PACKER_READ_FUNCS& st_PACKER_READ_FUNCS::operator=(const st_PACKER_READ_FUNCS& other)
-{
-    this->api_ver = other.api_ver;
-    this->Init = other.Init;
-    this->Done = other.Done;
-    this->LoadLayer = other.LoadLayer;
-    this->GetAssetSize = other.GetAssetSize;
-    this->LoadAsset = other.LoadAsset;
-    this->AssetByType = other.AssetByType;
-    this->AssetCount = other.AssetCount;
-    this->IsAssetReady = other.IsAssetReady;
-    this->SetActive = other.SetActive;
-    this->AssetName = other.AssetName;
-    this->GetBaseSector = other.GetBaseSector;
-    this->GetAssetInfo = other.GetAssetInfo;
-    this->GetAssetInfoByType = other.GetAssetInfoByType;
-    this->PkgHasAsset = other.PkgHasAsset;
-    this->PkgTimeStamp = other.PkgTimeStamp;
-    this->PkgDisconnect = other.PkgDisconnect;
-    return *this;
-}
-
 int32 PKRShutdown()
 {
     g_packinit--;
