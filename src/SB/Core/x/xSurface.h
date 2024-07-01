@@ -19,8 +19,6 @@ struct xSurface : xBase
     uint8 state;
     uint8 pad[3];
     void* moprops;
-
-    xSurface& operator=(const xSurface& ent);
 };
 
 #define XSURFACE_TYPE_1 1

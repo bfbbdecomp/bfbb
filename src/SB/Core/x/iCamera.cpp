@@ -316,19 +316,6 @@ void iCameraSetFogParams(iFogParams* fp, float32 time)
 }
 #endif
 
-iFogParams& iFogParams::operator=(const iFogParams& other) // temp
-{
-    this->type = other.type;
-    this->start = other.start;
-    this->stop = other.stop;
-    this->density = other.density;
-    *(uint32*)&this->fogcolor = *(uint32*)&other.fogcolor;
-    *(uint32*)&this->bgcolor = *(uint32*)&other.bgcolor;
-    this->table = other.table;
-
-    return *this;
-}
-
 void iCameraSetFogRenderStates()
 {
     RwCamera* pCamera;

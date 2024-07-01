@@ -23,22 +23,22 @@ void xSurfaceInit(uint16 num_surfs)
     }
 }
 
-extern "C" {
-extern void __copy(void* dst, const void* src, uint32 n);
-}
-
-xSurface& xSurface::operator=(const xSurface& ent)
+// xSurface::operator= and xBase::operator= are placed here at link time, however nothing in
+//   xSurface.cpp calls them in the final executable. This likely means there was an
+//   unused/stripped function in xSurface.cpp that called xSurface::operator= (which calls
+//   xBase::operator=).
+// Indeed, it turns out that Ratatouille's ratsgc_d.MAP file lists an unused function directly
+//   after xSurfaceInit__FUs: xSurfaceInit__FUsPC8xSurface, followed by __as__8xSurfaceFRC8xSurface
+//   and __as__5xBaseFRC5xBase. So it's safe to assume that this was the function that called
+//   xSurface::operator=, and it was likely also present in BfBB (sadly we don't have a .map file
+//   to 100% confirm).
+// There's no way to know what code xSurfaceInit__FUsPC8xSurface may have contained other than the
+//   call to xSurface::operator=, so the following code is just speculation. It doesn't really
+//   matter what the code is for matching purposes since this function will get stripped out by the
+//   linker - the purpose is to force the compiler to generate xSurface::operator= here.
+void xSurfaceInit(uint16 n, const xSurface* ent)
 {
-    xBase::operator=(ent);
-    this->idx = ent.idx;
-    this->type = ent.type;
-    this->ent = ent.ent;
-    this->friction = ent.friction;
-    this->state = ent.state;
-    // FIXME: Is this auto-inserted by the compiler?
-    __copy(&pad, &ent.pad, 3);
-    this->moprops = ent.moprops;
-    return *this;
+    surfs[n] = *ent;
 }
 
 void xSurfaceExit()

@@ -379,20 +379,6 @@ namespace
     }
 } // namespace
 
-rwGameCube2DVertex& rwGameCube2DVertex::operator=(const rwGameCube2DVertex& other) // temp
-{
-    this->x = other.x;
-    this->y = other.y;
-    this->z = other.z;
-    this->emissiveColor.red = other.emissiveColor.red;
-    this->emissiveColor.green = other.emissiveColor.green;
-    this->emissiveColor.blue = other.emissiveColor.blue;
-    this->emissiveColor.alpha = other.emissiveColor.alpha;
-    this->u = other.u;
-    this->v = other.v;
-    return *this;
-}
-
 namespace
 {
     void set_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 u, float32 v, iColor_tag c)
@@ -1254,37 +1240,6 @@ xtextbox::layout& xtextbox::temp_layout(bool cache) const
 }
 #endif
 
-xtextbox& xtextbox::operator=(const xtextbox& other) // temp
-{
-    *(uint32*)&this->font.id = *(uint32*)&other.font.id;
-    *(uint32*)&this->font.width = *(uint32*)&other.font.width;
-    *(uint32*)&this->font.height = *(uint32*)&other.font.height;
-    *(uint32*)&this->font.space = *(uint32*)&other.font.space;
-    *(uint32*)&this->font.color = *(uint32*)&other.font.color;
-    *(uint32*)&this->font.clip.x = *(uint32*)&other.font.clip.x;
-    *(uint32*)&this->font.clip.y = *(uint32*)&other.font.clip.y;
-    *(uint32*)&this->font.clip.w = *(uint32*)&other.font.clip.w;
-    *(uint32*)&this->font.clip.h = *(uint32*)&other.font.clip.h;
-    *(uint32*)&this->bounds.x = *(uint32*)&other.bounds.x;
-    *(uint32*)&this->bounds.y = *(uint32*)&other.bounds.y;
-    *(uint32*)&this->bounds.w = *(uint32*)&other.bounds.w;
-    *(uint32*)&this->bounds.h = *(uint32*)&other.bounds.h;
-    this->flags = other.flags;
-    this->line_space = other.line_space;
-    this->tab_stop = other.tab_stop;
-    this->left_indent = other.left_indent;
-    this->right_indent = other.right_indent;
-    this->cb = other.cb;
-    this->context = other.context;
-    this->texts = other.texts;
-    this->text_sizes = other.text_sizes;
-    this->texts_size = other.texts_size;
-    *(uint32*)&this->text.text = *(uint32*)&other.text.text;
-    *(uint32*)&this->text.size = *(uint32*)&other.text.size;
-    this->text_hash = other.text_hash;
-    return *this;
-}
-
 void xtextbox::render(layout& l, int32 begin_jot, int32 end_jot) const
 {
     l.render(*this, begin_jot, end_jot);
@@ -1566,26 +1521,6 @@ void xtextbox::layout::erase_jots(ulong32 begin_jot, ulong32 end_jot)
     {
         _jots[i] = _jots[i + erase_size];
     }
-}
-
-xtextbox::jot& xtextbox::jot::operator=(const jot& other) // temp
-{
-    *(uint32*)&this->s.text = *(uint32*)&other.s.text;
-    *(uint32*)&this->s.size = *(uint32*)&other.s.size;
-    *(uint32*)&this->flag = *(uint32*)&other.flag;
-    this->context_size = other.context_size;
-    this->context = other.context;
-    *(uint32*)&this->bounds.x = *(uint32*)&other.bounds.x;
-    *(uint32*)&this->bounds.y = *(uint32*)&other.bounds.y;
-    *(uint32*)&this->bounds.w = *(uint32*)&other.bounds.w;
-    *(uint32*)&this->bounds.h = *(uint32*)&other.bounds.h;
-    *(uint32*)&this->render_bounds.x = *(uint32*)&other.render_bounds.x;
-    *(uint32*)&this->render_bounds.y = *(uint32*)&other.render_bounds.y;
-    *(uint32*)&this->render_bounds.w = *(uint32*)&other.render_bounds.w;
-    *(uint32*)&this->render_bounds.h = *(uint32*)&other.render_bounds.h;
-    this->cb = other.cb;
-    this->tag = other.tag;
-    return *this;
 }
 
 void xtextbox::layout::merge_line(jot_line& line)
@@ -1886,13 +1821,6 @@ void xtextbox::layout::calc(const xtextbox& ctb, ulong32 start_text)
     }
 
     stop_layout(ctb);
-}
-
-substr& substr::operator=(const substr& other) // temp
-{
-    this->text = other.text;
-    this->size = other.size;
-    return *this;
 }
 
 void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jot)
@@ -3206,13 +3134,6 @@ namespace
     }
 } // namespace
 
-xVec2& xVec2::operator=(const xVec2& other) // temp
-{
-    this->x = other.x;
-    this->y = other.y;
-    return *this;
-}
-
 namespace
 {
 #if 0
@@ -3438,16 +3359,6 @@ void xtextbox::register_tags(const tag_type* t, ulong32 size)
     }
 
     format_tags_size = d - format_tags;
-}
-
-xtextbox::tag_type& xtextbox::tag_type::operator=(const tag_type& other) // temp
-{
-    this->name.text = other.name.text;
-    this->name.size = other.name.size;
-    this->parse_tag = other.parse_tag;
-    this->reset_tag = other.reset_tag;
-    this->context = other.context;
-    return *this;
 }
 
 xtextbox::tag_type* xtextbox::find_format_tag(const substr& s, int32& index)

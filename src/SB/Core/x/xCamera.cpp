@@ -202,36 +202,6 @@ void xCameraReset(xCamera* cam, float32 d, float32 h, float32 pitch)
     xcam_collis_owner_disable = 0;
 }
 
-xMat4x3& xMat4x3::operator=(const xMat4x3& other) // temp
-{
-    xMat3x3::operator=(other);
-
-    *(uint32*)&this->pos.x = *(uint32*)&other.pos.x;
-    *(uint32*)&this->pos.y = *(uint32*)&other.pos.y;
-    *(uint32*)&this->pos.z = *(uint32*)&other.pos.z;
-    *(uint32*)&this->pad3 = *(uint32*)&other.pad3;
-
-    return *this;
-}
-
-xMat3x3& xMat3x3::operator=(const xMat3x3& other) // temp
-{
-    *(uint32*)&this->right.x = *(uint32*)&other.right.x;
-    *(uint32*)&this->right.y = *(uint32*)&other.right.y;
-    *(uint32*)&this->right.z = *(uint32*)&other.right.z;
-    *(uint32*)&this->flags = *(uint32*)&other.flags;
-    *(uint32*)&this->up.x = *(uint32*)&other.up.x;
-    *(uint32*)&this->up.y = *(uint32*)&other.up.y;
-    *(uint32*)&this->up.z = *(uint32*)&other.up.z;
-    *(uint32*)&this->pad1 = *(uint32*)&other.pad1;
-    *(uint32*)&this->at.x = *(uint32*)&other.at.x;
-    *(uint32*)&this->at.y = *(uint32*)&other.at.y;
-    *(uint32*)&this->at.z = *(uint32*)&other.at.z;
-    *(uint32*)&this->pad2 = *(uint32*)&other.pad2;
-
-    return *this;
-}
-
 #ifndef NON_MATCHING
 static void xCam_buildbasis(xCamera* cam);
 #else
@@ -1331,16 +1301,6 @@ void xVec3Inv(xVec3* o, const xVec3* v)
     o->x = -v->x;
     o->y = -v->y;
     o->z = -v->z;
-}
-
-xQuat& xQuat::operator=(const xQuat& other) // temp
-{
-    *(uint32*)&this->v.x = *(uint32*)&other.v.x;
-    *(uint32*)&this->v.y = *(uint32*)&other.v.y;
-    *(uint32*)&this->v.z = *(uint32*)&other.v.z;
-    this->s = other.s;
-
-    return *this;
 }
 
 float32 xacos(float32 x)

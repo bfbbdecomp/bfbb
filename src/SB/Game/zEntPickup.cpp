@@ -1672,19 +1672,6 @@ void zEntPickup_RewardPostSetup()
     }
 }
 
-WEAK zLODTable& zLODTable::operator=(const zLODTable& other)
-{
-    this->baseBucket = other.baseBucket;
-    this->noRenderDist = other.noRenderDist;
-    this->lodBucket[0] = other.lodBucket[0];
-    this->lodBucket[1] = other.lodBucket[1];
-    this->lodBucket[2] = other.lodBucket[2];
-    *(uint32*)&this->lodDist[0] = *(uint32*)&other.lodDist[0];
-    *(uint32*)&this->lodDist[1] = *(uint32*)&other.lodDist[1];
-    *(uint32*)&this->lodDist[2] = *(uint32*)&other.lodDist[2];
-    return *this;
-}
-
 WEAK float32 xVec3DistFast(const xVec3* a, const xVec3* b)
 {
     float32 dx = a->x - b->x;

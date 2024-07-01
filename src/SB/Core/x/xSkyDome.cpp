@@ -65,15 +65,6 @@ void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
 }
 #endif
 
-SkyDomeInfo& SkyDomeInfo::operator=(const SkyDomeInfo& other) // temp
-{
-    this->ent = other.ent;
-    this->sortorder = other.sortorder;
-    this->lockY = other.lockY;
-
-    return *this;
-}
-
 void xSkyDome_Render()
 {
     RwMatrix* cammat = RwFrameGetMatrix(RwCameraGetFrame(RwCameraGetCurrentCamera()));
