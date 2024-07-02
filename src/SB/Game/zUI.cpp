@@ -454,25 +454,13 @@ void zUI_Reset(_zUI* ent)
     // non-matching: epilogue
 }
 
-// This appears to be a function that was totally inlined into zUI_PreUpdate
-// The name is totally made up
-inline int32 zUI_PreUpdateCondition()
-{
-    if (globals.firstStartPressed)
-    {
-        return 1;
-    }
-
-    return 1;
-}
-
 void zUI_PreUpdate(_zUI* ent, xScene*, float32)
 {
     _zUI* ui = ent;
 
     ent->uiButton = 0;
     // This matches perfectly with inlining enabled
-    for (int32 i = 0; i < zUI_PreUpdateCondition(); i++)
+    for (int32 i = 0; i < (globals.firstStartPressed ? 1 : 1); i++)
     {
         _tagxPad* pad;
 
