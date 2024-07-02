@@ -206,6 +206,12 @@ struct xParCmdRandomVelocityPar : xParCmdAsset
 
 // XPARCMD_TYPE_CUSTOM
 void xParCmdCustom_Update(xParCmd* c, xParGroup* ps, float32 dt);
+
+struct xParCmdCustom : xParCmdAsset // not in dwarf
+{
+    uint32 unknown;
+};
+
 void xParCmdCustom_Grass_Update(xParCmd* c, xParGroup* ps, float32 dt);
 
 // XPARCMD_TYPE_KILLDISTANCE
@@ -290,6 +296,11 @@ void xParCmdClipVolumes_Update(xParCmd* c, xParGroup* ps, float32 dt);
 
 // XPARCMD_TYPE_ANIMALMAGENTISM
 void xParCmdAnimalMagentism_Update(xParCmd* c, xParGroup* ps, float32 dt);
+
+struct xParCmdAnimalMagnetism : xParCmdAsset // not in dwarf
+{
+    float32 unknown;
+};
 
 // XPARCMD_TYPE_DAMAGEPLAYER
 void xParCmdDamagePlayer_Update(xParCmd* c, xParGroup* ps, float32 dt);
