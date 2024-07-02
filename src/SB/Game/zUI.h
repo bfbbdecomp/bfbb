@@ -50,7 +50,10 @@ struct zUIMgr : xMgr
 };
 
 extern int32 bad_card_available;
-extern zUIMgr gUIMgr;
+// Another .comm symbol is here ("uknown_common_bss_symbol").
+// Maybe some unused variable that was still linked in?
+_zUI* sSorted[768];
+zUIMgr gUIMgr;
 
 void zUI_Init();
 void zUI_Init(void* ent, void* asset);
