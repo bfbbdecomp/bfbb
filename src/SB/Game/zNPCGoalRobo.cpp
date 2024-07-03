@@ -17,7 +17,7 @@ int32 zNPCGoalAlertFodder::Enter(float32 dt, void* updCtxt)
     flg_attack = 0;
     tmr_alertfod = f_0; // need non-const float to get scheduling right
     alertfod = FODDER_ALERT_NOTICE;
-    zNPCGoalCommon::Enter(dt, updCtxt);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 int32 zNPCGoalAlertFodder::Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* scene)
