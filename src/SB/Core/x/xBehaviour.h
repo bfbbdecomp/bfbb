@@ -127,10 +127,10 @@ struct xPsyche : RyzMemData
 
 struct xGoal : xListItem<xGoal>, xFactoryInst
 {
-    xPsyche* psyche;
+    xPsyche* psyche; // 0x18
     int32 goalID;
     en_GOALSTATE stat;
-    int32 flg_able;
+    int32 flg_able; // 0x24
     xGoalProcessCallback fun_process;
     xGoalPreCalcCallback fun_precalc;
     xGoalChkRuleCallback fun_chkRule;

@@ -148,7 +148,7 @@ struct zPlayerGlobals
 
     // 0x16AC in globals
     uint32 Visible;
-    uint32 Health;
+    uint32 Health; // 0x16b0
     int32 Speed;
     float32 SpeedMult;
     int32 Sneak;
@@ -172,7 +172,7 @@ struct zPlayerGlobals
     float32 ScareTimer;
     xBase* ScareSource;
     float32 CowerTimer;
-    float32 DamageTimer;
+    float32 DamageTimer; // 0x1708
     float32 SundaeTimer;
     float32 ControlOffTimer;
     float32 HelmetTimer;

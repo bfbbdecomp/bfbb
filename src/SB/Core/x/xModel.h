@@ -46,11 +46,11 @@ struct xModelInstance
 
     // Offset: 0x40
     void* Object;
-    uint16 Flags;
-    uint8 BoneCount;
-    uint8 BoneIndex;
-    uint8* BoneRemap;
-    RwMatrix* Mat;
+    uint16 Flags; // 0x44
+    uint8 BoneCount; // 0x46
+    uint8 BoneIndex; // 0x47
+    uint8* BoneRemap; // 0x48
+    RwMatrix* Mat; // 0x4C
 
     // Offset: 0x50
     xVec3 Scale;

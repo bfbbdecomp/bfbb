@@ -42,5 +42,8 @@ void NPCSupport_Timestep(float32 dt);
 void NPCSupport_SceneReset();
 void NPCSupport_Shutdown();
 void NPCSupport_ScenePostInit();
+int32 NPCC_LampStatus();
+xVec3* NPCC_rightDir(xEnt* ent);
+void NPCC_ang_toXZDir(float32 angle, xVec3* dir);
 
 #endif

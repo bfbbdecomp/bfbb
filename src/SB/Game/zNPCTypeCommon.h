@@ -361,7 +361,7 @@ struct zNPCCommon : xNPCBasic
     zNPCSettings npcset;
     zMovePoint* nav_past;
     zMovePoint* nav_curr;
-    zMovePoint* nav_dest;
+    zMovePoint* nav_dest; // 0x210
     zMovePoint* nav_lead;
     xSpline3* spl_mvptspline;
     float32 len_mvptspline;
@@ -381,6 +381,11 @@ struct zNPCCommon : xNPCBasic
 
     zNPCCommon(int32 myType);
 
+    float32 TurnToFace(float32 dt, const xVec3* dir_want, float32 useTurnRate);
+    float32 ThrottleApply(float32 dt, const xVec3* dir, int32 force3D);
+    float32 ThrottleAccel(float32 dt, int32 speedup, float32 pct_max);
+    float32 ThrottleAdjust(float32 dt, float32 spd_want, float32 accel);
+
     void VelStop();
     static void ConfigSceneDone();
     uint32 LassoInit();
@@ -393,6 +398,7 @@ struct zNPCCommon : xNPCBasic
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);
+    void ModelScaleSet(float32 unk);
     void ModelScaleSet(const xVec3* vec);
     int32 AnimStart(uint32 animID, int32 forceRestart);
     uint32 AnimCurStateID();
@@ -415,6 +421,17 @@ struct zNPCCommon : xNPCBasic
                      int (*)(xGoal*, void*, en_trantype*, float, void*),
                      int (*)(xGoal*, void*, en_trantype*, float, void*),
                      int (*)(xGoal*, void*, en_trantype*, float, void*));
+
+    // defined from zNPCGoalRobo.cpp
+    xVec3* Center();
+    xVec3* Pos();
+    RwMatrix* BoneMat(int32 unk) const;
+    RwV3d* BonePos(int32 unk) const;
+    xVec3* XZVecToPlayer(xVec3* unk1, float32* unk2); // might have wrong return type
+    xVec3* XZVecToPos(xVec3* unk1, const xVec3* unk2, float32* unk3); // ? return type
+    int32 XYZDstSqToPlayer(xVec3* unk); // return type is probably wrong
+    int32 XYZDstSqToPos(xVec3* unk1, xVec3* unk2); // return type is probably wrong
+    int32 SomethingWonderful();
 
     // vTable (xNPCBasic)
 

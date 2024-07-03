@@ -27,11 +27,29 @@ struct NPCArena
     float32 DstSqFromHome(xVec3* pos, xVec3* delt);
     float32 PctFromHome(xVec3* pos);
     int32 IncludesPos(xVec3* pos, float32 rad_thresh, xVec3* vec);
+    float32 Radius(float32 unk);
+    xVec3* Pos();
+    int32 IncludesPlayer(float32 rad_thresh, xVec3* vec);
+    int32 IsReady();
+    void DBG_Draw(zNPCCommon*);
+};
+
+struct NPCLaser
+{
+    RwRaster* rast_laser;
+    float32 radius[2];
+    float32 uv_scroll[2];
+    RwRGBA rgba[2];
+    float32 uv_base[2];
+
+    void ColorSet(const RwRGBA*, const RwRGBA*);
 };
 
 struct NPCBattle
 {
     zNPCRobot* members[5];
+    void JoinBattle(zNPCRobot*);
+    void LeaveBattle(zNPCRobot*);
 };
 
 struct zNPCRobot : zNPCCommon
@@ -121,6 +139,8 @@ struct zNPCRobot : zNPCCommon
     zNPCLassoInfo* PRIV_GetLassoData();
     int32 LassoSetup();
 
+    float32 FacePlayer(float32 dt, float32 spd_turn);
+
     // vTable (zNPCRobot)
     virtual int32 RoboHandleMail(NPCMsg* mail);
     virtual int32 IsDying();
@@ -209,6 +229,7 @@ struct zNPCArfArf : zNPCRobot
     zNPCArfDog* pup_kennel[5];
 
     zNPCArfArf(int32 myType);
+    zMovePoint* GetTelepoint(int32 unk);
 };
 
 struct zNPCChuck : zNPCRobot
