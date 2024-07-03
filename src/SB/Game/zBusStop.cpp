@@ -13,12 +13,12 @@
 #include "zEntPlayer.h"
 #include "zEntCruiseBubble.h"
 
-extern float32 zBusStop_float_minusone;
-extern float32 zBusStop_float_6p25;
-extern float32 zBusStop_float_zero;
-extern float32 zBusStop_float_0p1;
-extern float32 zBusStop_float_0p5;
-extern float32 zBusStop_float_two;
+#define zBusStop_float_minusone -1.0f
+#define zBusStop_float_6p25 6.25f
+#define zBusStop_float_zero 0.0f
+#define zBusStop_float_0p1 0.1f
+#define zBusStop_float_0p5 0.5f
+#define zBusStop_float_two 2.0f
 
 extern xEnt* sBusStopUI;
 
@@ -64,11 +64,6 @@ void zBusStop_Setup(zBusStop* bstop)
     sBusStopUI = (xEnt*)zSceneFindObject(xStrHash("mnu4 busstop"));
 }
 
-#if 0
-// This function is so close, it's off by a single floating point register
-// assignment right at the end of the function :(
-// The registers in `if (bstop->switchTimer < zBusStop_float_zero)` are
-// assigned the opposite to how they are in the original code.
 void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
 {
     // If nearby, advance out of state 0, otherwise, drop back to state 0
@@ -200,7 +195,6 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
         }
     }
 }
-#endif
 
 int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*)
 {
