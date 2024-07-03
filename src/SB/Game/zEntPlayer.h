@@ -366,6 +366,7 @@ extern _CurrentPlayer gCurrentPlayer;
 void zEntPlayer_Load(xEnt*, xSerial*);
 
 int32 zEntPlayer_Damage(xBase* src, uint32 damage);
+int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback);
 
 uint32 WalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 uint32 RunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
