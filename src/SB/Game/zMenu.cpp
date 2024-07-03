@@ -137,9 +137,9 @@ uint32 zMenuLoop()
                 break;
             case 3:
                 draw_black = 1;
-                zFMVPlay(zFMVFileGetName(eFMVFile_LogoNick), 1, 2.0f, 1, 0);
-                zFMVPlay(zFMVFileGetName(eFMVFile_LogoTHQ), 1, 2.0f, 1, 0);
-                zFMVPlay(zFMVFileGetName(eFMVFile_LogoRW), 1, 2.0f, 1, 0);
+                zFMVPlay(zFMVFileGetName(eFMVFile_LogoNick), 0x10000, 2.0f, 1, 0);
+                zFMVPlay(zFMVFileGetName(eFMVFile_LogoTHQ), 0x10000, 2.0f, 1, 0);
+                zFMVPlay(zFMVFileGetName(eFMVFile_LogoRW), 0x10000, 2.0f, 1, 0);
                 holdTmr = 10.0f;
                 zGameModeSwitch(eGameMode_Title);
                 zGameStateSwitch(1);
