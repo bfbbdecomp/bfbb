@@ -48,6 +48,7 @@ union FloatAndVoid
     void* v;
 };
 
+uint32 xUpdateCull_AlwaysTrueCB(void* ent, void* cbdata);
 uint32 xUpdateCull_DistanceSquaredCB(void* ent, void* cbdata);
 xUpdateCullMgr* xUpdateCull_Init(void** ent, uint32 entCount, xGroup** group, uint32 groupCount);
 void xUpdateCull_Update(xUpdateCullMgr* m, uint32 percent_update);

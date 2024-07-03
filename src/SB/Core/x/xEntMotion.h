@@ -168,9 +168,13 @@ struct xEntMotion
     xEnt* target;
 };
 
+void xEntMotionInit(xEntMotion* motion, xEnt*, xEntMotionAsset* asset);
+void xEntMotionReset(xEntMotion* motion, xScene* sc);
 void xEntMotionMove(xEntMotion* motion, xScene* sc, float32 dt, xEntFrame* frame);
 void xEntMotionTranslate(xEntMotion* motion, const xVec3* dpos, xMat4x3* dmat);
 void xEntMotionDebugInit(uint16 num_xems);
 void xEntMotionDebugExit();
+void xEntMotionStop(xEntMotion* motion);
+void xEntMotionRun(xEntMotion* motion);
 
 #endif
