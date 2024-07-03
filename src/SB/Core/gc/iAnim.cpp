@@ -6,6 +6,10 @@
 #include <rwcore.h>
 #include <rtslerp.h>
 
+static uint8 scratchBuffer[9120];
+
+uint8* giAnimScratch = scratchBuffer;
+
 void iAnimInit()
 {
     return;
@@ -31,13 +35,11 @@ uint32 iAnimBoneCount(void* RawData)
     return 0;
 }
 
-#ifdef NON_MATCHING
+// non-matching: incorrect instruction order and regalloc
 void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset,
                 float32* BoneTable, uint32 BoneCount, xVec3* Tran1, xQuat* Quat1, xVec3* Tran2,
                 xQuat* Quat2, xVec3* TranDest, xQuat* QuatDest)
 {
-    // non-matching: incorrect instruction order and regalloc
-
     uint32 i;
     uint32 invert = 0;
     RtQuat* q2;
@@ -230,4 +232,3 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
         }
     }
 }
-#endif
