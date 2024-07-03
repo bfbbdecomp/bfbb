@@ -3,6 +3,9 @@
 #include <types.h>
 #include <string.h>
 
+#include "zEntCruiseBubble.h"
+#include "zEntTeleportBox.h"
+#include "zGlobals.h"
 #include "zNPCTypes.h"
 #include "zNPCSndTable.h"
 #include "zNPCSupport.h"
@@ -23,6 +26,7 @@ extern NPCSndTrax g_sndTrax_General[];
 extern float32 lbl_803CE4C0;
 extern int32 g_flg_wonder;
 extern int32 g_isConversation;
+extern xBase* g_ownerConversation;
 extern float32 g_tmr_talkless;
 
 xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*)
@@ -183,6 +187,94 @@ void zNPCCommon_WonderReset()
     g_flg_wonder = 0;
 }
 
+int32 NPCC_NPCIsConversing()
+{
+    return g_isConversation;
+}
+
+void zNPCCommon::WonderOfTalking(int32 inprogress, xBase* owner)
+{
+    if (inprogress)
+    {
+        g_isConversation = 1;
+        if (owner)
+        {
+            g_ownerConversation = owner;
+            return;
+        }
+        else
+        {
+            g_ownerConversation = this;
+            return;
+        }
+    }
+
+    g_isConversation = 0;
+    g_ownerConversation = NULL;
+}
+
+int32 zNPCCommon::SomethingWonderful()
+{
+    int32 flg_wonder = g_flg_wonder;
+
+    if (globals.player.Health < 1)
+    {
+        // Idk why they wouldn't do flg_wonder |= x here, but this is needed to match
+        flg_wonder = g_flg_wonder | 0b00000010;
+    }
+
+    if (globals.player.ControlOff & 0xffffbeff)
+    {
+        flg_wonder |= 0b00000100;
+    }
+
+    if (cruise_bubble::active() && (this->SelfType() & 0xffffff00) == 'NTF\0')
+    {
+        flg_wonder |= 0b01000000;
+    }
+
+    if (globals.cmgr && globals.cmgr->csn)
+    {
+        flg_wonder |= 0b00000001;
+    }
+
+    if (g_isConversation)
+    {
+        flg_wonder |= 0b00001000;
+    }
+
+    if (!NPCC_LampStatus())
+    {
+        flg_wonder |= 0b00100000;
+    }
+
+    if (zEntTeleportBox_playerIn())
+    {
+        flg_wonder |= 0b10000000;
+    }
+
+    return flg_wonder;
+}
+
+/*
+// Off by one instruction, I don't understand what the original code is doing
+int32 zNPCCommon::SndIsAnyPlaying()
+{
+    int32 iVar1 = 0;
+
+    for (int32 i = 0; i < 4; i++)
+    {
+        iVar1 = xSndIsPlaying(0, this->id);
+        if (iVar1)
+        {
+            break;
+        }
+    }
+
+    return iVar1;
+}
+*/
+
 uint32 zNPCCommon::LassoInit()
 {
     lassdata = PRIV_GetLassoData();
@@ -204,8 +296,52 @@ zNPCLassoInfo* zNPCCommon::GimmeLassInfo()
     return flg_vuln & 0x1000000 ? lassdata : NULL;
 }
 
-void zNPCCommon::AddDEVGoals()
+void zNPCCommon::LassoNotify(en_LASSO_EVENT event)
 {
+    zNPCLassoInfo* lass = this->lassdata;
+
+    if (!lass->stage && event)
+    {
+        return;
+    }
+
+    switch (event)
+    {
+    case LASS_STAT_DONE:
+    {
+        lass->stage = LASS_STAT_PENDING;
+        break;
+    }
+    case LASS_STAT_PENDING:
+    {
+        lass->stage = LASS_STAT_DONE;
+        break;
+    }
+    case LASS_STAT_GRABBING:
+    {
+        lass->stage = LASS_STAT_GRABBING;
+        break;
+    }
+    case LASS_STAT_NOMORE:
+    {
+        lass->stage = LASS_STAT_TOSSING;
+        return;
+    }
+    case LASS_STAT_UNK_5:
+    {
+        lass->stage = LASS_STAT_DONE;
+        break;
+    }
+    }
+}
+
+void zNPCCommon::AddDEVGoals(xPsyche*)
+{
+}
+
+uint32 zNPCCommon::DBG_Name()
+{
+    return 0;
 }
 
 void zNPCCommon::DBG_AddTweakers()
@@ -218,6 +354,11 @@ void zNPCCommon::SelfSetup()
 
 void zNPCCommon::DBG_RptDataSize()
 {
+}
+
+uint32 zNPCCommon::DBG_InstName()
+{
+    return this->DBG_Name();
 }
 
 xEntDrive* zNPCCommon::PRIV_GetDriverData()

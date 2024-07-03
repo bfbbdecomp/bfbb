@@ -89,6 +89,51 @@ void zEntPlayerKillCarry()
     globals.player.carry.grabbed = NULL;
 }
 
+void test(int32 a)
+{
+}
+
+void zEntPlayerControlOn(zControlOwner owner)
+{
+    uint32 originalValue = globals.player.ControlOff;
+    globals.player.ControlOff &= ~owner;
+
+    if (originalValue != globals.player.ControlOff)
+    {
+        if (globals.player.ControlOff & 0x202)
+        {
+            xSndSelectListenerMode(SND_LISTENER_MODE_CAMERA);
+        }
+        else
+        {
+            xSndSelectListenerMode(SND_LISTENER_MODE_PLAYER);
+        }
+    }
+}
+
+// 83%, but floating point scheduling preventing match
+void zEntPlayerControlOff(zControlOwner owner)
+{
+    uint32 originalValue = globals.player.ControlOff;
+
+    globals.player.ControlOff |= owner;
+    globals.player.ControlOffTimer = 1.0f;
+
+    if (originalValue != globals.player.ControlOff)
+    {
+        if (globals.player.ControlOff & 0x202)
+        {
+            xSndSelectListenerMode(SND_LISTENER_MODE_CAMERA);
+        }
+        else
+        {
+            xSndSelectListenerMode(SND_LISTENER_MODE_PLAYER);
+        }
+    }
+
+    zEntPlayerKillCarry();
+}
+
 void TellPlayerVillainIsNear(float32 visnear)
 {
     globals.player.BadGuyNearTimer = visnear;
@@ -97,6 +142,18 @@ void TellPlayerVillainIsNear(float32 visnear)
 void SetPlayerKillsVillainTimer(float32 time)
 {
     globals.player.VictoryTimer = time;
+}
+
+void PlayerArrive(xEnt* ent, xBase* base)
+{
+    globals.player.AutoMoveSpeed = 0;
+
+    zEntEvent(base, ent, 0x1f);
+
+    if (base->baseType == 0xd)
+    {
+        zEntEvent(ent, base, 0x1f);
+    }
 }
 
 void HealthReset()
@@ -211,7 +268,6 @@ uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return in_goo;
 }
 
-#if 0
 uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // Decompiled, but instructions are out of order?
@@ -222,9 +278,6 @@ uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
     return false;
 }
-#else
-
-#endif
 
 uint32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
@@ -317,7 +370,7 @@ uint32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
 }
 
-uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*)
+uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     // much different than PS2 version of this function
     return sSpatulaGrabbed;
@@ -332,7 +385,7 @@ int32 zEntPlayer_InBossBattle()
     );
 }
 
-uint32 LCopterCheck(xAnimTransition*, xAnimSingle*)
+uint32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
@@ -356,40 +409,54 @@ uint32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             (globals.pad0->pressed & 0x10000));
 }
 
-#if 0
-// surprisingly doesn't match at all even though it appears to be simple
 uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    zCameraSetBbounce(1);
-    globals.player.Bounced = 0;
-    globals.player.Jump_CanDouble = 1;
-    globals.player.Jump_CanFloat = 1;
-    sLassoInfo->canCopter = 1;
+    StopLCopterCB(tran, anim, param_3);
+    BounceCB(tran, anim, param_3);
     return 0;
 }
-#endif
 
-uint32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*)
+uint32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    xNPCBasic* npc = (xNPCBasic*)sLassoInfo->target;
+
+    if (npc != NULL)
+    {
+        if (npc->baseType == 0x2b)
+        {
+            if ((npc->SelfType() & 0xffffff00) != 0x4e545400)
+            {
+                return ((zNPCCommon*)sLassoInfo->target)->GimmeLassInfo() != NULL;
+            }
+        }
+
+        return 1;
+    }
+
+    return 0;
+}
+
+uint32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return !sLassoInfo->target;
 }
 
-uint32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*)
+uint32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-uint32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*)
+uint32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
 }
 
-uint32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*)
+uint32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-uint32 LassoReyankCheck(xAnimTransition*, xAnimSingle*)
+uint32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
 }
@@ -681,7 +748,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 
 uint8 xSndIsPlaying(uint32 assetID)
 {
-    return (uint8)iSndIsPlaying(assetID);
+    return iSndIsPlaying(assetID);
 }
 
 int32 zNPCTiki::IsHealthy()

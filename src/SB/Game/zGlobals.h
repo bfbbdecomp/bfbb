@@ -309,14 +309,14 @@ struct zPlayerGlobals
     xVec3 PredictCurrDir;
     float32 PredictCurrVel;
     float32 KnockBackTimer;
-    float32 KnockIntoAirTimer;
+    float32 KnockIntoAirTimer; // 0x1FB4
 };
 
 struct zGlobals : xGlobals
 {
     zPlayerGlobals player;
-    zAssetPickupTable* pickupTable;
-    zCutsceneMgr* cmgr;
+    zAssetPickupTable* pickupTable; // 0x1FB8
+    zCutsceneMgr* cmgr; // 0x1FBC
     zScene* sceneCur;
     zScene* scenePreload;
 };

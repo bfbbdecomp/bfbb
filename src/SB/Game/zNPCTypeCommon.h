@@ -241,6 +241,7 @@ enum en_LASSO_STATUS
     LASS_STAT_GRABBING,
     LASS_STAT_TOSSING,
     LASS_STAT_NOMORE,
+    LASS_STAT_UNK_5, // needed to match switch in zNPCCommon::LassoNotify, checks value of 5
     LASS_STAT_FORCEINT = 0x7fffffff
 };
 
@@ -390,9 +391,11 @@ struct zNPCCommon : xNPCBasic
     static void ConfigSceneDone();
     uint32 LassoInit();
     zNPCLassoInfo* GimmeLassInfo();
-    void AddDEVGoals();
+    void AddDEVGoals(xPsyche*);
+    uint32 DBG_Name(); // return type might be wrong
     void DBG_AddTweakers();
     void DBG_RptDataSize();
+    uint32 DBG_InstName(); // return type might be wrong
     xAnimTable* AnimGetTable();
     float32 AnimTimeRemain(xAnimState* ast);
     bool IsMountableType(en_ZBASETYPE type);
@@ -430,8 +433,11 @@ struct zNPCCommon : xNPCBasic
     xVec3* XZVecToPlayer(xVec3* unk1, float32* unk2); // might have wrong return type
     xVec3* XZVecToPos(xVec3* unk1, const xVec3* unk2, float32* unk3); // ? return type
     int32 XYZDstSqToPlayer(xVec3* unk); // return type is probably wrong
-    int32 XYZDstSqToPos(xVec3* unk1, xVec3* unk2); // return type is probably wrong
+    int32 XYZDstSqToPos(xVec3* unk1, xVec3* unk2);
+    void WonderOfTalking(int32 inprogress, xBase* owner);
+    // return type is probably wrong
     int32 SomethingWonderful();
+    int32 SndIsAnyPlaying();
 
     // vTable (xNPCBasic)
 
@@ -596,5 +602,6 @@ void ZNPC_Common_Shutdown();
 void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, int32* ourAnims, int32 idx_dflt,
                                 float32 blend);
 void zNPCCommon_EjectPhlemOnPawz();
+uint32 xSndIsPlaying(uint32 assetID, uint32 parid);
 
 #endif

@@ -31,8 +31,8 @@ struct xCutsceneZbufferHack
 struct xCutsceneMgr : xBase
 {
     xCutsceneMgrAsset* tasset;
-    xCutscene* csn;
-    uint32 stop;
+    xCutscene* csn; // 0x14
+    uint32 stop; // 0x18
     xCutsceneZbufferHack* zhack;
     float32 oldfov;
 };
