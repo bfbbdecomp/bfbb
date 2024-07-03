@@ -24,7 +24,7 @@ void zPendulum_Reset(_zPendulum* pend, xScene* sc);
 void zPendulum_Update(_zPendulum* pend, xScene* sc, float32 dt);
 void zPendulum_Move(_zPendulum* pend, xScene* sc, float32 dt, xEntFrame* frame);
 void zPendulumTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat);
-int32 zPendulumEventCB(xBase* to, uint32 toEvent, uint32 event, float32* toParam,
+int32 zPendulumEventCB(xBase* from, xBase* to, uint32 event, const float32* toParam,
                        xBase* toParamWidget);
 
 #endif
