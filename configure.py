@@ -133,7 +133,7 @@ if args.no_asm:
 
 # Tool versions
 config.binutils_tag = "2.42-1"
-config.compilers_tag = "20231018"
+config.compilers_tag = "20240702"
 config.dtk_tag = "v0.9.0"
 config.sjiswrap_tag = "v1.1.1"
 config.wibo_tag = "0.6.11"
@@ -209,8 +209,6 @@ cflags_rel = [
 cflags_bfbb = [
     *cflags_base,
     "-common on",
-    "-schedule on",
-    "-opt level=4,peephole,speed",
     "-char unsigned",
     "-str reuse,pool,readonly",
     "-use_lmw_stmw on",
@@ -229,7 +227,7 @@ cflags_bfbb = [
     "-DGAMECUBE",
 ]
 
-config.linker_version = "GC/2.0"
+config.linker_version = "GC/2.0p1"
 
 
 # Helper function for Dolphin libraries
