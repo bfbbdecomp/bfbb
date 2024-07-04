@@ -9,9 +9,9 @@ struct xVec3
     float32 y;
     float32 z;
 
-    static xVec3 m_Null;
-    static xVec3 m_UnitAxisX;
-    static xVec3 m_UnitAxisY;
+    static const xVec3 m_Null;
+    static const xVec3 m_UnitAxisX;
+    static const xVec3 m_UnitAxisY;
 
     static xVec3 create(float32 x, float32 y, float32 z);
     static xVec3 create(float32 f);
