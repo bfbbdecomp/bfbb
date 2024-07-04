@@ -1,4 +1,5 @@
 .DS_Store
+dwarf/
 __pycache__
 .idea
 .ninja_*

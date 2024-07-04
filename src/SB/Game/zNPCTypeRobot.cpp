@@ -7,6 +7,7 @@
 #include "xFactory.h"
 
 #include <string.h>
+#include "zGlobals.h"
 
 extern UVAModelInfo g_uvaShield;
 extern int32 g_cnt_fodbzzt;
@@ -17,6 +18,7 @@ extern int32 g_needuvincr_nightlight;
 extern int32 g_needuvincr_slickshield;
 extern int32 cnt_alerthokey__11zNPCFodBzzt;
 extern NPCSndTrax g_sndTrax_Robot[2];
+extern NPCSndTrax g_sndTrax_Fodder;
 extern float32 zNPCRobot_f_0_0;
 extern float32 zNPCRobot_f_1_0;
 
@@ -399,6 +401,37 @@ void zNPCRobot::InflictPain(int32 numHitPoints, int32 giveCreditToPlayer)
     }
 }
 
+void test(int32 a)
+{
+}
+
+void zNPCFodder::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_trax = &g_sndTrax_Fodder;
+    NPCS_SndTablePrepare(&g_sndTrax_Fodder);
+}
+
+/*
+void zNPCFodder::Stun(float32 stuntime)
+{
+    xVec3 dir_dmg;
+
+    if (this->IsWounded())
+    {
+        return;
+    }
+
+    xVec3* pos = xEntGetPos(&globals.player.ent);
+    xVec3* robot_pos = xEntGetPos(this);
+
+    xVec3Sub(&dir_dmg, pos, robot_pos);
+    float32 out = xVec3Normalize(&dir_dmg, robot_pos);
+
+    this->Respawn(pos, NULL, NULL);
+}
+*/
+
 void zNPCFodBzzt_ResetDanceParty()
 {
     cnt_alerthokey__11zNPCFodBzzt = 0;
@@ -449,6 +482,17 @@ int32 zNPCRobot::IsHealthy()
 xEntDrive* zNPCRobot::PRIV_GetDriverData()
 {
     return &raw_drvdata;
+}
+
+zNPCLassoInfo* zNPCFodder::PRIV_GetLassoData()
+{
+    return NULL;
+}
+
+void zNPCFodder::LassoModelIndex(int32* idxgrab, int32* idxhold)
+{
+    *idxgrab = -1;
+    *idxhold = -1;
 }
 
 int32 xEntIsEnabled(xEnt* ent)

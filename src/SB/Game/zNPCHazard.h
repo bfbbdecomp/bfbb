@@ -233,6 +233,7 @@ struct NPCHazard
     RwV3d* At();
     RwV3d* Right();
     RwV3d* Up();
+    void Discard();
 };
 
 void zNPCHazard_Startup();

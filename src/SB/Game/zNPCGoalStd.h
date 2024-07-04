@@ -2,6 +2,7 @@
 #define ZNPCGOALSTD_H
 
 #include "zNPCGoalCommon.h"
+#include "zNPCHazard.h"
 
 enum en_alertbzzt
 {
@@ -188,11 +189,44 @@ struct zNPCGoalAlertFodBzzt : zNPCGoalCommon
     void GetInArena(float32 dt);
 };
 
-struct zNPCGoalAlertFodder : zNPCGoalCommon
+struct zNPCGoalPushAnim : zNPCGoalCommon
 {
-    int32 flg_attack; // 0x4c
-    en_alertfod alertfod; // 0x50
-    float32 tmr_alertfod; // 0x54
+    int32 flg_pushanim;
+    float32 lastAnimTime;
+
+    // void* __ct(int32 myType);
+    int32 Enter(float32 dt, void* updCtxt);
+};
+
+struct zNPCGoalAttackFodder;
+
+struct CattleNotify : HAZNotify
+{
+    zNPCGoalAttackFodder* goal;
+
+    CattleNotify(int32 myType);
+    int32 Notify(en_haznote note);
+};
+
+struct zNPCGoalAttackFodder : zNPCGoalPushAnim
+{
+    xVec3 dir_attack;
+    int32 flg_attack;
+    CattleNotify cbNotify;
+    NPCHazard* haz_cattle; // 0x6C
+
+    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* xscn);
+    int32 Exit(float32 dt, void* updCtxt);
+    int32 Enter(float32 dt, void* updCtxt);
+    int32 SyncCattleProd();
+};
+
+class zNPCGoalAlertFodder : public zNPCGoalCommon
+{
+public:
+    signed int flg_attack; // offset 0x4C, size 0x4
+    enum en_alertfod alertfod; // offset 0x50, size 0x4
+    float tmr_alertfod; // offset 0x54, size 0x4
 
     void MoveEvade(float32 dt);
     void GetInArena(float32 dt);

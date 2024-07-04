@@ -227,8 +227,8 @@ struct NPCConfig : xListItem<NPCConfig>
     xVec3 animFrameRange[9];
     int32 cnt_esteem[5];
     float32 rad_sound;
-    NPCSndTrax* snd_trax;
-    NPCSndTrax* snd_traxShare;
+    NPCSndTrax* snd_trax; // 0x39C
+    NPCSndTrax* snd_traxShare; // 0x3A0
     int32 test_count;
     uint8 talk_filter[4];
     uint8 talk_filter_size;
@@ -398,6 +398,7 @@ struct zNPCCommon : xNPCBasic
     uint32 DBG_InstName(); // return type might be wrong
     xAnimTable* AnimGetTable();
     float32 AnimTimeRemain(xAnimState* ast);
+    float32 AnimDuration(xAnimState* ast);
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     void ModelScaleSet(float32 x, float32 y, float32 z);

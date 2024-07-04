@@ -195,6 +195,93 @@ void zNPCGoalAlertFodder::GetInArena(float32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
+int32 zNPCGoalAttackFodder::Enter(float32 dt, void* updCtxt)
+{
+    zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
+    this->haz_cattle = HAZ_Acquire();
+
+    if (this->haz_cattle)
+    {
+        if (this->haz_cattle->ConfigHelper(NPC_HAZ_CATTLEPROD))
+        {
+            this->cbNotify.goal = this;
+            this->haz_cattle->SetNPCOwner(npc);
+            this->haz_cattle->NotifyCBSet(&this->cbNotify);
+            this->haz_cattle->Start(NULL, -1.0f);
+        }
+        else
+        {
+            this->haz_cattle->Discard();
+            this->haz_cattle = NULL;
+        }
+    }
+
+    npc->VelStop();
+
+    return this->zNPCGoalPushAnim::Enter(dt, updCtxt);
+}
+
+int32 zNPCGoalAttackFodder::Exit(float32 dt, void* updCtxt)
+{
+    if (this->haz_cattle)
+    {
+        this->haz_cattle->Discard();
+    }
+
+    this->haz_cattle = NULL;
+    return this->zNPCGoalPushAnim::Exit(dt, updCtxt);
+}
+
+#define f_1370 1.0f
+
+int32 zNPCGoalAttackFodder::SyncCattleProd()
+{
+    xVec3 vec1;
+    zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
+
+    int32 var1 = this->flg_attack & 0x3;
+
+    if (!this->haz_cattle)
+    {
+        return var1;
+    }
+
+    if (this->haz_cattle->tmr_remain < f_1370)
+    {
+        this->haz_cattle->tym_lifespan = npc->AnimDuration(NULL);
+        this->haz_cattle->tmr_remain = npc->AnimTimeRemain(NULL);
+    }
+
+    if (!npc->GetVertPos(NPC_MDLVERT_ATTACK, &vec1))
+    {
+        return this->flg_attack & 0x3;
+    }
+
+    this->haz_cattle->PosSet(&vec1);
+
+    if (this->haz_cattle->flg_hazard & 0x40000000)
+    {
+        this->flg_attack |= 0x3;
+    }
+
+    return this->flg_attack & 0x3;
+}
+
+int32 zNPCGoalAttackFodder::Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* scene)
+{
+    if (!this->haz_cattle)
+    {
+        *trantype = GOAL_TRAN_POP;
+        return 1;
+    }
+    else
+    {
+        this->SyncCattleProd();
+    }
+
+    return this->zNPCGoalPushAnim::Process(trantype, dt, updCtxt, scene);
+}
+
 void zNPCGoalAlertFodBzzt::GetInArena(float32 dt)
 {
     zNPCRobot* npc;

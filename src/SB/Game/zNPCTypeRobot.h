@@ -150,6 +150,13 @@ struct zNPCRobot : zNPCCommon
 struct zNPCFodder : zNPCRobot
 {
     zNPCFodder(int32 myType);
+    void Stun(float32 stuntime);
+    uint32 AnimPick(int32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void ParseINI();
+    void Init(xEntAsset* asset);
+    zNPCLassoInfo* PRIV_GetLassoData();
+    void LassoModelIndex(int32* idxgrab, int32* idxhold);
 };
 
 struct zNPCFodBomb : zNPCRobot
