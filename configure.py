@@ -389,7 +389,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zUIFont.cpp"),
             Object(NonMatching, "SB/Game/zVar.cpp"),
             Object(NonMatching, "SB/Game/zVolume.cpp"),
-            Object(NonMatching, "SB/Core/gc/iAnim.cpp"),
+            Object(Equivalent, "SB/Core/gc/iAnim.cpp"),
             Object(NonMatching, "SB/Core/gc/iAnimSKB.cpp"),
             Object(NonMatching, "SB/Core/x/iCamera.cpp"),
             Object(NonMatching, "SB/Core/gc/iCollide.cpp"),

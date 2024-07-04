@@ -40,7 +40,7 @@ static zParPTank* sBubblePTank;
 static zParPTank* sMenuBubblePTank;
 static zParPTank* sSnowPTank;
 static zParPTank* sSteamPTank;
-static float sSparkleAnimTime;
+static float32 sSparkleAnimTime;
 static BubbleData* sBubbleData;
 static BubbleData* sMenuBubbleData;
 
@@ -63,10 +63,10 @@ namespace
 
 static float sSteamAnimTime;
 
-const RwV2d sparkleSize = { 0.3f, 0.3f };
+const RwV2d sparkle_size = { 0.3f, 0.3f };
 
-// Equivalent, float scheduling
-void zParPTankSparkleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCallback update)
+static void zParPTankSparkleCreate(zParPTank* zp, uint32 max_particles,
+                                   zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;
@@ -97,7 +97,7 @@ void zParPTankSparkleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdate
             RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cColor;
     }
     RPATOMICPTANKPLUGINDATA(zp->ptank)->instFlags |= rpPTANKIFLAGCNSCOLOR;
-    RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cSize = sparkleSize;
+    RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cSize = sparkle_size;
     RPATOMICPTANKPLUGINDATA(zp->ptank)->instFlags |= rpPTANKIFLAGCNSSIZE;
 
     RpMaterialSetTexture(zp->ptank->geometry->matList.materials[0], tex);
@@ -110,8 +110,8 @@ void zParPTankSparkleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdate
     sSparkleAnimTime = 0.0f;
 }
 
-// Equivalent: float scheduling, some literals are being but on the stack
-void zParPTankSparkleUpdate(zParPTank* zp, float dt)
+// Equivalent: float loading optimization
+static void zParPTankSparkleUpdate(zParPTank* zp, float dt)
 {
     sSparkleAnimTime += dt;
     if (!(sSparkleAnimTime >= 1.0f / 30.0f))
@@ -158,7 +158,7 @@ void zParPTankSparkleUpdate(zParPTank* zp, float dt)
     sSparkleAnimTime -= 1.0f / 30.f;
 }
 
-// Equivalent: Float scheduling
+// Equivalent: regswaps
 void zParPTankSpawnSparkles(xVec3* pos, uint32 count)
 {
     if (zGameIsPaused())
@@ -198,17 +198,19 @@ void zParPTankSpawnSparkles(xVec3* pos, uint32 count)
     RwCamera* camera = RwCameraGetCurrentCamera();
     if (gGameState == eGameState_Play && camera)
     {
-        ref_pos = (xVec3*)&((RpWorld*)RWSRCGLOBAL(curWorld))->directionalLightList.link.prev;
+        // TODO: This was probably some Renderware macro
+        ref_pos = (xVec3*)((uint8*)camera->object.object.parent + 0x40);
     }
 
-    for (uint32 i = 0; i < count; pos++, i++)
+    xVec3* posit = pos;
+    for (uint32 i = 0; i < count; posit++, i++)
     {
-        if (!sGameScreenTransCam && ref_pos && xVec3Dist2(pos, ref_pos) > 900.0f)
+        if (!sGameScreenTransCam && ref_pos && xVec3Dist2(posit, ref_pos) > 900.0f)
         {
             continue;
         }
 
-        *(xVec3*)(poslock_base + zp->num_particles * posLock.stride) = *pos;
+        *(xVec3*)(poslock_base + zp->num_particles * posLock.stride) = *posit;
         RwTexCoords* uv =
             (RwTexCoords*)(uvlock_base + zp->num_particles * vtx2TexCoordsLock.stride);
         uv[0].u = 0.0f;
@@ -226,7 +228,8 @@ void zParPTankSpawnSparkles(xVec3* pos, uint32 count)
 const RwRGBA bubble_color = { 0x80, 0x80, 0x80, 0xFF };
 
 // Equivalent, float scheduling
-void zParPTankBubbleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCallback update)
+static void zParPTankBubbleCreate(zParPTank* zp, uint32 max_particles,
+                                  zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;
@@ -260,7 +263,8 @@ void zParPTankBubbleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateC
     sBubbleData = (BubbleData*)xMemPushTemp(zp->max_particles * sizeof(BubbleData));
 }
 
-void zParPTankMenuBubbleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCallback update)
+static void zParPTankMenuBubbleCreate(zParPTank* zp, uint32 max_particles,
+                                      zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;
@@ -295,7 +299,7 @@ void zParPTankMenuBubbleCreate(zParPTank* zp, uint32 max_particles, zParPTankUpd
 }
 
 // Equivalent
-void zParPTankBubbleUpdate(zParPTank* zp, float dt)
+static void zParPTankBubbleUpdate(zParPTank* zp, float dt)
 {
     RpPTankLockStruct plock;
     RpPTankLockStruct clock;
@@ -354,8 +358,7 @@ void zParPTankBubbleUpdate(zParPTank* zp, float dt)
             color->alpha = 0xFF;
         }
 
-        int32 cond = (xp->life < 1.2f && xp->life > 0.5f && xurand() > 0.96f);
-        if (cond || xp->life < 0.0f)
+        if ((xp->life < 1.2f && xp->life > 0.5f && xurand() > 0.96f) != 0 || xp->life < 0.0f)
         {
             *pos = *(xVec3*)(plock_base + (zp->num_particles - 1) * plock.stride);
             *color = *(RwRGBA*)(clock_base + (zp->num_particles - 1) * clock.stride);
@@ -390,14 +393,15 @@ void zParPTankBubbleUpdate(zParPTank* zp, float dt)
     RPATOMICPTANKPLUGINDATA(zp->ptank)->actPCount = zp->num_particles;
 }
 
-void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, uint32 count, float scale, zParPTank* zp)
+// regswaps
+static void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, uint32 count, float scale, zParPTank* zp)
 {
     if (globals.player.ent.model == 0 || globals.player.ent.model->Mat == 0)
     {
         return;
     }
 
-    if (zp->max_particles - zp->num_particles > count)
+    if (count > zp->max_particles - zp->num_particles)
     {
         count = zp->max_particles - zp->num_particles;
     }
@@ -445,18 +449,22 @@ void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, uint32 count, float scale, zP
     RwCamera* camera = RwCameraGetCurrentCamera();
     if (gGameState == eGameState_Play && camera)
     {
-        ref_pos = (xVec3*)&((RpWorld*)RWSRCGLOBAL(curWorld))->directionalLightList.link.prev;
+        // TODO: This was probably some Renderware macro
+        ref_pos = (xVec3*)((uint8*)camera->object.object.parent + 0x40);
     }
 
-    for (uint32 i = 0; i < count; pos++, vel++, i++)
+    xVec3* posit = pos;
+    xVec3* velit = vel;
+    uint32 i = 0;
+    for (; i < count; posit++, velit++, i++)
     {
-        if (!sGameScreenTransCam && ref_pos && xVec3Dist2(pos, ref_pos) > 5625.0f)
+        if (!sGameScreenTransCam && ref_pos && xVec3Dist2(posit, ref_pos) > 5625.0f)
         {
             continue;
         }
 
-        *(xVec3*)(plock_base + zp->num_particles * plock.stride) = *pos;
-        base_xp[zp->num_particles].vel = *vel;
+        *(xVec3*)(plock_base + zp->num_particles * plock.stride) = *posit;
+        base_xp[zp->num_particles].vel = *velit;
         base_xp[zp->num_particles].life = 1.75f;
 
         RwTexCoords* uv = (RwTexCoords*)(uvlock_base + zp->num_particles * uvlock.stride);
@@ -467,7 +475,7 @@ void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, uint32 count, float scale, zP
 
         RwV2d* size = (RwV2d*)(slock_base + zp->num_particles * slock.stride);
 
-        size->x = size->y = scale * xurand() * 0.15f + 0.1f;
+        size->x = size->y = scale * (xurand() * 0.15f + 0.1f);
 
         *(RwRGBA*)(clock_base + zp->num_particles * clock.stride) = bubble_color;
         zp->num_particles++;
@@ -493,14 +501,13 @@ int32 zParPTankBubblesAvailable()
     return sBubblePTank->max_particles - sBubblePTank->num_particles;
 }
 
-// Equivalent: Scheduling
 void zParPTankSpawnMenuBubbles(xVec3* pos, xVec3* vel, uint32 count)
 {
     zParPTankSpawnBubbles(pos, vel, count, 1.0f, sMenuBubblePTank);
 }
 
 // Equivalent: Scheduling
-void zParPTankSnowCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCallback update)
+static void zParPTankSnowCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCallback update)
 {
     zp->flags = 0;
     zp->update = update;
@@ -512,12 +519,12 @@ void zParPTankSnowCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCal
     snow_pool.rs.src_blend = 5;
     snow_pool.rs.dst_blend = 2;
     snow_pool.rs.flags = 0;
-    snow_particles = (snow_particle_data*)xMemAlloc(
-        gActiveHeap, zp->max_particles * sizeof(snow_particle_data), 0);
+    snow_particles =
+        (snow_particle_data*)xMemAllocSize(zp->max_particles * sizeof(snow_particle_data));
 }
 
 // Equivalent: float scheduling
-void zParPTankSnowUpdate(zParPTank* zp, float dt)
+static void zParPTankSnowUpdate(zParPTank* zp, float dt)
 {
     snow_particle_data* end = snow_particles + zp->num_particles;
     float32 fadein_life = 0.9f * snow_life;
@@ -574,7 +581,6 @@ void zParPTankSnowUpdate(zParPTank* zp, float dt)
     zp->num_particles = end - snow_particles;
 }
 
-// Equivalent: float scheduling
 void zParPTankSpawnSnow(xVec3* pos, xVec3* vel, uint32 count)
 {
     if (zGameIsPaused())
@@ -610,8 +616,8 @@ void zParPTankSpawnSnow(xVec3* pos, xVec3* vel, uint32 count)
 
 const RwV2d steam_size = { 0.4f, 0.4f };
 
-// Equivalent: Scheduling
-void zParPTankSteamCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCallback update)
+static void zParPTankSteamCreate(zParPTank* zp, uint32 max_particles,
+                                 zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;
@@ -642,7 +648,7 @@ void zParPTankSteamCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCa
             RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cColor;
     }
     RPATOMICPTANKPLUGINDATA(zp->ptank)->instFlags |= rpPTANKIFLAGCNSCOLOR;
-    RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cSize = sparkleSize;
+    RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cSize = steam_size;
     RPATOMICPTANKPLUGINDATA(zp->ptank)->instFlags |= rpPTANKIFLAGCNSSIZE;
 
     RpMaterialSetTexture(zp->ptank->geometry->matList.materials[0], tex);
@@ -655,8 +661,8 @@ void zParPTankSteamCreate(zParPTank* zp, uint32 max_particles, zParPTankUpdateCa
     sSteamAnimTime = 0.0f;
 }
 
-// Equivalent: float scheduling
-void zParPTankSteamUpdate(zParPTank* zp, float dt)
+// Equivalent: float load optimization
+static void zParPTankSteamUpdate(zParPTank* zp, float dt)
 {
     RPATOMICPTANKPLUGINDATA(zp->ptank)->publicData.cSize = steam_size;
     RPATOMICPTANKPLUGINDATA(zp->ptank)->instFlags |= rpPTANKIFLAGCNSSIZE;
