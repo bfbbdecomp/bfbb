@@ -1,26 +1,18 @@
 # SpongeBob SquarePants: Battle for Bikini Bottom
 
-# [![Build Status]][actions] ![DOL Progress] [![Discord Badge]][discord]
+[![Discord Badge]][discord]
+[![Build Status]][actions]
 
-<!--
-Replace with your repository's URL.
--->
+[![Perfect Match]][progress]
+[![Fuzzy Match]][progress]
+[![Functions]][progress]
 
+[progress]: https://bfbbdecomp.github.io/bfbb/
+[Fuzzy Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=fuzzy_match&label=Close%20Match&color=yellowgreen
+[Perfect Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=perfect_match&label=Matching&color=limegreen
+[Functions]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=functions_matched&label=Functions&color=lavender
 [Build Status]: https://github.com/bfbbdecomp/bfbb/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/bfbbdecomp/bfbb/actions/workflows/build.yml
-
-<!---
-DOL progress URL:
-https://progress.decomp.club/data/[project]/[version]/dol/?mode=shield&measure=code
-URL encoded then appended to: https://img.shields.io/endpoint?label=DOL&url=
--->
-
-[DOL Progress]: https://img.shields.io/endpoint?label=Code&url=https%3A%2F%2Fprogress.decomp.club%2Fdata%2Fbfbb%2FGQPE78%2Fdol%2F%3Fmode%3Dshield%26measure%3Dcode
-
-<!--
-Replace with your Discord server's ID and invite URL.
--->
-
 [Discord Badge]: https://img.shields.io/discord/829152115322257436?color=%237289DA&logo=discord&logoColor=%23FFFFFF
 [discord]: https://discord.gg/dVbGFdYU6A
 
