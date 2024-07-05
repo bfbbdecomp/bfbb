@@ -8,11 +8,24 @@
 #include "iTRC.h"
 #include "iFile.h"
 
-// extern st_PKR_ASSET_TOCINFO lbl_80253EC8;
-st_STRAN_DATA g_xstdata = {};
-int32 g_straninit;
-st_PACKER_READ_FUNCS* g_pkrf;
-st_PACKER_ASSETTYPE* g_typeHandlers;
+static st_STRAN_DATA g_xstdata = {};
+static int32 g_straninit;
+static st_PACKER_READ_FUNCS* g_pkrf;
+static st_PACKER_ASSETTYPE* g_typeHandlers;
+
+static st_STRAN_SCENE* XST_lock_next();
+static void XST_unlock_all();
+static int32 XST_cnt_locked();
+static int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* path);
+static int8* XST_translate_sid(uint32 sid, int8* extension);
+static int8* XST_translate_sid_path(uint32 sid, int8* extension);
+static st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP);
+static void XST_reset_raw();
+static void XST_unlock(st_STRAN_SCENE* sdata);
+static void XST_unlock_all();
+static st_STRAN_SCENE* XST_get_rawinst(int32 index);
+static int32 XST_cnt_locked();
+static st_STRAN_SCENE* XST_nth_locked(int32 index);
 
 int32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
 {
@@ -342,15 +355,14 @@ int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
     return rc;
 }
 
-#if 0
-// WIP
+// Equivalent: scheduling is off with the copy of tocinfo to ainfo
 int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 {
     int32 rc = 0;
+    int32 sum = 0;
     const st_PKR_ASSET_TOCINFO tocinfo = { 0, NULL, 0, 0, 0, NULL };
     memset(ainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
 
-    int32 sum = 0;
     int32 found = XST_cnt_locked();
     for (int32 i = 0; i < found; i++)
     {
@@ -359,7 +371,7 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
         if (idx >= sum && idx < sum + cnt)
         {
             g_pkrf->GetBaseSector(sdata->spkg);
-            if (g_pkrf->GetAssetInfoByType(sdata->spkg, type, idx - cnt, &tocinfo) != 0)
+            if (g_pkrf->GetAssetInfoByType(sdata->spkg, type, idx - sum, &tocinfo) != 0)
             {
                 ainfo->aid = tocinfo.aid;
                 ainfo->sector = tocinfo.sector;
@@ -370,11 +382,11 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
                 break;
             }
         }
+            sum += cnt;
     }
 
     return rc;
 }
-#endif
 
 int32 xSTGetAssetInfoInHxP(uint32 aid, st_PKR_ASSET_TOCINFO* ainfo, uint32 j)
 {
@@ -422,9 +434,8 @@ int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID)
     return id;
 }
 
-#ifdef NON_MATCHING
 // register crap
-int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
+static int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
 {
     int32 buf = 0;
     st_PACKER_READ_DATA* spkg = g_pkrf->Init(sdata->userdata, name, 0x2e, &buf, g_typeHandlers);
@@ -435,32 +446,31 @@ int32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const int8* name)
     }
     return NULL;
 }
-#endif
 
-int8* XST_translate_sid(uint32 sid, int8* extension)
+static int8* XST_translate_sid(uint32 sid, int8* extension)
 {
-    static int8 buffer[0x40] = {};
-    sprintf(buffer, "%s%s", xUtil_idtag2string(sid, 0), extension);
-    return buffer;
+    static int8 fname[0x40] = {};
+    sprintf(fname, "%s%s", xUtil_idtag2string(sid, 0), extension);
+    return fname;
 }
 
-int8* XST_translate_sid_path(uint32 sid, int8* extension)
+static int8* XST_translate_sid_path(uint32 sid, int8* extension)
 {
     // NOTE: This buffer extends for 0x44 bytes in the rom
     // However, I think that's most likely padding for the jumptable that occurs afterwards
-    static int8 buffer[0x40] = {};
+    static int8 fname[0x40] = {};
     int8 pathSeparator[2] = "/";
-    sprintf(buffer, "%c%c%s%s%s", *xUtil_idtag2string(sid, 0), *(xUtil_idtag2string(sid, 0) + 1),
+    sprintf(fname, "%c%c%s%s%s", *xUtil_idtag2string(sid, 0), *(xUtil_idtag2string(sid, 0) + 1),
             pathSeparator, xUtil_idtag2string(sid, 0), extension);
-    return buffer;
+    return fname;
 }
 
-void XST_reset_raw()
+static void XST_reset_raw()
 {
     memset(&g_xstdata, 0, sizeof(st_STRAN_DATA));
 }
 
-st_STRAN_SCENE* XST_lock_next()
+static st_STRAN_SCENE* XST_lock_next()
 {
     st_STRAN_SCENE* sdata = NULL;
     int32 uselock = -1;
@@ -484,8 +494,7 @@ st_STRAN_SCENE* XST_lock_next()
     return sdata;
 }
 
-#ifdef NON_MATCHING
-void XST_unlock(st_STRAN_SCENE* sdata)
+static void XST_unlock(st_STRAN_SCENE* sdata)
 {
     if (sdata != NULL)
     {
@@ -493,14 +502,15 @@ void XST_unlock(st_STRAN_SCENE* sdata)
         {
             // Can't figure out how to get the andc instruction instead of two instructions
             // Seems to only generate andc if I remove the memset call.
+            // NOTE (Square): pulling 1 << sdata->lockid into a temp variable works but
+            // causes regswaps.
             g_xstdata.loadlock &= ~(1 << sdata->lockid);
             memset(sdata, 0, sizeof(st_STRAN_SCENE));
         }
     }
 }
-#endif
 
-void XST_unlock_all()
+static void XST_unlock_all()
 {
     if (g_xstdata.loadlock)
     {
@@ -514,12 +524,12 @@ void XST_unlock_all()
     }
 }
 
-st_STRAN_SCENE* XST_get_rawinst(int32 index)
+static st_STRAN_SCENE* XST_get_rawinst(int32 index)
 {
     return &g_xstdata.hipscn[index];
 }
 
-int32 XST_cnt_locked()
+static int32 XST_cnt_locked()
 {
     int32 sum = 0;
     for (int i = 0; i < 16; i++)
@@ -532,7 +542,7 @@ int32 XST_cnt_locked()
     return sum;
 }
 
-st_STRAN_SCENE* XST_nth_locked(int32 index)
+static st_STRAN_SCENE* XST_nth_locked(int32 index)
 {
     st_STRAN_SCENE* sdata = NULL;
     int32 cnt = 0;
@@ -552,7 +562,7 @@ st_STRAN_SCENE* XST_nth_locked(int32 index)
     return sdata;
 }
 
-st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
+static st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
 {
     st_STRAN_SCENE* da_sdata = NULL;
 
@@ -571,6 +581,6 @@ st_STRAN_SCENE* XST_find_bySID(uint32 sid, int32 findTheHOP)
     return da_sdata;
 }
 
-void iFileAsyncService()
+WEAK void iFileAsyncService()
 {
 }
