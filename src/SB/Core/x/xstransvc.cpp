@@ -355,15 +355,14 @@ int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
     return rc;
 }
 
-#if 0
-// WIP
+// Equivalent: scheduling is off with the copy of tocinfo to ainfo
 int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 {
     int32 rc = 0;
+    int32 sum = 0;
     const st_PKR_ASSET_TOCINFO tocinfo = { 0, NULL, 0, 0, 0, NULL };
     memset(ainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
 
-    int32 sum = 0;
     int32 found = XST_cnt_locked();
     for (int32 i = 0; i < found; i++)
     {
@@ -372,7 +371,7 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
         if (idx >= sum && idx < sum + cnt)
         {
             g_pkrf->GetBaseSector(sdata->spkg);
-            if (g_pkrf->GetAssetInfoByType(sdata->spkg, type, idx - cnt, &tocinfo) != 0)
+            if (g_pkrf->GetAssetInfoByType(sdata->spkg, type, idx - sum, &tocinfo) != 0)
             {
                 ainfo->aid = tocinfo.aid;
                 ainfo->sector = tocinfo.sector;
@@ -383,11 +382,11 @@ int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo)
                 break;
             }
         }
+            sum += cnt;
     }
 
     return rc;
 }
-#endif
 
 int32 xSTGetAssetInfoInHxP(uint32 aid, st_PKR_ASSET_TOCINFO* ainfo, uint32 j)
 {
