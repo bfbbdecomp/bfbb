@@ -5,6 +5,8 @@
 
 #include <types.h>
 
+extern uint32 gFrameCount;
+
 void xprintf(const char* msg, ...);
 int32 xDebugModeAdd(char* mode, void(*debugFunc));
 void xDebugInit();
