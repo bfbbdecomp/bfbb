@@ -26,40 +26,39 @@
 #include "zMusic.h"
 #include "zThrown.h"
 
-extern zGlobals globals;
-extern uint32 sCurrentStreamSndID;
+static uint32 sCurrentStreamSndID;
+static float32 sPlayerSndSneakDelay;
+static int32 sPlayerDiedLastTime;
 
-extern zPlayerLassoInfo* sLassoInfo;
+static zPlayerLassoInfo* sLassoInfo;
+static zLasso* sLasso;
 
-extern uint32 sSpatulaGrabbed;
-extern uint32 sShouldBubbleBowl;
-extern float32 sBubbleBowlLastWindupTime;
-extern float32 sBubbleBowlMultiplier;
+static int32 in_goo;
 
-extern zPlayerLassoInfo* sLassoInfo;
-extern zLasso* sLasso;
-
-extern int32 in_goo;
-extern int32 sPlayerDiedLastTime;
-extern int32 player_hit;
-extern int32 player_hit_anim;
-extern uint32 player_dead_anim;
-
-extern float32 lbl_803CD5A0; // 0.0
-extern float32 lbl_803CD5F0; // 0.1
-extern float32 lbl_803CD62C; // 0.2
-extern float32 lbl_803CD588; // 0.5
-extern float32 lbl_803CD830; // 30.0
-extern float32 lbl_803CD638; // 10.0
-
-// This needs to be const
-// because the address is used in the context of a const char pointer
-// when being passed to certain functions.
-extern const int8 zEntPlayer_Strings[];
+int32 player_hit;
+static int32 player_hit_anim = 1;
+static uint32 player_dead_anim = 1;
+static float32 sBubbleBowlLastWindupTime = -1.0f;
+static float32 sBubbleBowlMultiplier = 1.0f;
+static uint32 sShouldBubbleBowl;
+static float32 sBubbleBowlTimer;
+static uint32 sSpatulaGrabbed;
 
 // Multidimensional sound arrays for each player type
-extern uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total];
-extern uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total];
+static uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
+static uint32 sPlayerSndRand[3][47] = {};
+static uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
+
+void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count)
+{
+    uint32 num;
+    xVec3* posbuf;
+    xVec3* velbuf;
+    xVec3* pp;
+    xVec3* vp;
+    uint32 j;
+    float32 f;
+}
 
 void zEntPlayerKillCarry()
 {
@@ -87,10 +86,6 @@ void zEntPlayerKillCarry()
         }
     }
     globals.player.carry.grabbed = NULL;
-}
-
-void test(int32 a)
-{
 }
 
 void zEntPlayerControlOn(zControlOwner owner)
@@ -213,7 +208,7 @@ uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     xEntBoulder_BubbleBowl(sBubbleBowlMultiplier);
     globals.player.IsBubbleBowling = false;
     zEntPlayer_SNDStop(ePlayerSnd_BowlWindup);
-    zEntPlayer_SNDPlay(ePlayerSnd_BowlRelease, lbl_803CD5A0);
+    zEntPlayer_SNDPlay(ePlayerSnd_BowlRelease, 0.0f);
     return false;
 }
 
@@ -272,7 +267,7 @@ uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // Decompiled, but instructions are out of order?
     globals.player.Health = 0;
-    globals.player.DamageTimer = lbl_803CD638; // 10.0
+    globals.player.DamageTimer = 10.0; // 10.0
     zGooStopTide();
     sPlayerDiedLastTime = 1;
     zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
@@ -523,13 +518,7 @@ uint32 count_talk_anims(xAnimTable* anims)
     int8 talkAnimName[20];
     int32 talkAnimCount = 0;
 
-    sprintf(talkAnimName, (zEntPlayer_Strings + 0x29ff), 1);
-
-    // having this here is necessary for some reason
-    // The beginning address of the strings are stored in a register
-    // which is later added to in the loop itself
-    // Don't know if this will break when we substitute strings
-    const char* strings = zEntPlayer_Strings;
+    sprintf(talkAnimName, "Talk%02d", 1);
 
     for (xAnimState* state = anims->StateList; state != NULL; state = state->Next)
     {
@@ -539,7 +528,7 @@ uint32 count_talk_anims(xAnimTable* anims)
             {
                 break;
             }
-            sprintf(talkAnimName, (strings + 0x29ff), talkAnimCount + 1);
+            sprintf(talkAnimName, "Talk%02d", talkAnimCount + 1);
         }
     }
 
@@ -635,13 +624,13 @@ void zEntPlayer_GiveSpatula(int32)
 {
     sSpatulaGrabbed = 1;
 
-    if (globals.player.ControlOffTimer < lbl_803CD5F0)
+    if (globals.player.ControlOffTimer < 0.1f)
     {
-        globals.player.ControlOffTimer = lbl_803CD5F0;
+        globals.player.ControlOffTimer = 0.1f;
     }
 
-    zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
-    zMusicSetVolume(lbl_803CD588, lbl_803CD62C);
+    zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, 30.0f, 0x104, NPC_TYPE_UNKNOWN);
+    zMusicSetVolume(0.5f, 0.2f);
 }
 #endif
 
@@ -689,7 +678,7 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
 
     if (quantity > 0)
     {
-        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, 30.0f, 0x104, NPC_TYPE_UNKNOWN);
     }
 }
 
@@ -710,7 +699,7 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
 
     if (quantity > 0)
     {
-        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, lbl_803CD830, 0x104, NPC_TYPE_UNKNOWN);
+        zNPCMsg_AreaNotify(NULL, NPC_MID_PLYRSPATULA, 30.0f, 0x104, NPC_TYPE_UNKNOWN);
     }
 }
 
