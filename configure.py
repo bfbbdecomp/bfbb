@@ -291,7 +291,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xEnt.cpp"),
             Object(NonMatching, "SB/Core/x/xEntDrive.cpp"),
             Object(NonMatching, "SB/Core/x/xEntMotion.cpp"),
-            Object(NonMatching, "SB/Core/x/xEnv.cpp"),
+            Object(Matching, "SB/Core/x/xEnv.cpp"),
             Object(NonMatching, "SB/Core/x/xEvent.cpp"), # breaks build
             Object(NonMatching, "SB/Core/x/xFFX.cpp"),
             Object(Equivalent, "SB/Core/x/xFog.cpp"),
