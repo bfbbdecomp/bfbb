@@ -32,8 +32,6 @@
 #include "zMusic.h"
 #include "zThrown.h"
 
-static xVec3 last_center;
-
 static U32 sCurrentStreamSndID;
 static F32 sPlayerSndSneakDelay;
 static S32 sPlayerDiedLastTime;
@@ -46,9 +44,6 @@ static S32 in_goo;
 S32 player_hit;
 static S32 player_hit_anim = 1;
 static U32 player_dead_anim = 1;
-
-static U32 last_frame;
-
 static F32 sBubbleBowlLastWindupTime = -1.0f;
 static F32 sBubbleBowlMultiplier = 1.0f;
 static U32 sShouldBubbleBowl;
@@ -62,50 +57,13 @@ static U32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
 
 void zEntPlayer_SpawnWandBubbles(xVec3* center, U32 count)
 {
-    if (gFrameCount - last_frame > 5)
-    {
-        xVec3 wand;
-        xVec3ScaleC(&wand, (xVec3*)&globals.player.model_wand->Mat->at, 0.25f, 0.25f, 0.25f);
-        xVec3Sub(&last_center, center, &wand);
-    }
-
-    xVec3 dir;
-    xVec3Sub(&dir, center, &last_center);
-
-    U32 num = 3;
-    if (count != 0)
-    {
-        num = count;
-    }
-
-    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
-    xVec3* velbuf = posbuf + num;
-    if (posbuf)
-    {
-        xVec3* pp = posbuf;
-        xVec3* vp = velbuf;
-        U32 j = 0;
-        for (; j < num; j++, pp++, vp++)
-        {
-            F32 f = (F32)j / (F32)num;
-            xVec3Lerp(pp, &last_center, center, f);
-            pp->x += 0.125f * (xurand() - 0.5f);
-            pp->y += 0.125f * (xurand() - 0.5f);
-            pp->z += 0.125f * (xurand() - 0.5f);
-
-            f = 5.0f * xurand();
-            xVec3ScaleC(vp, &dir, f, f, f);
-            vp->x += 0.25f * (xurand() - 0.5f);
-            vp->y += 0.25f * (xurand() - 0.5f);
-            vp->z += 0.25f * (xurand() - 0.5f);
-        }
-
-        zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
-        xMemPopTemp(posbuf);
-    }
-
-    last_center = *center;
-    last_frame = gFrameCount;
+    U32 num;
+    xVec3* posbuf;
+    xVec3* velbuf;
+    xVec3* pp;
+    xVec3* vp;
+    U32 j;
+    F32 f;
 }
 
 void zEntPlayerKillCarry()
