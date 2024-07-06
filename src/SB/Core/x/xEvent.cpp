@@ -6,6 +6,8 @@
 
 #include "zScene.h"
 
+int8 zEventLogBuf[256][20];
+
 void zEntEvent(char* to, uint32 toEvent)
 {
     uint32 id = xStrHash(to);
