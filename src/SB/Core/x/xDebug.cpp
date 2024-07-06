@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+uint32 gFrameCount;
+
 extern float32 _781; // 0.0020833334f.
 extern float32 _783; // 0.0015625f.
 

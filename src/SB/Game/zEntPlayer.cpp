@@ -2,14 +2,19 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "iMath.h"
 #include "iSnd.h"
 
+#include "xDebug.h"
 #include "xEnt.h"
 #include "xEntBoulder.h"
 #include "xEvent.h"
+#include "xMath.h"
+#include "xMathInlines.h"
+#include "xMemMgr.h"
 #include "xSnd.h"
 #include "xVec3.h"
-#include "xMemMgr.h"
+#include "xVec3Inlines.h"
 
 #include "zBase.h"
 #include "zCamera.h"
@@ -17,14 +22,17 @@
 #include "zEntTeleportBox.h"
 #include "zGame.h"
 #include "zGameExtras.h"
-#include "zNPCTypeTiki.h"
 #include "zGlobals.h"
 #include "zGoo.h"
 #include "zLasso.h"
 #include "zNPCTypeTiki.h"
+#include "zNPCTypeTiki.h"
 #include "zNPCMessenger.h"
+#include "zParPTank.h"
 #include "zMusic.h"
 #include "zThrown.h"
+
+static xVec3 last_center;
 
 static uint32 sCurrentStreamSndID;
 static float32 sPlayerSndSneakDelay;
@@ -38,6 +46,9 @@ static int32 in_goo;
 int32 player_hit;
 static int32 player_hit_anim = 1;
 static uint32 player_dead_anim = 1;
+
+static uint32 last_frame;
+
 static float32 sBubbleBowlLastWindupTime = -1.0f;
 static float32 sBubbleBowlMultiplier = 1.0f;
 static uint32 sShouldBubbleBowl;
@@ -51,13 +62,50 @@ static uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
 
 void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count)
 {
-    uint32 num;
-    xVec3* posbuf;
-    xVec3* velbuf;
-    xVec3* pp;
-    xVec3* vp;
-    uint32 j;
-    float32 f;
+    if (gFrameCount - last_frame > 5)
+    {
+        xVec3 wand;
+        xVec3ScaleC(&wand, (xVec3*)&globals.player.model_wand->Mat->at, 0.25f, 0.25f, 0.25f);
+        xVec3Sub(&last_center, center, &wand);
+    }
+
+    xVec3 dir;
+    xVec3Sub(&dir, center, &last_center);
+
+    uint32 num = 3;
+    if (count != 0)
+    {
+        num = count;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf)
+    {
+        xVec3* pp = posbuf;
+        xVec3* vp = velbuf;
+        uint32 j = 0;
+        for (; j < num; j++, pp++, vp++)
+        {
+            float32 f = (float32)j / (float32)num;
+            xVec3Lerp(pp, &last_center, center, f);
+            pp->x += 0.125f * (xurand() - 0.5f);
+            pp->y += 0.125f * (xurand() - 0.5f);
+            pp->z += 0.125f * (xurand() - 0.5f);
+
+            f = 5.0f * xurand();
+            xVec3ScaleC(vp, &dir, f, f, f);
+            vp->x += 0.25f * (xurand() - 0.5f);
+            vp->y += 0.25f * (xurand() - 0.5f);
+            vp->z += 0.25f * (xurand() - 0.5f);
+        }
+
+        zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
+        xMemPopTemp(posbuf);
+    }
+
+    last_center = *center;
+    last_frame = gFrameCount;
 }
 
 void zEntPlayerKillCarry()
@@ -137,6 +185,96 @@ void TellPlayerVillainIsNear(float32 visnear)
 void SetPlayerKillsVillainTimer(float32 time)
 {
     globals.player.VictoryTimer = time;
+}
+
+static void DampenControls(float32* angle, float32* mag, float32 x, float32 y)
+{
+    *angle = xatan2(x, y);
+
+    if (x > -globals.player.g.AnalogMin && x < globals.player.g.AnalogMin)
+    {
+        x = 0.0f;
+    }
+
+    if (y > -globals.player.g.AnalogMin && y < globals.player.g.AnalogMin)
+    {
+        y = 0.0f;
+    }
+
+    if (!x && !y)
+    {
+        *angle = 0.0f;
+        *mag = 0.0f;
+        return;
+    }
+
+    if ((float)__fabs(x) > (float)__fabs(y))
+    {
+        *mag = __fabs(x);
+    }
+    else
+    {
+        *mag = __fabs(y);
+    }
+    *mag = (*mag - globals.player.g.AnalogMin) /
+           (globals.player.g.AnalogMax - globals.player.g.AnalogMin);
+
+    if (*mag < 0.0f)
+    {
+        *mag = 0.0f;
+        *angle = 0.0f;
+    }
+    else if (*mag > 1.0f)
+    {
+        *mag = 1.0f;
+    }
+}
+
+static void CalcAnimSpeed(xEnt* ent, float f, float* pf)
+{
+    if (!pf[0])
+    {
+        return;
+    }
+
+    f = f / pf[0];
+    if (f < pf[1])
+    {
+        f = pf[1];
+    }
+    else if (f > pf[2])
+    {
+        f = pf[2];
+    }
+
+    ent->model->Anim->Single->CurrentSpeed = f;
+}
+
+static void LeanUpdate(float32 a, float32 b)
+{
+    float abs = __fabs(a);
+    float lerp;
+    if (abs < 0.087266468f)
+    {
+        lerp = 0.0f;
+    }
+    else if (abs > 0.2617994f)
+    {
+        lerp = 1.0f;
+    }
+    else
+    {
+        lerp = 5.729578f * (abs - 0.087266468f);
+    }
+
+    if (a > 0.0f)
+    {
+        lerp = -lerp;
+    }
+    lerp += 1.0f;
+
+    float32 t = 6.0f * (lerp - globals.player.LeanLerp);
+    globals.player.LeanLerp += t * b;
 }
 
 void PlayerArrive(xEnt* ent, xBase* base)
