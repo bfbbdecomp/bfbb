@@ -459,7 +459,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCGoalDuplotron.cpp"),
             Object(NonMatching, "SB/Game/zNPCSpawner.cpp"),
             Object(NonMatching, "SB/Game/zEntTeleportBox.cpp"),
-            Object(NonMatching, "SB/Game/zBusStop.cpp"),
+            Object(Matching, "SB/Game/zBusStop.cpp"),
             Object(NonMatching, "SB/Game/zNPCSupport.cpp"),
             Object(NonMatching, "SB/Game/zTalkBox.cpp"),
             Object(NonMatching, "SB/Game/zTextBox.cpp"),

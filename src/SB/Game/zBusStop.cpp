@@ -13,14 +13,8 @@
 #include "zEntPlayer.h"
 #include "zEntCruiseBubble.h"
 
-#define zBusStop_float_minusone -1.0f
-#define zBusStop_float_6p25 6.25f
-#define zBusStop_float_zero 0.0f
-#define zBusStop_float_0p1 0.1f
-#define zBusStop_float_0p5 0.5f
-#define zBusStop_float_two 2.0f
-
-extern xEnt* sBusStopUI;
+uint32 gBusStopIsRunning;
+static xEnt* sBusStopUI;
 
 void zBusStop_Init(xBase& base, xDynAsset& asset, ulong32)
 {
@@ -60,7 +54,7 @@ void zBusStop_Setup(zBusStop* bstop)
 {
     zSceneFindObject(bstop->basset->cameraID);
     bstop->bus = (zEnt*)zSceneFindObject(bstop->basset->busID);
-    bstop->switchTimer = zBusStop_float_minusone;
+    bstop->switchTimer = -1.0f;
     sBusStopUI = (xEnt*)zSceneFindObject(xStrHash("mnu4 busstop"));
 }
 
@@ -72,7 +66,7 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
     float32 dx = globals.player.ent.bound.box.center.x - bstop->pos.x;
     float32 dy = globals.player.ent.bound.box.center.y - bstop->pos.y;
     float32 dz = globals.player.ent.bound.box.center.z - bstop->pos.z;
-    if (dx * dx + dy * dy + dz * dz < zBusStop_float_6p25)
+    if (dx * dx + dy * dy + dz * dz < 6.25f)
     {
         if (bstop->currState == 0)
         {
@@ -97,7 +91,7 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
                 if (globals.pad0->pressed & (1 << 12))
                 {
                     bstop->currState = 2;
-                    zEntPlayer_SNDPlay(ePlayerSnd_Bus, zBusStop_float_zero);
+                    zEntPlayer_SNDPlay(ePlayerSnd_Bus, 0.0f);
                 }
             }
         }
@@ -113,21 +107,21 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
         break;
 
     case 2:
-        globals.player.ent.frame->vel.x = zBusStop_float_zero;
-        globals.player.ent.frame->vel.y = zBusStop_float_zero;
-        globals.player.ent.frame->vel.z = zBusStop_float_zero;
+        globals.player.ent.frame->vel.x = 0.0f;
+        globals.player.ent.frame->vel.y = 0.0f;
+        globals.player.ent.frame->vel.z = 0.0f;
         break;
 
     case 3:
         xAnimSingle* single = bstop->bus->model->Anim->Single;
-        if (single->Time < zBusStop_float_0p1 || single->LastTime < zBusStop_float_0p1)
+        if (single->Time < 0.1f || single->LastTime < 0.1f)
         {
             bstop->currState = 1;
         }
 
-        globals.player.ent.frame->vel.x = zBusStop_float_zero;
-        globals.player.ent.frame->vel.y = zBusStop_float_zero;
-        globals.player.ent.frame->vel.z = zBusStop_float_zero;
+        globals.player.ent.frame->vel.x = 0.0f;
+        globals.player.ent.frame->vel.y = 0.0f;
+        globals.player.ent.frame->vel.z = 0.0f;
         break;
     }
 
@@ -151,11 +145,11 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
             zEntEvent("mnu4 busstop", eEventUIFocusOff_Unselect);
             zEntPlayerControlOff(CONTROL_OWNER_BUS_STOP);
             zEntEvent(bstop->basset->cameraID, eEventStartConversation);
-            zEntEvent(bstop->basset->cameraID, eEventSwitch, zBusStop_float_0p5,
-                      zBusStop_float_zero, zBusStop_float_zero, zBusStop_float_zero);
+            zEntEvent(bstop->basset->cameraID, eEventSwitch, 0.5f,
+                      0.0f, 0.0f, 0.0f);
             zEntEvent(bstop->basset->busID, eEventVisible);
-            zEntEvent(bstop->basset->busID, eEventAnimPlay, zBusStop_float_two, zBusStop_float_zero,
-                      zBusStop_float_zero, zBusStop_float_zero);
+            zEntEvent(bstop->basset->busID, eEventAnimPlay, 2.0f, 0.0f,
+                      0.0f, 0.0f);
             bstop->switchTimer = bstop->basset->delay;
             gBusStopIsRunning = 1;
             break;
@@ -180,18 +174,18 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
 
     // Advance state
     bstop->prevState = bstop->currState;
-    if (zBusStop_float_zero == bstop->switchTimer && bstop->currState == 2)
+    if (0.0f == bstop->switchTimer && bstop->currState == 2)
     {
         bstop->currState = 3;
     }
 
     // Advance timer
-    if (bstop->switchTimer > zBusStop_float_zero)
+    if (bstop->switchTimer > 0.0f)
     {
         bstop->switchTimer -= dt;
-        if (bstop->switchTimer < zBusStop_float_zero)
+        if (bstop->switchTimer < 0.0f)
         {
-            bstop->switchTimer = zBusStop_float_zero;
+            bstop->switchTimer = 0.0f;
         }
     }
 }
