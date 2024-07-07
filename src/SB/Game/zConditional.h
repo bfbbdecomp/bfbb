@@ -27,6 +27,6 @@ void zConditionalInit(xBase* base, zCondAsset* asset);
 void zConditionalInit(void* b, void* asset);
 void zConditionalLoad(_zConditional* ent, xSerial* s);
 void zConditionalSave(_zConditional* ent, xSerial* s);
-bool zConditional_Evaluate(_zConditional* c);
+uint32 zConditional_Evaluate(_zConditional* c);
 
 #endif

@@ -340,7 +340,7 @@ config.libs = [
             Object(Equivalent, "SB/Game/zAnimList.cpp"),
             Object(NonMatching, "SB/Game/zAssetTypes.cpp"),
             Object(NonMatching, "SB/Game/zCamera.cpp"),
-            Object(NonMatching, "SB/Game/zConditional.cpp"),
+            Object(Matching, "SB/Game/zConditional.cpp"),
             Object(NonMatching, "SB/Game/zCutsceneMgr.cpp"),
             Object(NonMatching, "SB/Game/zDispatcher.cpp"),
             Object(NonMatching, "SB/Game/zEGenerator.cpp"),

@@ -14,28 +14,21 @@ void zConditionalInit(void* b, void* asset)
     zVarInit(zVarEntryTable);
 }
 
-struct UnknownTypeInheritingBase : xBase
-{
-    int8* unknownPtr;
-};
-
 void zConditionalInit(xBase* b, zCondAsset* asset)
 {
-    xBaseInit(b, asset);
-    b->eventFunc = (xBaseEventCB)zConditionalEventCB;
+    _zConditional* cond = (_zConditional*)b;
 
-    // ?? I think that they must have cast asset to some other type, and
-    // accessed a field of that other type, but I don't know what type it is.
-    UnknownTypeInheritingBase* object = (UnknownTypeInheritingBase*)b;
-    object->unknownPtr = (int8*)asset;
+    xBaseInit((xBase*)cond, asset);
+    cond->eventFunc = (xBaseEventCB)zConditionalEventCB;
+    cond->asset = asset;
 
-    if (b->linkCount != 0)
+    if (cond->linkCount != 0)
     {
-        b->link = (xLinkAsset*)(object->unknownPtr + 24);
+        cond->link = (xLinkAsset*)(cond->asset + 1);
     }
     else
     {
-        b->link = NULL;
+        cond->link = NULL;
     }
 }
 
@@ -54,7 +47,7 @@ void zConditionalLoad(_zConditional* ent, xSerial* s)
     xBaseLoad(ent, s);
 }
 
-bool zConditional_Evaluate(_zConditional* c)
+uint32 zConditional_Evaluate(_zConditional* c)
 {
     zVarEntry* v = NULL;
     void* context = NULL;
@@ -81,40 +74,33 @@ bool zConditional_Evaluate(_zConditional* c)
     switch (c->asset->op)
     {
     case CONDITION_EQ:
-        return temp == c->asset->constNum;
+        return temp == c->asset->constNum ? 1 : 0;
 
     case CONDITION_GT:
-        return temp > c->asset->constNum;
+        return temp > c->asset->constNum ? 1 : 0;
 
     case CONDITION_LT:
-        return temp < c->asset->constNum;
+        return temp < c->asset->constNum ? 1 : 0;
 
     case CONDITION_GE:
-        return temp >= c->asset->constNum;
+        return temp >= c->asset->constNum ? 1 : 0;
 
     case CONDITION_LE:
-        return temp <= c->asset->constNum;
+        return temp <= c->asset->constNum ? 1 : 0;
 
     case CONDITION_NE:
-        return temp != c->asset->constNum;
+        return temp != c->asset->constNum ? 1 : 0;
 
     default:
         return 0;
     }
 }
 
-#if 0
-// This doesn't work because it's missing a single branch instruction
-// The original assembly has a redundant branch instruction:
-//   /* 80052814 0004F614  48 00 00 48 */ b lbl_8005285C
-//   /* 80052818 0004F618  48 00 00 44 */ b lbl_8005285C
-// But this code only generates a single one of those branch instructions,
-// otherwise, it is identical.
 int32 zConditionalEventCB(xBase* arg1, xBase* arg2, uint32 toEvent, const float32* fp, xBase* other)
 {
     switch (toEvent)
     {
-    case eEventTrue:
+    case eEventEvaluate:
         if (zConditional_Evaluate((_zConditional*)arg2))
         {
             zEntEvent(arg2, arg2, eEventTrue);
@@ -125,6 +111,9 @@ int32 zConditionalEventCB(xBase* arg1, xBase* arg2, uint32 toEvent, const float3
         }
         break;
 
+    case eEventTrue:
+        break;
+
     case eEventReset:
         zConditionalReset((_zConditional*)arg2);
         break;
@@ -132,4 +121,3 @@ int32 zConditionalEventCB(xBase* arg1, xBase* arg2, uint32 toEvent, const float3
 
     return eEventEnable;
 }
-#endif
