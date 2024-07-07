@@ -5,8 +5,6 @@
 
 #include <types.h>
 
-// NON_MATCHING:
-// function parameter loading order is swapped
 void xFogClearFog()
 {
     iCameraSetFogParams(NULL, 0.0f);
