@@ -117,6 +117,40 @@ xAnimTable* ZNPC_AnimTable_Jelly()
     return table;
 }
 
+xAnimTable* ZNPC_AnimTable_Neptune()
+{
+    int32 local_48[] = {
+        1, 2, 3, 4, 5, 6, 0,
+    };
+
+    xAnimTable* table = (xAnimTable*)xAnimTableNew("zNPCNeptune", NULL, 0);
+
+#define f903 0.5f
+
+    xAnimTableNewState(table, g_strz_ambianim[1], 0x10, 0, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[2], 0x10, 0, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[3], 0x10, 0, f882, 0x0, 0x0, f883, 0x0, 0x0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[4], 0x20, 0, f882, 0x0, 0x0, f883, 0x0, 0x0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[5], 0x20, 0, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[6], 0x20, 0, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    NPCC_BuildStandardAnimTran(table, g_strz_ambianim, local_48, 1, f903);
+
+    xAnimTableNewTransition(table, g_strz_ambianim[4], g_strz_ambianim[1], 0x0, 0x0, 0x10, 0, f883,
+                            f883, 0, 0, f903, 0x0);
+    xAnimTableNewTransition(table, g_strz_ambianim[5], g_strz_ambianim[2], 0x0, 0x0, 0x10, 0, f883,
+                            f883, 0, 0, f903, 0x0);
+    xAnimTableNewTransition(table, g_strz_ambianim[6], g_strz_ambianim[3], 0x0, 0x0, 0x10, 0, f883,
+                            f883, 0, 0, f903, 0x0);
+
+    return table;
+}
+
 /* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCAmbient::Init(xEntAsset* asset)
 {
