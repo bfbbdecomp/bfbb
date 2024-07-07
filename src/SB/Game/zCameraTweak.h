@@ -3,6 +3,8 @@
 
 #include "xDynAsset.h"
 
+#include <stddef.h>
+
 struct CameraTweak_asset : xDynAsset
 {
     S32 priority;

@@ -1669,7 +1669,7 @@ void zSaveLoadPreAutoSave(bool onOff)
 void zSaveLoadAutoSaveUpdate()
 {
     xBase* obj;
-    S32 out1, out2;
+    s32 out1, out2;
 
     if (globals.autoSaveFeature == 0 || gGameMode == eGameMode_Pause)
     {
