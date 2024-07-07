@@ -522,9 +522,9 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                     }
 
                     F32 dx = globals.player.carry.throwTarget->model->Mat->pos.x -
-                                 ent->model->Mat->pos.x;
+                             ent->model->Mat->pos.x;
                     F32 dz = globals.player.carry.throwTarget->model->Mat->pos.z -
-                                 ent->model->Mat->pos.z;
+                             ent->model->Mat->pos.z;
 
                     // unused?
                     xsqrt(dx * dx + dz * dz);
@@ -678,7 +678,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                                 pg->Speed = 2;
                                 maxVelmag = pg->s->MoveSpeed[2] * pg->SpeedMult;
                                 F32 slideVelMag = (stackMag - pg->s->MoveSpeed[4]) /
-                                                      (pg->s->MoveSpeed[5] - pg->s->MoveSpeed[4]);
+                                                  (pg->s->MoveSpeed[5] - pg->s->MoveSpeed[4]);
                                 if (slideVelMag > 1.0f)
                                 {
                                     slideVelMag = 1.0f;
@@ -728,7 +728,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                         F32 accelX = pg->SlideTrackVel.x * pg->SlideTrackDir.x;
                         F32 accelZ = pg->SlideTrackVel.z * pg->SlideTrackDir.z;
                         F32 fwdComponent = (accelX + accelZ - pg->g.SlideAccelVelMin) /
-                                               (pg->g.SlideAccelVelMax - pg->g.SlideAccelEnd);
+                                           (pg->g.SlideAccelVelMax - pg->g.SlideAccelEnd);
 
                         F32 sideComponent;
                         if (fwdComponent < 0.0f)
@@ -853,18 +853,289 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                             }
                             ent->frame->drot.angle = angle;
                         }
+
+                        if (animUserFlag & 0x40)
+                        {
+                            F32 targetLean = 0.0f;
+                            if (stackMag != 0.0f)
+                            {
+                                targetLean = stackAng - ent->frame->rot.angle;
+                                if (targetLean > PI)
+                                {
+                                    targetLean -= 2 * PI;
+                                }
+                                else if (targetLean < PI)
+                                {
+                                    targetLean += 2 * PI;
+                                }
+                            }
+
+                            // FIXME: Using our PI constant here is off by one bit with the resulting float constant
+                            targetLean = -targetLean / (3.1415926f / 3.6f);
+
+                            if (targetLean < -1.0f)
+                            {
+                                targetLean = -1.0f;
+                            }
+                            else if (targetLean > 1.0f)
+                            {
+                                targetLean = 1.0f;
+                            }
+
+                            pg->SlideTrackLean += 0.04f * (targetLean - pg->SlideTrackLean);
+                            ent->model->Anim->Single->BilinearLerp[0] = 1.0f + pg->SlideTrackLean;
+                        }
+                        else
+                        {
+                            pg->SlideTrackLean = 0.0f;
+                        }
+
+                        ent->frame->dpos.x = dt * pg->SlideTrackVel.x;
+                        ent->frame->dpos.z = dt * pg->SlideTrackVel.z;
+                        ent->frame->mode |= 0x2;
+                        ent->frame->vel.x = 0.0f;
+                        ent->frame->vel.z = 0.0f;
+
+                        if ((pg->SlideTrackSliding & 1) == 0)
+                        {
+                            pg->SlideTrackDecay -= dt;
+                            if (pg->SlideTrackDecay < 0.0f)
+                            {
+                                pg->SlideTrackDecay = 0.0f;
+                                ent->frame->vel.x = pg->SlideTrackVel.x;
+                                ent->frame->vel.z = pg->SlideTrackVel.z;
+                            }
+                        }
+                        else
+                        {
+                            pg->SlideTrackDecay = pg->g.SlideAirHoldTime;
+                        }
+                        return;
+                    }
+
+                    pg->SlideTrackDecay = 0.0f;
+                    if (animUserFlag & 0x1e != 0 || blendUserFlag & 0x1e)
+                    {
+                        U32 moveFlag = animUserFlag & 0x1e;
+                        if (animUserFlag & 0x1e == 0)
+                        {
+                            moveFlag = blendUserFlag & 0x1e;
+                        }
+
+                        switch (moveFlag)
+                        {
+                        case 0x2:
+                            if (rot > 0.0f && stackMag != 0.0f)
+                            {
+                                stackMag = mag * rot;
+                                goto finish;
+                            }
+                            break;
+                        case 0x4:
+                            if (rot > 0.0f)
+                            {
+                                stackMag = mag * rot;
+                                goto finish;
+                            }
+                            break;
+                        case 0x4 | 0x2:
+                            if (stackAng != 0.0f)
+                            {
+                                if (PI / 6 <= (float)__fabs(angle))
+                                {
+                                    if (angle > 0.0f)
+                                    {
+                                        stackAng = ent->frame->rot.angle + PI / 6;
+                                    }
+                                    else
+                                    {
+                                        stackAng = ent->frame->rot.angle - PI / 6;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                stackAng = ent->frame->rot.angle;
+                            }
+
+                            if ((animUserFlag & 0x20))
+                            {
+                                if (surfSlickRatio != 0.0f)
+                                {
+                                    stackMag = mag;
+                                    pg->DecelRunSpeed = mag;
+                                    pg->DecelRun = mag;
+                                    goto finish;
+                                }
+                            }
+                            else if (stackMag != 0.0f)
+                            {
+                                stackMag = pg->DecelRunSpeed;
+                                pg->DecelRunSpeed = -(4.0f / 3.0f) - pg->DecelRunSpeed;
+
+                                if (pg->DecelRunSpeed < 0.0f)
+                                {
+                                    pg->DecelRunSpeed = 0.0f;
+                                }
+                                goto finish;
+                            }
+                            break;
+                        case 0x8 | 0x2:
+                            if (rot > 0.0f || pg->cheat_mode)
+                            {
+                                stackMag = mag * rot;
+                                goto finish;
+                            }
+                            break;
+                        case 0x8 | 0x4:
+                            stackAng = ent->frame->rot.angle;
+                            stackMag = pg->HeadbuttVel;
+                            pg->DecelRunSpeed = pg->HeadbuttVel;
+                            pg->DecelRun = pg->HeadbuttVel;
+                            break;
+                        finish:
+                        default:
+                            switch ((animUserFlag & 0x1e))
+                            {
+                            case 0x2:
+                                if (strcmp(ent->model->Anim->Single->State->Name, "Walk_sneak") ==
+                                        0 ||
+                                    strcmp(ent->model->Anim->Single->State->Name,
+                                           "Walk_blackknight") == 0)
+                                {
+                                    CalcAnimSpeed(ent, stackMag, pg->s->AnimSneak);
+                                }
+                                break;
+                            case 0x4:
+                                CalcAnimSpeed(ent, stackMag, pg->s->AnimWalk);
+                                if (ent->model->Anim->Single->State->Speed != 1.0f)
+                                {
+                                    ent->model->Anim->Single->CurrentSpeed =
+                                        ent->model->Anim->Single->State->Speed;
+                                }
+                                break;
+                            case 0x2 | 0x4:
+                                CalcAnimSpeed(ent, stackMag, pg->s->AnimRun);
+                                break;
+                            }
+
+                            // xVec3* vel;
+                            // F32 accelMag;
+                            // F32 peakLerp;
+                            // F32 slickLerp;
+                            // TODO: maybe swapped
+                            if (surfSlickRatio == 0.0f || pg->ControlOff)
+                            {
+                                stackMag = stackMag * dt;
+                                F32 s = tslide_inair_tmr - pg->g.SlideAirHoldTime;
+                                if (s >= 0.0f && s < pg->g.SlideAirSlowTime)
+                                {
+                                    stackMag *= s / pg->g.SlideAirSlowTime;
+                                }
+
+                                if (tslide_dbl_tmr > 0.0f &&
+                                    tslide_dbl_tmr < pg->g.SlideAirDblHoldTime)
+                                {
+                                    stackMag *= tslide_dbl_tmr / pg->g.SlideAirDblHoldTime;
+                                }
+
+                                if (pg->cheat_mode)
+                                {
+                                    stackMag *= 3.0f;
+                                    if (globals.pad0->on & (XPAD_BUTTON_R1 | XPAD_BUTTON_R2 |
+                                                            XPAD_BUTTON_L1 | XPAD_BUTTON_L2))
+                                    {
+                                        stackMag *= 4.0f;
+                                    }
+                                }
+
+                                ent->frame->dpos.x = stackMag * isin(stackAng);
+                                ent->frame->dpos.z = stackMag * icos(stackAng);
+                                ent->frame->mode |= 0x2;
+
+                                if (pg->ControlOff && pg->AutoMoveSpeed != 0 &&
+                                    pg->AutoMoveSpeed != 4 &&
+                                    ent->frame->dpos.x * ent->frame->dpos.x +
+                                            ent->frame->dpos.z * ent->frame->dpos.z >=
+                                        0.0f)
+                                {
+                                    ent->frame->dpos.x =
+                                        pg->AutoMoveTarget.x - ent->model->Mat->pos.x;
+                                    ent->frame->dpos.z =
+                                        pg->AutoMoveTarget.z - ent->model->Mat->pos.z;
+                                    PlayerArrive(ent, pg->AutoMoveObject);
+                                }
+                            }
+                            else if (stackMag != 0.0f)
+                            {
+                                F32 s = surfAccelWalk;
+                                if (moveFlag != 0x4 && moveFlag != 2)
+                                {
+                                    s = surfAccelWalk;
+                                }
+
+                                surfMaxSpeed = maxVelmag * surfPeakRatio;
+                                rot =
+                                    s * ((1.0f - (4.0f / 3.0f) * surfSlipTimer) * surfSlickRatio) *
+                                        surfSlickRatio +
+                                    20.0f * (4.0f / 3.0f) * surfSlipTimer * surfSlickRatio;
+
+                                ent->frame->dpos.x += rot * isin(stackAng);
+                                ent->frame->dpos.z += rot * icos(stackAng);
+
+                                s = 2.5f * surfSlipTimer;
+                                if (s < 1.0f)
+                                {
+                                    surfMaxSpeed = stackMag;
+                                }
+                                else
+                                {
+                                    surfMaxSpeed = (1.0f - s) * surfMaxSpeed + s * stackMag;
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (ent->frame->vel.x * ent->frame->vel.x +
+                            ent->frame->vel.z * ent->frame->vel.z >
+                        0.01f)
+                    {
+                        ent->frame->mode &= ~0x2;
+                        angle =
+                            xatan2(ent->frame->vel.x, ent->frame->vel.z) - ent->frame->rot.angle;
+
+                        if (angle > PI)
+                        {
+                            angle -= 2 * PI;
+                        }
+                        else if (angle < -PI)
+                        {
+                            angle += 2 * PI;
+                        }
+
+                        ent->frame->drot.angle = 4.0f * angle * dt;
+                        ent->frame->mode |= 0x20;
+
+                        if ((float)__fabs(ent->frame->drot.angle) < 0.006f)
+                        {
+                            if ((float)__fabs(angle) > 0.006f)
+                            {
+                                angle = 0.006f;
+                            }
+                            else if (angle <= 0.0f)
+                            {
+                                angle = -0.006f;
+                            }
+                            ent->frame->drot.angle = angle;
+                        }
                     }
                 }
             }
         }
-        // F32 targetLean;
-        // U32 moveFlag;
-        // xVec3* vel;
-        // F32 accelMag;
-        // F32 peakLerp;
-        // F32 slickLerp;
-        // F32 s;
-        // F32 s;
     }
 
     LeanUpdate(angle, dt);
