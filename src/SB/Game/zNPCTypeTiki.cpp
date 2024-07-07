@@ -188,10 +188,6 @@ void zNPCTiki::ParseINI()
     }
 }
 
-void test(S32)
-{
-}
-
 // very close, but there are some float order issues
 S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, float dt, void*)
 {

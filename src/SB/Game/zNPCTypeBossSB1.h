@@ -8,19 +8,24 @@
 
 struct zNPCB_SB1 : zNPCBoss
 {
-    xModelInstance* m_subModels[6];
-    xModelTag m_leftArmTags[4];
-    xModelTag m_rightArmTags[4];
-    xModelTag m_feetTags[4];
-    F32 m_tauntTimer;
-    zEnt* m_armColl[2];
-    zEnt* m_bodyColl;
-    zEnt* m_armTgt[2];
-    xFXRing* m_stompRing[16];
-    U8 attacking;
-    F32 attack_delay;
+    xModelInstance* m_subModels[6]; // 0x2b4
+    xModelTag m_leftArmTags[4]; // 0x2CC
+    xModelTag m_rightArmTags[4]; // 0x34C
+    xModelTag m_feetTags[4]; // 0x3CC
+    F32 m_tauntTimer; // 0x44C
+    zEnt* m_armColl[2]; // 0x450
+    zEnt* m_bodyColl; // 0x458
+    zEnt* m_armTgt[2]; // 0x45C
+    xFXRing* m_stompRing[16]; // 0x464
+    U8 attacking; // 0x4A4
+    F32 attack_delay; // 0x4A8
 
     zNPCB_SB1(S32 myType);
+    void Reset();
+    void NewTime(xScene* xscn, F32 dt);
+    F32 AttackTimeLeft();
+    void HoldUpDude();
+    void ThanksImDone();
 };
 
 struct zNPCGoalBossSB1Idle : zNPCGoalCommon
@@ -30,6 +35,8 @@ struct zNPCGoalBossSB1Idle : zNPCGoalCommon
     zNPCGoalBossSB1Idle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSB1Taunt : zNPCGoalCommon
@@ -39,6 +46,8 @@ struct zNPCGoalBossSB1Taunt : zNPCGoalCommon
     zNPCGoalBossSB1Taunt(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSB1Stomp : zNPCGoalCommon
@@ -48,6 +57,8 @@ struct zNPCGoalBossSB1Stomp : zNPCGoalCommon
     zNPCGoalBossSB1Stomp(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSB1Smash : zNPCGoalCommon
@@ -57,21 +68,25 @@ struct zNPCGoalBossSB1Smash : zNPCGoalCommon
     zNPCGoalBossSB1Smash(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSB1Deflate : zNPCGoalCommon
 {
-    F32 timeInGoal;
-    RwV3d morphVertBuf[600];
-    RwV3d* targetVec;
-    RwV3d* modelVec;
-    RpGeometry* modelGeom;
-    S32 morphVertCount;
-    F32 morphInvTime;
+    F32 timeInGoal; // 0x4C
+    RwV3d morphVertBuf[600]; // 0x50
+    RwV3d* targetVec; // 0x1C70
+    RwV3d* modelVec; // 0x1C74
+    RpGeometry* modelGeom; // 0x1C78
+    S32 morphVertCount; // 0x1C7C
+    F32 morphInvTime; // 0x1C80
 
     zNPCGoalBossSB1Deflate(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 #endif

@@ -282,10 +282,6 @@ void zNPCJelly::JellyKill()
     }
 }
 
-void test(S32 a)
-{
-}
-
 // Really close to matching, but the switch cases aren't quite right
 U32 zNPCJelly::AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 {

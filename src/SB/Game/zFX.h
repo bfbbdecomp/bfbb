@@ -3,6 +3,7 @@
 
 #include "xString.h"
 #include "xEnt.h"
+#include "xFX.h"
 
 #include <rwcore.h>
 #include <rpworld.h>
@@ -162,7 +163,7 @@ void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* un
 
 void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
 
-void zFXMuscleArmWave(xVec3* pos);
+xFXRing* zFXMuscleArmWave(xVec3* pos);
 
 void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
                               const xVec3* vel_rnd);

@@ -81,11 +81,11 @@ struct xAnimTransition
     xAnimTransitionCallback Callback;
     U32 Flags;
     U32 UserFlags;
-    F32 SrcTime;
-    F32 DestTime;
+    F32 SrcTime; // 0x18
+    F32 DestTime; // 0x1C
     U16 Priority;
     U16 QueuePriority;
-    F32 BlendRecip;
+    F32 BlendRecip; // 0x24
     U16* BlendOffset;
 };
 
@@ -97,9 +97,9 @@ struct xAnimTransitionList
 
 struct xAnimTable
 {
-    xAnimTable* Next;
-    const char* Name;
-    xAnimTransition* TransitionList;
+    xAnimTable* Next; // 0x0
+    const char* Name; // 0x4
+    xAnimTransition* TransitionList; // 0x8
     xAnimState* StateList;
     U32 AnimIndex;
     U32 MorphIndex;
@@ -168,20 +168,18 @@ void xAnimTempTransitionInit(U32 count);
 xAnimFile* xAnimFileNew(void* rawData, const char* name, U32 flags, xAnimFile** linkedList);
 xAnimTable* xAnimTableNew(const char* name, xAnimTable** linkedList, U32 userFlags);
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U32 userFlags,
-                               F32 speed, F32* boneBlend, F32* timeSnap,
-                               F32 fadeRecip, U16* fadeOffset, void* callbackData,
+                               F32 speed, F32* boneBlend, F32* timeSnap, F32 fadeRecip,
+                               U16* fadeOffset, void* callbackData,
                                xAnimStateBeforeEnterCallback beforeEnter,
                                xAnimStateCallback stateCallback,
                                xAnimStateBeforeAnimMatricesCallback beforeAnimMatrices);
 xAnimTransition* xAnimTableNewTransition(xAnimTable* table, const char* source, const char* dest,
                                          xAnimTransitionConditionalCallback conditional,
-                                         xAnimTransitionCallback callback, U32 flags,
-                                         U32 userFlags, F32 srcTime, F32 destTime,
-                                         U16 priority, U16 queuePriority, F32 blendRecip,
-                                         U16* blendOffset);
+                                         xAnimTransitionCallback callback, U32 flags, U32 userFlags,
+                                         F32 srcTime, F32 destTime, U16 priority, U16 queuePriority,
+                                         F32 blendRecip, U16* blendOffset);
 void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state);
-void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags,
-                   U32 effectMax);
+void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax);
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
                           xModelInstance* modelInst);
 xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);

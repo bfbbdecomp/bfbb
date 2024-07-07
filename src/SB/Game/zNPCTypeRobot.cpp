@@ -401,10 +401,6 @@ void zNPCRobot::InflictPain(S32 numHitPoints, S32 giveCreditToPlayer)
     }
 }
 
-void test(S32 a)
-{
-}
-
 void zNPCFodder::ParseINI()
 {
     zNPCCommon::ParseINI();

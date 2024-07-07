@@ -65,10 +65,9 @@ void zFXPorterWave(xVec3* pos)
     xFXRingCreate(pos, &sPorterRing[1]);
 }
 
-// PS2 dwarf data says this returns an xFXRing*, but gamecube symbols say it's void
-void zFXMuscleArmWave(xVec3* pos)
+xFXRing* zFXMuscleArmWave(xVec3* pos)
 {
-    xFXRingCreate(pos, &sMuscleArmRing[0]);
+    return xFXRingCreate(pos, &sMuscleArmRing[0]);
 }
 
 void zFXGoo_SceneEnter()
