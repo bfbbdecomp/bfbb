@@ -8,21 +8,21 @@
 
 struct xJSPNodeInfo
 {
-    int32 originalMatIndex;
-    int32 nodeFlags;
+    S32 originalMatIndex;
+    S32 nodeFlags;
 };
 
 struct xJSPHeader
 {
-    int8 idtag[4];
-    uint32 version;
-    uint32 jspNodeCount;
+    char idtag[4];
+    U32 version;
+    U32 jspNodeCount;
     RpClump* clump;
     xClumpCollBSPTree* colltree;
     xJSPNodeInfo* jspNodeList;
 };
 
 RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3);
-void xJSP_MultiStreamRead(void* data, uint32 size, xJSPHeader** jsp);
+void xJSP_MultiStreamRead(void* data, U32 size, xJSPHeader** jsp);
 
 #endif

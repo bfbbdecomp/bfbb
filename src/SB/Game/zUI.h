@@ -8,37 +8,37 @@
 
 struct zUIAsset : xEntAsset
 {
-    uint32 uiFlags;
-    uint16 dim[2];
-    uint32 textureID;
-    float32 uva[2];
-    float32 uvb[2];
-    float32 uvc[2];
-    float32 uvd[2];
+    U32 uiFlags;
+    U16 dim[2];
+    U32 textureID;
+    F32 uva[2];
+    F32 uvb[2];
+    F32 uvc[2];
+    F32 uvd[2];
 };
 
 struct _zUI : zEnt
 {
     zUIAsset* sasset;
-    uint32 uiFlags;
-    uint32 uiButton;
-    uint16 preUpdateIndex;
-    uint16 updateIndex;
+    U32 uiFlags;
+    U32 uiButton;
+    U16 preUpdateIndex;
+    U16 updateIndex;
 };
 
 struct zUIMgr : xMgr
 {
-    int32 m_preUpdateStart;
-    int32 m_preUpdateEnd;
-    uint32 m_preUpdateMax;
+    S32 m_preUpdateStart;
+    S32 m_preUpdateEnd;
+    U32 m_preUpdateMax;
     _zUI** m_preUpdate;
-    int32 m_updateStart;
-    int32 m_updateEnd;
-    uint32 m_updateMax;
+    S32 m_updateStart;
+    S32 m_updateEnd;
+    U32 m_updateMax;
     _zUI** m_update;
 
-    void PreUpdate(zScene* s, float32 dt);
-    void Update(zScene* s, float32 dt);
+    void PreUpdate(zScene* s, F32 dt);
+    void Update(zScene* s, F32 dt);
     void Setup(zScene* s);
     void Touch(_zUI* ui);
     void Remove(_zUI* ui);
@@ -49,7 +49,7 @@ struct zUIMgr : xMgr
     void Add_Update(_zUI* ui);
 };
 
-extern int32 bad_card_available;
+extern S32 bad_card_available;
 // Another .comm symbol is here ("uknown_common_bss_symbol").
 // Maybe some unused variable that was still linked in?
 _zUI* sSorted[768];
@@ -61,17 +61,17 @@ void zUI_Init(_zUI* ent, xEntAsset* asset);
 void zUI_Save(_zUI* ent, xSerial* s);
 void zUI_Load(_zUI* ent, xSerial* s);
 void zUI_Reset(_zUI* ent);
-void zUI_PreUpdate(_zUI* ent, xScene*, float32);
-void zUI_Update(_zUI* ent, xScene*, float32 dt);
+void zUI_PreUpdate(_zUI* ent, xScene*, F32);
+void zUI_Update(_zUI* ent, xScene*, F32 dt);
 void zUIRenderAll();
 void zUI_Render(xEnt* ent);
-int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*);
+S32 zUIEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*);
 void zUI_ParseINI(xIniFile* ini);
-int32 zUIPortalEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+S32 zUIPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget);
 void zUI_ScenePortalSetToCurrentLevel(zScene* zsc);
 void zUI_ScenePortalInit(zScene* zsc);
-void zUI_PortalToKrabs(uint32 taskNum);
+void zUI_PortalToKrabs(U32 taskNum);
 void zUI_ScenePortalUpdate();
 void zUI_ScenePortalSave(xSerial* s);
 void zUI_ScenePortalLoad(xSerial* s);

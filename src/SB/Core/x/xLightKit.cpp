@@ -5,10 +5,10 @@
 #include <string.h>
 
 extern xLightKit* gLastLightKit;
-extern int32 iModelHack_DisablePrelight;
+extern S32 iModelHack_DisablePrelight;
 
 #if 0
-float32 MAX_COLOR = 1.0f;
+F32 MAX_COLOR = 1.0f;
 #endif
 
 #ifdef NON_MATCHING
@@ -30,7 +30,7 @@ xLightKit* xLightKit_Prepare(void* data)
         if (currlight->color.red > MAX_COLOR || currlight->color.green > MAX_COLOR ||
             currlight->color.blue > MAX_COLOR)
         {
-            float32 s;
+            F32 s;
             s = MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
             s = MAX(s, 0.00001f);
             s = 1.0f / s;

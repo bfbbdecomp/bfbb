@@ -39,22 +39,22 @@ enum en_NPC_SOUND
 struct NPCSndTrax
 {
     en_NPC_SOUND typ_sound;
-    int8* nam_sound;
-    uint32 aid_sound;
+    char* nam_sound;
+    U32 aid_sound;
 };
 
 struct NPCSndQueue
 {
-    uint32 sndDirect;
+    U32 sndDirect;
     en_NPC_SOUND sndtype;
-    int32 flg_snd;
-    float32 tmr_delay;
-    float32 radius;
+    S32 flg_snd;
+    F32 tmr_delay;
+    F32 radius;
 };
 
 void NPCS_Startup();
 void NPCS_SndTimersReset();
-void NPCS_SndTimersUpdate(float32 dt);
+void NPCS_SndTimersUpdate(F32 dt);
 void NPCS_SndTablePrepare(NPCSndTrax* trax);
 void NPCS_Shutdown();
 

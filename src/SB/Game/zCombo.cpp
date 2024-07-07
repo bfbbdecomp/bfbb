@@ -9,16 +9,16 @@
 #include "zGlobals.h"
 #include "zTextBox.h"
 
-extern const int8 zCombo_Strings[];
-extern const float32 zCombo_float_zero;
-extern const float32 zCombo_float_minusone;
+extern const char zCombo_Strings[];
+extern const F32 zCombo_float_zero;
+extern const F32 zCombo_float_minusone;
 
 struct zComboReward
 {
-    int32 reward;
-    int8* textName;
-    uint32 rewardList[10];
-    uint32 rewardNum;
+    S32 reward;
+    char* textName;
+    U32 rewardList[10];
+    U32 rewardNum;
     xTextAsset* textAsset;
 };
 
@@ -33,20 +33,20 @@ extern widget_chunk* comboHUD;
 
 extern zComboReward comboReward[16];
 
-extern int32 zCombo_int32_1; // probably comboPending
-extern int32 zCombo_int32_2; // probably comboLastCounter
-extern int32 zCombo_int32_3; // probably comboCounter
+extern S32 zCombo_int32_1; // probably comboPending
+extern S32 zCombo_int32_2; // probably comboLastCounter
+extern S32 zCombo_int32_3; // probably comboCounter
 
-extern float32 zCombo_float32_1; // probably comboMaxTime
-extern float32 zCombo_float32_3; // probably comboTimer
+extern F32 zCombo_float32_1; // probably comboMaxTime
+extern F32 zCombo_float32_3; // probably comboTimer
 
 extern xBase* sHideText[5];
 extern xBase* sHideUIF[1];
 
 void fillCombo(zComboReward* reward)
 {
-    int32 rewardLeft = reward->reward;
-    int32 j = 0;
+    S32 rewardLeft = reward->reward;
+    S32 j = 0;
 
     while (rewardLeft > 0)
     {
@@ -93,7 +93,7 @@ void zCombo_Setup()
     zCombo_float32_3 = zCombo_float_minusone;
 
     // "HUD_TEXT_COMBOMESSAGE"
-    uint32 id = xStrHash(zCombo_Strings + 0xc1);
+    U32 id = xStrHash(zCombo_Strings + 0xc1);
     comboHUD = (widget_chunk*)zSceneFindObject(id);
 
     // Junk to make the size match temporarily, REMOVE THIS
@@ -162,7 +162,7 @@ void zCombo_Setup()
 
 #if 0
 /* Can't figure out how to get the assignments to happen in the right order */
-void zCombo_Add(int32 points)
+void zCombo_Add(S32 points)
 {
     if (zCombo_float32_3 < zCombo_float_zero)
     {

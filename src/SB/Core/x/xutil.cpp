@@ -4,11 +4,11 @@
 
 #include <ctype.h>
 
-static volatile int32 g_xutilinit; // volatile so xUtilShutdown matches
-static int32 g_crc_needinit = 1;
-static uint32 g_crc32_table[256] = {};
+static volatile S32 g_xutilinit; // volatile so xUtilShutdown matches
+static S32 g_crc_needinit = 1;
+static U32 g_crc32_table[256] = {};
 
-int32 xUtilStartup()
+S32 xUtilStartup()
 {
     if (!g_xutilinit++)
     {
@@ -18,19 +18,19 @@ int32 xUtilStartup()
     return g_xutilinit;
 }
 
-int32 xUtilShutdown()
+S32 xUtilShutdown()
 {
     g_xutilinit--;
     return g_xutilinit;
 }
 
-char* xUtil_idtag2string(uint32 srctag, int32 bufidx)
+char* xUtil_idtag2string(U32 srctag, S32 bufidx)
 {
-    uint32 tag = srctag;
+    U32 tag = srctag;
     char* strptr;
-    int8* uc = (int8*)&tag;
-    int32 l;
-    int8 t;
+    char* uc = (char*)&tag;
+    S32 l;
+    char t;
     static char buf[6][10] = {};
 
     if (bufidx < 0 || bufidx >= 7)
@@ -46,7 +46,7 @@ char* xUtil_idtag2string(uint32 srctag, int32 bufidx)
 
     l = 1;
 
-    if ((int32)((int8*)&l)[3] != 0)
+    if ((S32)((char*)&l)[3] != 0)
     {
         t = uc[0];
         uc[0] = uc[3];
@@ -90,16 +90,16 @@ char* xUtil_idtag2string(uint32 srctag, int32 bufidx)
     return strptr;
 }
 
-uint32 xUtil_crc_init()
+U32 xUtil_crc_init()
 {
-    int32 i, j;
-    uint32 crc_accum;
+    S32 i, j;
+    U32 crc_accum;
 
     if (g_crc_needinit)
     {
         for (i = 0; i < 256; i++)
         {
-            crc_accum = (uint32)i << 24;
+            crc_accum = (U32)i << 24;
 
             for (j = 0; j < 8; j++)
             {
@@ -122,9 +122,9 @@ uint32 xUtil_crc_init()
     return 0xFFFFFFFF;
 }
 
-uint32 xUtil_crc_update(uint32 crc_accum, char* data, int32 datasize)
+U32 xUtil_crc_update(U32 crc_accum, char* data, S32 datasize)
 {
-    int32 i, j;
+    S32 i, j;
 
     if (g_crc_needinit)
     {
@@ -140,7 +140,7 @@ uint32 xUtil_crc_update(uint32 crc_accum, char* data, int32 datasize)
     return crc_accum;
 }
 
-int32 xUtil_yesno(float32 wt_yes)
+S32 xUtil_yesno(F32 wt_yes)
 {
     if (0.0f == wt_yes)
     {
@@ -155,12 +155,12 @@ int32 xUtil_yesno(float32 wt_yes)
     return (xurand() <= wt_yes);
 }
 
-void xUtil_wtadjust(float32* wts, int32 cnt, float32 arbref)
+void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref)
 {
-    const volatile float32 ZERO = 0.0f;
+    const volatile F32 ZERO = 0.0f;
 
-    int32 i;
-    float32 sum = 0.0f, fac;
+    S32 i;
+    F32 sum = 0.0f, fac;
 
     for (i = 0; i < cnt; i++)
     {

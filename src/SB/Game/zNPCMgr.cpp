@@ -6,7 +6,7 @@
 
 #include <types.h>
 
-extern int32 g_modinit;
+extern S32 g_modinit;
 extern zNPCMgr* g_npcmgr;
 
 zNPCMgr* zNPCMgrSelf()
@@ -55,7 +55,7 @@ void zNPCMgr_Shutdown()
 
 #endif
 
-void zNPCMgr_scenePrepare(int32 npccnt)
+void zNPCMgr_scenePrepare(S32 npccnt)
 {
     zNPCMgrSelf()->ScenePrepare(npccnt);
 }
@@ -80,7 +80,7 @@ void zNPCMgr_scenePostSetup()
     zNPCMgrSelf()->ScenePostSetup();
 }
 
-void zNPCMgr_sceneTimestep(xScene* xscn, float32 dt)
+void zNPCMgr_sceneTimestep(xScene* xscn, F32 dt)
 {
     zNPCMgrSelf()->SceneTimestep(xscn, dt);
 }
@@ -95,7 +95,7 @@ void zNPCMgr_scenePostParticleRender()
     zNPCMgrSelf()->ScenePostParticleRender();
 }
 
-xEnt* zNPCMgr_createNPCInst(int32, xEntAsset* assdat)
+xEnt* zNPCMgr_createNPCInst(S32, xEntAsset* assdat)
 {
     return zNPCMgrSelf()->CreateNPC(assdat);
 }
@@ -114,7 +114,7 @@ void zNPCMgr::Shutdown()
 
 #if 0
 // Need to define all the functions.
-void zNPCMgr::ScenePrepare(int32 npccnt)
+void zNPCMgr::ScenePrepare(S32 npccnt)
 {
     XOrdInit(&this->npclist, npccnt, 0);
     xBehaveMgr_ScenePrepare();
@@ -133,10 +133,10 @@ void zNPCMgr::ScenePrepare(int32 npccnt)
 
 #if 0
 // Yeah good luck getting it to spit out an li instead of doing a shift.
-int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
+S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {
-    uint32 key = *(uint32*)vkey;
-    uint32 item = *(uint32*)vitem;
+    U32 key = *(U32*)vkey;
+    U32 item = *(U32*)vitem;
     if (key < item)
     {
         return -1;

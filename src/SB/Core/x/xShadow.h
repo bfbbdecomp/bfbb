@@ -15,20 +15,20 @@ struct xShadowPoly
 struct xShadowCache
 {
     xVec3 pos;
-    float32 radius;
-    uint32 entCount;
-    uint32 polyCount;
-    float32 polyRayDepth[5];
-    uint16 castOnEnt;
-    uint16 castOnPoly;
+    F32 radius;
+    U32 entCount;
+    U32 polyCount;
+    F32 polyRayDepth[5];
+    U16 castOnEnt;
+    U16 castOnPoly;
     xEnt* ent[16];
     xShadowPoly poly[256];
 };
 
 void xShadow_ListAdd(xEnt* ent);
 void xShadowSetWorld(RpWorld* world);
-void xShadowSetLight(xVec3* param1, xVec3* param2, float32 param3);
-void xShadowManager_Init(int32 numEnts);
+void xShadowSetLight(xVec3* param1, xVec3* param2, F32 param3);
+void xShadowManager_Init(S32 numEnts);
 void xShadowManager_Reset();
 void xShadowManager_Render();
 

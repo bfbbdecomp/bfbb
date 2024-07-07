@@ -60,7 +60,7 @@ struct SMDepot
 struct SMSPStatus
 {
     zMovePoint* sp;
-    int32 flg_stat;
+    S32 flg_stat;
     zNPCCommon* npc_prefer;
 };
 
@@ -73,32 +73,32 @@ struct SMNPCStatus
 
 struct zNPCSpawner : RyzMemData
 {
-    int32 flg_spawner;
+    S32 flg_spawner;
     zNPCCommon* npc_owner;
-    float32 tym_delay;
-    int32 max_spawn;
+    F32 tym_delay;
+    S32 max_spawn;
     en_SM_WAVE_MODE wavemode;
     en_SM_WAVE_STAT wavestat;
-    float32 tmr_wave;
-    int32 cnt_spawn;
+    F32 tmr_wave;
+    S32 cnt_spawn;
     SMSPStatus sppool[16];
     SMNPCStatus npcpool[16];
     st_XORDEREDARRAY pendlist;
     st_XORDEREDARRAY actvlist;
-    int32 cnt_cleanup;
+    S32 cnt_cleanup;
 
     void Subscribe(zNPCCommon* owner);
-    void SetWaveMode(en_SM_WAVE_MODE mode, float32 delay, int32 lifemax);
-    int32 AddSpawnPoint(zMovePoint* sp);
-    int32 AddSpawnNPC(zNPCCommon* npc);
+    void SetWaveMode(en_SM_WAVE_MODE mode, F32 delay, S32 lifemax);
+    S32 AddSpawnPoint(zMovePoint* sp);
+    S32 AddSpawnNPC(zNPCCommon* npc);
     void Reset();
     void MapPreferred();
-    void Timestep(float32 dt);
-    void UpdateDiscreet(float32 dt);
-    void UpdateContinuous(float32 dt);
+    void Timestep(F32 dt);
+    void UpdateDiscreet(F32 dt);
+    void UpdateContinuous(F32 dt);
     void Notify(en_SM_NOTICES note, void* data);
-    int32 Owned(zNPCCommon* npc);
-    uint8 Receivable(en_SM_NOTICES note, void* data);
+    S32 Owned(zNPCCommon* npc);
+    U8 Receivable(en_SM_NOTICES note, void* data);
     SMSPStatus* SelectSP(const SMNPCStatus* npcstat);
     // NextPendingNPC.
     void ClearActive();
@@ -107,9 +107,9 @@ struct zNPCSpawner : RyzMemData
     void SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status);
 
     SMNPCStatus* StatForNPC(zNPCCommon* npc);
-    int32 SpawnBeastie(SMNPCStatus* npcstat, SMSPStatus* spstat);
+    S32 SpawnBeastie(SMNPCStatus* npcstat, SMSPStatus* spstat);
     SMNPCStatus* ToastedBeastie(zNPCCommon* npc);
-    void ChildHeartbeat(float32 dt);
+    void ChildHeartbeat(F32 dt);
 };
 
 void zNPCSpawner_Startup();

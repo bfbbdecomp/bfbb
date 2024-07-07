@@ -11,20 +11,20 @@ struct aqua_beam
 {
     struct config
     {
-        float32 duration;
-        int32 sound_interval;
+        F32 duration;
+        S32 sound_interval;
         struct
         {
-            float32 size;
-            float32 alpha;
-            float32 vel;
-            float32 accel;
-            float32 emit_delay;
-            float32 grow;
-            float32 fade_dist;
-            float32 kill_dist;
-            float32 follow;
-            float32 hit_radius;
+            F32 size;
+            F32 alpha;
+            F32 vel;
+            F32 accel;
+            F32 emit_delay;
+            F32 grow;
+            F32 fade_dist;
+            F32 kill_dist;
+            F32 follow;
+            F32 hit_radius;
             xVec3 hit_offset;
         } ring;
     };
@@ -33,9 +33,9 @@ struct aqua_beam
     {
         xModelInstance* model;
         xVec3 origin;
-        float32 dist;
-        float32 vel;
-        uint32 sound_handle;
+        F32 dist;
+        F32 vel;
+        U32 sound_handle;
         xMat4x3 mat;
     };
 
@@ -44,31 +44,31 @@ struct aqua_beam
         xMat4x3 mat;
         struct
         {
-            float32 freq;
-            float32 offset;
-            float32 move;
+            F32 freq;
+            F32 offset;
+            F32 move;
         } layer[3];
     };
 
     config cfg;
-    uint8 firing;
+    U8 firing;
     xVec3 loc;
     xVec3 dir;
     xMat4x3 mat;
-    float32 time;
+    F32 time;
     struct
     {
         RpAtomic* model_data;
-        float32 emit_time;
+        F32 emit_time;
         fixed_queue<ring_segment, 31> queue;
     } ring;
     struct
     {
         squiggle_segment set[8];
-        float32 alpha;
-        float32 scale;
+        F32 alpha;
+        F32 scale;
     } squiggle;
-    int32 ring_sounds;
+    S32 ring_sounds;
 };
 
 struct zNPCPrawn : zNPCSubBoss
@@ -85,58 +85,58 @@ struct zNPCPrawn : zNPCSubBoss
 
     struct range_type
     {
-        int32 min;
-        int32 max;
+        S32 min;
+        S32 max;
     };
 
     struct
     {
     } flag;
-    int32 life;
-    int32 round;
-    uint8 face_player;
+    S32 life;
+    S32 round;
+    U8 face_player;
     xVec2 look_dir;
     z_disco_floor* disco;
     zNPCSpawner* spawner[3];
-    uint32 danger_mask;
+    U32 danger_mask;
     floor_state_enum floor_state;
-    int32 floor_state_index;
-    uint32 floor_state_counter;
-    float32 floor_time;
-    float32 delay;
-    uint8 first_update;
-    uint8 fighting;
+    S32 floor_state_index;
+    U32 floor_state_counter;
+    F32 floor_time;
+    F32 delay;
+    U8 first_update;
+    U8 fighting;
     struct
     {
-        uint8 change;
+        U8 change;
         floor_state_enum floor_state;
-        uint32 counter;
+        U32 counter;
         range_type pattern;
-        float32 transition_delay;
-        float32 state_delay;
+        F32 transition_delay;
+        F32 state_delay;
     } pending;
     struct
     {
-        float32 sin_pitch;
-        float32 cos_pitch;
+        F32 sin_pitch;
+        F32 cos_pitch;
     } precomp;
     struct
     {
-        float32 vel;
-        float32 accel;
-        float32 max_vel;
+        F32 vel;
+        F32 accel;
+        F32 max_vel;
     } turn;
     aqua_beam beam;
     xVec3 closeup_loc[4][8];
     xModelInstance* closeup_model[8];
-    uint32 closeups_used;
+    U32 closeups_used;
 
-    zNPCPrawn(int32 myType);
+    zNPCPrawn(S32 myType);
 };
 
 struct zNPCGoalPrawnIdle : zNPCGoalCommon
 {
-    zNPCGoalPrawnIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalPrawnIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
@@ -154,34 +154,34 @@ struct zNPCGoalPrawnBeam : zNPCGoalCommon
     };
 
     substate_enum substate;
-    int32 sweeps;
-    float32 sweep_dir;
-    float32 delay;
+    S32 sweeps;
+    F32 sweep_dir;
+    F32 delay;
 
-    zNPCGoalPrawnBeam(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalPrawnBeam(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalPrawnBowl : zNPCGoalCommon
 {
-    uint8 aiming;
+    U8 aiming;
 
-    zNPCGoalPrawnBowl(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalPrawnBowl(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalPrawnDamage : zNPCGoalCommon
 {
-    zNPCGoalPrawnDamage(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalPrawnDamage(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalPrawnDeath : zNPCGoalCommon
 {
-    zNPCGoalPrawnDeath(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalPrawnDeath(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };

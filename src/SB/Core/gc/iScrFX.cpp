@@ -3,13 +3,13 @@
 #include <types.h>
 
 extern RwRaster* g_rast_gctapdance;
-extern int32 g_alreadyTriedAlloc;
+extern S32 g_alreadyTriedAlloc;
 extern _iMotionBlurData sMBD;
-extern uint32 sMotionBlurEnabled;
-extern float32 lbl_803CE168; // 0.0f
-extern float32 lbl_803CE174; // 1.0f
-extern float32 lbl_803CE178; // 0.5f
-extern float32 lbl_803CE17C; // 254f
+extern U32 sMotionBlurEnabled;
+extern F32 lbl_803CE168; // 0.0f
+extern F32 lbl_803CE174; // 1.0f
+extern F32 lbl_803CE178; // 0.5f
+extern F32 lbl_803CE17C; // 254f
 
 void iScrFxInit()
 {
@@ -38,14 +38,14 @@ void iScrFxEnd()
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDZERO);
 }
 
-void iCameraMotionBlurActivate(uint32 activate)
+void iCameraMotionBlurActivate(U32 activate)
 {
     sMotionBlurEnabled = activate;
 }
 
 #if 0
 // The instructions regarding the setting of sMotionBlurEnabled and sMBD.motionBlurAlpha are in the wrong order.
-void iCameraSetBlurriness(float32 amount)
+void iCameraSetBlurriness(F32 amount)
 {
     if (amount <= lbl_803CE168)
     {
@@ -58,7 +58,7 @@ void iCameraSetBlurriness(float32 amount)
             amount = lbl_803CE174;
         }
         sMotionBlurEnabled = 1;
-        sMBD.motionBlurAlpha = (int32)(lbl_803CE17C * amount + lbl_803CE178);
+        sMBD.motionBlurAlpha = (S32)(lbl_803CE17C * amount + lbl_803CE178);
     }
 }
 
@@ -99,14 +99,14 @@ RwRaster* FBMBlur_DebugIntervention(RwCamera* camera, RwRaster* ras)
     return ras;
 }
 
-int32 iScrFxMotionBlurOpen(RwCamera* camera)
+S32 iScrFxMotionBlurOpen(RwCamera* camera)
 {
     return 0;
 }
 
 #if 0
 // Something strange going one here.
-int32 iScrFxCameraDestroyed(RwCamera* pCamera)
+S32 iScrFxCameraDestroyed(RwCamera* pCamera)
 {
     GCMB_KillFrameBufferCopy();
     bool ret = sMBD.motionBlurFrontBuffer != NULL;
@@ -122,7 +122,7 @@ int32 iScrFxCameraDestroyed(RwCamera* pCamera)
 
 #if 0
 // WIP.
-void iScrFxMotionBlurRender(RwCamera* camera, uint32 col)
+void iScrFxMotionBlurRender(RwCamera* camera, U32 col)
 {
     if (sMBD.motionBlurFrontBuffer != NULL)
     {

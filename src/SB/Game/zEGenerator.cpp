@@ -6,8 +6,8 @@
 
 #include <types.h>
 
-extern float32 lbl_803CD290; // 1.0f
-extern float32 lbl_803CD294; // 0.0f
+extern F32 lbl_803CD290; // 1.0f
+extern F32 lbl_803CD294; // 0.0f
 extern const char zEGeneratorStringBase[];
 
 void zEGenerator_Init(void* egen, void* asset)
@@ -55,7 +55,7 @@ void zEGenerator_Setup(zEGenerator* egen, xScene* sc)
 {
     zEntSetup(egen);
     egen->num_dsts = 0;
-    for (int32 i = 0; i < egen->linkCount; i++)
+    for (S32 i = 0; i < egen->linkCount; i++)
     {
         xLinkAsset* la = (xLinkAsset*)&egen->link[i];
         xBase* b = (xBase*)zSceneFindObject(la->dstAssetID);
@@ -87,7 +87,7 @@ void zEGenerator_Reset(zEGenerator* egen, xScene* sc)
 {
     zEntReset((zEnt*)egen);
     zEGenAsset* zasset = (zEGenAsset*)egen->asset;
-    egen->flags = (uint16)zasset->flags;
+    egen->flags = (U16)zasset->flags;
     if (egen->flags & 1)
     {
         zEGenerator_TurnOn(egen);
@@ -107,7 +107,7 @@ void zEGenerator_Reset(zEGenerator* egen, xScene* sc)
     egen->bupdate((xEnt*)egen, (xVec3*)&egen->model->Mat->pos);
 }
 
-void zEGenerator_Move(zEGenerator* egen, xScene* sc, float32 dt)
+void zEGenerator_Move(zEGenerator* egen, xScene* sc, F32 dt)
 {
 }
 
@@ -136,7 +136,7 @@ void zEGenerator_TurnOn(zEGenerator* egen)
     {
         xDrawSphere(&egen->dst_pos, @856, 0xc006);
     }
-    for (int32 i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         if (egen->lfx[i] != NULL)
         {
@@ -156,7 +156,7 @@ void zEGenerator_TurnOff(zEGenerator* egen)
     {
         egen->model->Anim->Single->CurrentSpeed = lbl_803CD294;
     }
-    for (int32 i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         if (egen->lfx[i] != NULL)
         {
@@ -180,7 +180,7 @@ void zEGenerator_ToggleOn(zEGenerator* egen)
 
 #if 0
 // Need to figure out how to call the link function. Everything else should be in order as long as the case labels are correct.
-int32 zEGeneratorEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
+S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                          xBase* toParamWidget)
 {
     zEGenerator* egen = (zEGenerator*)from;

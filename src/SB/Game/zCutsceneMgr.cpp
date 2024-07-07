@@ -58,11 +58,11 @@ static zCutSceneNames zCutSceneNamesTable[14] = {
     { "cin_mm_scare", 0, 1 }, { "cin_sh_barrel", 0, 1 },
 
 };
-static int32 gCutsceneSkipOK;
-static int32 donpcfx;
-static uint8 ents_hidden;
-static int32 s_atomicNumber;
-extern float32 gSkipTimeCutscene;
+static S32 gCutsceneSkipOK;
+static S32 donpcfx;
+static U8 ents_hidden;
+static S32 s_atomicNumber;
+extern F32 gSkipTimeCutscene;
 
 void zCutsceneMgrInit(void* b, void* tasset)
 {
@@ -101,7 +101,7 @@ void zCutsceneMgrReset(zCutsceneMgr* mgr)
 
 void zCutsceneMgrSave(zCutsceneMgr*, xSerial* s)
 {
-    for (uint32 i = 0; i < 14; i++)
+    for (U32 i = 0; i < 14; i++)
     {
         if (zCutSceneNamesTable[i].played)
         {
@@ -116,7 +116,7 @@ void zCutsceneMgrSave(zCutsceneMgr*, xSerial* s)
 
 void zCutsceneMgrLoad(zCutsceneMgr*, xSerial* s)
 {
-    for (uint32 i = 0; i < 14; i++)
+    for (U32 i = 0; i < 14; i++)
     {
         s->Read_b1(&zCutSceneNamesTable[i].played);
     }
@@ -134,7 +134,7 @@ RpAtomic* HackBoundCB(RpAtomic* atomic, void* data)
 RpMaterial* HackAlphaSetMaterialAlphaCB(RpMaterial* material, void* data)
 {
     RwRGBA color = material->color;
-    color.alpha = (uint32)data;
+    color.alpha = (U32)data;
     material->color = color;
     return material;
 }
@@ -142,7 +142,7 @@ RpMaterial* HackAlphaSetMaterialAlphaCB(RpMaterial* material, void* data)
 RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data)
 {
     RpGeometry* pGeom = atomic->geometry;
-    if ((uint32)data & (1 << s_atomicNumber))
+    if ((U32)data & (1 << s_atomicNumber))
     {
         RpGeometryForAllMaterials(pGeom, HackAlphaSetMaterialAlphaCB, (void*)0xfe);
     }
@@ -162,7 +162,7 @@ void zCutSceneNamesTable_clearAll()
 void zCutsceneMgrPlayStart(zCutsceneMgr* t)
 {
     gCutsceneSkipOK = 1;
-    for (uint32 i = 0; i < 14; i++)
+    for (U32 i = 0; i < 14; i++)
     {
         if (t->csn->Info->AssetID == xStrHash(zCutSceneNamesTable[i].name))
         {
@@ -172,16 +172,16 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
         }
     }
 
-    for (uint32 i = 0; i < 58; i++)
+    for (U32 i = 0; i < 58; i++)
     {
-        uint32 cinid = xStrHash(cutsceneHackTable[i].cinname);
+        U32 cinid = xStrHash(cutsceneHackTable[i].cinname);
         if (t->tasset->cutsceneAssetID != cinid)
         {
             continue;
         }
 
-        uint32 hackid = xStrHash(cutsceneHackTable[i].modelname);
-        for (uint32 j = 0; j < t->csn->Info->NumData; j++)
+        U32 hackid = xStrHash(cutsceneHackTable[i].modelname);
+        for (U32 j = 0; j < t->csn->Info->NumData; j++)
         {
             if (hackid != t->csn->Data[j].AssetID || (t->csn->Data[j].DataType & 0xfffffff) != 1 ||
                 t->csn->Data[j].DataPtr == NULL)
@@ -224,7 +224,7 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
 }
 #endif
 
-int32 zCutsceneMgrEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
+S32 zCutsceneMgrEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 {
     zCutsceneMgr* t = (zCutsceneMgr*)to;
 
@@ -321,7 +321,7 @@ void zCutsceneMgrFinishExit(xBase* to)
 void zCutsceneMgrKillFX(zCutsceneMgr* t)
 {
     xCutsceneMgrAsset* a = t->tasset;
-    for (int32 i = 0; i < 15; i++)
+    for (S32 i = 0; i < 15; i++)
     {
         if (a->emitID[i] == 0)
         {
@@ -335,11 +335,11 @@ void zCutsceneMgrKillFX(zCutsceneMgr* t)
     }
 }
 
-void zCutsceneMgrUpdateFX(zCutsceneMgr* t, float32)
+void zCutsceneMgrUpdateFX(zCutsceneMgr* t, F32)
 {
     xCutsceneMgrAsset* a = t->tasset;
     xCutscene* csn = t->csn;
-    for (int32 i = 0; i < 15; i++)
+    for (S32 i = 0; i < 15; i++)
     {
         if (a->emitID[i] == 0)
         {
@@ -366,7 +366,7 @@ void zCutsceneMgrUpdateFX(zCutsceneMgr* t, float32)
     }
 }
 
-void zCutsceneMgrUpdate(xBase* to, xScene* sc, float32 dt)
+void zCutsceneMgrUpdate(xBase* to, xScene* sc, F32 dt)
 {
     zCutsceneMgr* t = (zCutsceneMgr*)to;
     if (t->csn->ShutDownWait)

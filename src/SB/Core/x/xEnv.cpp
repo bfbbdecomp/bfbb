@@ -2,7 +2,7 @@
 
 xEnv* gCurXEnv;
 
-void xEnvLoadBsp(xEnv* env, const void* data, uint32 datasize, int32 dataType)
+void xEnvLoadBsp(xEnv* env, const void* data, U32 datasize, S32 dataType)
 {
     if (dataType == 0)
     {

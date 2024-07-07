@@ -7,12 +7,12 @@
 #include "xEvent.h"
 #include "zNPCTypes.h"
 
-extern float32 _836_0;
-extern float32 _837_3;
-extern float32 _862_2;
-extern float32 _863_1;
+extern F32 _836_0;
+extern F32 _837_3;
+extern F32 _862_2;
+extern F32 _863_1;
 
-xFactoryInst* GOALCreate_Tiki(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* GOALCreate_Tiki(S32 who, RyzMemGrow* grow, void*)
 {
     xGoal* goal;
 
@@ -58,7 +58,7 @@ xFactoryInst* GOALCreate_Tiki(int32 who, RyzMemGrow* grow, void*)
     return goal;
 }
 
-int32 zNPCGoalTikiIdle::Enter(float32, void*)
+S32 zNPCGoalTikiIdle::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -78,7 +78,7 @@ int32 zNPCGoalTikiIdle::Enter(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiPatrol::Enter(float32, void*)
+S32 zNPCGoalTikiPatrol::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -90,7 +90,7 @@ int32 zNPCGoalTikiPatrol::Enter(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiHide::Enter(float32, void*)
+S32 zNPCGoalTikiHide::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -99,7 +99,7 @@ int32 zNPCGoalTikiHide::Enter(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiHide::Exit(float32, void*)
+S32 zNPCGoalTikiHide::Exit(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -108,7 +108,7 @@ int32 zNPCGoalTikiHide::Exit(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiCount::Enter(float32, void*)
+S32 zNPCGoalTikiCount::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -120,7 +120,7 @@ int32 zNPCGoalTikiCount::Enter(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiDying::Enter(float32, void*)
+S32 zNPCGoalTikiDying::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -130,7 +130,7 @@ int32 zNPCGoalTikiDying::Enter(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiDying::Exit(float32, void*)
+S32 zNPCGoalTikiDying::Exit(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -140,7 +140,7 @@ int32 zNPCGoalTikiDying::Exit(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiDead::Enter(float32, void*)
+S32 zNPCGoalTikiDead::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
@@ -159,7 +159,7 @@ int32 zNPCGoalTikiDead::Enter(float32, void*)
     return 0;
 }
 
-int32 zNPCGoalTikiDead::Exit(float32, void*)
+S32 zNPCGoalTikiDead::Exit(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 

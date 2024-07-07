@@ -8,53 +8,53 @@ namespace bungee_state
 {
     struct hook_asset : xDynAsset
     {
-        uint32 entity;
+        U32 entity;
         xVec3 center;
         struct
         {
-            float32 dist;
-            float32 travel_time;
+            F32 dist;
+            F32 travel_time;
         } attach;
         struct
         {
-            float32 dist;
-            float32 free_fall_time;
-            float32 accel;
+            F32 dist;
+            F32 free_fall_time;
+            F32 accel;
         } detach;
         struct
         {
-            float32 unused1;
-            float32 unused2;
+            F32 unused1;
+            F32 unused2;
         } turn;
         struct
         {
-            float32 frequency;
-            float32 gravity;
-            float32 dive;
-            float32 min_dist;
-            float32 max_dist;
-            float32 damp;
+            F32 frequency;
+            F32 gravity;
+            F32 dive;
+            F32 min_dist;
+            F32 max_dist;
+            F32 damp;
         } vertical;
         struct
         {
-            float32 max_dist;
+            F32 max_dist;
         } horizontal;
         struct
         {
-            float32 rest_dist;
-            float32 view_angle;
-            float32 offset;
-            float32 offset_dir;
-            float32 turn_speed;
-            float32 vel_scale;
-            float32 roll_speed;
+            F32 rest_dist;
+            F32 view_angle;
+            F32 offset;
+            F32 offset_dir;
+            F32 turn_speed;
+            F32 vel_scale;
+            F32 roll_speed;
             xVec3 unused1;
         } camera;
         struct
         {
-            float32 hit_loss;
-            float32 damage_velocity;
-            float32 hit_velocity;
+            F32 hit_loss;
+            F32 damage_velocity;
+            F32 hit_velocity;
         } collision;
     };
 
@@ -64,7 +64,7 @@ namespace bungee_state
         xEnt* ent;
     };
 
-    void load(xBase& data, xDynAsset& asset, ulong32);
+    void load(xBase& data, xDynAsset& asset, size_t);
     bool active();
     bool landed();
 } // namespace bungee_state

@@ -16,33 +16,33 @@
 #include <string.h>
 #include <stdio.h>
 
-extern uint32 current_disco_floor;
+extern U32 current_disco_floor;
 
-extern float32 _710_2; // 1.0f
-extern float32 _908; // 1.5f
-extern float32 _909_1; // 5.0f
-extern float32 _910; // 6.0f
-extern float32 _911_1; // 0.01f
-extern float32 _912; // 0.05f
-extern float32 _913_0; // 17.0f
-extern float32 _914_0; // -10.0f
-extern float32 _915; // 0.95f
-extern float32 _916_0; // 27.0f
-extern float32 _917_1; // 0.231f
-extern float32 _918_1; // 0.75f
-extern float32 _919_1; // 0.0f
-extern float32 _1129; // 0.25f
-extern float32 _1174_0; // 2*PI
-extern float32 _1260_1; // 0.1f
-extern float32 _1270_1; // 0.5f
-extern float32 _1271_0; // 0.2f
-extern float32 _1272; // 0.7f
-extern float32 _1273_0; // 0.3f
-extern float32 _1406; // 25.0f
-extern float32 _1407; // 100.0f
-extern float32 _1419_2; // 10.0f
-extern float32 _1461_0; // 0.35f
-extern float32 _1462_0; // 255.0f
+extern F32 _710_2; // 1.0f
+extern F32 _908; // 1.5f
+extern F32 _909_1; // 5.0f
+extern F32 _910; // 6.0f
+extern F32 _911_1; // 0.01f
+extern F32 _912; // 0.05f
+extern F32 _913_0; // 17.0f
+extern F32 _914_0; // -10.0f
+extern F32 _915; // 0.95f
+extern F32 _916_0; // 27.0f
+extern F32 _917_1; // 0.231f
+extern F32 _918_1; // 0.75f
+extern F32 _919_1; // 0.0f
+extern F32 _1129; // 0.25f
+extern F32 _1174_0; // 2*PI
+extern F32 _1260_1; // 0.1f
+extern F32 _1270_1; // 0.5f
+extern F32 _1271_0; // 0.2f
+extern F32 _1272; // 0.7f
+extern F32 _1273_0; // 0.3f
+extern F32 _1406; // 25.0f
+extern F32 _1407; // 100.0f
+extern F32 _1419_2; // 10.0f
+extern F32 _1461_0; // 0.35f
+extern F32 _1462_0; // 255.0f
 
 extern const char _stringBase0_89[];
 
@@ -81,16 +81,16 @@ namespace
         xLightKit_Destroy(&glow_light.kit);
     }
 
-    void object_prefix(const char* name, ulong32& size, ulong32& first)
+    void object_prefix(const char* name, size_t& size, size_t& first)
     {
         size = 0;
         first = 0;
 
-        ulong32 namelen = strlen(name);
+        size_t namelen = strlen(name);
 
         if (namelen)
         {
-            for (long32 i = namelen - 1; i >= 0; i--)
+            for (long i = namelen - 1; i >= 0; i--)
             {
                 if ((char)name[i] < '0' || (char)name[i] > '9')
                 {
@@ -119,16 +119,16 @@ namespace
         return object;
     }
 
-    ulong32 find_tiles(const char* name, z_disco_floor::tile_data* tiles, ulong32 size)
+    size_t find_tiles(const char* name, z_disco_floor::tile_data* tiles, size_t size)
     {
         char buffer[256];
-        ulong32 prefix_size, start;
+        size_t prefix_size, start;
 
         object_prefix(name, prefix_size, start);
         memcpy(buffer, name, prefix_size);
 
-        ulong32 i = start;
-        ulong32 total;
+        size_t i = start;
+        size_t total;
 
         while (true)
         {
@@ -141,7 +141,7 @@ namespace
 
             tiles[total].ent = NULL;
 
-            for (int32 j = 1; j < 5; j++)
+            for (S32 j = 1; j < 5; j++)
             {
                 sprintf(buffer + prefix_size, _stringBase0_89, j, i);
 
@@ -162,20 +162,20 @@ namespace
         }
     }
 
-    uint32 get_tile(const uint8*, ulong32);
+    U32 get_tile(const U8*, size_t);
 
-    void set_tile(uint8*, ulong32, uint32);
+    void set_tile(U8*, size_t, U32);
 
-    void translate_mask(uint8* r3, const uint8* r4, ulong32 r5)
+    void translate_mask(U8* r3, const U8* r4, size_t r5)
     {
-        for (ulong32 i = 0; i < r5; i++)
+        for (size_t i = 0; i < r5; i++)
         {
-            uint32 tile = get_tile(r4, i);
+            U32 tile = get_tile(r4, i);
             set_tile(r3, i, tile);
         }
     }
 
-    void set_object_state(const z_disco_floor&, ulong32, int32);
+    void set_object_state(const z_disco_floor&, size_t, S32);
 
     void refresh_state(z_disco_floor& df)
     {
@@ -183,10 +183,10 @@ namespace
 
         if (df.next_state != df.state)
         {
-            for (ulong32 i = 0; i < df.tiles_size; i++)
+            for (size_t i = 0; i < df.tiles_size; i++)
             {
-                uint32 t1 = get_tile(df.active_state_mask, i);
-                uint32 t2 = get_tile(df.next_state_mask, i);
+                U32 t1 = get_tile(df.active_state_mask, i);
+                U32 t2 = get_tile(df.next_state_mask, i);
 
                 if (t2 == 0)
                 {
@@ -204,9 +204,9 @@ namespace
         }
         else
         {
-            for (ulong32 i = 0; i < df.tiles_size; i++)
+            for (size_t i = 0; i < df.tiles_size; i++)
             {
-                uint32 t = get_tile(df.active_state_mask, i);
+                U32 t = get_tile(df.active_state_mask, i);
 
                 if (t == 1)
                 {
@@ -221,8 +221,8 @@ namespace
     }
 } // namespace
 
-extern float32 close_encounters[5];
-extern float32 blues_scale[6];
+extern F32 close_encounters[5];
+extern F32 blues_scale[6];
 
 namespace
 {
@@ -246,7 +246,7 @@ namespace
                 df.curr_note = _909_1 * -xurand() - _909_1;
             }
 
-            float32 pitch, pitch_offset;
+            F32 pitch, pitch_offset;
 
             if (df.curr_note >= 0)
             {
@@ -254,7 +254,7 @@ namespace
             }
             else
             {
-                pitch = blues_scale[(int32)(_910 * xurand() - _911_1)];
+                pitch = blues_scale[(S32)(_910 * xurand() - _911_1)];
             }
 
             if (df.transition_delay < _912)
@@ -280,9 +280,9 @@ namespace
     }
 #endif
 
-    ulong32 state_byte_size(ulong32 mask_size);
+    size_t state_byte_size(size_t mask_size);
 
-    float32 update_transition(z_disco_floor& df, float32 dt)
+    F32 update_transition(z_disco_floor& df, F32 dt)
     {
         df.transition_time += dt;
 
@@ -312,12 +312,12 @@ namespace
         return dt;
     }
 
-    ulong32 state_byte_size(ulong32 mask_size)
+    size_t state_byte_size(size_t mask_size)
     {
         return (((mask_size << 1) + 7) >> 3);
     }
 
-    void update_state(z_disco_floor& df, float32 dt)
+    void update_state(z_disco_floor& df, F32 dt)
     {
         df.state_time += dt;
 
@@ -427,7 +427,7 @@ namespace
         RpAtomicRender(atomic);
     }
 
-    void render_model(xModelInstance* model, const xSphere& sph, float32 y_offset)
+    void render_model(xModelInstance* model, const xSphere& sph, F32 y_offset)
     {
         RpAtomic* atomic = model->Data;
 
@@ -465,8 +465,8 @@ namespace
         RpAtomic* atomic;
         RpAtomic* atomic_clone;
         render_context* rc;
-        uint16 size;
-        uint16 used;
+        U16 size;
+        U16 used;
     };
 
     struct clone_pipe_data
@@ -476,7 +476,7 @@ namespace
 
 #ifdef PS2
         bucket_data* buckets;
-        uint32 buckets_size;
+        U32 buckets_size;
         RwFrame** frames;
         RwRGBAReal* colors;
 #endif
@@ -544,7 +544,7 @@ void z_disco_floor::render_all()
     RpAtomic* atomic; // unused
     bucket_data* bucket; // unused
     z_disco_floor* floor;
-    int32 group;
+    S32 group;
     tile_data* tile; // unused
     tile_data* end_tile; // unused
     xModelInstance* model; // unused
@@ -584,16 +584,16 @@ void z_disco_floor::effects_render_all()
     RpAtomic* atomic; // unused
     bucket_data* bucket; // unused
     z_disco_floor* floor;
-    int32 group;
-    float32 glow; // unused
-    float32 dalpha; // unused
-    float32 dyoffset; // unused
+    S32 group;
+    F32 glow; // unused
+    F32 dalpha; // unused
+    F32 dyoffset; // unused
     tile_data* tile; // unused
     tile_data* end_tile; // unused
     xModelInstance* model; // unused
-    float32 alpha; // unused
-    float32 yoffset; // unused
-    int32 i; // unused
+    F32 alpha; // unused
+    F32 yoffset; // unused
+    S32 i; // unused
 
     floor = begin_floor;
 
@@ -647,17 +647,17 @@ void z_disco_floor::load(z_disco_floor_asset& asset)
     prefix[1] = data + asset.prefix_offset.transition;
     prefix[2] = data + asset.prefix_offset.on;
 
-    state_masks = (uint8**)xMemAllocSize(asset.states_size * sizeof(uint8*));
+    state_masks = (U8**)xMemAllocSize(asset.states_size * sizeof(U8*));
 
-    ulong32* state_offsets = (ulong32*)(data + asset.states_offset);
+    size_t* state_offsets = (size_t*)(data + asset.states_offset);
 
-    for (ulong32 i = 0; i < asset.states_size; i++)
+    for (size_t i = 0; i < asset.states_size; i++)
     {
-        state_masks[i] = (uint8*)(data + state_offsets[i]);
+        state_masks[i] = (U8*)(data + state_offsets[i]);
     }
 
-    active_state_mask = (uint8*)xMemAllocSize(state_byte_size(asset.state_mask_size));
-    next_state_mask = (uint8*)xMemAllocSize(state_byte_size(asset.state_mask_size));
+    active_state_mask = (U8*)xMemAllocSize(state_byte_size(asset.state_mask_size));
+    next_state_mask = (U8*)xMemAllocSize(state_byte_size(asset.state_mask_size));
 
     if (asset.interval.transition < _919_1)
     {
@@ -699,10 +699,10 @@ void z_disco_floor::setup()
         return;
     }
 
-    ulong32 data_size = tiles_size * sizeof(tile_data);
+    size_t data_size = tiles_size * sizeof(tile_data);
     char* buffer = (char*)xMemAllocSize(data_size * 3);
 
-    for (int32 group = 0; group < 3; group++)
+    for (S32 group = 0; group < 3; group++)
     {
         tiles[group] = (tile_data*)buffer;
 
@@ -711,7 +711,7 @@ void z_disco_floor::setup()
         find_tiles(prefix[group], tiles[group], tiles_size);
     }
 
-    for (ulong32 i = 0; i < tiles_size; i++)
+    for (size_t i = 0; i < tiles_size; i++)
     {
         xSurface*& surf = tiles[2][i].ent->model->Surf;
 
@@ -725,8 +725,8 @@ void z_disco_floor::setup()
         }
     }
 
-    int32 i;
-    uint32 j = 0x10;
+    S32 i;
+    U32 j = 0x10;
 
     // non-matching: j keeps getting reloaded
 
@@ -776,7 +776,7 @@ void z_disco_floor::reset()
     flag.enabled = (asset->flags & 0x2) && (tiles_size != 0);
 }
 
-void z_disco_floor::update(xScene&, float32 dt)
+void z_disco_floor::update(xScene&, F32 dt)
 {
     if (!flag.enabled)
     {
@@ -806,10 +806,10 @@ void z_disco_floor::update(xScene&, float32 dt)
     }
 }
 
-void z_disco_floor::set_state(ulong32 state, bool immediate)
+void z_disco_floor::set_state(size_t state, bool immediate)
 {
-    ulong32 r; // unused
-    int32 bit_index; // unused
+    size_t r; // unused
+    S32 bit_index; // unused
 
     if (state < min_state)
     {
@@ -852,10 +852,10 @@ void z_disco_floor::disable()
     flag.enabled = false;
 }
 
-void z_disco_floor::set_state_range(int32 min, int32 max, bool immediate)
+void z_disco_floor::set_state_range(S32 min, S32 max, bool immediate)
 {
-    ulong32 min_state = range_limit<int32>(min, 0, asset->states_size - 1);
-    ulong32 max_state = range_limit<int32>(max, min, asset->states_size - 1);
+    size_t min_state = range_limit<S32>(min, 0, asset->states_size - 1);
+    size_t max_state = range_limit<S32>(max, min, asset->states_size - 1);
 
     if (min_state == this->min_state && max_state == this->max_state)
     {
@@ -867,7 +867,7 @@ void z_disco_floor::set_state_range(int32 min, int32 max, bool immediate)
 
     if (immediate)
     {
-        ulong32 newstate = range_limit<ulong32>(state, min_state, max_state);
+        size_t newstate = range_limit<size_t>(state, min_state, max_state);
 
         if (newstate != state)
         {
@@ -876,7 +876,7 @@ void z_disco_floor::set_state_range(int32 min, int32 max, bool immediate)
     }
     else
     {
-        ulong32 newstate = range_limit<ulong32>(next_state, min_state, max_state);
+        size_t newstate = range_limit<size_t>(next_state, min_state, max_state);
 
         if (newstate != next_state)
         {
@@ -885,19 +885,19 @@ void z_disco_floor::set_state_range(int32 min, int32 max, bool immediate)
     }
 }
 
-void z_disco_floor::set_transition_delay(float32 s)
+void z_disco_floor::set_transition_delay(F32 s)
 {
     transition_delay = s;
 }
 
-void z_disco_floor::set_state_delay(float32 s)
+void z_disco_floor::set_state_delay(F32 s)
 {
     state_delay = s;
 }
 
 void z_disco_floor::refresh_spheres()
 {
-    for (int32 group = 0; group < 3; group++)
+    for (S32 group = 0; group < 3; group++)
     {
         tile_data* it = tiles[group];
         tile_data* end = it + tiles_size;
@@ -936,14 +936,14 @@ void z_disco_floor::refresh_spheres()
 }
 
 #ifdef NON_MATCHING
-void z_disco_floor::update_pulse(float32 dt)
+void z_disco_floor::update_pulse(F32 dt)
 {
     pulse_time += _1174_0 * dt;
     pulse_time = xrmod(pulse_time);
 
     // non-matching: _1270_1 is saved in extra register
 
-    float32 f2 = _1270_1 * isin(pulse_time) + _1270_1;
+    F32 f2 = _1270_1 * isin(pulse_time) + _1270_1;
 
     pulse_glow[0] = _1260_1 * f2 + _1260_1;
     pulse_glow[0] += glow_fade;
@@ -984,14 +984,14 @@ void z_disco_floor::distance_cull()
     xVec3& cam_loc = globals.camera.mat.pos;
     xVec3 offset = bound.center - cam_loc;
 
-    float32 dist = offset.length();
+    F32 dist = offset.length();
 
-    float32 max_update_dist = cull_dist_update + bound.r;
+    F32 max_update_dist = cull_dist_update + bound.r;
 
     flag.culled = (dist >= max_update_dist);
 
-    float32 min_glow_dist = cull_dist_glow + bound.r;
-    float32 max_glow_dist = _1419_2 + min_glow_dist;
+    F32 min_glow_dist = cull_dist_glow + bound.r;
+    F32 max_glow_dist = _1419_2 + min_glow_dist;
 
     flag.glow_culled = (dist >= max_glow_dist);
 
@@ -1009,7 +1009,7 @@ void z_disco_floor::distance_cull()
     }
 }
 
-void z_disco_floor::render(int32 group)
+void z_disco_floor::render(S32 group)
 {
     tile_data* tile = tiles[group];
     tile_data* end_tile = tile + tiles_size;
@@ -1035,9 +1035,9 @@ void z_disco_floor::render(int32 group)
 }
 
 #ifdef NON_MATCHING
-void z_disco_floor::effects_render(int32 group)
+void z_disco_floor::effects_render(S32 group)
 {
-    float32 glow = pulse_glow[group];
+    F32 glow = pulse_glow[group];
 
     if (_919_1 == glow)
     {
@@ -1046,17 +1046,17 @@ void z_disco_floor::effects_render(int32 group)
 
     // non-matching: regalloc
 
-    float32 dyoffset = _1260_1 * glow;
-    float32 dalpha = _1461_0 * -glow;
-    float32 yoffset = dyoffset;
-    float32 alpha = _1272 * glow;
+    F32 dyoffset = _1260_1 * glow;
+    F32 dalpha = _1461_0 * -glow;
+    F32 yoffset = dyoffset;
+    F32 alpha = _1272 * glow;
 
-    for (int32 i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         RpAtomic* atomic = NULL;
         tile_data* tile = tiles[group];
         tile_data* end_tile = tile + tiles_size;
-        float32 alphaf = _1462_0 * alpha + _1270_1;
+        F32 alphaf = _1462_0 * alpha + _1270_1;
 
         while (tile != end_tile)
         {
@@ -1093,7 +1093,7 @@ void z_disco_floor::effects_render(int32 group)
 }
 #endif
 
-int32 z_disco_floor::event_handler(xBase*, xBase* to, uint32 event, const float32* argf, xBase*)
+S32 z_disco_floor::event_handler(xBase*, xBase* to, U32 event, const F32* argf, xBase*)
 {
     z_disco_floor& f = *(z_disco_floor*)to;
 
@@ -1139,7 +1139,7 @@ int32 z_disco_floor::event_handler(xBase*, xBase* to, uint32 event, const float3
     return 1;
 }
 
-template <> ulong32 range_limit(ulong32 v, ulong32 minv, ulong32 maxv)
+template <> size_t range_limit(size_t v, size_t minv, size_t maxv)
 {
     if (v <= minv)
     {
@@ -1154,7 +1154,7 @@ template <> ulong32 range_limit(ulong32 v, ulong32 minv, ulong32 maxv)
     return v;
 }
 
-template <> int32 range_limit(int32 v, int32 minv, int32 maxv)
+template <> S32 range_limit(S32 v, S32 minv, S32 maxv)
 {
     if (v <= minv)
     {

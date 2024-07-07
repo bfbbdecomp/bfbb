@@ -6,7 +6,7 @@
 namespace zhud
 {
     void render();
-    void update(float32 dt);
+    void update(F32 dt);
     void show();
     void hide();
     void init();

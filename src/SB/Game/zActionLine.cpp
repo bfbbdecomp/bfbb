@@ -12,7 +12,7 @@ RwRaster* sActionLineRaster;
 // Equivalent. Compiler doesn't generate the stwu instruction unless we remove `sActionLineRaster = NULL`, but we need it.
 void zActionLineInit()
 {
-    for (int32 i = 0; i < 8; i++)
+    for (S32 i = 0; i < 8; i++)
     {
         sActionLine[i] = NULL;
     }
@@ -27,9 +27,9 @@ void zActionLineInit()
 }
 
 // Equivalent. Compiler is optimizing out the reduntant float load.
-void zActionLineUpdate(float32 seconds)
+void zActionLineUpdate(F32 seconds)
 {
-    for (int32 i = 0; i < 8; i++)
+    for (S32 i = 0; i < 8; i++)
     {
         _tagActionLine* line = sActionLine[i];
 
@@ -61,10 +61,10 @@ void RenderActionLine(_tagActionLine* l)
         of work in the loop to make it closer.
 
         It also may not even be a loop,
-        but it probably is because int32 i
+        but it probably is because S32 i
         is defined in the dwarf data
     */
-    for (int32 i = 0; i < 4; i++)
+    for (S32 i = 0; i < 4; i++)
     {
         RxObjSpace3DVertex* vert = &sStripVert[i];
         RwRGBA* _col = &vert->c.color;
@@ -94,7 +94,7 @@ void zActionLineRender()
 {
     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, sActionLineRaster);
 
-    for (int32 i = 0; i < 8; i++)
+    for (S32 i = 0; i < 8; i++)
     {
         _tagActionLine* line = sActionLine[i];
 

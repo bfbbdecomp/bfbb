@@ -5,23 +5,18 @@
 // Don't include this in any RenderWare, system, bink, etc. files
 
 #ifdef GAMECUBE
-typedef char int8;
-typedef short int16;
-typedef int int32;
-typedef long long int64;
+typedef signed char S8;
+typedef signed short S16;
+typedef signed int S32;
+typedef signed long long S64;
 
-typedef unsigned char uint8;
-typedef unsigned short uint16;
-typedef unsigned int uint32;
-typedef unsigned long long uint64;
+typedef unsigned char U8;
+typedef unsigned short U16;
+typedef unsigned int U32;
+typedef unsigned long long U64;
 
-typedef float float32;
-typedef double float64;
-
-typedef long long32;
-typedef unsigned long ulong32;
-
-typedef int32 bool32;
+typedef float F32;
+typedef double F64;
 #endif
 
 #ifdef NULL

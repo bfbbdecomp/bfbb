@@ -5,18 +5,18 @@
 
 struct xGroupAsset : xBaseAsset
 {
-    uint16 itemCount;
-    uint16 groupFlags;
+    U16 itemCount;
+    U16 groupFlags;
 };
 
 struct xGroup : xBase
 {
     xGroupAsset* asset;
     xBase** item;
-    uint32 last_index;
-    int32 flg_group;
+    U32 last_index;
+    S32 flg_group;
 
-    uint32 get_any();
+    U32 get_any();
 };
 
 void xGroupInit(void* b, void* asset);
@@ -25,11 +25,11 @@ void xGroupSetup(xGroup* g);
 void xGroupSave(xGroup* ent, xSerial* s);
 void xGroupLoad(xGroup* ent, xSerial* s);
 void xGroupReset(xGroup* ent);
-int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
+S32 xGroupEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                     xBase* toParamWidget);
-uint32 xGroupGetCount(xGroup* g);
-xBase* xGroupGetItemPtr(xGroup* g, uint32 index);
-xBase* xGroupFindItemPtr(xGroup* g, uint32 index);
-uint32 xGroupGetItem(xGroup* g, uint32 index);
+U32 xGroupGetCount(xGroup* g);
+xBase* xGroupGetItemPtr(xGroup* g, U32 index);
+xBase* xGroupFindItemPtr(xGroup* g, U32 index);
+U32 xGroupGetItem(xGroup* g, U32 index);
 
 #endif

@@ -15,58 +15,58 @@ enum en_READ_ASYNC_STATUS
 
 struct st_HIPLOADBLOCK
 {
-    int32 endpos;
-    uint32 blk_id;
-    int32 blk_remain;
-    int32 flags;
+    S32 endpos;
+    U32 blk_id;
+    S32 blk_remain;
+    S32 flags;
 };
 
 struct st_HIPLOADDATA
 {
     st_FILELOADINFO* fli;
-    int32 lockid;
-    int32 bypass;
-    int32 bypass_recover;
-    uint32 base_sector;
-    int32 use_async;
+    S32 lockid;
+    S32 bypass;
+    S32 bypass_recover;
+    U32 base_sector;
+    S32 use_async;
     en_READ_ASYNC_STATUS asyn_stat;
-    int32 pos;
-    int32 top;
-    int32 readTop;
+    S32 pos;
+    S32 top;
+    S32 readTop;
     st_HIPLOADBLOCK stk[8];
 };
 
 struct st_HIPLOADFUNCS
 {
-    st_HIPLOADDATA* (*create)(const char*, char*, int32);
+    st_HIPLOADDATA* (*create)(const char*, char*, S32);
     void (*destroy)(st_HIPLOADDATA*);
-    uint32 (*basesector)(st_HIPLOADDATA*);
-    uint32 (*enter)(st_HIPLOADDATA*);
+    U32 (*basesector)(st_HIPLOADDATA*);
+    U32 (*enter)(st_HIPLOADDATA*);
     void (*exit)(st_HIPLOADDATA*);
-    int32 (*readBytes)(st_HIPLOADDATA*, char*, int32);
-    int32 (*readShorts)(st_HIPLOADDATA*, int16*, int32);
-    int32 (*readLongs)(st_HIPLOADDATA*, int32*, int32);
-    int32 (*readFloats)(st_HIPLOADDATA*, float32*, int32);
-    int32 (*readString)(st_HIPLOADDATA*, char*);
-    int32 (*setBypass)(st_HIPLOADDATA*, int32, int32);
-    void (*setSpot)(st_HIPLOADDATA*, int32);
+    S32 (*readBytes)(st_HIPLOADDATA*, char*, S32);
+    S32 (*readShorts)(st_HIPLOADDATA*, S16*, S32);
+    S32 (*readLongs)(st_HIPLOADDATA*, S32*, S32);
+    S32 (*readFloats)(st_HIPLOADDATA*, F32*, S32);
+    S32 (*readString)(st_HIPLOADDATA*, char*);
+    S32 (*setBypass)(st_HIPLOADDATA*, S32, S32);
+    void (*setSpot)(st_HIPLOADDATA*, S32);
     en_READ_ASYNC_STATUS (*pollRead)(st_HIPLOADDATA*);
 };
 
 struct st_HIPSAVEBLOCK
 {
-    int32 pos;
-    int32 len;
-    int32 flags;
+    S32 pos;
+    S32 len;
+    S32 flags;
 };
 
 struct st_HIPSAVEDATA
 {
     st_FILESAVEINFO* fsi;
-    int32 lockid;
-    int32 pos;
-    int32 top;
-    int32 writeTop;
+    S32 lockid;
+    S32 pos;
+    S32 top;
+    S32 writeTop;
     st_HIPSAVEBLOCK stk[8];
 };
 
@@ -74,15 +74,15 @@ struct st_HIPSAVEFUNCS
 {
     st_HIPSAVEDATA* (*create)(const char*);
     void (*destroy)(st_HIPSAVEDATA*);
-    void (*open)(st_HIPSAVEDATA*, uint32);
+    void (*open)(st_HIPSAVEDATA*, U32);
     void (*close)(st_HIPSAVEDATA*);
-    void (*writeBytes)(st_HIPSAVEDATA*, char*, int32);
-    void (*writeShorts)(st_HIPSAVEDATA*, int16*, int32);
-    void (*writeLongs)(st_HIPSAVEDATA*, int32*, int32);
-    void (*writeFloats)(st_HIPSAVEDATA*, float32*, int32);
+    void (*writeBytes)(st_HIPSAVEDATA*, char*, S32);
+    void (*writeShorts)(st_HIPSAVEDATA*, S16*, S32);
+    void (*writeLongs)(st_HIPSAVEDATA*, S32*, S32);
+    void (*writeFloats)(st_HIPSAVEDATA*, F32*, S32);
     void (*writeString)(st_HIPSAVEDATA*, char*);
-    int32 (*curSpot)(st_HIPSAVEDATA*);
-    int32 (*spotLong)(st_HIPSAVEDATA*, int32, uint32);
+    S32 (*curSpot)(st_HIPSAVEDATA*);
+    S32 (*spotLong)(st_HIPSAVEDATA*, S32, U32);
 };
 
 st_HIPLOADFUNCS* get_HIPLFuncs();

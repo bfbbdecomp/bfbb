@@ -11,9 +11,9 @@ extern OSHeapHandle he;
 extern OSHeapHandle hs;
 extern volatile OSHeapHandle the_heap;
 extern unsigned char _stack_addr[];
-extern uint32 HeapSize;
-extern uint32 mem_top_alloc;
-extern uint32 mem_base_alloc;
+extern U32 HeapSize;
+extern U32 mem_top_alloc;
+extern U32 mem_base_alloc;
 
 #if 0
 // Starts going wrong after the if and else statement, everything else before looks fine.
@@ -35,11 +35,11 @@ void iMemInit()
     gMemInfo.system.addr = 0;
     gMemInfo.system.size = 0x100000;
     gMemInfo.system.flags = 0x20;
-    gMemInfo.stack.addr = (uint32)&_stack_addr;
+    gMemInfo.stack.addr = (U32)&_stack_addr;
     gMemInfo.stack.size = 0xffff8000;
     gMemInfo.stack.flags = gMemInfo.DRAM.flags = 0x820;
     HeapSize = 0x384000;
-    gMemInfo.DRAM.addr = (uint32)OSAllocFromHeap((void*)__OSCurrHeap, 0x384000);
+    gMemInfo.DRAM.addr = (U32)OSAllocFromHeap((void*)__OSCurrHeap, 0x384000);
     gMemInfo.DRAM.size = HeapSize;
     gMemInfo.DRAM.flags = 0x820;
     gMemInfo.SRAM.addr = 0;

@@ -15,7 +15,7 @@ struct xModelBucket;
 struct xModelPool
 {
     xModelPool* Next;
-    uint32 NumMatrices;
+    U32 NumMatrices;
     xModelInstance* List;
 };
 
@@ -28,15 +28,15 @@ struct xModelInstance
 
     // Offset: 0x10
     RpAtomic* Data;
-    uint32 PipeFlags;
-    float32 RedMultiplier;
-    float32 GreenMultiplier;
+    U32 PipeFlags;
+    F32 RedMultiplier;
+    F32 GreenMultiplier;
 
     // Offset: 0x20
-    float32 BlueMultiplier;
-    float32 Alpha;
-    float32 FadeStart;
-    float32 FadeEnd;
+    F32 BlueMultiplier;
+    F32 Alpha;
+    F32 FadeStart;
+    F32 FadeEnd;
 
     // Offset: 0x30
     xSurface* Surf;
@@ -46,16 +46,16 @@ struct xModelInstance
 
     // Offset: 0x40
     void* Object;
-    uint16 Flags; // 0x44
-    uint8 BoneCount; // 0x46
-    uint8 BoneIndex; // 0x47
-    uint8* BoneRemap; // 0x48
+    U16 Flags; // 0x44
+    U8 BoneCount; // 0x46
+    U8 BoneIndex; // 0x47
+    U8* BoneRemap; // 0x48
     RwMatrix* Mat; // 0x4C
 
     // Offset: 0x50
     xVec3 Scale;
-    uint32 modelID;
-    uint32 shadowID;
+    U32 modelID;
+    U32 shadowID;
     RpAtomic* shadowmapAtomic;
     struct
     {
@@ -71,8 +71,8 @@ struct xModelInstance
 struct xModelTag
 {
     xVec3 v;
-    uint32 matidx;
-    float32 wt[4];
+    U32 matidx;
+    F32 wt[4];
 };
 
 struct xModelTagWithNormal : xModelTag
@@ -82,70 +82,70 @@ struct xModelTagWithNormal : xModelTag
 
 struct xModelAssetParam
 {
-    uint32 HashID;
-    uint8 WordLength;
-    uint8 String[3];
+    U32 HashID;
+    U8 WordLength;
+    U8 String[3];
 };
 
 struct xModelAssetInfo
 {
-    uint32 Magic;
-    uint32 NumModelInst;
-    uint32 AnimTableID;
-    uint32 CombatID;
-    uint32 BrainID;
+    U32 Magic;
+    U32 NumModelInst;
+    U32 AnimTableID;
+    U32 CombatID;
+    U32 BrainID;
 };
 
 struct xModelAssetInst
 {
-    uint32 ModelID;
-    uint16 Flags;
-    uint8 Parent;
-    uint8 Bone;
-    float32 MatRight[3];
-    float32 MatUp[3];
-    float32 MatAt[3];
-    float32 MatPos[3];
+    U32 ModelID;
+    U16 Flags;
+    U8 Parent;
+    U8 Bone;
+    F32 MatRight[3];
+    F32 MatUp[3];
+    F32 MatAt[3];
+    F32 MatPos[3];
 };
 
 struct xModelPipeLookup
 {
     RpAtomic* model;
-    uint32 PipeFlags;
+    U32 PipeFlags;
 };
 
 struct xModelPipeInfo
 {
-    uint32 ModelHashID;
-    uint32 SubObjectBits;
-    uint32 PipeFlags;
+    U32 ModelHashID;
+    U32 SubObjectBits;
+    U32 PipeFlags;
 };
 
-extern int32 xModelPipeNumTables;
-extern int32 xModelPipeCount[16];
+extern S32 xModelPipeNumTables;
+extern S32 xModelPipeCount[16];
 extern xModelPipeInfo* xModelPipeData[16];
-extern int32 xModelLookupCount;
+extern S32 xModelLookupCount;
 extern xModelPipeLookup* xModelLookupList;
-extern int32 xModelInstStaticAlloc;
+extern S32 xModelInstStaticAlloc;
 
-uint32 xModelGetPipeFlags(RpAtomic* model);
+U32 xModelGetPipeFlags(RpAtomic* model);
 void xModelInit();
-void xModelPoolInit(uint32 count, uint32 numMatrices);
+void xModelPoolInit(U32 count, U32 numMatrices);
 void xModelAnimCollStart(xModelInstance& m);
 void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame);
-xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, uint16 flags, uint8 boneIndex,
-                                    uint8* boneRemap);
+xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, U16 flags, U8 boneIndex,
+                                    U8* boneRemap);
 void xModelInstanceAttach(xModelInstance* inst, xModelInstance* parent);
 void xModelRender(xModelInstance* modelInst);
-void xModelRender2D(const xModelInstance& model, const basic_rect<float32>& r, const xVec3& from,
+void xModelRender2D(const xModelInstance& model, const basic_rect<F32>& r, const xVec3& from,
                     const xVec3& to);
-void xModelSetMaterialAlpha(xModelInstance* modelInst, uint8 alpha);
-void xModelUpdate(xModelInstance* modelInst, float32 timeDelta);
+void xModelSetMaterialAlpha(xModelInstance* modelInst, U8 alpha);
+void xModelUpdate(xModelInstance* modelInst, F32 timeDelta);
 xMat4x3* xModelGetFrame(xModelInstance* modelInst);
 void xModelEval(xModelInstance* modelInst);
 void xModel_SceneEnter(RpWorld* world);
 void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
-void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, ulong32 index);
+void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, size_t index);
 
 #endif

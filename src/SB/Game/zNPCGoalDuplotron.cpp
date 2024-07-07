@@ -10,10 +10,10 @@
 #include "xEvent.h"
 #include "xScrFx.h"
 
-extern float32 _816_0; // 20.0f
-extern float32 _840_3; // 0.0f
+extern F32 _816_0; // 20.0f
+extern F32 _840_3; // 0.0f
 
-xFactoryInst* GOALCreate_Duplotron(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* GOALCreate_Duplotron(S32 who, RyzMemGrow* grow, void*)
 {
     xGoal* goal = NULL;
 
@@ -34,7 +34,7 @@ xFactoryInst* GOALCreate_Duplotron(int32 who, RyzMemGrow* grow, void*)
     return goal;
 }
 
-int32 zNPCGoalDuploLive::Enter(float32 dt, void* updCtxt)
+S32 zNPCGoalDuploLive::Enter(F32 dt, void* updCtxt)
 {
     livestat = LIVESTAT_NORMAL;
     tmr_chkPlyrDist = _816_0;
@@ -42,10 +42,10 @@ int32 zNPCGoalDuploLive::Enter(float32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-int32 zNPCGoalDuploLive::Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* xscn)
+S32 zNPCGoalDuploLive::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     zNPCDuplotron* npc = (zNPCDuplotron*)psyche->clt_owner;
-    int32 nextgoal = 0;
+    S32 nextgoal = 0;
 
     npc->VelStop();
 
@@ -98,7 +98,7 @@ void zNPCGoalDuploLive::CheckPlayer()
 
     tmr_chkPlyrDist = 0.25f * (xurand() - 0.5f) + 1.0f;
 
-    uint32 curid = npc->AnimCurStateID();
+    U32 curid = npc->AnimCurStateID();
 
     if (curid == g_hash_dupoanim[2])
     {
@@ -108,7 +108,7 @@ void zNPCGoalDuploLive::CheckPlayer()
     xVec3 v;
     xVec3Sub(&v, xEntGetPos(&globals.player.ent), xEntGetPos(npc));
 
-    float32 len = xVec3Length2(&v);
+    F32 len = xVec3Length2(&v);
 
     if (len > SQ(npc->cfg_npc->rad_detect))
     {
@@ -120,9 +120,9 @@ void zNPCGoalDuploLive::CheckPlayer()
     }
 }
 
-int32 zNPCGoalDuploLive::NPCMessage(NPCMsg* mail)
+S32 zNPCGoalDuploLive::NPCMessage(NPCMsg* mail)
 {
-    int32 handled = 1;
+    S32 handled = 1;
     zNPCDuplotron* npc = (zNPCDuplotron*)psyche->clt_owner;
 
     switch (mail->msgid)
@@ -183,10 +183,10 @@ void zNPCGoalDuploLive::SDS_BigRedButton()
     }
 }
 
-int32 zNPCGoalDuploLive::SDS_Countdown(float32 dt)
+S32 zNPCGoalDuploLive::SDS_Countdown(F32 dt)
 {
     zNPCDuplotron* npc = (zNPCDuplotron*)psyche->clt_owner;
-    int32 done;
+    S32 done;
 
     switch (cnt_destruct)
     {
@@ -213,7 +213,7 @@ int32 zNPCGoalDuploLive::SDS_Countdown(float32 dt)
     }
     }
 
-    npc->VFXOverheat(dt, 1.0f - (float32)cnt_destruct / 180.0f);
+    npc->VFXOverheat(dt, 1.0f - (F32)cnt_destruct / 180.0f);
     npc->VFXCycleLights(dt, 1);
 
     cnt_destruct--;

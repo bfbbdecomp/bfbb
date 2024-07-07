@@ -39,10 +39,10 @@ extern xVec3 lbl_8026A3F8;
 void NPC_alwaysUseSphere(xEnt*, xVec3*);
 void NPC_entwrap_setup(xEnt*);
 void NPC_entwrap_reset(xEnt*);
-int32 NPC_entwrap_event(xBase*, xBase*, uint32, const float32*, xBase*);
-void NPC_entwrap_update(xEnt*, xScene*, float32);
+S32 NPC_entwrap_event(xBase*, xBase*, U32, const F32*, xBase*);
+void NPC_entwrap_update(xEnt*, xScene*, F32);
 void NPC_entwrap_bupdate(xEnt*, xVec3*);
-void NPC_entwrap_move(xEnt*, xScene*, float32, xEntFrame*);
+void NPC_entwrap_move(xEnt*, xScene*, F32, xEntFrame*);
 void NPC_entwrap_render(xEnt*);
 
 #ifdef NON_MATCHING
@@ -67,7 +67,7 @@ void xNPCBasic::Init(xEntAsset* asset)
     xEntInit(thisEnt, asset);
     collType = 8;
     collLev = 4;
-    bound.type = XBOUND_TYPE_SPHERE; // [int8] 0x84
+    bound.type = XBOUND_TYPE_SPHERE; // [S8] 0x84
     moreFlags |= 0x10;
     zEntParseModelInfo(thisEnt, asset->modelInfoID);
     xEntInitForType(thisEnt);
@@ -117,7 +117,7 @@ void xNPCBasic::Reset()
 {
     xEntReset(this);
     DBG_PStatClear();
-    if (!(uint32(flags1.flg_basenpc) & 0x2))
+    if (!(U32(flags1.flg_basenpc) & 0x2))
     {
         xVec3Copy(&frame->drot.axis, &g_Y3);
         frame->drot.angle = xNPCBasic_float_0;
@@ -128,14 +128,14 @@ void xNPCBasic::Reset()
     flags1.flg_basenpc |= 4;
     colFreq = -1;
 
-    float32 f1 = xurand();
-    float32 f0 = xNPCBasic_float_onehalf;
-    float32 f2 = xNPCBasic_float_onequarter;
+    F32 f1 = xurand();
+    F32 f0 = xNPCBasic_float_onehalf;
+    F32 f2 = xNPCBasic_float_onequarter;
     f1 -= f0;
     f0 = xNPCBasic_float_15;
     f1 = f2 * f1;
     f0 = f0 * f1 + f0;
-    colFreqReset = (int32)f0;
+    colFreqReset = (S32)f0;
     RestoreColFlags();
     return;
 }
@@ -165,19 +165,19 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
     }
 }
 
-void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
+void NPC_spdBasedColFreq(xNPCBasic* npc, F32 dt)
 {
     if (dt < xNPCBasic_float_1eminus5)
     {
         return;
     }
-    float32 d = xVec3Length(&npc->frame->vel);
+    F32 d = xVec3Length(&npc->frame->vel);
     if (d < xNPCBasic_float_0p2)
     {
         return;
     }
 
-    float32 radius;
+    F32 radius;
     if (npc->bound.type == XBOUND_TYPE_SPHERE)
     {
         radius = npc->bound.sph.r;
@@ -188,15 +188,15 @@ void NPC_spdBasedColFreq(xNPCBasic* npc, float32 dt)
                      npc->bound.box.box.upper.z - npc->bound.box.box.lower.z);
     }
 
-    int32 nf = xNPCBasic_float_thirty * (radius / d);
+    S32 nf = xNPCBasic_float_thirty * (radius / d);
     npc->colFreq = MIN(npc->colFreq, nf);
 }
 
-void xNPCBasic::Process(xScene* xscn, float32 dt)
+void xNPCBasic::Process(xScene* xscn, F32 dt)
 {
     xEnt* thisEnt = this;
     void (*bak_bupdate)(xEnt*, xVec3*);
-    int32 hasgrav = 0;
+    S32 hasgrav = 0;
 
     if (flags2.flg_colCheck || flags2.flg_penCheck)
     {
@@ -299,7 +299,7 @@ void xNPCBasic::CollideReview()
     }
 }
 
-void xNPCBasic::NewTime(xScene*, float32)
+void xNPCBasic::NewTime(xScene*, F32)
 {
     flags1.flg_basenpc &= ~0x4;
 }
@@ -318,9 +318,9 @@ void NPC_entwrap_reset(xEnt* ent)
     npc->Reset();
 }
 
-void NPC_entwrap_update(xEnt* ent, xScene* scn, float32 dt_caller)
+void NPC_entwrap_update(xEnt* ent, xScene* scn, F32 dt_caller)
 {
-    float32 dt = dt_caller;
+    F32 dt = dt_caller;
     if (dt > xNPCBasic_float_0p04)
     {
         dt = xNPCBasic_float_0p025;
@@ -355,15 +355,15 @@ void NPC_entwrap_bupdate(xEnt* ent, xVec3* pos)
     ((xNPCBasic*)ent)->BUpdate(pos);
 }
 
-void NPC_entwrap_move(xEnt* ent, xScene* scn, float32 dt, xEntFrame* frame)
+void NPC_entwrap_move(xEnt* ent, xScene* scn, F32 dt, xEntFrame* frame)
 {
     ((xNPCBasic*)ent)->Move(scn, dt, frame);
 }
 
-int32 NPC_entwrap_event(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+S32 NPC_entwrap_event(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                         xBase* toParamWidget)
 {
-    int32 handled = 0;
+    S32 handled = 0;
     return ((xNPCBasic*)to)->SysEvent(from, to, toEvent, toParam, toParamWidget, &handled);
 }
 
@@ -376,7 +376,7 @@ void xNPCBasic::DBG_PStatClear()
 {
 }
 
-void xNPCBasic::DBG_HaltOnMe(uint32, int8*)
+void xNPCBasic::DBG_HaltOnMe(U32, char*)
 {
 }
 

@@ -15,24 +15,24 @@
 #include "zGame.h"
 #include "zScene.h"
 
-static int32 g_enableGameExtras;
-static int32 g_currDay;
-static int32 g_currMonth;
-static int32 g_gameExtraFlags;
-static int32 g_flg_chEnabled;
-static float32 sCheatTimer;
-static int32 sCheatInputCount;
+static S32 g_enableGameExtras;
+static S32 g_currDay;
+static S32 g_currMonth;
+static S32 g_gameExtraFlags;
+static S32 g_flg_chEnabled;
+static F32 sCheatTimer;
+static S32 sCheatInputCount;
 
 static EGGItemFuncs EGGEmpty = {};
 
 static EGGItem g_eggBasket[] = { { EGG_check_ExtrasFlags, &EGGEmpty, NULL, NULL }, {} };
 
-int32 zGameExtras_ExtrasFlags()
+S32 zGameExtras_ExtrasFlags()
 {
     return g_gameExtraFlags;
 }
 
-void zGameExtras_MoDay(int32* month, int32* day)
+void zGameExtras_MoDay(S32* month, S32* day)
 {
     *month = g_currMonth;
     *day = g_currDay;
@@ -43,7 +43,7 @@ void zGameExtras_SceneInit()
     g_enableGameExtras = 0;
     g_currDay = iGetDay();
     g_currMonth = iGetMonth();
-    int32 somethingIsEnabled = 0;
+    S32 somethingIsEnabled = 0;
 
     EGGItem* egg_next = g_eggBasket;
 
@@ -132,7 +132,7 @@ void zGameExtras_SceneExit()
     g_currMonth = 0;
 }
 
-void zGameExtras_SceneUpdate(float32 dt)
+void zGameExtras_SceneUpdate(F32 dt)
 {
     if (!g_enableGameExtras)
     {
@@ -165,7 +165,7 @@ void zGameExtras_SceneUpdate(float32 dt)
     }
 }
 
-int32 EGG_check_ExtrasFlags(EGGItem*)
+S32 EGG_check_ExtrasFlags(EGGItem*)
 {
     switch (g_currMonth)
     {
@@ -251,27 +251,27 @@ int32 EGG_check_ExtrasFlags(EGGItem*)
 
 // 21 cheats
 // These symbols weren't actually defined as static. They are global in the object file.
-uint32 sCheatAddShiny[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, Y, Y, X, X, Y };
-uint32 sCheatAddSpatulas[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, Y, X, X, Y, Y, X };
-uint32 sCheatBubbleBowl[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, X, X, Y, Y };
-uint32 sCheatCruiseBubble[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, Y, Y, X, X };
-uint32 sCheatMonsterGallery[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, Y, X, Y, X };
-uint32 sCheatArtTheatre[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, X, Y, X, Y };
-uint32 sCheatChaChing[16] = { Y, X, Y, X, X, Y, X, X, X, Y, Y, Y, Y, X, X, Y };
-uint32 sCheatExpertMode[16] = { X, X, X, Y, Y, X, X, X, Y, X, Y, Y, Y, X, Y, Y };
-uint32 sCheatSwapCCLR[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, Y, X, X, X, X, Y, Y };
-uint32 sCheatSwapCCUD[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, X, X, X, X, Y };
-uint32 sCheatRestoreHealth[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, Y, X, Y, Y, Y, Y };
-uint32 sCheatShrapBob[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, Y, X, X, X, Y };
-uint32 sCheatNoPants[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, X, Y, X, Y, Y, X };
-uint32 sCheatCruiseControl[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, X, Y, X, Y, Y };
-uint32 sCheatBigPlank[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, X, X, X, X };
-uint32 sCheatSmallPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, Y, X };
-uint32 sCheatSmallCoStars[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, Y, Y, Y, Y };
-uint32 sCheatRichPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, Y, X, Y };
-uint32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, X, X };
-uint32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
-uint32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
+U32 sCheatAddShiny[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, Y, Y, X, X, Y };
+U32 sCheatAddSpatulas[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, Y, X, X, Y, Y, X };
+U32 sCheatBubbleBowl[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, X, X, Y, Y };
+U32 sCheatCruiseBubble[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, Y, Y, X, X };
+U32 sCheatMonsterGallery[16] = { 0, 0, 0, 0, 0, 0, 0, 0, X, Y, X, Y, Y, X, Y, X };
+U32 sCheatArtTheatre[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, Y, X, X, Y, X, Y };
+U32 sCheatChaChing[16] = { Y, X, Y, X, X, Y, X, X, X, Y, Y, Y, Y, X, X, Y };
+U32 sCheatExpertMode[16] = { X, X, X, Y, Y, X, X, X, Y, X, Y, Y, Y, X, Y, Y };
+U32 sCheatSwapCCLR[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, Y, X, X, X, X, Y, Y };
+U32 sCheatSwapCCUD[16] = { 0, 0, 0, 0, 0, 0, 0, 0, Y, X, X, X, X, X, X, Y };
+U32 sCheatRestoreHealth[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, Y, X, Y, Y, Y, Y };
+U32 sCheatShrapBob[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, Y, X, X, X, Y };
+U32 sCheatNoPants[16] = { 0, 0, 0, 0, X, X, X, X, Y, X, X, Y, X, Y, Y, X };
+U32 sCheatCruiseControl[16] = { 0, 0, 0, 0, X, X, X, X, Y, Y, X, X, Y, X, Y, Y };
+U32 sCheatBigPlank[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, X, X, X, X };
+U32 sCheatSmallPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, Y, X };
+U32 sCheatSmallCoStars[16] = { 0, 0, 0, 0, Y, Y, Y, Y, X, Y, X, Y, Y, Y, Y, Y };
+U32 sCheatRichPeep[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, Y, X, Y };
+U32 sCheatPanHandle[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, Y, X, X };
+U32 sCheatMedics[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, X, X, Y, Y };
+U32 sCheatDogTrix[16] = { 0, 0, 0, 0, Y, Y, Y, Y, Y, X, Y, X, Y, X, X, Y };
 
 // zGameCheats assumes this list will contain an empty entry at the end (null key_code pointer)
 static GECheat cheatList[] = { { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
@@ -297,9 +297,9 @@ static GECheat cheatList[] = { { sCheatAddShiny, GEC_cb_AddShiny, 0x2, 0 },
                                { sCheatDogTrix, GEC_cb_DogTrix, 0x400000, 0 },
                                {} };
 
-uint32 sCheatPressed[16] = {};
+U32 sCheatPressed[16] = {};
 
-int32 zGameExtras_CheatFlags()
+S32 zGameExtras_CheatFlags()
 {
     return g_flg_chEnabled;
 }
@@ -324,15 +324,15 @@ void zGameExtras_Save(xSerial* xser)
 
 void zGameExtras_Load(xSerial* xser)
 {
-    int32 keepers[2];
+    S32 keepers[2];
     keepers[0] = 0;
     xser->Read(keepers);
     g_flg_chEnabled |= keepers[0];
 }
 
-int32 TestCheat(uint32 cheat[])
+S32 TestCheat(U32 cheat[])
 {
-    int32 i = 15;
+    S32 i = 15;
 
     if (!cheat[i])
     {
@@ -350,9 +350,9 @@ int32 TestCheat(uint32 cheat[])
     return 1;
 }
 
-void AddToCheatPressed(uint32 button)
+void AddToCheatPressed(U32 button)
 {
-    for (int32 i = 0; i < 15; i++)
+    for (S32 i = 0; i < 15; i++)
     {
         sCheatPressed[i] = sCheatPressed[i + 1];
     }
@@ -367,7 +367,7 @@ void zGameCheats(float dt)
         return;
     }
 
-    int32 startover = false;
+    S32 startover = false;
     if ((globals.pad0->pressed & ~(L1 | R1 | X | Y)) || (globals.pad0->on & ~(L1 | R1 | X | Y)))
     {
         startover = true;
@@ -406,7 +406,7 @@ void zGameCheats(float dt)
 
     AddToCheatPressed(globals.pad0->pressed & 0x60000);
 
-    int32 match = 0;
+    S32 match = 0;
     sCheatTimer = 0.3f;
     GECheat* rec_next = cheatList;
     while (rec_next->key_code != NULL)
@@ -443,19 +443,19 @@ void zGameCheats(float dt)
     }
 }
 
-void GEC_CheatFlagAdd(int32 bit)
+void GEC_CheatFlagAdd(S32 bit)
 {
     g_flg_chEnabled |= bit;
 }
 
-void GEC_CheatFlagToggle(int32 bit)
+void GEC_CheatFlagToggle(S32 bit)
 {
     g_flg_chEnabled ^= bit;
 }
 
 void GEC_dfltSound()
 {
-    static uint32 aid_sndList[7] = {};
+    static U32 aid_sndList[7] = {};
     static signed char init;
 
     if (!init)
@@ -480,7 +480,7 @@ void GEC_dfltSound()
         init = 1;
     }
 
-    uint32 snd = xUtil_choose(aid_sndList, 7, NULL);
+    U32 snd = xUtil_choose(aid_sndList, 7, NULL);
 
     if (snd)
     {
@@ -500,7 +500,7 @@ void GEC_cb_AddShiny()
             pg->Inv_Shiny += 1000;
     }
 
-    uint32 aid_snd = xStrHash("SBG01019");
+    U32 aid_snd = xStrHash("SBG01019");
 
     if (aid_snd)
     {
@@ -513,7 +513,7 @@ void GEC_cb_AddSpatulas()
     zPlayerGlobals* pg = &globals.player;
     pg->Inv_Spatula = (pg->Inv_Spatula + 10 >= 100) ? 100 : pg->Inv_Spatula + 10;
 
-    uint32 aid_snd = xStrHash("gspatula_sb");
+    U32 aid_snd = xStrHash("gspatula_sb");
 
     if (aid_snd)
     {
@@ -525,7 +525,7 @@ void GEC_cb_BubbleBowl()
 {
     globals.player.g.PowerUp[0] = true;
 
-    uint32 aid_snd = xStrHash("SBG01092");
+    U32 aid_snd = xStrHash("SBG01092");
 
     if (aid_snd)
     {
@@ -537,7 +537,7 @@ void GEC_cb_CruiseBubble()
 {
     globals.player.g.PowerUp[1] = true;
 
-    uint32 aid_snd = xStrHash("SB_cruise_hit");
+    U32 aid_snd = xStrHash("SB_cruise_hit");
 
     if (aid_snd)
     {
@@ -547,13 +547,13 @@ void GEC_cb_CruiseBubble()
 
 void GEC_cb_MonsterGallery()
 {
-    int8 tempString[32];
+    char tempString[32];
 
     strcpy(tempString, "HB09 ROBOT COUNTER 01");
 
-    int8 c = '1';
+    char c = '1';
 
-    for (int32 i = 0; i < 15; i++)
+    for (S32 i = 0; i < 15; i++)
     {
         if (c > '9')
         {
@@ -564,7 +564,7 @@ void GEC_cb_MonsterGallery()
         tempString[20] = c;
         c++;
 
-        uint32 id = xStrHash(tempString);
+        U32 id = xStrHash(tempString);
         _xCounter* cntr = (_xCounter*)zSceneFindObject(id);
         cntr->count = 1;
     }
@@ -574,7 +574,7 @@ void GEC_cb_MonsterGallery()
 
 void GEC_cb_UnlockArtTheatre()
 {
-    uint32 aid_theatreCounter = xStrHash("HB01_FREE_MOVIE_PASS");
+    U32 aid_theatreCounter = xStrHash("HB01_FREE_MOVIE_PASS");
     _xCounter* cntr = (_xCounter*)zSceneFindObject(aid_theatreCounter);
     cntr->count = 1;
     zEntPlayer_SNDPlay(ePlayerSnd_Taxi, 0.0f);
@@ -589,13 +589,13 @@ void GEC_cb_ChaChing()
     gs->ShinyValueYellow = 10;
     gs->ShinyValueRed = 5;
 
-    uint32 aid_snd = xStrHash("SBG01019");
+    U32 aid_snd = xStrHash("SBG01019");
     xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
 }
 
 void GEC_cb_RestoreHealth()
 {
-    static uint32 choices[2] = {};
+    static U32 choices[2] = {};
     static signed char init;
 
     globals.player.Health = globals.player.MaxHealth;
@@ -606,7 +606,7 @@ void GEC_cb_RestoreHealth()
         init = 1;
     }
 
-    uint32 snd = xUtil_choose(choices, 2, NULL);
+    U32 snd = xUtil_choose(choices, 2, NULL);
 
     if (snd)
     {
@@ -626,13 +626,13 @@ void GEC_cb_ShrapBobMode()
 
 void GEC_cb_NoPantsMode()
 {
-    uint32 aid_snd = xStrHash("SBG01023");
+    U32 aid_snd = xStrHash("SBG01023");
     xSndPlay(aid_snd, 1.0f, 0.0f, 0x80, 0, 0, SND_CAT_GAME, 0.0f);
 }
 
 void GEC_cb_CruiseControl()
 {
-    static uint32 choices[3] = {};
+    static U32 choices[3] = {};
     static signed char init;
 
     if (!init)
@@ -645,7 +645,7 @@ void GEC_cb_CruiseControl()
         init = true;
     }
 
-    uint32 snd = xUtil_choose<uint32>(choices, 3, NULL);
+    U32 snd = xUtil_choose<U32>(choices, 3, NULL);
 
     if (snd)
     {
@@ -665,7 +665,7 @@ void GEC_cb_SwapCCUD()
 
 void GEC_villSound()
 {
-    static uint32 aid_sndList[6] = {};
+    static U32 aid_sndList[6] = {};
     static signed char init;
 
     if (!init)
@@ -681,7 +681,7 @@ void GEC_villSound()
         init = true;
     }
 
-    uint32 snd = xUtil_choose(aid_sndList, 6, NULL);
+    U32 snd = xUtil_choose(aid_sndList, 6, NULL);
 
     if (snd)
     {
@@ -728,11 +728,11 @@ static xEnt* sGalleryTitle;
 
 void zGame_HackGalleryInit()
 {
-    uint32 obj = xStrHash("KIOSK SELECT UIF");
+    U32 obj = xStrHash("KIOSK SELECT UIF");
     sGalleryTitle = (xEnt*)zSceneFindObject(obj);
 }
 
-uint32 zGame_HackIsGallery()
+U32 zGame_HackIsGallery()
 {
     if (sGalleryTitle && xEntIsVisible(sGalleryTitle))
     {
@@ -741,7 +741,7 @@ uint32 zGame_HackIsGallery()
     return 0;
 }
 
-template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 const* float_list)
+template <> U32 xUtil_choose<U32>(U32 const* list, S32 size, F32 const* float_list)
 {
     if (list == NULL)
     {
@@ -753,8 +753,8 @@ template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 
         return NULL;
     }
 
-    int32 idx = 0;
-    float32 rand = xurand();
+    S32 idx = 0;
+    F32 rand = xurand();
 
     if (float_list == NULL)
     {
@@ -762,9 +762,9 @@ template <> uint32 xUtil_choose<uint32>(uint32 const* list, int32 size, float32 
     }
     else
     {
-        const float32* float_it = float_list;
-        float32 total = 0.0f;
-        for (int32 i = 0; i < size; float_it++, i++)
+        const F32* float_it = float_list;
+        F32 total = 0.0f;
+        for (S32 i = 0; i < size; float_it++, i++)
         {
             float prev_total = total;
             total += *float_it;

@@ -4,8 +4,8 @@
 
 #if 0
 // WIP.
-void xQuickCullInit(xQCControl* ctrl, float32 xmin, float32 ymin, float32 zmin, float32 xmax,
-                    float32 ymax, float32 zmax)
+void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax,
+                    F32 ymax, F32 zmax)
 {
     ctrl->world_xmin = xmin;
     ctrl->world_ymin = ymin;
@@ -41,7 +41,7 @@ void xQuickCullInit(xQCControl* ctrl, const xBox* box)
 
 #if 0
 // WIP.
-int32 xQuickCullIsects(const xQCData* a, const xQCData* b)
+S32 xQuickCullIsects(const xQCData* a, const xQCData* b)
 {
     return a->xmin <= b->xmax && a->ymin <= b->ymax && a->zmin <= b->zmax && b->xmin <= a->xmax &&
            b->ymin <= a->ymax && b->zmin <= a->zmax;

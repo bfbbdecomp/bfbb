@@ -19,7 +19,7 @@
 
 typedef struct
 {
-    float32 x, y, z;
+    F32 x, y, z;
 } Vec;
 
 // All this essentially does is do "*dst = *src;"

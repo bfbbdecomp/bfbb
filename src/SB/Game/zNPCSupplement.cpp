@@ -13,24 +13,24 @@
 
 extern NPARMgmt g_npar_mgmt[12];
 extern NPARInfo g_npar_info[12];
-extern int32 g_gameExtrasFlags;
-extern int32 g_mon; // month
-extern int32 g_day; // day
-extern int32 g_isSpecialDay;
+extern S32 g_gameExtrasFlags;
+extern S32 g_mon; // month
+extern S32 g_day; // day
+extern S32 g_isSpecialDay;
 
 extern StreakInfo info_950;
 
-extern float32 _907_1_0;
-extern float32 _1022_2_0;
+extern F32 _907_1_0;
+extern F32 _1022_2_0;
 
-extern float32 _1558_10_0; // 10.0
-extern float32 _1559_0_2857143; // 0.2857143
-extern float32 _1560_0_5714286; // 0.5714286
-extern float32 _1561_0_125; // 0.125
-extern float32 _918_0_25; // 0.25
-extern float32 _1018_0_375; // 0.375
-extern float32 _909_0_5; // 0.5
-extern float32 _1562_0_625; // 0.625
+extern F32 _1558_10_0; // 10.0
+extern F32 _1559_0_2857143; // 0.2857143
+extern F32 _1560_0_5714286; // 0.5714286
+extern F32 _1561_0_125; // 0.125
+extern F32 _918_0_25; // 0.25
+extern F32 _1018_0_375; // 0.375
+extern F32 _909_0_5; // 0.5
+extern F32 _1562_0_625; // 0.625
 
 void NPCSupplement_Startup()
 {
@@ -69,7 +69,7 @@ void NPCSupplement_Timestep(float dt)
 }
 
 #if 0
-uint32 NPCC_StreakCreate(en_npcstreak styp)
+U32 NPCC_StreakCreate(en_npcstreak styp)
 {
     StreakInfo info = info_950;
     NPCC_MakeStreakInfo(styp, &info);
@@ -113,10 +113,10 @@ void NPAR_CheckSpecials()
 
 #if 0
 // WIP
-void NPAR_Timestep(float32 dt)
+void NPAR_Timestep(F32 dt)
 {
-    int32 isPawzd = zGameIsPaused();
-    int32 isCine = !(globals.cmgr && globals.cmgr);
+    S32 isPawzd = zGameIsPaused();
+    S32 isCine = !(globals.cmgr && globals.cmgr);
 
     NPAR_CheckSpecials();
     for (int i = 0; i < 12; i++)
@@ -135,7 +135,7 @@ void NPAR_Timestep(float32 dt)
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
 {
     NPARMgmt* mgmt = &g_npar_mgmt[parType];
-    int32 isReady = mgmt->IsReady();
+    S32 isReady = mgmt->IsReady();
     if (isReady)
     {
         return mgmt;
@@ -147,7 +147,7 @@ NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xt
 NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 {
     NPARMgmt* mgmt = &g_npar_mgmt[parType];
-    int32 isReady = mgmt->IsReady();
+    S32 isReady = mgmt->IsReady();
     if (isReady)
     {
         return mgmt;
@@ -168,7 +168,7 @@ void NPARMgmt::Clear()
     user_data = 0;
 }
 
-void NPARMgmt::UpdateAndRender(float32 param_1)
+void NPARMgmt::UpdateAndRender(F32 param_1)
 {
     g_npar_info[typ_npar].fun_update(this, param_1);
 }
@@ -192,7 +192,7 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
 // Matches, it just defines new data that won't match until that stuff can be redefined.
 // It also loads a bunch of byte stuff at the end for some reason
 // For the record it also matches when using the static colors. Externing zanyArray does not work.
-void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
+void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, F32 pam)
 {
     // There may be a better way to define these but this seemed like the cleanest.
     // static RwRGBA colr_pinkRyanz = { 0xcc, 0x60, 0xcc, 0xff };
@@ -249,7 +249,7 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
     // Lots of different dates
     if (g_isSpecialDay & 0b100000001)
     {
-        int32 trun = _1558_10_0 * pam;
+        S32 trun = _1558_10_0 * pam;
         if (trun < 0)
         {
             trun = 0;
@@ -364,22 +364,22 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, float32 pam)
 }
 #endif
 
-float32 ARCH3(float32 param_1)
+F32 ARCH3(F32 param_1)
 {
     return _907_1_0 - BOWL3(param_1);
 }
 
-float32 BOWL3(float32 param_1)
+F32 BOWL3(F32 param_1)
 {
-    return QUB((float32)_1022_2_0 * (float32)iabs(param_1 - _909_0_5));
+    return QUB((F32)_1022_2_0 * (F32)iabs(param_1 - _909_0_5));
 }
 
-float32 QUB(float32 param_1)
+F32 QUB(F32 param_1)
 {
     return param_1 * param_1 * param_1;
 }
 
-float32 ARCH(float32 param_1)
+F32 ARCH(F32 param_1)
 {
     return _907_1_0 - BOWL(param_1);
 }
@@ -394,7 +394,7 @@ void NPARMgmt::Reset()
     cnt_active = 0;
 }
 
-int32 NPARMgmt::IsReady()
+S32 NPARMgmt::IsReady()
 {
     return num_max != 0 && par_buf != 0;
 }

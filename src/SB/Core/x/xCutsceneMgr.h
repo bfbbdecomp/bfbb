@@ -6,25 +6,25 @@
 
 struct xCutsceneMgrAsset : xBaseAsset
 {
-    uint32 cutsceneAssetID;
-    uint32 flags;
-    float32 interpSpeed;
-    float32 startTime[15];
-    float32 endTime[15];
-    uint32 emitID[15];
+    U32 cutsceneAssetID;
+    U32 flags;
+    F32 interpSpeed;
+    F32 startTime[15];
+    F32 endTime[15];
+    U32 emitID[15];
 };
 
 struct xCutsceneZbuffer
 {
-    float32 start;
-    float32 end;
-    float32 nearPlane;
-    float32 farPlane;
+    F32 start;
+    F32 end;
+    F32 nearPlane;
+    F32 farPlane;
 };
 
 struct xCutsceneZbufferHack
 {
-    int8* name;
+    char* name;
     xCutsceneZbuffer times[4];
 };
 
@@ -32,9 +32,9 @@ struct xCutsceneMgr : xBase
 {
     xCutsceneMgrAsset* tasset;
     xCutscene* csn; // 0x14
-    uint32 stop; // 0x18
+    U32 stop; // 0x18
     xCutsceneZbufferHack* zhack;
-    float32 oldfov;
+    F32 oldfov;
 };
 
 #endif

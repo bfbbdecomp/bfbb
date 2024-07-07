@@ -22,10 +22,10 @@
 #define PLAYER_STATE_TELEPORTED 3
 #define PLAYER_STATE_EJECTING 4
 
-static int32 sPlayerIn;
-static uint32 sPlayerNear;
+static S32 sPlayerIn;
+static U32 sPlayerNear;
 static zUIFont* sTeleportUI;
-static float32 sTeleportCamPitch;
+static F32 sTeleportCamPitch;
 
 static const char _stringBase0_79[] = "Box_open\0"
                                       "teleportation_box_bind\0"
@@ -47,33 +47,33 @@ static const char _stringBase0_79[] = "Box_open\0"
                                       "Box_shuffle_alt\0"
                                       "Box_shuffle_open";
 
-extern float32 _777_1;
-extern float32 _778_0;
-extern float32 _779_2;
-extern float32 _780_2;
-extern float32 _853_3;
-extern float32 _858_3;
-extern float32 _860_3;
-extern float32 _888_0;
-extern float32 _943;
-extern float32 _944_0;
-extern float32 _945_2;
-extern float32 _946_3;
-extern float32 _947_2;
-extern float32 _970_1;
-extern float32 _971_0;
-extern float32 _972_0;
-extern float32 _973_0;
-extern float32 _974_0;
-extern float32 _975_1;
-extern float32 _976_2;
-extern float32 _977_2;
-extern float32 _978_2;
-extern float32 _979;
-extern float32 _980;
-extern float32 _1051_2;
-extern float32 _1052_1;
-extern float64 _1054_3;
+extern F32 _777_1;
+extern F32 _778_0;
+extern F32 _779_2;
+extern F32 _780_2;
+extern F32 _853_3;
+extern F32 _858_3;
+extern F32 _860_3;
+extern F32 _888_0;
+extern F32 _943;
+extern F32 _944_0;
+extern F32 _945_2;
+extern F32 _946_3;
+extern F32 _947_2;
+extern F32 _970_1;
+extern F32 _971_0;
+extern F32 _972_0;
+extern F32 _973_0;
+extern F32 _974_0;
+extern F32 _975_1;
+extern F32 _976_2;
+extern F32 _977_2;
+extern F32 _978_2;
+extern F32 _979;
+extern F32 _980;
+extern F32 _1051_2;
+extern F32 _1052_1;
+extern F64 _1054_3;
 
 #undef PI
 #undef ONEEIGHTY
@@ -90,39 +90,39 @@ static void VecFromAngle(float a, xVec3* v)
     xMat3x3LMulVec(v, &mat, v);
 }
 
-uint32 OpenCheck(xAnimTransition*, xAnimSingle*, void* object)
+U32 OpenCheck(xAnimTransition*, xAnimSingle*, void* object)
 {
     return ((_zEntTeleportBox*)object)->status != STATUS_CLOSED;
 }
 
-static uint32 JumpInCheck(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JumpInCheck(xAnimTransition*, xAnimSingle*, void* object)
 {
     return ((_zEntTeleportBox*)object)->jumpInAnim != 0;
 }
 
-static uint32 JumpInCB(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JumpInCB(xAnimTransition*, xAnimSingle*, void* object)
 {
     ((_zEntTeleportBox*)object)->jumpInAnim = 0;
     return 0;
 }
 
-static uint32 JumpOutCheck(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JumpOutCheck(xAnimTransition*, xAnimSingle*, void* object)
 {
     return ((_zEntTeleportBox*)object)->jumpOutAnim != 0;
 }
 
-static uint32 JumpOutCB(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JumpOutCB(xAnimTransition*, xAnimSingle*, void* object)
 {
     ((_zEntTeleportBox*)object)->jumpOutAnim = 0;
     return 0;
 }
 
-static uint32 JItoOCheck(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JItoOCheck(xAnimTransition*, xAnimSingle*, void* object)
 {
     return ((_zEntTeleportBox*)object)->JItoOpenAnim != 0;
 }
 
-static uint32 JItoOCB(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JItoOCB(xAnimTransition*, xAnimSingle*, void* object)
 {
     _zEntTeleportBox* tbox = (_zEntTeleportBox*)object;
 
@@ -132,32 +132,32 @@ static uint32 JItoOCB(xAnimTransition*, xAnimSingle*, void* object)
     return 0;
 }
 
-static uint32 JOtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JOtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
 {
     return ((_zEntTeleportBox*)object)->JOtoOpenAnim != 0;
 }
 
-static uint32 JOtoOCB(xAnimTransition*, xAnimSingle*, void* object)
+static U32 JOtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 {
     ((_zEntTeleportBox*)object)->JOtoOpenAnim = 0;
     return 0;
 }
 
-static uint32 CtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
+static U32 CtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
 {
     zEnt* player = &globals.player.ent;
 
-    float32 dx__ = player->bound.sph.center.x - ((_zEntTeleportBox*)object)->model->Mat->pos.x;
-    float32 dy__ = player->bound.sph.center.y - ((_zEntTeleportBox*)object)->model->Mat->pos.y;
-    float32 dz__ = player->bound.sph.center.z - ((_zEntTeleportBox*)object)->model->Mat->pos.z;
+    F32 dx__ = player->bound.sph.center.x - ((_zEntTeleportBox*)object)->model->Mat->pos.x;
+    F32 dy__ = player->bound.sph.center.y - ((_zEntTeleportBox*)object)->model->Mat->pos.y;
+    F32 dz__ = player->bound.sph.center.z - ((_zEntTeleportBox*)object)->model->Mat->pos.z;
 
     return (SQR(dx__) + SQR(dy__) + SQR(dz__) < _853_3);
 }
 
 #ifndef NON_MATCHING
-static uint32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object);
+static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object);
 #else
-static uint32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
+static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 {
     // non-matching: floats
     xVec3 tmp;
@@ -174,25 +174,25 @@ static uint32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 }
 #endif
 
-static uint32 JumpInEffectPlrInvisibleCB(uint32, xAnimActiveEffect*, xAnimSingle*, void* object)
+static U32 JumpInEffectPlrInvisibleCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
     zEntEvent(&globals.player.ent, eEventInvisible);
     return 0;
 }
 
-static uint32 JumpInEffectPlrTeleportCB(uint32, xAnimActiveEffect*, xAnimSingle*, void* object)
+static U32 JumpInEffectPlrTeleportCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
     ((_zEntTeleportBox*)object)->currPlrState = PLAYER_STATE_TELEPORTING;
     return 0;
 }
 
-static uint32 JumpInEffectJIAnimCB(uint32, xAnimActiveEffect*, xAnimSingle*, void* object)
+static U32 JumpInEffectJIAnimCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
     ((_zEntTeleportBox*)object)->JItoOpenAnim = 1;
     return 0;
 }
 
-static uint32 CtoOEffectTboxEnableCB(uint32, xAnimActiveEffect*, xAnimSingle*, void* object)
+static U32 CtoOEffectTboxEnableCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
     _zEntTeleportBox* tbox = (_zEntTeleportBox*)object;
 
@@ -204,14 +204,14 @@ static uint32 CtoOEffectTboxEnableCB(uint32, xAnimActiveEffect*, xAnimSingle*, v
     return 0;
 }
 
-static uint32 JumpOutEffectPlrVisibleCB(uint32, xAnimActiveEffect*, xAnimSingle*, void*)
+static U32 JumpOutEffectPlrVisibleCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
 {
     zEntEvent(&globals.player.ent, eEventVisible);
     iCameraMotionBlurActivate(0);
     return 0;
 }
 
-static uint32 JumpOutEffectPlrEjectCB(uint32, xAnimActiveEffect*, xAnimSingle*, void* object)
+static U32 JumpOutEffectPlrEjectCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
     _zEntTeleportBox* tbox = (_zEntTeleportBox*)object;
     xVec3 tmp;
@@ -228,13 +228,13 @@ static uint32 JumpOutEffectPlrEjectCB(uint32, xAnimActiveEffect*, xAnimSingle*, 
     return 0;
 }
 
-static uint32 JumpOutEffectJOAnimCB(uint32, xAnimActiveEffect*, xAnimSingle*, void* object)
+static U32 JumpOutEffectJOAnimCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
     ((_zEntTeleportBox*)object)->JOtoOpenAnim = 1;
     return 0;
 }
 
-void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, ulong32)
+void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, size_t)
 {
     zEntTeleportBox_Init((_zEntTeleportBox*)&data, (teleport_asset*)&asset);
 }
@@ -249,18 +249,18 @@ void zEntTeleportBox_InitAll()
 void zEntTeleportBox_Setup(_zEntTeleportBox* ent);
 
 #if 1 // wip
-void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt);
+void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt);
 #else
-void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt)
+void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
 {
     _zEntTeleportBox* ent = (_zEntTeleportBox*)rawent;
     _zEntTeleportBox* target = (_zEntTeleportBox*)ent->target;
 
     xEntUpdate(ent, sc, dt);
 
-    float32 dx__ = globals.player.ent.bound.sph.center.x - ent->model->Mat->pos.x;
-    float32 dy__ = globals.player.ent.bound.sph.center.y - ent->model->Mat->pos.y;
-    float32 dz__ = globals.player.ent.bound.sph.center.z - ent->model->Mat->pos.z;
+    F32 dx__ = globals.player.ent.bound.sph.center.x - ent->model->Mat->pos.x;
+    F32 dy__ = globals.player.ent.bound.sph.center.y - ent->model->Mat->pos.y;
+    F32 dz__ = globals.player.ent.bound.sph.center.z - ent->model->Mat->pos.z;
 
     if (SQR(dx__) + SQR(dy__) + SQR(dz__) < _853_3)
     {
@@ -358,7 +358,7 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, float32 dt)
         {
         case PLAYER_STATE_INSIDE:
         {
-            ent->chkby &= (uint8)~XENT_COLLTYPE_PLYR;
+            ent->chkby &= (U8)~XENT_COLLTYPE_PLYR;
 
             zEntPlayerControlOff(CONTROL_OWNER_TELEPORT_BOX);
 
@@ -437,7 +437,7 @@ void zEntTeleportBox_Load(_zEntTeleportBox* ent, xSerial* s)
 {
     zEntLoad(ent, s);
 
-    int32 open = 0;
+    S32 open = 0;
     s->Read_b1(&open);
 
     if (open)
@@ -468,7 +468,7 @@ void zEntTeleportBox_Close(_zEntTeleportBox* ent)
     }
 }
 
-int32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent)
+S32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent)
 {
     _zEntTeleportBox* target = (_zEntTeleportBox*)ent->target;
 
@@ -480,17 +480,17 @@ int32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent)
     return 0;
 }
 
-int32 zEntTeleportBox_isClosed(_zEntTeleportBox* ent)
+S32 zEntTeleportBox_isClosed(_zEntTeleportBox* ent)
 {
     return zEntTeleportBox_isOpen(ent) == 0;
 }
 
-int32 zEntTeleportBox_playerIn()
+S32 zEntTeleportBox_playerIn()
 {
     return sPlayerIn;
 }
 
-int32 zEntTeleportBoxEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
+S32 zEntTeleportBoxEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 {
     _zEntTeleportBox* s = (_zEntTeleportBox*)to;
 
@@ -510,23 +510,23 @@ int32 zEntTeleportBoxEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, 
     }
     case eEventCollisionOn:
     {
-        s->chkby |= (uint8)(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
+        s->chkby |= (U8)(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
         break;
     }
     case eEventCollisionOff:
     {
-        s->chkby &= (uint8) ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
+        s->chkby &= (U8) ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
         break;
     }
     case eEventCollision_Visible_On:
     {
-        s->chkby |= (uint8)(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
+        s->chkby |= (U8)(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
         xEntShow(s);
         break;
     }
     case eEventCollision_Visible_Off:
     {
-        s->chkby &= (uint8) ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
+        s->chkby &= (U8) ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR);
         xEntHide(s);
         break;
     }

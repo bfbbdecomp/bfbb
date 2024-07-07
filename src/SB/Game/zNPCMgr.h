@@ -15,12 +15,12 @@ struct zNPCMgr : RyzMemData
 
     zNPCMgr();
     void Shutdown();
-    void ScenePrepare(int32 npccnt);
+    void ScenePrepare(S32 npccnt);
     void SceneFinish();
     void SceneReset();
     void ScenePostInit();
     void ScenePostSetup();
-    void SceneTimestep(xScene* xscn, float32 dt);
+    void SceneTimestep(xScene* xscn, F32 dt);
     void ScenePostRender();
     void ScenePostParticleRender();
     xEnt* CreateNPC(xEntAsset* assdat);
@@ -29,7 +29,7 @@ struct zNPCMgr : RyzMemData
     ~zNPCMgr();
 
     /* Use as needed.
-	en_NPCTYPES NPCTypeForModel(uint32 brainID, uint32 mdl_hash);
+	en_NPCTYPES NPCTypeForModel(U32 brainID, U32 mdl_hash);
 	xEnt* CreateNPC(xEntAsset* asset);
 	void ScenePostParticleRender();
 	void ScenePostRender();
@@ -41,16 +41,16 @@ zNPCMgr* zNPCMgrSelf();
 st_XORDEREDARRAY* zNPCMgr_GetNPCList();
 void zNPCMgr_Startup();
 void zNPCMgr_Shutdown();
-void zNPCMgr_scenePrepare(int32 npccnt);
+void zNPCMgr_scenePrepare(S32 npccnt);
 void zNPCMgr_sceneFinish();
 void zNPCMgr_sceneReset();
 void zNPCMgr_scenePostInit();
 void zNPCMgr_scenePostSetup();
-void zNPCMgr_sceneTimestep(xScene* xscn, float32 dt);
+void zNPCMgr_sceneTimestep(xScene* xscn, F32 dt);
 void zNPCMgr_scenePostRender();
 void zNPCMgr_scenePostParticleRender();
-xEnt* zNPCMgr_createNPCInst(int32, xEntAsset* assdat);
+xEnt* zNPCMgr_createNPCInst(S32, xEntAsset* assdat);
 
-int32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem);
+S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem);
 
 #endif

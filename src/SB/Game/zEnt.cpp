@@ -17,26 +17,26 @@
 #include <stdio.h>
 
 extern _ShadowParams gShadowParams[5];
-extern uint32 g_hash_xentanim[5];
-extern int8* g_strz_xentanim[5];
+extern U32 g_hash_xentanim[5];
+extern char* g_strz_xentanim[5];
 
 extern xVec3 _1228;
-extern int8 zEnt_strings[];
+extern char zEnt_strings[];
 
-extern float32 _839_zEnt;
-extern float32 _840_zEnt;
-extern float32 _852_zEnt;
-extern float32 _853_zEnt;
-extern float32 _854_zEnt;
-extern float32 _1032_zEnt;
-extern float32 _1033_zEnt;
-extern float32 _1039_zEnt;
-extern float32 _1267_zEnt;
-extern float32 _1268_zEnt;
-extern float32 _1269_zEnt;
-extern float32 _1270_zEnt;
+extern F32 _839_zEnt;
+extern F32 _840_zEnt;
+extern F32 _852_zEnt;
+extern F32 _853_zEnt;
+extern F32 _854_zEnt;
+extern F32 _1032_zEnt;
+extern F32 _1033_zEnt;
+extern F32 _1039_zEnt;
+extern F32 _1267_zEnt;
+extern F32 _1268_zEnt;
+extern F32 _1269_zEnt;
+extern F32 _1270_zEnt;
 
-void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type)
+void zEntInit(zEnt* ent, xEntAsset* asset, U32 type)
 {
     xEntInit(ent, asset);
     ent->update = (xEntUpdateCallback)zEntUpdate;
@@ -188,7 +188,7 @@ void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type)
 
     if (asset->animListID != 0)
     {
-        int32 num_used = zAnimListGetNumUsed(asset->animListID);
+        S32 num_used = zAnimListGetNumUsed(asset->animListID);
         if (num_used > 0)
         {
             ent->atbl = zAnimListGetTable(asset->animListID);
@@ -227,7 +227,7 @@ void zEntSetup(zEnt* ent)
 void checkpoint_collision_hack(zEnt* ent)
 {
     static signed char init;
-    static uint32 model_id;
+    static U32 model_id;
 
     if (init == 0)
     {
@@ -301,22 +301,22 @@ void zEntReset(zEnt* ent)
     checkpoint_collision_hack(ent);
 }
 
-void zEntUpdate(zEnt* ent, zScene* scene, float32 elapsedSec)
+void zEntUpdate(zEnt* ent, zScene* scene, F32 elapsedSec)
 {
     xEntUpdate(ent, scene, elapsedSec);
 }
 
-void zEntEventAll(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam)
+void zEntEventAll(xBase* from, U32 fromEvent, U32 toEvent, F32* toParam)
 {
     zScene* s = globals.sceneCur;
-    for (uint16 i = 0; i < s->num_base; i++)
+    for (U16 i = 0; i < s->num_base; i++)
     {
         zEntEvent(from, fromEvent, s->base[i], toEvent, toParam, NULL, 0);
     }
 }
 
-void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam,
-                        uint32 type)
+void zEntEventAllOfType(xBase* from, U32 fromEvent, U32 toEvent, F32* toParam,
+                        U32 type)
 {
     zScene* s = globals.sceneCur;
     if (s == NULL)
@@ -324,7 +324,7 @@ void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* 
         return;
     }
 
-    for (uint16 i = 0; i < s->num_base; i++)
+    for (U16 i = 0; i < s->num_base; i++)
     {
         xBase* base = s->base[i];
         if (type == base->baseType)
@@ -334,7 +334,7 @@ void zEntEventAllOfType(xBase* from, uint32 fromEvent, uint32 toEvent, float32* 
     }
 }
 
-void zEntEventAllOfType(uint32 toEvent, uint32 type)
+void zEntEventAllOfType(U32 toEvent, U32 type)
 {
     zEntEventAllOfType(NULL, 0, toEvent, NULL, type);
 }
@@ -345,13 +345,13 @@ xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
 {
     xModelAssetInfo* zinfo = (xModelAssetInfo*)info;
     xModelAssetInst* zinst = (xModelAssetInst*)(zinfo + 1);
-    uint32 bufsize;
+    U32 bufsize;
     xModelInstance* tempInst[64];
 
-    for (uint32 i = 0; i < zinfo->NumModelInst; i++)
+    for (U32 i = 0; i < zinfo->NumModelInst; i++)
     {
         RpAtomic* imodel = (RpAtomic*)xSTFindAsset(zinst[i].ModelID, &bufsize);
-        if (*(uint32*)&imodel->object.object == 0x464e494d)
+        if (*(U32*)&imodel->object.object == 0x464e494d)
         {
             tempInst[i] = zEntRecurseModelInfo(imodel, ent);
             if (i != 0)
@@ -396,11 +396,11 @@ xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent)
 }
 #endif
 
-void zEntParseModelInfo(xEnt* ent, uint32 assetID)
+void zEntParseModelInfo(xEnt* ent, U32 assetID)
 {
-    uint32 bufsize[4];
+    U32 bufsize[4];
     void* info = xSTFindAsset(assetID, bufsize);
-    if (*(uint32*)info == 0x464e494d)
+    if (*(U32*)info == 0x464e494d)
     {
         ent->model = zEntRecurseModelInfo(info, ent);
     }
@@ -414,7 +414,7 @@ void zEntParseModelInfo(xEnt* ent, uint32 assetID)
 #ifdef NON_MATCHING
 // This function suffers from a couple floating point memes
 // Additionally it has a jumptable that needs to be generated in the correct place.
-void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
+void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam)
 {
     xAnimPlay* play = ent->model->Anim;
     if (play == NULL)
@@ -443,13 +443,13 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
                 break;
             }
 
-            int32 anum = (int)*animParam - 1;
+            S32 anum = (int)*animParam - 1;
             if (anum < 0 || anum >= 10 || ent->atbl == NULL)
             {
                 break;
             }
 
-            int8 name[12];
+            char name[12];
             if (animEvent == 0xc4)
             {
                 sprintf(name, zEnt_strings + 41, anum);
@@ -484,7 +484,7 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
             {
                 break;
             }
-            int8 name2[12];
+            char name2[12];
             strcpy(name2, single->State->Name);
             name2[0] = 's';
             name2[1] = 't';
@@ -513,18 +513,18 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
                 break;
             }
 
-            int32 anum2 = (int)animParam[0] - 1;
-            int32 anum3 = (int)animParam[1] - 1;
+            S32 anum2 = (int)animParam[0] - 1;
+            S32 anum3 = (int)animParam[1] - 1;
             if (anum2 < 0 || anum2 > anum3 || anum3 >= 10 || ent->atbl == NULL)
             {
                 break;
             }
 
-            int32 anum4 = xrand();
+            S32 anum4 = xrand();
             anum3 = anum3 - anum2 + 1;
             anum4 %= anum3;
 
-            int8 name3[12];
+            char name3[12];
             sprintf(name3, zEnt_strings + 48, anum2 + anum4);
 
             xAnimState* ast2 = xAnimTableGetState(ent->atbl, name3);
@@ -544,8 +544,8 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
                 break;
             }
 
-            int32 anum5 = (int)*animParam - 1;
-            float32 prob = _1033_zEnt * animParam[1];
+            S32 anum5 = (int)*animParam - 1;
+            F32 prob = _1033_zEnt * animParam[1];
             if (anum5 < 0 || anum5 >= 10)
             {
                 break;
@@ -554,7 +554,7 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
             // Inverting this if screws up the float comparison
             if (xurand() < prob && ent->atbl != NULL)
             {
-                int8 name4[12];
+                char name4[12];
                 sprintf(name4, zEnt_strings + 41, anum5);
                 xAnimState* ast3 = xAnimTableGetState(ent->atbl, name4);
                 if (ast3 == NULL)
@@ -577,12 +577,12 @@ void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam)
 // Thank you floating point memes. Very cool.
 xAnimTable* xEnt_AnimTable_AutoEventSmall()
 {
-    int8** names = g_strz_xentanim;
-    uint32* hash = g_hash_xentanim;
+    char** names = g_strz_xentanim;
+    U32* hash = g_hash_xentanim;
     xAnimTransition* deftran = NULL;
     if (*hash == 0)
     {
-        for (int32 i = 0; i < 5; i++)
+        for (S32 i = 0; i < 5; i++)
         {
             hash[i] = xStrHash(names[i]);
         }
@@ -590,7 +590,7 @@ xAnimTable* xEnt_AnimTable_AutoEventSmall()
 
     xAnimTable* table = xAnimTableNew(zEnt_strings + 0x15, NULL, 0);
 
-    for (int32 i = 0; i < 5; i++)
+    for (S32 i = 0; i < 5; i++)
     {
         if (i == 0)
         {
@@ -622,7 +622,7 @@ xAnimTable* xEnt_AnimTable_AutoEventSmall()
 #ifdef NON_MATCHING
 // This function needs the floats to be replaced with literals
 // and the jumptable to be generated in the right spot.
-void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animParam)
+void zEntAnimEvent_AutoAnim(zEnt* ent, U32 animEvent, const F32* animParam)
 {
     xAnimPlay* play = ent->model->Anim;
     xAnimSingle* single = play->Single;
@@ -636,7 +636,7 @@ void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animPara
             break;
         }
 
-        int32 anum = (int)*animParam + -1;
+        S32 anum = (int)*animParam + -1;
         if (anum < 0 || anum >= 5)
         {
             break;
@@ -710,14 +710,14 @@ void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animPara
             break;
         }
 
-        int32 anum1 = (int)animParam[0] - 1;
-        int32 anum2 = (int)animParam[1] - 1;
+        S32 anum1 = (int)animParam[0] - 1;
+        S32 anum2 = (int)animParam[1] - 1;
         if (anum1 < 0 || anum2 < 0 || anum1 > anum2 || anum2 >= 5)
         {
             break;
         }
 
-        int32 anum3 = xrand();
+        S32 anum3 = xrand();
         anum2 = anum2 - anum1 + 1;
         anum3 %= anum2;
         anum1 += anum3;
@@ -754,9 +754,9 @@ void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animPara
 }
 #endif
 
-xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
+xModelAssetParam* zEntGetModelParams(U32 assetID, U32* size)
 {
-    uint32 bufsize;
+    U32 bufsize;
     void* info = xSTFindAsset(assetID, &bufsize);
     xModelAssetInfo* minf = (xModelAssetInfo*)info;
 
@@ -765,7 +765,7 @@ xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
         *size = bufsize - (minf->NumModelInst * 0x38 + 0x14);
         if (*size != 0)
         {
-            return (xModelAssetParam*)((int8*)minf + minf->NumModelInst * 0x38 + 0x14);
+            return (xModelAssetParam*)((char*)minf + minf->NumModelInst * 0x38 + 0x14);
         }
     }
     else
@@ -776,32 +776,32 @@ xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size)
     return NULL;
 }
 
-int8* zParamGetString(xModelAssetParam* param, uint32 size, int8* tok, int8* def)
+char* zParamGetString(xModelAssetParam* param, U32 size, char* tok, char* def)
 {
-    uint32 hash = xStrHash(tok);
+    U32 hash = xStrHash(tok);
 
     while (param != NULL && size != 0)
     {
         if (param->HashID == hash)
         {
-            return (int8*)param->String;
+            return (char*)param->String;
         }
 
-        // int32 i = param->WordLength * 4;
+        // S32 i = param->WordLength * 4;
         size -= param->WordLength * 4 + 8;
-        param = (xModelAssetParam*)((int8*)param + (param->WordLength * 4 + 8));
+        param = (xModelAssetParam*)((char*)param + (param->WordLength * 4 + 8));
     }
     return def;
 }
 
-int32 zParamGetInt(xModelAssetParam* param, uint32 size, const int8* tok, int32 def)
+S32 zParamGetInt(xModelAssetParam* param, U32 size, const char* tok, S32 def)
 {
-    return zParamGetInt(param, size, (int8*)tok, def);
+    return zParamGetInt(param, size, (char*)tok, def);
 }
 
-int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def)
+S32 zParamGetInt(xModelAssetParam* param, U32 size, char* tok, S32 def)
 {
-    int8* str = zParamGetString(param, size, tok, NULL);
+    char* str = zParamGetString(param, size, tok, NULL);
     if (str != NULL)
     {
         return atoi(str);
@@ -809,14 +809,14 @@ int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def)
     return def;
 }
 
-float32 zParamGetFloat(xModelAssetParam* param, uint32 size, const int8* tok, float32 def)
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, const char* tok, F32 def)
 {
-    return zParamGetFloat(param, size, (int8*)tok, def);
+    return zParamGetFloat(param, size, (char*)tok, def);
 }
 
-float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 def)
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, char* tok, F32 def)
 {
-    int8* str = zParamGetString(param, size, tok, NULL);
+    char* str = zParamGetString(param, size, tok, NULL);
     if (str != NULL)
     {
         return xatof(str);
@@ -824,21 +824,21 @@ float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 
     return def;
 }
 
-int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, const int8* tok, int32 count,
-                         float32* def, float32* result)
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const char* tok, S32 count,
+                         F32* def, F32* result)
 {
-    return zParamGetFloatList(param, size, (int8*)tok, count, def, result);
+    return zParamGetFloatList(param, size, (char*)tok, count, def, result);
 }
 
-int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 count, float32* def,
-                         float32* result)
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, char* tok, S32 count, F32* def,
+                         F32* result)
 {
-    int8* str = zParamGetString(param, size, tok, NULL);
-    int32 act = 0;
+    char* str = zParamGetString(param, size, tok, NULL);
+    S32 act = 0;
 
     if (def != NULL)
     {
-        for (int32 i = 0; i < count; i++)
+        for (S32 i = 0; i < count; i++)
         {
             result[i] = def[i];
         }
@@ -851,26 +851,26 @@ int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 
     return act;
 }
 
-int32 zParamGetVector(xModelAssetParam* param, uint32 size, const int8* tok, xVec3 vec1,
+S32 zParamGetVector(xModelAssetParam* param, U32 size, const char* tok, xVec3 vec1,
                       xVec3* vec2)
 {
-    return zParamGetVector(param, size, (int8*)tok, vec1, vec2);
+    return zParamGetVector(param, size, (char*)tok, vec1, vec2);
 }
 
-int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 vec1, xVec3* vec2)
+S32 zParamGetVector(xModelAssetParam* param, U32 size, char* tok, xVec3 vec1, xVec3* vec2)
 {
-    int8* str = zParamGetString(param, size, tok, NULL);
-    int32 list = 0;
+    char* str = zParamGetString(param, size, tok, NULL);
+    S32 list = 0;
 
     xVec3 vec;
-    *(int32*)&vec.x = *(int32*)&_1228.x;
-    *(int32*)&vec.y = *(int32*)&_1228.y;
-    *(int32*)&vec.z = *(int32*)&_1228.z;
+    *(S32*)&vec.x = *(S32*)&_1228.x;
+    *(S32*)&vec.y = *(S32*)&_1228.y;
+    *(S32*)&vec.z = *(S32*)&_1228.z;
 
     xVec3Copy(vec2, &vec1);
     if (str != NULL)
     {
-        list = xStrParseFloatList((float32*)&vec, str, 3);
+        list = xStrParseFloatList((F32*)&vec, str, 3);
         if (list > 0)
         {
             vec2->x = vec.x;
@@ -889,10 +889,10 @@ int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 vec
     return list;
 }
 
-void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::radius_enum rtype)
+void zEntGetShadowParams(xEnt* ent, xVec3* center, F32* radius, xEntShadow::radius_enum rtype)
 {
     *center = *xBoundCenter(&ent->bound);
-    float32 r;
+    F32 r;
     if (ent->entShadow != NULL)
     {
         r = ent->entShadow->radius[rtype];
@@ -924,7 +924,7 @@ void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::
     {
         zNPCCommon* zp = (zNPCCommon*)ent;
         _ShadowParams* sp = gShadowParams;
-        for (uint32 i = 0; i < 5; i++)
+        for (U32 i = 0; i < 5; i++)
         {
             if (sp->type == zp->SelfType())
             {
@@ -948,13 +948,13 @@ xMat4x3* xEntGetFrame(const xEnt* ent)
     return xModelGetFrame(ent->model);
 }
 
-void xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                const xVec3* pos, float32 radius, sound_category category, float32 delay)
+void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
+                const xVec3* pos, F32 radius, sound_category category, F32 delay)
 {
     xSndPlay3D(id, vol, pitch, priority, flags, pos, radius * _1039_zEnt, radius, category, delay);
 }
 
-int32 xNPCBasic::SelfType() const
+S32 xNPCBasic::SelfType() const
 {
     return myNPCType;
 };

@@ -10,9 +10,9 @@
 #include "zNPCSupport.h"
 #include "zNPCGoals.h"
 
-float32 f_0 = 0.0f; // needed at file level to change scheduling for
+F32 f_0 = 0.0f; // needed at file level to change scheduling for
 
-int32 zNPCGoalAlertFodder::Enter(float32 dt, void* updCtxt)
+S32 zNPCGoalAlertFodder::Enter(F32 dt, void* updCtxt)
 {
     flg_attack = 0;
     tmr_alertfod = f_0; // need non-const float to get scheduling right
@@ -20,10 +20,10 @@ int32 zNPCGoalAlertFodder::Enter(float32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-int32 zNPCGoalAlertFodder::Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* scene)
+S32 zNPCGoalAlertFodder::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
-    int32 nextgoal = 0;
+    S32 nextgoal = 0;
 
     if (globals.player.Health < 1)
     {
@@ -55,10 +55,10 @@ int32 zNPCGoalAlertFodder::Process(en_trantype* trantype, float32 dt, void* updC
 
     en_alertfod old_alertfod = this->alertfod;
 
-    int32 flag2 = this->flg_info & 2;
+    S32 flag2 = this->flg_info & 2;
     this->flg_info = this->flg_info & ~0x6;
 
-    float32 pct = npc->arena.PctFromHome(npc->Pos());
+    F32 pct = npc->arena.PctFromHome(npc->Pos());
 
     if (pct > 1.0f)
     {
@@ -155,7 +155,7 @@ int32 zNPCGoalAlertFodder::Process(en_trantype* trantype, float32 dt, void* updC
     return this->xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
-void zNPCGoalAlertFodder::GetInArena(float32 dt)
+void zNPCGoalAlertFodder::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
     xVec3 vec1;
@@ -166,7 +166,7 @@ void zNPCGoalAlertFodder::GetInArena(float32 dt)
 
     xVec3Sub(&vec1, npc->arena.Pos(), npc->zNPCCommon::Pos());
 
-    float32 rot = xVec3Length(&vec1);
+    F32 rot = xVec3Length(&vec1);
 
     if (rot < 1.0f)
     {
@@ -185,7 +185,7 @@ void zNPCGoalAlertFodder::GetInArena(float32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
-int32 zNPCGoalAttackFodder::Enter(float32 dt, void* updCtxt)
+S32 zNPCGoalAttackFodder::Enter(F32 dt, void* updCtxt)
 {
     zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
     this->haz_cattle = HAZ_Acquire();
@@ -211,7 +211,7 @@ int32 zNPCGoalAttackFodder::Enter(float32 dt, void* updCtxt)
     return this->zNPCGoalPushAnim::Enter(dt, updCtxt);
 }
 
-int32 zNPCGoalAttackFodder::Exit(float32 dt, void* updCtxt)
+S32 zNPCGoalAttackFodder::Exit(F32 dt, void* updCtxt)
 {
     if (this->haz_cattle)
     {
@@ -224,12 +224,12 @@ int32 zNPCGoalAttackFodder::Exit(float32 dt, void* updCtxt)
 
 #define f_1370 1.0f
 
-int32 zNPCGoalAttackFodder::SyncCattleProd()
+S32 zNPCGoalAttackFodder::SyncCattleProd()
 {
     xVec3 vec1;
     zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
 
-    int32 var1 = this->flg_attack & 0x3;
+    S32 var1 = this->flg_attack & 0x3;
 
     if (!this->haz_cattle)
     {
@@ -257,7 +257,7 @@ int32 zNPCGoalAttackFodder::SyncCattleProd()
     return this->flg_attack & 0x3;
 }
 
-int32 zNPCGoalAttackFodder::Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* scene)
+S32 zNPCGoalAttackFodder::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     if (!this->haz_cattle)
     {
@@ -272,7 +272,7 @@ int32 zNPCGoalAttackFodder::Process(en_trantype* trantype, float32 dt, void* upd
     return this->zNPCGoalPushAnim::Process(trantype, dt, updCtxt, scene);
 }
 
-void zNPCGoalAlertFodBzzt::GetInArena(float32 dt)
+void zNPCGoalAlertFodBzzt::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
     xVec3 dir;
@@ -281,7 +281,7 @@ void zNPCGoalAlertFodBzzt::GetInArena(float32 dt)
 
     xVec3Sub(&dir, npc->arena.Pos(), npc->zNPCCommon::Pos());
 
-    float32 rot = xVec3Length(&dir);
+    F32 rot = xVec3Length(&dir);
 
     if (rot < 1.0f)
     {
@@ -296,7 +296,7 @@ void zNPCGoalAlertFodBzzt::GetInArena(float32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
-void zNPCGoalAlertChomper::GetInArena(float32 dt)
+void zNPCGoalAlertChomper::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
     xVec3 vec1;
@@ -307,7 +307,7 @@ void zNPCGoalAlertChomper::GetInArena(float32 dt)
 
     xVec3Sub(&vec1, npc->arena.Pos(), npc->zNPCCommon::Pos());
 
-    float32 rot = xVec3Length(&vec1);
+    F32 rot = xVec3Length(&vec1);
 
     if (rot < 1.0f)
     {
@@ -326,7 +326,7 @@ void zNPCGoalAlertChomper::GetInArena(float32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
-void zNPCGoalAlertTarTar::GetInArena(float32 dt)
+void zNPCGoalAlertTarTar::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
     xVec3 vec1;
@@ -337,7 +337,7 @@ void zNPCGoalAlertTarTar::GetInArena(float32 dt)
 
     xVec3Sub(&vec1, npc->arena.Pos(), npc->zNPCCommon::Pos());
 
-    float32 rot = xVec3Length(&vec1);
+    F32 rot = xVec3Length(&vec1);
 
     if (rot < 1.0f)
     {
@@ -356,7 +356,7 @@ void zNPCGoalAlertTarTar::GetInArena(float32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
-void zNPCGoalAlertChuck::GetInArena(float32 dt)
+void zNPCGoalAlertChuck::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
     xVec3 vec1;
@@ -367,7 +367,7 @@ void zNPCGoalAlertChuck::GetInArena(float32 dt)
 
     xVec3Sub(&vec1, npc->arena.Pos(), npc->zNPCCommon::Pos());
 
-    float32 rot = xVec3Length(&vec1);
+    F32 rot = xVec3Length(&vec1);
 
     if (rot < 1.0f)
     {
@@ -386,7 +386,7 @@ void zNPCGoalAlertChuck::GetInArena(float32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
-void zNPCGoalAlertSlick::GetInArena(float32 dt)
+void zNPCGoalAlertSlick::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
     xVec3 vec1;
@@ -397,7 +397,7 @@ void zNPCGoalAlertSlick::GetInArena(float32 dt)
 
     xVec3Sub(&vec1, npc->arena.Pos(), npc->zNPCCommon::Pos());
 
-    float32 rot = xVec3Length(&vec1);
+    F32 rot = xVec3Length(&vec1);
 
     if (rot < 1.0f)
     {
@@ -421,12 +421,12 @@ void zNPCGoalDogLaunch::SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3
     this->ViciousAttack(unk1, unk2, unk3, 1);
 }
 
-uint8 zNPCGoalPatThrow::CollReview(void*)
+U8 zNPCGoalPatThrow::CollReview(void*)
 {
     return 0;
 }
 
-uint8 zNPCGoalDogLaunch::CollReview(void*)
+U8 zNPCGoalDogLaunch::CollReview(void*)
 {
     return 0;
 }
@@ -443,7 +443,7 @@ void zNPCGoalDead::DieWithABang()
     flg_deadinfo &= ~2;
 }
 
-void xGoal::AddFlags(int32 flags)
+void xGoal::AddFlags(S32 flags)
 {
     this->flg_able |= flags;
 }
@@ -453,23 +453,23 @@ xPsyche* xGoal::GetPsyche() const
     return psyche;
 }
 
-xVec3* zNPCCommon::XZVecToPlayer(xVec3* unk1, float32* unk2)
+xVec3* zNPCCommon::XZVecToPlayer(xVec3* unk1, F32* unk2)
 {
     return zNPCCommon::XZVecToPos(unk1, xEntGetPos(&globals.player.ent), unk2);
 }
 
-RwMatrix* zNPCCommon::BoneMat(int32 unk) const
+RwMatrix* zNPCCommon::BoneMat(S32 unk) const
 {
     return &this->model->Mat[unk];
 }
 
-RwV3d* zNPCCommon::BonePos(int32 unk) const
+RwV3d* zNPCCommon::BonePos(S32 unk) const
 {
     return &this->model->Mat[unk].pos;
 }
 
 // Return type is probably wrong
-int32 zNPCCommon::XYZDstSqToPlayer(xVec3* unk)
+S32 zNPCCommon::XYZDstSqToPlayer(xVec3* unk)
 {
     return XYZDstSqToPos(xEntGetPos(&globals.player.ent), unk);
 }
@@ -483,7 +483,7 @@ xVec3* zNPCCommon::Center()
     return xEntGetCenter(this);
 }
 
-void zNPCCommon::ModelScaleSet(float32 unk)
+void zNPCCommon::ModelScaleSet(F32 unk)
 {
     ModelScaleSet(unk, unk, unk);
 }
@@ -501,7 +501,7 @@ void xDrawCyl(const xVec3*, float, float, unsigned int)
 {
 }
 
-float32 NPCArena::Radius(float32 unk)
+F32 NPCArena::Radius(F32 unk)
 {
     return unk * rad_arena;
 }
@@ -515,7 +515,7 @@ void NPCBattle::JoinBattle(zNPCRobot*)
 {
 }
 
-int32 NPCArena::IncludesPlayer(float32 rad_thresh, xVec3* vec)
+S32 NPCArena::IncludesPlayer(F32 rad_thresh, xVec3* vec)
 {
     if (NPCC_LampStatus())
     {
@@ -526,7 +526,7 @@ int32 NPCArena::IncludesPlayer(float32 rad_thresh, xVec3* vec)
     return 0;
 }
 
-int32 NPCArena::IsReady()
+S32 NPCArena::IsReady()
 {
     // TODO: not matching, not sure what this is
     return this->rad_arena == 1.0f; // @1130 check this float value
@@ -536,7 +536,7 @@ void NPCBattle::LeaveBattle(zNPCRobot*)
 {
 }
 
-float32 zNPCRobot::FacePlayer(float32 dt, float32 spd_turn)
+F32 zNPCRobot::FacePlayer(F32 dt, F32 spd_turn)
 {
     xVec3* pos = xEntGetPos(&globals.player.ent);
     return FacePos(pos, dt, spd_turn);
@@ -546,7 +546,7 @@ void NPCArena::DBG_Draw(zNPCCommon*)
 {
 }
 
-zMovePoint* zNPCArfArf::GetTelepoint(int32 unk)
+zMovePoint* zNPCArfArf::GetTelepoint(S32 unk)
 {
     return nav_dest;
 }
@@ -557,16 +557,16 @@ void zNPCHazard::SetNPCOwner(zNPCCommon* owner)
 }
 */
 
-int32 HAZNotify::Notify(en_haznote note, NPCHazard* haz)
+S32 HAZNotify::Notify(en_haznote note, NPCHazard* haz)
 {
     return 0;
 }
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

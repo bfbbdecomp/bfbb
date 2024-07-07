@@ -18,18 +18,18 @@
 #include "xDebug.h"
 
 extern char zNPCTypeCommon_strings[];
-extern int8* g_strz_lassanim[3];
-extern int32 g_hash_lassanim[3];
-extern volatile int32 g_skipDescent;
+extern char* g_strz_lassanim[3];
+extern S32 g_hash_lassanim[3];
+extern volatile S32 g_skipDescent;
 extern NPCConfig* g_ncfghead;
 extern NPCSndTrax g_sndTrax_General[];
-extern float32 lbl_803CE4C0;
-extern int32 g_flg_wonder;
-extern int32 g_isConversation;
+extern F32 lbl_803CE4C0;
+extern S32 g_flg_wonder;
+extern S32 g_isConversation;
 extern xBase* g_ownerConversation;
-extern float32 g_tmr_talkless;
+extern F32 g_tmr_talkless;
 
-xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_Common(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCCommon* com = NULL;
 
@@ -52,7 +52,7 @@ void ZNPC_Destroy_Common(xFactoryInst* inst)
 
 void ZNPC_Common_Startup()
 {
-    int32 i;
+    S32 i;
 
     for (i = 0; i < 3; i++)
     {
@@ -100,7 +100,7 @@ void zNPCCommon_ScenePostInit()
     NPCSupport_ScenePostInit();
 }
 
-void zNPCCommon_Timestep(float32 dt)
+void zNPCCommon_Timestep(F32 dt)
 {
     NPCSupport_Timestep(dt);
     NPCS_SndTimersUpdate(dt);
@@ -117,7 +117,7 @@ void zNPCCommon::Destroy()
     SelfDestroy();
 }
 
-void zNPCCommon::Process(xScene* xscn, float32 dt)
+void zNPCCommon::Process(xScene* xscn, F32 dt)
 {
     if ((flg_misc & 4) != 0)
     {
@@ -129,7 +129,7 @@ void zNPCCommon::Process(xScene* xscn, float32 dt)
 
 void zNPCCommon::ParseProps()
 {
-    for (int32 i = 0x3f; i < 0x42; i++)
+    for (S32 i = 0x3f; i < 0x42; i++)
     {
         switch (i)
         {
@@ -165,7 +165,7 @@ void zNPCCommon::SelfDestroy()
     psy_instinct = NULL;
 }
 
-int32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
+S32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
 {
     NPCConfig* cfg = cfg_npc;
     if (!(cfg->flg_vert & 1 << vid))
@@ -187,12 +187,12 @@ void zNPCCommon_WonderReset()
     g_flg_wonder = 0;
 }
 
-int32 NPCC_NPCIsConversing()
+S32 NPCC_NPCIsConversing()
 {
     return g_isConversation;
 }
 
-void zNPCCommon::WonderOfTalking(int32 inprogress, xBase* owner)
+void zNPCCommon::WonderOfTalking(S32 inprogress, xBase* owner)
 {
     if (inprogress)
     {
@@ -213,9 +213,9 @@ void zNPCCommon::WonderOfTalking(int32 inprogress, xBase* owner)
     g_ownerConversation = NULL;
 }
 
-int32 zNPCCommon::SomethingWonderful()
+S32 zNPCCommon::SomethingWonderful()
 {
-    int32 flg_wonder = g_flg_wonder;
+    S32 flg_wonder = g_flg_wonder;
 
     if (globals.player.Health < 1)
     {
@@ -258,11 +258,11 @@ int32 zNPCCommon::SomethingWonderful()
 
 /*
 // Off by one instruction, I don't understand what the original code is doing
-int32 zNPCCommon::SndIsAnyPlaying()
+S32 zNPCCommon::SndIsAnyPlaying()
 {
-    int32 iVar1 = 0;
+    S32 iVar1 = 0;
 
-    for (int32 i = 0; i < 4; i++)
+    for (S32 i = 0; i < 4; i++)
     {
         iVar1 = xSndIsPlaying(0, this->id);
         if (iVar1)
@@ -275,7 +275,7 @@ int32 zNPCCommon::SndIsAnyPlaying()
 }
 */
 
-uint32 zNPCCommon::LassoInit()
+U32 zNPCCommon::LassoInit()
 {
     lassdata = PRIV_GetLassoData();
     if (lassdata != NULL)
@@ -339,7 +339,7 @@ void zNPCCommon::AddDEVGoals(xPsyche*)
 {
 }
 
-uint32 zNPCCommon::DBG_Name()
+U32 zNPCCommon::DBG_Name()
 {
     return 0;
 }
@@ -356,7 +356,7 @@ void zNPCCommon::DBG_RptDataSize()
 {
 }
 
-uint32 zNPCCommon::DBG_InstName()
+U32 zNPCCommon::DBG_InstName()
 {
     return this->DBG_Name();
 }
@@ -393,7 +393,7 @@ void zNPCCommon::SpeakEnd()
 {
 }
 
-void zNPCCommon::SpeakStart(uint32 param_1, uint32 param_2, int32 param_3)
+void zNPCCommon::SpeakStart(U32 param_1, U32 param_2, S32 param_3)
 {
 }
 
@@ -401,7 +401,7 @@ void zNPCCommon::SpeakStop()
 {
 }
 
-float32 zNPCCommon::GenShadCacheRad()
+F32 zNPCCommon::GenShadCacheRad()
 {
     return lbl_803CE4C0;
 }
@@ -434,7 +434,7 @@ float32 zNPCCommon::GenShadCacheRad()
 // vtable[18] = ColChkByFlags(CFv)
 // vtable[19] = ColPenByFlags(CFv)
 // vtable[20] = PhysicsFlags(CFv)
-xNPCBasic::xNPCBasic(int32 value)
+xNPCBasic::xNPCBasic(S32 value)
 {
     myNPCType = value;
 }
@@ -444,12 +444,12 @@ void xNPCBasic::Setup()
 {
 }
 
-void xNPCBasic::Move(xScene* xscn, float32 dt, xEntFrame* frm)
+void xNPCBasic::Move(xScene* xscn, F32 dt, xEntFrame* frm)
 {
 }
 
-int32 xNPCBasic::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                          xBase* toParamWidget, int32* handled)
+S32 xNPCBasic::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                          xBase* toParamWidget, S32* handled)
 {
     return 1;
 }
@@ -481,17 +481,17 @@ void xPsyche::ImmTranOff()
     flg_psyche &= 0xfffffffe;
 }
 
-int32 xPsyche::ImmTranIsOn()
+S32 xPsyche::ImmTranIsOn()
 {
     return flg_psyche & 1;
 }
 
-int32 xPsyche::HasGoal(int32 goal)
+S32 xPsyche::HasGoal(S32 goal)
 {
     return FindGoal(goal) != NULL;
 }
 
-uint32 xSndIsPlaying(uint32 assetID, uint32 parid)
+U32 xSndIsPlaying(U32 assetID, U32 parid)
 {
     return iSndIsPlaying(assetID, parid) & 0xff;
 }

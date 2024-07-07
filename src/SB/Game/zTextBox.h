@@ -13,32 +13,32 @@ struct ztextbox : xBase
     {
         struct color_type
         {
-            uint8 r;
-            uint8 g;
-            uint8 b;
-            uint8 a;
+            U8 r;
+            U8 g;
+            U8 b;
+            U8 a;
         };
 
-        uint32 text;
-        basic_rect<float32> bounds;
-        uint32 font;
+        U32 text;
+        basic_rect<F32> bounds;
+        U32 font;
         struct
         {
-            float32 width;
-            float32 height;
+            F32 width;
+            F32 height;
         } size;
         struct
         {
-            float32 x;
-            float32 y;
+            F32 x;
+            F32 y;
         } space;
         color_type color;
         struct
         {
-            float32 left;
-            float32 top;
-            float32 right;
-            float32 bottom;
+            F32 left;
+            F32 top;
+            F32 right;
+            F32 bottom;
         } inset;
         enum
         {
@@ -53,12 +53,12 @@ struct ztextbox : xBase
             EX_DOWN,
             MAX_EX
         } expand;
-        float32 max_height;
+        F32 max_height;
         struct
         {
-            uint32 type;
+            U32 type;
             color_type color;
-            uint32 texture;
+            U32 texture;
         } backdrop;
     };
 
@@ -73,30 +73,30 @@ struct ztextbox : xBase
     asset_type* asset;
     xtextbox tb;
     const char* segments[16];
-    uint32 segments_size;
+    U32 segments_size;
     ztextbox* next;
     ztextbox* prev;
     RwRaster* bgtex;
 
     static void init();
-    static void load(xBase& data, xDynAsset& asset, ulong32);
-    static void update_all(xScene& s, float32 dt);
+    static void load(xBase& data, xDynAsset& asset, size_t);
+    static void update_all(xScene& s, F32 dt);
     static void render_all();
 
     void load(const asset_type& a);
-    void update(xScene&, float32);
+    void update(xScene&, F32);
     void reset();
     void render();
     void render_backdrop();
     void activate();
     void deactivate();
     void set_text(const char* s);
-    void set_text(uint32 id);
+    void set_text(U32 id);
     void add_text(const char* s);
-    void add_text(uint32 id);
+    void add_text(U32 id);
     void clear_text();
     void refresh();
-    void get_text(char* buffer, uint32 buffer_size) const;
+    void get_text(char* buffer, U32 buffer_size) const;
     bool visible();
 };
 

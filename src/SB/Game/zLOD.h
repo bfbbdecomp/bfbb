@@ -6,21 +6,21 @@
 struct zLODTable
 {
     xModelBucket** baseBucket;
-    float32 noRenderDist;
+    F32 noRenderDist;
     xModelBucket** lodBucket[3];
-    float32 lodDist[3];
+    F32 lodDist[3];
 };
 
 struct zLODManager
 {
-    int32 numextra;
+    S32 numextra;
     zLODTable* lod;
     xModelInstance* model;
-    float32 adjustNoRenderDist;
+    F32 adjustNoRenderDist;
 };
 
 void zLOD_Setup();
-void zLOD_Update(uint32 percent_update);
+void zLOD_Update(U32 percent_update);
 zLODTable* zLOD_Get(xEnt* ent);
 void AddToLODList(xModelInstance* model);
 xEnt* AddToLODList(xEnt* ent);

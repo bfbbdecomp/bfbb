@@ -6,10 +6,10 @@
 struct PickupTranslEntry
 {
     char* tname;
-    uint32 hval;
-    uint8 type;
-    uint8 subtype;
-    uint16 flags;
+    U32 hval;
+    U8 type;
+    U8 subtype;
+    U16 flags;
 };
 
 // clang-format off
@@ -38,12 +38,12 @@ static PickupTranslEntry ptranstbl[] =
 };
 // clang-format on
 
-static uint32 ptranstbl_size = sizeof(ptranstbl) / sizeof(ptranstbl[0]);
+static U32 ptranstbl_size = sizeof(ptranstbl) / sizeof(ptranstbl[0]);
 
 void zPickupTableInit()
 {
     zAssetPickup* ptbl = (zAssetPickup*)(globals.pickupTable + 1);
-    uint32 i, j;
+    U32 i, j;
 
     for (i = 0; i < ptranstbl_size; i++)
     {

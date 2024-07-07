@@ -5,14 +5,14 @@
 
 struct _tagiPad
 {
-    int32 port;
+    S32 port;
 };
 
 struct _tagxPad;
 struct _tagxRumble;
 
-int32 iPadInit();
-_tagxPad* iPadEnable(_tagxPad* pad, int16 port);
+S32 iPadInit();
+_tagxPad* iPadEnable(_tagxPad* pad, S16 port);
 void iPadStopRumble(_tagxPad* pad);
 void iPadStopRumble();
 void iPadStartRumble(_tagxPad* pad, _tagxRumble* rumble);

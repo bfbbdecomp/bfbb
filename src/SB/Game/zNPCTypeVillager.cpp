@@ -2,10 +2,10 @@
 
 #include "zNPCTypes.h"
 
-extern int8* g_strz_folkanim[26];
-extern uint32 g_hash_folkanim[26];
-extern int8* g_strz_platanim[2];
-extern uint32 g_hash_platanim[2];
+extern char* g_strz_folkanim[26];
+extern U32 g_hash_folkanim[26];
+extern char* g_strz_platanim[2];
+extern U32 g_hash_platanim[2];
 extern zParEmitter* g_pemit_aqualeak;
 extern char zNPCTypeVillager_stringBase0[];
 extern xParEmitterCustomSettings g_parf_aqualeak;
@@ -13,7 +13,7 @@ extern xVec3 g_O3;
 
 void ZNPC_Villager_Startup()
 {
-    int32 i;
+    S32 i;
 
     for (i = 0; i < 26; i++)
     {
@@ -48,12 +48,12 @@ void zNPCVillager_ScenePostInit()
     FOLK_InitEffects();
 }
 
-void zNPCVillager_SceneTimestep(float32 dt)
+void zNPCVillager_SceneTimestep(F32 dt)
 {
     zNPCBubbleBuddy_AlphaUpdate(dt);
 }
 
-xFactoryInst* ZNPC_Create_Villager(int32 who, RyzMemGrow* growCtxt, void*)
+xFactoryInst* ZNPC_Create_Villager(S32 who, RyzMemGrow* growCtxt, void*)
 {
     zNPCVillager* vil;
 
@@ -167,9 +167,9 @@ void FOLK_KillEffects()
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

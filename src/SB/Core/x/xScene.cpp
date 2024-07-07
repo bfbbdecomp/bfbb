@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-extern float32 lbl_803CCF78;
+extern F32 lbl_803CCF78;
 
 namespace
 {
@@ -22,15 +22,15 @@ namespace
     {
         const xRay3& ray;
         xCollis& coll;
-        uint8 chkby;
-        uint8 collType;
+        U8 chkby;
+        U8 collType;
 
-        cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType);
+        cb_ray_hits_ent(const xRay3& ray, xCollis& coll, U8 chkby, U8 collType);
         bool operator()(xEnt& ent, xGridBound& gridb);
     };
 } // namespace
 
-void xSceneInit(xScene* sc, uint16 num_trigs, uint16 num_stats, uint16 num_dyns, uint16 num_npcs)
+void xSceneInit(xScene* sc, U16 num_trigs, U16 num_stats, U16 num_dyns, U16 num_npcs)
 {
     sc->flags = 0;
     sc->num_trigs_allocd = num_trigs;
@@ -42,7 +42,7 @@ void xSceneInit(xScene* sc, uint16 num_trigs, uint16 num_stats, uint16 num_dyns,
     sc->num_npcs_allocd = num_npcs;
     sc->npcs = (xEnt**)xMemAllocSize(num_npcs * sizeof(xEnt*));
     sc->num_ents_allocd =
-        (uint32)num_trigs + (uint32)num_stats + (uint32)num_dyns + (uint32)num_npcs;
+        (U32)num_trigs + (U32)num_stats + (U32)num_dyns + (U32)num_npcs;
     sc->num_act_ents = 0;
     sc->act_ents = (xEnt**)xMemAllocSize(sc->num_ents_allocd * sizeof(xEnt*));
     sc->num_nact_ents = 0;
@@ -104,7 +104,7 @@ void xSceneAddEnt(xScene* sc, xEnt* ent)
     sc->act_ents[sc->num_act_ents++] = ent;
 }
 
-xBase* xSceneResolvID(xScene* sc, uint32 id)
+xBase* xSceneResolvID(xScene* sc, U32 id)
 {
     if (sc->resolvID)
     {
@@ -114,7 +114,7 @@ xBase* xSceneResolvID(xScene* sc, uint32 id)
     return NULL;
 }
 
-const char* xSceneID2Name(xScene* sc, uint32 id)
+const char* xSceneID2Name(xScene* sc, U32 id)
 {
     if (sc->id2Name)
     {
@@ -126,7 +126,7 @@ const char* xSceneID2Name(xScene* sc, uint32 id)
 
 void xSceneForAllEnts(xScene* sc, xSceneEntCallback func, void* data)
 {
-    for (uint16 i = 0; i < sc->num_act_ents; i++)
+    for (U16 i = 0; i < sc->num_act_ents; i++)
     {
         if (!func(sc->act_ents[i], sc, data))
         {
@@ -137,7 +137,7 @@ void xSceneForAllEnts(xScene* sc, xSceneEntCallback func, void* data)
 
 void xSceneForAllStatics(xScene* sc, xSceneEntCallback func, void* data)
 {
-    for (uint16 i = 0; i < sc->num_stats; i++)
+    for (U16 i = 0; i < sc->num_stats; i++)
     {
         if (!func(sc->stats[i], sc, data))
         {
@@ -148,7 +148,7 @@ void xSceneForAllStatics(xScene* sc, xSceneEntCallback func, void* data)
 
 void xSceneForAllDynamics(xScene* sc, xSceneEntCallback func, void* data)
 {
-    for (uint16 i = 0; i < sc->num_dyns; i++)
+    for (U16 i = 0; i < sc->num_dyns; i++)
     {
         if (!func(sc->dyns[i], sc, data))
         {
@@ -159,7 +159,7 @@ void xSceneForAllDynamics(xScene* sc, xSceneEntCallback func, void* data)
 
 void xSceneForAllNPCs(xScene* sc, xSceneEntCallback func, void* data)
 {
-    for (uint16 i = 0; i < sc->num_npcs; i++)
+    for (U16 i = 0; i < sc->num_npcs; i++)
     {
         if (!func(sc->npcs[i], sc, data))
         {
@@ -250,7 +250,7 @@ void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
     }
 }
 
-cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, uint8 chkby, uint8 collType)
+cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, U8 chkby, U8 collType)
     : ray(ray), coll(coll), chkby(chkby), collType(collType)
 {
 }
@@ -290,10 +290,10 @@ void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* para
 // Float memes
 void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 {
-    float32 fVar7 = lbl_803CCF78 * (param_1->x * ((param_2->upper).x + (param_2->lower).x) +
+    F32 fVar7 = lbl_803CCF78 * (param_1->x * ((param_2->upper).x + (param_2->lower).x) +
                                     param_1->y * ((param_2->upper).y + (param_2->lower).y) +
                                     param_1->z * ((param_2->upper).z + (param_2->lower).z));
-    float32 fVar1 = lbl_803CCF78 * (iabs(param_1->x * ((param_2->upper).x - (param_2->lower).x)) +
+    F32 fVar1 = lbl_803CCF78 * (iabs(param_1->x * ((param_2->upper).x - (param_2->lower).x)) +
                                     iabs(param_1->y * ((param_2->upper).y - (param_2->lower).y)) +
                                     iabs(param_1->z * ((param_2->upper).z - (param_2->lower).z)));
     *param_3 = fVar7 - fVar1;
@@ -302,11 +302,11 @@ void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 #endif
 
 static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle,
-                                           float32, void* data);
+                                           F32, void* data);
 
 static RpCollisionTriangle* sectorNearestFloorCB(RpIntersection* intersection, RpWorldSector*,
                                                  RpCollisionTriangle* collTriangle,
-                                                 float32 distance, void* data)
+                                                 F32 distance, void* data)
 {
     return nearestFloorCB(intersection, collTriangle, distance, data);
 }
@@ -368,7 +368,7 @@ void xEntEnable(xEnt* ent)
     xBaseEnable(ent);
 }
 
-template <> uint16 range_limit<uint16>(uint16 v, uint16 minv, uint16 maxv)
+template <> U16 range_limit<U16>(U16 v, U16 minv, U16 maxv)
 {
     if (v <= minv)
     {
@@ -389,9 +389,9 @@ void xBoxFromRay(xBox& box, const xRay3& ray)
 
     if (ray.flags & 0x400)
     {
-        float32 x = ray.dir.x * ray.min_t;
-        float32 y = ray.dir.y * ray.min_t;
-        float32 z = ray.dir.z * ray.min_t;
+        F32 x = ray.dir.x * ray.min_t;
+        F32 y = ray.dir.y * ray.min_t;
+        F32 z = ray.dir.z * ray.min_t;
 
         line.p1.x = ray.origin.x + x;
         line.p1.y = ray.origin.y + y;
@@ -406,7 +406,7 @@ void xBoxFromRay(xBox& box, const xRay3& ray)
 
     if (ray.flags & 0x800)
     {
-        float32 dist = (ray.flags & 0x400) ? ray.max_t - ray.min_t : ray.max_t;
+        F32 dist = (ray.flags & 0x400) ? ray.max_t - ray.min_t : ray.max_t;
 
         line.p2.x = ray.dir.x * dist;
         line.p2.y = ray.dir.y * dist;
@@ -438,9 +438,9 @@ void xBoxFromLine(xBox& box, const xLine3& line)
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

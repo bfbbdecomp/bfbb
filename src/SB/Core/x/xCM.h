@@ -6,12 +6,12 @@
 
 struct xCreditsData
 {
-    uint32 dummy;
+    U32 dummy;
 };
 
-void xCMupdate(float32 dt);
+void xCMupdate(F32 dt);
 void xCMrender();
-void xCMstart(xCreditsData* data, float32, xBase* parent);
+void xCMstart(xCreditsData* data, F32, xBase* parent);
 void xCMstop();
 
 #endif

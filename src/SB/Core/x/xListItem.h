@@ -5,7 +5,7 @@
 
 template <class T> struct xListItem
 {
-    int32 flg_travFilter;
+    S32 flg_travFilter;
     T* next;
     T* prev;
 

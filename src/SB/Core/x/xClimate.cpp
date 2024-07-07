@@ -16,7 +16,7 @@ const float snow_life = 3.0f;
 const xVec3 snow_vel = { 0.0f, -2.0f, 0.0f };
 const xVec3 snow_dvel = { 0.1f, 0.1f, 0.1f };
 
-void xClimateVecFromAngle(float32 angleDegrees, xVec3* vec)
+void xClimateVecFromAngle(F32 angleDegrees, xVec3* vec)
 {
     xMat3x3 Mat;
 
@@ -67,13 +67,13 @@ void xClimateInitAsset(_tagClimate* climate, xEnvAsset* asset)
 }
 #endif
 
-void xClimateSetSnow(float32 stre)
+void xClimateSetSnow(F32 stre)
 {
     sClimate->rain.rain = 0;
     sClimate->rain.strength = stre;
 }
 
-void xClimateSetRain(float32 stre)
+void xClimateSetRain(F32 stre)
 {
     sClimate->rain.rain = 1;
     sClimate->rain.strength = stre;
@@ -103,8 +103,8 @@ void UpdateRain(_tagClimate* climate, float seconds)
 
     if (r->rain != 0)
     {
-        int32 total_rain_drops = 25.0f * r->strength;
-        for (int32 i = 0; i < total_rain_drops; i++)
+        S32 total_rain_drops = 25.0f * r->strength;
+        for (S32 i = 0; i < total_rain_drops; i++)
         {
             GetPosBigDogWhattupFool(&info.pos);
             info.pos.x += 25.0f * xurand() - 12.5f;
@@ -116,20 +116,20 @@ void UpdateRain(_tagClimate* climate, float seconds)
     }
 
     xVec3 fool;
-    int32 total_snow_flakes = 25.0f * r->strength;
+    S32 total_snow_flakes = 25.0f * r->strength;
     info.custom_flags |= 0x202;
     GetPosBigDogWhattupFool(&fool);
     if (gPTankDisable)
     {
-        for (int32 i = 0; i < total_snow_flakes; i++)
+        for (S32 i = 0; i < total_snow_flakes; i++)
         {
             info.pos = fool;
             info.pos.x += 45.0f * xurand() - 22.5f;
             info.pos.z += 25.0f * xurand() - 22.5f;
 
-            float32 xx = info.pos.x - fool.x;
-            float32 zz = info.pos.z - fool.z;
-            float32 perc = 1.0f - xx * zz / 506.25f;
+            F32 xx = info.pos.x - fool.x;
+            F32 zz = info.pos.z - fool.z;
+            F32 perc = 1.0f - xx * zz / 506.25f;
             info.pos.y += 4.0f * perc + 4.0f;
 
             info.vel.x = snow_dvel.x * xurand() + snow_vel.x;
@@ -142,21 +142,21 @@ void UpdateRain(_tagClimate* climate, float seconds)
         return;
     }
 
-    int32 num = (float32)total_snow_flakes * 0.1f;
+    S32 num = (F32)total_snow_flakes * 0.1f;
     if (num > 0)
     {
         xVec3* pos = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
         xVec3* vel = pos + num;
         if (pos != NULL)
         {
-            for (int32 i = 0; i < num; i++)
+            for (S32 i = 0; i < num; i++)
             {
                 *pos = fool;
                 pos->x += 45.0f * xurand() - 22.5f;
                 pos->z += 45.0f * xurand() - 22.5f;
 
-                float32 zz = pos->z - fool.z;
-                float32 xx = pos->x - fool.x;
+                F32 zz = pos->z - fool.z;
+                F32 xx = pos->x - fool.x;
                 float perc = (1.0f - (xx * xx + zz * zz) / 506.25f);
 
                 pos->y += 4.0f * perc + 4.0f;
@@ -176,18 +176,18 @@ void UpdateRain(_tagClimate* climate, float seconds)
 }
 #endif
 
-void UpdateWind(_tagClimate* climate, float32 seconds)
+void UpdateWind(_tagClimate* climate, F32 seconds)
 {
     return;
 }
 
-void xClimateUpdate(_tagClimate* climate, float32 seconds)
+void xClimateUpdate(_tagClimate* climate, F32 seconds)
 {
     UpdateRain(climate, seconds);
     UpdateWind(climate, seconds);
 }
 
-void xVec3Init(xVec3* vec, float32 x, float32 y, float32 z)
+void xVec3Init(xVec3* vec, F32 x, F32 y, F32 z)
 {
     vec->x = x;
     vec->y = y;

@@ -10,9 +10,9 @@ struct ztalkbox : xBase
 {
     struct asset_type : xDynAsset
     {
-        uint32 dialog_box;
-        uint32 prompt_box;
-        uint32 quit_box;
+        U32 dialog_box;
+        U32 prompt_box;
+        U32 quit_box;
         bool trap : 8;
         bool pause : 8;
         bool allow_quit : 8;
@@ -21,7 +21,7 @@ struct ztalkbox : xBase
         bool show : 8;
         bool hide : 8;
         bool audio_effect : 8;
-        uint32 teleport;
+        U32 teleport;
         struct
         {
             struct
@@ -31,16 +31,16 @@ struct ztalkbox : xBase
                 bool sound : 8;
                 bool event : 8;
             } type;
-            float32 delay;
-            int32 which_event;
+            F32 delay;
+            S32 which_event;
         } auto_wait;
         struct
         {
-            uint32 skip;
-            uint32 noskip;
-            uint32 quit;
-            uint32 noquit;
-            uint32 yesno;
+            U32 skip;
+            U32 noskip;
+            U32 quit;
+            U32 noquit;
+            U32 yesno;
         } prompt;
     };
 
@@ -55,7 +55,7 @@ struct ztalkbox : xBase
     struct callback
     {
         callback();
-        virtual void on_signal(uint32);
+        virtual void on_signal(U32);
         virtual void on_start();
         virtual void on_stop();
         virtual void on_answer(answer_enum);
@@ -80,16 +80,16 @@ struct ztalkbox : xBase
     zNPCCommon* npc;
 
     static void init();
-    static void load(xBase& data, xDynAsset& asset, ulong32);
-    static void update_all(xScene& s, float32 dt);
+    static void load(xBase& data, xDynAsset& asset, size_t);
+    static void update_all(xScene& s, F32 dt);
     static void render_all();
     static void reset_all();
-    static void permit(uint32 add_flags, uint32 remove_flags);
+    static void permit(U32 add_flags, U32 remove_flags);
 
-    void start_talk(uint32 textID, callback*, zNPCCommon*); // FIXME: params not verified
+    void start_talk(U32 textID, callback*, zNPCCommon*); // FIXME: params not verified
     void stop_talk();
 
-    void set_text(uint32 textID);
+    void set_text(U32 textID);
 };
 
 #endif

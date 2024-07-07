@@ -5,11 +5,11 @@
 
 struct zNPCGoalExist : zNPCGoalCommon
 {
-    zNPCGoalExist(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalExist(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
-xFactoryInst* GOALCreate_Boss(int32 who, RyzMemGrow* grow, void*);
+xFactoryInst* GOALCreate_Boss(S32 who, RyzMemGrow* grow, void*);
 
 #endif

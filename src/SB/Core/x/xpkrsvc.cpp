@@ -9,21 +9,21 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
-extern int8 xpkrsvc_strings[];
+extern char xpkrsvc_strings[];
 
 extern st_PACKER_READ_FUNCS g_pkr_read_funcmap_original;
 extern st_PACKER_READ_FUNCS g_pkr_read_funcmap; // = g_pkr_read_funcmap_original;
 st_PACKER_READ_DATA g_readdatainst[16] = {};
 
 st_HIPLOADFUNCS* g_hiprf;
-uint32 g_loadlock;
-int32 pkr_sector_size;
-volatile int32 g_packinit;
-volatile int32 g_memalloc_pair;
-volatile int32 g_memalloc_runtot;
-volatile int32 g_memalloc_runfree;
+U32 g_loadlock;
+S32 pkr_sector_size;
+volatile S32 g_packinit;
+volatile S32 g_memalloc_pair;
+volatile S32 g_memalloc_runtot;
+volatile S32 g_memalloc_runfree;
 
-st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
+st_PACKER_READ_FUNCS* PKRGetReadFuncs(S32 apiver)
 {
     switch (apiver)
     {
@@ -36,7 +36,7 @@ st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
 
 #ifdef NON_MATCHING
 // Small reordering
-int32 PKRStartup()
+S32 PKRStartup()
 {
     if (g_packinit++ == 0)
     {
@@ -48,31 +48,31 @@ int32 PKRStartup()
 }
 #endif
 
-int32 PKRShutdown()
+S32 PKRShutdown()
 {
     g_packinit--;
     return g_packinit;
 }
 
-int32 PKRLoadStep(int32)
+S32 PKRLoadStep(S32)
 {
     return PKR_LoadStep_Async();
 }
 
-st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, int8* pkgfile, uint32 opts, int32* cltver,
+st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* cltver,
                                   st_PACKER_ASSETTYPE* typelist)
 {
     // I'm pretty sure this is just a pointer to an array on the heap
     // But it needs to be an array of pointers to generate correct code ???
-    int8* tocbuf_RAW[1];
+    char* tocbuf_RAW[1];
     tocbuf_RAW[0] = NULL;
     st_PACKER_READ_DATA* pr = NULL;
-    int32 uselock = -1;
+    S32 uselock = -1;
 
     PKR_alloc_chkidx();
-    int8* tocbuf_aligned = (int8*)PKR_getmem('PTOC', 0x8000, 'PTOC', 0x40, 1, tocbuf_RAW);
+    char* tocbuf_aligned = (char*)PKR_getmem('PTOC', 0x8000, 'PTOC', 0x40, 1, tocbuf_RAW);
 
-    for (int32 i = 0; i < 16; i++)
+    for (S32 i = 0; i < 16; i++)
     {
         if (!(g_loadlock & 1 << i))
         {
@@ -129,9 +129,9 @@ st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, int8* pkgfile, uint32 opts, in
 
 void PKR_ReadDone(st_PACKER_READ_DATA* pr)
 {
-    int32 i;
-    int32 j;
-    int32 lockid;
+    S32 i;
+    S32 j;
+    S32 lockid;
     st_PACKER_ATOC_NODE* assnode;
     st_PACKER_LTOC_NODE* laynode;
     st_XORDEREDARRAY* tmplist;
@@ -197,12 +197,12 @@ void PKR_ReadDone(st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // Incorrect (but equivalent) logic for comparing the loadflag
-int32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
+S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
-    int32 result;
-    int32 rc = 1;
-    int32 i;
-    int32 j;
+    S32 result;
+    S32 rc = 1;
+    S32 i;
+    S32 j;
     st_PACKER_ATOC_NODE* assnode;
     st_PACKER_LTOC_NODE* laynode;
 
@@ -251,11 +251,11 @@ int32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 }
 #endif
 
-int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 done = 0;
-    int32 is_ok = 0;
-    uint32 cid = g_hiprf->enter(pkg);
+    S32 done = 0;
+    S32 is_ok = 0;
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != false)
     {
         switch (cid)
@@ -305,9 +305,9 @@ int32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return done;
 }
 
-int32 PKR_LoadStep_Async()
+S32 PKR_LoadStep_Async()
 {
-    int32 rc;
+    S32 rc;
     static st_PACKER_READ_DATA* curpr = NULL;
     static st_PACKER_LTOC_NODE* asynlay = NULL;
 
@@ -355,7 +355,7 @@ int32 PKR_LoadStep_Async()
     }
     else
     {
-        int32 moretodo = g_hiprf->pollRead(curpr->pkg);
+        S32 moretodo = g_hiprf->pollRead(curpr->pkg);
         if (moretodo == 1)
         {
             moretodo = PKR_drv_guardVerify(asynlay);
@@ -401,9 +401,9 @@ int32 PKR_LoadStep_Async()
     return rc;
 }
 
-int8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
+char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
-    int8* mem = NULL;
+    char* mem = NULL;
     if (layer->laymem != NULL)
     {
         return layer->laymem;
@@ -414,15 +414,15 @@ int8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
     case PKR_LDDEST_SKIP:
         break;
     case PKR_LDDEST_KEEPSTATIC:
-        mem = (int8*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
+        mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
         break;
     case PKR_LDDEST_KEEPMALLOC:
-        mem = (int8*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40, 1,
+        mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40, 1,
                                 &layer->laytru);
         break;
     case PKR_LDDEST_RWHANDOFF:
         PKR_push_memmark();
-        mem = (int8*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
+        mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
         break;
     }
 
@@ -455,7 +455,7 @@ void PKR_drv_guardLayer(st_PACKER_LTOC_NODE*)
 {
 }
 
-int32 PKR_drv_guardVerify(st_PACKER_LTOC_NODE*)
+S32 PKR_drv_guardVerify(st_PACKER_LTOC_NODE*)
 {
     return 1;
 }
@@ -484,7 +484,7 @@ en_PKR_LAYER_LOAD_DEST PKR_layerLoadDest(en_LAYER_TYPE layer)
     }
 }
 
-int32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
+S32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
 {
     switch (layer)
     {
@@ -509,7 +509,7 @@ int32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
 
 #ifdef NON_MATCHING
 //Regalloc
-int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer)
+S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer)
 {
     st_PACKER_READ_DATA* tmppr;
     st_PACKER_LTOC_NODE* tmplay;
@@ -518,7 +518,7 @@ int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_
     if (*work_on_pkg != NULL)
     {
         tmppr = *work_on_pkg;
-        for (int32 i = 0; i < tmppr->laytoc.cnt; i++)
+        for (S32 i = 0; i < tmppr->laytoc.cnt; i++)
         {
             tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[i];
             if (!(tmplay->flg_ldstat & 0x2000000))
@@ -533,14 +533,14 @@ int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_
     if (*next_layer == NULL)
     {
         tmppr = g_readdatainst;
-        for (int32 i = 0; i < 16; i++, tmppr++)
+        for (S32 i = 0; i < 16; i++, tmppr++)
         {
             if ((g_loadlock & 1 << i) == 0 || tmppr == *work_on_pkg)
             {
                 continue;
             }
 
-            for (int32 j = 0; j < tmppr->laytoc.cnt; j++)
+            for (S32 j = 0; j < tmppr->laytoc.cnt; j++)
             {
                 tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
                 if (!(tmplay->flg_ldstat & 0x2000000))
@@ -567,7 +567,7 @@ int32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_
 void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
     st_PACKER_ATOC_NODE* tmpass = NULL;
-    for (int32 i = 0; i < laynode->assref.cnt; i++)
+    for (S32 i = 0; i < laynode->assref.cnt; i++)
     {
         tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
         if (tmpass->d_off > 0 && tmpass->d_size > 0)
@@ -579,8 +579,8 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 
     if (tmpass != NULL)
     {
-        int32 lay_hip_pos = tmpass->d_off;
-        for (int32 i = 0; i < laynode->assref.cnt; i++)
+        S32 lay_hip_pos = tmpass->d_off;
+        for (S32 i = 0; i < laynode->assref.cnt; i++)
         {
             st_PACKER_ATOC_NODE* tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
             if (!(tmpass->loadflag & 0x100000))
@@ -604,8 +604,8 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 
 void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
-    int32 i;
-    int32 will_be_dumped = false;
+    S32 i;
+    S32 will_be_dumped = false;
     en_PKR_LAYER_LOAD_DEST loaddest = PKR_layerLoadDest(laynode->laytyp);
 
     if (loaddest == PKR_LDDEST_RWHANDOFF)
@@ -629,7 +629,7 @@ void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode)
 }
 
 //
-void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, int32 dumpable_layer)
+void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
 {
     if (!(assnode->infoflag & 4))
     {
@@ -667,9 +667,9 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, int32 dumpable_layer)
             assnode->memloc = NULL;
         }
 
-        int8* xformloc =
-            (int8*)atype->readXForm(assnode->ownpr->userdata, assnode->aid, assnode->memloc,
-                                    assnode->d_size, (uint32*)&assnode->x_size);
+        char* xformloc =
+            (char*)atype->readXForm(assnode->ownpr->userdata, assnode->aid, assnode->memloc,
+                                    assnode->d_size, (U32*)&assnode->x_size);
         if (!dumpable_layer && assnode->memloc == xformloc && assnode->x_size != 0)
         {
             assnode->Name();
@@ -686,10 +686,10 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, int32 dumpable_layer)
     }
 }
 
-void* PKR_FindAsset(st_PACKER_READ_DATA* pr, uint32 aid)
+void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid)
 {
     st_PACKER_ATOC_NODE* assnode = NULL;
-    int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+    S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
 
     if (idx >= 0)
     {
@@ -708,20 +708,20 @@ void* PKR_FindAsset(st_PACKER_READ_DATA* pr, uint32 aid)
     return NULL;
 }
 
-int32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
+S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
     return 0;
 }
 
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, uint32 aid, const int8*, void*)
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*)
 {
     return PKR_FindAsset(pr, aid);
 }
 
-uint32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, uint32 aid)
+U32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, U32 aid)
 {
     st_PACKER_ATOC_NODE* assnode = NULL;
-    int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+    S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
 
     if (idx > -1)
     {
@@ -739,16 +739,16 @@ uint32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, uint32 aid)
     return 0;
 }
 
-int32 PKR_AssetCount(st_PACKER_READ_DATA* pr, uint32 type)
+S32 PKR_AssetCount(st_PACKER_READ_DATA* pr, U32 type)
 {
-    int32 count = 0;
+    S32 count = 0;
     if (type == 0)
     {
         return pr->asstoc.cnt;
     }
     else
     {
-        int32 idx = PKR_typeHdlr_idx(pr, type);
+        S32 idx = PKR_typeHdlr_idx(pr, type);
         if (idx >= 0)
         {
             st_XORDEREDARRAY* tmplist = &pr->typelist[idx];
@@ -758,7 +758,7 @@ int32 PKR_AssetCount(st_PACKER_READ_DATA* pr, uint32 type)
     return count;
 }
 
-void* PKR_AssetByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx, uint32* size)
+void* PKR_AssetByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx, U32* size)
 {
     if (size != NULL)
     {
@@ -770,7 +770,7 @@ void* PKR_AssetByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx, uint32* s
         idx = 0;
     }
 
-    int32 typeidx = PKR_typeHdlr_idx(pr, type);
+    S32 typeidx = PKR_typeHdlr_idx(pr, type);
     if (typeidx < 0)
     {
         return 0;
@@ -791,10 +791,10 @@ void* PKR_AssetByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx, uint32* s
 }
 
 //
-int32 PKR_IsAssetReady(st_PACKER_READ_DATA* pr, uint32 aid)
+S32 PKR_IsAssetReady(st_PACKER_READ_DATA* pr, U32 aid)
 {
-    int32 ready = false;
-    int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+    S32 ready = false;
+    S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
     if (idx >= 0)
     {
         st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
@@ -811,7 +811,7 @@ int32 PKR_IsAssetReady(st_PACKER_READ_DATA* pr, uint32 aid)
     return ready;
 }
 
-uint32 PKR_getPackTimestamp(st_PACKER_READ_DATA* pr)
+U32 PKR_getPackTimestamp(st_PACKER_READ_DATA* pr)
 {
     return pr->time_made;
 }
@@ -825,14 +825,14 @@ void PKR_Disconnect(st_PACKER_READ_DATA* pr)
     }
 }
 
-uint32 PKRAssetIDFromInst(void* inst)
+U32 PKRAssetIDFromInst(void* inst)
 {
     return ((st_PACKER_ATOC_NODE*)inst)->aid;
 }
 
-int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid)
+char* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid)
 {
-    int8* name = NULL;
+    char* name = NULL;
 
     if (aid == 0)
     {
@@ -840,7 +840,7 @@ int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid)
     }
     else
     {
-        int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+        S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
         if (idx >= 0)
         {
             name = ((st_PACKER_ATOC_NODE*)pr->asstoc.list[idx])->Name();
@@ -850,15 +850,15 @@ int8* PKR_AssetName(st_PACKER_READ_DATA* pr, uint32 aid)
     return name;
 }
 
-uint32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr)
+U32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr)
 {
     return pr->base_sector;
 }
 
-int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
+S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 {
     memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
-    int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+    S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
     if (idx >= 0)
     {
         st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
@@ -872,7 +872,7 @@ int32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, uint32 aid, st_PKR_ASSET_TOCINFO
     return idx >= 0 ? 1 : 0;
 }
 
-int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
+S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
                              st_PKR_ASSET_TOCINFO* tocainfo)
 {
     memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
@@ -881,7 +881,7 @@ int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
         idx = 0;
     }
 
-    int32 typeidx = PKR_typeHdlr_idx(pr, type);
+    S32 typeidx = PKR_typeHdlr_idx(pr, type);
     if (typeidx < 0)
     {
         return 0;
@@ -904,15 +904,15 @@ int32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, uint32 type, int32 idx,
     return 1;
 }
 
-int32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, uint32 aid)
+S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid)
 {
-    int32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
+    S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
     if (idx < 0)
     {
         return 0;
     }
 
-    int32 rc = 1;
+    S32 rc = 1;
     st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
     if (assnode->loadflag & 0x100000)
     {
@@ -925,10 +925,10 @@ int32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, uint32 aid)
     return rc;
 }
 
-int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, int32 oursize,
-                                uint32 ourtype, uint32 chksum, int8*)
+S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize,
+                                U32 ourtype, U32 chksum, char*)
 {
-    int32 is_dup = 0;
+    S32 is_dup = 0;
     if (aid == 0x7ab6743a)
     {
         return 0;
@@ -945,7 +945,7 @@ int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, i
             continue;
         }
 
-        int32 idx = XOrdLookup(&g_readdatainst[i].asstoc, (void*)aid, OrdTest_R_AssetID);
+        S32 idx = XOrdLookup(&g_readdatainst[i].asstoc, (void*)aid, OrdTest_R_AssetID);
         if (idx < 0)
         {
             continue;
@@ -984,7 +984,7 @@ int32 PKR_FRIEND_assetIsGameDup(uint32 aid, const st_PACKER_READ_DATA* skippr, i
     return is_dup;
 }
 
-int32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, int32 cnt)
+S32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, S32 cnt)
 {
     if (cnt == 0)
     {
@@ -1014,9 +1014,9 @@ void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr)
 }
 
 //
-st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, uint32 aid)
+st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, U32 aid)
 {
-    int32 idx = pr->pool_nextaidx;
+    S32 idx = pr->pool_nextaidx;
     st_PACKER_ATOC_NODE* newnode = (st_PACKER_ATOC_NODE*)&pr->pool_anode[idx];
     pr->pool_nextaidx++;
 
@@ -1025,7 +1025,7 @@ st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, uint32 aid)
     return newnode;
 }
 
-st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, int32 refcnt)
+st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, S32 refcnt)
 {
     st_PACKER_LTOC_NODE* newnode =
         (st_PACKER_LTOC_NODE*)PKR_getmem('LNOD', sizeof(st_PACKER_LTOC_NODE), layer + 0x8000, 0x40);
@@ -1042,14 +1042,14 @@ void PKR_oldlaynode(st_PACKER_LTOC_NODE* laynode)
     PKR_relmem('LNOD', sizeof(st_PACKER_LTOC_NODE), laynode, laynode->laytyp + 0x8000, 0);
 }
 
-int32 OrdComp_R_Asset(void* vkey, void* vitem)
+S32 OrdComp_R_Asset(void* vkey, void* vitem)
 {
-    int32 rc;
-    if (*(uint32*)vkey < *(uint32*)vitem)
+    S32 rc;
+    if (*(U32*)vkey < *(U32*)vitem)
     {
         rc = -1;
     }
-    else if (*(uint32*)vkey > *(uint32*)vitem)
+    else if (*(U32*)vkey > *(U32*)vitem)
     {
         rc = 1;
     }
@@ -1060,14 +1060,14 @@ int32 OrdComp_R_Asset(void* vkey, void* vitem)
     return rc;
 }
 
-int32 OrdTest_R_AssetID(const void* vkey, void* vitem)
+S32 OrdTest_R_AssetID(const void* vkey, void* vitem)
 {
-    int32 rc;
-    if ((uint32)vkey < *(uint32*)vitem)
+    S32 rc;
+    if ((U32)vkey < *(U32*)vitem)
     {
         rc = -1;
     }
-    else if ((uint32)vkey > *(uint32*)vitem)
+    else if ((U32)vkey > *(U32*)vitem)
     {
         rc = 1;
     }
@@ -1078,15 +1078,15 @@ int32 OrdTest_R_AssetID(const void* vkey, void* vitem)
     return rc;
 }
 
-int32 LOD_r_HIPA(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_HIPA(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     pr->pkgver = 'HIPA';
     return 1;
 }
 
-int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != 0)
     {
         switch (cid)
@@ -1118,9 +1118,9 @@ int32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // reordering
-int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 ver = 0;
+    S32 ver = 0;
     g_hiprf->readLongs(pkg, &ver, 1);
     pr->subver = ver;
 
@@ -1129,13 +1129,13 @@ int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
         PKR_spew_verhist();
     }
 
-    // int32 amt = -1;
+    // S32 amt = -1;
     ver = -1;
     g_hiprf->readLongs(pkg, &ver, 1);
     pr->cltver = ver;
 
     ver = -1;
-    int32 amt = g_hiprf->readLongs(pkg, &ver, 1);
+    S32 amt = g_hiprf->readLongs(pkg, &ver, 1);
     if (amt != 1)
     {
         pr->compatver = 1;
@@ -1150,17 +1150,17 @@ int32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // reordering
-int32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 flg = 0;
+    S32 flg = 0;
     g_hiprf->readLongs(pkg, &flg, 1);
     return 1;
 }
 #endif
 
-int32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 cnt = 0;
+    S32 cnt = 0;
     g_hiprf->readLongs(pkg, &cnt, 1);
     pr->asscnt = cnt;
     g_hiprf->readLongs(pkg, &cnt, 1);
@@ -1173,10 +1173,10 @@ int32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // need all of .rodata to generate for the OK
-int32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 time = 0;
-    int8 arr[256] = {};
+    S32 time = 0;
+    char arr[256] = {};
 
     g_hiprf->readLongs(pkg, &time, 1);
     pr->time_made = time;
@@ -1189,9 +1189,9 @@ int32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 time_mod = 0;
+    S32 time_mod = 0;
     g_hiprf->readLongs(pkg, &time_mod, 1);
     pr->time_mod = time_mod;
     return 1;
@@ -1199,10 +1199,10 @@ int32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // String data
-int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 plattag, int8* plat,
-                       int8* vid, int8* lang, int8* title)
+S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, char* plat,
+                       char* vid, char* lang, char* title)
 {
-    int8 fullname[128] = {};
+    char fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
 
     bool rc = false;
@@ -1277,14 +1277,14 @@ int32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, int32 platt
 
 #ifdef NON_MATCHING
 // Orderings and Regalloc
-int32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 result = 1;
-    int32 plattag = 0;
-    int8 platname[32] = {};
-    int8 vidname[32] = {};
-    int8 langname[32] = {};
-    int8 titlename[32] = {};
+    S32 result = 1;
+    S32 plattag = 0;
+    char platname[32] = {};
+    char vidname[32] = {};
+    char langname[32] = {};
+    char titlename[32] = {};
 
     g_hiprf->readLongs(pkg, &plattag, 1);
     g_hiprf->readString(pkg, platname);
@@ -1302,9 +1302,9 @@ int32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != 0)
     {
         switch (cid)
@@ -1324,9 +1324,9 @@ int32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-int32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != 0)
     {
         switch (cid)
@@ -1346,17 +1346,17 @@ int32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // reordering
-int32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 ival = 0;
+    S32 ival = 0;
     g_hiprf->readLongs(pkg, &ival, 1);
     return 1;
 }
 #endif
 
-int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 ival = 0;
+    S32 ival = 0;
 
     g_hiprf->readLongs(pkg, &ival, 1);
     st_PACKER_ATOC_NODE* assnode = PKR_newassnode(pr, ival);
@@ -1386,7 +1386,7 @@ int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     g_hiprf->readLongs(pkg, &ival, 1);
     assnode->infoflag = ival;
 
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != 0)
     {
         switch (cid)
@@ -1398,7 +1398,7 @@ int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
         cid = g_hiprf->enter(pkg);
     }
 
-    int32 isdup = PKR_FRIEND_assetIsGameDup(assnode->aid, pr, assnode->d_size, assnode->asstype,
+    S32 isdup = PKR_FRIEND_assetIsGameDup(assnode->aid, pr, assnode->d_size, assnode->asstype,
                                             assnode->d_chksum, NULL);
     if (isdup)
     {
@@ -1409,10 +1409,10 @@ int32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // uses reordering and uses .rodata
-int32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
+S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
 {
-    int32 ival = 0;
-    int8 tmpbuf[256] = {};
+    S32 ival = 0;
+    char tmpbuf[256] = {};
 
     g_hiprf->readLongs(pkg, &ival, 1);
     assnode->assalign = ival;
@@ -1432,9 +1432,9 @@ int32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NO
 }
 #endif
 
-int32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != 0)
     {
         switch (cid)
@@ -1454,9 +1454,9 @@ int32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // reordering
-int32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 ival = 0;
+    S32 ival = 0;
     g_hiprf->readLongs(pkg, &ival, 1);
     return 1;
 }
@@ -1464,11 +1464,11 @@ int32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // reordering
-int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 i;
-    int32 ival = 0;
-    int32 refcnt = 0;
+    S32 i;
+    S32 ival = 0;
+    S32 refcnt = 0;
 
     g_hiprf->readLongs(pkg, &ival, 1);
     en_LAYER_TYPE laytyp = (en_LAYER_TYPE)ival;
@@ -1479,7 +1479,7 @@ int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     for (i = 0; i < refcnt; i++)
     {
         g_hiprf->readLongs(pkg, &ival, 1);
-        int32 idx = XOrdLookup(&pr->asstoc, (void*)ival, OrdTest_R_AssetID);
+        S32 idx = XOrdLookup(&pr->asstoc, (void*)ival, OrdTest_R_AssetID);
         st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
         XOrdAppend(&laynode->assref, assnode);
 
@@ -1498,7 +1498,7 @@ int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
         laynode->laysize = laynode->laysize + 0x7ff & 0xfffff800;
     }
 
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != NULL)
     {
         switch (cid)
@@ -1514,9 +1514,9 @@ int32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 #endif
 
-int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode)
+S32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode)
 {
-    int32 ivar = 0;
+    S32 ivar = 0;
     if (pr->subver > 1)
     {
         g_hiprf->readLongs(pkg, &ivar, 1);
@@ -1525,9 +1525,9 @@ int32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NO
     return 1;
 }
 
-int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    uint32 cid = g_hiprf->enter(pkg);
+    U32 cid = g_hiprf->enter(pkg);
     while (cid != 0)
     {
         switch (cid)
@@ -1547,15 +1547,15 @@ int32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // reordering
-int32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
-    int32 ivar = 0;
+    S32 ivar = 0;
     g_hiprf->readLongs(pkg, &ivar, 1);
     return 1;
 }
 #endif
 
-int32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
+S32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     return 1;
 }
@@ -1564,7 +1564,7 @@ void PKR_spew_verhist()
 {
 }
 
-st_PACKER_ASSETTYPE* PKR_type2typeref(uint32 asstype, st_PACKER_ASSETTYPE* types)
+st_PACKER_ASSETTYPE* PKR_type2typeref(U32 asstype, st_PACKER_ASSETTYPE* types)
 {
     st_PACKER_ASSETTYPE* da_type = NULL;
     if (types != NULL)
@@ -1591,12 +1591,12 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 {
     st_PACKER_LTOC_NODE* laynode;
     st_PACKER_ATOC_NODE* assnode;
-    int32 j;
-    int32 i;
-    int32 typcnt[129] = {};
+    S32 j;
+    S32 i;
+    S32 typcnt[129] = {};
     st_XORDEREDARRAY* tmplist;
-    uint32 lasttype = 0;
-    int32 lastidx = 0;
+    U32 lasttype = 0;
+    S32 lastidx = 0;
 
     for (i = 0; i < pr->laytoc.cnt; i++)
     {
@@ -1606,7 +1606,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
-                int32 idx;
+                S32 idx;
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1648,7 +1648,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
-                int32 idx;
+                S32 idx;
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1676,9 +1676,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 }
 #endif
 
-int32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, uint32 type)
+S32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, U32 type)
 {
-    int32 idx = -1;
+    S32 idx = -1;
     int i = 0;
     st_PACKER_ASSETTYPE* tmptype = pr->types;
     while (tmptype->typetag != 0)
@@ -1699,12 +1699,12 @@ void PKR_alloc_chkidx()
 {
 }
 
-void* PKR_getmem(uint32 id, int32 amount, uint32 ui, int32 align)
+void* PKR_getmem(U32 id, S32 amount, U32 ui, S32 align)
 {
     return PKR_getmem(id, amount, ui, align, false, NULL);
 }
 
-void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int8** memtrue)
+void* PKR_getmem(U32 id, S32 amount, U32, S32 align, S32 isTemp, char** memtrue)
 {
     if (amount == 0)
     {
@@ -1719,13 +1719,13 @@ void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int
 
         if (memtrue != NULL)
         {
-            *memtrue = (int8*)memptr;
+            *memtrue = (char*)memptr;
         }
 
         if (align != 0)
         {
             // TODO: wtf is this
-            memptr = (void*)(-align & (uint32)((int32)memptr + align - 1));
+            memptr = (void*)(-align & (U32)((S32)memptr + align - 1));
         }
     }
     else
@@ -1757,7 +1757,7 @@ void* PKR_getmem(uint32 id, int32 amount, uint32, int32 align, int32 isTemp, int
     return memptr;
 }
 
-void PKR_relmem(uint32 id, int32 blksize, void* memptr, uint32, int32 isTemp)
+void PKR_relmem(U32 id, S32 blksize, void* memptr, U32, S32 isTemp)
 {
     g_memalloc_pair--;
     g_memalloc_runfree += blksize;
@@ -1790,7 +1790,7 @@ void PKR_pop_memmark()
     xMemPopBase(xMemGetBase() - 1);
 }
 
-int8* st_PACKER_ATOC_NODE::Name() const
+char* st_PACKER_ATOC_NODE::Name() const
 {
     return xpkrsvc_strings + 82;
 }

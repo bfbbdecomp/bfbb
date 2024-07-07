@@ -19,26 +19,26 @@
 #include "xString.h"
 #include "xutil.h"
 
-uint32 saveSuccess;
-float32 time_last;
-float32 time_current;
-float32 time_elapsed = 0.01f;
+U32 saveSuccess;
+F32 time_last;
+F32 time_current;
+F32 time_elapsed = 0.01f;
 iTime t0;
 iTime t1;
-int32 promptSel;
-int32 badCard;
-int32 sAvailable;
-int32 sNeeded;
-int32 sAccessType;
-uint8 preAutoSaving;
+S32 promptSel;
+S32 badCard;
+S32 sAvailable;
+S32 sNeeded;
+S32 sAccessType;
+U8 preAutoSaving;
 
-int32 currentCard = -1;
-int32 currentGame = -1;
-float32 dontPoll = 1.0f;
-int32 autoSaveCard = -1;
+S32 currentCard = -1;
+S32 currentGame = -1;
+F32 dontPoll = 1.0f;
+S32 autoSaveCard = -1;
 
-int8 currSceneStr[32] = "TEMP";
-int8 sceneRead[32] = "0000";
+char currSceneStr[32] = "TEMP";
+char sceneRead[32] = "0000";
 zSaveLoadUI zSaveLoadUITable[62] = { { 0, 0, "ld gameslot group" },
                                      { 1, 0, "ld memcards group" },
                                      { 2, 0, "ld format prompt group" },
@@ -102,16 +102,16 @@ zSaveLoadUI zSaveLoadUITable[62] = { { 0, 0, "ld gameslot group" },
                                      { 60, 0, "ld damaged save game" },
                                      { 0, 0, NULL } };
 
-int8* thumbIconMap[15] = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL",
+char* thumbIconMap[15] = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL",
                            "ThumbIconB1", "ThumbIconRB", "ThumbIconBC", "ThumbIconSM",
                            "ThumbIconB2", "ThumbIconKF", "ThumbIconGY", "ThumbIconDB",
                            "ThumbIconB3", "ThumbIconHB", "ThumbIconHB" };
 
 void zUpdateThumbIcon()
 {
-    int32 i;
-    int32 start;
-    int32 end;
+    S32 i;
+    S32 start;
+    S32 end;
     if (gGameMode == eGameMode_Load)
     {
         start = 6;
@@ -128,11 +128,11 @@ void zUpdateThumbIcon()
         _zUI* gameSlot = (_zUI*)zSceneFindObject(zSaveLoadUITable[i].nameID);
         if (gameSlot != NULL && (gameSlot->uiFlags & 2) != 0)
         {
-            uint32 id = xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON");
+            U32 id = xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON");
             _zUI* thumbIcon = (_zUI*)zSceneFindObject(id);
             if (thumbIcon != NULL)
             {
-                int32 index = zSaveLoadGameTable[i - start].thumbIconIndex;
+                S32 index = zSaveLoadGameTable[i - start].thumbIconIndex;
                 if (index >= 0 && index < 15)
                 {
                     if (thumbIcon->sasset->textureID != xStrHash(thumbIconMap[index]))
@@ -179,22 +179,22 @@ void zSaveLoad_Tick()
     xMat4x3 playerMat;
     xMat4x3* ma = xEntGetFrame(&(xEnt)globals.player.ent);
     // This feels like a normal assignment but that calls the assignment operator function.
-    *(uint32*)&playerMat.right.x = *(uint32*)&ma->right.x;
-    *(uint32*)&playerMat.right.y = *(uint32*)&ma->right.y;
-    *(uint32*)&playerMat.right.z = *(uint32*)&ma->right.z;
-    *(uint32*)&playerMat.flags = *(uint32*)&ma->flags;
-    *(uint32*)&playerMat.up.x = *(uint32*)&ma->up.x;
-    *(uint32*)&playerMat.up.y = *(uint32*)&ma->up.y;
-    *(uint32*)&playerMat.up.z = *(uint32*)&ma->up.z;
-    *(uint32*)&playerMat.pad1 = *(uint32*)&ma->pad1;
-    *(uint32*)&playerMat.at.x = *(uint32*)&ma->at.x;
-    *(uint32*)&playerMat.at.y = *(uint32*)&ma->at.y;
-    *(uint32*)&playerMat.at.z = *(uint32*)&ma->at.z;
-    *(uint32*)&playerMat.pad2 = *(uint32*)&ma->pad2;
-    *(uint32*)&playerMat.pos.x = *(uint32*)&ma->pos.x;
-    *(uint32*)&playerMat.pos.z = *(uint32*)&ma->pos.z;
-    *(uint32*)&playerMat.pad3 = *(uint32*)&ma->pad3;
-    *(uint32*)&playerMat.pos.y = *(uint32*)&ma->pos.y;
+    *(U32*)&playerMat.right.x = *(U32*)&ma->right.x;
+    *(U32*)&playerMat.right.y = *(U32*)&ma->right.y;
+    *(U32*)&playerMat.right.z = *(U32*)&ma->right.z;
+    *(U32*)&playerMat.flags = *(U32*)&ma->flags;
+    *(U32*)&playerMat.up.x = *(U32*)&ma->up.x;
+    *(U32*)&playerMat.up.y = *(U32*)&ma->up.y;
+    *(U32*)&playerMat.up.z = *(U32*)&ma->up.z;
+    *(U32*)&playerMat.pad1 = *(U32*)&ma->pad1;
+    *(U32*)&playerMat.at.x = *(U32*)&ma->at.x;
+    *(U32*)&playerMat.at.y = *(U32*)&ma->at.y;
+    *(U32*)&playerMat.at.z = *(U32*)&ma->at.z;
+    *(U32*)&playerMat.pad2 = *(U32*)&ma->pad2;
+    *(U32*)&playerMat.pos.x = *(U32*)&ma->pos.x;
+    *(U32*)&playerMat.pos.z = *(U32*)&ma->pos.z;
+    *(U32*)&playerMat.pad3 = *(U32*)&ma->pad3;
+    *(U32*)&playerMat.pos.y = *(U32*)&ma->pos.y;
     playerMat.pos.y += 0.6f;
 
     xSndSetListenerData(SND_LISTENER_CAMERA, &globals.camera.mat);
@@ -218,7 +218,7 @@ void zSaveLoad_Tick()
 }
 
 // Reordings/Float scheduling
-int32 zSaveLoad_poll(int32 i)
+S32 zSaveLoad_poll(S32 i)
 {
     if (dontPoll < 0.0f)
     {
@@ -233,22 +233,22 @@ int32 zSaveLoad_poll(int32 i)
     return 1;
 }
 
-void zSendEventToThumbIcon(uint32 toEvent)
+void zSendEventToThumbIcon(U32 toEvent)
 {
     const char* iconString = gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON";
     zEntEvent(zSceneFindObject(xStrHash(iconString)), toEvent);
 }
 
-void zChangeThumbIcon(const int8* icon)
+void zChangeThumbIcon(const char* icon)
 {
-    int32 arr[4];
+    S32 arr[4];
 
     memset(arr, 0, sizeof(arr));
     arr[0] = xStrHash(icon);
 
     zEntEvent(zSceneFindObject(
                   xStrHash(gGameMode == eGameMode_Load ? "MNU3 THUMBICON" : "MNU4 THUMBICON")),
-              eEventUIChangeTexture, (float32*)arr);
+              eEventUIChangeTexture, (F32*)arr);
 }
 
 void zSaveLoadInit()
@@ -259,7 +259,7 @@ void zSaveLoadInit()
 
 void zSaveLoadGameTableInit(zSaveLoadGame* saveTable)
 {
-    for (int32 i = 0; i < 3; i++)
+    for (S32 i = 0; i < 3; i++)
     {
         saveTable[i].label[0] = 0;
         saveTable[i].date[0] = 0;
@@ -272,13 +272,13 @@ void zSaveLoadGameTableInit(zSaveLoadGame* saveTable)
 void zSaveLoadUITableInit(zSaveLoadUI* saveTable)
 {
     //Doesn't match the zSaveLoadUITable size for some reason
-    for (int32 i = 0; i < 61; i++)
+    for (S32 i = 0; i < 61; i++)
     {
         saveTable[i].nameID = xStrHash(saveTable[i].name);
     }
 }
 
-void zSaveLoad_UIEvent(int32 i, uint32 toEvent)
+void zSaveLoad_UIEvent(S32 i, U32 toEvent)
 {
     zEntEvent(zSceneFindObject(zSaveLoadUITable[i].nameID), toEvent);
 }
@@ -294,7 +294,7 @@ st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
         zSaveLoad_UIEvent(0x28, eEventUIFocusOn);
     }
 
-    for (int32 i = 0; i < 801; i++)
+    for (S32 i = 0; i < 801; i++)
     {
         if (i % 200 == 0)
         {
@@ -305,7 +305,7 @@ st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode)
     return xSGInit(mode);
 }
 
-int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
+S32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
 {
     if (data->mode == XSG_MODE_LOAD)
     {
@@ -318,42 +318,42 @@ int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data)
     return xSGDone(data);
 }
 
-int32 zSaveLoad_getgame()
+S32 zSaveLoad_getgame()
 {
     return currentGame;
 }
 
-int32 zSaveLoad_getcard()
+S32 zSaveLoad_getcard()
 {
     return currentCard;
 }
 
-int32 zSaveLoad_getMCavailable()
+S32 zSaveLoad_getMCavailable()
 {
     return sAvailable;
 }
 
-int32 zSaveLoad_getMCneeded()
+S32 zSaveLoad_getMCneeded()
 {
     return sNeeded;
 }
 
-int32 zSaveLoad_getMCAccessType()
+S32 zSaveLoad_getMCAccessType()
 {
     return sAccessType;
 }
 
-int32 zSaveLoadGetAutoSaveCard()
+S32 zSaveLoadGetAutoSaveCard()
 {
     return autoSaveCard;
 }
 
-int32 format(int32 num, int32 mode)
+S32 format(S32 num, S32 mode)
 {
     st_XSAVEGAME_DATA* data = zSaveLoadSGInit(XSG_MODE_LOAD);
-    int32 tgtmax;
+    S32 tgtmax;
 
-    int32 rc = 0;
+    S32 rc = 0;
     switch (xSGTgtCount(data, &tgtmax))
     {
     case 2:
@@ -378,7 +378,7 @@ int32 format(int32 num, int32 mode)
         }
         break;
     case 1:
-        int32 idx = xSGTgtPhysSlotIdx(data, 0);
+        S32 idx = xSGTgtPhysSlotIdx(data, 0);
         if (idx != num)
         {
             zSaveLoadSGDone(data);
@@ -410,10 +410,10 @@ int32 format(int32 num, int32 mode)
     return rc;
 }
 
-int32 CardtoTgt(int32 card)
+S32 CardtoTgt(S32 card)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
-    int32 tgtmax;
+    S32 tgtmax;
 
     switch (xSGTgtCount(ldinst, &tgtmax))
     {
@@ -431,14 +431,14 @@ int32 CardtoTgt(int32 card)
     return -1;
 }
 
-int32 zSaveLoad_CardCount()
+S32 zSaveLoad_CardCount()
 {
     return 1;
 }
 
-int32 zSaveLoad_CardPrompt(int32 cardNumber)
+S32 zSaveLoad_CardPrompt(S32 cardNumber)
 {
-    int32 i = 0x15;
+    S32 i = 0x15;
     if (cardNumber == 1)
     {
         i = 0;
@@ -486,9 +486,9 @@ int32 zSaveLoad_CardPrompt(int32 cardNumber)
     return promptSel;
 }
 
-int32 zSaveLoad_CardPromptFormat(int32 mode)
+S32 zSaveLoad_CardPromptFormat(S32 mode)
 {
-    int32 i = 0x15;
+    S32 i = 0x15;
     if (mode == 1)
     {
         i = 0;
@@ -513,9 +513,9 @@ int32 zSaveLoad_CardPromptFormat(int32 mode)
     return promptSel;
 }
 
-int32 zSaveLoad_CardPromptSpace(int32 mode)
+S32 zSaveLoad_CardPromptSpace(S32 mode)
 {
-    int32 i = 0x15;
+    S32 i = 0x15;
     if (mode == 1)
     {
         i = 0;
@@ -534,9 +534,9 @@ int32 zSaveLoad_CardPromptSpace(int32 mode)
     return promptSel;
 }
 
-int32 zSaveLoad_CardPromptGames(int32 mode)
+S32 zSaveLoad_CardPromptGames(S32 mode)
 {
-    int32 i = 0x15;
+    S32 i = 0x15;
     if (mode == 1)
     {
         i = 0;
@@ -555,7 +555,7 @@ int32 zSaveLoad_CardPromptGames(int32 mode)
     return promptSel;
 }
 
-int32 zSaveLoad_CardPromptGameSlotEmpty()
+S32 zSaveLoad_CardPromptGameSlotEmpty()
 {
     zSaveLoad_UIEvent(0, eEventUIFocusOff_Unselect);
     zSaveLoad_UIEvent(0x13, eEventUIFocusOn_Select);
@@ -569,7 +569,7 @@ int32 zSaveLoad_CardPromptGameSlotEmpty()
     return promptSel;
 }
 
-int32 zSaveLoad_CardPromptOverwrite()
+S32 zSaveLoad_CardPromptOverwrite()
 {
     zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
     zSaveLoad_UIEvent(0x22, eEventUIFocusOn_Select);
@@ -584,7 +584,7 @@ int32 zSaveLoad_CardPromptOverwrite()
     return promptSel;
 }
 
-int32 zSaveLoad_CardPromptOverwriteDamaged()
+S32 zSaveLoad_CardPromptOverwriteDamaged()
 {
     zSaveLoad_UIEvent(0x15, eEventUIFocusOff_Unselect);
     zSaveLoad_UIEvent(0x23, eEventUIFocusOn_Select);
@@ -599,9 +599,9 @@ int32 zSaveLoad_CardPromptOverwriteDamaged()
     return promptSel;
 }
 
-int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
+S32 zSaveLoad_ErrorPrompt(S32 cardNumber)
 {
-    int32 i = 0x2b;
+    S32 i = 0x2b;
     if (cardNumber == 1)
     {
         i = 0x2a;
@@ -623,7 +623,7 @@ int32 zSaveLoad_ErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
+S32 zSaveLoad_DamagedSaveGameErrorPrompt(S32 cardNumber)
 {
     zSaveLoad_UIEvent(0x3c, eEventUIFocusOn_Select);
     promptSel = -1;
@@ -635,7 +635,7 @@ int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
+S32 zSaveLoad_CardWrongDeviceErrorPrompt(S32 mode)
 {
     int i = 0x3a;
     if (mode == 1)
@@ -659,7 +659,7 @@ int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode)
     return promptSel;
 }
 
-int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
+S32 zSaveLoad_CardDamagedErrorPrompt(S32 mode)
 {
     int i = 0x38;
     if (mode == 1)
@@ -683,7 +683,7 @@ int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode)
     return promptSel;
 }
 
-int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
+S32 zSaveLoad_SaveDamagedErrorPrompt(S32 cardNumber)
 {
     zSaveLoad_UIEvent(0x35, eEventUIFocusOn_Select);
 
@@ -696,7 +696,7 @@ int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
+S32 zSaveLoad_CardYankedErrorPrompt(S32 cardNumber)
 {
     zSaveLoad_UIEvent(0x36, eEventUIFocusOn_Select);
 
@@ -709,7 +709,7 @@ int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber)
     return promptSel;
 }
 
-int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
+S32 zSaveLoad_ErrorFormatPrompt(S32 cardNumber)
 {
     int i = 0x2e;
     if (cardNumber == 1)
@@ -733,7 +733,7 @@ int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber)
     return 6;
 }
 
-int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
+S32 zSaveLoad_ErrorFormatCardYankedPrompt(S32 cardNumber)
 {
     int i = 0x2f;
     if (cardNumber == 1)
@@ -757,11 +757,11 @@ int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber)
     return 6;
 }
 
-int32 zSaveLoad_CardCheckSingle(int32 cardNumber)
+S32 zSaveLoad_CardCheckSingle(S32 cardNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
-    int32 wrongDevice;
-    int32 tgtmax;
+    S32 wrongDevice;
+    S32 tgtmax;
 
     switch (xSGTgtCount(ldinst, &tgtmax))
     {
@@ -800,11 +800,11 @@ int32 zSaveLoad_CardCheckSingle(int32 cardNumber)
     return -1;
 }
 
-int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
+S32 zSaveLoad_CardCheckFormattedSingle(S32 cardNumber)
 {
-    int32 rc;
+    S32 rc;
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
-    int32 tgtmax;
+    S32 tgtmax;
 
     rc = 0;
     switch (xSGTgtCount(ldinst, &tgtmax))
@@ -825,7 +825,7 @@ int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
         }
         break;
     case 1:
-        int32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
+        S32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
         if (idx != cardNumber)
         {
             rc = -1;
@@ -856,7 +856,7 @@ int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber)
     return rc;
 }
 
-int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber)
+S32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber)
 {
     int rc;
 
@@ -884,11 +884,11 @@ int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
     return rc;
 }
 
-int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
+S32 zSaveLoad_CardCheckSpaceSingle(S32 cardNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_SAVE);
-    int32 tgtmax;
-    int32 rc;
+    S32 tgtmax;
+    S32 rc;
     rc = 0;
 
     switch (xSGTgtCount(ldinst, &tgtmax))
@@ -901,7 +901,7 @@ int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
         }
         break;
     case 1:
-        int32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
+        S32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
         if (idx != cardNumber)
         {
             rc = 5;
@@ -920,7 +920,7 @@ int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber)
     return rc;
 }
 
-int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber)
+S32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber)
 {
     int rc;
 
@@ -947,10 +947,10 @@ int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 c
     return rc;
 }
 
-int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
+S32 zSaveLoad_CardCheckGamesSingle(S32 cardNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
-    int32 tgtmax;
+    S32 tgtmax;
     int rc = 0;
 
     switch (xSGTgtCount(ldinst, &tgtmax))
@@ -963,7 +963,7 @@ int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
         }
         break;
     case 1:
-        int32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
+        S32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
         if (idx != cardNumber)
         {
             rc = 5;
@@ -982,10 +982,10 @@ int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber)
     return rc;
 }
 
-int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber,
-                                                   int32 gameNumber)
+S32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber,
+                                                   S32 gameNumber)
 {
-    int32 rc;
+    S32 rc;
 
     if (xSGTgtIsFormat(xsgdata, cardNumber, 0) <= 0)
     {
@@ -1007,10 +1007,10 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, i
     return rc;
 }
 
-int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
+S32 zSaveLoad_CardCheckSlotEmpty_hasGame(S32 cardNumber, S32 gameNumber)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
-    int32 tgtmax;
+    S32 tgtmax;
     int rc = 0;
 
     switch (xSGTgtCount(ldinst, &tgtmax))
@@ -1023,7 +1023,7 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
         }
         break;
     case 1:
-        int32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
+        S32 idx = xSGTgtPhysSlotIdx(ldinst, 0);
         if (idx != cardNumber)
         {
             rc = -1;
@@ -1041,9 +1041,9 @@ int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber)
     return rc;
 }
 
-int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
+S32 zSaveLoad_CardCheckSlotOverwrite_Free(S32 cardNumber, S32 gameNumber)
 {
-    int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
+    S32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
     switch (i)
     {
     case -1:
@@ -1060,9 +1060,9 @@ int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber)
     }
 }
 
-int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
+S32 zSaveLoad_CardCheck(S32 cardNumber, S32 mode)
 {
-    int32 cardResult = zSaveLoad_CardCheckSingle(cardNumber);
+    S32 cardResult = zSaveLoad_CardCheckSingle(cardNumber);
     while (cardResult == 0)
     {
         badCard = 1;
@@ -1077,9 +1077,9 @@ int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode)
     return cardResult == 9 ? 9 : 1;
 }
 
-int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
+S32 zSaveLoad_CardCheckFormatted(S32 cardNumber, S32 mode)
 {
-    int32 result;
+    S32 result;
     while (result = zSaveLoad_CardCheckFormattedSingle(cardNumber), result != 1)
     {
         badCard = 1;
@@ -1102,14 +1102,14 @@ int32 zSaveLoad_CardCheckFormatted(int32 cardNumber, int32 mode)
         }
 
         sAccessType = 3;
-        int32 tmp = format(cardNumber, mode);
+        S32 tmp = format(cardNumber, mode);
         sAccessType = 2;
         return tmp != 1 ? tmp : 11;
     }
     return 1;
 }
 
-int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
+S32 zSaveLoad_CardCheckValid(S32 cardNumber, S32 mode)
 {
     if (mode == 1)
     {
@@ -1121,9 +1121,9 @@ int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode)
     }
 }
 
-int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
+S32 zSaveLoad_CardCheckSpace(S32 cardNumber, S32 mode)
 {
-    int32 result = zSaveLoad_CardCheckSpaceSingle(cardNumber);
+    S32 result = zSaveLoad_CardCheckSpaceSingle(cardNumber);
     while (result != 1)
     {
         badCard = 1;
@@ -1143,9 +1143,9 @@ int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode)
     return 1;
 }
 
-int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
+S32 zSaveLoad_CardCheckGames(S32 cardNumber, S32 mode)
 {
-    int32 result = zSaveLoad_CardCheckGamesSingle(cardNumber);
+    S32 result = zSaveLoad_CardCheckGamesSingle(cardNumber);
     while (result != 1)
     {
         badCard = 1;
@@ -1165,7 +1165,7 @@ int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode)
     return 1;
 }
 
-int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode)
+S32 zSaveLoad_CardCheckGameSlot(S32 cardNumber, S32 gameNumber, S32 mode)
 {
     if (mode == 1)
     {
@@ -1177,9 +1177,9 @@ int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode
     }
 }
 
-int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
+S32 zSaveLoad_CardCheckSlotEmpty(S32 cardNumber, S32 gameNumber)
 {
-    int32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
+    S32 i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
     while (i != 1)
     {
         i = zSaveLoad_CardCheckSlotEmpty_hasGame(cardNumber, gameNumber);
@@ -1197,10 +1197,10 @@ int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber)
     return 1;
 }
 
-int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
+S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber)
 {
     // TODO: Figure out what this number means.
-    int32 iVar1 = zSaveLoad_CardCheckSlotOverwrite_Free(cardNumber, gameNumber);
+    S32 iVar1 = zSaveLoad_CardCheckSlotOverwrite_Free(cardNumber, gameNumber);
     // NOTE (Square): I'm not sure that this is supposed to be a loop. It doesn't make
     // sense to just break at the end and the condition feels like it should be an early return
     // but this matches and I don't know how else to generate the `b` instruction at 0x18
@@ -1235,10 +1235,10 @@ int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber)
     return 1;
 }
 
-int32 zSaveLoad_CardPick(int32 mode)
+S32 zSaveLoad_CardPick(S32 mode)
 {
-    int32 done = 0;
-    int32 formatDone = 0x16;
+    S32 done = 0;
+    S32 formatDone = 0x16;
 
     currentCard = -1;
     promptSel = -1;
@@ -1369,14 +1369,14 @@ int32 zSaveLoad_CardPick(int32 mode)
     return done;
 }
 
-bool IsValidName(int8* name)
+bool IsValidName(char* name)
 {
     if (strcmp((char*)name, "") == 0)
     {
         return 0;
     }
 
-    for (int8* p = name; *p != NULL; p++)
+    for (char* p = name; *p != NULL; p++)
     {
         if ((*p < 'A' || *p > 'z') && (*p < '0' || *p > '9') && (*p != ' ' && *p != '\''))
         {
@@ -1386,12 +1386,12 @@ bool IsValidName(int8* name)
     return 1;
 }
 
-void BuildIt(int8* build_txt, int32 i)
+void BuildIt(char* build_txt, S32 i)
 {
-    int8 date1[32] = {};
-    int8 date2[32];
-    int8 biggerbuf[256] = {};
-    int8 displaySizeUnit[32];
+    char date1[32] = {};
+    char date2[32];
+    char biggerbuf[256] = {};
+    char displaySizeUnit[32];
 
     if (IsValidName(zSaveLoadGameTable[i].label) == 0)
     {
@@ -1424,15 +1424,15 @@ void BuildIt(int8* build_txt, int32 i)
     }
 }
 
-void zSaveLoad_BuildName(int8* name_txt, int32 idx)
+void zSaveLoad_BuildName(char* name_txt, S32 idx)
 {
-    int8 desired[128];
-    int8 current_name[128];
+    char desired[128];
+    char current_name[128];
 
     BuildIt(desired, idx);
 
-    int32 counter = 0;
-    for (int32 i = 0; i < idx; i++)
+    S32 counter = 0;
+    for (S32 i = 0; i < idx; i++)
     {
         BuildIt(current_name, i);
         if (strcmp(zSaveLoadGameTable[i].label, zSaveLoadGameTable[idx].label) == 0 &&
@@ -1453,12 +1453,12 @@ void zSaveLoad_BuildName(int8* name_txt, int32 idx)
     }
 }
 
-int32 zSaveLoad_GameSelect(int32 mode)
+S32 zSaveLoad_GameSelect(S32 mode)
 {
-    int32 done = 0;
-    int32 i;
+    S32 done = 0;
+    S32 i;
     st_XSAVEGAME_DATA* svinst;
-    int32 use_tgt;
+    S32 use_tgt;
 
     badCard = 1;
     while (badCard != 0)
@@ -1520,7 +1520,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
 
         if (mode == 1)
         {
-            for (int32 emptyCount = 6; emptyCount <= 8; emptyCount++)
+            for (S32 emptyCount = 6; emptyCount <= 8; emptyCount++)
             {
                 if (zSaveLoad_slotIsEmpty(emptyCount - 6) == 0)
                 {
@@ -1639,7 +1639,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
         zSaveLoad_UIEvent(0, eEventEnable);
     }
 
-    int32 index = 0x15;
+    S32 index = 0x15;
     if (mode == 1)
     {
         index = 0;
@@ -1648,7 +1648,7 @@ int32 zSaveLoad_GameSelect(int32 mode)
     return done;
 }
 
-uint8 zSaveLoadGetPreAutoSave()
+U8 zSaveLoadGetPreAutoSave()
 {
     return preAutoSaving;
 }
@@ -1669,7 +1669,7 @@ void zSaveLoadPreAutoSave(bool onOff)
 void zSaveLoadAutoSaveUpdate()
 {
     xBase* obj;
-    int32 out1, out2;
+    s32 out1, out2;
 
     if (globals.autoSaveFeature == 0 || gGameMode == eGameMode_Pause)
     {
@@ -1680,7 +1680,7 @@ void zSaveLoadAutoSaveUpdate()
         return;
     }
 
-    int32 physicalSlot = xSGAutoSave_GetCache()->LastPhysicalSlot();
+    S32 physicalSlot = xSGAutoSave_GetCache()->LastPhysicalSlot();
     if (physicalSlot >= 0)
     {
         autoSaveCard = physicalSlot;
@@ -1713,10 +1713,10 @@ void zSaveLoadAutoSaveUpdate()
     }
 }
 
-int32 zSaveLoad_DoAutoSave()
+S32 zSaveLoad_DoAutoSave()
 {
-    int32 success = 0;
-    int32 teststat = 1;
+    S32 success = 0;
+    S32 teststat = 1;
     en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
     st_XSAVEGAME_DATA* svinst;
 
@@ -1730,8 +1730,8 @@ int32 zSaveLoad_DoAutoSave()
         return -1;
     }
 
-    int32 use_tgt = CardtoTgt(autodata->LastTarget());
-    int32 lastGame = autodata->LastGame();
+    S32 use_tgt = CardtoTgt(autodata->LastTarget());
+    S32 lastGame = autodata->LastGame();
     autodata->Discard();
     svinst = xSGInit(XSG_MODE_SAVE);
     xSGTgtSelect(svinst, use_tgt);
@@ -1748,9 +1748,9 @@ int32 zSaveLoad_DoAutoSave()
     xSGAddSaveClient(svinst, 'PREF', 0, xSGT_SaveInfoPrefsCB, xSGT_SaveProcPrefsCB);
 
     xSerial_svgame_register(svinst, XSG_MODE_SAVE);
-    uint32 progress = zSceneCalcProgress();
+    U32 progress = zSceneCalcProgress();
 
-    const int8* area;
+    const char* area;
     if (globals.sceneCur->sceneID == 'PG12')
     {
         area = zSceneGetLevelName('HB01');
@@ -1760,7 +1760,7 @@ int32 zSaveLoad_DoAutoSave()
         area = zSceneGetLevelName(globals.sceneCur->sceneID);
     }
 
-    int8 label[64];
+    char label[64];
     strncpy(label, area, sizeof(label));
     if (!xSGSetup(svinst, lastGame, label, progress, 0, zSceneGetLevelIndex()))
     {
@@ -1769,7 +1769,7 @@ int32 zSaveLoad_DoAutoSave()
 
     if (teststat != 0)
     {
-        int32 iprocess = xSGProcess(svinst);
+        S32 iprocess = xSGProcess(svinst);
         if (iprocess != 0)
         {
             asstat = xSGAsyncStatus(svinst, 1, 0, 0);
@@ -1810,7 +1810,7 @@ int32 zSaveLoad_DoAutoSave()
     {
         if (autodata != NULL)
         {
-            int32 idx = xSGTgtPhysSlotIdx(svinst, use_tgt);
+            S32 idx = xSGTgtPhysSlotIdx(svinst, use_tgt);
             autodata->SetCache(use_tgt, lastGame, idx);
             globals.autoSaveFeature = 1;
         }
@@ -1828,13 +1828,13 @@ int32 zSaveLoad_DoAutoSave()
 }
 
 // Reordering at beginning
-int32 zSaveLoad_SaveGame()
+S32 zSaveLoad_SaveGame()
 {
-    int32 success = false;
-    int32 teststat = true;
+    S32 success = false;
+    S32 teststat = true;
     en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
-    int32 use_tgt = CardtoTgt(currentCard);
-    int32 use_game = currentGame;
+    S32 use_tgt = CardtoTgt(currentCard);
+    S32 use_game = currentGame;
     autoSaveCard = currentCard;
 
     st_XSAVEGAME_DATA* xsgdata = zSaveLoadSGInit(XSG_MODE_SAVE);
@@ -1858,9 +1858,9 @@ int32 zSaveLoad_SaveGame()
 
     xSerial_svgame_register(xsgdata, XSG_MODE_SAVE);
 
-    uint32 progress = zSceneCalcProgress();
-    int8 label[64];
-    const int8* area;
+    U32 progress = zSceneCalcProgress();
+    char label[64];
+    const char* area;
 
     if (globals.sceneCur->sceneID == 'PG12')
     {
@@ -1881,7 +1881,7 @@ int32 zSaveLoad_SaveGame()
     en_XSG_WHYFAIL whyFail = XSG_WHYERR_NONE;
     if (teststat)
     {
-        int32 rc = xSGProcess(xsgdata);
+        S32 rc = xSGProcess(xsgdata);
         if (rc)
         {
             asstat = xSGAsyncStatus(xsgdata, 1, &whyFail, NULL);
@@ -1929,7 +1929,7 @@ int32 zSaveLoad_SaveGame()
     XSGAutoData* asg = xSGAutoSave_GetCache();
     if (success && teststat)
     {
-        int32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
+        S32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
         asg->SetCache(use_tgt, use_game, idx);
         globals.autoSaveFeature = 1;
         return 1;
@@ -1950,13 +1950,13 @@ int32 zSaveLoad_SaveGame()
 }
 
 // Reordering, causing different register use at the end
-int32 zSaveLoad_LoadGame()
+S32 zSaveLoad_LoadGame()
 {
-    int32 success = false;
-    int32 teststat = true;
-    int32 rc;
+    S32 success = false;
+    S32 teststat = true;
+    S32 rc;
     en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
-    int32 use_tgt = CardtoTgt(currentCard);
+    S32 use_tgt = CardtoTgt(currentCard);
     autoSaveCard = currentCard;
 
     st_XSAVEGAME_DATA* xsgdata = zSaveLoadSGInit(XSG_MODE_LOAD);
@@ -2026,10 +2026,10 @@ int32 zSaveLoad_LoadGame()
     }
 
     XSGAutoData* asg = xSGAutoSave_GetCache();
-    int32 use_game = currentCard;
+    S32 use_game = currentCard;
     if (success && teststat)
     {
-        int32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
+        S32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
         asg->SetCache(use_tgt, use_game, idx);
         globals.autoSaveFeature = 1;
         return 1;
@@ -2045,11 +2045,11 @@ int32 zSaveLoad_LoadGame()
     }
 }
 
-uint32 zSaveLoad_LoadLoop()
+U32 zSaveLoad_LoadLoop()
 {
     zSaveLoadInit();
     sAccessType = 1;
-    int32 state = 0;
+    S32 state = 0;
     while (state != 6)
     {
         switch (state)
@@ -2126,15 +2126,15 @@ uint32 zSaveLoad_LoadLoop()
     }
 
     zSendEventToThumbIcon(eEventInvisible);
-    return (uint32)sceneRead[0] << 0x18 | (uint32)sceneRead[1] << 0x10 |
-           (uint32)sceneRead[2] << 0x8 | (uint32)sceneRead[3];
+    return (U32)sceneRead[0] << 0x18 | (U32)sceneRead[1] << 0x10 |
+           (U32)sceneRead[2] << 0x8 | (U32)sceneRead[3];
 }
 
 // Scheduling meme on the return
-uint32 zSaveLoad_SaveLoop()
+U32 zSaveLoad_SaveLoop()
 {
     zSaveLoadInit();
-    int32 state = 0;
+    S32 state = 0;
     saveSuccess = 0;
 
     while (state != 6)
@@ -2235,7 +2235,7 @@ uint32 zSaveLoad_SaveLoop()
             state = 6;
             break;
         case 10:
-            int32 tmp = zSaveLoad_SaveGame();
+            S32 tmp = zSaveLoad_SaveGame();
             if (tmp == 1)
             {
                 zGameModeSwitch(eGameMode_Game);
@@ -2273,7 +2273,7 @@ uint32 zSaveLoad_SaveLoop()
     return saveSuccess;
 }
 
-void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
+void zSaveLoad_DispatchCB(U32 dispatchEvent, const F32* toParam)
 {
     switch (dispatchEvent)
     {
@@ -2303,14 +2303,14 @@ void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam)
     }
 }
 
-int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most)
+S32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, S32* need, S32* most)
 {
     *need = xSGWriteStrLen(currSceneStr);
     *most = *need << 1;
     return 1;
 }
 
-int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
+S32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
     if (globals.sceneCur->sceneID == 'PG12')
     {
@@ -2323,14 +2323,14 @@ int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECO
     return xSGWriteData(xsgdata, wctxt, currSceneStr, 1, strlen(currSceneStr)) + 1;
 }
 
-int32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, int32* i, int32* j)
+S32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, S32* i, S32* j)
 {
     *i = 16;
     *j = *i * 2;
     return 1;
 }
 
-int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
+S32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
     int sum = 0;
     sum += xSGWriteData(xsgdata, wctxt, &gSnd.stereo, 1);
@@ -2340,11 +2340,11 @@ int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WR
     return sum + 1;
 }
 
-int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                      uint32 ui, int32 i)
+S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
+                      U32 ui, S32 i)
 {
-    int8 bigbuf[32] = {};
-    int32 compdiff = 0;
+    char bigbuf[32] = {};
+    S32 compdiff = 0;
 
     xSGReadData(xsgdata, rctxt, bigbuf, 1, strlen(currSceneStr));
     if (strlen(currSceneStr) != strlen(bigbuf))
@@ -2359,10 +2359,10 @@ int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCON
     return compdiff == 0;
 }
 
-int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                       uint32 ui, int32 i)
+S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
+                       U32 ui, S32 i)
 {
-    uint32 stereo;
+    U32 stereo;
 
     xSGReadData(xsgdata, rctxt, &stereo, 1);
     xSGReadData(xsgdata, rctxt, &gSnd.categoryVolFader[2], 1);
@@ -2379,24 +2379,24 @@ int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCO
     return 1;
 }
 
-uint32 zSaveLoad_slotIsEmpty(uint32 slot)
+U32 zSaveLoad_slotIsEmpty(U32 slot)
 {
     // TODO: Fix this hardcoded offset once string generation is correct
-    int8* label = zSaveLoadGameTable[slot].label;
+    char* label = zSaveLoadGameTable[slot].label;
     return strcmp(label, "ld gameslot group" + 0x49c) == 0 ? 1 : 0;
 }
 
-int32 XSGAutoData::LastPhysicalSlot()
+S32 XSGAutoData::LastPhysicalSlot()
 {
     return this->lastPhysicalSlot;
 }
 
-int32 XSGAutoData::LastGame()
+S32 XSGAutoData::LastGame()
 {
     return this->lastGame;
 }
 
-int32 XSGAutoData::LastTarget()
+S32 XSGAutoData::LastTarget()
 {
     return this->lastTarg;
 }

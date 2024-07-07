@@ -5,7 +5,7 @@
 
 #include "xEvent.h"
 
-xFactoryInst* GOALCreate_Script(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* GOALCreate_Script(S32 who, RyzMemGrow* grow, void*)
 {
     xGoal* goal = NULL;
 
@@ -56,7 +56,7 @@ xFactoryInst* GOALCreate_Script(int32 who, RyzMemGrow* grow, void*)
     return goal;
 }
 
-int32 zNPCGoalScript::Enter(float32 dt, void* updCtxt)
+S32 zNPCGoalScript::Enter(F32 dt, void* updCtxt)
 {
     zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
 
@@ -65,21 +65,21 @@ int32 zNPCGoalScript::Enter(float32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-int32 zNPCGoalScript::Exit(float32 dt, void* updCtxt)
+S32 zNPCGoalScript::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
-int32 zNPCGoalScript::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                               xBase* toParamWidget, int32* handled)
+S32 zNPCGoalScript::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                               xBase* toParamWidget, S32* handled)
 {
     return xGoal::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
 }
 
-int32 zNPCGoalScript::NPCMessage(NPCMsg* mail)
+S32 zNPCGoalScript::NPCMessage(NPCMsg* mail)
 {
     xPsyche* psyche = GetPsyche();
-    int32 handled = 1;
+    S32 handled = 1;
 
     switch (mail->msgid)
     {

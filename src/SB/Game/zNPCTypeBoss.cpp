@@ -11,7 +11,7 @@
 
 #define ANIM_COUNT 78
 
-uint32 g_hash_bossanim[ANIM_COUNT] = {};
+U32 g_hash_bossanim[ANIM_COUNT] = {};
 
 // clang-format off
 const char* g_strz_bossanim[ANIM_COUNT] =
@@ -101,19 +101,19 @@ const char* g_strz_bossanim[ANIM_COUNT] =
 };
 // clang-format on
 
-static int32 g_boss_is_in_the_house = 0;
+static S32 g_boss_is_in_the_house = 0;
 static zParEmitter* g_pemit_holder = NULL;
 static xParEmitterCustomSettings g_parf_holder;
 
-extern int32 _917_0[2];
-extern float32 _920_2;
-extern float32 _921_2;
-extern float32 _922_0;
-extern float32 _947_3;
+extern S32 _917_0[2];
+extern F32 _920_2;
+extern F32 _921_2;
+extern F32 _922_0;
+extern F32 _947_3;
 
 void ZNPC_Boss_Startup()
 {
-    for (int32 i = 0; i < ANIM_COUNT; i++)
+    for (S32 i = 0; i < ANIM_COUNT; i++)
     {
         g_hash_bossanim[i] = xStrHash(g_strz_bossanim[i]);
     }
@@ -133,7 +133,7 @@ void zNPCBoss_SceneFinish()
     g_boss_is_in_the_house = 0;
 }
 
-xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_Boss(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCBoss* boss;
 
@@ -185,7 +185,7 @@ xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
     // non-matching: surprisingly the floats in this function are fine
     // r4 and r5 is swapped for some reason during the ourAnims assignment
     xAnimTable* table;
-    int32 ourAnims[2] = { 1, 0 };
+    S32 ourAnims[2] = { 1, 0 };
 
     table = xAnimTableNew("zNPCBBobbyArm", NULL, 0);
 
@@ -220,48 +220,48 @@ void BOSS_InitEffects()
 }
 #endif
 
-zNPCBoss::zNPCBoss(int32 myType) : zNPCCommon(myType)
+zNPCBoss::zNPCBoss(S32 myType) : zNPCCommon(myType)
 {
 }
 
-zNPCB_SB1::zNPCB_SB1(int32 myType) : zNPCBoss(myType)
+zNPCB_SB1::zNPCB_SB1(S32 myType) : zNPCBoss(myType)
 {
 }
 
-zNPCBPatrick::zNPCBPatrick(int32 myType) : zNPCBoss(myType)
+zNPCBPatrick::zNPCBPatrick(S32 myType) : zNPCBoss(myType)
 {
 }
 
-zNPCBSandy::zNPCBSandy(int32 myType) : zNPCBoss(myType)
+zNPCBSandy::zNPCBSandy(S32 myType) : zNPCBoss(myType)
 {
 }
 
-uint8 zNPCBoss::ColChkFlags() const
-{
-    return XENT_COLLTYPE_NONE;
-}
-
-uint8 zNPCBoss::ColPenFlags() const
+U8 zNPCBoss::ColChkFlags() const
 {
     return XENT_COLLTYPE_NONE;
 }
 
-uint8 zNPCBoss::ColChkByFlags() const
+U8 zNPCBoss::ColPenFlags() const
+{
+    return XENT_COLLTYPE_NONE;
+}
+
+U8 zNPCBoss::ColChkByFlags() const
 {
     return XENT_COLLTYPE_PLYR;
 }
 
-uint8 zNPCBoss::ColPenByFlags() const
+U8 zNPCBoss::ColPenByFlags() const
 {
     return XENT_COLLTYPE_PLYR;
 }
 
-uint8 zNPCBoss::PhysicsFlags() const
+U8 zNPCBoss::PhysicsFlags() const
 {
     return 0x3;
 }
 
-float32 zNPCBoss::AttackTimeLeft()
+F32 zNPCBoss::AttackTimeLeft()
 {
     return _947_3;
 }
@@ -274,6 +274,6 @@ void zNPCBoss::ThanksImDone()
 {
 }
 
-zNPCB_SB2::zNPCB_SB2(int32 myType) : zNPCBoss(myType)
+zNPCB_SB2::zNPCB_SB2(S32 myType) : zNPCBoss(myType)
 {
 }

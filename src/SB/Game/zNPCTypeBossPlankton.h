@@ -49,10 +49,10 @@ struct zNPCBPlankton : zNPCBoss
         zEntDestructObj* fuse;
         xTimer* timer;
         zNPCCommon* crony[8];
-        int32 crony_size;
-        uint8 fuse_detected;
-        uint8 fuse_destroyed;
-        float32 fuse_detect_time;
+        S32 crony_size;
+        U8 fuse_detected;
+        U8 fuse_destroyed;
+        F32 fuse_detect_time;
     };
 
     struct
@@ -66,11 +66,11 @@ struct zNPCBPlankton : zNPCBoss
         follow_enum follow;
     } flag;
     mode_enum mode;
-    float32 delay;
+    F32 delay;
     xQuat gun_tilt;
-    float32 ambush_delay;
-    float32 beam_duration;
-    float32 stun_duration;
+    F32 ambush_delay;
+    F32 beam_duration;
+    F32 stun_duration;
     xDecalEmitter beam_ring;
     xDecalEmitter beam_glow;
     xLaserBoltEmitter beam;
@@ -78,71 +78,71 @@ struct zNPCBPlankton : zNPCBoss
     struct
     {
         xVec3 center;
-        float32 radius;
+        F32 radius;
     } orbit;
     struct
     {
         xVec2 dir;
-        float32 vel;
-        float32 accel;
-        float32 max_vel;
+        F32 vel;
+        F32 accel;
+        F32 max_vel;
     } turn;
     move_info move;
     struct
     {
-        float32 delay;
-        float32 max_delay;
+        F32 delay;
+        F32 max_delay;
     } follow;
     struct
     {
-        uint8 moreFlags;
+        U8 moreFlags;
     } old;
     zNPCBoss* crony;
     territory_data territory[8];
-    int32 territory_size;
-    int32 active_territory;
+    S32 territory_size;
+    S32 active_territory;
     zNPCNewsFish* newsfish;
-    uint32 old_player_health;
-    uint8 played_intro;
+    U32 old_player_health;
+    U8 played_intro;
 
-    zNPCBPlankton(int32 myType);
+    zNPCBPlankton(S32 myType);
 };
 
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonAttack : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonAmbush : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonFlank : zNPCGoalCommon
 {
-    float32 accel;
+    F32 accel;
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonEvade : zNPCGoalCommon
 {
-    float32 evade_delay;
+    F32 evade_delay;
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
@@ -150,42 +150,42 @@ struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
     xVec3 player_loc;
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonMove : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonStun : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonFall : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonDizzy : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
@@ -198,32 +198,32 @@ struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
         SS_DONE
     };
 
-    float32 emitted;
+    F32 emitted;
     substate_enum substate;
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonWall : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
 {
     zNPCBPlankton& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 #endif

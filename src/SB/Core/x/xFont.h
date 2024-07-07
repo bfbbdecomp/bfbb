@@ -9,29 +9,29 @@
 
 struct xfont
 {
-    uint32 id;
-    float32 width;
-    float32 height;
-    float32 space;
+    U32 id;
+    F32 width;
+    F32 height;
+    F32 space;
     iColor_tag color;
-    basic_rect<float32> clip;
+    basic_rect<F32> clip;
 
     static void init();
     static void set_render_state(RwRaster* raster);
     static void restore_render_state();
     static xfont create();
-    static xfont create(uint32 id, float32 width, float32 height, float32 space, iColor_tag color,
-                        const basic_rect<float32>& clip);
+    static xfont create(U32 id, F32 width, F32 height, F32 space, iColor_tag color,
+                        const basic_rect<F32>& clip);
 
-    basic_rect<float32> bounds(char c) const;
-    basic_rect<float32> bounds(const char* text) const;
-    basic_rect<float32> bounds(const char* text, ulong32 text_size, float32 max_width,
-                               ulong32& size) const;
+    basic_rect<F32> bounds(char c) const;
+    basic_rect<F32> bounds(const char* text) const;
+    basic_rect<F32> bounds(const char* text, size_t text_size, F32 max_width,
+                               size_t& size) const;
     void start_render() const;
     void stop_render() const;
-    void irender(const char* text, float32 x, float32 y) const;
-    void irender(const char* text, ulong32 text_size, float32 x, float32 y) const;
-    void render(const char* text, float32 x, float32 y) const;
+    void irender(const char* text, F32 x, F32 y) const;
+    void irender(const char* text, size_t text_size, F32 x, F32 y) const;
+    void render(const char* text, F32 x, F32 y) const;
 };
 
 struct xtextbox
@@ -61,15 +61,15 @@ struct xtextbox
             bool dynamic : 1; // bit 25
             bool page_break : 1; // bit 26
             bool stateful : 1; // bit 27
-            uint16 dummy : 4; // bits 28-31
+            U16 dummy : 4; // bits 28-31
         } flag;
         // Offset: 0xC
-        uint16 context_size;
+        U16 context_size;
 
         // Offset: 0x10
         void* context;
-        basic_rect<float32> bounds;
-        basic_rect<float32> render_bounds;
+        basic_rect<F32> bounds;
+        basic_rect<F32> render_bounds;
         const callback* cb;
         tag_type* tag;
 
@@ -95,18 +95,18 @@ struct xtextbox
 
     struct callback
     {
-        void (*render)(const jot&, const xtextbox&, float32, float32);
+        void (*render)(const jot&, const xtextbox&, F32, F32);
         void (*layout_update)(const jot&, xtextbox&, const xtextbox&);
         void (*render_update)(const jot&, xtextbox&, const xtextbox&);
     };
 
     struct jot_line
     {
-        basic_rect<float32> bounds;
-        float32 baseline;
-        ulong32 first;
-        ulong32 last;
-        uint8 page_break;
+        basic_rect<F32> bounds;
+        F32 baseline;
+        size_t first;
+        size_t last;
+        U8 page_break;
     };
 
     struct tag_entry
@@ -114,89 +114,89 @@ struct xtextbox
         substr name;
         char op;
         substr* args;
-        ulong32 args_size;
+        size_t args_size;
     };
 
     struct tag_entry_list
     {
         tag_entry* entries;
-        ulong32 size;
+        size_t size;
     };
 
     xfont font;
-    basic_rect<float32> bounds;
-    uint32 flags;
-    float32 line_space;
-    float32 tab_stop;
-    float32 left_indent;
-    float32 right_indent;
+    basic_rect<F32> bounds;
+    U32 flags;
+    F32 line_space;
+    F32 tab_stop;
+    F32 left_indent;
+    F32 right_indent;
     callback* cb;
     void* context;
     const char** texts;
-    const ulong32* text_sizes;
-    ulong32 texts_size;
+    const size_t* text_sizes;
+    size_t texts_size;
     substr text;
-    ulong32 text_hash;
+    size_t text_hash;
 
     static callback text_cb;
 
-    static void text_render(const jot& j, const xtextbox& tb, float32 x, float32 y);
+    static void text_render(const jot& j, const xtextbox& tb, F32 x, F32 y);
     static tag_entry_list read_tag(const substr& s);
     static tag_entry* find_entry(const tag_entry_list& el, const substr& name);
-    static ulong32 read_list(const tag_entry& e, float32* v, ulong32 vsize);
-    static ulong32 read_list(const tag_entry& e, int32* v, ulong32 vsize);
+    static size_t read_list(const tag_entry& e, F32* v, size_t vsize);
+    static size_t read_list(const tag_entry& e, S32* v, size_t vsize);
     static void clear_layout_cache();
-    static void register_tags(const tag_type* tag, ulong32 count);
+    static void register_tags(const tag_type* tag, size_t count);
     static tag_type* find_format_tag(const substr& s);
-    static tag_type* find_format_tag(const substr& s, int32& index);
+    static tag_type* find_format_tag(const substr& s, S32& index);
     static xtextbox create();
-    static xtextbox create(const xfont& font, const basic_rect<float32>& bounds, uint32 flags,
-                           float32 line_space, float32 tab_stop, float32 left_indent,
-                           float32 right_indent);
+    static xtextbox create(const xfont& font, const basic_rect<F32>& bounds, U32 flags,
+                           F32 line_space, F32 tab_stop, F32 left_indent,
+                           F32 right_indent);
 
     void set_text(const char* text);
-    void set_text(const char* text, ulong32 text_size);
-    void set_text(const char** texts, ulong32 size);
-    void set_text(const char** texts, const ulong32* text_sizes, ulong32 size);
+    void set_text(const char* text, size_t text_size);
+    void set_text(const char** texts, size_t size);
+    void set_text(const char** texts, const size_t* text_sizes, size_t size);
     layout& temp_layout(bool cache) const;
     void render(bool cache) const;
-    void render(layout& l, int32 begin_jot, int32 end_jot) const;
-    float32 yextent(float32 max, int32& size, bool cache) const;
-    float32 yextent(float32 max, int32& size, const layout& l, int32 begin_jot,
-                    int32 end_jot) const;
+    void render(layout& l, S32 begin_jot, S32 end_jot) const;
+    F32 yextent(F32 max, S32& size, bool cache) const;
+    F32 yextent(F32 max, S32& size, const layout& l, S32 begin_jot,
+                    S32 end_jot) const;
 };
 
 struct xtextbox::layout
 {
     xtextbox tb;
     jot _jots[512];
-    ulong32 _jots_size;
+    size_t _jots_size;
     jot_line _lines[128];
-    ulong32 _lines_size;
-    uint8 context_buffer[1024];
-    ulong32 context_buffer_size;
-    uint16 dynamics[64];
-    ulong32 dynamics_size;
+    size_t _lines_size;
+    U8 context_buffer[1024];
+    size_t context_buffer_size;
+    U16 dynamics[64];
+    size_t dynamics_size;
 
     void refresh(const xtextbox& tb, bool force);
     void refresh_end(const xtextbox& tb);
     void clear();
     void trim_line(jot_line& line);
-    void erase_jots(ulong32 begin_jot, ulong32 end_jot);
+    void erase_jots(size_t begin_jot, size_t end_jot);
     void merge_line(jot_line& line);
     void bound_line(jot_line& line);
     bool fit_line();
     void next_line();
-    void calc(const xtextbox& ctb, ulong32 start_text);
-    void render(const xtextbox& ctb, int32 begin_jot, int32 end_jot);
-    float32 yextent(float32 max, int32& size, int32 begin_jot, int32 end_jot) const;
+    void calc(const xtextbox& ctb, size_t start_text);
+    void render(const xtextbox& ctb, S32 begin_jot, S32 end_jot);
+    F32 yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) const;
     bool changed(const xtextbox& ctb);
-    ulong32 jots_size() const;
+    size_t jots_size() const;
 };
 
-void render_fill_rect(const basic_rect<float32>& bounds, iColor_tag color);
+void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color);
 
-float32 NSCREENX(float32);
-float32 NSCREENY(float32);
+F32 NSCREENX(F32);
+F32 NSCREENY(F32);
 
 #endif

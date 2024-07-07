@@ -4,9 +4,9 @@
 
 #if 0
 // WIP.
-void zGustUpdateFX(float32 seconds)
+void zGustUpdateFX(F32 seconds)
 {
-    for (int32 i = 0; i < ngusts; i++)
+    for (S32 i = 0; i < ngusts; i++)
     {
         zGust* curr = gusts[i];
         if (curr->flags & 1)

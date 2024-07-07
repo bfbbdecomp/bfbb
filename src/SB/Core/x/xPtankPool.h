@@ -20,26 +20,26 @@ enum ptank_group_type
 struct render_state
 {
     RwTexture* texture;
-    uint32 src_blend;
-    uint32 dst_blend;
-    uint32 flags;
+    U32 src_blend;
+    U32 dst_blend;
+    U32 flags;
 };
 
 struct _class
 {
-    uint8* data;
-    int32 stride;
-    uint32 size;
+    U8* data;
+    S32 stride;
+    U32 size;
 };
 
 struct ptank_pool
 {
     render_state rs;
-    uint32 used;
+    U32 used;
     RpAtomic* ptank;
     _class hide;
 
-    int8 valid() const;
+    bool valid() const;
     void reset();
     void flush();
     void grab_block(ptank_group_type type);
@@ -52,7 +52,7 @@ struct ptank_pool__pos_color_size_uv2 : public ptank_pool
     iColor_tag* color;
     xVec2* size;
     xVec2* uv;
-    int32 stride;
+    S32 stride;
 
     void next();
     void flush();

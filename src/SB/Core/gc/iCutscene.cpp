@@ -9,17 +9,17 @@
 #include <rwcore.h>
 #include <string.h>
 
-uint32 read_sizzze = 0;
+U32 read_sizzze = 0;
 
-extern float32 _835_1;
-extern float32 _836_1;
-extern float32 _837_4;
+extern F32 _835_1;
+extern F32 _836_1;
+extern F32 _837_4;
 
 void iCSSoundSetup(xCutscene* csn)
 {
     xCutsceneData* data;
-    uint32 dataIndex;
-    uint32 numData;
+    U32 dataIndex;
+    U32 numData;
 
     data = (xCutsceneData*)(csn->Play + 1);
     numData = csn->Play->NumData;
@@ -37,22 +37,22 @@ void iCSSoundSetup(xCutscene* csn)
             csn->SndNumChannel++;
         }
 
-        data = (xCutsceneData*)((uint8*)data + ALIGN(data->ChunkSize, 16) + sizeof(xCutsceneData));
+        data = (xCutsceneData*)((U8*)data + ALIGN(data->ChunkSize, 16) + sizeof(xCutsceneData));
     }
 }
 
-void* iCSSoundGetData(xSndVoiceInfo* vp, uint32* size)
+void* iCSSoundGetData(xSndVoiceInfo* vp, U32* size)
 {
-    uint32 channelIndex;
-    uint32 dataIndex;
+    U32 channelIndex;
+    U32 dataIndex;
     xCutscene* csn;
     void* retdata;
     xCutsceneData* data;
-    uint32 numChannel;
-    uint32 numData;
-    int32 sndChannelIndex;
-    uint32 r4;
-    uint32 sndChannelReq;
+    U32 numChannel;
+    U32 numData;
+    S32 sndChannelIndex;
+    U32 r4;
+    U32 sndChannelReq;
 
     csn = xCutscene_CurrentCutscene();
 
@@ -115,7 +115,7 @@ void* iCSSoundGetData(xSndVoiceInfo* vp, uint32* size)
             }
         }
 
-        data = (xCutsceneData*)((uint8*)data + ALIGN(data->ChunkSize, 16) + sizeof(xCutsceneData));
+        data = (xCutsceneData*)((U8*)data + ALIGN(data->ChunkSize, 16) + sizeof(xCutsceneData));
     }
 
     if (!retdata)
@@ -123,9 +123,9 @@ void* iCSSoundGetData(xSndVoiceInfo* vp, uint32* size)
         return NULL;
     }
 
-    while ((uint32)retdata & 0x1F)
+    while ((U32)retdata & 0x1F)
     {
-        retdata = (void*)((uint8*)retdata + 16);
+        retdata = (void*)((U8*)retdata + 16);
         *size -= 16;
     }
 
@@ -136,7 +136,7 @@ void* iCSSoundGetData(xSndVoiceInfo* vp, uint32* size)
 
 static void iCSAsyncReadCB(tag_xFile* file)
 {
-    int32 bytes;
+    S32 bytes;
     xCutscene* csn;
 
     if (file)
@@ -151,9 +151,9 @@ static void iCSAsyncReadCB(tag_xFile* file)
     }
 }
 
-uint32 iCSFileOpen(xCutscene* csn)
+U32 iCSFileOpen(xCutscene* csn)
 {
-    uint32 headerskip;
+    U32 headerskip;
     st_PKR_ASSET_TOCINFO ainfo;
     const char* filename;
 
@@ -181,10 +181,10 @@ uint32 iCSFileOpen(xCutscene* csn)
     return 1;
 }
 
-void iCSFileAsyncRead(xCutscene* csn, void* dest, uint32 size)
+void iCSFileAsyncRead(xCutscene* csn, void* dest, U32 size)
 {
-    uint32* buf = (uint32*)dest;
-    uint32 i;
+    U32* buf = (U32*)dest;
+    U32 i;
 
     read_sizzze = size;
     csn->Waiting = 1;
@@ -197,7 +197,7 @@ void iCSFileAsyncRead(xCutscene* csn, void* dest, uint32 size)
     iFileReadAsync(&csn->File, dest, size, iCSAsyncReadCB, 0);
 }
 
-void iCSFileAsyncSkip(xCutscene* csn, uint32 amount)
+void iCSFileAsyncSkip(xCutscene* csn, U32 amount)
 {
     csn->Waiting = 1;
 
@@ -211,14 +211,14 @@ void iCSFileClose(xCutscene* csn)
     csn->Opened = 0;
 }
 
-int32 iCSLoadStep(xCutscene* csn)
+S32 iCSLoadStep(xCutscene* csn)
 {
-    int32 bytes;
+    S32 bytes;
     XFILE_READSECTOR_STATUS cdstat;
-    uint32 skipAccum;
-    uint32 tmpSize;
+    U32 skipAccum;
+    U32 tmpSize;
     void* foundModel;
-    uint32 i;
+    U32 i;
 
     if (csn->Waiting)
     {
@@ -234,7 +234,7 @@ int32 iCSLoadStep(xCutscene* csn)
     {
         skipAccum = 0;
 
-        while (csn->DataLoading < (int32)csn->Info->NumData)
+        while (csn->DataLoading < (S32)csn->Info->NumData)
         {
             if (csn->Data[csn->DataLoading].DataType == XCUTSCENEDATA_TYPE_6)
             {

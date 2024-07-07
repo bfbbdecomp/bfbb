@@ -28,20 +28,20 @@ extern RpLight* DirectionalLight;
 extern RpWorld* World;
 extern RwCamera* sGameScreenTransCam;
 extern _tagTRCPadInfo gTrcPad[4];
-extern int32 g_hiphopReloadHIP;
-extern int32 g_hiphopForcePortal;
+extern S32 g_hiphopReloadHIP;
+extern S32 g_hiphopForcePortal;
 
-extern float32 lbl_803CDA28;
+extern F32 lbl_803CDA28;
 
-extern float32 lbl_803CDA10; // R, G, B
-extern float32 lbl_803CF5AC; // A
+extern F32 lbl_803CDA10; // R, G, B
+extern F32 lbl_803CF5AC; // A
 
-extern float32 lbl_803CDA54;
-extern float32 lbl_803CDA58;
+extern F32 lbl_803CDA54;
+extern F32 lbl_803CDA58;
 
 #ifdef NON_MATCHING
 // Scheduling, I guess
-void zGameInit(uint32 theSceneID)
+void zGameInit(U32 theSceneID)
 {
     gGameWhereAmI = eGameWhere_InitStart;
     xtextbox::clear_layout_cache();
@@ -145,7 +145,7 @@ void zGameSetup()
 }
 #endif
 
-int32 zGameIsPaused()
+S32 zGameIsPaused()
 {
     if (gGameMode == 8)
     {
@@ -163,7 +163,7 @@ int32 zGameIsPaused()
 }
 
 #ifdef NON_MATCHING
-int32 zGameLoopContinue()
+S32 zGameLoopContinue()
 {
     if (gGameMode == eGameMode_Game)
     {
@@ -186,9 +186,9 @@ int32 zGameLoopContinue()
 }
 #endif
 
-int32 zGameOkToPause()
+S32 zGameOkToPause()
 {
-    int32 uVar1 = 0;
+    S32 uVar1 = 0;
 
     if (globals.cmgr)
     {
@@ -299,7 +299,7 @@ void zGameScreenTransitionBegin()
 #endif
 
 //
-void zGameScreenTransitionUpdate(float32 percentComplete, char* msg)
+void zGameScreenTransitionUpdate(F32 percentComplete, char* msg)
 {
     if (!zMenuIsFirstBoot())
     {

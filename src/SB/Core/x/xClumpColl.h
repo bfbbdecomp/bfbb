@@ -8,16 +8,16 @@
 
 struct xClumpCollBSPBranchNode
 {
-    uint32 leftInfo;
-    uint32 rightInfo;
-    float32 leftValue;
-    float32 rightValue;
+    U32 leftInfo;
+    U32 rightInfo;
+    F32 leftValue;
+    F32 rightValue;
 };
 
 struct xClumpCollBSPVertInfo
 {
-    uint16 atomIndex;
-    uint16 meshVertIndex;
+    U16 atomIndex;
+    U16 meshVertIndex;
 };
 
 struct xClumpCollBSPTriangle
@@ -27,27 +27,27 @@ struct xClumpCollBSPTriangle
         xClumpCollBSPVertInfo i;
         RwV3d* p;
     } v;
-    uint8 flags;
-    uint8 platData;
-    uint16 matIndex;
+    U8 flags;
+    U8 platData;
+    U16 matIndex;
 };
 
 struct xClumpCollBSPTree
 {
-    uint32 numBranchNodes;
+    U32 numBranchNodes;
     xClumpCollBSPBranchNode* branchNodes;
-    uint32 numTriangles;
+    U32 numTriangles;
     xClumpCollBSPTriangle* triangles;
 };
 
 struct nodeInfo
 {
-    uint32 type;
-    uint32 index;
+    U32 type;
+    U32 index;
 };
 struct RwMeshCache
 {
-    uint32 lengthOfMeshesArray;
+    U32 lengthOfMeshesArray;
     RwResEntry* meshes[1];
 };
 
@@ -60,6 +60,6 @@ struct TempAtomicList
 };
 
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump);
-xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2);
+xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32 param_2);
 
 #endif

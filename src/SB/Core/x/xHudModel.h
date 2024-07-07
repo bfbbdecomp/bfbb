@@ -8,17 +8,17 @@ namespace xhud
 {
     struct model_asset : asset
     {
-        uint32 model;
+        U32 model;
 
         char* type_name();
     };
 
     struct model_widget : widget
     {
-        uint32 mid;
+        U32 mid;
         xModelInstance* model;
 
-        static void load(xBase& data, xDynAsset& asset, ulong32);
+        static void load(xBase& data, xDynAsset& asset, size_t);
     };
 } // namespace xhud
 

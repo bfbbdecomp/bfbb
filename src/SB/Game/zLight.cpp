@@ -11,15 +11,15 @@
 #include <string.h>
 
 extern _zLight* sLight[32];
-extern int32 sLightTotal;
+extern S32 sLightTotal;
 extern _tagPartition sLightPart;
 extern zVolume* sPartitionVolume;
 extern char zLight_strings[];
-extern int32 gNumTemporaryLights;
+extern S32 gNumTemporaryLights;
 extern _zLight* gTemporaryLights[32];
-extern float32 zLight_float;
+extern F32 zLight_float;
 extern xVec3 sDefaultShadowVec;
-extern void (*sEffectFuncs[18])(_zLight*, float32);
+extern void (*sEffectFuncs[18])(_zLight*, F32);
 
 #ifdef NON_MATCHING
 
@@ -60,7 +60,7 @@ void zLightInit(xBase* b, zLightAsset* tasset)
     {
         b->link = 0;
     }
-    uint32 itype = 1;
+    U32 itype = 1;
     switch (tasset->lightType)
     {
     case 0:
@@ -100,7 +100,7 @@ void zLightInit(xBase* b, zLightAsset* tasset)
         }
         if (t->tasset->lightEffect != NULL)
         {
-            t->reg = (float32*)xMemAlloc(gActiveHeap, 32, 0);
+            t->reg = (F32*)xMemAlloc(gActiveHeap, 32, 0);
             zLightEffectSet(t, t->tasset->lightEffect);
         }
         else
@@ -113,7 +113,7 @@ void zLightInit(xBase* b, zLightAsset* tasset)
 
 void zLightResolveLinks()
 {
-    int32 i;
+    S32 i;
     _zLight* zl;
 
     for (i = 0; i < sLightTotal; i++)
@@ -132,7 +132,7 @@ void zLightResolveLinks()
 
 void zLightDestroyAll()
 {
-    int32 total = sLightTotal;
+    S32 total = sLightTotal;
 
     for (int i = 0; i < total; i++, sLightTotal--)
     {
@@ -167,7 +167,7 @@ void zLightLoad(_zLight* ent, xSerial* s)
     xBaseLoad(ent, s);
 }
 
-int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* param_4, xBase* param_5)
+S32 zLightEventCB(xBase* param_1, xBase* to, U32 toEvent, const float* param_4, xBase* param_5)
 {
     _zLight* t = (_zLight*)to;
     switch (toEvent)
@@ -197,7 +197,7 @@ int32 zLightEventCB(xBase* param_1, xBase* to, uint32 toEvent, const float* para
 
 #ifdef NON_MATCHING
 // Float issue
-void zLightUpdate(xBase* to, xScene* param_2, float32 dt)
+void zLightUpdate(xBase* to, xScene* param_2, F32 dt)
 {
     _zLight* t = (_zLight*)to;
 
@@ -278,7 +278,7 @@ void zLightSetVolume(zVolume* vol)
     }
     else
     {
-        uint32 lp_id = xStrHash(zLight_strings + 9);
+        U32 lp_id = xStrHash(zLight_strings + 9);
         if (vol->id == lp_id)
         {
             sPartitionVolume = vol;

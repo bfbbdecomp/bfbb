@@ -5,7 +5,7 @@
 #include "xBehaveGoalSimple.h"
 #include "xutil.h"
 
-extern int32 g_modinit_xBehaveMgr;
+extern S32 g_modinit_xBehaveMgr;
 extern xBehaveMgr* g_behavmgr;
 
 #ifdef NON_MATCHING
@@ -64,7 +64,7 @@ void xBehaveMgr::RegBuiltIn()
     xGoalSimple_RegisterTypes(this->goalFactory);
 }
 
-xPsyche* xBehaveMgr::Subscribe(xBase* owner, int32 i)
+xPsyche* xBehaveMgr::Subscribe(xBase* owner, S32 i)
 {
     xPsyche* psyche = &this->psypool[this->psylist.cnt];
     XOrdAppend(&this->psylist, psyche);
@@ -90,7 +90,7 @@ void xBehaveMgr::SceneFinish()
 
 void xBehaveMgr::SceneReset()
 {
-    for (int32 i = 0; i < this->psylist.cnt; i++)
+    for (S32 i = 0; i < this->psylist.cnt; i++)
     {
         xPsyche* psyche = (xPsyche*)this->psylist.list[i];
         psyche->Amnesia(0);
@@ -119,7 +119,7 @@ void xPsyche::BrainEnd()
 
 #ifdef NON_MATCHING
 // Regalloc
-xGoal* xPsyche::AddGoal(int32 gid, void* createData)
+xGoal* xPsyche::AddGoal(S32 gid, void* createData)
 {
     xGoal* goal = (xGoal*)xBehaveMgr_GoalFactory()->CreateItem(gid, createData, NULL);
 
@@ -143,7 +143,7 @@ xGoal* xPsyche::AddGoal(int32 gid, void* createData)
 }
 #endif
 
-extern float32 _750;
+extern F32 _750;
 void xPsyche::FreshWipe()
 {
     this->goalstak[0] = NULL;
@@ -201,7 +201,7 @@ void xPsyche::Lobotomy(xFactory* factory)
 }
 
 #if 0
-void xPsyche::Amnesia(int32 i)
+void xPsyche::Amnesia(S32 i)
 {
     xGoal* g = this->goallist;
     while (g != NULL)

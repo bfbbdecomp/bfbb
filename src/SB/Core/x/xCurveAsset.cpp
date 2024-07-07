@@ -4,19 +4,19 @@
 
 #include <stdlib.h>
 
-float32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, float32 t)
+F32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, F32 t)
 {
-    float32 max_t = curve_asset->delta * (curve_asset->numPoints - 1);
+    F32 max_t = curve_asset->delta * (curve_asset->numPoints - 1);
 
     if (curve_asset->clamp == xCC_CONSTANT)
     {
-        float32 curve_length = MIN(t, max_t);
+        F32 curve_length = MIN(t, max_t);
 
         t = MAX(curve_length, 0.0f);
     }
     else
     {
-        int32 curve_shift = t / max_t;
+        S32 curve_shift = t / max_t;
 
         if (t < 0.0f)
         {
@@ -31,8 +31,8 @@ float32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, float32 t)
         }
     }
 
-    uint32 last_point = t / curve_asset->delta;
-    float32 u = (t - (last_point * curve_asset->delta)) / curve_asset->delta;
+    U32 last_point = t / curve_asset->delta;
+    F32 u = (t - (last_point * curve_asset->delta)) / curve_asset->delta;
 
     return (1.0f - u) * curve_asset->points[last_point] + u * curve_asset->points[last_point + 1];
 }

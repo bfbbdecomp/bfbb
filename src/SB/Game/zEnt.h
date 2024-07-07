@@ -14,9 +14,9 @@ struct zScene;
 
 struct _ShadowParams
 {
-    uint32 type;
-    float32 at;
-    float32 rad;
+    U32 type;
+    F32 at;
+    F32 rad;
 };
 
 struct zEnt : xEnt
@@ -25,39 +25,39 @@ struct zEnt : xEnt
 };
 
 void checkpoint_collision_hack(zEnt* ent);
-int8* zParamGetString(xModelAssetParam* param, uint32 size, int8* tok, int8* def);
-int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, const int8* tok, int32 count,
-                         float32* def, float32* result);
-void zEntGetShadowParams(xEnt* ent, xVec3* center, float32* radius, xEntShadow::radius_enum rtype);
-int32 zParamGetVector(xModelAssetParam* param, uint32 size, const int8* tok, xVec3 result, xVec3*);
-int32 zParamGetVector(xModelAssetParam* param, uint32 size, int8* tok, xVec3 result, xVec3*);
-int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 count, float32* def,
-                         float32* result);
-int32 zParamGetFloatList(xModelAssetParam* param, uint32 size, int8* tok, int32 count, float32* def,
-                         float32* result);
-float32 zParamGetFloat(xModelAssetParam* param, uint32 size, const int8* tok, float32 def);
-float32 zParamGetFloat(xModelAssetParam* param, uint32 size, int8* tok, float32 def);
-int32 zParamGetInt(xModelAssetParam* param, uint32 size, const int8* tok, int32 def);
-int32 zParamGetInt(xModelAssetParam* param, uint32 size, int8* tok, int32 def);
-xModelAssetParam* zEntGetModelParams(uint32 assetID, uint32* size);
-void zEntAnimEvent_AutoAnim(zEnt* ent, uint32 animEvent, const float32* animParam);
+char* zParamGetString(xModelAssetParam* param, U32 size, char* tok, char* def);
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const char* tok, S32 count,
+                         F32* def, F32* result);
+void zEntGetShadowParams(xEnt* ent, xVec3* center, F32* radius, xEntShadow::radius_enum rtype);
+S32 zParamGetVector(xModelAssetParam* param, U32 size, const char* tok, xVec3 result, xVec3*);
+S32 zParamGetVector(xModelAssetParam* param, U32 size, char* tok, xVec3 result, xVec3*);
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, char* tok, S32 count, F32* def,
+                         F32* result);
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, char* tok, S32 count, F32* def,
+                         F32* result);
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, const char* tok, F32 def);
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, char* tok, F32 def);
+S32 zParamGetInt(xModelAssetParam* param, U32 size, const char* tok, S32 def);
+S32 zParamGetInt(xModelAssetParam* param, U32 size, char* tok, S32 def);
+xModelAssetParam* zEntGetModelParams(U32 assetID, U32* size);
+void zEntAnimEvent_AutoAnim(zEnt* ent, U32 animEvent, const F32* animParam);
 xAnimTable* xEnt_AnimTable_AutoEventSmall();
-void zEntAnimEvent(zEnt* ent, uint32 animEvent, const float32* animParam);
-void zEntParseModelInfo(xEnt* ent, uint32 assetID);
+void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam);
+void zEntParseModelInfo(xEnt* ent, U32 assetID);
 xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent);
-void zEntEventAllOfType(uint32 toEvent, uint32 type);
-void zEntEventAll(xBase* from, uint32 fromEvent, uint32 toEvent, float32* toParam);
-void zEntUpdate(zEnt* ent, zScene* scene, float32 elapsedSec);
+void zEntEventAllOfType(U32 toEvent, U32 type);
+void zEntEventAll(xBase* from, U32 fromEvent, U32 toEvent, F32* toParam);
+void zEntUpdate(zEnt* ent, zScene* scene, F32 elapsedSec);
 void zEntReset(zEnt* ent);
 void zEntLoad(zEnt* ent, xSerial* s);
 void zEntSave(zEnt* ent, xSerial* s);
 void zEntSetup(zEnt* ent);
-void zEntInit(zEnt* ent, xEntAsset* asset, uint32 type);
+void zEntInit(zEnt* ent, xEntAsset* asset, U32 type);
 
 // TODO: Misplaced Inlines/Weak functions
 WEAK void xModelAnimCollStop(xModelInstance& m);
 WEAK xMat4x3* xEntGetFrame(const xEnt* ent);
-WEAK void xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                     const xVec3* pos, float32 radius, sound_category category, float32 delay);
+WEAK void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
+                     const xVec3* pos, F32 radius, sound_category category, F32 delay);
 
 #endif

@@ -7,21 +7,21 @@
 
 extern RpWorld* sBucketDummyWorld;
 extern RwCamera* sBucketDummyCamera;
-extern int32 xModelBucketEnabled;
-extern int32 sBucketCurr;
-extern int32 sBucketCount;
+extern S32 xModelBucketEnabled;
+extern S32 sBucketCurr;
+extern S32 sBucketCount;
 extern xModelBucket* sBucketList;
-extern int32 sBucketClipCullCurr;
-extern int32 sBucketClipCullCount;
+extern S32 sBucketClipCullCurr;
+extern S32 sBucketClipCullCount;
 extern xModelBucket** sBucketClipCullList;
-extern int32 sAlphaCurr;
-extern int32 sAlphaStart;
-extern int32 sAlphaCount;
+extern S32 sAlphaCurr;
+extern S32 sAlphaStart;
+extern S32 sAlphaCount;
 extern xModelAlphaBucket* sAlphaList;
-extern float32 xModelBucket_f675; // 100000.0f
-extern float32 xModelBucket_f676; // -100000.0f
+extern F32 xModelBucket_f675; // 100000.0f
+extern F32 xModelBucket_f676; // -100000.0f
 
-int32 CmpAlphaBucket(const void* _a, const void* _b)
+S32 CmpAlphaBucket(const void* _a, const void* _b)
 {
     xModelAlphaBucket* a = (xModelAlphaBucket*)_a;
     xModelAlphaBucket* b = (xModelAlphaBucket*)_b;
@@ -59,7 +59,7 @@ void xModelBucket_PreCountReset()
 
 #if 0
 // Idk.
-void xModelBucket_PreCountAlloc(int32 maxAlphaModels)
+void xModelBucket_PreCountAlloc(S32 maxAlphaModels)
 {
     sAlphaCount = maxAlphaModels;
     sBucketList = (xModelBucket*)xMemAllocSize(sBucketCount * sizeof(xModelBucket));
@@ -94,7 +94,7 @@ void xModelBucket_Init()
 
 void xModelBucket_Begin()
 {
-    for (int32 i = 0; i < sBucketCount; i++)
+    for (S32 i = 0; i < sBucketCount; i++)
     {
         sBucketList[i].List = NULL;
     }

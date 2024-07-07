@@ -5,10 +5,10 @@
 
 struct _xFColor
 {
-    float32 r;
-    float32 g;
-    float32 b;
-    float32 a;
+    F32 r;
+    F32 g;
+    F32 b;
+    F32 a;
 };
 
 #endif

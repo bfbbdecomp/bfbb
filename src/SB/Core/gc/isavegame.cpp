@@ -6,16 +6,16 @@
 
 #include "iTRC.h"
 
-extern int8 isavegame_strings[];
+extern char isavegame_strings[];
 
 extern st_ISGSESSION g_isgdata_MAIN;
 
-extern int32 g_isginit;
+extern S32 g_isginit;
 
 #if 0
-int32 iSGStartup()
+S32 iSGStartup()
 {
-    int32 i = g_isginit;
+    S32 i = g_isginit;
 
     if (g_isginit != 0)
     {
@@ -31,7 +31,7 @@ int32 iSGStartup()
 }
 #endif
 
-int32 iSGShutdown()
+S32 iSGShutdown()
 {
     iSG_discard_icondata();
     return 1;
@@ -39,13 +39,13 @@ int32 iSGShutdown()
 
 #if 0
 // WIP
-int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx)
+char* iSGMakeName(en_NAMEGEN_TYPE type, const char* base, S32 idx)
 {
-    static int32 rotate = 0;
-    static int8 rotatebuf[32][8];
+    static S32 rotate = 0;
+    static char rotatebuf[32][8];
 
-    int8* use_buf = rotatebuf[rotate];
-    int8* fmt_sd = isavegame_strings;
+    char* use_buf = rotatebuf[rotate];
+    char* fmt_sd = isavegame_strings;
     rotate++;
     if (rotate == 8)
     {
@@ -78,7 +78,7 @@ int8* iSGMakeName(en_NAMEGEN_TYPE type, const int8* base, int32 idx)
 
 #if 0
 // Struct definition is screwed up.
-st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), int32 monitor)
+st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), S32 monitor)
 {
     iTRCDisk::CheckDVDAndResetState();
     memset(&g_isgdata_MAIN, 0, sizeof(st_ISGSESSION));
@@ -96,7 +96,7 @@ st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE)
 void iSGSessionEnd(st_ISGSESSION* isgdata)
 {
     iTRCDisk::CheckDVDAndResetState();
-    for (int32 i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         if (isgdata->mcdata[i].mcport != 0)
         {

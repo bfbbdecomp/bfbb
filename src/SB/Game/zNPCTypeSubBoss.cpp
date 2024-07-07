@@ -7,7 +7,7 @@
 
 #define ANIM_COUNT 23
 
-uint32 g_hash_subbanim[ANIM_COUNT] = {};
+U32 g_hash_subbanim[ANIM_COUNT] = {};
 
 // clang-format off
 const char* g_strz_subbanim[ANIM_COUNT] =
@@ -42,13 +42,13 @@ const char* g_strz_subbanim[ANIM_COUNT] =
 };
 // clang-format on
 
-static int32 g_contract_for_hire = 0;
+static S32 g_contract_for_hire = 0;
 static zParEmitter* g_pemit_holder = NULL;
 static xParEmitterCustomSettings g_parf_holder;
 
 void ZNPC_SubBoss_Startup()
 {
-    for (int32 i = 0; i < ANIM_COUNT; i++)
+    for (S32 i = 0; i < ANIM_COUNT; i++)
     {
         g_hash_subbanim[i] = xStrHash(g_strz_subbanim[i]);
     }
@@ -68,7 +68,7 @@ void zNPCSubBoss_SceneFinish()
     g_contract_for_hire = 0;
 }
 
-xFactoryInst* ZNPC_Create_SubBoss(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_SubBoss(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCSubBoss* boss;
 
@@ -126,31 +126,31 @@ void SUBB_InitEffects()
 }
 #endif
 
-zNPCSubBoss::zNPCSubBoss(int32 myType) : zNPCCommon(myType)
+zNPCSubBoss::zNPCSubBoss(S32 myType) : zNPCCommon(myType)
 {
 }
 
-uint8 zNPCSubBoss::ColChkFlags() const
-{
-    return XENT_COLLTYPE_NONE;
-}
-
-uint8 zNPCSubBoss::ColPenFlags() const
+U8 zNPCSubBoss::ColChkFlags() const
 {
     return XENT_COLLTYPE_NONE;
 }
 
-uint8 zNPCSubBoss::ColChkByFlags() const
+U8 zNPCSubBoss::ColPenFlags() const
+{
+    return XENT_COLLTYPE_NONE;
+}
+
+U8 zNPCSubBoss::ColChkByFlags() const
 {
     return XENT_COLLTYPE_PLYR;
 }
 
-uint8 zNPCSubBoss::ColPenByFlags() const
+U8 zNPCSubBoss::ColPenByFlags() const
 {
     return XENT_COLLTYPE_PLYR;
 }
 
-uint8 zNPCSubBoss::PhysicsFlags() const
+U8 zNPCSubBoss::PhysicsFlags() const
 {
     return 0x3;
 }

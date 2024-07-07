@@ -9,11 +9,11 @@
 
 struct busstop_asset : xDynAsset
 {
-    uint32 marker;
-    uint32 character;
-    uint32 cameraID;
-    uint32 busID;
-    float32 delay;
+    U32 marker;
+    U32 character;
+    U32 cameraID;
+    U32 busID;
+    F32 delay;
 };
 
 struct zBusStop : xBase
@@ -26,19 +26,19 @@ struct zBusStop : xBase
     xVec3 pos;
 
     // 0x24
-    uint32 currState;
-    uint32 prevState;
-    float32 switchTimer;
+    U32 currState;
+    U32 prevState;
+    F32 switchTimer;
 };
 
-extern uint32 gBusStopIsRunning;
+extern U32 gBusStopIsRunning;
 
 struct xScene;
 
-int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
-void zBusStop_Init(xBase& base, xDynAsset& asset, ulong32);
+S32 zBusStopEventCB(xBase*, xBase*, U32, const F32*, xBase*);
+void zBusStop_Init(xBase& base, xDynAsset& asset, size_t);
 void zBusStop_Init(zBusStop* bstop, busstop_asset* asset);
 void zBusStop_Setup(zBusStop* bstop);
-void zBusStop_Update(xBase* to, xScene*, float32 dt);
+void zBusStop_Update(xBase* to, xScene*, F32 dt);
 
 #endif

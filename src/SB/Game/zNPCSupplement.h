@@ -46,20 +46,20 @@ enum en_npcstreak
 struct NPARData
 {
     xVec3 pos;
-    float32 xy_size[2];
-    float32 uv_tl[2];
-    float32 uv_br[2];
+    F32 xy_size[2];
+    F32 uv_tl[2];
+    F32 uv_br[2];
     RwRGBA color;
-    float32 tmr_remain;
-    float32 tym_exist;
-    float32 fac_abuse;
+    F32 tmr_remain;
+    F32 tym_exist;
+    F32 fac_abuse;
     xVec3 vel;
     struct
     {
-        int32 flg_popts : 24;
-        int32 nparmode : 8;
+        S32 flg_popts : 24;
+        S32 nparmode : 8;
     };
-    float32 unused[3];
+    F32 unused[3];
 };
 
 struct NPARXtraData
@@ -69,10 +69,10 @@ struct NPARXtraData
 struct NPARMgmt
 {
     en_nparptyp typ_npar;
-    int32 flg_npar;
+    S32 flg_npar;
     NPARData* par_buf;
-    int32 cnt_active;
-    int32 num_max;
+    S32 cnt_active;
+    S32 num_max;
     RwTexture* txtr;
     NPARXtraData* xtra_data;
     void** user_data;
@@ -81,44 +81,44 @@ struct NPARMgmt
     void Clear();
     void Done();
     void Reset();
-    int32 IsReady();
-    void UpdateAndRender(float32 param_1);
+    S32 IsReady();
+    void UpdateAndRender(F32 param_1);
     void XtraDataSet(NPARXtraData* param_1);
     void UserDataSet(void** user_data);
 };
 
 struct NPARInfo
 {
-    void (*fun_update)(NPARMgmt*, float32);
-    int32 num_maxParticles;
-    int8* nam_texture;
-    int32 flg_npar;
+    void (*fun_update)(NPARMgmt*, F32);
+    S32 num_maxParticles;
+    char* nam_texture;
+    S32 flg_npar;
 };
 
 struct StreakInfo
 {
-    float32 freq;
-    float32 alf_fade;
-    float32 alf_start;
-    uint32 idx_useTxtr;
+    F32 freq;
+    F32 alf_fade;
+    F32 alf_start;
+    U32 idx_useTxtr;
     iColor_tag rgba_left;
     iColor_tag rgba_right;
-    int32 taper;
+    S32 taper;
 };
 
-void NPCC_MakeASplash(const xVec3* pos, float32 radius);
+void NPCC_MakeASplash(const xVec3* pos, F32 radius);
 void NPCSupplement_Shutdown();
 void NPAR_ScenePrepare();
 void NPAR_SceneFinish();
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
 void NPCC_ShadowCacheReset();
-void NPAR_Timestep(float32 dt);
+void NPAR_Timestep(F32 dt);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
 void xFXStreakStart(en_npcstreak* styp);
-void UpdateAndRender(NPARMgmt param_1, float32 dt);
-float32 BOWL3(float32 param_1);
-float32 QUB(float32 param_1);
-float32 BOWL(float32 param_1);
+void UpdateAndRender(NPARMgmt param_1, F32 dt);
+F32 BOWL3(F32 param_1);
+F32 QUB(F32 param_1);
+F32 BOWL(F32 param_1);
 
 #endif

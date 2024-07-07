@@ -4,7 +4,7 @@
 
 #include "xstransvc.h"
 
-extern uint32 g_hash_dupoanim[5];
+extern U32 g_hash_dupoanim[5];
 extern char* g_strz_dupoanim[5];
 
 extern zParEmitter* g_pemit_smoky;
@@ -42,7 +42,7 @@ void zNPCDuplotron_ScenePostInit()
     DUPO_InitEffects();
 }
 
-xFactoryInst* ZNPC_Create_Duplotron(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_Duplotron(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCDuplotron* npc;
 
@@ -109,44 +109,44 @@ void DUPO_KillEffects()
 {
 }
 
-zNPCDuplotron::zNPCDuplotron(int32 myType) : zNPCCommon(myType)
+zNPCDuplotron::zNPCDuplotron(S32 myType) : zNPCCommon(myType)
 {
 }
 
-void zNPCDuplotron::Move(xScene*, float32, xEntFrame*)
+void zNPCDuplotron::Move(xScene*, F32, xEntFrame*)
 {
 }
 
-uint8 zNPCDuplotron::ColChkFlags() const
-{
-    return 0;
-}
-
-uint8 zNPCDuplotron::ColPenFlags() const
+U8 zNPCDuplotron::ColChkFlags() const
 {
     return 0;
 }
 
-uint8 zNPCDuplotron::ColChkByFlags() const
+U8 zNPCDuplotron::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCDuplotron::ColChkByFlags() const
 {
     return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
 }
 
-uint8 zNPCDuplotron::ColPenByFlags() const
+U8 zNPCDuplotron::ColPenByFlags() const
 {
     return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
 }
 
-uint8 zNPCDuplotron::PhysicsFlags() const
+U8 zNPCDuplotron::PhysicsFlags() const
 {
     return 0;
 }
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

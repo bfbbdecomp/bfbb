@@ -17,25 +17,25 @@ enum IFILE_READSECTOR_STATUS
 #ifdef GAMECUBE
 struct tag_iFile
 {
-    uint32 flags;
+    U32 flags;
     char path[128];
-    int32 entrynum;
+    S32 entrynum;
     DVDFileInfo fileInfo;
-    int32 unkC4;
-    int32 asynckey;
-    int32 unknown[7];
-    int32 unkE8;
-    int32 offset;
+    S32 unkC4;
+    S32 asynckey;
+    S32 unknown[7];
+    S32 unkE8;
+    S32 offset;
 };
 #else
 #ifdef PS2
 struct tag_iFile
 {
-    uint32 flags;
+    U32 flags;
     char path[128];
-    int32 fd;
-    int32 offset;
-    int32 length;
+    S32 fd;
+    S32 offset;
+    S32 length;
 };
 #endif
 #endif
@@ -52,20 +52,20 @@ struct tag_xFile;
 
 void iFileInit();
 void iFileExit();
-uint32* iFileLoad(char* name, uint32* buffer, uint32* size);
-uint32 iFileOpen(const char* name, int32 flags, tag_xFile* file);
-int32 iFileSeek(tag_xFile* file, int32 offset, int32 whence);
-uint32 iFileRead(tag_xFile* file, void* buf, uint32 size);
-int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(tag_xFile*),
-                     int32 priority);
-IFILE_READSECTOR_STATUS iFileReadAsyncStatus(int32 key, int32* amtToFar);
-uint32 iFileClose(tag_xFile* file);
-uint32 iFileGetSize(tag_xFile* file);
+U32* iFileLoad(char* name, U32* buffer, U32* size);
+U32 iFileOpen(const char* name, S32 flags, tag_xFile* file);
+S32 iFileSeek(tag_xFile* file, S32 offset, S32 whence);
+U32 iFileRead(tag_xFile* file, void* buf, U32 size);
+S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_xFile*),
+                     S32 priority);
+IFILE_READSECTOR_STATUS iFileReadAsyncStatus(S32 key, S32* amtToFar);
+U32 iFileClose(tag_xFile* file);
+U32 iFileGetSize(tag_xFile* file);
 void iFileReadStop();
 void iFileFullPath(const char* relname, char* fullname);
 void iFileSetPath(char* path);
-uint32 iFileFind(const char* name, tag_xFile* file);
-void iFileGetInfo(tag_xFile* file, uint32* addr, uint32* length);
+U32 iFileFind(const char* name, tag_xFile* file);
+void iFileGetInfo(tag_xFile* file, U32* addr, U32* length);
 void iFileAsyncService();
 
 #endif

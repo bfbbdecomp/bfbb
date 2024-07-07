@@ -5,13 +5,13 @@
 
 struct zAnimListAsset
 {
-    uint32 ids[10];
+    U32 ids[10];
 };
 
-uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*);
+U32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*);
 void zAnimListInit();
 void zAnimListExit();
-xAnimTable* zAnimListGetTable(uint32 id);
-int32 zAnimListGetNumUsed(uint32 id);
+xAnimTable* zAnimListGetTable(U32 id);
+S32 zAnimListGetNumUsed(U32 id);
 
 #endif

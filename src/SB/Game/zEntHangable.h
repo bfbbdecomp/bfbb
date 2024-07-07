@@ -5,14 +5,14 @@
 
 struct xEntHangableAsset
 {
-    uint32 flags;
-    float32 pivotOffset;
-    float32 leverArm;
-    float32 gravity;
-    float32 accel;
-    float32 decay;
-    float32 grabDelay;
-    float32 stopDecel;
+    U32 flags;
+    F32 pivotOffset;
+    F32 leverArm;
+    F32 gravity;
+    F32 accel;
+    F32 decay;
+    F32 grabDelay;
+    F32 stopDecel;
 };
 
 struct zEntHangable : zEnt
@@ -22,15 +22,15 @@ struct zEntHangable : zEnt
     xVec3 endpos;
     xVec3 vel;
     xVec3 swingplane;
-    float32 grabTimer;
-    float32 spin;
-    uint32 state;
+    F32 grabTimer;
+    F32 spin;
+    U32 state;
     zEnt* shaggy;
-    int32 enabled;
+    S32 enabled;
     zEnt* follow;
-    int32 moving;
-    float32 candle_timer;
-    int32 candle_state;
+    S32 moving;
+    F32 candle_timer;
+    S32 candle_state;
 };
 
 void zEntHangable_SetupFX();

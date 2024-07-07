@@ -11,16 +11,16 @@ extern const float snow_life;
 
 struct _tagRain
 {
-    int32 rain;
-    float32 strength;
+    S32 rain;
+    F32 strength;
     zParEmitter* rain_emitter;
     zParEmitter* snow_emitter;
 };
 
 struct _tagWind
 {
-    float32 strength;
-    float32 angle;
+    F32 strength;
+    F32 angle;
     xVec3 dir;
 };
 
@@ -30,11 +30,11 @@ struct _tagClimate
     _tagWind wind;
 };
 
-void xClimateUpdate(_tagClimate* climate, float32 seconds);
-void UpdateRain(_tagClimate* climate, float32 seconds);
-void UpdateWind(_tagClimate* climate, float32 seconds);
-void xClimateSetRain(float32 stre);
-void xClimateSetSnow(float32 stre);
+void xClimateUpdate(_tagClimate* climate, F32 seconds);
+void UpdateRain(_tagClimate* climate, F32 seconds);
+void UpdateWind(_tagClimate* climate, F32 seconds);
+void xClimateSetRain(F32 stre);
+void xClimateSetSnow(F32 stre);
 void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset);
 void xClimateInit(_tagClimate* climate);
 

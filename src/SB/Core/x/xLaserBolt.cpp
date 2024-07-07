@@ -6,15 +6,15 @@
 #include <types.h>
 
 extern tagiRenderInput gRenderBuffer;
-extern float32 lbl_803CF7A4; // 0.0f
-extern float32 lbl_803CF7A8; // 255f
+extern F32 lbl_803CF7A4; // 0.0f
+extern F32 lbl_803CF7A8; // 255f
 
 void xLaserBoltEmitter::set_texture(char* name)
 {
     set_texture(xStrHash(name));
 }
 
-void xLaserBoltEmitter::set_texture(uint32 aid)
+void xLaserBoltEmitter::set_texture(U32 aid)
 {
     set_texture((RwTexture*)xSTFindAsset(aid, NULL));
 }
@@ -38,7 +38,7 @@ void xLaserBoltEmitter::set_texture(RwRaster* raster)
 
 void xLaserBoltEmitter::refresh_config()
 {
-    float32 alpha;
+    F32 alpha;
     if (this->cfg.kill_dist <= this->cfg.fade_dist)
     {
         alpha = lbl_803CF7A4;
@@ -60,9 +60,9 @@ void xLaserBoltEmitter::attach_effects(fx_when_enum when, effect_data* fx, size_
 
 #endif
 
-RxObjSpace3DVertex* xLaserBoltEmitter::get_vert_buffer(int32& dat)
+RxObjSpace3DVertex* xLaserBoltEmitter::get_vert_buffer(S32& dat)
 {
-    dat = (uint32)0x1e0;
+    dat = (U32)0x1e0;
     return gRenderBuffer.m_vertex;
 }
 
@@ -71,7 +71,7 @@ RxObjSpace3DVertex* xLaserBoltEmitter::get_vert_buffer(int32& dat)
 // WIP.
 void xLaserBoltEmitter::reset_fx(fx_when_enum when)
 {
-    uint32* sizePtr = &this->fxsize[when];
+    U32* sizePtr = &this->fxsize[when];
     effect_data** effect = &this->fx[when];
 }
 

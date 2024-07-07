@@ -11,27 +11,27 @@ struct xScene;
 
 struct xParSysAsset : xBaseAsset
 {
-    uint32 type;
-    uint32 parentParSysID;
-    uint32 textureID;
-    uint8 parFlags;
-    uint8 priority;
-    uint16 maxPar;
-    uint8 renderFunc;
-    uint8 renderSrcBlendMode;
-    uint8 renderDstBlendMode;
-    uint8 cmdCount;
-    uint32 cmdSize;
+    U32 type;
+    U32 parentParSysID;
+    U32 textureID;
+    U8 parFlags;
+    U8 priority;
+    U16 maxPar;
+    U8 renderFunc;
+    U8 renderSrcBlendMode;
+    U8 renderDstBlendMode;
+    U8 cmdCount;
+    U32 cmdSize;
 };
 
 struct xParSys : xBase
 {
     xParSysAsset* tasset;
-    uint32 cmdCount;
+    U32 cmdCount;
     xParCmd* cmd;
     xParSys* parent;
     xParGroup* group;
-    uint8 visible;
+    U8 visible;
     RwTexture* txtr_particle;
 };
 
@@ -39,6 +39,6 @@ void xParSysInit(void* b, void* tasset);
 void xParSysSetup(xParSys* t);
 void xParSysExit(xParSys* t);
 void xParSysRender(xBase* b);
-void xParSysUpdate(xBase* to, xScene*, float32 dt);
+void xParSysUpdate(xBase* to, xScene*, F32 dt);
 
 #endif

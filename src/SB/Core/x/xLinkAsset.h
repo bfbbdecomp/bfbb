@@ -5,12 +5,12 @@
 
 struct xLinkAsset
 {
-    uint16 srcEvent;
-    uint16 dstEvent;
-    uint32 dstAssetID;
-    float32 param[4];
-    uint32 paramWidgetAssetID;
-    uint32 chkAssetID;
+    U16 srcEvent;
+    U16 dstEvent;
+    U32 dstAssetID;
+    F32 param[4];
+    U32 paramWidgetAssetID;
+    U32 chkAssetID;
 };
 
 #endif

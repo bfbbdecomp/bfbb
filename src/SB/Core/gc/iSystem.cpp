@@ -15,14 +15,14 @@
 #include "iTime.h"
 #include "iTRC.h"
 
-extern uint32 mem_base_alloc;
-extern uint32 add;
-extern uint32 size;
-extern int32 gEmergencyMemLevel;
+extern U32 mem_base_alloc;
+extern U32 add;
+extern U32 size;
+extern S32 gEmergencyMemLevel;
 extern OSHeapHandle the_heap;
 extern void* bad_val;
 extern void* MemoryFunctions[4];
-extern uint16 last_error;
+extern U16 last_error;
 extern OSContext* last_context;
 
 void** psGetMemoryFunctions()
@@ -35,14 +35,14 @@ void iVSync()
     VIWaitForRetrace();
 }
 
-uint16 my_dsc(uint16 dsc)
+U16 my_dsc(U16 dsc)
 {
     return dsc;
 }
 
 //
 
-void MemoryProtectionErrorHandler(uint16 last, OSContext* ctx, uint64 unk1, uint64 unk2)
+void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2)
 {
     last_error = last;
     last_context = ctx;
@@ -82,7 +82,7 @@ void iSystemExit()
 }
 */
 
-int32 RenderWareExit()
+S32 RenderWareExit()
 {
     RwEngineStop();
     RwEngineClose();
@@ -95,15 +95,15 @@ void null_func()
 }
 
 extern "C" {
-void mem_null(uint32 param_1, uint32 param_2)
+void mem_null(U32 param_1, U32 param_2)
 {
     add = param_1;
     size = param_2;
 }
 
-void* malloc(uint32 __size)
+void* malloc(U32 __size)
 {
-    if ((int32)__size <= 0)
+    if ((S32)__size <= 0)
     {
         return NULL;
     }
@@ -138,10 +138,10 @@ void _rwDolphinHeapFree(void* __ptr)
         // TODO: clear this up
         // some number is compared against 0xbeef in the assembly.
         // 0xbeef was probably a hardcoded constant Heavy iron used.
-        // if (*(uint32*)((int32)__ptr + -4) + 0x2153 == 0xbeef)
-        if (*(int32*)((int32)__ptr + -4) == -0x21524111)
+        // if (*(U32*)((S32)__ptr + -4) + 0x2153 == 0xbeef)
+        if (*(S32*)((S32)__ptr + -4) == -0x21524111)
         {
-            free((void*)((int32)__ptr - 32));
+            free((void*)((S32)__ptr - 32));
         }
         else
         {
@@ -155,7 +155,7 @@ void _rwDolphinHeapFree(void* __ptr)
     }
 }
 
-int32 iGetMinute()
+S32 iGetMinute()
 {
     OSTime ticks = OSGetTime();
     OSCalendarTime td;
@@ -163,7 +163,7 @@ int32 iGetMinute()
     return td.min;
 }
 
-int32 iGetHour()
+S32 iGetHour()
 {
     OSTime ticks = OSGetTime();
     OSCalendarTime td;
@@ -171,7 +171,7 @@ int32 iGetHour()
     return td.hour;
 }
 
-int32 iGetDay()
+S32 iGetDay()
 {
     OSTime ticks = OSGetTime();
     OSCalendarTime td;
@@ -179,7 +179,7 @@ int32 iGetDay()
     return td.mday;
 }
 
-int32 iGetMonth()
+S32 iGetMonth()
 {
     OSTime ticks = OSGetTime();
     OSCalendarTime td;
@@ -221,7 +221,7 @@ char* iGetCurrFormattedTime(char* input)
         ret[11] = '.';
     }
     ret[12] = '\0';
-    return ret + (0xd - (int32)input);
+    return ret + (0xd - (S32)input);
 }
 
 #endif

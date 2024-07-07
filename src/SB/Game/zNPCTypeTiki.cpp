@@ -11,20 +11,20 @@
 #define ANIM_COUNT 2
 
 extern const char* g_strz_tikianim[ANIM_COUNT];
-extern uint32 g_hash_tikianim[ANIM_COUNT];
+extern U32 g_hash_tikianim[ANIM_COUNT];
 extern zParEmitter* cloudEmitter;
 extern xParEmitterCustomSettings thunderEmitterInfo;
 extern char zNPCTypeTiki_stringBase0[];
-extern float32 _862;
-extern float32 _858_2;
-extern float32 _1084;
-extern float32 _867;
+extern F32 _862;
+extern F32 _858_2;
+extern F32 _1084;
+extern F32 _867;
 extern NPCSndTrax g_sndTrax_TikiShared[3];
 extern NPCSndTrax g_sndTrax_TikiThunder[2];
 
 void ZNPC_Tiki_Startup()
 {
-    for (int32 i = 0; i < ANIM_COUNT; i++)
+    for (S32 i = 0; i < ANIM_COUNT; i++)
     {
         g_hash_tikianim[i] = xStrHash(g_strz_tikianim[i]);
     }
@@ -53,7 +53,7 @@ void zNPCTiki_InitFX(zScene* scene)
 }
 */
 
-xFactoryInst* ZNPC_Create_Tiki(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_Tiki(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCTiki* tiki = NULL;
 
@@ -96,8 +96,8 @@ xAnimTable* ZNPC_AnimTable_Tiki()
 void zNPCTiki::Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit)
 {
     if (((xNPCBasic::SelfType() != NPC_TYPE_TIKI_STONE) || (damtype == DMGTYP_CRUISEBUBBLE) ||
-         (damtype - DMGTYP_THUNDER_TIKI_EXPLOSION <= (uint32)1) ||
-         (damtype - DMGTYP_INSTAKILL <= (uint32)1)) &&
+         (damtype - DMGTYP_THUNDER_TIKI_EXPLOSION <= (U32)1) ||
+         (damtype - DMGTYP_INSTAKILL <= (U32)1)) &&
         this->flg_vuln != 0)
     {
         this->psy_instinct->GoalSet(NPC_GOAL_TIKIDYING, 0);
@@ -188,14 +188,14 @@ void zNPCTiki::ParseINI()
     }
 }
 
-void test(int32)
+void test(S32)
 {
 }
 
 // very close, but there are some float order issues
-int32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, float dt, void*)
+S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, float dt, void*)
 {
-    int32 nextgoal = 0;
+    S32 nextgoal = 0;
     zNPCGoalTikiDying* goal = (zNPCGoalTikiDying*)rawgoal->GetOwner();
 
     goal->tmr_dying = (-1 > goal->tmr_dying - dt) ? -1 : goal->tmr_dying - dt;
@@ -209,7 +209,7 @@ int32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, float dt, void*)
     return nextgoal;
 }
 
-int32 zNPCTiki::CanRope()
+S32 zNPCTiki::CanRope()
 {
     return 1;
 }
@@ -219,7 +219,7 @@ void AnimPick()
     xStrHash(zNPCTypeTiki_stringBase0 + 0x51);
 }
 
-void zNPCTiki::Move(xScene* xscn, float32 dt, xEntFrame*)
+void zNPCTiki::Move(xScene* xscn, F32 dt, xEntFrame*)
 {
 }
 
@@ -228,32 +228,32 @@ void zNPCTiki::BUpdate(xVec3* pos)
     xEntDefaultBoundUpdate(this, pos);
 }
 
-int32 zNPCTiki::IsAlive()
+S32 zNPCTiki::IsAlive()
 {
     return (0x200 - (tikiFlag & 0x300) | (tikiFlag & 0x300) - 0x200) >> 0x1f;
 }
 
-uint8 ColChkFlags()
+U8 ColChkFlags()
 {
     return 0;
 }
 
-uint8 ColPenFlags()
+U8 ColPenFlags()
 {
     return 0;
 }
 
-uint8 ColChkByFlags()
+U8 ColChkByFlags()
 {
     return 0x18;
 }
 
-uint8 ColPenByFlags()
+U8 ColPenByFlags()
 {
     return 0x18;
 }
 
-uint8 PhysicsFlags()
+U8 PhysicsFlags()
 {
     return 0;
 }

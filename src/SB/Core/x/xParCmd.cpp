@@ -7,25 +7,25 @@
 
 struct xCmdInfo
 {
-    uint32 type;
-    uint32 size;
+    U32 type;
+    U32 size;
     xParCmdUpdateFunc func;
 };
 
 static xCmdInfo sCmdInfo[XPARCMD_TYPE_COUNT] = {};
 
-extern float32 _658_0;
-extern float32 _691;
-extern float32 _760;
-extern float32 _772;
-extern float32 _812;
-extern float32 _830_1;
-extern float32 _831_0;
-extern float32 _857_0;
-extern float32 _858;
-extern float32 _1075;
-extern float32 _1076;
-extern float32 _1077;
+extern F32 _658_0;
+extern F32 _691;
+extern F32 _760;
+extern F32 _772;
+extern F32 _812;
+extern F32 _830_1;
+extern F32 _831_0;
+extern F32 _857_0;
+extern F32 _858;
+extern F32 _1075;
+extern F32 _1076;
+extern F32 _1077;
 
 void xParCmdInit()
 {
@@ -67,16 +67,16 @@ void xParCmdInit()
                     xParCmd_DampenSpeed_Update);
 }
 
-void xParCmdRegister(uint32 parType, uint32 size, xParCmdUpdateFunc func)
+void xParCmdRegister(U32 parType, U32 size, xParCmdUpdateFunc func)
 {
     sCmdInfo[parType].type = parType;
     sCmdInfo[parType].size = size;
     sCmdInfo[parType].func = func;
 }
 
-uint32 xParCmdGetSize(uint32 parType)
+U32 xParCmdGetSize(U32 parType)
 {
-    for (int32 i = 0; i < XPARCMD_TYPE_COUNT; i++)
+    for (S32 i = 0; i < XPARCMD_TYPE_COUNT; i++)
     {
         if (sCmdInfo[i].type == parType)
         {
@@ -87,9 +87,9 @@ uint32 xParCmdGetSize(uint32 parType)
     return 0;
 }
 
-xParCmdUpdateFunc xParCmdGetUpdateFunc(uint32 parType)
+xParCmdUpdateFunc xParCmdGetUpdateFunc(U32 parType)
 {
-    for (int32 i = 0; i < XPARCMD_TYPE_COUNT; i++)
+    for (S32 i = 0; i < XPARCMD_TYPE_COUNT; i++)
     {
         if (sCmdInfo[i].type == parType)
         {
@@ -100,11 +100,11 @@ xParCmdUpdateFunc xParCmdGetUpdateFunc(uint32 parType)
     return NULL;
 }
 
-void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdKillSlow* cmd = (xParCmdKillSlow*)c->tasset;
-    float32 speedLimit = cmd->speedLimitSqr * dt;
+    F32 speedLimit = cmd->speedLimitSqr * dt;
 
     if (cmd->kill_less_than)
     {
@@ -132,10 +132,10 @@ void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdAge_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdAge_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
-    float32 age_rate = ((xParCmdAge*)c->tasset)->unknown * dt;
+    F32 age_rate = ((xParCmdAge*)c->tasset)->unknown * dt;
 
     while (p)
     {
@@ -144,11 +144,11 @@ void xParCmdAge_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdFollow* cmd = (xParCmdFollow*)c->tasset;
-    float32 mdt = cmd->gravity * dt;
+    F32 mdt = cmd->gravity * dt;
 
     while (p && p->m_next)
     {
@@ -156,10 +156,10 @@ void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, float32 dt)
 
         xVec3Sub(&var_38, &p->m_next->m_pos, &p->m_pos);
 
-        float32 f31 = xVec3Length2(&var_38);
-        float32 f1 = xVec3LengthFast(var_38.x, var_38.y, var_38.z);
+        F32 f31 = xVec3Length2(&var_38);
+        F32 f1 = xVec3LengthFast(var_38.x, var_38.y, var_38.z);
 
-        float32 force = mdt / (f1 * (f31 + cmd->epsilon));
+        F32 force = mdt / (f1 * (f31 + cmd->epsilon));
 
         p->m_vel.x += var_38.x * force;
         p->m_vel.y += var_38.y * force;
@@ -169,11 +169,11 @@ void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdOrbitPoint* cmd = (xParCmdOrbitPoint*)c->tasset;
-    float32 mdt = cmd->gravity * dt;
+    F32 mdt = cmd->gravity * dt;
 
     while (p)
     {
@@ -181,13 +181,13 @@ void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, float32 dt)
 
         xVec3Sub(&var_38, &cmd->center, &p->m_pos);
 
-        float32 f31 = xVec3Length2(&var_38);
+        F32 f31 = xVec3Length2(&var_38);
 
         if (f31 < cmd->maxRadiusSqr)
         {
-            float32 f1 = xVec3LengthFast(var_38.x, var_38.y, var_38.z);
+            F32 f1 = xVec3LengthFast(var_38.x, var_38.y, var_38.z);
 
-            float32 force = mdt / (f1 + (f31 + cmd->epsilon));
+            F32 force = mdt / (f1 + (f31 + cmd->epsilon));
 
             p->m_vel.x += var_38.x * force;
             p->m_vel.y += var_38.y * force;
@@ -198,11 +198,11 @@ void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdOrbitLine* cmd = (xParCmdOrbitLine*)c->tasset;
-    float32 mdt = cmd->gravity * dt;
+    F32 mdt = cmd->gravity * dt;
 
     while (p)
     {
@@ -213,13 +213,13 @@ void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, float32 dt)
         xVec3Cross(&var_40, &cmd->axis, &var_4C);
         xVec3Sub(&var_58, &var_40, &var_34);
 
-        float32 f31 = xVec3Length2(&var_58);
+        F32 f31 = xVec3Length2(&var_58);
 
         if (f31 < cmd->maxRadiusSqr)
         {
-            float32 f1 = xVec3LengthFast(var_58.x, var_58.y, var_58.z);
+            F32 f1 = xVec3LengthFast(var_58.x, var_58.y, var_58.z);
 
-            float32 force = mdt / (f1 + (f31 + cmd->epsilon));
+            F32 force = mdt / (f1 + (f31 + cmd->epsilon));
 
             p->m_vel.x += var_58.x * force;
             p->m_vel.y += var_58.y * force;
@@ -230,7 +230,7 @@ void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
     xParCmdAccelerate* cmd = (xParCmdAccelerate*)c->tasset;
@@ -252,7 +252,7 @@ void xParCmdAccelerate_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdMove_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdMove_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
     xParCmdMove* cmd = (xParCmdMove*)c->tasset;
@@ -272,7 +272,7 @@ void xParCmdMove_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
     xParCmdMove* cmd = (xParCmdMove*)c->tasset;
@@ -297,12 +297,12 @@ void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdMoveRandomPar* cmd = (xParCmdMoveRandomPar*)c->tasset;
-    float32 f31 = cmd->dim.x * (dt * _772);
-    float32 f30 = cmd->dim.z * (dt * _772);
+    F32 f31 = cmd->dim.x * (dt * _772);
+    F32 f30 = cmd->dim.z * (dt * _772);
 
     while (p)
     {
@@ -313,37 +313,37 @@ void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdScale3rdPolyReg_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdScale3rdPolyReg_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
 }
 
-void xParCmdSmokeAlpha_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdSmokeAlpha_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
 }
 
-void xParCmdScale_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdScale_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
 }
 
-void xParCmdAlpha3rdPolyReg_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdAlpha3rdPolyReg_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
 }
 
-void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdRandomVelocityPar* cmd = (xParCmdRandomVelocityPar*)c->tasset;
-    float32 f31 = cmd->x * dt;
-    float32 f30 = cmd->y * dt;
-    float32 f29 = cmd->z * dt;
+    F32 f31 = cmd->x * dt;
+    F32 f30 = cmd->y * dt;
+    F32 f29 = cmd->z * dt;
 
     while (p)
     {
         xMat3x3 var_88;
 
-        float32 y = _760 * (f31 * xurand()) - f31;
-        float32 x = _760 * (f30 * xurand()) - f30;
-        float32 z = _760 * (f29 * xurand()) - f29;
+        F32 y = _760 * (f31 * xurand()) - f31;
+        F32 x = _760 * (f30 * xurand()) - f30;
+        F32 z = _760 * (f29 * xurand()) - f29;
 
         xMat3x3Euler(&var_88, x, y, z);
         xMat3x3LMulVec(&p->m_vel, &var_88, &p->m_vel);
@@ -353,13 +353,13 @@ void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
 }
 
 #ifdef NON_MATCHING
-void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
 
     // non-matching: f2 and f3 are combined into one register
-    float32 f2 = _812 * (((xParCmdApplyWind*)c->tasset)->unknown * dt);
-    float32 f3 = _812 * (((xParCmdApplyWind*)c->tasset)->unknown * dt);
+    F32 f2 = _812 * (((xParCmdApplyWind*)c->tasset)->unknown * dt);
+    F32 f3 = _812 * (((xParCmdApplyWind*)c->tasset)->unknown * dt);
 
     while (p)
     {
@@ -371,28 +371,28 @@ void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, float32 dt)
 }
 #endif
 
-void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdRotPar* cmd = (xParCmdRotPar*)c->tasset;
-    float32 f30 = _830_1 * ((cmd->max.x - cmd->min.x) / _831_0);
-    float32 f29 = _830_1 * ((cmd->max.y - cmd->min.y) / _831_0);
-    float32 f28 = _830_1 * ((cmd->max.z - cmd->min.z) / _831_0);
-    float32 f27 = _830_1 * (cmd->min.x / _831_0);
-    float32 f26 = _830_1 * (cmd->min.y / _831_0);
-    float32 f25 = _830_1 * (cmd->min.z / _831_0);
+    F32 f30 = _830_1 * ((cmd->max.x - cmd->min.x) / _831_0);
+    F32 f29 = _830_1 * ((cmd->max.y - cmd->min.y) / _831_0);
+    F32 f28 = _830_1 * ((cmd->max.z - cmd->min.z) / _831_0);
+    F32 f27 = _830_1 * (cmd->min.x / _831_0);
+    F32 f26 = _830_1 * (cmd->min.y / _831_0);
+    F32 f25 = _830_1 * (cmd->min.z / _831_0);
 
     while (p)
     {
-        p->m_rotdeg[0] += (uint8)(dt * (f30 * xurand() + f27));
-        p->m_rotdeg[1] += (uint8)(dt * (f29 * xurand() + f26));
-        p->m_rotdeg[2] += (uint8)(dt * (f28 * xurand() + f25));
+        p->m_rotdeg[0] += (U8)(dt * (f30 * xurand() + f27));
+        p->m_rotdeg[1] += (U8)(dt * (f29 * xurand() + f26));
+        p->m_rotdeg[2] += (U8)(dt * (f28 * xurand() + f25));
 
         p = p->m_next;
     }
 }
 
-void xParCmdVelocityApply_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdVelocityApply_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
 
@@ -405,13 +405,13 @@ void xParCmdVelocityApply_Update(xParCmd* c, xParGroup* ps, float32 dt)
 }
 
 #ifdef NON_MATCHING
-void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdRotateAround* cmd = (xParCmdRotateAround*)c->tasset;
 
-    float32 yaw = _857_0 * (dt * cmd->yaw) / _858;
-    float32 radius_growth = dt * cmd->radius_growth;
+    F32 yaw = _857_0 * (dt * cmd->yaw) / _858;
+    F32 radius_growth = dt * cmd->radius_growth;
 
     while (p)
     {
@@ -422,7 +422,7 @@ void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, float32 dt)
 
         xMat3x3 lookmat;
 
-        float32 radius = xMat3x3LookVec(&lookmat, &at);
+        F32 radius = xMat3x3LookVec(&lookmat, &at);
 
         xVec3 angles;
         xMat3x3GetEuler(&lookmat, &angles);
@@ -450,11 +450,11 @@ void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, float32 dt)
 }
 #endif
 
-void xParCmdTex_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdTex_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
 }
 
-void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
     xParCmdTexAnim* cmd = (xParCmdTexAnim*)c->tasset;
@@ -657,16 +657,16 @@ void xParCmdTexAnim_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdCollideFall_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdCollideFall_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xParCmdCollideFall& cmd = *(xParCmdCollideFall*)c->tasset;
     xPar* p = ps->m_root;
 
     while (p)
     {
-        float32& loc = p->m_pos.y;
-        float32& vel = p->m_vel.y;
-        float32 dloc = cmd.y - loc;
+        F32& loc = p->m_pos.y;
+        F32& vel = p->m_vel.y;
+        F32 dloc = cmd.y - loc;
 
         if (dloc < _691)
         {
@@ -686,17 +686,17 @@ void xParCmdCollideFall_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmdCollideFallSticky_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdCollideFallSticky_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xParCmdCollideFallSticky& cmd = *(xParCmdCollideFallSticky*)c->tasset;
-    float32 xzdamp = _812 - cmd.sticky;
+    F32 xzdamp = _812 - cmd.sticky;
     xPar* p = ps->m_root;
 
     while (p)
     {
-        float32& loc = p->m_pos.y;
-        float32& vel = p->m_vel.y;
-        float32 dloc = cmd.y - loc;
+        F32& loc = p->m_pos.y;
+        F32& vel = p->m_vel.y;
+        F32 dloc = cmd.y - loc;
 
         if (dloc < _691)
         {
@@ -719,7 +719,7 @@ void xParCmdCollideFallSticky_Update(xParCmd* c, xParGroup* ps, float32 dt)
     }
 }
 
-void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
     xParCmdDampenData* cmd = (xParCmdDampenData*)c->tasset;
@@ -728,7 +728,7 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, float32 dt)
     {
         p = ps->m_root;
 
-        float32 damp = dt * cmd->dampSpeed;
+        F32 damp = dt * cmd->dampSpeed;
 
         while (p)
         {
@@ -740,7 +740,7 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, float32 dt)
 }
 
 #ifdef NON_MATCHING
-void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
     xParCmdSizeInOutData* cmd = (xParCmdSizeInOutData*)c->tasset;
@@ -749,8 +749,8 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
     {
         p = ps->m_root;
 
-        int32 i, seg;
-        float32 slope_size[3];
+        S32 i, seg;
+        F32 slope_size[3];
 
         slope_size[0] = _1075 * (cmd->custSize[1] - cmd->custSize[0]);
         slope_size[1] = _1075 * (cmd->custSize[2] - cmd->custSize[1]);
@@ -759,7 +759,7 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
         while (p)
         {
             // non-matching: there is definitely a clamp happening here, but it isn't using the CLAMP macro.
-            float32 frac = CLAMP(_812 - p->m_lifetime / p->totalLifespan, _691, _812);
+            F32 frac = CLAMP(_812 - p->m_lifetime / p->totalLifespan, _691, _812);
 
             if (frac < _1076)
             {
@@ -774,7 +774,7 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
                 seg = 2;
             }
 
-            for (int32 i = seg; i > 0; i--)
+            for (S32 i = seg; i > 0; i--)
             {
                 // non-matching: _1076 is cached before loop
                 frac -= _1076;
@@ -789,31 +789,31 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
 #endif
 
 #if 0
-void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     // todo: this is very similar to xParCmd_SizeInOut_Update
 }
 #endif
 
 #if 0
-void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     // todo: part of this is very similar to xParCmd_SizeInOut_Update
 }
 #endif
 
-WEAK float32 xVec3LengthFast(float32 x, float32 y, float32 z)
+WEAK F32 xVec3LengthFast(F32 x, F32 y, F32 z)
 {
-    float32 len;
+    F32 len;
     xsqrtfast(len, SQR(x) + SQR(y) + SQR(z));
     return len;
 }
 
 static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

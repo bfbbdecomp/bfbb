@@ -14,7 +14,7 @@ void xSFXEnvironmentalStreamSceneExit(void)
 }
 
 #ifdef NON_MATCHING
-int32 xSFXWillSendDone(xSFX* param_1)
+S32 xSFXWillSendDone(xSFX* param_1)
 {
     if (param_1->linkCount != 0)
     {
@@ -42,7 +42,7 @@ void xSFXInit(xSFX* t, xSFXAsset* asset)
 {
     xBaseInit(t, asset);
 
-    // int32 xSFXEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam, xBase*)
+    // S32 xSFXEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase*)
     t->eventFunc = &xSFXEventCB;
     t->asset = asset;
 
@@ -80,7 +80,7 @@ void xSFXReset(xSFX* param_1)
 }
 
 #if 0
-uint32 xSFXConvertFlags(uint32 param_1)
+U32 xSFXConvertFlags(U32 param_1)
 {
     return param_1 & 4 ? 0 : 0x800;
 }

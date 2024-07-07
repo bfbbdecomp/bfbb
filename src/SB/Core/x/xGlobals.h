@@ -20,14 +20,14 @@ struct xGlobals
     _tagxPad* pad1;
     _tagxPad* pad2;
     _tagxPad* pad3;
-    int32 profile;
+    S32 profile;
 
     // 0x330 in globals
     char profFunc[6][128];
 
     // 0x630 in globals
     xUpdateCullMgr* updateMgr;
-    int32 sceneFirst;
+    S32 sceneFirst;
     char sceneStart[32];
     RpWorld* currWorld;
 
@@ -41,20 +41,20 @@ struct xGlobals
     iTime fog_t1;
 
     // 0x6C0 in globals
-    int32 option_vibration;
-    uint32 QuarterSpeed;
-    float32 update_dt;
-    int32 useHIPHOP;
+    S32 option_vibration;
+    U32 QuarterSpeed;
+    F32 update_dt;
+    S32 useHIPHOP;
 
     // 0x6D0 in globals
-    uint8 NoMusic;
-    int8 currentActivePad;
-    uint8 firstStartPressed;
+    U8 NoMusic;
+    S8 currentActivePad;
+    U8 firstStartPressed;
 
     // 0x6D4 in globals
-    uint32 minVSyncCnt;
-    uint8 dontShowPadMessageDuringLoadingOrCutScene;
-    uint8 autoSaveFeature;
+    U32 minVSyncCnt;
+    U8 dontShowPadMessageDuringLoadingOrCutScene;
+    U8 autoSaveFeature;
 };
 
 #endif

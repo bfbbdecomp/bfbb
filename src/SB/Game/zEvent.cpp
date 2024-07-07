@@ -545,7 +545,7 @@ char* sEventTable[eEventCount] = {
     "Restore Options",
 };
 
-char* zEventName(uint32 eventEnum)
+char* zEventName(U32 eventEnum)
 {
     return sEventTable[eventEnum];
 }

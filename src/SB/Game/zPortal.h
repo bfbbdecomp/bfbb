@@ -5,10 +5,10 @@
 
 struct xPortalAsset : xBaseAsset
 {
-    uint32 assetCameraID;
-    uint32 assetMarkerID;
-    float32 ang;
-    uint32 sceneID;
+    U32 assetCameraID;
+    U32 assetMarkerID;
+    F32 ang;
+    U32 sceneID;
 };
 
 struct _zPortal : xBase
@@ -20,6 +20,6 @@ void zPortalInit(void* portal, void* passet);
 void zPortalInit(_zPortal* portal, xPortalAsset* passet);
 void zPortalSave(_zPortal* ent, xSerial* s);
 void zPortalLoad(_zPortal* ent, xSerial* s);
-int32 zPortalEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3);
+S32 zPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3);
 
 #endif

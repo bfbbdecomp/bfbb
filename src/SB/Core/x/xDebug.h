@@ -5,10 +5,10 @@
 
 #include <types.h>
 
-extern uint32 gFrameCount;
+extern U32 gFrameCount;
 
 void xprintf(const char* msg, ...);
-int32 xDebugModeAdd(char* mode, void(*debugFunc));
+S32 xDebugModeAdd(char* mode, void(*debugFunc));
 void xDebugInit();
 void xDebugUpdate();
 void xDebugExit();
@@ -17,7 +17,7 @@ void xDebugTimestampScreen();
 void xDebugRemoveTweak(const char*);
 void xDebugUpdate();
 
-float32 NSCREENY(float32 scale);
-float32 NSCREENX(float32 scale);
+F32 NSCREENY(F32 scale);
+F32 NSCREENX(F32 scale);
 
 #endif

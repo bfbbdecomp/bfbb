@@ -24,41 +24,41 @@
 
 #include <string.h>
 
-extern float32 _780; // 1.0f
-extern float32 _781_0; // 3.0f
-extern float32 _942; // 0.0f
-extern float32 _950; // -1.0f
-extern float32 _951; // 9.9999997e37f
-extern float32 _1095; // 255.0f
-extern float64 _1097; // 4.503599627370496e15f
-extern float32 _1187; // 0.0017683882f
-extern float32 _1229; // 10.0f
-extern float32 _1300; // 0.69999999f
-extern float32 _1435; // 0.5f
-extern float32 _1436; // 0.63f
-extern float32 _1437; // 30.0f
-extern float32 _1438; // 0.0000099999997f
-extern float32 _1541; // 0.78539819f
-extern float64 _1593; // 4.503601774854144e15f
-extern float32 _1724; // 0.167f
-extern float32 _1725; // -0.86602497f
-extern float32 _1818; // 1.0471976f
-extern float32 _1819; // 0.001f
-extern float32 _1820; // 0.64999998f
-extern float32 _1821; // 1.5f
+extern F32 _780; // 1.0f
+extern F32 _781_0; // 3.0f
+extern F32 _942; // 0.0f
+extern F32 _950; // -1.0f
+extern F32 _951; // 9.9999997e37f
+extern F32 _1095; // 255.0f
+extern F64 _1097; // 4.503599627370496e15f
+extern F32 _1187; // 0.0017683882f
+extern F32 _1229; // 10.0f
+extern F32 _1300; // 0.69999999f
+extern F32 _1435; // 0.5f
+extern F32 _1436; // 0.63f
+extern F32 _1437; // 30.0f
+extern F32 _1438; // 0.0000099999997f
+extern F32 _1541; // 0.78539819f
+extern F64 _1593; // 4.503601774854144e15f
+extern F32 _1724; // 0.167f
+extern F32 _1725; // -0.86602497f
+extern F32 _1818; // 1.0471976f
+extern F32 _1819; // 0.001f
+extern F32 _1820; // 0.64999998f
+extern F32 _1821; // 1.5f
 
 extern xVec3 _1405_0; // { 0, 0, 0 }
 
 extern const char _stringBase0_4[];
 
-extern float32 nsn_angle;
-extern float32 sEntityTimePassed;
+extern F32 nsn_angle;
+extern F32 sEntityTimePassed;
 extern xBox all_ents_box;
-extern int32 all_ents_box_init;
-extern int32 setMaterialTextureRestore;
-extern int32 sSetPipeline;
+extern S32 all_ents_box_init;
+extern S32 setMaterialTextureRestore;
+extern S32 sSetPipeline;
 extern RxPipeline* oldPipe;
-extern int32 xent_entent;
+extern S32 xent_entent;
 
 namespace
 {
@@ -102,7 +102,7 @@ namespace
 
                     xBox& box = ent.bound.box.box;
                     xVec3 size = box.upper - box.lower;
-                    float32 max_size = size.x;
+                    F32 max_size = size.x;
 
                     if (max_size < size.y)
                     {
@@ -141,7 +141,7 @@ namespace
     } // namespace anim_coll
 } // namespace
 
-void xEntSetTimePassed(float32 sec)
+void xEntSetTimePassed(F32 sec)
 {
     sEntityTimePassed = sec;
 }
@@ -165,7 +165,7 @@ void xEntAddHittableFlag(xEnt* ent)
     }
     else
     {
-        for (uint32 i = 0; i < ent->linkCount; i++)
+        for (U32 i = 0; i < ent->linkCount; i++)
         {
             if (ent->link[i].srcEvent == eEventHit || ent->link[i].srcEvent == eEventHit_Cruise ||
                 ent->link[i].srcEvent == eEventHit_Melee ||
@@ -190,7 +190,7 @@ void hack_receive_shadow(xEnt* ent);
 static void hack_receive_shadow(xEnt* ent)
 {
     extern volatile signed char init_856; // todo: static
-    extern uint32 receive_models_855[15]; // todo: static
+    extern U32 receive_models_855[15]; // todo: static
 
     if (!init_856)
     {
@@ -214,8 +214,8 @@ static void hack_receive_shadow(xEnt* ent)
         init_856 = 1;
     }
 
-    uint32* end = receive_models_855 + sizeof(receive_models_855) / sizeof(uint32);
-    uint32* cur = receive_models_855;
+    U32* end = receive_models_855 + sizeof(receive_models_855) / sizeof(U32);
+    U32* cur = receive_models_855;
 
     while (cur != end)
     {
@@ -375,7 +375,7 @@ void xEntInitForType(xEnt* ent)
 
         memset(ent->frame, 0, sizeof(xEntFrame));
 
-        ent->pflags &= (uint8)~0x2;
+        ent->pflags &= (U8)~0x2;
         ent->chkby = XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR;
         ent->penby = XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR;
     }
@@ -422,7 +422,7 @@ void xEntInitForType(xEnt* ent)
 
 namespace
 {
-    float32 get_lower_extent(const xBound& bound)
+    F32 get_lower_extent(const xBound& bound)
     {
         switch (bound.type)
         {
@@ -457,14 +457,14 @@ namespace
         }
     }
 
-    bool collide_downward(xVec3& loc, xEnt*& hit, xScene& s, xEnt& ent, float32 max_dist)
+    bool collide_downward(xVec3& loc, xEnt*& hit, xScene& s, xEnt& ent, F32 max_dist)
     {
         xRay3 ray;
-        uint8 old_bound_type;
-        float32 old_bound_radius;
+        U8 old_bound_type;
+        F32 old_bound_radius;
         xCollis coll;
 
-        float32 f31 = get_lower_extent(ent.bound);
+        F32 f31 = get_lower_extent(ent.bound);
         xVec3* r30 = xBoundCenter(&ent.bound);
 
         ray.origin = *r30;
@@ -564,12 +564,12 @@ namespace
         ent.pflags = 0;
     }
 
-    void update_stacked_entity(xScene& sc, xEnt& ent, float32 dt)
+    void update_stacked_entity(xScene& sc, xEnt& ent, F32 dt)
     {
         xEntApplyPhysics(&ent, &sc, dt);
         xEntMove(&ent, &sc, dt);
 
-        float32 dist = ent.model->Mat->pos.y - ent.frame->mat.pos.y;
+        F32 dist = ent.model->Mat->pos.y - ent.frame->mat.pos.y;
         xVec3 loc;
         xEnt* hit;
 
@@ -590,7 +590,7 @@ void xEntSetup(xEnt* ent)
 {
     xSurface* surf;
     xModelInstance* minst;
-    int32 i;
+    S32 i;
     xLinkAsset* la;
     xEnt* dent;
 
@@ -628,7 +628,7 @@ void xEntSetup(xEnt* ent)
             if (dent)
             {
                 ent->driver = dent;
-                ent->driveMode = (int32)la->param[0];
+                ent->driveMode = (S32)la->param[0];
 
                 dent->driving_count++;
             }
@@ -684,7 +684,7 @@ void xEntSave(xEnt* ent, xSerial* s)
 
 void xEntLoad(xEnt* ent, xSerial* s)
 {
-    int32 b;
+    S32 b;
 
     xBaseLoad(ent, s);
 
@@ -835,7 +835,7 @@ void xEntSetupPipeline(xSurface* surf, RpAtomic* model)
 
                 if (g)
                 {
-                    uint32 texid = xGroupGetItem(g, pp->texanim[0].group_idx);
+                    U32 texid = xGroupGetItem(g, pp->texanim[0].group_idx);
                     RwTexture* texptr = (RwTexture*)xSTFindAsset(texid, NULL);
 
                     if (texptr)
@@ -852,7 +852,7 @@ void xEntSetupPipeline(xSurface* surf, RpAtomic* model)
 
                 if (g)
                 {
-                    uint32 texid = xGroupGetItem(g, pp->texanim[1].group_idx);
+                    U32 texid = xGroupGetItem(g, pp->texanim[1].group_idx);
                     RwTexture* texptr = (RwTexture*)xSTFindAsset(texid, NULL);
 
                     if (texptr)
@@ -921,7 +921,7 @@ void xEntRestorePipeline(xSurface*, RpAtomic* model)
 #ifdef NON_MATCHING
 void xEntRender(xEnt* ent)
 {
-    int32 shadowOutside;
+    S32 shadowOutside;
     xVec3 shadVec;
 
     if (ent->model && xEntIsVisible(ent))
@@ -979,7 +979,7 @@ void xEntRender(xEnt* ent)
 }
 #endif
 
-void xEntUpdate(xEnt* ent, xScene* sc, float32 dt)
+void xEntUpdate(xEnt* ent, xScene* sc, F32 dt)
 {
     xEntBeginUpdate(ent, sc, dt);
 
@@ -1008,7 +1008,7 @@ void xEntUpdate(xEnt* ent, xScene* sc, float32 dt)
     xEntEndUpdate(ent, sc, dt);
 }
 
-void xEntBeginUpdate(xEnt* ent, xScene* sc, float32 dt)
+void xEntBeginUpdate(xEnt* ent, xScene* sc, F32 dt)
 {
     if (ent->model)
     {
@@ -1028,7 +1028,7 @@ void xEntBeginUpdate(xEnt* ent, xScene* sc, float32 dt)
     }
 }
 
-void xEntEndUpdate(xEnt* ent, xScene* sc, float32 dt)
+void xEntEndUpdate(xEnt* ent, xScene* sc, F32 dt)
 {
     ent->num_updates++;
 
@@ -1167,7 +1167,7 @@ void xEntMotionToMatrix(xEnt* ent, xEntFrame* frame)
     }
 }
 
-void xEntMove(xEnt* ent, xScene* sc, float32 dt)
+void xEntMove(xEnt* ent, xScene* sc, F32 dt)
 {
     if (ent->moreFlags & 0x20)
     {
@@ -1235,15 +1235,15 @@ namespace
     } // namespace anim_coll
 } // namespace
 
-void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt)
+void xEntApplyPhysics(xEnt* ent, xScene* sc, F32 dt)
 {
     // i'm surprised this function matches lol
     // this beginning part eventually needs to be replaced with:
     // xVec3 dposvel = { 0, 0, 0 };
 
     xVec3 dposvel;
-    uint32* temp1 = (uint32*)&dposvel;
-    uint32* temp2 = (uint32*)&_1405_0;
+    U32* temp1 = (U32*)&dposvel;
+    U32* temp2 = (U32*)&_1405_0;
 
     temp1[0] = temp2[0];
     temp1[1] = temp2[1];
@@ -1256,13 +1256,13 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt)
 
     if (ent->pflags & 0x10 && sc->flags & 0x2)
     {
-        float32 tfric = -(sc->friction * dt - _780);
+        F32 tfric = -(sc->friction * dt - _780);
         xVec3SMulBy(&ent->frame->vel, tfric);
     }
 
     if (ent->pflags & 0x8 && sc->flags & 0x4)
     {
-        float32 tdrag = -(sc->drag * dt - _780);
+        F32 tdrag = -(sc->drag * dt - _780);
         xVec3SMulBy(&ent->frame->vel, tdrag);
     }
 
@@ -1271,9 +1271,9 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt)
 
     if (dposvel.y < _942)
     {
-        float32 dposXZ = xsqrt(SQR(dposvel.x) + SQR(dposvel.z));
-        float32 scaleXZ = (dposXZ > _1438) ? ((_1436 * (_1437 * dt)) / dposXZ) : _942;
-        float32 scaleY = (_1436 * (_1437 * dt)) / (float32)iabs(dposvel.y);
+        F32 dposXZ = xsqrt(SQR(dposvel.x) + SQR(dposvel.z));
+        F32 scaleXZ = (dposXZ > _1438) ? ((_1436 * (_1437 * dt)) / dposXZ) : _942;
+        F32 scaleY = (_1436 * (_1437 * dt)) / (F32)iabs(dposvel.y);
 
         if (scaleXZ < _780)
         {
@@ -1281,7 +1281,7 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt)
             dposvel.z *= scaleXZ;
         }
 
-        if (scaleY < *(const float32*)&_780) // this forces _780 to be reloaded
+        if (scaleY < *(const F32*)&_780) // this forces _780 to be reloaded
         {
             dposvel.y *= scaleY;
         }
@@ -1291,7 +1291,7 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, float32 dt)
 }
 
 #ifdef NON_MATCHING
-void xEntCollide(xEnt* ent, xScene* sc, float32 dt)
+void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
 {
     if (ent->model)
     {
@@ -1319,7 +1319,7 @@ void xEntCollide(xEnt* ent, xScene* sc, float32 dt)
 
         if (ent->collis->chk & 0x2E)
         {
-            float32 h_dot_n;
+            F32 h_dot_n;
 
             if (ent->bound.type == XBOUND_TYPE_SPHERE)
             {
@@ -1332,7 +1332,7 @@ void xEntCollide(xEnt* ent, xScene* sc, float32 dt)
 
             if (ent->pflags & 0x80 && coll->flags & 0x1)
             {
-                float32 depen_len = xVec3Dot(&coll->hdng, &coll->norm);
+                F32 depen_len = xVec3Dot(&coll->hdng, &coll->norm);
 
                 if (depen_len > _942)
                 {
@@ -1367,9 +1367,9 @@ void xEntCollide(xEnt* ent, xScene* sc, float32 dt)
 }
 #endif
 
-void xEntBeginCollide(xEnt* ent, xScene*, float32)
+void xEntBeginCollide(xEnt* ent, xScene*, F32)
 {
-    uint8 idx;
+    U8 idx;
     xCollis* coll;
 
     if (ent->bupdate)
@@ -1398,7 +1398,7 @@ void xEntBeginCollide(xEnt* ent, xScene*, float32)
     ent->collis->env_eidx = 6;
 }
 
-void xEntEndCollide(xEnt* ent, xScene* sc, float32 dt)
+void xEntEndCollide(xEnt* ent, xScene* sc, F32 dt)
 {
     if (ent->collis->post)
     {
@@ -1409,7 +1409,7 @@ void xEntEndCollide(xEnt* ent, xScene* sc, float32 dt)
 void xEntCollCheckEnv(xEnt* p, xScene* sc)
 {
     xCollis* coll;
-    uint8 ncolls;
+    U8 ncolls;
 
     p->collis->env_sidx = p->collis->idx;
 
@@ -1418,7 +1418,7 @@ void xEntCollCheckEnv(xEnt* p, xScene* sc)
 
     ncolls = 18 - p->collis->idx;
 
-    p->collis->idx += (uint8)iSphereHitsEnv3(&p->bound.sph, sc->env, coll, ncolls, _1541);
+    p->collis->idx += (U8)iSphereHitsEnv3(&p->bound.sph, sc->env, coll, ncolls, _1541);
     p->collis->env_eidx = p->collis->idx;
 }
 
@@ -1430,7 +1430,7 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
 {
     xVec3* r26 = xEntGetCenter(p);
     xGridIterator it;
-    int32 px, pz;
+    S32 px, pz;
 
     xGridBound* cell = xGridIterFirstCell(grid, r26->x, r26->y, r26->z, px, pz, it);
 
@@ -1446,10 +1446,10 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
 
     // non-matching: int to float conversion
 
-    float32 clcenterx = (_1435 * grid->csizex) + (grid->csizex * px + grid->minx);
-    float32 clcenterz = (_1435 * grid->csizez) + (grid->csizez * pz + grid->minz);
+    F32 clcenterx = (_1435 * grid->csizex) + (grid->csizex * px + grid->minx);
+    F32 clcenterz = (_1435 * grid->csizez) + (grid->csizez * pz + grid->minz);
 
-    extern int32 k_1552;
+    extern S32 k_1552;
 
     if (r26->x < clcenterx)
     {
@@ -1474,12 +1474,12 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
         }
     }
 
-    extern int32 offs_1551[4][3][2];
+    extern S32 offs_1551[4][3][2];
 
-    for (int32 i = 0; i < 3; i++)
+    for (S32 i = 0; i < 3; i++)
     {
-        int32 _x = px + offs_1551[k_1552][i][0];
-        int32 _z = pz + offs_1551[k_1552][i][1];
+        S32 _x = px + offs_1551[k_1552][i][0];
+        S32 _z = pz + offs_1551[k_1552][i][1];
 
         cell = xGridIterFirstCell(grid, _x, _z, it);
 
@@ -1563,7 +1563,7 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 
     xEnt* p = (xEnt*)data;
     xCollis* coll;
-    uint32 modl_coll = 0;
+    U32 modl_coll = 0;
 
     if (p->collis->idx >= 15)
     {
@@ -1607,9 +1607,9 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
         {
             xBound tmp;
             xBound* bptr; // unused
-            uint8 ncolls;
+            U8 ncolls;
             xVec3 *upper, *lower;
-            uint8 idx;
+            U8 idx;
 
             coll->flags = 0x1F00;
 
@@ -1629,7 +1629,7 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
                 xVec3Add(&tmp.sph.center, upper, lower);
                 xVec3SMulBy(&tmp.sph.center, _1435);
 
-                float32 rsum = upper->x + upper->y + upper->z - lower->x - lower->y - lower->z;
+                F32 rsum = upper->x + upper->y + upper->z - lower->x - lower->y - lower->z;
 
                 tmp.sph.r = _1724 * rsum;
 
@@ -1642,7 +1642,7 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 
             // idx might be undefined here...!
 
-            for (uint8 i = 0; i < idx; i++)
+            for (U8 i = 0; i < idx; i++)
             {
                 coll[i].optr = ent;
                 coll[i].mptr = ent->model;
@@ -1664,12 +1664,12 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
             if (ent->pflags & 0x20 && ent->bound.type == XBOUND_TYPE_SPHERE &&
                 p->bound.type == XBOUND_TYPE_SPHERE && coll->hdng.y < _1725)
             {
-                float32 dx = p->bound.sph.center.x - ent->bound.sph.center.x;
-                float32 dy = p->bound.sph.center.y - ent->bound.sph.center.y;
-                float32 dz = p->bound.sph.center.z - ent->bound.sph.center.z;
+                F32 dx = p->bound.sph.center.x - ent->bound.sph.center.x;
+                F32 dy = p->bound.sph.center.y - ent->bound.sph.center.y;
+                F32 dz = p->bound.sph.center.z - ent->bound.sph.center.z;
 
                 // non-matching: can't seem to generate a fmsubs here
-                float32 hsqr = SQR(p->bound.sph.r + ent->bound.sph.r) - (SQR(dx) + SQR(dz));
+                F32 hsqr = SQR(p->bound.sph.r + ent->bound.sph.r) - (SQR(dx) + SQR(dz));
 
                 if (hsqr >= _942)
                 {
@@ -1690,15 +1690,15 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 }
 #endif
 
-void xEntCollideFloor(xEnt* p, xScene* sc, float32 dt)
+void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
 {
     xCollis* coll = &p->collis->colls[0];
-    uint8 idx;
+    U8 idx;
     xCollis* ml = coll;
     xVec3 motion;
-    float32 mlen;
-    int32 stepping = 0;
-    float32 sbr;
+    F32 mlen;
+    S32 stepping = 0;
+    F32 sbr;
 
     if (p->bound.type == XBOUND_TYPE_SPHERE)
     {
@@ -1766,7 +1766,7 @@ void xEntCollideFloor(xEnt* p, xScene* sc, float32 dt)
 
     if (ml != coll)
     {
-        float32 flr_dist = ml->dist * (float32)iabs(ml->hdng.y);
+        F32 flr_dist = ml->dist * (F32)iabs(ml->hdng.y);
         xEnt* fent; // unused
 
         *coll = *ml;
@@ -1791,12 +1791,12 @@ void xEntCollideFloor(xEnt* p, xScene* sc, float32 dt)
     }
 }
 
-void xEntCollideCeiling(xEnt* p, xScene* sc, float32 dt)
+void xEntCollideCeiling(xEnt* p, xScene* sc, F32 dt)
 {
     xCollis* coll = &p->collis->colls[1];
-    uint8 idx;
+    U8 idx;
     xCollis* ml = coll;
-    float32 sbr;
+    F32 sbr;
 
     if (p->bound.type == XBOUND_TYPE_SPHERE)
     {
@@ -1834,7 +1834,7 @@ void xEntCollideCeiling(xEnt* p, xScene* sc, float32 dt)
 
     if (ml != coll)
     {
-        float32 ceil_dist = ml->dist * (float32)iabs(ml->hdng.y);
+        F32 ceil_dist = ml->dist * (F32)iabs(ml->hdng.y);
 
         *coll = *ml;
 
@@ -1848,12 +1848,12 @@ void xEntCollideCeiling(xEnt* p, xScene* sc, float32 dt)
     }
 }
 
-void xEntCollideWalls(xEnt* p, xScene* sc, float32 dt)
+void xEntCollideWalls(xEnt* p, xScene* sc, F32 dt)
 {
     xCollis* coll;
     xEnt* cent;
-    uint8 idx, sidx;
-    float32 sbr;
+    U8 idx, sidx;
+    F32 sbr;
 
     if (p->bound.type == XBOUND_TYPE_SPHERE)
     {
@@ -1880,7 +1880,7 @@ void xEntCollideWalls(xEnt* p, xScene* sc, float32 dt)
             {
                 if (_942 != coll->depen.x || _942 != coll->depen.z)
                 {
-                    coll->depen.y = *(const float32*)&_942;
+                    coll->depen.y = *(const F32*)&_942;
                 }
 
                 xEntAddToPos(p, &coll->depen);
@@ -1958,7 +1958,7 @@ void xEntCollideWalls(xEnt* p, xScene* sc, float32 dt)
     }
 }
 
-void xEntSetNostepNormAngle(float32 angle)
+void xEntSetNostepNormAngle(F32 angle)
 {
     nsn_angle = angle;
 }
@@ -1985,12 +1985,12 @@ void xEntAnimateCollision(xEnt& ent, bool on)
     }
     else if (!on && ent.moreFlags & 0x20)
     {
-        ent.moreFlags &= (uint8)~0x20;
+        ent.moreFlags &= (U8)~0x20;
     }
 }
 
 #ifdef NON_MATCHING
-bool xEntValidType(uint8 type)
+bool xEntValidType(U8 type)
 {
     // I have no idea how to match this lol
 
@@ -2043,7 +2043,7 @@ void xEntInitShadow(xEnt& ent, xEntShadow& shadow)
     shadow.radius[1] = _950;
 }
 
-xVec3& xVec3::operator-=(float32 f)
+xVec3& xVec3::operator-=(F32 f)
 {
     this->x -= f;
     this->y -= f;
@@ -2052,7 +2052,7 @@ xVec3& xVec3::operator-=(float32 f)
     return *this;
 }
 
-xVec3& xVec3::operator+=(float32 f)
+xVec3& xVec3::operator+=(F32 f)
 {
     this->x += f;
     this->y += f;
@@ -2101,16 +2101,16 @@ void xRotCopy(xRot* o, const xRot* r)
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;
     o->z = z;
 }
 
-void xMat3x3Rot(xMat3x3* m, const xVec3* a, float32 t)
+void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)
 {
     xMat3x3RotC(m, a->x, a->y, a->z, t);
 }
@@ -2125,7 +2125,7 @@ xMat4x3* xModelGetFrame(xModelInstance* modelInst)
     return (xMat4x3*)modelInst->Mat;
 }
 
-void xVec3SMulBy(xVec3* v, float32 s)
+void xVec3SMulBy(xVec3* v, F32 s)
 {
     v->x *= s;
     v->y *= s;
@@ -2157,7 +2157,7 @@ xGridBound* xGridIterFirstCell(xGridBound** head, xGridIterator& it)
     return cell;
 }
 
-xGridBound* xGridIterFirstCell(xGrid* grid, int32 grx, int32 grz, xGridIterator& iter)
+xGridBound* xGridIterFirstCell(xGrid* grid, S32 grx, S32 grz, xGridIterator& iter)
 {
     if (grx < 0 || grx >= grid->nx)
     {

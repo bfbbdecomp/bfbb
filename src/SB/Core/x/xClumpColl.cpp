@@ -2,12 +2,12 @@
 
 #include <types.h>
 
-xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2)
+xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32 param_2)
 {
-    uint32* header; // unused
+    U32* header; // unused
 
-    uint32 numBranchNodes = *(uint32*)((int)data + 4);
-    uint32 numTriangles = *(uint32*)((int)data + 8);
+    U32 numBranchNodes = *(U32*)((int)data + 4);
+    U32 numTriangles = *(U32*)((int)data + 8);
 
     xClumpCollBSPTree* tree = (xClumpCollBSPTree*)RwMalloc(16);
     if (numBranchNodes != 0)
@@ -27,14 +27,14 @@ xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, uint32 param_2)
 
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
 {
-    int32 i;
-    int32 numAtom;
+    S32 i;
+    S32 numAtom;
     TempAtomicList* atomicList;
     TempAtomicList* iterList;
     TempAtomicList* alist;
-    int32 vertIndex;
-    int32 numMeshes;
-    int32 meshIndex;
+    S32 vertIndex;
+    S32 numMeshes;
+    S32 meshIndex;
     RpMesh* mesh;
 }
 
@@ -42,18 +42,18 @@ void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
 //WIP
 xClumpCollBSPTree*
 xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
-                                          int32 (*callBack)(xClumpCollBSPTriangle*, void*),
+                                          S32 (*callBack)(xClumpCollBSPTriangle*, void*),
                                           void* data)
 {
-    int32 nStack;
+    S32 nStack;
     nodeInfo nodeStack[33];
     xClumpCollBSPBranchNode* branch;
 
-    uint32 uVar1;
+    U32 uVar1;
     int iVar2;
     int iVar3 = 0;
-    uint32 local_124 = 0;
-    uint32 local_128 = 1 - ((-(int)tree->branchNodes | (int)tree->branchNodes) >> 31);
+    U32 local_124 = 0;
+    U32 local_128 = 1 - ((-(int)tree->branchNodes | (int)tree->branchNodes) >> 31);
     while (true)
     {
         while (true)
@@ -86,7 +86,7 @@ xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
         iVar2 = ((*callBack)(tree->triangles + local_124, data));
         if (iVar2 == 0)
             break;
-        *(uint32*)&nodeStack[iVar3 * 2] = local_128;
+        *(U32*)&nodeStack[iVar3 * 2] = local_128;
         iVar3--;
     }
     return 0;

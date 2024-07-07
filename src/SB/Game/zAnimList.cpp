@@ -6,18 +6,18 @@
 
 #include "zAnimList.h"
 
-int32 nals;
+S32 nals;
 // NOTE (Square): I think these are Asset IDs, not Anim IDs
-uint32* aids; // anim IDs (not AIDS, you fool)
+U32* aids; // anim IDs (not AIDS, you fool)
 xAnimTable** atbls; // anim tables
-int32* anused;
+S32* anused;
 
 const char* astnames[2][10] = {
     "stop0", "stop1", "stop2", "stop3", "stop4", "stop5", "stop6", "stop7", "stop8", "stop9",
     "loop0", "loop1", "loop2", "loop3", "loop4", "loop5", "loop6", "loop7", "loop8", "loop9",
 };
 
-uint32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
+U32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
 {
     return 1;
 }
@@ -35,13 +35,13 @@ void zAnimListInit()
 
     // << 2 is the same as multiplying by 4
     // so it's just allocating size in bytes
-    aids = (uint32*)xMemAllocSize(nals * sizeof(int32));
-    atbls = (xAnimTable**)xMemAllocSize(nals * sizeof(int32));
-    anused = (int32*)xMemAllocSize(nals * sizeof(int32));
+    aids = (U32*)xMemAllocSize(nals * sizeof(S32));
+    atbls = (xAnimTable**)xMemAllocSize(nals * sizeof(S32));
+    anused = (S32*)xMemAllocSize(nals * sizeof(S32));
 
-    for (int32 i = 0; i < nals; i++)
+    for (S32 i = 0; i < nals; i++)
     {
-        uint32 size;
+        U32 size;
         zAnimListAsset* zala = (zAnimListAsset*)xSTFindAssetByType('ALST', i, &size);
         st_PKR_ASSET_TOCINFO ainfo;
         xSTGetAssetInfoByType('ALST', i, &ainfo);
@@ -61,7 +61,7 @@ void zAnimListInit()
             anused[i]++;
         }
 
-        for (int32 j = 1; j < 10; j++)
+        for (S32 j = 1; j < 10; j++)
         {
             if (zala->ids[j] == 0)
             {
@@ -105,11 +105,11 @@ void zAnimListExit()
     anused = NULL;
 }
 
-xAnimTable* zAnimListGetTable(uint32 id)
+xAnimTable* zAnimListGetTable(U32 id)
 {
-    uint32* current_id = aids;
+    U32* current_id = aids;
 
-    for (int32 i = 0; i < nals; i++)
+    for (S32 i = 0; i < nals; i++)
     {
         if (id == *current_id)
         {
@@ -121,11 +121,11 @@ xAnimTable* zAnimListGetTable(uint32 id)
     return NULL;
 }
 
-int32 zAnimListGetNumUsed(uint32 id)
+S32 zAnimListGetNumUsed(U32 id)
 {
-    uint32* current_id = aids;
+    U32* current_id = aids;
 
-    for (int32 i = 0; i < nals; i++)
+    for (S32 i = 0; i < nals; i++)
     {
         if (id == *current_id)
         {

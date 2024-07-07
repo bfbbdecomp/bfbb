@@ -3,12 +3,12 @@
 
 #include <types.h>
 
-int32 xUtilStartup();
-int32 xUtilShutdown();
-char* xUtil_idtag2string(uint32 srctag, int32 bufidx);
-uint32 xUtil_crc_init();
-uint32 xUtil_crc_update(uint32 crc_accum, char* data, int32 datasize);
-int32 xUtil_yesno(float32 wt_yes);
-void xUtil_wtadjust(float32* wts, int32 cnt, float32 arbref);
+S32 xUtilStartup();
+S32 xUtilShutdown();
+char* xUtil_idtag2string(U32 srctag, S32 bufidx);
+U32 xUtil_crc_init();
+U32 xUtil_crc_update(U32 crc_accum, char* data, S32 datasize);
+S32 xUtil_yesno(F32 wt_yes);
+void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref);
 
 #endif

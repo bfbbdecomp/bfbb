@@ -6,7 +6,7 @@
 #include "zScene.h"
 #include "xEvent.h"
 
-int32 zConditionalEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
+S32 zConditionalEventCB(xBase*, xBase*, U32, const F32*, xBase*);
 
 void zConditionalInit(void* b, void* asset)
 {
@@ -47,7 +47,7 @@ void zConditionalLoad(_zConditional* ent, xSerial* s)
     xBaseLoad(ent, s);
 }
 
-uint32 zConditional_Evaluate(_zConditional* c)
+U32 zConditional_Evaluate(_zConditional* c)
 {
     zVarEntry* v = NULL;
     void* context = NULL;
@@ -59,7 +59,7 @@ uint32 zConditional_Evaluate(_zConditional* c)
             v = &zVarEntryTable[i];
             if (i == 15 || i == 16 || i == 17)
             {
-                uint32 id = c->asset->value_asset;
+                U32 id = c->asset->value_asset;
                 if (id != 0)
                     context = zSceneFindObject(id);
             }
@@ -69,7 +69,7 @@ uint32 zConditional_Evaluate(_zConditional* c)
     if (v == NULL)
         return 0;
 
-    uint32 temp = v->varCB(context);
+    U32 temp = v->varCB(context);
 
     switch (c->asset->op)
     {
@@ -96,7 +96,7 @@ uint32 zConditional_Evaluate(_zConditional* c)
     }
 }
 
-int32 zConditionalEventCB(xBase* arg1, xBase* arg2, uint32 toEvent, const float32* fp, xBase* other)
+S32 zConditionalEventCB(xBase* arg1, xBase* arg2, U32 toEvent, const F32* fp, xBase* other)
 {
     switch (toEvent)
     {

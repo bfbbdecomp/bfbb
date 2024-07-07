@@ -4,21 +4,21 @@
 
 #include "xEvent.h"
 
-extern float32 _742_2;
-extern float32 _780_1;
+extern F32 _742_2;
+extern F32 _780_1;
 
 struct zGooParams
 {
-    float32 depth;
-    float32 orig_depth;
+    F32 depth;
+    F32 orig_depth;
     xEnt* goo_ent;
 };
 
 extern zGooParams* zgoo_gps;
-extern int32 zgoo_ngps;
-extern int32 zgoo_nused;
+extern S32 zgoo_ngps;
+extern S32 zgoo_nused;
 
-void zGooInit(int32 nobj)
+void zGooInit(S32 nobj)
 {
     zgoo_gps = (zGooParams*)xMemAllocSize(nobj * sizeof(zGooParams));
     zgoo_ngps = nobj;
@@ -31,9 +31,9 @@ void zGooExit()
     zgoo_nused = 0;
 }
 
-int32 zGooAdd(xEnt* obj, float32 depth, int32 freezeGroup)
+S32 zGooAdd(xEnt* obj, F32 depth, S32 freezeGroup)
 {
-    int32 i;
+    S32 i;
     zGooParams* gp;
 
     for (i = 0; i < zgoo_nused; i++)
@@ -67,10 +67,10 @@ int32 zGooAdd(xEnt* obj, float32 depth, int32 freezeGroup)
     return 1;
 }
 
-int32 zGooIs(xEnt* obj, float32& depth, uint32 playerCheck)
+S32 zGooIs(xEnt* obj, F32& depth, U32 playerCheck)
 {
-    int32 ret = 0;
-    int32 i;
+    S32 ret = 0;
+    S32 i;
 
     for (i = 0; i < zgoo_nused; i++)
     {
@@ -97,9 +97,9 @@ int32 zGooIs(xEnt* obj, float32& depth, uint32 playerCheck)
 #ifdef NON_MATCHING
 void zGooCollsBegin()
 {
-    int32 i;
+    S32 i;
     xEnt* gooey;
-    float32 ignoredepth;
+    F32 ignoredepth;
     xVec3 change;
 
     for (i = 0; i < zgoo_nused; i++)
@@ -124,7 +124,7 @@ void zGooCollsBegin()
 
 void zGooCollsEnd()
 {
-    int32 i;
+    S32 i;
     xEnt* gooey;
     xVec3 change;
 
@@ -145,7 +145,7 @@ void zGooCollsEnd()
 
 void zGooStopTide()
 {
-    int32 i;
+    S32 i;
 
     for (i = 0; i < zgoo_nused; i++)
     {
@@ -155,7 +155,7 @@ void zGooStopTide()
 
 void zGooMeltFinished(RpAtomic* atomic)
 {
-    int32 i;
+    S32 i;
     xEnt* gooey;
 
     for (i = 0; i < zgoo_nused; i++)

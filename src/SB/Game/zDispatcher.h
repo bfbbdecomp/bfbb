@@ -6,13 +6,13 @@
 struct st_ZDISPATCH_DATA : xBase
 {
     xBaseAsset* rawass;
-    int32 placeholder;
+    S32 placeholder;
 };
 
 struct st_ZDISPATCH_DEPOT
 {
     st_ZDISPATCH_DATA* raw_pool;
-    int32 raw_cnt;
+    S32 raw_cnt;
 };
 
 enum en_DISPATCH_COMMAND
@@ -58,8 +58,8 @@ void zDispatcher_Startup();
 void zDispatcher_Shutdown();
 void zDispatcher_scenePrepare();
 void zDispatcher_sceneFinish();
-st_ZDISPATCH_DATA* zDispatcher_memPool(int32 cnt);
-st_ZDISPATCH_DATA* zDispatcher_getInst(st_ZDISPATCH_DATA* pool, int32 idx);
+st_ZDISPATCH_DATA* zDispatcher_memPool(S32 cnt);
+st_ZDISPATCH_DATA* zDispatcher_getInst(st_ZDISPATCH_DATA* pool, S32 idx);
 void zDispatcher_Init(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass);
 void zDispatcher_InitDep(st_ZDISPATCH_DATA* dspdata, zScene*);
 void zDispatcher_Save(st_ZDISPATCH_DATA* dspdata, xSerial* s);
@@ -69,15 +69,15 @@ void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene);
 void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene);
 void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata);
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd);
-void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, int32);
+void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, S32);
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* indata, void* inxtra,
                     void* result);
-int32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt);
+S32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt);
 void zDispatcherStoreOptions();
 void zDispatcherRestoreOptions();
-int32 ZDSP_elcb_event(xBase*, xBase* xb, uint32 toEvent, const float32* toParam,
+S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam,
                       xBase* toParamWidget);
-void WRAP_xsnd_setMusicVolume(int32 i);
-void WRAP_xsnd_setSFXVolume(int32 i);
+void WRAP_xsnd_setMusicVolume(S32 i);
+void WRAP_xsnd_setSFXVolume(S32 i);
 
 #endif

@@ -2,45 +2,45 @@
 
 #include <types.h>
 
-uint32 xStrHash(const int8* str)
+U32 xStrHash(const char* str)
 {
-    uint32 hash = 0;
-    uint32 i;
+    U32 hash = 0;
+    U32 i;
 
     while (i = *str, i != NULL)
     {
-        hash = (i - (i & (int32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
+        hash = (i - (i & (S32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
         str++;
     }
 
     return hash;
 }
 
-uint32 xStrHash(const int8* str, ulong32 size)
+U32 xStrHash(const char* str, size_t size)
 {
-    uint32 hash = 0;
-    uint32 i = 0;
-    uint32 c;
+    U32 hash = 0;
+    U32 i = 0;
+    U32 c;
 
     while (i < size && (c = *str, c != NULL))
     {
         i++;
         str++;
-        hash = (c - (c & (int32)c >> 1 & 0x20) & 0xff) + hash * 0x83;
+        hash = (c - (c & (S32)c >> 1 & 0x20) & 0xff) + hash * 0x83;
     }
 
     return hash;
 }
 
-uint32 xStrHashCat(uint32 prefix, const int8* str)
+U32 xStrHashCat(U32 prefix, const char* str)
 {
-    uint32 hash;
-    uint32 i;
+    U32 hash;
+    U32 i;
 
     while (i = *str, i != NULL)
     {
         str++;
-        hash = (i - (i & (int32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
+        hash = (i - (i & (S32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
     }
 
     return hash;
@@ -62,7 +62,7 @@ char* xStrupr(char* string)
 
 // @unnamed@xString_cpp@::tolower(char)
 extern "C" {
-uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(uint32 param_1)
+U32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(U32 param_1)
 {
     return tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(param_1 & 0xff);
 }
@@ -70,7 +70,7 @@ uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(uint32 param_1)
 
 // @unnamed@xString_cpp@::tolower(int)
 extern "C" {
-uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(uint32 param_1)
+U32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(U32 param_1)
 {
     return param_1 | ((param_1 >> 1) & 32);
 }
@@ -78,10 +78,10 @@ uint32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(uint32 param_1)
 
 /*
 // Non-matching
-int32 icompare(const substr& s1, const substr& s2)
+S32 icompare(const substr& s1, const substr& s2)
 {
-    int32 result;
-    uint32 len;
+    S32 result;
+    U32 len;
 
     len = s2.size;
 

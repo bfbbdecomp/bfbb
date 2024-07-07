@@ -22,26 +22,26 @@ enum en_npcglyph
 struct NPCGlyph
 {
     en_npcglyph typ_glyph;
-    int32 flg_glyph;
+    S32 flg_glyph;
     xModelInstance* mdl_glyph;
     xVec3 pos_glyph;
     xVec3 vel_glyph;
     xMat3x3 rot_glyph;
     xVec3 scl_glyph;
-    float32 tmr_glyph;
+    F32 tmr_glyph;
 
-    void Timestep(float32 dt);
+    void Timestep(F32 dt);
     void RotAddDelta(xMat3x3* mat_rot);
     void VelSet_Shiny();
-    void RotSet(xVec3* ang, int32 doautospin);
+    void RotSet(xVec3* ang, S32 doautospin);
     void ScaleSet(xVec3* scale);
     void PosSet(xVec3* pos);
     void Discard();
-    void Enable(int32 ison);
+    void Enable(S32 ison);
     void Reset();
 };
 
-void zNPCCommon_Glyphs_RenderAll(int32 doOpaqueStuff);
+void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff);
 void zNPCGlyph_Startup();
 void zNPCGlyph_Shutdown();
 void zNPCGlyph_SceneReset();

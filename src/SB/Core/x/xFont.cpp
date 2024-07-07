@@ -34,56 +34,56 @@
 #define YJUSTIFY_CENTER 0x8
 #define YJUSTIFY_MASK (YJUSTIFY_TOP | YJUSTIFY_BOTTOM | YJUSTIFY_CENTER)
 
-extern float32 _744_0;
-extern float32 _762;
-extern float32 _763;
-extern float32 _903;
-extern float32 _904;
-extern float32 _1027;
+extern F32 _744_0;
+extern F32 _762;
+extern F32 _763;
+extern F32 _903;
+extern F32 _904;
+extern F32 _1027;
 extern substr _1615;
 extern substr _1616;
 extern xtextbox::tag_entry_list _1642;
-extern float32 _2167;
-extern float32 _2418;
-extern float32 _2808;
-extern float32 _2835;
+extern F32 _2167;
+extern F32 _2418;
+extern F32 _2808;
+extern F32 _2835;
 
-static const basic_rect<float32> screen_bounds = { 0, 0, 1, 1 };
+static const basic_rect<F32> screen_bounds = { 0, 0, 1, 1 };
 
 namespace
 {
     struct font_asset
     {
-        uint32 tex_id;
-        uint16 u;
-        uint16 v;
-        uint8 du;
-        uint8 dv;
-        uint8 line_size;
-        uint8 baseline;
+        U32 tex_id;
+        U16 u;
+        U16 v;
+        U8 du;
+        U8 dv;
+        U8 line_size;
+        U8 baseline;
         struct
         {
-            int16 x;
-            int16 y;
+            S16 x;
+            S16 y;
         } space;
-        uint32 flags;
-        uint8 char_set[128];
+        U32 flags;
+        U8 char_set[128];
         struct
         {
-            uint8 offset;
-            uint8 size;
+            U8 offset;
+            U8 size;
         } char_pos[127];
     };
 
     struct font_data
     {
         font_asset* asset;
-        uint32 index_max;
-        uint8 char_index[256];
-        float32 iwidth;
-        float32 iheight;
-        basic_rect<float32> tex_bounds[127];
-        basic_rect<float32> bounds[127];
+        U32 index_max;
+        U8 char_index[256];
+        F32 iwidth;
+        F32 iheight;
+        basic_rect<F32> tex_bounds[127];
+        basic_rect<F32> bounds[127];
         xVec2 dstfrac[127];
         RwTexture* texture;
         RwRaster* raster;
@@ -91,8 +91,8 @@ namespace
 
     struct model_cache_entry
     {
-        uint32 id;
-        uint32 order;
+        U32 id;
+        U32 order;
         xModelInstance* model;
     };
 
@@ -158,39 +158,39 @@ namespace
     // clang-format on
 
     font_data active_fonts[4];
-    uint32 active_fonts_size = 0;
+    U32 active_fonts_size = 0;
 
 #define VERT_BUFFER_SIZE 120
 
     RwIm2DVertex vert_buffer[VERT_BUFFER_SIZE];
-    uint32 vert_buffer_used = 0;
+    U32 vert_buffer_used = 0;
 
-    float32 rcz = 0;
-    float32 nsz = 0;
+    F32 rcz = 0;
+    F32 nsz = 0;
 
 #define MODEL_CACHE_SIZE 8
 
     model_cache_entry model_cache[MODEL_CACHE_SIZE];
     bool model_cache_inited = false;
 
-    basic_rect<int32> find_bounds(const iColor_tag* bits, const basic_rect<int32>& r, int32 pitch)
+    basic_rect<S32> find_bounds(const iColor_tag* bits, const basic_rect<S32>& r, S32 pitch)
     {
-        int32 diff = pitch - r.w;
+        S32 diff = pitch - r.w;
         const iColor_tag* endp = bits + pitch * r.h;
         const iColor_tag* p = bits;
-        int32 pmode = (p->r == p->g && p->g == p->b && p->r >= 240);
+        S32 pmode = (p->r == p->g && p->g == p->b && p->r >= 240);
 
-        int32 minx = r.x + r.w;
-        int32 maxx = r.x - 1;
-        int32 miny = r.y + r.h;
-        int32 maxy = r.y - 1;
+        S32 minx = r.x + r.w;
+        S32 maxx = r.x - 1;
+        S32 miny = r.y + r.h;
+        S32 maxy = r.y - 1;
 
-        int32 y = r.y;
+        S32 y = r.y;
 
         while (p != endp)
         {
             const iColor_tag* endline = p + r.w;
-            int32 x = r.x;
+            S32 x = r.x;
 
             while (p != endline)
             {
@@ -210,7 +210,7 @@ namespace
             y++;
         }
 
-        basic_rect<int32> b;
+        basic_rect<S32> b;
         b.x = minx;
         b.y = miny;
         b.w = maxx + 1 - minx;
@@ -228,16 +228,16 @@ namespace
             return false;
         }
 
-        basic_rect<int32> char_bounds;
+        basic_rect<S32> char_bounds;
         char_bounds.w = a.du;
         char_bounds.h = a.dv;
 
-        uint8 baseline_count[256];
+        U8 baseline_count[256];
         memset(baseline_count, 0, 256);
 
         a.baseline = 0;
 
-        int32 width = RwRasterGetWidth(RwTextureGetRaster(tex));
+        S32 width = RwRasterGetWidth(RwTextureGetRaster(tex));
         RwImage* image = RwImageCreate(width, RwRasterGetHeight(RwTextureGetRaster(tex)), 32);
 
         if (!image)
@@ -250,7 +250,7 @@ namespace
 
         iColor_tag* bits = (iColor_tag*)RwImageGetPixels(image);
 
-        for (int32 i = 0; a.char_set[i] != '\0'; i++)
+        for (S32 i = 0; a.char_set[i] != '\0'; i++)
         {
             if (a.flags & 0x4)
             {
@@ -263,7 +263,7 @@ namespace
                 char_bounds.y = a.v + char_bounds.h * (i / a.line_size);
             }
 
-            basic_rect<int32> r =
+            basic_rect<S32> r =
                 find_bounds(bits + width * char_bounds.y + char_bounds.x, char_bounds, width);
 
             if (a.flags & 0x8)
@@ -277,7 +277,7 @@ namespace
                 a.char_pos[i].size = r.w;
             }
 
-            int32 baseline = r.y - char_bounds.y + r.h + 1;
+            S32 baseline = r.y - char_bounds.y + r.h + 1;
 
             if (++baseline_count[baseline] > baseline_count[a.baseline])
             {
@@ -290,18 +290,18 @@ namespace
     }
 
 #if 1
-    basic_rect<float32> get_tex_bounds(const font_data& fd, uint8 c);
+    basic_rect<F32> get_tex_bounds(const font_data& fd, U8 c);
 #else
-    basic_rect<float32> get_tex_bounds(const font_data& fd, uint8 c)
+    basic_rect<F32> get_tex_bounds(const font_data& fd, U8 c)
     {
         // todo: uses int-to-float conversion
     }
 #endif
 
 #if 1
-    basic_rect<float32> get_bounds(const font_data& fd, uint8 c);
+    basic_rect<F32> get_bounds(const font_data& fd, U8 c);
 #else
-    basic_rect<float32> get_bounds(const font_data& fd, uint8 c)
+    basic_rect<F32> get_bounds(const font_data& fd, U8 c)
     {
         // todo: uses int-to-float conversion
     }
@@ -316,7 +316,7 @@ namespace
     }
 #endif
 
-    void start_tex_render(uint32 font_id)
+    void start_tex_render(U32 font_id)
     {
         font_data& fd = active_fonts[font_id];
 
@@ -341,13 +341,13 @@ namespace
         xfont::restore_render_state();
     }
 
-    void set_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 u, float32 v, iColor_tag c);
+    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c);
 
-    void tex_render(const basic_rect<float32>& src, const basic_rect<float32>& dst,
-                    const basic_rect<float32>& clip, iColor_tag color)
+    void tex_render(const basic_rect<F32>& src, const basic_rect<F32>& dst,
+                    const basic_rect<F32>& clip, iColor_tag color)
     {
-        basic_rect<float32> r = dst;
-        basic_rect<float32> rt = src;
+        basic_rect<F32> r = dst;
+        basic_rect<F32> rt = src;
 
         clip.clip(r, rt);
 
@@ -381,7 +381,7 @@ namespace
 
 namespace
 {
-    void set_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 u, float32 v, iColor_tag c)
+    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c)
     {
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);
@@ -411,7 +411,7 @@ namespace
 
         model_pool& pool = *(model_pool*)data;
 
-        for (uint32 i = 0; i < MODEL_CACHE_SIZE; i++)
+        for (U32 i = 0; i < MODEL_CACHE_SIZE; i++)
         {
             xModelInstance& model = pool.model[i];
             model_cache_entry& e = model_cache[i];
@@ -429,19 +429,19 @@ namespace
 #endif
 
 #ifndef NON_MATCHING
-    static uint32 next_order_967;
+    static U32 next_order_967;
     static signed char init_968;
 
-    xModelInstance* load_model(uint32 id);
+    xModelInstance* load_model(U32 id);
 #else
-    xModelInstance* load_model(uint32 id)
+    xModelInstance* load_model(U32 id)
     {
-        static uint32 next_order = 0;
-        uint32 oldest = 0;
+        static U32 next_order = 0;
+        U32 oldest = 0;
 
         next_order++;
 
-        for (uint32 i = 0; i < MODEL_CACHE_SIZE; i++)
+        for (U32 i = 0; i < MODEL_CACHE_SIZE; i++)
         {
             model_cache_entry& e = model_cache[i];
 
@@ -489,7 +489,7 @@ void xfont::init()
 {
     active_fonts_size = 0;
 
-    for (ulong32 i = 0; i < sizeof(default_font_assets) / sizeof(font_asset); i++)
+    for (size_t i = 0; i < sizeof(default_font_assets) / sizeof(font_asset); i++)
     {
         if (default_font_assets[i].tex_id < sizeof(default_font_texture) / sizeof(const char*))
         {
@@ -518,13 +518,13 @@ namespace
 {
     struct
     {
-        int32 fogenable;
-        int32 vertexalphaenable;
-        int32 zwriteenable;
-        int32 ztestenable;
-        uint32 srcblend;
-        uint32 destblend;
-        uint32 shademode;
+        S32 fogenable;
+        S32 vertexalphaenable;
+        S32 zwriteenable;
+        S32 ztestenable;
+        U32 srcblend;
+        U32 destblend;
+        U32 shademode;
         RwRaster* textureraster;
         RwTextureFilterMode filter;
     } oldrs;
@@ -567,34 +567,34 @@ void xfont::restore_render_state()
 }
 
 #ifdef NON_MATCHING
-basic_rect<float32> xfont::bounds(char c) const
+basic_rect<F32> xfont::bounds(char c) const
 {
     font_data& fd = active_fonts[id];
-    uint32 char_index = fd.char_index[c];
+    U32 char_index = fd.char_index[c];
 
     if (fd.char_index[c] == 0xFF)
     {
         // non-matching: scheduling
-        return basic_rect<float32>::m_Null;
+        return basic_rect<F32>::m_Null;
     }
 
-    basic_rect<float32> r = fd.bounds[char_index];
+    basic_rect<F32> r = fd.bounds[char_index];
     r.scale(width, height);
     return r;
 }
 #endif
 
-basic_rect<float32> xfont::bounds(const char* text) const
+basic_rect<F32> xfont::bounds(const char* text) const
 {
-    ulong32 size;
+    size_t size;
     return bounds(text, 0x40000000, _1027, size);
 }
 
-basic_rect<float32> xfont::bounds(const char* text, ulong32 text_size, float32 max_width,
-                                  ulong32& size) const
+basic_rect<F32> xfont::bounds(const char* text, size_t text_size, F32 max_width,
+                                  size_t& size) const
 {
     font_data& fd = active_fonts[id];
-    basic_rect<float32> r;
+    basic_rect<F32> r;
 
     r.x = _762;
     r.y = fd.bounds[0].y * height;
@@ -608,15 +608,15 @@ basic_rect<float32> xfont::bounds(const char* text, ulong32 text_size, float32 m
     }
 
     const char* s = text;
-    uint32 i = 0;
+    U32 i = 0;
 
     while (i < text_size && *s != '\0')
     {
-        uint32 charIndex = fd.char_index[*s];
+        U32 charIndex = fd.char_index[*s];
 
         if (charIndex != 0xFF)
         {
-            float32 dx = fd.bounds[charIndex].w * width;
+            F32 dx = fd.bounds[charIndex].w * width;
 
             if (r.w + dx > max_width)
             {
@@ -651,18 +651,18 @@ void xfont::stop_render() const
 
 namespace
 {
-    void char_render(uint8 c, uint32 font_index, const basic_rect<float32>& bounds,
-                     const basic_rect<float32>& clip, iColor_tag color)
+    void char_render(U8 c, U32 font_index, const basic_rect<F32>& bounds,
+                     const basic_rect<F32>& clip, iColor_tag color)
     {
         font_data& fd = active_fonts[font_index];
-        uint32 char_index = fd.char_index[c];
+        U32 char_index = fd.char_index[c];
 
         if (char_index >= fd.index_max)
         {
             return;
         }
 
-        basic_rect<float32> dst = fd.bounds[char_index];
+        basic_rect<F32> dst = fd.bounds[char_index];
         dst.scale(bounds.w, bounds.h);
         dst.x += bounds.x;
         dst.y += bounds.y;
@@ -689,15 +689,15 @@ namespace
     }
 } // namespace
 
-void xfont::irender(const char* text, float32 x, float32 y) const
+void xfont::irender(const char* text, F32 x, F32 y) const
 {
     irender(text, 0x40000000, x, y);
 }
 
-static const basic_rect<float32> _1107 = {};
+static const basic_rect<F32> _1107 = {};
 
 #ifdef NON_MATCHING
-void xfont::irender(const char* text, ulong32 text_size, float32 x, float32 y) const
+void xfont::irender(const char* text, size_t text_size, F32 x, F32 y) const
 {
     if (!text)
     {
@@ -708,8 +708,8 @@ void xfont::irender(const char* text, ulong32 text_size, float32 x, float32 y) c
 
     set_tex_raster(fd.raster);
 
-    basic_rect<float32> bounds = { x, y, width, height };
-    uint32 i = 0;
+    basic_rect<F32> bounds = { x, y, width, height };
+    U32 i = 0;
 
     // non-matching: color not stored in r28
 
@@ -719,7 +719,7 @@ void xfont::irender(const char* text, ulong32 text_size, float32 x, float32 y) c
 
         char_render(c, id, bounds, clip, color);
 
-        uint32 charIndex = fd.char_index[c];
+        U32 charIndex = fd.char_index[c];
 
         if (charIndex != 255)
         {
@@ -736,9 +736,9 @@ extern substr text_delims;
 namespace
 {
 #ifndef NON_MATCHING
-    ulong32 parse_split_tag(xtextbox::split_tag& ti);
+    size_t parse_split_tag(xtextbox::split_tag& ti);
 #else
-    ulong32 parse_split_tag(xtextbox::split_tag& ti)
+    size_t parse_split_tag(xtextbox::split_tag& ti)
     {
         ti.value.size = 0;
         ti.action.size = 0;
@@ -808,13 +808,13 @@ namespace
 #endif
 
     const char* parse_next_tag_jot(xtextbox::jot& a, const xtextbox& tb, const xtextbox& ctb,
-                                   const char* text, ulong32 text_size)
+                                   const char* text, size_t text_size)
     {
         xtextbox::split_tag ti = {};
         ti.tag.text = text;
         ti.tag.size = text_size;
 
-        ulong32 size = parse_split_tag(ti);
+        size_t size = parse_split_tag(ti);
 
         if (!size)
         {
@@ -849,7 +849,7 @@ namespace
     }
 
     const char* parse_next_text_jot(xtextbox::jot& a, const xtextbox& tb, const xtextbox& ctb,
-                                    const char* text, ulong32 text_size)
+                                    const char* text, size_t text_size)
     {
         char c = text[0];
 
@@ -884,7 +884,7 @@ namespace
     }
 
     const char* parse_next_jot(xtextbox::jot& a, const xtextbox& tb, const xtextbox& ctb,
-                               const char* text, ulong32 text_size)
+                               const char* text, size_t text_size)
     {
         const char* ret;
 
@@ -900,9 +900,9 @@ namespace
     struct tex_args
     {
         RwRaster* raster;
-        float32 rot;
-        basic_rect<float32> src;
-        basic_rect<float32> dst;
+        F32 rot;
+        basic_rect<F32> src;
+        basic_rect<F32> dst;
         xVec2 off;
         enum
         {
@@ -920,7 +920,7 @@ namespace
     {
         xModelInstance* model;
         xVec3 rot;
-        basic_rect<float32> dst;
+        basic_rect<F32> dst;
         xVec2 off;
         enum
         {
@@ -937,7 +937,7 @@ namespace
     {
         ta.raster = NULL;
         ta.rot = _762;
-        ta.src = ta.dst = basic_rect<float32>::m_Unit;
+        ta.src = ta.dst = basic_rect<F32>::m_Unit;
         ta.off.x = ta.off.y = _763;
         ta.scale = tex_args::SCALE_FONT;
     }
@@ -957,7 +957,7 @@ namespace
         if (e->op == ':' || (e->args_size == 1 && e->args[0].size))
         {
             substr& name = e->args[0];
-            uint32 id;
+            U32 id;
 
             if (name.size == 10 && imemcmp(name.text, "0x", 2) == 0)
             {
@@ -993,21 +993,21 @@ namespace
 
         if (e && e->op == '=' && e->args_size == 4)
         {
-            xtextbox::read_list(*e, (float32*)&ta.src, 4);
+            xtextbox::read_list(*e, (F32*)&ta.src, 4);
         }
 
         e = xtextbox::find_entry(el, substr::create("dst", 3));
 
         if (e && e->op == '=' && e->args_size == 4)
         {
-            xtextbox::read_list(*e, (float32*)&ta.dst, 4);
+            xtextbox::read_list(*e, (F32*)&ta.dst, 4);
         }
 
         e = xtextbox::find_entry(el, substr::create("off", 3));
 
         if (e && e->op == '=' && e->args_size == 2)
         {
-            xtextbox::read_list(*e, (float32*)&ta.off, 2);
+            xtextbox::read_list(*e, (F32*)&ta.off, 2);
         }
 
         e = xtextbox::find_entry(el, substr::create("scale", 5));
@@ -1058,7 +1058,7 @@ namespace
     {
         ma.model = NULL;
         ma.rot = xVec3::m_Null;
-        ma.dst = basic_rect<float32>::m_Unit;
+        ma.dst = basic_rect<F32>::m_Unit;
         ma.off.x = ma.off.y = _763;
         ma.scale = model_args::SCALE_FONT;
     }
@@ -1089,21 +1089,21 @@ namespace
 
         if (e && e->op == '=' && e->args_size == 3)
         {
-            xtextbox::read_list(*e, (float32*)&ma.rot, 3);
+            xtextbox::read_list(*e, (F32*)&ma.rot, 3);
         }
 
         e = xtextbox::find_entry(el, substr::create("dst", 3));
 
         if (e && e->op == '=' && e->args_size == 4)
         {
-            xtextbox::read_list(*e, (float32*)&ma.dst, 4);
+            xtextbox::read_list(*e, (F32*)&ma.dst, 4);
         }
 
         e = xtextbox::find_entry(el, substr::create("off", 3));
 
         if (e && e->op == '=' && e->args_size == 2)
         {
-            xtextbox::read_list(*e, (float32*)&ma.off, 2);
+            xtextbox::read_list(*e, (F32*)&ma.off, 2);
         }
 
         e = xtextbox::find_entry(el, substr::create("scale", 5));
@@ -1142,7 +1142,7 @@ namespace
     }
 } // namespace
 
-void xtextbox::text_render(const jot& j, const xtextbox& tb, float32 x, float32 y)
+void xtextbox::text_render(const jot& j, const xtextbox& tb, F32 x, F32 y)
 {
     tb.font.irender(j.s.text, j.s.size, x, y);
 }
@@ -1152,7 +1152,7 @@ void xtextbox::set_text(const char* text)
     set_text(text, 0x40000000);
 }
 
-void xtextbox::set_text(const char* text, ulong32 text_size)
+void xtextbox::set_text(const char* text, size_t text_size)
 {
     if (!text || !text_size)
     {
@@ -1167,12 +1167,12 @@ void xtextbox::set_text(const char* text, ulong32 text_size)
     set_text(&this->text.text, &this->text.size, 1);
 }
 
-void xtextbox::set_text(const char** texts, ulong32 size)
+void xtextbox::set_text(const char** texts, size_t size)
 {
     set_text(texts, NULL, size);
 }
 
-void xtextbox::set_text(const char** texts, const ulong32* text_sizes, ulong32 size)
+void xtextbox::set_text(const char** texts, const size_t* text_sizes, size_t size)
 {
     this->texts_size = size;
     this->text_hash = 0;
@@ -1187,14 +1187,14 @@ void xtextbox::set_text(const char** texts, const ulong32* text_sizes, ulong32 s
 
     if (!text_sizes)
     {
-        for (ulong32 i = 0; i < size; i++)
+        for (size_t i = 0; i < size; i++)
         {
             this->text_hash = this->text_hash * 131 + xStrHash(texts[i]);
         }
     }
     else
     {
-        for (ulong32 i = 0; i < size; i++)
+        for (size_t i = 0; i < size; i++)
         {
             this->text_hash = this->text_hash * 131 + xStrHash(texts[i], text_sizes[i]);
         }
@@ -1215,7 +1215,7 @@ namespace
 {
     struct tl_cache_entry
     {
-        uint32 used;
+        U32 used;
         iTime last_used;
         xtextbox::layout tl;
     };
@@ -1240,13 +1240,13 @@ xtextbox::layout& xtextbox::temp_layout(bool cache) const
 }
 #endif
 
-void xtextbox::render(layout& l, int32 begin_jot, int32 end_jot) const
+void xtextbox::render(layout& l, S32 begin_jot, S32 end_jot) const
 {
     l.render(*this, begin_jot, end_jot);
 }
 
-float32 xtextbox::yextent(float32 max, int32& size, const layout& l, int32 begin_jot,
-                          int32 end_jot) const
+F32 xtextbox::yextent(F32 max, S32& size, const layout& l, S32 begin_jot,
+                          S32 end_jot) const
 {
     return l.yextent(max, size, begin_jot, end_jot);
 }
@@ -1279,8 +1279,8 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
     static substr arg_buffer[32];
     static xtextbox::tag_entry entry_buffer[16];
 
-    uint32 entries_used = 0;
-    uint32 args_used = 0;
+    U32 entries_used = 0;
+    U32 args_used = 0;
 
     substr it = s;
 
@@ -1374,7 +1374,7 @@ xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr
 {
     // non-matching: el.size and el.entries are not cached at the beginning
 
-    for (ulong32 i = 0; i < el.size; i++)
+    for (size_t i = 0; i < el.size; i++)
     {
         tag_entry& e = el.entries[i];
 
@@ -1389,9 +1389,9 @@ xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr
 #endif
 
 #ifdef NON_MATCHING
-ulong32 xtextbox::read_list(const tag_entry& e, float32* v, ulong32 vsize)
+size_t xtextbox::read_list(const tag_entry& e, F32* v, size_t vsize)
 {
-    ulong32 total = e.args_size;
+    size_t total = e.args_size;
 
     if (vsize < total)
     {
@@ -1400,7 +1400,7 @@ ulong32 xtextbox::read_list(const tag_entry& e, float32* v, ulong32 vsize)
 
     // non-matching: e.args is not stored in r31
 
-    for (ulong32 i = 0; i < total; i++)
+    for (size_t i = 0; i < total; i++)
     {
         v[i] = xatof(e.args[i].text);
     }
@@ -1410,9 +1410,9 @@ ulong32 xtextbox::read_list(const tag_entry& e, float32* v, ulong32 vsize)
 #endif
 
 #ifdef NON_MATCHING
-ulong32 xtextbox::read_list(const tag_entry& e, int32* v, ulong32 vsize)
+size_t xtextbox::read_list(const tag_entry& e, S32* v, size_t vsize)
 {
-    ulong32 total = e.args_size;
+    size_t total = e.args_size;
 
     if (vsize < total)
     {
@@ -1421,7 +1421,7 @@ ulong32 xtextbox::read_list(const tag_entry& e, int32* v, ulong32 vsize)
 
     // non-matching: e.args is not stored in r31
 
-    for (ulong32 i = 0; i < total; i++)
+    for (size_t i = 0; i < total; i++)
     {
         v[i] = atoi(e.args[i].text);
     }
@@ -1432,7 +1432,7 @@ ulong32 xtextbox::read_list(const tag_entry& e, int32* v, ulong32 vsize)
 
 void xtextbox::clear_layout_cache()
 {
-    for (uint32 index = 0; index < TL_CACHE_COUNT; index++)
+    for (U32 index = 0; index < TL_CACHE_COUNT; index++)
     {
         tl_cache[index].tl.clear();
     }
@@ -1449,7 +1449,7 @@ void xtextbox::layout::refresh(const xtextbox& tb, bool force)
 
 void xtextbox::layout::refresh_end(const xtextbox& tb)
 {
-    ulong32 texts_size = this->tb.texts_size;
+    size_t texts_size = this->tb.texts_size;
 
     if (texts_size > tb.texts_size)
     {
@@ -1472,7 +1472,7 @@ void xtextbox::layout::trim_line(jot_line& line)
 {
     // non-matching: mtctr and bdnz not generated
 
-    for (int32 i = line.last - 1; i >= line.first; i--)
+    for (S32 i = line.last - 1; i >= line.first; i--)
     {
         jot& a = _jots[i];
 
@@ -1488,7 +1488,7 @@ void xtextbox::layout::trim_line(jot_line& line)
         }
     }
 
-    for (int32 i = line.first; i < line.last; i++)
+    for (S32 i = line.first; i < line.last; i++)
     {
         jot& a = _jots[i];
 
@@ -1505,7 +1505,7 @@ void xtextbox::layout::trim_line(jot_line& line)
 }
 #endif
 
-void xtextbox::layout::erase_jots(ulong32 begin_jot, ulong32 end_jot)
+void xtextbox::layout::erase_jots(size_t begin_jot, size_t end_jot)
 {
     if (end_jot >= _jots_size)
     {
@@ -1513,11 +1513,11 @@ void xtextbox::layout::erase_jots(ulong32 begin_jot, ulong32 end_jot)
         return;
     }
 
-    ulong32 erase_size = end_jot - begin_jot;
+    size_t erase_size = end_jot - begin_jot;
 
     _jots_size -= erase_size;
 
-    for (ulong32 i = begin_jot; i < _jots_size; i++)
+    for (size_t i = begin_jot; i < _jots_size; i++)
     {
         _jots[i] = _jots[i + erase_size];
     }
@@ -1525,8 +1525,8 @@ void xtextbox::layout::erase_jots(ulong32 begin_jot, ulong32 end_jot)
 
 void xtextbox::layout::merge_line(jot_line& line)
 {
-    ulong32 d = line.first;
-    ulong32 i = line.first + 1;
+    size_t d = line.first;
+    size_t i = line.first + 1;
 
     while (i != line.last)
     {
@@ -1561,7 +1561,7 @@ void xtextbox::layout::bound_line(jot_line& line)
 {
     line.bounds.w = line.bounds.h = line.baseline = _762;
 
-    for (ulong32 i = line.first; i != line.last; i++)
+    for (size_t i = line.first; i != line.last; i++)
     {
         jot& a = _jots[i];
 
@@ -1571,7 +1571,7 @@ void xtextbox::layout::bound_line(jot_line& line)
         }
     }
 
-    for (ulong32 i = line.first; i != line.last; i++)
+    for (size_t i = line.first; i != line.last; i++)
     {
         jot& a = _jots[i];
 
@@ -1580,7 +1580,7 @@ void xtextbox::layout::bound_line(jot_line& line)
             a.bounds.x = line.bounds.w;
             line.bounds.w += a.bounds.w;
 
-            float32 total_height = line.baseline + a.bounds.y + a.bounds.h;
+            F32 total_height = line.baseline + a.bounds.y + a.bounds.h;
 
             if (total_height > line.bounds.h)
             {
@@ -1615,7 +1615,7 @@ bool xtextbox::layout::fit_line()
         }
         default:
         {
-            for (int32 i = (int32)line.last - 1; i > (int32)line.first; i--)
+            for (S32 i = (S32)line.last - 1; i > (S32)line.first; i--)
             {
                 if (_jots[i].flag.word_break)
                 {
@@ -1662,7 +1662,7 @@ void xtextbox::layout::next_line()
     bound_line(line2);
 }
 
-void xtextbox::layout::calc(const xtextbox& ctb, ulong32 start_text)
+void xtextbox::layout::calc(const xtextbox& ctb, size_t start_text)
 {
     if (!start_text)
     {
@@ -1692,9 +1692,9 @@ void xtextbox::layout::calc(const xtextbox& ctb, ulong32 start_text)
         const char* end;
     } text_stack[16];
 
-    ulong32 text_stack_size = 0;
-    ulong32 size = ((!tb.text_sizes) ? 0x40000000 : tb.text_sizes[start_text]);
-    ulong32 text_index = start_text + 1;
+    size_t text_stack_size = 0;
+    size_t size = ((!tb.text_sizes) ? 0x40000000 : tb.text_sizes[start_text]);
+    size_t text_index = start_text + 1;
     const char* s = tb.texts[start_text];
     const char* end = s + size;
     const char* r25;
@@ -1812,7 +1812,7 @@ void xtextbox::layout::calc(const xtextbox& ctb, ulong32 start_text)
         }
     }
 
-    for (ulong32 i = 0; i < _jots_size; i++)
+    for (size_t i = 0; i < _jots_size; i++)
     {
         if (_jots[i].flag.dynamic)
         {
@@ -1823,7 +1823,7 @@ void xtextbox::layout::calc(const xtextbox& ctb, ulong32 start_text)
     stop_layout(ctb);
 }
 
-void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jot)
+void xtextbox::layout::render(const xtextbox& ctb, S32 begin_jot, S32 end_jot)
 {
     if (begin_jot < 0)
     {
@@ -1843,17 +1843,17 @@ void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jo
     tb = ctb;
     start_render(ctb);
 
-    int32 begin_line = 0;
+    S32 begin_line = 0;
 
     while (true)
     {
-        if (begin_line >= (int32)_lines_size)
+        if (begin_line >= (S32)_lines_size)
         {
             stop_render(ctb);
             return;
         }
 
-        if ((int32)_lines[begin_line].last > begin_jot)
+        if ((S32)_lines[begin_line].last > begin_jot)
         {
             break;
         }
@@ -1861,7 +1861,7 @@ void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jo
         begin_line++;
     }
 
-    for (int32 i = 0; i < begin_jot; i++)
+    for (S32 i = 0; i < begin_jot; i++)
     {
         jot& j = _jots[i];
 
@@ -1871,12 +1871,12 @@ void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jo
         }
     }
 
-    float32 top = _lines[begin_line].bounds.y;
-    uint32 li = begin_line - 1;
-    int32 line_last = -1;
-    float32 x, y;
+    F32 top = _lines[begin_line].bounds.y;
+    U32 li = begin_line - 1;
+    S32 line_last = -1;
+    F32 x, y;
 
-    for (int32 i = begin_jot; i < end_jot; i++)
+    for (S32 i = begin_jot; i < end_jot; i++)
     {
         if (i >= line_last)
         {
@@ -1888,7 +1888,7 @@ void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jo
             x = tb.bounds.x + line.bounds.x;
             y = tb.bounds.y + line.bounds.y + line.baseline - top;
 
-            uint32 xj = tb.flags & XJUSTIFY_MASK;
+            U32 xj = tb.flags & XJUSTIFY_MASK;
 
             if (xj == XJUSTIFY_CENTER)
             {
@@ -1928,7 +1928,7 @@ void xtextbox::layout::render(const xtextbox& ctb, int32 begin_jot, int32 end_jo
 #define min(a, b) ((a) >= (b) ? (b) : (a))
 
 #ifdef NON_MATCHING
-float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int32 end_jot) const
+F32 xtextbox::layout::yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) const
 {
     size = 0;
 
@@ -1947,16 +1947,16 @@ float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int
         return _762;
     }
 
-    int32 begin_line = 0;
+    S32 begin_line = 0;
 
     while (true)
     {
-        if (begin_line >= (int32)_lines_size)
+        if (begin_line >= (S32)_lines_size)
         {
             return _762;
         }
 
-        if ((int32)_lines[begin_line].last > begin_jot)
+        if ((S32)_lines[begin_line].last > begin_jot)
         {
             break;
         }
@@ -1965,12 +1965,12 @@ float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int
     }
 
     // non-matching: wrong float registers
-    float32 top = _lines[begin_line].bounds.y;
-    int32 i = begin_line;
+    F32 top = _lines[begin_line].bounds.y;
+    S32 i = begin_line;
 
     while (true)
     {
-        if (i == (int32)_lines_size)
+        if (i == (S32)_lines_size)
         {
             break;
         }
@@ -1984,7 +1984,7 @@ float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int
             break;
         }
 
-        if ((int32)line.last >= end_jot)
+        if ((S32)line.last >= end_jot)
         {
             break;
         }
@@ -2004,7 +2004,7 @@ float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int
 
     const jot_line& line = _lines[i];
 
-    size = min((int32)line.last, end_jot) - begin_jot;
+    size = min((S32)line.last, end_jot) - begin_jot;
 
     return line.bounds.y + line.bounds.h - top;
 }
@@ -2012,8 +2012,8 @@ float32 xtextbox::layout::yextent(float32 max, int32& size, int32 begin_jot, int
 
 bool xtextbox::layout::changed(const xtextbox& ctb)
 {
-    uint32 flags1 = tb.flags & (WRAP_MASK | FLAG_UNK40);
-    uint32 flags2 = ctb.flags & (WRAP_MASK | FLAG_UNK40);
+    U32 flags1 = tb.flags & (WRAP_MASK | FLAG_UNK40);
+    U32 flags2 = ctb.flags & (WRAP_MASK | FLAG_UNK40);
 
     if (tb.text_hash != ctb.text_hash || tb.font.id != ctb.font.id ||
         tb.font.width != ctb.font.width || tb.font.height != ctb.font.height ||
@@ -2023,18 +2023,18 @@ bool xtextbox::layout::changed(const xtextbox& ctb)
         return true;
     }
 
-    int32 i = dynamics_size;
+    S32 i = dynamics_size;
 
     while (i > 0)
     {
         i--;
 
         jot& j = _jots[dynamics[i]];
-        uint32 oldval = xStrHash((char*)j.context, j.context_size);
+        U32 oldval = xStrHash((char*)j.context, j.context_size);
 
         parse_next_jot(j, tb, ctb, j.s.text, j.s.size);
 
-        uint32 val = xStrHash((char*)j.context, j.context_size);
+        U32 val = xStrHash((char*)j.context, j.context_size);
 
         if (val != oldval)
         {
@@ -2049,7 +2049,7 @@ namespace
 {
     void update_tag_alpha(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.a = _2167 * (float32&)j.context + _744_0;
+        tb.font.color.a = _2167 * (F32&)j.context + _744_0;
     }
 
     void update_tag_reset_alpha(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2080,7 +2080,7 @@ namespace
 
     void update_tag_red(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.r = _2167 * (float32&)j.context + _744_0;
+        tb.font.color.r = _2167 * (F32&)j.context + _744_0;
     }
 
     void update_tag_reset_red(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2110,7 +2110,7 @@ namespace
 
     void update_tag_green(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.g = _2167 * (float32&)j.context + _744_0;
+        tb.font.color.g = _2167 * (F32&)j.context + _744_0;
     }
 
     void update_tag_reset_green(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2141,7 +2141,7 @@ namespace
 
     void update_tag_blue(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.b = _2167 * (float32&)j.context + _744_0;
+        tb.font.color.b = _2167 * (F32&)j.context + _744_0;
     }
 
     void update_tag_reset_blue(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2171,7 +2171,7 @@ namespace
 
     void update_tag_width(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.width = (float32&)j.context;
+        tb.font.width = (F32&)j.context;
     }
 
     void update_tag_reset_width(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2183,7 +2183,7 @@ namespace
                          const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_width, update_tag_width };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2236,7 +2236,7 @@ namespace
 
     void update_tag_height(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.height = (float32&)j.context;
+        tb.font.height = (F32&)j.context;
     }
 
     void update_tag_reset_height(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2248,7 +2248,7 @@ namespace
                           const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_height, update_tag_height };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2301,7 +2301,7 @@ namespace
 
     void update_tag_left_indent(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.left_indent = (float32&)j.context;
+        tb.left_indent = (F32&)j.context;
     }
 
     void update_tag_reset_left_indent(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2313,7 +2313,7 @@ namespace
                                const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_left_indent, NULL };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2365,7 +2365,7 @@ namespace
 
     void update_tag_right_indent(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.right_indent = (float32&)j.context;
+        tb.right_indent = (F32&)j.context;
     }
 
     void update_tag_reset_right_indent(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2377,7 +2377,7 @@ namespace
                                 const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_right_indent, NULL };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2429,7 +2429,7 @@ namespace
 
     void update_tag_tab_stop(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.tab_stop = (float32&)j.context;
+        tb.tab_stop = (F32&)j.context;
     }
 
     void update_tag_reset_tab_stop(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2441,7 +2441,7 @@ namespace
                             const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_tab_stop, NULL };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2493,7 +2493,7 @@ namespace
 
     void update_tag_xspace(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.space = (float32&)j.context;
+        tb.font.space = (F32&)j.context;
     }
 
     void update_tag_reset_xspace(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2505,7 +2505,7 @@ namespace
                           const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_xspace, update_tag_xspace };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2558,7 +2558,7 @@ namespace
 
     void update_tag_yspace(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.line_space = (float32&)j.context;
+        tb.line_space = (F32&)j.context;
     }
 
     void update_tag_reset_yspace(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2570,7 +2570,7 @@ namespace
                           const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_yspace, NULL };
-        float32& v = (float32&)a.context;
+        F32& v = (F32&)a.context;
 
         if (ti.value.size == 0 || ti.action.size == 0)
         {
@@ -2653,7 +2653,7 @@ namespace
             return;
         }
 
-        ulong32 v = atox(ti.value);
+        size_t v = atox(ti.value);
 
         if (ti.value.size < 8)
         {
@@ -2672,7 +2672,7 @@ namespace
         }
         case '+':
         {
-            uint32 temp;
+            U32 temp;
 
             temp = (v >> 24 & 0xff) + tb.font.color.a;
             color.a = (temp <= 255) ? temp : 255;
@@ -2715,7 +2715,7 @@ namespace
 
     void update_tag_font(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.id = (uint32&)j.context;
+        tb.font.id = (U32&)j.context;
     }
 
     void update_tag_reset_font(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2727,7 +2727,7 @@ namespace
                         const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_font, update_tag_font };
-        uint32& id = (uint32&)a.context;
+        U32& id = (U32&)a.context;
 
         if (ti.action.size < 1 || ti.action.text[0] != '=' || ti.value.size == 0)
         {
@@ -2751,7 +2751,7 @@ namespace
 
     void update_tag_wrap(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.flags = (tb.flags & ~WRAP_MASK) | ((uint32&)j.context & WRAP_MASK);
+        tb.flags = (tb.flags & ~WRAP_MASK) | ((U32&)j.context & WRAP_MASK);
     }
 
     void update_tag_reset_wrap(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2763,7 +2763,7 @@ namespace
                         const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_wrap, NULL };
-        uint32& flags = (uint32&)a.context;
+        U32& flags = (U32&)a.context;
 
         if (ti.action.size < 1 || ti.action.text[0] != '=' || ti.value.size != 4)
         {
@@ -2799,7 +2799,7 @@ namespace
 
     void update_tag_xjustify(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.flags = (tb.flags & ~XJUSTIFY_MASK) | ((uint32&)j.context & XJUSTIFY_MASK);
+        tb.flags = (tb.flags & ~XJUSTIFY_MASK) | ((U32&)j.context & XJUSTIFY_MASK);
     }
 
     void update_tag_reset_xjustify(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2811,7 +2811,7 @@ namespace
                             const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, NULL, update_tag_xjustify };
-        uint32& flags = (uint32&)a.context;
+        U32& flags = (U32&)a.context;
 
         if (ti.action.size < 1 || ti.action.text[0] != '=')
         {
@@ -2847,7 +2847,7 @@ namespace
 
     void update_tag_yjustify(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.flags = (tb.flags & ~YJUSTIFY_MASK) | ((uint32&)j.context & YJUSTIFY_MASK);
+        tb.flags = (tb.flags & ~YJUSTIFY_MASK) | ((U32&)j.context & YJUSTIFY_MASK);
     }
 
     void update_tag_reset_yjustify(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2859,7 +2859,7 @@ namespace
                             const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, NULL, update_tag_yjustify };
-        uint32& flags = (uint32&)a.context;
+        U32& flags = (U32&)a.context;
 
         if (ti.action.size < 1 || ti.action.text[0] != '=')
         {
@@ -2937,15 +2937,15 @@ namespace
     {
         xModelInstance* model;
         xVec3 rot;
-        basic_rect<float32> dst;
+        basic_rect<F32> dst;
         xSphere o;
     };
 
-    void render_tag_model(const xtextbox::jot& j, const xtextbox& tb, float32 x, float32 y)
+    void render_tag_model(const xtextbox::jot& j, const xtextbox& tb, F32 x, F32 y)
     {
         model_tag_context& mtc = *(model_tag_context*)j.context;
 
-        basic_rect<float32> dst = mtc.dst;
+        basic_rect<F32> dst = mtc.dst;
         dst.move(x, y);
 
         xVec3 from = { 0, 0, 1.0f };
@@ -2955,7 +2955,7 @@ namespace
 
         xMat3x3Euler(&frame, &mtc.rot);
 
-        float32 scale = _2808 * ((mtc.o.r <= _762) ? _763 : _744_0 / mtc.o.r);
+        F32 scale = _2808 * ((mtc.o.r <= _762) ? _763 : _744_0 / mtc.o.r);
 
         frame.right *= scale;
         frame.up *= scale;
@@ -3038,18 +3038,18 @@ namespace
     struct tex_tag_context
     {
         RwRaster* raster;
-        float32 rot;
-        basic_rect<float32> src;
-        basic_rect<float32> dst;
+        F32 rot;
+        basic_rect<F32> src;
+        basic_rect<F32> dst;
     };
 
-    void render_tag_tex(const xtextbox::jot& j, const xtextbox& tb, float32 x, float32 y)
+    void render_tag_tex(const xtextbox::jot& j, const xtextbox& tb, F32 x, F32 y)
     {
         tex_tag_context& ttc = *(tex_tag_context*)j.context;
 
         set_tex_raster(ttc.raster);
 
-        basic_rect<float32> dst = ttc.dst;
+        basic_rect<F32> dst = ttc.dst;
         dst.move(x, y);
 
         tex_render(ttc.src, dst, tb.font.clip, tb.font.color);
@@ -3107,15 +3107,15 @@ namespace
             case tex_args::SCALE_SCREEN_WIDTH:
             {
                 size = get_texture_size(*ttc.raster);
-                size.y *= *(const float32*)&_763 / size.x;
-                size.x = *(const float32*)&_763;
+                size.y *= *(const F32*)&_763 / size.x;
+                size.x = *(const F32*)&_763;
                 break;
             }
             case tex_args::SCALE_SCREEN_HEIGHT:
             {
                 size = get_texture_size(*ttc.raster);
-                size.x *= *(const float32*)&_763 / size.y;
-                size.y = *(const float32*)&_763;
+                size.x *= *(const F32*)&_763 / size.y;
+                size.y = *(const F32*)&_763;
                 break;
             }
             default:
@@ -3159,7 +3159,7 @@ namespace
             return;
         }
 
-        uint32 id = xStrHash(ti.value.text, ti.value.size);
+        U32 id = xStrHash(ti.value.text, ti.value.size);
 
         if (id)
         {
@@ -3185,7 +3185,7 @@ namespace
             return;
         }
 
-        uint32 id = atox(ti.value);
+        U32 id = atox(ti.value);
 
         if (id)
         {
@@ -3220,7 +3220,7 @@ namespace
             return;
         }
 
-        uint32 id = xStrHash(ti.value.text, ti.value.size);
+        U32 id = xStrHash(ti.value.text, ti.value.size);
 
         if (id)
         {
@@ -3231,8 +3231,8 @@ namespace
                 j.flag.insert = j.flag.dynamic = true;
 
                 char buffer[64];
-                uint32 sec = (uint32)ta->secondsLeft + 1;
-                uint32 mn = sec / 60;
+                U32 sec = (U32)ta->secondsLeft + 1;
+                U32 mn = sec / 60;
 
                 if (mn)
                 {
@@ -3304,10 +3304,10 @@ namespace
     // clang-format on
 
     xtextbox::tag_type* format_tags = format_tags_buffer[0];
-    uint32 format_tags_size = 48;
+    U32 format_tags_size = 48;
 } // namespace
 
-void xtextbox::register_tags(const tag_type* t, ulong32 size)
+void xtextbox::register_tags(const tag_type* t, size_t size)
 {
     const tag_type *s1, *s2, *end1, *end2;
 
@@ -3322,7 +3322,7 @@ void xtextbox::register_tags(const tag_type* t, ulong32 size)
 
     while (s1 < end1 && s2 < end2)
     {
-        int32 c = icompare(s1->name, s2->name);
+        S32 c = icompare(s1->name, s2->name);
 
         if (c < 0)
         {
@@ -3361,17 +3361,17 @@ void xtextbox::register_tags(const tag_type* t, ulong32 size)
     format_tags_size = d - format_tags;
 }
 
-xtextbox::tag_type* xtextbox::find_format_tag(const substr& s, int32& index)
+xtextbox::tag_type* xtextbox::find_format_tag(const substr& s, S32& index)
 {
-    int32 start = 0;
-    int32 end = format_tags_size;
+    S32 start = 0;
+    S32 end = format_tags_size;
 
     while (start != end)
     {
         index = (start + end) / 2;
 
         tag_type& t = format_tags[index];
-        int32 c = icompare(s, t.name);
+        S32 c = icompare(s, t.name);
 
         if (c < 0)
         {
@@ -3393,24 +3393,24 @@ xtextbox::tag_type* xtextbox::find_format_tag(const substr& s, int32& index)
 
 namespace
 {
-    void set_rect_verts(RwIm2DVertex* verts, float32 x, float32 y, float32 w, float32 h,
-                        iColor_tag c, float32 rcz, float32 nsz);
-    void set_rect_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 z, iColor_tag c,
-                       float32 rcz);
+    void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
+                        iColor_tag c, F32 rcz, F32 nsz);
+    void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
+                       F32 rcz);
 } // namespace
 
 #ifdef NON_MATCHING
-void render_fill_rect(const basic_rect<float32>& bounds, iColor_tag color)
+void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color)
 {
     if (!bounds.empty())
     {
-        float32 rcz = _763 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
-        float32 nsz = RwIm2DGetNearScreenZ();
+        F32 rcz = _763 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
+        F32 nsz = RwIm2DGetNearScreenZ();
 
         xfont::set_render_state(NULL);
 
         RwIm2DVertex vert[4];
-        basic_rect<float32> r = bounds;
+        basic_rect<F32> r = bounds;
 
         // non-matching: float scheduling
 
@@ -3425,8 +3425,8 @@ void render_fill_rect(const basic_rect<float32>& bounds, iColor_tag color)
 
 namespace
 {
-    void set_rect_verts(RwIm2DVertex* verts, float32 x, float32 y, float32 w, float32 h,
-                        iColor_tag c, float32 rcz, float32 nsz)
+    void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
+                        iColor_tag c, F32 rcz, F32 nsz)
     {
         set_rect_vert(verts[0], x, y, nsz, c, rcz);
         set_rect_vert(verts[1], x, y + h, nsz, c, rcz);
@@ -3434,8 +3434,8 @@ namespace
         set_rect_vert(verts[3], x + w, y + h, nsz, c, rcz);
     }
 
-    void set_rect_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 z, iColor_tag c,
-                       float32 rcz)
+    void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
+                       F32 rcz)
     {
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);
@@ -3445,12 +3445,12 @@ namespace
     }
 } // namespace
 
-basic_rect<float32>& basic_rect<float32>::scale(float32 x, float32 y)
+basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y)
 {
     return scale(x, y, x, y);
 }
 
-basic_rect<float32>& basic_rect<float32>::scale(float32 x, float32 y, float32 w, float32 h)
+basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h)
 {
     this->x *= x;
     this->y *= y;
@@ -3459,7 +3459,7 @@ basic_rect<float32>& basic_rect<float32>::scale(float32 x, float32 y, float32 w,
     return *this;
 }
 
-basic_rect<float32>& basic_rect<float32>::assign(float32 x, float32 y, float32 w, float32 h)
+basic_rect<F32>& basic_rect<F32>::assign(F32 x, F32 y, F32 w, F32 h)
 {
     this->x = x;
     this->y = y;
@@ -3468,20 +3468,20 @@ basic_rect<float32>& basic_rect<float32>::assign(float32 x, float32 y, float32 w
     return *this;
 }
 
-bool basic_rect<float32>::empty() const
+bool basic_rect<F32>::empty() const
 {
     return (w <= _762 || h <= _762);
 }
 
-void basic_rect<float32>::clip(basic_rect<float32>& a, basic_rect<float32>& b) const
+void basic_rect<F32>::clip(basic_rect<F32>& a, basic_rect<F32>& b) const
 {
-    float32 bwaw = b.w / a.w;
-    float32 bwah = b.h / a.h;
+    F32 bwaw = b.w / a.w;
+    F32 bwah = b.h / a.h;
 
     if (a.x < x)
     {
-        float32 xax = x - a.x;
-        float32 bwawxax = bwaw * xax;
+        F32 xax = x - a.x;
+        F32 bwawxax = bwaw * xax;
         a.x = x;
         a.w -= xax;
         b.x += bwawxax;
@@ -3490,39 +3490,39 @@ void basic_rect<float32>::clip(basic_rect<float32>& a, basic_rect<float32>& b) c
 
     if (a.y < y)
     {
-        float32 yay = y - a.y;
-        float32 bwahyay = bwah * yay;
+        F32 yay = y - a.y;
+        F32 bwahyay = bwah * yay;
         a.y = y;
         a.h -= yay;
         b.y += bwahyay;
         b.h -= bwahyay;
     }
 
-    float32 axaw = a.x + a.w;
-    float32 xw = x + w;
+    F32 axaw = a.x + a.w;
+    F32 xw = x + w;
 
     if (axaw > xw)
     {
-        float32 bwawaxawxw = bwaw * (axaw - xw);
+        F32 bwawaxawxw = bwaw * (axaw - xw);
         b.w -= bwawaxawxw;
         a.w = x + w - a.x;
     }
 
-    float32 ayah = a.y + a.h;
-    float32 yh = y + h;
+    F32 ayah = a.y + a.h;
+    F32 yh = y + h;
 
     if (ayah > yh)
     {
-        float32 bwahayahyh = bwah * (ayah - yh);
+        F32 bwahayahyh = bwah * (ayah - yh);
         b.h -= bwahayahyh;
         a.h = y + h - a.y;
     }
 }
 
-basic_rect<float32>& basic_rect<float32>::operator|=(const basic_rect<float32>& other)
+basic_rect<F32>& basic_rect<F32>::operator|=(const basic_rect<F32>& other)
 {
-    float32 x1, y1, x2, y2;
-    float32 _x1, _y1, _x2, _y2;
+    F32 x1, y1, x2, y2;
+    F32 _x1, _y1, _x2, _y2;
 
     this->get_bounds(x1, y1, x2, y2);
     other.get_bounds(_x1, _y1, _x2, _y2);
@@ -3552,7 +3552,7 @@ basic_rect<float32>& basic_rect<float32>::operator|=(const basic_rect<float32>& 
     return *this;
 }
 
-void basic_rect<float32>::set_bounds(float32 x1, float32 y1, float32 x2, float32 y2)
+void basic_rect<F32>::set_bounds(F32 x1, F32 y1, F32 x2, F32 y2)
 {
     x = x1;
     w = x2 - x1;
@@ -3560,7 +3560,7 @@ void basic_rect<float32>::set_bounds(float32 x1, float32 y1, float32 x2, float32
     h = y2 - y1;
 }
 
-void basic_rect<float32>::get_bounds(float32& x1, float32& y1, float32& x2, float32& y2) const
+void basic_rect<F32>::get_bounds(F32& x1, F32& y1, F32& x2, F32& y2) const
 {
     x1 = x;
     x2 = x + w;
@@ -3568,19 +3568,19 @@ void basic_rect<float32>::get_bounds(float32& x1, float32& y1, float32& x2, floa
     y2 = y + h;
 }
 
-basic_rect<float32>& basic_rect<float32>::move(float32 x, float32 y)
+basic_rect<F32>& basic_rect<F32>::move(F32 x, F32 y)
 {
     this->x += x;
     this->y += y;
     return *this;
 }
 
-basic_rect<float32>& basic_rect<float32>::scale(float32 s)
+basic_rect<F32>& basic_rect<F32>::scale(F32 s)
 {
     return scale(s, s, s, s);
 }
 
-xVec2& xVec2::assign(float32 x, float32 y)
+xVec2& xVec2::assign(F32 x, F32 y)
 {
     this->x = x;
     this->y = y;
@@ -3589,7 +3589,7 @@ xVec2& xVec2::assign(float32 x, float32 y)
 
 extern substr _427;
 
-substr substr::create(const char* text, ulong32 size)
+substr substr::create(const char* text, size_t size)
 {
     substr s = _427;
     s.text = text;
@@ -3597,12 +3597,12 @@ substr substr::create(const char* text, ulong32 size)
     return s;
 }
 
-ulong32 rskip_ws(substr& s)
+size_t rskip_ws(substr& s)
 {
     return rskip_ws(s.text, s.size);
 }
 
-ulong32 rskip_ws(const char*& text, ulong32& size)
+size_t rskip_ws(const char*& text, size_t& size)
 {
     while (size && is_ws(text[size - 1]))
     {
@@ -3625,7 +3625,7 @@ const char* find_char(const substr& s, char c)
     }
 
     const char* text = s.text;
-    int32 size = s.size;
+    S32 size = s.size;
 
     while (size > 0 && *text != '\0')
     {
@@ -3646,9 +3646,9 @@ const char* skip_ws(substr& s)
     return skip_ws(s.text, s.size);
 }
 
-const char* skip_ws(const char*& text, ulong32& size)
+const char* skip_ws(const char*& text, size_t& size)
 {
-    ulong32 i = 0;
+    size_t i = 0;
 
     while (i < size && *text != '\0')
     {
@@ -3665,18 +3665,18 @@ const char* skip_ws(const char*& text, ulong32& size)
     return text;
 }
 
-ulong32 atox(const substr& s)
+size_t atox(const substr& s)
 {
-    ulong32 read_size;
+    size_t read_size;
     return atox(s, read_size);
 }
 
-ulong32 trim_ws(substr& s)
+size_t trim_ws(substr& s)
 {
     return trim_ws(s.text, s.size);
 }
 
-ulong32 trim_ws(const char*& text, ulong32& size)
+size_t trim_ws(const char*& text, size_t& size)
 {
     skip_ws(text, size);
     return rskip_ws(text, size);
@@ -3684,11 +3684,11 @@ ulong32 trim_ws(const char*& text, ulong32& size)
 
 xtextbox::tag_type* xtextbox::find_format_tag(const substr& s)
 {
-    int32 index;
+    S32 index;
     return find_format_tag(s, index);
 }
 
-ulong32 xtextbox::layout::jots_size() const
+size_t xtextbox::layout::jots_size() const
 {
     return _jots_size;
 }
@@ -3711,12 +3711,12 @@ xfont xfont::create()
 
 void xtextbox::jot::intersect_flags(const jot& other)
 {
-    *(uint16*)&flag &= *(uint16*)&other.flag;
+    *(U16*)&flag &= *(U16*)&other.flag;
 }
 
 void xtextbox::jot::reset_flags()
 {
-    *(uint16*)&flag = 0;
+    *(U16*)&flag = 0;
 }
 
 xSphere* xModelGetLocalSBound(xModelInstance* model)

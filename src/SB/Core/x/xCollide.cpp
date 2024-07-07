@@ -5,7 +5,7 @@
 
 #include <types.h>
 
-// extern float32 lbl_803CCAA8; // 0.0
+// extern F32 lbl_803CCAA8; // 0.0
 
 #ifdef NON_MATCHING
 // Will match once we can use float literals for this
@@ -30,8 +30,8 @@ _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xM
             return k_XCOLLS_IDX_CEIL;
         }
     }
-    float32 local_x = mat->right.x * tohit->x + mat->right.z * tohit->z;
-    float32 local_z = mat->at.x * tohit->x + mat->at.z * tohit->z;
+    F32 local_x = mat->right.x * tohit->x + mat->right.z * tohit->z;
+    F32 local_z = mat->at.x * tohit->x + mat->at.z * tohit->z;
     if (local_x > 0.0f)
     {
         if (local_z > 0.0f)
@@ -93,11 +93,11 @@ void xCollideInit(xScene* sc)
 #if 0
 //WIP, very wrong but it compiles at least
 // Need to figure out why it defines scale twice and why ghidra passes in wrong values to xVec3SMul
-uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
+U32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
 {
     xIsect isx;
-    float32 scale;
-    // float32 scale;
+    F32 scale;
+    // F32 scale;
 
     iSphereIsectSphere(b, a, &isx);
     if (scale <= 0.0f)
@@ -106,7 +106,7 @@ uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
         {
             coll->flags = coll->flags | 0x10;
         }
-        coll->dist = (float32)((float)a->r + scale);
+        coll->dist = (F32)((float)a->r + scale);
         if ((coll->flags & 0x1600) != 0)
         {
             if (0.0f == scale)
@@ -150,9 +150,9 @@ uint32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

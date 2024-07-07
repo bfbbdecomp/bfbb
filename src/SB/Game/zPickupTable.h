@@ -5,19 +5,19 @@
 
 struct zAssetPickupTable
 {
-    uint32 Magic;
-    uint32 Count;
+    U32 Magic;
+    U32 Count;
 };
 
 struct zAssetPickup
 {
-    uint32 pickupHash;
-    uint8 pickupType;
-    uint8 pickupIndex;
-    uint16 pickupFlags;
-    uint32 quantity;
-    uint32 modelID;
-    uint32 animID;
+    U32 pickupHash;
+    U8 pickupType;
+    U8 pickupIndex;
+    U16 pickupFlags;
+    U32 quantity;
+    U32 modelID;
+    U32 animID;
 };
 
 #endif

@@ -20,22 +20,22 @@ enum zFXGooState
 struct zFXGooInstance
 {
     RpAtomic* atomic;
-    int32 freezeGroup;
+    S32 freezeGroup;
     xVec3* orig_verts;
     RwRGBA* orig_colors;
-    float32 time;
-    float32 timer;
-    float32 w0;
-    float32 w2;
-    float32 warbc[4];
-    float32 state_time[4];
+    F32 time;
+    F32 timer;
+    F32 w0;
+    F32 w2;
+    F32 warbc[4];
+    F32 state_time[4];
     xVec3 center;
-    int32 padding; // Padding used for zFXGoo_SceneExit().
+    S32 padding; // Padding used for zFXGoo_SceneExit().
     zFXGooState state;
-    float32 warb_time;
-    float32 alpha;
-    float32 min;
-    float32 max;
+    F32 warb_time;
+    F32 alpha;
+    F32 min;
+    F32 max;
     xVec3* ref_parentPos;
     xVec3 pos_parentOnFreeze;
 };
@@ -44,47 +44,47 @@ struct tweak_callback;
 
 struct uint_data
 {
-    uint32 value_def;
-    uint32 value_min;
-    uint32 value_max;
+    U32 value_def;
+    U32 value_min;
+    U32 value_max;
 };
 
 struct float_data
 {
-    float32 value_def;
-    float32 value_min;
-    float32 value_max;
+    F32 value_def;
+    F32 value_min;
+    F32 value_max;
 };
 
 struct bool_data
 {
-    uint8 value_def;
+    U8 value_def;
 };
 
 struct select_data
 {
-    uint32 value_def;
-    uint32 labels_size;
-    int8** labels;
+    U32 value_def;
+    U32 labels_size;
+    char** labels;
     void* values;
 };
 
 struct flag_data
 {
-    uint32 value_def;
-    uint32 mask;
+    U32 value_def;
+    U32 mask;
 };
 
 struct raw_data
 {
-    uint8 pad[16];
+    U8 pad[16];
 };
 
 struct int_data
 {
-    int32 value_def;
-    int32 value_min;
-    int32 value_max;
+    S32 value_def;
+    S32 value_min;
+    S32 value_max;
 };
 
 struct tweak_info
@@ -93,9 +93,9 @@ struct tweak_info
     void* value;
     tweak_callback* cb;
     void* context;
-    uint8 type;
-    uint8 value_size;
-    uint16 flags;
+    U8 type;
+    U8 value_size;
+    U16 flags;
     union
     {
         int_data int_context;
@@ -122,7 +122,7 @@ struct tweak_callback
     void (*convert_tweak_to_mem)(tweak_info&, void*);
 };
 
-extern uint32 gFXSurfaceFlags;
+extern U32 gFXSurfaceFlags;
 
 void on_spawn_bubble_wall(const tweak_info& tweak);
 void zFX_SceneEnter(RpWorld* world);
@@ -131,21 +131,21 @@ void zFX_SceneReset();
 void zFXHammer(xVec3* pos);
 void zFXPorterWave(const xVec3* pos);
 
-void zFXGooEnable(RpAtomic* atomic, int32 freezeGroup);
+void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup);
 
 void zFXGoo_SceneEnter();
 void zFXGoo_SceneReset();
 void zFXGoo_SceneExit();
 
-void zFXGooUpdate(float32 dt);
+void zFXGooUpdate(F32 dt);
 
-void zFXUpdate(float32 dt);
+void zFXUpdate(F32 dt);
 
-int32 zFXGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
+S32 zFXGooIs(xEnt* obj, F32& depth, U32 playerCheck);
 
-void zFX_SpawnBubbleHit(const xVec3* pos, uint32 num);
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num);
 void zFX_SpawnBubbleWall();
-void zFX_SpawnBubbleSlam(const xVec3* pos, uint32 num, float32 rang, float32 bvel, float32 rvel);
+void zFX_SpawnBubbleSlam(const xVec3* pos, U32 num, F32 rang, F32 bvel, F32 rvel);
 
 void reset_poppers();
 
@@ -153,21 +153,21 @@ void reset_entrails();
 
 void init_poppers();
 
-void update_poppers(float32 dt);
+void update_poppers(F32 dt);
 
-void update_entrails(float32 dt);
+void update_entrails(F32 dt);
 
 void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
-                    uint32 unk5);
+                    U32 unk5);
 
 void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
 
 void zFXMuscleArmWave(xVec3* pos);
 
-void zFX_SpawnBubbleMenuTrail(const xVec3* pos, uint32 num, const xVec3* pos_rnd,
+void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
                               const xVec3* vel_rnd);
 
-void zFXPopOn(xEnt& ent, float32 rate, float32 time);
-void zFXPopOff(xEnt& ent, float32 rate, float32 time);
+void zFXPopOn(xEnt& ent, F32 rate, F32 time);
+void zFXPopOff(xEnt& ent, F32 rate, F32 time);
 
 #endif

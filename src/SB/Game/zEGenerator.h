@@ -9,18 +9,18 @@
 struct zEGenAsset : xEntAsset
 {
     xVec3 src_dpos;
-    uint8 damage_type;
-    uint8 flags;
-    float32 ontime;
-    uint32 onAnimID;
+    U8 damage_type;
+    U8 flags;
+    F32 ontime;
+    U32 onAnimID;
 };
 
 struct zEGenerator : zEnt
 {
     zEGenAsset* zasset;
-    uint16 flags;
-    uint16 num_dsts;
-    float32 tmr;
+    U16 flags;
+    U16 num_dsts;
+    F32 tmr;
     xAnimFile* afile;
     xVec3 src_pos;
     xVec3 dst_pos;
@@ -35,12 +35,12 @@ void zEGenerator_Setup(zEGenerator* egen, xScene* sc);
 void zEGenerator_Save(zEGenerator* ent, xSerial* s);
 void zEGenerator_Load(zEGenerator* ent, xSerial* s);
 void zEGenerator_Reset(zEGenerator* egen, xScene* sc);
-void zEGenerator_Move(zEGenerator* egen, xScene* sc, float32 dt);
+void zEGenerator_Move(zEGenerator* egen, xScene* sc, F32 dt);
 void zEGenerator_Render(zEGenerator* egen);
 void zEGenerator_TurnOn(zEGenerator* egen);
 void zEGenerator_TurnOff(zEGenerator* egen);
 void zEGenerator_ToggleOn(zEGenerator* egen);
-int32 zEGeneratorEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
+S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                          xBase* toParamWidget);
 
 #endif

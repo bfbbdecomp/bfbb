@@ -5,7 +5,7 @@
 
 struct xTextAsset
 {
-    uint32 len;
+    U32 len;
 };
 
 #define xTextAssetGetText(t) ((char*)((xTextAsset*)(t) + 1))

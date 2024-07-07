@@ -13,7 +13,7 @@ static ztalkbox::answer_enum sAnswer = ztalkbox::ANSWER_3;
 
 static taxiCB* tCB;
 
-void zTaxi_Init(xBase& data, xDynAsset& asset, ulong32)
+void zTaxi_Init(xBase& data, xDynAsset& asset, size_t)
 {
     zTaxi_Init((zTaxi*)&data, (taxi_asset*)&asset);
 }
@@ -37,7 +37,7 @@ void zTaxi_Init(zTaxi* taxi, taxi_asset* asset)
         taxi->link = NULL;
     }
 
-    uint32 size;
+    U32 size;
     xVec3* assetPosition = (xVec3*)xSTFindAsset(asset->marker, &size);
     if (assetPosition != NULL && size == sizeof(xVec3))
     {
@@ -60,11 +60,11 @@ void zTaxi_Setup(zTaxi* taxi)
     xBase* taxiObj = zSceneFindObject(taxi->basset->taxiID);
     *(xBase**)&taxi->taxi = taxiObj;
     taxi->portalTimer = -1.0f;
-    taxi->baseFlags |= (uint16)2;
+    taxi->baseFlags |= (U16)2;
 }
 
 // Nonmatch due to regalloc, scheduling. https://decomp.me/scratch/1o3TG
-void zTaxi_Update(xBase* to, xScene*, float32 dt)
+void zTaxi_Update(xBase* to, xScene*, F32 dt)
 {
     zTaxi* taxi = (zTaxi*)to;
 
@@ -192,7 +192,7 @@ void zTaxi_Update(xBase* to, xScene*, float32 dt)
     }
 }
 
-void zTaxi_tb_answer(uint32 answer)
+void zTaxi_tb_answer(U32 answer)
 {
     sAnswer = (ztalkbox::answer_enum)answer;
 }
@@ -207,7 +207,7 @@ void zTaxi_Load(zTaxi* taxi, xSerial* s)
     xBaseLoad((xBase*)taxi, s);
 }
 
-int32 zTaxiEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3)
+S32 zTaxiEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3)
 {
     switch (toEvent)
     {
@@ -225,7 +225,7 @@ int32 zTaxiEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toPara
     return eEventEnable;
 }
 
-void taxiCB::on_signal(uint32)
+void taxiCB::on_signal(U32)
 {
 }
 

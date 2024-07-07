@@ -30,20 +30,20 @@ struct NPCTarget
 
 struct NPCBlinker
 {
-    float32 tmr_uvcell;
-    int32 idx_uvcell;
+    F32 tmr_uvcell;
+    S32 idx_uvcell;
 };
 
 void NPCWidget_Shutdown();
 void NPCSupport_Startup();
 void NPCSupport_ScenePrepare();
 void NPCSupport_SceneFinish();
-void NPCSupport_Timestep(float32 dt);
+void NPCSupport_Timestep(F32 dt);
 void NPCSupport_SceneReset();
 void NPCSupport_Shutdown();
 void NPCSupport_ScenePostInit();
-int32 NPCC_LampStatus();
+S32 NPCC_LampStatus();
 xVec3* NPCC_rightDir(xEnt* ent);
-void NPCC_ang_toXZDir(float32 angle, xVec3* dir);
+void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 
 #endif

@@ -7,34 +7,34 @@
 
 struct zSurfMatFX
 {
-    uint32 flags;
-    uint32 bumpmapID;
-    uint32 envmapID;
-    float32 shininess;
-    float32 bumpiness;
-    uint32 dualmapID;
+    U32 flags;
+    U32 bumpmapID;
+    U32 envmapID;
+    F32 shininess;
+    F32 bumpiness;
+    U32 dualmapID;
 };
 
 struct zSurfColorFX
 {
-    uint16 flags;
-    uint16 mode;
-    float32 speed;
+    U16 flags;
+    U16 mode;
+    F32 speed;
 };
 
 struct zSurfTextureAnim
 {
-    uint16 pad;
-    uint16 mode;
-    uint32 group;
-    float32 speed;
+    U16 pad;
+    U16 mode;
+    U32 group;
+    F32 speed;
 };
 
 struct zSurfUVFX
 {
-    int32 mode;
-    float32 rot;
-    float32 rot_spd;
+    S32 mode;
+    F32 rot;
+    F32 rot_spd;
     xVec3 trans;
     xVec3 trans_spd;
     xVec3 scale;
@@ -46,46 +46,46 @@ struct zSurfUVFX
 
 struct zSurfAssetBase : xBaseAsset
 {
-    uint8 game_damage_type;
-    uint8 game_sticky;
-    uint8 game_damage_flags;
-    uint8 surf_type;
-    uint8 phys_pad;
-    uint8 sld_start;
-    uint8 sld_stop;
-    uint8 phys_flags;
-    float32 friction;
+    U8 game_damage_type;
+    U8 game_sticky;
+    U8 game_damage_flags;
+    U8 surf_type;
+    U8 phys_pad;
+    U8 sld_start;
+    U8 sld_stop;
+    U8 phys_flags;
+    F32 friction;
     zSurfMatFX matfx;
     zSurfColorFX colorfx;
-    uint32 texture_anim_flags;
+    U32 texture_anim_flags;
     zSurfTextureAnim texture_anim[2];
-    uint32 uvfx_flags;
+    U32 uvfx_flags;
     zSurfUVFX uvfx[2];
-    uint8 on;
-    uint8 surf_pad[3];
-    float32 oob_delay;
-    float32 walljump_scale_xz;
-    float32 walljump_scale_y;
-    float32 damage_timer;
-    float32 damage_bounce;
+    U8 on;
+    U8 surf_pad[3];
+    F32 oob_delay;
+    F32 walljump_scale_xz;
+    F32 walljump_scale_y;
+    F32 damage_timer;
+    F32 damage_bounce;
 };
 
 struct zSurfacePropTexAnim
 {
-    uint16 mode;
-    float32 speed;
-    float32 frame;
-    uint32 group;
-    int32 group_idx;
+    U16 mode;
+    F32 speed;
+    F32 frame;
+    U32 group;
+    S32 group_idx;
     xBase* group_ptr;
 };
 
 struct zSurfacePropUVFX
 {
-    int32 mode;
-    float32 rot;
-    float32 rot_spd;
-    float32 minmax_timer[2];
+    S32 mode;
+    F32 rot;
+    F32 rot_spd;
+    F32 minmax_timer[2];
     xVec3 trans;
     xVec3 trans_spd;
     xVec3 scale;
@@ -98,36 +98,36 @@ struct zSurfacePropUVFX
 struct zSurfaceProps
 {
     zSurfAssetBase* asset;
-    uint32 texanim_flags;
+    U32 texanim_flags;
     zSurfacePropTexAnim texanim[2];
-    uint32 uvfx_flags;
+    U32 uvfx_flags;
     zSurfacePropUVFX uvfx[2];
 };
 
 struct zMaterialMapAsset
 {
-    uint32 id;
-    uint32 count;
+    U32 id;
+    U32 count;
 };
 
 struct zMaterialMapEntry
 {
-    uint32 surfaceAssetID;
-    uint32 materialIndex;
+    U32 surfaceAssetID;
+    U32 materialIndex;
 };
 
 struct xScene;
 
-void zSurfaceRegisterMapper(uint32 assetId);
+void zSurfaceRegisterMapper(U32 assetId);
 void zSurfaceExit();
-xSurface* zSurfaceGetSurface(uint32 mat_id);
+xSurface* zSurfaceGetSurface(U32 mat_id);
 // xSurface* zSurfaceGetSurface(const xCollis* coll);
-uint32 zSurfaceGetStandOn(const xSurface* surf);
+U32 zSurfaceGetStandOn(const xSurface* surf);
 void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);
 void zSurfaceSetup(xSurface* s);
-void zSurfaceUpdate(xBase* to, xScene*, float32 dt);
-void zSurfaceGetName(int32 type, int8* buffer);
+void zSurfaceUpdate(xBase* to, xScene*, F32 dt);
+void zSurfaceGetName(S32 type, char* buffer);
 xSurface& zSurfaceGetDefault();
 
 #endif

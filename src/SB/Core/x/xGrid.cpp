@@ -28,7 +28,7 @@ void xGridBoundInit(xGridBound* bound, void* data)
 // I think they may not have used the obvious pattern for it, since changing
 // the multiplication order for the second one generates closer machine code
 // than the same for both lines.
-void xGridInit(xGrid* grid, xBox* bounds, uint16 nx, uint16 nz, uint8 ingrid_id)
+void xGridInit(xGrid* grid, xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
 {
     grid->ingrid_id = ingrid_id;
     grid->nx = nx;
@@ -37,8 +37,8 @@ void xGridInit(xGrid* grid, xBox* bounds, uint16 nx, uint16 nz, uint8 ingrid_id)
     grid->minz = bounds->upper.z;
     grid->maxx = bounds->lower.x;
     grid->maxz = bounds->lower.z;
-    float32 gsizex = grid->maxx - grid->minx;
-    float32 gsizez = grid->maxz - grid->minz;
+    F32 gsizex = grid->maxx - grid->minx;
+    F32 gsizez = grid->maxz - grid->minz;
     grid->csizex = gsizex / nx;
     grid->csizez = gsizex / nz;
 
@@ -74,9 +74,9 @@ void xGridKill(xGrid* grid)
 
 void xGridEmpty(xGrid* grid)
 {
-    for (int32 x = 0; x < grid->nx; ++x)
+    for (S32 x = 0; x < grid->nx; ++x)
     {
-        for (int32 z = 0; z < grid->nz; ++z)
+        for (S32 z = 0; z < grid->nz; ++z)
         {
             xGridBound** head = &grid->cells[z * grid->nx];
             xGridBound* curr = head[x];
@@ -123,12 +123,12 @@ bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
     return true;
 }
 
-void xGridAdd(xGrid* grid, xGridBound* bound, int32 x, int32 z)
+void xGridAdd(xGrid* grid, xGridBound* bound, S32 x, S32 z)
 {
     xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
 }
 
-int32 xGridRemove(xGridBound* bound)
+S32 xGridRemove(xGridBound* bound)
 {
     if (bound->head)
     {
@@ -161,8 +161,8 @@ int32 xGridRemove(xGridBound* bound)
 
 void xGridUpdate(xGrid* grid, xEnt* ent)
 {
-    int32 dx;
-    int32 dz;
+    S32 dx;
+    S32 dz;
     xGridGetCell(grid, ent, dx, dz);
 
     if (dx != ent->gridb.gx || dz != ent->gridb.gz)
@@ -174,7 +174,7 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
     }
 }
 
-xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
+xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz)
 {
     const xBound* bound = &ent->bound;
     const xVec3* center;
@@ -200,18 +200,18 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz)
 }
 
 #ifdef NON_MATCHING
-void xGridGetCell(xGrid* grid, float32 x, float32 y, float32 z, int32& grx, int32& grz)
+void xGridGetCell(xGrid* grid, F32 x, F32 y, F32 z, S32& grx, S32& grz)
 {
-    float32 pgridx = (x - grid->minx) * grid->inv_csizex;
-    float32 pgridz = (z - grid->minz) * grid->inv_csizez;
+    F32 pgridx = (x - grid->minx) * grid->inv_csizex;
+    F32 pgridz = (z - grid->minz) * grid->inv_csizez;
 
-    grx = MIN(float32((grid->nx - 1) ^ 0x8000), MAX(0, pgridx));
-    grz = MIN(float32((grid->nz - 1) ^ 0x8000), MAX(0, pgridx));
+    grx = MIN(F32((grid->nx - 1) ^ 0x8000), MAX(0, pgridx));
+    grz = MIN(F32((grid->nz - 1) ^ 0x8000), MAX(0, pgridx));
 }
 #endif
 
-xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx,
-                               int32& grz, xGridIterator& iter)
+xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& grx,
+                               S32& grz, xGridIterator& iter)
 {
     xGridGetCell(grid, posx, posy, posz, grx, grz);
     return xGridIterFirstCell(grid, grx, grz, iter);

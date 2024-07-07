@@ -7,100 +7,100 @@
 
 struct xPlatformERData
 {
-    int32 nodata;
+    S32 nodata;
 };
 
 struct xPlatformOrbitData
 {
-    int32 nodata;
+    S32 nodata;
 };
 
 struct xPlatformSplineData
 {
-    int32 nodata;
+    S32 nodata;
 };
 
 struct xPlatformMPData
 {
-    int32 nodata;
+    S32 nodata;
 };
 
 struct xPlatformMechData
 {
-    int32 nodata;
+    S32 nodata;
 };
 
 struct xPlatformPenData
 {
-    int32 nodata;
+    S32 nodata;
 };
 
 struct xPlatformConvBeltData
 {
-    float32 speed;
+    F32 speed;
 };
 
 struct xPlatformFallingData
 {
-    float32 speed;
-    uint32 bustModelID;
+    F32 speed;
+    U32 bustModelID;
 };
 
 struct xPlatformFRData
 {
-    float32 fspeed;
-    float32 rspeed;
-    float32 ret_delay;
-    float32 post_ret_delay;
+    F32 fspeed;
+    F32 rspeed;
+    F32 ret_delay;
+    F32 post_ret_delay;
 };
 
 struct xPlatformBreakawayData
 {
-    float32 ba_delay;
-    uint32 bustModelID;
-    float32 reset_delay;
-    uint32 breakflags;
+    F32 ba_delay;
+    U32 bustModelID;
+    F32 reset_delay;
+    U32 breakflags;
 };
 
 struct xPlatformSpringboardData
 {
-    float32 jmph[3];
-    float32 jmpbounce;
-    uint32 animID[3];
+    F32 jmph[3];
+    F32 jmpbounce;
+    U32 animID[3];
     xVec3 jmpdir;
-    uint32 springflags;
+    U32 springflags;
 };
 
 struct xPlatformTeeterData
 {
-    float32 itilt;
-    float32 maxtilt;
-    float32 invmass;
+    F32 itilt;
+    F32 maxtilt;
+    F32 invmass;
 };
 
 struct xPlatformPaddleData
 {
-    int32 startOrient;
-    int32 countOrient;
-    float32 orientLoop;
-    float32 orient[6];
-    uint32 paddleFlags;
-    float32 rotateSpeed;
-    float32 accelTime;
-    float32 decelTime;
-    float32 hubRadius;
+    S32 startOrient;
+    S32 countOrient;
+    F32 orientLoop;
+    F32 orient[6];
+    U32 paddleFlags;
+    F32 rotateSpeed;
+    F32 accelTime;
+    F32 decelTime;
+    F32 hubRadius;
 };
 
 struct xPlatformFMData
 {
-    int32 nothingyet;
+    S32 nothingyet;
 };
 
 struct xPlatformAsset
 {
-    uint8 type;
-    uint8 pad;
-    uint16 flags;
+    U8 type;
+    U8 pad;
+    U16 flags;
     union
     {
         xPlatformERData er;
@@ -122,31 +122,31 @@ struct xPlatformAsset
 
 struct zPlatFMRunTime
 {
-    uint32 flags;
-    float32 tmrs[12];
-    float32 ttms[12];
-    float32 atms[12];
-    float32 dtms[12];
-    float32 vms[12];
-    float32 dss[12];
+    U32 flags;
+    F32 tmrs[12];
+    F32 ttms[12];
+    F32 atms[12];
+    F32 dtms[12];
+    F32 vms[12];
+    F32 dss[12];
 };
 
 struct zPlatform : zEnt
 {
     xPlatformAsset* passet;
     xEntMotion motion;
-    uint16 state;
-    uint16 plat_flags;
-    float32 tmr;
-    int32 ctr;
+    U16 state;
+    U16 plat_flags;
+    F32 tmr;
+    S32 ctr;
     xMovePoint* src;
     xModelInstance* am;
     xModelInstance* bm;
-    int32 moving;
+    S32 moving;
     xEntDrive drv;
     zPlatFMRunTime* fmrt;
-    float32 pauseMult;
-    float32 pauseDelta;
+    F32 pauseMult;
+    F32 pauseDelta;
 };
 
 #define ZPLATFORM_SUBTYPE_PLATFORM 0
@@ -168,7 +168,7 @@ void zPlatform_Setup(zPlatform* plat, xScene* sc);
 void zPlatform_Save(zPlatform* ent, xSerial* s);
 void zPlatform_Load(zPlatform* ent, xSerial* s);
 void zPlatform_Reset(zPlatform* plat, xScene* sc);
-uint32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
-                               uint32 worldSpaceNorm);
+U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
+                               U32 worldSpaceNorm);
 
 #endif

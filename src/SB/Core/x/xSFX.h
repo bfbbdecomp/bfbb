@@ -8,25 +8,25 @@
 
 struct xSFXAsset : xBaseAsset
 {
-    uint16 flagsSFX;
-    uint16 freq;
-    float32 freqm;
-    uint32 soundAssetID;
-    uint32 attachID;
-    uint8 loopCount;
-    uint8 priority;
-    uint8 volume;
-    uint8 pad;
+    U16 flagsSFX;
+    U16 freq;
+    F32 freqm;
+    U32 soundAssetID;
+    U32 attachID;
+    U8 loopCount;
+    U8 priority;
+    U8 volume;
+    U8 pad;
     xVec3 pos;
-    float32 innerRadius;
-    float32 outerRadius;
+    F32 innerRadius;
+    F32 outerRadius;
 };
 
 struct xSFX : xBase
 {
     xSFXAsset* asset;
-    uint32 sndID;
-    float32 cachedOuterDistSquared;
+    U32 sndID;
+    F32 cachedOuterDistSquared;
 };
 
 void xSFXInit(void* t, void* asset);
@@ -34,8 +34,8 @@ void xSFXInit(xSFX* t, xSFXAsset* asset);
 void xSFXSave(xSFX* ent, xSerial* s);
 void xSFXLoad(xSFX* ent, xSerial* s);
 void xSFXEnvironmentalStreamSceneExit();
-void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, uint32 numSounds);
-int32 xSFXEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam, xBase*);
-int32 xSFXWillSendDone(xSFX*);
+void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, U32 numSounds);
+S32 xSFXEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase*);
+S32 xSFXWillSendDone(xSFX*);
 
 #endif

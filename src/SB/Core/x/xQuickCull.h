@@ -7,35 +7,35 @@
 // Size: 0x20
 struct xQCData
 {
-    int8 xmin;
-    int8 ymin;
-    int8 zmin;
-    int8 zmin_dup;
-    int8 xmax;
-    int8 ymax;
-    int8 zmax;
-    int8 zmax_dup;
+    S8 xmin;
+    S8 ymin;
+    S8 zmin;
+    S8 zmin_dup;
+    S8 xmax;
+    S8 ymax;
+    S8 zmax;
+    S8 zmax_dup;
     xVec3 min;
     xVec3 max;
 };
 
 struct xQCControl
 {
-    float32 world_xmin;
-    float32 world_ymin;
-    float32 world_zmin;
-    float32 world_xmax;
-    float32 world_ymax;
-    float32 world_zmax;
-    float32 world_xsz;
-    float32 world_ysz;
-    float32 world_zsz;
-    float32 scale_x;
-    float32 scale_y;
-    float32 scale_z;
-    float32 center_x;
-    float32 center_y;
-    float32 center_z;
+    F32 world_xmin;
+    F32 world_ymin;
+    F32 world_zmin;
+    F32 world_xmax;
+    F32 world_ymax;
+    F32 world_zmax;
+    F32 world_xsz;
+    F32 world_ysz;
+    F32 world_zsz;
+    F32 scale_x;
+    F32 scale_y;
+    F32 scale_z;
+    F32 center_x;
+    F32 center_y;
+    F32 center_z;
 };
 
 extern xQCControl xqc_def_ctrl;
@@ -46,10 +46,10 @@ struct xBox;
 void xQuickCullInit(const xBox* box);
 void xQuickCullInit(xQCControl* ctrl, const xBox* box);
 
-void xQuickCullInit(xQCControl* ctrl, float32 xmin, float32 ymin, float32 zmin, float32 xmax,
-                    float32 ymax, float32 zmax);
+void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax,
+                    F32 ymax, F32 zmax);
 void xQuickCullInit(xQCControl* ctrl, const xBox* box);
-int32 xQuickCullIsects(const xQCData* a, const xQCData* b);
+S32 xQuickCullIsects(const xQCData* a, const xQCData* b);
 void xQuickCullForBound(xQCControl* ctrl, xQCData* q, const xBound* b);
 void xQuickCullCellForVec(xQCControl* ctrl, xQCData* c, const xVec3* v);
 void xQuickCullCellMerge(xQCData* dest, const xQCData* a, const xQCData* b);

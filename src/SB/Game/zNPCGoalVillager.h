@@ -9,6 +9,6 @@ public:
     void DoCheatPanHandle();
 };
 
-xFactoryInst* GOALCreate_Villager(int32 who, RyzMemGrow* grow, void*);
+xFactoryInst* GOALCreate_Villager(S32 who, RyzMemGrow* grow, void*);
 
 #endif

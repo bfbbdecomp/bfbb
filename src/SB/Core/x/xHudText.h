@@ -8,23 +8,23 @@ namespace xhud
 {
     struct text_asset : asset
     {
-        uint32 text_box;
-        uint32 text;
+        U32 text_box;
+        U32 text;
     };
 
     struct text_widget : widget
     {
-        int8 text[128];
+        char text[128];
         xtextbox tb;
 
         text_widget(); // possibly temp, added so zCombo.cpp compiles
         text_widget(const text_asset&);
 
-        static void load(xBase& data, xDynAsset& asset, ulong32);
+        static void load(xBase& data, xDynAsset& asset, size_t);
 
         void render();
-        void update(float32 dt);
-        uint8 is(uint32 id);
+        void update(F32 dt);
+        U8 is(U32 id);
         void destroy();
         void setup();
     };

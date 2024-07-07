@@ -5,7 +5,7 @@
 #include "zGlobals.h"
 #include "xString.h"
 
-zParEmitter* zParEmitterFind(uint32 asset_id)
+zParEmitter* zParEmitterFind(U32 asset_id)
 {
     zScene* s = globals.sceneCur;
 
@@ -16,7 +16,7 @@ zParEmitter* zParEmitterFind(uint32 asset_id)
 
     zParEmitter* pe = (zParEmitter*)s->baseList[eBaseTypeParticleEmitter];
 
-    for (int32 i = s->baseCount[eBaseTypeParticleEmitter]; i > 0; i--)
+    for (S32 i = s->baseCount[eBaseTypeParticleEmitter]; i > 0; i--)
     {
         if (pe->tasset->id == asset_id)
         {
@@ -30,6 +30,6 @@ zParEmitter* zParEmitterFind(uint32 asset_id)
 
 zParEmitter* zParEmitterFind(const char* asset_name)
 {
-    uint32 asset_id = xStrHash(asset_name);
+    U32 asset_id = xStrHash(asset_name);
     return zParEmitterFind(asset_id);
 }

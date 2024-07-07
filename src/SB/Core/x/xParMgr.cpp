@@ -5,8 +5,8 @@
 
 #include <types.h>
 
-uint32 sFrameCount;
-int32 sParMgrInit;
+U32 sFrameCount;
+S32 sParMgrInit;
 
 void xParMgrInit()
 {
@@ -29,10 +29,10 @@ void xParMgrKillAllParticles()
 
 #if 0
 // If statement and statement above are wrong.
-void xParMgrUpdate(float32 elapsedTime)
+void xParMgrUpdate(F32 elapsedTime)
 {
     iParMgrUpdate(elapsedTime);
-    sFrameCount = (int32)sFrameCount;
+    sFrameCount = (S32)sFrameCount;
     if (++sFrameCount > 10)
     {
         sFrameCount = 1;

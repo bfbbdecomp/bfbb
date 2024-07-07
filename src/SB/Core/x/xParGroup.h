@@ -9,15 +9,15 @@ struct xParGroup
 {
     xPar* m_root;
     xPar* m_dead;
-    int32 m_num_of_particles;
-    uint8 m_alive;
-    uint8 m_killWhenDead;
-    uint8 m_active;
-    uint8 m_visible;
-    uint8 m_culled;
-    uint8 m_priority;
-    uint8 m_flags;
-    uint8 m_regidx;
+    S32 m_num_of_particles;
+    U8 m_alive;
+    U8 m_killWhenDead;
+    U8 m_active;
+    U8 m_visible;
+    U8 m_culled;
+    U8 m_priority;
+    U8 m_flags;
+    U8 m_regidx;
     xParGroup* m_next;
     xParGroup* m_prev;
     void (*draw)(void*, xParGroup*);
@@ -31,15 +31,15 @@ struct xParGroup
 #define XPARGROUP_UNK10 0x10
 
 void xParGroupInit(xParGroup* ps);
-void xParGroupSetAging(xParGroup* ps, int32 age);
-void xParGroupSetBack2Life(xParGroup* ps, int32 b2l);
-void xParGroupSetVisibility(xParGroup* ps, int32 vis);
-void xParGroupSetPriority(xParGroup* ps, uint8 val);
+void xParGroupSetAging(xParGroup* ps, S32 age);
+void xParGroupSetBack2Life(xParGroup* ps, S32 b2l);
+void xParGroupSetVisibility(xParGroup* ps, S32 vis);
+void xParGroupSetPriority(xParGroup* ps, U8 val);
 void xParGroupRegister(xParGroup* ps);
 void xParGroupUnregister(xParGroup* ps);
-void xParGroupSetActive(xParGroup* ps, uint32 isActive);
+void xParGroupSetActive(xParGroup* ps, U32 isActive);
 void xParGroupKillAllParticles(xParGroup* ps);
-void xParGroupAnimate(xParGroup* ps, float32 dt);
+void xParGroupAnimate(xParGroup* ps, F32 dt);
 void xParGroupAddParP(xParGroup* ps, xPar* p);
 xPar* xParGroupAddPar(xParGroup* ps);
 void xParGroupKillPar(xParGroup* ps, xPar* p);

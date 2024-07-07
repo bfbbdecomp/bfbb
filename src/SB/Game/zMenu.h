@@ -3,16 +3,16 @@
 
 #include <types.h>
 
-int8 menu_fmv_played;
+bool menu_fmv_played;
 
-uint32 zMenuUpdateMode();
-uint32 zMenuIsPaused();
-int32 zMenuLoopContinue();
-void zMenuFirstBootSet(uint32 isFirstBoot);
-void zMenuFMVPlay(int8*, uint32, float32, bool, bool);
-bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* neededFiles);
-int32 zMenuGetBadCard();
-uint32 zMenuGetCorruptFiles(int8 name[][64]);
-int32 zMenuIsFirstBoot();
+U32 zMenuUpdateMode();
+U32 zMenuIsPaused();
+S32 zMenuLoopContinue();
+void zMenuFirstBootSet(U32 isFirstBoot);
+void zMenuFMVPlay(char*, U32, F32, bool, bool);
+bool zMenuCardCheckStartup(S32* bytesNeeded, S32* availOnDisk, S32* neededFiles);
+S32 zMenuGetBadCard();
+U32 zMenuGetCorruptFiles(char name[][64]);
+S32 zMenuIsFirstBoot();
 
 #endif

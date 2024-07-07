@@ -9,8 +9,8 @@
 
 struct RwMemory
 {
-    uint8* start;
-    uint32 length;
+    U8* start;
+    U32 length;
 };
 
 void FootstepHackSceneEnter();

@@ -5,7 +5,7 @@
 #include <dolphin.h>
 
 static iTime sStartupTime;
-static float32 sGameTime;
+static F32 sGameTime;
 
 void iTimeInit()
 {
@@ -21,27 +21,27 @@ iTime iTimeGet()
     return OSGetTime() - sStartupTime;
 }
 
-float32 iTimeDiffSec(iTime time)
+F32 iTimeDiffSec(iTime time)
 {
-    return (float32)time / (GET_BUS_FREQUENCY() / 4);
+    return (F32)time / (GET_BUS_FREQUENCY() / 4);
 }
 
-float32 iTimeDiffSec(iTime t0, iTime t1)
+F32 iTimeDiffSec(iTime t0, iTime t1)
 {
     return iTimeDiffSec(t1 - t0);
 }
 
-void iTimeGameAdvance(float32 elapsed)
+void iTimeGameAdvance(F32 elapsed)
 {
     sGameTime += elapsed;
 }
 
-void iTimeSetGame(float32 time)
+void iTimeSetGame(F32 time)
 {
     sGameTime = time;
 }
 
-void iProfileClear(uint32 sceneID)
+void iProfileClear(U32 sceneID)
 {
     // Redacted. :}
 }
@@ -51,7 +51,7 @@ void iFuncProfileDump()
     // Redacted. :}
 }
 
-void iFuncProfileParse(char* elfPath, int32 profile)
+void iFuncProfileParse(char* elfPath, S32 profile)
 {
     // Redacted. :}
 }

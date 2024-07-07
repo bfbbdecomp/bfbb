@@ -24,10 +24,10 @@ enum _tagRumbleType
 struct _tagxRumble
 {
     _tagRumbleType type;
-    float32 seconds;
+    F32 seconds;
     _tagxRumble* next;
-    int16 active;
-    uint16 fxflags;
+    S16 active;
+    U16 fxflags;
 };
 
 #endif

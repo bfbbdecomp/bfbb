@@ -5,22 +5,22 @@
 
 struct zEntDestructObjAsset
 {
-    float32 animSpeed;
-    uint32 initAnimState;
-    uint32 health;
-    uint32 spawnItemID;
-    uint32 dflags;
-    uint8 collType;
-    uint8 fxType;
-    uint8 pad[2];
-    float32 blast_radius;
-    float32 blast_strength;
-    uint32 shrapnelID_destroy;
-    uint32 shrapnelID_hit;
-    uint32 sfx_destroy;
-    uint32 sfx_hit;
-    uint32 hitModel;
-    uint32 destroyModel;
+    F32 animSpeed;
+    U32 initAnimState;
+    U32 health;
+    U32 spawnItemID;
+    U32 dflags;
+    U8 collType;
+    U8 fxType;
+    U8 pad[2];
+    F32 blast_radius;
+    F32 blast_strength;
+    U32 shrapnelID_destroy;
+    U32 shrapnelID_hit;
+    U32 sfx_destroy;
+    U32 sfx_hit;
+    U32 hitModel;
+    U32 destroyModel;
 };
 
 struct zParEmitter;
@@ -30,12 +30,12 @@ struct xSFXAsset;
 struct zEntDestructObj : zEnt
 {
     zEntDestructObjAsset* dasset;
-    uint32 state;
-    uint32 healthCnt;
-    float32 fx_timer;
+    U32 state;
+    U32 healthCnt;
+    F32 fx_timer;
     zParEmitter* fx_emitter;
-    float32 respawn_timer;
-    uint32 throw_target;
+    F32 respawn_timer;
+    U32 throw_target;
     zShrapnelAsset* shrapnel_destroy;
     zShrapnelAsset* shrapnel_hit;
     xModelInstance* base_model;
@@ -52,7 +52,7 @@ void zEntDestructObj_Init(void* ent, void* asset);
 void zEntDestructObj_Save(zEntDestructObj* ent, xSerial* s);
 void zEntDestructObj_Load(zEntDestructObj* ent, xSerial* s);
 void zEntDestructObj_Setup(zEntDestructObj* ent);
-uint32 zEntDestructObj_isDestroyed(zEntDestructObj* ent);
-void zEntDestructObj_Hit(zEntDestructObj* ent, uint32 mask);
+U32 zEntDestructObj_isDestroyed(zEntDestructObj* ent);
+void zEntDestructObj_Hit(zEntDestructObj* ent, U32 mask);
 
 #endif
