@@ -4,12 +4,12 @@
 
 #define REG_TABLE_SIZE 255
 
-int32 sParGroupRegTableInit = 0;
-int32 sParGroupRegTableCount = 0;
+S32 sParGroupRegTableInit = 0;
+S32 sParGroupRegTableCount = 0;
 extern xParGroup* sParGroupRegTable[REG_TABLE_SIZE]; // todo: move from bss.s
 
-extern float32 _708;
-extern float32 _709;
+extern F32 _708;
+extern F32 _709;
 
 void xParGroupInit(xParGroup* ps)
 {
@@ -33,7 +33,7 @@ void xParGroupInit(xParGroup* ps)
 
 static void xParGroupRegisterInit()
 {
-    for (int32 i = 0; i < REG_TABLE_SIZE; i++)
+    for (S32 i = 0; i < REG_TABLE_SIZE; i++)
     {
         sParGroupRegTable[i] = NULL;
     }
@@ -42,7 +42,7 @@ static void xParGroupRegisterInit()
     sParGroupRegTableCount = 0;
 }
 
-void xParGroupSetAging(xParGroup* ps, int32 age)
+void xParGroupSetAging(xParGroup* ps, S32 age)
 {
     if (age)
     {
@@ -57,7 +57,7 @@ void xParGroupSetAging(xParGroup* ps, int32 age)
     }
 }
 
-void xParGroupSetBack2Life(xParGroup* ps, int32 b2l)
+void xParGroupSetBack2Life(xParGroup* ps, S32 b2l)
 {
     if (b2l)
     {
@@ -72,12 +72,12 @@ void xParGroupSetBack2Life(xParGroup* ps, int32 b2l)
     }
 }
 
-void xParGroupSetVisibility(xParGroup* ps, int32 vis)
+void xParGroupSetVisibility(xParGroup* ps, S32 vis)
 {
     ps->m_visible = vis;
 }
 
-void xParGroupSetPriority(xParGroup* ps, uint8 val)
+void xParGroupSetPriority(xParGroup* ps, U8 val)
 {
     ps->m_priority = val;
 }
@@ -89,7 +89,7 @@ void xParGroupRegister(xParGroup* ps)
         xParGroupRegisterInit();
     }
 
-    for (uint8 i = 0; i < REG_TABLE_SIZE; i++)
+    for (U8 i = 0; i < REG_TABLE_SIZE; i++)
     {
         if (!sParGroupRegTable[i])
         {
@@ -102,7 +102,7 @@ void xParGroupRegister(xParGroup* ps)
 
 void xParGroupUnregister(xParGroup* ps)
 {
-    for (uint8 i = 0; i < REG_TABLE_SIZE; i++)
+    for (U8 i = 0; i < REG_TABLE_SIZE; i++)
     {
         if (sParGroupRegTable[i] == ps)
         {
@@ -113,7 +113,7 @@ void xParGroupUnregister(xParGroup* ps)
     }
 }
 
-void xParGroupSetActive(xParGroup* ps, uint32 isActive)
+void xParGroupSetActive(xParGroup* ps, U32 isActive)
 {
     ps->m_active = isActive;
 }
@@ -135,11 +135,11 @@ void xParGroupKillAllParticles(xParGroup* ps)
 #define clamp(x, a, b) (((x) < (a)) ? (a) : (((x) > (b)) ? (b) : (x)))
 
 #ifdef NON_MATCHING
-void xParGroupAnimate(xParGroup* ps, float32 dt)
+void xParGroupAnimate(xParGroup* ps, F32 dt)
 {
     xPar* i = ps->m_root;
     xPar* tmp;
-    float32 age = dt;
+    F32 age = dt;
 
     if (ps->m_flags & XPARGROUP_NOAGING)
     {
@@ -163,7 +163,7 @@ void xParGroupAnimate(xParGroup* ps, float32 dt)
         }
         else
         {
-            // non-matching: stack isn't resizing for each float-to-uint8 conversion
+            // non-matching: stack isn't resizing for each float-to-U8 conversion
             i->m_c[0] = i->m_cfl[0] = clamp(i->m_cvel[0] * dt + i->m_cfl[0], _708, _709);
             i->m_c[1] = i->m_cfl[1] = clamp(i->m_cvel[1] * dt + i->m_cfl[1], _708, _709);
             i->m_c[2] = i->m_cfl[2] = clamp(i->m_cvel[2] * dt + i->m_cfl[2], _708, _709);
@@ -207,9 +207,9 @@ xPar* xParGroupAddPar(xParGroup* ps)
 
         if (!p)
         {
-            int32 myPriority = ps->m_priority;
+            S32 myPriority = ps->m_priority;
 
-            for (uint8 i = 0; i < REG_TABLE_SIZE; i++)
+            for (U8 i = 0; i < REG_TABLE_SIZE; i++)
             {
                 if (sParGroupRegTable[i] && sParGroupRegTable[i] != ps &&
                     (sParGroupRegTable[i]->m_flags & XPARGROUP_ALLOCPARS) &&

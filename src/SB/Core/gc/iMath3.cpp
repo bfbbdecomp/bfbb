@@ -6,15 +6,15 @@
 
 #include <string.h>
 
-extern float32 _555_1; // 0.5f
-extern float32 _557_1; // 0.0f
-extern float32 _558_3; // 1.0f
-extern float32 _560_2; // 0.00001f
-extern float32 _607; // 2.0f
-extern float32 _608_0; // -1.0f
-extern float32 _1060; // -9.9999997e37f
-extern float32 _1061; // 9.9999997e37f
-extern float32 _1062; // -0.5f
+extern F32 _555_1; // 0.5f
+extern F32 _557_1; // 0.0f
+extern F32 _558_3; // 1.0f
+extern F32 _560_2; // 0.00001f
+extern F32 _607; // 2.0f
+extern F32 _608_0; // -1.0f
+extern F32 _1060; // -9.9999997e37f
+extern F32 _1061; // 9.9999997e37f
+extern F32 _1062; // -0.5f
 
 void iMath3Init()
 {
@@ -30,8 +30,8 @@ void iSphereIsectVec(const xSphere* s, const xVec3* v, xIsect* isx)
 
 void iSphereIsectRay(const xSphere* s, const xRay3* r, xIsect* isx)
 {
-    float32 t_in, t_out;
-    uint32 num;
+    F32 t_in, t_out;
+    U32 num;
 
     if (!(r->flags & 0x400))
     {
@@ -118,10 +118,10 @@ void iSphereInitBoundVec(xSphere* s, const xVec3* v)
 
 void iSphereBoundVec(xSphere* o, const xSphere* s, const xVec3* v)
 {
-    float32 scale;
+    F32 scale;
     xSphere temp;
     xSphere* tp;
-    uint32 usetemp;
+    U32 usetemp;
     xIsect isx;
 
     usetemp = (o == s);
@@ -164,7 +164,7 @@ void iSphereBoundVec(xSphere* o, const xSphere* s, const xVec3* v)
 
 void iCylinderIsectVec(const xCylinder* c, const xVec3* v, xIsect* isx)
 {
-    float32 b = c->center.y + c->h;
+    F32 b = c->center.y + c->h;
 
     if (v->y >= c->center.y - c->h && v->y <= b &&
         xVec2Dist(c->center.x, c->center.z, v->x, v->z) <= c->r)
@@ -443,7 +443,7 @@ void iBoxIsectVec(const xBox* b, const xVec3* v, xIsect* isx)
     }
 }
 
-static uint32 ClipPlane(float32 denom, float32 numer, float32* t_in, float32* t_out)
+static U32 ClipPlane(F32 denom, F32 numer, F32* t_in, F32* t_out)
 {
     if (denom > _557_1)
     {
@@ -477,8 +477,8 @@ static uint32 ClipPlane(float32 denom, float32 numer, float32* t_in, float32* t_
     return (numer <= _557_1);
 }
 
-static uint32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, float32* t_in,
-                      float32* t_out)
+static U32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, F32* t_in,
+                      F32* t_out)
 {
     return (ClipPlane(r5->x, -r4->x - r3->x, t_in, t_out) &&
             ClipPlane(-r5->x, r4->x - r3->x, t_in, t_out) &&
@@ -492,7 +492,7 @@ static uint32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, float32
 void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 {
     xVec3 var_14, var_20;
-    float32 t_in, t_out;
+    F32 t_in, t_out;
 
     if (!(r->flags & 0x400))
     {
@@ -574,7 +574,7 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 #ifdef NON_MATCHING
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
-    uint32 xcode, ycode, zcode;
+    U32 xcode, ycode, zcode;
 
     // non-matching: (p->center.x + p->r) computed inside if statement
 
@@ -736,20 +736,20 @@ void iBoxBoundVec(xBox* o, const xBox* b, const xVec3* v)
     xVec3Init(&o->upper, MAX(v->x, b->upper.x), MAX(v->y, b->upper.y), MAX(v->z, b->upper.z));
 }
 
-float32 xVec2Dist(float32 x1, float32 y1, float32 x2, float32 y2)
+F32 xVec2Dist(F32 x1, F32 y1, F32 x2, F32 y2)
 {
-    float32 x = x1 - x2;
-    float32 y = y1 - y2;
+    F32 x = x1 - x2;
+    F32 y = y1 - y2;
 
     return xsqrt(SQR(x) + SQR(y));
 }
 
-float32 xVec2Dot(const xVec2* a, const xVec2* b)
+F32 xVec2Dot(const xVec2* a, const xVec2* b)
 {
     return a->x * b->x + a->y * b->y;
 }
 
-void xVec2Init(xVec2* v, float32 _x, float32 _y)
+void xVec2Init(xVec2* v, F32 _x, F32 _y)
 {
     v->x = _x;
     v->y = _y;

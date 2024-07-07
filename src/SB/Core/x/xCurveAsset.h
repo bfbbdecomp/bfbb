@@ -19,11 +19,11 @@ struct xCurveAsset
 {
     xCurveType type;
     xCurveClamp clamp;
-    float32 delta;
-    int32 numPoints;
-    float32* points;
+    F32 delta;
+    S32 numPoints;
+    F32* points;
 };
 
-float32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, float32 t);
+F32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, F32 t);
 
 #endif

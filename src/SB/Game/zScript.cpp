@@ -8,7 +8,7 @@
 
 #include <types.h>
 
-int32 zScriptEventCB(xBase* to, xBase* from, uint32 event, const float32* param, xBase*);
+S32 zScriptEventCB(xBase* to, xBase* from, U32 event, const F32* param, xBase*);
 
 void zScriptInit(void* data, void* asset)
 {
@@ -52,7 +52,7 @@ void zScriptLoad(_zScript* script, xSerial* s)
     xBaseLoad((xBase*)script, s);
 }
 
-int32 zScriptEventCB(xBase* to, xBase* from, uint32 event, const float32*, xBase*)
+S32 zScriptEventCB(xBase* to, xBase* from, U32 event, const F32*, xBase*)
 {
     _zScript* fromScript = (_zScript*)from;
     switch (event)
@@ -87,12 +87,12 @@ int32 zScriptEventCB(xBase* to, xBase* from, uint32 event, const float32*, xBase
     return eEventEnable;
 }
 
-void zScriptExecuteEvents(_zScript* script, float32 start, float32 end)
+void zScriptExecuteEvents(_zScript* script, F32 start, F32 end)
 {
     script->more = 0;
 
     xScriptEventAsset* a = (xScriptEventAsset*)(script->tasset + 1);
-    for (uint32 i = 0; i < script->tasset->eventCount; ++i)
+    for (U32 i = 0; i < script->tasset->eventCount; ++i)
     {
         if (a[i].widget != 0 && a[i].time >= start)
         {
@@ -113,7 +113,7 @@ void zScriptExecuteEvents(_zScript* script, float32 start, float32 end)
     }
 }
 
-void zScriptUpdate(xBase* obj, xScene* scene, float32 dt)
+void zScriptUpdate(xBase* obj, xScene* scene, F32 dt)
 {
     _zScript* script = (_zScript*)obj;
     if (script->state == ZSCRIPT_STATE_RUNNING)

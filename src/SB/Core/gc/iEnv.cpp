@@ -5,7 +5,7 @@
 #include "iCamera.h"
 #include "xMemMgr.h"
 
-static int32 sBeginDrawFX;
+static S32 sBeginDrawFX;
 static RpWorld* sPipeWorld;
 static RwCamera* sPipeCamera;
 static iEnv* lastEnv;
@@ -28,7 +28,7 @@ static RpAtomic* SetPipelineCB(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-static void iEnvSetBSP(iEnv* env, int32 envDataType, RpWorld* bsp)
+static void iEnvSetBSP(iEnv* env, S32 envDataType, RpWorld* bsp)
 {
     if (envDataType == 0)
     {
@@ -49,7 +49,7 @@ static void iEnvSetBSP(iEnv* env, int32 envDataType, RpWorld* bsp)
 }
 
 #ifdef NON_MATCHING
-void iEnvLoad(iEnv* env, const void* data, uint32, int32 dataType)
+void iEnvLoad(iEnv* env, const void* data, U32, S32 dataType)
 {
     RpWorld* bsp = (RpWorld*)data;
     xJSPHeader* jsp = (xJSPHeader*)data;
@@ -131,8 +131,8 @@ void iEnvLightingBasics(iEnv*, xEnvAsset*)
 // This is named JspPS2_ClumpRender on PS2
 static void Jsp_ClumpRender(RpClump* clump, xJSPNodeInfo* nodeInfo)
 {
-    int32 backcullon = 1;
-    int32 zbufferon = 1;
+    S32 backcullon = 1;
+    S32 zbufferon = 1;
     RwLLLink* cur = rwLinkListGetFirstLLLink(&clump->atomicList);
     RwLLLink* end = rwLinkListGetTerminator(&clump->atomicList);
 

@@ -8,12 +8,12 @@
 #include "xMemMgr.h"
 #include "isavegame.h"
 
-int32 g_xsginit;
+S32 g_xsginit;
 st_XSAVEGAME_DATA g_xsgdata = {};
 st_XSAVEGAME_LEADER g_leaders[3] = {};
 static XSGAutoData g_autodata;
 
-int32 xSGStartup()
+S32 xSGStartup()
 {
     if (g_xsginit++ == 0)
     {
@@ -25,7 +25,7 @@ int32 xSGStartup()
     return g_xsginit;
 }
 
-int32 xSGShutdown()
+S32 xSGShutdown()
 {
     g_xsginit--;
     if (g_xsginit == 0)
@@ -65,9 +65,9 @@ st_XSAVEGAME_DATA* xSGInit(en_SAVEGAME_MODE mode)
     return xsgdata;
 }
 
-int32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
+S32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
+    S32 result = 1;
     if (!(xsgdata->stage & 1))
     {
         result = 0;
@@ -79,13 +79,13 @@ int32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
     }
     if (xsgdata->mode == XSG_MODE_SAVE)
     {
-        if (xsgdata->membuf != (int8*)0x0)
+        if (xsgdata->membuf != (S8*)0x0)
         {
             xUtil_idtag2string('XSGS', 0);
             xMemPopTemp(xsgdata->membuf);
-            xsgdata->membuf = (int8*)0x0;
+            xsgdata->membuf = (S8*)0x0;
             xsgdata->memsize = 0;
-            xsgdata->buf_curpos = (int8*)0x0;
+            xsgdata->buf_curpos = (S8*)0x0;
         }
     }
     else if (xsgdata->mode == XSG_MODE_LOAD)
@@ -113,25 +113,25 @@ int32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, int8 files[][64])
+S32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, S8 files[][64])
 {
     return iSGCheckForCorruptFiles(xsgdata->isgsess, files);
 }
 
-int32 xSGTgtCount(st_XSAVEGAME_DATA* xsgdata, int32* max)
+S32 xSGTgtCount(st_XSAVEGAME_DATA* xsgdata, S32* max)
 {
     return iSGTgtCount(xsgdata->isgsess, max);
 }
 
-int32 xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
+S32 xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA* xsgdata, S32 tidx)
 {
     return iSGTgtPhysSlotIdx(xsgdata->isgsess, tidx);
 }
 
-int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode)
+S32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, S32 tidx, S32* badEncode)
 {
-    int32 result = 0;
-    uint32 state = iSGTgtState(xsgdata->isgsess, tidx, NULL);
+    S32 result = 0;
+    U32 state = iSGTgtState(xsgdata->isgsess, tidx, NULL);
     if (state & 0x4000000)
     {
         if (badEncode != NULL)
@@ -144,7 +144,7 @@ int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode)
         result = 1;
     }
 
-    int32 rc = -1;
+    S32 rc = -1;
     if (!(state & 0x1000000))
     {
         rc = result;
@@ -152,14 +152,14 @@ int32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* badEncode)
     return rc;
 }
 
-int32 xSGTgtFormatTgt(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32* canRecover)
+S32 xSGTgtFormatTgt(st_XSAVEGAME_DATA* xsgdata, S32 tidx, S32* canRecover)
 {
     return iSGTgtFormat(xsgdata->isgsess, tidx, 0, canRecover);
 }
 
-int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
+S32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, S32 tidx)
 {
-    int32 result = iSGTgtSetActive(xsgdata->isgsess, tidx);
+    S32 result = iSGTgtSetActive(xsgdata->isgsess, tidx);
     if (result != 0 && xSG_chdir_gamedir(xsgdata) != 0)
     {
         xSG_grab_leaders(xsgdata);
@@ -167,9 +167,9 @@ int32 xSGTgtSelect(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
     return result;
 }
 
-int32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
+S32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, S32 tidx)
 {
-    int32 rc = iSGTgtSetActive(xsgdata->isgsess, tidx);
+    S32 rc = iSGTgtSetActive(xsgdata->isgsess, tidx);
     if (rc != 0)
     {
         return xSG_chdir_gamedir(xsgdata);
@@ -177,10 +177,10 @@ int32 xSGTgtHasGameDir(st_XSAVEGAME_DATA* xsgdata, int32 tidx)
     return rc;
 }
 
-int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
-                     int32* bytesNeeded, int32* availOnDisk, int32* needFile)
+S32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, S32 tidx, S32 fsize, S32 slotidx,
+                     S32* bytesNeeded, S32* availOnDisk, S32* needFile)
 {
-    int8 fname[256] = {};
+    S8 fname[256] = {};
 
     if (slotidx < 0)
     {
@@ -193,10 +193,10 @@ int32 xSGTgtHaveRoom(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 
                           needFile);
 }
 
-int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize, int32 slotidx,
-                            int32* bytesNeeded, int32* availOnDisk, int32* needFile)
+S32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, S32 tidx, S32 fsize, S32 slotidx,
+                            S32* bytesNeeded, S32* availOnDisk, S32* needFile)
 {
-    int8 fname[256] = {};
+    S8 fname[256] = {};
 
     if (slotidx < 0)
     {
@@ -209,40 +209,40 @@ int32 xSGTgtHaveRoomStartup(st_XSAVEGAME_DATA* xsgdata, int32 tidx, int32 fsize,
                                  availOnDisk, needFile);
 }
 
-uint8 xSGCheckMemoryCard(st_XSAVEGAME_DATA* xsgdata, int32 index)
+U8 xSGCheckMemoryCard(st_XSAVEGAME_DATA* xsgdata, S32 index)
 {
     return iSGCheckMemoryCard(xsgdata->isgsess, index);
 }
 
-void xSGGameSet(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+void xSGGameSet(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
     xsgdata->gslot = gidx;
 }
 
-int32 xSGGameIsEmpty(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S32 xSGGameIsEmpty(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
     return xSGGameSize(xsgdata, gidx) <= 0;
 }
 
-int32 xSGGameSize(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S32 xSGGameSize(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
-    int32 size = 0;
+    S32 size = 0;
     if (xSG_chdir_gamedir(xsgdata))
     {
-        int8* fname = xSG_cm_slotname(xsgdata, gidx);
+        S8* fname = xSG_cm_slotname(xsgdata, gidx);
         size = iSGFileSize(xsgdata->isgsess, fname);
     }
     return size;
 }
 
-int8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
-    static int8 da_date[32] = {};
+    static S8 da_date[32] = {};
     da_date[0] = '\0';
     if (xSG_chdir_gamedir(xsgdata))
     {
-        int8* slotname = xSG_cm_slotname(xsgdata, gidx);
-        int8* date = iSGFileModDate(xsgdata->isgsess, slotname);
+        S8* slotname = xSG_cm_slotname(xsgdata, gidx);
+        S8* date = iSGFileModDate(xsgdata->isgsess, slotname);
         if (date != NULL)
         {
             strcpy(da_date, date);
@@ -319,9 +319,9 @@ int8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return da_date;
 }
 
-int8* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S8* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
-    int8* da_name = NULL;
+    S8* da_name = NULL;
     if (xSG_chdir_gamedir(xsgdata) && g_leaders[gidx].gameLabel != NULL)
     {
         da_name = g_leaders[gidx].gameLabel;
@@ -329,9 +329,9 @@ int8* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return da_name;
 }
 
-int32 xSGGameThumbIndex(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S32 xSGGameThumbIndex(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
-    int32 idx_thum = -1;
+    S32 idx_thum = -1;
     if (xSG_chdir_gamedir(xsgdata))
     {
         st_XSAVEGAME_LEADER* lead = &g_leaders[gidx];
@@ -340,9 +340,9 @@ int32 xSGGameThumbIndex(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return idx_thum;
 }
 
-int32 xSGGameProgress(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S32 xSGGameProgress(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
-    int32 progress = -1;
+    S32 progress = -1;
     if (xSG_chdir_gamedir(xsgdata))
     {
         st_XSAVEGAME_LEADER* lead = &g_leaders[gidx];
@@ -351,11 +351,11 @@ int32 xSGGameProgress(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return progress;
 }
 
-int32 xSGAddSaveClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
-                       int32 (*infofunc)(void*, st_XSAVEGAME_DATA*, int32*, int32*),
-                       int32 (*procfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_WRITECONTEXT*))
+S32 xSGAddSaveClient(st_XSAVEGAME_DATA* xsgdata, U32 clttag, void* cltdata,
+                       S32 (*infofunc)(void*, st_XSAVEGAME_DATA*, S32*, S32*),
+                       S32 (*procfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_WRITECONTEXT*))
 {
-    int32 result = 1;
+    S32 result = 1;
     if (xsgdata->stage & 0x40000000)
     {
         result = 0;
@@ -388,11 +388,11 @@ int32 xSGAddSaveClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
     return result;
 }
 
-int32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
-                       int32 (*loadfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_READCONTEXT*,
-                                         uint32, int32))
+S32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, U32 clttag, void* cltdata,
+                       S32 (*loadfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_READCONTEXT*,
+                                         U32, S32))
 {
-    int32 result = 1;
+    S32 result = 1;
     if (xsgdata->stage & 0x40000000)
     {
         result = 0;
@@ -444,15 +444,15 @@ int32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, uint32 clttag, void* cltdata,
     return result;
 }
 
-int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata)
+S32 xSGSetup(st_XSAVEGAME_DATA* xsgdata)
 {
     return xSGSetup(xsgdata, 0, "nothing", -1, 0, 0);
 }
 
-int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, int32 gidx, int8* label, int32 progress, iTime playtime,
-               int32 thumbIconIdx)
+S32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, S32 gidx, S8* label, S32 progress, iTime playtime,
+               S32 thumbIconIdx)
 {
-    int32 result = 1;
+    S32 result = 1;
     if (xsgdata->stage & 0x40000000)
     {
         result = 0;
@@ -495,9 +495,9 @@ int32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, int32 gidx, int8* label, int32 progre
     return result;
 }
 
-int32 xSGProcess(st_XSAVEGAME_DATA* xsgdata)
+S32 xSGProcess(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
+    S32 result = 1;
     if (xsgdata->stage & 0x40000000)
     {
         result = 0;
@@ -552,10 +552,10 @@ int32 xSGProcess(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSGWrapup(st_XSAVEGAME_DATA* xsgdata)
+S32 xSGWrapup(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int32 rc = 0;
+    S32 result = 1;
+    S32 rc = 0;
 
     if (xsgdata->stage & 0x40000000)
     {
@@ -635,8 +635,8 @@ int32 xSGWrapup(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-en_XSGASYNC_STATUS xSGAsyncStatus(st_XSAVEGAME_DATA* xsgdata, int32 block, en_XSG_WHYFAIL* whyFail,
-                                  int8* errmsg)
+en_XSGASYNC_STATUS xSGAsyncStatus(st_XSAVEGAME_DATA* xsgdata, S32 block, en_XSG_WHYFAIL* whyFail,
+                                  S8* errmsg)
 {
     en_XSGASYNC_STATUS xstat = XSG_ASTAT_NOOP;
     en_ASYNC_OPERR whyerr = ISG_OPERR_NONE;
@@ -691,19 +691,19 @@ en_XSGASYNC_STATUS xSGAsyncStatus(st_XSAVEGAME_DATA* xsgdata, int32 block, en_XS
     return xstat;
 }
 
-int32 xSG_cb_leader_svinfo(void*, st_XSAVEGAME_DATA*, int32* cur_space, int32* max_fullgame)
+S32 xSG_cb_leader_svinfo(void*, st_XSAVEGAME_DATA*, S32* cur_space, S32* max_fullgame)
 {
     *cur_space = 0x100;
     *max_fullgame = 0x100;
     return 1;
 }
 
-int32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
+S32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
                            st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
     st_XSAVEGAME_DATA* xsg = (st_XSAVEGAME_DATA*)cltdata;
     st_XSAVEGAME_LEADER leader = {};
-    int8 fundata[] = "--TakeMeToYourLeader--";
+    S8 fundata[] = "--TakeMeToYourLeader--";
 
     strncpy(leader.gameLabel, xsg->label, 0x40);
     leader.gameLabel[63] = 0;
@@ -716,21 +716,21 @@ int32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
     return 1;
 }
 
-int32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
-                         st_XSAVEGAME_READCONTEXT* rctxt, uint32, int32)
+S32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
+                         st_XSAVEGAME_READCONTEXT* rctxt, U32, S32)
 {
-    int8 fundata[32] = {};
+    S8 fundata[32] = {};
     st_XSAVEGAME_LEADER discard = {};
     xSGReadData(original_xsgdata, rctxt, discard.gameLabel, sizeof(st_XSAVEGAME_LEADER));
     xSGReadData(original_xsgdata, rctxt, fundata, 0x16);
     return 1;
 }
 
-int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
-                   int32 elesiz, int32 n)
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, S8* data,
+                   S32 elesiz, S32 n)
 {
-    int32 cnt;
-    int32 is_ok = 1;
+    S32 cnt;
+    S32 is_ok = 1;
 
     if (xsgdata->stage & 0x40000000)
     {
@@ -788,41 +788,41 @@ int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt,
     return cnt;
 }
 
-int32 xSGWriteStrLen(const int8* str)
+S32 xSGWriteStrLen(const S8* str)
 {
-    int32 len = strlen(str);
+    S32 len = strlen(str);
     len += (len + 1 & 1) + 1;
     return len;
 }
 
-int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int8* data,
-                   int32 n)
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, S8* data,
+                   S32 n)
 {
-    return xSGWriteData(xsgdata, wctxt, data, sizeof(int8), n);
+    return xSGWriteData(xsgdata, wctxt, data, sizeof(S8), n);
 }
 
-int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, int32* data,
-                   int32 n)
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, S32* data,
+                   S32 n)
 {
-    return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(int32), n);
+    return xSGWriteData(xsgdata, wctxt, (S8*)data, sizeof(S32), n);
 }
 
-int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, uint32* data,
-                   int32 n)
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, U32* data,
+                   S32 n)
 {
-    return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(uint32), n);
+    return xSGWriteData(xsgdata, wctxt, (S8*)data, sizeof(U32), n);
 }
 
-int32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, float32* data,
-                   int32 n)
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, F32* data,
+                   S32 n)
 {
-    return xSGWriteData(xsgdata, wctxt, (int8*)data, sizeof(float32), n);
+    return xSGWriteData(xsgdata, wctxt, (S8*)data, sizeof(F32), n);
 }
 
-int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff,
-                  int32 elesiz, int32 n)
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, S8* buff,
+                  S32 elesiz, S32 n)
 {
-    int32 cnt;
+    S32 cnt;
     if (elesiz == 0)
     {
         return 0;
@@ -863,32 +863,32 @@ int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, i
     return cnt / elesiz;
 }
 
-int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int8* buff, int32 n)
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, S8* buff, S32 n)
 {
-    return xSGReadData(xsgdata, rctxt, buff, sizeof(int8), n);
+    return xSGReadData(xsgdata, rctxt, buff, sizeof(S8), n);
 }
 
-int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, int32* buff, int32 n)
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, S32* buff, S32 n)
 {
-    return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(int32), n);
+    return xSGReadData(xsgdata, rctxt, (S8*)buff, sizeof(S32), n);
 }
 
-int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, uint32* buff,
-                  int32 n)
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32* buff,
+                  S32 n)
 {
-    return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(uint32), n);
+    return xSGReadData(xsgdata, rctxt, (S8*)buff, sizeof(U32), n);
 }
 
-int32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, float32* buff,
-                  int32 n)
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, F32* buff,
+                  S32 n)
 {
-    return xSGReadData(xsgdata, rctxt, (int8*)buff, sizeof(float32), n);
+    return xSGReadData(xsgdata, rctxt, (S8*)buff, sizeof(F32), n);
 }
 
-int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 num_found = 0;
-    int8 readbuf[116] = {};
+    S32 num_found = 0;
+    S8 readbuf[116] = {};
 
     memset(&g_leaders, 0, sizeof(g_leaders));
 
@@ -897,12 +897,12 @@ int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
         return 0;
     }
 
-    for (int32 i = 0; i < 3; i++)
+    for (S32 i = 0; i < 3; i++)
     {
         if (!xSGGameIsEmpty(xsgdata, i))
         {
-            int8* slotname = xSG_cm_slotname(xsgdata, i);
-            int32 rc = iSGReadLeader(xsgdata->isgsess, slotname, readbuf, sizeof(readbuf), 0);
+            S8* slotname = xSG_cm_slotname(xsgdata, i);
+            S32 rc = iSGReadLeader(xsgdata->isgsess, slotname, readbuf, sizeof(readbuf), 0);
             if (rc != 0)
             {
                 num_found++;
@@ -914,10 +914,10 @@ int32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata)
     return num_found;
 }
 
-int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 rc = 1;
-    int8* name = iSGMakeName(ISG_NGTYP_GAMEDIR, NULL, 0);
+    S32 rc = 1;
+    S8* name = iSGMakeName(ISG_NGTYP_GAMEDIR, NULL, 0);
     if (!iSGSelectGameDir(xsgdata->isgsess, name))
     {
         rc = 0;
@@ -925,12 +925,12 @@ int32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata)
     return rc;
 }
 
-int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
+S8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, S32 gidx)
 {
-    static int8 slotname[32] = {};
+    static S8 slotname[32] = {};
     slotname[0] = '\0';
 
-    int8* tmp;
+    S8* tmp;
     if (gidx == 0x9a5)
     {
         tmp = iSGMakeName(ISG_NGTYP_CONFIG, NULL, 0);
@@ -943,26 +943,26 @@ int8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, int32 gidx)
     return slotname;
 }
 
-void xSG_areaComposeLabel(int8* label, int, int8*, int)
+void xSG_areaComposeLabel(S8* label, int, S8*, int)
 {
-    int8 buf[64] = {};
+    S8 buf[64] = {};
     iSGMakeTimeStamp(buf);
     sprintf(label, "%s", buf);
 }
 
-int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int32 cltamt = 0;
-    int32 cltmax = 0;
+    S32 result = 1;
+    S32 cltamt = 0;
+    S32 cltmax = 0;
 
-    for (int32 i = 0; i < xsgdata->stkcnt; i++)
+    for (S32 i = 0; i < xsgdata->stkcnt; i++)
     {
         st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
         cltamt = 0;
         cltmax = 0;
 
-        int32 rc = clt->cltinfo(clt->cltdata, xsgdata, &cltamt, &cltmax);
+        S32 rc = clt->cltinfo(clt->cltdata, xsgdata, &cltamt, &cltmax);
         if (rc == 0)
         {
             xUtil_idtag2string(clt->idtag, 0);
@@ -986,9 +986,9 @@ int32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
+    S32 result = 1;
 
     if (xsgdata->cltneed < 1)
     {
@@ -997,7 +997,7 @@ int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
     else
     {
         xsgdata->memsize = xsgdata->cltmax + xsgdata->chdrneed + 0x10;
-        xsgdata->membuf = (int8*)xMemPushTemp(xsgdata->memsize);
+        xsgdata->membuf = (S8*)xMemPushTemp(xsgdata->memsize);
 
         if (xsgdata->membuf == NULL)
         {
@@ -1013,13 +1013,13 @@ int32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int32 rc;
-    int8 bfill = 0xbf;
+    S32 result = 1;
+    S32 rc;
+    S8 bfill = 0xbf;
 
-    for (int32 i = 0; i < xsgdata->stkcnt; i++)
+    for (S32 i = 0; i < xsgdata->stkcnt; i++)
     {
         st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
 
@@ -1033,7 +1033,7 @@ int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
                 result = 0;
             }
 
-            int32 needfill = clt->maxamt - clt->realamt;
+            S32 needfill = clt->maxamt - clt->realamt;
             xUtil_idtag2string(clt->idtag, 0);
             while (needfill-- > 0)
             {
@@ -1055,18 +1055,18 @@ int32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSG_sv_bldchksum(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_sv_bldchksum(st_XSAVEGAME_DATA* xsgdata)
 {
     xsgdata->chksum =
         xUtil_crc_update(xsgdata->chksum, xsgdata->membuf + 16, xsgdata->memsize - 16);
     return 1;
 }
 
-int32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 i = '3333';
-    int32 j = 'GDAT';
-    int32 k = 1;
+    S32 i = '3333';
+    S32 j = 'GDAT';
+    S32 k = 1;
 
     xSGWriteData(xsgdata, 0, &j, 1);
     xSGWriteData(xsgdata, 0, &k, 1);
@@ -1078,11 +1078,11 @@ int32 xSG_smem_blkopen(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata)
 {
     xsgdata->upd_tally = 0;
 
-    int8* last_bufpos = xsgdata->buf_curpos;
+    S8* last_bufpos = xsgdata->buf_curpos;
     xsgdata->buf_curpos = xsgdata->buf_sizespot;
     xSGWriteData(xsgdata, NULL, &xsgdata->totamt, 1);
     xsgdata->buf_curpos = last_bufpos;
@@ -1095,10 +1095,10 @@ int32 xSG_smem_blkclose(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
+S32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
 {
-    int32 i = '3333';
-    int32 j = 0;
+    S32 i = '3333';
+    S32 j = 0;
 
     xUtil_idtag2string(clt->idtag, 0);
     j = clt->idtag;
@@ -1111,7 +1111,7 @@ int32 xSG_smem_cltopen(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
     return 1;
 }
 
-int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
+S32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
 {
     xUtil_idtag2string(clt->idtag, 0);
     xsgdata->upd_tally = 0;
@@ -1120,7 +1120,7 @@ int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
         xUtil_idtag2string(clt->idtag, 0);
     }
 
-    int8* last_bufpos = xsgdata->buf_curpos;
+    S8* last_bufpos = xsgdata->buf_curpos;
     xsgdata->buf_curpos = clt->buf_maxpos;
     xSGWriteData(xsgdata, NULL, &clt->maxamt, 1);
     xsgdata->buf_curpos = last_bufpos;
@@ -1134,13 +1134,13 @@ int32 xSG_smem_cltclose(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_CLIENT* clt)
     return 1;
 }
 
-int32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_sv_commit(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int32 rc;
-    int8 browselabel[64] = {};
+    S32 result = 1;
+    S32 rc;
+    S8 browselabel[64] = {};
 
-    int8* name = iSGMakeName(ISG_NGTYP_GAMEDIR, NULL, 0);
+    S8* name = iSGMakeName(ISG_NGTYP_GAMEDIR, NULL, 0);
     if (!iSGSetupGameDir(xsgdata->isgsess, name, 1))
     {
         result = 0;
@@ -1176,10 +1176,10 @@ void xSG_cb_ISGChange(void*, en_CHGCODE what)
     }
 }
 
-int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int8* name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot);
+    S32 result = 1;
+    S8* name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot);
     xsgdata->loadsize = iSGFileSize(xsgdata->isgsess, name);
 
     if (xsgdata->loadsize < 1)
@@ -1188,21 +1188,21 @@ int32 xSG_ld_prepload(st_XSAVEGAME_DATA* xsgdata)
     }
     else
     {
-        xsgdata->loadbuf = (int8*)xMemPushTemp(xsgdata->loadsize);
+        xsgdata->loadbuf = (S8*)xMemPushTemp(xsgdata->loadsize);
         memset(xsgdata->loadbuf, 0, xsgdata->loadsize);
     }
     return result;
 }
 
-int32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
+    S32 result = 1;
     if (xsgdata->stage & 0x40000000)
     {
         result = 0;
     }
 
-    int8* name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot);
+    S8* name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, xsgdata->gslot);
     if (!iSGLoadFile(xsgdata->isgsess, name, xsgdata->loadbuf, 1))
     {
         result = 0;
@@ -1216,10 +1216,10 @@ int32 xSG_ld_readgame(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int32 ival = 0;
+    S32 result = 1;
+    S32 ival = 0;
     bool not_ok = 0;
 
     xsgdata->walkpos = xsgdata->loadbuf;
@@ -1251,9 +1251,9 @@ int32 xSG_ld_readhead(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
+    S32 result = 1;
 
     xsgdata->loadsize = xsgdata->readsize;
     xsgdata->walkpos = xsgdata->loadbuf + 0x10;
@@ -1269,12 +1269,12 @@ int32 xSG_ld_validate(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
-int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 ival = 0;
-    uint32 tag = 0;
-    int32 maxamt = 0;
-    int32 actamt = 0;
+    S32 ival = 0;
+    U32 tag = 0;
+    S32 maxamt = 0;
+    S32 actamt = 0;
     st_XSAVEGAME_CLIENT* dfltclt = &xsgdata->dfltloadclt;
 
     xsgdata->walkpos = xsgdata->loadbuf;
@@ -1287,7 +1287,7 @@ int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
     while (xsgdata->walkremain > 0)
     {
         tag = 0;
-        int32 found = 0;
+        S32 found = 0;
         maxamt = 0;
         actamt = 0;
 
@@ -1296,7 +1296,7 @@ int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
         xSGReadData(xsgdata, 0, &actamt, 1);
         xUtil_idtag2string(tag, 0);
 
-        for (int32 i = 0; i < xsgdata->stkcnt; i++)
+        for (S32 i = 0; i < xsgdata->stkcnt; i++)
         {
             st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
 
@@ -1325,7 +1325,7 @@ int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
                 dfltclt->readamt = 0;
                 dfltclt->readremain = actamt;
 
-                int32 rc =
+                S32 rc =
                     dfltclt->cltload(dfltclt->cltdata, xsgdata, (st_XSAVEGAME_READCONTEXT*)dfltclt,
                                      tag, dfltclt->blokact);
                 if (rc == 0)
@@ -1356,12 +1356,12 @@ int32 xSG_ld_findcltblk(st_XSAVEGAME_DATA* xsgdata)
     return 1;
 }
 
-int32 xSG_ld_flipload(st_XSAVEGAME_DATA* xsgdata)
+S32 xSG_ld_flipload(st_XSAVEGAME_DATA* xsgdata)
 {
-    int32 result = 1;
-    int32 rc;
+    S32 result = 1;
+    S32 rc;
 
-    for (int32 i = 0; i < xsgdata->stkcnt; i++)
+    for (S32 i = 0; i < xsgdata->stkcnt; i++)
     {
         st_XSAVEGAME_CLIENT* clt = &xsgdata->cltstk[i];
         if (clt->cltload != NULL && clt->blokact != 0 && clt->blokpos != NULL)
@@ -1405,7 +1405,7 @@ void xSGAutoSave_Startup()
     iSGAutoSave_Startup();
 }
 
-int32 XSGAutoData::IsValid()
+S32 XSGAutoData::IsValid()
 {
     if (this->flg_autodata & 1 && !XSGAutoData::HWCheckConnect(this->lastTarg))
     {
@@ -1419,7 +1419,7 @@ void XSGAutoData::MarkInvalid()
     this->flg_autodata &= 0xfffffffe;
 }
 
-int32 XSGAutoData::SetCache(int32 targ, int32 game, int32 physicalSlot)
+S32 XSGAutoData::SetCache(S32 targ, S32 game, S32 physicalSlot)
 {
     this->Discard();
     this->isg_monitor = this->HWConnect(targ);
@@ -1448,7 +1448,7 @@ void XSGAutoData::Discard()
     this->isg_monitor = NULL;
 }
 
-st_ISGSESSION* XSGAutoData::HWConnect(int32 targ)
+st_ISGSESSION* XSGAutoData::HWConnect(S32 targ)
 {
     return iSGAutoSave_Connect(targ, xSGAutoSave_GetCache(), ASG_ISG_changed);
 }
@@ -1458,7 +1458,7 @@ void XSGAutoData::HWDisconnect(st_ISGSESSION* isgsess)
     iSGAutoSave_Disconnect(isgsess);
 }
 
-int32 XSGAutoData::HWCheckConnect(int32 targ)
+S32 XSGAutoData::HWCheckConnect(S32 targ)
 {
     return iSGAutoSave_Monitor(this->isg_monitor, this->lastTarg);
 }

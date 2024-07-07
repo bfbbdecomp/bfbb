@@ -26,7 +26,7 @@ void zCamMarkerLoad(zCamMarker* m, xSerial* s)
     xBaseLoad(m, s);
 }
 
-int32 zCamMarkerEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3)
+S32 zCamMarkerEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3)
 {
     switch (toEvent)
     {

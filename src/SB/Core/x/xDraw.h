@@ -5,7 +5,7 @@
 #include "xMath3.h"
 
 void xDrawSetColor(iColor_tag);
-void xDrawSphere2(const xSphere*, uint32);
+void xDrawSphere2(const xSphere*, U32);
 void xDrawOBB(const xBox*, const xMat4x3*);
 void xDrawBox(const xBox*);
 

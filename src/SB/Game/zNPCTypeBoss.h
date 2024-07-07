@@ -8,15 +8,15 @@ struct zNPCBoss : zNPCCommon
 {
     NPCTarget tgt_cur;
 
-    zNPCBoss(int32 myType);
+    zNPCBoss(S32 myType);
 
     virtual void Setup();
-    virtual uint8 ColChkFlags() const;
-    virtual uint8 ColPenFlags() const;
-    virtual uint8 ColChkByFlags() const;
-    virtual uint8 ColPenByFlags() const;
-    virtual uint8 PhysicsFlags() const;
-    virtual float32 AttackTimeLeft();
+    virtual U8 ColChkFlags() const;
+    virtual U8 ColPenFlags() const;
+    virtual U8 ColChkByFlags() const;
+    virtual U8 ColPenByFlags() const;
+    virtual U8 PhysicsFlags() const;
+    virtual F32 AttackTimeLeft();
     virtual void HoldUpDude();
     virtual void ThanksImDone();
 
@@ -27,7 +27,7 @@ protected:
 
 void ZNPC_Boss_Startup();
 void ZNPC_Boss_Shutdown();
-xFactoryInst* ZNPC_Create_Boss(int32 who, RyzMemGrow* grow, void*);
+xFactoryInst* ZNPC_Create_Boss(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Boss(xFactoryInst* inst);
 
 #endif

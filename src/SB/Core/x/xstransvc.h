@@ -5,37 +5,37 @@
 
 struct st_STRAN_SCENE
 {
-    uint32 scnid;
-    int32 lockid;
+    U32 scnid;
+    S32 lockid;
     st_PACKER_READ_DATA* spkg;
-    int32 isHOP;
+    S32 isHOP;
     void* userdata;
-    int8 fnam[256];
+    S8 fnam[256];
 };
 
 
 struct st_STRAN_DATA
 {
     st_STRAN_SCENE hipscn[16];
-    uint32 loadlock;
+    U32 loadlock;
 };
 
-int32 xSTPreLoadScene(uint32 sid, void* userdata, int32 flg_hiphop);
-int32 xSTQueueSceneAssets(uint32 sid, int32 flg_hiphop);
-void xSTUnLoadScene(uint32 sid, int32 flg_hiphop);
-float32 xSTLoadStep(uint32);
-void xSTDisconnect(uint32 sid, int32 flg_hiphop);
-int32 xSTSwitchScene(uint32 sid, void* userdata, int32 (*progmon)(void*, float32));
-void* xSTFindAsset(uint32 aid, uint32* size);
-int32 xSTAssetCountByType(uint32 type);
-void* xSTFindAssetByType(uint32 type, int32 idx, uint32* size);
-char* xSTAssetName(uint32 aid);
+S32 xSTPreLoadScene(U32 sid, void* userdata, S32 flg_hiphop);
+S32 xSTQueueSceneAssets(U32 sid, S32 flg_hiphop);
+void xSTUnLoadScene(U32 sid, S32 flg_hiphop);
+F32 xSTLoadStep(U32);
+void xSTDisconnect(U32 sid, S32 flg_hiphop);
+S32 xSTSwitchScene(U32 sid, void* userdata, S32 (*progmon)(void*, F32));
+void* xSTFindAsset(U32 aid, U32* size);
+S32 xSTAssetCountByType(U32 type);
+void* xSTFindAssetByType(U32 type, S32 idx, U32* size);
+char* xSTAssetName(U32 aid);
 char* xSTAssetName(void* raw_HIP_asset);
-int32 xSTGetAssetInfo(uint32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
-int32 xSTGetAssetInfoByType(uint32 type, int32 idx, st_PKR_ASSET_TOCINFO* ainfo);
-char* xST_xAssetID_HIPFullPath(uint32 aid);
-int32 PKRShutdown();
-int8* xST_xAssetID_HIPFullPath(uint32 aid, uint32* sceneID);
-int32 xSTShutdown();
+S32 xSTGetAssetInfo(U32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
+S32 xSTGetAssetInfoByType(U32 type, S32 idx, st_PKR_ASSET_TOCINFO* ainfo);
+char* xST_xAssetID_HIPFullPath(U32 aid);
+S32 PKRShutdown();
+S8* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID);
+S32 xSTShutdown();
 
 #endif

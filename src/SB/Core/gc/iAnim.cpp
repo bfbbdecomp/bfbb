@@ -6,28 +6,28 @@
 #include <rwcore.h>
 #include <rtslerp.h>
 
-static uint8 scratchBuffer[9120];
+static U8 scratchBuffer[9120];
 
-uint8* giAnimScratch = scratchBuffer;
+U8* giAnimScratch = scratchBuffer;
 
 void iAnimInit()
 {
     return;
 }
 
-void iAnimEval(void* RawData, float32 time, uint32 flags, xVec3* tran, xQuat* quat)
+void iAnimEval(void* RawData, F32 time, U32 flags, xVec3* tran, xQuat* quat)
 {
     iAnimEvalSKB((iAnimSKBHeader*)RawData, time, flags, tran, quat);
 }
 
-float32 iAnimDuration(void* RawData)
+F32 iAnimDuration(void* RawData)
 {
     return iAnimDurationSKB((iAnimSKBHeader*)RawData);
 }
 
-uint32 iAnimBoneCount(void* RawData)
+U32 iAnimBoneCount(void* RawData)
 {
-    if (*(uint32*)RawData == '1BKS')
+    if (*(U32*)RawData == '1BKS')
     {
         return ((iAnimSKBHeader*)RawData)->BoneCount;
     }
@@ -36,12 +36,12 @@ uint32 iAnimBoneCount(void* RawData)
 }
 
 // non-matching: incorrect instruction order and regalloc
-void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset,
-                float32* BoneTable, uint32 BoneCount, xVec3* Tran1, xQuat* Quat1, xVec3* Tran2,
+void iAnimBlend(F32 BlendFactor, F32 BlendRecip, U16* BlendTimeOffset,
+                F32* BoneTable, U32 BoneCount, xVec3* Tran1, xQuat* Quat1, xVec3* Tran2,
                 xQuat* Quat2, xVec3* TranDest, xQuat* QuatDest)
 {
-    uint32 i;
-    uint32 invert = 0;
+    U32 i;
+    U32 invert = 0;
     RtQuat* q2;
     RtQuat ident = { 0.0f, 0.0f, 0.0f, 1.0f };
     xVec3* t2;
@@ -66,7 +66,7 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
 
     if (!BoneTable && !BlendTimeOffset)
     {
-        float32 lerp = BlendFactor * BlendRecip;
+        F32 lerp = BlendFactor * BlendRecip;
 
         if (lerp < 0.0f)
         {
@@ -128,7 +128,7 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
     }
     else
     {
-        float32 baselerp;
+        F32 baselerp;
 
         if (!BlendTimeOffset)
         {
@@ -151,7 +151,7 @@ void iAnimBlend(float32 BlendFactor, float32 BlendRecip, uint16* BlendTimeOffset
 
         for (i = 0; i < BoneCount; i++)
         {
-            float32 lerp;
+            F32 lerp;
 
             if (BlendTimeOffset)
             {

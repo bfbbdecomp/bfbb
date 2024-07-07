@@ -21,29 +21,29 @@
 struct iLight
 {
     // 0x0
-    uint32 type;
+    U32 type;
     RpLight* hw;
 
     //0x8
     xSphere sph;
-    float32 radius_sq;
+    F32 radius_sq;
 
     //0x1C
     _xFColor color;
 
     //0x2C
     xVec3 dir;
-    float32 coneangle;
+    F32 coneangle;
 };
 
 extern RpWorld* gLightWorld;
 
 void iLightInit(RpWorld* world);
-iLight* iLightCreate(iLight* light, uint32 type);
-void iLightModify(iLight* light, uint32 flags);
+iLight* iLightCreate(iLight* light, U32 type);
+void iLightModify(iLight* light, U32 flags);
 void iLightSetColor(iLight* light, _xFColor* col);
 void iLightSetPos(iLight* light, xVec3* pos);
 void iLightDestroy(iLight* light);
-void iLightEnv(iLight* light, int32 env);
+void iLightEnv(iLight* light, S32 env);
 
 #endif

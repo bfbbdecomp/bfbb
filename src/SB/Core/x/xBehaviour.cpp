@@ -89,7 +89,7 @@ void xGoal::Clear()
     this->stat = GOAL_STAT_UNKNOWN;
 }
 
-int32 xGoal::PreCalc(float32 dt, void* updCtxt)
+S32 xGoal::PreCalc(F32 dt, void* updCtxt)
 {
     if (this->fun_precalc)
     {
@@ -99,7 +99,7 @@ int32 xGoal::PreCalc(float32 dt, void* updCtxt)
     return 0;
 }
 
-int32 xGoal::EvalRules(en_trantype* trantype, float32 dt, void* updCtxt)
+S32 xGoal::EvalRules(en_trantype* trantype, F32 dt, void* updCtxt)
 {
     if (this->fun_chkRule)
     {
@@ -109,7 +109,7 @@ int32 xGoal::EvalRules(en_trantype* trantype, float32 dt, void* updCtxt)
     return 0;
 }
 
-int32 xGoal::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+S32 xGoal::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
 {
     if (this->fun_process)
     {

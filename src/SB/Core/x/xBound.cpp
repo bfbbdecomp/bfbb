@@ -6,12 +6,12 @@
 
 #include "iMath.h"
 
-extern float32 _571;
-extern float32 _640;
-extern float32 _641;
-extern float32 _642;
-extern float32 _643;
-extern float32 _644;
+extern F32 _571;
+extern F32 _640;
+extern F32 _641;
+extern F32 _642;
+extern F32 _643;
+extern F32 _644;
 
 void xBoundUpdate(xBound* b)
 {
@@ -93,10 +93,10 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
 }
 
 #ifdef NON_MATCHING
-float32 xsqrt(float32 x)
+F32 xsqrt(F32 x)
 {
-    const float32 half = _571;
-    const float32 three = _640;
+    const F32 half = _571;
+    const F32 three = _640;
 
     if (x <= _641 || isinf(x))
     {
@@ -105,7 +105,7 @@ float32 xsqrt(float32 x)
 
     // non-matching: frsp instruction
 
-    float32 guess = __frsqrte(x);
+    F32 guess = __frsqrte(x);
     guess = half * guess * (three - guess * guess * x);
 
     if (guess > _644)
@@ -117,7 +117,7 @@ float32 xsqrt(float32 x)
 }
 #endif
 
-uint32 xBoundSphereHitsOBB(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll)
+U32 xBoundSphereHitsOBB(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll)
 {
     return xSphereHitsOBB_nu(s, b, m, coll);
 }
@@ -182,19 +182,19 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     xMat4x3 mnormal;
 
     {
-        float32 len2 = SQR(m->right.x) + SQR(m->right.y) + SQR(m->right.z);
+        F32 len2 = SQR(m->right.x) + SQR(m->right.y) + SQR(m->right.z);
 
-        if ((float32)iabs(len2 - _642) <= _644)
+        if ((F32)iabs(len2 - _642) <= _644)
         {
             // non-matching: incorrect instruction + order
 
-            scale.x = *(const float32*)&_642;
+            scale.x = *(const F32*)&_642;
 
             mnormal.right.x = m->right.x;
             mnormal.right.y = m->right.y;
             mnormal.right.z = m->right.z;
         }
-        else if ((float32)iabs(len2) <= _644)
+        else if ((F32)iabs(len2) <= _644)
         {
             // non-matching: incorrect order
 
@@ -208,7 +208,7 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
         {
             scale.x = xsqrt(len2);
 
-            float32 len_inv = _642 / scale.x;
+            F32 len_inv = _642 / scale.x;
 
             mnormal.right.x = m->right.x * len_inv;
             mnormal.right.y = m->right.y * len_inv;
@@ -217,19 +217,19 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     }
 
     {
-        float32 len2 = SQR(m->up.x) + SQR(m->up.y) + SQR(m->up.z);
+        F32 len2 = SQR(m->up.x) + SQR(m->up.y) + SQR(m->up.z);
 
-        if ((float32)iabs(len2 - _642) <= _644)
+        if ((F32)iabs(len2 - _642) <= _644)
         {
             // non-matching: incorrect instruction + order
 
-            scale.y = *(const float32*)&_642;
+            scale.y = *(const F32*)&_642;
 
             mnormal.up.x = m->up.x;
             mnormal.up.y = m->up.y;
             mnormal.up.z = m->up.z;
         }
-        else if ((float32)iabs(len2) <= _644)
+        else if ((F32)iabs(len2) <= _644)
         {
             // non-matching: incorrect order
 
@@ -243,7 +243,7 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
         {
             scale.y = xsqrt(len2);
 
-            float32 len_inv = _642 / scale.y;
+            F32 len_inv = _642 / scale.y;
 
             mnormal.up.x = m->up.x * len_inv;
             mnormal.up.y = m->up.y * len_inv;
@@ -252,19 +252,19 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     }
 
     {
-        float32 len2 = SQR(m->at.x) + SQR(m->at.y) + SQR(m->at.z);
+        F32 len2 = SQR(m->at.x) + SQR(m->at.y) + SQR(m->at.z);
 
-        if ((float32)iabs(len2 - _642) <= _644)
+        if ((F32)iabs(len2 - _642) <= _644)
         {
             // non-matching: incorrect instruction + order
 
-            scale.z = *(const float32*)&_642;
+            scale.z = *(const F32*)&_642;
 
             mnormal.at.x = m->at.x;
             mnormal.at.y = m->at.y;
             mnormal.at.z = m->at.z;
         }
-        else if ((float32)iabs(len2) <= _644)
+        else if ((F32)iabs(len2) <= _644)
         {
             // non-matching: incorrect order
 
@@ -278,7 +278,7 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
         {
             scale.z = xsqrt(len2);
 
-            float32 len_inv = _642 / scale.z;
+            F32 len_inv = _642 / scale.z;
 
             mnormal.at.x = m->at.x * len_inv;
             mnormal.at.y = m->at.y * len_inv;
@@ -418,9 +418,9 @@ void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;
@@ -436,7 +436,7 @@ void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
     xMat3x3Tolocal(o, m, o);
 }
 
-void xVec3SMul(xVec3* o, const xVec3* v, float32 s)
+void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
 {
     o->x = v->x * s;
     o->y = v->y * s;
@@ -450,7 +450,7 @@ void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b)
     o->z = a->z + b->z;
 }
 
-xVec3& xVec3::assign(float32 x, float32 y, float32 z)
+xVec3& xVec3::assign(F32 x, F32 y, F32 z)
 {
     this->x = x;
     this->y = y;
@@ -459,12 +459,12 @@ xVec3& xVec3::assign(float32 x, float32 y, float32 z)
     return *this;
 }
 
-float32 xVec3::length2() const
+F32 xVec3::length2() const
 {
     return this->x * this->x + this->y * this->y + this->z * this->z;
 }
 
-xVec3 xVec3::operator*(float32 f) const
+xVec3 xVec3::operator*(F32 f) const
 {
     xVec3 temp = *this;
     temp *= f;
@@ -472,7 +472,7 @@ xVec3 xVec3::operator*(float32 f) const
     return temp;
 }
 
-xVec3& xVec3::operator*=(float32 f)
+xVec3& xVec3::operator*=(F32 f)
 {
     this->x *= f;
     this->y *= f;
@@ -481,7 +481,7 @@ xVec3& xVec3::operator*=(float32 f)
     return *this;
 }
 
-float32 xVec3::length() const
+F32 xVec3::length() const
 {
     return xsqrt(this->length2());
 }
@@ -511,6 +511,6 @@ void xDrawOBB(const xBox*, const xMat4x3*)
 {
 }
 
-void xDrawSphere2(const xSphere*, uint32)
+void xDrawSphere2(const xSphere*, U32)
 {
 }

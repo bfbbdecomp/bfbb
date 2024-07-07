@@ -7,21 +7,21 @@ struct EGGItem;
 
 struct EGGMisc
 {
-    int32 other;
+    S32 other;
 };
 
 struct EGGData
 {
     union
     {
-        int32 placeholder;
+        S32 placeholder;
         EGGMisc misc;
     };
 };
 
 struct EGGItemFuncs
 {
-    void (*fun_update)(float32, EGGItem*);
+    void (*fun_update)(F32, EGGItem*);
     void (*fun_init)(EGGItem*);
     void (*fun_reset)(EGGItem*);
     void (*fun_done)(EGGItem*);
@@ -29,35 +29,35 @@ struct EGGItemFuncs
 
 struct EGGItem
 {
-    int32 (*fun_check)(EGGItem*);
+    S32 (*fun_check)(EGGItem*);
     EGGItemFuncs* funcs;
-    int32 enabled;
+    S32 enabled;
     EGGData eggdata;
 };
 
 struct GECheat
 {
-    uint32* key_code;
+    U32* key_code;
     void (*fun_cheat)();
-    int32 flg_keep;
-    int32 flg_mode;
+    S32 flg_keep;
+    S32 flg_mode;
 };
 
-int32 zGameExtras_ExtrasFlags();
-void zGameExtras_MoDay(int32* month, int32* day);
+S32 zGameExtras_ExtrasFlags();
+void zGameExtras_MoDay(S32* month, S32* day);
 void zGameExtras_SceneReset();
 void zGameExtras_SceneInit();
 void zGameExtras_SceneExit();
-void zGameExtras_SceneUpdate(float32 dt);
-int32 zGameExtras_CheatFlags();
+void zGameExtras_SceneUpdate(F32 dt);
+S32 zGameExtras_CheatFlags();
 void zGameExtras_NewGameReset();
 void zGameExtras_Save(xSerial* xser);
 void zGameExtras_Load(xSerial* xser);
-int32 TestCheat(uint32* cheat);
-int32 EGG_check_ExtrasFlags(EGGItem* egg);
-void AddToCheatPressed(uint32 param_1);
-void GEC_CheatFlagAdd(int32 bit);
-void GEC_CheatFlagToggle(int32 bit);
+S32 TestCheat(U32* cheat);
+S32 EGG_check_ExtrasFlags(EGGItem* egg);
+void AddToCheatPressed(U32 param_1);
+void GEC_CheatFlagAdd(S32 bit);
+void GEC_CheatFlagToggle(S32 bit);
 void GEC_dfltSound();
 void GEC_cb_AddShiny();
 void GEC_cb_AddSpatulas();
@@ -82,8 +82,8 @@ void GEC_cb_SmallCostars();
 void GEC_cb_RichPeep();
 void GEC_cb_PanHandle();
 void zGame_HackGalleryInit();
-uint32 zGame_HackIsGallery();
+U32 zGame_HackIsGallery();
 
-template <class T> T xUtil_choose(T const* list, int32 size, float32 const* c);
+template <class T> T xUtil_choose(T const* list, S32 size, F32 const* c);
 
 #endif

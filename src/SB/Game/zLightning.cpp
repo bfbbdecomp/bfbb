@@ -52,7 +52,7 @@ void zLightningRender()
     }
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
-    for (int32 i = 0; i < 0x30; i++)
+    for (S32 i = 0; i < 0x30; i++)
     {
         if (&sLightning[i] != NULL && sLightning[i].flags & 0x41 == 0x41)
         {
@@ -63,7 +63,7 @@ void zLightningRender()
 
 #endif
 
-void zLightningShow(zLightning* l, int32 show)
+void zLightningShow(zLightning* l, S32 show)
 {
     if (show)
     {
@@ -80,26 +80,26 @@ void zLightningKill(zLightning* l)
     l->flags &= 0xfffffefe;
 }
 
-void xDebugAddTweak(char* name, uint8* property, uint8 param_3, uint8 param_4,
-                    tweak_callback* callback, void* param_6, uint32 param_7)
+void xDebugAddTweak(char* name, U8* property, U8 param_3, U8 param_4,
+                    tweak_callback* callback, void* param_6, U32 param_7)
 {
     // Redacted. :}
 }
 
-void xDebugAddFlagTweak(char* name, uint32* property, uint32 param_3, tweak_callback* callback,
-                        void* param_5, uint32 param_6)
+void xDebugAddFlagTweak(char* name, U32* property, U32 param_3, tweak_callback* callback,
+                        void* param_5, U32 param_6)
 {
     // Redacted. :}
 }
 
-void xDebugAddSelectTweak(char* name, uint32* param_2, char** param_3, uint32* param_4,
-                          uint32 param_5, tweak_callback* callback, void* param_7, uint32 param_8)
+void xDebugAddSelectTweak(char* name, U32* param_2, char** param_3, U32* param_4,
+                          U32 param_5, tweak_callback* callback, void* param_7, U32 param_8)
 {
     // Redacted. :}
 }
 
-void xDebugAddTweak(char* name, int16* property, int16 param_3, int16 param_4,
-                    tweak_callback* callback, void* param_6, uint32 param_7)
+void xDebugAddTweak(char* name, S16* property, S16 param_3, S16 param_4,
+                    tweak_callback* callback, void* param_6, U32 param_7)
 {
     // Redacted. :}
 }

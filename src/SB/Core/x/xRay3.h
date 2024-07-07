@@ -7,9 +7,9 @@ struct xRay3
 {
     xVec3 origin;
     xVec3 dir;
-    float32 min_t;
-    float32 max_t;
-    int32 flags;
+    F32 min_t;
+    F32 max_t;
+    S32 flags;
 };
 
 #endif

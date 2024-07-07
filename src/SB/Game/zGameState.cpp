@@ -7,16 +7,16 @@
 #include "zGlobals.h"
 #include "zGame.h"
 
-int32 gGameState = eGameState_Dead;
+S32 gGameState = eGameState_Dead;
 eGameMode gGameMode;
 _GameOstrich gGameOstrich;
 
 // clang-format off
-static uint32 sGameMode_DispatchTable[eGameMode_Count] =
+static U32 sGameMode_DispatchTable[eGameMode_Count] =
 {
 };
 
-static uint32 sGameState_DispatchTable[eGameState_Count] =
+static U32 sGameState_DispatchTable[eGameState_Count] =
 {
     eEventDispatcher_GameState_FirstTime,
     eEventDispatcher_GameState_Play,
@@ -26,38 +26,38 @@ static uint32 sGameState_DispatchTable[eGameState_Count] =
     eEventDispatcher_GameState_Dead
 };
 
-static uint32 sPauseState_DispatchTable[ePauseState_Count] =
+static U32 sPauseState_DispatchTable[ePauseState_Count] =
 {
     eEventDispatcher_PauseState_Pause,
     eEventDispatcher_PauseState_Options
 };
 
-static uint32 sSaveState_DispatchTable[eSaveState_Count] =
+static U32 sSaveState_DispatchTable[eSaveState_Count] =
 {
     eEventDispatcher_SaveState_SelectMemCard,
     eEventDispatcher_SaveState_SelectSlot,
     eEventDispatcher_SaveState_Saving
 };
 
-static uint32 sOptionsState_DispatchTable[eOptionsState_Count] =
+static U32 sOptionsState_DispatchTable[eOptionsState_Count] =
 {
     eEventDispatcher_OptionsState_Options
 };
 
-static uint32 sLoadState_DispatchTable[eLoadState_Count] =
+static U32 sLoadState_DispatchTable[eLoadState_Count] =
 {
     eEventDispatcher_LoadState_SelectMemCard,
     eEventDispatcher_LoadState_SelectSlot,
     eEventDispatcher_LoadState_Loading
 };
 
-static uint32 sTitleState_DispatchTable[eTitleState_Count] =
+static U32 sTitleState_DispatchTable[eTitleState_Count] =
 {
     eEventDispatcher_TitleState_Start,
     eEventDispatcher_TitleState_Attract
 };
 
-static uint32 sIntroState_DispatchTable[eIntroState_Count] =
+static U32 sIntroState_DispatchTable[eIntroState_Count] =
 {
     eEventDispatcher_IntroState_Sony,
     eEventDispatcher_IntroState_Publisher,
@@ -65,7 +65,7 @@ static uint32 sIntroState_DispatchTable[eIntroState_Count] =
     eEventDispatcher_IntroState_License
 };
 
-static uint32 sGameState_DoDispatchTable[eGameState_Count] =
+static U32 sGameState_DoDispatchTable[eGameState_Count] =
 {
     eEventDispatcher_SetGameState_FirstTime,
     eEventDispatcher_SetGameState_Play,
@@ -77,38 +77,38 @@ static uint32 sGameState_DoDispatchTable[eGameState_Count] =
     eEventDispatcher_SetGameState_Exit
 };
 
-static uint32 sPauseState_DoDispatchTable[ePauseState_Count] =
+static U32 sPauseState_DoDispatchTable[ePauseState_Count] =
 {
     eEventDispatcher_SetPauseState_Pause,
     eEventDispatcher_SetPauseState_Options
 };
 
-static uint32 sSaveState_DoDispatchTable[eSaveState_Count] =
+static U32 sSaveState_DoDispatchTable[eSaveState_Count] =
 {
     eEventDispatcher_SetSaveState_SelectMemCard,
     eEventDispatcher_SetSaveState_SelectSlot,
     eEventDispatcher_SetSaveState_Saving
 };
 
-static uint32 sOptionsState_DoDispatchTable[eOptionsState_Count] =
+static U32 sOptionsState_DoDispatchTable[eOptionsState_Count] =
 {
     eEventDispatcher_SetOptionsState_Options
 };
 
-static uint32 sLoadState_DoDispatchTable[eLoadState_Count] =
+static U32 sLoadState_DoDispatchTable[eLoadState_Count] =
 {
     eEventDispatcher_SetLoadState_SelectMemCard,
     eEventDispatcher_SetLoadState_SelectSlot,
     eEventDispatcher_SetLoadState_Loading
 };
 
-static uint32 sTitleState_DoDispatchTable[eTitleState_Count] =
+static U32 sTitleState_DoDispatchTable[eTitleState_Count] =
 {
     eEventDispatcher_SetTitleState_Start,
     eEventDispatcher_SetTitleState_Attract
 };
 
-static uint32 sIntroState_DoDispatchTable[eIntroState_Count] =
+static U32 sIntroState_DoDispatchTable[eIntroState_Count] =
 {
     eEventDispatcher_SetIntroState_Sony,
     eEventDispatcher_SetIntroState_Publisher,
@@ -117,7 +117,7 @@ static uint32 sIntroState_DoDispatchTable[eIntroState_Count] =
 };
 // clang-format on
 
-int32 zGameStateGet()
+S32 zGameStateGet()
 {
     return gGameState;
 }
@@ -137,10 +137,10 @@ void zGameSetOstrich(_GameOstrich value)
     gGameOstrich = value;
 }
 
-int32 zGameStateFindEvent(uint32* eventList, int32 eventCount, int32 targetMode, int32 targetEvent,
-                          int32* new_mode, int32* new_state)
+S32 zGameStateFindEvent(U32* eventList, S32 eventCount, S32 targetMode, S32 targetEvent,
+                          S32* new_mode, S32* new_state)
 {
-    for (int32 i = 0; i < eventCount; ++i)
+    for (S32 i = 0; i < eventCount; ++i)
     {
         if (targetEvent == eventList[i])
         {
@@ -152,12 +152,12 @@ int32 zGameStateFindEvent(uint32* eventList, int32 eventCount, int32 targetMode,
     return 0;
 }
 
-void zGameStateSwitchEvent(int32 event)
+void zGameStateSwitchEvent(S32 event)
 {
-    int32 old_mode = zGameModeGet();
-    int32 old_state = zGameStateGet();
-    int32 new_mode = -1;
-    int32 new_state = -1;
+    S32 old_mode = zGameModeGet();
+    S32 old_state = zGameStateGet();
+    S32 new_mode = -1;
+    S32 new_state = -1;
 
     if (zGameStateFindEvent(sGameState_DoDispatchTable, eGameState_Count, eGameMode_Game, event,
                             &new_mode, &new_state) ||
@@ -194,10 +194,10 @@ void zGameStateSwitchEvent(int32 event)
     }
 }
 
-void zGameStateSwitch(int32 theNewState)
+void zGameStateSwitch(S32 theNewState)
 {
-    int32 stateOld = gGameState;
-    uint32 theEvent = 0;
+    S32 stateOld = gGameState;
+    U32 theEvent = 0;
 
     gGameState = theNewState;
 

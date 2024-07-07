@@ -6,13 +6,13 @@
 #include "xVec3.h"
 
 extern _xSndDelayed sDelayedSnd[16];
-extern uint32 sDelayedPaused;
+extern U32 sDelayedPaused;
 
-extern float32 sTimeElapsed;
-extern float32 _585;
-extern float32 _586;
-extern float32 _598;
-extern float32 _599;
+extern F32 sTimeElapsed;
+extern F32 _585;
+extern F32 _586;
+extern F32 _598;
+extern F32 _599;
 extern xSndGlobals gSnd;
 
 #ifdef NON_MATCHING
@@ -20,7 +20,7 @@ void xSndInit()
 {
     iSndInit();
     xSndVoiceInfo* voice = gSnd.voice;
-    for (int32 i = 0; i < 64; i++, voice++)
+    for (S32 i = 0; i < 64; i++, voice++)
     {
         voice->flags = 0;
         voice->lock_owner = 0;
@@ -46,7 +46,7 @@ void xSndInit()
 void xSndSceneInit()
 {
     gSnd.listenerMode = SND_LISTENER_MODE_PLAYER;
-    for (uint32 i = 0; i < 2; i++)
+    for (U32 i = 0; i < 2; i++)
     {
         gSnd.listenerMat[i].at.assign(_585, _598, _598);
         gSnd.listenerMat[i].right.assign(_598, _585, _598);
@@ -88,7 +88,7 @@ void xSndResume()
     sDelayedPaused = 0;
 }
 
-void xSndSetCategoryVol(sound_category category, float32 vol)
+void xSndSetCategoryVol(sound_category category, F32 vol)
 {
     gSnd.categoryVolFader[category] = vol;
 }
@@ -99,7 +99,7 @@ void xSndDelayedInit()
     for (int i = 0; i < 16; i++)
     {
         //Alternates between f1 and f0
-        sDelayedSnd[i].delay = *(volatile float32*)&_598;
+        sDelayedSnd[i].delay = *(volatile F32*)&_598;
     }
     sDelayedPaused = 0;
 }
@@ -134,7 +134,7 @@ void xSndCalculateListenerPosition()
 #ifdef NON_MATCHING
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 {
-    uint32 flags = pVoice->flags;
+    U32 flags = pVoice->flags;
     xVec3* ent;
 
     if ((flags & 1) != 0)
@@ -216,24 +216,24 @@ void xSndExit()
     reset_faders();
 }
 
-uint32 xSndPlay(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                uint32 parentID, sound_category category, float32 delay)
+U32 xSndPlay(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
+                U32 parentID, sound_category category, F32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, parentID, NULL, NULL, _598, _598,
                             category, delay);
 }
 
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                  xEnt* parent, float32 innerRadius, float32 outerRadius, sound_category category,
-                  float32 delay)
+U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
+                  xEnt* parent, F32 innerRadius, F32 outerRadius, sound_category category,
+                  F32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, NULL, parent, NULL, innerRadius,
                             outerRadius, category, delay);
 }
 
-uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32 flags,
-                  const xVec3* pos, float32 innerRadius, float32 outerRadius,
-                  sound_category category, float32 delay)
+U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
+                  const xVec3* pos, F32 innerRadius, F32 outerRadius,
+                  sound_category category, F32 delay)
 {
     if (flags & 0x800)
     {
@@ -247,12 +247,12 @@ uint32 xSndPlay3D(uint32 id, float32 vol, float32 pitch, uint32 priority, uint32
     }
 }
 
-void xSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
+void xSndStartStereo(U32 id1, U32 id2, F32 pitch)
 {
     iSndStartStereo(id1, id2, pitch);
 }
 
-uint32 xSndIDIsPlaying(uint32 sndID)
+U32 xSndIDIsPlaying(U32 sndID)
 {
     xSndVoiceInfo* voice = gSnd.voice;
     for (int i = 0; i < 64; i++, voice++)
@@ -265,15 +265,15 @@ uint32 xSndIDIsPlaying(uint32 sndID)
     return 0;
 }
 
-void xSndStop(uint32 snd)
+void xSndStop(U32 snd)
 {
     iSndStop(snd);
 }
 
-void xSndParentDied(uint32 pid)
+void xSndParentDied(U32 pid)
 {
     xSndVoiceInfo* voice = gSnd.voice;
-    for (int32 i = 0; i < 64; i++, voice++)
+    for (S32 i = 0; i < 64; i++, voice++)
     {
         if (voice->parentID == pid)
         {
@@ -282,9 +282,9 @@ void xSndParentDied(uint32 pid)
     }
 }
 
-void xSndStopChildren(uint32 pid)
+void xSndStopChildren(U32 pid)
 {
-    uint32 i = 0;
+    U32 i = 0;
     xSndVoiceInfo* voice = gSnd.voice;
     for (; i < 64; i++, voice++)
     {
@@ -296,24 +296,24 @@ void xSndStopChildren(uint32 pid)
     }
 }
 
-void xSndSetVol(uint32 snd, float32 vol)
+void xSndSetVol(U32 snd, F32 vol)
 {
     iSndSetVol(snd, vol);
 }
 
-void xSndSetPitch(uint32 snd, float32 pitch)
+void xSndSetPitch(U32 snd, F32 pitch)
 {
     iSndSetPitch(snd, pitch);
 }
 
-void xSndSetExternalCallback(void (*callback)(uint32))
+void xSndSetExternalCallback(void (*callback)(U32))
 {
     iSndSetExternalCallback(callback);
 }
 
 #if 0
 // Subtle issue with the register use in the setup of the loop
-uint8 xSndStreamReady(uint32 owner)
+U8 xSndStreamReady(U32 owner)
 {
     for (xSndVoiceInfo* voice = gSnd.voice; voice != gSnd.voice + 6; voice++)
     {
@@ -328,7 +328,7 @@ uint8 xSndStreamReady(uint32 owner)
 
 #if 0
 // Same issue as xSndStreamReady
-void xSndStreamUnlock(uint32 owner)
+void xSndStreamUnlock(U32 owner)
 {
     xSndVoiceInfo* voice = gSnd.voice;
     for (; voice != gSnd.voice + 6; voice++)
@@ -343,7 +343,7 @@ void xSndStreamUnlock(uint32 owner)
 #endif
 
 #if 0
-uint32 xSndCategoryGetsEffects(sound_category category)
+U32 xSndCategoryGetsEffects(sound_category category)
 {
     if (-(1 - category >> 1) + (~category | 1))
     {
@@ -356,7 +356,7 @@ uint32 xSndCategoryGetsEffects(sound_category category)
 }
 #endif
 
-float32 xSndGetVol(uint32 snd)
+F32 xSndGetVol(U32 snd)
 {
     return iSndGetVol(snd);
 }

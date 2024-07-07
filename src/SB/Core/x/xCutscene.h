@@ -5,30 +5,30 @@
 
 struct xCutsceneInfo
 {
-    uint32 Magic;
-    uint32 AssetID;
-    uint32 NumData;
-    uint32 NumTime;
-    uint32 MaxModel;
-    uint32 MaxBufEven;
-    uint32 MaxBufOdd;
-    uint32 HeaderSize;
-    uint32 VisCount;
-    uint32 VisSize;
-    uint32 BreakCount;
-    uint32 pad;
+    U32 Magic;
+    U32 AssetID;
+    U32 NumData;
+    U32 NumTime;
+    U32 MaxModel;
+    U32 MaxBufEven;
+    U32 MaxBufOdd;
+    U32 HeaderSize;
+    U32 VisCount;
+    U32 VisSize;
+    U32 BreakCount;
+    U32 pad;
     char SoundLeft[16];
     char SoundRight[16];
 };
 
 struct xCutsceneData
 {
-    uint32 DataType;
-    uint32 AssetID;
-    uint32 ChunkSize;
+    U32 DataType;
+    U32 AssetID;
+    U32 ChunkSize;
     union
     {
-        uint32 FileOffset;
+        U32 FileOffset;
         void* DataPtr;
     };
 };
@@ -38,71 +38,71 @@ struct xCutsceneData
 
 struct xCutsceneBreak
 {
-    float32 Time;
-    int32 Index;
+    F32 Time;
+    S32 Index;
 };
 
 struct xCutsceneTime
 {
-    float32 StartTime;
-    float32 EndTime;
-    uint32 NumData;
-    uint32 ChunkIndex;
+    F32 StartTime;
+    F32 EndTime;
+    U32 NumData;
+    U32 ChunkIndex;
 };
 
 struct XCSNNosey
 {
     void* userdata;
-    int32 flg_nosey;
+    S32 flg_nosey;
 };
 
 struct xCutscene
 {
     xCutsceneInfo* Info;
     xCutsceneData* Data;
-    uint32* TimeChunkOffs;
-    uint32* Visibility;
+    U32* TimeChunkOffs;
+    U32* Visibility;
     xCutsceneBreak* BreakList;
     xCutsceneTime* Play;
     xCutsceneTime* Stream;
-    uint32 Waiting;
-    uint32 BadReadPause;
-    float32 BadReadSpeed;
+    U32 Waiting;
+    U32 BadReadPause;
+    F32 BadReadSpeed;
     void* RawBuf;
     void* AlignBuf;
-    float32 Time;
-    float32 CamTime;
-    uint32 PlayIndex;
-    uint32 Ready;
-    int32 DataLoading;
-    uint32 GotData;
-    uint32 ShutDownWait;
-    float32 PlaybackSpeed;
-    uint32 Opened;
+    F32 Time;
+    F32 CamTime;
+    U32 PlayIndex;
+    U32 Ready;
+    S32 DataLoading;
+    U32 GotData;
+    U32 ShutDownWait;
+    F32 PlaybackSpeed;
+    U32 Opened;
     tag_xFile File;
-    int32 AsyncID;
+    S32 AsyncID;
     void* MemBuf;
     void* MemCurr;
-    uint32 SndStarted;
-    uint32 SndNumChannel;
-    uint32 SndChannelReq[2];
-    uint32 SndAssetID[2];
-    uint32 SndHandle[2];
+    U32 SndStarted;
+    U32 SndNumChannel;
+    U32 SndChannelReq[2];
+    U32 SndAssetID[2];
+    U32 SndHandle[2];
     XCSNNosey* cb_nosey;
 };
 
 struct xEnt;
 
-extern uint32 gFrameCount;
+extern U32 gFrameCount;
 
 void xCutscene_Init(void* toc);
-float32 xlog(float32 f);
+F32 xlog(F32 f);
 xCutscene* xCutscene_CurrentCutscene();
-void xCutscene_Render(xCutscene* csn, xEnt**, int32*, float32*);
-uint32 iCSFileOpen(xCutscene* csn);
-xCutscene* xCutscene_Create(uint32 id);
-int32 xCutscene_Destroy(xCutscene* csn);
-int32 xCutscene_LoadStart(xCutscene* csn);
-int32 xCutscene_Update(xCutscene* csn, float32 dt);
+void xCutscene_Render(xCutscene* csn, xEnt**, S32*, F32*);
+U32 iCSFileOpen(xCutscene* csn);
+xCutscene* xCutscene_Create(U32 id);
+S32 xCutscene_Destroy(xCutscene* csn);
+S32 xCutscene_LoadStart(xCutscene* csn);
+S32 xCutscene_Update(xCutscene* csn, F32 dt);
 
 #endif

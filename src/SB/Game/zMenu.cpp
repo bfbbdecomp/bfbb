@@ -29,28 +29,28 @@
 #include "zMusic.h"
 #include "zSaveLoad.h"
 
-static int32 sFirstBoot = 1;
+static S32 sFirstBoot = 1;
 
 // TODO: This probably wasn't volatile in the original code, but we have 100%
 // matching code for all of the functions which use it with it marked as
 // volatile, so leave it that way for now.
-static volatile int32 card;
-static int32 sInMenu;
-static int32 corruptFileCount;
-static int8 corruptFiles[3][64];
+static volatile S32 card;
+static S32 sInMenu;
+static S32 corruptFileCount;
+static S8 corruptFiles[3][64];
 
-static volatile float32 time_elapsed = 1.0f / 100.0f;
-static volatile float32 holdTmr = 10.0f;
-static volatile float32 time_last;
-static volatile float32 time_current;
-static volatile float32 sAttractMode_timer;
+static volatile F32 time_elapsed = 1.0f / 100.0f;
+static volatile F32 holdTmr = 10.0f;
+static volatile F32 time_last;
+static volatile F32 time_current;
+static volatile F32 sAttractMode_timer;
 
-int32 zMenuRunning()
+S32 zMenuRunning()
 {
     return sInMenu;
 }
 
-void zMenuInit(uint32 theSceneID)
+void zMenuInit(U32 theSceneID)
 {
     sInMenu = 1;
     xsrand(iTimeGet());
@@ -90,13 +90,13 @@ void zMenuSetup()
     zEntEvent(&globals.player.ent, 8);
 }
 
-void zMenuFirstBootSet(int32 value);
+void zMenuFirstBootSet(S32 value);
 
 // Equivalent
 // Scheduling is a mess. Some float constants are being pushed onto the stack
-uint32 zMenuLoop()
+U32 zMenuLoop()
 {
-    int32 s = 0;
+    S32 s = 0;
     if (sFirstBoot)
     {
         zGameModeSwitch(eGameMode_Intro);
@@ -117,11 +117,11 @@ uint32 zMenuLoop()
     iColor_tag black = { 0, 0, 0, 255 }; //BlackColorInitializer;
     iColor_tag clear = { 0 }; //ClearColorInitializer;
     xScrFxFade(&black, &clear, 0.0f, NULL, 1);
-    int32 ostrich_delay = 0xa;
+    S32 ostrich_delay = 0xa;
 
     time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
 
-    int32 draw_black;
+    S32 draw_black;
 
     do
     {
@@ -218,7 +218,7 @@ uint32 zMenuLoop()
         }
 
         xDrawBegin();
-        int32 wasPaused = zMenuIsPaused();
+        S32 wasPaused = zMenuIsPaused();
         zSceneUpdate(time_elapsed);
 
         if (wasPaused == 0)
@@ -262,7 +262,7 @@ uint32 zMenuLoop()
             tgt[3] = src[0];
             if (src[0] < '0' || src[0] > '9')
             {
-                memcpy(tgt, src, sizeof(uint32));
+                memcpy(tgt, src, sizeof(U32));
             }
             zGameModeSwitch(eGameMode_Game);
             zGameStateSwitch(0);
@@ -289,22 +289,22 @@ uint32 zMenuLoop()
     return s;
 }
 
-uint32 zMenuIsPaused()
+U32 zMenuIsPaused()
 {
     return 0;
 }
 
-int32 zMenuLoopContinue()
+S32 zMenuLoopContinue()
 {
     return gGameMode != eGameMode_Game;
 }
 
-uint32 zMenuUpdateMode()
+U32 zMenuUpdateMode()
 {
-    uint32 retVal = 0;
+    U32 retVal = 0;
     if (gGameMode == eGameMode_Load)
     {
-        float32 elapsed1 = float(iTimeGet()) - time_last;
+        F32 elapsed1 = float(iTimeGet()) - time_last;
         retVal = zSaveLoad_LoadLoop();
         if (retVal == '0000')
         {
@@ -325,7 +325,7 @@ uint32 zMenuUpdateMode()
     return retVal;
 }
 
-uint32 zMenuGetCorruptFiles(int8 name[][64])
+U32 zMenuGetCorruptFiles(S8 name[][64])
 {
     for (int i = 0; i < corruptFileCount; ++i)
     {
@@ -334,13 +334,13 @@ uint32 zMenuGetCorruptFiles(int8 name[][64])
     return corruptFileCount;
 }
 
-bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* neededFiles)
+bool zMenuCardCheckStartup(S32* bytesNeeded, S32* availOnDisk, S32* neededFiles)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_SAVE);
-    int32 tgtcnt, tgtmax;
-    int32 rc = 0;
+    S32 tgtcnt, tgtmax;
+    S32 rc = 0;
     tgtcnt = xSGTgtCount(ldinst, &tgtmax);
-    int32 tgtslot;
+    S32 tgtslot;
     switch (tgtcnt)
     {
     case 2:
@@ -473,13 +473,13 @@ bool zMenuCardCheckStartup(int32* bytesNeeded, int32* availOnDisk, int32* needed
     return !rc;
 }
 
-int32 zMenuGetBadCard()
+S32 zMenuGetBadCard()
 {
     return card + 1;
 }
 
 // Floating point assignments are out of order.
-void zMenuFMVPlay(int8* filename, uint32 buttons, float32 time, bool skippable, bool lockController)
+void zMenuFMVPlay(S8* filename, U32 buttons, F32 time, bool skippable, bool lockController)
 {
     if (filename)
     {
@@ -490,12 +490,12 @@ void zMenuFMVPlay(int8* filename, uint32 buttons, float32 time, bool skippable, 
     }
 }
 
-int32 zMenuIsFirstBoot()
+S32 zMenuIsFirstBoot()
 {
     return sFirstBoot;
 }
 
-void zMenuFirstBootSet(int32 value)
+void zMenuFirstBootSet(S32 value)
 {
     sFirstBoot = value;
 }

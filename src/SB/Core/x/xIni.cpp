@@ -30,13 +30,13 @@ char* TrimWhitespace(char* string)
     return string;
 }
 
-xIniFile* xIniParse(char* buf, int32 len)
+xIniFile* xIniParse(char* buf, S32 len)
 {
-    int32 i;
-    int32 ccr = 1;
-    int32 clf = 1;
-    int32 copen = 0;
-    int32 lastCRLF = -1;
+    S32 i;
+    S32 ccr = 1;
+    S32 clf = 1;
+    S32 copen = 0;
+    S32 lastCRLF = -1;
     for (i = 0; i < len; i++)
     {
         switch (buf[i])
@@ -60,8 +60,8 @@ xIniFile* xIniParse(char* buf, int32 len)
         ccr = clf;
     }
 
-    int32 sectionAlloc = copen;
-    int32 valueAlloc = ccr;
+    S32 sectionAlloc = copen;
+    S32 valueAlloc = ccr;
 
     xIniFile* ini = (xIniFile*)RwMalloc(sizeof(xIniFile) + (valueAlloc * sizeof(xIniValue)) +
                                         (sectionAlloc * sizeof(xIniSection)) + (len - lastCRLF));
@@ -158,9 +158,9 @@ void xIniDestroy(xIniFile* ini)
     RwFree(ini);
 }
 
-int32 xIniGetIndex(xIniFile* ini, int8* tok)
+S32 xIniGetIndex(xIniFile* ini, S8* tok)
 {
-    for (int32 i = 0; i < ini->NumValues; i++)
+    for (S32 i = 0; i < ini->NumValues; i++)
     {
         if (xStricmp(ini->Values[i].tok, tok) == 0)
         {
@@ -171,9 +171,9 @@ int32 xIniGetIndex(xIniFile* ini, int8* tok)
     return -1;
 }
 
-int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def)
+S32 xIniGetInt(xIniFile* ini, S8* tok, S32 def)
 {
-    int32 index = xIniGetIndex(ini, tok);
+    S32 index = xIniGetIndex(ini, tok);
     if (index == -1)
     {
         return def;
@@ -181,9 +181,9 @@ int32 xIniGetInt(xIniFile* ini, int8* tok, int32 def)
     return atoi(ini->Values[index].val);
 }
 
-float32 xIniGetFloat(xIniFile* ini, int8* tok, float32 def)
+F32 xIniGetFloat(xIniFile* ini, S8* tok, F32 def)
 {
-    int32 index = xIniGetIndex(ini, tok);
+    S32 index = xIniGetIndex(ini, tok);
     if (index == -1)
     {
         return def;
@@ -191,9 +191,9 @@ float32 xIniGetFloat(xIniFile* ini, int8* tok, float32 def)
     return atof(ini->Values[index].val);
 }
 
-int8* xIniGetString(xIniFile* ini, int8* tok, int8* def)
+S8* xIniGetString(xIniFile* ini, S8* tok, S8* def)
 {
-    int32 index = xIniGetIndex(ini, tok);
+    S32 index = xIniGetIndex(ini, tok);
     if (index == -1)
     {
         return def;

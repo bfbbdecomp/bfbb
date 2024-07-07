@@ -7,14 +7,14 @@ struct zEntTrigger : zEnt
 {
     xMat4x3 triggerMatrix;
     xBox triggerBox;
-    uint32 entered;
+    U32 entered;
 };
 
 struct xTriggerAsset
 {
     xVec3 p[4];
     xVec3 direction;
-    uint32 flags;
+    U32 flags;
 };
 
 #define ZENTTRIGGER_TYPE_BOX 0
@@ -26,8 +26,8 @@ struct xTriggerAsset
 
 void zEntTriggerInit(void* ent, void* asset);
 void zEntTriggerInit(zEntTrigger* ent, xEntAsset* asset);
-void zEntTriggerUpdate(zEntTrigger* trig, xScene*, float32);
-int32 zEntTriggerEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*);
+void zEntTriggerUpdate(zEntTrigger* trig, xScene*, F32);
+S32 zEntTriggerEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*);
 void zEntTriggerSave(zEntTrigger* ent, xSerial* s);
 void zEntTriggerLoad(zEntTrigger* ent, xSerial* s);
 void zEntTriggerReset(zEntTrigger* ent);

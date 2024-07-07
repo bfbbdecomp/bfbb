@@ -16,65 +16,65 @@
 struct st_BINIO_XTRADATA
 {
     char* dbl_buf;
-    int32 dblbuf_size;
-    int32 dbl_beg;
-    int32 dbl_end;
-    int32 dbl_amt;
-    uint32 fpos;
+    S32 dblbuf_size;
+    S32 dbl_beg;
+    S32 dbl_end;
+    S32 dbl_amt;
+    U32 fpos;
     char* asyn_data;
-    int32 asyn_amt;
-    int32 asyn_elesize;
-    int32 asyn_ismot;
+    S32 asyn_amt;
+    S32 asyn_elesize;
+    S32 asyn_ismot;
     en_BIO_ASYNC_ERRCODES asyn_status;
-    uint32 pad[3];
-    int32 gcaskey;
+    U32 pad[3];
+    S32 gcaskey;
 };
 
-static uint32 g_loadlock = 0xFFFFFF00;
+static U32 g_loadlock = 0xFFFFFF00;
 static st_FILELOADINFO g_loadinst[8] = {};
 static tag_xFile g_xfload[8] = {};
 static st_BINIO_XTRADATA g_xtraload[8] = {};
 static st_BINIO_XTRADATA* g_async_context = NULL;
 
 static void LoadDestroy(st_FILELOADINFO* fli);
-static int32 SkipBytes(st_FILELOADINFO* fli, int32 fwd);
-static int32 ReadSeek(st_FILELOADINFO* fli, int32 pos);
-static void SetBuffer(st_FILELOADINFO* fli, char* dblbuffer, int32 bufsize);
+static S32 SkipBytes(st_FILELOADINFO* fli, S32 fwd);
+static S32 ReadSeek(st_FILELOADINFO* fli, S32 pos);
+static void SetBuffer(st_FILELOADINFO* fli, char* dblbuffer, S32 bufsize);
 static void DiscardBuffer(st_FILELOADINFO* fli);
-static int32 ReadRaw(st_FILELOADINFO* fli, void* data, int32 size, int32 count);
-static int32 ReadBytes(st_FILELOADINFO* fli, char* data, int32 count);
-static int32 ReadMShorts(st_FILELOADINFO* fli, int16* data, int32 count);
-static int32 ReadMLongs(st_FILELOADINFO* fli, int32* data, int32 count);
-static int32 ReadMFloats(st_FILELOADINFO* fli, float32* data, int32 count);
-static int32 ReadMDoubles(st_FILELOADINFO* fli, float64* data, int32 count);
-static int32 ReadIShorts(st_FILELOADINFO* fli, int16* data, int32 count);
-static int32 ReadILongs(st_FILELOADINFO* fli, int32* data, int32 count);
-static int32 ReadIFloats(st_FILELOADINFO* fli, float32* data, int32 count);
-static int32 ReadIDoubles(st_FILELOADINFO* fli, float64* data, int32 count);
-static int32 AsyncMRead(st_FILELOADINFO* fli, int32 offset, char* data, int32 size, int32 n);
-static int32 AsyncIRead(st_FILELOADINFO* fli, int32 offset, char* data, int32 size, int32 n);
+static S32 ReadRaw(st_FILELOADINFO* fli, void* data, S32 size, S32 count);
+static S32 ReadBytes(st_FILELOADINFO* fli, char* data, S32 count);
+static S32 ReadMShorts(st_FILELOADINFO* fli, S16* data, S32 count);
+static S32 ReadMLongs(st_FILELOADINFO* fli, S32* data, S32 count);
+static S32 ReadMFloats(st_FILELOADINFO* fli, F32* data, S32 count);
+static S32 ReadMDoubles(st_FILELOADINFO* fli, F64* data, S32 count);
+static S32 ReadIShorts(st_FILELOADINFO* fli, S16* data, S32 count);
+static S32 ReadILongs(st_FILELOADINFO* fli, S32* data, S32 count);
+static S32 ReadIFloats(st_FILELOADINFO* fli, F32* data, S32 count);
+static S32 ReadIDoubles(st_FILELOADINFO* fli, F64* data, S32 count);
+static S32 AsyncMRead(st_FILELOADINFO* fli, S32 offset, char* data, S32 size, S32 n);
+static S32 AsyncIRead(st_FILELOADINFO* fli, S32 offset, char* data, S32 size, S32 n);
 static en_BIO_ASYNC_ERRCODES AsyncReadStatus(st_FILELOADINFO* fli);
-static void Swap2(char* d, int32 n);
-static void Swap4(char* d, int32 n);
-static void Swap8(char* d, int32 n);
-static tag_xFile* BFD_open(const char* filename, const char* mode, uint32 lockid, int32,
+static void Swap2(char* d, S32 n);
+static void Swap4(char* d, S32 n);
+static void Swap8(char* d, S32 n);
+static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32,
                            void* xtradata);
 static void BFD_close(tag_xFile* bffp, void* xtradata);
-static int32 BFD_read(void* data, int32 elesize, int32 elecnt, tag_xFile* bffp, void* xtradata);
-static int32 BFD_seek(tag_xFile* bffp, int32 offset, int32 whence, void* xtradata);
-static int32 BFD_getLength(tag_xFile* bffp, void* xtradata);
-static int32 BFD_startSector(const char* filename);
+static S32 BFD_read(void* data, S32 elesize, S32 elecnt, tag_xFile* bffp, void* xtradata);
+static S32 BFD_seek(tag_xFile* bffp, S32 offset, S32 whence, void* xtradata);
+static S32 BFD_getLength(tag_xFile* bffp, void* xtradata);
+static S32 BFD_startSector(const char* filename);
 static void BFD_cb_GCP2_readasync(tag_xFile* bffp);
-static int32 BFD_AsyncRead(st_FILELOADINFO* fli, int32 pos, void* data, int32 size, int32 n,
-                           int32 endian);
+static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n,
+                           S32 endian);
 static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli);
 
 st_FILELOADINFO* xBinioLoadCreate(const char* filename)
 {
     st_FILELOADINFO* fli = NULL;
     tag_xFile* tmp_fp;
-    int32 i;
-    int32 uselock = -1;
+    S32 i;
+    S32 uselock = -1;
 
     for (i = 0; i < 8; i++)
     {
@@ -147,14 +147,14 @@ static void LoadDestroy(st_FILELOADINFO* fli)
         BFD_close(fp, fli->xtradata);
     }
 
-    uint32 lockid = fli->lockid;
+    U32 lockid = fli->lockid;
 
     memset(fli, 0, sizeof(st_FILELOADINFO));
 
     g_loadlock &= ~(1 << lockid);
 }
 
-static int32 SkipBytes(st_FILELOADINFO* fli, int32 fwd)
+static S32 SkipBytes(st_FILELOADINFO* fli, S32 fwd)
 {
     tag_xFile* file = (tag_xFile*)fli->privdata;
 
@@ -191,7 +191,7 @@ static int32 SkipBytes(st_FILELOADINFO* fli, int32 fwd)
     return 1;
 }
 
-static int32 ReadSeek(st_FILELOADINFO* fli, int32 pos)
+static S32 ReadSeek(st_FILELOADINFO* fli, S32 pos)
 {
     tag_xFile* file = (tag_xFile*)fli->privdata;
 
@@ -220,7 +220,7 @@ static int32 ReadSeek(st_FILELOADINFO* fli, int32 pos)
     return 1;
 }
 
-static void SetBuffer(st_FILELOADINFO* fli, char* dblbuffer, int32 bufsize)
+static void SetBuffer(st_FILELOADINFO* fli, char* dblbuffer, S32 bufsize)
 {
     st_BINIO_XTRADATA* xtra = (st_BINIO_XTRADATA*)fli->xtradata;
 
@@ -239,7 +239,7 @@ static void DiscardBuffer(st_FILELOADINFO* fli)
     SetBuffer(fli, NULL, 0);
 }
 
-static int32 ReadRaw(st_FILELOADINFO* fli, void* data, int32 size, int32 count)
+static S32 ReadRaw(st_FILELOADINFO* fli, void* data, S32 size, S32 count)
 {
     tag_xFile* file = (tag_xFile*)fli->privdata;
 
@@ -248,11 +248,11 @@ static int32 ReadRaw(st_FILELOADINFO* fli, void* data, int32 size, int32 count)
         return 0;
     }
 
-    int32 amt = (size * count > fli->remain) ? fli->remain / size : count;
+    S32 amt = (size * count > fli->remain) ? fli->remain / size : count;
 
     if (amt)
     {
-        int32 n = BFD_read(data, size, amt, file, fli->xtradata);
+        S32 n = BFD_read(data, size, amt, file, fli->xtradata);
 
         if (n != amt)
         {
@@ -266,15 +266,15 @@ static int32 ReadRaw(st_FILELOADINFO* fli, void* data, int32 size, int32 count)
     return amt;
 }
 
-static int32 ReadBytes(st_FILELOADINFO* fli, char* data, int32 count)
+static S32 ReadBytes(st_FILELOADINFO* fli, char* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(char), count);
+    S32 act = ReadRaw(fli, data, sizeof(char), count);
     return act;
 }
 
-static int32 ReadMShorts(st_FILELOADINFO* fli, int16* data, int32 count)
+static S32 ReadMShorts(st_FILELOADINFO* fli, S16* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(int16), count);
+    S32 act = ReadRaw(fli, data, sizeof(S16), count);
 
 #if ENDIAN == LITTLE_ENDIAN
     Swap2((char*)data, act);
@@ -283,9 +283,9 @@ static int32 ReadMShorts(st_FILELOADINFO* fli, int16* data, int32 count)
     return act;
 }
 
-static int32 ReadMLongs(st_FILELOADINFO* fli, int32* data, int32 count)
+static S32 ReadMLongs(st_FILELOADINFO* fli, S32* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(int32), count);
+    S32 act = ReadRaw(fli, data, sizeof(S32), count);
 
 #if ENDIAN == LITTLE_ENDIAN
     Swap4((char*)data, act);
@@ -294,9 +294,9 @@ static int32 ReadMLongs(st_FILELOADINFO* fli, int32* data, int32 count)
     return act;
 }
 
-static int32 ReadMFloats(st_FILELOADINFO* fli, float32* data, int32 count)
+static S32 ReadMFloats(st_FILELOADINFO* fli, F32* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(float32), count);
+    S32 act = ReadRaw(fli, data, sizeof(F32), count);
 
 #if ENDIAN == LITTLE_ENDIAN
     Swap4((char*)data, act);
@@ -305,9 +305,9 @@ static int32 ReadMFloats(st_FILELOADINFO* fli, float32* data, int32 count)
     return act;
 }
 
-static int32 ReadMDoubles(st_FILELOADINFO* fli, float64* data, int32 count)
+static S32 ReadMDoubles(st_FILELOADINFO* fli, F64* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(float64), count);
+    S32 act = ReadRaw(fli, data, sizeof(F64), count);
 
 #if ENDIAN == LITTLE_ENDIAN
     Swap8((char*)data, act);
@@ -316,9 +316,9 @@ static int32 ReadMDoubles(st_FILELOADINFO* fli, float64* data, int32 count)
     return act;
 }
 
-static int32 ReadIShorts(st_FILELOADINFO* fli, int16* data, int32 count)
+static S32 ReadIShorts(st_FILELOADINFO* fli, S16* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(int16), count);
+    S32 act = ReadRaw(fli, data, sizeof(S16), count);
 
 #if ENDIAN == BIG_ENDIAN
     Swap2((char*)data, act);
@@ -327,9 +327,9 @@ static int32 ReadIShorts(st_FILELOADINFO* fli, int16* data, int32 count)
     return act;
 }
 
-static int32 ReadILongs(st_FILELOADINFO* fli, int32* data, int32 count)
+static S32 ReadILongs(st_FILELOADINFO* fli, S32* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(int32), count);
+    S32 act = ReadRaw(fli, data, sizeof(S32), count);
 
 #if ENDIAN == BIG_ENDIAN
     Swap4((char*)data, act);
@@ -338,9 +338,9 @@ static int32 ReadILongs(st_FILELOADINFO* fli, int32* data, int32 count)
     return act;
 }
 
-static int32 ReadIFloats(st_FILELOADINFO* fli, float32* data, int32 count)
+static S32 ReadIFloats(st_FILELOADINFO* fli, F32* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(float32), count);
+    S32 act = ReadRaw(fli, data, sizeof(F32), count);
 
 #if ENDIAN == BIG_ENDIAN
     Swap4((char*)data, act);
@@ -349,9 +349,9 @@ static int32 ReadIFloats(st_FILELOADINFO* fli, float32* data, int32 count)
     return act;
 }
 
-static int32 ReadIDoubles(st_FILELOADINFO* fli, float64* data, int32 count)
+static S32 ReadIDoubles(st_FILELOADINFO* fli, F64* data, S32 count)
 {
-    int32 act = ReadRaw(fli, data, sizeof(float64), count);
+    S32 act = ReadRaw(fli, data, sizeof(F64), count);
 
 #if ENDIAN == BIG_ENDIAN
     Swap8((char*)data, act);
@@ -360,12 +360,12 @@ static int32 ReadIDoubles(st_FILELOADINFO* fli, float64* data, int32 count)
     return act;
 }
 
-static int32 AsyncMRead(st_FILELOADINFO* fli, int32 offset, char* data, int32 size, int32 n)
+static S32 AsyncMRead(st_FILELOADINFO* fli, S32 offset, char* data, S32 size, S32 n)
 {
     return BFD_AsyncRead(fli, offset, data, size, n, BIG_ENDIAN);
 }
 
-static int32 AsyncIRead(st_FILELOADINFO* fli, int32 offset, char* data, int32 size, int32 n)
+static S32 AsyncIRead(st_FILELOADINFO* fli, S32 offset, char* data, S32 size, S32 n)
 {
     return BFD_AsyncRead(fli, offset, data, size, n, LITTLE_ENDIAN);
 }
@@ -375,7 +375,7 @@ static en_BIO_ASYNC_ERRCODES AsyncReadStatus(st_FILELOADINFO* fli)
     return BFD_AsyncReadStatus(fli);
 }
 
-static void Swap2(char* d, int32 n)
+static void Swap2(char* d, S32 n)
 {
     char t;
 
@@ -389,7 +389,7 @@ static void Swap2(char* d, int32 n)
     }
 }
 
-static void Swap4(char* d, int32 n)
+static void Swap4(char* d, S32 n)
 {
     char t;
 
@@ -407,7 +407,7 @@ static void Swap4(char* d, int32 n)
     }
 }
 
-static void Swap8(char* d, int32 n)
+static void Swap8(char* d, S32 n)
 {
     char t;
 
@@ -433,13 +433,13 @@ static void Swap8(char* d, int32 n)
     }
 }
 
-static tag_xFile* BFD_open(const char* filename, const char* mode, uint32 lockid, int32,
+static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32,
                            void* xtradata)
 {
     tag_xFile* bffp;
-    uint32 orc; // open return code
+    U32 orc; // open return code
     st_BINIO_XTRADATA* xtra = (st_BINIO_XTRADATA*)xtradata;
-    int32 xfflg = IFILE_OPEN_READ;
+    S32 xfflg = IFILE_OPEN_READ;
 
     if (strcmp(mode, "rb") == 0)
     {
@@ -495,18 +495,18 @@ static void BFD_close(tag_xFile* bffp, void* xtradata)
     xtra->dbl_amt = 0;
 }
 
-static int32 BFD_read(void* data, int32 elesize, int32 elecnt, tag_xFile* bffp, void* xtradata)
+static S32 BFD_read(void* data, S32 elesize, S32 elecnt, tag_xFile* bffp, void* xtradata)
 {
     st_BINIO_XTRADATA* xtra = (st_BINIO_XTRADATA*)xtradata;
     char* dest = (char*)data;
-    int32 readbeg;
-    int32 refill = 0;
-    int32 remain;
-    int32 actual;
-    uint32 holdpos;
-    uint32 numBytes = 0;
-    uint32 safety = 0;
-    int32 r26 = elesize * elecnt;
+    S32 readbeg;
+    S32 refill = 0;
+    S32 remain;
+    S32 actual;
+    U32 holdpos;
+    U32 numBytes = 0;
+    U32 safety = 0;
+    S32 r26 = elesize * elecnt;
 
     if (r26 == 0)
     {
@@ -574,13 +574,13 @@ static int32 BFD_read(void* data, int32 elesize, int32 elecnt, tag_xFile* bffp, 
         }
     }
 
-    return (int32)numBytes / elesize;
+    return (S32)numBytes / elesize;
 }
 
-static int32 BFD_seek(tag_xFile* bffp, int32 offset, int32 whence, void* xtradata)
+static S32 BFD_seek(tag_xFile* bffp, S32 offset, S32 whence, void* xtradata)
 {
     st_BINIO_XTRADATA* xtra = (st_BINIO_XTRADATA*)xtradata;
-    int32 pos = iFileSeek(bffp, offset, whence);
+    S32 pos = iFileSeek(bffp, offset, whence);
 
     xtra->fpos = offset;
 
@@ -592,16 +592,16 @@ static int32 BFD_seek(tag_xFile* bffp, int32 offset, int32 whence, void* xtradat
     return 0;
 }
 
-static int32 BFD_getLength(tag_xFile* bffp, void* xtradata)
+static S32 BFD_getLength(tag_xFile* bffp, void* xtradata)
 {
     return iFileGetSize(bffp);
 }
 
-static int32 BFD_startSector(const char* filename)
+static S32 BFD_startSector(const char* filename)
 {
     tag_xFile file = {};
-    uint32 addr = 0;
-    uint32 length = 0;
+    U32 addr = 0;
+    U32 length = 0;
 
     if (!iFileFind(filename, &file))
     {
@@ -617,8 +617,8 @@ static void BFD_cb_GCP2_readasync(tag_xFile* bffp)
 {
 }
 
-static int32 BFD_AsyncRead(st_FILELOADINFO* fli, int32 pos, void* data, int32 size, int32 n,
-                           int32 endian)
+static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n,
+                           S32 endian)
 {
     tag_xFile* file = (tag_xFile*)fli->privdata;
     st_BINIO_XTRADATA* xtra = (st_BINIO_XTRADATA*)fli->xtradata;
@@ -644,8 +644,8 @@ static int32 BFD_AsyncRead(st_FILELOADINFO* fli, int32 pos, void* data, int32 si
     iFileSeek(file, pos, IFILE_SEEK_SET);
     xFileSetUserData(file, fli);
 
-    int32 result = iFileReadAsync(file, data, size * n, BFD_cb_GCP2_readasync, 0);
-    int32 rc;
+    S32 result = iFileReadAsync(file, data, size * n, BFD_cb_GCP2_readasync, 0);
+    S32 rc;
 
     if (result < 0)
     {
@@ -684,7 +684,7 @@ static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli)
         if (xtra->asyn_status == BINIO_ASYNC_INPROG)
         {
             XFILE_READSECTOR_STATUS xrdstat;
-            int32 amtsofar = 0;
+            S32 amtsofar = 0;
 
             xrdstat = xFileReadAsyncStatus(xtra->gcaskey, &amtsofar);
 
@@ -728,7 +728,7 @@ WEAK void xFileSetUserData(tag_xFile* file, void* userdata)
     file->user_data = userdata;
 }
 
-WEAK XFILE_READSECTOR_STATUS xFileReadAsyncStatus(int32 key, int32* amtToFar)
+WEAK XFILE_READSECTOR_STATUS xFileReadAsyncStatus(S32 key, S32* amtToFar)
 {
     return (XFILE_READSECTOR_STATUS)iFileReadAsyncStatus(key, amtToFar);
 }

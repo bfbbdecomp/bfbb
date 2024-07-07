@@ -6,12 +6,12 @@
 
 extern xFFX* alist;
 extern xFFXShakeState* shake_alist;
-extern uint32 rot_match_psize;
+extern U32 rot_match_psize;
 extern xFFXRotMatchState* rot_match_pool;
 extern xFFXRotMatchState* rot_match_alist;
 
 // Structure same as the bottom function, get that one, you get this one.
-//void xFFXPoolInit(uint32 num_ffx);
+//void xFFXPoolInit(U32 num_ffx);
 
 xFFX* xFFXAlloc()
 {
@@ -41,9 +41,9 @@ void xFFXTurnOff(xFFX* f)
     f->flags &= 0xfffffffe;
 }
 
-int16 xFFXAddEffect(xEnt* ent, xFFX* f)
+S16 xFFXAddEffect(xEnt* ent, xFFX* f)
 {
-    uint8 numFFX;
+    U8 numFFX;
     f->next = (xFFX*)ent->ffx;
     f->flags = f->flags | 1;
     *(xFFX**)&ent->ffx = f;
@@ -52,10 +52,10 @@ int16 xFFXAddEffect(xEnt* ent, xFFX* f)
     return numFFX;
 }
 
-int16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, float32, void*), void* fd)
+S16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, F32, void*), void* fd)
 {
     xFFX* f = (xFFX*)xFFXAlloc();
-    int16 effectID;
+    S16 effectID;
     if (f == NULL)
     {
         effectID = -1;
@@ -71,7 +71,7 @@ int16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, float32, void*), void
 
 #if 0
 // WIP.
-uint32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
+U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
 {
     xFFX* ffx;
     xFFX** found;
@@ -97,7 +97,7 @@ uint32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
 
 #endif
 
-void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, float32 dt)
+void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, F32 dt)
 {
     if (ffx->next != NULL)
     {
@@ -109,7 +109,7 @@ void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, float32 dt)
     }
 }
 
-void xFFXApply(xEnt* ent, xScene* sc, float32 dt)
+void xFFXApply(xEnt* ent, xScene* sc, F32 dt)
 {
     if ((xFFX*)ent->ffx != NULL)
     {
@@ -118,7 +118,7 @@ void xFFXApply(xEnt* ent, xScene* sc, float32 dt)
 }
 
 // The structure of this is identical to the pool init below. Figure out that one, you get this one as well.
-//void xFFXShakePoolInit(uint32 num);
+//void xFFXShakePoolInit(U32 num);
 
 xFFXShakeState* xFFXShakeAlloc()
 {
@@ -140,18 +140,18 @@ void xFFXShakeFree(xFFXShakeState* s)
 
 #if 0
 // Some instructions are in the wrong order.
-void xFFXRotMatchPoolInit(uint32 num)
+void xFFXRotMatchPoolInit(U32 num)
 {
     rot_match_psize = num;
     rot_match_pool = (xFFXRotMatchState*)xMemAllocSize(num * sizeof(xFFXRotMatchState));
-    uint32 i = 1;
+    U32 i = 1;
     rot_match_pool->next = NULL;
-    int32 ind = sizeof(xFFXRotMatchState);
+    S32 ind = sizeof(xFFXRotMatchState);
     while (i < rot_match_psize)
     {
-        int32 nextAddr = ind - 1;
+        S32 nextAddr = ind - 1;
         i++;
-        *(xFFXRotMatchState**)((int32)&rot_match_pool->next + ind) = rot_match_pool + nextAddr;
+        *(xFFXRotMatchState**)((S32)&rot_match_pool->next + ind) = rot_match_pool + nextAddr;
         ind += sizeof(xFFXRotMatchState);
     }
     rot_match_alist = rot_match_pool + (rot_match_psize - 1);

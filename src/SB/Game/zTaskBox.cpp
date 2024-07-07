@@ -45,15 +45,15 @@ void ztaskbox::load(const ztaskbox::asset_type& a)
 
 void ztaskbox::read(xSerial& s)
 {
-    uint8 data[4];
-    data[0] = (uint8)this->state;
+    U8 data[4];
+    data[0] = (U8)this->state;
     s.Read(data);
     set_state((ztaskbox::state_enum)data[0]);
 }
 
 void ztaskbox::write(xSerial& s)
 {
-    s.Write((uint8)this->state);
+    s.Write((U8)this->state);
 }
 
 #if 0
@@ -216,14 +216,14 @@ ztaskbox::talk_callback::talk_callback()
 {
 }
 
-void ztaskbox::load(xBase& data, xDynAsset& asset, ulong32 num)
+void ztaskbox::load(xBase& data, xDynAsset& asset, size_t num)
 {
     ((ztaskbox&)data).load((asset_type&)asset);
 }
 
 bool ztaskbox::exists(state_enum stage)
 {
-    uint32 state = this->asset->stages[stage];
+    U32 state = this->asset->stages[stage];
     return state != STATE_BEGIN && xSTFindAsset(state, NULL);
 }
 

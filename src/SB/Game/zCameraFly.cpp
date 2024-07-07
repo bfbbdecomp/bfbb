@@ -10,9 +10,9 @@
 #include "zGlobals.h"
 #include "zMusic.h"
 
-extern uint32 zcam_flyasset_current;
+extern U32 zcam_flyasset_current;
 
-void zCameraFly_Init(xBase& data, xDynAsset& asset, ulong32)
+void zCameraFly_Init(xBase& data, xDynAsset& asset, size_t)
 {
     zCameraFly_Init((zCameraFly*)&data, (CameraFly_asset*)&asset);
 }
@@ -35,10 +35,10 @@ void zCameraFly_Init(zCameraFly* data, CameraFly_asset* asset)
 
 void zCameraFly_Setup(zCameraFly* fly)
 {
-    fly->baseFlags |= (uint16)2;
+    fly->baseFlags |= (U16)2;
 }
 
-void zCameraFly_Update(xBase* to, xScene* scene, float32 dt)
+void zCameraFly_Update(xBase* to, xScene* scene, F32 dt)
 {
 }
 
@@ -52,7 +52,7 @@ void zCameraFly_Load(zCameraFly* fly, xSerial* s)
     xBaseLoad((xBase*)fly, s);
 }
 
-uint32 zCameraFlyProcessStopEvent()
+U32 zCameraFlyProcessStopEvent()
 {
     zScene* s = globals.sceneCur;
 
@@ -61,12 +61,12 @@ uint32 zCameraFlyProcessStopEvent()
         zMusicSetVolume(1.0f, 2.0f);
     }
 
-    for (uint16 i = 0; i < s->num_base; i++)
+    for (U16 i = 0; i < s->num_base; i++)
     {
         xBase* entry = s->base[i];
         if (entry->baseType == eBaseTypeCameraFly)
         {
-            uint32 id = ((zCameraFly*)entry)->casset->flyID;
+            U32 id = ((zCameraFly*)entry)->casset->flyID;
             if (id == zcam_flyasset_current)
             {
                 zEntEvent(entry, eEventStop);
@@ -78,7 +78,7 @@ uint32 zCameraFlyProcessStopEvent()
     return 0;
 }
 
-int32 zCameraFlyEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3)
+S32 zCameraFlyEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3)
 {
     zCameraFly* fly = (zCameraFly*)to;
     switch (toEvent)

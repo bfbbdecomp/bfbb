@@ -10,16 +10,16 @@
 
 extern zMusicTrackInfo sMusicTrack[2];
 extern zVolumeInfo volume;
-extern uint32 sMusicPaused;
-extern int32 sMusicLastEnum[2];
-extern float32 lbl_803CDD48; //0f by default.
-extern float32 minDelay; //Value is defaulted at 0.001f.
-extern uint32 sMusicSoundID[24][2];
+extern U32 sMusicPaused;
+extern S32 sMusicLastEnum[2];
+extern F32 lbl_803CDD48; //0f by default.
+extern F32 minDelay; //Value is defaulted at 0.001f.
+extern U32 sMusicSoundID[24][2];
 extern zMusicSituation sMusicInfo[8];
-extern float32 lbl_803CCA78;
-extern float32 lbl_803CD118;
+extern F32 lbl_803CCA78;
+extern F32 lbl_803CD118;
 extern zMusicSituation* sMusicQueueData[2];
-extern float32 sMusicTimer[2];
+extern F32 sMusicTimer[2];
 
 extern eGameMode gGameMode;
 extern zGlobals globals;
@@ -39,7 +39,7 @@ void volume_reset()
 // Reset both music tracks to their default volume.
 void zMusicRefreshVolume()
 {
-    for (int32 i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         zMusicTrackInfo* track = &sMusicTrack[i];
         if (track->snd_id != 0)
@@ -117,9 +117,9 @@ void zMusicInit()
 // WIP.
 #ifdef NON_MATCHING
 // Correct, but won't work due to the switch case jump table (messes with offsets)
-int32 getCurrLevelMusicEnum()
+S32 getCurrLevelMusicEnum()
 {
-    int32 snd_enum;
+    S32 snd_enum;
 
     switch (zSceneGetLevelIndex())
     {
@@ -187,7 +187,7 @@ int32 getCurrLevelMusicEnum()
 
 #if 0
 // Probably floating point memes idk
-void zMusicNotify(int32 situation)
+void zMusicNotify(S32 situation)
 {
     zMusicSituation* s;
 
@@ -220,7 +220,7 @@ void zMusicNotify(int32 situation)
 // Stop all tracks and set them to null.
 void zMusicKill()
 {
-    for (int32 i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         zMusicTrackInfo* track = &sMusicTrack[i];
         if (track->snd_id != 0)
@@ -238,7 +238,7 @@ void zMusicPause()
 {
     if (sMusicPaused == 0)
     {
-        for (int32 i = 0; i < 2; i++)
+        for (S32 i = 0; i < 2; i++)
         {
             zMusicTrackInfo* track = &sMusicTrack[i];
             if (track->snd_id != 0)
@@ -253,14 +253,14 @@ void zMusicPause()
 // WIP.
 #if 0
 // Only thing that doesn't compile correctly is the function call to xSndPlay, in which a bunch of stuff is in the wrong order it looks like.
-void zMusicUnpause(int32 kill)
+void zMusicUnpause(S32 kill)
 {
     if (sMusicPaused != 0)
     {
-        for (int32 i = 0; i < 2; i++)
+        for (S32 i = 0; i < 2; i++)
         {
             zMusicTrackInfo* track = &sMusicTrack[i];
-            uint32 prioBase = 0x800 * i;
+            U32 prioBase = 0x800 * i;
             if (track->snd_id != 0)
             {
                 if (kill != 0)
@@ -269,7 +269,7 @@ void zMusicUnpause(int32 kill)
                 }
                 else
                 {
-                    uint32 res =
+                    U32 res =
                         xSndPlay(track->assetID, track->lastVol, lbl_803CDD48, 0xff,
                                  prioBase | (int)(-track->loop | track->loop) >> 0x1f & 0x8000U |
                                      0x10000 | 0x20000,
@@ -287,7 +287,7 @@ void zMusicUnpause(int32 kill)
 // WIP.
 #if 0
 // Not sure what's wrong with this one. Doesn't match in the slightest.
-void zMusicSetVolume(float32 vol, float32 delay)
+void zMusicSetVolume(F32 vol, F32 delay)
 {
     if (delay <= minDelay)
     {
@@ -303,7 +303,7 @@ void zMusicSetVolume(float32 vol, float32 delay)
 
 void zMusicReset()
 {
-    int32 currMusic;
+    S32 currMusic;
     currMusic = getCurrLevelMusicEnum();
     if (sMusicLastEnum[0] != currMusic)
     {

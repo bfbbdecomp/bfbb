@@ -2,17 +2,17 @@
 
 #include <types.h>
 
-uint32 gFrameCount;
+U32 gFrameCount;
 
-extern float32 _781; // 0.0020833334f.
-extern float32 _783; // 0.0015625f.
+extern F32 _781; // 0.0020833334f.
+extern F32 _783; // 0.0015625f.
 
 void xprintf(const char* msg, ...)
 {
     // Redacted. :}
 }
 
-int32 xDebugModeAdd(char* mode, void(*debugFunc))
+S32 xDebugModeAdd(char* mode, void(*debugFunc))
 {
     // Redacted. :}
     return -1;
@@ -43,12 +43,12 @@ void xtextbox::render(bool cache) const
     render(temp_layout(cache), 0, -1);
 }
 
-float32 NSCREENY(float32 scale)
+F32 NSCREENY(F32 scale)
 {
     return _781 * scale;
 }
 
-float32 NSCREENX(float32 scale)
+F32 NSCREENX(F32 scale)
 {
     return _783 * scale;
 }

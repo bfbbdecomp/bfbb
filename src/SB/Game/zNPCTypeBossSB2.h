@@ -26,7 +26,7 @@ struct zNPCB_SB2 : zNPCBoss
     struct node_data
     {
         zEntDestructObj* ent;
-        float32 pulse;
+        F32 pulse;
         xLightKit* old_light_kit;
         RpAtomic* skin_model;
         RwMatrixTag* skin_mat;
@@ -46,12 +46,12 @@ struct zNPCB_SB2 : zNPCBoss
 
     struct hand_data
     {
-        uint8 hurt_player;
-        uint8 hit_platforms;
+        U8 hurt_player;
+        U8 hit_platforms;
         xModelTag head_tag[4];
         xModelTag tail_tag[4];
         xEnt* ent;
-        float32 radius;
+        F32 radius;
     };
 
     struct bound_data
@@ -63,18 +63,18 @@ struct zNPCB_SB2 : zNPCBoss
 
     struct platform_data
     {
-        uint8 stopping;
+        U8 stopping;
         xEnt* ent;
-        float32 radius;
+        F32 radius;
         xMat3x3 mat;
         struct
         {
             xVec3 axis;
-            float32 ang;
-            float32 end_ang;
-            float32 vel;
-            float32 max_vel;
-            float32 accel;
+            F32 ang;
+            F32 end_ang;
+            F32 vel;
+            F32 max_vel;
+            F32 accel;
         } spin;
     };
 
@@ -90,41 +90,41 @@ struct zNPCB_SB2 : zNPCBoss
     struct slug_data
     {
         slug_stage stage;
-        uint8 spun;
-        uint8 abandoned;
-        float32 time;
-        float32 stage_delay;
+        U8 spun;
+        U8 abandoned;
+        F32 time;
+        F32 stage_delay;
         xEnt* ent;
         platform_data* target;
         xMat4x3 mat;
         xMat4x3 dmat;
         xVec3 move_dir;
-        float32 dist;
-        float32 vel;
-        float32 accel;
-        float32 end_dist;
-        float32 max_vel;
-        float32 ydist;
-        float32 yvel;
-        float32 end_ydist;
-        uint32 sound_handle;
+        F32 dist;
+        F32 vel;
+        F32 accel;
+        F32 end_dist;
+        F32 max_vel;
+        F32 ydist;
+        F32 yvel;
+        F32 end_ydist;
+        U32 sound_handle;
     };
 
     struct move_config
     {
-        float32 accel;
-        float32 max_vel;
-        float32 turn_accel;
-        float32 turn_max_vel;
+        F32 accel;
+        F32 max_vel;
+        F32 turn_accel;
+        F32 turn_max_vel;
     };
 
     struct move_data : move_config
     {
         xVec2 dest;
         xVec2 dir;
-        float32 vel;
-        float32 yaw;
-        float32 yaw_vel;
+        F32 vel;
+        F32 yaw;
+        F32 yaw_vel;
     };
 
     struct
@@ -140,17 +140,17 @@ struct zNPCB_SB2 : zNPCBoss
         bool nodes_taken;
         bool updated;
     } flag;
-    int32 life;
-    int32 round;
-    int32 stage;
-    float32 delay;
-    float32 stage_delay;
-    float32 player_damage_timer;
-    uint32 old_player_health;
+    S32 life;
+    S32 round;
+    S32 stage;
+    F32 delay;
+    F32 stage_delay;
+    F32 player_damage_timer;
+    U32 old_player_health;
     hand_enum active_hand;
     zNPCBPlankton* plankton;
     zNPCNewsFish* newsfish;
-    uint8 said_intro;
+    U8 said_intro;
     xModelInstance* models[4];
     node_data nodes[9];
     hand_data hands[2];
@@ -160,17 +160,17 @@ struct zNPCB_SB2 : zNPCBoss
     struct
     {
         xVec2 dir;
-        float32 vel;
-        float32 accel;
-        float32 max_vel;
+        F32 vel;
+        F32 accel;
+        F32 max_vel;
     } turn;
     move_data move;
     struct
     {
-        float32 begin;
-        float32 end;
-        float32 time;
-        float32 end_time;
+        F32 begin;
+        F32 end;
+        F32 time;
+        F32 end_time;
     } ymove;
     struct
     {
@@ -178,100 +178,100 @@ struct zNPCB_SB2 : zNPCBoss
         xVec3 mouth;
         xVec3 hand[2];
     } sound_loc;
-    float32 node_pulse;
+    F32 node_pulse;
     struct
     {
         xLightKit kit;
         xLightKitLight light[8];
     } glow_light;
 
-    zNPCB_SB2(int32 myType);
+    zNPCB_SB2(S32 myType);
 };
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon
 {
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Idle : zNPCGoalCommon
 {
-    uint8 transitioning;
+    U8 transitioning;
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
 {
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
 {
-    uint8 sicked;
+    U8 sicked;
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Hit : zNPCGoalCommon
 {
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
 {
-    uint8 following;
+    U8 following;
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
 {
-    uint8 started;
-    uint8 holding;
-    uint8 said;
-    uint32 begin_anim;
-    uint32 loop_anim;
-    uint32 end_anim;
+    U8 started;
+    U8 holding;
+    U8 said;
+    U32 begin_anim;
+    U32 loop_anim;
+    U32 end_anim;
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Chop : zNPCGoalCommon
 {
-    uint8 started;
-    uint8 targetted;
-    uint32 begin_anim;
-    uint32 loop_anim;
-    uint32 end_anim;
+    U8 started;
+    U8 targetted;
+    U32 begin_anim;
+    U32 loop_anim;
+    U32 end_anim;
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Karate : zNPCGoalCommon
 {
-    uint8 emitted[3];
-    uint8 started;
+    U8 emitted[3];
+    U8 started;
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 struct zNPCGoalBossSB2Death : zNPCGoalCommon
 {
     zNPCB_SB2& owner;
 
-    static xFactoryInst* create(int32 who, RyzMemGrow* grow, void* info);
+    static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
 #endif

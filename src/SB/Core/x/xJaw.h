@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-void* xJaw_FindData(uint32 soundID);
-float32 xJaw_EvalData(void* data, float32 time);
+void* xJaw_FindData(U32 soundID);
+F32 xJaw_EvalData(void* data, F32 time);
 
 #endif

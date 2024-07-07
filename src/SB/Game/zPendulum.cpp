@@ -81,9 +81,9 @@ void zPendulum_Reset(_zPendulum* pend, xScene* sc)
     pend->q3t *= asset->pen.period;
 }
 
-void zPendulum_Update(_zPendulum* pend, xScene* sc, float32 dt)
+void zPendulum_Update(_zPendulum* pend, xScene* sc, F32 dt)
 {
-    float32 lt, t;
+    F32 lt, t;
 
     xEntUpdate((xEnt*)pend, sc, dt);
 
@@ -108,7 +108,7 @@ void zPendulum_Update(_zPendulum* pend, xScene* sc, float32 dt)
     pend->lt = pend->motion.t;
 }
 
-void zPendulum_Move(_zPendulum* pend, xScene* sc, float32 dt, xEntFrame* frame)
+void zPendulum_Move(_zPendulum* pend, xScene* sc, F32 dt, xEntFrame* frame)
 {
     xEntMotionMove(&pend->motion, sc, dt, frame);
 }
@@ -119,7 +119,7 @@ void zPendulumTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat)
     xEntMotionTranslate(&((_zPendulum*)xent)->motion, dpos, dmat);
 }
 
-int32 zPendulumEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3)
+S32 zPendulumEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3)
 {
     _zPendulum* pend = (_zPendulum*)to;
 
@@ -182,7 +182,7 @@ int32 zPendulumEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* to
         }
         else
         {
-            float32 unk = SQR(*toParam);
+            F32 unk = SQR(*toParam);
             xUpdateCull_SetCB(globals.updateMgr, pend, xUpdateCull_DistanceSquaredCB,
                               *(void**)&unk);
         }

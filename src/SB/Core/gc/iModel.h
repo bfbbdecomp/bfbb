@@ -7,16 +7,16 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
-uint32 iModelNumBones(RpAtomic* model);
-int32 iModelCull(RpAtomic* model, RwMatrixTag* mat);
-int32 iModelSphereCull(xSphere* sphere);
+U32 iModelNumBones(RpAtomic* model);
+S32 iModelCull(RpAtomic* model, RwMatrixTag* mat);
+S32 iModelSphereCull(xSphere* sphere);
 RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model);
 void iModelSetMaterialTexture(RpAtomic* model, void* texture);
 void iModelResetMaterial(RpAtomic* model);
-int32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, int32* shadowOutside);
+S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* shadowOutside);
 void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrixTag* mat, xVec3* dest);
-void iModelSetMaterialAlpha(RpAtomic* model, uint8 alpha);
-RpAtomic* iModelFileNew(void* buffer, uint32 size);
+void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha);
+RpAtomic* iModelFileNew(void* buffer, U32 size);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
 void iModelUnload(RpAtomic* userdata);
 

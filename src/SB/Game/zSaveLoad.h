@@ -7,18 +7,18 @@ struct st_XSAVEGAME_DATA;
 
 struct zSaveLoadGame
 {
-    int8 label[64];
-    int8 date[32];
-    int32 progress;
-    uint32 size;
-    int8 thumbIconIndex;
+    S8 label[64];
+    S8 date[32];
+    S32 progress;
+    U32 size;
+    S8 thumbIconIndex;
 };
 
 struct zSaveLoadUI
 {
-    uint32 entry;
-    uint32 nameID;
-    int8* name;
+    U32 entry;
+    U32 nameID;
+    S8* name;
 };
 
 
@@ -26,80 +26,80 @@ zSaveLoadGame zSaveLoadGameTable[3];
 
 void zUpdateThumbIcon();
 void zSaveLoad_Tick();
-int32 zSaveLoad_poll(int32 i);
-void zSendEventToThumbIcon(uint32 toEvent);
-void zChangeThumbIcon(const int8* icon);
+S32 zSaveLoad_poll(S32 i);
+void zSendEventToThumbIcon(U32 toEvent);
+void zChangeThumbIcon(const S8* icon);
 
 void zSaveLoadInit();
 void zSaveLoadGameTableInit(zSaveLoadGame* saveTable);
 void zSaveLoadUITableInit(zSaveLoadUI* saveTable);
-void zSaveLoad_UIEvent(int32 p1, uint32 p2);
+void zSaveLoad_UIEvent(S32 p1, U32 p2);
 st_XSAVEGAME_DATA* zSaveLoadSGInit(en_SAVEGAME_MODE mode);
 
-int32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data);
-int32 zSaveLoad_getgame();
-int32 zSaveLoad_getcard();
-int32 zSaveLoad_getMCavailable();
-int32 zSaveLoad_getMCneeded();
-int32 zSaveLoad_getMCAccessType();
-int32 zSaveLoadGetAutoSaveCard();
-int32 format(int32 num, int32 mode);
-int32 CardtoTgt(int32 card);
-int32 zSaveLoad_CardCount();
-int32 zSaveLoad_CardPrompt(int32 cardNumber);
-int32 zSaveLoad_CardPromptFormat(int32 mode);
-int32 zSaveLoad_CardPromptSpace(int32 mode);
-int32 zSaveLoad_CardPromptGames(int32 mode);
-int32 zSaveLoad_CardPromptGameSlotEmpty();
-int32 zSaveLoad_CardPromptOverwrite();
-int32 zSaveLoad_CardPromptOverwriteDamaged();
-int32 zSaveLoad_ErrorPrompt(int32 cardNumber);
-int32 zSaveLoad_DamagedSaveGameErrorPrompt(int32 cardNumber);
-int32 zSaveLoad_CardWrongDeviceErrorPrompt(int32 mode);
-int32 zSaveLoad_CardDamagedErrorPrompt(int32 mode);
-int32 zSaveLoad_SaveDamagedErrorPrompt(int32 cardNumber);
-int32 zSaveLoad_CardYankedErrorPrompt(int32 cardNumber);
-int32 zSaveLoad_ErrorFormatPrompt(int32 cardNumber);
-int32 zSaveLoad_ErrorFormatCardYankedPrompt(int32 cardNumber);
-int32 zSaveLoad_CardCheckSingle(int32 cardNumber);
-int32 zSaveLoad_CardCheckFormattedSingle(int32 cardNumber);
-int32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber);
-int32 zSaveLoad_CardCheckSpaceSingle(int32 cardNumber);
-int32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber);
-int32 zSaveLoad_CardCheckGamesSingle(int32 cardNumber);
-int32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, int32 cardNumber,
-                                                   int32 gameNumber);
-int32 zSaveLoad_CardCheckSlotEmpty_hasGame(int32 cardNumber, int32 gameNumber);
-int32 zSaveLoad_CardCheckSlotOverwrite_Free(int32 cardNumber, int32 gameNumber);
-int32 zSaveLoad_CardCheck(int32 cardNumber, int32 mode);
-int32 zSaveLoad_CardCheckValid(int32 cardNumber, int32 mode);
-int32 zSaveLoad_CardCheckSpace(int32 cardNumber, int32 mode);
-int32 zSaveLoad_CardCheckGames(int32 cardNumber, int32 mode);
-int32 zSaveLoad_CardCheckGameSlot(int32 cardNumber, int32 gameNumber, int32 mode);
-int32 zSaveLoad_CardCheckSlotEmpty(int32 cardNumber, int32 gameNumber);
-int32 zSaveLoad_CardCheckSlotOverwrite(int32 cardNumber, int32 gameNumber);
-int32 zSaveLoad_CardPick(int32 mode);
-bool IsValidName(int8* name);
-void BuildIt(int8* build_txt, int32 i);
-void zSaveLoad_BuildName(int8* name_txt, int32 idx);
-int32 zSaveLoad_GameSelect(int32 mode);
-uint8 zSaveLoadGetPreAutoSave();
+S32 zSaveLoadSGDone(st_XSAVEGAME_DATA* data);
+S32 zSaveLoad_getgame();
+S32 zSaveLoad_getcard();
+S32 zSaveLoad_getMCavailable();
+S32 zSaveLoad_getMCneeded();
+S32 zSaveLoad_getMCAccessType();
+S32 zSaveLoadGetAutoSaveCard();
+S32 format(S32 num, S32 mode);
+S32 CardtoTgt(S32 card);
+S32 zSaveLoad_CardCount();
+S32 zSaveLoad_CardPrompt(S32 cardNumber);
+S32 zSaveLoad_CardPromptFormat(S32 mode);
+S32 zSaveLoad_CardPromptSpace(S32 mode);
+S32 zSaveLoad_CardPromptGames(S32 mode);
+S32 zSaveLoad_CardPromptGameSlotEmpty();
+S32 zSaveLoad_CardPromptOverwrite();
+S32 zSaveLoad_CardPromptOverwriteDamaged();
+S32 zSaveLoad_ErrorPrompt(S32 cardNumber);
+S32 zSaveLoad_DamagedSaveGameErrorPrompt(S32 cardNumber);
+S32 zSaveLoad_CardWrongDeviceErrorPrompt(S32 mode);
+S32 zSaveLoad_CardDamagedErrorPrompt(S32 mode);
+S32 zSaveLoad_SaveDamagedErrorPrompt(S32 cardNumber);
+S32 zSaveLoad_CardYankedErrorPrompt(S32 cardNumber);
+S32 zSaveLoad_ErrorFormatPrompt(S32 cardNumber);
+S32 zSaveLoad_ErrorFormatCardYankedPrompt(S32 cardNumber);
+S32 zSaveLoad_CardCheckSingle(S32 cardNumber);
+S32 zSaveLoad_CardCheckFormattedSingle(S32 cardNumber);
+S32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber);
+S32 zSaveLoad_CardCheckSpaceSingle(S32 cardNumber);
+S32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber);
+S32 zSaveLoad_CardCheckGamesSingle(S32 cardNumber);
+S32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber,
+                                                   S32 gameNumber);
+S32 zSaveLoad_CardCheckSlotEmpty_hasGame(S32 cardNumber, S32 gameNumber);
+S32 zSaveLoad_CardCheckSlotOverwrite_Free(S32 cardNumber, S32 gameNumber);
+S32 zSaveLoad_CardCheck(S32 cardNumber, S32 mode);
+S32 zSaveLoad_CardCheckValid(S32 cardNumber, S32 mode);
+S32 zSaveLoad_CardCheckSpace(S32 cardNumber, S32 mode);
+S32 zSaveLoad_CardCheckGames(S32 cardNumber, S32 mode);
+S32 zSaveLoad_CardCheckGameSlot(S32 cardNumber, S32 gameNumber, S32 mode);
+S32 zSaveLoad_CardCheckSlotEmpty(S32 cardNumber, S32 gameNumber);
+S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber);
+S32 zSaveLoad_CardPick(S32 mode);
+bool IsValidName(S8* name);
+void BuildIt(S8* build_txt, S32 i);
+void zSaveLoad_BuildName(S8* name_txt, S32 idx);
+S32 zSaveLoad_GameSelect(S32 mode);
+U8 zSaveLoadGetPreAutoSave();
 void zSaveLoadPreAutoSave(bool onOff);
 void zSaveLoadAutoSaveUpdate();
-int32 zSaveLoad_DoAutoSave();
-int32 zSaveLoad_SaveGame();
-int32 zSaveLoad_LoadGame();
-uint32 zSaveLoad_LoadLoop();
-uint32 zSaveLoad_SaveLoop();
-void zSaveLoad_DispatchCB(uint32 dispatchEvent, const float32* toParam);
-int32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, int32* need, int32* most);
-int32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
-int32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, int32* i, int32* j);
-int32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
-int32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                      uint32 ui, int32 i);
-int32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                       uint32 ui, int32 i);
-uint32 zSaveLoad_slotIsEmpty(uint32 slot);
+S32 zSaveLoad_DoAutoSave();
+S32 zSaveLoad_SaveGame();
+S32 zSaveLoad_LoadGame();
+U32 zSaveLoad_LoadLoop();
+U32 zSaveLoad_SaveLoop();
+void zSaveLoad_DispatchCB(U32 dispatchEvent, const F32* toParam);
+S32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, S32* need, S32* most);
+S32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
+S32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, S32* i, S32* j);
+S32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
+S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
+                      U32 ui, S32 i);
+S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
+                       U32 ui, S32 i);
+U32 zSaveLoad_slotIsEmpty(U32 slot);
 
 #endif

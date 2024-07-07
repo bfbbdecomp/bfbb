@@ -10,28 +10,28 @@
 
 struct zGustAsset : xBaseAsset
 {
-    uint32 flags;
-    uint32 volumeID;
-    uint32 effectID;
+    U32 flags;
+    U32 volumeID;
+    U32 effectID;
     xVec3 vel;
-    float32 fade;
-    float32 partMod;
+    F32 fade;
+    F32 partMod;
 };
 
 struct zGust : xBase
 {
-    uint32 flags;
+    U32 flags;
     zGustAsset* asset;
     zVolume* volume;
     zVolume* fx_volume;
-    float32 debris_timer;
+    F32 debris_timer;
 };
 
 void zGustInit();
 void zGustSetup();
-zGust* zGustGetGust(uint16 n);
+zGust* zGustGetGust(U16 n);
 void zGustSave(zGust* ent, xSerial* s);
 void zGustLoad(zGust* ent, xSerial* s);
-void zGustUpdateFX(float32 seconds);
+void zGustUpdateFX(F32 seconds);
 
 #endif

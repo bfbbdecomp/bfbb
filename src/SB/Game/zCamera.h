@@ -25,49 +25,49 @@ enum camera_owner_enum
 
 struct zFlyKey
 {
-    int32 frame;
-    float32 matrix[12];
-    float32 aperture[2];
-    float32 focal;
+    S32 frame;
+    F32 matrix[12];
+    F32 aperture[2];
+    F32 focal;
 };
 
 void zCameraReset(xCamera* cam);
-float32 GetCurrentPitch();
-float32 GetCurrentH();
-float32 _GetCurrentH();
-float32 GetCurrentD();
-float32 _GetCurrentD();
+F32 GetCurrentPitch();
+F32 GetCurrentH();
+F32 _GetCurrentH();
+F32 GetCurrentD();
+F32 _GetCurrentD();
 
-float32 EaseInOut();
-void zCameraConversUpdate(xCamera* cam, float32 dt);
-float32 TranSpeed(zFlyKey keys[]);
-float32 MatrixSpeed(zFlyKey keys[]);
+F32 EaseInOut();
+void zCameraConversUpdate(xCamera* cam, F32 dt);
+F32 TranSpeed(zFlyKey keys[]);
+F32 MatrixSpeed(zFlyKey keys[]);
 
-void zCameraSetBbounce(int32 bbouncing);
-void zCameraSetHighbounce(int32 hbounce);
-void zCameraSetLongbounce(int32 hbounce);
+void zCameraSetBbounce(S32 bbouncing);
+void zCameraSetHighbounce(S32 hbounce);
+void zCameraSetLongbounce(S32 hbounce);
 void zCameraSetPlayerVel(xVec3* vel);
 void zCameraSetConvers(int on);
 void zCameraDoTrans(xCamAsset* asset, float ttime);
-uint32 zCamera_FlyOnly();
-void zCameraTranslate(xCamera* camera, float32 x, float32 y, float32 z);
+U32 zCamera_FlyOnly();
+void zCameraTranslate(xCamera* camera, F32 x, F32 y, F32 z);
 void zCameraReset(xCamera* camera);
-void zCameraUpdate(xCamera* camera, float32 dt);
+void zCameraUpdate(xCamera* camera, F32 dt);
 
 void zCameraEnableInput();
 void zCameraDisableInput();
-uint32 zCameraIsTrackingDisabled();
+U32 zCameraIsTrackingDisabled();
 void zCameraEnableTracking(camera_owner_enum owner);
 void zCameraDisableTracking(camera_owner_enum owner);
 void zCameraDisableLassoCam();
 void zCameraEnableLassoCam();
-void zCameraSetLassoCamFactor(float32 new_factor);
-float32 zCameraGetLassoCamFactor();
-int32 zCameraGetConvers();
-void zCameraTranslate(xCamera* cam, float32 x, float32 y, float32 z);
+void zCameraSetLassoCamFactor(F32 new_factor);
+F32 zCameraGetLassoCamFactor();
+S32 zCameraGetConvers();
+void zCameraTranslate(xCamera* cam, F32 x, F32 y, F32 z);
 void zCameraDisableWallJump(xCamera* cam);
-void zCameraSetReward(int32 reward);
-void zCameraMinTargetHeightSet(float32 min_height);
+void zCameraSetReward(S32 reward);
+void zCameraMinTargetHeightSet(F32 min_height);
 void zCameraMinTargetHeightClear();
 
 #endif

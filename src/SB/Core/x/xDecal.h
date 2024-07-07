@@ -22,62 +22,62 @@ struct xDecalEmitter
 
     struct config
     {
-        uint32 flags;
-        float32 life_time;
-        uint32 blend_src;
-        uint32 blend_dst;
+        U32 flags;
+        F32 life_time;
+        U32 blend_src;
+        U32 blend_dst;
         struct
         {
             xVec2 uv[2];
-            uint8 rows;
-            uint8 cols;
+            U8 rows;
+            U8 cols;
             texture_mode mode;
         } texture;
     };
 
     struct unit_data
     {
-        uint8 flags;
-        uint8 curve_index;
-        uint8 u;
-        uint8 v;
-        float32 frac;
-        float32 age;
-        float32 cull_size;
+        U8 flags;
+        U8 curve_index;
+        U8 u;
+        U8 v;
+        F32 frac;
+        F32 age;
+        F32 cull_size;
         xMat4x3 mat;
     };
 
     struct curve_node
     {
-        float32 time;
+        F32 time;
         iColor_tag color;
-        float32 scale;
+        F32 scale;
     };
 
     config cfg;
     struct
     {
         RwTexture* asset;
-        uint32 units;
+        U32 units;
         xVec2 size;
         xVec2 isize;
-        int32 prev;
+        S32 prev;
     } texture;
     static_queue<unit_data*> units;
     curve_node* curve;
-    uint32 curve_size;
-    uint32 curve_index;
-    float32 ilife;
+    U32 curve_size;
+    U32 curve_index;
+    F32 ilife;
 
-    void set_curve(const curve_node* curve, ulong32 size);
+    void set_curve(const curve_node* curve, size_t size);
     void refresh_config();
-    void set_texture(const int8* name);
+    void set_texture(const S8* name);
     void set_default_config();
-    void init(int32 max_size, const int8*);
+    void init(S32 max_size, const S8*);
 };
 
 void xDecalInit();
-void xDecalUpdate(float32 dt);
+void xDecalUpdate(F32 dt);
 void xDecalDestroy();
 void xDecalRender();
 

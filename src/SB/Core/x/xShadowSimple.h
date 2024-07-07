@@ -12,34 +12,34 @@ struct xShadowSimplePoly
 // Size: 0x66
 struct xShadowSimpleCache
 {
-    uint16 flags;
-    uint8 alpha;
-    uint8 pad;
+    U16 flags;
+    U8 alpha;
+    U8 pad;
 
     // Offset: 0x4
-    uint32 collPriority;
+    U32 collPriority;
     xVec3 pos;
     xVec3 at;
 
     // Offset: 0x20
     xEnt* castOnEnt;
     xShadowSimplePoly poly;
-    float32 envHeight;
-    float32 shadowHeight;
-    uint32 raster;
+    F32 envHeight;
+    F32 shadowHeight;
+    U32 raster;
 
     // Offset: 0x40
-    float32 dydx;
-    float32 dydz;
+    F32 dydx;
+    F32 dydz;
     xVec3 corner[4];
 };
 
 void xShadowSimple_Render();
-void xShadowSimple_Add(xShadowSimpleCache* cache, xEnt* ent, float32 radius, float32 ecc);
-void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, uint8 alpha);
+void xShadowSimple_Add(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc);
+void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, U8 alpha);
 void xShadowSimple_Init();
 void xShadowSimple_AddVerts(xShadowSimpleCache* cache);
-void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, float32 radius, float32 ecc);
-void xShadowSimple_SceneCollide(xShadowSimpleCache* cache, xVec3* pos, float32 depth);
+void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc);
+void xShadowSimple_SceneCollide(xShadowSimpleCache* cache, xVec3* pos, F32 depth);
 
 #endif

@@ -2,7 +2,7 @@
 
 #pragma push
 #pragma force_active off
-void hack_function_order(xGoal* g, xPSYNote* p, float32 f)
+void hack_function_order(xGoal* g, xPSYNote* p, F32 f)
 {
     p->Notice(PSY_NOTE_HASRESUMED, NULL, NULL);
     g->SysEvent(NULL, NULL, 0, NULL, NULL, NULL);
@@ -14,9 +14,9 @@ void hack_function_order(xGoal* g, xPSYNote* p, float32 f)
 }
 #pragma pop
 
-int32 zNPCGoalCommon::Enter(float32 dt, void* updCtxt)
+S32 zNPCGoalCommon::Enter(F32 dt, void* updCtxt)
 {
-    int32 gid = psyche->GIDOfPending();
+    S32 gid = psyche->GIDOfPending();
 
     if (((flg_npcgauto & 0x2) && gid == 0) || gid == GetID())
     {
@@ -26,9 +26,9 @@ int32 zNPCGoalCommon::Enter(float32 dt, void* updCtxt)
     return xGoal::Enter(dt, updCtxt);
 }
 
-int32 zNPCGoalCommon::Resume(float32 dt, void* updCtxt)
+S32 zNPCGoalCommon::Resume(F32 dt, void* updCtxt)
 {
-    int32 gid = psyche->GIDOfPending();
+    S32 gid = psyche->GIDOfPending();
 
     if (((flg_npcgauto & 0x2) && (flg_npcgauto & 0x4) && gid == 0) || gid == GetID())
     {
@@ -38,7 +38,7 @@ int32 zNPCGoalCommon::Resume(float32 dt, void* updCtxt)
     return xGoal::Resume(dt, updCtxt);
 }
 
-int32 zNPCGoalCommon::PreCalc(float32 dt, void* updCtxt)
+S32 zNPCGoalCommon::PreCalc(F32 dt, void* updCtxt)
 {
     zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
 
@@ -46,7 +46,7 @@ int32 zNPCGoalCommon::PreCalc(float32 dt, void* updCtxt)
     {
         if ((flg_info |= 0x8) == 0)
         {
-            uint32 curid = npc->AnimCurStateID();
+            U32 curid = npc->AnimCurStateID();
 
             if (curid != anid_played)
             {
@@ -65,9 +65,9 @@ int32 zNPCGoalCommon::PreCalc(float32 dt, void* updCtxt)
     return xGoal::PreCalc(dt, updCtxt);
 }
 
-uint32 zNPCGoalCommon::DoAutoAnim(en_NPC_GOAL_SPOT gspot, int32 forceRestart)
+U32 zNPCGoalCommon::DoAutoAnim(en_NPC_GOAL_SPOT gspot, S32 forceRestart)
 {
-    uint32 anid = ((zNPCCommon*)psyche->clt_owner)->AnimPick(goalID, gspot, this);
+    U32 anid = ((zNPCCommon*)psyche->clt_owner)->AnimPick(goalID, gspot, this);
 
     if (anid)
     {
@@ -77,9 +77,9 @@ uint32 zNPCGoalCommon::DoAutoAnim(en_NPC_GOAL_SPOT gspot, int32 forceRestart)
     return anid_played;
 }
 
-uint32 zNPCGoalCommon::DoExplicitAnim(uint32 anid, int32 forceRestart)
+U32 zNPCGoalCommon::DoExplicitAnim(U32 anid, S32 forceRestart)
 {
-    int32 rc = ((zNPCCommon*)psyche->clt_owner)->AnimStart(anid, forceRestart);
+    S32 rc = ((zNPCCommon*)psyche->clt_owner)->AnimStart(anid, forceRestart);
 
     if (rc)
     {

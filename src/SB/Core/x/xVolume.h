@@ -6,11 +6,11 @@
 
 struct xVolumeAsset : xBaseAsset
 {
-    uint32 flags;
+    U32 flags;
     xBound bound;
-    float32 rot;
-    float32 xpivot;
-    float32 zpivot;
+    F32 rot;
+    F32 xpivot;
+    F32 zpivot;
 };
 
 struct xVolume : xBase

@@ -13,8 +13,8 @@ struct ztaskbox : xBase
 {
     struct flagData
     {
-        uint8 enabled : 8;
-        uint32 dummy : 24;
+        U8 enabled : 8;
+        U32 dummy : 24;
     };
 
     enum state_enum
@@ -49,13 +49,13 @@ struct ztaskbox : xBase
 
     struct asset_type : xDynAsset
     {
-        uint8 persistent : 8;
-        uint8 loop : 8;
-        uint8 enable : 8;
-        uint8 retry : 8;
-        uint32 talk_box;
-        uint32 next_task;
-        uint32 stages[6];
+        U8 persistent : 8;
+        U8 loop : 8;
+        U8 enable : 8;
+        U8 retry : 8;
+        U32 talk_box;
+        U32 next_task;
+        U32 stages[6];
     };
 
     flagData flag;
@@ -73,7 +73,7 @@ struct ztaskbox : xBase
     void write(xSerial& s);
     void read(xSerial& s);
     void load(const asset_type& a);
-    static void load(xBase& data, xDynAsset& asset, ulong32 num);
+    static void load(xBase& data, xDynAsset& asset, size_t num);
     void enable();
     void disable();
     void reset();

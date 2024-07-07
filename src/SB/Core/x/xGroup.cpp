@@ -21,14 +21,14 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     if (b->linkCount)
     {
         // Seek to then end of the xGroupAsset header and then seek to the end of the subsequent array of IDs
-        b->link = (xLinkAsset*)((uint8*)(t->asset) + sizeof(xGroupAsset) +
-                                asset->itemCount * sizeof(uint32));
+        b->link = (xLinkAsset*)((U8*)(t->asset) + sizeof(xGroupAsset) +
+                                asset->itemCount * sizeof(U32));
     }
     else
     {
         b->link = NULL;
     }
-    uint32 numItems = xGroupGetCount(t);
+    U32 numItems = xGroupGetCount(t);
     xBase** item;
     if (numItems != 0)
     {
@@ -47,9 +47,9 @@ void xGroupSetup(xGroup* g)
 {
     if ((g->flg_group & 1) == 0)
     {
-        uint32 numItems = xGroupGetCount(g);
-        uint32 i = 0;
-        uint32 ind = 0;
+        U32 numItems = xGroupGetCount(g);
+        U32 i = 0;
+        U32 ind = 0;
         while (i < numItems)
         {
             xBase* item = xGroupFindItemPtr(g, i);
@@ -77,7 +77,7 @@ void xGroupReset(xGroup* ent)
     ent->last_index = 0;
 }
 
-int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam,
+S32 xGroupEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                     xBase* toParamWidget)
 {
     xGroup* g = (xGroup*)from;
@@ -90,10 +90,10 @@ int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toPar
         toEvent = eEventDisable;
         break;
     }
-    int32 index = -1;
+    S32 index = -1;
     if (g->asset->groupFlags & 1)
     {
-        uint32 rand = xrand();
+        U32 rand = xrand();
         index = rand % g->asset->itemCount;
     }
     else if (g->asset->groupFlags & 2)
@@ -105,7 +105,7 @@ int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toPar
     switch (toEvent)
     {
     case eEventFastVisible:
-        for (int32 i = 0; i < g->asset->itemCount; i++)
+        for (S32 i = 0; i < g->asset->itemCount; i++)
         {
             if (!(index == -1 || index == i))
             {
@@ -129,7 +129,7 @@ int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toPar
         }
         return 1;
     case eEventFastInvisible:
-        for (int32 i = 0; i < g->asset->itemCount; i++)
+        for (S32 i = 0; i < g->asset->itemCount; i++)
         {
             if (!(index == -1 || index == i))
             {
@@ -153,7 +153,7 @@ int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toPar
         }
         return 1;
     default:
-        for (int32 i = 0; i < g->asset->itemCount; i++)
+        for (S32 i = 0; i < g->asset->itemCount; i++)
         {
             if (!(index == -1 || index == i))
             {
@@ -176,12 +176,12 @@ int32 xGroupEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toPar
     return 0;
 }
 
-uint32 xGroupGetCount(xGroup* g)
+U32 xGroupGetCount(xGroup* g)
 {
     return g->asset->itemCount;
 }
 
-xBase* xGroupGetItemPtr(xGroup* g, uint32 index)
+xBase* xGroupGetItemPtr(xGroup* g, U32 index)
 {
     if ((g->flg_group & 1) == 0)
     {
@@ -190,26 +190,26 @@ xBase* xGroupGetItemPtr(xGroup* g, uint32 index)
     return g->item != NULL ? g->item[index] : NULL;
 }
 
-xBase* xGroupFindItemPtr(xGroup* g, uint32 index)
+xBase* xGroupFindItemPtr(xGroup* g, U32 index)
 {
-    return (xBase*)zSceneFindObject((uint32)((uint32*)(g->asset + 1))[index]);
+    return (xBase*)zSceneFindObject((U32)((U32*)(g->asset + 1))[index]);
 }
 
-uint32 xGroupGetItem(xGroup* g, uint32 index)
+U32 xGroupGetItem(xGroup* g, U32 index)
 {
-    return (uint32)((uint32*)(g->asset + 1))[index];
+    return (U32)((U32*)(g->asset + 1))[index];
 }
 
-uint32 xGroup::get_any()
+U32 xGroup::get_any()
 {
-    uint16 numItems = this->asset->itemCount;
+    U16 numItems = this->asset->itemCount;
     if (numItems == 0)
     {
         return NULL;
     }
 
-    uint32 last = ((uint32*)((uint8*)this->asset + sizeof(xGroupAsset)))[this->last_index];
-    uint32 cnt = this->last_index + 1;
+    U32 last = ((U32*)((U8*)this->asset + sizeof(xGroupAsset)))[this->last_index];
+    U32 cnt = this->last_index + 1;
     this->last_index = cnt % numItems;
     return last;
 }

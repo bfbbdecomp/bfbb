@@ -6,9 +6,9 @@
 
 #if 0
 // So close to matching. There seems to be extra ors and I do not know why they show up.
-void* RyzMemGrow::operator new(size_t size, uint32 amt, RyzMemGrow* growCtxt)
+void* RyzMemGrow::operator new(size_t size, U32 amt, RyzMemGrow* growCtxt)
 {
-    int32 dogrow = true;
+    S32 dogrow = true;
     if (growCtxt == NULL)
     {
         dogrow = false;
@@ -38,7 +38,7 @@ void RyzMemData::operator delete(void* p)
 
 RyzMemGrow* RyzMemGrow::Init(xBase* growuser)
 {
-    int8* dat;
+    S8* dat;
     if (this->ptr != NULL)
     {
         return this;
@@ -47,7 +47,7 @@ RyzMemGrow* RyzMemGrow::Init(xBase* growuser)
     this->ptr_last = NULL;
     this->user_last = NULL;
     this->amt = 0x20;
-    dat = (int8*)xMemAllocSize(this->amt);
+    dat = (S8*)xMemAllocSize(this->amt);
     this->ptr = dat;
     this->user = growuser;
     this->flg_grow = 1;
@@ -74,7 +74,7 @@ void RyzMemGrow::Done()
     this->flg_grow = 0;
 }
 
-int32 RyzMemGrow::IsEnabled()
+S32 RyzMemGrow::IsEnabled()
 {
     return this->flg_grow & 1;
 }

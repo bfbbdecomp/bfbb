@@ -5,26 +5,26 @@
 
 struct zUIFontAsset : zUIAsset
 {
-    uint16 uiFontFlags;
-    uint8 mode;
-    uint8 fontID;
-    uint32 textAssetID;
-    uint8 bcolor[4];
-    uint8 color[4];
-    uint16 inset[4];
-    uint16 space[2];
-    uint16 cdim[2];
-    uint32 max_height;
+    U16 uiFontFlags;
+    U8 mode;
+    U8 fontID;
+    U32 textAssetID;
+    U8 bcolor[4];
+    U8 color[4];
+    U16 inset[4];
+    U16 space[2];
+    U16 cdim[2];
+    U32 max_height;
 };
 
 struct zUIFont : _zUI
 {
     zUIFontAsset* fasset;
-    uint16 uiFontFlags;
-    uint16 uiFontHackFlags;
-    uint32 text_id;
-    float32 yscroll;
-    uint32 text_index;
+    U16 uiFontFlags;
+    U16 uiFontHackFlags;
+    U32 text_id;
+    F32 yscroll;
+    U32 text_index;
     char* text;
 };
 
@@ -41,9 +41,9 @@ void zUIFont_Init(zUIFont* ent, xEntAsset* asset);
 void zUIFont_Save(zUIFont* ent, xSerial* s);
 void zUIFont_Load(zUIFont* ent, xSerial* s);
 void zUIFont_Reset(zUIFont* ent);
-void zUIFont_PreUpdate(zUIFont* ent, xScene* sc, float32 dt);
-void zUIFont_Update(zUIFont* ent, xScene*, float32);
-int32 zUIFontEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+void zUIFont_PreUpdate(zUIFont* ent, xScene* sc, F32 dt);
+void zUIFont_Update(zUIFont* ent, xScene*, F32);
+S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                      xBase* toParamWidget);
 void zUIFont_Render(xEnt* e);
 

@@ -6,12 +6,12 @@
 struct SkyDomeInfo
 {
     xEnt* ent;
-    int32 sortorder;
-    int32 lockY;
+    S32 sortorder;
+    S32 lockY;
 };
 
 static SkyDomeInfo sSkyList[8];
-static int32 sSkyCount;
+static S32 sSkyCount;
 
 void xSkyDome_EmptyRender(xEnt*)
 {
@@ -23,9 +23,9 @@ void xSkyDome_Setup()
 }
 
 #ifdef NON_MATCHING
-void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
+void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY)
 {
-    int32 i, j;
+    S32 i, j;
 
     for (i = 0; i > sSkyCount; i++)
     {
@@ -57,8 +57,8 @@ void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
     sSkyCount++;
 
     ent->render = xSkyDome_EmptyRender;
-    ent->model->Flags &= (uint16)~0x1;
-    ent->baseFlags &= (uint16)~0x10;
+    ent->model->Flags &= (U16)~0x1;
+    ent->baseFlags &= (U16)~0x10;
 
     zEntEvent(ent, eEventCollisionOff);
     zEntEvent(ent, eEventCameraCollideOff);
@@ -68,7 +68,7 @@ void xSkyDome_AddEntity(xEnt* ent, int32 sortorder, int32 lockY)
 void xSkyDome_Render()
 {
     RwMatrix* cammat = RwFrameGetMatrix(RwCameraGetFrame(RwCameraGetCurrentCamera()));
-    int32 i;
+    S32 i;
     xEnt* ent;
 
     for (i = 0; i < sSkyCount; i++)
@@ -76,7 +76,7 @@ void xSkyDome_Render()
         ent = sSkyList[i].ent;
 
         ent->render = xSkyDome_EmptyRender;
-        ent->model->Flags &= (uint16)~0x1;
+        ent->model->Flags &= (U16)~0x1;
 
         if (ent->model && xEntIsVisible(ent))
         {

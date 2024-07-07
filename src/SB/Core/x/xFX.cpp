@@ -17,19 +17,19 @@
 
 extern const char _stringBase0_7[];
 
-extern float32 _957_0;
-extern float32 _958;
-extern float32 _995;
-extern float32 _1132;
-extern float32 _1171;
+extern F32 _957_0;
+extern F32 _958;
+extern F32 _995;
+extern F32 _1132;
+extern F32 _1171;
 
 RpAtomicCallBackRender gAtomicRenderCallBack = NULL;
-float32 EnvMapShininess = 1.0f;
+F32 EnvMapShininess = 1.0f;
 RpLight* MainLight = NULL;
 
-static uint32 num_fx_atomics = 0;
+static U32 num_fx_atomics = 0;
 
-static uint32 xfx_initted = 0;
+static U32 xfx_initted = 0;
 
 static void LightResetFrame(RpLight* light);
 
@@ -63,7 +63,7 @@ void xFXInit()
     }
 }
 
-static uint32 Im3DBufferPos = 0;
+static U32 Im3DBufferPos = 0;
 static RwTexture* g_txtr_drawRing = NULL;
 
 static void DrawRingSetup()
@@ -96,7 +96,7 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params)
         return NULL;
     }
 
-    for (int32 i = 0; i < RING_COUNT; i++, ring++)
+    for (S32 i = 0; i < RING_COUNT; i++, ring++)
     {
         if (ring->time <= _957_0)
         {
@@ -119,25 +119,25 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params)
 #endif
 
 #ifndef NON_MATCHING
-static void xFXRingUpdate(float32 dt);
+static void xFXRingUpdate(F32 dt);
 #else
-static void xFXRingUpdate(float32 dt)
+static void xFXRingUpdate(F32 dt)
 {
     xFXRing* ring = &ringlist[0];
 
-    if ((float32)iabs(dt) < _995)
+    if ((F32)iabs(dt) < _995)
     {
         return;
     }
 
-    for (int32 i = 0; i < RING_COUNT; i++, ring++)
+    for (S32 i = 0; i < RING_COUNT; i++, ring++)
     {
         if (ring->time <= _957_0)
         {
             continue;
         }
 
-        float32 lifetime = ring->lifetime;
+        F32 lifetime = ring->lifetime;
 
         if (lifetime < dt)
         {
@@ -146,7 +146,7 @@ static void xFXRingUpdate(float32 dt)
 
         ring->time += dt;
 
-        float32 t = ring->time / lifetime;
+        F32 t = ring->time / lifetime;
 
         // non-matching: float scheduling
 
@@ -167,7 +167,7 @@ static void xFXRingUpdate(float32 dt)
 
 void xFXRingRender()
 {
-    int32 i;
+    S32 i;
     xFXRing* ring = &ringlist[0];
 
     for (i = 0; i < RING_COUNT; i++, ring++)
@@ -181,14 +181,14 @@ void xFXRingRender()
 
 static RpMaterial* MaterialSetEnvMap(RpMaterial* material, void* data);
 static RpMaterial* MaterialSetBumpMap(RpMaterial* material, void* data);
-static RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* env, float32 shininess,
-                                         RwTexture* bump, float32 bumpiness);
+static RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* env, F32 shininess,
+                                         RwTexture* bump, F32 bumpiness);
 
 #ifdef NON_MATCHING
 void xFX_SceneEnter(RpWorld* world)
 {
-    int32 i;
-    int32 num = RpWorldGetNumMaterials(world);
+    S32 i;
+    S32 num = RpWorldGetNumMaterials(world);
 
     for (i = 0; i < num; i++)
     {
@@ -276,7 +276,7 @@ void xFX_SceneEnter(RpWorld* world)
         {
             // non-matching: strings are getting cached for some reason
 
-            uint32 bubble;
+            U32 bubble;
 
             bubble = (ent->id == xStrHash(_stringBase0_7));
             bubble |= (ent->id == xStrHash(_stringBase0_7 + 13));
@@ -302,7 +302,7 @@ void xFX_SceneExit(RpWorld*)
 {
 }
 
-void xFXUpdate(float32 dt)
+void xFXUpdate(F32 dt)
 {
     xFXRingUpdate(dt);
     xFXRibbonUpdate(dt);
@@ -384,18 +384,18 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
 
 struct xFXBubbleParams
 {
-    uint32 pass1 : 1;
-    uint32 pass2 : 1;
-    uint32 pass3 : 1;
-    uint32 padding : 5;
-    uint8 pass1_alpha;
-    uint8 pass2_alpha;
-    uint8 pass3_alpha;
-    uint32 pass1_fbmsk;
-    uint32 fresnel_map;
-    float32 fresnel_map_coeff;
-    uint32 env_map;
-    float32 env_map_coeff;
+    U32 pass1 : 1;
+    U32 pass2 : 1;
+    U32 pass3 : 1;
+    U32 padding : 5;
+    U8 pass1_alpha;
+    U8 pass2_alpha;
+    U8 pass3_alpha;
+    U32 pass1_fbmsk;
+    U32 fresnel_map;
+    F32 fresnel_map_coeff;
+    U32 env_map;
+    F32 env_map_coeff;
 };
 
 static xFXBubbleParams defaultBFX = {
@@ -409,51 +409,51 @@ static xFXBubbleParams defaultBFX = {
     ID_rainbowfilm_smooth32, 0.5f
 };
 
-static uint32 bfx_curr = 0;
+static U32 bfx_curr = 0;
 static xFXBubbleParams* BFX = &defaultBFX;
 
-static uint32 sFresnelMap = 0;
-static uint32 sEnvMap = 0;
-static int32 sTweaked = 0;
+static U32 sFresnelMap = 0;
+static U32 sEnvMap = 0;
+static S32 sTweaked = 0;
 
 static RxPipeline* xFXanimUVPipeline = NULL;
-float32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
-float32 xFXanimUVRotMat1[2] = { 0.0f, 1.0f };
-float32 xFXanimUVTrans[2] = { 0.0f, 0.0f };
-float32 xFXanimUVScale[2] = { 1.0f, 1.0f };
-float32 xFXanimUV2PRotMat0[2] = { 1.0f, 0.0f };
-float32 xFXanimUV2PRotMat1[2] = { 0.0f, 1.0f };
-float32 xFXanimUV2PTrans[2] = { 0.0f, 0.0f };
-float32 xFXanimUV2PScale[2] = { 1.0f, 1.0f };
+F32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
+F32 xFXanimUVRotMat1[2] = { 0.0f, 1.0f };
+F32 xFXanimUVTrans[2] = { 0.0f, 0.0f };
+F32 xFXanimUVScale[2] = { 1.0f, 1.0f };
+F32 xFXanimUV2PRotMat0[2] = { 1.0f, 0.0f };
+F32 xFXanimUV2PRotMat1[2] = { 0.0f, 1.0f };
+F32 xFXanimUV2PTrans[2] = { 0.0f, 0.0f };
+F32 xFXanimUV2PScale[2] = { 1.0f, 1.0f };
 RwTexture* xFXanimUV2PTexture = NULL;
 
 namespace
 {
 #define ALPHA_COUNT 300
 
-    uint8 alpha_count0[ALPHA_COUNT];
-    uint8 alpha_count1[ALPHA_COUNT];
+    U8 alpha_count0[ALPHA_COUNT];
+    U8 alpha_count1[ALPHA_COUNT];
 } // namespace
 
 // clip_triangle jumptable
-static uint32 _1933[] = { 0x80028610, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
+static U32 _1933[] = { 0x80028610, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
                           0x80028640, 0x80028620, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
                           0x80028640, 0x80028640, 0x80028630, 0x80028640, 0x80028640, 0x80028640,
                           0x80028640, 0x80028640, 0x80028640, 0x80028630, 0x80028640, 0x80028640,
                           0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028620, 0x80028640,
                           0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028610 };
 
-static const uint8 segments_1637[43] = { 0, 1, 3, 0, 1, 2, 4, 0, 3, 4, 3, 0, 0, 0, 0,
+static const U8 segments_1637[43] = { 0, 1, 3, 0, 1, 2, 4, 0, 3, 4, 3, 0, 0, 0, 0,
                                          0, 1, 2, 4, 0, 2, 1, 2, 0, 4, 2, 1, 0, 0, 0,
                                          0, 0, 3, 4, 3, 0, 4, 2, 1, 0, 3, 1, 0 };
 
 struct _tagFirework
 {
-    int32 state;
-    float32 timer;
+    S32 state;
+    F32 timer;
     xVec3 vel;
     xVec3 pos;
-    float32 fuel;
+    F32 fuel;
 };
 
 #define FIREWORK_COUNT 10
@@ -462,8 +462,8 @@ static _tagFirework sFirework[FIREWORK_COUNT];
 static zParEmitter* sFireworkTrailEmit = NULL;
 static zParEmitter* sFirework1Emit = NULL;
 static zParEmitter* sFirework2Emit = NULL;
-static uint32 sFireworkSoundID = 0;
-static uint32 sFireworkLaunchSoundID = 0;
+static U32 sFireworkSoundID = 0;
+static U32 sFireworkLaunchSoundID = 0;
 
 static RwIm3DVertex sStripVert_2188[4];
 
@@ -474,31 +474,31 @@ namespace
 #define RIBBON_COUNT 64
 
     xFXRibbon* active_ribbons[RIBBON_COUNT];
-    uint32 active_ribbons_size = 0;
+    U32 active_ribbons_size = 0;
     bool ribbons_dirty = false;
 } // namespace
 
 struct _xFXAuraAngle
 {
-    float32 angle;
-    float32 cc;
-    float32 ss;
+    F32 angle;
+    F32 cc;
+    F32 ss;
 };
 
 struct _xFXAura
 {
     xVec3 pos;
     iColor_tag color;
-    float32 size;
+    F32 size;
     void* parent;
-    uint32 frame;
-    float32 dangle[2];
+    U32 frame;
+    F32 dangle[2];
 };
 
 #define AURA_COUNT 32
 
-static float32 sAuraPulse[2];
-static float32 sAuraPulseAng[2];
+static F32 sAuraPulse[2];
+static F32 sAuraPulseAng[2];
 static _xFXAuraAngle sAuraAngle[2];
 static RwTexture* gAuraTex = NULL;
 static _xFXAura sAura[AURA_COUNT];

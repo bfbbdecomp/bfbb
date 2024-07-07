@@ -5,7 +5,7 @@
 
 void xParMgrInit();
 void xParMgrKillAllParticles();
-void xParMgrUpdate(float32 elapsedTime);
+void xParMgrUpdate(F32 elapsedTime);
 void xParMgrRender();
 
 #endif

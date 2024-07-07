@@ -13,7 +13,7 @@
 #include "zVolume.h"
 
 static zVolume* sClipVolume[32];
-static int32 sClipVolumeTotal;
+static S32 sClipVolumeTotal;
 
 void zParCmdInit()
 {
@@ -81,7 +81,7 @@ void xParCmdClipVolumes_Update(xParCmd* c, xParGroup* ps, float)
 {
     for (xPar* p = ps->m_root; p != NULL; p = p->m_next)
     {
-        for (int32 i = 0; i < sClipVolumeTotal; i++)
+        for (S32 i = 0; i < sClipVolumeTotal; i++)
         {
             xCollis collis;
             xVecHitsBound(&p->m_pos, &sClipVolume[i]->asset->bound, &collis);
@@ -93,7 +93,7 @@ void xParCmdClipVolumes_Update(xParCmd* c, xParGroup* ps, float)
     }
 }
 
-void xParCmdPlayerCollision_Update(xParCmd* c, xParGroup* ps, float32 dt)
+void xParCmdPlayerCollision_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     return;
 }
@@ -106,14 +106,14 @@ void xParCmdAnimalMagentism_Update(xParCmd* c, xParGroup* ps, float dt)
     xVec3 pos = *xEntGetPos(&globals.player.ent);
     pos.y += 1.0f;
 
-    float32 mul = dt * -cmd->unknown;
+    F32 mul = dt * -cmd->unknown;
     for (; p != NULL; p = p->m_next)
     {
         xVec3 vec;
         vec.x = p->m_pos.x - pos.x;
         vec.y = p->m_pos.y - pos.y;
         vec.z = p->m_pos.z - pos.z;
-        float32 dist = xVec3Normalize(&vec, &vec);
+        F32 dist = xVec3Normalize(&vec, &vec);
 
         p->m_vel.x += vec.x * mul;
         p->m_vel.y += vec.y * mul;
@@ -137,7 +137,7 @@ void xParCmdDamagePlayer_Update(xParCmd* c, xParGroup* ps, float dt)
     xPar* p;
     xParCmdDamagePlayer* cmd = (xParCmdDamagePlayer*)c->tasset;
     xBound* pbound = &globals.player.ent.bound;
-    int32 last_idx = 10 - (xrand() & 1);
+    S32 last_idx = 10 - (xrand() & 1);
 
     p = ps->m_root;
     while (p != NULL && last_idx-- > 0)
@@ -175,7 +175,7 @@ void xParCmdDamagePlayer_Update(xParCmd* c, xParGroup* ps, float dt)
             }
         }
 
-        for (int32 i = 0; i < cmd->granular; i++)
+        for (S32 i = 0; i < cmd->granular; i++)
         {
             if (p == NULL)
             {
@@ -190,7 +190,7 @@ void xParCmdJet_Update(xParCmd* c, xParGroup* ps, float dt)
 {
     xPar* p;
     xParCmdJet* cmd = (xParCmdJet*)c->tasset;
-    float32 mdt = cmd->gravity * dt;
+    F32 mdt = cmd->gravity * dt;
 
     xVec3 center;
     if (cmd->mode == 0)
@@ -209,13 +209,13 @@ void xParCmdJet_Update(xParCmd* c, xParGroup* ps, float dt)
         xVec3 r;
         xVec3Sub(&r, &center, &p->m_pos);
 
-        float32 rSqr = r.x * r.x + r.y * r.y + r.z * r.z;
+        F32 rSqr = r.x * r.x + r.y * r.y + r.z * r.z;
         if (!(rSqr < cmd->radiusSqr))
         {
             continue;
         }
 
-        float32 oorSqr = mdt / xsqrt(rSqr + cmd->epsilon);
+        F32 oorSqr = mdt / xsqrt(rSqr + cmd->epsilon);
         r.x = r.x < 0.0f ? 1.0f : -1.0f;
         r.z = r.z < 0.0f ? 1.0f : -1.0f;
 
@@ -240,7 +240,7 @@ void xParCmdCustom_Grass_Update(xParCmd* c, xParGroup* ps, float dt)
         xVec3 r;
         xVec3Sub(&r, &pos, &p->m_pos);
 
-        float32 rSqr = r.x * r.x + r.y * r.y + r.z * r.z;
+        F32 rSqr = r.x * r.x + r.y * r.y + r.z * r.z;
         if (rSqr < 2.0f)
         {
             p->m_size = p->m_size - 4.0f * dt;
@@ -266,7 +266,7 @@ void xParCmdApplyCamMat_Update(xParCmd* c, xParGroup* ps, float dt)
     xPar* p;
     xParCmdApplyCamMat* cmd = (xParCmdApplyCamMat*)c->tasset;
     xMat4x3* mat = &globals.camera.mat;
-    float32 mul;
+    F32 mul;
 
     if (cmd->apply.x != 0.0f)
     {
@@ -310,7 +310,7 @@ void xParCmdCustom_Update(xParCmd* c, xParGroup* ps, float dt)
     switch (cmd->unknown)
     {
     case 0:
-        float32 mdt = 4.0f * dt;
+        F32 mdt = 4.0f * dt;
         xVec3 pos;
         pos.x = globals.player.ent.model->Mat->pos.x;
         pos.y = globals.player.ent.model->Mat->pos.y;
@@ -320,13 +320,13 @@ void xParCmdCustom_Update(xParCmd* c, xParGroup* ps, float dt)
         {
             xVec3 r;
             xVec3Sub(&r, &pos, &p->m_pos);
-            float32 rSqr = r.x * r.x + r.y * r.y + r.z * r.z;
+            F32 rSqr = r.x * r.x + r.y * r.y + r.z * r.z;
             if (!(rSqr < 16.0f))
             {
                 continue;
             }
 
-            float32 oorSqr = xsqrt(rSqr + 0.001f);
+            F32 oorSqr = xsqrt(rSqr + 0.001f);
             r.x = r.x < 0.0f ? 1.0f : -1.0f;
             r.z = r.z < 0.0f ? 1.0f : -1.0f;
 

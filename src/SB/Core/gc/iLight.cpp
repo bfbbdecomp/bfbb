@@ -3,15 +3,15 @@
 RpWorld* gLightWorld;
 
 // iLightCreate will not match without these floats being externed :thinking:
-extern float32 _535_0; // 0.0f
-extern float32 _536; // 1.0f
+extern F32 _535_0; // 0.0f
+extern F32 _536; // 1.0f
 
 void iLightInit(RpWorld* world)
 {
     gLightWorld = world;
 }
 
-iLight* iLightCreate(iLight* light, uint32 type)
+iLight* iLightCreate(iLight* light, U32 type)
 {
     RwFrame* frame;
 
@@ -65,7 +65,7 @@ iLight* iLightCreate(iLight* light, uint32 type)
     return light;
 }
 
-void iLightModify(iLight* light, uint32 flags)
+void iLightModify(iLight* light, U32 flags)
 {
     if (flags & 0x5)
     {
@@ -136,7 +136,7 @@ void iLightDestroy(iLight* light)
     RpLightDestroy(light->hw);
 }
 
-void iLightEnv(iLight* light, int32 env)
+void iLightEnv(iLight* light, S32 env)
 {
     RwUInt32 flags = 0;
 

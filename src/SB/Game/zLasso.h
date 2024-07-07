@@ -6,12 +6,12 @@
 
 struct zLasso
 {
-    uint32 flags;
-    float32 secsTotal;
-    float32 secsLeft;
-    float32 stRadius;
-    float32 tgRadius;
-    float32 crRadius;
+    U32 flags;
+    F32 secsTotal;
+    F32 secsLeft;
+    F32 stRadius;
+    F32 tgRadius;
+    F32 crRadius;
     xVec3 stCenter;
     xVec3 tgCenter;
     xVec3 crCenter;
@@ -19,15 +19,15 @@ struct zLasso
     xVec3 tgNormal;
     xVec3 crNormal;
     xVec3 honda;
-    float32 stSlack;
-    float32 stSlackDist;
-    float32 tgSlack;
-    float32 tgSlackDist;
-    float32 crSlack;
-    float32 currDist;
-    float32 lastDist;
+    F32 stSlack;
+    F32 stSlackDist;
+    F32 tgSlack;
+    F32 tgSlackDist;
+    F32 crSlack;
+    F32 currDist;
+    F32 lastDist;
     xVec3 lastRefs[5];
-    uint8 reindex[5];
+    U8 reindex[5];
     xVec3 anchor;
     xModelTag tag;
     xModelInstance* model;

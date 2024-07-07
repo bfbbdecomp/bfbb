@@ -26,35 +26,35 @@
 
 struct xFuncPiece
 {
-    float32 coef[5];
-    float32 end;
-    int32 order;
+    F32 coef[5];
+    F32 end;
+    S32 order;
     xFuncPiece* next;
 };
 
 void xMathInit();
 void xMathExit();
-float32 xatof(const char* x);
-void xsrand(uint32 seed);
-uint32 xrand();
-float32 xurand();
-uint32 xMathSolveQuadratic(float32 a, float32 b, float32 c, float32* x1, float32* x2);
-uint32 xMathSolveCubic(float32 a, float32 b, float32 c, float32 d, float32* x1, float32* x2,
-                       float32* x3);
-float32 xAngleClamp(float32 a);
-float32 xAngleClampFast(float32 a);
-float32 xDangleClamp(float32 a);
-void xAccelMove(float32& x, float32& v, float32 a, float32 dt, float32 endx, float32 maxv);
-float32 xAccelMoveTime(float32 dx, float32 a, float32, float32 maxv);
-void xAccelMove(float32& x, float32& v, float32 a, float32 dt, float32 maxv);
-void xAccelStop(float32& x, float32& v, float32 a, float32 dt);
-float32 xFuncPiece_Eval(xFuncPiece* func, float32 param, xFuncPiece** iterator);
-void xFuncPiece_EndPoints(xFuncPiece* func, float32 pi, float32 pf, float32 fi, float32 ff);
-void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, float32 newZero);
-float32 xSCurve(float32 t, float32 softness);
-float32 xSCurve(float32 t);
+F32 xatof(const char* x);
+void xsrand(U32 seed);
+U32 xrand();
+F32 xurand();
+U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2);
+U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2,
+                       F32* x3);
+F32 xAngleClamp(F32 a);
+F32 xAngleClampFast(F32 a);
+F32 xDangleClamp(F32 a);
+void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv);
+F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv);
+void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv);
+void xAccelStop(F32& x, F32& v, F32 a, F32 dt);
+F32 xFuncPiece_Eval(xFuncPiece* func, F32 param, xFuncPiece** iterator);
+void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff);
+void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, F32 newZero);
+F32 xSCurve(F32 t, F32 softness);
+F32 xSCurve(F32 t);
 
-float32 xrmod(float32 ang);
+F32 xrmod(F32 ang);
 
 template <class T> T range_limit(T v, T minv, T maxv);
 

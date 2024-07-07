@@ -6,7 +6,7 @@
 
 extern zEnt* sSB1_armTgtHit;
 
-void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, float32 param_3)
+void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, F32 param_3)
 {
     if (ent->frame != NULL)
     {
@@ -29,7 +29,7 @@ void SB1Dummy_RenderFunc(xEnt* ent)
     xDrawSphere(&(ent->bound).sph, 0xc0006);
 }
 
-int32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, uint32 toEvent, const float32* param_f,
+S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_f,
                             xBase* param_x)
 {
     if (toEvent == 360)

@@ -6,47 +6,47 @@
 
 struct zMusicSituation
 {
-    int32 track;
-    uint32 priority;
-    uint32 countMax;
-    float32 delay;
-    float32 punchDelay;
-    float32 elapsedTime;
-    uint32 count;
-    uint32 sndid;
-    int32 situation;
-    int32 music_enum;
-    int32 game_state;
+    S32 track;
+    U32 priority;
+    U32 countMax;
+    F32 delay;
+    F32 punchDelay;
+    F32 elapsedTime;
+    U32 count;
+    U32 sndid;
+    S32 situation;
+    S32 music_enum;
+    S32 game_state;
 };
 
 struct zVolumeInfo
 {
-    float32 cur;
-    float32 end;
-    float32 inc;
-    uint32 adjusted[2];
+    F32 cur;
+    F32 end;
+    F32 inc;
+    U32 adjusted[2];
 };
 
 struct zMusicTrackInfo
 {
-    uint32 snd_id;
-    uint32 loop;
+    U32 snd_id;
+    U32 loop;
     zMusicSituation* situation;
-    uint32 assetID;
-    float32 lastVol;
+    U32 assetID;
+    F32 lastVol;
 };
 
 void volume_reset();
 void zMusicRefreshVolume();
-int32 getCurrLevelMusicEnum();
-void zMusicNotify(int32 situation);
-void zMusicSetVolume(float32 vol, float32 delay);
+S32 getCurrLevelMusicEnum();
+void zMusicNotify(S32 situation);
+void zMusicSetVolume(F32 vol, F32 delay);
 void zMusicKill();
 void zMusicPause();
-void zMusicUnpause(int32 kill);
+void zMusicUnpause(S32 kill);
 void zMusicReset();
 void zMusicInit();
-void zMusicUpdate(float32 dt);
-void zMusicNotifyEvent(const float32* toParam, xBase*);
+void zMusicUpdate(F32 dt);
+void zMusicNotifyEvent(const F32* toParam, xBase*);
 
 #endif

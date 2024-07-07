@@ -2,9 +2,9 @@
 
 #include "xEvent.h"
 
-extern float32 _670;
-extern float32 _671_0;
-extern float32 _746_1;
+extern F32 _670;
+extern F32 _671_0;
+extern F32 _746_1;
 
 void zEntTriggerInit(void* ent, void* asset)
 {
@@ -49,7 +49,7 @@ void zEntTriggerInit(zEntTrigger* ent, xEntAsset* asset)
 
     if (ent->linkCount)
     {
-        ent->link = (xLinkAsset*)((uint8*)ent->asset + sizeof(xEntAsset) + sizeof(xTriggerAsset));
+        ent->link = (xLinkAsset*)((U8*)ent->asset + sizeof(xEntAsset) + sizeof(xTriggerAsset));
     }
     else
     {
@@ -59,11 +59,11 @@ void zEntTriggerInit(zEntTrigger* ent, xEntAsset* asset)
     ent->entered = 0;
 }
 
-void zEntTriggerUpdate(zEntTrigger* trig, xScene*, float32)
+void zEntTriggerUpdate(zEntTrigger* trig, xScene*, F32)
 {
     if (xBaseIsEnabled(trig))
     {
-        uint32 i;
+        U32 i;
         xLinkAsset* link = trig->link;
         xTriggerAsset* tasset = (xTriggerAsset*)(trig->asset + 1);
 
@@ -73,7 +73,7 @@ void zEntTriggerUpdate(zEntTrigger* trig, xScene*, float32)
                 link->srcEvent <= eEventExitEntityFLAG)
             {
                 xIsect isect;
-                int32 collide = 0;
+                S32 collide = 0;
 
                 if (link->chkAssetID)
                 {
@@ -196,7 +196,7 @@ void zEntTriggerUpdate(zEntTrigger* trig, xScene*, float32)
     }
 }
 
-int32 zEntTriggerEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
+S32 zEntTriggerEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 {
     zEntTrigger* trig = (zEntTrigger*)to;
 
@@ -270,16 +270,16 @@ bool zEntTriggerHitsSphere(const zEntTrigger& trig, const xSphere& o, const xVec
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;
     o->z = z;
 }
 
-bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, float32 r)
+bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r)
 {
     return xSphereHitsVCircle(s.center, s.r, c, r);
 }

@@ -49,51 +49,51 @@
 
 struct ShinySparkly
 {
-    uint16 pickupType;
-    uint16 pickupIndex;
-    float32 radius;
-    float32 std_rate;
-    float32 fly_rate;
-    uint8 br;
-    uint8 bg;
-    uint8 bb;
-    uint8 ba;
-    uint8 dr;
-    uint8 dg;
-    uint8 db;
-    uint8 da;
-    uint32 envmapID;
-    float32 shininess;
+    U16 pickupType;
+    U16 pickupIndex;
+    F32 radius;
+    F32 std_rate;
+    F32 fly_rate;
+    U8 br;
+    U8 bg;
+    U8 bb;
+    U8 ba;
+    U8 dr;
+    U8 dg;
+    U8 db;
+    U8 da;
+    U32 envmapID;
+    F32 shininess;
 };
 
 struct _tagKeyShake
 {
     xVec3 orig_pos;
-    float32 shake_timer;
-    float32 shake_it;
+    F32 shake_timer;
+    F32 shake_it;
     _zUI* ui;
 };
 
 struct RewardList
 {
     bool active;
-    float32 timer;
+    F32 timer;
     xVec3* ppos;
     xVec3 pos;
-    uint32 num;
-    uint32 currRequest;
-    uint32 pickups[REWARD_COUNT];
+    U32 num;
+    U32 currRequest;
+    U32 pickups[REWARD_COUNT];
 };
 
 zParEmitter* gEmitShinySparkles = NULL;
 
-static float32 SPARKLE_MAX_RATE = 30.0f;
+static F32 SPARKLE_MAX_RATE = 30.0f;
 
-uint32 gEnableRewardsQueue = 1;
+U32 gEnableRewardsQueue = 1;
 
-static float32 sSpatulaGrabbedSpinMult = 0.0f;
-static float32 sSpatulaGrabbedLife = 3.5f;
-static float32 sUnderwearFade = 1.0f;
+static F32 sSpatulaGrabbedSpinMult = 0.0f;
+static F32 sSpatulaGrabbedLife = 3.5f;
+static F32 sUnderwearFade = 1.0f;
 
 #define bubble 0xB5126DFC // bubble RWTX in boot.HIP
 
@@ -179,33 +179,33 @@ static xEntCollis gPickupCollis;
 static zEntPickup* sSpatulaAlreadyGiven = NULL;
 static zEntPickup* sSpatulaBungeeDeferred = NULL;
 
-extern float32 _864_0; // 0.8f
-extern float32 _865_2; // 15.0f
-extern float32 _866_1; // -20.0f
-extern float32 _867_2; // 0.0f
-extern float32 _964_2; // 1.0f
-extern float32 _1050_1; // 0.5f
-extern float32 _1051_0; // 0.00001f
-extern float32 _1144; // 4.0f
-extern float32 _1145; // 0.1f
-extern float32 _1146; // 1.5f
-extern float32 _1257_0; // 0.3f
-extern float32 _1258; // 1.3f
-extern float32 _1319; // 10.0f
-extern float32 _1519; // PI
-extern float32 _1526; // 1.2f
-extern float32 _1609; // 75.0f
-extern float32 _1610; // -7.5f
-extern float32 _1611; // 0.0001f
-extern float32 _2086; // 0.35f
-extern float32 _2087; // 0.2f
-extern float32 _2192; // 1.0e10f
+extern F32 _864_0; // 0.8f
+extern F32 _865_2; // 15.0f
+extern F32 _866_1; // -20.0f
+extern F32 _867_2; // 0.0f
+extern F32 _964_2; // 1.0f
+extern F32 _1050_1; // 0.5f
+extern F32 _1051_0; // 0.00001f
+extern F32 _1144; // 4.0f
+extern F32 _1145; // 0.1f
+extern F32 _1146; // 1.5f
+extern F32 _1257_0; // 0.3f
+extern F32 _1258; // 1.3f
+extern F32 _1319; // 10.0f
+extern F32 _1519; // PI
+extern F32 _1526; // 1.2f
+extern F32 _1609; // 75.0f
+extern F32 _1610; // -7.5f
+extern F32 _1611; // 0.0001f
+extern F32 _2086; // 0.35f
+extern F32 _2087; // 0.2f
+extern F32 _2192; // 1.0e10f
 
 #ifndef NON_MATCHING
-static void PickupFallPhysics(zEntPickup* ent, xScene* sc, float32 dt);
+static void PickupFallPhysics(zEntPickup* ent, xScene* sc, F32 dt);
 
 #else
-static void PickupFallPhysics(zEntPickup* ent, xScene* sc, float32 dt)
+static void PickupFallPhysics(zEntPickup* ent, xScene* sc, F32 dt)
 {
     // non-matching: scheduling, float regalloc
 
@@ -253,11 +253,11 @@ static void PickupFallPhysics(zEntPickup* ent, xScene* sc, float32 dt)
 }
 #endif
 
-uint32 isRewardPickup(zEntPickup* ent)
+U32 isRewardPickup(zEntPickup* ent)
 {
     char name[512];
 
-    for (int32 i = 0; i < 50; i++)
+    for (S32 i = 0; i < 50; i++)
     {
         sprintf(name, "%s%02d", "boot_reward_pickup", i);
 
@@ -282,7 +282,7 @@ void zEntPickupInit(void* ent, void* asset)
 void zEntPickupInit(zEntPickup* ent, xEntAsset* asset)
 {
     xEntPickupAsset* pickupAsset = (xEntPickupAsset*)(asset + 1);
-    uint32 i, tmpsize;
+    U32 i, tmpsize;
 
     zEntInit(ent, asset, 'PKUP');
 
@@ -349,7 +349,7 @@ void zEntPickupInit(zEntPickup* ent, xEntAsset* asset)
     }
 
     ent->model = xModelInstanceAlloc(modelData, ent, 0, 0, NULL);
-    ent->model->Flags &= (uint16)~0x2;
+    ent->model->Flags &= (U16)~0x2;
     ent->model->modelID = ptbl->modelID;
     ent->simpShadow = &ent->simpShadow_embedded;
 
@@ -399,13 +399,13 @@ void zEntPickupInit(zEntPickup* ent, xEntAsset* asset)
         }
     }
 
-    int32 found = 0;
+    S32 found = 0;
 
-    for (int32 i = 0; i < REWARD_TYPE_COUNT; i++)
+    for (S32 i = 0; i < REWARD_TYPE_COUNT; i++)
     {
         char name[512];
 
-        for (int32 j = 0; j < REWARD_PICKUP_COUNT; j++)
+        for (S32 j = 0; j < REWARD_PICKUP_COUNT; j++)
         {
             sprintf(name, "%s%d%d", "boot_reward_pickup", i, j);
 
@@ -439,7 +439,7 @@ void zEntPickup_Setup()
 {
     xBase* base;
     zScene* zsc;
-    uint32 i, j;
+    U32 i, j;
     zEntPickup* p;
     xVec3* srcPos;
 
@@ -491,7 +491,7 @@ void zEntPickup_Setup()
     }
 }
 
-int32 zEntPickupEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam,
+S32 zEntPickupEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam,
                         xBase* toParamWidget)
 {
     zEntPickup* p = (zEntPickup*)to;
@@ -505,7 +505,7 @@ int32 zEntPickupEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toPara
         {
             xEntShow(p);
 
-            if (toParam && (int32)(_1050_1 + toParam[0]) == 77)
+            if (toParam && (S32)(_1050_1 + toParam[0]) == 77)
             {
                 zFXPopOn(*p, toParam[1], toParam[2]);
             }
@@ -517,7 +517,7 @@ int32 zEntPickupEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toPara
     {
         xEntHide(p);
 
-        if (toParam && (int32)(_1050_1 + toParam[0]) == 77)
+        if (toParam && (S32)(_1050_1 + toParam[0]) == 77)
         {
             zFXPopOff(*p, toParam[1], toParam[2]);
         }
@@ -532,7 +532,7 @@ int32 zEntPickupEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toPara
 
             xEntShow(p);
 
-            if (toParam && toParam && (int32)(_1050_1 + toParam[0]) == 77)
+            if (toParam && toParam && (S32)(_1050_1 + toParam[0]) == 77)
             {
                 zFXPopOn(*p, toParam[1], toParam[2]);
             }
@@ -542,11 +542,11 @@ int32 zEntPickupEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toPara
     }
     case eEventCollision_Visible_Off:
     {
-        p->pickupFlags &= (uint8)~0x2;
+        p->pickupFlags &= (U8)~0x2;
 
         xEntHide(p);
 
-        if (toParam && (int32)(_1050_1 + toParam[0]) == 77)
+        if (toParam && (S32)(_1050_1 + toParam[0]) == 77)
         {
             zFXPopOff(*p, toParam[1], toParam[2]);
         }
@@ -614,19 +614,19 @@ int32 zEntPickupEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toPara
     return 1;
 }
 
-void zEntPickup_FlyToInterface(zEntPickup*, float32)
+void zEntPickup_FlyToInterface(zEntPickup*, F32)
 {
 }
 
 struct zEntPickup_cbData
 {
     xScene* sc;
-    float32 dt;
+    F32 dt;
 };
 
-static int32 CheckPickupAgainstPlayer(xEnt* cbent, void*);
+static S32 CheckPickupAgainstPlayer(xEnt* cbent, void*);
 
-void zEntPickup_CheckAllPickupsAgainstPlayer(xScene* sc, float32 dt)
+void zEntPickup_CheckAllPickupsAgainstPlayer(xScene* sc, F32 dt)
 {
     zEntPickup_cbData cbdata;
 
@@ -637,7 +637,7 @@ void zEntPickup_CheckAllPickupsAgainstPlayer(xScene* sc, float32 dt)
                        &globals.player.ent.bound.qcd, CheckPickupAgainstPlayer, &cbdata);
 }
 
-static int32 CheckPickupAgainstPlayer(xEnt* cbent, void*)
+static S32 CheckPickupAgainstPlayer(xEnt* cbent, void*)
 {
     if (cbent->baseType != eBaseTypePickup)
     {
@@ -656,13 +656,13 @@ static int32 CheckPickupAgainstPlayer(xEnt* cbent, void*)
             ent->baseFlags &= 0x7f;
         }
 
-        float32 distance;
+        F32 distance;
         zEnt* plent = &globals.player.ent;
-        float32 distsqr;
-        float32 dx__ = plent->bound.sph.center.x - ent->model->Mat->pos.x;
-        float32 dy__ = plent->bound.sph.center.y - ent->model->Mat->pos.y;
-        float32 dz__ = plent->bound.sph.center.z - ent->model->Mat->pos.z;
-        float32 chkdist = _1144 * plent->bound.sph.r;
+        F32 distsqr;
+        F32 dx__ = plent->bound.sph.center.x - ent->model->Mat->pos.x;
+        F32 dy__ = plent->bound.sph.center.y - ent->model->Mat->pos.y;
+        F32 dz__ = plent->bound.sph.center.z - ent->model->Mat->pos.z;
+        F32 chkdist = _1144 * plent->bound.sph.r;
 
         distance = SQR(dx__) + SQR(dy__) + SQR(dz__);
 
@@ -690,7 +690,7 @@ static int32 CheckPickupAgainstPlayer(xEnt* cbent, void*)
                     }
                     case PICKUP_SOCK:
                     {
-                        for (int32 i = 0; i < 5; i++)
+                        for (S32 i = 0; i < 5; i++)
                         {
                             xFXFireworksLaunch(_1050_1 + xurand(), (xVec3*)&ent->model->Mat->pos,
                                                _1050_1 * xurand() + _1145);
@@ -719,20 +719,20 @@ static int32 CheckPickupAgainstPlayer(xEnt* cbent, void*)
                             var_2C.y += _1050_1 * chkdist;
                             var_38.y -= _1050_1 * chkdist;
 
-                            float32 dist2_1, dist2_2;
+                            F32 dist2_1, dist2_2;
 
                             {
-                                float32 dx__ = plent->bound.sph.center.x - var_2C.x;
-                                float32 dy__ = plent->bound.sph.center.y - var_2C.y;
-                                float32 dz__ = plent->bound.sph.center.z - var_2C.z;
+                                F32 dx__ = plent->bound.sph.center.x - var_2C.x;
+                                F32 dy__ = plent->bound.sph.center.y - var_2C.y;
+                                F32 dz__ = plent->bound.sph.center.z - var_2C.z;
 
                                 dist2_1 = SQR(dx__) + SQR(dy__) + SQR(dz__);
                             }
 
                             {
-                                float32 dx__ = plent->bound.sph.center.x - var_38.x;
-                                float32 dy__ = plent->bound.sph.center.y - var_38.y;
-                                float32 dz__ = plent->bound.sph.center.z - var_38.z;
+                                F32 dx__ = plent->bound.sph.center.x - var_38.x;
+                                F32 dy__ = plent->bound.sph.center.y - var_38.y;
+                                F32 dz__ = plent->bound.sph.center.z - var_38.z;
 
                                 dist2_2 = SQR(dx__) + SQR(dy__) + SQR(dz__);
                             }
@@ -747,7 +747,7 @@ static int32 CheckPickupAgainstPlayer(xEnt* cbent, void*)
                                 zEntPlayerControlOff(CONTROL_OWNER_REWARDANIM);
                             }
 
-                            for (int32 i = 0; i < 10; i++)
+                            for (S32 i = 0; i < 10; i++)
                             {
                                 xFXFireworksLaunch(xurand(), (xVec3*)&ent->model->Mat->pos,
                                                    _1050_1 * xurand() + _1145);
@@ -1035,7 +1035,7 @@ static void collectPickup(zEntPickup* ent)
 void zEntPickup_GiveAllRewardsNow()
 {
     zEntPickup* ent;
-    uint32 i, j;
+    U32 i, j;
 
     for (i = 0; i < REWARD_TYPE_COUNT; i++)
     {
@@ -1061,7 +1061,7 @@ void zEntPickup_GiveAllRewardsNow()
         }
     }
 
-    uint32 total = 0;
+    U32 total = 0;
 
     for (i = 0; i < REWARD_COUNT; i++)
     {
@@ -1156,7 +1156,7 @@ void zEntPickup_Save(zEntPickup* ent, xSerial* s)
 
 void zEntPickup_Load(zEntPickup* ent, xSerial* s)
 {
-    int32 is_a_dropper = 0;
+    S32 is_a_dropper = 0;
 
     zEntLoad(ent, s);
 
@@ -1165,8 +1165,8 @@ void zEntPickup_Load(zEntPickup* ent, xSerial* s)
         is_a_dropper = 1;
     }
 
-    uint32 state = 0;
-    int32 coll = 0;
+    U32 state = 0;
+    S32 coll = 0;
 
     s->Read_b7(&state);
     s->Read_b1(&coll);
@@ -1186,7 +1186,7 @@ void zEntPickup_Load(zEntPickup* ent, xSerial* s)
     }
     else
     {
-        ent->pickupFlags &= (uint8)~0x2;
+        ent->pickupFlags &= (U8)~0x2;
     }
 
     if (ent->pickupFlags & 0x1)
@@ -1262,8 +1262,8 @@ void zEntPickup_Drop(zEntPickup* ent)
         xVec3Copy((xVec3*)&ent->model->Mat->pos, xEntGetPos(ent->useThisEntPos));
     }
 
-    float32 b = xsqrt(_1609);
-    float32 c = ent->model->Mat->pos.y - ent->droppos.y;
+    F32 b = xsqrt(_1609);
+    F32 c = ent->model->Mat->pos.y - ent->droppos.y;
 
     ent->vel.x = _867_2;
     ent->vel.y = b;
@@ -1271,8 +1271,8 @@ void zEntPickup_Drop(zEntPickup* ent)
 
     if (!(ent->flg_opts & 0x1))
     {
-        float32 sol[2];
-        uint32 solcnt = xMathSolveQuadratic(_1610, b, c, &sol[0], &sol[1]);
+        F32 sol[2];
+        U32 solcnt = xMathSolveQuadratic(_1610, b, c, &sol[0], &sol[1]);
 
         if (solcnt)
         {
@@ -1294,7 +1294,7 @@ void zEntPickup_Drop(zEntPickup* ent)
     ent->timer = _1526;
 }
 
-static uint32 ShowPickupFx(zEntPickup* ent)
+static U32 ShowPickupFx(zEntPickup* ent)
 {
     if (!globals.cmgr)
     {
@@ -1330,7 +1330,7 @@ zPickupAuraInfo zPickupAuraTable[] =
 };
 // clang-format on
 
-static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, float32 dt);
+static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, F32 dt);
 // Uses int-to-float conversion
 
 static void set_alpha_blend(xModelInstance* model)
@@ -1339,11 +1339,11 @@ static void set_alpha_blend(xModelInstance* model)
     model->PipeFlags |= 0x6508;
 }
 
-void zEntPickup_Render(zEntPickup* plist, uint32 pcount)
+void zEntPickup_Render(zEntPickup* plist, U32 pcount)
 {
     xLightKit_Enable(NULL, globals.currWorld);
 
-    for (uint32 i = 0; i < pcount; plist++, i++)
+    for (U32 i = 0; i < pcount; plist++, i++)
     {
         if (xEntIsVisible(plist) && !(plist->model->Flags & 0x400))
         {
@@ -1385,7 +1385,7 @@ void zEntPickup_RenderOne(xEnt* ent)
     zEntPickup* pickup = (zEntPickup*)ent;
     RpAtomic* imodel = pickup->model->Data;
     RwMatrix* mat = ent->model->Mat;
-    int32 shadowResult;
+    S32 shadowResult;
     xVec3 shadVec;
 
     // non-matching: scheduling
@@ -1425,9 +1425,9 @@ void zEntPickup_RenderOne(xEnt* ent)
 
 // Uses int-to-float conversion
 
-static uint32 rewardRequest(uint32 shinyType, xVec3* ppos, xVec3 pos)
+static U32 rewardRequest(U32 shinyType, xVec3* ppos, xVec3 pos)
 {
-    for (int32 i = 0; i < REWARD_PICKUP_COUNT; i++)
+    for (S32 i = 0; i < REWARD_PICKUP_COUNT; i++)
     {
         zEntPickup* p = rewardPickups[shinyType][i];
 
@@ -1437,7 +1437,7 @@ static uint32 rewardRequest(uint32 shinyType, xVec3* ppos, xVec3 pos)
 
             xEntShow(p);
 
-            p->baseFlags &= (uint8)~0x40;
+            p->baseFlags &= (U8)~0x40;
             p->baseFlags |= 0x80;
 
             if (ppos)
@@ -1476,7 +1476,7 @@ void zEntPickup_SceneReset()
 #endif
 
 #if 0
-void zEntPickup_SceneUpdate(float32 dt)
+void zEntPickup_SceneUpdate(F32 dt)
 {
     // wip
 
@@ -1514,13 +1514,13 @@ void zEntPickup_SceneUpdate(float32 dt)
         }
     }
 
-    for (int32 i = 0; i < REWARD_COUNT; i++)
+    for (S32 i = 0; i < REWARD_COUNT; i++)
     {
         if (sRewards[i].active && (!sRewards[i].currRequest || _867_2 == sRewards[i].timer))
         {
             sRewards[i].timer = _2087;
 
-            uint32 ret = rewardRequest(sRewards[i].pickups[sRewards[i].currRequest],
+            U32 ret = rewardRequest(sRewards[i].pickups[sRewards[i].currRequest],
                                        sRewards[i].ppos, sRewards[i].pos);
 
             if (!ret)
@@ -1569,7 +1569,7 @@ void zEntPickup_SceneUpdate(float32 dt)
         globals.player.Inv_Shiny = 99999;
     }
 
-    for (int32 i = 0; i < REWARD_COUNT; i++)
+    for (S32 i = 0; i < REWARD_COUNT; i++)
     {
         sRewards[i].timer -= dt;
 
@@ -1596,13 +1596,13 @@ void zEntPickup_SceneUpdate(float32 dt)
 #endif
 
 #ifndef NON_MATCHING
-static void spawnNRewards(uint32* pickups, uint32 num, xVec3* ppos, xVec3 pos);
+static void spawnNRewards(U32* pickups, U32 num, xVec3* ppos, xVec3 pos);
 #else
-static void spawnNRewards(uint32* pickups, uint32 num, xVec3* ppos, xVec3 pos)
+static void spawnNRewards(U32* pickups, U32 num, xVec3* ppos, xVec3 pos)
 {
     if (num >= 1 && gEnableRewardsQueue)
     {
-        for (int32 i = 0; i < REWARD_COUNT; i++)
+        for (S32 i = 0; i < REWARD_COUNT; i++)
         {
             if (!sRewards[i].active)
             {
@@ -1611,7 +1611,7 @@ static void spawnNRewards(uint32* pickups, uint32 num, xVec3* ppos, xVec3 pos)
                 sRewards[i].num = num;
                 sRewards[i].timer = _2087;
 
-                for (uint32 j = 0; j < num; j++)
+                for (U32 j = 0; j < num; j++)
                 {
                     sRewards[i].pickups[j] = pickups[j];
                 }
@@ -1633,7 +1633,7 @@ static void spawnNRewards(uint32* pickups, uint32 num, xVec3* ppos, xVec3 pos)
 }
 #endif
 
-void zEntPickup_SpawnNRewards(uint32* pickups, uint32 num, xVec3* ppos)
+void zEntPickup_SpawnNRewards(U32* pickups, U32 num, xVec3* ppos)
 {
     if (num >= 1)
     {
@@ -1642,7 +1642,7 @@ void zEntPickup_SpawnNRewards(uint32* pickups, uint32 num, xVec3* ppos)
     }
 }
 
-void zEntPickup_SpawnNRewards(uint32* pickups, uint32 num, xVec3 pos)
+void zEntPickup_SpawnNRewards(U32* pickups, U32 num, xVec3 pos)
 {
     if (num >= 1)
     {
@@ -1652,9 +1652,9 @@ void zEntPickup_SpawnNRewards(uint32* pickups, uint32 num, xVec3 pos)
 
 void zEntPickup_RewardPostSetup()
 {
-    for (int32 i = 0; i < REWARD_TYPE_COUNT; i++)
+    for (S32 i = 0; i < REWARD_TYPE_COUNT; i++)
     {
-        for (int32 j = 0; j < REWARD_PICKUP_COUNT; j++)
+        for (S32 j = 0; j < REWARD_PICKUP_COUNT; j++)
         {
             if (rewardPickups[i][j])
             {
@@ -1672,20 +1672,20 @@ void zEntPickup_RewardPostSetup()
     }
 }
 
-WEAK float32 xVec3DistFast(const xVec3* a, const xVec3* b)
+WEAK F32 xVec3DistFast(const xVec3* a, const xVec3* b)
 {
-    float32 dx = a->x - b->x;
-    float32 dy = a->y - b->y;
-    float32 dz = a->z - b->z;
-    float32 dist2 = SQR(dx) + SQR(dy) + SQR(dz);
-    float32 dist;
+    F32 dx = a->x - b->x;
+    F32 dy = a->y - b->y;
+    F32 dz = a->z - b->z;
+    F32 dist2 = SQR(dx) + SQR(dy) + SQR(dz);
+    F32 dist;
 
     xsqrtfast(dist, dist2);
 
     return dist;
 }
 
-WEAK void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, float32 _x, float32 _y, float32 _z, float32 t)
+WEAK void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
 {
     xMat3x3 var_38;
     xMat3x3RotC(&var_38, _x, _y, _z, t);

@@ -9,13 +9,13 @@
 #include "xMath.h"
 
 extern vinfo voices[58];
-extern int8 soundInited;
-extern int32 SoundFlags;
-extern float32 _1262;
-extern float32 _1263;
-extern volatile int32 fc;
+extern S8 soundInited;
+extern S32 SoundFlags;
+extern F32 _1262;
+extern F32 _1263;
+extern volatile S32 fc;
 
-void arq_callback(long32)
+void arq_callback(long)
 {
     if (!soundInited)
     {
@@ -41,11 +41,11 @@ void iSndInitSceneLoaded()
 }
 
 #ifdef NON_MATCHING
-uint32 iVolFromX(float32 param1)
+U32 iVolFromX(F32 param1)
 {
     float f = MAX(param1, _1263);
 
-    int32 i = _1262 * xlog(f);
+    S32 i = _1262 * xlog(f);
     i = (i & i >> 0x1f);
     if (i < -0x388)
     {
@@ -88,11 +88,11 @@ void iSndUpdateSounds()
     }
 }
 
-void iSndStartStereo(uint32 id1, uint32 id2, float32 pitch)
+void iSndStartStereo(U32 id1, U32 id2, F32 pitch)
 {
 }
 
-void iSndStereo(uint32 i)
+void iSndStereo(U32 i)
 {
     if (i == 0)
     {
@@ -123,7 +123,7 @@ void iSndWaitForDeadSounds()
 #endif
 
 //
-void iSndSuspendCD(uint32)
+void iSndSuspendCD(U32)
 {
 }
 
@@ -136,9 +136,9 @@ void iSndMessWithEA(sDSPADPCM* param1) //sDSPADPCM*
 }
 
 #if 0
-uint32 SampleToNybbleAddress(uint32 sample)
+U32 SampleToNybbleAddress(U32 sample)
 {
-    uint32 i = sample * 0x124924925U >> 0x20;
+    U32 i = sample * 0x124924925U >> 0x20;
     i = i & 0xfffffff0;
     i = i + sample % 0xe + 2;
     return i;
@@ -150,7 +150,7 @@ void sndloadcb(tag_xFile* tag)
     SoundFlags = 0;
 }
 
-void iSndSetExternalCallback(void (*func_ptr)(uint32))
+void iSndSetExternalCallback(void (*func_ptr)(U32))
 {
 }
 

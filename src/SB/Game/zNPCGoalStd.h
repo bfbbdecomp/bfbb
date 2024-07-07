@@ -68,27 +68,27 @@ enum en_alertfod
 
 struct zNPCGoalLoopAnim : zNPCGoalCommon
 {
-    int32 flg_loopanim;
-    uint32 anid_stage[3];
-    int32 cnt_loop;
-    float32 lastAnimTime;
-    uint32 origAnimFlags;
-    uint32 animWeMolested;
+    S32 flg_loopanim;
+    U32 anid_stage[3];
+    S32 cnt_loop;
+    F32 lastAnimTime;
+    U32 origAnimFlags;
+    U32 animWeMolested;
 
-    // void* __ct(int32 myType);
-    void LoopCountSet(int32 unk); // return type might be wrong
+    // void* __ct(S32 myType);
+    void LoopCountSet(S32 unk); // return type might be wrong
 };
 
 struct zNPCGoalTaunt : zNPCGoalLoopAnim
 {
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* xscn);
-    int32 Enter(float32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalPatThrow : zNPCGoalCommon
 {
-    int32 Enter(float32 dt, void* updCtxt);
-    uint8 CollReview(void*);
+    S32 Enter(F32 dt, void* updCtxt);
+    U8 CollReview(void*);
 };
 
 enum en_alertchuk
@@ -106,96 +106,96 @@ enum en_alertchuk
 
 struct zNPCGoalAlertSlick : zNPCGoalCommon
 {
-    int32 flg_alert;
+    S32 flg_alert;
     en_alertslik alertslik;
-    float32 tmr_reload;
+    F32 tmr_reload;
     xVec3 pos_corner;
 
-    void MoveCorner(float32 dt);
-    void GetInArena(float32 dt);
-    int32 NPCMessage(NPCMsg* mail);
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt);
-    int32 Resume(float32 dt, void* updCtxt);
-    int32 Enter(float32 dt, void* updCtxt);
+    void MoveCorner(F32 dt);
+    void GetInArena(F32 dt);
+    S32 NPCMessage(NPCMsg* mail);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalAlertChuck : zNPCGoalCommon
 {
     xVec3 dir_attack;
-    int32 flg_attack;
+    S32 flg_attack;
     en_alertchuk alertchuk;
-    float32 tmr_reload;
-    float32 tmr_hover;
+    F32 tmr_reload;
+    F32 tmr_hover;
     xVec3 dir_zoom;
-    float32 dst_zoom;
+    F32 dst_zoom;
 
-    int32 ZoomMove(float32 dt);
-    void GetInArena(float32 dt);
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt);
-    int32 Resume(float32 dt, void* updCtxt);
-    int32 Enter(float32 dt, void* updCtxt);
+    S32 ZoomMove(F32 dt);
+    void GetInArena(F32 dt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalAlertTarTar : zNPCGoalCommon
 {
-    int32 flg_attack;
+    S32 flg_attack;
     en_alerttart alerttart;
     en_hoppy hoppy;
-    float32 tmr_reload;
+    F32 tmr_reload;
 
-    void GetInArena(float32 dt);
-    int32 HoppyUpdate(en_trantype* trantype, float32 dt);
-    int32 NPCMessage(NPCMsg* mail);
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt);
-    int32 Resume(float32 dt, void* updCtxt);
-    int32 Enter(float32 dt, void* updCtxt);
+    void GetInArena(F32 dt);
+    S32 HoppyUpdate(en_trantype* trantype, F32 dt);
+    S32 NPCMessage(NPCMsg* mail);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalAlertChomper : zNPCGoalCommon
 {
     en_alertchomp alertchomp;
     xVec3 pos_evade;
-    float32 tmr_evade;
+    F32 tmr_evade;
 
-    int32 CheckSpot();
-    int32 MoveEvadePos(xVec3* pos, float32 dt);
-    int32 CalcEvadePos(xVec3* pos);
-    void GetInArena(float32 dt);
-    void CirclePlayer(float32 dt);
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt);
-    int32 Enter(float32 dt, void* updCtxt);
+    S32 CheckSpot();
+    S32 MoveEvadePos(xVec3* pos, F32 dt);
+    S32 CalcEvadePos(xVec3* pos);
+    void GetInArena(F32 dt);
+    void CirclePlayer(F32 dt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalAlertFodBzzt : zNPCGoalCommon
 {
-    int32 flg_alert;
+    S32 flg_alert;
     en_alertbzzt alertbzzt;
-    float32 tmr_warmup;
-    int32 cnt_nextlos;
-    float32 len_laser;
+    F32 tmr_warmup;
+    S32 cnt_nextlos;
+    F32 len_laser;
     xVec3 pos_laserSource;
     xVec3 pos_laserTarget;
     RwRGBA rgba_deathRay;
-    int32 cnt_inContact;
+    S32 cnt_inContact;
 
     void DeathRayRender();
-    void DeathRayUpdate(float32 dt);
-    void OrbitPlayer(float32 dt);
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt);
-    int32 Resume(float32 dt, void* updCtxt);
-    int32 Suspend();
-    int32 Exit();
-    int32 Enter(float32 dt, void* updCtxt);
-    void GetInArena(float32 dt);
+    void DeathRayUpdate(F32 dt);
+    void OrbitPlayer(F32 dt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Suspend();
+    S32 Exit();
+    S32 Enter(F32 dt, void* updCtxt);
+    void GetInArena(F32 dt);
 };
 
 struct zNPCGoalPushAnim : zNPCGoalCommon
 {
-    int32 flg_pushanim;
-    float32 lastAnimTime;
+    S32 flg_pushanim;
+    F32 lastAnimTime;
 
-    // void* __ct(int32 myType);
-    int32 Enter(float32 dt, void* updCtxt);
+    // void* __ct(S32 myType);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalAttackFodder;
@@ -204,21 +204,21 @@ struct CattleNotify : HAZNotify
 {
     zNPCGoalAttackFodder* goal;
 
-    CattleNotify(int32 myType);
-    int32 Notify(en_haznote note);
+    CattleNotify(S32 myType);
+    S32 Notify(en_haznote note);
 };
 
 struct zNPCGoalAttackFodder : zNPCGoalPushAnim
 {
     xVec3 dir_attack;
-    int32 flg_attack;
+    S32 flg_attack;
     CattleNotify cbNotify;
     NPCHazard* haz_cattle; // 0x6C
 
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* xscn);
-    int32 Exit(float32 dt, void* updCtxt);
-    int32 Enter(float32 dt, void* updCtxt);
-    int32 SyncCattleProd();
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 SyncCattleProd();
 };
 
 class zNPCGoalAlertFodder : public zNPCGoalCommon
@@ -228,41 +228,41 @@ public:
     enum en_alertfod alertfod; // offset 0x50, size 0x4
     float tmr_alertfod; // offset 0x54, size 0x4
 
-    void MoveEvade(float32 dt);
-    void GetInArena(float32 dt);
-    void FlankPlayer(float32 dt);
-    int32 CheckSpot(float32 dt);
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* scene);
-    int32 Enter(float32 dt, void* updCtxt);
+    void MoveEvade(F32 dt);
+    void GetInArena(F32 dt);
+    void FlankPlayer(F32 dt);
+    S32 CheckSpot(F32 dt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalDogLaunch : zNPCGoalCommon
 {
-    int32 flg_launch;
+    S32 flg_launch;
     xVec3 pos_src;
     xVec3 pos_tgt;
     xParabola parabinfo;
-    float32 tmr_remain;
+    F32 tmr_remain;
 
-    void BubTrailCone(xVec3* pos, int32 num, xVec3* pos_rand, xVec3* vel_rand, xMat3x3* mat);
-    int32 BallisticUpdate(float32 dt);
+    void BubTrailCone(xVec3* pos, S32 num, xVec3* pos_rand, xVec3* vel_rand, xMat3x3* mat);
+    S32 BallisticUpdate(F32 dt);
     void PreCollide();
-    int32 Process(en_trantype* trantype, float32 dt, void* updCtxt, xScene* xscn);
-    int32 Enter(float32 dt, void* updCtxt);
-    uint8 CollReview(void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Enter(F32 dt, void* updCtxt);
+    U8 CollReview(void*);
     void SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3);
-    void ViciousAttack(xVec3* unk1, xVec3* unk2, zMovePoint* unk3, int32 unk4);
+    void ViciousAttack(xVec3* unk1, xVec3* unk2, zMovePoint* unk3, S32 unk4);
 };
 
 struct zNPCGoalDead : zNPCGoalCommon
 {
-    int32 flg_deadinfo;
-    uint8 old_moreFlags;
+    S32 flg_deadinfo;
+    U8 old_moreFlags;
 
-    zNPCGoalDead(int32 goalID);
+    zNPCGoalDead(S32 goalID);
 
-    virtual int32 Enter(float32 dt, void* updCtxt);
-    virtual int32 Exit(float32 dt, void* updCtxt);
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Exit(F32 dt, void* updCtxt);
 
     void DieQuietly();
     void DieWithAWhimper();
@@ -272,7 +272,7 @@ protected:
     ~zNPCGoalDead();
 };
 
-xFactoryInst* GOALCreate_Standard(int32 who, RyzMemGrow* grow, void*);
+xFactoryInst* GOALCreate_Standard(S32 who, RyzMemGrow* grow, void*);
 void GOALDestroy_Goal(xFactoryInst* inst);
 
 #endif

@@ -13,10 +13,10 @@
 #include "zEntPlayer.h"
 #include "zEntCruiseBubble.h"
 
-uint32 gBusStopIsRunning;
+U32 gBusStopIsRunning;
 static xEnt* sBusStopUI;
 
-void zBusStop_Init(xBase& base, xDynAsset& asset, ulong32)
+void zBusStop_Init(xBase& base, xDynAsset& asset, size_t)
 {
     zBusStop_Init((zBusStop*)&base, (busstop_asset*)&asset);
 }
@@ -36,7 +36,7 @@ void zBusStop_Init(zBusStop* bstop, busstop_asset* asset)
         bstop->link = NULL;
     }
 
-    uint32 size;
+    U32 size;
     void* marker = xSTFindAsset(asset->marker, &size);
 
     if (marker != NULL)
@@ -58,14 +58,14 @@ void zBusStop_Setup(zBusStop* bstop)
     sBusStopUI = (xEnt*)zSceneFindObject(xStrHash("mnu4 busstop"));
 }
 
-void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
+void zBusStop_Update(xBase* to, xScene* scene, F32 dt)
 {
     // If nearby, advance out of state 0, otherwise, drop back to state 0
     zBusStop* bstop = (zBusStop*)to;
     //zEnt* player = &globals.player.ent;
-    float32 dx = globals.player.ent.bound.box.center.x - bstop->pos.x;
-    float32 dy = globals.player.ent.bound.box.center.y - bstop->pos.y;
-    float32 dz = globals.player.ent.bound.box.center.z - bstop->pos.z;
+    F32 dx = globals.player.ent.bound.box.center.x - bstop->pos.x;
+    F32 dy = globals.player.ent.bound.box.center.y - bstop->pos.y;
+    F32 dz = globals.player.ent.bound.box.center.z - bstop->pos.z;
     if (dx * dx + dy * dy + dz * dz < 6.25f)
     {
         if (bstop->currState == 0)
@@ -190,7 +190,7 @@ void zBusStop_Update(xBase* to, xScene* scene, float32 dt)
     }
 }
 
-int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*)
+S32 zBusStopEventCB(xBase*, xBase*, U32, const F32*, xBase*)
 {
     return eEventEnable;
 }

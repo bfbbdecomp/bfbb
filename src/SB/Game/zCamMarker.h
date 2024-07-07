@@ -15,6 +15,6 @@ struct zCamMarker : xBase
 void zCamMarkerInit(xBase* b, xCamAsset* asset);
 void zCamMarkerSave(zCamMarker* m, xSerial* s);
 void zCamMarkerLoad(zCamMarker* m, xSerial* s);
-int zCamMarkerEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam, xBase* b3);
+int zCamMarkerEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3);
 
 #endif

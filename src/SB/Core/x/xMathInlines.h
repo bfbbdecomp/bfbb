@@ -3,16 +3,16 @@
 
 #include <types.h>
 
-float32 xsqrt(float32 x);
-float32 xfmod(float32 a, float32 b);
-float32 xatan2(float32 y, float32 x);
-float32 xasin(float32 x);
-float32 xacos(float32 x);
-float32 xexp(float32 x);
-float32 xpow(float32 x, float32 y);
+F32 xsqrt(F32 x);
+F32 xfmod(F32 a, F32 b);
+F32 xatan2(F32 y, F32 x);
+F32 xasin(F32 x);
+F32 xacos(F32 x);
+F32 xexp(F32 x);
+F32 xpow(F32 x, F32 y);
 
-float32 SQ(float32 x);
+F32 SQ(F32 x);
 
-void xsqrtfast(float32& out, float32 x);
+void xsqrtfast(F32& out, F32 x);
 
 #endif

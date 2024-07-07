@@ -45,13 +45,13 @@ struct menuWorld
 {
     _zUI* uiSelected;
     char worldPrefix[2];
-    uint32 numTasks;
+    U32 numTasks;
     menuTask task[TASK_COUNT];
 };
 
 struct menuTaskInfo
 {
-    float32 ang;
+    F32 ang;
     _CurrentPlayer player;
 };
 
@@ -60,27 +60,27 @@ struct menuWorldInfo
     menuTaskInfo taskInfo[TASK_COUNT];
 };
 
-static uint32 sSortedCount = 0;
+static U32 sSortedCount = 0;
 
 static RwIm2DVertex Vertex[4];
 static RwImVertexIndex Index[6] = { 0, 1, 2, 0, 2, 3 };
 
-static uint32 cKeyUIid1off = xStrHash("KEY OFF 1 UI");
-static uint32 cKeyUIid2off = xStrHash("KEY OFF 2 UI");
-static uint32 cKeyUIid3off = xStrHash("KEY OFF 3 UI");
-static uint32 cKeyUIid4off = xStrHash("KEY OFF 4 UI");
-static uint32 cKeyUIid1on = xStrHash("KEY ON 1 UI");
-static uint32 cKeyUIid2on = xStrHash("KEY ON 2 UI");
-static uint32 cKeyUIid3on = xStrHash("KEY ON 3 UI");
-static uint32 cKeyUIid4on = xStrHash("KEY ON 4 UI");
+static U32 cKeyUIid1off = xStrHash("KEY OFF 1 UI");
+static U32 cKeyUIid2off = xStrHash("KEY OFF 2 UI");
+static U32 cKeyUIid3off = xStrHash("KEY OFF 3 UI");
+static U32 cKeyUIid4off = xStrHash("KEY OFF 4 UI");
+static U32 cKeyUIid1on = xStrHash("KEY ON 1 UI");
+static U32 cKeyUIid2on = xStrHash("KEY ON 2 UI");
+static U32 cKeyUIid3on = xStrHash("KEY ON 3 UI");
+static U32 cKeyUIid4on = xStrHash("KEY ON 4 UI");
 
 static char patsock_text_buffer[] = "##/##";
 static _zUI* patsock_ui;
 static zUIFont* patsock_uif;
-static uint32 patsock_prev_world = -1;
-static uint32 patsock_prev_count = -1;
+static U32 patsock_prev_world = -1;
+static U32 patsock_prev_count = -1;
 
-static float32 ushift;
+static F32 ushift;
 
 namespace
 {
@@ -108,7 +108,7 @@ namespace
     {
     }
 
-    void debug_update(zScene&, float32)
+    void debug_update(zScene&, F32)
     {
     }
 
@@ -117,13 +117,13 @@ namespace
     }
 } // namespace
 
-void zUIMgr::PreUpdate(zScene* s, float32 dt)
+void zUIMgr::PreUpdate(zScene* s, F32 dt)
 {
     if (s->baseCount[eBaseTypeUI])
     {
         _zUI* ui = (_zUI*)s->baseList[eBaseTypeUI];
 
-        for (uint32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
+        for (U32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
         {
             ui->uiButton = 0;
             ui++;
@@ -134,7 +134,7 @@ void zUIMgr::PreUpdate(zScene* s, float32 dt)
     {
         _zUI* ui = (_zUI*)s->baseList[eBaseTypeUI];
 
-        for (uint32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
+        for (U32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
         {
             zUI_PreUpdate(ui, s, dt);
             ui++;
@@ -142,9 +142,9 @@ void zUIMgr::PreUpdate(zScene* s, float32 dt)
     }
 }
 
-void zUIMgr::Update(zScene* s, float32 dt)
+void zUIMgr::Update(zScene* s, F32 dt)
 {
-    for (uint32 i = 0; i < m_updateMax; i++)
+    for (U32 i = 0; i < m_updateMax; i++)
     {
         if (xBaseIsEnabled(m_update[i]))
         {
@@ -157,8 +157,8 @@ void zUIMgr::Update(zScene* s, float32 dt)
 
 void zUIMgr::Setup(zScene* s)
 {
-    const uint32 count = s->baseCount[eBaseTypeUI];
-    const uint32 arraySize = count * sizeof(_zUI*);
+    const U32 count = s->baseCount[eBaseTypeUI];
+    const U32 arraySize = count * sizeof(_zUI*);
 
     m_preUpdateStart = 0;
     m_preUpdateEnd = count - 1;
@@ -174,7 +174,7 @@ void zUIMgr::Setup(zScene* s)
 
     _zUI* ui = (_zUI*)s->baseList[eBaseTypeUI];
 
-    for (uint32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
+    for (U32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
     {
         Add(ui);
         ui++;
@@ -298,9 +298,9 @@ void zUI_Init(void* ent, void* asset)
 
 namespace
 {
-    xModelInstance* load_model(uint32 id)
+    xModelInstance* load_model(U32 id)
     {
-        uint32 size;
+        U32 size;
         void* data;
 
         data = xSTFindAsset(xStrHashCat(id, ".minf"), &size);
@@ -335,7 +335,7 @@ namespace
             {
                 ui.atbl = NULL;
 
-                int32 used = zAnimListGetNumUsed(a.animListID);
+                S32 used = zAnimListGetNumUsed(a.animListID);
 
                 if (used > 0)
                 {
@@ -454,13 +454,13 @@ void zUI_Reset(_zUI* ent)
     // non-matching: epilogue
 }
 
-void zUI_PreUpdate(_zUI* ent, xScene*, float32)
+void zUI_PreUpdate(_zUI* ent, xScene*, F32)
 {
     _zUI* ui = ent;
 
     ent->uiButton = 0;
     // This matches perfectly with inlining enabled
-    for (int32 i = 0; i < (globals.firstStartPressed ? 1 : 1); i++)
+    for (S32 i = 0; i < (globals.firstStartPressed ? 1 : 1); i++)
     {
         _tagxPad* pad;
 
@@ -596,7 +596,7 @@ void zUI_PreUpdate(_zUI* ent, xScene*, float32)
     }
 }
 
-void zUI_Update(_zUI* ent, xScene*, float32 dt)
+void zUI_Update(_zUI* ent, xScene*, F32 dt)
 {
     if (xEntIsVisible(ent) && ent->model && (!(ent->uiFlags & 0x4) || !ent->sasset->textureID))
     {
@@ -675,7 +675,7 @@ static xBase* zUIRenderIteratorInsert(xBase* b, zScene*, void*)
     return b;
 }
 
-int32 iRenderQSort_Face(const void* arg1, const void* arg2)
+S32 iRenderQSort_Face(const void* arg1, const void* arg2)
 {
     _zUI* f1 = *(_zUI**)arg1;
     _zUI* f2 = *(_zUI**)arg2;
@@ -745,7 +745,7 @@ void zUIRenderAll()
 
     bool rendering_models = false;
 
-    for (int32 i = 0; i < (int32)sSortedCount; i++)
+    for (S32 i = 0; i < (S32)sSortedCount; i++)
     {
         if (xEntIsVisible(sSorted[i]))
         {
@@ -809,28 +809,28 @@ void zUI_Render(xEnt* ent)
                 }
 
                 RwRaster* raster = texture->raster;
-                uint8 r = 0xFF;
-                uint8 g = 0xFF;
-                uint8 b = 0xFF;
-                uint8 a = 0xFF;
-                float32 w = 640.0f;
-                float32 h = 480.0f;
+                U8 r = 0xFF;
+                U8 g = 0xFF;
+                U8 b = 0xFF;
+                U8 a = 0xFF;
+                F32 w = 640.0f;
+                F32 h = 480.0f;
 
-                float32 u1 = ui->sasset->uva[0];
-                float32 v1 = ui->sasset->uva[1];
-                float32 u2 = ui->sasset->uvb[0];
-                float32 v2 = ui->sasset->uvb[1];
-                float32 u3 = ui->sasset->uvc[0];
-                float32 v3 = ui->sasset->uvc[1];
-                float32 u4 = ui->sasset->uvd[0];
-                float32 v4 = ui->sasset->uvd[1];
-                float32 x1 = w * ui->sasset->pos.x / w;
-                float32 y1 = h * ui->sasset->pos.y / h;
-                float32 x2 = w * (ui->sasset->pos.x + ui->sasset->dim[0]) / w;
-                float32 y2 = h * (ui->sasset->pos.y + ui->sasset->dim[1]) / h;
+                F32 u1 = ui->sasset->uva[0];
+                F32 v1 = ui->sasset->uva[1];
+                F32 u2 = ui->sasset->uvb[0];
+                F32 v2 = ui->sasset->uvb[1];
+                F32 u3 = ui->sasset->uvc[0];
+                F32 v3 = ui->sasset->uvc[1];
+                F32 u4 = ui->sasset->uvd[0];
+                F32 v4 = ui->sasset->uvd[1];
+                F32 x1 = w * ui->sasset->pos.x / w;
+                F32 y1 = h * ui->sasset->pos.y / h;
+                F32 x2 = w * (ui->sasset->pos.x + ui->sasset->dim[0]) / w;
+                F32 y2 = h * (ui->sasset->pos.y + ui->sasset->dim[1]) / h;
 
-                float32 z = RwIm2DGetNearScreenZ();
-                float32 cz = z;
+                F32 z = RwIm2DGetNearScreenZ();
+                F32 cz = z;
 
                 if ((float)iabs(z) <= 0.00001f)
                 {
@@ -884,7 +884,7 @@ void zUI_Render(xEnt* ent)
             else if (ui->model != NULL)
             {
                 // zUIAsset & a;
-                basic_rect<float32> r = {};
+                basic_rect<F32> r = {};
                 r.x = ui->sasset->pos.x / 640.0f;
                 r.y = ui->sasset->pos.y / 480.0f;
                 r.w = ui->sasset->dim[0] / 640.0f;
@@ -895,8 +895,8 @@ void zUI_Render(xEnt* ent)
                     return;
                 }
 
-                uint32 srcblend = XMODELINSTANCE_GET_SRCBLEND(ui->model);
-                uint32 destblend = XMODELINSTANCE_GET_DSTBLEND(ui->model);
+                U32 srcblend = XMODELINSTANCE_GET_SRCBLEND(ui->model);
+                U32 destblend = XMODELINSTANCE_GET_DSTBLEND(ui->model);
                 RwRenderStateSet(rwRENDERSTATESRCBLEND,
                                  (void*)(srcblend ? srcblend : rwBLENDSRCALPHA));
                 RwRenderStateSet(rwRENDERSTATEDESTBLEND,
@@ -928,7 +928,7 @@ void zUI_Render(xEnt* ent)
     }
 }
 
-int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*)
+S32 zUIEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*)
 {
     _zUI* s = (_zUI*)to;
 
@@ -1025,7 +1025,7 @@ int32 zUIEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBas
     {
         if (s->sasset)
         {
-            uint32 theTextureID = *(uint32*)&toParam[0];
+            U32 theTextureID = *(U32*)&toParam[0];
 
             if (theTextureID)
             {
@@ -1246,8 +1246,8 @@ static menuWorld sWorld[WORLD_COUNT];
 _zUI* sTakeTaxi;
 _zUI* sNoneTaskDesc;
 _zUI* sCurrTaskDesc;
-uint32 sCurrWorld;
-uint32 sCurrTask;
+U32 sCurrWorld;
+U32 sCurrTask;
 _zUI* sPauseManager;
 _zUI* sConfirmation;
 xGroup* sTaxiConfirmGrp;
@@ -1261,9 +1261,9 @@ void zUI_ParseINI(xIniFile* ini)
 
     strcpy(itemName, "Menu00");
 
-    for (uint32 i = 0; i < WORLD_COUNT; i++)
+    for (U32 i = 0; i < WORLD_COUNT; i++)
     {
-        uint32 j;
+        U32 j;
 
         if (++itemName[5] > '9')
         {
@@ -1312,9 +1312,9 @@ void zUI_ParseINI(xIniFile* ini)
     }
 }
 
-static _zUI* findUI(zScene* s, uint32 id)
+static _zUI* findUI(zScene* s, U32 id)
 {
-    int32 i;
+    S32 i;
     _zUI* ui = (_zUI*)s->baseList[eBaseTypeUI];
 
     for (i = 0; i < s->baseCount[eBaseTypeUI]; i++)
@@ -1335,9 +1335,9 @@ static _zUI* findUI(zScene* s, uint32 id)
     return ui;
 }
 
-static zUIFont* findUIFont(zScene* zsc, uint32 id)
+static zUIFont* findUIFont(zScene* zsc, U32 id)
 {
-    int32 i;
+    S32 i;
     zUIFont* ui = (zUIFont*)zsc->baseList[eBaseTypeUIFont];
 
     for (i = 0; i < zsc->baseCount[eBaseTypeUIFont]; i++)
@@ -1358,10 +1358,10 @@ static zUIFont* findUIFont(zScene* zsc, uint32 id)
     return ui;
 }
 
-int32 zUIPortalEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+S32 zUIPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget)
 {
-    int32 result;
+    S32 result;
 
     result = zUIFontEventCB(from, to, toEvent, toParam, toParamWidget);
 
@@ -1380,10 +1380,10 @@ void zUI_ScenePortalSetToCurrentLevel(zScene* zsc)
 {
     sCurrTaskDesc = NULL;
 
-    for (uint32 i = 0; i < sizeof(sWorld) / sizeof(sWorld[0]); i++)
+    for (U32 i = 0; i < sizeof(sWorld) / sizeof(sWorld[0]); i++)
     {
-        uint32 curPrefix = (sWorld[i].worldPrefix[0] << 24) | (sWorld[i].worldPrefix[1] << 16);
-        uint32 scnPrefix = zsc->sceneID & ~0xffff;
+        U32 curPrefix = (sWorld[i].worldPrefix[0] << 24) | (sWorld[i].worldPrefix[1] << 16);
+        U32 scnPrefix = zsc->sceneID & ~0xffff;
 
         if (curPrefix == scnPrefix)
         {
@@ -1431,12 +1431,12 @@ void zUI_ScenePortalInit(zScene* zsc)
     sWorld[WORLD_PAT].numTasks = 8;
     sWorld[WORLD_KRABS].numTasks = 8;
 
-    uint32 i, j;
+    U32 i, j;
     char c, c2;
     char tempString[32];
-    uint32 uiID;
+    U32 uiID;
     _zUI* ui;
-    uint32 id;
+    U32 id;
 
     for (i = 0; i < WORLD_COUNT; i++)
     {
@@ -1745,7 +1745,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
 static void hideWorld()
 {
-    for (uint32 i = 0; i < TASK_COUNT; i++)
+    for (U32 i = 0; i < TASK_COUNT; i++)
     {
         xEntHide(sWorld[0].task[i].uiSpatOutline);
         xEntHide(sWorld[0].task[i].uiSpatGray);
@@ -1753,9 +1753,9 @@ static void hideWorld()
     }
 }
 
-static void showWorld(uint32 world)
+static void showWorld(U32 world)
 {
-    for (uint32 i = 0; i < sWorld[world].numTasks; i++)
+    for (U32 i = 0; i < sWorld[world].numTasks; i++)
     {
         switch (sWorld[world].task[i].counter->count)
         {
@@ -1797,10 +1797,10 @@ static void enable_ui(_zUI* ui)
     }
 }
 
-static void refresh_patsocks(uint32 world)
+static void refresh_patsocks(U32 world)
 {
-    uint32 count = globals.player.Inv_PatsSock[world];
-    uint32 max = globals.player.Inv_PatsSock_Max[world];
+    U32 count = globals.player.Inv_PatsSock[world];
+    U32 max = globals.player.Inv_PatsSock_Max[world];
 
     if (world != patsock_prev_world || count != patsock_prev_count)
     {
@@ -1841,11 +1841,11 @@ static void refresh_patsocks(uint32 world)
     }
 }
 
-void zUI_PortalToKrabs(uint32 taskNum)
+void zUI_PortalToKrabs(U32 taskNum)
 {
     xPortalAsset* passet = &sWorld[WORLD_KRABS].task[taskNum].portalAsset;
-    int32 c1 = sWorld[WORLD_B1].task[0].counter->count;
-    int32 c2 = sWorld[WORLD_B2].task[0].counter->count;
+    S32 c1 = sWorld[WORLD_B1].task[0].counter->count;
+    S32 c2 = sWorld[WORLD_B2].task[0].counter->count;
     char tempString[32];
 
     strcpy(tempString, "KS_SPAT_MARKER_01");
@@ -1874,7 +1874,7 @@ void zUI_PortalToKrabs(uint32 taskNum)
 
 void zUI_ScenePortalUpdate()
 {
-    for (uint32 i = 0; i < WORLD_COUNT; i++)
+    for (U32 i = 0; i < WORLD_COUNT; i++)
     {
         if (!sWorld[i].uiSelected)
         {
@@ -1891,7 +1891,7 @@ void zUI_ScenePortalUpdate()
 
         sCurrWorld = i;
 
-        for (uint32 j = 0; j < sWorld[i].numTasks; j++)
+        for (U32 j = 0; j < sWorld[i].numTasks; j++)
         {
             _zUI* select = sWorld[i].task[j].uiSelected;
 
@@ -1962,9 +1962,9 @@ void zUI_ScenePortalUpdate()
 
 void zUI_ScenePortalSave(xSerial* s)
 {
-    for (uint32 i = 0; i < WORLD_COUNT; i++)
+    for (U32 i = 0; i < WORLD_COUNT; i++)
     {
-        for (uint32 j = 0; j < sWorld[i].numTasks; j++)
+        for (U32 j = 0; j < sWorld[i].numTasks; j++)
         {
             s->Write(sWorld[i].task[j].counter->count);
         }
@@ -1973,9 +1973,9 @@ void zUI_ScenePortalSave(xSerial* s)
 
 void zUI_ScenePortalLoad(xSerial* s)
 {
-    for (uint32 i = 0; i < WORLD_COUNT; i++)
+    for (U32 i = 0; i < WORLD_COUNT; i++)
     {
-        for (uint32 j = 0; j < sWorld[i].numTasks; j++)
+        for (U32 j = 0; j < sWorld[i].numTasks; j++)
         {
             s->Read(&sWorld[i].task[j].counter->count);
         }

@@ -29,13 +29,13 @@ enum _tagSDRumbleType
     SDR_Total
 };
 
-void zRumbleStart(int32 pad_id, _tagSDRumbleType rumble_type, xEnt* ent);
-void zRumbleStart(int32 pad_id, _tagSDRumbleType rumble_type);
+void zRumbleStart(S32 pad_id, _tagSDRumbleType rumble_type, xEnt* ent);
+void zRumbleStart(S32 pad_id, _tagSDRumbleType rumble_type);
 void zRumbleStart(_tagSDRumbleType rumble_type);
 void zRumbleStart(_tagSDRumbleType rumble_type, xEnt* ent);
-void zRumbleStartDistance(int32 pad_id, float32 real_dist, float32 max_dist, _tagRumbleType type,
-                          float32 maxTime);
-void zRumbleStartEntDistance(xEnt* ent, float32 dist, _tagRumbleType type, float32 maxTime);
-int32 zPadAddRumble(_tagRumbleType type, float32 time, int32 replace, uint32 fxflags);
+void zRumbleStartDistance(S32 pad_id, F32 real_dist, F32 max_dist, _tagRumbleType type,
+                          F32 maxTime);
+void zRumbleStartEntDistance(xEnt* ent, F32 dist, _tagRumbleType type, F32 maxTime);
+S32 zPadAddRumble(_tagRumbleType type, F32 time, S32 replace, U32 fxflags);
 
 #endif

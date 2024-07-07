@@ -11,12 +11,12 @@
 #include "xEvent.h"
 #include "xColor.h"
 
-static const basic_rect<float32> _855_0 = { 0, 0, 0, 0 }; // remove when decomping zUIFont_Render
+static const basic_rect<F32> _855_0 = { 0, 0, 0, 0 }; // remove when decomping zUIFont_Render
 
-extern float32 _930;
-extern float64 _932_0;
+extern F32 _930;
+extern F64 _932_0;
 
-static void set_text(zUIFont& uif, uint32 id)
+static void set_text(zUIFont& uif, U32 id)
 {
     xTextAsset* t;
 
@@ -30,9 +30,9 @@ static void set_text(zUIFont& uif, uint32 id)
     }
 }
 
-static uint16 zUIFont_GetHackFlags(zUIFont* uif)
+static U16 zUIFont_GetHackFlags(zUIFont* uif)
 {
-    uint16 flags = 0;
+    U16 flags = 0;
 
     if (uif->id == xStrHash("MNU3 PRESS START"))
     {
@@ -131,12 +131,12 @@ void zUIFont_Reset(zUIFont* ent)
     }
 }
 
-void zUIFont_PreUpdate(zUIFont* ent, xScene* sc, float32 dt)
+void zUIFont_PreUpdate(zUIFont* ent, xScene* sc, F32 dt)
 {
     zUI_PreUpdate(ent, sc, dt);
 }
 
-void zUIFont_Update(zUIFont* ent, xScene*, float32)
+void zUIFont_Update(zUIFont* ent, xScene*, F32)
 {
     _zUI* ui;
     xBase* sendTo;
@@ -226,10 +226,10 @@ void zUIFont_Update(zUIFont* ent, xScene*, float32)
     }
 }
 
-int32 zUIFontEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
+S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                      xBase* toParamWidget)
 {
-    int32 rval = 1;
+    S32 rval = 1;
     zUIFont* s = (zUIFont*)to;
 
     switch (toEvent)
@@ -237,9 +237,9 @@ int32 zUIFontEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toPa
     case eEventVisible:
     case eEventFastVisible:
     {
-        if (toParam && *(uint32*)&toParam[0])
+        if (toParam && *(U32*)&toParam[0])
         {
-            set_text(*s, *(uint32*)&toParam[0]);
+            set_text(*s, *(U32*)&toParam[0]);
         }
 
         xEntShow(s);
@@ -306,7 +306,7 @@ int32 zUIFontEventCB(xBase* from, xBase* to, uint32 toEvent, const float32* toPa
     {
         if (toParam)
         {
-            set_text(*s, *(uint32*)&toParam[0]);
+            set_text(*s, *(U32*)&toParam[0]);
         }
 
         break;
@@ -374,7 +374,7 @@ void zUIFont_Render(xEnt* e)
         if (ent->uiFontFlags & 0x8)
         {
             iColor_tag c = xColorFromRGBA(a.bcolor[0], a.bcolor[1], a.bcolor[2], a.bcolor[3]);
-            basic_rect<float32> r = { NSCREENX(a.pos.x), NSCREENY(a.pos.y), NSCREENX(a.dim[0]),
+            basic_rect<F32> r = { NSCREENX(a.pos.x), NSCREENY(a.pos.y), NSCREENX(a.dim[0]),
                                       NSCREENY(a.dim[1]) };
 
             render_fill_rect(r, c);
@@ -410,8 +410,8 @@ void zUIFont_Render(xEnt* e)
 
         if (a.uiFontFlags & 0xc00)
         {
-            int32 size;
-            float32 yextent;
+            S32 size;
+            F32 yextent;
 
             yextent = tb.yextent(NSCREENY(a.max_height), size, true);
 
@@ -442,10 +442,10 @@ void zUIFont_Render(xEnt* e)
 }
 #endif
 
-float32 xtextbox::yextent(float32 max, int32& size, bool cache) const
+F32 xtextbox::yextent(F32 max, S32& size, bool cache) const
 {
     return yextent(max, size, temp_layout(cache), 0, -1);
 }
 
-__declspec(section ".sdata2") static float32 _930 = 0.5f;
-__declspec(section ".sdata2") static float64 _932_0 = 4.503599627370496e15;
+__declspec(section ".sdata2") static F32 _930 = 0.5f;
+__declspec(section ".sdata2") static F64 _932_0 = 4.503599627370496e15;

@@ -29,7 +29,7 @@ enum zFragLocType
 
 struct zFragBone
 {
-    int32 index;
+    S32 index;
     xVec3 offset;
 };
 
@@ -65,10 +65,10 @@ enum zFragType
 struct zFragAsset
 {
     zFragType type;
-    uint32 id;
-    uint32 parentID[2];
-    float32 lifetime;
-    float32 delay;
+    U32 id;
+    U32 parentID[2];
+    F32 lifetime;
+    F32 delay;
 };
 
 struct zFragGroup
@@ -81,7 +81,7 @@ struct zFragParticleAsset : zFragAsset
     zFragLocation source;
     zFragLocation vel;
     xParEmitterCustomSettings emit;
-    uint32 parEmitterID;
+    U32 parEmitterID;
     zParEmitter* parEmitter;
 };
 
@@ -92,20 +92,20 @@ struct zFragParticle
 
 struct zFragProjectileAsset : zFragAsset
 {
-    uint32 modelInfoID;
+    U32 modelInfoID;
     RpAtomic* modelFile;
     zFragLocation launch;
     zFragLocation vel;
-    float32 bounce;
-    int32 maxBounces;
-    uint32 flags;
-    uint32 childID;
+    F32 bounce;
+    S32 maxBounces;
+    U32 flags;
+    U32 childID;
     zShrapnelAsset* child;
-    float32 minScale;
-    float32 maxScale;
-    uint32 scaleCurveID;
+    F32 minScale;
+    F32 maxScale;
+    U32 scaleCurveID;
     xCurveAsset* scaleCurve;
-    float32 gravity;
+    F32 gravity;
 };
 
 struct zFragProjectile
@@ -113,13 +113,13 @@ struct zFragProjectile
     zFragProjectileAsset* fasset;
     xModelInstance* model;
     xParabola path;
-    float32 angVel;
-    float32 t;
-    float32 tColl;
-    int32 numBounces;
-    float32 scale;
-    float32 parentScale;
-    float32 alpha;
+    F32 angVel;
+    F32 t;
+    F32 tColl;
+    S32 numBounces;
+    F32 scale;
+    F32 parentScale;
+    F32 alpha;
     xVec3 N;
     xVec3 axis;
 };
@@ -128,8 +128,8 @@ struct zFragLightningAsset : zFragAsset
 {
     zFragLocation start;
     zFragLocation end;
-    uint32 startParentID;
-    uint32 endParentID;
+    U32 startParentID;
+    U32 endParentID;
 };
 
 struct zFragLightning
@@ -142,43 +142,43 @@ struct zFragLightning
 
 struct zFragSoundAsset : zFragAsset
 {
-    uint32 assetID;
+    U32 assetID;
     zFragLocation source;
-    float32 volume;
-    float32 innerRadius;
-    float32 outerRadius;
+    F32 volume;
+    F32 innerRadius;
+    F32 outerRadius;
 };
 
 struct zFragSound
 {
     zFragSoundAsset* fasset;
     xVec3 location;
-    uint32 soundID;
+    U32 soundID;
 };
 
 struct zFragShockwaveAsset : zFragAsset
 {
-    uint32 modelInfoID;
-    float32 birthRadius;
-    float32 deathRadius;
-    float32 birthVelocity;
-    float32 deathVelocity;
-    float32 birthSpin;
-    float32 deathSpin;
-    float32 birthColor[4];
-    float32 deathColor[4];
+    U32 modelInfoID;
+    F32 birthRadius;
+    F32 deathRadius;
+    F32 birthVelocity;
+    F32 deathVelocity;
+    F32 birthSpin;
+    F32 deathSpin;
+    F32 birthColor[4];
+    F32 deathColor[4];
 };
 
 struct zFragShockwave
 {
     zFragShockwaveAsset* fasset;
-    float32 currSize;
-    float32 currVelocity;
-    float32 deltVelocity;
-    float32 currSpin;
-    float32 deltSpin;
-    float32 currColor[4];
-    float32 deltColor[4];
+    F32 currSize;
+    F32 currVelocity;
+    F32 deltVelocity;
+    F32 currSpin;
+    F32 deltSpin;
+    F32 currColor[4];
+    F32 deltColor[4];
 };
 
 struct zFragInfo
@@ -198,10 +198,10 @@ struct zFrag
 {
     zFragType type;
     zFragInfo info;
-    float32 delay;
-    float32 alivetime;
-    float32 lifetime;
-    void (*update)(zFrag*, float32);
+    F32 delay;
+    F32 alivetime;
+    F32 lifetime;
+    void (*update)(zFrag*, F32);
     xModelInstance* parent[2];
     zFrag* prev;
     zFrag* next;
@@ -209,15 +209,15 @@ struct zFrag
 
 struct zShrapnelAsset
 {
-    int32 fassetCount;
-    uint32 shrapnelID;
+    S32 fassetCount;
+    U32 shrapnelID;
     void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
 };
 
 struct zScene;
 
 void zShrapnel_SceneInit(zScene*);
-void zShrapnel_Update(float32 dt);
+void zShrapnel_Update(F32 dt);
 void zShrapnel_Reset();
 void zShrapnel_Render();
 

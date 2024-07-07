@@ -8,14 +8,14 @@
 
 struct xFogAsset : xBaseAsset
 {
-    uint8 bkgndColor[4];
-    uint8 fogColor[4];
-    float32 fogDensity;
-    float32 fogStart;
-    float32 fogStop;
-    float32 transitionTime;
-    uint8 fogType;
-    uint8 padFog[3];
+    U8 bkgndColor[4];
+    U8 fogColor[4];
+    F32 fogDensity;
+    F32 fogStart;
+    F32 fogStop;
+    F32 transitionTime;
+    U8 fogType;
+    U8 padFog[3];
 };
 
 struct _xFog : xBase
@@ -29,7 +29,7 @@ void xFogInit(xBase* ent, xFogAsset* tasset);
 void xFogReset(_xFog* ent);
 void xFogSave(_xFog* ent, xSerial* s);
 void xFogLoad(_xFog* ent, xSerial* s);
-int32 xFogEventCB(xBase* to, xBase* from, uint32 toEvent, const float32* toParam, xBase* b3);
-void xFogUpdate(xBase* ent, xScene* sc, float32 dt);
+S32 xFogEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase* b3);
+void xFogUpdate(xBase* ent, xScene* sc, F32 dt);
 
 #endif

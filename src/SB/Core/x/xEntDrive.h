@@ -9,30 +9,30 @@ struct xEntDrive
     struct tri_data : xCollis::tri_data
     {
         xVec3 loc;
-        float32 yaw;
+        F32 yaw;
         xCollis* coll;
     };
 
-    uint32 flags;
-    float32 otm;
-    float32 otmr;
-    float32 os;
-    float32 tm;
-    float32 tmr;
-    float32 s;
+    U32 flags;
+    F32 otm;
+    F32 otmr;
+    F32 os;
+    F32 tm;
+    F32 tmr;
+    F32 s;
     xEnt* odriver;
     xEnt* driver;
     xEnt* driven;
     xVec3 op;
     xVec3 p;
     xVec3 q;
-    float32 yaw;
+    F32 yaw;
     xVec3 dloc;
     tri_data tri;
 };
 
 void xEntDriveInit(xEntDrive* drv, xEnt* driven);
-void xEntDriveMount(xEntDrive* drv, xEnt* driver, float32 mt, const xCollis* coll);
-void xEntDriveDismount(xEntDrive* drv, float32 dmt);
+void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll);
+void xEntDriveDismount(xEntDrive* drv, F32 dmt);
 
 #endif

@@ -8,13 +8,13 @@ namespace xhud
 {
     struct font_context
     {
-        uint32 id;
-        int32 justify;
-        float32 w;
-        float32 h;
-        float32 space;
-        float32 drop_x;
-        float32 drop_y;
+        U32 id;
+        S32 justify;
+        F32 w;
+        F32 h;
+        F32 space;
+        F32 drop_x;
+        F32 drop_y;
         color32u c;
         color32u drop_c;
     };
@@ -23,13 +23,13 @@ namespace xhud
     {
         font_context font;
         font_context start_font;
-        int32 precision;
+        S32 precision;
         xVec2 offset;
-        int8 buffer[12];
-        int32 last_value;
+        S8 buffer[12];
+        S32 last_value;
         xfont xf;
 
-        static void load(xBase& data, xDynAsset& asset, ulong32);
+        static void load(xBase& data, xDynAsset& asset, size_t);
     };
 } // namespace xhud
 

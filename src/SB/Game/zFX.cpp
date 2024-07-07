@@ -20,12 +20,12 @@ extern xFXRing sPatrickStunRing[3];
 
 extern zFXGooInstance zFXGooInstances[24];
 
-extern int8 zFX_strings[];
+extern S8 zFX_strings[];
 extern ztextbox* goo_timer_textbox;
 
-extern float32 lbl_803CD968; // 0.15f
-extern float32 lbl_803CD96C; // 12.0f
-extern float32 lbl_803CD970; // 2.0f
+extern F32 lbl_803CD968; // 0.15f
+extern F32 lbl_803CD96C; // 12.0f
+extern F32 lbl_803CD970; // 2.0f
 
 void on_spawn_bubble_wall(const tweak_info& tweak)
 {
@@ -73,7 +73,7 @@ void zFXMuscleArmWave(xVec3* pos)
 
 void zFXGoo_SceneEnter()
 {
-    int32 i;
+    S32 i;
     zFXGooInstance* goo = zFXGooInstances;
     for (i = 0; i < 24; i++)
     {
@@ -81,7 +81,7 @@ void zFXGoo_SceneEnter()
         goo->state = zFXGooStateInactive;
         goo++;
     }
-    uint32 gameID = xStrHash(zFX_strings + 0x19); // "FREEZY_TIMER_TEXTBOX"
+    U32 gameID = xStrHash(zFX_strings + 0x19); // "FREEZY_TIMER_TEXTBOX"
     goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
 }
 
@@ -90,7 +90,7 @@ void zFXGoo_SceneReset()
 {
     // This almost matches, only two instructions are flipped.
     // otherwise, its perfect.
-    int32 i;
+    S32 i;
     zFXGooInstance* goo = zFXGooInstances;
 
     for (i = 0; i < 24; i++)
@@ -107,7 +107,7 @@ void zFXGoo_SceneReset()
 
 void zFXGoo_SceneExit()
 {
-    int32 i;
+    S32 i;
     zFXGooInstance* goo = zFXGooInstances;
     for (i = 0; i < 0x18; i++)
     {
@@ -117,7 +117,7 @@ void zFXGoo_SceneExit()
     }
 }
 
-void zFXUpdate(float32 dt)
+void zFXUpdate(F32 dt)
 {
     zFXGooUpdate(dt);
     update_poppers(dt);
@@ -136,7 +136,7 @@ void init_poppers()
 #endif
 
 void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
-                    uint32 unk5)
+                    U32 unk5)
 {
 }
 
@@ -147,9 +147,9 @@ xVec3& xVec3::up_normalize()
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

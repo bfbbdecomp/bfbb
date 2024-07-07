@@ -17,7 +17,7 @@ void zEnvInit(void* env, void* easset)
 
 void zEnvInit(_zEnv* env, xEnvAsset* easset)
 {
-    uint32 bufsize;
+    U32 bufsize;
     void* buf;
 
     xBaseInit(env, easset);
@@ -103,9 +103,9 @@ void zEnvStartingCamera(_zEnv* env)
 void zEnvRender(xEnv* env)
 {
     RpWorld* world = env->geom->world;
-    int32 num = RpWorldGetNumMaterials(world);
+    S32 num = RpWorldGetNumMaterials(world);
 
-    for (int32 i = 0; i < num; i++)
+    for (S32 i = 0; i < num; i++)
     {
         xSurface* sp = zSurfaceGetSurface(i);
         zSurfaceProps* pp = (zSurfaceProps*)sp->moprops;
@@ -120,7 +120,7 @@ void zEnvRender(xEnv* env)
 
                 if (g)
                 {
-                    uint32 texid = xGroupGetItem(g, pp->texanim[0].group_idx);
+                    U32 texid = xGroupGetItem(g, pp->texanim[0].group_idx);
                     RwTexture* texptr = (RwTexture*)xSTFindAsset(texid, NULL);
 
                     if (texptr)
@@ -150,7 +150,7 @@ void zEnvReset(_zEnv* env)
     xBaseReset(env, env->easset);
 }
 
-int32 zEnvEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*)
+S32 zEnvEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*)
 {
     switch (toEvent)
     {

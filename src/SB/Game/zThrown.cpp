@@ -8,13 +8,13 @@
 
 extern zThrownStruct zThrownList[0x20];
 extern ThrowableStats zThrowableModels[23];
-extern uint32 zThrownCount;
-extern uint32 sFruitIsFreezy;
-extern uint32 sDebugDepth;
+extern U32 zThrownCount;
+extern U32 sFruitIsFreezy;
+extern U32 sDebugDepth;
 extern CarryableStats c_fruit;
-extern uint32 sThrowButtonMask;
-extern float32 _842; // 0.5f
-extern float32 _844; // 0.0f
+extern U32 sThrowButtonMask;
+extern F32 _842; // 0.5f
+extern F32 _844; // 0.0f
 
 void zThrown_AddTempFrame(zThrownStruct* thrown)
 {
@@ -30,7 +30,7 @@ void zThrown_AddTempFrame(zThrownStruct* thrown)
 void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
 {
     sDebugDepth++;
-    for (uint32 i = 0; i < zThrownCount; i++)
+    for (U32 i = 0; i < zThrownCount; i++)
     {
         if (zThrownList[i].stackEnt == ent)
         {
@@ -47,7 +47,7 @@ void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
 // WIP.
 void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
 {
-    for (uint32 i = 0; i < zThrownCount; i++)
+    for (U32 i = 0; i < zThrownCount; i++)
     {
         if (ent == zThrownList[i].ent)
         {
@@ -66,8 +66,8 @@ void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, float
     sFruitIsFreezy = 0;
 }
 
-void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, float32* bounce,
-                                float32* friction)
+void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
+                                F32* friction)
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
@@ -76,8 +76,8 @@ void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, float
     zEntEvent(thrown->ent, eEventDestroy);
 }
 
-void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, float32* bounce,
-                               float32* friction)
+void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
+                               F32* friction)
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
@@ -85,8 +85,8 @@ void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, float3
     *friction = _844;
 }
 
-void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, float32* bounce,
-                         float32* friction)
+void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
+                         F32* friction)
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
@@ -97,7 +97,7 @@ void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, float32* bou
 
 #if 0
 // WIP.
-int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
+S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight)
 {
     ThrowableStats* stats = zThrowableModels;
     while (stats->nameHash != ent->asset->modelInfoID &&
@@ -105,7 +105,7 @@ int32 zThrown_IsFruit(xEnt* ent, float32* stackHeight)
     {
         stats++;
     }
-    if (stats != NULL && *(uint32*)&stats->carry->killTimer == *(uint32*)&c_fruit.killTimer)
+    if (stats != NULL && *(U32*)&stats->carry->killTimer == *(U32*)&c_fruit.killTimer)
     {
         if (stackHeight != NULL)
         {
@@ -126,7 +126,7 @@ void checkAgainstButtons(xEnt* ent)
     struct
     {
         xVec3 center;
-        float32 unk;
+        F32 unk;
     } data;
     xVec3Copy(&data.center, d);
     data.unk = _842;
@@ -135,6 +135,6 @@ void checkAgainstButtons(xEnt* ent)
 
 #endif
 
-void xDrawSphere(xSphere* s, uint32 unk)
+void xDrawSphere(xSphere* s, U32 unk)
 {
 }

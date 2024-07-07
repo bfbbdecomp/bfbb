@@ -550,18 +550,18 @@ enum en_xEventTags
 };
 
 // Oddly, all the zEntEvent functions are in xEvent, not zEvent
-void zEntEvent(char* to, uint32 toEvent);
-void zEntEvent(uint32 toID, uint32 toEvent);
-void zEntEvent(uint32 toID, uint32 toEvent, float32 toParam0, float32 toParam1, float32 toParam2,
-               float32 toParam3);
-void zEntEvent(xBase* to, uint32 toEvent);
-void zEntEvent(xBase* to, uint32 toEvent, float32 toParam0, float32 toParam1, float32 toParam2,
-               float32 toParam3);
-void zEntEvent(xBase* to, uint32 toEvent, const float32* toParam);
-void zEntEvent(xBase* to, uint32 toEvent, const float32* toParam, xBase* toParamWidget);
-void zEntEvent(xBase* from, xBase* to, uint32 toEvent);
-void zEntEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam);
-void zEntEvent(xBase* from, uint32 fromEvent, xBase* to, uint32 toEvent, const float32* toParam,
-               xBase* toParamWidget, int32 forceEvent);
+void zEntEvent(char* to, U32 toEvent);
+void zEntEvent(U32 toID, U32 toEvent);
+void zEntEvent(U32 toID, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2,
+               F32 toParam3);
+void zEntEvent(xBase* to, U32 toEvent);
+void zEntEvent(xBase* to, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2,
+               F32 toParam3);
+void zEntEvent(xBase* to, U32 toEvent, const F32* toParam);
+void zEntEvent(xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget);
+void zEntEvent(xBase* from, xBase* to, U32 toEvent);
+void zEntEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam);
+void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* toParam,
+               xBase* toParamWidget, S32 forceEvent);
 
 #endif

@@ -5,8 +5,8 @@
 #include <types.h>
 #include <dolphin.h>
 
-extern uint32 Bink_surface_type[5];
-extern volatile uint32 frame_num;
+extern U32 Bink_surface_type[5];
+extern volatile U32 frame_num;
 
 void* iFMVmalloc(size_t size)
 {
@@ -20,7 +20,7 @@ void iFMVfree(void* mem)
 
 #ifdef NON_MATCHING
 // For some reason, the check for frame_num is always optimized to true.
-uint32 iFMVPlay(char* filename, uint32 buttons, float32 time, bool skippable, bool lockController)
+U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
 {
     if (filename == NULL)
     {
@@ -50,10 +50,10 @@ static void Setup_surface_array()
 
 #if 0
 // WIP.
-void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, int64 flags)
+void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, S64 flags)
 {
     BinkDoFrame(bnk);
-    int32 code = Lock_RAD_3D_image(rad_image, dfgdfgdfgdfg);
+    S32 code = Lock_RAD_3D_image(rad_image, dfgdfgdfgdfg);
     if (code != 0)
     {
         BinkCopyToBuffer(wefwefewfew);

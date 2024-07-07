@@ -3,8 +3,8 @@
 
 #include <types.h>
 
-extern float32 lbl_803CCDE0; // 1.0f
-extern float32 lbl_803CCDE4; // 0.0f
+extern F32 lbl_803CCDE0; // 1.0f
+extern F32 lbl_803CCDE4; // 0.0f
 extern const char lbl_80252F38[];
 
 #if 0

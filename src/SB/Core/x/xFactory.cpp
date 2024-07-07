@@ -4,9 +4,9 @@
 #include <types.h>
 #include <string.h>
 
-xFactory::xFactory(int32 maxTypes)
+xFactory::xFactory(S32 maxTypes)
 {
-    uint32 amt = maxTypes * sizeof(XGOFTypeInfo);
+    U32 amt = maxTypes * sizeof(XGOFTypeInfo);
     this->infopool = (XGOFTypeInfo*)xMemAllocSize(amt);
     memset(this->infopool, 0, amt);
     XOrdInit(&this->infolist, maxTypes, 0);
@@ -18,12 +18,12 @@ xFactory::~xFactory()
     XOrdDone(&this->infolist, 0);
 }
 
-static int32 OrdTest_infotype(const void* vkey, void* vitem);
-static int32 OrdComp_infotype(void* vkey, void* vitem);
+static S32 OrdTest_infotype(const void* vkey, void* vitem);
+static S32 OrdComp_infotype(void* vkey, void* vitem);
 
-int32 xFactory::RegItemType(XGOFTypeInfo* info)
+S32 xFactory::RegItemType(XGOFTypeInfo* info)
 {
-    int32 rc = 0;
+    S32 rc = 0;
     XGOFTypeInfo* tptr = info;
     XGOFTypeInfo* nextrec;
 
@@ -49,7 +49,7 @@ int32 xFactory::RegItemType(XGOFTypeInfo* info)
             break;
         }
 
-        int32 idx = XOrdLookup(&infolist, tptr, OrdTest_infotype);
+        S32 idx = XOrdLookup(&infolist, tptr, OrdTest_infotype);
 
         if (idx >= 0)
         {
@@ -70,7 +70,7 @@ int32 xFactory::RegItemType(XGOFTypeInfo* info)
     return rc;
 }
 
-int32 xFactory::RegItemType(int32 tid, XGOFTypeInfoCreator create, XGOFTypeInfoDestroyer destroy)
+S32 xFactory::RegItemType(S32 tid, XGOFTypeInfoCreator create, XGOFTypeInfoDestroyer destroy)
 {
     XGOFTypeInfo typerec[2] = {};
 
@@ -81,7 +81,7 @@ int32 xFactory::RegItemType(int32 tid, XGOFTypeInfoCreator create, XGOFTypeInfoD
     return RegItemType(typerec);
 }
 
-void xFactory::GrowDataEnable(xBase* user, int32 isResume)
+void xFactory::GrowDataEnable(xBase* user, S32 isResume)
 {
     if (isResume)
     {
@@ -98,9 +98,9 @@ void xFactory::GrowDataDisable()
     growContextData.Done();
 }
 
-xFactoryInst* xFactory::CreateItem(int32 typeID, void* userdata, RyzMemGrow* callerzgrow)
+xFactoryInst* xFactory::CreateItem(S32 typeID, void* userdata, RyzMemGrow* callerzgrow)
 {
-    int32 idx;
+    S32 idx;
     xFactoryInst* item;
     XGOFTypeInfo pattern = {};
     XGOFTypeInfo* darec = NULL;
@@ -170,7 +170,7 @@ void xFactory::DestroyAll()
 
 void xFactory::DestroyItem(xFactoryInst* item)
 {
-    int32 idx;
+    S32 idx;
     XGOFTypeInfo pattern = {};
 
     pattern.tid = item->itemType;
@@ -206,9 +206,9 @@ void xFactory::DestroyItem(xFactoryInst* item)
     }
 }
 
-static int32 OrdTest_infotype(const void* vkey, void* vitem)
+static S32 OrdTest_infotype(const void* vkey, void* vitem)
 {
-    int32 rc;
+    S32 rc;
 
     if (((XGOFTypeInfo*)vkey)->tid < ((XGOFTypeInfo*)vitem)->tid)
     {
@@ -226,9 +226,9 @@ static int32 OrdTest_infotype(const void* vkey, void* vitem)
     return rc;
 }
 
-static int32 OrdComp_infotype(void* vkey, void* vitem)
+static S32 OrdComp_infotype(void* vkey, void* vitem)
 {
-    int32 rc;
+    S32 rc;
 
     if (((XGOFTypeInfo*)vkey)->tid < ((XGOFTypeInfo*)vitem)->tid)
     {

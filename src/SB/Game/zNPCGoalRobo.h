@@ -4,6 +4,6 @@
 #include "zNPCGoalCommon.h"
 
 void ROBO_PrepRoboCop();
-xFactoryInst* GOALCreate_Robotic(int32 who, RyzMemGrow* grow, void*);
+xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*);
 
 #endif

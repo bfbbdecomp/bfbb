@@ -76,56 +76,56 @@ struct xPSYNote
     }
 };
 
-typedef int32 (*xGoalProcessCallback)(xGoal*, void*, en_trantype*, float32, void*);
-typedef int32 (*xGoalChkRuleCallback)(xGoal*, void*, en_trantype*, float32, void*);
-typedef int32 (*xGoalPreCalcCallback)(xGoal*, void*, float32, void*);
+typedef S32 (*xGoalProcessCallback)(xGoal*, void*, en_trantype*, F32, void*);
+typedef S32 (*xGoalChkRuleCallback)(xGoal*, void*, en_trantype*, F32, void*);
+typedef S32 (*xGoalPreCalcCallback)(xGoal*, void*, F32, void*);
 
 struct xPsyche : RyzMemData
 {
     xBase* clt_owner;
     xPSYNote* cb_notice;
-    int32 flg_psyche;
+    S32 flg_psyche;
     xGoal* goallist;
     xGoal* goalstak[5];
-    float32 tmr_stack[1][5];
-    int32 staktop;
+    F32 tmr_stack[1][5];
+    S32 staktop;
     xGoal* pendgoal;
     en_pendtype pendtype;
-    int32 gid_safegoal;
-    void (*fun_remap)(int32*, en_trantype*);
+    S32 gid_safegoal;
+    void (*fun_remap)(S32*, en_trantype*);
     void* userContext;
-    int32 cnt_transLastTimestep;
+    S32 cnt_transLastTimestep;
     PSY_BRAIN_STATUS psystat;
     xBase fakebase;
 
-    xGoal* GIDInStack(int32 gid) const;
+    xGoal* GIDInStack(S32 gid) const;
     void ImmTranOn();
     void ImmTranOff();
-    int32 ImmTranIsOn();
-    int32 HasGoal(int32 goal);
-    int32 GIDOfPending() const;
-    int32 GIDOfActive() const;
-    int32 Timestep(float32 dt, void* updCtxt);
-    xGoal* FindGoal(int32 gid);
-    int32 GoalSet(int32 gid, int32 r5);
-    int32 GoalPop(int32 gid_popto, int32 r5);
-    int32 GoalNone(int32 denyExplicit);
-    int32 GoalSwap(int32 gid, int32 r5);
-    int32 GoalPopRecover(int32 overpend);
-    int32 GoalPopToBase(int32 overpend);
-    int32 GoalPush(int32 gid, int32 r5);
-    int32 GoalSet(int32 gid);
+    S32 ImmTranIsOn();
+    S32 HasGoal(S32 goal);
+    S32 GIDOfPending() const;
+    S32 GIDOfActive() const;
+    S32 Timestep(F32 dt, void* updCtxt);
+    xGoal* FindGoal(S32 gid);
+    S32 GoalSet(S32 gid, S32 r5);
+    S32 GoalPop(S32 gid_popto, S32 r5);
+    S32 GoalNone(S32 denyExplicit);
+    S32 GoalSwap(S32 gid, S32 r5);
+    S32 GoalPopRecover(S32 overpend);
+    S32 GoalPopToBase(S32 overpend);
+    S32 GoalPush(S32 gid, S32 r5);
+    S32 GoalSet(S32 gid);
 
     void BrainBegin();
     void BrainExtend();
     void BrainEnd();
-    xGoal* AddGoal(int32 gid, void* createData);
+    xGoal* AddGoal(S32 gid, void* createData);
     void FreshWipe();
     void SetOwner(xBase*, void*);
     void KillBrain(xFactory*);
     void Lobotomy(xFactory*);
-    void SetSafety(int32);
-    void Amnesia(int32);
+    void SetSafety(S32);
+    void Amnesia(S32);
 
     xBase* GetClient()
     {
@@ -136,32 +136,32 @@ struct xPsyche : RyzMemData
 struct xGoal : xListItem<xGoal>, xFactoryInst
 {
     xPsyche* psyche; // 0x18
-    int32 goalID;
+    S32 goalID;
     en_GOALSTATE stat;
-    int32 flg_able; // 0x24
+    S32 flg_able; // 0x24
     xGoalProcessCallback fun_process;
     xGoalPreCalcCallback fun_precalc;
     xGoalChkRuleCallback fun_chkRule;
     void* cbdata;
 
-    xGoal(int32 goalID)
+    xGoal(S32 goalID)
     {
         this->goalID = goalID;
         this->flg_able = 0;
         this->stat = GOAL_STAT_UNKNOWN;
     }
 
-    int32 GetID() const
+    S32 GetID() const
     {
         return this->goalID;
     }
 
-    void SetFlags(int32 flags);
-    void AddFlags(int32 flags);
+    void SetFlags(S32 flags);
+    void AddFlags(S32 flags);
     xPsyche* GetPsyche() const;
     void SetCallbacks(xGoalProcessCallback process, xGoalChkRuleCallback chkRule,
                       xGoalPreCalcCallback precalc, void* cbdata);
-    int32 GetFlags() const;
+    S32 GetFlags() const;
     void SetPsyche(xPsyche* psyche);
     const char* Name();
     void SetState(en_GOALSTATE state);
@@ -171,32 +171,32 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     // vtable
     virtual void Clear() = 0;
 
-    virtual int32 Enter(float32 dt, void* updCtxt)
+    virtual S32 Enter(F32 dt, void* updCtxt)
     {
         return 0;
     }
 
-    virtual int32 Exit(float32 dt, void* updCtxt)
+    virtual S32 Exit(F32 dt, void* updCtxt)
     {
         return 0;
     }
 
-    virtual int32 Suspend(float32 dt, void* updCtxt)
+    virtual S32 Suspend(F32 dt, void* updCtxt)
     {
         return 0;
     }
 
-    virtual int32 Resume(float32 dt, void* updCtxt)
+    virtual S32 Resume(F32 dt, void* updCtxt)
     {
         return 0;
     }
 
-    virtual int32 PreCalc(float32 dt, void* updCtxt);
-    virtual int32 EvalRules(en_trantype* trantype, float32 dt, void* updCtxt);
-    virtual int32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
+    virtual S32 PreCalc(F32 dt, void* updCtxt);
+    virtual S32 EvalRules(en_trantype* trantype, F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 
-    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                           xBase* toParamWidget, int32* handled)
+    virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                           xBase* toParamWidget, S32* handled)
     {
         return 1;
     }

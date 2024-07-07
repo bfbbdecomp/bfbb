@@ -12,11 +12,11 @@ struct PreCalcOcclude
 };
 
 extern zVolume* vols;
-extern uint16 nvols;
+extern U16 nvols;
 
-extern int32 gOccludeCount;
+extern S32 gOccludeCount;
 extern zVolume* gOccludeList[10];
-extern int32 gOccludeCalcCount;
+extern S32 gOccludeCalcCount;
 extern PreCalcOcclude gOccludeCalc[10];
 
 extern float lbl_803CDFB8;
@@ -30,8 +30,8 @@ static void zVolumeInit(zVolume* vol, xVolumeAsset* asset)
 #ifdef NON_MATCHING
 void zVolumeInit()
 {
-    uint16 i;
-    uint32 size;
+    U16 i;
+    U32 size;
     xVolumeAsset* asset;
 
     nvols = xSTAssetCountByType('VOLU');
@@ -56,7 +56,7 @@ void zVolumeInit()
 
 void zVolumeSetup()
 {
-    uint32 i;
+    U32 i;
 
     for (i = 0; i < nvols; i++)
     {
@@ -64,7 +64,7 @@ void zVolumeSetup()
     }
 }
 
-zVolume* zVolumeGetVolume(uint16 n)
+zVolume* zVolumeGetVolume(U16 n)
 {
     return &vols[n];
 }
@@ -72,21 +72,21 @@ zVolume* zVolumeGetVolume(uint16 n)
 #ifdef NON_MATCHING
 void zVolume_OccludePrecalc(xVec3* camPos)
 {
-    int32 i;
-    int32 j;
+    S32 i;
+    S32 j;
     xVec3 corner[5];
     zVolume* vol;
     xVolumeAsset* a;
-    float32 c;
-    float32 s;
+    F32 c;
+    F32 s;
     PreCalcOcclude* calc;
     xVec3 d1;
     xVec3 d2;
     xVec4 locFrustVec[4];
-    float32 depthdot;
-    float32 camdot;
-    float32 testdot1;
-    float32 testdot2;
+    F32 depthdot;
+    F32 camdot;
+    F32 testdot1;
+    F32 testdot2;
 
     gOccludeCalcCount = 0;
 
@@ -190,10 +190,10 @@ void zVolume_OccludePrecalc(xVec3* camPos)
 #endif
 
 #ifdef NON_MATCHING
-int32 zVolumeEventCB(xBase*, xBase* to, uint32 toEvent, const float32*, xBase*)
+S32 zVolumeEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 {
     zVolume* vol = (zVolume*)to;
-    int32 i;
+    S32 i;
 
     switch (toEvent)
     {

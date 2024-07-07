@@ -14,24 +14,24 @@ struct xEnv
 
 struct xEnvAsset : xBaseAsset
 {
-    uint32 bspAssetID;
-    uint32 startCameraAssetID;
-    uint32 climateFlags;
-    float32 climateStrengthMin;
-    float32 climateStrengthMax;
-    uint32 bspLightKit;
-    uint32 objectLightKit;
-    float32 padF1;
-    uint32 bspCollisionAssetID;
-    uint32 bspFXAssetID;
-    uint32 bspCameraAssetID;
-    uint32 bspMapperID;
-    uint32 bspMapperCollisionID;
-    uint32 bspMapperFXID;
-    float32 loldHeight;
+    U32 bspAssetID;
+    U32 startCameraAssetID;
+    U32 climateFlags;
+    F32 climateStrengthMin;
+    F32 climateStrengthMax;
+    U32 bspLightKit;
+    U32 objectLightKit;
+    F32 padF1;
+    U32 bspCollisionAssetID;
+    U32 bspFXAssetID;
+    U32 bspCameraAssetID;
+    U32 bspMapperID;
+    U32 bspMapperCollisionID;
+    U32 bspMapperFXID;
+    F32 loldHeight;
 };
 
-void xEnvLoadBsp(xEnv* env, const void* data, uint32 datasize, int32 dataType);
+void xEnvLoadBsp(xEnv* env, const void* data, U32 datasize, S32 dataType);
 void xEnvSetup(xEnv* env);
 void xEnvRender(xEnv* env);
 

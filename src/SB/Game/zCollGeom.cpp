@@ -5,14 +5,14 @@
 #include "iModel.h"
 #include "xstransvc.h"
 
-static volatile uint32 sNumTables;
-static uint32 sTableCount[3];
+static volatile U32 sNumTables;
+static U32 sTableCount[3];
 static zCollGeomTable* sTableList[3];
 
-uint32 zCollGeom_EntSetup(xEnt* ent)
+U32 zCollGeom_EntSetup(xEnt* ent)
 {
-    uint32 i, j;
-    int32 auto_cam_coll;
+    U32 i, j;
+    S32 auto_cam_coll;
 
     auto_cam_coll = (ent->baseType == eBaseTypeStatic);
 
@@ -85,7 +85,7 @@ void zCollGeom_Init()
 
     if (sNumTables)
     {
-        uint32 tmpsize, i, k;
+        U32 tmpsize, i, k;
         void* data;
 
         for (k = 0; k < sNumTables; k++)
@@ -97,7 +97,7 @@ void zCollGeom_Init()
                 break;
             }
 
-            sTableCount[k] = *(uint32*)data;
+            sTableCount[k] = *(U32*)data;
 
             if (!sTableCount[k])
             {
@@ -105,20 +105,20 @@ void zCollGeom_Init()
                 break;
             }
 
-            sTableList[k] = (zCollGeomTable*)((uint32*)data + 1);
+            sTableList[k] = (zCollGeomTable*)((U32*)data + 1);
 
             for (i = 0; i < sTableCount[k]; i++)
             {
-                if ((uint32)sTableList[k][i].baseModel)
+                if ((U32)sTableList[k][i].baseModel)
                 {
                     sTableList[k][i].baseModel =
-                        (RpAtomic*)xSTFindAsset((uint32)sTableList[k][i].baseModel, NULL);
+                        (RpAtomic*)xSTFindAsset((U32)sTableList[k][i].baseModel, NULL);
                 }
 
-                if ((uint32)sTableList[k][i].colModel[0])
+                if ((U32)sTableList[k][i].colModel[0])
                 {
                     sTableList[k][i].colModel[0] =
-                        (RpAtomic*)xSTFindAsset((uint32)sTableList[k][i].colModel[0], NULL);
+                        (RpAtomic*)xSTFindAsset((U32)sTableList[k][i].colModel[0], NULL);
                 }
 
                 if (!sTableList[k][i].colModel[0])
@@ -126,7 +126,7 @@ void zCollGeom_Init()
                     if (sTableList[k][i].camcolModel)
                     {
                         sTableList[k][i].camcolModel =
-                            (RpAtomic*)xSTFindAsset((uint32)sTableList[k][i].camcolModel, NULL);
+                            (RpAtomic*)xSTFindAsset((U32)sTableList[k][i].camcolModel, NULL);
                     }
                 }
             }

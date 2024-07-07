@@ -5,15 +5,15 @@
 #include "xString.h"
 #include "xMath.h"
 
-extern float32 _830_2;
-extern float32 _831_2;
-extern float32 _832_0;
-extern float32 _866_5;
-extern float32 _867_6;
+extern F32 _830_2;
+extern F32 _831_2;
+extern F32 _832_0;
+extern F32 _866_5;
+extern F32 _867_6;
 
 #define ANIM_COUNT 11
 
-uint32 g_hash_testanim[ANIM_COUNT] = {};
+U32 g_hash_testanim[ANIM_COUNT] = {};
 
 // clang-format off
 const char* g_strz_testanim[ANIM_COUNT] =
@@ -38,7 +38,7 @@ const char* g_strz_testanim[ANIM_COUNT] =
 
 void ZNPC_Test_Startup()
 {
-    for (int32 i = 0; i < ANIM_COUNT; i++)
+    for (S32 i = 0; i < ANIM_COUNT; i++)
     {
         g_hash_testanim[i] = xStrHash(g_strz_testanim[i]);
     }
@@ -48,7 +48,7 @@ void ZNPC_Test_Shutdown()
 {
 }
 
-xFactoryInst* ZNPC_Create_Test(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_Test(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCTest* inst = NULL;
 
@@ -77,13 +77,13 @@ xAnimTable* ZNPC_AnimTable_Test()
 
     table = xAnimTableNew(_stringBase0_84 + 78, NULL, 0);
 
-    for (int32 i = 1; i < ANIM_COUNT; i++)
+    for (S32 i = 1; i < ANIM_COUNT; i++)
     {
         xAnimTableNewState(table, names[i], 0x10, 0x1, _830_2, NULL, NULL, _831_2, NULL, NULL,
                            xAnimDefaultBeforeEnter, NULL, NULL);
     }
 
-    for (int32 i = 1; i < ANIM_COUNT; i++)
+    for (S32 i = 1; i < ANIM_COUNT; i++)
     {
         // non-matching: float scheduling
 
@@ -104,7 +104,7 @@ xAnimTable* ZNPC_AnimTable_Test()
 }
 #endif
 
-zNPCTest::zNPCTest(int32 myType) : zNPCCommon(myType)
+zNPCTest::zNPCTest(S32 myType) : zNPCCommon(myType)
 {
 }
 
@@ -115,7 +115,7 @@ void zNPCTest::Reset()
     currentState = 0;
 }
 
-void zNPCTest::Process(xScene* xscn, float32 dt)
+void zNPCTest::Process(xScene* xscn, F32 dt)
 {
     transitionTimer = MAX(_866_5, transitionTimer - dt);
 
@@ -141,7 +141,7 @@ void zNPCTest::SelfSetup()
     transitionTimer = _867_6;
 }
 
-uint32 zNPCTest::AnimPick(int32, en_NPC_GOAL_SPOT, xGoal*)
+U32 zNPCTest::AnimPick(S32, en_NPC_GOAL_SPOT, xGoal*)
 {
     return g_hash_testanim[currentState + 1];
 }

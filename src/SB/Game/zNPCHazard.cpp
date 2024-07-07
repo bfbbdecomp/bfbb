@@ -7,22 +7,22 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 
-extern uint32 g_hash_hazanim[3];
+extern U32 g_hash_hazanim[3];
 extern char* g_strz_hazanim[3];
 extern NPCHazard g_hazards[64];
 extern UVAModelInfo g_haz_uvAnimInfo[30];
-extern int32 g_cnt_activehaz;
+extern S32 g_cnt_activehaz;
 extern NPCHazard* g_haz_uvAnimQue[27];
 extern RpAtomic* g_hazard_rawModel[30];
 extern xAnimTable* g_haz_animTable[30];
 extern xVec3 g_O3;
-extern float32 _958_Hazard; // 0.0f
-extern float32 _959_Hazard; // 1.0f
-extern float32 _1041_Hazard; // -1.0f
+extern F32 _958_Hazard; // 0.0f
+extern F32 _959_Hazard; // 1.0f
+extern F32 _1041_Hazard; // -1.0f
 
 void zNPCHazard_Startup()
 {
-    for (int32 i = 0; i < 3; i++)
+    for (S32 i = 0; i < 3; i++)
     {
         g_hash_hazanim[i] = xStrHash(g_strz_hazanim[i]);
     }
@@ -38,19 +38,19 @@ void zNPCHazard_ScenePrepare()
 {
     memset(g_hazards, 0, sizeof(g_hazards));
     g_cnt_activehaz = 0;
-    for (int32 i = 0; i < 27; i++)
+    for (S32 i = 0; i < 27; i++)
     {
         g_haz_uvAnimQue[i] = NULL;
     }
-    for (int32 i = 0; i < 30; i++)
+    for (S32 i = 0; i < 30; i++)
     {
         g_haz_uvAnimInfo[i].Clear();
     }
-    for (int32 i = 0; i < 30; i++)
+    for (S32 i = 0; i < 30; i++)
     {
         g_haz_animTable[i] = NULL;
     }
-    for (int32 i = 0; i < 30; i++)
+    for (S32 i = 0; i < 30; i++)
     {
         g_hazard_rawModel[i] = NULL;
     }
@@ -60,7 +60,7 @@ void zNPCHazard_ScenePrepare()
 
 void zNPCHazard_SceneReset()
 {
-    for (int32 i = 0; i < 64; i++)
+    for (S32 i = 0; i < 64; i++)
     {
         if (g_hazards[i].flg_hazard)
         {
@@ -79,7 +79,7 @@ void zNPCHazard_KillEffects()
 {
 }
 
-int32 HAZ_ord_sorttest(void* vkey, void* vitem)
+S32 HAZ_ord_sorttest(void* vkey, void* vitem)
 {
     NPCHazard* key = (NPCHazard*)vkey;
     NPCHazard* item = (NPCHazard*)vitem;
@@ -91,7 +91,7 @@ int32 HAZ_ord_sorttest(void* vkey, void* vitem)
     {
         return 1;
     }
-    else if ((int32)vkey < (int32)vitem)
+    else if ((S32)vkey < (S32)vitem)
     {
         return -1;
     }
@@ -106,7 +106,7 @@ int32 HAZ_ord_sorttest(void* vkey, void* vitem)
 NPCHazard* HAZ_Acquire()
 {
     NPCHazard* da_haz = g_hazards;
-    for (int32 i = 0; i < 64; i++)
+    for (S32 i = 0; i < 64; i++)
     {
         if (!(da_haz->flg_hazard & 1))
         {
@@ -122,7 +122,7 @@ NPCHazard* HAZ_Acquire()
 
 #endif
 
-int32 HAZ_AvailablePool()
+S32 HAZ_AvailablePool()
 {
     return 64 - g_cnt_activehaz;
 }
@@ -142,9 +142,9 @@ void NPCHazard::WipeIt()
 
 #if 0
 // WIP.
-int32 NPCHazard::ConfigHelper(en_npchaz haztype)
+S32 NPCHazard::ConfigHelper(en_npchaz haztype)
 {
-    int32 result = 1;
+    S32 result = 1;
     this->typ_hazard = haztype;
     switch (haztype)
     {
@@ -198,7 +198,7 @@ void NPCHazard::PosSet(const xVec3* pos)
     }
 }
 
-void NPCHazard::SetAlpha(float32 alpha)
+void NPCHazard::SetAlpha(F32 alpha)
 {
     if (this->mdl_hazard == NULL)
     {
@@ -208,12 +208,12 @@ void NPCHazard::SetAlpha(float32 alpha)
     this->mdl_hazard->Alpha = alpha;
 }
 
-int32 NPCHazard::ColPlyrSphere(float32 rad)
+S32 NPCHazard::ColPlyrSphere(F32 rad)
 {
     return this->ColTestSphere(&globals.player.ent.bound, rad);
 }
 
-int32 NPCHazard::ColPlyrCyl(float32 rad, float32 hyt)
+S32 NPCHazard::ColPlyrCyl(F32 rad, F32 hyt)
 {
     return this->ColTestCyl(&globals.player.ent.bound, rad, hyt);
 }
@@ -259,7 +259,7 @@ void NPCHazard::StagColNPC()
     this->StagColGeneral(4);
 }
 
-void NPCHazard::CollideResponse(xSweptSphere* swdata, float32 tym_inFuture)
+void NPCHazard::CollideResponse(xSweptSphere* swdata, F32 tym_inFuture)
 {
     this->ColResp_Default(swdata, tym_inFuture);
 }
@@ -272,7 +272,7 @@ void UVAModelInfo::Hemorrage()
 
 #if 0
 // Need to figure out what is wrong with the final return statement, and the b and blr swaps.
-int32 UVAModelInfo::GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* model)
+S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
 {
     coords = NULL;
     numVertices = 0;
@@ -287,7 +287,7 @@ int32 UVAModelInfo::GetUV(RwTexCoords*& coords, int32& numVertices, RpAtomic* mo
         return 0;
     }
     coords = geom->texCoords[0];
-    return (-(int32)coords->u | (uint32)coords->u) >> 0x1f;
+    return (-(S32)coords->u | (U32)coords->u) >> 0x1f;
 }
 
 #endif
@@ -316,7 +316,7 @@ NPCHazard::NPCHazard(en_npchaz haztype)
     this->typ_hazard = haztype;
 }
 
-float32 xVec2Length2(const xVec2* v)
+F32 xVec2Length2(const xVec2* v)
 {
     return xVec2Dot(v, v);
 }

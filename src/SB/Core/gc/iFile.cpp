@@ -12,35 +12,35 @@ struct file_queue_entry
 {
     tag_xFile* file;
     void* buf;
-    uint32 size;
-    uint32 offset;
+    U32 size;
+    U32 offset;
     IFILE_READSECTOR_STATUS stat;
     void (*callback)(tag_xFile* file);
-    uint32 asynckey;
+    U32 asynckey;
 };
 
 extern file_queue_entry file_queue[4];
 
-static uint32 tbuffer[1024 + 8];
-static uint32* buffer32;
-volatile uint32 iFileSyncAsyncReadActive;
-static int32 fopcount_503;
+static U32 tbuffer[1024 + 8];
+static U32* buffer32;
+volatile U32 iFileSyncAsyncReadActive;
+static S32 fopcount_503;
 static signed char init_504;
 
 void iFileInit()
 {
-    buffer32 = (uint32*)OSRoundUp32B(tbuffer);
+    buffer32 = (U32*)OSRoundUp32B(tbuffer);
 }
 
 void iFileExit()
 {
 }
 
-uint32* iFileLoad(char* name, uint32* buffer, uint32* size)
+U32* iFileLoad(char* name, U32* buffer, U32* size)
 {
     char path[128];
     tag_xFile file;
-    int32 fileSize, alignedSize;
+    S32 fileSize, alignedSize;
 
     iFileFullPath(name, path);
     iFileOpen(name, IFILE_OPEN_ABSPATH, &file);
@@ -49,7 +49,7 @@ uint32* iFileLoad(char* name, uint32* buffer, uint32* size)
 
     if (!buffer)
     {
-        buffer = (uint32*)OSAlloc(OSRoundUp32B(fileSize));
+        buffer = (U32*)OSAlloc(OSRoundUp32B(fileSize));
     }
 
     alignedSize = OSRoundUp32B(fileSize);
@@ -66,7 +66,7 @@ uint32* iFileLoad(char* name, uint32* buffer, uint32* size)
     return buffer;
 }
 
-uint32 iFileOpen(const char* name, int32 flags, tag_xFile* file)
+U32 iFileOpen(const char* name, S32 flags, tag_xFile* file)
 {
     tag_iFile* ps = &file->ps;
 
@@ -100,10 +100,10 @@ uint32 iFileOpen(const char* name, int32 flags, tag_xFile* file)
     return 0;
 }
 
-int32 iFileSeek(tag_xFile* file, int32 offset, int32 whence)
+S32 iFileSeek(tag_xFile* file, S32 offset, S32 whence)
 {
     tag_iFile* ps = &file->ps;
-    int32 position, new_pos;
+    S32 position, new_pos;
 
     switch (whence)
     {
@@ -150,7 +150,7 @@ static void ifilereadCB(tag_xFile* file)
     iFileSyncAsyncReadActive = 0;
 }
 
-uint32 iFileRead(tag_xFile* file, void* buf, uint32 size)
+U32 iFileRead(tag_xFile* file, void* buf, U32 size)
 {
     tag_iFile* ps = &file->ps;
 
@@ -173,7 +173,7 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo);
 #else
 static void async_cb(s32 result, DVDFileInfo* fileInfo)
 {
-    file_queue_entry* entry = &file_queue[(int32)fileInfo->cb.userData];
+    file_queue_entry* entry = &file_queue[(S32)fileInfo->cb.userData];
     s32 r7 = DVD_RESULT_FATAL_ERROR;
 
     switch (result)
@@ -222,7 +222,7 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
         entry->offset += r7;
         entry->stat = IFILE_RDSTAT_INPROG;
 
-        void* addr = (void*)((uint32)entry->buf + entry->offset);
+        void* addr = (void*)((U32)entry->buf + entry->offset);
         s32 length =
             (entry->size - entry->offset < 0x8000) ? ALIGN(entry->size - entry->offset, 3) : 0x8000;
 
@@ -239,11 +239,11 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
 #endif
 
 #ifdef NON_MATCHING
-int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(tag_xFile*),
-                     int32 priority)
+S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_xFile*),
+                     S32 priority)
 {
     tag_iFile* ps = &file->ps;
-    int32 i;
+    S32 i;
 
     if (!init_504)
     {
@@ -255,8 +255,8 @@ int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(
     {
         if (file_queue[i].stat != IFILE_RDSTAT_QUEUED && file_queue[i].stat != IFILE_RDSTAT_INPROG)
         {
-            int32 id = fopcount_503++ << 2;
-            int32 asynckey = id + i;
+            S32 id = fopcount_503++ << 2;
+            S32 asynckey = id + i;
 
             file_queue[i].file = file;
             file_queue[i].buf = buf;
@@ -283,9 +283,9 @@ int32 iFileReadAsync(tag_xFile* file, void* buf, uint32 aSize, void (*callback)(
 #endif
 
 #ifdef NON_MATCHING
-IFILE_READSECTOR_STATUS iFileReadAsyncStatus(int32 key, int32* amtToFar)
+IFILE_READSECTOR_STATUS iFileReadAsyncStatus(S32 key, S32* amtToFar)
 {
-    int32 k = key & 0x3;
+    S32 k = key & 0x3;
 
     if (k != file_queue[k].asynckey)
     {
@@ -301,10 +301,10 @@ IFILE_READSECTOR_STATUS iFileReadAsyncStatus(int32 key, int32* amtToFar)
 }
 #endif
 
-uint32 iFileClose(tag_xFile* file)
+U32 iFileClose(tag_xFile* file)
 {
     tag_iFile* ps = &file->ps;
-    int32 ret;
+    S32 ret;
 
     ret = DVDClose(&file->ps.fileInfo);
     ret = DVDClose(&file->ps.fileInfo);
@@ -318,7 +318,7 @@ uint32 iFileClose(tag_xFile* file)
     return 0;
 }
 
-uint32 iFileGetSize(tag_xFile* file)
+U32 iFileGetSize(tag_xFile* file)
 {
     return file->ps.fileInfo.length;
 }
@@ -337,12 +337,12 @@ void iFileSetPath(char* path)
 {
 }
 
-uint32 iFileFind(const char* name, tag_xFile* file)
+U32 iFileFind(const char* name, tag_xFile* file)
 {
     return iFileOpen(name, 0, file);
 }
 
-void iFileGetInfo(tag_xFile* file, uint32* addr, uint32* length)
+void iFileGetInfo(tag_xFile* file, U32* addr, U32* length)
 {
     if (addr)
     {

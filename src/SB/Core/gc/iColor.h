@@ -5,10 +5,10 @@
 
 struct iColor_tag
 {
-    uint8 r;
-    uint8 g;
-    uint8 b;
-    uint8 a;
+    U8 r;
+    U8 g;
+    U8 b;
+    U8 a;
 };
 
 #endif

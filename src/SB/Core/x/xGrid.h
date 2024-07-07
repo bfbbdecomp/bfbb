@@ -11,14 +11,14 @@ struct xQCData;
 struct xGridBound
 {
     void* data;
-    uint16 gx;
-    uint16 gz;
+    U16 gx;
+    U16 gz;
 
     // Offset: 0x8
-    uint8 ingrid;
-    uint8 oversize;
-    uint8 deleted;
-    uint8 gpad;
+    U8 ingrid;
+    U8 oversize;
+    U8 deleted;
+    U8 gpad;
 
     // Offset: 0xC
     xGridBound** head;
@@ -27,25 +27,25 @@ struct xGridBound
 
 struct xGrid
 {
-    uint8 ingrid_id;
-    uint8 pad[3];
-    uint16 nx;
-    uint16 nz;
+    U8 ingrid_id;
+    U8 pad[3];
+    U16 nx;
+    U16 nz;
 
     // Offset: 0x8
-    float32 minx;
-    float32 minz;
-    float32 maxx;
-    float32 maxz;
+    F32 minx;
+    F32 minz;
+    F32 maxx;
+    F32 maxz;
 
     // Offset: 0x18
-    float32 csizex;
-    float32 csizez;
-    float32 inv_csizex;
-    float32 inv_csizez;
+    F32 csizex;
+    F32 csizez;
+    F32 inv_csizex;
+    F32 inv_csizez;
 
     // Offset: 0x28
-    float32 maxr;
+    F32 maxr;
     xGridBound** cells;
     xGridBound* other;
 };
@@ -54,21 +54,21 @@ struct xGridIterator
 {
     xGridBound** listhead;
     xGridBound* curcell;
-    uint32 delfound;
+    U32 delfound;
 };
 
-typedef int32 (*GridEntCallback)(xEnt*, void*);
+typedef S32 (*GridEntCallback)(xEnt*, void*);
 
-extern volatile int32 gGridIterActive;
+extern volatile S32 gGridIterActive;
 
 void xGridBoundInit(xGridBound* gridb, void* data);
 void xGridEmpty(xGrid* grid);
-int32 xGridRemove(xGridBound* gridb);
-xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, int32& grx, int32& grz);
-void xGridGetCell(xGrid* grid, float32 posx, float32 posy, float32 posz, int32& grx, int32& grz);
-xGridBound* xGridIterFirstCell(xGrid* grid, int32 grx, int32 grz, xGridIterator& iter);
-xGridBound* xGridIterFirstCell(xGrid* grid, float32 posx, float32, float32 posz, int32& grx,
-                               int32& grz, xGridIterator& it);
+S32 xGridRemove(xGridBound* gridb);
+xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz);
+void xGridGetCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& grx, S32& grz);
+xGridBound* xGridIterFirstCell(xGrid* grid, S32 grx, S32 grz, xGridIterator& iter);
+xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32, F32 posz, S32& grx,
+                               S32& grz, xGridIterator& it);
 xGridBound* xGridIterFirstCell(xGridBound** head, xGridIterator& it);
 xGridBound* xGridIterNextCell(xGridIterator& it);
 void xGridIterClose(xGridIterator& it);

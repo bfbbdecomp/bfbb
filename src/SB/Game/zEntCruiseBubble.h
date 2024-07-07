@@ -17,7 +17,7 @@
 namespace auto_tweak
 {
     template <class T1, class T2>
-    void load_param(T1&, T2, T2, T2, xModelAssetParam*, uint32, const char*);
+    void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
 };
 
 namespace cruise_bubble
@@ -65,129 +65,129 @@ namespace cruise_bubble
 
         virtual void start();
         virtual void stop();
-        virtual state_enum update(float32 dt) = 0;
+        virtual state_enum update(F32 dt) = 0;
         virtual void render();
         virtual void abort();
     };
 
     struct state_player_fire : state_type
     {
-        uint8 wand_shown;
+        U8 wand_shown;
 
         state_player_fire();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
-        void update_wand(float32 dt);
+        state_enum update(F32 dt);
+        void update_wand(F32 dt);
     };
 
     struct state_camera_aim : state_type
     {
-        float32 phi;
-        float32 phi_vel;
-        float32 height;
-        float32 height_vel;
-        float32 dist;
-        float32 dist_vel;
+        F32 phi;
+        F32 phi_vel;
+        F32 height;
+        F32 height_vel;
+        F32 dist;
+        F32 dist_vel;
         xQuat facing;
         xQuat target;
-        float32 control_delay;
-        float32 seize_delay;
+        F32 control_delay;
+        F32 seize_delay;
 
         state_camera_aim();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
 
         void apply_turn() const;
-        void turn(float32 dt);
+        void turn(F32 dt);
         void collide_inward();
         void apply_motion() const;
-        void stop(float32 dt);
-        void move(float32 dt);
+        void stop(F32 dt);
+        void move(F32 dt);
     };
 
     struct state_player_halt : state_type
     {
-        uint8 first_update;
-        float32 time;
+        U8 first_update;
+        F32 time;
         xVec3 last_motion;
 
         state_player_halt();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
     };
 
     struct state_missle_explode : state_type
     {
-        float32 hit_time;
+        F32 hit_time;
 
         state_missle_explode();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
 
-        float32 get_radius() const;
+        F32 get_radius() const;
         void start_effects();
         void cb_droplet(zFrag* frag, zFragAsset* fa);
-        void perturb_direction(const xVec3&, float32, float32, float32, float32);
-        void get_next_quadrant(float32&, float32&, float32&, float32&);
-        void reset_quadrants(uint32 size, float32 ring);
-        void apply_damage(float32 radius);
-        void apply_damage_hazards(float32);
-        uint8 hazard_check(NPCHazard& haz, void* context);
+        void perturb_direction(const xVec3&, F32, F32, F32, F32);
+        void get_next_quadrant(F32&, F32&, F32&, F32&);
+        void reset_quadrants(U32 size, F32 ring);
+        void apply_damage(F32 radius);
+        void apply_damage_hazards(F32);
+        U8 hazard_check(NPCHazard& haz, void* context);
     };
 
     struct state_camera_attach : state_type
     {
-        float32 reticle_delay;
+        F32 reticle_delay;
 
         state_camera_attach();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
 
         void lock_targets();
         void lock_hazard_targets();
-        uint8 hazard_check(NPCHazard& haz, void* context);
+        U8 hazard_check(NPCHazard& haz, void* context);
         void get_view_bound(xBound& bound) const;
     };
 
     struct state_missle_fly : state_type
     {
-        float32 life;
-        float32 vel;
+        F32 life;
+        F32 vel;
         xVec3 rot;
         // Offset: 0x1c
         xVec3 rot_vel;
         // Offset: 0x28
-        float32 engine_pitch;
+        F32 engine_pitch;
         xVec3 last_loc;
         // Offset: 0x38
-        float32 flash_time;
+        F32 flash_time;
 
         state_missle_fly();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
         void abort();
-        void update_flash(float32 dt);
-        void update_engine_sound(float32 dt);
+        void update_flash(F32 dt);
+        void update_engine_sound(F32 dt);
 
-        uint8 collide_hazards();
+        U8 collide_hazards();
         static bool hazard_check(NPCHazard& haz, void* context);
-        uint8 collide();
-        uint8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
-        void update_move(float32 dt);
-        void update_turn(float32 dt);
-        void calculate_rotation(xVec2& d1, xVec2& v1, float32 dt, const xVec2& d0, const xVec2& v0,
+        U8 collide();
+        U8 hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen, xEnt*& hit_ent) const;
+        void update_move(F32 dt);
+        void update_turn(F32 dt);
+        void calculate_rotation(xVec2& d1, xVec2& v1, F32 dt, const xVec2& d0, const xVec2& v0,
                                 const xVec2& a0, const xVec2& a1) const;
     };
 
@@ -197,78 +197,78 @@ namespace cruise_bubble
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
         void move();
-        void update_effects(float32 dt);
+        void update_effects(F32 dt);
     };
 
     struct state_camera_seize : state_type
     {
-        float32 blend_time;
+        F32 blend_time;
         xVec3 start_loc;
         xQuat start_dir;
         xQuat end_dir;
         xQuat cur_dir;
-        float32 last_s;
-        float32 fov;
-        float32 wipe_bubbles;
+        F32 last_s;
+        F32 fov;
+        F32 wipe_bubbles;
 
         state_camera_seize();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
 
-        void refresh_missle_alpha(float32);
-        void update_turn(float32);
-        void update_move(float32);
+        void refresh_missle_alpha(F32);
+        void update_turn(F32);
+        void update_move(F32);
     };
 
     struct state_player_aim : state_type
     {
-        float32 yaw;
-        float32 yaw_vel;
-        float32 turn_delay;
+        F32 yaw;
+        F32 yaw_vel;
+        F32 turn_delay;
 
         state_player_aim();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
 
-        void update_animation(float32 dt);
+        void update_animation(F32 dt);
         void apply_yaw();
-        void face_camera(float32 dt);
+        void face_camera(F32 dt);
     };
 
     struct state_camera_restore : state_type
     {
-        float32 control_delay;
+        F32 control_delay;
 
         state_camera_restore();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
     };
 
     struct state_camera_survey : state_type
     {
-        float32 time;
+        F32 time;
         xVec2 start_sp;
-        float32 path_distance[127];
+        F32 path_distance[127];
 
         state_camera_survey();
 
         void start();
         void stop();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
 
         void move();
-        void eval_missle_path(float32 dist, xVec3& loc, float32& roll) const;
-        void lerp(float32& x, float32 t, float32 a, float32 b) const;
-        void lerp(xVec3& v, float32 t, const xVec3& a, const xVec3& b) const;
-        int32 find_nearest(float32) const;
+        void eval_missle_path(F32 dist, xVec3& loc, F32& roll) const;
+        void lerp(F32& x, F32 t, F32 a, F32 b) const;
+        void lerp(xVec3& v, F32 t, const xVec3& a, const xVec3& b) const;
+        S32 find_nearest(F32) const;
         void init_path();
         bool control_jerked() const;
     };
@@ -278,44 +278,44 @@ namespace cruise_bubble
         state_player_wait();
 
         void start();
-        state_enum update(float32 dt);
+        state_enum update(F32 dt);
     };
 
     struct sound_config
     {
         // offset 0x0
-        int8* name; // probably char*
+        S8* name; // probably char*
         // offset 0x4
-        float32 volume;
+        F32 volume;
         // offset 0x8
-        float32 radius_inner;
+        F32 radius_inner;
         // offset 0xc
-        float32 radius_outer;
+        F32 radius_outer;
         // offset 0x10
-        uint8 streamed; // might be bool, not sure
-        uint8 looping; // might be bool, not sure
+        U8 streamed; // might be bool, not sure
+        U8 looping; // might be bool, not sure
         // offset 0x14
         _tagSDRumbleType rumble;
         // offset 0x18
-        int32 first;
+        S32 first;
         // offset 0x1c
-        int32 last;
+        S32 last;
         // offset 0x20
-        uint32 id;
+        U32 id;
         // offset 0x24
-        uint32 handle;
+        U32 handle;
     };
 
     struct hud_gizmo
     {
-        int32 flags;
-        basic_rect<float32> bound;
-        float32 alpha;
+        S32 flags;
+        basic_rect<F32> bound;
+        F32 alpha;
         // Offset: 0x18
-        float32 alpha_vel;
-        float32 glow;
-        float32 glow_vel;
-        float32 opacity;
+        F32 alpha_vel;
+        F32 glow;
+        F32 glow_vel;
+        F32 opacity;
         const xVec3* target;
         xModelInstance* model;
     };
@@ -324,72 +324,72 @@ namespace cruise_bubble
     {
         RpAtomic* model;
         RwTexCoords* uv;
-        int32 uvsize;
+        S32 uvsize;
         xVec2 offset;
         xVec2 offset_vel;
 
         bool init(RpAtomic*);
-        bool clone_uv(RwTexCoords*&, int32&, RpAtomic*) const;
-        bool get_uv(RwTexCoords*&, int32&, RpAtomic*) const;
-        void update(float32 dt);
+        bool clone_uv(RwTexCoords*&, S32&, RpAtomic*) const;
+        bool get_uv(RwTexCoords*&, S32&, RpAtomic*) const;
+        void update(F32 dt);
         void refresh();
     };
 
     // Size: 0x1b8
     struct tweak_group
     {
-        float32 aim_delay;
+        F32 aim_delay;
         // Size: 0x10, Offset: 0x4
         struct _class_2
         {
-            float32 halt_time;
+            F32 halt_time;
             struct _class_4
             {
-                float32 turn_speed;
-                float32 anim_delta;
+                F32 turn_speed;
+                F32 anim_delta;
             } aim;
             struct _class_11
             {
-                float32 delay_wand;
+                F32 delay_wand;
             } fire;
         } player;
 
         // Size: 0x5c, Offset: 0x14
         struct _class_22
         {
-            float32 life;
-            float32 hit_dist;
-            float32 crash_angle;
-            float32 collide_twist;
-            int32 hit_tests;
+            F32 life;
+            F32 hit_dist;
+            F32 crash_angle;
+            F32 collide_twist;
+            S32 hit_tests;
             struct _class_27
             {
-                float32 delay_show;
-                float32 delay_fly;
+                F32 delay_show;
+                F32 delay_fly;
                 xVec3 offset;
             } appear;
             struct _class_32
             {
-                float32 accel;
-                float32 max_vel;
-                float32 engine_pitch_max;
-                float32 engine_pitch_sensitivity;
+                F32 accel;
+                F32 max_vel;
+                F32 engine_pitch_max;
+                F32 engine_pitch_sensitivity;
                 // Offset: 0x4c
-                float32 flash_interval;
+                F32 flash_interval;
                 struct _class_38
                 {
-                    float32 xdelta;
-                    float32 ydelta;
-                    float32 xdecay;
-                    float32 ydecay;
-                    float32 ybound;
-                    float32 roll_frac;
+                    F32 xdelta;
+                    F32 ydelta;
+                    F32 xdecay;
+                    F32 ydecay;
+                    F32 ybound;
+                    F32 roll_frac;
                 } turn;
             } fly;
             struct _class_49
             {
-                float32 hit_radius;
-                float32 hit_duration;
+                F32 hit_radius;
+                F32 hit_duration;
             } explode;
         } missle;
 
@@ -398,165 +398,165 @@ namespace cruise_bubble
         {
             struct _class_15
             {
-                float32 dist;
-                float32 height;
-                float32 pitch;
-                float32 accel;
-                float32 max_vel;
-                float32 stick_decel;
-                float32 stick_accel;
-                float32 stick_max_vel;
-                float32 turn_speed;
+                F32 dist;
+                F32 height;
+                F32 pitch;
+                F32 accel;
+                F32 max_vel;
+                F32 stick_decel;
+                F32 stick_accel;
+                F32 stick_max_vel;
+                F32 turn_speed;
             } aim;
             struct _class_24
             {
-                float32 delay;
-                float32 blend_time;
-                float32 fade_dist;
-                float32 hide_dist;
-                float32 fov;
+                F32 delay;
+                F32 blend_time;
+                F32 fade_dist;
+                F32 hide_dist;
+                F32 fov;
             } seize;
             struct _class_30
             {
-                float32 duration;
-                float32 min_duration;
-                float32 min_dist;
-                float32 cut_dist;
-                float32 drift_dist;
-                float32 drift_softness;
-                float32 jerk_offset;
-                float32 jerk_deflect;
+                F32 duration;
+                F32 min_duration;
+                F32 min_dist;
+                F32 cut_dist;
+                F32 drift_dist;
+                F32 drift_softness;
+                F32 jerk_offset;
+                F32 jerk_deflect;
             } survey;
             struct _class_39
             {
-                float32 control_delay;
+                F32 control_delay;
             } restore;
         } camera;
 
         // Size: 0x18, Offset: 0xcc
         struct _class_48
         {
-            float32 env_alpha;
-            float32 env_coeff;
-            uint32 env_texture;
-            float32 fresnel_alpha;
-            float32 fresnel_coeff;
-            uint32 fresnel_texture;
+            F32 env_alpha;
+            F32 env_coeff;
+            U32 env_texture;
+            F32 fresnel_alpha;
+            F32 fresnel_coeff;
+            U32 fresnel_texture;
         } material;
 
         // Size: 0x14, Offset: 0xe4
         struct _class_9
         {
             // Offset: 0xe4
-            float32 dist_min;
-            float32 dist_max;
+            F32 dist_min;
+            F32 dist_max;
             // Offset: 0xec
-            float32 ang_show;
-            float32 ang_hide;
-            float32 delay_retarget;
+            F32 ang_show;
+            F32 ang_hide;
+            F32 delay_retarget;
         } reticle;
 
         // Size: 0x10, Offset: 0xf8
         struct _class_20
         {
             // Offset: 0xf8
-            float32 sample_rate;
-            float32 bubble_rate;
-            float32 bubble_emit_radius;
-            float32 wake_emit_radius;
+            F32 sample_rate;
+            F32 bubble_rate;
+            F32 bubble_emit_radius;
+            F32 wake_emit_radius;
         } trail;
 
         // Size: 0x10, Offset: 0x108
         struct _class_29
         {
-            uint32 emit;
-            float32 radius;
-            float32 vel;
-            float32 rand_vel;
+            U32 emit;
+            F32 radius;
+            F32 vel;
+            F32 rand_vel;
         } blast;
 
         // Size: 0x24, Offset: 0x118
         struct _class_35
         {
-            float32 dist_min;
-            float32 dist_max;
-            uint32 emit_min;
-            uint32 emit_max;
-            float32 vel_min;
-            float32 vel_max;
-            float32 vel_perturb;
-            float32 vel_angle;
-            float32 rot_vel_max;
+            F32 dist_min;
+            F32 dist_max;
+            U32 emit_min;
+            U32 emit_max;
+            F32 vel_min;
+            F32 vel_max;
+            F32 vel_perturb;
+            F32 vel_angle;
+            F32 rot_vel_max;
         } droplet;
 
         // Size: 0x44, Offset: 0x13c
         struct _class_43
         {
-            float32 glow_size;
+            F32 glow_size;
             // Offset: 0x140
-            float32 time_fade;
-            float32 time_glow;
+            F32 time_fade;
+            F32 time_glow;
             struct _class_46
             {
-                float32 size;
-                float32 du;
-                float32 dv;
+                F32 size;
+                F32 du;
+                F32 dv;
             } swirl;
             struct _class_5
             {
-                float32 size;
-                float32 du;
-                float32 dv;
+                F32 size;
+                F32 du;
+                F32 dv;
             } wind;
             struct _class_12
             {
-                float32 size;
+                F32 size;
             } reticle;
             struct _class_18
             {
-                float32 size;
+                F32 size;
             } target;
             struct _class_23
             {
                 // Offset: 0x168
-                int32 font;
-                float32 font_width;
-                float32 font_height;
-                float32 x;
-                float32 y;
+                S32 font;
+                F32 font_width;
+                F32 font_height;
+                F32 x;
+                F32 y;
                 // Offset: 0x17c
-                float32 glow_size;
+                F32 glow_size;
             } timer;
         } hud;
 
         // Size: 0xc, Offset: 0x180
         struct _class_34
         {
-            float32 freq;
-            float32 decay;
-            float32 min_freq;
+            F32 freq;
+            F32 decay;
+            F32 min_freq;
         } dialog;
 
         void* context;
         tweak_callback cb_missle_model;
 
-        void register_tweaks(bool init, xModelAssetParam* ap, uint32 apsize, const char*);
-        void load(xModelAssetParam* params, uint32 size);
+        void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
+        void load(xModelAssetParam* params, U32 size);
     };
 
     struct missle_record_data
     {
         xVec3 loc;
-        float32 roll;
+        F32 roll;
 
-        missle_record_data(const xVec3& loc, float32 roll);
+        missle_record_data(const xVec3& loc, F32 roll);
     };
 
     void init_sound();
-    void stop_sound(int32 which, uint32 handle);
-    uint32 play_sound(int32 which, float32 volFactor);
-    uint32 play_sound(int32 which, float32 volFactor, const xVec3* pos);
-    void set_pitch(int32 which, float32 pitch, uint32 handle);
+    void stop_sound(S32 which, U32 handle);
+    U32 play_sound(S32 which, F32 volFactor);
+    U32 play_sound(S32 which, F32 volFactor, const xVec3* pos);
+    void set_pitch(S32 which, F32 pitch, U32 handle);
     void show_wand();
     void hide_wand();
     void show_missle();
@@ -567,24 +567,24 @@ namespace cruise_bubble
     bool camera_leave();
     void start_damaging();
     // void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-    //                    float32 radius, bool explosive);
-    uint8 can_damage(xEnt* ent);
-    uint8 was_damaged(xEnt* ent);
+    //                    F32 radius, bool explosive);
+    U8 can_damage(xEnt* ent);
+    U8 was_damaged(xEnt* ent);
     void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
     void exit_triggers(xScene& s);
-    void signal_event(uint32 toEvent);
+    void signal_event(U32 toEvent);
     void refresh_trail(xMat4x3& mat, xQuat& quat);
     void start_trail();
     void stop_trail();
     void set_state(thread_enum thread, state_enum state);
     bool check_launch();
     void kill(bool reset_camera, bool abortive);
-    void distort_screen(float32);
-    void update_player(xScene& s, float32 dt);
+    void distort_screen(F32);
+    void update_player(xScene& s, F32 dt);
     xVec3& get_player_loc();
     void render_player();
     void refresh_controls();
-    void update_state(xScene* s, float32 dt);
+    void update_state(xScene* s, F32 dt);
     void render_state();
     RpAtomic* custom_bubble_render(RpAtomic* atomic);
     void init_states();
@@ -595,50 +595,50 @@ namespace cruise_bubble
     void init_explode_decal();
     void init_shrapnel();
     void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1,
-                          const xVec3& dir1, float32 dt);
-    void update_trail(float32 dt);
+                          const xVec3& dir1, F32 dt);
+    void update_trail(F32 dt);
     void refresh_missle_model();
-    void update_missle(xScene& s, float32 dt);
+    void update_missle(xScene& s, F32 dt);
     void render_missle();
-    xModelInstance* load_model(uint32);
-    void render_model_2d(xModelInstance* m, const basic_rect<float32>& bound, float32 alpha);
-    void render_glow(xModelInstance* m, const basic_rect<float32>& r, float32 glow, float32 alpha);
+    xModelInstance* load_model(U32);
+    void render_model_2d(xModelInstance* m, const basic_rect<F32>& bound, F32 alpha);
+    void render_glow(xModelInstance* m, const basic_rect<F32>& r, F32 glow, F32 alpha);
     void init_hud();
-    void show_gizmo(hud_gizmo& gizmo, const basic_rect<float32>& rect, xModelInstance* m);
-    void update_gizmo(hud_gizmo& gizmo, float32 dt);
+    void show_gizmo(hud_gizmo& gizmo, const basic_rect<F32>& rect, xModelInstance* m);
+    void update_gizmo(hud_gizmo& gizmo, F32 dt);
     void flash_hud();
-    void render_timer(float32 alpha, float32 glow);
-    void lerp(iColor_tag& c, float32 t, iColor_tag a, iColor_tag b);
-    void lerp(uint8& x, float32 t, uint8 a, uint8 b);
-    void update_hud(float32 dt);
+    void render_timer(F32 alpha, F32 glow);
+    void lerp(iColor_tag& c, F32 t, iColor_tag a, iColor_tag b);
+    void lerp(U8& x, F32 t, U8 a, U8 b);
+    void update_hud(F32 dt);
     void render_hud();
     void show_hud();
     void hide_hud();
     xVec3 world_to_screen(const xVec3& loc);
-    int32 find_locked_target(const xVec3* target);
-    void lock_target(int32 index, const xVec3* target, float32 opacity);
+    S32 find_locked_target(const xVec3* target);
+    void lock_target(S32 index, const xVec3* target, F32 opacity);
     void check_lock_target(const xVec3* target);
-    uint32 check_anim_aim(xAnimTransition*, xAnimSingle*);
+    U32 check_anim_aim(xAnimTransition*, xAnimSingle*);
     void load_cheat_tweak();
     void load_settings();
     void init();
     void init_debug();
     void reset();
     void launch();
-    bool update(xScene* s, float32 dt);
+    bool update(xScene* s, F32 dt);
     bool render();
     void render_debug();
     void render_screen();
     void insert_player_animations(xAnimTable& table);
     bool active();
-    float32 exploding();
-    void get_explode_sphere(xVec3& center, float32& radius);
-    xEnt** get_explode_hits(int32& size);
-    void add_life(float32, float32);
-    void set_life(float32 life);
+    F32 exploding();
+    void get_explode_sphere(xVec3& center, F32& radius);
+    xEnt** get_explode_hits(S32& size);
+    void add_life(F32, F32);
+    void set_life(F32 life);
     void reset_life();
     // xBase* param names are guessed as they go unused and wont appear in dwarf
-    bool event_handler(xBase* from, uint32 event, const float32* fparam, xBase* to);
+    bool event_handler(xBase* from, U32 event, const F32* fparam, xBase* to);
     xMat4x3* get_player_mat();
     xMat4x3* get_missle_mat();
 } // namespace cruise_bubble

@@ -13,14 +13,14 @@
 
 extern xCutscene sActiveCutscene;
 extern xCutsceneInfo* sCutTocInfo;
-extern uint32 sCutTocCount;
+extern U32 sCutTocCount;
 extern void* RwEngineInstance;
 extern xModelInstance sCutsceneFakeModel[8];
 
-extern float32 _672; // 1.0
+extern F32 _672; // 1.0
 
-extern float32 lbl_803CCB3C; // 0.0
-extern float32 lbl_803CCB40; // 0.033333335
+extern F32 lbl_803CCB3C; // 0.0
+extern F32 lbl_803CCB40; // 0.033333335
 
 #ifdef NON_MATCHING
 // Non-matching: scheduling
@@ -31,8 +31,8 @@ void xCutscene_Init(void* toc)
     sCutTocInfo = 0;
     if (toc != NULL)
     {
-        sCutTocCount = *(int32*)toc;
-        sCutTocInfo = (xCutsceneInfo*)((int32*)toc + 1);
+        sCutTocCount = *(S32*)toc;
+        sCutTocInfo = (xCutsceneInfo*)((S32*)toc + 1);
     }
     for (int i = 0; i < 8; i++)
     {
@@ -55,11 +55,11 @@ void xCutscene_Init(void* toc)
 
 #if 0
 // Damn RwEngineInstance ruining this (as well as the members being accessed incorrectly by Ghidra)
-xCutscene* xCutscene_Create(uint32 id)
+xCutscene* xCutscene_Create(U32 id)
 {
     xCutscene* csn;
     xCutsceneInfo* cnfo;
-    uint32 maxload;
+    U32 maxload;
 
     xSndPauseAll(1, 1);
     memset(&sActiveCutscene, 0, 0x198);
@@ -84,7 +84,7 @@ xCutscene* xCutscene_Create(uint32 id)
     {
         sActiveCutscene.AlignBuf = (void*)((int)sActiveCutscene.AlignBuf + 4);
     }
-    sActiveCutscene.TimeChunkOffs = (uint32*)(cnfo[1].SoundLeft + cnfo->NumData * 0x10 + -0x30);
+    sActiveCutscene.TimeChunkOffs = (U32*)(cnfo[1].SoundLeft + cnfo->NumData * 0x10 + -0x30);
     sActiveCutscene.Info = cnfo;
     sActiveCutscene.Data = (xCutsceneData*)(cnfo + 1);
     sActiveCutscene.Visibility = sActiveCutscene.TimeChunkOffs + cnfo->NumTime + 1;
@@ -98,7 +98,7 @@ xCutscene* xCutscene_Create(uint32 id)
 
 #if 0
 // WIP
-int32 xCutscene_Destroy(xCutscene* csn)
+S32 xCutscene_Destroy(xCutscene* csn)
 {
     csn->Ready = 0;
     xSndSetExternalCallback(0);
@@ -120,19 +120,19 @@ int32 xCutscene_Destroy(xCutscene* csn)
     }
     for (int i = 0; i < csn->Info->NumData; i++)
     {
-        if ((((uint32*)csn->Data->DataType + i) & 0x80000000) &&
-            ((RpAtomic*)((uint32*)((uint32*)csn->Data->DataType + i) + 3) != NULL))
+        if ((((U32*)csn->Data->DataType + i) & 0x80000000) &&
+            ((RpAtomic*)((U32*)((U32*)csn->Data->DataType + i) + 3) != NULL))
         {
-            if ((((uint32*)csn->Data->DataType + i) & 0xfffffff) == 6)
+            if ((((U32*)csn->Data->DataType + i) & 0xfffffff) == 6)
             {
                 RwFree();
             }
             else
             {
-                iModelUnload((RpAtomic*)((uint32*)((uint32*)csn->Data->DataType + i) + 3));
+                iModelUnload((RpAtomic*)((U32*)((U32*)csn->Data->DataType + i) + 3));
             }
-            // (uint32)((uint32*)csn->Data->DataType + i) =
-            //     (((uint32*)csn->Data->DataType + i) & 0xfffffff);
+            // (U32)((U32*)csn->Data->DataType + i) =
+            //     (((U32*)csn->Data->DataType + i) & 0xfffffff);
         }
     }
     RwFree(csn->RawBuf);
@@ -141,9 +141,9 @@ int32 xCutscene_Destroy(xCutscene* csn)
 }
 #endif
 
-int32 xCutscene_LoadStart(xCutscene* csn)
+S32 xCutscene_LoadStart(xCutscene* csn)
 {
-    uint32 cnt;
+    U32 cnt;
 
     cnt = iCSFileOpen(csn);
 
@@ -158,7 +158,7 @@ int32 xCutscene_LoadStart(xCutscene* csn)
 
 #if 0
 // WIP
-float32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, uint32 param_3, int param_4)
+F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
 {
     int i = 0;
     if (param_3 == 0)

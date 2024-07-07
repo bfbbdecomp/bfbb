@@ -5,12 +5,12 @@
 
 struct xGroup;
 
-typedef uint32 (*xUpdateCullEntCallback)(void* ent, void* cbdata);
+typedef U32 (*xUpdateCullEntCallback)(void* ent, void* cbdata);
 
 struct xUpdateCullEnt
 {
-    uint16 index;
-    int16 groupIndex;
+    U16 index;
+    S16 groupIndex;
     xUpdateCullEntCallback cb;
     void* cbdata;
     xUpdateCullEnt* nextInGroup;
@@ -18,9 +18,9 @@ struct xUpdateCullEnt
 
 struct xUpdateCullGroup
 {
-    uint32 active;
-    uint16 startIndex;
-    uint16 endIndex;
+    U32 active;
+    U16 startIndex;
+    U16 endIndex;
     xGroup* groupObject;
 };
 
@@ -29,14 +29,14 @@ typedef void (*xUpdateCullDeactivateCallback)(void*);
 
 struct xUpdateCullMgr
 {
-    uint32 entCount;
-    uint32 entActive;
+    U32 entCount;
+    U32 entActive;
     void** ent;
     xUpdateCullEnt** mgr;
-    uint32 mgrCount;
-    uint32 mgrCurr;
+    U32 mgrCount;
+    U32 mgrCurr;
     xUpdateCullEnt* mgrList;
-    uint32 grpCount;
+    U32 grpCount;
     xUpdateCullGroup* grpList;
     xUpdateCullActivateCallback activateCB;
     xUpdateCullDeactivateCallback deactivateCB;
@@ -44,14 +44,14 @@ struct xUpdateCullMgr
 
 union FloatAndVoid
 {
-    float32 f;
+    F32 f;
     void* v;
 };
 
-uint32 xUpdateCull_AlwaysTrueCB(void* ent, void* cbdata);
-uint32 xUpdateCull_DistanceSquaredCB(void* ent, void* cbdata);
-xUpdateCullMgr* xUpdateCull_Init(void** ent, uint32 entCount, xGroup** group, uint32 groupCount);
-void xUpdateCull_Update(xUpdateCullMgr* m, uint32 percent_update);
+U32 xUpdateCull_AlwaysTrueCB(void* ent, void* cbdata);
+U32 xUpdateCull_DistanceSquaredCB(void* ent, void* cbdata);
+xUpdateCullMgr* xUpdateCull_Init(void** ent, U32 entCount, xGroup** group, U32 groupCount);
+void xUpdateCull_Update(xUpdateCullMgr* m, U32 percent_update);
 void xUpdateCull_SetCB(xUpdateCullMgr* m, void* entity, xUpdateCullEntCallback cb, void* cbdata);
 void xUpdateCull_Reset(xUpdateCullMgr* m);
 

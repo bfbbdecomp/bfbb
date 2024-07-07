@@ -5,24 +5,24 @@
 
 #include <types.h>
 
-extern float32 lbl_803CDE30; // 0.2f
-extern float32 lbl_803CDE34; // 0.1f
-extern float32 lbl_803CDE38; // 0.06f
-extern float32 lbl_803CDE3C; // 5.0f
-extern float32 lbl_803CDE40; // 0.5f
-extern float32 lbl_803CDE44; // 0.3f
-extern float32 lbl_803CDE48; // 0.05f
-extern float32 lbl_803CDE4C; // 0.15f
-extern float32 lbl_803CDE50; // 0.35f
-extern float32 lbl_803CDE54; // 0.6f
-extern float32 lbl_803CDE58; // 0.04f
-extern float32 lbl_803CDE5C; // 0.09f
-extern float32 lbl_803CDE60; // 0.0f
-extern float32 lbl_803CDE64; // 1.0f
+extern F32 lbl_803CDE30; // 0.2f
+extern F32 lbl_803CDE34; // 0.1f
+extern F32 lbl_803CDE38; // 0.06f
+extern F32 lbl_803CDE3C; // 5.0f
+extern F32 lbl_803CDE40; // 0.5f
+extern F32 lbl_803CDE44; // 0.3f
+extern F32 lbl_803CDE48; // 0.05f
+extern F32 lbl_803CDE4C; // 0.15f
+extern F32 lbl_803CDE50; // 0.35f
+extern F32 lbl_803CDE54; // 0.6f
+extern F32 lbl_803CDE58; // 0.04f
+extern F32 lbl_803CDE5C; // 0.09f
+extern F32 lbl_803CDE60; // 0.0f
+extern F32 lbl_803CDE64; // 1.0f
 
 #if 0
 // Another one that should work, but messes with jump tables. 800acdf0 and 800ace18 are the only ones in the function that don't work.
-void zRumbleStart(int32 pad_id, _tagSDRumbleType rumble_type, xEnt* ent)
+void zRumbleStart(S32 pad_id, _tagSDRumbleType rumble_type, xEnt* ent)
 {
     if (globals.option_vibration != 0)
     {
@@ -90,7 +90,7 @@ void zRumbleStart(int32 pad_id, _tagSDRumbleType rumble_type, xEnt* ent)
 
 #endif
 
-void zRumbleStart(int32 pad_id, _tagSDRumbleType rumble_type)
+void zRumbleStart(S32 pad_id, _tagSDRumbleType rumble_type)
 {
     zRumbleStart(pad_id, rumble_type, NULL);
 }
@@ -107,10 +107,10 @@ void zRumbleStart(_tagSDRumbleType rumble_type, xEnt* ent)
 
 #if 0
 // Can't seem to figure out the proper condition branching.
-void zRumbleStartDistance(int32 pad_id, float32 real_dist, float32 max_dist, _tagRumbleType type,
-                          float32 maxTime)
+void zRumbleStartDistance(S32 pad_id, F32 real_dist, F32 max_dist, _tagRumbleType type,
+                          F32 maxTime)
 {
-    float32 fVar1 = lbl_803CDE60;
+    F32 fVar1 = lbl_803CDE60;
     if (lbl_803CDE60 <= real_dist && (fVar1 = real_dist, max_dist < real_dist))
     {
         fVar1 = max_dist;
@@ -126,13 +126,13 @@ void zRumbleStartDistance(int32 pad_id, float32 real_dist, float32 max_dist, _ta
 
 #if 0
 // Template for future use.
-void zRumbleStartEntDistance(xEnt* ent, float32 dist, _tagRumbleType type, float32 maxTime)
+void zRumbleStartEntDistance(xEnt* ent, F32 dist, _tagRumbleType type, F32 maxTime)
 {
 }
 
 #endif
 
-int32 zPadAddRumble(_tagRumbleType type, float32 time, int32 replace, uint32 fxflags)
+S32 zPadAddRumble(_tagRumbleType type, F32 time, S32 replace, U32 fxflags)
 {
     return xPadAddRumble(globals.currentActivePad, type, time, replace, fxflags);
 }

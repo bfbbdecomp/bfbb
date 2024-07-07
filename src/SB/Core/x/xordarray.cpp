@@ -3,14 +3,14 @@
 
 #include <types.h>
 
-extern float32 lbl_803CCEE8; // 0.95f
-extern float32 lbl_803CCEF0; // 176f
+extern F32 lbl_803CCEE8; // 0.95f
+extern F32 lbl_803CCEF0; // 176f
 
 #if 0
 // Can't figure out how to match the bottom part due to the weird float stuff going on.
-void XOrdInit(st_XORDEREDARRAY* array, int32 size, int32 tempAlloc)
+void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
 {
-    uint32 cnt = 1;
+    U32 cnt = 1;
     if (size >= 1)
     {
         cnt = size;
@@ -29,7 +29,7 @@ void XOrdInit(st_XORDEREDARRAY* array, int32 size, int32 tempAlloc)
     if (array->warnlvl == array->max)
     {
         cnt = array->max - 1;
-        array->warnlvl = cnt & ~((int32)cnt >> 0x1f);
+        array->warnlvl = cnt & ~((S32)cnt >> 0x1f);
     }
 }
 
@@ -40,7 +40,7 @@ void XOrdReset(st_XORDEREDARRAY* array)
     array->cnt = 0;
 }
 
-void XOrdDone(st_XORDEREDARRAY* array, int32 wasTempAlloc)
+void XOrdDone(st_XORDEREDARRAY* array, S32 wasTempAlloc)
 {
     if (array->max != 0 && wasTempAlloc != 0)
     {
@@ -68,11 +68,11 @@ void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
     if (array->cnt < array->max)
     {
         array->cnt++;
-        int32 pos = array->cnt - 1;
+        S32 pos = array->cnt - 1;
         void* currElement = pos * sizeof(void*);
         while (pos > 0)
         {
-            int32 score = compare(array->list + currElement - sizeof(void*), elt);
+            S32 score = compare(array->list + currElement - sizeof(void*), elt);
             if (score <= 0)
             {
                 array->list[pos] = elt;
@@ -91,7 +91,7 @@ void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
 
 #if 0
 // WIP. The comparisons are probably wrong.
-void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, int32 index)
+void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)
 {
     if (elt == NULL)
     {
@@ -136,9 +136,9 @@ void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, int32 index)
 #endif
 
 #if 0
-int32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
+S32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
 {
-    int32 v, index, rightBound, leftBound;
+    S32 v, index, rightBound, leftBound;
     leftBound = 0;
     index = array->cnt;
     do
@@ -164,10 +164,10 @@ int32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test
 #endif
 
 #if 0
-void XOrdSort(st_XORDEREDARRAY* array, int32 (*test)(void*, void*))
+void XOrdSort(st_XORDEREDARRAY* array, S32 (*test)(void*, void*))
 {
     void** list = array->list;
-    int32 num = 1;
+    S32 num = 1;
     while (num <= cnt)
     {
         num = num * 3 + 1;
@@ -180,9 +180,9 @@ void XOrdSort(st_XORDEREDARRAY* array, int32 (*test)(void*, void*))
         }
         num = num / 3 + (num >> 0x1f);
         num = num - (num >> 0x1f);
-        int32 numPos = num * sizeof(void*);
+        S32 numPos = num * sizeof(void*);
         void** currItem = list + num;
-        int32 i = num;
+        S32 i = num;
         while (i < cnt)
         {
             // TODO!!!

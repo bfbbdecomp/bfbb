@@ -5,7 +5,7 @@
 #include "zEvent.h"
 
 extern SMDepot g_smdepot;
-extern float32 _805_Spawner; // 5.0f
+extern F32 _805_Spawner; // 5.0f
 
 void zNPCSpawner_Startup()
 {
@@ -19,7 +19,7 @@ void zNPCSpawner_ScenePrepare()
 {
     SMDepot* depot = &g_smdepot;
     XOrdInit(&depot->spawners, sizeof(g_smdepot), 0);
-    for (int32 i = 0; i < 0x10; i++)
+    for (S32 i = 0; i < 0x10; i++)
     {
         zNPCSpawner* sm = (zNPCSpawner*)RyzMemData::operator new(sizeof(zNPCSpawner), 'SPWN', NULL);
         XOrdAppend(&depot->spawners, sm);
@@ -29,7 +29,7 @@ void zNPCSpawner_ScenePrepare()
 void zNPCSpawner_SceneFinish()
 {
     SMDepot* depot = &g_smdepot;
-    for (int32 i = 0; i < depot->spawners.cnt; i++)
+    for (S32 i = 0; i < depot->spawners.cnt; i++)
     {
         RyzMemData::operator delete(depot->spawners.list[i]);
     }
@@ -44,7 +44,7 @@ zNPCSpawner* zNPCSpawner_GetInstance()
     zNPCSpawner* sm = (zNPCSpawner*)depot->spawners.list;
     if (depot->spawners.cnt > 0)
     {
-        for (int32 i = depot->spawners.cnt; i > 0; i--)
+        for (S32 i = depot->spawners.cnt; i > 0; i--)
         {
             zNPCSpawner* sm_tmp = sm;
             if (!(sm_tmp->flg_spawner & 1))
@@ -74,17 +74,17 @@ void zNPCSpawner::Subscribe(zNPCCommon* owner)
     XOrdInit(&this->actvlist, 0x10, 0);
 }
 
-void zNPCSpawner::SetWaveMode(en_SM_WAVE_MODE mode, float32 delay, int32 lifemax)
+void zNPCSpawner::SetWaveMode(en_SM_WAVE_MODE mode, F32 delay, S32 lifemax)
 {
     this->wavemode = mode;
     this->tym_delay = delay;
     this->max_spawn = lifemax;
 }
 
-int32 zNPCSpawner::AddSpawnPoint(zMovePoint* sp)
+S32 zNPCSpawner::AddSpawnPoint(zMovePoint* sp)
 {
-    int32 ack = 0;
-    for (int32 i = 0; i < 0x10; i++)
+    S32 ack = 0;
+    for (S32 i = 0; i < 0x10; i++)
     {
         SMSPStatus* sp_stat = &this->sppool[i];
         if (sp_stat->sp == NULL)
@@ -99,10 +99,10 @@ int32 zNPCSpawner::AddSpawnPoint(zMovePoint* sp)
 }
 
 #if 0
-int32 zNPCSpawner::AddSpawnNPC(zNPCCommon* npc)
+S32 zNPCSpawner::AddSpawnNPC(zNPCCommon* npc)
 {
-    int32 ack = 0;
-    for (int32 i = 0; i < 0x10; i++)
+    S32 ack = 0;
+    for (S32 i = 0; i < 0x10; i++)
     {
         SMNPCStatus* npc_stat = &this->npcpool[i];
         if (npc_stat->npc == NULL)
@@ -136,7 +136,7 @@ void zNPCSpawner::Reset()
 #if 0
 void zNPCSpawner::MapPreferred()
 {
-    for (int32 i = 0; i < 0x10; i++)
+    for (S32 i = 0; i < 0x10; i++)
     {
         SMNPCStatus* npc_stat = &this->npcpool[i];
         if (npc_stat->npc != NULL)
@@ -169,11 +169,11 @@ SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
     return ret;
 }
 
-void zNPCSpawner::ChildHeartbeat(float32 dt)
+void zNPCSpawner::ChildHeartbeat(F32 dt)
 {
 }
 
-uint8 zMovePoint::IsOn()
+U8 zMovePoint::IsOn()
 {
     return this->on;
 }

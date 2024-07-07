@@ -4,15 +4,15 @@
 #include <types.h>
 
 xSurface* surfs;
-uint16 nsurfs;
+U16 nsurfs;
 
-void xSurfaceInit(uint16 num_surfs)
+void xSurfaceInit(U16 num_surfs)
 {
     nsurfs = num_surfs;
     if (num_surfs != 0)
     {
         surfs = (xSurface*)xMemAllocSize(num_surfs * sizeof(xSurface));
-        for (uint16 i = 0; i < nsurfs; i++)
+        for (U16 i = 0; i < nsurfs; i++)
         {
             surfs[i].idx = i;
         }
@@ -36,7 +36,7 @@ void xSurfaceInit(uint16 num_surfs)
 //   call to xSurface::operator=, so the following code is just speculation. It doesn't really
 //   matter what the code is for matching purposes since this function will get stripped out by the
 //   linker - the purpose is to force the compiler to generate xSurface::operator= here.
-void xSurfaceInit(uint16 n, const xSurface* ent)
+void xSurfaceInit(U16 n, const xSurface* ent)
 {
     surfs[n] = *ent;
 }
@@ -59,12 +59,12 @@ void xSurfaceReset(xSurface* ent)
 {
 }
 
-uint16 xSurfaceGetNumSurfaces()
+U16 xSurfaceGetNumSurfaces()
 {
     return nsurfs;
 }
 
-xSurface* xSurfaceGetByIdx(uint16 n)
+xSurface* xSurfaceGetByIdx(U16 n)
 {
     return surfs != NULL ? &surfs[n] : NULL;
 }

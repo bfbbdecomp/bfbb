@@ -10,20 +10,20 @@
 
 struct xFXRing
 {
-    uint32 texture;
-    float32 lifetime;
+    U32 texture;
+    F32 lifetime;
     xVec3 pos;
-    float32 time;
-    float32 ring_radius;
-    float32 ring_radius_delta;
-    float32 ring_tilt;
-    float32 ring_tilt_delta;
-    float32 ring_height;
-    float32 ring_height_delta;
+    F32 time;
+    F32 ring_radius;
+    F32 ring_radius_delta;
+    F32 ring_tilt;
+    F32 ring_tilt_delta;
+    F32 ring_height;
+    F32 ring_height_delta;
     iColor_tag ring_color;
-    uint16 ring_segs;
-    uint8 u_repeat;
-    uint8 v_repeat;
+    U16 ring_segs;
+    U8 u_repeat;
+    U8 v_repeat;
     xFXRing** parent;
 };
 
@@ -31,28 +31,28 @@ struct xFXRibbon
 {
     struct config
     {
-        float32 life_time;
-        uint32 blend_src;
-        uint32 blend_dst;
-        float32 pivot;
+        F32 life_time;
+        U32 blend_src;
+        U32 blend_dst;
+        F32 pivot;
     };
 
     struct joint_data
     {
-        uint32 flags;
-        uint32 born;
+        U32 flags;
+        U32 born;
         xVec3 loc;
         xVec3 norm;
-        float32 orient;
-        float32 scale;
-        float32 alpha;
+        F32 orient;
+        F32 scale;
+        F32 alpha;
     };
 
     struct curve_node
     {
-        float32 time;
+        F32 time;
         iColor_tag color;
-        float32 scale;
+        F32 scale;
     };
 
     config cfg;
@@ -60,15 +60,15 @@ struct xFXRibbon
     RwRaster* raster;
     tier_queue<joint_data> joints;
     curve_node* curve;
-    uint32 curve_size;
-    uint32 curve_index;
-    float32 ilife;
-    uint32 mtime;
-    uint32 mlife;
+    U32 curve_size;
+    U32 curve_index;
+    F32 ilife;
+    U32 mtime;
+    U32 mlife;
 
-    void init(const int8*, const int8*);
-    void set_texture(const int8* name);
-    void set_curve(const curve_node* curve, ulong32 size);
+    void init(const S8*, const S8*);
+    void set_texture(const S8* name);
+    void set_curve(const curve_node* curve, size_t size);
     void refresh_config();
     void set_default_config();
 };
@@ -82,7 +82,7 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params);
 void xFXRingRender();
 void xFX_SceneEnter(RpWorld* world);
 void xFX_SceneExit(RpWorld* world);
-void xFXUpdate(float32 dt);
+void xFXUpdate(F32 dt);
 RpAtomic* AtomicDisableMatFX(RpAtomic* atomic);
 void xFXPreAllocMatFX(RpClump* clump);
 
@@ -93,27 +93,27 @@ void xFXanimUVSetTranslation(const xVec3* trans);
 void xFXanimUV2PSetTranslation(const xVec3* trans);
 void xFXanimUVSetScale(const xVec3* scale);
 void xFXanimUV2PSetScale(const xVec3* scale);
-void xFXanimUVSetAngle(float32 angle);
-void xFXanimUV2PSetAngle(float32 angle);
+void xFXanimUVSetAngle(F32 angle);
+void xFXanimUV2PSetAngle(F32 angle);
 RpAtomic* xFXanimUVAtomicSetup(RpAtomic* atomic);
-uint32 xFXanimUVCreate();
+U32 xFXanimUVCreate();
 void xFXFireworksInit(const char* fireworksTrailEmitter, const char* fireworksEmitter1,
                       const char* fireworksEmitter2, const char* fireworksSound,
                       const char* fireworksLaunchSound);
-void xFXFireworksLaunch(float32 countdownTime, const xVec3* pos, float32 fuelTime);
-void xFXFireworksUpdate(float32 dt);
+void xFXFireworksLaunch(F32 countdownTime, const xVec3* pos, F32 fuelTime);
+void xFXFireworksUpdate(F32 dt);
 void xFXStreakInit();
-void xFXStreakUpdate(float32 dt);
+void xFXStreakUpdate(F32 dt);
 void xFXStreakRender();
 void xFXShineInit();
-void xFXShineUpdate(float32 dt);
+void xFXShineUpdate(F32 dt);
 void xFXShineRender();
-RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, uint32 envmapID, float32 shininess);
+RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 envmapID, F32 shininess);
 void xFXRibbonSceneEnter();
-void xFXRibbonUpdate(float32 dt);
+void xFXRibbonUpdate(F32 dt);
 void xFXRibbonRender();
 void xFXAuraInit();
-void xFXAuraUpdate(float32 dt);
+void xFXAuraUpdate(F32 dt);
 void xFXAuraRender();
 void xFXSceneInit();
 void xFXSceneSetup();

@@ -5,11 +5,11 @@
 #include "zGameState.h"
 
 extern _CurrentPlayer gPendingPlayer;
-extern float32 sTimeElapsed;
-extern uint32 gLevelChanged;
-extern uint32 startPressed;
-extern uint8 sHackSmoothedUpdate;
-extern uint32 gBusStopIsRunning;
+extern F32 sTimeElapsed;
+extern U32 gLevelChanged;
+extern U32 startPressed;
+extern U8 sHackSmoothedUpdate;
+extern U32 gBusStopIsRunning;
 
 enum eGameWhereAmI
 {
@@ -102,15 +102,15 @@ enum eGameWhereAmI
 
 extern iTime sTimeCurrent;
 extern iTime sTimeLast;
-extern float32 sTimeElapsed;
+extern F32 sTimeElapsed;
 
 void zGameSetupPlayer();
 void xDrawBegin();
 void xDrawEnd();
-int32 zGameIsPaused();
+S32 zGameIsPaused();
 void zGameScreenTransitionBegin();
-void zGameScreenTransitionUpdate(float32 percentComplete, char* msg);
-void zGameScreenTransitionUpdate(float32 percentComplete, char* msg, uint8* rgba);
+void zGameScreenTransitionUpdate(F32 percentComplete, char* msg);
+void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba);
 void zGameScreenTransitionEnd();
 void zGameModeSwitch(eGameMode modeNew);
 void zGameStall();

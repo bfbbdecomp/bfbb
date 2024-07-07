@@ -103,23 +103,23 @@
 #include <string.h>
 #include <stdio.h>
 
-uint8 HACK_BASETYPE;
-static int32 bytesNeeded;
-static int32 availOnDisk;
-static int32 neededFiles;
-static float32 offsetx;
-static float32 offsety;
-static uint32 enableScreenAdj;
-static float32 oldOffsetx;
-static float32 oldOffsety;
-static int32 sMemDepthSceneStart = -1;
-static int32 sMemDepthJustHIPStart = -1;
+U8 HACK_BASETYPE;
+static S32 bytesNeeded;
+static S32 availOnDisk;
+static S32 neededFiles;
+static F32 offsetx;
+static F32 offsety;
+static U32 enableScreenAdj;
+static F32 oldOffsetx;
+static F32 oldOffsety;
+static S32 sMemDepthSceneStart = -1;
+static S32 sMemDepthJustHIPStart = -1;
 _zEnv* gCurEnv;
-uint32 gTransitionSceneID;
-float32 gSceneUpdateTime;
+U32 gTransitionSceneID;
+F32 gSceneUpdateTime;
 static xVec3 sOldPosPlayer;
 static xVec3 sOldPosCamera;
-static uint32 sSuddenMove;
+static U32 sSuddenMove;
 
 struct zSceneLevel
 {
@@ -151,25 +151,25 @@ static zSceneLevel sLevelTable[] =
 struct zSceneObjectInstanceDesc
 {
     const char* name;
-    int32 baseType;
-    uint32 assetType;
-    uint32 sizeRuntime;
-    uint32 (*func)(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
+    S32 baseType;
+    U32 assetType;
+    U32 sizeRuntime;
+    U32 (*func)(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
     void (*objectInitFunc)(void* ent, void* asset);
-    uint32 (*querySubObjects)(void*);
+    U32 (*querySubObjects)(void*);
 };
 
-static uint32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_MovePoint(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_SBNPC(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Surface(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Gust(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Volume(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_LobMaster(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
-static uint32 zSceneInitFunc_Dispatcher(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx);
+static U32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_MovePoint(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_SBNPC(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Surface(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Gust(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Volume(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_LobMaster(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
+static U32 zSceneInitFunc_Dispatcher(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx);
 
 // clang-format off
 static zSceneObjectInstanceDesc sInitTable[] =
@@ -214,30 +214,30 @@ static zSceneObjectInstanceDesc sInitTable[] =
 };
 // clang-format on
 
-extern uint32 _1251;
+extern U32 _1251;
 extern char byte_803D0884;
-extern uint32 _2014;
+extern U32 _2014;
 
-extern uint32 _1250;
-extern float32 _1373;
-extern float32 _1374;
-extern float32 _1375;
-extern float32 _1493;
-extern float32 _1494;
-extern float32 _1495;
-extern float32 _1496_0;
-extern uint32 _2013;
-extern float32 _2094;
-extern float32 _2095_0;
-extern float32 _2096_0;
-extern float32 _2097_0;
-extern float32 _2242;
+extern U32 _1250;
+extern F32 _1373;
+extern F32 _1374;
+extern F32 _1375;
+extern F32 _1493;
+extern F32 _1494;
+extern F32 _1495;
+extern F32 _1496_0;
+extern U32 _2013;
+extern F32 _2094;
+extern F32 _2095_0;
+extern F32 _2096_0;
+extern F32 _2097_0;
+extern F32 _2242;
 
-static void zSceneObjHashtableInit(int32 count);
+static void zSceneObjHashtableInit(S32 count);
 static void zSceneObjHashtableExit();
-static int32 zSceneObjHashtableUsage();
-static void zSceneObjHashtableAdd(uint32 id, xBase* base);
-static xBase* zSceneObjHashtableGet(uint32 id);
+static S32 zSceneObjHashtableUsage();
+static void zSceneObjHashtableAdd(U32 id, xBase* base);
+static xBase* zSceneObjHashtableGet(U32 id);
 static xBase* zSceneExitSoundIteratorCB(xBase* b, zScene*, void*);
 static void zSceneAutoSave();
 
@@ -246,10 +246,10 @@ namespace
     struct dynamic_type_data
     {
         const char* name;
-        int32 type;
-        ulong32 size;
+        S32 type;
+        size_t size;
         bool is_ent;
-        void (*load)(xBase& data, xDynAsset& asset, ulong32 size);
+        void (*load)(xBase& data, xDynAsset& asset, size_t size);
     };
 
     extern const dynamic_type_data dynamic_types[14];
@@ -288,15 +288,15 @@ namespace
     };
     // clang-format on
 
-    int32 count_dynamic_types(const char* name)
+    S32 count_dynamic_types(const char* name)
     {
-        uint32 type = xStrHash(name);
-        int32 dynaCount = xSTAssetCountByType('DYNA');
-        int32 count = 0;
+        U32 type = xStrHash(name);
+        S32 dynaCount = xSTAssetCountByType('DYNA');
+        S32 count = 0;
 
-        for (int32 i = 0; i < dynaCount; i++)
+        for (S32 i = 0; i < dynaCount; i++)
         {
-            uint32 size;
+            U32 size;
             xDynAsset* asset = (xDynAsset*)xSTFindAssetByType('DYNA', i, &size);
 
             if (asset && asset->type == type)
@@ -310,19 +310,19 @@ namespace
 
     void add_dynamic_types(zScene& s)
     {
-        for (int32 i = 0; i < sizeof(dynamic_types) / sizeof(dynamic_types[0]); i++)
+        for (S32 i = 0; i < sizeof(dynamic_types) / sizeof(dynamic_types[0]); i++)
         {
-            int32 count = count_dynamic_types(dynamic_types[i].name);
+            S32 count = count_dynamic_types(dynamic_types[i].name);
 
             s.baseCount[dynamic_types[i].type] = count;
             s.num_base += count;
         }
     }
 
-    uint32 init_dynamic_type(zScene& s, uint32 index, const dynamic_type_data& d)
+    U32 init_dynamic_type(zScene& s, U32 index, const dynamic_type_data& d)
     {
-        uint32 count, type;
-        int32 dyn_size, i, cnt;
+        U32 count, type;
+        S32 dyn_size, i, cnt;
 
         s.baseList[d.type] = NULL;
 
@@ -340,9 +340,9 @@ namespace
         type = xStrHash(d.name);
         count = xSTAssetCountByType('DYNA');
 
-        for (i = 0, cnt = 0; i < (int32)count; i++)
+        for (i = 0, cnt = 0; i < (S32)count; i++)
         {
-            uint32 asset_size;
+            U32 asset_size;
             xDynAsset* a;
             xBase* b;
 
@@ -354,7 +354,7 @@ namespace
 
                 xSTAssetName(a);
 
-                b = (xBase*)((uint8*)s.baseList[d.type] + cnt * d.size);
+                b = (xBase*)((U8*)s.baseList[d.type] + cnt * d.size);
 
                 zSceneSet(b, index);
 
@@ -378,9 +378,9 @@ namespace
         return index;
     }
 
-    uint32 init_dynamic_types(zScene& s, uint32 index)
+    U32 init_dynamic_types(zScene& s, U32 index)
     {
-        for (int32 i = 0; i < sizeof(dynamic_types) / sizeof(dynamic_types[0]); i++)
+        for (S32 i = 0; i < sizeof(dynamic_types) / sizeof(dynamic_types[0]); i++)
         {
             if (dynamic_types[i].load)
             {
@@ -394,19 +394,19 @@ namespace
 
 struct IDBasePair
 {
-    uint32 id;
+    U32 id;
     xBase* base;
 };
 
 static IDBasePair* scobj_idbps;
-static int32 scobj_size = -1;
-static int32 nidbps = -1;
+static S32 scobj_size = -1;
+static S32 nidbps = -1;
 
-static uint32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    uint8* block;
-    int32 count;
-    uint32 assetSize, offset;
+    U8* block;
+    S32 count;
+    U32 assetSize, offset;
     xBase* b;
 
     block = NULL;
@@ -416,12 +416,12 @@ static uint32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* des
 
     if (count)
     {
-        block = (uint8*)xMemAllocSize(count * offset);
+        block = (U8*)xMemAllocSize(count * offset);
 
         s->baseList[desc->baseType] = (xBase*)block;
     }
 
-    for (int32 i = 0; i < count; i++)
+    for (S32 i = 0; i < count; i++)
     {
         void* asset = xSTFindAssetByType(desc->assetType, i, &assetSize);
         b = (xBase*)(block + i * offset);
@@ -442,11 +442,11 @@ static uint32 zSceneInitFunc_DefaultEnt(zScene* s, zSceneObjectInstanceDesc* des
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    uint8* block;
-    int32 count;
-    uint32 assetSize, offset;
+    U8* block;
+    S32 count;
+    U32 assetSize, offset;
     xBase* b;
 
     block = NULL;
@@ -456,12 +456,12 @@ static uint32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, 
 
     if (count)
     {
-        block = (uint8*)xMemAllocSize(count * offset);
+        block = (U8*)xMemAllocSize(count * offset);
 
         s->baseList[desc->baseType] = (xBase*)block;
     }
 
-    for (int32 i = 0; i < count; i++)
+    for (S32 i = 0; i < count; i++)
     {
         void* asset = xSTFindAssetByType(desc->assetType, i, &assetSize);
         b = (xBase*)(block + i * offset);
@@ -481,10 +481,10 @@ static uint32 zSceneInitFunc_Default(zScene* s, zSceneObjectInstanceDesc* desc, 
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_MovePoint(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_MovePoint(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
-    uint32 assetSize;
+    S32 count;
+    U32 assetSize;
     zMovePoint* movpBlock;
 
     assetSize = 0;
@@ -495,7 +495,7 @@ static uint32 zSceneInitFunc_MovePoint(zScene* s, zSceneObjectInstanceDesc* desc
     {
         s->baseList[desc->baseType] = movpBlock;
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = zMovePoint_GetInst(idx);
             xBaseAsset* basset = (xBaseAsset*)xSTFindAssetByType('MVPT', idx, &assetSize);
@@ -511,9 +511,9 @@ static uint32 zSceneInitFunc_MovePoint(zScene* s, zSceneObjectInstanceDesc* desc
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_SBNPC(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_SBNPC(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
 
     count = s->baseCount[desc->baseType];
 
@@ -524,7 +524,7 @@ static uint32 zSceneInitFunc_SBNPC(zScene* s, zSceneObjectInstanceDesc* desc, ui
 
     s->baseList[desc->baseType] = NULL;
 
-    for (int32 i = 0; i < count; i++)
+    for (S32 i = 0; i < count; i++)
     {
         xEnt* ent;
         xEntAsset* assdat;
@@ -542,9 +542,9 @@ static uint32 zSceneInitFunc_SBNPC(zScene* s, zSceneObjectInstanceDesc* desc, ui
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
     zEnt* entBlock;
 
     count = s->baseCount[desc->baseType];
@@ -555,7 +555,7 @@ static uint32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, u
 
         s->baseList[desc->baseType] = entBlock;
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = &globals.player.ent;
             xEntAsset* asset;
@@ -580,9 +580,9 @@ static uint32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, u
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
     zCamMarker* camBlock;
 
     count = s->baseCount[desc->baseType];
@@ -592,7 +592,7 @@ static uint32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, u
         camBlock = (zCamMarker*)xMemAllocSize(count * sizeof(zCamMarker));
         s->baseList[desc->baseType] = camBlock;
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = &camBlock[idx];
             xCamAsset* assetCam = (xCamAsset*)xSTFindAssetByType('CAM ', idx, NULL);
@@ -608,9 +608,9 @@ static uint32 zSceneInitFunc_Camera(zScene* s, zSceneObjectInstanceDesc* desc, u
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Surface(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Surface(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
 
     count = s->baseCount[desc->baseType];
 
@@ -618,7 +618,7 @@ static uint32 zSceneInitFunc_Surface(zScene* s, zSceneObjectInstanceDesc* desc, 
     {
         s->baseList[desc->baseType] = xSurfaceGetByIdx(0);
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = xSurfaceGetByIdx(idx);
 
@@ -632,9 +632,9 @@ static uint32 zSceneInitFunc_Surface(zScene* s, zSceneObjectInstanceDesc* desc, 
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Gust(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Gust(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
 
     count = s->baseCount[desc->baseType];
 
@@ -644,7 +644,7 @@ static uint32 zSceneInitFunc_Gust(zScene* s, zSceneObjectInstanceDesc* desc, uin
     {
         s->baseList[desc->baseType] = zGustGetGust(0);
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = zGustGetGust(idx);
 
@@ -658,9 +658,9 @@ static uint32 zSceneInitFunc_Gust(zScene* s, zSceneObjectInstanceDesc* desc, uin
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Volume(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Volume(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
 
     count = s->baseCount[desc->baseType];
 
@@ -670,7 +670,7 @@ static uint32 zSceneInitFunc_Volume(zScene* s, zSceneObjectInstanceDesc* desc, u
     {
         s->baseList[desc->baseType] = zVolumeGetVolume(0);
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = zVolumeGetVolume(idx);
 
@@ -686,14 +686,14 @@ static uint32 zSceneInitFunc_Volume(zScene* s, zSceneObjectInstanceDesc* desc, u
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_LobMaster(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_LobMaster(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
     return base_idx;
 }
 
-static uint32 zSceneInitFunc_Dispatcher(zScene* s, zSceneObjectInstanceDesc* desc, uint32 base_idx)
+static U32 zSceneInitFunc_Dispatcher(zScene* s, zSceneObjectInstanceDesc* desc, U32 base_idx)
 {
-    int32 count;
+    S32 count;
 
     count = s->baseCount[desc->baseType];
 
@@ -702,7 +702,7 @@ static uint32 zSceneInitFunc_Dispatcher(zScene* s, zSceneObjectInstanceDesc* des
         st_ZDISPATCH_DATA* dpat_pool = zDispatcher_memPool(count);
         s->baseList[desc->baseType] = dpat_pool;
 
-        for (int32 idx = 0; idx < count; idx++)
+        for (S32 idx = 0; idx < count; idx++)
         {
             xBase* b = zDispatcher_getInst(dpat_pool, idx);
             xEntAsset* asset = (xEntAsset*)xSTFindAssetByType('DPAT', idx, NULL);
@@ -718,12 +718,12 @@ static uint32 zSceneInitFunc_Dispatcher(zScene* s, zSceneObjectInstanceDesc* des
     return base_idx;
 }
 
-void zSceneSet(xBase* b, uint32 index)
+void zSceneSet(xBase* b, U32 index)
 {
     globals.sceneCur->base[index] = b;
 }
 
-static void PipeCountStuffCB(RpAtomic*, uint32 pipeFlags, uint32)
+static void PipeCountStuffCB(RpAtomic*, U32 pipeFlags, U32)
 {
     if (pipeFlags)
     {
@@ -731,7 +731,7 @@ static void PipeCountStuffCB(RpAtomic*, uint32 pipeFlags, uint32)
     }
 }
 
-static void PipeAddStuffCB(RpAtomic* data, uint32 pipeFlags, uint32)
+static void PipeAddStuffCB(RpAtomic* data, U32 pipeFlags, U32)
 {
     if (pipeFlags)
     {
@@ -742,16 +742,16 @@ static void PipeAddStuffCB(RpAtomic* data, uint32 pipeFlags, uint32)
 }
 
 #ifndef NON_MATCHING
-static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, uint32 pipeFlags,
-                                                 uint32 subObjects));
+static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags,
+                                                 U32 subObjects));
 #else
-static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, uint32 pipeFlags,
-                                                 uint32 subObjects))
+static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags,
+                                                 U32 subObjects))
 {
     // non-matching: wrong registers
 
-    int32 i, j, k;
-    int32 numModels = xSTAssetCountByType('MODL');
+    S32 i, j, k;
+    S32 numModels = xSTAssetCountByType('MODL');
 
     for (i = 0; i < numModels; i++)
     {
@@ -760,7 +760,7 @@ static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, uint32 pipeFlag
         if (model)
         {
             st_PKR_ASSET_TOCINFO ainfo;
-            uint32 numSubObjects, remainSubObjBits, currSubObjBits;
+            U32 numSubObjects, remainSubObjBits, currSubObjBits;
             RpAtomic* tempmodel;
 
             xSTGetAssetInfoByType('MODL', i, &ainfo);
@@ -836,7 +836,7 @@ void zSceneInitEnvironmentalSoundEffect()
     }
 }
 
-static uint32 BaseTypeNeedsUpdate(uint8 baseType)
+static U32 BaseTypeNeedsUpdate(U8 baseType)
 {
     if (baseType == eBaseTypeUnknown || baseType == eBaseTypePlayer || baseType == eBaseTypeEnv ||
         baseType == eBaseTypeCamera || baseType == eBaseTypeStatic ||
@@ -863,20 +863,20 @@ static uint32 BaseTypeNeedsUpdate(uint8 baseType)
 void add_scene_tweaks();
 
 #ifdef NON_MATCHING
-void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
+void zSceneInit(U32 theSceneID, S32 reloadInProgress)
 {
-    float32 pdone;
+    F32 pdone;
     zScene* s;
-    uint32 i;
+    U32 i;
 
-    uint8 rgba_bkgrd[4];
-    *(uint32*)rgba_bkgrd = _1250;
+    U8 rgba_bkgrd[4];
+    *(U32*)rgba_bkgrd = _1250;
 
     gTransitionSceneID = theSceneID;
     gOccludeCount = 0;
 
     char b[5];
-    *(uint32*)b = _1251;
+    *(U32*)b = _1251;
     b[4] = byte_803D0884;
 
     sprintf(b, xUtil_idtag2string(theSceneID, 0));
@@ -903,7 +903,7 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
     {
         zGameScreenTransitionUpdate(pdone, "... scene preload ...\n");
 
-        int32 ver_hop = xSTPreLoadScene(theSceneID, NULL, 0x2);
+        S32 ver_hop = xSTPreLoadScene(theSceneID, NULL, 0x2);
 
         if (ver_hop >= 0x000A000F)
         {
@@ -997,12 +997,12 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
 
     xModelPipeNumTables = xSTAssetCountByType('PIPT');
 
-    for (int32 i = 0; i < xModelPipeNumTables; i++)
+    for (S32 i = 0; i < xModelPipeNumTables; i++)
     {
         void* data = xSTFindAssetByType('PIPT', i, NULL);
 
-        xModelPipeCount[i] = *(int32*)data;
-        xModelPipeData[i] = (xModelPipeInfo*)((int32*)data + 1);
+        xModelPipeCount[i] = *(S32*)data;
+        xModelPipeData[i] = (xModelPipeInfo*)((S32*)data + 1);
     }
 
     xModelLookupCount = 0;
@@ -1034,7 +1034,7 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
     zLasso_scenePrepare();
     zDispatcher_scenePrepare();
 
-    int32 total_npcs = xSTAssetCountByType('VIL ');
+    S32 total_npcs = xSTAssetCountByType('VIL ');
     zNPCMgr_scenePrepare(total_npcs);
 
     zAnimListInit();
@@ -1060,14 +1060,14 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
 
     for (i = 0; sInitTable[i].name; i++)
     {
-        uint32 typeCount = xSTAssetCountByType(sInitTable[i].assetType);
+        U32 typeCount = xSTAssetCountByType(sInitTable[i].assetType);
 
         s->baseCount[sInitTable[i].baseType] = typeCount;
         s->num_base += typeCount;
 
         if (sInitTable[i].querySubObjects)
         {
-            for (uint32 j = 0; j < typeCount; j++)
+            for (U32 j = 0; j < typeCount; j++)
             {
                 s->num_base += sInitTable[i].querySubObjects(
                     xSTFindAssetByType(sInitTable[i].assetType, j, NULL));
@@ -1097,7 +1097,7 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
     xPartitionReset();
     xFXRibbonSceneEnter();
 
-    uint32 base_idx = 0;
+    U32 base_idx = 0;
 
     for (i = 0; sInitTable[i].name; i++)
     {
@@ -1154,10 +1154,10 @@ void zSceneInit(uint32 theSceneID, int32 reloadInProgress)
     xScrFxLetterboxReset();
     xShadowManager_Init(eBaseTypeNPC + 10);
 
-    int32 lkitCount = xSTAssetCountByType('LKIT');
+    S32 lkitCount = xSTAssetCountByType('LKIT');
     void* lkitData;
 
-    for (int32 i = 0; i < lkitCount; i++)
+    for (S32 i = 0; i < lkitCount; i++)
     {
         lkitData = xSTFindAssetByType('LKIT', i, NULL);
 
@@ -1182,7 +1182,7 @@ void add_scene_tweaks()
 }
 
 #ifdef NON_MATCHING
-void zSceneExit(int32 beginReload)
+void zSceneExit(S32 beginReload)
 {
     zScene* s = globals.sceneCur;
 
@@ -1233,7 +1233,7 @@ void zSceneExit(int32 beginReload)
     {
         zParSys* ps = (zParSys*)s->baseList[eBaseTypeParticleSystem];
 
-        for (uint32 i = 0; i < s->baseCount[eBaseTypeParticleSystem]; i++)
+        for (U32 i = 0; i < s->baseCount[eBaseTypeParticleSystem]; i++)
         {
             if (xBaseIsValid(&ps[i]))
             {
@@ -1295,15 +1295,15 @@ void zSceneUpdateSFXWidgets()
 }
 
 #ifndef NON_MATCHING
-static void HackSwapIt(char* buf, int32 size);
+static void HackSwapIt(char* buf, S32 size);
 #else
-static void HackSwapIt(char* buf, int32 size)
+static void HackSwapIt(char* buf, S32 size)
 {
     // non-matching: r3 and r4 swapped
     char* end = size + buf;
     end--;
 
-    for (int32 i = 0; i < size / 2; i++)
+    for (S32 i = 0; i < size / 2; i++)
     {
         char tmp = *buf;
         *buf = *end;
@@ -1316,7 +1316,7 @@ static void HackSwapIt(char* buf, int32 size)
 #endif
 
 #ifdef NON_MATCHING
-void zSceneSwitch(_zPortal* p, int32 forceSameScene)
+void zSceneSwitch(_zPortal* p, S32 forceSameScene)
 {
     globals.sceneCur->pendingPortal = p;
 
@@ -1330,15 +1330,15 @@ void zSceneSwitch(_zPortal* p, int32 forceSameScene)
         HackSwapIt(id, 4);
     }
 
-    uint32 nextSceneID = (((char*)&passet->sceneID)[0] << 24) |
+    U32 nextSceneID = (((char*)&passet->sceneID)[0] << 24) |
                          (((char*)&passet->sceneID)[1] << 16) |
                          (((char*)&passet->sceneID)[2] << 8) | ((char*)&passet->sceneID)[3];
 
     if (!forceSameScene && nextSceneID == globals.sceneCur->sceneID)
     {
-        uint32 PlayerMarkerStartID = passet->assetMarkerID;
-        uint32 PlayerMarkerStartCamID = passet->assetCameraID;
-        float32 PlayerStartAngle = passet->ang;
+        U32 PlayerMarkerStartID = passet->assetMarkerID;
+        U32 PlayerMarkerStartCamID = passet->assetCameraID;
+        F32 PlayerStartAngle = passet->ang;
 
         if (zSceneFindObject(PlayerMarkerStartCamID))
         {
@@ -1363,7 +1363,7 @@ void zSceneSwitch(_zPortal* p, int32 forceSameScene)
         }
         else
         {
-            uint32 size;
+            U32 size;
             xMarkerAsset* m = (xMarkerAsset*)xSTFindAsset(PlayerMarkerStartID, &size);
 
             if (m)
@@ -1398,7 +1398,7 @@ void zSceneSave(zScene* ent, xSerial* s)
 {
     zEntPickup_FlushGrabbed();
 
-    uint32 i;
+    U32 i;
     xSerial xser;
 
     s = &xser;
@@ -1433,7 +1433,7 @@ void zSceneSave(zScene* ent, xSerial* s)
     strcpy(tempString, "HB09 ROBOT COUNTER 01");
 
     char c = '1';
-    uint32 id;
+    U32 id;
 
     for (i = 0; i < LEVEL_COUNT; i++)
     {
@@ -1466,7 +1466,7 @@ void zSceneSave(zScene* ent, xSerial* s)
     s->Write(offsetx);
     s->Write(offsety);
 
-    for (uint32 i = 0; i < globals.sceneCur->num_base; i++)
+    for (U32 i = 0; i < globals.sceneCur->num_base; i++)
     {
         xBase* b = globals.sceneCur->base[i];
 
@@ -1647,7 +1647,7 @@ void zSceneSave(zScene* ent, xSerial* s)
 void zSceneLoad(zScene* ent, xSerial* s)
 {
     xSerial xser;
-    int32 sceneExist;
+    S32 sceneExist;
 
     s = &xser;
 
@@ -1662,13 +1662,13 @@ void zSceneLoad(zScene* ent, xSerial* s)
 
         globals.player.Health = globals.player.MaxHealth;
 
-        s->Read((uint32*)&gCurrentPlayer);
+        s->Read((U32*)&gCurrentPlayer);
         s->Read(&globals.player.Inv_Shiny);
         s->Read(&globals.player.Inv_Spatula);
         s->Read(&globals.player.g.PowerUp[0]);
         s->Read(&globals.player.g.PowerUp[1]);
 
-        for (int32 i = 0; i < LEVEL_COUNT; i++)
+        for (S32 i = 0; i < LEVEL_COUNT; i++)
         {
             s->Read(&globals.player.Inv_PatsSock[i]);
             s->Read(&globals.player.Inv_LevelPickups[i]);
@@ -1694,8 +1694,8 @@ void zSceneLoad(zScene* ent, xSerial* s)
         strcpy(tempString, "HB09 ROBOT COUNTER 01");
 
         char c = '1';
-        int32 i;
-        uint32 id;
+        S32 i;
+        U32 id;
 
         for (i = 0; i < LEVEL_COUNT; i++)
         {
@@ -1733,7 +1733,7 @@ void zSceneLoad(zScene* ent, xSerial* s)
         s->Read(&offsetx);
         s->Read(&offsety);
 
-        for (uint16 i = 0; i < globals.sceneCur->num_base; i++)
+        for (U16 i = 0; i < globals.sceneCur->num_base; i++)
         {
             xBase* b = globals.sceneCur->base[i];
 
@@ -1917,7 +1917,7 @@ void zSceneLoad(zScene* ent, xSerial* s)
     }
 }
 
-int32 zSceneSetup_serialTraverseCB(uint32 clientID, xSerial* xser);
+S32 zSceneSetup_serialTraverseCB(U32 clientID, xSerial* xser);
 
 void zSceneReset()
 {
@@ -1952,7 +1952,7 @@ void zSceneReset()
     xSndUpdate();
     iSndWaitForDeadSounds();
 
-    for (uint32 i = 0; i < s->num_base; i++)
+    for (U32 i = 0; i < s->num_base; i++)
     {
         if (s->base[i])
         {
@@ -2072,7 +2072,7 @@ void zSceneReset()
 
 static void ActivateCB(xBase* base)
 {
-    base->baseFlags &= (uint8)~0x40;
+    base->baseFlags &= (U8)~0x40;
 }
 
 static void DeactivateCB(xBase* base)
@@ -2082,7 +2082,7 @@ static void DeactivateCB(xBase* base)
 
 // clang-format off
 // jumptable for zSceneSetup
-static uint32 _2098_0[] =
+static U32 _2098_0[] =
 {
 0x800B3418, 0x800B3418, 0x800B3418,
 0x800B3418, 0x800B33B0, 0x800B32E0,
@@ -2138,7 +2138,7 @@ void zSceneSetup()
     }
 
     {
-        uint32 dontcaresize;
+        U32 dontcaresize;
         xCutscene_Init(xSTFindAssetByType('CTOC', 0, &dontcaresize));
     }
 
@@ -2146,7 +2146,7 @@ void zSceneSetup()
 
     gCurEnv = NULL;
 
-    for (uint32 i = 0; i < s->num_base; i++)
+    for (U32 i = 0; i < s->num_base; i++)
     {
         if (s->base[i])
         {
@@ -2286,7 +2286,7 @@ void zSceneSetup()
     zEntHangable_SetupFX();
     zThrown_Setup(globals.sceneCur);
 
-    for (uint32 i = 0; i < s->num_base; i++)
+    for (U32 i = 0; i < s->num_base; i++)
     {
         if (s->base[i] && s->base[i]->baseType == eBaseTypeMovePoint)
         {
@@ -2306,7 +2306,7 @@ void zSceneSetup()
 
     enableScreenAdj = 0;
 
-    for (uint32 i = 0; i < s->num_base; i++)
+    for (U32 i = 0; i < s->num_base; i++)
     {
         if (s->base[i] && s->base[i]->baseType == eBaseTypeNPC)
         {
@@ -2340,8 +2340,8 @@ void zSceneSetup()
 
     {
         int max_drivensort_tiers = 256;
-        uint32 driven_swapped;
-        uint32 i, j;
+        U32 driven_swapped;
+        U32 i, j;
 
         do
         {
@@ -2374,8 +2374,8 @@ void zSceneSetup()
     }
 
     {
-        int32 i;
-        uint32 f;
+        S32 i;
+        U32 f;
 
         xEnvAsset* easset = globals.sceneCur->zen->easset;
 
@@ -2412,7 +2412,7 @@ void zSceneSetup()
             }
         }
 
-        int32 lkitCount = xSTAssetCountByType('LKIT');
+        S32 lkitCount = xSTAssetCountByType('LKIT');
 
         for (i = 0; i < lkitCount; i++)
         {
@@ -2424,7 +2424,7 @@ void zSceneSetup()
 
                 if (group)
                 {
-                    uint32 j, nitam;
+                    U32 j, nitam;
 
                     nitam = xGroupGetCount(group);
 
@@ -2458,14 +2458,14 @@ void zSceneSetup()
 
     xEnt** entList =
         s->act_ents + s->baseCount[eBaseTypeTrigger] + s->baseCount[eBaseTypePickup]; // r28
-    uint32 entCount = s->baseCount[eBaseTypeStatic] + s->baseCount[eBaseTypePlatform] +
+    U32 entCount = s->baseCount[eBaseTypeStatic] + s->baseCount[eBaseTypePlatform] +
                       s->baseCount[eBaseTypePendulum] + s->baseCount[eBaseTypeHangable] +
                       s->baseCount[eBaseTypeDestructObj] + s->baseCount[eBaseTypeBoulder] +
                       s->baseCount[eBaseTypeNPC] + s->baseCount[eBaseTypeButton]; // r27
 
-    uint32 i, j, k;
-    uint32 numPrimeMovers = 0; // r24
-    uint32 numDriven = 0; // r25
+    U32 i, j, k;
+    U32 numPrimeMovers = 0; // r24
+    U32 numDriven = 0; // r25
 
     for (i = 0; i < s->num_ents; i++)
     {
@@ -2503,7 +2503,7 @@ void zSceneSetup()
         }
     }
 
-    uint32 numGroups = 0;
+    U32 numGroups = 0;
 
     for (i = 0; i < s->num_base; i++)
     {
@@ -2522,7 +2522,7 @@ void zSceneSetup()
                 {
                     numGroups++;
 
-                    uint32 gcnt = xGroupGetCount(grp);
+                    U32 gcnt = xGroupGetCount(grp);
 
                     for (k = 0; k < gcnt; k++)
                     {
@@ -2557,7 +2557,7 @@ void zSceneSetup()
 
     if (numDriven)
     {
-        uint32 allocsize = numDriven * sizeof(xGroup) + numDriven * sizeof(xGroupAsset) +
+        U32 allocsize = numDriven * sizeof(xGroup) + numDriven * sizeof(xGroupAsset) +
                            (numDriven + numPrimeMovers) * sizeof(xBase*);
 
         driveGroupList = (xGroup*)RwMalloc(allocsize);
@@ -2713,19 +2713,19 @@ void zSceneSetup()
     zEntPickup_RewardPostSetup();
 
     iColor_tag black;
-    *(uint32*)&black = _2013;
+    *(U32*)&black = _2013;
 
     iColor_tag clear;
-    *(uint32*)&clear = _2014;
+    *(U32*)&clear = _2014;
 
     xScrFxFade(&black, &clear, _1374, NULL, 0);
 }
 #endif
 
-int32 zSceneSetup_serialTraverseCB(uint32 clientID, xSerial* xser)
+S32 zSceneSetup_serialTraverseCB(U32 clientID, xSerial* xser)
 {
     char uiName[16];
-    int32 val = 0;
+    S32 val = 0;
     xBase* b;
 
     xser->Read_b1(&val);
@@ -2751,10 +2751,10 @@ int32 zSceneSetup_serialTraverseCB(uint32 clientID, xSerial* xser)
     return 1;
 }
 
-void zSceneUpdate(float32 dt)
+void zSceneUpdate(F32 dt)
 {
-    uint32 i;
-    int32 isPaused;
+    U32 i;
+    S32 isPaused;
     zScene* s;
     xBase** b;
 
@@ -3027,7 +3027,7 @@ static void zSceneRenderPreFX()
     zRenderState(SDRS_OpaqueModels);
     z_disco_floor::render_all();
 
-    uint32 shadowHackCase = 0;
+    U32 shadowHackCase = 0;
 
     xEnt** entptr = &s->act_ents[s->num_act_ents - 1];
     xEnt** entlast = &s->act_ents[s->baseCount[eBaseTypeTrigger] + s->baseCount[eBaseTypePickup] +
@@ -3121,7 +3121,7 @@ static void zSceneRenderPreFX()
 
     zParSys* psys = (zParSys*)s->baseList[eBaseTypeParticleSystem];
 
-    for (int32 i = s->baseCount[eBaseTypeParticleSystem] - 1; i >= 0; i--, psys++)
+    for (S32 i = s->baseCount[eBaseTypeParticleSystem] - 1; i >= 0; i--, psys++)
     {
         xParSysRender(psys);
     }
@@ -3232,7 +3232,7 @@ void zSceneRender()
 }
 
 #ifdef NON_MATCHING
-static void zSceneObjHashtableInit(int32 count)
+static void zSceneObjHashtableInit(S32 count)
 {
     scobj_idbps = (IDBasePair*)xMemAllocSize(count * sizeof(IDBasePair));
 
@@ -3252,14 +3252,14 @@ static void zSceneObjHashtableExit()
 }
 #endif
 
-static int32 zSceneObjHashtableUsage()
+static S32 zSceneObjHashtableUsage()
 {
     return nidbps;
 }
 
-static void zSceneObjHashtableAdd(uint32 id, xBase* base)
+static void zSceneObjHashtableAdd(U32 id, xBase* base)
 {
-    int32 k, chkd;
+    S32 k, chkd;
 
     chkd = id & (scobj_size - 1);
 
@@ -3284,9 +3284,9 @@ static void zSceneObjHashtableAdd(uint32 id, xBase* base)
     }
 }
 
-static xBase* zSceneObjHashtableGet(uint32 id)
+static xBase* zSceneObjHashtableGet(U32 id)
 {
-    int32 k, chkd;
+    S32 k, chkd;
 
     chkd = id & (scobj_size - 1);
 
@@ -3315,18 +3315,18 @@ static xBase* zSceneObjHashtableGet(uint32 id)
     return NULL;
 }
 
-xBase* zSceneFindObject(uint32 gameID)
+xBase* zSceneFindObject(U32 gameID)
 {
     return zSceneObjHashtableGet(gameID);
 }
 
-xBase* zSceneGetObject(int32 type, int32 idx)
+xBase* zSceneGetObject(S32 type, S32 idx)
 {
     zScene* s = globals.sceneCur;
 
     if (s)
     {
-        for (uint32 i = 0; i < s->num_base; i++)
+        for (U32 i = 0; i < s->num_base; i++)
         {
             if (s->base[i] && type == s->base[i]->baseType)
             {
@@ -3345,7 +3345,7 @@ xBase* zSceneGetObject(int32 type, int32 idx)
     return NULL;
 }
 
-const char* zSceneGetName(uint32 gameID)
+const char* zSceneGetName(U32 gameID)
 {
     xBase* b = zSceneFindObject(gameID);
 
@@ -3378,7 +3378,7 @@ void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), void* data)
 
     if (s)
     {
-        for (uint16 i = 0; i < s->num_base; i++)
+        for (U16 i = 0; i < s->num_base; i++)
         {
             if (!func(s->base[i], s, data))
             {
@@ -3388,13 +3388,13 @@ void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), void* data)
     }
 }
 
-void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), int32 baseType, void* data)
+void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), S32 baseType, void* data)
 {
     zScene* s = globals.sceneCur;
 
     if (s)
     {
-        for (uint16 i = 0; i < s->num_base; i++)
+        for (U16 i = 0; i < s->num_base; i++)
         {
             if (baseType == s->base[i]->baseType)
             {
@@ -3409,7 +3409,7 @@ void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), int32 baseType, vo
 
 static xBase* zSceneExitSoundIteratorCB(xBase* b, zScene*, void*)
 {
-    xSndParentDied((uint32)b);
+    xSndParentDied((U32)b);
     return b;
 }
 
@@ -3418,7 +3418,7 @@ void zSceneMemLvlChkCB()
 }
 
 #ifdef NON_MATCHING
-uint32 zSceneLeavingLevel()
+U32 zSceneLeavingLevel()
 {
     // non-matching: instruction order
 
@@ -3433,12 +3433,12 @@ uint32 zSceneLeavingLevel()
 }
 #endif
 
-const char* zSceneGetLevelName(uint32 sceneID)
+const char* zSceneGetLevelName(U32 sceneID)
 {
-    int8 c1 = (sceneID >> 24) & 0xFF;
-    int8 c2 = (sceneID >> 16) & 0xFF;
+    S8 c1 = (sceneID >> 24) & 0xFF;
+    S8 c2 = (sceneID >> 16) & 0xFF;
 
-    for (int32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
+    for (S32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
     {
         if (c1 == sLevelTable[i].prefix[0] && c2 == sLevelTable[i].prefix[1])
         {
@@ -3449,17 +3449,17 @@ const char* zSceneGetLevelName(uint32 sceneID)
     return "Level Not Found";
 }
 
-uint32 zSceneGetLevelIndex()
+U32 zSceneGetLevelIndex()
 {
     return zSceneGetLevelIndex(globals.sceneCur->sceneID);
 }
 
-uint32 zSceneGetLevelIndex(uint32 sceneID)
+U32 zSceneGetLevelIndex(U32 sceneID)
 {
-    int8 c1 = (sceneID >> 24) & 0xFF;
-    int8 c2 = (sceneID >> 16) & 0xFF;
+    S8 c1 = (sceneID >> 24) & 0xFF;
+    S8 c2 = (sceneID >> 16) & 0xFF;
 
-    for (int32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
+    for (S32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
     {
         if (c1 == sLevelTable[i].prefix[0] && c2 == sLevelTable[i].prefix[1])
         {
@@ -3470,7 +3470,7 @@ uint32 zSceneGetLevelIndex(uint32 sceneID)
     return 0;
 }
 
-const char* zSceneGetLevelPrefix(uint32 index)
+const char* zSceneGetLevelPrefix(U32 index)
 {
     if (index >= sizeof(sLevelTable) / sizeof(sLevelTable[0]))
     {
@@ -3480,17 +3480,17 @@ const char* zSceneGetLevelPrefix(uint32 index)
     return sLevelTable[index].prefix;
 }
 
-const char* zSceneGetAreaname(uint32)
+const char* zSceneGetAreaname(U32)
 {
     return "Temp";
 }
 
-uint32 zSceneCalcProgress()
+U32 zSceneCalcProgress()
 {
     return globals.player.Inv_Spatula;
 }
 
-void zScene_UpdateFlyToInterface(float32 dt)
+void zScene_UpdateFlyToInterface(F32 dt)
 {
     zScene* s = globals.sceneCur;
 
@@ -3498,7 +3498,7 @@ void zScene_UpdateFlyToInterface(float32 dt)
                                     s->baseCount[eBaseTypePickup], dt);
 }
 
-void zSceneCardCheckStartup_set(int32 needed, int32 available, int32 files)
+void zSceneCardCheckStartup_set(S32 needed, S32 available, S32 files)
 {
     bytesNeeded = needed;
     availOnDisk = available;
@@ -3507,7 +3507,7 @@ void zSceneCardCheckStartup_set(int32 needed, int32 available, int32 files)
 
 void zSceneEnableVisited(zScene* s)
 {
-    uint32 uiNameID;
+    U32 uiNameID;
     char uiName[64];
     char* sceneName;
 
@@ -3521,7 +3521,7 @@ void zSceneEnableVisited(zScene* s)
 
     uiNameID = xStrHash(uiName);
 
-    for (uint32 i = 0; i < s->num_base; i++)
+    for (U32 i = 0; i < s->num_base; i++)
     {
         if (s->base[i] && s->base[i]->baseType == eBaseTypeUI && uiNameID == s->base[i]->id)
         {
@@ -3530,7 +3530,7 @@ void zSceneEnableVisited(zScene* s)
     }
 }
 
-void zSceneEnableScreenAdj(uint32 enable)
+void zSceneEnableScreenAdj(U32 enable)
 {
     enableScreenAdj = enable;
 }
@@ -3543,7 +3543,7 @@ void zSceneSetOldScreenAdj()
 }
 #endif
 
-uint32 zScene_ScreenAdjustMode()
+U32 zScene_ScreenAdjustMode()
 {
     return enableScreenAdj;
 }
@@ -3560,19 +3560,19 @@ void zSceneSpawnRandomBubbles()
     }
 
     RwMatrix* mat = RwFrameGetMatrix(RwCameraGetFrame(currentCamera));
-    float32 floatRand = xurand();
+    F32 floatRand = xurand();
 
     if (floatRand > 0.985f)
     {
         xVec3 pos, var_48;
-        float32 r;
+        F32 r;
 
         pos.x = mat->pos.x;
         pos.y = mat->pos.y;
         pos.z = mat->pos.z;
 
         r = xurand();
-        r *= (((int32)(10000 * floatRand) % 2) ? 1 : -1);
+        r *= (((S32)(10000 * floatRand) % 2) ? 1 : -1);
 
         xVec3ScaleC(&var_48, (xVec3*)&mat->right, r, r, r);
         xVec3Add(&pos, &pos, &var_48);
@@ -3601,7 +3601,7 @@ void xDecalRender()
 {
 }
 
-uint32 xBaseIsValid(xBase* xb)
+U32 xBaseIsValid(xBase* xb)
 {
     return xb->baseFlags & 0x4;
 }

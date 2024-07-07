@@ -9,17 +9,17 @@
 #include "zSurface.h"
 
 // TODO: replace hardcoded constant
-static uint32 sSurfaceSoundIDStep[23];
+static U32 sSurfaceSoundIDStep[23];
 xBase* paremit_sd_pawprint;
 xBase* paremit_vil_footprint;
 RwRaster* sSkidMarkRaster;
 
 void zFeetGetIDs()
 {
-    int8 type_name[128];
-    int8 name[128];
+    S8 type_name[128];
+    S8 name[128];
 
-    for (int32 i = 0; i < 23; i++)
+    for (S32 i = 0; i < 23; i++)
     {
         zSurfaceGetName(i, type_name);
         strcpy(name, "SNDFX_STEP_");

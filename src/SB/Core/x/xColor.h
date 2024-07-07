@@ -18,6 +18,6 @@ extern iColor_tag g_ORANGE;
 extern iColor_tag g_LAVENDER;
 extern iColor_tag g_PINK;
 
-iColor_tag xColorFromRGBA(uint8 r, uint8 g, uint8 b, uint8 a);
+iColor_tag xColorFromRGBA(U8 r, U8 g, U8 b, U8 a);
 
 #endif

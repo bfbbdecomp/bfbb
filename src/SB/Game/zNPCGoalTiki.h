@@ -5,9 +5,9 @@
 
 struct zNPCGoalTikiIdle : zNPCGoalCommon
 {
-    float32 tmr_wait;
+    F32 tmr_wait;
 
-    zNPCGoalTikiIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalTikiIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
@@ -15,7 +15,7 @@ struct zNPCGoalTikiIdle : zNPCGoalCommon
     {
     }
 
-    virtual int32 Enter(float32, void*);
+    virtual S32 Enter(F32, void*);
 };
 
 struct zNPCGoalTikiPatrol : zNPCGoalCommon
@@ -23,7 +23,7 @@ struct zNPCGoalTikiPatrol : zNPCGoalCommon
     xVec3 dest_pos;
     xVec3 vel;
 
-    zNPCGoalTikiPatrol(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalTikiPatrol(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
@@ -31,12 +31,12 @@ struct zNPCGoalTikiPatrol : zNPCGoalCommon
     {
     }
 
-    virtual int32 Enter(float32, void*);
+    virtual S32 Enter(F32, void*);
 };
 
 struct zNPCGoalTikiHide : zNPCGoalCommon
 {
-    zNPCGoalTikiHide(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalTikiHide(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
@@ -44,16 +44,16 @@ struct zNPCGoalTikiHide : zNPCGoalCommon
     {
     }
 
-    virtual int32 Enter(float32, void*);
-    virtual int32 Exit(float32, void*);
+    virtual S32 Enter(F32, void*);
+    virtual S32 Exit(F32, void*);
 };
 
 struct zNPCGoalTikiCount : zNPCGoalCommon
 {
-    float32 tmr_count;
-    int32 beingCarried;
+    F32 tmr_count;
+    S32 beingCarried;
 
-    zNPCGoalTikiCount(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalTikiCount(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
@@ -61,14 +61,14 @@ struct zNPCGoalTikiCount : zNPCGoalCommon
     {
     }
 
-    virtual int32 Enter(float32, void*);
+    virtual S32 Enter(F32, void*);
 };
 
 struct zNPCGoalTikiDying : zNPCGoalCommon
 {
-    float32 tmr_dying;
+    F32 tmr_dying;
 
-    zNPCGoalTikiDying(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalTikiDying(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
@@ -76,15 +76,15 @@ struct zNPCGoalTikiDying : zNPCGoalCommon
     {
     }
 
-    virtual int32 Enter(float32, void*);
-    virtual int32 Exit(float32, void*);
+    virtual S32 Enter(F32, void*);
+    virtual S32 Exit(F32, void*);
 };
 
 struct zNPCGoalTikiDead : zNPCGoalCommon
 {
-    float32 tmr_resurrect;
+    F32 tmr_resurrect;
 
-    zNPCGoalTikiDead(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalTikiDead(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
@@ -92,10 +92,10 @@ struct zNPCGoalTikiDead : zNPCGoalCommon
     {
     }
 
-    virtual int32 Enter(float32, void*);
-    virtual int32 Exit(float32, void*);
+    virtual S32 Enter(F32, void*);
+    virtual S32 Exit(F32, void*);
 };
 
-xFactoryInst* GOALCreate_Tiki(int32 who, RyzMemGrow* grow, void* dat);
+xFactoryInst* GOALCreate_Tiki(S32 who, RyzMemGrow* grow, void* dat);
 
 #endif

@@ -10,21 +10,21 @@
 #include "zGlobals.h"
 
 extern UVAModelInfo g_uvaShield;
-extern int32 g_cnt_fodbzzt;
-extern int32 g_cnt_sleepy;
-extern int32 g_needuvincr_tube;
-extern int32 g_needuvincr_bzzt;
-extern int32 g_needuvincr_nightlight;
-extern int32 g_needuvincr_slickshield;
-extern int32 cnt_alerthokey__11zNPCFodBzzt;
+extern S32 g_cnt_fodbzzt;
+extern S32 g_cnt_sleepy;
+extern S32 g_needuvincr_tube;
+extern S32 g_needuvincr_bzzt;
+extern S32 g_needuvincr_nightlight;
+extern S32 g_needuvincr_slickshield;
+extern S32 cnt_alerthokey__11zNPCFodBzzt;
 extern NPCSndTrax g_sndTrax_Robot[2];
 extern NPCSndTrax g_sndTrax_Fodder;
-extern float32 zNPCRobot_f_0_0;
-extern float32 zNPCRobot_f_1_0;
+extern F32 zNPCRobot_f_0_0;
+extern F32 zNPCRobot_f_1_0;
 
-void zNPCRobot_Timestep(float32 dt);
-void zNPCSleepy_Timestep(float32 dt);
-void zNPCFodBzzt_DoTheHokeyPokey(float32 dt);
+void zNPCRobot_Timestep(F32 dt);
+void zNPCSleepy_Timestep(F32 dt);
+void zNPCFodBzzt_DoTheHokeyPokey(F32 dt);
 void ZNPC_Destroy_Robot(xFactoryInst* inst);
 
 void PlayTheFiddle()
@@ -80,7 +80,7 @@ void zNPCRobot_Timestep(float dt)
     g_needuvincr_slickshield = 1;
 }
 
-xFactoryInst* ZNPC_Create_Robot(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* ZNPC_Create_Robot(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCRobot* robo;
 
@@ -187,9 +187,9 @@ void ZNPC_Destroy_Robot(xFactoryInst* inst)
     delete inst;
 }
 
-uint8 zNPCRobot::ColChkFlags() const
+U8 zNPCRobot::ColChkFlags() const
 {
-    int32 flags = 0x3E;
+    S32 flags = 0x3E;
 
     if (npcset.reduceCollide)
     {
@@ -199,9 +199,9 @@ uint8 zNPCRobot::ColChkFlags() const
     return flags;
 }
 
-uint8 zNPCRobot::ColPenFlags() const
+U8 zNPCRobot::ColPenFlags() const
 {
-    int32 flags = 0x3E;
+    S32 flags = 0x3E;
 
     if (npcset.reduceCollide)
     {
@@ -211,9 +211,9 @@ uint8 zNPCRobot::ColPenFlags() const
     return flags;
 }
 
-uint8 zNPCRobot::PhysicsFlags() const
+U8 zNPCRobot::PhysicsFlags() const
 {
-    int32 flags = 0;
+    S32 flags = 0;
 
     if (flg_move & 0x6)
     {
@@ -273,7 +273,7 @@ void zNPCRobot::Reset()
         }
         else
         {
-            if ((uint32)xEntIsEnabled(this) == 0)
+            if ((U32)xEntIsEnabled(this) == 0)
             {
                 goal = (zNPCGoalDead*)psy->FindGoal('NGRj');
                 goal->DieQuietly();
@@ -286,7 +286,7 @@ void zNPCRobot::Reset()
         }
     }
 
-    int32 rc = arena.NeedToCycle(this);
+    S32 rc = arena.NeedToCycle(this);
 
     if (rc == 2)
     {
@@ -308,7 +308,7 @@ void zNPCRobot::ParseINI()
     NPCS_SndTablePrepare(g_sndTrax_Robot);
 }
 
-void zNPCRobot::Process(xScene* xscn, float32 dt)
+void zNPCRobot::Process(xScene* xscn, F32 dt)
 {
     psy_instinct->Timestep(dt, NULL);
 
@@ -320,7 +320,7 @@ void zNPCRobot::Process(xScene* xscn, float32 dt)
     zNPCCommon::Process(xscn, dt);
 }
 
-void zNPCRobot::NewTime(xScene* xscn, float32 dt)
+void zNPCRobot::NewTime(xScene* xscn, F32 dt)
 {
     if (idx_neckBone >= 0 && !IsDying())
     {
@@ -364,10 +364,10 @@ void zNPCRobot::DuploOwner(zNPCCommon* duper)
     }
 }
 
-int32 zNPCRobot::LassoSetup()
+S32 zNPCRobot::LassoSetup()
 {
-    int32 param1 = -1;
-    int32 param2 = -1;
+    S32 param1 = -1;
+    S32 param2 = -1;
 
     LassoModelIndex(&param1, &param2);
     if ((param1 >= 0) && (param2 >= 0))
@@ -377,12 +377,12 @@ int32 zNPCRobot::LassoSetup()
     return zNPCCommon::LassoSetup();
 }
 
-int32 zNPCRobot::IsWounded()
+S32 zNPCRobot::IsWounded()
 {
     return IsDead() ? 0 : cfg_npc->pts_damage - hitpoints;
 }
 
-void zNPCRobot::InflictPain(int32 numHitPoints, int32 giveCreditToPlayer)
+void zNPCRobot::InflictPain(S32 numHitPoints, S32 giveCreditToPlayer)
 {
     if (numHitPoints < 0)
     {
@@ -401,7 +401,7 @@ void zNPCRobot::InflictPain(int32 numHitPoints, int32 giveCreditToPlayer)
     }
 }
 
-void test(int32 a)
+void test(S32 a)
 {
 }
 
@@ -413,7 +413,7 @@ void zNPCFodder::ParseINI()
 }
 
 /*
-void zNPCFodder::Stun(float32 stuntime)
+void zNPCFodder::Stun(F32 stuntime)
 {
     xVec3 dir_dmg;
 
@@ -426,7 +426,7 @@ void zNPCFodder::Stun(float32 stuntime)
     xVec3* robot_pos = xEntGetPos(this);
 
     xVec3Sub(&dir_dmg, pos, robot_pos);
-    float32 out = xVec3Normalize(&dir_dmg, robot_pos);
+    F32 out = xVec3Normalize(&dir_dmg, robot_pos);
 
     this->Respawn(pos, NULL, NULL);
 }
@@ -457,24 +457,24 @@ zNPCLassoInfo* zNPCRobot::PRIV_GetLassoData()
     return &raw_lassoinfo;
 }
 
-int32 zNPCRobot::IsAlive()
+S32 zNPCRobot::IsAlive()
 {
     return !IsDead();
 }
 
-void zNPCRobot::LassoModelIndex(int32* idxgrab, int32* idxhold)
+void zNPCRobot::LassoModelIndex(S32* idxgrab, S32* idxhold)
 {
     *idxgrab = 0xffffffff;
     *idxhold = 0xffffffff;
 }
 
-void zNPCSlick::LassoModelIndex(int32* idxgrab, int32* idxhold)
+void zNPCSlick::LassoModelIndex(S32* idxgrab, S32* idxhold)
 {
     *idxgrab = 2;
     *idxhold = 3;
 }
 
-int32 zNPCRobot::IsHealthy()
+S32 zNPCRobot::IsHealthy()
 {
     return (hitpoints < 0) ? 0 : hitpoints;
 }
@@ -489,13 +489,13 @@ zNPCLassoInfo* zNPCFodder::PRIV_GetLassoData()
     return NULL;
 }
 
-void zNPCFodder::LassoModelIndex(int32* idxgrab, int32* idxhold)
+void zNPCFodder::LassoModelIndex(S32* idxgrab, S32* idxhold)
 {
     *idxgrab = -1;
     *idxhold = -1;
 }
 
-int32 xEntIsEnabled(xEnt* ent)
+S32 xEntIsEnabled(xEnt* ent)
 
 {
     return xBaseIsEnabled((xBase*)ent) & 0xff;
@@ -503,9 +503,9 @@ int32 xEntIsEnabled(xEnt* ent)
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;

@@ -32,24 +32,24 @@ template <class T> struct basic_rect
 
 struct xVec2
 {
-    float32 x;
-    float32 y;
+    F32 x;
+    F32 y;
 
-    xVec2& assign(float32 xy)
+    xVec2& assign(F32 xy)
     {
         return assign(xy,xy);
     }
-    xVec2& assign(float32 x, float32 y);
-    float32 length() const;
+    xVec2& assign(F32 x, F32 y);
+    F32 length() const;
 
-    xVec2& operator=(float32);
-    xVec2 operator*(float32) const;
+    xVec2& operator=(F32);
+    xVec2 operator*(F32) const;
     xVec2& operator+=(const xVec2&);
-    xVec2& operator*=(float32);
+    xVec2& operator*=(F32);
 };
 
-float32 xVec2Dist(float32 x1, float32 y1, float32 x2, float32 y2);
-float32 xVec2Dot(const xVec2* a, const xVec2* b);
-void xVec2Init(xVec2* v, float32 _x, float32 _y);
+F32 xVec2Dist(F32 x1, F32 y1, F32 x2, F32 y2);
+F32 xVec2Dot(const xVec2* a, const xVec2* b);
+void xVec2Init(xVec2* v, F32 _x, F32 _y);
 
 #endif

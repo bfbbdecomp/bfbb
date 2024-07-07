@@ -6,15 +6,15 @@
 #include "zBase.h"
 #include "zEntDestructObj.h"
 
-extern uint32 sTableCount;
+extern U32 sTableCount;
 extern zLODTable* sTableList;
-extern uint32 sManagerCount;
+extern U32 sManagerCount;
 extern zLODManager sManagerList[2048];
 
-extern float32 lbl_803CDC44; // 1.0e-4, 0.0001
-extern float32 lbl_803CDC40; // 1.0
-extern float32 lbl_803CDC48; // 4.0
-extern float32 lbl_803CDC4C; // 10.0
+extern F32 lbl_803CDC44; // 1.0e-4, 0.0001
+extern F32 lbl_803CDC40; // 1.0
+extern F32 lbl_803CDC48; // 4.0
+extern F32 lbl_803CDC4C; // 10.0
 
 #ifdef NON_MATCHING
 // Float memes
@@ -34,7 +34,7 @@ void AddToLODList(xModelInstance* model)
             (*sTableList[i].baseBucket)->OriginalData == model->Data)
         {
             xModelInstance* minst = model->Next;
-            uint32 numextra = 0;
+            U32 numextra = 0;
             while (minst != NULL)
             {
                 minst = minst->Next;
@@ -42,7 +42,7 @@ void AddToLODList(xModelInstance* model)
             }
             if (sManagerCount < 2048)
             {
-                float32 distscale = ((model->Mat->right).x * (model->Mat->right).x +
+                F32 distscale = ((model->Mat->right).x * (model->Mat->right).x +
                                      (model->Mat->right).y * (model->Mat->right).y +
                                      (model->Mat->right).z * (model->Mat->right).z);
                 minst = model;

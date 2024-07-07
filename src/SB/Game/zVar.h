@@ -7,10 +7,10 @@
 
 struct zVarEntry
 {
-    uint32 entry;
-    uint32 varNameID;
-    int8* varName;
-    uint32 (*varCB)(void*);
+    U32 entry;
+    U32 varNameID;
+    S8* varName;
+    U32 (*varCB)(void*);
 };
 
 extern zVarEntry zVarEntryTable[19];
@@ -43,16 +43,16 @@ Num  | Name     | Callback
 struct var_type
 {
     substr name;
-    int8* (*get_text)();
+    S8* (*get_text)();
 };
 
-extern int32 bad_card_needed;
+extern S32 bad_card_needed;
 
 void zVarNewGame();
 void zVarInit(zVarEntry* table);
-uint32 zVarEntryCB_VibrationOn(void* arg);
-uint32 zVarEntryCB_SndMode(void* arg);
-uint32 zVarEntryCB_SndMusicVol(void* arg);
-uint32 zVarEntryCB_SndFXVol(void* arg);
+U32 zVarEntryCB_VibrationOn(void* arg);
+U32 zVarEntryCB_SndMode(void* arg);
+U32 zVarEntryCB_SndMusicVol(void* arg);
+U32 zVarEntryCB_SndFXVol(void* arg);
 
 #endif

@@ -8,31 +8,31 @@ namespace xhud
 {
     struct meter_asset : asset
     {
-        float32 start_value;
-        float32 min_value;
-        float32 max_value;
-        float32 increment_time;
-        float32 decrement_time;
+        F32 start_value;
+        F32 min_value;
+        F32 max_value;
+        F32 increment_time;
+        F32 decrement_time;
         struct _class_0
         {
-            uint32 start_increment;
-            uint32 increment;
-            uint32 start_decrement;
-            uint32 decrement;
+            U32 start_increment;
+            U32 increment;
+            U32 start_decrement;
+            U32 decrement;
         } sound;
     };
 
     struct meter_widget : widget
     {
         meter_asset& res;
-        float32 value;
-        float32 min_value;
-        float32 max_value;
-        float32 end_value;
-        float32 value_vel;
-        float32 value_accel;
-        float32 ping_delay;
-        float32 pitch;
+        F32 value;
+        F32 min_value;
+        F32 max_value;
+        F32 end_value;
+        F32 value_vel;
+        F32 value_accel;
+        F32 ping_delay;
+        F32 pitch;
         sound_queue<4> pings;
     };
 } // namespace xhud

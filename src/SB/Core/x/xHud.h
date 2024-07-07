@@ -13,10 +13,10 @@ namespace xhud
 {
     struct color32u
     {
-        uint8 r;
-        uint8 g;
-        uint8 b;
-        uint8 a;
+        U8 r;
+        U8 g;
+        U8 b;
+        U8 a;
     };
 
     struct render_context
@@ -24,23 +24,23 @@ namespace xhud
         xVec3 loc;
         xVec3 size;
         xVec3 rot;
-        float32 r;
-        float32 g;
-        float32 b;
-        float32 a;
+        F32 r;
+        F32 g;
+        F32 b;
+        F32 a;
     };
 
     struct motive
     {
-        float32* value;
-        float32 delta;
-        float32 start_delta;
-        float32 max_offset;
-        float32 offset;
-        float32 accel;
-        uint8 (*fp_update)(widget&, motive&, float32);
+        F32* value;
+        F32 delta;
+        F32 start_delta;
+        F32 max_offset;
+        F32 offset;
+        F32 accel;
+        U8 (*fp_update)(widget&, motive&, F32);
         void* context;
-        uint8 inverse;
+        U8 inverse;
     };
 
     struct motive_node
@@ -59,8 +59,8 @@ namespace xhud
     {
         struct
         {
-            uint8 visible;
-            uint8 enabled;
+            U8 visible;
+            U8 enabled;
         } flag;
         render_context rc;
         render_context start_rc;
@@ -80,13 +80,13 @@ namespace xhud
         virtual void destroy();
         void setup();
         void enable();
-        void update(float32 dt);
-        void dispatch(uint32 event);
-        void clear_motives(uint8 (*fp_update)(widget&, motive&, float32), void* context);
+        void update(F32 dt);
+        void dispatch(U32 event);
+        void clear_motives(U8 (*fp_update)(widget&, motive&, F32), void* context);
         void add_motive(motive& m);
         void hide();
         void show();
-        void updater(float32 dt);
+        void updater(F32 dt);
         void presetup();
         void destruct();
     };

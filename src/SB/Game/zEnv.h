@@ -17,6 +17,6 @@ void zEnvRender(xEnv* env);
 void zEnvSave(_zEnv* ent, xSerial* s);
 void zEnvLoad(_zEnv* ent, xSerial* s);
 void zEnvReset(_zEnv* env);
-int32 zEnvEventCB(xBase*, xBase* to, uint32 toEvent, const float32* toParam, xBase*);
+S32 zEnvEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*);
 
 #endif

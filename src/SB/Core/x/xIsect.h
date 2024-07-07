@@ -5,13 +5,13 @@
 
 struct xIsect
 {
-    uint32 flags;
-    float32 penned;
-    float32 contained;
-    float32 lapped;
+    U32 flags;
+    F32 penned;
+    F32 contained;
+    F32 lapped;
     xVec3 point;
     xVec3 norm;
-    float32 dist;
+    F32 dist;
 };
 
 #endif

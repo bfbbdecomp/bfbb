@@ -33,7 +33,7 @@ void PartitionSpaceInsert(_tagPartSpace* space, void* data)
 
 #if 0
 // Need to figure out the correct order.
-int32 xPartitionGetTrueIdx(_tagPartition* part, int32 x_spaces, int32 y_spaces, int32 z_spaces)
+S32 xPartitionGetTrueIdx(_tagPartition* part, S32 x_spaces, S32 y_spaces, S32 z_spaces)
 {
     return part->total_x * z_spaces + part->total_x * y_spaces * part->total_z + x_spaces;
 }

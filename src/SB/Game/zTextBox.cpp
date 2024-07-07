@@ -8,11 +8,11 @@
 
 #include <string.h>
 
-extern float32 _720_1;
-extern float32 _721_1;
-extern float32 _722_0;
-extern float32 _723_0;
-extern float32 _761_1;
+extern F32 _720_1;
+extern F32 _721_1;
+extern F32 _722_0;
+extern F32 _723_0;
+extern F32 _761_1;
 
 static RwIm2DVertex vert_701[6]; // todo: move to render_bk_tex_scale
 
@@ -35,10 +35,10 @@ namespace
                             const xtextbox::split_tag&);
 
     xtextbox::tag_type new_tags[] = { SUBSTR("blahblah"), parse_tag_blahblah, NULL, NULL };
-    uint32 new_tags_size = sizeof(new_tags) / sizeof(new_tags[0]);
+    U32 new_tags_size = sizeof(new_tags) / sizeof(new_tags[0]);
 
-    void set_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 u, float32 v, iColor_tag c,
-                  float32 nsz, float32 rcz);
+    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c,
+                  F32 nsz, F32 rcz);
 
     void render_bk_fill(const ztextbox& e)
     {
@@ -54,12 +54,12 @@ namespace
 
         iColor_tag c = convert(e.asset->backdrop.color);
 
-        float32 rcz = _720_1 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
-        float32 nsz = RwIm2DGetNearScreenZ();
+        F32 rcz = _720_1 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
+        F32 nsz = RwIm2DGetNearScreenZ();
 
         xfont::set_render_state(e.bgtex);
 
-        basic_rect<float32> r = e.tb.font.clip;
+        basic_rect<F32> r = e.tb.font.clip;
         r.scale(_721_1, _722_0);
 
         set_vert(vert_701[0], r.x, r.y, _723_0, _720_1, c, nsz, rcz);
@@ -77,8 +77,8 @@ namespace
     }
 #endif
 
-    void set_vert(RwIm2DVertex& vert, float32 x, float32 y, float32 u, float32 v, iColor_tag c,
-                  float32 nsz, float32 rcz)
+    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c,
+                  F32 nsz, F32 rcz)
     {
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);
@@ -94,7 +94,7 @@ namespace
 
     void init_textbox(ztextbox& e)
     {
-        static const uint32 xjlookup[] = { 0x0, 0x2, 0x1 };
+        static const U32 xjlookup[] = { 0x0, 0x2, 0x1 };
 
         ztextbox::asset_type& a = *e.asset;
 
@@ -114,16 +114,16 @@ namespace
 
         if (a.expand < ztextbox::asset_type::MAX_EX && a.max_height > a.bounds.h)
         {
-            int32 lines;
-            float32 minh = e.tb.bounds.h;
-            float32 maxh = a.max_height - a.inset.top - a.inset.bottom;
+            S32 lines;
+            F32 minh = e.tb.bounds.h;
+            F32 maxh = a.max_height - a.inset.top - a.inset.bottom;
 
             e.tb.bounds.h = maxh;
             e.tb.bounds.h = e.tb.yextent(maxh, lines, true);
 
             if (e.tb.bounds.h > minh)
             {
-                float32 hmore = e.tb.bounds.h - minh;
+                F32 hmore = e.tb.bounds.h - minh;
 
                 if (a.expand == ztextbox::asset_type::EX_CENTER)
                 {
@@ -151,7 +151,7 @@ namespace
     {
     }
 
-    int32 cb_dispatch(xBase*, xBase* to, uint32 event, const float32* argf, xBase*)
+    S32 cb_dispatch(xBase*, xBase* to, U32 event, const F32* argf, xBase*)
     {
         ztextbox& e = *(ztextbox*)to;
 
@@ -175,9 +175,9 @@ namespace
         }
         case eEventVisible:
         {
-            if (argf && *(uint32*)&argf[0])
+            if (argf && *(U32*)&argf[0])
             {
-                e.set_text(*(uint32*)&argf[0]);
+                e.set_text(*(U32*)&argf[0]);
             }
 
             e.activate();
@@ -192,7 +192,7 @@ namespace
         {
             if (argf)
             {
-                e.set_text(*(uint32*)&argf[0]);
+                e.set_text(*(U32*)&argf[0]);
             }
 
             break;
@@ -201,7 +201,7 @@ namespace
         {
             if (argf)
             {
-                e.add_text(*(uint32*)&argf[0]);
+                e.add_text(*(U32*)&argf[0]);
             }
 
             break;
@@ -247,7 +247,7 @@ void ztextbox::load(const asset_type& a)
     reset();
 }
 
-void ztextbox::update(xScene&, float32)
+void ztextbox::update(xScene&, F32)
 {
 }
 
@@ -339,7 +339,7 @@ void ztextbox::set_text(const char* s)
     add_text(s);
 }
 
-void ztextbox::set_text(uint32 id)
+void ztextbox::set_text(U32 id)
 {
     if (!id)
     {
@@ -371,7 +371,7 @@ void ztextbox::add_text(const char* s)
     flag.dirty = true;
 }
 
-void ztextbox::add_text(uint32 id)
+void ztextbox::add_text(U32 id)
 {
     if (!id)
     {
@@ -401,7 +401,7 @@ void ztextbox::refresh()
     }
 }
 
-void ztextbox::get_text(char* buffer, uint32 buffer_size) const
+void ztextbox::get_text(char* buffer, U32 buffer_size) const
 {
     const char* const* it = segments;
     const char* const* end = it + segments_size;
@@ -409,7 +409,7 @@ void ztextbox::get_text(char* buffer, uint32 buffer_size) const
     while (it != end)
     {
         const char* s = *it;
-        uint32 len = strlen(s);
+        U32 len = strlen(s);
 
         if (len >= buffer_size)
         {
@@ -433,12 +433,12 @@ void ztextbox::init()
     head_active = NULL;
 }
 
-void ztextbox::load(xBase& data, xDynAsset& asset, ulong32)
+void ztextbox::load(xBase& data, xDynAsset& asset, size_t)
 {
     ((ztextbox&)data).load((asset_type&)asset);
 }
 
-void ztextbox::update_all(xScene& s, float32 dt)
+void ztextbox::update_all(xScene& s, F32 dt)
 {
     ztextbox* it = head_active;
 

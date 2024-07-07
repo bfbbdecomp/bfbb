@@ -5,23 +5,23 @@
 
 struct zNPCGoalScript : zNPCGoalCommon
 {
-    int32 flg_script;
+    S32 flg_script;
 
-    zNPCGoalScript(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScript(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x1C);
     }
 
-    virtual int32 Enter(float32 dt, void* updCtxt);
-    virtual int32 Exit(float32 dt, void* updCtxt);
-    virtual int32 SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                           xBase* toParamWidget, int32* handled);
-    virtual int32 NPCMessage(NPCMsg* mail);
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Exit(F32 dt, void* updCtxt);
+    virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                           xBase* toParamWidget, S32* handled);
+    virtual S32 NPCMessage(NPCMsg* mail);
 };
 
 struct zNPCGoalScriptAnim : zNPCGoalCommon
 {
-    zNPCGoalScriptAnim(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptAnim(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
@@ -29,7 +29,7 @@ struct zNPCGoalScriptAnim : zNPCGoalCommon
 
 struct zNPCGoalScriptAttack : zNPCGoalCommon
 {
-    zNPCGoalScriptAttack(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptAttack(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
@@ -37,7 +37,7 @@ struct zNPCGoalScriptAttack : zNPCGoalCommon
 
 struct zNPCGoalScriptMove : zNPCGoalCommon
 {
-    zNPCGoalScriptMove(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptMove(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
@@ -45,7 +45,7 @@ struct zNPCGoalScriptMove : zNPCGoalCommon
 
 struct zNPCGoalScriptTalk : zNPCGoalCommon
 {
-    zNPCGoalScriptTalk(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptTalk(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
@@ -53,7 +53,7 @@ struct zNPCGoalScriptTalk : zNPCGoalCommon
 
 struct zNPCGoalScriptFollow : zNPCGoalCommon
 {
-    zNPCGoalScriptFollow(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptFollow(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
@@ -61,7 +61,7 @@ struct zNPCGoalScriptFollow : zNPCGoalCommon
 
 struct zNPCGoalScriptLead : zNPCGoalCommon
 {
-    zNPCGoalScriptLead(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptLead(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
@@ -69,12 +69,12 @@ struct zNPCGoalScriptLead : zNPCGoalCommon
 
 struct zNPCGoalScriptWait : zNPCGoalCommon
 {
-    zNPCGoalScriptWait(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalScriptWait(S32 goalID) : zNPCGoalCommon(goalID)
     {
         SetFlags(0x6);
     }
 };
 
-xFactoryInst* GOALCreate_Script(int32 who, RyzMemGrow* grow, void*);
+xFactoryInst* GOALCreate_Script(S32 who, RyzMemGrow* grow, void*);
 
 #endif

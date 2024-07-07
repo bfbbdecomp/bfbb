@@ -17,7 +17,7 @@ void zAssetShutdown()
 
 #if 0
 // Ghidra's output here is not helpful
-void* BSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint32* outsize)
+void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
     RwMemory rwmem;
     RwChunkHeaderInfo chunkHeaderInfo;
@@ -49,7 +49,7 @@ void* BSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint3
 }
 #endif
 
-void* JSP_Read(void* param_1, uint32 param_2, void* indata, uint32 insize, uint32* outsize)
+void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
     xJSPHeader* retjsp = &sDummyEmptyJSP;
     *outsize = 32;

@@ -5,7 +5,7 @@
 #include "zNPCTypeBossSB1.h"
 #include "zNPCTypeBossPatrick.h"
 
-xFactoryInst* GOALCreate_Boss(int32 who, RyzMemGrow* grow, void*)
+xFactoryInst* GOALCreate_Boss(S32 who, RyzMemGrow* grow, void*)
 {
     xGoal* goal = NULL;
 

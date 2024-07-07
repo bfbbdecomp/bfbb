@@ -34,33 +34,33 @@
 
 static xVec3 last_center;
 
-static uint32 sCurrentStreamSndID;
-static float32 sPlayerSndSneakDelay;
-static int32 sPlayerDiedLastTime;
+static U32 sCurrentStreamSndID;
+static F32 sPlayerSndSneakDelay;
+static S32 sPlayerDiedLastTime;
 
 static zPlayerLassoInfo* sLassoInfo;
 static zLasso* sLasso;
 
-static int32 in_goo;
+static S32 in_goo;
 
-int32 player_hit;
-static int32 player_hit_anim = 1;
-static uint32 player_dead_anim = 1;
+S32 player_hit;
+static S32 player_hit_anim = 1;
+static U32 player_dead_anim = 1;
 
-static uint32 last_frame;
+static U32 last_frame;
 
-static float32 sBubbleBowlLastWindupTime = -1.0f;
-static float32 sBubbleBowlMultiplier = 1.0f;
-static uint32 sShouldBubbleBowl;
-static float32 sBubbleBowlTimer;
-static uint32 sSpatulaGrabbed;
+static F32 sBubbleBowlLastWindupTime = -1.0f;
+static F32 sBubbleBowlMultiplier = 1.0f;
+static U32 sShouldBubbleBowl;
+static F32 sBubbleBowlTimer;
+static U32 sSpatulaGrabbed;
 
 // Multidimensional sound arrays for each player type
-static uint32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
-static uint32 sPlayerSndRand[3][47] = {};
-static uint32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
+static U32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
+static U32 sPlayerSndRand[3][47] = {};
+static U32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
 
-void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count)
+void zEntPlayer_SpawnWandBubbles(xVec3* center, U32 count)
 {
     if (gFrameCount - last_frame > 5)
     {
@@ -72,7 +72,7 @@ void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count)
     xVec3 dir;
     xVec3Sub(&dir, center, &last_center);
 
-    uint32 num = 3;
+    U32 num = 3;
     if (count != 0)
     {
         num = count;
@@ -84,10 +84,10 @@ void zEntPlayer_SpawnWandBubbles(xVec3* center, uint32 count)
     {
         xVec3* pp = posbuf;
         xVec3* vp = velbuf;
-        uint32 j = 0;
+        U32 j = 0;
         for (; j < num; j++, pp++, vp++)
         {
-            float32 f = (float32)j / (float32)num;
+            F32 f = (F32)j / (F32)num;
             xVec3Lerp(pp, &last_center, center, f);
             pp->x += 0.125f * (xurand() - 0.5f);
             pp->y += 0.125f * (xurand() - 0.5f);
@@ -138,7 +138,7 @@ void zEntPlayerKillCarry()
 
 void zEntPlayerControlOn(zControlOwner owner)
 {
-    uint32 originalValue = globals.player.ControlOff;
+    U32 originalValue = globals.player.ControlOff;
     globals.player.ControlOff &= ~owner;
 
     if (originalValue != globals.player.ControlOff)
@@ -157,7 +157,7 @@ void zEntPlayerControlOn(zControlOwner owner)
 // 83%, but floating point scheduling preventing match
 void zEntPlayerControlOff(zControlOwner owner)
 {
-    uint32 originalValue = globals.player.ControlOff;
+    U32 originalValue = globals.player.ControlOff;
 
     globals.player.ControlOff |= owner;
     globals.player.ControlOffTimer = 1.0f;
@@ -177,17 +177,17 @@ void zEntPlayerControlOff(zControlOwner owner)
     zEntPlayerKillCarry();
 }
 
-void TellPlayerVillainIsNear(float32 visnear)
+void TellPlayerVillainIsNear(F32 visnear)
 {
     globals.player.BadGuyNearTimer = visnear;
 }
 
-void SetPlayerKillsVillainTimer(float32 time)
+void SetPlayerKillsVillainTimer(F32 time)
 {
     globals.player.VictoryTimer = time;
 }
 
-static void DampenControls(float32* angle, float32* mag, float32 x, float32 y)
+static void DampenControls(F32* angle, F32* mag, F32 x, F32 y)
 {
     *angle = xatan2(x, y);
 
@@ -250,7 +250,7 @@ static void CalcAnimSpeed(xEnt* ent, float f, float* pf)
     ent->model->Anim->Single->CurrentSpeed = f;
 }
 
-static void LeanUpdate(float32 a, float32 b)
+static void LeanUpdate(F32 a, F32 b)
 {
     float abs = __fabs(a);
     float lerp;
@@ -273,7 +273,7 @@ static void LeanUpdate(float32 a, float32 b)
     }
     lerp += 1.0f;
 
-    float32 t = 6.0f * (lerp - globals.player.LeanLerp);
+    F32 t = 6.0f * (lerp - globals.player.LeanLerp);
     globals.player.LeanLerp += t * b;
 }
 
@@ -294,7 +294,7 @@ void HealthReset()
     globals.player.Health = globals.player.MaxHealth;
 }
 
-uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.cheat_mode)
     {
@@ -304,18 +304,18 @@ uint32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3
     return (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000));
 }
 
-uint32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.ent.frame->vel.y = -globals.player.g.BBounceSpeed;
     return 0;
 }
 
-uint32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (globals.player.JumpState == 0 || globals.player.JumpState == 1);
 }
 
-uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.cheat_mode)
     {
@@ -331,7 +331,7 @@ uint32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             globals.player.g.PowerUp[0]);
 }
 
-uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (anim->Time < sBubbleBowlLastWindupTime && sShouldBubbleBowl)
     {
@@ -341,7 +341,7 @@ uint32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param
     return false;
 }
 
-uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     xEntBoulder_BubbleBowl(sBubbleBowlMultiplier);
     globals.player.IsBubbleBowling = false;
@@ -350,43 +350,43 @@ uint32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-uint32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             WalkCheck(tran, anim, param_3));
 }
 
-uint32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunCheck(tran, anim, param_3));
 }
 
-uint32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunScaredCheck(tran, anim, param_3));
 }
 
-uint32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunVictoryCheck(tran, anim, param_3));
 }
 
-uint32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunOutOfWorldCheck(tran, anim, param_3));
 }
 
-uint32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunSlipCheck(tran, anim, param_3));
 }
 
-uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.ControlOff & 0x8000)
     {
@@ -401,7 +401,7 @@ uint32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return in_goo;
 }
 
-uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // Decompiled, but instructions are out of order?
     globals.player.Health = 0;
@@ -412,104 +412,104 @@ uint32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-uint32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 1);
 }
 
-uint32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 2;
     return false;
 }
 
-uint32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 2);
 }
 
-uint32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 3;
     return false;
 }
 
-uint32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 3);
 }
 
-uint32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 4;
     return false;
 }
 
-uint32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 4);
 }
 
-uint32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 5;
     return false;
 }
 
-uint32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 5);
 }
 
-uint32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 1;
     return false;
 }
 
-uint32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // it seems like this is a useless but necessary function call
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags == 0;
 }
 
-uint32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 2;
 }
 
-uint32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 3;
 }
 
-uint32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 4;
 }
 
-uint32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
 }
 
-uint32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     // much different than PS2 version of this function
     return sSpatulaGrabbed;
 }
 
-int32 zEntPlayer_InBossBattle()
+S32 zEntPlayer_InBossBattle()
 {
     return (globals.sceneCur->sceneID == 'B101' || // Robo Sandy
             globals.sceneCur->sceneID == 'B201' || // Robo Patrick
@@ -518,38 +518,38 @@ int32 zEntPlayer_InBossBattle()
     );
 }
 
-uint32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
 }
 
-uint32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_LAND;
     return 0;
 }
 
-uint32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_FLIGHT;
     return 0;
 }
 
-uint32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (globals.player.CanJump && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
 }
 
-uint32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+U32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     StopLCopterCB(tran, anim, param_3);
     BounceCB(tran, anim, param_3);
     return 0;
 }
 
-uint32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     xNPCBasic* npc = (xNPCBasic*)sLassoInfo->target;
 
@@ -569,27 +569,27 @@ uint32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
     return 0;
 }
 
-uint32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return !sLassoInfo->target;
 }
 
-uint32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-uint32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
 }
 
-uint32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-uint32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
+U32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
 }
@@ -601,7 +601,7 @@ bool zEntPlayer_IsSneaking()
         return false;
     }
 
-    uint32 flags = globals.player.ent.model->Anim->Single->State->UserFlags;
+    U32 flags = globals.player.ent.model->Anim->Single->State->UserFlags;
     if ((flags & 1) != 0 || (flags & 0x1e) == 2 || (flags & 0x1e) == 4)
     {
         return true;
@@ -613,21 +613,21 @@ bool zEntPlayer_IsSneaking()
 }
 
 #if 0
-// The cmpw instruction used in `if ((int32)non_choices[j] - 1 == i)` has its
+// The cmpw instruction used in `if ((S32)non_choices[j] - 1 == i)` has its
 // operands in the wrong order.
-int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_size, int32 max_size)
+S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 max_size)
 {
-    int32 found = 0;
-    float32* non_choices = (float32*)xMemPushTemp(max_size * 4);
-    int32 size = zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, max_size,
+    S32 found = 0;
+    F32* non_choices = (F32*)xMemPushTemp(max_size * 4);
+    S32 size = zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, max_size,
                                     non_choices, non_choices);
 
-    for (int32 i = 0; i < max_size; i++)
+    for (S32 i = 0; i < max_size; i++)
     {
         bool skip = false;
-        for (int32 j = 0; j < size; j++)
+        for (S32 j = 0; j < size; j++)
         {
-            if ((int32)non_choices[j] - 1 == i)
+            if ((S32)non_choices[j] - 1 == i)
             {
                 skip = true;
                 break;
@@ -650,11 +650,11 @@ int32 load_talk_filter(uint8* filter, xModelAssetParam* params, uint32 params_si
 }
 #endif
 
-uint32 count_talk_anims(xAnimTable* anims)
+U32 count_talk_anims(xAnimTable* anims)
 {
     xAnimFile* firstData = anims->StateList->Data;
-    int8 talkAnimName[20];
-    int32 talkAnimCount = 0;
+    S8 talkAnimName[20];
+    S32 talkAnimCount = 0;
 
     sprintf(talkAnimName, "Talk%02d", 1);
 
@@ -674,9 +674,9 @@ uint32 count_talk_anims(xAnimTable* anims)
 }
 
 void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
-                     uint32 params_size)
+                     U32 params_size)
 {
-    uint32 count;
+    U32 count;
     count = count_talk_anims(model.Anim->Table);
     ps.talk_anims = count;
     count = load_talk_filter(ps.talk_filter, modelass, params_size, ps.talk_anims);
@@ -686,7 +686,7 @@ void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetPara
 void load_player_ini()
 {
     xModelAssetParam* modelass;
-    uint32 size[3];
+    U32 size[3];
 
     if (globals.player.model_spongebob != NULL)
     {
@@ -719,9 +719,9 @@ void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
     globals.player.carry.patLauncher = patLauncher;
 }
 
-int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
+S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)
 {
-    int32 newDamage = zEntPlayer_Damage(src, damage);
+    S32 newDamage = zEntPlayer_Damage(src, damage);
 
     if (!newDamage)
     {
@@ -738,16 +738,16 @@ int32 zEntPlayer_Damage(xBase* src, uint32 damage, const xVec3* knockback)
     return true;
 }
 
-void zEntPlayer_GiveHealth(int32 quantity)
+void zEntPlayer_GiveHealth(S32 quantity)
 {
-    if (quantity < 0 && -quantity > (int32)globals.player.Health)
+    if (quantity < 0 && -quantity > (S32)globals.player.Health)
     {
         globals.player.Health = 0;
         return;
     }
 
-    uint32 sum = globals.player.Health + quantity;
-    uint32 maxHealth = globals.player.MaxHealth;
+    U32 sum = globals.player.Health + quantity;
+    U32 maxHealth = globals.player.MaxHealth;
     globals.player.Health = sum;
 
     if (sum > maxHealth)
@@ -758,7 +758,7 @@ void zEntPlayer_GiveHealth(int32 quantity)
 
 #if 0
 
-void zEntPlayer_GiveSpatula(int32)
+void zEntPlayer_GiveSpatula(S32)
 {
     sSpatulaGrabbed = 1;
 
@@ -772,16 +772,16 @@ void zEntPlayer_GiveSpatula(int32)
 }
 #endif
 
-void zEntPlayer_GiveShinyObject(int32 quantity)
+void zEntPlayer_GiveShinyObject(S32 quantity)
 {
-    if (quantity < 0 && -quantity > (int32)globals.player.Inv_Shiny)
+    if (quantity < 0 && -quantity > (S32)globals.player.Inv_Shiny)
     {
         globals.player.Inv_Shiny = 0;
         return;
     }
 
-    uint32 sum = globals.player.Inv_Shiny + quantity;
-    uint32 maxShinies = 99999; // TODO: make this defined somewhere globally
+    U32 sum = globals.player.Inv_Shiny + quantity;
+    U32 maxShinies = 99999; // TODO: make this defined somewhere globally
     globals.player.Inv_Shiny = sum;
 
     if (sum > maxShinies)
@@ -790,11 +790,11 @@ void zEntPlayer_GiveShinyObject(int32 quantity)
     }
 }
 
-void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
+void zEntPlayer_GivePatsSocksCurrentLevel(S32 quantity)
 {
-    uint32 level = zSceneGetLevelIndex();
+    U32 level = zSceneGetLevelIndex();
 
-    if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock_Total)
+    if (quantity < 0 && -quantity > (S32)globals.player.Inv_PatsSock_Total)
     {
         globals.player.Inv_PatsSock_Total = 0;
     }
@@ -803,7 +803,7 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
         globals.player.Inv_PatsSock_Total += quantity;
     }
 
-    if (quantity < 0 && -quantity > (int32)globals.player.Inv_PatsSock[level])
+    if (quantity < 0 && -quantity > (S32)globals.player.Inv_PatsSock[level])
     {
         globals.player.Inv_PatsSock[level] = 0;
     }
@@ -820,11 +820,11 @@ void zEntPlayer_GivePatsSocksCurrentLevel(int32 quantity)
     }
 }
 
-void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
+void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
 {
-    uint32 level = zSceneGetLevelIndex();
+    U32 level = zSceneGetLevelIndex();
 
-    if (quantity < 0 && -quantity > (int32)globals.player.Inv_LevelPickups[level])
+    if (quantity < 0 && -quantity > (S32)globals.player.Inv_LevelPickups[level])
     {
         globals.player.Inv_LevelPickups[level] = 0;
     }
@@ -841,7 +841,7 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(int32 quantity)
     }
 }
 
-void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
+void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, F32 new_vol)
 {
     if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
@@ -849,7 +849,7 @@ void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, float32 new_vol)
     }
 }
 
-void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
+void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, F32 new_pitch)
 {
     if (sPlayerSnd[gCurrentPlayer][player_snd])
     {
@@ -857,28 +857,28 @@ void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, float32 new_pitch)
     }
 }
 
-void zEntPlayer_SNDNotifyPlaying(uint32 id)
+void zEntPlayer_SNDNotifyPlaying(U32 id)
 {
     sCurrentStreamSndID = id;
 }
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    float32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    float32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    float32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
 
     o->x = x;
     o->y = y;
     o->z = z;
 }
 
-uint8 xSndIsPlaying(uint32 assetID)
+U8 xSndIsPlaying(U32 assetID)
 {
     return iSndIsPlaying(assetID);
 }
 
-int32 zNPCTiki::IsHealthy()
+S32 zNPCTiki::IsHealthy()
 {
     return flg_vuln != 0;
 }
@@ -910,8 +910,8 @@ xVec3* NPCC_upDir(xEnt* ent)
     return (xVec3*)&ent->model->Mat->up;
 }
 
-int32 zGooIs(xEnt* ent)
+S32 zGooIs(xEnt* ent)
 {
-    float32 temp;
+    F32 temp;
     return zGooIs(ent, temp, 0);
 }

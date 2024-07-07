@@ -7,19 +7,19 @@
 
 struct xLightKitLight
 {
-    uint32 type;
+    U32 type;
     RwRGBAReal color;
-    float32 matrix[16];
-    float32 radius;
-    float32 angle;
+    F32 matrix[16];
+    F32 radius;
+    F32 angle;
     RpLight* platLight;
 };
 
 struct xLightKit
 {
-    uint32 tagID;
-    uint32 groupID;
-    uint32 lightCount;
+    U32 tagID;
+    U32 groupID;
+    U32 lightCount;
     xLightKitLight* lightList;
 };
 

@@ -4,14 +4,14 @@
 #include "iPad.h"
 #include "xPad.h"
 
-int32 iPadInit()
+S32 iPadInit()
 {
     PADInit();
     return 1;
 }
 
 #if 0
-_tagxPad* iPadEnable(_tagxPad* pad, int16 port)
+_tagxPad* iPadEnable(_tagxPad* pad, S16 port)
 {
     pad->port = port;
     pad->slot = 0;
@@ -22,14 +22,14 @@ _tagxPad* iPadEnable(_tagxPad* pad, int16 port)
 }
 #endif
 
-int32 iPadConvFromGCN(uint32 a, uint32 b, uint32 c)
+S32 iPadConvFromGCN(U32 a, U32 b, U32 c)
 {
     // TODO: this can probably be simplified,
     // basically a copy of ghidra's output
-    return c & (int32)(-(a & b) | a & b) >> 0x1f;
+    return c & (S32)(-(a & b) | a & b) >> 0x1f;
 }
 
-void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, float32 time_passed)
+void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, F32 time_passed)
 {
 }
 

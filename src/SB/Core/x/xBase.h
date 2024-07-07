@@ -7,23 +7,23 @@
 // Size: 0x8
 struct xBaseAsset
 {
-    uint32 id;
-    uint8 baseType;
-    uint8 linkCount;
-    uint16 baseFlags;
+    U32 id;
+    U8 baseType;
+    U8 linkCount;
+    U16 baseFlags;
 };
 
 struct xBase;
 
-typedef int32 (*xBaseEventCB)(xBase*, xBase*, uint32, const float32*, xBase*);
+typedef S32 (*xBaseEventCB)(xBase*, xBase*, U32, const F32*, xBase*);
 
 // Size: 0x10
 struct xBase
 {
-    uint32 id;
-    uint8 baseType; // see en_ZBASETYPE in zBase.h
-    uint8 linkCount;
-    uint16 baseFlags;
+    U32 id;
+    U8 baseType; // see en_ZBASETYPE in zBase.h
+    U8 linkCount;
+    U16 baseFlags;
     xLinkAsset* link;
     xBaseEventCB eventFunc;
 };
@@ -33,7 +33,7 @@ void xBaseSetup(xBase* xb);
 void xBaseSave(xBase* ent, xSerial* s);
 void xBaseLoad(xBase* ent, xSerial* s);
 void xBaseReset(xBase* xb, xBaseAsset* asset);
-uint32 xBaseIsValid(xBase* xb);
+U32 xBaseIsValid(xBase* xb);
 void xBaseValidate(xBase* xb);
 bool xBaseIsEnabled(const xBase* xb);
 void xBaseDisable(xBase* xb);

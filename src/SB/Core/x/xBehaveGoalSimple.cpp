@@ -6,7 +6,7 @@ void xGoalSimple_RegisterTypes(xFactory* fac)
     fac->RegItemType('GSM\x01', GOALCreate_Generic, GOALDestroy_Generic);
 }
 
-xFactoryInst* GOALCreate_Generic(int32 who, RyzMemGrow* growCtxt, void*)
+xFactoryInst* GOALCreate_Generic(S32 who, RyzMemGrow* growCtxt, void*)
 {
     xGoal* goal = NULL;
 
@@ -32,7 +32,7 @@ void GOALDestroy_Generic(xFactoryInst* item)
     delete item;
 }
 
-int32 xGoalGeneric::Enter(float32 dt, void* updCtxt)
+S32 xGoalGeneric::Enter(F32 dt, void* updCtxt)
 {
     if (this->fun_enter)
     {
@@ -42,7 +42,7 @@ int32 xGoalGeneric::Enter(float32 dt, void* updCtxt)
     return xGoal::Enter(dt, updCtxt);
 }
 
-int32 xGoalGeneric::Exit(float32 dt, void* updCtxt)
+S32 xGoalGeneric::Exit(F32 dt, void* updCtxt)
 {
     if (this->fun_exit)
     {
@@ -52,7 +52,7 @@ int32 xGoalGeneric::Exit(float32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-int32 xGoalGeneric::Suspend(float32 dt, void* updCtxt)
+S32 xGoalGeneric::Suspend(F32 dt, void* updCtxt)
 {
     if (this->fun_suspend)
     {
@@ -62,7 +62,7 @@ int32 xGoalGeneric::Suspend(float32 dt, void* updCtxt)
     return xGoal::Suspend(dt, updCtxt);
 }
 
-int32 xGoalGeneric::Resume(float32 dt, void* updCtxt)
+S32 xGoalGeneric::Resume(F32 dt, void* updCtxt)
 {
     if (this->fun_resume)
     {
@@ -72,8 +72,8 @@ int32 xGoalGeneric::Resume(float32 dt, void* updCtxt)
     return xGoal::Resume(dt, updCtxt);
 }
 
-int32 xGoalGeneric::SysEvent(xBase* from, xBase* to, uint32 toEvent, const float32* toParam,
-                             xBase* toParamWidget, int32* handled)
+S32 xGoalGeneric::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                             xBase* toParamWidget, S32* handled)
 {
     if (this->fun_sysevent)
     {

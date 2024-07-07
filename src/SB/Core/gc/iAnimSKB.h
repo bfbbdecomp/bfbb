@@ -5,22 +5,22 @@
 
 struct iAnimSKBHeader
 {
-    uint32 Magic;
-    uint32 Flags;
-    uint16 BoneCount;
-    uint16 TimeCount;
-    uint32 KeyCount;
-    float32 Scale[3];
+    U32 Magic;
+    U32 Flags;
+    U16 BoneCount;
+    U16 TimeCount;
+    U32 KeyCount;
+    F32 Scale[3];
 };
 
 struct iAnimSKBKey
 {
-    uint16 TimeIndex;
-    int16 Quat[4];
-    int16 Tran[3];
+    U16 TimeIndex;
+    S16 Quat[4];
+    S16 Tran[3];
 };
 
-void iAnimEvalSKB(iAnimSKBHeader* data, float32 time, uint32 flags, xVec3* tran, xQuat* quat);
-float32 iAnimDurationSKB(iAnimSKBHeader* data);
+void iAnimEvalSKB(iAnimSKBHeader* data, F32 time, U32 flags, xVec3* tran, xQuat* quat);
+F32 iAnimDurationSKB(iAnimSKBHeader* data);
 
 #endif

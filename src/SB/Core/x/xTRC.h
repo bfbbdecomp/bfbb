@@ -23,16 +23,16 @@ enum _tagTRCState
 
 struct _tagTRCPadInfo : _tagiTRCPadInfo
 {
-    int32 id;
+    S32 id;
     _tagTRCState state;
 };
 
 extern _tagTRCPadInfo gTrcPad[4];
 
-void xTRCPad(int32 pad_id, _tagTRCState state);
+void xTRCPad(S32 pad_id, _tagTRCState state);
 void xTRCRender();
 void xTRCReset();
 void xTRCDisk(_tagTRCState state);
-void render_mem_card_no_space(int32 needed, int32 available, int32 neededFiles, bool enabled);
+void render_mem_card_no_space(S32 needed, S32 available, S32 neededFiles, bool enabled);
 
 #endif

@@ -3,11 +3,11 @@
 #include <types.h>
 #include <string.h>
 
-int32 xPadInit()
+S32 xPadInit()
 {
     memset(mPad, 0, sizeof(mPad));
     memset(mRumbleList, 0, sizeof(mRumbleList));
-    int32 code = iPadInit();
+    S32 code = iPadInit();
     if (!code)
     {
         return 0;
@@ -18,7 +18,7 @@ int32 xPadInit()
 
 #if 0
 // WIP.
-_tagxPad* xPadEnable(int32 idx)
+_tagxPad* xPadEnable(S32 idx)
 {
     _tagxPad* p = mPad + idx;
     if (p->state == ePad_Disabled && idx == 0)
@@ -30,7 +30,7 @@ _tagxPad* xPadEnable(int32 idx)
 
 #endif
 
-void xPadRumbleEnable(int32 idx, int32 enable)
+void xPadRumbleEnable(S32 idx, S32 enable)
 {
     _tagxPad* p = mPad + idx;
     if (p->state != 2)
@@ -64,7 +64,7 @@ void xPadKill()
 _tagxRumble* xPadGetRumbleSlot()
 {
     _tagxRumble* rum = mRumbleList;
-    for (int32 i = 0x20; i > 0; i--)
+    for (S32 i = 0x20; i > 0; i--)
     {
         if (rum->active == 0)
         {
@@ -90,7 +90,7 @@ void xPadDestroyRumbleChain(_tagxPad* pad)
     pad->rumble_head.next = NULL;
 }
 
-void xPadDestroyRumbleChain(int32 idx)
+void xPadDestroyRumbleChain(S32 idx)
 {
     xPadDestroyRumbleChain(mPad + idx);
 }

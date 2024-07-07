@@ -30,7 +30,7 @@ void xBaseSave(xBase* ent, xSerial* s)
 
 void xBaseLoad(xBase* ent, xSerial* s)
 {
-    int32 b = 0;
+    S32 b = 0;
     s->Read_b1(&b);
 
     if (b)

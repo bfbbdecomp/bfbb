@@ -19,91 +19,91 @@ struct zNPCVillager : zNPCCommon
 {
     HiThere hithere;
     ztaskbox* converse;
-    int32 current_talk_anim;
+    S32 current_talk_anim;
 
-    zNPCVillager(int32 myType);
+    zNPCVillager(S32 myType);
 };
 
 struct zNPCFish : zNPCVillager
 {
     NPCTarget tgt_robonear;
-    float32 tmr_robonear;
-    float32 tmr_checkagain;
+    F32 tmr_robonear;
+    F32 tmr_checkagain;
     xEntDrive raw_drvdata;
 
-    zNPCFish(int32 myType);
+    zNPCFish(S32 myType);
 };
 
 struct zNPCBubbleBuddy : zNPCFish
 {
-    zNPCBubbleBuddy(int32 myType);
+    zNPCBubbleBuddy(S32 myType);
 };
 
 struct zNPCBalloonBoy : zNPCFish
 {
-    int32 specialBalloon;
+    S32 specialBalloon;
     zPlatform* plat_balloons;
     xShadowCache* shadCache;
 
-    zNPCBalloonBoy(int32 myType);
+    zNPCBalloonBoy(S32 myType);
 };
 
 struct zNPCSandyBikini : zNPCVillager
 {
-    float32 tmr_leakCycle;
+    F32 tmr_leakCycle;
 
-    zNPCSandyBikini(int32 myType);
+    zNPCSandyBikini(S32 myType);
 };
 
 struct zNPCMerManChair : zNPCVillager
 {
-    int32 flg_mermanchair;
+    S32 flg_mermanchair;
 
-    zNPCMerManChair(int32 myType);
+    zNPCMerManChair(S32 myType);
 };
 
 struct zNPCNewsFish : zNPCVillager
 {
     struct say_data
     {
-        int32 total;
-        int32 prev_total;
+        S32 total;
+        S32 prev_total;
     };
 
     say_data said[71];
-    uint8 was_reset;
-    uint32 soundHandle;
-    uint32 currSoundID;
-    uint32 nextSoundID;
-    float32 jawTime;
+    U8 was_reset;
+    U32 soundHandle;
+    U32 currSoundID;
+    U32 nextSoundID;
+    F32 jawTime;
     void* jawData;
-    uint32 newsfishFlags;
+    U32 newsfishFlags;
     xVec2 onScreenCoords;
     xVec2 offScreenCoords;
     xVec2 screenCoords;
-    float32 screenSize;
-    float32 screenRot;
-    float32 appearSpeed;
-    float32 disappearSpeed;
-    float32 screenLerp;
+    F32 screenSize;
+    F32 screenRot;
+    F32 appearSpeed;
+    F32 disappearSpeed;
+    F32 screenLerp;
 
-    zNPCNewsFish(int32 myType);
+    zNPCNewsFish(S32 myType);
 };
 
 struct zNPCNewsFishTV : zNPCVillager
 {
-    zNPCNewsFishTV(int32 myType);
+    zNPCNewsFishTV(S32 myType);
 };
 
 xAnimTable* ZNPC_AnimTable_Villager(xAnimTable* callerTable);
-void zNPCBubbleBuddy_AlphaUpdate(float32 dt);
+void zNPCBubbleBuddy_AlphaUpdate(F32 dt);
 xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable);
 xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable);
 void FOLK_KillEffects();
 void FOLK_InitEffects();
 void ZNPC_Villager_Startup();
 void ZNPC_Villager_Shutdown();
-xFactoryInst* ZNPC_Create_Villager(int32 who, RyzMemGrow* growCtxt, void*);
+xFactoryInst* ZNPC_Create_Villager(S32 who, RyzMemGrow* growCtxt, void*);
 void ZNPC_Destroy_Villager(xFactoryInst* inst);
 
 #endif

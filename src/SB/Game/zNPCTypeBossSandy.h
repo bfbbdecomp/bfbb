@@ -14,21 +14,21 @@
 
 struct BossDamageEffectRecord
 {
-    float32 save_F32[64];
-    float32 BDEtimer;
+    F32 save_F32[64];
+    F32 BDEtimer;
     xModelInstance* BDEminst;
 };
 
 struct zNPCBSandy : zNPCBoss
 {
     xEnt** boundList; // 0x2B4
-    uint32* boundFlags;
-    float32* boundEmitTimer;
-    uint32 bossFlags;
+    U32* boundFlags;
+    F32* boundEmitTimer;
+    U32 bossFlags;
     xVec3 currDir;
-    float32 currVel;
-    int32 hitPoints; // 0x2D4
-    int32 round; // 0x2D8
+    F32 currVel;
+    S32 hitPoints; // 0x2D4
+    S32 round; // 0x2D8
     xVec3 ringCorner[8];
     xVec3 ringEdgeCenter[8];
     xVec3 ropeNormal[8];
@@ -38,11 +38,11 @@ struct zNPCBSandy : zNPCBoss
     xEnt* ropeSb; // 0x4FC
     xEnt* ropeSbDamaged; // 0x500
     xEnt* turnbuckle[8]; // 0x504
-    float32 edgeAlpha[8];
-    float32 scoreboardAlpha;
-    int32 fromRope;
-    int32 toRope;
-    float32 limbLength;
+    F32 edgeAlpha[8];
+    F32 scoreboardAlpha;
+    S32 fromRope;
+    S32 toRope;
+    F32 limbLength;
     RwRaster* helmetRaster;
     RwRaster* feetRaster;
     RwRaster* targetRaster;
@@ -52,7 +52,7 @@ struct zNPCBSandy : zNPCBoss
     xQuat qBoulder;
     xVec3 pHead;
     xVec3 pBoulder;
-    float32 magnetizeTime;
+    F32 magnetizeTime;
     xVec3 shockPos;
     xParEmitterCustomSettings dustEddieSetting;
     zParEmitter* dustEddieEmitter;
@@ -69,41 +69,41 @@ struct zNPCBSandy : zNPCBoss
     zCutsceneMgr* round1Csn;
     zCutsceneMgr* round2Csn;
     zCutsceneMgr* round3Csn;
-    float32 csnTimer;
+    F32 csnTimer;
     _tagLightningAdd sparks[6];
     zLightning* wireLight[2]; // 0x978
     xVec3 endPoints[2][4];
     xMat4x3 sparkTransform[2][2];
-    float32 timeToNextBolt[2];
-    float32 maxLightningWait[2];
-    uint32 springSndID;
-    uint32 ambientSndID;
-    float32 jawTime;
-    float32 jawLevel;
-    float32 jawThreshold;
+    F32 timeToNextBolt[2];
+    F32 maxLightningWait[2];
+    U32 springSndID;
+    U32 ambientSndID;
+    F32 jawTime;
+    F32 jawLevel;
+    F32 jawThreshold;
     void* jawData;
-    int32 isBeat;
+    S32 isBeat;
     xVec3 laserPoint[16];
     xFXRibbon laserShow;
     xFXRibbon::curve_node curveNode[2];
-    float32 curveNodeAlpha;
-    float32 curveNodeR;
-    float32 curveNodeG;
-    float32 curveNodeB;
+    F32 curveNodeAlpha;
+    F32 curveNodeR;
+    F32 curveNodeG;
+    F32 curveNodeB;
     zNPCNewsFish* newsfish;
-    uint32 nfFlags;
-    float32 shockRadius;
-    float32 shockwaveGrowthRate;
-    float32 shockwaveMaxRadius;
-    float32 edropTurnMinTime;
-    float32 edropShockwaveTime;
-    int32 firstTimeR1Csn;
-    int32 firstUpdate;
+    U32 nfFlags;
+    F32 shockRadius;
+    F32 shockwaveGrowthRate;
+    F32 shockwaveMaxRadius;
+    F32 edropTurnMinTime;
+    F32 edropShockwaveTime;
+    S32 firstTimeR1Csn;
+    S32 firstUpdate;
     zEntPickup* underwear[3]; // 0xD58
     xBinaryCamera bossCam;
     xBinaryCamera specialBossCam;
 
-    zNPCBSandy(int32 myType);
+    zNPCBSandy(S32 myType);
     void hiddenByCutscene();
 
     /*
@@ -169,127 +169,127 @@ struct zNPCBSandy : zNPCBoss
     virtual void Init(xEntAsset* asset); // 8013dca0 entry=2
     virtual void Setup(); // 8013e418 entry=4
     virtual void Reset(); // 8013e830 entry=6
-    virtual void Process(xScene* xscn, float32 dt); // 8014075c entry=7
-    virtual void NewTime(xScene* xscn, float32 dt); // 801419d0 entry=9
+    virtual void Process(xScene* xscn, F32 dt); // 8014075c entry=7
+    virtual void NewTime(xScene* xscn, F32 dt); // 801419d0 entry=9
     virtual void Render(); // 8013f9bc entry=12
     virtual void ParseINI(); // 8013f1ac entry=25
     virtual void SelfSetup(); // 8013e5ec entry=28
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, xVec3 const*); // 8014184c entry=32
-    virtual uint32 AnimPick(int32 gid, en_NPC_GOAL_SPOT param_2,
+    virtual U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT param_2,
                             xGoal* rawgoal); // 8013f1f8 entry=44
 };
 
 struct zNPCGoalBossSandyIdle : zNPCGoalCommon
 {
-    float32 timeInGoal;
+    F32 timeInGoal;
 
-    zNPCGoalBossSandyIdle(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyTaunt : zNPCGoalCommon
 {
-    float32 timeInGoal;
+    F32 timeInGoal;
 
-    zNPCGoalBossSandyTaunt(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyTaunt(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyChase : zNPCGoalCommon
 {
-    float32 timeInGoal;
+    F32 timeInGoal;
 
-    zNPCGoalBossSandyChase(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyChase(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyMelee : zNPCGoalCommon
 {
-    float32 timeInGoal;
+    F32 timeInGoal;
 
-    zNPCGoalBossSandyMelee(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyMelee(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyNoHead : zNPCGoalCommon
 {
-    float32 timeInGoal;
-    uint32 stage;
-    float32 secsSincePatWasCarryingHead;
+    F32 timeInGoal;
+    U32 stage;
+    F32 secsSincePatWasCarryingHead;
 
-    zNPCGoalBossSandyNoHead(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyNoHead(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyElbowDrop : zNPCGoalCommon
 {
-    float32 timeInGoal;
-    uint32 elbowFlags;
+    F32 timeInGoal;
+    U32 elbowFlags;
 
-    zNPCGoalBossSandyElbowDrop(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyElbowDrop(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyLeap : zNPCGoalCommon
 {
-    float32 timeInGoal;
-    uint32 stage;
-    float32 startX;
-    float32 startZ;
-    float32 endX;
-    float32 endZ;
+    F32 timeInGoal;
+    U32 stage;
+    F32 startX;
+    F32 startZ;
+    F32 endX;
+    F32 endZ;
 
-    zNPCGoalBossSandyLeap(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyLeap(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 
-    int32 Name();
+    S32 Name();
 };
 
 struct zNPCGoalBossSandySit : zNPCGoalCommon
 {
-    float32 timeInGoal;
-    float32 totalTime;
-    uint32 sitFlags;
+    F32 timeInGoal;
+    F32 totalTime;
+    U32 sitFlags;
 
-    zNPCGoalBossSandySit(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandySit(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyGetUp : zNPCGoalCommon
 {
-    float32 timeInGoal;
+    F32 timeInGoal;
 
-    zNPCGoalBossSandyGetUp(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyGetUp(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyRunToRope : zNPCGoalCommon
 {
-    float32 timeInGoal;
+    F32 timeInGoal;
 
-    zNPCGoalBossSandyRunToRope(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyRunToRope(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
 
 struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
 {
-    float32 timeInGoal;
-    uint32 stage;
-    uint32 playedAnimEarly;
-    float32 totalHoverTime;
+    F32 timeInGoal;
+    U32 stage;
+    U32 playedAnimEarly;
+    F32 totalHoverTime;
     xVec3 bounceStartPoint;
 
-    zNPCGoalBossSandyClothesline(int32 goalID) : zNPCGoalCommon(goalID)
+    zNPCGoalBossSandyClothesline(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
 };
@@ -297,9 +297,9 @@ struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
 void zNPCBSandy_AddBoundEntsToGrid(zScene*);
 void zNPCBSandy_GameIsPaused(zScene*);
 
-uint32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*);
-uint32 HeadIsShocked(xAnimTransition*, xAnimSingle*, void*);
-uint32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*);
-uint32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*);
+U32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*);
+U32 HeadIsShocked(xAnimTransition*, xAnimSingle*, void*);
+U32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*);
+U32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*);
 
 #endif

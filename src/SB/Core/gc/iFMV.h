@@ -14,12 +14,12 @@ struct iFMV
 
 void* iFMVmalloc(size_t size);
 void iFMVfree(void* mem);
-uint32 iFMVPlay(char* filename, uint32 buttons, float32 time, bool skippable, bool lockController);
+U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController);
 static void Setup_surface_array();
-void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, int64 flags);
+void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, S64 flags);
 
 void arammalloc(size_t size);
 void aramfree(void* mem);
-void PlayFMV(char* filename, size_t buttons, float32 time);
+void PlayFMV(char* filename, size_t buttons, F32 time);
 
 #endif

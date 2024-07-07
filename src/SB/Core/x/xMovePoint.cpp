@@ -6,7 +6,7 @@
 #include "xScene.h"
 #include "xMemMgr.h"
 
-float32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
+F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
 
 void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
 {
@@ -50,10 +50,10 @@ void xMovePointReset(xMovePoint* m)
 void xMovePointSetup(xMovePoint* m, xScene* sc)
 {
     m->node_wt_sum = 0;
-    uint32* pointIds = (uint32*)(m->asset + 1);
-    for (uint16 idx = 0; idx < m->asset->numPoints; ++idx)
+    U32* pointIds = (U32*)(m->asset + 1);
+    for (U16 idx = 0; idx < m->asset->numPoints; ++idx)
     {
-        uint32 id = pointIds[idx];
+        U32 id = pointIds[idx];
         m->nodes[idx] = (xMovePoint*)xSceneResolvID(sc, id);
         m->node_wt_sum += m->nodes[idx]->asset->wt;
         m->nodes[idx]->prev = m;
@@ -76,7 +76,7 @@ void xMovePointSplineDestroy(xMovePoint* m)
 // The r27-30 registers used to hold the main varibles of the function are all
 // perfect matches with this code.
 extern float xMovePoint_float_0;
-float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng)
+F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng)
 {
     if (m->asset->numPoints < 1)
     {
@@ -86,14 +86,14 @@ float32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xV
 
     xMovePoint* previousOption = NULL;
 
-    int32 rnd = xrand() % m->node_wt_sum;
+    S32 rnd = xrand() % m->node_wt_sum;
 
     // The debug symbols don't show a dedicated numPoints var, but if it isn't
     // present, then getting numPoints isn't lifted outside of the loop, which
     // it is in the original assembly.
-    //uint16 numPoints = m->asset->numPoints;
+    //U16 numPoints = m->asset->numPoints;
 
-    for (uint16 idx = 0; idx < m->asset->numPoints; ++idx)
+    for (U16 idx = 0; idx < m->asset->numPoints; ++idx)
     {
         *next = m->nodes[idx];
         rnd -= (*next)->asset->wt;

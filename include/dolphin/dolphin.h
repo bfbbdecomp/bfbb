@@ -101,7 +101,7 @@ struct DVDFileInfo
 // idk what this is
 struct _AXVPB
 {
-    int32 i;
+    s32 i;
 };
 
 #define DVD_STATE_FATAL_ERROR -1
@@ -199,7 +199,7 @@ void PADControlMotor(int chan, u32 command);
 void AXQuit();
 void AXFreeVoice(_AXVPB*);
 void OSSetSoundMode(u32 mode);
-int32 CARDProbeEx(int32, int32*, int32*);
+s32 CARDProbeEx(s32, s32*, s32*);
 void VIWaitForRetrace();
 
 #ifdef __cplusplus

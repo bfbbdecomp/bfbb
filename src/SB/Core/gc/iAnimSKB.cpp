@@ -6,21 +6,21 @@
 #include <limits.h>
 
 #ifdef NON_MATCHING
-void iAnimEvalSKB(iAnimSKBHeader* data, float32 time, uint32 flags, xVec3* tran, xQuat* quat)
+void iAnimEvalSKB(iAnimSKBHeader* data, F32 time, U32 flags, xVec3* tran, xQuat* quat)
 {
-    uint32 i, tidx, bcount, tcount;
+    U32 i, tidx, bcount, tcount;
     iAnimSKBKey* keys;
-    float32* times;
-    uint16* offsets;
-    int32 asdf; // unused
-    float32 scalex, scaley, scalez;
+    F32* times;
+    U16* offsets;
+    S32 asdf; // unused
+    F32 scalex, scaley, scalez;
 
     tcount = data->TimeCount;
     bcount = data->BoneCount;
 
     keys = (iAnimSKBKey*)(data + 1);
-    times = (float32*)(keys + data->KeyCount);
-    offsets = (uint16*)(times + tcount);
+    times = (F32*)(keys + data->KeyCount);
+    offsets = (U16*)(times + tcount);
 
     if (time < 0.0f)
     {
@@ -96,7 +96,7 @@ void iAnimEvalSKB(iAnimSKBHeader* data, float32 time, uint32 flags, xVec3* tran,
             RtQuat q1, q2;
             RwReal time1, time2, lerp;
             iAnimSKBKey* k = &keys[*offsets];
-            uint32 costheta, theta; // unused
+            U32 costheta, theta; // unused
 
             offsets++;
 
@@ -128,7 +128,7 @@ void iAnimEvalSKB(iAnimSKBHeader* data, float32 time, uint32 flags, xVec3* tran,
 }
 #endif
 
-float32 iAnimDurationSKB(iAnimSKBHeader* data)
+F32 iAnimDurationSKB(iAnimSKBHeader* data)
 {
-    return ((float32*)((iAnimSKBKey*)(data + 1) + data->KeyCount))[data->TimeCount - 1];
+    return ((F32*)((iAnimSKBKey*)(data + 1) + data->KeyCount))[data->TimeCount - 1];
 }

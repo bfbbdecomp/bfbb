@@ -29,37 +29,37 @@ enum _tagTransType
 
 struct _tagxCamFollowAsset
 {
-    float32 rotation;
-    float32 distance;
-    float32 height;
-    float32 rubber_band;
-    float32 start_speed;
-    float32 end_speed;
+    F32 rotation;
+    F32 distance;
+    F32 height;
+    F32 rubber_band;
+    F32 start_speed;
+    F32 end_speed;
 };
 
 struct _tagxCamShoulderAsset
 {
-    float32 distance;
-    float32 height;
-    float32 realign_speed;
-    float32 realign_delay;
+    F32 distance;
+    F32 height;
+    F32 realign_speed;
+    F32 realign_delay;
 };
 
 struct _tagp2CamStaticAsset
 {
-    uint32 unused;
+    U32 unused;
 };
 
 struct _tagxCamPathAsset
 {
-    uint32 assetID;
-    float32 time_end;
-    float32 time_delay;
+    U32 assetID;
+    F32 time_end;
+    F32 time_delay;
 };
 
 struct _tagp2CamStaticFollowAsset
 {
-    float32 rubber_band;
+    F32 rubber_band;
 };
 
 struct xCamAsset : xBaseAsset
@@ -69,14 +69,14 @@ struct xCamAsset : xBaseAsset
     xVec3 up;
     xVec3 right;
     xVec3 view_offset;
-    int16 offset_start_frames;
-    int16 offset_end_frames;
-    float32 fov;
-    float32 trans_time;
+    S16 offset_start_frames;
+    S16 offset_end_frames;
+    F32 fov;
+    F32 trans_time;
     _tagTransType trans_type;
-    uint32 flags;
-    float32 fade_up;
-    float32 fade_down;
+    U32 flags;
+    F32 fade_up;
+    F32 fade_down;
     union
     {
         _tagxCamFollowAsset cam_follow;
@@ -85,10 +85,10 @@ struct xCamAsset : xBaseAsset
         _tagxCamPathAsset cam_path;
         _tagp2CamStaticFollowAsset cam_staticFollow;
     };
-    uint32 valid_flags;
-    uint32 markerid[2];
-    uint8 cam_type;
-    uint8 pad[3];
+    U32 valid_flags;
+    U32 markerid[2];
+    U8 cam_type;
+    U8 pad[3];
 };
 
 struct xCamera : xBase
@@ -106,70 +106,70 @@ struct xCamera : xBase
     xVec3 focus;
     xScene* sc;
     xVec3 tran_accum;
-    float32 fov;
-    uint32 flags;
-    float32 tmr;
-    float32 tm_acc;
-    float32 tm_dec;
-    float32 ltmr;
-    float32 ltm_acc;
-    float32 ltm_dec;
-    float32 dmin;
-    float32 dmax;
-    float32 dcur;
-    float32 dgoal;
-    float32 hmin;
-    float32 hmax;
-    float32 hcur;
-    float32 hgoal;
-    float32 pmin;
-    float32 pmax;
-    float32 pcur;
-    float32 pgoal;
-    float32 depv;
-    float32 hepv;
-    float32 pepv;
-    float32 orn_epv;
-    float32 yaw_epv;
-    float32 pitch_epv;
-    float32 roll_epv;
+    F32 fov;
+    U32 flags;
+    F32 tmr;
+    F32 tm_acc;
+    F32 tm_dec;
+    F32 ltmr;
+    F32 ltm_acc;
+    F32 ltm_dec;
+    F32 dmin;
+    F32 dmax;
+    F32 dcur;
+    F32 dgoal;
+    F32 hmin;
+    F32 hmax;
+    F32 hcur;
+    F32 hgoal;
+    F32 pmin;
+    F32 pmax;
+    F32 pcur;
+    F32 pgoal;
+    F32 depv;
+    F32 hepv;
+    F32 pepv;
+    F32 orn_epv;
+    F32 yaw_epv;
+    F32 pitch_epv;
+    F32 roll_epv;
     xQuat orn_cur;
     xQuat orn_goal;
     xQuat orn_diff;
-    float32 yaw_cur;
-    float32 yaw_goal;
-    float32 pitch_cur;
-    float32 pitch_goal;
-    float32 roll_cur;
-    float32 roll_goal;
-    float32 dct;
-    float32 dcd;
-    float32 dccv;
-    float32 dcsv;
-    float32 hct;
-    float32 hcd;
-    float32 hccv;
-    float32 hcsv;
-    float32 pct;
-    float32 pcd;
-    float32 pccv;
-    float32 pcsv;
-    float32 orn_ct;
-    float32 orn_cd;
-    float32 orn_ccv;
-    float32 orn_csv;
-    float32 yaw_ct;
-    float32 yaw_cd;
-    float32 yaw_ccv;
-    float32 yaw_csv;
-    float32 pitch_ct;
-    float32 pitch_cd;
-    float32 pitch_ccv;
-    float32 pitch_csv;
-    float32 roll_ct;
-    float32 roll_cd;
-    float32 roll_ccv;
-    float32 roll_csv;
+    F32 yaw_cur;
+    F32 yaw_goal;
+    F32 pitch_cur;
+    F32 pitch_goal;
+    F32 roll_cur;
+    F32 roll_goal;
+    F32 dct;
+    F32 dcd;
+    F32 dccv;
+    F32 dcsv;
+    F32 hct;
+    F32 hcd;
+    F32 hccv;
+    F32 hcsv;
+    F32 pct;
+    F32 pcd;
+    F32 pccv;
+    F32 pcsv;
+    F32 orn_ct;
+    F32 orn_cd;
+    F32 orn_ccv;
+    F32 orn_csv;
+    F32 yaw_ct;
+    F32 yaw_cd;
+    F32 yaw_ccv;
+    F32 yaw_csv;
+    F32 pitch_ct;
+    F32 pitch_cd;
+    F32 pitch_ccv;
+    F32 pitch_csv;
+    F32 roll_ct;
+    F32 roll_cd;
+    F32 roll_ccv;
+    F32 roll_csv;
     xVec4 frustplane[12];
 };
 
@@ -177,9 +177,9 @@ struct xBinaryCamera
 {
     struct zone_data
     {
-        float32 distance;
-        float32 height;
-        float32 height_focus;
+        F32 distance;
+        F32 height;
+        F32 height_focus;
     };
 
     struct config
@@ -187,12 +187,12 @@ struct xBinaryCamera
         zone_data zone_rest;
         zone_data zone_above;
         zone_data zone_below;
-        float32 move_speed;
-        float32 turn_speed;
-        float32 stick_speed;
-        float32 stick_yaw_vel;
-        float32 max_yaw_vel;
-        float32 margin_angle;
+        F32 move_speed;
+        F32 turn_speed;
+        F32 stick_speed;
+        F32 stick_yaw_vel;
+        F32 max_yaw_vel;
+        F32 margin_angle;
     };
 
     config cfg;
@@ -200,37 +200,37 @@ struct xBinaryCamera
     xQuat cam_dir;
     xVec3* s1;
     xVec3* s2;
-    float32 s2_radius;
+    F32 s2_radius;
     xVec2 stick_offset;
 
     void init();
     void start(xCamera& camera);
     void stop();
-    void update(float32 dt);
+    void update(F32 dt);
     void add_tweaks(char const*);
-    void set_targets(xVec3 const& par_1, xVec3 const& par_2, float32 par_3);
+    void set_targets(xVec3 const& par_1, xVec3 const& par_2, F32 par_3);
     void render_debug();
 };
 
-float32 xVec3Length(const xVec3* vec);
-void xCameraInit(xCamera* cam, uint32 width, uint32 height);
+F32 xVec3Length(const xVec3* vec);
+void xCameraInit(xCamera* cam, U32 width, U32 height);
 void xCameraSetScene(xCamera* cam, xScene* sc);
-void xCameraReset(xCamera* cam, float32 d, float32 h, float32 pitch);
+void xCameraReset(xCamera* cam, F32 d, F32 h, F32 pitch);
 void xCameraExit(xCamera* cam);
-void xCameraUpdate(xCamera* cam, float32 dt);
-void xCameraBegin(xCamera* cam, int32);
-void xCameraEnd(xCamera* cam, float32 seconds, int32 update_scrn_fx);
+void xCameraUpdate(xCamera* cam, F32 dt);
+void xCameraBegin(xCamera* cam, S32);
+void xCameraEnd(xCamera* cam, F32 seconds, S32 update_scrn_fx);
 void xCameraShowRaster(xCamera* cam);
-float32 xCameraGetFOV(const xCamera* cam);
-void xCameraSetFOV(xCamera* cam, float32 fov);
-void xCameraMove(xCamera* cam, uint32 flags, float32 dgoal, float32 hgoal, float32 pgoal,
-                 float32 tm, float32 tm_acc, float32 tm_dec);
+F32 xCameraGetFOV(const xCamera* cam);
+void xCameraSetFOV(xCamera* cam, F32 fov);
+void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal,
+                 F32 tm, F32 tm_acc, F32 tm_dec);
 void xCameraMove(xCamera* cam, const xVec3& loc);
-void xCameraRotate(xCamera* cam, const xMat3x3& m, float32 time, float32 accel, float32 decl);
-float32 xCameraGetFOV(const xCamera* cam);
-void xCameraDoCollisions(int32 do_collis, int32 owner);
+void xCameraRotate(xCamera* cam, const xMat3x3& m, F32 time, F32 accel, F32 decl);
+F32 xCameraGetFOV(const xCamera* cam);
+void xCameraDoCollisions(S32 do_collis, S32 owner);
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
-void xCameraFXShake(float32 maxTime, float32 magnitude, float32 cycleMax, float32 rotate_magnitude,
-                    float32 radius, xVec3* epicenter, xVec3* player);
+void xCameraFXShake(F32 maxTime, F32 magnitude, F32 cycleMax, F32 rotate_magnitude,
+                    F32 radius, xVec3* epicenter, xVec3* player);
 
 #endif

@@ -9,22 +9,22 @@
 
 #include <string.h>
 
-extern float32 sCameraNearClip;
-extern float32 sCameraFarClip;
+extern F32 sCameraNearClip;
+extern F32 sCameraFarClip;
 extern RwCamera* sMainGameCamera;
 
-extern float32 _640_0;
-extern float32 _706_0;
-extern float32 _707_1;
-extern float32 _708_3;
-extern float32 _709_1;
-extern float32 _741_3;
-extern float32 _742_1;
-extern float32 _743_1;
-extern float64 _769_1;
-extern float64 _826_0;
+extern F32 _640_0;
+extern F32 _706_0;
+extern F32 _707_1;
+extern F32 _708_3;
+extern F32 _709_1;
+extern F32 _741_3;
+extern F32 _742_1;
+extern F32 _743_1;
+extern F64 _769_1;
+extern F64 _826_0;
 
-RwCamera* iCameraCreate(int32 width, int32 height, int32 mainGameCamera)
+RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
 {
     RwV2d vw;
     RwCamera* camera;
@@ -102,7 +102,7 @@ void iCameraDestroy(RwCamera* camera)
     }
 }
 
-void iCameraBegin(RwCamera* cam, int32 clear)
+void iCameraBegin(RwCamera* cam, S32 clear)
 {
     if (clear)
     {
@@ -228,7 +228,7 @@ void iCameraUpdatePos(RwCamera* cam, xMat4x3* pos)
 }
 
 #ifdef NON_MATCHING
-void iCameraSetFOV(RwCamera* cam, float32 fov)
+void iCameraSetFOV(RwCamera* cam, F32 fov)
 {
     RwV2d vw;
 
@@ -272,9 +272,9 @@ void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix)
 }
 
 #ifdef NON_MATCHING
-void iCameraSetNearFarClip(float32 nearPlane, float32 farPlane)
+void iCameraSetNearFarClip(F32 nearPlane, F32 farPlane)
 {
-    if (nearPlane <= *(const float32*)&_742_1)
+    if (nearPlane <= *(const F32*)&_742_1)
     {
         nearPlane = _741_3;
     }
@@ -283,7 +283,7 @@ void iCameraSetNearFarClip(float32 nearPlane, float32 farPlane)
 
     // non-matching: _742_1 is loaded too early
 
-    if (farPlane <= *(const float32*)&_742_1)
+    if (farPlane <= *(const F32*)&_742_1)
     {
         farPlane = _743_1;
     }
@@ -293,7 +293,7 @@ void iCameraSetNearFarClip(float32 nearPlane, float32 farPlane)
 #endif
 
 #ifdef NON_MATCHING
-void iCameraSetFogParams(iFogParams* fp, float32 time)
+void iCameraSetFogParams(iFogParams* fp, F32 time)
 {
     if (!fp || fp->type == rwFOGTYPENAFOGTYPE)
     {
@@ -320,7 +320,7 @@ void iCameraSetFogRenderStates()
 {
     RwCamera* pCamera;
     iFogParams* pFogParams;
-    uint32 bite_me;
+    U32 bite_me;
 
     pCamera = RwCameraGetCurrentCamera();
     pFogParams = &xglobals->fog;
