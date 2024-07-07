@@ -31,6 +31,8 @@ struct zBusStop : xBase
     float32 switchTimer;
 };
 
+extern uint32 gBusStopIsRunning;
+
 struct xScene;
 
 int32 zBusStopEventCB(xBase*, xBase*, uint32, const float32*, xBase*);
