@@ -97,6 +97,7 @@ void xRotCopy(xRot* o, const xRot* r);
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t);
 void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
+void xMat3x3RotY(xMat3x3* m, F32 t);
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
 void xMat4x3Identity(xMat4x3* m);
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m);

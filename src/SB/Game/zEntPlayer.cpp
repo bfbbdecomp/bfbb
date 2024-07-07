@@ -13,6 +13,7 @@
 #include "xMathInlines.h"
 #include "xMemMgr.h"
 #include "xSnd.h"
+#include "xTRC.h"
 #include "xVec3.h"
 #include "xVec3Inlines.h"
 
@@ -32,14 +33,64 @@
 #include "zMusic.h"
 #include "zThrown.h"
 
+xMat4x3 gPlayerAbsMat;
+
+static F32 sHackStuckTimer;
+static xVec3 sHackStuckDir;
+static xVec3 sHackStuckVel;
+static U32 sHackStuckSetDir;
+static F32 CATCH_CAPSULE_RAD = 0.45f;
+static F32 CATCH_CAPSULE_BIAS = 0.3f;
+static F32 sCatchCapsuleTimer;
+static F32 stuck_timer;
+static F32 not_stuck_timer;
+static xVec3 stuck_start_loc;
+
 static xVec3 last_center;
 
 static U32 sCurrentStreamSndID;
 static F32 sPlayerSndSneakDelay;
 static S32 sPlayerDiedLastTime;
 
+static F32 minVelmag = 0.01f;
+static F32 maxVelmag = 10.0f;
+static F32 curVelmag = 0.0f;
+static F32 curVelangle = 0.0f;
+
+static S32 surfSlickness = 1;
+static F32 surfFriction = 1.0f;
+static F32 surfDamping = 0.0f;
+static S32 lastSlickness = 1;
+static xVec3 lastDeltaPos;
+static xVec3 lastFloorNorm;
+static xEnt* lastFloorEnt;
+static U32 surfSticky;
+static F32 surfSlideStart = 0.34906587f; // Is this some sensible fraction?
+static F32 surfSlideStop = 0.17453294f; // ditto
+F32 surfSlickRatio;
+static F32 surfSlickTimer;
+static F32 surfPeakRatio = 1.25f;
+static F32 surfAccelWalk = 4.0f;
+static F32 surfAccelRun = 8.0f;
+static F32 surfDecelIdle = 2.0f;
+static F32 surfDecelSkid = 8.0f;
+static F32 surfMaxSpeed;
+static F32 surfSlipTimer;
+
 static zPlayerLassoInfo* sLassoInfo;
 static zLasso* sLasso;
+static xEnt* sHitch[32];
+static S32 sNumHitches;
+static F32 sHitchAngle;
+static F32 sSwingTimeElapsed;
+static S32 sLassoCamLinger;
+
+static F32 tslide_maxspd;
+static F32 tslide_maxspd_tmr;
+static F32 tslide_inair_tmr;
+static F32 tslide_dbl_tmr;
+static U32 tslide_ground;
+static xVec3 tslide_lastrealvel;
 
 static S32 in_goo;
 
@@ -59,6 +110,8 @@ static U32 sSpatulaGrabbed;
 static U32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
 static U32 sPlayerSndRand[3][47] = {};
 static U32 sPlayerSndID[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
+
+static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
 
 void zEntPlayer_SpawnWandBubbles(xVec3* center, U32 count)
 {
@@ -250,9 +303,9 @@ static void CalcAnimSpeed(xEnt* ent, float f, float* pf)
     ent->model->Anim->Single->CurrentSpeed = f;
 }
 
-static void LeanUpdate(F32 a, F32 b)
+static void LeanUpdate(F32 angle, F32 dt)
 {
-    float abs = __fabs(a);
+    float abs = __fabs(angle);
     float lerp;
     if (abs < 0.087266468f)
     {
@@ -267,14 +320,50 @@ static void LeanUpdate(F32 a, F32 b)
         lerp = 5.729578f * (abs - 0.087266468f);
     }
 
-    if (a > 0.0f)
+    if (angle > 0.0f)
     {
         lerp = -lerp;
     }
     lerp += 1.0f;
 
     F32 t = 6.0f * (lerp - globals.player.LeanLerp);
-    globals.player.LeanLerp += t * b;
+    globals.player.LeanLerp += t * dt;
+}
+
+// Temp function to fix sdata2 float order.
+// TODO: Figure out why these literals occur this earlier in the binary.
+void floatfix(float* out)
+{
+    out[0] = 3.0f;
+    out[1] = 0.00001f;
+}
+
+static void TurnToFace(xEnt* ent, const xVec3* target, F32 speedLimit, F32 dt)
+{
+    xVec3 currentFacing = ent->frame->mat.at;
+    xVec3Normalize(&currentFacing, &currentFacing);
+
+    F32 angle = xVec3Dot(&currentFacing, target);
+    const F32 maxAngle = 0.9999f;
+    if (angle < maxAngle)
+    {
+        xVec3Cross(&ent->frame->drot.axis, &currentFacing, target);
+        xVec3Normalize(&ent->frame->drot.axis, &ent->frame->drot.axis);
+
+        angle = xacos(angle);
+        if (angle > speedLimit * dt)
+        {
+            angle = speedLimit * dt;
+        }
+
+        if (ent->frame->drot.axis.y < 0.0f)
+        {
+            angle = -angle;
+        }
+
+        ent->frame->drot.angle = angle;
+        ent->frame->mode |= 0x20;
+    }
 }
 
 void PlayerArrive(xEnt* ent, xBase* base)
@@ -286,6 +375,508 @@ void PlayerArrive(xEnt* ent, xBase* base)
     if (base->baseType == 0xd)
     {
         zEntEvent(ent, base, 0x1f);
+    }
+}
+
+static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
+{
+    memset(ent, 0, sizeof(zGlobals));
+    S32 animUserFlag;
+    S32 blendUserFlag;
+    F32 angle = 0.0f;
+    F32 mag = 1.0f;
+    maxVelmag = 0.0f;
+
+    if (gTrcPad[0].state != TRC_PadInserted)
+    {
+        x = 0.0f;
+        z = x;
+    }
+
+    if (globals.player.ControlOff || sHackStuckTimer != 0.0f || sCatchCapsuleTimer > 0.15f)
+    {
+        x = 0.0f;
+        z = x;
+        ent->anim_coll = NULL;
+    }
+
+    // F32 scalemag;
+    // F32 dir_dp;
+    // F32 turnfactor;
+    // F32 diffAngle;
+    // F32 autodist2d;
+    // F32 camAngle;
+    xMat4x3* m = &ent->frame->mat;
+    xVec3 euler;
+    xMat3x3GetEuler(m, &euler);
+
+    if (euler.x < 0.0f)
+    {
+        euler.x += 2 * PI;
+    }
+    ent->frame->rot.angle = euler.x;
+
+    if (ent->model->Anim->Single->State)
+    {
+        animUserFlag = ent->model->Anim->Single->State->UserFlags;
+    }
+    else
+    {
+        animUserFlag = 0;
+    }
+
+    if (ent->model->Anim->Single->Blend && ent->model->Anim->Single->Blend->State)
+    {
+        blendUserFlag = ent->model->Anim->Single->Blend->State->UserFlags;
+    }
+    else
+    {
+        blendUserFlag = 0;
+    }
+
+    if (globals.player.KnockIntoAirTimer != 0.0f && (animUserFlag & 0x1e) == 0 &&
+        (animUserFlag & 0x1) == 0)
+    {
+        animUserFlag = animUserFlag & ~0x80 | 0b1010;
+    }
+
+    memset(&ent->frame->dpos, 0, sizeof(xVec3));
+
+    if (globals.player.KnockBackTimer != 0.0f || animUserFlag & 0x100)
+    {
+        return;
+    }
+
+    if (globals.player.ControlOff & 0x4000)
+    {
+        // F32 rot;
+        F32 dx = ent->frame->vel.x;
+        F32 dz = ent->frame->vel.z;
+
+        if (dx * dx + dz * dz < 0.01f)
+        {
+            ent->frame->mode &= ~0x2;
+
+            angle = xatan2(dx, dz) - ent->frame->rot.angle;
+            if (angle > PI)
+            {
+                angle -= 2 * PI;
+            }
+            else if (angle < -PI)
+            {
+                angle += 2 * PI;
+            }
+
+            ent->frame->rot.angle = 4.0f * angle * dt;
+            ent->frame->mode |= 0x20;
+
+            if ((float)__fabs(ent->frame->drot.angle) < 0.006f)
+            {
+                if ((float)__fabs(angle) > 0.006f)
+                {
+                    angle = 0.006f;
+                }
+                else if (angle <= 0.0f)
+                {
+                    angle = -0.006f;
+                }
+                ent->frame->drot.angle = angle;
+            }
+        }
+    }
+    else
+    {
+        // TODO: figure out which variables these were
+        F32 stackAng, stackMag;
+        DampenControls(&stackAng, &stackMag, x, z);
+        xMat4x3Copy(&gPlayerAbsMat, &globals.camera.mat);
+
+        if (globals.player.carry.grabTarget || globals.player.carry.throwTarget)
+        {
+            if (strcmp(ent->model->Anim->Single->State->Name, "Carry_Pickup") == 0 ||
+                strcmp(ent->model->Anim->Single->State->Name, "Carry_Throw") == 0)
+            {
+                ent->frame->mode &= ~0x2;
+
+                angle = globals.player.carry.targetRot - ent->frame->rot.angle;
+                if (angle > PI)
+                {
+                    angle -= 2 * PI;
+                }
+                else if (angle < -PI)
+                {
+                    angle += 2 * PI;
+                }
+
+                if (globals.player.carry.throwTarget)
+                {
+                    globals.player.carry.flyingToTarget = NULL;
+                    // Does the same thing on both branches
+                    if (angle > 0.0f)
+                    {
+                        ent->frame->drot.angle = globals.player.carry.throwTargetRotRate * dt;
+                    }
+                    else
+                    {
+                        ent->frame->drot.angle = globals.player.carry.throwTargetRotRate * dt;
+                    }
+
+                    F32 dx = globals.player.carry.throwTarget->model->Mat->pos.x -
+                                 ent->model->Mat->pos.x;
+                    F32 dz = globals.player.carry.throwTarget->model->Mat->pos.z -
+                                 ent->model->Mat->pos.z;
+
+                    // unused?
+                    xsqrt(dx * dx + dz * dz);
+                }
+                else
+                {
+                    ent->frame->drot.angle = 4.0f * angle * dt;
+                }
+
+                ent->frame->mode |= 0x20;
+
+                if ((float)__fabs(ent->frame->drot.angle) < 0.006f)
+                {
+                    if ((float)__fabs(angle) > 0.006f)
+                    {
+                        angle = 0.006f;
+                    }
+                    else if (angle <= 0.0f)
+                    {
+                        angle = -0.006f;
+                    }
+                    ent->frame->drot.angle = angle;
+                }
+
+                // F32 ddot;
+                F32 atime = ent->model->Anim->Single->Time;
+
+                if (globals.player.carry.grabLerpLast < globals.player.carry.grabLerpMax &&
+                    globals.player.carry.grabLerpMin < atime &&
+                    globals.player.carry.grabLerpMin < globals.player.carry.grabLerpMax)
+                {
+                    if (globals.player.carry.grabLerpLast < globals.player.carry.grabLerpMin)
+                    {
+                        globals.player.carry.grabLerpLast = globals.player.carry.grabLerpMin;
+                    }
+
+                    F32 lerp = atime;
+                    if (lerp > globals.player.carry.grabLerpMax)
+                    {
+                        lerp = globals.player.carry.grabLerpMax;
+                    }
+                    lerp = -((lerp - globals.player.carry.grabLerpLast) /
+                             (globals.player.carry.grabLerpMax - globals.player.carry.grabLerpMin));
+
+                    ent->frame->dpos.x = lerp * globals.player.carry.grabOffset.x;
+                    ent->frame->dpos.z = lerp * globals.player.carry.grabOffset.z;
+                    ent->frame->mode |= 0x2;
+                }
+            }
+            else
+            {
+                globals.player.carry.grabTarget = 0;
+                globals.player.carry.throwTarget = NULL;
+
+                if (strcmp(ent->model->Anim->Single->State->Name, "SpatulaGrab01") == 0)
+                {
+                    ent->frame->mode &= ~0x2;
+                    angle = xatan2(globals.camera.mat.pos.x - globals.player.ent.frame->mat.pos.x,
+                                   globals.camera.mat.pos.z - globals.player.ent.frame->mat.pos.z);
+
+                    angle -= ent->frame->rot.angle;
+                    if (angle > PI)
+                    {
+                        angle -= 2 * PI;
+                    }
+                    else if (angle < PI)
+                    {
+                        angle += 2 * PI;
+                    }
+
+                    ent->frame->drot.angle = 4.0f * angle * dt;
+                    ent->frame->mode |= 0x20;
+
+                    if ((float)__fabs(ent->frame->drot.angle) < 0.006f)
+                    {
+                        if ((float)__fabs(angle) > 0.006f)
+                        {
+                            angle = 0.006f;
+                        }
+                        else if (angle <= 0.0f)
+                        {
+                            angle = -0.006f;
+                        }
+                        ent->frame->drot.angle = angle;
+                    }
+                }
+                else if (sLassoInfo->target == NULL &&
+                             strcmp(ent->model->Anim->Single->State->Name, "LassoWindup") ||
+                         strcmp(ent->model->Anim->Single->State->Name, "LassoAboutToDestroy"))
+                {
+                    F32 rot;
+                    // F32 m;
+                    F32 curFactor;
+                    zPlayerGlobals* pg = &globals.player;
+                    if (stackMag != 0.0f)
+                    {
+                        stackAng -= xatan2(gPlayerAbsMat.right.z, gPlayerAbsMat.right.x);
+                        if (stackAng > PI)
+                        {
+                            stackAng -= 2 * PI;
+                        }
+                        else if (stackAng < PI)
+                        {
+                            stackAng += 2 * PI;
+                        }
+
+                        rot = angle;
+                        if ((animUserFlag & 0x800 | 0x80) == 0)
+                        {
+                            angle = stackAng - ent->frame->rot.angle;
+                            if (angle > PI)
+                            {
+                                angle -= 2 * PI;
+                            }
+                            else if (angle < PI)
+                            {
+                                angle += 2 * PI;
+                            }
+
+                            rot = icos(angle);
+                            ent->frame->drot.angle = 7.0f * angle * dt;
+                            ent->frame->mode |= 0x20;
+                        }
+
+                        if (pg->IsBubbleBowling)
+                        {
+                            angle *= 0.1f;
+                            rot = icos(angle);
+                            ent->frame->drot.angle = 7.0f * angle * dt;
+                            xMat3x3 rotY;
+                            xMat3x3RotY(&rotY, ent->frame->drot.angle);
+                            xMat3x3RMulVec(&ent->frame->vel, &rotY, &ent->frame->vel);
+                        }
+
+                        if (animUserFlag & 0x800)
+                        {
+                            rot = 1.0f;
+                        }
+
+                        if (stackMag > pg->s->MoveSpeed[3])
+                        {
+                            if (stackMag < pg->s->MoveSpeed[4])
+                            {
+                                pg->Speed = 1;
+                                maxVelmag = pg->s->MoveSpeed[1] * pg->SpeedMult;
+                                mag = (pg->SpeedMult * stackMag * pg->s->MoveSpeed[1]) /
+                                      pg->s->MoveSpeed[4];
+                            }
+                            else
+                            {
+                                pg->Speed = 2;
+                                maxVelmag = pg->s->MoveSpeed[2] * pg->SpeedMult;
+                                F32 slideVelMag = (stackMag - pg->s->MoveSpeed[4]) /
+                                                      (pg->s->MoveSpeed[5] - pg->s->MoveSpeed[4]);
+                                if (slideVelMag > 1.0f)
+                                {
+                                    slideVelMag = 1.0f;
+                                }
+                                F32 slideAccel = pg->s->MoveSpeed[1] * pg->SpeedMult;
+                                mag = slideVelMag *
+                                          (pg->s->MoveSpeed[2] * pg->SpeedMult - slideAccel) +
+                                      slideAccel;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        globals.player.Speed = 0;
+                    }
+
+                    ent->frame->mode &= ~0x2;
+
+                    if (sLassoInfo->swingTarget != NULL)
+                    {
+                        PlayerSwingUpdate(ent, stackMag, stackAng, dt);
+                        return;
+                    }
+
+                    if (sLassoCamLinger)
+                    {
+                        curFactor = zCameraGetLassoCamFactor() + dt;
+                        if (curFactor > 1.0f)
+                        {
+                            zCameraDisableLassoCam();
+                            sLassoCamLinger = 0;
+                        }
+                        else
+                        {
+                            zCameraSetLassoCamFactor(curFactor);
+                        }
+                    }
+
+                    if (pg->HangEnt)
+                    {
+                        return;
+                    }
+
+                    if ((pg->SlideTrackSliding & 1 && (pg->JumpState == 0 || pg->JumpState == 1)) ||
+                        pg->SlideTrackDecay != 0.0f && pg->JumpState != 0 && pg->JumpState != 1)
+                    {
+                        F32 accelX = pg->SlideTrackVel.x * pg->SlideTrackDir.x;
+                        F32 accelZ = pg->SlideTrackVel.z * pg->SlideTrackDir.z;
+                        F32 fwdComponent = (accelX + accelZ - pg->g.SlideAccelVelMin) /
+                                               (pg->g.SlideAccelVelMax - pg->g.SlideAccelEnd);
+
+                        F32 sideComponent;
+                        if (fwdComponent < 0.0f)
+                        {
+                            sideComponent = pg->g.SlideAccelStart;
+                        }
+                        else if (fwdComponent > 1.0f)
+                        {
+                            sideComponent = pg->g.SlideAccelEnd;
+                        }
+                        else
+                        {
+                            sideComponent =
+                                fwdComponent * (pg->g.SlideAccelEnd - pg->g.SlideAccelStart) +
+                                pg->g.SlideAccelStart;
+                        }
+
+                        pg->SlideTrackVel.x += sideComponent * pg->SlideTrackDir.x * dt;
+                        pg->SlideTrackVel.z += sideComponent * pg->SlideTrackDir.z * dt;
+
+                        fwdComponent = stackMag * isin(stackAng);
+                        sideComponent = stackMag * icos(stackAng);
+                        // TODO: this is another variable. angle is reassigned later
+                        angle = fwdComponent * pg->SlideTrackDir.x +
+                                sideComponent * pg->SlideTrackDir.z;
+
+                        if (accelX + accelZ >= 1.0f)
+                        {
+                            if (accelX + accelZ < 6.0f && angle < 0.0f)
+                            {
+                                angle *= (accelX + accelZ - 1.0f) / 5.0f;
+                            }
+                        }
+                        else if (angle < 0.0f)
+                        {
+                            angle = 0.0f;
+                        }
+
+                        F32 temp =
+                            angle < 0.0f ? pg->g.SlideAccelPlayerFwd : pg->g.SlideAccelPlayerBack;
+
+                        pg->SlideTrackVel.z += pg->SlideTrackVel.z * temp * angle;
+                        pg->SlideTrackVel.x += pg->SlideTrackVel.x * temp * angle;
+
+                        fwdComponent =
+                            pg->g.SlideAccelPlayerSide * (sideComponent * pg->SlideTrackDir.x -
+                                                          fwdComponent * pg->SlideTrackDir.z);
+                        pg->SlideTrackVel.x =
+                            -(pg->SlideTrackDir.z * fwdComponent - pg->SlideTrackDir.x);
+                        pg->SlideTrackVel.z =
+                            -(pg->SlideTrackDir.x * fwdComponent - pg->SlideTrackDir.z);
+
+                        mag = xsqrt(pg->SlideTrackVel.x * pg->SlideTrackVel.x +
+                                    pg->SlideTrackVel.y * pg->SlideTrackVel.y);
+                        if (mag > tslide_maxspd)
+                        {
+                            if (pg->SlideTrackDecay == pg->g.SlideAirHoldTime)
+                            {
+                                tslide_maxspd_tmr += dt;
+                                if (angle > 0.0f)
+                                {
+                                    tslide_maxspd_tmr += pg->g.SlideVelMaxIncAccel * angle * dt;
+                                }
+                            }
+
+                            if (pg->g.SlideVelMaxIncTime >= tslide_maxspd_tmr)
+                            {
+                                tslide_maxspd =
+                                    (tslide_maxspd_tmr / pg->g.SlideVelMaxIncTime) *
+                                        (pg->g.SlideVelMaxEnd - pg->g.SlideVelMaxStart) +
+                                    pg->g.SlideVelMaxStart;
+                            }
+                        }
+                        else
+                        {
+                            angle = pg->g.SlideVelMaxStart;
+                            if (mag > angle)
+                            {
+                                tslide_maxspd_tmr = (pg->g.SlideVelMaxIncTime * (mag - angle)) /
+                                                    (pg->g.SlideVelMaxEnd - angle);
+                                tslide_maxspd = mag;
+                            }
+                            else
+                            {
+                                tslide_maxspd_tmr = 0.0f;
+                                tslide_maxspd = mag;
+                            }
+                        }
+
+                        if (tslide_maxspd < mag)
+                        {
+                            // f = tslide_maxspd / mag
+                            pg->SlideTrackVel.x *= tslide_maxspd / mag;
+                            pg->SlideTrackVel.z *= tslide_maxspd / mag;
+                        }
+
+                        // F32 veldown;
+                        // F32 fwdlerp;
+                        angle = xatan2(pg->SlideTrackVel.x, pg->SlideTrackVel.z);
+                        F32 targetAngle = angle - ent->frame->rot.angle;
+
+                        if (targetAngle > PI)
+                        {
+                            targetAngle -= 2 * PI;
+                        }
+                        else if (targetAngle < PI)
+                        {
+                            targetAngle += 2 * PI;
+                        }
+
+                        ent->frame->drot.angle = 4.0f * targetAngle * dt;
+                        ent->frame->mode |= 0x20;
+                        if ((float)__fabs(ent->frame->drot.angle) < 0.006f)
+                        {
+                            if ((float)__fabs(angle) > 0.006f)
+                            {
+                                angle = 0.006f;
+                            }
+                            else if (angle <= 0.0f)
+                            {
+                                angle = -0.006f;
+                            }
+                            ent->frame->drot.angle = angle;
+                        }
+                    }
+                }
+            }
+        }
+        // F32 targetLean;
+        // U32 moveFlag;
+        // xVec3* vel;
+        // F32 accelMag;
+        // F32 peakLerp;
+        // F32 slickLerp;
+        // F32 s;
+        // F32 s;
+    }
+
+    LeanUpdate(angle, dt);
+
+    if (animUserFlag & 0x40)
+    {
+        ent->model->Anim->Single->BilinearLerp[0] = globals.player.LeanLerp;
+    }
+
+    if (blendUserFlag & 0x40)
+    {
+        ent->model->Anim->Single->Blend->BilinearLerp[0] = globals.player.LeanLerp;
     }
 }
 

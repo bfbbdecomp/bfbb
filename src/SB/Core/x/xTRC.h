@@ -27,7 +27,7 @@ struct _tagTRCPadInfo : _tagiTRCPadInfo
     _tagTRCState state;
 };
 
-extern _tagTRCPadInfo gTrcPad[4];
+_tagTRCPadInfo gTrcPad[4];
 
 void xTRCPad(S32 pad_id, _tagTRCState state);
 void xTRCRender();
