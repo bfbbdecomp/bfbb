@@ -37,7 +37,7 @@ static S32 sFirstBoot = 1;
 static volatile S32 card;
 static S32 sInMenu;
 static S32 corruptFileCount;
-static S8 corruptFiles[3][64];
+static char corruptFiles[3][64];
 
 static volatile F32 time_elapsed = 1.0f / 100.0f;
 static volatile F32 holdTmr = 10.0f;
@@ -325,7 +325,7 @@ U32 zMenuUpdateMode()
     return retVal;
 }
 
-U32 zMenuGetCorruptFiles(S8 name[][64])
+U32 zMenuGetCorruptFiles(char name[][64])
 {
     for (int i = 0; i < corruptFileCount; ++i)
     {
@@ -479,7 +479,7 @@ S32 zMenuGetBadCard()
 }
 
 // Floating point assignments are out of order.
-void zMenuFMVPlay(S8* filename, U32 buttons, F32 time, bool skippable, bool lockController)
+void zMenuFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
 {
     if (filename)
     {

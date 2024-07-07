@@ -9,7 +9,7 @@
 #include "xMath.h"
 
 extern vinfo voices[58];
-extern S8 soundInited;
+extern char soundInited;
 extern S32 SoundFlags;
 extern F32 _1262;
 extern F32 _1263;

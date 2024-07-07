@@ -127,7 +127,7 @@ void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);
 void zSurfaceSetup(xSurface* s);
 void zSurfaceUpdate(xBase* to, xScene*, F32 dt);
-void zSurfaceGetName(S32 type, S8* buffer);
+void zSurfaceGetName(S32 type, char* buffer);
 xSurface& zSurfaceGetDefault();
 
 #endif

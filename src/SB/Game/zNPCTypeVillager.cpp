@@ -2,9 +2,9 @@
 
 #include "zNPCTypes.h"
 
-extern S8* g_strz_folkanim[26];
+extern char* g_strz_folkanim[26];
 extern U32 g_hash_folkanim[26];
-extern S8* g_strz_platanim[2];
+extern char* g_strz_platanim[2];
 extern U32 g_hash_platanim[2];
 extern zParEmitter* g_pemit_aqualeak;
 extern char zNPCTypeVillager_stringBase0[];

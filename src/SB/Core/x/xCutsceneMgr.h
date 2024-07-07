@@ -24,7 +24,7 @@ struct xCutsceneZbuffer
 
 struct xCutsceneZbufferHack
 {
-    S8* name;
+    char* name;
     xCutsceneZbuffer times[4];
 };
 

@@ -9,14 +9,14 @@
 #include "zGlobals.h"
 #include "zTextBox.h"
 
-extern const S8 zCombo_Strings[];
+extern const char zCombo_Strings[];
 extern const F32 zCombo_float_zero;
 extern const F32 zCombo_float_minusone;
 
 struct zComboReward
 {
     S32 reward;
-    S8* textName;
+    char* textName;
     U32 rewardList[10];
     U32 rewardNum;
     xTextAsset* textAsset;

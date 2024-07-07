@@ -19,9 +19,9 @@ U32 xStrHash(const char* str);
 U32 xStrHash(const char* str, size_t size);
 U32 xStrHashCat(U32 prefix, const char* str);
 char* xStrupr(char* string);
-S32 xStricmp(const S8* string1, const S8* string2);
+S32 xStricmp(const char* string1, const char* string2);
 char* xStrTok(char* string, const char* control, char** nextoken);
-S32 xStrParseFloatList(F32* dest, const S8* strbuf, S32 max);
+S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max);
 
 S32 imemcmp(void const* d1, void const* d2, size_t size);
 S32 icompare(const substr& s1, const substr& s2);

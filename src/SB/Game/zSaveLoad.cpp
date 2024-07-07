@@ -37,8 +37,8 @@ S32 currentGame = -1;
 F32 dontPoll = 1.0f;
 S32 autoSaveCard = -1;
 
-S8 currSceneStr[32] = "TEMP";
-S8 sceneRead[32] = "0000";
+char currSceneStr[32] = "TEMP";
+char sceneRead[32] = "0000";
 zSaveLoadUI zSaveLoadUITable[62] = { { 0, 0, "ld gameslot group" },
                                      { 1, 0, "ld memcards group" },
                                      { 2, 0, "ld format prompt group" },
@@ -102,7 +102,7 @@ zSaveLoadUI zSaveLoadUITable[62] = { { 0, 0, "ld gameslot group" },
                                      { 60, 0, "ld damaged save game" },
                                      { 0, 0, NULL } };
 
-S8* thumbIconMap[15] = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL",
+char* thumbIconMap[15] = { "ThumbIconHB", "ThumbIconJF", "ThumbIconBB", "ThumbIconGL",
                            "ThumbIconB1", "ThumbIconRB", "ThumbIconBC", "ThumbIconSM",
                            "ThumbIconB2", "ThumbIconKF", "ThumbIconGY", "ThumbIconDB",
                            "ThumbIconB3", "ThumbIconHB", "ThumbIconHB" };
@@ -239,7 +239,7 @@ void zSendEventToThumbIcon(U32 toEvent)
     zEntEvent(zSceneFindObject(xStrHash(iconString)), toEvent);
 }
 
-void zChangeThumbIcon(const S8* icon)
+void zChangeThumbIcon(const char* icon)
 {
     S32 arr[4];
 
@@ -1369,14 +1369,14 @@ S32 zSaveLoad_CardPick(S32 mode)
     return done;
 }
 
-bool IsValidName(S8* name)
+bool IsValidName(char* name)
 {
     if (strcmp((char*)name, "") == 0)
     {
         return 0;
     }
 
-    for (S8* p = name; *p != NULL; p++)
+    for (char* p = name; *p != NULL; p++)
     {
         if ((*p < 'A' || *p > 'z') && (*p < '0' || *p > '9') && (*p != ' ' && *p != '\''))
         {
@@ -1386,12 +1386,12 @@ bool IsValidName(S8* name)
     return 1;
 }
 
-void BuildIt(S8* build_txt, S32 i)
+void BuildIt(char* build_txt, S32 i)
 {
-    S8 date1[32] = {};
-    S8 date2[32];
-    S8 biggerbuf[256] = {};
-    S8 displaySizeUnit[32];
+    char date1[32] = {};
+    char date2[32];
+    char biggerbuf[256] = {};
+    char displaySizeUnit[32];
 
     if (IsValidName(zSaveLoadGameTable[i].label) == 0)
     {
@@ -1424,10 +1424,10 @@ void BuildIt(S8* build_txt, S32 i)
     }
 }
 
-void zSaveLoad_BuildName(S8* name_txt, S32 idx)
+void zSaveLoad_BuildName(char* name_txt, S32 idx)
 {
-    S8 desired[128];
-    S8 current_name[128];
+    char desired[128];
+    char current_name[128];
 
     BuildIt(desired, idx);
 
@@ -1750,7 +1750,7 @@ S32 zSaveLoad_DoAutoSave()
     xSerial_svgame_register(svinst, XSG_MODE_SAVE);
     U32 progress = zSceneCalcProgress();
 
-    const S8* area;
+    const char* area;
     if (globals.sceneCur->sceneID == 'PG12')
     {
         area = zSceneGetLevelName('HB01');
@@ -1760,7 +1760,7 @@ S32 zSaveLoad_DoAutoSave()
         area = zSceneGetLevelName(globals.sceneCur->sceneID);
     }
 
-    S8 label[64];
+    char label[64];
     strncpy(label, area, sizeof(label));
     if (!xSGSetup(svinst, lastGame, label, progress, 0, zSceneGetLevelIndex()))
     {
@@ -1859,8 +1859,8 @@ S32 zSaveLoad_SaveGame()
     xSerial_svgame_register(xsgdata, XSG_MODE_SAVE);
 
     U32 progress = zSceneCalcProgress();
-    S8 label[64];
-    const S8* area;
+    char label[64];
+    const char* area;
 
     if (globals.sceneCur->sceneID == 'PG12')
     {
@@ -2343,7 +2343,7 @@ S32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRIT
 S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
                       U32 ui, S32 i)
 {
-    S8 bigbuf[32] = {};
+    char bigbuf[32] = {};
     S32 compdiff = 0;
 
     xSGReadData(xsgdata, rctxt, bigbuf, 1, strlen(currSceneStr));
@@ -2382,7 +2382,7 @@ S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONT
 U32 zSaveLoad_slotIsEmpty(U32 slot)
 {
     // TODO: Fix this hardcoded offset once string generation is correct
-    S8* label = zSaveLoadGameTable[slot].label;
+    char* label = zSaveLoadGameTable[slot].label;
     return strcmp(label, "ld gameslot group" + 0x49c) == 0 ? 1 : 0;
 }
 

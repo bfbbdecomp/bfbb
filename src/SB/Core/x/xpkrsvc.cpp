@@ -9,7 +9,7 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
-extern S8 xpkrsvc_strings[];
+extern char xpkrsvc_strings[];
 
 extern st_PACKER_READ_FUNCS g_pkr_read_funcmap_original;
 extern st_PACKER_READ_FUNCS g_pkr_read_funcmap; // = g_pkr_read_funcmap_original;
@@ -59,18 +59,18 @@ S32 PKRLoadStep(S32)
     return PKR_LoadStep_Async();
 }
 
-st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, S8* pkgfile, U32 opts, S32* cltver,
+st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* cltver,
                                   st_PACKER_ASSETTYPE* typelist)
 {
     // I'm pretty sure this is just a pointer to an array on the heap
     // But it needs to be an array of pointers to generate correct code ???
-    S8* tocbuf_RAW[1];
+    char* tocbuf_RAW[1];
     tocbuf_RAW[0] = NULL;
     st_PACKER_READ_DATA* pr = NULL;
     S32 uselock = -1;
 
     PKR_alloc_chkidx();
-    S8* tocbuf_aligned = (S8*)PKR_getmem('PTOC', 0x8000, 'PTOC', 0x40, 1, tocbuf_RAW);
+    char* tocbuf_aligned = (char*)PKR_getmem('PTOC', 0x8000, 'PTOC', 0x40, 1, tocbuf_RAW);
 
     for (S32 i = 0; i < 16; i++)
     {
@@ -401,9 +401,9 @@ S32 PKR_LoadStep_Async()
     return rc;
 }
 
-S8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
+char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
-    S8* mem = NULL;
+    char* mem = NULL;
     if (layer->laymem != NULL)
     {
         return layer->laymem;
@@ -414,15 +414,15 @@ S8* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
     case PKR_LDDEST_SKIP:
         break;
     case PKR_LDDEST_KEEPSTATIC:
-        mem = (S8*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
+        mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
         break;
     case PKR_LDDEST_KEEPMALLOC:
-        mem = (S8*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40, 1,
+        mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40, 1,
                                 &layer->laytru);
         break;
     case PKR_LDDEST_RWHANDOFF:
         PKR_push_memmark();
-        mem = (S8*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
+        mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
         break;
     }
 
@@ -667,8 +667,8 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
             assnode->memloc = NULL;
         }
 
-        S8* xformloc =
-            (S8*)atype->readXForm(assnode->ownpr->userdata, assnode->aid, assnode->memloc,
+        char* xformloc =
+            (char*)atype->readXForm(assnode->ownpr->userdata, assnode->aid, assnode->memloc,
                                     assnode->d_size, (U32*)&assnode->x_size);
         if (!dumpable_layer && assnode->memloc == xformloc && assnode->x_size != 0)
         {
@@ -713,7 +713,7 @@ S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
     return 0;
 }
 
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const S8*, void*)
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*)
 {
     return PKR_FindAsset(pr, aid);
 }
@@ -830,9 +830,9 @@ U32 PKRAssetIDFromInst(void* inst)
     return ((st_PACKER_ATOC_NODE*)inst)->aid;
 }
 
-S8* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid)
+char* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid)
 {
-    S8* name = NULL;
+    char* name = NULL;
 
     if (aid == 0)
     {
@@ -926,7 +926,7 @@ S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid)
 }
 
 S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize,
-                                U32 ourtype, U32 chksum, S8*)
+                                U32 ourtype, U32 chksum, char*)
 {
     S32 is_dup = 0;
     if (aid == 0x7ab6743a)
@@ -1176,7 +1176,7 @@ S32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 S32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 time = 0;
-    S8 arr[256] = {};
+    char arr[256] = {};
 
     g_hiprf->readLongs(pkg, &time, 1);
     pr->time_made = time;
@@ -1199,10 +1199,10 @@ S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 
 #ifdef NON_MATCHING
 // String data
-S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, S8* plat,
-                       S8* vid, S8* lang, S8* title)
+S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, char* plat,
+                       char* vid, char* lang, char* title)
 {
-    S8 fullname[128] = {};
+    char fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
 
     bool rc = false;
@@ -1281,10 +1281,10 @@ S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 result = 1;
     S32 plattag = 0;
-    S8 platname[32] = {};
-    S8 vidname[32] = {};
-    S8 langname[32] = {};
-    S8 titlename[32] = {};
+    char platname[32] = {};
+    char vidname[32] = {};
+    char langname[32] = {};
+    char titlename[32] = {};
 
     g_hiprf->readLongs(pkg, &plattag, 1);
     g_hiprf->readString(pkg, platname);
@@ -1412,7 +1412,7 @@ S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
 {
     S32 ival = 0;
-    S8 tmpbuf[256] = {};
+    char tmpbuf[256] = {};
 
     g_hiprf->readLongs(pkg, &ival, 1);
     assnode->assalign = ival;
@@ -1704,7 +1704,7 @@ void* PKR_getmem(U32 id, S32 amount, U32 ui, S32 align)
     return PKR_getmem(id, amount, ui, align, false, NULL);
 }
 
-void* PKR_getmem(U32 id, S32 amount, U32, S32 align, S32 isTemp, S8** memtrue)
+void* PKR_getmem(U32 id, S32 amount, U32, S32 align, S32 isTemp, char** memtrue)
 {
     if (amount == 0)
     {
@@ -1719,7 +1719,7 @@ void* PKR_getmem(U32 id, S32 amount, U32, S32 align, S32 isTemp, S8** memtrue)
 
         if (memtrue != NULL)
         {
-            *memtrue = (S8*)memptr;
+            *memtrue = (char*)memptr;
         }
 
         if (align != 0)
@@ -1790,7 +1790,7 @@ void PKR_pop_memmark()
     xMemPopBase(xMemGetBase() - 1);
 }
 
-S8* st_PACKER_ATOC_NODE::Name() const
+char* st_PACKER_ATOC_NODE::Name() const
 {
     return xpkrsvc_strings + 82;
 }

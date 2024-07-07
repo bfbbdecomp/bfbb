@@ -18,7 +18,7 @@
 #include "xDebug.h"
 
 extern char zNPCTypeCommon_strings[];
-extern S8* g_strz_lassanim[3];
+extern char* g_strz_lassanim[3];
 extern S32 g_hash_lassanim[3];
 extern volatile S32 g_skipDescent;
 extern NPCConfig* g_ncfghead;

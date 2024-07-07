@@ -12,7 +12,7 @@
 #include "zNPCGoals.h"
 #include "zGrid.h"
 
-extern S8* g_strz_ambianim[12];
+extern char* g_strz_ambianim[12];
 extern S32 g_hash_ambianim[12];
 extern NPCSndTrax g_sndTrax_Jelly[4];
 extern zGlobals globals;

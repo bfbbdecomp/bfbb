@@ -7,8 +7,8 @@ struct st_XSAVEGAME_DATA;
 
 struct zSaveLoadGame
 {
-    S8 label[64];
-    S8 date[32];
+    char label[64];
+    char date[32];
     S32 progress;
     U32 size;
     S8 thumbIconIndex;
@@ -18,7 +18,7 @@ struct zSaveLoadUI
 {
     U32 entry;
     U32 nameID;
-    S8* name;
+    char* name;
 };
 
 
@@ -28,7 +28,7 @@ void zUpdateThumbIcon();
 void zSaveLoad_Tick();
 S32 zSaveLoad_poll(S32 i);
 void zSendEventToThumbIcon(U32 toEvent);
-void zChangeThumbIcon(const S8* icon);
+void zChangeThumbIcon(const char* icon);
 
 void zSaveLoadInit();
 void zSaveLoadGameTableInit(zSaveLoadGame* saveTable);
@@ -79,9 +79,9 @@ S32 zSaveLoad_CardCheckGameSlot(S32 cardNumber, S32 gameNumber, S32 mode);
 S32 zSaveLoad_CardCheckSlotEmpty(S32 cardNumber, S32 gameNumber);
 S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber);
 S32 zSaveLoad_CardPick(S32 mode);
-bool IsValidName(S8* name);
-void BuildIt(S8* build_txt, S32 i);
-void zSaveLoad_BuildName(S8* name_txt, S32 idx);
+bool IsValidName(char* name);
+void BuildIt(char* build_txt, S32 i);
+void zSaveLoad_BuildName(char* name_txt, S32 idx);
 S32 zSaveLoad_GameSelect(S32 mode);
 U8 zSaveLoadGetPreAutoSave();
 void zSaveLoadPreAutoSave(bool onOff);

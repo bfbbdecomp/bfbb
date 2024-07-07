@@ -6,7 +6,7 @@
 
 #include "iTRC.h"
 
-extern S8 isavegame_strings[];
+extern char isavegame_strings[];
 
 extern st_ISGSESSION g_isgdata_MAIN;
 
@@ -39,13 +39,13 @@ S32 iSGShutdown()
 
 #if 0
 // WIP
-S8* iSGMakeName(en_NAMEGEN_TYPE type, const S8* base, S32 idx)
+char* iSGMakeName(en_NAMEGEN_TYPE type, const char* base, S32 idx)
 {
     static S32 rotate = 0;
-    static S8 rotatebuf[32][8];
+    static char rotatebuf[32][8];
 
-    S8* use_buf = rotatebuf[rotate];
-    S8* fmt_sd = isavegame_strings;
+    char* use_buf = rotatebuf[rotate];
+    char* fmt_sd = isavegame_strings;
     rotate++;
     if (rotate == 8)
     {

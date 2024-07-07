@@ -9,10 +9,10 @@ struct RyzMemGrow
 {
     S32 flg_grow;
     S32 amt;
-    S8* ptr;
+    char* ptr;
     xBase* user;
     S32 amt_last;
-    S8* ptr_last;
+    char* ptr_last;
     xBase* user_last;
 
     RyzMemGrow* Init(xBase* growuser);

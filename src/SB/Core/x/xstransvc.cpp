@@ -16,9 +16,9 @@ static st_PACKER_ASSETTYPE* g_typeHandlers;
 static st_STRAN_SCENE* XST_lock_next();
 static void XST_unlock_all();
 static S32 XST_cnt_locked();
-static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const S8* path);
-static S8* XST_translate_sid(U32 sid, S8* extension);
-static S8* XST_translate_sid_path(U32 sid, S8* extension);
+static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* path);
+static char* XST_translate_sid(U32 sid, char* extension);
+static char* XST_translate_sid_path(U32 sid, char* extension);
 static st_STRAN_SCENE* XST_find_bySID(U32 sid, S32 findTheHOP);
 static void XST_reset_raw();
 static void XST_unlock(st_STRAN_SCENE* sdata);
@@ -58,7 +58,7 @@ S32 xSTPreLoadScene(U32 sid, void* userdata, S32 flg_hiphop)
     S32 result;
     S32 i = 0;
     st_STRAN_SCENE* sdata;
-    S8* path;
+    char* path;
     if ((flg_hiphop & 3) == 2)
     {
         sdata = XST_lock_next();
@@ -226,9 +226,9 @@ S32 xSTSwitchScene(U32 sid, void* userdata, S32 (*progmon)(void*, F32))
     return rc;
 }
 
-S8* xSTAssetName(U32 aid)
+char* xSTAssetName(U32 aid)
 {
-    S8* aname = NULL;
+    char* aname = NULL;
 
     S32 cnt = XST_cnt_locked();
     for (int i = 0; i < cnt; i++)
@@ -247,9 +247,9 @@ S8* xSTAssetName(U32 aid)
     return aname;
 }
 
-S8* xSTAssetName(void* raw_HIP_asset)
+char* xSTAssetName(void* raw_HIP_asset)
 {
-    S8* aname = NULL;
+    char* aname = NULL;
 
     S32 cnt = XST_cnt_locked();
     for (int i = 0; i < cnt; i++)
@@ -408,14 +408,14 @@ S32 xSTGetAssetInfoInHxP(U32 aid, st_PKR_ASSET_TOCINFO* ainfo, U32 j)
     return rc;
 }
 
-S8* xST_xAssetID_HIPFullPath(U32 aid)
+char* xST_xAssetID_HIPFullPath(U32 aid)
 {
     return xST_xAssetID_HIPFullPath(aid, 0);
 }
 
-S8* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
+char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 {
-    S8* id = NULL;
+    char* id = NULL;
     S32 cnt = XST_cnt_locked();
     for (int i = 0; i < cnt; i++)
     {
@@ -435,7 +435,7 @@ S8* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 }
 
 // register crap
-static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const S8* name)
+static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* name)
 {
     S32 buf = 0;
     st_PACKER_READ_DATA* spkg = g_pkrf->Init(sdata->userdata, name, 0x2e, &buf, g_typeHandlers);
@@ -447,19 +447,19 @@ static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const S8* name)
     return NULL;
 }
 
-static S8* XST_translate_sid(U32 sid, S8* extension)
+static char* XST_translate_sid(U32 sid, char* extension)
 {
-    static S8 fname[0x40] = {};
+    static char fname[0x40] = {};
     sprintf(fname, "%s%s", xUtil_idtag2string(sid, 0), extension);
     return fname;
 }
 
-static S8* XST_translate_sid_path(U32 sid, S8* extension)
+static char* XST_translate_sid_path(U32 sid, char* extension)
 {
     // NOTE: This buffer extends for 0x44 bytes in the rom
     // However, I think that's most likely padding for the jumptable that occurs afterwards
-    static S8 fname[0x40] = {};
-    S8 pathSeparator[2] = "/";
+    static char fname[0x40] = {};
+    char pathSeparator[2] = "/";
     sprintf(fname, "%c%c%s%s%s", *xUtil_idtag2string(sid, 0), *(xUtil_idtag2string(sid, 0) + 1),
             pathSeparator, xUtil_idtag2string(sid, 0), extension);
     return fname;

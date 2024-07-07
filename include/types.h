@@ -5,10 +5,10 @@
 // Don't include this in any RenderWare, system, bink, etc. files
 
 #ifdef GAMECUBE
-typedef char S8;
-typedef short S16;
-typedef int S32;
-typedef long long S64;
+typedef signed char S8;
+typedef signed short S16;
+typedef signed int S32;
+typedef signed long long S64;
 
 typedef unsigned char U8;
 typedef unsigned short U16;

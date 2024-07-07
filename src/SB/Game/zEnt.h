@@ -25,20 +25,20 @@ struct zEnt : xEnt
 };
 
 void checkpoint_collision_hack(zEnt* ent);
-S8* zParamGetString(xModelAssetParam* param, U32 size, S8* tok, S8* def);
-S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const S8* tok, S32 count,
+char* zParamGetString(xModelAssetParam* param, U32 size, char* tok, char* def);
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const char* tok, S32 count,
                          F32* def, F32* result);
 void zEntGetShadowParams(xEnt* ent, xVec3* center, F32* radius, xEntShadow::radius_enum rtype);
-S32 zParamGetVector(xModelAssetParam* param, U32 size, const S8* tok, xVec3 result, xVec3*);
-S32 zParamGetVector(xModelAssetParam* param, U32 size, S8* tok, xVec3 result, xVec3*);
-S32 zParamGetFloatList(xModelAssetParam* param, U32 size, S8* tok, S32 count, F32* def,
+S32 zParamGetVector(xModelAssetParam* param, U32 size, const char* tok, xVec3 result, xVec3*);
+S32 zParamGetVector(xModelAssetParam* param, U32 size, char* tok, xVec3 result, xVec3*);
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, char* tok, S32 count, F32* def,
                          F32* result);
-S32 zParamGetFloatList(xModelAssetParam* param, U32 size, S8* tok, S32 count, F32* def,
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, char* tok, S32 count, F32* def,
                          F32* result);
-F32 zParamGetFloat(xModelAssetParam* param, U32 size, const S8* tok, F32 def);
-F32 zParamGetFloat(xModelAssetParam* param, U32 size, S8* tok, F32 def);
-S32 zParamGetInt(xModelAssetParam* param, U32 size, const S8* tok, S32 def);
-S32 zParamGetInt(xModelAssetParam* param, U32 size, S8* tok, S32 def);
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, const char* tok, F32 def);
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, char* tok, F32 def);
+S32 zParamGetInt(xModelAssetParam* param, U32 size, const char* tok, S32 def);
+S32 zParamGetInt(xModelAssetParam* param, U32 size, char* tok, S32 def);
 xModelAssetParam* zEntGetModelParams(U32 assetID, U32* size);
 void zEntAnimEvent_AutoAnim(zEnt* ent, U32 animEvent, const F32* animParam);
 xAnimTable* xEnt_AnimTable_AutoEventSmall();

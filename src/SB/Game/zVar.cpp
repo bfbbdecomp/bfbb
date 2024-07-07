@@ -31,7 +31,7 @@ Full `vars` Array Contents
 Notes:
 * Looking up the address in the callback column will yield the first
   instruction of a call in zVar.s, that's the function in question.
-* This means the function signature of the callbacks is `S8* Callback();`.
+* This means the function signature of the callbacks is `char* Callback();`.
 
 NameStr  | NameLen  | Callback
 ------------------------------
@@ -77,63 +77,63 @@ NameStr  | NameLen  | Callback
 8025FFE7 | 00000003 | 800BDF80
 */
 
-S8* var_text(const substr& str);
+char* var_text(const substr& str);
 U32 zVarEntryCB_SndFXVol(void*);
 U32 zVarEntryCB_SndMusicVol(void*);
 
-extern const S8 zVar_strings[];
+extern const char zVar_strings[];
 
 // Buffers for var_text callbacks. These should all be changed to:
-// static S8 buffer[...]
+// static char buffer[...]
 // inside the respective functions in the final version.
-extern S8 zVar_printf_buffer1[];
-extern S8 zVar_printf_buffer2[];
-extern S8 zVar_printf_buffer3[];
-extern S8 zVar_printf_buffer4[];
-extern S8 zVar_printf_buffer5[];
-extern S8 zVar_printf_buffer6[];
-extern S8 zVar_printf_buffer7[];
-extern S8 zVar_printf_buffer8[];
-extern S8 zVar_printf_buffer9[];
-extern S8 zVar_printf_buffer10[];
-extern S8 zVar_buffer11[0x40];
-extern S8 zVar_buffer12[0x40];
-extern S8 zVar_buffer13[0x40];
-extern S8 zVar_buffer14[0x40];
-extern S8 zVar_buffer15[0x40];
-extern S8 zVar_buffer16[0x40];
-extern S8 zVar_buffer17[0x40];
-extern S8 zVar_buffer18[0x40];
-extern S8 zVar_buffer19[];
-extern S8 zVar_buffer20[];
-extern S8 zVar_buffer21[];
-extern S8 zVar_buffer22[];
-extern S8 zVar_buffer23[];
-extern S8 zVar_buffer24[0x30];
-extern S8 zVar_buffer25[];
-extern S8 zVar_buffer26[];
-extern S8 zVar_buffer27[];
-extern S8 zVar_buffer28[];
-extern S8 zVar_buffer29[];
-extern S8 zVar_buffer30[];
-extern S8 zVar_buffer31[];
-extern S8 zVar_buffer32[];
-extern S8* playername_text[3]; // originally called "text"
-extern S8* heshe_text[3]; // also originally called "text"
-extern S8 lbl_80291708[];
+extern char zVar_printf_buffer1[];
+extern char zVar_printf_buffer2[];
+extern char zVar_printf_buffer3[];
+extern char zVar_printf_buffer4[];
+extern char zVar_printf_buffer5[];
+extern char zVar_printf_buffer6[];
+extern char zVar_printf_buffer7[];
+extern char zVar_printf_buffer8[];
+extern char zVar_printf_buffer9[];
+extern char zVar_printf_buffer10[];
+extern char zVar_buffer11[0x40];
+extern char zVar_buffer12[0x40];
+extern char zVar_buffer13[0x40];
+extern char zVar_buffer14[0x40];
+extern char zVar_buffer15[0x40];
+extern char zVar_buffer16[0x40];
+extern char zVar_buffer17[0x40];
+extern char zVar_buffer18[0x40];
+extern char zVar_buffer19[];
+extern char zVar_buffer20[];
+extern char zVar_buffer21[];
+extern char zVar_buffer22[];
+extern char zVar_buffer23[];
+extern char zVar_buffer24[0x30];
+extern char zVar_buffer25[];
+extern char zVar_buffer26[];
+extern char zVar_buffer27[];
+extern char zVar_buffer28[];
+extern char zVar_buffer29[];
+extern char zVar_buffer30[];
+extern char zVar_buffer31[];
+extern char zVar_buffer32[];
+extern char* playername_text[3]; // originally called "text"
+extern char* heshe_text[3]; // also originally called "text"
+extern char lbl_80291708[];
 extern S32 selSceneID;
-extern S8* state_text[4];
+extern char* state_text[4];
 
 // var_text callbacks
 namespace
 {
-    S8* var_text_ActivePad()
+    char* var_text_ActivePad()
     {
         sprintf(zVar_printf_buffer1, &zVar_strings[0] /*"%d"*/, globals.currentActivePad + 1);
         return zVar_printf_buffer1;
     }
 
-    S8* var_text_BadCard()
+    char* var_text_BadCard()
     {
         S32 badCardCount = zMenuGetBadCard();
         if (badCardCount > 0)
@@ -147,14 +147,14 @@ namespace
         return zVar_printf_buffer2;
     }
 
-    S8* var_text_BadCardAvailable()
+    char* var_text_BadCardAvailable()
     {
         sprintf(zVar_printf_buffer3, &zVar_strings[0] /*"%d"*/, bad_card_available);
         return zVar_printf_buffer3;
     }
 
     // var_text_BadCardNeeded__18_esc__2_unnamed_esc__2_zVar_cpp_esc__2_Fv
-    S8* var_text_BadCardNeeded()
+    char* var_text_BadCardNeeded()
     {
         sprintf(zVar_printf_buffer4, &zVar_strings[0] /*"%d"*/, bad_card_needed);
         return zVar_printf_buffer4;
@@ -163,9 +163,9 @@ namespace
 #ifdef NON_MATCHING
     // Indexing into zVar_strings didn't get pulled out of the loop in the original
     // code for some reason.
-    S8* var_text_CorruptFileName()
+    char* var_text_CorruptFileName()
     {
-        S8 corruptedNames[3][64];
+        char corruptedNames[3][64];
         U32 corruptCount = zMenuGetCorruptFiles(corruptedNames);
         strcpy(zVar_printf_buffer5, &zVar_strings[0xD] /*""*/);
         for (U32 i = 0; i < corruptCount; ++i)
@@ -182,34 +182,34 @@ namespace
         return zSceneGetAreaname(globals.sceneCur->sceneID);
     }
 
-    S8* var_text_CurrentData()
+    char* var_text_CurrentData()
     {
         iGetCurrFormattedDate(zVar_printf_buffer6);
         return zVar_printf_buffer6;
     }
 
-    S8* var_text_CurrentLevelCollectable()
+    char* var_text_CurrentLevelCollectable()
     {
         sprintf(zVar_printf_buffer7, zVar_strings /*"%d"*/,
                 globals.player.Inv_LevelPickups_CurrentLevel);
         return zVar_printf_buffer7;
     }
 
-    S8* var_text_CurrentLevelPatsSocks()
+    char* var_text_CurrentLevelPatsSocks()
     {
         sprintf(zVar_printf_buffer8, zVar_strings /*"%d"*/,
                 globals.player.Inv_PatsSock_CurrentLevel);
         return zVar_printf_buffer8;
     }
 
-    S8* var_text_CurrentScene()
+    char* var_text_CurrentScene()
     {
         sprintf(zVar_printf_buffer9, &zVar_strings[0x10] /*"%s"*/,
                 xUtil_idtag2string(globals.sceneCur->sceneID, 0));
         return zVar_printf_buffer9;
     }
 
-    S8* var_text_CurrentTime()
+    char* var_text_CurrentTime()
     {
         iGetCurrFormattedTime(zVar_printf_buffer10);
         return zVar_printf_buffer10;
@@ -222,20 +222,20 @@ namespace
 #if 1
 // Needed for the following functions to call, but not to be exposed in the
 // header file.
-S8* zVarGameSlotInfo(S32 i, S8* buffer, size_t something);
+char* zVarGameSlotInfo(S32 i, char* buffer, size_t something);
 
 #else
 // I don't understand this function. The behavior perfectly matches... but
 // it never ends up doing anything with the buffer it makes up?? It just returns
 // the same buffer it takes in, throwing away all the work it just did.
 // Still needs the strings to be pulled out
-S8* zVarGameSlotInfo(S32 i, S8* buffer, size_t something)
+char* zVarGameSlotInfo(S32 i, char* buffer, size_t something)
 {
-    S8 date[0x20] = "";
-    S8 time[0x20] = "";
+    char date[0x20] = "";
+    char time[0x20] = "";
     S32 hour;
-    S8 ampm[0x20] = "";
-    S8 anotherBuffer[0x100] = "";
+    char ampm[0x20] = "";
+    char anotherBuffer[0x100] = "";
 
     // Get the date
     strncpy(date, zSaveLoadGameTable[i].date, 5);
@@ -292,58 +292,58 @@ S8* zVarGameSlotInfo(S32 i, S8* buffer, size_t something)
 namespace
 {
 
-    S8* var_text_GameSlot0()
+    char* var_text_GameSlot0()
     {
         return zVarGameSlotInfo(0, zVar_buffer11, 0x3f);
     }
 
-    S8* var_text_GameSlot1()
+    char* var_text_GameSlot1()
     {
         return zVarGameSlotInfo(1, zVar_buffer12, 0x3f);
     }
 
-    S8* var_text_GameSlot2()
+    char* var_text_GameSlot2()
     {
         return zVarGameSlotInfo(2, zVar_buffer13, 0x3f);
     }
 
-    S8* var_text_GameSlot3()
+    char* var_text_GameSlot3()
     {
         return zVarGameSlotInfo(3, zVar_buffer14, 0x3f);
     }
 
-    S8* var_text_GameSlot4()
+    char* var_text_GameSlot4()
     {
         return zVarGameSlotInfo(4, zVar_buffer15, 0x3f);
     }
 
-    S8* var_text_GameSlot5()
+    char* var_text_GameSlot5()
     {
         return zVarGameSlotInfo(5, zVar_buffer16, 0x3f);
     }
 
-    S8* var_text_GameSlot6()
+    char* var_text_GameSlot6()
     {
         return zVarGameSlotInfo(6, zVar_buffer17, 0x3f);
     }
 
-    S8* var_text_GameSlot7()
+    char* var_text_GameSlot7()
     {
         return zVarGameSlotInfo(7, zVar_buffer18, 0x3f);
     }
 
-    S8* var_text_MCAccessType()
+    char* var_text_MCAccessType()
     {
         return state_text[zSaveLoad_getMCAccessType()];
     }
 
-    S8* var_text_MCAutoSaveCard()
+    char* var_text_MCAutoSaveCard()
     {
         sprintf(zVar_buffer19, &zVar_strings[0x3] /*"%c"*/, 'A' + zSaveLoadGetAutoSaveCard());
         return zVar_buffer19;
     }
 
-    S8* var_text_MCPS2MaxSpace()
+    char* var_text_MCPS2MaxSpace()
     {
         // Yes... this matches. Probably just stripped out during porting since it
         // was a PS2 thing.
@@ -351,35 +351,35 @@ namespace
         return zVar_buffer20;
     }
 
-    S8* var_text_MCPS2MinSpace()
+    char* var_text_MCPS2MinSpace()
     {
         sprintf(zVar_buffer21, &zVar_strings[0] /*"%d*/, 0);
         return zVar_buffer21;
     }
 
-    S8* var_text_MCSelectedCard()
+    char* var_text_MCSelectedCard()
     {
         sprintf(zVar_buffer22, &zVar_strings[0x3] /*"%c"*/, 'A' + zSaveLoad_getcard());
         return zVar_buffer22;
     }
 
-    S8* var_text_MCSelectedGame()
+    char* var_text_MCSelectedGame()
     {
         sprintf(zVar_buffer23, &zVar_strings[0] /*"%d"*/, zSaveLoad_getgame() + 1);
         return zVar_buffer23;
     }
 
-    S8* var_text_PlayerHeShe()
+    char* var_text_PlayerHeShe()
     {
         return heshe_text[gCurrentPlayer];
     }
 
-    S8* var_text_PlayerName()
+    char* var_text_PlayerName()
     {
         return playername_text[gCurrentPlayer];
     }
 
-    S8* var_text_PlayerPosition()
+    char* var_text_PlayerPosition()
     {
         xEntFrame* frame = globals.player.ent.frame;
         sprintf(zVar_buffer24, &zVar_strings[0xE0] /*"%d,%d,%d"*/, S32(frame->mat.pos.x),
@@ -394,13 +394,13 @@ namespace
         return zSceneGetAreaname(selSceneID);
     }
 
-    S8* var_text_ShinyCount()
+    char* var_text_ShinyCount()
     {
         sprintf(zVar_buffer25, &zVar_strings[0] /*"%d"*/, globals.player.Inv_Shiny);
         return zVar_buffer25;
     }
 
-    S8* var_text_ShinyCountText()
+    char* var_text_ShinyCountText()
     {
         if (globals.player.Inv_Shiny == 0)
         {
@@ -418,28 +418,28 @@ namespace
         return lbl_80291708;
     }
 
-    S8* var_text_SoundFXVolume()
+    char* var_text_SoundFXVolume()
     {
         sprintf(zVar_buffer26, &zVar_strings[0] /*"%d"*/, zVarEntryCB_SndFXVol(NULL));
         return zVar_buffer26;
     }
 
-    S8* var_text_SoundMusicVolume()
+    char* var_text_SoundMusicVolume()
     {
         sprintf(zVar_buffer27, &zVar_strings[0] /*"%d"*/, zVarEntryCB_SndMusicVol(NULL));
         return zVar_buffer27;
     }
 
-    S8* var_text_SpaceAvailable()
+    char* var_text_SpaceAvailable()
     {
         sprintf(zVar_buffer28, &zVar_strings[0], zSaveLoad_getMCavailable());
         return zVar_buffer28;
     }
 
-    S8* var_text_SpaceAvailableString()
+    char* var_text_SpaceAvailableString()
     {
         // What a wierd dance... they could have just used zVar_buffer29 directly.
-        S8 tmp[0x20];
+        char tmp[0x20];
         S32 available = zSaveLoad_getMCavailable();
         memset(tmp, 0, 0x20);
         memset(zVar_buffer29, 0, 0x40);
@@ -448,19 +448,19 @@ namespace
         return zVar_buffer29;
     }
 
-    S8* var_text_SpaceNeeded()
+    char* var_text_SpaceNeeded()
     {
         sprintf(zVar_buffer30, &zVar_strings[0] /*"%d"*/, zSaveLoad_getMCneeded());
         return zVar_buffer30;
     }
 
-    S8* var_text_TotalPatsSocks()
+    char* var_text_TotalPatsSocks()
     {
         sprintf(zVar_buffer31, &zVar_strings[0] /*"%d"*/, globals.player.Inv_PatsSock_Total);
         return zVar_buffer31;
     }
 
-    S8* var_text_MCName()
+    char* var_text_MCName()
     {
         switch (zSaveLoad_getcard())
         {
@@ -541,7 +541,7 @@ void var_init()
     xtextbox::register_tags(var_tag, 1);
 }
 
-S8* var_text(const substr& str)
+char* var_text(const substr& str)
 {
     var_type* entry = find_var(str);
     if (entry == NULL)
@@ -635,7 +635,7 @@ U32 zVarEntryCB_VibrationOn(void* arg)
 
 S32 zVarEntryCB_CurrentSceneLetter()
 {
-    S8 buffer[16];
+    char buffer[16];
     sprintf(buffer, &zVar_strings[0x10] /*"%s"*/, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
 
     // Convert the most significant char to uppercase
@@ -657,7 +657,7 @@ S32 zVarEntryCB_CurrentSceneLetter()
 
 S32 zVarEntryCB_CurrentRoom()
 {
-    S8 buffer[16];
+    char buffer[16];
     sprintf(buffer, &zVar_strings[0x10] /*"%s"*/, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
 
     S32 room = (buffer[2] - '0') * 10 + (buffer[3] - '0');

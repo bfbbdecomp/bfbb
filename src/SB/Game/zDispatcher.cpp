@@ -18,7 +18,7 @@
 #include "string.h"
 
 extern st_ZDISPATCH_CONTEXT lbl_80254E00;
-extern S8 lbl_80254E10[512];
+extern char lbl_80254E10[512];
 
 extern S32 g_zdsp_init;
 extern S32 warned_zDispatcher;
@@ -40,7 +40,7 @@ extern F32 _1197;
 extern F64 _1199;
 
 extern U8 menu_fmv_played;
-extern S8 zEventLogBuf[256][20];
+extern char zEventLogBuf[256][20];
 
 void zDispatcher_Startup()
 {
@@ -488,11 +488,11 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam,
         break;
 
     case 0x217:
-        S8 events[512];
+        char events[512];
         U32 c;
         U32 len;
         U32 i;
-        S8 log[512];
+        char log[512];
 
         for (i = 0; i < 512; i++)
         {

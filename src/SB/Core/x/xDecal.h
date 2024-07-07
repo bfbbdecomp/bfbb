@@ -71,9 +71,9 @@ struct xDecalEmitter
 
     void set_curve(const curve_node* curve, size_t size);
     void refresh_config();
-    void set_texture(const S8* name);
+    void set_texture(const char* name);
     void set_default_config();
-    void init(S32 max_size, const S8*);
+    void init(S32 max_size, const char*);
 };
 
 void xDecalInit();

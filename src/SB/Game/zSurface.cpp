@@ -249,7 +249,7 @@ void zSurfaceSetup(xSurface* s)
     }
 }
 
-void zSurfaceGetName(S32 type, S8* buffer)
+void zSurfaceGetName(S32 type, char* buffer)
 {
     *buffer = NULL;
     switch (type)

@@ -14,7 +14,7 @@ struct xJSPNodeInfo
 
 struct xJSPHeader
 {
-    S8 idtag[4];
+    char idtag[4];
     U32 version;
     U32 jspNodeCount;
     RpClump* clump;

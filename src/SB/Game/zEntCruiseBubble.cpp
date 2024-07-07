@@ -36,8 +36,8 @@ namespace cruise_bubble
 
     extern basic_rect<F32> screen_bounds;
     // basic_rect default_adjust;
-    // S8 buffer[16];
-    // S8 buffer[16];
+    // char buffer[16];
+    // char buffer[16];
     extern tweak_group normal_tweak;
     extern tweak_group cheat_tweak;
     extern tweak_group* current_tweak;
@@ -1660,7 +1660,7 @@ void cruise_bubble::tweak_group::load(xModelAssetParam* params, U32 size)
 
 #ifdef NON_MATCHING
 void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize,
-                                                 const S8*)
+                                                 const char*)
 {
     if (init)
     {

@@ -22,10 +22,10 @@ enum eFMVFile
 struct zFMVFile
 {
     eFMVFile type;
-    S8 fileName[32];
+    char fileName[32];
 };
 
-U32 zFMVPlay(S8* filename, U32 buttons, F32 time, bool skippable, bool lockController);
-S8* zFMVFileGetName(eFMVFile fileEnum);
+U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController);
+char* zFMVFileGetName(eFMVFile fileEnum);
 
 #endif

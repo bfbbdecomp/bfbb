@@ -10,7 +10,7 @@ struct st_STRAN_SCENE
     st_PACKER_READ_DATA* spkg;
     S32 isHOP;
     void* userdata;
-    S8 fnam[256];
+    char fnam[256];
 };
 
 
@@ -35,7 +35,7 @@ S32 xSTGetAssetInfo(U32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
 S32 xSTGetAssetInfoByType(U32 type, S32 idx, st_PKR_ASSET_TOCINFO* ainfo);
 char* xST_xAssetID_HIPFullPath(U32 aid);
 S32 PKRShutdown();
-S8* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID);
+char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID);
 S32 xSTShutdown();
 
 #endif

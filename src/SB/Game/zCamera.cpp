@@ -12,8 +12,8 @@
 #include "xScrFx.h"
 #include "xstransvc.h"
 
-// extern S8 buffer[16];
-// extern S8 buffer[16];
+// extern char buffer[16];
+// extern char buffer[16];
 // extern basic_rect screen_bounds;
 // extern basic_rect default_adjust;
 extern F32 zcam_pad_pyaw_scale;

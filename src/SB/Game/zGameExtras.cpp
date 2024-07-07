@@ -547,11 +547,11 @@ void GEC_cb_CruiseBubble()
 
 void GEC_cb_MonsterGallery()
 {
-    S8 tempString[32];
+    char tempString[32];
 
     strcpy(tempString, "HB09 ROBOT COUNTER 01");
 
-    S8 c = '1';
+    char c = '1';
 
     for (S32 i = 0; i < 15; i++)
     {

@@ -63,10 +63,10 @@ static bool _xCharIn(char ch, const char* str)
 
 // _xCheckAnimNameInner(const char*,const char*,int,char*,int*,int*)
 
-bool _xCheckAnimNameInner(const char* name, const char* pattern, S32 patternSize, S8* extra,
+bool _xCheckAnimNameInner(const char* name, const char* pattern, S32 patternSize, char* extra,
                           S32* nameOut, S32* extraOut);
 
-static bool _xCheckAnimName(const char* name, const char* pattern, S8* extra)
+static bool _xCheckAnimName(const char* name, const char* pattern, char* extra)
 {
     S32 patternSize, nameOut;
     bool rc;

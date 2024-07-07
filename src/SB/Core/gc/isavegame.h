@@ -100,7 +100,7 @@ struct st_ISG_MEMCARD_DATA
     S32 mcslot;
     S32 mcfp;
     en_ISG_IOMODE fmode;
-    S8 gamepath[64];
+    char gamepath[64];
     sceMcTblGetDir finfo;
     S32 cur_mcop;
     en_ISGMC_ERRSTATUS mcerr;
@@ -116,8 +116,8 @@ struct st_ISGSESSION
     // but there might just be another field before this instead.
     st_ISG_MEMCARD_DATA mcdata[2];
 
-    S8 gameroot[64];
-    S8 gamedir[64];
+    char gameroot[64];
+    char gamedir[64];
     en_ASYNC_OPCODE as_curop;
     en_ASYNC_OPSTAT as_opstat;
     en_ASYNC_OPERR as_operr;
@@ -136,34 +136,34 @@ enum en_NAMEGEN_TYPE
 
 S32 iSGStartup();
 S32 iSGShutdown();
-S8* iSGMakeName(en_NAMEGEN_TYPE type, const S8* base, S32 idx);
+char* iSGMakeName(en_NAMEGEN_TYPE type, const char* base, S32 idx);
 st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), S32 monitor);
 void iSGSessionEnd(st_ISGSESSION* isgdata);
 S32 iSGTgtCount(st_ISGSESSION* isgdata, S32* max);
 S32 iSGTgtPhysSlotIdx(st_ISGSESSION* isgdata, S32 tidx);
-U32 iSGTgtState(st_ISGSESSION* isgdata, S32 tgtidx, const S8* dpath);
+U32 iSGTgtState(st_ISGSESSION* isgdata, S32 tgtidx, const char* dpath);
 S32 iSGTgtFormat(st_ISGSESSION* isgdata, S32 tgtidx, S32 async, S32* canRecover);
 S32 iSGTgtSetActive(st_ISGSESSION* isgdata, S32 tgtidx);
-S32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const S8* dpath,
-                     const S8* fname, S32* bytesNeeded, S32* availOnDisk, S32* needFile);
-S32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const S8* dpath,
-                            const S8* fname, S32* bytesNeeded, S32* availOnDisk,
+S32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpath,
+                     const char* fname, S32* bytesNeeded, S32* availOnDisk, S32* needFile);
+S32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpath,
+                            const char* fname, S32* bytesNeeded, S32* availOnDisk,
                             S32* needFile);
 U8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, S32 index);
-S32 iSGFileSize(st_ISGSESSION* isgdata, const S8* fname);
-S8* iSGFileModDate(st_ISGSESSION* isgdata, const S8* fname);
-S8* iSGFileModDate(st_ISGSESSION* isgdata, const S8* fname, S32* sec, S32* min, S32* hr,
+S32 iSGFileSize(st_ISGSESSION* isgdata, const char* fname);
+char* iSGFileModDate(st_ISGSESSION* isgdata, const char* fname);
+char* iSGFileModDate(st_ISGSESSION* isgdata, const char* fname, S32* sec, S32* min, S32* hr,
                      S32* mon, S32* day, S32* yr);
 en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, S32 block);
-en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, S8* errmsg);
-S32 iSGReadLeader(st_ISGSESSION* isgdata, const S8* fname, S8* databuf, S32 numbytes,
+en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, char* errmsg);
+S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 numbytes,
                     S32 async);
-S32 iSGSelectGameDir(st_ISGSESSION* isgdata, const S8* dname);
-void iSGMakeTimeStamp(S8* str);
-S32 iSGSetupGameDir(st_ISGSESSION* isgdata, const S8* dname, S32 force_iconfix);
-S32 iSGSaveFile(st_ISGSESSION* isgdata, const S8* fname, S8* data, S32 n, S32 async,
-                  S8*);
-S32 iSGLoadFile(st_ISGSESSION* isgdata, const S8* fname, S8* databuf, S32 async);
+S32 iSGSelectGameDir(st_ISGSESSION* isgdata, const char* dname);
+void iSGMakeTimeStamp(char* str);
+S32 iSGSetupGameDir(st_ISGSESSION* isgdata, const char* dname, S32 force_iconfix);
+S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S32 async,
+                  char*);
+S32 iSGLoadFile(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 async);
 void iSGAutoSave_Startup();
 st_ISGSESSION* iSGAutoSave_Connect(S32 idx_target, void* cltdata, void (*chg)(void*, en_CHGCODE));
 void iSGAutoSave_Disconnect(st_ISGSESSION* isg);
@@ -174,6 +174,6 @@ S32 iSG_load_icondata();
 void iSG_discard_icondata();
 S32 iSG_chk_icondata();
 S32 iSG_mc_unmount(S32 slot);
-S32 iSGCheckForCorruptFiles(st_ISGSESSION*, S8 files[][64]);
+S32 iSGCheckForCorruptFiles(st_ISGSESSION*, char files[][64]);
 
 #endif

@@ -5,13 +5,13 @@
 
 struct xIniValue
 {
-    S8* tok;
-    S8* val;
+    char* tok;
+    char* val;
 };
 
 struct xIniSection
 {
-    S8* sec;
+    char* sec;
     S32 first;
     S32 count;
 };
@@ -23,15 +23,15 @@ struct xIniFile
     xIniValue* Values;
     xIniSection* Sections;
     void* mem;
-    S8 name[256];
-    S8 pathname[256];
+    char name[256];
+    char pathname[256];
 };
 
 xIniFile* xIniParse(char* buf, S32 len);
 void xIniDestroy(xIniFile* ini);
-S32 xIniGetIndex(xIniFile* ini, S8* tok);
-S32 xIniGetInt(xIniFile* ini, S8* tok, S32 def);
-F32 xIniGetFloat(xIniFile* ini, S8* tok, F32 def);
-S8* xIniGetString(xIniFile* ini, S8* tok, S8* def);
+S32 xIniGetIndex(xIniFile* ini, char* tok);
+S32 xIniGetInt(xIniFile* ini, char* tok, S32 def);
+F32 xIniGetFloat(xIniFile* ini, char* tok, F32 def);
+char* xIniGetString(xIniFile* ini, char* tok, char* def);
 
 #endif

@@ -25,7 +25,7 @@ namespace xhud
         font_context start_font;
         S32 precision;
         xVec2 offset;
-        S8 buffer[12];
+        char buffer[12];
         S32 last_value;
         xfont xf;
 

@@ -14,7 +14,7 @@ namespace xhud
 
     struct text_widget : widget
     {
-        S8 text[128];
+        char text[128];
         xtextbox tb;
 
         text_widget(); // possibly temp, added so zCombo.cpp compiles

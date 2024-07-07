@@ -66,8 +66,8 @@ struct xFXRibbon
     U32 mtime;
     U32 mlife;
 
-    void init(const S8*, const S8*);
-    void set_texture(const S8* name);
+    void init(const char*, const char*);
+    void set_texture(const char* name);
     void set_curve(const curve_node* curve, size_t size);
     void refresh_config();
     void set_default_config();

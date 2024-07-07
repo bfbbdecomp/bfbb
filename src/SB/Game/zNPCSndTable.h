@@ -39,7 +39,7 @@ enum en_NPC_SOUND
 struct NPCSndTrax
 {
     en_NPC_SOUND typ_sound;
-    S8* nam_sound;
+    char* nam_sound;
     U32 aid_sound;
 };
 

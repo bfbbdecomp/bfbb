@@ -32,12 +32,12 @@ struct st_XSAVEGAME_CLIENT
     S32 needamt;
     S32 maxamt;
     S32 realamt;
-    S8* buf_sizepos;
-    S8* buf_maxpos;
+    char* buf_sizepos;
+    char* buf_maxpos;
     S32 blokact;
     S32 blokmax;
-    S8* blokpos;
-    S8* readpos;
+    char* blokpos;
+    char* readpos;
     S32 readamt;
     S32 readremain;
 };
@@ -48,15 +48,15 @@ struct st_XSAVEGAME_DATA
     en_SAVEGAME_MODE mode;
     U32 stage;
     S32 gslot;
-    S8 label[64];
+    char label[64];
     S32 progress;
     S32 thumbIconIdx;
     iTime playtime;
-    S8* membuf;
+    char* membuf;
     S32 memsize;
-    S8* buf_curpos;
-    S8* buf_sizespot;
-    S8* buf_cksmspot;
+    char* buf_curpos;
+    char* buf_sizespot;
+    char* buf_cksmspot;
     S32 totamt;
     U32 chksum;
     U32 upd_tally;
@@ -69,9 +69,9 @@ struct st_XSAVEGAME_DATA
     U32 file_chksum;
     U32 read_chksum;
     S32 readsize;
-    S8* loadbuf;
+    char* loadbuf;
     S32 loadsize;
-    S8* walkpos;
+    char* walkpos;
     S32 walkremain;
     st_ISGSESSION* isgsess;
 };
@@ -106,10 +106,10 @@ enum en_XSGASYNC_STATUS
 
 struct st_XSAVEGAME_LEADER
 {
-    S8 gameLabel[64];
+    char gameLabel[64];
     S32 progress;
     iTime gametime;
-    S8 thumbIconIdx;
+    char thumbIconIdx;
 };
 
 enum en_XSG_WHYFAIL
@@ -125,15 +125,15 @@ enum en_XSG_WHYFAIL
 
 struct st_XSG_SHORTLABEL
 {
-    const S8* msglong;
-    const S8* msgshort;
+    const char* msglong;
+    const char* msgshort;
 };
 
 S32 xSGStartup();
 S32 xSGShutdown();
 st_XSAVEGAME_DATA* xSGInit(en_SAVEGAME_MODE mode);
 S32 xSGDone(st_XSAVEGAME_DATA* xsgdata);
-S32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, S8 files[][64]);
+S32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, char files[][64]);
 S32 xSGTgtCount(st_XSAVEGAME_DATA* xsgdata, S32* max);
 S32 xSGTgtPhysSlotIdx(st_XSAVEGAME_DATA* xsgdata, S32 tidx);
 S32 xSGTgtIsFormat(st_XSAVEGAME_DATA* xsgdata, S32 tidx, S32* badEncode);
@@ -148,8 +148,8 @@ U8 xSGCheckMemoryCard(st_XSAVEGAME_DATA* xsgdata, S32 index);
 void xSGGameSet(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
 S32 xSGGameIsEmpty(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
 S32 xSGGameSize(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
-S8* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
-S8* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
+char* xSGGameModDate(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
+char* xSGGameLabel(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
 S32 xSGGameThumbIndex(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
 S32 xSGGameProgress(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
 S32 xSGAddSaveClient(st_XSAVEGAME_DATA* xsgdata, U32 clttag, void* cltdata,
@@ -159,21 +159,21 @@ S32 xSGAddLoadClient(st_XSAVEGAME_DATA* xsgdata, U32 clttag, void* cltdata,
                        S32 (*loadfunc)(void*, st_XSAVEGAME_DATA*, st_XSAVEGAME_READCONTEXT*,
                                          U32, S32));
 S32 xSGSetup(st_XSAVEGAME_DATA* xsgdata);
-S32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, S32 gidx, S8* label, S32 progress, iTime playtime,
+S32 xSGSetup(st_XSAVEGAME_DATA* xsgdata, S32 gidx, char* label, S32 progress, iTime playtime,
                S32 thumbIconIdx);
 S32 xSGProcess(st_XSAVEGAME_DATA* xsgdata);
 S32 xSGWrapup(st_XSAVEGAME_DATA* xsgdata);
 en_XSGASYNC_STATUS xSGAsyncStatus(st_XSAVEGAME_DATA* xsgdata, S32 block, en_XSG_WHYFAIL* whyFail,
-                                  S8* errmsg);
+                                  char* errmsg);
 S32 xSG_cb_leader_svinfo(void*, st_XSAVEGAME_DATA*, S32* cur_space, S32* max_fullgame);
 S32 xSG_cb_leader_svproc(void* cltdata, st_XSAVEGAME_DATA* original_xsgdata,
                            st_XSAVEGAME_WRITECONTEXT* wctxt);
 S32 xSG_cb_leader_load(void*, st_XSAVEGAME_DATA* original_xsgdata,
                          st_XSAVEGAME_READCONTEXT* rctxt, U32, S32);
-S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, S8* data,
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, char* data,
                    S32 elesiz, S32 n);
-S32 xSGWriteStrLen(const S8* str);
-S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, S8* data,
+S32 xSGWriteStrLen(const char* str);
+S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, char* data,
                    S32 n);
 S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, S32* data,
                    S32 n);
@@ -181,9 +181,9 @@ S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, U
                    S32 n);
 S32 xSGWriteData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt, F32* data,
                    S32 n);
-S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, S8* buff,
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, char* buff,
                   S32 elesiz, S32 n);
-S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, S8* buff, S32 n);
+S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, char* buff, S32 n);
 S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, S32* buff,
                   S32 n);
 S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32* buff,
@@ -192,8 +192,8 @@ S32 xSGReadData(st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, F32
                   S32 n);
 S32 xSG_grab_leaders(st_XSAVEGAME_DATA* xsgdata);
 S32 xSG_chdir_gamedir(st_XSAVEGAME_DATA* xsgdata);
-S8* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
-void xSG_areaComposeLabel(S8* label, int, S8*, int);
+char* xSG_cm_slotname(st_XSAVEGAME_DATA* xsgdata, S32 gidx);
+void xSG_areaComposeLabel(char* label, int, char*, int);
 S32 xSG_sv_flipinfo(st_XSAVEGAME_DATA* xsgdata);
 S32 xSG_sv_prepdest(st_XSAVEGAME_DATA* xsgdata);
 S32 xSG_sv_flipproc(st_XSAVEGAME_DATA* xsgdata);

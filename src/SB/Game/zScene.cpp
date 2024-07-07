@@ -3435,8 +3435,8 @@ U32 zSceneLeavingLevel()
 
 const char* zSceneGetLevelName(U32 sceneID)
 {
-    S8 c1 = (sceneID >> 24) & 0xFF;
-    S8 c2 = (sceneID >> 16) & 0xFF;
+    char c1 = (sceneID >> 24) & 0xFF;
+    char c2 = (sceneID >> 16) & 0xFF;
 
     for (S32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
     {
@@ -3456,8 +3456,8 @@ U32 zSceneGetLevelIndex()
 
 U32 zSceneGetLevelIndex(U32 sceneID)
 {
-    S8 c1 = (sceneID >> 24) & 0xFF;
-    S8 c2 = (sceneID >> 16) & 0xFF;
+    char c1 = (sceneID >> 24) & 0xFF;
+    char c2 = (sceneID >> 16) & 0xFF;
 
     for (S32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
     {

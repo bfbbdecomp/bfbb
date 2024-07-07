@@ -17,9 +17,9 @@ zFMVFile zFMVFileTable[] = {
     { eFMVFile_Demo1, "FMV\\demo1" }, // Gameplay Demo (Idle)
 };
 
-U32 zFMVPlay(S8* filename, U32 buttons, F32 time, bool skippable, bool lockController)
+U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
 {
-    S8 fullname[64];
+    char fullname[64];
     U32 ret;
 
     if (filename == NULL)
@@ -43,7 +43,7 @@ U32 zFMVPlay(S8* filename, U32 buttons, F32 time, bool skippable, bool lockContr
     return ret;
 }
 
-S8* zFMVFileGetName(eFMVFile fileEnum)
+char* zFMVFileGetName(eFMVFile fileEnum)
 {
     for (S32 i = 0; i < eFMVFileCount; i++)
     {

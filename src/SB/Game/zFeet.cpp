@@ -16,8 +16,8 @@ RwRaster* sSkidMarkRaster;
 
 void zFeetGetIDs()
 {
-    S8 type_name[128];
-    S8 name[128];
+    char type_name[128];
+    char name[128];
 
     for (S32 i = 0; i < 23; i++)
     {

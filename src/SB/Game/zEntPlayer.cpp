@@ -653,7 +653,7 @@ S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 
 U32 count_talk_anims(xAnimTable* anims)
 {
     xAnimFile* firstData = anims->StateList->Data;
-    S8 talkAnimName[20];
+    char talkAnimName[20];
     S32 talkAnimCount = 0;
 
     sprintf(talkAnimName, "Talk%02d", 1);

@@ -67,7 +67,7 @@ struct xNPCBasic : xEnt, xFactoryInst
     void DBG_PStatCont(en_npcperf stat);
     void DBG_PStatOn(en_npcperf stat);
     S32 DBG_IsNormLog(en_npcdcat input, S32 input2);
-    void DBG_HaltOnMe(U32, S8*);
+    void DBG_HaltOnMe(U32, char*);
 
     // DO NOT CHANGE THE ORDER OF THESE, the order determines the
     // vtable layout which needs to remain fixed.

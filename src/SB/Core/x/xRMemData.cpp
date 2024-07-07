@@ -38,7 +38,7 @@ void RyzMemData::operator delete(void* p)
 
 RyzMemGrow* RyzMemGrow::Init(xBase* growuser)
 {
-    S8* dat;
+    char* dat;
     if (this->ptr != NULL)
     {
         return this;
@@ -47,7 +47,7 @@ RyzMemGrow* RyzMemGrow::Init(xBase* growuser)
     this->ptr_last = NULL;
     this->user_last = NULL;
     this->amt = 0x20;
-    dat = (S8*)xMemAllocSize(this->amt);
+    dat = (char*)xMemAllocSize(this->amt);
     this->ptr = dat;
     this->user = growuser;
     this->flg_grow = 1;

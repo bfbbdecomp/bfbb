@@ -376,7 +376,7 @@ void xNPCBasic::DBG_PStatClear()
 {
 }
 
-void xNPCBasic::DBG_HaltOnMe(U32, S8*)
+void xNPCBasic::DBG_HaltOnMe(U32, char*)
 {
 }
 

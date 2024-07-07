@@ -18,10 +18,10 @@
 
 extern _ShadowParams gShadowParams[5];
 extern U32 g_hash_xentanim[5];
-extern S8* g_strz_xentanim[5];
+extern char* g_strz_xentanim[5];
 
 extern xVec3 _1228;
-extern S8 zEnt_strings[];
+extern char zEnt_strings[];
 
 extern F32 _839_zEnt;
 extern F32 _840_zEnt;
@@ -449,7 +449,7 @@ void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam)
                 break;
             }
 
-            S8 name[12];
+            char name[12];
             if (animEvent == 0xc4)
             {
                 sprintf(name, zEnt_strings + 41, anum);
@@ -484,7 +484,7 @@ void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam)
             {
                 break;
             }
-            S8 name2[12];
+            char name2[12];
             strcpy(name2, single->State->Name);
             name2[0] = 's';
             name2[1] = 't';
@@ -524,7 +524,7 @@ void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam)
             anum3 = anum3 - anum2 + 1;
             anum4 %= anum3;
 
-            S8 name3[12];
+            char name3[12];
             sprintf(name3, zEnt_strings + 48, anum2 + anum4);
 
             xAnimState* ast2 = xAnimTableGetState(ent->atbl, name3);
@@ -554,7 +554,7 @@ void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam)
             // Inverting this if screws up the float comparison
             if (xurand() < prob && ent->atbl != NULL)
             {
-                S8 name4[12];
+                char name4[12];
                 sprintf(name4, zEnt_strings + 41, anum5);
                 xAnimState* ast3 = xAnimTableGetState(ent->atbl, name4);
                 if (ast3 == NULL)
@@ -577,7 +577,7 @@ void zEntAnimEvent(zEnt* ent, U32 animEvent, const F32* animParam)
 // Thank you floating point memes. Very cool.
 xAnimTable* xEnt_AnimTable_AutoEventSmall()
 {
-    S8** names = g_strz_xentanim;
+    char** names = g_strz_xentanim;
     U32* hash = g_hash_xentanim;
     xAnimTransition* deftran = NULL;
     if (*hash == 0)
@@ -765,7 +765,7 @@ xModelAssetParam* zEntGetModelParams(U32 assetID, U32* size)
         *size = bufsize - (minf->NumModelInst * 0x38 + 0x14);
         if (*size != 0)
         {
-            return (xModelAssetParam*)((S8*)minf + minf->NumModelInst * 0x38 + 0x14);
+            return (xModelAssetParam*)((char*)minf + minf->NumModelInst * 0x38 + 0x14);
         }
     }
     else
@@ -776,7 +776,7 @@ xModelAssetParam* zEntGetModelParams(U32 assetID, U32* size)
     return NULL;
 }
 
-S8* zParamGetString(xModelAssetParam* param, U32 size, S8* tok, S8* def)
+char* zParamGetString(xModelAssetParam* param, U32 size, char* tok, char* def)
 {
     U32 hash = xStrHash(tok);
 
@@ -784,24 +784,24 @@ S8* zParamGetString(xModelAssetParam* param, U32 size, S8* tok, S8* def)
     {
         if (param->HashID == hash)
         {
-            return (S8*)param->String;
+            return (char*)param->String;
         }
 
         // S32 i = param->WordLength * 4;
         size -= param->WordLength * 4 + 8;
-        param = (xModelAssetParam*)((S8*)param + (param->WordLength * 4 + 8));
+        param = (xModelAssetParam*)((char*)param + (param->WordLength * 4 + 8));
     }
     return def;
 }
 
-S32 zParamGetInt(xModelAssetParam* param, U32 size, const S8* tok, S32 def)
+S32 zParamGetInt(xModelAssetParam* param, U32 size, const char* tok, S32 def)
 {
-    return zParamGetInt(param, size, (S8*)tok, def);
+    return zParamGetInt(param, size, (char*)tok, def);
 }
 
-S32 zParamGetInt(xModelAssetParam* param, U32 size, S8* tok, S32 def)
+S32 zParamGetInt(xModelAssetParam* param, U32 size, char* tok, S32 def)
 {
-    S8* str = zParamGetString(param, size, tok, NULL);
+    char* str = zParamGetString(param, size, tok, NULL);
     if (str != NULL)
     {
         return atoi(str);
@@ -809,14 +809,14 @@ S32 zParamGetInt(xModelAssetParam* param, U32 size, S8* tok, S32 def)
     return def;
 }
 
-F32 zParamGetFloat(xModelAssetParam* param, U32 size, const S8* tok, F32 def)
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, const char* tok, F32 def)
 {
-    return zParamGetFloat(param, size, (S8*)tok, def);
+    return zParamGetFloat(param, size, (char*)tok, def);
 }
 
-F32 zParamGetFloat(xModelAssetParam* param, U32 size, S8* tok, F32 def)
+F32 zParamGetFloat(xModelAssetParam* param, U32 size, char* tok, F32 def)
 {
-    S8* str = zParamGetString(param, size, tok, NULL);
+    char* str = zParamGetString(param, size, tok, NULL);
     if (str != NULL)
     {
         return xatof(str);
@@ -824,16 +824,16 @@ F32 zParamGetFloat(xModelAssetParam* param, U32 size, S8* tok, F32 def)
     return def;
 }
 
-S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const S8* tok, S32 count,
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const char* tok, S32 count,
                          F32* def, F32* result)
 {
-    return zParamGetFloatList(param, size, (S8*)tok, count, def, result);
+    return zParamGetFloatList(param, size, (char*)tok, count, def, result);
 }
 
-S32 zParamGetFloatList(xModelAssetParam* param, U32 size, S8* tok, S32 count, F32* def,
+S32 zParamGetFloatList(xModelAssetParam* param, U32 size, char* tok, S32 count, F32* def,
                          F32* result)
 {
-    S8* str = zParamGetString(param, size, tok, NULL);
+    char* str = zParamGetString(param, size, tok, NULL);
     S32 act = 0;
 
     if (def != NULL)
@@ -851,15 +851,15 @@ S32 zParamGetFloatList(xModelAssetParam* param, U32 size, S8* tok, S32 count, F3
     return act;
 }
 
-S32 zParamGetVector(xModelAssetParam* param, U32 size, const S8* tok, xVec3 vec1,
+S32 zParamGetVector(xModelAssetParam* param, U32 size, const char* tok, xVec3 vec1,
                       xVec3* vec2)
 {
-    return zParamGetVector(param, size, (S8*)tok, vec1, vec2);
+    return zParamGetVector(param, size, (char*)tok, vec1, vec2);
 }
 
-S32 zParamGetVector(xModelAssetParam* param, U32 size, S8* tok, xVec3 vec1, xVec3* vec2)
+S32 zParamGetVector(xModelAssetParam* param, U32 size, char* tok, xVec3 vec1, xVec3* vec2)
 {
-    S8* str = zParamGetString(param, size, tok, NULL);
+    char* str = zParamGetString(param, size, tok, NULL);
     S32 list = 0;
 
     xVec3 vec;

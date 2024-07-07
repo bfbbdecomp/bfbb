@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-U32 xStrHash(const S8* str)
+U32 xStrHash(const char* str)
 {
     U32 hash = 0;
     U32 i;
@@ -16,7 +16,7 @@ U32 xStrHash(const S8* str)
     return hash;
 }
 
-U32 xStrHash(const S8* str, size_t size)
+U32 xStrHash(const char* str, size_t size)
 {
     U32 hash = 0;
     U32 i = 0;
@@ -32,7 +32,7 @@ U32 xStrHash(const S8* str, size_t size)
     return hash;
 }
 
-U32 xStrHashCat(U32 prefix, const S8* str)
+U32 xStrHashCat(U32 prefix, const char* str)
 {
     U32 hash;
     U32 i;

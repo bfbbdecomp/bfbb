@@ -39,7 +39,7 @@ struct ptank_pool
     RpAtomic* ptank;
     _class hide;
 
-    S8 valid() const;
+    bool valid() const;
     void reset();
     void flush();
     void grab_block(ptank_group_type type);

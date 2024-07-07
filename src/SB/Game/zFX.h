@@ -65,7 +65,7 @@ struct select_data
 {
     U32 value_def;
     U32 labels_size;
-    S8** labels;
+    char** labels;
     void* values;
 };
 

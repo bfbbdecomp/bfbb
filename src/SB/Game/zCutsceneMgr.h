@@ -11,8 +11,8 @@ struct zCutsceneMgr : xCutsceneMgr
 
 struct zCutsceneHack
 {
-    S8* cinname;
-    S8* modelname;
+    char* cinname;
+    char* modelname;
     F32 radius;
     U32 tworoot;
     U32 noshadow;
@@ -22,7 +22,7 @@ struct zCutsceneHack
 
 struct zCutSceneNames
 {
-    S8 name[64];
+    char name[64];
     S32 played;
     S32 skipOK;
 };

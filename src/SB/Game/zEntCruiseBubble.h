@@ -284,7 +284,7 @@ namespace cruise_bubble
     struct sound_config
     {
         // offset 0x0
-        S8* name; // probably char*
+        char* name;
         // offset 0x4
         F32 volume;
         // offset 0x8

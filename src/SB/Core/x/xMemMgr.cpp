@@ -11,7 +11,7 @@ extern xMemInfo_tag gMemInfo;
 extern xMemHeap_tag gxHeap[3];
 extern void (*sMemBaseNotifyFunc)();
 
-void xMemDebug_SoakLog(const S8*)
+void xMemDebug_SoakLog(const char*)
 {
 }
 

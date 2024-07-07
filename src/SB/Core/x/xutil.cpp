@@ -28,9 +28,9 @@ char* xUtil_idtag2string(U32 srctag, S32 bufidx)
 {
     U32 tag = srctag;
     char* strptr;
-    S8* uc = (S8*)&tag;
+    char* uc = (char*)&tag;
     S32 l;
-    S8 t;
+    char t;
     static char buf[6][10] = {};
 
     if (bufidx < 0 || bufidx >= 7)
@@ -46,7 +46,7 @@ char* xUtil_idtag2string(U32 srctag, S32 bufidx)
 
     l = 1;
 
-    if ((S32)((S8*)&l)[3] != 0)
+    if ((S32)((char*)&l)[3] != 0)
     {
         t = uc[0];
         uc[0] = uc[3];

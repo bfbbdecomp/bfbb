@@ -6,7 +6,7 @@
 
 #include "zScene.h"
 
-S8 zEventLogBuf[256][20];
+char zEventLogBuf[256][20];
 
 void zEntEvent(char* to, U32 toEvent)
 {
