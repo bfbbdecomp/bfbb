@@ -32,30 +32,20 @@ int32 zNPCGoalAlertFodder::Process(en_trantype* trantype, float32 dt, void* updC
         nextgoal = NPC_GOAL_TAUNT;
         *trantype = GOAL_TRAN_PUSH;
     }
-    else
+    else if (globals.player.DamageTimer > 0.5f)
     {
-        if (globals.player.DamageTimer > 0.5f)
-        {
-            nextgoal = NPC_GOAL_TAUNT;
-            *trantype = GOAL_TRAN_PUSH;
-        }
-        else
-        {
-            if (npc->SomethingWonderful())
-            {
-                *trantype = GOAL_TRAN_SET;
-                nextgoal = NPC_GOAL_NGN0;
-            }
-            else
-            {
-                // I don't understand this check
-                if (!npc->arena.IncludesPlayer(0.0f, NULL))
-                {
-                    nextgoal = NPC_GOAL_NGN0;
-                    *trantype = GOAL_TRAN_SET;
-                }
-            }
-        }
+        nextgoal = NPC_GOAL_TAUNT;
+        *trantype = GOAL_TRAN_PUSH;
+    }
+    else if (npc->SomethingWonderful())
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!npc->arena.IncludesPlayer(0.0f, NULL)) // I don't understand this check
+    {
+        nextgoal = NPC_GOAL_IDLE;
+        *trantype = GOAL_TRAN_SET;
     }
 
     if (*trantype != GOAL_TRAN_NONE)

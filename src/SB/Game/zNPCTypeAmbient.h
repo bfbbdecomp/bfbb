@@ -24,22 +24,32 @@ struct zNPCAmbient : zNPCCommon
 
 struct zNPCJelly : zNPCAmbient
 {
-    int32 cnt_angerLevel;
-    int32 hitpoints;
+    int32 cnt_angerLevel; // 0x2A0
+    int32 hitpoints; // 0x2A4
     float32 tmr_pulseAlpha;
     zNPCCommon* npc_daddyJelly;
 
     zNPCJelly(int32 myType);
 
-    void JellySpawn(xVec3* pos_spawn, float32 tym_fall);
+    void JellySpawn(const xVec3* pos_spawn, float32 tym_fall);
     void JellyKill();
 
     void Init(xEntAsset* asset);
+    void Process(xScene* xscn, float32 dt);
+    int32 AmbiHandleMail(NPCMsg* msg);
     void Reset();
-    void BUpdate();
+    void BUpdate(xVec3* unk);
     void ParseINI();
     void SelfSetup();
     int32 IsAlive();
+
+    void PlayWithAlpha(float32 unk);
+    void PlayWithAnimSpd();
+    void PumpFaster();
+    void PlayWithLightnin();
+    void SetAlpha(float32 alpha);
+
+    uint32 AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
 };
 
 struct zNPCNeptune : zNPCAmbient
@@ -60,6 +70,7 @@ struct zNPCMimeFish : zNPCAmbient
 
     void Reset();
     void SelfSetup();
+    void Process(xScene* xscn, float32 dt);
 };
 
 void ZNPC_Ambient_Startup();

@@ -352,28 +352,28 @@ struct zNPCLassoInfo
 struct zNPCCommon : xNPCBasic
 {
     xEntAsset* entass; // 0x1BC
-    xEntNPCAsset* npcass;
-    zNPCSettings* npcsetass;
-    int32 flg_vuln;
-    int32 flg_move;
-    int32 flg_misc;
-    int32 flg_able;
-    NPCConfig* cfg_npc;
-    zNPCSettings npcset;
-    zMovePoint* nav_past;
-    zMovePoint* nav_curr;
+    xEntNPCAsset* npcass; // 0x1C0
+    zNPCSettings* npcsetass; // 0x1C4
+    int32 flg_vuln; // 0x1C8
+    int32 flg_move; // 0x1CC
+    int32 flg_misc; // 0x1D0
+    int32 flg_able; // 0x1D4
+    NPCConfig* cfg_npc; // 0x1D8
+    zNPCSettings npcset; // 0x1DC
+    zMovePoint* nav_past; // 0x208
+    zMovePoint* nav_curr; // 0x20C
     zMovePoint* nav_dest; // 0x210
     zMovePoint* nav_lead;
     xSpline3* spl_mvptspline;
     float32 len_mvptspline;
     float32 dst_curspline;
     xEntDrive* drv_data;
-    xPsyche* psy_instinct;
+    xPsyche* psy_instinct; // 0x228
     zNPCCommon* npc_duplodude;
     float32 spd_throttle;
     int32 flg_xtrarend;
     float32 tmr_fidget;
-    float32 tmr_invuln;
+    float32 tmr_invuln; // 0x23C
     zShrapnelAsset* explosion;
     xModelAssetParam* parmdata;
     uint32 pdatsize;
@@ -569,7 +569,7 @@ struct NPCMsg
     en_NPC_MSG_ID msgid;
     uint32 sendto;
     uint32 from;
-    en_NPC_MSG_DATA infotype;
+    en_NPC_MSG_DATA infotype; // 0xC
     union
     {
         NPCSysEvent sysevent;
@@ -577,15 +577,15 @@ struct NPCMsg
         NPCChatInfo chatter;
         NPCSpawnInfo spawning;
         NPCTargetInfo target;
-        NPCDamageInfo dmgdata;
+        NPCDamageInfo dmgdata; // 0x10
         NPCStunInfo stundata;
         NPCScriptInfo scriptdata;
         NPCMountInfo mountdata;
         NPCAreaInfo areadata;
     };
-    void* attached;
+    void* attached; // 0x38
     NPCMsg* next;
-    float32 tmr_delay;
+    float32 tmr_delay; // 0x40
 };
 
 xFactoryInst* ZNPC_Create_Common(int32 who, RyzMemGrow* grow, void*);

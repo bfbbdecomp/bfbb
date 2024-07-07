@@ -104,10 +104,18 @@ struct xPsyche : RyzMemData
     int32 ImmTranIsOn();
     int32 HasGoal(int32 goal);
     int32 GIDOfPending() const;
+    int32 GIDOfActive() const;
     int32 Timestep(float32 dt, void* updCtxt);
     xGoal* FindGoal(int32 gid);
     int32 GoalSet(int32 gid, int32 r5);
     int32 GoalPop(int32 gid_popto, int32 r5);
+    int32 GoalNone(int32 denyExplicit);
+    int32 GoalSwap(int32 gid, int32 r5);
+    int32 GoalPopRecover(int32 overpend);
+    int32 GoalPopToBase(int32 overpend);
+    int32 GoalPush(int32 gid, int32 r5);
+    int32 GoalSet(int32 gid);
+
     void BrainBegin();
     void BrainExtend();
     void BrainEnd();

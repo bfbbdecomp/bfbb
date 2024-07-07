@@ -1,12 +1,16 @@
 #include <types.h>
 
 #include "xVec3.h"
+#include "xBound.h"
 #include "xMath3.h"
 
 #include "zGlobals.h"
 #include "zNPCGoalAmbient.h"
 #include "zNPCTypeAmbient.h"
 #include "zNPCTypes.h"
+#include <xutil.h>
+#include "zNPCGoals.h"
+#include "zGrid.h"
 
 extern int8* g_strz_ambianim[12];
 extern int32 g_hash_ambianim[12];
@@ -123,12 +127,11 @@ void zNPCAmbient::SelfSetup()
     psy_instinct = bmgr->Subscribe(this, 0);
     psy = psy_instinct;
     psy->BrainBegin();
-    psy->AddGoal('NGN0', NULL);
+    psy->AddGoal(NPC_GOAL_IDLE, NULL);
     psy->BrainEnd();
-    psy->SetSafety('NGN0');
+    psy->SetSafety(NPC_GOAL_IDLE);
 }
 
-/* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCJelly::Init(xEntAsset* asset)
 {
     zNPCAmbient::Init(asset);
@@ -136,7 +139,6 @@ void zNPCJelly::Init(xEntAsset* asset)
     flg_vuln = 0xffffffff;
     flg_vuln = flg_vuln & 0x9effffef;
 }
-*/
 
 void zNPCJelly::ParseINI()
 {
@@ -146,12 +148,12 @@ void zNPCJelly::ParseINI()
     cfg_npc->snd_trax = g_sndTrax_Jelly;
     NPCS_SndTablePrepare(g_sndTrax_Jelly);
     selfType = xNPCBasic::SelfType();
-    if (selfType == 'NTA1')
+    if (selfType == NPC_TYPE_JELLYBLUE)
     {
         cfg_npc->spd_moveMax = zNPCTypeAmbientx40600000;
         cfg_npc->spd_turnMax = zNPCTypeAmbientx405f66f3;
     }
-    else if (selfType == 'NTA0')
+    else if (selfType == NPC_TYPE_JELLYPINK)
     {
         if (globals.sceneCur->sceneID == 'JF04') //DAT_803c2518 is globals.sceneCur->sceneID
         {
@@ -174,7 +176,7 @@ void zNPCJelly::Reset()
     if (npc_daddyJelly != NULL)
     {
         hitpoints = 0;
-        psy_instinct->GoalSet('NGN5', 1);
+        psy_instinct->GoalSet(NPC_GOAL_DEAD, 1);
     }
 }
 
@@ -189,15 +191,15 @@ void zNPCJelly::SelfSetup()
     psy->BrainBegin();
     zNPCCommon::AddBaseline(psy, JELY_grul_getAngry, JELY_grul_getAngry, JELY_grul_getAngry,
                             JELY_grul_getAngry, JELY_grul_getAngry);
-    psy->AddGoal('NGJ1', NULL);
-    psy->AddGoal('NGJ0', NULL);
-    psy->AddGoal('NGJ2', NULL);
-    psy->AddGoal('NGN5', NULL);
+    psy->AddGoal(NPC_GOAL_JELLYBUMPED, NULL);
+    psy->AddGoal(NPC_GOAL_JELLYATTACK, NULL);
+    psy->AddGoal(NPC_GOAL_JELLYBIRTH, NULL);
+    psy->AddGoal(NPC_GOAL_DEAD, NULL);
     psy->BrainEnd();
-    psy->SetSafety('NGN0');
+    psy->SetSafety(NPC_GOAL_IDLE);
 }
 
-void zNPCJelly::JellySpawn(xVec3* pos_spawn, float32 tym_fall)
+void zNPCJelly::JellySpawn(const xVec3* pos_spawn, float32 tym_fall)
 {
     xPsyche* psy;
     zNPCGoalJellyBirth* birth;
@@ -211,11 +213,106 @@ void zNPCJelly::JellySpawn(xVec3* pos_spawn, float32 tym_fall)
 void zNPCJelly::JellyKill()
 {
     xPsyche* psy = psy_instinct;
-    if (psy != NULL && psy->GIDInStack('NGN5') == 0)
+    if (psy && !psy->GIDInStack(NPC_GOAL_DEAD))
     {
         hitpoints = 0;
-        psy->GoalSet('NGN5', 0);
+        psy->GoalSet(NPC_GOAL_DEAD, 0);
     }
+}
+
+void test(int32 a)
+{
+}
+
+// Really close to matching, but the switch cases aren't quite right
+uint32 zNPCJelly::AnimPick(int32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    uint32 r8 = 0;
+    int32 r31 = -1;
+
+    switch (animID)
+    {
+    case 'NGN0': // 8c
+    {
+        r31 = 1;
+        break;
+    }
+    case 'NGN3': // 94
+    {
+        r31 = 4;
+        break;
+    }
+    case 'NGN2': // 9c
+    {
+        r31 = 7;
+        break;
+    }
+    case 'NGN5': // a4
+    {
+        r31 = 1;
+        break;
+    }
+    case 'NGJ2': // ac
+    {
+        r31 = 1;
+        break;
+    }
+    case 'NGJ1': // b4
+    {
+        r31 = 8;
+        break;
+    }
+    case 'NGJ0': // bc
+    {
+        r31 = 11;
+        break;
+    }
+    case 'NGN4': // c4
+    case 'NGJ3': // c4
+    {
+        r8 = this->zNPCAmbient::AnimPick(animID, gspot, goal);
+        break;
+    }
+    }
+
+    if (r31 >= 0)
+    {
+        r8 = g_hash_ambianim[r31];
+    }
+
+    return r8;
+}
+
+// Non-match
+void zNPCJelly::BUpdate(xVec3*)
+{
+    xVec3 pos_bnd;
+    static xVec3 vec_offset;
+
+    xVec3* pos = (xVec3*)this->zNPCCommon::BonePos(2);
+
+    // Not sure about this.
+    // zNPCCommon::BonePos is not in DWARF.
+    // The decompiled code looks like it returns a vec3
+    // So I assumed that was its return type
+    // and this code looks like it's using the x,y,z of that
+    // but for some reason the compiler generated lwz instead of lfs
+    // and stw instead of stfs
+    pos_bnd.x = pos->x;
+    pos_bnd.y = pos->y;
+    pos_bnd.z = pos->z;
+
+    pos_bnd += vec_offset;
+
+    xMat3x3LMulVec(&pos_bnd, (xMat3x3*)this->zNPCCommon::BoneMat(0), pos);
+
+    pos_bnd += *((xVec3*)this->zNPCCommon::BonePos(0));
+    this->bound.sph.center = pos_bnd;
+
+    this->bound.sph.r = 0.5f; // @903 // Could be sph or cyl
+    xQuickCullForBound(&this->bound.qcd, &this->bound);
+
+    zGridUpdateEnt(this);
 }
 
 /* This should be 100% matching but it causes a vtable duplication error for some reason
@@ -244,11 +341,111 @@ void zNPCMimeFish::Reset()
 }
 */
 
-/* This should be 100% matching but it causes a vtable duplication error for some reason
+void zNPCJelly::Process(xScene* xscn, float32 dt)
+{
+    this->zNPCAmbient::Process(xscn, dt);
+
+    if (this->IsAlive())
+    {
+        this->PlayWithAlpha(dt);
+        this->PlayWithAnimSpd();
+
+        xPsyche* psy = this->psy_instinct;
+
+        int32 flg_wonder = this->SomethingWonderful();
+
+        if (xEntIsVisible(this))
+        {
+            if (xUtil_yesno(0.05f) && psy->GIDOfActive() != NPC_GOAL_DEAD)
+            {
+                this->PlayWithLightnin();
+            }
+        }
+    }
+}
+
+int32 zNPCJelly::AmbiHandleMail(NPCMsg* msg)
+{
+    int32 handled = 1;
+    xPsyche* psy = this->psy_instinct;
+
+    switch (msg->msgid)
+    {
+    case NPC_MID_DAMAGE:
+    {
+        if (psy && hitpoints >= 1)
+        {
+            if (msg->dmgdata.dmg_type == DMGTYP_CRUISEBUBBLE)
+            {
+                this->hitpoints = this->hitpoints < 1 ? this->hitpoints : 1;
+            }
+
+            if (psy->GIDInStack(NPC_GOAL_JELLYBUMPED))
+            {
+                break;
+            }
+
+            if (psy->GIDInStack(NPC_GOAL_FIDGET))
+            {
+                psy->GoalSwap(NPC_GOAL_JELLYBUMPED, 0);
+            }
+            else if (psy->GIDInStack(NPC_GOAL_JELLYATTACK))
+            {
+                psy->GoalSet(NPC_GOAL_IDLE, 0);
+                psy->GoalPush(NPC_GOAL_JELLYBUMPED, 0);
+            }
+            else
+            {
+                psy->GoalPush(NPC_GOAL_JELLYBUMPED, 0);
+            }
+        }
+
+        break;
+    }
+    default:
+    {
+        handled = 0;
+        break;
+    }
+    }
+
+    return handled;
+}
+
+void zNPCJelly::SetAlpha(float32 alpha)
+{
+    xModelInstance* model = this->model;
+
+    for (model; model != NULL; model = model->Next)
+    {
+        model->Flags |= 0x4000;
+        model->Alpha = alpha;
+    }
+}
+
+void zNPCJelly::PlayWithAnimSpd()
+{
+    const int32 arr[3] = {
+        0x4e474e32, // 'NGN2'
+        0x4e474e31, // 'NGN1'
+        0,
+    };
+
+    int32 gid = this->psy_instinct->GIDOfActive();
+
+    for (const int32* i = arr; *i != 0; i++)
+    {
+        if (gid == *i)
+        {
+            this->PumpFaster();
+            break;
+        }
+    }
+}
+
 void zNPCMimeFish::Process(xScene* xscn, float32 dt)
 {
 }
-*/
 
 int32 zNPCAmbient::AmbiHandleMail(NPCMsg msg)
 {
