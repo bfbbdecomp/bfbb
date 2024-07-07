@@ -81,11 +81,39 @@ void ZNPC_Destroy_Ambient(xFactoryInst* inst)
 {
     delete inst;
 }
+
 xAnimTable* ZNPC_AnimTable_Ambient()
 {
     xAnimTable* table = (xAnimTable*)xAnimTableNew(zNPCTypeAmbient_stringBase0 + 0x60, NULL, 0);
     xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, _882, NULL, NULL, _883, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    return table;
+}
+
+xAnimTable* ZNPC_AnimTable_Jelly()
+{
+    xAnimTable* table = (xAnimTable*)xAnimTableNew("zNPCJelly", NULL, 0);
+
+    int32 local_887[] = {
+        1, 7, 4, 8, 11, 0,
+    };
+
+#define f882 1.0f
+#define f883 0.0f
+
+    xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[7], 0x110, 1, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[4], 0x20, 1, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[8], 0x10, 1, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[11], 0x10, 1, f882, 0, 0, f883, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+
+    NPCC_BuildStandardAnimTran(table, g_strz_ambianim, local_887, 1, 0.2f);
+
     return table;
 }
 
