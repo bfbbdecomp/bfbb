@@ -5,12 +5,6 @@
 #include "xString.h"
 #include "xMath.h"
 
-extern F32 _830_2;
-extern F32 _831_2;
-extern F32 _832_0;
-extern F32 _866_5;
-extern F32 _867_6;
-
 #define ANIM_COUNT 11
 
 U32 g_hash_testanim[ANIM_COUNT] = {};
@@ -28,11 +22,7 @@ const char* g_strz_testanim[ANIM_COUNT] =
     "Test07",
     "Test08",
     "Test09",
-#if 1 // needed until ZNPC_AnimTable_Test is matching
-    "Test10\0zNPCTest"
-#else
-    "Test10"
-#endif
+    "Test10",
 };
 // clang-format on
 
@@ -69,40 +59,36 @@ void ZNPC_Destroy_Test(xFactoryInst* inst)
     delete inst;
 }
 
-#ifdef NON_MATCHING
 xAnimTable* ZNPC_AnimTable_Test()
 {
     xAnimTable* table;
     const char** names = g_strz_testanim;
 
-    table = xAnimTableNew(_stringBase0_84 + 78, NULL, 0);
+    table = xAnimTableNew("zNPCTest", NULL, 0);
 
     for (S32 i = 1; i < ANIM_COUNT; i++)
     {
-        xAnimTableNewState(table, names[i], 0x10, 0x1, _830_2, NULL, NULL, _831_2, NULL, NULL,
+        xAnimTableNewState(table, names[i], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                            xAnimDefaultBeforeEnter, NULL, NULL);
     }
 
     for (S32 i = 1; i < ANIM_COUNT; i++)
     {
-        // non-matching: float scheduling
-
         if (i < ANIM_COUNT - 1)
         {
-            xAnimTableNewTransition(table, names[i], names[i + 1], NULL, NULL, 0, 0, _831_2, _831_2,
-                                    1, 0, _832_0, NULL);
+            xAnimTableNewTransition(table, names[i], names[i + 1], NULL, NULL, 0, 0, 0.0f, 0.0f,
+                                    1, 0, 0.15f, NULL);
         }
 
         if (i > 1)
         {
-            xAnimTableNewTransition(table, names[i], names[1], NULL, NULL, 0, 0, _831_2, _831_2, 1,
-                                    0, _832_0, NULL);
+            xAnimTableNewTransition(table, names[i], names[1], NULL, NULL, 0, 0, 0.0f, 0.0f, 1,
+                                    0, 0.15f, NULL);
         }
     }
 
     return table;
 }
-#endif
 
 zNPCTest::zNPCTest(S32 myType) : zNPCCommon(myType)
 {
@@ -117,11 +103,11 @@ void zNPCTest::Reset()
 
 void zNPCTest::Process(xScene* xscn, F32 dt)
 {
-    transitionTimer = MAX(_866_5, transitionTimer - dt);
+    transitionTimer = MAX(-1.0f, transitionTimer - dt);
 
-    if (transitionTimer < _831_2)
+    if (transitionTimer < 0.0f)
     {
-        transitionTimer = _867_6;
+        transitionTimer = 5.0f;
 
         if (++currentState >= numAnimations)
         {
@@ -138,7 +124,7 @@ void zNPCTest::SelfSetup()
 {
     currentState = 0;
     numAnimations = cfg_npc->test_count;
-    transitionTimer = _867_6;
+    transitionTimer = 5.0f;
 }
 
 U32 zNPCTest::AnimPick(S32, en_NPC_GOAL_SPOT, xGoal*)

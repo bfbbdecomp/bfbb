@@ -465,7 +465,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zTextBox.cpp"),
             Object(NonMatching, "SB/Game/zTaskBox.cpp"),
             Object(NonMatching, "SB/Core/gc/iCutscene.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypeTest.cpp"),
+            Object(Matching, "SB/Game/zNPCTypeTest.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeSubBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalVillager.cpp"),
