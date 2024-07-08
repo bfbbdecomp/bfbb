@@ -21,6 +21,7 @@ struct zNPCB_SB1 : zNPCBoss
     F32 attack_delay; // 0x4A8
 
     zNPCB_SB1(S32 myType);
+    void Init(xEntAsset*);
     void Reset();
     void NewTime(xScene* xscn, F32 dt);
     F32 AttackTimeLeft();
@@ -37,6 +38,7 @@ struct zNPCGoalBossSB1Idle : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossSB1Taunt : zNPCGoalCommon
@@ -48,6 +50,7 @@ struct zNPCGoalBossSB1Taunt : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossSB1Stomp : zNPCGoalCommon
@@ -59,6 +62,7 @@ struct zNPCGoalBossSB1Stomp : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossSB1Smash : zNPCGoalCommon

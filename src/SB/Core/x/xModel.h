@@ -24,7 +24,7 @@ struct xModelInstance
     xModelInstance* Next;
     xModelInstance* Parent;
     xModelPool* Pool;
-    xAnimPlay* Anim;
+    xAnimPlay* Anim; // 0xC
 
     // Offset: 0x10
     RpAtomic* Data;

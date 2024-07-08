@@ -1,7 +1,11 @@
 #include <types.h>
 #include <string.h>
 
+#include "iMath.h"
+#include "iModel.h"
+
 #include "xDraw.h"
+#include "xMathInlines.h"
 
 #include "zGrid.h"
 #include "zNPCGoals.h"
@@ -38,8 +42,76 @@
 #define f1209 0.76666665f
 #define f1223 0.05f
 
-extern zEnt* sSB1_armTgtHit;
-extern zNPCB_SB1* sSB1_Ptr; // size: 0x4, address: 0x510188
+static xVec3 BossArmTags[8] = {
+    //
+    { 11.507f, 4.523f, 2.53f },
+    {
+        11.635f,
+        4.113f,
+        2.526f,
+    },
+    {
+        11.615f,
+        4.49f,
+        2.034f,
+    },
+    {
+        11.654f,
+        4.172f,
+        2.025f,
+    },
+    {
+        -11.507f,
+        4.523f,
+        2.53f,
+    },
+    {
+        -11.635f,
+        4.113f,
+        2.526f,
+    },
+    {
+        -11.615f,
+        4.49f,
+        2.034f,
+    },
+    {
+        -11.654f,
+        4.172f,
+        2.025f,
+    }
+};
+
+static xVec3 BossFeetTags[4] = {
+    //
+    {
+        1.188f,
+        0.011f,
+        -0.154f,
+    },
+    {
+        1.188f,
+        0.22f,
+        1.509f,
+    },
+    {
+        -1.19f,
+        0.011f,
+        -0.154f,
+    },
+    {
+        -1.19f,
+        0.22f,
+        1.509f,
+    },
+};
+
+zEnt* sSB1_armTgtHit;
+zNPCB_SB1* sSB1_Ptr; // size: 0x4, address: 0x510188
+
+void test(S32 a)
+{
+}
 
 xAnimTable* ZNPC_AnimTable_BossSB1()
 {
@@ -120,6 +192,57 @@ S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_
 }
 
 void SB1_ResetGlobalStuff();
+
+// Close, but no cigar
+void zNPCB_SB1::Init(xEntAsset* asset)
+{
+    /*
+        signed int i; // r19
+        class xModelInstance * minst; // r5
+    */
+
+    this->zNPCCommon::Init(asset);
+
+    sSB1_Ptr = this;
+
+    // xModelInstance* minst = this->model;
+    S32 i = 0;
+
+    xModelInstance* minst = this->model;
+    while (minst)
+    {
+        minst->Data->boundingSphere.radius = f890;
+        this->m_subModels[i] = minst;
+        i = i + 1;
+        minst = minst->Next;
+    }
+
+    // I'm pretty sure this idea is right, but for some reason it's loading
+    // BossArmTags into/out of the stack???
+    for (i = 0; i < 4; i++)
+    {
+        iModelTagSetup(this->m_leftArmTags[i], this->m_subModels[i]->Data, BossArmTags[i].x,
+                       BossArmTags[i].y, BossArmTags[i].z);
+
+        iModelTagSetup(this->m_rightArmTags[i], this->m_subModels[i]->Data, BossArmTags[i + 4].x,
+                       BossArmTags[i + 4].y, BossArmTags[i + 4].z);
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        iModelTagSetup(this->m_feetTags[i], this->m_subModels[i]->Data, BossFeetTags[i].x,
+                       BossFeetTags[i].y, BossFeetTags[i].z);
+    }
+
+    // get object by hash of each thing and assign each one
+    this->m_armColl[0] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMCOLL_LEFT"));
+    this->m_armColl[1] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMCOLL_RIGHT"));
+    this->m_bodyColl = (zEnt*)zSceneFindObject(xStrHash("DUMMY_BODYCOLL"));
+    this->m_armTgt[0] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMTGT_LEFT"));
+    this->m_armTgt[0] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMTGT_RIGHT"));
+
+    SB1_ResetGlobalStuff();
+}
 
 void zNPCB_SB1::Reset()
 {
@@ -312,6 +435,58 @@ S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
+S32 SB1_FaceTarget(zNPCB_SB1* sb1, xVec3* target, F32 dt)
+{
+    S32 retval = 0;
+    xVec3 newAt;
+
+    xVec3Sub(&newAt, target, (xVec3*)&sb1->model->Mat->pos);
+
+    newAt.y = f823;
+    F32 a = xVec3Normalize(&newAt, &newAt);
+
+    F32 currRot = xatan2(sb1->model->Mat->at.x, sb1->model->Mat->at.z);
+    F32 desireRot = xatan2(newAt.x, newAt.z);
+
+    F32 diffRot = desireRot - currRot;
+
+    if (diffRot > f1089)
+    {
+        diffRot -= f1088;
+    }
+
+    if (diffRot < f1090)
+    {
+        diffRot += f1088;
+    }
+
+    F32 deltaRot = f1091 * dt;
+
+    if ((F32)iabs(diffRot) < deltaRot)
+    {
+        sb1->frame->mat.at = newAt;
+        retval = 1;
+    }
+    else
+    {
+        if (diffRot < f823)
+        {
+            deltaRot = -deltaRot;
+        }
+
+        desireRot = currRot + deltaRot;
+        deltaRot = isin(currRot + deltaRot);
+        sb1->frame->mat.at.x = deltaRot;
+        sb1->frame->mat.at.y = f823;
+        deltaRot = icos(desireRot);
+        sb1->frame->mat.at.z = deltaRot;
+    }
+
+    xVec3Cross(&sb1->frame->mat.right, &sb1->frame->mat.up, &sb1->frame->mat.at);
+
+    return retval;
+}
+
 S32 zNPCGoalBossSB1Idle::Enter(F32 dt, void* updCtxt)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
@@ -320,12 +495,38 @@ S32 zNPCGoalBossSB1Idle::Enter(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalBossSB1Idle::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    if (sb1->model->Anim->Single->State->ID == g_hash_bossanim[1])
+    {
+        this->timeInGoal += dt;
+        sb1->m_tauntTimer -= dt;
+    }
+
+    SB1_FaceTarget(sb1, (xVec3*)&globals.player.ent.model->Mat->pos, dt);
+
+    return xGoal::Process(trantype, dt, ctxt, scene);
+}
+
 S32 zNPCGoalBossSB1Taunt::Enter(F32 dt, void* updCtxt)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
     this->timeInGoal = f823;
     sb1->m_tauntTimer = f983;
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB1Taunt::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    this->timeInGoal += dt;
+
+    SB1_FaceTarget(sb1, (xVec3*)&globals.player.ent.model->Mat->pos, dt);
+
+    return xGoal::Process(trantype, dt, ctxt, scene);
 }
 
 S32 zNPCGoalBossSB1Stomp::Enter(F32 dt, void* updCtxt)
@@ -398,4 +599,39 @@ void AddStompRing(zNPCB_SB1* sb1, xVec3* pos)
             }
         }
     }
+}
+
+S32 zNPCGoalBossSB1Stomp::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    xVec3 feetTag[4];
+    xVec3 wavePt[2];
+
+    this->timeInGoal += dt;
+
+    SB1_FaceTarget(sb1, (xVec3*)&globals.player.ent.model->Mat->pos, dt);
+
+    if (this->timeInGoal > f1160)
+    {
+        if (sb1->model->Anim->Single->LastTime > sb1->model->Anim->Single->Time)
+        {
+            for (U32 i = 0; i < 4; i++)
+            {
+                iModelTagEval(sb1->m_subModels[1]->Data, &sb1->m_feetTags[i],
+                              sb1->m_subModels[1]->Mat, &feetTag[i]);
+            }
+
+            xVec3Lerp(&wavePt[0], &feetTag[0], &feetTag[1], f1161);
+            xVec3Lerp(&wavePt[1], &feetTag[2], &feetTag[3], f1161);
+
+            wavePt[0].y = f1160;
+            wavePt[1].y = f1160;
+
+            AddStompRing(sb1, &wavePt[0]);
+            AddStompRing(sb1, &wavePt[1]);
+        }
+    }
+
+    return xGoal::Process(trantype, dt, ctxt, scene);
 }

@@ -151,11 +151,11 @@ typedef struct xModelInstance;
 struct xAnimPlay
 {
     xAnimPlay* Next;
-    U16 NumSingle;
-    U16 BoneCount;
-    xAnimSingle* Single;
-    void* Object;
-    xAnimTable* Table;
+    U16 NumSingle; // 0x4
+    U16 BoneCount; // 0x6
+    xAnimSingle* Single; // 0x8
+    void* Object; // 0xC
+    xAnimTable* Table; // 0x10
     xMemPool* Pool;
     xModelInstance* ModelInst;
     void (*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, S32);
