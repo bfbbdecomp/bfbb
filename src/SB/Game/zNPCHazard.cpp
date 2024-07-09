@@ -264,6 +264,10 @@ void NPCHazard::CollideResponse(xSweptSphere* swdata, F32 tym_inFuture)
     this->ColResp_Default(swdata, tym_inFuture);
 }
 
+void NPCHazard::Upd_Patriot(F32)
+{
+}
+
 void UVAModelInfo::Hemorrage()
 {
     model = 0;

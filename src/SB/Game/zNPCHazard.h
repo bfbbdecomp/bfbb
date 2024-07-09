@@ -230,6 +230,7 @@ struct NPCHazard
     void StagColDyn();
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
+    void Upd_Patriot(F32);
     RwV3d* At();
     RwV3d* Right();
     RwV3d* Up();
