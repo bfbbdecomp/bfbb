@@ -1,8 +1,11 @@
 {
   "configurations": [
     {
-      "name": "Mac",
-      "defines": ["GAMECUBE"],
+      "name": "Default",
+      "defines": [
+        "__MWERKS__",
+        "GAMECUBE"
+      ],
       "includePath": [
         "${workspaceFolder}/include/**",
         "${workspaceFolder}/src/**"
@@ -13,7 +16,9 @@
       "compilerPath": "",
       "configurationProvider": "ms-vscode.makefile-tools",
       "browse": {
-        "path": ["${workspaceFolder}/include"],
+        "path": [
+          "${workspaceFolder}/include"
+        ],
         "limitSymbolsToIncludedHeaders": false
       }
     }

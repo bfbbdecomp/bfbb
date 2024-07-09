@@ -23,7 +23,7 @@ struct zParPTank
 void zParPTankInit();
 void zParPTankSceneEnter();
 void zParPTankSceneExit();
-void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, U32 count, float scale);
+void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, U32 count, F32 scale);
 void zParPTankSpawnSnow(xVec3* pos, xVec3* vel, U32 count);
 void zParPTankExit();
 void zParPTankRender();
