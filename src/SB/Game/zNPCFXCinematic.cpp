@@ -20,4 +20,6 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
-void clamp_bone_index(NCINEntry*, RpAtomic*) {}
+void clamp_bone_index(NCINEntry*, RpAtomic*)
+{
+}
