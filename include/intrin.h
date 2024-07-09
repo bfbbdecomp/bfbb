@@ -1,8 +1,6 @@
 #ifndef _INTRIN_H
 #define _INTRIN_H
 
-#ifndef __MWERKS__
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -11,18 +9,18 @@ void __eieio(void);
 void __sync(void);
 void __isync(void);
 int __abs(int);
-float __fabs(float);
-float __fnabs(float);
+double __fabs(double);
+double __fnabs(double);
 long __labs(long);
-int __lhbrx(void*, int);
-int __lwbrx(void*, int);
+// int __lhbrx(void*, int);
+// int __lwbrx(void*, int);
 void __sthbrx(unsigned short, void*, int);
 void __stwbrx(unsigned int, void*, int);
-float __setflm(float);
+double __setflm(double);
 int __rlwinm(int, int, int, int);
 int __rlwnm(int, int, int, int);
-int __rlwimi(int, int, int, int);
-int __cntlzw(int);
+int __rlwimi(int, int, int, int, int);
+// int __cntlzw(int);
 void __dcbf(void*, int);
 void __dcbt(void*, int);
 void __dcbst(void*, int);
@@ -41,12 +39,10 @@ float __fnmsubs(float, float, float);
 double __mffs(void);
 float __fabsf(float);
 float __fnabsf(float);
-float __frsqrte(float);
+double __frsqrte(double);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
 
 #endif

@@ -4,7 +4,11 @@
 #include <types.h>
 #include <intrin.h>
 
-#define iabs __fabs
+#ifdef __MWERKS__
+#define iabs(x) (float)(__fabs((float)x))
+#else
+#define iabs(x) fabsf(x)
+#endif
 
 F32 isin(F32 x);
 F32 icos(F32 x);
