@@ -63,3 +63,7 @@ void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsiz
     jsp_shadow_hack(retjsp);
     return retjsp;
 }
+
+void Anim_Unload(void*, unsigned int)
+{
+}

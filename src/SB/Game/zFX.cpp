@@ -27,6 +27,10 @@ extern F32 lbl_803CD968; // 0.15f
 extern F32 lbl_803CD96C; // 12.0f
 extern F32 lbl_803CD970; // 2.0f
 
+void xDrawSphere2(const xVec3*, float, unsigned int)
+{
+}
+
 void on_spawn_bubble_wall(const tweak_info& tweak)
 {
     zFX_SpawnBubbleWall();

@@ -139,6 +139,54 @@ void zLightEffectRandomColFast()
 {
 }
 
+void zLightEffectRandomColFast(_zLight*, float)
+{
+}
+
+void zLightEffectRandomCol(_zLight*, float)
+{
+}
+
+void zLightEffectRandomColSlow(_zLight*, float)
+{
+}
+
+void zLightEffectHalfDimFast(_zLight*, float)
+{
+}
+
+void zLightEffectHalfDim(_zLight*, float)
+{
+}
+
+void zLightEffectHalfDimSlow(_zLight*, float)
+{
+}
+
+void zLightEffectDimFast(_zLight*, float)
+{
+}
+
+void zLightEffectDim(_zLight*, float)
+{
+}
+
+void zLightEffectDimSlow(_zLight*, float)
+{
+}
+
+void zLightEffectStrobeFast(_zLight*, float)
+{
+}
+
+void zLightEffectStrobe(_zLight*, float)
+{
+}
+
+void zLightEffectStrobeSlow(_zLight*, float)
+{
+}
+
 void zLightEffectInitCauldron(_zLight* zlight)
 {
     *zlight->reg = lbl_803CDB70;
