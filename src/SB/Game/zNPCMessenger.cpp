@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-void zNPCCommon::Stun(float)
+void zNPCCommon::Stun(F32)
 {
 }
 

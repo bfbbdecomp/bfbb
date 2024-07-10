@@ -139,51 +139,51 @@ void zLightEffectRandomColFast()
 {
 }
 
-void zLightEffectRandomColFast(_zLight*, float)
+void zLightEffectRandomColFast(_zLight*, F32)
 {
 }
 
-void zLightEffectRandomCol(_zLight*, float)
+void zLightEffectRandomCol(_zLight*, F32)
 {
 }
 
-void zLightEffectRandomColSlow(_zLight*, float)
+void zLightEffectRandomColSlow(_zLight*, F32)
 {
 }
 
-void zLightEffectHalfDimFast(_zLight*, float)
+void zLightEffectHalfDimFast(_zLight*, F32)
 {
 }
 
-void zLightEffectHalfDim(_zLight*, float)
+void zLightEffectHalfDim(_zLight*, F32)
 {
 }
 
-void zLightEffectHalfDimSlow(_zLight*, float)
+void zLightEffectHalfDimSlow(_zLight*, F32)
 {
 }
 
-void zLightEffectDimFast(_zLight*, float)
+void zLightEffectDimFast(_zLight*, F32)
 {
 }
 
-void zLightEffectDim(_zLight*, float)
+void zLightEffectDim(_zLight*, F32)
 {
 }
 
-void zLightEffectDimSlow(_zLight*, float)
+void zLightEffectDimSlow(_zLight*, F32)
 {
 }
 
-void zLightEffectStrobeFast(_zLight*, float)
+void zLightEffectStrobeFast(_zLight*, F32)
 {
 }
 
-void zLightEffectStrobe(_zLight*, float)
+void zLightEffectStrobe(_zLight*, F32)
 {
 }
 
-void zLightEffectStrobeSlow(_zLight*, float)
+void zLightEffectStrobeSlow(_zLight*, F32)
 {
 }
 

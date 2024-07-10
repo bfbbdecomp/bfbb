@@ -2,6 +2,6 @@
 
 #include <types.h>
 
-void zEntSimpleObj_Move(xEnt*, xScene*, float, xEntFrame*)
+void zEntSimpleObj_Move(xEnt*, xScene*, F32, xEntFrame*)
 {
 }
