@@ -14,7 +14,7 @@ static bool inited;
 
 void xhud::block_allocator::flush_all()
 {
-    for (block_allocator* allocator = _head_alloc; allocator != NULL; allocator = allocator->next)
+    for (block_allocator* allocator = _head_alloc; allocator != NULL; allocator = allocator->_next_alloc)
     {
         allocator->flush();
     }
@@ -22,50 +22,50 @@ void xhud::block_allocator::flush_all()
 
 xhud::block_allocator::block_allocator(U32 a0, U32 a1)
 {
-    unk0 = ALIGN(a0, 4) + 4;
-    unk8 = NULL;
-    next = _head_alloc;
+    _block_size = ALIGN(a0, 4) + 4;
+    _top = NULL;
+    _next_alloc = _head_alloc;
     _head_alloc = this;
     set_increment(a1);
 }
 
 void xhud::block_allocator::set_increment(U32 a0)
 {
-    unk4 = unk0 * a0;
+    _alloc_size = _block_size * a0;
 }
 
 void xhud::block_allocator::size_reserve(U32 size)
 {
     void** ppvVar1 = (void**)xMemAllocSize(size);
     void** ppvVar2 = (void**)((U32)ppvVar1 + size);
-    for (; ppvVar1 < ppvVar2; ppvVar1 = (void**)((U32)ppvVar1 + unk0))
+    for (; ppvVar1 < ppvVar2; ppvVar1 = (void**)((U32)ppvVar1 + _block_size))
     {
-        *ppvVar1 = unk8;
-        unk8 = ppvVar1;
+        *ppvVar1 = _top;
+        _top = ppvVar1;
     }
 }
 
 void* xhud::block_allocator::alloc()
 {
-    if (unk8 == NULL)
+    if (_top == NULL)
     {
-        size_reserve(unk4);
+        size_reserve(_alloc_size);
     }
 
-    void** ptr = (void**)unk8;
-    unk8 = *ptr;
+    void** ptr = (void**)_top;
+    _top = *ptr;
     return ptr + 1;
 }
 
 void xhud::block_allocator::free(void* ptr)
 {
-    *(void**)((U32)ptr - 4) = unk8;
-    unk8 = (void*)((U32)ptr - 4);
+    *(void**)((U32)ptr - 4) = _top;
+    _top = (void*)((U32)ptr - 4);
 }
 
 void xhud::block_allocator::flush()
 {
-    unk8 = NULL;
+    _top = NULL;
 }
 
 xhud::block_allocator* xhud::widget::motive_allocator()

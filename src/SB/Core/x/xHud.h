@@ -13,10 +13,10 @@ namespace xhud
 {
     struct block_allocator
     {
-        U32 unk0;
-        U32 unk4;
-        void* unk8;
-        block_allocator* next;
+        U32 _block_size;
+        U32 _alloc_size;
+        void* _top; // FIXME: This is a holder*
+        block_allocator* _next_alloc;
 
         static block_allocator* _head_alloc;
 
