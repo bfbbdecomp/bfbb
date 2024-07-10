@@ -17,3 +17,7 @@ void NPCSupport_Shutdown()
 void NPCWidget_Shutdown()
 {
 }
+
+void NPCWidget_ScenePrepare()
+{
+}

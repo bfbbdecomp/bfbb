@@ -32,6 +32,7 @@ struct zNPCFish : zNPCVillager
     xEntDrive raw_drvdata;
 
     zNPCFish(S32 myType);
+    void CheckDoChat();
 };
 
 struct zNPCBubbleBuddy : zNPCFish
@@ -88,6 +89,7 @@ struct zNPCNewsFish : zNPCVillager
     F32 screenLerp;
 
     zNPCNewsFish(S32 myType);
+    void SelfSetup();
 };
 
 struct zNPCNewsFishTV : zNPCVillager

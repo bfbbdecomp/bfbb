@@ -125,6 +125,10 @@ struct zNPCKingJelly : zNPCSubBoss
     U8 first_update;
 
     zNPCKingJelly(S32 myType);
+    void on_change_ambient_ring(const tweak_info&);
+    void on_change_fade_obstructions(const tweak_info&);
+    void render_debug();
+    void create_tentacle_lightning();
 };
 
 struct zNPCGoalKJIdle : zNPCGoalCommon

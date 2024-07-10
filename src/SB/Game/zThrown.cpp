@@ -85,8 +85,7 @@ void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* b
     *friction = _844;
 }
 
-void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
-                         F32* friction)
+void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce, F32* friction)
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
@@ -135,6 +134,6 @@ void checkAgainstButtons(xEnt* ent)
 
 #endif
 
-void xDrawSphere(xSphere* s, U32 unk)
+void xDrawSphere(const xSphere*, U32)
 {
 }

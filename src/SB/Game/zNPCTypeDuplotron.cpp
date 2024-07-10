@@ -42,6 +42,10 @@ void zNPCDuplotron_ScenePostInit()
     DUPO_InitEffects();
 }
 
+void zNPCDuplotron_ScenePrepare()
+{
+}
+
 xFactoryInst* ZNPC_Create_Duplotron(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCDuplotron* npc;
