@@ -14,3 +14,15 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->y = y;
     o->z = z;
 }
+
+void zNPCDutchman::render_debug()
+{
+}
+
+void zNPCDutchman::update_animation(float)
+{
+}
+
+void zNPCDutchman::add_splash(const xVec3&, float)
+{
+}
