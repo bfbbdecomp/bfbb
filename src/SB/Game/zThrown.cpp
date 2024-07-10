@@ -134,6 +134,6 @@ void checkAgainstButtons(xEnt* ent)
 
 #endif
 
-void xDrawSphere(const xSphere*, unsigned int)
+void xDrawSphere(const xSphere*, U32)
 {
 }
