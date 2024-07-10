@@ -108,7 +108,7 @@ void iSGSessionEnd(st_ISGSESSION* isgdata)
 }
 #endif
 
-void iSG_cb_asyndone(S64, S64)
+void iSG_cb_asyndone(long, long)
 {
 }
 
