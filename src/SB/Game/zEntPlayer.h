@@ -361,35 +361,14 @@ struct zPlayerLassoInfo
     xAnimState* zeroAnim;
 };
 
+#define SHINY_MAX 99999
+
 extern _CurrentPlayer gCurrentPlayer;
 
 void zEntPlayer_Load(xEnt*, xSerial*);
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage);
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback);
-
-U32 WalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 RunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 RunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 RunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 RunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 RunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-
-U32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-
-U32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-U32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
-
-U32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3);
 
 void zEntPlayerExit(xEnt*);
 void zEntPlayerPreReset();
@@ -398,6 +377,8 @@ void zEntPlayer_LoadSounds();
 void zEntPlayer_UnloadSounds();
 void zEntPlayer_ShadowModelEnable();
 void zEntPlayer_ShadowModelDisable();
+
+void zEntPlayerJumpStart(class xEnt* ent, class zJumpParam* jump);
 
 void zEntPlayer_setBoulderMode(U32 mode);
 void zEntPlayer_GiveSpatula(S32);
@@ -415,8 +396,7 @@ void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
                                     _tagePlayerStreamSnd player_snd_end, F32 delay);
 
 // Only plays sound if player's spatula count is between lower and upper
-void zEntPlayer_SNDPlayStreamRandom(U32 lower, U32 upper,
-                                    _tagePlayerStreamSnd player_snd_start,
+void zEntPlayer_SNDPlayStreamRandom(U32 lower, U32 upper, _tagePlayerStreamSnd player_snd_start,
                                     _tagePlayerStreamSnd player_snd_end, F32 delay);
 
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, F32 new_vol);
@@ -427,8 +407,6 @@ void zEntPlayerControlOff(zControlOwner owner);
 void zEntPlayerControlOn(zControlOwner owner);
 
 void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID);
-void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
-                     U32 param_4);
 S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 max_size);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
