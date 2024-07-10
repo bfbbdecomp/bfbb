@@ -106,6 +106,8 @@ struct zNPCBPlankton : zNPCBoss
     U8 played_intro;
 
     zNPCBPlankton(S32 myType);
+    void render_debug();
+    void update_animation(float);
 };
 
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon

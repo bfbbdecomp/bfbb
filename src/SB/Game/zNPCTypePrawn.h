@@ -132,6 +132,8 @@ struct zNPCPrawn : zNPCSubBoss
     U32 closeups_used;
 
     zNPCPrawn(S32 myType);
+    void render_debug();
+    void update_particles(float);
 };
 
 struct zNPCGoalPrawnIdle : zNPCGoalCommon

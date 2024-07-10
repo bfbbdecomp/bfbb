@@ -186,6 +186,9 @@ struct zNPCB_SB2 : zNPCBoss
     } glow_light;
 
     zNPCB_SB2(S32 myType);
+    void render_debug();
+    void decompose();
+    void HoldUpDude();
 };
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon

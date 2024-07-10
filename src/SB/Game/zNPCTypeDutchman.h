@@ -137,6 +137,9 @@ struct zNPCDutchman : zNPCSubBoss
     RwRaster* laser_raster;
 
     zNPCDutchman(S32 myType);
+    void render_debug();
+    void update_animation(float);
+    void add_splash(const xVec3&, float);
 };
 
 struct zNPCGoalDutchmanNil : zNPCGoalCommon
