@@ -7,6 +7,11 @@
 
 xhud::block_allocator* xhud::block_allocator::_head_alloc;
 
+namespace xhud
+{
+static bool inited;
+}
+
 void xhud::block_allocator::flush_all()
 {
     for (block_allocator* allocator = _head_alloc; allocator != NULL; allocator = allocator->next)
@@ -209,8 +214,7 @@ U32 xhud::widget::type() const
     return myid;
 }
 
-// Equivalent: scheduling
-U32 xhud::widget::is(U32 id) const
+bool xhud::widget::is(U32 id) const
 {
-    return id == widget::type() ? 1 : 0;
+    return id == widget::type();
 }

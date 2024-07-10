@@ -83,7 +83,7 @@ namespace xhud
 
         virtual void destroy();
         virtual U32 type() const;
-        virtual U32 is(U32 id) const;
+        virtual bool is(U32 id) const;
 
         motive_node* _motive_top;
         motive_node* _motive_temp;
@@ -138,8 +138,6 @@ namespace xhud
         motive m;
         motive_node* next;
     };
-
-    static bool inited;
 
     void init();
     void setup();
