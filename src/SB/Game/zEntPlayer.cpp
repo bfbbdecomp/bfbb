@@ -65,8 +65,8 @@ static xVec3 lastDeltaPos;
 static xVec3 lastFloorNorm;
 static xEnt* lastFloorEnt;
 static U32 surfSticky;
-static F32 surfSlideStart = 0.34906587f; // Is this some sensible fraction?
-static F32 surfSlideStop = 0.17453294f; // ditto
+static F32 surfSlideStart = DEG2RAD(20);
+static F32 surfSlideStop = DEG2RAD(10);
 F32 surfSlickRatio;
 static F32 surfSlickTimer;
 static F32 surfPeakRatio = 1.25f;
@@ -858,7 +858,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                             }
 
                             // FIXME: Using our PI constant here is off by one bit with the resulting float constant
-                            targetLean = -targetLean / (3.1415926f / 3.6f);
+                            targetLean = -targetLean / DEG2RAD(50);
 
                             if (targetLean < -1.0f)
                             {
