@@ -2,6 +2,6 @@
 
 #include <types.h>
 
-void zEntDestructObj_Move(zEntDestructObj*, xScene*, float, xEntFrame*)
+void zEntDestructObj_Move(zEntDestructObj*, xScene*, F32, xEntFrame*)
 {
 }

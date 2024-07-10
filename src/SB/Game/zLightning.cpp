@@ -80,45 +80,19 @@ void zLightningKill(zLightning* l)
     l->flags &= 0xfffffefe;
 }
 
-void xDebugAddTweak(char* name, U8* property, U8 param_3, U8 param_4, tweak_callback* callback,
-                    void* param_6, U32 param_7)
-{
-    // Redacted. :}
-}
-
-void xDebugAddFlagTweak(char* name, U32* property, U32 param_3, tweak_callback* callback,
-                        void* param_5, U32 param_6)
-{
-    // Redacted. :}
-}
-
-void xDebugAddSelectTweak(char* name, U32* param_2, char** param_3, U32* param_4, U32 param_5,
-                          tweak_callback* callback, void* param_7, U32 param_8)
-{
-    // Redacted. :}
-}
-
-void xDebugAddTweak(char* name, S16* property, S16 param_3, S16 param_4, tweak_callback* callback,
-                    void* param_6, U32 param_7)
-{
-    // Redacted. :}
-}
-
-void xDebugAddTweak(const char*, short*, short, short, const tweak_callback*, void*, unsigned int)
+void xDebugAddTweak(const char*, S16*, S16, S16, const tweak_callback*, void*, U32)
 {
 }
 
-void xDebugAddSelectTweak(const char*, unsigned int*, const char**, const unsigned int*,
-                          unsigned int, const tweak_callback*, void*, unsigned int)
+void xDebugAddTweak(const char*, U8*, U8, U8, const tweak_callback*, void*, U32)
 {
 }
 
-void xDebugAddFlagTweak(const char*, unsigned int*, unsigned int, const tweak_callback*, void*,
-                        unsigned int)
+void xDebugAddFlagTweak(const char*, U32*, U32, const tweak_callback*, void*, U32)
 {
 }
 
-void xDebugAddTweak(const char*, unsigned char*, unsigned char, unsigned char,
-                    const tweak_callback*, void*, unsigned int)
+void xDebugAddSelectTweak(const char*, U32*, const char**, const U32*, U32, const tweak_callback*,
+                          void*, U32)
 {
 }
