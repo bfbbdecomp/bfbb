@@ -2,6 +2,6 @@
 
 #include <types.h>
 
-void xTRCPad(int, _tagTRCState)
+void xTRCPad(S32, _tagTRCState)
 {
 }

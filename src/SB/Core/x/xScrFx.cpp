@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-void xScrFxDistortionAdd(xVec3*, xVec3*, int)
+void xScrFxDistortionAdd(xVec3*, xVec3*, S32)
 {
 }
 
