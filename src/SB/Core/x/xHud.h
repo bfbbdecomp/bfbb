@@ -78,6 +78,7 @@ namespace xhud
 
         widget(asset& a);
         virtual void destroy();
+        void init();
         void setup();
         void enable();
         void update(F32 dt);
@@ -89,6 +90,9 @@ namespace xhud
         void updater(F32 dt);
         void presetup();
         void destruct();
+        void add_tweaks();
+        void render();
+        void debug_render();
     };
 }; // namespace xhud
 

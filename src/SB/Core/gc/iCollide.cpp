@@ -12,3 +12,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->y = y;
     o->z = z;
 }
+
+void iCollideInit(xScene*)
+{
+}

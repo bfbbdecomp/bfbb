@@ -19,3 +19,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 void Pat_ResetGlobalStuff()
 {
 }
+
+void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
+{
+}

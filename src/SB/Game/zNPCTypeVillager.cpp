@@ -183,3 +183,11 @@ void zNPCNewsFish::SelfSetup()
 void zNPCFish::CheckDoChat()
 {
 }
+
+void ztaskbox::callback::on_talk_start()
+{
+}
+
+void ztaskbox::callback::on_talk_stop()
+{
+}

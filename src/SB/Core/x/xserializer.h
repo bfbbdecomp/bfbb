@@ -41,6 +41,7 @@ struct xSerial
     S32 Read(S32* buf);
     S32 Read(U32* buf);
     S32 Read(F32* buf);
+    void operator delete(void*);
 };
 
 void xSerialTraverse(S32 (*func)(U32 clientID, xSerial* xser));
