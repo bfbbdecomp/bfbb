@@ -84,6 +84,11 @@ namespace xhud
         virtual void destroy();
         virtual U32 type() const;
         virtual bool is(U32 id) const;
+        virtual void init();
+        virtual void setup();
+        virtual void update(F32 dt);
+        virtual void render();
+        virtual void dispatch(xBase*, U32, const F32*, xBase*);
 
         motive_node* _motive_top;
         motive_node* _motive_temp;
@@ -106,9 +111,7 @@ namespace xhud
 
         void add_tweaks();
 
-        void setup();
         void enable();
-        void update(F32 dt);
         void dispatch(U32 event);
         void clear_motives(U8 (*fp_update)(widget&, motive&, F32), void* context);
         void add_motive(motive& m);
