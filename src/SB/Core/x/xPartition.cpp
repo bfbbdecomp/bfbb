@@ -39,3 +39,7 @@ S32 xPartitionGetTrueIdx(_tagPartition* part, S32 x_spaces, S32 y_spaces, S32 z_
 }
 
 #endif
+
+void xPartitionDump(_tagPartition*, char*)
+{
+}

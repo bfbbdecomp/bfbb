@@ -107,3 +107,11 @@ void iSGSessionEnd(st_ISGSESSION* isgdata)
     memset(isgdata, 0, sizeof(st_ISGSESSION));
 }
 #endif
+
+void iSG_cb_asyndone(long, long)
+{
+}
+
+void iSGAutoSave_Startup()
+{
+}

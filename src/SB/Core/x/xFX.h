@@ -71,6 +71,10 @@ struct xFXRibbon
     void set_curve(const curve_node* curve, size_t size);
     void refresh_config();
     void set_default_config();
+    void update_curve_tweaks();
+    void debug_init(const char*, const char*);
+    void debug_update_curve();
+    void debug_update(F32);
 };
 
 #define RING_COUNT 8

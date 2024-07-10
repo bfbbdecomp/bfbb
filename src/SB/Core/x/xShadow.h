@@ -33,3 +33,11 @@ void xShadowManager_Reset();
 void xShadowManager_Render();
 
 #endif
+
+void xDrawSphere(const xVec3*, F32, U32)
+{
+}
+
+void xDrawSetColor(U8, U8, U8, U8)
+{
+}

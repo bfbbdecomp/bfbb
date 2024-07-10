@@ -437,15 +437,15 @@ namespace
 
 // clip_triangle jumptable
 static U32 _1933[] = { 0x80028610, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
-                          0x80028640, 0x80028620, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
-                          0x80028640, 0x80028640, 0x80028630, 0x80028640, 0x80028640, 0x80028640,
-                          0x80028640, 0x80028640, 0x80028640, 0x80028630, 0x80028640, 0x80028640,
-                          0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028620, 0x80028640,
-                          0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028610 };
+                       0x80028640, 0x80028620, 0x80028640, 0x80028640, 0x80028640, 0x80028640,
+                       0x80028640, 0x80028640, 0x80028630, 0x80028640, 0x80028640, 0x80028640,
+                       0x80028640, 0x80028640, 0x80028640, 0x80028630, 0x80028640, 0x80028640,
+                       0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028620, 0x80028640,
+                       0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028640, 0x80028610 };
 
 static const U8 segments_1637[43] = { 0, 1, 3, 0, 1, 2, 4, 0, 3, 4, 3, 0, 0, 0, 0,
-                                         0, 1, 2, 4, 0, 2, 1, 2, 0, 4, 2, 1, 0, 0, 0,
-                                         0, 0, 3, 4, 3, 0, 4, 2, 1, 0, 3, 1, 0 };
+                                      0, 1, 2, 4, 0, 2, 1, 2, 0, 4, 2, 1, 0, 0, 0,
+                                      0, 0, 3, 4, 3, 0, 4, 2, 1, 0, 3, 1, 0 };
 
 struct _tagFirework
 {
@@ -526,3 +526,39 @@ __declspec(section ".rodata") static const char _stringBase0_7[] = "bubble buddy
                                                                    "BLENDINVDESTCOLOR\0"
                                                                    "BLENDSRCALPHASAT\0"
                                                                    "FX|Ribbon";
+
+void xFXStartup()
+{
+}
+
+void xFXShutdown()
+{
+}
+
+void xFXSceneInit()
+{
+}
+
+void xFXSceneReset()
+{
+}
+
+void xFXScenePrepare()
+{
+}
+
+void xFXRibbon::update_curve_tweaks()
+{
+}
+
+void xFXRibbon::debug_init(const char*, const char*)
+{
+}
+
+void xFXRibbon::debug_update_curve()
+{
+}
+
+void xFXRibbon::debug_update(F32)
+{
+}
