@@ -214,6 +214,19 @@ enum _tagePlayerStreamSnd
     ePlayerStreamSnd_Total
 };
 
+struct zDelayedStreamSound
+{
+    _tagePlayerStreamSnd start;
+    _tagePlayerStreamSnd end;
+    F32 delay;
+};
+
+struct zPlayerSndTimer
+{
+    F32 timer;
+    F32 time;
+};
+
 // TODO: Why are there two of these enums with the same effect, should there be?
 enum _zPlayerType
 {
@@ -364,6 +377,7 @@ struct zPlayerLassoInfo
 #define SHINY_MAX 99999
 
 extern _CurrentPlayer gCurrentPlayer;
+extern S32 gWaitingToAutoSave;
 
 void zEntPlayer_Load(xEnt*, xSerial*);
 
@@ -391,13 +405,16 @@ U8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, F32 dt, xVec3& drive_motion);
 
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, F32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
-
-void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
-                                    _tagePlayerStreamSnd player_snd_end, F32 delay);
+void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd, U32 flags);
+// Only plays sound if player's spatula count is between lower and upper
+void zEntPlayer_SNDPlayStream(U32 lower, U32 upper, _tagePlayerStreamSnd player_snd, U32 flags);
 
 // Only plays sound if player's spatula count is between lower and upper
 void zEntPlayer_SNDPlayStreamRandom(U32 lower, U32 upper, _tagePlayerStreamSnd player_snd_start,
                                     _tagePlayerStreamSnd player_snd_end, F32 delay);
+void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
+                                    _tagePlayerStreamSnd player_snd_end, F32 delay);
+
 
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, F32 new_vol);
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, F32 new_pitch);
@@ -413,7 +430,6 @@ S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
-U32 StopLCopterCB(xAnimTransition*, xAnimSingle*, void*);
 U32 BounceCB(xAnimTransition*, xAnimSingle*, void*);
 
 #endif

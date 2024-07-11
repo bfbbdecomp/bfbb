@@ -97,7 +97,6 @@ struct xEnt;
 extern U32 gFrameCount;
 
 void xCutscene_Init(void* toc);
-F32 xlog(F32 f);
 xCutscene* xCutscene_CurrentCutscene();
 void xCutscene_Render(xCutscene* csn, xEnt**, S32*, F32*);
 U32 iCSFileOpen(xCutscene* csn);

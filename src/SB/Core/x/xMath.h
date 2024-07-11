@@ -35,6 +35,8 @@ struct xFuncPiece
     xFuncPiece* next;
 };
 
+F32 xlog(F32 f);
+
 void xMathInit();
 void xMathExit();
 F32 xatof(const char* x);
