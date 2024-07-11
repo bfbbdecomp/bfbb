@@ -96,7 +96,7 @@ struct ztextbox : xBase
     void add_text(U32 id);
     void clear_text();
     void refresh();
-    void get_text(char* buffer, U32 buffer_size) const;
+    void get_text(char* buffer, size_t buffer_size) const;
     bool visible();
 };
 
