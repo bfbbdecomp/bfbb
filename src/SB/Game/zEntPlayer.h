@@ -214,6 +214,19 @@ enum _tagePlayerStreamSnd
     ePlayerStreamSnd_Total
 };
 
+struct zDelayedStreamSound
+{
+    _tagePlayerStreamSnd start;
+    _tagePlayerStreamSnd end;
+    F32 delay;
+};
+
+struct zPlayerSndTimer
+{
+    F32 timer;
+    F32 time;
+};
+
 // TODO: Why are there two of these enums with the same effect, should there be?
 enum _zPlayerType
 {
@@ -392,13 +405,16 @@ U8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, F32 dt, xVec3& drive_motion);
 
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, F32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
-
-void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
-                                    _tagePlayerStreamSnd player_snd_end, F32 delay);
+void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd, U32 flags);
+// Only plays sound if player's spatula count is between lower and upper
+void zEntPlayer_SNDPlayStream(U32 lower, U32 upper, _tagePlayerStreamSnd player_snd, U32 flags);
 
 // Only plays sound if player's spatula count is between lower and upper
 void zEntPlayer_SNDPlayStreamRandom(U32 lower, U32 upper, _tagePlayerStreamSnd player_snd_start,
                                     _tagePlayerStreamSnd player_snd_end, F32 delay);
+void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
+                                    _tagePlayerStreamSnd player_snd_end, F32 delay);
+
 
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, F32 new_vol);
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, F32 new_pitch);

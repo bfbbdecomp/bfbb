@@ -136,6 +136,7 @@ U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
                         U32 parentID, xEnt* parentEnt, const xVec3* pos, F32 innerRadius,
                         F32 outerRadius, sound_category category, F32 delay);
 void xSndStartStereo(U32 id1, U32 id2, F32 pitch);
+U8 xSndIsPlayingByHandle(U32 sndID);
 U32 xSndIDIsPlaying(U32 sndID);
 void xSndStop(U32 snd);
 void xSndParentDied(U32 pid);
