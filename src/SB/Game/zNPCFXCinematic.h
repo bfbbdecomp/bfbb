@@ -181,4 +181,15 @@ struct NCINEntry
     NCINData fxdata;
 };
 
+struct NPCCone
+{
+    F32 rad_cone;
+    RwRGBA rgba_top;
+    RwRGBA rgba_bot;
+    RwRaster* rast_cone;
+    F32 uv_tip[2];
+    F32 uv_slice[2];
+    void TextureSet(RwRaster* raster);
+};
+
 #endif
