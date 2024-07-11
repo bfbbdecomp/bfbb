@@ -2,6 +2,10 @@
 
 #include <types.h>
 
+static float sCamPitch;
+static float sCamH;
+static float sCamD;
+
 F32 zCameraTweakGlobal_GetPitch()
 {
     return sCamPitch;
