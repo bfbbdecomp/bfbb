@@ -12,6 +12,7 @@
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xMemMgr.h"
+#include "xRay3.h"
 #include "xSnd.h"
 #include "xstransvc.h"
 #include "xTRC.h"
@@ -28,13 +29,14 @@
 #include "zGlobals.h"
 #include "zGoo.h"
 #include "zLasso.h"
+#include "zMusic.h"
 #include "zNPCTypeTiki.h"
 #include "zNPCTypeTiki.h"
 #include "zNPCMessenger.h"
 #include "zParPTank.h"
-#include "zMusic.h"
-#include "zThrown.h"
 #include "zRumble.h"
+#include "zSaveLoad.h"
+#include "zThrown.h"
 
 xMat4x3 gPlayerAbsMat;
 
@@ -113,6 +115,8 @@ static const struct sock
 static F32 update_dt = 1.0f / 60.0f;
 static F32 last_update_dt = 1.0f / 60.0f;
 
+_CurrentPlayer gCurrentPlayer;
+
 static F32 bbash_start_ht;
 static F32 bbash_end_tmr;
 static F32 bbash_tmr;
@@ -147,6 +151,7 @@ static F32 sBubbleBowlMultiplier = 1.0f;
 static U32 sShouldBubbleBowl;
 static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
+S32 gWaitingToAutoSave;
 
 // Multidimensional sound arrays for each player type
 static U32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
@@ -1549,7 +1554,7 @@ static U32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* par
         return false;
     }
 
-    return (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000));
+    return (!globals.player.ControlOff && (globals.pad0->pressed & XPAD_BUTTON_O));
 }
 
 // equivalent: sda relocation memes
@@ -1625,7 +1630,7 @@ static U32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
         return false;
     }
 
-    return (!globals.player.ControlOff && ((globals.pad0->pressed & 0x20000)) &&
+    return (!globals.player.ControlOff && ((globals.pad0->pressed & XPAD_BUTTON_O)) &&
             globals.player.g.PowerUp[0]);
 }
 
@@ -1733,7 +1738,7 @@ static U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // Decompiled, but instructions are out of order?
     globals.player.Health = 0;
-    globals.player.DamageTimer = 10.0; // 10.0
+    globals.player.DamageTimer = 10.0;
     zGooStopTide();
     sPlayerDiedLastTime = 1;
     zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
@@ -1874,10 +1879,85 @@ static S32 zEntPlayer_InBossBattle()
     );
 }
 
+// Equivalent: scheduling
+static U32 SpatulaGrabCB(xAnimTransition*, xAnimSingle*, void* data)
+{
+    sSpatulaGrabbed = 0;
+    tslide_inair_tmr = 0.0f;
+    tslide_dbl_tmr = 0.0f;
+    globals.player.SlideTrackDecay = 0.0f;
+    tslide_ground = 0;
+
+    xEnt* ent = (xEnt*)data;
+    ent->frame->vel.x = 0.0f;
+    if (ent->frame->vel.y > 0.0f)
+    {
+        ent->frame->vel.y = 0.0f;
+    }
+    ent->frame->vel.z = 0.0f;
+
+    globals.player.KnockBackTimer = 0.0f;
+    globals.player.KnockIntoAirTimer = 0.0f;
+
+    if (globals.autoSaveFeature)
+    {
+        if (zEntPlayer_InBossBattle())
+        {
+            gWaitingToAutoSave = 1;
+        }
+        else
+        {
+            zSaveLoadPreAutoSave(true);
+        }
+    }
+
+    xCollis rcoll;
+    xVec3 cam;
+    xVec3 center;
+    xRay3 r;
+    rcoll.flags = 0;
+
+    xVec3Copy(&center, &globals.player.ent.bound.cyl.center);
+
+    xVec3Copy(&cam, &globals.camera.mat.pos);
+
+    xVec3Copy(&r.origin, &center);
+    xVec3Sub(&r.dir, &cam, &center);
+    r.max_t = xVec3Length(&r.dir);
+    F32 one_len = 1.0f / MAX(r.max_t, 0.00001f);
+    xVec3SMul(&r.dir, &r.dir, one_len);
+    r.flags = 0x800;
+
+    xRayHitsScene(globals.sceneCur, &r, &rcoll);
+    if ((rcoll.flags & 1) == 0)
+    {
+        zCameraSetReward(1);
+    }
+
+    zCameraDisableInput();
+    F32 delay = 0.0f;
+    if (gCurrentPlayer == eCurrentPlayerSpongeBob)
+    {
+        delay = 4.4f;
+    }
+    else if (gCurrentPlayer == eCurrentPlayerPatrick)
+    {
+        delay = 1.8f;
+    }
+    else if (gCurrentPlayer == eCurrentPlayerSandy)
+    {
+        delay = 1.43f;
+    }
+
+    zEntPlayer_SNDPlay(ePlayerSnd_PickupSpatulaComment, delay);
+
+    return 0;
+}
+
 static U32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
-            (globals.pad0->pressed & 0x10000));
+            (globals.pad0->pressed & XPAD_BUTTON_X));
 }
 
 static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -1895,7 +1975,7 @@ static U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, 
 static U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (globals.player.CanJump && !globals.player.ControlOff &&
-            (globals.pad0->pressed & 0x10000));
+            (globals.pad0->pressed & XPAD_BUTTON_X));
 }
 
 static U32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)

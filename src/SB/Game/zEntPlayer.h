@@ -364,6 +364,7 @@ struct zPlayerLassoInfo
 #define SHINY_MAX 99999
 
 extern _CurrentPlayer gCurrentPlayer;
+extern S32 gWaitingToAutoSave;
 
 void zEntPlayer_Load(xEnt*, xSerial*);
 
