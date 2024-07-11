@@ -11,6 +11,8 @@ namespace oob_state
     void fx_render();
     void read_persistent(xSerial& s);
     void write_persistent(xSerial& s);
+
+    float oob_timer();
 } // namespace oob_state
 
 #endif

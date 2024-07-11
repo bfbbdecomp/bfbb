@@ -13,6 +13,7 @@
 #include "xMathInlines.h"
 #include "xMemMgr.h"
 #include "xSnd.h"
+#include "xstransvc.h"
 #include "xTRC.h"
 #include "xVec3.h"
 #include "xVec3Inlines.h"
@@ -20,6 +21,7 @@
 #include "zBase.h"
 #include "zCamera.h"
 #include "zEntPlayer.h"
+#include "zEntPlayerOOBState.h"
 #include "zEntTeleportBox.h"
 #include "zGame.h"
 #include "zGameExtras.h"
@@ -32,6 +34,7 @@
 #include "zParPTank.h"
 #include "zMusic.h"
 #include "zThrown.h"
+#include "zRumble.h"
 
 xMat4x3 gPlayerAbsMat;
 
@@ -51,6 +54,12 @@ static xVec3 last_center;
 static U32 sCurrentStreamSndID;
 static F32 sPlayerSndSneakDelay;
 static S32 sPlayerDiedLastTime;
+static S32 sPlayerIgnoreSound;
+static S32 sPlayerAttackInAir;
+
+F32 startJump;
+F32 startDouble;
+F32 startBounce;
 
 static F32 minVelmag = 0.01f;
 static F32 maxVelmag = 10.0f;
@@ -65,8 +74,8 @@ static xVec3 lastDeltaPos;
 static xVec3 lastFloorNorm;
 static xEnt* lastFloorEnt;
 static U32 surfSticky;
-static F32 surfSlideStart = 0.34906587f; // Is this some sensible fraction?
-static F32 surfSlideStop = 0.17453294f; // ditto
+static F32 surfSlideStart = DEG2RAD(20);
+static F32 surfSlideStop = DEG2RAD(10);
 F32 surfSlickRatio;
 static F32 surfSlickTimer;
 static F32 surfPeakRatio = 1.25f;
@@ -77,6 +86,11 @@ static F32 surfDecelSkid = 8.0f;
 static F32 surfMaxSpeed;
 static F32 surfSlipTimer;
 
+static xEnt* sGrabFound;
+static S32 sGrabFailed;
+
+static F32 sPlayerCollAdjust;
+
 static zPlayerLassoInfo* sLassoInfo;
 static zLasso* sLasso;
 static xEnt* sHitch[32];
@@ -84,6 +98,31 @@ static S32 sNumHitches;
 static F32 sHitchAngle;
 static F32 sSwingTimeElapsed;
 static S32 sLassoCamLinger;
+
+// This struct was anonymous in the dwarf but it seemed to do better with codegen to name it
+// so I can hold a pointer to it and access the members that way.
+static const struct sock
+{
+    U32 level;
+    U32 total;
+} patsock_totals[] = {
+    { 'HB\0\0', 8 }, { 'JF\0\0', 14 }, { 'BB\0\0', 9 }, { 'GL\0\0', 11 }, { 'BC\0\0', 4 },
+    { 'RB\0\0', 9 }, { 'SM\0\0', 10 }, { 'KF\0\0', 7 }, { 'GY\0\0', 3 },  { 'DB\0\0', 5 },
+};
+
+static F32 update_dt = 1.0f / 60.0f;
+static F32 last_update_dt = 1.0f / 60.0f;
+
+static F32 bbash_start_ht;
+static F32 bbash_end_tmr;
+static F32 bbash_tmr;
+static F32 bbash_vel;
+static S32 bbash_hit;
+static S32 bbounce_hit;
+
+static F32 idle_tmr;
+static F32 inact_tmr;
+static F32 stun_power_tmr;
 
 static F32 tslide_maxspd;
 static F32 tslide_maxspd_tmr;
@@ -93,10 +132,13 @@ static U32 tslide_ground;
 static xVec3 tslide_lastrealvel;
 
 static S32 in_goo;
-
+static S32 lin_goo;
+static F32 in_goo_tmr;
+static U32 player_hitlist_anim;
 S32 player_hit;
-static S32 player_hit_anim = 1;
-static U32 player_dead_anim = 1;
+static S32 player_hit_anim;
+static U32 player_dead_anim;
+static U32 player_idle_anim;
 
 static U32 last_frame;
 
@@ -532,7 +574,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                         atime > globals.player.carry.grabLerpMin &&
                         globals.player.carry.grabLerpMin > globals.player.carry.grabLerpMax)
                     {
-                        if( globals.player.carry.grabLerpMax > lerp)
+                        if (globals.player.carry.grabLerpMax > lerp)
                         {
                             lerp = globals.player.carry.grabLerpMin;
                         }
@@ -548,7 +590,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                         }
 
                         lerp = -((t - lerp) / (globals.player.carry.grabLerpMax -
-                                                 globals.player.carry.grabLerpMin));
+                                               globals.player.carry.grabLerpMin));
 
                         ent->frame->dpos.x = lerp * globals.player.carry.grabOffset.x;
                         ent->frame->dpos.z = lerp * globals.player.carry.grabOffset.z;
@@ -858,7 +900,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                             }
 
                             // FIXME: Using our PI constant here is off by one bit with the resulting float constant
-                            targetLean = -targetLean / (3.1415926f / 3.6f);
+                            targetLean = -targetLean / DEG2RAD(50);
 
                             if (targetLean < -1.0f)
                             {
@@ -1023,8 +1065,8 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                                     break;
                                 }
 
-                                F32 s = (4.0f / 3.0f) * surfSlipTimer * 20.0f * surfSlickRatio
-                                + (1.0f - (4.0f / 3.0f) * surfSlipTimer) * surfSlickRatio;
+                                F32 s = (4.0f / 3.0f) * surfSlipTimer * 20.0f * surfSlickRatio +
+                                        (1.0f - (4.0f / 3.0f) * surfSlipTimer) * surfSlickRatio;
 
                                 if (moveFlag == 0x4 || moveFlag == 2)
                                 {
@@ -1115,12 +1157,392 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
     }
 }
 
-void HealthReset()
+static void HealthReset();
+
+// WIP. Weird iterator code gen stuff isn't working
+static void InvReset()
+{
+    globals.player.MaxHealth = 3;
+    HealthReset();
+    globals.player.Inv_Shiny = globals.player.g.InitialShinyCount;
+    globals.player.Inv_Spatula = globals.player.g.InitialSpatulaCount;
+    globals.player.Inv_PatsSock_Total = 0;
+
+    if (globals.player.g.InitialShinyCount > SHINY_MAX)
+    {
+        globals.player.Inv_Shiny = SHINY_MAX;
+    }
+
+    // FIXME: Use some macro for the world count. WORLD_COUNT is local to zUI and hard to move
+    for (U32 i = 0; i < 15; i++)
+    {
+        globals.player.Inv_PatsSock[i] = 0;
+        globals.player.Inv_LevelPickups[i] = 0;
+        globals.player.Inv_PatsSock_Max[i] = 0;
+        U32& maxsocks = globals.player.Inv_PatsSock_Max[i];
+        const char* level_prefix = zSceneGetLevelPrefix(i);
+        if (level_prefix == NULL)
+        {
+            continue;
+        }
+
+        U32 level_mask = level_prefix[0] << 0x18 | level_prefix[1] << 0x10;
+        for (const sock* s = patsock_totals; s != NULL; s++)
+        {
+            if (level_mask == s->level)
+            {
+                maxsocks = s->total;
+            }
+        }
+    }
+
+    memcpy(&globals.player.g.PowerUp, &globals.player.g.InitialPowerUp,
+           sizeof(globals.player.g.InitialPowerUp));
+}
+
+static void HealthReset()
 {
     globals.player.Health = globals.player.MaxHealth;
 }
 
-U32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 RunAnyCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 2 && !surfSlickRatio && oob_state::oob_timer() < 0.0f;
+}
+
+static U32 RunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 2 && !(globals.player.BadGuyNearTimer > 0.0f) &&
+           !(globals.player.VictoryTimer > 0.0f) && !surfSlickRatio &&
+           oob_state::oob_timer() < 0.0f;
+}
+
+static U32 RunStoicCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 2 && !(globals.player.BadGuyNearTimer > 0.0f) &&
+           !(globals.player.VictoryTimer > 0.0f) && !surfSlickRatio &&
+           oob_state::oob_timer() < 0.0f;
+}
+
+static U32 RunScaredCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 2 && globals.player.BadGuyNearTimer > 0.0f &&
+           !(globals.player.VictoryTimer > 0.0f) && !surfSlickRatio &&
+           oob_state::oob_timer() < 0.0f;
+}
+
+static U32 RunVictoryCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 2 && globals.player.VictoryTimer > 0.0f && !surfSlickRatio &&
+           oob_state::oob_timer() < 0.0f;
+}
+
+static U32 RunSlipCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed >= 1 && surfSlickRatio;
+}
+
+static U32 RunOutOfWorldCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed >= 1 && !surfSlickRatio && oob_state::oob_timer() >= 0.0f;
+}
+
+static U32 WalkCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 1 && !surfSlickRatio && oob_state::oob_timer() < 0.0f;
+}
+
+static U32 WalkStoicCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 1 && !surfSlickRatio && !(globals.player.VictoryTimer > 0.0f) &&
+           !(globals.player.BadGuyNearTimer > 0.0f) && oob_state::oob_timer() < 0.0f;
+}
+
+static U32 WalkVictoryCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 1 && globals.player.VictoryTimer > 0.0f && !surfSlickRatio &&
+           oob_state::oob_timer() < 0.0f;
+}
+
+static U32 WalkScaredCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 1 && globals.player.BadGuyNearTimer > 0.0f &&
+           !(globals.player.VictoryTimer > 0.0f) && !surfSlickRatio &&
+           oob_state::oob_timer() < 0.0f;
+}
+
+static U32 IdleCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 0 && !surfSlickRatio;
+}
+
+static U32 IdleStoicCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 0 && !surfSlickRatio && !(globals.player.VictoryTimer > 0.0f) &&
+           !(globals.player.BadGuyNearTimer > 0.0f);
+}
+
+static U32 IdleVictoryCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 0 && globals.player.VictoryTimer > 0.0f && !surfSlickRatio;
+}
+
+static U32 IdleScaredCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 0 && globals.player.BadGuyNearTimer > 0.0f &&
+           !(globals.player.VictoryTimer > 0.0f) && !surfSlickRatio;
+}
+
+static U32 IdleSlipCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
+           globals.player.Speed == 0 && surfSlickRatio;
+}
+
+static U32 AnyMoveCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.Speed != 0;
+}
+
+static U32 AnyStopCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.Speed == 0;
+}
+
+static U32 SlipRunCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_SlipLoop, 0.0f);
+    return 0;
+}
+
+static U32 NoSlipCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    return 0;
+}
+
+static U32 IdleCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    idle_tmr = 0.0f;
+    return 0;
+}
+
+static U32 InactiveCheck(xAnimTransition* tran, xAnimSingle*, void*)
+{
+    return idle_tmr >= 5.0f &&
+           (tran->UserFlags & 0xffff) == player_idle_anim % (tran->UserFlags >> 0x10);
+}
+
+// Equivalent: sda reordering
+static U32 InactiveCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+    player_idle_anim = player_idle_anim + 1;
+    return 0;
+}
+
+static U32 InactiveFinishedCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return idle_tmr >= 5.0f;
+}
+
+static U32 LandCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0;
+}
+
+static U32 LandTrackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.SlideTrackLand;
+}
+
+static U32 LandNoTrackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && !globals.player.SlideTrackLand;
+}
+
+static U32 LandHighCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.WasDJumping;
+}
+
+static U32 LandRunCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed >= 2;
+}
+
+static U32 LandWalkCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed == 1;
+}
+
+static U32 LandFastCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed >= 2;
+}
+
+static U32 LandNoTrackWalkCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed == 1 &&
+           !globals.player.SlideTrackLand;
+}
+
+static U32 LandSlipIdleCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed == 0 && surfSlickRatio;
+}
+
+static U32 LandSlipRunCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed >= 1 && surfSlickRatio;
+}
+
+static U32 LandNoTrackFastCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed >= 2 &&
+           !globals.player.SlideTrackLand;
+}
+
+static U32 LandNoTrackSlipRunCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed >= 1 &&
+           !globals.player.SlideTrackLand && surfSlickRatio;
+}
+
+static U32 LandNoTrackSlipIdleCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.JumpState == 0 && globals.player.Speed == 0 &&
+           !globals.player.SlideTrackLand && surfSlickRatio;
+}
+
+static U32 LandCallback(xAnimTransition*, xAnimSingle*, void*)
+{
+    globals.player.WallJumpState = k_WALLJUMP_NOT;
+    zCameraDisableWallJump(&globals.camera);
+    return 0;
+}
+
+static U32 LandSlipRunCallback(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_SlipLoop, 0.0f);
+    globals.player.WallJumpState = k_WALLJUMP_NOT;
+    zCameraDisableWallJump(&globals.camera);
+    return 0;
+}
+
+static U32 SandyLandCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    globals.player.Jump_CanDouble = 1;
+    return 0;
+}
+
+static U32 BubbleSpinCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode != 0)
+    {
+        return 0;
+    }
+
+    if (zEntTeleportBox_playerIn())
+    {
+        return 0;
+    }
+
+    return (!globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_TRIANGLE);
+}
+
+static U32 BubbleSpinCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    anim->CurrentSpeed = 0.0f;
+    zEntPlayer_SNDPlay(ePlayerSnd_BubbleWand, 0.0f);
+    sPlayerAttackInAir++;
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    return 0;
+}
+
+// FIXME: These floats are out of order (again...)
+static void float_fix2(float* out)
+{
+    out[0] = 0.70709997f;
+    out[1] = 1.0e-7;
+    out[2] = -4.0f;
+    out[3] = 15.0f;
+    out[4] = 9.0f;
+    out[5] = -1.5f;
+    out[6] = 0.0001f;
+}
+
+static U32 BubbleBashCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    if (globals.player.cheat_mode != 0)
+    {
+        return 0;
+    }
+
+    if (zEntTeleportBox_playerIn())
+    {
+        return 0;
+    }
+
+    if (sPlayerCollAdjust > 0.2f)
+    {
+        return 0;
+    }
+
+    return (!globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_SQUARE);
+}
+
+// probably equivalent: looks like sda relocation memes on sPlayerCollAdjust
+static U32 BubbleBashCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BubbleBashStart, 0.0f);
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+
+    globals.player.ent.frame->vel.y = 0.0f;
+    bbash_start_ht = globals.player.ent.frame->mat.pos.y + sPlayerCollAdjust;
+    bbash_tmr = -globals.player.g.BBashDelay;
+    bbash_end_tmr = 0.25f;
+    globals.player.JumpState = 2;
+    bbash_hit = 0;
+
+    zCameraMinTargetHeightSet(bbash_start_ht);
+
+    return 0;
+}
+
+static U32 BBashStrikeCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    return bbash_hit;
+}
+
+static U32 BBashStrikeCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    globals.player.ent.frame->vel.y = 0.0f;
+    return 0;
+}
+
+static U32 BBashToJumpCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    return bbash_tmr >= globals.player.g.BBashTime;
+}
+
+static U32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.cheat_mode)
     {
@@ -1130,18 +1552,68 @@ U32 BubbleBounceCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return (!globals.player.ControlOff && (globals.pad0->pressed & 0x20000));
 }
 
-U32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+// equivalent: sda relocation memes
+static U32 BubbleBounceCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zCameraSetBbounce(true);
+
+    globals.player.ent.frame->vel.x = 0.0f;
+    globals.player.ent.frame->vel.y = 0.0f;
+    globals.player.ent.frame->vel.z = 0.0f;
+
+    tslide_inair_tmr = 0.0f;
+    tslide_dbl_tmr = 0.0f;
+    tslide_ground = 0;
+    globals.player.SlideTrackDecay = 0.0f;
+    bbounce_hit = 0;
+
+    return 0;
+}
+
+static U32 BBounceAttackCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.ent.frame->vel.y = -globals.player.g.BBounceSpeed;
     return 0;
 }
 
-U32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BBounceStrikeCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (globals.player.JumpState == 0 || globals.player.JumpState == 1);
 }
 
-U32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BBounceStrikeCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_BubbleBashStart);
+    zEntPlayer_SNDPlay(ePlayerSnd_BounceStrike, 0.0f);
+    zFX_SpawnBubbleSlam((xVec3*)&globals.player.ent.model->Mat->pos, 100, 0.15f, 12.0f, 2.0f);
+    zCameraSetBbounce(false);
+    zRumbleStart(SDR_Bounce);
+    return 0;
+}
+
+static U32 BBounceToJumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    return bbounce_hit;
+}
+
+static U32 BBounceToJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zEntPlayerJumpStart(&globals.player.ent, &globals.player.s->Jump);
+
+    startDouble = globals.player.ent.frame->mat.pos.y;
+    startJump = startDouble;
+    globals.player.CanJump = 0;
+    globals.player.IsJumping = 1;
+    globals.player.Jump_CanDouble = 1;
+    globals.player.IsDJumping = 0;
+
+    zCameraSetBbounce(false);
+    zEntPlayer_SNDStop(ePlayerSnd_BubbleBashStart);
+    zEntPlayer_SNDPlay(ePlayerSnd_BubbleBashHit1, 0.0f);
+    return 0;
+}
+
+static U32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.cheat_mode)
     {
@@ -1157,7 +1629,37 @@ U32 BbowlCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             globals.player.g.PowerUp[0]);
 }
 
-U32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BowlWindup, 0.0f);
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+
+    xEntFrame* frame = globals.player.ent.frame;
+    F32 x = (frame->mat.pos.x - frame->oldmat.pos.x) * last_update_dt;
+    F32 z = (frame->mat.pos.z - frame->oldmat.pos.z) * last_update_dt;
+    F32 speed2 = x * x + z * z;
+
+    if (speed2 < globals.player.g.BubbleBowlMinSpeed * globals.player.g.BubbleBowlMinSpeed)
+    {
+        globals.player.bbowlInitVel = globals.player.g.BubbleBowlMinSpeed;
+    }
+    else
+    {
+        globals.player.bbowlInitVel = xsqrt(speed2);
+    }
+
+    frame->vel.x = globals.player.bbowlInitVel * globals.player.ent.model->Mat->at.x;
+    frame->vel.z = globals.player.bbowlInitVel * globals.player.ent.model->Mat->at.z;
+
+    sShouldBubbleBowl = 0;
+    globals.player.IsBubbleBowling = 1;
+    sBubbleBowlTimer = 0.0f;
+    sBubbleBowlLastWindupTime = -1.0f;
+
+    return 0;
+}
+
+static U32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (anim->Time < sBubbleBowlLastWindupTime && sShouldBubbleBowl)
     {
@@ -1167,7 +1669,7 @@ U32 BbowlWindupEndCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-U32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     xEntBoulder_BubbleBowl(sBubbleBowlMultiplier);
     globals.player.IsBubbleBowling = false;
@@ -1176,43 +1678,43 @@ U32 BbowlTossEndCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-U32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlRecoverWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             WalkCheck(tran, anim, param_3));
 }
 
-U32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlRecoverRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunCheck(tran, anim, param_3));
 }
 
-U32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlRecoverRunScaredCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunScaredCheck(tran, anim, param_3));
 }
 
-U32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlRecoverRunVictoryCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunVictoryCheck(tran, anim, param_3));
 }
 
-U32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlRecoverRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunOutOfWorldCheck(tran, anim, param_3));
 }
 
-U32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BbowlRecoverRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (anim->Time > globals.player.g.BubbleBowlMinRecoverTime &&
             RunSlipCheck(tran, anim, param_3));
 }
 
-U32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     if (globals.player.ControlOff & 0x8000)
     {
@@ -1227,7 +1729,7 @@ U32 GooCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return in_goo;
 }
 
-U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // Decompiled, but instructions are out of order?
     globals.player.Health = 0;
@@ -1238,104 +1740,132 @@ U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     return false;
 }
 
-U32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 1);
 }
 
-U32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit01CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 2;
     return false;
 }
 
-U32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 2);
 }
 
-U32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit02CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 3;
     return false;
 }
 
-U32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 3);
 }
 
-U32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit03CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 4;
     return false;
 }
 
-U32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 4);
 }
 
-U32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit04CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 5;
     return false;
 }
 
-U32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (player_hit && player_hit_anim == 5);
 }
 
-U32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Hit05CB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     player_hit = 0;
     player_hit_anim = 1;
     return false;
 }
 
-U32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     // it seems like this is a useless but necessary function call
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags == 0;
 }
 
-U32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 2;
 }
 
-U32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 3;
 }
 
-U32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 4;
 }
 
-U32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
     return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
 }
 
-U32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*, void*)
+// Equivalent: sda relocation meme
+static U32 DefeatedCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+{
+    player_dead_anim++;
+
+    if (gCurrentPlayer == eCurrentPlayerSpongeBob)
+    {
+        S32 cheats = zGameExtras_CheatFlags();
+        if ((cheats & 0x2000000) || xurand() < 0.17f)
+        {
+            zShrapnelAsset* deathShrap =
+                (zShrapnelAsset*)xSTFindAsset(xStrHash("spongebob_shrapnel"), NULL);
+            if (deathShrap && deathShrap->initCB)
+            {
+                xEntHide(&globals.player.ent);
+                deathShrap->initCB(deathShrap, globals.player.ent.model, NULL, NULL);
+                globals.player.ent.frame->vel.x = 0.0f;
+                globals.player.ent.frame->vel.y = 0.0f;
+                globals.player.ent.frame->vel.z = 0.0f;
+                globals.player.KnockBackTimer = 0.0f;
+                globals.player.KnockIntoAirTimer = 0.0f;
+            }
+        }
+    }
+
+    return 0;
+}
+
+static U32 SpatulaGrabCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     // much different than PS2 version of this function
     return sSpatulaGrabbed;
 }
 
-S32 zEntPlayer_InBossBattle()
+static S32 zEntPlayer_InBossBattle()
 {
     return (globals.sceneCur->sceneID == 'B101' || // Robo Sandy
             globals.sceneCur->sceneID == 'B201' || // Robo Patrick
@@ -1344,38 +1874,38 @@ S32 zEntPlayer_InBossBattle()
     );
 }
 
-U32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
 }
 
-U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_LAND;
     return 0;
 }
 
-U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_FLIGHT;
     return 0;
 }
 
-U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     return (globals.player.CanJump && !globals.player.ControlOff &&
             (globals.pad0->pressed & 0x10000));
 }
 
-U32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
+static U32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     StopLCopterCB(tran, anim, param_3);
     BounceCB(tran, anim, param_3);
     return 0;
 }
 
-U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     xNPCBasic* npc = (xNPCBasic*)sLassoInfo->target;
 
@@ -1395,27 +1925,27 @@ U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
     return 0;
 }
 
-U32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LassoLostTargetCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return !sLassoInfo->target;
 }
 
-U32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LassoStraightToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-U32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LassoAboutToDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
 }
 
-U32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return sLasso->flags & (1 << 11);
 }
 
-U32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
+static U32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
 }
@@ -1476,7 +2006,7 @@ S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 
 }
 #endif
 
-U32 count_talk_anims(xAnimTable* anims)
+static U32 count_talk_anims(xAnimTable* anims)
 {
     xAnimFile* firstData = anims->StateList->Data;
     char talkAnimName[20];
@@ -1499,8 +2029,8 @@ U32 count_talk_anims(xAnimTable* anims)
     return talkAnimCount;
 }
 
-void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
-                     U32 params_size)
+static void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
+                            U32 params_size)
 {
     U32 count;
     count = count_talk_anims(model.Anim->Table);
@@ -1509,7 +2039,7 @@ void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetPara
     ps.talk_filter_size = count;
 }
 
-void load_player_ini()
+static void load_player_ini()
 {
     xModelAssetParam* modelass;
     U32 size[3];
@@ -1607,7 +2137,7 @@ void zEntPlayer_GiveShinyObject(S32 quantity)
     }
 
     U32 sum = globals.player.Inv_Shiny + quantity;
-    U32 maxShinies = 99999; // TODO: make this defined somewhere globally
+    U32 maxShinies = SHINY_MAX;
     globals.player.Inv_Shiny = sum;
 
     if (sum > maxShinies)
@@ -1699,24 +2229,26 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
-U8 xSndIsPlaying(U32 assetID)
+// TODO: Move these to their headers
+
+WEAK U8 xSndIsPlaying(U32 assetID)
 {
     return iSndIsPlaying(assetID);
 }
 
-S32 zNPCTiki::IsHealthy()
+WEAK S32 zNPCTiki::IsHealthy()
 {
     return flg_vuln != 0;
 }
 
-void zCameraTranslate(xCamera* cam, xVec3* pos)
+WEAK void zCameraTranslate(xCamera* cam, xVec3* pos)
 {
     zCameraTranslate(cam, pos->x, pos->y, pos->z);
 }
 
 // TODO: This belongs in zNPCSupport.h
 // but the compiler put it here for some reason?
-xVec3* NPCC_rightDir(xEnt* ent)
+WEAK xVec3* NPCC_rightDir(xEnt* ent)
 {
     // So this is actually a reference to a struct RwV3D
     // which is the exact same as xVec3, but typed differently.
@@ -1724,19 +2256,19 @@ xVec3* NPCC_rightDir(xEnt* ent)
     return (xVec3*)&ent->model->Mat->right;
 }
 
-xVec3* NPCC_faceDir(xEnt* ent)
+WEAK xVec3* NPCC_faceDir(xEnt* ent)
 {
     // TODO: see note in previous function
     return (xVec3*)&ent->model->Mat->at;
 }
 
-xVec3* NPCC_upDir(xEnt* ent)
+WEAK xVec3* NPCC_upDir(xEnt* ent)
 {
     // TODO: see note in previous function
     return (xVec3*)&ent->model->Mat->up;
 }
 
-S32 zGooIs(xEnt* ent)
+WEAK S32 zGooIs(xEnt* ent)
 {
     F32 temp;
     return zGooIs(ent, temp, 0);

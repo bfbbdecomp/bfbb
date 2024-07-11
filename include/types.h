@@ -34,9 +34,9 @@ typedef double F64;
 #endif
 #define FALSE 0
 
-#ifndef __MWERKS__
+#ifdef __MWERKS__
 #define __declspec(x)
-#define asm
+// #define asm
 #endif
 
 #define WEAK __declspec(weak)
