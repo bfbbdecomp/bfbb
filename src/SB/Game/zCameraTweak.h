@@ -3,6 +3,10 @@
 
 #include "xDynAsset.h"
 
+static float sCamPitch;
+static float sCamH;
+static float sCamD;
+
 #include <stddef.h>
 
 struct CameraTweak_asset : xDynAsset

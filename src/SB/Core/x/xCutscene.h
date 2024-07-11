@@ -89,6 +89,7 @@ struct xCutscene
     U32 SndAssetID[2];
     U32 SndHandle[2];
     XCSNNosey* cb_nosey;
+    void NoseySet(XCSNNosey* nosey);
 };
 
 struct xEnt;
