@@ -48,7 +48,7 @@ struct xGlobals
 
     // 0x6D0 in globals
     U8 NoMusic;
-    S8 currentActivePad;
+    U8 currentActivePad;
     U8 firstStartPressed;
 
     // 0x6D4 in globals
