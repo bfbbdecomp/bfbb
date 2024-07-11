@@ -29,13 +29,3 @@ void NPCCone::TextureSet(RwRaster* raster)
 {
     rast_cone = raster;
 }
-
-void xCutscene::NoseySet(XCSNNosey* nosey)
-{
-    cb_nosey = nosey;
-}
-
-void NPCCone::RadiusSet(F32 conefloat)
-{
-    rad_cone = conefloat;
-}

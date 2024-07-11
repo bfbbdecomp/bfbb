@@ -190,7 +190,6 @@ struct NPCCone
     F32 uv_tip[2];
     F32 uv_slice[2];
     void TextureSet(RwRaster* raster);
-    void RadiusSet(F32);
 };
 
 #endif

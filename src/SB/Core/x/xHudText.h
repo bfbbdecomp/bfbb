@@ -10,6 +10,11 @@ namespace xhud
     {
         U32 text_box;
         U32 text;
+
+        static const char* type_name()
+        {
+            return "hud:text";
+        }
     };
 
     struct text_widget : widget
@@ -22,11 +27,14 @@ namespace xhud
 
         static void load(xBase& data, xDynAsset& asset, size_t);
 
-        void render();
-        void update(F32 dt);
-        U8 is(U32 id);
-        void destroy();
-        void setup();
+        void destruct();
+
+        virtual void destroy();
+        virtual U32 type() const;
+        virtual bool is(U32 id) const;
+        virtual void setup();
+        virtual void update(F32 dt);
+        virtual void render();
     };
 
 }; // namespace xhud

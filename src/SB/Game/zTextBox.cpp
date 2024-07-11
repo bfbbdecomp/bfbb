@@ -401,7 +401,7 @@ void ztextbox::refresh()
     }
 }
 
-void ztextbox::get_text(char* buffer, U32 buffer_size) const
+void ztextbox::get_text(char* buffer, size_t buffer_size) const
 {
     const char* const* it = segments;
     const char* const* end = it + segments_size;
