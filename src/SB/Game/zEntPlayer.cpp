@@ -1954,10 +1954,89 @@ static U32 SpatulaGrabCB(xAnimTransition*, xAnimSingle*, void* data)
     return 0;
 }
 
+// equivalent: sda relocation scheduling
+static U32 SpatulaGrabStopCB(xAnimTransition*, xAnimSingle*, void* data)
+{
+    S32 result;
+    xBase* sendTo;
+
+    idle_tmr = 0.0f;
+    if (globals.autoSaveFeature)
+    {
+        if (zEntPlayer_InBossBattle())
+        {
+            gWaitingToAutoSave = 1;
+        }
+        else
+        {
+            if (zSaveLoad_DoAutoSave() < 0)
+            {
+                sendTo = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED"));
+                if (sendTo)
+                {
+                    zEntEvent(sendTo, eEventVisible);
+                }
+            }
+
+            sendTo = zSceneFindObject(xStrHash("SAVING GAME ICON UI"));
+            if (sendTo)
+            {
+                zEntEvent(sendTo, eEventInvisible);
+            }
+            zSaveLoadPreAutoSave(false);
+        }
+    }
+
+    zCameraEnableTracking(CO_REWARDANIM);
+    xCameraSetFOV(&xglobals->camera, 75.0f);
+    zCameraSetReward(0);
+    zMusicSetVolume(1.0f, 0.75f);
+    zCameraEnableInput();
+    zEntPlayerControlOn(CONTROL_OWNER_REWARDANIM);
+    return 0;
+}
+
 static U32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
             (globals.pad0->pressed & XPAD_BUTTON_X));
+}
+
+// Equivalent: sda relocation scheduling
+static U32 LCopterCB(xAnimTransition*, xAnimSingle*, void* data)
+{
+    xEnt* ent = (xEnt*)data;
+
+    zEntPlayer_SNDPlay(ePlayerSnd_Heli, 0.0f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_HeliComment1, ePlayerStreamSnd_HeliComment3,
+                                   0.1f);
+
+    globals.player.ent.frame->vel.x = 0.0f;
+    globals.player.ent.frame->vel.y = -1.0f;
+    globals.player.ent.frame->vel.z = 0.0f;
+
+    sLassoInfo->copterTime = 5.0f;
+    zLasso_InitTimer(sLasso, 0.25f);
+    sLasso->flags = 0x1243;
+    sLasso->tgRadius = 1.25f;
+    xVec3AddScaled(&sLasso->crCenter, (xVec3*)&(ent->model->Mat->up), 0.25f);
+
+    tslide_inair_tmr = 0.0f;
+    tslide_dbl_tmr = 0.0f;
+    tslide_ground = 0;
+    globals.player.SlideTrackDecay = 0.0f;
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 StopLCopterCB(xAnimTransition*, xAnimSingle*, void* data)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    idle_tmr = 0.0f;
+    sLassoInfo->copterTime = -1.0f;
+    sLassoInfo->canCopter = 0;
+    sLasso->flags = 0;
+    return 0;
 }
 
 static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)

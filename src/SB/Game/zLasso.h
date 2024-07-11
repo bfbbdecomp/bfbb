@@ -34,5 +34,6 @@ struct zLasso
 };
 
 void zLasso_scenePrepare();
+void zLasso_InitTimer(zLasso* lasso, float interpTime);
 
 #endif

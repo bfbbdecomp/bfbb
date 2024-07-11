@@ -414,7 +414,6 @@ S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
-U32 StopLCopterCB(xAnimTransition*, xAnimSingle*, void*);
 U32 BounceCB(xAnimTransition*, xAnimSingle*, void*);
 
 #endif
