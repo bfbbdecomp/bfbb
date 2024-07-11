@@ -23,3 +23,8 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 void clamp_bone_index(NCINEntry*, RpAtomic*)
 {
 }
+
+void NPCCone::TextureSet(RwRaster* raster)
+{
+    rast_cone = raster;
+}
