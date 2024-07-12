@@ -93,7 +93,6 @@ enum _xCollsIdx
 struct xScene;
 
 void xCollideInit(xScene* sc);
-void xsqrtfast(F32& dst, F32 num);
 S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
 S32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
