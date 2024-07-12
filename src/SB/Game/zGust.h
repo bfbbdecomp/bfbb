@@ -27,6 +27,13 @@ struct zGust : xBase
     F32 debris_timer;
 };
 
+struct zGustData
+{
+    U32 gust_on;
+    zGust* g[4];
+    float lerp[4];
+};
+
 void zGustInit();
 void zGustSetup();
 zGust* zGustGetGust(U16 n);

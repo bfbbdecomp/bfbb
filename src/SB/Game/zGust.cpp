@@ -1,4 +1,5 @@
 #include "xstransvc.h"
+#include "xMath.h"
 #include "xEvent.h"
 #include "xString.h"
 
@@ -61,7 +62,6 @@ void zGustInit()
      }
 }
 
-// NOTE(jelly): i think this is equivalent, the string loads are just not hoisted in orig
 void zGustSetup()
 {
      if (gusts)
@@ -69,9 +69,9 @@ void zGustSetup()
           for (U16 i = 0; i < ngusts; i++)
           {
                zGustSetup(&gusts[i]);
-               sGustDustEmitter = zParEmitterFind(xStrHash("PAREMIT_GUST_DUST"));
-               sGustDebrisEmitter = zParEmitterFind(xStrHash("PAREMIT_GUST_DUST"));
           }
+          sGustDustEmitter = zParEmitterFind(xStrHash("PAREMIT_GUST_DUST"));
+          sGustDebrisEmitter = zParEmitterFind(xStrHash("PAREMIT_GUST_DEBRIS"));
      }
 }
 
@@ -108,21 +108,104 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
 {
      unsigned int i; // r18
      unsigned int j; // r3
-     unsigned int minidx; // r17
+     //unsigned int minidx; // r17
      float minlerp; // r1
-     class zGustData * data; // r16
-     class xCollis coll; // r29+0x60
+     //class zGustData * data; // r16
+     //class xCollis coll; // r29+0x60
      float lerpinc; // r3
      class xVec3 * gvel; // r4
      class xVec3 dpos; // r29+0xB0
 
-     if (gusts)
+     zGustData* data = (zGustData*)gdata;
+     
+     if (!gusts) return;
+     
+     xCollis coll;
+     coll.flags = 0;
+     for (U32 i = 0; i < ngusts; i++)
      {
-          for (U32 i = 0; gusts[i].flags & 0xffff; i++)
+          if (gusts[i].flags & 1)
           {
-               for (U32 j = 0; j < ngusts; j++)
+               xBoundHitsBound(&ent->bound, &gusts[i].volume->asset->bound, &coll);
+               if (coll.flags & 1)
                {
+                    U32 minidx = 0;
+                    U32 j;
+                    for (j = 0; j < 4; j++)
+                    {
+                         if (&gusts[i] == data->g[j] && data->lerp[j] < 2.0f)
+                         {
+                              minidx = j;
+                              break;
+                         }
+                    }
+
+                    if (j == 4)
+                    {
+                         data->g[minidx] = (zGust *)gusts[i].id;
+                         data->lerp[minidx] = 1.0E-7;
+                    }
                }
+               else
+               {
+                    for (U32 j = 0; j < 4; j++)
+                    {
+                         if (data->g[0] == &gusts[i] && data->lerp[0] == 1.0f)
+                         {
+                              data->lerp[j] = -1.0f;
+                              break;
+                         }
+                    }
+               }
+          }
+     }
+
+     for (U32 i = 0; i < 4; i++)
+     {
+          zGust *g = data->g[i];
+          if (g)
+          {
+               if (g->flags & 1)
+               {
+                    float lerpinc = g->asset->fade;
+                    if (dt < lerpinc)
+                    {
+                         lerpinc = dt / lerpinc;
+                         if (data->lerp[i] < 0.0f)
+                         {
+                              data->lerp[i] += lerpinc;
+                         }
+                         else if (data->lerp[i] > 1.0f)
+                         {
+                              data->lerp[i] += lerpinc;
+                              if (data->lerp[i] > 1.0f)
+                              {
+                                   data->lerp[i] = .0f;
+                              }
+                              
+                         }
+                    }
+                    if (data->lerp[i] < 0.0f)
+                    {
+                         data->g[i] = 0;
+                         data->lerp[i] = 0.0f;
+                    }
+               }
+               else
+               {
+                    data->g[i] = 0;
+                    data->lerp[i] = 0.0f;
+               }
+          }
+     }
+
+     data->gust_on = 0;
+     for (U32 i = 0; i < 4; i++)
+     {
+          if (data->g[i])
+          {
+               data->gust_on = 1;
+               xVec3Mul(&dpos, data->g[i]->asset->vel, dt * xAbs(data->lerp[i]));
           }
      }
 }
