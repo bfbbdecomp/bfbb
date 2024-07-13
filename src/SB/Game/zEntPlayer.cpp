@@ -2109,7 +2109,7 @@ static void DoWallJumpCheck()
 
         zSurfaceProps* surfaceProperties = (zSurfaceProps*)surf->moprops;
 
-        if(!(surfaceProperties->asset->phys_flags & 0x20))
+        if (!(surfaceProperties->asset->phys_flags & 0x20))
         {
             return;
         }
@@ -2124,6 +2124,29 @@ static void DoWallJumpCheck()
             }
         }
     }
+}
+
+static U32 WallJumpLaunchCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    if (globals.player.ControlOff || !(globals.pad0->pressed & XPAD_BUTTON_X) ||
+        !globals.player.IsJumping || globals.player.s->Wall.PeakHeight <= 0.0f)
+    {
+        return false;
+    }
+    return sWallJumpResult == WallJumpResult_Jump;
+}
+
+static U32 WallJumpLaunchCallback(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    globals.player.WallJumpState = k_WALLJUMP_LAUNCH;
+    zCameraEnableWallJump(&globals.camera, sWallNormal);
+    sWallJumpResult = WallJumpResult_NoJump;
+    return 0;
+}
+
+static U32 WallJumpFlightLandCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    return sWallJumpResult == WallJumpResult_Jump;
 }
 
 static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
