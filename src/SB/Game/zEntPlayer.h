@@ -244,13 +244,6 @@ enum _CurrentPlayer
     eCurrentPlayerCount
 };
 
-// was originally called _enum in DWARF data
-enum _zPlayerWallJumpResult
-{
-    WallJumpResult_NoJump,
-    WallJumpResult_Jump
-};
-
 enum _zPlayerWallJumpState
 {
     k_WALLJUMP_NOT,

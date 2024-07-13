@@ -37,6 +37,7 @@
 #include "zParPTank.h"
 #include "zRumble.h"
 #include "zSaveLoad.h"
+#include "zSurface.h"
 #include "zThrown.h"
 
 static F32 sHackStuckTimer;
@@ -173,6 +174,14 @@ static U32 sShouldBubbleBowl;
 static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
 S32 gWaitingToAutoSave;
+
+static enum {
+    WallJumpResult_NoJump,
+    WallJumpResult_Jump,
+} sWallJumpResult;
+static class xVec3 sWallNormal;
+static class zSurfaceProps* sWallCollisionSurface;
+static float sTongueDblSpeedMult;
 
 static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
 
@@ -2053,6 +2062,91 @@ static U32 StopLCopterCB(xAnimTransition*, xAnimSingle*, void* data)
     sLassoInfo->canCopter = 0;
     sLasso->flags = 0;
     return 0;
+}
+
+// Equivalent: static initializer scheduling (probably sda relocations?)
+static void DoWallJumpCheck()
+{
+    sWallJumpResult = WallJumpResult_NoJump;
+    xEnt* ent = &globals.player.ent;
+
+    static F32 sAtdist = 0.65f;
+    static F32 sSweptrad = 0.4f;
+    static F32 sVerticalCos = 0.2588f;
+
+    xVec3 start;
+    start.x = ent->model->Mat->pos.x;
+    start.y = ent->model->Mat->pos.y + ent->bound.cyl.r;
+    start.z = ent->model->Mat->pos.z;
+
+    // hack: compiler isn't calling operator=
+    xVec3 end;
+    end.operator=(start);
+    end.x += ent->model->Mat->at.x * sAtdist;
+    end.z += ent->model->Mat->at.z * sAtdist;
+
+    xSweptSphere sws;
+    xSweptSpherePrepare(&sws, &start, &end, sSweptrad);
+
+    if (xSweptSphereToScene(&sws, globals.sceneCur, ent, 0x16))
+    {
+        xSweptSphereGetResults(&sws);
+
+        xSurface* surf;
+        if (sws.optr && sws.mptr)
+        {
+            surf = sws.mptr->Surf;
+        }
+        else
+        {
+            surf = zSurfaceGetSurface(sws.oid);
+        }
+
+        if (!surf)
+        {
+            return;
+        }
+
+        zSurfaceProps* surfaceProperties = (zSurfaceProps*)surf->moprops;
+
+        if (!(surfaceProperties->asset->phys_flags & 0x20))
+        {
+            return;
+        }
+
+        if (xabs(sws.worldNormal.y) < sVerticalCos)
+        {
+            if (xVec3Dot(&sws.worldNormal, &sws.worldPolynorm) > 0.999f)
+            {
+                sWallNormal = sws.worldNormal;
+                sWallJumpResult = WallJumpResult_Jump;
+                sWallCollisionSurface = surfaceProperties;
+            }
+        }
+    }
+}
+
+static U32 WallJumpLaunchCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    if (globals.player.ControlOff || !(globals.pad0->pressed & XPAD_BUTTON_X) ||
+        !globals.player.IsJumping || globals.player.s->Wall.PeakHeight <= 0.0f)
+    {
+        return false;
+    }
+    return sWallJumpResult == WallJumpResult_Jump;
+}
+
+static U32 WallJumpLaunchCallback(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    globals.player.WallJumpState = k_WALLJUMP_LAUNCH;
+    zCameraEnableWallJump(&globals.camera, sWallNormal);
+    sWallJumpResult = WallJumpResult_NoJump;
+    return 0;
+}
+
+static U32 WallJumpFlightLandCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    return sWallJumpResult == WallJumpResult_Jump;
 }
 
 static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
