@@ -57,6 +57,7 @@ void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff);
 void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, F32 newZero);
 F32 xSCurve(F32 t, F32 softness);
 F32 xSCurve(F32 t);
+void xsqrtfast(F32& dst, F32 num);
 
 F32 xrmod(F32 ang);
 

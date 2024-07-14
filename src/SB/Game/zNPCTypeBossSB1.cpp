@@ -1,5 +1,6 @@
 #include <types.h>
 #include <string.h>
+#include <xDebug.h>
 
 #include "iMath.h"
 #include "iModel.h"
@@ -41,6 +42,8 @@
 #define f1161 0.5f
 #define f1209 0.76666665f
 #define f1223 0.05f
+
+static U32 sSB1_deflated[2];
 
 static xVec3 BossArmTags[8] = {
     //
@@ -191,7 +194,9 @@ S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_
     return 1;
 }
 
-void SB1_ResetGlobalStuff();
+void SB1_ResetGlobalStuff()
+{
+}
 
 // Close, but no cigar
 void zNPCB_SB1::Init(xEntAsset* asset)
@@ -244,6 +249,43 @@ void zNPCB_SB1::Init(xEntAsset* asset)
     SB1_ResetGlobalStuff();
 }
 
+S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*);
+S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+S32 stompCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+S32 smashCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+
+void zNPCB_SB1::SelfSetup()
+{
+    SB1_ResetGlobalStuff();
+
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    this->psy_instinct = bmgr->Subscribe(this, 0);
+
+    xPsyche* psy = this->psy_instinct;
+
+    psy->BrainBegin();
+
+    xGoal* goal = psy->AddGoal(NPC_GOAL_BOSSSB1IDLE, NULL);
+    goal->SetCallbacks(idleCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal(NPC_GOAL_BOSSSB1TAUNT, NULL);
+    goal->SetCallbacks(tauntCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal(NPC_GOAL_BOSSSB1STOMP, NULL);
+    goal->SetCallbacks(stompCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal(NPC_GOAL_BOSSSB1SMASH, NULL);
+    goal->SetCallbacks(smashCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal(NPC_GOAL_BOSSSB1DEFLATE, NULL);
+    goal->SetCallbacks(deflateCB, NULL, NULL, NULL);
+
+    psy->BrainEnd();
+
+    psy->SetSafety(NPC_GOAL_BOSSSB1IDLE);
+}
+
 void zNPCB_SB1::Reset()
 {
     SB1_ResetGlobalStuff();
@@ -255,6 +297,105 @@ void zNPCB_SB1::Reset()
     {
         this->psy_instinct->GoalSet(NPC_GOAL_BOSSSB1IDLE, 0);
     }
+}
+
+U32 zNPCB_SB1::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    S32 index = -1;
+    U32 animId = 0;
+
+    switch (gid)
+    {
+    case NPC_GOAL_BOSSSB1IDLE:
+    {
+        if (this->model->Anim->Single->State->ID == g_hash_bossanim[42])
+        {
+            index = 43;
+        }
+        else
+        {
+            index = 1;
+        }
+        break;
+    }
+    case NPC_GOAL_BOSSSB1TAUNT:
+    {
+        index = 3;
+        break;
+    }
+    case NPC_GOAL_BOSSSB1STOMP:
+    {
+        index = 44;
+        break;
+    }
+    case NPC_GOAL_BOSSSB1SMASH:
+    {
+        index = 41;
+        break;
+    }
+    case NPC_GOAL_BOSSSB1DEFLATE:
+    {
+        if (sSB1_armTgtHit == this->m_armTgt[0])
+        {
+            index = 46;
+        }
+        else
+        {
+            index = 47;
+        }
+        break;
+    }
+    default:
+    {
+        index = 1;
+    }
+    }
+
+    if (index > -1)
+    {
+        animId = g_hash_bossanim[index];
+    }
+
+    return animId;
+}
+
+void zNPCB_SB1::Process(xScene* xscn, F32 dt)
+{
+    this->attack_delay += dt;
+
+    if (this->attack_delay > f983)
+    {
+        this->attacking = !this->attacking;
+
+        this->attack_delay = f823;
+    }
+
+    if (this->attacking && this->psy_instinct)
+    {
+        this->psy_instinct->Timestep(dt, NULL);
+    }
+
+    xFXRing* ring; // needs to be declared outside to match
+
+    for (U32 i = 0; i < 16; i++)
+    {
+        ring = this->m_stompRing[i];
+
+        if (ring && ring->time > f984)
+        {
+            F32 rescale = ring->time / (ring->time + f983 * dt);
+
+            ring->ring_radius_delta *= rescale;
+            ring->ring_tilt_delta *= rescale;
+            ring->ring_height_delta *= rescale;
+            ring->time += f983 * dt;
+        }
+    }
+
+    this->zNPCCommon::Process(xscn, dt);
+
+    xprintf("BOSS:  %s  %f\n", this->model->Anim->Single->State->Name,
+            this->model->Anim->Single->Time);
 }
 
 void zNPCB_SB1::NewTime(xScene* xscn, F32 dt)
@@ -545,6 +686,22 @@ S32 zNPCGoalBossSB1Smash::Enter(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalBossSB1Smash::Exit(F32 dt, void* updCtxt)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    sb1->m_armTgt[0]->model->Mat->pos.y = f890;
+    sb1->m_armTgt[1]->model->Mat->pos.y = f890;
+
+    sSB1_Ptr->m_armTgt[0]->bound.box.center = (xVec3&)sSB1_Ptr->m_armTgt[0]->model->Mat->pos;
+    sSB1_Ptr->m_armTgt[1]->bound.box.center = (xVec3&)sSB1_Ptr->m_armTgt[1]->model->Mat->pos;
+
+    SB1Dummy_BoundFunc(sb1->m_armTgt[0], NULL);
+    SB1Dummy_BoundFunc(sb1->m_armTgt[1], NULL);
+
+    return this->zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
 // WIP, only 32% matching
 S32 zNPCGoalBossSB1Deflate::Enter(F32 dt, void* updCtxt)
 {
@@ -634,4 +791,36 @@ S32 zNPCGoalBossSB1Stomp::Process(en_trantype* trantype, float dt, void* ctxt, x
     }
 
     return xGoal::Process(trantype, dt, ctxt, scene);
+}
+
+S32 zNPCGoalBossSB1Deflate::Exit(F32 dt, void* updCtxt)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    RpGeometryLock(this->modelGeom, 2);
+    memcpy(this->modelVec, this->morphVertBuf, this->morphVertCount * sizeof(xVec3));
+    RpGeometryUnlock(this->modelGeom);
+
+    if (sSB1_armTgtHit == sb1->m_armTgt[0])
+    {
+        sb1->m_subModels[2]->Flags &= ~1;
+        sb1->m_subModels[4]->Flags |= 1;
+
+        sb1->m_armColl[0]->model->Data = sb1->m_subModels[4]->Data;
+        sb1->m_armColl[0]->model->Mat = sb1->m_subModels[4]->Mat;
+
+        sSB1_deflated[0] = 1;
+    }
+    else
+    {
+        sb1->m_subModels[3]->Flags &= ~1;
+        sb1->m_subModels[5]->Flags |= 1;
+
+        sb1->m_armColl[1]->model->Data = sb1->m_subModels[5]->Data;
+        sb1->m_armColl[1]->model->Mat = sb1->m_subModels[5]->Mat;
+
+        sSB1_deflated[1] = 1;
+    }
+
+    return this->zNPCGoalCommon::Exit(dt, updCtxt);
 }

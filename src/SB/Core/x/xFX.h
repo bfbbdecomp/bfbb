@@ -13,12 +13,12 @@ struct xFXRing
     U32 texture;
     F32 lifetime;
     xVec3 pos;
-    F32 time;
+    F32 time; // 0x14
     F32 ring_radius;
-    F32 ring_radius_delta;
+    F32 ring_radius_delta; // 0x1c
     F32 ring_tilt;
-    F32 ring_tilt_delta;
-    F32 ring_height;
+    F32 ring_tilt_delta; // 0x24?
+    F32 ring_height; // 0x28
     F32 ring_height_delta;
     iColor_tag ring_color;
     U16 ring_segs;

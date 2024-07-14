@@ -37,6 +37,7 @@
 #include "zParPTank.h"
 #include "zRumble.h"
 #include "zSaveLoad.h"
+#include "zSurface.h"
 #include "zThrown.h"
 
 static F32 sHackStuckTimer;
@@ -112,6 +113,13 @@ static F32 sHitchAngle;
 static F32 sSwingTimeElapsed;
 static S32 sLassoCamLinger;
 
+static S32 sGooKnockedToSafety;
+static F32 sGooKnockedTimer;
+xEntBoulder* boulderVehicle;
+static F32 bvTimeToIdle;
+static S32 boulderRollShouldEnd;
+static S32 boulderRollShouldStart;
+
 // This struct was anonymous in the dwarf but it seemed to do better with codegen to name it
 // so I can hold a pointer to it and access the members that way.
 static const struct sock
@@ -132,6 +140,9 @@ static const struct sock
 
 static F32 update_dt = 1.0f / 60.0f;
 static F32 last_update_dt = 1.0f / 60.0f;
+static xVec3 update_motion;
+static xVec3 req_motion;
+static xVec3 precollide_motion;
 
 xMat4x3 gPlayerAbsMat;
 
@@ -173,6 +184,14 @@ static U32 sShouldBubbleBowl;
 static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
 S32 gWaitingToAutoSave;
+
+static enum {
+    WallJumpResult_NoJump,
+    WallJumpResult_Jump,
+} sWallJumpResult;
+static class xVec3 sWallNormal;
+static class zSurfaceProps* sWallCollisionSurface;
+static float sTongueDblSpeedMult;
 
 static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
 
@@ -2055,10 +2074,136 @@ static U32 StopLCopterCB(xAnimTransition*, xAnimSingle*, void* data)
     return 0;
 }
 
+// Equivalent: static initializer scheduling (probably sda relocations?)
+static void DoWallJumpCheck()
+{
+    sWallJumpResult = WallJumpResult_NoJump;
+    xEnt* ent = &globals.player.ent;
+
+    static F32 sAtdist = 0.65f;
+    static F32 sSweptrad = 0.4f;
+    static F32 sVerticalCos = 0.2588f;
+
+    xVec3 start;
+    start.x = ent->model->Mat->pos.x;
+    start.y = ent->model->Mat->pos.y + ent->bound.cyl.r;
+    start.z = ent->model->Mat->pos.z;
+
+    // hack: compiler isn't calling operator=
+    xVec3 end;
+    end.operator=(start);
+    end.x += ent->model->Mat->at.x * sAtdist;
+    end.z += ent->model->Mat->at.z * sAtdist;
+
+    xSweptSphere sws;
+    xSweptSpherePrepare(&sws, &start, &end, sSweptrad);
+
+    if (xSweptSphereToScene(&sws, globals.sceneCur, ent, 0x16))
+    {
+        xSweptSphereGetResults(&sws);
+
+        xSurface* surf;
+        if (sws.optr && sws.mptr)
+        {
+            surf = sws.mptr->Surf;
+        }
+        else
+        {
+            surf = zSurfaceGetSurface(sws.oid);
+        }
+
+        if (!surf)
+        {
+            return;
+        }
+
+        zSurfaceProps* surfaceProperties = (zSurfaceProps*)surf->moprops;
+
+        if (!(surfaceProperties->asset->phys_flags & 0x20))
+        {
+            return;
+        }
+
+        if (xabs(sws.worldNormal.y) < sVerticalCos)
+        {
+            if (xVec3Dot(&sws.worldNormal, &sws.worldPolynorm) > 0.999f)
+            {
+                sWallNormal = sws.worldNormal;
+                sWallJumpResult = WallJumpResult_Jump;
+                sWallCollisionSurface = surfaceProperties;
+            }
+        }
+    }
+}
+
+static U32 WallJumpLaunchCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    if (globals.player.ControlOff || !(globals.pad0->pressed & XPAD_BUTTON_X) ||
+        !globals.player.IsJumping || globals.player.s->Wall.PeakHeight <= 0.0f)
+    {
+        return false;
+    }
+    return sWallJumpResult == WallJumpResult_Jump;
+}
+
+static U32 WallJumpLaunchCallback(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    globals.player.WallJumpState = k_WALLJUMP_LAUNCH;
+    zCameraEnableWallJump(&globals.camera, sWallNormal);
+    sWallJumpResult = WallJumpResult_NoJump;
+    return 0;
+}
+
+static float CalcJumpImpulse(zJumpParam*, const zPlayerSettings*);
+
+// Really strange non-matches here, seem unlike most things in this TU. Look equivalent though?
+static U32 WallJumpCallback(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    zJumpParam wallParam = globals.player.s->Wall;
+    wallParam.PeakHeight *= sWallCollisionSurface->asset->walljump_scale_y;
+
+    CalcJumpImpulse(&wallParam, NULL);
+    zEntPlayerJumpStart(&globals.player.ent, &wallParam);
+    zEntPlayer_SNDPlay(ePlayerSnd_Jump, 0.0f);
+
+    xEntFrame* frame = globals.player.ent.frame;
+    // Really weird reordering of these instructions
+    globals.player.WallJumpState = k_WALLJUMP_FLIGHT;
+    globals.player.IsDJumping = 0;
+
+    xVec3* velocity = &globals.player.ent.frame->vel;
+    velocity->x = 0.0f;
+    velocity->z = 0.0f;
+
+    xVec3 u;
+    xVec3SMul(&u, &sWallNormal,
+              globals.player.s->WallJumpVelocity * sWallCollisionSurface->asset->walljump_scale_xz);
+    xVec3Add(velocity, velocity, &u);
+    xVec3Copy(&frame->dvel, &g_O3);
+    xVec3Copy(&frame->oldvel, velocity);
+    xMat3x3LookAt((xMat3x3*)globals.player.ent.model->Mat, &sWallNormal, &g_O3);
+    xVec3Copy(&frame->dpos, &g_O3);
+
+    frame->drot.angle = 0.0f;
+    xVec3Copy(&frame->oldmat.pos, &frame->mat.pos);
+
+    return 0;
+}
+
+static U32 WallJumpFlightLandCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    return sWallJumpResult == WallJumpResult_Jump;
+}
+
 static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_LAND;
     return 0;
+}
+
+static U32 WallJumpLandFlightCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    return sWallJumpResult != WallJumpResult_Jump;
 }
 
 static U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -2073,11 +2218,164 @@ static U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             (globals.pad0->pressed & XPAD_BUTTON_X));
 }
 
+static void zEntPlayerJumpAddDriver(xEnt* ent);
+static U32 JumpCB(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode)
+    {
+        return 0;
+    }
+
+    zEntPlayerJumpStart(&globals.player.ent, &globals.player.s->Jump);
+    zEntPlayerJumpAddDriver(&globals.player.ent);
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    zEntPlayer_SNDPlay(ePlayerSnd_Jump, 0.0f);
+    startDouble = globals.player.ent.frame->mat.pos.y;
+    startJump = startDouble;
+    globals.player.CanJump = 0;
+    globals.player.IsJumping = 1;
+
+    return 0;
+}
+
+static U32 JumpApexCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    return globals.player.ent.model == globals.player.model_sandy && anim->State &&
+                   anim->State->Name &&
+                   (strcmp(anim->State->Name, "DJumpStart01") == 0 ||
+                    strcmp(anim->State->Name, "DJumpLift01") == 0) ?
+               (globals.player.ent.frame->vel.y <= 5.0f) :
+               (globals.player.ent.frame->vel.y <= 0.001f);
+}
+
+static U32 BounceCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.Bounced == 1;
+}
+
+// Equivalent: sda relocation scheduling + regswap
+static U32 BounceCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zCameraSetBbounce(true);
+    globals.player.Bounced = 0;
+    globals.player.Jump_CanDouble = 1;
+    globals.player.Jump_CanFloat = 1;
+    sLassoInfo->canCopter = 1;
+
+    return 0;
+}
+
 static U32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     StopLCopterCB(tran, anim, param_3);
     BounceCB(tran, anim, param_3);
     return 0;
+}
+
+static U32 DblJumpCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.s->Double.PeakHeight <= 0.0f)
+    {
+        return 0;
+    }
+
+    if (globals.player.ControlOff || !(globals.pad0->pressed & XPAD_BUTTON_X) ||
+        !globals.player.Jump_CanDouble)
+    {
+        return 0;
+    }
+
+    zEntPlayer_SNDPlay(ePlayerSnd_DoubleJump, 0.0f);
+
+    return sWallJumpResult != WallJumpResult_Jump;
+}
+
+// Equivalent: regswaps and a sda relocation scheduling meme, may be cause some/all the swaps
+static U32 DblJumpCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode)
+    {
+        return 0;
+    }
+
+    zEntPlayerJumpStart(&globals.player.ent, &globals.player.s->Double);
+    globals.player.Jump_CanDouble = 0;
+    startDouble = globals.player.ent.frame->mat.pos.y;
+    globals.player.IsDJumping = 1;
+    globals.player.Bounced = 0;
+    sLasso->flags = NULL;
+
+    if (tslide_inair_tmr)
+    {
+        // load order swap
+        F32 dirx = update_motion.x;
+        F32 dirz = update_motion.z;
+        F32 dbldirx = SQR(dirx);
+        F32 dbldirz = SQR(dirz);
+
+        F32 speed;
+        F32 dblspeed;
+        F32 len2 = dbldirx + dbldirz;
+        if (xabs(len2 - 1.0f) <= 0.00001f)
+        {
+            dirx = update_motion.x;
+            speed = 1.0f;
+        }
+        else if (xabs(len2) <= 0.00001f)
+        {
+            dirx = 0.0f;
+            dirz = 0.0f;
+            speed = 0.0f;
+        }
+        else
+        {
+            speed = xsqrt(dbldirx + dbldirz);
+            dirx = update_motion.x * (1.0f / speed);
+            dirz = update_motion.z * (1.0f / speed);
+        }
+
+        F32 len_inv = speed / update_dt;
+        if (globals.player.g.SlideVelDblBoost *
+                (dirx * globals.player.SlideTrackDir.x + dirz * globals.player.SlideTrackDir.z) >
+            len_inv)
+        {
+            globals.player.ent.frame->vel.x += dirx * len_inv;
+            globals.player.ent.frame->vel.z += dirz * len_inv;
+            tslide_dbl_tmr = update_dt;
+        }
+    }
+    return 0;
+}
+
+// equivalent: sda relocation optimization
+static U32 TongueDblJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    DblJumpCB(tran, anim, data);
+    sTongueDblSpeedMult =
+        (1.1f * (2.0f * anim->State->Data->Duration - anim->Time)) / anim->State->Data->Duration;
+    anim->CurrentSpeed *= sTongueDblSpeedMult;
+    return 0;
+}
+
+static U32 TongueDblSpinCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    anim->CurrentSpeed *= sTongueDblSpeedMult;
+    return 0;
+}
+
+static U32 FallCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    return !((anim && anim->State &&
+              (strcmp(anim->State->Name, "LCopter01") == 0 ||
+               strcmp(anim->State->Name, "LCopterHeadUp01") == 0)) &&
+             (globals.player.ControlOff == 0 && (globals.pad0->on & XPAD_BUTTON_X) &&
+              sLassoInfo->copterTime > 0.0f)) &&
+           globals.player.JumpState != 0 && globals.player.JumpState != 1;
+}
+
+static U32 BoulderRollMoveCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return bvTimeToIdle > 0.0f && boulderVehicle;
 }
 
 static U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)

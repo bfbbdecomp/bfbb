@@ -244,13 +244,6 @@ enum _CurrentPlayer
     eCurrentPlayerCount
 };
 
-// was originally called _enum in DWARF data
-enum _zPlayerWallJumpResult
-{
-    WallJumpResult_NoJump,
-    WallJumpResult_Jump
-};
-
 enum _zPlayerWallJumpState
 {
     k_WALLJUMP_NOT,
@@ -415,7 +408,6 @@ void zEntPlayer_SNDPlayStreamRandom(U32 lower, U32 upper, _tagePlayerStreamSnd p
 void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
                                     _tagePlayerStreamSnd player_snd_end, F32 delay);
 
-
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, F32 new_vol);
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, F32 new_pitch);
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
@@ -429,7 +421,5 @@ S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
-
-U32 BounceCB(xAnimTransition*, xAnimSingle*, void*);
 
 #endif
