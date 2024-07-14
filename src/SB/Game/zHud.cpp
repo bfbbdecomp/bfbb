@@ -10,7 +10,7 @@ namespace zhud
     {
         widget widgets[];
         bool inited;
-        bool last_paused;
+        bool last_paused = true;
     }
     
     void zhud::render()
