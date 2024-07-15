@@ -13,6 +13,8 @@ struct xParInterp
     U32 interp;
     F32 freq;
     F32 oofreq;
+
+    void set(F32, F32, F32, U32);
 };
 
 // Size 0x138
@@ -106,7 +108,6 @@ void xParEmitterSetup(xParEmitter* t);
 void xParEmitterDestroy();
 void xParEmitterUpdate(xBase* to, xScene*, F32 dt);
 xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* info);
-F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_elapsed,
-                          F32 last_val);
+F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_elapsed, F32 last_val);
 
 #endif
