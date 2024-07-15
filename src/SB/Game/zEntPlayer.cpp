@@ -2767,8 +2767,10 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
     }
 }
 
-static void _SetupRumble(_tagePlayerSnd, _tagRumbleType, float)
+static void _SetupRumble(_tagePlayerSnd player_snd, _tagRumbleType type, float time)
 {
+    sPlayerRumbleType[player_snd] = type;
+    sPlayerRumbleTime[player_snd] = time;
 }
 
 // Close. missing redundant float loads, maybe equivalent.
