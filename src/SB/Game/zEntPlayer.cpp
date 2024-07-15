@@ -1,3 +1,4 @@
+#include "zFX.h"
 #include <types.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -119,6 +120,9 @@ xEntBoulder* boulderVehicle;
 static F32 bvTimeToIdle;
 static S32 boulderRollShouldEnd;
 static S32 boulderRollShouldStart;
+static zParEmitter* sEmitSpinBubbles;
+static zParEmitter* sEmitSundae;
+static zParEmitter* sEmitStankBreath;
 
 // This struct was anonymous in the dwarf but it seemed to do better with codegen to name it
 // so I can hold a pointer to it and access the members that way.
@@ -2376,6 +2380,102 @@ static U32 FallCheck(xAnimTransition*, xAnimSingle* anim, void*)
 static U32 BoulderRollMoveCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return bvTimeToIdle > 0.0f && boulderVehicle;
+}
+
+static U32 BoulderRollIdleCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return bvTimeToIdle <= 0.0f && boulderVehicle;
+}
+
+static U32 BoulderRollCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return boulderRollShouldStart && boulderVehicle;
+}
+
+static U32 BoulderRollWindupCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BoulderStart, 0.0f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_SpongeBallComment1,
+                                   ePlayerStreamSnd_SpongeBallComment3, 0.2f);
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    return 0;
+}
+
+static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt);
+static void zEntPlayer_BoulderVehicleMove(xEnt*, xScene*, F32, xEntFrame* frame);
+static void zEntPlayer_BoulderVehicleRender(xEnt*);
+
+static U32 BoulderRollCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    xEntHide(&globals.player.ent);
+    xEntBoulder_Reset(boulderVehicle, globals.sceneCur);
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->pos,
+              (xVec3*)&globals.player.ent.model->Mat->pos);
+
+    boulderVehicle->model->Mat->pos.y += boulderVehicle->bound.sph.r;
+    xVec3SubFrom((xVec3*)&boulderVehicle->model->Mat->pos,
+                 (xVec3*)&boulderVehicle->model->Data->boundingSphere.center);
+
+    globals.player.ent.update = zEntPlayer_BoulderVehicleUpdate;
+    globals.player.ent.move = zEntPlayer_BoulderVehicleMove;
+    globals.player.ent.render = zEntPlayer_BoulderVehicleRender;
+    boulderVehicle->vel.y = 0.0f;
+    boulderVehicle->vel.x = globals.player.PredictCurrDir.x * globals.player.PredictCurrVel;
+    boulderVehicle->vel.z = globals.player.PredictCurrDir.z * globals.player.PredictCurrVel;
+    boulderVehicle->rotVec.x = boulderVehicle->vel.z;
+    boulderVehicle->rotVec.y = 0.0f;
+    boulderVehicle->rotVec.z = -boulderVehicle->vel.x;
+
+    xVec3Normalize(&boulderVehicle->rotVec, &boulderVehicle->rotVec);
+    boulderVehicle->angVel = xVec3Length(&boulderVehicle->vel) / boulderVehicle->bound.sph.r;
+
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->right,
+              (xVec3*)&globals.player.ent.model->Mat->right);
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->at, (xVec3*)&globals.player.ent.model->Mat->at);
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->up, (xVec3*)&globals.player.ent.model->Mat->up);
+
+    xParEmitterCustomSettings info;
+    if (gPTankDisable)
+    {
+        info.custom_flags = 0x35e;
+        xVec3Copy(&info.pos, (xVec3*)&boulderVehicle->model->Mat->pos);
+        xVec3Copy(&info.vel, (xVec3*)&boulderVehicle->vel);
+
+        if (xVec3Normalize(&info.vel, &info.vel) < 0.00001f)
+        {
+            info.vel.x = 0.0f;
+            info.vel.y = 3.0f;
+            info.vel.z = 0.0f;
+        }
+        else
+        {
+            xVec3SMulBy(&info.vel, 3.0f);
+        }
+
+        info.vel_angle_variation = DEG2RAD(270);
+        info.rate.set(3000.0f, 3000.0f, 1.0f, 0.0f);
+        info.life.set(0.75f, 0.75f, 1.0f, 0.0f);
+        info.size_birth.set(0.25f, 0.25f, 1.0f, 0.0f);
+        info.size_death.set(0.5f, 0.5f, 1.0f, 0.0f);
+
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+        xVec3AddScaled(&info.pos, &boulderVehicle->vel, 10.0f * update_dt);
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+    }
+    else
+    {
+        zFX_SpawnBubbleHit((xVec3*)&boulderVehicle->model->Mat->pos, 50);
+    }
+
+    boulderRollShouldEnd = 0;
+    zEntEvent(&globals.player.ent, eEventSpongeballOn);
+    xEntBeginUpdate(boulderVehicle, globals.sceneCur, 0.00001f);
+    xEntEndUpdate(boulderVehicle, globals.sceneCur, 0.00001f);
+    xEntBoulder_RealBUpdate(boulderVehicle, &boulderVehicle->frame->mat.pos);
+    boulderVehicle->lightKit = globals.player.ent.lightKit;
+    boulderVehicle->model->LightKit = globals.player.ent.lightKit;
+
+    return 0;
 }
 
 static U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
