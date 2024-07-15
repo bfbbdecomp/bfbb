@@ -352,7 +352,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zEntPickup.cpp"),
             Object(NonMatching, "SB/Game/zEntPlayer.cpp"),
             Object(NonMatching, "SB/Game/zEntSimpleObj.cpp"),
-            Object(NonMatching, "SB/Game/zEntTrigger.cpp"),
+            Object(Matching, "SB/Game/zEntTrigger.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zEnv.cpp"),
             Object(Matching, "SB/Game/zEvent.cpp"),
             Object(Matching, "SB/Game/zFeet.cpp"),

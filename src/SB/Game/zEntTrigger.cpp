@@ -2,10 +2,6 @@
 
 #include "xEvent.h"
 
-extern F32 _670;
-extern F32 _671_0;
-extern F32 _746_1;
-
 void zEntTriggerInit(void* ent, void* asset)
 {
     zEntTriggerInit((zEntTrigger*)ent, (xEntAsset*)asset);
@@ -29,15 +25,15 @@ void zEntTriggerInit(zEntTrigger* ent, xEntAsset* asset)
 
         xVec3Sub(&var_20, &var_20, &asset->pos);
         xVec3Sub(&var_2C, &var_2C, &asset->pos);
-        xVec3Lerp(&var_38, &var_2C, &var_20, _670);
+        xVec3Lerp(&var_38, &var_2C, &var_20, 0.5f);
 
         xMat3x3RMulVec(&var_38, &ent->triggerMatrix, &var_38);
 
         xVec3Add(&ent->triggerMatrix.pos, &var_38, &asset->pos);
 
-        ent->triggerBox.lower.x = _671_0 * (var_20.x - var_2C.x);
-        ent->triggerBox.lower.y = _671_0 * (var_20.y - var_2C.y);
-        ent->triggerBox.lower.z = _671_0 * (var_20.z - var_2C.z);
+        ent->triggerBox.lower.x = -0.5f * (var_20.x - var_2C.x);
+        ent->triggerBox.lower.y = -0.5f * (var_20.y - var_2C.y);
+        ent->triggerBox.lower.z = -0.5f * (var_20.z - var_2C.z);
         ent->triggerBox.upper.x = -ent->triggerBox.lower.x;
         ent->triggerBox.upper.y = -ent->triggerBox.lower.y;
         ent->triggerBox.upper.z = -ent->triggerBox.lower.z;
@@ -101,7 +97,7 @@ void zEntTriggerUpdate(zEntTrigger* trig, xScene*, F32)
                             xMat4x3Tolocal(&xformVec, &trig->triggerMatrix, chkPos);
                             iBoxIsectVec(&trig->triggerBox, &xformVec, &isect);
 
-                            collide = (isect.penned <= _746_1);
+                            collide = (isect.penned <= 0.0f);
 
                             break;
                         }
@@ -115,7 +111,7 @@ void zEntTriggerUpdate(zEntTrigger* trig, xScene*, F32)
 
                             iSphereIsectVec(&sphere, chkPos, &isect);
 
-                            collide = (isect.penned <= _746_1);
+                            collide = (isect.penned <= 0.0f);
 
                             break;
                         }
@@ -130,7 +126,7 @@ void zEntTriggerUpdate(zEntTrigger* trig, xScene*, F32)
 
                             iCylinderIsectVec(&cylinder, chkPos, &isect);
 
-                            collide = (isect.penned <= _746_1);
+                            collide = (isect.penned <= 0.0f);
 
                             break;
                         }
@@ -144,7 +140,7 @@ void zEntTriggerUpdate(zEntTrigger* trig, xScene*, F32)
 
                             iSphereIsectVec(&sphere, chkPos, &isect);
 
-                            collide = (isect.penned <= _746_1);
+                            collide = (isect.penned <= 0.0f);
 
                             break;
                         }
@@ -240,7 +236,7 @@ bool zEntTriggerHitsSphere(const zEntTrigger& trig, const xSphere& o, const xVec
 
     tasset = zEntTriggerAsset(trig);
 
-    if (tasset->flags & 0x1 && dir.dot(tasset->direction) <= _746_1)
+    if (tasset->flags & 0x1 && dir.dot(tasset->direction) <= 0.0f)
     {
         return false;
     }
