@@ -176,5 +176,6 @@ void xEntMotionDebugInit(U16 num_xems);
 void xEntMotionDebugExit();
 void xEntMotionStop(xEntMotion* motion);
 void xEntMotionRun(xEntMotion* motion);
+U32 xEntMotionIsStopped(const xEntMotion* motion);
 
 #endif
