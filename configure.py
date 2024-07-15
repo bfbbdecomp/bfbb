@@ -345,7 +345,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zDispatcher.cpp"),
             Object(NonMatching, "SB/Game/zEGenerator.cpp"),
             Object(NonMatching, "SB/Game/zEnt.cpp"),
-            Object(NonMatching, "SB/Game/zEntButton.cpp"),
+            Object(Equivalent, "SB/Game/zEntButton.cpp"),
             Object(NonMatching, "SB/Game/zEntCruiseBubble.cpp"),
             Object(NonMatching, "SB/Game/zEntDestructObj.cpp"),
             Object(NonMatching, "SB/Game/zEntHangable.cpp"),
