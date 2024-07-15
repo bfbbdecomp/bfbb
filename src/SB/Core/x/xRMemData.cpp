@@ -4,9 +4,7 @@
 #include <types.h>
 #include <string.h>
 
-#if 0
-// So close to matching. There seems to be extra ors and I do not know why they show up.
-void* RyzMemGrow::operator new(size_t size, U32 amt, RyzMemGrow* growCtxt)
+void* RyzMemData::operator new(size_t size, S32 amt, RyzMemGrow* growCtxt)
 {
     S32 dogrow = true;
     if (growCtxt == NULL)
@@ -17,20 +15,19 @@ void* RyzMemGrow::operator new(size_t size, U32 amt, RyzMemGrow* growCtxt)
     {
         dogrow = false;
     }
+
+    void* mem;
     if (dogrow)
     {
-        xMemGrowAllocSize(size);
+        mem = xMemGrowAllocSize(size);
     }
     else
     {
-        xMemAllocSize(size);
+        mem = xMemAllocSize(size);
     }
-    void* mem;
     memset(mem, 0, 4);
     return mem;
 }
-
-#endif
 
 void RyzMemData::operator delete(void* p)
 {
@@ -72,9 +69,4 @@ void RyzMemGrow::Done()
     this->ptr = NULL;
     this->user = NULL;
     this->flg_grow = 0;
-}
-
-S32 RyzMemGrow::IsEnabled()
-{
-    return this->flg_grow & 1;
 }

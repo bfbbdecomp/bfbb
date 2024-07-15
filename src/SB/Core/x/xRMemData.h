@@ -18,7 +18,10 @@ struct RyzMemGrow
     RyzMemGrow* Init(xBase* growuser);
     RyzMemGrow* Resume(xBase*);
     void Done();
-    S32 IsEnabled();
+    S32 IsEnabled()
+    {
+        return this->flg_grow & 1;
+    }
 };
 
 struct RyzMemData
