@@ -25,7 +25,7 @@ struct xBase
     U8 linkCount;
     U16 baseFlags;
     xLinkAsset* link;
-    xBaseEventCB eventFunc;
+    xBaseEventCB eventFunc; // 0xC
 };
 
 void xBaseInit(xBase* xb, xBaseAsset* asset);

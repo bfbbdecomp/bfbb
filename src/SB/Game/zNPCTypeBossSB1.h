@@ -78,6 +78,7 @@ struct zNPCGoalBossSB1Smash : zNPCGoalCommon
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossSB1Deflate : zNPCGoalCommon
@@ -96,6 +97,7 @@ struct zNPCGoalBossSB1Deflate : zNPCGoalCommon
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
 #endif

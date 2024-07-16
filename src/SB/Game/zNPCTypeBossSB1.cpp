@@ -43,8 +43,6 @@
 #define f1209 0.76666665f
 #define f1223 0.05f
 
-static U32 sSB1_deflated[2];
-
 static xVec3 BossArmTags[8] = {
     //
     { 11.507f, 4.523f, 2.53f },
@@ -109,8 +107,9 @@ static xVec3 BossFeetTags[4] = {
     },
 };
 
-zEnt* sSB1_armTgtHit;
-zNPCB_SB1* sSB1_Ptr; // size: 0x4, address: 0x510188
+static zNPCB_SB1* sSB1_Ptr; // size: 0x4, address: 0x510188
+static zEnt* sSB1_armTgtHit;
+static U32 sSB1_deflated[2];
 
 void test(S32 a)
 {
@@ -196,6 +195,79 @@ S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_
 
 void SB1_ResetGlobalStuff()
 {
+    // signed int i;
+
+    sSB1_Ptr->m_subModels[2]->Flags |= 1;
+    sSB1_Ptr->m_subModels[3]->Flags |= 1;
+    sSB1_Ptr->m_subModels[4]->Flags &= ~1;
+    sSB1_Ptr->m_subModels[5]->Flags &= ~1;
+
+    sSB1_Ptr->m_tauntTimer = f823;
+
+    sSB1_deflated[0] = 0; // sSB1_deflated[0];
+    sSB1_deflated[1] = 0; // sSB1_deflated[0];
+    sSB1_armTgtHit = NULL;
+
+    memset(sSB1_Ptr->m_stompRing, 0, 0x40);
+
+    S32 i = 0;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (sSB1_Ptr->m_armColl[i])
+        {
+            sSB1_Ptr->m_armColl[i]->model->Flags = 0x2800;
+            sSB1_Ptr->m_armColl[i]->model->Next = NULL;
+            sSB1_Ptr->m_armColl[i]->bound.box.center = g_O3;
+
+            sSB1_Ptr->m_armColl[i]->bound.box.center.y = f890;
+            sSB1_Ptr->m_armColl[i]->update = SB1Dummy_UpdateFunc;
+            sSB1_Ptr->m_armColl[i]->bupdate = SB1Dummy_BoundFunc;
+            sSB1_Ptr->m_armColl[i]->penby = 0x10;
+            sSB1_Ptr->m_armColl[i]->chkby = 0x10;
+        }
+    }
+
+    sSB1_Ptr->m_armColl[0]->model->Data = sSB1_Ptr->m_subModels[2]->Data;
+    sSB1_Ptr->m_armColl[0]->model->Mat = sSB1_Ptr->m_subModels[2]->Mat;
+
+    sSB1_Ptr->m_armColl[1]->model->Data = sSB1_Ptr->m_subModels[3]->Data;
+    sSB1_Ptr->m_armColl[1]->model->Mat = sSB1_Ptr->m_subModels[3]->Mat;
+
+    if (sSB1_Ptr->m_bodyColl)
+    {
+        sSB1_Ptr->model->Flags = 0x2000;
+
+        sSB1_Ptr->m_bodyColl->bound.type = 4;
+
+        sSB1_Ptr->m_bodyColl->bound.box.box.lower.x = f891;
+        sSB1_Ptr->m_bodyColl->bound.box.box.lower.y = f823;
+        sSB1_Ptr->m_bodyColl->bound.box.box.lower.z = f892;
+
+        sSB1_Ptr->m_bodyColl->bound.box.box.upper.x = f893;
+        sSB1_Ptr->m_bodyColl->bound.box.box.upper.y = f894;
+        sSB1_Ptr->m_bodyColl->bound.box.box.upper.z = f895;
+
+        sSB1_Ptr->m_bodyColl->bound.mat = (xMat4x3*)sSB1_Ptr->model->Mat;
+
+        sSB1_Ptr->m_bodyColl->update = SB1Dummy_UpdateFunc;
+        sSB1_Ptr->m_bodyColl->bupdate = SB1Dummy_BoundFunc;
+
+        sSB1_Ptr->m_bodyColl->penby = 0x10;
+        sSB1_Ptr->m_bodyColl->chkby = 0x10;
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        if (sSB1_Ptr->m_armTgt[i])
+        {
+            sSB1_Ptr->m_armTgt[i]->render = SB1Dummy_RenderFunc;
+            sSB1_Ptr->m_armTgt[i]->bupdate = SB1Dummy_BoundFunc;
+            sSB1_Ptr->m_armTgt[i]->eventFunc = SB1Dummy_TgtEventFunc;
+            //sSB1_Ptr->m_armTgt[i]->bound.box.center.x = 1;
+            // sSB1_Ptr->m_armTgt[i]->bound.box.center.y = f896;
+        }
+    }
 }
 
 // Close, but no cigar
@@ -636,7 +708,7 @@ S32 zNPCGoalBossSB1Idle::Enter(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB1Idle::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+S32 zNPCGoalBossSB1Idle::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
 
@@ -659,7 +731,7 @@ S32 zNPCGoalBossSB1Taunt::Enter(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB1Taunt::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+S32 zNPCGoalBossSB1Taunt::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
 
@@ -702,7 +774,56 @@ S32 zNPCGoalBossSB1Smash::Exit(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Exit(dt, updCtxt);
 }
 
-// WIP, only 32% matching
+S32 zNPCGoalBossSB1Smash::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
+{
+    xVec3 curTag;
+
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    this->timeInGoal += dt;
+
+    if (sb1->model->Anim->Single->State->ID == g_hash_bossanim[42] ||
+        (sb1->model->Anim->Single->Time > f1209))
+    {
+        if (sSB1_deflated[0] == NULL)
+        {
+            xVec3 sumTag = { 0, 0, 0 };
+
+            for (S32 i = 0; i < 4; i++)
+            {
+                iModelTagEval(sb1->m_subModels[2]->Data, &sb1->m_leftArmTags[i],
+                              sb1->m_subModels[2]->Mat, &curTag);
+                xVec3Add(&sumTag, &sumTag, &curTag);
+            }
+
+            xVec3SMulBy(&sumTag, f1160);
+            xVec3* pos = (xVec3*)&sSB1_Ptr->m_armTgt[0]->model->Mat->pos;
+            *pos = sumTag;
+            sSB1_Ptr->m_armTgt[0]->bound.sph.center = sumTag;
+            SB1Dummy_BoundFunc(sb1->m_armTgt[0], NULL);
+        }
+        if (sSB1_deflated[1] == NULL)
+        {
+            xVec3 sumTag = { 0, 0, 0 };
+
+            for (S32 i = 0; i < 4; i++)
+            {
+                iModelTagEval(sb1->m_subModels[3]->Data, &sb1->m_rightArmTags[i],
+                              sb1->m_subModels[3]->Mat, &curTag);
+                xVec3Add(&sumTag, &sumTag, &curTag);
+            }
+
+            xVec3SMulBy(&sumTag, f1160);
+            xVec3* pos = (xVec3*)&sSB1_Ptr->m_armTgt[1]->model->Mat->pos;
+            *pos = sumTag;
+            sSB1_Ptr->m_armTgt[1]->bound.sph.center = sumTag;
+            SB1Dummy_BoundFunc(sb1->m_armTgt[1], NULL);
+        }
+    }
+
+    return this->xGoal::Process(trantype, dt, ctxt, scene);
+}
+
 S32 zNPCGoalBossSB1Deflate::Enter(F32 dt, void* updCtxt)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
@@ -712,22 +833,23 @@ S32 zNPCGoalBossSB1Deflate::Enter(F32 dt, void* updCtxt)
     RpGeometry* dstGeom; // r17
     xAnimState* deflateState; // r16
 
-    // WIP
-    // I think might be a loop the compiler unrolled, not sure though
-    for (S32 i = 0; i < 2; i++)
+    if (sSB1_armTgtHit == sb1->m_armTgt[0])
     {
-        if (sSB1_armTgtHit == sb1->m_armTgt[i])
-        {
-            srcGeom = sb1->m_subModels[i]->Data->geometry;
-            dstGeom = sb1->m_subModels[i + 1]->Data->geometry;
-            deflateState = xAnimTableGetStateID(sb1->model->Anim->Table, g_hash_bossanim[i]);
-        }
+        srcGeom = sb1->m_subModels[2]->Data->geometry;
+        dstGeom = sb1->m_subModels[4]->Data->geometry;
+        deflateState = xAnimTableGetStateID(sb1->model->Anim->Table, g_hash_bossanim[46]);
+    }
+    else
+    {
+        srcGeom = sb1->m_subModels[3]->Data->geometry;
+        dstGeom = sb1->m_subModels[5]->Data->geometry;
+        deflateState = xAnimTableGetStateID(sb1->model->Anim->Table, g_hash_bossanim[47]);
     }
 
     this->morphVertCount = srcGeom->numVertices;
     this->modelVec = srcGeom->morphTarget->verts;
     this->modelGeom = srcGeom;
-    this->targetVec = srcGeom->morphTarget->verts;
+    this->targetVec = dstGeom->morphTarget->verts;
 
     memcpy(this->morphVertBuf, this->modelVec, this->morphVertCount * sizeof(RwV3d));
 
@@ -758,7 +880,7 @@ void AddStompRing(zNPCB_SB1* sb1, xVec3* pos)
     }
 }
 
-S32 zNPCGoalBossSB1Stomp::Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene)
+S32 zNPCGoalBossSB1Stomp::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
 
@@ -823,4 +945,35 @@ S32 zNPCGoalBossSB1Deflate::Exit(F32 dt, void* updCtxt)
     }
 
     return this->zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB1Deflate::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    this->timeInGoal += dt;
+
+    RpGeometryLock(this->modelGeom, 2);
+    F32 invlerp;
+    F32 lerp;
+
+    lerp = this->timeInGoal * this->morphInvTime;
+
+    if (lerp > f822)
+    {
+        lerp = f822;
+    }
+
+    invlerp = f822 - lerp;
+
+    for (S32 i = 0; i < this->morphVertCount; i++)
+    {
+        this->modelVec[i].x = invlerp * this->morphVertBuf[i].x + lerp * this->targetVec[i].x;
+        this->modelVec[i].y = invlerp * this->morphVertBuf[i].y + lerp * this->targetVec[i].y;
+        this->modelVec[i].z = invlerp * this->morphVertBuf[i].z + lerp * this->targetVec[i].z;
+    }
+
+    RpGeometryUnlock(this->modelGeom);
+
+    return this->xGoal::Process(trantype, dt, ctxt, scene);
 }
