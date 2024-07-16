@@ -110,10 +110,6 @@ static zNPCB_SB1* sSB1_Ptr; // size: 0x4, address: 0x510188
 static zEnt* sSB1_armTgtHit;
 static U32 sSB1_deflated[2];
 
-void test(S32 a)
-{
-}
-
 xAnimTable* ZNPC_AnimTable_BossSB1()
 {
     int ourAnims[11] = {
@@ -193,6 +189,7 @@ static S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32*
     return 1;
 }
 
+// 86% match, just some sda2 scheduling issues
 static void SB1_ResetGlobalStuff()
 {
     sSB1_Ptr->m_subModels[2]->Flags |= 1;
@@ -202,15 +199,15 @@ static void SB1_ResetGlobalStuff()
 
     sSB1_Ptr->m_tauntTimer = f823;
 
-    sSB1_deflated[0] = 0; // sSB1_deflated[0];
-    sSB1_deflated[1] = 0; // sSB1_deflated[0];
+    sSB1_deflated[0] = 0;
+    sSB1_deflated[1] = 0;
     sSB1_armTgtHit = NULL;
 
-    memset(sSB1_Ptr->m_stompRing, 0, 0x40);
+    memset(sSB1_Ptr->m_stompRing, 0, sizeof(sSB1_Ptr->m_stompRing));
 
-    //S32 i = 0;
+    S32 i; // needs to be declared here and re-used to match
 
-    for (S32 i = 0; i < 2; i++)
+    for (i = 0; i < 2; i++)
     {
         if (sSB1_Ptr->m_armColl[i])
         {
@@ -222,8 +219,8 @@ static void SB1_ResetGlobalStuff()
             sSB1_Ptr->m_armColl[i]->bound.box.box.upper.x = f890;
             sSB1_Ptr->m_armColl[i]->update = SB1Dummy_UpdateFunc;
             sSB1_Ptr->m_armColl[i]->bupdate = SB1Dummy_BoundFunc;
-            sSB1_Ptr->m_armColl[i]->penby = 0x10;
-            sSB1_Ptr->m_armColl[i]->chkby = 0x10;
+            sSB1_Ptr->m_armColl[i]->penby = XENT_COLLTYPE_PLYR;
+            sSB1_Ptr->m_armColl[i]->chkby = XENT_COLLTYPE_PLYR;
         }
     }
 
@@ -235,7 +232,7 @@ static void SB1_ResetGlobalStuff()
 
     if (sSB1_Ptr->m_bodyColl)
     {
-        sSB1_Ptr->model->Flags = 0x2000;
+        sSB1_Ptr->m_bodyColl->model->Flags = 0x2000;
 
         sSB1_Ptr->m_bodyColl->bound.type = 4;
 
@@ -252,11 +249,11 @@ static void SB1_ResetGlobalStuff()
         sSB1_Ptr->m_bodyColl->update = SB1Dummy_UpdateFunc;
         sSB1_Ptr->m_bodyColl->bupdate = SB1Dummy_BoundFunc;
 
-        sSB1_Ptr->m_bodyColl->penby = 0x10;
-        sSB1_Ptr->m_bodyColl->chkby = 0x10;
+        sSB1_Ptr->m_bodyColl->penby = XENT_COLLTYPE_PLYR;
+        sSB1_Ptr->m_bodyColl->chkby = XENT_COLLTYPE_PLYR;
     }
 
-    for (S32 i = 0; i < 2; i++)
+    for (i = 0; i < 2; i++)
     {
         sSB1_Ptr->m_armTgt[i]->render = SB1Dummy_RenderFunc;
         sSB1_Ptr->m_armTgt[i]->bupdate = SB1Dummy_BoundFunc;
@@ -737,6 +734,63 @@ S32 zNPCGoalBossSB1Stomp::Enter(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+static void AddStompRing(zNPCB_SB1* sb1, xVec3* pos)
+{
+    for (S32 i = 0; i < 16; i++)
+    {
+        if (sb1->m_stompRing[i] == NULL)
+        {
+            sb1->m_stompRing[i] = zFXMuscleArmWave(pos);
+
+            if (!sb1->m_stompRing[i])
+            {
+                break;
+            }
+            else
+            {
+                // set the parent to itself...???
+                sb1->m_stompRing[i]->parent = &sb1->m_stompRing[i];
+                break;
+            }
+        }
+    }
+}
+
+S32 zNPCGoalBossSB1Stomp::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
+{
+    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
+
+    xVec3 feetTag[4];
+    xVec3 wavePt[2];
+
+    this->timeInGoal += dt;
+
+    SB1_FaceTarget(sb1, (xVec3*)&globals.player.ent.model->Mat->pos, dt);
+
+    if (this->timeInGoal > f1160)
+    {
+        if (sb1->model->Anim->Single->LastTime > sb1->model->Anim->Single->Time)
+        {
+            for (U32 i = 0; i < 4; i++)
+            {
+                iModelTagEval(sb1->m_subModels[1]->Data, &sb1->m_feetTags[i],
+                              sb1->m_subModels[1]->Mat, &feetTag[i]);
+            }
+
+            xVec3Lerp(&wavePt[0], &feetTag[0], &feetTag[1], f1161);
+            xVec3Lerp(&wavePt[1], &feetTag[2], &feetTag[3], f1161);
+
+            wavePt[0].y = f1160;
+            wavePt[1].y = f1160;
+
+            AddStompRing(sb1, &wavePt[0]);
+            AddStompRing(sb1, &wavePt[1]);
+        }
+    }
+
+    return xGoal::Process(trantype, dt, ctxt, scene);
+}
+
 // scheduling memes preventing match
 S32 zNPCGoalBossSB1Smash::Enter(F32 dt, void* updCtxt)
 {
@@ -844,63 +898,6 @@ S32 zNPCGoalBossSB1Deflate::Enter(F32 dt, void* updCtxt)
     this->morphInvTime = f822 / (deflateState->Data->Duration - f1223);
 
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
-}
-
-static void AddStompRing(zNPCB_SB1* sb1, xVec3* pos)
-{
-    for (S32 i = 0; i < 16; i++)
-    {
-        if (sb1->m_stompRing[i] == NULL)
-        {
-            sb1->m_stompRing[i] = zFXMuscleArmWave(pos);
-
-            if (!sb1->m_stompRing[i])
-            {
-                break;
-            }
-            else
-            {
-                // set the parent to itself...???
-                sb1->m_stompRing[i]->parent = &sb1->m_stompRing[i];
-                break;
-            }
-        }
-    }
-}
-
-S32 zNPCGoalBossSB1Stomp::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
-{
-    zNPCB_SB1* sb1 = (zNPCB_SB1*)this->GetOwner();
-
-    xVec3 feetTag[4];
-    xVec3 wavePt[2];
-
-    this->timeInGoal += dt;
-
-    SB1_FaceTarget(sb1, (xVec3*)&globals.player.ent.model->Mat->pos, dt);
-
-    if (this->timeInGoal > f1160)
-    {
-        if (sb1->model->Anim->Single->LastTime > sb1->model->Anim->Single->Time)
-        {
-            for (U32 i = 0; i < 4; i++)
-            {
-                iModelTagEval(sb1->m_subModels[1]->Data, &sb1->m_feetTags[i],
-                              sb1->m_subModels[1]->Mat, &feetTag[i]);
-            }
-
-            xVec3Lerp(&wavePt[0], &feetTag[0], &feetTag[1], f1161);
-            xVec3Lerp(&wavePt[1], &feetTag[2], &feetTag[3], f1161);
-
-            wavePt[0].y = f1160;
-            wavePt[1].y = f1160;
-
-            AddStompRing(sb1, &wavePt[0]);
-            AddStompRing(sb1, &wavePt[1]);
-        }
-    }
-
-    return xGoal::Process(trantype, dt, ctxt, scene);
 }
 
 S32 zNPCGoalBossSB1Deflate::Exit(F32 dt, void* updCtxt)
