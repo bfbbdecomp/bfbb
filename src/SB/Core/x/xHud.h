@@ -194,6 +194,7 @@ namespace xhud
     void destroy();
     void update(F32 dt);
     void render();
+    void render_model(xModelInstance& model, const render_context& context);
 
     bool linear_motive_update(widget& w, motive& m, F32);
     bool accelerate_motive_update(widget& w, motive& m, F32);
