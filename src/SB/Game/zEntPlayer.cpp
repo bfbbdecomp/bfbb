@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "iAnim.h"
 #include "iMath.h"
 #include "iSnd.h"
 
@@ -2474,6 +2475,303 @@ static U32 BoulderRollCB(xAnimTransition*, xAnimSingle*, void*)
     xEntBoulder_RealBUpdate(boulderVehicle, &boulderVehicle->frame->mat.pos);
     boulderVehicle->lightKit = globals.player.ent.lightKit;
     boulderVehicle->model->LightKit = globals.player.ent.lightKit;
+
+    return 0;
+}
+
+static U32 BoulderRollDoneCheck()
+{
+    if (globals.sceneCur->sceneID == 'PG12')
+    {
+        return 0;
+    }
+
+    return !globals.player.ControlOff &&
+               (globals.pad0->pressed &
+                (XPAD_BUTTON_TRIANGLE | XPAD_BUTTON_SQUARE | XPAD_BUTTON_O | XPAD_BUTTON_X)) ||
+           boulderRollShouldEnd;
+}
+
+static void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt);
+static void zEntPlayer_Move(xEnt*, xScene*, F32, xEntFrame* frame);
+static void zEntPlayer_Render(xEnt*);
+
+// Equivalent: sda relocation and some float thing before info.rate.set
+static U32 BoulderRollDoneCB()
+{
+    xEntShow(&globals.player.ent);
+    zEntPlayer_SNDPlay(ePlayerSnd_BoulderEnd, 0.0f);
+
+    xParEmitterCustomSettings info;
+    if (gPTankDisable)
+    {
+        info.custom_flags = 0x35e;
+        xVec3Copy(&info.pos, (xVec3*)&boulderVehicle->model->Mat->pos);
+        xVec3Copy(&info.vel, (xVec3*)&boulderVehicle->vel);
+
+        if (xVec3Normalize(&info.vel, &info.vel) < 0.00001f)
+        {
+            info.vel.x = 0.0f;
+            info.vel.y = 3.0f;
+            info.vel.z = 0.0f;
+        }
+        else
+        {
+            xVec3SMulBy(&info.vel, 3.0f);
+        }
+
+        info.vel_angle_variation = DEG2RAD(270);
+        info.rate.set(3000.0f, 3000.0f, 1.0f, 0.0f);
+        info.life.set(0.75f, 0.75f, 1.0f, 0.0f);
+        info.size_birth.set(0.25f, 0.25f, 1.0f, 0.0f);
+        info.size_death.set(0.5f, 0.5f, 1.0f, 0.0f);
+
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+        xVec3AddScaled(&info.pos, &boulderVehicle->vel, 10.0f * update_dt);
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+    }
+    else
+    {
+        zFX_SpawnBubbleHit((xVec3*)&boulderVehicle->model->Mat->pos, 50);
+    }
+
+    globals.player.ent.update = zEntPlayer_Update;
+    globals.player.ent.move = zEntPlayer_Move;
+    globals.player.ent.render = zEntPlayer_Render;
+
+    xEntBoulder_Kill(boulderVehicle);
+    boulderRollShouldStart = 0;
+
+    zEntEvent(&globals.player.ent, eEventSpongeballOff);
+    idle_tmr = 0.0f;
+
+    return 0;
+}
+
+static U32 SlideTrackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.SlideTrackSliding & 1;
+}
+
+static U32 SlideTrackCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    sLasso->flags = 0;
+    globals.player.SlideTrackLean = 0.0f;
+
+    if (globals.player.Health != 0 && sPlayerSndID[gCurrentPlayer][ePlayerSnd_SlideLoop] == 0)
+    {
+        zEntPlayer_SNDPlay(ePlayerSnd_SlideLoop, 0.0f);
+    }
+
+    if (gCurrentPlayer == eCurrentPlayerSandy)
+    {
+        globals.player.Jump_CanDouble = 1;
+    }
+
+    zEntPlayerKillCarry();
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+
+    return 0;
+}
+
+static U32 NoslideTrackCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+    return 0;
+}
+
+static U32 NoslideTrackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.SlideTrackSliding & 1) == 0 && globals.player.JumpState == 0;
+}
+
+static U32 TrackFallCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.SlideTrackSliding & 1) == 0 && globals.player.JumpState != 0;
+}
+
+static U32 TrackFallCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    globals.player.JumpState = 2;
+    globals.player.CanJump = 1;
+    return 0;
+}
+
+static U32 TrackPrefallJumpCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.CanJump && !globals.player.ControlOff &&
+           globals.pad0->pressed & XPAD_BUTTON_X && tslide_inair_tmr != 0.0f &&
+           tslide_inair_tmr < 0.25f;
+}
+
+static U32 LedgeGrabCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.s->ledge.tmr == -1.0f;
+}
+
+static U32 LedgeGrabCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    globals.player.s->ledge.tmr = 0.00001f;
+    // FIXME: figure out the type of object (local variable missing from dwarf)
+    globals.player.s->ledge.startrot = *(*((F32**)object + 0x48 / 4) + 0xb8 / 4);
+
+    F32 endrot = globals.player.s->ledge.endrot;
+    F32 startrot = globals.player.s->ledge.startrot;
+    if (startrot > endrot + PI)
+    {
+        globals.player.s->ledge.startrot -= 2 * PI;
+    }
+    else if (startrot < endrot - PI)
+    {
+        globals.player.s->ledge.startrot += 2 * PI;
+    }
+
+    sLasso->flags = 0;
+    xCameraDoCollisions(0, 2);
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 LedgeFinishCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    idle_tmr = 0.0f;
+    globals.player.JumpState = 1;
+    globals.player.JumpTimer = 0.0f;
+    xCameraDoCollisions(1, 2);
+    return 0;
+}
+
+static U32 PatrickGrabCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sGrabFound != 0;
+}
+
+static U32 PatrickGrabFailed(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sGrabFailed != 0;
+}
+
+static U32 PatrickGrabKill(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.carry.grabbed == NULL;
+}
+
+static U32 PatrickGrabThrow(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode)
+    {
+        return 0;
+    }
+
+    return !globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_O;
+}
+
+static U32 PatrickAttackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode || zEntTeleportBox_playerIn())
+    {
+        return 0;
+    }
+
+    return !globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_TRIANGLE;
+}
+
+static U32 PatrickStunCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return !globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_O;
+}
+
+// Equivalent: scheduling
+static U32 PatrickMeleeCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    globals.player.DoMeleeCheck = 1;
+    zEntPlayer_SNDPlay(ePlayerSnd_BellyMelee, 0.0f);
+    return 0;
+}
+
+static U32 PatrickGrabCB(xAnimTransition* tran, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Lift1, 0.0f);
+    if ((xrand() & 3) == 3)
+    {
+        zEntPlayer_SNDPlayStream(ePlayerStreamSnd_Lift1);
+    }
+
+    globals.player.carry.grabbed = sGrabFound;
+    globals.player.carry.grabTarget = 1;
+    globals.player.carry.grabYclear = 0;
+
+    if (sGrabFound->baseType == '/')
+    {
+        globals.player.carry.targetRot =
+            xatan2(sGrabFound->bound.sph.center.x - globals.player.ent.frame->mat.pos.x,
+                   sGrabFound->bound.sph.center.z - globals.player.ent.frame->mat.pos.z);
+    }
+    else
+    {
+        globals.player.carry.targetRot =
+            xatan2(sGrabFound->model->Mat->pos.x - globals.player.ent.frame->mat.pos.x,
+                   sGrabFound->model->Mat->pos.z - globals.player.ent.frame->mat.pos.z);
+    }
+
+    globals.player.carry.grabLerpLast = 0.0f;
+
+    xAnimState* stat =
+        xAnimTableGetState(globals.player.ent.model->Anim->Table, "Carry_PickupItem");
+    if (stat)
+    {
+        xVec3 tmptran;
+        xQuat tmpquat;
+        iAnimEval(stat->Data->RawData[0], 1.0 / 30.0f, 1, &tmptran, &tmpquat);
+
+        xMat4x3 objMat;
+        xQuatToMat(&tmpquat, &objMat);
+        xMat4x3 targetMat;
+        objMat.pos = tmptran;
+        xMat3x3Rot(&targetMat, &g_Y3, globals.player.carry.targetRot);
+        targetMat.pos = globals.player.ent.frame->mat.pos;
+
+        xMat4x3Mul(&objMat, &objMat, &targetMat);
+
+        if (globals.player.carry.grabbed->baseType == '/')
+        {
+            globals.player.carry.grabOffset.x = objMat.pos.x - sGrabFound->bound.sph.center.x;
+            globals.player.carry.grabOffset.y =
+                sGrabFound->bound.sph.r + (objMat.pos.y - sGrabFound->bound.sph.center.y);
+            globals.player.carry.grabOffset.z = objMat.pos.z - sGrabFound->bound.sph.center.z;
+        }
+        else
+        {
+            globals.player.carry.grabOffset.x = objMat.pos.x - sGrabFound->model->Mat->pos.x;
+            globals.player.carry.grabOffset.y = objMat.pos.y - sGrabFound->model->Mat->pos.y;
+            globals.player.carry.grabOffset.z = objMat.pos.z - sGrabFound->model->Mat->pos.z;
+        }
+    }
+    else
+    {
+        globals.player.carry.grabOffset.x = 0.0f;
+        globals.player.carry.grabOffset.y = 0.0f;
+        globals.player.carry.grabOffset.z = 0.0f;
+    }
+
+    xMat3x3Rot(&globals.player.carry.spin, &g_Y3, -globals.player.carry.targetRot);
+    xMat3x3Mul(&globals.player.carry.spin, (xMat3x3*)sGrabFound->model->Mat,
+               &globals.player.carry.spin);
+    xVec3Init(&globals.player.carry.spin.pos, 0.0f, 0.0f, 0.0f);
+
+    // FIXME: hella fakematch. can't get this one right for some reason.
+    sGrabFound->chkby = __rlwinm(sGrabFound->chkby, 0, 28, 26);
+
+    zThrown_AddFruit(sGrabFound);
+
+    if (sGrabFound->baseType == '+')
+    {
+        // FIXME: What is this callback? sGrabFound must be casted to something here
+        // but nothing makes sense to me right now
+        typedef (*MysteryCallback)(xEnt*, u32);
+        (*(MysteryCallback*)(*(U8*)((U8*)sGrabFound + 0x1b8) + 0x98))(sGrabFound, 1);
+    }
 
     return 0;
 }

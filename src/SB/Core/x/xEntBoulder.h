@@ -79,6 +79,7 @@ void xEntBoulder_BubbleBowl(F32 multiplier);
 void xEntBoulder_Setup(xEntBoulder* ent);
 void xEntBoulder_Reset(xEntBoulder* ent, xScene* scene);
 void xEntBoulder_RealBUpdate(xEnt* ent, xVec3* pos);
+void xEntBoulder_Kill(xEntBoulder* ent);
 void xBoulderGenerator_Init(xBase& data, xDynAsset& asset, size_t);
 void xBoulderGenerator_Init(xBoulderGenerator* bg, xBoulderGeneratorAsset* asset);
 void xBoulderGenerator_Init(xBase& data, xDynAsset& asset);
