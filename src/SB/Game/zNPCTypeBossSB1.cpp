@@ -43,8 +43,7 @@
 #define f1209 0.76666665f
 #define f1223 0.05f
 
-static xVec3 BossArmTags[8] = {
-    //
+static xVec3 BossArmTags[8] = { //
     { 11.507f, 4.523f, 2.53f },
     {
         11.635f,
@@ -161,7 +160,7 @@ xAnimTable* ZNPC_AnimTable_BossSB1()
     return table;
 }
 
-void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, F32 param_3)
+static void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, F32 param_3)
 {
     if (ent->frame != NULL)
     {
@@ -173,18 +172,19 @@ void SB1Dummy_UpdateFunc(xEnt* ent, xScene* param_2, F32 param_3)
     }
 }
 
-void SB1Dummy_BoundFunc(xEnt* ent, xVec3* param_2)
+static void SB1Dummy_BoundFunc(xEnt* ent, xVec3* param_2)
 {
     xBoundUpdate(&ent->bound);
     zGridUpdateEnt(ent);
 }
 
-void SB1Dummy_RenderFunc(xEnt* ent)
+static void SB1Dummy_RenderFunc(xEnt* ent)
 {
     xDrawSphere(&(ent->bound).sph, 0xc0006);
 }
 
-S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_f, xBase* param_x)
+static S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_f,
+                                 xBase* param_x)
 {
     if (toEvent == 360)
     {
@@ -193,10 +193,8 @@ S32 SB1Dummy_TgtEventFunc(xBase* to, xBase* from, U32 toEvent, const F32* param_
     return 1;
 }
 
-void SB1_ResetGlobalStuff()
+static void SB1_ResetGlobalStuff()
 {
-    // signed int i;
-
     sSB1_Ptr->m_subModels[2]->Flags |= 1;
     sSB1_Ptr->m_subModels[3]->Flags |= 1;
     sSB1_Ptr->m_subModels[4]->Flags &= ~1;
@@ -210,17 +208,18 @@ void SB1_ResetGlobalStuff()
 
     memset(sSB1_Ptr->m_stompRing, 0, 0x40);
 
-    S32 i = 0;
+    //S32 i = 0;
 
-    for (i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
         if (sSB1_Ptr->m_armColl[i])
         {
             sSB1_Ptr->m_armColl[i]->model->Flags = 0x2800;
             sSB1_Ptr->m_armColl[i]->model->Next = NULL;
+            sSB1_Ptr->m_armColl[i]->bound.type = 1;
             sSB1_Ptr->m_armColl[i]->bound.box.center = g_O3;
 
-            sSB1_Ptr->m_armColl[i]->bound.box.center.y = f890;
+            sSB1_Ptr->m_armColl[i]->bound.box.box.upper.x = f890;
             sSB1_Ptr->m_armColl[i]->update = SB1Dummy_UpdateFunc;
             sSB1_Ptr->m_armColl[i]->bupdate = SB1Dummy_BoundFunc;
             sSB1_Ptr->m_armColl[i]->penby = 0x10;
@@ -257,32 +256,23 @@ void SB1_ResetGlobalStuff()
         sSB1_Ptr->m_bodyColl->chkby = 0x10;
     }
 
-    for (i = 0; i < 2; i++)
+    for (S32 i = 0; i < 2; i++)
     {
-        if (sSB1_Ptr->m_armTgt[i])
-        {
-            sSB1_Ptr->m_armTgt[i]->render = SB1Dummy_RenderFunc;
-            sSB1_Ptr->m_armTgt[i]->bupdate = SB1Dummy_BoundFunc;
-            sSB1_Ptr->m_armTgt[i]->eventFunc = SB1Dummy_TgtEventFunc;
-            //sSB1_Ptr->m_armTgt[i]->bound.box.center.x = 1;
-            // sSB1_Ptr->m_armTgt[i]->bound.box.center.y = f896;
-        }
+        sSB1_Ptr->m_armTgt[i]->render = SB1Dummy_RenderFunc;
+        sSB1_Ptr->m_armTgt[i]->bupdate = SB1Dummy_BoundFunc;
+        sSB1_Ptr->m_armTgt[i]->eventFunc = SB1Dummy_TgtEventFunc;
+        sSB1_Ptr->m_armTgt[i]->bound.type = 1;
+        sSB1_Ptr->m_armTgt[i]->bound.box.center = *(xVec3*)&sSB1_Ptr->m_armTgt[i]->model->Mat->pos;
+        sSB1_Ptr->m_armTgt[i]->bound.box.box.upper.x = f896;
     }
 }
 
-// Close, but no cigar
 void zNPCB_SB1::Init(xEntAsset* asset)
 {
-    /*
-        signed int i; // r19
-        class xModelInstance * minst; // r5
-    */
-
     this->zNPCCommon::Init(asset);
 
     sSB1_Ptr = this;
 
-    // xModelInstance* minst = this->model;
     S32 i = 0;
 
     xModelInstance* minst = this->model;
@@ -294,20 +284,18 @@ void zNPCB_SB1::Init(xEntAsset* asset)
         minst = minst->Next;
     }
 
-    // I'm pretty sure this idea is right, but for some reason it's loading
-    // BossArmTags into/out of the stack???
     for (i = 0; i < 4; i++)
     {
-        iModelTagSetup(this->m_leftArmTags[i], this->m_subModels[i]->Data, BossArmTags[i].x,
+        iModelTagSetup(&this->m_leftArmTags[i], this->m_subModels[2]->Data, BossArmTags[i].x,
                        BossArmTags[i].y, BossArmTags[i].z);
 
-        iModelTagSetup(this->m_rightArmTags[i], this->m_subModels[i]->Data, BossArmTags[i + 4].x,
+        iModelTagSetup(&this->m_rightArmTags[i], this->m_subModels[3]->Data, BossArmTags[i + 4].x,
                        BossArmTags[i + 4].y, BossArmTags[i + 4].z);
     }
 
     for (i = 0; i < 4; i++)
     {
-        iModelTagSetup(this->m_feetTags[i], this->m_subModels[i]->Data, BossFeetTags[i].x,
+        iModelTagSetup(&this->m_feetTags[i], this->m_subModels[1]->Data, BossFeetTags[i].x,
                        BossFeetTags[i].y, BossFeetTags[i].z);
     }
 
@@ -316,16 +304,16 @@ void zNPCB_SB1::Init(xEntAsset* asset)
     this->m_armColl[1] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMCOLL_RIGHT"));
     this->m_bodyColl = (zEnt*)zSceneFindObject(xStrHash("DUMMY_BODYCOLL"));
     this->m_armTgt[0] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMTGT_LEFT"));
-    this->m_armTgt[0] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMTGT_RIGHT"));
+    this->m_armTgt[1] = (zEnt*)zSceneFindObject(xStrHash("DUMMY_ARMTGT_RIGHT"));
 
     SB1_ResetGlobalStuff();
 }
 
-S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*);
-S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-S32 stompCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-S32 smashCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*);
+static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 stompCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 smashCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
 
 void zNPCB_SB1::SelfSetup()
 {
@@ -508,7 +496,7 @@ void zNPCB_SB1::ThanksImDone()
     this->attack_delay = f983;
 }
 
-S32 SB1_CheckFeetStomp(zNPCB_SB1* sb1, S32* goal, en_trantype* trantype)
+static S32 SB1_CheckFeetStomp(zNPCB_SB1* sb1, S32* goal, en_trantype* trantype)
 {
     xVec3* player_pos = (xVec3*)&globals.player.ent.model->Mat->pos;
     xVec3* boss_pos = (xVec3*)&sb1->model->Mat->pos;
@@ -530,7 +518,7 @@ S32 SB1_CheckFeetStomp(zNPCB_SB1* sb1, S32* goal, en_trantype* trantype)
     return result;
 }
 
-S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
+static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)rawgoal->GetOwner();
     zNPCGoalBossSB1Idle* idle = (zNPCGoalBossSB1Idle*)rawgoal;
@@ -559,7 +547,7 @@ S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
     return nextgoal;
 }
 
-S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)rawgoal->GetOwner();
 
@@ -579,7 +567,7 @@ S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-S32 stompCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 stompCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCGoalBossSB1Stomp* stomp = (zNPCGoalBossSB1Stomp*)rawgoal;
     zNPCB_SB1* sb1 = (zNPCB_SB1*)rawgoal->GetOwner();
@@ -605,7 +593,7 @@ S32 stompCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 }
 
 // 91% match, just has a register scheduling issue
-S32 smashCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 smashCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCGoalBossSB1Smash* smash = (zNPCGoalBossSB1Smash*)rawgoal;
     zNPCB_SB1* sb1 = (zNPCB_SB1*)rawgoal->GetOwner();
@@ -633,7 +621,7 @@ S32 smashCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCB_SB1* sb1 = (zNPCB_SB1*)rawgoal->GetOwner();
 
@@ -648,7 +636,7 @@ S32 deflateCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-S32 SB1_FaceTarget(zNPCB_SB1* sb1, xVec3* target, F32 dt)
+static S32 SB1_FaceTarget(zNPCB_SB1* sb1, xVec3* target, F32 dt)
 {
     S32 retval = 0;
     xVec3 newAt;
@@ -858,7 +846,7 @@ S32 zNPCGoalBossSB1Deflate::Enter(F32 dt, void* updCtxt)
     return this->zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-void AddStompRing(zNPCB_SB1* sb1, xVec3* pos)
+static void AddStompRing(zNPCB_SB1* sb1, xVec3* pos)
 {
     for (S32 i = 0; i < 16; i++)
     {

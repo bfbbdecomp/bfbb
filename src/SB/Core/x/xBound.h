@@ -10,8 +10,7 @@ struct xBound
 {
     xQCData qcd;
 
-    // Offset: 0x20
-    U8 type;
+    U8 type; // Offset: 0x20 (or 0x84)
     U8 pad[3];
     union
     {
