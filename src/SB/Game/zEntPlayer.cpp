@@ -12,6 +12,7 @@
 #include "xEnt.h"
 #include "xEntBoulder.h"
 #include "xEvent.h"
+#include "xJaw.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xMemMgr.h"
@@ -71,7 +72,7 @@ static S32 sPlayerAttackInAir;
 
 #define MAX_DELAYED_SOUNDS 8
 static zDelayedStreamSound sDelayedSound[MAX_DELAYED_SOUNDS];
-static zPlayerSndTimer sPlayerStreamSndTimer[ePlayerStreamSnd_Total];
+static zPlayerSndTimer sPlayerStreamSndTimer[ePlayerStreamSnd_Total] = {};
 
 F32 startJump;
 F32 startDouble;
@@ -124,6 +125,15 @@ static S32 boulderRollShouldStart;
 static zParEmitter* sEmitSpinBubbles;
 static zParEmitter* sEmitSundae;
 static zParEmitter* sEmitStankBreath;
+static class xModelTag sStankTag[3];
+
+static RpAtomic* sReticleModel;
+static F32 sReticleRot;
+static F32 sReticleAlpha;
+static xMat4x3 sReticleMat;
+static S32 sTypeOfTarget;
+static F32 sTimeToRetarget;
+class xEnt* gReticleTarget;
 
 // This struct was anonymous in the dwarf but it seemed to do better with codegen to name it
 // so I can hold a pointer to it and access the members that way.
@@ -2772,6 +2782,151 @@ static U32 PatrickGrabCB(xAnimTransition* tran, xAnimSingle*, void*)
     return 0;
 }
 
+namespace
+{
+    static struct foo
+    {
+        S32 anim;
+        U32 sndid;
+        void* data;
+        F32 time;
+    } player_talk;
+
+    static U32 TalkCheck(xAnimTransition* anim, xAnimSingle*, void*)
+    {
+        return anim->UserFlags == player_talk.anim;
+    }
+
+    static U32 TalkDoneCheck(xAnimTransition* anim, xAnimSingle*, void*)
+    {
+        return anim->UserFlags != player_talk.anim;
+    }
+
+    static void speak_update(F32 dt)
+    {
+        if (player_talk.anim == -1)
+        {
+            return;
+        }
+
+        if (player_talk.time < 0.2f || xSndIsPlaying(player_talk.sndid) != 0)
+        {
+            player_talk.time += dt;
+            float jawval = xJaw_EvalData(player_talk.data, player_talk.time);
+            globals.player.ent.model->Anim->Single->BilinearLerp[0] = jawval;
+        }
+        else
+        {
+            zEntPlayerSpeakStop();
+        }
+    }
+} // namespace
+
+// WIP, not equivalent
+void zEntPlayerSpeakStart(U32 sndid, U32, S32 anim)
+{
+    zEntPlayerSpeakStop();
+
+    player_talk.data = xJaw_FindData(sndid);
+    if (player_talk.data)
+    {
+        player_talk.sndid = sndid;
+        player_talk.time = 0.0f;
+        if (anim < 0 || anim >= globals.player.s->talk_anims)
+        {
+            // wtf is happening here
+            U8 filter_size = globals.player.s->talk_filter_size;
+            U32 which = (xrand() >> 13); // / filter_size;
+            player_talk.anim = globals.player.s->talk_filter[which % filter_size];
+        }
+        else
+        {
+            player_talk.anim = anim;
+        }
+    }
+}
+
+// Equiavlent: sda scheduling reorder
+void zEntPlayerSpeakStop()
+{
+    player_talk.anim = -1;
+    globals.player.ent.model->Anim->Single->BilinearLerp[0] = 0.0f;
+}
+
+// TODO
+static xEnt* GetPatrickTarget(xEnt* ent)
+{
+    xEnt* result = NULL;
+    xCollis* coll;
+    zPlatform* plat;
+    xVec3 relpos;
+    U32 i;
+    F32 bestTargetDot;
+    xVec3* bestTargetPos;
+    zScene* zsc;
+    S32 grabbedIsFruit;
+    F32 maxHeight;
+    xEnt* tgtent;
+    F32 dx;
+    F32 dy;
+    F32 dz;
+    F32 ddot;
+    return result;
+}
+
+static U32 PatrickGrabThrowCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Throw, 0.0f);
+    zEnt* ent = (zEnt*)object;
+    if (gReticleTarget && sTypeOfTarget == 3)
+    {
+        globals.player.carry.throwTarget = gReticleTarget;
+    }
+    else
+    {
+        globals.player.carry.throwTarget = GetPatrickTarget(ent);
+    }
+
+    globals.player.carry.flyingToTarget = NULL;
+    if (globals.player.carry.grabbed && globals.player.carry.grabbed->baseType == eBaseTypeNPC)
+    {
+        ((zNPCCommon*)globals.player.carry.grabbed)->SetCarryState(zNPCCARRY_THROW);
+    }
+
+    return 0;
+}
+
+static class zNPCLassoInfo* sCurrentNPCInfo;
+void zEntPlayer_LassoNotify(en_LASSO_EVENT event)
+{
+    switch (event)
+    {
+    case LASS_EVNT_GRABEND:
+        zLasso_SetGuide(sCurrentNPCInfo->lassoee, sCurrentNPCInfo->holdGuideAnim);
+        break;
+    case LASS_EVNT_ABORT:
+        globals.player.lassoInfo.lasso.flags = 0;
+        globals.player.lassoInfo.target = NULL;
+        break;
+    }
+}
+
+static unsigned int sShouldMelee;
+static U32 MeleeCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    if (!sShouldMelee)
+    {
+        return 0;
+    }
+
+    if (strcmp(anim->State->Name, "DJumpApex01") == 0 && anim->Time < 0.3f)
+    {
+        return 0;
+    }
+
+    return 1;
+}
+
 static U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     xNPCBasic* npc = (xNPCBasic*)sLassoInfo->target;
@@ -3996,7 +4151,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 
 // TODO: Move these to their headers
 
-WEAK U8 xSndIsPlaying(U32 assetID)
+WEAK U32 xSndIsPlaying(U32 assetID)
 {
     return iSndIsPlaying(assetID);
 }
