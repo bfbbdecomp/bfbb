@@ -251,7 +251,6 @@ void zGameStateSwitch(S32 theNewState)
     }
 }
 
-#ifdef NON_MATCHING
 void zGameModeSwitch(eGameMode modeNew)
 {
     eGameMode modeOld = gGameMode;
@@ -284,4 +283,3 @@ void zGameModeSwitch(eGameMode modeNew)
 
     zEntEventAllOfType(sGameMode_DispatchTable[modeNew], eBaseTypeDispatcher);
 }
-#endif
