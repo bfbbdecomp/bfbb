@@ -360,7 +360,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zFX.cpp"),
             Object(NonMatching, "SB/Game/zGame.cpp"),
             Object(Equivalent, "SB/Game/zGameExtras.cpp"),
-            Object(NonMatching, "SB/Game/zGameState.cpp"),
+            Object(Equivalent, "SB/Game/zGameState.cpp"),
             Object(NonMatching, "SB/Game/zGust.cpp"),
             Object(NonMatching, "SB/Game/zHud.cpp"),
             Object(NonMatching, "SB/Game/zLasso.cpp"),
