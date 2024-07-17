@@ -456,7 +456,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeDuplotron.cpp"),
             Object(NonMatching, "SB/Core/x/xModelBucket.cpp"),
             Object(NonMatching, "SB/Game/zShrapnel.cpp"),
-            Object(NonMatching, "SB/Game/zNPCGoalDuplotron.cpp"),
+            Object(Matching, "SB/Game/zNPCGoalDuplotron.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCSpawner.cpp"),
             Object(NonMatching, "SB/Game/zEntTeleportBox.cpp"),
             Object(Matching, "SB/Game/zBusStop.cpp"),
