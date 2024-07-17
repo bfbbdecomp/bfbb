@@ -2702,7 +2702,7 @@ static U32 PatrickGrabCB(xAnimTransition* tran, xAnimSingle*, void*)
     globals.player.carry.grabTarget = 1;
     globals.player.carry.grabYclear = 0;
 
-    if (sGrabFound->baseType == '/')
+    if (sGrabFound->baseType == eBaseTypeBoulder)
     {
         globals.player.carry.targetRot =
             xatan2(sGrabFound->bound.sph.center.x - globals.player.ent.frame->mat.pos.x,
@@ -2760,17 +2760,13 @@ static U32 PatrickGrabCB(xAnimTransition* tran, xAnimSingle*, void*)
                &globals.player.carry.spin);
     xVec3Init(&globals.player.carry.spin.pos, 0.0f, 0.0f, 0.0f);
 
-    // FIXME: hella fakematch. can't get this one right for some reason.
-    sGrabFound->chkby = __rlwinm(sGrabFound->chkby, 0, 28, 26);
+    sGrabFound->chkby &= ~XENT_COLLTYPE_PLYR;
 
     zThrown_AddFruit(sGrabFound);
 
-    if (sGrabFound->baseType == '+')
+    if (sGrabFound->baseType == eBaseTypeNPC)
     {
-        // FIXME: What is this callback? sGrabFound must be casted to something here
-        // but nothing makes sense to me right now
-        typedef (*MysteryCallback)(xEnt*, u32);
-        (*(MysteryCallback*)(*(U8*)((U8*)sGrabFound + 0x1b8) + 0x98))(sGrabFound, 1);
+        ((zNPCCommon*)sGrabFound)->SetCarryState(zNPCCARRY_PICKUP);
     }
 
     return 0;
