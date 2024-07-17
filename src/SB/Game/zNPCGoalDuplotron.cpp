@@ -10,9 +10,6 @@
 #include "xEvent.h"
 #include "xScrFx.h"
 
-extern F32 _816_0; // 20.0f
-extern F32 _840_3; // 0.0f
-
 xFactoryInst* GOALCreate_Duplotron(S32 who, RyzMemGrow* grow, void*)
 {
     xGoal* goal = NULL;
@@ -37,7 +34,7 @@ xFactoryInst* GOALCreate_Duplotron(S32 who, RyzMemGrow* grow, void*)
 S32 zNPCGoalDuploLive::Enter(F32 dt, void* updCtxt)
 {
     livestat = LIVESTAT_NORMAL;
-    tmr_chkPlyrDist = _816_0;
+    tmr_chkPlyrDist = 20.0f;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -53,7 +50,7 @@ S32 zNPCGoalDuploLive::Process(en_trantype* trantype, F32 dt, void* updCtxt, xSc
     {
     case LIVESTAT_NORMAL:
     {
-        if (tmr_chkPlyrDist < _840_3)
+        if (tmr_chkPlyrDist < 0.0f)
         {
             CheckPlayer();
         }
