@@ -477,7 +477,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeKingJelly.cpp"),
             Object(Matching, "SB/Game/zNPCGoalBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypePrawn.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypeBossSB1.cpp"),
+            Object(Equivalent, "SB/Game/zNPCTypeBossSB1.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBossSB2.cpp"),
             Object(Matching, "SB/Core/x/xJaw.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBossPatrick.cpp"),
