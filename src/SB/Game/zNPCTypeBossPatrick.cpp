@@ -283,6 +283,54 @@ void zNPCBPatrick::getNextFreeGlob()
 {
 }
 
+void zNPCBPatrick::playSplat(xVec3* pos)
+{
+    // float picker; // r2
+}
+
+U32 zNPCBPatrick::canSpawnChucks()
+{
+    /*
+        unsigned int result; // r2
+        signed int i; // r5
+    */
+}
+
+void zNPCBPatrick::gotoRound(S32 num)
+{
+}
+
+// return type probably wrong. not in PS2 dwarf
+void zNPCBPatrick::ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk)
+{
+}
+
+void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
+{
+    /*
+        signed int i; // r13
+        signed int j; // r12
+        class xMat4x3 * mat; // r11
+        class xVec3 * lower; // r10
+        class xVec3 * upper; // r9
+        float a; // r10
+        float b; // r9
+        float det; // r4
+        float t[2]; // r29+0x18
+        float dispX; // r11
+        float dispZ; // r8
+    */
+}
+
+// return type probably wrong. not in PS2 dwarf
+void zNPCBPatrick::bossPatBoxCheckCollide(bossPatBox* bx)
+{
+}
+
+void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
+{
+}
+
 void zNPCBPatrick::hiddenByCutscene()
 {
     /*

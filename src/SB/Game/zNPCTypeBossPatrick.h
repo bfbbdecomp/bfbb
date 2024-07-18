@@ -131,13 +131,17 @@ struct zNPCBPatrick : zNPCBoss
 
     void RenderGlobs();
     void RenderFrozenPlayer();
-
     void RenderExtra();
-
     void NewTime(xScene* xscn, F32 dt);
     S32 nextGoal();
     void getNextFreeGlob();
-
+    void playSplat(xVec3* pos);
+    U32 canSpawnChucks();
+    void gotoRound(S32 num);
+    void ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk); // Not in PS2 DWARF
+    void ParabolaHitsConveyors(xParabola* parabola, xCollis* collis_unk);
+    void bossPatBoxCheckCollide(bossPatBox* bx); // Not in PS2 DWARF
+    void bossPatBoxUpdate(bossPatBox* bx, F32 dt);
     void hiddenByCutscene();
 };
 
