@@ -20,13 +20,13 @@ public:
 
 struct bossPatGlob
 {
-    xParabola path;
-    F32 t;
-    xVec3 lastPos;
-    xVec3 norm;
-    xVec3 convVel;
-    zPlatform* conv;
-    U32 flags;
+    xParabola path; // offset 0x0, size 0x24
+    F32 t; // offset 0x24, size 0x4
+    xVec3 lastPos; // offset 0x28, size 0xC
+    xVec3 norm; // offset 0x34, size 0xC
+    xVec3 convVel; // offset 0x40, size 0xC
+    zPlatform* conv; // offset 0x4C, size 0x4
+    U32 flags; // offset 0x50, size 0x4
 };
 
 struct bossPatBox
@@ -134,7 +134,7 @@ struct zNPCBPatrick : zNPCBoss
     void RenderExtra();
     void NewTime(xScene* xscn, F32 dt);
     S32 nextGoal();
-    void getNextFreeGlob();
+    bossPatGlob* getNextFreeGlob(); // Not in PS2 DWARF
     void playSplat(xVec3* pos);
     U32 canSpawnChucks();
     void gotoRound(S32 num);

@@ -277,10 +277,22 @@ S32 zNPCBPatrick::nextGoal()
     // signed int nextgoal; // r16
 }
 
-// return type probably wrong
 // not in PS2 dwarf
-void zNPCBPatrick::getNextFreeGlob()
+bossPatGlob* zNPCBPatrick::getNextFreeGlob()
 {
+    S32 current = this->currGlob;
+
+    this->currGlob = current + 1;
+
+    bossPatGlob* glob = &this->glob[current];
+
+    if (this->currGlob >= 50)
+    {
+        this->currGlob = 0;
+    }
+
+    glob->flags = 1;
+    return glob;
 }
 
 void zNPCBPatrick::playSplat(xVec3* pos)
