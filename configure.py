@@ -469,7 +469,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeSubBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalVillager.cpp"),
-            Object(NonMatching, "SB/Game/zNPCGoalSubBoss.cpp"),
+            Object(Matching, "SB/Game/zNPCGoalSubBoss.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xShadowSimple.cpp"),
             Object(NonMatching, "SB/Core/x/xUpdateCull.cpp"),
             Object(NonMatching, "SB/Game/zDiscoFloor.cpp"),
