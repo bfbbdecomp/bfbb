@@ -3147,6 +3147,215 @@ static U32 LassoFailRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void*
     return !sLassoInfo->target && RunSlipCheck(tran, anim, data);
 }
 
+// Equivalent: sda relocation scheduling
+static U32 JumpMeleeCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Kick, 0.0f);
+    if ((xrand() & 3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_KickComment1, ePlayerStreamSnd_KickComment3,
+                                       0.0f);
+    }
+
+    globals.player.ent.frame->vel.y *= 0.8f;
+    sShouldMelee = 0;
+    sPlayerAttackInAir++;
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 MeleeCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Chop, 0.0f);
+    if ((xrand() & 3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_ChopComment1, ePlayerStreamSnd_ChopComment3,
+                                       0.0f);
+    }
+
+    sLassoInfo->target = NULL;
+    sShouldMelee = 0;
+    sPlayerAttackInAir++;
+    return 0;
+}
+
+static U32 LassoStartCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Heli, 0.0f);
+    sLassoInfo->swingTarget = NULL;
+
+    xEnt* ent = (xEnt*)object;
+    zNPCCommon* npc = (zNPCCommon*)sLassoInfo->target;
+    if (sLassoInfo->target->baseType == eBaseTypeNPC && (npc->SelfType() & 0xffffff00) != 'NTT\0')
+    {
+        sLassoInfo->targetGuide = 1;
+        sCurrentNPCInfo = npc->GimmeLassInfo();
+        npc->LassoNotify(LASS_EVNT_BEGIN);
+        zLasso_SetGuide(npc, sCurrentNPCInfo->grabGuideAnim);
+    }
+    else
+    {
+        sLassoInfo->targetGuide = NULL;
+    }
+
+    zLasso_InitTimer(sLasso, 0.125f);
+    sLasso->flags = 0x12c3;
+    sLasso->tgRadius = 1.25f;
+
+    xVec3AddScaled(&sLasso->crCenter, (xVec3*)&ent->model->Mat->up, 0.5f);
+    sLassoInfo->lassoRot =
+        xatan2(sLassoInfo->target->model->Mat->pos.x - globals.player.ent.frame->mat.pos.x,
+               sLassoInfo->target->model->Mat->pos.z - globals.player.ent.frame->mat.pos.z);
+
+    return 0;
+}
+
+// Equivalent
+static U32 LassoThrowCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    zLasso_ResetTimer(sLasso, 0.4f);
+
+    sLasso->flags = 0x11;
+    sLasso->tgRadius = 0.75f * sLasso->crRadius;
+
+    xVec3SMul(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->at, -sLassoInfo->dist);
+    // Result is being subtracted from original instead of negated and added
+    sLasso->tgNormal.y += -(4.0f * sLassoInfo->dist - 5.0f);
+    xVec3Normalize(&sLasso->tgNormal, &sLasso->tgNormal);
+    xVec3Copy(&sLasso->tgCenter, &sLasso->stCenter);
+    xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->at, 0.5f * -sLassoInfo->dist);
+
+    sLasso->tgCenter.y += 0.7f * sLassoInfo->dist + 0.3f;
+
+    return 0;
+}
+
+// Equivalent
+static U32 LassoFlyCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoThrow, 0.0f);
+    zLasso_ResetTimer(sLasso, 0.4f * sLassoInfo->dist);
+
+    if (sLassoInfo->targetGuide == 0)
+    {
+        sLasso->flags = 1;
+        xVec3Copy(&sLasso->tgCenter, xBoundCenter(&sLassoInfo->target->bound));
+        xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->at,
+                       sLassoInfo->target->model->Data->boundingSphere.radius * sLassoInfo->dist);
+        xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->up,
+                       sLassoInfo->target->model->Data->boundingSphere.radius * sLassoInfo->dist);
+        sLasso->tgRadius = 1.5f * sLassoInfo->target->model->Data->boundingSphere.radius;
+
+        xVec3SMul(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->at, 1.0f);
+        // Result is being subtracted from original instead of negated and added
+        sLasso->tgNormal.y += -(4.0f * sLassoInfo->dist - 5.0f);
+        xVec3Normalize(&sLasso->tgNormal, &sLasso->tgNormal);
+    }
+    else
+    {
+        sLasso->flags = 1;
+        zLasso_InterpToGuide(sLasso);
+    }
+
+    sLasso->tgSlack = 0.5f;
+    return 0;
+}
+
+static U32 LassoDestroyCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoYank, 0.17f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_RopingComment1, ePlayerStreamSnd_RopingComment3,
+                                   0.133f);
+
+    if (sLassoInfo->targetGuide == 0)
+    {
+        zLasso_ResetTimer(sLasso, 0.5f);
+        sLassoInfo->destroy = 1;
+        sLasso->flags = 0x521;
+
+        xVec3Copy(&sLasso->tgCenter, xBoundCenter(&sLassoInfo->target->bound));
+        sLasso->tgRadius = 0.75f * sLassoInfo->target->model->Data->boundingSphere.radius;
+        xVec3Init(&sLasso->tgNormal, 0.0f, 1.0f, 0.0f);
+        return 0;
+    }
+    else
+    {
+        sLassoInfo->zeroAnim = sLassoInfo->target->model->Anim->Single->State;
+        ((zNPCCommon*)sLassoInfo->target)->LassoNotify(LASS_EVNT_GRABSTART);
+        sLasso->flags = 0x4c01;
+        return 0;
+    }
+}
+
+static U32 LassoYankCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoYank, 0.17f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_RopingComment1, ePlayerStreamSnd_RopingComment3,
+                                   0.133f);
+
+    if (sLassoInfo->targetGuide && sLassoInfo->target)
+    {
+        ((zNPCCommon*)sLassoInfo->target)->LassoNotify(LASS_EVNT_YANK);
+    }
+
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 MeleeStopCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+
+    if (globals.player.SundaeTimer < 0.0f)
+    {
+        globals.player.SpeedMult = 1.0f;
+    }
+    else
+    {
+        globals.player.SpeedMult = globals.player.g.SundaeMult;
+    }
+
+    sShouldMelee = 0;
+    return 0;
+}
+
+static U32 SpatulaMeleeStopCB(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    MeleeStopCB(tran, anim, data);
+    SpatulaGrabCB(tran, anim, data);
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 LassoStopCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+    sLasso->flags = 0;
+
+    if (sLassoInfo->targetGuide)
+    {
+        if (sLassoInfo->target)
+        {
+            ((zNPCCommon*)sLassoInfo->target)->LassoNotify(LASS_EVNT_YANK);
+        }
+    }
+    else if (sLassoInfo->destroy && sLassoInfo->target)
+    {
+        zEntEvent(sLassoInfo->target, eEventHit);
+    }
+
+    sLassoInfo->destroy = 0;
+    sLassoInfo->target = NULL;
+    zLasso_SetGuide(NULL, NULL);
+    zRumbleStart(SDR_LassoDestroy);
+    return 0;
+}
+
 bool zEntPlayer_IsSneaking()
 {
     if (gCurrentPlayer != eCurrentPlayerSpongeBob)
