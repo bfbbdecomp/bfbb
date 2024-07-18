@@ -111,7 +111,7 @@ static U32 sCurrNFSound;
 static tweak_callback newsfish_cb;
 static tweak_callback recenter_cb;
 
-void test(S32, zNPCBPatrick* pat)
+void test(S32)
 {
 }
 
@@ -234,6 +234,24 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
 {
     /*
         class xVec3 toHit; // r29+0x20
+    */
+}
+
+void zNPCBPatrick_GameIsPaused(zScene* scn)
+{
+    if (sPat_Ptr && sPat_Ptr->bossFlags & 0x100)
+    {
+        sPat_Ptr->bossFlags &= 0xfffffeff;
+        sPat_Ptr->hiddenByCutscene();
+    }
+}
+
+void zNPCBPatrick::hiddenByCutscene()
+{
+    /*
+        signed int i; // r17
+        class bossPatBox * bx; // r2
+        class bossPatBox * bx; // r2
     */
 }
 
