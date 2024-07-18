@@ -2878,8 +2878,8 @@ static xEnt* GetPatrickTarget(xEnt* ent)
             worldpos.z = -2.0f;
             xMat4x3Toworld(&worldpos, (xMat4x3*)plat->model->Mat, &worldpos);
 
-            if (ent->model->Mat->at.x * (worldpos.x - ent->model->Mat->pos.x)  +
-                    ent->model->Mat->at.z *(worldpos.z - ent->model->Mat->pos.z) >
+            if (ent->model->Mat->at.x * (worldpos.x - ent->model->Mat->pos.x) +
+                    ent->model->Mat->at.z * (worldpos.z - ent->model->Mat->pos.z) >
                 0.0f)
             {
                 globals.player.carry.targetRot =
@@ -2906,7 +2906,6 @@ static xEnt* GetPatrickTarget(xEnt* ent)
             continue;
         }
         F32 maxHeight = globals.player.carry.throwMaxHeight;
-
 
         if (tgtent->baseType == eBaseTypeStatic)
         {
@@ -3116,6 +3115,36 @@ static U32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 static U32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return 0;
+}
+
+static U32 LassoFailIdleSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && IdleSlipCheck(tran, anim, data);
+}
+
+static U32 LassoFailIdleCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && IdleCheck(tran, anim, data);
+}
+
+static U32 LassoFailWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && WalkCheck(tran, anim, data);
+}
+
+static U32 LassoFailRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && RunAnyCheck(tran, anim, data);
+}
+
+static U32 LassoFailRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && RunOutOfWorldCheck(tran, anim, data);
+}
+
+static U32 LassoFailRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && RunSlipCheck(tran, anim, data);
 }
 
 bool zEntPlayer_IsSneaking()
