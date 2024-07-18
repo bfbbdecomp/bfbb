@@ -43,6 +43,14 @@ struct zNPCBubbleBuddy : zNPCFish
     zNPCBubbleBuddy(S32 myType);
 };
 
+enum en_BBOY_PLATANIM
+{
+    BBOY_PLATANIM_MOVE,
+    BBOY_PLATANIM_HIT,
+    BBOY_PLATANIM_NOMORE,
+    BBOY_PLATANIM_FORCE = 0x7FFFFFFF,
+};
+
 struct zNPCBalloonBoy : zNPCFish
 {
     S32 specialBalloon;
@@ -50,6 +58,9 @@ struct zNPCBalloonBoy : zNPCFish
     xShadowCache* shadCache;
 
     zNPCBalloonBoy(S32 myType);
+
+    void PlatAnimSet(en_BBOY_PLATANIM anim);
+    void PlatAnimSync();
 };
 
 struct zNPCSandyBikini : zNPCVillager
