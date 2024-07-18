@@ -180,6 +180,69 @@ void zNPCBPatrick::Destroy()
         xModelInstanceFree(this->frozenSBIce);
         this->frozenSBIce = NULL;
     }
+
+    zNPCCommon::Destroy();
+}
+
+U32 zNPCBPatrick::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+}
+
+void zNPCBPatrick::Process(xScene* xscn, F32 dt)
+{
+    /*
+        signed int i; // r5
+        signed int j; // r21
+        signed int csn; // r17
+        float fudgeRate; // r1
+        float * swingY; // r4
+        signed int shouldPlayIt; // r3
+        float finalHeight; // r2
+        class xModelInstance * tempModel; // r19
+        float maxDist; // r28
+        float numSnowflakes; // r27
+        float currSize; // r26
+        class xVec3 snowDir; // r29+0x170
+        class xVec3 snowPos; // r29+0x160
+        signed int numSamples; // r20
+        float interp; // r25
+        signed int numToEmit; // r19
+        float theta; // r21
+        float moveSplat; // r20
+        float timeTillEnd; // r1
+        class xCollis colls; // r29+0xF0
+        unsigned int doDamage; // r20
+        class xVec3 knockback; // r29+0x150
+        signed int touchDamage; // r19
+        class xCollis * coll; // r6
+        class xCollis * cend; // r5
+        class xVec3 bubbleVel; // r29+0x140
+        unsigned int picker; // r2
+        signed int num; // r17
+    */
+}
+
+void zNPCBPatrick::DuploNotice(en_SM_NOTICES note, void* data)
+{
+    /*
+        class zNPCCommon * npc; // r2
+        signed int i; // r5
+    */
+}
+
+void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec_hit)
+{
+    /*
+        class xVec3 toHit; // r29+0x20
+    */
+}
+
+void zNPCBPatrick_AddBoundEntsToGrid(zScene* scn)
+{
+    /*
+        signed int i; // r17
+        class xEnt * ent; // r18
+    */
 }
 
 static void Pat_ResetGlobalStuff()

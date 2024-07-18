@@ -124,6 +124,10 @@ struct zNPCBPatrick : zNPCBoss
     void SelfSetup();
     void Reset();
     void Destroy();
+    U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+    void Process(xScene* xscn, F32 dt);
+    void DuploNotice(en_SM_NOTICES note, void* data);
+    void Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec_hit);
 };
 
 struct zNPCGoalBossPatIdle : zNPCGoalCommon
