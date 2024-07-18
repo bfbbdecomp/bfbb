@@ -86,13 +86,16 @@ struct xEntCollis
     U8 pen;
     U8 env_sidx;
     U8 env_eidx;
+    
     U8 npc_sidx;
     U8 npc_eidx;
     U8 dyn_sidx;
     U8 dyn_eidx;
+
     U8 stat_sidx;
     U8 stat_eidx;
     U8 idx;
+    
     xCollis colls[18];
     void (*post)(xEnt*, xScene*, F32, xEntCollis*);
     U32 (*depenq)(xEnt*, xEnt*, xScene*, F32, xCollis*);
