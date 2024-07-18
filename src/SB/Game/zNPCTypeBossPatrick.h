@@ -9,7 +9,13 @@
 
 #include "xCamera.h"
 
-struct zNPCNewsFish;
+class newsfishSound
+{
+    // total size: 0x8
+public:
+    char* soundName; // offset 0x0, size 0x4
+    unsigned int soundID; // offset 0x4, size 0x4
+};
 
 struct bossPatGlob
 {
@@ -111,6 +117,8 @@ struct zNPCBPatrick : zNPCBoss
     xBinaryCamera bossCam;
 
     zNPCBPatrick(S32 myType);
+
+    void Init(xEntAsset* asset);
 };
 
 struct zNPCGoalBossPatIdle : zNPCGoalCommon

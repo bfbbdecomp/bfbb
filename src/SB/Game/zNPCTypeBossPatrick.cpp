@@ -83,8 +83,54 @@
 #define f2885 12.5f
 #define f2994 7.5f
 
-void test(S32)
+static unsigned char sUseBossCam;
+static unsigned char sWasUsingBossCam;
+static unsigned char sOthersHaventBeenAdded;
+static zNPCBPatrick* sPat_Ptr;
+static xVec3* sCamSubTarget;
+static F32 sSecsSincePatWasCarryingHead;
+static xVec3 sCamSubTargetFixed;
+static F32 sCurrYaw;
+static F32 sCurrHeight;
+static F32 sCurrRadius;
+static F32 sCurrPitch;
+static F32 sCurrYawOffset;
+static F32 sCurrCamInterp;
+static F32 minYVel;
+static F32 varYVel;
+static F32 minHMul;
+static F32 varHMul;
+static F32 minT;
+static F32 varT;
+static S32 sBone[10];
+static S32 sBoundBone[4];
+static F32 sBoundRadius[4];
+static xVec3 sBoneOffset[4];
+static newsfishSound sNFComment[37];
+static U32 sCurrNFSound;
+static tweak_callback newsfish_cb;
+static tweak_callback recenter_cb;
+
+void test(S32, zNPCBPatrick* pat)
 {
+}
+
+void zNPCBPatrick::Init(xEntAsset* asset)
+{
+    /*
+        signed int i; // r20
+        class xEnt * ent; // r19
+        class RwTexture * tempTexture; // r2
+    */
+}
+
+void on_change_newsfish(const tweak_info&)
+{
+}
+
+void on_change_recenter(const tweak_info&)
+{
+    sPat_Ptr->bossFlags |= 0x200;
 }
 
 static void Pat_ResetGlobalStuff()
