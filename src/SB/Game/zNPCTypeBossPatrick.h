@@ -129,6 +129,15 @@ struct zNPCBPatrick : zNPCBoss
     void DuploNotice(en_SM_NOTICES note, void* data);
     void Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec_hit);
 
+    void RenderGlobs();
+    void RenderFrozenPlayer();
+
+    void RenderExtra();
+
+    void NewTime(xScene* xscn, F32 dt);
+    S32 nextGoal();
+    void getNextFreeGlob();
+
     void hiddenByCutscene();
 };
 

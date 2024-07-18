@@ -246,6 +246,43 @@ void zNPCBPatrick_GameIsPaused(zScene* scn)
     }
 }
 
+void zNPCBPatrick::RenderGlobs()
+{
+    /*
+        class xMat4x3 globMat; // r29+0xB0
+        signed int i; // r29+0xA0
+    */
+}
+
+void zNPCBPatrick::RenderFrozenPlayer()
+{
+    /*
+        class xMat4x3 globMat; // r29+0xB0
+        signed int i; // r20
+    */
+}
+
+void zNPCBPatrick::RenderExtra()
+{
+    // enum _SDRenderState oldState; // r16
+}
+
+void zNPCBPatrick::NewTime(xScene* xscn, F32 dt)
+{
+    // signed int i; // r20
+}
+
+S32 zNPCBPatrick::nextGoal()
+{
+    // signed int nextgoal; // r16
+}
+
+// return type probably wrong
+// not in PS2 dwarf
+void zNPCBPatrick::getNextFreeGlob()
+{
+}
+
 void zNPCBPatrick::hiddenByCutscene()
 {
     /*
