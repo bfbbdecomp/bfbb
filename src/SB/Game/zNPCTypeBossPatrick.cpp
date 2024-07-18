@@ -133,6 +133,40 @@ void on_change_recenter(const tweak_info&)
     sPat_Ptr->bossFlags |= 0x200;
 }
 
+void zNPCBPatrick::Setup()
+{
+    /*
+        char tempString[32]; // r29+0xA0
+        signed int i; // r18
+        signed int j; // r20
+        class RpAtomic * tempIModel; // r2
+        class xMarkerAsset * marker; // r2
+        char objName[32]; // r29+0x80
+    */
+}
+
+void zNPCBPatrick::SelfSetup()
+{
+    /*
+        class xBehaveMgr * bmgr; // r2
+        class xPsyche * psy; // r16
+        class xGoal * goal; // r2
+    */
+}
+
+void zNPCBPatrick::Reset()
+{
+    /*
+        signed int i; // r5
+        class bossPatBox * bx; // r2
+    */
+
+    for (S32 i = 0; i < 0x2f; i++)
+    {
+        this->glob[i].flags = 0;
+    }
+}
+
 static void Pat_ResetGlobalStuff()
 {
 }

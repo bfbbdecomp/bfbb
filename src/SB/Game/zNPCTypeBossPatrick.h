@@ -120,6 +120,9 @@ struct zNPCBPatrick : zNPCBoss
     zNPCBPatrick(S32 myType);
 
     void Init(xEntAsset* asset);
+    void Setup();
+    void SelfSetup();
+    void Reset();
 };
 
 struct zNPCGoalBossPatIdle : zNPCGoalCommon
