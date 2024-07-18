@@ -123,6 +123,7 @@ struct zNPCBPatrick : zNPCBoss
     void Setup();
     void SelfSetup();
     void Reset();
+    void Destroy();
 };
 
 struct zNPCGoalBossPatIdle : zNPCGoalCommon

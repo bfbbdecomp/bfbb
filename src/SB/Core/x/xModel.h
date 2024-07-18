@@ -135,6 +135,7 @@ void xModelAnimCollStart(xModelInstance& m);
 void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame);
 xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, U16 flags, U8 boneIndex,
                                     U8* boneRemap);
+void xModelInstanceFree(xModelInstance* modelInst);
 void xModelInstanceAttach(xModelInstance* inst, xModelInstance* parent);
 void xModelRender(xModelInstance* modelInst);
 void xModelRender2D(const xModelInstance& model, const basic_rect<F32>& r, const xVec3& from,

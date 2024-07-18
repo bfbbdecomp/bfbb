@@ -167,6 +167,21 @@ void zNPCBPatrick::Reset()
     }
 }
 
+void zNPCBPatrick::Destroy()
+{
+    if (this->frozenSB)
+    {
+        xModelInstanceFree(this->frozenSB);
+        this->frozenSB = NULL;
+    }
+
+    if (this->frozenSBIce)
+    {
+        xModelInstanceFree(this->frozenSBIce);
+        this->frozenSBIce = NULL;
+    }
+}
+
 static void Pat_ResetGlobalStuff()
 {
 }
