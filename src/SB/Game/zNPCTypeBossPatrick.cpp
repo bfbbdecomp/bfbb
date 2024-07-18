@@ -1,9 +1,11 @@
 #include <types.h>
 
+#include "xMath.h"
 #include "xMath3.h"
 #include "xVec3.h"
 
 #include "zNPCTypeBossPatrick.h"
+#include "zGlobals.h"
 
 #define f831 1.0f
 #define f832 0.0f
@@ -240,9 +242,64 @@ void zNPCBPatrick::DuploNotice(en_SM_NOTICES note, void* data)
 
 void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec_hit)
 {
-    /*
-        class xVec3 toHit; // r29+0x20
-    */
+    xVec3 toHit; // r29+0x20
+
+    if (dmg_type == DMGTYP_SIDE || dmg_type == DMGTYP_INSTAKILL || dmg_type == DMGTYP_BUBBOWL)
+    {
+        return;
+    }
+
+    if (!(this->bossFlags & 4) && this->badHitTimer < f832)
+    {
+        if (vec_hit)
+        {
+            xVec3Copy(&toHit, vec_hit);
+        }
+        else
+        {
+            xVec3Sub(&toHit, (xVec3*)&this->model->Mat->pos,
+                     (xVec3*)&globals.player.ent.model->Mat->pos);
+        }
+
+        xVec3Normalize(&toHit, &toHit);
+
+        if (xVec3Dot(&toHit, (xVec3*)&this->model->Mat->at) > f832)
+        {
+            this->bossFlags |= 8;
+            this->badHitTimer = f1054;
+        }
+    }
+    else
+    {
+        if ((this->nfFlags & 4) == 0)
+        {
+            if (this->round == 2)
+            {
+                // not right, but it's some newsfish vtable call
+                this->newsfish->AnimStart(0, 1);
+            }
+            else
+            {
+                this->newsfish->AnimStart(1, 1);
+            }
+
+            this->nfFlags |= 4;
+        }
+        else
+        {
+            U32 uVar1 = xrand();
+
+            if (((uVar1 & 0x80) == 0) || (this->round == 2))
+            {
+                this->newsfish->AnimStart(2, 1);
+            }
+            else
+            {
+                this->newsfish->AnimStart(3, 1);
+            }
+        }
+        this->badHitTimer = f1054;
+    }
 }
 
 void zNPCBPatrick_GameIsPaused(zScene* scn)
