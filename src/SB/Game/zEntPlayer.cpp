@@ -3356,6 +3356,137 @@ static U32 LassoStopCB(xAnimTransition*, xAnimSingle*, void*)
     return 0;
 }
 
+static U32 LassoSwingGroundedBeginCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.sceneCur->sceneID == 'B201' && globals.player.JumpState == 0)
+    {
+        sLassoInfo->swingTarget = NULL;
+        gReticleTarget = NULL;
+        sTypeOfTarget = 0;
+    }
+
+    return sLassoInfo->swingTarget && globals.player.JumpState == 0;
+}
+
+static U32 LassoSwingBeginCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sLassoInfo->swingTarget && globals.player.JumpState != 0;
+}
+
+static U32 LassoSwingReleaseCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (!globals.player.ControlOff && (globals.pad0->pressed & XPAD_BUTTON_X) &&
+            sSwingTimeElapsed > 0.5f) ||
+           sLassoInfo->swingTarget == NULL || !(sLassoInfo->swingTarget->flags & 1);
+}
+
+static U32 LassoSwingBeginCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+
+    sLassoInfo->target = NULL;
+    gReticleTarget = NULL;
+
+    if (sLasso->flags & 1)
+    {
+        sLasso->flags = 1;
+        zLasso_ResetTimer(sLasso, 0.133f);
+        xVec3Copy(&sLasso->tgCenter, &sLasso->stCenter);
+    }
+    else
+    {
+        sLasso->flags = 0x1043;
+        zLasso_InitTimer(sLasso, 0.133f);
+        xVec3Copy(&sLasso->stNormal, (xVec3*)&ent->model->Mat->right);
+        zEntPlayer_SNDPlay(ePlayerSnd_Heli, 0.0f);
+    }
+
+    sLasso->tgSlack = 0.5f;
+    sLasso->tgRadius = sLassoInfo->swingTarget->model->Data->boundingSphere.radius;
+    xVec3Copy(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->right);
+    xVec3Copy(&globals.player.HangVel, (xVec3*)&ent->frame->vel);
+    sSwingTimeElapsed = 0.0f;
+
+    zCameraSetBbounce(false);
+    zCameraSetLongbounce(false);
+    zCameraSetHighbounce(false);
+    return 0;
+}
+
+static U32 LassoSwingGroundedBeginCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+    JumpCB(tran, anim, object);
+
+    ent->frame->vel.y *= 0.5f;
+    LassoSwingBeginCB(tran, anim, object);
+    return 0;
+}
+
+static U32 LassoSwingTossCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoThrow, 0.0f);
+
+    sLasso->flags = 1;
+    zLasso_ResetTimer(sLasso, 0.117f);
+    xVec3Copy(&sLasso->tgCenter, xBoundCenter(&sLassoInfo->swingTarget->bound));
+    xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&sLassoInfo->swingTarget->model->Mat->up, -0.6f);
+    xVec3Copy(&sLasso->tgNormal, (xVec3*)&sLassoInfo->swingTarget->model->Mat->up);
+
+    if (xVec3Dot(&sLasso->tgNormal, &sLasso->stNormal) < 0.0f)
+    {
+        xVec3Inv(&sLasso->tgNormal, &sLasso->tgNormal);
+    }
+
+    sLasso->tgRadius = 0.1f;
+    return 0;
+}
+
+static U32 LassoSwingCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    sLasso->flags = 0xc21;
+    zLasso_ResetTimer(sLasso, 0.0f);
+
+    anim->BilinearLerp[0] = 1.0f;
+    anim->Blend->BilinearLerp[0] = 1.0f;
+
+    zCameraEnableLassoCam();
+    zCameraSetLassoCamFactor(1.0f);
+    return 0;
+}
+
+// Equivalent: sda/float scheduling crap
+static U32 LassoSwingGroundedCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    idle_tmr = 0.0f;
+    sTimeToRetarget = 0.5f;
+    sLassoInfo->swingTarget = NULL;
+    sLasso->flags = 0;
+    sLassoCamLinger = 1;
+
+    return 0;
+}
+
+// Really odd scheduling. Maybe equivalent?
+static U32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    idle_tmr = 0.0f;
+    sTimeToRetarget = 0.5f;
+    sLassoInfo->canCopter = 1;
+    globals.player.Jump_CanDouble = 1;
+    globals.player.IsDJumping = 0;
+    sLassoCamLinger = 1;
+    sLassoInfo->swingTarget = NULL;
+    sLasso->flags = 0;
+
+    JumpCB(tran, anim, object);
+
+    return 0;
+}
+
 bool zEntPlayer_IsSneaking()
 {
     if (gCurrentPlayer != eCurrentPlayerSpongeBob)
