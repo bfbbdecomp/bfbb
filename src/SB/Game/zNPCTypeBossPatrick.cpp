@@ -280,11 +280,9 @@ S32 zNPCBPatrick::nextGoal()
 // not in PS2 dwarf
 bossPatGlob* zNPCBPatrick::getNextFreeGlob()
 {
-    S32 current = this->currGlob;
+    bossPatGlob* glob = &this->glob[this->currGlob];
 
-    this->currGlob = current + 1;
-
-    bossPatGlob* glob = &this->glob[current];
+    this->currGlob++;
 
     if (this->currGlob >= 50)
     {
