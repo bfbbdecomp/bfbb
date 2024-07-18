@@ -8,6 +8,7 @@
 #include "zEntPickup.h"
 
 #include "xCamera.h"
+#include "zNPCTypeVillager.h"
 
 class newsfishSound
 {
