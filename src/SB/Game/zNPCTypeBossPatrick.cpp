@@ -224,10 +224,18 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
 
 void zNPCBPatrick::DuploNotice(en_SM_NOTICES note, void* data)
 {
-    /*
-        class zNPCCommon * npc; // r2
-        signed int i; // r5
-    */
+    if (note != 1)
+    {
+        return;
+    }
+
+    for (S32 i = 0; i < 3; i++)
+    {
+        if (this->chuckList[i] == (zNPCCommon*)data)
+        {
+            this->chuckFlags[i] |= 1;
+        }
+    }
 }
 
 void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec_hit)
