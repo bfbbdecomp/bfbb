@@ -83,12 +83,15 @@
 #define f2885 12.5f
 #define f2994 7.5f
 
-
-void Pat_ResetGlobalStuff()
+void test(S32)
 {
 }
 
-void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+static void Pat_ResetGlobalStuff()
+{
+}
+
+static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
     F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
     F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
@@ -99,6 +102,6 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
-void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
+WEAK void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
 {
 }
