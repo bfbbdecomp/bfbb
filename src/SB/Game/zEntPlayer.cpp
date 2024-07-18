@@ -25,6 +25,8 @@
 
 #include "zBase.h"
 #include "zCamera.h"
+#include "zEntButton.h"
+#include "zEntDestructObj.h"
 #include "zEntPlayer.h"
 #include "zEntPlayerOOBState.h"
 #include "zEntTeleportBox.h"
@@ -38,6 +40,7 @@
 #include "zNPCTypeTiki.h"
 #include "zNPCMessenger.h"
 #include "zParPTank.h"
+#include "zPlatform.h"
 #include "zRumble.h"
 #include "zSaveLoad.h"
 #include "zSurface.h"
@@ -2853,24 +2856,167 @@ void zEntPlayerSpeakStop()
     globals.player.ent.model->Anim->Single->BilinearLerp[0] = 0.0f;
 }
 
-// TODO
+// Close, some float mismatches + regswaps
 static xEnt* GetPatrickTarget(xEnt* ent)
 {
     xEnt* result = NULL;
-    xCollis* coll;
-    zPlatform* plat;
-    xVec3 relpos;
-    U32 i;
-    F32 bestTargetDot;
+    zPlatform* plat =
+        ent->collis->colls[0].flags & 1 ? (zPlatform*)ent->collis->colls[0].optr : NULL;
+
+    if (plat && plat->baseType == eBaseTypePlatform && plat->plat_flags & 2)
+    {
+        xCollis* coll;
+        xVec3 relpos;
+        xMat4x3Tolocal(&relpos, (xMat4x3*)plat->model->Mat, (xVec3*)&ent->model->Mat->pos);
+
+        relpos.z -= 2.0f;
+        if (SQR(relpos.x) + SQR(relpos.z))
+        {
+            xVec3 worldpos;
+            worldpos.x = 0.0f;
+            worldpos.y = 1.23f;
+            worldpos.z = -2.0f;
+            xMat4x3Toworld(&worldpos, (xMat4x3*)plat->model->Mat, &worldpos);
+
+            if (ent->model->Mat->at.x * (worldpos.x - ent->model->Mat->pos.x)  +
+                    ent->model->Mat->at.z *(worldpos.z - ent->model->Mat->pos.z) >
+                0.0f)
+            {
+                globals.player.carry.targetRot =
+                    xatan2(worldpos.x - globals.player.ent.frame->mat.pos.x,
+                           worldpos.z - globals.player.ent.frame->mat.pos.z);
+                globals.player.carry.throwTargetRotRate =
+                    globals.player.carry.targetRot - ent->frame->rot.angle;
+                CLAMP_ANGLE(globals.player.carry.throwTargetRotRate);
+                globals.player.carry.throwTargetRotRate /= 0.2f;
+                return plat;
+            }
+        }
+    }
+
+    F32 bestTargetDot = -1.0f;
     xVec3* bestTargetPos;
-    zScene* zsc;
-    S32 grabbedIsFruit;
-    F32 maxHeight;
-    xEnt* tgtent;
-    F32 dx;
-    F32 dy;
-    F32 dz;
-    F32 ddot;
+    zScene* zsc = globals.sceneCur;
+    S32 grabbedIsFruit = zThrown_IsFruit(globals.player.carry.grabbed, NULL);
+    for (U32 i = 0; i < zsc->num_ents; i++)
+    {
+        xEnt* tgtent = zsc->ents[i];
+        if (tgtent == globals.player.carry.grabbed || (tgtent->flags & 1) == 0)
+        {
+            continue;
+        }
+        F32 maxHeight = globals.player.carry.throwMaxHeight;
+
+
+        if (tgtent->baseType == eBaseTypeStatic)
+        {
+            if (!grabbedIsFruit || !(tgtent->moreFlags & 0x8))
+            {
+                continue;
+            }
+            if (zThrown_IsFruit(tgtent, NULL) == 0)
+            {
+                continue;
+            }
+            maxHeight = globals.player.carry.throwMaxStack;
+        }
+        else if (tgtent->baseType == eBaseTypeDestructObj)
+        {
+            if (((zEntDestructObj*)globals.player.carry.grabbed)->throw_target == 0)
+            {
+                continue;
+            }
+        }
+        else if (tgtent->baseType == eBaseTypeNPC)
+        {
+            // FIXME: This comparison looks like a fakematch
+            U32 t = ((xNPCBasic*)globals.player.carry.grabbed)->SelfType();
+            if (t - NPC_TYPE_JELLYPINK <= 2 || t == NPC_TYPE_MIMEFISH)
+            {
+                continue;
+            }
+        }
+        else if (tgtent->baseType == eBaseTypeButton)
+        {
+            if (zThrown_IsFruit(globals.player.carry.grabbed, NULL))
+            {
+                if ((((_zEntButton*)tgtent)->basset->buttonActFlags & (0x10000 | 0x80)) == 0)
+                {
+                    continue;
+                }
+            }
+            else if (globals.player.carry.grabbed->baseType == eBaseTypeNPC &&
+                     ((xNPCBasic*)globals.player.carry.grabbed)->SelfType() == NPC_TYPE_TIKI_STONE)
+            {
+                if ((((_zEntButton*)tgtent)->basset->buttonActFlags & (0x2000 | 0x40)) == 0)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if ((((_zEntButton*)tgtent)->basset->buttonActFlags & 0x40) == 0)
+                {
+                    continue;
+                }
+            }
+        }
+        else
+        {
+            continue;
+        }
+
+        F32 dx = tgtent->model->Mat->pos.x - ent->model->Mat->pos.x;
+        F32 dy = tgtent->model->Mat->pos.y - ent->model->Mat->pos.y;
+        F32 dz = tgtent->model->Mat->pos.z - ent->model->Mat->pos.z;
+        if (SQR(dx) + SQR(dz) >= SQR(globals.player.carry.throwMaxDist) ||
+            dy <= globals.player.carry.throwMinHeight || dy >= maxHeight ||
+            SQR(dx) + SQR(dz) <= SQR(globals.player.carry.throwMinDist))
+        {
+            continue;
+        }
+
+        // cos of angle between (dx, 0, dz) and at (at should already be normalized)
+        F32 ddot =
+            (dx * ent->model->Mat->at.x + dz * ent->model->Mat->at.z) / xsqrt(SQR(dx) + SQR(dz));
+
+        if (ddot < globals.player.carry.throwMaxCosAngle)
+        {
+            continue;
+        }
+
+        if (bestTargetDot != -1.0f)
+        {
+            if (tgtent->model->Mat->pos.y > bestTargetPos->y)
+            {
+                if (ddot + 0.05f < bestTargetDot)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if (ddot - 0.05f < bestTargetDot)
+                {
+                    continue;
+                }
+            }
+        }
+        result = tgtent;
+
+        globals.player.carry.targetRot =
+            xatan2(tgtent->model->Mat->pos.x - globals.player.ent.frame->mat.pos.x,
+                   tgtent->model->Mat->pos.z - globals.player.ent.frame->mat.pos.z);
+
+        globals.player.carry.throwTargetRotRate =
+            globals.player.carry.targetRot - ent->frame->rot.angle;
+
+        CLAMP_ANGLE(globals.player.carry.throwTargetRotRate);
+
+        globals.player.carry.throwTargetRotRate /= 0.2f;
+        bestTargetPos = (xVec3*)&tgtent->model->Mat->pos;
+        bestTargetDot = ddot;
+    }
     return result;
 }
 
