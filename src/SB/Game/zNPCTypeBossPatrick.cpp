@@ -300,10 +300,18 @@ void zNPCBPatrick::playSplat(xVec3* pos)
 
 U32 zNPCBPatrick::canSpawnChucks()
 {
-    /*
-        unsigned int result; // r2
-        signed int i; // r5
-    */
+    U32 result = 0;
+
+    for (S32 i = 0; i < 3; i++)
+    {
+        if (this->chuckFlags[i] & 1)
+        {
+            result = 1;
+            break;
+        }
+    }
+
+    return result;
 }
 
 void zNPCBPatrick::gotoRound(S32 num)
