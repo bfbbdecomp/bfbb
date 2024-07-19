@@ -13,6 +13,7 @@ static const RwRGBAReal ShadowLightColor =
 };
 static RwCamera* ShadowCamera;
 static RwRaster* ShadowCameraRaster;
+static RwRaster* ShadowRenderRaster;
 static int shadow_ent_count;
 static float SHADOW_BOTH;
 
@@ -87,4 +88,11 @@ U32 xShadowCameraCreate()
 {
     U32 res = SetupShadow();
     return (-res | res) >> 0x1f;
+}
+
+void xShadowCameraUpdate(void* model, void(*renderCB)(void*), xVec3* center, F32 radius, S32 shadowMode)
+{
+    ShadowCameraSetSpherePersp(ShadowCamera, (RwV3d*)center, radius);
+    ShadowCameraUpdate(ShadowCamera, model, renderCB, center, radius, shadowMode);
+    ShadowRenderRaster = ShadowCameraRaster;
 }
