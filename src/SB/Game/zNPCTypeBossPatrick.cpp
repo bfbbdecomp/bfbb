@@ -261,6 +261,8 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
                      (xVec3*)&globals.player.ent.model->Mat->pos);
         }
 
+        toHit.y = f832;
+
         xVec3Normalize(&toHit, &toHit);
 
         if (xVec3Dot(&toHit, (xVec3*)&this->model->Mat->at) > f832)
