@@ -26,6 +26,9 @@ struct xShadowCache
 };
 
 void xShadowInit();
+void xShadowRender(xVec3* center, F32 radius, F32 max_dist);
+void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
+
 void xShadowCameraCreate();
 void xShadow_ListAdd(xEnt* ent);
 void xShadowSetWorld(RpWorld* world);

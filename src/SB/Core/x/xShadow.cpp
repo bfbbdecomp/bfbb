@@ -21,3 +21,8 @@ void xShadowInit()
     RwFrame* frame = RwFrameCreate();
     _rwObjectHasFrameSetFrame(ShadowLight, frame);
 }
+
+void xShadowRender(xVec3* center, F32 radius, F32 max_dist)
+{
+  xShadowRenderWorld(center, radius, max_dist);
+}
