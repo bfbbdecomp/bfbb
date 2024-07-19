@@ -9,6 +9,8 @@ static const RwRGBAReal ShadowLightColor =
 {
     0, 0, 0, 1
 };
+static RwCamera* ShadowCamera;
+static RwRaster* ShadowCameraRaster;
 static int shadow_ent_count;
 
 void xShadowInit()
@@ -24,5 +26,32 @@ void xShadowInit()
 
 void xShadowRender(xVec3* center, F32 radius, F32 max_dist)
 {
-  xShadowRenderWorld(center, radius, max_dist);
+    xShadowRenderWorld(center, radius, max_dist);
+}
+
+S32 SetupShadow()
+{
+    S32 res;
+    for (res = 256; res > 640 || res > 480; res >>= 1) ;
+
+    ShadowCamera = ShadowCameraCreatePersp(res);
+
+    if (ShadowCamera == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        ShadowCameraRaster = ShadowRasterCreate(res);
+        if (ShadowCameraRaster == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            ShadowCamera->frameBuffer = ShadowCameraRaster;
+        }
+    }
+
+    return 1;
 }

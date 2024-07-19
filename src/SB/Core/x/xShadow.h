@@ -28,7 +28,10 @@ struct xShadowCache
 void xShadowInit();
 void xShadowRender(xVec3* center, F32 radius, F32 max_dist);
 void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
+S32 SetupShadow();
 
+RwCamera* ShadowCameraCreatePersp(S32 value); // TODO: better param name
+RwRaster* ShadowRasterCreate(S32 value); // TODO: better param name
 void xShadowCameraCreate();
 void xShadow_ListAdd(xEnt* ent);
 void xShadowSetWorld(RpWorld* world);
