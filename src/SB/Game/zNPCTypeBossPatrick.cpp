@@ -249,7 +249,7 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
         return;
     }
 
-    if (!(this->bossFlags & 4) && this->badHitTimer < f832)
+    if (!(this->bossFlags & 4))
     {
         if (vec_hit)
         {
@@ -271,9 +271,22 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
             this->badHitTimer = f1054;
         }
     }
-    else
+    else if (this->badHitTimer < f832)
     {
-        if ((this->nfFlags & 4) == 0)
+        if (this->nfFlags & 4)
+        {
+            U32 uVar1 = xrand();
+
+            if (((uVar1 & 0x80) == 0) || (this->round == 2))
+            {
+                this->newsfish->AnimStart(2, 1);
+            }
+            else
+            {
+                this->newsfish->AnimStart(3, 1);
+            }
+        }
+        else
         {
             if (this->round == 2)
             {
@@ -286,19 +299,6 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
             }
 
             this->nfFlags |= 4;
-        }
-        else
-        {
-            U32 uVar1 = xrand();
-
-            if (((uVar1 & 0x80) == 0) || (this->round == 2))
-            {
-                this->newsfish->AnimStart(2, 1);
-            }
-            else
-            {
-                this->newsfish->AnimStart(3, 1);
-            }
         }
         this->badHitTimer = f1054;
     }
