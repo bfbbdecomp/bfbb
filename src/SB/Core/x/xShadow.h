@@ -29,12 +29,12 @@ void xShadowInit();
 void xShadowRender(xVec3* center, F32 radius, F32 max_dist);
 void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
 S32 SetupShadow();
+void xShadowSetWorld(RpWorld* world);
 
 RwCamera* ShadowCameraCreatePersp(S32 value); // TODO: better param name
 RwRaster* ShadowRasterCreate(S32 value); // TODO: better param name
 void xShadowCameraCreate();
 void xShadow_ListAdd(xEnt* ent);
-void xShadowSetWorld(RpWorld* world);
 void xShadowSetLight(xVec3* param1, xVec3* param2, F32 param3);
 void xShadowManager_Init(S32 numEnts);
 void xShadowManager_Reset();

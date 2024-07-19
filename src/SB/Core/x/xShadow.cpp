@@ -12,6 +12,7 @@ static const RwRGBAReal ShadowLightColor =
 static RwCamera* ShadowCamera;
 static RwRaster* ShadowCameraRaster;
 static int shadow_ent_count;
+static float SHADOW_BOTH;
 
 void xShadowInit()
 {
@@ -54,4 +55,10 @@ S32 SetupShadow()
     }
 
     return 1;
+}
+
+void xShadowSetWorld(RpWorld* world)
+{
+  RpWorldAddCamera(world, ShadowCamera);
+  SHADOW_BOTH = 2.0f;
 }
