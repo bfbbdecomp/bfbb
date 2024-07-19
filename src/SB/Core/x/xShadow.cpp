@@ -82,3 +82,9 @@ void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 value)
     RwMatrixUpdate(camMatrix);
     RwFrameUpdateObjects(camFrame);
 }
+
+U32 xShadowCameraCreate()
+{
+    U32 res = SetupShadow();
+    return (-res | res) >> 0x1f;
+}
