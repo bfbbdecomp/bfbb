@@ -25,6 +25,8 @@ struct xShadowCache
     xShadowPoly poly[256];
 };
 
+void xShadowInit();
+void xShadowCameraCreate();
 void xShadow_ListAdd(xEnt* ent);
 void xShadowSetWorld(RpWorld* world);
 void xShadowSetLight(xVec3* param1, xVec3* param2, F32 param3);
