@@ -1,7 +1,9 @@
 #include <types.h>
 #include "rwcore.h"
 #include "rwplcore.h"
+#include "xMath3.h"
 #include "xShadow.h"
+#include "xVec3.h"
 
 static RwRaster* gc_saveraster;
 static RpLight* ShadowLight;
@@ -61,4 +63,22 @@ void xShadowSetWorld(RpWorld* world)
 {
   RpWorldAddCamera(world, ShadowCamera);
   SHADOW_BOTH = 2.0f;
+}
+
+void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 value)
+{
+    xVec3 zvec;
+    xMat4x3 matrix;
+    RwFrame* camFrame;
+    RwMatrixTag* camMatrix;
+
+    xVec3Normalize(&zvec, (const xVec3*)in_vec);
+    xMat3x3LookVec(&matrix, (const xVec3*)&zvec);
+    matrix.pos = (*target_pos);
+    camFrame = (RwFrame*)ShadowCamera->object.object.parent;
+    camMatrix = &camFrame->modelling;
+    xMat4x3Copy((xMat4x3*)camMatrix, (const xMat4x3*)&matrix);
+    RwFrameOrthoNormalize(camFrame);
+    RwMatrixUpdate(camMatrix);
+    RwFrameUpdateObjects(camFrame);
 }
