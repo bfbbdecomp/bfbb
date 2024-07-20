@@ -191,3 +191,53 @@ void ztaskbox::callback::on_talk_start()
 void ztaskbox::callback::on_talk_stop()
 {
 }
+
+U8 zNPCNewsFishTV::PhysicsFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColPenByFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColChkByFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColChkFlags() const
+{
+    return 0;
+}
+
+U8 zNPCMerManChair::PhysicsFlags() const
+{
+    return 0;
+}
+
+U8 zNPCMerManChair::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCMerManChair::ColChkFlags() const
+{
+    return 0;
+}
+
+U8 zNPCVillager::ColPenByFlags() const
+{
+    return 24;
+}
+
+U8 zNPCVillager::ColChkByFlags() const
+{
+    return 24;
+}

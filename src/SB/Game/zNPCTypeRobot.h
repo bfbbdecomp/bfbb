@@ -43,6 +43,7 @@ struct NPCLaser
     F32 uv_base[2];
 
     void ColorSet(const RwRGBA*, const RwRGBA*);
+    U32 TextureGet();
 };
 
 struct NPCBattle
@@ -135,6 +136,8 @@ struct zNPCRobot : zNPCCommon
     void Stun(F32 stuntime);
     F32 GenShadCacheRad();
     xEntDrive* PRIV_GetDriverData();
+    U8 ColPenByFlags() const;
+    U8 ColChkByFlags() const;
     zNPCLassoInfo* PRIV_GetLassoData();
     S32 LassoSetup();
 
@@ -163,6 +166,7 @@ struct zNPCFodBomb : zNPCRobot
     NPCBlinker blinker;
 
     zNPCFodBomb(S32 myType);
+    zNPCLassoInfo* PRIV_GetLassoData();
 };
 
 struct zNPCFodBzzt : zNPCRobot
@@ -173,6 +177,7 @@ struct zNPCFodBzzt : zNPCRobot
     F32 uv_discoLight[2];
 
     zNPCFodBzzt(S32 myType);
+    zNPCLassoInfo* PRIV_GetLassoData();
 };
 
 struct zNPCChomper : zNPCRobot
@@ -181,11 +186,13 @@ struct zNPCChomper : zNPCRobot
     S32 cnt_skipEmit;
 
     zNPCChomper(S32 myType);
+    zNPCLassoInfo* PRIV_GetLassoData();
 };
 
 struct zNPCCritter : zNPCRobot
 {
     zNPCCritter(S32 myType);
+    zNPCLassoInfo* PRIV_GetLassoData();
 };
 
 struct zNPCHammer : zNPCRobot
@@ -206,6 +213,7 @@ struct zNPCGlove : zNPCRobot
 struct zNPCMonsoon : zNPCRobot
 {
     zNPCMonsoon(S32 myType);
+    U8 FoulWeather(float);
 };
 
 struct zNPCSleepy : zNPCRobot
@@ -227,6 +235,7 @@ struct zNPCArfDog : zNPCRobot
     NPCBlinker blinkTail;
 
     zNPCArfDog(S32 myType);
+    zNPCLassoInfo* PRIV_GetLassoData();
 };
 
 struct zNPCArfArf : zNPCRobot
@@ -353,6 +362,12 @@ struct zNPCTubeSlave : zNPCRobot
     zNPCTubelet* tub_pete;
 
     zNPCTubeSlave(S32 myType);
+    U8 PhysicsFlags() const;
+    U8 ColPenByFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenFlags() const;
+    U8 ColChkFlags() const;
+    S32 CanRope();
 };
 
 struct zNPCSlick : zNPCRobot

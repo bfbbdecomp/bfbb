@@ -1231,3 +1231,8 @@ static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 WEAK void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
 {
 }
+
+S32 BoundEventCB(xBase*, xBase*, U32, const F32*, xBase*)
+{
+    return 1;
+}

@@ -26,3 +26,28 @@ void zNPCDutchman::update_animation(float)
 void zNPCDutchman::add_splash(const xVec3&, float)
 {
 }
+
+U8 zNPCDutchman::PhysicsFlags() const
+{
+    return 3;
+}
+
+U8 zNPCDutchman::ColPenByFlags() const
+{
+    return 16;
+}
+
+U8 zNPCDutchman::ColChkByFlags() const
+{
+    return 16;
+}
+
+U8 zNPCDutchman::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCDutchman::ColChkFlags() const
+{
+    return 0;
+}
