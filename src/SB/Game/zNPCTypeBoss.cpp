@@ -11,6 +11,10 @@
 
 U32 g_hash_bossanim[ANIM_COUNT] = {};
 
+void foo(zNPCBPatrick* pat)
+{
+}
+
 // clang-format off
 char* g_strz_bossanim[ANIM_COUNT] =
 {

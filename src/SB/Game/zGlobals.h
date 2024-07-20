@@ -210,7 +210,7 @@ struct zPlayerGlobals
     F32 IdleSitTimer;
     S32 Transparent;
     zEnt* FireTarget;
-    U32 ControlOff;
+    U32 ControlOff; // 0x1788
     U32 ControlOnEvent;
 
     // Offset: 0x1790

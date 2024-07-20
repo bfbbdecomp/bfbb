@@ -180,7 +180,7 @@ struct xEnt : xBase
     xShadowSimpleCache* simpShadow;
     xEntShadow* entShadow;
     anim_coll_data* anim_coll;
-    void* user_data;
+    void* user_data; // 0xCC
 };
 
 // collision types
