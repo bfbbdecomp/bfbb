@@ -43,7 +43,7 @@ struct NPCLaser
     F32 uv_base[2];
 
     void ColorSet(const RwRGBA*, const RwRGBA*);
-    U8 TextureGet();
+    U32 TextureGet();
 };
 
 struct NPCBattle
