@@ -512,3 +512,73 @@ U32 NPCLaser::TextureGet()
 {
     return *(U32*)(this);
 }
+
+zNPCLassoInfo* zNPCFodBomb::PRIV_GetLassoData()
+{
+    return NULL;
+}
+
+zNPCLassoInfo* zNPCFodBzzt::PRIV_GetLassoData()
+{
+    return NULL;
+}
+
+zNPCLassoInfo* zNPCChomper::PRIV_GetLassoData()
+{
+    return NULL;
+}
+
+zNPCLassoInfo* zNPCCritter::PRIV_GetLassoData()
+{
+    return NULL;
+}
+
+zNPCLassoInfo* zNPCArfDog::PRIV_GetLassoData()
+{
+    return NULL;
+}
+
+U8 zNPCTubeSlave::PhysicsFlags() const
+{
+    return 3;
+}
+
+U8 zNPCTubeSlave::ColPenByFlags() const
+{
+    return 16;
+}
+
+U8 zNPCTubeSlave::ColChkByFlags() const
+{
+    return 16;
+}
+
+U8 zNPCTubeSlave::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCTubeSlave::ColChkFlags() const
+{
+    return 0;
+}
+
+S32 zNPCTubeSlave::CanRope()
+{
+    return 0;
+}
+
+U8 zNPCRobot::ColPenByFlags() const
+{
+    return 60;
+}
+
+U8 zNPCRobot::ColChkByFlags() const
+{
+    return 60;
+}
+
+U8 zNPCMonsoon::FoulWeather(float)
+{
+    return 0;
+}
