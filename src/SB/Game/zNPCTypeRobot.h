@@ -43,6 +43,7 @@ struct NPCLaser
     F32 uv_base[2];
 
     void ColorSet(const RwRGBA*, const RwRGBA*);
+    U8 TextureGet();
 };
 
 struct NPCBattle
@@ -68,8 +69,8 @@ struct zNPCRobot : zNPCCommon
 
     zNPCRobot(S32);
 
-    S32 LaunchProjectile(en_npchaz haztyp, F32 spd_proj, F32 dst_minRange,
-                           en_mdlvert idx_mvtx, F32 tym_predictMax, F32 hyt_offset);
+    S32 LaunchProjectile(en_npchaz haztyp, F32 spd_proj, F32 dst_minRange, en_mdlvert idx_mvtx,
+                         F32 tym_predictMax, F32 hyt_offset);
     void ShowerConfetti(xVec3* pos);
     F32 MoveTowardsArena(F32 dt, F32 speed);
     void CornerOfArena(xVec3* pos_corner, F32 dst);
@@ -79,8 +80,7 @@ struct zNPCRobot : zNPCCommon
     void InflictPain(S32 numHitPoints, S32 giveCreditToPlayer);
     void LassoNotify(en_LASSO_EVENT event);
     void SyncStunGlyph(F32 tmr_remain, F32 height);
-    void AddStunThrow(xPsyche* psy,
-                      S32 (*eval_evilpat)(xGoal*, void*, en_trantype*, F32, void*),
+    void AddStunThrow(xPsyche* psy, S32 (*eval_evilpat)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_stunned)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_patcarry)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_patthrow)(xGoal*, void*, en_trantype*, F32, void*));
@@ -111,7 +111,7 @@ struct zNPCRobot : zNPCCommon
     void Process(xScene* xscn, F32 dt);
     void NewTime(xScene* xscn, F32 dt);
     S32 SysEvent(xBase* from, xBase* to, U32 toEvent, F32* toParam, xBase* toParamWidget,
-                   S32* handled);
+                 S32* handled);
     void CollideReview();
     U8 PhysicsFlags() const;
     U8 ColPenFlags() const;

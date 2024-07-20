@@ -22,6 +22,9 @@ struct zNPCVillager : zNPCCommon
     S32 current_talk_anim;
 
     zNPCVillager(S32 myType);
+    U8 ColPenByFlags() const;
+    U8 ColChkByFlags() const;
+    F32 GenShadCacheRad();
 };
 
 struct zNPCFish : zNPCVillager
@@ -61,6 +64,9 @@ struct zNPCMerManChair : zNPCVillager
     S32 flg_mermanchair;
 
     zNPCMerManChair(S32 myType);
+    U8 PhysicsFlags() const;
+    U8 ColPenFlags() const;
+    U8 ColChkFlags() const;
 };
 
 struct zNPCNewsFish : zNPCVillager
@@ -95,6 +101,11 @@ struct zNPCNewsFish : zNPCVillager
 struct zNPCNewsFishTV : zNPCVillager
 {
     zNPCNewsFishTV(S32 myType);
+    U8 PhysicsFlags() const;
+    U8 ColPenByFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenFlags() const;
+    U8 ColChkFlags() const;
 };
 
 xAnimTable* ZNPC_AnimTable_Villager(xAnimTable* callerTable);
