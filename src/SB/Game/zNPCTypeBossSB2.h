@@ -275,6 +275,7 @@ struct zNPCGoalBossSB2Death : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 #endif

@@ -27,3 +27,8 @@ void zNPCB_SB2::decompose()
 void zNPCB_SB2::HoldUpDude()
 {
 }
+
+S32 zNPCGoalBossSB2Death::Process(en_trantype*, float, void*, xScene*)
+{
+    return 0;
+}

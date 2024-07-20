@@ -23,3 +23,8 @@ void Pat_ResetGlobalStuff()
 void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
 {
 }
+
+S32 BoundEventCB(xBase*, xBase*, U32, const F32*, xBase*)
+{
+    return 1;
+}
