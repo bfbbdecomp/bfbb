@@ -602,6 +602,7 @@ void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();
 void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnims, S32 idx_dflt,
                                 F32 blend);
+S32 NPCC_NPCIsConversing();
 void zNPCCommon_EjectPhlemOnPawz();
 U32 xSndIsPlaying(U32 assetID, U32 parid);
 
