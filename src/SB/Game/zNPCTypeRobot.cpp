@@ -578,7 +578,7 @@ U8 zNPCRobot::ColChkByFlags() const
     return 60;
 }
 
-U8 zNPCMonsoon::FoulWeather(float)
+U8 zNPCMonsoon::FoulWeather(F32)
 {
     return 0;
 }

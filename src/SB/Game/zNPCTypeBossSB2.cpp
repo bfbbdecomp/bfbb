@@ -28,7 +28,7 @@ void zNPCB_SB2::HoldUpDude()
 {
 }
 
-S32 zNPCGoalBossSB2Death::Process(en_trantype*, float, void*, xScene*)
+S32 zNPCGoalBossSB2Death::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }

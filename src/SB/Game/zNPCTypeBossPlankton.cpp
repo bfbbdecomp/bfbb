@@ -30,27 +30,27 @@ U8 zNPCBPlankton::ColChkByFlags() const
     return 16;
 }
 
-S32 zNPCGoalBPlanktonBomb::Process(en_trantype*, float, void*, xScene*)
+S32 zNPCGoalBPlanktonBomb::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
 
-S32 zNPCGoalBPlanktonMissle::Process(en_trantype*, float, void*, xScene*)
+S32 zNPCGoalBPlanktonMissle::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
 
-S32 zNPCGoalBPlanktonWall::Process(en_trantype*, float, void*, xScene*)
+S32 zNPCGoalBPlanktonWall::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
 
-S32 zNPCGoalBPlanktonMove::Process(en_trantype*, float, void*, xScene*)
+S32 zNPCGoalBPlanktonMove::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
 
-S32 zNPCGoalBPlanktonTaunt::Process(en_trantype*, float, void*, xScene*)
+S32 zNPCGoalBPlanktonTaunt::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
