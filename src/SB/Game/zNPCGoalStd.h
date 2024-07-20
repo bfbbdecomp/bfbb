@@ -75,7 +75,11 @@ struct zNPCGoalLoopAnim : zNPCGoalCommon
     U32 origAnimFlags;
     U32 animWeMolested;
 
-    // void* __ct(S32 myType);
+    zNPCGoalLoopAnim(S32 myType) : zNPCGoalCommon(myType)
+    {
+        SetFlags(1 << 1);
+    }
+
     void LoopCountSet(S32 unk); // return type might be wrong
 };
 
@@ -194,7 +198,11 @@ struct zNPCGoalPushAnim : zNPCGoalCommon
     S32 flg_pushanim;
     F32 lastAnimTime;
 
-    // void* __ct(S32 myType);
+    zNPCGoalPushAnim(S32 myType) : zNPCGoalCommon(myType)
+    {
+        SetFlags((1 << 2) | (1 << 1));
+    }
+
     S32 Enter(F32 dt, void* updCtxt);
 };
 
