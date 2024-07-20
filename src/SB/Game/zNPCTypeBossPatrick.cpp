@@ -6,6 +6,7 @@
 #include "xMath.h"
 #include "xMath3.h"
 #include "xstransvc.h"
+#include "xSnd.h"
 #include "xVec3.h"
 
 #include "zCamera.h"
@@ -17,6 +18,7 @@
 #include "zNPCGoals.h"
 #include "zLightning.h"
 #include "zNPCTypeRobot.h"
+#include <xMathInlines.h>
 
 #define f831 1.0f
 #define f832 0.0f
@@ -1010,6 +1012,22 @@ static S32 spitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
 static S32 runCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCBPatrick* pat = (zNPCBPatrick*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
 static S32 smackCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
@@ -1054,6 +1072,59 @@ static S32 fudgeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
+static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate, F32 dt)
+{
+    S32 retval = -1;
+    xVec3 newAt;
+
+    xVec3Sub(&newAt, target, (xVec3*)&pat->model->Mat->pos);
+
+    newAt.y = f832;
+    F32 a = xVec3Normalize(&newAt, &newAt);
+
+    F32 currRot = xatan2(pat->model->Mat->at.x, pat->model->Mat->at.z);
+    F32 desireRot = xatan2(newAt.x, newAt.z);
+
+    F32 diffRot = desireRot - currRot;
+
+    if (diffRot > f1140)
+    {
+        diffRot -= f1666;
+    }
+
+    if (diffRot < f2405)
+    {
+        diffRot += f1666;
+    }
+
+    F32 deltaRot = turn_rate * dt;
+
+    if ((F32)iabs(diffRot) < deltaRot)
+    {
+        pat->frame->mat.at = newAt;
+        retval = 0;
+    }
+    else
+    {
+        if (diffRot < f832)
+        {
+            deltaRot = -deltaRot;
+            retval = 1;
+        }
+
+        desireRot = currRot + deltaRot;
+        deltaRot = isin(currRot + deltaRot);
+        pat->frame->mat.at.x = deltaRot;
+        pat->frame->mat.at.y = f832;
+        deltaRot = icos(desireRot);
+        pat->frame->mat.at.z = deltaRot;
+    }
+
+    xVec3Cross(&pat->frame->mat.right, &pat->frame->mat.up, &pat->frame->mat.at);
+
+    return retval;
+}
+
 void zNPCBPatrick::hiddenByCutscene()
 {
     /*
@@ -1069,6 +1140,81 @@ void zNPCBPatrick_AddBoundEntsToGrid(zScene* scn)
         signed int i; // r17
         class xEnt * ent; // r18
     */
+}
+
+S32 zNPCGoalBossPatIdle::Enter(F32 dt, void* unk)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    this->timeInGoal = f832;
+    pat->bossFlags |= 0x20;
+    xVec3Init(&pat->frame->vel, f832, f832, f832);
+    return zNPCGoalCommon::Enter(dt, unk);
+}
+
+S32 zNPCGoalBossPatIdle::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    this->timeInGoal += dt;
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    return xGoal::Process(trantype, dt, ctxt, scene);
+}
+
+S32 zNPCGoalBossPatRun::Enter(F32 dt, void* unk)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    this->timeInGoal = f832;
+
+    U32 hash = xStrHash("b201_rp_run_loop");
+
+    this->runSndID =
+        xSndPlay3D(hash, f1671, f832, (U32)0, (U32)0, pat, f891, f1659, SND_CAT_GAME, f832);
+
+    pat->bossFlags |= 0x20;
+
+    return zNPCGoalCommon::Enter(dt, unk);
+}
+
+S32 zNPCGoalBossPatRun::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    this->timeInGoal += dt;
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossPatRun::Exit(F32 dt, void* unk)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    xSndStop(this->runSndID);
+    return xGoal::Exit(dt, unk);
+}
+
+void StartFreezeBreath()
+{
+    zNPCBPatrick* pat = sPat_Ptr;
+
+    pat->parList[0] = NULL;
+    pat->parList[1] = NULL;
+    pat->parList[2] = NULL;
+    pat->parList[3] = NULL;
+
+    pat->numParticles = 0;
+    pat->particleTimer = f832;
+}
+
+void StopFreezeBreath()
+{
+    zNPCBPatrick* pat = sPat_Ptr;
+
+    if (!pat->lastEmitted)
+    {
+        return;
+    }
+
+    pat->parList[pat->numParticles] = pat->lastEmitted;
+    pat->numParticles++;
 }
 
 static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)

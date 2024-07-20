@@ -153,6 +153,9 @@ struct zNPCGoalBossPatIdle : zNPCGoalCommon
     zNPCGoalBossPatIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* unk);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossPatTaunt : zNPCGoalCommon
@@ -195,6 +198,10 @@ struct zNPCGoalBossPatRun : zNPCGoalCommon
     zNPCGoalBossPatRun(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* unk);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Exit(F32 dt, void* unk);
 };
 
 struct zNPCGoalBossPatSmack : zNPCGoalCommon
